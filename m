@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDED034575D;
-	Sat, 30 May 2026 16:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57352F25E4;
+	Sat, 30 May 2026 16:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780158472; cv=none; b=rUG0D+/7SORcDq+dh80EWt+K95Em6GskmXKXUrNPoepkBvdQLOqjeUTaZrSV6KOgdHf0tbp5vetrPAQWCWc0wOL7F/ecKezxAFLHX6Vs6PxZOdo+jIJWF1R4LiIm7xFjYCTz0PpDVWflX6vHEZdlXTQPjBCN/xvmz4OF/aATwoM=
+	t=1780158478; cv=none; b=OO1eLeWikJ4Vx4+bc+qoxqZosWsapFaZ8CpzZA8v4RiS8/PtIPc0UjTbsO1rmkyvVGAeLNgPRPVrDfrKXQGvS+POYtv0yHYUkvEEIUaVdxEV8fJDMQ+CM3s1tKj3+Ht5WfZ0OU1QAfsjb1Im2oySBjXm/fUzXDCEXXUJuJ4H/24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780158472; c=relaxed/simple;
-	bh=73IgEOqY8IEoSGritJLo/FL1iRP83ezqMpnIxzJkjnk=;
+	s=arc-20240116; t=1780158478; c=relaxed/simple;
+	bh=R2m3GZ86emc89aId+/F9441UIZ9hbSkxBMdkES2v/5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a6oFn+0GfRIrFpi0xgmXUZ//9zGdBEgqThSUGX9IbGVCsjvLN3uI6v76IcUFI5oPlht+nGbBgSsiU+bUblHWwQ8l3FGVPRdmt4Wk8ORRZi41haijEyxg7vKLhNsG+RerxHvfGR+n89+G3movLHnOBkTXO08NQXQ5dlMHUelKAoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDDvpkz8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RSYvhqcpMD4iXHmXvQJ0BQUe3Sx0lksSN+VqUaYZCYU7vvd5O0Os/8Ktms96XnAwMRLCmFvgg58Hxin1IpknsxqoZMfZ6niJY/cJH4+WfPPsA1GV4pmulI5AhAUlPPyEOEmef3Z5r0wJMpXBPfQmeCWRD+Z7rnekuAG7XGp5vQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fbuDWfyh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDDvpkz8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF39A1F00893;
-	Sat, 30 May 2026 16:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fbuDWfyh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E3E1F00893;
+	Sat, 30 May 2026 16:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780158470;
-	bh=brEq7ii3CJkZxxCoV/wEOjF1w63Sw2ugKsnxBYs8KY0=;
+	s=korg; t=1780158477;
+	bh=OdMhpNN4ZxoNQPrbQLPIZWzAaF0Pnv+g+xujukXO9LI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gDDvpkz8GCFYx/hL+Ht1Zi5srMhsNyJgCUChtLThlH/dzvxjUA6Wgwe1IWOzz9xuN
-	 F1nKlNNqA2qcL4syzatxl2kY7D1zqkh4XU7/wuGhAo13IqJqtPca7PGqVj2w/WdUks
-	 cV9R0TdtvKKNvY3WTB1vfcy4OMLF6py/P9CzIJ8g=
+	b=fbuDWfyh7SUw5j9wBIcWuLw6U62T+NR4BB4gboC7rv2JArLQ9AJda/3eAF/4l/0uD
+	 fam1EerU0L+SVebdxiBCuWkgXn3RscBinEWmxuDElshBip/kN5sjiqRr4vbD774SRp
+	 N3Tbd5bVuplRMHQFKIp+j/7BRgCg+2w/KIHnQCSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Mika Kahola <mika.kahola@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 054/969] ALSA: usb-audio: Improve Focusrite sample rate filtering
-Date: Sat, 30 May 2026 17:52:58 +0200
-Message-ID: <20260530160301.888290661@linuxfoundation.org>
+Subject: [PATCH 6.1 055/969] drm/i915/psr: Do not use pipe_src as borders for SU area
+Date: Sat, 30 May 2026 17:52:59 +0200
+Message-ID: <20260530160301.912091314@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,167 +46,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geoffrey D. Bennett <g@b4.vu>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-[ Upstream commit 24d2d3c5f94007a5a0554065ab7349bb69e28bcb ]
+[ Upstream commit 75519f5df2a9b23f7bf305e12dc9a6e3e65c24b7 ]
 
-Replace the bLength == 10 max_rate check in
-focusrite_valid_sample_rate() with filtering that also examines the
-bmControls VAL_ALT_SETTINGS bit.
+This far using crtc_state->pipe_src as borders for Selective Update area
+haven't caused visible problems as drm_rect_width(crtc_state->pipe_src) ==
+crtc_state->hw.adjusted_mode.crtc_hdisplay and
+drm_rect_height(crtc_state->pipe_src) ==
+crtc_state->hw.adjusted_mode.crtc_vdisplay when pipe scaling is not
+used. On the other hand using pipe scaling is forcing full frame updates and all the
+Selective Update area calculations are skipped. Now this improper usage of
+crtc_state->pipe_src is causing following warnings:
 
-When VAL_ALT_SETTINGS is readable, the device uses strict
-per-altsetting rate filtering (only the highest rate pair for that
-altsetting is valid). When it is not readable, all rates up to
-max_rate are valid.
+<4> [7771.978166] xe 0000:00:02.0: [drm] drm_WARN_ON_ONCE(su_lines % vdsc_cfg->slice_height)
 
-For devices without the bLength == 10 Format Type descriptor extension
-but with VAL_ALT_SETTINGS readable and multiple altsettings (only seen
-in Scarlett 18i8 3rd Gen playback), fall back to the Focusrite
-convention: alt 1 = 48kHz, alt 2 = 96kHz, alt 3 = 192kHz.
+after WARN_ON_ONCE was added by commit:
 
-This produces correct rate tables for all tested Focusrite devices
-(all Scarlett 2nd, 3rd, and 4th Gen, Clarett+, and Vocaster) using
-only USB descriptors, allowing QUIRK_FLAG_VALIDATE_RATES to be removed
-for Focusrite in the next commit.
+"drm/i915/dsc: Add helper for writing DSC Selective Update ET parameters"
 
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/7e18c1f393a6ecb6fc75dd867a2c4dbe135e3e22.1771594828.git.g@b4.vu
+These warnings are seen when DSC and pipe scaling are enabled
+simultaneously. This is because on full frame update SU area is improperly
+set as pipe_src which is not aligned with DSC slice height.
+
+Fix these by creating local rectangle using
+crtc_state->hw.adjusted_mode.crtc_hdisplay and
+crtc_state->hw.adjusted_mode.crtc_vdisplay. Use this local rectangle as
+borders for SU area.
+
+Fixes: d6774b8c3c58 ("drm/i915: Ensure damage clip area is within pipe area")
+Cc: <stable@vger.kernel.org> # v6.0+
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Mika Kahola <mika.kahola@intel.com>
+Link: https://patch.msgid.link/20260327114553.195285-1-jouni.hogander@intel.com
+(cherry picked from commit da0cdc1c329dd2ff09c41fbbe9fbd9c92c5d2c6e)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+[ omitted hunks for DSC selective update ET alignment infrastructure ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/format.c | 86 +++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 74 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/i915/display/intel_psr.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/sound/usb/format.c b/sound/usb/format.c
-index f33d25a4e4cc7..682adbdf7ee79 100644
---- a/sound/usb/format.c
-+++ b/sound/usb/format.c
-@@ -304,9 +304,37 @@ static bool s1810c_valid_sample_rate(struct audioformat *fp,
- }
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index e2d7c0a6802aa..a465b19293108 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -1686,9 +1686,9 @@ static void psr2_man_trk_ctl_calc(struct intel_crtc_state *crtc_state,
  
- /*
-- * Many Focusrite devices supports a limited set of sampling rates per
-- * altsetting. Maximum rate is exposed in the last 4 bytes of Format Type
-- * descriptor which has a non-standard bLength = 10.
-+ * Focusrite devices use rate pairs: 44100/48000, 88200/96000, and
-+ * 176400/192000. Return true if rate is in the pair for max_rate.
-+ */
-+static bool focusrite_rate_pair(unsigned int rate,
-+				unsigned int max_rate)
-+{
-+	switch (max_rate) {
-+	case 48000:  return rate == 44100 || rate == 48000;
-+	case 96000:  return rate == 88200 || rate == 96000;
-+	case 192000: return rate == 176400 || rate == 192000;
-+	default:     return true;
-+	}
-+}
-+
-+/*
-+ * Focusrite devices report all supported rates in a single clock
-+ * source but only a subset is valid per altsetting.
-+ *
-+ * Detection uses two descriptor features:
-+ *
-+ * 1. Format Type descriptor bLength == 10: non-standard extension
-+ *    with max sample rate in bytes 6..9.
-+ *
-+ * 2. bmControls VAL_ALT_SETTINGS readable bit: when set, the device
-+ *    only supports the highest rate pair for that altsetting, and when
-+ *    clear, all rates up to max_rate are valid.
-+ *
-+ * For devices without the bLength == 10 extension but with
-+ * VAL_ALT_SETTINGS readable and multiple altsettings (only seen in
-+ * Scarlett 18i8 3rd Gen playback), fall back to the Focusrite
-+ * convention: alt 1 = 48kHz, alt 2 = 96kHz, alt 3 = 192kHz.
-  */
- static bool focusrite_valid_sample_rate(struct snd_usb_audio *chip,
- 					struct audioformat *fp,
-@@ -314,8 +342,10 @@ static bool focusrite_valid_sample_rate(struct snd_usb_audio *chip,
+ static void clip_area_update(struct drm_rect *overlap_damage_area,
+ 			     struct drm_rect *damage_area,
+-			     struct drm_rect *pipe_src)
++			     struct drm_rect *display_area)
  {
- 	struct usb_interface *iface;
- 	struct usb_host_interface *alts;
-+	struct uac2_as_header_descriptor *as;
- 	unsigned char *fmt;
- 	unsigned int max_rate;
-+	bool val_alt;
+-	if (!drm_rect_intersect(damage_area, pipe_src))
++	if (!drm_rect_intersect(damage_area, display_area))
+ 		return;
  
- 	iface = usb_ifnum_to_if(chip->dev, fp->iface);
- 	if (!iface)
-@@ -327,26 +357,58 @@ static bool focusrite_valid_sample_rate(struct snd_usb_audio *chip,
- 	if (!fmt)
- 		return true;
+ 	if (overlap_damage_area->y1 == -1) {
+@@ -1761,6 +1761,12 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 	struct drm_rect pipe_clip = { .x1 = 0, .y1 = -1, .x2 = INT_MAX, .y2 = -1 };
+ 	struct intel_plane_state *new_plane_state, *old_plane_state;
+ 	struct intel_plane *plane;
++	struct drm_rect display_area = {
++		.x1 = 0,
++		.y1 = 0,
++		.x2 = crtc_state->hw.adjusted_mode.crtc_hdisplay,
++		.y2 = crtc_state->hw.adjusted_mode.crtc_vdisplay,
++	};
+ 	bool full_update = false;
+ 	int i, ret;
  
-+	as = snd_usb_find_csint_desc(alts->extra, alts->extralen,
-+				     NULL, UAC_AS_GENERAL);
-+	if (!as)
-+		return true;
-+
-+	val_alt = uac_v2v3_control_is_readable(as->bmControls,
-+					       UAC2_AS_VAL_ALT_SETTINGS);
-+
- 	if (fmt[0] == 10) { /* bLength */
- 		max_rate = combine_quad(&fmt[6]);
+@@ -1807,14 +1813,14 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 				damaged_area.y1 = old_plane_state->uapi.dst.y1;
+ 				damaged_area.y2 = old_plane_state->uapi.dst.y2;
+ 				clip_area_update(&pipe_clip, &damaged_area,
+-						 &crtc_state->pipe_src);
++						 &display_area);
+ 			}
  
--		/* Validate max rate */
--		if (max_rate != 48000 &&
--		    max_rate != 96000 &&
--		    max_rate != 192000 &&
--		    max_rate != 384000) {
--
-+		if (val_alt)
-+			return focusrite_rate_pair(rate, max_rate);
-+
-+		/* No val_alt: rates fall through from higher */
-+		switch (max_rate) {
-+		case 192000:
-+			if (rate == 176400 || rate == 192000)
-+				return true;
-+			fallthrough;
-+		case 96000:
-+			if (rate == 88200 || rate == 96000)
-+				return true;
-+			fallthrough;
-+		case 48000:
-+			return (rate == 44100 || rate == 48000);
-+		default:
- 			usb_audio_info(chip,
- 				"%u:%d : unexpected max rate: %u\n",
- 				fp->iface, fp->altsetting, max_rate);
--
- 			return true;
+ 			if (new_plane_state->uapi.visible) {
+ 				damaged_area.y1 = new_plane_state->uapi.dst.y1;
+ 				damaged_area.y2 = new_plane_state->uapi.dst.y2;
+ 				clip_area_update(&pipe_clip, &damaged_area,
+-						 &crtc_state->pipe_src);
++						 &display_area);
+ 			}
+ 			continue;
+ 		} else if (new_plane_state->uapi.alpha != old_plane_state->uapi.alpha) {
+@@ -1822,7 +1828,7 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 			damaged_area.y1 = new_plane_state->uapi.dst.y1;
+ 			damaged_area.y2 = new_plane_state->uapi.dst.y2;
+ 			clip_area_update(&pipe_clip, &damaged_area,
+-					 &crtc_state->pipe_src);
++					 &display_area);
+ 			continue;
  		}
-+	}
  
--		return rate <= max_rate;
-+	if (!val_alt)
-+		return true;
-+
-+	/* Multi-altsetting device with val_alt but no max_rate
-+	 * in the format descriptor. Use Focusrite convention:
-+	 * alt 1 = 48kHz, alt 2 = 96kHz, alt 3 = 192kHz.
-+	 */
-+	if (iface->num_altsetting <= 2)
-+		return true;
-+
-+	switch (fp->altsetting) {
-+	case 1:		max_rate = 48000; break;
-+	case 2:		max_rate = 96000; break;
-+	case 3:		max_rate = 192000; break;
-+	default:	return true;
+@@ -1838,7 +1844,7 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 		damaged_area.x1 += new_plane_state->uapi.dst.x1 - src.x1;
+ 		damaged_area.x2 += new_plane_state->uapi.dst.x1 - src.x1;
+ 
+-		clip_area_update(&pipe_clip, &damaged_area, &crtc_state->pipe_src);
++		clip_area_update(&pipe_clip, &damaged_area, &display_area);
  	}
  
--	return true;
-+	return focusrite_rate_pair(rate, max_rate);
- }
- 
- /*
+ 	/*
 -- 
 2.53.0
 
