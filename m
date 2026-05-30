@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD357348C55;
-	Sat, 30 May 2026 17:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220BF340293;
+	Sat, 30 May 2026 17:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161884; cv=none; b=PP6i7E1TwlEfuNL7I87ThcbPGhLILk7T1W/ckLaTCZ4UHCHxzpnmH/MuUl7LqTzYh2aeT4cQnroQX4bOM4i5rZvI2L4ffiK2HMkV7rhV8MYix1R/IUc34aNdqg+q/8PvtkMjG1Yrkeh9olHkVEXXP1VJL0ctaEZmbcKw5S/YlOc=
+	t=1780161887; cv=none; b=goW5qbjqfBhdRYuSLQqXjO2MeNbUh4mbSR6p6rdu9vzGOnFO+vDNGlraV1OdUhrCA1CVI783RCBV48oh3/22jw98bIBEEmhtYSsgvcMEkpSxG7nqlmDVsIz0JTCxMy4PfnxpgiTy3ITTtDuvtSdXw7xU8AB2ALz5xtQZjeGhJHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161884; c=relaxed/simple;
-	bh=AhxfZ/32oZ4lddNgoGHqiGYcnAGDzA41mZhPTtnNehU=;
+	s=arc-20240116; t=1780161887; c=relaxed/simple;
+	bh=a8iUkmVY9xkGsypBOi7YD3cvqzTovIT5JO8fFEcifZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VM5MQwIWV0iFwsCEHtDY0JuhiP+Awe2MEUW/urTrpMJUgQIlZn8B5jcPxMAQq9jpFnm7QkKqPPEwONSCqutSxI6uiWHtPx3FmazwAGpUJNUg3VrZhV4n3LKeYpPQ0t/5BLo4boji+txAcmOX167XOGnDQsV5PbgLfa1jLJwfcWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLXo0mKc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=in3PMtYD/CMSZQiQdfQ6Eu9HBJ/sxjB4BF6CVlvLOiplkRx54mW4/5QOLHzlwJJ8SWPN6aGKcL8XM8JMstiC11UDNWgv43N/7esDBXa3sYMefU8qzh1ORumCx1P0rj1ZVP35+MnsPv6QTlkXhPKbTVO6oPRwmlveuWDKAqm1HEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gWLzcMKq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLXo0mKc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD1A1F00893;
-	Sat, 30 May 2026 17:24:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWLzcMKq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F2F1F00893;
+	Sat, 30 May 2026 17:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161882;
-	bh=21GLyUZFq1AWMRnMVSntb3kAdv7pjZhEs712V3SMK9s=;
+	s=korg; t=1780161885;
+	bh=kohF9OhRFkiJXKp1qS2Yu/DqawArLO6aC/1X+GRbzIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xLXo0mKctzgetY1EZuHmrmuKPVyCxv62GzHpIw2T8kor/TPCAMTMduKdGHl6MvJVG
-	 DqRbb+RXWdlKlum+WrwYLKAIFR6ugXjpHfdO7f2MNUiAU0uoLz7bT4zltYi2vPFZTp
-	 CIQfsbGGnFDp0cFG7NfwaesUarBVRLBaiunnBmMo=
+	b=gWLzcMKqHpznvnHTcS4rrBpfxq9IBwaZH+TaJv8dAKWlLTn05omTukK/TBel0YtqE
+	 1tCesGhQR8tMQzz608Z92piJpT4pDGeYjCUT9KHKfInHbz9MIdc4X6/3H8f0NWw8ye
+	 uRVzVDzbHoG/vgT1/SyUr/2AhmkWe3AABxCj0QJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Geurts <paul.geurts@prodrive-technologies.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Mark Greer <mgreer@animalcreek.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 755/969] NFC: trf7970a: Ignore antenna noise when checking for RF field
-Date: Sat, 30 May 2026 18:04:39 +0200
-Message-ID: <20260530160321.413442386@linuxfoundation.org>
+Subject: [PATCH 6.1 756/969] neighbour: add RCU protection to neigh_tables[]
+Date: Sat, 30 May 2026 18:04:40 +0200
+Message-ID: <20260530160321.441296488@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -53,51 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Geurts <paul.geurts@prodrive-technologies.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit a9bc28aa4e64320668131349436a650bf42591a5 ]
+[ Upstream commit f8f2eb9de69a1119117d198547c13d7a1123a5a9 ]
 
-The main channel Received Signal Strength Indicator (RSSI) measurement
-is used to determine whether an RF field is present or not. RSSI != 0
-is interpreted as an RF Field is present. This does not take RF noise
-and measurement inaccuracy into account, and results in false positives
-in the field.
+In order to remove RTNL protection from neightbl_dump_info()
+and neigh_dump_info() later, we need to add
+RCU protection to neigh_tables[].
 
-Define a noise level and make sure the RF field is only interpreted as
-present when the RSSI is above the noise level.
-
-Fixes: 851ee3cbf850 ("NFC: trf7970a: Don't turn on RF if there is already an RF field")
-Signed-off-by: Paul Geurts <paul.geurts@prodrive-technologies.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Mark Greer <mgreer@animalcreek.com>
-Link: https://patch.msgid.link/20260422100930.581237-1-paul.geurts@prodrive-technologies.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 4438113be604 ("neigh: let neigh_xmit take skb ownership")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/trf7970a.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/core/neighbour.c | 30 +++++++++++++++++++-----------
+ 1 file changed, 19 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/nfc/trf7970a.c b/drivers/nfc/trf7970a.c
-index 7968baa626d16..b7a8d525e3c29 100644
---- a/drivers/nfc/trf7970a.c
-+++ b/drivers/nfc/trf7970a.c
-@@ -311,6 +311,7 @@
- #define TRF7970A_RSSI_OSC_STATUS_RSSI_MASK	(BIT(2) | BIT(1) | BIT(0))
- #define TRF7970A_RSSI_OSC_STATUS_RSSI_X_MASK	(BIT(5) | BIT(4) | BIT(3))
- #define TRF7970A_RSSI_OSC_STATUS_RSSI_OSC_OK	BIT(6)
-+#define TRF7970A_RSSI_OSC_STATUS_RSSI_NOISE_LEVEL	1
+diff --git a/net/core/neighbour.c b/net/core/neighbour.c
+index 92dc1f1788de7..fe0e839972ba7 100644
+--- a/net/core/neighbour.c
++++ b/net/core/neighbour.c
+@@ -1764,7 +1764,7 @@ static void neigh_parms_destroy(struct neigh_parms *parms)
  
- #define TRF7970A_SPECIAL_FCN_REG1_COL_7_6		BIT(0)
- #define TRF7970A_SPECIAL_FCN_REG1_14_ANTICOLL		BIT(1)
-@@ -1253,7 +1254,7 @@ static int trf7970a_is_rf_field(struct trf7970a *trf, bool *is_rf_field)
- 	if (ret)
- 		return ret;
+ static struct lock_class_key neigh_table_proxy_queue_class;
  
--	if (rssi & TRF7970A_RSSI_OSC_STATUS_RSSI_MASK)
-+	if ((rssi & TRF7970A_RSSI_OSC_STATUS_RSSI_MASK) > TRF7970A_RSSI_OSC_STATUS_RSSI_NOISE_LEVEL)
- 		*is_rf_field = true;
- 	else
- 		*is_rf_field = false;
+-static struct neigh_table *neigh_tables[NEIGH_NR_TABLES] __read_mostly;
++static struct neigh_table __rcu *neigh_tables[NEIGH_NR_TABLES] __read_mostly;
+ 
+ void neigh_table_init(int index, struct neigh_table *tbl)
+ {
+@@ -1821,13 +1821,19 @@ void neigh_table_init(int index, struct neigh_table *tbl)
+ 	tbl->last_flush = now;
+ 	tbl->last_rand	= now + tbl->parms.reachable_time * 20;
+ 
+-	neigh_tables[index] = tbl;
++	rcu_assign_pointer(neigh_tables[index], tbl);
+ }
+ EXPORT_SYMBOL(neigh_table_init);
+ 
++/*
++ * Only called from ndisc_cleanup(), which means this is dead code
++ * because we no longer can unload IPv6 module.
++ */
+ int neigh_table_clear(int index, struct neigh_table *tbl)
+ {
+-	neigh_tables[index] = NULL;
++	RCU_INIT_POINTER(neigh_tables[index], NULL);
++	synchronize_rcu();
++
+ 	/* It is not clean... Fix it to unload IPv6 module safely */
+ 	cancel_delayed_work_sync(&tbl->managed_work);
+ 	cancel_delayed_work_sync(&tbl->gc_work);
+@@ -1859,10 +1865,10 @@ static struct neigh_table *neigh_find_table(int family)
+ 
+ 	switch (family) {
+ 	case AF_INET:
+-		tbl = neigh_tables[NEIGH_ARP_TABLE];
++		tbl = rcu_dereference_rtnl(neigh_tables[NEIGH_ARP_TABLE]);
+ 		break;
+ 	case AF_INET6:
+-		tbl = neigh_tables[NEIGH_ND_TABLE];
++		tbl = rcu_dereference_rtnl(neigh_tables[NEIGH_ND_TABLE]);
+ 		break;
+ 	}
+ 
+@@ -2328,7 +2334,7 @@ static int neightbl_set(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	ndtmsg = nlmsg_data(nlh);
+ 
+ 	for (tidx = 0; tidx < NEIGH_NR_TABLES; tidx++) {
+-		tbl = neigh_tables[tidx];
++		tbl = rcu_dereference_rtnl(neigh_tables[tidx]);
+ 		if (!tbl)
+ 			continue;
+ 		if (ndtmsg->ndtm_family && tbl->family != ndtmsg->ndtm_family)
+@@ -2516,7 +2522,7 @@ static int neightbl_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
+ 	for (tidx = 0; tidx < NEIGH_NR_TABLES; tidx++) {
+ 		struct neigh_parms *p;
+ 
+-		tbl = neigh_tables[tidx];
++		tbl = rcu_dereference_rtnl(neigh_tables[tidx]);
+ 		if (!tbl)
+ 			continue;
+ 
+@@ -2877,7 +2883,7 @@ static int neigh_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
+ 	s_t = cb->args[0];
+ 
+ 	for (t = 0; t < NEIGH_NR_TABLES; t++) {
+-		tbl = neigh_tables[t];
++		tbl = rcu_dereference_rtnl(neigh_tables[t]);
+ 
+ 		if (!tbl)
+ 			continue;
+@@ -3141,14 +3147,15 @@ int neigh_xmit(int index, struct net_device *dev,
+ 	       const void *addr, struct sk_buff *skb)
+ {
+ 	int err = -EAFNOSUPPORT;
++
+ 	if (likely(index < NEIGH_NR_TABLES)) {
+ 		struct neigh_table *tbl;
+ 		struct neighbour *neigh;
+ 
+-		tbl = neigh_tables[index];
+-		if (!tbl)
+-			goto out;
+ 		rcu_read_lock();
++		tbl = rcu_dereference(neigh_tables[index]);
++		if (!tbl)
++			goto out_unlock;
+ 		if (index == NEIGH_ARP_TABLE) {
+ 			u32 key = *((u32 *)addr);
+ 
+@@ -3164,6 +3171,7 @@ int neigh_xmit(int index, struct net_device *dev,
+ 			goto out_kfree_skb;
+ 		}
+ 		err = READ_ONCE(neigh->output)(neigh, skb);
++out_unlock:
+ 		rcu_read_unlock();
+ 	}
+ 	else if (index == NEIGH_LINK_TABLE) {
 -- 
 2.53.0
 
