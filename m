@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A7B21B191;
-	Sat, 30 May 2026 16:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D466432BF24;
+	Sat, 30 May 2026 16:59:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160389; cv=none; b=YaaAXCqdjVqUwBPwQ2+TKEykrSGNb0d/qtxIb4esD/X2GM+A1cabm5nobttbGriUaVA4rG4Y76JDSq6Xp0qPx8Re5TB4zpcEMWakBXzeqsDbc6oap1xSH+wJteJmtXd7X+0fUUcEYwBhDXnx+vzxRVG2PwvX40Kx2k9fXrrGC4o=
+	t=1780160393; cv=none; b=X0eHBSQRlMXLgzDUCAImEGwJ4UCwmduAdXLnpfZpX8mtJDYQgjjaVIYEhSmEtHSFruEEH7++JWMN4B3qXl62TxdCPUD61VlgCnvXJMBEpXQ/kQqCLkuCR5BBram9NeXS5WHDtPc2Zg8JoGJJA22nrH1BUX8/rBRBDwblpk4mEVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160389; c=relaxed/simple;
-	bh=4WEESecgNvMoEnqVLLo8n0Byx87LzBOQDNJ3rSisSOE=;
+	s=arc-20240116; t=1780160393; c=relaxed/simple;
+	bh=sqzjNGib9k5QbN9xD6qPeGdIj7NVCjInoWjAf44fOl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jITj4ox/4SkV8altLgN0XnnfIDFEL44yLaF8NLymMG+lKHfv6m4acVsuw4BWKcbz+SOEkn0jr2MbbgOvxs+N33gKYDGAavhBcb/xcjNzcH1jII7rMg9JlCna1EliWc1MMO8xOn5mpxRqUuxH0+eR8itz/QUPL8LU8J5OwY/bnFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AoRmQe20; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s1gGKp6Buwaa1LFvxmRJNZXjdxxYM7SlKlIqkzyDO7bVEocCFjxfZRHZnrGQ5XeeQLIVYFWeqJRMhLtgzIx6uNjtEPAZpsMXu18jDrRdQ1BImUbjWw3mkMBPV4yiTje7pMLxJ39lHeBMWahqBFgeyN3NccBb38rFUifd0qphU28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtkJsDg+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AoRmQe20"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF541F00893;
-	Sat, 30 May 2026 16:59:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtkJsDg+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C341F00893;
+	Sat, 30 May 2026 16:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160388;
-	bh=cfw4dEzv7z1LeisX4dcJlfII3qrASyGk0Ex1HHrU/hI=;
+	s=korg; t=1780160391;
+	bh=d4qhpY3la3OIv3hTWkzuCRzd1XPs//LScgN4e/DZFBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AoRmQe20hqFAkhqnih5DS/CJjQygqt+Rz0O/Xhb1wNM1tjyFxnDnOAHJhvv3lAd6n
-	 PUpSsH1vq6vulguNOWNIHGSt7lHt9hidL/fOLDNmVAtizxUmFAZDIu6YLIPOgYcwub
-	 91Wt09Y0PodhYwY3qHSzDzQgRO9uh5ZdsYwNbp8g=
+	b=CtkJsDg+61PaMn+yV3SG3JmpZipU1gjharfzuKU0YcSRfG30QmsqNrwJy7VMV4ZwD
+	 QWLVMYA+bo79ymBll4grwZhWllmk5prRfMg1eWNGn3MEGSGEK37nLNACx2MgvtT0VR
+	 4W+G1uFs1CKXwsB64TZPMB7S2kcjzXKjAAyzT9fI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeungJu Cheon <suunj1331@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 324/969] sound: ua101: fix division by zero at probe
-Date: Sat, 30 May 2026 17:57:28 +0200
-Message-ID: <20260530160309.342280949@linuxfoundation.org>
+	Maoyi Xie <maoyi.xie@ntu.edu.sg>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 325/969] ip6_gre: Use cached t->net in ip6erspan_changelink().
+Date: Sat, 30 May 2026 17:57:29 +0200
+Message-ID: <20260530160309.367969412@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,45 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeungJu Cheon <suunj1331@gmail.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit d1f73f169c1014463b5060e3f60813e13ddc7b87 upstream.
+commit 1d324c2f43f70c965f25c58cc3611c779adbe47e upstream.
 
-Add a missing sanity check for bNrChannels in detect_usb_format()
-to prevent a division by zero in playback_urb_complete() and
-capture_urb_complete().
+After commit 5e72ce3e3980 ("net: ipv6: Use link netns in newlink() of
+rtnl_link_ops"), ip6erspan_newlink() correctly resolves the per-netns
+ip6gre hash via link_net. ip6erspan_changelink() was not converted in
+that series and still uses dev_net(dev), which diverges from the
+device's creation netns after IFLA_NET_NS_FD migration.
 
-USB core does not validate class-specific descriptor fields such
-as bNrChannels, so drivers must verify them before use. If a
-device provides bNrChannels = 0, frame_bytes becomes zero and is
-later used as a divisor in the URB completion handlers, leading
-to a kernel crash.
+This re-inserts the tunnel into the wrong per-netns hash. The
+original netns keeps a stale entry. When that netns is later
+destroyed, ip6gre_exit_rtnl_net() walks the stale entry, producing a
+slab-use-after-free reported by KASAN, followed by a kernel BUG at
+net/core/dev.c (LIST_POISON1) in unregister_netdevice_many_notify().
 
-Fixes: 63978ab3e3e9 ("sound: add Edirol UA-101 support")
-Cc: stable@vger.kernel.org
-Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
-Link: https://patch.msgid.link/20260426111239.103296-1-suunj1331@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reachable from an unprivileged user namespace (unshare --user
+--map-root-user --net).
+
+ip6gre_changelink() earlier in the same file already uses the cached
+t->net; only ip6erspan_changelink() has the wrong shape.
+
+Fixes: 2d665034f239 ("net: ip6_gre: Fix ip6erspan hlen calculation")
+Cc: stable@vger.kernel.org # v5.15+
+Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260430103318.3206018-1-maoyi.xie@ntu.edu.sg
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/misc/ua101.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/ipv6/ip6_gre.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/sound/usb/misc/ua101.c
-+++ b/sound/usb/misc/ua101.c
-@@ -994,6 +994,13 @@ static int detect_usb_format(struct ua10
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -2322,10 +2322,11 @@ static int ip6erspan_changelink(struct n
+ 				struct nlattr *data[],
+ 				struct netlink_ext_ack *extack)
+ {
+-	struct ip6gre_net *ign = net_generic(dev_net(dev), ip6gre_net_id);
++	struct ip6_tnl *t = netdev_priv(dev);
+ 	struct __ip6_tnl_parm p;
+-	struct ip6_tnl *t;
++	struct ip6gre_net *ign;
  
- 	ua->capture.channels = fmt_capture->bNrChannels;
- 	ua->playback.channels = fmt_playback->bNrChannels;
-+	if (!ua->capture.channels || !ua->playback.channels) {
-+		dev_err(&ua->dev->dev,
-+			"invalid channel count: capture %u, playback %u\n",
-+			ua->capture.channels, ua->playback.channels);
-+		return -EINVAL;
-+	}
-+
- 	ua->capture.frame_bytes =
- 		fmt_capture->bSubframeSize * ua->capture.channels;
- 	ua->playback.frame_bytes =
++	ign = net_generic(t->net, ip6gre_net_id);
+ 	t = ip6gre_changelink_common(dev, tb, data, &p, extack);
+ 	if (IS_ERR(t))
+ 		return PTR_ERR(t);
 
 
