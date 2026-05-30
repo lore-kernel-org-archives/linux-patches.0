@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3451B87C0;
-	Sat, 30 May 2026 18:42:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E902F6184;
+	Sat, 30 May 2026 18:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166566; cv=none; b=lQ+XcQ2+rpDFeb04nN6X6nOkWM2eHHQqJZpCSaZ6KidIrh6kRhqacPm/+ZY0ls4AOp4YKvoXVVSbP76umSFIH/tAqTmhT0CGlIxNkpjuQki/LuhX0EnrseC3HHC5JqYEMEhy/66FO1+yRZPG4flFeasTsQ6TH6STfF+hMyDjLQA=
+	t=1780166570; cv=none; b=GA1ttvo4RLTwn9vz43qQxtNIQd7h5scn4SZqyBNcMmNGerBKP2KJiD3sx78Gy5kiJJ0jotcNkPiG+5P3++h8oqeurqFXmQnfBJHqYBLzQtOND7fG5c3AFEfuI/BYTB/jJXKRN/ZzcOraMvaz9/tl5d8MHg2CmqzZcC2zeRUU110=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166566; c=relaxed/simple;
-	bh=2XHQzUAxoonQW2Vv9/QwW+xAINisYtk9/+3sKN8F2R8=;
+	s=arc-20240116; t=1780166570; c=relaxed/simple;
+	bh=pqPBd1MJlSa/N3TLyUhWq+TH2nBiC61TOSYqwjqcP9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I7xPtFchsFFu86aGgFsvObg/LJ84BMaYqzGJdqc8d65KUbMogLLr9qOeuG2785ftV7uETT9LNPZyUYtCkvFnu3mwXynv3BXdNK+aKREZ5iWm+fWCJpx+hNy6ItQAhbwOPXa9zQeMonIvSyZpaCyM62WWOxFiLTPCCUTkNfMlSwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rftb9uUK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bYeci52uF5vLjA0sPIAUwFfPjGJmHZ3jmZvOGQZcd0Y/WD2sew3IZ3OygdQI1R2ZEgc00PU/HGLsXCgSlRgk0QplpD2kAv9NEw8sa5QrTl8t+Che3IyuhC9u5rzaJc7r0mM5RRSCoFpDFfVUz9nNWZT5hW+ZZU/k8PM8SYsJ1yA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ECfZxh9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rftb9uUK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0A71F00893;
-	Sat, 30 May 2026 18:42:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ECfZxh9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530411F00893;
+	Sat, 30 May 2026 18:42:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166565;
-	bh=TYr3Q4TLJ1SRttmxlvp8+7dMxnVX3CE2yvLEI2ecATw=;
+	s=korg; t=1780166569;
+	bh=VdPGrbLWrdSI6bPjJHQeo8HZVg10C4tWvplZDqr4ws4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rftb9uUKJzhxCRLfUWqrBr3mZ0Kq7M24E4n7JLj10SO6f4RbXstZ1Mrx/4dDMq3e6
-	 eEJSFBQvJ2+3ImUZYYqYEEMfYwJ4LvmSz9YlVvboDIMc+5fQ1RzFZ1iqxJwVKLra3G
-	 2/Nniay+JGoos6VHpFqsNmPv+EoAsoNkol7Gklf8=
+	b=1ECfZxh96zQkxXy23NPI0wuHshzPzxREtLnAugIdTxLlQIA2c9KHqJK1ROA2HaTsg
+	 GDLJHjwuLUHg9kr7ElcYx5zfmpb8PxQZE7Gdsd8sbYPWoI55HheMncVpNVtaz4nUO+
+	 i7TU5tJGRmfcB8tcgWtzjF7xLbSQe+ZHN3W5XGMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Hawley <warthog9@eaglescrag.net>,
-	Andrea Righi <arighi@nvidia.com>,
-	Marcos Paulo de Souza <mpdesouza@suse.com>,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Yang Erkun <yangerkun@huawei.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 355/589] ktest: Avoid undef warning when WARNINGS_FILE is unset
-Date: Sat, 30 May 2026 18:03:56 +0200
-Message-ID: <20260530160234.188564466@linuxfoundation.org>
+Subject: [PATCH 5.10 397/589] scsi: sg: Resolve soft lockup issue when opening /dev/sgX
+Date: Sat, 30 May 2026 18:04:38 +0200
+Message-ID: <20260530160235.216712070@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,51 +46,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo B. Marlière <rbm@suse.com>
+From: Yang Erkun <yangerkun@huawei.com>
 
-[ Upstream commit 057854f8a595160656fe77ed7bf0d2403724b915 ]
+[ Upstream commit d06a310b45e153872033dd0cf19d5a2279121099 ]
 
-check_buildlog() probes $warnings_file with -f even when WARNINGS_FILE is
-not configured. Perl warns about the uninitialized value and adds noise to
-the test log, which can hide the output we actually care about.
+The parameter def_reserved_size defines the default buffer size reserved
+for each Sg_fd and should be restricted to a range between 0 and 1,048,576
+(see https://tldp.org/HOWTO/SCSI-Generic-HOWTO/proc.html).  Although the
+function sg_proc_write_dressz enforces this limit, it is possible to bypass
+it by directly modifying the module parameter as shown below, which then
+causes a soft lockup:
 
-Check that WARNINGS_FILE is defined before testing whether the file exists.
+echo -1 > /sys/module/sg/parameters/def_reserved_size
+exec 4<> /dev/sg0
 
-Cc: John Hawley <warthog9@eaglescrag.net>
-Cc: Andrea Righi <arighi@nvidia.com>
-Cc: Marcos Paulo de Souza <mpdesouza@suse.com>
-Cc: Matthieu Baerts <matttbe@kernel.org>
-Cc: Fernando Fernandez Mancera <fmancera@suse.de>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Link: https://patch.msgid.link/20260307-ktest-fixes-v1-1-565d412f4925@suse.com
-Fixes: 4283b169abfb ("ktest: Add make_warnings_file and process full warnings")
-Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+watchdog: BUG: soft lockup - CPU#5 stuck for 26 seconds! [bash:537]
+Modules loaded:
+CPU: 5 UID: 0 PID: 537 Command: bash, kernel version 6.19.0-rc3+ #134,
+PREEMPT disabled
+Hardware: QEMU Standard PC (i440FX + PIIX, 1996), BIOS version
+1.16.1-2.fc37 dated 04/01/2014
+...
+Call Trace:
+
+  sg_build_reserve+0x5c/0xa0
+  sg_add_sfp+0x168/0x270
+  sg_open+0x16e/0x340
+  chrdev_open+0xbe/0x230
+  do_dentry_open+0x175/0x480
+  vfs_open+0x34/0xf0
+  do_open+0x265/0x3d0
+  path_openat+0x110/0x290
+  do_filp_open+0xc3/0x170
+  do_sys_openat2+0x71/0xe0
+  __x64_sys_openat+0x6d/0xa0
+  do_syscall_64+0x62/0x310
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+The fix is to use module_param_cb to validate and reject invalid values
+assigned to def_reserved_size.
+
+Fixes: 6460e75a104d ("[SCSI] sg: fixes for large page_size")
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260127062044.3034148-3-yangerkun@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/ktest/ktest.pl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/sg.c | 29 +++++++++++++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
-index 512a3cc586fdd..a5c1871d3c8e7 100755
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -2419,7 +2419,7 @@ sub check_buildlog {
-     my $save_no_reboot = $no_reboot;
-     $no_reboot = 1;
+diff --git a/drivers/scsi/sg.c b/drivers/scsi/sg.c
+index b24e80a9c8cac..3c06c035b85c0 100644
+--- a/drivers/scsi/sg.c
++++ b/drivers/scsi/sg.c
+@@ -1647,10 +1647,35 @@ sg_remove_device(struct device *cl_dev, struct class_interface *cl_intf)
+ }
  
--    if (-f $warnings_file) {
-+    if (defined($warnings_file) && -f $warnings_file) {
- 	open(IN, $warnings_file) or
- 	    dodie "Error opening $warnings_file";
+ module_param_named(scatter_elem_sz, scatter_elem_sz, int, S_IRUGO | S_IWUSR);
+-module_param_named(def_reserved_size, def_reserved_size, int,
+-		   S_IRUGO | S_IWUSR);
+ module_param_named(allow_dio, sg_allow_dio, int, S_IRUGO | S_IWUSR);
  
++static int def_reserved_size_set(const char *val, const struct kernel_param *kp)
++{
++	int size, ret;
++
++	if (!val)
++		return -EINVAL;
++
++	ret = kstrtoint(val, 0, &size);
++	if (ret)
++		return ret;
++
++	/* limit to 1 MB */
++	if (size < 0 || size > 1048576)
++		return -ERANGE;
++
++	def_reserved_size = size;
++	return 0;
++}
++
++static const struct kernel_param_ops def_reserved_size_ops = {
++	.set	= def_reserved_size_set,
++	.get	= param_get_int,
++};
++
++module_param_cb(def_reserved_size, &def_reserved_size_ops, &def_reserved_size,
++		   S_IRUGO | S_IWUSR);
++
+ MODULE_AUTHOR("Douglas Gilbert");
+ MODULE_DESCRIPTION("SCSI generic (sg) driver");
+ MODULE_LICENSE("GPL");
 -- 
 2.53.0
 
