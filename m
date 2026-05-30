@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EABB241C8C;
-	Sat, 30 May 2026 18:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 863D0233D9E;
+	Sat, 30 May 2026 18:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165112; cv=none; b=EeizIBnQHG9SK0TrSDc4YHm+4sbtCzhFtEH9KjeoBkwZGY68fUmu/MZiWKUZoyOEvRyh2UhYTTwR3PkYsc+v2CpQJCC07elWlAenblc+5lTxIsa3xudlb53jPl6AbwsgARaLWJ6Mw+ckl1tthjhN+XttC8qTdiQNwYHzB4ehqEU=
+	t=1780165115; cv=none; b=U5Ye2mFJOnEk5M3bQHrY0YftCzuH9JajDouo+1x6151rg5ZTIiEk8fXXlSfIOjR+NP0TgY9NS6YX/L7D794gJVg4xtbn/3wt8BcllU121hwpI8swUNesxYlZLieD2ulEVfXEyZMkiZEHAl9l0sIjidE7ziNHVkNWzyw/ExvuCHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165112; c=relaxed/simple;
-	bh=MUCwcXXhtanHn7Mr3I5JBlPprclB/poFsdXyjK1KZhc=;
+	s=arc-20240116; t=1780165115; c=relaxed/simple;
+	bh=vrcbqwFZHa+Ge5n0/dfnEaWaynaDqsnogdIy6pTZ0+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rwDHTT3m7Vbm2ra4Wz3CGGY2M+Q0iEspro3exArOkFM4pKwCpEj6gHhTQkFmyLG77ibVrbgMlrLbgenj5o4BwzMlOeyXAOSidhoLLLqpvsTSunx5n8Y4ZF42jKXZ7Sgyzzu8PtKFzqwDEjbzBNC4V1Cu7uXONv/sEeTQ036EtQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=REJ+xRZV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lpP+nmwupByh6NkRa0qAMFWmHoFBVvlNDcq9VdSh7Tszh73+rJvsKyLD6PX3DQDBt1J41E/ip64yHx2+pfPySKBIlXFXCCrAQt0qeQFKkfJmwc1VgtOh0+he2I8uyQZAQzJdK85RHhvMUZn3OYHgjMMjFrQsIq6XmjL2MV+j7v4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fP9ZvKY1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REJ+xRZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82E071F00893;
-	Sat, 30 May 2026 18:18:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fP9ZvKY1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDA51F00893;
+	Sat, 30 May 2026 18:18:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165111;
-	bh=t2UdIyYqe1O5X1hJv2f1T6MHzklEluOpKpmccDg9kJE=;
+	s=korg; t=1780165114;
+	bh=he9D7rd2wkazJY6hCgIJSESymGT+1Y3bVh/zy+60jw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=REJ+xRZV0h0edanih7dJIlytIsz3JA/+dfsU4cq9BjdLIrobX1xGUXobLJOtnp9Yo
-	 e5XU9uzsHkiCCnQkeUlNz/wfFltJ+Nud7K9nRATx8P0WKzLD1TTIF9CLObbIlKyGF4
-	 NT63YK3FBkICJ5cmoprFWeDoLi1/cT1Y25Zy+8fM=
+	b=fP9ZvKY1Td7CgNlmt/dbDC9kPGIWyZAuwxDo8Ly3dGG0H/GQTp21VavBUI6zEN1Tb
+	 hYcL8gLFi7R2cQ5Wg6+mtuANvt64DffTu15qfwSnAm6cq6V9OMS3hOlPT+Evf2HeJf
+	 20cjNFCrFM1BWWl9eU+NoY7L27AbanRP0sC43xQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 5.15 723/776] hwmon: (pmbus/adm1266) register the nvmem device after pmbus_do_probe()
-Date: Sat, 30 May 2026 18:07:17 +0200
-Message-ID: <20260530160258.506296941@linuxfoundation.org>
+Subject: [PATCH 5.15 724/776] hwmon: (pmbus/adm1266) reject short block-read responses in the GPIO accessors
+Date: Sat, 30 May 2026 18:07:18 +0200
+Message-ID: <20260530160258.532840262@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,53 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-commit 6af713af91d5c34ec049eb3cc2c5b3f5eba953b8 upstream.
+commit a7232f68c43ca62f545049b7f5fbfc75137b843b upstream.
 
-adm1266_probe() calls adm1266_config_nvmem() -- which goes on to
-devm_nvmem_register() and exposes adm1266_nvmem_read() to userspace --
-before pmbus_do_probe() has initialised the per-client PMBus state.
+adm1266_gpio_get() and adm1266_gpio_get_multiple() both compose the
+pin-status word as
 
-Same latent hazard as the gpio_chip one fixed in the previous patch:
-once the nvmem device is registered, gpiolib's nvmem char-dev / sysfs
-interface is reachable, and any concurrent read triggers
-adm1266_nvmem_read() -> adm1266_nvmem_read_blackbox(), which issues
-PMBus traffic that races pmbus_do_probe()'s own device accesses with
-no serialisation.
+	pins_status = read_buf[0] + (read_buf[1] << 8);
 
-Move adm1266_config_nvmem() down past pmbus_do_probe() so the nvmem
-device isn't reachable from userspace until the PMBus state the
-nvmem accessors depend on is fully initialised.
+right after i2c_smbus_read_block_data(), guarding only against an
+error return.  A well-behaved device returns 2 bytes for
+GPIO_STATUS/PDIO_STATUS, but the helper happily reports a 0- or
+1-byte response too.  If the device returns 0 bytes, both read_buf
+slots are uninitialized stack memory; if it returns 1 byte, read_buf[1]
+is.
 
-Fixes: 15609d189302 ("hwmon: (pmbus/adm1266) read blackbox")
+The composed value then flows through set_bit() into the caller's
+*bits in adm1266_gpio_get_multiple(), or into the return value of
+adm1266_gpio_get(), and ends up in userspace via gpiolib (sysfs and
+the char-dev ioctls).  That leaks a few bits of kernel stack per
+request on any device whose firmware glitch, bus error, or hostile
+slave produces a short block-read response.
+
+Add the missing length check to both call sites and surface a short
+response as -EIO.
+
+Fixes: d98dfad35c38 ("hwmon: (pmbus/adm1266) Add support for GPIOs")
 Cc: stable@vger.kernel.org
 Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Link: https://lore.kernel.org/r/20260518-adm1266-gpio-fixes-v3-5-e425e4f88139@nexthop.ai
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260518-adm1266-gpio-fixes-v3-3-e425e4f88139@nexthop.ai
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/adm1266.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/hwmon/pmbus/adm1266.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/drivers/hwmon/pmbus/adm1266.c
 +++ b/drivers/hwmon/pmbus/adm1266.c
-@@ -472,14 +472,14 @@ static int adm1266_probe(struct i2c_clie
+@@ -176,6 +176,8 @@ static int adm1266_gpio_get(struct gpio_
+ 	ret = i2c_smbus_read_block_data(data->client, pmbus_cmd, read_buf);
  	if (ret < 0)
  		return ret;
++	if (ret < 2)
++		return -EIO;
  
--	ret = adm1266_config_nvmem(data);
--	if (ret < 0)
--		return ret;
--
- 	ret = pmbus_do_probe(client, &data->info);
- 	if (ret)
- 		return ret;
- 
-+	ret = adm1266_config_nvmem(data);
-+	if (ret < 0)
-+		return ret;
-+
- 	ret = adm1266_config_gpio(data);
+ 	pins_status = read_buf[0] + (read_buf[1] << 8);
+ 	if (offset < ADM1266_GPIO_NR)
+@@ -196,6 +198,8 @@ static int adm1266_gpio_get_multiple(str
+ 	ret = i2c_smbus_read_block_data(data->client, ADM1266_GPIO_STATUS, read_buf);
  	if (ret < 0)
  		return ret;
++	if (ret < 2)
++		return -EIO;
+ 
+ 	status = read_buf[0] + (read_buf[1] << 8);
+ 
+@@ -208,6 +212,8 @@ static int adm1266_gpio_get_multiple(str
+ 	ret = i2c_smbus_read_block_data(data->client, ADM1266_PDIO_STATUS, read_buf);
+ 	if (ret < 0)
+ 		return ret;
++	if (ret < 2)
++		return -EIO;
+ 
+ 	status = read_buf[0] + (read_buf[1] << 8);
+ 
 
 
