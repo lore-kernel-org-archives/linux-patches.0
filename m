@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F8A267B05;
-	Sat, 30 May 2026 17:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445CA27A477;
+	Sat, 30 May 2026 17:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162993; cv=none; b=ji0tjCRhjIJo/Urtdbjsv6fYLwbnXF3HyeIyrGZweeL49e8s0Y/H0oVmHo01xGqH4qAUL6ZL8m2AMtbFzTXuAlVKlHhbwcDofpn6weZhHgxHM1gTbMUqwlCGn8/mo4WD48G4pmmEO+TChqY9gOZ+/PgGFz+l7eE1VV413jy7c6Y=
+	t=1780162997; cv=none; b=unjYPNnFG4fFXFnpmcR60rx1SI5GFSLpYYLh6mPrmuEggRuNLG1pX1PAyILFkobyoK3Rm67PuUXDlewqCFEGCzhJHajmxlDkTw2sKwoCoUv+qks/CjBMKw3x4PWg2X++XJkPHvSCD62S9nj+iFXKpIPihZwAFPUJEB++6Qkt004=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162993; c=relaxed/simple;
-	bh=gbnstl78QptB/UUS+58mnjst0/+ZklWiHkqzKsA6CqI=;
+	s=arc-20240116; t=1780162997; c=relaxed/simple;
+	bh=JUa2KFXFFItBsQWs8wy+jVG++waJsitfg4f5eUN6BZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZn3mkcke+X6mZ5N/igFtgj45GNVinNwLr8Nu+kr8LsLElyWgknCTR4ZL6XbqB9mRHK/bsLrFvKkXZBc+AoRTnB+/jlNQl7Gxiwp+Oa0Nq1ZVnMLASwx+fy0ctvMJ9RC4qbtZnwnG+XqaoZICOka9T//2bJMmbhvcD1nDPg8hms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shDyKlcT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RasTGHuNv22bW2IuN2Dej47Nz0CpWqR38S+RLz9qEpNq7OLCdmR72Jpz8/ooyAXUyITKIQHsYtaxQs1SFtIxp7VdlZFfujCMd6x69Y7yKIHD2YQRZs/ZONeTmLLy/C6wphz2pXdzPg7koO9sBrmWetTKuZCXqSKj81VkekF/Bek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTilf98n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shDyKlcT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086ED1F00893;
-	Sat, 30 May 2026 17:43:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTilf98n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 883C41F00893;
+	Sat, 30 May 2026 17:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162992;
-	bh=DUBQIAu846dkkBup0i4legRTTNHE+XKsCUSNmiGt/4U=;
+	s=korg; t=1780162996;
+	bh=evwSfqe38RvyXN101sbBnfVQDerwndRCM6E8bPR1FcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=shDyKlcTI7lypayr+Sl0V2outKjJo8wmyHJP6FhN5EpjXfGps4siM03Fh/JSSAuME
-	 phjPSMWiQFXmv4O1lh7ABzaGOmv2SbvFt6/pFTl6B1yk7yH5kBg196FuXvwyis+bcZ
-	 PFbtLZSJDXz5Z6BQ/10Wk+WcI44ea2fhq6llDYMI=
+	b=fTilf98nwdCL6ti/arbxjP+n0kCsjY0QupwuGO6QQFCytWc/lOH3Pf5A1JCz2vqW7
+	 Jw4t5Xfwi6DsQd6lKVOgV0nbHL2e9G8A4rLP/rFgFgGBOAMSEivSn2rlxTqVbm18Tl
+	 4JPWlzu2Y5dmry57m8X5rUHXqzyjVXysKKJHuxPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Guangwu Zhang <guazhang@redhat.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 5.15 125/776] dm-verity: disable recursive forward error correction
-Date: Sat, 30 May 2026 17:57:19 +0200
-Message-ID: <20260530160243.607090526@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Bin Lan <lanbincn@139.com>
+Subject: [PATCH 5.15 126/776] net: add skb_header_pointer_careful() helper
+Date: Sat, 30 May 2026 17:57:20 +0200
+Message-ID: <20260530160243.633477123@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,65 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit d9f3e47d3fae0c101d9094bc956ed24e7a0ee801 ]
+[ Upstream commit 13e00fdc9236bd4d0bff4109d2983171fbcb74c4 ]
 
-There are two problems with the recursive correction:
+This variant of skb_header_pointer() should be used in contexts
+where @offset argument is user-controlled and could be negative.
 
-1. It may cause denial-of-service. In fec_read_bufs, there is a loop that
-has 253 iterations. For each iteration, we may call verity_hash_for_block
-recursively. There is a limit of 4 nested recursions - that means that
-there may be at most 253^4 (4 billion) iterations. Red Hat QE team
-actually created an image that pushes dm-verity to this limit - and this
-image just makes the udev-worker process get stuck in the 'D' state.
+Negative offsets are supported, as long as the zone starts
+between skb->head and skb->data.
 
-2. It doesn't work. In fec_read_bufs we store data into the variable
-"fio->bufs", but fio bufs is shared between recursive invocations, if
-"verity_hash_for_block" invoked correction recursively, it would
-overwrite partially filled fio->bufs.
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reported-by: Guangwu Zhang <guazhang@redhat.com>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
-[ The context change is due to the commit bdf253d580d7
-("dm-verity: remove support for asynchronous hashes")
-in v6.18 and the commit 9356fcfe0ac4
-("dm verity: set DM_TARGET_SINGLETON feature flag") in v6.9
-which are irrelevant to the logic of this patch. ]
-Signed-off-by: Rahul Sharma <black.hawk@163.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260128141539.3404400-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Adjust context ]
+Signed-off-by: Bin Lan <lanbincn@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-fec.c |    4 +---
- drivers/md/dm-verity-fec.h |    3 ---
- 2 files changed, 1 insertion(+), 6 deletions(-)
+ include/linux/skbuff.h |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/md/dm-verity-fec.c
-+++ b/drivers/md/dm-verity-fec.c
-@@ -423,10 +423,8 @@ int verity_fec_decode(struct dm_verity *
- 	if (!verity_fec_is_enabled(v))
- 		return -EOPNOTSUPP;
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -3869,6 +3869,18 @@ skb_header_pointer(const struct sk_buff
+ 				    skb_headlen(skb), buffer);
+ }
  
--	if (fio->level >= DM_VERITY_FEC_MAX_RECURSION) {
--		DMWARN_LIMIT("%s: FEC: recursion too deep", v->data_dev->name);
-+	if (fio->level)
- 		return -EIO;
--	}
- 
- 	fio->level++;
- 
---- a/drivers/md/dm-verity-fec.h
-+++ b/drivers/md/dm-verity-fec.h
-@@ -23,9 +23,6 @@
- #define DM_VERITY_FEC_BUF_MAX \
- 	(1 << (PAGE_SHIFT - DM_VERITY_FEC_BUF_RS_BITS))
- 
--/* maximum recursion level for verity_fec_decode */
--#define DM_VERITY_FEC_MAX_RECURSION	4
--
- #define DM_VERITY_OPT_FEC_DEV		"use_fec_from_device"
- #define DM_VERITY_OPT_FEC_BLOCKS	"fec_blocks"
- #define DM_VERITY_OPT_FEC_START		"fec_start"
++/* Variant of skb_header_pointer() where @offset is user-controlled
++ * and potentially negative.
++ */
++static inline void * __must_check
++skb_header_pointer_careful(const struct sk_buff *skb, int offset,
++			   int len, void *buffer)
++{
++	if (unlikely(offset < 0 && -offset > skb_headroom(skb)))
++		return NULL;
++	return skb_header_pointer(skb, offset, len, buffer);
++}
++
+ /**
+  *	skb_needs_linearize - check if we need to linearize a given skb
+  *			      depending on the given device features.
 
 
