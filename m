@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBC62E92B3;
-	Sat, 30 May 2026 16:59:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473B432D42B;
+	Sat, 30 May 2026 16:59:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160347; cv=none; b=hHGejsGXKgfbK8V8AHQuXmFu/dfhzl6417z/6H1qN9KlJE1GjmVFW/zfSSH70j0kICykeZPCK5iR79r/7G7iLCx2n2KL2kH0AL++YuJGZ11eACnsLywwpoJAMzXp3xeRbajCu77dT6dEHm5Nd84ixCwsC9lC/oAr3y9UqGd20Dg=
+	t=1780160351; cv=none; b=OQj947QPOIDwqs49CVPCXD1ADCe2vbiy1f45lCSjE5L6D8FzLcK+yY53pG743PVuaXW37bq40K2sj0FPn3hI47UUZ6Vceam8DCAH61gAJSZ6cVXZAm8Fabay1iPjteg4HW6XgVEKRLb3pqv+btuAxJPc4Zh0vDKFm7gEZY/eo9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160347; c=relaxed/simple;
-	bh=A8lpaAN2dPm6/f/V71rvlANzZGyeWfw7Cw4gszc3Pl4=;
+	s=arc-20240116; t=1780160351; c=relaxed/simple;
+	bh=BOrmvhGWIvYszLyJ5z+LIyMs/0hdQlBG1ZKPCxdC9Zg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m93aIwhPDwiJX/EDG/QSBSKshdayBgL8Wq4DJof6UWIj0MQFs4y7sQf/mi10FLQzewssw+vscloBmOFRzZkFEKIhiG4NAx+n3D/rw/DuxINt7ULX996U2lwtzDjbnBY+Hzv4dBEl7vzG6P5Cptg/DKZ25Dpe/Ha7brzUF9cGrJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pcgz/K+7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qruChhKIgUydE+7nhF8gmmH1q0y4OycG26LRL+gwUMUaLMx6mpj0hF7fAFY2b99epOBLJZ/qqvgfY5OhApAeojCLMlmKF6AiSIAtU3VnfaYRyvqrocuUXJSGJleBQlWs2GXwPHxA9qW4Ect1yWnz82vqopZLOW9Mf4rDiVNQtW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lj07MsHo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pcgz/K+7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DEAA1F00893;
-	Sat, 30 May 2026 16:59:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lj07MsHo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D2C1F00893;
+	Sat, 30 May 2026 16:59:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160346;
-	bh=q6MHOR9o2r9HGrQP+Qr6t+qSFFuVIyVF6NJKTkmOqro=;
+	s=korg; t=1780160350;
+	bh=LATBZ1gKDKZpWKFDaAN1cYuRQJQqbRQgfV3QPn9Rp3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pcgz/K+7PnFXlbWOfL4xiQt+69kvSpro2dZkMt4QtnAFAzR55aMl053Ay7nd11fVT
-	 B9QwWvWd1B0KkXD3SocIcMxXaxrXG9rWQSsOUNPk6ziFeYEchjMdVj4Hpk9WUtaudH
-	 OfYyEP2TvzwLXdSjfzmL5858Bbm05Zy+/URkFOYk=
+	b=Lj07MsHoe8frvCM4O8U3D1OqsLLYzbgFHf1HD3rPF5vH1MDlpdhp7gj9coUxSUssA
+	 r2MhpCIgzH1deRpOdoNelC4AwieF3po9ryNrEuXpxQeheNCwhwllKtYE1mpwxm1m+N
+	 wa5gE+XeYFU7dkg4bgrfc6czlW0B8BqnAzozPStU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
 	Yifan Wu <yifanwucs@gmail.com>,
 	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
 	Xin Liu <bird@lzu.edu.cn>,
-	Ruijie Li <ruijieli51@gmail.com>,
+	Ruide Cao <caoruide123@gmail.com>,
+	Yilin Zhu <zylzyl2333@gmail.com>,
 	Ren Wei <n05ec@lzu.edu.cn>,
+	Simon Horman <horms@kernel.org>,
 	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.1 314/969] xfrm: provide message size for XFRM_MSG_MAPPING
-Date: Sat, 30 May 2026 17:57:18 +0200
-Message-ID: <20260530160309.082084934@linuxfoundation.org>
+Subject: [PATCH 6.1 315/969] ipv6: xfrm6: release dst on error in xfrm6_rcv_encap()
+Date: Sat, 30 May 2026 17:57:19 +0200
+Message-ID: <20260530160309.108925080@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -56,40 +58,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruijie Li <ruijieli51@gmail.com>
+From: Yilin Zhu <zylzyl2333@gmail.com>
 
-commit 28465227c80fe417b4013c432be1f3737cb9f9a3 upstream.
+commit bc0fcb9823cd0894934cf968b525c575833d7078 upstream.
 
-The compat 64=>32 translation path handles XFRM_MSG_MAPPING, but
-xfrm_msg_min[] does not provide the native payload size for this
-message type.
+xfrm6_rcv_encap() performs an IPv6 route lookup when the skb does not
+already have a dst attached. ip6_route_input_lookup() returns a
+referenced dst entry even when the lookup resolves to an error route.
 
-Add the missing XFRM_MSG_MAPPING entry so compat translation can size
-and translate mapping notifications correctly.
+If dst->error is set, xfrm6_rcv_encap() drops the skb without attaching
+the dst to the skb and without releasing the reference returned by the
+lookup. Repeated packets hitting this path therefore leak dst entries.
 
-Fixes: 5461fc0c8d9f ("xfrm/compat: Add 64=>32-bit messages translator")
+Release the dst before jumping to the drop path.
+
+Fixes: 0146dca70b87 ("xfrm: add support for UDPv6 encapsulation of ESP")
 Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
 Reported-by: Yifan Wu <yifanwucs@gmail.com>
 Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Ruijie Li <ruijieli51@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ruide Cao <caoruide123@gmail.com>
+Signed-off-by: Yilin Zhu <zylzyl2333@gmail.com>
 Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_user.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/ipv6/xfrm6_protocol.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -2960,6 +2960,7 @@ const int xfrm_msg_min[XFRM_NR_MSGTYPES]
- 	[XFRM_MSG_GETSADINFO  - XFRM_MSG_BASE] = sizeof(u32),
- 	[XFRM_MSG_NEWSPDINFO  - XFRM_MSG_BASE] = sizeof(u32),
- 	[XFRM_MSG_GETSPDINFO  - XFRM_MSG_BASE] = sizeof(u32),
-+	[XFRM_MSG_MAPPING     - XFRM_MSG_BASE] = XMSGSIZE(xfrm_user_mapping),
- 	[XFRM_MSG_SETDEFAULT  - XFRM_MSG_BASE] = XMSGSIZE(xfrm_userpolicy_default),
- 	[XFRM_MSG_GETDEFAULT  - XFRM_MSG_BASE] = XMSGSIZE(xfrm_userpolicy_default),
- };
+--- a/net/ipv6/xfrm6_protocol.c
++++ b/net/ipv6/xfrm6_protocol.c
+@@ -88,8 +88,10 @@ int xfrm6_rcv_encap(struct sk_buff *skb,
+ 
+ 		dst = ip6_route_input_lookup(dev_net(skb->dev), skb->dev, &fl6,
+ 					     skb, flags);
+-		if (dst->error)
++		if (dst->error) {
++			dst_release(dst);
+ 			goto drop;
++		}
+ 		skb_dst_set(skb, dst);
+ 	}
+ 
 
 
