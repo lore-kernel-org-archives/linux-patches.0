@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430C9217704;
-	Sat, 30 May 2026 18:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36F2217704;
+	Sat, 30 May 2026 18:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165484; cv=none; b=fIGUOapcxVtNVUgEYpA0qZmIzRDtznM1LdCHUERYNhftSvo/5o3NxXDwp2CD35hJlrdRorU3pxiH4wgArgZy611vN+SyTaXkF25PeJnUI9mzaWZWvXq1Oeu0UaORS/tVXYigqOPs2jAxadSoG2gpzYYWXgOx2B0fcb+0gB9MfCA=
+	t=1780165487; cv=none; b=op0+HIBugNU0zqHJ66M9CHE9rs9Dp41i5c1TvrxgnAyUUfElWga2pn0STXIBd6Vq8CepsMUqR9wtkoN6GCpT26yHPPGcOkSvFAbg6PR8dWfa9xCa2S9wW9nME2y1b72hJpljtmIQq8a8mw8pOCr0N335ZJW/N5oV/0qgu56vspk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165484; c=relaxed/simple;
-	bh=qcrAOaSPFFwey8POak9iun+HB52kZ37ZENuw9KKt/d4=;
+	s=arc-20240116; t=1780165487; c=relaxed/simple;
+	bh=lPDsqjHIQDaYpFjRLcV//XgriDXR9TjVGJFfNkIeAzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/BursoeXBBq//2QB7wTM1d0VhwjU07cvglt3XwW9iPeKlvpNVr/0eYTc4ogaNWxVo2E9F8czuRDND7bBYnAPNPis7noQdM06M9XS5o/BsVEO8K/Pml7EMfnXlDI3v6qh6oA/3GqnKDjvr5jxgp15IK4c6Ho1kL+5D/3DvPaRpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6e+HjOP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CvzOHwmS9sR84BdPFa+981aq7W6KpzwVC0Q78dJ6p6NWNzLDr9/Aqherd4PlBc/j0yeVzLsc4QkdUd3B1YwLnml8CLuIHFIWAVuJMRd/6VmjMWNBjruJ6QnWbNnXCx5dn/iERTRkHNWbuT1WrLfgOFVAPIuaVTXUxpLGU6KqY2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjFVC3tV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6e+HjOP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 890011F00893;
-	Sat, 30 May 2026 18:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjFVC3tV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12CB1F00893;
+	Sat, 30 May 2026 18:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165483;
-	bh=SISY/crXphpqRWx/tTpwv4AHnR6uQeKQ3ysY6N941E8=;
+	s=korg; t=1780165486;
+	bh=PVlyd0cnB/eaz8W57/flYwFck+K+UV0eOptDrMVY2xU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y6e+HjOPplxLIEpFQOhCBxhXRzw0siz5cavpNCbQxoon9wxbMvxMNUU4EnRIxdGRK
-	 N5oNRFC7RcPCn/f3pNn7vvcKHxNqB1jRH3m0j8A8pUUxOpGpYeUZXc4FIeOB74ZiUA
-	 bAcxl7ZC4ctEbCuOkMJBNqYNqSn/8+3A+pV4Sk44=
+	b=JjFVC3tVP+iQd9buF49TPsSaKfYiRddocmu35omi91NhK1hz6AZFu2ZpLF1b/BHTi
+	 lBxnW6sJGFJ0P2tvDMAPcysU45DDrSYGz0SEaaqE5QZfanB5IFBheROCy2NSFNpH/S
+	 vr/+yOD3O9+umAiWK2qdE9Tm9TBgHcv016nNAbOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhengYuan Huang <gality369@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 064/589] ocfs2: handle invalid dinode in ocfs2_group_extend
-Date: Sat, 30 May 2026 17:59:05 +0200
-Message-ID: <20260530160226.283490895@linuxfoundation.org>
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Li hongliang <1468888505@139.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 091/589] wifi: mac80211: always free skb on ieee80211_tx_prepare_skb() failure
+Date: Sat, 30 May 2026 17:59:32 +0200
+Message-ID: <20260530160227.081293628@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -57,77 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhengYuan Huang <gality369@gmail.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit 4a1c0ddc6e7bcf2e9db0eeaab9340dcfe97f448f upstream.
+[ Upstream commit d5ad6ab61cbd89afdb60881f6274f74328af3ee9 ]
 
-[BUG]
-kernel BUG at fs/ocfs2/resize.c:308!
-Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-RIP: 0010:ocfs2_group_extend+0x10aa/0x1ae0 fs/ocfs2/resize.c:308
-Code: 8b8520ff ffff83f8 860f8580 030000e8 5cc3c1fe
-Call Trace:
- ...
- ocfs2_ioctl+0x175/0x6e0 fs/ocfs2/ioctl.c:869
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:597 [inline]
- __se_sys_ioctl fs/ioctl.c:583 [inline]
- __x64_sys_ioctl+0x197/0x1e0 fs/ioctl.c:583
- x64_sys_call+0x1144/0x26a0 arch/x86/include/generated/asm/syscalls_64.h:17
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x93/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
- ...
+ieee80211_tx_prepare_skb() has three error paths, but only two of them
+free the skb. The first error path (ieee80211_tx_prepare() returning
+TX_DROP) does not free it, while invoke_tx_handlers() failure and the
+fragmentation check both do.
 
-[CAUSE]
-ocfs2_group_extend() assumes that the global bitmap inode block
-returned from ocfs2_inode_lock() has already been validated and
-BUG_ONs when the signature is not a dinode. That assumption is too
-strong for crafted filesystems because the JBD2-managed buffer path
-can bypass structural validation and return an invalid dinode to the
-resize ioctl.
+Add kfree_skb() to the first error path so all three are consistent,
+and remove the now-redundant frees in callers (ath9k, mt76,
+mac80211_hwsim) to avoid double-free.
 
-[FIX]
-Validate the dinode explicitly in ocfs2_group_extend(). If the global
-bitmap buffer does not contain a valid dinode, report filesystem
-corruption with ocfs2_error() and fail the resize operation instead of
-crashing the kernel.
+Document the skb ownership guarantee in the function's kdoc.
 
-Link: https://lkml.kernel.org/r/20260401092303.3709187-1-gality369@gmail.com
-Fixes: 10995aa2451a ("ocfs2: Morph the haphazard OCFS2_IS_VALID_DINODE() checks.")
-Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://patch.msgid.link/20260314065455.2462900-1-nbd@nbd.name
+Fixes: 06be6b149f7e ("mac80211: add ieee80211_tx_prepare_skb() helper function")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ Exclude changes to drivers/net/wireless/mediatek/mt76/scan.c as this file is first
+ introduced by commit 31083e38548f("wifi: mt76: add code for emulating hardware scanning")
+ after linux-6.14.]
+Signed-off-by: Li hongliang <1468888505@139.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/resize.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ath/ath9k/channel.c | 6 ++----
+ drivers/net/wireless/mac80211_hwsim.c    | 1 -
+ include/net/mac80211.h                   | 4 ++++
+ net/mac80211/tx.c                        | 4 +++-
+ 4 files changed, 9 insertions(+), 6 deletions(-)
 
---- a/fs/ocfs2/resize.c
-+++ b/fs/ocfs2/resize.c
-@@ -297,9 +297,13 @@ int ocfs2_group_extend(struct inode * in
+diff --git a/drivers/net/wireless/ath/ath9k/channel.c b/drivers/net/wireless/ath/ath9k/channel.c
+index 6cf0875221572..31b7921bf34f3 100644
+--- a/drivers/net/wireless/ath/ath9k/channel.c
++++ b/drivers/net/wireless/ath/ath9k/channel.c
+@@ -1011,7 +1011,7 @@ static void ath_scan_send_probe(struct ath_softc *sc,
+ 	skb_set_queue_mapping(skb, IEEE80211_AC_VO);
  
- 	fe = (struct ocfs2_dinode *)main_bm_bh->b_data;
+ 	if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, NULL))
+-		goto error;
++		return;
  
--	/* main_bm_bh is validated by inode read inside ocfs2_inode_lock(),
--	 * so any corruption is a code bug. */
--	BUG_ON(!OCFS2_IS_VALID_DINODE(fe));
-+	/* JBD-managed buffers can bypass validation, so treat this as corruption. */
-+	if (!OCFS2_IS_VALID_DINODE(fe)) {
-+		ret = ocfs2_error(main_bm_inode->i_sb,
-+				  "Invalid dinode #%llu\n",
-+				  (unsigned long long)OCFS2_I(main_bm_inode)->ip_blkno);
-+		goto out_unlock;
+ 	txctl.txq = sc->tx.txq_map[IEEE80211_AC_VO];
+ 	if (ath_tx_start(sc->hw, skb, &txctl))
+@@ -1124,10 +1124,8 @@ ath_chanctx_send_vif_ps_frame(struct ath_softc *sc, struct ath_vif *avp,
+ 
+ 		skb->priority = 7;
+ 		skb_set_queue_mapping(skb, IEEE80211_AC_VO);
+-		if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, &sta)) {
+-			dev_kfree_skb_any(skb);
++		if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, &sta))
+ 			return false;
+-		}
+ 		break;
+ 	default:
+ 		return false;
+diff --git a/drivers/net/wireless/mac80211_hwsim.c b/drivers/net/wireless/mac80211_hwsim.c
+index 037358606a51a..865bbe0293436 100644
+--- a/drivers/net/wireless/mac80211_hwsim.c
++++ b/drivers/net/wireless/mac80211_hwsim.c
+@@ -2275,7 +2275,6 @@ static void hw_scan_work(struct work_struct *work)
+ 						      hwsim->tmp_chan->band,
+ 						      NULL)) {
+ 				rcu_read_unlock();
+-				kfree_skb(probe);
+ 				continue;
+ 			}
+ 
+diff --git a/include/net/mac80211.h b/include/net/mac80211.h
+index 8f91609f928c1..70ee982f08d9d 100644
+--- a/include/net/mac80211.h
++++ b/include/net/mac80211.h
+@@ -6337,6 +6337,10 @@ void ieee80211_report_wowlan_wakeup(struct ieee80211_vif *vif,
+  * @band: the band to transmit on
+  * @sta: optional pointer to get the station to send the frame to
+  *
++ * Return: %true if the skb was prepared, %false otherwise.
++ * On failure, the skb is freed by this function; callers must not
++ * free it again.
++ *
+  * Note: must be called under RCU lock
+  */
+ bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 30ad46cfcad86..b923cd755a68c 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -1869,8 +1869,10 @@ bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
+ 	struct ieee80211_tx_data tx;
+ 	struct sk_buff *skb2;
+ 
+-	if (ieee80211_tx_prepare(sdata, &tx, NULL, skb) == TX_DROP)
++	if (ieee80211_tx_prepare(sdata, &tx, NULL, skb) == TX_DROP) {
++		kfree_skb(skb);
+ 		return false;
 +	}
  
- 	if (le16_to_cpu(fe->id2.i_chain.cl_cpg) !=
- 		ocfs2_group_bitmap_size(osb->sb, 0,
+ 	info->band = band;
+ 	info->control.vif = vif;
+-- 
+2.53.0
+
 
 
