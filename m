@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65903C1406;
-	Sat, 30 May 2026 18:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA42C3AC0FC;
+	Sat, 30 May 2026 18:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164366; cv=none; b=B5cQIDPrQCcqMI79W0jTv0oxaAn4lvPfco87UXm2ZKRhZAm6HplbyxTJEgAOkrR/rL3WiblSlP6SALLfqlYzQDT6up3DrPghbyl47tExqQrkXWduOhNKhqFE07E72PVTgr2Y3/CGmE3WWrqxlX/6oRp65JnKyS2qtxqm7nNNlLc=
+	t=1780164368; cv=none; b=tFjtzS7D5LjziG1LfZrrYa6DhAxMyHj7GNcmGbC0v6eCIDatu8HWdfMrIPZ1o9YnXML1DWxMnPr72yuo4uHLAz5BppoU2nsjUhWolM/jngB9ymIwWPSk4nRj/A99ck7WE5r/Kyf9/EJxA8TxobACkj2cf15auxuGMk0Cqb7LVIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164366; c=relaxed/simple;
-	bh=PPA8iy6i1VLqUCskBOR0SscW2ga40EJQS7T9YW1aoHI=;
+	s=arc-20240116; t=1780164368; c=relaxed/simple;
+	bh=1D4bQqr2fuRECXjs8LuNZd97Dj9G5ysDWMD6yf0wjHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BQPlfuDlGe2jRpoFYDbqP9G8jPcWccjj27IQmNt9k3VZ9DtP+9jnNdByhEZvErl+L/zi0STB/Q+rAMyBaF91l3KX2rDkxIpd3Cf71kYU1b0yS8npzZDgSz36N37N0K4ZVJZN+qGiI5eWpcFmgfGekzq4gymmpQvorBx80e06u68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bD4aTfR/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aspBJhKShoqh/mrSHn0JOf9a/EYHfnACeYcUvQDgBg1R1Zt/e+jU8TLPUTRWJxWTPJGS05hbugVJOVOJAqGKRu5TSnlWSMvVAucItW5zWzlvRV7BvosJCCyrtR3E9I60gsMYLhPyoTCHKec6ibFoXGCRPmO5NlWLCtYwWX9FVTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjnpGKAn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bD4aTfR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88A31F00893;
-	Sat, 30 May 2026 18:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjnpGKAn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A6B1F00898;
+	Sat, 30 May 2026 18:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164363;
-	bh=qNQGoGYd26PUWC6yN3n2GBn/4YWO47d6yPpQvh/EM1Y=;
+	s=korg; t=1780164366;
+	bh=+yvRIBwdegq4p+xGSJYK0Mg3/Jl9C4QYuz4ljX9r8aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bD4aTfR/IHRHdB3Jmz+T9U63hl6M/LLFt/LtpAbDzarSw4j94xTo9sIDEBFq0MI1Z
-	 LWu2pmqNRC4/8hzGCROIwaQZYN0mDuTMPkUjVVYK8IchKzngtciH3Hz1eQQUnXoaaK
-	 0KIoj6vBX5wTYbl2VeHAxVWA/Dpe78nWfhZwxEDM=
+	b=JjnpGKAnEpR7D1bzCA3ZePzDeV/sZu90Jdbysb6ZtfcJpXBb9AugjzHrVWYvb3Ck1
+	 gfGR4eHF30gCTbF/sP4TmFulT+vfGoPxvf24DUePolmitduvZNMalOkjzZjFvL/VxP
+	 J6pVgSywCmT779aROO9BD6srHqP8nhWYdTkPmRxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Florian Westphal <fw@strlen.de>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 533/776] platform/x86: dell-wmi-sysman: bound enumeration string aggregation
-Date: Sat, 30 May 2026 18:04:07 +0200
-Message-ID: <20260530160253.976944574@linuxfoundation.org>
+Subject: [PATCH 5.15 534/776] RDMA/core: Prefer NLA_NUL_STRING
+Date: Sat, 30 May 2026 18:04:08 +0200
+Message-ID: <20260530160253.999702776@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -45,101 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 3c34471c26abc52a37f5ad90949e2e4b8027eb14 ]
+[ Upstream commit 6ed3d14fc45d3da6025e7fe4a6a09066856698e2 ]
 
-populate_enum_data() aggregates firmware-provided value-modifier
-and possible-value strings into fixed 512-byte struct members.
-The current code bounds each individual source string but then
-appends every string and separator with raw strcat() and no
-remaining-space check.
+These attributes are evaluated as c-string (passed to strcmp), but
+NLA_STRING doesn't check for the presence of a \0 terminator.
 
-Switch the aggregation loops to a bounded append helper and
-reject enumeration packages whose combined strings do not fit
-in the destination buffers.
+Either this needs to switch to nla_strcmp() and needs to adjust printf fmt
+specifier to not use plain %s, or this needs to use NLA_NUL_STRING.
 
-Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260408084501.1-dell-wmi-sysman-v2-pengpeng@iscas.ac.cn
-[ij: add include]
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+As the code has been this way for long time, it seems to me that userspace
+does include the terminating nul, even tough its not enforced so far, and
+thus NLA_NUL_STRING use is the simpler solution.
+
+Fixes: 30dc5e63d6a5 ("RDMA/core: Add support for iWARP Port Mapper user space service")
+Link: https://patch.msgid.link/r/20260330122742.13315-1-fw@strlen.de
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dell/dell-wmi-sysman/enum-attributes.c    | 34 +++++++++++++++----
- 1 file changed, 28 insertions(+), 6 deletions(-)
+ drivers/infiniband/core/iwpm_msg.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c b/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c
-index fc2f58b4cbc6e..7e44ba3015627 100644
---- a/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/enum-attributes.c
-@@ -6,10 +6,32 @@
-  *  Copyright (c) 2020 Dell Inc.
-  */
+diff --git a/drivers/infiniband/core/iwpm_msg.c b/drivers/infiniband/core/iwpm_msg.c
+index 3c9a9869212bb..feb09008eb9ca 100644
+--- a/drivers/infiniband/core/iwpm_msg.c
++++ b/drivers/infiniband/core/iwpm_msg.c
+@@ -365,9 +365,9 @@ int iwpm_remove_mapping(struct sockaddr_storage *local_addr, u8 nl_client)
+ /* netlink attribute policy for the received response to register pid request */
+ static const struct nla_policy resp_reg_policy[IWPM_NLA_RREG_PID_MAX] = {
+ 	[IWPM_NLA_RREG_PID_SEQ]     = { .type = NLA_U32 },
+-	[IWPM_NLA_RREG_IBDEV_NAME]  = { .type = NLA_STRING,
++	[IWPM_NLA_RREG_IBDEV_NAME]  = { .type = NLA_NUL_STRING,
+ 					.len = IWPM_DEVNAME_SIZE - 1 },
+-	[IWPM_NLA_RREG_ULIB_NAME]   = { .type = NLA_STRING,
++	[IWPM_NLA_RREG_ULIB_NAME]   = { .type = NLA_NUL_STRING,
+ 					.len = IWPM_ULIBNAME_SIZE - 1 },
+ 	[IWPM_NLA_RREG_ULIB_VER]    = { .type = NLA_U16 },
+ 	[IWPM_NLA_RREG_PID_ERR]     = { .type = NLA_U16 }
+@@ -677,7 +677,7 @@ int iwpm_remote_info_cb(struct sk_buff *skb, struct netlink_callback *cb)
  
-+#include <linux/bug.h>
-+
- #include "dell-wmi-sysman.h"
- 
- get_instance_id(enumeration);
- 
-+static int append_enum_string(char *dest, const char *src)
-+{
-+	size_t dest_len = strlen(dest);
-+	ssize_t copied;
-+
-+	if (WARN_ON_ONCE(dest_len >= MAX_BUFF))
-+		return -EINVAL;
-+
-+	copied = strscpy(dest + dest_len, src, MAX_BUFF - dest_len);
-+	if (copied < 0)
-+		return -EINVAL;
-+
-+	dest_len += copied;
-+	copied = strscpy(dest + dest_len, ";", MAX_BUFF - dest_len);
-+	if (copied < 0)
-+		return -EINVAL;
-+
-+	return 0;
-+}
-+
- static ssize_t current_value_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf)
- {
- 	int instance_id = get_enumeration_instance_id(kobj);
-@@ -176,9 +198,9 @@ int populate_enum_data(union acpi_object *enumeration_obj, int instance_id,
- 			return -EINVAL;
- 		if (check_property_type(enumeration, next_obj, ACPI_TYPE_STRING))
- 			return -EINVAL;
--		strcat(wmi_priv.enumeration_data[instance_id].dell_value_modifier,
--			enumeration_obj[next_obj++].string.pointer);
--		strcat(wmi_priv.enumeration_data[instance_id].dell_value_modifier, ";");
-+		if (append_enum_string(wmi_priv.enumeration_data[instance_id].dell_value_modifier,
-+				       enumeration_obj[next_obj++].string.pointer))
-+			return -EINVAL;
- 	}
- 
- 	if (next_obj >= enum_property_count)
-@@ -193,9 +215,9 @@ int populate_enum_data(union acpi_object *enumeration_obj, int instance_id,
- 			return -EINVAL;
- 		if (check_property_type(enumeration, next_obj, ACPI_TYPE_STRING))
- 			return -EINVAL;
--		strcat(wmi_priv.enumeration_data[instance_id].possible_values,
--			enumeration_obj[next_obj++].string.pointer);
--		strcat(wmi_priv.enumeration_data[instance_id].possible_values, ";");
-+		if (append_enum_string(wmi_priv.enumeration_data[instance_id].possible_values,
-+				       enumeration_obj[next_obj++].string.pointer))
-+			return -EINVAL;
- 	}
- 
- 	return sysfs_create_group(attr_name_kobj, &enumeration_attr_group);
+ /* netlink attribute policy for the received request for mapping info */
+ static const struct nla_policy resp_mapinfo_policy[IWPM_NLA_MAPINFO_REQ_MAX] = {
+-	[IWPM_NLA_MAPINFO_ULIB_NAME] = { .type = NLA_STRING,
++	[IWPM_NLA_MAPINFO_ULIB_NAME] = { .type = NLA_NUL_STRING,
+ 					.len = IWPM_ULIBNAME_SIZE - 1 },
+ 	[IWPM_NLA_MAPINFO_ULIB_VER]  = { .type = NLA_U16 }
+ };
 -- 
 2.53.0
 
