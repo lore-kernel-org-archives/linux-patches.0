@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B2521E098;
-	Sat, 30 May 2026 17:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA0721E098;
+	Sat, 30 May 2026 17:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163893; cv=none; b=uj+BB38CKbERNgF6OK8k0O5OdQVKpMsbVd+L9ENvXPBq7ytBeUhVl+CTJj8pzJ08z4Acryi5V/PNSkmQm/dbuWPD8W7jdMWjG0xdAKnrJYvWd4jhfQM7/RRt9FOKy53Arzk4nhwItpqkrJcZYA5X4qJpwjE8Ky7OqvfQz278R7Q=
+	t=1780163896; cv=none; b=HygA3r6EqK5VkhUmRKhQMqhY4RT1mfQ/firPzysZs5W8VgRDiPdOaLwNkaCoRMLsVy0V4FgKTrKdgOZq/hvPZXQ3sMH4rRl+Hv3jDN+2jCzS0/y61PD+8qziNaurYLjLSNWMsj58YnFf1I4JSiKWY+34+oJlOFcXFP/HO1xLTXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163893; c=relaxed/simple;
-	bh=z52UjLNRVw/BsM+L3pCd5HNEu4jKVk6fuup0GDXfkX4=;
+	s=arc-20240116; t=1780163896; c=relaxed/simple;
+	bh=9TEj/gaFit7Dv9Ms70dnlxQ3BRDdyazZRU+wLZOJ5bE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r1AeQlhi/Nzy00sak282jltrgzi9hAdyO7bqcqnAreR2XUOUyo2BThMa9ZKlwQH6YDr7HTrWDYs/cRa2Ep+Vw/UA0aaOazlMBrdU9/i8TPmphUYuTth3EVpuVh2P/DBYOcUV0jvMs0qPA64lSu6orJ3bNhF9YQ7ZHaenQLG6b9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXwobqlp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pL8f69Ztj1gAIHPG2EIUBbFhh5LWtSS/Zg/SG5d1hM3WLd5QJ44bHsq1IG7kfuTTBpobRIr0iq2MsQbS30Mgs9b3lJ4ZAxqyggMssz5iaUHelCEgEFPsLO5rx2dlVqvh0kstoru3lL/UNVV5Pf/3V3yi0VepDWbpI1ETZ0RUKWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nH+jB+Vj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXwobqlp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6572C1F00893;
-	Sat, 30 May 2026 17:58:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nH+jB+Vj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC70A1F00893;
+	Sat, 30 May 2026 17:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163892;
-	bh=XrLC/EgkLJ9YFeTfnRHeyWrfTdLtex1iHlf7nGNhs5c=;
+	s=korg; t=1780163895;
+	bh=sSnPOMYa0zRYbIGqYebHSg7fRuhCfCZSXGHobcVO/XE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UXwobqlpiNzcI0A8Deg3uVc2ljJqfk3TsMcQkQpBM4HcHjP7TEpjPfLdsu5/fL6kE
-	 pGNXYlBHP+AqDPWVNs9aHv8CPGtd6N224ayIYurCDxXQKUbRiJ5jnE3hLMVTEnxGMj
-	 UV/FwG+vg814K+gFz2IkxVrLH8S0EnYsWAgUoQNg=
+	b=nH+jB+VjipXHScHel18dzcu43P0V8ory1OiyW59yRnu3+VKqRw1qq0pbKG+NiuZkC
+	 YnwzuzdBNGEZ/u1/XxnrLz1INLXRvJuUPrI2n37Bgwa8E7/c6saAIPiv/NpoQktwbB
+	 tvvIXPLx/h9SjYryYk5f/t77xNJLDdBuNMVOt5pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 364/776] spi: mpc52xx: fix use-after-free on unbind
-Date: Sat, 30 May 2026 18:01:18 +0200
-Message-ID: <20260530160249.970881253@linuxfoundation.org>
+	Benjamin Cheng <benjamin.cheng@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Ruijing Dong <ruijing.dong@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 365/776] drm/amdgpu/vcn3: Prevent OOB reads when parsing dec msg
+Date: Sat, 30 May 2026 18:01:19 +0200
+Message-ID: <20260530160249.994059760@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -45,45 +46,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Benjamin Cheng <benjamin.cheng@amd.com>
 
-commit 706b3dc2ac7a998c55e14b3fd2e8f934c367e6e0 upstream.
+commit b193019860d61e92da395eae2011f2f6716b182f upstream.
 
-The state machine work is scheduled by the interrupt handler and
-therefore needs to be cancelled after disabling interrupts to avoid a
-potential use-after-free.
+Check bounds against the end of the BO whenever we access the msg.
 
-Fixes: 984836621aad ("spi: mpc52xx: Add cancel_work_sync before module remove")
+Signed-off-by: Benjamin Cheng <benjamin.cheng@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Cc: Pei Xiao <xiaopei01@kylinos.cn>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260414134319.978196-5-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-mpc52xx.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c |   23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
---- a/drivers/spi/spi-mpc52xx.c
-+++ b/drivers/spi/spi-mpc52xx.c
-@@ -521,10 +521,11 @@ static int mpc52xx_spi_remove(struct pla
- 	struct mpc52xx_spi *ms = spi_master_get_devdata(master);
- 	int i;
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
+@@ -1861,7 +1861,7 @@ static int vcn_v3_0_dec_msg(struct amdgp
+ {
+ 	struct ttm_operation_ctx ctx = { false, false };
+ 	struct amdgpu_bo_va_mapping *map;
+-	uint32_t *msg, num_buffers;
++	uint32_t *msg, num_buffers, len_dw;
+ 	struct amdgpu_bo *bo;
+ 	uint64_t start, end;
+ 	unsigned int i;
+@@ -1882,6 +1882,11 @@ static int vcn_v3_0_dec_msg(struct amdgp
+ 		return -EINVAL;
+ 	}
  
--	cancel_work_sync(&ms->work);
- 	free_irq(ms->irq0, ms);
- 	free_irq(ms->irq1, ms);
- 
-+	cancel_work_sync(&ms->work);
++	if (end - addr < 16) {
++		DRM_ERROR("VCN messages must be at least 4 DWORDs!\n");
++		return -EINVAL;
++	}
 +
- 	for (i = 0; i < ms->gpio_cs_count; i++)
- 		gpio_free(ms->gpio_cs[i]);
+ 	bo->flags |= AMDGPU_GEM_CREATE_CPU_ACCESS_REQUIRED;
+ 	amdgpu_bo_placement_from_domain(bo, bo->allowed_domains);
+ 	r = ttm_bo_validate(&bo->tbo, &bo->placement, &ctx);
+@@ -1898,8 +1903,8 @@ static int vcn_v3_0_dec_msg(struct amdgp
+ 
+ 	msg = ptr + addr - start;
+ 
+-	/* Check length */
+ 	if (msg[1] > end - addr) {
++		DRM_ERROR("VCN message header does not fit in BO!\n");
+ 		r = -EINVAL;
+ 		goto out;
+ 	}
+@@ -1907,7 +1912,16 @@ static int vcn_v3_0_dec_msg(struct amdgp
+ 	if (msg[3] != RDECODE_MSG_CREATE)
+ 		goto out;
+ 
++	len_dw = msg[1] / 4;
+ 	num_buffers = msg[2];
++
++	/* Verify that all indices fit within the claimed length. Each index is 4 DWORDs */
++	if (num_buffers > len_dw || 6 + num_buffers * 4 > len_dw) {
++		DRM_ERROR("VCN message has too many buffers!\n");
++		r = -EINVAL;
++		goto out;
++	}
++
+ 	for (i = 0, msg = &msg[6]; i < num_buffers; ++i, msg += 4) {
+ 		uint32_t offset, size, *create;
+ 
+@@ -1917,14 +1931,15 @@ static int vcn_v3_0_dec_msg(struct amdgp
+ 		offset = msg[1];
+ 		size = msg[2];
+ 
+-		if (offset + size > end) {
++		if (size < 4 || offset + size > end - addr) {
++			DRM_ERROR("VCN message buffer exceeds BO bounds!\n");
+ 			r = -EINVAL;
+ 			goto out;
+ 		}
+ 
+ 		create = ptr + addr + offset - start;
+ 
+-		/* H246, HEVC and VP9 can run on any instance */
++		/* H264, HEVC and VP9 can run on any instance */
+ 		if (create[0] == 0x7 || create[0] == 0x10 || create[0] == 0x11)
+ 			continue;
  
 
 
