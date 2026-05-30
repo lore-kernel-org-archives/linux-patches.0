@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF5B29B78B;
-	Sat, 30 May 2026 18:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97623342CB3;
+	Sat, 30 May 2026 18:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164070; cv=none; b=MblZMHdmydClcnxRc8SjQgIcwSi9KnH5BDoQYylc3IkJa4B6bZq1DCNMAAqL46SFudaQza5YClYm/9dvwOyVjlxs2T1rZMLjj6TgW2MMHbPRMyZ06YcfSdxJ3Ezywg/Y/6LuFtM26mUiBZyqHAf+8sIXhKUFuPMnR3twFO5t4CI=
+	t=1780164074; cv=none; b=mlRP9Y2Tw+zWdgsqUhBq4CQeQcj5T5Bso/eh5CVffERp9eWqyo5F5yJoLHHyDIIcHuh0FQKsKyCBFfYJ6B9+gQFv6MB18zyQ/KqwXKFQ93pHTWrvZe8iGQFEb1zUdViP287apfEfWTo7+je00gl1R5YyOa8/yuO82uCjuMfmW78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164070; c=relaxed/simple;
-	bh=y3z048z935veChmgj7T2PLmwW8psZcwklojJPNmCdkE=;
+	s=arc-20240116; t=1780164074; c=relaxed/simple;
+	bh=QDRQ0Vv1ts6I3PKSBf3tAk3BzFEL0SLjwCB6sdc5KHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HZXvS3lbbA/0orudNSSfxIJZNhmBVtJ8R6iHPNQD6Vtus7xd5mQIAw1ZcRpM71FjtHTfvdkE/84Gk1+H3WbDNuf8xHpi7rdU5o+H0PSqGq137vtK7jtqpDm2g6lk3/fVqFrnsO3wYE6weShbhVAMNuL4P/+w/SwF+Y8+2cotdVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6hheZ5F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sdxGPcfU7O+eP7v/VtTc2PIWRFYNvrXheZrLR2JbHXvSf0smDhrr8WExbyfT5ktKciafm5mHSdll5SdgmkU2XIPqqRqyfZcfoflHarmGxMI9VjA3jmC0Gz+zBS+o9wq4WvdDRcLyCf1hnfP7MoJEzO2G/Ysw5bA4eymRyK5RDts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KXuSV/70; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6hheZ5F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2EEB1F00893;
-	Sat, 30 May 2026 18:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KXuSV/70"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2051F00893;
+	Sat, 30 May 2026 18:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164069;
-	bh=37vhsr0G1wYNdJcjq4FIGwvYvUQgNNsZivQ+utDGdQg=;
+	s=korg; t=1780164073;
+	bh=ZHBjd7iW1DNGmsgUqYMutQKUZ2KD+0yYKCE5bPb+jbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i6hheZ5FF8CN39N4ao8OoCcdTJSg8sEKRZjw7nsgAgr5yckmBHIUP7WIZe3dVgAOb
-	 6bxeImh9t5JDfZraYEy4kcFtp+jFOajgFUspeY1lx2vvxE7E8hho1EZtjFBzLYrEai
-	 U+Tt/sQNbxEpmAs8BFJAVWpGgjYK3HojCKrJsZg0=
+	b=KXuSV/70clpdmushSzh/CXZtNk6koysyCp7NUVpD+BNNCQynFFsw0xwAgT+UnKUfn
+	 QYtdv7G5VRj9lSyofhEz7I0aylHtO2jAbGzKC+1TGhR9ODX0nUQBW8bR23UKjmEU2e
+	 2f0obxJOHmsVBmv+eCMZPxLRJG6M0hhyG73EAleI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Alexander Koskovich <akoskovich@pm.me>,
+	syzbot+80e046b8da2820b6ba73@syzkaller.appspotmail.com,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 446/776] drm/msm/dsi: rename MSM8998 DSI version from V2_2_0 to V2_0_0
-Date: Sat, 30 May 2026 18:02:40 +0200
-Message-ID: <20260530160251.930431545@linuxfoundation.org>
+Subject: [PATCH 5.15 429/776] net, bpf: fix null-ptr-deref in xdp_master_redirect() for down master
+Date: Sat, 30 May 2026 18:02:23 +0200
+Message-ID: <20260530160251.530984019@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,60 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Koskovich <akoskovich@pm.me>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 913a709dea0eff9c7b2e9470f8c8594b9a0114ab ]
+[ Upstream commit 1921f91298d1388a0bb9db8f83800c998b649cb3 ]
 
-The MSM8998 DSI controller is v2.0.0 as stated in commit 7b8c9e203039
-("drm/msm/dsi: Add support for MSM8998 DSI controller"). The value was
-always correct just the name was wrong.
+syzkaller reported a kernel panic in bond_rr_gen_slave_id() reached via
+xdp_master_redirect(). Full decoded trace:
 
-Rename and reorder to maintain version sorting.
+  https://syzkaller.appspot.com/bug?extid=80e046b8da2820b6ba73
 
-Fixes: 7b8c9e203039 ("drm/msm/dsi: Add support for MSM8998 DSI controller")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
-Patchwork: https://patchwork.freedesktop.org/patch/713717/
-Link: https://lore.kernel.org/r/20260324-dsi-rgb101010-support-v5-3-ff6afc904115@pm.me
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+bond_rr_gen_slave_id() dereferences bond->rr_tx_counter, a per-CPU
+counter that bonding only allocates in bond_open() when the mode is
+round-robin. If the bond device was never brought up, rr_tx_counter
+stays NULL.
+
+The XDP redirect path can still reach that code on a bond that was
+never opened: bpf_master_redirect_enabled_key is a global static key,
+so as soon as any bond device has native XDP attached, the
+XDP_TX -> xdp_master_redirect() interception is enabled for every
+slave system-wide. The path xdp_master_redirect() ->
+bond_xdp_get_xmit_slave() -> bond_xdp_xmit_roundrobin_slave_get() ->
+bond_rr_gen_slave_id() then runs against a bond that has no
+rr_tx_counter and crashes.
+
+Fix this in the generic xdp_master_redirect() by refusing to call into
+the master's ->ndo_xdp_get_xmit_slave() when the master device is not
+up. IFF_UP is only set after ->ndo_open() has successfully returned,
+so this reliably excludes masters whose XDP state has not been fully
+initialized. Drop the frame with XDP_ABORTED so the exception is
+visible via trace_xdp_exception() rather than silently falling through.
+This is not specific to bonding: any current or future master that
+defers XDP state allocation to ->ndo_open() is protected.
+
+Fixes: 879af96ffd72 ("net, core: Add support for XDP redirection to slave device")
+Reported-by: syzbot+80e046b8da2820b6ba73@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/698f84c6.a70a0220.2c38d7.00cc.GAE@google.com/T/
+Suggested-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260411005524.201200-2-jiayuan.chen@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_cfg.c | 4 ++--
- drivers/gpu/drm/msm/dsi/dsi_cfg.h | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ net/core/filter.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-index 68a3f8fea9fe6..f61ccdf2b7398 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-@@ -268,10 +268,10 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
- 		&msm8996_dsi_cfg, &msm_dsi_6g_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V1_4_2,
- 		&msm8976_dsi_cfg, &msm_dsi_6g_host_ops},
-+	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_0_0,
-+		&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_1_0,
- 		&sdm660_dsi_cfg, &msm_dsi_6g_v2_host_ops},
--	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_0,
--		&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_1,
- 		&sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_3_0,
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-index 41e99a9fb5de5..426ed4c97ae52 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-@@ -18,8 +18,8 @@
- #define MSM_DSI_6G_VER_MINOR_V1_3_1	0x10030001
- #define MSM_DSI_6G_VER_MINOR_V1_4_1	0x10040001
- #define MSM_DSI_6G_VER_MINOR_V1_4_2	0x10040002
-+#define MSM_DSI_6G_VER_MINOR_V2_0_0	0x20000000
- #define MSM_DSI_6G_VER_MINOR_V2_1_0	0x20010000
--#define MSM_DSI_6G_VER_MINOR_V2_2_0	0x20000000
- #define MSM_DSI_6G_VER_MINOR_V2_2_1	0x20020001
- #define MSM_DSI_6G_VER_MINOR_V2_3_0	0x20030000
- #define MSM_DSI_6G_VER_MINOR_V2_4_0	0x20040000
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 87aaab182e60d..87447a7843b5a 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -4031,6 +4031,8 @@ u32 xdp_master_redirect(struct xdp_buff *xdp)
+ 	struct bpf_redirect_info *ri = this_cpu_ptr(&bpf_redirect_info);
+ 
+ 	master = netdev_master_upper_dev_get_rcu(xdp->rxq->dev);
++	if (unlikely(!(master->flags & IFF_UP)))
++		return XDP_ABORTED;
+ 	slave = master->netdev_ops->ndo_xdp_get_xmit_slave(master, xdp);
+ 	if (slave && slave != xdp->rxq->dev) {
+ 		/* The target device is different from the receiving device, so
 -- 
 2.53.0
 
