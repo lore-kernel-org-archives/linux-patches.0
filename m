@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E649395AEA;
-	Sat, 30 May 2026 17:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F368334165B;
+	Sat, 30 May 2026 17:09:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160946; cv=none; b=Rq7cpDKHkcqG7ng3U+ZmzK0L//uRHC022yvsBxGjtgIOuCcV2G4FPNWrE68Go3bqiZw/vizMH7keIfVyW78Zbo9UuSPi3Z07JRBpEBjqyl4ylM1cfSr/IEuXAQAcMWaZCY3qB5l8OkRg7UrlZNp7SlF+qPNaJbuZbBLgErK1T8s=
+	t=1780160950; cv=none; b=KgA5jWi8L/3gvwpLGYxZsN5HQlNNiO7ZbR74yHQKQDBv51QnZvx2B25FUPZ8dZhfxah0OoeIJytSIOXXlNUH50A8PcfTzHW2WWiQc4HASZimTXvsp7xOBRySvEY9cKq8AlNRnmpMYEloNLtFT0Ty80ihpDAWxcE0IMfhQlZk63U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160946; c=relaxed/simple;
-	bh=tuaYxaCONh52nT85qKdk5B6ZWcgwrdlZH7lpbZmBRJ4=;
+	s=arc-20240116; t=1780160950; c=relaxed/simple;
+	bh=lPgEy/GmZt491J5fWZBO/FGVWJ5bg6TaRc99FJNWDpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qem5xGdaZsSSOLwFBe5Rzn6fl1YIuIomQ/6UhlNF1BFgfBAa1917b0GywbiwnV796qAFZlr6sXJrVfTAIUT8juflrqR7wGJg/fD2Ki585L6Y8r/nomieEIjv9FoxsSZ/uuep7ND5f1sq2v+lQ7J6IfGZ4T8eQcgKMvdIs4L8/Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+2/OB6G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I4rusPqFHXYc0VkAHpaLHvHJnJuv1nXrlsiJiHqkTeaNa1OiAS76kVR4fnhYcFplail0S6XRjee+Dk3eL0gZKW+vHJecwVMternbgDXovI+as+Z8hvBgfPwETSnLuvZrGC6hbIU/xgF5PlbcWa14UwSV14NfkIo2WZZs1w0Cw6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3KPWC3u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+2/OB6G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F001F00893;
-	Sat, 30 May 2026 17:09:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3KPWC3u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70A51F00893;
+	Sat, 30 May 2026 17:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160944;
-	bh=C1Jmovuvh+48T5Fip5cnVIyaUqoOb5YsXlBcprdMEl0=;
+	s=korg; t=1780160948;
+	bh=5Xu4JhRMWa2NJmSkdZr46lM/bWHGuLyJayUaQFpTSIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r+2/OB6GZPjZsok1vIy9ylT0o46NfpS+qu3gehDes2+Q8S0wX5/lZDPDI2sd72Uxx
-	 fzFwW3sC1MB7ZGan1qUv8Q0hsdmv3IJZRrul/2fsKJwUdtOIFBFtzKn2tPBz3OyMyn
-	 OYef8K1MFEiv0sRKfaAxbNNlCsp06Zax2Lv7bbd4=
+	b=G3KPWC3uZgZJPnLub1ACqWPv2taXhqf1v8asDiMrKRD0S9MbCZ0wdJod5W/D0idL5
+	 6LvWvQibDs3fS27tDIGgU/sEyQSn33GSrqWYskmLYSeVTqjWb7F3kitwHKrJ5Sv+le
+	 4Y4LkoCGhjMMUee/hU0mdmehVrXcmOzEuWc/rjvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
-	Somasundaram Krishnasamy <somasundaram.krishnasamy@oracle.com>,
-	Gerd Rausch <gerd.rausch@oracle.com>,
+	syzbot+da8e060735ae02c8f3d1@syzkaller.appspotmail.com,
+	Greg Jumper <greg.jumper@oracle.com>,
 	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 481/969] net/rds: Optimize rds_ib_laddr_check
-Date: Sat, 30 May 2026 18:00:05 +0200
-Message-ID: <20260530160313.585943556@linuxfoundation.org>
+Subject: [PATCH 6.1 482/969] net/rds: Restrict use of RDS/IB to the initial network namespace
+Date: Sat, 30 May 2026 18:00:06 +0200
+Message-ID: <20260530160313.613471150@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -48,191 +47,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Håkon Bugge <haakon.bugge@oracle.com>
+From: Greg Jumper <greg.jumper@oracle.com>
 
-[ Upstream commit 236f718ac885965fa886440b9898dfae185c9733 ]
+[ Upstream commit ebf71dd4aff46e8e421d455db3e231ba43d2fa8a ]
 
-rds_ib_laddr_check() creates a CM_ID and attempts to bind the address
-in question to it. This in order to qualify the allegedly local
-address as a usable IB/RoCE address.
+Prevent using RDS/IB in network namespaces other than the initial one.
+The existing RDS/IB code will not work properly in non-initial network
+namespaces.
 
-In the field, ExaWatcher runs rds-ping to all ports in the fabric from
-all local ports. This using all active ToS'es. In a full rack system,
-we have 14 cell servers and eight db servers. Typically, 6 ToS'es are
-used. This implies 528 rds-ping invocations per ExaWatcher's "RDSinfo"
-interval.
-
-Adding to this, each rds-ping invocation creates eight sockets and
-binds the local address to them:
-
-socket(AF_RDS, SOCK_SEQPACKET, 0)       = 3
-bind(3, {sa_family=AF_INET, sin_port=htons(0),
-	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
-socket(AF_RDS, SOCK_SEQPACKET, 0)       = 4
-bind(4, {sa_family=AF_INET, sin_port=htons(0),
-	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
-socket(AF_RDS, SOCK_SEQPACKET, 0)       = 5
-bind(5, {sa_family=AF_INET, sin_port=htons(0),
-	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
-socket(AF_RDS, SOCK_SEQPACKET, 0)       = 6
-bind(6, {sa_family=AF_INET, sin_port=htons(0),
-	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
-socket(AF_RDS, SOCK_SEQPACKET, 0)       = 7
-bind(7, {sa_family=AF_INET, sin_port=htons(0),
-	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
-socket(AF_RDS, SOCK_SEQPACKET, 0)       = 8
-bind(8, {sa_family=AF_INET, sin_port=htons(0),
-	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
-socket(AF_RDS, SOCK_SEQPACKET, 0)       = 9
-bind(9, {sa_family=AF_INET, sin_port=htons(0),
-	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
-socket(AF_RDS, SOCK_SEQPACKET, 0)       = 10
-bind(10, {sa_family=AF_INET, sin_port=htons(0),
-	sin_addr=inet_addr("192.168.36.2")}, 16) = 0
-
-So, at every interval ExaWatcher executes rds-ping's, 4224 CM_IDs are
-allocated, considering this full-rack system. After the a CM_ID has
-been allocated, rdma_bind_addr() is called, with the port number being
-zero. This implies that the CMA will attempt to search for an un-used
-ephemeral port. Simplified, the algorithm is to start at a random
-position in the available port space, and then if needed, iterate
-until an un-used port is found.
-
-The book-keeping of used ports uses the idr system, which again uses
-slab to allocate new struct idr_layer's. The size is 2092 bytes and
-slab tries to reduce the wasted space. Hence, it chooses an order:3
-allocation, for which 15 idr_layer structs will fit and only 1388
-bytes are wasted per the 32KiB order:3 chunk.
-
-Although this order:3 allocation seems like a good space/speed
-trade-off, it does not resonate well with how it used by the CMA. The
-combination of the randomized starting point in the port space (which
-has close to zero spatial locality) and the close proximity in time of
-the 4224 invocations of the rds-ping's, creates a memory hog for
-order:3 allocations.
-
-These costly allocations may need reclaims and/or compaction. At
-worst, they may fail and produce a stack trace such as (from uek4):
-
-[<ffffffff811a72d5>] __inc_zone_page_state+0x35/0x40
-[<ffffffff811c2e97>] page_add_file_rmap+0x57/0x60
-[<ffffffffa37ca1df>] remove_migration_pte+0x3f/0x3c0 [ksplice_6cn872bt_vmlinux_new]
-[<ffffffff811c3de8>] rmap_walk+0xd8/0x340
-[<ffffffff811e8860>] remove_migration_ptes+0x40/0x50
-[<ffffffff811ea83c>] migrate_pages+0x3ec/0x890
-[<ffffffff811afa0d>] compact_zone+0x32d/0x9a0
-[<ffffffff811b00ed>] compact_zone_order+0x6d/0x90
-[<ffffffff811b03b2>] try_to_compact_pages+0x102/0x270
-[<ffffffff81190e56>] __alloc_pages_direct_compact+0x46/0x100
-[<ffffffff8119165b>] __alloc_pages_nodemask+0x74b/0xaa0
-[<ffffffff811d8411>] alloc_pages_current+0x91/0x110
-[<ffffffff811e3b0b>] new_slab+0x38b/0x480
-[<ffffffffa41323c7>] __slab_alloc+0x3b7/0x4a0 [ksplice_s0dk66a8_vmlinux_new]
-[<ffffffff811e42ab>] kmem_cache_alloc+0x1fb/0x250
-[<ffffffff8131fdd6>] idr_layer_alloc+0x36/0x90
-[<ffffffff8132029c>] idr_get_empty_slot+0x28c/0x3d0
-[<ffffffff813204ad>] idr_alloc+0x4d/0xf0
-[<ffffffffa051727d>] cma_alloc_port+0x4d/0xa0 [rdma_cm]
-[<ffffffffa0517cbe>] rdma_bind_addr+0x2ae/0x5b0 [rdma_cm]
-[<ffffffffa09d8083>] rds_ib_laddr_check+0x83/0x2c0 [ksplice_6l2xst5i_rds_rdma_new]
-[<ffffffffa05f892b>] rds_trans_get_preferred+0x5b/0xa0 [rds]
-[<ffffffffa05f09f2>] rds_bind+0x212/0x280 [rds]
-[<ffffffff815b4016>] SYSC_bind+0xe6/0x120
-[<ffffffff815b4d3e>] SyS_bind+0xe/0x10
-[<ffffffff816b031a>] system_call_fastpath+0x18/0xd4
-
-To avoid these excessive calls to rdma_bind_addr(), we optimize
-rds_ib_laddr_check() by simply checking if the address in question has
-been used before. The rds_rdma module keeps track of addresses
-associated with IB devices, and the function rds_ib_get_device() is
-used to determine if the address already has been qualified as a valid
-local address. If not found, we call the legacy rds_ib_laddr_check(),
-now renamed to rds_ib_laddr_check_cm().
-
-Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
-Signed-off-by: Somasundaram Krishnasamy <somasundaram.krishnasamy@oracle.com>
-Signed-off-by: Gerd Rausch <gerd.rausch@oracle.com>
+Fixes: d5a8ac28a7ff ("RDS-TCP: Make RDS-TCP work correctly when it is set up in a netns other than init_net")
+Reported-by: syzbot+da8e060735ae02c8f3d1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=da8e060735ae02c8f3d1
+Signed-off-by: Greg Jumper <greg.jumper@oracle.com>
 Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260408080420.540032-2-achender@kernel.org
+Link: https://patch.msgid.link/20260408080420.540032-3-achender@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: ebf71dd4aff4 ("net/rds: Restrict use of RDS/IB to the initial network namespace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/ib.c      | 20 ++++++++++++++++++--
- net/rds/ib.h      |  1 +
- net/rds/ib_rdma.c |  2 +-
- 3 files changed, 20 insertions(+), 3 deletions(-)
+ net/rds/af_rds.c | 10 ++++++++--
+ net/rds/ib.c     |  4 ++++
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/net/rds/ib.c b/net/rds/ib.c
-index 9826fe7f9d008..996f007cd516b 100644
---- a/net/rds/ib.c
-+++ b/net/rds/ib.c
-@@ -403,8 +403,8 @@ static void rds6_ib_ic_info(struct socket *sock, unsigned int len,
-  * allowed to influence which paths have priority.  We could call userspace
-  * asserting this policy "routing".
-  */
--static int rds_ib_laddr_check(struct net *net, const struct in6_addr *addr,
--			      __u32 scope_id)
-+static int rds_ib_laddr_check_cm(struct net *net, const struct in6_addr *addr,
-+				 __u32 scope_id)
- {
- 	int ret;
- 	struct rdma_cm_id *cm_id;
-@@ -489,6 +489,22 @@ static int rds_ib_laddr_check(struct net *net, const struct in6_addr *addr,
+diff --git a/net/rds/af_rds.c b/net/rds/af_rds.c
+index d107f7605db4f..752ae3fbc2e7a 100644
+--- a/net/rds/af_rds.c
++++ b/net/rds/af_rds.c
+@@ -357,7 +357,8 @@ static int rds_cong_monitor(struct rds_sock *rs, sockptr_t optval, int optlen)
  	return ret;
  }
  
-+static int rds_ib_laddr_check(struct net *net, const struct in6_addr *addr,
-+			      __u32 scope_id)
-+{
-+	struct rds_ib_device *rds_ibdev = NULL;
-+
-+	if (ipv6_addr_v4mapped(addr)) {
-+		rds_ibdev = rds_ib_get_device(addr->s6_addr32[3]);
-+		if (rds_ibdev) {
-+			rds_ib_dev_put(rds_ibdev);
-+			return 0;
-+		}
-+	}
-+
-+	return rds_ib_laddr_check_cm(net, addr, scope_id);
-+}
-+
- static void rds_ib_unregister_client(void)
+-static int rds_set_transport(struct rds_sock *rs, sockptr_t optval, int optlen)
++static int rds_set_transport(struct net *net, struct rds_sock *rs,
++			     sockptr_t optval, int optlen)
  {
- 	ib_unregister_client(&rds_ib_client);
-diff --git a/net/rds/ib.h b/net/rds/ib.h
-index 2ba71102b1f1f..d6c1197731c1c 100644
---- a/net/rds/ib.h
-+++ b/net/rds/ib.h
-@@ -384,6 +384,7 @@ void rds_ib_cm_connect_complete(struct rds_connection *conn,
- 	__rds_ib_conn_error(conn, KERN_WARNING "RDS/IB: " fmt)
+ 	int t_type;
  
- /* ib_rdma.c */
-+struct rds_ib_device *rds_ib_get_device(__be32 ipaddr);
- int rds_ib_update_ipaddr(struct rds_ib_device *rds_ibdev,
- 			 struct in6_addr *ipaddr);
- void rds_ib_add_conn(struct rds_ib_device *rds_ibdev, struct rds_connection *conn);
-diff --git a/net/rds/ib_rdma.c b/net/rds/ib_rdma.c
-index 30fca2169aa7a..468fd60d818ff 100644
---- a/net/rds/ib_rdma.c
-+++ b/net/rds/ib_rdma.c
-@@ -47,7 +47,7 @@ struct rds_ib_dereg_odp_mr {
+@@ -373,6 +374,10 @@ static int rds_set_transport(struct rds_sock *rs, sockptr_t optval, int optlen)
+ 	if (t_type < 0 || t_type >= RDS_TRANS_COUNT)
+ 		return -EINVAL;
  
- static void rds_ib_odp_mr_worker(struct work_struct *work);
++	/* RDS/IB is restricted to the initial network namespace */
++	if (t_type != RDS_TRANS_TCP && !net_eq(net, &init_net))
++		return -EPROTOTYPE;
++
+ 	rs->rs_transport = rds_trans_get(t_type);
  
--static struct rds_ib_device *rds_ib_get_device(__be32 ipaddr)
-+struct rds_ib_device *rds_ib_get_device(__be32 ipaddr)
+ 	return rs->rs_transport ? 0 : -ENOPROTOOPT;
+@@ -433,6 +438,7 @@ static int rds_setsockopt(struct socket *sock, int level, int optname,
+ 			  sockptr_t optval, unsigned int optlen)
  {
- 	struct rds_ib_device *rds_ibdev;
- 	struct rds_ib_ipaddr *i_ipaddr;
+ 	struct rds_sock *rs = rds_sk_to_rs(sock->sk);
++	struct net *net = sock_net(sock->sk);
+ 	int ret;
+ 
+ 	if (level != SOL_RDS) {
+@@ -461,7 +467,7 @@ static int rds_setsockopt(struct socket *sock, int level, int optname,
+ 		break;
+ 	case SO_RDS_TRANSPORT:
+ 		lock_sock(sock->sk);
+-		ret = rds_set_transport(rs, optval, optlen);
++		ret = rds_set_transport(net, rs, optval, optlen);
+ 		release_sock(sock->sk);
+ 		break;
+ 	case SO_TIMESTAMP_OLD:
+diff --git a/net/rds/ib.c b/net/rds/ib.c
+index 996f007cd516b..ce5be43c5fbac 100644
+--- a/net/rds/ib.c
++++ b/net/rds/ib.c
+@@ -494,6 +494,10 @@ static int rds_ib_laddr_check(struct net *net, const struct in6_addr *addr,
+ {
+ 	struct rds_ib_device *rds_ibdev = NULL;
+ 
++	/* RDS/IB is restricted to the initial network namespace */
++	if (!net_eq(net, &init_net))
++		return -EPROTOTYPE;
++
+ 	if (ipv6_addr_v4mapped(addr)) {
+ 		rds_ibdev = rds_ib_get_device(addr->s6_addr32[3]);
+ 		if (rds_ibdev) {
 -- 
 2.53.0
 
