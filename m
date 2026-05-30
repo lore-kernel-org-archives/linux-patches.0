@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8B733FE15;
-	Sat, 30 May 2026 17:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC8533F8B4;
+	Sat, 30 May 2026 17:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161909; cv=none; b=ExpUgMmXlWhteuT4T4eHCmSaEqm2mFmWKFo0KTqMEh9ejewdEScxorPCU0GdJouI8+bjDZbl7VU4ogIJS3lJzm5UuBDwFFCFXDz0oDk3fmyOXXBq2/N2WczYGBZqrC7n2eCbzV4T6hI2X3Je+4R7AY4/HPJ+c+iZtf3IBxgfp+k=
+	t=1780161913; cv=none; b=q/cJmlZMNjEUSbNOBgo63Vm3GK2a7Ai9nqkZ9FvLh3ZRgFzYo5RETg0HoQ7vZJGKQLLXNc0Ujf0BIrNJxkmQv8xk+q2GOgoix1UipSuOl6uurT6+wgltK30BAQk+dhse6ojtZ0gX9vb5abdzrFxfwNVG6CicFr5rQw18KB5WeE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161909; c=relaxed/simple;
-	bh=3haIF6qSn2woW6nO2qlNCrbVncTdcHzSqDnjhaYslWU=;
+	s=arc-20240116; t=1780161913; c=relaxed/simple;
+	bh=aw+obntB1e6T8DrnuRZ4rwn0OkDg1t0iviqTVSjxXEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wxtsjy7WDHIPSORQATwjfftVnTY3adlDncKAOYUKoNvSowWnI0FMmuzNx5r1a63I7lQ+N65gSxwQ0IqARLFHi6mwkOKi+PLIleSCj/XVi/Xeyj35wT1ZM313wBX2go0SuXIKZM+O0t68jSiYyLlltdOmpLr7zKtbsy3BfjGqxAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ta7nFxMb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FU5Fna8hBvIcY5ZrjCU+Bd7d0FpmNOSedWIrrhxJlbnMYDlxJQD3YLSTDlKk4vTOzu0nHkhMsLFPWdc27RCZBY6BURH1enzU7Dcw6RQUQ1StmtVbYshz6xdizujS9If/oivR7shhs5H59sxLpTwv7o9Ox74R4FaW9J4PTrgTO0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLMhKnwo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ta7nFxMb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07301F00893;
-	Sat, 30 May 2026 17:25:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLMhKnwo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAC21F00893;
+	Sat, 30 May 2026 17:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161905;
-	bh=gBMWAhK7Of+o5dRqqSbHAckkq666qe8U/KWqZkKGTQg=;
+	s=korg; t=1780161912;
+	bh=KvHgZ7b0upB/yAW458R1GcXyg2J18i0yI44K5vnyJg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ta7nFxMbUQPwOXzvDIzSuEGMo/FhEtX3ToGW/PICyZLnGZ6uGx80BFvpD0i1nw1+d
-	 7B9TlX+1+nm/OHd0GzA82XDcHhD7DbYS6SexPyfoiT0e7TX0ceQnZWOi/gA7iXjfNi
-	 xjqewIPhE7rGeWsG5wMkOfv7fAnx4fxzFOfLHgOc=
+	b=SLMhKnwoCmbMUayV3gjXSuHZyUdq5kIwu9nQ/SK/aOOko/fPnuzl+nkGmSOeRQnMd
+	 t9mMVO02gk0knWinVygj0SmvQ8QzzLzd6X3TcFWj/8q5pGxAu7o6l7H/yHwIOE9hDb
+	 ysVsl1/pnjIAqWFIn9mhrxRGGUXjHLxbj1AL+wkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Yunje Shin <ioerts@kookmin.ac.kr>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Maurizio Lombardi <mlombard@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Kanchan Joshi <joshi.k@samsung.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 733/969] nvmet-tcp: propagate nvmet_tcp_build_pdu_iovec() errors to its callers
-Date: Sat, 30 May 2026 18:04:17 +0200
-Message-ID: <20260530160320.785864307@linuxfoundation.org>
+Subject: [PATCH 6.1 735/969] nvme-pci: fix missed admin queue sq doorbell write
+Date: Sat, 30 May 2026 18:04:19 +0200
+Message-ID: <20260530160320.846389394@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -54,159 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit ea8e356acb165cb1fd75537a52e1f66e5e76c538 ]
+[ Upstream commit 1cc4cdae2a3b7730d462d69e30f213fd2efe7807 ]
 
-Currently, when nvmet_tcp_build_pdu_iovec() detects an out-of-bounds
-PDU length or offset, it triggers nvmet_tcp_fatal_error(cmd->queue)
-and returns early. However, because the function returns void, the
-callers are entirely unaware that a fatal error has occurred and
-that the cmd->recv_msg.msg_iter was left uninitialized.
+We can batch admin commands submitted through io_uring_cmd passthrough,
+which means bd->last may be false and skips the doorbell write to
+aggregate multiple commands per write. If a subsequent command can't be
+dispatched for whatever reason, we have to provide the blk-mq ops'
+commit_rqs callback in order to ensure we properly update the doorbell.
 
-Callers such as nvmet_tcp_handle_h2c_data_pdu() proceed to blindly
-overwrite the queue state with queue->rcv_state = NVMET_TCP_RECV_DATA
-Consequently, the socket receiving loop may attempt to read incoming
-network data into the uninitialized iterator.
-
-Fix this by shifting the error handling responsibility to the callers.
-
-Fixes: 52a0a9854934 ("nvmet-tcp: add bounds checks in nvmet_tcp_build_pdu_iovec")
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Yunje Shin <ioerts@kookmin.ac.kr>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Fixes: 58e5bdeb9c2b ("nvme: enable uring-passthrough for admin commands")
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 51 ++++++++++++++++++++++-----------------
- 1 file changed, 29 insertions(+), 22 deletions(-)
+ drivers/nvme/host/pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index a46c9f5110838..01d685499b97d 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -308,7 +308,7 @@ static void nvmet_tcp_free_cmd_buffers(struct nvmet_tcp_cmd *cmd)
- 
- static void nvmet_tcp_fatal_error(struct nvmet_tcp_queue *queue);
- 
--static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
-+static int nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
- {
- 	struct bio_vec *iov = cmd->iov;
- 	struct scatterlist *sg;
-@@ -321,22 +321,19 @@ static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
- 	offset = cmd->rbytes_done;
- 	cmd->sg_idx = offset / PAGE_SIZE;
- 	sg_offset = offset % PAGE_SIZE;
--	if (!cmd->req.sg_cnt || cmd->sg_idx >= cmd->req.sg_cnt) {
--		nvmet_tcp_fatal_error(cmd->queue);
--		return;
--	}
-+	if (!cmd->req.sg_cnt || cmd->sg_idx >= cmd->req.sg_cnt)
-+		return -EPROTO;
-+
- 	sg = &cmd->req.sg[cmd->sg_idx];
- 	sg_remaining = cmd->req.sg_cnt - cmd->sg_idx;
- 
- 	while (length) {
--		if (!sg_remaining) {
--			nvmet_tcp_fatal_error(cmd->queue);
--			return;
--		}
--		if (!sg->length || sg->length <= sg_offset) {
--			nvmet_tcp_fatal_error(cmd->queue);
--			return;
--		}
-+		if (!sg_remaining)
-+			return -EPROTO;
-+
-+		if (!sg->length || sg->length <= sg_offset)
-+			return -EPROTO;
-+
- 		u32 iov_len = min_t(u32, length, sg->length - sg_offset);
- 
- 		bvec_set_page(iov, sg_page(sg), iov_len,
-@@ -351,6 +348,7 @@ static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
- 
- 	iov_iter_bvec(&cmd->recv_msg.msg_iter, ITER_DEST, cmd->iov,
- 		      nr_pages, cmd->pdu_len);
-+	return 0;
- }
- 
- static void nvmet_tcp_fatal_error(struct nvmet_tcp_queue *queue)
-@@ -906,7 +904,7 @@ static int nvmet_tcp_handle_icreq(struct nvmet_tcp_queue *queue)
- 	return 0;
- }
- 
--static void nvmet_tcp_handle_req_failure(struct nvmet_tcp_queue *queue,
-+static int nvmet_tcp_handle_req_failure(struct nvmet_tcp_queue *queue,
- 		struct nvmet_tcp_cmd *cmd, struct nvmet_req *req)
- {
- 	size_t data_len = le32_to_cpu(req->cmd->common.dptr.sgl.length);
-@@ -922,19 +920,23 @@ static void nvmet_tcp_handle_req_failure(struct nvmet_tcp_queue *queue,
- 	if (!nvme_is_write(cmd->req.cmd) || !data_len ||
- 	    data_len > cmd->req.port->inline_data_size) {
- 		nvmet_prepare_receive_pdu(queue);
--		return;
-+		return 0;
- 	}
- 
- 	ret = nvmet_tcp_map_data(cmd);
- 	if (unlikely(ret)) {
- 		pr_err("queue %d: failed to map data\n", queue->idx);
- 		nvmet_tcp_fatal_error(queue);
--		return;
-+		return -EPROTO;
- 	}
- 
- 	queue->rcv_state = NVMET_TCP_RECV_DATA;
--	nvmet_tcp_build_pdu_iovec(cmd);
- 	cmd->flags |= NVMET_TCP_F_INIT_FAILED;
-+	ret = nvmet_tcp_build_pdu_iovec(cmd);
-+	if (unlikely(ret))
-+		pr_err("queue %d: failed to build PDU iovec\n", queue->idx);
-+
-+	return ret;
- }
- 
- static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
-@@ -986,7 +988,10 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- 		goto err_proto;
- 	}
- 	cmd->pdu_recv = 0;
--	nvmet_tcp_build_pdu_iovec(cmd);
-+	if (unlikely(nvmet_tcp_build_pdu_iovec(cmd))) {
-+		pr_err("queue %d: failed to build PDU iovec\n", queue->idx);
-+		goto err_proto;
-+	}
- 	queue->cmd = cmd;
- 	queue->rcv_state = NVMET_TCP_RECV_DATA;
- 
-@@ -1049,8 +1054,7 @@ static int nvmet_tcp_done_recv_pdu(struct nvmet_tcp_queue *queue)
- 			req->cmd->common.opcode,
- 			le32_to_cpu(req->cmd->common.dptr.sgl.length));
- 
--		nvmet_tcp_handle_req_failure(queue, queue->cmd, req);
--		return 0;
-+		return nvmet_tcp_handle_req_failure(queue, queue->cmd, req);
- 	}
- 
- 	ret = nvmet_tcp_map_data(queue->cmd);
-@@ -1067,8 +1071,11 @@ static int nvmet_tcp_done_recv_pdu(struct nvmet_tcp_queue *queue)
- 	if (nvmet_tcp_need_data_in(queue->cmd)) {
- 		if (nvmet_tcp_has_inline_data(queue->cmd)) {
- 			queue->rcv_state = NVMET_TCP_RECV_DATA;
--			nvmet_tcp_build_pdu_iovec(queue->cmd);
--			return 0;
-+			ret = nvmet_tcp_build_pdu_iovec(queue->cmd);
-+			if (unlikely(ret))
-+				pr_err("queue %d: failed to build PDU iovec\n",
-+					queue->idx);
-+			return ret;
- 		}
- 		/* send back R2T */
- 		nvmet_tcp_queue_response(&queue->cmd->req);
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 394673a7f75cb..660e8fbb18136 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -1756,6 +1756,7 @@ static int nvme_create_queue(struct nvme_queue *nvmeq, int qid, bool polled)
+ static const struct blk_mq_ops nvme_mq_admin_ops = {
+ 	.queue_rq	= nvme_queue_rq,
+ 	.complete	= nvme_pci_complete_rq,
++	.commit_rqs	= nvme_commit_rqs,
+ 	.init_hctx	= nvme_admin_init_hctx,
+ 	.init_request	= nvme_pci_init_request,
+ 	.timeout	= nvme_timeout,
 -- 
 2.53.0
 
