@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FF727A477;
-	Sat, 30 May 2026 17:42:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F16267B05;
+	Sat, 30 May 2026 17:42:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162955; cv=none; b=OTNTXSzzlgXW1Cvkdd2pELw9WXRDz3104Nd7SPOxURWtbuvbFOhrUdWQXmFWVtp86usO9qBc9yQCWwavYgHBiDgqQCaulgOU/SVOSlyDdkgWJVxsYn3oizDt0oaXzYKGOekRxWnMqt+BtkZPQRCYwcWZqP4E8Z1KmDHO9olucw4=
+	t=1780162959; cv=none; b=lXSEinS2PUc2A34x+0399TpPtiWmfOfm4oppj3txdM3TLl9C4L1UyB4tQcsNAfx+gnRGCejFY9mHqaiiUICa5dZvaO+Uh3VcqZhcfiV5yHO7Lpt3Y0XgLcsqZcJWzUZ9SlIDtUqLMwlF4ZH5uj7rjHLLn2V+mTTcm5IqbvxVgF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162955; c=relaxed/simple;
-	bh=F6UyGpqu+mkWZFA5EKJUeB29xbAGJP1yzfntLpPiRPw=;
+	s=arc-20240116; t=1780162959; c=relaxed/simple;
+	bh=UYVWwWbQ6KLaOuZNB8lUOg3YP6g+1DrFyWFTEIpm5ZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IL6+Wxgewz5lZ3EBj1Oj54wcRCu8eDhHfEH80+t809NrZfzrhkRKirD5imy3012aVLeI76N0Ew/RzYOJTXtu2teM4oRBFQVvtRo6DoqOCMP0MaN+rnkQQyJOwdE4kY/dqNYvxPU/gjJI/a/E+SJiDds7PcyFGdjnZHGjBzjeSHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ouqYztQF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oYR13RNdLt56gNriKXWNAKYNV9QsPmUvI7NRAFyNaRiB8ZL67/ooiUXQmMdk8UCvisPVn7JXEhOMhNRkrUooVW10Lgkg0LwYDEREAuR83Ut76DOWZWDRt/4B4e9lKPpmC1f7W70re0GHBv9X7V1qVuJxUxXiAyQbA89bx2XnVbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHcWTfWe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ouqYztQF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF361F00893;
-	Sat, 30 May 2026 17:42:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHcWTfWe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E901F00893;
+	Sat, 30 May 2026 17:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162954;
-	bh=jsmQv2+GUNWUUova6MTn0k9w9ZfeMt40alU8QEOq3Q0=;
+	s=korg; t=1780162957;
+	bh=J7wANRIPs5TOpb1YCzkCHdn/MPnpXV16yqij2tcDl0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ouqYztQFe0V5+7ptLg+fj0h8DIDRQsAL8GN1Pe8EzLzsukk9J5Q6JMYa3DWtKhKCB
-	 pNPj4xwkh2gH3jMgak4FygLjXYgkp15aIWkUAapGKksYyT9Voob+Dc9NyiTnMdPM7s
-	 rvUXrQ8p3UPZmCV3ir/nLXQvj9d807hiLjQN+bmY=
+	b=ZHcWTfWeYlH5nHROJkKPKCl9fKhfZS56DdQbsB6fyo1g8bti8a3UgK2GvdCvPH0tZ
+	 nEK89i6sjEuM28dUpVKbComlpIU4zdySdOsjIfMVyQPGIdMoRhjQdL1ANjFMdBsjUt
+	 APA5xYE5dlKnfyFuUQnzCg14ZP2A43Tiqy5xCYKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liam Merwick <liam.merwick@oracle.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.15 074/776] KVM: SEV: Drop WARN on large size for KVM_MEMORY_ENCRYPT_REG_REGION
-Date: Sat, 30 May 2026 17:56:28 +0200
-Message-ID: <20260530160242.236768463@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Nathan Rebello <nathan.c.rebello@gmail.com>
+Subject: [PATCH 5.15 065/776] usbip: validate number_of_packets in usbip_pack_ret_submit()
+Date: Sat, 30 May 2026 17:56:19 +0200
+Message-ID: <20260530160241.996400390@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,71 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Nathan Rebello <nathan.c.rebello@gmail.com>
 
-commit 8acffeef5ef720c35e513e322ab08e32683f32f2 upstream.
+commit 2ab833a16a825373aad2ba7d54b572b277e95b71 upstream.
 
-Drop the WARN in sev_pin_memory() on npages overflowing an int, as the
-WARN is comically trivially to trigger from userspace, e.g. by doing:
+When a USB/IP client receives a RET_SUBMIT response,
+usbip_pack_ret_submit() unconditionally overwrites
+urb->number_of_packets from the network PDU. This value is
+subsequently used as the loop bound in usbip_recv_iso() and
+usbip_pad_iso() to iterate over urb->iso_frame_desc[], a flexible
+array whose size was fixed at URB allocation time based on the
+*original* number_of_packets from the CMD_SUBMIT.
 
-  struct kvm_enc_region range = {
-          .addr = 0,
-          .size = -1ul,
-  };
+A malicious USB/IP server can set number_of_packets in the response
+to a value larger than what was originally submitted, causing a heap
+out-of-bounds write when usbip_recv_iso() writes to
+urb->iso_frame_desc[i] beyond the allocated region.
 
-  __vm_ioctl(vm, KVM_MEMORY_ENCRYPT_REG_REGION, &range);
+KASAN confirmed this with kernel 7.0.0-rc5:
 
-Note, the checks in sev_mem_enc_register_region() that presumably exist to
-verify the incoming address+size are completely worthless, as both "addr"
-and "size" are u64s and SEV is 64-bit only, i.e. they _can't_ be greater
-than ULONG_MAX.  That wart will be cleaned up in the near future.
+  BUG: KASAN: slab-out-of-bounds in usbip_recv_iso+0x46a/0x640
+  Write of size 4 at addr ffff888106351d40 by task vhci_rx/69
 
-	if (range->addr > ULONG_MAX || range->size > ULONG_MAX)
-		return -EINVAL;
+  The buggy address is located 0 bytes to the right of
+   allocated 320-byte region [ffff888106351c00, ffff888106351d40)
 
-Opportunistically add a comment to explain why the code calculates the
-number of pages the "hard" way, e.g. instead of just shifting @ulen.
+The server side (stub_rx.c) and gadget side (vudc_rx.c) already
+validate number_of_packets in the CMD_SUBMIT path since commits
+c6688ef9f297 ("usbip: fix stub_rx: harden CMD_SUBMIT path to handle
+malicious input") and b78d830f0049 ("usbip: fix vudc_rx: harden
+CMD_SUBMIT path to handle malicious input"). The server side validates
+against USBIP_MAX_ISO_PACKETS because no URB exists yet at that point.
+On the client side we have the original URB, so we can use the tighter
+bound: the response must not exceed the original number_of_packets.
 
-Fixes: 78824fabc72e ("KVM: SVM: fix svn_pin_memory()'s use of get_user_pages_fast()")
-Cc: stable@vger.kernel.org
-Reviewed-by: Liam Merwick <liam.merwick@oracle.com>
-Tested-by: Liam Merwick <liam.merwick@oracle.com>
-Link: https://patch.msgid.link/20260313003302.3136111-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+This mirrors the existing validation of actual_length against
+transfer_buffer_length in usbip_recv_xbuff(), which checks the
+response value against the original allocation size.
+
+Kelvin Mbogo's series ("usb: usbip: fix integer overflow in
+usbip_recv_iso()", v2) hardens the receive-side functions themselves;
+this patch complements that work by catching the bad value at its
+source -- in usbip_pack_ret_submit() before the overwrite -- and
+using the tighter per-URB allocation bound rather than the global
+USBIP_MAX_ISO_PACKETS limit.
+
+Fix this by checking rpdu->number_of_packets against
+urb->number_of_packets in usbip_pack_ret_submit() before the
+overwrite. On violation, clamp to zero so that usbip_recv_iso() and
+usbip_pad_iso() safely return early.
+
+Fixes: 1325f85fa49f ("staging: usbip: bugfix add number of packets for isochronous frames")
+Cc: stable <stable@kernel.org>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Nathan Rebello <nathan.c.rebello@gmail.com>
+Link: https://patch.msgid.link/20260402085259.234-1-nathan.c.rebello@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/usb/usbip/usbip_common.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -388,10 +388,16 @@ static struct page **sev_pin_memory(stru
- 	if (ulen == 0 || uaddr + ulen < uaddr)
- 		return ERR_PTR(-EINVAL);
- 
--	/* Calculate number of pages. */
-+	/*
-+	 * Calculate the number of pages that need to be pinned to cover the
-+	 * entire range.  Note!  This isn't simply ulen >> PAGE_SHIFT, as KVM
-+	 * doesn't require the incoming address+size to be page aligned!
-+	 */
- 	first = (uaddr & PAGE_MASK) >> PAGE_SHIFT;
- 	last = ((uaddr + ulen - 1) & PAGE_MASK) >> PAGE_SHIFT;
- 	npages = (last - first + 1);
-+	if (npages > INT_MAX)
-+		return ERR_PTR(-EINVAL);
- 
- 	locked = sev->pages_locked + npages;
- 	lock_limit = rlimit(RLIMIT_MEMLOCK) >> PAGE_SHIFT;
-@@ -400,9 +406,6 @@ static struct page **sev_pin_memory(stru
- 		return ERR_PTR(-ENOMEM);
+--- a/drivers/usb/usbip/usbip_common.c
++++ b/drivers/usb/usbip/usbip_common.c
+@@ -384,6 +384,18 @@ static void usbip_pack_ret_submit(struct
+ 		urb->status		= rpdu->status;
+ 		urb->actual_length	= rpdu->actual_length;
+ 		urb->start_frame	= rpdu->start_frame;
++		/*
++		 * The number_of_packets field determines the length of
++		 * iso_frame_desc[], which is a flexible array allocated
++		 * at URB creation time. A response must never claim more
++		 * packets than originally submitted; doing so would cause
++		 * an out-of-bounds write in usbip_recv_iso() and
++		 * usbip_pad_iso(). Clamp to zero on violation so both
++		 * functions safely return early.
++		 */
++		if (rpdu->number_of_packets < 0 ||
++		    rpdu->number_of_packets > urb->number_of_packets)
++			rpdu->number_of_packets = 0;
+ 		urb->number_of_packets = rpdu->number_of_packets;
+ 		urb->error_count	= rpdu->error_count;
  	}
- 
--	if (WARN_ON_ONCE(npages > INT_MAX))
--		return ERR_PTR(-EINVAL);
--
- 	/* Avoid using vmalloc for smaller buffers. */
- 	size = npages * sizeof(struct page *);
- 	if (size > PAGE_SIZE)
 
 
