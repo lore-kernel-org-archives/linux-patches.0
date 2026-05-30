@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8C926738C;
-	Sat, 30 May 2026 18:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988C926738C;
+	Sat, 30 May 2026 18:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165950; cv=none; b=UYQmSYuecEr2LtidF6B8z7uEQ7kkQfi4BDizEcLy16qcMshkTwNm2xokFy3KORluPshUBFyIDoPocOlaftkWU+EYW3Tp6JWXGD3a2Jr+3i927vqVIfWiFFhS8B9L4JbTJSzSD3Zmv4fSfAEp96MdbzTrXQB5htuxd3wzqVa+66o=
+	t=1780165953; cv=none; b=XGJ5/FgtZppoDwfPjzFq38t7kt3BPp1C1/gHQccPci87dWUb4/glxnZmjnqwiWTFyRewSQ8w5EaDh3E1qBeS6FNGM7MMy+czdgzaXxrJxZoP6Es24UCqgrCNDMXKt9FI1mXuuCHw43tjXCq5HDJ7kSnSjr0OCLLKpedXlj7Sgvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165950; c=relaxed/simple;
-	bh=uvjWVwXgkqpiVxFUBcGpQpXp5iEnZorvt+5X1Cm8vUw=;
+	s=arc-20240116; t=1780165953; c=relaxed/simple;
+	bh=2lBd1yRuOAdOjK5xUoj07oz4BnKrPYxs2UlBTSMQpKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=suzQhBMLn5Hl3uiSoHYN8ynv2qen9qmJ1TSnznxu19sO2rJOgRx9kkG+9WSuKXNQHAIc5aKoU3LvxqLHcrj5yanCDOovZ/J4BFMijVjl/9xn6lIsIRRKR6hA1GsMN3S8IgNQxLs5sjSuebIVKrsXevvdQxSgG6P3yMP4kWkUTm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXz8SmhU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kkfwf7ML05NqIB2xy7IWv5uEctZ2V318b+HKt+GYpwJg3rWWUUZPMIgApWEpnuylFQEHtEwp3gHgpfJkZN+NodBCGMCXj+FjePe7pikiUhuXs3zCmK0GKEIvlkJS66QZty3YhT15zJeWcXCMHWlTV5WlaPj7MSrqDqrxZeeKM30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wA1aMpKX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXz8SmhU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B43C1F00893;
-	Sat, 30 May 2026 18:32:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wA1aMpKX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9317C1F00893;
+	Sat, 30 May 2026 18:32:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165948;
-	bh=lNkvRViBk7HIwJyOOq6Yhvvz4JltEic/nIWcuPufLrA=;
+	s=korg; t=1780165952;
+	bh=QanbMkmDUx7gGxW6UeD8N8tAOLVAgZcVK4ns54r+Caw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fXz8SmhUvSB05J/Ly2LbYXYnroqQFnE/mNA5mVnJguR9ZLUXk42ccN3nNHPIKcq0h
-	 Sm3/pyfQInpcsyf8XbUlyrOSw5IZ/JGlp4ZSgbaxvZz44Pgg/rVWSaR0vyaQ99Buy8
-	 S6Wr1N41hNAuhkxsbr/xZPtKdoli3D1TMovDouhA=
+	b=wA1aMpKXZzasPoHW9bjJgOHihi0ePGSvjDJK4hcdjo5K1qE/Qss49rwswt9NNY3Pj
+	 IJsHlaS0EB7lWB4u6Ejcde8ek0qRVvfkA6lssR0m4WGqouEejWPpDeZL1Nbp+3nKqo
+	 N0fbzwVR3DZefe6jAaQ5lpuq8rJSb31UJ0qxIBes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ruide Cao <caoruide123@gmail.com>,
-	Yilin Zhu <zylzyl2333@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Simon Horman <horms@kernel.org>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 5.10 229/589] ipv6: xfrm6: release dst on error in xfrm6_rcv_encap()
-Date: Sat, 30 May 2026 18:01:50 +0200
-Message-ID: <20260530160231.000324162@linuxfoundation.org>
+	Siwei Zhang <oss@fourdim.xyz>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.10 230/589] Bluetooth: L2CAP: Fix null-ptr-deref in l2cap_sock_new_connection_cb()
+Date: Sat, 30 May 2026 18:01:51 +0200
+Message-ID: <20260530160231.026796244@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -58,50 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yilin Zhu <zylzyl2333@gmail.com>
+From: Siwei Zhang <oss@fourdim.xyz>
 
-commit bc0fcb9823cd0894934cf968b525c575833d7078 upstream.
+commit 0a120d96166301d7a95be75b52f843837dbd1219 upstream.
 
-xfrm6_rcv_encap() performs an IPv6 route lookup when the skb does not
-already have a dst attached. ip6_route_input_lookup() returns a
-referenced dst entry even when the lookup resolves to an error route.
+Add the same NULL guard already present in
+l2cap_sock_resume_cb() and l2cap_sock_ready_cb().
 
-If dst->error is set, xfrm6_rcv_encap() drops the skb without attaching
-the dst to the skb and without releasing the reference returned by the
-lookup. Repeated packets hitting this path therefore leak dst entries.
-
-Release the dst before jumping to the drop path.
-
-Fixes: 0146dca70b87 ("xfrm: add support for UDPv6 encapsulation of ESP")
+Fixes: 80808e431e1e ("Bluetooth: Add l2cap_chan_ops abstraction")
 Cc: stable@kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Ruide Cao <caoruide123@gmail.com>
-Signed-off-by: Yilin Zhu <zylzyl2333@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/xfrm6_protocol.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/bluetooth/l2cap_sock.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/ipv6/xfrm6_protocol.c
-+++ b/net/ipv6/xfrm6_protocol.c
-@@ -88,8 +88,10 @@ int xfrm6_rcv_encap(struct sk_buff *skb,
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1455,6 +1455,9 @@ static struct l2cap_chan *l2cap_sock_new
+ {
+ 	struct sock *sk, *parent = chan->data;
  
- 		dst = ip6_route_input_lookup(dev_net(skb->dev), skb->dev, &fl6,
- 					     skb, flags);
--		if (dst->error)
-+		if (dst->error) {
-+			dst_release(dst);
- 			goto drop;
-+		}
- 		skb_dst_set(skb, dst);
- 	}
++	if (!parent)
++		return NULL;
++
+ 	lock_sock(parent);
  
+ 	/* Check for backlog size */
 
 
