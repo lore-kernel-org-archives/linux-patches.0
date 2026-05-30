@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B21267B05;
-	Sat, 30 May 2026 17:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F8A267B05;
+	Sat, 30 May 2026 17:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162990; cv=none; b=lSCwxsQAhURBFBD4Q9tSSjfeDgl06PljljSqHH2e/98m5kv06W9y+lcjepwrOl/+Yn8IjXiOI/SrkvwRgNpglE5STZmTxhfrK5VGSAQCzdSJHW8cE/o8Lt2zNzKRLlEc+aRgCgVQLUunJQxNpIYo8cRYtEuz6pe3Y31VLXYM7EQ=
+	t=1780162993; cv=none; b=ji0tjCRhjIJo/Urtdbjsv6fYLwbnXF3HyeIyrGZweeL49e8s0Y/H0oVmHo01xGqH4qAUL6ZL8m2AMtbFzTXuAlVKlHhbwcDofpn6weZhHgxHM1gTbMUqwlCGn8/mo4WD48G4pmmEO+TChqY9gOZ+/PgGFz+l7eE1VV413jy7c6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162990; c=relaxed/simple;
-	bh=qfpLXBnzMjudIxViUzcD4VDU69rVrYogadW7TGnl6Kw=;
+	s=arc-20240116; t=1780162993; c=relaxed/simple;
+	bh=gbnstl78QptB/UUS+58mnjst0/+ZklWiHkqzKsA6CqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jlReSiij0T3agW2qlNiS4fqzHwTh1E/Q2RYPshtY8/jlBcJPH2YDa6bQuWofR15WtaSJNNDQXQ0AjTL3LBldJnf7VtMjnKOmsKooxalz8uHMoOpJmOH2lLf4+PHd63gMAkKOZvkjRFH/Cw6O/EHY4D1sed9297TS01ycnxmie38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wTKZCLWj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UZn3mkcke+X6mZ5N/igFtgj45GNVinNwLr8Nu+kr8LsLElyWgknCTR4ZL6XbqB9mRHK/bsLrFvKkXZBc+AoRTnB+/jlNQl7Gxiwp+Oa0Nq1ZVnMLASwx+fy0ctvMJ9RC4qbtZnwnG+XqaoZICOka9T//2bJMmbhvcD1nDPg8hms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shDyKlcT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wTKZCLWj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473A31F00893;
-	Sat, 30 May 2026 17:43:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shDyKlcT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086ED1F00893;
+	Sat, 30 May 2026 17:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162989;
-	bh=QUgee3/O+JisQ/hDfTMC4E0tSXnf+ftZYjhBOrCIFmI=;
+	s=korg; t=1780162992;
+	bh=DUBQIAu846dkkBup0i4legRTTNHE+XKsCUSNmiGt/4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wTKZCLWjIlDhxWfv8eYgVOUrELs/RbZFLeBnRva1wD8KFSkJqS79EkE2TazqAOmKH
-	 KajhR71BHkN7Sv18YKawuOcp7fm+7B0MGdPXBFmg4WzJxMtkiTyRDmTlrxaXdlF8sp
-	 snlyxqYLdANGgDbNaVBfQ5x9/804wF3+HranNyVc=
+	b=shDyKlcTI7lypayr+Sl0V2outKjJo8wmyHJP6FhN5EpjXfGps4siM03Fh/JSSAuME
+	 phjPSMWiQFXmv4O1lh7ABzaGOmv2SbvFt6/pFTl6B1yk7yH5kBg196FuXvwyis+bcZ
+	 PFbtLZSJDXz5Z6BQ/10Wk+WcI44ea2fhq6llDYMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Ming Lei <ming.lei@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Alva Lan <alvalan9@foxmail.com>
-Subject: [PATCH 5.15 124/776] blk-mq: use quiesced elevator switch when reinitializing queues
-Date: Sat, 30 May 2026 17:57:18 +0200
-Message-ID: <20260530160243.581252463@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Guangwu Zhang <guazhang@redhat.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Rahul Sharma <black.hawk@163.com>
+Subject: [PATCH 5.15 125/776] dm-verity: disable recursive forward error correction
+Date: Sat, 30 May 2026 17:57:19 +0200
+Message-ID: <20260530160243.607090526@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,111 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 8237c01f1696bc53c470493bf1fe092a107648a6 ]
+[ Upstream commit d9f3e47d3fae0c101d9094bc956ed24e7a0ee801 ]
 
-The hctx's run_work may be racing with the elevator switch when
-reinitializing hardware queues. The queue is merely frozen in this
-context, but that only prevents requests from allocating and doesn't
-stop the hctx work from running. The work may get an elevator pointer
-that's being torn down, and can result in use-after-free errors and
-kernel panics (example below). Use the quiesced elevator switch instead,
-and make the previous one static since it is now only used locally.
+There are two problems with the recursive correction:
 
-  nvme nvme0: resetting controller
-  nvme nvme0: 32/0/0 default/read/poll queues
-  BUG: kernel NULL pointer dereference, address: 0000000000000008
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 80000020c8861067 P4D 80000020c8861067 PUD 250f8c8067 PMD 0
-  Oops: 0000 [#1] SMP PTI
-  Workqueue: kblockd blk_mq_run_work_fn
-  RIP: 0010:kyber_has_work+0x29/0x70
+1. It may cause denial-of-service. In fec_read_bufs, there is a loop that
+has 253 iterations. For each iteration, we may call verity_hash_for_block
+recursively. There is a limit of 4 nested recursions - that means that
+there may be at most 253^4 (4 billion) iterations. Red Hat QE team
+actually created an image that pushes dm-verity to this limit - and this
+image just makes the udev-worker process get stuck in the 'D' state.
 
-...
+2. It doesn't work. In fec_read_bufs we store data into the variable
+"fio->bufs", but fio bufs is shared between recursive invocations, if
+"verity_hash_for_block" invoked correction recursively, it would
+overwrite partially filled fio->bufs.
 
-  Call Trace:
-   __blk_mq_do_dispatch_sched+0x83/0x2b0
-   __blk_mq_sched_dispatch_requests+0x12e/0x170
-   blk_mq_sched_dispatch_requests+0x30/0x60
-   __blk_mq_run_hw_queue+0x2b/0x50
-   process_one_work+0x1ef/0x380
-   worker_thread+0x2d/0x3e0
-
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20220927155652.3260724-1-kbusch@fb.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ Adjust context ]
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reported-by: Guangwu Zhang <guazhang@redhat.com>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+[ The context change is due to the commit bdf253d580d7
+("dm-verity: remove support for asynchronous hashes")
+in v6.18 and the commit 9356fcfe0ac4
+("dm verity: set DM_TARGET_SINGLETON feature flag") in v6.9
+which are irrelevant to the logic of this patch. ]
+Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-mq.c   |    6 +++---
- block/blk.h      |    3 +--
- block/elevator.c |    4 ++--
- 3 files changed, 6 insertions(+), 7 deletions(-)
+ drivers/md/dm-verity-fec.c |    4 +---
+ drivers/md/dm-verity-fec.h |    3 ---
+ 2 files changed, 1 insertion(+), 6 deletions(-)
 
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -3732,14 +3732,14 @@ static bool blk_mq_elv_switch_none(struc
+--- a/drivers/md/dm-verity-fec.c
++++ b/drivers/md/dm-verity-fec.c
+@@ -423,10 +423,8 @@ int verity_fec_decode(struct dm_verity *
+ 	if (!verity_fec_is_enabled(v))
+ 		return -EOPNOTSUPP;
  
- 	mutex_lock(&q->sysfs_lock);
- 	/*
--	 * After elevator_switch_mq, the previous elevator_queue will be
-+	 * After elevator_switch, the previous elevator_queue will be
- 	 * released by elevator_release. The reference of the io scheduler
- 	 * module get by elevator_get will also be put. So we need to get
- 	 * a reference of the io scheduler module here to prevent it to be
- 	 * removed.
- 	 */
- 	__module_get(qe->type->elevator_owner);
--	elevator_switch_mq(q, NULL);
-+	elevator_switch(q, NULL);
- 	mutex_unlock(&q->sysfs_lock);
+-	if (fio->level >= DM_VERITY_FEC_MAX_RECURSION) {
+-		DMWARN_LIMIT("%s: FEC: recursion too deep", v->data_dev->name);
++	if (fio->level)
+ 		return -EIO;
+-	}
  
- 	return true;
-@@ -3764,7 +3764,7 @@ static void blk_mq_elv_switch_back(struc
- 	kfree(qe);
+ 	fio->level++;
  
- 	mutex_lock(&q->sysfs_lock);
--	elevator_switch_mq(q, t);
-+	elevator_switch(q, t);
- 	mutex_unlock(&q->sysfs_lock);
- }
+--- a/drivers/md/dm-verity-fec.h
++++ b/drivers/md/dm-verity-fec.h
+@@ -23,9 +23,6 @@
+ #define DM_VERITY_FEC_BUF_MAX \
+ 	(1 << (PAGE_SHIFT - DM_VERITY_FEC_BUF_RS_BITS))
  
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -189,8 +189,7 @@ void blk_account_io_done(struct request
- 
- void blk_insert_flush(struct request *rq);
- 
--int elevator_switch_mq(struct request_queue *q,
--			      struct elevator_type *new_e);
-+int elevator_switch(struct request_queue *q, struct elevator_type *new_e);
- void __elevator_exit(struct request_queue *, struct elevator_queue *);
- int elv_register_queue(struct request_queue *q, bool uevent);
- void elv_unregister_queue(struct request_queue *q);
---- a/block/elevator.c
-+++ b/block/elevator.c
-@@ -581,7 +581,7 @@ void elv_unregister(struct elevator_type
- }
- EXPORT_SYMBOL_GPL(elv_unregister);
- 
--int elevator_switch_mq(struct request_queue *q,
-+static int elevator_switch_mq(struct request_queue *q,
- 			      struct elevator_type *new_e)
- {
- 	int ret;
-@@ -719,7 +719,7 @@ void elevator_init_mq(struct request_que
-  * need for the new one. this way we have a chance of going back to the old
-  * one, if the new one fails init for some reason.
-  */
--static int elevator_switch(struct request_queue *q, struct elevator_type *new_e)
-+int elevator_switch(struct request_queue *q, struct elevator_type *new_e)
- {
- 	int err;
- 
+-/* maximum recursion level for verity_fec_decode */
+-#define DM_VERITY_FEC_MAX_RECURSION	4
+-
+ #define DM_VERITY_OPT_FEC_DEV		"use_fec_from_device"
+ #define DM_VERITY_OPT_FEC_BLOCKS	"fec_blocks"
+ #define DM_VERITY_OPT_FEC_START		"fec_start"
 
 
