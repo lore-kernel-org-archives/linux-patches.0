@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C135D34D38B;
-	Sat, 30 May 2026 17:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6623B6359;
+	Sat, 30 May 2026 17:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162662; cv=none; b=botb/iij6Z2af6AQClhQ7++TuiPGRfJpmk8+0gU72sDfzarHgk2Xorn0LInNVsAQq9VQdmsF99803LikYR7CjvO6MNSsqn0zPNlWoEAB8pMWHFIMyrHng3FdFUFYd9FIdu+hAwgF5yrfeUJb4e+8u4VE8wsrWCuB1nUjlb1XaiI=
+	t=1780162670; cv=none; b=VUA94Hq95MIJrHZqNvJ3nOBNIglBM4usMU3jqQNmnKf4KPeZZBJ90Tqid9+raoCinTvLYu9joZbxxAXhpE9JkjPxDOpZOSbzqIHVQ45Ewu0gB3LuwxOYXP+Pq4ahDreY7miZEQSS21oKGpre5O43Qlc3DTt7PxlleT+4n+sKwoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162662; c=relaxed/simple;
-	bh=AdbhM/AqASSHNjP0l81RTi6Zw92OzJFwPTm86mr59BA=;
+	s=arc-20240116; t=1780162670; c=relaxed/simple;
+	bh=34IOL2aRnUnuxbJZgro7sYnQEImNnmwGLgMjf0UsXsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=azCWYdKJST5d1YAeZNvlXq5iRAh6PaRrDMV+g/9E1mk8AE73Wd/mTWfmTEaTGLpZiCZlarMf1CBy2htO+hrpYDV3S2r/etZKLWoeS0xfcYiPcJgZDOVrALIEpQV2KwB515o4cusWH3mkPuxlZMBlrPrhNQapXNAo1WESFax9USA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJdonCaW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bdGjVXjj2cJ4I5lTR2B4gxzhUBmg7xgG1HUfDedMKPgVT27tjsFGzJ8iw3QfxJ9rHHSj5f8+g9JcQ7e37MckmeN2qixXdLEj0hbdwtkGW4b9I43Jr2cqJ+5tzYSfovYS03fOqH8qIEiUVshBu+bUd1e4VdrSxlKhCYXHizJECC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yy4LHziw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJdonCaW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6F21F00898;
-	Sat, 30 May 2026 17:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yy4LHziw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7332A1F00899;
+	Sat, 30 May 2026 17:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162660;
-	bh=U4EbAIxRZT4e8FuXJwIJCCXaOH+WlxhvsdjAUnvh270=;
+	s=korg; t=1780162669;
+	bh=nf4c6WmzOkMi208xUw0XTGjVshRFFdfhIdMEd+biOZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yJdonCaWUEYHwvvw2QTBc3Z61HBzfiPpo0a3Q9Oxe5fATf5t6ZxsyNM7n89rvHPsD
-	 RHj6iruka8n12wIml+6JiAngEux/+khrI/vNw06gnSl4qdkeGev9EUaBEQsY1wZk8I
-	 Zzja6eyD73nNzvdtag/6rQbJLShteeAkL3fFc9C4=
+	b=yy4LHziwk7VtkizS3CTf9Y2UokUMyBBqAHh/wPdmDhqGZL7q81hmV/FZxBnKCMIHm
+	 bW7P1tNpqyfZDI/2jTU1BFb66pvsJFjcQgBI2ab2nYHtdE6u15x4vE7x4uIftatxu5
+	 jpfeoG4fJZNwGHqAdGSVEbBGkBh0ZT5PqGIP9Zmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiqi Sun <sunyiqixm@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/776] ipv4: icmp: fix null-ptr-deref in icmp_build_probe()
-Date: Sat, 30 May 2026 17:55:41 +0200
-Message-ID: <20260530160240.970723560@linuxfoundation.org>
+Subject: [PATCH 5.15 028/776] nfc: s3fwrn5: allocate rx skb before consuming bytes
+Date: Sat, 30 May 2026 17:55:42 +0200
+Message-ID: <20260530160240.998929103@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,48 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yiqi Sun <sunyiqixm@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit fde29fd9349327acc50d19a0b5f3d5a6c964dfd8 ]
+[ Upstream commit 5c14a19d5b1645cce1cb1252833d70b23635b632 ]
 
-ipv6_stub->ipv6_dev_find() may return ERR_PTR(-EAFNOSUPPORT) when the
-IPv6 stack is not active (CONFIG_IPV6=m and not loaded), and passing
-this error pointer to dev_hold() will cause a kernel crash with
-null-ptr-deref.
+s3fwrn82_uart_read() reports the number of accepted bytes to the serdev
+core. The current code consumes bytes into recv_skb and may already
+deliver a complete frame before allocating a fresh receive buffer.
 
-Instead, silently discard the request. RFC 8335 does not appear to
-define a specific response for the case where an IPv6 interface
-identifier is syntactically valid but the implementation cannot perform
-the lookup at runtime, and silently dropping the request may safer than
-misreporting "No Such Interface".
+If that alloc_skb() fails, the callback returns 0 even though it has
+already consumed bytes, and it leaves recv_skb as NULL for the next
+receive callback. That breaks the receive_buf() accounting contract and
+can also lead to a NULL dereference on the next skb_put_u8().
 
-Fixes: d329ea5bd884 ("icmp: add response to RFC 8335 PROBE messages")
-Signed-off-by: Yiqi Sun <sunyiqixm@gmail.com>
-Link: https://patch.msgid.link/20260402070419.2291578-1-sunyiqixm@gmail.com
+Allocate the receive skb lazily before consuming the next byte instead.
+If allocation fails, return the number of bytes already accepted.
+
+Fixes: 3f52c2cb7e3a ("nfc: s3fwrn5: Support a UART interface")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260402042148.65236-1-pengpeng@iscas.ac.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/icmp.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/nfc/s3fwrn5/uart.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
-index 0215e2510670a..4dae803fc7c71 100644
---- a/net/ipv4/icmp.c
-+++ b/net/ipv4/icmp.c
-@@ -1108,6 +1108,13 @@ bool icmp_build_probe(struct sk_buff *skb, struct icmphdr *icmphdr)
- 			if (iio->ident.addr.ctype3_hdr.addrlen != sizeof(struct in6_addr))
- 				goto send_mal_query;
- 			dev = ipv6_stub->ipv6_dev_find(net, &iio->ident.addr.ip_addr.ipv6_addr, dev);
-+			/*
-+			 * If IPv6 identifier lookup is unavailable, silently
-+			 * discard the request instead of misreporting NO_IF.
-+			 */
-+			if (IS_ERR(dev))
-+				return false;
+diff --git a/drivers/nfc/s3fwrn5/uart.c b/drivers/nfc/s3fwrn5/uart.c
+index 82ea35d748a5d..dde1a87ed1e47 100644
+--- a/drivers/nfc/s3fwrn5/uart.c
++++ b/drivers/nfc/s3fwrn5/uart.c
+@@ -59,6 +59,12 @@ static int s3fwrn82_uart_read(struct serdev_device *serdev,
+ 	size_t i;
+ 
+ 	for (i = 0; i < count; i++) {
++		if (!phy->recv_skb) {
++			phy->recv_skb = alloc_skb(NCI_SKB_BUFF_LEN, GFP_KERNEL);
++			if (!phy->recv_skb)
++				return i;
++		}
 +
- 			dev_hold(dev);
- 			break;
- #endif
+ 		skb_put_u8(phy->recv_skb, *data++);
+ 
+ 		if (phy->recv_skb->len < S3FWRN82_NCI_HEADER)
+@@ -70,9 +76,7 @@ static int s3fwrn82_uart_read(struct serdev_device *serdev,
+ 
+ 		s3fwrn5_recv_frame(phy->common.ndev, phy->recv_skb,
+ 				   phy->common.mode);
+-		phy->recv_skb = alloc_skb(NCI_SKB_BUFF_LEN, GFP_KERNEL);
+-		if (!phy->recv_skb)
+-			return 0;
++		phy->recv_skb = NULL;
+ 	}
+ 
+ 	return i;
 -- 
 2.53.0
 
