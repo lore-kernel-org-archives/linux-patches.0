@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA0721E098;
-	Sat, 30 May 2026 17:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8FAE329C6D;
+	Sat, 30 May 2026 17:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163896; cv=none; b=HygA3r6EqK5VkhUmRKhQMqhY4RT1mfQ/firPzysZs5W8VgRDiPdOaLwNkaCoRMLsVy0V4FgKTrKdgOZq/hvPZXQ3sMH4rRl+Hv3jDN+2jCzS0/y61PD+8qziNaurYLjLSNWMsj58YnFf1I4JSiKWY+34+oJlOFcXFP/HO1xLTXg=
+	t=1780163899; cv=none; b=PEcnRdui7CWy9SPU+JL5kjAO4mtZr/9+DkZmaO/vmZDSCNiPlEFiOyutCd/CraBeJCqEKCbfVy7W0mIM2nAPikQcskp2V9wJbAnKvTk0SU6ogbbNWLppGfIu21DUMDdY03bP9GntgCvbyGxaXazZxK+dX7sRgN6OFGXqgFD6gaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163896; c=relaxed/simple;
-	bh=9TEj/gaFit7Dv9Ms70dnlxQ3BRDdyazZRU+wLZOJ5bE=;
+	s=arc-20240116; t=1780163899; c=relaxed/simple;
+	bh=CF63jfuR6IDbP+gwm5Yb0gdphy00NnlUDGI7QLeaWf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pL8f69Ztj1gAIHPG2EIUBbFhh5LWtSS/Zg/SG5d1hM3WLd5QJ44bHsq1IG7kfuTTBpobRIr0iq2MsQbS30Mgs9b3lJ4ZAxqyggMssz5iaUHelCEgEFPsLO5rx2dlVqvh0kstoru3lL/UNVV5Pf/3V3yi0VepDWbpI1ETZ0RUKWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nH+jB+Vj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k+u8Bcb++wrtI62axJu+sZdWChZ9Nnse73PHSG0yIAILE68Q3EJzepcEB/Vdr+is5jlxFcBnWxst3y8Qm5OHwWEnWTAm+vY2hPxsaMfgaSNk839xH08BKSAmLH9TgY71JoMuvro8dJN9aycdTKtXfr3NKGa2WYQM2o8FWsr2rg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1SAvcTxs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nH+jB+Vj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC70A1F00893;
-	Sat, 30 May 2026 17:58:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1SAvcTxs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F171F00893;
+	Sat, 30 May 2026 17:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163895;
-	bh=sSnPOMYa0zRYbIGqYebHSg7fRuhCfCZSXGHobcVO/XE=;
+	s=korg; t=1780163898;
+	bh=w6FFm38U076VZpQt00MSGxp0JGGT8dClKM94hvi8aXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nH+jB+VjipXHScHel18dzcu43P0V8ory1OiyW59yRnu3+VKqRw1qq0pbKG+NiuZkC
-	 YnwzuzdBNGEZ/u1/XxnrLz1INLXRvJuUPrI2n37Bgwa8E7/c6saAIPiv/NpoQktwbB
-	 tvvIXPLx/h9SjYryYk5f/t77xNJLDdBuNMVOt5pc=
+	b=1SAvcTxs4TBLyM1fUffHt4tGj8kqJEOLXzfviMnXVzJjp7l/72eaixk+OXPW+hvrZ
+	 O24bvMiZ5EO49pVupCBIbZcM6l0gth8xa9tsSgm7X5k/eGmIzYqj87hUUqxELGsb5w
+	 nqV/yZiSzl6OjmBfGlsP3TQbf8C2ANUybD1VZ5rI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Cheng <benjamin.cheng@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Ruijing Dong <ruijing.dong@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 365/776] drm/amdgpu/vcn3: Prevent OOB reads when parsing dec msg
-Date: Sat, 30 May 2026 18:01:19 +0200
-Message-ID: <20260530160249.994059760@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Ashutosh Desai <ashutoshdesai993@gmail.com>
+Subject: [PATCH 5.15 366/776] drm/gem: Fix inconsistent plane dimension calculation in drm_gem_fb_init_with_funcs()
+Date: Sat, 30 May 2026 18:01:20 +0200
+Message-ID: <20260530160250.015415758@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -46,96 +44,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Cheng <benjamin.cheng@amd.com>
+From: Ashutosh Desai <ashutoshdesai993@gmail.com>
 
-commit b193019860d61e92da395eae2011f2f6716b182f upstream.
+commit 3d4c2268bd7243c3780fe32bf24ff876da272acf upstream.
 
-Check bounds against the end of the BO whenever we access the msg.
+drm_gem_fb_init_with_funcs() computes sub-sampled plane dimensions
+using plain integer division:
 
-Signed-off-by: Benjamin Cheng <benjamin.cheng@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Ruijing Dong <ruijing.dong@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+  unsigned int width  = mode_cmd->width  / (i ? info->hsub : 1);
+  unsigned int height = mode_cmd->height / (i ? info->vsub : 1);
+
+However, the ioctl-level framebuffer_check() in drm_framebuffer.c uses
+drm_format_info_plane_width/height() which round up dimensions via
+DIV_ROUND_UP(). This inconsistency corrupts the subsequent GEM object
+size check for certain pixel format and dimension combinations.
+
+For example, with NV12 (vsub=2) and a 1-pixel-tall framebuffer the
+GEM size validation path sees height=0 instead of height=1. The
+expression (height - 1) then wraps to UINT_MAX as an unsigned int,
+causing min_size to overflow and wrap back to a small value. A tiny
+GEM object therefore passes the size guard, yet when the GPU accesses
+the chroma plane it will read or write memory beyond the object's
+bounds.
+
+Fix by replacing the open-coded divisions with drm_format_info_plane_width()
+and drm_format_info_plane_height(), which use DIV_ROUND_UP() and match
+the calculation already used in framebuffer_check().
+
+Fixes: 4c3dbb2c312c ("drm: Add GEM backed framebuffer library")
+Cc: stable@vger.kernel.org # v4.14+
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260420013637.457751-1-ashutoshdesai993@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c |   23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/drm_gem_framebuffer_helper.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v3_0.c
-@@ -1861,7 +1861,7 @@ static int vcn_v3_0_dec_msg(struct amdgp
- {
- 	struct ttm_operation_ctx ctx = { false, false };
- 	struct amdgpu_bo_va_mapping *map;
--	uint32_t *msg, num_buffers;
-+	uint32_t *msg, num_buffers, len_dw;
- 	struct amdgpu_bo *bo;
- 	uint64_t start, end;
- 	unsigned int i;
-@@ -1882,6 +1882,11 @@ static int vcn_v3_0_dec_msg(struct amdgp
- 		return -EINVAL;
+--- a/drivers/gpu/drm/drm_gem_framebuffer_helper.c
++++ b/drivers/gpu/drm/drm_gem_framebuffer_helper.c
+@@ -159,8 +159,8 @@ int drm_gem_fb_init_with_funcs(struct dr
  	}
  
-+	if (end - addr < 16) {
-+		DRM_ERROR("VCN messages must be at least 4 DWORDs!\n");
-+		return -EINVAL;
-+	}
-+
- 	bo->flags |= AMDGPU_GEM_CREATE_CPU_ACCESS_REQUIRED;
- 	amdgpu_bo_placement_from_domain(bo, bo->allowed_domains);
- 	r = ttm_bo_validate(&bo->tbo, &bo->placement, &ctx);
-@@ -1898,8 +1903,8 @@ static int vcn_v3_0_dec_msg(struct amdgp
+ 	for (i = 0; i < info->num_planes; i++) {
+-		unsigned int width = mode_cmd->width / (i ? info->hsub : 1);
+-		unsigned int height = mode_cmd->height / (i ? info->vsub : 1);
++		unsigned int width = drm_format_info_plane_width(info, mode_cmd->width, i);
++		unsigned int height = drm_format_info_plane_height(info, mode_cmd->height, i);
+ 		unsigned int min_size;
  
- 	msg = ptr + addr - start;
- 
--	/* Check length */
- 	if (msg[1] > end - addr) {
-+		DRM_ERROR("VCN message header does not fit in BO!\n");
- 		r = -EINVAL;
- 		goto out;
- 	}
-@@ -1907,7 +1912,16 @@ static int vcn_v3_0_dec_msg(struct amdgp
- 	if (msg[3] != RDECODE_MSG_CREATE)
- 		goto out;
- 
-+	len_dw = msg[1] / 4;
- 	num_buffers = msg[2];
-+
-+	/* Verify that all indices fit within the claimed length. Each index is 4 DWORDs */
-+	if (num_buffers > len_dw || 6 + num_buffers * 4 > len_dw) {
-+		DRM_ERROR("VCN message has too many buffers!\n");
-+		r = -EINVAL;
-+		goto out;
-+	}
-+
- 	for (i = 0, msg = &msg[6]; i < num_buffers; ++i, msg += 4) {
- 		uint32_t offset, size, *create;
- 
-@@ -1917,14 +1931,15 @@ static int vcn_v3_0_dec_msg(struct amdgp
- 		offset = msg[1];
- 		size = msg[2];
- 
--		if (offset + size > end) {
-+		if (size < 4 || offset + size > end - addr) {
-+			DRM_ERROR("VCN message buffer exceeds BO bounds!\n");
- 			r = -EINVAL;
- 			goto out;
- 		}
- 
- 		create = ptr + addr + offset - start;
- 
--		/* H246, HEVC and VP9 can run on any instance */
-+		/* H264, HEVC and VP9 can run on any instance */
- 		if (create[0] == 0x7 || create[0] == 0x10 || create[0] == 0x11)
- 			continue;
- 
+ 		objs[i] = drm_gem_object_lookup(file, mode_cmd->handles[i]);
 
 
