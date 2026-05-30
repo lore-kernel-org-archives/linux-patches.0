@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A47355F53;
-	Sat, 30 May 2026 18:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7175A2FDC5E;
+	Sat, 30 May 2026 18:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164186; cv=none; b=Oep9OSutGyTLrRMQEDSXwcB7RsBUbeJ5u2iinskqJ/rZOfDe+YNtkjqa7sSgihRSLMDqit6zxGIlyltFoB+cwm6t/3SvoX8JVs1TLkDRdWm7SBiGlrGl8pQbDAdPWxCrhqxM+uSt5+CYU26MPSFFDsSpvY5q7CzasFEv7qbUufQ=
+	t=1780164189; cv=none; b=pu+bhi1naxC8wy5HUhFTo6Ez6BS2S5HrHN2ANm2KK2QlopWgJ0oj3z7/AlvkPlv0vFbNte2Q0ekAPW7goPHAN9VljEijtkgayMhHJZ1PDC+AiU0OHXvNlKotLmEqZZv3tlHxsflJrNhC+7AZzEGZUtEoZ6vUmYWIu1Ew5EmfxtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164186; c=relaxed/simple;
-	bh=rkjFYqrKSPlq98SMbYAl83sMzurt4LWgWY38xHMKAuA=;
+	s=arc-20240116; t=1780164189; c=relaxed/simple;
+	bh=m+65F1GhQTMZEjBzimvPR7sk5wXk4WhwyTXbjpncGFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sKebzOvBRsvfZ/b/dAl7VDdVWtO5ZvEUECIxD3s8cJH1GCEjlYlN55patWX4tDAHz0PErCRWF/9OBcaGvRO9+rq+5TSNiJqkpZfX4pF8vVvz90VedZW7xXApBc2EIj4FTtQYHqGBQSmInJR5irlTsHR372x7o/5cEj31zxkuU0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ow31CMY9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sseWNN74HIux0Z1w8pNqU+mGtES7ssJIZRyaMtRLfO90FCyYpTp04LCvEFnOZT54t3OfF3klAHBKNdzxx/tyglVFpR634dEu3SLIx/OszhUmIR1SD1VOrsRjosJuOBMpd3txlGakLUZ41/wqueJ1JqGHajYeKHRqeykjO/3l0u4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SIJGhjdg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ow31CMY9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD111F00893;
-	Sat, 30 May 2026 18:03:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SIJGhjdg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B911F00893;
+	Sat, 30 May 2026 18:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164185;
-	bh=0efNi06mULXjjZrO5B/6TCGS+If23i+VHLjvfcUbmfc=;
+	s=korg; t=1780164188;
+	bh=zjiAyyvMtR3pPS3JGVIS0lFq5/OzW0Ki5V8P88YDK04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ow31CMY9SXaYXuo3Erv/+RQXl8qIXoeTdEw7h8zLjOia4qf2usdo2fbSHOeDBFehp
-	 oWiQQ8MGgaWlQqskN+plaU5OoDGrsLVKugaQNiEayrJuC1y1mdtwQcIKLXVZF3LUP5
-	 t2Q/nHX0yQZZdvBcAxGtu8vwIDl+kksDwOOk+ixg=
+	b=SIJGhjdg45FVmhD4ejd4HWDBdesZL+akFA9FmFSDg/yZxRh+HipiVibD2KCWkJ5hO
+	 +8xM5R5y5GhWwK78K8Sa5d0+aKmmlyJVtRUrHK/h14zSLv9grVUA9fut6Cg/5TA2li
+	 iEyFJXax7sgcNSzuCvkQ623xGNCDciguJCIJXBnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -36,9 +36,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
 	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 479/776] ktest: Honor empty per-test option overrides
-Date: Sat, 30 May 2026 18:03:13 +0200
-Message-ID: <20260530160252.718701432@linuxfoundation.org>
+Subject: [PATCH 5.15 480/776] ktest: Run POST_KTEST hooks on failure and cancellation
+Date: Sat, 30 May 2026 18:03:14 +0200
+Message-ID: <20260530160252.743220402@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -60,32 +60,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Ricardo B. Marlière <rbm@suse.com>
 
-[ Upstream commit a2de57a3c8192dcd67cccaff6c341b93748d799b ]
+[ Upstream commit bc6e165a452da909cef0efbc286e6695624db372 ]
 
-A per-test override can clear an inherited default option by assigning an
-empty value, but __set_test_option() still used option_defined() to decide
-whether a per-test key existed. That turned an empty per-test assignment
-back into "fall back to the default", so tests still could not clear
-inherited settings.
+PRE_KTEST can be useful for setting up the environment and POST_KTEST to
+tear it down, however POST_KTEST only runs on the normal end-of-run path.
+It is skipped when ktest exits through dodie() or cancel_test(). Final
+cleanup hooks are skipped.
 
-For example:
-
-  DEFAULTS
-  (...)
-  LOG_FILE = /tmp/ktest-empty-override.log
-  CLEAR_LOG = 1
-  ADD_CONFIG = /tmp/.config
-
-  TEST_START
-  TEST_TYPE = build
-  BUILD_TYPE = nobuild
-  ADD_CONFIG =
-
-This would run the test with ADD_CONFIG[1] = /tmp/.config
-
-Fix by checking whether the per-test key exists before falling back. If it
-does exist but is empty, treat it as unset for that test and stop the
-fallback chain there.
+Factor the final hook execution into run_post_ktest(), call it from the
+normal exit path and from the early exit paths, and guard it so the hook
+runs at most once.
 
 Cc: John Hawley <warthog9@eaglescrag.net>
 Cc: Andrea Righi <arighi@nvidia.com>
@@ -93,39 +77,81 @@ Cc: Marcos Paulo de Souza <mpdesouza@suse.com>
 Cc: Matthieu Baerts <matttbe@kernel.org>
 Cc: Fernando Fernandez Mancera <fmancera@suse.de>
 Cc: Pedro Falcato <pfalcato@suse.de>
-Link: https://patch.msgid.link/20260307-ktest-fixes-v1-4-565d412f4925@suse.com
-Fixes: 22c37a9ac49d ("ktest: Allow tests to undefine default options")
+Link: https://patch.msgid.link/20260307-ktest-fixes-v1-8-565d412f4925@suse.com
+Fixes: 921ed4c7208e ("ktest: Add PRE/POST_KTEST and TEST options")
 Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
 Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/ktest/ktest.pl | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ tools/testing/ktest/ktest.pl | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
 diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
-index d752c4bd0d8b3..28eebfa32621d 100755
+index 28eebfa32621d..df8588dadc2ca 100755
 --- a/tools/testing/ktest/ktest.pl
 +++ b/tools/testing/ktest/ktest.pl
-@@ -4106,7 +4106,8 @@ sub __set_test_option {
+@@ -98,6 +98,7 @@ my $test_type;
+ my $build_type;
+ my $build_options;
+ my $final_post_ktest;
++my $post_ktest_done = 0;
+ my $pre_ktest;
+ my $post_ktest;
+ my $pre_test;
+@@ -1530,6 +1531,24 @@ sub get_test_name() {
+     return $name;
+ }
  
-     my $option = "$name\[$i\]";
- 
--    if (option_defined($option)) {
-+    if (exists($opt{$option})) {
-+	return undef if (!option_defined($option));
- 	return $opt{$option};
++sub run_post_ktest {
++    my $cmd;
++
++    return if ($post_ktest_done);
++
++    if (defined($final_post_ktest)) {
++	$cmd = $final_post_ktest;
++    } elsif (defined($post_ktest)) {
++	$cmd = $post_ktest;
++    } else {
++	return;
++    }
++
++    my $cp_post_ktest = eval_kernel_version($cmd);
++    run_command $cp_post_ktest;
++    $post_ktest_done = 1;
++}
++
+ sub dodie {
+     # avoid recursion
+     return if ($in_die);
+@@ -1589,6 +1608,7 @@ sub dodie {
+     if (defined($post_test)) {
+ 	run_command $post_test;
      }
++    run_post_ktest;
  
-@@ -4114,7 +4115,8 @@ sub __set_test_option {
- 	if ($i >= $test &&
- 	    $i < $test + $repeat_tests{$test}) {
- 	    $option = "$name\[$test\]";
--	    if (option_defined($option)) {
-+	    if (exists($opt{$option})) {
-+		return undef if (!option_defined($option));
- 		return $opt{$option};
- 	    }
- 	}
+     die @_, "\n";
+ }
+@@ -4223,6 +4243,7 @@ sub cancel_test {
+ 	send_email("KTEST: Your [$name] test was cancelled",
+ 	    "Your test started at $script_start_time was cancelled: sig int");
+     }
++    run_post_ktest;
+     die "\nCaught Sig Int, test interrupted: $!\n"
+ }
+ 
+@@ -4533,11 +4554,7 @@ for (my $i = 1; $i <= $opt{"NUM_TESTS"}; $i++) {
+     success $i;
+ }
+ 
+-if (defined($final_post_ktest)) {
+-
+-    my $cp_final_post_ktest = eval_kernel_version $final_post_ktest;
+-    run_command $cp_final_post_ktest;
+-}
++run_post_ktest;
+ 
+ if ($opt{"POWEROFF_ON_SUCCESS"}) {
+     halt;
 -- 
 2.53.0
 
