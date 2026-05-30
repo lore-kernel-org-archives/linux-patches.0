@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD363B7B72;
-	Sat, 30 May 2026 18:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5696B3112C1;
+	Sat, 30 May 2026 18:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164451; cv=none; b=rxwWuO/kJSyLcRFtP2vVTBSoPHhYkaN1Z2cVs7IQUbWU9BAo8BvjOaapX+q8pd6wk0LHW0ix7m8BS9oz57xecuipIUd54zjJ1ApWc+GUaWoovGcU1+jXxzWN0Ye67o/+YmNy1K+4a5bFZcduOXycoScEPr90hqEHO1nfYRmr0To=
+	t=1780164454; cv=none; b=gzEz2CVBUwOICCTlj4r8iyG59rjYkQHFNdzKeJ0PRUIPMbeFQtj/RgBYfiw22zc+PsWSK5zDzW6aG9pI4D+u07xO3ucMkChcyZDC9jm7jKN8BE4gyDRRA8pPAPOO8Hk3PNxyZ/R8LxvSPUCaXPPefV/7E2CaOElHXyuEeNQVhCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164451; c=relaxed/simple;
-	bh=OeIelfQd5K1H0D7rOm3lCnY8mvBGgy1973LDL+A/dKQ=;
+	s=arc-20240116; t=1780164454; c=relaxed/simple;
+	bh=4QGSyWTyPijHnGChRCN1MKq9QglkOq35KyPw7cPaN7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E0PmN/sD/WGco3EsNL76LqIO1zaShLGPbK8I/ZekyI5PUlAQWtDseXeUkt3fZQWqYnB7iMjkKkFPV8Wt8Qb7Zyxyjr3wnAd+JmKadMzJ4mz1ip08htIYd5SiVUiexTvM7TEmUZayIzHokhmtJs098cH/ZzwhzEfsuOZ4hh1hjSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqjKyw4Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S/saW/fGZGFzQG0F4C4jra9Vs7kDPBmCd/zsFPBhGDc6tD800+Bf/7VYhtlQSYiu777yIGrKQbrOpTyrsuG+xz3KBA7O30HbRled4kQCP7BwQccZj+yzN8T58yNneUWxM79czmSpuzOC8hCnSf+NphDc4/nCOVW+Ns2CVusKEZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4QNC/pV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqjKyw4Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 507861F00893;
-	Sat, 30 May 2026 18:07:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4QNC/pV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9281F00893;
+	Sat, 30 May 2026 18:07:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164449;
-	bh=N2ahyQoNWP/hjb1gcTjk4pIeMR5rt6efI2yiX4L9H4Y=;
+	s=korg; t=1780164453;
+	bh=yIGQ5hDgLaxNx1Aao9bxHMj+RIA1hfabPRov2fvOFMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kqjKyw4ZMW4qNGtM6yv1cS5E8AlNcBxOyyscPnL51q9YC+UIdv3DugtPAmXK7LLmb
-	 +PtiG7J70U9UhHMpkVIHPLdG8PjPVCYRn4+eAPz6J/UausQ/NJJih2fiaZN5P+vZkS
-	 nROVtYNklpggmd/SeGtsmr02dxbm3MejyRydGzj8=
+	b=Y4QNC/pV7ZBc0IT/ad7O23g+QxmcYfRCmICWP1+kKFYpf48BSemSu6Nj7EnlvEQqZ
+	 a78VyBA/cD7YJX/kfzoUI4PwDbi0nboSIEeFln5AmO0Z2vGG0ag3TtWjmh3H0Z2tW2
+	 0RoTVPadcKSrDBN0Exd8RS6yFJVnmMXvfaR7FQ88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anna Schumaker <anna.schumkaer@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 530/776] nfs/blocklayout: Fix compilation error (`make W=1`) in bl_write_pagelist()
-Date: Sat, 30 May 2026 18:04:04 +0200
-Message-ID: <20260530160253.907612082@linuxfoundation.org>
+Subject: [PATCH 5.15 531/776] fs/ntfs3: terminate the cached volume label after UTF-8 conversion
+Date: Sat, 30 May 2026 18:04:05 +0200
+Message-ID: <20260530160253.930297859@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,55 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit f83c8dda456ce4863f346aa26d88efa276eda35d ]
+[ Upstream commit a6cd43fe9b083fa23fe1595666d5738856cb261a ]
 
-Clang compiler is not happy about set but unused variable
-(when dprintk() is no-op):
+ntfs_fill_super() loads the on-disk volume label with utf16s_to_utf8s()
+and stores the result in sbi->volume.label. The converted label is later
+exposed through ntfs3_label_show() using %s, but utf16s_to_utf8s() only
+returns the number of bytes written and does not add a trailing NUL.
 
-.../blocklayout/blocklayout.c:384:9: error: variable 'count' set but not used [-Werror,-Wunused-but-set-variable]
+If the converted label fills the entire fixed buffer,
+ntfs3_label_show() can read past the end of sbi->volume.label while
+looking for a terminator.
 
-Remove a leftover from the previous cleanup.
+Terminate the cached label explicitly after a successful conversion and
+clamp the exact-full case to the last byte of the buffer.
 
-Fixes: 3a6fd1f004fc ("pnfs/blocklayout: remove read-modify-write handling in bl_write_pagelist")
-Acked-by: Anna Schumaker <anna.schumkaer@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/blocklayout/blocklayout.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/ntfs3/super.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/blocklayout/blocklayout.c b/fs/nfs/blocklayout/blocklayout.c
-index 76423557f5b3d..54a18a9540aae 100644
---- a/fs/nfs/blocklayout/blocklayout.c
-+++ b/fs/nfs/blocklayout/blocklayout.c
-@@ -399,14 +399,13 @@ bl_write_pagelist(struct nfs_pgio_header *header, int sync)
- 	sector_t isect, extent_length = 0;
- 	struct parallel_io *par = NULL;
- 	loff_t offset = header->args.offset;
--	size_t count = header->args.count;
- 	struct page **pages = header->args.pages;
- 	int pg_index = header->args.pgbase >> PAGE_SHIFT;
- 	unsigned int pg_len;
- 	struct blk_plug plug;
- 	int i;
- 
--	dprintk("%s enter, %zu@%lld\n", __func__, count, offset);
-+	dprintk("%s enter, %u@%lld\n", __func__, header->args.count, offset);
- 
- 	/* At this point, header->page_aray is a (sequential) list of nfs_pages.
- 	 * We want to write each, and if there is an error set pnfs_error
-@@ -448,7 +447,6 @@ bl_write_pagelist(struct nfs_pgio_header *header, int sync)
- 		}
- 
- 		offset += pg_len;
--		count -= pg_len;
- 		isect += (pg_len >> SECTOR_SHIFT);
- 		extent_length -= (pg_len >> SECTOR_SHIFT);
- 	}
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index a9952b0321837..4ba1501119bff 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -958,8 +958,13 @@ static int ntfs_fill_super(struct super_block *sb, struct fs_context *fc)
+ 				      le32_to_cpu(attr->res.data_size) >> 1,
+ 				      UTF16_LITTLE_ENDIAN, sbi->volume.label,
+ 				      sizeof(sbi->volume.label));
+-		if (err < 0)
++		if (err < 0) {
+ 			sbi->volume.label[0] = 0;
++		} else if (err >= sizeof(sbi->volume.label)) {
++			sbi->volume.label[sizeof(sbi->volume.label) - 1] = 0;
++		} else {
++			sbi->volume.label[err] = 0;
++		}
+ 	} else {
+ 		/* Should we break mounting here? */
+ 		//err = -EINVAL;
 -- 
 2.53.0
 
