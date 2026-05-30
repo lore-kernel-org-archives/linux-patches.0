@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B70341AC7;
-	Sat, 30 May 2026 17:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE8F237713;
+	Sat, 30 May 2026 17:55:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163709; cv=none; b=RAbYjKIPLY9zBxmjPyc2Uha4AMmdWSSfc8ux7DuYkv+5ZdkkIVAb4I7DFFB/W93uSCy/kSJWyiN9hyDles7Xh6z5vcKqjR3vTcSJfQAi3C5vb604rRqrWLy+QqtUU34IgCKSh0riQKII6HhK68bq9ue738TIxtNpbGmI3ym6aPI=
+	t=1780163712; cv=none; b=b30eAFtJrjV3Zp7THwMWUktJ8nIG5gpL4ici280Npm14jnuyuGZll4o97099M9YlNo5Sq4mupzwBUVdJbtrSCtYt4yOkYDv+n0jOA+dgjLeVZzjisInpjmo6krCj07h+rsmxWLBIT17/hMG+4O7/8DXoJPOfBQI806e6qtFvvII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163709; c=relaxed/simple;
-	bh=drW4+MLtI7IamaDzFKQQ7Z+GWsSdzhWt28t7ii2M/EQ=;
+	s=arc-20240116; t=1780163712; c=relaxed/simple;
+	bh=Anr946FTDbxz2wNi8j1464YamnOMUM+4rjGu4Z07Wyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=au4RdT+pr+0dUpa4bAbZqOv4HYUfvvmvIXXFb0dzH0R24wOf7uO75Xu9JIQgfJCRR8kwZlIF10VINQ04svSqyVRvTWimZkPV/vntKeMdl0KNksFxC03LuGBsO5RsjNaBhVeF+Tj9x5d+3idTexm4iUcHr2Ey6fLTbYY7zPKFnbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGi5+ne9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P3LDh456jglkBy3reJvrITjMlMO7KXhyhfUGfP1mlxP4UBCQoQfZUPMZUjEMG04CitLW7wK29ojYtL3IGN84odjHcPoGyXLqMkkyvLdfMaVMWOQJGzKoHEoKSOxEyxSnjfaXiqTjkdH2siM3SE4NKjj8uSkkkrkckNmGOnzDBO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JUWGLf9v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGi5+ne9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7698B1F00893;
-	Sat, 30 May 2026 17:55:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUWGLf9v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6121F00893;
+	Sat, 30 May 2026 17:55:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163708;
-	bh=FHgWuEPI4bqSmSORRBOFYGxCQ3jy1OfBHJKJ+Dv6gFM=;
+	s=korg; t=1780163711;
+	bh=HHei9Zbft0pTYotTxoRO9HuJI6zSKbwUmRNMolg0R3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AGi5+ne9IgKhwDIrGLm+uWIAfykFmLkrGtemgnatDXNNmUaFKyJi8kuPg0NE7O0tD
-	 Ndg64Yx567sHCLE1Ad92GV1sOprLSvzTxMfF1NghzMaLp5+V3q6+0xR3j5ht/LRuAe
-	 pinNYbB91YG0MNpuhqiBDlYdc1jLUAUVh0GVAOTc=
+	b=JUWGLf9v5pALvggxBkIuLD2ajAFxq+7x9S5lFHUPazNWaQTghZx3d22z7kGG/7oV9
+	 0cQGN2L7exj/FdZpc3AlS79rFN51tGqpik/socT8c8UOQ6hCs4iowScQvqoMFWhTRh
+	 OMMNOxeAq01uDQ7sRnuEuG9Fg3WaVuIfbZcTkc1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lukas Wunner <lukas@wunner.de>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Subject: [PATCH 5.15 339/776] PCI/AER: Clear only error bits in PCIe Device Status
-Date: Sat, 30 May 2026 18:00:53 +0200
-Message-ID: <20260530160249.334119394@linuxfoundation.org>
+	Stefan Roese <stefan.roese@mailbox.org>
+Subject: [PATCH 5.15 340/776] PCI/AER: Stop ruling out unbound devices as error source
+Date: Sat, 30 May 2026 18:00:54 +0200
+Message-ID: <20260530160249.361499762@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,64 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Xue <xueshuai@linux.alibaba.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit a8aeea1bf3c80cc87983689e0118770e019bd4f3 upstream.
+commit 1ab4a3c805084d752ec571efc78272295a9f2f74 upstream.
 
-Currently, pcie_clear_device_status() clears the entire PCIe Device Status
-register (PCI_EXP_DEVSTA) by writing back the value read from the register,
-which affects not only the error status bits but also other writable bits.
+When searching for the error source, the AER driver rules out devices whose
+enable_cnt is zero.  This was introduced in 2009 by commit 28eb27cf0839
+("PCI AER: support invalid error source IDs") without providing a
+rationale.
 
-According to PCIe r7.0, sec 7.5.3.5, this register contains:
+Drivers typically call pci_enable_device() on probe, hence the enable_cnt
+check essentially filters out unbound devices.  At the time of the commit,
+drivers had to opt in to AER by calling pci_enable_pcie_error_reporting()
+and so any AER-enabled device could be assumed to be bound to a driver.
+The check thus made sense because it allowed skipping config space accesses
+to devices which were known not to be the error source.
 
-  - RW1C error status bits (CED, NFED, FED, URD at bits 0-3): These are the
-    four error status bits that need to be cleared.
+But since 2022, AER is universally enabled on all devices when they are
+enumerated, cf. commit f26e58bf6f54 ("PCI/AER: Enable error reporting when
+AER is native").
 
-  - Read-only bits (AUXPD at bit 4, TRPND at bit 5): Writing to these has
-    no effect.
+Errors may very well be reported by unbound devices, e.g. due to link
+instability.  By ruling them out as error source, errors reported by them
+are neither logged nor cleared.  When they do get bound and another error
+occurs, the earlier error is reported together with the new error, which
+may confuse users.  Stop doing so.
 
-  - Emergency Power Reduction Detected (bit 6): A RW1C non-error bit
-    introduced in PCIe r5.0 (2019). This is currently the only writable
-    non-error bit in the Device Status register. Unconditionally clearing
-    this bit can interfere with other software components that rely on this
-    power management indication.
-
-  - Reserved bits (RsvdZ): These bits are required to be written as zero.
-    Writing 1s to them (as the current implementation may do) violates the
-    specification.
-
-To prevent unintended side effects, modify pcie_clear_device_status() to
-only write 1s to the four error status bits (CED, NFED, FED, URD), leaving
-the Emergency Power Reduction Detected bit and reserved bits unaffected.
-
-Fixes: ec752f5d54d7 ("PCI/AER: Clear device status bits during ERR_FATAL and ERR_NONFATAL")
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Fixes: f26e58bf6f54 ("PCI/AER: Enable error reporting when AER is native")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260211124624.49656-1-xueshuai@linux.alibaba.com
+Reviewed-by: Stefan Roese <stefan.roese@mailbox.org>
+Cc: stable@vger.kernel.org # v6.0+
+Link: https://patch.msgid.link/734338c2e8b669db5a5a3b45d34131b55ffebfca.1774605029.git.lukas@wunner.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/pci/pcie/aer.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -2220,10 +2220,9 @@ EXPORT_SYMBOL_GPL(pci_set_pcie_reset_sta
+--- a/drivers/pci/pcie/aer.c
++++ b/drivers/pci/pcie/aer.c
+@@ -852,8 +852,6 @@ static bool is_error_source(struct pci_d
+ 	 *      3) There are multiple errors and prior ID comparing fails;
+ 	 * We check AER status registers to find possible reporter.
+ 	 */
+-	if (atomic_read(&dev->enable_cnt) == 0)
+-		return false;
  
- void pcie_clear_device_status(struct pci_dev *dev)
- {
--	u16 sta;
--
--	pcie_capability_read_word(dev, PCI_EXP_DEVSTA, &sta);
--	pcie_capability_write_word(dev, PCI_EXP_DEVSTA, sta);
-+	pcie_capability_write_word(dev, PCI_EXP_DEVSTA,
-+				   PCI_EXP_DEVSTA_CED | PCI_EXP_DEVSTA_NFED |
-+				   PCI_EXP_DEVSTA_FED | PCI_EXP_DEVSTA_URD);
- }
- 
- /**
+ 	/* Check if AER is enabled */
+ 	pcie_capability_read_word(dev, PCI_EXP_DEVCTL, &reg16);
 
 
