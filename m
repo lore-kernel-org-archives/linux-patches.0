@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2BE137750;
-	Sat, 30 May 2026 18:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16CCE21E098;
+	Sat, 30 May 2026 18:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166952; cv=none; b=Qr8R1IIQAlhHubSytEsm4MeDwxvi3tYon9DhxaXYmXYtwfLaAfO1xocRDlxiFCERHKfecbTW+J4UVVSZXTTWYogg7BujaQrlhC+nZx/bABKftWHIMLAw976eA2u74nhPnvp5dH2GLftvWdVfw4fwB556exdnA+x34RlOzyyoX5s=
+	t=1780166956; cv=none; b=g4BtTUiAJS5njcngVAX5qqgZvmP0iiMEEA4usvVGcReuGupohVSC3IsJkcnI6jz614AaEfC7bhYiumrbdlBiOG1h88x7PqSSwJJEkhSaMUUEdeI4XBpBAInJkaV2F3NWKTs3mOLG24+4NDSeF1+nY9rhbLEiLI+/566fF3Mi/w4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166952; c=relaxed/simple;
-	bh=ViX5VdLJuiTK/dMoJlPpyS1DU9vv2ri9Nc3vBnmZWS4=;
+	s=arc-20240116; t=1780166956; c=relaxed/simple;
+	bh=k+9YcnxZ0oxDdji3Unt1iulHTN7O288J8mLxsLA3I/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dh+Lh9TkDBajMCDNYhdU1BbavKBFelqcrKj2Xmrp12gmU9/6T6t/18md3eWGc5XO7WmjsWVbPpVsPxKmWuQn8hKxXGaHdn8yFfVvLWN8d13PadyNb+dqe4Enst2PnT07lKtxfnxNDfE9bs4eS1KVT99/fFkUh7YjMPukko7wnMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yyRTccY0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eK7Eu0yWwuN5lOsrWgv4yvGFvm6DLt8NpqhgoeJXgcmqWObPh8ytULOE5PZr73//oM03l5HM0DL23KiFbwXhDuuRRUrag80AFYGXHxZCQgtg1X6MDcni5GbBfMhs91WWkQoJKb97tCBA2Cu60qCw8GXYtIG6t81x82y5qZ4C3CE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vj/WqsCe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yyRTccY0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6C41F00893;
-	Sat, 30 May 2026 18:49:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vj/WqsCe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5958D1F00893;
+	Sat, 30 May 2026 18:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166951;
-	bh=FarddmOWscuFnz8E4mlbCQMTcIDaL4X5GEbIouEdqhs=;
+	s=korg; t=1780166955;
+	bh=tvDxUKrxC+TYgUl4+FAZWJqYBDDfNgB6f1OLehyor0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yyRTccY0yzkWw9S0lN1qbE1GN7WDh8ldH52uqn/Y8+Z4reEwPDWE/bCQGWl4d2wk0
-	 9jlp8A2o3hYarTPSi9a2bI+qxMhIbhDJZYjHefLVYZ//G9qjsloTMBEoQQ6Z2sKeKe
-	 GgEHPvRx8YYaEYPI8XJ7CpYMHF0JDTNpU0EMuHOo=
+	b=Vj/WqsCe6KGfsa7/P+6VwUHmJ4Svp89Ej1PAA2FBdVUXjEcs8EzXm1odMZ0eTbQOf
+	 q2YjgpjkOfctm9CoMjG1Q9GhMvUIa7BBMIjFgwUPiI1CWLAa7Wp2QRlYsUeN5WTE3j
+	 xSid1LOyYZYPaTSPK6UsaCMTTDI9bW0WWoyqRRoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Benjamin Block <bblock@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Kees Cook <keescook@chromium.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 521/589] s390/debug: Reject zero-length input before trimming a newline
-Date: Sat, 30 May 2026 18:06:42 +0200
-Message-ID: <20260530160238.310839706@linuxfoundation.org>
+Subject: [PATCH 5.10 522/589] selftests: lib.mk: Also install "config" and "settings"
+Date: Sat, 30 May 2026 18:06:43 +0200
+Message-ID: <20260530160238.334837451@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -53,47 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit c366a7b5ed7564e41345c380285bd3f6cb98971b ]
+[ Upstream commit de53fa9baa701963722e9fa3d0fe34b897104497 ]
 
-debug_get_user_string() copies the userspace buffer into a newly
-allocated NUL-terminated buffer and then unconditionally looks at
-buffer[user_len - 1] to strip a trailing newline.
+Installed seccomp tests would time out because the "settings" file was
+missing. Install both "settings" (needed for proper test execution) and
+"config" (needed for informational purposes) with the other test
+targets.
 
-A zero-length write reaches this helper unchanged, so the newline trim
-reads before the start of the allocated buffer.
-
-Reject empty writes before accessing the last input byte.
-
-Fixes: 66a464dbc8e0 ("[PATCH] s390: debug feature changes")
-Cc: stable@vger.kernel.org
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
-Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
-Tested-by: Vasily Gorbik <gor@linux.ibm.com>
-Link: https://lore.kernel.org/r/20260417073530.96002-1-pengpeng@iscas.ac.cn
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/debug.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/lib.mk | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/s390/kernel/debug.c b/arch/s390/kernel/debug.c
-index ece21ebf6558f..a347f6244654a 100644
---- a/arch/s390/kernel/debug.c
-+++ b/arch/s390/kernel/debug.c
-@@ -1211,6 +1211,9 @@ static inline char *debug_get_user_string(const char __user *user_buf,
- {
- 	char *buffer;
+diff --git a/tools/testing/selftests/lib.mk b/tools/testing/selftests/lib.mk
+index 56e360e019ecc..a3df78b7702c1 100644
+--- a/tools/testing/selftests/lib.mk
++++ b/tools/testing/selftests/lib.mk
+@@ -101,6 +101,7 @@ define INSTALL_RULE
+ 	$(eval INSTALL_LIST = $(TEST_CUSTOM_PROGS)) $(INSTALL_SINGLE_RULE)
+ 	$(eval INSTALL_LIST = $(TEST_GEN_PROGS_EXTENDED)) $(INSTALL_SINGLE_RULE)
+ 	$(eval INSTALL_LIST = $(TEST_GEN_FILES)) $(INSTALL_SINGLE_RULE)
++	$(eval INSTALL_LIST = $(wildcard config settings)) $(INSTALL_SINGLE_RULE)
+ endef
  
-+	if (!user_len)
-+		return ERR_PTR(-EINVAL);
-+
- 	buffer = kmalloc(user_len + 1, GFP_KERNEL);
- 	if (!buffer)
- 		return ERR_PTR(-ENOMEM);
+ install: all
 -- 
 2.53.0
 
