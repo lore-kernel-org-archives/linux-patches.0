@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40261D63E4;
-	Sat, 30 May 2026 18:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731A51D63E4;
+	Sat, 30 May 2026 18:50:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780167038; cv=none; b=kjS04Zl6QmMQzbkJPdIdV4VDhsIqwXSM46nXDlGmVfBzFtLswTH9Etnw2VZY0oYUVx8QBUXLeHN7uekuHQCVFI5K0Fwav6X4klTUzrk0QjjdoOHrc2YTE/zjsW8flz/SOjsPEmrg73YpIax5lidhvuwCpeJOmDsQeFhzFDnT3+4=
+	t=1780167042; cv=none; b=BgnZ1SOmSi1h22DrXgYdyKYinrAbdXVXcDI78Q3kTsw7Il/ROiyFVaAY2rw48Cu0RL6DI+8P/3ZdEM+H9CtNFTmhb0qj3o42jM8B6P6NCEn63Yir4z3z6OihAydZac9iWy0xrjrLmrnj6SK61AGg/3JYh0cxTqXMk/Gkeh3J8RA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780167038; c=relaxed/simple;
-	bh=Ww1rYVA0a3Hp3oC8TifdagWuFmtBM6mvdmQiIGLnRqI=;
+	s=arc-20240116; t=1780167042; c=relaxed/simple;
+	bh=Y1OlP2K90Sh7FVz0PiMJcfoN5EbD6fNKY0vZ4F+sZws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pHh12P89SgGNtLGFTeE4bpstn2DrbX6ZW/A1CDz3XvCW6DH+lmTTpxd1RzaWNuN6paeBY0OmCOaliOS1UxTPAFGB3bNxDDFQeMQ/49S8ckO3TYji58Q33t2WrL+a3u1Ph+w9Z8csDxQFGY1RxJrlPB289g7BrcmaBmnErUt/I94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aV1BzsbQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q+s9q1dYy33v15mehOvpCJQPgDAhe/nGr6g903UHH1LFWxOCNTy9HJjo1y3IPMVlanCdmg//o6q59e/KNpVpmrZLv8/jOQri+QrPKS7Qk71HLM3Qs9X7dOxYBavHILrpJjvMOgWp3OC4rSLtS6Xa0Icat5MlQbbe73sXab0y9+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MW7x55fx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aV1BzsbQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04ACA1F00893;
-	Sat, 30 May 2026 18:50:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MW7x55fx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB3B1F00893;
+	Sat, 30 May 2026 18:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780167037;
-	bh=I9t32nd3mQeGUZOalHv1h4qBEO5DLcuGw5Un7s4jf6k=;
+	s=korg; t=1780167041;
+	bh=Lo+Z0VAVrl71Urn8ssbb/81SqrCmNs6NWLtNU9bd+Sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aV1BzsbQHZlBuHswfFg/S3jZJvcc6szTyhdzEpiQWe1CTDzOpgnBTSdbs2Drp5sIb
-	 /kIRFZ6Hpv/PgeQC6uX1Z9o3ROj/T5+jQc/z4dTOqXh02Gx6yudt+qCg8c6pDJxfxo
-	 3h+JMzPtbtu9NzfWXXVVXAS1LDjKEvsglshuRX34=
+	b=MW7x55fxfeYF6N81vWAI6da4sgGvzBZlmP+WJm93l0rR9hDhtRMzyGONULimjuhbr
+	 c7Zz4v6I9ptNzvOysUIw0UVR9XovyeAiBGiMiQh86A0Yx0a+aTjcs5MD50q13uuRnE
+	 nDPqE3ZFUGgwTgGOc4yuqR5n2skGxYvamOjNOZ/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minh Nguyen <minhnguyen.080505@gmail.com>,
-	Bryan Tan <bryan-bt.tan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 538/589] vsock/vmci: fix UAF when peer resets connection during handshake
-Date: Sat, 30 May 2026 18:06:59 +0200
-Message-ID: <20260530160238.833252523@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 5.10 547/589] RDMA/siw: Reject MPA FPDU length underflow before signed receive math
+Date: Sat, 30 May 2026 18:07:08 +0200
+Message-ID: <20260530160239.050532324@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,64 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minh Nguyen <minhnguyen.080505@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 99e22ddf4edb63dc8382bc028af928056d3450cf upstream.
+commit 0ce1bc9e46ecabe84772bb561e373c0d9876d6f2 upstream.
 
-vmci_transport_recv_connecting_server() returned err = 0 for a peer
-RST in its default switch arm:
+A malicious connected siw peer can send an iWARP FPDU whose MPA length
+field (c_hdr->mpa_len, 16 bit big-endian, peer-controlled) is smaller
+than the fixed DDP/RDMAP header for the announced opcode. Soft-iWARP
+parses the full header in siw_get_hdr() based on iwarp_pktinfo[opcode]
+.hdr_len, but never compares mpa_len against that header length.
 
-	err = pkt->type == VMCI_TRANSPORT_PACKET_TYPE_RST ? 0 : -EINVAL;
+siw_tcp_rx_data() then derives
 
-That made vmci_transport_recv_listen() skip vsock_remove_pending(),
-leaving the pending socket on the listener's pending_links with
-sk_state = TCP_CLOSE while destroy: still dropped the explicit
-reference taken before schedule_delayed_work().
+    srx->fpdu_part_rem = be16_to_cpu(mpa_len) - fpdu_part_rcvd
+                         + MPA_HDR_SIZE;
 
-One second later vsock_pending_work() observed is_pending=true and
-performed full cleanup: vsock_remove_pending() then the two trailing
-sock_put(sk) calls -- the first reached refcount 0 and __sk_freed
-the socket, and the second wrote into the freed object:
+where fpdu_part_rcvd equals iwarp_pktinfo[opcode].hdr_len at this
+point. For a tagged WRITE (hdr_len 16, MPA_HDR_SIZE 2) the smallest
+on-wire mpa_len of 0 yields fpdu_part_rem = -14, and any mpa_len below
+hdr_len - MPA_HDR_SIZE underflows to a negative int.
 
-  BUG: KASAN: slab-use-after-free in refcount_warn_saturate
-  Write of size 4 at addr ffff88800b1cac80 by task kworker
-  Workqueue: events vsock_pending_work
+The signed value then flows into siw_proc_write()/siw_proc_rresp() as
 
-Treat peer RST like any other unexpected packet type (err = -EINVAL).
-All destroy: arms now return err < 0, so vmci_transport_recv_listen()
-removes pending from pending_links synchronously and
-vsock_pending_work() takes the is_pending=false / !rejected branch,
-dropping only its own work reference.  This also closes the
-multi-packet race Sashiko reported on v2: pending is removed from
-the list before any subsequent packet can find it.
+    bytes = min(srx->fpdu_part_rem, srx->skb_new);
 
-The pre-existing sk_acceptq_removed() gap on the err < 0 path of
-vmci_transport_recv_listen() that Sashiko also noted is not
-introduced or changed by this patch.
+is handed to siw_check_mem() as an int len (whose interval check
+addr + len > mem->va + mem->len is satisfied for a valid base when
+len is negative), and reaches siw_rx_data() -> siw_rx_kva() /
+siw_rx_umem() -> skb_copy_bits() as a signed copy length. The header
+copy branch in skb_copy_bits() promotes that to size_t, producing a
+multi-gigabyte read.
 
-Tested on lts-6.12.79 with KASAN: 52/100 unpatched -> 0/100 patched.
+KASAN under a KUnit harness that drives the real kernel TCP receive
+path -- a loopback AF_INET socketpair, the malformed FPDU written via
+kernel_sendmsg, sk_data_ready firing in softirq, tcp_read_sock
+dispatching to siw_tcp_rx_data -- reports:
 
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+    BUG: KASAN: use-after-free in skb_copy_bits+0x284/0x480
+    Read of size 4294967295 at addr ffff888...
+    Call Trace:
+     skb_copy_bits
+     siw_rx_kva
+     siw_rx_data
+     siw_check_mem
+     siw_proc_write
+     siw_tcp_rx_data
+     __tcp_read_sock
+     siw_qp_llp_data_ready
+     tcp_data_ready
+     tcp_data_queue
+
+Add the missing invariant at the earliest point where the peer header
+is fully assembled. iwarp_pktinfo[*].hdr_len - MPA_HDR_SIZE is exactly
+the value the siw transmitter uses as the minimum mpa_len for each
+opcode (drivers/infiniband/sw/siw/siw_qp.c:33), so this matches the
+protocol contract. Out-of-range FPDUs terminate the connection with
+TERM_ERROR_LAYER_LLP / LLP_ETYPE_MPA / LLP_ECODE_FPDU_START -- which
+is RFC 5044 Section 8 error code 3 ("Marker and ULPDU Length fields
+do not agree on the start of an FPDU"), the correct framing-error
+class for this inconsistency.
+
+Fixes: 8b6a361b8c48 ("rdma/siw: receive path")
+Link: https://patch.msgid.link/r/20260513175325.2042630-2-michael.bommarito@gmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Minh Nguyen <minhnguyen.080505@gmail.com>
-Acked-by: Bryan Tan <bryan-bt.tan@broadcom.com>
-Link: https://patch.msgid.link/20260519102310.237181-1-minhnguyen.080505@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Assisted-by: Claude:claude-opus-4-7
+Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/vmci_transport.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/sw/siw/siw_qp_rx.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/net/vmw_vsock/vmci_transport.c
-+++ b/net/vmw_vsock/vmci_transport.c
-@@ -1158,7 +1158,7 @@ vmci_transport_recv_connecting_server(st
- 		/* Close and cleanup the connection. */
- 		vmci_transport_send_reset(pending, pkt);
- 		skerr = EPROTO;
--		err = pkt->type == VMCI_TRANSPORT_PACKET_TYPE_RST ? 0 : -EINVAL;
-+		err = -EINVAL;
- 		goto destroy;
+--- a/drivers/infiniband/sw/siw/siw_qp_rx.c
++++ b/drivers/infiniband/sw/siw/siw_qp_rx.c
+@@ -1102,6 +1102,21 @@ static int siw_get_hdr(struct siw_rx_str
  	}
  
+ 	/*
++	 * Peer-controlled mpa_len must not underflow srx->fpdu_part_rem
++	 * in siw_tcp_rx_data(); a negative value flows as a signed copy
++	 * length into siw_check_mem() and skb_copy_bits().
++	 */
++	if (unlikely(be16_to_cpu(c_hdr->mpa_len) + MPA_HDR_SIZE <
++		     iwarp_pktinfo[opcode].hdr_len)) {
++		pr_warn_ratelimited("siw: short mpa_len %u for opcode %u (hdr_len %u)\n",
++				    be16_to_cpu(c_hdr->mpa_len), opcode,
++				    iwarp_pktinfo[opcode].hdr_len);
++		siw_init_terminate(rx_qp(srx), TERM_ERROR_LAYER_LLP,
++				   LLP_ETYPE_MPA, LLP_ECODE_FPDU_START, 0);
++		return -EINVAL;
++	}
++
++	/*
+ 	 * DDP/RDMAP header receive completed. Check if the current
+ 	 * DDP segment starts a new RDMAP message or continues a previously
+ 	 * started RDMAP message.
 
 
