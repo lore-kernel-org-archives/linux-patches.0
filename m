@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C5B34BA42;
-	Sat, 30 May 2026 17:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B619E26F288;
+	Sat, 30 May 2026 17:01:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160517; cv=none; b=YBikBT23ltPcwkFqbqP04iUpFWDUQGv5pLoi7prfVeKAYX0PYU8abPuWgXG2D9JqZPliKlVOqIvXoCfqDI5uSeTV/Lq2Coayyob92iWS8ebGkryQEbN9u+x80VhZbeNXtfVeO45JZHG90y2SEhsfdXHrDnRQR7+30WngQSKvvYQ=
+	t=1780160520; cv=none; b=csnwoIJMYQxIGHfAJ3nwLFa+tzCck4iC0qObGK/OngHz7ykbiOvk3sx8ymQc3xaYTir3g6hT7NIeRLg42oYGGrNEHhXFHNCadnetoLrccPaNRKR/DE5fk/K36TzxQO9aNtH6IHWmDc4IHtTike7r+qruCdWpnxEqz0Y5jQSuZj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160517; c=relaxed/simple;
-	bh=4Sn0XfXW08TB5BGXRKyA4gDb9CgaS8Q4byU7e9Ai6yA=;
+	s=arc-20240116; t=1780160520; c=relaxed/simple;
+	bh=iu9Rc1PXsqL+YudGhKC5sMWkiYe7HQJr/vrtkRG7/XI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4eM+Aq/SdidDw3u1vREXg/3BRD/Dja+TKT/7SDmeIG9rW49ZzLw+L10Y9pHOW6wOsX+cYyKoRRKizd7G5S2M7ihqlPbifXEX3fVoctbcrLO4PgFBUYH+/el4aSiuikiQBgTxJg3tqzzp78iYiJRzvmo1uL0ancnNOXUqRCU5U0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvbwR4BG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lktOmBVxyi+lEyyWeSar7D3dp2uUEkIQbhZyt7ZskeKpt+f9b5KepiaLvgJgqWX7yMwM3zciyJobr1BZXRfe8IpEZlCLA1nP1DRgZMcndAdyMZmC9H0RdgpwFILVgfV9J4Nx0TZK5DkFp4CZLxCpYIe9aAVPHOKXcmGOYNoKu8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEYAnNpB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvbwR4BG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABFB71F00893;
-	Sat, 30 May 2026 17:01:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEYAnNpB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0775F1F00893;
+	Sat, 30 May 2026 17:01:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160516;
-	bh=ddtX8GqV5NAUMeasGBOxKVEHZdLSLpvxT/u3At3ZqnM=;
+	s=korg; t=1780160519;
+	bh=bi7IedU5yDQnGZkn0d+HCzbQG1R4Q/+0RVGalfaXfNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rvbwR4BGCYGepvRuU8uxDQa3SC7gyXUxBzEnA0ya5oh5k4RToFYjmcAIY8qDUGCWW
-	 HQxE1SkSIl64mqF9dXrFpZT0AFn+cXtpwNBeVdHC35YNOyEHKlDnx6KMTt9Ixz826J
-	 vCXgixeECRivVL9iyry2a/MR0IrS+lWBxEMLudwA=
+	b=TEYAnNpBbp28qYFy3ILkFBsW8tYFMUN5aAqj09gLQ6dZZA+mBTxP0rvfhvu429uaC
+	 hPGWQi/yhregowpSU0J06kU/Fer7HRRuEXIkBWi1NTCh+kwvmlbKAu5AHKPzwOYqXz
+	 68GeAr/fVQN51n9hD01ooVkaB67Q+1wWyuFN5fP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.1 359/969] nvmet: avoid recursive nvmet-wq flush in nvmet_ctrl_free
-Date: Sat, 30 May 2026 17:58:03 +0200
-Message-ID: <20260530160310.248409542@linuxfoundation.org>
+	Eelco Chaudron <echaudro@redhat.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 360/969] openvswitch: vport: fix self-deadlock on release of tunnel ports
+Date: Sat, 30 May 2026 17:58:04 +0200
+Message-ID: <20260530160310.274695218@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,137 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chaitanya Kulkarni <kch@nvidia.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-commit aade8abd8b868b6ffa9697aadaea28ec7f65bee6 upstream.
+commit aa69918bd418e700309fdd08509dba324fb24296 upstream.
 
-nvmet_tcp_release_queue_work() runs on nvmet-wq and can drop the
-final controller reference through nvmet_cq_put(). If that triggers
-nvmet_ctrl_free(), the teardown path flushes ctrl->async_event_work on
-the same nvmet-wq.
+vports are used concurrently and protected by RCU, so netdev_put()
+must happen after the RCU grace period.  So, either in an RCU call or
+after the synchronize_net().  The rtnl_delete_link() must happen under
+RTNL and so can't be executed in RCU context.  Calling synchronize_net()
+while holding RTNL is not a good idea for performance and system
+stability under load in general, so calling netdev_put() in RCU call
+is the right solution here.
 
-Call chain:
+However,
+when the device is deleted, rtnl_unlock() will call netdev_run_todo()
+and block until all the references are gone.  In the current code this
+means that we never reach the call_rcu() and the vport is never freed
+and the reference is never released, causing a self-deadlock on device
+removal.
 
- nvmet_tcp_schedule_release_queue()
-   kref_put(&queue->kref, nvmet_tcp_release_queue)
-     nvmet_tcp_release_queue()
-       queue_work(nvmet_wq, &queue->release_work) <--- nvmet_wq
-         process_one_work()
-           nvmet_tcp_release_queue_work()
-             nvmet_cq_put(&queue->nvme_cq)
-               nvmet_cq_destroy()
-                 nvmet_ctrl_put(cq->ctrl)
-                   nvmet_ctrl_free()
-                     flush_work(&ctrl->async_event_work) <--- nvmet_wq
+Fix that by moving the rcu_call() before the rtnl_unlock(), so the
+scheduled RCU callback will be executed when synchronize_net() is
+called from the rtnl_unlock()->netdev_run_todo() while the RTNL itself
+is already released.
 
-                      Previously Scheduled by :-
-		        nvmet_add_async_event
-		          queue_work(nvmet_wq, &ctrl->async_event_work);
-
-This trips lockdep with a possible recursive locking warning.
-
-[ 5223.015876] run blktests nvme/003 at 2026-04-07 20:53:55
-[ 5223.061801] loop0: detected capacity change from 0 to 2097152
-[ 5223.072206] nvmet: adding nsid 1 to subsystem blktests-subsystem-1
-[ 5223.088368] nvmet_tcp: enabling port 0 (127.0.0.1:4420)
-[ 5223.126086] nvmet: Created discovery controller 1 for subsystem nqn.2014-08.org.nvmexpress.discovery for NQN nqn.2014-08.org.nvmexpress:uuid:0f01fb42-9f7f-4856-b0b3-51e60b8de349.
-[ 5223.128453] nvme nvme1: new ctrl: NQN "nqn.2014-08.org.nvmexpress.discovery", addr 127.0.0.1:4420, hostnqn: nqn.2014-08.org.nvmexpress:uuid:0f01fb42-9f7f-4856-b0b3-51e60b8de349
-[ 5233.199447] nvme nvme1: Removing ctrl: NQN "nqn.2014-08.org.nvmexpress.discovery"
-
-[ 5233.227718] ============================================
-[ 5233.231283] WARNING: possible recursive locking detected
-[ 5233.234696] 7.0.0-rc3nvme+ #20 Tainted: G           O     N
-[ 5233.238434] --------------------------------------------
-[ 5233.241852] kworker/u192:6/2413 is trying to acquire lock:
-[ 5233.245429] ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: touch_wq_lockdep_map+0x26/0x90
-[ 5233.251438]
-               but task is already holding lock:
-[ 5233.255254] ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: process_one_work+0x5cc/0x6e0
-[ 5233.261125]
-               other info that might help us debug this:
-[ 5233.265333]  Possible unsafe locking scenario:
-
-[ 5233.269217]        CPU0
-[ 5233.270795]        ----
-[ 5233.272436]   lock((wq_completion)nvmet-wq);
-[ 5233.275241]   lock((wq_completion)nvmet-wq);
-[ 5233.278020]
-                *** DEADLOCK ***
-
-[ 5233.281793]  May be due to missing lock nesting notation
-
-[ 5233.286195] 3 locks held by kworker/u192:6/2413:
-[ 5233.289192]  #0: ffff888111632548 ((wq_completion)nvmet-wq){+.+.}-{0:0}, at: process_one_work+0x5cc/0x6e0
-[ 5233.294569]  #1: ffffc9000e2a7e40 ((work_completion)(&queue->release_work)){+.+.}-{0:0}, at: process_one_work+0x1c5/0x6e0
-[ 5233.300128]  #2: ffffffff82d7dc40 (rcu_read_lock){....}-{1:3}, at: __flush_work+0x62/0x530
-[ 5233.304290]
-               stack backtrace:
-[ 5233.306520] CPU: 4 UID: 0 PID: 2413 Comm: kworker/u192:6 Tainted: G           O     N  7.0.0-rc3nvme+ #20 PREEMPT(full)
-[ 5233.306524] Tainted: [O]=OOT_MODULE, [N]=TEST
-[ 5233.306525] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-[ 5233.306527] Workqueue: nvmet-wq nvmet_tcp_release_queue_work [nvmet_tcp]
-[ 5233.306532] Call Trace:
-[ 5233.306534]  <TASK>
-[ 5233.306536]  dump_stack_lvl+0x73/0xb0
-[ 5233.306552]  print_deadlock_bug+0x225/0x2f0
-[ 5233.306556]  __lock_acquire+0x13f0/0x2290
-[ 5233.306563]  lock_acquire+0xd0/0x300
-[ 5233.306565]  ? touch_wq_lockdep_map+0x26/0x90
-[ 5233.306571]  ? __flush_work+0x20b/0x530
-[ 5233.306573]  ? touch_wq_lockdep_map+0x26/0x90
-[ 5233.306577]  touch_wq_lockdep_map+0x3b/0x90
-[ 5233.306580]  ? touch_wq_lockdep_map+0x26/0x90
-[ 5233.306583]  ? __flush_work+0x20b/0x530
-[ 5233.306585]  __flush_work+0x268/0x530
-[ 5233.306588]  ? __pfx_wq_barrier_func+0x10/0x10
-[ 5233.306594]  ? xen_error_entry+0x30/0x60
-[ 5233.306600]  nvmet_ctrl_free+0x140/0x310 [nvmet]
-[ 5233.306617]  nvmet_cq_put+0x74/0x90 [nvmet]
-[ 5233.306629]  nvmet_tcp_release_queue_work+0x19f/0x360 [nvmet_tcp]
-[ 5233.306634]  process_one_work+0x206/0x6e0
-[ 5233.306640]  worker_thread+0x184/0x320
-[ 5233.306643]  ? __pfx_worker_thread+0x10/0x10
-[ 5233.306646]  kthread+0xf1/0x130
-[ 5233.306648]  ? __pfx_kthread+0x10/0x10
-[ 5233.306651]  ret_from_fork+0x355/0x450
-[ 5233.306653]  ? __pfx_kthread+0x10/0x10
-[ 5233.306656]  ret_from_fork_asm+0x1a/0x30
-[ 5233.306664]  </TASK>
-
-There is also no need to flush async_event_work from controller
-teardown. The admin queue teardown already fails outstanding AER
-requests before the final controller put :-
-
- nvmet_sq_destroy(admin sq)
-    nvmet_async_events_failall(ctrl)
-
-The controller has already been removed from the subsystem list before
-nvmet_ctrl_free() quiesces outstanding work.
-
-Replace flush_work() with cancel_work_sync() so a pending
-async_event_work item is canceled and a running instance is waited on
-without recursing into the same workqueue.
-
-Fixes: 06406d81a2d7 ("nvmet: cancel fatal error and flush async work before free controller")
+Fixes: 6931d21f87bc ("openvswitch: defer tunnel netdev_put to RCU release")
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Acked-by: Eelco Chaudron <echaudro@redhat.com>
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Acked-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20260430233848.440994-2-i.maximets@ovn.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/openvswitch/vport-netdev.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -1496,7 +1496,7 @@ static void nvmet_ctrl_free(struct kref
+--- a/net/openvswitch/vport-netdev.c
++++ b/net/openvswitch/vport-netdev.c
+@@ -189,9 +189,13 @@ void ovs_netdev_tunnel_destroy(struct vp
+ 	 */
+ 	if (vport->dev->reg_state == NETREG_REGISTERED)
+ 		rtnl_delete_link(vport->dev, 0, NULL);
+-	rtnl_unlock();
  
- 	nvmet_stop_keep_alive_timer(ctrl);
++	/* We can't put the device reference yet, since it can still be in
++	 * use, but rtnl_unlock()->netdev_run_todo() will block until all
++	 * the references are released, so the RCU call must be before it.
++	 */
+ 	call_rcu(&vport->rcu, vport_netdev_free);
++	rtnl_unlock();
+ }
+ EXPORT_SYMBOL_GPL(ovs_netdev_tunnel_destroy);
  
--	flush_work(&ctrl->async_event_work);
-+	cancel_work_sync(&ctrl->async_event_work);
- 	cancel_work_sync(&ctrl->fatal_err_work);
- 
- 	nvmet_destroy_auth(ctrl);
 
 
