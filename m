@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BAF82BE05F;
-	Sat, 30 May 2026 16:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC2232B10F;
+	Sat, 30 May 2026 16:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780157573; cv=none; b=UiyoUSKYLWq3IZU471CQ3r7R8QNPA88cF4SLTK1EIx3AblHdTZL5K8UvnJx8RNzDgdB6MDnbWZvZBuXsEFwRLwxhMY8QBiLdlDfWurTp1VmKUAVzqWtoiRUZT8bu08Vf3QRn3B96ZJGDkNo5yKWmAY1vnKylA0yPpw22aYViZpw=
+	t=1780157593; cv=none; b=fdsMmLZwoQNv7+8UO4Ft015YIM5nWfnBu29O/no+fmv4QIobtLXd8sGkNWFFSHHPsIAejZVz75nBNMzddWgP7wGMk27TF74gyJxibs1wiu31p8VFl3jB2RhE7uyu0DEQXNSjogDny2baqaRjRrHXqELAu9SKypg+3QMX1TCa80E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780157573; c=relaxed/simple;
-	bh=FKCD1+iG2KV+VOvQFVATrcEFo0zee/qxgeWjeFcT6Ys=;
+	s=arc-20240116; t=1780157593; c=relaxed/simple;
+	bh=intT23irT1rljL4NrkJ+U+B9aiGEA0lNZ4F1QZt+sBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DB+97MX6fEa7Cf/9hQJ4yO7a6Br8PMNN784K0nuz8ZviwGkrsuPmAFTd7HY/gjKsKi0FwWdUDYw858uKaHQqYFtBa+LMnZPTZV+sfsR1mix90e+SGAmXm/0Ae/DGbXlqnIUr6E6CXi8ODyEO9YEAz4uBRKCI7leMPqq9PvAdDZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vyMYPts+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h/eP2wZR7F4bjR7ETsovXLUDl86ZNQXzUZcyFgm1f/gNC9BYcDXAS2Eeh6sOLgFexdHmLPLBWr161z1bLc6gID07QccWdi2ITF7xKI5IqJCN0IGkrzDCy7l94AFBs3zfczyYJV4uEA/Qg7QrGpkfNlEsmQbNGdfTqehLPtPteDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/uRVieo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vyMYPts+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2F41F00893;
-	Sat, 30 May 2026 16:12:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/uRVieo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CEF41F00893;
+	Sat, 30 May 2026 16:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780157571;
-	bh=0hd2ERUNCH+SqOrXh8v/ZJOdb28L5j6+2b/TnFAZ5Qw=;
+	s=korg; t=1780157592;
+	bh=CjKOWhRhM/Dv3l+r3q5nGmY8bbxr7Ju4NGMQqCg5D3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vyMYPts+qs/fqhGJqhbtPv1OBMVZ+gTwP2/pAI5PUxv+5HBvEBgE+0NDC55jUuHWy
-	 sZbgsEb9RkIkIecGWPJGI370OaNf2nw1nT4PCmFdFEX6NRydCsnJG0uONIzxKAuTHn
-	 Ra42sbURLxMAQ7ssySp6+CcNbSGYrNdv/4/jxqEY=
+	b=L/uRVieobnlp27eV9klZeYJtcN/nfkfUDXpMV/laSy7LTerJ8i+JXBpeQlDTUHHWX
+	 Ud3pNxudjUTSEdIJFkSGHQ7we++S2hRg8ctzH11V5gS/RVrWMGaesxMMdYdAT+TilS
+	 iyii4QqD1hGJJUdVb9KhSCawfnV6hbzVxtDpFnYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Wenyuan Li <2063309626@qq.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 003/969] media: rkvdec: reduce stack usage in rkvdec_init_v4l2_vp9_count_tbl()
-Date: Sat, 30 May 2026 17:52:07 +0200
-Message-ID: <20260530160300.582578003@linuxfoundation.org>
+Subject: [PATCH 5.15 003/776] can: mcp251x: add error handling for power enable in open and resume
+Date: Sat, 30 May 2026 17:55:17 +0200
+Message-ID: <20260530160240.327410170@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
-References: <20260530160300.485627683@linuxfoundation.org>
+In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
+References: <20260530160240.228940103@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,51 +47,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Wenyuan Li <2063309626@qq.com>
 
-[ Upstream commit c03b7dec3c4ddc97872fa12bfca75bae9cb46510 ]
+[ Upstream commit 7a57354756c7df223abe2c33774235ad70cb4231 ]
 
-The deeply nested loop in rkvdec_init_v4l2_vp9_count_tbl() needs a lot
-of registers, so when the clang register allocator runs out, it ends up
-spilling countless temporaries to the stack:
+Add missing error handling for mcp251x_power_enable() calls in both
+mcp251x_open() and mcp251x_can_resume() functions.
 
-drivers/media/platform/rockchip/rkvdec/rkvdec-vp9.c:966:12: error: stack frame size (1472) exceeds limit (1280) in 'rkvdec_vp9_start' [-Werror,-Wframe-larger-than]
+In mcp251x_open(), if power enable fails, jump to error path to close
+candev without attempting to disable power again.
 
-Marking this function as noinline_for_stack keeps it out of
-rkvdec_vp9_start(), giving the compiler more room for optimization.
+In mcp251x_can_resume(), properly check return values of power enable calls
+for both power and transceiver regulators. If any fails, return the error
+code to the PM framework and log the failure.
 
-The resulting code is good enough that both the total stack usage
-and the loop get enough better to stay under the warning limit,
-though it's still slow, and would need a larger rework if this
-function ends up being called in a fast path.
+This ensures the driver properly handles power control failures and
+maintains correct device state.
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Wenyuan Li <2063309626@qq.com>
+Link: https://patch.msgid.link/tencent_F3EFC5D7738AC548857B91657715E2D3AA06@qq.com
+[mkl: fix patch description]
+[mkl: mcp251x_can_resume(): replace goto by return]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/rkvdec/rkvdec-vp9.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/can/spi/mcp251x.c | 29 ++++++++++++++++++++++++-----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/staging/media/rkvdec/rkvdec-vp9.c b/drivers/staging/media/rkvdec/rkvdec-vp9.c
-index cfae99b40ccb4..dc3e6354c7974 100644
---- a/drivers/staging/media/rkvdec/rkvdec-vp9.c
-+++ b/drivers/staging/media/rkvdec/rkvdec-vp9.c
-@@ -924,7 +924,8 @@ static void rkvdec_vp9_done(struct rkvdec_ctx *ctx,
- 	update_ctx_last_info(vp9_ctx);
- }
+diff --git a/drivers/net/can/spi/mcp251x.c b/drivers/net/can/spi/mcp251x.c
+index e71edca7afbb2..2810583b818a3 100644
+--- a/drivers/net/can/spi/mcp251x.c
++++ b/drivers/net/can/spi/mcp251x.c
+@@ -1218,7 +1218,11 @@ static int mcp251x_open(struct net_device *net)
+ 	}
  
--static void rkvdec_init_v4l2_vp9_count_tbl(struct rkvdec_ctx *ctx)
-+static noinline_for_stack void
-+rkvdec_init_v4l2_vp9_count_tbl(struct rkvdec_ctx *ctx)
+ 	mutex_lock(&priv->mcp_lock);
+-	mcp251x_power_enable(priv->transceiver, 1);
++	ret = mcp251x_power_enable(priv->transceiver, 1);
++	if (ret) {
++		dev_err(&spi->dev, "failed to enable transceiver power: %pe\n", ERR_PTR(ret));
++		goto out_close_candev;
++	}
+ 
+ 	priv->force_quit = 0;
+ 	priv->tx_skb = NULL;
+@@ -1267,6 +1271,7 @@ static int mcp251x_open(struct net_device *net)
+ 	mcp251x_hw_sleep(spi);
+ out_close:
+ 	mcp251x_power_enable(priv->transceiver, 0);
++out_close_candev:
+ 	close_candev(net);
+ 	mutex_unlock(&priv->mcp_lock);
+ 	if (release_irq)
+@@ -1505,11 +1510,25 @@ static int __maybe_unused mcp251x_can_resume(struct device *dev)
  {
- 	struct rkvdec_vp9_ctx *vp9_ctx = ctx->priv;
- 	struct rkvdec_vp9_intra_frame_symbol_counts *intra_cnts = vp9_ctx->count_tbl.cpu;
+ 	struct spi_device *spi = to_spi_device(dev);
+ 	struct mcp251x_priv *priv = spi_get_drvdata(spi);
++	int ret = 0;
+ 
+-	if (priv->after_suspend & AFTER_SUSPEND_POWER)
+-		mcp251x_power_enable(priv->power, 1);
+-	if (priv->after_suspend & AFTER_SUSPEND_UP)
+-		mcp251x_power_enable(priv->transceiver, 1);
++	if (priv->after_suspend & AFTER_SUSPEND_POWER) {
++		ret = mcp251x_power_enable(priv->power, 1);
++		if (ret) {
++			dev_err(dev, "failed to restore power: %pe\n", ERR_PTR(ret));
++			return ret;
++		}
++	}
++
++	if (priv->after_suspend & AFTER_SUSPEND_UP) {
++		ret = mcp251x_power_enable(priv->transceiver, 1);
++		if (ret) {
++			dev_err(dev, "failed to restore transceiver power: %pe\n", ERR_PTR(ret));
++			if (priv->after_suspend & AFTER_SUSPEND_POWER)
++				mcp251x_power_enable(priv->power, 0);
++			return ret;
++		}
++	}
+ 
+ 	if (priv->after_suspend & (AFTER_SUSPEND_POWER | AFTER_SUSPEND_UP))
+ 		queue_work(priv->wq, &priv->restart_work);
 -- 
 2.53.0
 
