@@ -1,46 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D5127A477;
-	Sat, 30 May 2026 17:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797562E7379;
+	Sat, 30 May 2026 17:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162939; cv=none; b=UxQh3DuPyJmUOg/FLyO5eBmMxJxTobcRXuUxZsxr9qpI73iC5uRFAoOw+g32TND3LaJA+emrvddPKoS/bJfleDwfl66Nm+YJd4jMYURpmtN/8rYzec8uBrIU1z231qkgguExs8TrY66Vkh0KaXlQpn+5bv64BgJi+sAARtduFp4=
+	t=1780162942; cv=none; b=WFn7u7r/zyKDKJFmv9z/A2MOsiTtlDEYqtQp0pe1C0bKKgcW5WI1+5S9m6VAQBApUHDJs7gbEWH5nsYjtUP/Zwob0yBi95D9VCWSsXMAwg31yEggVMboS6YAeeQXpZ89kIb1BK4kQGGNB/iozj6ke2PuzzVx0OhqIqOpD9lnN1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162939; c=relaxed/simple;
-	bh=EK2Zaemy9LcHXxUjIhqYoRUIaJGtbpug6P3+cBBbmsQ=;
+	s=arc-20240116; t=1780162942; c=relaxed/simple;
+	bh=ygKshb4OScdRuroNlV8rsG7YMdl3U2nGhg9LMidcrV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SYSAs+afWTN/pCC+usk3+SQt83/udK8cU98l38QOtR5VR/aiV8MgOZ7ShGj8KtmfFduBYexg2oRu/OMwhZ3hv9JfwCzSyMMmQxc7LGvftOJV9Qu8DRxCSmYyXSky2qF10Hs68MLaEFWSqUri/L9abdiKkgm3FR0eR3tiB0AzBAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gcvKev/7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FZXQuF5jfBL1F9Wpj7NKPFAwRF4EDH9TaYmI5LS+1GhlwTpY7FpCGImj+vtgDA//9fMN+JW61kWTWr3e2YaqnXhbTaK04Jw+WO0D/dYs5zh1VBB33mmlkNfFkV+vD5afZeAmmtkPK4E6oOSU6ITvoCmZJ1fwczQI/Q5XEIDO2xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0mV8EIe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcvKev/7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4176F1F00893;
-	Sat, 30 May 2026 17:42:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0mV8EIe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0661F00893;
+	Sat, 30 May 2026 17:42:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162938;
-	bh=Q1/NAJRjkBk+FNsiGZIAyXcVBqmkhP53XgWRcEiFDo0=;
+	s=korg; t=1780162941;
+	bh=b04uAX0RcFrRtW2JEQjO9I0Ie5eUpoJbv8FFXs3l9tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gcvKev/7Sf36b23T4Aionq52oLPwpyCSdp05XC3o9HE7IlvgrhutavMuMpWLzme4f
-	 NKYapEyfvidFZiT5Cf5wqWSOT7ZkXeYhfq89qLPsU2fyiWROoK8G4kwZsjJxAQMk5D
-	 CdpOpNl3a5RzdLy4XLXgwK8LVDtnbeAo7wtKu9T0=
+	b=t0mV8EIeHPRWEhSwE0thjkbAsQUZWn526wgRwn9IDbvBYVz6KjOqGwNBiDzctkJFK
+	 V3NDsHpj3bSVmGA/fM2xTRMlFhxFCv9D5p+/xURnCHHaC0IBA2f0UtpcRWeJAmWNmt
+	 UBV87WDMqs9MRTd2fgHjwFiCJGGY2SjaBIltjGsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	syzbot+c897823f699449cc3eb4@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 106/776] ocfs2: validate inline data i_size during inode read
-Date: Sat, 30 May 2026 17:57:00 +0200
-Message-ID: <20260530160243.090300771@linuxfoundation.org>
+	Harin Lee <me@harin.net>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 070/776] ALSA: ctxfi: Limit PTP to a single page
+Date: Sat, 30 May 2026 17:56:24 +0200
+Message-ID: <20260530160242.129676210@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -59,85 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Harin Lee <me@harin.net>
 
-[ Upstream commit 1524af3685b35feac76662cc551cbc37bd14775f ]
+commit e9418da50d9e5c496c22fe392e4ad74c038a94eb upstream.
 
-When reading an inode from disk, ocfs2_validate_inode_block() performs
-various sanity checks but does not validate the size of inline data.  If
-the filesystem is corrupted, an inode's i_size can exceed the actual
-inline data capacity (id_count).
+Commit 391e69143d0a increased CT_PTP_NUM from 1 to 4 to support 256
+playback streams, but the additional pages are not used by the card
+correctly. The CT20K2 hardware already has multiple VMEM_PTPAL
+registers, but using them separately would require refactoring the
+entire virtual memory allocation logic.
 
-This causes ocfs2_dir_foreach_blk_id() to iterate beyond the inline data
-buffer, triggering a use-after-free when accessing directory entries from
-freed memory.
+ct_vm_map() always uses PTEs in vm->ptp[0].area regardless of
+CT_PTP_NUM. On AMD64 systems, a single PTP covers 512 PTEs (2M). When
+aggregate memory allocations exceed this limit, ct_vm_map() tries to
+access beyond the allocated space and causes a page fault:
 
-In the syzbot report:
-  - i_size was 1099511627576 bytes (~1TB)
-  - Actual inline data capacity (id_count) is typically <256 bytes
-  - A garbage rec_len (54648) caused ctx->pos to jump out of bounds
-  - This triggered a UAF in ocfs2_check_dir_entry()
+  BUG: unable to handle page fault for address: ffffd4ae8a10a000
+  Oops: Oops: 0002 [#1] SMP PTI
+  RIP: 0010:ct_vm_map+0x17c/0x280 [snd_ctxfi]
+  Call Trace:
+  atc_pcm_playback_prepare+0x225/0x3b0
+  ct_pcm_playback_prepare+0x38/0x60
+  snd_pcm_do_prepare+0x2f/0x50
+  snd_pcm_action_single+0x36/0x90
+  snd_pcm_action_nonatomic+0xbf/0xd0
+  snd_pcm_ioctl+0x28/0x40
+  __x64_sys_ioctl+0x97/0xe0
+  do_syscall_64+0x81/0x610
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Fix by adding a validation check in ocfs2_validate_inode_block() to ensure
-inodes with inline data have i_size <= id_count.  This catches the
-corruption early during inode read and prevents all downstream code from
-operating on invalid data.
+Revert CT_PTP_NUM to 1. The 256 SRC_RESOURCE_NUM and playback_count
+remain unchanged.
 
-Link: https://lkml.kernel.org/r/20251212052132.16750-1-kartikey406@gmail.com
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reported-by: syzbot+c897823f699449cc3eb4@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c897823f699449cc3eb4
-Tested-by: syzbot+c897823f699449cc3eb4@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/all/20251211115231.3560028-1-kartikey406@gmail.com/T/ [v1]
-Link: https://lore.kernel.org/all/20251212040400.6377-1-kartikey406@gmail.com/T/ [v2]
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 7bc5da4842be ("ocfs2: fix out-of-bounds write in ocfs2_write_end_inline")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 391e69143d0a ("ALSA: ctxfi: Bump playback substreams to 256")
+Cc: stable@vger.kernel.org
+Signed-off-by: Harin Lee <me@harin.net>
+Link: https://patch.msgid.link/20260406074857.216034-1-me@harin.net
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/inode.c |   25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ sound/pci/ctxfi/ctvmem.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ocfs2/inode.c
-+++ b/fs/ocfs2/inode.c
-@@ -1416,12 +1416,25 @@ int ocfs2_validate_inode_block(struct su
- 		goto bail;
- 	}
+--- a/sound/pci/ctxfi/ctvmem.h
++++ b/sound/pci/ctxfi/ctvmem.h
+@@ -15,7 +15,7 @@
+ #ifndef CTVMEM_H
+ #define CTVMEM_H
  
--	if ((le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_DATA_FL) &&
--	    le32_to_cpu(di->i_clusters)) {
--		rc = ocfs2_error(sb, "Invalid dinode %llu: %u clusters\n",
--				 (unsigned long long)bh->b_blocknr,
--				 le32_to_cpu(di->i_clusters));
--		goto bail;
-+	if (le16_to_cpu(di->i_dyn_features) & OCFS2_INLINE_DATA_FL) {
-+		struct ocfs2_inline_data *data = &di->id2.i_data;
-+
-+		if (le32_to_cpu(di->i_clusters)) {
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode %llu: %u clusters\n",
-+					 (unsigned long long)bh->b_blocknr,
-+					 le32_to_cpu(di->i_clusters));
-+			goto bail;
-+		}
-+
-+		if (le64_to_cpu(di->i_size) > le16_to_cpu(data->id_count)) {
-+			rc = ocfs2_error(sb,
-+					 "Invalid dinode #%llu: inline data i_size %llu exceeds id_count %u\n",
-+					 (unsigned long long)bh->b_blocknr,
-+					 (unsigned long long)le64_to_cpu(di->i_size),
-+					 le16_to_cpu(data->id_count));
-+			goto bail;
-+		}
- 	}
+-#define CT_PTP_NUM	4	/* num of device page table pages */
++#define CT_PTP_NUM	1	/* num of device page table pages */
  
- 	rc = 0;
+ #include <linux/mutex.h>
+ #include <linux/list.h>
 
 
