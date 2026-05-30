@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6549532D42B;
-	Sat, 30 May 2026 17:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D152690D5;
+	Sat, 30 May 2026 17:03:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160589; cv=none; b=dCXG2yFFbhuTcH8s6OE2PdQSj7tRgJPAdo8Ftltr2eFoWCPTyQ1iPgGdQ4D6x5q4ogtDveD165fbFgQnKDn4C9muK8g+d5Vz8d+5YVmaK2Az6v02NzS0mFAEppudWaAWQS7v+RPo1ufzFupEAhy+o0dCBBZHQ1kbopae3Y5DlHA=
+	t=1780160593; cv=none; b=KmMUVUKF+dCFqiQ3S6mpKLuDFn/Uk/9OCUEU56y9teoheldG6ysFfoNe79KqUU3BRCe3chVkiJZuihe9HFLgZf87+vPq3LqGwyHJa1b1SXujVaotk+TuIXtWid1Hxe/PqF8DNT45NNl+BKBzUWSApHQ+0dacd9HIgeQO8vWHO+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160589; c=relaxed/simple;
-	bh=hlJma0sLS8cz1XwvhLlcjhGY/rp7kq4WH51b1XOCZDw=;
+	s=arc-20240116; t=1780160593; c=relaxed/simple;
+	bh=zPWuMBvi+HMpnD23PXzjYKsphyw1SJyb2witQdImLdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CxnTRrvdkU4V9VJx0bKpNxSUAx12LtwYFzQW9prHTo6/zwnIRWOIkXnmt/Dhqy0OtnrxTqPpxU9azwhImG02fd1DoSNv67WltEkA7Vl/HHQvyhAw0b4pKY4X/3rbQhTZZKhpiAGQZLzMmjVCZGhOTeKHHNr5rinxEWxkeF6WKxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pq8wIZYB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OTP6yrIu2un7Zq0Oeflemakk211C4f0Lu8EqYmD0WX+55LvmjAJzJPZx2GY692eMhnGOvfsdcz0Lt9Qul7TXqRbmrjzI172DZXobfVCaYdTXwOveAFn1Bk641abyv2v6lSYtcpOmBVbnIx20hahloUDYXNbPl54VjBF401rpoGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfa2rk8H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pq8wIZYB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C03B1F00893;
-	Sat, 30 May 2026 17:03:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfa2rk8H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE8E1F00893;
+	Sat, 30 May 2026 17:03:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160588;
-	bh=XTaNVMoePQMUOONLrghF0TmFiF2KErCY+QUyrZbzoJE=;
+	s=korg; t=1780160592;
+	bh=682HuJp+U5IogcBQnNO4/ED6CAHtnEjkBc0mtLvjHJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pq8wIZYBE1XGShey9m9VXkSZD4X6wjJd4i/WOl1udNmG5nsY0Z8gWl9iY8tJl9Mnm
-	 Mr7QemBq5BvFrdkiIvcrlrJrspenbs0P2wxRLSpOCitOhaQbeZ97ntfE40BrC5WPsC
-	 iayCLFF0AiqvZwbrbcjtlcNvxsvQQSal2q12aicg=
+	b=vfa2rk8HbqCgowNln2bIQ9aEjVDY6gmGcEXX37RBet9cZUjOF+YqCZbmG6ML25q8z
+	 eQCGi5bOgbnZ1FKfRikBVGLGZLH54ugbpgi9sbMQoX09uq3R+br7LyRr5na5u27ZHW
+	 BUisP65nXDoqpy0PhClj5SqSYd9RqWMZ3zc6G0WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Guan <guanwentao@uniontech.com>,
+	Chao Li <lichao@loongson.cn>,
+	Dongyan Qian <qiandongyan@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 379/969] LoongArch: Fix potential ADE in loongson_gpu_fixup_dma_hang()
-Date: Sat, 30 May 2026 17:58:23 +0200
-Message-ID: <20260530160310.765563799@linuxfoundation.org>
+Subject: [PATCH 6.1 380/969] LoongArch: Use per-root-bridge PCIH flag to skip mem resource fixup
+Date: Sat, 30 May 2026 17:58:24 +0200
+Message-ID: <20260530160310.791443418@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,103 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Guan <guanwentao@uniontech.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 8dfa2f8780e486d05b9a0ffce70b8f5fbd62053e upstream.
+commit 49f33840dcc907d21313d369e34872880846b61c upstream.
 
-The switch case in loongson_gpu_fixup_dma_hang() may not DC2 or DC3, and
-readl(crtc_reg) will access with random address, because the "device" is
-from "base+PCI_DEVICE_ID", "base" is from "pdev->devfn+1". This is wrong
-when my platform inserts a discrete GPU:
+When firmware enables 64-bit PCI host bridge support, some root bridges
+already provide valid 64-bit mem resource windows through ACPI.
 
-lspci -tv
--[0000:00]-+-00.0  Loongson Technology LLC Hyper Transport Bridge Controller
-...
-           +-06.0  Loongson Technology LLC LG100 GPU
-           +-06.2  Loongson Technology LLC Device 7a37
-...
+In this case, the LoongArch-specific mem resource high-bits fixup in
+acpi_prepare_root_resources() should not be applied unconditionally.
+Otherwise, the kernel may override the native resource layout derived
+from firmware, and later BAR assignment can fail to place device BARs
+into the intended 64-bit address space correctly.
 
-Add a default switch case to fix the panic as below:
+Add a per-root-bridge ACPI flag, PCIH, and evaluate it from the current
+root bridge device scope. When PCIH is set, skip the mem resource high-
+bits fixup path and let the kernel use the firmware-provided resource
+description directly. When PCIH is absent or cleared, keep the existing
+behavior and continue filling the high address bits from the host bridge
+address.
 
- Kernel ade access[#1]:
- CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.6.136-loong64-desktop-hwe+ #4
- pc 90000000017e5534 ra 90000000017e54c0 tp 90000001002f8000 sp 90000001002fb6c0
- a0 80000efe00003100 a1 0000000000003100 a2 0000000000000000 a3 0000000000000002
- a4 90000001002fb6b4 a5 900000087cdb58fd a6 90000000027af000 a7 0000000000000001
- t0 00000000000085b9 t1 000000000000ffff t2 0000000000000000 t3 0000000000000000
- t4 fffffffffffffffd t5 00000000fffb6d9c t6 0000000000083b00 t7 00000000000070c0
- t8 900000087cdb4d94 u0 900000087cdb58fd s9 90000001002fb826 s0 90000000031c12c8
- s1 7fffffffffffff00 s2 90000000031c12d0 s3 0000000000002710 s4 0000000000000000
- s5 0000000000000000 s6 9000000100053000 s7 7fffffffffffff00 s8 90000000030d4000
-    ra: 90000000017e54c0 loongson_gpu_fixup_dma_hang+0x40/0x210
-   ERA: 90000000017e5534 loongson_gpu_fixup_dma_hang+0xb4/0x210
-  CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
-  PRMD: 00000004 (PPLV0 +PIE -PWE)
-  EUEN: 00000000 (-FPE -SXE -ASXE -BTE)
-  ECFG: 00071c1d (LIE=0,2-4,10-12 VS=7)
- ESTAT: 00480000 [ADEM] (IS= ECode=8 EsubCode=1)
-  BADV: 7fffffffffffff00
-  PRID: 0014d000 (Loongson-64bit, Loongson-3A6000-HV)
- Modules linked in:
- Process swapper/0 (pid: 1, threadinfo=(____ptrval____), task=(____ptrval____))
- Stack : 0000000000000006 90000001002fb778 90000001002fb704 0000000000000007
-         0000000016a65700 90000000017e5690 000000000000ffff ffffffffffffffff
-         900000000209f7c0 9000000100053000 900000000209f7a8 9000000000eebc08
-         0000000000000000 0000000000000000 0000000000000006 90000001002fb778
-         90000001000530b8 90000000027af000 0000000000000000 9000000100054000
-         9000000100053000 9000000000ebb70c 9000000100004c00 9000000004000001
-         90000001002fb7e4 bae765461f31cb12 0000000000000000 0000000000000000
-         0000000000000006 90000000027af000 0000000000000030 90000000027af000
-         900000087cd6f800 9000000100053000 0000000000000000 9000000000ebc560
-         7a2500147cdaf720 bae765461f31cb12 0000000000000001 0000000000000030
-         ...
- Call Trace:
- [<90000000017e5534>] loongson_gpu_fixup_dma_hang+0xb4/0x210
- [<9000000000eebc08>] pci_fixup_device+0x108/0x280
- [<9000000000ebb70c>] pci_setup_device+0x24c/0x690
- [<9000000000ebc560>] pci_scan_single_device+0xe0/0x140
- [<9000000000ebc684>] pci_scan_slot+0xc4/0x280
- [<9000000000ebdd00>] pci_scan_child_bus_extend+0x60/0x3f0
- [<9000000000f5bc94>] acpi_pci_root_create+0x2b4/0x420
- [<90000000017e5e74>] pci_acpi_scan_root+0x2d4/0x440
- [<9000000000f5b02c>] acpi_pci_root_add+0x21c/0x3a0
- [<9000000000f4ee54>] acpi_bus_attach+0x1a4/0x3c0
- [<90000000010e200c>] device_for_each_child+0x6c/0xe0
- [<9000000000f4bbf4>] acpi_dev_for_each_child+0x44/0x70
- [<9000000000f4ef40>] acpi_bus_attach+0x290/0x3c0
- [<90000000010e200c>] device_for_each_child+0x6c/0xe0
- [<9000000000f4bbf4>] acpi_dev_for_each_child+0x44/0x70
- [<9000000000f4ef40>] acpi_bus_attach+0x290/0x3c0
- [<9000000000f5211c>] acpi_bus_scan+0x6c/0x280
- [<900000000189c028>] acpi_scan_init+0x194/0x310
- [<900000000189bc6c>] acpi_init+0xcc/0x140
- [<9000000000220cdc>] do_one_initcall+0x4c/0x310
- [<90000000018618fc>] kernel_init_freeable+0x258/0x2d4
- [<900000000184326c>] kernel_init+0x28/0x13c
- [<9000000000222008>] ret_from_kernel_thread+0xc/0xa4
+This makes the behavior per-root-bridge configurable and avoids breaking
+valid 64-bit BAR space allocation on bridges whose 64-bit windows have
+already been fully described by firmware.
 
 Cc: stable@vger.kernel.org
-Fixes: 95db0c9f526d ("LoongArch: Workaround LS2K/LS7A GPU DMA hang bug")
-Link: https://gist.github.com/opsiff/ebf2dac51b4013d22462f2124c55f807
-Link: https://gist.github.com/opsiff/a62f2a73db0492b3c49bf223a339b133
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Suggested-by: Chao Li <lichao@loongson.cn>
+Tested-by: Dongyan Qian <qiandongyan@loongson.cn>
+Signed-off-by: Dongyan Qian <qiandongyan@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/pci/pci.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/loongarch/pci/acpi.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/loongarch/pci/pci.c
-+++ b/arch/loongarch/pci/pci.c
-@@ -133,6 +133,9 @@ static void loongson_gpu_fixup_dma_hang(
- 		crtc_reg = regbase;
- 		crtc_offset = 0x400;
- 		break;
-+	default:
-+		iounmap(regbase);
-+		return;
- 	}
+--- a/arch/loongarch/pci/acpi.c
++++ b/arch/loongarch/pci/acpi.c
+@@ -58,11 +58,16 @@ static void acpi_release_root_info(struc
+ static int acpi_prepare_root_resources(struct acpi_pci_root_info *ci)
+ {
+ 	int status;
++	unsigned long long pci_h = 0;
+ 	struct resource_entry *entry, *tmp;
+ 	struct acpi_device *device = ci->bridge;
  
- 	for (i = 0; i < CRTC_NUM_MAX; i++, crtc_reg += crtc_offset) {
+ 	status = acpi_pci_probe_root_resources(ci);
+ 	if (status > 0) {
++		acpi_evaluate_integer(device->handle, "PCIH", NULL, &pci_h);
++		if (pci_h)
++			return status;
++
+ 		resource_list_for_each_entry_safe(entry, tmp, &ci->resources) {
+ 			if (entry->res->flags & IORESOURCE_MEM) {
+ 				entry->offset = ci->root->mcfg_addr & GENMASK_ULL(63, 40);
 
 
