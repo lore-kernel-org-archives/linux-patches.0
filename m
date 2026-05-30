@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39207341AB8;
-	Sat, 30 May 2026 17:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867E733F8B4;
+	Sat, 30 May 2026 17:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162385; cv=none; b=RrvIM4szBxtaTL847RP2zvjqYvVRnB7EU0/+7EiQ1xn2QJ13gVcqjXq6hEhtpMVpUKN5aXIF4stBjYnULyA9UnoaJaLr9WwIFBKtASF0fiD1qeXMsSw1bsQ7uruK62nf/W6M4amGNlesRnjzmCNkLoc2YhlumnWTPS9j9q92yB4=
+	t=1780162388; cv=none; b=VqV/YnC0YPllepUdnx5MsFdGz35U63bioS8G03DhyZ1c/3y1lt9YCAThJoe+4OZgRWNPRae3cg5hejsdsNdjJQuovSwQU8P5FqW3QGbRFhEUkC7gUOwOUA1fsOG733dnzNBTDEcFca3nqXE+2V5lRDbWob59WtAQMyvsndqT5+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162385; c=relaxed/simple;
-	bh=GI88SGU3UYzzfEFcOAUC6ma7KVFuY1wZagn/0InZwtc=;
+	s=arc-20240116; t=1780162388; c=relaxed/simple;
+	bh=WySRyabm3OBxgSwOcsDl4RsZHfKuZlauCEQ9FGrT1D0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=orBSR7045VTebntnVFlLufX2iCug5/dE4A/DOjqX7brNPYLaDoozOSjvrlXYDD5XbSl5G6JPJ2ooFEtHhLVLGdz3Tl91b7lrb0LoaIERb7Pyey4em6bcq6bTBKshD9dC7ffQed00ni5wfxqX/W9qJ1tLxLVWtNiY8y/h02+gEWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lvk/D7wy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cnvq8+AYDKQL5Hyrkbd3qwh+ntX95QoXDS9iNh0r43Ap5/npp4CA6umhga5rOpzubhqHAVtlbqDvU9Bhah43AEIM+2P4s3Al9ZAUZDQ2/rMK9koaeJAro8aXLiE1O1zaCZilN7YweqRWnyWEjKBN/n7LOQwvkW8Ys0wzgohDk1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HN34mrqz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lvk/D7wy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4381F00893;
-	Sat, 30 May 2026 17:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HN34mrqz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65241F00893;
+	Sat, 30 May 2026 17:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162384;
-	bh=FrxV5NZ9+xQhxqLUpO2GoAi0EK7cHzxNU6TaNP2gskA=;
+	s=korg; t=1780162387;
+	bh=CZxNFKGgCqrX6lAuE12/ztOZXSDohrbccO3uYxM07O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lvk/D7wy9/vfPd6ymqTwS7XBfj8++rQjHNKFxeF767dGAQA9zSj4kdp6kGgde99p7
-	 7zz3aF9PCQklhSyXJPiASn5gFTMX5dSeSb5803/SgafImGZowptBi6/z7KdqhGXrL0
-	 zZqJtQxCrICPJ8fY3uqv8MwoNiv1Fk9W7P35QtfQ=
+	b=HN34mrqzHuDoqcvHalr4vhFG8C/rQMfvs36gWyDUsEX2aFlLRNd8oAhLTwf8YH/a5
+	 xm8+EVEj6SxrFloBP4io6yYfk4Vac4hMehhjuAUZdzfS+7Mmlhsb4QVebV6iFylDxZ
+	 ILzmxtI7cF70M6ukY9vjjmiO3b1ggGmp1e2y0+ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.1 866/969] KVM: arm64: vgic-its: Reject restored DTE with out-of-range num_eventid_bits
-Date: Sat, 30 May 2026 18:06:30 +0200
-Message-ID: <20260530160324.591829272@linuxfoundation.org>
+	Minh Nguyen <minhnguyen.080505@gmail.com>,
+	Bryan Tan <bryan-bt.tan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 857/969] vsock/vmci: fix UAF when peer resets connection during handshake
+Date: Sat, 30 May 2026 18:06:21 +0200
+Message-ID: <20260530160324.334563519@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,43 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Minh Nguyen <minhnguyen.080505@gmail.com>
 
-commit 9ce754ed8e7ab4e3999767ce1505f85c449ccb07 upstream.
+commit 99e22ddf4edb63dc8382bc028af928056d3450cf upstream.
 
-Userspace can restore an ITS Device Table Entry whose Size field encodes
-more EventID bits than the virtual ITS supports.  The live MAPD path
-rejects that state, but vgic_its_restore_dte() accepts it and stores the
-out-of-range value in dev->num_eventid_bits.
+vmci_transport_recv_connecting_server() returned err = 0 for a peer
+RST in its default switch arm:
 
-Reject restored DTEs with num_eventid_bits > VITS_TYPER_IDBITS before
-allocating the device.  This mirrors the MAPD check and prevents the
-restored state from reaching vgic_its_restore_itt(), where the unchecked
-value can be converted into an oversized scan_its_table() range.
+	err = pkt->type == VMCI_TRANSPORT_PACKET_TYPE_RST ? 0 : -EINVAL;
 
-Fixes: 57a9a117154c ("KVM: arm64: vgic-its: Device table save/restore")
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://lore.kernel.org/r/20260519132519.2142458-1-michael.bommarito@gmail.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+That made vmci_transport_recv_listen() skip vsock_remove_pending(),
+leaving the pending socket on the listener's pending_links with
+sk_state = TCP_CLOSE while destroy: still dropped the explicit
+reference taken before schedule_delayed_work().
+
+One second later vsock_pending_work() observed is_pending=true and
+performed full cleanup: vsock_remove_pending() then the two trailing
+sock_put(sk) calls -- the first reached refcount 0 and __sk_freed
+the socket, and the second wrote into the freed object:
+
+  BUG: KASAN: slab-use-after-free in refcount_warn_saturate
+  Write of size 4 at addr ffff88800b1cac80 by task kworker
+  Workqueue: events vsock_pending_work
+
+Treat peer RST like any other unexpected packet type (err = -EINVAL).
+All destroy: arms now return err < 0, so vmci_transport_recv_listen()
+removes pending from pending_links synchronously and
+vsock_pending_work() takes the is_pending=false / !rejected branch,
+dropping only its own work reference.  This also closes the
+multi-packet race Sashiko reported on v2: pending is removed from
+the list before any subsequent packet can find it.
+
+The pre-existing sk_acceptq_removed() gap on the err < 0 path of
+vmci_transport_recv_listen() that Sashiko also noted is not
+introduced or changed by this patch.
+
+Tested on lts-6.12.79 with KASAN: 52/100 unpatched -> 0/100 patched.
+
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
 Cc: stable@vger.kernel.org
+Signed-off-by: Minh Nguyen <minhnguyen.080505@gmail.com>
+Acked-by: Bryan Tan <bryan-bt.tan@broadcom.com>
+Link: https://patch.msgid.link/20260519102310.237181-1-minhnguyen.080505@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/vmw_vsock/vmci_transport.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -2413,6 +2413,10 @@ static int vgic_its_restore_dte(struct v
- 	/* dte entry is valid */
- 	offset = (entry & KVM_ITS_DTE_NEXT_MASK) >> KVM_ITS_DTE_NEXT_SHIFT;
- 
-+	/* Mimic the MAPD behaviour and reject invalid EID bits. */
-+	if (num_eventid_bits > VITS_TYPER_IDBITS)
-+		return -EINVAL;
-+
- 	if (!vgic_its_check_id(its, baser, id, NULL))
- 		return -EINVAL;
+--- a/net/vmw_vsock/vmci_transport.c
++++ b/net/vmw_vsock/vmci_transport.c
+@@ -1156,7 +1156,7 @@ vmci_transport_recv_connecting_server(st
+ 		/* Close and cleanup the connection. */
+ 		vmci_transport_send_reset(pending, pkt);
+ 		skerr = EPROTO;
+-		err = pkt->type == VMCI_TRANSPORT_PACKET_TYPE_RST ? 0 : -EINVAL;
++		err = -EINVAL;
+ 		goto destroy;
+ 	}
  
 
 
