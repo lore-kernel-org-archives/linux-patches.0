@@ -1,46 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609C13AFCF3;
-	Sat, 30 May 2026 17:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5831223DC6;
+	Sat, 30 May 2026 17:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163119; cv=none; b=toOIEKqQzudOReQGvJ9dm7x+zBpXwHIlCQ6nf8ruj1PVu/bh6bqPndt9BwMiracTbks0cR/KxQ4ZINI9HpHtShoyCkJo5hhzbCUn2t/89IItZiryysCv1Bl0vaWegcqAdMjAMmPhrzDR4mLen+8sihitIDrxKrU1YYnIXk71PwA=
+	t=1780163122; cv=none; b=bmdgWlNsbBBKk3tJvmNJR9vhb8kkhGV74V8GkfjyZFmsMAn4TXwiTqGFcvv5nhlChDwCqem5V6SHnlm91tPOqGICtCJpTSjZCwh9ZAsqAPhiB3xh+AbfU3oE+Vtfkc2bdq7nt6DH3SGck4/JBUw0yZ0UDQv7zbbshxdLpQEpLuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163119; c=relaxed/simple;
-	bh=mAPGqFe3RzcBmoqgNIbOY8t6TTeeLvsIVr7wUfEuzG4=;
+	s=arc-20240116; t=1780163122; c=relaxed/simple;
+	bh=oZGQ57FFfm/4uizaqR9KXdEXCD6epBEpuAL2Xq2vcaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ig841/AghZ4ozkkFxVdiiA9Hk/SXe0dy0n4BJwf+sgaGPCSKKhlYnRvqDB1vLP+or+wb0mWHPrkqthKgpgDep317QPTIiC/lrGty+984rv/uxGwFQOE1jEDTj1FE6EDzR/eUOe2Cj8oY6wwRFhLDlFbkFpntXdSrh1I7D0BC2vI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oo1wUykg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tWWLGz+ds+IyfX/4/TQVTEMOKL8I/hnvswB2CFyZHMGBQrEkh9KQLyhPmd2Mmi8Vu9oIW8pq6+pG2JIdl4D84htUxbVJyBTt1RL5u8vgB0gy+E6Al7udfnimKJRWel38vyGTmW5t7MoMwqZs04K8WZJZ/o2ozYTt1COABAMa+RA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UgNLXs+G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oo1wUykg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4ED41F00893;
-	Sat, 30 May 2026 17:45:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UgNLXs+G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40591F00893;
+	Sat, 30 May 2026 17:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163118;
-	bh=FDGAC7QYcPnNyNp2ackx0H9I+pUaXq1Y+sO95r2R+dA=;
+	s=korg; t=1780163121;
+	bh=dueVMz9mhXmpBGVx/rhCNzKdbrD8TvDjeq/1GTH6pc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oo1wUykgWGECvzvlJXXAIp0YeZM0cSTA8b0qXrCWJZHsSP1hehx+NbOtDTk1QJfQU
-	 C/u9YBBuNhslw0eCBd3OuF/fhO+tHwR+UmkIJw2Ek/lEZcofcS4qhu1KTbf8trwxd4
-	 gNeKJmW21JIfVB3Ig7EDca69QWyGHYf+8LT1eRD8=
+	b=UgNLXs+Gn18CuWltWTssesCFK+iYgbN/tHIAcfGRp/ipHH+26LjSpwhR4oLrMN0Te
+	 72d9/MYzS2yizVrsBw/g+mzc/Sd09aGdNbJ++cOXfuARWUw9hIhqMVwS0kD/Ak+4Uc
+	 fIbxtY6I6l13gXQ36/juWChFKWLJfYeh8G0GzWMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+67b90111784a3eac8c04@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Joseph Qi <jiangqi903@gmail.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
+	Breno Leitao <leitao@debian.org>,
+	Dennis Zhou <dennis@kernel.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	David Hildenbrand <david@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	JP Kobryn <inwardvessel@gmail.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Tejun Heo <tj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 113/776] ocfs2: fix possible deadlock between unlink and dio_end_io_write
-Date: Sat, 30 May 2026 17:57:07 +0200
-Message-ID: <20260530160243.283245634@linuxfoundation.org>
+Subject: [PATCH 5.15 114/776] mm: blk-cgroup: fix use-after-free in cgwb_release_workfn()
+Date: Sat, 30 May 2026 17:57:08 +0200
+Message-ID: <20260530160243.311924910@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -59,83 +65,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit b02da26a992db0c0e2559acbda0fc48d4a2fd337 ]
+[ Upstream commit 8f5857be99f1ed1fa80991c72449541f634626ee ]
 
-ocfs2_unlink takes orphan dir inode_lock first and then ip_alloc_sem,
-while in ocfs2_dio_end_io_write, it acquires these locks in reverse order.
-This creates an ABBA lock ordering violation on lock classes
-ocfs2_sysfile_lock_key[ORPHAN_DIR_SYSTEM_INODE] and
-ocfs2_file_ip_alloc_sem_key.
+cgwb_release_workfn() calls css_put(wb->blkcg_css) and then later accesses
+wb->blkcg_css again via blkcg_unpin_online().  If css_put() drops the last
+reference, the blkcg can be freed asynchronously (css_free_rwork_fn ->
+blkcg_css_free -> kfree) before blkcg_unpin_online() dereferences the
+pointer to access blkcg->online_pin, resulting in a use-after-free:
 
-Lock Chain #0 (orphan dir inode_lock -> ip_alloc_sem):
-ocfs2_unlink
-  ocfs2_prepare_orphan_dir
-    ocfs2_lookup_lock_orphan_dir
-      inode_lock(orphan_dir_inode) <- lock A
-    __ocfs2_prepare_orphan_dir
-      ocfs2_prepare_dir_for_insert
-        ocfs2_extend_dir
-	  ocfs2_expand_inline_dir
-	    down_write(&oi->ip_alloc_sem) <- Lock B
+  BUG: KASAN: slab-use-after-free in blkcg_unpin_online (./include/linux/instrumented.h:112 ./include/linux/atomic/atomic-instrumented.h:400 ./include/linux/refcount.h:389 ./include/linux/refcount.h:432 ./include/linux/refcount.h:450 block/blk-cgroup.c:1367)
+  Write of size 4 at addr ff11000117aa6160 by task kworker/71:1/531
+   Workqueue: cgwb_release cgwb_release_workfn
+   Call Trace:
+    <TASK>
+     blkcg_unpin_online (./include/linux/instrumented.h:112 ./include/linux/atomic/atomic-instrumented.h:400 ./include/linux/refcount.h:389 ./include/linux/refcount.h:432 ./include/linux/refcount.h:450 block/blk-cgroup.c:1367)
+     cgwb_release_workfn (mm/backing-dev.c:629)
+     process_scheduled_works (kernel/workqueue.c:3278 kernel/workqueue.c:3385)
 
-Lock Chain #1 (ip_alloc_sem -> orphan dir inode_lock):
-ocfs2_dio_end_io_write
-  down_write(&oi->ip_alloc_sem) <- Lock B
-  ocfs2_del_inode_from_orphan()
-    inode_lock(orphan_dir_inode) <- Lock A
+   Freed by task 1016:
+    kfree (./include/linux/kasan.h:235 mm/slub.c:2689 mm/slub.c:6246 mm/slub.c:6561)
+    css_free_rwork_fn (kernel/cgroup/cgroup.c:5542)
+    process_scheduled_works (kernel/workqueue.c:3302 kernel/workqueue.c:3385)
 
-Deadlock Scenario:
-  CPU0 (unlink)                     CPU1 (dio_end_io_write)
-  ------                            ------
-  inode_lock(orphan_dir_inode)
-                                    down_write(ip_alloc_sem)
-  down_write(ip_alloc_sem)
-                                    inode_lock(orphan_dir_inode)
+** Stack based on commit 66672af7a095 ("Add linux-next specific files
+for 20260410")
 
-Since ip_alloc_sem is to protect allocation changes, which is unrelated
-with operations in ocfs2_del_inode_from_orphan.  So move
-ocfs2_del_inode_from_orphan out of ip_alloc_sem to fix the deadlock.
+I am seeing this crash sporadically in Meta fleet across multiple kernel
+versions.  A full reproducer is available at:
+https://github.com/leitao/debug/blob/main/reproducers/repro_blkcg_uaf.sh
 
-Link: https://lkml.kernel.org/r/20260306032211.1016452-1-joseph.qi@linux.alibaba.com
-Reported-by: syzbot+67b90111784a3eac8c04@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=67b90111784a3eac8c04
-Fixes: a86a72a4a4e0 ("ocfs2: take ip_alloc_sem in ocfs2_dio_get_block & ocfs2_dio_end_io_write")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Joseph Qi <jiangqi903@gmail.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
+(The race window is narrow.  To make it easily reproducible, inject a
+msleep(100) between css_put() and blkcg_unpin_online() in
+cgwb_release_workfn().  With that delay and a KASAN-enabled kernel, the
+reproducer triggers the splat reliably in less than a second.)
+
+Fix this by moving blkcg_unpin_online() before css_put(), so the
+cgwb's CSS reference keeps the blkcg alive while blkcg_unpin_online()
+accesses it.
+
+Link: https://lore.kernel.org/20260413-blkcg-v1-1-35b72622d16c@debian.org
+Fixes: 59b57717fff8 ("blkcg: delay blkg destruction until after writeback has finished")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Dennis Zhou <dennis@kernel.org>
+Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Josef Bacik <josef@toxicpanda.com>
+Cc: JP Kobryn <inwardvessel@gmail.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Cc: Martin KaFai Lau <martin.lau@linux.dev>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Tejun Heo <tj@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/aops.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ mm/backing-dev.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/ocfs2/aops.c
-+++ b/fs/ocfs2/aops.c
-@@ -2322,8 +2322,6 @@ static int ocfs2_dio_end_io_write(struct
- 		goto out;
- 	}
+--- a/mm/backing-dev.c
++++ b/mm/backing-dev.c
+@@ -404,12 +404,13 @@ static void cgwb_release_workfn(struct w
+ 	wb_shutdown(wb);
  
--	down_write(&oi->ip_alloc_sem);
--
- 	/* Delete orphan before acquire i_rwsem. */
- 	if (dwc->dw_orphaned) {
- 		BUG_ON(dwc->dw_writer_pid != task_pid_nr(current));
-@@ -2336,6 +2334,7 @@ static int ocfs2_dio_end_io_write(struct
- 			mlog_errno(ret);
- 	}
+ 	css_put(wb->memcg_css);
+-	css_put(wb->blkcg_css);
+-	mutex_unlock(&wb->bdi->cgwb_release_mutex);
  
-+	down_write(&oi->ip_alloc_sem);
- 	di = (struct ocfs2_dinode *)di_bh->b_data;
+ 	/* triggers blkg destruction if no online users left */
+ 	blkcg_unpin_online(blkcg);
  
- 	ocfs2_init_dinode_extent_tree(&et, INODE_CACHE(inode), di_bh);
++	css_put(wb->blkcg_css);
++	mutex_unlock(&wb->bdi->cgwb_release_mutex);
++
+ 	fprop_local_destroy_percpu(&wb->memcg_completions);
+ 
+ 	spin_lock_irq(&cgwb_lock);
 
 
