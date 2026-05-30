@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5527134A3C4;
-	Sat, 30 May 2026 17:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972BF33F8A2;
+	Sat, 30 May 2026 17:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163103; cv=none; b=tcjJzJ7Nlxm9TwnXf+pWylZiCYVXnT8ZoT1JBHPzMs8hCsThBgOGjnuXgsm+ihHmQSW6/Q1LUvdbx76ipAaWEV97kmVA9gpJ0PxHKPlVMUv12VkQ5x+OcrcAeOZHV8O8xMhpsNxnP/RJCJmWbr7VkPLV0xH5m8Ar3kgF7P0wdvY=
+	t=1780163106; cv=none; b=Uqaq67FVlBFa0q+6n0zYJoE3x+jnJfsW0TS1aOSAL4+QMbxHwoWsVYCkc3Fe9SuwfA6C1Y0Tce3dHG6VNxCYQsh4tVkQMEswOSVPsisWeXnH3HeJoBHJzw2f2hjN/77Wt+SOKDrmSdLOqhV8PCusOmMo+U6ddwf8lzz2IbAbI6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163103; c=relaxed/simple;
-	bh=/RsiHR5Rhrblr6hAwjPC6lUDmA/Ka4MXUn3XxN2/x4Y=;
+	s=arc-20240116; t=1780163106; c=relaxed/simple;
+	bh=a35hfQEFGCRu2z5EKFLZEDIKYd1tVzZTA3/tbkpyT+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i2vb57KSBhUtGad+sx/6hF+Yweor0dN/JCH3Q3Il27mAoIINHXKp31Qx/Bv8TuUU9b2BgqwKlk81MoVJBfpjNA8Gmo7/wcQsdhR+Jl37W4yGfhnaDFcs99qN3v3fMpsSvl7CB/zewHb77XFBAZN5aOwKJiysxSgDrwyVqBzrwVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rM6lZxUq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e6ZN6gvzmrMpwBjh0jpce5JSasVaIY2G/ytP0gcCaY1pEPnDG3StYIECk9SQ2EWu5A1fGz8DnK6aWvH+DcmCmfPLu6TnATtd6D3bRrF0dskaSehGGq6lnSpe1H3AD7BRgSNqlBZVw6T5C5xYWYDdo7SpB3XmZlvHBsTjQ5cGNWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAeHeEAC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rM6lZxUq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 964601F00893;
-	Sat, 30 May 2026 17:45:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAeHeEAC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFBA1F00893;
+	Sat, 30 May 2026 17:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163102;
-	bh=td4RGocMSq+G9Wpn5tHJHLodlprZgsD2UHZbD8I4eu4=;
+	s=korg; t=1780163105;
+	bh=0lZIkks0Vv3nr9Jm6ZTMOVMZ3frievWaBACBvtGKtl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rM6lZxUqmLKnvIyBkduZQCXSwPM7SjebJPLuxRIuAUMQChNug5FmFP+X2CCLqx8yQ
-	 D7Oh0p4WJTbIUxcgHccqxrq9IqI/njYC6Rrp2022wPeU+SetOTDTUHDotNHFdjEWwI
-	 FtOe0tc35L+iR0Qjzpg1rxmF6h5ngr3gW8D9NCS4=
+	b=bAeHeEACRnuH/KIu5ExQqcKc6iWzLzeHfwgjb3DpOIiez3eEsgMxV5lwxj3xQSqqU
+	 v4KN0suyvLiU6tCBlYTGMhZXALlpwEP+H8GxaqzeA9J8Ykj7hxHbOW57NYJar8ahJv
+	 NH3azfxuwNXbD5XfmX4onXI3QX4Wz0kgfuVMBLVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	"stable@vger.kernel.org, Konstantin Komarov" <almaz.alexandrovich@paragon-software.com>
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Garcia <rob_garcia@163.com>
-Subject: [PATCH 5.15 155/776] fs/ntfs3: Add more attributes checks in mi_enum_attr()
-Date: Sat, 30 May 2026 17:57:49 +0200
-Message-ID: <20260530160244.472184780@linuxfoundation.org>
+	Faith <faith@zellic.io>,
+	Pumpkin Chang <pumpkin@devco.re>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jay Wang <wanjay@amazon.com>
+Subject: [PATCH 5.15 156/776] rxrpc: Fix recvmsg() unconditional requeue
+Date: Sat, 30 May 2026 17:57:50 +0200
+Message-ID: <20260530160244.500264469@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,139 +54,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 013ff63b649475f0ee134e2c8d0c8e65284ede50 ]
+[ Upstream commit 2c28769a51deb6022d7fbd499987e237a01dd63a ]
 
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-[ Overflow check deleted to keep context consistent. ]
-Signed-off-by: Robert Garcia <rob_garcia@163.com>
+If rxrpc_recvmsg() fails because MSG_DONTWAIT was specified but the call
+at the front of the recvmsg queue already has its mutex locked, it
+requeues the call - whether or not the call is already queued.  The call
+may be on the queue because MSG_PEEK was also passed and so the call was
+not dequeued or because the I/O thread requeued it.
+
+The unconditional requeue may then corrupt the recvmsg queue, leading to
+things like UAFs or refcount underruns.
+
+Fix this by only requeuing the call if it isn't already on the queue -
+and moving it to the front if it is already queued.  If we don't queue
+it, we have to put the ref we obtained by dequeuing it.
+
+Also, MSG_PEEK doesn't dequeue the call so shouldn't call
+rxrpc_notify_socket() for the call if we didn't use up all the data on
+the queue, so fix that also.
+
+Fixes: 540b1c48c37a ("rxrpc: Fix deadlock between call creation and sendmsg/recvmsg")
+Reported-by: Faith <faith@zellic.io>
+Reported-by: Pumpkin Chang <pumpkin@devco.re>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Acked-by: Marc Dionne <marc.dionne@auristor.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+[Adapted to 5.15: use write_lock_bh/write_unlock_bh, trace_rxrpc_call
+ directly for see-call tracing, 5.15 trace enum naming convention, and
+ added entries to both plain enum and EM() macro list.]
+Signed-off-by: Jay Wang <wanjay@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/record.c |   63 ++++++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 50 insertions(+), 13 deletions(-)
+ include/trace/events/rxrpc.h |    8 ++++++++
+ net/rxrpc/recvmsg.c          |   22 ++++++++++++++++++----
+ 2 files changed, 26 insertions(+), 4 deletions(-)
 
---- a/fs/ntfs3/record.c
-+++ b/fs/ntfs3/record.c
-@@ -193,8 +193,9 @@ struct ATTRIB *mi_enum_attr(struct mft_i
- {
- 	const struct MFT_REC *rec = mi->mrec;
- 	u32 used = le32_to_cpu(rec->used);
--	u32 t32, off, asize;
-+	u32 t32, off, asize, prev_type;
- 	u16 t16;
-+	u64 data_size, alloc_size, tot_size;
+--- a/include/trace/events/rxrpc.h
++++ b/include/trace/events/rxrpc.h
+@@ -93,9 +93,13 @@ enum rxrpc_call_trace {
+ 	rxrpc_call_put_notimer,
+ 	rxrpc_call_put_timer,
+ 	rxrpc_call_put_userid,
++	rxrpc_call_put_recvmsg_peek_nowait,
+ 	rxrpc_call_queued,
+ 	rxrpc_call_queued_ref,
+ 	rxrpc_call_release,
++	rxrpc_call_see_recvmsg_requeue,
++	rxrpc_call_see_recvmsg_requeue_first,
++	rxrpc_call_see_recvmsg_requeue_move,
+ 	rxrpc_call_seen,
+ };
  
- 	if (!attr) {
- 		u32 total = le32_to_cpu(rec->total);
-@@ -213,6 +214,7 @@ struct ATTRIB *mi_enum_attr(struct mft_i
- 		if (!is_rec_inuse(rec))
- 			return NULL;
+@@ -291,9 +295,13 @@ enum rxrpc_tx_point {
+ 	EM(rxrpc_call_put_notimer,		"PnT") \
+ 	EM(rxrpc_call_put_timer,		"PTM") \
+ 	EM(rxrpc_call_put_userid,		"Pus") \
++	EM(rxrpc_call_put_recvmsg_peek_nowait,	"PpN") \
+ 	EM(rxrpc_call_queued,			"QUE") \
+ 	EM(rxrpc_call_queued_ref,		"QUR") \
+ 	EM(rxrpc_call_release,			"RLS") \
++	EM(rxrpc_call_see_recvmsg_requeue,	"SrQ") \
++	EM(rxrpc_call_see_recvmsg_requeue_first,"SrF") \
++	EM(rxrpc_call_see_recvmsg_requeue_move,	"SrM") \
+ 	E_(rxrpc_call_seen,			"SEE")
  
-+		prev_type = 0;
- 		attr = Add2Ptr(rec, off);
+ #define rxrpc_transmit_traces \
+--- a/net/rxrpc/recvmsg.c
++++ b/net/rxrpc/recvmsg.c
+@@ -607,7 +607,8 @@ try_again:
+ 
+ 		if (after(call->rx_top, call->rx_hard_ack) &&
+ 		    call->rxtx_buffer[(call->rx_hard_ack + 1) & RXRPC_RXTX_BUFF_MASK])
+-			rxrpc_notify_socket(call);
++			if (!(flags & MSG_PEEK))
++				rxrpc_notify_socket(call);
+ 		break;
+ 	default:
+ 		ret = 0;
+@@ -642,11 +643,24 @@ error_unlock_call:
+ error_requeue_call:
+ 	if (!(flags & MSG_PEEK)) {
+ 		write_lock_bh(&rx->recvmsg_lock);
+-		list_add(&call->recvmsg_link, &rx->recvmsg_q);
+-		write_unlock_bh(&rx->recvmsg_lock);
++		if (list_empty(&call->recvmsg_link)) {
++			list_add(&call->recvmsg_link, &rx->recvmsg_q);
++			trace_rxrpc_call(call->debug_id,
++					 rxrpc_call_see_recvmsg_requeue,
++					 refcount_read(&call->ref),
++					 __builtin_return_address(0), NULL);
++			write_unlock_bh(&rx->recvmsg_lock);
++		} else if (list_is_first(&call->recvmsg_link, &rx->recvmsg_q)) {
++			write_unlock_bh(&rx->recvmsg_lock);
++			rxrpc_put_call(call, rxrpc_call_see_recvmsg_requeue_first);
++		} else {
++			list_move(&call->recvmsg_link, &rx->recvmsg_q);
++			write_unlock_bh(&rx->recvmsg_lock);
++			rxrpc_put_call(call, rxrpc_call_see_recvmsg_requeue_move);
++		}
+ 		trace_rxrpc_recvmsg(call, rxrpc_recvmsg_requeue, 0, 0, 0, 0);
  	} else {
- 		/* Check if input attr inside record. */
-@@ -226,6 +228,7 @@ struct ATTRIB *mi_enum_attr(struct mft_i
- 			return NULL;
- 		}
- 
-+		prev_type = le32_to_cpu(attr->type);
- 		attr = Add2Ptr(attr, asize);
- 		off += asize;
+-		rxrpc_put_call(call, rxrpc_call_put);
++		rxrpc_put_call(call, rxrpc_call_put_recvmsg_peek_nowait);
  	}
-@@ -245,7 +248,11 @@ struct ATTRIB *mi_enum_attr(struct mft_i
- 
- 	/* 0x100 is last known attribute for now. */
- 	t32 = le32_to_cpu(attr->type);
--	if ((t32 & 0xf) || (t32 > 0x100))
-+	if (!t32 || (t32 & 0xf) || (t32 > 0x100))
-+		return NULL;
-+
-+	/* attributes in record must be ordered by type */
-+	if (t32 < prev_type)
- 		return NULL;
- 
- 	/* Check overflow and boundary. */
-@@ -254,16 +261,15 @@ struct ATTRIB *mi_enum_attr(struct mft_i
- 
- 	/* Check size of attribute. */
- 	if (!attr->non_res) {
-+		/* Check resident fields. */
- 		if (asize < SIZEOF_RESIDENT)
- 			return NULL;
- 
- 		t16 = le16_to_cpu(attr->res.data_off);
--
- 		if (t16 > asize)
- 			return NULL;
- 
--		t32 = le32_to_cpu(attr->res.data_size);
--		if (t16 + t32 > asize)
-+		if (t16 + le32_to_cpu(attr->res.data_size) > asize)
- 			return NULL;
- 
- 		if (attr->name_len &&
-@@ -274,21 +280,52 @@ struct ATTRIB *mi_enum_attr(struct mft_i
- 		return attr;
- 	}
- 
--	/* Check some nonresident fields. */
--	if (attr->name_len &&
--	    le16_to_cpu(attr->name_off) + sizeof(short) * attr->name_len >
--		    le16_to_cpu(attr->nres.run_off)) {
-+	/* Check nonresident fields. */
-+	if (attr->non_res != 1)
-+		return NULL;
-+
-+	t16 = le16_to_cpu(attr->nres.run_off);
-+	if (t16 > asize)
-+		return NULL;
-+
-+	t32 = sizeof(short) * attr->name_len;
-+	if (t32 && le16_to_cpu(attr->name_off) + t32 > t16)
-+		return NULL;
-+
-+	/* Check start/end vcn. */
-+	if (le64_to_cpu(attr->nres.svcn) > le64_to_cpu(attr->nres.evcn) + 1)
-+		return NULL;
-+
-+	data_size = le64_to_cpu(attr->nres.data_size);
-+	if (le64_to_cpu(attr->nres.valid_size) > data_size)
- 		return NULL;
--	}
- 
--	if (attr->nres.svcn || !is_attr_ext(attr)) {
-+	alloc_size = le64_to_cpu(attr->nres.alloc_size);
-+	if (data_size > alloc_size)
-+		return NULL;
-+
-+	t32 = mi->sbi->cluster_mask;
-+	if (alloc_size & t32)
-+		return NULL;
-+
-+	if (!attr->nres.svcn && is_attr_ext(attr)) {
-+		/* First segment of sparse/compressed attribute */
-+		if (asize + 8 < SIZEOF_NONRESIDENT_EX)
-+			return NULL;
-+
-+		tot_size = le64_to_cpu(attr->nres.total_size);
-+		if (tot_size & t32)
-+			return NULL;
-+
-+		if (tot_size > alloc_size)
-+			return NULL;
-+	} else {
- 		if (asize + 8 < SIZEOF_NONRESIDENT)
- 			return NULL;
- 
- 		if (attr->nres.c_unit)
- 			return NULL;
--	} else if (asize + 8 < SIZEOF_NONRESIDENT_EX)
--		return NULL;
-+	}
- 
- 	return attr;
- }
+ error_no_call:
+ 	release_sock(&rx->sk);
 
 
