@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606B8284690;
-	Sat, 30 May 2026 18:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDAC33BE175;
+	Sat, 30 May 2026 18:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164933; cv=none; b=OhuQlrb5YPgZGGAAhiJljoux1vqhkw26CxrtNKA2NimiX/jm3mTAlc3YtYZzHF2SkL0zRJH11EOvqRtsWEKGPzncp56yRIUgczkD/ESU+xEbFzR8JfCvaRHi3/XBpwR05pgZCDeXW5VgnLJlzP73oR5z88A7V4fTK7I26nHNrlA=
+	t=1780164936; cv=none; b=jq7+IpU4t1bTdYgZMtYt/Vswar4gXL57qxM4jNCNOvRU+ITpRnbT9MRNb9CFKsxP5WR8DYVif2mzEoDI3vDO7IyQhqOq8XgjuH5606k02L+ZHHBirfgdmk/VDlcKXg/inxXyBLkw6p1ukNteb26C7DeCjz9xmJ0Za5Onoqagcn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164933; c=relaxed/simple;
-	bh=RXpiqktoqUcT36vHbQGlUUmkbSs3NqJfocYTjr1EIXA=;
+	s=arc-20240116; t=1780164936; c=relaxed/simple;
+	bh=/F5LDO1oJl130X+TRshRecCIhaXaGAuvfD5v8/K9nEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FnNmqjw03Zkb/PxDKyysTM/8cdUKEBvs4MD2vxLHi1nq8c0OzQAySH9fn0QdSTUO4xsCTLbIgPBnyfGnJdOR+9jldLM6JUW4vAUdaDVdm84DJHwERvHMtWpyOQSoYGnZO1d9RKbRRB34R2voyKhUPpbdMezx0dxs9BSSoyArgNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBZX4y9N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MsnUSi/JN7fW7B0Cc8GESnDrz01Yt9Y6+K+1h5aRbgaFRGT6PsnIxFxwyjZRezHcZ2S+v2jrBFFEDJdv+yK5JH0OO5abb5Um2BCtsinnkvsH+b4/2vtrkeq8ZkjkaZ4G1iUuQ6dtpTrYOug0G0B9aUO4CYga+DeoP9dArm2JVAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUncJo2j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBZX4y9N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A46AD1F00893;
-	Sat, 30 May 2026 18:15:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUncJo2j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED4B1F00893;
+	Sat, 30 May 2026 18:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164932;
-	bh=Ev6D3rrs7zu8hUmPQpbMlzL0qqCPRhhQGZvDAF3ix1s=;
+	s=korg; t=1780164935;
+	bh=mYrDseRq+LQwbI/bnh9grBBjT6q5V7sLrWC+czoCJJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UBZX4y9NiY734x22+baXQHsg5oIHZ3m3e8019FzXMjZmaj3qLb2vuYPm520JMDt7c
-	 kF3RVwlAb4aoqrYVMmcQQSfYGs+mEpTlQe8aGGLnSFuoOs6p0AMq0CY5RO5DamOyRR
-	 ildBdCpCSJWggT9LdPowFDd2+gXmLuQozMHscMwk=
+	b=xUncJo2j9c+iYAIbArslXEATaxuKZQcL1vqxSiNp+PjmSDI8ELjQDradlcy8bGiRl
+	 HL246WLC0nArqJjZQ7sv+hsm+yJcVRsVvvQPh0UVx2D00RFrUR53zMzZiSK+bwSd42
+	 QGHlSwVMQOJP2vgFjjaTVvfAzTr5wmSNl3bMEjlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.15 684/776] Bluetooth: hci_uart: fix UAFs and race conditions in close and init paths
-Date: Sat, 30 May 2026 18:06:38 +0200
-Message-ID: <20260530160257.539810671@linuxfoundation.org>
+	Julien Chauveau <chauveau.julien@gmail.com>,
+	Javier Martinez Canillas <javierm@redhat.com>
+Subject: [PATCH 5.15 702/776] drm/bridge: it66121: acquire reset GPIO in probe
+Date: Sat, 30 May 2026 18:06:56 +0200
+Message-ID: <20260530160257.983181242@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -50,173 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: Julien Chauveau <chauveau.julien@gmail.com>
 
-commit c1bb9336ae6b54a5f6a353c4bd4ed9a4307e429b upstream.
+commit e02b5262fd288cc235f14e12233ea54e78c04611 upstream.
 
-Vulnerabilities leading to Use-After-Free (UAF) and Null Pointer
-Dereference (NPD) conditions were observed in the lifecycle management
-of hci_uart.
+The it66121_ctx structure has a gpio_reset field, and it66121_hw_reset()
+calls gpiod_set_value() on it. However, the GPIO descriptor is never
+acquired via devm_gpiod_get(), leaving gpio_reset as NULL throughout
+the driver lifetime.
 
-The primary issue arises because the workqueues (init_ready and
-write_work) are only flushed/cancelled if the HCI_UART_PROTO_READY
-flag is set during TTY close. If a hangup occurs before setup completes,
-hci_uart_tty_close() skips the teardown of these workqueues and
-proceeds to free the `hu` struct. When the scheduled work executes
-later, it blindly dereferences the freed `hu` struct.
+gpiod_set_value() silently returns when passed a NULL descriptor, so
+the hardware reset sequence in it66121_hw_reset() is a no-op. This
+leaves the chip in an undefined state at probe time, which can prevent
+it from responding on the I2C bus.
 
-Furthermore, several data races and UAFs were identified in the teardown
-sequence:
-1. Calling hci_uart_flush() from hci_uart_close() without effectively
-   disabling write_work causes a race condition where both can concurrently
-   double-free hu->tx_skb. This happens because protocol timers can
-   concurrently invoke hci_uart_tx_wakeup() and requeue write_work.
-2. Calling hci_free_dev(hdev) before hu->proto->close(hu) causes a UAF
-   when vendor specific protocol close callbacks dereference hu->hdev.
-3. In the initialization error paths, failing to take the proto_lock
-   write lock before clearing PROTO_READY leads to races with active
-   readers. Additionally, hci_uart_tty_receive() accesses hu->hdev
-   outside the read lock, leading to UAFs if the initialization error
-   path frees hdev concurrently.
+The DT binding marks reset-gpios as a required property, so all
+compliant device trees provide this GPIO. Add the missing
+devm_gpiod_get() call after enabling power supplies and before the
+hardware reset, so the chip is properly reset with power applied.
 
-Fix these synchronization and lifecycle issues by:
-1. Re-ordering hci_uart_tty_close() to clear HCI_UART_PROTO_READY first,
-   followed immediately by a cancel_work_sync(&hu->write_work). Clearing
-   the flag locks out concurrent protocol timers from successfully invoking
-   hci_uart_tx_wakeup(), effectively rendering the cancellation permanent
-   and preventing the tx_skb double-free.
-2. Note: Clearing PROTO_READY early causes hci_uart_close() to skip
-   hu->proto->flush(). This is perfectly safe in the tty_close path
-   because hu->proto->close() executes shortly after, which intrinsically
-   purges all protocol SKB queues and tears down the state.
-3. Relocating hu->proto->close(hu) strictly prior to hci_free_dev(hdev)
-   across all close and error paths to prevent vendor-level UAFs.
-4. Moving the hdev->stat.byte_rx increment in hci_uart_tty_receive()
-   inside the proto_lock read-side critical section to safely synchronize
-   with device unregistration.
-5. Adding cancel_work_sync(&hu->write_work) to hci_uart_close() to safely
-   flush the workqueue before hci_uart_flush() is invoked via the HCI core.
-6. Utilizing cancel_work_sync() instead of disable_work_sync() across
-   all paths to prevent permanently breaking user-space retry capabilities.
-
-Fixes: 3b799254cf6f ("Bluetooth: hci_uart: Cancel init work before unregistering")
+Fixes: 988156dc2fc9 ("drm: bridge: add it66121 driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Julien Chauveau <chauveau.julien@gmail.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Tested-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patch.msgid.link/20260324193011.16583-1-chauveau.julien@gmail.com
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_ldisc.c |   48 +++++++++++++++++++++++++++++++++++-------
- 1 file changed, 40 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/bridge/ite-it66121.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/bluetooth/hci_ldisc.c
-+++ b/drivers/bluetooth/hci_ldisc.c
-@@ -194,7 +194,15 @@ void hci_uart_init_work(struct work_stru
- 	err = hci_register_dev(hu->hdev);
- 	if (err < 0) {
- 		BT_ERR("Can't register HCI device");
+--- a/drivers/gpu/drm/bridge/ite-it66121.c
++++ b/drivers/gpu/drm/bridge/ite-it66121.c
+@@ -955,6 +955,11 @@ static int it66121_probe(struct i2c_clie
+ 	if (ret)
+ 		return ret;
+ 
++	ctx->gpio_reset = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
++	if (IS_ERR(ctx->gpio_reset))
++		return dev_err_probe(dev, PTR_ERR(ctx->gpio_reset),
++				     "Failed to get reset GPIO\n");
 +
-+		percpu_down_write(&hu->proto_lock);
- 		clear_bit(HCI_UART_PROTO_READY, &hu->flags);
-+		percpu_up_write(&hu->proto_lock);
-+
-+		/* Safely cancel work after clearing flags */
-+		cancel_work_sync(&hu->write_work);
-+
-+		/* Close protocol before freeing hdev */
- 		hu->proto->close(hu);
- 		hdev = hu->hdev;
- 		hu->hdev = NULL;
-@@ -263,8 +271,12 @@ static int hci_uart_open(struct hci_dev
- /* Close device */
- static int hci_uart_close(struct hci_dev *hdev)
- {
-+	struct hci_uart *hu = hci_get_drvdata(hdev);
-+
- 	BT_DBG("hdev %p", hdev);
+ 	it66121_hw_reset(ctx);
  
-+	cancel_work_sync(&hu->write_work);
-+
- 	hci_uart_flush(hdev);
- 	hdev->flush = NULL;
- 	return 0;
-@@ -525,6 +537,7 @@ static void hci_uart_tty_close(struct tt
- {
- 	struct hci_uart *hu = tty->disc_data;
- 	struct hci_dev *hdev;
-+	bool proto_ready;
- 
- 	BT_DBG("tty %p", tty);
- 
-@@ -534,24 +547,38 @@ static void hci_uart_tty_close(struct tt
- 	if (!hu)
- 		return;
- 
--	hdev = hu->hdev;
--	if (hdev)
--		hci_uart_close(hdev);
-+	/* Wait for init_ready to finish to prevent registration races */
-+	cancel_work_sync(&hu->init_ready);
- 
--	if (test_bit(HCI_UART_PROTO_READY, &hu->flags)) {
-+	proto_ready = test_bit(HCI_UART_PROTO_READY, &hu->flags);
-+	if (proto_ready) {
- 		percpu_down_write(&hu->proto_lock);
- 		clear_bit(HCI_UART_PROTO_READY, &hu->flags);
- 		percpu_up_write(&hu->proto_lock);
-+	}
- 
--		cancel_work_sync(&hu->init_ready);
--		cancel_work_sync(&hu->write_work);
-+	/*
-+	 * Unconditionally cancel write_work AFTER clearing PROTO_READY.
-+	 * This ensures that concurrent protocol timers cannot requeue
-+	 * write_work via hci_uart_tx_wakeup(), permanently preventing
-+	 * double-free races and UAFs.
-+	 */
-+	cancel_work_sync(&hu->write_work);
-+
-+	hdev = hu->hdev;
-+	if (hdev)
-+		hci_uart_close(hdev); /* proto->flush is safely skipped */
- 
-+	if (proto_ready) {
- 		if (hdev) {
- 			if (test_bit(HCI_UART_REGISTERED, &hu->flags))
- 				hci_unregister_dev(hdev);
--			hci_free_dev(hdev);
- 		}
-+		/* Close protocol before freeing hdev (intrinsically purges queues) */
- 		hu->proto->close(hu);
-+
-+		if (hdev)
-+			hci_free_dev(hdev);
- 	}
- 	clear_bit(HCI_UART_PROTO_SET, &hu->flags);
- 
-@@ -619,11 +646,12 @@ static void hci_uart_tty_receive(struct
- 	 * tty caller
- 	 */
- 	hu->proto->recv(hu, data, count);
--	percpu_up_read(&hu->proto_lock);
- 
- 	if (hu->hdev)
- 		hu->hdev->stat.byte_rx += count;
- 
-+	percpu_up_read(&hu->proto_lock);
-+
- 	tty_unthrottle(tty);
- }
- 
-@@ -694,6 +722,10 @@ static int hci_uart_register_dev(struct
- 		percpu_down_write(&hu->proto_lock);
- 		clear_bit(HCI_UART_PROTO_INIT, &hu->flags);
- 		percpu_up_write(&hu->proto_lock);
-+		/* Cancel work after clearing flags */
-+		cancel_work_sync(&hu->write_work);
-+
-+		/* Close protocol before freeing hdev */
- 		hu->proto->close(hu);
- 		hu->hdev = NULL;
- 		hci_free_dev(hdev);
+ 	ctx->regmap = devm_regmap_init_i2c(client, &it66121_regmap_config);
 
 
