@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F3B341AC7;
-	Sat, 30 May 2026 17:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F7A342CA7;
+	Sat, 30 May 2026 17:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163665; cv=none; b=DZDDDoWRHn7M5eKBUjmpaHAs/kzAzVKGeYuSNMACxKfT9J5IUAkMzySjTHtFEH+zz8xnqO6x/ocq29EzFSNgFTbW0R0Hi8mF3X7N6JC631WG6BK6k6HVPK5TKe9FcYHqceBm8Vtrj/zONVZ0vqnp+BN9kj1B5+94zYq0pYaVoAM=
+	t=1780163667; cv=none; b=jk/2t1tuMXVReijApRY0SGf/G5cmq7h1ctFLCGIoVWDIjj9N68I8DPGRCv/QbCRzHnKDZSIIMyWv4yZR2aEHZeyUhMCAmh4oOM+DZIGLJSsREMlgz0Kvw9nC+rLju8VSNP/Zl/v1xr7yMC8eeDX6bLWMD0Yz+8MLvYqU3mlEz8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163665; c=relaxed/simple;
-	bh=6EY1Np2MMWwsHG4DuKEuF+TXoxYXTXicuPXm8nDLx/I=;
+	s=arc-20240116; t=1780163667; c=relaxed/simple;
+	bh=1DwKcCVbyHSG0NglLdtUs0+JalyaG0RTCkn8c5tErjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=crHYVF8/DfgFmaYGQ6DW5NW6UFxdnSqTnl2uqVGHMZXXcsWVQ1OJIQNdYdfemg/ftt1RFfYVkHGJNHoKRqk7wENvoSxYz6U3qiYwqCwWzW8N9vBMXDZ/fwYxdBkCtbIvDgs9tg3I/nZ4NMfXcHDF9mDEOeh0kGNvwi5sjD3ATPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZRFcPVR6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nb2Y7p5EcI90SwtBwAaBCsyCdwQje2TK9Jg0A0TNJ8P5zv2EqCzhIQ2t291KWsVs0Yp1/Ghx86GxqAEe9OwCYqqS3NTbs6m+tUWNYMN3ddDuyNf96uhdQMvYUVyBVBASJ+Ty1/7SrRzvSWUfcpzv8noMXPsPq1T2pJtiWvQIqZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3KqYlUA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZRFcPVR6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226181F00898;
-	Sat, 30 May 2026 17:54:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3KqYlUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4AB1F00893;
+	Sat, 30 May 2026 17:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163664;
-	bh=sQ72OfCeN9rQV+VsBiDN6i73vKB2EBKZU8aR3ZZatMo=;
+	s=korg; t=1780163661;
+	bh=5k69gmqfJQBwAHF0+ftY2YkJQtf3pcEdkROGBB4M+es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZRFcPVR6Gwqik7aUrdAuipMuIE66PXqmLb8GvKVoKGq/fsHVyFHmeBqf8yGEpXzZY
-	 HrBWOSO4EKitRY1dVVRp3TsMvypbulWRQTIGB6oQv/23FijlEBpBeNEuMSxXIWoLtd
-	 v7k9cEWXJWa7mEAl+lG/WCNiVIJzH8xJ1OEl40Xg=
+	b=I3KqYlUA4qQ86DmjNu+r12XdXuO6DtNB2GbJnJOB1Ag0KDb1UhRazAiqEPzsqQHeL
+	 A2reWmUhLLWGSbh6J4lJe+cTyTMsKFUtEL0bNcV5kVypryE68vhGlNXrNeQ1RGMSUH
+	 OJ0QhbWjoRDPPtBxooxx30Sm6BOk04oDoA7jFC2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 296/776] ALSA: usb-audio: Fix UAC3 cluster descriptor size check
-Date: Sat, 30 May 2026 18:00:10 +0200
-Message-ID: <20260530160248.212153571@linuxfoundation.org>
+	Tomoya MORINAGA <tomoya-linux@dsn.okisemi.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 323/776] spi: topcliff-pch: fix use-after-free on unbind
+Date: Sat, 30 May 2026 18:00:37 +0200
+Message-ID: <20260530160248.916193890@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -44,50 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 26265dd69da32d88a88d21987853cec899d9e21f upstream.
+commit 9d72732fe70c11424bc90ed466c7ccfa58b42a9a upstream.
 
-The UAC3 cluster descriptor length check in
-snd_usb_get_audioformat_uac3()was added to
-make sure that the buffer is large enough for
-a struct uac3_cluster_header_descriptor before the
-returned data is cast and used.
+Give the driver a chance to flush its queue before releasing the DMA
+buffers on driver unbind
 
-However, the check uses sizeof(cluster), where cluster
-is a pointer, not the size of the descriptor header.
-This makes the validation depend on the architecture
-pointer size and does not match the intended object size.
-
-Check against sizeof(*cluster) instead.
-
-Fixes: fb4e2a6e8f28 ("ALSA: usb-audio: Fix out-of-bounds read in snd_usb_get_audioformat_uac3()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260424-alsa-usb-uac3-cluster-size-v1-1-99a5808898a3@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: c37f3c2749b5 ("spi/topcliff_pch: DMA support")
+Cc: stable@vger.kernel.org	# 3.1
+Cc: Tomoya MORINAGA <tomoya-linux@dsn.okisemi.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260414134319.978196-9-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/stream.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-topcliff-pch.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/sound/usb/stream.c
-+++ b/sound/usb/stream.c
-@@ -993,7 +993,7 @@ snd_usb_get_audioformat_uac3(struct snd_
- 	 * and request Cluster Descriptor
- 	 */
- 	wLength = le16_to_cpu(hc_header.wLength);
--	if (wLength < sizeof(cluster))
-+	if (wLength < sizeof(*cluster))
- 		return NULL;
- 	cluster = kzalloc(wLength, GFP_KERNEL);
- 	if (!cluster)
+--- a/drivers/spi/spi-topcliff-pch.c
++++ b/drivers/spi/spi-topcliff-pch.c
+@@ -1427,9 +1427,6 @@ static int pch_spi_pd_remove(struct plat
+ 	dev_dbg(&plat_dev->dev, "%s:[ch%d] irq=%d\n",
+ 		__func__, plat_dev->id, board_dat->pdev->irq);
+ 
+-	if (use_dma)
+-		pch_free_dma_buf(board_dat, data);
+-
+ 	/* check for any pending messages; no action is taken if the queue
+ 	 * is still full; but at least we tried.  Unload anyway */
+ 	count = 500;
+@@ -1453,6 +1450,9 @@ static int pch_spi_pd_remove(struct plat
+ 		free_irq(board_dat->pdev->irq, data);
+ 	}
+ 
++	if (use_dma)
++		pch_free_dma_buf(board_dat, data);
++
+ 	pci_iounmap(board_dat->pdev, data->io_remap_addr);
+ 	spi_unregister_master(data->master);
+ 
 
 
