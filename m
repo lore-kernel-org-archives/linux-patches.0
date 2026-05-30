@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1240B30EF7B;
-	Sat, 30 May 2026 16:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE76D1DE4EF;
+	Sat, 30 May 2026 16:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780158633; cv=none; b=uaic6DioUr0mVZzqr1gMXJja8E1RJol8pBZQS72xK5Ssns6IVrU2IvxzAWqNrWBFnbgpIJXXfP9WaDaYGynyAFl/8CnETo025aPykmIqxlj4KFWXtWxhzyzXECrCMJTMTm1KtEud/cf9NPj8ziwkgNItnP4rghpk4LYS2QB1Vvs=
+	t=1780158645; cv=none; b=sCiFq0j42s9XGLI+aoejFkh/zWVL7ucZuNv1HguWkJD7qAqmEKbYWl5A5bYrYEKDJ0G34z8YP8lVlOGGbqI1Y0vuAVS1Xy8btuRzgPye3BZrGdfxjkzUP/CqEkzvOk7bA4Tz/XQyCzRLIHF3ED8rVYxP5RPTerC+KSpReWyUFkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780158633; c=relaxed/simple;
-	bh=yqWqZnqj9WD1vOVi13XaQWOvO/3LVr2dRbDf1V5gNYw=;
+	s=arc-20240116; t=1780158645; c=relaxed/simple;
+	bh=46uwWTudn09OiZ1JK01YP0H5ZAKr19FzBQdrTS9roEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=og4e74Ga/+wdzJ1+k6MxFAfrsO4bK7PmNZTxPxtLjkRbwflShzoBz/tiTKtjch/7xMQFbiNDePCaumEk+OluFEukELl3e15FKqjSsZFElUyRWBOSmbjRO7JL5u5DNuwlnSII1h8ikJRSrdUiE8TZJgm4qyxn0BmGdiA+cugQuec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q02+ZMFo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OstTIX+SqiNElgM5dfDPeOJg/mAwv9mtrVY9QqAZM+lsubiPRIyKlTInou7Le8YTSOhEJgLt8dphdXtolIjRkeKLe+AbY9sBH5A1/bRxPKnpmrWGH+UEtne4Q4IJyqUrb3fDewstnV701s8oidhcRaTUclmnTUl3Za6Q1YNiaB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKMiK/aA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q02+ZMFo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A141F00893;
-	Sat, 30 May 2026 16:30:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKMiK/aA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F80A1F00893;
+	Sat, 30 May 2026 16:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780158632;
-	bh=D+NhftjYi1YslEDviCRM9fyYs5IQFWZtnTxlX6VIbOA=;
+	s=korg; t=1780158643;
+	bh=1LOl4wj0iqKyT8gMoMVi/4P9u2knNo+3pEy4BOPphjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q02+ZMFox11N0OxQNkNxuTndibP4AAmXBOWE2PoWrMoFga4SeczABePbkazztp9Uf
-	 uL5oVu6ZgausMhJqiTYOE4i7k+MZYRkGpFjfBUq0fmXdi3rPjYjATIs7iksfAOSNYp
-	 VXTvVttZRIeoYr0e3DD5ti1gHB1qwD4YdOi3l5ZI=
+	b=iKMiK/aAJpQ9vb7FjuH1ihgppIr+1xZQDhJEmRo7kS6eauoCu8i6Rco2OWpKLoLiA
+	 bM++cYv82x5h5OdGa9Mg/spVoCYy+vOgD4/kn/dnO3YUNQTmVlmDxJpA/ezE2ROCO0
+	 fYYbC6C+S9yGMcHSJIRXO3mWlk21P3JeMiH7rWSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoqiang Xiong <xxiong@redhat.com>,
-	Michal Schmidt <mschmidt@redhat.com>,
+	Iskhakov Daniil <dish@amicon.ru>,
+	Agalakov Daniil <ade@amicon.ru>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 039/969] ixgbevf: add missing negotiate_features op to Hyper-V ops table
-Date: Sat, 30 May 2026 17:52:43 +0200
-Message-ID: <20260530160301.500808764@linuxfoundation.org>
+Subject: [PATCH 6.1 040/969] e1000: check return value of e1000_read_eeprom
+Date: Sat, 30 May 2026 17:52:44 +0200
+Message-ID: <20260530160301.526687195@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -53,76 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Schmidt <mschmidt@redhat.com>
+From: Agalakov Daniil <ade@amicon.ru>
 
-[ Upstream commit 4821d563cd7f251ae728be1a6d04af82a294a5b9 ]
+[ Upstream commit d3baa34a470771399c1495bc04b1e26ac15d598e ]
 
-Commit a7075f501bd3 ("ixgbevf: fix mailbox API compatibility by
-negotiating supported features") added the .negotiate_features callback
-to ixgbe_mac_operations and populated it in ixgbevf_mac_ops, but forgot
-to add it to ixgbevf_hv_mac_ops. This leaves the function pointer NULL
-on Hyper-V VMs.
+[Why]
+e1000_set_eeprom() performs a read-modify-write operation when the write
+range is not word-aligned. This requires reading the first and last words
+of the range from the EEPROM to preserve the unmodified bytes.
 
-During probe, ixgbevf_negotiate_api() calls ixgbevf_set_features(),
-which unconditionally dereferences hw->mac.ops.negotiate_features().
-On Hyper-V this results in a NULL pointer dereference:
+However, the code does not check the return value of e1000_read_eeprom().
+If the read fails, the operation continues using uninitialized data from
+eeprom_buff. This results in corrupted data being written back to the
+EEPROM for the boundary words.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  [...]
-  Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine [...]
-  Workqueue: events work_for_cpu_fn
-  RIP: 0010:0x0
-  [...]
-  Call Trace:
-   ixgbevf_negotiate_api+0x66/0x160 [ixgbevf]
-   ixgbevf_sw_init+0xe4/0x1f0 [ixgbevf]
-   ixgbevf_probe+0x20f/0x4a0 [ixgbevf]
-   local_pci_probe+0x50/0xa0
-   work_for_cpu_fn+0x1a/0x30
-   [...]
+Add the missing error checks and abort the operation if reading fails.
 
-Add ixgbevf_hv_negotiate_features_vf() that returns -EOPNOTSUPP and
-wire it into ixgbevf_hv_mac_ops. The caller already handles -EOPNOTSUPP
-gracefully.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: a7075f501bd3 ("ixgbevf: fix mailbox API compatibility by negotiating supported features")
-Reported-by: Xiaoqiang Xiong <xxiong@redhat.com>
-Closes: https://issues.redhat.com/browse/RHEL-155455
-Assisted-by: Claude:claude-4.6-opus-high Cursor
-Tested-by: Xiaoqiang Xiong <xxiong@redhat.com>
-Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Co-developed-by: Iskhakov Daniil <dish@amicon.ru>
+Signed-off-by: Iskhakov Daniil <dish@amicon.ru>
+Signed-off-by: Agalakov Daniil <ade@amicon.ru>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbevf/vf.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/intel/e1000/e1000_ethtool.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbevf/vf.c b/drivers/net/ethernet/intel/ixgbevf/vf.c
-index 708d5dd921acc..70dfda13b7885 100644
---- a/drivers/net/ethernet/intel/ixgbevf/vf.c
-+++ b/drivers/net/ethernet/intel/ixgbevf/vf.c
-@@ -709,6 +709,12 @@ static int ixgbevf_negotiate_features_vf(struct ixgbe_hw *hw, u32 *pf_features)
- 	return err;
- }
- 
-+static int ixgbevf_hv_negotiate_features_vf(struct ixgbe_hw *hw,
-+					    u32 *pf_features)
-+{
-+	return -EOPNOTSUPP;
-+}
+diff --git a/drivers/net/ethernet/intel/e1000/e1000_ethtool.c b/drivers/net/ethernet/intel/e1000/e1000_ethtool.c
+index d06d29c6c0370..c7b50059663d9 100644
+--- a/drivers/net/ethernet/intel/e1000/e1000_ethtool.c
++++ b/drivers/net/ethernet/intel/e1000/e1000_ethtool.c
+@@ -496,14 +496,19 @@ static int e1000_set_eeprom(struct net_device *netdev,
+ 		 */
+ 		ret_val = e1000_read_eeprom(hw, first_word, 1,
+ 					    &eeprom_buff[0]);
++		if (ret_val)
++			goto out;
 +
- /**
-  *  ixgbevf_set_vfta_vf - Set/Unset VLAN filter table address
-  *  @hw: pointer to the HW structure
-@@ -1142,6 +1148,7 @@ static const struct ixgbe_mac_operations ixgbevf_hv_mac_ops = {
- 	.setup_link		= ixgbevf_setup_mac_link_vf,
- 	.check_link		= ixgbevf_hv_check_mac_link_vf,
- 	.negotiate_api_version	= ixgbevf_hv_negotiate_api_version_vf,
-+	.negotiate_features	= ixgbevf_hv_negotiate_features_vf,
- 	.set_rar		= ixgbevf_hv_set_rar_vf,
- 	.update_mc_addr_list	= ixgbevf_hv_update_mc_addr_list_vf,
- 	.update_xcast_mode	= ixgbevf_hv_update_xcast_mode,
+ 		ptr++;
+ 	}
+-	if (((eeprom->offset + eeprom->len) & 1) && (ret_val == 0)) {
++	if ((eeprom->offset + eeprom->len) & 1) {
+ 		/* need read/modify/write of last changed EEPROM word
+ 		 * only the first byte of the word is being modified
+ 		 */
+ 		ret_val = e1000_read_eeprom(hw, last_word, 1,
+ 					    &eeprom_buff[last_word - first_word]);
++		if (ret_val)
++			goto out;
+ 	}
+ 
+ 	/* Device's eeprom is always little-endian, word addressable */
+@@ -522,6 +527,7 @@ static int e1000_set_eeprom(struct net_device *netdev,
+ 	if ((ret_val == 0) && (first_word <= EEPROM_CHECKSUM_REG))
+ 		e1000_update_eeprom_checksum(hw);
+ 
++out:
+ 	kfree(eeprom_buff);
+ 	return ret_val;
+ }
 -- 
 2.53.0
 
