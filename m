@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D29F217704;
-	Sat, 30 May 2026 18:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09032E7390;
+	Sat, 30 May 2026 18:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165298; cv=none; b=sYExA8cgsyOBoCS5ZAF464SeYYty/b3pO/4A8ce4o1Ze2R9JwKQmquJbZIk/fLVAyUif6MHOHj+e7rpx9aDJsbs3ng2UhMG50Vix9zVxT/iYKvGT5MP4GYU3GqM8DoxBG1Q3XTZQOYEnXRoXEQb5th8Y9g1a03RdRyEKBcZN9lY=
+	t=1780165302; cv=none; b=jT+Pkh23/xNFd4Xyx1yKkpt0LB4FppBHrbaJ4JnlT6I1t9kiobqsDrKnCkWfSM73T4BhjRLvy4D/iY21TPxNR9IyrW6/YPFrePIgHIOSYWhjpWFQzWaZfatBrv9Pfbt6R9WbU9VM9ifFXQyvBpoErvtWrTDLYL0Kra/dU/TWpHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165298; c=relaxed/simple;
-	bh=atPz0NoVJJZ8AFws/n6j89qQTHagxtr3vZ+bwn96MaU=;
+	s=arc-20240116; t=1780165302; c=relaxed/simple;
+	bh=NiWlwjaXWhfYPOO1Ht6vmMgV1777i1SfJybtvRVC09Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HTubf3IHVg7eo9CmMA08+gph+3ktPTeYBy3usUPYHCukveKgu2NNDltqX8rt5MNWJHZNkvsQOpLuWBQUwABC6cGqywi3jqMAOSL6KcIPUvHmyl+1A7u3Uf/ELG2NMfSCI0NP5V5ZRuKV5O2QCehZmQ/84PGPs8mDR0lkh4e2cDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V2Hz5AtZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eQWDSl4Rt/zHGdt61R0kx66ut+KAuTWKdcl1REGKTq29AZLmAo9UW0XJ4Gv8Aldx78niH6kkQ+YJCPn7hjSYkego/9Ke3NRyx7o9LecQyPyUjLTI14vnPltEeKdkFII25dnAotE5mCLAQJw+mhnaXwchhTkJpG1+Sj8yz2e+CTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ymKSfVsa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V2Hz5AtZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350601F00893;
-	Sat, 30 May 2026 18:21:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ymKSfVsa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E994D1F00893;
+	Sat, 30 May 2026 18:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165296;
-	bh=Qg1WdKo0tz0iDevGEbZDqQjQJ8u+y+mzYPrja28Cz4Y=;
+	s=korg; t=1780165300;
+	bh=8LmY217q/lEqvKfjvRrvB+YwUx954Ray4NXIMRO1nDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V2Hz5AtZ/Maw/gR0JIXGriTeNShMJTDgC2cLViJ5Y7jHPd4T+O8u4nw84UlwQdUjB
-	 Tla5MErDbQwrw39G58rgnxZRbffSgyrHFORBQ9PpE0n6gLKilrRJs2ieTVFVLoOrcp
-	 yks8HqBthqn8FtGHPB5qIfNLTdsDGwOt1fbQApls=
+	b=ymKSfVsaj9GiXmRlYmaI3bv0Q3qS3tpjhvMY1+sXVx0gdhzJdYcxCpwHD4wb5SCTW
+	 559AuW9dzfRMpy2e/1aasEqlcSml/zAdxn6ZvPNlxrXR04jutaPoQYVHHm/IhwjqC+
+	 km3zBPPHQhzt0p8+fLGC8ZjzkbSnJm2JAbsTqm/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuhang Zheng <z1652074432@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 007/589] wifi: wl1251: validate packet IDs before indexing tx_frames
-Date: Sat, 30 May 2026 17:58:08 +0200
-Message-ID: <20260530160224.770915821@linuxfoundation.org>
+Subject: [PATCH 5.10 030/589] netfilter: xt_multiport: validate range encoding in checkentry
+Date: Sat, 30 May 2026 17:58:31 +0200
+Message-ID: <20260530160225.375884111@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,49 +56,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Ren Wei <n05ec@lzu.edu.cn>
 
-[ Upstream commit 0fd56fad9c56356e7fa7a7c52e7ecbf807a44eb0 ]
+[ Upstream commit ff64c5bfef12461df8450e0f50bb693b5269c720 ]
 
-wl1251_tx_packet_cb() uses the firmware completion ID directly to index
-the fixed 16-entry wl->tx_frames[] array. The ID is a raw u8 from the
-completion block, and the callback does not currently verify that it
-fits the array before dereferencing it.
+ports_match_v1() treats any non-zero pflags entry as the start of a
+port range and unconditionally consumes the next ports[] element as
+the range end.
 
-Reject completion IDs that fall outside wl->tx_frames[] and keep the
-existing NULL check in the same guard. This keeps the fix local to the
-trust boundary and avoids touching the rest of the completion flow.
+The checkentry path currently validates protocol, flags and count, but
+it does not validate the range encoding itself. As a result, malformed
+rules can mark the last slot as a range start or place two range starts
+back to back, leaving ports_match_v1() to step past the last valid
+ports[] element while interpreting the rule.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260323080845.40033-1-pengpeng@iscas.ac.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reject malformed multiport v1 rules in checkentry by validating that
+each range start has a following element and that the following element
+is not itself marked as another range start.
+
+Fixes: a89ecb6a2ef7 ("[NETFILTER]: x_tables: unify IPv4/IPv6 multiport match")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Yuhang Zheng <z1652074432@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ti/wl1251/tx.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/netfilter/xt_multiport.c | 34 ++++++++++++++++++++++++++++++----
+ 1 file changed, 30 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ti/wl1251/tx.c b/drivers/net/wireless/ti/wl1251/tx.c
-index 5771f61392efb..7f406c086ca56 100644
---- a/drivers/net/wireless/ti/wl1251/tx.c
-+++ b/drivers/net/wireless/ti/wl1251/tx.c
-@@ -402,12 +402,14 @@ static void wl1251_tx_packet_cb(struct wl1251 *wl,
- 	int hdrlen;
- 	u8 *frame;
+diff --git a/net/netfilter/xt_multiport.c b/net/netfilter/xt_multiport.c
+index 44a00f5acde8a..a1691ff405d3c 100644
+--- a/net/netfilter/xt_multiport.c
++++ b/net/netfilter/xt_multiport.c
+@@ -105,6 +105,28 @@ multiport_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ 	return ports_match_v1(multiinfo, ntohs(pptr[0]), ntohs(pptr[1]));
+ }
  
--	skb = wl->tx_frames[result->id];
--	if (skb == NULL) {
--		wl1251_error("SKB for packet %d is NULL", result->id);
-+	if (unlikely(result->id >= ARRAY_SIZE(wl->tx_frames) ||
-+		     wl->tx_frames[result->id] == NULL)) {
-+		wl1251_error("invalid packet id %u", result->id);
- 		return;
- 	}
- 
-+	skb = wl->tx_frames[result->id];
++static bool
++multiport_valid_ranges(const struct xt_multiport_v1 *multiinfo)
++{
++	unsigned int i;
 +
- 	info = IEEE80211_SKB_CB(skb);
++	for (i = 0; i < multiinfo->count; i++) {
++		if (!multiinfo->pflags[i])
++			continue;
++
++		if (++i >= multiinfo->count)
++			return false;
++
++		if (multiinfo->pflags[i])
++			return false;
++
++		if (multiinfo->ports[i - 1] > multiinfo->ports[i])
++			return false;
++	}
++
++	return true;
++}
++
+ static inline bool
+ check(u_int16_t proto,
+       u_int8_t ip_invflags,
+@@ -127,8 +149,10 @@ static int multiport_mt_check(const struct xt_mtchk_param *par)
+ 	const struct ipt_ip *ip = par->entryinfo;
+ 	const struct xt_multiport_v1 *multiinfo = par->matchinfo;
  
- 	if (!(info->flags & IEEE80211_TX_CTL_NO_ACK) &&
+-	return check(ip->proto, ip->invflags, multiinfo->flags,
+-		     multiinfo->count) ? 0 : -EINVAL;
++	if (!check(ip->proto, ip->invflags, multiinfo->flags, multiinfo->count))
++		return -EINVAL;
++
++	return multiport_valid_ranges(multiinfo) ? 0 : -EINVAL;
+ }
+ 
+ static int multiport_mt6_check(const struct xt_mtchk_param *par)
+@@ -136,8 +160,10 @@ static int multiport_mt6_check(const struct xt_mtchk_param *par)
+ 	const struct ip6t_ip6 *ip = par->entryinfo;
+ 	const struct xt_multiport_v1 *multiinfo = par->matchinfo;
+ 
+-	return check(ip->proto, ip->invflags, multiinfo->flags,
+-		     multiinfo->count) ? 0 : -EINVAL;
++	if (!check(ip->proto, ip->invflags, multiinfo->flags, multiinfo->count))
++		return -EINVAL;
++
++	return multiport_valid_ranges(multiinfo) ? 0 : -EINVAL;
+ }
+ 
+ static struct xt_match multiport_mt_reg[] __read_mostly = {
 -- 
 2.53.0
 
