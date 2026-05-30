@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2ABE3B7B72;
-	Sat, 30 May 2026 18:10:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AF329B799;
+	Sat, 30 May 2026 18:10:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164638; cv=none; b=klYZIf7JHt1tXiWHWNQ8t8A4/IAxybXxW0dOKxr1SrjNcnN38G5Hg1VZ/HlFYJ7Kl99Rivbb8r4YpQ016U1lmrWgXgt0fpdTnNqg9ZdM2sfHSMTaSqMoouW0xk9RcRuY+UCvMQXFyLd05Ix6prVhPJJ97DLZL0/ibFBtoZNWhNk=
+	t=1780164642; cv=none; b=PSG9oxqIBzXXziBGu3Pae2LxGf6YZgdRz097toLt3foKFHuMBH8nAfUtCoa+A+2sD+XV66yTjtziPL2J7BP7zYzj4Wpk8QoLdAX1lUlzev+Dj51URsdUrYHfgBiXqT26VPnsH/+t1SebNm9h8QQfuGpXcKFTEx4/OEntPbSqty4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164638; c=relaxed/simple;
-	bh=aTsFHTLEHUdgqCt0qrqn6hqFrFg3Wo0vXkCtjH4Jcn4=;
+	s=arc-20240116; t=1780164642; c=relaxed/simple;
+	bh=yNOHklpWFjhfZhBJrMHgNMDwJWUv11yGY1QmCpA/GdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N1LsXHNXWRp3V/80cVv9TPErm8sFk4miOl7d1DWNioZedruVJnuDm235a0Zdg01WG2dpIR8KN6yleV7IhAsktoyyfUj3ogQ/pZxEOzHX1Pd+Kmg/44yzaCEB62oEzEd6Edh1H/Ws/F9YIHdZMk+eUff2seyuntn11+Gjtroc68E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pzltiSCo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RRi8AMQwvTz2DFSZv2DJEC1eqsD6Jr1qOsuz3XOnE/TGsvAQJSkuWJgaeiJ3063oqfvmxzQTpV+RpzSO0UZIxgWu30SCfFzhINdetmduBpo53NRaO7KjIZZaTNp6YA+2ibFZs/pfFA0+QaA4qq1ItAReBxYxvWNXOOVKvCXWUgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7LovUXI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pzltiSCo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D201F00893;
-	Sat, 30 May 2026 18:10:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7LovUXI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7A71F00893;
+	Sat, 30 May 2026 18:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164637;
-	bh=yodlt6V3RtMlPMeODGVsgDCgUpD7Z5eWoWM9NGBwY7o=;
+	s=korg; t=1780164641;
+	bh=XjmV2rKQv277RKO+v/pjiX7NwpjgVaXves92XLbUKv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pzltiSComFyO+koUa+zJKsnkG36saSQtcJmj5zLrIesbUJaHVurtYTZmPoIa8i2u4
-	 47RzBvQnDLJyRkMlNKm+dFcVgYJuAXhA5E6R3AubeF/uKjGFUOAUaG67L3/lKLNpkS
-	 SZvCpF2gMdIbnMx5eYMlU60UFSd0Npom1DJTCYso=
+	b=h7LovUXIOpASwZNx//ckqX+3qT/wUxwSe8qbVr5PpXW1MMEv5D6jukWz8gXzYclDd
+	 sATfx2Bafh0lyOUIyiTSucTZI0R3qFMMFXkWbGttr1VA+gRqM0Fv4YgZyKP6kmCTwS
+	 XVTlZ6r9Qs3pHedcPrTh6HWYFfz0/6lF38RUKltg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	Stephen Hemminger <stephen@networkplumber.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 614/776] net: sched: sch_netem: Refactor code in 4-state loss generator
-Date: Sat, 30 May 2026 18:05:28 +0200
-Message-ID: <20260530160255.872926725@linuxfoundation.org>
+Subject: [PATCH 5.15 615/776] net/sched: netem: fix probability gaps in 4-state loss model
+Date: Sat, 30 May 2026 18:05:29 +0200
+Message-ID: <20260530160255.894736273@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,87 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Stephen Hemminger <stephen@networkplumber.org>
 
-[ Upstream commit cb3ef7b00042479277cda7871d899378ad91f081 ]
+[ Upstream commit 732b463449fd0ef90acd13cda68eab1c91adb00c ]
 
-Fixed comments to match description with variable names and
-refactored code to match the convention as per [1].
+The 4-state Markov chain in loss_4state() has gaps at the boundaries
+between transition probability ranges. The comparisons use:
 
-To match the convention mapping is done as follows:
-State 3 - LOST_IN_BURST_PERIOD
-State 4 - LOST_IN_GAP_PERIOD
+  if (rnd < a4)
+  else if (a4 < rnd && rnd < a1 + a4)
 
-[1] S. Salsano, F. Ludovici, A. Ordine, "Definition of a general
-and intuitive loss model for packet networks and its implementation
-in the Netem module in the Linux kernel"
+When rnd equals a boundary value exactly, neither branch matches and
+no state transition occurs. The redundant lower-bound check (a4 < rnd)
+is already implied by being in the else branch.
 
-Fixes: a6e2fe17eba4 ("sch_netem: replace magic numbers with enumerate")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Acked-by: Stephen Hemminger <stephen@networkplumber.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 732b463449fd ("net/sched: netem: fix probability gaps in 4-state loss model")
+Remove the unnecessary lower-bound comparisons so the ranges are
+contiguous and every random value produces a transition, matching
+the GI (General and Intuitive) loss model specification.
+
+This bug goes back to original implementation of this model.
+
+Fixes: 661b79725fea ("netem: revised correlated loss generator")
+Signed-off-by: Stephen Hemminger <stephen@networkplumber.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260418032027.900913-2-stephen@networkplumber.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ net/sched/sch_netem.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index 951156d7e5485..cbd7f3032fccf 100644
+index cbd7f3032fccf..1f47711cb1667 100644
 --- a/net/sched/sch_netem.c
 +++ b/net/sched/sch_netem.c
-@@ -210,17 +210,17 @@ static bool loss_4state(struct netem_sched_data *q)
- 	 * next state and if the next packet has to be transmitted or lost.
- 	 * The four states correspond to:
- 	 *   TX_IN_GAP_PERIOD => successfully transmitted packets within a gap period
--	 *   LOST_IN_BURST_PERIOD => isolated losses within a gap period
--	 *   LOST_IN_GAP_PERIOD => lost packets within a burst period
--	 *   TX_IN_GAP_PERIOD => successfully transmitted packets within a burst period
-+	 *   LOST_IN_GAP_PERIOD => isolated losses within a gap period
-+	 *   LOST_IN_BURST_PERIOD => lost packets within a burst period
-+	 *   TX_IN_BURST_PERIOD => successfully transmitted packets within a burst period
- 	 */
- 	switch (clg->state) {
- 	case TX_IN_GAP_PERIOD:
+@@ -219,10 +219,10 @@ static bool loss_4state(struct netem_sched_data *q)
  		if (rnd < clg->a4) {
--			clg->state = LOST_IN_BURST_PERIOD;
-+			clg->state = LOST_IN_GAP_PERIOD;
+ 			clg->state = LOST_IN_GAP_PERIOD;
  			return true;
- 		} else if (clg->a4 < rnd && rnd < clg->a1 + clg->a4) {
--			clg->state = LOST_IN_GAP_PERIOD;
-+			clg->state = LOST_IN_BURST_PERIOD;
+-		} else if (clg->a4 < rnd && rnd < clg->a1 + clg->a4) {
++		} else if (rnd < clg->a1 + clg->a4) {
+ 			clg->state = LOST_IN_BURST_PERIOD;
  			return true;
- 		} else if (clg->a1 + clg->a4 < rnd) {
+-		} else if (clg->a1 + clg->a4 < rnd) {
++		} else {
  			clg->state = TX_IN_GAP_PERIOD;
-@@ -229,24 +229,24 @@ static bool loss_4state(struct netem_sched_data *q)
- 		break;
- 	case TX_IN_BURST_PERIOD:
- 		if (rnd < clg->a5) {
--			clg->state = LOST_IN_GAP_PERIOD;
-+			clg->state = LOST_IN_BURST_PERIOD;
- 			return true;
- 		} else {
- 			clg->state = TX_IN_BURST_PERIOD;
  		}
  
- 		break;
--	case LOST_IN_GAP_PERIOD:
-+	case LOST_IN_BURST_PERIOD:
+@@ -239,9 +239,9 @@ static bool loss_4state(struct netem_sched_data *q)
+ 	case LOST_IN_BURST_PERIOD:
  		if (rnd < clg->a3)
  			clg->state = TX_IN_BURST_PERIOD;
- 		else if (clg->a3 < rnd && rnd < clg->a2 + clg->a3) {
+-		else if (clg->a3 < rnd && rnd < clg->a2 + clg->a3) {
++		else if (rnd < clg->a2 + clg->a3) {
  			clg->state = TX_IN_GAP_PERIOD;
- 		} else if (clg->a2 + clg->a3 < rnd) {
--			clg->state = LOST_IN_GAP_PERIOD;
-+			clg->state = LOST_IN_BURST_PERIOD;
+-		} else if (clg->a2 + clg->a3 < rnd) {
++		} else {
+ 			clg->state = LOST_IN_BURST_PERIOD;
  			return true;
  		}
- 		break;
--	case LOST_IN_BURST_PERIOD:
-+	case LOST_IN_GAP_PERIOD:
- 		clg->state = TX_IN_GAP_PERIOD;
- 		break;
- 	}
 -- 
 2.53.0
 
