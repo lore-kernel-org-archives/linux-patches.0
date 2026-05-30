@@ -1,50 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A9B39478D;
-	Sat, 30 May 2026 16:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D019533F5A3;
+	Sat, 30 May 2026 16:50:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159841; cv=none; b=KVwF4i31zT7FByiP2UUzfLuij/TQsMcXHOO2XLAJt3gH5ZxldYvCYdqI4odUUzLofBbIrZ51QtJHvCZfTpAm/idgrhms0Lys24sjS0i16CFO2llDy9T5DGq8pFzb+a+pCdZExz1rmxXPSCKfgpSm6s9h5GYErj+vAlpYqPcwxKg=
+	t=1780159845; cv=none; b=mRHdY+OfTEltfrn2/IZ2Cm5rXQJ3UUMInqEmTnK/JCUVa2jp7lQgH5SbjBfr0mnBaYLMDzdZJXypIc+ujBqVcxXP60+6HJidipBkZv1gY7gG/Hi9N7xLbhL7IHlLFXkDpilgBt5wJnITG/etJ6/KrxO/3g6ZtpQmBDD4SvgFh0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159841; c=relaxed/simple;
-	bh=2LEvt0zmlNuzw1WXfG71HshMunekWdJJd4N3DV3F6ew=;
+	s=arc-20240116; t=1780159845; c=relaxed/simple;
+	bh=36oxzOqsxFxP8tUNG464puSQ4a7acc3SRjtuODz/yAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fu1rnmWA2bRvHkaA3QGdI0XGHpdXR4V4/loe2S8q4gOj8PLbBGp4WlotPvTuUAXiPYWikRb3sxDz2UsI341/tPK7+pMSeSxk9nxMMeZkPDJj0De0qbwqJv4VnCmH/SLgOPEgMctK/MgM+2zDeVCSZAHYBsHodCyXC05AAaw5wIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVWqHSdd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Onb3CAl302nwt8qSQD6Tc/BmEAiAWlYLfEvgoFihY+Avq5ZQUF0V5OO+8YWZjps1T8+n8AMkso/h5/9elF0wVCamWTrfnlszNeqcz78HAjGs/FHQh8vwHIuoFf2n+JiuMASnOavz1RzWllBsC5nxFczax1IsrxX8c6QfVbzRN4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bwBQrNMG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVWqHSdd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 300F21F00893;
-	Sat, 30 May 2026 16:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bwBQrNMG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17BD1F00893;
+	Sat, 30 May 2026 16:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159840;
-	bh=00LS3Au5XXPgs2yOilIJsC2xJuYXMFlTsQHXWSH8BNw=;
+	s=korg; t=1780159843;
+	bh=5cvbTjYCis+xrI/mcXiisEHf/Iy/AKzJASWmEzU2ETU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gVWqHSddWdl4ff+zuuooQSiKyYb3QEOmBKyisosoGpaFfYxxuNnp3MMYvv+JHjcF1
-	 Pd9tuE6YI3LEbdtXYqxx1qd6jjHX7yDRRQloeNgvR8UJ/qQHeqx6k/Rew38Cx9CRzQ
-	 lrwbjvZgK5TZwd9KQUEIOjmCkdqzIlfAYX/3aoDQ=
+	b=bwBQrNMGoK5Fy36bnx47GJ84b17FYVx1mgRdnWReE/0nMurH3rQNk403y415chOxO
+	 ZQHQ2ZMX22GIbLaD2MrhlkNdhzcaLaZGPV+1sCFtmjHRsTxc6IZnqReSdBDIaOhvRc
+	 MLxeW2ZH35uEzaOwElpTljWiATw6rpD7JTqI7Vwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Al Viro <viro@ZenIV.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Eric Biederman <ebiederm@xmission.com>,
-	Jan Kara <jack@suse.cz>,
-	Kees Cook <keescook@chromium.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Wen Yang <wen.yang@linux.dev>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 176/969] regset: use kvzalloc() for regset_get_alloc()
-Date: Sat, 30 May 2026 17:55:00 +0200
-Message-ID: <20260530160305.355689378@linuxfoundation.org>
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Saravana Kannan <saravanak@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.1 177/969] device property: Make modifications of fwnode "flags" thread safe
+Date: Sat, 30 May 2026 17:55:01 +0200
+Message-ID: <20260530160305.382508152@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -65,122 +57,311 @@ Content-Transfer-Encoding: 8bit
 
 From: Douglas Anderson <dianders@chromium.org>
 
-commit 6b839b3b76cf17296ebd4a893841f32cae08229c upstream.
+commit f72e77c33e4b5657af35125e75bab249256030f3 upstream.
 
-While browsing through ChromeOS crash reports, I found one with an
-allocation failure that looked like this:
+In various places in the kernel, we modify the fwnode "flags" member
+by doing either:
+  fwnode->flags |= SOME_FLAG;
+  fwnode->flags &= ~SOME_FLAG;
 
-  chrome: page allocation failure: order:7,
-          mode:0x40dc0(GFP_KERNEL|__GFP_COMP|__GFP_ZERO),
-	  nodemask=(null),cpuset=urgent,mems_allowed=0
-  CPU: 7 PID: 3295 Comm: chrome Not tainted
-          5.15.133-20574-g8044615ac35c #1 (HASH:1162 1)
-  Hardware name: Google Lazor (rev3 - 8) with KB Backlight (DT)
-  Call trace:
-  ...
-  warn_alloc+0x104/0x174
-  __alloc_pages+0x5f0/0x6e4
-  kmalloc_order+0x44/0x98
-  kmalloc_order_trace+0x34/0x124
-  __kmalloc+0x228/0x36c
-  __regset_get+0x68/0xcc
-  regset_get_alloc+0x1c/0x28
-  elf_core_dump+0x3d8/0xd8c
-  do_coredump+0xeb8/0x1378
-  get_signal+0x14c/0x804
-  ...
+This type of modification is not thread-safe. If two threads are both
+mucking with the flags at the same time then one can clobber the
+other.
 
-An order 7 allocation is (1 << 7) contiguous pages, or 512K. It's not
-a surprise that this allocation failed on a system that's been running
-for a while.
+While flags are often modified while under the "fwnode_link_lock",
+this is not universally true.
 
-More digging showed that it was fairly easy to see the order 7
-allocation by just sending a SIGQUIT to chrome (or other processes) to
-generate a core dump. The actual amount being allocated was 279,584
-bytes and it was for "core_note_type" NT_ARM_SVE.
+Create some accessor functions for setting, clearing, and testing the
+FWNODE flags and move all users to these accessor functions. New
+accessor functions use set_bit() and clear_bit(), which are
+thread-safe.
 
-There was quite a bit of discussion [1] on the mailing lists in
-response to my v1 patch attempting to switch to vmalloc. The overall
-conclusion was that we could likely reduce the 279,584 byte allocation
-by quite a bit and Mark Brown has sent a patch to that effect [2].
-However even with the 279,584 byte allocation gone there are still
-65,552 byte allocations. These are just barely more than the 65,536
-bytes and thus would require an order 5 allocation.
-
-An order 5 allocation is still something to avoid unless necessary and
-nothing needs the memory here to be contiguous. Change the allocation
-to kvzalloc() which should still be efficient for small allocations
-but doesn't force the memory subsystem to work hard (and maybe fail)
-at getting a large contiguous chunk.
-
-[1] https://lore.kernel.org/r/20240201171159.1.Id9ad163b60d21c9e56c2d686b0cc9083a8ba7924@changeid
-[2] https://lore.kernel.org/r/20240203-arm64-sve-ptrace-regset-size-v1-1-2c3ba1386b9e@kernel.org
-
-Link: https://lkml.kernel.org/r/20240205092626.v2.1.Id9ad163b60d21c9e56c2d686b0cc9083a8ba7924@changeid
+Cc: stable@vger.kernel.org
+Fixes: c2c724c868c4 ("driver core: Add fw_devlink_parse_fwtree()")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Al Viro <viro@ZenIV.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Dave Martin <Dave.Martin@arm.com>
-Cc: Eric Biederman <ebiederm@xmission.com>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Will Deacon <will@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Wen Yang <wen.yang@linux.dev>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Reviewed-by: Saravana Kannan <saravanak@kernel.org>
+Link: https://patch.msgid.link/20260317090112.v2.1.I0a4d03104ecd5103df3d76f66c8d21b1d15a2e38@changeid
+[ Fix fwnode_clear_flag() argument alignment, restore dropped blank
+  line in fwnode_dev_initialized(), and remove unnecessary parentheses
+  around fwnode_test_flag() calls. - Danilo ]
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/binfmt_elf.c | 2 +-
- kernel/regset.c | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/base/core.c        |   24 ++++++++++++------------
+ drivers/bus/imx-weim.c     |    2 +-
+ drivers/i2c/i2c-core-of.c  |    2 +-
+ drivers/net/phy/mdio_bus.c |    4 ++--
+ drivers/of/base.c          |    2 +-
+ drivers/of/dynamic.c       |    2 +-
+ drivers/of/platform.c      |    2 +-
+ drivers/spi/spi.c          |    2 +-
+ include/linux/fwnode.h     |   44 +++++++++++++++++++++++++++++++++-----------
+ 9 files changed, 53 insertions(+), 31 deletions(-)
 
-diff --git a/fs/binfmt_elf.c b/fs/binfmt_elf.c
-index 762704eed9ce9..2fa739f2f7bb8 100644
---- a/fs/binfmt_elf.c
-+++ b/fs/binfmt_elf.c
-@@ -2014,7 +2014,7 @@ static void free_note_info(struct elf_note_info *info)
- 		threads = t->next;
- 		WARN_ON(t->notes[0].data && t->notes[0].data != &t->prstatus);
- 		for (i = 1; i < info->thread_notes; ++i)
--			kfree(t->notes[i].data);
-+			kvfree(t->notes[i].data);
- 		kfree(t);
- 	}
- 	kfree(info->psinfo.data);
-diff --git a/kernel/regset.c b/kernel/regset.c
-index 586823786f397..b2871fa68b2a7 100644
---- a/kernel/regset.c
-+++ b/kernel/regset.c
-@@ -16,14 +16,14 @@ static int __regset_get(struct task_struct *target,
- 	if (size > regset->n * regset->size)
- 		size = regset->n * regset->size;
- 	if (!p) {
--		to_free = p = kzalloc(size, GFP_KERNEL);
-+		to_free = p = kvzalloc(size, GFP_KERNEL);
- 		if (!p)
- 			return -ENOMEM;
- 	}
- 	res = regset->regset_get(target, regset,
- 			   (struct membuf){.p = p, .left = size});
- 	if (res < 0) {
--		kfree(to_free);
-+		kvfree(to_free);
- 		return res;
- 	}
- 	*data = p;
-@@ -71,6 +71,6 @@ int copy_regset_to_user(struct task_struct *target,
- 	ret = regset_get_alloc(target, regset, size, &buf);
- 	if (ret > 0)
- 		ret = copy_to_user(data, buf, ret) ? -EFAULT : 0;
--	kfree(buf);
-+	kvfree(buf);
- 	return ret;
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -194,7 +194,7 @@ void fw_devlink_purge_absent_suppliers(s
+ 	if (fwnode->dev)
+ 		return;
+ 
+-	fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
++	fwnode_set_flag(fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 	fwnode_links_purge_consumers(fwnode);
+ 
+ 	fwnode_for_each_available_child_node(fwnode, child)
+@@ -240,7 +240,7 @@ static void __fw_devlink_pickup_dangling
+ 	if (fwnode->dev && fwnode->dev->bus)
+ 		return;
+ 
+-	fwnode->flags |= FWNODE_FLAG_NOT_DEVICE;
++	fwnode_set_flag(fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 	__fwnode_links_move_consumers(fwnode, new_sup);
+ 
+ 	fwnode_for_each_available_child_node(fwnode, child)
+@@ -1070,7 +1070,7 @@ static void device_links_missing_supplie
+ static bool dev_is_best_effort(struct device *dev)
+ {
+ 	return (fw_devlink_best_effort && dev->can_match) ||
+-		(dev->fwnode && (dev->fwnode->flags & FWNODE_FLAG_BEST_EFFORT));
++		(dev->fwnode && fwnode_test_flag(dev->fwnode, FWNODE_FLAG_BEST_EFFORT));
  }
--- 
-2.53.0
-
+ 
+ static struct fwnode_handle *fwnode_links_check_suppliers(
+@@ -1764,11 +1764,11 @@ bool fw_devlink_is_strict(void)
+ 
+ static void fw_devlink_parse_fwnode(struct fwnode_handle *fwnode)
+ {
+-	if (fwnode->flags & FWNODE_FLAG_LINKS_ADDED)
++	if (fwnode_test_flag(fwnode, FWNODE_FLAG_LINKS_ADDED))
+ 		return;
+ 
+ 	fwnode_call_int_op(fwnode, add_links);
+-	fwnode->flags |= FWNODE_FLAG_LINKS_ADDED;
++	fwnode_set_flag(fwnode, FWNODE_FLAG_LINKS_ADDED);
+ }
+ 
+ static void fw_devlink_parse_fwtree(struct fwnode_handle *fwnode)
+@@ -1889,7 +1889,7 @@ static bool fwnode_init_without_drv(stru
+ 	struct device *dev;
+ 	bool ret;
+ 
+-	if (!(fwnode->flags & FWNODE_FLAG_INITIALIZED))
++	if (!fwnode_test_flag(fwnode, FWNODE_FLAG_INITIALIZED))
+ 		return false;
+ 
+ 	dev = get_dev_from_fwnode(fwnode);
+@@ -1948,10 +1948,10 @@ static bool __fw_devlink_relax_cycles(st
+ 	 * We aren't trying to find all cycles. Just a cycle between con and
+ 	 * sup_handle.
+ 	 */
+-	if (sup_handle->flags & FWNODE_FLAG_VISITED)
++	if (fwnode_test_flag(sup_handle, FWNODE_FLAG_VISITED))
+ 		return false;
+ 
+-	sup_handle->flags |= FWNODE_FLAG_VISITED;
++	fwnode_set_flag(sup_handle, FWNODE_FLAG_VISITED);
+ 
+ 	/* Termination condition. */
+ 	if (sup_handle == con_handle) {
+@@ -2021,7 +2021,7 @@ static bool __fw_devlink_relax_cycles(st
+ 	}
+ 
+ out:
+-	sup_handle->flags &= ~FWNODE_FLAG_VISITED;
++	fwnode_clear_flag(sup_handle, FWNODE_FLAG_VISITED);
+ 	put_device(sup_dev);
+ 	put_device(con_dev);
+ 	put_device(par_dev);
+@@ -2074,7 +2074,7 @@ static int fw_devlink_create_devlink(str
+ 	 * When such a flag is set, we can't create device links where P is the
+ 	 * supplier of C as that would delay the probe of C.
+ 	 */
+-	if (sup_handle->flags & FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD &&
++	if (fwnode_test_flag(sup_handle, FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD) &&
+ 	    fwnode_is_ancestor_of(sup_handle, con->fwnode))
+ 		return -EINVAL;
+ 
+@@ -2097,7 +2097,7 @@ static int fw_devlink_create_devlink(str
+ 	else
+ 		flags = FW_DEVLINK_FLAGS_PERMISSIVE;
+ 
+-	if (sup_handle->flags & FWNODE_FLAG_NOT_DEVICE)
++	if (fwnode_test_flag(sup_handle, FWNODE_FLAG_NOT_DEVICE))
+ 		sup_dev = fwnode_get_next_parent_dev(sup_handle);
+ 	else
+ 		sup_dev = get_dev_from_fwnode(sup_handle);
+@@ -2109,7 +2109,7 @@ static int fw_devlink_create_devlink(str
+ 		 * supplier device indefinitely.
+ 		 */
+ 		if (sup_dev->links.status == DL_DEV_NO_DRIVER &&
+-		    sup_handle->flags & FWNODE_FLAG_INITIALIZED) {
++		    fwnode_test_flag(sup_handle, FWNODE_FLAG_INITIALIZED)) {
+ 			dev_dbg(con,
+ 				"Not linking %pfwf - dev might never probe\n",
+ 				sup_handle);
+--- a/drivers/bus/imx-weim.c
++++ b/drivers/bus/imx-weim.c
+@@ -336,7 +336,7 @@ static int of_weim_notify(struct notifie
+ 			 * fw_devlink doesn't skip adding consumers to this
+ 			 * device.
+ 			 */
+-			rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
++			fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 			if (!of_platform_device_create(rd->dn, NULL, &pdev->dev)) {
+ 				dev_err(&pdev->dev,
+ 					"Failed to create child device '%pOF'\n",
+--- a/drivers/i2c/i2c-core-of.c
++++ b/drivers/i2c/i2c-core-of.c
+@@ -182,7 +182,7 @@ static int of_i2c_notify(struct notifier
+ 		 * Clear the flag before adding the device so that fw_devlink
+ 		 * doesn't skip adding consumers to this device.
+ 		 */
+-		rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
++		fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 		client = of_i2c_register_device(adap, rd->dn);
+ 		if (IS_ERR(client)) {
+ 			dev_err(&adap->dev, "failed to create client for '%pOF'\n",
+--- a/drivers/net/phy/mdio_bus.c
++++ b/drivers/net/phy/mdio_bus.c
+@@ -539,8 +539,8 @@ int __mdiobus_register(struct mii_bus *b
+ 		return -EINVAL;
+ 
+ 	if (bus->parent && bus->parent->of_node)
+-		bus->parent->of_node->fwnode.flags |=
+-					FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD;
++		fwnode_set_flag(&bus->parent->of_node->fwnode,
++				FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD);
+ 
+ 	WARN(bus->state != MDIOBUS_ALLOCATED &&
+ 	     bus->state != MDIOBUS_UNREGISTERED,
+--- a/drivers/of/base.c
++++ b/drivers/of/base.c
+@@ -1927,7 +1927,7 @@ void of_alias_scan(void * (*dt_alloc)(u6
+ 		if (name)
+ 			of_stdout = of_find_node_opts_by_path(name, &of_stdout_options);
+ 		if (of_stdout)
+-			of_stdout->fwnode.flags |= FWNODE_FLAG_BEST_EFFORT;
++			fwnode_set_flag(&of_stdout->fwnode, FWNODE_FLAG_BEST_EFFORT);
+ 	}
+ 
+ 	if (!of_aliases)
+--- a/drivers/of/dynamic.c
++++ b/drivers/of/dynamic.c
+@@ -227,7 +227,7 @@ static void __of_attach_node(struct devi
+ 	np->sibling = np->parent->child;
+ 	np->parent->child = np;
+ 	of_node_clear_flag(np, OF_DETACHED);
+-	np->fwnode.flags |= FWNODE_FLAG_NOT_DEVICE;
++	fwnode_set_flag(&np->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ }
+ 
+ /**
+--- a/drivers/of/platform.c
++++ b/drivers/of/platform.c
+@@ -745,7 +745,7 @@ static int of_platform_notify(struct not
+ 		 * Clear the flag before adding the device so that fw_devlink
+ 		 * doesn't skip adding consumers to this device.
+ 		 */
+-		rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
++		fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 		/* pdev_parent may be NULL when no bus platform device */
+ 		pdev_parent = of_find_device_by_node(rd->dn->parent);
+ 		pdev = of_platform_device_create(rd->dn, NULL,
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -4480,7 +4480,7 @@ static int of_spi_notify(struct notifier
+ 		 * Clear the flag before adding the device so that fw_devlink
+ 		 * doesn't skip adding consumers to this device.
+ 		 */
+-		rd->dn->fwnode.flags &= ~FWNODE_FLAG_NOT_DEVICE;
++		fwnode_clear_flag(&rd->dn->fwnode, FWNODE_FLAG_NOT_DEVICE);
+ 		spi = of_register_spi_device(ctlr, rd->dn);
+ 		put_device(&ctlr->dev);
+ 
+--- a/include/linux/fwnode.h
++++ b/include/linux/fwnode.h
+@@ -12,6 +12,7 @@
+ #include <linux/types.h>
+ #include <linux/list.h>
+ #include <linux/bits.h>
++#include <linux/bitops.h>
+ #include <linux/err.h>
+ 
+ struct fwnode_operations;
+@@ -31,12 +32,12 @@ struct device;
+  *		suppliers. Only enforce ordering with suppliers that have
+  *		drivers.
+  */
+-#define FWNODE_FLAG_LINKS_ADDED			BIT(0)
+-#define FWNODE_FLAG_NOT_DEVICE			BIT(1)
+-#define FWNODE_FLAG_INITIALIZED			BIT(2)
+-#define FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD	BIT(3)
+-#define FWNODE_FLAG_BEST_EFFORT			BIT(4)
+-#define FWNODE_FLAG_VISITED			BIT(5)
++#define FWNODE_FLAG_LINKS_ADDED			0
++#define FWNODE_FLAG_NOT_DEVICE			1
++#define FWNODE_FLAG_INITIALIZED			2
++#define FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD	3
++#define FWNODE_FLAG_BEST_EFFORT			4
++#define FWNODE_FLAG_VISITED			5
+ 
+ struct fwnode_handle {
+ 	struct fwnode_handle *secondary;
+@@ -44,7 +45,7 @@ struct fwnode_handle {
+ 	struct device *dev;
+ 	struct list_head suppliers;
+ 	struct list_head consumers;
+-	u8 flags;
++	unsigned long flags;
+ };
+ 
+ /*
+@@ -197,16 +198,37 @@ static inline void fwnode_init(struct fw
+ 	INIT_LIST_HEAD(&fwnode->suppliers);
+ }
+ 
++static inline void fwnode_set_flag(struct fwnode_handle *fwnode,
++				   unsigned int bit)
++{
++	set_bit(bit, &fwnode->flags);
++}
++
++static inline void fwnode_clear_flag(struct fwnode_handle *fwnode,
++				     unsigned int bit)
++{
++	clear_bit(bit, &fwnode->flags);
++}
++
++static inline void fwnode_assign_flag(struct fwnode_handle *fwnode,
++				      unsigned int bit, bool value)
++{
++	assign_bit(bit, &fwnode->flags, value);
++}
++
++static inline bool fwnode_test_flag(struct fwnode_handle *fwnode,
++				    unsigned int bit)
++{
++	return test_bit(bit, &fwnode->flags);
++}
++
+ static inline void fwnode_dev_initialized(struct fwnode_handle *fwnode,
+ 					  bool initialized)
+ {
+ 	if (IS_ERR_OR_NULL(fwnode))
+ 		return;
+ 
+-	if (initialized)
+-		fwnode->flags |= FWNODE_FLAG_INITIALIZED;
+-	else
+-		fwnode->flags &= ~FWNODE_FLAG_INITIALIZED;
++	fwnode_assign_flag(fwnode, FWNODE_FLAG_INITIALIZED, initialized);
+ }
+ 
+ extern bool fw_devlink_is_strict(void);
 
 
