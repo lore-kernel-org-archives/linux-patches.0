@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FB314A62B;
-	Sat, 30 May 2026 17:23:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0233161A3;
+	Sat, 30 May 2026 17:23:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161807; cv=none; b=N8n9Z7X2SY66BREprIMBga+/wKrXBDOzDcHDT+d0cyqDg9yr1MKpr/xlIpeU2wy5uZh0Mw+cA2PaeMQahcLBzmJA4eS0NToMh4kuYPss50tVfYtF69EqVLfNsCm9W8S4UoeyilsX0XOBzj5TMbgmcTtUo4raNRUL1/XzrNIkBSE=
+	t=1780161810; cv=none; b=P+IcRI3SDqtws/WqxieeU25+V8IVnfOOp4C4D5zDi1QbLl3zbpnwhFEvIZTNDtc1x2pnjO+0ODSMUgl/Ev4kK93NQhwX3wpu6JSxPdRd/6pJbBxW8dnhfhZBVRDF+ip07A8IKyjDx5iu1eTTXZWrWZol5Ycugzrc00qcyBQWZS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161807; c=relaxed/simple;
-	bh=+snHpONMoM9Uf9EtVxWVbQrdizS254xNr2Xq5IGQZ/k=;
+	s=arc-20240116; t=1780161810; c=relaxed/simple;
+	bh=aCei/ZAHYiEGSM1L4lId2t1FaO8buhMo3uiuSp4UzCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=btXYsO+OlzKnA04xKBaL0cifC1ziJMfiXDecWFE0Ns6XyBphopbBkV0C3aLG5zXrXUmrvYkQFHPRfTLF2qQLEUo77ZLApA6eqy/AB47H3d7NhCyRbJcA2pDX4gESBgcYsuv2uVtVpI7lNXNKmhEaWcwtIETinVZuueOuKl7IsKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/juPFN+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BkJxPpIkYV/XeUR0l65el/ds4pN1SMd7wjDoQmNep6tgK6izPG3IWLBApYDHAMGcHvDcOxzC003j28XBSNB+frnzIRsO9SMoUppsKhRzsqjI/BGenhNtsSTrx7QnvbGzBJ8FznS7m6XSEc+ZQixVHgXkuTWraot7qG2APr5QnWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=haUeay9i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/juPFN+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5639F1F00893;
-	Sat, 30 May 2026 17:23:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="haUeay9i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CFCE1F00893;
+	Sat, 30 May 2026 17:23:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161806;
-	bh=Jyw2tUks6L13D5SHK098JqLEbH1EeiYW+9iUBggv6To=;
+	s=korg; t=1780161809;
+	bh=ikRTIr8dvqsNc3vNjnMGRPBavzjIxBp1v3VwZ48runo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o/juPFN+ULfcrbSg7iAMqsk0M0wjYB3ukoz2bvI8zv8xsXF/oehzBnJGORACtdTvS
-	 Q+1E204fJCcjX/Hs8uM7vXKFd4S7twyV2mma7SIH41CPtqza5sBzV/BKQ1WgNedECP
-	 3Tywn0nh3kjXwq10q1aksmHnpdPflOww1tUHSx3Y=
+	b=haUeay9iw2qYGkmObWyq+moc7fg+AfJ7sh/TDjVeMLQ9G64GnvoKDsZ6FlEZ/LcUR
+	 6dbAsA4S8TBQEKmmeCuQxd0wy2KzOk+TpLjsMMmWwkgsuMHqUat0rlFAFDA5TubWre
+	 CJTSQhHdS8DiAJeRfJdP0tvzhdjaFYBwIQ2q36as=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	"Kito Xu (veritas501)" <hxzene@gmail.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 702/969] netfilter: conntrack: remove sprintf usage
-Date: Sat, 30 May 2026 18:03:46 +0200
-Message-ID: <20260530160319.904106272@linuxfoundation.org>
+Subject: [PATCH 6.1 703/969] netfilter: xtables: restrict several matches to inet family
+Date: Sat, 30 May 2026 18:03:47 +0200
+Message-ID: <20260530160319.933207041@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -52,180 +51,206 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 6e7066bdb481a87fe88c4fa563e348c03b2d373d ]
+[ Upstream commit b6fe26f86a1649f84e057f3f15605b08eda15497 ]
 
-Replace it with scnprintf, the buffer sizes are expected to be large enough
-to hold the result, no need for snprintf+overflow check.
+This is a partial revert of:
 
-Increase buffer size in mangle_content_len() while at it.
+  commit ab4f21e6fb1c ("netfilter: xtables: use NFPROTO_UNSPEC in more extensions")
 
-BUG: KASAN: stack-out-of-bounds in vsnprintf+0xea5/0x1270
-Write of size 1 at addr [..]
- vsnprintf+0xea5/0x1270
- sprintf+0xb1/0xe0
- mangle_content_len+0x1ac/0x280
- nf_nat_sdp_session+0x1cc/0x240
- process_sdp+0x8f8/0xb80
- process_invite_request+0x108/0x2b0
- process_sip_msg+0x5da/0xf50
- sip_help_tcp+0x45e/0x780
- nf_confirm+0x34d/0x990
- [..]
+to allow ipv4 and ipv6 only.
 
-Fixes: 9fafcd7b2032 ("[NETFILTER]: nf_conntrack/nf_nat: add SIP helper port")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+- xt_mac
+- xt_owner
+- xt_physdev
+
+These extensions are not used by ebtables in userspace.
+
+Moreover, xt_realm is only for ipv4, since dst->tclassid is ipv4
+specific.
+
+Fixes: ab4f21e6fb1c ("netfilter: xtables: use NFPROTO_UNSPEC in more extensions")
+Reported-by: "Kito Xu (veritas501)" <hxzene@gmail.com>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_nat_amanda.c |  2 +-
- net/netfilter/nf_nat_sip.c    | 33 ++++++++++++++++++---------------
- 2 files changed, 19 insertions(+), 16 deletions(-)
+ net/netfilter/xt_mac.c     | 34 +++++++++++++++++++++++-----------
+ net/netfilter/xt_owner.c   | 37 +++++++++++++++++++++++++------------
+ net/netfilter/xt_physdev.c | 29 +++++++++++++++++++----------
+ net/netfilter/xt_realm.c   |  2 +-
+ 4 files changed, 68 insertions(+), 34 deletions(-)
 
-diff --git a/net/netfilter/nf_nat_amanda.c b/net/netfilter/nf_nat_amanda.c
-index 98deef6cde694..8f1054920a857 100644
---- a/net/netfilter/nf_nat_amanda.c
-+++ b/net/netfilter/nf_nat_amanda.c
-@@ -50,7 +50,7 @@ static unsigned int help(struct sk_buff *skb,
- 		return NF_DROP;
- 	}
- 
--	sprintf(buffer, "%u", port);
-+	snprintf(buffer, sizeof(buffer), "%u", port);
- 	if (!nf_nat_mangle_udp_packet(skb, exp->master, ctinfo,
- 				      protoff, matchoff, matchlen,
- 				      buffer, strlen(buffer))) {
-diff --git a/net/netfilter/nf_nat_sip.c b/net/netfilter/nf_nat_sip.c
-index cf4aeb299bdef..c845b6d1a2bdf 100644
---- a/net/netfilter/nf_nat_sip.c
-+++ b/net/netfilter/nf_nat_sip.c
-@@ -68,25 +68,27 @@ static unsigned int mangle_packet(struct sk_buff *skb, unsigned int protoff,
+diff --git a/net/netfilter/xt_mac.c b/net/netfilter/xt_mac.c
+index 81649da57ba5d..bd2354760895d 100644
+--- a/net/netfilter/xt_mac.c
++++ b/net/netfilter/xt_mac.c
+@@ -38,25 +38,37 @@ static bool mac_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ 	return ret;
  }
  
- static int sip_sprintf_addr(const struct nf_conn *ct, char *buffer,
-+			    size_t size,
- 			    const union nf_inet_addr *addr, bool delim)
+-static struct xt_match mac_mt_reg __read_mostly = {
+-	.name      = "mac",
+-	.revision  = 0,
+-	.family    = NFPROTO_UNSPEC,
+-	.match     = mac_mt,
+-	.matchsize = sizeof(struct xt_mac_info),
+-	.hooks     = (1 << NF_INET_PRE_ROUTING) | (1 << NF_INET_LOCAL_IN) |
+-	             (1 << NF_INET_FORWARD),
+-	.me        = THIS_MODULE,
++static struct xt_match mac_mt_reg[] __read_mostly = {
++	{
++		.name		= "mac",
++		.family		= NFPROTO_IPV4,
++		.match		= mac_mt,
++		.matchsize	= sizeof(struct xt_mac_info),
++		.hooks		= (1 << NF_INET_PRE_ROUTING) |
++				  (1 << NF_INET_LOCAL_IN) |
++				  (1 << NF_INET_FORWARD),
++		.me		= THIS_MODULE,
++	},
++	{
++		.name		= "mac",
++		.family		= NFPROTO_IPV6,
++		.match		= mac_mt,
++		.matchsize	= sizeof(struct xt_mac_info),
++		.hooks		= (1 << NF_INET_PRE_ROUTING) |
++				  (1 << NF_INET_LOCAL_IN) |
++				  (1 << NF_INET_FORWARD),
++		.me		= THIS_MODULE,
++	},
+ };
+ 
+ static int __init mac_mt_init(void)
  {
- 	if (nf_ct_l3num(ct) == NFPROTO_IPV4)
--		return sprintf(buffer, "%pI4", &addr->ip);
-+		return scnprintf(buffer, size, "%pI4", &addr->ip);
- 	else {
- 		if (delim)
--			return sprintf(buffer, "[%pI6c]", &addr->ip6);
-+			return scnprintf(buffer, size, "[%pI6c]", &addr->ip6);
- 		else
--			return sprintf(buffer, "%pI6c", &addr->ip6);
-+			return scnprintf(buffer, size, "%pI6c", &addr->ip6);
- 	}
+-	return xt_register_match(&mac_mt_reg);
++	return xt_register_matches(mac_mt_reg, ARRAY_SIZE(mac_mt_reg));
  }
  
- static int sip_sprintf_addr_port(const struct nf_conn *ct, char *buffer,
-+				 size_t size,
- 				 const union nf_inet_addr *addr, u16 port)
+ static void __exit mac_mt_exit(void)
  {
- 	if (nf_ct_l3num(ct) == NFPROTO_IPV4)
--		return sprintf(buffer, "%pI4:%u", &addr->ip, port);
-+		return scnprintf(buffer, size, "%pI4:%u", &addr->ip, port);
- 	else
--		return sprintf(buffer, "[%pI6c]:%u", &addr->ip6, port);
-+		return scnprintf(buffer, size, "[%pI6c]:%u", &addr->ip6, port);
+-	xt_unregister_match(&mac_mt_reg);
++	xt_unregister_matches(mac_mt_reg, ARRAY_SIZE(mac_mt_reg));
  }
  
- static int map_addr(struct sk_buff *skb, unsigned int protoff,
-@@ -119,7 +121,7 @@ static int map_addr(struct sk_buff *skb, unsigned int protoff,
- 	if (nf_inet_addr_cmp(&newaddr, addr) && newport == port)
- 		return 1;
- 
--	buflen = sip_sprintf_addr_port(ct, buffer, &newaddr, ntohs(newport));
-+	buflen = sip_sprintf_addr_port(ct, buffer, sizeof(buffer), &newaddr, ntohs(newport));
- 	return mangle_packet(skb, protoff, dataoff, dptr, datalen,
- 			     matchoff, matchlen, buffer, buflen);
+ module_init(mac_mt_init);
+diff --git a/net/netfilter/xt_owner.c b/net/netfilter/xt_owner.c
+index 50332888c8d23..7be2fe22b067e 100644
+--- a/net/netfilter/xt_owner.c
++++ b/net/netfilter/xt_owner.c
+@@ -127,26 +127,39 @@ owner_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ 	return true;
  }
-@@ -212,7 +214,7 @@ static unsigned int nf_nat_sip(struct sk_buff *skb, unsigned int protoff,
- 					       &addr, true) > 0 &&
- 		    nf_inet_addr_cmp(&addr, &ct->tuplehash[dir].tuple.src.u3) &&
- 		    !nf_inet_addr_cmp(&addr, &ct->tuplehash[!dir].tuple.dst.u3)) {
--			buflen = sip_sprintf_addr(ct, buffer,
-+			buflen = sip_sprintf_addr(ct, buffer, sizeof(buffer),
- 					&ct->tuplehash[!dir].tuple.dst.u3,
- 					true);
- 			if (!mangle_packet(skb, protoff, dataoff, dptr, datalen,
-@@ -229,7 +231,7 @@ static unsigned int nf_nat_sip(struct sk_buff *skb, unsigned int protoff,
- 					       &addr, false) > 0 &&
- 		    nf_inet_addr_cmp(&addr, &ct->tuplehash[dir].tuple.dst.u3) &&
- 		    !nf_inet_addr_cmp(&addr, &ct->tuplehash[!dir].tuple.src.u3)) {
--			buflen = sip_sprintf_addr(ct, buffer,
-+			buflen = sip_sprintf_addr(ct, buffer, sizeof(buffer),
- 					&ct->tuplehash[!dir].tuple.src.u3,
- 					false);
- 			if (!mangle_packet(skb, protoff, dataoff, dptr, datalen,
-@@ -247,7 +249,7 @@ static unsigned int nf_nat_sip(struct sk_buff *skb, unsigned int protoff,
- 		    htons(n) == ct->tuplehash[dir].tuple.dst.u.udp.port &&
- 		    htons(n) != ct->tuplehash[!dir].tuple.src.u.udp.port) {
- 			__be16 p = ct->tuplehash[!dir].tuple.src.u.udp.port;
--			buflen = sprintf(buffer, "%u", ntohs(p));
-+			buflen = scnprintf(buffer, sizeof(buffer), "%u", ntohs(p));
- 			if (!mangle_packet(skb, protoff, dataoff, dptr, datalen,
- 					   poff, plen, buffer, buflen)) {
- 				nf_ct_helper_log(skb, ct, "cannot mangle rport");
-@@ -418,7 +420,8 @@ static unsigned int nf_nat_sip_expect(struct sk_buff *skb, unsigned int protoff,
  
- 	if (!nf_inet_addr_cmp(&exp->tuple.dst.u3, &exp->saved_addr) ||
- 	    exp->tuple.dst.u.udp.port != exp->saved_proto.udp.port) {
--		buflen = sip_sprintf_addr_port(ct, buffer, &newaddr, port);
-+		buflen = sip_sprintf_addr_port(ct, buffer, sizeof(buffer),
-+					       &newaddr, port);
- 		if (!mangle_packet(skb, protoff, dataoff, dptr, datalen,
- 				   matchoff, matchlen, buffer, buflen)) {
- 			nf_ct_helper_log(skb, ct, "cannot mangle packet");
-@@ -438,8 +441,8 @@ static int mangle_content_len(struct sk_buff *skb, unsigned int protoff,
+-static struct xt_match owner_mt_reg __read_mostly = {
+-	.name       = "owner",
+-	.revision   = 1,
+-	.family     = NFPROTO_UNSPEC,
+-	.checkentry = owner_check,
+-	.match      = owner_mt,
+-	.matchsize  = sizeof(struct xt_owner_match_info),
+-	.hooks      = (1 << NF_INET_LOCAL_OUT) |
+-	              (1 << NF_INET_POST_ROUTING),
+-	.me         = THIS_MODULE,
++static struct xt_match owner_mt_reg[] __read_mostly = {
++	{
++		.name       = "owner",
++		.revision   = 1,
++		.family     = NFPROTO_IPV4,
++		.checkentry = owner_check,
++		.match      = owner_mt,
++		.matchsize  = sizeof(struct xt_owner_match_info),
++		.hooks      = (1 << NF_INET_LOCAL_OUT) |
++			      (1 << NF_INET_POST_ROUTING),
++		.me         = THIS_MODULE,
++	},
++	{
++		.name       = "owner",
++		.revision   = 1,
++		.family     = NFPROTO_IPV6,
++		.checkentry = owner_check,
++		.match      = owner_mt,
++		.matchsize  = sizeof(struct xt_owner_match_info),
++		.hooks      = (1 << NF_INET_LOCAL_OUT) |
++			      (1 << NF_INET_POST_ROUTING),
++		.me         = THIS_MODULE,
++	}
+ };
+ 
+ static int __init owner_mt_init(void)
  {
- 	enum ip_conntrack_info ctinfo;
- 	struct nf_conn *ct = nf_ct_get(skb, &ctinfo);
-+	char buffer[sizeof("4294967295")];
- 	unsigned int matchoff, matchlen;
--	char buffer[sizeof("65536")];
- 	int buflen, c_len;
- 
- 	/* Get actual SDP length */
-@@ -454,7 +457,7 @@ static int mangle_content_len(struct sk_buff *skb, unsigned int protoff,
- 			      &matchoff, &matchlen) <= 0)
- 		return 0;
- 
--	buflen = sprintf(buffer, "%u", c_len);
-+	buflen = scnprintf(buffer, sizeof(buffer), "%u", c_len);
- 	return mangle_packet(skb, protoff, dataoff, dptr, datalen,
- 			     matchoff, matchlen, buffer, buflen);
+-	return xt_register_match(&owner_mt_reg);
++	return xt_register_matches(owner_mt_reg, ARRAY_SIZE(owner_mt_reg));
  }
-@@ -491,7 +494,7 @@ static unsigned int nf_nat_sdp_addr(struct sk_buff *skb, unsigned int protoff,
- 	char buffer[INET6_ADDRSTRLEN];
- 	unsigned int buflen;
  
--	buflen = sip_sprintf_addr(ct, buffer, addr, false);
-+	buflen = sip_sprintf_addr(ct, buffer, sizeof(buffer), addr, false);
- 	if (mangle_sdp_packet(skb, protoff, dataoff, dptr, datalen,
- 			      sdpoff, type, term, buffer, buflen))
- 		return 0;
-@@ -509,7 +512,7 @@ static unsigned int nf_nat_sdp_port(struct sk_buff *skb, unsigned int protoff,
- 	char buffer[sizeof("nnnnn")];
- 	unsigned int buflen;
+ static void __exit owner_mt_exit(void)
+ {
+-	xt_unregister_match(&owner_mt_reg);
++	xt_unregister_matches(owner_mt_reg, ARRAY_SIZE(owner_mt_reg));
+ }
  
--	buflen = sprintf(buffer, "%u", port);
-+	buflen = scnprintf(buffer, sizeof(buffer), "%u", port);
- 	if (!mangle_packet(skb, protoff, dataoff, dptr, datalen,
- 			   matchoff, matchlen, buffer, buflen))
- 		return 0;
-@@ -529,7 +532,7 @@ static unsigned int nf_nat_sdp_session(struct sk_buff *skb, unsigned int protoff
- 	unsigned int buflen;
+ module_init(owner_mt_init);
+diff --git a/net/netfilter/xt_physdev.c b/net/netfilter/xt_physdev.c
+index 343e65f377d44..130842c35c6fa 100644
+--- a/net/netfilter/xt_physdev.c
++++ b/net/netfilter/xt_physdev.c
+@@ -115,24 +115,33 @@ static int physdev_mt_check(const struct xt_mtchk_param *par)
+ 	return 0;
+ }
  
- 	/* Mangle session description owner and contact addresses */
--	buflen = sip_sprintf_addr(ct, buffer, addr, false);
-+	buflen = sip_sprintf_addr(ct, buffer, sizeof(buffer), addr, false);
- 	if (mangle_sdp_packet(skb, protoff, dataoff, dptr, datalen, sdpoff,
- 			      SDP_HDR_OWNER, SDP_HDR_MEDIA, buffer, buflen))
- 		return 0;
+-static struct xt_match physdev_mt_reg __read_mostly = {
+-	.name       = "physdev",
+-	.revision   = 0,
+-	.family     = NFPROTO_UNSPEC,
+-	.checkentry = physdev_mt_check,
+-	.match      = physdev_mt,
+-	.matchsize  = sizeof(struct xt_physdev_info),
+-	.me         = THIS_MODULE,
++static struct xt_match physdev_mt_reg[] __read_mostly = {
++	{
++		.name		= "physdev",
++		.family		= NFPROTO_IPV4,
++		.checkentry	= physdev_mt_check,
++		.match		= physdev_mt,
++		.matchsize	= sizeof(struct xt_physdev_info),
++		.me		= THIS_MODULE,
++	},
++	{
++		.name		= "physdev",
++		.family		= NFPROTO_IPV6,
++		.checkentry	= physdev_mt_check,
++		.match		= physdev_mt,
++		.matchsize	= sizeof(struct xt_physdev_info),
++		.me		= THIS_MODULE,
++	},
+ };
+ 
+ static int __init physdev_mt_init(void)
+ {
+-	return xt_register_match(&physdev_mt_reg);
++	return xt_register_matches(physdev_mt_reg, ARRAY_SIZE(physdev_mt_reg));
+ }
+ 
+ static void __exit physdev_mt_exit(void)
+ {
+-	xt_unregister_match(&physdev_mt_reg);
++	xt_unregister_matches(physdev_mt_reg, ARRAY_SIZE(physdev_mt_reg));
+ }
+ 
+ module_init(physdev_mt_init);
+diff --git a/net/netfilter/xt_realm.c b/net/netfilter/xt_realm.c
+index 6df485f4403d0..61b2f1e58d150 100644
+--- a/net/netfilter/xt_realm.c
++++ b/net/netfilter/xt_realm.c
+@@ -33,7 +33,7 @@ static struct xt_match realm_mt_reg __read_mostly = {
+ 	.matchsize	= sizeof(struct xt_realm_info),
+ 	.hooks		= (1 << NF_INET_POST_ROUTING) | (1 << NF_INET_FORWARD) |
+ 			  (1 << NF_INET_LOCAL_OUT) | (1 << NF_INET_LOCAL_IN),
+-	.family		= NFPROTO_UNSPEC,
++	.family		= NFPROTO_IPV4,
+ 	.me		= THIS_MODULE
+ };
+ 
 -- 
 2.53.0
 
