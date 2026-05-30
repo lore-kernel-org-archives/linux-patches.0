@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4BE32D42B;
-	Sat, 30 May 2026 16:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDF632D42B;
+	Sat, 30 May 2026 16:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160264; cv=none; b=IJKMCGYnglon732JvjpilT2X4ikXkHiYtTKCgeg30ibBWI08OSNM7xpbq7OKyNBQM0wbQrbIBSP2Ww6lGJjVg4WZyKl2qi5RknNcJhtLwQ/1+NIPxIBazhGL3/DihbRQ6qymuw+w6s2WgS+3iF7mWx+yA+PYsFRGtzLcwur6MGs=
+	t=1780160268; cv=none; b=BDhEupkia14jpmnhTZVMcpVqNu+UitGCVADrjvaEsy/DFYl2Q32Lw6roCSDNeYsmj1g1Ghmhns+WqbUorvL66V9g9O+MhvJ3kRTavz1IYF3vObk+l+VXCLegXrTDTJIeuZhOOSheB7BtYouWV2DqqWwh3hXtUY6cUmfGdsUP/VE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160264; c=relaxed/simple;
-	bh=i4zVbvtJlY+XXLk4RdHgfFynt18va+nBS3jkNPrfgl8=;
+	s=arc-20240116; t=1780160268; c=relaxed/simple;
+	bh=YPfjjEcapclR9D3pczH5ijzQXDoHTowgtdYsLvo4dxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U+kmZNdhdl1CIW/52JJaCLvvXTfUVxAGOtc/jHZ8G5dUaap1B5T5zKk3W/eBZwLbqklgh1lGc4Ms5MfkMEjs1svp5IGah4XMkmi7VMn6umFMmKd6HJ6Wxy1vNUgX+Y7x/wMsfgfyHfhB1Dc6n+hWBCMvt5C3q/toJ40hWbJjNQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2nDDoRC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fefXGv4Ok6lVUugs3Ca+OFJJoaOnpdUDLwknf7Zi1Jy3vcW7rcjsoBZeQtpKcu/8vX4uR+IA7fUTc33ho0Psu2Jq7pz6izeJp0fX6Nb52dRXtFQD8TzF98catwhzOoFjjITl9RiNNZaZcLgPE7Q6TWafClM476iUpSTrbKBsu6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/6zy6pi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2nDDoRC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA33E1F00893;
-	Sat, 30 May 2026 16:57:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/6zy6pi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E7B1F00893;
+	Sat, 30 May 2026 16:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160263;
-	bh=R22tBWA8+dKDxJelcLpPMv9+DHbpTHPtqFuzsSPxW74=;
+	s=korg; t=1780160267;
+	bh=nmuKJn/EzJXXvHzvVzQXSWaLjAPReb8yFGnZWGa+tek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W2nDDoRCMDFuH+6wB+kGCGQTuRZkY0iKahZgsFaQsMojgwXCVrLo2BWY/6TiJ13LQ
-	 FAWwosIKPR3UpcALNOD25vRo/uMxfdHXW4fygrOejmyIGyiKDcH2N+6VwZzPxuyvxq
-	 dRLUKGZVmBCeQztTYXqaohmInmYhKjBRvgfJQ2+4=
+	b=a/6zy6pi/Cj0KDhlbJMkl7A6tCh5bSB9bD1yfWIZbSjti187iQ1V4OUFS5uLlD0lG
+	 POj50BzMVLSxU8WReSzryigCtH21SgTo55D7e4Chym6gPjjeQzIZUxVhitIgCJ4K7t
+	 f3JfS/zM/gZkApEW9+I3NGuDIV/mGcw12Y05Yp5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Wenshan Lan <jetlan9@163.com>,
+	syzbot+04c4e65cab786a2e5b7e@syzkaller.appspotmail.com,
+	Tejas Bharambe <tejas.bharambe@outlook.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org,
+	Jianqiang kang <jianqkang@sina.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 290/969] spi: meson-spicc: Fix double-put in remove path
-Date: Sat, 30 May 2026 17:56:54 +0200
-Message-ID: <20260530160308.463535099@linuxfoundation.org>
+Subject: [PATCH 6.1 291/969] ext4: validate p_idx bounds in ext4_ext_correct_indexes
+Date: Sat, 30 May 2026 17:56:55 +0200
+Message-ID: <20260530160308.488147866@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -53,46 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Tejas Bharambe <tejas.bharambe@outlook.com>
 
-[ Upstream commit 63542bb402b7013171c9f621c28b609eda4dbf1f ]
+[ Upstream commit 2acb5c12ebd860f30e4faf67e6cc8c44ddfe5fe8 ]
 
-meson_spicc_probe() registers the controller with
-devm_spi_register_controller(), so teardown already drops the
-controller reference via devm cleanup.
+ext4_ext_correct_indexes() walks up the extent tree correcting
+index entries when the first extent in a leaf is modified. Before
+accessing path[k].p_idx->ei_block, there is no validation that
+p_idx falls within the valid range of index entries for that
+level.
 
-Calling spi_controller_put() again in meson_spicc_remove()
-causes a double-put.
+If the on-disk extent header contains a corrupted or crafted
+eh_entries value, p_idx can point past the end of the allocated
+buffer, causing a slab-out-of-bounds read.
 
-Fixes: 8311ee2164c5 ("spi: meson-spicc: fix memory leak in meson_spicc_remove")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260322-rockchip-v1-1-fac3f0c6dad8@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ In v6.1, commit 68bf3288c7eb ("spi: meson-spicc: switch to use modern name")
-has not been applied, so the driver still uses the legacy spicc->master field
-and spi_master_put() API. The line to remove is spi_master_put(spicc->master)
-rather than spi_controller_put(spicc->host) as in the upstream patch.
-They are functionally identical. ]
-Signed-off-by: Wenshan Lan <jetlan9@163.com>
+Fix this by validating path[k].p_idx against EXT_LAST_INDEX() at
+both access sites: before the while loop and inside it. Return
+-EFSCORRUPTED if the index pointer is out of range, consistent
+with how other bounds violations are handled in the ext4 extent
+tree code.
+
+Reported-by: syzbot+04c4e65cab786a2e5b7e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=04c4e65cab786a2e5b7e
+Signed-off-by: Tejas Bharambe <tejas.bharambe@outlook.com>
+Link: https://patch.msgid.link/JH0PR06MB66326016F9B6AD24097D232B897CA@JH0PR06MB6632.apcprd06.prod.outlook.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+[ Minor conflict resolved. ]
+Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-meson-spicc.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/ext4/extents.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/spi/spi-meson-spicc.c b/drivers/spi/spi-meson-spicc.c
-index 1b4195c54ee26..04cf8489dd56b 100644
---- a/drivers/spi/spi-meson-spicc.c
-+++ b/drivers/spi/spi-meson-spicc.c
-@@ -883,8 +883,6 @@ static int meson_spicc_remove(struct platform_device *pdev)
- 	clk_disable_unprepare(spicc->core);
- 	clk_disable_unprepare(spicc->pclk);
- 
--	spi_master_put(spicc->master);
--
- 	return 0;
- }
- 
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 1df7174774694..6d95dab538475 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -1740,6 +1740,13 @@ static int ext4_ext_correct_indexes(handle_t *handle, struct inode *inode,
+ 	err = ext4_ext_get_access(handle, inode, path + k);
+ 	if (err)
+ 		return err;
++	if (unlikely(path[k].p_idx > EXT_LAST_INDEX(path[k].p_hdr))) {
++		EXT4_ERROR_INODE(inode,
++				 "path[%d].p_idx %p > EXT_LAST_INDEX %p",
++				 k, path[k].p_idx,
++				 EXT_LAST_INDEX(path[k].p_hdr));
++		return -EFSCORRUPTED;
++	}
+ 	path[k].p_idx->ei_block = border;
+ 	err = ext4_ext_dirty(handle, inode, path + k);
+ 	if (err)
+@@ -1752,6 +1759,14 @@ static int ext4_ext_correct_indexes(handle_t *handle, struct inode *inode,
+ 		err = ext4_ext_get_access(handle, inode, path + k);
+ 		if (err)
+ 			break;
++		if (unlikely(path[k].p_idx > EXT_LAST_INDEX(path[k].p_hdr))) {
++			EXT4_ERROR_INODE(inode,
++					 "path[%d].p_idx %p > EXT_LAST_INDEX %p",
++					 k, path[k].p_idx,
++					 EXT_LAST_INDEX(path[k].p_hdr));
++			err = -EFSCORRUPTED;
++			break;
++		}
+ 		path[k].p_idx->ei_block = border;
+ 		err = ext4_ext_dirty(handle, inode, path + k);
+ 		if (err)
 -- 
 2.53.0
 
