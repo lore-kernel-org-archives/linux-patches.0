@@ -1,49 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F4A27A477;
-	Sat, 30 May 2026 17:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2AE3AA182;
+	Sat, 30 May 2026 17:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163073; cv=none; b=NZdhJUz0e77r/DQAvvyzI07y7mIpbafXgrtYdJEj7FDs0VcIf3zlEMRaS2g+NUdnnZRrRFwyEiTkyY8c4EVj0w/YVQwlL0ICnRjJLwbX5nbRXOMW5y2cMbyC1dpZAyM9AuzLvY9IKh4q5Fk55X0PnXnMQ4EBWAWgytC5EuTaAB8=
+	t=1780163077; cv=none; b=KhR5WMmBBS8xhCbRnlmWmUD7yf1S7KR1qTYHa4axmwo2G9l09/6x79RP1i5gku54fmFa4WH5z9DhPQlJSQAtkFSplV1su2cfJSwkW4HPS5+58Xuj7XmSeTD7A4cWlxAhb/6qWbkA4hgq9jlhCDe/Wv7iaGvr1PprExP4FQvpGRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163073; c=relaxed/simple;
-	bh=UjR0WD9nIJt7PV5pS/aJPi6LrPJiJVPDc32tpYLGBnA=;
+	s=arc-20240116; t=1780163077; c=relaxed/simple;
+	bh=5CEERwxLFWm2aOgnfnl+0O0tHTEbij0/Ch36OsQ6xxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gRYqLfFrNv68WY2X7X5Z+59YBzl8OZn/DVRJfTAGmvpNyv2ez7452UcUCcHMAEfA09Zs9Z7MRh9kt/3VlJvv9geYSKniYRqAF8mvfW/0OgmkGVCrAtvahz2sP1AQl5YZp0qV7ty2o4um24DwYOrBWcTZfiD28w1+O5784yt6Zj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWCxMuaK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t/rbw/R9R0pe65bsKEPivcwvEkQyApX9TpD5SB61AhVGI0NGHilz3ut7qF9bIu2wth9DjEEZ+cZdCJnY6rjK7ExelnfbGRiY/VFgGR10al8nN9spj24/eeqHol+XkvX/lsH/+mpKK3QsIL/2A41etu3U/+5dAGk5ks/Y/iTf7s0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rkiO/46y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWCxMuaK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72E2D1F00893;
-	Sat, 30 May 2026 17:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rkiO/46y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8DC1F00893;
+	Sat, 30 May 2026 17:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163072;
-	bh=GWk7Hp1Ko9Th6m35xUcSpJUOjA848Cjclt08z+znC8o=;
+	s=korg; t=1780163075;
+	bh=VIwFizWpR5V61nO1JgbumISQbx+OchFfpsyVTYtMEEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WWCxMuaKQIL2kUe7KPhH1aYoSTtCnd4qnS7tyYHUclexip32LGM9g91sFjCDcq5iW
-	 omYtEK1DoEHR7mid/fiWhonq/8Jri2Ava70rB8a6g3Ayf2Y2nLxTdcg10lnWBQyQE8
-	 +1GekuIeGs7Y1MlJP+EIUQqwkY0Zy+Uk0ZO2J3jY=
+	b=rkiO/46y8pciig5EXCoH69w9vkShDmV8Nyxipdi9qkvdSfZ0sZXWizjZz3mxv36JR
+	 5cInpqChOGo3Cg9k22dH8jsGxsSJHRmR+ODqbEYYZhb69qk3GZmp9bL5bauvUWx8Ij
+	 zLhseXQV1oJuThuyTOWbBzJDdQ7su+ZjUPSkwiMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ren Wei <enjou1224z@gmail.com>,
-	Yuqi Xu <xuyuqiabc@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 111/776] rxrpc: reject undecryptable rxkad response tickets
-Date: Sat, 30 May 2026 17:57:05 +0200
-Message-ID: <20260530160243.229264955@linuxfoundation.org>
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 147/776] iio: imu: inv_icm42600: fix odr switch when turning buffer off
+Date: Sat, 30 May 2026 17:57:41 +0200
+Message-ID: <20260530160244.249752088@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -62,60 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuqi Xu <xuyuqiabc@gmail.com>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-[ Upstream commit fe4447cd95623b1cfacc15f280aab73a6d7340b2 ]
+[ Upstream commit ffd32db8263d2d785a2c419486a450dc80693235 ]
 
-rxkad_decrypt_ticket() decrypts the RXKAD response ticket and then
-parses the buffer as plaintext without checking whether
-crypto_skcipher_decrypt() succeeded.
+ODR switch is done in 2 steps when FIFO is on : change the ODR register
+value and acknowledge change when reading the FIFO ODR change flag.
+When we are switching odr and turning buffer off just afterward, we are
+losing the FIFO ODR change flag and ODR switch is blocked.
 
-A malformed RESPONSE can therefore use a non-block-aligned ticket
-length, make the decrypt operation fail, and still drive the ticket
-parser with attacker-controlled bytes.
+Fix the issue by force applying any waiting ODR change when turning
+buffer off.
 
-Check the decrypt result and abort the connection with RXKADBADTICKET
-when ticket decryption fails.
-
-Fixes: 17926a79320a ("[AF_RXRPC]: Provide secure RxRPC sockets for use by userspace and kernel both")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Ren Wei <enjou1224z@gmail.com>
-Signed-off-by: Yuqi Xu <xuyuqiabc@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/20260408121252.2249051-12-dhowells@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted `rxrpc_abort_conn()` call to existing `goto other_error` error-handling pattern ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ec74ae9fd37c ("iio: imu: inv_icm42600: add accurate timestamping")
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/rxkad.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/rxrpc/rxkad.c
-+++ b/net/rxrpc/rxkad.c
-@@ -1013,8 +1013,13 @@ static int rxkad_decrypt_ticket(struct r
- 	sg_init_one(&sg[0], ticket, ticket_len);
- 	skcipher_request_set_callback(req, 0, NULL, NULL);
- 	skcipher_request_set_crypt(req, sg, sg, ticket_len, iv.x);
--	crypto_skcipher_decrypt(req);
-+	ret = crypto_skcipher_decrypt(req);
- 	skcipher_request_free(req);
-+	if (ret < 0) {
-+		abort_code = RXKADBADTICKET;
-+		ret = -EPROTO;
-+		goto other_error;
-+	}
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
+@@ -377,6 +377,7 @@ out_unlock:
+ static int inv_icm42600_buffer_postdisable(struct iio_dev *indio_dev)
+ {
+ 	struct inv_icm42600_state *st = iio_device_get_drvdata(indio_dev);
++	struct inv_icm42600_timestamp *ts = iio_priv(indio_dev);
+ 	struct device *dev = regmap_get_device(st->map);
+ 	unsigned int sensor;
+ 	unsigned int *watermark;
+@@ -398,6 +399,8 @@ static int inv_icm42600_buffer_postdisab
  
- 	p = ticket;
- 	end = p + ticket_len;
+ 	mutex_lock(&st->lock);
+ 
++	inv_icm42600_timestamp_apply_odr(ts, 0, 0, 0);
++
+ 	ret = inv_icm42600_buffer_set_fifo_en(st, st->fifo.en & ~sensor);
+ 	if (ret)
+ 		goto out_unlock;
 
 
