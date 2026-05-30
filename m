@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26CD3AC0FA;
-	Sat, 30 May 2026 18:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A4D341AC7;
+	Sat, 30 May 2026 18:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164331; cv=none; b=LL2fCoKl7XcEiEfq5Zs7DEXTyzZKEBLEjzZzwInn8ThgUh2khSKRsW+tKTrvAU7ftiEHLxMLPxhNoGQD9ti+1e4Z2eZnDUkdHmUgl4pz8raIvIlhikuIvl9zLaEY1NJdJtCYcQ6ptvADMwXq+t+JG86wpCpDQ8Lrvz/3XO3Lkzc=
+	t=1780164334; cv=none; b=CTqRnLOgqrzoYpq5eU7k8wdOdaWEZ5b2CI3x/SX2qKp8srCZuWAcuq1D/e8XQKRqhcu2EvTgKMF/ZNEZVm2k3OWQj/pjrhbSUoZYhllntk4qYU/nFlf+s5+8AZ+JOql7iVMW0ojNhJ/fpZVYuauOYlKKic4fkDmru1joeSYW3WA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164331; c=relaxed/simple;
-	bh=ZfkSe/WXmIrM5x7uT+M7zMFEDUuXzwslcuvxYPmLSRA=;
+	s=arc-20240116; t=1780164334; c=relaxed/simple;
+	bh=kACNz/s3caXLNysk2L7+KwDWaJ2DEyG8PZkPOgEF/Ag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S0vyD8uQU0XkbPIAOOf2Uu4QpqQ57e4j/3pRxoGTpTlbXdyNEimT4I9bunaayjfaoyuTytcNAh9XeJ2qlHEWJqjbz9YE0nYylHlz8PjtzE7UCBZd6i/I5I8AbNh8ux7d4IDlsP54g3Yn5Lsb9Ch1QqPbbldoWWR7SQEv4B9S620=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5bAZBRt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SxZrmO3iCOWq7R1TQPdxamYsTvyIxLm7ZDIGEHGlBygdqzuMIwWn4XJe+8aK2TqyZZ1FAkL9SxXcttmdA3XNgJlAw27BC4HoJ9rK8qIw8yxWAN0hjwZno/aGnKL3PO3J6SWxo9fmsMB390KcgxfKzdgi/jJ8+NYDmzXR6MNnufc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8GudS0A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5bAZBRt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08831F00893;
-	Sat, 30 May 2026 18:05:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8GudS0A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016C61F00893;
+	Sat, 30 May 2026 18:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164330;
-	bh=2aOrTfaUHZrclItKxsqrr1DAOSHly11yx8cnV7mMKro=;
+	s=korg; t=1780164333;
+	bh=6zS2+Neu25QLsRM0HvB/mCRqGw15bloaZ0Xc8QfBVF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x5bAZBRt2AiUZzEhkJvb4RAYKBO4pAjwAJZjvPnxMyfTYJjsgjuukAKNQHkOWE0QY
-	 I1ghXdr29d8rKIc6djNZmtob0SipMyOo0lJwgMmM08PHl/svPFT5fwgTzH5S24aHtU
-	 ivr7uDGcMD9l+4yQUunTJiKNKDS6dhMdaXjS+H+E=
+	b=R8GudS0AAXc0EWI3oOgYUcEbcu0BkEF0FXDzGB05g+yW6/aen/JrOnpX1kxPJCT6I
+	 nfzsQw+eYksA2u1YAFQUKTAkiR5RbQNgMCqaOR+THhf/3o1ClDT4UfnKWIluDfNcKd
+	 5D1jSVdTEh2dMU/OWWlOMJjP6bJHtnMmKGjWfwCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 521/776] driver core: Move dev_err_probe() to where it belogs
-Date: Sat, 30 May 2026 18:03:55 +0200
-Message-ID: <20260530160253.698238524@linuxfoundation.org>
+Subject: [PATCH 5.15 522/776] dev_printk: add new dev_err_probe() helpers
+Date: Sat, 30 May 2026 18:03:56 +0200
+Message-ID: <20260530160253.721143951@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,52 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit 9e0cace7a6254070159ebd86497eadc29ea307ca ]
+[ Upstream commit dbbe7eaf0e4795bf003ac06872aaf52b6b6b1310 ]
 
-dev_err_probe() belongs to the printing API, hence
-move the definition from device.h to dev_printk.h.
+This is similar to dev_err_probe() but for cases where an ERR_PTR() or
+ERR_CAST() is to be returned simplifying patterns like:
 
-There is no change to the callers at all, since:
-1) implementation is located in the same core.c;
-2) dev_printk.h is guaranteed to be included by device.h.
+	dev_err_probe(dev, ret, ...);
+	return ERR_PTR(ret)
+or
+	dev_err_probe(dev, PTR_ERR(ptr), ...);
+	return ERR_CAST(ptr)
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20230721131309.16821-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20240606-dev-add_dev_errp_probe-v3-1-51bb229edd79@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Stable-dep-of: 797cc011ae02 ("backlight: sky81452-backlight: Check return value of devm_gpiod_get_optional() in sky81452_bl_parse_dt()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/dev_printk.h | 2 ++
- include/linux/device.h     | 2 --
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ include/linux/dev_printk.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/include/linux/dev_printk.h b/include/linux/dev_printk.h
-index 65eec5be8ccb9..ae80a303c216b 100644
+index ae80a303c216b..ca32b5bb28eb5 100644
 --- a/include/linux/dev_printk.h
 +++ b/include/linux/dev_printk.h
-@@ -275,4 +275,6 @@ do {									\
- 	WARN_ONCE(condition, "%s %s: " format, \
- 			dev_driver_string(dev), dev_name(dev), ## arg)
+@@ -277,4 +277,12 @@ do {									\
  
-+__printf(3, 4) int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
+ __printf(3, 4) int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
+ 
++/* Simple helper for dev_err_probe() when ERR_PTR() is to be returned. */
++#define dev_err_ptr_probe(dev, ___err, fmt, ...) \
++	ERR_PTR(dev_err_probe(dev, ___err, fmt, ##__VA_ARGS__))
++
++/* Simple helper for dev_err_probe() when ERR_CAST() is to be returned. */
++#define dev_err_cast_probe(dev, ___err_ptr, fmt, ...) \
++	ERR_PTR(dev_err_probe(dev, PTR_ERR(___err_ptr), fmt, ##__VA_ARGS__))
 +
  #endif /* _DEVICE_PRINTK_H_ */
-diff --git a/include/linux/device.h b/include/linux/device.h
-index 97fb43c6d919d..2c16bc2149c20 100644
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -1030,8 +1030,6 @@ void device_links_supplier_sync_state_pause(void);
- void device_links_supplier_sync_state_resume(void);
- void device_link_wait_removal(void);
- 
--__printf(3, 4) int dev_err_probe(const struct device *dev, int err, const char *fmt, ...);
--
- /* Create alias, so I can be autoloaded. */
- #define MODULE_ALIAS_CHARDEV(major,minor) \
- 	MODULE_ALIAS("char-major-" __stringify(major) "-" __stringify(minor))
 -- 
 2.53.0
 
