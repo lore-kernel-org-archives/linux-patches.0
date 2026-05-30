@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3C53AA182;
-	Sat, 30 May 2026 17:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4DA2E7379;
+	Sat, 30 May 2026 17:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162759; cv=none; b=ueeHUhBbVbVPC0Ci1tI4mTCQqDK3XotOASPmhlQLHeWFYREiLgW0Th+lg5OGbywXffA72OHMahSKlMf9P4WTFC5BqCsha4GjeMRDmk7sbQ9dehH9d8FkKSoMzuOBY3LD8qh2l5XiR2D7iB4a0t+sx5F3y8BKu7+B8U4k3iRARRo=
+	t=1780162762; cv=none; b=RMGV7h+DMKHeH8iOBW3OSHe7hR7NRHs0u8cDMll2k5TfL8uPYe+NEDFdlKYt+4Dw9t86EosrrPEkkOSYp3qczm176XxoSXMb2PSLHVkJlTBe5pUh5qUuOThDYyV5IkKbwivxnoMyTwcUjW3KoGTjt84ppy1m5MzASNFOVT47VSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162759; c=relaxed/simple;
-	bh=h1HUTmpN4rxYCB0DAQ+LljJVogua4eL8i5+kW5yU7LQ=;
+	s=arc-20240116; t=1780162762; c=relaxed/simple;
+	bh=EfHCTO+EpYzjYKxsegrN6R6nkoHxOC/6yDHkCXjn3fs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tz83CclD4uuQovOqsOFarcYPI/0EbNaiWJ7R6gnIod8BY+hvpF+YX5c59MKZm6H2WGb6pwP8FhwIBSnPzha3HWtyWtnLeRhQ5+b93J4+4MlbUEMxhMTBi7+LGUnKrCNW3tauh4SegwZOizKm+JEet7aJULSxMSOowGxpOtU0dmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HW1iYqQ1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o2OM8MnOTmceFMheN7x/GVI4nE/R5TxXrJ4aiGAkoi80KLHv2GDTNn6UHJbN4/BPzdI4DOHpMC5kBX0TB8U/zlRxls8B20sSFbE+LIpfRXNxmcoAvud8PQXbkgJDwkIz3TcVCeXnWVgaR3UrtKF5d4eqSezGzHHad2weHpDLnKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C5MGVSye; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HW1iYqQ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3481F00893;
-	Sat, 30 May 2026 17:39:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C5MGVSye"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 912F91F00893;
+	Sat, 30 May 2026 17:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162757;
-	bh=mtmp6qUOuygiJCxA7IrNDyvcE2WvpmU9C6OLcPcF/Bc=;
+	s=korg; t=1780162761;
+	bh=yBvyzRW4ygWjwQbM5yVbRzX1z6S39dcXLoIDRWpr7yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HW1iYqQ1fd8ExIA0Z2uDd5LpfLsVEQlQHwuvrECHC8ckD4RPRqvSnS2QliZ8YdGg9
-	 TuyF+ibC/1R0TCfq6L/NRpobEoEtgA3Rhf51rPBi/g3x0UsLlSgoDhmKCsQOE7EzKq
-	 FTEx+UrDO/c66CL5pbLi0M2Pn+Di/zjuAdoHUm6k=
+	b=C5MGVSyekI8jNUMJy8EU8M+DzwctP6UhV+Sbxlz+Pd6sFyMMpWImBR4y1kfkz/w/b
+	 T/zh9UpySZppbUNIw1Nn99Zp3KVdC5E2lC9BkdGa+E0mgVsG9BnhLHEkgRIBy2FU3i
+	 Ciw3ZpK/MxuAdH9D14f+klMTkoq4kPiyn4VCPPzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 054/776] i2c: s3c24xx: check the size of the SMBUS message before using it
-Date: Sat, 30 May 2026 17:56:08 +0200
-Message-ID: <20260530160241.709161201@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Lin YuChen <starpt.official@gmail.com>
+Subject: [PATCH 5.15 055/776] staging: rtl8723bs: initialize le_tmp64 in rtw_BIP_verify()
+Date: Sat, 30 May 2026 17:56:09 +0200
+Message-ID: <20260530160241.735585791@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,46 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Lin YuChen <starpt.official@gmail.com>
 
-commit c0128c7157d639a931353ea344fb44aad6d6e17a upstream.
+commit 8c964b82a4e97ec7f25e17b803ee196009b38a57 upstream.
 
-The first byte of an i2c SMBUS message is the size, and it should be
-verified to ensure that it is in the range of 0..I2C_SMBUS_BLOCK_MAX
-before processing it.
+Initialize le_tmp64 to zero in rtw_BIP_verify() to prevent using
+uninitialized data.
 
-This is the same logic that was added in commit a6e04f05ce0b ("i2c:
-tegra: check msg length in SMBUS block read") to the i2c tegra driver.
+Smatch warns that only 6 bytes are copied to this 8-byte (u64)
+variable, leaving the last two bytes uninitialized:
 
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Alim Akhtar <alim.akhtar@samsung.com>
-Cc: Andi Shyti <andi.shyti@kernel.org>
+drivers/staging/rtl8723bs/core/rtw_security.c:1308 rtw_BIP_verify()
+warn: not copying enough bytes for '&le_tmp64' (8 vs 6 bytes)
+
+Initializing the variable at the start of the function fixes this
+warning and ensures predictable behavior.
+
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
 Cc: stable <stable@kernel.org>
-Assisted-by: gkh_clanker_2000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/2026022314-rely-scrubbed-4839@gregkh
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/linux-staging/abvwIQh0CHTp4wNJ@stanley.mountain/
+Signed-off-by: Lin YuChen <starpt.official@gmail.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/20260320172502.167332-1-starpt.official@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-s3c2410.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/staging/rtl8723bs/core/rtw_security.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-s3c2410.c
-+++ b/drivers/i2c/busses/i2c-s3c2410.c
-@@ -508,8 +508,13 @@ static int i2c_s3c_irq_nextbyte(struct s
- 		i2c->msg->buf[i2c->msg_ptr++] = byte;
+--- a/drivers/staging/rtl8723bs/core/rtw_security.c
++++ b/drivers/staging/rtl8723bs/core/rtw_security.c
+@@ -1364,7 +1364,7 @@ u32 rtw_BIP_verify(struct adapter *padap
+ 	u8 mic[16];
+ 	struct mlme_ext_priv *pmlmeext = &padapter->mlmeextpriv;
+ 	__le16 le_tmp;
+-	__le64 le_tmp64;
++	__le64 le_tmp64 = 0;
  
- 		/* Add actual length to read for smbus block read */
--		if (i2c->msg->flags & I2C_M_RECV_LEN && i2c->msg->len == 1)
-+		if (i2c->msg->flags & I2C_M_RECV_LEN && i2c->msg->len == 1) {
-+			if (byte == 0 || byte > I2C_SMBUS_BLOCK_MAX) {
-+				s3c24xx_i2c_stop(i2c, -EPROTO);
-+				break;
-+			}
- 			i2c->msg->len += byte;
-+		}
-  prepare_read:
- 		if (is_msglast(i2c)) {
- 			/* last byte of buffer */
+ 	ori_len = pattrib->pkt_len-WLAN_HDR_A3_LEN+BIP_AAD_SIZE;
+ 	BIP_AAD = rtw_zmalloc(ori_len);
 
 
