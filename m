@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49323242BA;
-	Sat, 30 May 2026 16:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D727332EA7;
+	Sat, 30 May 2026 16:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159747; cv=none; b=az2sA4OZCbf1z70z3YAgfurztDGvhHnRdcGXgNA/Qgd8LA4O2B/7hbHYuLqVyTCIM+mjtAegIDLTEIxCH0QRe5rGMUTQeJWLvPiBNkL21DuZlQi1EByM2qUxZw1yxlDK4g4uN93sXEh18kthlH0srVl3YmwVBK1Clj0XN1hKGVo=
+	t=1780159750; cv=none; b=QkC8pUlEuPcDstvFtCY0K+enFeNsENTQuNrK+zISMFbDisBaO3llhROybS1N07KXrBsXw26WWMzt74mxLt/HezMKBw/1WONDYFbu6l7YT1KuorzDlZOc7HqRCvQAfuoCSt6GBXRtCQMRqT7ghFripGmxyNjhuv2IzSiFfGzuIWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159747; c=relaxed/simple;
-	bh=NpEmDmCMvvZPRTMQN/+qcCzG94y+5UqMgBiW+PxBV9c=;
+	s=arc-20240116; t=1780159750; c=relaxed/simple;
+	bh=aA0kr3S/RcIwaF7Sd2KKy7QCTn4rIa/X6LDFRHki2ZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jiq2tOXCLxc1APURAMT82Sn6d6mISBqgBha1KUn0+WTnzhqsayBiw7HdF2jyiax4Z6VLdmaPLOqb6GkN28KzAGPUKVSjaXA1orB7hm3jYpyNMDEhAwagX5DhHsVfZz9uny2nvZfpmm0H+hkIW9ZaqH8NlrsdbSFif5J+5AClmYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sjrkn/Q9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pJavq27Ab6RIOl35o2JwLzcGstUXPzC0cgyl5T2STC6qxvaZ1ghGvJnrY4WiIZt/ID88auN6BQqvNzAVySll41wDj2Q+ecvuMV0vbhUiEbknrB0Frk2AIuCCA0dTs4E9UJBiWvLbWNHzWleFeaaeFTM6PJ8zfgFBl9gf2EsP5hE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJKxJOGu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sjrkn/Q9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B275E1F00893;
-	Sat, 30 May 2026 16:49:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJKxJOGu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806B81F00893;
+	Sat, 30 May 2026 16:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159745;
-	bh=h6n2loZ4hACeNYPQAJlAw18Zf8K2LFE5wBdepAL9Nls=;
+	s=korg; t=1780159749;
+	bh=7egytk1miRcxqoz/0dSZma4HhKipi7UAALsGBm8NFO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sjrkn/Q9L30rqILVsh/CiiLlbCsyetWwZLAJnYvvBEga54L5Z3qkZ+tHt3bpFxgol
-	 /2NlP7xNRwtdJOQ7AqotslndEGval5elK4V2oP06C/VhM6bnCAziiYsYOxtiYdRVy0
-	 JXnlUw1/RqK379piF95d2nx3bx9TXDeDWMs0vW4k=
+	b=BJKxJOGuK0kFNRXiyVulKDcBcMR9+4KKs69LOkhvD+4vy5m139UJyT3+PpY4rZt5Q
+	 7WQ5uBNBm8aKHdmS004Twpv3doVD8zCZ4kNkzxkzVAEANd+rpCKJLuyuUfWHqnFnUg
+	 xqjVJ4FrvTIXIRDVDJJ3pbwfaJCte77ALfViko28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tristan Madani <tristan@talencesecurity.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 150/969] ksmbd: fix out-of-bounds write in smb2_get_ea() EA alignment
-Date: Sat, 30 May 2026 17:54:34 +0200
-Message-ID: <20260530160304.693380345@linuxfoundation.org>
+Subject: [PATCH 6.1 151/969] ksmbd: use check_add_overflow() to prevent u16 DACL size overflow
+Date: Sat, 30 May 2026 17:54:35 +0200
+Message-ID: <20260530160304.717754465@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -53,50 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Tristan Madani <tristan@talencesecurity.com>
 
-commit 30010c952077a1c89ecdd71fc4d574c75a8f5617 upstream.
+commit 299f962c0b02d048fb45d248b4da493d03f3175d upstream.
 
-smb2_get_ea() applies 4-byte alignment padding via memset() after
-writing each EA entry. The bounds check on buf_free_len is performed
-before the value memcpy, but the alignment memset fires unconditionally
-afterward with no check on remaining space.
+set_posix_acl_entries_dacl() and set_ntacl_dacl() accumulate ACE sizes
+in u16 variables. When a file has many POSIX ACL entries, the
+accumulated size can wrap past 65535, causing the pointer arithmetic
+(char *)pndace + *size to land within already-written ACEs. Subsequent
+writes then overwrite earlier entries, and pndacl->size gets a
+truncated value.
 
-When the EA value exactly fills the remaining buffer (buf_free_len == 0
-after value subtraction), the alignment memset writes 1-3 NUL bytes
-past the buf_free_len boundary. In compound requests where the response
-buffer is shared across commands, the first command (e.g., READ) can
-consume most of the buffer, leaving a tight remainder for the QUERY_INFO
-EA response. The alignment memset then overwrites past the physical
-kvmalloc allocation into adjacent kernel heap memory.
-
-Add a bounds check before the alignment memset to ensure buf_free_len
-can accommodate the padding bytes.
-
-This is the same bug pattern fixed by commit beef2634f81f ("ksmbd: fix
-potencial OOB in get_file_all_info() for compound requests") and
-commit fda9522ed6af ("ksmbd: fix OOB write in QUERY_INFO for compound
-requests"), both of which added bounds checks before unconditional
-writes in QUERY_INFO response handlers.
+Use check_add_overflow() at each accumulation point to detect the
+wrap before it corrupts the buffer, consistent with existing
+check_mul_overflow() usage elsewhere in smbacl.c.
 
 Cc: stable@vger.kernel.org
-Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/server/smbacl.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -4495,6 +4495,8 @@ static int smb2_get_ea(struct ksmbd_work
- 		/* align next xattr entry at 4 byte bundary */
- 		alignment_bytes = ((next_offset + 3) & ~3) - next_offset;
- 		if (alignment_bytes) {
-+			if (buf_free_len < alignment_bytes)
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -596,6 +596,7 @@ static void set_posix_acl_entries_dacl(s
+ 	struct smb_sid *sid;
+ 	struct smb_ace *ntace;
+ 	int i, j;
++	u16 ace_sz;
+ 
+ 	if (!fattr->cf_acls)
+ 		goto posix_default_acl;
+@@ -640,8 +641,10 @@ static void set_posix_acl_entries_dacl(s
+ 			flags = 0x03;
+ 
+ 		ntace = (struct smb_ace *)((char *)pndace + *size);
+-		*size += fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, flags,
++		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, flags,
+ 				pace->e_perm, 0777);
++		if (check_add_overflow(*size, ace_sz, size))
++			break;
+ 		(*num_aces)++;
+ 		if (pace->e_tag == ACL_USER)
+ 			ntace->access_req |=
+@@ -650,8 +653,10 @@ static void set_posix_acl_entries_dacl(s
+ 		if (S_ISDIR(fattr->cf_mode) &&
+ 		    (pace->e_tag == ACL_USER || pace->e_tag == ACL_GROUP)) {
+ 			ntace = (struct smb_ace *)((char *)pndace + *size);
+-			*size += fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED,
++			ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED,
+ 					0x03, pace->e_perm, 0777);
++			if (check_add_overflow(*size, ace_sz, size))
 +				break;
- 			memset(ptr, '\0', alignment_bytes);
- 			ptr += alignment_bytes;
- 			next_offset += alignment_bytes;
+ 			(*num_aces)++;
+ 			if (pace->e_tag == ACL_USER)
+ 				ntace->access_req |=
+@@ -691,8 +696,10 @@ posix_default_acl:
+ 		}
+ 
+ 		ntace = (struct smb_ace *)((char *)pndace + *size);
+-		*size += fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, 0x0b,
++		ace_sz = fill_ace_for_sid(ntace, sid, ACCESS_ALLOWED, 0x0b,
+ 				pace->e_perm, 0777);
++		if (check_add_overflow(*size, ace_sz, size))
++			break;
+ 		(*num_aces)++;
+ 		if (pace->e_tag == ACL_USER)
+ 			ntace->access_req |=
+@@ -728,7 +735,8 @@ static void set_ntacl_dacl(struct user_n
+ 				break;
+ 
+ 			memcpy((char *)pndace + size, ntace, nt_ace_size);
+-			size += nt_ace_size;
++			if (check_add_overflow(size, nt_ace_size, &size))
++				break;
+ 			aces_size -= nt_ace_size;
+ 			ntace = (struct smb_ace *)((char *)ntace + nt_ace_size);
+ 			num_aces++;
 
 
