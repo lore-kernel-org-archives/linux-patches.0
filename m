@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E34F263F44;
-	Sat, 30 May 2026 17:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1CE33FE15;
+	Sat, 30 May 2026 17:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161421; cv=none; b=Lpklt6yy5rcl6E00FmtpJCOHhGQhxbD1jigU7MTxzGe9PyDjjfuJHu5VovfSaBFbw/Bh9EV8l/U/KxttSZLxhecfqmEcdQoRuwxKWOrnpArR8aUhlEDrBP8omJIBLbNQ3MUkTFKYcVLJwNULJpBWJ3lnUbyGyqhaeaOTPbJHYX8=
+	t=1780161424; cv=none; b=Pc6qwlMkFbpPt7i9E/KiMmr58T2Go9E+WF7rQFGPyntsL3EXcRDM5LV0tOUbnHbUR71pUdMX+hYyQ/hptuQu5hgxTNnR6vb4MhNmK7pWrh1GAr8hZTte4QNkdMRoZ0pvLIPKzDbcTC4/Vq/R+DcP6qX35Ezg9fyYKcsSH4P5hgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161421; c=relaxed/simple;
-	bh=HBzMNGKdYmuCbLNHWbklMoVJWN5KStE+hUOpCEQvFr8=;
+	s=arc-20240116; t=1780161424; c=relaxed/simple;
+	bh=L9dgEFhSs1xfdWx0N17hdDOCIDb6pO74maiqO2oiHJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g/2/pNWKMXFBSanQvTkI5+Lj0X7tSNcfmsu5IYa5Ya4WT0V912XRilOpVM0npKXzSkdc4Q1zMwQ0YojfBmaL8cXQ2YuELoNKAvdycYDjd/dSIxpVkHnqGqU+3R3QDssTIoV1qZT80yvJJbrpkVKcqm320PG4dFag5mbOcGsEcvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nDbsPwTJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nJL5cb9qcmAaV3NTIIfG1feIAQtcmfyuCfbyDeXYpikE8HTo8G8833IsSXVKqF4r8rKKW/venaj7mx6JEUy9FA49N7GmC/hRvB9ooVoMtn7dvOl1fgi3EnpIz61yFWFtap/SQyXnssnL+wXx5Bip+pvNpwOtmh+VhuAI9jOt/hM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOEEjst6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nDbsPwTJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692231F00893;
-	Sat, 30 May 2026 17:16:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOEEjst6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F12541F00893;
+	Sat, 30 May 2026 17:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161420;
-	bh=Z7JR93YgVlSfLfoWQ6z0s7Zs99qDJR9MeHD8o6IrSpY=;
+	s=korg; t=1780161423;
+	bh=fLZV4ZQgk3RJEEdcnuIrRWfxv4ovz5EKbdChZk1AnVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nDbsPwTJaTRqLegS+N6StquY58w8WImw0ICJHjzP6zr67TftCI8bxalPfcXGZ6TGw
-	 c0BmykDThSALnTyM4rOvPRyVw928ntpYfEA0m8mWNlNQKnuDOLckD+/6b/E25Xs6Wa
-	 CzYv3hp2zjl73pjGJWv/rbuHa8RPPBgjHPXLFEqA=
+	b=wOEEjst6WDejHHJa/h3vbdLQ8IktOi5gu8aKnef5oPM6o65qxcbz1mBnNE/Sc1P74
+	 QjfYKHWhtV2PL7qlhA7riydjL3jr5Yn27rYPdaeQnI5yuxapqpV6PH8LrumHf/cdmU
+	 Zsy41PmMRIRyIg5YyriJwNBUKYjk08DDMlHw3IpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Puranjay Mohan <puranjay@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Michal Luczaj <mhal@rbox.co>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 618/969] bpf, arm64: Fix off-by-one in check_imm signed range check
-Date: Sat, 30 May 2026 18:02:22 +0200
-Message-ID: <20260530160317.500516959@linuxfoundation.org>
+Subject: [PATCH 6.1 619/969] bpf, sockmap: Fix af_unix iter deadlock
+Date: Sat, 30 May 2026 18:02:23 +0200
+Message-ID: <20260530160317.528753371@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -46,61 +48,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit 1dd8be4ec722ce54e4cace59f3a4ba658111b3ec ]
+[ Upstream commit 4d328dd695383224aa750ddee6b4ad40c0f8d205 ]
 
-check_imm(bits, imm) is used in the arm64 BPF JIT to verify that
-a branch displacement (in arm64 instruction units) fits into the
-signed N-bit immediate field of a B, B.cond or CBZ/CBNZ encoding
-before it is handed to the encoder. The macro currently tests for
-(imm > 0 && imm >> bits) || (imm < 0 && ~imm >> bits) which admits
-values in [-2^N, 2^N) — effectively a signed (N+1)-bit range. A
-signed N-bit field only holds [-2^(N-1), 2^(N-1)), so the check
-admits one extra bit of range on each side.
+bpf_iter_unix_seq_show() may deadlock when lock_sock_fast() takes the fast
+path and the iter prog attempts to update a sockmap. Which ends up spinning
+at sock_map_update_elem()'s bh_lock_sock():
 
-In particular, for check_imm19(), values in [2^18, 2^19) slip past
-the check but do not fit into the 19-bit signed imm19 field of
-B.cond. aarch64_insn_encode_immediate() then masks the raw value
-into the 19-bit field, setting bit 18 (the sign bit) and flipping
-a forward branch into a backward one. Same class of issue exists
-for check_imm26() and the B/BL encoding. Shift by (bits - 1)
-instead of bits so the actual signed N-bit range is enforced.
+WARNING: possible recursive locking detected
+test_progs/1393 is trying to acquire lock:
+ffff88811ec25f58 (slock-AF_UNIX){+...}-{3:3}, at: sock_map_update_elem+0xdb/0x1f0
 
-Fixes: e54bcde3d69d ("arm64: eBPF JIT compiler")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Puranjay Mohan <puranjay@kernel.org>
-Link: https://lore.kernel.org/r/20260415121403.639619-2-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+but task is already holding lock:
+ffff88811ec25f58 (slock-AF_UNIX){+...}-{3:3}, at: __lock_sock_fast+0x37/0xe0
+
+other info that might help us debug this:
+ Possible unsafe locking scenario:
+
+       CPU0
+       ----
+  lock(slock-AF_UNIX);
+  lock(slock-AF_UNIX);
+
+ *** DEADLOCK ***
+
+ May be due to missing lock nesting notation
+
+4 locks held by test_progs/1393:
+ #0: ffff88814b59c790 (&p->lock){+.+.}-{4:4}, at: bpf_seq_read+0x59/0x10d0
+ #1: ffff88811ec25fd8 (sk_lock-AF_UNIX){+.+.}-{0:0}, at: bpf_seq_read+0x42c/0x10d0
+ #2: ffff88811ec25f58 (slock-AF_UNIX){+...}-{3:3}, at: __lock_sock_fast+0x37/0xe0
+ #3: ffffffff85a6a7c0 (rcu_read_lock){....}-{1:3}, at: bpf_iter_run_prog+0x51d/0xb00
+
+Call Trace:
+ dump_stack_lvl+0x5d/0x80
+ print_deadlock_bug.cold+0xc0/0xce
+ __lock_acquire+0x130f/0x2590
+ lock_acquire+0x14e/0x2b0
+ _raw_spin_lock+0x30/0x40
+ sock_map_update_elem+0xdb/0x1f0
+ bpf_prog_2d0075e5d9b721cd_dump_unix+0x55/0x4f4
+ bpf_iter_run_prog+0x5b9/0xb00
+ bpf_iter_unix_seq_show+0x1f7/0x2e0
+ bpf_seq_read+0x42c/0x10d0
+ vfs_read+0x171/0xb20
+ ksys_read+0xff/0x200
+ do_syscall_64+0x6b/0x3a0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Fixes: 2c860a43dd77 ("bpf: af_unix: Implement BPF iterator for UNIX domain socket.")
+Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
+Suggested-by: Martin KaFai Lau <martin.lau@linux.dev>
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260414-unix-proto-update-null-ptr-deref-v4-2-2af6fe97918e@rbox.co
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/net/bpf_jit_comp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/unix/af_unix.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
-index 783883721aaf5..e66218aed831d 100644
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -33,8 +33,8 @@
- #define FP_BOTTOM (MAX_BPF_JIT_REG + 4)
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -3598,15 +3598,14 @@ static int bpf_iter_unix_seq_show(struct
+ 	struct bpf_prog *prog;
+ 	struct sock *sk = v;
+ 	uid_t uid;
+-	bool slow;
+ 	int ret;
  
- #define check_imm(bits, imm) do {				\
--	if ((((imm) > 0) && ((imm) >> (bits))) ||		\
--	    (((imm) < 0) && (~(imm) >> (bits)))) {		\
-+	if ((((imm) > 0) && ((imm) >> ((bits) - 1))) ||		\
-+	    (((imm) < 0) && (~(imm) >> ((bits) - 1)))) {	\
- 		pr_info("[%2d] imm=%d(0x%x) out of range\n",	\
- 			i, imm, imm);				\
- 		return -EINVAL;					\
--- 
-2.53.0
-
+ 	if (v == SEQ_START_TOKEN)
+ 		return 0;
+ 
+-	slow = lock_sock_fast(sk);
++	lock_sock(sk);
+ 
+-	if (unlikely(sk_unhashed(sk))) {
++	if (unlikely(sock_flag(sk, SOCK_DEAD))) {
+ 		ret = SEQ_SKIP;
+ 		goto unlock;
+ 	}
+@@ -3616,7 +3615,7 @@ static int bpf_iter_unix_seq_show(struct
+ 	prog = bpf_iter_get_info(&meta, false);
+ 	ret = unix_prog_seq_show(prog, &meta, v, uid);
+ unlock:
+-	unlock_sock_fast(sk, slow);
++	release_sock(sk);
+ 	return ret;
+ }
+ 
 
 
