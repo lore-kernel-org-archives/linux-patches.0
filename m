@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57D22EF652;
-	Sat, 30 May 2026 18:34:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE122EF652;
+	Sat, 30 May 2026 18:34:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780166089; cv=none; b=Fe5F87mQH2fuReuV3DXb9JeleZMD1hcgsW7ukXZtUrZ9maIx+p+zvqYUzvNM5XEYrKd2W80MQcvrKU28wTz2bu+K9eHS0cp5RWuBrfqMUbbQt6TpTr3qCA5Wo71BiiT2byA7fU2i8FstV7aY+EAmE1DhvEFuAJjaKLKl3POCCmA=
+	t=1780166093; cv=none; b=cffr4Hv05BkzJLHxCgZ6b8fOBkuU7BLkHPlfRuKOFiQRVX4ie4tHvLdR14fpGsCAcDhG4l2I8amULXjLlnSvAUsfHRSZlPC7H/LrFFL34+bZQtkw/CWQCtvBgZ+9jLjGji3XIE9k4TvxC0ieOOnNntd5Yxt48wwSLNV28foqISc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780166089; c=relaxed/simple;
-	bh=qXMpd+eW3EvSvR17Bud6OBoEZqvxMaQ/dlBL6EhgjN4=;
+	s=arc-20240116; t=1780166093; c=relaxed/simple;
+	bh=xz8KBB3laHtWQ8zripPPa656JX4Hy/YN/1X5vpi9Ev0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EmMWS24AA1Ny9gN4OaLAWvUEIU6SBfHtGBV7XatQ6ZXt8jsS5mFfDZ7Cg1C+S8Hcq4sH60jCIzpVVmKPDqrud30qSncZkOAIAA1hGPWao3HsMejMpvdCFbGt4MnECeyOrhcIYnmd0pXUThJ2bV9X+xDoNy+G3eZNfZ13zDHWnfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkKPqlNS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fbPo0W60GTqvGOSolDm3SoSxuw5HMBCU0fqo1H9Bh+Eal384K1VPZrQ6UD6in9FwlROfpFCmg3ihYKST4pq31yLETHUhhNtMeJ7NNyq9gcyxlFx0tKz6iHFvSpNG9/T/VA37zI2qHselkPIU+PkaPf4EaryRFqE4/lmU4a9/J4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9bm2ncl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkKPqlNS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3702C1F00893;
-	Sat, 30 May 2026 18:34:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9bm2ncl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804DE1F00893;
+	Sat, 30 May 2026 18:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780166088;
-	bh=1rL3zh3KGIFydj1Uu06MrPTqGyMPOoaE9o86aCllI8Q=;
+	s=korg; t=1780166092;
+	bh=wJZoLATgYQ/Iuq8aJTBzz5Ah8Rp+MhAj6pYLqs51guw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pkKPqlNSb8PKB7DYWFusRYgZqqYiDdAYUZywV6MUQ3LyQtM5Lq87ZUwGCfgSywvk8
-	 /NYRJSPE4WGSsClG87Vq4QBKUVsxn1Rv5VvIm158Zt4SvLxmzYMRQ5oEHyh9zgnGdi
-	 54T8JdO4EnGXJQzbUClhm79QlwdEwI+mIhVJek/0=
+	b=G9bm2ncluTq5OvSZBqNPLkFDZ+Sye7fb9qvPyltAO0RL4pZ67WHFCRsYjgIveZ/3K
+	 sJYbNVjj5hyidM6wUiPueMKaYezItiDxSG1YsG4agB0voyIczB2YIw8rYFbw2zXpmW
+	 8oJXLu+kxKG+2YKvTLKpuppUxEVfEn4wSoxT3N88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>
-Subject: [PATCH 5.10 243/589] thermal/drivers/sprd: Fix raw temperature clamping in sprd_thm_rawdata_to_temp
-Date: Sat, 30 May 2026 18:02:04 +0200
-Message-ID: <20260530160231.386332617@linuxfoundation.org>
+	Chuanhong Guo <gch981213@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 270/589] spi: mtk-nor: fix controller deregistration
+Date: Sat, 30 May 2026 18:02:31 +0200
+Message-ID: <20260530160232.079658724@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -51,38 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Johan Hovold <johan@kernel.org>
 
-commit b3414148bbc1f9cd56217e58a558c6ac4fd1b4a6 upstream.
+commit 76336f24934621db286cabb20b483773ee01dcaa upstream.
 
-The raw temperature data was never clamped to SPRD_THM_RAW_DATA_LOW or
-SPRD_THM_RAW_DATA_HIGH because the return value of clamp() was not used.
-Fix this by assigning the clamped value to 'rawdata'.
+Make sure to deregister the controller before disabling underlying
+resources like clocks during driver unbind.
 
-Casting SPRD_THM_RAW_DATA_LOW and SPRD_THM_RAW_DATA_HIGH to u32 is also
-redundant and can be removed.
-
-Fixes: 554fdbaf19b1 ("thermal: sprd: Add Spreadtrum thermal driver support")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260307102422.306055-2-thorsten.blum@linux.dev
+Fixes: 881d1ee9fe81 ("spi: add support for mediatek spi-nor controller")
+Cc: stable@vger.kernel.org	# 5.7
+Cc: Chuanhong Guo <gch981213@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-3-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/sprd_thermal.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-mtk-nor.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/thermal/sprd_thermal.c
-+++ b/drivers/thermal/sprd_thermal.c
-@@ -178,7 +178,7 @@ static int sprd_thm_sensor_calibration(s
- static int sprd_thm_rawdata_to_temp(struct sprd_thermal_sensor *sen,
- 				    u32 rawdata)
- {
--	clamp(rawdata, (u32)SPRD_THM_RAW_DATA_LOW, (u32)SPRD_THM_RAW_DATA_HIGH);
-+	rawdata = clamp(rawdata, SPRD_THM_RAW_DATA_LOW, SPRD_THM_RAW_DATA_HIGH);
+--- a/drivers/spi/spi-mtk-nor.c
++++ b/drivers/spi/spi-mtk-nor.c
+@@ -835,7 +835,7 @@ static int mtk_nor_probe(struct platform
+ 	pm_runtime_enable(&pdev->dev);
+ 	pm_runtime_get_noresume(&pdev->dev);
  
- 	/*
- 	 * According to the thermal datasheet, the formula of converting
+-	ret = devm_spi_register_controller(&pdev->dev, ctlr);
++	ret = spi_register_controller(ctlr);
+ 	if (ret < 0)
+ 		goto err_probe;
+ 
+@@ -861,6 +861,8 @@ static int mtk_nor_remove(struct platfor
+ 	struct spi_controller *ctlr = dev_get_drvdata(&pdev->dev);
+ 	struct mtk_nor *sp = spi_controller_get_devdata(ctlr);
+ 
++	spi_unregister_controller(ctlr);
++
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
 
 
