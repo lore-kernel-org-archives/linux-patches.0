@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4AC3233D9E;
-	Sat, 30 May 2026 18:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA1824EA90;
+	Sat, 30 May 2026 18:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165204; cv=none; b=HH2P8KZQe59oQz4B9p74nuL34I33eqaeSwTcFDR4Kh2GsQlOSeTf3uCADoW6S1Io2E6k4JwO8wq3hvkMEx7+uYozBmGYN3Wwqlz44Pag0G25rYNT92hkQbfD6wSTTW5MS7MkXuuvgwd7Ti2boOjG5TEWaMl2m2Z1cJrWubY5TnE=
+	t=1780165208; cv=none; b=MJJ72fMSszLeK1G63G/71eJ3+lGjWBIWNJcW5tHNikEPxr6jqq1BE0RtlubJnvUmTw7Lh40OYk1AE/szwvmXm81vjmaHNZXZmVFJqNZ1tM2ueqYIaGv/qgAipSshXKZILIPC1hdNq/jhFcPZjU9kSNnEfyXDzf+9wZwGA9qU7Zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165204; c=relaxed/simple;
-	bh=xvavtGN4xyQLMkYrx6o5NWy6ptPVGXJac3TCbKJKPrQ=;
+	s=arc-20240116; t=1780165208; c=relaxed/simple;
+	bh=p/7q4jrfmElQ3iwCbgrqbpDKgTTed0isoQf28QzdwFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YuFxGa6xWhOxYdAzMFmSkTrBNdV7lYzLNhjQ9ExebBYEjXtNj8rx3G0N+hBhh0YjFL6bFbdKjh0eQhHr9yqu/TFZzqYYcVXUQ3DM47MtKKjbH8d1RR4oYu4LK8j1FafdDeCcyFPRPJioLFlkb8+5DKyxqjngipLGk8jivou7v7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rn3a9pam; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N5jnQrBAutzQElXTzE0Pmylw6fbvHJ1i4qI+r9ZsMSKj9DjWc222JGTyFIGINbuyct/O1ClpRCIwXb9g65Hwh2vmi4C5s1oglLiswYsQeG/El+UhEGUHwTqNDDcZY+ywczaFNQwWyDnNgvfmBeBZuTJcFTmywvzZtDyXSo3jFzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OY0mZIt0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rn3a9pam"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255011F00893;
-	Sat, 30 May 2026 18:20:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OY0mZIt0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ECED1F00893;
+	Sat, 30 May 2026 18:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165203;
-	bh=BvG1ohil4A5hki7LUQPfCdSGSDtMco6YePEUuP+iYTQ=;
+	s=korg; t=1780165207;
+	bh=d0aHds9JWfaOuU4Bwt49cmpJgplpjU5/3C+GgLJajuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rn3a9pamBJ9NKeYGxvPIkmJvXkHKss8pJFbp6s9Qn/NXp6dvQjtxiCqMRrHGcYYwM
-	 V2PT8YhZUhLds2IDRix9neiwwX8Cqid8LVTD7PZG/JSNVW/gNQwH+Ttz8Q0Rou0Q5y
-	 rgyDnzGSisizB6pv9CdH9Mhl2D9kZtlwMkHz8boY=
+	b=OY0mZIt0trEtabGtjLzpgrz2uC4LyYtk+wzuMW9rZepRr6ia6F/x5ZXXMATYPrT32
+	 ZoWKx8+Xt8sDFMT8bTPQK7FeJ+zPTkYC/sOln1kpsfFFW1/N9PijG7ClGzCLS2aMF3
+	 9Xvn6E9VAmG5xIKp/9WW+lMFfSnrDwyMeHjYQDc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Bulwahn <lukas.bulwahn@redhat.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Chenguang Zhao <zhaochenguang@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 753/776] HID: quirks: really enable the intended work around for appledisplay
-Date: Sat, 30 May 2026 18:07:47 +0200
-Message-ID: <20260530160259.219109046@linuxfoundation.org>
+Subject: [PATCH 5.15 754/776] ethtool: fix ethnl_bitmap32_not_zero() bit interval semantics
+Date: Sat, 30 May 2026 18:07:48 +0200
+Message-ID: <20260530160259.241038511@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,40 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Bulwahn <lukas.bulwahn@redhat.com>
+From: Chenguang Zhao <zhaochenguang@kylinos.cn>
 
-[ Upstream commit 5f90dcfa8dc32a488581b78e575cdd7808ba5c78 ]
+[ Upstream commit 3d042592ebd4c7e44974d556de0b727cb7db4dab ]
 
-Commit c7fabe4ad921 ("HID: quirks: work around VID/PID conflict for
-appledisplay") intends to add a quirk for kernels built with Apple Cinema
-Display support, but it refers to the non-existing config option
-CONFIG_APPLEDISPLAY, whereas the config option for Apple Cinema Display
-support is named CONFIG_USB_APPLEDISPLAY.
+ethnl_bitmap32_not_zero() should return true if some bit in [start, end)
+is set:
 
-Refer to the intended config option CONFIG_USB_APPLEDISPLAY in the ifdef
-directive.
+- Fix inverted memchr_inv() sense: return true when the scan finds a
+  non-zero byte, not when the middle words are all zero.
+- Return false for an empty interval (end <= start).
+- When end is 32-bit aligned, indices in [start, end) do not include any
+  bits from map[end_word]; return false after earlier checks found no
+  non-zero data.
 
-Fixes: c7fabe4ad921 ("HID: quirks: work around VID/PID conflict for appledisplay")
-Signed-off-by: Lukas Bulwahn <lukas.bulwahn@redhat.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 10b518d4e6dd ("ethtool: netlink bitset handling")
+Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-quirks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ethtool/bitset.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 9eb4d02cc6d77..6e9501fe1a281 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -222,7 +222,7 @@ static const struct hid_device_id hid_quirks[] = {
-  * used as a driver. See hid_scan_report().
-  */
- static const struct hid_device_id hid_have_special_driver[] = {
--#if IS_ENABLED(CONFIG_APPLEDISPLAY)
-+#if IS_ENABLED(CONFIG_USB_APPLEDISPLAY)
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9218) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9219) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x921c) },
+diff --git a/net/ethtool/bitset.c b/net/ethtool/bitset.c
+index f0883357d12e5..4691d6d0f2b75 100644
+--- a/net/ethtool/bitset.c
++++ b/net/ethtool/bitset.c
+@@ -91,7 +91,7 @@ static bool ethnl_bitmap32_not_zero(const u32 *map, unsigned int start,
+ 	u32 mask;
+ 
+ 	if (end <= start)
+-		return true;
++		return false;
+ 
+ 	if (start % 32) {
+ 		mask = ethnl_upper_bits(start);
+@@ -104,11 +104,11 @@ static bool ethnl_bitmap32_not_zero(const u32 *map, unsigned int start,
+ 		start_word++;
+ 	}
+ 
+-	if (!memchr_inv(map + start_word, '\0',
+-			(end_word - start_word) * sizeof(u32)))
++	if (memchr_inv(map + start_word, '\0',
++		       (end_word - start_word) * sizeof(u32)))
+ 		return true;
+ 	if (end % 32 == 0)
+-		return true;
++		return false;
+ 	return map[end_word] & ethnl_lower_bits(end);
+ }
+ 
 -- 
 2.53.0
 
