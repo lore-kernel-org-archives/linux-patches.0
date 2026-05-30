@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583333112C1;
-	Sat, 30 May 2026 18:07:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E5283112C1;
+	Sat, 30 May 2026 18:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164441; cv=none; b=SAo8xuT6Ui1YEawRTfo+LitDjfuI6sdJIAnl1Aj4CDnAS1ahWVX1qZwVkgFjIZvTgSmTvLSuwqd4XPuoPtxuI2ri5LgsNvv5IvEMiJRZlcg3/G5uwuBh2fcHQKSZEQtrtbQkVBFgP5+VjhO6XbPRIf9scw9YlHijSLonB1WJNqo=
+	t=1780164444; cv=none; b=R5ctlKdiZy/Tf7M0ez8PJnMEtJg+fP7oZzpobGsVhP1ZzusLFP+bxo8tmobf5O4miH9oNXM2I/wJ8JY7mKR6E3er0yetyzveRsE2cehGI1jiUHmJs+EAmvl4bN86Y570wXm4Q7SQowByF1JPVgmAAuezAdDYNTOcv3Ho/XFKmhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164441; c=relaxed/simple;
-	bh=ebdq+IzmpPI6BfugIf6skAciFHbSloiBiyt8CxFKVuA=;
+	s=arc-20240116; t=1780164444; c=relaxed/simple;
+	bh=qDcI1FyqsCxuui6E4gIiROzYcPORIbJuuX+x0dHLPFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hme2Wf90kF/XFz6qROI0h6kWxmyt2WUtdP4xDl97PcjKY1FzZ5KhWYJCdckmfodLnVYYZ3VkTeCa0iSpefwrdF4lCJnm5AmIHBBtHyBJNCeyWfmbVbgJqcEaXJfeeJrlyY2DPtrGyV+f0otmijHSadQUVuEsJGMlc7qHD28UQXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtxwJkcP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Fq1WGUHmyeXIKKKkypk7/yGy+QRLhPWtG5tKp4krHtFt7Yqvua3NlD17g5p4MZeLH8M0tVvjSc/EuLHzE2lcbDeOwRBkVWgs/cCA4FUzJE1eRy/xertVkr77uD+JXpmq65oDTcBjF1QWKdTTB7zeC6S57kGr05LHXxeEWqt0cpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxL8x2db; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtxwJkcP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A07F1F00893;
-	Sat, 30 May 2026 18:07:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxL8x2db"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20DE1F00893;
+	Sat, 30 May 2026 18:07:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164440;
-	bh=pXVMHKsLqoPB1tFYWCa1to8cP/tBFDcCkMVcYY7NR4c=;
+	s=korg; t=1780164443;
+	bh=dT16MGTZ1KDPyw5D63GFhAo3ulaGCy1PVvQJFYYgmI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RtxwJkcPPaW8KhIc9Ikz85cjFg4+mbHvG9kljLW/z7f8JraLCXGtIHO794taG95m0
-	 3CfK3rro/l1WFUVnQJHJ4VCdYOCJiotTblOhrsULDe4WuJOafZ6pP64YtQOHlZ+Xfh
-	 fcVBKfPIrXWZBwGBybZiks+BRjGW9FTSL2wLnkKw=
+	b=hxL8x2db2JDqlDMTnbqqQ0lBQOUdt1kxOK+tRIh/6dbeQcet/th44hesIKBABID4F
+	 zrhNtTzcE1pRdYpbplKDc8XEYUTcv1ETlPpeBEJKMvfcqFNdnxzLMppcfRMpHIkXTO
+	 kCaLpNOnVmR5YWFWtSaDTPuBZB8cb2wXFqKhpZ2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 527/776] tty: hvc_iucv: fix off-by-one in number of supported devices
-Date: Sat, 30 May 2026 18:04:01 +0200
-Message-ID: <20260530160253.837059044@linuxfoundation.org>
+Subject: [PATCH 5.15 528/776] platform/x86: panasonic-laptop: Fix OPTD notifier registration and cleanup
+Date: Sat, 30 May 2026 18:04:02 +0200
+Message-ID: <20260530160253.860464326@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -44,54 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit f2a880e802ad12d1e38039d1334fb1475d0f5241 ]
+[ Upstream commit 8baeff2c1d33dad8572216c6ad3a7425852507d4 ]
 
-MAX_HVC_IUCV_LINES == HVC_ALLOC_TTY_ADAPTERS == 8.
-This is the number of entries in:
-  static struct hvc_iucv_private *hvc_iucv_table[MAX_HVC_IUCV_LINES];
+An ACPI notify handler is leaked if device_create_file() returns an
+error in acpi_pcc_hotkey_add().
 
-Sometimes hvc_iucv_table[] is limited by:
-(a)	if (num > hvc_iucv_devices) // for error detection
-or
-(b)	for (i = 0; i < hvc_iucv_devices; i++) // in 2 places
-(so these 2 don't agree; second one appears to be correct to me.)
+Also, it is pointless to call pcc_unregister_optd_notifier() in
+acpi_pcc_hotkey_remove() if pcc->platform is NULL and it is better
+to arrange the cleanup code in that function in the same order as
+the rollback code in acpi_pcc_hotkey_add().
 
-hvc_iucv_devices can be 0..8. This is a counter.
-(c)	if (hvc_iucv_devices > MAX_HVC_IUCV_LINES)
+Address the above by placing the pcc_register_optd_notifier() call in
+acpi_pcc_hotkey_add() after the device_create_file() return value
+check and placing the pcc_unregister_optd_notifier() call in
+acpi_pcc_hotkey_remove() right before the device_remove_file() call.
 
-If hvc_iucv_devices == 8, (a) allows the code to access hvc_iucv_table[8].
-Oops.
-
-Fixes: 44a01d5ba8a4 ("[S390] s390/hvc_console: z/VM IUCV hypervisor console support")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://patch.msgid.link/20260130072939.1535869-1-rdunlap@infradead.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d5a81d8e864b ("platform/x86: panasonic-laptop: Add support for optical driver power in Y and W series")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/2411055.ElGaqSPkdT@rafael.j.wysocki
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/hvc/hvc_iucv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/panasonic-laptop.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/hvc/hvc_iucv.c b/drivers/tty/hvc/hvc_iucv.c
-index 7d49a872de48a..9551269e106a4 100644
---- a/drivers/tty/hvc/hvc_iucv.c
-+++ b/drivers/tty/hvc/hvc_iucv.c
-@@ -130,7 +130,7 @@ static struct iucv_handler hvc_iucv_handler = {
-  */
- static struct hvc_iucv_private *hvc_iucv_get_private(uint32_t num)
- {
--	if (num > hvc_iucv_devices)
-+	if (num >= hvc_iucv_devices)
- 		return NULL;
- 	return hvc_iucv_table[num];
- }
+diff --git a/drivers/platform/x86/panasonic-laptop.c b/drivers/platform/x86/panasonic-laptop.c
+index 418cd4d781261..6728e24db1d2a 100644
+--- a/drivers/platform/x86/panasonic-laptop.c
++++ b/drivers/platform/x86/panasonic-laptop.c
+@@ -1077,9 +1077,10 @@ static int acpi_pcc_hotkey_add(struct acpi_device *device)
+ 		}
+ 		result = device_create_file(&pcc->platform->dev,
+ 			&dev_attr_cdpower);
+-		pcc_register_optd_notifier(pcc, "\\_SB.PCI0.EHCI.ERHB.OPTD");
+ 		if (result)
+ 			goto out_platform;
++
++		pcc_register_optd_notifier(pcc, "\\_SB.PCI0.EHCI.ERHB.OPTD");
+ 	} else {
+ 		pcc->platform = NULL;
+ 	}
+@@ -1113,10 +1114,10 @@ static int acpi_pcc_hotkey_remove(struct acpi_device *device)
+ 	i8042_remove_filter(panasonic_i8042_filter);
+ 
+ 	if (pcc->platform) {
++		pcc_unregister_optd_notifier(pcc, "\\_SB.PCI0.EHCI.ERHB.OPTD");
+ 		device_remove_file(&pcc->platform->dev, &dev_attr_cdpower);
+ 		platform_device_unregister(pcc->platform);
+ 	}
+-	pcc_unregister_optd_notifier(pcc, "\\_SB.PCI0.EHCI.ERHB.OPTD");
+ 
+ 	sysfs_remove_group(&device->dev.kobj, &pcc_attr_group);
+ 
 -- 
 2.53.0
 
