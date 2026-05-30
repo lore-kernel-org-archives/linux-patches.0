@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4802233D9E;
-	Sat, 30 May 2026 18:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED489233D9E;
+	Sat, 30 May 2026 18:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165180; cv=none; b=SL2VS0igFqVGChnlY0xznAK5X6H1M40mAtLsrAnvKOaE0FG8EUWDhnDQTR9gvAoR1KOGwYs8Eq2YMpxGTDjjdL2sFx2XDXUjJnFjfEFmwn+wtNHxdfcxzbatIqReIPMHQLLGrZEdQRYjWx7ucTlQZrRzFzdwgVZK1gW0ftiIAjU=
+	t=1780165183; cv=none; b=FJkYonP+eIrR/NUXlemNSpA3xi3wpUnpTp4X+n5BCSWXuKfoSCL7NOHtHpzbsGZAgMyl99IrIzRVigF4lYzcIFyrQbuMpPlCpfhZ43VP4Jnh2SOBFGsUPi2p1LQ3Bqq8HcwNNYyYimI6sJKDdRO0UYD7eIpsFmFV3G553IOxVtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165180; c=relaxed/simple;
-	bh=G1oSoEGVs7zWpQnupGVkdTWHr6eVOvNW9TJAv4G0gxg=;
+	s=arc-20240116; t=1780165183; c=relaxed/simple;
+	bh=O1IVx473UG9ECmcyzzSE8KUHGcZcMiOp16gHN5/YDj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SFY8l2RLwYaetTDrNLdDgeFsO3eqSWv9MiP25VUjWY56Q7MpjyGApYKvEF6OJYREkJR1Ek0nXqwkek/NH9e2xQBnv9D/Vut5SObQTy0/P+NrPwiQ0K1M18+SxO1DS7X1mEcWrXxbElZWSC+dN2kxWcWc/Zrrs4hBvPfGQbe5swE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vogT7V8q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b5lv7ZnMR55f53drQn6eb2O5Db6H87TCGrQPRGUf8ZPT1C5Lmgcdwz8wWig8FeI+5j936YduYpF/GwufBd8mPCBYyo49Llhgx2+JUjCXIvobuzVB8TBNiWrNteIf5ehe9VmUAJT0a2AGZ0qfKI40PYp7uBg+VujBI9jWQk7h8wQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qi7tef4r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vogT7V8q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E837E1F00893;
-	Sat, 30 May 2026 18:19:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qi7tef4r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC771F00893;
+	Sat, 30 May 2026 18:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165179;
-	bh=v7b5T6ifJCKSQJk6uMk6XdjE5bkECw2kZn6Gfm6H7M4=;
+	s=korg; t=1780165182;
+	bh=K3+k3nzayssPRqJirh6QI2u2XK2GgjYokk9MPQjh+eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vogT7V8q9FI+iOYwzZjMuVz7Qxzwk+QNBJ73HRoXPZH7C6jQ6xy5pThN02PhxJjag
-	 Z3TZOtqupViJFiuGB8CQXyfU9ij+uxrG6wZKYaAVPxqbEnGSlXxpJ9lq1WkYl+Oycs
-	 0z7x/8A1oT12oJaew+PlT4wTVelzjBYXAIsW78Ds=
+	b=Qi7tef4rs67AFc4Lx0sXGCZoGP8C61U/rqNg+PY4e1YsfZDyhpl7Ui4eEXCh0pGSp
+	 R7zhgUeJQx50WpjRt6N3ZWgSllKp2Yi/Kg6VNoXDlnv8qbSNdeuTNCaio9sgkqCVux
+	 G3tPdTP8qpSNYzHDrP+4QwL7guJaqv2p4z6ScOVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 772/776] net: ag71xx: check error for platform_get_irq
-Date: Sat, 30 May 2026 18:08:06 +0200
-Message-ID: <20260530160259.662169731@linuxfoundation.org>
+Subject: [PATCH 5.15 773/776] string: add mem_is_zero() helper to check if memory area is all zeros
+Date: Sat, 30 May 2026 18:08:07 +0200
+Message-ID: <20260530160259.684122942@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -52,36 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit e7c70bf97e90d974cd575e4c90f8f9b07d056da3 ]
+[ Upstream commit 3942bb49728ad9e1f94d953a88af169a8f5d8099 ]
 
-Complete error handling for a failed platform_get_irq() call
+Almost two thirds of the memchr_inv() usages check if the memory area is
+all zeros, with no interest in where in the buffer the first non-zero
+byte is located. Checking for !memchr_inv(s, 0, n) is also not very
+intuitive or discoverable. Add an explicit mem_is_zero() helper for this
+use case.
 
-Fixes: d51b6ce441d3 ("net: ethernet: add ag71xx driver")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20260516212616.11758-1-rosenp@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240814100035.3100852-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Stable-dep-of: 3e6ccd790ed6 ("gpio: cdev: check if uAPI v2 config attributes are correctly zeroed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/atheros/ag71xx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/string.h | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/atheros/ag71xx.c b/drivers/net/ethernet/atheros/ag71xx.c
-index d5be9ca4d4fed..411f94e95291c 100644
---- a/drivers/net/ethernet/atheros/ag71xx.c
-+++ b/drivers/net/ethernet/atheros/ag71xx.c
-@@ -1933,6 +1933,9 @@ static int ag71xx_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+diff --git a/include/linux/string.h b/include/linux/string.h
+index bf368130bc42b..0e2f82182ab40 100644
+--- a/include/linux/string.h
++++ b/include/linux/string.h
+@@ -212,6 +212,18 @@ static inline void memcpy_flushcache(void *dst, const void *src, size_t cnt)
+ void *memchr_inv(const void *s, int c, size_t n);
+ char *strreplace(char *s, char old, char new);
  
- 	ndev->irq = platform_get_irq(pdev, 0);
-+	if (ndev->irq < 0)
-+		return ndev->irq;
++/**
++ * mem_is_zero - Check if an area of memory is all 0's.
++ * @s: The memory area
++ * @n: The size of the area
++ *
++ * Return: True if the area of memory is all 0's.
++ */
++static inline bool mem_is_zero(const void *s, size_t n)
++{
++	return !memchr_inv(s, 0, n);
++}
 +
- 	err = devm_request_irq(&pdev->dev, ndev->irq, ag71xx_interrupt,
- 			       0x0, dev_name(&pdev->dev), ndev);
- 	if (err) {
+ extern void kfree_const(const void *x);
+ 
+ extern char *kstrdup(const char *s, gfp_t gfp) __malloc;
 -- 
 2.53.0
 
