@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33ABD2690D5;
-	Sat, 30 May 2026 17:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D652690D5;
+	Sat, 30 May 2026 17:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780160510; cv=none; b=OQJCtG8StxpQs86jFJkDdvHJYQ6HzKSWvYbGEIsI/WsdcJVNm/Btws2WQRjrxpCl4ky1WA1JS4B3b/uDvuHYLEVSX3p/C5TJWpkgRWLbxxAAvpwiZbQRyrbl+CWAzyIrnKlUqQrrIdrHqNgWQu+PZyaoayUO3eCWg0VTvSUOJVM=
+	t=1780160513; cv=none; b=HMWJ9AvWqKvFUwW0+2Eg0EqcyLWyHJF3peBDMZx4ls2SmnP07NRlNbCdTaCwEMGaXrjmpxIWyefNJnmeNpJU9Y472C+59sJQIfN0PjrrZCmcEiFRSuldaA4XvEp6L5JvIjhRyDf/jPdzk2AM+eES3NOJuJB05bQeMe0H6HyBs4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780160510; c=relaxed/simple;
-	bh=jncns+CMVAUZUYWYeGmfCPU0vfuWNvSpu0peDpdiofU=;
+	s=arc-20240116; t=1780160513; c=relaxed/simple;
+	bh=NTGyYvhlWMLDqhxJ6BxtUr9l38/sgXt1sLbuFD8Vee8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JAHu5AqCgg7qMH/84iLcfj7FjxkE7RsoFsJ+p0VbiCtZPhBLDtSe86hA/f9lGk9SsJHa43GloH9gSCYPwEN9v2EQB9XwqgmHYBkKbHCxXrne3ZiCJbap2C6IGDHcheXgimMnjRPYjv/6i7ZE0u+GQMFOkvB2aYPfGJo/ovvqXLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B9wvELHj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ABDaqO4ag8pK9UJH5dG9lLdK3mri5etmPbj9gIcNEz6XkgkPrSRN9u2HuSjZXn5ppPwdyS8ETHOD7DeYQhE4Pv4TCXVtzOqSafQv7R3OGcR68NmzNkKaMIw0jxeFXtKwOjg9kAjEMQ4yfpzcGRZHT2oVt0XuzLa7sLqxUt206JQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wbp0T7Uo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B9wvELHj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B81F1F00898;
-	Sat, 30 May 2026 17:01:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wbp0T7Uo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E47891F00893;
+	Sat, 30 May 2026 17:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780160505;
-	bh=kiUyZaYo/hthBqyamGjkk2+RsWJVqdVB0zOF/rOZ95U=;
+	s=korg; t=1780160512;
+	bh=4DqYgzYkhkClDoZQy9JjyG4RnoHfZ19oGaLxekOdqlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B9wvELHjTnzO9vhxtauxM7G/3DO6O0kOsFVv3kCp6zpuvypjge+0KUA/upZObzhMw
-	 kVo3/ENNV1q/ilKh0x4EiuUrzpMUCYOmDyBCxgM9mowUlRFVc4JFW4+tNV/DoZ9jcY
-	 Jrd0U5S9UMHHAaIkJcdNy5IehT/oEybgnPOAhmNM=
+	b=Wbp0T7Uo4vh7tYJ6Zi7bM0DoDGsbPQhsk/uFuO41V6nNuIBLTct69Cjmsw3puZFEv
+	 pwaQ1qR72C7gpKJQPzuRnXY3vMvFm2VORQk9KK4UiIYn/MTkOFKzfN+2StOcpl/vfS
+	 cQVk6eoa7EoaPh+0W36TrMVrnsrde87wga9f1cxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomoya MORINAGA <tomoya-linux@dsn.okisemi.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 339/969] spi: topcliff-pch: fix use-after-free on unbind
-Date: Sat, 30 May 2026 17:57:43 +0200
-Message-ID: <20260530160309.729989621@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.1 358/969] nvme-apple: drop invalid put of admin queue reference count
+Date: Sat, 30 May 2026 17:58:02 +0200
+Message-ID: <20260530160310.222658152@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,45 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 9d72732fe70c11424bc90ed466c7ccfa58b42a9a upstream.
+commit ba9d308ccd6732dd97ed8080d834a4a89e758e14 upstream.
 
-Give the driver a chance to flush its queue before releasing the DMA
-buffers on driver unbind
+Commit 03b3bcd319b3 ("nvme: fix admin request_queue lifetime") moved the
+admin queue reference ->put call into nvme_free_ctrl() - a controller
+device release callback performed for every nvme driver doing
+nvme_init_ctrl().
 
-Fixes: c37f3c2749b5 ("spi/topcliff_pch: DMA support")
-Cc: stable@vger.kernel.org	# 3.1
-Cc: Tomoya MORINAGA <tomoya-linux@dsn.okisemi.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260414134319.978196-9-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+nvme-apple sets refcount of the admin queue to 1 at allocation during the
+probe function and then puts it twice now:
+
+nvme_free_ctrl()
+  blk_put_queue(ctrl->admin_q) // #1
+  ->free_ctrl()
+    apple_nvme_free_ctrl()
+      blk_put_queue(anv->ctrl.admin_q) // #2
+
+Note that there is a commit 941f7298c70c ("nvme-apple: remove an extra
+queue reference") which intended to drop taking an extra admin queue
+reference.  Looks like at that moment it accidentally fixed a refcount
+leak, which existed since the driver's introduction.  There were two ->get
+calls at driver's probe function and a single ->put inside
+apple_nvme_free_ctrl().
+
+However now after commit 03b3bcd319b3 ("nvme: fix admin request_queue
+lifetime") the refcount is imbalanced again.  Fix it by removing extra
+->put call from apple_nvme_free_ctrl().  anv->dev and ctrl->dev point to
+the same device, so use ctrl->dev directly for simplification.  Compile
+tested only.
+
+Found by Linux Verification Center (linuxtesting.org).
+
+Fixes: 03b3bcd319b3 ("nvme: fix admin request_queue lifetime")
+Cc: stable@vger.kernel.org
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-topcliff-pch.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/nvme/host/apple.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/drivers/spi/spi-topcliff-pch.c
-+++ b/drivers/spi/spi-topcliff-pch.c
-@@ -1406,9 +1406,6 @@ static int pch_spi_pd_remove(struct plat
- 	dev_dbg(&plat_dev->dev, "%s:[ch%d] irq=%d\n",
- 		__func__, plat_dev->id, board_dat->pdev->irq);
+--- a/drivers/nvme/host/apple.c
++++ b/drivers/nvme/host/apple.c
+@@ -1194,11 +1194,7 @@ static int apple_nvme_get_address(struct
  
--	if (use_dma)
--		pch_free_dma_buf(board_dat, data);
+ static void apple_nvme_free_ctrl(struct nvme_ctrl *ctrl)
+ {
+-	struct apple_nvme *anv = ctrl_to_apple_nvme(ctrl);
 -
- 	/* check for any pending messages; no action is taken if the queue
- 	 * is still full; but at least we tried.  Unload anyway */
- 	count = 500;
-@@ -1432,6 +1429,9 @@ static int pch_spi_pd_remove(struct plat
- 		free_irq(board_dat->pdev->irq, data);
- 	}
+-	if (anv->ctrl.admin_q)
+-		blk_put_queue(anv->ctrl.admin_q);
+-	put_device(anv->dev);
++	put_device(ctrl->dev);
+ }
  
-+	if (use_dma)
-+		pch_free_dma_buf(board_dat, data);
-+
- 	pci_iounmap(board_dat->pdev, data->io_remap_addr);
- 	spi_unregister_master(data->master);
- 
+ static const struct nvme_ctrl_ops nvme_ctrl_ops = {
 
 
