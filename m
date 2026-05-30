@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD474223DC6;
-	Sat, 30 May 2026 17:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52077223DC6;
+	Sat, 30 May 2026 17:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163186; cv=none; b=FepKPtGkDJCiZUsfQi2j8YhRFKrLP3ea2ev1HmGRjtyg5J+eYdPsusXui6r05m7xISvVUAnLP7rsDrz2EfyE5TtKHtAdAR1HbQ0++F4Xcc4AYzyKoqx3/S/uGl/jsgbcTE1Wh6gVt+9IW6QQvxRcIni70pVnXkf2gcMBw47TiGs=
+	t=1780163190; cv=none; b=aNHz+d7E/NI0oszwnBLmBVyYhqbpyNumhgUeSDnQu8EQNXtgIDqKFChcL2JgraAujsGARUlfhMNo5DcOVK+5LhwEGSQtlY9OWAGa1LMYR69B64fUF644kiUBvMAmWGhvKvVrvEZRxQwGxzbPpe1xShG18+7FXUPAmqn6aDgQGLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163186; c=relaxed/simple;
-	bh=8QdHsQJ/P8IEAKj/4qeif9KQ9sw38RlDduxy3askZF4=;
+	s=arc-20240116; t=1780163190; c=relaxed/simple;
+	bh=2v9+f6Je98sA5ZpbrDSS+6dCb24Rni7qclTwfQgMV5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Mws55t7g/SyCubKs0JXbLCYlFx4DB7HAnKcyAWNGBZz6DF8I+jmYfDnYtiX77R1R9dlJovlf8zC4FuxLOFNV1geyy+xrAaeiiV6dfB0MEmCuZ3c871a1ZYdanrLOgQItnFR/7xDi7/j1Mx/b6eaZIwm50T2/nnKniftwYv/YBxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJf+OYXN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=StG90wUp294n6Dj4qSOrUtPiinFDMavDgZb9EZ5aHj7BMp6cUlfEWNVzJl+Fw1ciK67AT7JIRGUfFtP5sBoL8gT+GgaLm3ixNBgH3pCt7waSP4UK2vMqNI8V3RVhMIN8R3ca42wyS2+GBEgrSrgWxWMTtpoU1nFz9BeqxukKY38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4FgByXv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJf+OYXN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE96B1F00893;
-	Sat, 30 May 2026 17:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4FgByXv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A121F00893;
+	Sat, 30 May 2026 17:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163185;
-	bh=wa4Lsk7qKCOMDEo6YwexRLuceZkZ5+D4KtAfW2BYC8w=;
+	s=korg; t=1780163188;
+	bh=CRsVLYFzgNDOfGkngvI6q5fVA6tz9V2VCMuYf1IONsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rJf+OYXNZzx1MmGsEvyRBoavlliew07od8pjcgpzUOrQwulrG0ZIowID3aFoLtx2N
-	 vCd87b1dMG1K1uGvkxae1mAdTK2GDxfcurgLlKLLbqaw35mUFTG1339hxYxS+xW7jk
-	 bb30Xd5dfWh93pqgtEh8U/1OnygWxh9f5XuwrdRQ=
+	b=k4FgByXvXkU+3eybZZFTDVzmf3jsulqhCYOIRTJNW2ZfmdcVGCpG2FVCUCw9sRxzU
+	 RV9l43BLPCG2f0KnNn//LwjgGyldEkXDzQjQRqfAD57fYL2psb39kQ3d4S1u3IqEwF
+	 A8Rq3TOxk+mYoNBP6mGmeOs078/rfJ4xFK51Y1H0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 182/776] ALSA: usb-audio: Avoid false E-MU sample-rate notifications
-Date: Sat, 30 May 2026 17:58:16 +0200
-Message-ID: <20260530160245.203187536@linuxfoundation.org>
+Subject: [PATCH 5.15 183/776] ALSA: usb-audio: Fix Audio Advantage Micro II SPDIF switch
+Date: Sat, 30 May 2026 17:58:17 +0200
+Message-ID: <20260530160245.228791701@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,50 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit fca9c850042a7ab4828ce3a9caa8bc40ea09856a upstream.
+commit a9224f26b754b5034719248891ff3c2ea0d11144 upstream.
 
-snd_emuusb_set_samplerate() unconditionally notifies the E-MU
-SampleRate Extension Unit control after issuing SET_CUR.
+snd_microii_spdif_switch_put() returns 0 when the requested
+vendor register value differs from the cached one.
 
-If snd_usb_mixer_set_ctl_value() fails, the control value has not
-changed, yet snd_usb_mixer_notify_id() still invalidates the cache and
-emits a value-change event to userspace.
+This comparison was inverted by the resume-support conversion,
+so real SPDIF switch toggles are ignored while no-op writes still
+issue SET_CUR and report success.
 
-Notify the control only after a successful write.
+Return early only when the requested value matches the cached one.
 
-Fixes: 7d2b451e65d2 ("ALSA: usb-audio - Added functionality for E-mu 0404USB/0202USB/TrackerPre")
+Fixes: 288673beae6c ("ALSA: usb-audio: Add resume support for MicroII SPDIF ctls")
 Cc: stable@vger.kernel.org
 Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260421-alsa-emuusb-samplerate-notify-v1-1-8b63bbc1d7f1@gmail.com
+Link: https://patch.msgid.link/20260421-microii-spdif-switch-fix-v1-1-5c50dc28b88f@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_quirks.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ sound/usb/mixer_quirks.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/sound/usb/mixer_quirks.c
 +++ b/sound/usb/mixer_quirks.c
-@@ -1561,15 +1561,17 @@ void snd_emuusb_set_samplerate(struct sn
- {
- 	struct usb_mixer_interface *mixer;
- 	struct usb_mixer_elem_info *cval;
-+	int err;
- 	int unitid = 12; /* SampleRate ExtensionUnit ID */
+@@ -2066,7 +2066,7 @@ static int snd_microii_spdif_switch_put(
+ 	int err;
  
- 	list_for_each_entry(mixer, &chip->mixer_list, list) {
- 		if (mixer->id_elems[unitid]) {
- 			cval = mixer_elem_list_to_info(mixer->id_elems[unitid]);
--			snd_usb_mixer_set_ctl_value(cval, UAC_SET_CUR,
--						    cval->control << 8,
--						    samplerate_id);
--			snd_usb_mixer_notify_id(mixer, unitid);
-+			err = snd_usb_mixer_set_ctl_value(cval, UAC_SET_CUR,
-+							  cval->control << 8,
-+							  samplerate_id);
-+			if (!err)
-+				snd_usb_mixer_notify_id(mixer, unitid);
- 			break;
- 		}
- 	}
+ 	reg = ucontrol->value.integer.value[0] ? 0x28 : 0x2a;
+-	if (reg != list->kctl->private_value)
++	if (reg == list->kctl->private_value)
+ 		return 0;
+ 
+ 	kcontrol->private_value = reg;
 
 
