@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1156A23392B;
-	Sat, 30 May 2026 18:02:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3E4349CC5;
+	Sat, 30 May 2026 18:02:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164163; cv=none; b=HuFMtDzfHj7RjQHaPAkWph49Op5JPRrAxEYKGuwtvWHcYOPcUlSTPidSrJDX5qh2qzwjXDAihARFBjPY7q9+r0A/9nFmLUs9mkGeeo+ILVqZfQNqOKLTjVjgGFDiQF7LeMplreuv9A1r5OV9oDpipiqyyYLbhN2mbym/7yAAcAw=
+	t=1780164166; cv=none; b=L5ynT0hpvG1qB+pIrYFuPf7VBvN7miwCLHoW7Nh/QYrRXEsAEFnicKdLWRREUBHo8sd9rev/HksydWCT858Z+DmlK4QlxMHzNVRgyQ/FgG6tJf6BKafs3JkR8AO+b+HGQoA5QwuvdBF82bXtLlnBeZLLUYjUGRQ2AA+nNnPhNw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164163; c=relaxed/simple;
-	bh=tJJVLUPIPTVnziNlZdMZMrWpYPs9dk4hDkvNd7X7PTo=;
+	s=arc-20240116; t=1780164166; c=relaxed/simple;
+	bh=8r56om+26vNz9Jnv1uGGK4e/Addc3XF2yFeMmpqVKyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MRqpFNSP5hAC9N3WRS6h+CqOfOXSnZIpCUku+r2Kdr5KhrAACnjdP70WgD6kKfrPglofiY4Qy+L8Af7wZFN6CpEw1qCDy9whu3Bbg/CutULc96ffg3qe5eqGlCXeqSVuzTqWJ2+a7OpoKkpRYvWIOx8BAn2cw4nn6QkrA9YcaIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CosHtZmV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M1NBsTlAKMXnZE4vpnAy6K29ikY3Y0dp7+72Ss2bw3AtBkjxI9J4Uoa5szEc1oPVn9p5YmtozLBIKAw+bwV1SocNadCrMS1xb0GHhd2KHBG5t69k6LHjrGQl96A6eU9n2yMpHpv04bCpkB80BEAb3MdCJ99Hc6SAOm+zo628SDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKrb5wNX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CosHtZmV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554691F00893;
-	Sat, 30 May 2026 18:02:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKrb5wNX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA791F00893;
+	Sat, 30 May 2026 18:02:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164162;
-	bh=R8tttKc25KHhvWlnTyBupQxMX8JLSVAwagiDRQdBYlk=;
+	s=korg; t=1780164165;
+	bh=S1fPccKv5tCTA56OAV18Z5adzCin572HL9wn7+MKfsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CosHtZmVBTr5NV/a2PhrKY7nZocVi3mWEDKrv0f50Vn3hmBr/8nPGyByapRIzuijk
-	 ZVtC3orikr6M10WmJ3bhoNK6Xb49yxuZlXUO9bxvFLEyFIr3YqaUUKM7pywiaRWljj
-	 iXgmdh/ByUOuBzkiAHjrUy4JYLrrlhV3JC1UJSTo=
+	b=UKrb5wNXA+XXytpP25trpHjBQaHNoctHEaZ4bW1862r7NwH6wMGhNpkdjKeR7c8nJ
+	 8xQZBAjF61hXeRIh0OPkUKLDXOJxJBk0urEvpsYS/IbtHjOnV9tDmCdXoLoig0er15
+	 86IcZSwSBe1gLxERlanYO+1tJ0WnBBmmr5N87B90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Jon Hunter <jonathanh@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 473/776] PCI: tegra194: Disable LTSSM after transition to Detect on surprise link down
-Date: Sat, 30 May 2026 18:03:07 +0200
-Message-ID: <20260530160252.568811696@linuxfoundation.org>
+Subject: [PATCH 5.15 474/776] PCI: tegra194: Use devm_gpiod_get_optional() to parse "nvidia,refclk-select"
+Date: Sat, 30 May 2026 18:03:08 +0200
+Message-ID: <20260530160252.594221143@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -54,89 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+From: Vidya Sagar <vidyas@nvidia.com>
 
-[ Upstream commit 9fa0c242f8d7acf1b124d4462d18f4023573ac1c ]
+[ Upstream commit f62bc7917de1374dce86a852ffba8baf9cb7a56a ]
 
-After the link reaches a Detect-related LTSSM state, disable LTSSM so it
-does not keep toggling between Polling and Detect. Do this by polling for
-the Detect state first, then clearing APPL_CTRL_LTSSM_EN in both
-tegra_pcie_dw_pme_turnoff() and pex_ep_event_pex_rst_assert().
+The GPIO DT property "nvidia,refclk-select", to select the PCIe reference
+clock is optional. Use devm_gpiod_get_optional() to get it.
 
-Fixes: 56e15a238d92 ("PCI: tegra: Add Tegra194 PCIe support")
+Fixes: c57247f940e8 ("PCI: tegra: Add support for PCIe endpoint mode in Tegra194")
 Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
 Signed-off-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Tested-by: Jon Hunter <jonathanh@nvidia.com>
 Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260324190755.1094879-4-mmaddireddy@nvidia.com
+Reviewed-by: Vidya Sagar <vidyas@nvidia.com>
+Link: https://patch.msgid.link/20260324190755.1094879-7-mmaddireddy@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-tegra194.c | 29 ++++++++++++----------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ drivers/pci/controller/dwc/pcie-tegra194.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-index a7ab82067d538..c32184e8e5636 100644
+index c32184e8e5636..d5f48aa6bf5a2 100644
 --- a/drivers/pci/controller/dwc/pcie-tegra194.c
 +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-@@ -1539,14 +1539,6 @@ static void tegra_pcie_dw_pme_turnoff(struct tegra_pcie_dw *pcie)
- 		data &= ~APPL_PINMUX_PEX_RST;
- 		appl_writel(pcie, data, APPL_PINMUX);
- 
--		/*
--		 * Some cards do not go to detect state even after de-asserting
--		 * PERST#. So, de-assert LTSSM to bring link to detect state.
--		 */
--		data = readl(pcie->appl_base + APPL_CTRL);
--		data &= ~APPL_CTRL_LTSSM_EN;
--		writel(data, pcie->appl_base + APPL_CTRL);
--
- 		err = readl_poll_timeout(pcie->appl_base + APPL_DEBUG, data,
- 			((data & APPL_DEBUG_LTSSM_STATE_MASK) == LTSSM_STATE_DETECT_QUIET) ||
- 			((data & APPL_DEBUG_LTSSM_STATE_MASK) == LTSSM_STATE_DETECT_ACT) ||
-@@ -1555,6 +1547,14 @@ static void tegra_pcie_dw_pme_turnoff(struct tegra_pcie_dw *pcie)
- 			LTSSM_DELAY_US, LTSSM_TIMEOUT_US);
- 		if (err)
- 			dev_info(pcie->dev, "LTSSM state: 0x%x detect timeout: %d\n", data, err);
-+
-+		/*
-+		 * Deassert LTSSM state to stop the state toggling between
-+		 * Polling and Detect.
-+		 */
-+		data = readl(pcie->appl_base + APPL_CTRL);
-+		data &= ~APPL_CTRL_LTSSM_EN;
-+		writel(data, pcie->appl_base + APPL_CTRL);
+@@ -1146,9 +1146,9 @@ static int tegra_pcie_dw_parse_dt(struct tegra_pcie_dw *pcie)
+ 		return err;
  	}
- 	/*
- 	 * DBI registers may not be accessible after this as PLL-E would be
-@@ -1636,11 +1636,6 @@ static void pex_ep_event_pex_rst_assert(struct tegra_pcie_dw *pcie)
- 	if (pcie->ep_state == EP_STATE_DISABLED)
- 		return;
  
--	/* Disable LTSSM */
--	val = appl_readl(pcie, APPL_CTRL);
--	val &= ~APPL_CTRL_LTSSM_EN;
--	appl_writel(pcie, val, APPL_CTRL);
--
- 	ret = readl_poll_timeout(pcie->appl_base + APPL_DEBUG, val,
- 		((val & APPL_DEBUG_LTSSM_STATE_MASK) == LTSSM_STATE_DETECT_QUIET) ||
- 		((val & APPL_DEBUG_LTSSM_STATE_MASK) == LTSSM_STATE_DETECT_ACT) ||
-@@ -1651,6 +1646,14 @@ static void pex_ep_event_pex_rst_assert(struct tegra_pcie_dw *pcie)
- 	if (ret)
- 		dev_info(pcie->dev, "LTSSM state: 0x%x detect timeout: %d\n", val, ret);
- 
-+	/*
-+	 * Deassert LTSSM state to stop the state toggling between
-+	 * Polling and Detect.
-+	 */
-+	val = appl_readl(pcie, APPL_CTRL);
-+	val &= ~APPL_CTRL_LTSSM_EN;
-+	appl_writel(pcie, val, APPL_CTRL);
-+
- 	reset_control_assert(pcie->core_rst);
- 
- 	tegra_pcie_disable_phy(pcie);
+-	pcie->pex_refclk_sel_gpiod = devm_gpiod_get(pcie->dev,
+-						    "nvidia,refclk-select",
+-						    GPIOD_OUT_HIGH);
++	pcie->pex_refclk_sel_gpiod = devm_gpiod_get_optional(pcie->dev,
++							     "nvidia,refclk-select",
++							     GPIOD_OUT_HIGH);
+ 	if (IS_ERR(pcie->pex_refclk_sel_gpiod)) {
+ 		int err = PTR_ERR(pcie->pex_refclk_sel_gpiod);
+ 		const char *level = KERN_ERR;
 -- 
 2.53.0
 
