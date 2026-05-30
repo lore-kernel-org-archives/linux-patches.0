@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E101D2E7379;
-	Sat, 30 May 2026 17:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C4CC349CCF;
+	Sat, 30 May 2026 17:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162256; cv=none; b=tQcekjVUMOr5r62Xvm2oUAadOfMAGUAkwAY90bDXaihY0ydCC13U5dogKJ1yZI9Xg1/ytBKQ1kAA9cl7JMpszZj7XOzdU0kfDt2ITEJpu6ic+6e1aiClMzqBwMgKMNbD4dljzPnL/7fKr3DNoFHIpZD1D3oFLTSBSEgn/4Og7PA=
+	t=1780162261; cv=none; b=m8pCgTUFFkXIb2lv8nP5Cimgjuk7vzoLQr/aE4FArXYfDb4rYd+B/NpxkK9Ig8S6fBqD/Zrewh2f4Imt+mleojwcJjcz3x6rncVSTJvvVfdICmSmEmzVv3Npg+KHooljWRGAzOFZMRVQXJlguDO9eYRia4f48S5KNhQr2pjHnLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162256; c=relaxed/simple;
-	bh=X5ckjMDl6kLWXMMTwC1gGN2/R+0Uch500lDVcLea75Q=;
+	s=arc-20240116; t=1780162261; c=relaxed/simple;
+	bh=izRQkCCyo+Zu3GH+UfLUnWwvkdEoOeY5f8Zr3BJ4qd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YGGBvbiNcj5JSGyENN0HnC9s/vUH3V5CyBSumVre0NGtiuW4O5tyuh+vbe98TcU7ly+dVB/CKV1/R1x+cJPMxqmpILqIUIaMOG/Vi/ookkS0LMQm7fvOgUx9KpHVgQykDzbm+OTFEoRuifa7QZDf0xO9jqmiD63mMKZGSLOQ31U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q+62upgt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V+PWUDrKhJHUPNanIQw0WjQcr6ts1rmzMh8PpZBrZ/xNgNkv2gmLxCk26uOEpC0eCPS3X+0B8O+2+hj2X4VbJe/duxkEMRRhB1Rw/7BgNBFVpkZAEC0PMhZRLP5siKTReS3SOvYIVqmz0lmyPLGZAvTA98ltRhRFYU7iLO7SNMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KBcWDe6a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q+62upgt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B821F00893;
-	Sat, 30 May 2026 17:30:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KBcWDe6a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515F81F00893;
+	Sat, 30 May 2026 17:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162255;
-	bh=Us9G9Bm7J+epRUv799Q7/gZodtKjZKrf1C/gLU2hSig=;
+	s=korg; t=1780162259;
+	bh=ycQudfmQOELWu7UK04XMVsuTdPWlZdfr3OkPKAl85wI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q+62upgteU7bOdSyto1piMIZqDi81qAre2l16ajtLU5UKNJh0TvpdHeu9fKQ0A2/X
-	 23XuHWofQ8zuC3jbo91yIaGm70/UYTHpf9hCV9bZbVruwQYkMvVz3Bfb1UMLI+fAKG
-	 qxr6KZWP8ciVgQJvtHaxqhU67JEtqUYIi1qVU+EE=
+	b=KBcWDe6aQszsTyl5/Av/nIYQ7339/BB3+wU1n4T0+UKd4Gt2rWzkvtkebL/22s3FE
+	 MJpVgMV52aYALHWVYGVrD5LeT4USs9VnUqw8TDmqR6yzeACBsKRKgZso/6QA74Xaua
+	 tZZGH/aU3wWPgzg8iPVOm2QHHevJAXnyPK9N/k/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 868/969] scsi: isci: Fix use-after-free in device removal path
-Date: Sat, 30 May 2026 18:06:32 +0200
-Message-ID: <20260530160324.648258168@linuxfoundation.org>
+	Lanqing Liu <lanqing.liu@unisoc.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 869/969] spi: sprd: fix error pointer deref after DMA setup failure
+Date: Sat, 30 May 2026 18:06:33 +0200
+Message-ID: <20260530160324.677168968@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -50,60 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit b52a8d52c3125ec9a93106ed816582368de34426 upstream.
+commit 3d67fffb74267772d461c02c67f1eff893ad547d upstream.
 
-The ISCI completion tasklet is initialized in isci_host_alloc()
-(drivers/scsi/isci/init.c:496) and scheduled from both MSI-X and legacy
-interrupt handlers (drivers/scsi/isci/host.c:223,613).
+The driver falls back to PIO mode if DMA setup fails during probe.
 
-isci_host_deinit() stops the controller and waits for stop completion,
-but it never kills completion_tasklet before teardown continues. A
-top-of-function tasklet_kill() is not sufficient here: interrupts are
-only disabled when isci_host_stop_complete() runs, so until
-wait_for_stop() returns the IRQ handlers can still requeue the
-tasklet. The tasklet callback also re-enables interrupts after draining
-completions, so killing the tasklet before the source is quiesced leaves
-the same race open.
+Make sure to check the dma.enabled flag before trying to release the DMA
+channels also on late probe errors to avoid dereferencing an error
+pointer (or attempting to release a channel a second time).
 
-Once wait_for_stop() returns, no further IRQ-driven scheduling can
-occur. Kill completion_tasklet there so teardown cannot race a queued
-tasklet running on a dead ihost. On remove or unload, the stale callback
-can otherwise dereference ihost and touch ihost->smu_registers after the
-host lifetime ends.
+This issue was flagged by Sashiko when reviewing a devres allocation
+conversion patch.
 
-A UML + KASAN analogue reproduced the failure class both with no
-tasklet_kill() and with tasklet_kill() placed before source quiesce, and
-stayed clean once the kill happened after quiescing the scheduling
-source.
-
-This mirrors commit f6ab594672d4 ("scsi: aic94xx: fix use-after-free in
-device removal path"), but ISCI needs the kill after wait_for_stop().
-
-Fixes: 6f231dda6808 ("isci: Intel(R) C600 Series Chipset Storage Control Unit Driver")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260419210420.2134639-1-michael.bommarito@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 386119bc7be9 ("spi: sprd: spi: sprd: Add DMA mode support")
+Link: https://sashiko.dev/#/patchset/20260505072909.618363-1-johan%40kernel.org?part=10
+Cc: stable@vger.kernel.org	# 5.1
+Cc: Lanqing Liu <lanqing.liu@unisoc.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260512074733.915029-1-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/isci/host.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/spi/spi-sprd.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/isci/host.c
-+++ b/drivers/scsi/isci/host.c
-@@ -1252,6 +1252,9 @@ void isci_host_deinit(struct isci_host *
+--- a/drivers/spi/spi-sprd.c
++++ b/drivers/spi/spi-sprd.c
+@@ -995,7 +995,8 @@ err_rpm_put:
+ disable_clk:
+ 	clk_disable_unprepare(ss->clk);
+ release_dma:
+-	sprd_spi_dma_release(ss);
++	if (ss->dma.enable)
++		sprd_spi_dma_release(ss);
+ free_controller:
+ 	spi_controller_put(sctlr);
  
- 	wait_for_stop(ihost);
- 
-+	/* No further IRQ-driven scheduling can happen past wait_for_stop(). */
-+	tasklet_kill(&ihost->completion_tasklet);
-+
- 	/* phy stop is after controller stop to allow port and device to
- 	 * go idle before shutting down the phys, but the expectation is
- 	 * that i/o has been shut off well before we reach this
 
 
