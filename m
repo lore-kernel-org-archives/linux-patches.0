@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783E8349CCF;
-	Sat, 30 May 2026 17:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC693BE620;
+	Sat, 30 May 2026 17:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162614; cv=none; b=VO5E4ijUpSOTlbdK7wdoKJhLxEK5On3BGrIhqkBvZ9U0FaBk6soq3lUOZHQarYGXLUiHCjdb6S/tkRWoZ32J+6dSf3RsXlffajDEvqDIy8ms41T/otwuBE2H3D1yGkHAnTKjUbTZWfOBjITVwGRCY1hY0j0swNxqJCEt7uoMcE4=
+	t=1780162617; cv=none; b=Dt+VG8ADL04nLM9LyoOSLfYVCtp3QQ2ZsDX+/6P/XircSCFSElEP5wvetXWxCNxFdwOuOVw6lsg4g3QwfvEu/hTa+uMeQQU0d+6yk/HEX7kAo55nhtzi2/XoOVXjdSG1JKawUtflsLIbKCTaENs83hn3bZIxQU5PRrj3dZ+RYx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162614; c=relaxed/simple;
-	bh=Z5IFlwi/zvdvTFxzuA1sFpYljsGozRN9QAfvMkqY4qE=;
+	s=arc-20240116; t=1780162617; c=relaxed/simple;
+	bh=n/CLvyBcoRQj9BVRtQCnd0rI4/IAlofPystjFoEz8VU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k4B0veGozddgsp0AQJ+DOsEODzcFL5Qw9vvGsGJCjHUH+caTW/LCeeKgODwCQAn0NB6wm5Jh2CpF8RVRrZdnf3doe9d5xN/YK+NSBYW/4jOA1f1h4mXV+8gtSA+CqgD2hSNsUPFtrzVToXIRNDxClY7+DjQYCuGJrGa9nwQiKeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kmfReSiw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dkuL0EgtNICktBRE7fsWyJdF/KjUxAK8CbWSOuitvRGY8eOKTWnSSOPYRz4kh+Gxx4invEKKT74+NgwL8Sce3r+QrMUCICzDSKQYSMxyN4xsokUHS8gig2di0sjaSFPcED4qZV9nRelmEdQASuNPCuFJVViMrRgscne11b/CA08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWzup/Dg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kmfReSiw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B78601F0089A;
-	Sat, 30 May 2026 17:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWzup/Dg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE891F00899;
+	Sat, 30 May 2026 17:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162613;
-	bh=N/9rxeJ0XpKzCxb2jgq8a/200K7U1FiNcPZMYeYDs/Y=;
+	s=korg; t=1780162616;
+	bh=LD+SY7y91lWYPJ0Qf1E0wCr4PoxoSXeG92UTo6r84TQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kmfReSiw3EqU/po1VX78djGStd0j5eX7d95DZ9yTQ8C9Cn5R7DCSX8JcscijP4XDu
-	 8QVlOZeH3nYc7GVQbI14UFIdMZ4dtX7xxLo14kDOC+GMn8Hhc+dJYAteL3FN7UvkLS
-	 btDG3Vnm1EsHqCRSDBapM6QHTcQi/4CPm0y2VMl4=
+	b=jWzup/DgQzkY0T5Dq2et+3PqW6leddgJx2V1vsebDKVmlukyA0/FzYURcDnzKrqgK
+	 FmWD3UV/WAix+Ejdsg+17wWo9t3qVSOT2bQe4p6OkOs+hTY+N/7eIc4uL3qB/oDaM+
+	 we2AE1DRhXTrUdE5GvAbSEMWdNpOfqJipCKVnpEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Daniel Golle <daniel@makrotopia.org>,
+	"Chester A. Unal" <chester.a.unal@arinc9.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 953/969] net: dsa: mt7530: rename mt753x_bpdu_port_fw enum to mt753x_to_cpu_fw
-Date: Sat, 30 May 2026 18:07:57 +0200
-Message-ID: <20260530160327.078794484@linuxfoundation.org>
+Subject: [PATCH 6.1 954/969] net: dsa: mt7530: preserve VLAN tags on trapped link-local frames
+Date: Sat, 30 May 2026 18:07:58 +0200
+Message-ID: <20260530160327.108779792@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,187 +46,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arınç ÜNAL <arinc.unal@arinc9.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 7603a0c7d2210a253265394b50567c64fbb977e4 ]
+[ Upstream commit 3ac85bcfd404b588298c95c6fba8aad4ad334f57 ]
 
-The mt753x_bpdu_port_fw enum is globally used for manipulating the process
-of deciding the forwardable ports, specifically concerning the CPU port(s).
-Therefore, rename it and the values in it to mt753x_to_cpu_fw.
+The BPC, RGAC1 and RGAC2 registers control the handling of link-local
+frames with reserved MAC DAs (01:80:C2:00:00:0x). These frames are
+correctly trapped to the CPU port, but the egress VLAN tag attribute was
+set to MT7530_VLAN_EG_UNTAGGED which causes the switch to strip any
+VLAN tags from trapped frames before they reach the CPU.
 
-Change FOLLOW_MFC to SYSTEM_DEFAULT to be on par with the switch documents.
+This causes VLAN-tagged link-local frames (STP BPDUs, LLDP, PTP Peer
+Delay Requests) to arrive at the CPU without their VLAN tag, so they
+are delivered to the base network interface instead of the VLAN
+sub-interface. The DSA local_termination selftest confirms this: all
+link-local protocol tests on VLAN upper interfaces fail.
 
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 3ac85bcfd404 ("net: dsa: mt7530: preserve VLAN tags on trapped link-local frames")
+Set the EG_TAG attribute to MT7530_VLAN_EG_DISABLED (system default)
+so that the switch does not modify VLAN tags in trapped frames. This
+way VLAN-tagged frames retain their original tag and are delivered to
+the correct VLAN sub-interface, matching the behavior of non-trapped
+frames which pass through without VLAN tag modification.
+
+Fixes: 69ddba9d170b ("net: dsa: mt7530: fix handling of all link-local frames")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Acked-by: Chester A. Unal <chester.a.unal@arinc9.com>
+Link: https://patch.msgid.link/891e0cd34db2a5fe20ceb73283a81fb5f71427ca.1778766629.git.daniel@makrotopia.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 44 ++++++++++-------------
- drivers/net/dsa/mt7530.h | 76 ++++++++++++++++++++--------------------
- 2 files changed, 56 insertions(+), 64 deletions(-)
+ drivers/net/dsa/mt7530.c | 27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
 diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index 3e81871688a9f..fc3c97d0df4fc 100644
+index fc3c97d0df4fc..73eeb6aeac5cc 100644
 --- a/drivers/net/dsa/mt7530.c
 +++ b/drivers/net/dsa/mt7530.c
-@@ -1191,42 +1191,34 @@ mt753x_trap_frames(struct mt7530_priv *priv)
- 	 * VLAN-untagged.
+@@ -1187,37 +1187,40 @@ static void mt7530_setup_port5(struct dsa_switch *ds, phy_interface_t interface)
+ static void
+ mt753x_trap_frames(struct mt7530_priv *priv)
+ {
+-	/* Trap 802.1X PAE frames and BPDUs to the CPU port(s) and egress them
+-	 * VLAN-untagged.
++	/* Trap 802.1X PAE frames and BPDUs to the CPU port(s) and egress
++	 * them with the EG_TAG attribute set to disabled (system default)
++	 * so that any VLAN tags in the frame are not modified by the
++	 * switch egress VLAN tag processing. This preserves VLAN tags
++	 * for reception on VLAN sub-interfaces.
  	 */
  	mt7530_rmw(priv, MT753X_BPC,
--		   MT753X_PAE_BPDU_FR | MT753X_PAE_EG_TAG_MASK |
--			   MT753X_PAE_PORT_FW_MASK | MT753X_BPDU_EG_TAG_MASK |
--			   MT753X_BPDU_PORT_FW_MASK,
--		   MT753X_PAE_BPDU_FR |
--			   MT753X_PAE_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
--			   MT753X_PAE_PORT_FW(MT753X_BPDU_CPU_ONLY) |
--			   MT753X_BPDU_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
--			   MT753X_BPDU_CPU_ONLY);
-+		   PAE_BPDU_FR | PAE_EG_TAG_MASK | PAE_PORT_FW_MASK |
-+			   BPDU_EG_TAG_MASK | BPDU_PORT_FW_MASK,
-+		   PAE_BPDU_FR | PAE_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
-+			   PAE_PORT_FW(TO_CPU_FW_CPU_ONLY) |
-+			   BPDU_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
-+			   TO_CPU_FW_CPU_ONLY);
+ 		   PAE_BPDU_FR | PAE_EG_TAG_MASK | PAE_PORT_FW_MASK |
+ 			   BPDU_EG_TAG_MASK | BPDU_PORT_FW_MASK,
+-		   PAE_BPDU_FR | PAE_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++		   PAE_BPDU_FR | PAE_EG_TAG(MT7530_VLAN_EG_DISABLED) |
+ 			   PAE_PORT_FW(TO_CPU_FW_CPU_ONLY) |
+-			   BPDU_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++			   BPDU_EG_TAG(MT7530_VLAN_EG_DISABLED) |
+ 			   TO_CPU_FW_CPU_ONLY);
  
- 	/* Trap frames with :01 and :02 MAC DAs to the CPU port(s) and egress
- 	 * them VLAN-untagged.
+-	/* Trap frames with :01 and :02 MAC DAs to the CPU port(s) and egress
+-	 * them VLAN-untagged.
++	/* Trap frames with :01 and :02 MAC DAs to the CPU port(s) and
++	 * egress them with EG_TAG disabled.
  	 */
  	mt7530_rmw(priv, MT753X_RGAC1,
--		   MT753X_R02_BPDU_FR | MT753X_R02_EG_TAG_MASK |
--			   MT753X_R02_PORT_FW_MASK | MT753X_R01_BPDU_FR |
--			   MT753X_R01_EG_TAG_MASK | MT753X_R01_PORT_FW_MASK,
--		   MT753X_R02_BPDU_FR |
--			   MT753X_R02_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
--			   MT753X_R02_PORT_FW(MT753X_BPDU_CPU_ONLY) |
--			   MT753X_R01_BPDU_FR |
--			   MT753X_R01_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
--			   MT753X_BPDU_CPU_ONLY);
-+		   R02_BPDU_FR | R02_EG_TAG_MASK | R02_PORT_FW_MASK |
-+			   R01_BPDU_FR | R01_EG_TAG_MASK | R01_PORT_FW_MASK,
-+		   R02_BPDU_FR | R02_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
-+			   R02_PORT_FW(TO_CPU_FW_CPU_ONLY) | R01_BPDU_FR |
-+			   R01_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
-+			   TO_CPU_FW_CPU_ONLY);
+ 		   R02_BPDU_FR | R02_EG_TAG_MASK | R02_PORT_FW_MASK |
+ 			   R01_BPDU_FR | R01_EG_TAG_MASK | R01_PORT_FW_MASK,
+-		   R02_BPDU_FR | R02_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++		   R02_BPDU_FR | R02_EG_TAG(MT7530_VLAN_EG_DISABLED) |
+ 			   R02_PORT_FW(TO_CPU_FW_CPU_ONLY) | R01_BPDU_FR |
+-			   R01_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++			   R01_EG_TAG(MT7530_VLAN_EG_DISABLED) |
+ 			   TO_CPU_FW_CPU_ONLY);
  
- 	/* Trap frames with :03 and :0E MAC DAs to the CPU port(s) and egress
- 	 * them VLAN-untagged.
+-	/* Trap frames with :03 and :0E MAC DAs to the CPU port(s) and egress
+-	 * them VLAN-untagged.
++	/* Trap frames with :03 and :0E MAC DAs to the CPU port(s) and
++	 * egress them with EG_TAG disabled.
  	 */
  	mt7530_rmw(priv, MT753X_RGAC2,
--		   MT753X_R0E_BPDU_FR | MT753X_R0E_EG_TAG_MASK |
--			   MT753X_R0E_PORT_FW_MASK | MT753X_R03_BPDU_FR |
--			   MT753X_R03_EG_TAG_MASK | MT753X_R03_PORT_FW_MASK,
--		   MT753X_R0E_BPDU_FR |
--			   MT753X_R0E_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
--			   MT753X_R0E_PORT_FW(MT753X_BPDU_CPU_ONLY) |
--			   MT753X_R03_BPDU_FR |
--			   MT753X_R03_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
--			   MT753X_BPDU_CPU_ONLY);
-+		   R0E_BPDU_FR | R0E_EG_TAG_MASK | R0E_PORT_FW_MASK |
-+			   R03_BPDU_FR | R03_EG_TAG_MASK | R03_PORT_FW_MASK,
-+		   R0E_BPDU_FR | R0E_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
-+			   R0E_PORT_FW(TO_CPU_FW_CPU_ONLY) | R03_BPDU_FR |
-+			   R03_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
-+			   TO_CPU_FW_CPU_ONLY);
+ 		   R0E_BPDU_FR | R0E_EG_TAG_MASK | R0E_PORT_FW_MASK |
+ 			   R03_BPDU_FR | R03_EG_TAG_MASK | R03_PORT_FW_MASK,
+-		   R0E_BPDU_FR | R0E_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++		   R0E_BPDU_FR | R0E_EG_TAG(MT7530_VLAN_EG_DISABLED) |
+ 			   R0E_PORT_FW(TO_CPU_FW_CPU_ONLY) | R03_BPDU_FR |
+-			   R03_EG_TAG(MT7530_VLAN_EG_UNTAGGED) |
++			   R03_EG_TAG(MT7530_VLAN_EG_DISABLED) |
+ 			   TO_CPU_FW_CPU_ONLY);
  }
  
- static int
-diff --git a/drivers/net/dsa/mt7530.h b/drivers/net/dsa/mt7530.h
-index 6441e8d7f05d9..54d806a1c2713 100644
---- a/drivers/net/dsa/mt7530.h
-+++ b/drivers/net/dsa/mt7530.h
-@@ -66,47 +66,47 @@ enum mt753x_id {
- #define MT753X_MIRROR_MASK(id)		(((id) == ID_MT7531) ? \
- 					 MT7531_MIRROR_MASK : MIRROR_MASK)
- 
--/* Registers for BPDU and PAE frame control*/
-+/* Register for BPDU and PAE frame control */
- #define MT753X_BPC			0x24
--#define  MT753X_PAE_BPDU_FR		BIT(25)
--#define  MT753X_PAE_EG_TAG_MASK		GENMASK(24, 22)
--#define  MT753X_PAE_EG_TAG(x)		FIELD_PREP(MT753X_PAE_EG_TAG_MASK, x)
--#define  MT753X_PAE_PORT_FW_MASK	GENMASK(18, 16)
--#define  MT753X_PAE_PORT_FW(x)		FIELD_PREP(MT753X_PAE_PORT_FW_MASK, x)
--#define  MT753X_BPDU_EG_TAG_MASK	GENMASK(8, 6)
--#define  MT753X_BPDU_EG_TAG(x)		FIELD_PREP(MT753X_BPDU_EG_TAG_MASK, x)
--#define  MT753X_BPDU_PORT_FW_MASK	GENMASK(2, 0)
--
--/* Register for :01 and :02 MAC DA frame control */
-+#define  PAE_BPDU_FR			BIT(25)
-+#define  PAE_EG_TAG_MASK		GENMASK(24, 22)
-+#define  PAE_EG_TAG(x)			FIELD_PREP(PAE_EG_TAG_MASK, x)
-+#define  PAE_PORT_FW_MASK		GENMASK(18, 16)
-+#define  PAE_PORT_FW(x)			FIELD_PREP(PAE_PORT_FW_MASK, x)
-+#define  BPDU_EG_TAG_MASK		GENMASK(8, 6)
-+#define  BPDU_EG_TAG(x)			FIELD_PREP(BPDU_EG_TAG_MASK, x)
-+#define  BPDU_PORT_FW_MASK		GENMASK(2, 0)
-+
-+/* Register for 01-80-C2-00-00-[01,02] MAC DA frame control */
- #define MT753X_RGAC1			0x28
--#define  MT753X_R02_BPDU_FR		BIT(25)
--#define  MT753X_R02_EG_TAG_MASK		GENMASK(24, 22)
--#define  MT753X_R02_EG_TAG(x)		FIELD_PREP(MT753X_R02_EG_TAG_MASK, x)
--#define  MT753X_R02_PORT_FW_MASK	GENMASK(18, 16)
--#define  MT753X_R02_PORT_FW(x)		FIELD_PREP(MT753X_R02_PORT_FW_MASK, x)
--#define  MT753X_R01_BPDU_FR		BIT(9)
--#define  MT753X_R01_EG_TAG_MASK		GENMASK(8, 6)
--#define  MT753X_R01_EG_TAG(x)		FIELD_PREP(MT753X_R01_EG_TAG_MASK, x)
--#define  MT753X_R01_PORT_FW_MASK	GENMASK(2, 0)
--
--/* Register for :03 and :0E MAC DA frame control */
-+#define  R02_BPDU_FR			BIT(25)
-+#define  R02_EG_TAG_MASK		GENMASK(24, 22)
-+#define  R02_EG_TAG(x)			FIELD_PREP(R02_EG_TAG_MASK, x)
-+#define  R02_PORT_FW_MASK		GENMASK(18, 16)
-+#define  R02_PORT_FW(x)			FIELD_PREP(R02_PORT_FW_MASK, x)
-+#define  R01_BPDU_FR			BIT(9)
-+#define  R01_EG_TAG_MASK		GENMASK(8, 6)
-+#define  R01_EG_TAG(x)			FIELD_PREP(R01_EG_TAG_MASK, x)
-+#define  R01_PORT_FW_MASK		GENMASK(2, 0)
-+
-+/* Register for 01-80-C2-00-00-[03,0E] MAC DA frame control */
- #define MT753X_RGAC2			0x2c
--#define  MT753X_R0E_BPDU_FR		BIT(25)
--#define  MT753X_R0E_EG_TAG_MASK		GENMASK(24, 22)
--#define  MT753X_R0E_EG_TAG(x)		FIELD_PREP(MT753X_R0E_EG_TAG_MASK, x)
--#define  MT753X_R0E_PORT_FW_MASK	GENMASK(18, 16)
--#define  MT753X_R0E_PORT_FW(x)		FIELD_PREP(MT753X_R0E_PORT_FW_MASK, x)
--#define  MT753X_R03_BPDU_FR		BIT(9)
--#define  MT753X_R03_EG_TAG_MASK		GENMASK(8, 6)
--#define  MT753X_R03_EG_TAG(x)		FIELD_PREP(MT753X_R03_EG_TAG_MASK, x)
--#define  MT753X_R03_PORT_FW_MASK	GENMASK(2, 0)
--
--enum mt753x_bpdu_port_fw {
--	MT753X_BPDU_FOLLOW_MFC,
--	MT753X_BPDU_CPU_EXCLUDE = 4,
--	MT753X_BPDU_CPU_INCLUDE = 5,
--	MT753X_BPDU_CPU_ONLY = 6,
--	MT753X_BPDU_DROP = 7,
-+#define  R0E_BPDU_FR			BIT(25)
-+#define  R0E_EG_TAG_MASK		GENMASK(24, 22)
-+#define  R0E_EG_TAG(x)			FIELD_PREP(R0E_EG_TAG_MASK, x)
-+#define  R0E_PORT_FW_MASK		GENMASK(18, 16)
-+#define  R0E_PORT_FW(x)			FIELD_PREP(R0E_PORT_FW_MASK, x)
-+#define  R03_BPDU_FR			BIT(9)
-+#define  R03_EG_TAG_MASK		GENMASK(8, 6)
-+#define  R03_EG_TAG(x)			FIELD_PREP(R03_EG_TAG_MASK, x)
-+#define  R03_PORT_FW_MASK		GENMASK(2, 0)
-+
-+enum mt753x_to_cpu_fw {
-+	TO_CPU_FW_SYSTEM_DEFAULT,
-+	TO_CPU_FW_CPU_EXCLUDE = 4,
-+	TO_CPU_FW_CPU_INCLUDE = 5,
-+	TO_CPU_FW_CPU_ONLY = 6,
-+	TO_CPU_FW_DROP = 7,
- };
- 
- /* Registers for address table access */
 -- 
 2.53.0
 
