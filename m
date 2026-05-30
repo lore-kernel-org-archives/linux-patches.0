@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C9021B191;
-	Sat, 30 May 2026 17:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DB834389F;
+	Sat, 30 May 2026 17:42:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162946; cv=none; b=Ls7MOUeHz6MJCracGdf+nQu+Ol9hxaGeG1rZfHsx/2FfRZOpBVZEkZFND/71ihhKBGfcSpRzBdi1eZv3tuQQAnNGB7cf7jyQWsA35sViKKqopVAG/+AI0dls9Wp3GXohPRpefCL3u5qMtxrck+8ZBYid9TuwffUlTrV5h3S3u3M=
+	t=1780162949; cv=none; b=r7nU19n48fDlhhq+VfiU8iuQLEj5gao5dMgBR9hwfThwHK9URfXqNujaRoF/7gKfuL4QL+PLB2oVSadoUvEUCugd3y3KSuyBVK/dUw7JaNkG9VAyONpYmKx0i1In2bxSoLBKU0wB7XenWuAdjGP/deOCFGjeeoIVpUnOV3B09jE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162946; c=relaxed/simple;
-	bh=GyBqdSC/iGQbEq5gMvncKxkHHGa+x0fYax8YKHvCUJ0=;
+	s=arc-20240116; t=1780162949; c=relaxed/simple;
+	bh=GhT9UV3vp/zveAKJmrG01zZR1DJlDxGLQtd2cJ3PQdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jFcKym9Poz8rAN9QiMrq13W2H2Cf/zoDZMFQSuUn+zFBM2hnho5SiEYtXJtpEZrZwXnI0XKoLFcQfhTNslXAvxgTm7WJpxUaiCd+022T5P0Myj3v67g+mhOtLuD5w6f2EItWimPi7Me21S8lCvTMH5BIOAfCRjfW7BCmhAZv4BA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2lWtULFo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ipnXfLfo/k0Bt+BX7HwTagPaEmrs3gSOvrWMd70L8VkPp9tvOAnDVRZ+Ui/fa9981kjniIsQkjiXiq0IyoEulPSC+GDsqAhcvtwL29PzSuDCUjmZ6UBmQZXTR+jo1pVcuAipW5igKRe3yoDbIhUPKZHHYjbnXM2SnHLSvV/su/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eHxXnik8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lWtULFo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147761F00893;
-	Sat, 30 May 2026 17:42:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eHxXnik8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292051F00893;
+	Sat, 30 May 2026 17:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162944;
-	bh=FdvnT/8g07GmZmC/oE8DeH4k9ERLtnAUu+acCcFPt1A=;
+	s=korg; t=1780162948;
+	bh=1nUKMAOcliiN+avdirfNxpCuNr8TW3g4ttKwMpveLxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2lWtULFokxM66uQUr+TRTpZBleU/AVHxEKsRDjPwQgkSZPyfJ19jb8XTMJ6swSXbV
-	 IsRl8JkVBaOvWaRdXXGSVti5XUkBIn3jiJ7CO1joHOqONAuj4OXnZLSfMUEsq+hUfP
-	 T8cG3K/5ghqnI0hFhAYeggxoQbnvbvksDApM7LgY=
+	b=eHxXnik8P7pUad5jmCWdlIsELwGUfKxa+YMmfdJaCcLhwA26M2uGAUgdx0EDiwuT9
+	 2qqBQx2vfDSHvm0rp/fjNmB0g3fLoxGetv6lzVfFPUt8b7AByIhHAbeSOW5vtegqe6
+	 9NtTG4hHCs1pjO5VwPcVLxIonaocmMc4w369yPz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1f5bcc7c919ec578777a@syzkaller.appspotmail.com,
-	Ruslan Valiyev <linuxoid@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 071/776] media: vidtv: fix NULL pointer dereference in vidtv_channel_pmt_match_sections
-Date: Sat, 30 May 2026 17:56:25 +0200
-Message-ID: <20260530160242.155428788@linuxfoundation.org>
+	Tejas Bharambe <tejas.bharambe@outlook.com>,
+	syzbot+a49010a0e8fcdeea075f@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 072/776] ocfs2: fix use-after-free in ocfs2_fault() when VM_FAULT_RETRY
+Date: Sat, 30 May 2026 17:56:26 +0200
+Message-ID: <20260530160242.182401911@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,56 +58,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruslan Valiyev <linuxoid@gmail.com>
+From: Tejas Bharambe <tejas.bharambe@outlook.com>
 
-commit f8e1fc918a9fe67103bcda01d20d745f264d00a7 upstream.
+commit 7de554cabf160e331e4442e2a9ad874ca9875921 upstream.
 
-syzbot reported a general protection fault in vidtv_psi_desc_assign [1].
+filemap_fault() may drop the mmap_lock before returning VM_FAULT_RETRY,
+as documented in mm/filemap.c:
 
-vidtv_psi_pmt_stream_init() can return NULL on memory allocation
-failure, but vidtv_channel_pmt_match_sections() does not check for
-this. When tail is NULL, the subsequent call to
-vidtv_psi_desc_assign(&tail->descriptor, desc) dereferences a NULL
-pointer offset, causing a general protection fault.
+  "If our return value has VM_FAULT_RETRY set, it's because the mmap_lock
+  may be dropped before doing I/O or by lock_folio_maybe_drop_mmap()."
 
-Add a NULL check after vidtv_psi_pmt_stream_init(). On failure, clean
-up the already-allocated stream chain and return.
+When this happens, a concurrent munmap() can call remove_vma() and free
+the vm_area_struct via RCU. The saved 'vma' pointer in ocfs2_fault() then
+becomes a dangling pointer, and the subsequent trace_ocfs2_fault() call
+dereferences it -- a use-after-free.
 
-[1]
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-RIP: 0010:vidtv_psi_desc_assign+0x24/0x90 drivers/media/test-drivers/vidtv/vidtv_psi.c:629
-Call Trace:
- <TASK>
- vidtv_channel_pmt_match_sections drivers/media/test-drivers/vidtv/vidtv_channel.c:349 [inline]
- vidtv_channel_si_init+0x1445/0x1a50 drivers/media/test-drivers/vidtv/vidtv_channel.c:479
- vidtv_mux_init+0x526/0xbe0 drivers/media/test-drivers/vidtv/vidtv_mux.c:519
- vidtv_start_streaming drivers/media/test-drivers/vidtv/vidtv_bridge.c:194 [inline]
- vidtv_start_feed+0x33e/0x4d0 drivers/media/test-drivers/vidtv/vidtv_bridge.c:239
+Fix this by saving ip_blkno as a plain integer before calling
+filemap_fault(), and removing vma from the trace event. Since
+ip_blkno is copied by value before the lock can be dropped, it
+remains valid regardless of what happens to the vma or inode
+afterward.
 
-Fixes: f90cf6079bf67 ("media: vidtv: add a bridge driver")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+1f5bcc7c919ec578777a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1f5bcc7c919ec578777a
-Signed-off-by: Ruslan Valiyev <linuxoid@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Link: https://lkml.kernel.org/r/20260410083816.34951-1-tejas.bharambe@outlook.com
+Fixes: 614a9e849ca6 ("ocfs2: Remove FILE_IO from masklog.")
+Signed-off-by: Tejas Bharambe <tejas.bharambe@outlook.com>
+Reported-by: syzbot+a49010a0e8fcdeea075f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a49010a0e8fcdeea075f
+Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vidtv/vidtv_channel.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ocfs2/mmap.c        |    7 +++----
+ fs/ocfs2/ocfs2_trace.h |   10 ++++------
+ 2 files changed, 7 insertions(+), 10 deletions(-)
 
---- a/drivers/media/test-drivers/vidtv/vidtv_channel.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_channel.c
-@@ -341,6 +341,10 @@ vidtv_channel_pmt_match_sections(struct
- 					tail = vidtv_psi_pmt_stream_init(tail,
- 									 s->type,
- 									 e_pid);
-+					if (!tail) {
-+						vidtv_psi_pmt_stream_destroy(head);
-+						return;
-+					}
+--- a/fs/ocfs2/mmap.c
++++ b/fs/ocfs2/mmap.c
+@@ -30,7 +30,8 @@
  
- 					if (!head)
- 						head = tail;
+ static vm_fault_t ocfs2_fault(struct vm_fault *vmf)
+ {
+-	struct vm_area_struct *vma = vmf->vma;
++	unsigned long long ip_blkno =
++		OCFS2_I(file_inode(vmf->vma->vm_file))->ip_blkno;
+ 	sigset_t oldset;
+ 	vm_fault_t ret;
+ 
+@@ -38,11 +39,9 @@ static vm_fault_t ocfs2_fault(struct vm_
+ 	ret = filemap_fault(vmf);
+ 	ocfs2_unblock_signals(&oldset);
+ 
+-	trace_ocfs2_fault(OCFS2_I(vma->vm_file->f_mapping->host)->ip_blkno,
+-			  vma, vmf->page, vmf->pgoff);
++	trace_ocfs2_fault(ip_blkno, vmf->page, vmf->pgoff);
+ 	return ret;
+ }
+-
+ static vm_fault_t __ocfs2_page_mkwrite(struct file *file,
+ 			struct buffer_head *di_bh, struct page *page)
+ {
+--- a/fs/ocfs2/ocfs2_trace.h
++++ b/fs/ocfs2/ocfs2_trace.h
+@@ -1248,22 +1248,20 @@ TRACE_EVENT(ocfs2_write_end_inline,
+ 
+ TRACE_EVENT(ocfs2_fault,
+ 	TP_PROTO(unsigned long long ino,
+-		 void *area, void *page, unsigned long pgoff),
+-	TP_ARGS(ino, area, page, pgoff),
++		 void *page, unsigned long pgoff),
++	TP_ARGS(ino, page, pgoff),
+ 	TP_STRUCT__entry(
+ 		__field(unsigned long long, ino)
+-		__field(void *, area)
+ 		__field(void *, page)
+ 		__field(unsigned long, pgoff)
+ 	),
+ 	TP_fast_assign(
+ 		__entry->ino = ino;
+-		__entry->area = area;
+ 		__entry->page = page;
+ 		__entry->pgoff = pgoff;
+ 	),
+-	TP_printk("%llu %p %p %lu",
+-		  __entry->ino, __entry->area, __entry->page, __entry->pgoff)
++	TP_printk("%llu %p %lu",
++		  __entry->ino, __entry->page, __entry->pgoff)
+ );
+ 
+ /* End of trace events for fs/ocfs2/mmap.c. */
 
 
