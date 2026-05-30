@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09032E7390;
-	Sat, 30 May 2026 18:21:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFAE02E7390;
+	Sat, 30 May 2026 18:21:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165302; cv=none; b=jT+Pkh23/xNFd4Xyx1yKkpt0LB4FppBHrbaJ4JnlT6I1t9kiobqsDrKnCkWfSM73T4BhjRLvy4D/iY21TPxNR9IyrW6/YPFrePIgHIOSYWhjpWFQzWaZfatBrv9Pfbt6R9WbU9VM9ifFXQyvBpoErvtWrTDLYL0Kra/dU/TWpHM=
+	t=1780165304; cv=none; b=s00xTcEDQqX/WajkaUg/sSUkCLgjsBR2IocqWH3yIfj3CtG9jB5evxg3LcZEdnzaW/PBZ7RSDunt1nU7d7Dnw4TVI45ECaqd5iBm7C9l4peV26g022xI4fSu9UdWTMhnYQOBi378WwXeW7aLZnqGSlwhHHxaxSJ1cJzt6YOvn0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165302; c=relaxed/simple;
-	bh=NiWlwjaXWhfYPOO1Ht6vmMgV1777i1SfJybtvRVC09Y=;
+	s=arc-20240116; t=1780165304; c=relaxed/simple;
+	bh=yTPn4b/vTwy1g0rjnteXJE+vk9BDR7IMO43njJqRaZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eQWDSl4Rt/zHGdt61R0kx66ut+KAuTWKdcl1REGKTq29AZLmAo9UW0XJ4Gv8Aldx78niH6kkQ+YJCPn7hjSYkego/9Ke3NRyx7o9LecQyPyUjLTI14vnPltEeKdkFII25dnAotE5mCLAQJw+mhnaXwchhTkJpG1+Sj8yz2e+CTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ymKSfVsa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ys1o+dVF4z8eEpYyFLC0alvsNn74lucKiEZ4OlutXJa3qzZhddOHAc2RiXBYsjYcAJseZFRW8KLnuzE/66nu7t8QdQGLr/c0rkzklYxBuTu5i7DizfjbxIsxmd+uVHFyjSSP6ooXQQbz388f2VHXz6GTjM0ozkmYUYc6BMf038I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMJVV5KK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ymKSfVsa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E994D1F00893;
-	Sat, 30 May 2026 18:21:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMJVV5KK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC751F00893;
+	Sat, 30 May 2026 18:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165300;
-	bh=8LmY217q/lEqvKfjvRrvB+YwUx954Ray4NXIMRO1nDw=;
+	s=korg; t=1780165303;
+	bh=7CFcBBoQIQLjLtdwi1x4pNvOeZL3Ut7nnXennv9cw6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ymKSfVsaj9GiXmRlYmaI3bv0Q3qS3tpjhvMY1+sXVx0gdhzJdYcxCpwHD4wb5SCTW
-	 559AuW9dzfRMpy2e/1aasEqlcSml/zAdxn6ZvPNlxrXR04jutaPoQYVHHm/IhwjqC+
-	 km3zBPPHQhzt0p8+fLGC8ZjzkbSnJm2JAbsTqm/E=
+	b=hMJVV5KKh8utV5tjD64a4VoBCdqAwkQCc0lHE5oB8PHppuWNlz5rzHiRSgsrNln1J
+	 c9vK0ghzplyh6rSV44Ub6jZvZJCKKd4H1F/bKg9KZep8N+GaZxNKHmC6PnK3OrPqns
+	 YTxkwOWkwLPX5d+R5wxBFCi1XqZOlqCpOKWQ0Z60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuhang Zheng <z1652074432@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Florian Westphal <fw@strlen.de>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 030/589] netfilter: xt_multiport: validate range encoding in checkentry
-Date: Sat, 30 May 2026 17:58:31 +0200
-Message-ID: <20260530160225.375884111@linuxfoundation.org>
+Subject: [PATCH 5.10 039/589] MIPS: mm: Suppress TLB uniquification on EHINV hardware
+Date: Sat, 30 May 2026 17:58:40 +0200
+Message-ID: <20260530160225.615351022@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -56,97 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ren Wei <n05ec@lzu.edu.cn>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit ff64c5bfef12461df8450e0f50bb693b5269c720 ]
+commit 74283cfe216392c7b776ebf6045b5b15ed9dffcd upstream.
 
-ports_match_v1() treats any non-zero pflags entry as the start of a
-port range and unconditionally consumes the next ports[] element as
-the range end.
+Hardware that supports the EHINV feature, mandatory for R6 ISA and FTLB
+implementation, lets software mark TLB entries invalid, which eliminates
+the need to ensure no duplicate matching entries are ever created.  This
+feature is already used by local_flush_tlb_all(), via the UNIQUE_ENTRYHI
+macro, making the preceding call to r4k_tlb_uniquify() superfluous.
 
-The checkentry path currently validates protocol, flags and count, but
-it does not validate the range encoding itself. As a result, malformed
-rules can mark the last slot as a range start or place two range starts
-back to back, leaving ports_match_v1() to step past the last valid
-ports[] element while interpreting the rule.
+The next change will also modify uniquification code such that it'll
+become incompatible with the FTLB and MMID features, as well as MIPSr6
+CPUs that do not implement 4KiB pages.
 
-Reject malformed multiport v1 rules in checkentry by validating that
-each range start has a following element and that the following element
-is not itself marked as another range start.
+Therefore prevent r4k_tlb_uniquify() from being used on EHINV hardware,
+as denoted by `cpu_has_tlbinv'.
 
-Fixes: a89ecb6a2ef7 ("[NETFILTER]: x_tables: unify IPv4/IPv6 multiport match")
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Yuhang Zheng <z1652074432@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_multiport.c | 34 ++++++++++++++++++++++++++++++----
- 1 file changed, 30 insertions(+), 4 deletions(-)
+ arch/mips/mm/tlb-r4k.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/xt_multiport.c b/net/netfilter/xt_multiport.c
-index 44a00f5acde8a..a1691ff405d3c 100644
---- a/net/netfilter/xt_multiport.c
-+++ b/net/netfilter/xt_multiport.c
-@@ -105,6 +105,28 @@ multiport_mt(const struct sk_buff *skb, struct xt_action_param *par)
- 	return ports_match_v1(multiinfo, ntohs(pptr[0]), ntohs(pptr[1]));
- }
+diff --git a/arch/mips/mm/tlb-r4k.c b/arch/mips/mm/tlb-r4k.c
+index 3aef6acd57bdd..af0f1d4693099 100644
+--- a/arch/mips/mm/tlb-r4k.c
++++ b/arch/mips/mm/tlb-r4k.c
+@@ -630,7 +630,8 @@ static void r4k_tlb_configure(void)
+ 	temp_tlb_entry = current_cpu_data.tlbsize - 1;
  
-+static bool
-+multiport_valid_ranges(const struct xt_multiport_v1 *multiinfo)
-+{
-+	unsigned int i;
-+
-+	for (i = 0; i < multiinfo->count; i++) {
-+		if (!multiinfo->pflags[i])
-+			continue;
-+
-+		if (++i >= multiinfo->count)
-+			return false;
-+
-+		if (multiinfo->pflags[i])
-+			return false;
-+
-+		if (multiinfo->ports[i - 1] > multiinfo->ports[i])
-+			return false;
-+	}
-+
-+	return true;
-+}
-+
- static inline bool
- check(u_int16_t proto,
-       u_int8_t ip_invflags,
-@@ -127,8 +149,10 @@ static int multiport_mt_check(const struct xt_mtchk_param *par)
- 	const struct ipt_ip *ip = par->entryinfo;
- 	const struct xt_multiport_v1 *multiinfo = par->matchinfo;
+ 	/* From this point on the ARC firmware is dead.	 */
+-	r4k_tlb_uniquify();
++	if (!cpu_has_tlbinv)
++		r4k_tlb_uniquify();
+ 	local_flush_tlb_all();
  
--	return check(ip->proto, ip->invflags, multiinfo->flags,
--		     multiinfo->count) ? 0 : -EINVAL;
-+	if (!check(ip->proto, ip->invflags, multiinfo->flags, multiinfo->count))
-+		return -EINVAL;
-+
-+	return multiport_valid_ranges(multiinfo) ? 0 : -EINVAL;
- }
- 
- static int multiport_mt6_check(const struct xt_mtchk_param *par)
-@@ -136,8 +160,10 @@ static int multiport_mt6_check(const struct xt_mtchk_param *par)
- 	const struct ip6t_ip6 *ip = par->entryinfo;
- 	const struct xt_multiport_v1 *multiinfo = par->matchinfo;
- 
--	return check(ip->proto, ip->invflags, multiinfo->flags,
--		     multiinfo->count) ? 0 : -EINVAL;
-+	if (!check(ip->proto, ip->invflags, multiinfo->flags, multiinfo->count))
-+		return -EINVAL;
-+
-+	return multiport_valid_ranges(multiinfo) ? 0 : -EINVAL;
- }
- 
- static struct xt_match multiport_mt_reg[] __read_mostly = {
+ 	/* Did I tell you that ARC SUCKS?  */
 -- 
 2.53.0
 
