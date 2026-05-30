@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1573161A3;
-	Sat, 30 May 2026 17:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53413242D7;
+	Sat, 30 May 2026 17:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780161797; cv=none; b=hpE3qKMDUFKrONHMobI54hfmm7EDHgxnuMokhiMrdqmxhCBCmTz96Jx1eOc5LMZsTDHrG/3d18UD49qgmiADcJ0bDwefBIENLoy3Ow2tnng7ub3husA8nr5YehZMKBpNteGt5smYpMdLjuwnqQBb1h1kI03Y5vm+Z3M26W15XsY=
+	t=1780161800; cv=none; b=onqa01dicyNdSYtjNIJXAFY50uwmSkB+dYQdyFnEjStK98moesFG2QsYgn0cxuIqaEPtdLq08NJ0nytO/k9jm9Mz3AdYlJR7L5mNIGEAvgva1rhz5apnqURffbEwtTrAT0fApXcZ9ZZdUupl3L8kbOmDV6ykOTSy+vWOaxlhSJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780161797; c=relaxed/simple;
-	bh=aTmgSLHsZZOARm9h4+GyDG5t7Wa+6Fr3ie4arliefA4=;
+	s=arc-20240116; t=1780161800; c=relaxed/simple;
+	bh=Wqpck2rC7bSFEWn/til3G0sFdykuAZMtEIh9yH9JAMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gw/JjdPEtvWN1YhyfxsyGloOimXBunpCjQs/ByxZg38ZdiBlWUKz19xRublzV70FH4c+cumlyrlNZqRQ2mgWJOkgWsEYeuikFKNOJMGSaRQSAt982CTAItzTxKaDxT5xHo9SQKHgFSzLvoHFalqVYWNrvvZOAr6Tiw8nM4RloFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3B5CQJC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q8MtgtGpQORFenkgrXJMBJWVsgsapGxPQi5fPC8ZND1ob7FX6tCmV1BOeiynBvPMer+bHWI0lLxlg+9Yn3Ogv6PdrFn2aEF62murVgwERfgweRns6NL1Gl3S+v5azRd7uwOU+l7TT7QOy/tLyElrhHlYXTxvJCQ2aj/8BI/WP9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NlyI08D5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3B5CQJC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D87B1F00893;
-	Sat, 30 May 2026 17:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NlyI08D5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B66051F00893;
+	Sat, 30 May 2026 17:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780161796;
-	bh=/OHqN1ZwUoKLtNDRglXhN0v1IbjNG7GW5g7r0Qm1pZw=;
+	s=korg; t=1780161799;
+	bh=KYvgTKpK7IU9NVMX3Hnwzsf9Ojj/q7QmGfEqQdLrz4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I3B5CQJCvZ6pYcIsaCSRtV4ZNgq3lMh9WBT0Fs1y232a7YtZmvNGmhe6DEbZ5WnS0
-	 C+h7JPH6i8CEKxBLLSHK9lKLacfybmPReIAKEIZxxqJQhIk50YqwFcICZx4CbOpXuX
-	 Kyp7WbsMp5dd4LOUn5Jir01RBrwRoM8VD7z/Mf90=
+	b=NlyI08D5m0IZMkbbAIo2cyd7Js3Z6fydRHaVzuU8TkMvt6DcOvW2WCb1KBqyoDyOS
+	 XBrSxnmk1BqXISMsony5eEfUdVnoPc243Sn+AzGd0GhvzTXduOjeGQ3Pnjo5oghyOo
+	 ykYqpS9uVOC6NLUZcDuPKbi9JLJE+0KqfABMrddM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 728/969] mailbox: mailbox-test: dont free the reused channel
-Date: Sat, 30 May 2026 18:04:12 +0200
-Message-ID: <20260530160320.645913475@linuxfoundation.org>
+Subject: [PATCH 6.1 700/969] netfilter: nft_osf: restrict it to ipv4
+Date: Sat, 30 May 2026 18:03:44 +0200
+Message-ID: <20260530160319.847266570@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -51,44 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 88ebadbf0deefdaccdab868b44ff70a0a257f473 ]
+[ Upstream commit b336fdbb7103fb1484e1dcb6741151d4b5a41e35 ]
 
-The RX channel can be aliased to the TX channel if it has a different
-MMIO. This special case needs to be handled when freeing the channels
-otherwise a double-free occurs.
+This expression only supports for ipv4, restrict it.
 
-Fixes: 8ea4484d0c2b ("mailbox: Add generic mechanism for testing Mailbox Controllers")
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Fixes: b96af92d6eaf ("netfilter: nf_tables: implement Passive OS fingerprint module in nft_osf")
+Acked-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox-test.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nft_osf.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
-index 1d546cae922ce..247e83af060e3 100644
---- a/drivers/mailbox/mailbox-test.c
-+++ b/drivers/mailbox/mailbox-test.c
-@@ -423,7 +423,7 @@ static int mbox_test_probe(struct platform_device *pdev)
- err_free_chans:
- 	if (tdev->tx_channel)
- 		mbox_free_channel(tdev->tx_channel);
--	if (tdev->rx_channel)
-+	if (tdev->rx_channel && tdev->rx_channel != tdev->tx_channel)
- 		mbox_free_channel(tdev->rx_channel);
- 	return ret;
- }
-@@ -436,7 +436,7 @@ static int mbox_test_remove(struct platform_device *pdev)
+diff --git a/net/netfilter/nft_osf.c b/net/netfilter/nft_osf.c
+index adacf95b6e2bd..9bf2dfd351846 100644
+--- a/net/netfilter/nft_osf.c
++++ b/net/netfilter/nft_osf.c
+@@ -28,6 +28,11 @@ static void nft_osf_eval(const struct nft_expr *expr, struct nft_regs *regs,
+ 	struct nf_osf_data data;
+ 	struct tcphdr _tcph;
  
- 	if (tdev->tx_channel)
- 		mbox_free_channel(tdev->tx_channel);
--	if (tdev->rx_channel)
-+	if (tdev->rx_channel && tdev->rx_channel != tdev->tx_channel)
- 		mbox_free_channel(tdev->rx_channel);
++	if (nft_pf(pkt) != NFPROTO_IPV4) {
++		regs->verdict.code = NFT_BREAK;
++		return;
++	}
++
+ 	if (pkt->tprot != IPPROTO_TCP) {
+ 		regs->verdict.code = NFT_BREAK;
+ 		return;
+@@ -119,7 +124,6 @@ static int nft_osf_validate(const struct nft_ctx *ctx,
  
- 	return 0;
+ 	switch (ctx->family) {
+ 	case NFPROTO_IPV4:
+-	case NFPROTO_IPV6:
+ 	case NFPROTO_INET:
+ 		hooks = (1 << NF_INET_LOCAL_IN) |
+ 			(1 << NF_INET_PRE_ROUTING) |
 -- 
 2.53.0
 
