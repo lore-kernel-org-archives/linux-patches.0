@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BEC3AEB5C;
-	Sat, 30 May 2026 17:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583B0352027;
+	Sat, 30 May 2026 17:58:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780163880; cv=none; b=DTyOEm0BdBhIpuOaTjwCza8HqXK+oWvL0dQqTkpDddfFS0Bxjaxz/D3pg4ZlX36SNRidep4st1/qH41/efG6tHf2Fxe/i+FgTPb5STwK2AyJpTHlelwntrB7xcfDbRPSUeHRiwkt7e5j02rYy44gwyrnIVKyZ/NyqIlcwsU1/Lc=
+	t=1780163885; cv=none; b=F30WKEXGnBFPw+DHVsFEH7ycnc/GIpe0NRWPuQmLdXYfdgMRqNFW7Ri8qP2j2piXZFwV/wbxe+DvxbmGOwvD5RVtMwugtfh17VUowRh+3kFNfYkof6DoXW2zc56VZupn7sj0PeRgD72UerIB91U6iQj1Q/NxhvxK0fZkGqoeUg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780163880; c=relaxed/simple;
-	bh=fYyvEiefXNOG40NqhrKBUWXbyBaCSxhyIXSPIzze2Ww=;
+	s=arc-20240116; t=1780163885; c=relaxed/simple;
+	bh=DCDrH4FO7BnQf3tmKhi7rGqA2Viej1/8OXq3am4jrbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Usjgcs8O8txbaoKydafCW89mITEjWdWwKQDTVV3IMoBD3XqUEfmrq97F4f4xgg+OrS0GxyABo1gYDZY5Uxpey4IqKy8hces/+CLedH+hC+9fItRBASc6M1wgs852XHywy4ko6R74tit8umzSsD9G2R+YIBQZgPLgxx5+VDPQVgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0Xk2ZjU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gsv0Jm+Hmv8GgW/2tCTOjFmcnhrAvjqZ+8mxWNf4U0cMspGSEaa8oiacRd+pHzJHO37IG3Jt5EhQG2yMi3z90EVulfCX9Qw7HFqWCBbbBYNg5Wii6yonx1oN+oJr7iF1WBFSMcp2AH07B0oFiUzwaMo0eLsYXex+ApeO9UxovEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oRsLzh3k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0Xk2ZjU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC39C1F00893;
-	Sat, 30 May 2026 17:57:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRsLzh3k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 108621F00893;
+	Sat, 30 May 2026 17:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780163878;
-	bh=DNxELC3LYOV/K1eJhoBD9OSlIPex6Mg1ZAaNVluwSa4=;
+	s=korg; t=1780163881;
+	bh=auDS5JC4vZEULDurI6Paz6xgGNYxJ6p7sURHMttEkiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C0Xk2ZjUlQn0lMmcAnILP0fb+JV4hWjhpMhE6S6rvw9uyCiXEHrWyVFNu/STUYDOo
-	 iCQ7LAuEMeL33UanSVn0k4PMnyzCnvsOT0edRH3jsNNLSfkHNR5hsBdBqhhmqsY8WY
-	 /DHUzD76a1tDEOHFvY/a4Kjrx7WgaY5LeBH6ah8o=
+	b=oRsLzh3kM/Ar73igDu1oaF8Da3yWoybplJvGcnVnE/fFApXeofsO3QSdlxKgEzThM
+	 To0m66CiATX8Vg1ucpeOHIzRoeiXqjLz/Uczz2OVg8zTwyPEIwxaQ94oKSWmPUmpmw
+	 CKjtQVD8dmX2DhiufB/NeZwpbs9mM/f+ndxYGJDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cole Leavitt <cole@unwrap.rs>,
-	Kees Cook <kees@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 388/776] pstore/ram: fix resource leak when ioremap() fails
-Date: Sat, 30 May 2026 18:01:42 +0200
-Message-ID: <20260530160250.527453931@linuxfoundation.org>
+Subject: [PATCH 5.15 389/776] devres: fix missing node debug info in devm_krealloc()
+Date: Sat, 30 May 2026 18:01:43 +0200
+Message-ID: <20260530160250.552630667@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,50 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cole Leavitt <cole@unwrap.rs>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit 2ddb69f686ef7a621645e97fc7329c50edf5d0e5 ]
+[ Upstream commit f813ec9e84b4d0ca81ec1da94ab07bfb4a29266c ]
 
-In persistent_ram_iomap(), ioremap() or ioremap_wc() may return NULL on
-failure. Currently, if this happens, the function returns NULL without
-releasing the memory region acquired by request_mem_region().
+Fix missing call to set_node_dbginfo() for new devres nodes created by
+devm_krealloc().
 
-This leads to a resource leak where the memory region remains reserved
-but unusable.
-
-Additionally, the caller persistent_ram_buffer_map() handles NULL
-correctly by returning -ENOMEM, but without this check, a NULL return
-combined with request_mem_region() succeeding leaves resources in an
-inconsistent state.
-
-This is the ioremap() counterpart to commit 05363abc7625 ("pstore:
-ram_core: fix incorrect success return when vmap() fails") which fixed
-a similar issue in the vmap() path.
-
-Fixes: 404a6043385d ("staging: android: persistent_ram: handle reserving and mapping memory")
-Signed-off-by: Cole Leavitt <cole@unwrap.rs>
-Link: https://patch.msgid.link/20260225235406.11790-1-cole@unwrap.rs
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: f82485722e5d ("devres: provide devm_krealloc()")
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260202235210.55176-2-dakr@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram_core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/base/devres.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
-index c0b3b9c6892d1..8a86b9928503d 100644
---- a/fs/pstore/ram_core.c
-+++ b/fs/pstore/ram_core.c
-@@ -489,6 +489,10 @@ static void *persistent_ram_iomap(phys_addr_t start, size_t size,
- 	else
- 		va = ioremap_wc(start, size);
+diff --git a/drivers/base/devres.c b/drivers/base/devres.c
+index 58e8e2be26ac7..6e4b43c5c3075 100644
+--- a/drivers/base/devres.c
++++ b/drivers/base/devres.c
+@@ -907,6 +907,8 @@ void *devm_krealloc(struct device *dev, void *ptr, size_t new_size, gfp_t gfp)
+ 	if (!new_dr)
+ 		return NULL;
  
-+	/* We must release the mem region if ioremap fails. */
-+	if (!va)
-+		release_mem_region(start, size);
++	set_node_dbginfo(&new_dr->node, "devm_krealloc_release", new_size);
 +
  	/*
- 	 * Since request_mem_region() and ioremap() are byte-granularity
- 	 * there is no need handle anything special like we do when the
+ 	 * The spinlock protects the linked list against concurrent
+ 	 * modifications but not the resource itself.
 -- 
 2.53.0
 
