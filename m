@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C3B29B799;
-	Sat, 30 May 2026 18:13:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E2E29B799;
+	Sat, 30 May 2026 18:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164781; cv=none; b=M49j4Le7VhL//JnLfEZappxDYw4/yIJyUb0970eUg0AOuNGBQspjbfhL4DuP/2Fb8b4CyzyPN4PN5+MMfKuZe6Xv8zu5edyMoZQAwRy0CloYFWh0zbPQ/oRU7BsX9ShX8Rt8D/Sj3qnnW4eeiKr189GPDrmkyneok8GxGQ5VAvw=
+	t=1780164785; cv=none; b=FlJ5+bjdnIhBIcxSuIUpRTvp/psP6fIsP6k/OHQ0gQYqHex3ljzcvA9GhyHwXYQqjs36l2WGk1g3giHCuF1raHmcmV8PzmcbBhd6pvkDanf4JltMhcL+R0RPHLvScd52TCWjTGO/RfbhHSVVENe1ox/gTL93I+UD9vXVuEnAfpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164781; c=relaxed/simple;
-	bh=TB4NWzM8rw3TaPEAOYmMrMUb8Zu/0iol4XlS22xVOBM=;
+	s=arc-20240116; t=1780164785; c=relaxed/simple;
+	bh=iV5CGXljnNXXm9hiZG0RUS8vpTLoeBDMWeln+DbGI3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s7WNoXnAnzeMQx33XCsFvPwZs682RnPNxnpBWBne6sLEXletdMwu9YVTCCmnRWSUl+UWt+IBL7Bs95MNjh0K6s2IV6eZbHeCmGzzwEBhpvwzPFO2g9s5Z/VIMTfSaHGuJJ27IWZnbIwKjBAaBIPaGEQXRXELWNC1za2eFZEJ1sA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DhUzsLdp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N35JT5tRWBvHK4LKcPYYDwvmmeFX5rxqqzdWExgEg49Q1PshR4afG8hV1NP4lqrAV1YR+9dAG/InByU+jVKvpj2XxEu0iIMrbXdGhf8ELX7XRJgUmDE0/aZW6Za/v6ys98gp/kT+YkMuWiFv8bu+lJ4XxwtEGiAjcWrTf5sTo/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqtcTu20; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DhUzsLdp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D2A1F00893;
-	Sat, 30 May 2026 18:12:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqtcTu20"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88EBA1F00893;
+	Sat, 30 May 2026 18:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164780;
-	bh=GNoYjfRsUviuu2vE6W50+HUccqslU1vbfrvVX65v/68=;
+	s=korg; t=1780164784;
+	bh=+qaTlc4XzQY5Lduk6FJj/Qa1JflcTqY/yQ6Ik92arsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DhUzsLdpnpfd+MN8TN4RS362U4VwzbXBAMPKCxhXjs/bUgRFR7B7wrdjRljKenhnF
-	 E2ksluArQmmD3UucCCGA9aVrUDLXz2igTc+Hk9j2ldN1uPrn1yw6hAJ09YfxOTU/AH
-	 pq9fXMlxbm5HBS5Y/7LCCnoPMQuJykcJ88bMP+jQ=
+	b=DqtcTu20/B9/L5yCYabmwiDzUPBrNCxagV2fm6svzRUmrUTKMIXBVLYrYefXnXnDW
+	 mMPGDXBTO+q1wn+Fbo5zq4JDS5CvezBvzqdTDibiSqj/tpheiyBpiDS16ny0oWB8jE
+	 wfC3r9G50kci4rPEFa2hiiWNkGI+xrvreGc7OlW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 618/776] net: sched: choke: remove unused variables in struct choke_sched_data
-Date: Sat, 30 May 2026 18:05:32 +0200
-Message-ID: <20260530160255.961713158@linuxfoundation.org>
+	Zoran Ilievski <goodboy@rexbytes.com>,
+	Sukhdeep Singh <sukhdeeps@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 651/776] net: atlantic: preserve PCI wake-from-D3 on shutdown when WOL enabled
+Date: Sat, 30 May 2026 18:06:05 +0200
+Message-ID: <20260530160256.745131729@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -51,42 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Zoran Ilievski <goodboy@rexbytes.com>
 
-[ Upstream commit 38af11717b386560f10f2891350933fc5200aeea ]
+commit 2c308cf34284420963607d677d576a2b4124d8bd upstream.
 
-The variable "other" in the struct choke_sched_data is not used. Remove it.
+The shutdown handler aq_pci_shutdown() unconditionally calls
+pci_wake_from_d3(pdev, false), clearing the PCI PME_En bit even when
+wake-on-LAN has been configured. While aq_nic_shutdown() correctly
+programs the NIC firmware via aq_nic_set_power() to listen for magic
+packets, the PCI subsystem will not propagate the resulting PME wake
+event from D3, so the system never wakes after poweroff.
 
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+WOL from suspend (S3) is unaffected because aq_suspend_common() does
+not touch pci_wake_from_d3() and relies on the PM core's wake
+configuration via device_may_wakeup().
+
+This affects all atlantic-supported NICs (AQC107/108/111/112/113);
+users have reported that WOL works if the atlantic driver is never
+loaded, but breaks once it has run its shutdown path.
+
+Pass the configured WOL state to pci_wake_from_d3() instead of a
+literal false, so the PCI PME_En bit is preserved when the user has
+armed WOL via ethtool.
+
+Fixes: 90869ddfefeb ("net: aquantia: Implement pci shutdown callback")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zoran Ilievski <goodboy@rexbytes.com>
+Reviewed-by: Sukhdeep Singh <sukhdeeps@marvell.com>
+Link: https://patch.msgid.link/20260511064002.1857-1-goodboy@rexbytes.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: d3aeb889dcbd ("net/sched: sch_choke: annotate data-races in choke_dump_stats()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_choke.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_choke.c b/net/sched/sch_choke.c
-index f3805bee995bb..e38cf34287018 100644
---- a/net/sched/sch_choke.c
-+++ b/net/sched/sch_choke.c
-@@ -60,7 +60,6 @@ struct choke_sched_data {
- 		u32	forced_drop;	/* Forced drops, qavg > max_thresh */
- 		u32	forced_mark;	/* Forced marks, qavg > max_thresh */
- 		u32	pdrop;          /* Drops due to queue limits */
--		u32	other;          /* Drops due to drop() calls */
- 		u32	matched;	/* Drops to flow match */
- 	} stats;
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_pci_func.c
+@@ -374,7 +374,7 @@ static void aq_pci_shutdown(struct pci_d
+ 	pci_disable_device(pdev);
  
-@@ -464,7 +463,6 @@ static int choke_dump_stats(struct Qdisc *sch, struct gnet_dump *d)
- 		.early	= q->stats.prob_drop + q->stats.forced_drop,
- 		.marked	= q->stats.prob_mark + q->stats.forced_mark,
- 		.pdrop	= q->stats.pdrop,
--		.other	= q->stats.other,
- 		.matched = q->stats.matched,
- 	};
- 
--- 
-2.53.0
-
+ 	if (system_state == SYSTEM_POWER_OFF) {
+-		pci_wake_from_d3(pdev, false);
++		pci_wake_from_d3(pdev, self->aq_hw->aq_nic_cfg->wol);
+ 		pci_set_power_state(pdev, PCI_D3hot);
+ 	}
+ }
 
 
