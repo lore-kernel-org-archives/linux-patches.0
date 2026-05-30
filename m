@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2CBF39A7FE;
-	Sat, 30 May 2026 18:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D17D233D9E;
+	Sat, 30 May 2026 18:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780164901; cv=none; b=OlN/PgvloDpeX+qXD84+fogBpmkyxGEmpoCLboT8h4rABlzdhSRpDOruKDB9krteQ2Uqc6/mjTdAFbpbLTxjVmG/KyMGW1vTehkqkPJs1LryTaEDFNtNuhIABrHqoIOt4RZeTkBjB5sgrXcJ4I2JOsS6ERmJ5ODC7QqqBxLOJu0=
+	t=1780164905; cv=none; b=R4mNLX4Wl5xWvqHL2fVTHhkNnh0oGKoB1ErNRWpHi0rMQ/wDyqnjwWHqcWPRB1gJLRsm8tWrVqp14miUVtzSRktfd0jrHLb+F9X1hai+LMt2o/3hzk7pEw38fNVaSpP0CCgNbi2tQ5LnJHfjSPHmxSWiEtaAwJhhCRwLgTVeihA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780164901; c=relaxed/simple;
-	bh=shfNEo0BSU0yKPW3C+wS2VxpZzpv7RDKqT48AEvD+Hg=;
+	s=arc-20240116; t=1780164905; c=relaxed/simple;
+	bh=eKuRBnCmvhJQw1mNkvmsdpDFigzWW5iNu7FY7UQxQxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gH5dXWDSzus/TeKiR3BJ64a6pl6Pk+N6PbpWgWUp1QAPyWgQrLnwz1gJHUCvAca/EEwKEnlrPvNEpe2gjviPahzjSuVZjw8iKJiI79iylGOTN8soWn3q8maco4wUg3iKg4eH8n17VEWrpwbT6S+c8Dw3il39hB1o0FpA+oA7FlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fR5q4Lbp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HW6Yn2u2UC7XcFoUp63toq1n3EeVeaJ9x2fXZSWTKW19/DsD8eDPkWCBuD91gGzbWePhTbObmyEZhMOr2SaIUKPNsiG7zaxrJG6kDr+4TFWKBxVTCPlXGecO3DowOfdTuHCFnmD0Ciw29VyPsU+K8ReCYVXrHlFg/7u29NqzE+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SMEx5vjs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fR5q4Lbp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DDA31F00893;
-	Sat, 30 May 2026 18:14:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SMEx5vjs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B17A51F00893;
+	Sat, 30 May 2026 18:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780164900;
-	bh=hLlJJMm6obIYNaTL4cBh7PnPl98lnMybu9Y2RzqLR+w=;
+	s=korg; t=1780164904;
+	bh=JK83Mub3Tozrw4Ie4O/GSncWaz+WkxqTCTRAclrNtFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fR5q4LbpEBihokjWADAn3JUZQIsf+9QR6WUNNUbmpZIAO35b/ts3KvvRpEKxwQOhm
-	 zrFeic189AmeMEvZE8sQJS83+HZMONbltP5KFaK/z5FT5uiOzLnYnqFQlPw1Nlev6r
-	 7FzNMD3gwcOSE19t4Zh1k7aAgUhsDsii3RVbU8Q0=
+	b=SMEx5vjs3WC9ZcU67hJVVUXJz/EU/4l6h8uRA7FGQPUvNndyAkmPxXKkAabW45EMX
+	 M2YlzYtgsLymz7upPTy76s6JZ1kPse6jH8V7i/8KzB+FyesfGVoy8gISRIJ0rAQPJ+
+	 PhZz8nMr7s+88rBbMsPrXBAHDt33dL57ZxGtMwgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
 	Michael Bommarito <michael.bommarito@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 693/776] ipv4: raw: reject IP_HDRINCL packets with ihl < 5
-Date: Sat, 30 May 2026 18:06:47 +0200
-Message-ID: <20260530160257.752844682@linuxfoundation.org>
+Subject: [PATCH 5.15 694/776] ixgbevf: fix use-after-free in VEPA multicast source pruning
+Date: Sat, 30 May 2026 18:06:48 +0200
+Message-ID: <20260530160257.775038915@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -53,84 +55,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 915fab69823a14c170dbaa3b41978768e0fe62fc upstream.
+commit 5d49b568c188dc77199d8d2b959c91da8cc27cf1 upstream.
 
-raw_send_hdrinc() validates that the caller-supplied IPv4 header
-fits within the message length:
+ixgbevf_clean_rx_irq() prunes frames whose source MAC matches the VF's
+own address (VEPA multicast workaround) by freeing the skb and
+continuing to the next descriptor:
 
-    iphlen = iph->ihl * 4;
-    err = -EINVAL;
-    if (iphlen > length)
-        goto error_free;
+    dev_kfree_skb_irq(skb);
+    continue;
 
-    if (iphlen >= sizeof(*iph)) {
-        /* fix up saddr, tot_len, id, csum, transport_header */
-    }
+The skb pointer is declared outside the while loop and persists across
+iterations.  Because the continue skips the "skb = NULL" reset at the
+bottom of the loop, the next iteration enters the "else if (skb)" path
+and calls ixgbevf_add_rx_frag() on the freed skb, dereferencing
+skb_shinfo(skb)->nr_frags - a use-after-free in NAPI softirq context.
 
-It does not, however, reject ihl < 5.  For such a packet the
-"if (iphlen >= sizeof(*iph))" branch is skipped, leaving the
-crafted iphdr untouched, but the packet is still handed to
-__ip_local_out() and onward.  Downstream consumers that read
-iph->ihl assume a sane value: net/ipv4/ah4.c:ah_output() in
-particular subtracts sizeof(struct iphdr) from top_iph->ihl * 4
-and passes the (signed-int-negative, then cast to size_t)
-result to memcpy(), producing an OOB access of length close to
-SIZE_MAX and a host kernel panic.
+The sibling driver iavf already handles this correctly by nulling the
+pointer before continuing.  Apply the same pattern here.
 
-An IPv4 header with ihl < 5 is malformed by definition (RFC 791:
-"Internet Header Length is the length of the internet header in
-32 bit words ... Note that the minimum value for a correct header
-is 5.").  The kernel should not be willing to inject such a
-packet into its own output path.
+I do not have ixgbevf hardware; the bug was found by static analysis
+(scan_drop_continue_loops.py + semgrep drop_continue_in_loop, multi-tool
+corroboration with the highest score in the scan).  The UAF was confirmed
+under KASAN by loading a test module that reproduces the exact code
+pattern (alloc skb, kfree_skb, then read skb_shinfo(skb)->nr_frags):
 
-Reject "iphlen < sizeof(*iph)" alongside the existing
-"iphlen > length" check.  This matches the principle that locally
-constructed packets that re-enter the IP stack must pass the same
-basic sanity tests that a foreign packet would be subjected to.
+  BUG: KASAN: slab-use-after-free in ixgbevf_uaf_test_init+0x100/0x1000
+  Read of size 8 at addr 000000006163ae78 by task insmod/30
+  freed 208-byte region [000000006163adc0, 000000006163ae90)
 
-Once this lands, the "if (iphlen >= sizeof(*iph))" wrapper around
-the fixup branch becomes redundant; left in place to keep the
-patch minimal and backport-friendly.  A follow-up can unwrap it.
+QEMU emulates igb (82576) but not ixgbe (82599), and the igbvf VF
+driver does not include the VEPA source pruning path, so a full
+end-to-end reproduction with emulated hardware was not possible.
 
-Note that commit 86f4c90a1c5c ("ipv4, ipv6: ensure raw socket
-message is big enough to hold an IP header") ensures the message
-buffer is large enough to hold an iphdr, but does not constrain
-the self-reported iph->ihl.
-
-Reachability: the malformed packet source is any caller with
-CAP_NET_RAW, including an unprivileged process in a user+net
-namespace on a kernel with CONFIG_USER_NS=y.  The reproduced AH
-crash also requires a matching xfrm AH policy on the outgoing
-route; a container granted CAP_NET_ADMIN can install that state
-and policy in its netns.  Loopback bypasses xfrm_output, so the
-trigger uses a real netdev.
-
-Reproduced on UML + KASAN: kernel-mode fault at addr 0x0 with
-memcpy_orig at the crash site.  Same shape reproduces inside a
-rootless Docker container with --cap-add NET_ADMIN on a stock
-distro kernel.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: bad17234ba70 ("ixgbevf: Change receive model to use double buffered page based receives")
 Cc: stable@vger.kernel.org
-Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/77ec2b5e8111961c2c39883c92e8aa2709039c17.1778614451.git.michael.bommarito@gmail.com
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260515182419.1597859-8-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/raw.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/ipv4/raw.c
-+++ b/net/ipv4/raw.c
-@@ -407,7 +407,7 @@ static int raw_send_hdrinc(struct sock *
- 	 * in, reject the frame as invalid
- 	 */
- 	err = -EINVAL;
--	if (iphlen > length)
-+	if (iphlen > length || iphlen < sizeof(*iph))
- 		goto error_free;
+--- a/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
++++ b/drivers/net/ethernet/intel/ixgbevf/ixgbevf_main.c
+@@ -1220,6 +1220,7 @@ static int ixgbevf_clean_rx_irq(struct i
+ 		    ether_addr_equal(rx_ring->netdev->dev_addr,
+ 				     eth_hdr(skb)->h_source)) {
+ 			dev_kfree_skb_irq(skb);
++			skb = NULL;
+ 			continue;
+ 		}
  
- 	if (iphlen >= sizeof(*iph)) {
 
 
