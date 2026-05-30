@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B23034BA42;
-	Sat, 30 May 2026 16:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0991CAA6C;
+	Sat, 30 May 2026 16:52:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780159962; cv=none; b=cBI3vtWb5kRf64IuJEEiCxI5JLfl/qfxKJKL70KYhDEWdCnA2gM8E729UB8KyBqzsgjo7KXFYqv00+p56fquW26dEV0wyqeKXKfUygbE16qpyzvaEYBQdEWyYPqgU2XqDXK7WGz63ob1UnEmJMm6rd4iSItKrNZH5X7Qg0DY6bI=
+	t=1780159966; cv=none; b=G0OBk9ikkOMHR6HRU80X4oprwFfQ1e4Nfpzcjgma6F/8JTZG+62Db+FrjNcrw8YY4UPOKTRleKTssidujCJdC1/gV/bDfgkQzBq4U7apqSUr8SXgpuVUviHqktz180AVtX/d1iFl9Uva6THB9E/S80DNAukRQQjONS8RueHdW4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780159962; c=relaxed/simple;
-	bh=I+ET57xotEeYD+nX1StFkEkFqeSTsbFHx6UbiF5OR+c=;
+	s=arc-20240116; t=1780159966; c=relaxed/simple;
+	bh=luif0YMAL5DuJ+MeeeDd6Jj8uCGTT/O5rciAbgdUev4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NRusEvXajm3EVo+gJrKt1Rul3OanYEFFZyMS+W+UkA6OW6KQfLFrSJ99jrSHZkIAYDgs+mqrsrfidOjhTs3swrY5zJ9vMAXXFZBalBxgQCETkYV3bgmZvY7se8JtVmcb1Kl4qCt+VhyM2/NgOJgswQ2NKr7UEtiKJNKfAXYOJQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmuZBWrl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ha4AYPAU7gc7mNKXuvZh0LOcOuyXCqi5fwr4lq1UEheiMhTCakOT42J1T/nmAITBm46Ni5tJodjgQ/+IUQSyJal4YakUWGjFEjDasokmlvjkTO70UawXN729MAnhgpBffv2MlpFf5q4bSy7qW/pmxshKMmh2DP7WIwyyffnG3Es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eX6usT7F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmuZBWrl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9671F00898;
-	Sat, 30 May 2026 16:52:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eX6usT7F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34161F00893;
+	Sat, 30 May 2026 16:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780159961;
-	bh=MMFUTwOegvBTk6EG/u4jxlk9fbWbF01BQpov4wnWIr0=;
+	s=korg; t=1780159964;
+	bh=j5shZnP0Y9ljbd8x22Z99JUc3+MzavxDveFMczmnACc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gmuZBWrloCyoxhyACzJedM2sQY2P9mVbtxU1nIrJXAdjOzjV+1L37/M+QRSCUVzXB
-	 Qma8d5OzskZLOd8jfMEdN/UFz+ljsAvQzbF0FreQeTlPlPjgZX7iJraFmaVCeM2cC9
-	 Uv1OMLftONNa9tCE+7Mr8yFNGVJMkfo6lEt8Upp4=
+	b=eX6usT7FRnUr/xR2HfOV7du93HfmBZ2Q6KZjrFzORRDfcPisIlTwSmAyinWBdxt+7
+	 ZouSVt5wd7mCfGh36g0QXUhEcloiJDjYDUixTR9wnfHhRUyByd+2TlxMaQWuis3iX5
+	 QgmShQdWr/YA9IrfjIjhKOyNgl9rBhMZcNZb62Ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jake Lamberson <lamberson.jake@gmail.com>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 208/969] ALSA: core: Fix potential data race at fasync handling
-Date: Sat, 30 May 2026 17:55:32 +0200
-Message-ID: <20260530160306.212054588@linuxfoundation.org>
+Subject: [PATCH 6.1 209/969] ALSA: caiaq: Fix control_put() result and cache rollback
+Date: Sat, 30 May 2026 17:55:33 +0200
+Message-ID: <20260530160306.238709515@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -44,76 +44,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-commit 8146cd333d235ed32d48bb803fdf743472d7c783 upstream.
+commit a3542d1b30f92307f545f2def14e8d988dffdff0 upstream.
 
-In snd_fasync_work_fn(), which is the offload work for traversing and
-processing the pending fasync list, the call of kill_fasync() is done
-outside the snd_fasync_lock for avoiding deadlocks.  The problem is
-that its the references of fasync->on, fasync->signal and fasync->poll
-are done there also outside the lock.  Since these may be modified by
-snd_kill_fasync() call concurrently from other process, inconsistent
-values might be passed to kill_fasync().  Although there shouldn't be
-critical UAF, it's still better to be addressed.
+control_put() always returns 1 and updates cdev->control_state[]
+before sending the USB command. It also ignores transport errors
+from usb_bulk_msg(), snd_usb_caiaq_send_command(), and
+snd_usb_caiaq_send_command_bank().
 
-This patch moves the kill_fasync() argument evaluations inside the
-snd_fasync_lock for avoiding the data races above.  The handling in
-fasync->on flag is optimized in the loop to skip directly.
+That breaks the ALSA .put() contract and can leave control_get()
+reporting a cached value the device never accepted.
 
-Also, for more clarity, snd_fasync_free() takes the lock and unlink
-the pending entry more directly instead of clearing fasync->on flag.
+Return 0 for unchanged values, propagate transport failures,
+and restore the cached byte when the write fails.
 
-Reported-by: Jake Lamberson <lamberson.jake@gmail.com>
-Fixes: ef34a0ae7a26 ("ALSA: core: Add async signal helpers")
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260420061721.3253644-1-tiwai@suse.de
+Fixes: 8e3cd08ed8e59 ("[ALSA] caiaq - add control API and more input features")
+Cc: stable@vger.kernel.org
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260417-caiaq-control-put-v1-1-c37826e92447@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/misc.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ sound/usb/caiaq/control.c |   54 +++++++++++++++++++++++++++++++---------------
+ 1 file changed, 37 insertions(+), 17 deletions(-)
 
---- a/sound/core/misc.c
-+++ b/sound/core/misc.c
-@@ -171,14 +171,18 @@ static LIST_HEAD(snd_fasync_list);
- static void snd_fasync_work_fn(struct work_struct *work)
- {
- 	struct snd_fasync *fasync;
-+	int signal, poll;
+--- a/sound/usb/caiaq/control.c
++++ b/sound/usb/caiaq/control.c
+@@ -87,6 +87,7 @@ static int control_put(struct snd_kcontr
+ 	struct snd_usb_caiaqdev *cdev = caiaqdev(chip->card);
+ 	int pos = kcontrol->private_value;
+ 	int v = ucontrol->value.integer.value[0];
++	int ret;
+ 	unsigned char cmd;
  
- 	spin_lock_irq(&snd_fasync_lock);
- 	while (!list_empty(&snd_fasync_list)) {
- 		fasync = list_first_entry(&snd_fasync_list, struct snd_fasync, list);
- 		list_del_init(&fasync->list);
-+		if (!fasync->on)
-+			continue;
-+		signal = fasync->signal;
-+		poll = fasync->poll;
- 		spin_unlock_irq(&snd_fasync_lock);
--		if (fasync->on)
--			kill_fasync(&fasync->fasync, fasync->signal, fasync->poll);
-+		kill_fasync(&fasync->fasync, signal, poll);
- 		spin_lock_irq(&snd_fasync_lock);
+ 	switch (cdev->chip.usb_id) {
+@@ -103,6 +104,10 @@ static int control_put(struct snd_kcontr
+ 
+ 	if (pos & CNT_INTVAL) {
+ 		int i = pos & ~CNT_INTVAL;
++		unsigned char old = cdev->control_state[i];
++
++		if (old == v)
++			return 0;
+ 
+ 		cdev->control_state[i] = v;
+ 
+@@ -113,10 +118,11 @@ static int control_put(struct snd_kcontr
+ 			cdev->ep8_out_buf[0] = i;
+ 			cdev->ep8_out_buf[1] = v;
+ 
+-			usb_bulk_msg(cdev->chip.dev,
+-				     usb_sndbulkpipe(cdev->chip.dev, 8),
+-				     cdev->ep8_out_buf, sizeof(cdev->ep8_out_buf),
+-				     &actual_len, 200);
++			ret = usb_bulk_msg(cdev->chip.dev,
++					   usb_sndbulkpipe(cdev->chip.dev, 8),
++					   cdev->ep8_out_buf,
++					   sizeof(cdev->ep8_out_buf),
++					   &actual_len, 200);
+ 		} else if (cdev->chip.usb_id ==
+ 			USB_ID(USB_VID_NATIVEINSTRUMENTS, USB_PID_MASCHINECONTROLLER)) {
+ 
+@@ -128,21 +134,36 @@ static int control_put(struct snd_kcontr
+ 				offset = MASCHINE_BANK_SIZE;
+ 			}
+ 
+-			snd_usb_caiaq_send_command_bank(cdev, cmd, bank,
+-					cdev->control_state + offset,
+-					MASCHINE_BANK_SIZE);
++			ret = snd_usb_caiaq_send_command_bank(cdev, cmd, bank,
++							      cdev->control_state + offset,
++							      MASCHINE_BANK_SIZE);
+ 		} else {
+-			snd_usb_caiaq_send_command(cdev, cmd,
+-					cdev->control_state, sizeof(cdev->control_state));
++			ret = snd_usb_caiaq_send_command(cdev, cmd,
++							 cdev->control_state,
++							 sizeof(cdev->control_state));
+ 		}
+-	} else {
+-		if (v)
+-			cdev->control_state[pos / 8] |= 1 << (pos % 8);
+-		else
+-			cdev->control_state[pos / 8] &= ~(1 << (pos % 8));
+ 
+-		snd_usb_caiaq_send_command(cdev, cmd,
+-				cdev->control_state, sizeof(cdev->control_state));
++		if (ret < 0) {
++			cdev->control_state[i] = old;
++			return ret;
++		}
++	} else {
++		int idx = pos / 8;
++		unsigned char mask = 1 << (pos % 8);
++		unsigned char old = cdev->control_state[idx];
++		unsigned char val = v ? (old | mask) : (old & ~mask);
++
++		if (old == val)
++			return 0;
++
++		cdev->control_state[idx] = val;
++		ret = snd_usb_caiaq_send_command(cdev, cmd,
++						 cdev->control_state,
++						 sizeof(cdev->control_state));
++		if (ret < 0) {
++			cdev->control_state[idx] = old;
++			return ret;
++		}
  	}
- 	spin_unlock_irq(&snd_fasync_lock);
-@@ -234,7 +238,10 @@ void snd_fasync_free(struct snd_fasync *
- {
- 	if (!fasync)
- 		return;
--	fasync->on = 0;
-+
-+	scoped_guard(spinlock_irq, &snd_fasync_lock)
-+		list_del_init(&fasync->list);
-+
- 	flush_work(&snd_fasync_work);
- 	kfree(fasync);
+ 
+ 	return 1;
+@@ -640,4 +661,3 @@ int snd_usb_caiaq_control_init(struct sn
+ 
+ 	return ret;
  }
+-
 
 
