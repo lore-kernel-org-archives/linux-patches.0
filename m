@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED4130E853;
-	Sat, 30 May 2026 17:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71F3341AB8;
+	Sat, 30 May 2026 17:34:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162455; cv=none; b=dso23S6gR657MqAocAl+Po0HJuJER5qgmtjwmrmzMpZ3Dr9yj08QQT5ZieL1aW96nl0h18Dctngda26TZlK+qjDmqYrAgTue6f5bS8/YsHR2it5iCErYtwhu+Zy1kyZRbFUI8IRmjpQFJJTIGrA5H1DNFlm47MqLFtZLf5m9gdM=
+	t=1780162458; cv=none; b=FoTj6VDqS5Ed4QiTKiOF96hcko9srMAoiAZgfesHFk7Qihzt4mr2LNJpKtRnDWy5gkDsXcE1nhHFIaVaKs3NKPIZ+aSlYp5sKJ3cd8tbCDsZdQB7V9lQ+atuIXJ5u+peqMsx9fp+SAUW17ZFudm3vqjdS9z6z0fdjCfX8ENw1mU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162455; c=relaxed/simple;
-	bh=AePlaPkjoRMwNjkeFlKlPQdMpxVqG/Pn7tUFkbDlUac=;
+	s=arc-20240116; t=1780162458; c=relaxed/simple;
+	bh=bWIXNSN/bfG8/kbfZ9sfW+vc0JyitiGiaTyH8LPi+pM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uvQ9e2yFRsVUJWbeNDRL3YTgfdST4vsH6lMNK2xT9msCkCK9+N+JBC9bsQfGUDRUMc+/o+CNAdyCjkayzmeoTh+P1PocIUJxWFp5OIW56BESGyOGp/tr7qvYJkUFX1HF5lmlSsQfRb2USTOuC0SJJmoB61MI5Q+EKPKeFMoH1UY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G2RJ15au; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=DLdyvejZyZ0nXQ7rnYLPuemwxWeJMt6wWIeF4zlLOIOfMJONW6cdyePBJNTLD6qJlechSDVY9H+Nlq80VxGY4hGnfEjGCs+x1sdS/RhceuCXnImzOwoIKXvQRbYy94jsKClfKCGt1Zzm7XAvdS6HvL3wrufIlcBNgy/j1eEoyjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dwlZCJrt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G2RJ15au"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732F31F00893;
-	Sat, 30 May 2026 17:34:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dwlZCJrt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD3551F00893;
+	Sat, 30 May 2026 17:34:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162454;
-	bh=rxmc86KbjSJlEM8D2iYdnqrBn+kncD2DynhOkJh5Fds=;
+	s=korg; t=1780162457;
+	bh=NJ70OBXakCeK3ZneqksRmXZ4wKPBmNtUBUMJ+fEtXZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G2RJ15au0XPtndJBcR5LheBePw8FBen70jWrIcjDqny5UM/vwezwFgmAUJLI3K4qb
-	 VGyAl64glYSf16tAgStmeUShdKsiaAa92rWLRbh4E8zs6H1LgT//47AAS8xdL+sNsA
-	 za8rayrmPUTqYVt88jboIQ5tJ0TyVF6MHqR9i+yY=
+	b=dwlZCJrtRY6EZMcCc90u9ADvEOAZPP4q5s09nwV/6xbGPIImdI9iya1c7fSFXEto8
+	 9g7Wyk0mJRv8dAdkTpj35T41bbO/EhCo8CQo2gmrzKM5JVU3pbCdqTgMJGNClxpPRf
+	 9suxVKI4f31abopQqYe/+caaPoO8w4WaiIMfQjYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Andreas Haarmann-Thiemann <eitschman@nebelreich.de>,
 	Linus Walleij <linusw@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 926/969] net: ethernet: cortina: Make RX SKB per-port
-Date: Sat, 30 May 2026 18:07:30 +0200
-Message-ID: <20260530160326.311981516@linuxfoundation.org>
+Subject: [PATCH 6.1 927/969] net: ethernet: cortina: Drop half-assembled SKB
+Date: Sat, 30 May 2026 18:07:31 +0200
+Message-ID: <20260530160326.339786939@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -45,91 +47,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Andreas Haarmann-Thiemann <eitschman@nebelreich.de>
 
-[ Upstream commit 06937db21ee311ed07eba47954447245041a982d ]
+[ Upstream commit b266bacba796ff5c4dcd2ae2fc08aacf7ab39153 ]
 
-The SKB used to assemble packets from fragments in gmac_rx()
-is static local, but the Gemini has two ethernet ports, meaning
-there can be races between the ports on a bad day if a device
-is using both.
+In gmac_rx() (drivers/net/ethernet/cortina/gemini.c), when
+gmac_get_queue_page() returns NULL for the second page of a multi-page
+fragment, the driver logs an error and continues — but does not free the
+partially assembled skb that was being assembled via napi_build_skb() /
+napi_get_frags().
 
-Make the RX SKB a per-port variable and carry it over between
-invocations in the port struct instead.
-
-Zero the pointer once we call napi_gro_frags(), on error (after
-calling napi_free_frags()) or if the port is stopped.
-
-Zero it in some place where not strictly necessary just to
-emphasize what is going on.
-
-This was found by Sashiko during normal patch review.
+Free the in-progress partially assembled skb via napi_free_frags()
+and increase the number of dropped frames appropriately
+and assign the skb pointer NULL to make sure it is not lingering
+around, matching the pattern already used elsewhere in the driver.
 
 Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
-Link: https://sashiko.dev/#/patchset/20260505-gemini-ethernet-fix-v2-1-997c31d06079%40kernel.org
+Signed-off-by: Andreas Haarmann-Thiemann <eitschman@nebelreich.de>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260509-gemini-ethernet-fixes-v1-2-6c5d20ddc35b@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Link: https://patch.msgid.link/20260505-gemini-ethernet-fix-v2-1-997c31d06079@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cortina/gemini.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/cortina/gemini.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
-index 729a69007ec47..dbfcbdb8d751a 100644
+index dbfcbdb8d751a..51108bf65845d 100644
 --- a/drivers/net/ethernet/cortina/gemini.c
 +++ b/drivers/net/ethernet/cortina/gemini.c
-@@ -121,6 +121,8 @@ struct gemini_ethernet_port {
- 	struct napi_struct	napi;
- 	struct hrtimer		rx_coalesce_timer;
- 	unsigned int		rx_coalesce_nsecs;
-+	struct sk_buff		*rx_skb;
-+
- 	unsigned int		freeq_refill;
- 	struct gmac_txq		txq[TX_QUEUE_NUM];
- 	unsigned int		txq_order;
-@@ -1447,10 +1449,10 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 	unsigned short m = (1 << port->rxq_order) - 1;
- 	struct gemini_ethernet *geth = port->geth;
- 	void __iomem *ptr_reg = port->rxq_rwptr;
-+	struct sk_buff *skb = port->rx_skb;
- 	unsigned int frame_len, frag_len;
- 	struct gmac_rxdesc *rx = NULL;
- 	struct gmac_queue_page *gpage;
--	static struct sk_buff *skb;
- 	union gmac_rxdesc_0 word0;
- 	union gmac_rxdesc_1 word1;
- 	union gmac_rxdesc_3 word3;
-@@ -1504,6 +1506,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 			if (skb) {
- 				napi_free_frags(&port->napi);
- 				port->stats.rx_dropped++;
+@@ -1498,6 +1498,11 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
+ 		gpage = gmac_get_queue_page(geth, port, mapping + PAGE_SIZE);
+ 		if (!gpage) {
+ 			dev_err(geth->dev, "could not find mapping\n");
++			if (skb) {
++				napi_free_frags(&port->napi);
++				port->stats.rx_dropped++;
 +				skb = NULL;
- 			}
- 
- 			skb = gmac_skb_if_good_frame(port, word0, frame_len);
-@@ -1554,6 +1557,7 @@ static unsigned int gmac_rx(struct net_device *netdev, unsigned int budget)
- 		port->stats.rx_dropped++;
- 	}
- 
-+	port->rx_skb = skb;
- 	writew(r, ptr_reg);
- 	return budget;
- }
-@@ -1882,6 +1886,7 @@ static int gmac_stop(struct net_device *netdev)
- 	gmac_disable_tx_rx(netdev);
- 	gmac_stop_dma(port);
- 	napi_disable(&port->napi);
-+	port->rx_skb = NULL;
- 
- 	gmac_enable_irq(netdev, 0);
- 	gmac_cleanup_rxq(netdev);
++			}
+ 			continue;
+ 		}
+ 		page = gpage->page;
 -- 
 2.53.0
 
