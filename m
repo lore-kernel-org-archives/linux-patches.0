@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8ACF21ADC7;
-	Sat, 30 May 2026 18:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430C9217704;
+	Sat, 30 May 2026 18:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165480; cv=none; b=CJFIeCgSn9LnPwDXfH6VdlpqiHom7+V3Y8jTz3PtuzwWbc6LgpGQhESzmufrRHpODgoZr/rkXK+2BHrSSKzOzRtMXZnr7sLiujs+d11eptrXXy0xUS7DOrWU/vsU8Q3kmxexjhSXXPYYo+mLWwFV8qP5bSH/8kL5E8My18PbWA8=
+	t=1780165484; cv=none; b=fIGUOapcxVtNVUgEYpA0qZmIzRDtznM1LdCHUERYNhftSvo/5o3NxXDwp2CD35hJlrdRorU3pxiH4wgArgZy611vN+SyTaXkF25PeJnUI9mzaWZWvXq1Oeu0UaORS/tVXYigqOPs2jAxadSoG2gpzYYWXgOx2B0fcb+0gB9MfCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165480; c=relaxed/simple;
-	bh=wFA9Qi71l+DtOqFZQYE1u5uWxXo2szxOPiQw/go5DE0=;
+	s=arc-20240116; t=1780165484; c=relaxed/simple;
+	bh=qcrAOaSPFFwey8POak9iun+HB52kZ37ZENuw9KKt/d4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qhzp2a/WlD2s8TWiv/i6A1WfBfDTF/7OOrtkqrVkxwhDql7Ooof8SLDbjSJ0BNNEkG0VquWz3gkNBor6xseV+7/AGVKVFxCokd4gMgASNf6lgIUyFWh3dxN3zupRoDk36N/ueySZ1tZufm+HTLCaJjQoea7mqnO8D5QEI2LB754=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0D0d6qph; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m/BursoeXBBq//2QB7wTM1d0VhwjU07cvglt3XwW9iPeKlvpNVr/0eYTc4ogaNWxVo2E9F8czuRDND7bBYnAPNPis7noQdM06M9XS5o/BsVEO8K/Pml7EMfnXlDI3v6qh6oA/3GqnKDjvr5jxgp15IK4c6Ho1kL+5D/3DvPaRpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6e+HjOP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0D0d6qph"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B1B1F00893;
-	Sat, 30 May 2026 18:24:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6e+HjOP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 890011F00893;
+	Sat, 30 May 2026 18:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165479;
-	bh=2fMr5pmn6k8qf5/UBWi2e9nO1D8tlHJtKP0lSqUPQgM=;
+	s=korg; t=1780165483;
+	bh=SISY/crXphpqRWx/tTpwv4AHnR6uQeKQ3ysY6N941E8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0D0d6qphjQbxTI4t6VyzX8q4S4hsmsgNMWI7q/IowFshYcf+mhzTQB6ocOx8fZFOH
-	 mv7QcBNQmnBETl72IDfyrcwFBhgc5wDMIKw8rPldhGO642pRg/wvg0dV2ckqISH7gb
-	 LOfdAJjtWBXzjJxNL+qbyPp8z/NbsfRcMBp3h0Vg=
+	b=y6e+HjOPplxLIEpFQOhCBxhXRzw0siz5cavpNCbQxoon9wxbMvxMNUU4EnRIxdGRK
+	 N5oNRFC7RcPCn/f3pNn7vvcKHxNqB1jRH3m0j8A8pUUxOpGpYeUZXc4FIeOB74ZiUA
+	 bAcxl7ZC4ctEbCuOkMJBNqYNqSn/8+3A+pV4Sk44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 090/589] drm/amd/display: Add null checker before passing variables
-Date: Sat, 30 May 2026 17:59:31 +0200
-Message-ID: <20260530160227.055687089@linuxfoundation.org>
+	ZhengYuan Huang <gality369@gmail.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 064/589] ocfs2: handle invalid dinode in ocfs2_group_extend
+Date: Sat, 30 May 2026 17:59:05 +0200
+Message-ID: <20260530160226.283490895@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
@@ -54,64 +57,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: ZhengYuan Huang <gality369@gmail.com>
 
-commit 8092aa3ab8f7b737a34b71f91492c676a843043a upstream.
+commit 4a1c0ddc6e7bcf2e9db0eeaab9340dcfe97f448f upstream.
 
-Checks null pointer before passing variables to functions.
+[BUG]
+kernel BUG at fs/ocfs2/resize.c:308!
+Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+RIP: 0010:ocfs2_group_extend+0x10aa/0x1ae0 fs/ocfs2/resize.c:308
+Code: 8b8520ff ffff83f8 860f8580 030000e8 5cc3c1fe
+Call Trace:
+ ...
+ ocfs2_ioctl+0x175/0x6e0 fs/ocfs2/ioctl.c:869
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:597 [inline]
+ __se_sys_ioctl fs/ioctl.c:583 [inline]
+ __x64_sys_ioctl+0x197/0x1e0 fs/ioctl.c:583
+ x64_sys_call+0x1144/0x26a0 arch/x86/include/generated/asm/syscalls_64.h:17
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x93/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ ...
 
-This fixes 3 NULL_RETURNS issues reported by Coverity.
+[CAUSE]
+ocfs2_group_extend() assumes that the global bitmap inode block
+returned from ocfs2_inode_lock() has already been validated and
+BUG_ONs when the signature is not a dinode. That assumption is too
+strong for crafted filesystems because the JBD2-managed buffer path
+can bypass structural validation and return an invalid dinode to the
+resize ioctl.
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Fixes: cdaae8371aa9 ("drm/amd/display: Handle GPU reset for DC block")
-Fixes: dcd5fb82ffb4 ("drm/amd/display: Fix reference counting for struct dc_sink.")
-Fixes: 4562236b3bc0 ("drm/amd/dc: Add dc display driver (v2)")
-[ kovalev: bp to fix CVE-2024-43902; added Fixes tags ]
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[FIX]
+Validate the dinode explicitly in ocfs2_group_extend(). If the global
+bitmap buffer does not contain a valid dinode, report filesystem
+corruption with ocfs2_error() and fail the resize operation instead of
+crashing the kernel.
+
+Link: https://lkml.kernel.org/r/20260401092303.3709187-1-gality369@gmail.com
+Fixes: 10995aa2451a ("ocfs2: Morph the haphazard OCFS2_IS_VALID_DINODE() checks.")
+Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/ocfs2/resize.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index c22783b882067..bd15de4dee75e 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -1778,7 +1778,8 @@ static int dm_suspend(void *handle)
- 		mutex_lock(&dm->dc_lock);
- 		dm->cached_dc_state = dc_copy_state(dm->dc->current_state);
+--- a/fs/ocfs2/resize.c
++++ b/fs/ocfs2/resize.c
+@@ -297,9 +297,13 @@ int ocfs2_group_extend(struct inode * in
  
--		dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
-+		if (dm->cached_dc_state)
-+			dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
+ 	fe = (struct ocfs2_dinode *)main_bm_bh->b_data;
  
- 		amdgpu_dm_commit_zero_streams(dm->dc);
+-	/* main_bm_bh is validated by inode read inside ocfs2_inode_lock(),
+-	 * so any corruption is a code bug. */
+-	BUG_ON(!OCFS2_IS_VALID_DINODE(fe));
++	/* JBD-managed buffers can bypass validation, so treat this as corruption. */
++	if (!OCFS2_IS_VALID_DINODE(fe)) {
++		ret = ocfs2_error(main_bm_inode->i_sb,
++				  "Invalid dinode #%llu\n",
++				  (unsigned long long)OCFS2_I(main_bm_inode)->ip_blkno);
++		goto out_unlock;
++	}
  
-@@ -5396,7 +5397,8 @@ static void create_eml_sink(struct amdgpu_dm_connector *aconnector)
- 		aconnector->dc_sink = aconnector->dc_link->local_sink ?
- 		aconnector->dc_link->local_sink :
- 		aconnector->dc_em_sink;
--		dc_sink_retain(aconnector->dc_sink);
-+		if (aconnector->dc_sink)
-+			dc_sink_retain(aconnector->dc_sink);
- 	}
- }
- 
-@@ -6575,7 +6577,8 @@ static int amdgpu_dm_connector_get_modes(struct drm_connector *connector)
- 				drm_add_modes_noedid(connector, 640, 480);
- 	} else {
- 		amdgpu_dm_connector_ddc_get_modes(connector, edid);
--		amdgpu_dm_connector_add_common_modes(encoder, connector);
-+		if (encoder)
-+			amdgpu_dm_connector_add_common_modes(encoder, connector);
- 	}
- 	amdgpu_dm_fbc_init(connector);
- 
--- 
-2.53.0
-
+ 	if (le16_to_cpu(fe->id2.i_chain.cl_cpg) !=
+ 		ocfs2_group_bitmap_size(osb->sb, 0,
 
 
