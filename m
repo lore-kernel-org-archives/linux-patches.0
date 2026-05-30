@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7378E24EA90;
-	Sat, 30 May 2026 18:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD16F24EA90;
+	Sat, 30 May 2026 18:20:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780165211; cv=none; b=H3uSx9L3dEDdlQfisVd6Z8+ffsyf+MiWuU0BhnHA+i1WGt/248LgPrQwUJcE5hMC16BM/lsApAW5uMmE2Mphky/C0rzIIrQBtZL+xvTwLbBWGVWR/E7oat5HuRkgk8Iz7Zv+hiDOCMBKybad1uQJYhxpF7qYh0TInKAcFTJfv8M=
+	t=1780165214; cv=none; b=FJ+Frdtb4JrOKDZvZEF/3lKESpHQhZYRunhb9075bhP6T0WuwEGHVZHhoWtG1x8o59h3t0xGhxF+XdI5RekW4fx/2TdjFViRI5Lz8P0n35vXT9utxeStvjNCVi9j+T9XEIz8gmaJVZb74kEatLJZsh8imR0dK4yVHqvjPQ3sD4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780165211; c=relaxed/simple;
-	bh=Sp2A3kXvs1uvii3/dVdKlBPUtxPzFZi61Dt4TkY6RHI=;
+	s=arc-20240116; t=1780165214; c=relaxed/simple;
+	bh=Y6KZrnv8OP9R7oJWonmtgq3Azw+ST2XFTsPmKL8Ga/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ceb5KWFhM4CD96O+bdyOXQ0y8VQfWswmdGNn9bWYnQWq4UD2NyeAv6o/9GXrG5HlTt3CZclXZyrdnAOWml4vzR+JVGWHwcZDtDK20EBo9AraATrBMitnNbI6rvTb0r9ZmwVkoAfa112ubxDWuhZVdMI3Ng5jVVll6Pe01DtIiCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUxPXnT7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lgij47CYPJNQwQL/W+eDe7Byooio/Wzjvn2ZpnHEAJKdr+zjV4OOB6nJVhUsbqR+zXRqb4xu+EJUicQ2HUcCoOz0TqCJpeCdXyd5eWRnRxhZvJDn4d2RwRd8esy7K+5HusI+ApmSAKPWQ2aIO75ssWxM4tTL9TsK0iRx4jnNRsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AtJ3eSPh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUxPXnT7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B836D1F00893;
-	Sat, 30 May 2026 18:20:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtJ3eSPh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1881F00893;
+	Sat, 30 May 2026 18:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780165210;
-	bh=MJHbhrNGXTaoMoWFZA5sh7KQbnnWf7rxLThkVAwfZ3E=;
+	s=korg; t=1780165213;
+	bh=43vjvAmPSiRZDz48TLXmsy78hSNb3MbfIv0rrZnXfnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oUxPXnT7ejyaZeWl4jP6qQvHsVo8e6JLJkH/ZRKdPKlY7xtWwDXSZXB2qs5UAOnRO
-	 YyafV6UauG+K6YypG6d1NpU1hhLu9H//G/yAyELoJfHT3XO9MNPlf84Nl7Fg0tfHCd
-	 Aoh5r7mq+VS56Nnx4pJUqk8N+IteXxLRwrX72wIY=
+	b=AtJ3eSPhZKRbmo/Ltwp+FBraO51QvIlS8cBoZzUMYC8IIBfm9VBS6SLrkd2H1lXPt
+	 ssi4NnYA0JCDkNPJV7wXgtSZGwSYsV7WWz8Llf5Q3dnAXr4bmyRAl+2EYd64nDSCN0
+	 xlRCINknpQe7wQZ95+YYDcH9XBkwKs5hY6FJo/OY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	=?UTF-8?q?=E9=92=B1=E4=B8=80=E9=93=AD?= <yimingqian591@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 755/776] drm/msm: Fix iommu_map_sgtable() return value check and avoid WARN
-Date: Sat, 30 May 2026 18:07:49 +0200
-Message-ID: <20260530160259.264847475@linuxfoundation.org>
+Subject: [PATCH 5.15 756/776] net: tls: fix off-by-one in sg_chain entry count for wrapped sk_msg ring
+Date: Sat, 30 May 2026 18:07:50 +0200
+Message-ID: <20260530160259.287724408@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
 References: <20260530160240.228940103@linuxfoundation.org>
@@ -45,55 +47,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 55e0f0d1c1a4ee1e46da7da4d443eb3044fb3851 ]
+[ Upstream commit 285943c6e7ca309bbea84b253745154241d9788a ]
 
-Commit "iommu: return full error code from iommu_map_sg[_atomic]()"
-changed iommu_map_sgtable() to return an ssize_t and negative values
-in error cases, rather than a size_t and a zero.
+When an sk_msg scatterlist ring wraps (sg.end < sg.start),
+tls_push_record() chains the tail portion of the ring to the head
+using sg_chain(). An extra entry in the sg array is reserved for
+this:
 
-Store the return value in the appropriate type and in case of error,
-return it rather than WARNing.
+  struct sk_msg_sg {
+        [...]
+        /* The extra two elements:
+         * 1) used for chaining the front and sections when the list becomes
+         *    partitioned (e.g. end < start). The crypto APIs require the
+         *    chaining;
+         * 2) to chain tailer SG entries after the message.
+         */
+        struct scatterlist              data[MAX_MSG_FRAGS + 2];
 
-Fixes: ad8f36e4b6b1 ("iommu: return full error code from iommu_map_sg[_atomic]()")
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Patchwork: https://patchwork.freedesktop.org/patch/719685/
-Message-ID: <20260421-iommu_map_sgtable-return-v1-3-fb484c07d2a1@nvidia.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+The current code uses MAX_SKB_FRAGS + 1 as the ring size:
+
+    sg_chain(&msg_pl->sg.data[msg_pl->sg.start],
+             MAX_SKB_FRAGS - msg_pl->sg.start + 1,
+             msg_pl->sg.data);
+
+This places the chain pointer at
+
+  sg_chain(data[start], (MAX_SKB_FRAGS - msg_start + 1) .. =
+  &data[start] + (MAX_SKB_FRAGS - msg_start + 1) - 1 =
+  data[start + (MAX_SKB_FRAGS - start + 1) - 1] =
+  data[MAX_SKB_FRAGS]
+
+instead of the true last entry. This is likely due to a "race" of
+the commit under Fixes landing close to
+commit 031097d9e079 ("bpf: sk_msg, zap ingress queue on psock down")
+
+Convert to ARRAY_SIZE and drop the data[start] / - start (as suggested
+by Sabrina).
+
+Reported-by: 钱一铭 <yimingqian591@gmail.com>
+Fixes: 9aaaa56845a0 ("bpf: Sockmap/tls, skmsg can have wrapped skmsg that needs extra chaining")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20260511174920.433155-2-kuba@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_iommu.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/tls/tls_sw.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
-index ef4da3f0cd22d..ede7510562f9d 100644
---- a/drivers/gpu/drm/msm/msm_iommu.c
-+++ b/drivers/gpu/drm/msm/msm_iommu.c
-@@ -262,14 +262,15 @@ static int msm_iommu_map(struct msm_mmu *mmu, uint64_t iova,
- 		struct sg_table *sgt, size_t len, int prot)
- {
- 	struct msm_iommu *iommu = to_msm_iommu(mmu);
--	size_t ret;
-+	ssize_t ret;
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 002806908aa82..33b8afa2048ce 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -784,11 +784,9 @@ static int tls_push_record(struct sock *sk, int flags,
+ 		sg_mark_end(sk_msg_elem(msg_pl, i));
+ 	}
  
- 	/* The arm-smmu driver expects the addresses to be sign extended */
- 	if (iova & BIT_ULL(48))
- 		iova |= GENMASK_ULL(63, 49);
+-	if (msg_pl->sg.end < msg_pl->sg.start) {
+-		sg_chain(&msg_pl->sg.data[msg_pl->sg.start],
+-			 MAX_SKB_FRAGS - msg_pl->sg.start + 1,
++	if (msg_pl->sg.end < msg_pl->sg.start)
++		sg_chain(msg_pl->sg.data, ARRAY_SIZE(msg_pl->sg.data),
+ 			 msg_pl->sg.data);
+-	}
  
- 	ret = iommu_map_sgtable(iommu->domain, iova, sgt, prot);
--	WARN_ON(!ret);
-+	if (ret < 0)
-+		return ret;
- 
- 	return (ret == len) ? 0 : -EINVAL;
- }
+ 	i = msg_pl->sg.start;
+ 	sg_chain(rec->sg_aead_in, 2, &msg_pl->sg.data[i]);
 -- 
 2.53.0
 
