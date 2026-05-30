@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1FD32B11F;
-	Sat, 30 May 2026 17:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4369933E36A;
+	Sat, 30 May 2026 17:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162597; cv=none; b=Q2+aziw9Ew043ctmM17EboJzmK6rZBgIr3A0VHJTsURJXuel/WKGByWpWU3mrDS9WNYFxgj4RuFxoTPlxDbVpA6PsN+IrqyghhCZHyMnPf5Qy/dcUIHGRB8TjqkQwuwUyLQ7q9Gj4D2EJUdxXlBSyFbu3v9Cs8Va4Vvm82jkFYo=
+	t=1780162601; cv=none; b=surZnumooESSSAb7pQ/ncIhMQxtUeV4Dsovw+UEyBINM7O5SpUIOXObTTCFM7V3VQX/3WRnxClCkF9P1aGK2JytXyqjSFO3IwZ3aLiGdGyCe/t/wCr9mfZUs1ABlweBAUJG2pnTwWByBg5EuG1rvr5Rk3Gh7CFV9C3zrAQaYO0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162597; c=relaxed/simple;
-	bh=Di6qQdAVIwmV26ZqOOV8TGmNfdsxSKbbkL2xk+FWZ5E=;
+	s=arc-20240116; t=1780162601; c=relaxed/simple;
+	bh=qDEHJIAbN/GXEvaPSYp8t9xEdb6fZoRP+K+elRnyyZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y2Euqxcs/AZ+bWbsxzdh8WNsXAAL3qqydtPoCP0cJk5M2FDBsCOdT+AWPKIt/HE4b31wEkp2cWlSuGpPz0+CLD4N2SaFfMsmyGN05ViArxUChdaVu4UuwcsIs/cRlxZedVYjXlYwNXxMfAiVP6MclnakMoEva/Vu6tJZbrXk4qQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QndqrGs0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HgjTFwDjINACumfzoBnNo/YrU1sLbCVj33NY4ziDXcCHw872y312giXK70cTD+p+NcTyaIKIWgh4iF3Ryh6qlHT5wIfLFfu4PXHuseGQOPa+d+6nIbdO2F7WkLnp8Tc/yJld207CvA9nR+9ZLc/Z3OxP/BxbT6ELDEtmnRhuHak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EC8//nOw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QndqrGs0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3A41F00893;
-	Sat, 30 May 2026 17:36:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EC8//nOw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 868EB1F00893;
+	Sat, 30 May 2026 17:36:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780162596;
-	bh=7Lj9Es4c+r2Bz4L3dLXNw9Vw+8Ob2zrgZEe1S/EBIUk=;
+	s=korg; t=1780162600;
+	bh=Z9PknbvIpbRs4tg/EXBwgTABjdYrqgiDHvybmfQvvlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QndqrGs0tXXo6vi433WiTYbUO8YdBtMkyoLXKGkDLoNDX9EI1sH75a5pcz2+/6mey
-	 eitLEQkSPOA9halKiC9xXZeUHFAyVCpA2QhQ0V8lyoHpX+tbblxO/o+WINI+Gdx0jR
-	 G0Fu2pUZH1C1ouodA6tVL0tnU7IBxu/kgYxWxe/s=
+	b=EC8//nOwcdAoLIuTlyP5lTWp5qTOkKGAA3/KIFNyRDPIl7L1P2Fv0P5xi3RILz212
+	 qbZSQciJXr+3tL3oOl29lty2pQGO+Zq8hn3PPafGp1o4jVqOFQKid+UeP7gJEFHi6E
+	 Kt/LA+2jdK7M681WiNYYWiEgYeFzOcR2mIVIN/Pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <npc@anthropic.com>,
-	David Howells <dhowells@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Paul Moore <paul@paul-moore.com>,
-	James Morris James Morris <jmorris@namei.org>,
-	"Serge E. Hallyn" <serge@hallyn.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.1 969/969] security/keys: fix missed RCU read section on lookup
-Date: Sat, 30 May 2026 18:08:13 +0200
-Message-ID: <20260530160327.539304944@linuxfoundation.org>
+	P Praneesh <quic_ppranees@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 949/969] wifi: ath11k: fix rssi station dump not updated in QCN9074
+Date: Sat, 30 May 2026 18:07:53 +0200
+Message-ID: <20260530160326.962950629@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 References: <20260530160300.485627683@linuxfoundation.org>
@@ -55,48 +51,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: P Praneesh <quic_ppranees@quicinc.com>
 
-commit 43a1e3744548e6fd85873e6fb43e293eb4010694 upstream.
+[ Upstream commit 031ffa6c2cd305a57ccc6d610f2decd956b2e7f6 ]
 
-Nicholas Carlini reports that the keyring code calls assoc_array_find()
-in find_key_to_update() without holding the RCU read lock, while the
-assoc_array_gc() code really is designed around removing the node from
-the tree and then freeing it after an RCU grace-period.
+In QCN9074, station dump signal values display default value which
+is -95 dbm, since there is firmware header change for HAL_RX_MPDU_START
+between QCN9074 and IPQ8074 which cause wrong peer_id fetch from msdu.
+Fix this by updating hal_rx_mpdu_info with corresponding QCN9074 tlv
+format.
 
-The regular key handling doesn't see this because holding the keyring
-semaphore hides any lifetime issues, but the persistent key handling
-uses a different model.
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
+Tested-on: IPQ8074 hw2.0 AHB WLAN.HK.2.4.0.1-01695-QCAHKSWPL_SILICONZ-1
 
-Instead of extending the keyring locking, just do the simple RCU locking
-that the assoc_array was designed for.
-
-Reported-by: Nicholas Carlini <npc@anthropic.com>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Jarkko Sakkinen <jarkko@kernel.org>
-Cc: Paul Moore <paul@paul-moore.com>
-Cc: James Morris James Morris <jmorris@namei.org>
-Cc: Serge E. Hallyn <serge@hallyn.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230320110312.20639-1-quic_ppranees@quicinc.com
+Stable-dep-of: 2a2451a34afd ("wifi: ath11k: fix peer resolution on rx path when peer_id=0")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/keyring.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/ath/ath11k/hal_rx.c | 10 ++++++++-
+ drivers/net/wireless/ath/ath11k/hal_rx.h | 18 +++++++++++++++-
+ drivers/net/wireless/ath/ath11k/hw.c     | 27 ++++++++++++++++--------
+ drivers/net/wireless/ath/ath11k/hw.h     |  2 +-
+ 4 files changed, 45 insertions(+), 12 deletions(-)
 
-diff --git a/security/keys/keyring.c b/security/keys/keyring.c
-index b39038f7dd31..5a9887d6b7be 100644
---- a/security/keys/keyring.c
-+++ b/security/keys/keyring.c
-@@ -1109,6 +1109,7 @@ key_ref_t find_key_to_update(key_ref_t keyring_ref,
- 	kenter("{%d},{%s,%s}",
- 	       keyring->serial, index_key->type->name, index_key->description);
+diff --git a/drivers/net/wireless/ath/ath11k/hal_rx.c b/drivers/net/wireless/ath/ath11k/hal_rx.c
+index d1785e71ffc98..47bd937591470 100644
+--- a/drivers/net/wireless/ath/ath11k/hal_rx.c
++++ b/drivers/net/wireless/ath/ath11k/hal_rx.c
+@@ -866,6 +866,12 @@ ath11k_hal_rx_populate_mu_user_info(void *rx_tlv, struct hal_rx_mon_ppdu_info *p
+ 	ath11k_hal_rx_populate_byte_count(rx_tlv, ppdu_info, rx_user_status);
+ }
  
-+	guard(rcu)();
- 	object = assoc_array_find(&keyring->keys, &keyring_assoc_array_ops,
- 				  index_key);
++static u16 ath11k_hal_rx_mpduinfo_get_peerid(struct ath11k_base *ab,
++					     struct hal_rx_mpdu_info *mpdu_info)
++{
++	return ab->hw_params.hw_ops->mpdu_info_get_peerid(mpdu_info);
++}
++
+ static enum hal_rx_mon_status
+ ath11k_hal_rx_parse_mon_status_tlv(struct ath11k_base *ab,
+ 				   struct hal_rx_mon_ppdu_info *ppdu_info,
+@@ -1460,9 +1466,11 @@ ath11k_hal_rx_parse_mon_status_tlv(struct ath11k_base *ab,
+ 		break;
+ 	}
+ 	case HAL_RX_MPDU_START: {
++		struct hal_rx_mpdu_info *mpdu_info =
++				(struct hal_rx_mpdu_info *)tlv_data;
+ 		u16 peer_id;
  
+-		peer_id = ab->hw_params.hw_ops->mpdu_info_get_peerid(tlv_data);
++		peer_id = ath11k_hal_rx_mpduinfo_get_peerid(ab, mpdu_info);
+ 		if (peer_id)
+ 			ppdu_info->peer_id = peer_id;
+ 		break;
+diff --git a/drivers/net/wireless/ath/ath11k/hal_rx.h b/drivers/net/wireless/ath/ath11k/hal_rx.h
+index f6bae07abfd3e..47e8208b22e13 100644
+--- a/drivers/net/wireless/ath/ath11k/hal_rx.h
++++ b/drivers/net/wireless/ath/ath11k/hal_rx.h
+@@ -405,7 +405,7 @@ struct hal_rx_phyrx_rssi_legacy_info {
+ #define HAL_RX_MPDU_INFO_INFO0_PEERID_WCN6855	GENMASK(15, 0)
+ #define HAL_RX_MPDU_INFO_INFO1_MPDU_LEN		GENMASK(13, 0)
+ 
+-struct hal_rx_mpdu_info {
++struct hal_rx_mpdu_info_ipq8074 {
+ 	__le32 rsvd0;
+ 	__le32 info0;
+ 	__le32 rsvd1[11];
+@@ -413,12 +413,28 @@ struct hal_rx_mpdu_info {
+ 	__le32 rsvd2[9];
+ } __packed;
+ 
++struct hal_rx_mpdu_info_qcn9074 {
++	__le32 rsvd0[10];
++	__le32 info0;
++	__le32 rsvd1[2];
++	__le32 info1;
++	__le32 rsvd2[9];
++} __packed;
++
+ struct hal_rx_mpdu_info_wcn6855 {
+ 	__le32 rsvd0[8];
+ 	__le32 info0;
+ 	__le32 rsvd1[14];
+ } __packed;
+ 
++struct hal_rx_mpdu_info {
++	union {
++		struct hal_rx_mpdu_info_ipq8074 ipq8074;
++		struct hal_rx_mpdu_info_qcn9074 qcn9074;
++		struct hal_rx_mpdu_info_wcn6855 wcn6855;
++	} u;
++} __packed;
++
+ #define HAL_RX_PPDU_END_DURATION	GENMASK(23, 0)
+ struct hal_rx_ppdu_end_duration {
+ 	__le32 rsvd0[9];
+diff --git a/drivers/net/wireless/ath/ath11k/hw.c b/drivers/net/wireless/ath/ath11k/hw.c
+index 60ac215e06786..6b4355a68e266 100644
+--- a/drivers/net/wireless/ath/ath11k/hw.c
++++ b/drivers/net/wireless/ath/ath11k/hw.c
+@@ -835,26 +835,35 @@ static void ath11k_hw_ipq5018_reo_setup(struct ath11k_base *ab)
+ 			   ring_hash_map);
+ }
+ 
+-static u16 ath11k_hw_ipq8074_mpdu_info_get_peerid(u8 *tlv_data)
++static u16
++ath11k_hw_ipq8074_mpdu_info_get_peerid(struct hal_rx_mpdu_info *mpdu_info)
+ {
+ 	u16 peer_id = 0;
+-	struct hal_rx_mpdu_info *mpdu_info =
+-		(struct hal_rx_mpdu_info *)tlv_data;
+ 
+ 	peer_id = FIELD_GET(HAL_RX_MPDU_INFO_INFO0_PEERID,
+-			    __le32_to_cpu(mpdu_info->info0));
++			    __le32_to_cpu(mpdu_info->u.ipq8074.info0));
+ 
+ 	return peer_id;
+ }
+ 
+-static u16 ath11k_hw_wcn6855_mpdu_info_get_peerid(u8 *tlv_data)
++static u16
++ath11k_hw_qcn9074_mpdu_info_get_peerid(struct hal_rx_mpdu_info *mpdu_info)
++{
++	u16 peer_id = 0;
++
++	peer_id = FIELD_GET(HAL_RX_MPDU_INFO_INFO0_PEERID,
++			    __le32_to_cpu(mpdu_info->u.qcn9074.info0));
++
++	return peer_id;
++}
++
++static u16
++ath11k_hw_wcn6855_mpdu_info_get_peerid(struct hal_rx_mpdu_info *mpdu_info)
+ {
+ 	u16 peer_id = 0;
+-	struct hal_rx_mpdu_info_wcn6855 *mpdu_info =
+-		(struct hal_rx_mpdu_info_wcn6855 *)tlv_data;
+ 
+ 	peer_id = FIELD_GET(HAL_RX_MPDU_INFO_INFO0_PEERID_WCN6855,
+-			    __le32_to_cpu(mpdu_info->info0));
++			    __le32_to_cpu(mpdu_info->u.wcn6855.info0));
+ 	return peer_id;
+ }
+ 
+@@ -1042,7 +1051,7 @@ const struct ath11k_hw_ops qcn9074_ops = {
+ 	.rx_desc_get_attention = ath11k_hw_qcn9074_rx_desc_get_attention,
+ 	.rx_desc_get_msdu_payload = ath11k_hw_qcn9074_rx_desc_get_msdu_payload,
+ 	.reo_setup = ath11k_hw_ipq8074_reo_setup,
+-	.mpdu_info_get_peerid = ath11k_hw_ipq8074_mpdu_info_get_peerid,
++	.mpdu_info_get_peerid = ath11k_hw_qcn9074_mpdu_info_get_peerid,
+ 	.rx_desc_mac_addr2_valid = ath11k_hw_ipq9074_rx_desc_mac_addr2_valid,
+ 	.rx_desc_mpdu_start_addr2 = ath11k_hw_ipq9074_rx_desc_mpdu_start_addr2,
+ 	.get_ring_selector = ath11k_hw_ipq8074_get_tcl_ring_selector,
+diff --git a/drivers/net/wireless/ath/ath11k/hw.h b/drivers/net/wireless/ath/ath11k/hw.h
+index 9f45d061d8265..6a5dd2dbdb3ab 100644
+--- a/drivers/net/wireless/ath/ath11k/hw.h
++++ b/drivers/net/wireless/ath/ath11k/hw.h
+@@ -263,7 +263,7 @@ struct ath11k_hw_ops {
+ 	struct rx_attention *(*rx_desc_get_attention)(struct hal_rx_desc *desc);
+ 	u8 *(*rx_desc_get_msdu_payload)(struct hal_rx_desc *desc);
+ 	void (*reo_setup)(struct ath11k_base *ab);
+-	u16 (*mpdu_info_get_peerid)(u8 *tlv_data);
++	u16 (*mpdu_info_get_peerid)(struct hal_rx_mpdu_info *mpdu_info);
+ 	bool (*rx_desc_mac_addr2_valid)(struct hal_rx_desc *desc);
+ 	u8* (*rx_desc_mpdu_start_addr2)(struct hal_rx_desc *desc);
+ 	u32 (*get_ring_selector)(struct sk_buff *skb);
 -- 
-2.54.0
+2.53.0
 
 
 
