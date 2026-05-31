@@ -1,16 +1,16 @@
 Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368AD38D3F6;
-	Sun, 31 May 2026 13:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A8F332EA2;
+	Sun, 31 May 2026 14:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780233634; cv=none; b=KpiDyfjfFq+Xi41elLJmxoeJMuaWb96+0251G21sFv83Y80FvBuYWOOr16V7K+n5M8unWKMeBuO/DHt9MIjm/UdcbUCpS5BqwSfe3sVkNt5Se11XybBHS1BhaNbwNWwbxjVoH0ZXIr6eJSfoEffP9tWi7aWFGI9eKkO34Qx7ULs=
+	t=1780237187; cv=none; b=QTuNgNYpi3ZfcS8vR3E4ux6m5sUXF5sikwWojHY+jrNTc+7mZxASqSJrYa0jZkfAS7H66S5rEXWH5cuYHlwNV7lwFqaE5Bf7qDxLOpoaSXmZRqbzublYUVb65cG4zc53/xo6jt+5kvt5cEE7UBn2SE2kI30azlxTqjq7Sc3hdbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780233634; c=relaxed/simple;
-	bh=KUBg7hsI1YVDn0Qj0Kaw6/CZu61rIfo+N9/0U1evMLU=;
+	s=arc-20240116; t=1780237187; c=relaxed/simple;
+	bh=dEgYalVeKkZqCZ0S/NKEeezREN36klzUlk3U8bynM7A=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=oblIuHeOXgii8lxyOTsRwZGA/27HrpoHCGqvNnaK3pNBwTC5twmeKiMqLNNCOyVxkBoywuxJE2PpN6loJYa6ampNT3mdefdQlDpUaIUSyocDJLGEVrjd2Bea1qcherOo/Qhg/YTEud7Iv2rN37Ni8CQt5H4szkyN1mheG0velRY=
+	 Content-Type:MIME-Version; b=iyifNuQSC0dP7xov+WqNzh9/nipfVe/daT8CWa26abxTh5xxfnThGiz2igNjzQVJURnSeMIleX7oj51o4nPAB+UhmeP5g3D0qSK+CyPjVKyKVTqBcj7bXNMvVK70DWkcdZO2puHYZL1I1HjJJ1jEqYlp7F3lMNgkruMU02Dy4Sw=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
@@ -18,28 +18,26 @@ Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
 	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.96)
 	(envelope-from <ben@decadent.org.uk>)
-	id 1wTg5b-000O4g-19;
-	Sun, 31 May 2026 13:20:27 +0000
+	id 1wTh0w-000OHI-1g;
+	Sun, 31 May 2026 14:19:42 +0000
 Received: from ben by deadeye with local (Exim 4.99.2)
 	(envelope-from <ben@decadent.org.uk>)
-	id 1wTg5Z-0000000FCef-3MG7;
-	Sun, 31 May 2026 15:20:25 +0200
-Message-ID: <866e188244055e8b90d632cb82e2badb40946706.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 101/589] rxrpc: Fix key quota calculation for
- multitoken keys
+	id 1wTh0v-0000000FFck-2a3L;
+	Sun, 31 May 2026 16:19:41 +0200
+Message-ID: <b7871589afa5bc3668b07550b9e8b69b3a6c15dd.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.10 114/589] arm64: dts: imx8mq-librem5: Dont mark
+ buck3 as always on
 From: Ben Hutchings <ben@decadent.org.uk>
-To: Sasha Levin <sashal@kernel.org>, David Howells <dhowells@redhat.com>
-Cc: patches@lists.linux.dev, Marc Dionne <marc.dionne@auristor.com>, Jeffrey
- Altman <jaltman@auristor.com>, Simon Horman <horms@kernel.org>,
- linux-afs@lists.infradead.org, 	stable@kernel.org, Jakub Kicinski
- <kuba@kernel.org>, Greg Kroah-Hartman	 <gregkh@linuxfoundation.org>, stable
- <stable@vger.kernel.org>
-Date: Sun, 31 May 2026 15:20:20 +0200
-In-Reply-To: <20260530160227.359961685@linuxfoundation.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Guido =?ISO-8859-1?Q?G=FCnther?=
+ <agx@sigxcpu.org>,  Martin Kepplinger <martin.kepplinger@puri.sm>, Shawn
+ Guo <shawnguo@kernel.org>, Sasha Levin <sashal@kernel.org>
+Date: Sun, 31 May 2026 16:19:34 +0200
+In-Reply-To: <20260530160227.753209120@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
-	 <20260530160227.359961685@linuxfoundation.org>
+	 <20260530160227.753209120@linuxfoundation.org>
 Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-KdLnGxpFZeMT36rZDyM1"
+	protocol="application/pgp-signature"; boundary="=-hBijeSRhk6/jPsaufnci"
 User-Agent: Evolution 3.56.2-9 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -52,7 +50,7 @@ X-SA-Exim-Mail-From: ben@decadent.org.uk
 X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
 
---=-KdLnGxpFZeMT36rZDyM1
+--=-hBijeSRhk6/jPsaufnci
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -62,70 +60,38 @@ ow.
 >=20
 > ------------------
 >=20
-> From: David Howells <dhowells@redhat.com>
+> From: Guido G=C3=BCnther <agx@sigxcpu.org>
 >=20
-> [ Upstream commit bdbfead6d38979475df0c2f4bad2b19394fe9bdc ]
+> [ Upstream commit 99e71c029213d3cfcc4f39a534c73d1828ffb341 ]
 >=20
-> In the rxrpc key preparsing, every token extracted sets the proposed quot=
-a
-> value, but for multitoken keys, this will overwrite the previous proposed
-> quota, losing it.
->=20
-> Fix this by adding to the proposed quota instead.
->=20
-> Fixes: 8a7a3eb4ddbe ("KEYS: RxRPC: Use key preparsing")
-> Closes: https://sashiko.dev/#/patchset/20260319150150.4189381-1-dhowells%=
-40redhat.com
-> Signed-off-by: David Howells <dhowells@redhat.com>
-> cc: Marc Dionne <marc.dionne@auristor.com>
-> cc: Jeffrey Altman <jaltman@auristor.com>
-> cc: Simon Horman <horms@kernel.org>
-> cc: linux-afs@lists.infradead.org
-> cc: stable@kernel.org
-> Link: https://patch.msgid.link/20260408121252.2249051-2-dhowells@redhat.c=
-om
-> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-> [ dropped hunk for rxrpc_preparse_xdr_yfs_rxgk() ]
+> With the pmic driver fixed we can now shut off the regulator in the gpc.
 
-Indeed 5.10 does not have that key type, but it does have
-rxrpc_preparse_xdr_rxk5() which I think also needs to be updated.
+But not for all hardware revisions.  We need commit a362b0cc94d4 "arm64:
+dts: imx8mq-librem5-r3: Mark buck3 as always on" on top of this.
 
 Ben.
 
+> Signed-off-by: Guido G=C3=BCnther <agx@sigxcpu.org>
+> Signed-off-by: Martin Kepplinger <martin.kepplinger@puri.sm>
+> Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+> Stable-dep-of: 511f76bf1dce ("arm64: dts: imx8mq-librem5: Bump BUCK1 susp=
+end voltage up to 0.85V")
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 > ---
->  net/rxrpc/key.c |    5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
+>  arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi |    1 -
+>  1 file changed, 1 deletion(-)
 >=20
-> --- a/net/rxrpc/key.c
-> +++ b/net/rxrpc/key.c
-> @@ -108,7 +108,7 @@ static int rxrpc_preparse_xdr_rxkad(stru
->  		return -EKEYREJECTED;
+> --- a/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
+> +++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
+> @@ -671,7 +671,6 @@
+>  				regulator-min-microvolt =3D <700000>;
+>  				regulator-max-microvolt =3D <1300000>;
+>  				rohm,dvs-run-voltage =3D <900000>;
+> -				regulator-always-on;
+>  			};
 > =20
->  	plen =3D sizeof(*token) + sizeof(*token->kad) + tktlen;
-> -	prep->quotalen =3D datalen + plen;
-> +	prep->quotalen +=3D datalen + plen;
-> =20
->  	plen -=3D sizeof(*token);
->  	token =3D kzalloc(sizeof(*token), GFP_KERNEL);
-> @@ -718,6 +718,7 @@ static int rxrpc_preparse(struct key_pre
->  	memcpy(&kver, prep->data, sizeof(kver));
->  	prep->data +=3D sizeof(kver);
->  	prep->datalen -=3D sizeof(kver);
-> +	prep->quotalen =3D 0;
-> =20
->  	_debug("KEY I/F VERSION: %u", kver);
-> =20
-> @@ -755,7 +756,7 @@ static int rxrpc_preparse(struct key_pre
->  		goto error;
-> =20
->  	plen =3D sizeof(*token->kad) + v1->ticket_length;
-> -	prep->quotalen =3D plen + sizeof(*token);
-> +	prep->quotalen +=3D plen + sizeof(*token);
-> =20
->  	ret =3D -ENOMEM;
->  	token =3D kzalloc(sizeof(*token), GFP_KERNEL);
+>  			buck4_reg: BUCK4 {
 >=20
 >=20
 
@@ -134,25 +100,25 @@ Ben Hutchings
 Time is nature's way of making sure that
 everything doesn't happen at once.
 
---=-KdLnGxpFZeMT36rZDyM1
+--=-hBijeSRhk6/jPsaufnci
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmocNZQACgkQ57/I7JWG
-EQlRJxAAiEFKtwUy3nJ/4y1FfxU0J93QfRiALaoiMSl6QtKX/V3to7AmxdW94nsL
-IAx923DA+9pbMi9XX9EtOcWBOxHo6am3VtvXeN7bj0KfLb1t0q86d7dTEW0o497O
-VRM/wElqCzI5t09LGidZt8LBN5CeEO+1KXzZtatNKlG++dNMboX40mrY9zFJptHt
-OER+1wpK7C69cHWHx/iLLw0/y2DdgK7rBhP6blJfL5DwjbdaJ2B5kDKuhsoJ9D/2
-oR2cGfep+pNfVoGin/iYPke8UETRaDz+xoFqiFKPKk+wZzS5dp6UH2UR/UMI5Nv5
-Bi4AKfAPG9giFS+8C3+Ih0insWiXu0ru3uj56RmSpCTyl/xzS6Jl+AJNL0RFcWNW
-aK1Gwq0gKpW73frm+KQZpGuEBZq3EOqyk9I9NAyVKHxXPT5+D8+jlqFHGjHdvT4l
-gmqelyKyXEnX+wLIxjIc4OLLE4bCrMIfWy696ormBUovMuFkEO2AVIlXJCyu8rJ0
-RcY2hPvoXOrYXQyrEFGb5+DDCdwd87W4Is4K5ev9EH6eWfkVNhAGv7nPCH66DpGO
-us8s0GPwaKdltseP/NWXr7b6maH1rq+kJB7G5hkoT2t4nidl4UABsDrVxphC+b6A
-VTe75hPObNH5yonkM09RwDu9bg8BjQu3lH+gl0ovaW2bmzoA95k=
-=tNwi
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmocQ3YACgkQ57/I7JWG
+EQlv1g//YJ+MrTZTsbrDpLqKgSEGLlfyacs4IJV8FyEfnRpkKjZsS8fScTk+3bic
+F1FMDKEDfnxfNxmdhOYKdBuqPsBg6VZmPrvDVSEdAS4bOYtDwmDgI1g1gdGEIyDZ
+whjwxHlLHX0A6RXCGWMwqYe4vswqCwa9u3A4nFpY1RNz7Gx2w2be8SxvKfcwjg+U
+Okjn2i4vib7V42kVwrUYYRcbZ7bIWDIzRByIGHL7Jy0HgBxiGB3MkIm93O98Xer5
+EEK3SlncZMKS9UteAetfQuv1R1g5RhB9XYMKE/BQtayoWZAClHOxtRKLzNxdA5Up
+h9eI5Qp1on3OsNrfM+E4b92zpggWN5L2BQCkcs9vq5iVuRez5m9IJkJddqZ7tb0C
+mqi+mrg27fVp+v5M/XpuSGdMASczcflYt+O5J/KRDK1OfrWaP8BFk1ZIi4uN1O+w
+Y2DicENIRFFXFh631vEoJ2BSPjahkRj0uCfC57k5SmnVpF65SkmzBjkXiJqFByXf
+Zjyvnjck0X7zzgvCu5Q4/uLv9eD81HIUXOdd37j8mUucMCA69Yn2HfoXQaXAxokE
+dT51fBs9g2uViseGln4M/rUrMObc5BssSvzZxJ5l8GGhmtDaLdRXXy+hyP327aF6
+0z/4sOtTOBLCOnw8uSrpnNp5pl0OowErSWxSoczqN0A0j2ZcE9M=
+=IkH9
 -----END PGP SIGNATURE-----
 
---=-KdLnGxpFZeMT36rZDyM1--
+--=-hBijeSRhk6/jPsaufnci--
