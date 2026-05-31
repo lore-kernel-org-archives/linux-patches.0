@@ -1,16 +1,16 @@
 Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED16335BA;
-	Sun, 31 May 2026 12:34:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368AD38D3F6;
+	Sun, 31 May 2026 13:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780230846; cv=none; b=dApI1sJ/jVSfRhEst2UNoOQzxI7IyLeKHGaYBNlLDB5CBaOayb+cuFFd/M94AuRxrkBGUxBIhpOLwS1KpSSJQiaCWDMjSCskK6k7noZaoqfEpfJwHCNIIBecp3q9IHARp95rV5Ewzrr7vzgs9bG1l3qYafKFAiREt4FvM2nR9Hw=
+	t=1780233634; cv=none; b=KpiDyfjfFq+Xi41elLJmxoeJMuaWb96+0251G21sFv83Y80FvBuYWOOr16V7K+n5M8unWKMeBuO/DHt9MIjm/UdcbUCpS5BqwSfe3sVkNt5Se11XybBHS1BhaNbwNWwbxjVoH0ZXIr6eJSfoEffP9tWi7aWFGI9eKkO34Qx7ULs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780230846; c=relaxed/simple;
-	bh=BoBAlG10CgV5SweZUjHsYBM7U2GWC8AECDm/4l2XK3E=;
+	s=arc-20240116; t=1780233634; c=relaxed/simple;
+	bh=KUBg7hsI1YVDn0Qj0Kaw6/CZu61rIfo+N9/0U1evMLU=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=knUih7ICx7aFNuzKVPp/05nJfkpJb0oX8ImwTTYW2xp0YgG9EFkH2dUpXmDvfTizrepzgUmj3PvijYss4gH+k3wHynlhXtE5TpGvMaxUUMHPmHmfzEaKSrnK03P6UfFHIC8ZhftRQjIXimTF9UL9SED5yddN/V0M1M5X92JI/RA=
+	 Content-Type:MIME-Version; b=oblIuHeOXgii8lxyOTsRwZGA/27HrpoHCGqvNnaK3pNBwTC5twmeKiMqLNNCOyVxkBoywuxJE2PpN6loJYa6ampNT3mdefdQlDpUaIUSyocDJLGEVrjd2Bea1qcherOo/Qhg/YTEud7Iv2rN37Ni8CQt5H4szkyN1mheG0velRY=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
@@ -18,26 +18,28 @@ Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
 	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.96)
 	(envelope-from <ben@decadent.org.uk>)
-	id 1wTfMa-000NwC-1n;
-	Sun, 31 May 2026 12:33:56 +0000
+	id 1wTg5b-000O4g-19;
+	Sun, 31 May 2026 13:20:27 +0000
 Received: from ben by deadeye with local (Exim 4.99.2)
 	(envelope-from <ben@decadent.org.uk>)
-	id 1wTfMZ-0000000FBhx-3Dii;
-	Sun, 31 May 2026 14:33:55 +0200
-Message-ID: <ca469f4a22fe4688bbf88c355d074ae5be16a621.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 095/589] ALSA: usb-audio: fix null pointer
- dereference on pointer cs_desc
+	id 1wTg5Z-0000000FCef-3MG7;
+	Sun, 31 May 2026 15:20:25 +0200
+Message-ID: <866e188244055e8b90d632cb82e2badb40946706.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.10 101/589] rxrpc: Fix key quota calculation for
+ multitoken keys
 From: Ben Hutchings <ben@decadent.org.uk>
-To: Vasiliy Kovalev <kovalev@altlinux.org>, Chengfeng Ye
- <cyeaa@connect.ust.hk>,  Takashi Iwai	 <tiwai@suse.de>
-Cc: patches@lists.linux.dev, Sasha Levin <sashal@kernel.org>, Greg
- Kroah-Hartman <gregkh@linuxfoundation.org>, stable <stable@vger.kernel.org>
-Date: Sun, 31 May 2026 14:33:46 +0200
-In-Reply-To: <20260530160227.194081368@linuxfoundation.org>
+To: Sasha Levin <sashal@kernel.org>, David Howells <dhowells@redhat.com>
+Cc: patches@lists.linux.dev, Marc Dionne <marc.dionne@auristor.com>, Jeffrey
+ Altman <jaltman@auristor.com>, Simon Horman <horms@kernel.org>,
+ linux-afs@lists.infradead.org, 	stable@kernel.org, Jakub Kicinski
+ <kuba@kernel.org>, Greg Kroah-Hartman	 <gregkh@linuxfoundation.org>, stable
+ <stable@vger.kernel.org>
+Date: Sun, 31 May 2026 15:20:20 +0200
+In-Reply-To: <20260530160227.359961685@linuxfoundation.org>
 References: <20260530160224.570625122@linuxfoundation.org>
-	 <20260530160227.194081368@linuxfoundation.org>
+	 <20260530160227.359961685@linuxfoundation.org>
 Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-KDc48Xu9x3RJZjVYgOfZ"
+	protocol="application/pgp-signature"; boundary="=-KdLnGxpFZeMT36rZDyM1"
 User-Agent: Evolution 3.56.2-9 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -50,7 +52,7 @@ X-SA-Exim-Mail-From: ben@decadent.org.uk
 X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
 
---=-KDc48Xu9x3RJZjVYgOfZ
+--=-KdLnGxpFZeMT36rZDyM1
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -60,103 +62,97 @@ ow.
 >=20
 > ------------------
 >=20
-> From: Chengfeng Ye <cyeaa@connect.ust.hk>
+> From: David Howells <dhowells@redhat.com>
 >=20
-> commit b97053df0f04747c3c1e021ecbe99db675342954 upstream.
+> [ Upstream commit bdbfead6d38979475df0c2f4bad2b19394fe9bdc ]
 >=20
-> The pointer cs_desc return from snd_usb_find_clock_source could
-> be null, so there is a potential null pointer dereference issue.
-> Fix this by adding a null check before dereference.
+> In the rxrpc key preparsing, every token extracted sets the proposed quot=
+a
+> value, but for multitoken keys, this will overwrite the previous proposed
+> quota, losing it.
 >=20
-> Signed-off-by: Chengfeng Ye <cyeaa@connect.ust.hk>
-> Link: https://lore.kernel.org/r/20211024111736.11342-1-cyeaa@connect.ust.=
-hk
-> Signed-off-by: Takashi Iwai <tiwai@suse.de>
-> Fixes: 1dc669fed61a ("ALSA: usb-audio: UAC2: support read-only freq contr=
-ol")
-> [ kovalev: bp to fix CVE-2021-47211; added Fixes tag; the null
->   check was added into both UAC2 and UAC3 branches since the
->   older kernel still has the clock source lookup split between
->   snd_usb_find_clock_source() and snd_usb_find_clock_source_v3()
->   (see upstream commit 9ec730052fa2) ]
+> Fix this by adding to the proposed quota instead.
+>=20
+> Fixes: 8a7a3eb4ddbe ("KEYS: RxRPC: Use key preparsing")
+> Closes: https://sashiko.dev/#/patchset/20260319150150.4189381-1-dhowells%=
+40redhat.com
+> Signed-off-by: David Howells <dhowells@redhat.com>
+> cc: Marc Dionne <marc.dionne@auristor.com>
+> cc: Jeffrey Altman <jaltman@auristor.com>
+> cc: Simon Horman <horms@kernel.org>
+> cc: linux-afs@lists.infradead.org
+> cc: stable@kernel.org
+> Link: https://patch.msgid.link/20260408121252.2249051-2-dhowells@redhat.c=
+om
+> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+> [ dropped hunk for rxrpc_preparse_xdr_yfs_rxgk() ]
 
-In the upstream version the return statement was added in
-snd_usb_set_sample_rate_v2v3(), so set_sample_rate_v2v3() will do:
-
-        cur_rate =3D snd_usb_set_sample_rate_v2v3(chip, fmt, clock, rate); =
- // =3D 0
-        if (cur_rate < 0) ...                              // false
-        if (!cur_rate)                                     // true
-                cur_rate =3D prev_rate;
-        if (cur_rate !=3D rate) ...
- validation:
-        if (!uac_clock_source_is_valid(chip, fmt, clock))  // true because =
-clock soure is missing                                                     =
-                =20
-                return -ENXIO;
-
-so it will ultimately return -ENXIO.
-
-Whereas this backport puts the return statements in
-set_sample_rate_v2v3(), so it directly returns 0 i.e. silently fails.=20
-Shouldn't these be changed to return -ENXIO?
+Indeed 5.10 does not have that key type, but it does have
+rxrpc_preparse_xdr_rxk5() which I think also needs to be updated.
 
 Ben.
 
-> Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 > ---
->  sound/usb/clock.c | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  net/rxrpc/key.c |    5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 >=20
-> diff --git a/sound/usb/clock.c b/sound/usb/clock.c
-> index 197a6b7d8ad6f..3d5d4f3aafce4 100644
-> --- a/sound/usb/clock.c
-> +++ b/sound/usb/clock.c
-> @@ -646,11 +646,17 @@ static int set_sample_rate_v2v3(struct snd_usb_audi=
-o *chip, int iface,
->  		struct uac3_clock_source_descriptor *cs_desc;
+> --- a/net/rxrpc/key.c
+> +++ b/net/rxrpc/key.c
+> @@ -108,7 +108,7 @@ static int rxrpc_preparse_xdr_rxkad(stru
+>  		return -EKEYREJECTED;
 > =20
->  		cs_desc =3D snd_usb_find_clock_source_v3(chip->ctrl_intf, clock);
-> +
-> +		if (!cs_desc)
-> +			return 0;
->  		bmControls =3D le32_to_cpu(cs_desc->bmControls);
->  	} else {
->  		struct uac_clock_source_descriptor *cs_desc;
+>  	plen =3D sizeof(*token) + sizeof(*token->kad) + tktlen;
+> -	prep->quotalen =3D datalen + plen;
+> +	prep->quotalen +=3D datalen + plen;
 > =20
->  		cs_desc =3D snd_usb_find_clock_source(chip->ctrl_intf, clock);
-> +
-> +		if (!cs_desc)
-> +			return 0;
->  		bmControls =3D cs_desc->bmControls;
->  	}
+>  	plen -=3D sizeof(*token);
+>  	token =3D kzalloc(sizeof(*token), GFP_KERNEL);
+> @@ -718,6 +718,7 @@ static int rxrpc_preparse(struct key_pre
+>  	memcpy(&kver, prep->data, sizeof(kver));
+>  	prep->data +=3D sizeof(kver);
+>  	prep->datalen -=3D sizeof(kver);
+> +	prep->quotalen =3D 0;
 > =20
+>  	_debug("KEY I/F VERSION: %u", kver);
+> =20
+> @@ -755,7 +756,7 @@ static int rxrpc_preparse(struct key_pre
+>  		goto error;
+> =20
+>  	plen =3D sizeof(*token->kad) + v1->ticket_length;
+> -	prep->quotalen =3D plen + sizeof(*token);
+> +	prep->quotalen +=3D plen + sizeof(*token);
+> =20
+>  	ret =3D -ENOMEM;
+>  	token =3D kzalloc(sizeof(*token), GFP_KERNEL);
+>=20
+>=20
 
 --=20
 Ben Hutchings
 Time is nature's way of making sure that
 everything doesn't happen at once.
 
---=-KDc48Xu9x3RJZjVYgOfZ
+--=-KdLnGxpFZeMT36rZDyM1
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmocKqoACgkQ57/I7JWG
-EQmv5g//XKzTREPT3S+Bj7NpL0OpN4xUznypFItHKZe/iBh5X8Hb4IiF+H5KSMkk
-YbGgNCGeQOG9AqumXb3ffzmYDdBDfz/zIG7nquq2YbrF7SmLsoBf3PO/U0gI+m7n
-/3vIGjtTk6OdpobU6okU8Njfgi3iaOGBOLBhpMKIHOlwfOCwlRLJWEQXTLzIxPJD
-6aYhKQrrfAMoA2yj2Q/9s2WU4o5xC3e+A4YrPXziR80/CHshXIuPCbp7BTIpP1DR
-VyNzRsWrkFAqWu+GMOP9DljaJt30G8zQQNUAQhwu3k3AY7hpTwBglRAjBlMasYzP
-Mal3CfDMqKkqO9Mhapnycuv0VP5Tgl+BFjk5zVV+BnmEc+bqQ33af/2sMXhIekzX
-QIGFtKr3dAeULRfFfQzXK1My3QSs9f83KZ34bgjZ/TfUF0LCNs/mJyhJ4tzlp4v5
-VDav4uVWy1QgbW8p1mGvhsP7EDgaIFlpOv6EdIzFMFFCYU4PXnPqPAiQ4VBVg4vb
-Du255x/qmm9W9nRV01Vnfek9FDB+OYqM5t8XMpOsv8O0b9cdbiRKL2zaOs+JoPp1
-c226biFzwCdbJQvGFUwscksHUKO7kIB8i542VYyEsbM/7rxo1jG4IIIbqv/gsYwf
-pyms4hV9VmPRrGzVDZnSN7ds6LunpO0WEpV73kMUxHF7RXcMDsI=
-=VZ6D
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmocNZQACgkQ57/I7JWG
+EQlRJxAAiEFKtwUy3nJ/4y1FfxU0J93QfRiALaoiMSl6QtKX/V3to7AmxdW94nsL
+IAx923DA+9pbMi9XX9EtOcWBOxHo6am3VtvXeN7bj0KfLb1t0q86d7dTEW0o497O
+VRM/wElqCzI5t09LGidZt8LBN5CeEO+1KXzZtatNKlG++dNMboX40mrY9zFJptHt
+OER+1wpK7C69cHWHx/iLLw0/y2DdgK7rBhP6blJfL5DwjbdaJ2B5kDKuhsoJ9D/2
+oR2cGfep+pNfVoGin/iYPke8UETRaDz+xoFqiFKPKk+wZzS5dp6UH2UR/UMI5Nv5
+Bi4AKfAPG9giFS+8C3+Ih0insWiXu0ru3uj56RmSpCTyl/xzS6Jl+AJNL0RFcWNW
+aK1Gwq0gKpW73frm+KQZpGuEBZq3EOqyk9I9NAyVKHxXPT5+D8+jlqFHGjHdvT4l
+gmqelyKyXEnX+wLIxjIc4OLLE4bCrMIfWy696ormBUovMuFkEO2AVIlXJCyu8rJ0
+RcY2hPvoXOrYXQyrEFGb5+DDCdwd87W4Is4K5ev9EH6eWfkVNhAGv7nPCH66DpGO
+us8s0GPwaKdltseP/NWXr7b6maH1rq+kJB7G5hkoT2t4nidl4UABsDrVxphC+b6A
+VTe75hPObNH5yonkM09RwDu9bg8BjQu3lH+gl0ovaW2bmzoA95k=
+=tNwi
 -----END PGP SIGNATURE-----
 
---=-KDc48Xu9x3RJZjVYgOfZ--
+--=-KdLnGxpFZeMT36rZDyM1--
