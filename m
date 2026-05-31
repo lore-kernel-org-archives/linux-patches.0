@@ -1,146 +1,126 @@
-Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
+Received: from m.b4.vu (m.b4.vu [203.16.231.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1ADC3242B2;
-	Sun, 31 May 2026 14:32:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2EB388879
+	for <patches@lists.linux.dev>; Sun, 31 May 2026 15:13:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.16.231.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780237929; cv=none; b=jCVjOJMQH7GDeEnMG8JqH6rg1xeNjH4RzJ1Y3zrGbx0VNl344YiP7hOIRsqoxh+LIXkR6CfKlbhudYzWzrWJyN4vlze/qeh7/rgxjpFos0se3ANAQxmcygGVslRjOb0LwO6cgZUn15j2vqd1UFK8vQjVSm7J/NkF8tGg2wD5MFs=
+	t=1780240411; cv=none; b=ukL+2JhBH9za5OP/TpshOby/0xV0DtW8YZj6LXv00mJTFygFFZCDqTzhlbMIY+0M7zi5W8bHNRN60DHUOtvjJlIe1DPBXchjVy8pxpLZA+mY4wVkz8TVONTVkDlq4fuPdJ0laU99389PlPinlKncYNOnhRby5wuehe2qcAsj//k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780237929; c=relaxed/simple;
-	bh=o2bghsenNXobi081XOpbMzNDXWsR4DzLRzj+dbjqFOA=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=gnAKo8vd79LvlVRmH5Lkhi2A+/QANScLmDgW/6fic1LrHVB6/v/VXFhWDq2RYeU/N7hj0ol1t+2HUw4bLnVWcT59zDe5yVcqchOFNYu+QGCUfzSHZJWITN7XLcyEM/2SSmY7GpNLbaNa5mrAckvFMyG96yGdydMH3IdVgERPfzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
-Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
-	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wThCu-000OJL-23;
-	Sun, 31 May 2026 14:32:04 +0000
-Received: from ben by deadeye with local (Exim 4.99.2)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wThCt-0000000FGOt-0b4W;
-	Sun, 31 May 2026 16:32:03 +0200
-Message-ID: <70620d4eddfa13b0b5333e482bb76d7f4b323114.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 096/589] scsi: ufs: core: Improve SCSI abort
- handling
-From: Ben Hutchings <ben@decadent.org.uk>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Bean Huo <beanhuo@micron.com>, Stanley Chu	
- <stanley.chu@mediatek.com>, Bart Van Assche <bvanassche@acm.org>, "Martin
- K. Petersen" <martin.petersen@oracle.com>, Vasiliy Kovalev
- <kovalev@altlinux.org>, Sasha Levin	 <sashal@kernel.org>
-Date: Sun, 31 May 2026 16:31:58 +0200
-In-Reply-To: <20260530160227.218464986@linuxfoundation.org>
-References: <20260530160224.570625122@linuxfoundation.org>
-	 <20260530160227.218464986@linuxfoundation.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-M9kNx94o/cPq/cqSst5y"
-User-Agent: Evolution 3.56.2-9 
+	s=arc-20240116; t=1780240411; c=relaxed/simple;
+	bh=H2ExlMdIhxev/OHb0le93xGbNGsb+HE6C8eYWRhN4VQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LsUNzLoIxUtV9KZb4ulwXwb7x+o0L4jlr7A0sxSBNgFaTfNe0CmRRF0lt5+QDkzzJ82t7/nuuyhYIHvbcBSR5tvsPfKe0ZMoL679IYSXrHVtMFuaUUixQrOOr/2GEq+WTjd48BcsgTzDoXrna7YYJREb/FH7AlJmM7m9VFr6FUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=b4.vu; spf=pass smtp.mailfrom=b4.vu; dkim=pass (2048-bit key) header.d=b4.vu header.i=@b4.vu header.b=IFhxnrGB; arc=none smtp.client-ip=203.16.231.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=b4.vu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=b4.vu
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=b4.vu header.i=@b4.vu header.b="IFhxnrGB"
+Received: by m.b4.vu (Postfix, from userid 1000)
+	id C2EEB67DC7DB; Mon,  1 Jun 2026 00:43:20 +0930 (ACST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 m.b4.vu C2EEB67DC7DB
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=b4.vu; s=m1;
+	t=1780240400; bh=fGPzGM6HsELRKDb0LPe7FpxAWXKREgEVrtYdnVrRNlI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=IFhxnrGB3R8Gy0pb5KDCtWuEbxYgZ+rB930ZW3ezUW3np6ez6BYVD9gB9gkZpJEp6
+	 mnJ8DiiYp/3NIhZIPkjSBGNQ83FXfulvAVzG8N1zUBoHJSFZ570Jmqo2bHcKDU5xCH
+	 oz8mMFl40OZDLi8zDxPhyociOuuUgaIt9UycXV0A+8EMp2pVOSel41U6qRV2TX4Pio
+	 IbLdM8YhgHAOmKLiuYqtLTThyPGv+W0ZWrIWSxZLro86p6Sn4WboQC9C5s3XvX86OP
+	 WCu51K7y0yflN+hwHX+AUxLxQvmtqQCtwNP13ltd0yotkgcJPBZSVix7LbZUAFurWB
+	 7x8QJDU96V/dg==
+Date: Mon, 1 Jun 2026 00:43:20 +0930
+From: "Geoffrey D. Bennett" <g@b4.vu>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Takashi Iwai <tiwai@suse.de>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.1 054/969] ALSA: usb-audio: Improve Focusrite sample
+ rate filtering
+Message-ID: <ahxQECPrGoTY10B3@m.b4.vu>
+References: <20260530160300.485627683@linuxfoundation.org>
+ <20260530160301.888290661@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260530160301.888290661@linuxfoundation.org>
 
-
---=-M9kNx94o/cPq/cqSst5y
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Sat, 2026-05-30 at 17:59 +0200, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me kn=
-ow.
->=20
+On Sat, May 30, 2026 at 05:52:58PM +0200, Greg Kroah-Hartman wrote:
+> 6.1-stable review patch.  If anyone has any objections, please let me know.
+> 
 > ------------------
->=20
-> From: Bart Van Assche <bvanassche@acm.org>
->=20
-> commit 3ff1f6b6ba6f97f50862aa50e79959cc8ddc2566 upstream.
-
-Since there are no patches to ufshcd in this series besides this and its
-revert, it seems like you should drop both of them.
-
-Ben.
-
-> The following has been observed on a test setup:
->=20
-> WARNING: CPU: 4 PID: 250 at drivers/scsi/ufs/ufshcd.c:2737 ufshcd_queueco=
-mmand+0x468/0x65c
-> Call trace:
->  ufshcd_queuecommand+0x468/0x65c
->  scsi_send_eh_cmnd+0x224/0x6a0
->  scsi_eh_test_devices+0x248/0x418
->  scsi_eh_ready_devs+0xc34/0xe58
->  scsi_error_handler+0x204/0x80c
->  kthread+0x150/0x1b4
->  ret_from_fork+0x10/0x30
->=20
-> That warning is triggered by the following statement:
->=20
-> 	WARN_ON(lrbp->cmd);
->=20
-> Fix this warning by clearing lrbp->cmd from the abort handler.
->=20
-> Link: https://lore.kernel.org/r/20211104181059.4129537-1-bvanassche@acm.o=
-rg
-> Fixes: 7a3e97b0dc4b ("[SCSI] ufshcd: UFS Host controller driver")
-> Reviewed-by: Bean Huo <beanhuo@micron.com>
-> Reviewed-by: Stanley Chu <stanley.chu@mediatek.com>
-> Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-> Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-> [ kovalev: bp to fix CVE-2021-47188; adapted placement of
->   lrbp->cmd =3D NULL for 5.10 function structure ]
-> Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+> 
+> From: Geoffrey D. Bennett <g@b4.vu>
+> 
+> [ Upstream commit 24d2d3c5f94007a5a0554065ab7349bb69e28bcb ]
+> 
+> Replace the bLength == 10 max_rate check in
+> focusrite_valid_sample_rate() with filtering that also examines the
+> bmControls VAL_ALT_SETTINGS bit.
+> 
+> When VAL_ALT_SETTINGS is readable, the device uses strict
+> per-altsetting rate filtering (only the highest rate pair for that
+> altsetting is valid). When it is not readable, all rates up to
+> max_rate are valid.
+> 
+> For devices without the bLength == 10 Format Type descriptor extension
+> but with VAL_ALT_SETTINGS readable and multiple altsettings (only seen
+> in Scarlett 18i8 3rd Gen playback), fall back to the Focusrite
+> convention: alt 1 = 48kHz, alt 2 = 96kHz, alt 3 = 192kHz.
+> 
+> This produces correct rate tables for all tested Focusrite devices
+> (all Scarlett 2nd, 3rd, and 4th Gen, Clarett+, and Vocaster) using
+> only USB descriptors, allowing QUIRK_FLAG_VALIDATE_RATES to be removed
+> for Focusrite in the next commit.
+> 
+> Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+> Signed-off-by: Takashi Iwai <tiwai@suse.de>
+> Link: https://patch.msgid.link/7e18c1f393a6ecb6fc75dd867a2c4dbe135e3e22.1771594828.git.g@b4.vu
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > ---
->  drivers/scsi/ufs/ufshcd.c | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-> index c7bf0e6bc303d..1b8072f47e7e8 100644
-> --- a/drivers/scsi/ufs/ufshcd.c
-> +++ b/drivers/scsi/ufs/ufshcd.c
-> @@ -6788,6 +6788,7 @@ static int ufshcd_abort(struct scsi_cmnd *cmd)
->  		__ufshcd_transfer_req_compl(hba, (1UL << tag));
->  		spin_unlock_irqrestore(host->host_lock, flags);
->  out:
-> +		lrbp->cmd =3D NULL;
->  		err =3D SUCCESS;
->  	} else {
->  		dev_err(hba->dev, "%s: failed with err %d\n", __func__, err);
+>  sound/usb/format.c | 86 +++++++++++++++++++++++++++++++++++++++-------
+>  1 file changed, 74 insertions(+), 12 deletions(-)
+> 
+> diff --git a/sound/usb/format.c b/sound/usb/format.c
+> index f33d25a4e4cc7..682adbdf7ee79 100644
+[...]
 
---=20
-Ben Hutchings
-Time is nature's way of making sure that
-everything doesn't happen at once.
+Hi Greg,
 
---=-M9kNx94o/cPq/cqSst5y
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+Please drop these from 6.1 and 5.15. They're part of a 3-patch series
+that needs all 3 to get the benefit (plus 5 more fixes on top for the
+1st Gen Scarletts that the series regressed).
 
------BEGIN PGP SIGNATURE-----
+The series avoids leaving the device at 192kHz after probe (which
+mutes the internal mixer and disables the Air/Safe modes until an
+application opens the PCM). But the part that actually fixes that,
+38c322068a26 ("Add QUIRK_FLAG_SKIP_IFACE_SETUP"), wasn't selected.
+Without it, __snd_usb_parse_audio_interface() still calls
+snd_usb_init_sample_rate(rate_max) at probe, so removing
+VALIDATE_RATES on its own doesn't help.
 
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmocRl4ACgkQ57/I7JWG
-EQkU6A//QIhP8MUFpZh2gTGy7IfkiYvBX5qXmlyyHOgqGPXYfOQuilPRUsP456xB
-ViyATSW5CK846XdNGm4VG6GpQYkp+8eL1Puj7AuLGhj09EerQY3y7v/KJ4EGP65B
-dxOu0CBeQc3pOfbd3soYTsy3s1cxeFUSY8n9p2bBkQ/c7ZccZtGgBpXlDHbkBsrH
-2uoJMj1833cSd14GnFtZbHNPcc76t2mSSM7I9n3vy++cyaAWuOobx/rVFGpQq1lT
-eGIrr9m8l7UXN5TmB5yISuPRFjaZ0UE5epvIuv/2+LT9CR34ZjIkunNze6mPWQ58
-NLI/pDcE/5akbhVf6a9YlN9FS86T6t8H8OIdu6Tf/SIG1zcHM52Z4M/BCOMhfZSn
-C2gUMcgK9PrgGIBYsYChp1C4kSxB6yTRdkMAuQH75VX8H4Am54yTUWgkzljrhI8j
-IEi4eWs5YhOg6/GWdTGgIMIscfv47YrcYsnXkmTrU9sSQfZhb7VlcZsBkPgHjX1G
-e/l4BjIFVuDj1dsVNAlrs4r8ZpDf2PTQ5+RqybcxHDM8ZFqTQYxKJ5ZqAu9cvg20
-Ixn2h1lJ4GylVRtUXdlmh04ZxzWEwGRKcMJCjnI5GP/rXqv6+YVMM/60sPeH+pRJ
-RqeK1dkixP5XhPZWO6iJRdHYkxN2n45SBus+cvdflghM8Gny4oU=
-=4oM5
------END PGP SIGNATURE-----
+Unfortunately 38c322068a26 is a regression for some 1st Gen Scarletts,
+and those exclusions were found one model at a time, so I'm not 100%
+confident every affected model is covered, although there have been no
+further reports in nearly 8 weeks. I'm not sure for 6.1/5.15 if the
+benefit outweighs the risk, but if you'd rather take it all, the full
+set in order is:
 
---=-M9kNx94o/cPq/cqSst5y--
+24d2d3c5f940 ALSA: usb-audio: Improve Focusrite sample rate filtering
+a8cc55bf81a4 ALSA: usb-audio: Remove VALIDATE_RATES quirk for Focusrite devices
+38c322068a26 ALSA: usb-audio: Add QUIRK_FLAG_SKIP_IFACE_SETUP
+8780f561f671 ALSA: usb-audio: Exclude Scarlett 2i2 1st Gen from SKIP_IFACE_SETUP
+990a8b0732cf ALSA: usb-audio: Exclude Scarlett 2i4 1st Gen from SKIP_IFACE_SETUP
+f025ac8c698a ALSA: usb-audio: Exclude Scarlett Solo 1st Gen from SKIP_IFACE_SETUP
+a0dafdbd1049 ALSA: usb-audio: Exclude Scarlett 2i2 1st Gen (8016) from SKIP_IFACE_SETUP
+a47306a74c31 ALSA: usb-audio: Exclude Scarlett 18i20 1st Gen from SKIP_IFACE_SETUP
+
+Same issue applies to 6.6 and 6.12: they took the first two (filter +
+VALIDATE_RATES removal) but not 38c322068a26, so the 192kHz behaviour
+is unchanged there. They should probably get the same treatment.
+
+Thanks,
+Geoffrey
