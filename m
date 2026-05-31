@@ -1,149 +1,163 @@
-Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1113E32B12B;
-	Sun, 31 May 2026 20:14:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780258456; cv=none; b=IvIb4bRGU9N8CGkeG6URzyTqXxVg4RfjfLkXPMtlj1oCiXOMDV+6L8PANNA3NHOOdG4Y20bNt86sVWGxLrcKx3ALpSrcviubf1Qmgo7vvIaEE9wR9OPUN9Vmpt3MGYe2rt8JxfUztpG27HFc3f3SnVndfIU5n6BdijlvuNrxYOY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780258456; c=relaxed/simple;
-	bh=10PBxLE8vh1z+Yx+PNDrgc3lS5UezaNt+zZZKiygrrM=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=hLqtF3eerPHit10iS2FxCJQKXRdt1ftFxdu+1w1+2KKQfksrrDHn+9feWoj6DJ/Kp00ni3XNvXIgqXHYuFBQJ8ZkSNUMohyMd7sKowopYChvflUkaM9cdE3Yy4yWvivzWLJXbn5f+4N1OFq4tasHqRCrCKyJNKEikq6e1cWPRcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
-Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
-	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wTmY0-000PfP-0e;
-	Sun, 31 May 2026 20:14:12 +0000
-Received: from ben by deadeye with local (Exim 4.99.2)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wTmXz-0000000FRLT-1dRW;
-	Sun, 31 May 2026 22:14:11 +0200
-Message-ID: <5903b777c7688dd17f8e4eb173361c80ea0fff46.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 177/589] KVM: nSVM: Sync NextRIP to cached vmcb12
- after VMRUN of L2
-From: Ben Hutchings <ben@decadent.org.uk>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Yosry Ahmed <yosry@kernel.org>, Sean
- Christopherson <seanjc@google.com>
-Date: Sun, 31 May 2026 22:14:06 +0200
-In-Reply-To: <20260530160229.538712833@linuxfoundation.org>
-References: <20260530160224.570625122@linuxfoundation.org>
-	 <20260530160229.538712833@linuxfoundation.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-3c8dqEpHifOe+gwk3EA9"
-User-Agent: Evolution 3.56.2-9 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353F328C2BF
+	for <patches@lists.linux.dev>; Sun, 31 May 2026 21:21:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780262505; cv=pass; b=aLQA0ulG/Z8rooh+SL7EfMMT+LGLBAkQ52sU3btlNB1DLJxDbhN6eK7DG0An9F1j4+eY5dvcXFcRAWoeDF/8ewUAi7qgu06tclc2jDk55dnkjpVdVQJyq7UhpOZj/FvSfs40HhuoOHR+9gYEptBd3VNZGiAhYC1b6hhErLkYPbk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780262505; c=relaxed/simple;
+	bh=HK+FQZK/X2670pSoGvJT+eXxMm/YbYUTBbsmMo4Pt1U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=b+286nYQCZn0I0xUImLC534e1M38mTds7uKIyflGxP8atP4e8aJsMConasSjM1R2XSAFZ/izU3mFYMMmhrJZZ51u4g1dSmvfFGxgQJaCHm/jIzcxH/onRu3nGcqoheI1poGD3YYqa/pZnWEBI39Tjdri+pztUOKGah02/1LO69k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bA0gSciL; arc=pass smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bA0gSciL"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-bec449d0af2so75944466b.2
+        for <patches@lists.linux.dev>; Sun, 31 May 2026 14:21:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780262502; cv=none;
+        d=google.com; s=arc-20240605;
+        b=bmGnhCBS++SaOZA/QIQmIu2S581QLJy3A7Rl/QlxIxdtZ7JXsP8hfKdNY4UJig+noH
+         BBcVv7HDbWkkD8JldRF4WY23C4g5iXCg/wmxYHZmSpwTC2nVPJAp7EEAUI8/p5gero1y
+         0tDnXjQL5s5hZlkldjwys2FUKsN1Qf7OoGt/CiHcCOcG1x2LpdVKgnBfFklbQCTyMxcP
+         IeBkjtBtamgnx5dimP9OAAFZspXNzGeEtg9obD7f2w+cs/7ES+bmQ+zbxCFEFEjAUedE
+         +y0nQAJgalqljhLkXr+Rlae83Eo/NpD7+4E9Z0NuZ+dNqMmj3/vkuMigAwisfGXKZFVE
+         l7AA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=HK+FQZK/X2670pSoGvJT+eXxMm/YbYUTBbsmMo4Pt1U=;
+        fh=ZI/nAac0O25iPNDehBQE8h3Yp39iJK+646yfyQGV7As=;
+        b=e86B5MnbNxmZ9WAhkFpthWT10ccS2+jv1hDgBNw3XVz/iSlXw/il03ywBKjt9/wqwN
+         JnES2W58fPN23nn6Gk/b5lLq32DBN9TVPc18ufkILwb0JUxNAR9ExXcU9xlHgRiVE8HO
+         VNSYRmotXZi9KPZHIKt0ka2WUMggKPZEvaUk7X3hHcVFyxR5td7SxPGlRNs5aFSeCBun
+         XY1kmMGjsCz/pN7KaKRLIH91AsabkUwFsEFZDJX9ecpzkipbb7wsv31zMQzqSXTC0F3l
+         EqU9tZa6hWdN9rZICqJwlbC2vCmXde5mt7rGkBefaGJGVuSVBmwdSvwVxVrkf3b5V4Xq
+         YrYg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780262502; x=1780867302; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HK+FQZK/X2670pSoGvJT+eXxMm/YbYUTBbsmMo4Pt1U=;
+        b=bA0gSciLpvOC/6iGKeT4KnLa9B+UUlVySQo5woUmiGz7B55CmVUgKHNinHWNQHH1SY
+         srH26HXDH7utwSz/u0FxZvD5bwbTjC37S/UzMPM+n7OjQUytrhVjVl8aTo9XAf8VsAjm
+         tEWwywq2oNb5mDqkMYhC4kqtBx/LOYdtYq7i2+iTkr6pyXa7KCtZUyzglz25Rmw6Lqwd
+         zIm1AtsqnDAn3+3nZ9B0CO/m/+fu0sfelezBFK8oiEPsYeptLy+a9rba+ss4jY8/tbpz
+         uD92OPRfQP6kO9sD89eISQVdGc17zZZbT/M2fFyIzzHJWiI+xLXpPqEYSRblqme26phk
+         TckA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780262502; x=1780867302;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=HK+FQZK/X2670pSoGvJT+eXxMm/YbYUTBbsmMo4Pt1U=;
+        b=aBTZaeAkZ5HVrKkRUukDjU+pKATw3Cm0TnsUs6zMqfeuYJbyHirftzozLMWXDD+aEN
+         GC6ovbXrgQt8EaHsvXIMbsjWDNsNLjCBLOv2l1it7oEsyEYk6w6e3j1yerkqV9JMLpe7
+         r2miqCm00gUdLODej1qyl0BK1ak7cTEq3uRaJwghBiJ+Eam/izpRFzl4H0UzzwMCvQ9B
+         SupawjEcgA1znvbj51OS9HWsdrPJtqL4dXcY5pmyIlELk2GEi3TBPZW/DN3I+YwoDaqX
+         ovwjUNreWzrj5pgNl38Jfragr9LK1vfZm4Ufn9vPCTC34+W46KNxzUumdaWsdD7Pbsng
+         pcyw==
+X-Forwarded-Encrypted: i=1; AFNElJ9nDm4A2dZm99AA8jPIlJ6N0edSRDxSzzkqskGHpV/Q9xJVjpd/3ry6Tp8fw+LdsYzG2O2c2lHl@lists.linux.dev
+X-Gm-Message-State: AOJu0YzlE/Vv2J7kiVSTp757ngOsCu4BjOHURmMW9cSarHz/V9QNA1BW
+	8Lc1i2HOFSWxp13ZhAShV5yPT2Wegm6eY4JSjDUzzFYS/3uZQvgTuGLeADeCVSiholDHGGO+8Fu
+	5YfVjiFdBji4O83/OwuKZd4NcGlG7/uY=
+X-Gm-Gg: Acq92OGFTQMm+09cgtt53AcOok5CvSVGuvdbBhoDfuyKpeBhdHkvKN+V75IjeJsziCO
+	YUxbYiUr159zbKioHrWgjSq14BCYr3z2mScj05xR4Xj597wtkpjbj8RyfSyE8H4gMlhEn4/bIPU
+	UVS93WvVLRBWPa5E2zW99t6rYFxsHZ3LpjTtya52vxXTyGXnUpvWKsdhpyY91UNnVbjJk0HPAdV
+	Djyw9PteRgRQ34xT3FejFqFjaJGof5o8QJl0WsXfxqw61Z66e1CdcCDd/52RJH0mDiBBn2a9kHj
+	YpzteznNcEjT4Fn/csDz4S/tcvEc
+X-Received: by 2002:a17:907:d02:b0:be2:dd37:facd with SMTP id
+ a640c23a62f3a-beab4339068mr455362966b.20.1780262502221; Sun, 31 May 2026
+ 14:21:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
-
-
---=-3c8dqEpHifOe+gwk3EA9
+References: <20260531010107.1953702-1-safinaskar@gmail.com> <ahv16ogY8Zx3Rtox@pedro-suse.lan>
+In-Reply-To: <ahv16ogY8Zx3Rtox@pedro-suse.lan>
+From: Askar Safin <safinaskar@gmail.com>
+Date: Mon, 1 Jun 2026 00:21:06 +0300
+X-Gm-Features: AVHnY4IV40jpJJDRQFbdKVprCBGPqL0nWYb_1HSlt6FzSI1F6gq0u1bXknLpLA8
+Message-ID: <CAPnZJGD5QR5jrNMAem7FjMRTtw+Ue+jm7Dc2Kp8Lcjj+9TDw_Q@mail.gmail.com>
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
+To: Pedro Falcato <pfalcato@suse.de>
+Cc: linux-fsdevel@vger.kernel.org, Christian Brauner <brauner@kernel.org>, 
+	Alexander Viro <viro@zeniv.linux.org.uk>, Jan Kara <jack@suse.cz>, linux-kernel@vger.kernel.org, 
+	linux-mm@kvack.org, linux-api@vger.kernel.org, netdev@vger.kernel.org, 
+	Linus Torvalds <torvalds@linux-foundation.org>, Matthew Wilcox <willy@infradead.org>, 
+	Jens Axboe <axboe@kernel.dk>, Christoph Hellwig <hch@infradead.org>, David Howells <dhowells@redhat.com>, 
+	Andrew Morton <akpm@linux-foundation.org>, David Hildenbrand <david@kernel.org>, 
+	Miklos Szeredi <miklos@szeredi.hu>, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, 2026-05-30 at 18:00 +0200, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me kn=
-ow.
->=20
-> ------------------
->=20
-> From: Yosry Ahmed <yosry@kernel.org>
->=20
-> commit 778d8c1b2a6ffe622ddcd3bb35b620e6e41f4da0 upstream.
->=20
-> After VMRUN in guest mode, nested_sync_control_from_vmcb02() syncs
-> fields written by the CPU from vmcb02 to the cached vmcb12. This is
-> because the cached vmcb12 is used as the authoritative copy of some of
-> the controls, and is the payload when saving/restoring nested state.
->=20
-> NextRIP is also written by the CPU (in some cases) after VMRUN, but is
-> not sync'd to the cached vmcb12. As a result, it is corrupted after
-> save/restore (replaced by the original value written by L1 on nested
-> VMRUN). This could cause problems for both KVM (e.g. when injecting a
-> soft IRQ) or L1 (e.g. when using NextRIP to advance RIP after emulating
-> an instruction).
->=20
-> Fix this by sync'ing NextRIP to the cache after VMRUN of L2, but only
-> after completing interrupts (not in nested_sync_control_from_vmcb02()),
-> as KVM may update NextRIP (e.g. when re-injecting a soft IRQ).
->=20
-> Fixes: cc440cdad5b7 ("KVM: nSVM: implement KVM_GET_NESTED_STATE and KVM_S=
-ET_NESTED_STATE")
-> CC: stable@vger.kernel.org
-> Co-developed-by: Sean Christopherson <seanjc@google.com>
-> Signed-off-by: Yosry Ahmed <yosry@kernel.org>
-> Link: https://patch.msgid.link/20260225005950.3739782-2-yosry@kernel.org
-> Signed-off-by: Sean Christopherson <seanjc@google.com>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->  arch/x86/kvm/svm/svm.c |   10 ++++++++++
->  1 file changed, 10 insertions(+)
->=20
-> --- a/arch/x86/kvm/svm/svm.c
-> +++ b/arch/x86/kvm/svm/svm.c
-> @@ -3677,6 +3677,16 @@ static __no_kcsan fastpath_t svm_vcpu_ru
->  	if (is_guest_mode(vcpu))
->  		return EXIT_FASTPATH_NONE;
-> =20
-> +	/*
-> +	 * Update the cache after completing interrupts to get an accurate
-> +	 * NextRIP, e.g. when re-injecting a soft interrupt.
-> +	 *
-> +	 * FIXME: Rework svm_get_nested_state() to not pull data from the
-> +	 *        cache (except for maybe int_ctl).
-> +	 */
-> +	if (is_guest_mode(vcpu))
-> +		svm->nested.ctl.next_rip =3D svm->vmcb->control.next_rip;
+On Sun, May 31, 2026 at 11:54=E2=80=AFAM Pedro Falcato <pfalcato@suse.de> w=
+rote:
+> So, you took an ongoing discussion with an ongoing RFC patchset, and you
+> decided to reimplement part of the idea on your own, as a concurrent patc=
+hset.
 
-I don't know whether this assignment would be a correct fix for 5.10,
-but in this version it is unreachable because of the previous if-
-statement.
+Yes. But I propose an alternative solution to this problem.
 
-Ben.
+Brauner said in discussion for your patchset:
+"So I'm not very likely to pick this up as is".
+So, I decided to submit another solution.
 
-> +
->  	return svm_exit_handlers_fastpath(vcpu);
->  }
-> =20
->=20
->=20
+Pedro, I'm not trying to insult you.
+
+Other kernel developers will decide which of these two solutions they like =
+more.
+
+Many people in discussion of your patchset said how they
+dislike splice/vmsplice, and especially vmsplice.
+Hellwig said "vmsplice is the worst".
+Brauner, Hellwig, Horn said that they dislike vmsplice.
+They said that vmsplice in its current form should not
+be used, and that it is broken.
+
+Despite all these problems nobody managed to fix
+vmsplice in all these years.
+So I propose just to effectively remove it.
+
+You may think that I just saw a recent discussion and decided
+to jump in. No. splice/vmsplice is my topic of interest for many
+years. You can verify this by searching "f:Askar splice"
+on lore.kernel.org . I simply decided that given
+recent vulnerabilities now is the perfect time to solve
+all these vmsplice problems once and for all.
+
+I explained my position here:
+https://lore.kernel.org/all/20260523204100.553125-1-safinaskar@gmail.com/ .
+Nobody answered, so I just posted this patchset.
+
+If my patchset is applied, then I will try to deal
+with splice-pagecache-to-pipe somehow,
+probably by removing it, too. :) I decided first
+to deal with vmsplice, because it seems to be
+easier problem.
+
+> > vmsplice(fd, vec, vlen, vmsplice_flags) will
+> > be equivalent to preadv2(fd, vec, vlen, -1, rw_flags) if you have
+> > readable pipe and to pwritev2(fd, vec, vlen, -1, rw_flags) if you have
+> > writable pipe.
+>
+> This does not work. https://codesearch.debian.net/search?q=3Dvmsplice%28&=
+literal=3D1
+> There are users.
+
+Yes, they are. But my solution is compatible. vmsplice is simply performanc=
+e
+optimization. vmsplice will work just as before, but slower.
+And, most importantly, vmsplice design problems will be gone
+(nobody managed to fix them anyway for all these years).
 
 --=20
-Ben Hutchings
-Time is nature's way of making sure that
-everything doesn't happen at once.
-
---=-3c8dqEpHifOe+gwk3EA9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmoclo4ACgkQ57/I7JWG
-EQl9SQ/+LTc6DQ9dIPl/HC7xwDogMCb7M19V+MXsDTDwRil/BYd844R7oqxcm6ho
-9Z2u5H32vn1K/tObwsqy46Ou1Hw94cj46rrlJJ42tWg49Eq6oqnXqb7WXr9kJrpO
-Ic7UI0wrR3W9HuoCOLHhkM0XEEelHCTFjbyRQ5GnDJDgSdfHUe5KMiX5t8XI8l8t
-Jn7JRwd3UFiVIVGD53U5+lJU5axhJJ9vnkCcPpSTifi4yHOMI+Z5MiGuMwbpBxhT
-m5jJJgCRTiHjrbyosn7oCnn1Uuqr737QWB0BcLsL6VGRohX2OzAkKy+M3NGDBVzJ
-qNiNbddPhJkCM2jXjUEbTDkXxBMzhOJzfbkL349CL482glHzj02L2gLnzg1G5Nub
-AAhjdtyqDekZZRekBAoriXm4F3I6mvfm3BhC86yu+/MDFsOJA14Iklntkngn895V
-PSXWn+0USUXpfLUaEAttxyfAV5v5iYLKewCyawplCDPDhjxLcJk0H89UAwKwHiv/
-9LEdpDvgE/s4+a3IYlFMu11yKqKj33Rlma9x7iXqEX2bIQvtKNCb8lC1lHhQqg8/
-uV2XcsxdVi5QpdMq8VszS2aVDtseIz57ISjXHEJX9RcVNVg45iY70e374pawiJ1X
-NM4gcxWRrQ+6gdtQdWY+EBfStKeSmjo6LBKrRGE6/unNr6wkuEs=
-=87de
------END PGP SIGNATURE-----
-
---=-3c8dqEpHifOe+gwk3EA9--
+Askar Safin
