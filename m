@@ -1,109 +1,154 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA6522A80D
-	for <patches@lists.linux.dev>; Sat, 30 May 2026 20:18:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B8C17745
+	for <patches@lists.linux.dev>; Sun, 31 May 2026 01:01:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780172315; cv=none; b=JOav9/J7AllEBDOcG8UqTQKl0XQ9ONx6afAmxQPV+6zVqCd42E3Wr5AVVPd6b2ttzbJrKIKe+XK5O3jarytZYb++RhijRlg/YtWd/i1E3Sr/Gc0HAKuZLQ7C9+vFHoqGkACSnfM3PlSY26tYCXcfixTCKJhRFr7cMb+/X7b75dU=
+	t=1780189312; cv=none; b=dLpI62Ta0CdW3Xj3Pm3hU2o9YGlwejq8gdOnpB5MJloZ4xcQCBntZfK0HzfQO07oDDEzcfbVqHJPe6IUTOXufhrASarKoN1Oajhgakx078Iz1/lHiSFm6nm+bxTq8jXeWAmnjFeg3mUdQ+jhCW0IkaPHqzHXUVOmb5VBZHVtmqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780172315; c=relaxed/simple;
-	bh=c4MdMrJlz0LtBQTvMhi7ix08vuegWMJPyFsqkFVkb0Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hT7iTb8y4qi5Iup+j6UR05aGB6QoAiXoxc15JTVK83csE7dNL6zpwjJ023ucEY1l/hZOBSWE/fiGMPsFgrY+S9HXX3CJgiP/h+z9NfkF6EUIlXwAxl4w7IfoMVmgO2eK25yZsFGD4iUmy93vmF9MANSYkCKx0lBFSgbP+PNMa48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=b81I1DZ6; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1780189312; c=relaxed/simple;
+	bh=zDp1XhZh+e1pWOK/DsDnXaGWcjK6DLDDhCVbs2gw3ZU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fRHaUVAwerdx7Zkt5vKyHukZ6klSzOCnvx5540xDzggpF8uvWp4+7gncQjSJW54KuIRrM5Kpf5Dbd4biHExTo2gut01mvt+E63pdRJ0zDeAkpF3TRy6dqDU2N5SPZFRHutwI85dyqdAy0/kza9ow/Njmy5iSm+fql20mUt7jnTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GO+X7Trm; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="b81I1DZ6"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4905529b933so65762805e9.0
-        for <patches@lists.linux.dev>; Sat, 30 May 2026 13:18:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GO+X7Trm"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-490686877a1so49172255e9.0
+        for <patches@lists.linux.dev>; Sat, 30 May 2026 18:01:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20251104; t=1780172313; x=1780777113; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EjF7rZtP24/FVY8gGbj0C3I59Z8/71JmY+tNyNbwV3s=;
-        b=b81I1DZ68FRLvUCc8PHrFGHtVBm79cP4JWPMMj3Oyvj/UW5x2UH2b4DMdyR2Fr4K0E
-         qMPNE2U9utQNSWzjX57Vs927zT/8oQ65lSaDwKhmMMlJKPuWGMR4gah6lvFnnLyQxD97
-         wJNRjATeV0etEwq5lc+LMBg7dmZ+/n9tAYm1w7/1dSKhPHcf9ee9tYfxSfqd9RHRoddW
-         NaJYClvOAbPWAIjCo43E0PxDpKQbUWJo/JwX6JBlpSPM9MT0JAAT//Yz+MHm8X8mCUlL
-         AWH9VNPTokhhIm0J7oP8q7aojErVwKPwDj7yFrsMBoL+Agsfyi/JgMg116bC6jW2rPFT
-         nhEQ==
+        d=gmail.com; s=20251104; t=1780189309; x=1780794109; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zPl6w3uFFVNTR71LIvI6Hm9g27LWiqb2gsEEN2QBH30=;
+        b=GO+X7TrmUCj0j6QJfUeVdaiePSTIPxXdv4a1OKcTpVWxGgGiXRjZqVqrVIYYFxRpVC
+         oNswf5K6rIMMIaWt6lo9DwjWJMzCDP8GSUE0jjhG7h3t6FkrXO4B39O5i58FSrIgnX1u
+         em4MvyjFQjF91fx9sB8bD5e7IOOA53TndgfeZZ4AcuPHg6Vq0I1Gb53X0+EVPmL5IoL/
+         Gf9olTuHPN5SXzKXlp2OUd4sGWeW+woyTH8xvUkK4JkwRNEytl+9/Epx0l8Rmaw7DUNV
+         z4HGT4DOuk8QeywLcPvP7dsVij2n2HRuC7KE5MOROcCJELW4YobSsKtmrHdQ87cQKsVq
+         cm8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780172313; x=1780777113;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EjF7rZtP24/FVY8gGbj0C3I59Z8/71JmY+tNyNbwV3s=;
-        b=B0TOgUgGiqjwLf4WqLspZTYEZ66FwbCJgy9hA/B79XkU/RBotvvnVTpJEgIHCg7Sm6
-         rX2DojwrA0kggZfOjoSySVh9vvhXQZoUrGHXjMWjV8OYZ39kuB4GCBPqCQ0Mg8cEf0tN
-         RqRfVApPZZ3Nc6/lLrZTD433PLxOoKpS6fd6EFimbn5ZzMVCRKIitPWA+UlWnQyAc4nS
-         b/ZrKYKqLQAN6Rnbz9Ttk4+23lSDCqp3gfnVhD9xAVb9dFL1S/Q4zluFPDGkTb9dd0po
-         Dc7uPKgFfpscK/hncuiSmnqwQId8ukGsRzElaqSMmSg2vv54r5/SFT7EiMZy0bJwcUaI
-         YpbQ==
-X-Gm-Message-State: AOJu0YyDlSyanUiwm66d5EFUx6kNwdn614frXbXKbb/R+LbV5BSUIqMA
-	0gwGPZcwd90AthjzKQ7QNigXNBSul/NqZoYCjsxokpF5SPRTfwGtdRY=
-X-Gm-Gg: Acq92OHo/A1O1OGFBqdv1YiglSpcKBgKsWhGw2knkgLNOqnvn+IhyfVB+LdUjZi4voA
-	9kf8gPnH2b4WV5LoUhSQ+4O5hp3H0cFdgKi5mWl+xN1Trs6FzQ1Mjaym8d6uET2U6n+Tl4dmGwK
-	NHGuCAZjouxN+6hMZoZwqJoludLRK2+IiiEGoJ351VhiFF4gbWPMCMNgWAD4xMO5+RiGyOyeMrK
-	hRwwPTVI5/p/WqpVUP35rhlmjMfXd/zFzXOOxYnzI1zSvUMTPt77LGfHwm5arrk3ocT0npCwvZJ
-	X658dcCU1G1goC2LRHfsjinVDLPaVwotg7OjJzIPXjrziBs/Uh5BkL3HVI22FUn2F6CpKZTlnJ3
-	lmPJBCi5bbOOeSJe9GKxHq70lewlKBkL/3jr76oaEr6SVi1SKMhZViDounfL8rII5at6KDktZO3
-	lZyG4/x6ohZC7LMkyklgGwNAjoKB8xufCRCnR9rWF5ntWZ7vy8aO72wkroX9iAJWrzBSFneXw89
-	xKsni94J5kn
-X-Received: by 2002:a05:600d:644e:20b0:48a:53ea:140b with SMTP id 5b1f17b1804b1-490a296b260mr64789555e9.28.1780172312557;
-        Sat, 30 May 2026 13:18:32 -0700 (PDT)
-Received: from [192.168.1.3] (p5b057a22.dip0.t-ipconnect.de. [91.5.122.34])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4909ca65f54sm126842335e9.5.2026.05.30.13.18.31
+        d=1e100.net; s=20251104; t=1780189309; x=1780794109;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zPl6w3uFFVNTR71LIvI6Hm9g27LWiqb2gsEEN2QBH30=;
+        b=fEDhxB6EOjdrtwv4oAmSqaV4xNo4ZF3W9bFBxx5Vndz3RInQRefIrqW2QSRBMaJ0DH
+         ZYcNo7BLZrJWJtpttY146PARtRSEAspmw4+NrurhE0zCnaYzpnLJgJSVtIYXunKjqST8
+         Hg18fib5q0geOpgLa7IbiigqIDuH/0m7o12IxRRvhi+vpx+Fi8xNdl9lgywVmd7XE/wL
+         ghwnENCZUaDNuFjZuE7J9EilK/xfqkTshHKGJMnSu6XZEODY/29O8uymsz3HVXUGZKLi
+         ZyJt3EFlorRjs9mlAD/mzuYxsZ0m1tGhiBUyTSvRVfps/CP2gx7s2GnyVOW+zH6L+VRe
+         ioww==
+X-Forwarded-Encrypted: i=1; AFNElJ/wfqER/zhDhYRng7v3nNpIUtPcSVlkBaL711HDWZUNjP8pu6uU3u1IoQwYcHuCGeZ7tIfgIIKT@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy9GCKnNA1AvxT6qWN2304RboDgdKGdJ9fVsFw6z+hrciOw6irL
+	hjCyS8Z7coNstYp9wYfC+krMCu/dniIRcv0fdRn4C73pJYgdCHWLh8As
+X-Gm-Gg: Acq92OHstb91wECyHYveuFS0bri48ytFYlxAtBr73A0U6Fyt9YNOaZsrScV3JGfNFpL
+	i8jKRI1SnjoNorIicw8JAu/WPnnK4y3f1lfuv5BlTXiy7D4LRXpm6kxEw5+IFcqzF5F5r+3mjK1
+	VIWhWtvWTle+YVObgj+tpZ5A0GlAxB+yPd7/UmF+4DNpKuNQUQ1JZtiA1FQkiYTxeLe6N6NJx5b
+	z04/QEA/AXIU7YrZr/oB+JVuis42eUgzEInSa3gZJsiFZGhEuPq/iHXpgzbwcSsxQ3QECLcRJFc
+	8C2dvW9aVOM7/8Qx41fMUOyPUsmiSiCy9GufatjtQ07pJfguTRzOJ3hJoyugrGhcOIzJ4ml1yWx
+	YjBpLQHhqNsQY3dWpvGOIo3FgY4i3gGbaKYxxreSooHj4AWoXuls1xg8XJ3l+fl2KBSYUlEK3n/
+	mm1XoJZVgNdCccXz/5jgH95wbh/PgSQoEi2ZigXqcs
+X-Received: by 2002:a05:600c:c168:b0:490:5000:917 with SMTP id 5b1f17b1804b1-490a2a02ad9mr75824695e9.1.1780189308943;
+        Sat, 30 May 2026 18:01:48 -0700 (PDT)
+Received: from localhost ([212.73.77.104])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4909cab0e79sm261799535e9.13.2026.05.30.18.01.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 30 May 2026 13:18:32 -0700 (PDT)
-Message-ID: <3ff645dc-92a2-4b25-be85-88c733d004be@googlemail.com>
-Date: Sat, 30 May 2026 22:18:30 +0200
+        Sat, 30 May 2026 18:01:48 -0700 (PDT)
+From: Askar Safin <safinaskar@gmail.com>
+To: linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Jan Kara <jack@suse.cz>
+Cc: linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	linux-api@vger.kernel.org,
+	netdev@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Christoph Hellwig <hch@infradead.org>,
+	David Howells <dhowells@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Miklos Szeredi <miklos@szeredi.hu>,
+	patches@lists.linux.dev
+Subject: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
+Date: Sun, 31 May 2026 01:01:04 +0000
+Message-ID: <20260531010107.1953702-1-safinaskar@gmail.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.1 000/969] 6.1.175-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260530160300.485627683@linuxfoundation.org>
-Content-Language: de-DE
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Am 30.05.2026 um 17:52 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.1.175 release.
-> There are 969 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+This patchset is for VFS.
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
+Recently we got a lot of vulnerabilities in splice/vmsplice.
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+Also vmsplice already was source of vulnerabilities in the past:
+CVE-2020-29374 (see https://lwn.net/Articles/849638/ ).
+
+Also vmsplice is problematic for other reasons. Here is what other
+developers say:
+
+Linus Torvalds in 2023:
+> So I'd personally be perfectly ok with just making vmsplice() be
+> exactly the same as write, and turn all of vmsplice() into just "it's
+> a read() if the pipe is open for read, and a write if it's open for
+> writing".
+https://lore.kernel.org/all/CAHk-=wgG_2cmHgZwKjydi7=iimyHyN8aessnbM9XQ9ufbaUz9g@mail.gmail.com/
+
+Christoph Hellwig in May 2026:
+> vmsplice is the worst, as it is one of the few remaining places that
+> can incorrectly dirty file backed pages without telling the file system
+> and cause the other problems fixed by a FOLL_PIN conversion, but it is
+> the only one where we do not have any idea yet how we could convert it
+> to FOLL_PIN due to the unbounded pin time.
+https://lore.kernel.org/all/agwFlBKvKytjURDO@infradead.org/
+
+See recent discussion here:
+https://lore.kernel.org/all/20260516182126.530498-1-pfalcato@suse.de/T/#u
+
+For all these reasons I propose to make vmsplice a simple wrapper for
+preadv2/pwritev2.
+
+vmsplice(fd, vec, vlen, vmsplice_flags) will
+be equivalent to preadv2(fd, vec, vlen, -1, rw_flags) if you have
+readable pipe and to pwritev2(fd, vec, vlen, -1, rw_flags) if you have
+writable pipe.
+
+SPLICE_F_NONBLOCK is translated to RWF_NOWAIT, all other SPLICE_F_*
+flags are ignored.
+
+There is a small change to handling of NONBLOCK-related flags,
+see commit messages for details.
+
+I tested this patch in Qemu.
+
+This patchset was written by me, not by LLMs.
+
+Askar Safin (3):
+  tee: fs/splice.c: remove unused parameter "flags" from "link_pipe"
+  vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
+  splice: remove PIPE_BUF_FLAG_GIFT
+
+ fs/fuse/dev.c             |   1 -
+ fs/read_write.c           |  23 +++++
+ fs/splice.c               | 202 +-------------------------------------
+ include/linux/pipe_fs_i.h |   1 -
+ include/linux/skbuff.h    |   4 +-
+ include/linux/splice.h    |   2 +-
+ include/linux/syscalls.h  |   4 +-
+ 7 files changed, 33 insertions(+), 204 deletions(-)
 
 
-Beste Grüße,
-Peter Schneider
-
+base-commit: e7ae89a0c97ce2b68b0983cd01eda67cf373517d (7.1-rc5)
 -- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+2.47.3
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
