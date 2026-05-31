@@ -1,126 +1,101 @@
-Received: from m.b4.vu (m.b4.vu [203.16.231.148])
+Received: from air.basealt.ru (air.basealt.ru [193.43.8.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2EB388879
-	for <patches@lists.linux.dev>; Sun, 31 May 2026 15:13:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.16.231.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1102238E8B1
+	for <patches@lists.linux.dev>; Sun, 31 May 2026 15:35:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.43.8.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780240411; cv=none; b=ukL+2JhBH9za5OP/TpshOby/0xV0DtW8YZj6LXv00mJTFygFFZCDqTzhlbMIY+0M7zi5W8bHNRN60DHUOtvjJlIe1DPBXchjVy8pxpLZA+mY4wVkz8TVONTVkDlq4fuPdJ0laU99389PlPinlKncYNOnhRby5wuehe2qcAsj//k=
+	t=1780241723; cv=none; b=azt1skLWXlpALeeYBsLsrBrJtBUJG0Pftb3lC+K883fb7ApSl+5okJ2i84uPXmscdaxpDc643bJv1XhHVnHQSsHsHIBybOptTdxmA3ntAHqIcTXD2wMrHuEpEAttaYIn75S64Hf/xTtepEXUkoR7SoDpRkbbrLLbId8G6E+SlmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780240411; c=relaxed/simple;
-	bh=H2ExlMdIhxev/OHb0le93xGbNGsb+HE6C8eYWRhN4VQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LsUNzLoIxUtV9KZb4ulwXwb7x+o0L4jlr7A0sxSBNgFaTfNe0CmRRF0lt5+QDkzzJ82t7/nuuyhYIHvbcBSR5tvsPfKe0ZMoL679IYSXrHVtMFuaUUixQrOOr/2GEq+WTjd48BcsgTzDoXrna7YYJREb/FH7AlJmM7m9VFr6FUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=b4.vu; spf=pass smtp.mailfrom=b4.vu; dkim=pass (2048-bit key) header.d=b4.vu header.i=@b4.vu header.b=IFhxnrGB; arc=none smtp.client-ip=203.16.231.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=b4.vu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=b4.vu
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=b4.vu header.i=@b4.vu header.b="IFhxnrGB"
-Received: by m.b4.vu (Postfix, from userid 1000)
-	id C2EEB67DC7DB; Mon,  1 Jun 2026 00:43:20 +0930 (ACST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 m.b4.vu C2EEB67DC7DB
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=b4.vu; s=m1;
-	t=1780240400; bh=fGPzGM6HsELRKDb0LPe7FpxAWXKREgEVrtYdnVrRNlI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IFhxnrGB3R8Gy0pb5KDCtWuEbxYgZ+rB930ZW3ezUW3np6ez6BYVD9gB9gkZpJEp6
-	 mnJ8DiiYp/3NIhZIPkjSBGNQ83FXfulvAVzG8N1zUBoHJSFZ570Jmqo2bHcKDU5xCH
-	 oz8mMFl40OZDLi8zDxPhyociOuuUgaIt9UycXV0A+8EMp2pVOSel41U6qRV2TX4Pio
-	 IbLdM8YhgHAOmKLiuYqtLTThyPGv+W0ZWrIWSxZLro86p6Sn4WboQC9C5s3XvX86OP
-	 WCu51K7y0yflN+hwHX+AUxLxQvmtqQCtwNP13ltd0yotkgcJPBZSVix7LbZUAFurWB
-	 7x8QJDU96V/dg==
-Date: Mon, 1 Jun 2026 00:43:20 +0930
-From: "Geoffrey D. Bennett" <g@b4.vu>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 054/969] ALSA: usb-audio: Improve Focusrite sample
- rate filtering
-Message-ID: <ahxQECPrGoTY10B3@m.b4.vu>
-References: <20260530160300.485627683@linuxfoundation.org>
- <20260530160301.888290661@linuxfoundation.org>
+	s=arc-20240116; t=1780241723; c=relaxed/simple;
+	bh=Sz2DmgnbadyAo3Dz86pJGRgTp2LYw+19Ug46KEiSCB0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OHJV2tQ5eOL21Kgf5zyr87UvfNziLlMcXOCzcuYi0Cma4lVoKEpGLSVevnQZg0d0nHxMHuqf2Hiafk8wzk73TgvYOv9gDGvzzzke18kIPnRCbqjYjBM8r+haq1w5nHDPE7HyOWE42WKZjxLrzIrM/z6gkF6hJgl77eE3ZdRWfTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=altlinux.org; spf=pass smtp.mailfrom=altlinux.org; arc=none smtp.client-ip=193.43.8.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=altlinux.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=altlinux.org
+Received: from [10.88.16.7] (unknown [193.43.11.2])
+	(Authenticated sender: kovalevvv)
+	by air.basealt.ru (Postfix) with ESMTPSA id 4E77C2336D;
+	Sun, 31 May 2026 18:35:19 +0300 (MSK)
+Message-ID: <fc9b0b14-be90-71be-17a8-695549dedd5d@basealt.ru>
+Date: Sun, 31 May 2026 18:35:18 +0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260530160301.888290661@linuxfoundation.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 5.10 095/589] ALSA: usb-audio: fix null pointer
+ dereference on pointer cs_desc
+To: Ben Hutchings <ben@decadent.org.uk>, Chengfeng Ye <cyeaa@connect.ust.hk>,
+ Takashi Iwai <tiwai@suse.de>
+Cc: patches@lists.linux.dev, Sasha Levin <sashal@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ stable <stable@vger.kernel.org>
+References: <20260530160224.570625122@linuxfoundation.org>
+ <20260530160227.194081368@linuxfoundation.org>
+ <ca469f4a22fe4688bbf88c355d074ae5be16a621.camel@decadent.org.uk>
+Content-Language: en-US
+From: Vasiliy Kovalev <kovalev@altlinux.org>
+In-Reply-To: <ca469f4a22fe4688bbf88c355d074ae5be16a621.camel@decadent.org.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, May 30, 2026 at 05:52:58PM +0200, Greg Kroah-Hartman wrote:
-> 6.1-stable review patch.  If anyone has any objections, please let me know.
+On 5/31/26 15:33, Ben Hutchings wrote:
+> On Sat, 2026-05-30 at 17:59 +0200, Greg Kroah-Hartman wrote:
+>> 5.10-stable review patch.  If anyone has any objections, please let me know.
+>>
+>> ------------------
+>>
+>> From: Chengfeng Ye <cyeaa@connect.ust.hk>
+>>
+>> commit b97053df0f04747c3c1e021ecbe99db675342954 upstream.
+>>
+>> The pointer cs_desc return from snd_usb_find_clock_source could
+>> be null, so there is a potential null pointer dereference issue.
+>> Fix this by adding a null check before dereference.
+>>
+>> Signed-off-by: Chengfeng Ye <cyeaa@connect.ust.hk>
+>> Link: https://lore.kernel.org/r/20211024111736.11342-1-cyeaa@connect.ust.hk
+>> Signed-off-by: Takashi Iwai <tiwai@suse.de>
+>> Fixes: 1dc669fed61a ("ALSA: usb-audio: UAC2: support read-only freq control")
+>> [ kovalev: bp to fix CVE-2021-47211; added Fixes tag; the null
+>>    check was added into both UAC2 and UAC3 branches since the
+>>    older kernel still has the clock source lookup split between
+>>    snd_usb_find_clock_source() and snd_usb_find_clock_source_v3()
+>>    (see upstream commit 9ec730052fa2) ]
 > 
-> ------------------
+> In the upstream version the return statement was added in
+> snd_usb_set_sample_rate_v2v3(), so set_sample_rate_v2v3() will do:
 > 
-> From: Geoffrey D. Bennett <g@b4.vu>
+>          cur_rate = snd_usb_set_sample_rate_v2v3(chip, fmt, clock, rate);  // = 0
+>          if (cur_rate < 0) ...                              // false
+>          if (!cur_rate)                                     // true
+>                  cur_rate = prev_rate;
+>          if (cur_rate != rate) ...
+>   validation:
+>          if (!uac_clock_source_is_valid(chip, fmt, clock))  // true because clock soure is missing
+>                  return -ENXIO;
 > 
-> [ Upstream commit 24d2d3c5f94007a5a0554065ab7349bb69e28bcb ]
+> so it will ultimately return -ENXIO.
 > 
-> Replace the bLength == 10 max_rate check in
-> focusrite_valid_sample_rate() with filtering that also examines the
-> bmControls VAL_ALT_SETTINGS bit.
+> Whereas this backport puts the return statements in
+> set_sample_rate_v2v3(), so it directly returns 0 i.e. silently fails.
+> Shouldn't these be changed to return -ENXIO?
 > 
-> When VAL_ALT_SETTINGS is readable, the device uses strict
-> per-altsetting rate filtering (only the highest rate pair for that
-> altsetting is valid). When it is not readable, all rates up to
-> max_rate are valid.
-> 
-> For devices without the bLength == 10 Format Type descriptor extension
-> but with VAL_ALT_SETTINGS readable and multiple altsettings (only seen
-> in Scarlett 18i8 3rd Gen playback), fall back to the Focusrite
-> convention: alt 1 = 48kHz, alt 2 = 96kHz, alt 3 = 192kHz.
-> 
-> This produces correct rate tables for all tested Focusrite devices
-> (all Scarlett 2nd, 3rd, and 4th Gen, Clarett+, and Vocaster) using
-> only USB descriptors, allowing QUIRK_FLAG_VALIDATE_RATES to be removed
-> for Focusrite in the next commit.
-> 
-> Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-> Signed-off-by: Takashi Iwai <tiwai@suse.de>
-> Link: https://patch.msgid.link/7e18c1f393a6ecb6fc75dd867a2c4dbe135e3e22.1771594828.git.g@b4.vu
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  sound/usb/format.c | 86 +++++++++++++++++++++++++++++++++++++++-------
->  1 file changed, 74 insertions(+), 12 deletions(-)
-> 
-> diff --git a/sound/usb/format.c b/sound/usb/format.c
-> index f33d25a4e4cc7..682adbdf7ee79 100644
-[...]
+> Ben.
 
-Hi Greg,
+Hi Ben,
+You're right. In 5.10 set_sample_rate_v2v3() is a single function, so 
+return 0 here is consumed as success by snd_usb_pcm_prepare(), diverging 
+from upstream which ends up at -ENXIO via !uac_clock_source_is_valid().
 
-Please drop these from 6.1 and 5.15. They're part of a 3-patch series
-that needs all 3 to get the benefit (plus 5 more fixes on top for the
-1st Gen Scarletts that the series regressed).
+v2 sent: 
+https://lore.kernel.org/all/20260531152950.191924-1-kovalev@altlinux.org/
 
-The series avoids leaving the device at 192kHz after probe (which
-mutes the internal mixer and disables the Air/Safe modes until an
-application opens the PCM). But the part that actually fixes that,
-38c322068a26 ("Add QUIRK_FLAG_SKIP_IFACE_SETUP"), wasn't selected.
-Without it, __snd_usb_parse_audio_interface() still calls
-snd_usb_init_sample_rate(rate_max) at probe, so removing
-VALIDATE_RATES on its own doesn't help.
-
-Unfortunately 38c322068a26 is a regression for some 1st Gen Scarletts,
-and those exclusions were found one model at a time, so I'm not 100%
-confident every affected model is covered, although there have been no
-further reports in nearly 8 weeks. I'm not sure for 6.1/5.15 if the
-benefit outweighs the risk, but if you'd rather take it all, the full
-set in order is:
-
-24d2d3c5f940 ALSA: usb-audio: Improve Focusrite sample rate filtering
-a8cc55bf81a4 ALSA: usb-audio: Remove VALIDATE_RATES quirk for Focusrite devices
-38c322068a26 ALSA: usb-audio: Add QUIRK_FLAG_SKIP_IFACE_SETUP
-8780f561f671 ALSA: usb-audio: Exclude Scarlett 2i2 1st Gen from SKIP_IFACE_SETUP
-990a8b0732cf ALSA: usb-audio: Exclude Scarlett 2i4 1st Gen from SKIP_IFACE_SETUP
-f025ac8c698a ALSA: usb-audio: Exclude Scarlett Solo 1st Gen from SKIP_IFACE_SETUP
-a0dafdbd1049 ALSA: usb-audio: Exclude Scarlett 2i2 1st Gen (8016) from SKIP_IFACE_SETUP
-a47306a74c31 ALSA: usb-audio: Exclude Scarlett 18i20 1st Gen from SKIP_IFACE_SETUP
-
-Same issue applies to 6.6 and 6.12: they took the first two (filter +
-VALIDATE_RATES removal) but not 38c322068a26, so the 192kHz behaviour
-is unchanged there. They should probably get the same treatment.
-
+-- 
 Thanks,
-Geoffrey
+Vasiliy
