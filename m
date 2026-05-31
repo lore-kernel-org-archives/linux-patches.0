@@ -1,172 +1,95 @@
-Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C65E376A18;
-	Sun, 31 May 2026 10:53:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEE026ACC
+	for <patches@lists.linux.dev>; Sun, 31 May 2026 12:04:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780224811; cv=none; b=jU2VcSIBgsBwoURTADtLC1PEIaiXc6nXpHMJO4ewM4hlmoWAWpRwbOsU6IHuVRU48TIHEfzoLnvs2VLjxrgaXdtLGrm6bf3bICa1puMiBbllNKGOBCRaAh7e/18fVLWk2TG7cbU5pmr/jKFsnYiWYXLjGoQkt6q34ypkRJoIoQ8=
+	t=1780229097; cv=none; b=n18871YW/OZX+zXzbykA9KE882sjGdjzMXGudoaXMGluagf5ZJQeAfo3xudlD/1HV37FtzPbVLuSggFcmpA62s3ESBuZ4WsY5VoZQ6xEjApD8RPJvMo6UWWveh6G63/2E5DT20LXHrKp/gcQ0mD4QldN9IrtG+V+SyKS47/q/vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780224811; c=relaxed/simple;
-	bh=i45gdTuZiRDSr0I/OSp/H4C/1/l9afk6RfqlpF+CjIs=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=K6h1PXeLQ99q/KpKyJ53TrZZXjMlWnLSFsjCw4v3K+NCphlvQIVibjCC6gTtUsfNFr9Xm9Sqg6YfOH858/UaSDx2R95CiNVJw+I+eXlg28PTNJe22GWAMn0V+nwHK/DK1eOnIuQDHDsr3O6lj92TnSCoZ4a80yoeyxyXm98y3M4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
-Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
-	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wTdnL-000Ncn-0a;
-	Sun, 31 May 2026 10:53:27 +0000
-Received: from ben by deadeye with local (Exim 4.99.2)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wTdnJ-0000000F8HQ-417y;
-	Sun, 31 May 2026 12:53:25 +0200
-Message-ID: <136f03aa6f51bdfecc786e5278f5fd03b4a6966e.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 072/589] media: uvcvideo: Use heuristic to find
- stream entity
-From: Ben Hutchings <ben@decadent.org.uk>
+	s=arc-20240116; t=1780229097; c=relaxed/simple;
+	bh=NONLKoto7eRwTUPCeYEECkrzXOAMDm5bu+8PZe/7nls=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=RTsvp3x8ZiKspU00vJmlmyUbrPLbuP9GHnOpbMFEsHcoTl5ez34p044mcIDxkMfIaUA8D5Uzclm98s3b4DtfGeVlwOdl0DzBw/9+neMqcshnBZVEgBqqWwkyNF5NqkRs9SYamAi+NbdSp6REaHb/Pe5aJ7qjSsr8tfmBqdS/NJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F30AFzcI; arc=none smtp.client-ip=209.85.222.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F30AFzcI"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-914c5898245so673632385a.1
+        for <patches@lists.linux.dev>; Sun, 31 May 2026 05:04:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780229095; x=1780833895; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:mime-version:user-agent:date
+         :message-id:from:references:cc:to:subject:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QPje15x//JjtJNNtyyJtV4KyOBwO7VPG1InhgHR/odw=;
+        b=F30AFzcIhjG5e59ozLvdcW6UjkdDWSfZXQYJUWaKlv3tL++cmsTw7Az4fmyP3Y3JgP
+         GpnR+qEJJaezHFV/CYR+X9Jc/hx28FedPTQmN30906s2uWhuZtPB/gjTSlQ/K1Ir1iiD
+         lMb2oJPNzpa7xNaxTbAUPdqArjuDzi5N5xQqZvTiYQ4U0juMM6HqOosiKDKn42G9JPD4
+         4uCUPscydJYeX1AXx7kLk6ILSc6DPP6ui4je7fE49u3/rP2o2ST0cbwhUtI5ulsbKsJG
+         WFX7XEeWdIDHRtv82YbUU6YksgPoE1UmwoJ+3tDk/N6ChP1dikZq51690zHkL+shf+fM
+         tfMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780229095; x=1780833895;
+        h=content-transfer-encoding:in-reply-to:mime-version:user-agent:date
+         :message-id:from:references:cc:to:subject:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QPje15x//JjtJNNtyyJtV4KyOBwO7VPG1InhgHR/odw=;
+        b=dj0+twomfnVYY/7EfSbzxA97IdtgFGC0wxFotKSbrjc4SHPjvGfQDpPEws3fC6nH1B
+         brRpwsuZJIDMneHXh5LjY/eYWqfnpHBvviLSKH7nnAkY+78YteFexyR1XxnPXsOH6jjo
+         tcMj6PWLF+jLgbglAjDAODG2uxmlbO4Z6YI70gTeVwXQ/m56RhddX7AnVzPkEPd5UMHR
+         3zuVxSTop4Mk/ecbphXbL4QTsYn5ZQc2fm7NmqMoftGoGodMqOFGheZHlecu8n6Bhnzr
+         p5DiaDpIIQEGbIktjmvjnxnTjLpPtWxB8+Q8fCeRXW2I4yOG3l4owq7yclLH56aQHM6q
+         br4w==
+X-Gm-Message-State: AOJu0Yw69F28zAOSvGI4t60nLUPeEC9QAByukksRngMouQ9FLjc/6FVX
+	CjCa9exfuVDS774Ffa+YLc86fKCUu1NfgPP9t/DpjFsYV02xXWVaCIY=
+X-Gm-Gg: Acq92OEiCNvBTEeM3EcW5Qkgh8lkeDqvMNebQT5yeCWyw4xJeH51U2BBlORovfcVj2G
+	7DmA0R+CzBi6zoK3qvbHfIrXYHtLiv0GXhG52dJufjznZFWUC8vKDrV1M3q58Oq8rw8QCSD3CNa
+	jCfbnzf17Ur4PvsY9esmjXqGi2UgNmJTel8pgyYKMxgVu5wC1XQcuprfjV/1+qb6ajV7YqQDCZi
+	sWc9aMbVzKKbFJ9nmOhWJELuEHko5JOezwm9iiolMrqPxhhM32LgU1ZapZ9/joVjmae33z37WZw
+	xMtXB2AAkSBdsnt2GeFNbdLwQ2iizYnXMsSbLntLlfCvhnJMoZ4GIncNqEenrOn09ONtw2gS7K4
+	nlf9Mo/J9tSKyPJaT32jhqL9llhxrBKJD5x0efFKrD+JWXl6jYlvPbmQj+f9XXQb/nnvppBSFdw
+	/fIzpXuKzfn8AY26DMOiz7P/NdRFcp3NR+cDUXJ0Dtotvl0igbuccdkBRAD0qOzRTIzWiNUYho
+X-Received: by 2002:a05:620a:2990:b0:915:4685:f9b1 with SMTP id af79cd13be357-9154685fc7fmr729735985a.9.1780229094997;
+        Sun, 31 May 2026 05:04:54 -0700 (PDT)
+Received: from [120.7.1.23] (135-23-94-154.cpe.pppoe.ca. [135.23.94.154])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-915326016c2sm723500485a.25.2026.05.31.05.04.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 31 May 2026 05:04:54 -0700 (PDT)
+Subject: Re: [PATCH 5.10 000/589] 5.10.258-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Angel4005 <ooara1337@gmail.com>, Ricardo
- Ribalda	 <ribalda@chromium.org>, Hans de Goede <hansg@kernel.org>, Hans
- Verkuil	 <hverkuil+cisco@kernel.org>, Sasha Levin <sashal@kernel.org>
-Date: Sun, 31 May 2026 12:53:20 +0200
-In-Reply-To: <20260530160226.496219768@linuxfoundation.org>
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
 References: <20260530160224.570625122@linuxfoundation.org>
-	 <20260530160226.496219768@linuxfoundation.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-1/MpVFW9o6bj11MJxigQ"
-User-Agent: Evolution 3.56.2-9 
+From: Woody Suwalski <terraluna977@gmail.com>
+Message-ID: <4a908311-9cdb-e8c1-2e6c-bd846cf475a5@gmail.com>
+Date: Sun, 31 May 2026 08:05:05 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101
+ Firefox/128.0 SeaMonkey/2.53.23
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
+In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.258 release.
+> There are 589 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+>
+Built OK on i386, installed on a 32-bit device, no issues noticed
 
---=-1/MpVFW9o6bj11MJxigQ
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Tested-by: Woody Suwalski <terraluna977@gmail.com>
 
-On Sat, 2026-05-30 at 17:59 +0200, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me kn=
-ow.
->=20
-> ------------------
->=20
-> From: Ricardo Ribalda <ribalda@chromium.org>
->=20
-> [ Upstream commit 758dbc756aad429da11c569c0d067f7fd032bcf7 ]
-
-This doesn't properly fix the problem.  Commit 3d9f32e02c2e "media:
-uvcvideo: Create an ID namespace for streaming output terminals" (which
-reverts this) needs to be applied on top.  I haven't checked whether
-that would apply cleanly.
-
-Ben.
-
-> Some devices, like the Grandstream GUV3100 webcam, have an invalid UVC
-> descriptor where multiple entities share the same ID, this is invalid
-> and makes it impossible to make a proper entity tree without heuristics.
->=20
-> We have recently introduced a change in the way that we handle invalid
-> entities that has caused a regression on broken devices.
->=20
-> Implement a new heuristic to handle these devices properly.
->=20
-> Reported-by: Angel4005 <ooara1337@gmail.com>
-> Closes: https://lore.kernel.org/linux-media/CAOzBiVuS7ygUjjhCbyWg-KiNx+HF=
-TYnqH5+GJhd6cYsNLT=3DDaA@mail.gmail.com/
-> Fixes: 0e2ee70291e6 ("media: uvcvideo: Mark invalid entities with id UVC_=
-INVALID_ENTITY_ID")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-> Reviewed-by: Hans de Goede <hansg@kernel.org>
-> Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-> Tested-by: Ron Economos <re@w6rz.net>
-> Tested-by: Pavel Machek (CIP) <pavel@nabladev.com>
-> Tested-by: Brett A C Sheffield <bacs@librecast.net>
-> Tested-by: Mark Brown <broonie@kernel.org>
-> Tested-by: Barry K. Nathan <barryn@pobox.com>
-> Tested-by: Peter Schneider <pschneider1968@googlemail.com>
-> Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-> Tested-by: Shuah Khan <skhan@linuxfoundation.org>
-> Tested-by: Jon Hunter <jonathanh@nvidia.com>
-> Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
-> Tested-by: Miguel Ojeda <ojeda@kernel.org>
-> Tested-by: Vijayendra Suman <vijayendra.suman@oracle.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  drivers/media/usb/uvc/uvc_driver.c | 15 ++++++++++++++-
->  1 file changed, 14 insertions(+), 1 deletion(-)
->=20
-> diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/u=
-vc_driver.c
-> index 34e3f04340a23..20a18caf77176 100644
-> --- a/drivers/media/usb/uvc/uvc_driver.c
-> +++ b/drivers/media/usb/uvc/uvc_driver.c
-> @@ -442,13 +442,26 @@ static struct uvc_entity *uvc_entity_by_reference(s=
-truct uvc_device *dev,
-> =20
->  static struct uvc_streaming *uvc_stream_by_id(struct uvc_device *dev, in=
-t id)
->  {
-> -	struct uvc_streaming *stream;
-> +	struct uvc_streaming *stream, *last_stream;
-> +	unsigned int count =3D 0;
-> =20
->  	list_for_each_entry(stream, &dev->streams, list) {
-> +		count +=3D 1;
-> +		last_stream =3D stream;
->  		if (stream->header.bTerminalLink =3D=3D id)
->  			return stream;
->  	}
-> =20
-> +	/*
-> +	 * If the streaming entity is referenced by an invalid ID, notify the
-> +	 * user and use heuristics to guess the correct entity.
-> +	 */
-> +	if (count =3D=3D 1 && id =3D=3D UVC_INVALID_ENTITY_ID) {
-> +		dev_warn(&dev->intf->dev,
-> +			 "UVC non compliance: Invalid USB header. The streaming entity has an=
- invalid ID, guessing the correct one.");
-> +		return last_stream;
-> +	}
-> +
->  	return NULL;
->  }
-> =20
-
---=20
-Ben Hutchings
-Time is nature's way of making sure that
-everything doesn't happen at once.
-
---=-1/MpVFW9o6bj11MJxigQ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmocEyEACgkQ57/I7JWG
-EQkVPA/+MSEar0a53RF8fIgTGxoLwkeWNKLzZhkG9fOcIZmi0r8auU5XNvRih+d6
-KRPticuZoFDHDQm/vO4w/RtFJW4akPT2d2QJ/UcezxuncNegCNLdKxeEpnfCW5d8
-UvSoGJpvCSX/bLa3+/NmyvvF+GvmYlBo60dJNF8Dh3WG+3FHOmriPTazfy2irXsk
-yOX9prSpjDOheDBf+cQ+dfqMJ3mPFS12Piecb9yO4uNVQZgE01Vt6Hfx7qUdwt93
-D4Jgp1Gn7NF0YKE4q856q36LLFUeMZRZnEiP9+cQtosH/XFdxF1sE8lzgtASwDww
-BygE8Ov4NTDCAhUFQikpPqq3IAq1tpQoKK/X001dzT2SJGXuym0zGFg5jACzda54
-UAWWLnvymCho3IwR9UcTwKo73hBgp2wyZMDXAHDAOKLYKoooxfxnXBvoffPF150g
-0G12MACYLRHBsKgkDaf+MshMGDu36qrFN2DGjRSvEa8bje+JfMHYJVY33QJVzZ71
-xQ00yOYKU2NgZqdYIM6oVScNiePL/eX86r98YbdXszlHAvi39w7kYNQYh/LdZnbb
-eJFDBECC+xKJP9qxZLzw5vqVyr+fTo0Pt6RdVVYuhFCybFTXTqt3i4vFEJ7YCbfD
-qF0sUqrcbzqc5fdvcIbckF7ZDUFRCHgBZgbMdIQhGjzwFWJndLQ=
-=706S
------END PGP SIGNATURE-----
-
---=-1/MpVFW9o6bj11MJxigQ--
