@@ -1,101 +1,141 @@
-Received: from air.basealt.ru (air.basealt.ru [193.43.8.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1102238E8B1
-	for <patches@lists.linux.dev>; Sun, 31 May 2026 15:35:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.43.8.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A3521ADC7;
+	Sun, 31 May 2026 19:01:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780241723; cv=none; b=azt1skLWXlpALeeYBsLsrBrJtBUJG0Pftb3lC+K883fb7ApSl+5okJ2i84uPXmscdaxpDc643bJv1XhHVnHQSsHsHIBybOptTdxmA3ntAHqIcTXD2wMrHuEpEAttaYIn75S64Hf/xTtepEXUkoR7SoDpRkbbrLLbId8G6E+SlmE=
+	t=1780254076; cv=none; b=T6nqHvACEiCmjKztD7ijRmd8cmlCkC5XcjY/PmPUMH1D6hfDB+ORJKnFW1m7AFPMsCnA2a6vOpqoxSF2tuWgz+InV8TUsXv4hvgnOqv2WTk00VbQLH+rIAw88bbPgjtVEjHY5lOyc02i8d73k8GH9OdLkrvWsCIQQA6HCE81BCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780241723; c=relaxed/simple;
-	bh=Sz2DmgnbadyAo3Dz86pJGRgTp2LYw+19Ug46KEiSCB0=;
+	s=arc-20240116; t=1780254076; c=relaxed/simple;
+	bh=c6HVtj1BrNeQP8HJB4VgikCUxQBGGOr8yQg/LtHBzKI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OHJV2tQ5eOL21Kgf5zyr87UvfNziLlMcXOCzcuYi0Cma4lVoKEpGLSVevnQZg0d0nHxMHuqf2Hiafk8wzk73TgvYOv9gDGvzzzke18kIPnRCbqjYjBM8r+haq1w5nHDPE7HyOWE42WKZjxLrzIrM/z6gkF6hJgl77eE3ZdRWfTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=altlinux.org; spf=pass smtp.mailfrom=altlinux.org; arc=none smtp.client-ip=193.43.8.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=altlinux.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=altlinux.org
-Received: from [10.88.16.7] (unknown [193.43.11.2])
-	(Authenticated sender: kovalevvv)
-	by air.basealt.ru (Postfix) with ESMTPSA id 4E77C2336D;
-	Sun, 31 May 2026 18:35:19 +0300 (MSK)
-Message-ID: <fc9b0b14-be90-71be-17a8-695549dedd5d@basealt.ru>
-Date: Sun, 31 May 2026 18:35:18 +0300
+	 In-Reply-To:Content-Type; b=YCP1AcirEMDgiTBHyOPvWOAhgc0NAV85lcmrvFVhExaQX8DIYmD5d8daV54YYk9PvjO9ikt6f9GfT8mAwTrY2p+EhyVxrJRgDKIVE087ELgxnvubB36ckRjRhLk7ZV+RSif5ZNJyixORXOljHKt+6KRxrXJ24wlP3ueib5JyRvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IR3X1VQ3; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IR3X1VQ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568961F00893;
+	Sun, 31 May 2026 19:01:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780254075;
+	bh=fcdMJCvYcrxynpav12XOXRlTlPDIl3/7C5MgYt6/rxM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=IR3X1VQ3sfK8nwizv/o40dv7x4UY52RwB32eTAzN6vkUjJen1CO+9kUOt76HB0+xD
+	 iykOW4+TrFC5n9TXfXZXtvSDoJ4ycLBnff42d5ofdKUqncVr1sayrtVj0RNfWKbJU2
+	 Tcbhu2r/7h/Y6zlcnS56zEIybxwmlYZXlD2hhVKlYta+WHVbTe0y4D/eZeHvVWKp00
+	 NFuTbY3VnbUD74bfNyrUJtoXbuONXsBl+I1+jvo3g0GUZcmsHQYkUePajF8NZrvxr3
+	 2nW6ksVuhtD3SjQi/lFyT0qTOGpPU82KdOPIe3G2NUq68rkk9r8Elc8gOHPPplMtq/
+	 vXK2p3JnBERXQ==
+Message-ID: <6dfa5f7c-ffbd-4605-96f2-09e365ce57dd@kernel.org>
+Date: Sun, 31 May 2026 21:01:10 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 5.10 095/589] ALSA: usb-audio: fix null pointer
- dereference on pointer cs_desc
-To: Ben Hutchings <ben@decadent.org.uk>, Chengfeng Ye <cyeaa@connect.ust.hk>,
- Takashi Iwai <tiwai@suse.de>
-Cc: patches@lists.linux.dev, Sasha Levin <sashal@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- stable <stable@vger.kernel.org>
-References: <20260530160224.570625122@linuxfoundation.org>
- <20260530160227.194081368@linuxfoundation.org>
- <ca469f4a22fe4688bbf88c355d074ae5be16a621.camel@decadent.org.uk>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for
+ preadv2/pwritev2
+To: Pedro Falcato <pfalcato@suse.de>, Askar Safin <safinaskar@gmail.com>
+Cc: linux-fsdevel@vger.kernel.org, Christian Brauner <brauner@kernel.org>,
+ Alexander Viro <viro@zeniv.linux.org.uk>, Jan Kara <jack@suse.cz>,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, linux-api@vger.kernel.org,
+ netdev@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>,
+ Matthew Wilcox <willy@infradead.org>, Jens Axboe <axboe@kernel.dk>,
+ Christoph Hellwig <hch@infradead.org>, David Howells <dhowells@redhat.com>,
+ Andrew Morton <akpm@linux-foundation.org>, Miklos Szeredi
+ <miklos@szeredi.hu>, patches@lists.linux.dev
+References: <20260531010107.1953702-1-safinaskar@gmail.com>
+ <ahv16ogY8Zx3Rtox@pedro-suse.lan>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
 Content-Language: en-US
-From: Vasiliy Kovalev <kovalev@altlinux.org>
-In-Reply-To: <ca469f4a22fe4688bbf88c355d074ae5be16a621.camel@decadent.org.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=david@kernel.org; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <ahv16ogY8Zx3Rtox@pedro-suse.lan>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 5/31/26 15:33, Ben Hutchings wrote:
-> On Sat, 2026-05-30 at 17:59 +0200, Greg Kroah-Hartman wrote:
->> 5.10-stable review patch.  If anyone has any objections, please let me know.
+On 5/31/26 10:54, Pedro Falcato wrote:
+> On Sun, May 31, 2026 at 01:01:04AM +0000, Askar Safin wrote:
+>> This patchset is for VFS.
 >>
->> ------------------
+>> Recently we got a lot of vulnerabilities in splice/vmsplice.
 >>
->> From: Chengfeng Ye <cyeaa@connect.ust.hk>
+>> Also vmsplice already was source of vulnerabilities in the past:
+>> CVE-2020-29374 (see https://lwn.net/Articles/849638/ ).
 >>
->> commit b97053df0f04747c3c1e021ecbe99db675342954 upstream.
+>> Also vmsplice is problematic for other reasons. Here is what other
+>> developers say:
 >>
->> The pointer cs_desc return from snd_usb_find_clock_source could
->> be null, so there is a potential null pointer dereference issue.
->> Fix this by adding a null check before dereference.
+>> Linus Torvalds in 2023:
+>>> So I'd personally be perfectly ok with just making vmsplice() be
+>>> exactly the same as write, and turn all of vmsplice() into just "it's
+>>> a read() if the pipe is open for read, and a write if it's open for
+>>> writing".
+>> https://lore.kernel.org/all/CAHk-=wgG_2cmHgZwKjydi7=iimyHyN8aessnbM9XQ9ufbaUz9g@mail.gmail.com/
 >>
->> Signed-off-by: Chengfeng Ye <cyeaa@connect.ust.hk>
->> Link: https://lore.kernel.org/r/20211024111736.11342-1-cyeaa@connect.ust.hk
->> Signed-off-by: Takashi Iwai <tiwai@suse.de>
->> Fixes: 1dc669fed61a ("ALSA: usb-audio: UAC2: support read-only freq control")
->> [ kovalev: bp to fix CVE-2021-47211; added Fixes tag; the null
->>    check was added into both UAC2 and UAC3 branches since the
->>    older kernel still has the clock source lookup split between
->>    snd_usb_find_clock_source() and snd_usb_find_clock_source_v3()
->>    (see upstream commit 9ec730052fa2) ]
+>> Christoph Hellwig in May 2026:
+>>> vmsplice is the worst, as it is one of the few remaining places that
+>>> can incorrectly dirty file backed pages without telling the file system
+>>> and cause the other problems fixed by a FOLL_PIN conversion, but it is
+>>> the only one where we do not have any idea yet how we could convert it
+>>> to FOLL_PIN due to the unbounded pin time.
+>> https://lore.kernel.org/all/agwFlBKvKytjURDO@infradead.org/
+>>
+>> See recent discussion here:
+>> https://lore.kernel.org/all/20260516182126.530498-1-pfalcato@suse.de/T/#u
 > 
-> In the upstream version the return statement was added in
-> snd_usb_set_sample_rate_v2v3(), so set_sample_rate_v2v3() will do:
+> So, you took an ongoing discussion with an ongoing RFC patchset, and you
+> decided to reimplement part of the idea on your own, as a concurrent patchset.
 > 
->          cur_rate = snd_usb_set_sample_rate_v2v3(chip, fmt, clock, rate);  // = 0
->          if (cur_rate < 0) ...                              // false
->          if (!cur_rate)                                     // true
->                  cur_rate = prev_rate;
->          if (cur_rate != rate) ...
->   validation:
->          if (!uac_clock_source_is_valid(chip, fmt, clock))  // true because clock soure is missing
->                  return -ENXIO;
-> 
-> so it will ultimately return -ENXIO.
-> 
-> Whereas this backport puts the return statements in
-> set_sample_rate_v2v3(), so it directly returns 0 i.e. silently fails.
-> Shouldn't these be changed to return -ENXIO?
-> 
-> Ben.
+> Riiiiiight.... I don't think I have to NAK this, do I?
 
-Hi Ben,
-You're right. In 5.10 set_sample_rate_v2v3() is a single function, so 
-return 0 here is consumed as success by snd_usb_pcm_prepare(), diverging 
-from upstream which ends up at -ENXIO via !uac_clock_source_is_valid().
-
-v2 sent: 
-https://lore.kernel.org/all/20260531152950.191924-1-kovalev@altlinux.org/
+Jup. I'll just ignore this patch set here.
 
 -- 
-Thanks,
-Vasiliy
+Cheers,
+
+David
