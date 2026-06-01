@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4946B2236E0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6AD37FF5E
 	for <patches@lists.linux.dev>; Mon,  1 Jun 2026 19:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780343804; cv=none; b=alIHuLAYxZ4qTh/Ys3D3gDBsm3kDahsKWJSYqvURRJ6dJcLs7o8emk+nQQXoEsZIXsso5e+n9jGsYt+waN+f3DB/726XD5SV4+zlgaJYTgUuG4Q0DchJ8rJvfg5ssn9kP7WyCIrg42DduOmZK9pBj6l4iFw3u76k8pQdYIsy4KI=
+	t=1780343804; cv=none; b=CuLrBxDfeL2Gw2Us/IXIdt9g6T0mvlvfLDkfT/q3iLoTX6kF7Hvn9zxfEqMhIHZU9fRLCmvakcp/TyfzAKVRFEzvRTSwhaAo3ylE3wzuk1yw5MoWktjo7g5ul8G1SMfVGqhJ55CUhG8+4afxGz9qBnU/jjWQp+HdFN0wDEb4Xio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1780343804; c=relaxed/simple;
-	bh=KWzZiN4PnLBKT0ZxCr2BGbKILpgQE+52KEovuBGUNfc=;
+	bh=mwI/yhmgeN5/52KEyoVb6JwFkIjGCcVHBKa4n3GiI4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eIGqIgKnCPDVEYT8B/2kDWzvUQQkY4C7sUSrqCfmJ1XZqDQ/lgilk5x/oZBpdDVYyXpMJC1xyxcC3CohdacE/ToL0E+wWmwcj9EfBTu4PvApaPswQxopmgQ1X4eHEHI+x1o9aXASkA+Yd/Dm2nMwe/VLZMtjyJj+AuHGeF5tNFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gY1KPrFO; arc=none smtp.client-ip=198.175.65.21
+	 MIME-Version; b=lypPFfLFRVNnnnEj2mF2VBzEu7nUlHNSjUkKahMxJjuQnsDIcr3STzHdM23A2o4DDnMHhcMHANnLCW9BUS84WWpAamh/VRL86rcb+8sY79mEiqfEkZ8kUkNLmeIryI9dp/s/hipNTQjnbrboF4LQqNkK8UTxQxcLjqq0Qb/gfHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Gr5WipBH; arc=none smtp.client-ip=198.175.65.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gY1KPrFO"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Gr5WipBH"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1780343803; x=1811879803;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=KWzZiN4PnLBKT0ZxCr2BGbKILpgQE+52KEovuBGUNfc=;
-  b=gY1KPrFO9UitqL4GvMD6DOm1hZW04QBjI2E2NHdmgEyP/hidIrNuD7WL
-   XiQPRuhMuMcYLhjcN12YjCWr0JHteTiaHsM9BkoyUvX0STKrjzoKb9MvJ
-   W2FraiXq6ONbvvXusNft9090UOb5y9W58snDGU1Ggrk9BzvZdexDGXzwd
-   5yRi4u/x/T5SmBHwg3ii6GBTG44X0EnVqqJk33dXBqBgLrM1k1idH+5VL
-   pkiYpzrVfPVGeB891ysFSluhqSMa+RP3YWVsxC+MzC/QC4deZczqsq6ZY
-   tED5RWRjw19+zMdYRQN2KBOFMs4OcUKmTk77VEbtk02BP3aGsf8fXNaIL
+  bh=mwI/yhmgeN5/52KEyoVb6JwFkIjGCcVHBKa4n3GiI4Y=;
+  b=Gr5WipBHaiTDy6d9tZoLC7IMUTp/hcQam9dui3hE0M6Gu+bXkF2g7ATD
+   HWZJs0T6gKkBR2GeyC6jBbVJlIgFnfSLteYjAN9xbSK/NptDxXizt+3oH
+   kGI+scGSwd+3GEQ/4hfDbEZhwqleXIQ2/rhkqQpmbNQcMe+ELGjVsWogL
+   lZl0acSPliNAPUKAB1LKOAH+/3BYLM005cpSnkOXjMRSRizDoHquQpwRl
+   BSAeH7EaVaYz5KgiG/nbRrHmPwOav8ms4cUuxf7YR9wHKgkOtUXbP6WsK
+   IKmSyb4hLOdEv9N9E9J12QMG5/gX8IO+pqWPNrOzZW3E8gz3CNaExp40B
    A==;
-X-CSE-ConnectionGUID: W7Fi0KUBQXyiKPyvvNI61A==
-X-CSE-MsgGUID: 6yB9GMt0QFWRKgpdiT857g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11804"; a="81011577"
+X-CSE-ConnectionGUID: iK6gNeTeSeG5h5Jd1wKTsA==
+X-CSE-MsgGUID: jX8UGK8+QxyFo5C76PoZMQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11804"; a="81011587"
 X-IronPort-AV: E=Sophos;i="6.24,181,1774335600"; 
-   d="scan'208";a="81011577"
+   d="scan'208";a="81011587"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
   by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 12:56:41 -0700
-X-CSE-ConnectionGUID: rnaDRR4rTHGNFIuff739MA==
-X-CSE-MsgGUID: AB3hqHX5S+m7P6b0ZDXrHA==
+X-CSE-ConnectionGUID: q0n2xr5jSnGO8/6ZNb5cQw==
+X-CSE-MsgGUID: a13zFb1PT/O1PAvg970IIA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.24,181,1774335600"; 
-   d="scan'208";a="247946496"
+   d="scan'208";a="247946499"
 Received: from lstrano-mobl6.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.221.168])
   by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 12:56:40 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -58,11 +58,12 @@ To: Fenghua Yu <fenghuay@nvidia.com>,
 Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	Tony Luck <tony.luck@intel.com>,
-	Sashiko <sashiko-bot@kernel.org>
-Subject: [PATCH v7 03/14] fs/resctrl: Fix use-after-free during unmount
-Date: Mon,  1 Jun 2026 12:56:21 -0700
-Message-ID: <20260601195632.15876-4-tony.luck@intel.com>
+	Ben Horgan <ben.horgan@arm.com>
+Subject: [PATCH v7 04/14] fs/resctrl: Fix deadlock for errors during mount
+Date: Mon,  1 Jun 2026 12:56:22 -0700
+Message-ID: <20260601195632.15876-5-tony.luck@intel.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260601195632.15876-1-tony.luck@intel.com>
 References: <20260601195632.15876-1-tony.luck@intel.com>
@@ -74,95 +75,162 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-During unmount or failure teardown all mon_data structures that contain
-monitoring event file private data are freed after which kernfs nodes are
-removed. However, the RDT_DELETED flag is never set for the statically
-allocated default resource group.
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-A concurrent reader of an event file associated with the default resource
-group may, after dropping kernfs active protection, block on rdtgroup_mutex
-while unmount proceeds to free the file private data and destroy the kernfs
-node without waiting for the reader.
+rdt_get_tree() acquires rdtgroup_mutex before calling kernfs_get_tree(). If
+superblock setup fails inside kernfs_get_tree(), the VFS calls kill_sb on
+the same thread before the call returns.  rdt_kill_sb() unconditionally
+attempts to acquire rdtgroup_mutex and deadlock occurs.
 
-When the mutex is released, the reader wakes up, observes that RDT_DELETED
-is not set for the default group, and dereferences the already-freed
-file private data.
+Move the call to kernfs_get_tree() outside of locks. If kernfs_get_tree()
+fails and ctx->kfc.new_sb_created is set, then rdt_kill_sb() has already
+been called and no further cleanup is needed.
 
-Set RDT_DELETED for the default group unconditionally since the flag does
-not lead to free of this statically allocated group.
+Add an extra hold in this error path on rdtgroup_default.kn to defend against
+other races destroying the root which is then dereferenced in kernfs_kill_sb()
 
-Do not allow a new resctrl mount if there are any waiters on default group
-of previous mount. A new mount will re-initialize the default group that
-would appear to waiters from previous mount as though the default group is
-accessible causing them to access the mon_data structures from the previous
-mount that have been removed.
+Add resctrl_unmount() helper to keep code consistent between the
+rdt_get_tree() failure path and a normal unmount.
 
-Fixes: 2a6566038544 ("x86/resctrl: Expand the width of domid by replacing mon_data_bits")
+Fixes: 5ff193fbde20 ("x86/intel_rdt: Add basic resctrl filesystem support")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260508182143.14592-1-tony.luck%40intel.com?part=2 [1]
+Closes: https://sashiko.dev/#/patchset/20260429184858.36423-1-tony.luck%40intel.com [1]
+Co-developed-by: Tony Luck <tony.luck@intel.com>
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Reviewed-by: Ben Horgan <ben.horgan@arm.com>
 ---
- fs/resctrl/rdtgroup.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ fs/resctrl/rdtgroup.c | 82 +++++++++++++++++++++++++++++--------------
+ 1 file changed, 55 insertions(+), 27 deletions(-)
 
 diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 506b40dc9430..ac3285ba8775 100644
+index ac3285ba8775..d2a1f88d8782 100644
 --- a/fs/resctrl/rdtgroup.c
 +++ b/fs/resctrl/rdtgroup.c
-@@ -585,14 +585,20 @@ static ssize_t rdtgroup_cpus_write(struct kernfs_open_file *of,
-  *
-  * On resource group creation via a mkdir, an extra kernfs_node reference is
-  * taken to ensure that the rdtgroup structure remains accessible for the
-- * rdtgroup_kn_unlock() calls where it is removed.
-+ * rdtgroup_kn_unlock() calls where it is removed. The default group is
-+ * statically allocated: it does not have an extra reference but will have
-+ * RDT_DELETED set on unmount to support safe access to its associated files
-+ * via rdtgroup_kn_lock_live/rdtgroup_kn_unlock().
-  *
-- * Drop the extra reference here, then free the rdtgroup structure.
-+ * For all but the default group: drop the extra reference, then free the
-+ * rdtgroup structure.
-  *
-  * Return: void
-  */
- static void rdtgroup_remove(struct rdtgroup *rdtgrp)
- {
-+	if (rdtgrp == &rdtgroup_default)
-+		return;
- 	kernfs_put(rdtgrp->kn);
- 	kfree(rdtgrp);
- }
-@@ -2965,6 +2971,7 @@ static void resctrl_fs_teardown(void)
- 	mon_put_kn_priv();
- 	rdt_pseudo_lock_release();
- 	rdtgroup_default.mode = RDT_MODE_SHAREABLE;
-+	rdtgroup_default.flags = RDT_DELETED;
- 	closid_exit();
- 	schemata_list_destroy();
+@@ -2977,10 +2977,34 @@ static void resctrl_fs_teardown(void)
  	rdtgroup_destroy_root();
-@@ -2990,6 +2997,12 @@ static int rdt_get_tree(struct fs_context *fc)
- 		goto out;
+ }
+ 
++static void resctrl_unmount(void)
++{
++	struct rdt_resource *r;
++
++	cpus_read_lock();
++	mutex_lock(&rdtgroup_mutex);
++
++	rdt_disable_ctx();
++
++	/* Put everything back to default values. */
++	for_each_alloc_capable_rdt_resource(r)
++		resctrl_arch_reset_all_ctrls(r);
++
++	resctrl_fs_teardown();
++	if (resctrl_arch_alloc_capable())
++		resctrl_arch_disable_alloc();
++	if (resctrl_arch_mon_capable())
++		resctrl_arch_disable_mon();
++	resctrl_mounted = false;
++	mutex_unlock(&rdtgroup_mutex);
++	cpus_read_unlock();
++}
++
+ static int rdt_get_tree(struct fs_context *fc)
+ {
+ 	struct rdt_fs_context *ctx = rdt_fc2context(fc);
+ 	unsigned long flags = RFTYPE_CTRL_BASE;
++	struct kernfs_node *rdt_root_kn;
+ 	struct rdt_l3_mon_domain *dom;
+ 	struct rdt_resource *r;
+ 	int ret;
+@@ -3056,10 +3080,6 @@ static int rdt_get_tree(struct fs_context *fc)
+ 	if (ret)
+ 		goto out_mondata;
+ 
+-	ret = kernfs_get_tree(fc);
+-	if (ret < 0)
+-		goto out_psl;
+-
+ 	if (resctrl_arch_alloc_capable())
+ 		resctrl_arch_enable_alloc();
+ 	if (resctrl_arch_mon_capable())
+@@ -3075,10 +3095,37 @@ static int rdt_get_tree(struct fs_context *fc)
+ 						   RESCTRL_PICK_ANY_CPU);
  	}
  
-+	/* Avoid races from pending operations from a previous mount */
-+	if (atomic_read(&rdtgroup_default.waitcount) != 0) {
-+		ret = -EBUSY;
-+		goto out;
-+	}
+-	goto out;
++	/*
++	 * Ensure root kn remains accessible after mutex is unlocked so that
++	 * kernfs_kill_sb() can run safely if called by kernfs_get_tree()'s
++	 * failure path after creating a superblock but before taking reference
++	 * on root kn.
++	 */
++	kernfs_get(rdtgroup_default.kn);
 +
- 	ret = setup_rmid_lru_list();
- 	if (ret)
- 		goto out;
-@@ -4265,6 +4278,7 @@ static int rdtgroup_setup_root(struct rdt_fs_context *ctx)
++	/*
++	 * Make backup of the current root kn being created to be used in kernfs_put().
++	 * The additional reference taken above will prevent the kn from being freed
++	 * before kernfs_kill_sb() can run but rdtgroup_default.kn may be set to NULL
++	 * via rdtgroup_destroy_root() and its backing root (rdt_root) could be overwritten
++	 * before kernfs_put() can run.
++	 */
++	rdt_root_kn = rdtgroup_default.kn;
++
++	rdt_last_cmd_clear();
++	mutex_unlock(&rdtgroup_mutex);
++	cpus_read_unlock();
++
++	ret = kernfs_get_tree(fc);
++	/*
++	 * resctrl can only be mounted once, new superblock only expected
++	 * to be created once.
++	 */
++	if (!ctx->kfc.new_sb_created)
++		resctrl_unmount();
++	kernfs_put(rdt_root_kn);
++	return ret;
  
- 	ctx->kfc.root = rdt_root;
- 	rdtgroup_default.kn = kernfs_root_to_node(rdt_root);
-+	rdtgroup_default.flags = 0;
+-out_psl:
+-	rdt_pseudo_lock_release();
+ out_mondata:
+ 	if (resctrl_arch_mon_capable())
+ 		kernfs_remove(kn_mondata);
+@@ -3098,7 +3145,6 @@ static int rdt_get_tree(struct fs_context *fc)
+ out_root:
+ 	rdtgroup_destroy_root();
+ out:
+-	rdt_last_cmd_clear();
+ 	mutex_unlock(&rdtgroup_mutex);
+ 	cpus_read_unlock();
+ 	return ret;
+@@ -3185,26 +3231,8 @@ static int rdt_init_fs_context(struct fs_context *fc)
  
- 	return 0;
+ static void rdt_kill_sb(struct super_block *sb)
+ {
+-	struct rdt_resource *r;
+-
+-	cpus_read_lock();
+-	mutex_lock(&rdtgroup_mutex);
+-
+-	rdt_disable_ctx();
+-
+-	/* Put everything back to default values. */
+-	for_each_alloc_capable_rdt_resource(r)
+-		resctrl_arch_reset_all_ctrls(r);
+-
+-	resctrl_fs_teardown();
+-	if (resctrl_arch_alloc_capable())
+-		resctrl_arch_disable_alloc();
+-	if (resctrl_arch_mon_capable())
+-		resctrl_arch_disable_mon();
+-	resctrl_mounted = false;
++	resctrl_unmount();
+ 	kernfs_kill_sb(sb);
+-	mutex_unlock(&rdtgroup_mutex);
+-	cpus_read_unlock();
  }
+ 
+ static struct file_system_type rdt_fs_type = {
 -- 
 2.54.0
 
