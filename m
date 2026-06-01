@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6AD37FF5E
-	for <patches@lists.linux.dev>; Mon,  1 Jun 2026 19:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11DE93A3815
+	for <patches@lists.linux.dev>; Mon,  1 Jun 2026 19:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780343804; cv=none; b=CuLrBxDfeL2Gw2Us/IXIdt9g6T0mvlvfLDkfT/q3iLoTX6kF7Hvn9zxfEqMhIHZU9fRLCmvakcp/TyfzAKVRFEzvRTSwhaAo3ylE3wzuk1yw5MoWktjo7g5ul8G1SMfVGqhJ55CUhG8+4afxGz9qBnU/jjWQp+HdFN0wDEb4Xio=
+	t=1780343806; cv=none; b=f2ds6mVULYR9M9nTYUKWSMDoRzF/gnKZwxI9vane/y36yo5F8UIq8Htg1z7bF82Hz381FSf8tpcBcApGkU364vBrm1DhfehZ561p8cYoJc5NPMwM8hxk0JVetXhIuj3Vthv7twcO07VrBuMaqvMZ8yFHiRkd8d2y9/o0OVtiOFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780343804; c=relaxed/simple;
-	bh=mwI/yhmgeN5/52KEyoVb6JwFkIjGCcVHBKa4n3GiI4Y=;
+	s=arc-20240116; t=1780343806; c=relaxed/simple;
+	bh=5woIoOc43z2dzYZgi/fPqVTgZV6nkyOwMkU2OHyiCx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lypPFfLFRVNnnnEj2mF2VBzEu7nUlHNSjUkKahMxJjuQnsDIcr3STzHdM23A2o4DDnMHhcMHANnLCW9BUS84WWpAamh/VRL86rcb+8sY79mEiqfEkZ8kUkNLmeIryI9dp/s/hipNTQjnbrboF4LQqNkK8UTxQxcLjqq0Qb/gfHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Gr5WipBH; arc=none smtp.client-ip=198.175.65.21
+	 MIME-Version; b=fSPZ1V4AA2aRpmcQXq8qlAppELCK7Jsj0d7fqkCLXtw7Ucocw1MkUhz6tConHGDDvYm5MLebs4E1JsC2ikvw2ko2RHEYXccfD5q2SrDBhs+eLP82nn99Qh7dD6TRvVPfLrOOfS8VoAIDgFgSVB7G6pGo5SFqBrpi3wVBU61/JsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nrGl9hzz; arc=none smtp.client-ip=198.175.65.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Gr5WipBH"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nrGl9hzz"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780343803; x=1811879803;
+  t=1780343805; x=1811879805;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=mwI/yhmgeN5/52KEyoVb6JwFkIjGCcVHBKa4n3GiI4Y=;
-  b=Gr5WipBHaiTDy6d9tZoLC7IMUTp/hcQam9dui3hE0M6Gu+bXkF2g7ATD
-   HWZJs0T6gKkBR2GeyC6jBbVJlIgFnfSLteYjAN9xbSK/NptDxXizt+3oH
-   kGI+scGSwd+3GEQ/4hfDbEZhwqleXIQ2/rhkqQpmbNQcMe+ELGjVsWogL
-   lZl0acSPliNAPUKAB1LKOAH+/3BYLM005cpSnkOXjMRSRizDoHquQpwRl
-   BSAeH7EaVaYz5KgiG/nbRrHmPwOav8ms4cUuxf7YR9wHKgkOtUXbP6WsK
-   IKmSyb4hLOdEv9N9E9J12QMG5/gX8IO+pqWPNrOzZW3E8gz3CNaExp40B
+  bh=5woIoOc43z2dzYZgi/fPqVTgZV6nkyOwMkU2OHyiCx0=;
+  b=nrGl9hzzeQ3X896jS5WtvYXE9Q/j6A1pPL8oERvt8F7bxt47uHC4hRhH
+   NH6De1joZjwYocbqrjVadRPzFnisrqew5DPBeWFAFr6TD0pqp2xKkiTee
+   1KBWVI4gL8V29IRbZ8LboDPv2bg7pHFn6GoJonei4mDOD2BAeIqZ2s2Ir
+   uGRhucxX0byZbpML8mF8w56kcutbxYnui1vXkEavxwFsGBUeAs9tFQnDT
+   B5iOg6FJwnYI0hT3nx0gcLhawfmrRv9FxDoAS31Qq+rfTayIs4mZvouNG
+   B/vzKUUS2skbVjFBXw2AXUb/iJsa8Gzbp6ITxlWGnsnVc03Tcn6mN2ekZ
    A==;
-X-CSE-ConnectionGUID: iK6gNeTeSeG5h5Jd1wKTsA==
-X-CSE-MsgGUID: jX8UGK8+QxyFo5C76PoZMQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11804"; a="81011587"
+X-CSE-ConnectionGUID: XgTiiktSS+GaWpYydepxLg==
+X-CSE-MsgGUID: E6xtN8WIQFGikrwNlQ/qeQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11804"; a="81011616"
 X-IronPort-AV: E=Sophos;i="6.24,181,1774335600"; 
-   d="scan'208";a="81011587"
+   d="scan'208";a="81011616"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 12:56:41 -0700
-X-CSE-ConnectionGUID: q0n2xr5jSnGO8/6ZNb5cQw==
-X-CSE-MsgGUID: a13zFb1PT/O1PAvg970IIA==
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 12:56:43 -0700
+X-CSE-ConnectionGUID: wXWD48CBS5+gnTBjaV2KlQ==
+X-CSE-MsgGUID: w5wqfjKYSKi/ShwzlBy54w==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.24,181,1774335600"; 
-   d="scan'208";a="247946499"
+   d="scan'208";a="247946511"
 Received: from lstrano-mobl6.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.221.168])
-  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 12:56:40 -0700
+  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 12:56:42 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -58,12 +58,10 @@ To: Fenghua Yu <fenghuay@nvidia.com>,
 Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Tony Luck <tony.luck@intel.com>,
-	Ben Horgan <ben.horgan@arm.com>
-Subject: [PATCH v7 04/14] fs/resctrl: Fix deadlock for errors during mount
-Date: Mon,  1 Jun 2026 12:56:22 -0700
-Message-ID: <20260601195632.15876-5-tony.luck@intel.com>
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v7 07/14] x86/resctrl: Maintain a count of enabled monitor features
+Date: Mon,  1 Jun 2026 12:56:25 -0700
+Message-ID: <20260601195632.15876-8-tony.luck@intel.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260601195632.15876-1-tony.luck@intel.com>
 References: <20260601195632.15876-1-tony.luck@intel.com>
@@ -75,162 +73,162 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Reinette Chatre <reinette.chatre@intel.com>
+AET (Application Energy Telemetry) may be enabled/disabled from one mount
+to the next depending on whether the pmt_telemetry module is loaded. If
+AET is the only monitoring feature supported on a system and it is enabled
+in one mount, but disabled in a subsequent mount this will result in empty
+mon_data directories.
 
-rdt_get_tree() acquires rdtgroup_mutex before calling kernfs_get_tree(). If
-superblock setup fails inside kernfs_get_tree(), the VFS calls kill_sb on
-the same thread before the call returns.  rdt_kill_sb() unconditionally
-attempts to acquire rdtgroup_mutex and deadlock occurs.
+Change from a boolean to a count of enabled monitor features inside
+architecture code. File system code only needs to know if any monitor
+features are enabled so resctrl_arch_mon_capable() can still return
+boolean.
 
-Move the call to kernfs_get_tree() outside of locks. If kernfs_get_tree()
-fails and ctx->kfc.new_sb_created is set, then rdt_kill_sb() has already
-been called and no further cleanup is needed.
-
-Add an extra hold in this error path on rdtgroup_default.kn to defend against
-other races destroying the root which is then dereferenced in kernfs_kill_sb()
-
-Add resctrl_unmount() helper to keep code consistent between the
-rdt_get_tree() failure path and a normal unmount.
-
-Fixes: 5ff193fbde20 ("x86/intel_rdt: Add basic resctrl filesystem support")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260429184858.36423-1-tony.luck%40intel.com [1]
-Co-developed-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Chen Yu <yu.c.chen@intel.com>
-Reviewed-by: Ben Horgan <ben.horgan@arm.com>
 ---
- fs/resctrl/rdtgroup.c | 82 +++++++++++++++++++++++++++++--------------
- 1 file changed, 55 insertions(+), 27 deletions(-)
+ arch/x86/include/asm/resctrl.h         |  4 ++--
+ arch/x86/kernel/cpu/resctrl/internal.h |  2 +-
+ arch/x86/kernel/cpu/resctrl/core.c     | 24 +++++++++++++-----------
+ arch/x86/kernel/cpu/resctrl/monitor.c  | 11 +++--------
+ 4 files changed, 19 insertions(+), 22 deletions(-)
 
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index ac3285ba8775..d2a1f88d8782 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -2977,10 +2977,34 @@ static void resctrl_fs_teardown(void)
- 	rdtgroup_destroy_root();
+diff --git a/arch/x86/include/asm/resctrl.h b/arch/x86/include/asm/resctrl.h
+index 575f8408a9e7..1e50c7dc3fe3 100644
+--- a/arch/x86/include/asm/resctrl.h
++++ b/arch/x86/include/asm/resctrl.h
+@@ -43,7 +43,7 @@ struct resctrl_pqr_state {
+ DECLARE_PER_CPU(struct resctrl_pqr_state, pqr_state);
+ 
+ extern bool rdt_alloc_capable;
+-extern bool rdt_mon_capable;
++extern int rdt_mon_feature_count;
+ 
+ DECLARE_STATIC_KEY_FALSE(rdt_enable_key);
+ DECLARE_STATIC_KEY_FALSE(rdt_alloc_enable_key);
+@@ -68,7 +68,7 @@ static inline void resctrl_arch_disable_alloc(void)
+ 
+ static inline bool resctrl_arch_mon_capable(void)
+ {
+-	return rdt_mon_capable;
++	return !!rdt_mon_feature_count;
  }
  
-+static void resctrl_unmount(void)
-+{
-+	struct rdt_resource *r;
-+
-+	cpus_read_lock();
-+	mutex_lock(&rdtgroup_mutex);
-+
-+	rdt_disable_ctx();
-+
-+	/* Put everything back to default values. */
-+	for_each_alloc_capable_rdt_resource(r)
-+		resctrl_arch_reset_all_ctrls(r);
-+
-+	resctrl_fs_teardown();
-+	if (resctrl_arch_alloc_capable())
-+		resctrl_arch_disable_alloc();
-+	if (resctrl_arch_mon_capable())
-+		resctrl_arch_disable_mon();
-+	resctrl_mounted = false;
-+	mutex_unlock(&rdtgroup_mutex);
-+	cpus_read_unlock();
-+}
-+
- static int rdt_get_tree(struct fs_context *fc)
- {
- 	struct rdt_fs_context *ctx = rdt_fc2context(fc);
- 	unsigned long flags = RFTYPE_CTRL_BASE;
-+	struct kernfs_node *rdt_root_kn;
- 	struct rdt_l3_mon_domain *dom;
- 	struct rdt_resource *r;
- 	int ret;
-@@ -3056,10 +3080,6 @@ static int rdt_get_tree(struct fs_context *fc)
- 	if (ret)
- 		goto out_mondata;
+ static inline void resctrl_arch_enable_mon(void)
+diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
+index e3cfa0c10e92..3b09cfe9a046 100644
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -224,7 +224,7 @@ union l3_qos_abmc_cfg {
  
--	ret = kernfs_get_tree(fc);
--	if (ret < 0)
--		goto out_psl;
--
- 	if (resctrl_arch_alloc_capable())
- 		resctrl_arch_enable_alloc();
- 	if (resctrl_arch_mon_capable())
-@@ -3075,10 +3095,37 @@ static int rdt_get_tree(struct fs_context *fc)
- 						   RESCTRL_PICK_ANY_CPU);
+ void rdt_ctrl_update(void *arg);
+ 
+-int rdt_get_l3_mon_config(struct rdt_resource *r);
++void rdt_get_l3_mon_config(struct rdt_resource *r);
+ 
+ bool rdt_cpu_has(int flag);
+ 
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 7667cf7c4e94..1af8f965fdd0 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -779,7 +779,7 @@ void resctrl_arch_pre_mount(void)
+ 	cpus_read_lock();
+ 	mutex_lock(&domain_list_lock);
+ 	r->mon_capable = true;
+-	rdt_mon_capable = true;
++	rdt_mon_feature_count++;
+ 	for_each_online_cpu(cpu)
+ 		domain_add_cpu_mon(cpu, r);
+ 	mutex_unlock(&domain_list_lock);
+@@ -959,30 +959,32 @@ static __init bool get_rdt_alloc_resources(void)
+ 	return ret;
+ }
+ 
+-static __init bool get_rdt_mon_resources(void)
++static __init int get_rdt_mon_resources(void)
+ {
+ 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
+-	bool ret = false;
++	int ret = 0;
+ 
+ 	if (rdt_cpu_has(X86_FEATURE_CQM_OCCUP_LLC)) {
+ 		resctrl_enable_mon_event(QOS_L3_OCCUP_EVENT_ID, false, 0, NULL);
+-		ret = true;
++		ret++;
+ 	}
+ 	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_TOTAL)) {
+ 		resctrl_enable_mon_event(QOS_L3_MBM_TOTAL_EVENT_ID, false, 0, NULL);
+-		ret = true;
++		ret++;
+ 	}
+ 	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_LOCAL)) {
+ 		resctrl_enable_mon_event(QOS_L3_MBM_LOCAL_EVENT_ID, false, 0, NULL);
+-		ret = true;
++		ret++;
+ 	}
+ 	if (rdt_cpu_has(X86_FEATURE_ABMC))
+-		ret = true;
++		ret++;
+ 
+ 	if (!ret)
+-		return false;
++		return 0;
+ 
+-	return !rdt_get_l3_mon_config(r);
++	rdt_get_l3_mon_config(r);
++
++	return ret;
+ }
+ 
+ static __init void __check_quirks_intel(void)
+@@ -1013,9 +1015,9 @@ static __init void check_quirks(void)
+ static __init bool get_rdt_resources(void)
+ {
+ 	rdt_alloc_capable = get_rdt_alloc_resources();
+-	rdt_mon_capable = get_rdt_mon_resources();
++	rdt_mon_feature_count = get_rdt_mon_resources();
+ 
+-	return (rdt_mon_capable || rdt_alloc_capable);
++	return (rdt_mon_feature_count || rdt_alloc_capable);
+ }
+ 
+ static __init void rdt_init_res_defs_intel(void)
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index 9bd87bae4983..497cc57ac135 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -25,11 +25,8 @@
+ 
+ #include "internal.h"
+ 
+-/*
+- * Global boolean for rdt_monitor which is true if any
+- * resource monitoring is enabled.
+- */
+-bool rdt_mon_capable;
++/* Global count of number of resource monitor functions that are enabled. */
++int rdt_mon_feature_count;
+ 
+ #define CF(cf)	((unsigned long)(1048576 * (cf) + 0.5))
+ 
+@@ -402,7 +399,7 @@ static __init int snc_get_config(void)
+ 	return ret;
+ }
+ 
+-int __init rdt_get_l3_mon_config(struct rdt_resource *r)
++void __init rdt_get_l3_mon_config(struct rdt_resource *r)
+ {
+ 	unsigned int mbm_offset = boot_cpu_data.x86_cache_mbm_width_offset;
+ 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
+@@ -460,8 +457,6 @@ int __init rdt_get_l3_mon_config(struct rdt_resource *r)
  	}
  
--	goto out;
-+	/*
-+	 * Ensure root kn remains accessible after mutex is unlocked so that
-+	 * kernfs_kill_sb() can run safely if called by kernfs_get_tree()'s
-+	 * failure path after creating a superblock but before taking reference
-+	 * on root kn.
-+	 */
-+	kernfs_get(rdtgroup_default.kn);
-+
-+	/*
-+	 * Make backup of the current root kn being created to be used in kernfs_put().
-+	 * The additional reference taken above will prevent the kn from being freed
-+	 * before kernfs_kill_sb() can run but rdtgroup_default.kn may be set to NULL
-+	 * via rdtgroup_destroy_root() and its backing root (rdt_root) could be overwritten
-+	 * before kernfs_put() can run.
-+	 */
-+	rdt_root_kn = rdtgroup_default.kn;
-+
-+	rdt_last_cmd_clear();
-+	mutex_unlock(&rdtgroup_mutex);
-+	cpus_read_unlock();
-+
-+	ret = kernfs_get_tree(fc);
-+	/*
-+	 * resctrl can only be mounted once, new superblock only expected
-+	 * to be created once.
-+	 */
-+	if (!ctx->kfc.new_sb_created)
-+		resctrl_unmount();
-+	kernfs_put(rdt_root_kn);
-+	return ret;
- 
--out_psl:
--	rdt_pseudo_lock_release();
- out_mondata:
- 	if (resctrl_arch_mon_capable())
- 		kernfs_remove(kn_mondata);
-@@ -3098,7 +3145,6 @@ static int rdt_get_tree(struct fs_context *fc)
- out_root:
- 	rdtgroup_destroy_root();
- out:
--	rdt_last_cmd_clear();
- 	mutex_unlock(&rdtgroup_mutex);
- 	cpus_read_unlock();
- 	return ret;
-@@ -3185,26 +3231,8 @@ static int rdt_init_fs_context(struct fs_context *fc)
- 
- static void rdt_kill_sb(struct super_block *sb)
- {
--	struct rdt_resource *r;
+ 	r->mon_capable = true;
 -
--	cpus_read_lock();
--	mutex_lock(&rdtgroup_mutex);
--
--	rdt_disable_ctx();
--
--	/* Put everything back to default values. */
--	for_each_alloc_capable_rdt_resource(r)
--		resctrl_arch_reset_all_ctrls(r);
--
--	resctrl_fs_teardown();
--	if (resctrl_arch_alloc_capable())
--		resctrl_arch_disable_alloc();
--	if (resctrl_arch_mon_capable())
--		resctrl_arch_disable_mon();
--	resctrl_mounted = false;
-+	resctrl_unmount();
- 	kernfs_kill_sb(sb);
--	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
+-	return 0;
  }
  
- static struct file_system_type rdt_fs_type = {
+ void __init intel_rdt_mbm_apply_quirk(void)
 -- 
 2.54.0
 
