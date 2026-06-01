@@ -1,36 +1,35 @@
 Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3893655EC
-	for <patches@lists.linux.dev>; Mon,  1 Jun 2026 08:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52ABA331222
+	for <patches@lists.linux.dev>; Mon,  1 Jun 2026 08:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.251.229.89
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780303641; cv=none; b=LNpJUPNTN8rWjMcTYvICm9QGHIza+Mfxu/hjUvRA86QMaTII/OcUP0cynjrGprlBVedhm7Elh6JMTQbnmCkPSjVTJGbrjoRd8oKSHshyZ9RxD/2tS7k/QAP9nRiCPn4l6yvHEkbBZd0V8nVtTenVJGewELBJVJqqwat7oqqm/ZA=
+	t=1780304198; cv=none; b=mFojDdg/xo3sUtbDc0xHlyjMjV4DNGdwT+fpXUlHMbg1C5+Qj9kglnc2jyD4yPvPEnujn605RSJNxznVM54SC3i6tME41xinryrRuLcCjkiBsOwrnEv39dpUktf6DWaq1IqpqU9amqCMgue8+Whd0pd1/bKL3N6+iOnCg4enSrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780303641; c=relaxed/simple;
-	bh=FvWO1DQR9PSK/kSEH1HSoxZBaYkieoINGM+a+PKJUVE=;
+	s=arc-20240116; t=1780304198; c=relaxed/simple;
+	bh=kdjmhyKz//fjIMOuk1DoUiELRlSQILJHokm+KiwW8Q8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hGdYvHj6GCJUUywzGHrm/YydsY0gNnVD/xtrrA8cAd4Bhhzvf2Ush3rVrvz8CyzOFrWTeHcj7DilmLeOr9TMEQ31rgqCDRsIs6lPp6/zLK92UGv26yhGu4WRjFSLx2QO32qDQdvC3quYiEH5m64z0MgaghM5WMc5wWI98AMwI3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=gCK/lI1P; arc=none smtp.client-ip=178.251.229.89
+	 Content-Type:Content-Disposition:In-Reply-To; b=fHQ8lu0xbsQYg7V0t6Ybx/0vOeZY28geWFCprWyGRYdrbBjCpLTO6E3O+WBnbWT4proL5/c3mqZEu5LSAI2caV8GMV+Q/MH39PNspB0XJr5drrOHjyuu12fVZ+v7J87NgVSYeVUj7XDFPDDNDAmjsr8Lw0HuJnj4xHrLw6nYJnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com; spf=pass smtp.mailfrom=nabladev.com; dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b=KvdZvbf9; arc=none smtp.client-ip=178.251.229.89
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="gCK/lI1P"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 9C3BF116C40;
-	Mon,  1 Jun 2026 10:47:08 +0200 (CEST)
+	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.b="KvdZvbf9"
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id E25B0116BF5;
+	Mon,  1 Jun 2026 10:56:31 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
-	s=dkim; t=1780303631;
+	s=dkim; t=1780304193;
 	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=YIeqwSroJEmQZI2uQ5WI4926AydeuIuVX4oqsN3tzz8=;
-	b=gCK/lI1Pi6ZdyXqxfKSelEi2CA0EOtX6+IaNEBX0im434GQE76XUuFUrrkVJmGpdS0i6Ph
-	3r6LlwAZsynaRe2jNAA5qi8K5be0Nfu7tdSwWtWyN5fSqxL8BI/ovtgh+6SkkYi+InRi+1
-	Kn39h0eXej87vNgOGH5CssgKklX6RfQ4VhOjLuF6Y5caG3SvnRFwm2qlzZwUzey5CpiIPn
-	33XXVVAsEWMU6Gw+g1QeKcLjfeYUOzG3KR0XWXSExfVwjqjoJoapY2t/4HHNB4mDxodViN
-	n0KsAkA2qpJnuuei/YKYsvR1FT50inxoW2ja8NprweQuqhSedY3cphfC2fMAhQ==
-Date: Mon, 1 Jun 2026 10:47:06 +0200
+	 in-reply-to:references; bh=yNB8pokyYVxKzFS/Vh+8vPeb0b4cK/EFAVmU3A9AKyE=;
+	b=KvdZvbf9o12dTIcXcRuOkXKXqrwNHkvQ4JL9ZJ0sjnCmJ4DDhMZ1eQ+kTrjHSBK++ZU4Em
+	urhbv3VtcXH6z1NsL+Js8/VZITElTGk5CMRxuOqfoVNUVtwi+GKaS7139JCzkJpsmeCYjX
+	m1fl+i0jej6QM55oBRJ2n7G7L7d06SlGoR211p+Z5H9hR9cpeAJQ3jNZL4izoc0JLmpZjP
+	sV+f7zPQoEqW9Fv36P4mWNAmLLpiVUkuo8krDl0Q/aJWSioMcKwp4UfIPhJVr1QvjtgVXn
+	6WTJ0ousAXSiwoMKoahks9lhAUJBRDkepPRjLH3nE9HGWmoLfLX2wWVDLbrW5w==
+Date: Mon, 1 Jun 2026 10:56:30 +0200
 From: Pavel Machek <pavel@nabladev.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	claudiu.beznea@kernel.org, Chris.Paterson2@renesas.com
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
@@ -39,9 +38,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
 	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
 	sr@sladewatkins.com
-Subject: Re: [PATCH 5.10 000/589] 5.10.258-rc1 review
-Message-ID: <ah1HCk9vuUMCzAvU@duo.ucw.cz>
-References: <20260530160224.570625122@linuxfoundation.org>
+Subject: Re: [PATCH 6.1 000/969] 6.1.175-rc1 review
+Message-ID: <ah1JPrjMumdcPlvG@duo.ucw.cz>
+References: <20260530160300.485627683@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,46 +48,40 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="wPkJT+ToGdUfRPPt"
+	protocol="application/pgp-signature"; boundary="cgG21IZHn9Yqy1T7"
 Content-Disposition: inline
-In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
+In-Reply-To: <20260530160300.485627683@linuxfoundation.org>
 X-Last-TLS-Session-Version: TLSv1.3
 
 
---wPkJT+ToGdUfRPPt
+--cgG21IZHn9Yqy1T7
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
 Hi!
 
-> This is the start of the stable review cycle for the 5.10.258 release.
-> There are 589 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.1.175 release.
+> There are 969 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
-We see boot failures on 5.10-cip:
+CIP testing did not find any problems here:
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/2564188475
-https://lava.ciplatform.org/scheduler/job/1451830
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-6.1.y
 
-This may be related to
-
-[PATCH v3] phy: renesas: rcar-gen3-usb2: Avoid long delay in atomic context
-
-but I don't see related patches in the shortlog below. I put Renesas
-people in the cc list, they should know more.
+Tested-by: Pavel Machek (CIP) <pavel@nabladev.com>
 
 Best regards,
-									Pavel
+                                                                Pavel
 
---wPkJT+ToGdUfRPPt
+--cgG21IZHn9Yqy1T7
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCah1HCgAKCRAw5/Bqldv6
-8u4lAJ403IuxbDkgW7SL4NdEnFK61WHBNQCfSMZnfRg2hVXgRqOWkqgBGTmb+TY=
-=XZNf
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCah1JPgAKCRAw5/Bqldv6
+8ptHAJ9Jx3zozxGqV4kdfoA4T4PXcxqegQCfaF9ugW29UZR+5W2gH1unrERpnJc=
+=z6CZ
 -----END PGP SIGNATURE-----
 
---wPkJT+ToGdUfRPPt--
+--cgG21IZHn9Yqy1T7--
