@@ -1,126 +1,83 @@
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CF8256C61
-	for <patches@lists.linux.dev>; Mon,  1 Jun 2026 03:11:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780283510; cv=pass; b=YiWKOBid3R788+IKtLqGEcwx8arDOiDs6HLDuKtOXho2Jh3//wDskS27t/Hma8H+ZlnrmQEt7B7+8tRyCRWd1pV7x/eS0aqgqRbFJ4cSAbiBODsi1d9giFnsXbcKAqd1u0Y5Xg5K9Aka+JP+85m76+LWSq/LyYjnnv98Rr1ZhPA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780283510; c=relaxed/simple;
-	bh=3MMmkUu/YfzDJCqhb57EOJIut04O28w1bNQaD8zFkqE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=q62GkQPFZ+DYu/znyqyyHT91YhKUaNyNtGwMKKnyxn4zd7Ue57bd4zl6Vs8AdZAAkqTHvP/eWlNEw2r3eAJ1/uF/HuUy5wbsMqxf+ykFhlqU/V5akxjhUJIi0sf8JGJCoYTYrfyaPSq1KaooJvx+v7pOUObq0bk6M1Pe4sG4slU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=amacapital.net; spf=pass smtp.mailfrom=amacapital.net; dkim=pass (2048-bit key) header.d=amacapital-net.20251104.gappssmtp.com header.i=@amacapital-net.20251104.gappssmtp.com header.b=O1kxGDjg; arc=pass smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=amacapital.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amacapital.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54C8265CD9
+	for <patches@lists.linux.dev>; Mon,  1 Jun 2026 03:36:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780285005; cv=none; b=Q7Zu4lHufEf6e0WjugwWSLAeTLOyBkRVX+NZaaK81GKAkyngPdx8bgAqxqlf3RuOPRyBukwomYXV7zoJJsRAPG5rkSeAMveMZaYlAae72xHjNsqS3rDKYgXfHVRHbh6pJJ2tCu7F7xUrE/CmRVAgg5UhHIJBY8vm6Rg+IDjmv3I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780285005; c=relaxed/simple;
+	bh=BI9tI918GfzIZSRsUdqAB8+iapy2l9qK0mRkNsU+fhM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=O/Wi+jQMrrcp/cOoK/eHdxAC/0oKUUDSs9QZsJXUDaqIPB9e6ughxlVPZ5H7y90AewxRSu4CxWsW3TOtMwKlV/RlE1kIkPAVlVJOSP0cEciYxFZyhLOnNGErGyIczuOigZVWuV8lBrQTaCfLkaLaTEbyFzbgW5qhQux4Woc8Ego=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=hHDQyNG/; arc=none smtp.client-ip=62.210.214.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=amacapital-net.20251104.gappssmtp.com header.i=@amacapital-net.20251104.gappssmtp.com header.b="O1kxGDjg"
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5aa68dbb38aso643587e87.2
-        for <patches@lists.linux.dev>; Sun, 31 May 2026 20:11:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780283507; cv=none;
-        d=google.com; s=arc-20240605;
-        b=gFYBtTtXl4wzeQQSKZ1bvDU/sf3tg7XtCssUhMmOIpgAAsmIHe6FX0FVgnGnypsSM6
-         zS9e7jEDOUw1bIOkhbWhWOaYWe/NpA8zZz7IhP2zpOaKVbZMmqCByZJl6/Kx87HrmZjL
-         aksi+WAXIXJ7as5nO/J+n6TGiCnu2vHBm8qqnKX+ax8nJTNJCWl/zKvy6RuQsio7ZWjU
-         Hyk0+6k0TmFKiYFjjDh4Yx2R2wf4gSN83EA7nWDKwwXj52X24WKEHU81RllJ2+blN3YL
-         oXEP/G3qXGHRMS7vzR+7wkrpWbBBJKzF5AiClG4nHJkkHNEoExYdPBx5RGALZME0/Poi
-         QrpQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=MuDntok0/7oP3h0HaSkrbvB8I/WbSdzhW7ajx8MOkQs=;
-        fh=lrHP4yQAvk++NNtiRa6uZzuo00ApxcSPEXG2nO8BD10=;
-        b=XZvB6jUxZ7dQBP2g+ptGHpNLdpQcF4+5b72VCasvMTV/YIW89pQHdPK1IilmPc1aa5
-         nWDP9ASMOqxiZ4+gRubmJSLXfhzA87gkIKR1krDPp61GyUEIIYW2Fq4PDoy67oD3Ac02
-         bg5URMm1R6n9oOOMGB1yZQZx9l72B3QogUsGSqHD0PFUtJnpOW/JlGa/lDcRin5xuABq
-         dOOVCIiNTTrYlO8ulOtM/btQb0oLmTPce9gb5x6r0LFYl3S9abUa4SpyZC7UUwZgKaIS
-         US7A7uUisCILETd4tvuE4m3D/pv1WKKqFr2dFwGN78ytygOCyPZaLq+y1KNJgZTM3R3w
-         0hVg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=amacapital-net.20251104.gappssmtp.com; s=20251104; t=1780283507; x=1780888307; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MuDntok0/7oP3h0HaSkrbvB8I/WbSdzhW7ajx8MOkQs=;
-        b=O1kxGDjgI1I+4S1fWdNwvyGqU0kOA7+SFDAOF8oh1qv4s4Ihy5yheLPLnErCWqgZ4V
-         HLPTRkBOJ50BkXDpEf6s90AO0LvV3DhXxDMg56yfSYjm3ZFb3r+v57Wa7FyUARznxY0s
-         6INWzoIxNlBeENHgOVLAOrgSaGkvk8MWNBaiKAxJLVHunGqphuWdcfw8Sf+KZMp8MVQb
-         dxQdqETNaIT84oDsMEy8K4oVdfh20gMgqr86rMKMoudBREcNONyVxSUp8OWxw4Xx5fAF
-         HTqBcA5ApTD/CwSdGSeHV46vWkc6XdJ00wjfo0nKjQGq8gE704u8o/KiPsPChI2HOQu/
-         1n5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780283507; x=1780888307;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=MuDntok0/7oP3h0HaSkrbvB8I/WbSdzhW7ajx8MOkQs=;
-        b=SVia53TZ1ZAk379OfYv4AnRFqF5jnzIsanH3isPAAMPic4BG/PV076/ZpTEynOI/xW
-         eCMmtVOcu9ZTMDPwlpCn7GwUdsqmIp5Rvvog1B4qebl2Ay2BCVyXHfdfOmJf0ct6n4ZO
-         aJwFD+B0ho0PbHb5ZD+WTXapH/0yfTOpiNlbW4z0REGQ8RrL6e9TUVqD2kEhH8reBtuC
-         GL9JbMiWiZnuc1SHHlTqiD+6X4l+quPp7Bj9SIubumRpFNYcpj5ZFogDZ0IanZrCRLpL
-         X/h1VZIHBDS0dSv3H2PJsTF8Xj8czlRSQYNYx/+mnbdNooRJp3G6LOzkDy4axk0g6gp5
-         Ukgw==
-X-Forwarded-Encrypted: i=1; AFNElJ9jeDP2a3GMTkN5brGqorU+epsSyli0beHg/iphU1M44DD15pbLt+dG/gnuvzTWoldR0oKvf/ug@lists.linux.dev
-X-Gm-Message-State: AOJu0YzNXXMUoSX24pZNeUupSTSlNOjuVsKwx+5I0OfFCUBk0fil2pAl
-	Y2+todgyBz9kqBjW0+4CLUiYYMZvREPFeHHBSViQfRWLBvU52n+zF6T7EILaHxzuuVyg06sQ8JL
-	B6rjYK96dYNL2GQOx8bkDZxwt/M2WYRbkgQDE6Oad
-X-Gm-Gg: Acq92OGSWTNvdNeB9qrz5xh7DFrecmJti36NFdEePsPVQaDLECBww8YJpbYy7JSf+8s
-	Say+XtQXS8WejWEaL4DD9DFA0ny8p+9fsedPA95DRt4cbcN5VW9aH0FTe4oSTmoAN9Pt+rvN6HH
-	Q3D+emiVft+5pZpbOKMVyp8ILw4VdHzScvEmhhpz6J+lltNYr6y9QX+2F16K10LjXuNTeWgl5Pd
-	oMOsymlAQdoQRyDQQirlXkI/BGT7ZLZifmc9Cq0KmXqRYQnTBAOGV/HY/L2ok90PfgMmkEvaox4
-	e1+t+SV5/TrdJ44=
-X-Received: by 2002:a05:6512:158e:b0:5aa:690c:662f with SMTP id
- 2adb3069b0e04-5aa690c66e9mr1347657e87.23.1780283506595; Sun, 31 May 2026
- 20:11:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="hHDQyNG/"
+Received: from gaia.codewreck.org (localhost [127.0.0.1])
+	by submarine.notk.org (Postfix) with ESMTPS id 2367014C2D6;
+	Mon,  1 Jun 2026 05:36:29 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
+	s=2; t=1780284995;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=LISSrtzA05F3JkeZ9vD+SSIOhByZOvSq9XHTmt/ltr4=;
+	b=hHDQyNG/VsAkALfCA0zGrp2tsbaqZ3UMedgfpXTevkzIe5vKVyTbBOQmca8ErFtDn2+d1Z
+	iC93JejHHn8WvJmEnYfxPkclLv8+4jzNHbXMaHW4+zs6sJH+OMCVyS885nXX5CjTiy+0eR
+	/S8wyurUy8cmKqvgqGXg354J4hOsbvwdsHjd8ydDcyeE1CvKKOcggE5wau6uxv9s6dJF6i
+	HyUHwJz1w0jcgHQUBLOzoc/Jy0ZoC39zdnudlBmS4Ie69DPwmrvn//8GvHlPz/3SgBw3/t
+	Z3hbx4brSBhqxB0Du4Xdxqv8HSCn0j0sjMOB0Jl0llX3vSin+n/yfc/jakfDkA==
+Received: from localhost (gaia.codewreck.org [local])
+	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 90bf2db0;
+	Mon, 1 Jun 2026 03:36:28 +0000 (UTC)
+Date: Mon, 1 Jun 2026 12:36:13 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 5.10 000/589] 5.10.258-rc1 review
+Message-ID: <ahz-LRETxhw5zg_V@codewreck.org>
+References: <20260530160224.570625122@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260531010107.1953702-1-safinaskar@gmail.com>
-In-Reply-To: <20260531010107.1953702-1-safinaskar@gmail.com>
-From: Andy Lutomirski <luto@amacapital.net>
-Date: Sun, 31 May 2026 20:11:34 -0700
-X-Gm-Features: AVHnY4JXGlP1eBaFLieX9GEu2QC7fa8YTkX6sK3P-yG-Mx-u9DLHduWiKUrWdA8
-Message-ID: <CALCETrW__=8mSusayfXG7UFCfue5BGbx+vqESj1d9wqOfX4s8w@mail.gmail.com>
-Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
-To: Askar Safin <safinaskar@gmail.com>
-Cc: linux-fsdevel@vger.kernel.org, Christian Brauner <brauner@kernel.org>, 
-	Alexander Viro <viro@zeniv.linux.org.uk>, Jan Kara <jack@suse.cz>, linux-kernel@vger.kernel.org, 
-	linux-mm@kvack.org, linux-api@vger.kernel.org, netdev@vger.kernel.org, 
-	Linus Torvalds <torvalds@linux-foundation.org>, Matthew Wilcox <willy@infradead.org>, 
-	Jens Axboe <axboe@kernel.dk>, Christoph Hellwig <hch@infradead.org>, David Howells <dhowells@redhat.com>, 
-	Andrew Morton <akpm@linux-foundation.org>, David Hildenbrand <david@kernel.org>, 
-	Pedro Falcato <pfalcato@suse.de>, Miklos Szeredi <miklos@szeredi.hu>, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
 
-On Sat, May 30, 2026 at 6:03=E2=80=AFPM Askar Safin <safinaskar@gmail.com> =
-wrote:
->
-> See recent discussion here:
-> https://lore.kernel.org/all/20260516182126.530498-1-pfalcato@suse.de/T/#u
->
-> For all these reasons I propose to make vmsplice a simple wrapper for
-> preadv2/pwritev2.
->
+Greg Kroah-Hartman wrote on Sat, May 30, 2026 at 05:58:01PM +0200:
+> This is the start of the stable review cycle for the 5.10.258 release.
+> There are 589 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Mon, 01 Jun 2026 16:01:34 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.258-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
 
-I have no comment on the code or the history.  But I'm 100% in favor
-of the solution.  vmsplice is a crappy API, and would be incredibly
-complex to get the implementation right,  and it should be removed.
-But it has users, and the approach of just mapping them straight to
-pread/pwrite makes perfect sense.
+Tested 01c1356f563d ("Linux 5.10.258-rc1") on:
+- arm i.MX6ULL (Armadillo 640)
+- arm64 i.MX8MP (Armadillo G4)
+- arm64 i.MX8ULP (Armadillo IoT A9E)
 
-(If anyone wants to contemplate how bad the API is, contemplate gift
-mode.  Or contemplate that, if you want correct results, you need to
-avoid modifying the memory until the recipient is done reading or you
-need to avoid reading the memory until the writer is done writing, and
-vmsplice *does not tell you when it's done*.  And there isn't even a
-caller specification of whether they want to read or write.  It's ...
-crap.)
-
---Andy
+No obvious regression in dmesg or basic tests:
+Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+-- 
+Dominique Martinet
