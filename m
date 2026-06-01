@@ -1,63 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A5F20468E;
-	Mon,  1 Jun 2026 02:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D391D5160;
+	Mon,  1 Jun 2026 02:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780279897; cv=none; b=PRHfwv2qvzZE8S3BAgVrh9TqVXWwwH3hva8urqkO/j1h1G4ohxpgAHlgviPQb92MyVuON3SocBGxF2UMkAkst1n0pSOPpRj+58ZQ3+2vkFxcdX0W0CKCr6x/m10eBjotvYT0gfBfbPEaiqqv/IF+9tji0vM+Qdc88YDDpCKAWEs=
+	t=1780279897; cv=none; b=KNFHiT8982bIkdS+jmd9H90MWSBfVaZfc2daQhtFZyWNQXd6xxRd0AW8NulpiaE3OrZ3mS/VT7wNOhJS2OtLj+ixpYUGThPW0qK85bfmOMqG3BLnLMMocaqx61iB+ltrv+fX9O/lzbe8LYncfMc4GcgP2qpN2yw2WLyZSDJfJxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1780279897; c=relaxed/simple;
-	bh=6hW86zlebySrbdjIbjFYkybFpXtTVTUuR61ICRnin/w=;
+	bh=Tkkyc1fjb55iNTWltUGRP1dxid5yPJ910ybhBga2s3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A91WZ59yZCEZfhAKktBn14NMwwt7vibnAXcygJ7oD6CHvsmPsaDPhdA0XiUi5zWM7BwZ/Rla8xD06VquOhpeuyESTRttfCMPPVSpJA1rwPs9gMMqi6VL07N6V+D850KY++ZdhRddrrpmp8CblPy1y+RnY7UgvW12hYllplullF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UuDNdOwW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nFf84td6KvTtdyhmU6PhQEJz1EhU7KnXfTuxOCLNT99mz7duiiUCPrEYe9QhNo3jahn2uBkCWvg78N5+devgQ/I1Ka8+Q3iByMSplQcmIJaB/Pf+8cIFNM5IGm4ZylLGWl7dQnJgkoFKV992RVdVdVmiZd+Sjw57Uc7orGigmx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CcK3UG8c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UuDNdOwW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62FB1F00893;
-	Mon,  1 Jun 2026 02:11:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CcK3UG8c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067E21F00898;
+	Mon,  1 Jun 2026 02:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780279895;
-	bh=yPtqoN5Z39aMqZowrbWq6GATWZsPrGUmuolvjnFAHFk=;
+	s=k20260515; t=1780279896;
+	bh=Tkkyc1fjb55iNTWltUGRP1dxid5yPJ910ybhBga2s3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UuDNdOwWVDuqW+nT5mR2U1URzLEWqOAQFl8yEOB2JsbYXQnq4eTxfzwgPMcsXRj5h
-	 6f1PJKfSzNqIu69oCVksJMB/TSM2AB59hSbKlFTcMkkL06B1pvgng/maCq8ozBL4xu
-	 quhozSfK9Yz4fin6gmNUNlwhpnJtFs8sYXeFiqvR0ZVTJi8CvyecKnlIKd3zBc+N29
-	 yojk5pAT2sMKKnk7zGm6qRTMkzaG6uTERkhrUtAnMMy6+nlDhDwqgHPHRY8Irew2iL
-	 rB981kOcFsRXo/8VunYE75b0u5K2AnpXQfJKpRtTxn1CZLZ+hOIwKmHrp0la6RWe8S
-	 QYDgUmBl51ngQ==
+	b=CcK3UG8c5lAKsU3vtF3eZBR2UEoRU5cZ5lG9UAM1PJYle6mx3bO6uMC5A5ZnyY6cZ
+	 mMoF5StPQzrO/u/LZEklFNIqzBhf7DU6eMJO1z8x7H+eDItrDI+PM0/7mZP352gzbO
+	 udiaBRGfwf3nf6YVSRzy2K9il6U/NmZb3OFfJBNxMxCLr7gubmIDo+yrDiJao/cM+0
+	 X5bmySdYRbYhYpjsGnYcil12bFD/CyhVjH9Zhef68L6xrcl759YaNg3GNCuRGRe+J/
+	 PaixpEOwgrZCYbh63LTqlsGYLqSQ+duYs12zccgMKRuNbYSqGyn1pR3ymznv7Ssqft
+	 Ci8mMtdIgoC9Q==
 From: Sasha Levin <sashal@kernel.org>
-To: Ben Hutchings <ben@decadent.org.uk>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: Sasha Levin <sashal@kernel.org>,
-	patches@lists.linux.dev,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel=20Monteiro=20Pires?= <cassiogabrielcontato@gmail.com>
-Subject: Re: [PATCH 5.10 002/589] ASoC: SOF: topology: reject invalid vendor array size in token parser
-Date: Sun, 31 May 2026 22:11:20 -0400
-Message-ID: <20260601015021.rc-asoc-sof-author@kernel.org>
+	patches@lists.linux.dev,
+	Takashi Iwai <tiwai@suse.de>,
+	"Geoffrey D. Bennett" <g@b4.vu>
+Subject: Re: [PATCH 6.1 054/969] ALSA: usb-audio: Improve Focusrite sample rate filtering
+Date: Sun, 31 May 2026 22:11:21 -0400
+Message-ID: <20260601015021.rc-focusrite-filtering@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <a6df0003-8be0-4663-8753-4e28f4cffb1e@gmail.com>
-References: <20260530160224.570625122@linuxfoundation.org> <20260530160224.642881938@linuxfoundation.org> <daa0df3788560bd8759418d9c333e09c45368aa4.camel@decadent.org.uk> <a6df0003-8be0-4663-8753-4e28f4cffb1e@gmail.com>
+In-Reply-To: <ahxQECPrGoTY10B3@m.b4.vu>
+References: <20260530160300.485627683@linuxfoundation.org> <20260530160301.888290661@linuxfoundation.org> <ahxQECPrGoTY10B3@m.b4.vu>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Sun, 2026-05-31 at 19:32 -0300, Cássio Gabriel Monteiro Pires wrote:
-> In order to keep the minimum header-size validation but force the comparison
-> to remain signed, I think we can do this:
->
->         if (asize < (int)sizeof(*array))
+On Mon, 2026-06-01 at 00:43 +0930, Geoffrey D. Bennett wrote:
+> Please drop these from 6.1 and 5.15. They're part of a 3-patch series
+> that needs all 3 to get the benefit (plus 5 more fixes on top for the
+> 1st Gen Scarletts that the series regressed).
 
-Thanks for confirming. I've dropped it from the stable queues (5.10, 5.15 and
-6.1).
+Dropped from the 6.1 and 5.15 queues. In 5.15 I also dropped the companion
+"ALSA: usb-audio: Remove VALIDATE_RATES quirk for Focusrite devices"
+(a8cc55bf81a4), since it builds on this one and dropping the filtering
+patch alone would leave validation removed atop the old filtering logic.
 
 --
 Thanks,
