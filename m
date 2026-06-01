@@ -1,62 +1,101 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A87F3624C5;
-	Mon,  1 Jun 2026 11:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CE4371D08;
+	Mon,  1 Jun 2026 12:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780313964; cv=none; b=arIRuR8ZZdQS6/y5Jh4r/W4NgIBNvKSg+doUwxRTq0ooyhKvvhzl2Ji9O6vkU8n0vCq3W+eeCAB/I72tpW7IEt0jMAMD3kPyxDn+iCvt19M9ycQWOUZ2NkdfqzKhdn4LR4wuMpY+g2BMcG4p1AXYASwoAX/ywyTpwIA0SqWNLYU=
+	t=1780318725; cv=none; b=rLAUFs3kC+6Zl644CyZWLrZjOnFGGdED6hgSDZosCul3EPaY2SfxtXTrmtpQ0I+L89TJJ74qmyp5Vq4NL2WSGurc0DciKuIvbrV0hfUEUYq4sZvJ1MX9kYo5N+SxE4LvgBTHUx1ZwNOUAt91nUKBst8Me8JpoPud2btNiE8P7Mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780313964; c=relaxed/simple;
-	bh=xeJPerOtPlGsNmIwybWbAMdHt/J8RboC7i4kzQvYfSc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LFJ7SN2ECo8zBDQEZJz5NTWoUsM0tn/jkAdXjy19T6h8aanCn0nljN5340OQTqOp1gRGesyMkk/QBHMXjjL3hPFcwYW51luJp8JQwmPrgg1I/pAo+4NoGfKDRT6R5fu2+D5xTDzEFC1yizQC6iyRVd7J1N7LhzY/a1rMBsIQMRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EeLQEutC; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780318725; c=relaxed/simple;
+	bh=6Y5HJCUfZOnFUQa4AatktWigr2XfKiuV2TQs0zIUxQo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=c9G0pGdc7erakn/YZhCyuiYUMmTvYxjE1WMa6NXT1FxXYRWvZ7Dh0fa+Rwu5X0h0j/M4imgKbvfmvOQD0R+j/SmE4E6Seh6CZTUH4vsU5sMSnUUm9BH+6+FgWchiPoBU8WMV6xOjT1HY4MnDUOLofQSWvmQYODTMOHSNwboGJEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MYNNB4HN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EeLQEutC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60E71F00893;
-	Mon,  1 Jun 2026 11:39:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MYNNB4HN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC2D1F00893;
+	Mon,  1 Jun 2026 12:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780313963;
-	bh=xeJPerOtPlGsNmIwybWbAMdHt/J8RboC7i4kzQvYfSc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EeLQEutCamdHjdKK4pfsfBuxfEi7kogr1qBRgkuhxucNq6yLGno1DvS7JwftohkC3
-	 8gEv1U4b13FNuxioUWqs+KUW3NikA2kPMuJQHiQbOu3tm9BrYu9x9tdDhs97CC1xNY
-	 LTJYX+nRvlSENmJQ3mkan3AmpSk16t2EqLMxQtCwhD/3vahBP2WsRJyxKIadPC/9ah
-	 AuzmTVk9kxPQNJo+UFDhE7fo19E91AjrWBC174b3RWx04+6BL/oU/bECkyngEdJzEM
-	 LlN6lkPy6kl0cue/R5yMgzPUz0SZjZK0Mb/x9E4OgWpXodoaU7wyjwuebayZjHkasM
-	 NFjX381MfTFmA==
-From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org
-Cc: Sasha Levin <sashal@kernel.org>,
-	patches@lists.linux.dev,
-	Bean Huo <beanhuo@micron.com>,
-	Stanley Chu <stanley.chu@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Ben Hutchings <ben@decadent.org.uk>
-Subject: Re: [PATCH 5.10 096/589] scsi: ufs: core: Improve SCSI abort handling
-Date: Mon,  1 Jun 2026 07:39:20 -0400
-Message-ID: <20260601113715.scsi-ufs-abort-keep@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <70620d4eddfa13b0b5333e482bb76d7f4b323114.camel@decadent.org.uk>
-References: <20260530160224.570625122@linuxfoundation.org> <20260530160227.218464986@linuxfoundation.org> <70620d4eddfa13b0b5333e482bb76d7f4b323114.camel@decadent.org.uk>
+	s=k20260515; t=1780318724;
+	bh=P7rDevCZnFjkWVTnN7LsLiTYCzqFkr5n/NYFmJGjz+Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=MYNNB4HNONIG/b/z1lxMw17uWiLW2/iSk8HouiQQvxi78qlWwzikTRMoBb7l90tSz
+	 +yALZ1WhIRogzCT/8TU7Yy+fASCh5FyB1xSuLK3blHn8EH3qy6eCJS9oDlpMHSRB4y
+	 TDjG53L/Kwzksych4gwMlq6pL8BLvpllYnskDDR7eAgmh4C/vbryfSnxlVSc8YmJy6
+	 tvKxgulPJKf9Mv9rgVVkVa2WWULCoSijzdNE94pKHd7szHUoVI6B2nNROge7Q8qnOE
+	 HslnChmi3f0sBiU1naABH6YB3OZRAn9+OklyQ9LHPg7pKObukwMF0pO0mTMUffKf37
+	 NqOvD3uNTumXw==
+Date: Mon, 1 Jun 2026 13:58:38 +0100
+From: Will Deacon <will@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: David Laight <david.laight.linux@gmail.com>,
+	David Matlack <dmatlack@google.com>,
+	Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org,
+	Leon Romanovsky <leon@kernel.org>, linux-kselftest@vger.kernel.org,
+	linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>,
+	netdev@vger.kernel.org, Saeed Mahameed <saeedm@nvidia.com>,
+	Shuah Khan <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v2 06/11] selftests: Fix arm64 IO barriers to match kernel
+Message-ID: <ah2B_mzQabiEYSWt@willie-the-truck>
+References: <0-v2-72e9640932fd+2c64-mlx5st_jgg@nvidia.com>
+ <6-v2-72e9640932fd+2c64-mlx5st_jgg@nvidia.com>
+ <ahiFxtmspbETiqWw@google.com>
+ <20260529134947.GA128816@nvidia.com>
+ <20260529175516.06d5788f@pumpkin>
+ <20260529192933.GD3195266@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260529192933.GD3195266@nvidia.com>
 
-On Sun, 2026-05-31 at 16:31 +0200, Ben Hutchings wrote:
-> Since there are no patches to ufshcd in this series besides this and its
-> revert, it seems like you should drop both of them.
+On Fri, May 29, 2026 at 04:29:34PM -0300, Jason Gunthorpe wrote:
+> On Fri, May 29, 2026 at 05:55:16PM +0100, David Laight wrote:
+> > On Fri, 29 May 2026 10:49:47 -0300
+> > Jason Gunthorpe <jgg@nvidia.com> wrote:
+> > 
+> > > On Thu, May 28, 2026 at 06:13:26PM +0000, David Matlack wrote:
+> > > 
+> > > > Let's put these in tools/arch/arm64/include/asm/io.h so that the tools
+> > > > headers are more aligned with the kernel headers, and so that the arm64
+> > > > io.h overrides are done in the same way as the x86 overrides in
+> > > > tools/arch/x86/include/asm/io.h.
+> > > > 
+> > > > Something like this (untested):  
+> > > 
+> > > Okay, the disassembly says it works:
+> > > 
+> > >     1db8:       ca080108        eor     x8, x8, x8
+> > >     1dbc:       b5000008        cbnz    x8, 1dbc <readl+0x58>
+> > >     1dc0:       f9000fe8        str     x8, [sp, #24]
+> > 
+> > That looks strange, I suspect the C didn't match any usual pattern.
+> > Normally 'tmp' would get thrown away and 'v' would get kept.
+> > But you seem to have discarded 'v' and written 'tmp' to stack.
+> 
+> Oh interesting the optimizer isn't turned on for selftest builds. So
+> the str is dutifully writing tmp to the stack. Another register has
+> the actual value.
+> 
+> > I'm probably being stupid again, but how does that work?
+> > The cpu can speculate straight through the control dependency into
+> > the following instructions.
+> > An 'eor x1, x8, x8' may not even have a data-dependency on x8.
+> > (Most x86 cpus just generate a zero for the equivalent instruction.)
+> 
+> I can't say, this is copied from the kernel and Will made it:
+> 
+>     arm64: io: Ensure calls to delay routines are ordered against prior readX()
 
-We could, but keeping this structure makes it easier to track in the future.
+This is specifically for ordering counter accesses against prior
+barriered MMIO reads. Userspace should really be using the vDSO instead
+of accessing the counter directly, so you could probably drop this for
+the tools headers tbh and just have the dma_rmb().
 
---
-Thanks,
-Sasha
+Will
