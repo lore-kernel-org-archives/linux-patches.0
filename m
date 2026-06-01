@@ -1,112 +1,136 @@
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67103DCDA3
-	for <patches@lists.linux.dev>; Mon,  1 Jun 2026 17:14:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B673DE45D
+	for <patches@lists.linux.dev>; Mon,  1 Jun 2026 17:17:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780334071; cv=none; b=O4sw2q2djFg/QXDDeVyzribclUkG75gtIdMEP6Vmy3qo3uAwKmiZ1RVK/opceQ9zSeALA2stJAWAzMgdAlngK5DwXEATI8nqFZxroPCS4Jx9ctgSpDKS0jqVeJKez00khpUr/Yxj18ipUxKnpfeSMEudOrxHaKBfVR0900Z7nRQ=
+	t=1780334267; cv=none; b=XKSQz9iGcrlU88s2bqEfHSEvxhnEsiPh4CCzDBMCtsDLS2ppTeMXNEK3/XLOGbiZGfKbO/jmk8wQw1KctN4e3niEoJwX+Iw0Wrf1rm4eu/DzWvWToCkJ2N0ITysx5gEfaq5pflxjmKDAXoB2OcHu4SAe71oA3ahsEBWwu5Dw7qM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780334071; c=relaxed/simple;
-	bh=Arcw7RDu6YnvHHrozBQqErDjIv0rUN+ZLgIh1ITCFS0=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=hX4t925trnBhpMaIH9EnWhFpH4xU5JDfIjiPtTUFx+0jYE+BYaiNbhu//QcnWK7FG8UUN7M/2+89IOUr6s8tRmGMyGqrUCB5k4wrytNdgsI7qaOi6bMgST21DF8FvAgOtB7+wfjYmXR+YSAv15RyGVOmIuICuW0PrrBFRihrFgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qn9DNBAL; arc=none smtp.client-ip=209.85.217.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780334267; c=relaxed/simple;
+	bh=QOF4HTo9NC+sG07UWNWNGhB1bOa8fZKjrboF6NtGYig=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aaF0BypwI7J1GHN/14StBvuncIWdWiavFd//BnG5/6gv72eS3a685+TxH6U3dr/TmUcIkEMZezD0IoLK/j2Q21AD0PnxWPqlAnTmgjeg67fqqcrGOFgg5GwYRMd/2sSbaWj89nz0cAIhqilS9eO5zvJX48EdYIzviw6lJsu84qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=Jzli/xfB; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qn9DNBAL"
-Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-6c3b507a4fbso1071111137.2
-        for <patches@lists.linux.dev>; Mon, 01 Jun 2026 10:14:30 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="Jzli/xfB"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-bed4f2f0898so165796466b.3
+        for <patches@lists.linux.dev>; Mon, 01 Jun 2026 10:17:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780334070; x=1780938870; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=+RyRi+i9cRJsqRIFBEtxCh34w8MgyXpxo3mgchnEBr8=;
-        b=Qn9DNBALml3Uugs3evwvdVLpPHSGLXdywD0ejQ3VgmMl8YKnxU/I7rLiyED4YyDWwQ
-         B4GeBBiTCMlmR6EqzLi58sb61qo/NaYQsWQ7le3Y7gTa7PNYuSFClgW/HASWi3HbCkTV
-         fPsPQbodu1/+cxg1zOXcPdKl/l6VO1daZr8OA7ppHhqf24/C05d0EPvcJdkXLk60zlmw
-         tXigsiLx3fE7F47Le+Fkk0fo9hZl0GnXRP12abAlkuH7ooT8qjN6dP0c2sMTp56LrDIZ
-         akGe9du1UmHQw4mzVzYoolsdCxeJKguVWY3DdMLTA4iYsYK9S6Czllh+DfSk4eWlzwi0
-         qp9A==
+        d=linux-foundation.org; s=google; t=1780334262; x=1780939062; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=8glRJeBkbbvtPfYZZguJlBO/diWKKHW+QvqawLEed2k=;
+        b=Jzli/xfBWPZXJ3DYydQUBd61nLLb+ZARdXLWOBskK7ezO3kZPKnHcEzFm/iDYni7Up
+         gtJGwwccQ0xCKMBicZ2SjhdppSquVexMkCPjkNN0Ki/WsKGFrcXM5vxTeUJo+MFJiPg4
+         eTPaS/ZRa4azN1kZp2WPlBACGmJggJAn7KwGw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780334070; x=1780938870;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+RyRi+i9cRJsqRIFBEtxCh34w8MgyXpxo3mgchnEBr8=;
-        b=Gpenix+ws3sTvUUvFrM3YCbS0H7T5/AoQIRX6krkGkq6ux8B1cs+uSp9VJ47WP9yaX
-         cWr2Dfm07kbMXZxqZNHGBuhh6qUnGr63Fc5sMXTQHXz9ihHL1atQKQxzqTMsBEtcYzWd
-         DMZhn4k9MFzVX/a3EzRgCg3tbLzABa621jqh1/isvegf6OwWd8F5hCtZ4ebR8Ux2jHVd
-         CF9xEgejvlyi6EZlF7uxUfuq0jf9UDHMpmpBbH0P55JO4uqlumcxOuEmlHqI/951eGv+
-         S4CIoniGydeYGkmC5pzCsmmD70SBZBI2p2+rAJ/pvnSVac64efC4TEI1ymXCPoOrxUZj
-         KVBA==
-X-Gm-Message-State: AOJu0YzWaMsf09gxx0JdwkTyhi8ubR5/AZyEnkie1FVsWmUN2WXkMjbE
-	auAFyGusiwX3M31YvCICIwwH2G2d+b9zN0ScbnO03/+Lff1o6QqKRJBt
-X-Gm-Gg: Acq92OG9l88dJ+CefBGDYfTQKOh7KQgdLD8JyXKNllW1e0c7B0XrjLADjhHw/IPDcMW
-	fhddqlrG9wWu5wszp9xxy0yhYRAr8YlUKuBxejA2MZDYSZYQC0O+gjdzH0MFBrmdgINKt05mtJo
-	P2cLvsR2CtOvBtDcqIAMGyGECScuazlcERQ/XFhda96/CoQ7ApQokRDt1+z9JrHqCNXW/P0i1LY
-	BQplhBbmg69NI+OxSpsxci+y+hWiw82ngL7wfPGKTMspvt/xiXDC37RWbHf2aGnrv2XV8UyXXTU
-	GUhH+p7RkojwL5HZvDIf6/zaPt/Je0Vp+wkKuScHHmSbNGC8LHcfxNTid598r8Ol+qt6li2Z8Ql
-	279UrKg1UQWGSimQXceiRxFYij3g3SRA3NBy6FvGNfmhvRRFpPWJcwS7qYV8dF1PAFfRTS4kcl6
-	TDRAS3Hrq4pX6bkEl7AJbCt9qfo9sY0cSWmjGO5dfZBLIgHYeh9qk2QiFQa14d
-X-Received: by 2002:a05:6102:9d8:b0:62f:4553:7a28 with SMTP id ada2fe7eead31-6c69e741a2fmr5254418137.21.1780334069540;
-        Mon, 01 Jun 2026 10:14:29 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ccea061e87sm97982576d6.12.2026.06.01.10.14.27
+        d=1e100.net; s=20251104; t=1780334262; x=1780939062;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8glRJeBkbbvtPfYZZguJlBO/diWKKHW+QvqawLEed2k=;
+        b=oz3OiMgVKaWG9XQ5WeWC5GcZ8UTvcLPgiBA5Z8/M4Fa7mQF+tPD+2VNlOSzB7YdUWT
+         4a2S6r0FhcUWOfVgvMab1UG8JVIalj80KALB9IQ49AWNYJGuwLlHUvVG1P3j1vuijLsl
+         KEk7mAQr4vmIdWmqYiIGvnzDXdXQBT7kV/5fM694qZKu5gIwQl8GYdFXSnvynrix6NQw
+         mbyLSRW9u9S7k8Fz2pAf65+ZS6o6M7moAY+8VZwgTfuhfzAc6Y2TJs8Mp3KwlYh0d6wn
+         /1a/B4kYvGjZyGnAzlUha6jgP8rqN0u/0/K0JMPZcSO5hcmvdQzLG/OOE/tyhLwvJH5C
+         1naw==
+X-Forwarded-Encrypted: i=1; AFNElJ9acCCDBPXX+m/uCZooe6p6ugjWak50fJ+lQ2cEEOzSwmYHsNzroHPQD4b9+4Zqnho1VKz4OxuT@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx6JVMDVW4hwY6XPWPA+suDHS9YvxMQXNiD6q6lFzCAeydvTQFQ
+	6QMDAXIREBa1Bca3TmMB0HnTg7dvcSoU72TfxUM9hFYLLQnU3KZYjco6b50oMsj2R7f83OmxBXc
+	Ypzh0qMA=
+X-Gm-Gg: Acq92OFtY3PZ8BrdA8GNOMImLEFoqEGEBEAZGisFqvwNkZ2ApZPBXQL8PTrr6QHat6N
+	5jtIL4Bu0lzkK3FliK6PjUL/Q8tyJ+xT2eMy8xpRlFG0/xmvmOwbkgIgsttsZEWdRCRdAoh294u
+	LhxSNIJzgrj68lwEOvAbH9mkvzfYj44qYoT+Ck6kvr4wPD4PXHvDVDJlXEWUa3tBDD1mdt0G4Nu
+	HomuWoz5c1yZs24GNTZ9ctVnl7bZ7nF/MamL0RQZbKwGcDSGRCYCemCqY/wm59/nNwrQs4L/q0h
+	q8+56DviTGESw/uZn9Vu6ntblt20RqB3ULuKk+SZMV49VsWvoJ8z5mphp2W4/71cpsMNqCaW5+H
+	4xwcTfNa8xePwB+bm0eIzIZ39+2hgw7vl5SO6NEcgDKPYtoQzKu1C8UHCM3ZUqawu/GMuhxpsiy
+	YE1ONikqTD4tipEaMlRgaAicCkmTxa6mFdNoifALG6kzIfhObeQaZY5R6WeGAtw1bb4dL1Hw+RZ
+	52swzBCUGc=
+X-Received: by 2002:a17:906:eec6:b0:bd9:2b46:99b0 with SMTP id a640c23a62f3a-beab3e3eddemr716019766b.49.1780334262042;
+        Mon, 01 Jun 2026 10:17:42 -0700 (PDT)
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com. [209.85.218.42])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bee4092940asm82934666b.11.2026.06.01.10.17.40
+        for <patches@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Jun 2026 10:14:28 -0700 (PDT)
-Message-ID: <893c1c66-bcce-40d9-95e5-42adee11b6ef@gmail.com>
-Date: Mon, 1 Jun 2026 10:14:25 -0700
+        Mon, 01 Jun 2026 10:17:41 -0700 (PDT)
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-bed4f2f0898so165790566b.3
+        for <patches@lists.linux.dev>; Mon, 01 Jun 2026 10:17:40 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ/gD5JlJ2sraMo/+GnzC3Zc2NBt67rD5qb6TOv4ZXOilVMGHoP5tAMPxKoblK2zAMgvyeR78Khv@lists.linux.dev
+X-Received: by 2002:a17:906:4583:b0:bef:12f:347e with SMTP id
+ a640c23a62f3a-bef012f3d6fmr16123966b.24.1780334260114; Mon, 01 Jun 2026
+ 10:17:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Florian Fainelli <f.fainelli@gmail.com>
-Subject: Re: [PATCH 5.15 000/776] 5.15.209-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260530160240.228940103@linuxfoundation.org>
-Content-Language: en-US
-In-Reply-To: <20260530160240.228940103@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260531010107.1953702-1-safinaskar@gmail.com> <20260601-enthusiasmus-canceln-anlehnen-0e62317a9784@brauner>
+In-Reply-To: <20260601-enthusiasmus-canceln-anlehnen-0e62317a9784@brauner>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Mon, 1 Jun 2026 10:17:23 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wifX_rrDjRGnDnOqE-usptAukuXKrmuPuVDP5bOCBWzGQ@mail.gmail.com>
+X-Gm-Features: AVHnY4KexWf0o1w3H7pefWBidQ5elZSrUhqo_ATAUmEnAO4iwBaX4DnfDRLKUYk
+Message-ID: <CAHk-=wifX_rrDjRGnDnOqE-usptAukuXKrmuPuVDP5bOCBWzGQ@mail.gmail.com>
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
+To: Christian Brauner <brauner@kernel.org>
+Cc: Askar Safin <safinaskar@gmail.com>, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
+	linux-api@vger.kernel.org, netdev@vger.kernel.org, 
+	Matthew Wilcox <willy@infradead.org>, Jens Axboe <axboe@kernel.dk>, 
+	Christoph Hellwig <hch@infradead.org>, David Howells <dhowells@redhat.com>, 
+	Andrew Morton <akpm@linux-foundation.org>, David Hildenbrand <david@kernel.org>, 
+	Pedro Falcato <pfalcato@suse.de>, Miklos Szeredi <miklos@szeredi.hu>, patches@lists.linux.dev, 
+	linux-fsdevel@vger.kernel.org, Alexander Viro <viro@zeniv.linux.org.uk>, 
+	Jan Kara <jack@suse.cz>
+Content-Type: text/plain; charset="UTF-8"
 
+On Mon, 1 Jun 2026 at 09:42, Christian Brauner <brauner@kernel.org> wrote:
+>
+> Applied to the vfs-7.2.vmsplice branch of the vfs/vfs.git tree.
 
+Btw, if people want to work further on this - assuming we don't get
+any huge screams of pain from having effectively gotten rid of
+vmsplice() - I don't think it would hurt to look at limiting the
+"regular" splice() too.
 
-On 5/30/2026 8:55 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.209 release.
-> There are 776 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Mon, 01 Jun 2026 16:01:37 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.209-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+We already have the code to just turn it into a pure copy on the
+"splice to pipe" case: copy_splice_read(). In many ways it would be
+*lovely* to just always force that path.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+We already do that explicitly for DAX and O_DIRECT, but we made a lot
+of special files do it implicitly too, so quite a lot of the splice
+reading cases already use that "just read() into a kernel space
+buffer" model for splicing.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+It would be interesting to hear who would even notice if we just
+always used that copy case, and made "f_op->splice_read" never trigger
+at all.
 
+And it turns out that the only thing that ever uses
+"f_op->splice_write" is splice_to_socket. Which was actually the
+problematic buggy case.
+
+Everybody else pretty much seems to just use iter_file_splice_write(),
+which does the "emulate it with just a write from kernel buffers".
+
+So *if* we get rid of f_op->splice_read, we do leave the case that
+really caused problems, but nobody will ever care. Because once splice
+only deals with private buffers that can't be shared with anything
+else, a f_op->splice_write() that gets things wrong is pretty much a
+non-event.
+
+(We'd have to look at 'tee()' too: I don't think anybody really uses
+it, but it does do the "no copy linking" by just incrementing
+refcounts on the pipe buffers. So to really protect against
+splice_write users messing up, that should do copies too, but as long
+as it's all "private ephemeral buffers" that get their refcounts
+updated, I don't think anybody *really* cares)
+
+TLDR: maybe we could ghet rid of "f_op->splice_read". *That* would be
+a big simplification.
+
+                Linus
