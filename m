@@ -1,198 +1,93 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+Received: from relay.hostedemail.com (smtprelay0013.hostedemail.com [216.40.44.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C823DA5AA
-	for <patches@lists.linux.dev>; Mon,  1 Jun 2026 19:56:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3192274B43
+	for <patches@lists.linux.dev>; Mon,  1 Jun 2026 20:04:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780343819; cv=none; b=qOyKlWxxX0I273QWNE2UCHAwdNerGu1gR7aV8XpUsLbJsn6dLtCfQHWqOpmf65g1CdnQCyT/yTMOD0UDrrCxhZjJF9iUdawOuEeYZMtvwzteK1jmVsghqpmVuGPZqLHWnhBMpO8LMPBbYUVhjSAjw7cXKjy4ASHiN+GMiz/QpF0=
+	t=1780344258; cv=none; b=UqKSYFzdau8f6q+JPm0YR5Zy5kYlhTcVjvkNS8kR0/XawkNt86Gh0KVKBsQrDFI+to/fsukJE5zN2NFJPdD48TPQYsN9dJi7UzreQcNZHEbS1NGqwUu45VGzfbYbvBrbvxbLyBijPsmjXDTiT4dxREssL0wVMIG5xh4WatDYk1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780343819; c=relaxed/simple;
-	bh=HaCy2UcOAtXgMRHDUcRnuReWIZTKPx2CtYe4rvcCsRk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VcQLndoSTFn+Gb3xoJgGK47PCyBS8zUOAyKsPC5CwzypV5dAbP6e/baiLYdReSnApLGMw1MVQpv/23+sQytf3IfBjvR0bwT5T9JS1N3vyVl7nV1qvBgfuh9mIcLzotYBTdV1xdTJGlpjmtovh6kJQLOzDIaz+FRJ6bpLIlqdqGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=OYOyudDz; arc=none smtp.client-ip=198.175.65.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="OYOyudDz"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780343817; x=1811879817;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=HaCy2UcOAtXgMRHDUcRnuReWIZTKPx2CtYe4rvcCsRk=;
-  b=OYOyudDz6ODwMjDpI2cqvNoj28xmUxTvtxxco+znySUYLBjr5qL3kAHS
-   BbX/ZiwCFoKiun0nQ/po8BfZa2uEAkI5JWS85Mlr+poA7XbAfOoAFI+bq
-   P5rX6CgEmQTCI28kyLkblkL1DWLBQBV63inST/AFQy8joLEOo4tFc9I4x
-   ijLLWV4VzvL0ay5NqQ7M5VjQKP1vA1Rx2mIWoqIh57pSkhyC7419BcVoA
-   shWyaMxxoZp1+5pvOsReplce0wX8kHlHshchIGu80nuF8Wm1MZ0E4jgH2
-   7Dhb7HTJfITQq6dTJAlBs6MNXwzC4Ujom8I/yjG0hESILZA/3NsChlvsQ
-   A==;
-X-CSE-ConnectionGUID: vTSg2J4mTxG0bAduEHALLw==
-X-CSE-MsgGUID: PuunwHchT0CJboxzxrHZ3g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11804"; a="81011670"
-X-IronPort-AV: E=Sophos;i="6.24,181,1774335600"; 
-   d="scan'208";a="81011670"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 12:56:45 -0700
-X-CSE-ConnectionGUID: bSlny4kXTlGSDAGXigF5VA==
-X-CSE-MsgGUID: j1VPjJdeTpWeF0tZDSuvPw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,181,1774335600"; 
-   d="scan'208";a="247946532"
-Received: from lstrano-mobl6.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.221.168])
-  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 12:56:44 -0700
-From: Tony Luck <tony.luck@intel.com>
-To: Fenghua Yu <fenghuay@nvidia.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Chen Yu <yu.c.chen@intel.com>,
-	David E Box <david.e.box@intel.com>,
-	x86@kernel.org
-Cc: Christoph Hellwig <hch@infradead.org>,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v7 13/14] x86/resctrl: Simplify Kconfig options for resctrl
-Date: Mon,  1 Jun 2026 12:56:31 -0700
-Message-ID: <20260601195632.15876-14-tony.luck@intel.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260601195632.15876-1-tony.luck@intel.com>
-References: <20260601195632.15876-1-tony.luck@intel.com>
+	s=arc-20240116; t=1780344258; c=relaxed/simple;
+	bh=uk0yKLHBz4R2ETgjnWSZXX0AwG/hvj2NvyoF/ETVPZI=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=SDH45j3HdnDLomY9ck0E54h1OD6zkunuYMiola00KDZ1VqL5C/a8s7ngre7GgQCfyEU0P8HlwWsUYF+OmBSuvqU8v4UE62VFb0jacoTyxjcpS4clih9ddscpYr2NXTxEVU8QXtmpXfYxqOl33o/ugXHAPXt13Goia6UUlfwDSmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+Received: from omf18.hostedemail.com (lb01a-stub [10.200.18.249])
+	by unirelay05.hostedemail.com (Postfix) with ESMTP id 68DA14070E;
+	Mon,  1 Jun 2026 20:04:13 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf18.hostedemail.com (Postfix) with ESMTPA id A76E530;
+	Mon,  1 Jun 2026 20:04:09 +0000 (UTC)
+Date: Mon, 1 Jun 2026 16:04:55 -0400
+From: Steven Rostedt <rostedt@goodmis.org>
+To: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, Christian Brauner
+ <brauner@kernel.org>, Askar Safin <safinaskar@gmail.com>,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org,
+ linux-api@vger.kernel.org, netdev@vger.kernel.org, Matthew Wilcox
+ <willy@infradead.org>, Jens Axboe <axboe@kernel.dk>, Christoph Hellwig
+ <hch@infradead.org>, David Howells <dhowells@redhat.com>, Andrew Morton
+ <akpm@linux-foundation.org>, David Hildenbrand <david@kernel.org>, Pedro
+ Falcato <pfalcato@suse.de>, Miklos Szeredi <miklos@szeredi.hu>,
+ patches@lists.linux.dev, linux-fsdevel@vger.kernel.org, Jan Kara
+ <jack@suse.cz>
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for
+ preadv2/pwritev2
+Message-ID: <20260601160455.2c187574@gandalf.local.home>
+In-Reply-To: <20260601173325.GH2636677@ZenIV>
+References: <20260531010107.1953702-1-safinaskar@gmail.com>
+	<20260601-enthusiasmus-canceln-anlehnen-0e62317a9784@brauner>
+	<CAHk-=wifX_rrDjRGnDnOqE-usptAukuXKrmuPuVDP5bOCBWzGQ@mail.gmail.com>
+	<20260601173325.GH2636677@ZenIV>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: A76E530
+X-Stat-Signature: syidb8ujcaud9qkpckodykrwqszhs89e
+X-Rspamd-Server: rspamout07
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX1/l7NpaaKPpVVcYp6ykgwcyKHOTZkMF8KI=
+X-HE-Tag: 1780344249-165888
+X-HE-Meta: U2FsdGVkX1+J41g7IAS42JSeE5M9CFGhSVLKinkR5n5mo/WYVmBVHXBpB5cbIVL47VN3NsR+c1LBVIEHnhIvPvN6NQi5OTyaalsbrZEmg3uNAU4L5pjofHBefOVOwNAzq+bTYnik8yKJTyJaiIEZ//BclFM5tzba7zY+yq3qDmo5h2ghnrR+eDolpCZLEmUU1Ym4s93HTmeKQd6vDDUtwpZKMi4L2rkJyltTU8DXus3jvdVihyyTkULc+uoUj3MmLLV05SGgEjAXDGIG29TGeb2W66WTCW47AFMcODko/oJOuCEj3D+mT6s8K8FqbmRLqPBpAFWNEmeijv9MkxLF04LGCExu8JIYiaBNjan8sjAMgUDEmR1OwJeg5Jf7Echc
 
-Linus Torvalds complained[1] about Kconfig complexity making it too
-hard for "random people to build their own kernels".
+On Mon, 1 Jun 2026 18:33:25 +0100
+Al Viro <viro@zeniv.linux.org.uk> wrote:
 
-CONFIG_X86_CPU_RESCTRL_INTEL_AET has been causing problems since
-it was first added as it unnaturally required other config options
-to be set to "built-in".
+> On Mon, Jun 01, 2026 at 10:17:23AM -0700, Linus Torvalds wrote:
+> 
+> > TLDR: maybe we could ghet rid of "f_op->splice_read". *That* would be
+> > a big simplification.  
+> 
+> FUSE might be interesting - fuse_dev_splice_read() and its ilk.
+> Communications between the kernel and fuse server at least used to
+> seriously want that, so that would be one place to look for unhappy
+> userland...
+> 
+> splice-related logics in fs/fuse/dev.c is interesting; another place
+> like this is kernel/trace/, but I'm less familiar with that one.
+> 
+> rostedt Cc'd (miklos already had been)
 
-AET now resolves PMT symbols at runtime via the registration API,
-so INTEL_PMT_TELEMETRY no longer needs to be built-in. This means
-that AET can be included unconditionally as part of X86_CPU_RESCTRL.
+Thanks for the Cc. The tracing ring buffer was specifically made to be used
+by splice and the libtracefs has a lot of code to use it as well. As
+reading the ring buffer literally swaps out the write portion with a blank
+read portion, that portion (sub-buffer) is used to be directly fed into
+splice, providing a zero-copy of the trace data from the write of the event
+to going into a file.
 
-CONFIG_X86_CPU_RESCTRL now depends on X86_64 because reading telemetry
-data needs readq().
+trace-cmd defaults to using splice to copy the tracing ring buffer directly
+into files to avoid as much copying during live recordings as possible.
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://lore.kernel.org/all/CAHk-=whigg3hvOy7c1j1MXFy6o6CHp0g4Tc3Y-MAk+XDssHU0A@mail.gmail.com # 1
----
- arch/x86/include/asm/resctrl.h         |  7 -------
- arch/x86/kernel/cpu/resctrl/internal.h | 13 -------------
- arch/x86/Kconfig                       | 15 +--------------
- arch/x86/kernel/cpu/resctrl/Makefile   |  2 +-
- 4 files changed, 2 insertions(+), 35 deletions(-)
+Whatever changes we make, I would like to make sure there's no regressions
+in performance of trace-cmd record.
 
-diff --git a/arch/x86/include/asm/resctrl.h b/arch/x86/include/asm/resctrl.h
-index c23d9c56a337..5a61d0b0955d 100644
---- a/arch/x86/include/asm/resctrl.h
-+++ b/arch/x86/include/asm/resctrl.h
-@@ -195,17 +195,10 @@ static inline void resctrl_arch_mon_ctx_free(struct rdt_resource *r,
- 
- void resctrl_cpu_detect(struct cpuinfo_x86 *c);
- 
--#ifdef CONFIG_X86_CPU_RESCTRL_INTEL_AET
- void intel_aet_register_enumeration(struct module *module,
- 				    struct pmt_feature_group *(*get)(enum pmt_feature_id id),
- 				    void (*put)(struct pmt_feature_group *p));
- void intel_aet_unregister_enumeration(void);
--#else
--static inline void intel_aet_register_enumeration(struct module *module,
--						  struct pmt_feature_group *(*get)(enum pmt_feature_id id),
--						  void (*put)(struct pmt_feature_group *p)) { }
--static inline void intel_aet_unregister_enumeration(void) { }
--#endif /* CONFIG_X86_CPU_RESCTRL_INTEL_AET */
- 
- #else
- 
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index 017a19143ec9..4a89f00aaa01 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -233,24 +233,11 @@ void __init intel_rdt_mbm_apply_quirk(void);
- void rdt_domain_reconfigure_cdp(struct rdt_resource *r);
- void resctrl_arch_mbm_cntr_assign_set_one(struct rdt_resource *r);
- 
--#ifdef CONFIG_X86_CPU_RESCTRL_INTEL_AET
- bool intel_aet_pre_mount(void);
- void intel_aet_unmount(void);
- int intel_aet_read_event(int domid, u32 rmid, void *arch_priv, u64 *val);
- void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
- 				struct list_head *add_pos);
- bool intel_handle_aet_option(bool force_off, char *tok);
--#else
--static inline bool intel_aet_pre_mount(void) { return false; }
--static inline void intel_aet_unmount(void) { }
--static inline int intel_aet_read_event(int domid, u32 rmid, void *arch_priv, u64 *val)
--{
--	return -EINVAL;
--}
--
--static inline void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
--					      struct list_head *add_pos) { }
--static inline bool intel_handle_aet_option(bool force_off, char *tok) { return false; }
--#endif
- 
- #endif /* _ASM_X86_RESCTRL_INTERNAL_H */
-diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index f3f7cb01d69d..77fd5529542a 100644
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -515,7 +515,7 @@ config X86_MPPARSE
- 
- config X86_CPU_RESCTRL
- 	bool "x86 CPU resource control support"
--	depends on X86 && (CPU_SUP_INTEL || CPU_SUP_AMD)
-+	depends on X86_64 && (CPU_SUP_INTEL || CPU_SUP_AMD)
- 	depends on MISC_FILESYSTEMS
- 	select ARCH_HAS_CPU_RESCTRL
- 	select RESCTRL_FS
-@@ -536,19 +536,6 @@ config X86_CPU_RESCTRL
- 
- 	  Say N if unsure.
- 
--config X86_CPU_RESCTRL_INTEL_AET
--	bool "Intel Application Energy Telemetry"
--	depends on X86_64 && X86_CPU_RESCTRL && CPU_SUP_INTEL && INTEL_PMT_TELEMETRY=y && INTEL_TPMI=y
--	help
--	  Enable per-RMID telemetry events in resctrl.
--
--	  Intel feature that collects per-RMID execution data
--	  about energy consumption, measure of frequency independent
--	  activity and other performance metrics. Data is aggregated
--	  per package.
--
--	  Say N if unsure.
--
- config X86_FRED
- 	bool "Flexible Return and Event Delivery"
- 	depends on X86_64
-diff --git a/arch/x86/kernel/cpu/resctrl/Makefile b/arch/x86/kernel/cpu/resctrl/Makefile
-index 273ddfa30836..97ceb4e44dfa 100644
---- a/arch/x86/kernel/cpu/resctrl/Makefile
-+++ b/arch/x86/kernel/cpu/resctrl/Makefile
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0
- obj-$(CONFIG_X86_CPU_RESCTRL)		+= core.o rdtgroup.o monitor.o
- obj-$(CONFIG_X86_CPU_RESCTRL)		+= ctrlmondata.o
--obj-$(CONFIG_X86_CPU_RESCTRL_INTEL_AET)	+= intel_aet.o
-+obj-$(CONFIG_X86_CPU_RESCTRL)		+= intel_aet.o
- obj-$(CONFIG_RESCTRL_FS_PSEUDO_LOCK)	+= pseudo_lock.o
- 
- # To allow define_trace.h's recursive include:
--- 
-2.54.0
+Thanks,
 
+-- Steve
