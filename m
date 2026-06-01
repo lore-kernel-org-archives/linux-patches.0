@@ -1,141 +1,121 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58AD53451C6
-	for <patches@lists.linux.dev>; Mon,  1 Jun 2026 06:41:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C753806D5
+	for <patches@lists.linux.dev>; Mon,  1 Jun 2026 06:54:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780296091; cv=none; b=BXlkkQDyPSu8Naglyqr96kJTKhMgyloM3WYV5jZgNW3mCd0tkcj2KuCBfunQdJqLUIdElCv6GIhhRn8y/vf32WqEjdSmVddG2Y4YtQCzzcyvzV9czpoApoKobHOYtd2k6qw50bZWI6JfFuuyu0c1W7FY7vMhCTf4GhQmSLuRqN8=
+	t=1780296859; cv=none; b=T2RTVsN2ED3Q1CP6cUCw17LmE5TqWd8hkThK9YCpDJPSJEHmi5XdJOiwOZWAOpYqCt1sc0SjIq38eFGounkrRBR/1FcNP170obzH1qD0vJEp/hjeqsGrCzzHrchdey7lAKlajWHMKgj5TjKg6Lps0nA36cFUbgRuLyrQnDKobAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780296091; c=relaxed/simple;
-	bh=JKr3Z0kvyM5THXu2zQIiY1on4STp7BRu77YEIZYjAyo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Uwo+uhoPtfujONqoWkoJT4P/QB/ESiVzmUNwc7VpXS3K1B+1M97d5JN8NdMKBNJVsIecqKoKlyMu0ZS3ABLXwWssDUAXiERRcUsGh6OUmBw8wcWNoRBLkvuKjBeld4sK4IWYBEc3kssT8vwqLo9xti19uyVGsQM2hKi/K6DRfLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=HsG3x0Dr; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1780296859; c=relaxed/simple;
+	bh=6+D/HV2hutrD3NWx7CQmPSJE1q+yf64nkYMNNgSo5n8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HqeSNJEjZhebLrLk3d1ogTAl4A/omK/j3EUg0koBQdQ9d1jYXOvSDlZfbulZYsH70pFvRaZYlMK36q/gr0bIOFXNnnmn6NLjh0aMHgeqRKZgpP+hagh2Kvhjoa7a8EXd9EPsUEGFHfRcJcE8V3r/FsXRWQexAnFJIbIF1Q50+iA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GAm57KWS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bPKjPaGt; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="HsG3x0Dr"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-bebac79fff8so119017666b.0
-        for <patches@lists.linux.dev>; Sun, 31 May 2026 23:41:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1780296089; x=1780900889; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=grkecyCDjbFeNTHglTGH7ZaSe0hCCHo9PMK+wzDd0Ts=;
-        b=HsG3x0DruvEp8hpYgfqB+8xHaKJ3uEOiKREg8rBp2iVAvErAmke42WH6mt11pU4eTv
-         zR18HwtixNOUaV/SNYgd/zjyx+/0p8/85HBCaqSH9UHtJm7ybpUyIRPJMSR7ZBGIaYMV
-         YkXdl3v7hkSfr6Vintzrh4Fq7ieTNhWk1l+ZY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780296089; x=1780900889;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=grkecyCDjbFeNTHglTGH7ZaSe0hCCHo9PMK+wzDd0Ts=;
-        b=tYFB+0e7/X3h3pFt4nBavRWdk7IdiZvXHTpztyWQCwd/OMnuI7a4Xl2VZw+LwhJaC9
-         ZuxhbSE2cIqdPlkDlzAPoq/hoL9Ga7X7PlTIqySZwnkFDRQdgVYgxxWo3eXIsKlCdv8g
-         P+JOTC2CaVPh0oALVeOTh3sfT2xINNJbeKVlAuLohBqqYvKgyB4qpS6zZ4wBkEOjVS5L
-         qanLjLXYwZeIyyGlYRdUwjSZPFDJeCUG8xTDqJT+H2GQXLlhU6dxWKWvwMXs5O/OOhzO
-         OVDW7YVyE69DHvPnYOJb+K9oHR5ZF21bsju69E9NDBocJVJyC7gUsJy3kOSRZoc6X97Q
-         1TFw==
-X-Forwarded-Encrypted: i=1; AFNElJ+43m8WaciJEif+ms1pgZb3LwV1mDi8iA3U9BTmm9VcFvwz3rHM/Ydu0QGN7eLoS/VQJZPebcPZ@lists.linux.dev
-X-Gm-Message-State: AOJu0YyW6lFyt68vNdntxJhAYt6hp3vSVSntTNdlOHn+a67ZGwLIwWLc
-	X2jd9gsTogN9VEBz5FshFnIeS260GVvquUgDPQIH7YWXdJF0lPcNkJJpe0rOwkuJgbDCCyynlYG
-	LsarnRg==
-X-Gm-Gg: Acq92OGcTnVsKW/grEFCR6b5Ap9bM8PDIC/wA5fj3BZwiyP29i7n123PTRQoxEWgJ4k
-	HpQOPoAAOBdyog/SnQeDIfGjLArHxPoDN/oeLIw5yYg1FldxHys5bulNKEQd6oy2QfeTkYTiPD+
-	gy57M2MaVYp5eyih8EToWGaSz/G8zFZnpQoh8cc4MtGivdt5gTnpUufaBrYGKl/kXE1a8W2M0Fz
-	rOXkPMO9FnVf5oMEcRte4ahfQk2dseXlnucasxwRt9g6Rwks9lQiwyetdPgzRXJP5yHnX3QEKib
-	VkJljnQZu/W4dPaWxa2E7XCCdHevoQQHXB/tB8frLtDtz11wEB+uCMsUBE/WyZ03UhvNFUAgHjD
-	xcf04UBmg0yC5HO0aU+TzR1VdYthIwJUyTqwVT/Bo52jpTwLNvB5TcA791yQbeDpOiYbfT4yrcS
-	zdk02qTKWh0ECEbO8C+L1Ko/fuAJhROwaTSSBWEFj/aCvp9g19QuH8dm5XgZKehasv0qwu3a8=
-X-Received: by 2002:a17:907:6d16:b0:bec:bd4f:e495 with SMTP id a640c23a62f3a-becbd4fe861mr237107966b.12.1780296088588;
-        Sun, 31 May 2026 23:41:28 -0700 (PDT)
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com. [209.85.208.43])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-be9d6cf9adfsm307844066b.62.2026.05.31.23.41.27
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 31 May 2026 23:41:27 -0700 (PDT)
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-68d2342c5e6so1332303a12.3
-        for <patches@lists.linux.dev>; Sun, 31 May 2026 23:41:27 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ8TXIC9BlnVQugi5LGZYScYl445mWBPwxeeCDYISvwvGW3cp3WpPD50LdlQ/XGXTV2/kxssP4fY@lists.linux.dev
-X-Received: by 2002:a17:907:3e0a:b0:bcb:66df:819a with SMTP id
- a640c23a62f3a-beab1e809cdmr487255866b.40.1780296086476; Sun, 31 May 2026
- 23:41:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GAm57KWS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bPKjPaGt"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 80B5BEC01D1;
+	Mon,  1 Jun 2026 02:54:15 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 01 Jun 2026 02:54:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1780296855;
+	 x=1780383255; bh=hKTO0qf4C4LzwggzJvsMwTM2li7HDIQWWhZAjJnbO8A=; b=
+	GAm57KWSsHF5cpNf9F+g9e7Yp9B1YdoaEumNNMstqilD+uhztBCSbXGmiAU5X+FQ
+	fqkTiD1skAX5WEv8QuVbzuCo98gax9KZd3Qiq5Oj+doyr+zi//AT+elZJuJeI8jU
+	iUuIn0aa9GU1n6Wq8qJr7UkkdEPzc++lN1Ghu9UT2pPsrFzyIZJrloY6jV8+q16Q
+	6KKZIiPvCgiZYeuk3nHhrkO0V/ZW1O3K7ZvQtHqgKQgcJS91fvZkZL8atvB8vAOT
+	EzDrDcJyGERogTUv53O/DZx2NSdLMUzIHg+WhwntUzCj9WV8mNcSZJtHGotYr0AI
+	BQKwpN6Q6Rnjui0w9d5bcw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780296855; x=
+	1780383255; bh=hKTO0qf4C4LzwggzJvsMwTM2li7HDIQWWhZAjJnbO8A=; b=b
+	PKjPaGtTYXtStq1mBn5KM/wJTF1FJeUbs7FE0q4CbEGz9Xu37g9j6WfsYAlc6drh
+	idpgY6aNGu7Alf0YsVo8EsJak7/D0aPBB+rjSM4dZKvicTOBhE1nsbNo/XXi/SR8
+	stDV/foX6Z+3Ohl77teGdSKwh6LUNasjE190Z4fwTqJw/zNehIsnOLPC7AWoBF0d
+	vjy4NNToZo0q3S8V15jQO1rxcuSEDYEJ4eXNOb3a7UsPHz0+3GO0UGBqiPoJJQGw
+	5VA7lDvS04BSBsQgPdq9SVLyI0gwwcosv4OwMYD0/AfU+OzYAf8SXIktJjd3eLwR
+	udgXQSBli1FkKWm0pug1A==
+X-ME-Sender: <xms:liwdaj7RB0hP8WKJLU-k8liKhuFDnmD6gMgBvcTJLaea8FZ9a3I92Q>
+    <xme:liwdakwafTa65SYqx2GciN8BnAJ9qlJ1ANP1Vlh2mGgeOVoGzhfynOXQCuZLLwoKa
+    t0zLUuoGiCrYzVDYHMdRKm6boRnK-_zSgaqx9q5m-3yHUTHCU7lqA>
+X-ME-Received: <xmr:liwdal9hCMjQxTFd_IsAsS9cMp96rh1jIdx1pljQI6ZcLyVlQwal4hW46FvR6dnJiLtscvV-p9JWg1fzywPGhN5m90YhJ_VV>
+X-ME-Proxy-Cause: dmFkZTGXJxcod9zgFW6rG0VSmWXbGpH2E+z0SCLbfllWouww/5ACfY3DtSzT69+3dJcxlJ
+    bwtASi4hnEYg5ir0+XkIMJv4k5K5+SeMsrvBYEkRjRymqn89ipC7kmgxx2n1h6lopnFwfG
+    6SJ7znSjTvgok53QT8Pyj1h+musssMWsJ432obrbMSB1E6xJ0K1jh/YxWn+7toYerMLtyj
+    ecfvTRpRnIAyfvDNya7V/LLg8bi0X6X7rTTRW5HJh1s8VXGIIkbvxBi50kvfL9k93w5/2l
+    GZ9AZCz0ZnW0y5xvLhNnVxvVczxJHRXCDf9AeOHHMpfEI/X3NKYW7W+4DXlZ8c7hx7Mdjp
+    qp4w+pYYk2Ek1LrA8Ro7liF8n09pPS+NsUJ+04kF0iqgsZRceX+bXEhd2nbBIaQcdsvY+E
+    5L2XY77wdWcNGOvS/38ItwW58kQIb82j3BMSkZc+pC5lPI7tgEG8pOUT2+1ileSmlpuXhj
+    9TB196I1Gm8Kb153D4WLTTQNvdiFuTlXwRlQnMGWt5PdGmojl6EOaibb3ZLv+8qeVHDE2D
+    g521kpVOay1OSC52E7WdgiN0+o165oR/ovnazvIpNo0e88kPjv/43wVm3NgGYUJWbilKfK
+    2VYC3UzPzBAtWUR6CLu4Klh5sY+1hwP6JN3nxV6ZrQ1dyQy0tH69P/zn0vCw
+X-ME-Proxy: <xmx:liwdaoG5EywTvmeuMgq3yc4qMDDtw1Fkb3cZ_gUOySJq9MXfu4Tnwg>
+    <xmx:liwdavCaZ9l6W_NRgSqm98Kkg4LZs_mdaOXVqjSJNy8E6j0uTW7xMw>
+    <xmx:liwdasku7Ftjihiu9Zy9jdPoWKOrialTyeGXa6FNUkNqLAjYfO46TQ>
+    <xmx:liwdaiSjrs54n5RVQagsHpDPXOfiVLjAJ_PFqQmmjzRYK1inlT32WA>
+    <xmx:lywdapMEXua7tqEhssO9SS-wPwayHFaqGnW-EVC1zqRIWCu2C6U06Fb5>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 1 Jun 2026 02:54:12 -0400 (EDT)
+Message-ID: <5c48884d-6bcc-4a12-a9dc-dd9e2d03dd90@pobox.com>
+Date: Sun, 31 May 2026 23:54:10 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260530160224.570625122@linuxfoundation.org> <20260530160226.496219768@linuxfoundation.org>
- <5e2ac444-451c-4220-8013-0e6382b5f165@pobox.com> <136f03aa6f51bdfecc786e5278f5fd03b4a6966e.camel@decadent.org.uk>
- <20260601015021.rc-uvcvideo-heuristic@kernel.org>
-In-Reply-To: <20260601015021.rc-uvcvideo-heuristic@kernel.org>
-From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Mon, 1 Jun 2026 08:41:14 +0200
-X-Gmail-Original-Message-ID: <CANiDSCvh6u6AWnarEtso=zKPD3upEsaJBMOm1x35fHyPMaEMyw@mail.gmail.com>
-X-Gm-Features: AVHnY4J7eEIEPEY8n4veiWY6QsIg61l11iuaxssDhuKBbjpiPm_kh5n0oDz1rwY
-Message-ID: <CANiDSCvh6u6AWnarEtso=zKPD3upEsaJBMOm1x35fHyPMaEMyw@mail.gmail.com>
-Subject: Re: [PATCH 5.10 072/589] media: uvcvideo: Use heuristic to find
- stream entity
-To: Sasha Levin <sashal@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, Angel4005 <ooara1337@gmail.com>, 
-	Hans de Goede <hansg@kernel.org>, Hans Verkuil <hverkuil+cisco@kernel.org>, Ron Economos <re@w6rz.net>, 
-	"Pavel Machek (CIP)" <pavel@nabladev.com>, Brett A C Sheffield <bacs@librecast.net>, Mark Brown <broonie@kernel.org>, 
-	Peter Schneider <pschneider1968@googlemail.com>, 
-	Francesco Dolcini <francesco.dolcini@toradex.com>, Shuah Khan <skhan@linuxfoundation.org>, 
-	Jon Hunter <jonathanh@nvidia.com>, Florian Fainelli <florian.fainelli@broadcom.com>, 
-	Miguel Ojeda <ojeda@kernel.org>, Vijayendra Suman <vijayendra.suman@oracle.com>, 
-	Ben Hutchings <ben@decadent.org.uk>, "Barry K. Nathan" <barryn@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.10 000/589] 5.10.258-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260530160224.570625122@linuxfoundation.org>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <20260530160224.570625122@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Sasha
+On 5/30/26 8:58 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.258 release.
+> There are 589 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Mon, 01 Jun 2026 16:01:34 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.258-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-On Mon, 1 Jun 2026 at 04:11, Sasha Levin <sashal@kernel.org> wrote:
->
-> On Sun, 2026-05-31 at 12:53 +0200, Ben Hutchings wrote:
-> > This doesn't properly fix the problem.  Commit 3d9f32e02c2e "media:
-> > uvcvideo: Create an ID namespace for streaming output terminals" (which
-> > reverts this) needs to be applied on top.
->
-> Rather than carry the heuristic and then layer the namespace rework on top
-> in 5.10 only, I've dropped this together with its regression source
-> 0e2ee70291e6 ("media: uvcvideo: Mark invalid entities with id
-> UVC_INVALID_ENTITY_ID") from the 5.10 queue. That mirrors what 3d9f32e02c2e
-> does upstream (it reverts the heuristic), and avoids exposing the
-> 0e2ee70291e6 regression that would otherwise enter 5.10 in the same batch.
+Tested on 2 amd64 laptops (a Lenovo ThinkPad T14 Gen 1 and a 2017 Apple
+MacBook Air). Working well, no regressions observed.
 
-Are you going to apply:
-
-Commit 3d9f32e02c2e "media: uvcvideo: Create an ID namespace for
-streaming output terminals"
-?
-
-We need either that patch or this one: media: uvcvideo: Use heuristic
-to find stream entity
-
-The namespace solution is cleaner, which is why it is the upstream
-solution, but both patches solve the issue.
-
-Regards
-
->
-> Barry K. Nathan wrote:
-> > Comparing this patch to the corresponding patches that went into
-> > 5.15.203/6.1.169/6.6.117/6.12.58/6.17.8, I believe these Tested-by tags
-> > may be incorrect.
->
-> You're right that the tag set on the 5.10 backport was over-attributed
-> relative to the other branches; since the patch is being dropped this is
-> now moot. Thanks to you both for the review.
->
-> --
-> Thanks,
-> Sasha
-
-
+Tested-by: Barry K. Nathan <barryn@pobox.com>
 
 -- 
-Ricardo Ribalda
+-Barry K. Nathan  <barryn@pobox.com>
