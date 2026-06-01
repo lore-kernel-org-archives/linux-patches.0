@@ -1,77 +1,103 @@
-Received: from zeniv.linux.org.uk (zeniv.linux.org.uk [62.89.141.173])
+Received: from pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com (pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com [52.34.181.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D683DD53E;
-	Mon,  1 Jun 2026 17:33:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.89.141.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449F63DE427
+	for <patches@lists.linux.dev>; Mon,  1 Jun 2026 17:34:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.34.181.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780335213; cv=none; b=gh39mq3gW7O4Fqd32aQ0YedWoZTtOTUdw3Xg4/LlRsacaLof2pSLLL8gR4hB9kZyT+4nvwsBj9utWPSBSJ3R43AK/6qzfydoAhAX4QJc+YMAQNcZF3VsXSkcCY1ndjr8KSVDxPCtOumKz/Qf8gBC/qq7o0SjXGx9mV7hXachfy8=
+	t=1780335272; cv=none; b=sG/Q6VXUMXho+eVUqxZ/7SmSrdYt5IefSD+2iMHJzptdJyMF73SrwDXUpufN1FCKVwuuopvWZlgiOjUJaPdo93nGtoxYbj44DEkcDbrnjZr1gYipC/JMhCxbvXHS7/bLXqEu98zgusz9JDiMvDDTbwbyZ7Xa9kH/NkQgO/8u/z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780335213; c=relaxed/simple;
-	bh=UIq0QwS9m8Vn34cqT2JX2YbbXgMu17lIdfl6g487i/A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XdkILFnRMUyVLYYjy1JgCGNfL+IQi+nzk0IcBHlDXFnETw5m3BYktdDARhD5cqEPFEHC2bNFI76pywy2aikqy3nxhb/j1f4jggDrCHIl4vj15363AWla2IWduT1NSerdQpMLpAHLiSTXnXQnHSIrbERj63x71S5oqZYT/RinF8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zeniv.linux.org.uk; spf=none smtp.mailfrom=ftp.linux.org.uk; dkim=pass (2048-bit key) header.d=linux.org.uk header.i=@linux.org.uk header.b=C4F2CJUG; arc=none smtp.client-ip=62.89.141.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zeniv.linux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ftp.linux.org.uk
+	s=arc-20240116; t=1780335272; c=relaxed/simple;
+	bh=sE6njkJEp4k7reIjcuUdLFOAcSxP1sZIw+VApabLxJI=;
+	h=From:To:CC:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TwOGaWrCvTkvUVdBd1g/2RMJH7Nma4ZhpvwfEv1PFxJGuC9ROYZKyupfEBHK/29xGoWc3SPR8yMe5Vg0E/sdSf2vm1sGSBbfqGR2l1yQlfzSqGMwnhlDtVYzKCkuHvag5z06v2HgunJF4h6OrKVpqkD8tLzXgt3RsO15IRJV2J8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.de; spf=pass smtp.mailfrom=amazon.de; dkim=pass (2048-bit key) header.d=amazon.de header.i=@amazon.de header.b=GOjBc+Mh; arc=none smtp.client-ip=52.34.181.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linux.org.uk header.i=@linux.org.uk header.b="C4F2CJUG"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=linux.org.uk; s=zeniv-20220401; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=UIq0QwS9m8Vn34cqT2JX2YbbXgMu17lIdfl6g487i/A=; b=C4F2CJUGwfl5xKazpWoseKj1wE
-	WRgOlgnpACsA11o9vsmsB1IEgIxOgcMlpETmH2q+Pkmy5QKe6KOUTqNF+mzjFAZmW6fSabyetV2cW
-	sg4PJwBvnYadtSQUsssgLJfv23FCBmBzKfIJqAjEkjJ8j6aMfSc6ff579wCMlKgyGVa+578BhJf+3
-	aqYDiA+xagJzyAsdmYZ+Gofucv2YCBS1b4uUF8Ws6ne0a/OJF3nk0dr/nzPgMKLe6ZYQlNMD2P5vh
-	7swJk2/OoPqvxRHMKexP/fcSrQDpePjfupzXW1wLMs+uMptCrx8erMt988UpqDtoAY4rWS8q83sDm
-	jWgor8qg==;
-Received: from viro by zeniv.linux.org.uk with local (Exim 4.99.2 #2 (Red Hat Linux))
-	id 1wU6Vx-00000003Mll-0wOR;
-	Mon, 01 Jun 2026 17:33:25 +0000
-Date: Mon, 1 Jun 2026 18:33:25 +0100
-From: Al Viro <viro@zeniv.linux.org.uk>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Christian Brauner <brauner@kernel.org>,
-	Askar Safin <safinaskar@gmail.com>, linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org, linux-api@vger.kernel.org,
-	netdev@vger.kernel.org, Matthew Wilcox <willy@infradead.org>,
-	Jens Axboe <axboe@kernel.dk>, Christoph Hellwig <hch@infradead.org>,
-	David Howells <dhowells@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Miklos Szeredi <miklos@szeredi.hu>, patches@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org, Jan Kara <jack@suse.cz>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for
- preadv2/pwritev2
-Message-ID: <20260601173325.GH2636677@ZenIV>
-References: <20260531010107.1953702-1-safinaskar@gmail.com>
- <20260601-enthusiasmus-canceln-anlehnen-0e62317a9784@brauner>
- <CAHk-=wifX_rrDjRGnDnOqE-usptAukuXKrmuPuVDP5bOCBWzGQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=amazon.de header.i=@amazon.de header.b="GOjBc+Mh"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.de; i=@amazon.de; q=dns/txt; s=amazoncorp2;
+  t=1780335271; x=1811871271;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version;
+  bh=gNTAQDrVKLggTTWWyzpgrt2RReuC1quSVK4V/MXLIwU=;
+  b=GOjBc+MhZlo56F16GiqMqdJhPCn714Znsa4fwysi7+rs3esac1Yd9jJi
+   mlyvBDi9GVERL5TTVhVuoG5REpJuVp0U8LXeCXOevULqfyUJaMcLsX4Lu
+   6TwprngDGy5vqVltKSRCIfvVDXR5dsQ9CovYzXQ2ZA7+p+Dz7tbliqMzH
+   ZFan9I23fx50t4XiwxuoSLzcOlSdxS2HmFxhxRGuqCaeM8QUwYHIUFDD6
+   XNdpm8DXeH8jF/SUdSCjX1dCv7YKLJcwM+RfdqtP+JIOFS7Xb6HTaRSoY
+   rnG6OAmvuPLjrVyqkPpsVVrJgkaer9sOdgpSMelsjMGZ1vGdak7PFdMW1
+   Q==;
+X-CSE-ConnectionGUID: /wTNCTaoQn699AJ6A9LWJQ==
+X-CSE-MsgGUID: b7RJvN6BR1WEVvGZTCq0nQ==
+X-IronPort-AV: E=Sophos;i="6.24,181,1774310400"; 
+   d="scan'208";a="20851813"
+Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
+  by internal-pdx-out-007.esa.us-west-2.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2026 17:34:28 +0000
+Received: from EX19MTAUWA001.ant.amazon.com [205.251.233.182:25088]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.19.154:2525] with esmtp (Farcaster)
+ id fc2b5218-b6d3-4437-98e6-e21bfec254e2; Mon, 1 Jun 2026 17:34:28 +0000 (UTC)
+X-Farcaster-Flow-ID: fc2b5218-b6d3-4437-98e6-e21bfec254e2
+Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
+ EX19MTAUWA001.ant.amazon.com (10.250.64.218) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.37;
+ Mon, 1 Jun 2026 17:34:27 +0000
+Received: from dev-dsk-mngyadam-1c-cb3f7548.eu-west-1.amazon.com.amazon.de
+ (10.253.107.175) by EX19D001UWA001.ant.amazon.com (10.13.138.214) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.37; Mon, 1 Jun 2026
+ 17:34:26 +0000
+From: Mahmoud Nagy Adam <mngyadam@amazon.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>, Mingzhe Zou
+	<mingzhe.zou@easystack.cn>, Coly Li <colyli@fnnas.com>, Jens Axboe
+	<axboe@kernel.dk>, <nagy@khwaternagy.com>
+Subject: Re: [PATCH 6.1 431/969] bcache: fix uninitialized closure object
+In-Reply-To: <20260530160312.161639627@linuxfoundation.org>
+References: <20260530160300.485627683@linuxfoundation.org>
+	<20260530160312.161639627@linuxfoundation.org>
+Date: Mon, 1 Jun 2026 19:34:24 +0200
+Message-ID: <lrkyqqzmq17xb.fsf@dev-dsk-mngyadam-1c-cb3f7548.eu-west-1.amazon.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHk-=wifX_rrDjRGnDnOqE-usptAukuXKrmuPuVDP5bOCBWzGQ@mail.gmail.com>
-Sender: Al Viro <viro@ftp.linux.org.uk>
+Content-Type: text/plain
+X-ClientProxiedBy: EX19D043UWA001.ant.amazon.com (10.13.139.45) To
+ EX19D001UWA001.ant.amazon.com (10.13.138.214)
 
-On Mon, Jun 01, 2026 at 10:17:23AM -0700, Linus Torvalds wrote:
 
-> TLDR: maybe we could ghet rid of "f_op->splice_read". *That* would be
-> a big simplification.
+Hey Greg,
 
-FUSE might be interesting - fuse_dev_splice_read() and its ilk.
-Communications between the kernel and fuse server at least used to
-seriously want that, so that would be one place to look for unhappy
-userland...
+Greg Kroah-Hartman <gregkh@linuxfoundation.org> writes:
 
-splice-related logics in fs/fuse/dev.c is interesting; another place
-like this is kernel/trace/, but I'm less familiar with that one.
+> 6.1-stable review patch.  If anyone has any objections, please let me know.
+>
+> ------------------
+>
+> From: Mingzhe Zou <mingzhe.zou@easystack.cn>
+>
+> commit 20a8e451ec1c7e99060b1bbaaad03ce88c39ddb8 upstream.
+>
 
-rostedt Cc'd (miklos already had been)
+Just a heads up, that this fix patch is missing from 6.6->6.18
+kernels. While being backported to older kernels (< 6.1). Any blockers
+for it to be backported to newer kernels as well?
+
+Regards,
+Mahmoud Nagy Adam
+
+
+
+Amazon Web Services Development Center Germany GmbH
+Tamara-Danz-Str. 13
+10243 Berlin
+Geschaeftsfuehrung: Christof Hellmis, Andreas Stieger
+Eingetragen am Amtsgericht Charlottenburg unter HRB 257764 B
+Sitz: Berlin
+Ust-ID: DE 365 538 597
+
