@@ -1,122 +1,184 @@
-Received: from n169-111.mail.139.com (n169-111.mail.139.com [120.232.169.111])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C24D3B9600
-	for <patches@lists.linux.dev>; Tue,  2 Jun 2026 07:50:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.111
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03822376A07;
+	Tue,  2 Jun 2026 08:25:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780386620; cv=none; b=a0MZPOnZ7U0b8zFCXTc9IWnko3vZilgkefAA4fPLY+e5Mjbz5Y8d+x1bc6I+EHhdVBZaPdpGjgTTJmMxk15rvmKzFUXXH8II7YraA0hWiOAfYHfxYcnKYFP1nza/jkemb4robv8ZJ+1bSDoQCi7PQGWYE+mOBgPdErOEhNGPOdM=
+	t=1780388713; cv=none; b=EFrY8D7Jl6+3//FR4R7kXeXpTolcqj2ZNGjSPAmW6vbJ0RIhwaXKMW+15jdG4KN+Qg71T7EuJ5+9nkwR8VRow4gd87hKBxFlP/Q4549nOW6P/QDUtAzzclNrvb3fy94D5vti/CXGo3oe9QYtF1et75MssnfCFYMqbVFJRJ/FwH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780386620; c=relaxed/simple;
-	bh=r8JJSHfKw9Brkkcjw3TDT0i1OPaFOAg7fPAPfVj2Lec=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=RUBUUTLeL/5M+8MUMUzFukB7WZZOxZgrZhwey2nRKqDaIyyvmvrJVclw9tWdcodJqxtSHwkyiiU2iimkybyPhJ+ZYJBt6lIaUu7141BJGLpCCpUA3fPRmsJou+C8eb3VTCa9HuvRXN2FPPik0QHsDfjEhLHk7Y3QKZcrbHQAO5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=d6uX4TgG; arc=none smtp.client-ip=120.232.169.111
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
+	s=arc-20240116; t=1780388713; c=relaxed/simple;
+	bh=8zcw9476bmIVS/4b89RRadtm+/GXSNGvi3nuVv+gjZo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kBNmVM1GfjMAi1+SEUKi+ZlS47HKDwU3+fYts9tjPs7zdzaGno4v/YkwJT5QVzKxd93PyXqPwK/QtotOf7mK95Hb6gimpesnSs1i2AkPEfjJumeZ0rlBmuBMF1xE0gmCPwIKbqX0c4mjhNfepD+WnT5jqw32JQZj2LtCfdhEDZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QlNXRHxS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="d6uX4TgG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=139.com; s=dkim; l=0;
-	h=from:subject:message-id:to:cc:mime-version;
-	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=d6uX4TgGv6yot+IU0+JPwwvDwBJHBzykiSicikOxgodxZpH+fkeYwgHGBUqGq7rzIWMfgJj+lNOow
-	 0ql+JDtHphqTba4Swg3OVsjLXuL/y7JLIMbTFSUGUosh0zC7YnYgo7dZOPdxmbR+tdB56046di2BwJ
-	 uJgb+IeO0p5EHHrI=
-X-RM-TagInfo: emlType=0                                       
-X-RM-SPAM:                                                                                        
-X-RM-SPAM-FLAG:00000000
-Received:from NTT-kernel-dev (unknown[60.247.85.88])
-	by rmsmtp-lg-appmail-12-12001 (RichMail) with SMTP id 2ee16a1e8b375ef-0261c;
-	Tue, 02 Jun 2026 15:50:19 +0800 (CST)
-X-RM-TRANSID:2ee16a1e8b375ef-0261c
-From: Li hongliang <1468888505@139.com>
-To: gregkh@linuxfoundation.org,
-	stable@vger.kernel.org,
-	jk@codeconstruct.com.au
-Cc: patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	matt@codeconstruct.com.au,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	horms@kernel.org,
-	netdev@vger.kernel.org
-Subject: [PATCH 5.15.y] net: mctp: ensure our nlmsg responses are initialised
-Date: Tue,  2 Jun 2026 15:50:14 +0800
-Message-Id: <20260602075014.3210968-1-1468888505@139.com>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QlNXRHxS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BCD1F00893;
+	Tue,  2 Jun 2026 08:25:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780388711;
+	bh=GfYwKww7FMGPbJDqSUJQdQvreM42hX75a3ElXylSb7I=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=QlNXRHxSiVLWRkqR3Q83ejTs3EHdyrR1prTvQZYTL8YtFs0PR52piVz8fyJEJM2uC
+	 hJ0TWK8wgrljJbxRonpFInx6SFOlMhVMZDhiW7rHu/6VGdbp/Oy15a+GKR94qHGpTS
+	 VCQM4Fhfkz0Sa0rxZoUqWUjjPxcva4ax7udZsjeOqX0J3reXgreOaDMiaJvCPgC0j2
+	 meOw6D3lKrik3jhF+vZJn3oeQsp7CD5E41F2hw99M6ee25Iou8YF8cZwu/HsyhxEqf
+	 FWnXd70Qv5lqK5b7AmTLci9xmpmuJwDz8nTPaMds7BQqU2ZMFJhKvEBeT4RFna+atK
+	 6NwEOEfbTStiw==
+Message-ID: <821ed41e-5b2f-4d17-aeb2-71b0361f8e7f@kernel.org>
+Date: Tue, 2 Jun 2026 10:25:06 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for
+ preadv2/pwritev2
+To: Andrew Morton <akpm@linux-foundation.org>,
+ Steven Rostedt <rostedt@goodmis.org>
+Cc: Al Viro <viro@zeniv.linux.org.uk>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ Christian Brauner <brauner@kernel.org>, Askar Safin <safinaskar@gmail.com>,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, linux-api@vger.kernel.org,
+ netdev@vger.kernel.org, Matthew Wilcox <willy@infradead.org>,
+ Jens Axboe <axboe@kernel.dk>, Christoph Hellwig <hch@infradead.org>,
+ David Howells <dhowells@redhat.com>, Pedro Falcato <pfalcato@suse.de>,
+ Miklos Szeredi <miklos@szeredi.hu>, patches@lists.linux.dev,
+ linux-fsdevel@vger.kernel.org, Jan Kara <jack@suse.cz>
+References: <20260531010107.1953702-1-safinaskar@gmail.com>
+ <20260601-enthusiasmus-canceln-anlehnen-0e62317a9784@brauner>
+ <CAHk-=wifX_rrDjRGnDnOqE-usptAukuXKrmuPuVDP5bOCBWzGQ@mail.gmail.com>
+ <20260601173325.GH2636677@ZenIV> <20260601160455.2c187574@gandalf.local.home>
+ <20260601172825.a51a588ec1c32617a0e12d78@linux-foundation.org>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=david@kernel.org; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <20260601172825.a51a588ec1c32617a0e12d78@linux-foundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-From: Jeremy Kerr <jk@codeconstruct.com.au>
+On 6/2/26 02:28, Andrew Morton wrote:
+> On Mon, 1 Jun 2026 16:04:55 -0400 Steven Rostedt <rostedt@goodmis.org> wrote:
+> 
+>> On Mon, 1 Jun 2026 18:33:25 +0100
+>> Al Viro <viro@zeniv.linux.org.uk> wrote:
+>>
+>>>
+>>>
+>>> FUSE might be interesting - fuse_dev_splice_read() and its ilk.
+>>> Communications between the kernel and fuse server at least used to
+>>> seriously want that, so that would be one place to look for unhappy
+>>> userland...
+>>>
+>>> splice-related logics in fs/fuse/dev.c is interesting; another place
+>>> like this is kernel/trace/, but I'm less familiar with that one.
+>>>
+>>> rostedt Cc'd (miklos already had been)
+>>
+>> Thanks for the Cc. The tracing ring buffer was specifically made to be used
+>> by splice and the libtracefs has a lot of code to use it as well. As
+>> reading the ring buffer literally swaps out the write portion with a blank
+>> read portion, that portion (sub-buffer) is used to be directly fed into
+>> splice, providing a zero-copy of the trace data from the write of the event
+>> to going into a file.
+>>
+>> trace-cmd defaults to using splice to copy the tracing ring buffer directly
+>> into files to avoid as much copying during live recordings as possible.
+>>
+>> Whatever changes we make, I would like to make sure there's no regressions
+>> in performance of trace-cmd record.
+> 
+> Well yes, The patchset seems sensible from a quality POV.  But to make
+> a decision we should first have a decent understanding of its downside
+> impact.
 
-[ Upstream commit a6a9bc544b675d8b5180f2718ec985ad267b5cbf ]
+I guess most (all?) of us ... dislike ... vmsplice(), so trying to remove it
+entirely is certainly very appealing ...
 
-Syed Faraz Abrar (@farazsth98) from Zellic, and Pumpkin (@u1f383) from
-DEVCORE Research Team working with Trend Micro Zero Day Initiative
-report that a RTM_GETNEIGH will return uninitalised data in the pad
-bytes of the ndmsg data.
+> 
+> I haven't seen a description of that impact in the discussion thus far.
+> And that description is owed, please.
+> 
+> I assume a small number of specialized applications are using
+> vmsplice() to great effect?  What are those applications?  What is the
+> impact of this change?
 
-Ensure we're initialising the netlink data to zero, in the link, addr
-and neigh response messages.
 
-Fixes: 831119f88781 ("mctp: Add neighbour netlink interface")
-Fixes: 06d2f4c583a7 ("mctp: Add netlink route management")
-Fixes: 583be982d934 ("mctp: Add device handling and netlink interface")
-Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260209-dev-mctp-nlmsg-v1-1-f1e30c346a43@codeconstruct.com.au
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Li hongliang <1468888505@139.com>
----
- net/mctp/device.c | 1 +
- net/mctp/neigh.c  | 1 +
- net/mctp/route.c  | 1 +
- 3 files changed, 3 insertions(+)
+I did some digging, and the kernel crypto API documents using splice/vmsplice
+for zero-copy[1] and libkcapi [2].
 
-diff --git a/net/mctp/device.c b/net/mctp/device.c
-index aec7ffad2666..a11d5aca201c 100644
---- a/net/mctp/device.c
-+++ b/net/mctp/device.c
-@@ -55,6 +55,7 @@ static int mctp_fill_addrinfo(struct sk_buff *skb, struct netlink_callback *cb,
- 		return -EMSGSIZE;
- 
- 	hdr = nlmsg_data(nlh);
-+	memset(hdr, 0, sizeof(*hdr));
- 	hdr->ifa_family = AF_MCTP;
- 	hdr->ifa_prefixlen = 0;
- 	hdr->ifa_flags = 0;
-diff --git a/net/mctp/neigh.c b/net/mctp/neigh.c
-index bc75a263719c..18a6be38f172 100644
---- a/net/mctp/neigh.c
-+++ b/net/mctp/neigh.c
-@@ -217,6 +217,7 @@ static int mctp_fill_neigh(struct sk_buff *skb, u32 portid, u32 seq, int event,
- 		return -EMSGSIZE;
- 
- 	hdr = nlmsg_data(nlh);
-+	memset(hdr, 0, sizeof(*hdr));
- 	hdr->ndm_family = AF_MCTP;
- 	hdr->ndm_ifindex = dev->ifindex;
- 	hdr->ndm_state = 0; // TODO other state bits?
-diff --git a/net/mctp/route.c b/net/mctp/route.c
-index 48d32bfd3863..a93796eb0a09 100644
---- a/net/mctp/route.c
-+++ b/net/mctp/route.c
-@@ -1031,6 +1031,7 @@ static int mctp_fill_rtinfo(struct sk_buff *skb, struct mctp_route *rt,
- 		return -EMSGSIZE;
- 
- 	hdr = nlmsg_data(nlh);
-+	memset(hdr, 0, sizeof(*hdr));
- 	hdr->rtm_family = AF_MCTP;
- 
- 	/* we use the _len fields as a number of EIDs, rather than
+I did not find performance numbers, how much vmsplice/splice actually gives us.
+Playing with the kcapi-speed tool [3] (specifying --vmsplice vs. --sendmsg)
+doesn't really reveal a big difference at least on my notebook. Not sure if the
+parameters I specify are reasonable.
+
+I don't know whether downgrading vmsplice to preadv2/pwritev2 would perform
+significantly worse than sendmsg ... and I don't know what the default would
+usually be (default to vmsplice or sendmsg). I might try finding some time to
+play with it more, but I doubt it, so if anybody else has time ... :)
+
+
+I'll note that we have a bunch of selftests (mostly around COW handling) that
+rely on vmsplice to test R/O pinning behavior. For R/W pinning, we can use
+iouring fixed buffers easily. The only alternative for R/O pinning is using the
+gup_test infrastructure that needs to be compiled into the kernel, unfortunately ...
+
+So we'll have to adjust some tests there to use a different interface. I'm sure
+I can find someone to work on that once this change here landed and doesn't have
+to be yanked immediately again.
+
+
+[1] https://www.kernel.org/doc/html/latest/crypto/userspace-if.html
+[2] https://github.com/smuellerDD/libkcapi/blob/master/lib/kcapi-kernel-if.c
+[3] https://github.com/smuellerDD/libkcapi/tree/master/speed-test
+
 -- 
-2.34.1
+Cheers,
 
-
+David
