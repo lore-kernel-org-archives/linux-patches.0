@@ -1,149 +1,174 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from CY3PR05CU001.outbound.protection.outlook.com (mail-westcentralusazon11013010.outbound.protection.outlook.com [40.93.201.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8678C3909A4;
-	Tue,  2 Jun 2026 18:44:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780425883; cv=none; b=T1/OP8ui6Tej0fsXje8xZUpjZiAKt3R8uebIWgW8ygSLxZDKzKhLlA3Wg55cU6lK1pmUrBJIdBxviT2VihhqpuPIVi+m7N+ycBQXArnq+oSUvrkxlTeCNkldeoKkQYgyaN6ybAMnY2g3RKVeqZk40jKQ3ByCFrYchKiUAgRK+iE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780425883; c=relaxed/simple;
-	bh=IAJgDRvTCvMXiiaxRtRemk9HFoGhIAzgZdjXk1Y3atU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ABS9ujdSL4kgrZKxQff3FWl0X4Xzq3ad+hlk/1V/NLA/uSq6Wo984EnRAXyNDaHUs6mKp6Zo2iLcoxrz6bT9ryTPM+cggLF3J0mTwHinPxttrT+ijHigmw7KQ0hJHD0dxIJR0QQCwtHmLfMp19zb/oShCKwBvKbIaNStTAuvO/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZkPgGXeJ; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA4C346E70
+	for <patches@lists.linux.dev>; Tue,  2 Jun 2026 19:37:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.201.10
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780429054; cv=fail; b=OdvUNZ+q/X69sbycVtzqAqhaF+3QtjZrrivGxXSTyLZ/afTNFo51+MA66FaYsIlVuxa5KOhb2NWcUXC0Io38Rskp84BpTTeZlLwqadrHbiUP7+2MraVgSYJD03Y9HKXNmsO8qF51NEzA/pR87ED6JARfN2YvZ2VVauf+iB1T14U=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780429054; c=relaxed/simple;
+	bh=E7onBPeVzzqv6LfsS93COeF4y13M0zPLmpLLbUx0M/Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=txQDouD6EIbjAgz0M0z8ztQDneb7ysKP4fdRjxu3mLe7PkxNKXCEo3FyAqSMtgt+h0slPZawOvXK7uQwYSHOD72q5/yG5MdHVnPpnkEK59r6Nd10IujdHJrcJzvitDhUjDtBw/yMifVOc1iyJBFl0a4fSQjYGUEI3delY8n/nHA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=tXeec52w; arc=fail smtp.client-ip=40.93.201.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZkPgGXeJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 883B11F00893;
-	Tue,  2 Jun 2026 18:44:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780425882;
-	bh=MLZpb/dBT6Cd/zdymSeQQn2ShIJqYaKuCdbAYTAgCEs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=ZkPgGXeJhcybPoUrwoJsoHbVqWODRisiZEor43NouJ0EOonoHtL5ZjXT5z2iJq2OW
-	 GDChFmTvh0mNbkacQwKUaKroi/K5VuMWckc3qDOZkoGWloPBy/BiNDmIsaDfaEbVdt
-	 SJIvc7Zr/r1UimXiaMWvOVkDxmTPRqm5nQj0oHRrXQP3pz160C1TveVTP7t69+wX+y
-	 4XU2qNwckg8sNPBwiMTbYksGRjLuaZKd4WSdoPd/PXHbT4sUKt38KmcNBD0nQUxgYG
-	 yrp+jU8aG/MhN4ziuGvqzI6WZWvejPq1QXRH+RvSiAdjLWhsMCdLfqKnatMcOtteZT
-	 VzdugpvG6XUWg==
-Date: Tue, 2 Jun 2026 18:44:40 +0000
-From: Eric Biggers <ebiggers@kernel.org>
-To: "David Hildenbrand (Arm)" <david@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Askar Safin <safinaskar@gmail.com>, linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org, linux-api@vger.kernel.org,
-	netdev@vger.kernel.org, Matthew Wilcox <willy@infradead.org>,
-	Jens Axboe <axboe@kernel.dk>, Christoph Hellwig <hch@infradead.org>,
-	David Howells <dhowells@redhat.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Miklos Szeredi <miklos@szeredi.hu>, patches@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org, Jan Kara <jack@suse.cz>
-Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for
- preadv2/pwritev2
-Message-ID: <20260602184440.GB2503276@google.com>
-References: <20260531010107.1953702-1-safinaskar@gmail.com>
- <20260601-enthusiasmus-canceln-anlehnen-0e62317a9784@brauner>
- <CAHk-=wifX_rrDjRGnDnOqE-usptAukuXKrmuPuVDP5bOCBWzGQ@mail.gmail.com>
- <20260601173325.GH2636677@ZenIV>
- <20260601160455.2c187574@gandalf.local.home>
- <20260601172825.a51a588ec1c32617a0e12d78@linux-foundation.org>
- <821ed41e-5b2f-4d17-aeb2-71b0361f8e7f@kernel.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="tXeec52w"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=gU/wt0zINag+nz1Tx3GL9o8zXgasEs01APrG3IOMhHfM7TSb4/t8pFbEC1GTuf/y25xPleMKFJdFxfv6fLGqxE2Ox0atEZwFr1hlKrEc97EOpHnX0bfdMHqGd/jRz2UOEgsvZ2DZgyA3sFFQauJ+NoBCzNI8ozp09zgMABIl+/B9zw8y7w1TYq8V4Ufe32JyugXIq+2DoxR23mmpDn/sGFSFkO3u2nLLTnl17Laqzyv1qF64myCyEd6QQX/8oM78tdDPH609ZPR5A9ad49w8tSmuoOpCRlRXZBesAVGFbRQOAlyezIjd0Mi9HMW+RmKok1LmuRuwZR2z9Ynl2cmsvA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=czERaC5f4Ufz17FGzITAzlX/CaY8habXIbzqPKoUC8k=;
+ b=KKMkIputUcL8PW7muFj7s0ZfB+E2+deZjeNljTH7264NjMPujuAgL01mpyGx9C1dmZt1h34joESXF14YhVdkhoYze5aXJFJ87kWsK00XRnwe4OdJqQwfU352PFxQPqW0/5Ea7kpuYFJy/QzVGrmuIpD+Iz6a/uhvBtKc4TwQP0Op74k7Y5lPKSqIOZzBVt4p7S/1A6GBYOddWknRV8b+rOisCtapfsmEwsO0/J4NP53soj8wzVZXArDjpmuGYec9CTe1yxeFa9Tuyt2IIBlnxf//cT4uNGlYd14uiZNWemcdY4poPSbm+OPNPCpNpiO1Te1jBIWe9etJrkQ624UKXw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=czERaC5f4Ufz17FGzITAzlX/CaY8habXIbzqPKoUC8k=;
+ b=tXeec52wJ8XlkMFWZbCkAmI0DsG0W8rXnbTuAI2nSsyA9lSyvracfUCf9GOyNX5zgnwKQe0/icP1uBnYJbquaOD1nWQuOw9aBhdvAO6CbyRfftnP8Nqxo6dJNYN2/OQ9jKe16+nosvC32hbBudxE2O+l1Y+X99vT0Ezs5IpqeyeG8VsFLrclUp1JkuwGLyG1YSGjTwP1LGXMwqtiaF1phKz1asN6TBS3BdN0YwGQGhD5xfZU/Uq0l1exym8tHoxV/Q9JYfKUmuih/0PQ9v+WhdCsl2HNvE1S7NganpYBF1zOm7EbgMjI7X+KKvoT7DeNv7XmgSxID8Tbp/uVtM5fQQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by LV8PR12MB9714.namprd12.prod.outlook.com (2603:10b6:408:2a0::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.16; Tue, 2 Jun 2026
+ 19:37:29 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0071.015; Tue, 2 Jun 2026
+ 19:37:29 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Leon Romanovsky <leon@kernel.org>,
+	linux-rdma@vger.kernel.org
+Cc: Leon Romanovsky <leonro@nvidia.com>,
+	Mark Zhang <markzhang@nvidia.com>,
+	patches@lists.linux.dev
+Subject: [PATCH] IB/cm: Fix av cm device leak on an error path in cm_init_av_by_path()
+Date: Tue,  2 Jun 2026 16:37:28 -0300
+Message-ID: <0-v1-38292501f539+14f-ib_cm_av_leak_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: YT4PR01CA0142.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:d5::17) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <821ed41e-5b2f-4d17-aeb2-71b0361f8e7f@kernel.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|LV8PR12MB9714:EE_
+X-MS-Office365-Filtering-Correlation-Id: a57b2844-fc97-4d13-475f-08dec0de6227
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|18002099003|56012099006|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	WkVWH9EU4q3aq3fjsmcH1d7fJKqlxRj7gmRieU59bUgoWIlfKRchfw5d6SNzFi6AnOicdXeAbtMVBirN8RJFELtHgDk5IfnqNVtjf3mh2TgkyuteVhZcfGITa3WrL4H0lJwyNSgSjdg7tIlvqybxG/vm+QrGIklrB3bE7gcHOLwgytCvrlodCtCdLgLH9BhZKoz8k4wCsJzS3tXMkJto8MherI2y4QW1pWx2iA5tolAUZKGkINGwPhcOQvNbNaqsLamdTSXJcuRnKv99gPGWU1Qr6Ebj7GBuJWji4smgtuNQ+2AGDJ92l0SFdqIBBmgjJ9o7DtSiegl1EyMj27cUxw8yy/uIOD1dyl4RkpDE6ZcydrAT3RP3SeuZk3AAZWE0GFM2ai0rbK36xTOAqE5a+0j62Vpm0cyR5OqbRYFCZtWawDg327uiOLKm+CoeL496TheiK5RAX3UXuD28rT8riSp9Te/DP1DsflYqy7bQBE/RHmNYpB4ZG4aYkZPsj037WyJjFW9ZsnZxZFKCKHXy67WeqZurrDSSxoV5jpn8UuwqtqfyOnWxBrUDCBV5JN0JYPQ0NPO/qZ5Hn8Wl+cDIZtOUEJa6HJc4F9aqP+2/A1HaCGpcW4UMT4A9GviM5RKcXTqTRLHC63VDf6/SGnRVYrAFKG/Bf6+8xWlKVXvnr21NEsWbH9WjhZPPDzj02C0b
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(18002099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?26XKOaNn85Pmv+wsFVCLxjpOMseE5kctnj4Lo35vncdzAqRAaH09cDpp0Y1U?=
+ =?us-ascii?Q?HekNWh5bVhK2qGOz8N+ygDw+bgxzKR/BSaTWxtFoX6Nj5LeIGOutbCO9iInJ?=
+ =?us-ascii?Q?OKuEHpS+SfXucSK/R2Z1KZK0B/k2W1iIK7ERL81KQBPCwwE0w9EFnkufiBp9?=
+ =?us-ascii?Q?c7HPk/gWIuyIFgLdLto1Pxbn11ctp5z1PgLcbc87mSvz8CmomQeoK+M9JYof?=
+ =?us-ascii?Q?gcuHJ0GiDhvkn9/5OXby3giW4+VxOJks/Pj2nzKWM2tqgVbWVLnSmpXRxUQO?=
+ =?us-ascii?Q?DvtFZaZNxVEUvXJHiVA/1Ns6teHpUXBLwBtgLfmkgdatZdoocQ0hkSMM/EU+?=
+ =?us-ascii?Q?3pDnvLvtyAmdDylKOm+yo3uG4KdQBaoXUBH8BFUZo6SpWE7zjwYMrGQS9Mmk?=
+ =?us-ascii?Q?84whKw57LdVRTLc4DeO6SP7PzaPRz8ihE98CaCGKqXtiRxW6agMTsCDUdXA2?=
+ =?us-ascii?Q?kZJEArf5b60Gc+m1sKiYT8jbYMREnuQOCI6M+EpLeE70RL3WlGXjmugsz8O/?=
+ =?us-ascii?Q?DiyAqlNN/LtBiiVA8a2A03T3zBvTuL616Idr1gjPV1zE3cA4F6amYjyeAn75?=
+ =?us-ascii?Q?3OBp44iHWGm/KvdwO8pze+M/laMhazUOM4emXwzJSuvq8QCzqvlAcaQ++yYx?=
+ =?us-ascii?Q?Sm7fxT9CaVURWVWVjI3fvtEPWm/JLF6U5a4pFNqz+uKXXrcPw5/PHklHhlwA?=
+ =?us-ascii?Q?hN4yGzIVXw4/mZ8I5ZFLQuRegtelvl27S3KzHaTrvuQ64ZAL6pdMWFrLEWqB?=
+ =?us-ascii?Q?xRQiNiGezvD9ZqO0/Q4gCRNZjWGJr2RIK3Bopj0fnuwmR3mnC7b+pQ0cjWTg?=
+ =?us-ascii?Q?fGBEuwSEjBfddBnvyri0j2FEKZW53LoJuhbac7RVZOGD9oC7lm8NCHPkd0Wh?=
+ =?us-ascii?Q?jrL4x2hwLSPs2nKUnS5Boh6cCqNeafdDWiai7xQK3HPS/4n/Yc97e9SFYYBJ?=
+ =?us-ascii?Q?RJxmZuEkn3vRUYenkKt/k3+h7rJr1mCbq1QNFAKg3TuJ3rUUgq2keec2NfVu?=
+ =?us-ascii?Q?DJPqtzvpSpKbN6GcBglHxkXLSnD15oQNNAbWb/9rDuGxlZZ1956Ci5HV4cRW?=
+ =?us-ascii?Q?2th4e5gey38suM2s7oYDq07KdBsb0EsouPYBpaBG/RYe0Kc59Msg6sow1FjS?=
+ =?us-ascii?Q?6Uu78n92iAP9m4KPLOLN1IFicJr9c89ptr5JsOPoU3uJv9dFbSCP89/DBJKD?=
+ =?us-ascii?Q?DAL2lLeyRuiaJo8o6Tj/Eb2vwCykh7eyeE/B8LhVCRFq8JC2VMCbna/plPH6?=
+ =?us-ascii?Q?LBVR67BjPii2ZZqgvkY4AsD3ctNY7HvFF4CJ79SDr5BSz0QN3k4bedu41qH1?=
+ =?us-ascii?Q?dB+ZBYrZVAJy/fpYGEOwM3jD0qEO5CVnZkZ00IHGuE8EBlOqF67P/boC8UhH?=
+ =?us-ascii?Q?Ggrc7Q+eZqhkLkn29MDcdOIrkBNiref0OteNWl2oOFycPB2zT6oJE91IYlSc?=
+ =?us-ascii?Q?S13nGEij6l3apkt/ZY74W1xGv4USQeWWCyacWn/CvMKQhZ05c0lBbK+LFiD5?=
+ =?us-ascii?Q?yfaR7nRnU4iJr50/NCsmIoUNtgUeg+If0otkw0d4/SuvwKBKBW5anNUVbjWJ?=
+ =?us-ascii?Q?wgzNXr8/yfcFyUXK1Gf/UiomYHfvQiUiEfM4N79k9ZtssQ1ejE1PRP4ft3yU?=
+ =?us-ascii?Q?U5lZmfv0fzdCJztbCOF8/n3aOKHaQpqf0bZs6TjqxMqbdd7PokUXJMI4icln?=
+ =?us-ascii?Q?cNmSZO0NnsZANgb0RPigpE6DFGdFZEgj/owpNav5B7uZhmwM?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a57b2844-fc97-4d13-475f-08dec0de6227
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 19:37:29.7002
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: DD/uTLz7j9C32C5QtLpaEKCUbUq4Z5Za3nldAr8MSCQiEoR8f1ehQbFDGrHqNlVO
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9714
 
-On Tue, Jun 02, 2026 at 10:25:06AM +0200, David Hildenbrand (Arm) wrote:
-> On 6/2/26 02:28, Andrew Morton wrote:
-> > On Mon, 1 Jun 2026 16:04:55 -0400 Steven Rostedt <rostedt@goodmis.org> wrote:
-> > 
-> >> On Mon, 1 Jun 2026 18:33:25 +0100
-> >> Al Viro <viro@zeniv.linux.org.uk> wrote:
-> >>
-> >>>
-> >>>
-> >>> FUSE might be interesting - fuse_dev_splice_read() and its ilk.
-> >>> Communications between the kernel and fuse server at least used to
-> >>> seriously want that, so that would be one place to look for unhappy
-> >>> userland...
-> >>>
-> >>> splice-related logics in fs/fuse/dev.c is interesting; another place
-> >>> like this is kernel/trace/, but I'm less familiar with that one.
-> >>>
-> >>> rostedt Cc'd (miklos already had been)
-> >>
-> >> Thanks for the Cc. The tracing ring buffer was specifically made to be used
-> >> by splice and the libtracefs has a lot of code to use it as well. As
-> >> reading the ring buffer literally swaps out the write portion with a blank
-> >> read portion, that portion (sub-buffer) is used to be directly fed into
-> >> splice, providing a zero-copy of the trace data from the write of the event
-> >> to going into a file.
-> >>
-> >> trace-cmd defaults to using splice to copy the tracing ring buffer directly
-> >> into files to avoid as much copying during live recordings as possible.
-> >>
-> >> Whatever changes we make, I would like to make sure there's no regressions
-> >> in performance of trace-cmd record.
-> > 
-> > Well yes, The patchset seems sensible from a quality POV.  But to make
-> > a decision we should first have a decent understanding of its downside
-> > impact.
-> 
-> I guess most (all?) of us ... dislike ... vmsplice(), so trying to remove it
-> entirely is certainly very appealing ...
-> 
-> > 
-> > I haven't seen a description of that impact in the discussion thus far.
-> > And that description is owed, please.
-> > 
-> > I assume a small number of specialized applications are using
-> > vmsplice() to great effect?  What are those applications?  What is the
-> > impact of this change?
-> 
-> 
-> I did some digging, and the kernel crypto API documents using splice/vmsplice
-> for zero-copy[1] and libkcapi [2].
-> 
-> I did not find performance numbers, how much vmsplice/splice actually gives us.
-> Playing with the kcapi-speed tool [3] (specifying --vmsplice vs. --sendmsg)
-> doesn't really reveal a big difference at least on my notebook. Not sure if the
-> parameters I specify are reasonable.
-> 
-> I don't know whether downgrading vmsplice to preadv2/pwritev2 would perform
-> significantly worse than sendmsg ... and I don't know what the default would
-> usually be (default to vmsplice or sendmsg). I might try finding some time to
-> play with it more, but I doubt it, so if anybody else has time ... :)
+Codex pointed out that cm_init_av_by_path() can call cm_set_av_port()
+which takes a reference on the cm device, but then can immediately return
+error if ib_init_ah_attr_from_path() fails.
 
-AF_ALG is a mistake and isn't commonly used.  Using a userspace crypto
-library is faster and is what almost everyone does anyway, as it avoids
-the syscall overhead.  There are many other issues with AF_ALG as well.
+Since callers like ib_send_cm_req() put the av on the stack this leaks
+that cm device reference.
 
-7.2 will mark AF_ALG as deprecated, mostly remove AF_ALG's zero-copy
-support, and remove AF_ALG's async I/O support:
+Re-order cm_init_av_by_path() so it doesn't touch the av until it has done
+all its failable work, and then update the av in one shot so it is either
+left alone or fully init'd.
 
-    https://lore.kernel.org/linux-crypto/20260430011544.31823-1-ebiggers@kernel.org/
-    https://lore.kernel.org/linux-crypto/20260504225328.25356-1-ebiggers@kernel.org/
-    https://lore.kernel.org/linux-crypto/20260523-af-alg-harden-v1-0-c76755c3a5c5@gmail.com/
+Fixes: 76039ac9095f ("IB/cm: Protect cm_dev, cm_ports and mad_agent with kref and lock")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+---
+ drivers/infiniband/core/cm.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-In practice, the programs that are keeping Linux distros from disabling
-AF_ALG in their kconfig outright are just iwd, cryptsetup, and bluez.
-They use AF_ALG just because it was mistakenly thought to be easier than
-using a userspace crypto library.  They don't need maximum performance,
-nor do they use vmsplice, splice, or sendfile.
+diff --git a/drivers/infiniband/core/cm.c b/drivers/infiniband/core/cm.c
+index 6ab9a0aee1ec60..ee966a25141b12 100644
+--- a/drivers/infiniband/core/cm.c
++++ b/drivers/infiniband/core/cm.c
+@@ -530,6 +530,7 @@ static int cm_init_av_by_path(struct sa_path_rec *path,
+ 	struct rdma_ah_attr new_ah_attr;
+ 	struct cm_device *cm_dev;
+ 	struct cm_port *port;
++	u16 pkey_index;
+ 	int ret;
+ 
+ 	port = get_cm_port_from_path(path, sgid_attr);
+@@ -538,12 +539,10 @@ static int cm_init_av_by_path(struct sa_path_rec *path,
+ 	cm_dev = port->cm_dev;
+ 
+ 	ret = ib_find_cached_pkey(cm_dev->ib_device, port->port_num,
+-				  be16_to_cpu(path->pkey), &av->pkey_index);
++				  be16_to_cpu(path->pkey), &pkey_index);
+ 	if (ret)
+ 		return ret;
+ 
+-	cm_set_av_port(av, port);
+-
+ 	/*
+ 	 * av->ah_attr might be initialized based on wc or during
+ 	 * request processing time which might have reference to sgid_attr.
+@@ -558,6 +557,8 @@ static int cm_init_av_by_path(struct sa_path_rec *path,
+ 	if (ret)
+ 		return ret;
+ 
++	av->pkey_index = pkey_index;
++	cm_set_av_port(av, port);
+ 	av->timeout = path->packet_life_time + 1;
+ 	rdma_move_ah_attr(&av->ah_attr, &new_ah_attr);
+ 	return 0;
 
-There is other highly niche code out there that does implement the
-AF_ALG + vmsplice + splice thing, e.g. libkcapi.  But it's just not
-enough of a reason to keep zero-copy support, especially considering
-that AF_ALG has always been the wrong solution in the first place.  The
-fallback to copying the data is fine for this deprecated API.
+base-commit: d6ab440240a04b8737ee4c7bb21af9182e451733
+-- 
+2.43.0
 
-- Eric
