@@ -1,34 +1,34 @@
-Received: from n169-114.mail.139.com (n169-114.mail.139.com [120.232.169.114])
+Received: from n169-111.mail.139.com (n169-111.mail.139.com [120.232.169.111])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F783B3BF4
-	for <patches@lists.linux.dev>; Tue,  2 Jun 2026 07:50:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C24D3B9600
+	for <patches@lists.linux.dev>; Tue,  2 Jun 2026 07:50:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.111
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780386617; cv=none; b=g95HtRMk3QDlL8aOXOcp9XZ37LPvw9R9OfCi2QsPkCvtFeqbLjyY40UhACZhgVh5zn36crgM5fkZCtJIK2pVBAzlxaBM6M10rhiRbCXBdYPNRTnjFwSZpAe8hKS15os0kidhZI5754VhLzSH8NqMjcJbJIbuOoCXG0umJERhdi8=
+	t=1780386620; cv=none; b=a0MZPOnZ7U0b8zFCXTc9IWnko3vZilgkefAA4fPLY+e5Mjbz5Y8d+x1bc6I+EHhdVBZaPdpGjgTTJmMxk15rvmKzFUXXH8II7YraA0hWiOAfYHfxYcnKYFP1nza/jkemb4robv8ZJ+1bSDoQCi7PQGWYE+mOBgPdErOEhNGPOdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780386617; c=relaxed/simple;
-	bh=WtN4eaIts+Ftcwn9eMgaXtTeXR/Gk9lkpwWarXWxRCo=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=o6cgdfywNGi58FXTzK48gP/X2fMC8THPxdYvu0HuESn5eaXkND+GFCcJMjrb4/m3lqkEO25dowkv1/QymZZb7EiaJPgAl5d40Fht5vlsXVU8tTGn4UJFHEtSdmVJs5XnLEh3T8YhnVxWPjbD6YOhmIYiM8/nALFwSq+UkzTVnkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=O6bM1H6a; arc=none smtp.client-ip=120.232.169.114
+	s=arc-20240116; t=1780386620; c=relaxed/simple;
+	bh=r8JJSHfKw9Brkkcjw3TDT0i1OPaFOAg7fPAPfVj2Lec=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=RUBUUTLeL/5M+8MUMUzFukB7WZZOxZgrZhwey2nRKqDaIyyvmvrJVclw9tWdcodJqxtSHwkyiiU2iimkybyPhJ+ZYJBt6lIaUu7141BJGLpCCpUA3fPRmsJou+C8eb3VTCa9HuvRXN2FPPik0QHsDfjEhLHk7Y3QKZcrbHQAO5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=d6uX4TgG; arc=none smtp.client-ip=120.232.169.111
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="O6bM1H6a"
+	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="d6uX4TgG"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
 	d=139.com; s=dkim; l=0;
 	h=from:subject:message-id:to:cc:mime-version;
 	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=O6bM1H6aJU3LrKKjAq/eUb2UlvzkpxTmQ2vyVTubqr++xoyICwZI2Y595b+y/CrxhgcvWYBHqHJmt
-	 73q9MNMtqkjIpdyhcy1Lqw5hW6EyX6SaFRewjv3EYgcPmWjEIX+kfjNrER0qsp0TePpWTGCqmjYV8v
-	 NXut8Ozl9G97TmIw=
+	b=d6uX4TgGv6yot+IU0+JPwwvDwBJHBzykiSicikOxgodxZpH+fkeYwgHGBUqGq7rzIWMfgJj+lNOow
+	 0ql+JDtHphqTba4Swg3OVsjLXuL/y7JLIMbTFSUGUosh0zC7YnYgo7dZOPdxmbR+tdB56046di2BwJ
+	 uJgb+IeO0p5EHHrI=
 X-RM-TagInfo: emlType=0                                       
 X-RM-SPAM:                                                                                        
 X-RM-SPAM-FLAG:00000000
 Received:from NTT-kernel-dev (unknown[60.247.85.88])
-	by rmsmtp-lg-appmail-45-12076 (RichMail) with SMTP id 2f2c6a1e8b2a7ba-027e8;
-	Tue, 02 Jun 2026 15:50:06 +0800 (CST)
-X-RM-TRANSID:2f2c6a1e8b2a7ba-027e8
+	by rmsmtp-lg-appmail-12-12001 (RichMail) with SMTP id 2ee16a1e8b375ef-0261c;
+	Tue, 02 Jun 2026 15:50:19 +0800 (CST)
+X-RM-TRANSID:2ee16a1e8b375ef-0261c
 From: Li hongliang <1468888505@139.com>
 To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org,
@@ -42,9 +42,9 @@ Cc: patches@lists.linux.dev,
 	pabeni@redhat.com,
 	horms@kernel.org,
 	netdev@vger.kernel.org
-Subject: [PATCH 6.1.y] net: mctp: ensure our nlmsg responses are initialised
-Date: Tue,  2 Jun 2026 15:50:05 +0800
-Message-Id: <20260602075005.3210862-1-1468888505@139.com>
+Subject: [PATCH 5.15.y] net: mctp: ensure our nlmsg responses are initialised
+Date: Tue,  2 Jun 2026 15:50:14 +0800
+Message-Id: <20260602075014.3210968-1-1468888505@139.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -81,10 +81,10 @@ Signed-off-by: Li hongliang <1468888505@139.com>
  3 files changed, 3 insertions(+)
 
 diff --git a/net/mctp/device.c b/net/mctp/device.c
-index 85cc5f31f1e7..fd368249246d 100644
+index aec7ffad2666..a11d5aca201c 100644
 --- a/net/mctp/device.c
 +++ b/net/mctp/device.c
-@@ -71,6 +71,7 @@ static int mctp_fill_addrinfo(struct sk_buff *skb,
+@@ -55,6 +55,7 @@ static int mctp_fill_addrinfo(struct sk_buff *skb, struct netlink_callback *cb,
  		return -EMSGSIZE;
  
  	hdr = nlmsg_data(nlh);
@@ -93,10 +93,10 @@ index 85cc5f31f1e7..fd368249246d 100644
  	hdr->ifa_prefixlen = 0;
  	hdr->ifa_flags = 0;
 diff --git a/net/mctp/neigh.c b/net/mctp/neigh.c
-index 590f642413e4..c0151a69d2b7 100644
+index bc75a263719c..18a6be38f172 100644
 --- a/net/mctp/neigh.c
 +++ b/net/mctp/neigh.c
-@@ -218,6 +218,7 @@ static int mctp_fill_neigh(struct sk_buff *skb, u32 portid, u32 seq, int event,
+@@ -217,6 +217,7 @@ static int mctp_fill_neigh(struct sk_buff *skb, u32 portid, u32 seq, int event,
  		return -EMSGSIZE;
  
  	hdr = nlmsg_data(nlh);
@@ -105,10 +105,10 @@ index 590f642413e4..c0151a69d2b7 100644
  	hdr->ndm_ifindex = dev->ifindex;
  	hdr->ndm_state = 0; // TODO other state bits?
 diff --git a/net/mctp/route.c b/net/mctp/route.c
-index fdeaf80691e5..c9b0b7542243 100644
+index 48d32bfd3863..a93796eb0a09 100644
 --- a/net/mctp/route.c
 +++ b/net/mctp/route.c
-@@ -1331,6 +1331,7 @@ static int mctp_fill_rtinfo(struct sk_buff *skb, struct mctp_route *rt,
+@@ -1031,6 +1031,7 @@ static int mctp_fill_rtinfo(struct sk_buff *skb, struct mctp_route *rt,
  		return -EMSGSIZE;
  
  	hdr = nlmsg_data(nlh);
