@@ -1,141 +1,138 @@
-Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
+Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azon11011054.outbound.protection.outlook.com [52.101.57.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D653D669D;
-	Tue,  2 Jun 2026 12:24:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.108
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780403069; cv=none; b=eO9MuHHLyoKhlY8IWWgWQaRVmcZ8ZvIlK4/XwbfovCFOwjKn6pNRFKMobjSjZvtf6j6Sadmy6nk5wCdVanMF8dSWhLjzrBT4f2gnR4b4A+rbt24NGhjy1GrxDs4jYpS7DtRHUvYarTmJ53XW5LgAupBuudMheW6ihwjrJiJOrk0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780403069; c=relaxed/simple;
-	bh=JlT+cZYsqRG96W04CugaFUAuiXRhWUqpRZ1gwj1v9yQ=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=iGsz4HzaDCFq7lSPflpN7JRn4y1eMWTBgE9z2G9oyzqBU/Si1dtlnAAaKIoWG5VDiH+OHiWZxaDP9xPMXdiUVlE+T2dI+MCcJqnsq9ehLpslOVC83JJv1DXPem/MhNCJCqG/6vdVct3REvFQmc53Id5on0I+td/yyrVgiSJqY3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=lSBGcYcw; arc=none smtp.client-ip=82.195.75.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=debian.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B253E3170
+	for <patches@lists.linux.dev>; Tue,  2 Jun 2026 13:05:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.57.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780405507; cv=fail; b=T8MisHvsNX/cvfNNAybFn7Uz9G4OLRRz2V5ztIFtuw3P4EnUMCtJyTWRNi2g3j62GYEhUWTqq2WfeSwmokrWvO44YTTfGa9cXSZB4YkH0z12L6L75wAKr4fQ/15tM8ph9op2ZHRB+H7NRyW4f31OvnmBjUh/WEMYtcXUVReQUfQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780405507; c=relaxed/simple;
+	bh=mYOZgjgOIcu/Gu2Ydm4lQRJNcRDecJSBqFckkv5ZcBo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=EG2mDDiEx/CD5FbTs84BHL810QIoPX2LRGLd4alYibOOuf0hEylzVYabLbzu9GO85YW7cutoNe6t92ju6HOLBKyKyC38RyrlsTPCeXZuZC2jDJnQlYedjevNBSUZiFYjmflvpCizIoGO2TJT2VGL0XLcXmmwZ3L63BpIr9r6LH0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=PokTYaYg; arc=fail smtp.client-ip=52.101.57.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="lSBGcYcw"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:MIME-Version:Content-Type:References:
-	In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=KVqA0dyDMlZqpwtMJ9x40FOgRbN07P0B63/VMtUhQro=; b=lSBGcYcwI1Kbe1cfXa/27rifmo
-	scx63GB4xXpDCQloMYUD4NJ8Rv87w6TP1+1Le+SqqmHnKBMV+6NrT9f0Jr5+ViLcLQZOKlS42FT9q
-	ydf6rDB3xDcEhZ1DR5STEbOACE4IyA+U9nheEjVC7534M6qCFs4RvcTFHi8g8wgXDE5LpbKPmmRME
-	jastH441b9qUFise3AOStU/6SX0yEgO9r7Xzx/yuWP8A+qZFEwjAVNkMNM17RWc0phKa2HtxK9HDa
-	6utSlaudiPL0dx/rOyuHHQyTKvNUpebC6y/eNjiSblOD+ZEfJD1JAwSKumGtlFFStiFwRkTYBu52B
-	4dd69Y2A==;
-Received: from authenticated-user
-	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.96)
-	(envelope-from <benh@debian.org>)
-	id 1wUOAK-002x2t-2P;
-	Tue, 02 Jun 2026 12:24:16 +0000
-Message-ID: <d9c2e8ea23b1919fe663e480cc7def260ed0ee24.camel@debian.org>
-Subject: Re: [PATCH 5.15 002/570] ip6_tunnel: Fix usage of
- skb_vlan_inet_prepare()
-From: Ben Hutchings <benh@debian.org>
-To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>, Greg
- Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Sasha Levin <sashal@kernel.org>, Alexandr
- Alexandrov <alexandr.alexandrov@oracle.com>
-Date: Tue, 02 Jun 2026 14:24:10 +0200
-In-Reply-To: <68ad88bb-958d-4009-8631-284853ffe1b0@oracle.com>
-References: <20260413155830.386096114@linuxfoundation.org>
-	 <20260413155830.485087556@linuxfoundation.org>
-	 <68ad88bb-958d-4009-8631-284853ffe1b0@oracle.com>
-Organization: Debian
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-GEeodVjEnDPZLD35272B"
-User-Agent: Evolution 3.56.2-9 
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="PokTYaYg"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wp0EfFmG1TjOWgP0r3Z/fWMx8f/RPtE7xu1LHHb00vnJjJoV3JK1ot4kajd8kco/Sshs1wMUx8UVkQQC4uGWNjHa+eVHQqAo3707x4XWezVWvVAzFnoFSOpgsPtLTjSg3F32NaHjIbvHUdQ1msXQqqAVIUw010jkDuAaQU9KfC1zyQ8bKVmuJatYpE4qaWqyAspkAbLDWn4de8QMgUTJPYkMsN6Lqx2gBdVUBJXMYD1ZMUByLNfG0KcvUOteEWVtnh7lp1sLQrLQTzHTxxNXK3SgRCKnr02G48+0o32ITAUYxKidOQfB0macmyWZy5aDNlGrfr9MR87k3pcNJsfqRQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=GJS/bOfP3mH/lUxqIYzsu1vJBmCzfh2C9kwla2ZlDKk=;
+ b=mSZ3TXuaLuo3SSfp152c9tgvV9STjB5ATzJZr7EMNSf9AnKDDA7u4imlK83giJn/NkbfV/2YA93DV0JK2jIuIryFyDr6iY898VMafxSPwNzUiJpQKeQJ3+aaRm7+9Yp58ijTFzhqgXiBV2h8JREA1h5fhvnhk19nOvYL5Po4lJlpF9OK8B0yoQyJLUugNvbFDa2JBoq9a3zhXlH3M13ayecwXpLxxmh3gZF7xx6YCWRKQ4dnc6eNa2AfwAXzvIyqGRabvokKy5GvZ8Fx7tAsVJF4QJHxmRf2HB7FWBb2IvI5gqx01/2a1lPPP5WvG6xFRVrsYSzMyEUzXfWbgQgvXQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GJS/bOfP3mH/lUxqIYzsu1vJBmCzfh2C9kwla2ZlDKk=;
+ b=PokTYaYgRO7K/s6DyRJPwO4+I/9WTcppbljn2Hh2vjZPjMXPciwoEH9UUcpxbYUTez9LPUFdYb+cY4UOXTNU9tOwdtSY9WhUdio5j15drxxfSQyAGEFTwlLsQk3jIODHEe0A4hWV12Tfbkh6RVYImKHfs+Tb4AIbbA8i9NF1xAL71wInzxOPWkaoWOUIv39RZUy1UDJMALMKERn4ZUM16QahJux10c3TDn7YTp2U66ClD+6LrXpFwQf0K9n98ZVPmcdIAsvYNo9zjFP58F74Nqh5KPwo1xvvXwJ0fE4siWshRSri1IW7e3COvc8w0iC55Mdm+eHT8zf4l8orlvZWnQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by MN2PR12MB4359.namprd12.prod.outlook.com (2603:10b6:208:265::24) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.17; Tue, 2 Jun 2026
+ 13:04:51 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0071.015; Tue, 2 Jun 2026
+ 13:04:51 +0000
+Date: Tue, 2 Jun 2026 10:04:46 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: linux-rdma@vger.kernel.org
+Cc: Chiara Meiohas <cmeiohas@nvidia.com>, Leon Romanovsky <leon@kernel.org>,
+	patches@lists.linux.dev, stable@vger.kernel.org,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Yishai Hadas <yishaih@nvidia.com>
+Subject: Re: [PATCH rc] RDMA/core: Validate the passed in fops for
+ ib_get_ucaps()
+Message-ID: <20260602130446.GA910183@nvidia.com>
+References: <0-v1-fd9482545e37+1e25-ib_ucaps_fd_ops_jgg@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0-v1-fd9482545e37+1e25-ib_ucaps_fd_ops_jgg@nvidia.com>
+X-ClientProxiedBy: BN0PR04CA0143.namprd04.prod.outlook.com
+ (2603:10b6:408:ed::28) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Debian-User: benh
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|MN2PR12MB4359:EE_
+X-MS-Office365-Filtering-Correlation-Id: fc2397c7-d147-41ed-dd56-08dec0a785eb
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|366016|6133799003|11063799006|18002099003|56012099006|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	BDXYGFZSppOgcPBrG83lsufa/0asETNkQEeyaQB08K2KAOlWeMlXqxsn+v3EXrfep1+8zNO5sSYSYg7sH5Ds+yyUk/r0lXHaXoBz5ZbUIvEZxe2hjxJqbUgJl7K/Y6KWRrss/QfHjjERUHTVUoqDk1sDPcFw3Us+6EVKLWuiF0zAS6VfqPeRDczS/06ePC+z6uhiXopnQUBUgtES5DcZRUYkyPF+Z251mBWPzzuPM/2CZ4rcLDcF3rT/420c6WU+l147GOKFcjWGAqZuSsx4KvNVghfscWmjklYDf4T0Ezv8dOlX4C+XstGVV9toh4xzUuWyNkgcah2I2evc/HMpwBRc6m6amxT9rw6wqrPloUDxUEn6slRtAH2kWLtkEY9ML0vGTbAohHTvfaZFXQZ+aACEZf+NJoJ9HRvcoJXgEp3idRjqCi2FzO2iSNUHyKoZ7kXKen3Q7YG8Dp8FssZNDx18uP57eS9b3y9YQsTydNvTMvVQHGjr4GDYLPZ4rJI5UyU601WdT2qonKt6TJ2ELdtwhpn4OpTkIRUratZ9rIcpvBvD5XaKlOXFx6NHcZkNfTJjwrjKpoxdGmPNG4yBM9xobCtguoq0+mxRHGq33iyHJsWz8hzlfmV6cBTBgoyr+Hccg0sBnqAaGn9QHoAqPDFK84F5ZlO8lIR7Kk89QcbQ3otA1YMRCl3lHhV8i1/T
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(6133799003)(11063799006)(18002099003)(56012099006)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?iMh6xQ1tRIvXzr/cwVw2rmsFCQcWsAedVIi+RsAtY6/mBybr8KDgzGxRYsQl?=
+ =?us-ascii?Q?p3+wPyEhsD2HCxVMyF15wKlkrl//wJszvi9R2xZyyroP3vbQBVytraxV0tPM?=
+ =?us-ascii?Q?xKzeQrry31VLTdDcBmt6RdC5BGnkM7Yhpu44N8IOdpZCZU1T0+WjMRjhcEY0?=
+ =?us-ascii?Q?xdEs7dBS0XvB6NB1MY9AMcCW0e4CePxFss0xVVzDVjzlQ9Hdwgr9HFdD/MWn?=
+ =?us-ascii?Q?5OMFuyySIk18uq55AP8TXybGMknxKIqYAk6kGNrnJsODmQpoNf0Wv9NUyy3v?=
+ =?us-ascii?Q?qqhCn4FMnASzHi/E/fQnN6I1CdaSaOkOJOigRyqIr4B5JaRSjVo6ayLezqpe?=
+ =?us-ascii?Q?GG0XKWaJaDo9I1p0NCJo1Ib1MyEwkqQZvAX3wsKKEIZl+0kaBMcB97Y3rE/8?=
+ =?us-ascii?Q?nS+KmvLSfeHKHedxFMpPhdPgwhwRRaJ78ijnz2oZJn/ePer1Ck20YY4bPEdc?=
+ =?us-ascii?Q?9OFtXWU7UCrMRWYxJBZrvEKL0ntXCrafh49gXLV7VJNitDLazWj1T0c5M+lU?=
+ =?us-ascii?Q?qMn7sxr1Ek+NvRFYSby75IJGehwaI74c0d23qHCahvsBL3WwwXq9HRZefNwB?=
+ =?us-ascii?Q?W8Atyuru7bdkAqzLcgPy6pRIMBtwl7jXcIMc4SY4DFNTR7fEU0luwHhqknqy?=
+ =?us-ascii?Q?sq7Z/Dx0S8yvvxwvr9UfBRTRpuvF3rQiW5vTu1tNET/AgT+dGkzvS08V9jGt?=
+ =?us-ascii?Q?Lt3uqO0ELgq17ZqyvFbQaTWMDRMMxxCaDWoXRplrNwXtp0ItzS3dAFyLV5Bz?=
+ =?us-ascii?Q?0HmTy8SqLa9ZHvujyI7SnNd8jf3VNpat3JYomsPmE7UHnh+wzbU+LFsMHNfw?=
+ =?us-ascii?Q?w100RZH+QOdaYjbo1pNbJ9x/C6bW5/4fCiG9DfF0k6gQW9Sa23TRVUe2AFfc?=
+ =?us-ascii?Q?d9EDLEDM3npFsJ9AD4C4OvNWnyo53/c7KLpzwncp7IW+QHo8wNsBXiMoTUGF?=
+ =?us-ascii?Q?VW7gueSxSZva32m1NjMstj8dwMM6Jv63i7ht6pXUdxUuF7JMfvTSN+wdQD83?=
+ =?us-ascii?Q?Ta0QYWkB2R4hUaDd2Oj4vuP8O4B1udFWJSXizxNAhIW+4SBchPXw6QvGh4A7?=
+ =?us-ascii?Q?yUSyUoKygv8grByzgpGBJHTAMDejLLjdF3gLVFEolhryWPmL+jloU4ZskwlT?=
+ =?us-ascii?Q?HKvC6kaX9ZpxBKqTXnuIWWrft8VAYIpwqKBN0hEh3owByVeaPUKbiZWO8odg?=
+ =?us-ascii?Q?J4LJIM+8pKhUrOX0vmxt2h7zVaczZOapHTPnzNmIvLWyp2IKiH7/Aqwi/WFw?=
+ =?us-ascii?Q?By/Vy9x3k7TDjdG3yL6x1TKp6VNhtC3Dz7Y7Bmls6K339n6xkUOG2b5beaVQ?=
+ =?us-ascii?Q?zEum8WfWtgtZScNPvulfIj8reqcogYmZahMarH+GFKTwzXIxsX7c79Lush8F?=
+ =?us-ascii?Q?8IpcZ+NgKw3Oc1d+7PROS90VdYQCwVnHccq6d4xKzsEYZxMd8o179MwV+V4a?=
+ =?us-ascii?Q?7dgtiJV6wr65hDi1jYKh4TveLCeSLy9qDPS0QPD0j8pd4Mb85n8nqWu8/5sE?=
+ =?us-ascii?Q?JvJItxjNraEf9XCl48JhICNcuPVTqWYtKJ7VuMMeI0TPf11499D71o9PYbwj?=
+ =?us-ascii?Q?ucOfcn0lQf82StypUsTklntGu/hL/uA157IdigRJB4D7c3uFXrjYnOZbmvd5?=
+ =?us-ascii?Q?TH51RR95GuhAAO2Om3NMH7+S+c8K43453tjm0dQ+c2xe9fkJ/4gu5E4WF3Tn?=
+ =?us-ascii?Q?j+F59Fop3CL61bwkqIZVGIh5BGGP0Qmcz/L9Rzyu0+pkcR5C?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fc2397c7-d147-41ed-dd56-08dec0a785eb
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 13:04:47.4906
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4h3nOzkEADzPnXQYmM8MefTd0X0Va5J/6OwwDLSarWL4mgt6X7LlIxovWS58JOlR
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4359
 
+On Tue, May 26, 2026 at 12:40:25PM -0300, Jason Gunthorpe wrote:
+> Sashiko pointed out it is not safe to rely only on the devt because
+> char/block alias so if the user finds a block device with the same dev_t
+> it can masquerade as a ucap cdev fd.
+> 
+> Test the f_ops to only accept authentic cdevs.
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: 61e51682816d ("RDMA/uverbs: Introduce UCAP (User CAPabilities) API")
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/infiniband/core/ucaps.c | 8 +++-----
+>  1 file changed, 3 insertions(+), 5 deletions(-)
 
---=-GEeodVjEnDPZLD35272B
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Applied to for-rc
 
-On Tue, 2026-06-02 at 16:50 +0530, Harshit Mogalapalli wrote:
-> Hi Ben, Greg, Sasha,
->=20
-> On 13/04/26 21:22, Greg Kroah-Hartman wrote:
-> > 5.15-stable review patch.  If anyone has any objections, please let me =
-know.
-> >=20
-> > ------------------
-> >=20
-> > From: Ben Hutchings <ben@decadent.org.uk>
-> >=20
-> > Backports of commit 81c734dae203 "ip6_tunnel: use
-> > skb_vlan_inet_prepare() in __ip6_tnl_rcv()" broke IPv6 tunnelling in
-> > stable branches 5.10-6.12 inclusive.  This is because the return value
-> > of skb_vlan_inet_prepare() had the opposite sense (0 for error rather
-> > than for success) before commit 9990ddf47d416 "net: tunnel: make
-> > skb_vlan_inet_prepare() return drop reasons".
-> >=20
-> > For branches including commit c504e5c2f964 "net: skb: introduce
-> > kfree_skb_reason()" etc. (i.e. 6.1 and newer) it was simple to
-> > backport commit 9990ddf47d416, but for 5.10 and 5.15 that doesn't seem
-> > to be practical.
->=20
-> We have seen ltp-net failing after this LTS update on downstream kernel(U=
-EK)
->=20
->    mainline            : v5.17-rc1        - c504e5c2f964 net: skb:=20
-> introduce kfree_skb_reason()
->    stable-5.15         : v5.15.58         - 5158e18225c0 net: skb:=20
-> introduce kfree_skb_reason()
->=20
-> So this is not needed for 5.15.y.
-
-I don't know about that test failure, but your analysis is wrong.  The
-dependency of the original fix was commit 9990ddf47d416 "net: tunnel:
-make skb_vlan_inet_prepare() return drop reasons" which changed the
-sense of skb_vlan_inet_prepare()'s return value and has not been
-backported to 5.15.  That in turn depended on the commit you are looking
-at.
-
-> This needs to be reverted for 5.15.y, looks good for 5.10.y
-[...]
-
-I started looking at how to fix the regression in 5.10, which does not
-have a backport of commit c504e5c2f964, and did not notice that it had
-been backported to 5.15.  So this patch probably could be reverted and
-replaced with a backport of commit 9990ddf47d416.  But simply reverting
-it would not be correct.
-
-Ben.
-
---=20
-Ben Hutchings - Debian developer, member of kernel, installer and LTS
-teams
-
---=-GEeodVjEnDPZLD35272B
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmoey2oACgkQ57/I7JWG
-EQlkURAAtcN3wwN/IwXVolorxWiAfyc16MmuRFvwqC8TRrus+Nc6t19KRRKBscxV
-7bFA7bFHNhXnyM4kj2CJEe2Ft4uLwqV66fGnD9K4Kri2nL8Ogc3nYNRl/W7LR2Zg
-Lw4z1Sk7NUdy2uJ2AYtovuoErzvUPwS1iT/KgcAbFNAl6O6ZrQ1lakOGGXiYwTqG
-XiBdZL5y3SuT4sEBFf0Pc1lq3Hu7gYVr6gbJybnF264he7dOXTVXYKISFO4icK2J
-tAPeBHtWQyJUZSCp5mo2HtWHKcBleR1kW3R/hb3CFS4idXw9Hiy/U0scJz7keyRx
-ByMHnqm42Jpb/mHK7mQ1CPutSi4fztS9+u0GWG775WvHxIPdL52Q31ob6el4q/Vx
-DypIy3BUDDDZ9t/6zkY8eUk3RYcs+42axPOPoqUTYqkvXOrpusPOy9hySqpIuiZb
-bVaN21um2AKJIfZhewjKfAizFBiL9W79lEkyn0e4leCu/Nmv0yPL8ylbRfXF93Jx
-ib1r4GmtiAwjI7VIQKhkoGJE/jdssFwhp2kWmR3563OjpLpU0psWQpNkxTjFQ+MQ
-YPTpBNquvf8qn42aRWnWE2UGjj0OF+uNAmBrkVl693KO2+cGP/RtgZDd8Ua9hjv5
-jnIbPFkKO4GpPj/HubL7Cs6apVdLhCSLI1Mk1koqu1ugYs9ZYJY=
-=/TEW
------END PGP SIGNATURE-----
-
---=-GEeodVjEnDPZLD35272B--
+Jason
