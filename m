@@ -1,61 +1,149 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18096395AED;
-	Tue,  2 Jun 2026 18:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8678C3909A4;
+	Tue,  2 Jun 2026 18:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780424514; cv=none; b=pDQ2JvtfQb0iCx/NZWcd+thws1bBkngazFzogzTvMk4E0AxJ+94ArmDSIzt8Wrgd5+PvuVWGYQhvVyXNE3S0ErmlL25h2s/MN69tmzXvN3YhYfIjHCsJAvxgw1K/uq5OT8loLqiVXM+4Nbdeb58HjfyoqxeEg7Sv5nzbxmeQsO0=
+	t=1780425883; cv=none; b=T1/OP8ui6Tej0fsXje8xZUpjZiAKt3R8uebIWgW8ygSLxZDKzKhLlA3Wg55cU6lK1pmUrBJIdBxviT2VihhqpuPIVi+m7N+ycBQXArnq+oSUvrkxlTeCNkldeoKkQYgyaN6ybAMnY2g3RKVeqZk40jKQ3ByCFrYchKiUAgRK+iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780424514; c=relaxed/simple;
-	bh=i2L3+R0ep+uqSS2+EisTUcxiMofV8C0uAgvH2dIF+pk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Js0unmZ684a6IQ91grkVldv0IPvk/8ZDBnNkdZ0NcFtBWtj5+axzTytDiqZivs8O/HnZNhmzqkDm5sxyqb3jmUQ2jr6vXZowyqvD5RksMe1DgPLwzu3gZqgAvnsOAA3InbVkL72MfZ8+hSSbIi7fzIM783FHkEgpDRlfSR2z0Go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c1Un9/rk; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780425883; c=relaxed/simple;
+	bh=IAJgDRvTCvMXiiaxRtRemk9HFoGhIAzgZdjXk1Y3atU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ABS9ujdSL4kgrZKxQff3FWl0X4Xzq3ad+hlk/1V/NLA/uSq6Wo984EnRAXyNDaHUs6mKp6Zo2iLcoxrz6bT9ryTPM+cggLF3J0mTwHinPxttrT+ijHigmw7KQ0hJHD0dxIJR0QQCwtHmLfMp19zb/oShCKwBvKbIaNStTAuvO/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZkPgGXeJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c1Un9/rk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F200B1F0089C;
-	Tue,  2 Jun 2026 18:21:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZkPgGXeJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 883B11F00893;
+	Tue,  2 Jun 2026 18:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780424513;
-	bh=i2L3+R0ep+uqSS2+EisTUcxiMofV8C0uAgvH2dIF+pk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c1Un9/rkT4lRQP1K6PQSlJ78EJMaM8CQtwfepbiEHIh7+qHayLQstdKgkkfaJKV1Q
-	 njYvAIijL2ksVg1ALYWZpAuESyMY0wvvHMsHBLvAAi5VjoKREBEhyHbEnxW/aUWjPz
-	 KOpfmEufJqw3cE7O7DaByjVaCYlm6sG7bkcwOuv8I17zcS3fdZ3w/5ojhfqroJX55J
-	 ngdx2uhf8lw53pKP3oNIxigvPwc5PyRZLtOnrH76fz9l2ge/uTt+32fAhaUjf3mVpc
-	 WCMDhUaB9JHpqN3/1pVl/3DOriHGsLRrOigU9c9ycCmUheZ3ui8BtKVGBilA7gEUmn
-	 BSBlpa79gjNgw==
-From: Sasha Levin <sashal@kernel.org>
-To: Mahmoud Nagy Adam <mngyadam@amazon.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Sasha Levin <sashal@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	Mingzhe Zou <mingzhe.zou@easystack.cn>,
-	Coly Li <colyli@fnnas.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	nagy@khwaternagy.com
-Subject: Re: [PATCH 6.1 431/969] bcache: fix uninitialized closure object
-Date: Tue,  2 Jun 2026 14:21:29 -0400
-Message-ID: <20260602180900.bcache-closure-reply@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <lrkyqqzmq17xb.fsf@dev-dsk-mngyadam-1c-cb3f7548.eu-west-1.amazon.com>
-References: <20260530160300.485627683@linuxfoundation.org> <20260530160312.161639627@linuxfoundation.org> <lrkyqqzmq17xb.fsf@dev-dsk-mngyadam-1c-cb3f7548.eu-west-1.amazon.com>
+	s=k20260515; t=1780425882;
+	bh=MLZpb/dBT6Cd/zdymSeQQn2ShIJqYaKuCdbAYTAgCEs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ZkPgGXeJhcybPoUrwoJsoHbVqWODRisiZEor43NouJ0EOonoHtL5ZjXT5z2iJq2OW
+	 GDChFmTvh0mNbkacQwKUaKroi/K5VuMWckc3qDOZkoGWloPBy/BiNDmIsaDfaEbVdt
+	 SJIvc7Zr/r1UimXiaMWvOVkDxmTPRqm5nQj0oHRrXQP3pz160C1TveVTP7t69+wX+y
+	 4XU2qNwckg8sNPBwiMTbYksGRjLuaZKd4WSdoPd/PXHbT4sUKt38KmcNBD0nQUxgYG
+	 yrp+jU8aG/MhN4ziuGvqzI6WZWvejPq1QXRH+RvSiAdjLWhsMCdLfqKnatMcOtteZT
+	 VzdugpvG6XUWg==
+Date: Tue, 2 Jun 2026 18:44:40 +0000
+From: Eric Biggers <ebiggers@kernel.org>
+To: "David Hildenbrand (Arm)" <david@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Askar Safin <safinaskar@gmail.com>, linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org, linux-api@vger.kernel.org,
+	netdev@vger.kernel.org, Matthew Wilcox <willy@infradead.org>,
+	Jens Axboe <axboe@kernel.dk>, Christoph Hellwig <hch@infradead.org>,
+	David Howells <dhowells@redhat.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Miklos Szeredi <miklos@szeredi.hu>, patches@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org, Jan Kara <jack@suse.cz>
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for
+ preadv2/pwritev2
+Message-ID: <20260602184440.GB2503276@google.com>
+References: <20260531010107.1953702-1-safinaskar@gmail.com>
+ <20260601-enthusiasmus-canceln-anlehnen-0e62317a9784@brauner>
+ <CAHk-=wifX_rrDjRGnDnOqE-usptAukuXKrmuPuVDP5bOCBWzGQ@mail.gmail.com>
+ <20260601173325.GH2636677@ZenIV>
+ <20260601160455.2c187574@gandalf.local.home>
+ <20260601172825.a51a588ec1c32617a0e12d78@linux-foundation.org>
+ <821ed41e-5b2f-4d17-aeb2-71b0361f8e7f@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <821ed41e-5b2f-4d17-aeb2-71b0361f8e7f@kernel.org>
 
-On Sun, Jun 01, 2026 at 07:34:24PM +0200, Mahmoud Nagy Adam wrote:
-> This fix (20a8e451ec1c "bcache: fix uninitialized closure object") is
-> missing from 6.6 through 7.0.
+On Tue, Jun 02, 2026 at 10:25:06AM +0200, David Hildenbrand (Arm) wrote:
+> On 6/2/26 02:28, Andrew Morton wrote:
+> > On Mon, 1 Jun 2026 16:04:55 -0400 Steven Rostedt <rostedt@goodmis.org> wrote:
+> > 
+> >> On Mon, 1 Jun 2026 18:33:25 +0100
+> >> Al Viro <viro@zeniv.linux.org.uk> wrote:
+> >>
+> >>>
+> >>>
+> >>> FUSE might be interesting - fuse_dev_splice_read() and its ilk.
+> >>> Communications between the kernel and fuse server at least used to
+> >>> seriously want that, so that would be one place to look for unhappy
+> >>> userland...
+> >>>
+> >>> splice-related logics in fs/fuse/dev.c is interesting; another place
+> >>> like this is kernel/trace/, but I'm less familiar with that one.
+> >>>
+> >>> rostedt Cc'd (miklos already had been)
+> >>
+> >> Thanks for the Cc. The tracing ring buffer was specifically made to be used
+> >> by splice and the libtracefs has a lot of code to use it as well. As
+> >> reading the ring buffer literally swaps out the write portion with a blank
+> >> read portion, that portion (sub-buffer) is used to be directly fed into
+> >> splice, providing a zero-copy of the trace data from the write of the event
+> >> to going into a file.
+> >>
+> >> trace-cmd defaults to using splice to copy the tracing ring buffer directly
+> >> into files to avoid as much copying during live recordings as possible.
+> >>
+> >> Whatever changes we make, I would like to make sure there's no regressions
+> >> in performance of trace-cmd record.
+> > 
+> > Well yes, The patchset seems sensible from a quality POV.  But to make
+> > a decision we should first have a decent understanding of its downside
+> > impact.
+> 
+> I guess most (all?) of us ... dislike ... vmsplice(), so trying to remove it
+> entirely is certainly very appealing ...
+> 
+> > 
+> > I haven't seen a description of that impact in the discussion thus far.
+> > And that description is owed, please.
+> > 
+> > I assume a small number of specialized applications are using
+> > vmsplice() to great effect?  What are those applications?  What is the
+> > impact of this change?
+> 
+> 
+> I did some digging, and the kernel crypto API documents using splice/vmsplice
+> for zero-copy[1] and libkcapi [2].
+> 
+> I did not find performance numbers, how much vmsplice/splice actually gives us.
+> Playing with the kcapi-speed tool [3] (specifying --vmsplice vs. --sendmsg)
+> doesn't really reveal a big difference at least on my notebook. Not sure if the
+> parameters I specify are reasonable.
+> 
+> I don't know whether downgrading vmsplice to preadv2/pwritev2 would perform
+> significantly worse than sendmsg ... and I don't know what the default would
+> usually be (default to vmsplice or sendmsg). I might try finding some time to
+> play with it more, but I doubt it, so if anybody else has time ... :)
 
-Now queued from mainline (20a8e451ec1c) to 7.0.y, 6.18.y, 6.12.y and
-6.6.y.
+AF_ALG is a mistake and isn't commonly used.  Using a userspace crypto
+library is faster and is what almost everyone does anyway, as it avoids
+the syscall overhead.  There are many other issues with AF_ALG as well.
 
-Thanks,
-Sasha
+7.2 will mark AF_ALG as deprecated, mostly remove AF_ALG's zero-copy
+support, and remove AF_ALG's async I/O support:
+
+    https://lore.kernel.org/linux-crypto/20260430011544.31823-1-ebiggers@kernel.org/
+    https://lore.kernel.org/linux-crypto/20260504225328.25356-1-ebiggers@kernel.org/
+    https://lore.kernel.org/linux-crypto/20260523-af-alg-harden-v1-0-c76755c3a5c5@gmail.com/
+
+In practice, the programs that are keeping Linux distros from disabling
+AF_ALG in their kconfig outright are just iwd, cryptsetup, and bluez.
+They use AF_ALG just because it was mistakenly thought to be easier than
+using a userspace crypto library.  They don't need maximum performance,
+nor do they use vmsplice, splice, or sendfile.
+
+There is other highly niche code out there that does implement the
+AF_ALG + vmsplice + splice thing, e.g. libkcapi.  But it's just not
+enough of a reason to keep zero-copy support, especially considering
+that AF_ALG has always been the wrong solution in the first place.  The
+fallback to copying the data is fine for this deprecated API.
+
+- Eric
