@@ -1,173 +1,143 @@
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE2D472776
-	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 22:23:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780525414; cv=pass; b=mA2CisAMeurJRgOs780qte83+EvY7D1Jd8XwXXUnHjvRV4jNkLv+naCsLOPvvjOXBQ4NMPIHQYkLnP03SOYhRlPmsZSg7LBFtOeAGYXvpiJlOD329B4Xwqo1x4omw+8Db+Xrb3n9j57WXZkz+HhCYKR904Vn3GCOpGjAb25Kc6U=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780525414; c=relaxed/simple;
-	bh=qdFVVpm9+qBWydzXpCd5rc442R2RuxPVFhAYWPCKrjk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HxccStyCPwexmKpVJeweKZFMwWA/5N49A5zmBHoNL2OlfvatoJla1//wyBRqajwk2Gi13J5ay5s9cLta/AP1XMH+qthjwu4Z0p1JTIyD8fonTbFHttqTF8dhbgzaSsJ9J/1jH3f+bpUpxQpJx9Sfk9zLzYTTOvukHupdswpyNfY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=amacapital.net; spf=pass smtp.mailfrom=amacapital.net; dkim=pass (2048-bit key) header.d=amacapital-net.20251104.gappssmtp.com header.i=@amacapital-net.20251104.gappssmtp.com header.b=Ez+9yFV7; arc=pass smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=amacapital.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amacapital.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDBD38CFE1
+	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 22:43:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780526603; cv=none; b=l0AIPm8tHQrbh/hs2P/UNKXHx1M9jRg1Aw8uCgxvAj8cfWJKKVvVbPTAjrQLiuuzUdaSwUddhwwXpv2CuItajfYuAVDjjWyZinkCC5S/chbvcrQiPYHGHwaHkMNJxpnvLhiriAtVQSk8FC/g1hfOjV2euMXfQ4dD2gLVLb3MFU8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780526603; c=relaxed/simple;
+	bh=bpSKopOh+lqC+IlYALKlFknmtsR6CYYa845dkB+uwqY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=RF2e5DhK0o9ziYBssAAtupUmpcYU2ri4irxmnpb0I8Q7/oFFZ2U/9kJaK/t1ZSGYYlcztDKdDbZh9M+OlpwPK+OVvrwCU5tEU2sXuTtLHFGXme8jEygIWLMBskfarIejRw1weSWt6hmHHVl2tcX+PG/LsYw3D+vVtx9e8ZwN4ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K2cI3haZ; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=amacapital-net.20251104.gappssmtp.com header.i=@amacapital-net.20251104.gappssmtp.com header.b="Ez+9yFV7"
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5aa5edf347eso4012360e87.3
-        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 15:23:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780525412; cv=none;
-        d=google.com; s=arc-20240605;
-        b=RjYVDlJvc26HpttbO/5s1AhIFwZ3XYKVRP+GXPC4FnZKcV4cbTvI+0NysO6v5F6clL
-         Gfh2ePFyWr3zkDCbxE/NfNvlyNNX6UYVyXoeNppMwgryflz8YfY+UEbkVAiCh5lzwz6t
-         kLw7auMkPzL64HA1yhfEk/S/PmrRjKqe/o5MQP2QWd5RPWjQDUMANEUmDZ41Xvdt+nv4
-         GTNQcDDZgYvhBeRnBG5OZpEceGghyi0UP2o7T/Ic2dmy9UdtXTaqdU6BErNtl3AKmX2T
-         UL7K5LYewXWuovWfXo2duBRvDHDxYs+lQhKY2DaFXOgXVD+yOQ2Ms/VdewfrkB0cb40C
-         bM2w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=s3SPKunMho6E/CBsMnfM4oP5YS4R7re3HwYPdqVA40w=;
-        fh=y9xaNaP7M75QC3/apTLJQY1oe+8GCgk40u5uHpfbxyM=;
-        b=Dy8rjX5TJheKl0ao/jF8/E0JtQTiBAlqHwVlWprlmd2u6mRol4N4CG4DDidglfbfmb
-         1Z20J/EQAFoDgS02nya38XffqogWNggtbgXvbPuryE8nNUgARnpOzCoRIudUFo2xOr8j
-         0zVhpWpjf7tdm9YlsvtnC8CPlfcUKy930i+o94bxP4qDM6pxYByMmwLZW5kicQnclnHf
-         lG2e2R3xkJb36opli7f0cCgne3cG9aCUegdT0GVoymz3aoVzMmHe7OdR9F1WUWip3AHi
-         D7vXVGxU13eT2CupbTKEMA/29sivVUmjJfcmhACLgaT0iPWo4Nclp2PugavrCReh127s
-         zg4g==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K2cI3haZ"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-490b613a17bso571175e9.3
+        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 15:43:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=amacapital-net.20251104.gappssmtp.com; s=20251104; t=1780525412; x=1781130212; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1780526601; x=1781131401; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=s3SPKunMho6E/CBsMnfM4oP5YS4R7re3HwYPdqVA40w=;
-        b=Ez+9yFV7jDxak6dwO95GP1WzFoXRoTrbQP0drNHSj3ynQgpfRI2o/OEcKydQu7QXWH
-         uBBf8RcqX2tju5JG38OteyXqub5IA0zBOji+pDeXNC9xpi9Jb6YUjMt2dBPb11IS/4zN
-         /kfDK/D6JMCrtYVYQ3VJmmKuIwuq5vkPkd76lLa6Oq3uj/9TOCcC4tAdrkBGJ7I00QLi
-         nS80cDJ8dgZ6yiU0vUUeZXQjy/Gyxj/LakTMQfuZ3ZOtynRdnGNSay12GmRKvNXpub75
-         6Dhg7y9LsIMZabDmqXq+YV5jxih9Z0UDnvT322ty9iQsrTqjiREuwzMUsgL3k3rfbn9T
-         c5aA==
+        bh=iTE44OxcHCqYjYX+doIy+3NqUmI4SQrZkrHVFocDs+M=;
+        b=K2cI3haZgqn7pGadUAqPsuoKmBHd7CYXfCChXKi2VJMPU+EVrcl2lUnLtnciibRXRc
+         1zwPsjB9W2pyaDn4HWWPy22rl5poGbiqSqOPuq89UYgxqrdmGQXzS2pM32alNF4OtT9E
+         KrGsj5BzZ6h6ydTtBWD/SeECMmVSwVhJ8oJYZgQlDlzRuzlKCb0GmR2lq3E6wNELJFx0
+         g8AlRreU7Q0WW9KRJF9CTGOI5H/qCtZJv6Cw/cHiFQVPWlR6Mnb/jSgDSqh4j8faFNOC
+         HhHEc0qpZQtcDz2s4RUnXZc/85ebxaUw8jmZYrkpbWC0IfBAmGZlC9hibAmW2QO6K2DO
+         mo9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780525412; x=1781130212;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1780526601; x=1781131401;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=s3SPKunMho6E/CBsMnfM4oP5YS4R7re3HwYPdqVA40w=;
-        b=CoOqrNkr6S9nFNsgqpWyGE1aY0LFZzuAAJBtDsPq04ZcrPLiVZ6LVVr/+VUU2LdE8V
-         3VtyIiUNslYp8hh3S4qePBCCloCoKQqzb0wuy/kVvCqyscRKAfTKTiL2GR+dY7IGnDxy
-         2mf93j7NDA/Zj1I5pcxTKSNjkerrWEEPImsZ9Zziq2SUzlyTdK5wCKqTgUBTTPcpgU7W
-         rDXtZ0AXYDQ4z+f22IO1ukEXWxfpb00YVrCoL2yWWh6HRP5bYY72tkcEx9GkO8FJKCC4
-         lgYHxQtcJ5fqd6ab9w9hEc3A/otlYFlLM3Y7Im0UaBTUkEtR5otDnN0YGItd3Uc0Jg9/
-         oQ4w==
-X-Forwarded-Encrypted: i=1; AFNElJ++WM+I5fGz7Z2Eyd1W2CcWan0SvBCDw7hyG/QHBT0nS/LMbhCbkW3y+RIF/rZR5b69MSHfOef/@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywbx97qyDCIMalPcij0uEGbkb8aIF1XC8lmrDL7LcBR2J59R9DZ
-	zy/wlylPmNI8xBtUl6lqANa6U5QMf8NsvoXNaYYLsYwYCZCIduJnAgJcR9i11W8LrRzFFlZlGl/
-	LxCiypJ8xdo2CUG/6oFBMQusuTwvHwiJl3Km+93rp
-X-Gm-Gg: Acq92OG9o/TEhCE/2Jomp5rDsO8QsOpXS13V79PuKBaCAwtr6QaLsYvW/uVq/rF2vzs
-	OSUQtv1GdOjXi78nGyQlo7eUwr8qS1vJsHeoiJOYg/rNoMaDiTw4H4T0giD2ZFwltVO7WUzG5xa
-	QvNTP8uzokXOQBFvsSdnzca6eIBYJxvcXz0Tv9c70vlA8uH5Uuc5+N5YMT9WpoDFD9iTV12mYtt
-	YGdJRqrcYl4FbtH4Avh4f/+2EO8+cvVm3p4fbYFDo9RVCkEVs8P0e86FTMNRXnHs5M5z8L21TOC
-	IM/1LexjR58CGwS084A=
-X-Received: by 2002:a05:6512:3d14:b0:5aa:7126:c645 with SMTP id
- 2adb3069b0e04-5aa7c088c90mr1762489e87.2.1780525411782; Wed, 03 Jun 2026
- 15:23:31 -0700 (PDT)
+        bh=iTE44OxcHCqYjYX+doIy+3NqUmI4SQrZkrHVFocDs+M=;
+        b=FgL+F6PFZOolHD8QWFvhAaMFcNML8gJUcMUZk74UiRAcabIAkJNvV8cKNJoxw6bwxe
+         CZV12vbtGjkd1Whg+XxXckzEvOekaIInsP4cCcuqIzuWNiX7HlX+9Aj4zljT9Jy3xCto
+         bXw2h+GerJA5/SEjtRTS7cRaaNkh3TdN561+/6tpparKbPITiaJYWJ2DakElxznvT0/s
+         KRWSWbTJ8gHlRX/Ier9jxmwsnwBLiDCEBj0TYetsqxKpuah0H4ZSI2QBKpf2/8uInyOZ
+         k3KiAMHDvstaFUbphGEfFfM443Gi4kxXs9+gGnnYUwFplad46QBRAUsdoLsDBh89JtI+
+         OMJw==
+X-Forwarded-Encrypted: i=1; AFNElJ9PLMFJp9hj2cXnbV85kMu+pODajIBtO8a9EcY0uuDL1U4itsuObdFh/1XU55ohB0W0xsw1EuAQ@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx8QrHNF7a5/JlbfvOPxtiyD1BAMP7Rt2MdPhagOULzS8+On5o4
+	s4t8p4BFBfqzGW6eAktgxL6Fy9wjI6nViLfLqQwGbTKtLf02ZjWezG0c
+X-Gm-Gg: Acq92OEyLVpWHd1mo9/Dvm9Oyg3vJ1yKEvgQYNDbxGJv0/aiJsijgpnXsxsbdHgHtQe
+	xfvO0Lu1yhZnbYjzIRJM7a41kpw+kMYk77fPRPCJcj13UMBJ9YIpyOs/q8+9KaISfXQRjRHqC8z
+	5D+QCfkayX3aULwPl/L0q4XphWVUGwPRd1lCeBb2BEq+h4FQRNfGoUmF96pO26ErCr8BrkiqLDZ
+	vsKkMkl7kY56w74prnVU+3nBXepmGfBByKCmccqcnvH3Rwdco8+MFculdanS800tC3ouirDAhBh
+	RgicT+WCW3HoWEMap4wsoN08ICLklo/nUYxbvLCZdKasJuqd1yFCkGcVI4JN0SDdxeL+DADNk1d
+	mPfmEswxdxOdcPdX9k+cXjbQ2E4zXSrk+eXMoLl+RJ5s9cbyuM6DxIK2Pa745MnFT8QeA3cfYSx
+	EBVHk+W3O6RMQtf3YLnI1q56WIxGrcEw==
+X-Received: by 2002:a05:600c:a09:b0:490:688b:f9f8 with SMTP id 5b1f17b1804b1-490b5fe6672mr83368675e9.27.1780526600498;
+        Wed, 03 Jun 2026 15:43:20 -0700 (PDT)
+Received: from localhost ([212.73.77.104])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-490bc391aaasm29855955e9.1.2026.06.03.15.43.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jun 2026 15:43:19 -0700 (PDT)
+From: Askar Safin <safinaskar@gmail.com>
+To: luto@amacapital.net
+Cc: akpm@linux-foundation.org,
+	axboe@kernel.dk,
+	brauner@kernel.org,
+	david@kernel.org,
+	dhowells@redhat.com,
+	hch@infradead.org,
+	jack@suse.cz,
+	linux-api@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	miklos@szeredi.hu,
+	netdev@vger.kernel.org,
+	patches@lists.linux.dev,
+	pfalcato@suse.de,
+	safinaskar@gmail.com,
+	torvalds@linux-foundation.org,
+	viro@zeniv.linux.org.uk,
+	willy@infradead.org
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
+Date: Thu,  4 Jun 2026 01:43:11 +0300
+Message-ID: <20260603224311.834796-1-safinaskar@gmail.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <CALCETrW3XcNLuB1Y6PSkxQDSK2o+=EB2AAd25SjWQqcJemwnbw@mail.gmail.com>
+References: <CALCETrW3XcNLuB1Y6PSkxQDSK2o+=EB2AAd25SjWQqcJemwnbw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAHk-=wiAqf0PdZ4AKj_4riUnnEb=g_ZNPkLnXrByA9BBHYiFRg@mail.gmail.com>
- <20260602225426.122258-1-safinaskar@gmail.com> <CAHk-=wgKy4dP0oQCNKyMQQf3-uVpaigmDyH6_T0Via76gWST9g@mail.gmail.com>
- <CALCETrWx8-Q5-rK1KnAPCxCbXaWCd=Yfs_Pr8qVMa8k8L6of1w@mail.gmail.com>
- <CAHk-=wizkDXRut5xLXRF-CVUVYMaZ5AOexxeghOAoXPb4yAvQg@mail.gmail.com>
- <CALCETrXzxubt4eWue3+wv7Fq9C2m7uu6bWPstqFh6Mo57bPwQQ@mail.gmail.com>
- <CAHk-=wiEwSjfbjfO74xu=UmkkdHXkJg5QNQ8pP-3iYmunmeV9g@mail.gmail.com>
- <CALCETrW3XcNLuB1Y6PSkxQDSK2o+=EB2AAd25SjWQqcJemwnbw@mail.gmail.com> <CAHk-=wgn3QTLj+F+XccE10dXY-UGWN8+fNLEvhsLw+tik9rOmg@mail.gmail.com>
-In-Reply-To: <CAHk-=wgn3QTLj+F+XccE10dXY-UGWN8+fNLEvhsLw+tik9rOmg@mail.gmail.com>
-From: Andy Lutomirski <luto@amacapital.net>
-Date: Wed, 3 Jun 2026 15:23:19 -0700
-X-Gm-Features: AVHnY4Ikay6WVUle1y1S25sIv6i_k8jcErZspj4ec4V3SJVcTGqkjlXJTjro2bQ
-Message-ID: <CALCETrXpqPMS487Bm8f8mHe8hv9DzCqoaW4UdoHetzYBUAhYLw@mail.gmail.com>
-Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Askar Safin <safinaskar@gmail.com>, akpm@linux-foundation.org, axboe@kernel.dk, 
-	brauner@kernel.org, david@kernel.org, dhowells@redhat.com, hch@infradead.org, 
-	jack@suse.cz, linux-api@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-mm@kvack.org, miklos@szeredi.hu, 
-	netdev@vger.kernel.org, patches@lists.linux.dev, pfalcato@suse.de, 
-	viro@zeniv.linux.org.uk, willy@infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jun 3, 2026 at 2:39=E2=80=AFPM Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
->
-> On Wed, 3 Jun 2026 at 14:31, Andy Lutomirski <luto@amacapital.net> wrote:
-> >
-> > I think I buried the lede too much and you're arguing against what I
-> > was trying not to say.
-> >
-> > Maybe we should keep an API that does an optimized copy, from one fd
-> > to another, that can send from a file to the network with at most ONE
-> > cpu-side copy.  Not aiming for zero like sendfile / splice.  Aiming
-> > for one.
->
-> Oh, absolutely - that's what my completely untested test patch  basically=
- did.
->
-> The user space interface was still there.
->
-> And the networking side still continued to use the ->splice_write()
-> thing for writing to the socket.
+Andy Lutomirski <luto@amacapital.net>:
+> Maybe we should keep an API that does an optimized copy, from one fd
+> to another, that can send from a file to the network with at most ONE
+> cpu-side copy.  Not aiming for zero like sendfile / splice.  Aiming
+> for one.
 
-So I'm suspicious that you've possibly make bugs much (MUCH) harder to
-exploit, but the underlying awful code and opportunity for bugs is
-still there.  MSG_SPLICE_PAGES is still around, and there is still
-(AFAICS) no actual coherent description of what it means.  There is
-code that checks for it and apparently needs to do something special.
-Foir example, some random kernel version I have checked out has this
-delight in af_alg.c:
+Yes, this is what my hypothetical future patch will do.
 
-                /* use the existing memory in an allocated page */
-                if (ctx->merge && !(msg->msg_flags & MSG_SPLICE_PAGES)) {
+One copy from pagecache to pipe, and then network uses that buffer
+directly.
 
-Grepping for MSG_SPLICE_PAGES come up with all kinds of terrors.
-Check out the lovely comment in drivers/block/drbd/drbd_main.c, for
-example...
+> But splice_to_socket involves
+> MSG_SPLACE_PAGES, which I think is a part of the mess that you
+> dislike.  And the path where one does copy_splice_read and then
+> splice_to_socket has to be a bit complex because of tee and (I think)
+> because splice_to_socket cannot assume that the incoming data is just
+> ordinary unshared buffers.
 
-And even with your patch, I think checking for MSG_SPLICE_PAGES still
-matters: if I write to a pipe (using copy_splice_read or even just
-plain write) and then I tee() that data, then I splice one of those
-teed copies into a socket, then we hit ->sendmsg with MSG_SPLICE_PAGES
-set, and we're hoping that the code does the right thing.  And maybe
-all the bugs are fixed by now or maybe they're not.  Most of what your
-patch accomplishes is breaking the connection between the buffers and
-pagecache, so you can't poison /sbin/su.
+My future patch will provide new guarantee: pipe buffers are always
+stable, i. e. they will not be externally-modified.
 
-It also seems kind of unfortunate that we can have skbs that contain
-data that isn't actually owned by the socket in question, and, with
-your patch applied, I'm wondering if the only case where this can
-really happen is tee() and a handful of random drivers that send to
-sockets.  (The ones in drivers/nvme/host/tcp.c and iSCSI seem like the
-ones that people are likely to care about the most.)
+So hopefully network code will be adjusted to use this guarantee.
 
-I *think* that what I'm sort of suggesting is to drop this ability
-from the kernel as well, or at least to consider it.  skbs would
-always own their contents.  And something would get wired up so that
-at least the cases of sendfile, nvme and iscsi to TCP or UDP sockets
-would still works with only one copy, from the source page cache into
-the socket buffer.
+But pipe buffers will not be "ordinary unshared buffers".
 
+They still may be shared with other things because of tee(2).
+(But they are still stable! They will not be randomly modified!)
 
-I suppose the counterargument is that, even if more bugs exist, it's a
-bit hard to imagine a real attack involving tee, and one needs
-privileges to set up nvme or iscsi aimed at an unusual socket type.
+But network code can do "pipe_buf_try_steal" and thus ensure that
+these buffers are not shared with anything else.
 
---=20
-Andy Lutomirski
-AMA Capital Management, LLC
+So, network code can be modified to use "pipe_buf_try_steal", and you
+will get "ordinary unshared buffers" exactly as you want. This will
+give you in total exactly one copy.
+
+Also: as well as I understand, previously, pipe_buf_try_steal was
+kind of lie. It may return true for buffers created via vmsplice with
+GIFT. (I did not check this, but I think so.) I. e. pipe_buf_try_steal will
+return "true" in this case, but pages are still shared! But, thanks to my
+vmsplice patchset (which is already applied), this is no longer true!
+So now pipe_buf_try_steal is absolutely safe to use!
+
+Finally, we can degrade tee(2) to copy, and hopefully this will
+allow us to always be sure that pipe buffers are not shared with anything.
+This is possible future direction.
+
+-- 
+Askar Safin
