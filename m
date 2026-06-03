@@ -1,68 +1,68 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24EF4921AA
-	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 21:37:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B94E3DA7C4
+	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 21:39:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780522637; cv=none; b=uEWbKZdPjcvIIw37uOH10hQ7fatdH5c2c4pa/ox8M/trNuNrIeShdI3mD8mPfDQtIBBFBmX7cPe6YPyi7yXvUir0sXCF0ZugvUMa3r/meem7repKT7UlBBCtn6ZaxmM0yjHYDAgVyzhcTzU/M+1wdePi67ZiMoNwknRJM28kGUg=
+	t=1780522743; cv=none; b=XlzevmB7MF3h7fn7DFS3MtMWebcNMUpKJxK7tM26YlYiOuAVh7USyPx99GvYgNwT36OewIkHUXCNfv5xrlvKZ72N+6i5q+3ltbHI8eqBfxGsbnghykLYrFGJvNzvluAlEaqEjA7X+Ww0hHHJj9yIuJ33Qxez8hg0CSGIgaGYQ24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780522637; c=relaxed/simple;
-	bh=G8aqlWT5bLZQV/uLuybjUVkjg96V4exbndaKeusMIxw=;
+	s=arc-20240116; t=1780522743; c=relaxed/simple;
+	bh=KZSmPn6xQM1bVRhAbp7rTJ/2+QAJ2min3ynRo3L1ax4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JpN1sfJEgiVuKvg/Oq/5atnnr7xi/tYRAhMkh/cNmyXs1/iQ22wAAIMlIHxSmGtXuj91R2rB/e21FO2+kiuScqyziTdyUqolsGGlAXPp/MAw4IS3N7fkANiCrbdOQ1XnhLdrKXx4fLHgs36t1At9A6b33lsEsuZH13a/ZMkbVHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=G5x3b0kB; arc=none smtp.client-ip=209.85.210.170
+	 To:Cc:Content-Type; b=J2ExZST0sfq17aSx4odFJDOX7HpV8totG4zCt3wLPlUuuR+Z7hUZLATigUrS/gRpaGrRfp9GZ0Ww5JLOcbrlYemsWMDskrXVdyynFrT79/QMN3kH6MjOa0TuQMFnsCYHnmelzbyDpLzxSVEwy1RdNF0EdtSzRHaSfm3WuJCRYao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=TcZfbmmN; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="G5x3b0kB"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-84226d0f1d2so6479b3a.1
-        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 14:37:15 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="TcZfbmmN"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-842273a2c4dso3702b3a.3
+        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 14:39:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1780522635; x=1781127435; darn=lists.linux.dev;
+        d=linux-foundation.org; s=google; t=1780522740; x=1781127540; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jlzwef06CJIrE3LIQnd2Z4dg96b07Ks4mMmqsV33wA0=;
-        b=G5x3b0kBovvSXXS02Um9BIayOaguSuzhp0F56nCyWygaG2qkkX/5v6y4pf0UWSQVSi
-         sFVyI2UtEHkEAKJfvhYz1QKyHp+TGxr501I8kVpUTG/JJtZ0EC5g68VfwjYNHGwQVFv9
-         bZAdf7RNhveH9tDiFtOI7+EsrQ623jkBg+78k=
+        bh=O8X5hcAFVZJZKmCogabE4dJnuZ1g/E7cQIrqG9l17rg=;
+        b=TcZfbmmNXXqqU9dboeWy1xxCSEXOGMulKi+SJ5jLBiDu1X89IKtZObyyNaAnf2/PE+
+         pTf096VLBq/TK7zorMCiefvV49KF8IF798Wn/0PRpS3joSlrb9zK0Md3+u4XafCBVdSw
+         cvAlsH+aJkOJ0xdCIt69j21wRxTNta4t8pqoo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780522635; x=1781127435;
+        d=1e100.net; s=20251104; t=1780522740; x=1781127540;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Jlzwef06CJIrE3LIQnd2Z4dg96b07Ks4mMmqsV33wA0=;
-        b=q6hGkqxLCx2sJ/P5x6HaeOVZWtREMuoVsirVSQ54+T0tJ83xqcAltpheE8VmBLXNrZ
-         QAPoFZA2RXDaXpGLudiONYkpaN10tVrTsx59qGCV5/M+nhTfJu7ATP/9IBsUNeEVQnOf
-         j5DUH16yA9gQYcHQxNczpYnkQ/Gry/lRYuAuza0amytk7gvC8YhMMFcyPAsko3wtr4JI
-         Xgh2w6DnwXlH3RSUxCTEZdOl9yEsWsqjg6mhJqMtNCLd722u8M5sR3qxeQ5bGgI0w4kO
-         +QkdREwpbcSzpjYCaWMYWYXE47irwG/gtJpWmSj+CjIGwpJ2JqZ40vtVZsMznHX4BWjd
-         nzZA==
-X-Forwarded-Encrypted: i=1; AFNElJ+t6p+CzmrShLjXaiTX3VIXFf0HZwrJYzSV0KTkCFWh/X8rEdR0CsMMHxtjQlm5+AQWGCCfNPxf@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz9BGpGCmaWfCl9z6kvi89Ynamh56OI1dRYyvxNLUw27RcVqEFU
-	WOhP3IFJ8sFBWocujjm1ZVyxYFuayW1C3MxQLAAsXgz+Pkz8yy+P6evyjwy0xNBVeI13f9s+Ja4
-	NPTRqKCcNuw==
-X-Gm-Gg: Acq92OHG+yeGH2Jtasr7eYgi2yu/S5FmhJkgw9lHEtLEXCayz1+ocFFrmlrpAAQ0gJh
-	m5KYYBOU84yE2EZ2mryy73g5FJWaInhj6mqs0ZgCEb/aO9UOJ/yHjTlZ5Sk6I6bvMhJ7W799jXx
-	oruDsP1z3kZb356skUiaYcT3tT3Jir8lfcwAXuj5xmuXRyJCEtaHsnWBiFO6n6p9S8oGJYGlwbC
-	pz6aUnKpJklxDXOP/KzJeIjiF8rxZhztBU0jc2RgttuLo51inl5Tw1o6SQcmqTT09CIjiFbUNnq
-	nEg4XnIP3UBn7TB3ov3uSQV9ri8fOj5h/fSwPX7Ro//b9omIcSJla5M3jPKqwlNh0QufCXkD/uz
-	KmQM7sTCA5s+E0SYZl9tAF6hHI/2EOSXIdtR7BZx97B5VquJ0YvKhym3sJEbpVmu4SuuuKE/dt2
-	9KewGPrcq+K1BrO6zyoFN19+QCZWyECyE2/pdS8KqsdmpioTJ98U9vR2+uS61vGWZedD0Y9nNXk
-	eHKCZfdVszo4Mk=
-X-Received: by 2002:a05:6a00:a257:b0:842:4fdd:502e with SMTP id d2e1a72fcca58-84284f2ab82mr4987813b3a.48.1780522635171;
-        Wed, 03 Jun 2026 14:37:15 -0700 (PDT)
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com. [209.85.215.176])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84282494285sm3739391b3a.25.2026.06.03.14.37.13
+        bh=O8X5hcAFVZJZKmCogabE4dJnuZ1g/E7cQIrqG9l17rg=;
+        b=Wqyix10iEpSQE4cgmaLqGLKk8SHHJ7cpKUJOI0uLWYvp2uuMQSRXa9OPXOg56XO+aW
+         b4UEVTDQVrnFhWE3mctCP5VGC8ClNlP09qOlQb51SGopQfTy2ZJb3JbUni+L19T0wKyI
+         RVf0q30xTzRw6NG08IvwR/ZCurbAHi+J9h5Ta6y3jVt30Ikfn+zwDusDGR6LcGsDt14U
+         1sb7FZ43R4FbCj83hxVH2v0l0jtxvoled5lkM/GM/oa4n/uePy9zENUr+NcOowgT+tGp
+         NY8xYMnrU2VDuGFRBkOeEZDGmSBdEa0NhyTX+j+BB/mgkKrN/d4uptfC3n0qM0RANPiS
+         EFgQ==
+X-Forwarded-Encrypted: i=1; AFNElJ/yd5xgwOQsTP4YasOfS4dxoXvKOUoWaqWP+jjE0Xpm8LTrQj6JddEmyIe1XptSU1yqltPoSxJm@lists.linux.dev
+X-Gm-Message-State: AOJu0YwxBM8mxoxO3PBj4D9Dj+CyqUfEYm9dVUhrrgVPmfgYKn23WVvu
+	d44CaAHFo0/5G7lF2tgzy/cOoy8n24/V/+/tD57lu2dnkKt38is2f4ACmBNpcOuoOT/knenEtV8
+	yI+9l7Y3O2g==
+X-Gm-Gg: Acq92OHylSW7RIxVP+Uda9cirbKdCal8lhq3s9EfuhqyPOj+47/e2Ya1Vx1ILo+uOrI
+	tBzA9NpWPVE+xvU0lAUgmn/HRaht+/jejDSP6MOuS0228FIWD+m38MHHTx8Vgdr+v3TS63xCErd
+	t2Mjjr8oll3ks394S4V6GPEiIubc+itVnjVZrIS9076W/UBalQ6PZOPdDfJbCDrhraAzFIYS7BP
+	zdIqSV3RNivGfg9TbEFBpQq00CNEIWYgUxY/WL5TE+8jXcikofy8UUAdRyCzPklXE0aGojId7pF
+	+U9KXQ2iUs9aLSaHg4ohnbLavGKmYZ5d86QjAq3tWxnLvSzL5+oSYfeMONb6ABfjZq0ZuFRGSOm
+	fyBQocyIX1kt5C2StUnF4lFXQL82mbkhqS9gkeDbuWj7iusQ1zVZcZx/dg3/OHuRQOUY6ao7TU7
+	xhMOs7UYGn7kgZQEOqetEWcR1+1KYBXnMgIoJDVVbAFbYNt8tpoN8gjzU9QXwM9rewBHbrLfLzI
+	BHbmxkf6HByKuCoa94ZIQ==
+X-Received: by 2002:a05:6a00:3695:b0:842:3be7:4d54 with SMTP id d2e1a72fcca58-84284e2713amr5219411b3a.15.1780522740182;
+        Wed, 03 Jun 2026 14:39:00 -0700 (PDT)
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com. [209.85.216.46])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8428221c3e4sm4099254b3a.5.2026.06.03.14.38.58
         for <patches@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Jun 2026 14:37:13 -0700 (PDT)
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c85825bbc4fso15370a12.2
-        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 14:37:13 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ/eeqAMTil07+zsim5eSKeYr2Wn6pHb+138FeuXu27zeCVL6pSwHbiGdZ1psWMA4ScJAgcRkg75@lists.linux.dev
-X-Received: by 2002:a05:6a20:e196:b0:398:90e5:a9b9 with SMTP id
- adf61e73a8af0-3b4978a0b2amr4845639637.27.1780522633187; Wed, 03 Jun 2026
- 14:37:13 -0700 (PDT)
+        Wed, 03 Jun 2026 14:38:58 -0700 (PDT)
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-36d8b644473so4344358a91.3
+        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 14:38:58 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ+nxL0OOULQucYgE7lFKP2xENUt/62b4R4XrYfsyIyGvtih11G3YEkyMr1TYewf0yAj1XOgbsd0@lists.linux.dev
+X-Received: by 2002:a17:90a:d647:b0:368:af5c:5925 with SMTP id
+ 98e67ed59e1d1-36e31102a48mr5572800a91.23.1780522737998; Wed, 03 Jun 2026
+ 14:38:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -74,13 +74,14 @@ References: <CAHk-=wiAqf0PdZ4AKj_4riUnnEb=g_ZNPkLnXrByA9BBHYiFRg@mail.gmail.com>
  <CALCETrWx8-Q5-rK1KnAPCxCbXaWCd=Yfs_Pr8qVMa8k8L6of1w@mail.gmail.com>
  <CAHk-=wizkDXRut5xLXRF-CVUVYMaZ5AOexxeghOAoXPb4yAvQg@mail.gmail.com>
  <CALCETrXzxubt4eWue3+wv7Fq9C2m7uu6bWPstqFh6Mo57bPwQQ@mail.gmail.com>
- <CAHk-=wiEwSjfbjfO74xu=UmkkdHXkJg5QNQ8pP-3iYmunmeV9g@mail.gmail.com> <CALCETrW3XcNLuB1Y6PSkxQDSK2o+=EB2AAd25SjWQqcJemwnbw@mail.gmail.com>
-In-Reply-To: <CALCETrW3XcNLuB1Y6PSkxQDSK2o+=EB2AAd25SjWQqcJemwnbw@mail.gmail.com>
+ <CAHk-=wiEwSjfbjfO74xu=UmkkdHXkJg5QNQ8pP-3iYmunmeV9g@mail.gmail.com>
+ <CALCETrW3XcNLuB1Y6PSkxQDSK2o+=EB2AAd25SjWQqcJemwnbw@mail.gmail.com> <CAHk-=wgn3QTLj+F+XccE10dXY-UGWN8+fNLEvhsLw+tik9rOmg@mail.gmail.com>
+In-Reply-To: <CAHk-=wgn3QTLj+F+XccE10dXY-UGWN8+fNLEvhsLw+tik9rOmg@mail.gmail.com>
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Wed, 3 Jun 2026 14:36:52 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wgn3QTLj+F+XccE10dXY-UGWN8+fNLEvhsLw+tik9rOmg@mail.gmail.com>
-X-Gm-Features: AVHnY4JdHVy7zfm3YSY570fWNlTEBH8JxW4P9TvGYREa7sUrzYx92vQNA-k2Zxc
-Message-ID: <CAHk-=wgn3QTLj+F+XccE10dXY-UGWN8+fNLEvhsLw+tik9rOmg@mail.gmail.com>
+Date: Wed, 3 Jun 2026 14:38:34 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wha=LtAq8y-B4j9ps1g_qv3CK0LrHdHEVxP_52p-m=NZA@mail.gmail.com>
+X-Gm-Features: AVHnY4IpVbwzilxzEo0kIzmtKsGcV63XCgmSpKmBQvjcdm3Lbflf84U-wY6VXLY
+Message-ID: <CAHk-=wha=LtAq8y-B4j9ps1g_qv3CK0LrHdHEVxP_52p-m=NZA@mail.gmail.com>
 Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
 To: Andy Lutomirski <luto@amacapital.net>
 Cc: Askar Safin <safinaskar@gmail.com>, akpm@linux-foundation.org, axboe@kernel.dk, 
@@ -91,25 +92,23 @@ Cc: Askar Safin <safinaskar@gmail.com>, akpm@linux-foundation.org, axboe@kernel.
 	viro@zeniv.linux.org.uk, willy@infradead.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 3 Jun 2026 at 14:31, Andy Lutomirski <luto@amacapital.net> wrote:
+On Wed, 3 Jun 2026 at 14:36, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
 >
-> I think I buried the lede too much and you're arguing against what I
-> was trying not to say.
->
-> Maybe we should keep an API that does an optimized copy, from one fd
-> to another, that can send from a file to the network with at most ONE
-> cpu-side copy.  Not aiming for zero like sendfile / splice.  Aiming
-> for one.
+> It was just the filesystem side that basically now instead of exposing
+> the page cache directly (with filemap_splice_read) now only exposed a
+> *copy* of the page cache (with copy_splice_read).
 
-Oh, absolutely - that's what my completely untested test patch  basically did.
+... and let me note that UNTESTED part again.
 
-The user space interface was still there.
+The patch looked "ObviouslyCorrect(tm)" to me, and I did actually
+compile-test it too.
 
-And the networking side still continued to use the ->splice_write()
-thing for writing to the socket.
+So it probably wasn't _complete_ crap.
 
-It was just the filesystem side that basically now instead of exposing
-the page cache directly (with filemap_splice_read) now only exposed a
-*copy* of the page cache (with copy_splice_read).
+But I never even booted it, and if I had, I wouldn't have had any
+loads that uses splice (or sendfile) anyway.
 
-                  Linus
+So caveat emptor.
+
+              Linus
