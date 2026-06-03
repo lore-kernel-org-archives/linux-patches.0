@@ -1,138 +1,151 @@
-Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azon11010038.outbound.protection.outlook.com [52.101.201.38])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9E947D945
-	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 12:41:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.201.38
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780490475; cv=fail; b=O3SRw4P0V3dtMnEsB9v2QXZeKM2mtTLTXrbdz27kaDfPG3rRM40KR9S5nhOXFmROnGfjmLUv0sam/IrZFzLCGedrI5JB5HAPsBk/hB6RVmngVqM2emQEUWPXbW3Bm5vvTXZlih7wzFcU0ucC8CarJHV4IPHunTVo5cCN/EP+Vds=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780490475; c=relaxed/simple;
-	bh=/NCoc/BuwhpVlSUPmTfLgw5vMVdHpmBKr101w+YfYMA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=GDctuq6VqA3FYUXaM3NPwjkuvumrq9BKI9pL462NGQm6TT5NoK1zfqTWMZBnyY5CPf37WI8++dBLkjoYS916Ag7acu9kPjgU6SBgDAkn5dYqug9bpcZFlFZUlpZhpH4uPgOG2MkdvkYnIBQfBV+SdaEU+tecwzrYsGYz2JCmJ58=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Y6aZzlpu; arc=fail smtp.client-ip=52.101.201.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9492F7EEF;
+	Wed,  3 Jun 2026 13:40:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780494044; cv=none; b=IqZTnqw9grflu5GXNQKEtBvrWPB2qpfabK8IhvC6dur6NhQxGY5ZyrJimK7a58qoN/RcJudKVQ/C9f4LUvZT8BJG+wwcqmX6WGpea+NzPAp+Qu2sJ1D6qkdCYxsfB2WE9khvlUhwW3tEDpYw6PUAKML5Iq+RvdPnL1QK0HFK9Lg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780494044; c=relaxed/simple;
+	bh=b6vBOlamIALY9QchbQL4bGF2Nouw+mjRGEs7YrsXTNo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NM6AXP31Z8B/Z0cT9ykvrYuUjg5NKHCqoP8EZSOAxGRSC9NeLE943CM0b3oQqo1D90H887Tjw16Fyp/TJ1G0y4gDlIRpQyOhXXyxrMzjbWbXoOwdh6BW/fkg7vODBz8U7wOQNrikCRZLJl/4FIgG4/tcex7cnp9JFUDlUqA+jBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c1ouCCeO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Y6aZzlpu"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kIn/dFLj1OnhJcUFnC0hvLCYLZp6ziYzvUeEnYKWzFqseMhvAy2KzTREt9EVOywuOIMqVec/srSENzLe5QrOtC6uCnS5VYAboSipLSj0HZUkaYz+XHZww/s0HMh3YLTCwvAQUr3uBuq5AuNXrqwV7/S43DNJ2ZzX5S4qoT71YpxHZJxKCYWagRIUTuCVq2uyM3uw+695VVoTQNS3inbgejO9/1v/otnpboL6xdHC+QDZg9wgjSR3ZtVtVKnU9FMR12lii/1/eSiaRzxaUBU1xbSoKS3L1+wFoRDvoEfC6ZeoFUXeOu9WPUDaLTWh/GnzDV/E859VxHE6DNqq11FUaA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Fs+viUNUi1tTatwkudodvgiODnUHr/JxZHEU0HBw1hE=;
- b=KGaKJ+nlBlwwtgeweg0nu+NB7MxvRzOHzrnoszSsGFcsL+nWFLpaokOjGuRPymn2mm3PF/K1IO2jPnj4+B+UQChmO2UC/lnBe9OXMeuszMuR1Chf8ZHGchNEHYGV1dgExTNqQk1FkyoDam2r/FvRINVA/WPeWZYFNPCgdBrNMNmub96pwXRWPUhYKDCMgcaFB87H4kGcbdB28eO0Zr/0gPMheEo8vsAKMBjcUXepPa3tu9gaqFEAycLtXqXqzGrxWpUsTBlPUBQ680pKwYnetu8JH2cAQLfDZRXtkZIxh9HvlhWY864YWfIuRMDBG2pXx6wgEHr462jCkssuTUbD3w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Fs+viUNUi1tTatwkudodvgiODnUHr/JxZHEU0HBw1hE=;
- b=Y6aZzlpu7+/GFsFvEvIIov2fqgiqxseqIH7+HExFnj4eisFEtw9E7iX6Y7BMh40ip9W2Y2wOnxWhMpjuSm3Bs9pQQEgSEQus8rMXTee4cZT5ZexRBkSfGD2Cgnb8uIJcU6E1BaFtd6GHOturDN+PqoW6oh4mF4mXls3+JStY3lFTLlSMsnPb1WGxuFftXfoOrQ1wScIfcAK9JwKDGSJbnC40n03AXr//K+sl6MBdr8tUOz0cki24Wo42KjBP8JpcHyXKcwOKuaQueWr00dqEuZz8cH3u6rz6cv7gKbzRlZnCWBc9ZRqwrZc4sg4LzcGOlV5cOC/5alW9LJ79/bX8Ig==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by BY5PR12MB4036.namprd12.prod.outlook.com (2603:10b6:a03:210::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.13; Wed, 3 Jun 2026
- 12:41:07 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0092.006; Wed, 3 Jun 2026
- 12:41:07 +0000
-Date: Wed, 3 Jun 2026 09:41:06 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Leon Romanovsky <leon@kernel.org>, linux-rdma@vger.kernel.org
-Cc: patches@lists.linux.dev, Shiraz Saleem <shiraz.saleem@intel.com>,
-	stable@vger.kernel.org
-Subject: Re: [PATCH 0/3] Fix typing issues in the umem code
-Message-ID: <20260603124106.GA1429219@nvidia.com>
-References: <0-v1-88303e9e509f+f7-ib_umem_types_jgg@nvidia.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0-v1-88303e9e509f+f7-ib_umem_types_jgg@nvidia.com>
-X-ClientProxiedBy: BL1PR13CA0226.namprd13.prod.outlook.com
- (2603:10b6:208:2bf::21) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c1ouCCeO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB4C61F00898;
+	Wed,  3 Jun 2026 13:40:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780494043;
+	bh=KGsTHKQ9mld7YxQe3rajH7wvD+M6DWrkXFM9QhfOh6M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=c1ouCCeOfGsSWLGNkvvoOa5gTYM0YWhQ2YWKcMokI4OUSVIQBt0LDWDEXGXgdOBhk
+	 RcRyl93QyEJ9JLW5AoFWnCmqBcXY4cK06cakG8SwHN1xGxeQjB9bXeW0akqq75vk2P
+	 s1CIE2PyGQkPbaRlS08LsLJsqwRjPSYYv9Co1tKaf2nz1vK6+dOTW+wW6ZJys66m7i
+	 l/CfFgBOqWkhIpv51rSLKkHcHCfO99JTOGnqyq9fBQ5yu+2Nk4F/mwwgwhNKVUGHUE
+	 NbEKOEm1HAbHTIt1WY4dqDDq5U04q5ORt1Vz6IqwcdFYPqakOw4Ejt1EIbx3TDx8mS
+	 7EOkXsCAM9FvQ==
+Date: Wed, 3 Jun 2026 15:40:36 +0200
+From: Christian Brauner <brauner@kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Andy Lutomirski <luto@amacapital.net>, 
+	Askar Safin <safinaskar@gmail.com>, akpm@linux-foundation.org, axboe@kernel.dk, david@kernel.org, 
+	dhowells@redhat.com, hch@infradead.org, jack@suse.cz, linux-api@vger.kernel.org, 
+	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
+	miklos@szeredi.hu, netdev@vger.kernel.org, patches@lists.linux.dev, 
+	pfalcato@suse.de, viro@zeniv.linux.org.uk, willy@infradead.org
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for
+ preadv2/pwritev2
+Message-ID: <20260603-raumfahrt-unmerklich-ertrugen-c4ecae70d5f9@brauner>
+References: <CAHk-=wiAqf0PdZ4AKj_4riUnnEb=g_ZNPkLnXrByA9BBHYiFRg@mail.gmail.com>
+ <20260602225426.122258-1-safinaskar@gmail.com>
+ <CAHk-=wgKy4dP0oQCNKyMQQf3-uVpaigmDyH6_T0Via76gWST9g@mail.gmail.com>
+ <CALCETrWx8-Q5-rK1KnAPCxCbXaWCd=Yfs_Pr8qVMa8k8L6of1w@mail.gmail.com>
+ <CAHk-=wizkDXRut5xLXRF-CVUVYMaZ5AOexxeghOAoXPb4yAvQg@mail.gmail.com>
+ <20260603-navigieren-pleite-stilvoll-60e6da66b1d4@brauner>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|BY5PR12MB4036:EE_
-X-MS-Office365-Filtering-Correlation-Id: 545debd5-24ed-4ce7-3e31-08dec16d61ce
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|22082099003|18002099003|56012099006|11063799006|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	Q4areJ1gszdbs2cvW9lhESK5DSpQoFSm9TU7IvaAdQ2/DRe6E7nZnD9HbNxg/UJT+H4MtnTlDe4K/5zNWLUrCIS7Idff/uNjdrrB3JVUhCHOcWhfsDfp7wJdeNmTfeJoj2uErbzekZpGfmLWbOqpmBzUAk+0LmDRZ8WaQWiRMlQ3p2SIOG3UJU0V5zoErKPtlo8WBfKHwsLy+AKCT0mJKhADmlUk7UXBojN+Y/6x7SNi0bRTxBLqUnSRnU/gyt4Skb1ibBBPsyd0BmfLtv2WRU7+LXRtGlln2BuI+UhHjeqaRArbReh05DDM7ZBJU3FFHt1j2Yot8LpkaK5/c7K3Pti3TOlQRufYY99BaxTLZMlau4mvhEVKwR7gJp5jLMwL1/lDYp9Ep0jQwkddbq9E9nFJei4eMLzXBDgrgBYO7UJ/6+Bj6EaCdI5Ap8m/wHBB1aLZL+2Bc54pZA3aU0RUPvGI/IMGdYPcxQxHZ4Ep10bfafRoFpbrlziq5wbktRhYlmbw/Z+0tri3Z1yLvX2JlxV4MyC/5bGfgyXkicOIEWajRg7fkZ+cEj6tyn1wAz8ZvzlttzSTRIQJ5sPW/6K5p5ogIRyW9Hq7+NK5akIxnIuwi4ENgKYWKu8GvqsQfEXrzcDwLkFALKfGldQu8IG9/29IgniGYHGzhZaoDoyBSH4bT8sDAyQLmIeN52Fvfwlc
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(22082099003)(18002099003)(56012099006)(11063799006)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?smoi2rn5ZBj6xq2j1F/+uT1E1aPiYxYCUIh4zIbGnCJZnZZaAvfbiwGNw8xC?=
- =?us-ascii?Q?/0i1FZ4NSZGO0AaBMjbFPVsOsytbq9w88dwUkQHaF4AnUL+NETstD76GDGFp?=
- =?us-ascii?Q?FdK1Tak7mGygyXRGw2xW77qHKlu3wMk5aKM9CkKlZWh5b1nsTNJWjwqry9/a?=
- =?us-ascii?Q?bkYEmnekrEiLtwAJ7oVF2k1QbBjAcTTq6cY+cFfL6PuZ8ituZx4z6gXbtK+y?=
- =?us-ascii?Q?Pe43WOKkLy0HhotfnHeaiRLDYSUaP5tQCooH5LsZ3VQ4cKoy12o8W3xafzUp?=
- =?us-ascii?Q?1pGzFokrW1ZVSQBB8Dcyr7R6PoKVOAwiLOdLkeJs6AorkIywRRa7IGi1UYwz?=
- =?us-ascii?Q?uJ9bozD6RGR7figcu3VtywPTjkjOBjPUvLq6f5S9zwwEhtzAzyba+bfR0ajH?=
- =?us-ascii?Q?Gf92B/YBxQvlvWm7sbZqVr/WTJ/zqMlrebYw/YMlQrmaHhpOHja6iO5cGuOf?=
- =?us-ascii?Q?MjZg50oodp/capoblHml734TqO6kDLosOPJ+kwQ90+UNcMy+3FNLMrUjEwAn?=
- =?us-ascii?Q?ek2n3+UWlxn71Evd64s+8Nbx/6vwpfU4ol4VoX9Rj8LddNisD3FEvdwnPpJ0?=
- =?us-ascii?Q?Cxtv6YfiKEds1jD6lyxwmvegLh1Gygi8IkcRXjPzQ15rRF01/0EqCSFCd8eq?=
- =?us-ascii?Q?0KK2TaR6G0kJv374Mypy8U4afVh1QB0vKs7TY1INL5BHBLElCcUFzuVjRiZ0?=
- =?us-ascii?Q?fR9Ch6kVvzUidoxicRkcaau8i+XE5KSEzGYnZhIsMXJvYFwtV8N2JQYJb6Nv?=
- =?us-ascii?Q?Ihg7/7lYpsiaQJaTUgz5+tTLgOnKfsmy/ljWRCUy5OqG2U+Sxswv+0pDwQPl?=
- =?us-ascii?Q?BIugodXrmORtEqeJUey30tJVWCtjpvGdI8uUX0pJ5v3L7C9AAbRzsYtnq02K?=
- =?us-ascii?Q?DqJC5Fym6vAUaJyPN65Tv/VqZpYQC3we8pYOoSLs0I0tG1tK8ozHBR4Sdayl?=
- =?us-ascii?Q?9B/7yERNKWv55VnGz1Qa4rTYo9dUlcd5q3x8dvdEZXjKZlzosYVH+anqJWIu?=
- =?us-ascii?Q?qLNr9f1b22wUOELbKZQUqQkSQYtTIzprVfSQLRcvDbYmXqKDc8KSWFl6l/0c?=
- =?us-ascii?Q?DzZQIBDKkKfkyz7sepPKZbjrKi9wPiCH152GfnG1BkrDcq4xnoxw5fKvrjbd?=
- =?us-ascii?Q?SBzs8TPTpBgGnWsnnCEmkFgvV+AUXbPvApDik8VWklZEAQh7BnSvWLbobd8Z?=
- =?us-ascii?Q?nE/1pZBkqyZI8mqIUFVN6p3OVLRHNx6uzv+stj318EzZSTqQFFzDfybiok/p?=
- =?us-ascii?Q?UThegONmf+J0S2z+nyCxW6c1HIeexgxpuhGpZ81WvpongOyjGQe5ZX/hd+nr?=
- =?us-ascii?Q?Y4C8L/RUQKCU6VZAK5GCI/sn7fFKrNyb2FQAtj/fAFBd4/KLjgmHzckjgfNO?=
- =?us-ascii?Q?o4bz5xWOTz9efOE6bVwoZCpVnMvdb/daMksAC2ujdXKgbUeZvgLng6TMjU04?=
- =?us-ascii?Q?4g6W83F7e2tDwBKvcH7LFECdBP8szVbytbbg7zVHaV2ZCOgyJzq7KVb+Bvus?=
- =?us-ascii?Q?VP5HgkYeCGQ/HptbCmAO+1xY+t4Tz9nibhqI9ffC+cqyM5NdlWwvr4vGaTYj?=
- =?us-ascii?Q?lnCdEAb1STC3lBi2z6r7qZgvpqMlvybvY0FWbiDR9aBxlZewa+K2xSXzE9G4?=
- =?us-ascii?Q?KBN4+XldXISj/Hhhqd7qwS4QUgloZkv4OLqbGCIkBcc3xvHmHPAHEvWAQSSG?=
- =?us-ascii?Q?YUh2r9AdYhKxxWJ9TfEcWfwutvKKD7CntXYR7Hz8PSqldiQP?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 545debd5-24ed-4ce7-3e31-08dec16d61ce
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2026 12:41:07.1848
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3wfP/hVyF4I33ifptB6kwomT1KFICg+CAzj82ylcAAsUimn7Z9AzwwpANxfeb5K8
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4036
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260603-navigieren-pleite-stilvoll-60e6da66b1d4@brauner>
 
-On Mon, Jun 01, 2026 at 01:52:30PM -0300, Jason Gunthorpe wrote:
-> The types are tricky here as we have a mixture of u64, dma_addr_t and
-> unsigned long used purposefully for different things:
->  - The on-the-wire IOVA address of the MR is u64
->  - The dma address is dma_addr_t which can be u32 or u64
->  - unsigned long is used for pgsize, mostly because a bunch of bit math
->    helper functions are used and they are obnoxious to use u64
+On Wed, Jun 03, 2026 at 08:45:18AM +0200, Christian Brauner wrote:
+> On Tue, Jun 02, 2026 at 09:20:13PM -0700, Linus Torvalds wrote:
+> > On Tue, 2 Jun 2026 at 20:51, Andy Lutomirski <luto@amacapital.net> wrote:
+> > >
+> > > Am I understanding correctly that this will completely break zerocopy
+> > > sendfile?
+> > 
+> > Very much, yes.
+> > 
+> > And it's worth making it very very clear that ABSOLUTELY NONE of the
+> > recent big security bugs were in splice.
+> > 
+> > They were all in the networking and crypto code that just didn't deal
+> > with shared data correctly.
+> > 
+> > So in that sense, it's a bit sad to discuss castrating splice.
 > 
-> Fix various silent truncations, issues on 32 bit compiles and
-> understandability.
+> Well, we're completely ignoring the fact that splice()'s locking and
+> interactions with pipe_lock() are complete insanity. So unless someone
+> sits down and really thinks about how to rework the locking I think
+> degrading splice() is just fine.
 > 
-> Jason Gunthorpe (3):
->   RDMA/umem: Fix truncation for block sizes >= 4G
->   RDMA/umem: Be careful about boundary conditions in
->     ib_umem_find_best_pgsz()
->   RDMA/umem: Make ib_umem_is_contiguous() safe on 32 bit
+> > But it's probably still the right thing to at least try.
+> 
+> Yes.
+> 
+> > I just suspect we'll never get real answers without going the "let's
+> > just see what happens" route...
+> 
+> Yes.
 
-I picked up t he first patch to -rc
+Reading this thread again I'm really amazed how willingly people argue
+to remain locked into a really broken API even if they're giving a risk
+but worthwhile chance to kill it for good. Anway, odd-userspace behavior
+time:
 
-Jason
+David reported vmsplice01 failing in the LTP testsuite after the change:
+
+11297 20:41:02.548383  <LAVA_SIGNAL_STARTTC vmsplice01>
+11298 20:41:02.548518  tst_tmpdir.c:316: TINFO: Using /tmp/LTP_vmsZ13ZQj as tmpdir (tmpfs filesystem)
+11299 20:41:02.548656  tst_test.c:2047: TINFO: LTP version: 20260130
+11300 20:41:02.548793  tst_test.c:2050: TINFO: Tested kernel: 7.1.0-rc6-next-20260602 #1 SMP PREEMPT Tue Jun  2 18:13:29 UTC 2026 aarch64
+11301 20:41:02.548932  tst_kconfig.c:88: TINFO: Parsing kernel config '/proc/config.gz'
+11302 20:41:02.549069  tst_test.c:1875: TINFO: Overall timeout per run is 0h 01m 30s
+11303 20:41:02.549205  tst_test.c:1632: TINFO: tmpfs is supported by the test
+11304 20:41:02.549340  Test timeouted, sending SIGKILL!
+11305 20:41:02.549477  tst_test.c:1947: TINFO: If you are running on slow machine, try exporting LTP_TIMEOUT_MUL > 1
+11306 20:41:02.549614  tst_test.c:1949: TBROK: Test killed! (timeout?)
+11307 20:41:02.549751  
+11308 20:41:02.549887  Summary:
+11309 20:41:02.550021  passed   0
+11310 20:41:02.550155  failed   0
+11311 20:41:02.550290  broken   1
+11312 20:41:02.550450  skipped  0
+11313 20:41:02.550582  warnings 0
+11314 20:41:02.550710  
+11315 20:41:02.550838  <LAVA_SIGNAL_ENDTC vmsplice01>
+
+So I looked at the test:
+
+	while (v.iov_len) {
+		/*
+		 * in a real app you'd be more clever with poll of course,
+		 * here we are basically just blocking on output room and
+		 * not using the free time for anything interesting.
+		 */
+		if (poll(&pfd, 1, -1) < 0)
+			tst_brk(TBROK | TERRNO, "poll() failed");
+
+		written = vmsplice(pipes[1], &v, 1, 0);
+		if (written < 0) {
+			tst_brk(TBROK | TERRNO, "vmsplice() failed");
+		} else {
+			if (written == 0) {
+				break;
+			} else {
+				v.iov_base += written;
+				v.iov_len -= written;
+			}
+		}
+
+		SAFE_SPLICE(pipes[0], NULL, fd_out, &offset, written, 0);
+		//printf("offset = %lld\n", (long long)offset);
+	}
+
+Prior to the change add_to_pipe() returns -EAGAIN the moment the pipe is
+full. So iter_to_pipe stops and returns a partial count capped at pipe
+capacity. For a 128K buffer over a 64K pipe the first call returns 64K,
+the test drains it, call 2 returns the remaining 64K. Done.
+
+After this change do_writev(... flags & SPLICE_F_NONBLOCK ? RWF_NOWAIT :
+0) then calls pipe_write which does not stop when the pipe fills. It
+blocks until the entire iovec is consumed.
+
+I kinda think we need to preserve similar semantics.
