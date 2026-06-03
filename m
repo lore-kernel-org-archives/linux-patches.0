@@ -1,89 +1,69 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73EE02FDC30
-	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 01:08:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E573F0762
+	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 03:27:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780448932; cv=none; b=NWVwwpMJmjJz9O9j7qX60FWSqBucr+HWsXUBAdhS59LFEBuo+cbE7lee4b/zk5bSBUeRzik5vYI+R6p7MKNfCjhwnZxuXfAKYaF2x5Aj0XAiCLcsmlqHHxHmpTUPAX4LvlmO79TIVSVi/maZU80B8uNASXcUG131VqLA+5JmOyg=
+	t=1780457281; cv=none; b=E7gtiU5Et8AWbCFzkQhRJubE7iWvdGHBTAVXKURhC19Bl4+OvzpeHDZgRmfjLsjh4roJ6fIts955Y11v1d2bQd1F4xv/S3ZC8+SGdHFBGNW9uCJb9kwnZu3XuMgcgqIHeM0yEfyMp5sKwg+5/fRDtaGlGOrHzVv119Kqqb5p3lA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780448932; c=relaxed/simple;
-	bh=2ZV+1Hj/UhdYw1uvUPcYqYevnxoEYOizS2cgooIrU6Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bUBvPq+qiLzYSvePf0AwiwMQLcCpoyWuMqUXehwA//CHnozB4/1KJyvUSGNNVwmVCUw9sBm5y/KCliaJwQRtL2XwKhf5PtlSYIN0hvShHRZ5uaSip/2fLJlk+3QntfuJfn+f2984bMH7dD1uWD3MqIpCsb3pLuBOiV7wyUeSJyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dbpqgSba; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780457281; c=relaxed/simple;
+	bh=JP2ur9A6LiOPSafheMdfkuIvnoNhxLYGSX4vb8FkVCg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mqObkJzSuIMZs0M3NWPBnj9ZA6c3Tdb1AorFqxLB3P6O+n51WdIoOByb80oX3c+y4a5cQf4hZYJcKTGwaVInfSRid0uoe1QSJEuoZ0/RLt9vac4+87mXvria+BeVGkMdjYpuiYoeubNYpiZciQ18gmHSICTVE7c8qU+POfxVK6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=aEI1kUEU; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dbpqgSba"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4903f7a90d1so109926735e9.2
-        for <patches@lists.linux.dev>; Tue, 02 Jun 2026 18:08:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780448930; x=1781053730; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=d3GAR7SC93N2eePKpNe9tCYUdzk5c1g7WEzw2IFy6ZM=;
-        b=dbpqgSbaZYrs4nyuwSZzmx978h/WuRj52MBk5MoDPXeQf2evsEKqxYvP/IOLQ/B+D2
-         d4NE4Wmig9Cr0jbXQPu21yZBsbhVHoZvqvq5e5XXndlP1IUUaJy8gnFyuVtiUb0NnqIc
-         ovMyJtHGZzf89ijviwcB67LungyRqqDqXkkfNjX0p9xF+nuRKMfigmnY0ei/jXjeOV0T
-         SbEdJM9HV0AYLMMuo3/YYlQLqoG+ICwsswMr04Y+7lES1RKAarzAwUpW3HTo7o6Cl8Pg
-         z29QUA/mkYh32tqzU5wEFni1oZ2aLwR6NHmkk+mfjgRPqFeDsc55Ylm+qovrJpM6IA0u
-         VqiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780448930; x=1781053730;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=d3GAR7SC93N2eePKpNe9tCYUdzk5c1g7WEzw2IFy6ZM=;
-        b=EzTheKTf3CDBb7EQMsJcjYMllJf574aT87/q4x9H2vd4R1+BzSQnW8OgAhhV1l+pEE
-         rNit+6dl7jeTIwVEwg5fJiE1uhM08Kvpejs7KaiWyQ8ndftYhUHfvr2/K3L+/Ahmdys6
-         FnHVC3VzizbJ2/h288gdwL8+gfHzJZPVABexVuH6hmRMUaYvPGot44lWKQuGiLcc38D4
-         TJ4vSDAHIt9KK+hgUmwBe8MNJZKhN+j5pZEK/B3wwoByO3Ki2WBJ6B9YrguU6lyT+3Wf
-         lH5tqCcSK/nbME44Lf8QZW+25YKbYTYkotzCFBYjj3+bt/N2sNzhdUXHVB3Az5veCAog
-         eA0Q==
-X-Forwarded-Encrypted: i=1; AFNElJ8tGb66zkiQhEX8ZU1BLMiijt7YBm9nnAoajDiaWTkOw9/JAuk5AUEit2uEuegE2r3QOTW2kmlx@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzw3D3Qg8PlgMpQwFoXhR+V9P+4BuGDKz6CtKMyN5hLUNE4knXj
-	+Vr26/a4GTW3YYrh0dZSZ9YSEleaBc2L8PZIcIVCVe2DgWu4xBcwwC48
-X-Gm-Gg: Acq92OF5/THrQhbugbEJin8wdiLY7VrChXlYdJt5VQpay011rTwqM2mIukSoUAWpvDS
-	E+buGQU1sT+dhArBJhlfIqTd1W6qUod2NnnlqLzX7/i4laj9A3LK2CizjSnOUtHTBwwXRRWills
-	Ng6ENzxlUOc4I6tiawE7/uzgFtuXaGzH0rAIFOd0DjdCBsZXdANTRer4D5l8Pi32KPSH5QxcMZ/
-	DmN/oLz4DaFajlQrcVmtCbt38fg8V3Ypicw66dMlErEWLAwWhKwFpEufaaOMou7uavidIs6VrhN
-	XgVSs56SJ4dhOXKyMg4453pfLoA69HDxzYyPT970VA0jbC9qP2qQKNt6b+jqA95RfisE8+qPID7
-	2PdZteVFM2hZy9+kPbfHe+2/wgZdugDujaStHms/LtZ8ay0S1ko2nv6KdMcqtbwbcFslPdZC2f6
-	RfisUFkzSfl9L11XGQ31W2+fyo2bpdFg==
-X-Received: by 2002:a05:600c:3e19:b0:490:b58a:dcc1 with SMTP id 5b1f17b1804b1-490b60fcd56mr18908035e9.29.1780448929768;
-        Tue, 02 Jun 2026 18:08:49 -0700 (PDT)
-Received: from localhost ([212.73.77.104])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-490b725fb1bsm11254325e9.8.2026.06.02.18.08.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Jun 2026 18:08:49 -0700 (PDT)
-From: Askar Safin <safinaskar@gmail.com>
-To: torvalds@linux-foundation.org
-Cc: akpm@linux-foundation.org,
-	axboe@kernel.dk,
-	brauner@kernel.org,
-	david@kernel.org,
-	dhowells@redhat.com,
-	hch@infradead.org,
-	jack@suse.cz,
-	linux-api@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="aEI1kUEU"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1780457279; x=1811993279;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=JP2ur9A6LiOPSafheMdfkuIvnoNhxLYGSX4vb8FkVCg=;
+  b=aEI1kUEUpcgvmlo9I4vN00Bye6BJ9Mg1EYYNzD2SMNZrME2Q/TATM/NM
+   Mry3Ide8fX8HOa+pmbPLwwiS9XUVvlGpl+duZBQAG0Q2h4LJ+mg9OhKuo
+   bj0lNBAbDVk2Is0yEvGHhGKbgIBpM2669ZfGkt8okT/ywXB8iYa7bXc1D
+   hAdq5QR+YIlpJmHQL48jQM6imGDiyaYw3fYIGGY54XdJEpJXEai61qODQ
+   albgXqVX85VDGOnOuCifs/jE+byVER1ZGaHNlrvSxtxePFe7dXkgFOiAw
+   3MboOMO88FvgG3wYbIEHf6EO87sr5Wd1p9YpqkmkpjPVOWRIdcJ4FakQj
+   w==;
+X-CSE-ConnectionGUID: f96pG+R8TxCw2BVDQKwFBw==
+X-CSE-MsgGUID: IkW3N5vfRHyxcIK6JieFwQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11805"; a="91938960"
+X-IronPort-AV: E=Sophos;i="6.24,184,1774335600"; 
+   d="scan'208";a="91938960"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2026 20:27:58 -0700
+X-CSE-ConnectionGUID: hbQQk0sRS7ayuLsaMpya4w==
+X-CSE-MsgGUID: HtUAyFGJTTmapRn2fQIivQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,184,1774335600"; 
+   d="scan'208";a="241110092"
+Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2026 20:27:58 -0700
+From: Reinette Chatre <reinette.chatre@intel.com>
+To: tony.luck@intel.com,
+	james.morse@arm.com,
+	Dave.Martin@arm.com,
+	babu.moger@amd.com,
+	bp@alien8.de,
+	tglx@linutronix.de,
+	dave.hansen@linux.intel.com
+Cc: x86@kernel.org,
+	hpa@zytor.com,
+	ben.horgan@arm.com,
+	fustini@kernel.org,
+	fenghuay@nvidia.com,
+	peternewman@google.com,
+	yu.c.chen@intel.com,
 	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	miklos@szeredi.hu,
-	netdev@vger.kernel.org,
 	patches@lists.linux.dev,
-	pfalcato@suse.de,
-	safinaskar@gmail.com,
-	viro@zeniv.linux.org.uk,
-	willy@infradead.org
-Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
-Date: Wed,  3 Jun 2026 04:08:44 +0300
-Message-ID: <20260603010844.257094-1-safinaskar@gmail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <CAHk-=wgKy4dP0oQCNKyMQQf3-uVpaigmDyH6_T0Via76gWST9g@mail.gmail.com>
-References: <CAHk-=wgKy4dP0oQCNKyMQQf3-uVpaigmDyH6_T0Via76gWST9g@mail.gmail.com>
+	reinette.chatre@intel.com
+Subject: [PATCH v4 00/10] x86,fs/resctrl: Fix long-standing issues
+Date: Tue,  2 Jun 2026 20:27:28 -0700
+Message-ID: <cover.1780456704.git.reinette.chatre@intel.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -92,16 +72,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Linus Torvalds <torvalds@linux-foundation.org>:
-> That absolutely would be my suggested next step.
-> 
-> Something like the attached - get rid of filemap_splice_read()
-> entirely, and just replace it with copy_splice_read().
+v3: https://lore.kernel.org/lkml/cover.1779476724.git.reinette.chatre@intel.com/
+v2: https://lore.kernel.org/lkml/20260515193944.15114-1-tony.luck@intel.com/
+v1: https://lore.kernel.org/all/20260508182143.14592-1-tony.luck@intel.com/
 
-Okay, I will post something like this soon.
+While reviewing the AET series [1] Sashiko reported a deadlock during mount,
+and a use-after-free when an L3 domain is removed during CPU offline. More issues
+were uncovered as fixes were developed and reviewed. While the goal is to
+fix all issues the races surrounding pseudo-locked regions are not yet
+solved and have been removed from this version of fixes.
 
-But I'm slow person, and also I will test things in Qemu, so this will
-take some days.
+Applies against tip/master to ensure it considers pending x86/cache changes.
+
+Changes since V3:
+- Drop majority of pseudo-locking fixes, only keep the double free/double
+  list add fix.
+- Add patch to help document safe RCU list traversal.
+- See individual patches for detailed changes.
+
+[1] https://sashiko.dev/#/patchset/20260429184858.36423-1-tony.luck%40intel.com
+
+Reinette Chatre (7):
+  x86,fs/resctrl: Document safe RCU list traversal
+  fs/resctrl: Fix deadlock on errors during mount
+  fs/resctrl: Prevent use-after-free in rdtgroup_kn_put()
+  fs/resctrl: Fix double-add of pseudo-locked region's RMID to free list
+  fs/resctrl: Prevent deadlock and use-after-free in info file handlers
+  x86/resctrl: Ensure domain fully initialized before placed on RCU list
+  fs/resctrl: Fix UAF from worker threads when domains are removed
+
+Tony Luck (3):
+  fs/resctrl: Move functions to avoid forward references in subsequent
+    fixes
+  fs/resctrl: Free mon_data structures on rdt_get_tree() failure
+  fs/resctrl: Fix use-after-free during unmount
+
+ arch/x86/kernel/cpu/resctrl/core.c        |  18 +-
+ arch/x86/kernel/cpu/resctrl/ctrlmondata.c |   4 +-
+ arch/x86/kernel/cpu/resctrl/intel_aet.c   |   5 +-
+ arch/x86/kernel/cpu/resctrl/monitor.c     |   2 +-
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c    |   4 +-
+ fs/resctrl/ctrlmondata.c                  |  50 +-
+ fs/resctrl/internal.h                     |   3 +-
+ fs/resctrl/monitor.c                      | 123 ++--
+ fs/resctrl/pseudo_lock.c                  |   2 +-
+ fs/resctrl/rdtgroup.c                     | 859 ++++++++++++++--------
+ 10 files changed, 663 insertions(+), 407 deletions(-)
 
 -- 
-Askar Safin
+2.50.1
+
