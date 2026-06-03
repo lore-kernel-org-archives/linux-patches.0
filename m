@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FD13F412A
-	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 03:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6238C3F54BB
+	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 03:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780457285; cv=none; b=WvefqqWbpkGCWLXLIQDSCUTsxA53wBHHhEf7Z3HGIZeobfh/1VpgwHBdRcDMA9pkanDjNNXkJLShJ5Ynfs/bg3ZQZbk63ppRlAow5tvWxXV7TLa17fZrQ+xtEI+yy3+PuBboX8zkwtAy989zGGJtaavgzMIQwvYiEhw5aW15MYE=
+	t=1780457286; cv=none; b=cA4hnsizPgAes8J7jrNYFD083xXVwXc2NnnHSMdbma81IhBKnlxVUyLcZuCSXNoJyONLZ7E1wyZ3b0PDGBS7nemaTpwBrCKGUlbby969T3wnOsXBPZ81laFfzcs7cQKdp5eDAT45VInwgXztJKj9FrV+coCF6vuAXWOZ/6xPwEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780457285; c=relaxed/simple;
-	bh=bQGZ3Gi1hecEzRonc8KkP4mUrFcfRliOT9dqTRLLRN4=;
+	s=arc-20240116; t=1780457286; c=relaxed/simple;
+	bh=+bCwbGXodPOyojvefV3AVotYYV06mZ2z2YAeKsYo9NE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SwiNzCo5OZAMrTBiB+jH+q1xSdmrcFy1G+EJaxrn078SniPeGHN2pw3yRiRI2z4SX23qMnGwddhwL4wzT/BG4YPLzx+ll36gcHwqqzFJ19CRozwx26tqNNS4306FwdGpA8CxrDY8BPq56JOgkN5OLrl/2ZJ+eQhFPkCZZ4HWB9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=e1hdAnrT; arc=none smtp.client-ip=192.198.163.9
+	 MIME-Version; b=Dw7M2Qr/74u83AvuHArZOjIznfIfrWPtKbllgxOwlk10Sn/x13rKoJB8TxG4R3CPx5QxaehI472OW7ZEYiEKgX5ZOqzEQ5m0ONwGE3ofss7ExODyK8YzEOA3RkxA4+xNVxpUTv8difYyPr7tR7XLlewkIv6lJM1mVnnLG3fXTTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FJ4UH0z9; arc=none smtp.client-ip=192.198.163.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="e1hdAnrT"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FJ4UH0z9"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780457283; x=1811993283;
+  t=1780457284; x=1811993284;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=bQGZ3Gi1hecEzRonc8KkP4mUrFcfRliOT9dqTRLLRN4=;
-  b=e1hdAnrTjtQEQ4Nemj5kpeNULYTnNHH2RIVftI0KR7LDdCXeT5YZwZ60
-   AC0ALDs9kaM0EbZ49Pn3rOHZKj7uJvn5X+l0uEmCy+eLuazljBUiLOw6Z
-   sQrIsghn1tI4z8vbKxIEJEUATb9/JrB/pi9ISqV7JIyV+zNRzPQqSw5MN
-   7FzQMlWoNOGlmy/809/exonzGS5igOwBNIebwQNe0QpFeydAAsVKuilte
-   PQvIrHMQnE0KOwbjgZEAKK5WJLpHu05jxaUGzh7FsFm+VuKVnmepa75gj
-   uU0FiyZF96Z7diZLTw8QKzfDGxNalR8YqPgZ1BZ4QsUdHdDxfYxsiRAu+
-   Q==;
-X-CSE-ConnectionGUID: 0jyA7ywQQau+CCXsjyILaA==
-X-CSE-MsgGUID: dH2kXmArTFKjiLzacGWn5w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11805"; a="91939020"
+  bh=+bCwbGXodPOyojvefV3AVotYYV06mZ2z2YAeKsYo9NE=;
+  b=FJ4UH0z9xfJTlt3sya+7s1brfk/P1V3zFP55mU1F03s2CjlpvbgOV/X+
+   4UCSGpA6BmXZTk/R5kIRodazoWshOhkUrpZrgVF2J5mubCNZvNJMENatv
+   0aHczjx6Um+8HC7EeF5VgALnG4qbLzR/Fz8zu6loUM6SjXblGmgBSmt0t
+   2c8/FlOHpsAtdlXwCK1k4IAy+S+2u7SYu82e64G0jibzw8eJmP2GD9RVX
+   X8k0j/0rKZOe5PbUa9TRSnBmOEX7IyMp3WpGiPXBuMwgG1I6RfykDKGpl
+   KHL1Djz68O7neX8jZeV4Mh4fVCdkGTmQwonI0+zhtIvNbEyJUhDMMTtCp
+   w==;
+X-CSE-ConnectionGUID: TjemZ051RIuqxyLYtW72Nw==
+X-CSE-MsgGUID: 0/kJbBOOQRmmu84nY57nCg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11805"; a="91939030"
 X-IronPort-AV: E=Sophos;i="6.24,184,1774335600"; 
-   d="scan'208";a="91939020"
+   d="scan'208";a="91939030"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
   by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2026 20:28:01 -0700
-X-CSE-ConnectionGUID: 4atK+GKBRHKn7zvQjHHrYw==
-X-CSE-MsgGUID: s45oagcsQGuyrH3D8BLmQg==
+X-CSE-ConnectionGUID: I7K+eS4KQmKbRtrIiO8SgA==
+X-CSE-MsgGUID: qNzA9OWNSiq/ySxEloFnkg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.24,184,1774335600"; 
-   d="scan'208";a="241110114"
+   d="scan'208";a="241110119"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
   by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2026 20:28:00 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
@@ -61,9 +61,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v4 06/10] fs/resctrl: Prevent use-after-free in rdtgroup_kn_put()
-Date: Tue,  2 Jun 2026 20:27:34 -0700
-Message-ID: <a2ba7d12c8dae5c4d04ea0bbda6bf4340f5b0d27.1780456704.git.reinette.chatre@intel.com>
+Subject: [PATCH v4 07/10] fs/resctrl: Fix double-add of pseudo-locked region's RMID to free list
+Date: Tue,  2 Jun 2026 20:27:35 -0700
+Message-ID: <2eda4d2873e6607b3c3f19bb5cac1d9fa8e2c04d.1780456704.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1780456704.git.reinette.chatre@intel.com>
 References: <cover.1780456704.git.reinette.chatre@intel.com>
@@ -75,89 +75,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A struct rdtgroup is reference counted via rdtgroup::waitcount. Callers
-that need the structure to remain valid across a sleep (while waiting on
-acquiring rdtgroup_mutex) take a reference with rdtgroup_kn_get() and
-release it with rdtgroup_kn_put(). The release path is intended to serve
-as the fallback freer: if the count drops to zero and the group has
-already been marked RDT_DELETED, rdtgroup_kn_put() frees the structure.
-The bulk teardown paths free_all_child_rdtgrp() and rmdir_all_sub()
-resulting from a resctrl directory remove or resctrl fs unmount act as
-the primary freer: they hold rdtgroup_mutex and free each rdtgroup whose
-waitcount is zero, otherwise they set RDT_DELETED and leave the freeing
-to the last waiter.
+A pseudo-locked group's RMID is freed when it is created. On unmount
+rmdir_all_sub() unconditionally frees all RMID of all groups, resulting
+in a double-free of the pseudo-locked group's RMID. The consequence of this
+is that the original free results in the pseudo-locked group's RMID being
+added to the rmid_free_lru linked list and the second free then attempts
+to add the same RMID entry to the rmid_free_lru again.
 
-These two freers race. rdtgroup_kn_put() commits waitcount == 0 with
-atomic_dec_and_test() outside rdtgroup_mutex, then reads rdtgroup::flags.
-Between those two operations a concurrent caller of free_all_child_rdtgrp()
-or rmdir_all_sub() (which holds the mutex) can observe waitcount == 0 via
-atomic_read(), call rdtgroup_remove(), and kfree() the structure. The
-subsequent read of rdtgroup::flags in rdtgroup_kn_put() is then a
-use-after-free, and the structure may even be freed twice if the freed
-memory happens to satisfy the RDT_DELETED flag check.
+Do not double-free a pseudo-locked group's RMID.
 
-Replace the bare atomic_dec_and_test() with atomic_dec_and_mutex_lock()
-so that the decrement-to-zero takes rdtgroup_mutex before the count
-becomes globally visible. The inspection of rdtgroup::flags then runs
-under the same mutex held by the bulk freers, making the two paths
-mutually exclusive. The common case where the count does not reach
-zero remains lock-free. Defer kernfs_unbreak_active_protection() until
-after the mutex is dropped since kernfs active protections functionally
-wrap rdtgroup_mutex. Remove resource group, which in turn drops its kernfs
-reference, after kernfs protection is restored.
-
-Fixes: b8511ccc75c0 ("x86/resctrl: Fix use-after-free when deleting resource groups")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260515193944.15114-1-tony.luck%40intel.com?part=1
-Assisted-by: GitHub_Copilot:gemini-3.1-pro
+Fixes: e0bdfe8e36f3 ("x86/intel_rdt: Support creation/removal of pseudo-locked region")
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Ben Horgan <ben.horgan@arm.com>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
 ---
 Changes since V2:
 - New patch
 
 Changes since V3:
-- Add Ben's Reviewed-by tag.
-- Add Tony's Reviewed-by tag.
+- Extract the double-add/double-free fix from all the other pseudo-locking
+  fixes that will be deferred. This issue was uncovered during testing
+  of the race fixes so drop all the Reported-by and Closes tags.
 ---
- fs/resctrl/rdtgroup.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ fs/resctrl/rdtgroup.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 0d073d4db734..c04424c081a4 100644
+index c04424c081a4..77c9d22017bc 100644
 --- a/fs/resctrl/rdtgroup.c
 +++ b/fs/resctrl/rdtgroup.c
-@@ -2606,15 +2606,24 @@ static void rdtgroup_kn_get(struct rdtgroup *rdtgrp, struct kernfs_node *kn)
+@@ -2885,10 +2885,6 @@ static void rmdir_all_sub(void)
+ 		if (rdtgrp == &rdtgroup_default)
+ 			continue;
  
- static void rdtgroup_kn_put(struct rdtgroup *rdtgrp, struct kernfs_node *kn)
- {
--	if (atomic_dec_and_test(&rdtgrp->waitcount) &&
--	    (rdtgrp->flags & RDT_DELETED)) {
-+	bool needs_free;
-+
-+	if (!atomic_dec_and_mutex_lock(&rdtgrp->waitcount, &rdtgroup_mutex)) {
-+		kernfs_unbreak_active_protection(kn);
-+		return;
-+	}
-+
-+	needs_free = rdtgrp->flags & RDT_DELETED;
-+
-+	mutex_unlock(&rdtgroup_mutex);
-+
-+	kernfs_unbreak_active_protection(kn);
-+
-+	if (needs_free) {
- 		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
- 		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
- 			rdtgroup_pseudo_lock_remove(rdtgrp);
--		kernfs_unbreak_active_protection(kn);
- 		rdtgroup_remove(rdtgrp);
--	} else {
--		kernfs_unbreak_active_protection(kn);
- 	}
- }
+-		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
+-		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
+-			rdtgroup_pseudo_lock_remove(rdtgrp);
+-
+ 		/*
+ 		 * Give any CPUs back to the default group. We cannot copy
+ 		 * cpu_online_mask because a CPU might have executed the
+@@ -2899,7 +2895,13 @@ static void rmdir_all_sub(void)
  
+ 		rdtgroup_unassign_cntrs(rdtgrp);
+ 
+-		free_rmid(rdtgrp->closid, rdtgrp->mon.rmid);
++		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
++		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
++			rdtgroup_pseudo_lock_remove(rdtgrp);
++		} else {
++			/* Pseudo-locked group's RMID is freed during setup. */
++			free_rmid(rdtgrp->closid, rdtgrp->mon.rmid);
++		}
+ 
+ 		kernfs_remove(rdtgrp->kn);
+ 		list_del(&rdtgrp->rdtgroup_list);
 -- 
 2.50.1
 
