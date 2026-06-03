@@ -1,82 +1,107 @@
-Received: from hr2.samba.org (hr2.samba.org [144.76.82.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305C9409605
-	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 20:57:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.76.82.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8917D4963CF
+	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 21:17:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780520232; cv=none; b=WihDKFt7449Yx0rbjGURDB/IgBWuTq1JKwnNUNvRsBkM4Fi8qrx52vJ7mMS5Ot7Yz0oN4y5zbApH0p52oGlDMr/okIpQai+X8+/RMidFmdxTfgRgF5UAWmM18JPD0MneTr2NuVHVDyocMWE5HAOiLpKC2ZmizfwOE4fBWOFPews=
+	t=1780521470; cv=none; b=qp15UcYsayp6q7kO8quPqZRfg1DpYKPsZFjPZ2xDRpKO9gNEksPB/YFNMfRhPWrGBBiJC0EgxXgGfKKKoVx9Zt6giZfm+xuYgmVB0qD+laeqaPTF1zKVlQncgIAcalqJfXAA2iHf5neCTwNyq24kV19xFKqhiLSN4CBBWI75HkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780520232; c=relaxed/simple;
-	bh=V2fXSXVzTIh8my+gZteAmchKNpC3cbws67iXcxUG/DU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Lk7k8qgCiHvyxKlVz3oxb6jse947s3bRvHAQr2wETTEqImtuSLX/0UClsPPwzqs+SGpiCUOtO544CQzRVNWW7II/TeqMtMk0DSpWNkWWExIawla7adRnbyFRpGSaENuaoMli97YUtQZ7tyLiEjXFI9UMYHn3/7KcIB9E6gMphE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=samba.org; spf=pass smtp.mailfrom=samba.org; dkim=pass (3072-bit key) header.d=samba.org header.i=@samba.org header.b=IkdgwTOo; arc=none smtp.client-ip=144.76.82.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=samba.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samba.org
+	s=arc-20240116; t=1780521470; c=relaxed/simple;
+	bh=cC2THtMvsKyfTnqSrCUcXu0Wb3XRjrvrr6iNqn0oj+c=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=SivOGEYUks4S3lYtR2/BNL88Fu+SsfYJxgYS6Pb/yx7iURkPsNIvmBTI73mm+l99qOsvdSi7+DjKV1f/Qqo5PQ06H81Xxtm1lB/PHI8g8nHkoH0LkatPxLUNWMGGsOM+qrOYhqF7G/gfZslPREymNKX9IDfkxlb9CGU7S5ntoCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BtF+szdC; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=samba.org header.i=@samba.org header.b="IkdgwTOo"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=samba.org;
-	s=42; h=From:Cc:To:Date:Message-ID;
-	bh=8BcJ1AYTFKicCZr4Jz0bUiyIXeLFCzsYHFc8JfDuOPI=; b=IkdgwTOofDKPbnSVfFpsvzvLwX
-	eOoOzStETsZ3WEPO0WPXmqBwdzYWHPKtXsWUBnPrhS49AtanwdCw0YdlhOj8U+4uuX/Y+SfTGA994
-	V7ALuQ7pbP0qgnPLvhDKoW4JaBX2kBwD+pPOmvpZsDURTw+GW7K1+NI24niCZg1RzD7JOHoHF0SmP
-	hdcGlnB/fPmeokjhlU+8VVRBpZh+b/J1zE3upcIPtx9c6TbTI3ByJCL102NkFbqcHCTIoTCffGSni
-	xtaEVXw+VwiZSATF2Xkm+AdCErd7J1WdkfDSXvkaDex04ioZI6pz8mSvaUmBgstMGtyOZlp3OjcJW
-	P7D6uZnanayQ1fDHOYYKRvi4YPhXlXQZbFaku9paKoIFPTrOzvfo4fQ6ml8lPxemUdrPhChWMRMLB
-	KbBvwt5/zIz36T+cmighMPqMSn7ZLdhtyimFeX+K5B0RraYwM92HQ/VTyeWryZpwntdJ1Vx0rG0ql
-	oWA+ogV47gyUOm1BondGaIYR;
-Received: from [127.0.0.2] (localhost [127.0.0.1])
-	by hr2.samba.org with esmtpsa (TLS1.3:ECDHE_SECP256R1__ECDSA_SECP256R1_SHA256__CHACHA20_POLY1305:256)
-	(Exim)
-	id 1wUse3-0000000Dpix-3X3G;
-	Wed, 03 Jun 2026 20:56:59 +0000
-Message-ID: <f919874c-065e-48be-ac5b-300c4ab86d4e@samba.org>
-Date: Wed, 3 Jun 2026 22:56:58 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BtF+szdC"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-490ac357c55so195135e9.1
+        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 14:17:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780521463; x=1781126263; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6B/50xn270YOFb+RgL3nLDaMTNlbmRRwqq6mUIoXECM=;
+        b=BtF+szdCE9zIKoql2v69YFcxT/cocpyEtuUoWrWSsUNuY03hNb6lK1UmNrK3PcK2Hn
+         y5yrIUNQkzf7dJWSUv4+00NnZpLVigkhoDEuiRCXQ5tXc9LexLv5VZdLUwxHkP3wJgB4
+         OPela8T5kKqF3jHG13oj+rhB7NtmclUf81uktj/YsvL9XOKn28CM28PCnR57TWxcfJjQ
+         1X5diUcn4Hqa8PeFO6y+DChxC28irJkBG28K9YLAm6ILFK/gqOxcytZEgcp04USiYeb8
+         S6u8UUb6PY7yJO+eT88/oBOBkts/1Tl9wuQOZbyzSbNanjLoYtOT/AmTCBPz8p7EXBxO
+         stHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780521463; x=1781126263;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=6B/50xn270YOFb+RgL3nLDaMTNlbmRRwqq6mUIoXECM=;
+        b=We628cFaQozWAd9A9EqLVWZWELKvRD49LPYl2S2fzoG+YDnnEQrAurnZIMIzorwP0w
+         ck4KdX1CKrtCxTXi4JwBZiN63FtJqY15PDVuX4XXNCsZ0NQnAFO199CYmS2r+GDMxzqC
+         j+FZuWnCF34/bvVNElwM/ETjUphanZRf9bsy22DL15yr+vjR3ibqtgQpsUXuXeGdH8mn
+         FMtweQV9eyZk0yGpMnbrHRrXMpfOUVg5Mut5y8uZbA2ep8ZZ1/rGFJNSXwCA7tMlZnBO
+         IHS7Gcq9OJEj/VSkBSuBVxF6kb1EMyzN+58adZs+PQVclVjC/gRRFITh1v//WWNx/TZw
+         nNAQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+Y8qdblSZeshvzHuW13V9g2otlyrECW03WJR1KbDIY8y6gbdMIletnS21Kvs2Mn0hYIirlx9v9@lists.linux.dev
+X-Gm-Message-State: AOJu0YyYHZNOcO+oGSPnWpQDRNwVi+RnWyXGy4YOpcPNXAYLpAGWKMDt
+	jBFbN02kvM6gjhqU6Z6lxcoDKBxDCV8Cq75j1+dXCWJysQ4OzQlCExzpHoHW1A==
+X-Gm-Gg: Acq92OGBKo03gbZx7U5H3jhkh1zhhRhc8bsmhs/Fif7OXWGTqmf8vmVRfgD5gAV6TGl
+	86yuFrYg71S4/OOrQ37ot8TxuIWPot5E/wgT/EkFMz0HUDaFMMBfDp181rnGvaoGvLWHpqjPRTC
+	okMxQWljEsIXjCZwLXPKB/1RkbLwGlFn3JsRkwhbDl5iKITLAmtpy3wGafEeaKdJbd86oIZ+/Z4
+	DaLgerOxmAHtULW3Bx0OkeDACW8I8DFN0An3BIfwbqYhfB9SNWjZB9JjGKThteUawL8gObQaGz4
+	zeEepdTIo65P+5mFy7cTNQvx4mOJYahvorN2lEZ/QTEyuGhP04fEJKeGYf0JbldkxoUEnKohmBE
+	xYnQUT5Ws/ual90DxvnqcstcvN2uGBAsvjUjoz6gcvkeDXt7b1li70gbeNgIoqZREn93oFiLjQk
+	yFUDZ5vGEUvws7RE2TkyCxFP3wKISKUQ==
+X-Received: by 2002:a05:600c:19d2:b0:490:7136:ad02 with SMTP id 5b1f17b1804b1-490b5e94d63mr81490465e9.7.1780521462549;
+        Wed, 03 Jun 2026 14:17:42 -0700 (PDT)
+Received: from localhost ([212.73.77.104])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-490b7a273e3sm59171155e9.0.2026.06.03.14.17.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jun 2026 14:17:41 -0700 (PDT)
+From: Askar Safin <safinaskar@gmail.com>
+To: metze@samba.org
+Cc: akpm@linux-foundation.org,
+	axboe@kernel.dk,
+	brauner@kernel.org,
+	david@kernel.org,
+	dhowells@redhat.com,
+	hch@infradead.org,
+	jack@suse.cz,
+	linux-api@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	miklos@szeredi.hu,
+	netdev@vger.kernel.org,
+	patches@lists.linux.dev,
+	pfalcato@suse.de,
+	safinaskar@gmail.com,
+	torvalds@linux-foundation.org,
+	viro@zeniv.linux.org.uk,
+	willy@infradead.org
+Subject: Re: [PATCH 2/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
+Date: Thu,  4 Jun 2026 00:17:36 +0300
+Message-ID: <20260603211736.755139-1-safinaskar@gmail.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <f919874c-065e-48be-ac5b-300c4ab86d4e@samba.org>
+References: <f919874c-065e-48be-ac5b-300c4ab86d4e@samba.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] vmsplice: make vmsplice a trivial wrapper for
- preadv2/pwritev2
-To: Askar Safin <safinaskar@gmail.com>, linux-fsdevel@vger.kernel.org,
- Christian Brauner <brauner@kernel.org>,
- Alexander Viro <viro@zeniv.linux.org.uk>, Jan Kara <jack@suse.cz>
-Cc: linux-kernel@vger.kernel.org, linux-mm@kvack.org,
- linux-api@vger.kernel.org, netdev@vger.kernel.org,
- Linus Torvalds <torvalds@linux-foundation.org>,
- Matthew Wilcox <willy@infradead.org>, Jens Axboe <axboe@kernel.dk>,
- Christoph Hellwig <hch@infradead.org>, David Howells <dhowells@redhat.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- David Hildenbrand <david@kernel.org>, Pedro Falcato <pfalcato@suse.de>,
- Miklos Szeredi <miklos@szeredi.hu>, patches@lists.linux.dev
-References: <20260531010107.1953702-1-safinaskar@gmail.com>
- <20260531010107.1953702-3-safinaskar@gmail.com>
-Content-Language: en-US
-From: Stefan Metzmacher <metze@samba.org>
-In-Reply-To: <20260531010107.1953702-3-safinaskar@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Askar,
+Stefan Metzmacher <metze@samba.org>:
+> Why is 'int fd' changed to 'unsigned long fd'?
 
-> diff --git a/include/linux/syscalls.h b/include/linux/syscalls.h
-> index f5639d5ac331..a86a88207956 100644
-> --- a/include/linux/syscalls.h
-> +++ b/include/linux/syscalls.h
-> @@ -514,8 +514,8 @@ asmlinkage long sys_ppoll_time32(struct pollfd __user *, unsigned int,
->   			  struct old_timespec32 __user *, const sigset_t __user *,
->   			  size_t);
->   asmlinkage long sys_signalfd4(int ufd, sigset_t __user *user_mask, size_t sizemask, int flags);
-> -asmlinkage long sys_vmsplice(int fd, const struct iovec __user *iov,
-> -			     unsigned long nr_segs, unsigned int flags);
-> +asmlinkage long sys_vmsplice(unsigned long fd, const struct iovec __user *vec,
-> +			     unsigned long vlen, unsigned int flags);
+Because preadv2 and pwritev2 take "unsigned long". I want vmsplice
+to be as similar as possible to preadv2 and pwritev2.
 
-Why is 'int fd' changed to 'unsigned long fd'?
-Should that be its own commit if the change is desired?
+> Should that be its own commit if the change is desired?
 
-metze
+Yes, possibly. But this patchset already got to next.
+
+-- 
+Askar Safin
