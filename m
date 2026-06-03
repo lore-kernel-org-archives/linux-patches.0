@@ -1,146 +1,170 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00C93CAA47
-	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 11:21:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B723CF671
+	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 11:43:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780485700; cv=none; b=Ua8XlLxsOok1tu7UGqDE3IAIEgI6xxizTvemqRIRsCQhspzqCSr04PPs7ZbwgEGtVzZmHCGfHQw2+vHC/VTM9OcmB7Y+lk1It9/pYJmpUUooe8A2/65sCBL8tgrSgIvGervqz/GUPYps/hkRv6jh6tdnBf8vDctV3EsWqiOP81Q=
+	t=1780487041; cv=none; b=SzMEukpe+acE2AjsF/KdyHfoFQRx9TnW0YQhnF1nXTuppEjy5kWsWHDW4HQ4IfAr/gE/1jOc6LOUIJSa0NYyYL3N33zWvqg4BVzPZU/kqoNw6PvJpCXmwjBrclh4X5xNMdw9tThSnJWZbrAblQ8d+bPklChB+J94lBlpg9/GZV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780485700; c=relaxed/simple;
-	bh=HTPmKUvNupQRiIlnkTWVHFoNHhl+8FOWGUotjzo8VPA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=U+8QjyO6Nk0QmuuiXaQH4HFp+tqlK0EveunlqO+uT7M+PFhlOzbzN9auWM7A6sylGzEQolY592VwJOFENR9+eRLzpUWDi8eYSkswo+CFRNu2ryNsB0Pjwcn+FGKDq6h5Zav6dCd5n/9jMjEujA0fmkIiLi3ZqkltId2QEj0u2Ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=bRlZ9OhC; arc=none smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1780487041; c=relaxed/simple;
+	bh=cB5IzueyNAgldHyPvG5KG9AuTk1cmqYL6BsojGI83KI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=acI/TraWpV+GasguaIjSGoUeaX4WL+yRs64FwUJA7baF+4uSFkmCMSW9KwFMu+78WHdlqX9ibYdoW0EDQBYME5en+i2hAbf+w96cviUglN1t5c+KvOttJ0ZYX7d/Yi7B0lpV+nDTIHvVLkIfDMVsdZdDTkhwvHACCtootTH2S3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=e9TruHKb; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=L+5Da9hO; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=e9TruHKb; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=L+5Da9hO; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="bRlZ9OhC"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-bebbc325000so488914066b.0
-        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 04:21:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1780485697; x=1781090497; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mmWYQhsLy8u3OL3FpmVNlvrqjfjo/sGOnkY3CQlMd0M=;
-        b=bRlZ9OhCQmfap8H2W6a26TIU+4qao+L6AhZbfDPNnSFmU1KULPwTr3snz6xuZBAx5I
-         JqKMXnryyRZ+a0OG+6/xAvfCACqdAv8VnRaAUzqKTTwEnmOIYlNHJD11qBsjxCSULckW
-         iUt2sbwayF5snwxsXErkysPKqAfmfKYm8nDX0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780485697; x=1781090497;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mmWYQhsLy8u3OL3FpmVNlvrqjfjo/sGOnkY3CQlMd0M=;
-        b=euJEfCEHu+B8wEBEeU2Ee7xkZteBgq1YKe2RnJn+nKKtC6USHE6nnTmek43xwjVWl6
-         lwgBjtkVv9/rCLl2ntBC/OXh1X9ScxMf7TR6DYPiY9e6hdm+u7/kFgrx1OcChfzwXiqo
-         eYE+50IJzeXrHjWQJhfZMCXb82JlZipYG41Eay0R6uvsrvZIYMo1i4f/3uP6kNV6r1uu
-         XaNt7nNqZGnI0rEwVeAaOPGpydxqWAyXNQiJ80nF5G8GV0PoZoM4jaM4uUqvrNmSclQD
-         rsGZZ72D3qt3a6GpoNLA+vtmHY+fWqb0titYFSanE7Ex8d9mAlw9bTtdSdqnQojy26/3
-         2wpw==
-X-Forwarded-Encrypted: i=1; AFNElJ9q5fnVfYBfMMmfnw5oh8dWUYnPXIgp3ppx6X36+cTlFf9qYg8k1Or5PsV0arudRvUUxA8DQjSO@lists.linux.dev
-X-Gm-Message-State: AOJu0YysOoZQKAf4gkfP8lnq3dwitzWOm/CTv28ty4TCTNBYFjRpyvYZ
-	5jAkjA1Lk/IvxXDhpjctOpImG9LPQATS1sJZgfh40d2UlpuRch2TIUF3hO61ipXRzQdKIEq6kIU
-	kFelscw==
-X-Gm-Gg: Acq92OG8tfSS2jIoq8B8sHRjcW0WdVhYhoXMTWnENUBQ+8AwPOpG1Wo00bkebO+OtKX
-	3WE/UvyfF+E2+7Itxwq1B/p779YSOQwxJ/A7aoTT6OeNuUjKFxOqeHN4rpaBG64n5oar4Mm/GS1
-	n/Tz4/9XvDsuG86WOyS+92kBKr/d1tfK/wKKp/ruMgj75ZdfZhV1Of8vbubP8DdEm4aoEIvShIs
-	U30pR8x9PazqSUoZKSfOmvHYAGJMM0SjwjCNIwMoxREPe8XiE0NOLxQs8V9Pv8/2rm0lNa0zbKy
-	EyAhO5FRKl1YZE+OEuyS1irtAklWxJ+sLm0bBuMbW04PTOtMvQwisDYxp4FSGYNgO+82hdlvfSx
-	3uv3AsnUXH7GV0LzFnnxyyFJHGKB9HzGjX3qF2l+B08cmDkP09/JgM1FoiD1TQoPuuLV6PIs0Ct
-	iwMuGY6m1zSxpDPCkmQMkN8JQXq0amSFPRMm3gECZEUCRhlc7KtZOM8xXD2YENQxyNAURgnNw=
-X-Received: by 2002:a17:907:cbc5:b0:beb:7979:47dd with SMTP id a640c23a62f3a-bf0b2bd0608mr140341566b.27.1780485697441;
-        Wed, 03 Jun 2026 04:21:37 -0700 (PDT)
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com. [209.85.208.49])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bf05176fd20sm140843066b.7.2026.06.03.04.21.36
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Jun 2026 04:21:36 -0700 (PDT)
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-68be16c61d1so10617606a12.2
-        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 04:21:36 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ/7hkX9lSh9tws5acitFRGiOuDywdb7BroJyEFteWyIv0wp1fWAJoimXEa7qNGrlae4CVrSdZpI@lists.linux.dev
-X-Received: by 2002:a17:906:c106:b0:bd5:405c:7964 with SMTP id
- a640c23a62f3a-bf0b3dadc24mr156021466b.48.1780485695242; Wed, 03 Jun 2026
- 04:21:35 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="e9TruHKb";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="L+5Da9hO";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="e9TruHKb";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="L+5Da9hO"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id A8A7067559;
+	Wed,  3 Jun 2026 11:43:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1780487037; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=W0eCuaAhCxqMdNJLOaVe8WqPBMsrJRRf6/0fkCn++oY=;
+	b=e9TruHKba2Aw8j5znNs7wuEBN6ABAIt9lPHHNKWc10ifZhfTD8lU+Amkj6FyF3IwnwqsOn
+	ZJSB/bau0jk/KeED2ljIJWWGmrp4+0ZNlP/gz4LWSh0lEAZqj2+Lm+WHhG7wDQUsUCBo76
+	tZ2EMza79/ZhFb4kLqIaWpmw8RG6E6c=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1780487037;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=W0eCuaAhCxqMdNJLOaVe8WqPBMsrJRRf6/0fkCn++oY=;
+	b=L+5Da9hOM6Rn3I3fgd338xAE9ha2lU5C4Va8OfuLmzgu2gRs0ZCE33NMTcTqxRbWVALAl9
+	NTF3zlbpIv+RVfCw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1780487037; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=W0eCuaAhCxqMdNJLOaVe8WqPBMsrJRRf6/0fkCn++oY=;
+	b=e9TruHKba2Aw8j5znNs7wuEBN6ABAIt9lPHHNKWc10ifZhfTD8lU+Amkj6FyF3IwnwqsOn
+	ZJSB/bau0jk/KeED2ljIJWWGmrp4+0ZNlP/gz4LWSh0lEAZqj2+Lm+WHhG7wDQUsUCBo76
+	tZ2EMza79/ZhFb4kLqIaWpmw8RG6E6c=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1780487037;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=W0eCuaAhCxqMdNJLOaVe8WqPBMsrJRRf6/0fkCn++oY=;
+	b=L+5Da9hOM6Rn3I3fgd338xAE9ha2lU5C4Va8OfuLmzgu2gRs0ZCE33NMTcTqxRbWVALAl9
+	NTF3zlbpIv+RVfCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 84DC4779A7;
+	Wed,  3 Jun 2026 11:43:56 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id GOpGHXwTIGqNXAAAD6G6ig
+	(envelope-from <pfalcato@suse.de>); Wed, 03 Jun 2026 11:43:56 +0000
+Date: Wed, 3 Jun 2026 12:43:54 +0100
+From: Pedro Falcato <pfalcato@suse.de>
+To: Andy Lutomirski <luto@amacapital.net>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, 
+	Askar Safin <safinaskar@gmail.com>, akpm@linux-foundation.org, axboe@kernel.dk, brauner@kernel.org, 
+	david@kernel.org, dhowells@redhat.com, hch@infradead.org, jack@suse.cz, 
+	linux-api@vger.kernel.org, linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-mm@kvack.org, miklos@szeredi.hu, netdev@vger.kernel.org, 
+	patches@lists.linux.dev, viro@zeniv.linux.org.uk, willy@infradead.org
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for
+ preadv2/pwritev2
+Message-ID: <aiAREqlHK1llOw_y@pedro-suse.lan>
+References: <CAHk-=wiAqf0PdZ4AKj_4riUnnEb=g_ZNPkLnXrByA9BBHYiFRg@mail.gmail.com>
+ <20260602225426.122258-1-safinaskar@gmail.com>
+ <CAHk-=wgKy4dP0oQCNKyMQQf3-uVpaigmDyH6_T0Via76gWST9g@mail.gmail.com>
+ <CALCETrWx8-Q5-rK1KnAPCxCbXaWCd=Yfs_Pr8qVMa8k8L6of1w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260530160224.570625122@linuxfoundation.org> <20260530160226.496219768@linuxfoundation.org>
- <5e2ac444-451c-4220-8013-0e6382b5f165@pobox.com> <136f03aa6f51bdfecc786e5278f5fd03b4a6966e.camel@decadent.org.uk>
- <20260601015021.rc-uvcvideo-heuristic@kernel.org> <CANiDSCvh6u6AWnarEtso=zKPD3upEsaJBMOm1x35fHyPMaEMyw@mail.gmail.com>
- <2026060104-customs-naturist-7a58@gregkh>
-In-Reply-To: <2026060104-customs-naturist-7a58@gregkh>
-From: Ricardo Ribalda <ribalda@chromium.org>
-Date: Wed, 3 Jun 2026 13:21:22 +0200
-X-Gmail-Original-Message-ID: <CANiDSCsjR5NHqu_Ui5cOqWdJgFqmYsQ9WR8O7m0WOhngaYXFpw@mail.gmail.com>
-X-Gm-Features: AVHnY4LaRyBJK0yrJYhC3WjO7GVxRuwz4FcveLyMZupXOph9y2DtgyUwl2vn084
-Message-ID: <CANiDSCsjR5NHqu_Ui5cOqWdJgFqmYsQ9WR8O7m0WOhngaYXFpw@mail.gmail.com>
-Subject: Re: [PATCH 5.10 072/589] media: uvcvideo: Use heuristic to find
- stream entity
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org, patches@lists.linux.dev, 
-	Angel4005 <ooara1337@gmail.com>, Hans de Goede <hansg@kernel.org>, 
-	Hans Verkuil <hverkuil+cisco@kernel.org>, Ron Economos <re@w6rz.net>, 
-	"Pavel Machek (CIP)" <pavel@nabladev.com>, Brett A C Sheffield <bacs@librecast.net>, Mark Brown <broonie@kernel.org>, 
-	Peter Schneider <pschneider1968@googlemail.com>, 
-	Francesco Dolcini <francesco.dolcini@toradex.com>, Shuah Khan <skhan@linuxfoundation.org>, 
-	Jon Hunter <jonathanh@nvidia.com>, Florian Fainelli <florian.fainelli@broadcom.com>, 
-	Miguel Ojeda <ojeda@kernel.org>, Vijayendra Suman <vijayendra.suman@oracle.com>, 
-	Ben Hutchings <ben@decadent.org.uk>, "Barry K. Nathan" <barryn@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALCETrWx8-Q5-rK1KnAPCxCbXaWCd=Yfs_Pr8qVMa8k8L6of1w@mail.gmail.com>
+X-Spam-Flag: NO
+X-Spam-Score: -4.30
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MISSING_XM_UA(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	ARC_NA(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[linux-foundation.org,gmail.com,kernel.dk,kernel.org,redhat.com,infradead.org,suse.cz,vger.kernel.org,kvack.org,szeredi.hu,lists.linux.dev,zeniv.linux.org.uk];
+	TO_DN_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
+X-Spam-Level: 
 
-Hi Greg
-
-On Mon, 1 Jun 2026 at 17:13, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> On Mon, Jun 01, 2026 at 08:41:14AM +0200, Ricardo Ribalda wrote:
-> > Hi Sasha
+On Tue, Jun 02, 2026 at 08:51:03PM -0700, Andy Lutomirski wrote:
+> On Tue, Jun 2, 2026 at 5:12 PM Linus Torvalds
+> <torvalds@linux-foundation.org> wrote:
 > >
-> > On Mon, 1 Jun 2026 at 04:11, Sasha Levin <sashal@kernel.org> wrote:
+> > On Tue, 2 Jun 2026 at 15:54, Askar Safin <safinaskar@gmail.com> wrote:
 > > >
-> > > On Sun, 2026-05-31 at 12:53 +0200, Ben Hutchings wrote:
-> > > > This doesn't properly fix the problem.  Commit 3d9f32e02c2e "media:
-> > > > uvcvideo: Create an ID namespace for streaming output terminals" (which
-> > > > reverts this) needs to be applied on top.
-> > >
-> > > Rather than carry the heuristic and then layer the namespace rework on top
-> > > in 5.10 only, I've dropped this together with its regression source
-> > > 0e2ee70291e6 ("media: uvcvideo: Mark invalid entities with id
-> > > UVC_INVALID_ENTITY_ID") from the 5.10 queue. That mirrors what 3d9f32e02c2e
-> > > does upstream (it reverts the heuristic), and avoids exposing the
-> > > 0e2ee70291e6 regression that would otherwise enter 5.10 in the same batch.
+> > > Pedro is talking here not about this vmsplice patch, but about
+> > > my future hypothetical patch, which will remove splice-pagecache-to-pipe.
 > >
-> > Are you going to apply:
+> > That absolutely would be my suggested next step.
 > >
-> > Commit 3d9f32e02c2e "media: uvcvideo: Create an ID namespace for
-> > streaming output terminals"
-> > ?
->
-> It wasn't planned on.
->
-> > We need either that patch or this one: media: uvcvideo: Use heuristic
-> > to find stream entity
->
-> What id is that?
+> > Something like the attached - get rid of filemap_splice_read()
+> > entirely, and just replace it with copy_splice_read().
+> 
+> Am I understanding correctly that this will completely break zerocopy
+> sendfile?  sendfile is, internally, splice-to-a-secret-per-task-pipe
+> and then splice to the socket.  How much to people care?  These days,
+> a lot of high-bandwidth network senders are sending encrypted data,
+> which is not zerocopy frompagecache.  But there are surely some users
 
-Sorry, I should have been more specific. I am talking about Upstream
-commit 758dbc756aad429da11c569c0d067f7fd032bcf7.
+You can do zerocopy from the page cache, even with TLS on top, by having
+your (fancy) NIC do TLS offloading for you. See https://people.freebsd.org/~gallatin/talks/euro2019-ktls.pdf.
+Linux works similarly. Slide 26 is particularly interesting.
+(No KTLS I assume is using simple sendmsg()'s from user memory, SW TLS
+and NIC KTLS are both sendfile(), per the slides)
 
-(this patch that we are discussing)
+TL;DR I really do think it matters.
 
-Regards
-
-
->
-> thanks,
->
-> greg k-h
-
-
+> 
+> Now maybe someone cares about a different path?  Splice from socket to
+> pipe to file?  Splice from socket to pipe to other socket?  Does
+> anyone do any of this?  One can, of course, recv() directly to an
+> mmapped file, but then you pay for page faults, so that probably a bad
+> idea in most cases.  At least all of these cases don't have spliced
+> buffers that refer to a potentially read-only file.
+> 
+> 
+> But I'm a little concerned that zerocopy sends from files to network
+> are actually important.
+> 
+> --Andy
 
 -- 
-Ricardo Ribalda
+Pedro
