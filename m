@@ -1,124 +1,146 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BCF44BCA8
-	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 09:57:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780480646; cv=pass; b=D7daHjQNWAkWLjK7l5RIWxjU5ILfAuGyNxp8SJUvpyeUzUgSlT8el8h3DITuVLIbu4Ur6Q2/xR1barITamimhEKr/6fKqckwMoo52eNTNzuKwbSpZObgb6s0/NC76YfCx1KFNNCbDSTc9bDXXyyMSQZk4eqMfq+jxVpnbTdyDfs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780480646; c=relaxed/simple;
-	bh=ZCqrAxzAA1VkvSHMPbJW9yIvYLlRWu40qg6zjxtnKxA=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00C93CAA47
+	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 11:21:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780485700; cv=none; b=Ua8XlLxsOok1tu7UGqDE3IAIEgI6xxizTvemqRIRsCQhspzqCSr04PPs7ZbwgEGtVzZmHCGfHQw2+vHC/VTM9OcmB7Y+lk1It9/pYJmpUUooe8A2/65sCBL8tgrSgIvGervqz/GUPYps/hkRv6jh6tdnBf8vDctV3EsWqiOP81Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780485700; c=relaxed/simple;
+	bh=HTPmKUvNupQRiIlnkTWVHFoNHhl+8FOWGUotjzo8VPA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=A2aoGHBYX+ZT3U+MNA+y9fgXCQEPYB+OZLUpHwlFynueRRJPfEeVLLsRAtZXBExmrCnell9F1RDLm2yvycmzkWqhhCaeWUlC241EqBr/sYFtwjaXy7VqVJz5qDP5jooG3dZ7qr0ehrxXNYHhSZXy0UGYV1gkt+hp92H8qxSmc68=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=szeredi.hu; spf=pass smtp.mailfrom=szeredi.hu; dkim=pass (1024-bit key) header.d=szeredi.hu header.i=@szeredi.hu header.b=dMRCX6MA; arc=pass smtp.client-ip=209.85.222.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=szeredi.hu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=szeredi.hu
+	 To:Cc:Content-Type; b=U+8QjyO6Nk0QmuuiXaQH4HFp+tqlK0EveunlqO+uT7M+PFhlOzbzN9auWM7A6sylGzEQolY592VwJOFENR9+eRLzpUWDi8eYSkswo+CFRNu2ryNsB0Pjwcn+FGKDq6h5Zav6dCd5n/9jMjEujA0fmkIiLi3ZqkltId2QEj0u2Ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=bRlZ9OhC; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=szeredi.hu header.i=@szeredi.hu header.b="dMRCX6MA"
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-9155183b42cso64734885a.0
-        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 02:57:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780480643; cv=none;
-        d=google.com; s=arc-20240605;
-        b=WN6tDU8kcN/9pVJZEAcAXyucY1sI/WFgZJTTMflEF1O0hcHQija+SbkYlR1Mz4gd5O
-         eRWJZR1Demop+AkgL85kfE+ru9Ck5Ix4smZLMr8DKEUYIZyCRo4NZQDV3s+KaTbdBV5x
-         G8qlRK+haQyg8VZcmts8tJf2GK24js13vbz+UwxO/R6EigsQynRLoIdkm9PJRvES5KF2
-         pKOxeUbBtaODSsYcS6xsfOKPEhJIMfFT+QFADFD/Hp026RM5+7uBZOguWhMeJtQdYcoB
-         DmXWcYc7B7Xfen6oTnb3Aj92nJIKAX7bpp1RuZan0FAZQo6qsPV3t6isN04NB4m269+t
-         u9ZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=ZCqrAxzAA1VkvSHMPbJW9yIvYLlRWu40qg6zjxtnKxA=;
-        fh=I8cDo9Nst8M6CYQtDMLP7aHwjqfIasd7hwoPxI0/Js4=;
-        b=cyUqbFOnWjvfHge6SMOZjwWljvRZA+wdMG85Z7s7R5jndLQ5rtxsAbusO9QIQWGFip
-         GQGuJ0gT8I2tpUqRu0PrNz+4RaZBNbaCYayweu8XH6jv89XgTOxI85u1xGxHjn1jzXFa
-         /QGnbmwa2e6I/OPjIoyT4HK+nhtphJxcmiPL99Wa3ALXF+492waIV4MTYOb5sGF4rAch
-         z9XtTXYvGEFTGWdLo/B4/aEmmFpMTDS1MqdDOuo17wFbusFQoFNjp5EsaayDo0NIsaXu
-         6ygyfvZ0ghlf55nlcTktVx4OTy1SK5mrwi9knHIeU6lcsg3w9wy2MTG8fCm0pxpGC4Qc
-         25jw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="bRlZ9OhC"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-bebbc325000so488914066b.0
+        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 04:21:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=szeredi.hu; s=google; t=1780480643; x=1781085443; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1780485697; x=1781090497; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZCqrAxzAA1VkvSHMPbJW9yIvYLlRWu40qg6zjxtnKxA=;
-        b=dMRCX6MA2ZKnAYmNmqbTbcyWyN6L8zwp6HSIalR9n/7XIHgRHhMe0G0pP8Wo7oGyid
-         n2yXRdpeD+oynFzEVvHZekvSoF0HEi3Ey7tv1KgggpCr/eBJzZLtcR0F9EEr7nn+Iq0l
-         g7XyDi6/w1MhcnEG182Juuyn9Lmbtl4XrskK8=
+        bh=mmWYQhsLy8u3OL3FpmVNlvrqjfjo/sGOnkY3CQlMd0M=;
+        b=bRlZ9OhCQmfap8H2W6a26TIU+4qao+L6AhZbfDPNnSFmU1KULPwTr3snz6xuZBAx5I
+         JqKMXnryyRZ+a0OG+6/xAvfCACqdAv8VnRaAUzqKTTwEnmOIYlNHJD11qBsjxCSULckW
+         iUt2sbwayF5snwxsXErkysPKqAfmfKYm8nDX0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780480643; x=1781085443;
+        d=1e100.net; s=20251104; t=1780485697; x=1781090497;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZCqrAxzAA1VkvSHMPbJW9yIvYLlRWu40qg6zjxtnKxA=;
-        b=SIrYQoADailYz8snwUanprvf9312tiu0X2swVF3NrZh89xefNXvVMadIu8dcE38Wfo
-         nVVC5gmhUm+pQtYNdKfw7vRWkiQ36vQvHVchp3cVyaDVcYMi65gF6mfKYViFrFNSY+tb
-         zbC7cInY1ki3Whu24wb73m3nfcsv8F/ruOwcz8xmvGy9oIgyIziLMHN1weGZpcTXhSIp
-         WDqHoUGmW3mkysYPm3cVVbyicl0TX+MGPoQtm9w+7lAJ+MgEDSgwrTlTTXNOk2CfZTSZ
-         +vhuufUuJXeYjBPz9GDwhTrhkCq4gz2aUMUVh9cufN/jq6c0GcqcqQ0ubFpHZnwGx6pY
-         e5GQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8flfGMGXQAHdbzqLF5Ga/RKpN0MSIIUhzWYI/VokXdj3lNtFl43GQLI9EGmFtjA4lNnlulJFC+@lists.linux.dev
-X-Gm-Message-State: AOJu0YwMhEn+51X/jAqELk8DLapdBFw7j9JuwiP5ChEvx2J1xtD2RBN1
-	ponYiocTF1NLKZPGa4Jj3pZkljjVvQDJpNilYu6uEzd46mPqBkJwBg8zVbPrnau6XXEgr5I7g9u
-	/H2iKt9fPJ8z5TOfmTBrDAi00xw7+6OadburLKKNPhA==
-X-Gm-Gg: Acq92OEl3BKJV9yC6RZzt/2zh4HQW+D+mn908Fc03AX8HeBUG/YH6hfUqV7UgZh1ywM
-	GS3VUhssXyLTWMG+J1uMveex4YP5PpfDQDJ1yXyEGTC1KWo3+3w0t9o+zmmgko/paHqNLIAGAXp
-	llxLSkfBwMHvDxax40eYTI2I+oMe5k8vVke3rY5HOSmegt5KRoMHzwb+1+w9nrr5dtpWjDUHh60
-	uN8vCQHBzNbcL1USqDMv+ELE2ORkbTkA6hvo3Snvewo2wcx+FJoVA/28tMS2A4x+KUUXP1IMh1m
-	NeEB/K3rd5yieyLkY7jC1efuxG3XhYCGIbCu3Z+VZjtjY8lSePy165EiYA==
-X-Received: by 2002:a05:620a:31a8:b0:915:422c:a0 with SMTP id
- af79cd13be357-9158b6e2074mr292177985a.22.1780480643420; Wed, 03 Jun 2026
- 02:57:23 -0700 (PDT)
+        bh=mmWYQhsLy8u3OL3FpmVNlvrqjfjo/sGOnkY3CQlMd0M=;
+        b=euJEfCEHu+B8wEBEeU2Ee7xkZteBgq1YKe2RnJn+nKKtC6USHE6nnTmek43xwjVWl6
+         lwgBjtkVv9/rCLl2ntBC/OXh1X9ScxMf7TR6DYPiY9e6hdm+u7/kFgrx1OcChfzwXiqo
+         eYE+50IJzeXrHjWQJhfZMCXb82JlZipYG41Eay0R6uvsrvZIYMo1i4f/3uP6kNV6r1uu
+         XaNt7nNqZGnI0rEwVeAaOPGpydxqWAyXNQiJ80nF5G8GV0PoZoM4jaM4uUqvrNmSclQD
+         rsGZZ72D3qt3a6GpoNLA+vtmHY+fWqb0titYFSanE7Ex8d9mAlw9bTtdSdqnQojy26/3
+         2wpw==
+X-Forwarded-Encrypted: i=1; AFNElJ9q5fnVfYBfMMmfnw5oh8dWUYnPXIgp3ppx6X36+cTlFf9qYg8k1Or5PsV0arudRvUUxA8DQjSO@lists.linux.dev
+X-Gm-Message-State: AOJu0YysOoZQKAf4gkfP8lnq3dwitzWOm/CTv28ty4TCTNBYFjRpyvYZ
+	5jAkjA1Lk/IvxXDhpjctOpImG9LPQATS1sJZgfh40d2UlpuRch2TIUF3hO61ipXRzQdKIEq6kIU
+	kFelscw==
+X-Gm-Gg: Acq92OG8tfSS2jIoq8B8sHRjcW0WdVhYhoXMTWnENUBQ+8AwPOpG1Wo00bkebO+OtKX
+	3WE/UvyfF+E2+7Itxwq1B/p779YSOQwxJ/A7aoTT6OeNuUjKFxOqeHN4rpaBG64n5oar4Mm/GS1
+	n/Tz4/9XvDsuG86WOyS+92kBKr/d1tfK/wKKp/ruMgj75ZdfZhV1Of8vbubP8DdEm4aoEIvShIs
+	U30pR8x9PazqSUoZKSfOmvHYAGJMM0SjwjCNIwMoxREPe8XiE0NOLxQs8V9Pv8/2rm0lNa0zbKy
+	EyAhO5FRKl1YZE+OEuyS1irtAklWxJ+sLm0bBuMbW04PTOtMvQwisDYxp4FSGYNgO+82hdlvfSx
+	3uv3AsnUXH7GV0LzFnnxyyFJHGKB9HzGjX3qF2l+B08cmDkP09/JgM1FoiD1TQoPuuLV6PIs0Ct
+	iwMuGY6m1zSxpDPCkmQMkN8JQXq0amSFPRMm3gECZEUCRhlc7KtZOM8xXD2YENQxyNAURgnNw=
+X-Received: by 2002:a17:907:cbc5:b0:beb:7979:47dd with SMTP id a640c23a62f3a-bf0b2bd0608mr140341566b.27.1780485697441;
+        Wed, 03 Jun 2026 04:21:37 -0700 (PDT)
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com. [209.85.208.49])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bf05176fd20sm140843066b.7.2026.06.03.04.21.36
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jun 2026 04:21:36 -0700 (PDT)
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-68be16c61d1so10617606a12.2
+        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 04:21:36 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ/7hkX9lSh9tws5acitFRGiOuDywdb7BroJyEFteWyIv0wp1fWAJoimXEa7qNGrlae4CVrSdZpI@lists.linux.dev
+X-Received: by 2002:a17:906:c106:b0:bd5:405c:7964 with SMTP id
+ a640c23a62f3a-bf0b3dadc24mr156021466b.48.1780485695242; Wed, 03 Jun 2026
+ 04:21:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260531010107.1953702-1-safinaskar@gmail.com>
- <20260601-enthusiasmus-canceln-anlehnen-0e62317a9784@brauner>
- <CAHk-=wifX_rrDjRGnDnOqE-usptAukuXKrmuPuVDP5bOCBWzGQ@mail.gmail.com> <20260601173325.GH2636677@ZenIV>
-In-Reply-To: <20260601173325.GH2636677@ZenIV>
-From: Miklos Szeredi <miklos@szeredi.hu>
-Date: Wed, 3 Jun 2026 11:57:11 +0200
-X-Gm-Features: AVHnY4IqQCqMS4qklUMIqRUT1Fpv-SuCQDkhxYBkM9m1uTwHwBhUln17rZFWNU4
-Message-ID: <CAJfpegtH-E79D-3UL=pPv-QqJk6C4ODXLLZSAjzQJwSSeqqS-A@mail.gmail.com>
-Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
-To: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, Christian Brauner <brauner@kernel.org>, 
-	Askar Safin <safinaskar@gmail.com>, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
-	linux-api@vger.kernel.org, netdev@vger.kernel.org, 
-	Matthew Wilcox <willy@infradead.org>, Jens Axboe <axboe@kernel.dk>, 
-	Christoph Hellwig <hch@infradead.org>, David Howells <dhowells@redhat.com>, 
-	Andrew Morton <akpm@linux-foundation.org>, David Hildenbrand <david@kernel.org>, 
-	Pedro Falcato <pfalcato@suse.de>, patches@lists.linux.dev, linux-fsdevel@vger.kernel.org, 
-	Jan Kara <jack@suse.cz>, Steven Rostedt <rostedt@goodmis.org>, 
-	Joanne Koong <joannelkoong@gmail.com>, fuse-devel <fuse-devel@lists.linux.dev>
+References: <20260530160224.570625122@linuxfoundation.org> <20260530160226.496219768@linuxfoundation.org>
+ <5e2ac444-451c-4220-8013-0e6382b5f165@pobox.com> <136f03aa6f51bdfecc786e5278f5fd03b4a6966e.camel@decadent.org.uk>
+ <20260601015021.rc-uvcvideo-heuristic@kernel.org> <CANiDSCvh6u6AWnarEtso=zKPD3upEsaJBMOm1x35fHyPMaEMyw@mail.gmail.com>
+ <2026060104-customs-naturist-7a58@gregkh>
+In-Reply-To: <2026060104-customs-naturist-7a58@gregkh>
+From: Ricardo Ribalda <ribalda@chromium.org>
+Date: Wed, 3 Jun 2026 13:21:22 +0200
+X-Gmail-Original-Message-ID: <CANiDSCsjR5NHqu_Ui5cOqWdJgFqmYsQ9WR8O7m0WOhngaYXFpw@mail.gmail.com>
+X-Gm-Features: AVHnY4LaRyBJK0yrJYhC3WjO7GVxRuwz4FcveLyMZupXOph9y2DtgyUwl2vn084
+Message-ID: <CANiDSCsjR5NHqu_Ui5cOqWdJgFqmYsQ9WR8O7m0WOhngaYXFpw@mail.gmail.com>
+Subject: Re: [PATCH 5.10 072/589] media: uvcvideo: Use heuristic to find
+ stream entity
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org, patches@lists.linux.dev, 
+	Angel4005 <ooara1337@gmail.com>, Hans de Goede <hansg@kernel.org>, 
+	Hans Verkuil <hverkuil+cisco@kernel.org>, Ron Economos <re@w6rz.net>, 
+	"Pavel Machek (CIP)" <pavel@nabladev.com>, Brett A C Sheffield <bacs@librecast.net>, Mark Brown <broonie@kernel.org>, 
+	Peter Schneider <pschneider1968@googlemail.com>, 
+	Francesco Dolcini <francesco.dolcini@toradex.com>, Shuah Khan <skhan@linuxfoundation.org>, 
+	Jon Hunter <jonathanh@nvidia.com>, Florian Fainelli <florian.fainelli@broadcom.com>, 
+	Miguel Ojeda <ojeda@kernel.org>, Vijayendra Suman <vijayendra.suman@oracle.com>, 
+	Ben Hutchings <ben@decadent.org.uk>, "Barry K. Nathan" <barryn@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 1 Jun 2026 at 19:33, Al Viro <viro@zeniv.linux.org.uk> wrote:
->
-> On Mon, Jun 01, 2026 at 10:17:23AM -0700, Linus Torvalds wrote:
->
-> > TLDR: maybe we could ghet rid of "f_op->splice_read". *That* would be
-> > a big simplification.
->
-> FUSE might be interesting - fuse_dev_splice_read() and its ilk.
-> Communications between the kernel and fuse server at least used to
-> seriously want that, so that would be one place to look for unhappy
-> userland...
->
-> splice-related logics in fs/fuse/dev.c is interesting; another place
-> like this is kernel/trace/, but I'm less familiar with that one.
+Hi Greg
 
-[Cc: Joanne, fuse-devel]
+On Mon, 1 Jun 2026 at 17:13, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> On Mon, Jun 01, 2026 at 08:41:14AM +0200, Ricardo Ribalda wrote:
+> > Hi Sasha
+> >
+> > On Mon, 1 Jun 2026 at 04:11, Sasha Levin <sashal@kernel.org> wrote:
+> > >
+> > > On Sun, 2026-05-31 at 12:53 +0200, Ben Hutchings wrote:
+> > > > This doesn't properly fix the problem.  Commit 3d9f32e02c2e "media:
+> > > > uvcvideo: Create an ID namespace for streaming output terminals" (which
+> > > > reverts this) needs to be applied on top.
+> > >
+> > > Rather than carry the heuristic and then layer the namespace rework on top
+> > > in 5.10 only, I've dropped this together with its regression source
+> > > 0e2ee70291e6 ("media: uvcvideo: Mark invalid entities with id
+> > > UVC_INVALID_ENTITY_ID") from the 5.10 queue. That mirrors what 3d9f32e02c2e
+> > > does upstream (it reverts the heuristic), and avoids exposing the
+> > > 0e2ee70291e6 regression that would otherwise enter 5.10 in the same batch.
+> >
+> > Are you going to apply:
+> >
+> > Commit 3d9f32e02c2e "media: uvcvideo: Create an ID namespace for
+> > streaming output terminals"
+> > ?
+>
+> It wasn't planned on.
+>
+> > We need either that patch or this one: media: uvcvideo: Use heuristic
+> > to find stream entity
+>
+> What id is that?
 
-I'd favor simplification, but care is needed to not regress performance.
+Sorry, I should have been more specific. I am talking about Upstream
+commit 758dbc756aad429da11c569c0d067f7fd032bcf7.
 
-Joanne might be in a better position to say something about relative
-performance of various transport modes in fuse.
+(this patch that we are discussing)
 
-Thanks,
-Miklos
+Regards
+
+
+>
+> thanks,
+>
+> greg k-h
+
+
+
+-- 
+Ricardo Ribalda
