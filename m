@@ -1,360 +1,141 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BDCC3F7A96
-	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 03:28:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780457289; cv=none; b=cWy9uwYfO1Ayhf3SN2nbcL0GZ26xseArk8JFDfAU5DswecwuEzIhIfR88Bii48/1UJs6MDXJqkMbvO+Zwj/N0s7X9Hi+ngspNpnw9ajDPVFRaMI3gTe1UDHdetCp4+wt9cqnSPzRi4wyei+QXOjjsuU5j9HiIlIp2ZUdwuwuSB4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780457289; c=relaxed/simple;
-	bh=NkRz2ujFLstUVTop8cwQvKn2tC+od6QZJws0jIRRO8k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lbgNOT/4q/1GOf20w+QMcVC1VPZJ+2nBB1dPL6XNo0RJu9D+mgsp/Ze67Y9/wxHRUfTRHD/IatZ9Vl9ZB0ol5tdwelmeepdJWOwLlAjeNGGXskfS4E6nTRzwrrBDoX/jj6vhqGJHgyYperlyJiNMUqZbTOlddRCv5LedQx0qlN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=R09Bng2h; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7315A3E4C88
+	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 03:51:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780458679; cv=pass; b=Tae4CKAwQu634lrsquU/picgQDnZkMfOv16EQFOstgwkmCFHhpMCcVVVSvUnWR6gevJIFCsii/4C2c7VefUKssPQBPGx3IYBMA9jPHiDv5G7Ps8yXCvARp8EwY2ufxtyKB7KOfzERYLqP1UCHECK5+nISrr0kBypOyYPSmXxe/8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780458679; c=relaxed/simple;
+	bh=anjN+nTOXqNBWHTS9fQMFqGEaXiDXaRnabq18gPz6kk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sZTXaK2azs4j1SM+c5wOQY1zXW19Kkoa8Q+y5isx/Yjuc2yqiAYn7sBNi3JyYS3B9ekmpdWs/Vrky/qRzVRh9uO7xojpAXsSVL1vbuDxmLBxsRWN5EzwpqO8TygDhdTizVQr3MfAj9RZVB0pRQyCtVi+7tQEve2S7jtg0vVpRqg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=amacapital.net; spf=pass smtp.mailfrom=amacapital.net; dkim=pass (2048-bit key) header.d=amacapital-net.20251104.gappssmtp.com header.i=@amacapital-net.20251104.gappssmtp.com header.b=ERoJG6xP; arc=pass smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=amacapital.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amacapital.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="R09Bng2h"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780457286; x=1811993286;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=NkRz2ujFLstUVTop8cwQvKn2tC+od6QZJws0jIRRO8k=;
-  b=R09Bng2hugCtX8+g/L9/hM7m7IUaiz9SlVxFjnl4j7ROVmIs9WAsoE5N
-   MhE7uXPLBqVxU4n5JIXA62bnt42jgSr0SLLVYHetRdVKmsU6Lp822QSTr
-   awmtp+4msa/kC++kdMDcyRw4y1w5UQwhPv/6mZOfkBd7asLhdwjswaG4j
-   LzujE38c07k7jIUTbBgeqw1HboA9o2P/ofI8/+Cj2j2bnXIyakXBBYH3H
-   jhx2WRL0lvKTfIWqgLW3qm6aJ7MmKtHcLW6r17SSBTaVhsl79KdwhW/Uz
-   +YUONnrWqbj/ZiCPX6o92C5NYU7a9GALMzKa0VP+3C9DfUNa38FNqqjJB
-   w==;
-X-CSE-ConnectionGUID: Pv26WbbiRiCdcF67KdLOCw==
-X-CSE-MsgGUID: uk58Z1SOR/CUg3jabahvLA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11805"; a="91939062"
-X-IronPort-AV: E=Sophos;i="6.24,184,1774335600"; 
-   d="scan'208";a="91939062"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2026 20:28:02 -0700
-X-CSE-ConnectionGUID: trpoU+IfQoanmb/bMAAi9w==
-X-CSE-MsgGUID: WdrtOkcIR1KdSAaIWULefw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,184,1774335600"; 
-   d="scan'208";a="241110148"
-Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
-  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2026 20:28:01 -0700
-From: Reinette Chatre <reinette.chatre@intel.com>
-To: tony.luck@intel.com,
-	james.morse@arm.com,
-	Dave.Martin@arm.com,
-	babu.moger@amd.com,
-	bp@alien8.de,
-	tglx@linutronix.de,
-	dave.hansen@linux.intel.com
-Cc: x86@kernel.org,
-	hpa@zytor.com,
-	ben.horgan@arm.com,
-	fustini@kernel.org,
-	fenghuay@nvidia.com,
-	peternewman@google.com,
-	yu.c.chen@intel.com,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	reinette.chatre@intel.com
-Subject: [PATCH v4 10/10] fs/resctrl: Fix UAF from worker threads when domains are removed
-Date: Tue,  2 Jun 2026 20:27:38 -0700
-Message-ID: <c6bdc19625e0aba4978db2031b7cefb3bfd6fbc1.1780456704.git.reinette.chatre@intel.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <cover.1780456704.git.reinette.chatre@intel.com>
-References: <cover.1780456704.git.reinette.chatre@intel.com>
+	dkim=pass (2048-bit key) header.d=amacapital-net.20251104.gappssmtp.com header.i=@amacapital-net.20251104.gappssmtp.com header.b="ERoJG6xP"
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5aa2c25c632so13311918e87.1
+        for <patches@lists.linux.dev>; Tue, 02 Jun 2026 20:51:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780458677; cv=none;
+        d=google.com; s=arc-20240605;
+        b=e5jhXudHpVWtea7rPnGhKN3vmHDiYtc1rY5YcuZSLNxUVFeB5tBNihx007Yrsdcpon
+         HPiM4QpU+BvXuguv71MNmHtijNp6aGX7WTV6dx1SYx0gMoi/N6s2kA4Nf3nsf0uTKJMw
+         1+WcV7uaPNPNFhPJ1eKz+zgukAhEbhKar2ZSGGXH+f5yTuRthZGFPQz4Pf3+nP5N9llJ
+         8eVJGscs1+5E3UCVlZnWqm6lcaj7YcZxtgauQFM6PYSau5hxy1ozQ0JnH8qcf9AqOKkm
+         g7nqLbVTke919LqwCIqW0BI9sc6P31HxGf0lPq6UP2MHZfHxUeJVH7f8wxmpCBsXZa4O
+         baLw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=hLctvnpeHHKwaBCwCGUFctRGdwexf3XsJleZhrQYpkE=;
+        fh=4SPaypGmwTwBJUsBNbX/hCq+nTnMIyZeHbZ0nn4ot5Y=;
+        b=CRITEVBlLBHkpmUIXgiDDqKJoOxL5qLItzv5/ROUufQ/krEhnyscJwD047Dr8VyHx1
+         p3n9PeIOFc1oLrvqV+v3rzGtv6saEpis9eSayvRwJnGNR1SMGEepShzOTm21myAuyGN5
+         aTOvXliSINQz/V9L6MVr3GkiaXFzJZfSWjvrydOmrbTnylm2ClVcF2oAHIqI8TXNY/8o
+         zxFpwUfiVI/EmH86/L260MOshWUB6J6wm3Mj7/Ffs4IJTouI84wwJT+u3QL6HRiu8RM9
+         kliC1Osu77r1j8QumtJ9+4aCvv4y8lw9gjW6lLDdFTNfKGoNAuJ2sLfbtA+IllmIDiRX
+         Apiw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=amacapital-net.20251104.gappssmtp.com; s=20251104; t=1780458677; x=1781063477; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hLctvnpeHHKwaBCwCGUFctRGdwexf3XsJleZhrQYpkE=;
+        b=ERoJG6xPEfcL61kkxkvTlgAPseDiMgZek0NW+dSE/7BDX2L6YcmNcq+yYl83iCOpnZ
+         7tiOeAr+HCbWdAtHFOr6MWdwrRhQxlDr3udQjUKNuASI/8TZcwFLwiyyKANGI/kCD5/A
+         kBXbVrLHpW/O1c0YW/dKH5Zl2CP8cKKhVmBNNMV4Npo7Bj1N1CVKe9ZpmnE+W6ARNxQ+
+         7SlsBAHKCB92SSoyw/e9aT2GAzMPi9btOvZ9uwL/DEDkBrjazPJvp1cgPdOxSY6bIb0f
+         ja+bFi4FmPjxQBYP7ySQULz/D1OQl75TYllxZ0rOQ7v/lhv7RfOJXKp5omOHzWUa7352
+         Z7xQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780458677; x=1781063477;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=hLctvnpeHHKwaBCwCGUFctRGdwexf3XsJleZhrQYpkE=;
+        b=BuhVsk4A5Nfx4Zi3gER+sBWFRhs/zb/JxIP5RoMXgLgoAsaezL5ahfYo8G0NmwWy2f
+         zRa7/vALvOgnueKpJs6TvK6dfakV2/e0K1t+qS1SzLV7Os9AUVUFCNvKwVBUpn6Avv/m
+         kdLDtkaLGhBMMrsCIaVHNc0NoSgw3//5BK3UP82Q+qhNCj6NmFcPubYOSHxt+jLZszAq
+         xONQwH8Iwi8+qxYF8qCoOms19+CveVLJhS/oiEJAdUA0u1QVpYe6dxNZZHHZP7IIhAWW
+         Cowu5Kv7FC8UF3FkXkVSOtvFu0Fw7l7NUJgV/MPZPaCTKwxDbCK3NdsXcSsupuIllCSE
+         O5JA==
+X-Forwarded-Encrypted: i=1; AFNElJ8UbfgZB1c9ZS6lE+pvhXPmnW+JCV221wkDF/8vXtGJRD9Z0b2XaShgPy55FKuQ7Q+WGsFqxP10@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz6lXvFfpeMG+G3qWkXKmc8q/9kXJfCUpG8m67odJnZ1jeAzw+8
+	hy4XtBEHGtXCuj+ASPAwZBFVqwSDRJyZ5SIo8ccgwJ590Et02JnWPKdyqYiqC7Taei/WD14bE7h
+	1UJiCLb7kK+alEM/GJe0LX6HBjEOFjyEZAQTpwI9h
+X-Gm-Gg: Acq92OHUEV4tD2Cf1GN9JVMlLSXHNa+QCotb3GTpkN4Ys5NQHI9a3kVwWQVSUVrplmh
+	GP5y5sBdbBjrD34dB7H7E1f/UDW9bQc0529gYLZDmi75/X/Jzvq3T3LIp/HxUEAjSuOeDyQKyJ+
+	vlpTCBKj3Kp8aOXiR/z1TranHU0kpIth829fgOxyfP8RYvI/8QVoSxPEDZzJkrcD92dAjNjw/bB
+	MLnBYUtvrRteINzwf+w/Q5sucRDyQKYMxSYVapAa0zEzD4nCL7XJIWkIoVBSlYVkX0fKw/7STg3
+	NXXo4C0yPhD+bDk=
+X-Received: by 2002:a05:6512:1587:b0:5aa:6d0f:1dc7 with SMTP id
+ 2adb3069b0e04-5aa7c0bf470mr459675e87.19.1780458676548; Tue, 02 Jun 2026
+ 20:51:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAHk-=wiAqf0PdZ4AKj_4riUnnEb=g_ZNPkLnXrByA9BBHYiFRg@mail.gmail.com>
+ <20260602225426.122258-1-safinaskar@gmail.com> <CAHk-=wgKy4dP0oQCNKyMQQf3-uVpaigmDyH6_T0Via76gWST9g@mail.gmail.com>
+In-Reply-To: <CAHk-=wgKy4dP0oQCNKyMQQf3-uVpaigmDyH6_T0Via76gWST9g@mail.gmail.com>
+From: Andy Lutomirski <luto@amacapital.net>
+Date: Tue, 2 Jun 2026 20:51:03 -0700
+X-Gm-Features: AVHnY4I4B2wg7ilf1zQmemgKARTlVUvTJ9JxDnVBlHgiDg-UsafiWLR7jiVDKio
+Message-ID: <CALCETrWx8-Q5-rK1KnAPCxCbXaWCd=Yfs_Pr8qVMa8k8L6of1w@mail.gmail.com>
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Askar Safin <safinaskar@gmail.com>, akpm@linux-foundation.org, axboe@kernel.dk, 
+	brauner@kernel.org, david@kernel.org, dhowells@redhat.com, hch@infradead.org, 
+	jack@suse.cz, linux-api@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-mm@kvack.org, miklos@szeredi.hu, 
+	netdev@vger.kernel.org, patches@lists.linux.dev, pfalcato@suse.de, 
+	viro@zeniv.linux.org.uk, willy@infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The mbm_handle_overflow() and cqm_handle_limbo() workers read event
-counters and may sleep while doing so. They are scheduled via
-delayed_work embedded in struct rdt_l3_mon_domain. Architecture allocates
-and frees these domains from CPU hotplug callbacks under cpus_write_lock(),
-and the workers acquire cpus_read_lock() to keep the domain alive across
-their access.
+On Tue, Jun 2, 2026 at 5:12=E2=80=AFPM Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+>
+> On Tue, 2 Jun 2026 at 15:54, Askar Safin <safinaskar@gmail.com> wrote:
+> >
+> > Pedro is talking here not about this vmsplice patch, but about
+> > my future hypothetical patch, which will remove splice-pagecache-to-pip=
+e.
+>
+> That absolutely would be my suggested next step.
+>
+> Something like the attached - get rid of filemap_splice_read()
+> entirely, and just replace it with copy_splice_read().
 
-A use-after-free can occur when a worker is blocked waiting for
-cpus_read_lock() while the hotplug core holds cpus_write_lock():
-the architecture frees the rdt_l3_mon_domain that contains the worker's
-work_struct. When the worker unblocks, the container_of() it performs on
-the embedded work pointer dereferences freed memory.
+Am I understanding correctly that this will completely break zerocopy
+sendfile?  sendfile is, internally, splice-to-a-secret-per-task-pipe
+and then splice to the socket.  How much to people care?  These days,
+a lot of high-bandwidth network senders are sending encrypted data,
+which is not zerocopy frompagecache.  But there are surely some users
+that care, for example the person who went to the effort to implement
+IORING_OP_SPLICE:
 
-Drop cpus_read_lock() from the workers and instead drain pending and
-in-flight work synchronously before the architecture can free the domain.
-Since architecture offlines the domain under cpus_write_lock() after it has
-been unlinked from the RCU list and a grace period has elapsed, no new work
-can be scheduled. The cancel only needs to wait out existing work.
-Drop rdtgroup_mutex during CPU offline around cancel_delayed_work_sync()
-so that a worker waiting on the mutex can complete before re-pinning the
-work on a different CPU.
+commit 7d67af2c013402537385dae343a2d0f6a4cb3bfd
+Author: Pavel Begunkov <asml.silence@gmail.com>
+Date:   Mon Feb 24 11:32:45 2020 +0300
 
-When offlining a CPU the architecture may iterate over resources in any
-order. For example, the MBA control domain may be offlined before or
-after a corresponding L3 monitor domain. Ensure that resctrl fs cancels
-the workers no matter what order the architecture offlines the domains.
+    io_uring: add splice(2) support
 
-Fixes: 24247aeeabe9 ("x86/intel_rdt/cqm: Improve limbo list processing")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260429184858.36423-1-tony.luck%40intel.com # [1]
-Co-developed-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
----
-Changes since v2:
-- Rewrite changelog
-- v2 attempted to solve the issue by using is_percpu_thread() within the
-  worker to learn if CPU worker was running on is going offline. A
-  Sashiko (https://sashiko.dev/#/patchset/20260515193944.15114-1-tony.luck%40intel.com?part=5)
-  pointed out that this would not be able to handle the scenario if one
-  of the hotplug handlers following the resctrl offline handlers failed.
-- Some other fixes attempted that failed:
-  - Switch to accessing domain structure in handler via RCU so that CPU
-    hotplug lock no longer needed. Use cancel_delayed_work_sync() with
-    mutex dropped to cancel worker. Running worker from RCU read-side
-    critical section is a problem since the worker needs to be
-    able to sleep (mbm_handle_overflow()->mbm_update()->
-		    mbm_update_one_event()->resctrl_arch_mon_ctx_alloc()->
-		    might_sleep())
-  - Adding a reference count to the domain structure to avoid the worker
-    needing to take CPU hotplug lock. This ended up being very complicated
-    with the architecture needing new APIs to manage the reference count
-    which cannot cleanly integrate into MPAM since it uses a single
-    architecture domain structure to contain both the control and monitoring
-    domain structures. Managing the references across mount, unmount,
-    online, offline, as well as worker self exit resulted in several
-    asymmetrical and complicated paths that were error prone. Locking also
-    proved to be complicated since architecture would need to initiate
-    domain free that will need to call back into resctrl that will take
-    rdtgroup_mutex which means that references need to be taken/released
-    without locking.
+Now maybe someone cares about a different path?  Splice from socket to
+pipe to file?  Splice from socket to pipe to other socket?  Does
+anyone do any of this?  One can, of course, recv() directly to an
+mmapped file, but then you pay for page faults, so that probably a bad
+idea in most cases.  At least all of these cases don't have spliced
+buffers that refer to a potentially read-only file.
 
-Changes since V3:
-----------------
-- Traverse mon_domains list using list_for_each_entry_rcu( ...,
-  lockdep_is_cpus_held()) to document how CPU hotplug lock is required
-  to be held (via architecture).
-- Add snippet in changelog to motivate canceling work in monitor and
-  control domain offline handlers.
----
- fs/resctrl/monitor.c  | 52 ++++++++++++++++++++++++++++++++++---------
- fs/resctrl/rdtgroup.c | 52 ++++++++++++++++++++++++++++++++++++++-----
- 2 files changed, 89 insertions(+), 15 deletions(-)
 
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index f7ab9a1bc726..db56c0153e3a 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -628,14 +628,22 @@ void mon_event_count(void *info)
- 		rr->err = 0;
- }
- 
--static struct rdt_ctrl_domain *get_ctrl_domain_from_cpu(int cpu,
--							struct rdt_resource *r)
-+/*
-+ * Find the software controller's ctrl domain that contains @cpu on resource @r.
-+ *
-+ * Only called from the mbm_over worker via update_mba_bw() where the returned
-+ * domain is kept alive by cancel_delayed_work_sync() in
-+ * resctrl_offline_ctrl_domain(). This drains this worker and then waits on
-+ * rdtgroup_mutex held here before the architecture can free the ctrl domain.
-+ *
-+ * Context: Call from RCU read-side critical section.
-+ */
-+static struct rdt_ctrl_domain *get_sc_ctrl_domain_from_cpu(int cpu,
-+							   struct rdt_resource *r)
- {
- 	struct rdt_ctrl_domain *d;
- 
--	lockdep_assert_cpus_held();
--
--	list_for_each_entry(d, &r->ctrl_domains, hdr.list) {
-+	list_for_each_entry_rcu(d, &r->ctrl_domains, hdr.list) {
- 		/* Find the domain that contains this CPU */
- 		if (cpumask_test_cpu(cpu, &d->hdr.cpu_mask))
- 			return d;
-@@ -696,7 +704,8 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_l3_mon_domain *dom_m
- 	if (WARN_ON_ONCE(!pmbm_data))
- 		return;
- 
--	dom_mba = get_ctrl_domain_from_cpu(smp_processor_id(), r_mba);
-+	guard(rcu)();
-+	dom_mba = get_sc_ctrl_domain_from_cpu(smp_processor_id(), r_mba);
- 	if (!dom_mba) {
- 		pr_warn_once("Failure to get domain for MBA update\n");
- 		return;
-@@ -799,9 +808,19 @@ void cqm_handle_limbo(struct work_struct *work)
- 	unsigned long delay = msecs_to_jiffies(CQM_LIMBOCHECK_INTERVAL);
- 	struct rdt_l3_mon_domain *d;
- 
--	cpus_read_lock();
-+	/*
-+	 * Safe to run without CPU hotplug lock. Work is guaranteed to be
-+	 * canceled before the domain structure is removed.
-+	 */
- 	mutex_lock(&rdtgroup_mutex);
- 
-+	/*
-+	 * Ensure the worker is dedicated to a CPU as intended and not
-+	 * relocated by workqueue subsystem as part of CPU going offline.
-+	 */
-+	if (!is_percpu_thread())
-+		goto out_unlock;
-+
- 	d = container_of(work, struct rdt_l3_mon_domain, cqm_limbo.work);
- 
- 	__check_limbo(d, false);
-@@ -813,8 +832,8 @@ void cqm_handle_limbo(struct work_struct *work)
- 					 delay);
- 	}
- 
-+out_unlock:
- 	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
- }
- 
- /**
-@@ -846,7 +865,10 @@ void mbm_handle_overflow(struct work_struct *work)
- 	struct list_head *head;
- 	struct rdt_resource *r;
- 
--	cpus_read_lock();
-+	/*
-+	 * Safe to run without CPU hotplug lock. Work is guaranteed to be
-+	 * canceled before the domain structure is removed.
-+	 */
- 	mutex_lock(&rdtgroup_mutex);
- 
- 	/*
-@@ -856,6 +878,17 @@ void mbm_handle_overflow(struct work_struct *work)
- 	if (!resctrl_mounted || !resctrl_arch_mon_capable())
- 		goto out_unlock;
- 
-+	/*
-+	 * Ensure the worker is dedicated to a CPU and not relocated by
-+	 * workqueue subsystem as part of CPU going offline since reading
-+	 * events depend on smp_processor_id(). After passing this check
-+	 * smp_processor_id() is valid for entire duration of this worker
-+	 * since it runs with rdtgroup_mutex held and the offline handler needs
-+	 * rdtgroup_mutex to offline the CPU being run on here.
-+	 */
-+	if (!is_percpu_thread())
-+		goto out_unlock;
-+
- 	r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
- 	d = container_of(work, struct rdt_l3_mon_domain, mbm_over.work);
- 
-@@ -880,7 +913,6 @@ void mbm_handle_overflow(struct work_struct *work)
- 
- out_unlock:
- 	mutex_unlock(&rdtgroup_mutex);
--	cpus_read_unlock();
- }
- 
- /**
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 9f998e394911..b5fb59d0e035 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -4491,6 +4491,29 @@ static void domain_destroy_l3_mon_state(struct rdt_l3_mon_domain *d)
- 
- void resctrl_offline_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain *d)
- {
-+	/*
-+	 * mbm_handle_overflow() may dereference this ctrl domain via
-+	 * update_mba_bw()->get_sc_ctrl_domain_from_cpu(). The architecture has
-+	 * unlinked the domain from the RCU list and waited a grace period, so
-+	 * no new worker iteration can find it; drain any worker that already
-+	 * holds a pointer to it before the architecture frees the domain.
-+	 *
-+	 * Software controller is enabled/disabled on mount/unmount with
-+	 * cpus_read_lock() held. Running here with cpus_write_lock() so
-+	 * there are no concurrent changes to software controller status.
-+	 */
-+	if (r->rid == RDT_RESOURCE_MBA && is_mba_sc(r)) {
-+		struct rdt_resource *l3 = resctrl_arch_get_resource(RDT_RESOURCE_L3);
-+		struct rdt_l3_mon_domain *mon_d;
-+
-+		list_for_each_entry_rcu(mon_d, &l3->mon_domains, hdr.list, lockdep_is_cpus_held()) {
-+			if (mon_d->hdr.id == d->hdr.id) {
-+				cancel_delayed_work_sync(&mon_d->mbm_over);
-+				break;
-+			}
-+		}
-+	}
-+
- 	mutex_lock(&rdtgroup_mutex);
- 
- 	if (supports_mba_mbps() && r->rid == RDT_RESOURCE_MBA)
-@@ -4503,6 +4526,24 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
- {
- 	struct rdt_l3_mon_domain *d;
- 
-+	/*
-+	 * Called by architecture under CPU hotplug lock as it prepares to remove
-+	 * the domain which is guaranteed to be accessible here.
-+	 * The domain has been unlinked from the RCU list and a grace period
-+	 * has elapsed, so no new worker can be scheduled. Drain any worker that
-+	 * is in flight or pending before letting architecture proceed to free
-+	 * the domain that has the workers' struct delayed_work embedded.
-+	 * Do so before taking rdtgroup_mutex since the workers also acquire it.
-+	 */
-+	if (r->rid == RDT_RESOURCE_L3 &&
-+	    domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3)) {
-+		d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
-+		if (resctrl_is_mbm_enabled())
-+			cancel_delayed_work_sync(&d->mbm_over);
-+		if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID))
-+			cancel_delayed_work_sync(&d->cqm_limbo);
-+	}
-+
- 	mutex_lock(&rdtgroup_mutex);
- 
- 	/*
-@@ -4519,8 +4560,6 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
- 		goto out_unlock;
- 
- 	d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
--	if (resctrl_is_mbm_enabled())
--		cancel_delayed_work(&d->mbm_over);
- 	if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID) && has_busy_rmid(d)) {
- 		/*
- 		 * When a package is going down, forcefully
-@@ -4531,7 +4570,6 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
- 		 * package never comes back.
- 		 */
- 		__check_limbo(d, true);
--		cancel_delayed_work(&d->cqm_limbo);
- 	}
- 
- 	domain_destroy_l3_mon_state(d);
-@@ -4712,12 +4750,16 @@ void resctrl_offline_cpu(unsigned int cpu)
- 	d = get_mon_domain_from_cpu(cpu, l3);
- 	if (d) {
- 		if (resctrl_is_mbm_enabled() && cpu == d->mbm_work_cpu) {
--			cancel_delayed_work(&d->mbm_over);
-+			mutex_unlock(&rdtgroup_mutex);
-+			cancel_delayed_work_sync(&d->mbm_over);
-+			mutex_lock(&rdtgroup_mutex);
- 			mbm_setup_overflow_handler(d, 0, cpu);
- 		}
- 		if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID) &&
- 		    cpu == d->cqm_work_cpu && has_busy_rmid(d)) {
--			cancel_delayed_work(&d->cqm_limbo);
-+			mutex_unlock(&rdtgroup_mutex);
-+			cancel_delayed_work_sync(&d->cqm_limbo);
-+			mutex_lock(&rdtgroup_mutex);
- 			cqm_setup_limbo_handler(d, 0, cpu);
- 		}
- 	}
--- 
-2.50.1
+But I'm a little concerned that zerocopy sends from files to network
+are actually important.
 
+--Andy
