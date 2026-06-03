@@ -1,170 +1,124 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938A53D47DC;
-	Wed,  3 Jun 2026 07:50:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780473023; cv=none; b=s4wqQP++zvwP1pVV6iKvg5n4yUB3cGCnSwgxnQO79P+m539YghvQSdznI/XKqQI5JuOMd10BaXzZF1rxNLbJpB54beKnLWXfOwDGxDw5YLfymHsSM5UDj83KM5Hq8RCg1dzqH7eoBZHqUgxnCTuWABgmDiZbAvFYOuPxOAEat6E=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780473023; c=relaxed/simple;
-	bh=4SlNVuIUt4a+Le1/sIdYKbYIKA3fRJN6rU1+wZYsBfw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WNKl2HqwTYNB2Q1DEZeHKsAqkpC0RDM71rGeuGZVl/R92HGWRFW6fC5YWdlmuF9X/YBbwfFZKxzwKXWLc25uwYpklmWw5BOTv6Hs2HjhvxsElzDHAizbX1moBjLZ4b6zMYcgclbEn+eOKXuiY3Uv4ZK0dOuHcTg3qiDk1qdVIwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L2Up9Zp/; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BCF44BCA8
+	for <patches@lists.linux.dev>; Wed,  3 Jun 2026 09:57:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780480646; cv=pass; b=D7daHjQNWAkWLjK7l5RIWxjU5ILfAuGyNxp8SJUvpyeUzUgSlT8el8h3DITuVLIbu4Ur6Q2/xR1barITamimhEKr/6fKqckwMoo52eNTNzuKwbSpZObgb6s0/NC76YfCx1KFNNCbDSTc9bDXXyyMSQZk4eqMfq+jxVpnbTdyDfs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780480646; c=relaxed/simple;
+	bh=ZCqrAxzAA1VkvSHMPbJW9yIvYLlRWu40qg6zjxtnKxA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=A2aoGHBYX+ZT3U+MNA+y9fgXCQEPYB+OZLUpHwlFynueRRJPfEeVLLsRAtZXBExmrCnell9F1RDLm2yvycmzkWqhhCaeWUlC241EqBr/sYFtwjaXy7VqVJz5qDP5jooG3dZ7qr0ehrxXNYHhSZXy0UGYV1gkt+hp92H8qxSmc68=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=szeredi.hu; spf=pass smtp.mailfrom=szeredi.hu; dkim=pass (1024-bit key) header.d=szeredi.hu header.i=@szeredi.hu header.b=dMRCX6MA; arc=pass smtp.client-ip=209.85.222.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=szeredi.hu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=szeredi.hu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L2Up9Zp/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCB7D1F00893;
-	Wed,  3 Jun 2026 07:50:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780473022;
-	bh=88hbOu2kVMzvRDy1eOcozFAmg35YAXSjbmJFuM/mDK4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=L2Up9Zp/7tLPcWy426HJxpyxK5jrLwIKsJh/I7EJrRqcMVmPW2D3+n64+taNy6XZD
-	 ZwdSTJ3RON53sNMh72dYcdBngzi+//cBXjPCP2TR0P2pLDzeSCUSNIp2+t/UrFFG+f
-	 l5kJXpa9fMPly8p1SjmScFTJJ15uQW2Zu81INbFDgDLPz5mtcYEx1uNknRioWz8unX
-	 U0un4cVpgXwBSRBNNymxkAycgiZmzK55Txhoa8kYnHkznYtABdxBsIRTGYEIQQqIYB
-	 F0JhkZF7PR8dLeyUevRBWaTjlMrnD/sVqHpvTV1ougk40oJuqlpF6GsQKvj5/BOxGQ
-	 cyjSy6gZLovcA==
-Message-ID: <df22c9ff-6705-426e-85b1-b5018590d723@kernel.org>
-Date: Wed, 3 Jun 2026 09:50:15 +0200
+	dkim=pass (1024-bit key) header.d=szeredi.hu header.i=@szeredi.hu header.b="dMRCX6MA"
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-9155183b42cso64734885a.0
+        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 02:57:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780480643; cv=none;
+        d=google.com; s=arc-20240605;
+        b=WN6tDU8kcN/9pVJZEAcAXyucY1sI/WFgZJTTMflEF1O0hcHQija+SbkYlR1Mz4gd5O
+         eRWJZR1Demop+AkgL85kfE+ru9Ck5Ix4smZLMr8DKEUYIZyCRo4NZQDV3s+KaTbdBV5x
+         G8qlRK+haQyg8VZcmts8tJf2GK24js13vbz+UwxO/R6EigsQynRLoIdkm9PJRvES5KF2
+         pKOxeUbBtaODSsYcS6xsfOKPEhJIMfFT+QFADFD/Hp026RM5+7uBZOguWhMeJtQdYcoB
+         DmXWcYc7B7Xfen6oTnb3Aj92nJIKAX7bpp1RuZan0FAZQo6qsPV3t6isN04NB4m269+t
+         u9ZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=ZCqrAxzAA1VkvSHMPbJW9yIvYLlRWu40qg6zjxtnKxA=;
+        fh=I8cDo9Nst8M6CYQtDMLP7aHwjqfIasd7hwoPxI0/Js4=;
+        b=cyUqbFOnWjvfHge6SMOZjwWljvRZA+wdMG85Z7s7R5jndLQ5rtxsAbusO9QIQWGFip
+         GQGuJ0gT8I2tpUqRu0PrNz+4RaZBNbaCYayweu8XH6jv89XgTOxI85u1xGxHjn1jzXFa
+         /QGnbmwa2e6I/OPjIoyT4HK+nhtphJxcmiPL99Wa3ALXF+492waIV4MTYOb5sGF4rAch
+         z9XtTXYvGEFTGWdLo/B4/aEmmFpMTDS1MqdDOuo17wFbusFQoFNjp5EsaayDo0NIsaXu
+         6ygyfvZ0ghlf55nlcTktVx4OTy1SK5mrwi9knHIeU6lcsg3w9wy2MTG8fCm0pxpGC4Qc
+         25jw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=szeredi.hu; s=google; t=1780480643; x=1781085443; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZCqrAxzAA1VkvSHMPbJW9yIvYLlRWu40qg6zjxtnKxA=;
+        b=dMRCX6MA2ZKnAYmNmqbTbcyWyN6L8zwp6HSIalR9n/7XIHgRHhMe0G0pP8Wo7oGyid
+         n2yXRdpeD+oynFzEVvHZekvSoF0HEi3Ey7tv1KgggpCr/eBJzZLtcR0F9EEr7nn+Iq0l
+         g7XyDi6/w1MhcnEG182Juuyn9Lmbtl4XrskK8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780480643; x=1781085443;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZCqrAxzAA1VkvSHMPbJW9yIvYLlRWu40qg6zjxtnKxA=;
+        b=SIrYQoADailYz8snwUanprvf9312tiu0X2swVF3NrZh89xefNXvVMadIu8dcE38Wfo
+         nVVC5gmhUm+pQtYNdKfw7vRWkiQ36vQvHVchp3cVyaDVcYMi65gF6mfKYViFrFNSY+tb
+         zbC7cInY1ki3Whu24wb73m3nfcsv8F/ruOwcz8xmvGy9oIgyIziLMHN1weGZpcTXhSIp
+         WDqHoUGmW3mkysYPm3cVVbyicl0TX+MGPoQtm9w+7lAJ+MgEDSgwrTlTTXNOk2CfZTSZ
+         +vhuufUuJXeYjBPz9GDwhTrhkCq4gz2aUMUVh9cufN/jq6c0GcqcqQ0ubFpHZnwGx6pY
+         e5GQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8flfGMGXQAHdbzqLF5Ga/RKpN0MSIIUhzWYI/VokXdj3lNtFl43GQLI9EGmFtjA4lNnlulJFC+@lists.linux.dev
+X-Gm-Message-State: AOJu0YwMhEn+51X/jAqELk8DLapdBFw7j9JuwiP5ChEvx2J1xtD2RBN1
+	ponYiocTF1NLKZPGa4Jj3pZkljjVvQDJpNilYu6uEzd46mPqBkJwBg8zVbPrnau6XXEgr5I7g9u
+	/H2iKt9fPJ8z5TOfmTBrDAi00xw7+6OadburLKKNPhA==
+X-Gm-Gg: Acq92OEl3BKJV9yC6RZzt/2zh4HQW+D+mn908Fc03AX8HeBUG/YH6hfUqV7UgZh1ywM
+	GS3VUhssXyLTWMG+J1uMveex4YP5PpfDQDJ1yXyEGTC1KWo3+3w0t9o+zmmgko/paHqNLIAGAXp
+	llxLSkfBwMHvDxax40eYTI2I+oMe5k8vVke3rY5HOSmegt5KRoMHzwb+1+w9nrr5dtpWjDUHh60
+	uN8vCQHBzNbcL1USqDMv+ELE2ORkbTkA6hvo3Snvewo2wcx+FJoVA/28tMS2A4x+KUUXP1IMh1m
+	NeEB/K3rd5yieyLkY7jC1efuxG3XhYCGIbCu3Z+VZjtjY8lSePy165EiYA==
+X-Received: by 2002:a05:620a:31a8:b0:915:422c:a0 with SMTP id
+ af79cd13be357-9158b6e2074mr292177985a.22.1780480643420; Wed, 03 Jun 2026
+ 02:57:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for
- preadv2/pwritev2
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
- Steven Rostedt <rostedt@goodmis.org>, Al Viro <viro@zeniv.linux.org.uk>,
- Linus Torvalds <torvalds@linux-foundation.org>,
- Christian Brauner <brauner@kernel.org>, Askar Safin <safinaskar@gmail.com>,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, linux-api@vger.kernel.org,
- netdev@vger.kernel.org, Matthew Wilcox <willy@infradead.org>,
- Jens Axboe <axboe@kernel.dk>, Christoph Hellwig <hch@infradead.org>,
- David Howells <dhowells@redhat.com>, Pedro Falcato <pfalcato@suse.de>,
- Miklos Szeredi <miklos@szeredi.hu>, patches@lists.linux.dev,
- linux-fsdevel@vger.kernel.org, Jan Kara <jack@suse.cz>
 References: <20260531010107.1953702-1-safinaskar@gmail.com>
  <20260601-enthusiasmus-canceln-anlehnen-0e62317a9784@brauner>
- <CAHk-=wifX_rrDjRGnDnOqE-usptAukuXKrmuPuVDP5bOCBWzGQ@mail.gmail.com>
- <20260601173325.GH2636677@ZenIV> <20260601160455.2c187574@gandalf.local.home>
- <20260601172825.a51a588ec1c32617a0e12d78@linux-foundation.org>
- <821ed41e-5b2f-4d17-aeb2-71b0361f8e7f@kernel.org>
- <20260602184440.GB2503276@google.com>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- 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
- qIws/H2t
-In-Reply-To: <20260602184440.GB2503276@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ <CAHk-=wifX_rrDjRGnDnOqE-usptAukuXKrmuPuVDP5bOCBWzGQ@mail.gmail.com> <20260601173325.GH2636677@ZenIV>
+In-Reply-To: <20260601173325.GH2636677@ZenIV>
+From: Miklos Szeredi <miklos@szeredi.hu>
+Date: Wed, 3 Jun 2026 11:57:11 +0200
+X-Gm-Features: AVHnY4IqQCqMS4qklUMIqRUT1Fpv-SuCQDkhxYBkM9m1uTwHwBhUln17rZFWNU4
+Message-ID: <CAJfpegtH-E79D-3UL=pPv-QqJk6C4ODXLLZSAjzQJwSSeqqS-A@mail.gmail.com>
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
+To: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, Christian Brauner <brauner@kernel.org>, 
+	Askar Safin <safinaskar@gmail.com>, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
+	linux-api@vger.kernel.org, netdev@vger.kernel.org, 
+	Matthew Wilcox <willy@infradead.org>, Jens Axboe <axboe@kernel.dk>, 
+	Christoph Hellwig <hch@infradead.org>, David Howells <dhowells@redhat.com>, 
+	Andrew Morton <akpm@linux-foundation.org>, David Hildenbrand <david@kernel.org>, 
+	Pedro Falcato <pfalcato@suse.de>, patches@lists.linux.dev, linux-fsdevel@vger.kernel.org, 
+	Jan Kara <jack@suse.cz>, Steven Rostedt <rostedt@goodmis.org>, 
+	Joanne Koong <joannelkoong@gmail.com>, fuse-devel <fuse-devel@lists.linux.dev>
+Content-Type: text/plain; charset="UTF-8"
 
-On 6/2/26 20:44, Eric Biggers wrote:
-> On Tue, Jun 02, 2026 at 10:25:06AM +0200, David Hildenbrand (Arm) wrote:
->> On 6/2/26 02:28, Andrew Morton wrote:
->>>
->>>
->>> Well yes, The patchset seems sensible from a quality POV.  But to make
->>> a decision we should first have a decent understanding of its downside
->>> impact.
->>
->> I guess most (all?) of us ... dislike ... vmsplice(), so trying to remove it
->> entirely is certainly very appealing ...
->>
->>>
->>> I haven't seen a description of that impact in the discussion thus far.
->>> And that description is owed, please.
->>>
->>> I assume a small number of specialized applications are using
->>> vmsplice() to great effect?  What are those applications?  What is the
->>> impact of this change?
->>
->>
->> I did some digging, and the kernel crypto API documents using splice/vmsplice
->> for zero-copy[1] and libkcapi [2].
->>
->> I did not find performance numbers, how much vmsplice/splice actually gives us.
->> Playing with the kcapi-speed tool [3] (specifying --vmsplice vs. --sendmsg)
->> doesn't really reveal a big difference at least on my notebook. Not sure if the
->> parameters I specify are reasonable.
->>
->> I don't know whether downgrading vmsplice to preadv2/pwritev2 would perform
->> significantly worse than sendmsg ... and I don't know what the default would
->> usually be (default to vmsplice or sendmsg). I might try finding some time to
->> play with it more, but I doubt it, so if anybody else has time ... :)
-> 
-> AF_ALG is a mistake and isn't commonly used.  Using a userspace crypto
-> library is faster and is what almost everyone does anyway, as it avoids
-> the syscall overhead.  There are many other issues with AF_ALG as well.
-> 
-> 7.2 will mark AF_ALG as deprecated, mostly remove AF_ALG's zero-copy
-> support, and remove AF_ALG's async I/O support:
-> 
->     https://lore.kernel.org/linux-crypto/20260430011544.31823-1-ebiggers@kernel.org/
->     https://lore.kernel.org/linux-crypto/20260504225328.25356-1-ebiggers@kernel.org/
->     https://lore.kernel.org/linux-crypto/20260523-af-alg-harden-v1-0-c76755c3a5c5@gmail.com/
-> 
-> In practice, the programs that are keeping Linux distros from disabling
-> AF_ALG in their kconfig outright are just iwd, cryptsetup, and bluez.
-> They use AF_ALG just because it was mistakenly thought to be easier than
-> using a userspace crypto library.  They don't need maximum performance,
-> nor do they use vmsplice, splice, or sendfile.
-> 
-> There is other highly niche code out there that does implement the
-> AF_ALG + vmsplice + splice thing, e.g. libkcapi.  But it's just not
-> enough of a reason to keep zero-copy support, especially considering
-> that AF_ALG has always been the wrong solution in the first place.  The
-> fallback to copying the data is fine for this deprecated API.
+On Mon, 1 Jun 2026 at 19:33, Al Viro <viro@zeniv.linux.org.uk> wrote:
+>
+> On Mon, Jun 01, 2026 at 10:17:23AM -0700, Linus Torvalds wrote:
+>
+> > TLDR: maybe we could ghet rid of "f_op->splice_read". *That* would be
+> > a big simplification.
+>
+> FUSE might be interesting - fuse_dev_splice_read() and its ilk.
+> Communications between the kernel and fuse server at least used to
+> seriously want that, so that would be one place to look for unhappy
+> userland...
+>
+> splice-related logics in fs/fuse/dev.c is interesting; another place
+> like this is kernel/trace/, but I'm less familiar with that one.
 
-Cool, thanks for sharing that Eric!
+[Cc: Joanne, fuse-devel]
 
--- 
-Cheers,
+I'd favor simplification, but care is needed to not regress performance.
 
-David
+Joanne might be in a better position to say something about relative
+performance of various transport modes in fuse.
+
+Thanks,
+Miklos
