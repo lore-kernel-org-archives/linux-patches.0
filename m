@@ -1,114 +1,107 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A531B4224
-	for <patches@lists.linux.dev>; Thu,  4 Jun 2026 00:01:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B5E73463
+	for <patches@lists.linux.dev>; Thu,  4 Jun 2026 00:46:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780531295; cv=none; b=T8BE7x0Io6/RYwomfLhx+1nNE/eNjKYBMgua8XG3EnKUpVyrrOBldNU9rqmvzCWywZuejpot0W038Rhhjm/eHk5QJIoIN9xiTT45zbba3XYbWTvSf3QG/CNblX0x3RGbLP4C1RAUeWJRW2x48mKxMdo5HYtax98gcEYUDtWPmHw=
+	t=1780533970; cv=none; b=pvZpK0lgE/KaL3/47lh6uostiBC7ZBnf3RN1BsXBy4rE3aiAoj16xJu8FoKdiatSDCDQT7FoTYMsa+hev/6eHXcYHtPsUqe7/BIhI8bDws/iHI615Klp+62ePGEsYFsvI8BqyU0cIvPD5RuNL8sS3Fj/cfxeaClDbf3kJ8UBT+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780531295; c=relaxed/simple;
-	bh=uQcJ3DbEdxsfH/k24j2l4FHVQEAFZdw9HA2H2VMaFx4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aj9niFnsBQj5N/6yCySj4qcz9pF3gr8MjsKRiH2OugjrlF4Jw9dotVKTC6nqjPAqHArr7djtWsfhTqcHXcxFZqDzdOEQfQYDG2rM0n8zixtOAuBww9ikDPELRQn4SK7QSElhDPBm6zjaEPdLdkCjOFPpLiG+ILaKFIozfKDOuCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=a8eJKSGt; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	s=arc-20240116; t=1780533970; c=relaxed/simple;
+	bh=4C6y2z/XTDC26AyRBpojFCbnM2K9+BeYPffxKjyVQk0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=PP7cz16rVICy4J+S42k4C6Ut8kkhjxhFYYWLYPHOlx2hrWGqdcOwecTgayew5rizvUbwl4pJnlio2+TxrYiu/7YAxP3L01s0uWvc4MJkATdYrzKVhwXMjnEDeQheKf7S150ywkWGlvfM8+YTTpxBjNJFlKH66eurG8sIh0CGXao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WMtXJfrb; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="a8eJKSGt"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-84237c55ef9so38980b3a.0
-        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 17:01:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WMtXJfrb"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-45eee266c6cso66784f8f.1
+        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 17:46:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1780531294; x=1781136094; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fmwtcO9oMtO4r20fiMVX6YvjF6Gi+HYM7qIN8rIiuJU=;
-        b=a8eJKSGte8CoUZOF6WVBYsfjIh/RbT0wZOR8/rRUy2fWP6icKCi4WfAiE8k/PIgzwH
-         /s7pQf6BWkoYBJA6gOqCtT/i+g1R0bYnH9v3D7NugO9rFUVlFwIDAFEuu6csOadPtKEH
-         w+eao0iaTK/hqRyb6JFxxCiEKwvOXo9/P5z90=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780531294; x=1781136094;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1780533968; x=1781138768; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fmwtcO9oMtO4r20fiMVX6YvjF6Gi+HYM7qIN8rIiuJU=;
-        b=H8kNd6sRm8JDacXRzjRJFKpP2JUej6+MN3mRXd4qFVAvdkGSHUHFcOv4qaXAj371iW
-         6+luXwj4fnul9ITFtxBMW/pZBspnSNuD5c072XM0UHtT0epyXB0M5mrOhwliTxktsiHO
-         bU0W7TsDDclBF3ibnuRJeR11zBm352E8pQK+Rsg4amQ0AdFEJ4wiIAc44uFJjZksutkE
-         iWejEXeLzsaV0/eoLytiWpRykx1m8MCvB9pwPH0YJAu69xSaeZ0NtnQf8hm2a1ZlBAcQ
-         ssbdGw7qFndHnYOWURTdNJp9PRhlSu+YkUYsgV4byhrYiHQbPF9tnkJAjtew+9JEIoKN
-         VeGw==
-X-Forwarded-Encrypted: i=1; AFNElJ8ug2z9pglF2iigBmCjt87qDnZAgEWHhCW3On/sekPv4q1vQCKcqzFvmvL8nWr4D7mKk02j4f1a@lists.linux.dev
-X-Gm-Message-State: AOJu0YykKbuCPB9kHtkvtojTRYqNOJgxFVJOr8GyFOmG+PdqRBTrC8H0
-	2IQYaI8pJ/apn/nkMyR3p89MVkVg3H10CMcnzOh10asrmNyxb/TNrLWFsCBtiMyzUnd3Ch+kvqG
-	2JFlNWFMZSg==
-X-Gm-Gg: Acq92OGPK0jhbPvY3S0685ScLXPKvb+dKVf9pQglDw0P+j3tOYJn+hTWVVRb+LzMXqp
-	KCB1KI1Kuu3O5l8w/dSDNIvqyG4T3q4YV7E/GZSRGSCUnOz8f9NPje2nE6a8v5DehB1/Md0zpJv
-	8UOeWFDdTTE6ksYDsIWZZogM9wUosPkVpivhLVNV4x//kttLnngv4oIa2WLQAsOiuh0IbTiyngX
-	j2sSSmCgk5zmuTtzAoxHXpJ4oHAybH3DMHIv8Zsts1vNCkP3CuXj4OUwdzv+oBF03Dr1h0E4EXm
-	26ix+H3BNHLKjrw8+va9QFK6+KFLVHYMQ4PEOzIkjaLXV0y7AMZy9t9wo6975Ka5BAiJ1iK0Rtz
-	mRfD23opPqnd9WP46AkEU615EDy13pIYxhuwo1VCtL7QiFVfLZ8j16q9RHzG+vvr1G8hhVtV8Mr
-	K3vP2S8PeGgkNQoSz0dAtW1pu6LETH6h9PH22Iz7PC/KXMgnfjQ0hxERDUpO7QDTuGWLd0uOrm7
-	pvAD66vHz4=
-X-Received: by 2002:a05:6a00:a203:b0:842:33f3:da7f with SMTP id d2e1a72fcca58-84284db91f0mr5097323b3a.2.1780531293648;
-        Wed, 03 Jun 2026 17:01:33 -0700 (PDT)
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com. [209.85.216.47])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84282904889sm4119314b3a.55.2026.06.03.17.01.31
-        for <patches@lists.linux.dev>
+        bh=hNgRjJgbYuUrLzdW/5WEzZhlyP27Ht6YujPqndZuMqc=;
+        b=WMtXJfrbXtCTDNLfCjbFk26nEaYe1pa1Z5jLVUK5e7Fx5ojKuw1gC9ZWOOW75yEIUV
+         UD2nRhxmGOVjm7b8HVTDia+aUVxOWoYDOkRYQymUWEyIMVCEyNQhbj0Jkx9H80EpnTcT
+         o+dXovGTBeB3S9+x4mF9OpOjIsvq9ZHBc9rfApZXyVKrU1syeMp8/GbumW8tI2VIFa2z
+         mb3nJwqR1/mclmsEPBaw+vF/krj/ffeliFHI7BIlWcyTZCD+/thAkmqEAIDRQe3KYA0P
+         WomNWhOp3i29PcS2tlRg47sQF3fD5lhx1hC7IfpaDqfEGSVxjsmcHkUzeyYwIxQWPTPV
+         MNzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780533968; x=1781138768;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=hNgRjJgbYuUrLzdW/5WEzZhlyP27Ht6YujPqndZuMqc=;
+        b=oehD3V72nJ7lfvuXko8pKn9mhkkJsyC30vOcGpdwRs7CWimr9y6sSnB4nTvC4oiWl8
+         OXX6Fh+7ZA1YqQ3YhEgVbdq93yBuDNfk2xRLD9zzS6Kuft37Tmwrn4lBERzJlhPHDbG7
+         VNvrz8tePAbow+RAqc9Y0gJjFhtsl22vd0b471tZwhO4Xd68Gx5JrN1sHNESE9eby/fv
+         MM39Q9Gc4B7j0SvQ+vb/XWxi3noN8swUq2unCrZwk1BhCP0IUzxy1WfJaGeUzY9Aq+Hn
+         eT+RPkI17NmN88b4B5Qhz0/NdqyXBaiDj1moTeO7rkDTeK0pU1pZCeBzwI0kfm+iIlu/
+         SI8g==
+X-Forwarded-Encrypted: i=1; AFNElJ8e7OUSOnVsSgHjqpZKUJvSuQCr4jdNiE54qkLInx+BMMu+NApDIpauZXTXj89CVOtxCrYNh+vZ@lists.linux.dev
+X-Gm-Message-State: AOJu0YwWh1BNS23npBGNmseIk10/bbJt3BciizEldPNXBSb7j4lVm5WK
+	7m3fSlkvAfwb+SpifgPOHLDCyPyFa6Lo4qDTPX4xPPbpMxlxe7km7Bdl
+X-Gm-Gg: Acq92OE2ar5HY2UrpLT6BZaBqzARPReFP0B4DpbSheZuXVR2pfzTK6xjE+g7NJb8b/W
+	DUgQNiVCG8x+UZuh6+Yvn/gSylz48/YLu5Ou6RP8jyXnijJ3oZ9QHWV+hOZaNoirlX/wxplZeTf
+	2tn+9PtxPS8329kVhKyX3A7TshZELBLY4Xf9caJz+vPADIwb3Kb5WT8CsbPD2gVIwSyZ95RmG+3
+	6Hfc/jEahDnix+nljJrhgA9ZzikZ/UZRQkf1iX6aNA20cMtGrEKd6hP3TFwEfw0h3Og1qN7LaRA
+	GqynhwDlHSFk4gwtXjXwMlnbOajdJrxT4B5xoibSeSGub+T6TwIuyAHcK8NOB4uQzkx6JiUSfx3
+	7mUKwhHlVV3G84GJuaZ1VK//GwZX9AcATie2Nv3rsVA3pbPSSZmJHhsxhu4O5BvTQrEmvJFjHol
+	loYLRhC5DvHlubr5wxGoAEn2t5pgAudoFVoUulACPu
+X-Received: by 2002:a5d:55cb:0:b0:43d:dd:8ca4 with SMTP id ffacd0b85a97d-460218f1283mr6820154f8f.14.1780533967626;
+        Wed, 03 Jun 2026 17:46:07 -0700 (PDT)
+Received: from localhost ([212.73.77.104])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-4601f2dcde3sm13029996f8f.1.2026.06.03.17.46.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Jun 2026 17:01:31 -0700 (PDT)
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-36baeec21dcso37268a91.3
-        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 17:01:31 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ9lpiMq6YBVX/nAfzH6yFq2pLVvPY/mQkE6/HJ50wNQsZO5eutBvYSOkBEk5NiyCDAbslCrAz+6@lists.linux.dev
-X-Received: by 2002:a17:90b:2811:b0:36d:5dbe:2a0d with SMTP id
- 98e67ed59e1d1-36e30c23af4mr5607319a91.7.1780531290626; Wed, 03 Jun 2026
- 17:01:30 -0700 (PDT)
+        Wed, 03 Jun 2026 17:46:05 -0700 (PDT)
+From: Askar Safin <safinaskar@gmail.com>
+To: safinaskar@gmail.com
+Cc: akpm@linux-foundation.org,
+	axboe@kernel.dk,
+	brauner@kernel.org,
+	david@kernel.org,
+	dhowells@redhat.com,
+	hch@infradead.org,
+	jack@suse.cz,
+	linux-api@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org,
+	miklos@szeredi.hu,
+	netdev@vger.kernel.org,
+	patches@lists.linux.dev,
+	pfalcato@suse.de,
+	torvalds@linux-foundation.org,
+	viro@zeniv.linux.org.uk,
+	willy@infradead.org
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
+Date: Thu,  4 Jun 2026 03:45:59 +0300
+Message-ID: <20260604004559.1112474-1-safinaskar@gmail.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260531010107.1953702-1-safinaskar@gmail.com>
+References: <20260531010107.1953702-1-safinaskar@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CALCETrU94ja56CA5CRtXrm1v_7gBaPUNOHKQzS=JNF9JZ7Fznw@mail.gmail.com>
- <20260603230122.851517-1-safinaskar@gmail.com>
-In-Reply-To: <20260603230122.851517-1-safinaskar@gmail.com>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Wed, 3 Jun 2026 17:01:11 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wjARJSHGWvZKJysvZOVEVi7bNL5x9K2X7ifhfLA9YK2sQ@mail.gmail.com>
-X-Gm-Features: AVHnY4J3E2GAiTMiUKCy1DVjF0CiXaoh4gFXUo3phzZ8FQ9ufT44d-VKtd1uRR8
-Message-ID: <CAHk-=wjARJSHGWvZKJysvZOVEVi7bNL5x9K2X7ifhfLA9YK2sQ@mail.gmail.com>
-Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
-To: Askar Safin <safinaskar@gmail.com>
-Cc: luto@amacapital.net, akpm@linux-foundation.org, axboe@kernel.dk, 
-	brauner@kernel.org, david@kernel.org, dhowells@redhat.com, hch@infradead.org, 
-	jack@suse.cz, linux-api@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-mm@kvack.org, miklos@szeredi.hu, 
-	netdev@vger.kernel.org, patches@lists.linux.dev, pfalcato@suse.de, 
-	viro@zeniv.linux.org.uk, willy@infradead.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Wed, 3 Jun 2026 at 16:01, Askar Safin <safinaskar@gmail.com> wrote:
->
-> So, if we remove tee(2), then we will probably need to remove all
-> non-standard implementations of pipe_buf_operations.
+Askar Safin <safinaskar@gmail.com>:
+> For all these reasons I propose to make vmsplice a simple wrapper for
+> preadv2/pwritev2.
 
-I don't think tee matters.
+This patchset is already in next, but I still kindly ask people to
+carefully review it. I'm still a new contributor, and I can make mistakes.
 
-Sure, it will share pages across pipes.
+For example, in vmsplice I do "CLASS(fd, f)(fd)" and then I pass
+"fd" (i. e. integer) to "do_writev/do_readv". I don't know whether
+this is okay to do so.
 
-But if we make normal "splice to pipe" always copy from the page
-cache, nobody cares.
-
-You can corrupt the resulting pages as much as you want - through
-multiple pipes if you use tee() to copy it - and it's all just
-corrupting your private copy.
-
-And yes, iSCSI and nvme might do their own splice-like thing, but
-again, nobody really cares. When it's all kernel-internal, the attack
-surface has gone away.
-
-So that's why splice() (and vmsplice()) is special - not because it's
-buggy, but because it's the user-facing attack surface to expose bugs
-elsewhere.
-
-             Linus
+-- 
+Askar Safin
