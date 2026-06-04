@@ -1,160 +1,108 @@
-Received: from mta1.formilux.org (mta1.formilux.org [51.159.59.229])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2500237E2E6
-	for <patches@lists.linux.dev>; Thu,  4 Jun 2026 06:32:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=51.159.59.229
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6879F3F7894
+	for <patches@lists.linux.dev>; Thu,  4 Jun 2026 09:06:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780554742; cv=none; b=hW2zA1Wqwdtf9T1sOKoRXArT83q0jHqWiUUrSh23Dkq07FzcJo7iawdTPlCDRhAK8bLBCT0cNiqdFf8DO3mZvgZoZ9gxlOZEGl/1WJRsfQjxTWheghTDXz7mnU4NT8JpATHO/velTvbFqk3KpQbYS9Coj8dtY31Hp1/6WHIc0Gw=
+	t=1780563974; cv=none; b=nSqkh3OWjAP09GHH/R2TLy3KuiDJxjatK4wwoIWu6s2aRWd+A4IedtWnjgUqZwXONDFk4gnFDdlLrpzqitbBGoHDqRk9R+lWkJBZb2oz1950LaXsL5br18+0f1jaKyUkRrnjPk6Vu9uYRUqqzdJ3hKaKqNgebh32LwQad4NDKnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780554742; c=relaxed/simple;
-	bh=SfnC9yJJuifTGy+OR43943J7ylh76jONzzAr29Kxf08=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Rt/0EcrwleDKoXlkKwymamWytmio9C/jal1AwCQYlgunizT6A2mCbnT8EbUrkyxUxGmHgJLwp3ri2lBPrSKt0KBT0WgQCrQS+Lh6+xZk9H+ihdKzNZfx4Rgsu8fK3PVJwJWZIYM0Jw1tovO9XZCr5txMlvh1Hd64kNJWcso5MF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=1wt.eu; spf=pass smtp.mailfrom=1wt.eu; dkim=pass (1024-bit key) header.d=1wt.eu header.i=@1wt.eu header.b=jpkB2nzY; arc=none smtp.client-ip=51.159.59.229
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=1wt.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=1wt.eu
+	s=arc-20240116; t=1780563974; c=relaxed/simple;
+	bh=6nC4qMmpp4fUyVsAFDYujq7+sxNujf5CGEPAWJHIlFA=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=TKEniNDDVFmEv4xpjSUt2r7Z3MwPXdFpcPbXmg935mGsTjApdJcKqYt3/0nuyG3SK5VuOq5DQO8AXCpnwQOm+o2kpUJSIJjKeMvKI6EYI5DsGd/oIoFp/Oppp29yMIVUTQdn35pwho1Mw9+J1P22Oa5U8ty0+HfT27CASrM3+3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h+o2WL53; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=1wt.eu header.i=@1wt.eu header.b="jpkB2nzY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=1wt.eu; s=mail;
-	t=1780554737; bh=D9nwLs4KwMwQ80PQ1Q3ExZLliPxSXG1vTX5NNZIw0Hg=;
-	h=From:Message-ID:From;
-	b=jpkB2nzYMYFGJLo2yxhZ7zzA+WhfbH6IPBDq/rnj5kwadTf4T1dykNg7QvtDS3q/f
-	 X1+Gc6B00HW6CKs9VJ9MpDO6InL90L1sxTWsIl/GvAc+96Vwhwlca0ShHaEEmf4bvI
-	 0SMiD+Gpq2qOzkk1UhzhXudoxeVA4OeVV8ZoBGyc=
-Received: from 1wt.eu (ded1.1wt.eu [163.172.96.212])
-	by mta1.formilux.org (Postfix) with ESMTP id 989C8C0B73;
-	Thu, 04 Jun 2026 08:32:17 +0200 (CEST)
-Date: Thu, 4 Jun 2026 08:32:16 +0200
-From: Willy Tarreau <w@1wt.eu>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>, Al Viro <viro@zeniv.linux.org.uk>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Christian Brauner <brauner@kernel.org>,
-        Askar Safin <safinaskar@gmail.com>, linux-kernel@vger.kernel.org,
-        linux-mm@kvack.org, linux-api@vger.kernel.org, netdev@vger.kernel.org,
-        Matthew Wilcox <willy@infradead.org>, Jens Axboe <axboe@kernel.dk>,
-        Christoph Hellwig <hch@infradead.org>,
-        David Howells <dhowells@redhat.com>,
-        David Hildenbrand <david@kernel.org>, Pedro Falcato <pfalcato@suse.de>,
-        Miklos Szeredi <miklos@szeredi.hu>, patches@lists.linux.dev,
-        linux-fsdevel@vger.kernel.org, Jan Kara <jack@suse.cz>
-Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h+o2WL53"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-490ac357c55so5396275e9.1
+        for <patches@lists.linux.dev>; Thu, 04 Jun 2026 02:06:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780563972; x=1781168772; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EdFuwsES54dFvGT6zPCTaZ+yF4K8AlHGY+rBuqBIdh4=;
+        b=h+o2WL53QEmXLZj757jVUYUdmZHjyQZhdVdQ6v9e7qhFibHZ8tjVGpZUv8DWb7Fsa0
+         o9tJibN+6QzgxJYLktICVPT+OrXdjfWrfA3dlw9UsQ7uErDKaDtzM2HH6EPWwyOUoWzC
+         eVKU+Z7YswOw/jjXKR7agZl/3OvxK7KovCU6dzkRlhYgaL+xwpHKnwVOzhM5b9sbum3x
+         H6avaqrpK//X4udctyR8/FWfhjmBsrQma0lL7kRXwdPadf0uo7uCqI9OwIeAC98JIYRT
+         Unw7lplifd4u+xfp3VrxHh9AwgC70yCi7+oe4/g/OB0I56zIOFoAztHTwnU6R3pmpU6D
+         g0vQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780563972; x=1781168772;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=EdFuwsES54dFvGT6zPCTaZ+yF4K8AlHGY+rBuqBIdh4=;
+        b=TvDjzSxYlvyt7k9pd7S3OqY4KHIMBqCj6FpkjJEx3dl07zp0w6b3nO6USs1kew6XXB
+         RtFmSX5pcs38lcxW0LLMzx0KS9IBjrhfJubuwbIdXDmix7HXKGuHNoVvraX5LbymiGtY
+         VPZQ8Cm4PmTZthU3yQdyo4nnSjteheCOg1dgiZeKyhDEPfamvz/oXVLcakbpG93GAB1D
+         i5psLzykX6NzI8ErbmnGjp9uXJYLdr6mERpujNYvp8j5Gj6zImUC6zWeinq1MS7de9FW
+         F/Xog0wtB8cRs2Uo59hmmL6YJa2k1NKIIx5uPEAcHzWw9Bh30CYCSCmvbfJU4OhzAzyp
+         jIcw==
+X-Forwarded-Encrypted: i=1; AFNElJ/usZ37aeFhdjWzdugBGzk7qjWt9kklSXR8PnBdknk6oArOD986jnLi+2lYZuIlgPXB0v2BADj6@lists.linux.dev
+X-Gm-Message-State: AOJu0YxTQ/jwMOhRNA46m0/IL8ew0nL4W+sHW0oHLGIzEO7s2wWWH+am
+	bdKvKRTKGe6wysVwx1+mzIGyPlHFWZxU/cW4LSJZMER0ZvNwI0tcczQA
+X-Gm-Gg: Acq92OFr/rEprRV806nsh4uT7o6DkvVeMXvXkQUYFA+8tag42PIXSOi9Xrq6U6Pvqg2
+	FA5k8a/LW3Zf5Vn0eINLxkeahGi57JBkcAjpm/YFzaJ3o+VZ83x+3kaLDxgkkrd9hfF5ZOvseaw
+	X+8YHuoyxMPSjQUfp0ynmI5nwFbwGT934GZBNvFqRjwQPEpn9uG/W/Uxlp0y8gx4TQs2g5rj+G/
+	IuIf1slyIq5LtPmV0/yI99B9gXez4vt5SwlLGgBrqD+3JhDYqdSemz4kvmveqR29OlICTaa8rau
+	qgsITv1QaecnxrqWUmgz0j5L/ASCjGio8S+iAhPfPLOJ6D6Mg14PCVGoxcGuiCIguBlft5Ioe6s
+	C8U/VIPnbvTIrWGc8+FX1LSNoHZ4aGhpv/jWt83W5dEEiaIiL2xHE1H9ON7gdstCdcZGz+o3Fe+
+	3d9XJlGa+cIajBc3IRW/j3mhWCKcUvDy7ius77UuBwrJPe912DgXl7cta1MxfnqzJ+zQGd+S1rN
+	0I6M1P33A==
+X-Received: by 2002:a05:600c:8184:b0:490:5cd8:d213 with SMTP id 5b1f17b1804b1-490b5eb44f8mr113527135e9.15.1780563971711;
+        Thu, 04 Jun 2026 02:06:11 -0700 (PDT)
+Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490b7e6c774sm70203515e9.1.2026.06.04.02.06.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Jun 2026 02:06:11 -0700 (PDT)
+Date: Thu, 4 Jun 2026 10:06:09 +0100
+From: David Laight <david.laight.linux@gmail.com>
+To: Askar Safin <safinaskar@gmail.com>
+Cc: metze@samba.org, akpm@linux-foundation.org, axboe@kernel.dk,
+ brauner@kernel.org, david@kernel.org, dhowells@redhat.com,
+ hch@infradead.org, jack@suse.cz, linux-api@vger.kernel.org,
+ linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-mm@kvack.org, miklos@szeredi.hu, netdev@vger.kernel.org,
+ patches@lists.linux.dev, pfalcato@suse.de, torvalds@linux-foundation.org,
+ viro@zeniv.linux.org.uk, willy@infradead.org
+Subject: Re: [PATCH 2/3] vmsplice: make vmsplice a trivial wrapper for
  preadv2/pwritev2
-Message-ID: <aiEb8CTM-ovMIq7-@1wt.eu>
-References: <20260531010107.1953702-1-safinaskar@gmail.com>
- <20260601-enthusiasmus-canceln-anlehnen-0e62317a9784@brauner>
- <CAHk-=wifX_rrDjRGnDnOqE-usptAukuXKrmuPuVDP5bOCBWzGQ@mail.gmail.com>
- <20260601173325.GH2636677@ZenIV>
- <20260601160455.2c187574@gandalf.local.home>
- <20260601172825.a51a588ec1c32617a0e12d78@linux-foundation.org>
+Message-ID: <20260604100609.6b37f500@pumpkin>
+In-Reply-To: <20260603211736.755139-1-safinaskar@gmail.com>
+References: <f919874c-065e-48be-ac5b-300c4ab86d4e@samba.org>
+	<20260603211736.755139-1-safinaskar@gmail.com>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260601172825.a51a588ec1c32617a0e12d78@linux-foundation.org>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jun 01, 2026 at 05:28:25PM -0700, Andrew Morton wrote:
-> On Mon, 1 Jun 2026 16:04:55 -0400 Steven Rostedt <rostedt@goodmis.org> wrote:
+On Thu,  4 Jun 2026 00:17:36 +0300
+Askar Safin <safinaskar@gmail.com> wrote:
+
+> Stefan Metzmacher <metze@samba.org>:
+> > Why is 'int fd' changed to 'unsigned long fd'?  
 > 
-> > On Mon, 1 Jun 2026 18:33:25 +0100
-> > Al Viro <viro@zeniv.linux.org.uk> wrote:
-> > 
-> > > On Mon, Jun 01, 2026 at 10:17:23AM -0700, Linus Torvalds wrote:
-> > > 
-> > > > TLDR: maybe we could ghet rid of "f_op->splice_read". *That* would be
-> > > > a big simplification.  
-> > > 
-> > > FUSE might be interesting - fuse_dev_splice_read() and its ilk.
-> > > Communications between the kernel and fuse server at least used to
-> > > seriously want that, so that would be one place to look for unhappy
-> > > userland...
-> > > 
-> > > splice-related logics in fs/fuse/dev.c is interesting; another place
-> > > like this is kernel/trace/, but I'm less familiar with that one.
-> > > 
-> > > rostedt Cc'd (miklos already had been)
-> > 
-> > Thanks for the Cc. The tracing ring buffer was specifically made to be used
-> > by splice and the libtracefs has a lot of code to use it as well. As
-> > reading the ring buffer literally swaps out the write portion with a blank
-> > read portion, that portion (sub-buffer) is used to be directly fed into
-> > splice, providing a zero-copy of the trace data from the write of the event
-> > to going into a file.
-> > 
-> > trace-cmd defaults to using splice to copy the tracing ring buffer directly
-> > into files to avoid as much copying during live recordings as possible.
-> > 
-> > Whatever changes we make, I would like to make sure there's no regressions
-> > in performance of trace-cmd record.
+> Because preadv2 and pwritev2 take "unsigned long". I want vmsplice
+> to be as similar as possible to preadv2 and pwritev2.
+
+Something needs to ensure that the high 32bits of the fd get masked off
+on 64bit systems.
+They can be non-zero in the register that comes from userspace.
+
+-- David
+
 > 
-> Well yes, The patchset seems sensible from a quality POV.  But to make
-> a decision we should first have a decent understanding of its downside
-> impact.
+> > Should that be its own commit if the change is desired?  
 > 
-> I haven't seen a description of that impact in the discussion thus far.
-> And that description is owed, please.
+> Yes, possibly. But this patchset already got to next.
 > 
-> I assume a small number of specialized applications are using
-> vmsplice() to great effect?  What are those applications?  What is the
-> impact of this change?
 
-> Once we are armed with that information, is there some middle ground in
-> which we de-feature vmsplice()?  Fall back to pread/pwrite in the
-> tricky cases and still permit vmsplicing if the application is
-> appropriately restrictive in it usage?
-
-I'm using vmsplice() + tee() + splice() in high-performance applications,
-load generators to be precise, and soon a cache. This is super convenient
-and extremely efficient:
-
-  - vmsplice() is used to prepare a "master" pipe with data to be sent
-    over TCP or kTLS
-  - then for each request, we do tee() from this master pipe to per-request
-    pipes.
-  - the per-request pipes are those that are used to deliver the data to
-    the socket via splice().
-
-So we effectively use vmsplice(), tee() and splice() here, and for exactly
-the reasons they were designed: only play with page refcount and not copy
-data. The code is here for the curious:
-
-   https://git.haproxy.org/?p=haproxy.git;a=blob;f=src/haterm.c
-
-and its ancestor is here:
-
-   https://github.com/wtarreau/httpterm/blob/master/httpterm.c
-
-It simply doubles the network bandwidth compared to not using that.
-(62 Gbps per core vs 31). I would seriously miss it if I couldn't use
-this anymore.
-
-I also have mid-term plans for using vmsplice() to deliver contents from
-a cache to sockets as well via splice(). Right now our cache is split into
-too small chunks (1kB) to make that useful, but as soon as we can move to
-4kB pages, it will make sense. There the same gains are expected, and I
-would particularly dislike the idea of no longer being able to implement
-zero-copy!
-
-Maybe some arrangements are possible though. I'm not seeing any other way
-to achieve the same things differently, but possibly that the base of the
-problem is the easy abuse of vmsplice() to affect the page cache. Maybe
-placing certain restrictions such as he area only being mapped to anonymous
-pages, or anything similar could make sense. In my use case it wouldn't be
-that much of a constraint. Well, for the cache maybe it could be though,
-as it would prevent us from sharing it via persistent storage. Or maybe
-we could require a CAP_BACKED_VMSPLICE to be allowed to vmsplice file-
-backed pages, which could be sufficient to prevent easy LPE each time a
-bug is found ?
-
-I think that the users of this APIs are rare enough that we can probably
-find a solution that anyone can reasonably adapt to with minimal
-constraints. But most likely each of these few users rely on this
-*a lot*.
-
-Just my two cents,
-Willy
