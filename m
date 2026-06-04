@@ -1,250 +1,160 @@
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010046.outbound.protection.outlook.com [40.93.198.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9E5261B8A
-	for <patches@lists.linux.dev>; Thu,  4 Jun 2026 01:28:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780536488; cv=fail; b=GR27JvcTfyBafl3R2p2fNunEa27sh6FjJA3m9XBUKbGy0DzrNBl33xq3OoZqOITf6u3DwwF9j4FvgGhvdiQRxcKYPQ+OqeYnrHd8r4FPp6kSBxhkLPx/DiXyVzRgaJIOA7XbwR6hgCGtk/XKfsXzcD84Zc/qs26SmQyO78qP12s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780536488; c=relaxed/simple;
-	bh=pPc8V/s+H14s8uTChzVLgopQ3U5f47mspsUjW0hTQoI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=BfXQXwfw0I+O7LZbdOzmkl+LpKOpQC7K7CgDouayXLO7l+RmE2DHP8tt15gL1wUYCNQPEGlu0gb0/gbqTM4GdOh4nc1ok/QXaZCIxMAsLHigoD+hlc8d8D1DbAAZe59NH7x+O/b6m1rh0XgeXH1EKFp36NfOTQuRak4I0raSbMs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Gl+BhzhL; arc=fail smtp.client-ip=40.93.198.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A703928640C
+	for <patches@lists.linux.dev>; Thu,  4 Jun 2026 01:52:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780537957; cv=none; b=SKLf3cDZxNwzpVaQBEDR8xH7pOOra6JjYAl92cNhR6hXquAKSBlEN72ItMAa3l88lFGsxVdCR1jNWdOuUozdhNSYhKTxH4cleren5lqfYwk8G9zxthnqF61mZekPfYuJ2PSW16vdoUelXsa5lVca9JTO/2PovmNdd1XcLzBAHiI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780537957; c=relaxed/simple;
+	bh=n1SkdCcNZQRg1IgD5sSmDSj8j+GpuHeY4/Td660VL9M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gfqET62z3AH8nKfgnZlH4OvCbu4av70x4pQQUI0HpDDN1uQc6oyiExOBNvQAAtCjwEI3smGU88X/U5JVk+wPcy5lGLLd7pXD8CD5KPSudvbpgM+ezk3R/zttol6pf5DXayNMVm68odf6rkphL+l7TheI8vt4XuTRfVmzbPkOmkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=Jh6IxDZQ; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Gl+BhzhL"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=deZh/PS/vMtM78cJZIRHCb5Id/w9TuGk7Nyw5riWWOE6nSdt82h/UjYkyZOHfqhbvcJdfdhSOXMn3xwXTwyyyt/OVgJXugCkZB9f3Px6rMAJZfBl9XlTdQoW4EzxKutjEAY7r/UxyWjb/IjPfUhIozKNpqRrUCCKEpM8oCP9uOBCsozpZ/863yAR5Nm/WXbndY+udXqcBWuJiefA/Uo5VpvGj2+panfLKMLwHI97QUCc1iJkCQiRfxd3Y15uSQWoHozVe00GG6Uy5uCBqyFCsnR0Auc7D9euyH9uH+zSem96kEfAuo6UzTBK4ecQWD3e+k1RJWsnFK22s7uL+UjcCA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pEf/wVlwzo0VK2plDLKsWqfitL+xwcz9GWP9y678OUU=;
- b=xXVP3CZRIPziBULXQIK//tLSUICJDOK8YSkvhhzhJVMfl1NNVneyYvepLLfKoynuAouSrYA9H1n4l3GjlVXjAImzAzkEf0YyVmSWt1TNxzE+gPTw9wd1kYr6yskOgtKXHP8KJzEisjhk27uVtYJCk1Vk0iP5XNL3LTLuEw65WBfT1l1pJ7VXMqmGU4tJtwQDlUYXl/cXZOJ4p5E0dwFCndh7/UNUG8VXSrK4YE94EEAL9KPWnOsREHzzMzOCICNV5kNEBdeS5v4cw0+o9mn8O2EQFAFzMxN7QxO/OnAt9G3P8RxcqT8II79pzO2iMBBf7I4crHB7u7uAnXkES6K3lg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pEf/wVlwzo0VK2plDLKsWqfitL+xwcz9GWP9y678OUU=;
- b=Gl+BhzhLA5iab5tCX7U1rboylJPFshJE5ZSvhcwcFADMhekHB/Hu8vCTstSIbUw2c5AMGvlaahtpGWdW1+w3USaCqV9/zIrvGu+7cv3QyFPpQPN8smHBi63Y1RvdMnMSA3495PzDzlWh1lzPIeD97IQLSsq9SJYnCcqtoiUDIKsOP4BDq5IEKAOKOG5SAZVDSotKF3fqlnFQ2DfnDa61j4E9W4Rqfhtjw7fO5gAp4DHNzj+HjuqOt4OazCMdAREdiVj4eGX2AcPxVs5lrGIfdRXqWAgiSJ+nVGxcFdpWaGmNUfX83P2ujGVea0wFqhpsiTUbFVxhWww4WTbB6VklQg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by IA0PR12MB8981.namprd12.prod.outlook.com (2603:10b6:208:484::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Thu, 4 Jun 2026
- 01:27:56 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0092.006; Thu, 4 Jun 2026
- 01:27:56 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Leon Romanovsky <leon@kernel.org>,
-	linux-rdma@vger.kernel.org
-Cc: Doug Ledford <dledford@redhat.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leonro@mellanox.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Matan Barak <matanb@mellanox.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Noa Osherovich <noaos@mellanox.com>,
-	patches@lists.linux.dev,
-	Steve Wise <swise@opengridcomputing.com>
-Subject: [PATCH 09/10] IB/mlx5: Push pdn above pagfault_real_mr()
-Date: Wed,  3 Jun 2026 22:27:48 -0300
-Message-ID: <9-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com>
-In-Reply-To: <0-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com>
-References:
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: YT4P288CA0096.CANP288.PROD.OUTLOOK.COM
- (2603:10b6:b01:d0::25) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="Jh6IxDZQ"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-bec429c2bb1so20877966b.1
+        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 18:52:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google; t=1780537954; x=1781142754; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ti3H/yNlOCN9jiz2PA4OGwlivuSMT91KkxAffb1eRD4=;
+        b=Jh6IxDZQ8Ul/GMNEOTP/naUaOR0hoqk7Db3f1wyS7oNvJNOsGcTNY8LbW4is9dVUX1
+         RPvKNioXJmKeqOFyZvbuE6/kD+tOoD4tnB2hludv9WSpRC5dZyTYYc5hT5H7Tnfu2Kta
+         SVvSj4kzFf2BTXZ5gYxIHNQjmCBGOXnTFFVvk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780537954; x=1781142754;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ti3H/yNlOCN9jiz2PA4OGwlivuSMT91KkxAffb1eRD4=;
+        b=Xlw6eqNjvCHQPmH+x9m2adsdea2fFiCv+ypiJJA3y23e9XROzS3GHWsSGNqnxIdFQI
+         fbJaXWKTojyr2lEwYq2ey5vLd6DX8DYgz5Fut9NCDpX0O6My/SFz08Phbw9w1lnq35ge
+         0VfWhQ6mAU9md6iG8qbXgyBC4f/gZYCCwuOIp4w+oefsPBXw30JAqWEHm70UXroORmN3
+         //PGS1szit4lcGU4sfhvBNCiNeBu95UDNiDxOGVMrhvN6Zzg2oteRjnC80UO6CEHIBYY
+         xSh/yhxOxHkcb8QBobcPTuJejJn6qblrS+UYIfLRQs/x5YQP9JwYgPB54pZZG9rQ0WFq
+         QdnQ==
+X-Forwarded-Encrypted: i=1; AFNElJ9Rgc9x/UV8YIrL0Kcl34DB5K5Y+vX6ZS0c+1jr1VhkKswduUheQUScDvSkkAcyVBrW4LwHf/ET@lists.linux.dev
+X-Gm-Message-State: AOJu0YyzrbkwHED9LLnsCe+iVvkDjmT25HVWjaSHw5CXxAdFD2dp7qsJ
+	pLbVjG16xTPIx0KlJtwPebqtlkidtpVYBLFD+K65k1G8jqB3/Ru6Xeyr7VglAYMswLocrGn71r8
+	Ag5e54HnjaA==
+X-Gm-Gg: Acq92OHtybXHgwmeM9eiCvFpCcf7g5w+ieeupBWtiNEARZA+5NlFhalB3uzsMOfUeqv
+	vuGXvdETHvHJuzWwnHbIkTeEOTgbNOfVRVvC6So1V/lo/iicYZrP1Yt9Oe7oXTFAaOkFkN8lxeJ
+	1ZYLXVCWKWT0ZaA7IQqF9XupAsXWAbRILBbtYcV4EYe1MnGzj/8W7msu+nVmcq8W00QsrXm4D9q
+	FCi7n6MDDqj7/3Dmja6pfTvrh8gyAZXpZukTu54l4taBVV8w9OAyMKkA1MlqD7Gy5mtW3ZyYHCI
+	iv6bhK+EInO9+AbVJodbTkqvUpyfMURP+gmmZmw20+1mr2YRxzXzrKhjqZSwLYze7iMnAtLidyZ
+	UzXv56+nzo/CNU/KcNTuQKxOxB1DGweZj625ttvuDFRW4Z8eXe6Y0MKf7WFyohFcFeQiVqn4As2
+	PBWvy6PFVEsxVrav+BKhQu6dH3W4k1w4qrJ5hC2J4nKwBIgTaRV0iwTqh6U6aAQaEH80z9j0TW2
+	s4siNvN7Bo=
+X-Received: by 2002:a17:906:5a53:b0:bec:5865:6c63 with SMTP id a640c23a62f3a-bf0ae3feed9mr218954066b.26.1780537954051;
+        Wed, 03 Jun 2026 18:52:34 -0700 (PDT)
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com. [209.85.208.44])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bf05228a16csm230512566b.28.2026.06.03.18.52.32
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jun 2026 18:52:33 -0700 (PDT)
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-68bac6e24fdso178855a12.1
+        for <patches@lists.linux.dev>; Wed, 03 Jun 2026 18:52:32 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ/Lr9p2ij7YIdd7narIdfGSI+cl2EivPQtvFOuYr9dXgjn1Fl4ENxqRA6ILdJuXwzrFw48swlbQ@lists.linux.dev
+X-Received: by 2002:a05:6402:550a:b0:66d:d2f9:520c with SMTP id
+ 4fb4d7f45d1cf-68e72250122mr2844444a12.19.1780537952777; Wed, 03 Jun 2026
+ 18:52:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|IA0PR12MB8981:EE_
-X-MS-Office365-Filtering-Correlation-Id: 963ceb20-ebc0-43a1-292a-08dec1d87f95
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|18002099003|22082099003|56012099006|11063799006;
-X-Microsoft-Antispam-Message-Info:
-	lVx+kB0dTK1wdBOnJRM5PXEYcq7kYolPqyaszbwGZpfvqsFi4LMsVFwppSZSJBXEEvLYAsEkHEh87NeLxpKSgoRBtR56IRe4gj2+4DDc8JrnowhfYCJU0lqDsiydNtQBOunK2xyPrizQhDGDlMQRpBPJ23xN6B5QJ+/7a2NHuziQjzbKUb0fSijO7aL2VlFxfhzdTtKlG2qMXGqoML39zK7jOI1OJoWcfokk5tqMyJVjVrgM9VKvHVYsDIzj123KjWBWsLDYeHC0RKpPNWoEmqEwqDpU97TaPBYcNYjeDk43jPMSb0Ffok/OunsK9bA8Va5gS0eiRaVugZe9aM7lS0g82NEDm7Iwvl6cEmHGyCUYwtMKENQiIN3D/AKdGV4PdRLHE7urXiffJCdhp8gM7xl8cSydQaLNBFPpABBGuh3/VGiLwDimuk4dgDboJi5J9ysynJcozDt0Xdri+0HdCD2iWZ56/Im8q/SYWj2s3lGM/Cy9T+gzvF1+OoFpUNRozAwLM5T0p1swz+wdHWf9YIOp8M8QbAwPt4nsmjSZEKuRPreRxV0fK2JBM/Wp45vBVbgiUE4wY4popFdnSw15lgrrl0c8O1NUBycvXeadN16C8zFl5QiDucVCIUXnVAjq/Wjn8xV56AsRQCpJzGKXIQI/7ID9wC4HVNxsNu8RR7A6lr+Y77Kh+nZPN8jsqtLN
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(18002099003)(22082099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?3YJ8Fv0AeB2nzT2zC8lP9lfEfYkZ1JZK46q1pkSq5Z6oR7mfyEKb+5MZzCkS?=
- =?us-ascii?Q?ozYGmTHvbvBJIuZcTWsku/clYJ9zzd6gen4akBQnrt4mJbLktpr4RPMgs7sR?=
- =?us-ascii?Q?WKOUyA5O24ehx7FFZfyHCaMPKKo30v066fi78hy7pyS3/IKjVOfBMloaM0yg?=
- =?us-ascii?Q?xEpaV/J1yJSYnVzW1Qf8UhbudJNxYJ7iZlH4yD2lWQVuQ0WztAWRmfd3Q9qd?=
- =?us-ascii?Q?1lKYKQG3Atqmrn3T6+GsUPJ7iocZTkxbRwUuCZogx/G2g7vRH5SeGEzNzSU6?=
- =?us-ascii?Q?FdOfmcJKIHbGhDyMYbHDeWq0JwBk5UxyLMSiJAsAPR+oNDPB/sweN5JbbP42?=
- =?us-ascii?Q?juXuT5Z/HCI2E6YQD/nWIKig8HzvKkUgDjBacuZUhZOVXN6aVOOQsRa+yaYN?=
- =?us-ascii?Q?K99Qb2W9VbIrJ+LA7AKSw4ZAlONdYqecO9RtoIzV5C/TwXUf4ndZARVgsFRs?=
- =?us-ascii?Q?OCW2x49J1kXlrkA6mi1UVIMbLTvr7+ALU+TrEb5UGnrQMROmXt6YMvyJU7P0?=
- =?us-ascii?Q?7A1bLnaDo9+QY37M5+LqsPrIxnGXJBOkZGPb1CF0XrFvjS8l9/7Dr3dGNlbT?=
- =?us-ascii?Q?fAZ+bkTMK74/OVj4eoSBmje0p1ot/1FwW5hF8OIFeIoxSRJT3/eV5I5hHpFr?=
- =?us-ascii?Q?uzKY3u2ZBSPDAyz9fbFZ75wibLmf3jI0ZdU+DgmfuUuqmgh9AOEPg8apAzSN?=
- =?us-ascii?Q?x14taxHgZoYGLPxCDbQbgDAgJaevwFaxLuHgLiaF/vxQ7/ejqP0vrN+TsBpd?=
- =?us-ascii?Q?G+bZOe/MUUrjf7dkA8+FINH+xKOFQmXdECYTVQcyMcFAaPf+09z0IKS7bnQ4?=
- =?us-ascii?Q?cYR6DBeJlQRCLz48u/iRXvnnc2UhrT3fDM5Wxa4Zyuv9p0MzPwKFhiTL2hsV?=
- =?us-ascii?Q?ypdOKXGCu59w3Teb0Bv6ZJex5+Y22a+GlGDe86QOnApZSjTZU4Lt5vrExASf?=
- =?us-ascii?Q?M2SE04ktDE2qgh3Wb/GAP8/VQJ+QgjR5lBCtfHElfZV0K1DTf6JdvyzeIa4k?=
- =?us-ascii?Q?FCqMcWTTOgIJfbJfLRiGXI6Fm3fh14mI0JnUz0obasGtdasIn9fCJHzRNAYL?=
- =?us-ascii?Q?nxYb7aY2wlv2x/d6JlNs+gjVVJYkP3XFbddCFWZ/g3g0nP+slMbcnMyPF0xB?=
- =?us-ascii?Q?HnjKRi9wkuOJ3KVywYNCkfDOKUmyt0blNnpeyW3PcvLM8eu2rirfOZOKSRwm?=
- =?us-ascii?Q?+/mDV3HUPSHPHNfgYi6XW2i/4pWgGTTAXv2a8UbUct4IbAhn3XiypiDo19o9?=
- =?us-ascii?Q?hYWgH0EOiGrWDAVA2LX+GtFvtWJpp5y4haVTGbwgzrLNrozRr4cKQ97HKffr?=
- =?us-ascii?Q?4DIla4c6/e/tDts8kFJbnoIkI5kAfReq8+Z9sH0+y+iiuRE9Iu/FHq6SP2+f?=
- =?us-ascii?Q?zm+PijASqbR6ODEcVra0XwsK2L4k4f0aw45JyPuFnGhKm1/a8qOt3yFi4G8Z?=
- =?us-ascii?Q?c9vuF7moJpQLPGeUEYXuLC5Ylw/1O0tevrFMAayovkpXPR1Q+m6gmcj8HHZE?=
- =?us-ascii?Q?FA49gP/PmrCRw/pxOCB9MGdDN06es8InPxaIV1d8aU/i1gV92a/XyK+BOqWG?=
- =?us-ascii?Q?CoAh+fzvqOf7Vdy9sZlRfV6uUVHY47e7PfTjwq8z5CO6stk+ILeEEx6+AKKl?=
- =?us-ascii?Q?IVu2vB2wIo5L4nAm7OYLBzHxULTuyE/63FUY3UhZ1zF5EamJXpEy8g46QKMw?=
- =?us-ascii?Q?38e171T3dyM8EjaU+U2tyep/UzzDTs7+EzrHHxUQwx1mKlB8?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 963ceb20-ebc0-43a1-292a-08dec1d87f95
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jun 2026 01:27:53.3863
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: s0Dz0rntAfXjnjdvwM/mxnljptWri8yF6Lm97JFWRKCYs4rUXwOI2VVNi/Km1AKY
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8981
+References: <20260531010107.1953702-1-safinaskar@gmail.com> <20260604004559.1112474-1-safinaskar@gmail.com>
+In-Reply-To: <20260604004559.1112474-1-safinaskar@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Wed, 3 Jun 2026 18:52:15 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wgPzxQL9Bdze=qnSa5v8A2D6cPaU0Bi=j4N38+ja1NkzQ@mail.gmail.com>
+X-Gm-Features: AVHnY4Ia6Rugs2gzhFv567LCSFsgwGvMvJbpyqp7BVsPOVMqNGKAIqxMQwoy6bY
+Message-ID: <CAHk-=wgPzxQL9Bdze=qnSa5v8A2D6cPaU0Bi=j4N38+ja1NkzQ@mail.gmail.com>
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
+To: Askar Safin <safinaskar@gmail.com>
+Cc: akpm@linux-foundation.org, axboe@kernel.dk, brauner@kernel.org, 
+	david@kernel.org, dhowells@redhat.com, hch@infradead.org, jack@suse.cz, 
+	linux-api@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-mm@kvack.org, miklos@szeredi.hu, 
+	netdev@vger.kernel.org, patches@lists.linux.dev, pfalcato@suse.de, 
+	viro@zeniv.linux.org.uk, willy@infradead.org
+Content-Type: text/plain; charset="UTF-8"
 
-Remove the mlx5_mr_pdn() in pagefault_real_mr() by pushing the pdn up, all
-the callers use 0 since they don't pass MLX5_PF_FLAGS_ENABLE except the
-ioctl reg_mr path which can use the ioctl pd.
+On Wed, 3 Jun 2026 at 17:46, Askar Safin <safinaskar@gmail.com> wrote:
+>
+> For example, in vmsplice I do "CLASS(fd, f)(fd)" and then I pass
+> "fd" (i. e. integer) to "do_writev/do_readv". I don't know whether
+> this is okay to do so.
 
-Assisted-by: Codex:gpt-5-5
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- drivers/infiniband/hw/mlx5/mlx5_ib.h |  4 ++--
- drivers/infiniband/hw/mlx5/mr.c      |  2 +-
- drivers/infiniband/hw/mlx5/odp.c     | 20 ++++++++++++--------
- 3 files changed, 15 insertions(+), 11 deletions(-)
+Oh, good point.
 
-diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-index 0a2b8ede0d818a..1c88a11f8dfc93 100644
---- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
-+++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-@@ -1422,7 +1422,7 @@ int mlx5_odp_populate_xlt(void *xlt, size_t idx, size_t nentries,
- int mlx5_ib_advise_mr_prefetch(struct ib_pd *pd,
- 			       enum ib_uverbs_advise_mr_advice advice,
- 			       u32 flags, struct ib_sge *sg_list, u32 num_sge);
--int mlx5_ib_init_odp_mr(struct mlx5_ib_mr *mr);
-+int mlx5_ib_init_odp_mr(struct mlx5_ib_mr *mr, struct ib_pd *pd);
- int mlx5_ib_init_dmabuf_mr(struct mlx5_ib_mr *mr);
- #else /* CONFIG_INFINIBAND_ON_DEMAND_PAGING */
- static inline int mlx5_ib_odp_init_one(struct mlx5_ib_dev *ibdev) { return 0; }
-@@ -1451,7 +1451,7 @@ mlx5_ib_advise_mr_prefetch(struct ib_pd *pd,
- {
- 	return -EOPNOTSUPP;
- }
--static inline int mlx5_ib_init_odp_mr(struct mlx5_ib_mr *mr)
-+static inline int mlx5_ib_init_odp_mr(struct mlx5_ib_mr *mr, struct ib_pd *pd)
- {
- 	return -EOPNOTSUPP;
- }
-diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
-index a56443b9053734..46847054491f50 100644
---- a/drivers/infiniband/hw/mlx5/mr.c
-+++ b/drivers/infiniband/hw/mlx5/mr.c
-@@ -842,7 +842,7 @@ static struct ib_mr *create_user_odp_mr(struct ib_pd *pd, u64 start, u64 length,
- 	if (err)
- 		goto err_dereg_mr;
- 
--	err = mlx5_ib_init_odp_mr(mr);
-+	err = mlx5_ib_init_odp_mr(mr, pd);
- 	if (err)
- 		goto err_dereg_mr;
- 	return &mr->ibmr;
-diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
-index 50804b4c90e477..2dcc4f5339f9d3 100644
---- a/drivers/infiniband/hw/mlx5/odp.c
-+++ b/drivers/infiniband/hw/mlx5/odp.c
-@@ -687,12 +687,16 @@ void mlx5_ib_free_odp_mr(struct mlx5_ib_mr *mr)
- 	}
- }
- 
-+/*
-+ * pdn must be valid only when xlt_flags updates the mkey PD. In this path that
-+ * is only MLX5_PF_FLAGS_ENABLE. DOWNGRADE and SNAPSHOT leave the PD masked out.
-+ */
- #define MLX5_PF_FLAGS_DOWNGRADE BIT(1)
- #define MLX5_PF_FLAGS_SNAPSHOT BIT(2)
- #define MLX5_PF_FLAGS_ENABLE BIT(3)
- static int pagefault_real_mr(struct mlx5_ib_mr *mr, struct ib_umem_odp *odp,
- 			     u64 user_va, size_t bcnt, u32 *bytes_mapped,
--			     u32 flags)
-+			     u32 flags, u32 pdn)
- {
- 	int page_shift, ret, np;
- 	bool downgrade = flags & MLX5_PF_FLAGS_DOWNGRADE;
-@@ -722,7 +726,7 @@ static int pagefault_real_mr(struct mlx5_ib_mr *mr, struct ib_umem_odp *odp,
- 	 * ib_umem_odp_map_dma_and_lock already checks this.
- 	 */
- 	ret = mlx5r_umr_update_xlt(mr, start_idx, np, page_shift, xlt_flags,
--				   mlx5_mr_pdn(mr));
-+				   pdn);
- 	mutex_unlock(&odp->umem_mutex);
- 
- 	if (ret < 0) {
-@@ -788,7 +792,7 @@ static int pagefault_implicit_mr(struct mlx5_ib_mr *imr,
- 		      user_va;
- 
- 		ret = pagefault_real_mr(mtt, umem_odp, user_va, len,
--					bytes_mapped, flags);
-+					bytes_mapped, flags, 0);
- 
- 		mlx5r_deref_odp_mkey(&mtt->mmkey);
- 
-@@ -930,19 +934,20 @@ static int pagefault_mr(struct mlx5_ib_mr *mr, u64 io_virt, size_t bcnt,
- 				    ib_umem_end(odp) - user_va < bcnt))
- 			return -EFAULT;
- 		return pagefault_real_mr(mr, odp, user_va, bcnt, bytes_mapped,
--					 flags);
-+					 flags, 0);
- 	}
- 	return pagefault_implicit_mr(mr, odp, io_virt, bcnt, bytes_mapped,
- 				     flags);
- }
- 
--int mlx5_ib_init_odp_mr(struct mlx5_ib_mr *mr)
-+int mlx5_ib_init_odp_mr(struct mlx5_ib_mr *mr, struct ib_pd *pd)
- {
- 	int ret;
- 
- 	ret = pagefault_real_mr(mr, to_ib_umem_odp(mr->umem), mr->umem->address,
- 				mr->umem->length, NULL,
--				MLX5_PF_FLAGS_SNAPSHOT | MLX5_PF_FLAGS_ENABLE);
-+				MLX5_PF_FLAGS_SNAPSHOT | MLX5_PF_FLAGS_ENABLE,
-+				to_mpd(pd)->pdn);
- 	return ret >= 0 ? 0 : ret;
- }
- 
-@@ -1575,8 +1580,7 @@ static void mlx5_ib_mr_memory_pfault_handler(struct mlx5_ib_dev *dev,
- 	ret = pagefault_mr(mr, prefetch_va, prefetch_size, NULL, 0, true);
- 	if (ret < 0) {
- 		ret = pagefault_mr(mr, pfault->memory.va,
--				   pfault->memory.fault_byte_count, NULL, 0,
--				   true);
-+				   pfault->memory.fault_byte_count, NULL, 0, true);
- 		if (ret < 0)
- 			goto err;
- 	}
--- 
-2.43.0
+It's ok in the sense that it will work, and it's not really going to
+cause problems, but it does mean that the 'struct file' will be looked
+up twice.
 
+And *technically* it's a TOCTOU race, where the first time you look it
+up - in the vmsplice() wrapper - it could be one file, and you make
+decisions based on that. And then pass it off to do_writev(), and it
+will look it up again, and now it might be a different file.
+
+Does it *matter*? No. Even if the file changed, and is now something
+else, it's just going to be a different file that the user does
+writev() on. do_writev() will still do all the appropriate safety
+checks etc, so it doesn't really change anything. It just means that
+you could pass what you *think* is a pipe (because you did that
+
++       if (!get_pipe_info(fd_file(f), /* for_splice = */ false))
++               return -EBADF;
+
+and by the time do_writev() then looks up the fd again it might be
+something else, and now the user used vmsplice() as a really odd way
+to write to a another non-pipe file instead. But the user could have
+done that with a regular writev(), so it's just the user being silly -
+not something that really confuses the kernel.
+
+Coimpletely harmless, in other words.
+
+But it would probably be *cleaner* to pass in the 'struct file *'
+pointer that you already looked up once instead, and use vfs_writev()
+instead of do_writev().
+
+And I do suspect that the wrapper system call should use the same
+
+   SYSCALL_DEFINE4(vmsplice, int, fd, ..
+
+that the original used. Because it somebody crazy had the high bits
+set in 'fd', the old vmsplice() system call didn't care, but your new
+emulation system call will actually see the high bits on a 64-bit
+architecture.
+
+Again - that doesn't actually *matter*, because "CLASS(fd)" takes an
+"int fd" and those high bits will be masked out at use time both in
+vmsplice() and in do_readv/writev().
+
+So it won't affect any behavior, but it does look a bit odd in the conversion.
+
+And I already answered Christian wrt the change in behavior: I think
+RWF_NOWAIT should always be set on the writing side - because splice()
+never waited after it filled a pipe - and instead that
+SPLICE_F_NONBLOCK flag should be used before write to check for
+whether we'll wait *before* doing the write like it used to do with
+
+        ret = wait_for_space(pipe, flags);
+
+in vmsplice_to_pipe().
+
+(On the other side, vmsplice_from_pipe() used to do
+pipe_clear_nowait(), but I think that becomes a non-issue with the
+conversion to readv()).
+
+And once you need wait_for_space(), that probably means that the new
+vmsplice() wrapper simpler needs to remain inside fs/splice.c, and we
+just need to make vfs_readv/vfs_writev non-static.
+
+              Linus
