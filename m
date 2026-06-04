@@ -1,47 +1,47 @@
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010046.outbound.protection.outlook.com [40.93.198.46])
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010020.outbound.protection.outlook.com [40.93.198.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AFE261B8A
-	for <patches@lists.linux.dev>; Thu,  4 Jun 2026 01:28:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE9F25B08F
+	for <patches@lists.linux.dev>; Thu,  4 Jun 2026 01:28:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.20
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780536487; cv=fail; b=ChbPT54xdrZ+PiMW78uAsX3oIpl1GNCCy8Imh4cmcTzahybLq5h1mgDuLXVRHmm1DhJFBzHNW+7xYG2S9E4Fwt+IoHlQny7u9g9EuBCwUjIFZ3NuMSqNDpxxj7d+TZ6bFBGIsiD4dqMl8veYZGAmbhgBdxnr7KeflEaU0nVo3x0=
+	t=1780536487; cv=fail; b=bKJsmsH84o4QnyH47wuws6Of656iEA7FikP5YsJfzceRCbemyQ5NFnZbzvg8UODbPK75p5r0Iv71TInoTkHMDOJcY54WGB5LweDeXj052dHZGVZ0rFsgYFZPGGQoXH+XsY62lYc1w6UrjLeDYBRLgsApzQP2KDLe1oKLlkwL8v4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1780536487; c=relaxed/simple;
-	bh=IJEOGHSFcD4C85RZoZgcGGJ768g6jcrI35mqE8r/LoM=;
+	bh=hwUUnfJfMUs8BPcgPLM1hL8a6LDdHPl92B+ORy7X9zM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=NsUvQ9zjlkO1jUpIypmlNNG80D/5kAy/vTBpKq480qZAqTcUuHNrudmgrJNnsHEVt39Xh7ntwCgfAyl3vL3zT2vstPLk4nnIkjZG4guPhIebqm/x+/9Q6xqZ5c/mvRHbg+pB8wWdyS01MzVKt1vnrkEPW+sKa/iv91Nq0O0njMs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=MlYptG7I; arc=fail smtp.client-ip=40.93.198.46
+	 Content-Type:MIME-Version; b=A5Vf4+IIqRCnqM6PjuwS21VEUFCceBw/OVL8goQ9xusweguymW5OzhKf2LiHp0lXtGdVluYQVhVpGFdBer3DiBdxDfklqflX+4H77a+3dnBtgDdH5udtpUtiY7uLc2tQpTS/RRn052o6hgVLYmip+4pEl9MXLmw5HeUNEA5j8Ts=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=rFAl0qHT; arc=fail smtp.client-ip=40.93.198.20
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="MlYptG7I"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="rFAl0qHT"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GfqznLUHQpdrIxxQa8+eq7AV++xj71cC4I3qhEyKmY+ASvIpage/b6/yGbXwWdjyqp/+5T9eSy/4zYaHP3/1SV5PWyttHVYYsKZzDpV+S8ZbRmBPvIp2oBwl8djpoy1cnfOwAqURH8HNBHLmydw0Bu3AYZncRTDst+my5oPvYzBVpDhA/fFOX5B5Ll22D4QO4NMHPxtOwrW0n+TrPkRbGQ2RihYYO2k6/PfgAeZM4el9YjepgkijwcaxnYH3V5Mlj8uqttGlNVsyiz3cNPezjriG5wnp4ZRzLAKQxFuyAZY036i5ejqR0kQGdw9DFhTL8JhTywg6W5sOYsCmuZjz7A==
+ b=qiHfNn3n2KJ/o84+a6a1gPEHdg2w6b/LiSfaKvxYVPWVx8Itp7Mb4vGtJBGN7ItkoU2cMMSceMUdygL8/Vfytb3XHyh84xhzf9Cf5fEXzZmCQZtbv2h0naCV4ndBBWckPL0lMbScryD1jKnXUx2J0uOaJKnq+CJ+QgSJkxtbIG2ytLaZz0Ldtr1Nt3uHrSTFcyXFcgOo7qGYEb6K0xrw9xt8QtDWqF13+WeF6mkRa+YugszliwT7yntq3bkMBejLwXV8NBJcfdkiaByYx0xRBr2Z6mLrzlsJ3MKrKinZnUearOM09HwGm62ROM+oDrtiqNGQjQzJP/uh4HPrvd1h9A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=V63qQzWm0ZI6qds22bqDeDpZl121ecfDWJnEARpmwEs=;
- b=Ry/S+TjHyVCxcDCNs8zDAESIRoCgLCZJuT6N6ExnVXYLEdY4Z3sMWVnDifi60lm//KKrD2TWPKKXh0k0t416y2cllj5/YqEOeab8gkXtAME7A5uAsd0kBhSm9iwT2KEY202XejUFK7GoUWwajS1DThmzMy6rSn63St2Puk0NQAFRKeRuaIV4P8F62lrb2LC3gv2av8f4AdQHSqEfrVTWOI/rEpmyh86pQezYy5OcubKuk9PYlO43WZxs0jJmnmLCGYAqds7RBGpEOqViavwI6nQK9dK690h0WRkMNVTNmFjpK2YyHYzczu6SPbz2lnzq2JW1p63tIgrEXh9rKuLjRA==
+ bh=y7n5m2O5svPhx99oFd2KADsmzAj98LMMHU98zfj8nh8=;
+ b=n2dSMPVgNJDGlsyVS4OWfzJsizB1wdSZjqjbwxQ+p+Yo5E6eN8kw+OBTDo3z+l87A84P15EvHv7j6jrhbmjCIjfEcMg40OYEv/zhev/aAwPD3V2h1rxN1TSy4Qv7GWRVHyXjhNffue3nImkXycxrPSquUt6HqbwBOwUQe8U63xq0dkJAiHmWVJ/bQYcprAUKbDmv8edHOuW4IiASCPKKpOvr20vqsI5KzBJdYtad//raWOGMRhiqYYMaVaotJGBLZK1TzX+s9pEaYibg7xXOXGCNIUfhzd9t23vjtsTMP9b19lRIuUP2imVAJgqmZ0K4uFNHvvM5lSbbGb76mz2F7w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=V63qQzWm0ZI6qds22bqDeDpZl121ecfDWJnEARpmwEs=;
- b=MlYptG7IveBzE337tV/GENl7kg/JlOaV9HDNs4x9KQxTDmB+rQuC2rP+YpLKQp0mEa+039e9ZrJE/Zv7qNg1FH1Y4NgNXyrgPteIzckhD608HbigAf2tReqm05YwMA7rCJ2U/xAx1L5JVXqECz705M9IFPXRBlMWaaNHoacZVIU4setxhF6dzyrxcu9CJq2TJqpAP+uFi9n7vAdGQ4Iai1QxW8jM9s1uyVLLa2LefG5Rhr7PoIGjIuPdmdMlpAx/gq2rHlQYxqqnCuT8gUFyIHqGlmvZ/oAQAgoEnguuK5hZVQNnAES5JmnPmdViPEQIurRBhQYSqFkEbeON3vaQpA==
+ bh=y7n5m2O5svPhx99oFd2KADsmzAj98LMMHU98zfj8nh8=;
+ b=rFAl0qHT/r/FRxO+bfPDoiZpR9m+fMUVMaPV7Wh005AEwJto7O5J7z43iPtPrmqzJD7lMbbIUQcrd5EzLZwVxa/lXG4OIcRAgtI65XASxqAXR+v4ayouoHoJRDzqP3wQ1WLzMwdOgG0rWw/dBt2S8MZdMROur6prmdmYEztFvAt31x//DQcyhxmu+ObD5RfviAB1cGKvWa1m5SumGpD/oVhyxi5cAmNHVoRvrWAW2E2eDuqawvHgkz5yKa5AvAhevmAD2ioDh8l7vN5LZo2Jf9vXRjH7XS9kp0Docjx1hMBPYQvy46Hy1jgv21MpJiLfGf8PFSnEWvl8FVgvKWlCUA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by IA0PR12MB8981.namprd12.prod.outlook.com (2603:10b6:208:484::18) with
+ by IA4PR12MB9809.namprd12.prod.outlook.com (2603:10b6:208:54f::19) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Thu, 4 Jun 2026
- 01:27:55 +0000
+ 01:27:57 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0092.006; Thu, 4 Jun 2026
- 01:27:55 +0000
+ 01:27:57 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Leon Romanovsky <leon@kernel.org>,
 	linux-rdma@vger.kernel.org
@@ -54,15 +54,15 @@ Cc: Doug Ledford <dledford@redhat.com>,
 	Noa Osherovich <noaos@mellanox.com>,
 	patches@lists.linux.dev,
 	Steve Wise <swise@opengridcomputing.com>
-Subject: [PATCH 04/10] RDMA/nldev: Fix locking when accessing mr->pd
-Date: Wed,  3 Jun 2026 22:27:43 -0300
-Message-ID: <4-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com>
+Subject: [PATCH 06/10] IB/mlx5: Pull the pdn out of the depths of the umr machinery
+Date: Wed,  3 Jun 2026 22:27:45 -0300
+Message-ID: <6-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com>
 In-Reply-To: <0-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: YT4PR01CA0350.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:fc::20) To LV8PR12MB9620.namprd12.prod.outlook.com
+X-ClientProxiedBy: YT4P288CA0053.CANP288.PROD.OUTLOOK.COM
+ (2603:10b6:b01:d2::10) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -71,259 +71,421 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|IA0PR12MB8981:EE_
-X-MS-Office365-Filtering-Correlation-Id: e4af7473-6a2b-4c76-b467-08dec1d87ee6
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|IA4PR12MB9809:EE_
+X-MS-Office365-Filtering-Correlation-Id: 579ef4c9-bd2f-4635-1284-08dec1d8806e
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|6133799003|18002099003|22082099003|56012099006|11063799006;
+	BCL:0;ARA:13230040|366016|1800799024|376014|22082099003|18002099003|11063799006|56012099006;
 X-Microsoft-Antispam-Message-Info:
-	uCrO9KF1jsuk8zzMBx39zX0TPujDLv55GIUrp2cahBtzCbbSrehC2tkWxb901W7yJHjXz2+27yG7/H6DS0FjrvFj+MtkCvGNVv3QUmlTvkRkyb8uVeyxMqBT1vgqznS7XZqtUnkSB00u7OOhIvx9CmBmmt+7ArdXFj7bsKRxqJ55cC78hOk6+3//0vEDyhIToE3RDtFqVE0hswwK43U9/j7UOMELBx0UxUmSipVHryiO2LQu40M39KKwNJlO0YNaF7VgryaDMpa5GsF/GJMPVHu7TJpJQrY1iZd1W8sCdGXeeqQprYxwJCzJVAkz5/DQh8NlETi4P+R8wUMNCs8ZBMx2HSg8U+bM86FxYFNZjem/87fNe5V9SEWSWgZ6s8e+CK/rCOt4/PkBSBvBOxhWzwMDqo8IAmYtTIBETGNuDamoSk0E+6f5+rhxL/dVYz/x8t0BmHUZoK4/3hbSXra7RVj8fOgRe9xD6uenRceQJ1moZ9e6tgA46SYHW+aTa8fosa2eh2EXZVWbAZAa4qLWI5U6AGxXXvOCexm7xQXBM4qZ5TzVB/z36Zf/CY1HB4d1eVVGdswRN0QN3zy+kMDUklaYd9YbeDQVXJascrUvVomlQa5vQKroW45JgJvKMDEI+33kEPG9WFBw0PGzLgwZIkYRhekr+3LSY9ETu+U1Bi0KTZOCLLKe3X6XL6xnq9lk
+	NAeRzDqxtKCGunECx8gW5Iv8T96mkVRU8ch6lzf4P4wBMN5yizdosWszjpvFK+vUgpf8LiFpdC983GHV6aNrIGZXn7tFVYqCdSTrpG61K6npin5vKIolHVberxpB8g6fPaH7Vw0HgGdaFRDiJfjZeYUqw6TyO5E0lWUIutZ1zKpzYa+5MrqtSIrdMgFiSJVCLaqCkyTQ8ZQFvHCqIGrfxpABY37FXOZfdP6Vo8pS2Upf66S7ayr4Ezexo62GZ9PCgHrqJFBERlmQcsx/XDHJ4ljP/Ub6dr9w0NgIT9y546nKkG/sYVYdeaJ7EhvYavBM33TrRlKUkNXqJjPY6mXGoGRtJWTIjcz39QC1K8jBKkqdujwqJRozb4nMC59Pn48m8dmRezfCM8FVHOSWdvoR3tJKG+qcmp3R21pnq24U4pi6qqN0dBRI4wev3pdD6CCBHvcME50Y3nNlWeRTBOaxVwXZsQZ2SAiTpdWQNqH/MQ/9wu3Ubeh7pGHj64GJEnURirZusWmM601TMa4IFGroUtk5/1A7i8vVKgqiAy1wKzy9llt5oDJzr3ZUIq5nO6SCsRg2wuUo+Tfd+pNPy2rfAXa+dw/PD0fC3UbT6s4xaY4gmQr+34qF/ot5rNahj8/Vqi1/u97aj7LXUSf+xJkKp6scKg4jE+5p3MKdcVTAZMee62bvOXJNhNEvXP8+WbV5
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(6133799003)(18002099003)(22082099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(22082099003)(18002099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?jFRh/WDZTz6HMHwt75z6L3Lydr0Hz0zzKpYqfivXJsRBBtiTH0B10KlCGk/R?=
- =?us-ascii?Q?JO9PrgUWa87xgyKGanOZGi3ISFBsxBsn7Nl3wZQVPfNBCAHj7Ts4OSv2NTIA?=
- =?us-ascii?Q?YozHa/MiFsy4t6/QqpXWCnR2xeDFkoi1WwrMv5E5665qzyoNQFasxFAPGtCc?=
- =?us-ascii?Q?CB2a28c0pI8nKz9nb8/+P+6gGc6bCMXo6f68d77LYVoioqBWUsjLfS26yrz0?=
- =?us-ascii?Q?YGVGD/trMNbAHJylwALvNAdQA67Tw63X4I+bxsVefBEO+PFoEROU7BKvJcj+?=
- =?us-ascii?Q?BY5MiPaCQgesz5aY2KYFGMjkY5L6oWRXXOa7p+a+HgB4BmVhCCgK60CCIpLV?=
- =?us-ascii?Q?DmfbUT+AY9B2vdllvcQiMLDt9XpYYj/BqpLUKAYvlNdCSuQ79qwNE10BCVBq?=
- =?us-ascii?Q?w/ZeYUdDqplS0NYrb+rp2Oy7WSwdzWxdOLue+NBWzdun9gumK7USk24F2xhH?=
- =?us-ascii?Q?yRH2r0c9grUkgTzrMqHCbQ8O8fq9cgM2wqjlEbtbeQ1OXrIbLxLwdtbbl7l5?=
- =?us-ascii?Q?iecmFfYXGM7Z3rR5UZbM7M7P1rcmSY5730yRkkYxOmQb9WZnJuQZE9T4tlmu?=
- =?us-ascii?Q?hghhgmOIMjnlDvv+87uCGvuvvo2XO4mC28nG4EDjKh3bNkOopQi13RRBJImJ?=
- =?us-ascii?Q?ITf2IWSyta/LW00qfDoZakcpVIHHNcdo0CqOwP9l23V6mkB+YLPRrZmL90Px?=
- =?us-ascii?Q?CAIeTVGqBghi/DCioL7nCmSPawGFlW/OZTABe92lmzgtFrquTRrHiG81xCmD?=
- =?us-ascii?Q?b+nUsl3I5eRL40f2brnFVcdgs2ORupBI0GacMncivJdhP0yGdUhBg+XjfSzc?=
- =?us-ascii?Q?8k/A40sQXV5OwDGWdxUDLc3f2mYgnqRvgoNDhTunUM8LRdjDcDvxSXwjO5JX?=
- =?us-ascii?Q?Z5Dx0hCfgKSqFymfaOos1J807DzvdSkuUzHsHBPLjmVNnx62Wohw3L3F6iJE?=
- =?us-ascii?Q?KRdshcNZ2Uz+ExpkX2Q9OXB3HjKAyG7q2lzdLVQLq/dCtFHkdnFW0OfRu8qo?=
- =?us-ascii?Q?ykOI8tsCHvM5us4Z/0rX3HeX37AFfcHY++vBdecFRoLS3yyDyB5XXrWIis3b?=
- =?us-ascii?Q?StT0yzE9YYh57t1Sn9hzOS6EsIefNqqBG7aq7ssiJZxNQEScp1ZoqKA7RPUo?=
- =?us-ascii?Q?908i6iHD75UBMPt+zKky+3Nv4DLxIEWoJLvVPRPez3m4/x2kKEpvr7ls0Jfx?=
- =?us-ascii?Q?S5txEg6FzH1X5TcM3vEpnUb/LWnQtzKPioSvqgvp9/Tli5GHk/DNFsIQAgrF?=
- =?us-ascii?Q?U19B3Yz2A1/dyR9gMlmKrEfQCfq87zKUVitaeXB5lo1wXSzF7+ZDiqKK+mAd?=
- =?us-ascii?Q?4uoCFbuVWBT/iLTC143ZzS4uOfugDonSzd48axOxXy/VFZn1LQKD8nFBucCX?=
- =?us-ascii?Q?k5rj2BuLHEwake27IgjROG9D83jIUAESW9wr1N7TQSj+JHNBpt4VOBGhcHyF?=
- =?us-ascii?Q?ZlzAJlXHUrGOHks1suWo3TqR2CLIzAdxRxYeTNQ65X688+ivOOO9XaEQ+gNJ?=
- =?us-ascii?Q?yTsBDf/TN3na5FA8PrEX45HUOFyKJfQ8W6AE6xa60Ls7rwb9dsdaPcPl3vSB?=
- =?us-ascii?Q?6sfwmYTZ1HjT2LE1LW+MCF81C0/STvEdZE6/FN327zOkFyyrA8j4h2I31rGQ?=
- =?us-ascii?Q?j9QRABDkpQQk+hbY43vivBEBjdtkdbR6RRxNOspsTFqRIIV8AYGROGQUEZsa?=
- =?us-ascii?Q?eMV/baMWlcqPa9HOFm0Xo5RIpDu1BPtpAZuA9HyxZXMhx1YL?=
+	=?us-ascii?Q?PwAF7kMhiOOR8JJu2uz2NAvYz/1NGDS9ogv3QVQ/W1iRAfWcOi53uDKM/xBf?=
+ =?us-ascii?Q?oLuLJIWgjS7siW5tLeFaTcqL77ZsVY3TaLRSwBRAQketNVSzi/Jcl4xoMNAL?=
+ =?us-ascii?Q?5gY7RNyQE98GABo89+TDkYN5nRSCbN3v70v8U9Sq6FphNM9zutbGjG3NkBCF?=
+ =?us-ascii?Q?EFDsdB6xJ5RDdVZi41Ra7lLoZ5fwKxOaBNjgFOBdEuVlwIWO3JUuw3t88jxi?=
+ =?us-ascii?Q?Ghv2Fq5V/qZfVcsOJ6lpkBuWq96YN7M6ZYneTp6PONip2dgBaby/66+ETcZC?=
+ =?us-ascii?Q?dlh4i1FthIu7Khp4t+UXyKyY9JmL8ardRt8HMcZC1eZl1Gh6gGDJcuaLsSzW?=
+ =?us-ascii?Q?xp9zoC0/5/tmcn36QilhLMXpktLalHDn2Q6VVEybs7iUeu2CVOFpOOgiSgQ8?=
+ =?us-ascii?Q?geKCXI0X9Dr7ml2Vf0JkSwk7+hrIW+BX4oDp1om1ggawhayOz+5KP4wW9Iih?=
+ =?us-ascii?Q?TocQMxDnyoq2gQ/rczR5viO3xAFonPUYVMiUVzv3SIk4aa/KWwHHnfJ1IRLi?=
+ =?us-ascii?Q?LBbx28iDUp1fyPar2tQNj/Kx2z6FSgZsHja2xBzDG5fsXDCk8MaqXMPN3r/p?=
+ =?us-ascii?Q?Qxbei2BVmn5ud3TCMOUNTVD2QTZLCKTKweTpRbEd5g4WjmdC6YFOpqETXfyU?=
+ =?us-ascii?Q?vVVD+tPi2BS0RTQgH9KSz/OEtQ/OIIn21J2idNNyJHIJFHDzBeRPtIHAV2ly?=
+ =?us-ascii?Q?i85YlR7IX+mTiHnz+tabJ3LEIfa8ZshG559cVIJGDaU6SlCDlL5pnSz4Pfrw?=
+ =?us-ascii?Q?MknWcLg0hz0TKy05/hga3XBgNafuoG7Jrc+4F3ZBiNJaDnlF1QY/o6ZZsHvQ?=
+ =?us-ascii?Q?SC/YK6qlaOUcgL9uxTHM6hhn6fIbFzAJUYMPBDIeCT5mABR8EGcEU8wf4/Pv?=
+ =?us-ascii?Q?CtnvSWqRC+dYfmOjSxBmjsCG6mJX/sD4zf0T+7XPpQC0Ini8Er/Uw9RB9ntb?=
+ =?us-ascii?Q?Lyc4Qg59Zudzv5lYcr6VuZXltNAbpw44+vnM2JZji+/2j0E5ehg8JkvRzpfF?=
+ =?us-ascii?Q?tQVvKiNCy1GaSJay29yH8KN3dLyCfq9+zDDbC9+ouLK41gYGcRcIqXmDKj+x?=
+ =?us-ascii?Q?xVJ14gN7dQ8qGvqMW/vmJajdXko/6j7UUSGzJEZDrBYrxYX4UKn6i74NQP4n?=
+ =?us-ascii?Q?AvzSG/46uAfCnedT5SStdhKnuTajds9istSjj5EjESUOOL2rqayyleksvMq7?=
+ =?us-ascii?Q?r6VYDrhLcL6wpU4OAlPSulpV8SEGWP18/VmX+aWnBcGilEGalSmomXeypu9q?=
+ =?us-ascii?Q?GtO4j5P80HigPv1TMbIi9g72vDiL2uf7toVz4Ff5Jt9cp9vMCWhAnAe43Ooc?=
+ =?us-ascii?Q?KC5egg6gZXYMJ0Q1SoVvfcP+lV+xL5zSTfZ4A9GYzpMIYFJs2K8vCwjB1FjS?=
+ =?us-ascii?Q?HyZZVU2pl/3xe6xPNfTXK5eDemzJsb7uqW/Wj8Dqin4qjLk54HL/+qCf3uhv?=
+ =?us-ascii?Q?oBKedwHoSzcAjbRWdOwK1XuzfSfjBe6wq/5WZ67mno2xGTCgpTHsEHQ3tEg8?=
+ =?us-ascii?Q?DtqKJajwBtc+N3rujYN6bX+gmVZISYaQwB8fdKp1gA/Rjl5ICPeoV+eWE5Ms?=
+ =?us-ascii?Q?v0jsmpndmJo8suj2++RTJtDCTA3V2/iS1YoeNCq9+GtRGEpi/gaeM3QzwyTJ?=
+ =?us-ascii?Q?zfzraHWiWYgOq9yH5lt9heBodTilrd9sXjdVtBQgwSQld7zAZGHvSS+4o5o4?=
+ =?us-ascii?Q?bQOMzqF4rMGCkc4nGKXI98P7gyCW3FEavlSZtXN/2rESmgpv?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e4af7473-6a2b-4c76-b467-08dec1d87ee6
+X-MS-Exchange-CrossTenant-Network-Message-Id: 579ef4c9-bd2f-4635-1284-08dec1d8806e
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jun 2026 01:27:52.4070
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jun 2026 01:27:54.9498
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9qI3aicnFQSIAkUe1AkABHd4hpZZDQZJQ3rutA0+UfdljhSDyWhN0lcPZIt+No2k
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8981
+X-MS-Exchange-CrossTenant-UserPrincipalName: lxfemmi+M4mkxBh/O9KSHKWlfizDgSwdoUYoggm+OknIxm30HGWw735Z1oQCBeyF
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4PR12MB9809
 
-Sashiko points out that, due to rereg_mr, the PD is actually variable and
-all the touches in nldev are racy.
+Instead of getting the pdn deep inside the umr code, pass it in from the
+top. to_mpd(mr->ibmr.pd)->pdn is not safe due to the rereg races, so all
+the call sites need some revision to obtain the pdn in a safe way.
 
-Use mr->device instead of mr->pd->device.
+Mark them with mlx5_mr_pdn(); following patches will go through and remove
+these.
 
-Getting the PD restrack ID is more tricky. To avoid disturbing all the
-happy paths, add an rdma_restrack_sync() operation which is sort of like
-flush_workqueue() or synchronize_irq(): after it returns, all the old
-nldev touches to the mr are gone and everything sees the new PD. This
-makes it safe to reach into the PD pointer.
+Cases where the XLT flags are known and do not require the PDN can pass 0,
+such as for mlx5_ib_dmabuf_invalidate_cb().
 
-Link: https://sashiko.dev/#/patchset/20260427-security-bug-fixes-v3-0-4621fa52de0e%40nvidia.com?part=4
-Fixes: da5c85078215 ("RDMA/nldev: add driver-specific resource tracking")
+Also extract the DMABUF data_direct special case from inside the UMR code
+and into the only place that needs it, pagefault_dmabuf_mr(). The actual
+mr was created directly without using the UMR flow. Ultimately this will
+be moved into mlx5_ib_init_dmabuf_mr().
+
+Assisted-by: Codex:gpt-5-5
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/infiniband/core/nldev.c      | 15 +++++----
- drivers/infiniband/core/restrack.c   | 49 ++++++++++++++++++++++++++++
- drivers/infiniband/core/restrack.h   |  1 +
- drivers/infiniband/core/uverbs_cmd.c | 10 ++++--
- include/rdma/ib_verbs.h              |  5 +++
- 5 files changed, 72 insertions(+), 8 deletions(-)
+ drivers/infiniband/hw/mlx5/mlx5_ib.h |  9 ++++
+ drivers/infiniband/hw/mlx5/mr.c      |  8 +--
+ drivers/infiniband/hw/mlx5/odp.c     | 12 +++--
+ drivers/infiniband/hw/mlx5/umr.c     | 75 ++++++++++++++--------------
+ drivers/infiniband/hw/mlx5/umr.h     |  6 +--
+ 5 files changed, 64 insertions(+), 46 deletions(-)
 
-diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
-index 5aaba2b9746ba6..02a0a9c0a4a6ad 100644
---- a/drivers/infiniband/core/nldev.c
-+++ b/drivers/infiniband/core/nldev.c
-@@ -695,7 +695,7 @@ static int fill_res_mr_entry(struct sk_buff *msg, bool has_cap_net_admin,
- 			     struct rdma_restrack_entry *res, uint32_t port)
- {
- 	struct ib_mr *mr = container_of(res, struct ib_mr, res);
--	struct ib_device *dev = mr->pd->device;
-+	struct ib_device *dev = mr->device;
+diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+index e156dc4d752996..0a2b8ede0d818a 100644
+--- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
++++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+@@ -331,6 +331,10 @@ struct mlx5_ib_flow_db {
+ #define MLX5_IB_QPT_DCT		IB_QPT_RESERVED4
+ #define MLX5_IB_WR_UMR		IB_WR_RESERVED1
  
- 	if (has_cap_net_admin) {
- 		if (nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_RKEY, mr->rkey))
-@@ -711,9 +711,12 @@ static int fill_res_mr_entry(struct sk_buff *msg, bool has_cap_net_admin,
- 	if (nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_MRN, res->id))
- 		return -EMSGSIZE;
- 
--	if (!rdma_is_kernel_res(res) &&
--	    nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_PDN, mr->pd->res.id))
--		return -EMSGSIZE;
-+	if (!rdma_is_kernel_res(res)) {
-+		struct ib_pd *pd = READ_ONCE(mr->pd);
-+
-+		if (nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_PDN, pd->res.id))
-+			return -EMSGSIZE;
-+	}
- 
- 	if (fill_res_name_pid(msg, res))
- 		return -EMSGSIZE;
-@@ -727,7 +730,7 @@ static int fill_res_mr_raw_entry(struct sk_buff *msg, bool has_cap_net_admin,
- 				 struct rdma_restrack_entry *res, uint32_t port)
- {
- 	struct ib_mr *mr = container_of(res, struct ib_mr, res);
--	struct ib_device *dev = mr->pd->device;
-+	struct ib_device *dev = mr->device;
- 
- 	if (!dev->ops.fill_res_mr_entry_raw)
- 		return -EINVAL;
-@@ -1017,7 +1020,7 @@ static int fill_stat_mr_entry(struct sk_buff *msg, bool has_cap_net_admin,
- 			      struct rdma_restrack_entry *res, uint32_t port)
- {
- 	struct ib_mr *mr = container_of(res, struct ib_mr, res);
--	struct ib_device *dev = mr->pd->device;
-+	struct ib_device *dev = mr->device;
- 
- 	if (nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_MRN, res->id))
- 		goto err;
-diff --git a/drivers/infiniband/core/restrack.c b/drivers/infiniband/core/restrack.c
-index ac3688952cabbf..cfee2071586c16 100644
---- a/drivers/infiniband/core/restrack.c
-+++ b/drivers/infiniband/core/restrack.c
-@@ -71,6 +71,8 @@ int rdma_restrack_count(struct ib_device *dev, enum rdma_restrack_type type,
- 
- 	xa_lock(&rt->xa);
- 	xas_for_each(&xas, e, U32_MAX) {
-+		if (xa_is_zero(e))
-+			continue;
- 		if (xa_get_mark(&rt->xa, e->id, RESTRACK_DD) && !show_details)
- 			continue;
- 		cnt++;
-@@ -276,6 +278,53 @@ int rdma_restrack_put(struct rdma_restrack_entry *res)
- }
- EXPORT_SYMBOL(rdma_restrack_put);
- 
-+/**
-+ * rdma_restrack_sync() - Fence concurrent netlink dumps on an entry
-+ * @res:  resource entry
-+ *
-+ * After this returns any concurrent netlink dump threads will see the current
-+ * value of the object. This is useful if the object has to be changed and there
-+ * is not locking to protect the nl side. Eg for mr->pd. This effectively
-+ * destroys the object from a kref/xarray perspective and then immediately
-+ * restores it. The kref is acting like a lock to barrier concurrent nl threads.
-+ * Callers must ensure rdma_restrack_del() is not concurrently called.
++/*
++ * A valid pdn is required when flags include MLX5_IB_UPD_XLT_ENABLE,
++ * MLX5_IB_UPD_XLT_PD or MLX5_IB_UPD_XLT_ACCESS.
 + */
-+void rdma_restrack_sync(struct rdma_restrack_entry *res)
-+{
-+	struct rdma_restrack_entry *old;
-+	struct rdma_restrack_root *rt;
-+	struct task_struct *task;
-+	struct ib_device *dev;
-+
-+	if (!res->valid || res->no_track)
-+		return;
-+
-+	dev = res_to_dev(res);
-+	if (WARN_ON(!dev))
-+		return;
-+
-+	rt = &dev->res[res->type];
-+	if (WARN_ON(xa_get_mark(&rt->xa, res->id, RESTRACK_DD)))
-+		return;
-+
-+	old = xa_cmpxchg(&rt->xa, res->id, res, XA_ZERO_ENTRY, GFP_KERNEL);
-+	if (WARN_ON(old != res))
-+		return;
-+
-+	task = res->task;
-+	if (task)
-+		get_task_struct(task);
-+	rdma_restrack_put(res);
-+	wait_for_completion(&res->comp);
-+	reinit_completion(&res->comp);
-+	if (task)
-+		res->task = task;
-+	kref_init(&res->kref);
-+
-+	xa_cmpxchg(&rt->xa, res->id, XA_ZERO_ENTRY, res, GFP_KERNEL);
-+}
-+EXPORT_SYMBOL(rdma_restrack_sync);
-+
- /**
-  * rdma_restrack_del() - delete object from the resource tracking database
-  * @res:  resource entry
-diff --git a/drivers/infiniband/core/restrack.h b/drivers/infiniband/core/restrack.h
-index 6a04fc41f73801..75b8d1005a984b 100644
---- a/drivers/infiniband/core/restrack.h
-+++ b/drivers/infiniband/core/restrack.h
-@@ -27,6 +27,7 @@ int rdma_restrack_init(struct ib_device *dev);
- void rdma_restrack_clean(struct ib_device *dev);
- void rdma_restrack_add(struct rdma_restrack_entry *res);
- void rdma_restrack_del(struct rdma_restrack_entry *res);
-+void rdma_restrack_sync(struct rdma_restrack_entry *res);
- void rdma_restrack_new(struct rdma_restrack_entry *res,
- 		       enum rdma_restrack_type type);
- void rdma_restrack_set_name(struct rdma_restrack_entry *res,
-diff --git a/drivers/infiniband/core/uverbs_cmd.c b/drivers/infiniband/core/uverbs_cmd.c
-index 91a62d2ade4dd0..22793e4b1895e4 100644
---- a/drivers/infiniband/core/uverbs_cmd.c
-+++ b/drivers/infiniband/core/uverbs_cmd.c
-@@ -47,6 +47,7 @@
+ #define MLX5_IB_UPD_XLT_ZAP	      BIT(0)
+ #define MLX5_IB_UPD_XLT_ENABLE	      BIT(1)
+ #define MLX5_IB_UPD_XLT_ATOMIC	      BIT(2)
+@@ -1209,6 +1213,11 @@ static inline struct mlx5_ib_pd *to_mpd(struct ib_pd *ibpd)
+ 	return container_of(ibpd, struct mlx5_ib_pd, ibpd);
+ }
  
- #include "uverbs.h"
- #include "core_priv.h"
-+#include "restrack.h"
++static inline u32 mlx5_mr_pdn(struct mlx5_ib_mr *mr)
++{
++	return to_mpd(mr->ibmr.pd)->pdn;
++}
++
+ static inline struct mlx5_ib_srq *to_msrq(struct ib_srq *ibsrq)
+ {
+ 	return container_of(ibsrq, struct mlx5_ib_srq, ibsrq);
+diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
+index ab0ba34448eb89..a7924e96c2817a 100644
+--- a/drivers/infiniband/hw/mlx5/mr.c
++++ b/drivers/infiniband/hw/mlx5/mr.c
+@@ -781,7 +781,8 @@ static struct ib_mr *create_real_mr(struct ib_pd *pd, struct ib_umem *umem,
+ 		 * configured properly but left disabled. It is safe to go ahead
+ 		 * and configure it again via UMR while enabling it.
+ 		 */
+-		err = mlx5r_umr_update_mr_pas(mr, MLX5_IB_UPD_XLT_ENABLE);
++		err = mlx5r_umr_update_mr_pas(mr, MLX5_IB_UPD_XLT_ENABLE,
++					      to_mpd(pd)->pdn);
+ 		if (err) {
+ 			mlx5_ib_dereg_mr(&mr->ibmr, NULL);
+ 			return ERR_PTR(err);
+@@ -890,7 +891,8 @@ static void mlx5_ib_dmabuf_invalidate_cb(struct dma_buf_attachment *attach)
+ 	if (!umem_dmabuf->sgt || !mr)
+ 		return;
+ 
+-	mlx5r_umr_update_mr_pas(mr, MLX5_IB_UPD_XLT_ZAP);
++	/* MLX5_IB_UPD_XLT_ZAP does not change the pdn */
++	mlx5r_umr_update_mr_pas(mr, MLX5_IB_UPD_XLT_ZAP, 0);
+ 	ib_umem_dmabuf_unmap_pages(umem_dmabuf);
+ }
+ 
+@@ -1145,7 +1147,7 @@ static int umr_rereg_pas(struct mlx5_ib_mr *mr, struct ib_pd *pd,
+ 	mr->ibmr.length = new_umem->length;
+ 	mr->page_shift = order_base_2(page_size);
+ 	mr->umem = new_umem;
+-	err = mlx5r_umr_update_mr_pas(mr, upd_flags);
++	err = mlx5r_umr_update_mr_pas(mr, upd_flags, mlx5_mr_pdn(mr));
+ 	if (err) {
+ 		/*
+ 		 * The MR is revoked at this point so there is no issue to free
+diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
+index 10c11b72f41247..d7feb49b28fbac 100644
+--- a/drivers/infiniband/hw/mlx5/odp.c
++++ b/drivers/infiniband/hw/mlx5/odp.c
+@@ -833,12 +833,14 @@ static int pagefault_dmabuf_mr(struct mlx5_ib_mr *mr, size_t bcnt,
+ 			       u32 *bytes_mapped, u32 flags)
+ {
+ 	struct ib_umem_dmabuf *umem_dmabuf = to_ib_umem_dmabuf(mr->umem);
++	struct mlx5_ib_dev *dev = mr_to_mdev(mr);
+ 	int access_mode = mr->data_direct ? MLX5_MKC_ACCESS_MODE_KSM :
+ 					    MLX5_MKC_ACCESS_MODE_MTT;
+ 	unsigned int old_page_shift = mr->page_shift;
+ 	unsigned int page_shift;
+ 	unsigned long page_size;
+ 	u32 xlt_flags = 0;
++	u32 pdn = 0;
+ 	int err;
+ 
+ 	if (flags & MLX5_PF_FLAGS_ENABLE)
+@@ -857,8 +859,12 @@ static int pagefault_dmabuf_mr(struct mlx5_ib_mr *mr, size_t bcnt,
+ 		err = -EINVAL;
+ 	} else {
+ 		page_shift = order_base_2(page_size);
++		if (mr->data_direct)
++			pdn = dev->ddr.pdn;
++		else
++			pdn = mlx5_mr_pdn(mr);
+ 		if (page_shift != mr->page_shift && mr->dmabuf_faulted) {
+-			err = mlx5r_umr_dmabuf_update_pgsz(mr, xlt_flags,
++			err = mlx5r_umr_dmabuf_update_pgsz(mr, xlt_flags, pdn,
+ 							   page_shift);
+ 		} else {
+ 			mr->page_shift = page_shift;
+@@ -866,8 +872,8 @@ static int pagefault_dmabuf_mr(struct mlx5_ib_mr *mr, size_t bcnt,
+ 				err = mlx5r_umr_update_data_direct_ksm_pas(
+ 					mr, xlt_flags);
+ 			else
+-				err = mlx5r_umr_update_mr_pas(mr,
+-							      xlt_flags);
++				err = mlx5r_umr_update_mr_pas(mr, xlt_flags,
++							      pdn);
+ 		}
+ 	}
+ 	dma_resv_unlock(umem_dmabuf->attach->dmabuf->resv);
+diff --git a/drivers/infiniband/hw/mlx5/umr.c b/drivers/infiniband/hw/mlx5/umr.c
+index 062a47d0c991b7..f92f222b899f8d 100644
+--- a/drivers/infiniband/hw/mlx5/umr.c
++++ b/drivers/infiniband/hw/mlx5/umr.c
+@@ -603,11 +603,11 @@ mlx5r_umr_set_update_xlt_ctrl_seg(struct mlx5_wqe_umr_ctrl_seg *ctrl_seg,
+ 
+ static void mlx5r_umr_set_update_xlt_mkey_seg(struct mlx5_ib_dev *dev,
+ 					      struct mlx5_mkey_seg *mkey_seg,
+-					      struct mlx5_ib_mr *mr,
++					      struct mlx5_ib_mr *mr, u32 pdn,
+ 					      unsigned int page_shift)
+ {
+ 	mlx5r_umr_set_access_flags(dev, mkey_seg, mr->access_flags);
+-	MLX5_SET(mkc, mkey_seg, pd, to_mpd(mr->ibmr.pd)->pdn);
++	MLX5_SET(mkc, mkey_seg, pd, pdn);
+ 	MLX5_SET64(mkc, mkey_seg, start_addr, mr->ibmr.iova);
+ 	MLX5_SET64(mkc, mkey_seg, len, mr->ibmr.length);
+ 	MLX5_SET(mkc, mkey_seg, log_page_size, page_shift);
+@@ -670,23 +670,22 @@ static void mlx5r_umr_final_update_xlt(struct mlx5_ib_dev *dev,
+ 	wqe->data_seg.byte_count = cpu_to_be32(sg->length);
+ }
+ 
+-static void
+-_mlx5r_umr_init_wqe(struct mlx5_ib_mr *mr, struct mlx5r_umr_wqe *wqe,
+-		    struct ib_sge *sg, unsigned int flags,
+-		    unsigned int page_shift, bool dd)
++static void _mlx5r_umr_init_wqe(struct mlx5_ib_mr *mr,
++				struct mlx5r_umr_wqe *wqe, struct ib_sge *sg,
++				unsigned int flags, u32 pdn,
++				unsigned int page_shift)
+ {
+ 	struct mlx5_ib_dev *dev = mr_to_mdev(mr);
+ 
+ 	mlx5r_umr_set_update_xlt_ctrl_seg(&wqe->ctrl_seg, flags, sg);
+-	mlx5r_umr_set_update_xlt_mkey_seg(dev, &wqe->mkey_seg, mr, page_shift);
+-	if (dd) /* Use the data direct internal kernel PD */
+-		MLX5_SET(mkc, &wqe->mkey_seg, pd, dev->ddr.pdn);
++	mlx5r_umr_set_update_xlt_mkey_seg(dev, &wqe->mkey_seg, mr, pdn,
++					  page_shift);
+ 	mlx5r_umr_set_update_xlt_data_seg(&wqe->data_seg, sg);
+ }
+ 
+-static int
+-_mlx5r_umr_update_mr_pas(struct mlx5_ib_mr *mr, unsigned int flags, bool dd,
+-			 size_t start_block, size_t nblocks)
++static int _mlx5r_umr_update_mr_pas(struct mlx5_ib_mr *mr, unsigned int flags,
++				    u32 pdn, bool dd, size_t start_block,
++				    size_t nblocks)
+ {
+ 	size_t ent_size = dd ? sizeof(struct mlx5_ksm) : sizeof(struct mlx5_mtt);
+ 	struct mlx5_ib_dev *dev = mr_to_mdev(mr);
+@@ -720,7 +719,7 @@ _mlx5r_umr_update_mr_pas(struct mlx5_ib_mr *mr, unsigned int flags, bool dd,
+ 
+ 	orig_sg_length = sg.length;
+ 
+-	_mlx5r_umr_init_wqe(mr, &wqe, &sg, flags, mr->page_shift, dd);
++	_mlx5r_umr_init_wqe(mr, &wqe, &sg, flags, pdn, mr->page_shift);
+ 
+ 	/* Set initial translation offset to start_block */
+ 	offset = (u64)start_block * ent_size;
+@@ -811,7 +810,8 @@ int mlx5r_umr_update_data_direct_ksm_pas_range(struct mlx5_ib_mr *mr,
+ 	    !(flags & MLX5_IB_UPD_XLT_KEEP_PGSZ)))
+ 		return -EINVAL;
+ 
+-	return _mlx5r_umr_update_mr_pas(mr, flags, true, start_block, nblocks);
++	return _mlx5r_umr_update_mr_pas(mr, flags, mr_to_mdev(mr)->ddr.pdn,
++					true, start_block, nblocks);
+ }
+ 
+ int mlx5r_umr_update_data_direct_ksm_pas(struct mlx5_ib_mr *mr,
+@@ -821,12 +821,13 @@ int mlx5r_umr_update_data_direct_ksm_pas(struct mlx5_ib_mr *mr,
+ }
+ 
+ int mlx5r_umr_update_mr_pas_range(struct mlx5_ib_mr *mr, unsigned int flags,
+-				  size_t start_block, size_t nblocks)
++				  u32 pdn, size_t start_block, size_t nblocks)
+ {
+ 	if (WARN_ON(mr->umem->is_odp))
+ 		return -EINVAL;
+ 
+-	return _mlx5r_umr_update_mr_pas(mr, flags, false, start_block, nblocks);
++	return _mlx5r_umr_update_mr_pas(mr, flags, pdn, false, start_block,
++					nblocks);
+ }
  
  /*
-  * Copy a response to userspace. If the provided 'resp' is larger than the
-@@ -819,6 +820,10 @@ static int ib_uverbs_rereg_mr(struct uverbs_attr_bundle *attrs)
- 			ret = PTR_ERR(new_pd);
- 			goto put_uobjs;
- 		}
-+		if (new_pd == orig_pd) {
-+			uobj_put_obj_read(new_pd);
-+			cmd.flags &= ~IB_MR_REREG_PD;
-+		}
- 	} else {
- 		new_pd = mr->pd;
- 	}
-@@ -866,9 +871,10 @@ static int ib_uverbs_rereg_mr(struct uverbs_attr_bundle *attrs)
- 		mr = new_mr;
- 	} else {
- 		if (cmd.flags & IB_MR_REREG_PD) {
--			atomic_dec(&orig_pd->usecnt);
--			mr->pd = new_pd;
- 			atomic_inc(&new_pd->usecnt);
-+			WRITE_ONCE(mr->pd, new_pd);
-+			rdma_restrack_sync(&mr->res);
-+			atomic_dec(&orig_pd->usecnt);
- 		}
- 		if (cmd.flags & IB_MR_REREG_TRANS) {
- 			mr->iova = cmd.hca_va;
-diff --git a/include/rdma/ib_verbs.h b/include/rdma/ib_verbs.h
-index 9dd76f489a0ba4..46568a5221f403 100644
---- a/include/rdma/ib_verbs.h
-+++ b/include/rdma/ib_verbs.h
-@@ -1977,6 +1977,11 @@ struct ib_dmah {
+@@ -834,9 +835,9 @@ int mlx5r_umr_update_mr_pas_range(struct mlx5_ib_mr *mr, unsigned int flags,
+  * Dmabuf MR is handled in a similar way, except that the MLX5_IB_UPD_XLT_ZAP
+  * flag may be used.
+  */
+-int mlx5r_umr_update_mr_pas(struct mlx5_ib_mr *mr, unsigned int flags)
++int mlx5r_umr_update_mr_pas(struct mlx5_ib_mr *mr, unsigned int flags, u32 pdn)
+ {
+-	return mlx5r_umr_update_mr_pas_range(mr, flags, 0, 0);
++	return mlx5r_umr_update_mr_pas_range(mr, flags, pdn, 0, 0);
+ }
  
- struct ib_mr {
- 	struct ib_device  *device;
-+	/*
-+	 * Due to IB_MR_REREG_PD pd is not a fixed pointer and can change. For a
-+	 * user MR, this value should only be read from a system call that holds
-+	 * the uobject lock, or the driver should disable in-place REREG_PD.
-+	 */
- 	struct ib_pd	  *pd;
- 	u32		   lkey;
- 	u32		   rkey;
+ static bool umr_can_use_indirect_mkey(struct mlx5_ib_dev *dev)
+@@ -861,6 +862,7 @@ int mlx5r_umr_update_xlt(struct mlx5_ib_mr *mr, u64 idx, int npages,
+ 	size_t orig_sg_length;
+ 	size_t pages_iter;
+ 	struct ib_sge sg;
++	u32 pdn = mlx5_mr_pdn(mr);
+ 	int err = 0;
+ 	void *xlt;
+ 
+@@ -895,7 +897,8 @@ int mlx5r_umr_update_xlt(struct mlx5_ib_mr *mr, u64 idx, int npages,
+ 	}
+ 
+ 	mlx5r_umr_set_update_xlt_ctrl_seg(&wqe.ctrl_seg, flags, &sg);
+-	mlx5r_umr_set_update_xlt_mkey_seg(dev, &wqe.mkey_seg, mr, page_shift);
++	mlx5r_umr_set_update_xlt_mkey_seg(dev, &wqe.mkey_seg, mr, pdn,
++					  page_shift);
+ 	mlx5r_umr_set_update_xlt_data_seg(&wqe.data_seg, &sg);
+ 
+ 	for (pages_mapped = 0;
+@@ -962,17 +965,18 @@ int mlx5r_umr_update_mr_page_shift(struct mlx5_ib_mr *mr,
+ 	return err;
+ }
+ 
+-static inline int
+-_mlx5r_dmabuf_umr_update_pas(struct mlx5_ib_mr *mr, unsigned int flags,
+-			     size_t start_block, size_t nblocks, bool dd)
++static inline int _mlx5r_dmabuf_umr_update_pas(struct mlx5_ib_mr *mr,
++					       unsigned int flags, u32 pdn,
++					       size_t start_block,
++					       size_t nblocks, bool dd)
+ {
+ 	if (dd)
+ 		return mlx5r_umr_update_data_direct_ksm_pas_range(mr, flags,
+ 								  start_block,
+ 								  nblocks);
+ 	else
+-		return mlx5r_umr_update_mr_pas_range(mr, flags, start_block,
+-						     nblocks);
++		return mlx5r_umr_update_mr_pas_range(mr, flags, pdn,
++						     start_block, nblocks);
+ }
+ 
+ /**
+@@ -986,11 +990,9 @@ _mlx5r_dmabuf_umr_update_pas(struct mlx5_ib_mr *mr, unsigned int flags,
+  * Return: On success, returns the number of entries that were zapped.
+  *         On error, returns a negative error code.
+  */
+-static int _mlx5r_umr_zap_mkey(struct mlx5_ib_mr *mr,
+-			       unsigned int flags,
+-			       unsigned int page_shift,
+-			       size_t *nblocks,
+-			       bool dd)
++static int _mlx5r_umr_zap_mkey(struct mlx5_ib_mr *mr, unsigned int flags,
++			       unsigned int page_shift, size_t *nblocks,
++			       u32 pdn, bool dd)
+ {
+ 	unsigned int old_page_shift = mr->page_shift;
+ 	struct mlx5_ib_dev *dev = mr_to_mdev(mr);
+@@ -1030,7 +1032,7 @@ static int _mlx5r_umr_zap_mkey(struct mlx5_ib_mr *mr,
+ 	 */
+ 	if (*nblocks)
+ 		mr->page_shift = max_page_shift;
+-	err = _mlx5r_dmabuf_umr_update_pas(mr, flags, 0, *nblocks, dd);
++	err = _mlx5r_dmabuf_umr_update_pas(mr, flags, pdn, 0, *nblocks, dd);
+ 	if (err) {
+ 		mr->page_shift = old_page_shift;
+ 		return err;
+@@ -1055,6 +1057,7 @@ static int _mlx5r_umr_zap_mkey(struct mlx5_ib_mr *mr,
+  * entries accordingly
+  * @mr:        The memory region to update
+  * @xlt_flags: Translation table update flags
++ * @pdn:       Protection domain number
+  * @page_shift: The new (optimized) page shift to use
+  *
+  * This function updates the page size and mkey translation entries for a DMABUF
+@@ -1074,7 +1077,7 @@ static int _mlx5r_umr_zap_mkey(struct mlx5_ib_mr *mr,
+  *
+  * Returns 0 on success or a negative error code on failure.
+  */
+-int mlx5r_umr_dmabuf_update_pgsz(struct mlx5_ib_mr *mr, u32 xlt_flags,
++int mlx5r_umr_dmabuf_update_pgsz(struct mlx5_ib_mr *mr, u32 xlt_flags, u32 pdn,
+ 				 unsigned int page_shift)
+ {
+ 	unsigned int old_page_shift = mr->page_shift;
+@@ -1083,7 +1086,7 @@ int mlx5r_umr_dmabuf_update_pgsz(struct mlx5_ib_mr *mr, u32 xlt_flags,
+ 	int err;
+ 
+ 	err = _mlx5r_umr_zap_mkey(mr, xlt_flags, page_shift, &zapped_blocks,
+-				  mr->data_direct);
++				  pdn, mr->data_direct);
+ 	if (err)
+ 		return err;
+ 
+@@ -1096,10 +1099,8 @@ int mlx5r_umr_dmabuf_update_pgsz(struct mlx5_ib_mr *mr, u32 xlt_flags,
+ 		 * the page size in the mkey yet.
+ 		 */
+ 		err = _mlx5r_dmabuf_umr_update_pas(
+-			mr,
+-			xlt_flags | MLX5_IB_UPD_XLT_KEEP_PGSZ,
+-			zapped_blocks,
+-			total_blocks - zapped_blocks,
++			mr, xlt_flags | MLX5_IB_UPD_XLT_KEEP_PGSZ, pdn,
++			zapped_blocks, total_blocks - zapped_blocks,
+ 			mr->data_direct);
+ 		if (err)
+ 			goto err;
+@@ -1108,7 +1109,7 @@ int mlx5r_umr_dmabuf_update_pgsz(struct mlx5_ib_mr *mr, u32 xlt_flags,
+ 	err = mlx5r_umr_update_mr_page_shift(mr, mr->page_shift);
+ 	if (err)
+ 		goto err;
+-	err = _mlx5r_dmabuf_umr_update_pas(mr, xlt_flags, 0, zapped_blocks,
++	err = _mlx5r_dmabuf_umr_update_pas(mr, xlt_flags, pdn, 0, zapped_blocks,
+ 					   mr->data_direct);
+ 	if (err)
+ 		goto err;
+diff --git a/drivers/infiniband/hw/mlx5/umr.h b/drivers/infiniband/hw/mlx5/umr.h
+index 59809d4d7d7297..99192ec67957c7 100644
+--- a/drivers/infiniband/hw/mlx5/umr.h
++++ b/drivers/infiniband/hw/mlx5/umr.h
+@@ -101,13 +101,13 @@ int mlx5r_umr_update_data_direct_ksm_pas_range(struct mlx5_ib_mr *mr,
+ 					       size_t nblocks);
+ int mlx5r_umr_update_data_direct_ksm_pas(struct mlx5_ib_mr *mr, unsigned int flags);
+ int mlx5r_umr_update_mr_pas_range(struct mlx5_ib_mr *mr, unsigned int flags,
+-				  size_t start_block, size_t nblocks);
+-int mlx5r_umr_update_mr_pas(struct mlx5_ib_mr *mr, unsigned int flags);
++				  u32 pdn, size_t start_block, size_t nblocks);
++int mlx5r_umr_update_mr_pas(struct mlx5_ib_mr *mr, unsigned int flags, u32 pdn);
+ int mlx5r_umr_update_xlt(struct mlx5_ib_mr *mr, u64 idx, int npages,
+ 			 int page_shift, int flags);
+ int mlx5r_umr_update_mr_page_shift(struct mlx5_ib_mr *mr,
+ 				   unsigned int page_shift);
+-int mlx5r_umr_dmabuf_update_pgsz(struct mlx5_ib_mr *mr, u32 xlt_flags,
++int mlx5r_umr_dmabuf_update_pgsz(struct mlx5_ib_mr *mr, u32 xlt_flags, u32 pdn,
+ 				 unsigned int page_shift);
+ 
+ #endif /* _MLX5_IB_UMR_H */
 -- 
 2.43.0
 
