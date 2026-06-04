@@ -1,47 +1,47 @@
-Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011046.outbound.protection.outlook.com [52.101.62.46])
+Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010046.outbound.protection.outlook.com [40.93.198.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F4326738D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AFE261B8A
 	for <patches@lists.linux.dev>; Thu,  4 Jun 2026 01:28:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.46
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.46
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780536486; cv=fail; b=Oe6X0TT/NAgx3mUoarWkwXUcaZ2U8J9jaAI2je7guXud3qqm/79EMDTLTuv/BARPehddBhorblvVcpVh6mp6IF7ERimRBfnoYkvp/VLo8jc/APUH/TjvAdQ6yPt5/QF/i3tIywxN8QkN2c43ML3nPC+tN1dgO+aBdACK/MwQb7c=
+	t=1780536487; cv=fail; b=ChbPT54xdrZ+PiMW78uAsX3oIpl1GNCCy8Imh4cmcTzahybLq5h1mgDuLXVRHmm1DhJFBzHNW+7xYG2S9E4Fwt+IoHlQny7u9g9EuBCwUjIFZ3NuMSqNDpxxj7d+TZ6bFBGIsiD4dqMl8veYZGAmbhgBdxnr7KeflEaU0nVo3x0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780536486; c=relaxed/simple;
-	bh=0X9MpUq9Md6FnrKXnGhbNQv41xEYJssBUDg5quWYhfU=;
+	s=arc-20240116; t=1780536487; c=relaxed/simple;
+	bh=IJEOGHSFcD4C85RZoZgcGGJ768g6jcrI35mqE8r/LoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=U5G88OxnL512YSkiSmoPVx867MYDbeoLswXee7N8aGErpfJxrfvT0yDVdWe53273S+3ZGX5flz43WzOoUirlfblO+vZvQuy5JOZK9szHWDl6M8NucZw//DOkWuyVcEbx+8KuSJ17DV8fQ/GrEmSvudoT2Cv9SWVxqiODkjWXJDA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=luin/KPF; arc=fail smtp.client-ip=52.101.62.46
+	 Content-Type:MIME-Version; b=NsUvQ9zjlkO1jUpIypmlNNG80D/5kAy/vTBpKq480qZAqTcUuHNrudmgrJNnsHEVt39Xh7ntwCgfAyl3vL3zT2vstPLk4nnIkjZG4guPhIebqm/x+/9Q6xqZ5c/mvRHbg+pB8wWdyS01MzVKt1vnrkEPW+sKa/iv91Nq0O0njMs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=MlYptG7I; arc=fail smtp.client-ip=40.93.198.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="luin/KPF"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="MlYptG7I"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kdv+YrecjDn26ZavGIry2ILHGmNiZ92RcrjKYrPvmRLHJZ4denAzRqL/frtMf4JgiczFWC6HALaYMV/dW5KnrUfDPonccy+SMbiPK/q4fk1U2+otMjgpQOFsYyPtcJDddK/7oGR/VvYhalO+AmFNTQPJBC8+g0zqLVNF0NDbRqo8+w1Eg8H3/QzggW/6j+u22VSQF8W5HGnz0W/lFFxE9VzsLvYYGOrhMB/mdgowkf0Dv4B/Bcfg8T7dBBwdeTvtDKvp09KfQ8H1dJm0FDOzvrxHvQ7Mmuaff0StyFIwksQRMjwaJM1Oi4pYOKOqzqLWs9dS9ft7YfkbhCq/KU2EiA==
+ b=GfqznLUHQpdrIxxQa8+eq7AV++xj71cC4I3qhEyKmY+ASvIpage/b6/yGbXwWdjyqp/+5T9eSy/4zYaHP3/1SV5PWyttHVYYsKZzDpV+S8ZbRmBPvIp2oBwl8djpoy1cnfOwAqURH8HNBHLmydw0Bu3AYZncRTDst+my5oPvYzBVpDhA/fFOX5B5Ll22D4QO4NMHPxtOwrW0n+TrPkRbGQ2RihYYO2k6/PfgAeZM4el9YjepgkijwcaxnYH3V5Mlj8uqttGlNVsyiz3cNPezjriG5wnp4ZRzLAKQxFuyAZY036i5ejqR0kQGdw9DFhTL8JhTywg6W5sOYsCmuZjz7A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SGBGKYw7oz2M8QxXeKKqe8YxIDPwlFLk2hYzI2WMBGM=;
- b=MTYBFa4DDXWXRXs5tomaIYHJ9Z/zJMfXsD7YolMb4h9Vb3ht37cdb2W5M1BXf8CBqVJ9K25B1yAfMFa/20d88ZVkoAiQdplxUu++FruZQfI7KVPU3B172Gu+fWBt3ZXhCFS3iDkRPT0WzsZ1lwRf5k7mzkVabWEPWtoFoZjOsvLEr5qX0Bcy23YeDz9u+aH4EQjapy1mJBQ3bgz1Nx4f9r6BmGykgu4nD0Wnj8NenkE7XdaJUKf6pT/IXsI5e/I+dAwy7rMqBlVln2Ze+8C58imohXrue3g24k7hMNuhzXtxFAPN+y5UuJ4PilgXk37UPmaqCID8Ka1MnbxX7dCZYQ==
+ bh=V63qQzWm0ZI6qds22bqDeDpZl121ecfDWJnEARpmwEs=;
+ b=Ry/S+TjHyVCxcDCNs8zDAESIRoCgLCZJuT6N6ExnVXYLEdY4Z3sMWVnDifi60lm//KKrD2TWPKKXh0k0t416y2cllj5/YqEOeab8gkXtAME7A5uAsd0kBhSm9iwT2KEY202XejUFK7GoUWwajS1DThmzMy6rSn63St2Puk0NQAFRKeRuaIV4P8F62lrb2LC3gv2av8f4AdQHSqEfrVTWOI/rEpmyh86pQezYy5OcubKuk9PYlO43WZxs0jJmnmLCGYAqds7RBGpEOqViavwI6nQK9dK690h0WRkMNVTNmFjpK2YyHYzczu6SPbz2lnzq2JW1p63tIgrEXh9rKuLjRA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SGBGKYw7oz2M8QxXeKKqe8YxIDPwlFLk2hYzI2WMBGM=;
- b=luin/KPFgRXE8HkCPUbFlfBf6C2TzXyCbGb9ifZZYae9HKESZCqAxj8DZ/jGKtkhwheal8UeBxPlnfI3hhT4tyTQbQnkNIEmZJGpWV0k83/FcFoLkdtfqmF/w+Jq1hjOk757OUvnfqhzcTPLJwc8sxzpF2Fzxwtk7KTJRZ2gMCrLyeyIGREer0k0UoqCuwv8AAkCYSNrROK88fxco6vTdrneiNr/J7TShxuoh+PneGGSrfG1kMbWPn1pzt5qOCsdrH+wMNhgSq0HyaTaZYJ6jhG9FT5tDjvINF487zfAeAePXfLt3p0z063JcjxoRi/ozj+Q7c6HtVf3jXpoOgsUAQ==
+ bh=V63qQzWm0ZI6qds22bqDeDpZl121ecfDWJnEARpmwEs=;
+ b=MlYptG7IveBzE337tV/GENl7kg/JlOaV9HDNs4x9KQxTDmB+rQuC2rP+YpLKQp0mEa+039e9ZrJE/Zv7qNg1FH1Y4NgNXyrgPteIzckhD608HbigAf2tReqm05YwMA7rCJ2U/xAx1L5JVXqECz705M9IFPXRBlMWaaNHoacZVIU4setxhF6dzyrxcu9CJq2TJqpAP+uFi9n7vAdGQ4Iai1QxW8jM9s1uyVLLa2LefG5Rhr7PoIGjIuPdmdMlpAx/gq2rHlQYxqqnCuT8gUFyIHqGlmvZ/oAQAgoEnguuK5hZVQNnAES5JmnPmdViPEQIurRBhQYSqFkEbeON3vaQpA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
  by IA0PR12MB8981.namprd12.prod.outlook.com (2603:10b6:208:484::18) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Thu, 4 Jun 2026
- 01:27:56 +0000
+ 01:27:55 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0092.006; Thu, 4 Jun 2026
- 01:27:56 +0000
+ 01:27:55 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Leon Romanovsky <leon@kernel.org>,
 	linux-rdma@vger.kernel.org
@@ -54,15 +54,15 @@ Cc: Doug Ledford <dledford@redhat.com>,
 	Noa Osherovich <noaos@mellanox.com>,
 	patches@lists.linux.dev,
 	Steve Wise <swise@opengridcomputing.com>
-Subject: [PATCH 10/10] IB/mlx5: Push pdn above pagefault_dmabuf_mr()
-Date: Wed,  3 Jun 2026 22:27:49 -0300
-Message-ID: <10-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com>
+Subject: [PATCH 04/10] RDMA/nldev: Fix locking when accessing mr->pd
+Date: Wed,  3 Jun 2026 22:27:43 -0300
+Message-ID: <4-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com>
 In-Reply-To: <0-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: YT3PR01CA0032.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:82::31) To LV8PR12MB9620.namprd12.prod.outlook.com
+X-ClientProxiedBy: YT4PR01CA0350.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:fc::20) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -72,180 +72,258 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|IA0PR12MB8981:EE_
-X-MS-Office365-Filtering-Correlation-Id: 340764e1-4d13-43ce-d306-08dec1d87fab
+X-MS-Office365-Filtering-Correlation-Id: e4af7473-6a2b-4c76-b467-08dec1d87ee6
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|18002099003|22082099003|56012099006|11063799006;
+	BCL:0;ARA:13230040|366016|1800799024|376014|6133799003|18002099003|22082099003|56012099006|11063799006;
 X-Microsoft-Antispam-Message-Info:
-	+A0vstcoaVkPjYPJcGsNI3xY435MjxMnUvyLg9FaDayCrn9/fW8Dy+XqejJuZBtj6TsA8iS96ApMdm/5RT/NAlRX7ajVF277dh5mxqwg15ZWK5sztYZ0tcC+Tv5ujM4JPJtlcnCFV0hebWP8boVIEaA++6pzCunORnbn0m6Wy6AOYROXIu0yV8gVlIwT7aYH7F/+fPTTX6Uzlqe8oEb3psHKtzVy6qUfwBebDKIvU/GapbaKP7pXu1gTGNQjka/m0nZ47ADcBoBFBgD992xElk3RcqBL7wFmNzofxkddZfudnKqS6JXzb/x3E0ut2faGQadRtacXQlnvkkeVDibT3Ai4klT7nX4oDWJBXnbmig+XQ6tl30ZokDZAGRk1YoJF0eW0xkCGNASNbKXyQQIVG3gNh7OdKboBavwjZhUNR/h5lWn1hXOnFJmn5pQ2gyX4C5Ro/IIjibqs1fCntEMr8GdLpRX8D4ikug3PDFZR1h8VSykktGNFwz03PPro/UYbtNNPtv1rHBiwlNUT4NJ3MX7b/utl4TIFp/ijdb4GDS9A5Gp5f7KueEX4xOQiUenQuolYx94zGkbGoOkJauMxHEPn6gyJOhnv/h8IEg9sZt5VlNGcINvKOxmbBh8Be5NAtPEHYV5xP10C2WyuhXT5cANzBCceQzlYc/IdzAoI08iM/AyMV+uviN5CHL+vpxJ+
+	uCrO9KF1jsuk8zzMBx39zX0TPujDLv55GIUrp2cahBtzCbbSrehC2tkWxb901W7yJHjXz2+27yG7/H6DS0FjrvFj+MtkCvGNVv3QUmlTvkRkyb8uVeyxMqBT1vgqznS7XZqtUnkSB00u7OOhIvx9CmBmmt+7ArdXFj7bsKRxqJ55cC78hOk6+3//0vEDyhIToE3RDtFqVE0hswwK43U9/j7UOMELBx0UxUmSipVHryiO2LQu40M39KKwNJlO0YNaF7VgryaDMpa5GsF/GJMPVHu7TJpJQrY1iZd1W8sCdGXeeqQprYxwJCzJVAkz5/DQh8NlETi4P+R8wUMNCs8ZBMx2HSg8U+bM86FxYFNZjem/87fNe5V9SEWSWgZ6s8e+CK/rCOt4/PkBSBvBOxhWzwMDqo8IAmYtTIBETGNuDamoSk0E+6f5+rhxL/dVYz/x8t0BmHUZoK4/3hbSXra7RVj8fOgRe9xD6uenRceQJ1moZ9e6tgA46SYHW+aTa8fosa2eh2EXZVWbAZAa4qLWI5U6AGxXXvOCexm7xQXBM4qZ5TzVB/z36Zf/CY1HB4d1eVVGdswRN0QN3zy+kMDUklaYd9YbeDQVXJascrUvVomlQa5vQKroW45JgJvKMDEI+33kEPG9WFBw0PGzLgwZIkYRhekr+3LSY9ETu+U1Bi0KTZOCLLKe3X6XL6xnq9lk
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(18002099003)(22082099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(6133799003)(18002099003)(22082099003)(56012099006)(11063799006);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?HG4S5VVJkRishujDDIARO7EGQUBth34U8I8+Cr0vFEmVXy/6rzngZMpalCRx?=
- =?us-ascii?Q?oLCuH+L6UUybNOC71bD79H7y5xxG+hBYBwKTAhGIjIy7W9h0ZXatjukH3Rhe?=
- =?us-ascii?Q?MFymFic3FD9f6Ql/vaDgDdD+bpzE9NEQj4irJ7srtWQnF/LBWZVIvRyF+Zbv?=
- =?us-ascii?Q?YbzTBOK46DgWbG3aARwhvWWaphlcbplXR+OehGtdKc6WxSC4lffM2fkpLr6t?=
- =?us-ascii?Q?KgnInmTt11PdDR7yncWRmGemvDcGdnE5yUQRCN5Zr2JH3OVfasYT16SVrprA?=
- =?us-ascii?Q?AreNUcaCFXQUazqKDXrzS0hbe3AM8lBDCsYG+pkE1orAA+V5/WG1JnRoRlCS?=
- =?us-ascii?Q?hfmTIyh/2y17VGJGZhlT/znX2zF8oQVwXmeb1yRc+YZT/98DqWktgks6Pm0o?=
- =?us-ascii?Q?dbAJt1uY/flyDhC1777gaqy+mTYuFyPg5LlYMtO4xolsTKRz+izRn7FuUUBY?=
- =?us-ascii?Q?2irtWNr8pgkfNKHyhAvQojyvaZ9C3Vq6jvinCSjQOyAeZyGkKpSBC0VnKJvo?=
- =?us-ascii?Q?rPlsCE4tXLFzx/ckEgO1L5spfBqWdFNNtkgr5pQuwqaV7nP3HrgQ5z0TBlVF?=
- =?us-ascii?Q?23ky19xnu/IKfuGI0PP1h53XzTEHeAjYfo/W6iLTm22OG1PJgDaSuKsqvJIU?=
- =?us-ascii?Q?srnEnBaBnb8r793cMrLDw1qaXLHh3YgBl7LZ2BZvUk7OiCaeUt0YWgyls7x8?=
- =?us-ascii?Q?qpkzzv9rPsn9iq8iRNwjLVlZNHPkQMyMKe9yhiOBtJRMueN4eKQ6/iH33wFn?=
- =?us-ascii?Q?lcJ+hYk78a4fUuNx4g+aORViqDWy1Od2Q7La+U0qxTdF9ySazBkL12RDuKNV?=
- =?us-ascii?Q?MFMotCUADitXFQnw1TuqCxKFH7KYaTkF51JmuceonHQTvqUp1fVaxiosMI7q?=
- =?us-ascii?Q?O7yvCTSUtXP8ue2i/hnEi1Ch2et9uL1uBsy+GC9V+iygz41EWmSP45zOFGs3?=
- =?us-ascii?Q?GfqA7wgdMsKDLvBmx6LaqkK7dkXDu5gyksDaWfNBMa2TgAIPwmASZ8tGRVw1?=
- =?us-ascii?Q?89e3p8LnldCVRoyk8rSOEEtyMzHQIXE18pncgAF5ynWPABTJ2yCXX/Mb2dTm?=
- =?us-ascii?Q?BR11dLcXZQuikWIZhhYWu56WMZ3K6bMFLhF2G2eqQdrLR/91LaBPLvId2Auu?=
- =?us-ascii?Q?AFsyLHaUHtpKsYFMNqN2Jg3SZoydUsyVX/fpP+vPjrvj51i6xWZ7zpPhnHUb?=
- =?us-ascii?Q?nESlmWYIsExwgYfbUTgnlwMCUPROz55w8eIOsd4m+K99HvpZTwo3eLD/dWzm?=
- =?us-ascii?Q?1l7w4l4VNYFy7Oax9MSyJNExapysqVIZaAibxipGJoQbZxsM2l+pGBq0wvA/?=
- =?us-ascii?Q?lhp6OseVhFE8/GXSiPOXRWj7eVHuJplaWsqjIjdDj37mswfYzpMv1qNMG6qc?=
- =?us-ascii?Q?w1TvJUfte4WIalwoY/zHc47K3hhaht1GVcuyYWgOPfJMUfY71iy4H/GHr/4Z?=
- =?us-ascii?Q?zg+7hbm7HZRCFJHCqiyRgBa804ixbKDjOPeV3VH+z9ckbnjxvTGFtqhEkAtc?=
- =?us-ascii?Q?v46US5CEw3T4mA5sGU+pVWAVQ2DtI3fXrMD8KK79jsw9I4uO3WGkDPGemqZP?=
- =?us-ascii?Q?0HUkHRnaUVtf1xmRUMQN8cP59e70KDDrI6uu+Qnh4hsCARn1AjzuL/1yLcDI?=
- =?us-ascii?Q?GCB9iLeTc58HoMsKTgvdSLH3xQsLOvEJouAd2ml4/kqNIySzp085Vl7rU9B+?=
- =?us-ascii?Q?vHnBYLSGowpfmwM+4aaDudoEZ1PWtC3Gpnyu7qye4U+I2yeB?=
+	=?us-ascii?Q?jFRh/WDZTz6HMHwt75z6L3Lydr0Hz0zzKpYqfivXJsRBBtiTH0B10KlCGk/R?=
+ =?us-ascii?Q?JO9PrgUWa87xgyKGanOZGi3ISFBsxBsn7Nl3wZQVPfNBCAHj7Ts4OSv2NTIA?=
+ =?us-ascii?Q?YozHa/MiFsy4t6/QqpXWCnR2xeDFkoi1WwrMv5E5665qzyoNQFasxFAPGtCc?=
+ =?us-ascii?Q?CB2a28c0pI8nKz9nb8/+P+6gGc6bCMXo6f68d77LYVoioqBWUsjLfS26yrz0?=
+ =?us-ascii?Q?YGVGD/trMNbAHJylwALvNAdQA67Tw63X4I+bxsVefBEO+PFoEROU7BKvJcj+?=
+ =?us-ascii?Q?BY5MiPaCQgesz5aY2KYFGMjkY5L6oWRXXOa7p+a+HgB4BmVhCCgK60CCIpLV?=
+ =?us-ascii?Q?DmfbUT+AY9B2vdllvcQiMLDt9XpYYj/BqpLUKAYvlNdCSuQ79qwNE10BCVBq?=
+ =?us-ascii?Q?w/ZeYUdDqplS0NYrb+rp2Oy7WSwdzWxdOLue+NBWzdun9gumK7USk24F2xhH?=
+ =?us-ascii?Q?yRH2r0c9grUkgTzrMqHCbQ8O8fq9cgM2wqjlEbtbeQ1OXrIbLxLwdtbbl7l5?=
+ =?us-ascii?Q?iecmFfYXGM7Z3rR5UZbM7M7P1rcmSY5730yRkkYxOmQb9WZnJuQZE9T4tlmu?=
+ =?us-ascii?Q?hghhgmOIMjnlDvv+87uCGvuvvo2XO4mC28nG4EDjKh3bNkOopQi13RRBJImJ?=
+ =?us-ascii?Q?ITf2IWSyta/LW00qfDoZakcpVIHHNcdo0CqOwP9l23V6mkB+YLPRrZmL90Px?=
+ =?us-ascii?Q?CAIeTVGqBghi/DCioL7nCmSPawGFlW/OZTABe92lmzgtFrquTRrHiG81xCmD?=
+ =?us-ascii?Q?b+nUsl3I5eRL40f2brnFVcdgs2ORupBI0GacMncivJdhP0yGdUhBg+XjfSzc?=
+ =?us-ascii?Q?8k/A40sQXV5OwDGWdxUDLc3f2mYgnqRvgoNDhTunUM8LRdjDcDvxSXwjO5JX?=
+ =?us-ascii?Q?Z5Dx0hCfgKSqFymfaOos1J807DzvdSkuUzHsHBPLjmVNnx62Wohw3L3F6iJE?=
+ =?us-ascii?Q?KRdshcNZ2Uz+ExpkX2Q9OXB3HjKAyG7q2lzdLVQLq/dCtFHkdnFW0OfRu8qo?=
+ =?us-ascii?Q?ykOI8tsCHvM5us4Z/0rX3HeX37AFfcHY++vBdecFRoLS3yyDyB5XXrWIis3b?=
+ =?us-ascii?Q?StT0yzE9YYh57t1Sn9hzOS6EsIefNqqBG7aq7ssiJZxNQEScp1ZoqKA7RPUo?=
+ =?us-ascii?Q?908i6iHD75UBMPt+zKky+3Nv4DLxIEWoJLvVPRPez3m4/x2kKEpvr7ls0Jfx?=
+ =?us-ascii?Q?S5txEg6FzH1X5TcM3vEpnUb/LWnQtzKPioSvqgvp9/Tli5GHk/DNFsIQAgrF?=
+ =?us-ascii?Q?U19B3Yz2A1/dyR9gMlmKrEfQCfq87zKUVitaeXB5lo1wXSzF7+ZDiqKK+mAd?=
+ =?us-ascii?Q?4uoCFbuVWBT/iLTC143ZzS4uOfugDonSzd48axOxXy/VFZn1LQKD8nFBucCX?=
+ =?us-ascii?Q?k5rj2BuLHEwake27IgjROG9D83jIUAESW9wr1N7TQSj+JHNBpt4VOBGhcHyF?=
+ =?us-ascii?Q?ZlzAJlXHUrGOHks1suWo3TqR2CLIzAdxRxYeTNQ65X688+ivOOO9XaEQ+gNJ?=
+ =?us-ascii?Q?yTsBDf/TN3na5FA8PrEX45HUOFyKJfQ8W6AE6xa60Ls7rwb9dsdaPcPl3vSB?=
+ =?us-ascii?Q?6sfwmYTZ1HjT2LE1LW+MCF81C0/STvEdZE6/FN327zOkFyyrA8j4h2I31rGQ?=
+ =?us-ascii?Q?j9QRABDkpQQk+hbY43vivBEBjdtkdbR6RRxNOspsTFqRIIV8AYGROGQUEZsa?=
+ =?us-ascii?Q?eMV/baMWlcqPa9HOFm0Xo5RIpDu1BPtpAZuA9HyxZXMhx1YL?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 340764e1-4d13-43ce-d306-08dec1d87fab
+X-MS-Exchange-CrossTenant-Network-Message-Id: e4af7473-6a2b-4c76-b467-08dec1d87ee6
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jun 2026 01:27:53.5395
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jun 2026 01:27:52.4070
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: qoUqHqcwe+b0C8mdB+xcgF3X6/jA9D9wxbFqr+aevSeDJDsL30vNtAwen1rNDDdC
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9qI3aicnFQSIAkUe1AkABHd4hpZZDQZJQ3rutA0+UfdljhSDyWhN0lcPZIt+No2k
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8981
 
-Remove the mlx5_mr_pdn() inside pagefault_dmabuf_mr(), the only user of
-the pdn is the init path which is inside an ioctl.
+Sashiko points out that, due to rereg_mr, the PD is actually variable and
+all the touches in nldev are racy.
 
+Use mr->device instead of mr->pd->device.
+
+Getting the PD restrack ID is more tricky. To avoid disturbing all the
+happy paths, add an rdma_restrack_sync() operation which is sort of like
+flush_workqueue() or synchronize_irq(): after it returns, all the old
+nldev touches to the mr are gone and everything sees the new PD. This
+makes it safe to reach into the PD pointer.
+
+Link: https://sashiko.dev/#/patchset/20260427-security-bug-fixes-v3-0-4621fa52de0e%40nvidia.com?part=4
+Fixes: da5c85078215 ("RDMA/nldev: add driver-specific resource tracking")
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/infiniband/hw/mlx5/mlx5_ib.h |  9 ++-------
- drivers/infiniband/hw/mlx5/mr.c      |  2 +-
- drivers/infiniband/hw/mlx5/odp.c     | 21 +++++++++++----------
- 3 files changed, 14 insertions(+), 18 deletions(-)
+ drivers/infiniband/core/nldev.c      | 15 +++++----
+ drivers/infiniband/core/restrack.c   | 49 ++++++++++++++++++++++++++++
+ drivers/infiniband/core/restrack.h   |  1 +
+ drivers/infiniband/core/uverbs_cmd.c | 10 ++++--
+ include/rdma/ib_verbs.h              |  5 +++
+ 5 files changed, 72 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-index 1c88a11f8dfc93..74613f53483384 100644
---- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
-+++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
-@@ -1213,11 +1213,6 @@ static inline struct mlx5_ib_pd *to_mpd(struct ib_pd *ibpd)
- 	return container_of(ibpd, struct mlx5_ib_pd, ibpd);
- }
- 
--static inline u32 mlx5_mr_pdn(struct mlx5_ib_mr *mr)
--{
--	return to_mpd(mr->ibmr.pd)->pdn;
--}
--
- static inline struct mlx5_ib_srq *to_msrq(struct ib_srq *ibsrq)
+diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
+index 5aaba2b9746ba6..02a0a9c0a4a6ad 100644
+--- a/drivers/infiniband/core/nldev.c
++++ b/drivers/infiniband/core/nldev.c
+@@ -695,7 +695,7 @@ static int fill_res_mr_entry(struct sk_buff *msg, bool has_cap_net_admin,
+ 			     struct rdma_restrack_entry *res, uint32_t port)
  {
- 	return container_of(ibsrq, struct mlx5_ib_srq, ibsrq);
-@@ -1423,7 +1418,7 @@ int mlx5_ib_advise_mr_prefetch(struct ib_pd *pd,
- 			       enum ib_uverbs_advise_mr_advice advice,
- 			       u32 flags, struct ib_sge *sg_list, u32 num_sge);
- int mlx5_ib_init_odp_mr(struct mlx5_ib_mr *mr, struct ib_pd *pd);
--int mlx5_ib_init_dmabuf_mr(struct mlx5_ib_mr *mr);
-+int mlx5_ib_init_dmabuf_mr(struct mlx5_ib_mr *mr, struct ib_pd *pd);
- #else /* CONFIG_INFINIBAND_ON_DEMAND_PAGING */
- static inline int mlx5_ib_odp_init_one(struct mlx5_ib_dev *ibdev) { return 0; }
- static inline int mlx5r_odp_create_eq(struct mlx5_ib_dev *dev,
-@@ -1455,7 +1450,7 @@ static inline int mlx5_ib_init_odp_mr(struct mlx5_ib_mr *mr, struct ib_pd *pd)
- {
- 	return -EOPNOTSUPP;
- }
--static inline int mlx5_ib_init_dmabuf_mr(struct mlx5_ib_mr *mr)
-+static inline int mlx5_ib_init_dmabuf_mr(struct mlx5_ib_mr *mr, struct ib_pd *pd)
- {
- 	return -EOPNOTSUPP;
- }
-diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
-index 46847054491f50..193f874482edf1 100644
---- a/drivers/infiniband/hw/mlx5/mr.c
-+++ b/drivers/infiniband/hw/mlx5/mr.c
-@@ -969,7 +969,7 @@ reg_user_mr_dmabuf(struct ib_pd *pd, struct device *dma_device,
- 		mr->data_direct = true;
- 	}
+ 	struct ib_mr *mr = container_of(res, struct ib_mr, res);
+-	struct ib_device *dev = mr->pd->device;
++	struct ib_device *dev = mr->device;
  
--	err = mlx5_ib_init_dmabuf_mr(mr);
-+	err = mlx5_ib_init_dmabuf_mr(mr, pd);
- 	if (err)
- 		goto err_dereg_mr;
- 	return &mr->ibmr;
-diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
-index 2dcc4f5339f9d3..1badec9bf52708 100644
---- a/drivers/infiniband/hw/mlx5/odp.c
-+++ b/drivers/infiniband/hw/mlx5/odp.c
-@@ -836,17 +836,15 @@ static int pagefault_implicit_mr(struct mlx5_ib_mr *imr,
- }
+ 	if (has_cap_net_admin) {
+ 		if (nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_RKEY, mr->rkey))
+@@ -711,9 +711,12 @@ static int fill_res_mr_entry(struct sk_buff *msg, bool has_cap_net_admin,
+ 	if (nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_MRN, res->id))
+ 		return -EMSGSIZE;
  
- static int pagefault_dmabuf_mr(struct mlx5_ib_mr *mr, size_t bcnt,
--			       u32 *bytes_mapped, u32 flags)
-+			       u32 *bytes_mapped, u32 flags, u32 pdn)
- {
- 	struct ib_umem_dmabuf *umem_dmabuf = to_ib_umem_dmabuf(mr->umem);
--	struct mlx5_ib_dev *dev = mr_to_mdev(mr);
- 	int access_mode = mr->data_direct ? MLX5_MKC_ACCESS_MODE_KSM :
- 					    MLX5_MKC_ACCESS_MODE_MTT;
- 	unsigned int old_page_shift = mr->page_shift;
- 	unsigned int page_shift;
- 	unsigned long page_size;
- 	u32 xlt_flags = 0;
--	u32 pdn = 0;
- 	int err;
- 
- 	if (flags & MLX5_PF_FLAGS_ENABLE)
-@@ -865,10 +863,6 @@ static int pagefault_dmabuf_mr(struct mlx5_ib_mr *mr, size_t bcnt,
- 		err = -EINVAL;
- 	} else {
- 		page_shift = order_base_2(page_size);
--		if (mr->data_direct)
--			pdn = dev->ddr.pdn;
--		else
--			pdn = mlx5_mr_pdn(mr);
- 		if (page_shift != mr->page_shift && mr->dmabuf_faulted) {
- 			err = mlx5r_umr_dmabuf_update_pgsz(mr, xlt_flags, pdn,
- 							   page_shift);
-@@ -915,7 +909,7 @@ static int pagefault_mr(struct mlx5_ib_mr *mr, u64 io_virt, size_t bcnt,
- 		return -EFAULT;
- 
- 	if (mr->umem->is_dmabuf)
--		return pagefault_dmabuf_mr(mr, bcnt, bytes_mapped, flags);
-+		return pagefault_dmabuf_mr(mr, bcnt, bytes_mapped, flags, 0);
- 
- 	if (!odp->is_implicit_odp) {
- 		u64 offset = io_virt < mr->ibmr.iova ? 0 : io_virt - mr->ibmr.iova;
-@@ -951,12 +945,19 @@ int mlx5_ib_init_odp_mr(struct mlx5_ib_mr *mr, struct ib_pd *pd)
- 	return ret >= 0 ? 0 : ret;
- }
- 
--int mlx5_ib_init_dmabuf_mr(struct mlx5_ib_mr *mr)
-+int mlx5_ib_init_dmabuf_mr(struct mlx5_ib_mr *mr, struct ib_pd *pd)
- {
-+	struct mlx5_ib_dev *dev = mr_to_mdev(mr);
-+	u32 pdn;
- 	int ret;
- 
-+	if (mr->data_direct)
-+		pdn = dev->ddr.pdn;
-+	else
-+		pdn = to_mpd(pd)->pdn;
+-	if (!rdma_is_kernel_res(res) &&
+-	    nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_PDN, mr->pd->res.id))
+-		return -EMSGSIZE;
++	if (!rdma_is_kernel_res(res)) {
++		struct ib_pd *pd = READ_ONCE(mr->pd);
 +
- 	ret = pagefault_dmabuf_mr(mr, mr->umem->length, NULL,
--				  MLX5_PF_FLAGS_ENABLE);
-+				  MLX5_PF_FLAGS_ENABLE, pdn);
++		if (nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_PDN, pd->res.id))
++			return -EMSGSIZE;
++	}
  
- 	return ret >= 0 ? 0 : ret;
+ 	if (fill_res_name_pid(msg, res))
+ 		return -EMSGSIZE;
+@@ -727,7 +730,7 @@ static int fill_res_mr_raw_entry(struct sk_buff *msg, bool has_cap_net_admin,
+ 				 struct rdma_restrack_entry *res, uint32_t port)
+ {
+ 	struct ib_mr *mr = container_of(res, struct ib_mr, res);
+-	struct ib_device *dev = mr->pd->device;
++	struct ib_device *dev = mr->device;
+ 
+ 	if (!dev->ops.fill_res_mr_entry_raw)
+ 		return -EINVAL;
+@@ -1017,7 +1020,7 @@ static int fill_stat_mr_entry(struct sk_buff *msg, bool has_cap_net_admin,
+ 			      struct rdma_restrack_entry *res, uint32_t port)
+ {
+ 	struct ib_mr *mr = container_of(res, struct ib_mr, res);
+-	struct ib_device *dev = mr->pd->device;
++	struct ib_device *dev = mr->device;
+ 
+ 	if (nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_MRN, res->id))
+ 		goto err;
+diff --git a/drivers/infiniband/core/restrack.c b/drivers/infiniband/core/restrack.c
+index ac3688952cabbf..cfee2071586c16 100644
+--- a/drivers/infiniband/core/restrack.c
++++ b/drivers/infiniband/core/restrack.c
+@@ -71,6 +71,8 @@ int rdma_restrack_count(struct ib_device *dev, enum rdma_restrack_type type,
+ 
+ 	xa_lock(&rt->xa);
+ 	xas_for_each(&xas, e, U32_MAX) {
++		if (xa_is_zero(e))
++			continue;
+ 		if (xa_get_mark(&rt->xa, e->id, RESTRACK_DD) && !show_details)
+ 			continue;
+ 		cnt++;
+@@ -276,6 +278,53 @@ int rdma_restrack_put(struct rdma_restrack_entry *res)
  }
+ EXPORT_SYMBOL(rdma_restrack_put);
+ 
++/**
++ * rdma_restrack_sync() - Fence concurrent netlink dumps on an entry
++ * @res:  resource entry
++ *
++ * After this returns any concurrent netlink dump threads will see the current
++ * value of the object. This is useful if the object has to be changed and there
++ * is not locking to protect the nl side. Eg for mr->pd. This effectively
++ * destroys the object from a kref/xarray perspective and then immediately
++ * restores it. The kref is acting like a lock to barrier concurrent nl threads.
++ * Callers must ensure rdma_restrack_del() is not concurrently called.
++ */
++void rdma_restrack_sync(struct rdma_restrack_entry *res)
++{
++	struct rdma_restrack_entry *old;
++	struct rdma_restrack_root *rt;
++	struct task_struct *task;
++	struct ib_device *dev;
++
++	if (!res->valid || res->no_track)
++		return;
++
++	dev = res_to_dev(res);
++	if (WARN_ON(!dev))
++		return;
++
++	rt = &dev->res[res->type];
++	if (WARN_ON(xa_get_mark(&rt->xa, res->id, RESTRACK_DD)))
++		return;
++
++	old = xa_cmpxchg(&rt->xa, res->id, res, XA_ZERO_ENTRY, GFP_KERNEL);
++	if (WARN_ON(old != res))
++		return;
++
++	task = res->task;
++	if (task)
++		get_task_struct(task);
++	rdma_restrack_put(res);
++	wait_for_completion(&res->comp);
++	reinit_completion(&res->comp);
++	if (task)
++		res->task = task;
++	kref_init(&res->kref);
++
++	xa_cmpxchg(&rt->xa, res->id, XA_ZERO_ENTRY, res, GFP_KERNEL);
++}
++EXPORT_SYMBOL(rdma_restrack_sync);
++
+ /**
+  * rdma_restrack_del() - delete object from the resource tracking database
+  * @res:  resource entry
+diff --git a/drivers/infiniband/core/restrack.h b/drivers/infiniband/core/restrack.h
+index 6a04fc41f73801..75b8d1005a984b 100644
+--- a/drivers/infiniband/core/restrack.h
++++ b/drivers/infiniband/core/restrack.h
+@@ -27,6 +27,7 @@ int rdma_restrack_init(struct ib_device *dev);
+ void rdma_restrack_clean(struct ib_device *dev);
+ void rdma_restrack_add(struct rdma_restrack_entry *res);
+ void rdma_restrack_del(struct rdma_restrack_entry *res);
++void rdma_restrack_sync(struct rdma_restrack_entry *res);
+ void rdma_restrack_new(struct rdma_restrack_entry *res,
+ 		       enum rdma_restrack_type type);
+ void rdma_restrack_set_name(struct rdma_restrack_entry *res,
+diff --git a/drivers/infiniband/core/uverbs_cmd.c b/drivers/infiniband/core/uverbs_cmd.c
+index 91a62d2ade4dd0..22793e4b1895e4 100644
+--- a/drivers/infiniband/core/uverbs_cmd.c
++++ b/drivers/infiniband/core/uverbs_cmd.c
+@@ -47,6 +47,7 @@
+ 
+ #include "uverbs.h"
+ #include "core_priv.h"
++#include "restrack.h"
+ 
+ /*
+  * Copy a response to userspace. If the provided 'resp' is larger than the
+@@ -819,6 +820,10 @@ static int ib_uverbs_rereg_mr(struct uverbs_attr_bundle *attrs)
+ 			ret = PTR_ERR(new_pd);
+ 			goto put_uobjs;
+ 		}
++		if (new_pd == orig_pd) {
++			uobj_put_obj_read(new_pd);
++			cmd.flags &= ~IB_MR_REREG_PD;
++		}
+ 	} else {
+ 		new_pd = mr->pd;
+ 	}
+@@ -866,9 +871,10 @@ static int ib_uverbs_rereg_mr(struct uverbs_attr_bundle *attrs)
+ 		mr = new_mr;
+ 	} else {
+ 		if (cmd.flags & IB_MR_REREG_PD) {
+-			atomic_dec(&orig_pd->usecnt);
+-			mr->pd = new_pd;
+ 			atomic_inc(&new_pd->usecnt);
++			WRITE_ONCE(mr->pd, new_pd);
++			rdma_restrack_sync(&mr->res);
++			atomic_dec(&orig_pd->usecnt);
+ 		}
+ 		if (cmd.flags & IB_MR_REREG_TRANS) {
+ 			mr->iova = cmd.hca_va;
+diff --git a/include/rdma/ib_verbs.h b/include/rdma/ib_verbs.h
+index 9dd76f489a0ba4..46568a5221f403 100644
+--- a/include/rdma/ib_verbs.h
++++ b/include/rdma/ib_verbs.h
+@@ -1977,6 +1977,11 @@ struct ib_dmah {
+ 
+ struct ib_mr {
+ 	struct ib_device  *device;
++	/*
++	 * Due to IB_MR_REREG_PD pd is not a fixed pointer and can change. For a
++	 * user MR, this value should only be read from a system call that holds
++	 * the uobject lock, or the driver should disable in-place REREG_PD.
++	 */
+ 	struct ib_pd	  *pd;
+ 	u32		   lkey;
+ 	u32		   rkey;
 -- 
 2.43.0
 
