@@ -1,134 +1,119 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B414748AE00
-	for <patches@lists.linux.dev>; Thu,  4 Jun 2026 17:38:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77EC03C3439
+	for <patches@lists.linux.dev>; Thu,  4 Jun 2026 19:30:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780594714; cv=none; b=YNRxWu5JR17mK6o956ylh5FA8OdmXNH+xzDblGrgr7aHUrpsg3245suGQFTIzKTcf/mcUZDxBV1tiZJMC1uIeU1nfpcLr0DuJ4E9oZqlc2EDEiAKjGROS5fXVbS1QXtt0ulfvnMeFtPxbdpr+72XOhqNRJrzKw5urGnYrp9LpQs=
+	t=1780601452; cv=none; b=DVy2gtJVqgqZp2u/Oy28anCtTRsnr2iYqzIJVS9b9swJMQMKzZ9dyE268jYwiMh64PZsousIAA0R7OesjIRgoOOIloZcdAUyx15IERakgWPxgHqiHPx6MD0ArHnh/n+XKpVYAlX6IwUQMjxJYKAllMrzeNFIwBo1ggcT3traFyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780594714; c=relaxed/simple;
-	bh=v2KH0A+T/5unV0mAelk5zB+47zjGgz9MT7jM30vb1s0=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JWU9M70b7mEQBDT4xPiK/iHzHOdvscj+B9mYzLimHbWff5jxj1t7DMr6JrQTiTfoOFB1cAw2p65feNSdwn2etpCoW66rlqGC+HI4ibFmC3vQXJ5u9rE/gdz+xH+RH2Ua/2hiXoZNsYHmbbNVRfwuic5K6O/7JNy1xK5gdmfkg4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HP5Jyc51; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780601452; c=relaxed/simple;
+	bh=d97FFwmE32XoeNnLtg7CNSRYTgucvS3+TBVC4MKcTx0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LEikVtwotu1jAUn6elb+WszkAFnZ6VGkd2tAs4LIv5+G1hBqIAIjiHMc5i4m6rwPOWAWHkV2NqeFpb7b8Gao3jpj0Kx2PRVgWGoOFuIB1qZwDq2l4mR6MfdgbIJf1pU24TMW8+xQvVxF6WTS7NJWKaNCkhRyODvxTfHk8FGskJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=OsNJN4SU; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HP5Jyc51"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-490b12270b3so6531855e9.1
-        for <patches@lists.linux.dev>; Thu, 04 Jun 2026 10:38:32 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="OsNJN4SU"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-bef47b1ac01so177885066b.2
+        for <patches@lists.linux.dev>; Thu, 04 Jun 2026 12:30:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780594711; x=1781199511; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aDxRgk4KLva6cv7jp07s/JuZGm0Suw+6/YbYX6FRPfQ=;
-        b=HP5Jyc51S0triCv3j/+oLKoHPDR/HX6BHPEVmIvSBI34dIZ3bSLmQGm6scqfeRthPL
-         Pq5uW0EbhfmcKUOUU37tlh2feif+jQF4PF/TgBdIAbpz0XEf2JwZ9ruLC/x5+VRgg6Mw
-         QpTaTH064iPDWFTooCplzocsk1ldaA/9Lgzlg2EQzp8AcWZGj5ZKbYaF3AN9L7F69f/v
-         E1OoqVLMkIUzm2Aq2aigzrrNK5mYeoR+MUNZuosMQYxraazQaSorrMFWGu9RZ2xP1mGL
-         /R2qdkcyI/13whfxMfK0EUnCzcF3QmHhICrCig3zYk3D1dtlDtdXNhnjknplm70FbcaA
-         364g==
+        d=linux-foundation.org; s=google; t=1780601449; x=1781206249; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=/vRjXw0GxoiIE6driNbyJfpHo79+KlSJNRDFpalZAbE=;
+        b=OsNJN4SUujNxCXzrLGPht4QRj75VthB/IXFEA3kzaJLEEh62fG/l5z4FVBkq0mltjX
+         ZhcUnkM5hR0qUsyckycqOrdFTaquNUb63iKyK2d/ERsmGebEvS7RYDb5FqoymXJEDmTi
+         jk9nJjq7YqcHuIP43wiS1NlAhysEYVNVOh1so=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780594711; x=1781199511;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=aDxRgk4KLva6cv7jp07s/JuZGm0Suw+6/YbYX6FRPfQ=;
-        b=GP26tZ0L9djoqjWG88KkD4kh8m72T9l5VftbjSUQBRZsCv++wdGz8sEwnWAgwLhaZK
-         g8Wvdu5CeIVsukSWm7/xeXs6vGJVITofydwCgNAkIj69FFEZ+xHs6ttGl2KD22L4Vv8k
-         4ojKvFo9G25SOul15u/t0XTtXC/iVc1joRmoxReVAOqJAYRE/w5vFhVn+KdQfGoshc4e
-         atDnNxTEwB7dwQfgfVkMAh3xi2MLu9suTFw6e4ZN6v02FsdUzUnrvQN45deMsoelW1sv
-         MZJ1wRmepEgGAdYHAqaYV6D3wRoBV2jI6Gr2kB2lEAFf7iWL0cXbeRaMvIGqRvRKG2Wm
-         QcjQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/iDHZp6PiHGu9BM+9piiezz1q6uh+Um8pf5EQ1UVbDn3Iue1khN2uQzZNSM6K8I2enrjSxUuu9@lists.linux.dev
-X-Gm-Message-State: AOJu0YzK0hUb2d+pIcLHICpyKDHATNZvhbGVswvBgDQ10ivDO3DO1mbj
-	dQj/Y3cX8aNcswOWCUYfaaI+aElYuByGNKfr1+jCd5brSr5zCociLDZF
-X-Gm-Gg: Acq92OEgRPF/dbWwU29KWmrgg1MrJZJviA6lLgiLSad3GW4Okbdu3RUba9Ap+rPXrDf
-	pFQu7hom0yfTaPY4EPZgbaUCFXcikOyvv8lxDyZNhGmm/X69WJ8pjF012ikB4eBljoPt+onnnPO
-	FcXCBeApHdEIaMoDRjjVV2CaQzgiTn990mM9MA4rHpRZ4MBD4qs5IxxE/uFHPA4KfCNwt9aCGZb
-	585NUfYihFHImhNX1Rq9c2hLIz9bBhOTKQEJF98Oz6EJ0bbk2z1UaiBFlzxvMPI+WVcFzQYGIs6
-	Fg12TncfRVl65raFyYeFzR04ylmONh0H3b0xJFIYsHO0pd8buSE89Jy5OygU0lfh844boIR3jwL
-	9xUTa/DzTcmm0faZKQYB66XZe1YfWo8G2DYlF1X5uVBMRDd7FLdb3atUF2nuto+d/iqzaUz348a
-	nadJ74z6wYr4gYTlHZniCt+AI1V1/GKACKk2efUAjKPmxZy7elfLNxmrg9HG8LffQ6pqihCJc=
-X-Received: by 2002:a05:600c:1c13:b0:490:b642:ce29 with SMTP id 5b1f17b1804b1-490b642cea1mr153777325e9.8.1780594710934;
-        Thu, 04 Jun 2026 10:38:30 -0700 (PDT)
-Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490bc3cc140sm105657875e9.9.2026.06.04.10.38.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2026 10:38:30 -0700 (PDT)
-Date: Thu, 4 Jun 2026 18:38:29 +0100
-From: David Laight <david.laight.linux@gmail.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Askar Safin <safinaskar@gmail.com>, metze@samba.org,
- akpm@linux-foundation.org, axboe@kernel.dk, brauner@kernel.org,
- david@kernel.org, dhowells@redhat.com, hch@infradead.org, jack@suse.cz,
- linux-api@vger.kernel.org, linux-fsdevel@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, miklos@szeredi.hu,
- netdev@vger.kernel.org, patches@lists.linux.dev, pfalcato@suse.de,
- viro@zeniv.linux.org.uk, willy@infradead.org
-Subject: Re: [PATCH 2/3] vmsplice: make vmsplice a trivial wrapper for
- preadv2/pwritev2
-Message-ID: <20260604183829.63c35fd9@pumpkin>
-In-Reply-To: <CAHk-=wjvb56qo27-axALOKCY-CjLsj9_294zeBovPVJaYm14dA@mail.gmail.com>
-References: <f919874c-065e-48be-ac5b-300c4ab86d4e@samba.org>
-	<20260603211736.755139-1-safinaskar@gmail.com>
-	<20260604100609.6b37f500@pumpkin>
-	<CAHk-=wjvb56qo27-axALOKCY-CjLsj9_294zeBovPVJaYm14dA@mail.gmail.com>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
+        d=1e100.net; s=20251104; t=1780601449; x=1781206249;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/vRjXw0GxoiIE6driNbyJfpHo79+KlSJNRDFpalZAbE=;
+        b=WVRxdPksPxuHMkma4/f2ys+FtKrpXBKMMSoN5Uw+JThBkYB5oue26tV4lOfIKwKVrc
+         TEjmfYFtVL3p9r4ftzp2vNBefmUV5+SPEa23JKyekTAIsTac8Vw99UgMNhKjEPIKEbh5
+         UiZRbjEjgWlx5Ing6PCUS8YG5KYlkWtcztZRVEXwAuG5Oo0N4PC/Wi+ZRmUacQJFzREU
+         DNhgwTnRkN07M81/JTUn9Mm8SJLoebCXvHIY15SAuwEoqE/w8m2PRri0hzd37kpcztQw
+         JgPWcidY/FPwL+Uxsd79D0DTZdxvNdHvHhLryRcKBK0j8SjgGIUz/AuK8TUVwclfnv4k
+         KYaQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8J0BDbZxiRH1p67n9abR6xqTAP22B9j5Y5PZrs1iUJ9wq3OY0f2eqgDg8EzfWu96b8GV5mbWe7@lists.linux.dev
+X-Gm-Message-State: AOJu0YyUYkGLNU63bpV1FAWZvoyo0jJX4aj/EOqQsTowcLumagCT6Xby
+	3GVD3EDEcj5j06NgoUaUsSUQQfthZNaMBb2TXZbOldbnS0MdBos8PPxB0VIhZ5XlLljijcvq5TS
+	NfmfDYo9TdQ==
+X-Gm-Gg: Acq92OFO883Hdy+wPVcCu/Cz0bLCo47rkPG4T3jaZJC4Npubl5gVmojF+7DNH/5P70H
+	YvwI2FW0aTjYITlgJxiNzjmlqgueLleQgCDa/3zUU1BgrpbSf0EscIHe7Vid2LRccZsrBsjn8Rp
+	DKN/zq6pM/EoCZb0QfwdDurEBgoq5WN5TQVFif3k0f+lNGJnbXfVVo/2NlD1wcqqMnJVloAMGUA
+	LMTtTmvzMj5y73VVUDt2j5zUh1AwfzH3DRw5buRBDh6qEAPFsCsHTnvDvgE0XjD8y/CNjf5p/ir
+	891instoO61PsoDVdgLej9I5psf804XY0bKJWijbJr2hCHX9NG64nwDJtOAfb4t9oYcHaiUHBjL
+	4w1HxHVTbbAaO+gpcUVhtvOt4GuAtt/+Wl46OQ/L8juAlwewUesSww3O55hu8b4bYvyvEKGButC
+	pcf5+2Q5XHPIZ2AdJ6yiv02EbVFlUx6TYjQ0u8en2D/vEUP8XpSgxKP/JchiVa7GzzYTDOnjcw0
+	vqGqUYICpk=
+X-Received: by 2002:a17:906:846a:b0:bed:19af:f8a7 with SMTP id a640c23a62f3a-bf36fd9c54fmr3214366b.9.1780601448908;
+        Thu, 04 Jun 2026 12:30:48 -0700 (PDT)
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com. [209.85.218.52])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bf054e03716sm340158166b.34.2026.06.04.12.30.47
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Jun 2026 12:30:48 -0700 (PDT)
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-bdb3fd39045so142625366b.3
+        for <patches@lists.linux.dev>; Thu, 04 Jun 2026 12:30:47 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ8X0X1QxSZmZYQPgEPxNS8RjBOiNLc0iX6mSCBJ9Vr5wA+uiAiq4GWaRCIhknK+BaVXQPLS/wDT@lists.linux.dev
+X-Received: by 2002:a17:907:3e20:b0:bf3:fe:1d5d with SMTP id
+ a640c23a62f3a-bf373306d04mr3098066b.43.1780601447577; Thu, 04 Jun 2026
+ 12:30:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <f919874c-065e-48be-ac5b-300c4ab86d4e@samba.org>
+ <20260603211736.755139-1-safinaskar@gmail.com> <20260604100609.6b37f500@pumpkin>
+ <CAHk-=wjvb56qo27-axALOKCY-CjLsj9_294zeBovPVJaYm14dA@mail.gmail.com> <20260604183829.63c35fd9@pumpkin>
+In-Reply-To: <20260604183829.63c35fd9@pumpkin>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Thu, 4 Jun 2026 12:30:30 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wip3mwLOHOYJ9TtjDxOaq9YUXmuCg2AycyASGgeY6qqUw@mail.gmail.com>
+X-Gm-Features: AVVi8CdPQe90u6Sxnc7w9w1KvqakJpNEvGXvNsTMWUZWIferNC2FIUNZ3K7Amh0
+Message-ID: <CAHk-=wip3mwLOHOYJ9TtjDxOaq9YUXmuCg2AycyASGgeY6qqUw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
+To: David Laight <david.laight.linux@gmail.com>
+Cc: Askar Safin <safinaskar@gmail.com>, metze@samba.org, akpm@linux-foundation.org, 
+	axboe@kernel.dk, brauner@kernel.org, david@kernel.org, dhowells@redhat.com, 
+	hch@infradead.org, jack@suse.cz, linux-api@vger.kernel.org, 
+	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-mm@kvack.org, miklos@szeredi.hu, netdev@vger.kernel.org, 
+	patches@lists.linux.dev, pfalcato@suse.de, viro@zeniv.linux.org.uk, 
+	willy@infradead.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 4 Jun 2026 07:17:10 -0700
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
+On Thu, 4 Jun 2026 at 10:38, David Laight <david.laight.linux@gmail.com> wrote:
+>
+> Bool is another matter entirely, (IIRC from a couple of weeks ago)
+> gcc will assume that the low 8 bits of the parameter register are
+> either 0 or 1 and clang assumes that the low 32 bits are 0 or 1.
+> You can't even check with 'if ((u32)bool_param > 1) error()' because
+> the compiler 'knows' it can't be false.
 
-> On Thu, 4 Jun 2026 at 02:06, David Laight <david.laight.linux@gmail.com> wrote:
-> >
-> > Something needs to ensure that the high 32bits of the fd get masked off
-> > on 64bit systems.  
-> 
-> That something already exists: CLASS(fd, f)(fd);
-> 
-> It ignores the top bits, because 'fdget()' takes an 'unsigned int'.
-> 
-> We have been a bit random in how we declare the system calls in
-> general, and we mix 'unsigned int' and 'int' and 'unsigned long'
-> pretty much randomly when it comes to file descriptor arguments to
-> system calls.
-> 
-> fs/read_write.c in particular uses all three cases with no real logic to it all:
-> 
->   SYSCALL_DEFINE3(lseek, unsigned int, fd, ..
->   SYSCALL_DEFINE3(readv, unsigned long, fd, ..
->   SYSCALL_DEFINE4(sendfile, int, out_fd, ..
-> 
-> but then anything that uses fdget() (through one of the helper classes
-> or not) will simply not care.
-> 
-> Does it make sense? Is it pretty? Nope. Does it matter? Also nope.
+Nobody should ever use 'bool' as a system call argument. Anything that
+takes a boolean should take a 'flags' field with bits.
 
-I know it has mattered elsewhere, and is easy to get wrong because
-'mostly it works'.
+But this is basically what a lot of the SYSCALL_DEFINEx() macros are
+all about - sorting out ABI assumptions.
 
-At least u32/u64 is reasonably sane - the called function has to ignore
-the high bits (at least on x86).
+For example, on powerpc (iirc - maybe it was 390), a 32-bit argument
+is always sign-extended by the ABI, and the compiler *depends* on
+that. But at system call boundaries we can't trust that the user side
+actually follows the ABI, so SYSCALL_DEFINEx() will actually take a
+'unsigned long' and turn it into a 32-bit argument so that things like
+this are well-defined and you can't fool the kernel by not following
+the ABI rules.
 
-Bool is another matter entirely, (IIRC from a couple of weeks ago)
-gcc will assume that the low 8 bits of the parameter register are
-either 0 or 1 and clang assumes that the low 32 bits are 0 or 1.
-You can't even check with 'if ((u32)bool_param > 1) error()' because
-the compiler 'knows' it can't be false.
-It all dumps you down one of the UB 'rabbit holes'.
+The same would be the case if some system call actually takes bool
+(but I don't think such garbage exists). The SYSCALL_DEFINE() macro
+magic would take the full register content and *force* it to follow
+the ABI conventions, whatever they are on that platform.
 
--- David
-
-> 
->                   Linus
-
+              Linus
