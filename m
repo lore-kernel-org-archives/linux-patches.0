@@ -1,106 +1,87 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E8D31E821
-	for <patches@lists.linux.dev>; Thu,  4 Jun 2026 23:25:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2ED3380FC1;
+	Fri,  5 Jun 2026 01:57:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780615526; cv=none; b=LdIBUwk/In50YCXGCKy2dft8myMaqEVJ8Epo4HWdy8MhwCUXhM/fCv/VCp3ashgL1E0GBnmbi1auY6eDCnMNGfR5wvPulyzSKEZjDDPEibUWOZ1luzJB1rrCgYABRFlXMXAorfGNJycYSWRNneULH90Z41YjF0naHygfgM0EvoI=
+	t=1780624658; cv=none; b=YaAwXcRzk1GPsDMyAobyXw5QivNFUkKlvsW/YzYO7J3R32bIeVwbBd1wOJVv5iauS8TBF23gxRGtVdUiE/CDHuJli8VleKNvymdGeSTad6R9AUGyT0g08ZtnzHlkYBp8LbyvTE8+NPdskHW1zXdQ9xxL+Hf4ljU5STgARzRzsUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780615526; c=relaxed/simple;
-	bh=YcOxrIBH2BpZdGTvyCaML4gFpZ+luYLhgZonf1vLcN8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O0IteuXMMFjkToWwa7QM+DEulLOnvy6lopDCXcF4me/vMIZ58hfiPM+f9Rr8+BSgskjfiX8TA+W42z3f1H3E2KH0fVmNc5i23LyNoHlYck9IP6dlvLf00Qk8IOJaOgWkEJ3suvVoPonRf21vFN2psTM1B4OAH4vV64K+mfk0u9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WPd7/09T; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1780624658; c=relaxed/simple;
+	bh=FyD284KL2h6kq9Zsrb0/HR/oaReskZnD6LUfv9AEEkE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SIecx0VqdRaoEhJqTr0/tT+gNAqMHhbqjiblHILGFqOyJFxd+P6WCML/8h29qY/WXsQMxdf7/Fnn4JEedZqPFoOWMHmhrWOV8AYWAqrqEZud2wUwRgvJlBTv1cdSkQyMVoY2pzwF84dnOmogdaA9i3Jfep2U/MIDqUn6qjCGc0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h5kFVbKG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WPd7/09T"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-46013161068so640772f8f.2
-        for <patches@lists.linux.dev>; Thu, 04 Jun 2026 16:25:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780615524; x=1781220324; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=afznK2o04gyhM0m9icIwY9Iwej89NrlffaDAhI1G0qM=;
-        b=WPd7/09T3U69rxyk3isCTd9gDmq35Sbs40eiQpBc/lRxQZMbCv3toOBJJozHVUOqqG
-         +by94WifjwjXtyBHzo9JbS7nldt0UCtLGyrSLYSCKVhRzqzH6X4HTST/xlGbba8BdTxk
-         eYvs/Cwp0SOMFZIKMVXTvDUI9Ij/6jX2V7cUn9efga3qi3EieWBF/WXd2gEFJArWIDph
-         TwcD9suH4OWmkNnWG+cGwKascPrTttNXPqy+jOumWJ14gyyNojHNWpJl1LEKafvPmBNl
-         wP7dnwMsLh5I3pzVmCBDMJLHeoB+Mp2DRyn6JnJUvqZjAfw+JyJzyaKQAkAlGMDhOWh4
-         2nag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780615524; x=1781220324;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=afznK2o04gyhM0m9icIwY9Iwej89NrlffaDAhI1G0qM=;
-        b=pQ1N4FpKAUfYu4wwIUew9tslsPBpWi/MfqKVv+ggLHMgydpzalv+F6Duaadm2VWPcP
-         6V1EtM6XuwdoPDdJzwmuAGCfKw0GBJh6N1XIbCKh0uNvZHSvn2QNpl6cqE5SWlp3W5OS
-         nZHSUWmgw6eEU8mf6rW4HgvWuWni0sVprtsERNUBNHWAvUloVxfmaDAFIzF+AYTRuBcL
-         CTuY1t9hC5LO3tfPO16X6WLvU/0epFeX04SjZkioJDwPDnSIaw+2ucvQu6SO+/7tFsZ/
-         2vY/FqmsrS+LUcqHtpf5SlDPbDd5VOH0769QqFdB0rrFhVOCyVM5ZtXV3MsEdO4kCY3Z
-         MBjw==
-X-Forwarded-Encrypted: i=1; AFNElJ/s39FwG+liSz5WgLPwy8x82CHkQ+9yqT2Dz07LLyvdUOZDnRFXVPWzMijRFEUep5CYpAO/QUuO@lists.linux.dev
-X-Gm-Message-State: AOJu0YxuGiZGb8w3cCtAURxBnrATnpktHYr4ky0JgmvZk9QUHZeNJvZP
-	6bRI5COn69LgK+q6JDFl+gwIuU7N5rE2eZbCAKdDFf48Qc6tHZaHaYkG
-X-Gm-Gg: Acq92OGAVjYR8qlaM6XnO14i8u3klejB0b4W9ztkzEniWti+XCRvIxDdxDVL5cnfk/T
-	WFqjFhRXx1Zz7iF5sABxzlfaf8cSq7yc47qCQdlaIhETTUaVoSX5ga94Cwbv3dA9eYhiqI+X49L
-	qZcKShTKidewGJXuPBCKdtGcCRTaVzViPgN03JQfgtUpiqGYvA1FyJvYW7JQoeAL+3fnqWYx0Ta
-	wVfAQ2b86JpvRvtKy5hzPGt8PiRW/75kGQZ8XucfNriKkfeS5CZP+ajjeZrweyE98epIwZ/iwPT
-	r8IIoo/xs+p867q+ANRzH0PyJS2LNzf5lW9n/KUP4bMxtu7roEf9yShB1AkNu/rFwSLdne8pk+e
-	xNSwV5vMsNTJKk0N5UgJgyXmU4aQ5nhdikqzp1uIk/XY0D5dD1INsaTizhN1UyqiG7h0ivxB8De
-	lagdJCUxHhpN6wVH/OSp606EFoTKtetQ==
-X-Received: by 2002:a5d:4e49:0:b0:460:1ab4:6623 with SMTP id ffacd0b85a97d-460306429a0mr1128044f8f.27.1780615523601;
-        Thu, 04 Jun 2026 16:25:23 -0700 (PDT)
-Received: from localhost ([212.73.77.104])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-4601f3529e0sm20375107f8f.28.2026.06.04.16.25.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jun 2026 16:25:23 -0700 (PDT)
-From: Askar Safin <safinaskar@gmail.com>
-To: david.laight.linux@gmail.com
-Cc: akpm@linux-foundation.org,
-	axboe@kernel.dk,
-	brauner@kernel.org,
-	david@kernel.org,
-	dhowells@redhat.com,
-	hch@infradead.org,
-	jack@suse.cz,
-	linux-api@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org,
-	metze@samba.org,
-	miklos@szeredi.hu,
-	netdev@vger.kernel.org,
-	patches@lists.linux.dev,
-	pfalcato@suse.de,
-	safinaskar@gmail.com,
-	torvalds@linux-foundation.org,
-	viro@zeniv.linux.org.uk,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h5kFVbKG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4348B1F00898;
+	Fri,  5 Jun 2026 01:57:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780624651;
+	bh=hSMeDgYWfG9legqy7nLxVx38jDi5V+SRhptqZ18fLp0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=h5kFVbKGgWVM4/By8YauS1zHj3ZfSM7nv7xk5g47JSYjO4uExbSJ8vU62gwc4dAjb
+	 9QQCREwAtgUZqllgZ0AZ8AUIqgkKZFTwlNCOGAb9zpcS8ZM+lT1XkImHiYqor5wnS1
+	 /XlH4Q1yDcsbIC2OsFk+IKqTlK9WBNa20C5VrMvxCEruIE9fHYYaJ7JmPuzX3Wtp2i
+	 3EghSwMOFry9oSJBFg7uVX9Lsap2HZmy+EoldQIf4mz2RbBTkpKKaPMVrv4PmoLKgA
+	 g6YTizz/03AnztZfkq647HYGn7jqBBAF5k1WupLx5j698k7fx5hbgFDH/ed/3FrRFy
+	 43v2riFR3o/4g==
+Date: Thu, 4 Jun 2026 18:57:24 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: David Laight <david.laight.linux@gmail.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Askar Safin <safinaskar@gmail.com>, metze@samba.org,
+	akpm@linux-foundation.org, axboe@kernel.dk, brauner@kernel.org,
+	david@kernel.org, dhowells@redhat.com, hch@infradead.org,
+	jack@suse.cz, linux-api@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-mm@kvack.org, miklos@szeredi.hu, netdev@vger.kernel.org,
+	patches@lists.linux.dev, pfalcato@suse.de, viro@zeniv.linux.org.uk,
 	willy@infradead.org
-Subject: Re: [PATCH 2/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
-Date: Fri,  5 Jun 2026 02:25:18 +0300
-Message-ID: <20260604232518.1896014-1-safinaskar@gmail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260604183829.63c35fd9@pumpkin>
-References: <20260604183829.63c35fd9@pumpkin>
+Subject: Re: [PATCH 2/3] vmsplice: make vmsplice a trivial wrapper for
+ preadv2/pwritev2
+Message-ID: <20260605015724.GA520134@ax162>
+References: <f919874c-065e-48be-ac5b-300c4ab86d4e@samba.org>
+ <20260603211736.755139-1-safinaskar@gmail.com>
+ <20260604100609.6b37f500@pumpkin>
+ <CAHk-=wjvb56qo27-axALOKCY-CjLsj9_294zeBovPVJaYm14dA@mail.gmail.com>
+ <20260604183829.63c35fd9@pumpkin>
+ <CAHk-=wip3mwLOHOYJ9TtjDxOaq9YUXmuCg2AycyASGgeY6qqUw@mail.gmail.com>
+ <20260604223216.73468830@pumpkin>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260604223216.73468830@pumpkin>
 
-David Laight <david.laight.linux@gmail.com>:
-> I know it has mattered elsewhere, and is easy to get wrong because
-> 'mostly it works'.
+On Thu, Jun 04, 2026 at 10:32:16PM +0100, David Laight wrote:
+> Talking of broken compilers, had you noticed that:
+> struct foo {
+>     int a;
+>     char c[32];
+> };
+> 
+> int b(struct foo *f)
+> {
+>     return __builtin_object_size(f->c, 1);
+> }
+> returns -1 (size unknown/indefinite).
+> You can't use __builtin_object_size() to stop code running off the end
+> of anything referenced by address - even when the size is constant.
 
-I will send a patch, which will change that argument back to "int".
-Hopefully today.
-Also I will add that "wait_for_space".
+That is the entire point of using '-fstrict-flex-arrays=3' in the
+kernel:
+
+  df8fc4e934c1 ("kbuild: Enable -fstrict-flex-arrays=3")
+  https://godbolt.org/z/bvfrh7W58
+
+Without it, all trailing arrays in structures are treated as flexible
+arrays, even those with fixed sizes.
 
 -- 
-Askar Safin
+Cheers,
+Nathan
