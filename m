@@ -1,134 +1,175 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050AD3C65FA
-	for <patches@lists.linux.dev>; Fri,  5 Jun 2026 08:23:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9103CD8CA
+	for <patches@lists.linux.dev>; Fri,  5 Jun 2026 08:35:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780647804; cv=none; b=WH+3g5qVav3XY0gyGsIhtHdppSdj2BaJqLuVHcqoWKbAbQVP9x0ETXp0rgvTEn7gZjDV8cpTI/RK+zwKq1knBvwIKgP0ad/REOqkJ9nBaqij+milxFmqvh3wuXnWKjeqD5vz7TvwUIysLMjLfxBhlF2FkA/oEXdETnjI1Plxz4A=
+	t=1780648535; cv=none; b=nRjIXP8MoX9ZO4A3RnzqHc12a21Qu2hsSR0HVZ4DWbt2IpvG2fN7S72MEQOL5WuTUn6sQnm3Z1g1XTp9Zt9+okh198RpYA5ZYiLdymYQ3mK/bvwtGGEZJ6PJYuJ/m9mLeK4pV5Qs6nur40oU/vj95JKREgb9kWwovLOHujuY1dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780647804; c=relaxed/simple;
-	bh=eAlKvP2gsEfRQmVOZv1allmZysrFKO1fn5IMvtPZQiI=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z6HrV1l8KEsHa/higSKq1/YxJiBpNBQVXa4CWhMhBu2hXBj8SPAz5KyGlfCM3RZMIpzuUzTaNQo2HZ1J35GvzbNw16KrDZnVq1x5ZXgsOLmeTN8aCEwo1cLruoM0wfJomSaHbk+Dc8MA8nznWP+yaB2Q1V5Kg4qEA6u4HyrFFQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZENBaDX0; arc=none smtp.client-ip=209.85.221.41
+	s=arc-20240116; t=1780648535; c=relaxed/simple;
+	bh=lDo/awf12mnu0rXStjbYUQ5yncxlrbhWIgSdHpfq9pY=;
+	h=From:To:Cc:In-reply-to:Date:Message-ID:MIME-Version:Content-Type;
+	b=rXt+c8d4QRu+xgh6A8Ga1hrbAbDY8KzaBY8IMk9w+zwlBiI5PQgn5/jLR9JaAvB6noFe1jd8d9Ej+ijmHOGNN8N+YLeigKq/B/ibyov5jtEn4sXqJv5GcV9wGqIIRDMZIDeOY/uhtXyB9/ut6KI6YdbbB5Aa4lpyulRjFzxFY9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CpaLyU3/; arc=none smtp.client-ip=74.125.82.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZENBaDX0"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-45efb698ef2so773844f8f.3
-        for <patches@lists.linux.dev>; Fri, 05 Jun 2026 01:23:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CpaLyU3/"
+Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-304d0ac5e3cso2838461eec.0
+        for <patches@lists.linux.dev>; Fri, 05 Jun 2026 01:35:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780647801; x=1781252601; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/ncylH/iADc8ME04RgleGvGv2QOfG/3EuEqLEAZ+XWA=;
-        b=ZENBaDX0jv5RIMjvMv8PLkTUgG64zghaORa+d7wYbYLV06tLABlqTONGyALYusbnVf
-         pKb84cqeO2jHo4Tl/rgVb6lFaS6Wc9xb09xRVP7W+K5yYhjF9sk8Yk/cEB6bpP5f88o3
-         C1A6Z3cnB7V+gsFSR3rHH8qpQQ9nLCU7IAF+QRR0F7NlRTiFgor0cHY26NN58BzXhPfR
-         x3RrUpSH4LzHp88xjCDAqmZa8bCwzdQOhnxYx0DXfYrqRlaMxkVRlog+4uyGavb6EsLG
-         gWykColyYpxWwib+wmVy8mJ54Uc+glxVNfazliB+EmPYcVgr4Wfnx+w7iFzePrfWFxYn
-         4klg==
+        d=gmail.com; s=20251104; t=1780648533; x=1781253333; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :in-reply-to:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=G2QbVMMAjVZgPuV1Q0/veKQfSmVHwoFIoMdSdS/WIZg=;
+        b=CpaLyU3/YqOtt7bQDJM7iAGRBprH9D7GaTnTXVJCBBM2fyD1URF4Ms/Sh/DGEM8TUV
+         vjAZSTEOO/HL7LlgA75LXq6WewH/V+BHJGh57X+D3uo3LWX9afPdOyvk7wpb0XKcewB0
+         Q4Q1Zp0nwu5L7CSx2blHLdc3D8oaePzyF85XgjHYYBTYKxf0HBUNJAHJDnjGCZ3s0DsN
+         A0eQA8LcIH8UTBMc7Is49rDdWNVAAaBcrl5kScuvlBmNfI/8tOSHeyYWBBXcMJT4W6du
+         lhxF4a1e4n7ES+xddGEnWmZ9c1NX4JxlitzawqjGGYstjjVgup4m30YHKgWKu/vLn+PA
+         8EAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780647801; x=1781252601;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=/ncylH/iADc8ME04RgleGvGv2QOfG/3EuEqLEAZ+XWA=;
-        b=LZ9SX7d9b87pNxqcsFSdcrZNLC+sBZdWQkJHbZIObaXhfKsgCtfnpeahm+sHYhgYV1
-         0emwnSx2y+e+CRNG13xTWupBLQ7Qjtyv0cVUj1ZRsZX2Ul2LCCzdNgJH4PHoG/XpBcuP
-         cD+V5t+xkRy2V8AzdJeJBOT0MKSJEUy4tUROgDct/osH55qvmDPfDfs5uCzacFRDBjW4
-         qc766AV6Ct3/P74zW3Yr5my08LXsF31x2VnKz1+jCJPsHAVbYQLQ4jO+OdmbLq4wx2bd
-         TvrF5WVX6eX+8N0gpzXz3pvi0mtbnOI4xrbOjBS4wLlWAqcL0N5/hErmdFiZuO8xX75M
-         vbRg==
-X-Forwarded-Encrypted: i=1; AFNElJ/wDyFBBRh2wWXFU7s50eV9knJRlbBMJ5wglW3xAZbl2atRLVzuMSCdH60kIw9J1hbfca5snd1C@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxu3tPeQEkcui6ZrpEW5uRqgdD27aKVXkgj5arxeiZyJLeu7ThU
-	lnMHaW73h0f/ehEQQStx+skOc+Tgg22foJ9H6bwrBKcCOjtEsk1aVq7I
-X-Gm-Gg: Acq92OE4jihWo6BnKi0q2M7/kQoXW8pNYa+i7XH+1mRxt7rpVKp98VsgzRmv0xXRPyF
-	feujcK2kM4KHUP/JVrbyHa89vMvMvrn0oAlnx2wjhHxDK/0gnuy57rcN449bAGjM7kFjD/Dq9Lk
-	kmcJMMM4ozn7qanmI0Bo90Yjpv4DzDPdVLb6IdvztA268GhKNnOxwdLV8Gcw6/semvMA7rpaBJu
-	Rds3aHaWaW7PfQiahoR37MkESUpz9vpii5Hia/uChRzzqcZFXKmqzuk9Zc1Ve5qLZBm82N/scgC
-	yP3uG0URhVKDdPCgyt/FQBUnmpHMStWdVnfs2FlVBoVXrvhwsUKrhLSslk9vfHpemzTR/lyKoJy
-	4NEQsYOlDhFVvuz9Zntp9LDhxFMDmx5GXusZRr9HERVyYnavOAaMJqF+A69keuSD0X1tA8ryHtB
-	d07Xk9zR9i0qPJmqfYLl6IfiLJEVQPq2fOin1BidQg/iDbwV40DfCg15/iowJE29Ls7TyFI6VgE
-	gqX0MF/Ew==
-X-Received: by 2002:a05:600c:4fc6:b0:490:51e9:deba with SMTP id 5b1f17b1804b1-490c2615a5cmr34498005e9.27.1780647801274;
-        Fri, 05 Jun 2026 01:23:21 -0700 (PDT)
-Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f2f67c6sm23925419f8f.16.2026.06.05.01.23.20
+        d=1e100.net; s=20251104; t=1780648533; x=1781253333;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :in-reply-to:cc:to:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=G2QbVMMAjVZgPuV1Q0/veKQfSmVHwoFIoMdSdS/WIZg=;
+        b=NSV4c1v6Swq0b1MU9qbQHExZfeJf0t+G+1XiB6bfQVMmuqSAOkOGJQBV5/zNF4Ewwr
+         d6DVC3OKWfGI77tFeAg0228RgwBrXJEZV91gRMX1y/cj1uOvfog4pPVIJyJS7AqRP9pH
+         s5/SPK8GcfekOtYbJGJBglUueGG62rNxshghu45JksHIL8E/iIWcH+6twFTTbO+w/mCK
+         rJK0JM58A/mGA1yQhEDnneKgiH5+4hnwlucfPSOyclkzhqa+KbI8bstk2IN1L4iGg7uv
+         j4gbC2biZ2PZhZ/GBUWye9tMauMx4MradOiSk8+yxbUZPOwVVHB5XQCB9IvyBtXRGEWS
+         cTaA==
+X-Forwarded-Encrypted: i=1; AFNElJ8EdYKsou3JFmLMBWtgLI1jIHdinYNazN5du0yZGQSwFxhP3PbpM4+spATiNMBd33UNOHhZ4uil@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywq7pSPfMvOPQWQ/RakCUDnVgsv3+mr8dFLw5B7uy3LedxWnbCO
+	2gyX5PlQfHGs8PkydBm2AfKrYmtFmeTjA6y76MyM2t7dkohoGS6Tvz8D
+X-Gm-Gg: Acq92OHG4lnSbxnoLRiTBX6/nRZEpc/OxiJy71q63uZK+KnJhBIebfzYsHWySXs9tJQ
+	QRemzKIPrIpAaGosrGCcY6mE976mSJ42vcR45VJ8qkcGBXxMHuTjiHjIe1/mxcTLqAPcAw7+5O5
+	IkIYGs865aAAhtJl5ZCOAHgf0HjHvDOzvngL7xnZaQTLcSuoIgDqHYlAr2qOXl5PK5a0YIiypMG
+	lOva0nGrgpK8sMqTO5uRYbxw7vvqDU4v8sjUS5mzkJiCkjgT7l3H2D9x0ygleqONdVA/E7VgzXw
+	b3h4n1Aa00DJxE0Q0kla+hJDnaMFDIaiPNgJ1mN8GHT8+eYX7TfKQVh5fA4DST/Z99kodjikogC
+	0j7gQsSWP/QO+Q4tTU0K5zUgvrvsP9QNESHEki6ukICF4kLVr0tBjh4kxnHp7NYkIN+HoTcb3Bf
+	xV35/LmpnSkCvGKShcx9eWidqAiXLa3blGqw==
+X-Received: by 2002:a05:7300:72c9:b0:2ea:5057:a304 with SMTP id 5a478bee46e88-3077aeed2fbmr1184583eec.2.1780648532644;
+        Fri, 05 Jun 2026 01:35:32 -0700 (PDT)
+Received: from fedora ([2601:646:8081:3770:10ff:fc71:c346:9948])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074dba046esm6534100eec.9.2026.06.05.01.35.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jun 2026 01:23:20 -0700 (PDT)
-Date: Fri, 5 Jun 2026 09:23:19 +0100
-From: David Laight <david.laight.linux@gmail.com>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, Askar Safin
- <safinaskar@gmail.com>, metze@samba.org, akpm@linux-foundation.org,
- axboe@kernel.dk, brauner@kernel.org, david@kernel.org, dhowells@redhat.com,
- hch@infradead.org, jack@suse.cz, linux-api@vger.kernel.org,
- linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org, miklos@szeredi.hu, netdev@vger.kernel.org,
- patches@lists.linux.dev, pfalcato@suse.de, viro@zeniv.linux.org.uk,
- willy@infradead.org
-Subject: Re: [PATCH 2/3] vmsplice: make vmsplice a trivial wrapper for
- preadv2/pwritev2
-Message-ID: <20260605092319.5a1bba74@pumpkin>
-In-Reply-To: <20260605015724.GA520134@ax162>
-References: <f919874c-065e-48be-ac5b-300c4ab86d4e@samba.org>
-	<20260603211736.755139-1-safinaskar@gmail.com>
-	<20260604100609.6b37f500@pumpkin>
-	<CAHk-=wjvb56qo27-axALOKCY-CjLsj9_294zeBovPVJaYm14dA@mail.gmail.com>
-	<20260604183829.63c35fd9@pumpkin>
-	<CAHk-=wip3mwLOHOYJ9TtjDxOaq9YUXmuCg2AycyASGgeY6qqUw@mail.gmail.com>
-	<20260604223216.73468830@pumpkin>
-	<20260605015724.GA520134@ax162>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
+        Fri, 05 Jun 2026 01:35:32 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: brauner@kernel.org
+Cc: =?utf-8?Q?P=C3=A1draig?= Brady <P@draigBrady.com>,
+ akpm@linux-foundation.org,
+ axboe@kernel.dk, david@kernel.org, dhowells@redhat.com, hch@infradead.org,
+ jack@suse.cz, linux-api@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, miklos@szeredi.hu,
+ netdev@vger.kernel.org, patches@lists.linux.dev, pfalcato@suse.de,
+ safinaskar@gmail.com, torvalds@linux-foundation.org,
+ viro@zeniv.linux.org.uk, willy@infradead.org
+In-reply-to: <20260601-enthusiasmus-canceln-anlehnen-0e62317a9784@brauner>
+Date: Fri, 05 Jun 2026 01:35:29 -0700
+Message-ID: <87tsrh8jvy.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 4 Jun 2026 18:57:24 -0700
-Nathan Chancellor <nathan@kernel.org> wrote:
+Hi all,
 
-> On Thu, Jun 04, 2026 at 10:32:16PM +0100, David Laight wrote:
-> > Talking of broken compilers, had you noticed that:
-> > struct foo {
-> >     int a;
-> >     char c[32];
-> > };
-> > 
-> > int b(struct foo *f)
-> > {
-> >     return __builtin_object_size(f->c, 1);
-> > }
-> > returns -1 (size unknown/indefinite).
-> > You can't use __builtin_object_size() to stop code running off the end
-> > of anything referenced by address - even when the size is constant.  
-> 
-> That is the entire point of using '-fstrict-flex-arrays=3' in the
-> kernel:
-> 
->   df8fc4e934c1 ("kbuild: Enable -fstrict-flex-arrays=3")
->   https://godbolt.org/z/bvfrh7W58
-> 
-> Without it, all trailing arrays in structures are treated as flexible
-> arrays, even those with fixed sizes.
-> 
+Christian Brauner <brauner@kernel.org> wrote:
 
-strict-flex-arrays got added in gcc 13.1 and clang 15.0; it isn't supported
-by the gcc 12.2 on the debian 12 system I'm building kernels on.
-__buitin_object_size() itself is in gcc 4.1.2 and clang 3.0.
+> On Sun, 31 May 2026 01:01:04 +0000, Askar Safin wrote:
+> > This patchset is for VFS.
+> >=20
+> > Recently we got a lot of vulnerabilities in splice/vmsplice.
+> >=20
+> > Also vmsplice already was source of vulnerabilities in the past:
+> > CVE-2020-29374 (see https://lwn.net/Articles/849638/ ).
+> >=20
+> > [...]
+>=20
+> Applied to the vfs-7.2.vmsplice branch of the vfs/vfs.git tree.
+> Patches in the vfs-7.2.vmsplice branch should appear in linux-next soon.
+>=20
+> Please report any outstanding bugs that were missed during review in a
+> new review to the original patch series allowing us to drop it.
+>=20
+> It's encouraged to provide Acked-bys and Reviewed-bys even though the
+> patch has now been applied. If possible patch trailers will be updated.
+>=20
+> Note that commit hashes shown below are subject to change due to rebase,
+> trailer updates or similar. If in doubt, please check the listed branch.
+>=20
+> tree:   https://git.kernel.org/pub/scm/linux/kernel/git/vfs/vfs.git
+> branch: vfs-7.2.vmsplice
+>=20
+> [1/3] tee: fs/splice.c: remove unused parameter "flags" from "link_pipe"
+>       https://git.kernel.org/vfs/vfs/c/a9f7db50ed2f
+> [2/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
+>       https://git.kernel.org/vfs/vfs/c/e2c0b2368081
+> [3/3] splice: remove PIPE_BUF_FLAG_GIFT
+>       https://git.kernel.org/vfs/vfs/c/7d75aa8edfce
 
-Neither are flex arrays mentioned in the gcc docs for __builtin_object_size().
+In GNU coreutils-9.11, released 2026-04-20, P=C3=A1draig Brady added the use
+of splice and vmsplice to the 'yes' command [1]. Afterward, I added the
+use of splice to the 'cat' command, which is now used if copy_file_range
+fails or cannot be used [2]. There were some minor adjustments that had
+to be made to those patches pre-release. However, as far as I am aware,
+they have not had any issues yet which was a bit surprising to me at
+least. Now it seems we are a bit unlucky with our timing...
 
-Someone might have used (eg) 'char x[4]' as a flex array to include the
-padding, but no one would have used anything that extended the structure.
-And the chance of those hitting __builtin_object_size() is even smaller.
+Anyways, I figured you may be interested in seeing how these changes
+affect some applications. I built a kernel from the vfs-7.2.vmsplice
+branch and used a config based on my recent Fedora kernel.
 
--- David
+Here is the throughput on my Fedora kernel:
 
+    $ uname -r
+    7.0.10-201.fc44.x86_64
+    $ yes --version | head -n 1
+    yes (GNU coreutils) 9.11.50-157bd
+    $ timeout 1m taskset 1 yes | taskset 2 pv -r > /dev/null
+    [36.9GiB/s]
+    $ cat --version | head -n 1
+    cat (GNU coreutils) 9.11.50-157bd
+    $ timeout 1m taskset 1 cat /dev/zero | taskset 2 pv -r > /dev/null
+    [9.34GiB/s]
+
+Here is the throughput on the vfs-7.2.vmsplice kernel:
+
+    $ uname -r
+    7.1.0-rc1+
+    $ yes --version | head -n 1
+    yes (GNU coreutils) 9.11.50-157bd
+    $ timeout 1m taskset 1 yes | taskset 2 pv -r > /dev/null
+    [3.41GiB/s]
+    $ cat --version | head -n 1
+    cat (GNU coreutils) 9.11.50-157bd
+    $ timeout 1m taskset 1 cat /dev/zero | taskset 2 pv -r > /dev/null
+    [9.50GiB/s]
+
+Unsurprisingly, 'cat' is not affected since it does not use vmsplice. On
+the other hand 'yes' is 10x slower. I dislike this, obviously. However,
+of course I realize that the average person uses the 'yes' command much
+less frequently than I do, if they use it at all. To them security is a
+far greater concern. Just want to make it clear that this message isn't
+an attempt at getting this change reverted or anything like that.
+
+Anyways, hope the testing was at least somewhat useful.
+
+Collin
+
+[1] https://github.com/coreutils/coreutils/commit/2b1c059e6a06eebbb721d010b=
+1221ec54200cc33
+[2] https://github.com/coreutils/coreutils/commit/457f88513a128ce91160c4a60=
+f821cc1612204be
+
+P.S. It would be fun to test this branch on the machine where we got
+'yes' to output at 175GiB/s. Sadly we do not have root access on it to
+install a new kernel, though.
