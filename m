@@ -1,87 +1,116 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2ED3380FC1;
-	Fri,  5 Jun 2026 01:57:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D1530D40A
+	for <patches@lists.linux.dev>; Fri,  5 Jun 2026 04:47:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780624658; cv=none; b=YaAwXcRzk1GPsDMyAobyXw5QivNFUkKlvsW/YzYO7J3R32bIeVwbBd1wOJVv5iauS8TBF23gxRGtVdUiE/CDHuJli8VleKNvymdGeSTad6R9AUGyT0g08ZtnzHlkYBp8LbyvTE8+NPdskHW1zXdQ9xxL+Hf4ljU5STgARzRzsUc=
+	t=1780634851; cv=none; b=R7PLdxIqyYPSK5IpbvVdp58bvoQQwU8+aMHdDoCR1hXgs+whN067GPSZ36VSzp1VVKIIwzo4YRP6DNOqbYdYz6oeVBQRZ99Vhqt3R0Yxh6V9CCqY2fgFlmZMddCOw0hCMXxTgaqFcek1pPg4rFZTiNUZOiBAqlzR6Z9i0q4ws8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780624658; c=relaxed/simple;
-	bh=FyD284KL2h6kq9Zsrb0/HR/oaReskZnD6LUfv9AEEkE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SIecx0VqdRaoEhJqTr0/tT+gNAqMHhbqjiblHILGFqOyJFxd+P6WCML/8h29qY/WXsQMxdf7/Fnn4JEedZqPFoOWMHmhrWOV8AYWAqrqEZud2wUwRgvJlBTv1cdSkQyMVoY2pzwF84dnOmogdaA9i3Jfep2U/MIDqUn6qjCGc0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h5kFVbKG; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780634851; c=relaxed/simple;
+	bh=97IGAAnBI1e+DTfT29z4xqc4kMta8WlkeU157gOp86U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YSLfv2fZAXubyL9HmHWLDETCxzBseSvGqkTI1CN3GP9kQhLhqJ29PtCf3+9LgTf9hR9SgokoITSZWlJkRogG/X0RKFsDAJahPKpxdNGORx3Fh4ATISq1J3Fhse/GNiv5oLGQ0dF87aDjaLVI6LfCts7+HVRDDuWCJdj5jh7SMP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IXx6LwFa; arc=none smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h5kFVbKG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4348B1F00898;
-	Fri,  5 Jun 2026 01:57:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780624651;
-	bh=hSMeDgYWfG9legqy7nLxVx38jDi5V+SRhptqZ18fLp0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=h5kFVbKGgWVM4/By8YauS1zHj3ZfSM7nv7xk5g47JSYjO4uExbSJ8vU62gwc4dAjb
-	 9QQCREwAtgUZqllgZ0AZ8AUIqgkKZFTwlNCOGAb9zpcS8ZM+lT1XkImHiYqor5wnS1
-	 /XlH4Q1yDcsbIC2OsFk+IKqTlK9WBNa20C5VrMvxCEruIE9fHYYaJ7JmPuzX3Wtp2i
-	 3EghSwMOFry9oSJBFg7uVX9Lsap2HZmy+EoldQIf4mz2RbBTkpKKaPMVrv4PmoLKgA
-	 g6YTizz/03AnztZfkq647HYGn7jqBBAF5k1WupLx5j698k7fx5hbgFDH/ed/3FrRFy
-	 43v2riFR3o/4g==
-Date: Thu, 4 Jun 2026 18:57:24 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: David Laight <david.laight.linux@gmail.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Askar Safin <safinaskar@gmail.com>, metze@samba.org,
-	akpm@linux-foundation.org, axboe@kernel.dk, brauner@kernel.org,
-	david@kernel.org, dhowells@redhat.com, hch@infradead.org,
-	jack@suse.cz, linux-api@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-mm@kvack.org, miklos@szeredi.hu, netdev@vger.kernel.org,
-	patches@lists.linux.dev, pfalcato@suse.de, viro@zeniv.linux.org.uk,
-	willy@infradead.org
-Subject: Re: [PATCH 2/3] vmsplice: make vmsplice a trivial wrapper for
- preadv2/pwritev2
-Message-ID: <20260605015724.GA520134@ax162>
-References: <f919874c-065e-48be-ac5b-300c4ab86d4e@samba.org>
- <20260603211736.755139-1-safinaskar@gmail.com>
- <20260604100609.6b37f500@pumpkin>
- <CAHk-=wjvb56qo27-axALOKCY-CjLsj9_294zeBovPVJaYm14dA@mail.gmail.com>
- <20260604183829.63c35fd9@pumpkin>
- <CAHk-=wip3mwLOHOYJ9TtjDxOaq9YUXmuCg2AycyASGgeY6qqUw@mail.gmail.com>
- <20260604223216.73468830@pumpkin>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IXx6LwFa"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1780634850; x=1812170850;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=97IGAAnBI1e+DTfT29z4xqc4kMta8WlkeU157gOp86U=;
+  b=IXx6LwFaW9xHCAhPfPAhV5Y0hz1WETk33KH3BiWaJkIosYV6QGn6NXLl
+   Yswog9O29ZgIXRtTr0/xx5VFXmBbgjMfwZvmSD8sTYVBzLi3TJXjdjKFn
+   a8V5n1+SomFWNKH/aRaqzWz+aGN9GUfOSM55+4p6QnuCoH+4Kacod3ApY
+   LV2/Uya/Hcr8jmsyFXyxVCA7f+7XKq5FgWIcZSK8dnNOker7t4p2BZ3nb
+   slKddp8sxJ3X6xaXxtm3tFGVJnG2X3yGe0N/wB3W8e7NBROQZmozB5xpI
+   8PdtJjSWNP211JUZxaKvnUUHEibu7dJYFz+wSeY+6e7yAz4TSJCFqi7CR
+   Q==;
+X-CSE-ConnectionGUID: QFmfRpQwSMadKxCC60h8TA==
+X-CSE-MsgGUID: DxUOYr2ES/CoxRB+txOI8w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11807"; a="81212921"
+X-IronPort-AV: E=Sophos;i="6.24,188,1774335600"; 
+   d="scan'208";a="81212921"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jun 2026 21:47:29 -0700
+X-CSE-ConnectionGUID: 2nBrIbehSZKQY1wdB2ZtsQ==
+X-CSE-MsgGUID: ZI7qzas4RwWSe2xNou/ewA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,188,1774335600"; 
+   d="scan'208";a="243658121"
+Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
+  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Jun 2026 21:47:29 -0700
+From: Reinette Chatre <reinette.chatre@intel.com>
+To: tony.luck@intel.com,
+	james.morse@arm.com,
+	Dave.Martin@arm.com,
+	babu.moger@amd.com,
+	bp@alien8.de,
+	tglx@linutronix.de,
+	dave.hansen@linux.intel.com
+Cc: x86@kernel.org,
+	hpa@zytor.com,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	reinette.chatre@intel.com
+Subject: [PATCH v2] x86/resctrl: Only check Intel systems for SNC
+Date: Thu,  4 Jun 2026 21:46:49 -0700
+Message-ID: <9849330f45ac86344cc5ac54df2d313906d70bc4.1780634584.git.reinette.chatre@intel.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260604223216.73468830@pumpkin>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jun 04, 2026 at 10:32:16PM +0100, David Laight wrote:
-> Talking of broken compilers, had you noticed that:
-> struct foo {
->     int a;
->     char c[32];
-> };
-> 
-> int b(struct foo *f)
-> {
->     return __builtin_object_size(f->c, 1);
-> }
-> returns -1 (size unknown/indefinite).
-> You can't use __builtin_object_size() to stop code running off the end
-> of anything referenced by address - even when the size is constant.
+From: Tony Luck <tony.luck@intel.com>
 
-That is the entire point of using '-fstrict-flex-arrays=3' in the
-kernel:
+topology_num_nodes_per_package() reports values greater than one on certain
+AMD systems resulting in resctrl's Intel model specific SNC detection
+printing the confusing message "CoD enabled system? Resctrl not supported".
 
-  df8fc4e934c1 ("kbuild: Enable -fstrict-flex-arrays=3")
-  https://godbolt.org/z/bvfrh7W58
+Add a check for Intel systems before looking at topology.
 
-Without it, all trailing arrays in structures are treated as flexible
-arrays, even those with fixed sizes.
+[ reinette: Add Closes tag, fix tag typos, rework changelog ]
 
+Fixes: 59674fc9d0bf ("x86/resctrl: Fix SNC detection")
+Reported-by: Babu Moger <babu.moger@amd.com>
+Closes: https://lore.kernel.org/lkml/37ac0376-43a3-4283-a3d5-4d57b3bec578@amd.com/
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Tested-by: Babu Moger <babu.moger@amd.com>
+---
+Changes since V1:
+- v1: https://lore.kernel.org/lkml/20260428232657.107381-1-tony.luck@intel.com/
+- Add Closes tag
+- Fix Babu's name in tags.
+- Rework changelog to describe less code and more what it does/means.
+---
+ arch/x86/kernel/cpu/resctrl/monitor.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index 794a6fb175e4..645df3448cbc 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -377,7 +377,12 @@ static const struct x86_cpu_id snc_cpu_ids[] __initconst = {
+ 
+ static __init int snc_get_config(void)
+ {
+-	int ret = topology_num_nodes_per_package();
++	int ret;
++
++	if (boot_cpu_data.x86_vendor != X86_VENDOR_INTEL)
++		return 1;
++
++	ret = topology_num_nodes_per_package();
+ 
+ 	if (ret > 1 && !x86_match_cpu(snc_cpu_ids)) {
+ 		pr_warn("CoD enabled system? Resctrl not supported\n");
 -- 
-Cheers,
-Nathan
+2.50.1
+
