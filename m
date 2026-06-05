@@ -1,114 +1,160 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012030.outbound.protection.outlook.com [40.107.209.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820162FE575
-	for <patches@lists.linux.dev>; Fri,  5 Jun 2026 15:58:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780675139; cv=none; b=dLk3N1Dyvm1Xfj9zA7GDkaryAQStvxcli7JWEIxrmLCjUZhLQBpqjXzjQH/iBlouKZ/68x8f9NIRNf4s/M6YAyaPRKvN0zCP5AS32d0G3XK8ut3jE1HALXQKNVHY22LulubZhPWSeDih5LceUfFwQ13zargejkdvrsshjlD6YA0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780675139; c=relaxed/simple;
-	bh=cHDeiU+5q6zHW354GymA6FXFmgmlOGfgwP7cdr1ffak=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FWV+YYuo17g5E0HiQVh02bbXHGOz+NmmEBnJToQBLbDvof2Db2Pae+bxOAIolYuegJpP7ROdvAyBo9SfFLVuZ3yYZ7/Y1OqpCESNJCLmPjuH6vNiRBj6hLt95VWh+JtR7tevYAY48jwAJRHYYTw4YsPNiCymA/wFpxbP59JUT3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=Bn1It7u/; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BDB83A9D84
+	for <patches@lists.linux.dev>; Fri,  5 Jun 2026 16:08:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.30
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780675686; cv=fail; b=r+mZJg5PCxRDXgUbPuC0oD3raXaNRV3PWGA7R4s2Bt/4lCAOfG9aTDavpqBdFzPoXL7Zp1H6GizNMQfx25cLORJu9xddVXCoThgYcWW5iw/sWzVgRyIwFFM4Ut3n4yJwnPyY054Jeyg9yYR2BC00mFRc1Cs02ocH8QebJX0OuQ4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780675686; c=relaxed/simple;
+	bh=pDDCxx1hBaXvLf1NWh2KUXoaEIWToSCsQZrAlmQK3eM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=sjYFKMLEjhySoboAvX8m5/rhvC6E9AqfBvPqc1GUn9Tb2FrD6bXVm7OHvx6yDFrQkvWhAtuMyZGAcdFYfVNlQD3KLc7vzCVbdoOaUsJaQ9funS9FcI2rB/COeFpTXkxP3pogSjZQxQDcAy6HFJoFMB0o7ZKevr5kPC+sMQ+Xs/c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=nY7YDz/G; arc=fail smtp.client-ip=40.107.209.30
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="Bn1It7u/"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-6912f4acca4so502162a12.1
-        for <patches@lists.linux.dev>; Fri, 05 Jun 2026 08:58:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1780675137; x=1781279937; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=OUZ5QahFiUWTYdBZUTA5YwtlfS/dH2OxVTaDuMHjYEI=;
-        b=Bn1It7u/MRH3X6OdCCj1wYviEkI13P8GtBChdK3iwS+l3o4C9SFr4GFe6iHHbEp6a2
-         r3CxdUGfuKFlIzUCsPuS4EYE3VyW3DH/zxrivybpPUW4I5IcDm0hhIvkosrcY9wVsmnb
-         qQX3fK94b27dJZvzBQFHNgTljfOFUbvm4JsK4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780675137; x=1781279937;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OUZ5QahFiUWTYdBZUTA5YwtlfS/dH2OxVTaDuMHjYEI=;
-        b=KBH4/B6fpf4l/oHRESVbL7ee2jf0QvsHShQhb2AmnJfCW8yueWAWCTKzGKsAbt6pnB
-         ls70v7IHbSeNpIA6x8I9Sg2h/umc0sOOYJ7OfxgV6QD5r07CTrLQE31m2JoJS4ix0AFI
-         Q5CLcrZL67S9B0Hqezhj0P8GzDF4TSWX11ILJu6YlTTyQ5/P7TVYR0H1q7ySoRysko3D
-         X2jH92Szr1nFNqJKE10cxFOrH3VAz0SpVgFWJpMBuWgkcY928zTfPWWnj3rb0ZylEwaF
-         TzQ+yQZPOb/Jie3kl1ziVIndgDbUsbM2tK30UluRlXR6bsO2KZYH+aDEi6lJcCbWrC6h
-         pggQ==
-X-Forwarded-Encrypted: i=1; AFNElJ808ZlXzMblEHOSTyUJ4q65gngNCs96AXXxdBxmRQzCG8ncNz1XcSVHqJSLdKHFLmwhH1cqWajx@lists.linux.dev
-X-Gm-Message-State: AOJu0YwInPGK2zhOChqxQu/5sY3KabUmCM+BToM0tTxxsCLCUoNws6B0
-	iRdqZk2PqXHRGuEE23Kqs1KDziMeuwlNXXd4K5KWfOPWPx67eEqsP5tz7USEOMVaJ+o4mCA9fdW
-	jT2+2nJKGrQ==
-X-Gm-Gg: Acq92OG+RthSv54EYSg0yoJmzRo1C6lrZEK1ue1o68JSVDMxyFImgTn7RrKJB039JOA
-	tS1jkox/yTU+1N/Vx2nQh371wSLkYmHzgdeb50QiWxCGJS/ZipxH3kxFjKSddWmmS91vUh4Wd+H
-	9FknY63a6dmsyu6GwyNSpqKntVLEcfS5deV7j7YSerB6SIOLIWHMv7VvkEqkwjOZt1vUW1ilZxu
-	TOxWxgXwKZ/jFA0M//+jQCTyIN94T8O6EoIREmqRRzeBsFivfSBz5eOoBFQnWeoP/S/wwVai5Y+
-	2uN7yv7YqdPXdq2u4DirR9LItcdJmKzGXSIAzxu+jMPckzvAf5GPnsv2FTD8Y4H71MPnW+LV7rB
-	TEWXnMdkWF+VV1+P6q5IDhGF9wEvjHzFr9x21fUGC+vf2oCOPZycZhFa/VL3Nwe6+qNgLuvXNK6
-	qj+bepIyS1FVBBKkwihbiAi9Nac+4z8MI2B/p80u3oYuXEIFEHr5lVdoXx/89ILtJIuC7Te0p7s
-	9/odO/Z+Oo=
-X-Received: by 2002:a05:6402:2713:b0:689:bbd0:45b0 with SMTP id 4fb4d7f45d1cf-68fa4c1fcf2mr2152276a12.9.1780675136966;
-        Fri, 05 Jun 2026 08:58:56 -0700 (PDT)
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com. [209.85.208.46])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-68e65867e67sm3813103a12.21.2026.06.05.08.58.55
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Jun 2026 08:58:56 -0700 (PDT)
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-68bd167797dso3173342a12.0
-        for <patches@lists.linux.dev>; Fri, 05 Jun 2026 08:58:55 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ/72aQGYVD/v6PofCLV5aKeaRKQtet+5HxrAAScDqFsPl6bGhHtqu1/NnFKgyi+f2vyKmfdWk8e@lists.linux.dev
-X-Received: by 2002:a17:907:a03:b0:be2:dd37:facd with SMTP id
- a640c23a62f3a-bf370e6211cmr221318066b.20.1780675135190; Fri, 05 Jun 2026
- 08:58:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="nY7YDz/G"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yn2wBczbKYEjVCFc4KY1knlGD7e7dNniISCWWin4u3jWVBQtWPJ0VEsZ7nfvQClqFRqLhYEW1CMlgvvHr1+2vuI6XgYmUe2V87OIJqwIrMZP7Yu7wAIB7kC7uetRKYinXWC2a/+n3yM7QeCsjhrYudygr+0YcvwBY/g+51I+Yupbk7eDwckn9MpBGgP/tytTrOP7Bynf7Je+W29ou2txmUjWlpW2JfimO6w8ci+IFpXcQtjS8QJHNZ82W9uiq65FDlGhAeA8Fy7IzCHMWPLttKJBAtizcf1fS2Qm2Jj5GCFMlGoP51vFBqHDTkA/yfURvqceXD3UThN5U8F7UB8t8Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=zyXwD3rfHb/4szf0xyCc7uWEoDdnpge0uX2Z26iPpdY=;
+ b=qHWvWFanOwrKzhbP7ZFp4mVlgWQCYoU+t+RPWPL/kvoUFOvq85gvK9orGuYHvQ1iz5BrLrN1tOpspG6ylUfwP/pIr6AIakx97LcHgb9Ky2O+iwjOMJRcBemk2zuaQbVGFZ/LblOjFxxpsPebNyejrtHu3rpYGshTitxPlahgwQG9tNR4oAPBeToX6Bpf+pD0DsfRsEEqhXb5jnWlINwuUIKJ1rOSVbwEK2gnMdhlaZpdC4ARHg5Q2+YQX2pUq6nG0O1RtwexTEnPqcH+iYWZ6kSPqT0XiapzuEne7CEHCYFjBJIDh/f6Wj+pla3MNNKNlX3n8ftXEbphArANg2AdIA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zyXwD3rfHb/4szf0xyCc7uWEoDdnpge0uX2Z26iPpdY=;
+ b=nY7YDz/GFfAd0GPU6RKNQSYGlkI0xY+TSjNpdBJKTpAa1dn7olr7NgJ/R0u5dPlokaN5q4vgIjy+Sjjyc/NOp1SBS87Niwqimbk8OZsXPF+YiRLQJWGaH6/e153OwQMhyQB4AeigXR1bhtz+Ps24oU3IkdmAZ/ONq9YiixWWKnLaASGcrzqSM+5RZVBCJ/PJh1wKHvxzUjgSnuG7NVJvYMIicvOxGaFfUuj6ayNv/+6tLSnaPQsBJmTmlXMhaAAr3dF5UjXsko1exmBX9h2smaIm2hJQXhL3PzvuMmL3l6i+2iHVRPZ4tssx3hIqv/vHfkDX8moEQ2UkhX5OiRVwzw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by IA0PR12MB7752.namprd12.prod.outlook.com (2603:10b6:208:442::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.9; Fri, 5 Jun 2026
+ 16:07:54 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0092.007; Fri, 5 Jun 2026
+ 16:07:54 +0000
+Date: Fri, 5 Jun 2026 13:07:53 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Leon Romanovsky <leon@kernel.org>, linux-rdma@vger.kernel.org
+Cc: Leon Romanovsky <leonro@nvidia.com>, Mark Zhang <markzhang@nvidia.com>,
+	patches@lists.linux.dev
+Subject: Re: [PATCH] IB/cm: Fix av cm device leak on an error path in
+ cm_init_av_by_path()
+Message-ID: <20260605160753.GA2727797@nvidia.com>
+References: <0-v1-38292501f539+14f-ib_cm_av_leak_jgg@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0-v1-38292501f539+14f-ib_cm_av_leak_jgg@nvidia.com>
+X-ClientProxiedBy: MN2PR06CA0019.namprd06.prod.outlook.com
+ (2603:10b6:208:23d::24) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAHk-=wiAqf0PdZ4AKj_4riUnnEb=g_ZNPkLnXrByA9BBHYiFRg@mail.gmail.com>
- <20260602225426.122258-1-safinaskar@gmail.com> <CAHk-=wgKy4dP0oQCNKyMQQf3-uVpaigmDyH6_T0Via76gWST9g@mail.gmail.com>
- <CALCETrWx8-Q5-rK1KnAPCxCbXaWCd=Yfs_Pr8qVMa8k8L6of1w@mail.gmail.com>
- <CAHk-=wizkDXRut5xLXRF-CVUVYMaZ5AOexxeghOAoXPb4yAvQg@mail.gmail.com>
- <CALCETrXzxubt4eWue3+wv7Fq9C2m7uu6bWPstqFh6Mo57bPwQQ@mail.gmail.com>
- <CAHk-=wiEwSjfbjfO74xu=UmkkdHXkJg5QNQ8pP-3iYmunmeV9g@mail.gmail.com>
- <CALCETrW3XcNLuB1Y6PSkxQDSK2o+=EB2AAd25SjWQqcJemwnbw@mail.gmail.com>
- <CAHk-=wgn3QTLj+F+XccE10dXY-UGWN8+fNLEvhsLw+tik9rOmg@mail.gmail.com>
- <CALCETrXpqPMS487Bm8f8mHe8hv9DzCqoaW4UdoHetzYBUAhYLw@mail.gmail.com>
- <CAHk-=wh5bFj1a7eaGp9sixDg3UXu7xUGfU=YJo+ckpGxGAyhXQ@mail.gmail.com> <f1c7fbbf-5be1-48b0-8927-2d9b75a35816@samba.org>
-In-Reply-To: <f1c7fbbf-5be1-48b0-8927-2d9b75a35816@samba.org>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Fri, 5 Jun 2026 08:58:38 -0700
-X-Gmail-Original-Message-ID: <CAHk-=whL0oLvmh3FO9SapDhgrXMT_d6qkP2V3OBjysOWXod2Og@mail.gmail.com>
-X-Gm-Features: AVVi8Cf0FjZlqJePEzD8bhzCDc_NK8sni3u4Z9RMJefCrCHFLhBrwtWwfg4F_Wo
-Message-ID: <CAHk-=whL0oLvmh3FO9SapDhgrXMT_d6qkP2V3OBjysOWXod2Og@mail.gmail.com>
-Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
-To: Stefan Metzmacher <metze@samba.org>
-Cc: Andy Lutomirski <luto@amacapital.net>, Askar Safin <safinaskar@gmail.com>, akpm@linux-foundation.org, 
-	axboe@kernel.dk, brauner@kernel.org, david@kernel.org, dhowells@redhat.com, 
-	hch@infradead.org, jack@suse.cz, linux-api@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-mm@kvack.org, miklos@szeredi.hu, netdev@vger.kernel.org, 
-	patches@lists.linux.dev, pfalcato@suse.de, viro@zeniv.linux.org.uk, 
-	willy@infradead.org
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|IA0PR12MB7752:EE_
+X-MS-Office365-Filtering-Correlation-Id: 82d61a30-0abd-43e7-5f14-08dec31c99c4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|366016|22082099003|18002099003|11063799006|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	rfDluq/EW/oGwj7cMW6OmGhchqKFA2mN6Ni53hT3elVQRMjPDbm1Cxh+I1SfiYZliaikkDxo9oGYSksW4NYsznx/XalZeTyhSUdfvoDFPbYn9t+7p+tzHSqVQfBeZue6WLqpSONeHZQHznRlbVMPahqQqATzx6mi+u9miwGf1xfzZIs9U+qF5ee1n+ov4i7/oP4yx9wtQTzMPiFEuwoO+dnxOmmfD8PD5ofvU35XFQ3Imlm99AYj4q/Tgur/7vmcTc9bJkkxEGR2kRpsdzKx43SIBHpnkdUeJXfCdGge0AWRQVsnomXILz1+ub4lJy7w+r26ie3rNeGd+u5ukA43g8zd/e/5T7VIPWvDdVmo1fERgVgs810lCKqkjW2+nG/gIKdslqc6cgujKVTNo/BkhpI30ARnskmo1I85/KDREPEZARA12yd+0obDiXnXetA4cH8yXPaGXo/zUMpHQRyc9sYv+spaeNPsIGjMsekR4BkHbyHbAZ8VRHMocENxe+P2rkUxqct/2ugD+En87GDgI1j931c4MYmGJF9pRdJ2gUWGGPhFLklzI8ZhI3d9nn9fDbY/1jsibjQ537BObZlCeKw/5jM0oQwiGKC1ILN+dYaM14+P5V8OufyYRwxLKLbU+6C/Fovweyf/DQZ+lghumlrzFqC9PzbhChVekRPfwAURGGfenzVjcAxf2rdNOoZa
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(22082099003)(18002099003)(11063799006)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?tPEBAQ9gF1nQBwLic5Ko56bhLgfY7v73tEXTxcLE1k5ZkEIdoNkaH5UrUNY1?=
+ =?us-ascii?Q?DIYyPlGH43loFQ5S5HG7BTEX2KwHVCUMv1znZA7cIxn8i1fylrfYTthh+Jio?=
+ =?us-ascii?Q?v8RL4CM+HIdsOC4hLYN79P5EVHY/j6DVinXdJ3rpEtUO86U2a4T5ayG588p3?=
+ =?us-ascii?Q?5XYnqohH2wADP2wbEawrm6L9gygRlqMPConw18LPBgU64XBlq/K0n+5fjpMT?=
+ =?us-ascii?Q?tUSz17AFeH7YCeTNlBH3OnbMzoyMFkBd7fIjz9eb5YHKwbx7uWxZn9zcbQXB?=
+ =?us-ascii?Q?+6ckZas60o3qBrjccDjMsDRmgZyvEJFFhyFFAJ6rpguAKqlI1tsmMM2pgp0t?=
+ =?us-ascii?Q?TOT3W/kmaQMM+ogSTevw2gN2Q1v/DKEQy2ZJvrmUqSj85u5gwQ34hTD/kThF?=
+ =?us-ascii?Q?+Libr8wpuq6mJEijE1vcq0p1UxGU6fq67II+wJlv7owNxaeHsOXjBtShq+si?=
+ =?us-ascii?Q?LmSRQyrzcFwcI7VNy4d9SiX/h0KkXZWGTw28+waqNSkWk5ztQrU5pIetmbxn?=
+ =?us-ascii?Q?huXnOA6WjiyjaQeuBybSQT+YQvXTBW07SAOgb+kh76XKmptPFdeszeTG+lwB?=
+ =?us-ascii?Q?qUaP5t5FuA4ws/aKL/TzpIQqSuCVP92EKVHhqkWfawsb+Dt/wHFjCFswSI66?=
+ =?us-ascii?Q?CMhKBBrM8adHRyl/9r4XA2ZtUVG+TtTuXVe5NP/qaIvTHSrqVFmtVojAkK3e?=
+ =?us-ascii?Q?dh1lEefWe5IS8TZKqLGrnUGD47mPOHNRhyEbUbyRJJYNsAlGOfzEN3U6srqA?=
+ =?us-ascii?Q?lknj34FqUo8WobhbzEqFhuF4dP9fzbMgAHFszbnQcXu+hqTPD2eorXEiUmnK?=
+ =?us-ascii?Q?3QuAj/LUZVmQ9oAwYPn98MCGS79Naou6Dsu7M3G0bOr3FDXibIiz2Az4T1V6?=
+ =?us-ascii?Q?D6AXBYGndTx8R9BfKYvbuK9HAkLOV8l4AIG+MSd+dINW8mHOmxS+Ur2Mp2Ru?=
+ =?us-ascii?Q?cz0MUGFOLwEt6bYvk4x5FDZADVI2xByyk7IEk6254fTdx78VTpZKg36CR8AW?=
+ =?us-ascii?Q?GVrP6f+btx+q/rbHBN/9F7oReRUX2lgQ4WBxE/4ZRpKUOLGZEyR/J2q3eonB?=
+ =?us-ascii?Q?vfyAVyZfBioZ692YNLZ1VraquSOYUBdFlBIKHVJ52YYp+P2JQJ01YXR81o9n?=
+ =?us-ascii?Q?MLRLSV4y6HUiTvQzNDgI1pJAbZrX1bIICCqJX+NFVSkYTFruKNuLRLudJx6O?=
+ =?us-ascii?Q?mXJRoKj5hUs0Y4HBktuabdOVT4Ggyc/jJkjLUNmetp4rJ3qH2LdcKR27tQKN?=
+ =?us-ascii?Q?SriljxhzlZJq9IOOew3ePtzfkQrrWPwGcnxFccCmAUk/QBlSxpvRLB3UoVSO?=
+ =?us-ascii?Q?kTSQzW+Mx92cZiMJ1RN3VnY5D/VIzKQdbXX1Mt0LpdEEya8w+RBOIXX4jWjO?=
+ =?us-ascii?Q?2wO6dmcsjOnKDhf2z2yeYLO+/h88+3eONCLZRvlKmWIPzvr9Ze/dr8vSlVM5?=
+ =?us-ascii?Q?aLafgtSNCZLXL0rQSFZe3CIo15+2cGklIdPomcHbbW7Zf6NLIpDPE8NGq0Uw?=
+ =?us-ascii?Q?34KlNwzT0G7J62VaAJm0IXboE1Wd1CPZqa7EqTw3O4q0PYEk7opZpGofEavT?=
+ =?us-ascii?Q?FHK2JuRqhu/GvoUyF+6Fb8TYtJOVqdumfKEM34GGZO+Nrfpg9Dx+/7vDpeBX?=
+ =?us-ascii?Q?zTlm/4/pYLDZU+ky/ahTdCbf6tWA8ySO8P0PGixOgt/m6O+iraJvqnWKeBfO?=
+ =?us-ascii?Q?xsEAVC/DG08/mBeRE/zM+HBH9Y3VR4bGFj7YB4OlgKwW07LS?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 82d61a30-0abd-43e7-5f14-08dec31c99c4
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 16:07:54.1524
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: JbAGtWEwQ797FriFzH0GByv4gaEKQIZKO1OtubY3jIRDC9x9c3gV7IOcV1x3VwR7
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB7752
 
-On Fri, 5 Jun 2026 at 08:15, Stefan Metzmacher <metze@samba.org> wrote:
->
-> It means the most common workload, e.g. a file only opened for
-> file serving (or simple opens in general) would still be able to
-> be optimized.
+On Tue, Jun 02, 2026 at 04:37:28PM -0300, Jason Gunthorpe wrote:
+> Codex pointed out that cm_init_av_by_path() can call cm_set_av_port()
+> which takes a reference on the cm device, but then can immediately return
+> error if ib_init_ah_attr_from_path() fails.
+> 
+> Since callers like ib_send_cm_req() put the av on the stack this leaks
+> that cm device reference.
+> 
+> Re-order cm_init_av_by_path() so it doesn't touch the av until it has done
+> all its failable work, and then update the av in one shot so it is either
+> left alone or fully init'd.
+> 
+> Fixes: 76039ac9095f ("IB/cm: Protect cm_dev, cm_ports and mad_agent with kref and lock")
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/infiniband/core/cm.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
 
-Nope. If your web server opens files with write access, I'd be
-extremely surprised.
+Sashiko also pointed out that the cm_destroy_av() prior to
+cm_init_av_by_path() is harmful as it leaves the AV broken in the error
+case and thus the REJ won't send. Since cm_init_av_by_path() is now atomic
+it is safe to delete the cm_destroy_av(). On succees the av from
+cm_init_av_for_response() is cleaned up by cm_init_av_by_path(), on
+failure the 'goto rejected' guarentees the av is destroyed during
+ib_destroy_cm_id().
 
-And if you don't have write access, and you're sending out data from
-files you opened just for reading - the onle sane case - you hit all
-the existing problems with "I can certainly look up pages, but I damn
-well shouldn't pass those pages to the networking code without copying
-them".
+So I folded this in:
 
-               Linus
+-       /* This destroy call is needed to pair with cm_init_av_for_response */
+-       cm_destroy_av(&cm_id_priv->av);
++       /*
++        * cm_init_av_by_path() will internally pair with the above
++        * cm_init_av_for_response() if it succeeds.
++        */
+        ret = cm_init_av_by_path(&work->path[0], gid_attr, &cm_id_priv->av);
+        if (ret) {
+                int err;
+
+applied
+
+Jason
