@@ -1,192 +1,179 @@
-Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012013.outbound.protection.outlook.com [52.101.48.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50594D8D95
-	for <patches@lists.linux.dev>; Fri,  5 Jun 2026 11:53:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.13
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780660424; cv=fail; b=ZBWxGX2G5DsOZnfuC0YCJ5t8muku7ypYJy0oN4/EY5fahYafZWhddwl/SM4/00eQqGuvJPYF7JcRyG9/NuaRHTAAJyORs8cZJuPytC20hu4eCxAnhImZiKjlEr5ehRpLiP4GgAvzHen6xHA/iIdsYmvUGTdk/4ElrPI3VlzYS8k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780660424; c=relaxed/simple;
-	bh=OX/neXOEiFXL0ML8pVClNJc5Msk3U3qzf45viT6gNQc=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=qkNrLa4jAGLhR5U0FsQyF9+5W0J3e+1GfD9z65FF/QcN7tuAHvgmCo2/mzEB6tjKwGFJKdepNayQxPbI+1Glx1R4rUi3DKu7841UGR7rIDwGazhhluTRmmWx2gU46MI/GdLY3LQaUSNmTxDPigSio4jT7DK0HjLQpwrStFyhn8E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=J2e213du; arc=fail smtp.client-ip=52.101.48.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A53A2DA756
+	for <patches@lists.linux.dev>; Fri,  5 Jun 2026 12:19:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780661989; cv=none; b=sEiSXAHQ4d9LdGTA31BbUEnWS3AyX5BceHRF108/My4QR9xx+1GKIIbXq7O6KqxvzhLyBwmuWpLJ2rm3mZI1EVaxHJHUodE2X+BftSGrL8Kgbx4Pwad9PqS9/Ijg91e+WXKoOvcBNASkcrxtI6B3yJRcmLrZcZ1wfBMUGMdIHJ4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780661989; c=relaxed/simple;
+	bh=fG5cj9E2nMxzrFq+XWzFsnTRtUdYT3n82TzWC2ntc84=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=iVFDoUvoPJWuAhKf9aGAZI756XbT+X71kU/cxJZxqNWbDKCsna2zjAfIaZm5vydHtMNVJM+2ZTJtaKLeb7ReoFahPZ5br3YIZGY4R7zq7aZZaUqovhjkqcTnMG6lHqrBZugTchzaBYrDwn10Xs3+hX2D5+c4V9PlbmDLHKIGC5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gOlvsiWN; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="J2e213du"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lgV0soKGt4ltRFvrsQ5ernyQotmC4untQ7LV0psziuQKXGodZvlZRMQJtOH3MZNb8GBMufmY1h6Ib+anrXa7wHDwnGl1oQnJu2eNNcLvYX/D6wQHcWTTbuF+PpjpkOaJ3QF97Qt4zPYky87qIzxHkQS7SkSlKVE1F7gINWo3wC4j8yxM8hqv4x8FU0AvobS+eJNhs2HiatshRb4rftVVVuJcfFQSVaz8+FBMTbWSpv6QAHD127UCAnwjqUuOB+MXlpBYLuajAmN1ZU5oNJfh8nlFHCVtGQusfs9ATfve45TgUJvLXYTkITE7o063ZnpzIt4/TFGUEPSEKRk2i2m9bw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=c/irmv3bn3XKTFpeNKSHvlaoTPs4bcCvu82x2MSVwSY=;
- b=dR2R5GanH6zVXJVMqD0+NkAWkGHeE3XI9pXzTCeRCQJaThq+vgX1D/50nbqsuJgEJKgOf5SrhDNdrymSNHGcf8vN70DecdP/J0lzssg3kARmVZ9wrg+ljH59yfhgCnndMH/A+pQ2zozq/55QuBr9CZ88p4gwGiigsv5HUNTVo+Mvms5Ah0EWPsagpJ/QUoTowkVkVFcQm6gIqjHt83Kbqh46kPsrbM8wiI1OJSmYlM1e8CduOJPWRz+y7lQhvQIS5K/3hhb1s4D1EF8B1XlhYHZP7cgGEhERjG0UlMqae/aik+4CUKTcSFjfUpcRby2SBSwJnqt1sQNUbbeF2wBWgQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=c/irmv3bn3XKTFpeNKSHvlaoTPs4bcCvu82x2MSVwSY=;
- b=J2e213duaDeafUcS9b5sypmy1+KVAHlPYY+7OcHk+4dsH3kiPRadu2tDWfWhSEok+2oEreNDQotgkB5sS4YRzJbQ8Sl4PUfqMsyI53+NI9rqg7WonuReIXJjNH4slZ1+ddgph91Za1G31aQrbMmT3WBw+E29ktI/StgQoX6K82OpNv80o6jNkv4xGhqkI+oLcpBEyxI4TgjlMvCw/gu+nWCHo0O8Gjo7RYHNpB1ssKLOwP2a7fiPnibp/Os+Hi8GKFWyRUh1aonQShI778FAMmI4qXkzoGh7eA+mYRthSuwz+anr2luh6PgOJeWpsR0ABF4By3G2xCl4fH3oPErHVg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by SA3PR12MB9106.namprd12.prod.outlook.com (2603:10b6:806:37e::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.9; Fri, 5 Jun 2026
- 11:53:40 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0092.007; Fri, 5 Jun 2026
- 11:53:40 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Leon Romanovsky <leon@kernel.org>,
-	linux-rdma@vger.kernel.org,
-	Yishai Hadas <yishaih@nvidia.com>
-Cc: Matan Barak <matanb@mellanox.com>,
-	Or Gerlitz <ogerlitz@mellanox.com>,
-	patches@lists.linux.dev,
-	Roland Dreier <roland@purestorage.com>
-Subject: [PATCH] IB/mlx4: Fill in the access_flags if IB_MR_REREG_ACCESS is not specified
-Date: Fri,  5 Jun 2026 08:53:35 -0300
-Message-ID: <0-v1-29ca7a402625+ddd6-mlx4_rereg_flags_jgg@nvidia.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MN2PR01CA0041.prod.exchangelabs.com (2603:10b6:208:23f::10)
- To LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gOlvsiWN"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-490b2b037d2so16448995e9.3
+        for <patches@lists.linux.dev>; Fri, 05 Jun 2026 05:19:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780661987; x=1781266787; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Gz+VtwQhYk3ng5JxyiUgLQa8oImJtLVBwaLlzEeVzFo=;
+        b=gOlvsiWN7IaSqUbdsD59x4UrZdnjDxSoTQeCuFU2kXTtcdKl8Q42aW51ps8lqs4wdy
+         CY/520UwzV0OaT/RsNYR4OEF24ftrJfN9rp+IWmNKsd+LKwpV8R/Un7dlYTLwPba8N6N
+         qZIAMOHl7xNT7WDQuPsT/UpiZxgfZvgZnQg6zT5dirImsL0G0mC7vrsvzCCCb7Ng1nqj
+         JrhaOhE0lAq5KJNm0N9sDaMNrdIDjrSaZIeN25Y50k7Q9+C/GJP+CMNugzFEER+Anp8N
+         LJVXpAUPvpniV97yKdjtSsMZ72G6TwSjx+2bgxGVQYkyFcL60gdIlOPYZJuqD0MTQqId
+         VhIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780661987; x=1781266787;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Gz+VtwQhYk3ng5JxyiUgLQa8oImJtLVBwaLlzEeVzFo=;
+        b=ptqJy3DyMlhhEqEU95z+GIiJT/E++yDLk4Bsbx2zoussRH3+N6h/Bt+tiaxsiG9RQz
+         9/vLZ0EmhcAnMm+t2uVWhCOAJ3elDoLXtNBwxLGgbTkwGlMx+bJ4hewiSewSy9aZkpEr
+         O6Y5davkOfkoTDaInjGGquK+6qPRitmG+gdGdUfgQRf2Tt93maKoBurJyrdk5VOZrTzZ
+         yJi3h1Uvns1bXiILL0eLtK4P1f0CfeyB5P6VQUwNUldZjW6rBLtItGB7Wu7VLBSJtm3M
+         4FBAO+17j4u2YBc68KSVcROH4jzVP1pqvro8AMB0T7s9s5/fasZ76Voeu9O/iLjyVRyk
+         1U6w==
+X-Forwarded-Encrypted: i=1; AFNElJ8IHysmpHcBQtm/AjeyIi6FUXYD++ekamZ036gVMCkFazT0YdKYveBxyRnShOnHTka1BJ7JE/AT@lists.linux.dev
+X-Gm-Message-State: AOJu0YxloweiVr4LvXcRoUlq7i4+76G9iGaiKzaUv+cMPp79CqLwE0n+
+	XNLf/jEjLH+JbGwsrtZ1YCYgdwoy6POXapYqJy1eqvBNfkF6Jvnjpczn
+X-Gm-Gg: Acq92OEuvtkLgLVQUsYa8fhO1OcyKEfbJ6arruRHgRzPP1K49PcKDfCGtF258P+O5EW
+	Vx0wnAU/MrzgSPb70FxfVm60aZKEQFG0GhfQneuTTMpti79ge9noBvCNUswLjfPxlyDuYbnlKcf
+	pknLcavg29+abIxgIjnwP4/0gO2jO65jJUQBDgPLC7ZwEP7ZpADAO3JELEJO3QJd91DlExaO/Cs
+	5R9Pb70c9jAyJl0nf08+Udx41VZ/vpz52+sSrwvz1XO78ILQzHiHD7n1N8NP8l9aKRh33UaUdHe
+	MIfyF7D/rbKnLvPXfgplXueVN6y+meIQnaG46Hd+jsVivmnMtxBYiqxXgKOGY2GjTiuALpNApfb
+	tL4V0ex08QPCiMxgcCiOIjzUeqRPoEm3I6wkPn92TdndrBsCK5U18g4zrNsZ9oKhjU3xfsLRqx5
+	eYY93MLtOekySDjBpMM/YIvxrE8sYnuLiPXlwecVsaT75t29E/0nd5fZ5XLmnFhI3biUnfnRr6T
+	FXyHzrMjw==
+X-Received: by 2002:a05:600c:1d12:b0:490:7227:100 with SMTP id 5b1f17b1804b1-490c26049a0mr52430315e9.18.1780661986468;
+        Fri, 05 Jun 2026 05:19:46 -0700 (PDT)
+Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490bc3cbfe4sm152016275e9.7.2026.06.05.05.19.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Jun 2026 05:19:46 -0700 (PDT)
+Date: Fri, 5 Jun 2026 13:19:42 +0100
+From: David Laight <david.laight.linux@gmail.com>
+To: Stefan Metzmacher <metze@samba.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, Andy Lutomirski
+ <luto@amacapital.net>, Askar Safin <safinaskar@gmail.com>,
+ akpm@linux-foundation.org, axboe@kernel.dk, brauner@kernel.org,
+ david@kernel.org, dhowells@redhat.com, hch@infradead.org, jack@suse.cz,
+ linux-api@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, miklos@szeredi.hu,
+ netdev@vger.kernel.org, patches@lists.linux.dev, pfalcato@suse.de,
+ viro@zeniv.linux.org.uk, willy@infradead.org
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for
+ preadv2/pwritev2
+Message-ID: <20260605131942.4584728e@pumpkin>
+In-Reply-To: <512d948f-7883-4d8c-b2c5-a777e70ca975@samba.org>
+References: <CAHk-=wiAqf0PdZ4AKj_4riUnnEb=g_ZNPkLnXrByA9BBHYiFRg@mail.gmail.com>
+	<20260602225426.122258-1-safinaskar@gmail.com>
+	<CAHk-=wgKy4dP0oQCNKyMQQf3-uVpaigmDyH6_T0Via76gWST9g@mail.gmail.com>
+	<CALCETrWx8-Q5-rK1KnAPCxCbXaWCd=Yfs_Pr8qVMa8k8L6of1w@mail.gmail.com>
+	<CAHk-=wizkDXRut5xLXRF-CVUVYMaZ5AOexxeghOAoXPb4yAvQg@mail.gmail.com>
+	<512d948f-7883-4d8c-b2c5-a777e70ca975@samba.org>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SA3PR12MB9106:EE_
-X-MS-Office365-Filtering-Correlation-Id: 43e6cfdf-8b17-4e6e-4447-08dec2f913ee
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|376014|56012099006|11063799006|18002099003|5023799004;
-X-Microsoft-Antispam-Message-Info:
-	yOTVna2F967O88uiBOHPmE5ErPUvxisvdMCb8I/oN1UBqP+TCE43zaE8W06Ary7dwXME49d/OlUyQsMMxPyKi9Gq7NouZbGHeoG+Qj4VU1/haTDDn0/Dl3Yuq4yfroA2o1NoyF464Z1CMI6p/TmHVPaMLbV1B411gU/2bn3p8e/dRAeg9dQL2mRkUCp5YBeziB7a7bboxW+8zxVV7tLH19nX8ulNoiZ6gc862z2GuYN483wYltZYQcQaIxX19O4emzoTYjcmTukb/DFJ4y8Cea/uTwDCAkXU3iCMolKyEzm/INl0twsCSwhh4duL86jQBFt1Q723SD+ZV5wFKdVb5gwU1YXGcQjG8ij1goD1Du2husNymUBkr2I2yKovFQen1/MXJmMgm4CBwXuEQcv/GuCYXUmDHTRUWdc3YwjBgjkOMm3Fy9xUTCCLpa+kK9/FHC6Ew/qUVaVM5tsTDrKXdM/d2l9bzl6TDnbkpAQq6t71ikqUOs+FdqRJd8Siw5sa15SdDu7MKM1uIb5gQpXGbRf0xDBBwQp/DZXXsXROBCukPPiT/bI1A+mX4epGzyCDMy95/2vM6Uq1czTkbtnIJ4m2xFTDMGpocDN7F34YFIiSeO+kCGDBZM4iKLqrGw+sXQQ3aeRbl7jfdyvLWU5H2SgZ0eUZU51PV9bIYjEOjy2Nv+cBZU4TzGqDx1Z7pd1M
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(56012099006)(11063799006)(18002099003)(5023799004);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?FPbO7+Y+/FODTJKVRqP6fhS1UyqBGJLm48z0Ywm20bSkdjzuzS0SBzKoVezU?=
- =?us-ascii?Q?n3O2DOQTa9bqEhIsMjW07tY5JjVWY3q7eXwfRWZOJ5hVWaO82v3DWgW9kAdH?=
- =?us-ascii?Q?GF9VWojXtAkqhkGADMyX3OE41c+ZwUI4G/dQ0c3W+hB/T6cS+EzXlyYTvppS?=
- =?us-ascii?Q?SGPbEbPTdkxy8rJ0pY71o6tTvIuEmq7ha3TWj/Wgxx+jmU6ra+yfvbzxF9ds?=
- =?us-ascii?Q?TZEMYCW0KR6IVl+zsIIUlMePGXT0IPzJKefyNuW7w/wP/ReGurA6Ehce2KyQ?=
- =?us-ascii?Q?R84ha94kTgn934tn/DF5Tsr5WOS3iS3ccNCjRPG7LZ8w8az4Qdu5iI1fV5Rs?=
- =?us-ascii?Q?6Ycpu+yQ084XpElUQbif4/1k5H0KQMZjnaSBZi/NpU9WnNaTYjd5xTpyDPaD?=
- =?us-ascii?Q?HLn4W3fZB9QRwSAJBPWKHBE4osb/CXojr3yX8Hme08PbZb7psixNJA6lqX3A?=
- =?us-ascii?Q?GEAtWnHvHHzVadEQFVgbh4i3k1ANKut4kI31eudqXTvrpYUs5hK+raUT5O5J?=
- =?us-ascii?Q?RAbluGUOfNS4x/csyCUF1zBlM0UqYLe0bes4kfvdpjQ3qU8PIdh9w1wnJ+Zv?=
- =?us-ascii?Q?ggz/2vc9f2gGd5uAqJ/8To0SKVaHp0n4YeXhq43HhE2KZonNZaq7QlxC4j4B?=
- =?us-ascii?Q?lNfSSr6Zo+lTxmn4iUYrO4aOCGai8Geo06FCXO+4XlTd3d+8eyQsv5ykI5Hr?=
- =?us-ascii?Q?uN35NNwxI21wxODNXiVYHSThzy+kGcxPl+HgE8Wy0zg582oTYycq4NXJVaST?=
- =?us-ascii?Q?YP/mRZRSpPBrv5Z7c9blXHbtx+uO+ce2jBV7QuRudh2N0LbyunNdBffzw0Bv?=
- =?us-ascii?Q?Ubh2Uwzm/9gvv7O/l7wDISVNtEEyd2HS/ugl3Br+sCmdb23S0J3my6Slyk2q?=
- =?us-ascii?Q?VNdAbGhjDRCimL9h6yu6fcR5USvSMAEsrv4jbo8sJpc3dI/qo7EjPPVYxIUp?=
- =?us-ascii?Q?5MR0FrDlLViPtjAwMUkfqdKehJv2wuRzF/i4Nh3jOCauJoOUiHaUuCXtpTfv?=
- =?us-ascii?Q?yghKCZiBFxWm/doxH6/COu2zg2AJ+SrZFHik5OCavF/qOoXsarAgWT27iX+i?=
- =?us-ascii?Q?V5QsCd5s5h4WWf6A+QKRE6qHMaiYhVYs6ZjVkC0ol/SXSACEs0ckEoleivr+?=
- =?us-ascii?Q?WI0WqL993WQsHoLGNLSd3otBpcBcUFym2ADiWoQURm+42ZpnqGTYgV5acfrl?=
- =?us-ascii?Q?U0RVKXqeewQv0w0XE0RCsB4Z6toFJAACBt6g3JcAJlmwVQ/gtfSW+W8s5m9a?=
- =?us-ascii?Q?YEOGrm9oCCmxXxjdt84nacWAwZoPO7/XJf1Kvo7+Oo7ekw/Y5RhjB9inSIbo?=
- =?us-ascii?Q?NTRzQLEtwwZp8Y6zBRyXfy51nN9K7EJRoeJpMZtaFEK3ZSDNYcroNfh3bkFL?=
- =?us-ascii?Q?tUsJ+kkm0BrTaCEYsp0rhS2L/iUk6uNZr+gWbzQsKtLS2Brj7sM2mE1bwZgG?=
- =?us-ascii?Q?0O4sX9t6jDvT5Y7GdJ8V8Q+tQZpoikG2pi0EGxmupM/nzlGp68LFztU9HWE6?=
- =?us-ascii?Q?iVLjWpWFaLkh3AzAQ+oTR5Aif9OQHCcGomPTX24MBVPSCvKRk6mFkKqcxrwD?=
- =?us-ascii?Q?RTRrOPgu9MXuhNev/ht16Uvd96srsXJMQIrzTNCNIdehAJZQlrpHiunwUg7Q?=
- =?us-ascii?Q?vvvL4RuAmxOLW53r7pcQiESlhCMaJQQsZKeetsqee1AsQwGyc+DolSktnrFL?=
- =?us-ascii?Q?w5mY5gtOYAWJopDZs+tWjbTPV7fjV9QDDBYid9lAdI+TXJ2I?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 43e6cfdf-8b17-4e6e-4447-08dec2f913ee
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 11:53:37.1526
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: IDb6Z+3bR+raBa0SExWCaDWPZcPLRJ7VAzy2+Gf1EQnSISCDOU3JGmONmknDhEdU
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB9106
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Sashiko noticed mlx4 was using whatever random access flags were provided
-when IB_MR_REREG_ACCESS is not used. Since IB_MR_REREG_TRANS needs
-access_flags it used the random ones which means it doesn't work sensibly
-if userspace provides only IB_MR_REREG_TRANS.
+On Fri, 5 Jun 2026 11:43:45 +0200
+Stefan Metzmacher <metze@samba.org> wrote:
 
-Keep track of the current access_flag of the MR and use it if the user
-does not specify one.
+> Hi Linus,
+> 
+> >> Am I understanding correctly that this will completely break zerocopy
+> >> sendfile?  
+> > 
+> > Very much, yes.
+> > 
+> > And it's worth making it very very clear that ABSOLUTELY NONE of the
+> > recent big security bugs were in splice.
+> > 
+> > They were all in the networking and crypto code that just didn't deal
+> > with shared data correctly.
+> > 
+> > So in that sense, it's a bit sad to discuss castrating splice.
+> > 
+> > But it's probably still the right thing to at least try.
+> > 
+> > I've seen very impressive benchmark numbers over the years, but
+> > they've often smelled more like benchmarketing than actual real work.
+> > 
+> > There's also a real possibility that a lot of the sendfile / splice
+> > advantage has little to do with zero-copy, and more to do with the
+> > cost of mapping and maintaining buffers in user space.
+> > 
+> > If you are sending file data using plain reads and writes, it's not
+> > just the "copy from user space to socket data structures".
+> > 
+> > There's also the cost of populating user space in the first place:
+> > page faults for mmap made *that* historical copy avoidance basically a
+> > fairy tale.
+> > 
+> > And not using mmap means that you have the cost of double caching in
+> > the kernel _and_ user space etc.
+> > 
+> > So sendfile() as a concept (whether you use combinations of splice()
+> > system calls or the sendfile system call itsefl) isn't necessarily
+> > only about the zero-copy, it's really also about avoiding the user
+> > space memory management.  
+> 
+> I don't think so. Ok, maybe for webservers just serving tiny
+> html files, that's true. But for me with Samba it's really the
+> copy_to/from_iter() that is the major factor.
 
-Also fixup a little confusion around mmr.access, it is the HW access flags
-so the convert_access() was missing. But nothing reads this by the time
-rereg_mr can happen.
+Is that copy also doing the ip checksum?
+I really can't tell from the code (it does sometimes, even for tcp).
+But I can't help feeling that optimisation is well past its sell by date.
 
-Fixes: 9376932d0c26 ("IB/mlx4_ib: Add support for user MR re-registration")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- drivers/infiniband/hw/mlx4/mlx4_ib.h | 1 +
- drivers/infiniband/hw/mlx4/mr.c      | 9 +++++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+-- David
 
-Sashiko also noticed the error unwinds are broken too, but properly fixing
-that that requires switching to use the new mr replacement rereg flow which is
-not worth doing for this ancient driver.
-
-diff --git a/drivers/infiniband/hw/mlx4/mlx4_ib.h b/drivers/infiniband/hw/mlx4/mlx4_ib.h
-index 5a799d6df93ebc..898c8363422abb 100644
---- a/drivers/infiniband/hw/mlx4/mlx4_ib.h
-+++ b/drivers/infiniband/hw/mlx4/mlx4_ib.h
-@@ -135,6 +135,7 @@ struct mlx4_ib_mr {
- 	dma_addr_t		page_map;
- 	u32			npages;
- 	u32			max_pages;
-+	int			access_flags;
- 	struct mlx4_mr		mmr;
- 	struct ib_umem	       *umem;
- 	size_t			page_map_size;
-diff --git a/drivers/infiniband/hw/mlx4/mr.c b/drivers/infiniband/hw/mlx4/mr.c
-index 306704f54325cf..de076b176b0ec8 100644
---- a/drivers/infiniband/hw/mlx4/mr.c
-+++ b/drivers/infiniband/hw/mlx4/mr.c
-@@ -181,6 +181,7 @@ struct ib_mr *mlx4_ib_reg_user_mr(struct ib_pd *pd, u64 start, u64 length,
- 	if (err)
- 		goto err_mr;
- 
-+	mr->access_flags = access_flags;
- 	mr->ibmr.rkey = mr->ibmr.lkey = mr->mmr.key;
- 	mr->ibmr.page_size = 1U << shift;
- 
-@@ -235,6 +236,8 @@ struct ib_mr *mlx4_ib_rereg_user_mr(struct ib_mr *mr, int flags, u64 start,
- 
- 		if (err)
- 			goto release_mpt_entry;
-+	} else {
-+		mr_access_flags = mmr->access_flags;
- 	}
- 
- 	if (flags & IB_MR_REREG_TRANS) {
-@@ -276,8 +279,10 @@ struct ib_mr *mlx4_ib_rereg_user_mr(struct ib_mr *mr, int flags, u64 start,
- 	 * return a failure. But dereg_mr will free the resources.
- 	 */
- 	err = mlx4_mr_hw_write_mpt(dev->dev, &mmr->mmr, pmpt_entry);
--	if (!err && flags & IB_MR_REREG_ACCESS)
--		mmr->mmr.access = mr_access_flags;
-+	if (!err && flags & IB_MR_REREG_ACCESS) {
-+		mmr->access_flags = mr_access_flags;
-+		mmr->mmr.access = convert_access(mr_access_flags);
-+	}
- 
- release_mpt_entry:
- 	mlx4_mr_hw_put_mpt(dev->dev, pmpt_entry);
-
-base-commit: 8f064f2e2bd23f84dbfba26b83e08d5de7311d44
--- 
-2.43.0
+> 
+> We can use io_uring with IOSQE_ASYNC in order to offload
+> the memcpy cpu wasting to different cores, but it's still
+> wasting a lot of resources.
+> 
+> For the case of filesystem => socket, we can use
+> IORING_OP_SENDMSG_ZC and that at least removes the
+> copy_from_iter() in the sendmsg path, but the
+> IORING_OP_READV of buffers in the sizes up to 8MBytes
+> is wasting cpu in copy_to_iter().
+> 
+> For the case with smbdirect and RDMA offload with 2x200GBit/s links
+> changes from only ~33GBytes/s are used (and the server cpu even if using multiple cores)
+> is the limit. Without the memcpy waste ~46GByte/s is easily reached
+> and the limit is just the network link.
+> 
+> Maybe another solution could be having a version of
+> copy_to/from_iter that uses async_memcpy(), but didn't
+> have the time to experiment with that yet. Maybe a new flag
+> to preadv2/pwritev2 could control that, so that the
+> application can decide what's better.
+> 
+> But without an alternative please don't kill splice.
+> 
+> A lot of people are frustrated because they bought hardware
+> that is able to handle a lot of throughput, but
+> e.g. with the default of smb over tcp they get no
+> higher than 3.5GByte/s on a 100GBit/s link that's able
+> to handle ~11GBytes/s. And io_uring and splice are
+> a key factor to fix that.
+> 
+> Thanks!
+> metze
+> 
 
