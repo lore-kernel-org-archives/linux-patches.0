@@ -1,179 +1,177 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azon11010056.outbound.protection.outlook.com [52.101.201.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A53A2DA756
-	for <patches@lists.linux.dev>; Fri,  5 Jun 2026 12:19:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780661989; cv=none; b=sEiSXAHQ4d9LdGTA31BbUEnWS3AyX5BceHRF108/My4QR9xx+1GKIIbXq7O6KqxvzhLyBwmuWpLJ2rm3mZI1EVaxHJHUodE2X+BftSGrL8Kgbx4Pwad9PqS9/Ijg91e+WXKoOvcBNASkcrxtI6B3yJRcmLrZcZ1wfBMUGMdIHJ4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780661989; c=relaxed/simple;
-	bh=fG5cj9E2nMxzrFq+XWzFsnTRtUdYT3n82TzWC2ntc84=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iVFDoUvoPJWuAhKf9aGAZI756XbT+X71kU/cxJZxqNWbDKCsna2zjAfIaZm5vydHtMNVJM+2ZTJtaKLeb7ReoFahPZ5br3YIZGY4R7zq7aZZaUqovhjkqcTnMG6lHqrBZugTchzaBYrDwn10Xs3+hX2D5+c4V9PlbmDLHKIGC5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gOlvsiWN; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69853B3896
+	for <patches@lists.linux.dev>; Fri,  5 Jun 2026 14:31:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.201.56
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780669888; cv=fail; b=YtxOD5Nsuj83tP2tmuAAWyXhrMbSBWWdhZWlC+rfgRA/jZSG5WjS39+XWgy56oHNs1SK8BWbR5K4dTUyveO3m/krOk7pzg8pHFlVb8rykcuvtvuyLigP4xzxtzq4uCJzDS/q+mopnVuLlbbjK9fgsX37VWzedZNGSkylP3c7xPc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780669888; c=relaxed/simple;
+	bh=fPV7xsKxQxFdN2ti6vwUU8Opk65l2n0AWMOJSVdKgfc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=EdXvDtxF99wLljIkMucWNG9PeFRvBmI5SYxv4nkEGh81n45dK2uyNsHXjcvHemvLD7rwIJBHSXBaYTPOaf7WanNhrMo51nJwmudk8l09viSD752Tnq/4tyWbyRvdDttQTnzR6b18vl6SehAc+OK1OCo9H+l4JAh/FEa90GUYWGA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=K0y5APHg; arc=fail smtp.client-ip=52.101.201.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gOlvsiWN"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-490b2b037d2so16448995e9.3
-        for <patches@lists.linux.dev>; Fri, 05 Jun 2026 05:19:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780661987; x=1781266787; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Gz+VtwQhYk3ng5JxyiUgLQa8oImJtLVBwaLlzEeVzFo=;
-        b=gOlvsiWN7IaSqUbdsD59x4UrZdnjDxSoTQeCuFU2kXTtcdKl8Q42aW51ps8lqs4wdy
-         CY/520UwzV0OaT/RsNYR4OEF24ftrJfN9rp+IWmNKsd+LKwpV8R/Un7dlYTLwPba8N6N
-         qZIAMOHl7xNT7WDQuPsT/UpiZxgfZvgZnQg6zT5dirImsL0G0mC7vrsvzCCCb7Ng1nqj
-         JrhaOhE0lAq5KJNm0N9sDaMNrdIDjrSaZIeN25Y50k7Q9+C/GJP+CMNugzFEER+Anp8N
-         LJVXpAUPvpniV97yKdjtSsMZ72G6TwSjx+2bgxGVQYkyFcL60gdIlOPYZJuqD0MTQqId
-         VhIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780661987; x=1781266787;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Gz+VtwQhYk3ng5JxyiUgLQa8oImJtLVBwaLlzEeVzFo=;
-        b=ptqJy3DyMlhhEqEU95z+GIiJT/E++yDLk4Bsbx2zoussRH3+N6h/Bt+tiaxsiG9RQz
-         9/vLZ0EmhcAnMm+t2uVWhCOAJ3elDoLXtNBwxLGgbTkwGlMx+bJ4hewiSewSy9aZkpEr
-         O6Y5davkOfkoTDaInjGGquK+6qPRitmG+gdGdUfgQRf2Tt93maKoBurJyrdk5VOZrTzZ
-         yJi3h1Uvns1bXiILL0eLtK4P1f0CfeyB5P6VQUwNUldZjW6rBLtItGB7Wu7VLBSJtm3M
-         4FBAO+17j4u2YBc68KSVcROH4jzVP1pqvro8AMB0T7s9s5/fasZ76Voeu9O/iLjyVRyk
-         1U6w==
-X-Forwarded-Encrypted: i=1; AFNElJ8IHysmpHcBQtm/AjeyIi6FUXYD++ekamZ036gVMCkFazT0YdKYveBxyRnShOnHTka1BJ7JE/AT@lists.linux.dev
-X-Gm-Message-State: AOJu0YxloweiVr4LvXcRoUlq7i4+76G9iGaiKzaUv+cMPp79CqLwE0n+
-	XNLf/jEjLH+JbGwsrtZ1YCYgdwoy6POXapYqJy1eqvBNfkF6Jvnjpczn
-X-Gm-Gg: Acq92OEuvtkLgLVQUsYa8fhO1OcyKEfbJ6arruRHgRzPP1K49PcKDfCGtF258P+O5EW
-	Vx0wnAU/MrzgSPb70FxfVm60aZKEQFG0GhfQneuTTMpti79ge9noBvCNUswLjfPxlyDuYbnlKcf
-	pknLcavg29+abIxgIjnwP4/0gO2jO65jJUQBDgPLC7ZwEP7ZpADAO3JELEJO3QJd91DlExaO/Cs
-	5R9Pb70c9jAyJl0nf08+Udx41VZ/vpz52+sSrwvz1XO78ILQzHiHD7n1N8NP8l9aKRh33UaUdHe
-	MIfyF7D/rbKnLvPXfgplXueVN6y+meIQnaG46Hd+jsVivmnMtxBYiqxXgKOGY2GjTiuALpNApfb
-	tL4V0ex08QPCiMxgcCiOIjzUeqRPoEm3I6wkPn92TdndrBsCK5U18g4zrNsZ9oKhjU3xfsLRqx5
-	eYY93MLtOekySDjBpMM/YIvxrE8sYnuLiPXlwecVsaT75t29E/0nd5fZ5XLmnFhI3biUnfnRr6T
-	FXyHzrMjw==
-X-Received: by 2002:a05:600c:1d12:b0:490:7227:100 with SMTP id 5b1f17b1804b1-490c26049a0mr52430315e9.18.1780661986468;
-        Fri, 05 Jun 2026 05:19:46 -0700 (PDT)
-Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490bc3cbfe4sm152016275e9.7.2026.06.05.05.19.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jun 2026 05:19:46 -0700 (PDT)
-Date: Fri, 5 Jun 2026 13:19:42 +0100
-From: David Laight <david.laight.linux@gmail.com>
-To: Stefan Metzmacher <metze@samba.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, Andy Lutomirski
- <luto@amacapital.net>, Askar Safin <safinaskar@gmail.com>,
- akpm@linux-foundation.org, axboe@kernel.dk, brauner@kernel.org,
- david@kernel.org, dhowells@redhat.com, hch@infradead.org, jack@suse.cz,
- linux-api@vger.kernel.org, linux-fsdevel@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, miklos@szeredi.hu,
- netdev@vger.kernel.org, patches@lists.linux.dev, pfalcato@suse.de,
- viro@zeniv.linux.org.uk, willy@infradead.org
-Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for
- preadv2/pwritev2
-Message-ID: <20260605131942.4584728e@pumpkin>
-In-Reply-To: <512d948f-7883-4d8c-b2c5-a777e70ca975@samba.org>
-References: <CAHk-=wiAqf0PdZ4AKj_4riUnnEb=g_ZNPkLnXrByA9BBHYiFRg@mail.gmail.com>
-	<20260602225426.122258-1-safinaskar@gmail.com>
-	<CAHk-=wgKy4dP0oQCNKyMQQf3-uVpaigmDyH6_T0Via76gWST9g@mail.gmail.com>
-	<CALCETrWx8-Q5-rK1KnAPCxCbXaWCd=Yfs_Pr8qVMa8k8L6of1w@mail.gmail.com>
-	<CAHk-=wizkDXRut5xLXRF-CVUVYMaZ5AOexxeghOAoXPb4yAvQg@mail.gmail.com>
-	<512d948f-7883-4d8c-b2c5-a777e70ca975@samba.org>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="K0y5APHg"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IdESV95OEiLO/r/RITknG2u4gFFYORXZ9TudjwVbvxwQqRzulLffykNHklpUlPCN3elt+wnLXQCwMHQLGpu2fgO4r/krRrfKqXPhkrDfKGIw8Y3dBgX9BGbey2Dqpu6rl7essTsCEY0c3O2Ic478KGj5i9E23cGZPQIS0s9LJdCSdFhFhk65AXSak17nok7TMyeYqvTGyvrtA0FJdmTAX+spDDW+IO7MAm2lzdk/kbNtAI8I/9aBE7p7VHsnWxB/m8A+iE81/RMznBieNgBNtczyP4rCC0Jdjp26p6Oh6xEr1ynjWuZl5v83bidT+E5Y8uardFDBq7XKnvlHlcjCmA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ClVFReKgLlvhLMls25eMwrZPttdbNJ4yE6wNtdoShCM=;
+ b=J1RCP+uQkGMtKWAf8SbAbAgipafS1y/yasGxRq5edz6uwDLMf/T/wcHa33XjPC9gJ39Enlv2Iz3A1Hs844pa1G7h08glMI6ht0GElJbheDiBC2plpFgOSKV38XdC6hXB1jq1fCk0PF/6ASPnUpAbG2Pp5hQ3CPRtauQur/zm3+MdbqgvBeq78G7zAM7O6dHWHFIT0l6M7i5bJibVFSkKYOmUVId0zzn3J0G6ACtPRBm0I9nfSlVkiYkvEiu28EegmAAUraR/vr15ac2y0YJ7V22SRZfPBrO8EQyI1FUImQRZnFMkLmwHK1N53PlOsLH6q6Q0bMBXuICVw5TR1vg1gQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ClVFReKgLlvhLMls25eMwrZPttdbNJ4yE6wNtdoShCM=;
+ b=K0y5APHg2RS0ANxZ8VyWDA7CdAe+GFZEs6WNlJjVzgF4pSq1yKHwiHFo+rpzD36MnNViKjyfe2tKHsmWAxJ85a9XUN7X6U4No+J4Epdz/P3Gg4GcrVeCyxCO2Xfvl6P0oci/z79SC9fWJ71zXiYdA/UKeS/kMWLq5ZIKeNJP1lvshI8ef064yzhCG8luwj82JpErkOWyzpfeurP5HJ24SB/mE4tnsgMbalLlFtUfANby+tKdcz0Fh70Rz096xdsiBwILYbmuszlwe4Q2ZiAOCY3n2AczSDPMNkAFWN8xlspSHI8Lz3RE/VROJAIBBQnmoWkSZpTz6aja6VmqO/qBZQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by CH8PR12MB9813.namprd12.prod.outlook.com (2603:10b6:610:260::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.8; Fri, 5 Jun 2026
+ 14:31:20 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0092.007; Fri, 5 Jun 2026
+ 14:31:20 +0000
+Date: Fri, 5 Jun 2026 11:31:19 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Will Deacon <will@kernel.org>
+Cc: David Laight <david.laight.linux@gmail.com>,
+	David Matlack <dmatlack@google.com>,
+	Alex Williamson <alex@shazbot.org>, kvm@vger.kernel.org,
+	Leon Romanovsky <leon@kernel.org>, linux-kselftest@vger.kernel.org,
+	linux-rdma@vger.kernel.org, Mark Bloch <mbloch@nvidia.com>,
+	netdev@vger.kernel.org, Saeed Mahameed <saeedm@nvidia.com>,
+	Shuah Khan <shuah@kernel.org>, Tariq Toukan <tariqt@nvidia.com>,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v2 06/11] selftests: Fix arm64 IO barriers to match kernel
+Message-ID: <20260605143119.GC1962447@nvidia.com>
+References: <0-v2-72e9640932fd+2c64-mlx5st_jgg@nvidia.com>
+ <6-v2-72e9640932fd+2c64-mlx5st_jgg@nvidia.com>
+ <ahiFxtmspbETiqWw@google.com>
+ <20260529134947.GA128816@nvidia.com>
+ <20260529175516.06d5788f@pumpkin>
+ <20260529192933.GD3195266@nvidia.com>
+ <ah2B_mzQabiEYSWt@willie-the-truck>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ah2B_mzQabiEYSWt@willie-the-truck>
+X-ClientProxiedBy: LV3P220CA0021.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:408:234::13) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|CH8PR12MB9813:EE_
+X-MS-Office365-Filtering-Correlation-Id: bdac9edf-0cef-4b93-df4e-08dec30f1c43
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|366016|1800799024|376014|7416014|6133799003|4143699003|3023799007|11063799006|5023799004|56012099006|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	b8LQl8b7yc5TEaXhiQN8+YvJH/COhusWcI4cYDJujuPs0XX8S4OvA5eOV8aqd9jhNatlIqGD0dp8HCC+PidKou8+aA80emT/2zrppt/COhqij4JsjWJDXm5vbpMDImp9qX3VjAxhUkVuJgY759/qB/YGT+wPgKI1yXcAAi/CMcvAUevEYr4mMyfQsALLXvUrBn1A739jNj/AimXJEiuqI1APN8WMc2q/GwamKINIEMjxAh5gLWZ27lcFNl06y810m83jr13YXhyYr+BuZbbLtiq+z1wSB9ajfpIZ4qmmuwbAAs/6DCkA920jGutrz9pRQR/8z8JzH7fUq8WYhONcsuSGyAqPE1jBKYVYkfhItnOtL+b+F/brq6HRoZSHqU/+N+sKnAhpvhDCzsMxSBJSYYPjdBpmeYs09DKAuB88QicGwsmVDJew+0t8lPB9FN1eiD+IhGihl46XEI4fjG/EZ8qnChnGRbp+jFPnZkQ4muvzJsrIntUn6UoNVVDRmqpeaiZKvGPNDHh8dYo1p+4qWF2CJOyAMyZ252ETdZFnhGIxH5o54E8p0x8dO64fJ+mCo7sWW6btZn3u5YoIE16/1oKfbowJFn3ChaO9cHrirfh2tpGD306C64qyhRfRVJ7UALLYeoEnzmH4xWowKYJekq2ECU/2InXcuKzCofq0GTn5hG+RIPm8/+eXW0SOi7XD
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014)(6133799003)(4143699003)(3023799007)(11063799006)(5023799004)(56012099006)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?taDoa1rMOXP2qqYncIftsH912Ywv7p9B16ZqLm/F/oN0jKLzIvhtF6ksvmwb?=
+ =?us-ascii?Q?747a/TDAFnz/d6znnMZmu8YuzX+O0EW2QxzKk03dmEeCt5Y+JviwslqYBwFK?=
+ =?us-ascii?Q?MThxbZQctCsd9tFmXSioSDijnEpBEVqv/LLri6xcdLWWsECII8hdeTZGpgrp?=
+ =?us-ascii?Q?3+iV9w2kmmQA1RrZ/gDvr7cEmfxULD61CYZ6nsAog7rb9K3DxIFCOUVpwsrK?=
+ =?us-ascii?Q?KSX6P0TWRPkbM0pqR7/oxb3p1bobC/Y/BWoQZYh/oCfIzxi02jiVKPXngG+f?=
+ =?us-ascii?Q?udjTj3CClqhqoZNJX4cfiN+ztf18X2HrAAzNNBG66/H04ndYR+DYle7iiCCW?=
+ =?us-ascii?Q?hWMdjK+HkRBtqYEayo4cDVCbJzojtU2+Rc9YgGySUxmnGaRXVs3fh8rL4TN6?=
+ =?us-ascii?Q?/+L3hEYSvcWkqblOMWYfzpD1W717u505OgoIZyY1/nYrm8H1ttNnIP9n63Rx?=
+ =?us-ascii?Q?2UXTvID6xjl48x3Ok0aZ9DN5rn3+Wd51gjjuoJI2Ub5ItxMOWBxA2E1PRsut?=
+ =?us-ascii?Q?PdKzlJM4VyZjGqXNBBwCK5d3cMTYYrpqtWIRydeGTYmgMN/2CmzfDr8HCosI?=
+ =?us-ascii?Q?9N8atffSpCSXCDUmoAPJp0lOBxUOyoXvghTW5g4jIUZYo6+14lEvEpQTJm2h?=
+ =?us-ascii?Q?jFJd6tkfD3rfzRsD2AsbQ7ziYdBC7QeC/7cFF05mlL20u3/EWfO0m9nr7O2M?=
+ =?us-ascii?Q?rxIoTntC/JFNEhwtmLlXiWgWAhMbkQtsTsQQyRjZC5FtaxE/RDuF6RAzEsfk?=
+ =?us-ascii?Q?JunJ5Ihi1mKLbOly4u19ALcwPR0yHbkvgL2lmUU4gRamQD7swn+fFwVyqbHM?=
+ =?us-ascii?Q?FnnxKAzArqUtAUGF0zei7Ccnon3o0V8vyob4O4y56fYjpPJ0NSTZHjsmdKOe?=
+ =?us-ascii?Q?L1syuBt6EMh0lBtDYJtR0MghqCvAQeQk+SSGto8Ccuf9M4CIiXOj4XMwe4Bg?=
+ =?us-ascii?Q?imgnrQllVRCccmywy4PZr97tdtuPXpZ5Os5Bn1i8dlbdnqDf7/Dw09wDoVQI?=
+ =?us-ascii?Q?JQLmp0WkJ5/Ab1y1XUa5YWCjoJ8SXJcmPtXNtouHoDU/io8LBAv0twahcokf?=
+ =?us-ascii?Q?l9mkaaiCU6sA3XuEPbYui0X7LilvsxNiU5JpKBx+Mzorg0WObnh0URbQLtTr?=
+ =?us-ascii?Q?ML9pP2vQYjatsxlN1SrgUALoQu+I91ZBBlln2HZJ3HyXqrNJTt4R2UtI48Zh?=
+ =?us-ascii?Q?MZ/ZYqJnzrA0pdxL6kSxR0SzsqqDPyyQLXEI5lnMc5O0VYwqvBYBx9O4z4EG?=
+ =?us-ascii?Q?fEek9Bxx29KfvS7Zuv8Oga7B/BcpS9vZmgAasFDFOGa5bQDHg2xpCKcc094U?=
+ =?us-ascii?Q?ZYQi07piwM4tyAR4u4e+r5CcBw6xJQ1FYhOHja+lwZwD50T1VWfdLkhQbLM/?=
+ =?us-ascii?Q?8rzuvHDhh+iqLXJux/4lCf8iDT8MYogiYmocceyYRyRDaig6FPciK7aLNaPp?=
+ =?us-ascii?Q?aB8HXKJsHNCoY5WLir8TKtwRZ+XpK7Pe7mOA98CufZiJQOSLJ2kKjjtajwne?=
+ =?us-ascii?Q?aMvE/CPUEPfQwbflNWNWytN227z4HAClqdW0sxruZuaSB7lDwUGntfj56GtH?=
+ =?us-ascii?Q?Q+q3NOpMx5e/zn4ejzDnFxIdkusJdJKiBulZkbDbCS4v/mTOucALAvi9rlTw?=
+ =?us-ascii?Q?wF1wKYzg63aY7HrbwqwQQvpuAJC4g1cnL9ctCqgu/uHXvhUIGVpkydVeNnTP?=
+ =?us-ascii?Q?H9Qibr0n5hAuvnSydF7iKhQfw3ITQGCdQgKYFSVYEXJ1njQp?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bdac9edf-0cef-4b93-df4e-08dec30f1c43
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2026 14:31:20.2054
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: eDa8sATVxkNFCZb7eRcGVi5Bfno5lcjLtmtoFbAIVfySYvCHnPeFojMlKtLyf+4A
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH8PR12MB9813
 
-On Fri, 5 Jun 2026 11:43:45 +0200
-Stefan Metzmacher <metze@samba.org> wrote:
+On Mon, Jun 01, 2026 at 01:58:38PM +0100, Will Deacon wrote:
+> On Fri, May 29, 2026 at 04:29:34PM -0300, Jason Gunthorpe wrote:
+> > On Fri, May 29, 2026 at 05:55:16PM +0100, David Laight wrote:
+> > > On Fri, 29 May 2026 10:49:47 -0300
+> > > Jason Gunthorpe <jgg@nvidia.com> wrote:
+> > > 
+> > > > On Thu, May 28, 2026 at 06:13:26PM +0000, David Matlack wrote:
+> > > > 
+> > > > > Let's put these in tools/arch/arm64/include/asm/io.h so that the tools
+> > > > > headers are more aligned with the kernel headers, and so that the arm64
+> > > > > io.h overrides are done in the same way as the x86 overrides in
+> > > > > tools/arch/x86/include/asm/io.h.
+> > > > > 
+> > > > > Something like this (untested):  
+> > > > 
+> > > > Okay, the disassembly says it works:
+> > > > 
+> > > >     1db8:       ca080108        eor     x8, x8, x8
+> > > >     1dbc:       b5000008        cbnz    x8, 1dbc <readl+0x58>
+> > > >     1dc0:       f9000fe8        str     x8, [sp, #24]
+> > > 
+> > > That looks strange, I suspect the C didn't match any usual pattern.
+> > > Normally 'tmp' would get thrown away and 'v' would get kept.
+> > > But you seem to have discarded 'v' and written 'tmp' to stack.
+> > 
+> > Oh interesting the optimizer isn't turned on for selftest builds. So
+> > the str is dutifully writing tmp to the stack. Another register has
+> > the actual value.
+> > 
+> > > I'm probably being stupid again, but how does that work?
+> > > The cpu can speculate straight through the control dependency into
+> > > the following instructions.
+> > > An 'eor x1, x8, x8' may not even have a data-dependency on x8.
+> > > (Most x86 cpus just generate a zero for the equivalent instruction.)
+> > 
+> > I can't say, this is copied from the kernel and Will made it:
+> > 
+> >     arm64: io: Ensure calls to delay routines are ordered against prior readX()
+> 
+> This is specifically for ordering counter accesses against prior
+> barriered MMIO reads. Userspace should really be using the vDSO instead
+> of accessing the counter directly, so you could probably drop this for
+> the tools headers tbh and just have the dma_rmb().
 
-> Hi Linus,
-> 
-> >> Am I understanding correctly that this will completely break zerocopy
-> >> sendfile?  
-> > 
-> > Very much, yes.
-> > 
-> > And it's worth making it very very clear that ABSOLUTELY NONE of the
-> > recent big security bugs were in splice.
-> > 
-> > They were all in the networking and crypto code that just didn't deal
-> > with shared data correctly.
-> > 
-> > So in that sense, it's a bit sad to discuss castrating splice.
-> > 
-> > But it's probably still the right thing to at least try.
-> > 
-> > I've seen very impressive benchmark numbers over the years, but
-> > they've often smelled more like benchmarketing than actual real work.
-> > 
-> > There's also a real possibility that a lot of the sendfile / splice
-> > advantage has little to do with zero-copy, and more to do with the
-> > cost of mapping and maintaining buffers in user space.
-> > 
-> > If you are sending file data using plain reads and writes, it's not
-> > just the "copy from user space to socket data structures".
-> > 
-> > There's also the cost of populating user space in the first place:
-> > page faults for mmap made *that* historical copy avoidance basically a
-> > fairy tale.
-> > 
-> > And not using mmap means that you have the cost of double caching in
-> > the kernel _and_ user space etc.
-> > 
-> > So sendfile() as a concept (whether you use combinations of splice()
-> > system calls or the sendfile system call itsefl) isn't necessarily
-> > only about the zero-copy, it's really also about avoiding the user
-> > space memory management.  
-> 
-> I don't think so. Ok, maybe for webservers just serving tiny
-> html files, that's true. But for me with Samba it's really the
-> copy_to/from_iter() that is the major factor.
+Okay lets drop it then
 
-Is that copy also doing the ip checksum?
-I really can't tell from the code (it does sometimes, even for tcp).
-But I can't help feeling that optimisation is well past its sell by date.
-
--- David
-
-> 
-> We can use io_uring with IOSQE_ASYNC in order to offload
-> the memcpy cpu wasting to different cores, but it's still
-> wasting a lot of resources.
-> 
-> For the case of filesystem => socket, we can use
-> IORING_OP_SENDMSG_ZC and that at least removes the
-> copy_from_iter() in the sendmsg path, but the
-> IORING_OP_READV of buffers in the sizes up to 8MBytes
-> is wasting cpu in copy_to_iter().
-> 
-> For the case with smbdirect and RDMA offload with 2x200GBit/s links
-> changes from only ~33GBytes/s are used (and the server cpu even if using multiple cores)
-> is the limit. Without the memcpy waste ~46GByte/s is easily reached
-> and the limit is just the network link.
-> 
-> Maybe another solution could be having a version of
-> copy_to/from_iter that uses async_memcpy(), but didn't
-> have the time to experiment with that yet. Maybe a new flag
-> to preadv2/pwritev2 could control that, so that the
-> application can decide what's better.
-> 
-> But without an alternative please don't kill splice.
-> 
-> A lot of people are frustrated because they bought hardware
-> that is able to handle a lot of throughput, but
-> e.g. with the default of smb over tcp they get no
-> higher than 3.5GByte/s on a 100GBit/s link that's able
-> to handle ~11GBytes/s. And io_uring and splice are
-> a key factor to fix that.
-> 
-> Thanks!
-> metze
-> 
-
+Jason
