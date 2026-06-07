@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5B04204E;
-	Sun,  7 Jun 2026 10:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744792E3AF1;
+	Sun,  7 Jun 2026 10:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829722; cv=none; b=dvbnXbTYaCf6qzywnCRTVK1gVyil8AvIIDZ/77W7OzEwYE05jjDiqrpsDQCHQsAadNL4Z2Q74vmucKSribyu8tAUyjwv0rStj4m4BBm5kdGxTMVCOQOg95/gOJwlt9hMt7CGQ9gqZ8QNfAeBY5Iv5PAI+hjhcZrvzupoeoheUj0=
+	t=1780829725; cv=none; b=LlleN16iVgOpVGuLZIu6nzHG5ufwhAd+uAF2YT257JQP4kX2TqsmKkljJit5zuU9aEoM+ByoIYdKEfXMSWbevpvf7McKWP7c17UCO1VY5ZWvN0EsqNMPSX/Oct36JiZy6k/jEwer7VrRLv5ryirHyhfLP5QkdCJL6oSvBAOYtx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829722; c=relaxed/simple;
-	bh=pNtFatK/XX3YFT4gZth0i0RqWcGJINtLYgq0IoEG44I=;
+	s=arc-20240116; t=1780829725; c=relaxed/simple;
+	bh=jtppIwOdgPKmX1Vuvlqxu0Rew+KPhzjYB7+Oz/uJZqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=djvxnhadEENpFUWzwtPFU03MCocMy7M9GpdfTDwqvFODYzuHqGvnB0iv5NiWkzJBT6WgLKT0o1uSCnbdlY+Q7RrN4BWd9v49bMl2hcA4IzLjc0+c2BcC+8KGCZezaBPZgUPLtBqVB6ShsK3NxvDU8pzYTDLOvluMpJJwScsQ06M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DuZexC0+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eoJqT9XVhXoC0rp9VNAEBIEjrmTRTtaB+YhhhPnf5PhLH9vGzAJyt9Rdt6RRWV42yFtk+2UvgzLE8GpzGf9ukGPRMt5SlEelcI2ds5x9pYsZocgLglAAFb9HzYR86NEC9/Ho2TRap8PLZntOLyCeBG3QTPZzJZWYS73dQjt6gFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E37IzCNI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DuZexC0+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392361F00898;
-	Sun,  7 Jun 2026 10:55:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E37IzCNI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B781C1F00893;
+	Sun,  7 Jun 2026 10:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829721;
-	bh=92eRY6Wr52GDtwRb3PETRLofxB8tF2zinut0a+yu6i0=;
+	s=korg; t=1780829724;
+	bh=agP4AjSo7zQO7frjoard1DY5id7MyB8jKRbdLLapsQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DuZexC0+Il9zKrmv5uifZYe7hrpZSWwiJrcbQF67d+bhe/ph5d5TY+9m8h5kQcura
-	 X1022PTlTaiXJphN52tRMaqztShJomdcPols5qNEzy1MNuEBm3iK0ZnO8retr69Gl5
-	 QCenxRPMmmhf4n2gZaOEqNnZLhNiNAdkqlrro3Vk=
+	b=E37IzCNIV13K+Iw3KkPD2L7k+wiptuLxBFxoJ4jtm0wb7nBaLhB5ij3Ei4Ouyeyqd
+	 R92K6X6kNN1S8xrb/vkTYaIeBw/6hFkTSHSUTnDkROwd8q8u56eUWCu//H8bUTp7/0
+	 iRBqZeTDDDzlM8Ow7uSb4S9ZaS8mushF4TG7umZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>
-Subject: [PATCH 6.18 273/315] serial: dz: Fix bootconsole message clobbering at chip reset
-Date: Sun,  7 Jun 2026 12:01:00 +0200
-Message-ID: <20260607095737.593358970@linuxfoundation.org>
+	Ziyi Guo <n7l8m4@u.northwestern.edu>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.0 308/332] drm/amdgpu: check num_entries in GEM_OP GET_MAPPING_INFO
+Date: Sun,  7 Jun 2026 12:01:17 +0200
+Message-ID: <20260607095739.396962920@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,75 +46,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-commit ca904f4b42355287bc5ce8b7550ebe909cda4c2c upstream.
+commit a1ba4594232c87c3b8defd6f89a2e40f8b08395d upstream.
 
-In the DZ interface as implemented by the DC7085 gate array the serial
-transmitters are double buffered, meaning that at the time a transmitter
-is ready to accept the next character there is one in the transmit shift
-register still being sent to the line.  Issuing a master clear at this
-time causes this character to be lost, so wait an extra amount of time
-sufficient for the transmit shift register to drain at 9600bps, which is
-the baud rate setting used by the firmware console.
+kvcalloc(args->num_entries, sizeof(*vm_entries), GFP_KERNEL) at
+amdgpu_gem.c:1050 uses the user-supplied num_entries directly without
+any upper bounds check. Since num_entries is a __u32 and
+sizeof(drm_amdgpu_gem_vm_entry) is 32 bytes, a large num_entries
+produces an allocation exceeding INT_MAX, triggering
+WARNING in __kvmalloc_node_noprof(), causing a kernel WARNING,
+TAINT_WARN, and panic on CONFIG_PANIC_ON_WARN=y systems.
 
-Mind the specified 1.4us TRDY recovery time in the course and continue
-using iob() as the completion barrier, since the platforms involved use
-a write buffer that can delay and combine writes, and reorder them with
-respect to reads regardless of the MMIO locations accessed and we still
-lack a platform-independent handler for that.
+Add a size bounds check before we invoke the kvzalloc() to
+reject oversized num_entries early with -EINVAL.
 
-When called from dz_serial_console_init() this is too early for fsleep()
-to work and even before lpj has been calculated and therefore the delay
-is actually not sufficient for the transmitter to drain and is merely a
-placeholder now.  This will be addressed in a follow-up change.
-
-Fixes: e6ee512f5a77 ("dz.c: Resource management")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Cc: stable@vger.kernel.org # v2.6.25+
-Link: https://patch.msgid.link/alpine.DEB.2.21.2605062259080.46195@angie.orcam.me.uk
+Fixes: 4d82724f7f2b ("drm/amdgpu: Add mapping info option for GEM_OP ioctl")
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 1fe7bf5457f6efd7be60b17e23163ba54341d73d)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/dz.c |   21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/tty/serial/dz.c
-+++ b/drivers/tty/serial/dz.c
-@@ -542,10 +542,31 @@ static int dz_encode_baud_rate(unsigned
- static void dz_reset(struct dz_port *dport)
- {
- 	struct dz_mux *mux = dport->mux;
-+	unsigned short tcr;
-+	int loops = 10000;
- 
- 	if (mux->initialised)
- 		return;
- 
-+	tcr = dz_in(dport, DZ_TCR);
-+
-+	/* Do not disturb any ongoing transmissions.  */
-+	if (dz_in(dport, DZ_CSR) & DZ_MSE) {
-+		unsigned short csr, mask;
-+
-+		mask = tcr;
-+		while ((mask & DZ_LNENB) && loops--) {
-+			csr = dz_in(dport, DZ_CSR);
-+			if (!(csr & DZ_TRDY))
-+				continue;
-+			mask &= ~(1 << ((csr & DZ_TLINE) >> 8));
-+			dz_out(dport, DZ_TCR, mask);
-+			iob();
-+			udelay(2);		/* 1.4us TRDY recovery.  */
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+@@ -1095,6 +1095,11 @@ int amdgpu_gem_op_ioctl(struct drm_devic
+ 		 * If that number is larger than the size of the array, the ioctl must
+ 		 * be retried.
+ 		 */
++		if (args->num_entries > INT_MAX / sizeof(*vm_entries)) {
++			r = -EINVAL;
++			goto out_exec;
 +		}
-+		udelay(1200);			/* Transmitter drain.  */
-+	}
 +
- 	dz_out(dport, DZ_CSR, DZ_CLR);
- 	while (dz_in(dport, DZ_CSR) & DZ_CLR);
- 	iob();
+ 		vm_entries = kvcalloc(args->num_entries, sizeof(*vm_entries), GFP_KERNEL);
+ 		if (!vm_entries) {
+ 			r = -ENOMEM;
 
 
