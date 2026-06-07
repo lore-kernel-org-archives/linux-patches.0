@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385C62D8378;
-	Sun,  7 Jun 2026 10:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE22E2D8378;
+	Sun,  7 Jun 2026 10:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827923; cv=none; b=ExwGEJdyUY5/xAyxQp3BVbQmhFIKKH7ycFl52Y7Xn3Lo6pG1N59UPImQfaIvqnxbSVGPub25awydoqeNYaPO94J7u7ucimza0czttY1u8hvox5VMnYWqNjNJ45lzBWXYQmJ/3Jl/COEG0ccj9wCPm1gKEooITmUiYEjMb5Gbntc=
+	t=1780827926; cv=none; b=rKpZPX0Vcf+BXlNilRXH7xNIVlv2UN//np4E7DTd4cs3yRJbv+BHpqcGL/r7Q9lhv5q2iePepGtxQuv6Le2ADxz2jGS1ET9aDZrOp+e+kNeAx/UmtfOrEaseBVecnas3dX2pPFSoXlasl7lQSByML1DKQc+ckSu9/9fJo1Eyb0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827923; c=relaxed/simple;
-	bh=Cz36WjBSUlidySHV3aqJZQA0g47EOagHApqKY/2YC/I=;
+	s=arc-20240116; t=1780827926; c=relaxed/simple;
+	bh=7jeiiOd7Fe+T8y/gxysAl/b/Lvtb2L18CB+adX6/svM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U3oB/+AMYe3Y0GozRm3qmvSE6JvmiDOyFGls3cdCf3leBpNl2OzpVGSwanRXJKwdhGtfVQbI7fObF8IYLEvo26IqGAr1g/pmL0NIKh70EOPBMFN7QU7KwcSE72pY8qbUbcTYfNKsj7KX6BZP/mu1kB0vsqMFAOVR958sts03gSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWIUG6Tc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bR5IAG5qUfcDyBpxs0BQYV7CHZVq7FbfE9GfiSNIp54guhEoIZb63TSKQafiIKskTJDbMJrjyA2vwj6ofZSSCy6N3WyqLSWj+bj5LpGZjvZ8Lq+PIkSzYxEbvYdagy9pdUAZRexhrhYe6uxgD7M9Ybifz7fDWnhtXVaGIZIj9ZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OmuROP/C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWIUG6Tc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 702F71F00893;
-	Sun,  7 Jun 2026 10:25:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OmuROP/C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080B61F00893;
+	Sun,  7 Jun 2026 10:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827922;
-	bh=/ZHD2MA2cqBKSAQINHtLEf7KX9iYBPQ6N7fDMI4A22c=;
+	s=korg; t=1780827925;
+	bh=ogJCWID7T3SpDh4hmIfDyUiTjNz2WlNgmeMHYlmxbHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HWIUG6TcgvD9qroscnZKFCyB4UXrawlM1LhznKQp0zMjko6QuuZZ0WPiuaVEeagam
-	 jHRtyE24IwF+c7EZUtHrvI60W0hR7+B9dfJ8HCbF3PgHQu7lSDc7ctDEgOW6zSeoVS
-	 M0CP52jMpGK2P0n7M74GEylzn1kdA4WVxwTnshAk=
+	b=OmuROP/CaZd+/ctgamEcv5Yl8aPB0xGl3IpkADzNPEj+Y4MTZ5x+XoXSTnO4puImi
+	 m382rjEfrTkF1UFnXlcm3bOI7v4OCJEaWEjoXCGJzYhBB0iN5bRDlcO+HK8uA1xIgu
+	 d+eOQqRlBv4jfhR2lPiGNXhWKSbu+372NsgW5ukQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.0 137/332] mm/damon/sysfs-schemes: delete tried region in regions_rmdirs()
-Date: Sun,  7 Jun 2026 11:58:26 +0200
-Message-ID: <20260607095733.129778823@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Amit Sunil Dhamne <amitsd@google.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.18 113/315] usb: typec: tcpm/tcpci_maxim: validate header NDO against RX_BYTE_CNT
+Date: Sun,  7 Jun 2026 11:58:20 +0200
+Message-ID: <20260607095731.790756545@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,96 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 441f92f7d386b85bad16de49db95a307cba048a2 upstream.
+commit aa2f716327be1818e1cb156da8a2844804aaec2f upstream.
 
-DAMON sysfs maintains the DAMOS tried region directory objects via a
-linked list.  When the user requests refresh of the directories, DAMON
-sysfs removes all the region directories first, and then generate updated
-regions directory on the empty space.  The removal function
-(damon_sysfs_scheme_regions_rm_dirs()) only puts the kobj objects.
-Deletion of the container region object from the linked list is done
-inside the kobj release callback function.
+A broken/malicious port can transmit a CRC-valid frame whose header
+advertises up to seven data objects but whose body carries fewer than
+that.  Check for this, and rightfully reject the message, instead of
+reading from uninitialized stack memory.
 
-If somehow the callback invocation is delayed, the list will contain
-regions list that gonna be freed.  If the updated region directories
-creation is started in this situation, the list can be corrupted and
-use-after-free can happen.
-
-Because the kobj objects are managed by only DAMON sysfs, the issue cannot
-happen in normal situation.  But, such delays can be made on kernels that
-built with CONFIG_DEBUG_KOBJECT_RELEASE.  On the kernel, the issue can
-indeed be reproduced like below.
-
-    # damo start --damos_action stat
-    # cd /sys/kernel/mm/damon/admin/kdamonds/0/
-    # for i in {1..10}; do echo update_schemes_tried_regions > state; done
-    # dmesg | grep underflow
-    [   89.296152] refcount_t: underflow; use-after-free.
-
-Fix the issue by removing the region object from the list when
-decrementing the reference count.
-
-Also update damos_sysfs_populate_region_dir() to add the region object to
-the list only after the kobject_init_and_add() is success, so that fail of
-kobject_init_and_add() is not leaving the deallocated object on the list.
-
-The issue was discovered [1] by Sashiko.
-
-Link: https://lore.kernel.org/20260518152559.93038-1-sj@kernel.org
-Link: https://lore.kernel.org/20260513011920.119183-1-sj@kernel.org [1]
-Fixes: 9277d0367ba1 ("mm/damon/sysfs-schemes: implement scheme region directory")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.2.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Assisted-by: gkh_clanker_t1000
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc: "André Draszik" <andre.draszik@linaro.org>
+Cc: Badhri Jagan Sridharan <badhri@google.com>
+Cc: Amit Sunil Dhamne <amitsd@google.com>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/2026051350-sitter-canopener-9045@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs-schemes.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/typec/tcpm/tcpci_maxim_core.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -88,7 +88,6 @@ static void damon_sysfs_scheme_region_re
- 	struct damon_sysfs_scheme_region *region = container_of(kobj,
- 			struct damon_sysfs_scheme_region, kobj);
- 
--	list_del(&region->list);
- 	kfree(region);
- }
- 
-@@ -164,7 +163,7 @@ static void damon_sysfs_scheme_regions_r
- 	struct damon_sysfs_scheme_region *r, *next;
- 
- 	list_for_each_entry_safe(r, next, &regions->regions_list, list) {
--		/* release function deletes it from the list */
-+		list_del(&r->list);
- 		kobject_put(&r->kobj);
- 		regions->nr_regions--;
- 	}
-@@ -2870,14 +2869,15 @@ void damos_sysfs_populate_region_dir(str
- 	if (!region)
- 		return;
- 	region->sz_filter_passed = sz_filter_passed;
--	list_add_tail(&region->list, &sysfs_regions->regions_list);
--	sysfs_regions->nr_regions++;
- 	if (kobject_init_and_add(&region->kobj,
- 				&damon_sysfs_scheme_region_ktype,
- 				&sysfs_regions->kobj, "%d",
- 				sysfs_regions->nr_regions++)) {
- 		kobject_put(&region->kobj);
+--- a/drivers/usb/typec/tcpm/tcpci_maxim_core.c
++++ b/drivers/usb/typec/tcpm/tcpci_maxim_core.c
+@@ -186,6 +186,15 @@ static void process_rx(struct max_tcpci_
+ 	rx_buf_ptr = rx_buf + TCPC_RECEIVE_BUFFER_RX_BYTE_BUF_OFFSET;
+ 	msg.header = cpu_to_le16(*(u16 *)rx_buf_ptr);
+ 	rx_buf_ptr = rx_buf_ptr + sizeof(msg.header);
++
++	if (count < TCPC_RECEIVE_BUFFER_RX_BYTE_BUF_OFFSET + sizeof(msg.header) +
++		    pd_header_cnt_le(msg.header) * sizeof(msg.payload[0])) {
++		max_tcpci_write16(chip, TCPC_ALERT, TCPC_ALERT_RX_STATUS);
++		dev_err(chip->dev, "Invalid TCPC_RX_BYTE_CNT %d for header cnt %d\n",
++			count, pd_header_cnt_le(msg.header));
 +		return;
- 	}
-+	list_add_tail(&region->list, &sysfs_regions->regions_list);
-+	sysfs_regions->nr_regions++;
- }
- 
- int damon_sysfs_schemes_clear_regions(
++	}
++
+ 	for (payload_index = 0; payload_index < pd_header_cnt_le(msg.header); payload_index++,
+ 	     rx_buf_ptr += sizeof(msg.payload[0]))
+ 		msg.payload[payload_index] = cpu_to_le32(*(u32 *)rx_buf_ptr);
 
 
