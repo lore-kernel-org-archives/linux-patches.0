@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343D73195FD;
-	Sun,  7 Jun 2026 10:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6CA257855;
+	Sun,  7 Jun 2026 10:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828879; cv=none; b=tJVf5IS2RwJGQ6JHHvPaojbjhfIv+o9fO89E0WKIBFyJEMRvO5cwUi4rM0764HxSkz1qOGdBaRKHW1SAcTu+T5Gtpdxabr8QnjjTcMDuIQF60ZF7m0agQ4q0DN15X9F3FihzAkEf9gmqFLzsGRBR+CSdgIRpkXWH+xLpMX5t7TM=
+	t=1780828883; cv=none; b=L1Hs2yMoRLwHBz2E/5CvmWfmy7XMVIUJOrlIevW6KGcySfoE1cj0a7+RX92pEVwmcC2nCU6O1zO/dZkp8B1IGsUHFKJ6ZnWHNT71z/uSUDRXr9yKwqAMojzG7RXMdsNt7VwrRslMxR3V0WCzXotwmviI6DEnqRgQ0HJJzatYxro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828879; c=relaxed/simple;
-	bh=j4UZf524aFy7cagWkLd5GePpq5rT4Ty0TIbxKdrVCB4=;
+	s=arc-20240116; t=1780828883; c=relaxed/simple;
+	bh=TcKwQJkkbj8demCcqupgg1vMjphJLZEheJg1zdfbltI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lSihmRuY427ZjaSaoE3INszf2E1v4bx4BQTddJ9ludWFbNL/2UiR6I0rvDcVXd/yFQ4U6+M6sL4Hq34cMcbyseO8jfSZ3rx+iW8Ll6UTT+LFFaDyp2raNeVZGbYSgGP4uGbma0SQFpZpGrCmLF3zK699ARw3iDRHixVv+mNgpGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYAxaqx8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Pf8htESTajnJWz30YyXwzgWw5Lp3efoHUJGF7Jy7YvTDpt3269wVd7kxzyAAEWZ5A6PE2wgGG9i4HEuEog9vv50+YXvGZdcRuLAQCtKo2CevlUiySqhEDOXpkeWP/bXiLCMmoFEVXdMGvEgofwawOJgYeEFzEdIr21t36nQWSyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oomw3dkz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYAxaqx8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0472B1F00893;
-	Sun,  7 Jun 2026 10:41:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oomw3dkz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A44C1F00893;
+	Sun,  7 Jun 2026 10:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828877;
-	bh=9Eofvq9IJZWEoVN/X7P5iWoPqZkzPrURaW5cqEvNmo8=;
+	s=korg; t=1780828882;
+	bh=kBebDAnQOhp2TMonCtjm/5H8u7KvCArz/u2qHFCoh/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tYAxaqx8Bf3ZsaWotsZYVTLyF4fqCYGgWFOI9vCwcSnBW3oSd6836aBbtjz0gfOXy
-	 hxuBolhJVI3iO/DvXIczxAh/QzHCBPK1lh9HxWmf7DHF3fGDr+fEyuIe1yXo8tKTuX
-	 J173POlvR//ZSspzJ2OtkFrMTs00IMV55dc9MZr4=
+	b=oomw3dkzkg8PW0aczsyiQik42QicpuASOQ1NWnon/MiRpEPydsDwAkCc9IcuvnAUg
+	 nTEWg+acdtSFmcqFBpimDdHqgeF+Rd83+0OEiqwfVZjuyXOG5eHL3+4exJN6cTdPg+
+	 g4d/4MUy64anwcydqus1GUSLZQIS3FUaI1aSvwXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	linux-kbuild@vger.kernel.org,
-	Arnd Bergmann <arnd@arndb.de>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 7.0 223/332] iommu, debugobjects: avoid gcc-16.1 section mismatch warnings
-Date: Sun,  7 Jun 2026 11:59:52 +0200
-Message-ID: <20260607095736.250640622@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@bootlin.com>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>,
+	James Nuss <jamesnuss@nanometrics.ca>
+Subject: [PATCH 6.12 176/307] iio: buffer: Fix DMA fence leak in iio_buffer_enqueue_dmabuf()
+Date: Sun,  7 Jun 2026 11:59:33 +0200
+Message-ID: <20260607095734.180033883@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,132 +47,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Benoît Monin <benoit.monin@bootlin.com>
 
-commit 4c9ad387aa2d6785299722e54224d34764edaeb3 upstream.
+commit a093999355084bdbfe6e97f1dd232e58a1525f0b upstream.
 
-gcc-16 has gained some more advanced inter-procedual optimization
-techniques that enable it to inline the dummy_tlb_add_page() and
-dummy_tlb_flush() function pointers into a specialized version of
-__arm_v7s_unmap:
+iio_buffer_enqueue_dmabuf() allocates a struct iio_dma_fence (104 bytes,
+kmalloc-128) via kmalloc_obj()+dma_fence_init(), which sets the initial
+kref to 1.  It then calls dma_resv_add_fence() which takes a second
+reference (kref=2), and stores a raw pointer in block->fence.
 
-WARNING: modpost: vmlinux: section mismatch in reference: __arm_v7s_unmap+0x2cc (section: .text) -> dummy_tlb_add_page (section: .init.text)
-ERROR: modpost: Section mismatches detected.
+On the success path the function returns without calling dma_fence_put()
+to release the initial reference, so every buffer enqueue permanently
+leaks one kmalloc-128 allocation.
 
->From what I can tell, the transformation is correct, as this is only
-called when __arm_v7s_unmap() is called from arm_v7s_do_selftests(),
-which is also __init. Since __arm_v7s_unmap() however is not __init,
-gcc cannot inline the inner function calls directly.
+The iio_buffer_cleanup() work item only releases the temporary reference
+taken during completion signalling by iio_buffer_signal_dmabuf_done();
+the initial reference from dma_fence_init() is never released.
 
-In debug_objects_selftest(), the same thing happens. Both the
-caller and the leaf function are __init, but the IPA pulls
-it into a non-init one:
+With four iio_rwdev instances at 240kHz and 512 samples per buffer,
+this produces ~1875 kmalloc-128 allocations per second matching the
+observed slab growth exactly. A test with ftrace confirmed that the
+dma_fence_destroy event was never triggered.
 
-WARNING: modpost: vmlinux: section mismatch in reference: lookup_object_or_alloc+0x7c (section: .text.lookup_object_or_alloc) -> is_static_object (section: .init.text)
+Fix by calling dma_fence_put() after dma_resv_add_fence(), transferring
+ownership of the fence to the DMA reservation object. The DMA fence then
+gets properly discarded after being signalled.
 
-Marking the affected functions as not "__init" would reliably avoid this
-issue but is not a good solution because it removes an otherwise correct
-annotation. I tried marking the functions as 'noinline', but that ended
-up not covering all the affected configurations.
-
-With some more experimenting, I found that marking these functions as
-__attribute__((noipa)) is both logical and reliable.
-
-In order to keep the syntax readable, add a custom macro for this in
-include/linux/compiler_attributes.h next to other related macros and
-use it to annotate both files.
-
-Link: https://lore.kernel.org/all/abRB6g-48ZX6Yl2r@willie-the-truck/
-Cc: Will Deacon <will@kernel.org>
-Cc: Thomas Gleixner <tglx@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>
-Cc: linux-kbuild@vger.kernel.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Will Deacon <will@kernel.org>
-Acked-by: Thomas Gleixner <tglx@kernel.org>
-Acked-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: 3e26d9f08fbe0 ("iio: core: Add new DMABUF interface infrastructure")
+Originally-by: James Nuss <jamesnuss@nanometrics.ca>
+Signed-off-by: Benoît Monin <benoit.monin@bootlin.com>
+Reviewed-by: Paul Cercueil <paul@crapouillou.net>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/io-pgtable-arm-v7s.c  |   18 ++++++++++++------
- include/linux/compiler_attributes.h |   11 +++++++++++
- lib/debugobjects.c                  |    2 +-
- 3 files changed, 24 insertions(+), 7 deletions(-)
+ drivers/iio/industrialio-buffer.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iommu/io-pgtable-arm-v7s.c
-+++ b/drivers/iommu/io-pgtable-arm-v7s.c
-@@ -777,21 +777,27 @@ struct io_pgtable_init_fns io_pgtable_ar
+--- a/drivers/iio/industrialio-buffer.c
++++ b/drivers/iio/industrialio-buffer.c
+@@ -1911,6 +1911,7 @@ static int iio_buffer_enqueue_dmabuf(str
  
- static struct io_pgtable_cfg *cfg_cookie __initdata;
+ 	dma_resv_add_fence(dmabuf->resv, &fence->base,
+ 			   dma_to_ram ? DMA_RESV_USAGE_WRITE : DMA_RESV_USAGE_READ);
++	dma_fence_put(&fence->base);
+ 	dma_resv_unlock(dmabuf->resv);
  
--static void __init dummy_tlb_flush_all(void *cookie)
-+/*
-+ * __noipa prevents gcc from turning indirect iommu_flush_ops calls
-+ * into direct calls from a specialized __arm_v7s_unmap() that triggers
-+ * a build time section mismatch assertion.
-+ */
-+static __noipa void __init dummy_tlb_flush_all(void *cookie)
- {
- 	WARN_ON(cookie != cfg_cookie);
- }
- 
--static void __init dummy_tlb_flush(unsigned long iova, size_t size,
--				   size_t granule, void *cookie)
-+static __noipa void __init dummy_tlb_flush(unsigned long iova, size_t size,
-+					   size_t granule, void *cookie)
- {
- 	WARN_ON(cookie != cfg_cookie);
- 	WARN_ON(!(size & cfg_cookie->pgsize_bitmap));
- }
- 
--static void __init dummy_tlb_add_page(struct iommu_iotlb_gather *gather,
--				      unsigned long iova, size_t granule,
--				      void *cookie)
-+static __noipa void __init dummy_tlb_add_page(struct iommu_iotlb_gather *gather,
-+					      unsigned long iova,
-+					      size_t granule,
-+					      void *cookie)
- {
- 	dummy_tlb_flush(iova, granule, granule, cookie);
- }
---- a/include/linux/compiler_attributes.h
-+++ b/include/linux/compiler_attributes.h
-@@ -397,6 +397,17 @@
- #endif
- 
- /*
-+ * Optional: not supported by clang
-+ *
-+ *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Attributes.html#index-noipa
-+ */
-+#if __has_attribute(noipa)
-+# define __noipa __attribute__((noipa))
-+#else
-+# define __noipa
-+#endif
-+
-+/*
-  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-weak-function-attribute
-  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html#index-weak-variable-attribute
-  */
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -1212,7 +1212,7 @@ struct self_test {
- 
- static __initconst const struct debug_obj_descr descr_type_test;
- 
--static bool __init is_static_object(void *addr)
-+static __noipa bool __init is_static_object(void *addr)
- {
- 	struct self_test *obj = addr;
- 
+ 	cookie = dma_fence_begin_signalling();
 
 
