@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B115308F38;
-	Sun,  7 Jun 2026 10:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C478A3290D8;
+	Sun,  7 Jun 2026 10:46:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829188; cv=none; b=UzFo1W+txMswWr9QQZhw/4oALO4IP5Hr5Ae3mBtdBE4LQkkJyqiPkqug/f3Zx41OynLJczUwZ0By/9ND8d8AaYdgZl1M3NmDZz7dnijLj7VfXo/CWZJ81Cw5AeB9j2FqmymUZr3tQ4HOLEa4IoVR+i5eRJI71VtM4u3B/g7i3CE=
+	t=1780829193; cv=none; b=YwgO6zW/i3qhGHbSmwm6kVFD2J/h7eumSZ0gZngOGtKA7bqf8RmisVJIAtS7Ga1y6m50VRtip26iYRPvU8mtXiDYWeCEazGOCqpyTyydaheoIpQruA70FllwEY3wX3JeOSXTAZncbeIq9EmZ2huT14UBDQ+gzqoyxeUZHyCZous=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829188; c=relaxed/simple;
-	bh=HyOoxgPklQDEt7iz3LQ/aqIRke+Wd72afc0G/OcOzGo=;
+	s=arc-20240116; t=1780829193; c=relaxed/simple;
+	bh=kUgGcjDk8Ij8Qnx2mEixeJv7/OiBE0n6E/91n9+NP8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+HHsd3yB2EQUcT5oqOUTRT35+7xQDIRoGIkojbyVqiAzh8/04UrxPjQmThHVeV9m0zhXUR/XBYdho0xzRC+YDIEZRkVtPPjO4ZwpdeKt6jHGbcWZne70EQOFwctLLCzNE9SHczcXZWPxYJlm+1gOhFJ36CMNYsbrv821XQwlxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldK1Ru5j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PcgIi6pfkB1LxhP9T1C/5aQbWAM8959yHtum6SAf8XJht5/nWX4Rk9Ahx8eGUoq7t33tqiquVONCxBj4h6ln9FtSEs93njVIm+Cs1DqV6Oe0KduJGg47dskaSeK4DkDBV0d366FdE8i2qCxV3i9vCakIcOXXagbRgNSUTc7LnXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vkip+qci; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldK1Ru5j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EACAE1F00893;
-	Sun,  7 Jun 2026 10:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vkip+qci"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E711F00893;
+	Sun,  7 Jun 2026 10:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829185;
-	bh=Eqpeg/LEUoTxINmvxQslG/+1ueRRDsdZZncKw5zFCV8=;
+	s=korg; t=1780829191;
+	bh=LKgwGPH804JMOFQPUIRhyvmmP7bzxw7NZ7SFocLSXHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ldK1Ru5jR5iKIFDIlNXkSwafwLYgWUoBOxxNyvAtO3gNMNXrs1hKQk8n16+SkgAer
-	 VgVOBGaBjMu/1UStFV5Z2haqwLjMlR7D9VA6qPkvxMdB3rxy3CRfLimMzDlyrHZM+6
-	 JMUxynFHNpyuZOzC/g2quu3xsFDXM5ol7lzqkCuw=
+	b=Vkip+qciOKL0bHq3pT11xSgBpMySAI85669d2cIdQI9w3u5UMS1KphM+mCvsXdH5s
+	 E4KNWO2fDmc3IIFmhjYvwBzBE2XtF1OD+P4tZhW6lC6+R5WDuZhUXRTxyfQ9qjm/Te
+	 zkBTbaAv+IpvvMxr/PrKj4LSep5L67z0LqdyzOCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Tao Xue <xuetao09@huawei.com>
-Subject: [PATCH 7.0 252/332] usb: core: Fix up Interrupt IN endpoints with bogus wBytesPerInterval
-Date: Sun,  7 Jun 2026 12:00:21 +0200
-Message-ID: <20260607095737.301966629@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>
+Subject: [PATCH 7.0 240/332] misc: rp1: Send IACK on IRQ activate to fix kdump/kexec
+Date: Sun,  7 Jun 2026 12:00:09 +0200
+Message-ID: <20260607095736.866437043@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
 References: <20260607095728.031258202@linuxfoundation.org>
@@ -44,71 +44,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-commit 727d045d064b7c9a24db3bce9c0485a382cb768b upstream.
+commit 36770417153644bc88281c7284730ef1d14d8d3c upstream.
 
-Tao Xue found that some common devices violate USB 3.x section 9.6.7
-by reporting wBytesPerInterval lower than the size of packets they
-actually send. I confirmed that AX88179 may set it to 0 and RTL8153
-CDC configuration sets it to 8 but sends both 8 and 16 byte packets:
+After a kexec/kdump reboot, the macb Ethernet controller fails to
+receive any packets, causing DHCP to hang indefinitely and the network
+interface to be unusable despite link being up.
 
-S Ii:11:007:3 -115:128 16 <
-C Ii:11:007:3 0:128 8 = a1000000 01000000
-S Ii:11:007:3 -115:128 16 <
-C Ii:11:007:3 0:128 16 = a12a0000 01000800 00000000 00000000
+The root cause is that RP1's level-triggered MSI-X interrupt sources
+(such as macb on hwirq 6) may have their internal state machines stuck
+in the "waiting for IACK" state. This happens because the previous
+kernel crashed before sending the acknowledgment for a pending level
+interrupt.
 
-Most xHCI host controllers neglect interrupt bandwidth reservations
-and let such devices exceed theirs, some fail the URB with EOVERFLOW.
+In this stuck state, RP1 will not generate new MSI-X writes even though
+the interrupt source remains asserted. Since no new MSI-X is sent, the
+GIC never sees a new edge, the chained IRQ handler is never invoked,
+and the interrupt is permanently lost.
 
-Assume that wBytesPerInterval lower than wMaxPacketSize is bogus and
-increase it to the worst case maximum on interrupt IN endpoints. This
-solves xHCI problems and appears to have no other effect. Interrupt
-transfers are not limited to one interval and drivers submit URBs of
-class defined size without looking at wBytesPerInterval. Any multi-
-interval transfer is considered terminated by a packet shorter than
-wMaxPacketSize regardless of wBytesPerInterval - see USB3 8.10.3.
+Fix this by sending MSIX_CFG_IACK in rp1_irq_activate(). This
+unconditionally resets the MSI-X state machine back to idle when a
+child device requests its interrupt. If the interrupt source is still
+asserted, RP1 will immediately issue a new MSI-X with the freshly
+configured msg_addr/msg_data, and normal interrupt delivery resumes.
 
-Stay in spec on OUT endpoints and isochronous. No buggy devices are
-known and we don't want to risk sending more data than the device
-is prepared to handle or confusing isoc drivers regarding altsetting
-capacities guaranteed by the device itself. And don't complain when
-wMaxPacketSize <= wBytesPerInterval < wMaxPacketSize * (bMaxBurst+1)
-because enabling this seems to be the exact goal of the spec.
+Writing IACK when the state machine is already idle (i.e., on a normal
+cold boot) is harmless — it has no effect.
 
-Reported-and-tested-by: Tao Xue <xuetao09@huawei.com>
-Closes: https://lore.kernel.org/linux-usb/20260402021400.28853-1-xuetao09@huawei.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Link: https://patch.msgid.link/20260518073207.5b7d26e7.michal.pecio@gmail.com
+Fixes: 49d63971f963 ("misc: rp1: RaspberryPi RP1 misc driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Link: https://patch.msgid.link/20260518073405.2115003-1-xiaolei.wang@windriver.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/config.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/misc/rp1/rp1_pci.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/core/config.c
-+++ b/drivers/usb/core/config.c
-@@ -191,7 +191,14 @@ static void usb_parse_ss_endpoint_compan
- 			(desc->bMaxBurst + 1);
- 	else
- 		max_tx = 999999;
--	if (le16_to_cpu(desc->wBytesPerInterval) > max_tx) {
-+	/*
-+	 * wBytesPerInterval > max_tx is bogus, but USB3 spec doesn't forbid the opposite.
-+	 * Experience shows that wBytesPerInterval < wMaxPacketSize on common interrupt IN
-+	 * endpoints is usually bogus too, and recent HCs enforce interrupt BW limits.
-+	 */
-+	if (le16_to_cpu(desc->wBytesPerInterval) > max_tx ||
-+	    (le16_to_cpu(desc->wBytesPerInterval) < usb_endpoint_maxp(&ep->desc) &&
-+	     usb_endpoint_is_int_in(&ep->desc))) {
- 		dev_notice(ddev, "%s endpoint with wBytesPerInterval of %d in "
- 				"config %d interface %d altsetting %d ep %d: "
- 				"setting to %d\n",
+--- a/drivers/misc/rp1/rp1_pci.c
++++ b/drivers/misc/rp1/rp1_pci.c
+@@ -143,6 +143,7 @@ static int rp1_irq_activate(struct irq_d
+ 	struct rp1_dev *rp1 = d->host_data;
+ 
+ 	msix_cfg_set(rp1, (unsigned int)irqd->hwirq, MSIX_CFG_ENABLE);
++	msix_cfg_set(rp1, (unsigned int)irqd->hwirq, MSIX_CFG_IACK);
+ 
+ 	return 0;
+ }
 
 
