@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0D14204E;
-	Sun,  7 Jun 2026 10:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7FE4204E;
+	Sun,  7 Jun 2026 10:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829620; cv=none; b=o3B9kp0g6yTgnvV3he5Ih3VwNGoYL/TmHpMv0qUNuDCriF0bBdQtAC88RCLRMQcYJiz4PTBlaxgQidAmApPYhatZf8pAtzDHo2f6lyRpZwfVJwhOv0c9fQzT4gfmYOyX1RzUVtyldHnxYDaQ6+27wLdur1iq/1FB7Yp3tOKOzJU=
+	t=1780829623; cv=none; b=BIoyQ8ixvbOXhCEncb8kLMGY0iT7vonux7L45AtKTwTGZfkf8eGSz87WG8h4aw8n5gYHhVtfnNNOANV4VqeH0R0jeMGx4xztVQtyPWWm7fHSdxt3VAfIG+L/G41VDG3KCvkfBb+r0fchjjz+daEyalzo2j2UTMBPBxWNG3NkCdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829620; c=relaxed/simple;
-	bh=XOjeYQle7wFuXQ4lzk1Tio2gg6fOfVhiE8pnwNimaSw=;
+	s=arc-20240116; t=1780829623; c=relaxed/simple;
+	bh=WDRu+g+EKrGVIUjCtMbuJBTDPq09+qkHYJTsAPEIpFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fDEn4JQtPgNDgDAoiz/d4EMpJlAtJRvEfOeerrCEA4Cq06PzGRW34GiRZd6W5edtTXAGqlOgR+D1K0giM4OU39EWEls0YhxBaBV+Wy9sKaLVpqMThYhgkbN+ElNaLv0JGT2/j3HbUrLrK1qFBxuwPt29ORgPUnsCkxTIF/qMrDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+9KD9pl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FDaAA5ArqfaCsIG+1bWPONy04ITkg4cGjluQ/VRLFuUtELaWAtbLovaAfnA/Xh88s/xsansJzinjex/okehfnzIqfJcE5nj3XjRgv+021dS1B/lM8OsqAGg9MgKxHHjqzxmWL2yBDcKaqbDzBbnLxXKIhcMnaT9GMwokMKUViQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JOpIAZ+2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+9KD9pl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8FA1F00893;
-	Sun,  7 Jun 2026 10:53:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JOpIAZ+2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8220B1F00893;
+	Sun,  7 Jun 2026 10:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829618;
-	bh=KzM6UC3lIt2epdle4TFGvgsbhQQ3xOE2Mv77xn3Uiio=;
+	s=korg; t=1780829622;
+	bh=yWFJSj47opkl9hregE8aQNfxq1Mo6Yx+LLo4SaacyDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P+9KD9pl+7kXK8dMn0kudzXvRWRyI50PhtcfMPDULxzHQlH03Z8nJfzh9qxPr5cR9
-	 uE9UrHWpK50YEJGm/7FJEeuN55Le+0NX9ffO9MYSmf3PMOcpcz/bHt/ibkLJWNK4DY
-	 5FdSxt/HPQ7wc/fZtxjNALkL6O3gob1LZAj2+zGk=
+	b=JOpIAZ+209Npky9tMwohN8S/SRGVLNlDoq5vOxLs5NkuWd7KsQACUmoKb51aTK4A4
+	 E0pkD8S9d6YjH1tpxekRJ2tFegW+7B8k6o8PmyBhRpZ7O4r/N79sQeEh1Yp/ZPvptY
+	 3FVMcvLKaVbIZ2dnBP5CIiRKauOYfK5x5/RrVMSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>
-Subject: [PATCH 7.0 295/332] drm/amd/pm/si: Disregard vblank time when no displays are connected
-Date: Sun,  7 Jun 2026 12:01:04 +0200
-Message-ID: <20260607095738.898435104@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>
+Subject: [PATCH 7.0 300/332] serial: zs: Fix swapped RI/DSR modem line transition counting
+Date: Sun,  7 Jun 2026 12:01:09 +0200
+Message-ID: <20260607095739.079603102@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
 References: <20260607095728.031258202@linuxfoundation.org>
@@ -45,50 +44,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit dd4f3ee535b3b0ac027f75dbf9dc5fc88733c765 upstream.
+commit d15cd40cb1858f75846eaafa9a6bca841b790a92 upstream.
 
-When no displays are connected, there is no vblank
-happening so the power management code shouldn't
-worry about it.
+Fix a thinko in the status interrupt handler that has caused counters
+for the RI and DSR modem line transitions to be used for the other line
+each.
 
-This fixes a regression that caused the memory clock
-to be stuck at maximum when there were no displays
-connected to a SI GPU.
-
-Fixes: 9003a0746864 ("drm/amd/pm: Treat zero vblank time as too short in si_dpm (v3)")
-Fixes: 9d73b107a61b ("drm/amd/pm: Use pm_display_cfg in legacy DPM (v2)")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Tested-by: Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6d87e0199f7b83735b56e422d59f170a201897a8)
-Cc: stable@vger.kernel.org
+Fixes: 8b4a40809e53 ("zs: move to the serial subsystem")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Link: https://patch.msgid.link/alpine.DEB.2.21.2604101747110.29980@angie.orcam.me.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/tty/serial/zs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-@@ -3076,6 +3076,10 @@ static bool si_dpm_vblank_too_short(void
- 	/* we never hit the non-gddr5 limit so disable it */
- 	u32 switch_limit = adev->gmc.vram_type == AMDGPU_VRAM_TYPE_GDDR5 ? 450 : 0;
+--- a/drivers/tty/serial/zs.c
++++ b/drivers/tty/serial/zs.c
+@@ -680,9 +680,9 @@ static void zs_status_handle(struct zs_p
+ 			uart_handle_dcd_change(uport,
+ 					       zport->mctrl & TIOCM_CAR);
+ 		if (delta & TIOCM_RNG)
+-			uport->icount.dsr++;
+-		if (delta & TIOCM_DSR)
+ 			uport->icount.rng++;
++		if (delta & TIOCM_DSR)
++			uport->icount.dsr++;
  
-+	/* Disregard vblank time when there are no displays connected */
-+	if (!adev->pm.pm_display_cfg.num_display)
-+		return false;
-+
- 	/* Consider zero vblank time too short and disable MCLK switching.
- 	 * Note that the vblank time is set to maximum when no displays are attached,
- 	 * so we'll still enable MCLK switching in that case.
+ 		if (delta)
+ 			wake_up_interruptible(&uport->state->port.delta_msr_wait);
 
 
