@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D28C2EB87F;
-	Sun,  7 Jun 2026 10:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9A22E3AF1;
+	Sun,  7 Jun 2026 10:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827630; cv=none; b=iaz+4cjcz8CdEqQ+yMdxWJ29WC4YwhHL5z7NGcYtV4OzPlRN0HklFI//4uFh+fi7l2IzOTrkmtwFCUz0DQ0qsuJtsqReh1V6hdwRexQRxaDDrl52Era6wTV+liFYRi6+5lojPfPxMse6LSRqSlzoBrn9AiT+qhWXTqTHNh39e3Y=
+	t=1780827634; cv=none; b=ASBZ3NBT+xARKxvcgzBFlVTBVKxh1ZfuuIds88iHf0/OJoGyuWfVGh2/e0bRfsX5ALaOfOlWmyjb+KSMj39yhT7Ex6MzC/r8bcALTyPZsxIK7raSwMab7Yw6JPVZX+JJjCJBipSM6tdt8aD2mZd6pPYO6Cbd6+G8u/7Iyl6hTI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827630; c=relaxed/simple;
-	bh=mFiFUUhrdTUfVzD6H0mr3IGkVg8uHo6t88ZzTCqdj+U=;
+	s=arc-20240116; t=1780827634; c=relaxed/simple;
+	bh=hfHIahQknxvoNgKWU0yHNjwlat6rsINFZpxq+WVplxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DitjmaFzdiOCwxMdqctYP7qMNuuWMqzESz9N0cuVA3tRd3+eZkGF3QHg/ISIjYZLL0EoqhjXyxvnkNDXCgW6olrM/kKvRO506fpfVaBiDamppPide5/NRuJFmRyxRJfBp1qIZ1DQxaMr5QKI9t9C1gL+YGBPInuc9mVdHuDUNUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWbSrVb3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AXKoEh+jdEpDbviXn5LyqvMLTjemfxDOCiT/Z0gMxyOEMPmwfFJNZfJdDfOGCX8xfpgmMDTnRPXZMzLEIzLXWXuliqtqRDT7h6+Tl5rskoK7KeDvArnogpq+B90O8NyBybBjWDm0B0JIcjm788my1uB70LXOEH0F6ZTumeFfKNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=td2+G2/D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWbSrVb3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83A31F00893;
-	Sun,  7 Jun 2026 10:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="td2+G2/D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CBBA1F00893;
+	Sun,  7 Jun 2026 10:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827629;
-	bh=QFdFqSJKhqzo83ll3291rcxA0rwKDKkf0yHd4oev+pU=;
+	s=korg; t=1780827633;
+	bh=NR9ZxvtbPQEmf9huFzxS1zhIJdc5IzErGXB473CW4Fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sWbSrVb3ywGdidSPSG9Me1hE8i/8+/h2p3GRPc6OzBoG/9xbAJJtsb1lfM3x6s61i
-	 oDOeQ002lOtGpkZhdedjX9GYs5Ie+2UGdm5nlEHecdIHpYzEd4jJOkZOoGUoWPAZ3U
-	 fme7GUhtjFS9DX8LVbaN9VT3/Ul70UNEP/OJu6QE=
+	b=td2+G2/D7Y89xPlOp5k6305OrfuAooFRbzmhXezDwFOGjRbMEIgYA23Se28WfkcKm
+	 RYbehq5bTcIGdoiyKXVcYhrcqXAb+pOb9o1bl8/z9pOrkmpkpI1z4KpQ72SQSJurpt
+	 OblUPff2iHHkMSuWYi18xUoQQ+V1X7h/xmR8Y1QY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Liu <will@willsroot.io>,
-	Savino Dicanosa <savy@syst3mfailure.io>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 074/307] net/sched: fix packet loop on netem when duplicate is on
-Date: Sun,  7 Jun 2026 11:57:51 +0200
-Message-ID: <20260607095730.481390690@linuxfoundation.org>
+Subject: [PATCH 7.0 110/332] ipv6: fix possible infinite loop in rt6_fill_node()
+Date: Sun,  7 Jun 2026 11:57:59 +0200
+Message-ID: <20260607095732.158093455@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,73 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 9552b11e3edabc97cfcd9f29103d5afbce7ae183 ]
+[ Upstream commit 9f72412bcf60144f252b0d6205106abf14344abc ]
 
-When netem duplicates a packet it re-enqueues the copy at the root qdisc.
-If another netem sits in the tree the copy can be duplicated
-again, recursing until the stack or memory is exhausted.
+Sashiko reported this issue [1]. Apply the same fix as
+commit f8d8ce1b515a ("ipv6: fix possible infinite loop in fib6_info_uses_dev()").
 
-The original duplication guard temporarily zeroed q->duplicate around
-the re-enqueue, but that does not cover all cases because it is
-per-qdisc state shared across all concurrent enqueue paths
-and is not safe without additional locking.
+Writers holding tb6_lock can list_del_rcu(&rt->fib6_siblings)
+without waiting for RCU readers; rt->fib6_siblings.next then still
+points into the old ring and this softirq-side walker never reaches
+&rt->fib6_siblings, causing a CPU stall. fib6_del_route() always
+WRITE_ONCE()s rt->fib6_nsiblings to 0 before list_del_rcu(), so an
+inside-loop check is a reliable detach signal.
 
-Use the skb tc_depth field introduced in an earlier patch:
- - increment it on the duplicate before re-enqueue
- - skip duplication for any skb whose tc_depth is already non-zero.
+[1] https://sashiko.dev/#/patchset/20260526020227.4857-1-jiayuan.chen%40linux.dev
 
-This marks the packet itself rather than mutating qdisc state,
-therefore it is safe regardless of tree topology or concurrency.
-
-Fixes: 0afb51e72855 ("[PKT_SCHED]: netem: reinsert for duplication")
-Reported-by: William Liu <will@willsroot.io>
-Reported-by: Savino Dicanosa <savy@syst3mfailure.io>
-Closes: https://lore.kernel.org/netdev/8DuRWwfqjoRDLDmBMlIfbrsZg9Gx50DHJc1ilxsEBNe2D6NMoigR_eIRIG0LOjMc3r10nUUZtArXx4oZBIdUfZQrwjcQhdinnMis_0G7VEk=@willsroot.io/
-Co-developed-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Reviewed-by: William Liu <will@willsroot.io>
-Reviewed-by: Stephen Hemminger <stephen@networkplumber.org>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260525122556.973584-5-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: d9ccb18f83ea ("ipv6: Fix soft lockups in fib6_select_path under high next hop churn")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260527053133.180695-1-jiayuan.chen@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ net/ipv6/route.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index 1fdebf2ab7ee46..136b7d81296eff 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -459,7 +459,8 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	skb->prev = NULL;
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index cb521700cee7ed..398e873072bbfb 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -5891,6 +5891,8 @@ static int rt6_fill_node(struct net *net, struct sk_buff *skb,
  
- 	/* Random duplication */
--	if (q->duplicate && q->duplicate >= get_crandom(&q->dup_cor, &q->prng))
-+	if (q->duplicate && skb->tc_depth == 0 &&
-+	    q->duplicate >= get_crandom(&q->dup_cor, &q->prng))
- 		++count;
+ 				goto nla_put_failure;
+ 			}
++			if (!READ_ONCE(rt->fib6_nsiblings))
++				break;
+ 		}
  
- 	/* Drop packet? */
-@@ -538,11 +539,9 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	 */
- 	if (skb2) {
- 		struct Qdisc *rootq = qdisc_root_bh(sch);
--		u32 dupsave = q->duplicate; /* prevent duplicating a dup... */
- 
--		q->duplicate = 0;
-+		skb2->tc_depth++; /* prevent duplicating a dup... */
- 		rootq->enqueue(skb2, rootq, to_free);
--		q->duplicate = dupsave;
- 		skb2 = NULL;
- 	}
- 
+ 		rcu_read_unlock();
 -- 
 2.53.0
 
