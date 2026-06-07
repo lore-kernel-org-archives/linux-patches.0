@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B2D257855;
-	Sun,  7 Jun 2026 10:43:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8BA1E98EF;
+	Sun,  7 Jun 2026 10:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829020; cv=none; b=VVC7AVKFT4W6PDiRZs2MgDwq08sGMmz1S1qnXtu6uUChrC8v6xO815uO56XjoE9sqh/T/Y55C5PclkY9mSlnuyB+mZkm7Q37M6ETS5mGOO31OUxFfE2gafcEqFb6HCvgyg+1RAvSOXYwRfGTenJzMCAsMH6oF8xaY3wvOAdqc6A=
+	t=1780829024; cv=none; b=Uf3uQ5Qs0taYpohSZs6qPFgZdYKhCI0cb/7jGmZosNubnCwPWrJqLPnaxBDfReosdS5SmcXdfi4mWOKnJFQzpTDxxLmxe66RSlGYXf+aIcovP8R1DyXpZlnuNWmUumgo6z34xAkJX/C5rDUWbRi+Z11iq7T3WBzW/0vfqSnsQ6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829020; c=relaxed/simple;
-	bh=gXmSscQ2LZ1zC6Q2trSL8LS3eCHjJm08KUi3xje77E4=;
+	s=arc-20240116; t=1780829024; c=relaxed/simple;
+	bh=ISZfvGtEI6K+EjaEaAkmd5ynSN4xemTKAWTkjtKLaJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+tF0AapB49EkpuTPgR2edz9pbQcDV3GYZPvifsnCoF/QtgHMboFUP3+s4w2XXANEEeI8dTHU6A2UlB3wuUmOg/tKEwb+Lty/Ja1BuqRYQWYo8cp0B1zX3W5VGyhby2VwznEdlJfC6HMDlAK25grPKqWJNlwEWRreWlBo+ofsuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=st6+BVHV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ArHoOuWeB/nVenCkD4AsMOEhl31pTCKkAiGPv1r9p7VvQILqlGrH5vNfqkpdYVjQZmdQbVWFmzjCNyB7UbSFNLHkoGDKi2PulO10pJrUWlKLcGeif9+8V19mIvOmche4Ly1g68L5dk6nl7QQp84nJ+3r9Xz0OISeIN1NjFBqP5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPSIrQ8i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="st6+BVHV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2601F00893;
-	Sun,  7 Jun 2026 10:43:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPSIrQ8i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C1441F00893;
+	Sun,  7 Jun 2026 10:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829019;
-	bh=FuAGwswN7TyyOjXzvAKaLUrR/F8eURFqStUEeDv6e0w=;
+	s=korg; t=1780829022;
+	bh=85XtFziLiyMJL7a7uxWMTmc2gLeIyMEEmHC6qA5KEOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=st6+BVHVx5XTkCxfWl6IpeXz3TsOWimSMgmyKReE9Rn7jHYkhoL3MHVs434ij2Ito
-	 jTnde2qbj0WOLmjCptrtcMkyi6eP/ggHVg/gMNMMoumZJhN2WIhTW3j7UKgFTPCjZF
-	 VnraI5y8GTw0fET4RLGOlpziOYU0SO4sUAIdbm7w=
+	b=WPSIrQ8iSJ2JKLV7HNATKntxBEbqbVCBpNBBObhM79If9QNbjPlnHmQ8WWSgameIa
+	 T/10LPx4J0v6rslplTROaQWnE+uL8ewPh58ORfYEr54TIgdj/0Ez6XLSml29MaKR6U
+	 EijzTIjexwtUnICJqbSRfvsah2TrGDPur0QkpupY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 187/307] ASoC: qcom: q6asm-dai: fix error handling in prepare and set_params
-Date: Sun,  7 Jun 2026 11:59:44 +0200
-Message-ID: <20260607095734.589561561@linuxfoundation.org>
+	Qbeliw Tanaka <q.tanaka@gmx.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.18 210/315] Input: xpad - add "Nova 2 Lite" from GameSir
+Date: Sun,  7 Jun 2026 11:59:57 +0200
+Message-ID: <20260607095735.270733190@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,87 +46,35 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Qbeliw Tanaka <q.tanaka@gmx.com>
 
-commit 4b4db09f283df65d780bc7cee66cb4a7e9bf4770 upstream.
+commit 1f6ac0f8441c48c4cc250141e1da8486c13512ba upstream.
 
-Fix error handling in q6asm_dai_compr_set_params() and q6asm_dai_prepare()
-for both CMD_CLOSE and q6asm_unmap_memory_regions().
+Add support for the gamepad "Nova 2 Lite" from GameSir, compatible with
+the Xbox 360 gamepad.
 
-In both the functions, we are doing q6asm_audio_client_free in failure
-cases, which means if prepare or set_params fail, we can never recover.
-Now open and close are done in respective dai_open/close functions.
-
-Fixes: 2a9e92d371db ("ASoC: qdsp6: q6asm: Add q6asm dai driver")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260518092347.3446946-4-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Qbeliw Tanaka <q.tanaka@gmx.com>
+Link: https://patch.msgid.link/20260429.162040.930225048583399359.q.tanaka@gmx.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6asm-dai.c |   24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ drivers/input/joystick/xpad.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/qcom/qdsp6/q6asm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
-@@ -234,9 +234,19 @@ static int q6asm_dai_prepare(struct snd_
- 	/* rate and channels are sent to audio driver */
- 	if (prtd->state == Q6ASM_STREAM_RUNNING) {
- 		/* clear the previous setup if any  */
--		q6asm_cmd(prtd->audio_client, prtd->stream_id, CMD_CLOSE);
--		q6asm_unmap_memory_regions(substream->stream,
--					   prtd->audio_client);
-+		ret = q6asm_cmd(prtd->audio_client, prtd->stream_id, CMD_CLOSE);
-+		if (ret < 0) {
-+			dev_err(dev, "Failed to close q6asm stream %d\n", prtd->stream_id);
-+			return ret;
-+		}
-+
-+		ret = q6asm_unmap_memory_regions(substream->stream, prtd->audio_client);
-+		if (ret < 0) {
-+			dev_err(dev, "Failed to unmap memory regions for q6asm stream %d\n",
-+				prtd->stream_id);
-+			return ret;
-+		}
-+
- 		q6routing_stream_close(soc_prtd->dai_link->id,
- 					 substream->stream);
- 		prtd->state = Q6ASM_STREAM_STOPPED;
-@@ -304,8 +314,6 @@ routing_err:
- 	q6asm_cmd(prtd->audio_client, prtd->stream_id,  CMD_CLOSE);
- open_err:
- 	q6asm_unmap_memory_regions(substream->stream, prtd->audio_client);
--	q6asm_audio_client_free(prtd->audio_client);
--	prtd->audio_client = NULL;
- 
- 	return ret;
- }
-@@ -902,7 +910,7 @@ static int q6asm_dai_compr_set_params(st
- 			      prtd->session_id, dir);
- 	if (ret) {
- 		dev_err(dev, "Stream reg failed ret:%d\n", ret);
--		goto q6_err;
-+		goto routing_err;
- 	}
- 
- 	ret = __q6asm_dai_compr_set_codec_params(component, stream,
-@@ -928,11 +936,11 @@ static int q6asm_dai_compr_set_params(st
- 	return 0;
- 
- q6_err:
-+	q6routing_stream_close(rtd->dai_link->id, dir);
-+routing_err:
- 	q6asm_cmd(prtd->audio_client, prtd->stream_id, CMD_CLOSE);
- 
- open_err:
--	q6asm_audio_client_free(prtd->audio_client);
--	prtd->audio_client = NULL;
- 	return ret;
- }
- 
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -425,6 +425,7 @@ static const struct xpad_device {
+ 	{ 0x3285, 0x0662, "Nacon Revolution5 Pro", 0, XTYPE_XBOX360 },
+ 	{ 0x3285, 0x0663, "Nacon Evol-X", 0, XTYPE_XBOXONE },
+ 	{ 0x3537, 0x1004, "GameSir T4 Kaleid", 0, XTYPE_XBOX360 },
++	{ 0x3537, 0x100f, "GameSir Nova 2 Lite", 0, XTYPE_XBOX360 },
+ 	{ 0x3537, 0x1010, "GameSir G7 SE", 0, XTYPE_XBOXONE },
+ 	{ 0x3651, 0x1000, "CRKD SG", 0, XTYPE_XBOX360 },
+ 	{ 0x366c, 0x0005, "ByoWave Proteus Controller", MAP_SHARE_BUTTON, XTYPE_XBOXONE, FLAG_DELAY_INIT },
 
 
