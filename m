@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A7031F993;
-	Sun,  7 Jun 2026 10:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E3B32470F;
+	Sun,  7 Jun 2026 10:23:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827782; cv=none; b=ujIw+ywD1Ikpg653gOlZldAcQj7uFBP9XcK3ScW6oHdzhSOqaXZzfpuXoKvqwXxubLQB/X8uBLw+ghwQlSymP1WjH+StMpDPZvju7MqCHVCGZYfMbIbRgf2AzZjaaiEjVA+UjhclxjvGGI+O6IgPKszReqq4xgOOYjswXzAQijo=
+	t=1780827787; cv=none; b=dFrmWU3xy3MXqRT28TsDLfKqfDWXOofc+K711fKAr/dxcXtoKEk8ZzF3NUtVNCl/tI5IKI71sm+abTPorb6YbF3WA6/1vU/mOeo71gq3MsxPEOSsPIjTm+ryVkCRYMDHXURQNO7zDihQM2lw/1Ik5l3Ta3h5ce6fTnzqMKouRwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827782; c=relaxed/simple;
-	bh=qPDH6iGDjlsfQUvsF3DqFuYJAogfzpf+8qHvCXEprdg=;
+	s=arc-20240116; t=1780827787; c=relaxed/simple;
+	bh=ym3YRZqSVlKh/YOe9r9CSovfD43GxTCotNRDa6aWLMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iFSipLvdWOA+0B5xs59t9zCe0fsz0ZNXombUkuB4ljkQp6KruHddbcalfPsXTbFBOYRVkzIKh4YTnnllsw7OrTHgNklv21+SLf2hcBlFmyOAIv8RMwEMzrme3ZZ8MDo8zbGXFWFk5A+AceyWJGuqYINCp/2YOYombcOTsw1zjiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KLzsGQdf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oBGOlRsoyYUcJalCZ293bmqIN7/OXnzJq5y+WaPjG7w1DqyDZaozqjodkMJY/PnDTuMTFEHWzVjKIrcQfKy4GMQTz1hAM5NdiBD0rUVnFGDO5bB4/ZJ9kRymljcvPTjpMMeGNrPwerg/4Aa7b2XTtFVxC0kSqcLaozt5r5mu2gU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLMbutw6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KLzsGQdf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398F81F00893;
-	Sun,  7 Jun 2026 10:23:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLMbutw6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDD01F00893;
+	Sun,  7 Jun 2026 10:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827781;
-	bh=EtMYg20IMxfE/l7Pv0Yp2TfhJ7PJTw0XGA33Unkmci4=;
+	s=korg; t=1780827785;
+	bh=8iFKAsEzFB5NJtLn4Kial7embpMziybK0VCBcJuyUZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KLzsGQdfOs5RwRmzAlaAJa7jhM254fCT1Dpiku+4NevSpQis0Bk3PswZKpjLhd7dr
-	 sAKecUTMaT9OxdUZ9VBrv0GSXSw5EN7Ka8707RNS3Vx2h9XjJmaa0W/3T0D98FtzW1
-	 /SQyJq4irRe+0B0QvICFwc/Ck5GaBLt0Y2SaFsgU=
+	b=rLMbutw6B2uO0pSap7laYNq5mZkJOK+73BRydfwCBcTuSz9X4PLQwKF2mWu4aBXi2
+	 oe1GSaACpvT0R+ONg83M7P+J4I3GkN2VsBQ2+STD4hKMX8ua7ai+2xmkKr2DbpW37Y
+	 KASHUn28K3YjRLbR0pAsFImPFta92FbydVN63pGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Zhenghang Xiao <kipreyyy@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 100/315] drm/i915/psr: Add defininitions for INTEL_WA_REGISTER_CAPS DPCD register
-Date: Sun,  7 Jun 2026 11:58:07 +0200
-Message-ID: <20260607095731.316005634@linuxfoundation.org>
+Subject: [PATCH 6.12 086/307] Bluetooth: l2cap: clear chan->ident on ECRED reconfiguration success
+Date: Sun,  7 Jun 2026 11:58:03 +0200
+Message-ID: <20260607095730.932447808@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,74 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Zhenghang Xiao <kipreyyy@gmail.com>
 
-commit fbceb39b536e40c2f7cc47ab42037bb7c2b7ced9 upstream.
+[ Upstream commit 00e1950716c6ed67d74777b2db286b0fa23b4be9 ]
 
-EDP specification says:
+l2cap_ecred_reconf_rsp() returns early on success without clearing
+chan->ident. Every other L2CAP response handler (l2cap_ecred_conn_rsp,
+l2cap_le_connect_rsp, l2cap_config_rsp) clears chan->ident after a
+successful transaction to prevent the channel from matching subsequent
+responses with the recycled ident value.
 
-"If either VSC SDP is unable to be transmitted 100 ns before the SU region,
-the Source device may optionally transmit the VSC SDP during the prior
-video scan line’s HBlank period There is a Intel specific drm dp register
-currently containing bits related how TCON can support PSR2 with SDP on
-prior line."
+A remote attacker that completed a reconfiguration as the peer can
+replay a failure response with the stale ident, causing the kernel to
+match and destroy the already-established channel via
+l2cap_chan_del(chan, ECONNRESET).
 
-Unfortunately many panels are having problems in implementing this. So
-there is a custom Intel specific DPCD register (INTEL_WA_REGISTER_CAPS) to
-figure out if this is properly implemented on a panel or if panel doesn't
-require that 100 ns delay before the SU region. Here are the definitions in
-this custom DPCD address:
+Clear chan->ident for all matching channels on success, and harden the
+failure path by using l2cap_chan_hold_unless_zero() consistent with
+other L2CAP handlers (l2cap_le_command_rej, __l2cap_get_chan_by_ident).
 
-0 = Panel doesn't support SDP on prior line
-1 = Panel supports SDP on prior line
-2 = Panel doesn't have 100ns requirement
-3 = Reserved
-
-Add definitions for this new register and it's values into new header
-intel_dpcd.h.
-
-v2: add INTEL_DPCD_ prefix to definitions
-
-Bspec: 74741
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260515095756.2799483-2-jouni.hogander@intel.com
-(cherry picked from commit 1da1c9294825f08f622c473480d185680c2a3b75)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
+Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dpcd.h | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
- create mode 100644 drivers/gpu/drm/i915/display/intel_dpcd.h
+ net/bluetooth/l2cap_core.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dpcd.h b/drivers/gpu/drm/i915/display/intel_dpcd.h
-new file mode 100644
-index 00000000000000..4aea5326f2ed48
---- /dev/null
-+++ b/drivers/gpu/drm/i915/display/intel_dpcd.h
-@@ -0,0 +1,15 @@
-+/* SPDX-License-Identifier: MIT */
-+/*
-+ * Copyright © 2026 Intel Corporation
-+ */
-+
-+#ifndef __INTEL_DPCD_H__
-+#define __INTEL_DPCD_H__
-+
-+#define INTEL_DPCD_INTEL_WA_REGISTER_CAPS					0x3f0
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_EARLYSCANLINE_SDP_SUPPORT_MASK	REG_GENMASK(1, 0)
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_FALL_BACK_TO_PSR1			0
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITH_EARLY_SCANLINE		1
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITHOUT_EARLY_SCANLINE		2
-+
-+#endif /* __INTEL_DPCD_H__ */
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index b24e4d8130ddb1..9de5d545966d60 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -5392,14 +5392,20 @@ static inline int l2cap_ecred_reconf_rsp(struct l2cap_conn *conn,
+ 
+ 	BT_DBG("result 0x%4.4x", result);
+ 
+-	if (!result)
++	if (!result) {
++		list_for_each_entry(chan, &conn->chan_l, list) {
++			if (chan->ident == cmd->ident)
++				chan->ident = 0;
++		}
+ 		return 0;
++	}
+ 
+ 	list_for_each_entry_safe(chan, tmp, &conn->chan_l, list) {
+ 		if (chan->ident != cmd->ident)
+ 			continue;
+ 
+-		l2cap_chan_hold(chan);
++		if (!l2cap_chan_hold_unless_zero(chan))
++			continue;
+ 		l2cap_chan_lock(chan);
+ 
+ 		l2cap_chan_del(chan, ECONNRESET);
 -- 
 2.53.0
 
