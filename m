@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED0E12CDA5;
-	Sun,  7 Jun 2026 10:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E12E3242DF;
+	Sun,  7 Jun 2026 10:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829939; cv=none; b=qT+JhwVwcG1BPrpO1oBWnYtkgNarWGSpwHgJRjiv23is9N9yW21/FKr3nKchRlj+a+KIbw3ysahdBtueTRtANglllJC/TcLUUFxwqI2s/s9snp8AAeyw8121IXiTWuOnuvE7QtE46dtXLF4jBgBR/47A7Qa761LeNCSajlGz4E4=
+	t=1780829943; cv=none; b=rcXQ3DtuDRcrQgu98TA3ks+kjKwHtleOvFvfoXvMPIFbEUomBQXza56xEud/SS4wBvUuhdXVnOz9kswwdBZwKHjUMjdlpF0YqQeKTbFAXEKqJZB9j5VVNJTHPKkE+h6FrpFw3yo4th1sD4WvhuArEcGUYntFmS05cIRW2jGqerQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829939; c=relaxed/simple;
-	bh=3SOKXIaBQno+5AaSAjhDpPTO0v9c60Ff3NdKwL6zYrY=;
+	s=arc-20240116; t=1780829943; c=relaxed/simple;
+	bh=Yi1oSLOVjJEkr5ew1NHikcp1Kf1c2B+YHgo89MfbzUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PKdTSFF7lYmKZuM9Urq9OdP9/IXgob2JX9n+2R8kR0otZ7OdlgXtDfW2pxoPfcFyzHtI8Jsoa65lfprgumPmwyS0HsiLJVul5p9wg7qFWiVIfVbl8mw+Gnh2T22pBsGOW6wkrSKazLByOlM+2RQCvyi7jQjOqMi87shI41kHci4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnrFDTeN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HaXW5ThMb7Ypt8sU+JXGGKXNQWvHqKtPvJSHb2PqRBJ803HWW4RJffPIw9brhMYGsZICgVgpX4kGnYUa/o1+KqfKx17blayjRbE3civFCkM7MGy2uVLqGLKQ4XDcNS5rgQ5dlIwakIVT4Cwldf8+eG3MH4LfdT4NDyL1AbSUKn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGv9l1Qw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnrFDTeN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49CF1F00893;
-	Sun,  7 Jun 2026 10:58:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGv9l1Qw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A09671F00893;
+	Sun,  7 Jun 2026 10:59:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829938;
-	bh=/GSDwjDsuQnekFrkVZadFZWEsGU2enI/OuUHlyNImzo=;
+	s=korg; t=1780829942;
+	bh=34txfECVFuWCpuvuSp7+I/RJw99v2PRbnX7lFGcVbfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BnrFDTeNWPHlklClXucl+WArk2X/I0SW9NoIi61wUrC2+zUDvC0TGBsGQuWvpO54Q
-	 wLZoW0p5q0al06Mqk62xRTOB3+olzkGnR7Gm+roMR+QTIWJXg6OHOFtY9cMG2RPXSs
-	 ttdf+auhNr/oTwrmHM7KcoJFgOQrnnF43205JWPU=
+	b=rGv9l1QwBrGCGiOSv1oC1OkHyKz/Fj7MOAZVzqgY96H/Lf+URDmCjRY+RmbBswe9Y
+	 IpfQjIImxsaOXLP6CnaybOfR/jJksjkB5uxmu8SrWJiQACez9k3ZzfOyVm3BtSlWWR
+	 Xc657fuVQmucd4dobx2WQTowt0kNiBVqOQyqGVGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 328/332] hwmon: (pmbus/adm1266) serialize sequencer_state debugfs read with pmbus_lock
-Date: Sun,  7 Jun 2026 12:01:37 +0200
-Message-ID: <20260607095740.179479064@linuxfoundation.org>
+Subject: [PATCH 6.18 294/315] mptcp: borrow forward memory from subflow
+Date: Sun,  7 Jun 2026 12:01:21 +0200
+Message-ID: <20260607095738.395345675@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +49,201 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 4e4af55aaca7f6d7673d5f9889ad0529db86a048 ]
+[ Upstream commit 9db5b3cec4ec1c0cd3239689f5c8653d691a1754 ]
 
-adm1266_state_read() backs the sequencer_state debugfs entry and
-issues an i2c_smbus_read_word_data(client, ADM1266_READ_STATE)
-against the device without taking pmbus_lock.  pmbus_core holds
-pmbus_lock around its own multi-transaction sequences (notably the
-"set PAGE, then read paged register" pattern used by hwmon
-attributes), so an unlocked debugfs reader can land between a PAGE
-write and the subsequent paged read in another thread.  READ_STATE
-itself is not paged, so it cannot corrupt PAGE in flight, but the
-same defensive serialisation that applies to the GPIO accessors
-applies here: any direct device access from outside pmbus_core
-should be ordered with respect to pmbus_core's own.
+In the MPTCP receive path, we release the subflow allocated fwd
+memory just to allocate it again shortly after for the msk.
 
-Take pmbus_lock at the top of adm1266_state_read() via the
-scope-based guard().
+That could increases the failures chances, especially when we will
+add backlog processing, with other actions could consume the just
+released memory before the msk socket has a chance to do the
+rcv allocation.
 
-Fixes: ed1ff457e187 ("hwmon: (pmbus/adm1266) add debugfs for states")
-Cc: stable@vger.kernel.org
-Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Link: https://lore.kernel.org/r/20260518-adm1266-gpio-fixes-v3-8-e425e4f88139@nexthop.ai
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Replace the skb_orphan() call with an open-coded variant that
+explicitly borrows, the fwd memory from the subflow socket instead
+of releasing it.
+
+The borrowed memory does not have PAGE_SIZE granularity; rounding to
+the page size will make the fwd allocated memory higher than what is
+strictly required and could make the incoming subflow fwd mem
+consistently negative. Instead, keep track of the accumulated frag and
+borrow the full page at subflow close time.
+
+This allow removing the last drop in the TCP to MPTCP transition and
+the associated, now unused, MIB.
+
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251121-net-next-mptcp-memcg-backlog-imp-v1-12-1f34b6c1e0b1@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 50c2d91c5dfa ("mptcp: do not drop partial packets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/adm1266.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/mptcp/fastopen.c |    4 +++-
+ net/mptcp/mib.c      |    1 -
+ net/mptcp/mib.h      |    1 -
+ net/mptcp/protocol.c |   23 +++++++++++++++--------
+ net/mptcp/protocol.h |   28 ++++++++++++++++++++++++++++
+ 5 files changed, 46 insertions(+), 11 deletions(-)
 
---- a/drivers/hwmon/pmbus/adm1266.c
-+++ b/drivers/hwmon/pmbus/adm1266.c
-@@ -328,6 +328,7 @@ static int adm1266_state_read(struct seq
- 	struct i2c_client *client = to_i2c_client(dev);
- 	int ret;
+--- a/net/mptcp/fastopen.c
++++ b/net/mptcp/fastopen.c
+@@ -33,7 +33,8 @@ void mptcp_fastopen_subflow_synack_set_p
+ 	/* dequeue the skb from sk receive queue */
+ 	__skb_unlink(skb, &ssk->sk_receive_queue);
+ 	skb_ext_reset(skb);
+-	skb_orphan(skb);
++
++	mptcp_subflow_lend_fwdmem(subflow, skb);
  
-+	guard(pmbus_lock)(client);
- 	ret = i2c_smbus_read_word_data(client, ADM1266_READ_STATE);
- 	if (ret < 0)
- 		return ret;
+ 	/* We copy the fastopen data, but that don't belong to the mptcp sequence
+ 	 * space, need to offset it in the subflow sequence, see mptcp_subflow_get_map_offset()
+@@ -52,6 +53,7 @@ void mptcp_fastopen_subflow_synack_set_p
+ 	mptcp_data_lock(sk);
+ 	DEBUG_NET_WARN_ON_ONCE(sock_owned_by_user_nocheck(sk));
+ 
++	mptcp_borrow_fwdmem(sk, skb);
+ 	skb_set_owner_r(skb, sk);
+ 	__skb_queue_tail(&sk->sk_receive_queue, skb);
+ 	mptcp_sk(sk)->bytes_received += skb->len;
+--- a/net/mptcp/mib.c
++++ b/net/mptcp/mib.c
+@@ -71,7 +71,6 @@ static const struct snmp_mib mptcp_snmp_
+ 	SNMP_MIB_ITEM("MPFastcloseRx", MPTCP_MIB_MPFASTCLOSERX),
+ 	SNMP_MIB_ITEM("MPRstTx", MPTCP_MIB_MPRSTTX),
+ 	SNMP_MIB_ITEM("MPRstRx", MPTCP_MIB_MPRSTRX),
+-	SNMP_MIB_ITEM("RcvPruned", MPTCP_MIB_RCVPRUNED),
+ 	SNMP_MIB_ITEM("SubflowStale", MPTCP_MIB_SUBFLOWSTALE),
+ 	SNMP_MIB_ITEM("SubflowRecover", MPTCP_MIB_SUBFLOWRECOVER),
+ 	SNMP_MIB_ITEM("SndWndShared", MPTCP_MIB_SNDWNDSHARED),
+--- a/net/mptcp/mib.h
++++ b/net/mptcp/mib.h
+@@ -70,7 +70,6 @@ enum linux_mptcp_mib_field {
+ 	MPTCP_MIB_MPFASTCLOSERX,	/* Received a MP_FASTCLOSE */
+ 	MPTCP_MIB_MPRSTTX,		/* Transmit a MP_RST */
+ 	MPTCP_MIB_MPRSTRX,		/* Received a MP_RST */
+-	MPTCP_MIB_RCVPRUNED,		/* Incoming packet dropped due to memory limit */
+ 	MPTCP_MIB_SUBFLOWSTALE,		/* Subflows entered 'stale' status */
+ 	MPTCP_MIB_SUBFLOWRECOVER,	/* Subflows returned to active status after being stale */
+ 	MPTCP_MIB_SNDWNDSHARED,		/* Subflow snd wnd is overridden by msk's one */
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -352,7 +352,7 @@ end:
+ static void mptcp_init_skb(struct sock *ssk, struct sk_buff *skb, int offset,
+ 			   int copy_len)
+ {
+-	const struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
++	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
+ 	bool has_rxtstamp = TCP_SKB_CB(skb)->has_rxtstamp;
+ 
+ 	/* the skb map_seq accounts for the skb offset:
+@@ -377,11 +377,7 @@ static bool __mptcp_move_skb(struct sock
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 	struct sk_buff *tail;
+ 
+-	/* try to fetch required memory from subflow */
+-	if (!sk_rmem_schedule(sk, skb, skb->truesize)) {
+-		MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_RCVPRUNED);
+-		goto drop;
+-	}
++	mptcp_borrow_fwdmem(sk, skb);
+ 
+ 	if (MPTCP_SKB_CB(skb)->map_seq == msk->ack_seq) {
+ 		/* in sequence */
+@@ -403,7 +399,6 @@ static bool __mptcp_move_skb(struct sock
+ 	 * will retransmit as needed, if needed.
+ 	 */
+ 	MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_DUPDATA);
+-drop:
+ 	mptcp_drop(sk, skb);
+ 	return false;
+ }
+@@ -704,7 +699,7 @@ static bool __mptcp_move_skbs_from_subfl
+ 			size_t len = skb->len - offset;
+ 
+ 			mptcp_init_skb(ssk, skb, offset, len);
+-			skb_orphan(skb);
++			mptcp_subflow_lend_fwdmem(subflow, skb);
+ 			ret = __mptcp_move_skb(sk, skb) || ret;
+ 			seq += len;
+ 
+@@ -2454,6 +2449,7 @@ static void __mptcp_close_ssk(struct soc
+ {
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 	bool dispose_it, need_push = false;
++	int fwd_remaining;
+ 
+ 	/* Do not pass RX data to the msk, even if the subflow socket is not
+ 	 * going to be freed (i.e. even for the first subflow on graceful
+@@ -2462,6 +2458,17 @@ static void __mptcp_close_ssk(struct soc
+ 	lock_sock_nested(ssk, SINGLE_DEPTH_NESTING);
+ 	subflow->closing = 1;
+ 
++	/* Borrow the fwd allocated page left-over; fwd memory for the subflow
++	 * could be negative at this point, but will be reach zero soon - when
++	 * the data allocated using such fragment will be freed.
++	 */
++	if (subflow->lent_mem_frag) {
++		fwd_remaining = PAGE_SIZE - subflow->lent_mem_frag;
++		sk_forward_alloc_add(sk, fwd_remaining);
++		sk_forward_alloc_add(ssk, -fwd_remaining);
++		subflow->lent_mem_frag = 0;
++	}
++
+ 	/* If the first subflow moved to a close state before accept, e.g. due
+ 	 * to an incoming reset or listener shutdown, the subflow socket is
+ 	 * already deleted by inet_child_forget() and the mptcp socket can't
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -548,6 +548,7 @@ struct mptcp_subflow_context {
+ 	bool	scheduled;
+ 	bool	pm_listener;	    /* a listener managed by the kernel PM? */
+ 	bool	fully_established;  /* path validated */
++	u32	lent_mem_frag;
+ 	u32	remote_nonce;
+ 	u64	thmac;
+ 	u32	local_nonce;
+@@ -647,6 +648,33 @@ mptcp_send_active_reset_reason(struct so
+ 	tcp_send_active_reset(sk, GFP_ATOMIC, reason);
+ }
+ 
++/* Made the fwd mem carried by the given skb available to the msk,
++ * To be paired with a previous mptcp_subflow_lend_fwdmem() before freeing
++ * the skb or setting the skb ownership.
++ */
++static inline void mptcp_borrow_fwdmem(struct sock *sk, struct sk_buff *skb)
++{
++	struct sock *ssk = skb->sk;
++
++	/* The subflow just lend the skb fwd memory, and we know that the skb
++	 * is only accounted on the incoming subflow rcvbuf.
++	 */
++	DEBUG_NET_WARN_ON_ONCE(skb->destructor);
++	skb->sk = NULL;
++	sk_forward_alloc_add(sk, skb->truesize);
++	atomic_sub(skb->truesize, &ssk->sk_rmem_alloc);
++}
++
++static inline void
++mptcp_subflow_lend_fwdmem(struct mptcp_subflow_context *subflow,
++			  struct sk_buff *skb)
++{
++	int frag = (subflow->lent_mem_frag + skb->truesize) & (PAGE_SIZE - 1);
++
++	skb->destructor = NULL;
++	subflow->lent_mem_frag = frag;
++}
++
+ static inline u64
+ mptcp_subflow_get_map_offset(const struct mptcp_subflow_context *subflow)
+ {
 
 
