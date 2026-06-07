@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCF92C1595;
-	Sun,  7 Jun 2026 10:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB412C1595;
+	Sun,  7 Jun 2026 10:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828789; cv=none; b=KXdxPUM3knrnuAHVgriwkKxTNB7ScyDzixFivnykzrQ9p3EQ7Ex+6yok6DzBHocbQhRK4Slh8cLul8UOq3xp/UOKS2qLsmqO9yu593jvliZbtJ6xJ+5mQpmW6484F7ceh8q9BckqCl4c44TdrPMSS3eReD3y+7dI2lcZPg523io=
+	t=1780828793; cv=none; b=NFle8HRg+2KnDDLP9kf4e8RV4Pj21akVDu0xgsNLZ2QiFc/ycEb1M7/r8Ls2sFUsE19/nw98Pnqh3pc4QFfgvT5zZyvYclP/EybhkIzEu1r1AE1T8rXUW5hZq5cBPqIEoECe7O8msfymhTjCdMKC8mlzR2EKW8NtcSAd/5nR7e0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828789; c=relaxed/simple;
-	bh=tmLgu360pmcOfC+i3sdZ2jhq9IzRmuwh3Yvdz5m6syg=;
+	s=arc-20240116; t=1780828793; c=relaxed/simple;
+	bh=56uzZXdSZ1WeZeLSHfy1CmSQQam/TzuM2jFzLvcb59U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cFyqWKASspQwkCvKSkjR0WctymZs/ROKN9prFIO2VMpOc59j2IRNjoT9MhUx2qdIuSE2AbzeR6MPNzkYyc4N9AXpsxgqJgBwc9GnDSmoPgr1lUtJz+3ZXsaMTL5uKCv95LtYNhVX226sd0VBJiIZGs+uaWdfPGIpkqWh8CEWOxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EtZn1Htx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UTNTHKh1WKnTvSi3kpznhY6Ql3/o3JRxzdyG2lIRuNFS/1yabvLL1bpLnHieiFKZjGeue95ahrWbUy6tVspkvYINfXmSyHn19vDeHHVHArNLENaA5ozWWp0ZCtomLmzqIz3LBVzpz2cXtomnflpsJOjC0MHVV1bVUKkyQxo5Cio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IsLl+7I8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EtZn1Htx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B071F00893;
-	Sun,  7 Jun 2026 10:39:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IsLl+7I8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955681F00893;
+	Sun,  7 Jun 2026 10:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828788;
-	bh=4b4pQIOGYVg08wTr+HV6342ePUlE0NJ33O+JeEc4iQY=;
+	s=korg; t=1780828792;
+	bh=YyMmM7MaNylWQqa7hceTWchpuEL+GmfZGfZzuuzt3+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EtZn1HtxIky42/9h997aYIGK7F/uqpbi7bD5AiKTwqdT0h8mmWQe23FC1/t0h26TF
-	 0T8sJQ0BVEr1nDcAXsYorkx7f4GPmY71vP/pgKUWezDTuOc9mSiXyzlHDhbH43dHLs
-	 m8cFBomA9R/le6at19nJVQLDNh5pCPk/TH8LDe7E=
+	b=IsLl+7I8yQhWwGWwbIA+PqotxMyTb8QFZqa7nebr1PytiZ8NvQPpqcHrZ8b2cnvOA
+	 Nx5R3LfnecQ3sVjSimYM3Hun/N6UbOh+FXlOnPZF8JKdcUtLQT/+3QujdoyE1mmOgB
+	 /FtITVXBluloFRpo2vmrd9Liw63N9UEYLt8rohQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,12 +30,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Qi Tang <tpluszz77@gmail.com>,
 	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 191/315] ipv6: validate extension header length before copying to cmsg
-Date: Sun,  7 Jun 2026 11:59:38 +0200
-Message-ID: <20260607095734.588553542@linuxfoundation.org>
+Subject: [PATCH 7.0 216/332] ipv6: validate extension header length before copying to cmsg
+Date: Sun,  7 Jun 2026 11:59:45 +0200
+Message-ID: <20260607095735.993558926@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,7 +47,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -104,7 +104,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/net/ipv6/datagram.c
 +++ b/net/ipv6/datagram.c
-@@ -617,6 +617,18 @@ void ip6_datagram_recv_common_ctl(struct
+@@ -618,6 +618,18 @@ void ip6_datagram_recv_common_ctl(struct
  	}
  }
  
@@ -123,7 +123,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  void ip6_datagram_recv_specific_ctl(struct sock *sk, struct msghdr *msg,
  				    struct sk_buff *skb)
  {
-@@ -643,7 +655,10 @@ void ip6_datagram_recv_specific_ctl(stru
+@@ -644,7 +656,10 @@ void ip6_datagram_recv_specific_ctl(stru
  	/* HbH is allowed only once */
  	if (np->rxopt.bits.hopopts && (opt->flags & IP6SKB_HOPBYHOP)) {
  		u8 *ptr = nh + sizeof(struct ipv6hdr);
@@ -135,7 +135,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	}
  
  	if (opt->lastopt &&
-@@ -664,26 +679,37 @@ void ip6_datagram_recv_specific_ctl(stru
+@@ -665,26 +680,37 @@ void ip6_datagram_recv_specific_ctl(stru
  			unsigned int len;
  			u8 *ptr = nh + off;
  
@@ -176,7 +176,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  				break;
  			}
  
-@@ -705,19 +731,31 @@ void ip6_datagram_recv_specific_ctl(stru
+@@ -706,19 +732,31 @@ void ip6_datagram_recv_specific_ctl(stru
  	}
  	if (np->rxopt.bits.ohopopts && (opt->flags & IP6SKB_HOPBYHOP)) {
  		u8 *ptr = nh + sizeof(struct ipv6hdr);
