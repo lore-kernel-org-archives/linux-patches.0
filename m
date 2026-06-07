@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531041E98EF;
-	Sun,  7 Jun 2026 10:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFF417B418;
+	Sun,  7 Jun 2026 10:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827278; cv=none; b=JwzF2RKE6LKzxspsnt0FPyzkNrYWIKAJZnk0/PggXF4N7JofYwr6AtuwzMbx1SHN8rZbiFHSoGk4r88sPgUR+rStSbF2ldBaUv939BpffPs9/0YtpANOJgVqDtuiND/qG19RlUeBoQ2cYmRgZu3RpDRuvmW/SpWM4wIZidfis3I=
+	t=1780827281; cv=none; b=mWzwPCRGPOR0UQvP6GkIjb6k+a3vOpOkd4CSkoo8sRT0UCblr9o8m62kh1uzWXFwLoMIkUZh3Oow3tvoctJ/w1q5lzIR00e5Ck10Xj9Pycel2fTZgeqFVDW3tJZrHmqLMh788VAAod67yXTiLEtvrqJN0Po6jNcn2NZk/Q5qhBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827278; c=relaxed/simple;
-	bh=nvbPHC8ueSV6EACXFlU6UqvEmVWixrQQ5TiBKKiwEog=;
+	s=arc-20240116; t=1780827281; c=relaxed/simple;
+	bh=mnmnlu1xtJzNdMtKC6VWelvWGKn6Y0cegj6cCtZ8Cd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GIpoQ5nKDsnFbHbg7usXc2ydOWiCrp2qhKRKX0yEfE2fDn2E5BfpINthk0XMVHcLGcbZr2M3Wn4fpEQ2LZzlcWcvXuqeN7Ij+r5LWH27jsP+8mnT7FSMvohLHI9tqHHVbkMj8Pdj8H+cojKCSlHW0rIwuVr6eE0mDB0Iy+/c9Lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQVLsIjs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jXKMK240UpXb0hxu51tnSrx4CJjFr9Mnh5kSmxcR8HPmRRJ551sw3Fas6foPRn+Slnhqd3BN7EwKeN4xJyfu/JEwQJOVg+5Nvju/ujv4EaokDGNAce58scP4fjqPcb4T35EcQKHhYOgffi/e9xvno3gi2OvHxHzsdIedGWd6C7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1BG12NCa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQVLsIjs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D011F00893;
-	Sun,  7 Jun 2026 10:14:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1BG12NCa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19E51F00893;
+	Sun,  7 Jun 2026 10:14:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827277;
-	bh=on1HTev623nBBxHa6f2SN4L28R27jIEL44LwpdejuZk=;
+	s=korg; t=1780827280;
+	bh=+qid/aqnzZJtWBBIvbQE1JDvNN6feXobM9b3IBoRlAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KQVLsIjs57Y0qmfdsjV9zIqpP7EOSUXLZG9EUoVtNFv3ciYsdXrDM82XhRnJPEXjF
-	 B6Ae4hF6JFkcMK+8PC2girQB37FRddxYxAT+gY9W2XQ4VcPCPuokpdlsuM3xjDyulI
-	 mmbegYRuNvylTL3oYzFoCQSePdLqBMXxdUX1nhFo=
+	b=1BG12NCaizYuXEXoUajMgeMrusVG+tvpS5VBY5gTWZ5SqdQlp8Y4gAmDg+G58GmPx
+	 5qVEcxN4VDdQdiQ+B73u+XhEe+uVGKQX3GzCCmk3H8S4ZVuApsFqaXVfaUoQg5u2tH
+	 fR1Qvf7N5tdM2rS194iyIK4vKZH2IjpRYc0e68u8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Jeffery <djeffery@redhat.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Ji-Soo Chung <jschung2@proton.me>,
+	Gerlinde <lrGerlinde@mailfence.com>,
+	zyc zyc <zyc199902@zohomail.cn>,
+	Manas Ghandat <ghandatmanas@gmail.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 041/307] scsi: core: Run queues for all non-SDEV_DEL devices from scsi_run_host_queues
-Date: Sun,  7 Jun 2026 11:57:18 +0200
-Message-ID: <20260607095729.204061798@linuxfoundation.org>
+Subject: [PATCH 7.0 079/332] net/sched: Revert "net/sched: Restrict conditions for adding duplicating netems to qdisc tree"
+Date: Sun,  7 Jun 2026 11:57:28 +0200
+Message-ID: <20260607095731.043498514@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,81 +52,103 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Jeffery <djeffery@redhat.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 7205b58702273baf21d6ba7992e6ba15852325f7 ]
+[ Upstream commit eda0b7f203bb166c98d1418b204135bd566ac83b ]
 
-While a SCSI host is in a recovery state, scsi_mq_requeue_cmd() will not
-set the requeue list for a requeued command to be kicked in the future.
-The expectation is a call to scsi_run_host_queues() will kick all SCSI
-devices once the recovery state is cleared.
+This reverts commit ec8e0e3d7adef940cdf9475e2352c0680189d14e.
 
-However, scsi_run_host_queues() uses shost_for_each_device() which uses
-scsi_device_get() and so will ignore devices in a partially removed
-state like SDEV_CANCEL. But these devices may also have requeued
-requests, leaving their requests stuck from not being kicked and causing
-the removal process of the device to hang.
+The original patch rejects any tree containing two netems when
+either has duplication set, even when they sit on unrelated classes
+of the same classful parent. That broke configurations that have
+worked since netem was introduced.
 
-scsi_run_host_queues() needs to run against more devices than the macro
-shost_for_each_device() allows. Instead of using the too limiting
-scsi_device_get() state checks, only ignore devices in SDEV_DEL state or
-when unable to acquire a reference. Attempt to run the queues for all
-other devices when scsi_run_host_queues() is called.
+The re-entrancy problem the original commit was trying to solve is
+handled by later patch using tc_depth flag.
 
-Fixes: 8b566edbdbfb ("scsi: core: Only kick the requeue list if necessary")
-Signed-off-by: David Jeffery <djeffery@redhat.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260515180941.9698-1-djeffery@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Doing this revert will (re)expose the original bug with multiple
+netem duplication. When this patch is backported make sure
+and get the full series.
+
+Fixes: ec8e0e3d7ade ("net/sched: Restrict conditions for adding duplicating netems to qdisc tree")
+Reported-by: Ji-Soo Chung <jschung2@proton.me>
+Reported-by: Gerlinde <lrGerlinde@mailfence.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220774
+Reported-by: zyc zyc <zyc199902@zohomail.cn>
+Closes: https://lore.kernel.org/all/19adda5a1e2.12410b78222774.9191120410578703463@zohomail.cn/
+Reported-by: Manas Ghandat <ghandatmanas@gmail.com>
+Closes: https://lore.kernel.org/netdev/f69b2c8f-8325-4c2e-a011-6dbc089f30e4@gmail.com/
+Reviewed-by: Stephen Hemminger <stephen@networkplumber.org>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260525122556.973584-3-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_lib.c | 27 +++++++++++++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
+ net/sched/sch_netem.c | 40 ----------------------------------------
+ 1 file changed, 40 deletions(-)
 
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index 55717fd3234be2..d63d10d53a2aad 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -569,10 +569,33 @@ void scsi_requeue_run_queue(struct work_struct *work)
- 
- void scsi_run_host_queues(struct Scsi_Host *shost)
- {
--	struct scsi_device *sdev;
-+	struct scsi_device *sdev, *prev = NULL;
-+	unsigned long flags;
- 
--	shost_for_each_device(sdev, shost)
-+	spin_lock_irqsave(shost->host_lock, flags);
-+	__shost_for_each_device(sdev, shost) {
-+		/*
-+		 * Only skip devices so deep into removal they will never need
-+		 * another kick to their queues. Thus scsi_device_get() cannot
-+		 * be used as it would skip devices in SDEV_CANCEL state which
-+		 * may need a queue kick.
-+		 */
-+		if (sdev->sdev_state == SDEV_DEL ||
-+		    !get_device(&sdev->sdev_gendev))
-+			continue;
-+		spin_unlock_irqrestore(shost->host_lock, flags);
-+
-+		if (prev)
-+			put_device(&prev->sdev_gendev);
- 		scsi_run_queue(sdev->request_queue);
-+
-+		prev = sdev;
-+
-+		spin_lock_irqsave(shost->host_lock, flags);
-+	}
-+	spin_unlock_irqrestore(shost->host_lock, flags);
-+	if (prev)
-+		put_device(&prev->sdev_gendev);
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index bc18e1976b6e07..d97acd2f392346 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -1007,41 +1007,6 @@ static int parse_attr(struct nlattr *tb[], int maxtype, struct nlattr *nla,
+ 	return 0;
  }
  
- static void scsi_uninit_cmd(struct scsi_cmnd *cmd)
+-static const struct Qdisc_class_ops netem_class_ops;
+-
+-static int check_netem_in_tree(struct Qdisc *sch, bool duplicates,
+-			       struct netlink_ext_ack *extack)
+-{
+-	struct Qdisc *root, *q;
+-	unsigned int i;
+-
+-	root = qdisc_root_sleeping(sch);
+-
+-	if (sch != root && root->ops->cl_ops == &netem_class_ops) {
+-		if (duplicates ||
+-		    ((struct netem_sched_data *)qdisc_priv(root))->duplicate)
+-			goto err;
+-	}
+-
+-	if (!qdisc_dev(root))
+-		return 0;
+-
+-	hash_for_each(qdisc_dev(root)->qdisc_hash, i, q, hash) {
+-		if (sch != q && q->ops->cl_ops == &netem_class_ops) {
+-			if (duplicates ||
+-			    ((struct netem_sched_data *)qdisc_priv(q))->duplicate)
+-				goto err;
+-		}
+-	}
+-
+-	return 0;
+-
+-err:
+-	NL_SET_ERR_MSG(extack,
+-		       "netem: cannot mix duplicating netems with other netems in tree");
+-	return -EINVAL;
+-}
+-
+ /* Parse netlink message to set options */
+ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 			struct netlink_ext_ack *extack)
+@@ -1118,11 +1083,6 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 	q->gap = qopt->gap;
+ 	q->counter = 0;
+ 	q->loss = qopt->loss;
+-
+-	ret = check_netem_in_tree(sch, qopt->duplicate, extack);
+-	if (ret)
+-		goto unlock;
+-
+ 	q->duplicate = qopt->duplicate;
+ 
+ 	/* for compatibility with earlier versions.
 -- 
 2.53.0
 
