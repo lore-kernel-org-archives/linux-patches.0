@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F074C330B22;
-	Sun,  7 Jun 2026 10:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90963242DF;
+	Sun,  7 Jun 2026 10:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829770; cv=none; b=Jr4nnIgyjsLBNlO37BtBhUQnr+mVDrVarJdKUGbDBIRZamKMZm1oWXp4tXPDBLGpahVcHqPX/N78U0VYnPgFlfmMrguz2W5GxXAIVy9YVz8MKvyEBdxhtuBRRl9Je/yxpMT+hj3vAyuEW0rI1fn1usJtYNlqirGuvWkqQss9s2U=
+	t=1780829773; cv=none; b=POGnMMd/VXoYBpblCsexaUOP5hRv29rRRnOYPknpJy+BLl5IWz70OgVT+5aGWtSJmGXTvbvhilmXCGI7TwxB+n0DNEkqloOAT99DVrw//OQ1lEH+SKNQIODvW0mBfSz3EuGA9QgJdkCvDwfbEkQEfmSH/fgjd+xDHIm/WuIk64E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829770; c=relaxed/simple;
-	bh=xSN/pjw6bk9z6rNX9/7TbmtitgrUPOaUWKWpVQGc/uw=;
+	s=arc-20240116; t=1780829773; c=relaxed/simple;
+	bh=8BfKpx9nkw/QG1sTu/iuB2HJ1Px/ODeeVHFlXbIWqf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GZ0LbeC4fovxJoRihM7u3ZUxQCLZI9LEsNv1VLOWIXOeBtaClxAiI74if7KCEGnLgFU70tVynV/IU2mJrCsKBhk2qhOqRII3hPsD/kZYVJB2KaOOSV6M8B599074Df7vPewtaGyPpG02+Ly5q2hkevfthlZ5yN/bdfe/dIa365M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SugUmqi8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jlSfkiZU/VkGBrs4AHRlA+6v8sTl8LcWKF332mA8ry3nF9lm42iujUu5Uy0gzRuj0rz0spdQ3tYCnrTUds4eGeayXoUgr2//Mnh65mEsHcJjaakkOs5Wd/TKKVKyq//Hn4SbOoOmdn4+dILia0dMryQlS6pPNAJ04M8kmC5HQ5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJM3EJEM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SugUmqi8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C431F00893;
-	Sun,  7 Jun 2026 10:56:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJM3EJEM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6111F00893;
+	Sun,  7 Jun 2026 10:56:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829768;
-	bh=fPMNKpa4FeJhOUHt8JfRLaq4PYCwLZE1n26OmTDz7G8=;
+	s=korg; t=1780829772;
+	bh=dQ1ABQeivri6BRWs88tv/WdAm/oInkcgO9tcXoqdJB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SugUmqi8SEDQUxQv4YVrcIlO2iy9sNW584FlIqgc8zbQmQbr/UsNv4sNNs6gRcfOJ
-	 nSm9FzPCRnKEnPIM41k9X9O8q5+MJjABA3oelsghzQzS48odc7SGcRb3dIdF+1KgQq
-	 Rn5+UMsQE3eLdxKTg9KHRa8LYQSh7uAn7UNVHr44=
+	b=UJM3EJEM/OzqrP/APhfusVPres9AXHjnC0egYoeERMsgzHUphV9r/6zy6u5S5lZYM
+	 lwThxLSgTddiVMWkV9Rmoj4oeGJgWNG/0F7TCQ2UwoN7YQVn1Y/O6NaiEgZxvq6gPX
+	 WbSAMuf1h3PjdBVAusS2RTZskiLICyiMA5nw62/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 6.12 252/307] serial: fsl_lpuart: fix rx buffer and DMA map leaks in start_rx_dma
-Date: Sun,  7 Jun 2026 12:00:49 +0200
-Message-ID: <20260607095736.947378965@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>
+Subject: [PATCH 6.18 277/315] serial: zs: Switch to using channel reset
+Date: Sun,  7 Jun 2026 12:01:04 +0200
+Message-ID: <20260607095737.754232419@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,94 +45,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shitalkumar Gandhi <shital.gandhi45@gmail.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit 9a9254c4a2a3ca2b3da16d173f3b0dd01f397ff6 upstream.
+commit 8572955630f30948837088aa98bcbe0532d1ceac upstream.
 
-lpuart_start_rx_dma() allocates sport->rx_ring.buf with kzalloc() and
-then maps a scatterlist via dma_map_sg().  On three subsequent error
-paths the function returns directly without releasing those resources:
+Switch the driver to using the channel reset rather than hardware reset,
+simplifying handling by removing an interference between channels that
+causes the other channel to become uninitialised afterwards.
 
-  - when dma_map_sg() returns 0 (-EINVAL):
-      ring->buf is leaked.
-  - when dmaengine_slave_config() fails:
-      ring->buf and the DMA mapping are leaked.
-  - when dmaengine_prep_dma_cyclic() returns NULL:
-      ring->buf and the DMA mapping are leaked.
+There is little difference between the two kinds of reset in terms of
+register settings that result, and we initialise the whole register set
+right away anyway.  However this prevents a hang from happening should
+the console output handler in the firmware try to access the other port
+whose transmitter has been disabled and line parameters messed up.
 
-The sole cleanup path, lpuart_dma_rx_free(), is only reached when
-lpuart_dma_rx_use is set, and the caller lpuart_rx_dma_startup() clears
-that flag on failure of lpuart_start_rx_dma().  So these resources are
-permanently leaked on every failure in this function.  Repeated port
-open/close or termios changes under error conditions will slowly consume
-memory and leave stale streaming DMA mappings behind.
+For example this will happen if the keyboard port (port A) is chosen for
+the system console, unusually but not insanely for a headless system, as
+the port is wired to a standard DA-15 connector and an adapter can be
+easily made.  Or with the next change in place this would happen for the
+regular console port (port B), since the keyboard port (port A) will be
+initialised first.
 
-Fix it by introducing two error labels that unmap the scatterlist and
-free the ring buffer as appropriate.  While here, replace the misleading
--EFAULT (bad userspace pointer) returned when dmaengine_prep_dma_cyclic()
-fails with the more accurate -ENOMEM, matching how other dmaengine users
-in the tree treat this failure.
+Just remove the unnecessary complication then, a channel reset is good
+enough.  We still need the initialisation marker, now per channel rather
+than per SCC, as for the console port zs_reset() will be called twice:
+once early on via zs_serial_console_init() for the console setup only,
+and then again via zs_config_port() as the port is associated with a TTY
+device.
 
-No functional change on the success path.
-
-Fixes: 5887ad43ee02 ("tty: serial: fsl_lpuart: Use cyclic DMA for Rx")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260420135903.2062024-1-shitalkumar.gandhi@cambiumnetworks.com
+Fixes: 8b4a40809e53 ("zs: move to the serial subsystem")
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Cc: stable@vger.kernel.org # v2.6.23+
+Link: https://patch.msgid.link/alpine.DEB.2.21.2605062323430.46195@angie.orcam.me.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/fsl_lpuart.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/tty/serial/zs.c |    7 ++++---
+ drivers/tty/serial/zs.h |    2 +-
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -1375,7 +1375,8 @@ static inline int lpuart_start_rx_dma(st
+--- a/drivers/tty/serial/zs.c
++++ b/drivers/tty/serial/zs.c
+@@ -832,21 +832,22 @@ static void zs_shutdown(struct uart_port
  
- 	if (!nent) {
- 		dev_err(sport->port.dev, "DMA Rx mapping error\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err_free_buf;
+ static void zs_reset(struct zs_port *zport)
+ {
++	struct zs_port *zport_a = &zport->scc->zport[ZS_CHAN_A];
+ 	struct zs_scc *scc = zport->scc;
+ 	int irq;
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&scc->zlock, flags);
+ 	irq = !irqs_disabled_flags(flags);
+-	if (!scc->initialised) {
++	if (!zport->initialised) {
+ 		/* Reset the pointer first, just in case...  */
+ 		read_zsreg(zport, R0);
+ 		/* And let the current transmission finish.  */
+ 		zs_line_drain(zport, irq);
+-		write_zsreg(zport, R9, FHWRES);
++		write_zsreg(zport, R9, zport == zport_a ? CHRA : CHRB);
+ 		udelay(10);
+ 		write_zsreg(zport, R9, 0);
+-		scc->initialised = 1;
++		zport->initialised = 1;
  	}
+ 	load_zsregs(zport, zport->regs, irq);
+ 	spin_unlock_irqrestore(&scc->zlock, flags);
+--- a/drivers/tty/serial/zs.h
++++ b/drivers/tty/serial/zs.h
+@@ -22,6 +22,7 @@
+ struct zs_port {
+ 	struct zs_scc	*scc;			/* Containing SCC.  */
+ 	struct uart_port port;			/* Underlying UART.  */
++	int		initialised;		/* For the console port.  */
  
- 	dma_rx_sconfig.src_addr = lpuart_dma_datareg_addr(sport);
-@@ -1387,7 +1388,7 @@ static inline int lpuart_start_rx_dma(st
- 	if (ret < 0) {
- 		dev_err(sport->port.dev,
- 				"DMA Rx slave config failed, err = %d\n", ret);
--		return ret;
-+		goto err_unmap_sg;
- 	}
+ 	int		clk_mode;		/* May be 1, 16, 32, or 64.  */
  
- 	sport->dma_rx_desc = dmaengine_prep_dma_cyclic(chan,
-@@ -1398,7 +1399,8 @@ static inline int lpuart_start_rx_dma(st
- 				 DMA_PREP_INTERRUPT);
- 	if (!sport->dma_rx_desc) {
- 		dev_err(sport->port.dev, "Cannot prepare cyclic DMA\n");
--		return -EFAULT;
-+		ret = -ENOMEM;
-+		goto err_unmap_sg;
- 	}
+@@ -41,7 +42,6 @@ struct zs_scc {
+ 	struct zs_port	zport[2];
+ 	spinlock_t	zlock;
+ 	atomic_t	irq_guard;
+-	int		initialised;
+ };
  
- 	sport->dma_rx_desc->callback = lpuart_dma_rx_complete;
-@@ -1422,6 +1424,13 @@ static inline int lpuart_start_rx_dma(st
- 	}
- 
- 	return 0;
-+
-+err_unmap_sg:
-+	dma_unmap_sg(chan->device->dev, &sport->rx_sgl, 1, DMA_FROM_DEVICE);
-+err_free_buf:
-+	kfree(ring->buf);
-+	ring->buf = NULL;
-+	return ret;
- }
- 
- static void lpuart_dma_rx_free(struct uart_port *port)
+ #endif /* __KERNEL__ */
 
 
