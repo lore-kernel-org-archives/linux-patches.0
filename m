@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0AA3195FD;
-	Sun,  7 Jun 2026 10:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A71D2D3A69;
+	Sun,  7 Jun 2026 10:38:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828680; cv=none; b=VNsaKvXFutKfJgC6RZ1aP76Q6Wsb7SyXjfhuOK8EmjMQ8TF4hvAq+Py/YZrI0QWgTn62p3vDLxBOfxMkzDkPzvtkI4XsQUQ3OnIS36NmLWLJ+ETvFffzMq7BcOFWhej/zg8n4mIcyV2H5TS+MGze4jlvCRsLa1Pr2U3949LJ/L8=
+	t=1780828684; cv=none; b=o19mdtGca4R32JdYMmAf+Tf0zxwbS+pO0M2wDRWKscy7mGIMrw43q8sU0nDKiSOOhyRoi+G/Iv+Und+xHq0yhntm4xlSxftss5OSYDKIO6eCcDlNfRG8Vfcpsh6LZjVcy/FbA75UAOaZbYqCUQPTmiDnru4uIDpNiO26AejSfQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828680; c=relaxed/simple;
-	bh=EAHFNTIjiHKCOQsV9Hrf2QfB+tbyvIkiykQ8OAnEpzo=;
+	s=arc-20240116; t=1780828684; c=relaxed/simple;
+	bh=1TPdF/rgRar5azxM06sSMBWRGIb3mCpQx0LNHdmVgKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PEuZ3pfx410THkQmOenJl9/hQSZxZSJezK2tRywqD0U8AcI31u3PWViXAELGhHQ8lZU1J8Hd9XYXnSe4dmf8m5nz1Gmw6rxla09yi74KXkCBRuE09Ceag0oc3ahOwv2ChgGCE8lwJZSRWH8KbhKP+soKy7TkJR0pYzhbf8CxrcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tszCTuVG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jch8YIxKcUAY+vOLkvMx/KTnfw/9rIBoCu43+X0adR2/X5V797J/uqnfxvpA/PCa/73ESSD+tEP6VzUkM93yfe4o4IzOLhvaDcca8X4VrTgzEq8jAHB4Ja3GdsWiJZOmdBh2QCJlerMqde5iX/dwoAd6WuMtOamoj6c723sjX1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UAbmeAxB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tszCTuVG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33DB1F00893;
-	Sun,  7 Jun 2026 10:37:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UAbmeAxB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 799451F00893;
+	Sun,  7 Jun 2026 10:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828679;
-	bh=VXOF/UfZ7FaUv/omEKc5qfNP8AlThEqsg8VjLzXyOFw=;
+	s=korg; t=1780828683;
+	bh=4JEcr28DtA5g8Tzy/QIoWZ1N5OB7q7fmfkBYDvQvD2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tszCTuVGGT5eZN4wKLRZXSZ1jxSecNz79HlPy6a9KuwbQBTclQTUtSaAIolVjF+nR
-	 42pWwYKJQQOwarKkgiiZ37t+75YNNK0iyKuCnmVaIgGEKUVzV6Hg6AY+3yWfrPK0M9
-	 56PwgD7FO+miGCgIQlhMJVkFNkL4gd5VKuteB8SU=
+	b=UAbmeAxB3xRc4KyX86KUiF3AcqzPDfx2egS/G7cfEACOdFR2UQCtcZta9p8RB1yLt
+	 /Okn+53HajK8KRMx2Nt/WkNEbs/eqM+n1eUe5PgUx1csv7WJpHYjYYHh365Kst9Ekj
+	 wd26Tp6AUUsJcoSX1VlSk48BpuSyxa6gOQYgCEV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 164/315] iio: gyro: itg3200: fix i2c read into the wrong stack location
-Date: Sun,  7 Jun 2026 11:59:11 +0200
-Message-ID: <20260607095733.616223469@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Chaitanya Sabnis <chaitanya.msabnis@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.18 182/315] i2c: davinci: fix division by zero on missing clock-frequency
+Date: Sun,  7 Jun 2026 11:59:29 +0200
+Message-ID: <20260607095734.268111488@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
 References: <20260607095727.528828913@linuxfoundation.org>
@@ -51,53 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Chaitanya Sabnis <chaitanya.msabnis@gmail.com>
 
-commit 6bdc3023d62ed5c7d591f0eb27a5adb37fb892ae upstream.
+commit 030675aa54cf757769b3db65642433d626b3ed7c upstream.
 
-itg3200_read_all_channels() takes `__be16 *buf' as a parameter and
-fills the i2c_msg destination as `(char *)&buf'. Since `buf' is the
-parameter (a pointer), `&buf' is the address of the local pointer
-slot on the stack of itg3200_read_all_channels(), not the address
-of the caller's scan buffer. The (char *) cast hides the type
-mismatch.
+When the 'clock-frequency' property is missing from the device tree,
+the driver falls back to DAVINCI_I2C_DEFAULT_BUS_FREQ. However, this
+macro was defined in kHz (100), whereas the device tree property is
+expected in Hz.
 
-i2c_transfer() therefore writes ITG3200_SCAN_ELEMENTS * sizeof(s16)
-= 8 bytes into the parameter's stack slot, which is discarded when
-the function returns. The caller's scan buffer in
-itg3200_trigger_handler() is never written to, so
-iio_push_to_buffers_with_timestamp() pushes uninitialised stack
-contents to userspace via /dev/iio:deviceX every scan -- both a
-functional bug (no actual gyroscope or temperature data is
-delivered through the triggered buffer) and an information leak.
+The probe function divided the fallback value by 1000, causing
+integer truncation that resulted in dev->bus_freq = 0. This triggered
+a deterministic division-by-zero kernel panic when calculating clock
+dividers later in the probe sequence.
 
-The non-buffered read_raw() path is unaffected: it goes through
-itg3200_read_reg_s16() which uses `&out' on a local s16 value,
-where that is correct.
+Fix this by redefining DAVINCI_I2C_DEFAULT_BUS_FREQ in Hz (100000)
+to match the expected device tree property unit, allowing the existing
+division logic to work correctly for both cases.
 
-Drop the spurious `&' so the i2c read writes into the caller's
-buffer.
-
-Fixes: 9dbf091da080 ("iio: gyro: Add itg3200")
-Cc: stable@vger.kernel.org
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: b04ce6385979 ("i2c: davinci: kill platform data")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260514044726.57297C2BCB7@smtp.kernel.org/
+Signed-off-by: Chaitanya Sabnis <chaitanya.msabnis@gmail.com>
+Cc: <stable@vger.kernel.org> # v6.14+
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260526102240.4949-1-chaitanya.msabnis@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/gyro/itg3200_buffer.c |    2 +-
+ drivers/i2c/busses/i2c-davinci.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/gyro/itg3200_buffer.c
-+++ b/drivers/iio/gyro/itg3200_buffer.c
-@@ -34,7 +34,7 @@ static int itg3200_read_all_channels(str
- 			.addr = i2c->addr,
- 			.flags = i2c->flags | I2C_M_RD,
- 			.len = ITG3200_SCAN_ELEMENTS * sizeof(s16),
--			.buf = (char *)&buf,
-+			.buf = (char *)buf,
- 		},
- 	};
+--- a/drivers/i2c/busses/i2c-davinci.c
++++ b/drivers/i2c/busses/i2c-davinci.c
+@@ -117,7 +117,7 @@
+ /* timeout for pm runtime autosuspend */
+ #define DAVINCI_I2C_PM_TIMEOUT	1000	/* ms */
  
+-#define DAVINCI_I2C_DEFAULT_BUS_FREQ	100
++#define DAVINCI_I2C_DEFAULT_BUS_FREQ	100000
+ 
+ struct davinci_i2c_dev {
+ 	struct device           *dev;
 
 
