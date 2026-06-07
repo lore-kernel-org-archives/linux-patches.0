@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E71296BCC;
-	Sun,  7 Jun 2026 10:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A3D4204E;
+	Sun,  7 Jun 2026 10:53:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829633; cv=none; b=mzXgBq9ThqjHkR2bozh8LqfXUzT1AA5cL+Ni2BYgOGZ+mYzz67IYD7QXgx4xXbTua0vK93ILwQx+mGSbIVFpflUjT8cLljHb41cQMO83G3wbJHwfh0o9NcvjQt6Z20tiRj+EvI3rC1fErlRswIIPSfFn36QxY7D90XR4d7n9VOk=
+	t=1780829637; cv=none; b=j/X6tj6XqIGVgfSJ9hJ4tWotPdrMN/NZ4HUGVfiRRVcdyIuHAeKoOuMLWZ+wzyXSt49TJw24FvYMrC7pEaitGi0QWM/0tmwhyk620TATRXSAcw+7WHErGYGqeaaPcSLSACuqr/+JwaVI0z++ZSl+1R7kAfcJmu5V7PkUsYzBLSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829633; c=relaxed/simple;
-	bh=wATruwFd+qB/wrEa+ZhmancLQShTdR2zsDu062AETrs=;
+	s=arc-20240116; t=1780829637; c=relaxed/simple;
+	bh=TKXYqRTHLO08VDgOprq+xs8fTBcE0N4WvqN2dnZUHG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lJnqudS6SVcbhMAoGYA2fVlD6q1r3hcaBF+eRFyQTf1BexMgfqOj7d1zbCNTgN8yiH2uKLtWkdlBac+oVRfk1Zp6KUmF24SUZl01ENAOnkLIJgvYRXP/HgX+gZ5BKkWygEYqUUA5C+h9egz2bH707iSOPOqSqrIyfQNZnqcr+XE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RodX1/Vy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dd6FMP3xUIWO1pV2GXskBVPrrgHai3CNSFkDX0gbobHOLnQlRmpLeGFHVt0SEi1aLLzDgOzqb4BiIZN/RhjSU5UDXPzipuXLWJYbjE8F3Pp58p5nVvIRyCErQ+PhoN9gi/1zyrwPu5FaQlr17MQJx8CbQ8Sfskv+gykYdybxsOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kd+nInBs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RodX1/Vy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B9F1F00893;
-	Sun,  7 Jun 2026 10:53:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kd+nInBs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49EE01F00893;
+	Sun,  7 Jun 2026 10:53:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829632;
-	bh=1sKpwoqZ89qUumMjO3f+3naQ+N+uXQEj3tt2YS/l9H8=;
+	s=korg; t=1780829636;
+	bh=7vnIv5Y63o6e5uvKGoTM4afxnJ0MnLF6qljcxva2vjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RodX1/Vy/swhc1bWBCQNPN336C4WJieV1WOTwO4wUEAycod4g/pXLL2+mNh/9gBwh
-	 H8W9z45+Z1PGkh/4lUO044/PIZzunig4/qVd6jKNoArPf6uN86XFJoT/wPhiBurRAB
-	 cR1qiU+DLbIxnaQJ7P7l3OY3Ic8nFl/kf/Mfm5uI=
+	b=kd+nInBsEaq9y/qbbZHY+7KHQvFM9SBBvRFkY6ErM8kJ13XXroa/Foao7m99pU9Ij
+	 t+s+GFojlKFkOiOPQJyfjEXI1GKn4Jgh7S3gaVtSWR5eGtuUeqGdp64DcTf9TZrwsI
+	 SaywJFbaA16y5D+aRUoU2GMGozhbA7fYgQWQ6U+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 7.0 301/332] serial: fsl_lpuart: fix rx buffer and DMA map leaks in start_rx_dma
-Date: Sun,  7 Jun 2026 12:01:10 +0200
-Message-ID: <20260607095739.115051182@linuxfoundation.org>
+	Alexandru Hossu <hossu.alexandru@gmail.com>,
+	David Disseldorp <ddiss@suse.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.12 242/307] scsi: target: iscsi: Validate CHAP_R length before base64 decode
+Date: Sun,  7 Jun 2026 12:00:39 +0200
+Message-ID: <20260607095736.587719148@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,94 +47,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shitalkumar Gandhi <shital.gandhi45@gmail.com>
+From: Alexandru Hossu <hossu.alexandru@gmail.com>
 
-commit 9a9254c4a2a3ca2b3da16d173f3b0dd01f397ff6 upstream.
+commit 85db7391310b1304d2dc8ae3b0b12105a9567147 upstream.
 
-lpuart_start_rx_dma() allocates sport->rx_ring.buf with kzalloc() and
-then maps a scatterlist via dma_map_sg().  On three subsequent error
-paths the function returns directly without releasing those resources:
+chap_server_compute_hash() allocates client_digest as
+kzalloc(chap->digest_size) and then, for BASE64-encoded responses,
+passes chap_r directly to chap_base64_decode() without checking whether
+the input length could produce more than digest_size bytes of output.
 
-  - when dma_map_sg() returns 0 (-EINVAL):
-      ring->buf is leaked.
-  - when dmaengine_slave_config() fails:
-      ring->buf and the DMA mapping are leaked.
-  - when dmaengine_prep_dma_cyclic() returns NULL:
-      ring->buf and the DMA mapping are leaked.
+chap_base64_decode() writes to the destination unconditionally as long
+as there is input to consume. With MAX_RESPONSE_LENGTH set to 128 and
+the "0b" prefix stripped by extract_param(), up to 127 base64 characters
+can reach the decoder. 127 characters decode to 95 bytes. For SHA-256
+(digest_size=32) this overflows client_digest by 63 bytes; for MD5
+(digest_size=16) the overflow is 79 bytes.
 
-The sole cleanup path, lpuart_dma_rx_free(), is only reached when
-lpuart_dma_rx_use is set, and the caller lpuart_rx_dma_startup() clears
-that flag on failure of lpuart_start_rx_dma().  So these resources are
-permanently leaked on every failure in this function.  Repeated port
-open/close or termios changes under error conditions will slowly consume
-memory and leave stale streaming DMA mappings behind.
+The length check at line 344 fires after the write has already happened.
 
-Fix it by introducing two error labels that unmap the scatterlist and
-free the ring buffer as appropriate.  While here, replace the misleading
--EFAULT (bad userspace pointer) returned when dmaengine_prep_dma_cyclic()
-fails with the more accurate -ENOMEM, matching how other dmaengine users
-in the tree treat this failure.
+The HEX branch in the same switch statement already validates the length
+up front. Apply the same approach to the BASE64 branch: strip trailing
+base64 padding characters, then reject any input whose data length
+exceeds DIV_ROUND_UP(digest_size * 4, 3) before calling the decoder.
 
-No functional change on the success path.
+Stripping trailing '=' before the comparison handles both padded and
+unpadded encodings. chap_base64_decode() already returns early on '=',
+so the full original string is still passed to the decoder unchanged.
 
-Fixes: 5887ad43ee02 ("tty: serial: fsl_lpuart: Use cyclic DMA for Rx")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260420135903.2062024-1-shitalkumar.gandhi@cambiumnetworks.com
+The mutual CHAP path decodes CHAP_C into initiatorchg_binhex, which is
+kzalloc(CHAP_CHALLENGE_STR_LEN). extract_param() caps initiatorchg at
+CHAP_CHALLENGE_STR_LEN characters, so at most CHAP_CHALLENGE_STR_LEN-1
+base64 characters reach the decoder. The maximum decoded size,
+DIV_ROUND_UP((CHAP_CHALLENGE_STR_LEN-1) * 3, 4), is less than
+CHAP_CHALLENGE_STR_LEN, so no overflow is possible there. A comment is
+added at the call site to document this.
+
+Fixes: 1e5733883421 ("scsi: target: iscsi: Support base64 in CHAP")
+Cc: stable@vger.kernel.org
+Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
+Reviewed-by: David Disseldorp <ddiss@suse.de>
+Link: https://patch.msgid.link/20260521151121.808477-1-hossu.alexandru@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/fsl_lpuart.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/target/iscsi/iscsi_target_auth.c |   19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -1379,7 +1379,8 @@ static inline int lpuart_start_rx_dma(st
- 
- 	if (!nent) {
- 		dev_err(sport->port.dev, "DMA Rx mapping error\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err_free_buf;
- 	}
- 
- 	dma_rx_sconfig.src_addr = lpuart_dma_datareg_addr(sport);
-@@ -1391,7 +1392,7 @@ static inline int lpuart_start_rx_dma(st
- 	if (ret < 0) {
- 		dev_err(sport->port.dev,
- 				"DMA Rx slave config failed, err = %d\n", ret);
--		return ret;
-+		goto err_unmap_sg;
- 	}
- 
- 	sport->dma_rx_desc = dmaengine_prep_dma_cyclic(chan,
-@@ -1402,7 +1403,8 @@ static inline int lpuart_start_rx_dma(st
- 				 DMA_PREP_INTERRUPT);
- 	if (!sport->dma_rx_desc) {
- 		dev_err(sport->port.dev, "Cannot prepare cyclic DMA\n");
--		return -EFAULT;
-+		ret = -ENOMEM;
-+		goto err_unmap_sg;
- 	}
- 
- 	sport->dma_rx_desc->callback = lpuart_dma_rx_complete;
-@@ -1426,6 +1428,13 @@ static inline int lpuart_start_rx_dma(st
- 	}
- 
- 	return 0;
+--- a/drivers/target/iscsi/iscsi_target_auth.c
++++ b/drivers/target/iscsi/iscsi_target_auth.c
+@@ -339,13 +339,22 @@ static int chap_server_compute_hash(
+ 			goto out;
+ 		}
+ 		break;
+-	case BASE64:
++	case BASE64: {
++		size_t r_len = strlen(chap_r);
 +
-+err_unmap_sg:
-+	dma_unmap_sg(chan->device->dev, &sport->rx_sgl, 1, DMA_FROM_DEVICE);
-+err_free_buf:
-+	kfree(ring->buf);
-+	ring->buf = NULL;
-+	return ret;
- }
- 
- static void lpuart_dma_rx_free(struct uart_port *port)
++		while (r_len > 0 && chap_r[r_len - 1] == '=')
++			r_len--;
++		if (r_len > DIV_ROUND_UP(chap->digest_size * 4, 3)) {
++			pr_err("Malformed CHAP_R: base64 payload too long\n");
++			goto out;
++		}
+ 		if (chap_base64_decode(client_digest, chap_r, strlen(chap_r)) !=
+ 		    chap->digest_size) {
+ 			pr_err("Malformed CHAP_R: invalid BASE64\n");
+ 			goto out;
+ 		}
+ 		break;
++	}
+ 	default:
+ 		pr_err("Could not find CHAP_R\n");
+ 		goto out;
+@@ -472,6 +481,14 @@ static int chap_server_compute_hash(
+ 		}
+ 		break;
+ 	case BASE64:
++		/*
++		 * No overflow check needed: initiatorchg_binhex is
++		 * CHAP_CHALLENGE_STR_LEN bytes and extract_param() caps
++		 * initiatorchg at CHAP_CHALLENGE_STR_LEN characters, so
++		 * the decoded output is at most DIV_ROUND_UP(
++		 * (CHAP_CHALLENGE_STR_LEN - 1) * 3, 4) bytes, which is
++		 * less than CHAP_CHALLENGE_STR_LEN.
++		 */
+ 		initiatorchg_len = chap_base64_decode(initiatorchg_binhex,
+ 						      initiatorchg,
+ 						      strlen(initiatorchg));
 
 
