@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6712F1E98EF;
-	Sun,  7 Jun 2026 10:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC181303CAE;
+	Sun,  7 Jun 2026 10:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827124; cv=none; b=QwMIbjFoVccpjNz5SknTEzkpL8qH21T8VBtZiAo2CR0A4bgFU8pNQI2CNctp3z451ws3XTj1cSUr8hKfSy/r0y+sU76YoyYaSYvF6Gr5IRbLP8IEP7+8JEFZ1bnBaKpQM8q4pKrTURPwNWKPW5eNhdflh1hcN6QdW0g617YNFHw=
+	t=1780827127; cv=none; b=Dcym/x9Fg5Ci9ybimFLVhAj+BHpl/DKDyFU39Jov6ZKmEo262qRqYrC87c7bmQ80uum9DtUZKBuLjsQaaBIzTfgmKO82FSvyXLdSPkfBmFquGXxt23UZPqC4JbBWx9M/sz6bqO0O7ZfbtO2Cvd/+BagwvlPfNxN4tqpQqgVjEaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827124; c=relaxed/simple;
-	bh=S8N+u2omnJ4nxX1BEfDRnY2Z2uvEqn0YJAz3JIQgv6g=;
+	s=arc-20240116; t=1780827127; c=relaxed/simple;
+	bh=4qVVScQMlBHclMKvxdeVjxvr/SuTK4wtJbf/ll4EoLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dWgK8dYkyjWxYCwFiqYW+JL7QwDGFYvxFjP8KCQPbW7KSXLY8nCdM7Vpxi1P+QkpaNpCZ8w/7rjvSZCksmVGkxPpLBlznFormFTln6EbYTxBtQT/K/dWcJQ/s0UqehVdfMCjBvznPp0CeaBv4P0DxR0PBJ3w1VdYgC3cgEUzTiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xmsl/tEj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sIOMPOlZtstqIBEVS5cZcKh9VdcBCdqAQd5DiBKo4Y83IfxrUAXNMuZ3jUDih0okl9zljrqFXzUDxSkVmhzbGu6uTnLmtlEhxaPnCRlzfJ4wuwjNzBqv3CX8So4eqmBCb7B0gHAJj5/v7d64JMiJGveQiavh2jV18n7jymS574w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXgQa2F4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmsl/tEj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735081F00893;
-	Sun,  7 Jun 2026 10:12:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXgQa2F4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAC91F00893;
+	Sun,  7 Jun 2026 10:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827123;
-	bh=M8Xcvhc/IipSzVeD1AatUIqgRyHDtzPN/tow19Mvo0E=;
+	s=korg; t=1780827126;
+	bh=eS9+2mBHusBQwx1ZlRm7kP1IX8b1OvC6O5DkbQrpxSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xmsl/tEjj/2m89Ogi+Z+7QKpoMIvYmiTwYePlcda0cWhJrxN9QHLLOVvbvcCobxlk
-	 8S53ytBaGtOPBQbrIuwfdBwxa6yE1DLsGJvqlYkJYvsmbMVwJd6vfYdrE2VgwFYkyh
-	 GYxm+g85WhJ/IOYLNZ6rHGtsQKYXvN7fSeg/xyYI=
+	b=WXgQa2F4UZMGgnLxm0gI/+qSwRiu9a67B1b2BuT1gk2Qp5s26F7/qbf05SV+P0Hg4
+	 IaJBOBv0OsvlAeadZqZDCXyGv8MibIwXBhwBw6B3RypmbEGj5vwGS7cALWJ2IKJFGw
+	 ANoxm99txLd8u+UBO8SaYeU0tSqyJ4C3V3+ud93o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 024/307] arm64: debug: always unmask interrupts in el0_softstp()
-Date: Sun,  7 Jun 2026 11:57:01 +0200
-Message-ID: <20260607095728.518615883@linuxfoundation.org>
+Subject: [PATCH 6.18 042/315] ethtool: rss: fix hkey leak when indir_size is 0
+Date: Sun,  7 Jun 2026 11:57:09 +0200
+Message-ID: <20260607095729.106435913@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,75 +46,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit ea0d55ae4b3207c33691a73da3443b1fd379f1d2 ]
+[ Upstream commit 78ccf1a70c6378e1f5073a8c2209b5129067b925 ]
 
-We intend that EL0 exception handlers unmask all DAIF exceptions
-before calling exit_to_user_mode().
+rss_get_data_alloc() allocates a single buffer that backs both the
+indirection table and the hash key, but only assigned data->indir_table
+when indir_size was nonzero. The expectation was that no driver
+implements RSS without supporting indirection table but apparently
+enic does just that (it's the only such in-tree driver).
+enic has get_rxfh_key_size but no get_rxfh_indir_size.
+data->indir_table stays as NULL, hkey gets set but rss_get_data_free()
+kfree(data->indir_table) is a nop and the allocation leaks.
 
-When completing single-step of a suspended breakpoint, we do not call
-local_daif_restore(DAIF_PROCCTX) before calling exit_to_user_mode(),
-leaving all DAIF exceptions masked.
+Always store the allocation base in data->indir_table so the free path
+is unambiguous. No caller treats indir_table as a sentinel; everything
+keys off indir_size.
 
-When pseudo-NMIs are not in use this is benign.
-
-When pseudo-NMIs are in use, this is unsound. At this point interrupts
-are masked by both DAIF.IF and PMR_EL1, and subsequent irq flag
-manipulation may not work correctly. For example, a subsequent
-local_irq_enable() within exit_to_user_mode_loop() will only unmask
-interrupts via PMR_EL1 (leaving those masked via DAIF.IF), and
-anything depending on interrupts being unmasked (e.g. delivery of
-signals) will not work correctly.
-
-This was detected by CONFIG_ARM64_DEBUG_PRIORITY_MASKING.
-
-Move the call to `try_step_suspended_breakpoints()` outside of the check
-so that interrupts can be unmasked even if we don't call the step handler.
-
-Fixes: 0ac7584c08ce ("arm64: debug: split single stepping exception entry")
-Cc: <stable@vger.kernel.org> # 6.17
-Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-[catalin.marinas@arm.com: added Mark's rewritten commit log and some whitespace]
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Fixes: 7112a04664bf ("ethtool: add netlink based get rss support")
+Link: https://patch.msgid.link/20260522230647.1705600-6-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/entry-common.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/ethtool/rss.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm64/kernel/entry-common.c b/arch/arm64/kernel/entry-common.c
-index b98d6d1a1dfd63..ea3876d99c2ec5 100644
---- a/arch/arm64/kernel/entry-common.c
-+++ b/arch/arm64/kernel/entry-common.c
-@@ -796,6 +796,8 @@ static void noinstr el0_breakpt(struct pt_regs *regs, unsigned long esr)
+diff --git a/net/ethtool/rss.c b/net/ethtool/rss.c
+index 5416aec13b7fe7..f745ddec6fbab8 100644
+--- a/net/ethtool/rss.c
++++ b/net/ethtool/rss.c
+@@ -132,8 +132,7 @@ rss_get_data_alloc(struct net_device *dev, struct rss_reply_data *data)
+ 	if (!rss_config)
+ 		return -ENOMEM;
  
- static void noinstr el0_softstp(struct pt_regs *regs, unsigned long esr)
- {
-+	bool step_done;
-+
- 	if (!is_ttbr0_addr(regs->pc))
- 		arm64_apply_bp_hardening();
- 
-@@ -806,10 +808,10 @@ static void noinstr el0_softstp(struct pt_regs *regs, unsigned long esr)
- 	 * If we are stepping a suspended breakpoint there's nothing more to do:
- 	 * the single-step is complete.
- 	 */
--	if (!try_step_suspended_breakpoints(regs)) {
--		local_daif_restore(DAIF_PROCCTX);
-+	step_done = try_step_suspended_breakpoints(regs);
-+	local_daif_restore(DAIF_PROCCTX);
-+	if (!step_done)
- 		do_el0_softstep(esr, regs);
--	}
- 	exit_to_user_mode(regs);
- }
+-	if (data->indir_size)
+-		data->indir_table = (u32 *)rss_config;
++	data->indir_table = (u32 *)rss_config;
+ 	if (data->hkey_size)
+ 		data->hkey = rss_config + indir_bytes;
  
 -- 
 2.53.0
