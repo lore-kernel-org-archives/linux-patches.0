@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F36A28688C;
-	Sun,  7 Jun 2026 10:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40C02E739E;
+	Sun,  7 Jun 2026 10:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827091; cv=none; b=ehGQjZK/BqxUnEn9oKkV42padILXlmo05dpTZ0NmrFKRkPvLmUJQOA8XpsKD/Iiv/j6/gy/QIT108PgzikDAeEDN+wqXvfcUZV0O455H3+1xPOsW5JkCvZPvmIt2Crqkcvg9uL/c6YLM66AQ7qyTAn4eTtSXaSTC01Gez8knSdw=
+	t=1780827093; cv=none; b=H8fPFdhUuUr+wu7hQ+4/s6hycA5YUQ0y07jKVgEbyPdCnK2pOpEg1WCgDifn1pMTG8/HWHB2qVSHOiNWsOSN/6+Mz8+nlCDOWU+5jbKb11AdctxKjO/WFrtHjBmReI9jyDzffKRBYvdh4VILUs6CoyxXFEXkOTyr6xOlxB0l1Ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827091; c=relaxed/simple;
-	bh=dfU8NILRegafn+OK8lCpyTUU5mVM1oocARGQHQyiZLs=;
+	s=arc-20240116; t=1780827093; c=relaxed/simple;
+	bh=Ov1CTaHwhM/CRWD5fR7ud62UtTPAESDI3yYpicGJlMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KNezEnCQ760PwRY1lCYmh/2aM9CC4PrCuBSFMEU0W25kq3CVqwfK5Z0zSP7kJCS0qPq/O4LT1vhQyPETXnEZzLgB0PkHM9DWbfinXXDkkwLIVoREgdbPsljqvdjtSOPEWWpuMIO+do0p9hsXMNVhQRL4YCW4VsLSxR1zJLSE1Fk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjQIJM8Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fGcEJSZOGVKRhFZwYnYHckx7dgUYluqjji8gov44Zv0q4508aridjJ7oi6Uh1w4ZVYrJvcQO+1lp9/88MnDrEXcCdjHTu5nzxPspJYD+GQ18XLSyXbt2VClS0p24fCMzNjCCNxZ8DmhU07Y7H9+KCSjCEE1ttW2JstMoRfRPBGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PGl0DnTW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjQIJM8Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B502B1F00893;
-	Sun,  7 Jun 2026 10:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PGl0DnTW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A5DA1F00893;
+	Sun,  7 Jun 2026 10:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827089;
-	bh=70MhRBX7bb3dIWsWjq0dF9FLG7PbFX7ErId2uCoprf0=;
+	s=korg; t=1780827092;
+	bh=OWkL5N3MfN5yXsd22M5FmHvSkZ+XUF4LgjQ5qNu1Snw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zjQIJM8YHzEAC+BaU2Z3vzEmM6rUZ4D01UZsKpIPBcS8FGuUUDV+4zG1nKqD+vgiP
-	 5vZFSKayVBx5qBH2ZGOY4yi74zuGKH/9m/BEHLka+moAE6pqhy6U4NZfY4SkYekiQk
-	 0k/9wEujoTWFb8t1tDrWoGlq/jPbp3cFT6wtgUxM=
+	b=PGl0DnTWwMC1T8596qeCf7ldEVq4Yb2UPtBVkOJN3tqmgvJAsI0Hh0+JqS6wDvMWq
+	 09pBnKzezSoVXKc+zpSjSEJCmvfHBC30NQL01aX/hEDEfghSYiLbbHRyOxCEx2Psne
+	 pvXuoluTB2OIFH2tRwCobiffyCzoTIDkEJGM5Ed8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
-	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 021/307] arm64: debug: split brk64 exception entry
-Date: Sun,  7 Jun 2026 11:56:58 +0200
-Message-ID: <20260607095728.400951906@linuxfoundation.org>
+Subject: [PATCH 6.18 039/315] ethtool: rss: add missing errno on RSS context delete
+Date: Sun,  7 Jun 2026 11:57:06 +0200
+Message-ID: <20260607095728.984954761@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,224 +46,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 31575e11ecf7e44face72d1e624cb147a9283733 ]
+[ Upstream commit 3e6c6e9782ff8a8d8ded774b07ad4590cd61d04c ]
 
-Currently all debug exceptions share common entry code and are routed
-to `do_debug_exception()`, which calls dynamically-registered
-handlers for each specific debug exception. This is unfortunate as
-different debug exceptions have different entry handling requirements,
-and it would be better to handle these distinct requirements earlier.
+Remember to set ret before jumping out if someone tries
+to delete a context on a device which doesn't support
+contexts.
 
-The BRK64 instruction can only be triggered by a BRK instruction. Thus,
-we know that the PC is a legitimate address and isn't being used to train
-a branch predictor with a bogus address : we don't need to call
-`arm64_apply_bp_hardening()`.
-
-We do not need to handle the Cortex-A76 erratum #1463225 either, as it
-only relevant for single stepping at EL1.
-BRK64 does not write FAR_EL1 either, as only hardware watchpoints do so.
-
-Split the BRK64 exception entry, adjust the function signature, and its
-behaviour to match the lack of needed mitigations.
-Further, as the EL0 and EL1 code paths are cleanly separated, we can split
-`do_brk64()` into `do_el0_brk64()` and `do_el1_brk64()`, and call them
-directly from the relevant entry paths.
-Use `die()` directly for the EL1 error path, as in `do_el1_bti()` and
-`do_el1_undef()`.
-We can also remove `NOKRPOBE_SYMBOL` for the EL0 path, as it cannot
-lead to a kprobe recursion.
-
-When taking a BRK64 exception from EL0, the exception handling is safely
-preemptible : the only possible handler is `uprobe_brk_handler()`.
-It only operates on task-local data and properly checks its validity,
-then raises a Thread Information Flag, processed before returning
-to userspace in `do_notify_resume()`, which is already preemptible.
-Thus we can safely unmask interrupts and enable preemption before
-handling the break itself, fixing a PREEMPT_RT issue where the handler
-could call a sleeping function with preemption disabled.
-
-Given that the break hook registration is handled statically in
-`call_break_hook` since
-(arm64: debug: call software break handlers statically)
-and that we now bypass the exception handler registration, this change
-renders `early_brk64` redundant : its functionality is now handled through
-the post-init path.
-
-This also removes the last usage of `el1_dbg()`.
-
-This also removes the last usage of `el0_dbg()` without `CONFIG_COMPAT`.
-Mark it `__maybe_unused`, to prevent a warning when building this patch
-without `CONFIG_COMPAT`, as the following patch removes `el0_dbg()`.
-
-Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Tested-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
-Reviewed-by: Will Deacon <will@kernel.org>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20250707114109.35672-12-ada.coupriediaz@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Fixes: fbe09277fa63 ("ethtool: rss: support removing contexts via Netlink")
+Link: https://patch.msgid.link/20260522230647.1705600-3-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/exception.h |  2 ++
- arch/arm64/kernel/debug-monitors.c | 46 ++++++++++++++----------------
- arch/arm64/kernel/entry-common.c   | 24 ++++++++++------
- 3 files changed, 39 insertions(+), 33 deletions(-)
+ net/ethtool/rss.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/exception.h b/arch/arm64/include/asm/exception.h
-index 594350e552e112..7bc79602840fd0 100644
---- a/arch/arm64/include/asm/exception.h
-+++ b/arch/arm64/include/asm/exception.h
-@@ -70,6 +70,8 @@ static inline void do_watchpoint(unsigned long addr, unsigned long esr,
- #endif /* CONFIG_HAVE_HW_BREAKPOINT */
- void do_el0_softstep(unsigned long esr, struct pt_regs *regs);
- void do_el1_softstep(unsigned long esr, struct pt_regs *regs);
-+void do_el0_brk64(unsigned long esr, struct pt_regs *regs);
-+void do_el1_brk64(unsigned long esr, struct pt_regs *regs);
- void do_fpsimd_acc(unsigned long esr, struct pt_regs *regs);
- void do_sve_acc(unsigned long esr, struct pt_regs *regs);
- void do_sme_acc(unsigned long esr, struct pt_regs *regs);
-diff --git a/arch/arm64/kernel/debug-monitors.c b/arch/arm64/kernel/debug-monitors.c
-index 10d2bc51a32f7c..45e0dbe17c82fd 100644
---- a/arch/arm64/kernel/debug-monitors.c
-+++ b/arch/arm64/kernel/debug-monitors.c
-@@ -207,15 +207,8 @@ void do_el1_softstep(unsigned long esr, struct pt_regs *regs)
- }
- NOKPROBE_SYMBOL(do_el1_softstep);
+diff --git a/net/ethtool/rss.c b/net/ethtool/rss.c
+index 926be5698ba4cc..688c0e4bba69db 100644
+--- a/net/ethtool/rss.c
++++ b/net/ethtool/rss.c
+@@ -1160,8 +1160,10 @@ int ethnl_rss_delete_doit(struct sk_buff *skb, struct genl_info *info)
+ 	dev = req.dev;
+ 	ops = dev->ethtool_ops;
  
--static int call_break_hook(struct pt_regs *regs, unsigned long esr)
-+static int call_el1_break_hook(struct pt_regs *regs, unsigned long esr)
- {
--	if (user_mode(regs)) {
--		if (IS_ENABLED(CONFIG_UPROBES) &&
--			esr_brk_comment(esr) == UPROBES_BRK_IMM)
--			return uprobe_brk_handler(regs, esr);
--		return DBG_HOOK_ERROR;
--	}
--
- 	if (esr_brk_comment(esr) == BUG_BRK_IMM)
- 		return bug_brk_handler(regs, esr);
+-	if (!ops->create_rxfh_context)
++	if (!ops->create_rxfh_context) {
++		ret = -EOPNOTSUPP;
+ 		goto exit_free_dev;
++	}
  
-@@ -252,24 +245,30 @@ static int call_break_hook(struct pt_regs *regs, unsigned long esr)
- 
- 	return DBG_HOOK_ERROR;
- }
--NOKPROBE_SYMBOL(call_break_hook);
-+NOKPROBE_SYMBOL(call_el1_break_hook);
- 
--static int brk_handler(unsigned long unused, unsigned long esr,
--		       struct pt_regs *regs)
-+/*
-+ * We have already unmasked interrupts and enabled preemption
-+ * when calling do_el0_brk64() from entry-common.c.
-+ */
-+void do_el0_brk64(unsigned long esr, struct pt_regs *regs)
- {
--	if (call_break_hook(regs, esr) == DBG_HOOK_HANDLED)
--		return 0;
-+	if (IS_ENABLED(CONFIG_UPROBES) &&
-+		esr_brk_comment(esr) == UPROBES_BRK_IMM &&
-+		uprobe_brk_handler(regs, esr) == DBG_HOOK_HANDLED)
-+		return;
- 
--	if (user_mode(regs)) {
--		send_user_sigtrap(TRAP_BRKPT);
--	} else {
--		pr_warn("Unexpected kernel BRK exception at EL1\n");
--		return -EFAULT;
--	}
-+	send_user_sigtrap(TRAP_BRKPT);
-+}
- 
--	return 0;
-+void do_el1_brk64(unsigned long esr, struct pt_regs *regs)
-+{
-+	if (call_el1_break_hook(regs, esr) == DBG_HOOK_HANDLED)
-+		return;
-+
-+	die("Oops - BRK", regs, esr);
- }
--NOKPROBE_SYMBOL(brk_handler);
-+NOKPROBE_SYMBOL(do_el1_brk64);
- 
- bool try_handle_aarch32_break(struct pt_regs *regs)
- {
-@@ -311,10 +310,7 @@ bool try_handle_aarch32_break(struct pt_regs *regs)
- NOKPROBE_SYMBOL(try_handle_aarch32_break);
- 
- void __init debug_traps_init(void)
--{
--	hook_debug_fault_code(DBG_ESR_EVT_BRK, brk_handler, SIGTRAP,
--			      TRAP_BRKPT, "BRK handler");
--}
-+{}
- 
- /* Re-enable single step for syscall restarting. */
- void user_rewind_single_step(struct task_struct *task)
-diff --git a/arch/arm64/kernel/entry-common.c b/arch/arm64/kernel/entry-common.c
-index b90babcf2e2b10..ba114bfdb32b5a 100644
---- a/arch/arm64/kernel/entry-common.c
-+++ b/arch/arm64/kernel/entry-common.c
-@@ -547,13 +547,12 @@ static void noinstr el1_watchpt(struct pt_regs *regs, unsigned long esr)
- 	arm64_exit_el1_dbg(regs);
- }
- 
--static void noinstr el1_dbg(struct pt_regs *regs, unsigned long esr)
-+static void noinstr el1_brk64(struct pt_regs *regs, unsigned long esr)
- {
--	unsigned long far = read_sysreg(far_el1);
--
- 	arm64_enter_el1_dbg(regs);
--	if (!cortex_a76_erratum_1463225_debug_handler(regs))
--		do_debug_exception(far, esr, regs);
-+	debug_exception_enter(regs);
-+	do_el1_brk64(esr, regs);
-+	debug_exception_exit(regs);
- 	arm64_exit_el1_dbg(regs);
- }
- 
-@@ -599,7 +598,7 @@ asmlinkage void noinstr el1h_64_sync_handler(struct pt_regs *regs)
- 		el1_watchpt(regs, esr);
- 		break;
- 	case ESR_ELx_EC_BRK64:
--		el1_dbg(regs, esr);
-+		el1_brk64(regs, esr);
- 		break;
- 	case ESR_ELx_EC_FPAC:
- 		el1_fpac(regs, esr);
-@@ -827,7 +826,16 @@ static void noinstr el0_watchpt(struct pt_regs *regs, unsigned long esr)
- 	exit_to_user_mode(regs);
- }
- 
--static void noinstr el0_dbg(struct pt_regs *regs, unsigned long esr)
-+static void noinstr el0_brk64(struct pt_regs *regs, unsigned long esr)
-+{
-+	enter_from_user_mode(regs);
-+	local_daif_restore(DAIF_PROCCTX);
-+	do_el0_brk64(esr, regs);
-+	exit_to_user_mode(regs);
-+}
-+
-+static void noinstr __maybe_unused
-+el0_dbg(struct pt_regs *regs, unsigned long esr)
- {
- 	/* Only watchpoints write FAR_EL1, otherwise its UNKNOWN */
- 	unsigned long far = read_sysreg(far_el1);
-@@ -912,7 +920,7 @@ asmlinkage void noinstr el0t_64_sync_handler(struct pt_regs *regs)
- 		el0_watchpt(regs, esr);
- 		break;
- 	case ESR_ELx_EC_BRK64:
--		el0_dbg(regs, esr);
-+		el0_brk64(regs, esr);
- 		break;
- 	case ESR_ELx_EC_FPAC:
- 		el0_fpac(regs, esr);
+ 	rtnl_lock();
+ 	netdev_lock_ops(dev);
 -- 
 2.53.0
 
