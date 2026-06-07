@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83503257855;
-	Sun,  7 Jun 2026 10:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832FE32ABC0;
+	Sun,  7 Jun 2026 10:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828529; cv=none; b=j5i2OOyVfpJMz7/yrV/JBtvPhdNkXTygkXJ4OGjy+dU0TyW+xidTwl6NCkWWIiN66DYG77V7Nqm+JENBzcE3vp7LfG4sAtgpAtkI9L8MlPsXB2u4L0jgQGtfX+W/7IDp40AUZuLMIONsofkfr33JssoMtsks4jm6xbIkq9VcQrw=
+	t=1780828533; cv=none; b=VifDE7TX6PFSrNJJcRSOIkVXDE15fWK/3QEimelGpph4a6uV2Mqvu8/SJRwgokiir0+H91J2ez/D4GlpGG30KIHMDSTjTS3PNnfcHumTwTbWUuq5uSrSUh1uPwhtmBPbOsMukZigd368Ted9UnbgYHS5ukGpCh0CCpgJ5e2QPww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828529; c=relaxed/simple;
-	bh=8v2gXg3Y0OXilEAnQFDteqTd7P/8zSXzwUYcprJgDJs=;
+	s=arc-20240116; t=1780828533; c=relaxed/simple;
+	bh=QB+6zbLl1eqZ+b0ZuzxtlZZ8gwQRa2WWIcap0I6lGU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dTqmrRq7t0xLqXtXlI/6qwAuTgZbypT1+mchivtp91gfjwTcabOo6zOuWQXuyI10r/cCS3h4L7VfmzPEPGexbsuhHhbTGM342YiM5Ud2pCANFa3M9d3FgrX31YvvmVKwcuuMS4/7b2Gz1WtkwiGah9faD4cfFT3WKaPg/mqF7aA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XboMh6ul; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lfFyV2gLqkcmQxc60cYAmhmjD6u/hLV2TpuEb9tFl8/M05s1y43WlElsAQ/q+zsfIR2L1ux7HacIoYgZ0bbZx34t8CfFTx6+Awx7PRiGSx/Dc7Ccj2amK6bvdLKgdJm1WxvoVIXIud/ohvMrrTPT9DnalLbjwOoFysRseaiK/hI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kWq1YZvQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XboMh6ul"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF3451F00893;
-	Sun,  7 Jun 2026 10:35:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kWq1YZvQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86EDE1F00893;
+	Sun,  7 Jun 2026 10:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828528;
-	bh=QozIm/jpm9jIoiAu2CgBTGnY6Mccq0xJ1c/rej/Ho08=;
+	s=korg; t=1780828532;
+	bh=k8DouMujjVwOIDtWy8DQLHn+zoE/i9PRXgU8MXCQyy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XboMh6ulUZ1yOV+E2dpMiMJb6w+40EVY0gemwmRvwfu3rRVyjf4xtGObLNBIs9xB4
-	 8YDqc7TGc39QjA9ZBXy78rDV+jj6dL6suvQUVYcNWFD6biCiM3zo2JRSXbEhaAf9Px
-	 3uNUAeuMU6H4H8aliJnD0fD0aX1g8N3j78EcVm/Q=
+	b=kWq1YZvQz16V7UFkLNhb7oJ1dhae6mbzGZflD95pQD8IgOdn5eSaNMb44GOdZfe4I
+	 xQJnH6/7/OAlxCa9YUzUX5fEt1GEF1oYZNoYWmYIi+xA/CDPliHtrpCf6gRCwk7pAn
+	 XCFzfKkxwHsGWQX/fUzQ0sSmQ2m++V4xkt3PO51s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Svyatoslav Ryhel <clamor95@gmail.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Salah Triki <salah.triki@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 170/315] iio: Fix iio_multiply_value use in iio_read_channel_processed_scale
-Date: Sun,  7 Jun 2026 11:59:17 +0200
-Message-ID: <20260607095733.834694113@linuxfoundation.org>
+Subject: [PATCH 7.0 191/332] iio: temperature: tsys01: fix broken PROM checksum validation
+Date: Sun,  7 Jun 2026 11:59:20 +0200
+Message-ID: <20260607095735.082999414@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,50 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Svyatoslav Ryhel <clamor95@gmail.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-commit bb21ee31f5753a7972148798fd7dfb841dd33bdb upstream.
+commit 4701e471c16866e7aa8f5e6a3a6b0d31e097e2c9 upstream.
 
-The function iio_multiply_value returns IIO_VAL_INT (1) on success or a
-negative error number on failure, while iio_read_channel_processed_scale
-should return an error code or 0. This creates a situation where the
-expected result is treated as an error. Fix this by checking the
-iio_multiply_value result separately, instead of passing it as a return
-value.
+The current implementation of tsys01_crc_valid() incorrectly sums the
+first word (n_prom[0]) repeatedly instead of iterating over the 8 words
+retrieved from the PROM. This leads to a checksum mismatch and probe
+failure on hardware.
 
-Fixes: 05f958d003c9 ("iio: Improve iio_read_channel_processed_scale() precision")
-Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+According to the TSYS01 datasheet, the PROM consists of 8 words. A valid
+check must iterate through all 8 words to verify the integrity of the
+calibration data. The current driver only checks the first word 8 times.
+
+Note: This fix was identified during a code audit and is based on
+datasheet specifications. It has not been tested on real hardware.
+
+Fixes: 43e53407f680 ("Add tsys01 meas-spec driver support")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/inkern.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/iio/temperature/tsys01.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/inkern.c b/drivers/iio/inkern.c
-index 0df0ab3de270..9ce20cb05a9b 100644
---- a/drivers/iio/inkern.c
-+++ b/drivers/iio/inkern.c
-@@ -738,7 +738,11 @@ int iio_read_channel_processed_scale(struct iio_channel *chan, int *val,
- 		if (ret < 0)
- 			return ret;
+--- a/drivers/iio/temperature/tsys01.c
++++ b/drivers/iio/temperature/tsys01.c
+@@ -119,7 +119,7 @@ static bool tsys01_crc_valid(u16 *n_prom
+ 	u8 sum = 0;
  
--		return iio_multiply_value(val, scale, ret, pval, pval2);
-+		ret = iio_multiply_value(val, scale, ret, pval, pval2);
-+		if (ret < 0)
-+			return ret;
-+
-+		return 0;
- 	} else {
- 		ret = iio_channel_read(chan, val, NULL, IIO_CHAN_INFO_RAW);
- 		if (ret < 0)
--- 
-2.54.0
-
+ 	for (cnt = 0; cnt < TSYS01_PROM_WORDS_NB; cnt++)
+-		sum += ((n_prom[0] >> 8) + (n_prom[0] & 0xFF));
++		sum += ((n_prom[cnt] >> 8) + (n_prom[cnt] & 0xFF));
+ 
+ 	return (sum == 0);
+ }
 
 
