@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973B44071DA;
-	Sun,  7 Jun 2026 10:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04AE4204E;
+	Sun,  7 Jun 2026 10:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827030; cv=none; b=d/Hyp9HgvfcN4gVOkztEY/7ggCh2U7rFEdW8LdyZp4CWAQR/2B6MikZBn8Mvg584uD4JGYF3weLAZdR+8huxJV7BtDGHk7fHT64dvvCw4flM4wbTDrC3e3qSf2O8GUnKqloeKsYElqRUzloTfgfwHeY4qEDn/x7YtySktggpPz0=
+	t=1780827033; cv=none; b=JB1BX26dJAk7idsUbEkN3F4LrRoet/iAbSQKCM9V6jMFGv+AuYHoRvXyKROw6kfj3fx6C0mlkVmvoa+35cFtF8cfyYwGnC+iPImkg0cIgH6yJEpa2e/jjCc1fTB7fP3xGRbPypbFdQdF7frl3/PMY3Xn0sliw/BZWKHGvxit73Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827030; c=relaxed/simple;
-	bh=OPkfZtdlmN/wCw6c8GPMe/D2dA6uLLSkfI57pqOIf9o=;
+	s=arc-20240116; t=1780827033; c=relaxed/simple;
+	bh=Em2ZzgOBlPFCIrjOFLlJRKv0xXHXxVCadgYHa6nDHHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oGZk2Zp6OBouadmY9pwACegtoX5axfdUDFiMOxFLoyPmKlbTGrtoX8qRJD9eWM+tuu8ieM5IUxpQIW1HX5z+FF7rqjpYchLotO0mEoGHzUgxocrx0fvsmbI3Zwtq8qEgiZF0Md49zvRVYb0wffei3TQSSvC8kS4KFrwrV4GhvbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iqt9jl9i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ujiq/UiObDImLKyH0BiM4BgoNWAIenTHSDzV9AIzpPQ47gSGhzjKbq574nyRuEtx3r34nRfr+s0tE2RUwV1yYf+yruXgdA6tCy8gw+ZOI4s3kdby2JLs0iwB9d92c9Psw4aMECFR2tQ6lhNvB4CvgyttuhbKHZEBlPC1N/PM9uc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dwm068iM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iqt9jl9i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94F21F00893;
-	Sun,  7 Jun 2026 10:10:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dwm068iM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 315F01F00893;
+	Sun,  7 Jun 2026 10:10:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827029;
-	bh=QbixXJ+ZiP8W72AyElLplb/u9mxwl/4DVD66TW9kcg8=;
+	s=korg; t=1780827032;
+	bh=aKhJ3lQTUWKuChJ0XKF4M6EaK8s4RrrsejnJ9r5WCYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iqt9jl9iWuxInHsQDjK2wQ7RMkmADfqDXK5u0/3LdsIUU5HDNfmPsbfp2Ve6NrVsY
-	 XTF8lUuBcK2HARGiBYX3DGxh3+wPRv7aCJfHeCclG6WIkzahcIxp7SkHvNMjZg1uZh
-	 POdHrdWVfpKn2ePYDYh1BpBQucLqkpfSpSey+K2E=
+	b=Dwm068iM/o2SKsG6vjE7wDDaoIO/d4t/5MJl1jI7LQr9WZzFBUmr7V0NzFsaMfIVw
+	 rg2SDdyuqA4fSNQWmjIF26sfxRFGzHkK8eRF/g3b4NeuF+kiSR8wHdqZv6w5HhWnFy
+	 sR0S+UyGyEaKzNtK9QDTxQ1QLq3vnUQ1vzKpSItw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Danielle Ratson <danieller@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 016/307] arm64: entry: Add entry and exit functions for debug exceptions
-Date: Sun,  7 Jun 2026 11:56:53 +0200
-Message-ID: <20260607095728.222759286@linuxfoundation.org>
+Subject: [PATCH 7.0 050/332] ethtool: module: check fw_flash_in_progress under rtnl_lock
+Date: Sun,  7 Jun 2026 11:56:59 +0200
+Message-ID: <20260607095729.960635399@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,116 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit eaff68b3286116d499a3d4e513a36d772faba587 ]
+[ Upstream commit 504eaefa44c8dec50f7499edcb36d24f3aefab2a ]
 
-Move the `debug_exception_enter()` and `debug_exception_exit()`
-functions from mm/fault.c, as they are needed to split
-the debug exceptions entry paths from the current unified one.
+ethnl_set_module_validate() inspects module_fw_flash_in_progress
+but validate is meant for _input_ validation, not state validation.
+rtnl_lock is not held, yet. Move the check into ethnl_set_module().
 
-Make them externally visible in include/asm/exception.h until
-the caller in mm/fault.c is cleaned up.
-
-Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Tested-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: Will Deacon <will@kernel.org>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20250707114109.35672-7-ada.coupriediaz@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Fixes: 32b4c8b53ee7 ("ethtool: Add ability to flash transceiver modules' firmware")
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Danielle Ratson <danieller@nvidia.com>
+Link: https://patch.msgid.link/20260522231312.1710836-5-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/exception.h |  4 ++++
- arch/arm64/kernel/entry-common.c   | 22 ++++++++++++++++++++++
- arch/arm64/mm/fault.c              | 22 ----------------------
- 3 files changed, 26 insertions(+), 22 deletions(-)
+ net/ethtool/module.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/include/asm/exception.h b/arch/arm64/include/asm/exception.h
-index f296662590c7f8..b1d6a65f6d2256 100644
---- a/arch/arm64/include/asm/exception.h
-+++ b/arch/arm64/include/asm/exception.h
-@@ -77,4 +77,8 @@ void do_serror(struct pt_regs *regs, unsigned long esr);
- void do_signal(struct pt_regs *regs);
+diff --git a/net/ethtool/module.c b/net/ethtool/module.c
+index ce4ce514edca89..373326e49d150e 100644
+--- a/net/ethtool/module.c
++++ b/net/ethtool/module.c
+@@ -120,12 +120,6 @@ ethnl_set_module_validate(struct ethnl_req_info *req_info,
+ 	if (!tb[ETHTOOL_A_MODULE_POWER_MODE_POLICY])
+ 		return 0;
  
- void __noreturn panic_bad_stack(struct pt_regs *regs, unsigned long esr, unsigned long far);
-+
-+void debug_exception_enter(struct pt_regs *regs);
-+void debug_exception_exit(struct pt_regs *regs);
-+
- #endif	/* __ASM_EXCEPTION_H */
-diff --git a/arch/arm64/kernel/entry-common.c b/arch/arm64/kernel/entry-common.c
-index d23315ef7b679b..2e04e04aaf2ad6 100644
---- a/arch/arm64/kernel/entry-common.c
-+++ b/arch/arm64/kernel/entry-common.c
-@@ -441,6 +441,28 @@ static __always_inline void fpsimd_syscall_exit(void)
- 	__this_cpu_write(fpsimd_last_state.to_save, FP_STATE_CURRENT);
- }
+-	if (req_info->dev->ethtool->module_fw_flash_in_progress) {
+-		NL_SET_ERR_MSG(info->extack,
+-			       "Module firmware flashing is in progress");
+-		return -EBUSY;
+-	}
+-
+ 	if (!ops->get_module_power_mode || !ops->set_module_power_mode) {
+ 		NL_SET_ERR_MSG_ATTR(info->extack,
+ 				    tb[ETHTOOL_A_MODULE_POWER_MODE_POLICY],
+@@ -148,6 +142,12 @@ ethnl_set_module(struct ethnl_req_info *req_info, struct genl_info *info)
  
-+/*
-+ * In debug exception context, we explicitly disable preemption despite
-+ * having interrupts disabled.
-+ * This serves two purposes: it makes it much less likely that we would
-+ * accidentally schedule in exception context and it will force a warning
-+ * if we somehow manage to schedule by accident.
-+ */
-+void debug_exception_enter(struct pt_regs *regs)
-+{
-+	preempt_disable();
-+
-+	/* This code is a bit fragile.  Test it. */
-+	RCU_LOCKDEP_WARN(!rcu_is_watching(), "exception_enter didn't work");
-+}
-+NOKPROBE_SYMBOL(debug_exception_enter);
-+
-+void debug_exception_exit(struct pt_regs *regs)
-+{
-+	preempt_enable_no_resched();
-+}
-+NOKPROBE_SYMBOL(debug_exception_exit);
-+
- UNHANDLED(el1t, 64, sync)
- UNHANDLED(el1t, 64, irq)
- UNHANDLED(el1t, 64, fiq)
-diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
-index 2d1ebc0c3437f2..7c87d2b3b06eaa 100644
---- a/arch/arm64/mm/fault.c
-+++ b/arch/arm64/mm/fault.c
-@@ -939,28 +939,6 @@ void __init hook_debug_fault_code(int nr,
- 	debug_fault_info[nr].name	= name;
- }
+ 	ops = dev->ethtool_ops;
  
--/*
-- * In debug exception context, we explicitly disable preemption despite
-- * having interrupts disabled.
-- * This serves two purposes: it makes it much less likely that we would
-- * accidentally schedule in exception context and it will force a warning
-- * if we somehow manage to schedule by accident.
-- */
--static void debug_exception_enter(struct pt_regs *regs)
--{
--	preempt_disable();
--
--	/* This code is a bit fragile.  Test it. */
--	RCU_LOCKDEP_WARN(!rcu_is_watching(), "exception_enter didn't work");
--}
--NOKPROBE_SYMBOL(debug_exception_enter);
--
--static void debug_exception_exit(struct pt_regs *regs)
--{
--	preempt_enable_no_resched();
--}
--NOKPROBE_SYMBOL(debug_exception_exit);
--
- void do_debug_exception(unsigned long addr_if_watchpoint, unsigned long esr,
- 			struct pt_regs *regs)
- {
++	if (dev->ethtool->module_fw_flash_in_progress) {
++		NL_SET_ERR_MSG(info->extack,
++			       "Module firmware flashing is in progress");
++		return -EBUSY;
++	}
++
+ 	power_new.policy = nla_get_u8(tb[ETHTOOL_A_MODULE_POWER_MODE_POLICY]);
+ 	ret = ops->get_module_power_mode(dev, &power, info->extack);
+ 	if (ret < 0)
 -- 
 2.53.0
 
