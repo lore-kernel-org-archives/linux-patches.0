@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B620E2AD00;
-	Sun,  7 Jun 2026 10:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6E74071DA;
+	Sun,  7 Jun 2026 10:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827503; cv=none; b=e5ReOuB8frD1SVqVBM9rIvtvFzj8eSvSBHyz6aEufdvua5tLPa9t8g3F0qMRQCa/IHU9TuMyaTUGdyPACRddQ3BYpPe/DcPORBJr0o/rAPCc4mpGOVun4nlzEvLyZnYdNZz1B6zB2iW+QJW6U+tGcCnoNM7oIjChlPujHzdd0Ww=
+	t=1780827508; cv=none; b=DH7GrRLJaYRn7KuLLVr14RjE/o6ry0ctbmyzMrERoggu1pFJT4Bzol77/IKwh2P87BRKN7st7ln+sgRdMxSyB3BUqyYePMyvWJNDc6UAfbAmlSVtZEKd4o9e/xtDIacQlK73k5L/yvCKBJX/Tru5aCxEYx/ammvSHArgR4HY/lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827503; c=relaxed/simple;
-	bh=k65aqkSb4Ye2lfXh3+fjeQIMLAUHp5nEBdvBSVWgyUI=;
+	s=arc-20240116; t=1780827508; c=relaxed/simple;
+	bh=EALF81OgEBAYzwjgaGsG6QRm8DMW7wrWGNjCijo7zXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ieiRnQKP9Sp3MtzMhrA7WcoNTh0f3IEn/G0GYA169ox5ftrqCQDWg9P3cxeTbt36oizgJ82/PARXpCc4cCSwqyccaXVkzY513ITy9WbVe/IC2ukYtdoaeH9Pp7OrmJHWyzK/MhramM4jAVKNQh4xPpxVRs213Yl5F7DHSH9LDtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLwejRGS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TEN2oQNpN84UrKl4T9K8xEHx8LIW8e6Grldtm/UOwqXIHRZ6mwqDzwDbzISYVEhkajTZe6n5doBaCSkCgTg8Zn2NDysrAKz6ICyRU+5rT/ebdhzBLJhQ1D71n6Si8iWsvJ9vwLG8NQXe7RAL+elyOH0X5rR09AVe1u/fSQM/HZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cODJIbni; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLwejRGS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD821F00893;
-	Sun,  7 Jun 2026 10:18:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cODJIbni"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D619D1F00893;
+	Sun,  7 Jun 2026 10:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827502;
-	bh=Z3YTHBZ36ehI7NEe72bp11kx5KXVrXR1C0WAh8NvNGg=;
+	s=korg; t=1780827506;
+	bh=pKhv52GIMA/PMAetSDjYNeS7mVs037k3t4bPlpvvQ2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GLwejRGS4ZcZeTdl1kINRPiBuoZNZ6aNP6WG3vt09MX4B4CRt4CYj/8NmKzdAvY4w
-	 tAv12WLr7T+bAfTsHLfJ4M6W1JTEujlWhifnrOTrGu8m6WS/YQ/w/9WdA+rvMs7loo
-	 YiWFQZOcjaIiUllolZqZnGgphFvZWDsFMhQH5Jzg=
+	b=cODJIbniQ+pgwNx9zOGbMqXHfSVyD+NT6Yj5WQ+hVtfNbZXHQuUcKwjX2R2+ZQjJ+
+	 mdYY4rvX1Z5FoEaBFu9L08MTe3JIHNmegRv0SfPgPJO4HRe9pPb7ENOkwjxtu8yfgL
+	 BIQs3FxbJjiS71SFgfz6KG4vLcGWMF43fp51vBBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 098/332] Bluetooth: L2CAP: Fix possible crash on l2cap_ecred_conn_rsp
-Date: Sun,  7 Jun 2026 11:57:47 +0200
-Message-ID: <20260607095731.745126165@linuxfoundation.org>
+Subject: [PATCH 6.18 079/315] net/handshake: Pass negative errno through handshake_complete()
+Date: Sun,  7 Jun 2026 11:57:46 +0200
+Message-ID: <20260607095730.516892200@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,83 +48,213 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 41c2713b204e6cb6a94587bc6bf6935107df5479 ]
+[ Upstream commit 6b22d433aa13f68e3cd9534ca9a5f4277bfa01c2 ]
 
-If dcid is received for an already-assigned destination CID the spec
-requires that both channels to be discarded, but calling l2cap_chan_del
-may invalidate the tmp cursor created by list_for_each_entry_safe and
-in fact it is the wrong procedure as the chan->dcid may be assigned
-previously it really needs to be disconnected.
+handshake_complete() declares status as unsigned int and
+tls_handshake_done() negates that value (-status) before handing
+it to the TLS consumer. Consumers match on negative errno
+constants -- xs_tls_handshake_done() has
 
-Calling l2cap_chan_clone directly may still lead to l2cap_chan_del so
-instead schedule l2cap_chan_timeout with delay 0 to close the channel
-asynchronously.
+	switch (status) {
+	case 0:
+	case -EACCES:
+	case -ETIMEDOUT:
+		lower_transport->xprt_err = status;
+		break;
+	default:
+		lower_transport->xprt_err = -EACCES;
+	}
 
-Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+so the API as designed expects callers to pass positive errno
+values that the tlshd shim then negates.
+
+Three internal callers in handshake_nl_accept_doit(), the
+net-exit drain, and a kunit test follow kernel convention and
+pass negative errnos -- -EIO, -ETIMEDOUT, -ETIMEDOUT. The
+implicit conversion to unsigned int turns -ETIMEDOUT into
+0xFFFFFF92; the subsequent -status in tls_handshake_done()
+wraps back to 110, the consumer's switch falls through, and
+the xprt reports -EACCES on what should be -ETIMEDOUT or -EIO.
+
+Fix the API rather than the call sites. The natural kernel
+convention is negative errno in, negative errno out. Change
+handshake_complete() and hp_done to take int status, drop the
+negation in tls_handshake_done(), and negate once in
+handshake_nl_done_doit() where status arrives from the wire
+as an unsigned netlink attribute. The three internal callers
+were already correct under that convention and need no change.
+
+At the same wire boundary, declare MAX_ERRNO as the netlink
+policy upper bound for HANDSHAKE_A_DONE_STATUS. Attribute
+validation rejects out-of-range values before
+handshake_nl_done_doit() runs, and negating a bounded u32 there
+stays within int range -- closing the UBSAN-visible signed-
+integer overflow that an unconstrained u32 would invoke.
+
+Fixes: 3b3009ea8abb ("net/handshake: Create a NETLINK service for handling handshake requests")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260525-handshake-file-pin-v3-3-66c616906ead@oracle.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ Documentation/netlink/specs/handshake.yaml | 8 ++++++++
+ net/handshake/genl.c                       | 3 ++-
+ net/handshake/genl.h                       | 1 +
+ net/handshake/handshake-test.c             | 2 +-
+ net/handshake/handshake.h                  | 4 ++--
+ net/handshake/netlink.c                    | 2 +-
+ net/handshake/request.c                    | 2 +-
+ net/handshake/tlshd.c                      | 4 ++--
+ 8 files changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 83ea31926bd0f8..27b5d459e1217c 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -5268,6 +5268,7 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
- 	cmd_len -= sizeof(*rsp);
+diff --git a/Documentation/netlink/specs/handshake.yaml b/Documentation/netlink/specs/handshake.yaml
+index 95c3fade7a8d7b..1024297b38513a 100644
+--- a/Documentation/netlink/specs/handshake.yaml
++++ b/Documentation/netlink/specs/handshake.yaml
+@@ -12,6 +12,12 @@ protocol: genetlink
+ doc: Netlink protocol to request a transport layer security handshake.
  
- 	list_for_each_entry_safe(chan, tmp, &conn->chan_l, list) {
-+		struct l2cap_chan *orig;
- 		u16 dcid;
+ definitions:
++  -
++    type: const
++    name: max-errno
++    value: 4095
++    header: linux/err.h
++    scope: kernel
+   -
+     type: enum
+     name: handler-class
+@@ -80,6 +86,8 @@ attribute-sets:
+       -
+         name: status
+         type: u32
++        checks:
++          max: max-errno
+       -
+         name: sockfd
+         type: s32
+diff --git a/net/handshake/genl.c b/net/handshake/genl.c
+index f55d14d7b7269d..a5fa8b27f22423 100644
+--- a/net/handshake/genl.c
++++ b/net/handshake/genl.c
+@@ -9,6 +9,7 @@
+ #include "genl.h"
  
- 		if (chan->ident != cmd->ident ||
-@@ -5289,8 +5290,10 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ #include <uapi/linux/handshake.h>
++#include <linux/err.h>
  
- 		BT_DBG("dcid[%d] 0x%4.4x", i, dcid);
+ /* HANDSHAKE_CMD_ACCEPT - do */
+ static const struct nla_policy handshake_accept_nl_policy[HANDSHAKE_A_ACCEPT_HANDLER_CLASS + 1] = {
+@@ -17,7 +18,7 @@ static const struct nla_policy handshake_accept_nl_policy[HANDSHAKE_A_ACCEPT_HAN
  
-+		orig = __l2cap_get_chan_by_dcid(conn, dcid);
-+
- 		/* Check if dcid is already in use */
--		if (dcid && __l2cap_get_chan_by_dcid(conn, dcid)) {
-+		if (dcid && orig) {
- 			/* If a device receives a
- 			 * L2CAP_CREDIT_BASED_CONNECTION_RSP packet with an
- 			 * already-assigned Destination CID, then both the
-@@ -5299,10 +5302,24 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
- 			 */
- 			l2cap_chan_del(chan, ECONNREFUSED);
- 			l2cap_chan_unlock(chan);
--			chan = __l2cap_get_chan_by_dcid(conn, dcid);
--			l2cap_chan_lock(chan);
--			l2cap_chan_del(chan, ECONNRESET);
--			l2cap_chan_unlock(chan);
-+
-+			/* Check that the dcid channel mode is
-+			 * L2CAP_MODE_EXT_FLOWCTL since this procedure is only
-+			 * valid for that mode and shouldn't disconnect a dcid
-+			 * in other modes.
-+			 */
-+			if (orig->mode == L2CAP_MODE_EXT_FLOWCTL) {
-+				l2cap_chan_lock(orig);
-+				/* Disconnect the original channel as it may be
-+				 * considered connected since dcid has already
-+				 * been assigned; don't call l2cap_chan_close
-+				 * directly since that could lead to
-+				 * l2cap_chan_del and then removing the channel
-+				 * from the list while we're iterating over it.
-+				 */
-+				__set_chan_timer(orig, 0);
-+				l2cap_chan_unlock(orig);
-+			}
- 			continue;
- 		}
+ /* HANDSHAKE_CMD_DONE - do */
+ static const struct nla_policy handshake_done_nl_policy[HANDSHAKE_A_DONE_REMOTE_AUTH + 1] = {
+-	[HANDSHAKE_A_DONE_STATUS] = { .type = NLA_U32, },
++	[HANDSHAKE_A_DONE_STATUS] = NLA_POLICY_MAX(NLA_U32, MAX_ERRNO),
+ 	[HANDSHAKE_A_DONE_SOCKFD] = { .type = NLA_S32, },
+ 	[HANDSHAKE_A_DONE_REMOTE_AUTH] = { .type = NLA_U32, },
+ };
+diff --git a/net/handshake/genl.h b/net/handshake/genl.h
+index ae72a596f6cc3e..684e5fd684481b 100644
+--- a/net/handshake/genl.h
++++ b/net/handshake/genl.h
+@@ -10,6 +10,7 @@
+ #include <net/genetlink.h>
+ 
+ #include <uapi/linux/handshake.h>
++#include <linux/err.h>
+ 
+ int handshake_nl_accept_doit(struct sk_buff *skb, struct genl_info *info);
+ int handshake_nl_done_doit(struct sk_buff *skb, struct genl_info *info);
+diff --git a/net/handshake/handshake-test.c b/net/handshake/handshake-test.c
+index 55442b2f518afb..df3948e807a0fd 100644
+--- a/net/handshake/handshake-test.c
++++ b/net/handshake/handshake-test.c
+@@ -25,7 +25,7 @@ static int test_accept_func(struct handshake_req *req, struct genl_info *info,
+ 	return 0;
+ }
+ 
+-static void test_done_func(struct handshake_req *req, unsigned int status,
++static void test_done_func(struct handshake_req *req, int status,
+ 			   struct genl_info *info)
+ {
+ }
+diff --git a/net/handshake/handshake.h b/net/handshake/handshake.h
+index a48163765a7a1d..2289b0e274f40a 100644
+--- a/net/handshake/handshake.h
++++ b/net/handshake/handshake.h
+@@ -57,7 +57,7 @@ struct handshake_proto {
+ 	int			(*hp_accept)(struct handshake_req *req,
+ 					     struct genl_info *info, int fd);
+ 	void			(*hp_done)(struct handshake_req *req,
+-					   unsigned int status,
++					   int status,
+ 					   struct genl_info *info);
+ 	void			(*hp_destroy)(struct handshake_req *req);
+ };
+@@ -86,7 +86,7 @@ struct handshake_req *handshake_req_hash_lookup(struct sock *sk);
+ struct handshake_req *handshake_req_next(struct handshake_net *hn, int class);
+ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
+ 			 gfp_t flags);
+-void handshake_complete(struct handshake_req *req, unsigned int status,
++void handshake_complete(struct handshake_req *req, int status,
+ 			struct genl_info *info);
+ bool handshake_req_cancel(struct sock *sk);
+ 
+diff --git a/net/handshake/netlink.c b/net/handshake/netlink.c
+index 394e270cc505cb..d8211e0ba75c69 100644
+--- a/net/handshake/netlink.c
++++ b/net/handshake/netlink.c
+@@ -161,7 +161,7 @@ int handshake_nl_done_doit(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	status = -EIO;
+ 	if (info->attrs[HANDSHAKE_A_DONE_STATUS])
+-		status = nla_get_u32(info->attrs[HANDSHAKE_A_DONE_STATUS]);
++		status = -(int)nla_get_u32(info->attrs[HANDSHAKE_A_DONE_STATUS]);
+ 
+ 	handshake_complete(req, status, info);
+ 	sockfd_put(sock);
+diff --git a/net/handshake/request.c b/net/handshake/request.c
+index 654e55b141cded..62efb7e32730ea 100644
+--- a/net/handshake/request.c
++++ b/net/handshake/request.c
+@@ -284,7 +284,7 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
+ }
+ EXPORT_SYMBOL(handshake_req_submit);
+ 
+-void handshake_complete(struct handshake_req *req, unsigned int status,
++void handshake_complete(struct handshake_req *req, int status,
+ 			struct genl_info *info)
+ {
+ 	struct sock *sk = req->hr_sk;
+diff --git a/net/handshake/tlshd.c b/net/handshake/tlshd.c
+index af294c6cc71731..7567150c2a4f95 100644
+--- a/net/handshake/tlshd.c
++++ b/net/handshake/tlshd.c
+@@ -93,7 +93,7 @@ static void tls_handshake_remote_peerids(struct tls_handshake_req *treq,
+  *
+  */
+ static void tls_handshake_done(struct handshake_req *req,
+-			       unsigned int status, struct genl_info *info)
++			       int status, struct genl_info *info)
+ {
+ 	struct tls_handshake_req *treq = handshake_req_private(req);
+ 
+@@ -104,7 +104,7 @@ static void tls_handshake_done(struct handshake_req *req,
+ 	if (!status)
+ 		set_bit(HANDSHAKE_F_REQ_SESSION, &req->hr_flags);
+ 
+-	treq->th_consumer_done(treq->th_consumer_data, -status,
++	treq->th_consumer_done(treq->th_consumer_data, status,
+ 			       treq->th_peerid[0]);
+ }
  
 -- 
 2.53.0
