@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066B61E98EF;
-	Sun,  7 Jun 2026 10:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4510831E850;
+	Sun,  7 Jun 2026 10:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829099; cv=none; b=dlXD2O/pEGyvH2Q897OR3P9r3ap9DHJpLnSJvEPyRhMCG5MJca0ockxHrbq5vjdk5ONgfHRHE6DYu+ylOmEPqJqcTXKim1XxHUS87T4PpFPoAvfsC2ZcDalXhSkD0DbFOAQkD6yrpShjgtRtorfZnMBvqPJAVYufCGjG1aMuOYM=
+	t=1780829103; cv=none; b=N1+9I5Ebz7qSjOscAUyBrRDAXDDY7EyTsbVwwD5JBvGdiAtIn+mN2rpQW0XASbp9J+UgbQkxJZJuf92+06QgXGkvbJQnNY3OiClIJkOBVzl6pGTSP1MS2XqKU46yL41OlUvrhQPyUNrmMYsYzmMvTs2ti9TI/Q2T+XVwjAsgCCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829099; c=relaxed/simple;
-	bh=j4OpgDqOYjScj46Ux3yDW53tOB72oKczatvyEPIw1jo=;
+	s=arc-20240116; t=1780829103; c=relaxed/simple;
+	bh=fn4thRPpYDnjlOFkssnmJxxkj+3kelxxhCL4PVlF1fM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qwKAYIJ2cgqgikv514SJBZyHAfetwoypaRlcU1eE8Ui4CfbhiLJkyx8iDqjURLARxPJcnSoT+MCS2fDeaXahx5FsCI/nXmgxSRvJYfwpa//w1KVol4uKMev39nSyrCKOZRtrql1/1KZ4OYsVj2aeKBsV+Leoec1gZQ5MWV3ctzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0uZ1n1tX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VjLHOYY/J4FLH0KrBBw7GCwR1BM5zGk1POQmBRgJknCKS1XfIuJ1ipykkia7ubTloW3Tt04A4Ob1KF4OXg8W7JGT/OKSEwSRvPm8qSAFR91reCsn+LKBP0uAwNgDXfaBu51NQRmMlRyd94aOO5PIv+WO+TUMP2J/XHeUdJ7DfMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHLZP23s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0uZ1n1tX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462CC1F00893;
-	Sun,  7 Jun 2026 10:44:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHLZP23s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC4D1F00893;
+	Sun,  7 Jun 2026 10:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829098;
-	bh=mvP99nVX3kqVW8FC1q2LN/BUFFtzsCWh/NQp/QQuPag=;
+	s=korg; t=1780829102;
+	bh=IiwfwUVdAlpFLvdtoR7LVE3p6GApHEnX/AVFUeiSiPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0uZ1n1tXdSMbJAUF66wJWUAUazOhvJ/5i8T7xSW2heQQCPPJtkY5p7uoUs6j8glaW
-	 90k3NMgKGNyL9fhf5+aQM/7KC4LhmcXHzOOgUBA38rF3fFokQOohzx4zzfItRMChDP
-	 KNzhdb3x94g1Qb+3a1pEyvHR0VICoIHDl4gw92zU=
+	b=YHLZP23sHA7kVQBWyJm9qgo5P7Nn8XLBAPZQiA1tdMLJ4RH8Pga1nwsa+ieTgJuRn
+	 UK/nvq2etF2af4awP1Nv8TG/GduzfCY6t9dYDp3mk3bRwSbWDwQNEBznq10SuxWUSO
+	 bDovfbnI7Fqj0sfO9ntmihq//ANJW0IP1+VCyMRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.18 217/315] comedi: comedi_test: fix check for valid scan_begin_src in waveform_ai_cmdtest()
-Date: Sun,  7 Jun 2026 12:00:04 +0200
-Message-ID: <20260607095735.543633307@linuxfoundation.org>
+	Ali Ganiyev <ali.qaniyev@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 7.0 239/332] ksmbd: OOB read regression in smb_check_perm_dacl() ACE-walk loops
+Date: Sun,  7 Jun 2026 12:00:08 +0200
+Message-ID: <20260607095736.830769312@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,41 +47,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Ali Ganiyev <ali.qaniyev@gmail.com>
 
-commit 542f5248cb481073203e0dadab5bcbd28aeae308 upstream.
+commit 0e60dafe97eca61721f3db456f97d97a80c6c8ae upstream.
 
-Commit 783ddaebd397 ("staging: comedi: comedi_test: support
-scan_begin_src == TRIG_FOLLOW") neglected to add a test that
-`scan_begin_src` has only one bit set.  The allowed values are
-`TRIG_FOLLOW` and `TRIG_TIMER`, but the code incorrectly also allows
-`TRIG_FOLLOW | TRIG_TIMER`.  Add a call to
-`comedi_check_trigger_is_unique()` to check that only one trigger source
-bit is set.
+Commit d07b26f39246 ("ksmbd: require minimum ACE size in
+smb_check_perm_dacl()") introduced a transposed bounds check:
 
-Fixes: 783ddaebd397 ("staging: comedi: comedi_test: support scan_begin_src == TRIG_FOLLOW")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260422162138.36003-1-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    if (offsetof(struct smb_ace, sid) + aces_size < CIFS_SID_BASE_SIZE)
+
+Since offsetof(..sid) is 8 and CIFS_SID_BASE_SIZE is 8, this evaluates
+to `aces_size < 0`. Because `aces_size` is always non-negative, this
+check becomes dead code and never breaks the loop.
+
+Worse, that commit removed the old 4-byte guard, meaning the loop now
+reads `ace->size` (offset 2) even when `aces_size` is 0-3 bytes. This
+re-opens a 2-byte heap out-of-bounds (OOB) read past the pntsd allocation
+during subsequent SMB2_CREATE operations.
+
+Fix this by properly transposing the comparison to require at least
+16 bytes (8-byte offset + 8-byte SID base), matching the correct form
+used in smb_inherit_dacl().
+
+Fixes: d07b26f39246 ("ksmbd: require minimum ACE size in smb_check_perm_dacl()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ali Ganiyev <ali.qaniyev@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/comedi_test.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/server/smbacl.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/comedi/drivers/comedi_test.c
-+++ b/drivers/comedi/drivers/comedi_test.c
-@@ -274,6 +274,7 @@ static int waveform_ai_cmdtest(struct co
- 	/* Step 2a : make sure trigger sources are unique */
- 
- 	err |= comedi_check_trigger_is_unique(cmd->convert_src);
-+	err |= comedi_check_trigger_is_unique(cmd->scan_begin_src);
- 	err |= comedi_check_trigger_is_unique(cmd->stop_src);
- 
- 	/* Step 2b : and mutually compatible */
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1446,8 +1446,8 @@ int smb_check_perm_dacl(struct ksmbd_con
+ 		ace = (struct smb_ace *)((char *)pdacl + sizeof(struct smb_acl));
+ 		aces_size = acl_size - sizeof(struct smb_acl);
+ 		for (i = 0; i < le16_to_cpu(pdacl->num_aces); i++) {
+-			if (offsetof(struct smb_ace, sid) +
+-			    aces_size < CIFS_SID_BASE_SIZE)
++			if (aces_size < offsetof(struct smb_ace, sid) +
++			    CIFS_SID_BASE_SIZE)
+ 				break;
+ 			ace_size = le16_to_cpu(ace->size);
+ 			if (ace_size > aces_size ||
+@@ -1467,8 +1467,8 @@ int smb_check_perm_dacl(struct ksmbd_con
+ 	ace = (struct smb_ace *)((char *)pdacl + sizeof(struct smb_acl));
+ 	aces_size = acl_size - sizeof(struct smb_acl);
+ 	for (i = 0; i < le16_to_cpu(pdacl->num_aces); i++) {
+-		if (offsetof(struct smb_ace, sid) +
+-		    aces_size < CIFS_SID_BASE_SIZE)
++		if (aces_size < offsetof(struct smb_ace, sid) +
++		    CIFS_SID_BASE_SIZE)
+ 			break;
+ 		ace_size = le16_to_cpu(ace->size);
+ 		if (ace_size > aces_size ||
 
 
