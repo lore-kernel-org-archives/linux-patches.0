@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AB11E98EF;
-	Sun,  7 Jun 2026 10:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24553195FD;
+	Sun,  7 Jun 2026 10:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828967; cv=none; b=kXCRkDrcuHDmc0xzjzHKUSxosECNiI7nXsQFqMZXvIGzNeBaJ7i1f+EIX0OfPp5L0zA7gjncgGYl1crPsmXZU7B9dNWCVZcGaqinUeE/TgsUiXLVBJ+pK/l5JnyEepaiCbcfehEHTwZTOROLXa2uxzfucG8ws1BmBNTsIct/y30=
+	t=1780828971; cv=none; b=Ya8XEt07hFaI4dTAz+Khr8nqfqGr/WwUE/wIra3ZDwcpkIrLbir2/4/CO0lssywfQeUEaWmePukVq6iyM0u/GmK5yCadMNb76RHshj/EXXs2LmEgo39ORtCXXYRV9R8LV/CHlUh2DLiH+CiBDD+cY4ZKIJOXqoFKTuVcLFJvh+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828967; c=relaxed/simple;
-	bh=h7oJQ/XCm+HoCWyKxM/yKkfIuz4g659D06jOufRPUNc=;
+	s=arc-20240116; t=1780828971; c=relaxed/simple;
+	bh=s5pgZmUl/8Q8BjIr1FFSM9NEvSjfDTMQzlPO0ZzMOjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jfrId0AZfu49yIOASB9d9hmaEd0C/JsNYUECaahsQE4yuW1hKcnnHGc0S/I/1LE+od60dJomlSfN4Ba0m+40hy9ximUvgxk+jS43Fx7m3IcTHY2Sjof2WekfTNMifd3Zv3lxpIt/tTBQ1dYmvaaZReaEBCYuFikC8/6j+LyYMHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzLE3wvc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qFC5OciSH26DMzi5ybeD3c/MgMUzGKSUxXTlpfRMgoBN0gq4I8psDr8SK17xPMJWUjYPcHeN2Uv+Av6KNbpY3auxoTUl2VhzikzghJCGJe8jhpPjnRz5pngJoOyDjEUaK+8YBoEUAqw6b0tuJxNMQ8F8fwCJ9jGK2R2gzQ/ZLhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=simg8mqi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzLE3wvc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE291F00893;
-	Sun,  7 Jun 2026 10:42:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="simg8mqi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED4D1F00893;
+	Sun,  7 Jun 2026 10:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828966;
-	bh=zxCTDucRo87qOGLD3HGVaqsFlm4p4Y5XceebMr/0Ci0=;
+	s=korg; t=1780828970;
+	bh=uWEBb6tg2v2VWLBn5GyO3V3G8N8OsY8czownzMBdPe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XzLE3wvc8/91T9MM5eRgOgiqD4zt7MaTPhdUS8KP4MJIPQL2Ab/FHHK22v2GsLvxF
-	 s2Rx4rvjeVEuz81zTtWFFfgKSInGr/yZIPmBNNNBZig6ZtaWaagBWt19//MdmcXYPE
-	 udyOKIYdT1DhFvEGwfqUd2pk8YCo0X2YZ3U6wbOc=
+	b=simg8mqiIHQLuZ44iGFl7h6Bh31pJIQXmNvd1ikaG12B6oFzEADLoWeaxwtHBPVGH
+	 J0Hrk2aXGBFBFGs630Zm261fLwO5fVRMA4RlPhSpumb+PnmMpPqzAq9gDkdm6FBlil
+	 +EYivoBd2fEWf5/cz5vNYxiKBwPHL3KecF08O/7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 183/307] wireguard: send: append trailer after expanding head
-Date: Sun,  7 Jun 2026 11:59:40 +0200
-Message-ID: <20260607095734.435516284@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 206/315] ASoC: qcom: q6asm-dai: close stream only when running
+Date: Sun,  7 Jun 2026 11:59:53 +0200
+Message-ID: <20260607095735.127106486@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,65 +47,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit f75e3eb08fe31d30a9af6ed80cdd22e6772837e2 upstream.
+commit 048c540ee76ded666bda74f9dae1ca3254e0633c upstream.
 
-With how this is currently written, we add the trailer, zero it out, and
-then add the header space on. If that header space requires a
-reallocation + copy, the zeros in the trailer aren't copied, because the
-skb len hasn't actually been yet expanded to cover that. Instead add the
-padding at the end of the process rather than at the beginning.
+q6asm_dai_close() and q6asm_dai_compr_free() currently issue CMD_CLOSE
+whenever prtd->state is non-zero.
 
-Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Link: https://patch.msgid.link/20260529173134.3080773-2-Jason@zx2c4.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+After prepare() closes an existing stream, the state is updated to
+Q6ASM_STREAM_STOPPED. Since this state is also non-zero, the close and
+free paths can send CMD_CLOSE again for a stream that has already been
+closed.
+
+Restrict CMD_CLOSE to the Q6ASM_STREAM_RUNNING state so the command is
+sent only when the ASM stream is still active.
+
+Fixes: 2a9e92d371db ("ASoC: qdsp6: q6asm: Add q6asm dai driver")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260518092347.3446946-3-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireguard/send.c |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ sound/soc/qcom/qdsp6/q6asm-dai.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/net/wireguard/send.c
-+++ b/drivers/net/wireguard/send.c
-@@ -177,16 +177,6 @@ static bool encrypt_packet(struct sk_buf
- 	trailer_len = padding_len + noise_encrypted_len(0);
- 	plaintext_len = skb->len + padding_len;
+--- a/sound/soc/qcom/qdsp6/q6asm-dai.c
++++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
+@@ -447,12 +447,12 @@ static int q6asm_dai_close(struct snd_so
+ 	struct q6asm_dai_rtd *prtd = runtime->private_data;
  
--	/* Expand data section to have room for padding and auth tag. */
--	num_frags = skb_cow_data(skb, trailer_len, &trailer);
--	if (unlikely(num_frags < 0 || num_frags > ARRAY_SIZE(sg)))
--		return false;
+ 	if (prtd->audio_client) {
+-		if (prtd->state)
++		if (prtd->state == Q6ASM_STREAM_RUNNING) {
+ 			q6asm_cmd(prtd->audio_client, prtd->stream_id,
+ 				  CMD_CLOSE);
 -
--	/* Set the padding to zeros, and make sure it and the auth tag are part
--	 * of the skb.
--	 */
--	memset(skb_tail_pointer(trailer), 0, padding_len);
--
- 	/* Expand head section to have room for our header and the network
- 	 * stack's headers.
- 	 */
-@@ -198,6 +188,16 @@ static bool encrypt_packet(struct sk_buf
- 		     skb_checksum_help(skb)))
- 		return false;
+-		q6asm_unmap_memory_regions(substream->stream,
++			q6asm_unmap_memory_regions(substream->stream,
+ 					   prtd->audio_client);
++		}
+ 		q6asm_audio_client_free(prtd->audio_client);
+ 		prtd->audio_client = NULL;
+ 	}
+@@ -669,7 +669,7 @@ static int q6asm_dai_compr_free(struct s
+ 	struct snd_soc_pcm_runtime *rtd = stream->private_data;
  
-+	/* Expand data section to have room for padding and auth tag. */
-+	num_frags = skb_cow_data(skb, trailer_len, &trailer);
-+	if (unlikely(num_frags < 0 || num_frags > ARRAY_SIZE(sg)))
-+		return false;
-+
-+	/* Set the padding to zeros, and make sure it and the auth tag are part
-+	 * of the skb.
-+	 */
-+	memset(skb_tail_pointer(trailer), 0, padding_len);
-+
- 	/* Only after checksumming can we safely add on the padding at the end
- 	 * and the header.
- 	 */
+ 	if (prtd->audio_client) {
+-		if (prtd->state) {
++		if (prtd->state == Q6ASM_STREAM_RUNNING) {
+ 			q6asm_cmd(prtd->audio_client, prtd->stream_id,
+ 				  CMD_CLOSE);
+ 			if (prtd->next_track_stream_id) {
+@@ -677,11 +677,11 @@ static int q6asm_dai_compr_free(struct s
+ 					  prtd->next_track_stream_id,
+ 					  CMD_CLOSE);
+ 			}
+-		}
+ 
+-		snd_dma_free_pages(&prtd->dma_buffer);
+-		q6asm_unmap_memory_regions(stream->direction,
++			q6asm_unmap_memory_regions(stream->direction,
+ 					   prtd->audio_client);
++		}
++		snd_dma_free_pages(&prtd->dma_buffer);
+ 		q6asm_audio_client_free(prtd->audio_client);
+ 		prtd->audio_client = NULL;
+ 	}
 
 
