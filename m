@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C921A6822;
-	Sun,  7 Jun 2026 10:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0802D8378;
+	Sun,  7 Jun 2026 10:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829284; cv=none; b=LY5SPwEy2YKN0weOULgBGXt+zQTldRHsUGrI7QWKnAYKEZaj5VlbxWSjzi/+kFt2LxGYBfVjcEeCraqzdvGGUUUS9GpZb7fjJYvmiay1bjBa9mSFZeWQ5AqYwrWd/vAFJlSqhJnh+gma9HnYSsN28ny2OYNuKpWaW7BM1EYIbFE=
+	t=1780829288; cv=none; b=dDA6oIIvwRq+t1B6wjDY7/Bhx6uhUcN7GkuKtc6OBM2AlO1ijV9eS4UApjsDqjsgFo3olWQWXWPia39oCrw4JIlzcstVI8nW0goyGZggRkA9hvhqCY2i5rnMbC52GzVPcHH7CF7F4dKT4ZXknBnjj9SBTi6oHZ+z5oCB03AosOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829284; c=relaxed/simple;
-	bh=0NN4w0+RKdZoee3K52S36CAlf2xKiUMh5+n9qFOFMaE=;
+	s=arc-20240116; t=1780829288; c=relaxed/simple;
+	bh=+2+S0O5MnTD9qqCf4qimSrznS3JYdxLz+qzd9gVveds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SVUY+nhdwUcyj4PWMQjhhcjOHYBu5IfifB43Y6g4n9lGHGXRgHEONh3ITDOhLhfifkSA3J43wBPu/obxlfmmsHYE2Th4nKuwS7royH4gWMaA9By+B9SJ2qe/C3Crn5W4xW8aQBlNFkbhkunX1LnaHOhpWVKJH1s4n4J2rb0TleM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2xv+Rzh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SipfeGfa+BJz5a1Lwe8fWNWgPKdwZ2Im04iW0zXz+EeLcu9/7HEdqvI4w/40MPJ5tjtKOGkTtXovnQJIzrJR/hvn9QEg3y3Yso7he2FRjRqavvnLeVyVaUsdW3qD4lB6IFkV7ScC3QKgSFMxEuTJYipWyPFWe+uDoV+Qgus6vLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrV3XcXB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2xv+Rzh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2551F00893;
-	Sun,  7 Jun 2026 10:48:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrV3XcXB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A4E1F00893;
+	Sun,  7 Jun 2026 10:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829283;
-	bh=bsya4kkGNjvYdoOqCUbI+EQqjqBOOfglyPYWnZ6iClE=;
+	s=korg; t=1780829287;
+	bh=vhChUoGk5c+UgBLNFtuJOAM/HnwMPR0iaAISGCnSrwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T2xv+Rzh1Ny6ZubVLtNoeaL35b11GEBdcJTHCoStyxPi0w5diny3RaBqo/UAeEYtS
-	 aaj4v6Q6qX5tt29Hb5csnylv1riQvRo2TRPg09ONsXIYw5qEgL4u7kckfLu4GPggOK
-	 67DYMoMRDZnZ0iLCec4olByPtC3xvhoO27zRd8/0=
+	b=IrV3XcXBgPsfmFfzqFmPwCLrajLpWODhURWS8G8Wz7vLe9CNUZAsglhouNhbQM5KD
+	 u9imeqwp4wJ52QVyQ+AHzp0Au1hpTZYhr4Qnm192vjtmzYvJw3YvBiMAHLrdgZPN/T
+	 Klgsebimfh8lur/xGYb6qJbNaJauMcAiF4UNmncw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>
-Subject: [PATCH 6.18 232/315] usb: typec: ucsi: Check if power role change actually happened before handling
-Date: Sun,  7 Jun 2026 12:00:19 +0200
-Message-ID: <20260607095736.094727720@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 6.12 211/307] comedi: comedi_test: Fix limiting of convert_arg in waveform_ai_cmdtest()
+Date: Sun,  7 Jun 2026 12:00:08 +0200
+Message-ID: <20260607095735.466927678@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,67 +46,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit b80e7d34c7ea6a564525119d6138fbb577a23dba upstream.
+commit 8a3bee801d420be8a7a0bae4a26547b353b8fe22 upstream.
 
-The CrOS EC may send a connector status change event with the power
-direction changed flag set even if the power direction hasn't actually
-changed after initiating a SET_PDR command internally [1]. In practice
-this happens on every system suspend due to other changes performed by
-the EC [2][3][4], causing suspend to fail.
+The function checks and possibly modifies the description of an
+asynchronous command to be run on the analog input subdevice of a comedi
+device attached to the "comedi_test" driver, returning 0 if no
+modifications were required, or a positive value that indicates which
+step of the checking process it failed on.  Step 4 fixes up various
+argument values for various trigger sources.
 
-Fix this by checking if the power role change actually happened before
-handling it.
+There are two bugs in the fixing up of the `convert_arg` value to keep
+the `scan_begin_arg` value within the range of `unsigned int` when
+`scan_begin_src` and `convert_src` both have the value `TRIG_TIMER`,
+which indicates that the corresponding `_arg` values hold a time period
+in nanoseconds.  The code also uses `scan_end_arg` which hold the number
+of "conversions" within each "scan".  The goal is to end up with the
+scan period being less than or equal to the convert period multiplied by
+the number of conversions per scan.  It intends to do that by clamping
+the `convert_arg` value to a maximum value of `UINT_MAX / scan_end_arg`
+rounded down to a multiple of 1000 (`NSEC_PER_USEC`).
 
-[1]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=1689;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
-[2]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=3923;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
-[3]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=5094;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
-[4]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=2229;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
+(The rounding from nanoseconds to microseconds is because the driver is
+modelling a device that uses a 1 MHz clock for timing.  This is partly
+because that is a more typical timing base for real hardware devices
+driven by comedi, and partly because the driver used to use `struct
+timeval` internally.)
 
+The first bug is that the code checks if `scan_begin_arg == TRIG_TIMER`
+when it should be checking if `scan_begin_src == TRIG_TIMER`.  The
+bugged check will always fail because if `scan_begin_src == TRIG_TIMER`,
+then `scan_begin_arg` will be at least 1000 (`NSEC_PER_USEC`), otherwise
+`scan_begin_src == TRIG_FOLLOW` and `scan_begin_arg` will be 0.  (N.B
+`TRIG_TIMER` is defined as `0x10`.)  The second bug is that is rounding
+the maximum value down to a multiple of 1000000000 (`NSEC_PER_SEC`)
+instead of 1000 (`NSEC_PER_USEC`), however this bug is not reached due
+to the first bug.  This patch fixes both bugs.
+
+Fixes: 783ddaebd397 ("staging: comedi: comedi_test: support scan_begin_src == TRIG_FOLLOW")
+Fixes: 5afdcad2f818 ("staging: comedi: comedi_test: limit maximum convert_arg")
 Cc: stable <stable@kernel.org>
-Fixes: 7616f006db07 ("usb: typec: ucsi: Update power_supply on power role change")
-Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
-Reported-and-tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260519-ucsi-fix-2-v1-1-6f1239535187@qtmlabs.xyz
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260422144637.27692-1-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/comedi/drivers/comedi_test.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1224,7 +1224,7 @@ static void ucsi_handle_connector_change
- 						  work);
- 	struct ucsi *ucsi = con->ucsi;
- 	u8 curr_scale, volt_scale;
--	enum typec_role role;
-+	enum typec_role role, prev_role;
- 	u16 change;
- 	int ret;
- 	u32 val;
-@@ -1235,6 +1235,8 @@ static void ucsi_handle_connector_change
- 		dev_err_once(ucsi->dev, "%s entered without EVENT_PENDING\n",
- 			     __func__);
- 
-+	prev_role = UCSI_CONSTAT(con, PWR_DIR);
-+
- 	ret = ucsi_get_connector_status(con, true);
- 	if (ret) {
- 		dev_err(ucsi->dev, "%s: GET_CONNECTOR_STATUS failed (%d)\n",
-@@ -1251,7 +1253,7 @@ static void ucsi_handle_connector_change
- 	change = UCSI_CONSTAT(con, CHANGE);
- 	role = UCSI_CONSTAT(con, PWR_DIR);
- 
--	if (change & UCSI_CONSTAT_POWER_DIR_CHANGE) {
-+	if ((change & UCSI_CONSTAT_POWER_DIR_CHANGE) && role != prev_role) {
- 		typec_set_pwr_role(con->port, role);
- 		ucsi_port_psy_changed(con);
- 
+--- a/drivers/comedi/drivers/comedi_test.c
++++ b/drivers/comedi/drivers/comedi_test.c
+@@ -324,10 +324,10 @@ static int waveform_ai_cmdtest(struct co
+ 		arg = min(arg,
+ 			  rounddown(UINT_MAX, (unsigned int)NSEC_PER_USEC));
+ 		arg = NSEC_PER_USEC * DIV_ROUND_CLOSEST(arg, NSEC_PER_USEC);
+-		if (cmd->scan_begin_arg == TRIG_TIMER) {
++		if (cmd->scan_begin_src == TRIG_TIMER) {
+ 			/* limit convert_arg to keep scan_begin_arg in range */
+ 			limit = UINT_MAX / cmd->scan_end_arg;
+-			limit = rounddown(limit, (unsigned int)NSEC_PER_SEC);
++			limit = rounddown(limit, (unsigned int)NSEC_PER_USEC);
+ 			arg = min(arg, limit);
+ 		}
+ 		err |= comedi_check_trigger_arg_is(&cmd->convert_arg, arg);
 
 
