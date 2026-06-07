@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99212AD00;
-	Sun,  7 Jun 2026 10:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E05A2ECEB9;
+	Sun,  7 Jun 2026 10:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827330; cv=none; b=HbtUfxr3/76QhZX4nmm7ZdG+YaMaZgY5BsiaOy+s5STvoDBgmkzkCBFYfV99D/lZfC+t3rlRToKYbK+zV3CZoBHFxFa4t2vpMexnxVkmc6gw78vdeei47UdDGm8S7R8JaBC5u2jNF0YOrId7hK0t18reZTEgYyY0PMa7LCbSwC8=
+	t=1780827334; cv=none; b=oEFCN+FMAChDAvfJKZ9FrnQvhRYS6pUdNvrh6D/0303CK9Agt21ucLOX6GR0S4Ni9h83IsLZaY32vwn02g3W1SskTWbMLeh51xyVUu6iroLX1X9+1d+uVbj6oXri5UlzORS4TcF2fye/do6Lr0po0V18uYblGLOGsUZwor4uWtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827330; c=relaxed/simple;
-	bh=4qIrHHKgOHhYP5qY4T0bhYiuS2j64CL1yB11HoSI3tY=;
+	s=arc-20240116; t=1780827334; c=relaxed/simple;
+	bh=2pzLPyyNZ7zk5g0gi3Hr6Aa6AUOglc5dIJqNDNnIUk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZqMfbYPEN8J73RQSPQbBifOkafqMm8kvArI1S+z3OyQIX+x1gP8uMIb8+X/LKer32k9qqY0uTsSjtvgQozzq3lmp3l1/zAJb8vtmg2Wq6PCx7ZURuHUeRIyDIAA5ZrK8bdOFSwE/xFau7+Igc32BdHN7irX8ncQ84MF3GVO3Eeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4JOBWyJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OffTqGG5WPtzH4Yj1AG9aIIGPr91vzQ9dvLzcWSQFKXiyP4zfbjc8aEBLI7rQ3XgV+iwdYXOUysKdTxmMCQnXRyO0x/EnSrIQalbA5uioMukSs0Gp2YgrA1ub2yAEKM2Qm/2W7kS3LLIJd6n7+/1vpYQ+SlJR33NKws+hc/n/xA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maYCse1n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4JOBWyJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3158A1F00893;
-	Sun,  7 Jun 2026 10:15:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maYCse1n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBF31F00893;
+	Sun,  7 Jun 2026 10:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827329;
-	bh=FZTiQUl5LtfezJdW2qymqcs86DNXGpOeEMzR/bGnvxw=;
+	s=korg; t=1780827333;
+	bh=UF+7b/0S/3uEu5HdVrbmygy+FFHaDnXLpBe1t3Pwb1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X4JOBWyJ+tklzx0qXMMROcW0jc5mS1d8ALLqsOrj1g+f/YiyboUKOypxSGLnYVvVM
-	 /T4QGP8km+Z1hBuBn1hhpYM1n1sP4aRWF9N5IwEJtAi/xKrxWX2Z5VAlCPEStQehD9
-	 8zfInokjfu88ZvQfeoW3TEr2kCpvg48iImHSV80E=
+	b=maYCse1nZfTigse10T7NjwmQZjQEn4bZrGs9rHx1HwP1KWNYbcVJiXTQ7Hwhl+OGF
+	 VuZNNAJ6lt0PAAQQIgWDLdtytP505P94fOnT3sz28SfRhCLFYVR4lIgGSZHq8Cmhgm
+	 AlA/D2XFiB8t9/VwmiDanp9jpnILRX2tjKzt8QhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Karol Wachowski <karol.wachowski@linux.intel.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/307] accel/ivpu: prevent uninitialized data bug in debugfs
-Date: Sun,  7 Jun 2026 11:57:23 +0200
-Message-ID: <20260607095729.399124788@linuxfoundation.org>
+Subject: [PATCH 7.0 084/332] net/sched: act_mirred: Fix return code in early mirred redirect error paths
+Date: Sun,  7 Jun 2026 11:57:33 +0200
+Message-ID: <20260607095731.230784677@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +48,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 44e151be23deb788d9f6124de93823faf6e04e99 ]
+[ Upstream commit e80ad525fc7e8c933ad78478c5dda286cfd55c60 ]
 
-The simple_write_to_buffer() will only initialize data starting from
-the *pos offset so if it's non-zero then the first part of the buffer
-uninitialized.  Really, if *pos is non-zero then this code won't work
-so just check for that at the start of the function.
+Since retval is set as TC_ACT_STOLEN in the mirred redirect case, returning
+retval in cases where redirect failed will make the callers not register
+the skb as being dropped.
 
-Fixes: 320323d2e545 ("accel/ivpu: Add debugfs interface for setting HWS priority bands")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Link: https://patch.msgid.link/ahP24m6Mii9EDL7Q@stanley.mountain
+Fix this by returning TC_ACT_SHOT instead in such scenarios.
+
+Fixes: 16085e48cb48 ("net/sched: act_mirred: Create function tcf_mirred_to_dev and improve readability")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260413082027.2244884-1-hxzene%40gmail.com
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260525122556.973584-8-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/act_mirred.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/accel/ivpu/ivpu_debugfs.c b/drivers/accel/ivpu/ivpu_debugfs.c
-index df89c1c0da6dd7..1da4ce6a99cd9b 100644
---- a/drivers/accel/ivpu/ivpu_debugfs.c
-+++ b/drivers/accel/ivpu/ivpu_debugfs.c
-@@ -447,7 +447,7 @@ priority_bands_fops_write(struct file *file, const char __user *user_buf, size_t
- 	u32 band;
- 	int ret;
+diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
+index dbe4a4ff3e08b8..553342c55cf7c6 100644
+--- a/net/sched/act_mirred.c
++++ b/net/sched/act_mirred.c
+@@ -372,7 +372,8 @@ static int tcf_blockcast_redir(struct sk_buff *skb, struct tcf_mirred *m,
+ 					 dev_is_mac_header_xmit(dev_prev),
+ 					 m_eaction, retval);
  
--	if (size >= sizeof(buf))
-+	if (*pos != 0 || size >= sizeof(buf))
- 		return -EINVAL;
+-	return retval;
++	/* If the packet wasn't redirected, we have to register as a drop */
++	return TC_ACT_SHOT;
+ }
  
- 	ret = simple_write_to_buffer(buf, sizeof(buf) - 1, pos, user_buf, size);
+ static int tcf_blockcast_mirror(struct sk_buff *skb, struct tcf_mirred *m,
+@@ -410,7 +411,7 @@ static int tcf_blockcast(struct sk_buff *skb, struct tcf_mirred *m,
+ 	block = tcf_block_lookup(dev_net(skb->dev), blockid);
+ 	if (!block || xa_empty(&block->ports)) {
+ 		tcf_action_inc_overlimit_qstats(&m->common);
+-		return retval;
++		return is_redirect ? TC_ACT_SHOT : retval;
+ 	}
+ 
+ 	if (is_redirect)
+@@ -428,8 +429,8 @@ TC_INDIRECT_SCOPE int tcf_mirred_act(struct sk_buff *skb,
+ {
+ 	struct tcf_mirred *m = to_mirred(a);
+ 	int retval = READ_ONCE(m->tcf_action);
++	bool m_mac_header_xmit, is_redirect;
+ 	struct netdev_xmit *xmit;
+-	bool m_mac_header_xmit;
+ 	struct net_device *dev;
+ 	bool want_ingress;
+ 	int i, m_eaction;
+@@ -462,11 +463,13 @@ TC_INDIRECT_SCOPE int tcf_mirred_act(struct sk_buff *skb,
+ 		return retval;
+ 	}
+ 
++	is_redirect = tcf_mirred_is_act_redirect(m_eaction);
++
+ 	dev = rcu_dereference_bh(m->tcfm_dev);
+ 	if (unlikely(!dev)) {
+ 		pr_notice_once("tc mirred: target device is gone\n");
+ 		tcf_action_inc_overlimit_qstats(&m->common);
+-		return retval;
++		goto err_out;
+ 	}
+ 
+ 	if (!want_ingress) {
+@@ -476,7 +479,7 @@ TC_INDIRECT_SCOPE int tcf_mirred_act(struct sk_buff *skb,
+ 			pr_notice_once("tc mirred: loop on device %s\n",
+ 				       netdev_name(dev));
+ 			tcf_action_inc_overlimit_qstats(&m->common);
+-			return retval;
++			goto err_out;
+ 		}
+ 		xmit->sched_mirred_dev[xmit->sched_mirred_nest++] = dev;
+ 	}
+@@ -489,6 +492,11 @@ TC_INDIRECT_SCOPE int tcf_mirred_act(struct sk_buff *skb,
+ 		xmit->sched_mirred_nest--;
+ 
+ 	return retval;
++
++err_out:
++	if (is_redirect)
++		retval = TC_ACT_SHOT;
++	return retval;
+ }
+ 
+ static void tcf_stats_update(struct tc_action *a, u64 bytes, u64 packets,
 -- 
 2.53.0
 
