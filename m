@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591B523F417;
-	Sun,  7 Jun 2026 10:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9D128CF4A;
+	Sun,  7 Jun 2026 10:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828162; cv=none; b=EpFn4PMCz8sHhCcOIJku4UNCH1JHEYOsCcchEgHa87+LCz5IHCRuyblKmsy2160ANvt8k75KIl0948vp+So2TJVNZM8kNNJL1DNCvJd//uNsqVRb9FCg5NsCipea/iUyazDE1lFbB9rFTSjCbdei2LylMEWNO0yxVUUSrV2z/ww=
+	t=1780828166; cv=none; b=t67RtSaAP/xDNE+kmVIPJ31m7HiMV7fWWpmJ6lVF6dsoFA3i+MKQUJVP5GdmCIIcBt6yqLNQcDqH51zWUpOa452ndIYVa+Bw6k65TldBdGaD/0yc9FI6LsqzAII6DGyRMtBn1k8GAYLX0szbmAqcTcOloMKhgzK6xg+hFQ/okkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828162; c=relaxed/simple;
-	bh=qZsq2HCAdOnymFf4C18bcNbPg7ksny87PJrnkicUDNc=;
+	s=arc-20240116; t=1780828166; c=relaxed/simple;
+	bh=zzLUH10kcP/WdMQay1VeBSd1o23MYCU6v6MX6e3C3go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s5iddf0IKk3D8J/t79a6IuGHMZxSP40kiIJsOFtWUmoFyilHO8k7SKzeI59jhdb859Cve5ywujPIn7NseZmH1YJZxNlKg4o4mYRCjjAEwQCNG4Hv0WkH3sjzwkzSEU/EUJ/H5zZMlzx0DLhEMnsuw8iD+Cplk9EaxwqL1E3bWko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQbENdYN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OyZ78gebhuXSb5POm6jcyjFm7wG9REGtp8alECzMz6Y8DBfk/PZHcfmY8nBAP5kl3ozbQXGBnPPn9dbddSwGBWfBkv61KxAfQZW3vElVwQB2VQmgMXeoaGd1qpBU6FFnLNqd29ZtAIBETA3RP2XaF6AXHOyXujtltalHHb4OjtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHmgIVd2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQbENdYN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D7CA1F00898;
-	Sun,  7 Jun 2026 10:29:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHmgIVd2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898291F00893;
+	Sun,  7 Jun 2026 10:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828161;
-	bh=pl3eRfrRfjh9XBCtPDFUZtWHzJhCZfjEsCPdWsgFeqg=;
+	s=korg; t=1780828165;
+	bh=L20ZWwgrpgTMLNzmsLA3D6PEewJvVlMf03H8cIqmxUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gQbENdYNtpVqAA8TbmwE2/CMqbv9r9ys++Vqd5q6aYDtKxqDdUpvxFTu66gxZkJma
-	 p8maYyZgNPIDp2D5knkBjm8w/nFlQCrR6xYHCPoSydx9ANjQlUng/4seSSQt1dGpwE
-	 Npji/AlZHp0Mcet3WXyfm9ANmbM6td5r1YLRG+PY=
+	b=lHmgIVd2iQz/LpnanaFik2sp2MjGrevk5rdro3fyovfZx+OsQLyL4SWcTPCekxCnX
+	 JJKZ1JeyPoIEtOwwmH8Ui6v633YG9IFU0Um+9pWI6ShR2lm/3wdGD0ndWl1vf0Ka9Z
+	 F/sVlGJ521MQDey90c6tiTv7LkLZjJKs1F8ilCGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Amit Sunil Dhamne <amitsd@google.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 7.0 127/332] usb: typec: tcpm/tcpci_maxim: validate header NDO against RX_BYTE_CNT
-Date: Sun,  7 Jun 2026 11:58:16 +0200
-Message-ID: <20260607095732.772238340@linuxfoundation.org>
+	Pavitra Jha <jhapavitra98@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 133/315] Bluetooth: hci_conn: Fix memory leak in hci_le_big_terminate()
+Date: Sun,  7 Jun 2026 11:58:40 +0200
+Message-ID: <20260607095732.497533524@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,51 +44,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Pavitra Jha <jhapavitra98@gmail.com>
 
-commit aa2f716327be1818e1cb156da8a2844804aaec2f upstream.
+commit bfa9d28960ed677d556bdf097073bc3129686229 upstream.
 
-A broken/malicious port can transmit a CRC-valid frame whose header
-advertises up to seven data objects but whose body carries fewer than
-that.  Check for this, and rightfully reject the message, instead of
-reading from uninitialized stack memory.
+hci_le_big_terminate() allocates iso_list_data via kzalloc_obj but
+returns 0 without freeing it when neither pa_sync_term nor big_sync_term
+flags are set after evaluating the PA and BIG sync connection state.
 
-Assisted-by: gkh_clanker_t1000
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: "André Draszik" <andre.draszik@linaro.org>
-Cc: Badhri Jagan Sridharan <badhri@google.com>
-Cc: Amit Sunil Dhamne <amitsd@google.com>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/2026051350-sitter-canopener-9045@gregkh
+This early-return path was introduced when hci_le_big_terminate() was
+refactored to take struct hci_conn instead of raw u8 parameters, adding
+PA/BIG flag evaluation logic. The existing kfree() on hci_cmd_sync_queue
+failure does not cover this path.
+
+Fixes: a7bcffc673de ("Bluetooth: Add PA_LINK to distinguish BIG sync and PA sync connections")
+Cc: stable@vger.kernel.org
+Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpci_maxim_core.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/bluetooth/hci_conn.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/tcpm/tcpci_maxim_core.c
-+++ b/drivers/usb/typec/tcpm/tcpci_maxim_core.c
-@@ -186,6 +186,15 @@ static void process_rx(struct max_tcpci_
- 	rx_buf_ptr = rx_buf + TCPC_RECEIVE_BUFFER_RX_BYTE_BUF_OFFSET;
- 	msg.header = cpu_to_le16(*(u16 *)rx_buf_ptr);
- 	rx_buf_ptr = rx_buf_ptr + sizeof(msg.header);
-+
-+	if (count < TCPC_RECEIVE_BUFFER_RX_BYTE_BUF_OFFSET + sizeof(msg.header) +
-+		    pd_header_cnt_le(msg.header) * sizeof(msg.payload[0])) {
-+		max_tcpci_write16(chip, TCPC_ALERT, TCPC_ALERT_RX_STATUS);
-+		dev_err(chip->dev, "Invalid TCPC_RX_BYTE_CNT %d for header cnt %d\n",
-+			count, pd_header_cnt_le(msg.header));
-+		return;
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -803,8 +803,10 @@ static int hci_le_big_terminate(struct h
+ 			d->big_sync_term = true;
+ 	}
+ 
+-	if (!d->pa_sync_term && !d->big_sync_term)
++	if (!d->pa_sync_term && !d->big_sync_term) {
++		kfree(d);
+ 		return 0;
 +	}
-+
- 	for (payload_index = 0; payload_index < pd_header_cnt_le(msg.header); payload_index++,
- 	     rx_buf_ptr += sizeof(msg.payload[0]))
- 		msg.payload[payload_index] = cpu_to_le32(*(u32 *)rx_buf_ptr);
+ 
+ 	ret = hci_cmd_sync_queue(hdev, big_terminate_sync, d,
+ 				 terminate_big_destroy);
 
 
