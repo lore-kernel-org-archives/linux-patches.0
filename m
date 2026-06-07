@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B222D3A69;
-	Sun,  7 Jun 2026 10:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8306B3254A9;
+	Sun,  7 Jun 2026 10:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828661; cv=none; b=aE5sTvkMLq7Eqr8T/jgogX0wrN/ydBlx0FC7PKDYntW34ra1FquOfq5IWSQYcDqUE8llDSCUixK+70YUh4mOhchtvgv8nUU35VIC50/U3Q6d7EfAXrTyxOpaE3OeJmTpBUsOnxD+XrXZKuhbFeh6urj2idQdZPsBOSKkzsvUMM8=
+	t=1780828665; cv=none; b=c0ZcuJrZtv8HWHFlowlcxpsnTJ7VWzNIEyRpKaRWhAnXzwbJe0w6JQdTq+2Jj2QFBSQ+T2XtTG/yu/RgUz7Wk1fkHU2gS5+phVEDspX3jGx5kGvRQh1g70lkYtkHqBcZe++nk9AHi1hab0FsN/btsZBD01sR9SWNVTcd+Vg7FLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828661; c=relaxed/simple;
-	bh=q6wxvO0AKokay83q4FeDcUQ5Z85Bhu//IUJuQSJTSk0=;
+	s=arc-20240116; t=1780828665; c=relaxed/simple;
+	bh=jBhQt/o3ctMPY/7Z1FBxKhuabeXlyM5XQc9tlpkSLNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MrCXVbv505mRY+l2Ayywjvkk8ZncBAB6DHNumN6GklytKmuTglsPV6tZmP0sepzuEGaKjfn1QnQcXGA5YgfMWs2CrhLmuEpf2kVuLy/ixIU2258n+tsUVw1wSroFYVEyUtvTi+rWNMWWxElUhEt2USAwMtEzu4Ne8NiaULzuFIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TnMGiQvN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s88BWABULFaa1vCPw1qXLwb2ChDDywb38KnU0iCaQbWM8X4HEu5bln46NUwzH2SoFBpnj9ZUjdYHMVaKNiRd2tUA6gNCDRf13iOFz5yv7es7jqx23AJ3MigJo0t7LsAJb8cR9jM5IKaifbe0t5MBtHkOKIUivO7gFZvNBxX+x/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OkWT9LtR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TnMGiQvN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04BD1F00893;
-	Sun,  7 Jun 2026 10:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OkWT9LtR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B5F1F00893;
+	Sun,  7 Jun 2026 10:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828660;
-	bh=8J7rRVpUdc95BQmrRt0M07PrtObLATkx4QUyJ4aSNRU=;
+	s=korg; t=1780828664;
+	bh=peshYLbFyqUgd2ouW9mMDohPFF10+jsYQGq0cImIXZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TnMGiQvNPSv2vhYOwmT83S4qV54WG+Uvi6yYWcACg25mwT3gkvt81ZPOwgt++/HM3
-	 UTYJ8xIR4VauOkSIfyUJA+2WYVxpYfLuEdKlZ6G0lE9ponN4coa6zWhUF/S0My+iTw
-	 l1ED8alK5OrffAx6ikDoFqw9Xg5bTSirhdOeLCRM=
+	b=OkWT9LtR3HHDkP5KUqTnojhX+kK0FBQw1MFPYJqR1oGe+r/U9D6k345uDXjv7RDnr
+	 yDr3ZA+8l1ZpADoq/53WCev8m6IkwqtWZRsdGJrwBkC/Vv/5W6M1xBooe4MPk3ITsx
+	 D95fN3VVlfbJRMMhCbDQwZPeoOVHl1Gpw6UQ+KY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Peter Chen <peter.chen@kernel.org>,
-	Yongchao Wu <yongchao.wu@autochips.com>
-Subject: [PATCH 7.0 201/332] usb: cdns3: gadget: fix request skipping after clearing halt
-Date: Sun,  7 Jun 2026 11:59:30 +0200
-Message-ID: <20260607095735.435806125@linuxfoundation.org>
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Michael Roth <michael.roth@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.12 156/307] KVM: SEV: WARN if KVM attempts to setup scratch area with min_len==0
+Date: Sun,  7 Jun 2026 11:59:13 +0200
+Message-ID: <20260607095733.452454191@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,71 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yongchao Wu <yongchao.wu@autochips.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit c8778ff817a7047d6848fefba99dcb27b1bf01fe upstream.
+commit f185e05dce6f170f83c4ba602e969b1c3c7a22e6 upstream.
 
-According to the cdns3 datasheet, the EPRST (Endpoint Reset) command
-causes the DMA engine to reposition its internal pointer to the next
-Transfer Descriptor (TD) if it was already processing one.
+Now that all paths in KVM properly validate the length needed for the
+scratch area, and are guaranteed to pass in a non-zero length, WARN if KVM
+attempts to configured the scratch area with min_len==0 to guard against
+future bugs.
 
-This issue is consistently observed during the ADB identification
-process on macOS hosts, where the host issues a Clear_Halt. Although
-commit 4bf2dd65135a ("usb: cdns3: gadget: toggle cycle bit before reset
-endpoint") attempted to avoid DMA advance by toggling the cycle bit,
-trace logs show that on certain hosts like macOS, the DMA pointer
-(EP_TRADDR) still shifts after EPRST:
-
-  cdns3_ctrl_req: Clear Endpoint Feature(Halt ep1out)
-  cdns3_doorbell_epx: ep1out, ep_trbaddr f9c04030  <-- Should be f9c04000
-  cdns3_gadget_giveback: ep1out: req: ... length: 16384/16384
-
-As shown above, the DMA pointer jumped to the next TD, causing
-the controller to skip the initial TRBs of the request. This leads to
-data misalignment and ADB protocol hangs on macOS.
-
-Fix this by manually restoring the EP_TRADDR register to the starting
-physical address of the current request after the EPRST operation is
-complete.
-
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
-Cc: stable <stable@kernel.org>
-Cc: Peter Chen <peter.chen@kernel.org>
-Signed-off-by: Yongchao Wu <yongchao.wu@autochips.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://patch.msgid.link/20260513160012.2547894-1-yongchao.wu@autochips.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Michael Roth <michael.roth@amd.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260501202250.2115252-8-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdns3-gadget.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ arch/x86/kvm/svm/sev.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/cdns3/cdns3-gadget.c
-+++ b/drivers/usb/cdns3/cdns3-gadget.c
-@@ -2817,9 +2817,19 @@ int __cdns3_gadget_ep_clear_halt(struct
- 	priv_ep->flags &= ~(EP_STALLED | EP_STALL_PENDING);
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -3509,6 +3509,9 @@ static int setup_vmgexit_scratch(struct
+ 	u64 scratch_gpa_beg, scratch_gpa_end;
+ 	void *scratch_va;
  
- 	if (request) {
--		if (trb)
-+		if (trb) {
- 			*trb = trb_tmp;
- 
-+			/*
-+			 * Per datasheet, EPRST causes DMA to reposition to the next TD.
-+			 * Manually reset EP_TRADDR to the current TRB to prevent
-+			 * the hardware from skipping the interrupted request.
-+			 */
-+			writel(EP_TRADDR_TRADDR(priv_ep->trb_pool_dma +
-+						priv_req->start_trb * TRB_SIZE),
-+						&priv_dev->regs->ep_traddr);
-+		}
++	if (WARN_ON_ONCE(!min_len))
++		goto e_scratch;
 +
- 		cdns3_rearm_transfer(priv_ep, 1);
- 	}
- 
+ 	scratch_gpa_beg = svm->sev_es.sw_scratch;
+ 	if (!scratch_gpa_beg) {
+ 		pr_err("vmgexit: scratch gpa not provided\n");
 
 
