@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79643296BCC;
-	Sun,  7 Jun 2026 10:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42DD2D8378;
+	Sun,  7 Jun 2026 10:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829434; cv=none; b=Lm+NZHesz66uCsWfnEqXnSMHkZVajXf7QHj/2pnpPNyYnyyrVg53jWYDebXuml2yn+sN2UkDeoZUm59nfk0iVDwMQPVk7cD9EwZDyM8mArL2nfED7NOfCG8WSWueFGrx54IwWaO6CRk4m/pYH0JnZQni6JB5yiv8m996tv0Beak=
+	t=1780829437; cv=none; b=kX8lHNtFWm4zRSVx0VvgjvDcWrBO78Zkwn5h5/Gg+4vDoL1rw/tr/cCl6VrCKLuPnYEXwm2CLzOj4oUI7DfZjMUHLWDGXTHAdaXjvukdtaRn6w22BYnD7cK2SLOS9jKOH+jamXyDENn+VLpPLbtiONdjMySWFsymSvNulVSL7PI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829434; c=relaxed/simple;
-	bh=dmxx9SK3M1tnizDlq8//Qk5FTFZCgIGsZu7atjRA698=;
+	s=arc-20240116; t=1780829437; c=relaxed/simple;
+	bh=+zwnnFGh59mbwTVYZA4Vie6KsH2ysmrQdtIWaMLzpBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y3y4UTlmhwGxYBpX2cJRQqAMQU2lcIk5ICZaGovZuUJ+LeWctMMkKF9rRrTn1h/5u6cUaOoDX4faFw9RMxB4Exx5RmM+QLes2x6RZTFpIW8IgFtw31QWpXQ0PcpF7vH9ygNNw2z6OeMbDtj5qpG0WDEhYhj67XnGTJdqF+QyMrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XFg7+IB9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UQixr0ikzne6FrG3iz5S0M4PeliUd/N1kqmZ+k1PQiMsH4NUq/A/oGwP4Maio7wa4m1FRdhYKEclVcacN/5YNB1WYnO6DRfBPZ87ppDehaJZ/8/6lwFsb6or9Dd1IzJ4TEJgEKw6Inj6XITYsHxxCN5oeG5C9woHrb6qJXqUc9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgNJonnX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XFg7+IB9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1831F00893;
-	Sun,  7 Jun 2026 10:50:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgNJonnX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15C5D1F00893;
+	Sun,  7 Jun 2026 10:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829433;
-	bh=8KG2Bq7/hPs3JcjTdGaOmJjr6jfFHP/38LBbNMjPtHk=;
+	s=korg; t=1780829436;
+	bh=mCnviL8peLuKyhpveY6JJ+paxtPyJ4kSek//JBYjlnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XFg7+IB9e3cTxEzCCA0JUR73LlLdUcKL95bkycYa1TJEJfXWw3ARfeD4zYcqeXNGx
-	 A4nqTTVnxuEOvmsaqk6A9sEHSNr8GjefYLmh+27A276O5GjfMru6XVuOOxFGoQXxyI
-	 f9XiX7Am7xC+I+BtEn9hsWM50ZvEMy6Q8GChg8eY=
+	b=ZgNJonnXBjT0l4d+/Xd1aVgSRHoM8a6YxAXW6TNiPm4Bk4sXZ9NtQiLK75NswB3+i
+	 Ei4G2iuNulSx2y/dUKkfyPkqB+4IOajOPb/DNli22kK5Gcy9EZvpKVR+XVd9bGHmfb
+	 wqB57MIyeGgi92fS6wqbJ+m9INcWa2nC312mb4uM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Michael Bommarito <michael.bommarito@gmail.com>
-Subject: [PATCH 6.18 247/315] usb: gadget: f_fs: serialize DMABUF cancel against request completion
-Date: Sun,  7 Jun 2026 12:00:34 +0200
-Message-ID: <20260607095736.632296391@linuxfoundation.org>
+	Wanquan Zhong <wanquan.zhong@fibocom.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 224/307] USB: serial: option: add missing RSVD(5) flag for Rolling RW135R-GL
+Date: Sun,  7 Jun 2026 12:00:21 +0200
+Message-ID: <20260607095735.933949255@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,166 +46,136 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Wanquan Zhong <wanquan.zhong@fibocom.com>
 
-commit 2796646f6d892c1eb6818c7ca41fdfa12568e8d1 upstream.
+commit 689f2facc689c8add11d7ff69fbbad17d65ee596 upstream.
 
-ffs_epfile_dmabuf_io_complete() calls usb_ep_free_request() on the
-completed request but leaves priv->req, the back-pointer that
-ffs_dmabuf_transfer() set on submission, pointing at the freed
-memory.  A later FUNCTIONFS_DMABUF_DETACH ioctl or
-ffs_epfile_release() on the close path still sees priv->req
-non-NULL under ffs->eps_lock:
+The RW135R-GL entry added in commit 01e8d0f74222 ("USB: serial: option:
+add support for Rolling Wireless RW135R-GL") was missing the
+.driver_info = RSVD(5) flag used by other Rolling Wireless MBIM laptop
+modules (e.g. RW135-GL and RW350-GL).
 
-    if (priv->ep && priv->req)
-            usb_ep_dequeue(priv->ep, priv->req);
+Without this flag, the option driver incorrectly binds to the reserved
+ADB interface (If#5) in multi-interface USB modes, causing AT/MBIM
+communication failures after mode switching. This matches the handling
+of other Rolling Wireless MBIM devices.
 
-so usb_ep_dequeue() is called on a freed usb_request.
+- VID:PID 33f8:1003, RW135R-GL for laptop debug M.2 cards (with MBIM
+  interface for Linux/Chrome OS)
 
-On dummy_hcd the dequeue path only walks a live queue and
-pointer-compares, so the freed pointer reads without faulting and
-KASAN requires an explicit check at the FunctionFS call site to
-surface the use-after-free.  On SG-capable in-tree UDCs the
-dequeue path dereferences the supplied request immediately:
+  0x1003: mbim, diag, AT, pipe
 
-  * chipidea's ep_dequeue() does
-    container_of(req, struct ci_hw_req, req) and reads
-    hwreq->req.status before acquiring its own lock.
-  * cdnsp's cdnsp_gadget_ep_dequeue() reads request->status first.
+  Here are the outputs of usb-devices:
 
-The narrower option of clearing priv->req via cmpxchg() in the
-completion does not close the race: the completion runs without
-eps_lock, so a cancel path holding eps_lock can still observe
-priv->req non-NULL, race a concurrent completion that clears and
-frees, and pass the freed pointer to usb_ep_dequeue().  A slightly
-longer fix that moves the free into the cleanup work is needed.
+T:  Bus=03 Lev=01 Prnt=01 Port=04 Cnt=02 Dev#=  8 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=33f8 ProdID=1003 Rev= 5.15
+S:  Manufacturer=Rolling Wireless S.a.r.l.
+S:  Product=Rolling RW135R-GL Module
+S:  SerialNumber=12345678
+C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Same class of lifetime race as the recent usbip-vudc timer fix [1].
+- VID:PID 33f8:1003, RW135R-GL for laptop debug M.2 cards (with MBIM
+  interface for Linux/Chrome OS)
 
-Take eps_lock in the sole place that mutates priv->req from the
-callback direction by moving usb_ep_free_request() out of the
-completion into ffs_dmabuf_cleanup(), the existing work handler
-scheduled by ffs_dmabuf_signal_done() on
-ffs->io_completion_wq.  Clear priv->req there under eps_lock
-before freeing, and only clear if priv->req still names our
-request (a subsequent ffs_dmabuf_transfer() on the same
-attachment may have queued a new one).
+  0x1003: mbim, diag, AT, ADB, pipe
 
-This keeps the existing dummy_hcd sync-dequeue invariant: the
-completion callback is still invoked by the UDC without
-eps_lock held (dummy_hcd drops its own lock before calling the
-callback), and the callback now takes no f_fs lock at all.
-Serialization against the cancel path happens in cleanup, which
-runs from the workqueue with no f_fs lock held on entry.
+  Here are the outputs of usb-devices:
 
-The priv ref count protects the containing ffs_dmabuf_priv:
-ffs_dmabuf_transfer() takes a ref via ffs_dmabuf_get(), cleanup
-drops it via ffs_dmabuf_put(), so priv stays live for the
-cleanup even after the cancel path's list_del + ffs_dmabuf_put.
+T:  Bus=03 Lev=01 Prnt=01 Port=04 Cnt=02 Dev#=  7 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=33f8 ProdID=1003 Rev= 5.15
+S:  Manufacturer=Rolling Wireless S.a.r.l.
+S:  Product=Rolling RW135R-GL Module
+S:  SerialNumber=12345678
+C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-The ffs_dmabuf_transfer() error path no longer frees usb_req
-inline: fence->req and fence->ep are set before usb_ep_queue(),
-so ffs_dmabuf_cleanup() (scheduled by the error-path
-ffs_dmabuf_signal_done()) owns the free regardless of whether
-the queue succeeded.
+- VID:PID 33f8:1003, RW135R-GL for laptop debug M.2 cards (with MBIM
+  interface for Linux/Chrome OS)
 
-Reproduced under KASAN on both detach and close paths against
-dummy_hcd with an observability hook
-(kasan_check_byte(priv->req) immediately before usb_ep_dequeue)
-at the two FunctionFS cancel sites to surface the stale-pointer
-access; the hook is not part of this patch.  The KASAN
-allocator / free stacks in the captured splats identify the
-same request: alloc in dummy_alloc_request, free in
-dummy_timer, fault reached from ffs_epfile_release (close) and
-from the FUNCTIONFS_DMABUF_DETACH ioctl (detach).  With the
-patch applied, both paths are silent under the same hook.
+  0x1003: mbim, pipe
 
-The bug is reached from the FunctionFS device node, which in
-real deployments is owned by the privileged gadget daemon
-(adbd, UMS, composite gadget services, etc.); it is not
-reachable from unprivileged userspace or from a USB host on the
-cable.  FunctionFS mounts default to GLOBAL_ROOT_UID, but the
-filesystem supports uid=, gid=, and fmode= delegation to a
-non-root gadget daemon, so on real deployments the attacker may
-be a less-privileged service rather than root.
+  Here are the outputs of usb-devices:
 
-Fixes: 7b07a2a7ca02 ("usb: gadget: functionfs: Add DMABUF import interface")
-Link: https://lore.kernel.org/all/20260417163552.807548-1-michael.bommarito@gmail.com/ [1]
-Cc: stable <stable@kernel.org>
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260419161227.1587668-1-michael.bommarito@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+T:  Bus=03 Lev=01 Prnt=01 Port=04 Cnt=02 Dev#=  9 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=33f8 ProdID=1003 Rev= 5.15
+S:  Manufacturer=Rolling Wireless S.a.r.l.
+S:  Product=Rolling RW135R-GL Module
+S:  SerialNumber=12345678
+C:* #Ifs= 3 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Fixes: 01e8d0f74222 ("USB: serial: option: add support for Rolling Wireless RW135R-GL")
+Signed-off-by: Wanquan Zhong <wanquan.zhong@fibocom.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |   24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ drivers/usb/serial/option.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -151,6 +151,8 @@ struct ffs_dma_fence {
- 	struct dma_fence base;
- 	struct ffs_dmabuf_priv *priv;
- 	struct work_struct work;
-+	struct usb_ep *ep;
-+	struct usb_request *req;
- };
- 
- struct ffs_epfile {
-@@ -1365,6 +1367,21 @@ static void ffs_dmabuf_cleanup(struct wo
- 	struct ffs_dmabuf_priv *priv = dma_fence->priv;
- 	struct dma_buf_attachment *attach = priv->attach;
- 	struct dma_fence *fence = &dma_fence->base;
-+	struct usb_request *req = dma_fence->req;
-+	struct usb_ep *ep = dma_fence->ep;
-+
-+	/*
-+	 * eps_lock pairs with the cancel paths so they cannot pass a freed
-+	 * req to usb_ep_dequeue().  Only clear if priv->req still names ours;
-+	 * a re-queue on the same attachment may have taken that slot.
-+	 */
-+	spin_lock_irq(&priv->ffs->eps_lock);
-+	if (priv->req == req)
-+		priv->req = NULL;
-+	spin_unlock_irq(&priv->ffs->eps_lock);
-+
-+	if (ep && req)
-+		usb_ep_free_request(ep, req);
- 
- 	ffs_dmabuf_put(attach);
- 	dma_fence_put(fence);
-@@ -1394,8 +1411,8 @@ static void ffs_epfile_dmabuf_io_complet
- 					  struct usb_request *req)
- {
- 	pr_vdebug("FFS: DMABUF transfer complete, status=%d\n", req->status);
-+	/* req is freed by ffs_dmabuf_cleanup() under eps_lock. */
- 	ffs_dmabuf_signal_done(req->context, req->status);
--	usb_ep_free_request(ep, req);
- }
- 
- static const char *ffs_dmabuf_get_driver_name(struct dma_fence *fence)
-@@ -1679,6 +1696,10 @@ static int ffs_dmabuf_transfer(struct fi
- 	usb_req->context  = fence;
- 	usb_req->complete = ffs_epfile_dmabuf_io_complete;
- 
-+	/* ffs_dmabuf_cleanup() frees usb_req via these two fields. */
-+	fence->req = usb_req;
-+	fence->ep = ep->ep;
-+
- 	cookie = dma_fence_begin_signalling();
- 	ret = usb_ep_queue(ep->ep, usb_req, GFP_ATOMIC);
- 	dma_fence_end_signalling(cookie);
-@@ -1688,7 +1709,6 @@ static int ffs_dmabuf_transfer(struct fi
- 	} else {
- 		pr_warn("FFS: Failed to queue DMABUF: %d\n", ret);
- 		ffs_dmabuf_signal_done(fence, ret);
--		usb_ep_free_request(ep->ep, usb_req);
- 	}
- 
- 	spin_unlock_irq(&epfile->ffs->eps_lock);
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2476,7 +2476,8 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x0302, 0xff) },			/* Rolling RW101R-GL (laptop MBIM) */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x0802, 0xff),			/* Rolling RW350-GL (laptop MBIM) */
+ 	  .driver_info = RSVD(5) },
+-	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x1003, 0xff) },			/* Rolling RW135R-GL (laptop MBIM) */
++	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x1003, 0xff),			/* Rolling RW135R-GL (laptop MBIM) */
++	  .driver_info = RSVD(5) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for Global */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0x00, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x40) },
 
 
