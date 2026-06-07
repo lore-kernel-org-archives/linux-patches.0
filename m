@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F900202C46;
-	Sun,  7 Jun 2026 10:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B5C2D8378;
+	Sun,  7 Jun 2026 10:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827910; cv=none; b=dVEsVJA/jY2DyIlrAjKiB0axAe3ykHvzyyVEmj+sDUJ50s7A8uobrJd9HqjOGvF19KzNj0O6rlZ0cwIP3nWlTVBptWuYyeO2qduxgk9PQ2w1/kXo2apl50Qw30LLkSVFKm9/UCmc6J9IZcaCghI7i9vHdoozUoIXBcXTVOPghn8=
+	t=1780827914; cv=none; b=otrDNlGnUhYjQYR7pLT3/eVHFQRYceKq9994Ha1LOpljrkb/CU7Xqrq4mcYqJ/IBHvKlCqC7HJgN497Xy/5G8VAlHwAsngRb3WTdI9/mzuL4ARirDCkkso2c2mTVlitDMnZbsjV8sgzOVAOA3Hx0TFcGXAL7cZR/8DuoC7u0Lx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827910; c=relaxed/simple;
-	bh=LeHhIHcwZnqje1NpehLAN8w5D5rrQ+E37LFDgjUJtaQ=;
+	s=arc-20240116; t=1780827914; c=relaxed/simple;
+	bh=HKUObmvtZGdmTn2388qJL08WcD4edHdqIaxgVBd6CNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n3Wym5HUYMRKVh3fC0hVUTJ+AMxOPEFTNwvd0HZ9bXLNCf6ca+bZBJ1LcCveiv2DykpySNAdGx1ZvX9ht0/W2ZPM71bokJD1KVrfPldT7yCO5wizbECoUeeNhj26wG5M3HZUQee9j41rRV8DOVPwZfQaG5rBFI9Khg/9X6JGeNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1NKUH3pa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sAF5BUypYgSmh6A1Z9ROtZwHHN+zZfjnDnfbqnUJT3TAOhlk/Rxn/i7W281Na9l1dqTEJfRhcbH7ML/Fyuw4hPPkAePqi55a1vWmcrGsDzERA/UAwiSVbUGqoBOboJxThqx7NLeh4RO8jCOsNoQWCuK9LjwajbWTROD8Uxz3cLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S42SCVIz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1NKUH3pa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97591F00893;
-	Sun,  7 Jun 2026 10:25:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S42SCVIz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 376FC1F00893;
+	Sun,  7 Jun 2026 10:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827909;
-	bh=ljSiUK1/fKXUnSSXpj1e85oOc9nHwjlrbZiexA0hr1A=;
+	s=korg; t=1780827912;
+	bh=NwwPnmqXeU1h0ximJoNIwSBr3HmtpzbOjwLs6fx5sNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1NKUH3paGCBoraoUy6Cwd7ADm366Uuk15x5/us5+PG675AAPPO8U9eNnR1Q0L7TDo
-	 j8DkRKwAC+Pd7GOGHTMXimo9Rm9JtyKGjngKX2jE/FcHaYo0clSacJwlId6R6jPrcm
-	 OvxT8EwBoTBswcmr0UMz0YmYR6WvDZksccaVC0o8=
+	b=S42SCVIzVXMAXgco6v0DrBmpz+hHoTo16CW4flUc6mvUWdNCid3/bdLC0PT6i4+ki
+	 j4c4LvpGY+o4MxhabLvxvGAKS1/RxOeCZChDs3t6/rGB3KA7/7Djy2l2bU4rbOl1Pk
+	 Jb7GhNOyAP/liEKkW01dIy524cDTZJ2CeIIOE5JM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.0 129/332] USB: serial: safe_serial: fix memory corruption with small endpoint
-Date: Sun,  7 Jun 2026 11:58:18 +0200
-Message-ID: <20260607095732.843110755@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.18 112/315] usb: typec: wcove: dont write past struct pd_message in wcove_read_rx_buffer()
+Date: Sun,  7 Jun 2026 11:58:19 +0200
+Message-ID: <20260607095731.754738560@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,53 +46,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 438061ed1ad85e6743e2dce826671772d81089ec upstream.
+commit 4af7ad0e6d7aa4403dbb1dac7b9659b0421efcaa upstream.
 
-Make sure that the bulk-out buffer size is at least eight bytes to avoid
-user-controlled slab corruption in "safe" mode should a malicious device
-report a smaller size.
+wcove_read_rx_buffer() copies the PD RX FIFO into the caller's
+struct pd_message with
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+	for (i = 0; i < USBC_RXINFO_RXBYTES(info); i++)
+		regmap_read(wcove->regmap, USBC_RX_DATA + i, msg + i);
+
+which has two problems:
+
+USBC_RXINFO_RXBYTES() is a 5-bit field (max 31) while struct pd_message
+is 30 bytes (__le16 header + __le32 payload[PD_MAX_PAYLOAD], packed).
+The byte count latched in RXINFO is the number of bytes the port partner
+put on the wire, so a malicious partner that transmits a 31-byte frame
+can drive the loop one byte past the destination if the WCOVE BMC
+receiver does not enforce the PD object-count limit in hardware. The
+existing FIXME flagged this as unverified.
+
+Independently, regmap_read() takes an unsigned int * and stores a full
+unsigned int at the destination. Passing the byte pointer msg + i means
+each iteration writes four bytes; the high three are zero (val_bits is
+8) and are normally overwritten by the next iteration, but the final
+iteration's high bytes are not. With RXBYTES == 30 the i == 29 iteration
+already writes three zero bytes past msg, which sits on the IRQ thread's
+stack in wcove_typec_irq().
+
+Clamp the loop to sizeof(struct pd_message) and read each register into
+a local before storing only its low byte, so the copy can never exceed
+the destination regardless of what RXINFO reports.
+
+Assisted-by: gkh_clanker_t1000
+Cc: stable <stable@kernel.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/2026051347-clustered-deflected-9543@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/safe_serial.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/usb/typec/tcpm/wcove.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/serial/safe_serial.c
-+++ b/drivers/usb/serial/safe_serial.c
-@@ -259,6 +259,7 @@ static int safe_prepare_write_buffer(str
- static int safe_startup(struct usb_serial *serial)
- {
- 	struct usb_interface_descriptor	*desc;
-+	int bulk_out_size;
- 
- 	if (serial->dev->descriptor.bDeviceClass != CDC_DEVICE_CLASS)
- 		return -ENODEV;
-@@ -279,6 +280,16 @@ static int safe_startup(struct usb_seria
- 	default:
- 		return -EINVAL;
- 	}
-+
-+	/*
-+	 * The bulk-out buffer needs to be large enough for the two-byte
-+	 * trailer in safe mode, but assume anything smaller than eight bytes
-+	 * is broken.
-+	 */
-+	bulk_out_size = serial->port[0]->bulk_out_size;
-+	if (bulk_out_size > 0 && bulk_out_size < 8)
-+		return -EINVAL;
-+
- 	return 0;
+--- a/drivers/usb/typec/tcpm/wcove.c
++++ b/drivers/usb/typec/tcpm/wcove.c
+@@ -444,9 +444,11 @@ static int wcove_start_toggling(struct t
+ 	return regmap_write(wcove->regmap, USBC_CONTROL1, usbc_ctrl);
  }
  
+-static int wcove_read_rx_buffer(struct wcove_typec *wcove, void *msg)
++static int wcove_read_rx_buffer(struct wcove_typec *wcove,
++				struct pd_message *msg)
+ {
+-	unsigned int info;
++	unsigned int info, val, len;
++	u8 *buf = (u8 *)msg;
+ 	int ret;
+ 	int i;
+ 
+@@ -454,12 +456,13 @@ static int wcove_read_rx_buffer(struct w
+ 	if (ret)
+ 		return ret;
+ 
+-	/* FIXME: Check that USBC_RXINFO_RXBYTES(info) matches the header */
++	len = min(USBC_RXINFO_RXBYTES(info), sizeof(*msg));
+ 
+-	for (i = 0; i < USBC_RXINFO_RXBYTES(info); i++) {
+-		ret = regmap_read(wcove->regmap, USBC_RX_DATA + i, msg + i);
++	for (i = 0; i < len; i++) {
++		ret = regmap_read(wcove->regmap, USBC_RX_DATA + i, &val);
+ 		if (ret)
+ 			return ret;
++		buf[i] = val;
+ 	}
+ 
+ 	return regmap_write(wcove->regmap, USBC_RXSTATUS,
 
 
