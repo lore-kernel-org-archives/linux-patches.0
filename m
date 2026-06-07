@@ -1,48 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB791FE47B;
-	Sun,  7 Jun 2026 10:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4021FE47B;
+	Sun,  7 Jun 2026 10:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828387; cv=none; b=Zi6ydEObUh+TFMcBY4jdacWcHNFTQr17au9LP8CrumaJyExzq62051hlvJXn3xyCcKNVuVcTcVqg5N2/eU3y2ThZT/2nHHXyNoTzosBKhH7hjrPeLpiAAs7Dtl+weC3pEn+TK5snG3lJDfY+i2POIROga2k/Jnaf5BUUt5BQ++s=
+	t=1780828391; cv=none; b=O8TPqp5gzjaW3GVYYzVJnWFLz0b1GtM9mbOLmi9BlhyoP1IEn1hndF5AsUiRO1ptoqcm5zE1dGmxio/6VutdPBAYANx8FyEwEo0cHcDjeSBuymypKzFvFfVBLhkuzaCBy76V9ZkP2qqctJ4+e29SFE9CbRxhtSfodFkKTwkfjYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828387; c=relaxed/simple;
-	bh=CPfO1YXpoarM/0o2YTRpEXLxpE6bu6+jkGOrlyrcRr0=;
+	s=arc-20240116; t=1780828391; c=relaxed/simple;
+	bh=lmeLzQgkFiaQhyUiPS/Ljd6/jFNQviXabzyd/3djmCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WNpetE2b0cpuxg/H2nxFpPNGFRKr3aiXcQOn+A7lwV8+NX5xY9jb7gkxKMjgYzeqTc/UrAP9WizTc8OP5u1R3qB064xd6N7n6HWdi/wWjMZbCSW337qtP1Ggj6B8ySq/VBZkSnqxqXRnJZGDq9Q4SwaM7TsST5bTtVYHHWPQ6+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qep0im1G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sK4mRHpOqoit0ecENDP1oHJgY3gyrdo3e6RjksZieJi9R2Bl6gG9Y3wGrIAOI3z8AQlS05uCRguodOhb2zjanTd5tc1yzI4e6TyCCQqiclLYi1uvNMZi/pvKysSXayhmG2OWYXokSmsmHLbfEhRnQbHJ8KIa3y1tsTCxiDYRQbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MT2QcDMo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qep0im1G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E51191F00893;
-	Sun,  7 Jun 2026 10:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MT2QcDMo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD6771F00893;
+	Sun,  7 Jun 2026 10:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828386;
-	bh=zg+nI6ySUPHw4ov00TZob81T+Ej+zav0Ec5Gmoh5USU=;
+	s=korg; t=1780828390;
+	bh=tsdIKZuZ9grmxN3oKCMpQEGmQQB3yOKlSzl0AQ98y+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qep0im1GMLuE9DMtpe113VLZaD3WSLS/L9R93BDTTKxFl01fVOdNpKzqa8+Kvi4qZ
-	 +oa6fU6T9yPFkoH//tXR/jbhL0+XhwTkM6biEqVKGk0UT7cOQFCwa8mPqPIpFRvMuX
-	 G7pjSQtb99JNQYgRyUkZYB65cQdq0xeYP2IydXmA=
+	b=MT2QcDMoEs7oylBLZluxIT4mT0L0XbXNRxz1VrzR4m7zwlAf1tGOR5p0ErTr7j2Z9
+	 IllNNqD/RyQBeZZaiLF5gD06cAWBY3zt0cri5paDG/pZ36H0PkxYOzeEBp/EFSM06Y
+	 EXH16Vh3XShElP89fdzPs6bW+WClDWdy8t9B+mmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Benson Leung <bleung@chromium.org>,
-	Jameson Thies <jthies@google.com>,
-	Nathan Rebello <nathan.c.rebello@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	Pooja Katiyar <pooja.katiyar@intel.com>,
-	Hsin-Te Yuan <yuanhsinte@chromium.org>,
-	Abel Vesa <abelvesa@kernel.org>,
-	stable <stable@kernel.org>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>
-Subject: [PATCH 6.12 134/307] usb: typec: ucsi: validate connector number in ucsi_connector_change()
-Date: Sun,  7 Jun 2026 11:58:51 +0200
-Message-ID: <20260607095732.670025908@linuxfoundation.org>
+	Kim Seer Paller <kimseer.paller@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 6.18 155/315] iio: dac: ad3530r: Fix AD3531/AD3531R powerdown mode strings
+Date: Sun,  7 Jun 2026 11:59:02 +0200
+Message-ID: <20260607095733.293258399@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,69 +47,125 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Kim Seer Paller <kimseer.paller@analog.com>
 
-commit 288a81a8507052bcfbf884d39a463c44c42c5fd9 upstream.
+commit ebd250c2581ec46c64c73fdfa918c9a7f757505e upstream.
 
-The connector number in a UCSI CCI notification is a 7-bit field
-supplied by the PPM.  ucsi_connector_change() uses it to index the
-ucsi->connector[] array without checking it against the number of
-connectors the PPM reported at init time, so a buggy or malicious PPM
-(EC firmware, or an I2C-attached UCSI controller on the ccg / stm32g0 /
-glink transports) can drive schedule_work() on memory past the end of
-the array.
+The AD3531/AD3531R has different output operating modes from the
+AD3530/AD3530R. According to the AD3531/AD3531R datasheet, the
+powerdown modes are:
+  01: 500 Ohm output impedance
+  10: 3.85 kOhm output impedance
+  11: 16 kOhm output impedance
 
-Reject connector numbers that are zero or exceed cap.num_connectors
-before dereferencing the array.
+The driver currently uses the AD3530R modes (1k, 7.7k, 32k) for all
+variants, which is incorrect for AD3531/AD3531R.
 
-Assisted-by: gkh_clanker_t1000
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: Benson Leung <bleung@chromium.org>
-Cc: Jameson Thies <jthies@google.com>
-Cc: Nathan Rebello <nathan.c.rebello@gmail.com>
-Cc: Johan Hovold <johan@kernel.org>
-Cc: Pooja Katiyar <pooja.katiyar@intel.com>
-Cc: Hsin-Te Yuan <yuanhsinte@chromium.org>
-Cc: Abel Vesa <abelvesa@kernel.org>
-Cc: stable <stable@kernel.org>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Link: https://patch.msgid.link/2026051351-truck-steadfast-df48@gregkh
+Add AD3531R-specific powerdown mode strings and assign them to the
+AD3531/AD3531R chip variants.
+
+Fixes: 93583174a3df ("iio: dac: ad3530r: Add driver for AD3530R and AD3531R")
+Signed-off-by: Kim Seer Paller <kimseer.paller@analog.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/iio/dac/ad3530r.c |   54 ++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 40 insertions(+), 14 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1290,13 +1290,22 @@ out_unlock:
-  */
- void ucsi_connector_change(struct ucsi *ucsi, u8 num)
+--- a/drivers/iio/dac/ad3530r.c
++++ b/drivers/iio/dac/ad3530r.c
+@@ -108,6 +108,12 @@ static const char * const ad3530r_powerd
+ 	"32kohm_to_gnd",
+ };
+ 
++static const char * const ad3531r_powerdown_modes[] = {
++	"500ohm_to_gnd",
++	"3.85kohm_to_gnd",
++	"16kohm_to_gnd",
++};
++
+ static int ad3530r_get_powerdown_mode(struct iio_dev *indio_dev,
+ 				      const struct iio_chan_spec *chan)
  {
--	struct ucsi_connector *con = &ucsi->connector[num - 1];
-+	struct ucsi_connector *con;
+@@ -136,6 +142,13 @@ static const struct iio_enum ad3530r_pow
+ 	.set = ad3530r_set_powerdown_mode,
+ };
  
- 	if (!(ucsi->ntfy & UCSI_ENABLE_NTFY_CONNECTOR_CHANGE)) {
- 		dev_dbg(ucsi->dev, "Early connector change event\n");
- 		return;
- 	}
++static const struct iio_enum ad3531r_powerdown_mode_enum = {
++	.items = ad3531r_powerdown_modes,
++	.num_items = ARRAY_SIZE(ad3531r_powerdown_modes),
++	.get = ad3530r_get_powerdown_mode,
++	.set = ad3530r_set_powerdown_mode,
++};
++
+ static ssize_t ad3530r_get_dac_powerdown(struct iio_dev *indio_dev,
+ 					 uintptr_t private,
+ 					 const struct iio_chan_spec *chan,
+@@ -279,7 +292,20 @@ static const struct iio_chan_spec_ext_in
+ 	{ }
+ };
  
-+	if (!num || num > ucsi->cap.num_connectors) {
-+		dev_warn_ratelimited(ucsi->dev,
-+				     "Bogus connector change on %u (max %u)\n",
-+				     num, ucsi->cap.num_connectors);
-+		return;
-+	}
+-#define AD3530R_CHAN(_chan)					\
++static const struct iio_chan_spec_ext_info ad3531r_ext_info[] = {
++	{
++		.name = "powerdown",
++		.shared = IIO_SEPARATE,
++		.read = ad3530r_get_dac_powerdown,
++		.write = ad3530r_set_dac_powerdown,
++	},
++	IIO_ENUM("powerdown_mode", IIO_SEPARATE, &ad3531r_powerdown_mode_enum),
++	IIO_ENUM_AVAILABLE("powerdown_mode", IIO_SHARED_BY_TYPE,
++			   &ad3531r_powerdown_mode_enum),
++	{ }
++};
 +
-+	con = &ucsi->connector[num - 1];
-+
- 	if (!test_and_set_bit(EVENT_PENDING, &ucsi->flags))
- 		schedule_work(&con->work);
++#define AD3530R_CHAN(_chan, _ext_info)				\
+ {								\
+ 	.type = IIO_VOLTAGE,					\
+ 	.indexed = 1,						\
+@@ -287,25 +313,25 @@ static const struct iio_chan_spec_ext_in
+ 	.output = 1,						\
+ 	.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |		\
+ 			      BIT(IIO_CHAN_INFO_SCALE),		\
+-	.ext_info = ad3530r_ext_info,				\
++	.ext_info = _ext_info,					\
  }
+ 
+ static const struct iio_chan_spec ad3530r_channels[] = {
+-	AD3530R_CHAN(0),
+-	AD3530R_CHAN(1),
+-	AD3530R_CHAN(2),
+-	AD3530R_CHAN(3),
+-	AD3530R_CHAN(4),
+-	AD3530R_CHAN(5),
+-	AD3530R_CHAN(6),
+-	AD3530R_CHAN(7),
++	AD3530R_CHAN(0, ad3530r_ext_info),
++	AD3530R_CHAN(1, ad3530r_ext_info),
++	AD3530R_CHAN(2, ad3530r_ext_info),
++	AD3530R_CHAN(3, ad3530r_ext_info),
++	AD3530R_CHAN(4, ad3530r_ext_info),
++	AD3530R_CHAN(5, ad3530r_ext_info),
++	AD3530R_CHAN(6, ad3530r_ext_info),
++	AD3530R_CHAN(7, ad3530r_ext_info),
+ };
+ 
+ static const struct iio_chan_spec ad3531r_channels[] = {
+-	AD3530R_CHAN(0),
+-	AD3530R_CHAN(1),
+-	AD3530R_CHAN(2),
+-	AD3530R_CHAN(3),
++	AD3530R_CHAN(0, ad3531r_ext_info),
++	AD3530R_CHAN(1, ad3531r_ext_info),
++	AD3530R_CHAN(2, ad3531r_ext_info),
++	AD3530R_CHAN(3, ad3531r_ext_info),
+ };
+ 
+ static const struct ad3530r_chip_info ad3530_chip = {
 
 
