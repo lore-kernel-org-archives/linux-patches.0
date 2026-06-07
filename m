@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C478A3290D8;
-	Sun,  7 Jun 2026 10:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0F11A6822;
+	Sun,  7 Jun 2026 10:46:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829193; cv=none; b=YwgO6zW/i3qhGHbSmwm6kVFD2J/h7eumSZ0gZngOGtKA7bqf8RmisVJIAtS7Ga1y6m50VRtip26iYRPvU8mtXiDYWeCEazGOCqpyTyydaheoIpQruA70FllwEY3wX3JeOSXTAZncbeIq9EmZ2huT14UBDQ+gzqoyxeUZHyCZous=
+	t=1780829196; cv=none; b=D/EJFetag1v9ElLYLlv1n+Vn79LH0yvQXQ9RbehH/f/tX9rlX32p2Y3S+aUzNrjAKRTb/kE4emoaxJ4Q28uztph+kk+3PaaJ00v1+ulLmauwx2O3qTBEUdFvyhqO1SjepedO+cA9jzerGW4AfKP2Ojp5nEL0l5QU1wiW2RKAwwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829193; c=relaxed/simple;
-	bh=kUgGcjDk8Ij8Qnx2mEixeJv7/OiBE0n6E/91n9+NP8k=;
+	s=arc-20240116; t=1780829196; c=relaxed/simple;
+	bh=p7QtBQw+jcfEuHv42TfDPWGkUN2nfv5yquLbWcU/vO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PcgIi6pfkB1LxhP9T1C/5aQbWAM8959yHtum6SAf8XJht5/nWX4Rk9Ahx8eGUoq7t33tqiquVONCxBj4h6ln9FtSEs93njVIm+Cs1DqV6Oe0KduJGg47dskaSeK4DkDBV0d366FdE8i2qCxV3i9vCakIcOXXagbRgNSUTc7LnXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vkip+qci; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oHxsJN+nsnjN1xXzj1ZWpSU076l4ljf+j3all387mR5KJvQ/d6Kv1CfZyRyGwz19iGG25ZDk4Xb92m6/AZ0rg3kIKZenDcjeM2wqiHmfBl4ykCKkSVlhUzE8cfLU7nFtrfPf9kobEq2sumxYeBpZ+HyD4aqnlbG4vvv1sN3agfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khUJOfcP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vkip+qci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E711F00893;
-	Sun,  7 Jun 2026 10:46:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khUJOfcP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E4E1F00893;
+	Sun,  7 Jun 2026 10:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829191;
-	bh=LKgwGPH804JMOFQPUIRhyvmmP7bzxw7NZ7SFocLSXHU=;
+	s=korg; t=1780829194;
+	bh=vg2g7L/luRvTUB1ScPEvUICmtsGkYxMkAlS3OJM63ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vkip+qciOKL0bHq3pT11xSgBpMySAI85669d2cIdQI9w3u5UMS1KphM+mCvsXdH5s
-	 E4KNWO2fDmc3IIFmhjYvwBzBE2XtF1OD+P4tZhW6lC6+R5WDuZhUXRTxyfQ9qjm/Te
-	 zkBTbaAv+IpvvMxr/PrKj4LSep5L67z0LqdyzOCw=
+	b=khUJOfcPdU82hrM1X+WuAjqQR/xkVJC1FpWMCiTbxYRxPOvQO8V+Y+SRI1t1EsPc6
+	 eNpfjlxoFrcjcXHQL7Jq4C+H1OMcweyd8X9wb0WWs0RzqxNfTJ5q1T2Lvgk8yQ8w8N
+	 dveah/vu9RMJqU9kmNwicIXJl+nElqfj50skE2Bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Xiaolei Wang <xiaolei.wang@windriver.com>
-Subject: [PATCH 7.0 240/332] misc: rp1: Send IACK on IRQ activate to fix kdump/kexec
-Date: Sun,  7 Jun 2026 12:00:09 +0200
-Message-ID: <20260607095736.866437043@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>
+Subject: [PATCH 6.18 224/315] usb: musb: omap2430: Fix use-after-free in omap2430_probe()
+Date: Sun,  7 Jun 2026 12:00:11 +0200
+Message-ID: <20260607095735.802348730@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,60 +44,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiaolei Wang <xiaolei.wang@windriver.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 36770417153644bc88281c7284730ef1d14d8d3c upstream.
+commit e194ce048f5a6c549b3a23a8c568c6470f40f772 upstream.
 
-After a kexec/kdump reboot, the macb Ethernet controller fails to
-receive any packets, causing DHCP to hang indefinitely and the network
-interface to be unusable despite link being up.
+In omap2430_probe(), of_node_put(np) is called prematurely before the
+last access to np, leading to a use-after-free if the node's reference
+count drops to zero. Move the of_node_put() calls after the last use of
+np in both the success and error paths.
 
-The root cause is that RP1's level-triggered MSI-X interrupt sources
-(such as macb on hwirq 6) may have their internal state machines stuck
-in the "waiting for IACK" state. This happens because the previous
-kernel crashed before sending the acknowledgment for a pending level
-interrupt.
-
-In this stuck state, RP1 will not generate new MSI-X writes even though
-the interrupt source remains asserted. Since no new MSI-X is sent, the
-GIC never sees a new edge, the chained IRQ handler is never invoked,
-and the interrupt is permanently lost.
-
-Fix this by sending MSIX_CFG_IACK in rp1_irq_activate(). This
-unconditionally resets the MSI-X state machine back to idle when a
-child device requests its interrupt. If the interrupt source is still
-asserted, RP1 will immediately issue a new MSI-X with the freshly
-configured msg_addr/msg_data, and normal interrupt delivery resumes.
-
-Writing IACK when the state machine is already idle (i.e., on a normal
-cold boot) is harmless — it has no effect.
-
-Fixes: 49d63971f963 ("misc: rp1: RaspberryPi RP1 misc driver")
+Fixes: ffbe2feac59b ("usb: musb: omap2430: Fix probe regression for missing resources")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
-Link: https://patch.msgid.link/20260518073405.2115003-1-xiaolei.wang@windriver.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260409101104.480623-1-vulab@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/rp1/rp1_pci.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/musb/omap2430.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/misc/rp1/rp1_pci.c
-+++ b/drivers/misc/rp1/rp1_pci.c
-@@ -143,6 +143,7 @@ static int rp1_irq_activate(struct irq_d
- 	struct rp1_dev *rp1 = d->host_data;
+--- a/drivers/usb/musb/omap2430.c
++++ b/drivers/usb/musb/omap2430.c
+@@ -338,7 +338,6 @@ static int omap2430_probe(struct platfor
+ 	} else {
+ 		device_set_of_node_from_dev(&musb->dev, &pdev->dev);
+ 	}
+-	of_node_put(np);
  
- 	msix_cfg_set(rp1, (unsigned int)irqd->hwirq, MSIX_CFG_ENABLE);
-+	msix_cfg_set(rp1, (unsigned int)irqd->hwirq, MSIX_CFG_IACK);
+ 	glue->dev			= &pdev->dev;
+ 	glue->musb			= musb;
+@@ -456,6 +455,7 @@ static int omap2430_probe(struct platfor
+ 		dev_err(&pdev->dev, "failed to register musb device\n");
+ 		goto err_disable_rpm;
+ 	}
++	of_node_put(np);
  
  	return 0;
- }
+ 
+@@ -465,6 +465,7 @@ err_put_control_otghs:
+ 	if (!IS_ERR(glue->control_otghs))
+ 		put_device(glue->control_otghs);
+ err_put_musb:
++	of_node_put(np);
+ 	platform_device_put(musb);
+ 
+ 	return ret;
 
 
