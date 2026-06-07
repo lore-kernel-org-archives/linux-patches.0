@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC9831E850;
-	Sun,  7 Jun 2026 10:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38A931F9AC;
+	Sun,  7 Jun 2026 10:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829091; cv=none; b=of2mYqreZ2sns8MErXVqk/oFxs5udA+vLMQKDW2xjMy3ZJ892bZn9RYdgE9SBStDLwauJ6eYCxJGuci5eGdklt1AojjOUAlQMBfXNf1L3XxvLzp9hl9t6LDBUpAOG161qT6u+hd2KmZdnXsHJdXCnMjmn1Xh4pfQaCwdnDSIWZI=
+	t=1780829095; cv=none; b=APnvs+HJfIqga9LW/sncbZNnXpAWVTBmPVKqw/pFEXu7z1bUHN9Zv3i+sSCaaJoGpcFdZNnF6Lxa/Tz+XgBUHUaERR6gJzyW+6GWbEMlq/xXjqGTxz33/t7QTkrJh2Gz4ypwmdQaZP/M4AY+WCNbtf8UH2MhplMo9allzcSHOeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829091; c=relaxed/simple;
-	bh=zV1kroj2RGY/UOMFSFz9L8qI3/FdTBlNeRtLXjFy6vU=;
+	s=arc-20240116; t=1780829095; c=relaxed/simple;
+	bh=zDkvQa9HCM32t+ih2wMrC9KwbRp64ZkD9vnZLEFUfS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lwqrEKl/ChJsLXdjUC23QbdHcSWLy5rtM+zSxM2civMaSr6j6goUD3Q8/R16kFeqcTXuQSAzP7Tcu/j1SKEXvWoHF0vUWMFpbAJ3EAhS/xpiL5d48oayi/m2sT4SuPvhhAoPPP8645eo+fxsQvGouEHdkcef3IkfErAkaYIyV28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcGD3mKj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sdOQvYpyK6glq1ozaOfpCmlfcVEvEjS5RyERlv41qLSVdBErO3oV2F5yO+5+RLgGhdkygMqKF81YW+M4V5DCF4PGTTB+pq/7xSMYWZ8cKz4z2DgMiK54tvRQqdYg3RdLtJcM16/NjGP6vvuxJjmPLxG3aN4pxUvm2Ef6WEAkae8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RA9hwms4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcGD3mKj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F361F00893;
-	Sun,  7 Jun 2026 10:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RA9hwms4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F891F00893;
+	Sun,  7 Jun 2026 10:44:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829090;
-	bh=ElUubLqaq07/jbx4fdYPrdbQA3kFmiAkpMYoRNV4coM=;
+	s=korg; t=1780829094;
+	bh=J2nRWYuiiZvVORAQryv1NpG4spneeS8Wsjq5kMgRMJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PcGD3mKjVzmY0+mOqRy2RRyz1qROHPMkwXRXjMbeEYtHGIFuph4WgdIfvi7U52Gcn
-	 0C7mfKRKDrHOjP1SkHHjW78vzPLEqzl7dWho8B4+2tWd5LRhSI6l6oR58FRqphQ2Fb
-	 fn+cLtwbLVR/k00ox6tv7O5hJ1quWmwpSjI8hREo=
+	b=RA9hwms4qVUQRX0m0avOc2zMqW6uaIICdmnYNmgQSwYGJVQQgDYRnl6OxMSp5q8rP
+	 eEjR1YowphbEl67Nf6ljqSaFFOb+4Pgp9YYnaU24vQDxTiKOWNxEaN2a/r+diRF36u
+	 7h1ic+wJ5wHXxjqITB54eyX7TedsIQDSL1wL/kco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping Cheng <ping.cheng@wacom.com>,
-	Lee Jones <lee@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.12 195/307] HID: wacom: Fix OOB write in wacom_hid_set_device_mode()
-Date: Sun,  7 Jun 2026 11:59:52 +0200
-Message-ID: <20260607095734.887739332@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 7.0 245/332] comedi: comedi_test: fix check for valid scan_begin_src in waveform_ai_cmdtest()
+Date: Sun,  7 Jun 2026 12:00:14 +0200
+Message-ID: <20260607095737.040320945@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,85 +46,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit c0a8899e02ddebd51e2589835182c239c2e224ae upstream.
+commit 542f5248cb481073203e0dadab5bcbd28aeae308 upstream.
 
-wacom_hid_set_device_mode() currently assumes that the HID_DG_INPUTMODE
-usage is always located in the first field (field[0]) of the feature report.
-However, a device can specify HID_DG_INPUTMODE in a different field.
+Commit 783ddaebd397 ("staging: comedi: comedi_test: support
+scan_begin_src == TRIG_FOLLOW") neglected to add a test that
+`scan_begin_src` has only one bit set.  The allowed values are
+`TRIG_FOLLOW` and `TRIG_TIMER`, but the code incorrectly also allows
+`TRIG_FOLLOW | TRIG_TIMER`.  Add a call to
+`comedi_check_trigger_is_unique()` to check that only one trigger source
+bit is set.
 
-If HID_DG_INPUTMODE is in a field other than the first one and the first
-field has a report_count smaller than the usage_index of HID_DG_INPUTMODE,
-this leads to an out-of-bounds write to r->field[0]->value.
-
-Fix this by storing the field index of HID_DG_INPUTMODE in 'struct
-hid_data' during feature mapping.  In wacom_hid_set_device_mode(), use
-this stored field index to access the correct field and add bounds
-checks to ensure both the field index and the value index are within
-valid ranges before writing.
-
-Cc: stable@vger.kernel.org
-Fixes: 5ae6e89f7409 ("HID: wacom: implement the finger part of the HID generic handling")
-Tested-by: Ping Cheng <ping.cheng@wacom.com>
-Reviewed-by: Ping Cheng <ping.cheng@wacom.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Fixes: 783ddaebd397 ("staging: comedi: comedi_test: support scan_begin_src == TRIG_FOLLOW")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260422162138.36003-1-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_sys.c |   13 ++++++++++---
- drivers/hid/wacom_wac.h |    1 +
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ drivers/comedi/drivers/comedi_test.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -341,6 +341,7 @@ static void wacom_feature_mapping(struct
+--- a/drivers/comedi/drivers/comedi_test.c
++++ b/drivers/comedi/drivers/comedi_test.c
+@@ -274,6 +274,7 @@ static int waveform_ai_cmdtest(struct co
+ 	/* Step 2a : make sure trigger sources are unique */
  
- 		hid_data->inputmode = field->report->id;
- 		hid_data->inputmode_index = usage->usage_index;
-+		hid_data->inputmode_field_index = field->index;
- 		break;
+ 	err |= comedi_check_trigger_is_unique(cmd->convert_src);
++	err |= comedi_check_trigger_is_unique(cmd->scan_begin_src);
+ 	err |= comedi_check_trigger_is_unique(cmd->stop_src);
  
- 	case HID_UP_DIGITIZER:
-@@ -556,9 +557,14 @@ static int wacom_hid_set_device_mode(str
- 
- 	re = &(hdev->report_enum[HID_FEATURE_REPORT]);
- 	r = re->report_id_hash[hid_data->inputmode];
--	if (r) {
--		r->field[0]->value[hid_data->inputmode_index] = 2;
--		hid_hw_request(hdev, r, HID_REQ_SET_REPORT);
-+	if (r && hid_data->inputmode_field_index >= 0 &&
-+	    hid_data->inputmode_field_index < r->maxfield) {
-+		struct hid_field *field = r->field[hid_data->inputmode_field_index];
-+
-+		if (field && hid_data->inputmode_index < field->report_count) {
-+			field->value[hid_data->inputmode_index] = 2;
-+			hid_hw_request(hdev, r, HID_REQ_SET_REPORT);
-+		}
- 	}
- 	return 0;
- }
-@@ -2819,6 +2825,7 @@ static int wacom_probe(struct hid_device
- 		return error;
- 
- 	wacom_wac->hid_data.inputmode = -1;
-+	wacom_wac->hid_data.inputmode_field_index = -1;
- 	wacom_wac->mode_report = -1;
- 
- 	if (hid_is_usb(hdev)) {
---- a/drivers/hid/wacom_wac.h
-+++ b/drivers/hid/wacom_wac.h
-@@ -298,6 +298,7 @@ struct wacom_shared {
- struct hid_data {
- 	__s16 inputmode;	/* InputMode HID feature, -1 if non-existent */
- 	__s16 inputmode_index;	/* InputMode HID feature index in the report */
-+	__s16 inputmode_field_index; /* InputMode HID feature field index in the report */
- 	bool sense_state;
- 	bool inrange_state;
- 	bool invert_state;
+ 	/* Step 2b : and mutually compatible */
 
 
