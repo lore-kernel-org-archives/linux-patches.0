@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7E9212564;
-	Sun,  7 Jun 2026 10:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5982212564;
+	Sun,  7 Jun 2026 10:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828771; cv=none; b=IZE8iUfi7aLv0AT4cROFJ1k8Y+TzgrsahNZZTM0E05MwWWp91fKeS122xXDPcXT3XX0Z9oVXDhjw8WO16bzeRvwag5Sxv3UQ3Ls6d5AyGQa5NKm82YG46/UGJJImlVo9R3prIRwATAxe1u9oDaQlWcwIidxVcgd8mYf5d2K5LzU=
+	t=1780828774; cv=none; b=M9Lnza9qScul2fvdubdrvXHDbkPdaz0ucB6JFO7jLOORKbUcX8Uv5gDLmI5383dSYcLQ6+TAKMtWYYalk7TV/DVArn6HQ45Q3KahH0VYZlUls3gOqJfRv4Uq/OxG5YH1SRk8ddSt6fG+IU7GmtFqZz46MrYfWZa/v6UGK6TbAY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828771; c=relaxed/simple;
-	bh=4OXHpfFKsp+Md0/xYHSkTIBOq2nMGxYyV0oJQ5WIZcE=;
+	s=arc-20240116; t=1780828774; c=relaxed/simple;
+	bh=Jked75wG9pn4436BnQahFzrpv/5o4edo012dg1nyO5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RpqSDKJabePEwi20XU923esbOj0oVvNTo04a11GCooq/O7p2g51JmQwwKkMXpmKio05vCEI6wfvzzwdOKEDL4Slgj+WETXBwiHJ4nrMyN66DaCVbeqQKXWIcfZb/Pt4124TZ+umVERR0UwtQ1LuEBvEd8kQ0d5ew8Mg9Nx8g/8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4XkPpdZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XtuKthZddMZQTYvo9xIXnN8i+LKaFe7J82rWLi1z9OR5aH2iph3hfpPh1kVx+ME9RHcrDY58OgUnJRnAPTSgHx3YjCbedPROeKmbB9WFxb2CJpkjIA4cFRKMHocvaFIaItUC3FG/Yg1AujD0Wu2KEd9l3hLQmUWGbud5qP7sT3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cF6yQkwb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4XkPpdZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C781F00893;
-	Sun,  7 Jun 2026 10:39:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cF6yQkwb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 169CE1F00893;
+	Sun,  7 Jun 2026 10:39:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828770;
-	bh=nMFZqEID5k4gjNVJI5c5ZRfaULSEJZO4j3I+cYI5Chc=;
+	s=korg; t=1780828773;
+	bh=4rCmsriME6wbvwxDsqu+lkySB2+xB8KIN/Fxz282LgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i4XkPpdZ2bmNmFJdQzScin2F7zcWAf/CFTMkD9Asob6uytViqeqhcLZeK9dwANWqS
-	 7zdwTDxj3uEkGUZL/fDzQd5QIL627zZxM2oa5O0JxeMaBQBxsrQBKXi59qI2MB8pa7
-	 HtTlMFd9DcKUWaofgSSAvOgLUTkR7v2FXU4QiRqo=
+	b=cF6yQkwb2VkcmIKxTSHj4M511LDebWyAJw3jJ0KV9CROnFKnX79hgVXKpx5jXHKPw
+	 xbCV6mBcSwdi4Wq/7fJgV4Ittf6nSSAjj0xpnOlnyClaOcCGAYs4zwvF/q+GQ2ZwJk
+	 I04jyvV30bjygESEBdidxDFmC7+a/boTPj/85BEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 210/332] macsec: fix replay protection at XPN lower-PN wrap
-Date: Sun,  7 Jun 2026 11:59:39 +0200
-Message-ID: <20260607095735.779924163@linuxfoundation.org>
+	Salah Triki <salah.triki@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 6.12 167/307] iio: adc: mt6359: fix unchecked return value in mt6358_read_imp
+Date: Sun,  7 Jun 2026 11:59:24 +0200
+Message-ID: <20260607095733.857889239@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-commit e68842b3356471ba56c882209f324613dac47f64 upstream.
+commit f9bbd943c34a9ad60e593a4b99ce2394e4e2381b upstream.
 
-In macsec_post_decrypt(), when pn is U32_MAX, pn + 1 overflows u32 to 0
-and the first branch never fires. If next_pn_halves.lower is also in the
-upper half, pn_same_half(pn, lower) is true and the XPN else-if does not
-fire either, leaving next_pn_halves unchanged. An attacker that captures
-the legitimate frame carrying pn == 0xFFFFFFFF on an XPN association
-can then replay it indefinitely, since lowest_pn never rises above
-the captured pn and macsec_decrypt() reconstructs the same IV.
+In mt6358_read_imp(), the variable val_v is passed to regmap_read()
+but the return value is not checked. If the read fails, val_v remains
+uninitialized and its random stack content is subsequently reported
+as a measurement result.
 
-Extend the XPN else-if to also fire when pn + 1 wraps to 0, so receipt
-of pn == U32_MAX advances next_pn_halves to (upper + 1, 0).
+Initialize val_v to zero to ensure a predictable value is reported
+in case of bus failure and to prevent potential stack data leakage.
+This also satisfies static analyzers that might otherwise flag the
+variable as used uninitialized.
 
-Fixes: a21ecf0e0338 ("macsec: Support XPN frame handling - IEEE 802.1AEbw")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://patch.msgid.link/SYBPR01MB78813FD49E58F253B989F197AF012@SYBPR01MB7881.ausprd01.prod.outlook.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3587914bf61d ("iio: adc: Add support for MediaTek MT6357/8/9 Auxiliary ADC")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/macsec.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iio/adc/mt6359-auxadc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -804,7 +804,8 @@ static bool macsec_post_decrypt(struct s
- 		if (pn + 1 > rx_sa->next_pn_halves.lower) {
- 			rx_sa->next_pn_halves.lower = pn + 1;
- 		} else if (secy->xpn &&
--			   !pn_same_half(pn, rx_sa->next_pn_halves.lower)) {
-+			   (pn + 1 == 0 ||
-+			    !pn_same_half(pn, rx_sa->next_pn_halves.lower))) {
- 			rx_sa->next_pn_halves.upper++;
- 			rx_sa->next_pn_halves.lower = pn + 1;
- 		}
+--- a/drivers/iio/adc/mt6359-auxadc.c
++++ b/drivers/iio/adc/mt6359-auxadc.c
+@@ -347,6 +347,7 @@ static int mt6358_read_imp(struct mt6359
+ 		return ret;
+ 
+ 	/* Read the params before stopping */
++	val_v = 0;
+ 	regmap_read(regmap, reg_adc0 + (cinfo->imp_adc_num << 1), &val_v);
+ 
+ 	mt6358_stop_imp_conv(adc_dev);
 
 
