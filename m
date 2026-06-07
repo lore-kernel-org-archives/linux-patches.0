@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3732AF1D;
-	Sun,  7 Jun 2026 10:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E352D8378;
+	Sun,  7 Jun 2026 10:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829235; cv=none; b=Hh9gcDJ8RDVG2CV2iSgnIsSHZrHn9SGaqNDxaYj08o79vL7aStaVmly9tSkqT9CVDVjCSAsX+jnEEHbXrtoynXQNTUu2O6/bZDBPl+k8JMkdAgGRv25OHGWoBMccmrzhoXD/MzawFY7gPPDpZT6hF95JdE73V9lXKTfnhvIpXPg=
+	t=1780829239; cv=none; b=KzsYhsiOovCdi/13dsUx6WABNpL6ABLIU2FYwtsCviQizjwsxDAYMlVnY9pW9FTWH+aGm8wUw/ouHkNmjj5F17KZHjVCVvUWm8fRt12glLiOEvJFBiCIfOas1em5TIob+KXAbAIxpQNg7sUuK8KNsXIY34xHTksV83gRdhVESb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829235; c=relaxed/simple;
-	bh=tJOJx3rlJnP6Tlm9b+T1RZtfZFiGBOl7SG79BfU8UAc=;
+	s=arc-20240116; t=1780829239; c=relaxed/simple;
+	bh=heSlknBKk15DZsflWulc2PQdueZd39mO5AdTmTvVkX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e0LgFQB2egrSQONuUazmSNt7m2FjZzffpXwOd0miRrITCCvYNDoMUWtwfqZTyZxIPq4joI8nwNMuvIfnGsZVu4T2J+aTARSyaYdxtCt7Jhdc/Co6C8y250RWzKbz+sm4fpfAbIwsJv3fnToRuajwGIvi6RcXeg8hgKr+nXdhFpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xztGLJL5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WNcdecU9uN3a2e/qi7YDBsfBRsFTRj7GIKiiOySQLacwoOZu5RRAIfkuq2zQ7HgvZPB3aXqpHzC5D2bhG1Ki1jSQ8tS7i89NnOzxN5WiFSrtXZ8vCmrDkAho+HbBDqkZe71imwX0W4N942AlSZD6ZTnx3l1KMKA192FiGWBZ0WI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Suo3wKMv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xztGLJL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4F81F00893;
-	Sun,  7 Jun 2026 10:47:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Suo3wKMv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67BFC1F00893;
+	Sun,  7 Jun 2026 10:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829234;
-	bh=ShcGgJGtoaqtL/NAGr8IN955bobj+dYh5wG3a0JYSfI=;
+	s=korg; t=1780829238;
+	bh=PPZiDLFU4iS24uEp0khFpdB/jovhPdfkPYCtB8hKWCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xztGLJL58w8kLjHT0mM9KvtHKRxrTjPsMX2eEYWwGxNbxS0IOjGNQ3vra8A8PrPFs
-	 0DOqa5kLeBB65Uiiy5Nkt7aAxEl8KmMQYf+Ow/O6djmIfETUkwK9UaTX16LvidDIlW
-	 AEgFbBcfpZavprI5CJ9FgI3gNWokrHM0b/gXwWQA=
+	b=Suo3wKMv9L4k/4x3Q9ivsVFY5NVOxkEpxIs6EywnKAu6K9tUYu5CrfBs8dNCo5iQ9
+	 IMUcL6AWtvc7vLAidbMqise4kBy7En9r29DmXORhI8va3Dtp3BwNz/riVTLiN7B/6K
+	 E82Bf90e6n61ousjy1AP1lUDoesfocARXfLvEB8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Burkels <sam@1a38.nl>,
-	Oliver Neukum <oneukum@suse.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 7.0 256/332] usb: storage: Add quirks for PNY Elite Portable SSD
-Date: Sun,  7 Jun 2026 12:00:25 +0200
-Message-ID: <20260607095737.447850393@linuxfoundation.org>
+	syzbot+abbfd103085885cf16a2@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Michal Pecio <michal.pecio@gmail.com>,
+	Heitor Alves de Siqueira <halves@igalia.com>
+Subject: [PATCH 6.18 228/315] usb: usbtmc: check URB actual_length for interrupt-IN notifications
+Date: Sun,  7 Jun 2026 12:00:15 +0200
+Message-ID: <20260607095735.949323625@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,73 +48,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sam Burkels <sam@1a38.nl>
+From: Heitor Alves de Siqueira <halves@igalia.com>
 
-commit b53ebb811e00be50a779ce4e7aee604178b4a825 upstream.
+commit 52f2ad3f7e5eb3b5908e1d685d4342519dc9cfcd upstream.
 
-The PNY Elite Portable SSD (USB ID 154b:f009) is a sibling of the
-already-quirked PNY Pro Elite SSDs (154b:f00b and 154b:f00d). Like its
-siblings, it uses a Phison-based USB-SATA bridge that exhibits
-firmware bugs when bound to the uas driver.
+USBTMC devices can use an optional interrupt endpoint for notification
+messages. These typically contain two-byte headers indicating the
+payload format, but the driver does not check if these headers are
+present before accessing the data buffers. In cases where the URB
+actual_length is not enough to fit these headers, the driver will either
+cause an out-of-bounds read, or consume stale leftover data from a
+previous notification.
 
-Without quirks, the device fails to complete READ CAPACITY commands
-when accessed over UAS on a SuperSpeed (USB 3) port. The device
-enumerates and reports as a SCSI direct-access device, but reports
-zero logical blocks and never finishes spin-up:
+Fix by checking if actual_data contains enough bytes for the headers,
+otherwise resubmit URB to the interrupt endpoint.
 
-    usb 2-3: new SuperSpeed USB device number 8 using xhci_hcd
-    usb 2-3: New USB device found, idVendor=154b, idProduct=f009
-    usb 2-3: Product: PNY ELITE PSSD
-    usb 2-3: Manufacturer: PNY
-    scsi host0: uas
-    scsi 0:0:0:0: Direct-Access     PNY      PNY ELITE PSSD   0
-    sd 0:0:0:0: [sda] Spinning up disk...
-    [...10+ seconds of polling, no progress...]
-    sd 0:0:0:0: [sda] Read Capacity(16) failed: hostbyte=DID_ERROR
-    sd 0:0:0:0: [sda] Read Capacity(10) failed: hostbyte=DID_ERROR
-    sd 0:0:0:0: [sda] 0 512-byte logical blocks: (0 B/0 B)
-
-Tested each individual quirk to find the minimum that fixes this:
-  - US_FL_NO_ATA_1X alone: device hangs on spin-up
-  - US_FL_NO_REPORT_OPCODES alone: works on USB 2.0, hangs on USB 3.0
-  - US_FL_NO_ATA_1X | US_FL_NO_REPORT_OPCODES: works on both
-
-With both quirks the device enumerates correctly while still using
-the uas driver, and delivers full UAS throughput (~281 MB/s
-sequential read on a USB 3.0 Gen 1 port).
-
-The existing PNY Pro Elite entries (f00b, f00d) only set NO_ATA_1X,
-but this device additionally chokes on REPORT OPCODES under
-SuperSpeed.
-
-Signed-off-by: Sam Burkels <sam@1a38.nl>
-Acked-by: Oliver Neukum <oneukum@suse.com>
+Fixes: dbf3e7f654c0 ("Implement an ioctl to support the USMTMC-USB488 READ_STATUS_BYTE operation.")
+Reported-by: syzbot+abbfd103085885cf16a2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=abbfd103085885cf16a2
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260501132346.86572-1-sam@1a38.nl
+Suggested-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Heitor Alves de Siqueira <halves@igalia.com>
+Link: https://patch.msgid.link/20260505-usbtmc-iin-size-v3-1-a36113f62db7@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/unusual_uas.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/class/usbtmc.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/usb/storage/unusual_uas.h
-+++ b/drivers/usb/storage/unusual_uas.h
-@@ -132,6 +132,13 @@ UNUSUAL_DEV(0x152d, 0x0583, 0x0000, 0x99
- 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
- 		US_FL_NO_REPORT_OPCODES),
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -2310,6 +2310,14 @@ static void usbtmc_interrupt(struct urb
  
-+/* Reported-by: Sam Burkels <sam@1a38.nl> */
-+UNUSUAL_DEV(0x154b, 0xf009, 0x0000, 0x9999,
-+		"PNY",
-+		"PNY ELITE PSSD",
-+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
-+		US_FL_NO_ATA_1X | US_FL_NO_REPORT_OPCODES),
+ 	switch (status) {
+ 	case 0: /* SUCCESS */
++		/* ensure at least two bytes of headers were transferred */
++		if (urb->actual_length < 2) {
++			dev_warn(dev,
++				"actual length %d not sufficient for interrupt headers\n",
++				urb->actual_length);
++			goto exit;
++		}
 +
- /* Reported-by: Thinh Nguyen <thinhn@synopsys.com> */
- UNUSUAL_DEV(0x154b, 0xf00b, 0x0000, 0x9999,
- 		"PNY",
+ 		/* check for valid STB notification */
+ 		if (data->iin_buffer[0] > 0x81) {
+ 			data->bNotify1 = data->iin_buffer[0];
 
 
