@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9FF32B13B;
-	Sun,  7 Jun 2026 10:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2997632AAA3;
+	Sun,  7 Jun 2026 10:40:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828845; cv=none; b=rcy4j1lOPguFiQZFf/8E1HrxaKyITJ494rU/UQcYzDa/41xc7kHX4QlJqtKfSB59/NKyOLE5hFbx14QzR24t+B0P58gAJlxP8bSYYc/giuWlUHwEl5o+pcJ21C0Gxh8sbAk2SrFF4B4riSEpoyYjQxEPoShnq2RdEVrrDF3XWB4=
+	t=1780828849; cv=none; b=g034j/vgy1EckTCp3UodIa1wd7//qk3TRs6F9FJ42nudhaHcizKhTvTQWQfl6oCmZlAW1OTrcD3TSummXeD/XMR4R5n68uNM+sn7CeHTbWH8BXJyI6FabCOJUmnkct8xkoT8wYypfq+HzBXEjVIQZ8fxVy/tqTgGXDIkV+6no28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828845; c=relaxed/simple;
-	bh=W3Myk9KZQa+xgONckhyPy96InF6C2S4qox4YP9WTeIM=;
+	s=arc-20240116; t=1780828849; c=relaxed/simple;
+	bh=WbCK5/02Xsf3gtJuABcd/CaHEj93cycl5PvrIyrUofQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jfKuPJgOQod6OdVvhNz1YLlPDD4tYz8bTt4FMKm8rdK2InCqhWdAUl444zL+yBQ5UvQ/yTNj4gpAo2LbWICGj9PaK7dqoGLLNODQS18zbxs0wihI+BnDHnyZSA3EDtwuNfI1y5x02UcuNeK9oFqqoMUu03bbr74+zuABRemvgM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z54AMkhZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O6VkUaeC8ya9hgJcJ2nT5mgSWMiVMqfXj7phxp8wgeWY+5l3MyqwYQ+iw77fsyOawsz8ecgbBzVtTriG+8A0bHadbtoULjHegw9RRHYU3FzkDBC34HlnL5cKkmSh8cYoY2xuzLRPvmZuNrtHlOa9LJ+8/v74+8C+GNTgtm2pNOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tfkh8jXv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z54AMkhZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5ED1F00893;
-	Sun,  7 Jun 2026 10:40:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tfkh8jXv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F45A1F00893;
+	Sun,  7 Jun 2026 10:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828843;
-	bh=LTNyhlgylcWH9wBnV5GC8bWbmIvmDvJNhOL5rIoa3xQ=;
+	s=korg; t=1780828847;
+	bh=Ig+l3yze5BMJxIH05qrU9D2Ze7eYyNrkLhzANVdjNNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z54AMkhZB5YDvBrguB5WSzmWx3P4oDloIEMvyQIdhgw/DeGl5BcvUM6ZUXQi9oM4k
-	 Z4yJZEyLrOTBDb9OPjWyHHf5o0s6kJvZ6rsxrCYW9IUderBidgLXCpntwFftda10h9
-	 Ufz6EM4ho0iMgVkhi2VHWIJEoRY5sSJTcyd9cY0k=
+	b=tfkh8jXvx+1zJG2fAQgabO4Hgbxl+Cv2y25zXj0x/auuL4VnNX7r1+QuH6JUKblnz
+	 6W8xz5b94dnQqWHC1giZqwPyS8Xp3dUj927ndZyay5LX756teZGg7E/s07aOuuN61n
+	 PtmcYuHaQXGCSoZ3GWiaZ2Bj4QxESVJYWsGBtWu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Advait Dhamorikar <advaitd@mechasystems.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.12 173/307] iio: magnetometer: st_magn: fix default DRDY pin selection for LIS2MDL
-Date: Sun,  7 Jun 2026 11:59:30 +0200
-Message-ID: <20260607095734.073281210@linuxfoundation.org>
+	Tianyu Xu <xtydtc@gmail.com>,
+	Santhosh Kumar K <s-k6@ti.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 196/315] spi: spi-mem: avoid mutating op template in spi_mem_supports_op()
+Date: Sun,  7 Jun 2026 11:59:43 +0200
+Message-ID: <20260607095734.770563336@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,64 +48,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Advait Dhamorikar <advaitd@mechasystems.com>
+From: Santhosh Kumar K <s-k6@ti.com>
 
-commit 49f79cd28f1e3333cbe0d616ce59ead0b24bf34e upstream.
+commit 79378db6a86c7014cce40b65252e6c18f5b8bcc2 upstream.
 
-The device tree binding for st,lis2mdl does not support
-st,drdy-int-pin property. However, when no platform data is provided
-and the property is absent, the driver falls back to default_magn_pdata
-which hardcodes drdy_int_pin = 2. This causes
-`st_sensors_set_drdy_int_pin` to fail with -EINVAL because the LIS2MDL
-sensor settings have no INT2 DRDY mask defined.
+spi_mem_supports_op() accepts a const struct spi_mem_op pointer but
+casts away const internally to call spi_mem_adjust_op_freq(). This
+mutates the caller's op template, which causes stale max_freq values
+when callers reuse persistent templates - subsequent calls won't
+re-apply the device frequency cap since spi_mem_adjust_op_freq()
+skips non-zero values.
 
-Fix this by checking the sensor's INT2 DRDY mask availability at
-probe time and selecting the appropriate default pin. Sensors that
-do not support INT2 DRDY will default to INT1, while all others
-retain the existing default of INT2.
+Fix by operating on a stack-local copy instead.
 
-Fixes: 38934daf7b5c ("iio: magnetometer: st_magn: Provide default platform data")
-Signed-off-by: Advait Dhamorikar <advaitd@mechasystems.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: a4f8e70d75dd ("spi: spi-mem: add spi_mem_adjust_op_freq() in spi_mem_supports_op()")
+Cc: Tianyu Xu <xtydtc@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Santhosh Kumar K <s-k6@ti.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/20260527173736.2243004-1-s-k6@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/magnetometer/st_magn_core.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/spi/spi-mem.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/drivers/iio/magnetometer/st_magn_core.c
-+++ b/drivers/iio/magnetometer/st_magn_core.c
-@@ -506,6 +506,11 @@ static const struct st_sensors_platform_
- 	.drdy_int_pin = 2,
- };
+--- a/drivers/spi/spi-mem.c
++++ b/drivers/spi/spi-mem.c
+@@ -276,13 +276,20 @@ static bool spi_mem_internal_supports_op
+  */
+ bool spi_mem_supports_op(struct spi_mem *mem, const struct spi_mem_op *op)
+ {
+-	/* Make sure the operation frequency is correct before going futher */
+-	spi_mem_adjust_op_freq(mem, (struct spi_mem_op *)op);
++	struct spi_mem_op eval_op = *op;
  
-+/* LIS2MDL only supports DRDY on INT1 */
-+static const struct st_sensors_platform_data alt_magn_pdata = {
-+	.drdy_int_pin = 1,
-+};
+-	if (spi_mem_check_op(op))
++	/*
++	 * Work on a local copy; this is a pure capability check and must
++	 * not modify the caller's op. Stored templates with max_freq == 0
++	 * must remain unset so their frequency is always re-capped to the
++	 * current device maximum at execution time.
++	 */
++	spi_mem_adjust_op_freq(mem, &eval_op);
 +
- static int st_magn_read_raw(struct iio_dev *indio_dev,
- 			struct iio_chan_spec const *ch, int *val,
- 							int *val2, long mask)
-@@ -628,8 +633,12 @@ int st_magn_common_probe(struct iio_dev
- 	mdata->current_fullscale = &mdata->sensor_settings->fs.fs_avl[0];
- 	mdata->odr = mdata->sensor_settings->odr.odr_avl[0].hz;
++	if (spi_mem_check_op(&eval_op))
+ 		return false;
  
--	if (!pdata)
--		pdata = (struct st_sensors_platform_data *)&default_magn_pdata;
-+	if (!pdata) {
-+		if (mdata->sensor_settings->drdy_irq.int2.mask)
-+			pdata = (struct st_sensors_platform_data *)&default_magn_pdata;
-+		else
-+			pdata = (struct st_sensors_platform_data *)&alt_magn_pdata;
-+	}
+-	return spi_mem_internal_supports_op(mem, op);
++	return spi_mem_internal_supports_op(mem, &eval_op);
+ }
+ EXPORT_SYMBOL_GPL(spi_mem_supports_op);
  
- 	err = st_sensors_init_sensor(indio_dev, pdata);
- 	if (err < 0)
 
 
