@@ -1,48 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EB91C5F27;
-	Sun,  7 Jun 2026 10:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076EC31E832;
+	Sun,  7 Jun 2026 10:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828056; cv=none; b=CiMpw1sygByZ557h6gGN4PUM8/mdQF83cjKgt5Bx013054ebwgMQYE8o2lywhJJo/kUM0Mz8qB+4D0V6a3C71FaV6znCaPCuWu0yfXGgiYffGy0r/nNtYBK/e9114OFUy8fwB60CpvtA/ihBYeI5IVDmQF1JRSqfOenWj88hKko=
+	t=1780828060; cv=none; b=Ya908YIGCtbP56QvgEaPXiv2ltEBfN/9XftqlTEho8yPnqaFSy62w3Up0QMJ+x9gaXg7j0RVCfFFPByf/0NQxPhCGev/1fuJaWJr4/Iz5OOC5oeDmLxBOz7zQE7pJe7WpoNxS+Eo4dGi2ZgKjgPqMGv0mhfjZ3NTBFqyZZOyIBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828056; c=relaxed/simple;
-	bh=KZNbvooBaBlsTS7bCPsXKutY8m5Mhov9lCEA2SLvvZQ=;
+	s=arc-20240116; t=1780828060; c=relaxed/simple;
+	bh=BfIxPTMTzNq2Fukd/Op4SjS3xky21uWhhM6ye8v1fb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HCPKofxttZA0pU1RiTPqn4HCwfWNYajvWixm1ByHgxXWNbn1kVT010ASxEMNy1FM4M9D2QSMHXeum7F+uhfNQT3tYmWM9QuB9frJ/kKUxHMS+B500F5Y7gRIIHWTfnm26kKUU3Nw1+n3K8o60higKrWp+crCSmqgjPL5gHGYmgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oPqf7S4x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dzbri8htUvnRImliPhaQlSYdiydLQfsOqtJrxp9hgtYCO1XeihNwJ3+8SWHoaVR8IjVpULoLTC1GW9Vdopbsbyd10ghEMJvn+ew98KPKc2d+Vkv8R+sIBTh4gFAfiVLV/dBxTrnO/uRBZk2WJp8SZ86SAko8NlqWlw8nQmHUHp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w0afL+5G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oPqf7S4x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D9721F00893;
-	Sun,  7 Jun 2026 10:27:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w0afL+5G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB661F00893;
+	Sun,  7 Jun 2026 10:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828055;
-	bh=2V0dwLcxcrx19ts06zdnzQ364/Do0lrJw/CixTEMXrw=;
+	s=korg; t=1780828058;
+	bh=y9bcItJYY0KJBjytwGFMvSxrVegVl/2zWNPoppd4sOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oPqf7S4xC6wEySHs7OogwoGtgyXd7//UD+bXEGVBF6fUMwKM9R/drn9qx02cD4qhH
-	 M1PTDlZZUKILtAIF7LWxAbUDPbCv4yOvONI+8BdPbXYfFSVvaGPNXVOxUhFIQVeL6V
-	 FwnKTEjLlC9enMVux22Pz5fbsY8g8NvC9cQ9ofsc=
+	b=w0afL+5GtQSbU6xbwaVyUde8GWNHKBlFq1bx/K86c8pfqw2ci5bQ5rxFQVABKylg4
+	 P8lPHBouVsVxYmypCPSi5yKYyBCW0Gcp5EpJ0cW1Sz2svCfrADJbEVv+S5aHx4lXKC
+	 f3WHNYCuLQ994eGTyoIgjSCvqWo6Ro7BjKo0PRpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Jeff Xu <jeffxu@google.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Brendan Jackman <jackmanb@google.com>,
-	Greg Thelen <gthelen@google.com>,
-	Hugh Dickins <hughd@google.com>,
-	Kees Cook <kees@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 124/315] memfd: deny writeable mappings when implying SEAL_WRITE
-Date: Sun,  7 Jun 2026 11:58:31 +0200
-Message-ID: <20260607095732.176645045@linuxfoundation.org>
+	Muhammad Bilal <meatuni001@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 7.0 148/332] Bluetooth: HIDP: fix missing length checks in hidp_input_report()
+Date: Sun,  7 Jun 2026 11:58:37 +0200
+Message-ID: <20260607095733.531080874@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,71 +46,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pratyush Yadav (Google) <pratyush@kernel.org>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 3b041514cb6eae45869b020f743c14d983363222 upstream.
+commit 2a3ac9ee11dbb9845f3947cef4a79dba658cf6f6 upstream.
 
-When SEAL_EXEC is added, SEAL_WRITE is implied to make W^X.  But the
-implied seal is set after the check that makes sure the memfd can not have
-any writable mappings.  This means one can use SEAL_EXEC to apply
-SEAL_WRITE while having writeable mappings.
+hidp_input_report() reads keyboard and mouse payload data from an skb
+without first verifying that skb->len contains enough data.
 
-This breaks the contract that SEAL_WRITE provides and can be used by an
-attacker to pass a memfd that appears to be write sealed but can still be
-modified arbitrarily.
+hidp_recv_intr_frame() pulls the 1-byte HIDP header before dispatching
+to hidp_input_report(). If a paired device sends a truncated packet,
+the handler reads beyond the valid skb data, resulting in an
+out-of-bounds read of skb data. The OOB bytes may be interpreted as
+phantom key presses or spurious mouse movement.
 
-Fix this by adding the implied seals before the call for
-mapping_deny_writable() is done.
+Replace the open-coded length tracking and pointer arithmetic with
+skb_pull_data() calls. skb_pull_data() returns NULL if the requested
+bytes are not present, eliminating the need for a manual size variable
+and the separate skb->len guard.
 
-Link: https://lore.kernel.org/20260505133922.797635-1-pratyush@kernel.org
-Fixes: c4f75bc8bd6b ("mm/memfd: add write seals when apply SEAL_EXEC to executable memfd")
-Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
-Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
-Acked-by: Jeff Xu <jeffxu@google.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: Greg Thelen <gthelen@google.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Kees Cook <kees@kernel.org>
-Cc: "David Hildenbrand (Arm)" <david@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memfd.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/bluetooth/hidp/core.c |   23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
---- a/mm/memfd.c
-+++ b/mm/memfd.c
-@@ -284,6 +284,12 @@ static int memfd_add_seals(struct file *
- 		goto unlock;
- 	}
- 
-+	/*
-+	 * SEAL_EXEC implies SEAL_WRITE, making W^X from the start.
-+	 */
-+	if (seals & F_SEAL_EXEC && inode->i_mode & 0111)
-+		seals |= F_SEAL_SHRINK|F_SEAL_GROW|F_SEAL_WRITE|F_SEAL_FUTURE_WRITE;
+--- a/net/bluetooth/hidp/core.c
++++ b/net/bluetooth/hidp/core.c
+@@ -179,12 +179,21 @@ static void hidp_input_report(struct hid
+ {
+ 	struct input_dev *dev = session->input;
+ 	unsigned char *keys = session->keys;
+-	unsigned char *udata = skb->data + 1;
+-	signed char *sdata = skb->data + 1;
+-	int i, size = skb->len - 1;
++	unsigned char *udata;
++	signed char *sdata;
++	u8 *hdr;
++	int i;
 +
- 	if ((seals & F_SEAL_WRITE) && !(*file_seals & F_SEAL_WRITE)) {
- 		error = mapping_deny_writable(file->f_mapping);
- 		if (error)
-@@ -296,12 +302,6 @@ static int memfd_add_seals(struct file *
- 		}
++	hdr = skb_pull_data(skb, 1);
++	if (!hdr)
++		return;
+ 
+-	switch (skb->data[0]) {
++	switch (*hdr) {
+ 	case 0x01:	/* Keyboard report */
++		udata = skb_pull_data(skb, 8);
++		if (!udata)
++			break;
++
+ 		for (i = 0; i < 8; i++)
+ 			input_report_key(dev, hidp_keycode[i + 224], (udata[0] >> i) & 1);
+ 
+@@ -213,6 +222,10 @@ static void hidp_input_report(struct hid
+ 		break;
+ 
+ 	case 0x02:	/* Mouse report */
++		sdata = skb_pull_data(skb, 3);
++		if (!sdata)
++			break;
++
+ 		input_report_key(dev, BTN_LEFT,   sdata[0] & 0x01);
+ 		input_report_key(dev, BTN_RIGHT,  sdata[0] & 0x02);
+ 		input_report_key(dev, BTN_MIDDLE, sdata[0] & 0x04);
+@@ -222,7 +235,7 @@ static void hidp_input_report(struct hid
+ 		input_report_rel(dev, REL_X, sdata[1]);
+ 		input_report_rel(dev, REL_Y, sdata[2]);
+ 
+-		if (size > 3)
++		if (skb->len > 0)
+ 			input_report_rel(dev, REL_WHEEL, sdata[3]);
+ 		break;
  	}
- 
--	/*
--	 * SEAL_EXEC implies SEAL_WRITE, making W^X from the start.
--	 */
--	if (seals & F_SEAL_EXEC && inode->i_mode & 0111)
--		seals |= F_SEAL_SHRINK|F_SEAL_GROW|F_SEAL_WRITE|F_SEAL_FUTURE_WRITE;
--
- 	*file_seals |= seals;
- 	error = 0;
- 
 
 
