@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBEE202C46;
-	Sun,  7 Jun 2026 10:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C84A322C88;
+	Sun,  7 Jun 2026 10:24:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827852; cv=none; b=T5yISd3m3VY2YZOutE4SX9HXLV/xSl9Itb1MlOoKP2epTE0whWEmxdncL/fOYHK8MqrZcTdQ+Cwze+3h5z+K6NASQFlGkD2o//3F5muqoxeDPZFW0NduujGzuRJ2n5unH0+tT6nihoszbO1RKMNYHpsuBCHj6pv2D2+psdG2498=
+	t=1780827856; cv=none; b=ruUjyMo5o4BqFYoOQQaMFN+sP4dWkqx1EUoZFql3DL3e39Rrzt41LHOlIDN1fdhOA8rTVCA306HjCtmQnHpi12tR+17Nz44si2ZfJNlQPoVIcyCPSXFvjwn9aN9S9FKFPZzUcQeIk6HP5f5lgJc0IjDBfqsPkcxIMXD2bRM2CUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827852; c=relaxed/simple;
-	bh=cS07nr/Uo87VVZdWSJguISvuJsTAGCwucqK5Wl6/FPU=;
+	s=arc-20240116; t=1780827856; c=relaxed/simple;
+	bh=nEU1xgtHO17d1bpVk8wwX9smIEptBxuJLVb+C3KF3FM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bWtLEqxq13S9JTM8CZKcVmwlbM0Gf3Xcf4aWiGhUVmHeXkdda2UoNbxLBIKx9ot4gVswaKUzqVFJ14ORNRJErpysXibWBXPQ6QzPpdC9NX33FmZp3Y4tGIM9c+n1ZOWCxwLHR6dClBrrhzs1uLlELgHIGhh/SJzhFO/uThIQrU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MeVxheJV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gjX7+344ucyAQNVi4X/Eq4BuOW4j/JAGoexgBObn/VnUErlxyUhf/LBEhVmzrdmYFbjp1vSCPkBW3u6+tKSEsqYOCifn523l+qERaujfMdRsm3uT0JKlzvZ7SAzWFyaTs2fKNtIRna9te+D/kpIt0WG754l8Pu5ZuO3M/w5Iex8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/UiSmvu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeVxheJV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD251F00893;
-	Sun,  7 Jun 2026 10:24:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/UiSmvu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA1E1F00893;
+	Sun,  7 Jun 2026 10:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827851;
-	bh=K+wWvuXNclzkg1X64WdRJrTUYu4+odcahLUT8NZrEE8=;
+	s=korg; t=1780827855;
+	bh=sHB/TECIDLHvyxcHncI1IJ7odrlf53dJPI/IRJd9htE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MeVxheJVimQtZ6dAW8JM0hqjyUlDdUnYDXD0P15ScQdi455WvRXmL5aVE76LfeISY
-	 rD3CQOp5PJSRMKFAeCFQFiVZ+8HSy287iGHRBpWdTq70oN4Zs9xiMVKCoo+lbKd+Ec
-	 hIJhlzGTyyr75adAaeXTUXfSuv1jfARJW58rWnWQ=
+	b=B/UiSmvuPKRRvNw551rSgrNb63KDlySgzQF0YNly41ws1Zvt9+NUf900Ak3vKLeev
+	 xJ/VrDOl5SdbpsbmDOpbsr5Jv4faMarI918xv9BCpiGXRmx3Y9lQxE3dq9eEbkrViT
+	 aPpMsJsN6wVWlt3K3kKW1AhjTzmYchmSDl4opIs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Dipayaan Roy <dipayanroy@linux.microsoft.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Heitor Alves de Siqueira <halves@igalia.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 091/307] net: mana: Add NULL guards in teardown path to prevent panic on attach failure
-Date: Sun,  7 Jun 2026 11:58:08 +0200
-Message-ID: <20260607095731.119261425@linuxfoundation.org>
+Subject: [PATCH 6.18 082/315] Bluetooth: hci_sync: Set HCI_CMD_DRAIN_WORKQUEUE during device close
+Date: Sun,  7 Jun 2026 11:57:49 +0200
+Message-ID: <20260607095730.630733065@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,149 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dipayaan Roy <dipayanroy@linux.microsoft.com>
+From: Heitor Alves de Siqueira <halves@igalia.com>
 
-[ Upstream commit 17bfe0a8c014ee1d542ad352cd6a0a505361664a ]
+[ Upstream commit 525daaea459fc215f432de1b8debbd9144bf97b0 ]
 
-When queue allocation fails partway through, the error cleanup frees
-and NULLs apc->tx_qp and apc->rxqs. Multiple teardown paths such as
-mana_remove(), mana_change_mtu() recovery, and internal error handling
-in mana_alloc_queues() can subsequently call into functions that
-dereference these pointers without NULL checks:
+Since hci_dev_close_sync() can now be called during the reset path, we
+should also set HCI_CMD_DRAIN_WORKQUEUE. This avoids queuing timeouts
+while the hdev workqueue is being drained.
 
-- mana_chn_setxdp() dereferences apc->rxqs[0], causing a NULL pointer
-  dereference panic (CR2: 0000000000000000 at mana_chn_setxdp+0x26).
-- mana_destroy_vport() iterates apc->rxqs without a NULL check.
-- mana_fence_rqs() iterates apc->rxqs without a NULL check.
-- mana_dealloc_queues() iterates apc->tx_qp without a NULL check.
-
-Add NULL guards for apc->rxqs in mana_fence_rqs(),
-mana_destroy_vport(), and before the mana_chn_setxdp() call. Add a
-NULL guard for apc->tx_qp in mana_dealloc_queues() to skip TX queue
-draining when TX queues were never allocated or already freed.
-
-Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Signed-off-by: Dipayaan Roy <dipayanroy@linux.microsoft.com>
-Link: https://patch.msgid.link/20260525081129.1230035-2-dipayanroy@linux.microsoft.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 877afadad2dc ("Bluetooth: When HCI work queue is drained, only queue chained work")
+Signed-off-by: Heitor Alves de Siqueira <halves@igalia.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c | 70 +++++++++++--------
- 1 file changed, 41 insertions(+), 29 deletions(-)
+ net/bluetooth/hci_sync.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
-index e527139936dee4..0e4b0ac4acf86b 100644
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -1304,6 +1304,9 @@ static void mana_fence_rqs(struct mana_port_context *apc)
- 	struct mana_rxq *rxq;
- 	int err;
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index f498ab28f1aa06..73e429c41e17b5 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -5246,6 +5246,12 @@ int hci_dev_close_sync(struct hci_dev *hdev)
  
-+	if (!apc->rxqs)
-+		return;
+ 	bt_dev_dbg(hdev, "");
+ 
++	/* Set HCI_DRAIN_WORKQUEUE flag to prevent queuing work during
++	 * reset/close. See hci_cmd_work() and handle_cmd_cnt_and_timer().
++	 */
++	hci_dev_set_flag(hdev, HCI_CMD_DRAIN_WORKQUEUE);
++	synchronize_rcu();
 +
- 	for (rxq_idx = 0; rxq_idx < apc->num_queues; rxq_idx++) {
- 		rxq = apc->rxqs[rxq_idx];
- 		err = mana_fence_rq(apc, rxq);
-@@ -2324,13 +2327,16 @@ static void mana_destroy_vport(struct mana_port_context *apc)
- 	struct mana_rxq *rxq;
- 	u32 rxq_idx;
+ 	if (hci_dev_test_flag(hdev, HCI_UNREGISTER)) {
+ 		disable_delayed_work(&hdev->power_off);
+ 		disable_delayed_work(&hdev->ncmd_timer);
+@@ -5269,6 +5275,7 @@ int hci_dev_close_sync(struct hci_dev *hdev)
  
--	for (rxq_idx = 0; rxq_idx < apc->num_queues; rxq_idx++) {
--		rxq = apc->rxqs[rxq_idx];
--		if (!rxq)
--			continue;
-+	if (apc->rxqs) {
- 
--		mana_destroy_rxq(apc, rxq, true);
--		apc->rxqs[rxq_idx] = NULL;
-+		for (rxq_idx = 0; rxq_idx < apc->num_queues; rxq_idx++) {
-+			rxq = apc->rxqs[rxq_idx];
-+			if (!rxq)
-+				continue;
-+
-+			mana_destroy_rxq(apc, rxq, true);
-+			apc->rxqs[rxq_idx] = NULL;
-+		}
+ 	if (!test_and_clear_bit(HCI_UP, &hdev->flags)) {
+ 		cancel_delayed_work_sync(&hdev->cmd_timer);
++		hci_dev_clear_flag(hdev, HCI_CMD_DRAIN_WORKQUEUE);
+ 		return err;
  	}
  
- 	mana_destroy_txq(apc);
-@@ -2633,7 +2639,8 @@ static int mana_dealloc_queues(struct net_device *ndev)
- 	if (apc->port_is_up)
- 		return -EINVAL;
+@@ -5368,6 +5375,7 @@ int hci_dev_close_sync(struct hci_dev *hdev)
+ 	/* Clear flags */
+ 	hdev->flags &= BIT(HCI_RAW);
+ 	hci_dev_clear_volatile_flags(hdev);
++	hci_dev_clear_flag(hdev, HCI_CMD_DRAIN_WORKQUEUE);
  
--	mana_chn_setxdp(apc, NULL);
-+	if (apc->rxqs)
-+		mana_chn_setxdp(apc, NULL);
- 
- 	if (gd->gdma_context->is_pf)
- 		mana_pf_deregister_filter(apc);
-@@ -2651,33 +2658,38 @@ static int mana_dealloc_queues(struct net_device *ndev)
- 	 * number of queues.
- 	 */
- 
--	for (i = 0; i < apc->num_queues; i++) {
--		txq = &apc->tx_qp[i].txq;
--		tsleep = 1000;
--		while (atomic_read(&txq->pending_sends) > 0 &&
--		       time_before(jiffies, timeout)) {
--			usleep_range(tsleep, tsleep + 1000);
--			tsleep <<= 1;
--		}
--		if (atomic_read(&txq->pending_sends)) {
--			err = pcie_flr(to_pci_dev(gd->gdma_context->dev));
--			if (err) {
--				netdev_err(ndev, "flr failed %d with %d pkts pending in txq %u\n",
--					   err, atomic_read(&txq->pending_sends),
--					   txq->gdma_txq_id);
-+	if (apc->tx_qp) {
-+		for (i = 0; i < apc->num_queues; i++) {
-+			txq = &apc->tx_qp[i].txq;
-+			tsleep = 1000;
-+			while (atomic_read(&txq->pending_sends) > 0 &&
-+			       time_before(jiffies, timeout)) {
-+				usleep_range(tsleep, tsleep + 1000);
-+				tsleep <<= 1;
-+			}
-+			if (atomic_read(&txq->pending_sends)) {
-+				err =
-+				    pcie_flr(to_pci_dev(gd->gdma_context->dev));
-+				if (err) {
-+					netdev_err(ndev, "flr failed %d with %d pkts pending in txq %u\n",
-+						   err,
-+					    atomic_read(&txq->pending_sends),
-+					    txq->gdma_txq_id);
-+				}
-+				break;
- 			}
--			break;
- 		}
--	}
- 
--	for (i = 0; i < apc->num_queues; i++) {
--		txq = &apc->tx_qp[i].txq;
--		while ((skb = skb_dequeue(&txq->pending_skbs))) {
--			mana_unmap_skb(skb, apc);
--			dev_kfree_skb_any(skb);
-+		for (i = 0; i < apc->num_queues; i++) {
-+			txq = &apc->tx_qp[i].txq;
-+			while ((skb = skb_dequeue(&txq->pending_skbs))) {
-+				mana_unmap_skb(skb, apc);
-+				dev_kfree_skb_any(skb);
-+			}
-+			atomic_set(&txq->pending_sends, 0);
- 		}
--		atomic_set(&txq->pending_sends, 0);
- 	}
-+
- 	/* We're 100% sure the queues can no longer be woken up, because
- 	 * we're sure now mana_poll_tx_cq() can't be running.
- 	 */
+ 	memset(hdev->eir, 0, sizeof(hdev->eir));
+ 	memset(hdev->dev_class, 0, sizeof(hdev->dev_class));
 -- 
 2.53.0
 
