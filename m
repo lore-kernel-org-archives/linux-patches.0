@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17AD42D3A69;
-	Sun,  7 Jun 2026 10:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B752D3A69;
+	Sun,  7 Jun 2026 10:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828640; cv=none; b=bdQMi7Hgho3fJX+EcfhOncv0dzkAtfEtioA2TaLkhqY0aQ/5PP75RCyIhzFjdhXjx/tFaq9ZgSqoTRbR7Ql63HvsVDgeRJEijVQGJhDWyNbZiTE1n2/UUJzQkY/GnRHzKGKCjEpceZKufIGV5UGDuRP2iA9n/uqAqAx5+gjooQE=
+	t=1780828643; cv=none; b=tvfAzXAXqMst0iWTFPCmIV/aHETqjujnujLRkYeLmL8QOFpIIi4O5EBrn6HO+GKY3uEJKyPXypieimyHeAzrgKdctNN7aaJsIeATcAWI0Z4UrTjxy3xPqUaY2SD7bZmRGUqPy7vXnPNv3ZRdXiUpg1HWkQZfXU6KprFkBe+lnwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828640; c=relaxed/simple;
-	bh=RYB20Cq/LeEC9KK8r2i9Qa993iZj8TzaM8/AyR2DSO0=;
+	s=arc-20240116; t=1780828643; c=relaxed/simple;
+	bh=P4YJCPPvjDUfZu87ln79kR/tsgEE25u16SkMzuENCFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a/eDyiSsOhZ5StVkJA9VlcnCjCMosDRVTg0P+GAAJJHABLmy/dRpXLqrjUkIf6NoCgrGiomA9bp3HNsO5bvflG99TeRoX6OD3ohBmXboloaN1rCKJJIE+JSWkiHhiHDXP/2G6GawIJ+klPWKOT8P0IoD8dm/fGtZkvjZvdb9ngw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tghpHeMh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JoosO0AQb7gu21MEuSMN4wfhdCN9EddPWz11jhRtOC+L0Gp1F8r7jolDMgTLdI7pCn00Fmt8aEp2SHmW3OtLiKuuNuymr/MNtxu9xF2tjZyaTlUrbhUDSQWdf9vfYpyr15p5wnQc9f38WfUNy5Ye3EgXlRxvOVhi/ZFklqTVaBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qV7IbfkE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tghpHeMh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF5441F00893;
-	Sun,  7 Jun 2026 10:37:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qV7IbfkE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67ED1F00893;
+	Sun,  7 Jun 2026 10:37:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828638;
-	bh=tNxqzq5WKPIzU0d/zk5AD9IiHqmRf6r9l700aPdHIAQ=;
+	s=korg; t=1780828642;
+	bh=osqsGiJU8FO43PVzvZF9Sp4obHoYFaRwywQpxM3Tq5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tghpHeMhMoBvSXpwOOKNwcZQpgZAsdpwh6z1i4EnmATNv8sYPyBBY0KrOKRd8Wqqe
-	 E8Owg5qoeQsd+y4SsxiQFA+UH6Zs4H5JRZCGqSrCcfRVYKj67U+sEnL8EeA/y3w8/U
-	 crAZOShfAIM32uLsGvI+rJ7VJQ1WqkQrUNvxOSg4=
+	b=qV7IbfkEgLLYzHCBDA83CluYlf40BSSZS2gArMsEMH2BgYNND56ekjuNNDclfZpYq
+	 BrNWh3OsXIIQ1Q6NUlm0PScgE9RgndrIHSKja/nCDpKZnkhWLC11jnVaX2nO9mmjwu
+	 C09eAdIpRW49dYpoM53ya7hmBHStrBlZ6XQZ9SOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Radu Sabau <radu.sabau@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 7.0 184/332] iio: adc: ad4695: Fix call ordering in offload buffer postenable
-Date: Sun,  7 Jun 2026 11:59:13 +0200
-Message-ID: <20260607095734.824250746@linuxfoundation.org>
+	Stan Shaw <shawstan96@gmail.com>,
+	Michael Roth <michael.roth@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Peter Gonda <pgonda@google.com>,
+	Jacky Li <jackyli@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.12 154/307] KVM: SEV: Require in-GHCB scratch area if GHCB v2+ is in use
+Date: Sun,  7 Jun 2026 11:59:11 +0200
+Message-ID: <20260607095733.375798429@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,91 +49,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Radu Sabau <radu.sabau@analog.com>
+From: Michael Roth <michael.roth@amd.com>
 
-commit 1a772719318c11e146f6fbe621fffd230a6f456a upstream.
+commit db3f2195d29344a3cf1e9dd9ab7f21ced7308cf7 upstream.
 
-ad4695_enter_advanced_sequencer_mode() was called after
-spi_offload_trigger_enable(). That is wrong because
-ad4695_enter_advanced_sequencer_mode() issues regular SPI transfers to
-put the ADC into advanced sequencer mode, and not all SPI offload capable
-controllers support regular SPI transfers while offloading is enabled.
+As per the GHCB spec, when using GHCB v2+ require the software scratch area
+to reside in the GHCB's shared buffer.  Note, things like Page State Change
+(PSC) requests _rely_ on this behavior, as the guest can't provide a length
+when making the request, i.e. the size of the guest payload is bounded by
+the size of the shared buffer.
 
-Fix this by calling ad4695_enter_advanced_sequencer_mode() before
-spi_offload_trigger_enable(), so the ADC is fully configured before the
-first CNV pulse can occur. This is consistent with the same constraint
-that already applies to the BUSY_GP_EN write above it.
+Failure to force usage of the GHCB, and a slew of other flaws, lets a
+malicious SNP guest corrupt host kernel heap memory, and leak host heap
+layout information.
 
-Update the error unwind labels accordingly: add err_exit_conversion_mode
-so that a failure of spi_offload_trigger_enable() correctly exits
-conversion mode before clearing BUSY_GP_EN.
+setup_vmgexit_scratch() allocates a buffer via kvzalloc(exit_info_2),
+where exit_info_2 is guest-controlled. With exit_info_2=24, this yields
+a 24-byte allocation in kmalloc-cg-32 (32-byte slab objects). The buffer
+holds an 8-byte psc_hdr followed by 8-byte psc_entry structs, so only
+entries[0] and entries[1] are in-bounds.
 
-Fixes: f09f140e3ea8 ("iio: adc: ad4695: Add support for SPI offload")
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Signed-off-by: Radu Sabau <radu.sabau@analog.com>
-Cc: Stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+snp_begin_psc() validates end_entry against VMGEXIT_PSC_MAX_COUNT (253)
+but NOT against the actual buffer size:
+
+      idx_end = hdr->end_entry;
+
+      if (idx_end >= VMGEXIT_PSC_MAX_COUNT) {   // checks 253, not buffer
+          snp_complete_psc(svm, ...);
+          return 1;
+      }
+
+      for (idx = idx_start; idx <= idx_end; idx++) {
+          entry_start = entries[idx];           // OOB when idx >= 2
+
+The guest sets end_entry=10+, causing the host to iterate entries[2+]
+which are OOB into adjacent slab objects. For each OOB entry:
+
+  - The host reads 8 bytes (OOB READ / info leak oracle)
+  - If the data passes PSC validation, __snp_complete_one_psc() writes
+    cur_page = 1 or 512 into the entry (OOB WRITE, sev.c:3806)
+  - If validation fails, the error response reveals whether adjacent
+    memory is zero vs non-zero (information disclosure to guest)
+
+The guest controls allocation size (exit_info_2), entry range
+(cur_entry/end_entry), and can fire unlimited VMGEXITs to repeatedly
+hit different slab positions.
+
+By exploiting the variety of bugs, a malicious SEV-SNP guest can:
+    - OOB read adjacent kmalloc-cg-32 objects (heap layout disclosure)
+    - OOB write cur_page bits into adjacent objects (heap corruption)
+    - Trigger use-after-free conditions across VMGEXITs
+
+E.g. with KASAN enabled, a single insmod of the PoC guest module
+produces 73 KASAN reports:
+
+    BUG: KASAN: slab-out-of-bounds in snp_begin_psc+0x126/0x890
+    Read of size 8 at addr ffff888219ffb5e0 by task qemu-system-x86/2199
+
+    BUG: KASAN: slab-out-of-bounds in snp_begin_psc+0x468/0x890
+    Write of size 8 at addr ffff888351566648 by task qemu-system-x86/2199
+
+    The buggy address belongs to the object at ffff888XXXXXXXXX
+     which belongs to the cache kmalloc-cg-32 of size 32
+    The buggy address is located N bytes to the right of
+     allocated 32-byte region [ffff888XXXXXXXXX, ffff888XXXXXXXXX)
+
+  Breakdown:
+    62 slab-out-of-bounds (reads + writes past allocation)
+     7 slab-use-after-free
+     4 use-after-free
+
+All credit to Stan for the wonderful description and reproducer!
+
+Reported-by: Stan Shaw <shawstan96@gmail.com>
+Cc: Michael Roth <michael.roth@amd.com>
+Cc: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: Peter Gonda <pgonda@google.com>
+Cc: Jacky Li <jackyli@google.com>
+Fixes: 4af663c2f64a ("KVM: SEV: Allow per-guest configuration of GHCB protocol version")
+Cc: stable@vger.kernel.org
+Signed-off-by: Michael Roth <michael.roth@amd.com>
+[sean: write changelog]
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260501202250.2115252-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad4695.c |   23 ++++++++---------------
- 1 file changed, 8 insertions(+), 15 deletions(-)
+ arch/x86/kvm/svm/sev.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/iio/adc/ad4695.c
-+++ b/drivers/iio/adc/ad4695.c
-@@ -876,14 +876,14 @@ static int ad4695_offload_buffer_postena
- 	if (ret)
- 		goto err_unoptimize_message;
- 
--	ret = spi_offload_trigger_enable(st->offload, st->offload_trigger,
--					 &config);
-+	ret = ad4695_enter_advanced_sequencer_mode(st, num_slots);
- 	if (ret)
- 		goto err_disable_busy_output;
- 
--	ret = ad4695_enter_advanced_sequencer_mode(st, num_slots);
-+	ret = spi_offload_trigger_enable(st->offload, st->offload_trigger,
-+					 &config);
- 	if (ret)
--		goto err_offload_trigger_disable;
-+		goto err_exit_conversion_mode;
- 
- 	mutex_lock(&st->cnv_pwm_lock);
- 	pwm_get_state(st->cnv_pwm, &state);
-@@ -895,23 +895,16 @@ static int ad4695_offload_buffer_postena
- 	ret = pwm_apply_might_sleep(st->cnv_pwm, &state);
- 	mutex_unlock(&st->cnv_pwm_lock);
- 	if (ret)
--		goto err_offload_exit_conversion_mode;
-+		goto err_offload_trigger_disable;
- 
- 	return 0;
- 
--err_offload_exit_conversion_mode:
--	/*
--	 * We have to unwind in a different order to avoid triggering offload.
--	 * ad4695_exit_conversion_mode() triggers a conversion, so it has to be
--	 * done after spi_offload_trigger_disable().
--	 */
--	spi_offload_trigger_disable(st->offload, st->offload_trigger);
--	ad4695_exit_conversion_mode(st);
--	goto err_disable_busy_output;
--
- err_offload_trigger_disable:
- 	spi_offload_trigger_disable(st->offload, st->offload_trigger);
- 
-+err_exit_conversion_mode:
-+	ad4695_exit_conversion_mode(st);
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -3543,6 +3543,10 @@ static int setup_vmgexit_scratch(struct
+ 		scratch_va = (void *)svm->sev_es.ghcb;
+ 		scratch_va += (scratch_gpa_beg - control->ghcb_gpa);
+ 	} else {
++		/* GHCB v2 requires the scratch area to be within the GHCB. */
++		if (to_kvm_sev_info(svm->vcpu.kvm)->ghcb_version >= 2)
++			goto e_scratch;
 +
- err_disable_busy_output:
- 	regmap_clear_bits(st->regmap, AD4695_REG_GP_MODE,
- 			  AD4695_REG_GP_MODE_BUSY_GP_EN);
+ 		/*
+ 		 * The guest memory must be read into a kernel buffer, so
+ 		 * limit the size
 
 
