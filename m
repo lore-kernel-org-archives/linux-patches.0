@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB8431AF3B;
-	Sun,  7 Jun 2026 10:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B11E327C13;
+	Sun,  7 Jun 2026 10:28:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828111; cv=none; b=aaU/0boaVrPxYCqyxdmEf2fMVVRSUX9J1wTDYQFdCZfVa19pirY3gPhkFSuKSmClhg+awtiTV2NExM4Qk8cYy+m2nNbYkI1ONiLCu85mmzoFVBJ0zTViEDamr+MUllPH8qSWUsabCkFJg3KCMlryU+EsddrkPDcKzZiBiHnj1jY=
+	t=1780828114; cv=none; b=C9nyBp2GYcoszCWvQnoz4S4eDdZahqFhbuamzdrfa+wSup6WV8JwUxoBhvI6XIYJuikfwmjURrdQ2JmBvfCvssYZ4FxuGS7+5wIliVPQ0UZ5iLv8a2FYh2d3gUWjJPiFQDhoxPZeXaau5uqphxEYA/EyVqqqQNnPe88DCRnNVOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828111; c=relaxed/simple;
-	bh=E5H86kwGI09TN91Eh0p/qOvwDebuYb+2Qsvr+SFlqds=;
+	s=arc-20240116; t=1780828114; c=relaxed/simple;
+	bh=AXPwGbwdGOZkumY3kLoJOd+7gE1H9y8wUvozL32kB+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FVOuL2o5ArT0S+82jgKnSRBLbzcvX1eQ2cX4PHXqVkFlfqZA5jFPc2aUZ+w4geifASemhjJvNBxc9AQNfSdbwUYfevTay2b69uQSKRCeBZsoeWQYz9yuugnKYKlMy+q73f7Gs+Rx4XNvWDwOabzF/98L1XiZ8/821/E8P0+bW00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSbw9QdB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IF80hJ+wTAZAaBj73Ea8gs+QObcijKfnY20No3kCXrepEscFv+jPIavM+6EAecyWoUkDgNRUbD95L4UoVHBmGHXvNK0FKTx6Z9yiiWVKv6opKQ851zh0e7wtW4JIrjRJIJRUuzG3aB2b1sPKxvmBEk+ZPpRXAMlI5ZPzoFYIXys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHVPqyhm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSbw9QdB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38531F00893;
-	Sun,  7 Jun 2026 10:28:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHVPqyhm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352071F00893;
+	Sun,  7 Jun 2026 10:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828109;
-	bh=WHvPbjw0sim4zM5ki70MwLnLaTBNjGX40eyssCXk6E0=;
+	s=korg; t=1780828113;
+	bh=wJQL1TpQHnse8rLxomBH/oaSR1Bo+JPlp0ttHHFtMcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CSbw9QdBOlbBp6n7RZKSfVHWWmi7WVNF25ocoWhrRxTlidCsN5W3bhnVJ5Acysbdi
-	 LhohW95s9ng3ybtGtvQqj4Pt5Imt1UqRSLi6jP4gr8qQLp7THNvHZZjFnX352MSMzM
-	 mDr5czlKSSr/wqKIxyzIavpg9nHIyLextmak9bKA=
+	b=ZHVPqyhm70rbsHp2KTta4jsEfcRYhpqvk23cq86IfbFcPHUHFWyiKMw5L6SoMwn+1
+	 zmPcWFbomnxVEXtnYM6yovghAZ6jW2SVYnprqTAXkA4hop/hKYyiZoWvKX9++LKtjl
+	 JhVLFxgTSd1VPrKiiUehK3FKumOgurUu8IhvUN0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Shuai Zhang <shuai.zhang@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.0 152/332] Bluetooth: hci_qca: Use 100 ms SSR delay for rampatch and NVM loading
-Date: Sun,  7 Jun 2026 11:58:41 +0200
-Message-ID: <20260607095733.670004676@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Rajani Kantha <681739313@139.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 112/307] inet: frags: add inet_frag_queue_flush()
+Date: Sun,  7 Jun 2026 11:58:29 +0200
+Message-ID: <20260607095731.890384221@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,58 +48,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit fa21e86caba2347e89eb65af926205a36a097c53 upstream.
+[ Upstream commit 1231eec6994be29d6bb5c303dfa54731ed9fc0e6 ]
 
-When bt_en is pulled high by hardware, the host does not re-download
-the firmware after SSR. The controller loads the rampatch and NVM
-internally.
+Instead of exporting inet_frag_rbtree_purge() which requires that
+caller takes care of memory accounting, add a new helper. We will
+need to call it from a few places in the next patch.
 
-On HMT chip, the rampatch is ~264 KB and the NVM is ~9.4 KB. The
-loading process takes approximately 70 ms. The previous 50 ms delay is
-too short, causing the controller to not respond to the reset command
-sent by the host, which leads to BT initialization failure:
-
- Bluetooth: hci0: QCA memdump Done, received 458752, total 458752
- Bluetooth: hci0: mem_dump_status: 2
- Bluetooth: hci0: Opcode 0x0c03 failed: -110
-
-Increase the delay to 100 ms, which was confirmed as a safe value by
-the controller, to ensure the controller has finished loading the
-firmware before the host sends commands.
-
-Steps to reproduce:
-1. Trigger SSR and wait for SSR to complete:
-   hcitool cmd 0x3f 0c 26
-2. Run "bluetoothctl power on" and observe that BT fails to start.
-
-Fixes: fce1a9244a0f ("Bluetooth: hci_qca: Fix SSR (SubSystem Restart) fail when BT_EN is pulled up by hw")
-Cc: stable@vger.kernel.org
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20251207010942.1672972-3-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Rajani Kantha <681739313@139.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_qca.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/inet_frag.h  |  5 ++---
+ net/ipv4/inet_fragment.c | 15 ++++++++++++---
+ net/ipv4/ip_fragment.c   |  6 +-----
+ 3 files changed, 15 insertions(+), 11 deletions(-)
 
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1677,8 +1677,8 @@ static void qca_hw_error(struct hci_dev
- 		mod_timer(&qca->tx_idle_timer, jiffies +
- 				  msecs_to_jiffies(qca->tx_idle_delay));
+diff --git a/include/net/inet_frag.h b/include/net/inet_frag.h
+index 5af6eb14c5db15..94edc0e130d2c4 100644
+--- a/include/net/inet_frag.h
++++ b/include/net/inet_frag.h
+@@ -141,9 +141,8 @@ void inet_frag_kill(struct inet_frag_queue *q);
+ void inet_frag_destroy(struct inet_frag_queue *q);
+ struct inet_frag_queue *inet_frag_find(struct fqdir *fqdir, void *key);
  
--		/* Controller reset completion time is 50ms */
--		msleep(50);
-+		/* Wait for the controller to load the rampatch and NVM. */
-+		msleep(100);
+-/* Free all skbs in the queue; return the sum of their truesizes. */
+-unsigned int inet_frag_rbtree_purge(struct rb_root *root,
+-				    enum skb_drop_reason reason);
++void inet_frag_queue_flush(struct inet_frag_queue *q,
++			   enum skb_drop_reason reason);
  
- 		clear_bit(QCA_SSR_TRIGGERED, &qca->flags);
- 		clear_bit(QCA_IBS_DISABLED, &qca->flags);
+ static inline void inet_frag_put(struct inet_frag_queue *q)
+ {
+diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
+index d179a2c8422276..70640906337757 100644
+--- a/net/ipv4/inet_fragment.c
++++ b/net/ipv4/inet_fragment.c
+@@ -264,8 +264,8 @@ static void inet_frag_destroy_rcu(struct rcu_head *head)
+ 	kmem_cache_free(f->frags_cachep, q);
+ }
+ 
+-unsigned int inet_frag_rbtree_purge(struct rb_root *root,
+-				    enum skb_drop_reason reason)
++static unsigned int
++inet_frag_rbtree_purge(struct rb_root *root, enum skb_drop_reason reason)
+ {
+ 	struct rb_node *p = rb_first(root);
+ 	unsigned int sum = 0;
+@@ -285,7 +285,16 @@ unsigned int inet_frag_rbtree_purge(struct rb_root *root,
+ 	}
+ 	return sum;
+ }
+-EXPORT_SYMBOL(inet_frag_rbtree_purge);
++
++void inet_frag_queue_flush(struct inet_frag_queue *q,
++			   enum skb_drop_reason reason)
++{
++	unsigned int sum;
++
++	sum = inet_frag_rbtree_purge(&q->rb_fragments, reason);
++	sub_frag_mem_limit(q->fqdir, sum);
++}
++EXPORT_SYMBOL(inet_frag_queue_flush);
+ 
+ void inet_frag_destroy(struct inet_frag_queue *q)
+ {
+diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
+index 183856b0b74094..eb5f6060b85d52 100644
+--- a/net/ipv4/ip_fragment.c
++++ b/net/ipv4/ip_fragment.c
+@@ -253,16 +253,12 @@ static int ip_frag_too_far(struct ipq *qp)
+ 
+ static int ip_frag_reinit(struct ipq *qp)
+ {
+-	unsigned int sum_truesize = 0;
+-
+ 	if (!mod_timer(&qp->q.timer, jiffies + qp->q.fqdir->timeout)) {
+ 		refcount_inc(&qp->q.refcnt);
+ 		return -ETIMEDOUT;
+ 	}
+ 
+-	sum_truesize = inet_frag_rbtree_purge(&qp->q.rb_fragments,
+-					      SKB_DROP_REASON_FRAG_TOO_FAR);
+-	sub_frag_mem_limit(qp->q.fqdir, sum_truesize);
++	inet_frag_queue_flush(&qp->q, SKB_DROP_REASON_FRAG_TOO_FAR);
+ 
+ 	qp->q.flags = 0;
+ 	qp->q.len = 0;
+-- 
+2.53.0
+
 
 
