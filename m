@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8CC2580CF;
-	Sun,  7 Jun 2026 10:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7782D8378;
+	Sun,  7 Jun 2026 10:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829165; cv=none; b=uIadeTnAeAegNseypbmwhnAi4qyCWMlKn5vXEM01APLue75GB5tnUaZOSDG3oNuxqAzdoUDqa39ntz1lbwOGgT3SNVd4XtI13pSxSqKIk8lgitkR1N5EM5fTBXZuLT3EyWGoSKS0p27t0uPys6Y18VMILv5wv1mxB7dhSZpDbYA=
+	t=1780829169; cv=none; b=TGzSYO/Gd4e2/HPtiqmBjQ+wheVX82F15BpNTwXFRgbrckbZgH8Hr7y8YgaX8RUXYiWpl6oACk+dvZ+61bPvNG2pEHxKy75dey0psKm+M0jlhbbFZ8SEqvOklIyCIhS90WllK8yoPe332OKlxCQ4+0KBkzmjqG17kjLwg+mOBuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829165; c=relaxed/simple;
-	bh=EkP8oDNqE1Jaz9zLhJrYoxxgHI4FWs+7l74KE/ns9vY=;
+	s=arc-20240116; t=1780829169; c=relaxed/simple;
+	bh=7FmIjBOeAqoUw0f3MTBqmbvtHbMQJZNQh7+19VBPiAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JTusvXkLUCZO4YStfe+cEqrMbHrje7vXNChcYHgBO9DWvu46Ra9ndF6N0QIweRi1SnErdo5vPYS4Jiz95CBeNRm3Plwj3e4V4DmtHCuK+kwRnnCwX4A8ChgAjtmwR1u9lIjym4ieXYAKr31uZKhdvkSwFAR1XJfpJdFSjgk1Th8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJoElXPF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T3eU+x5SLvCGvAaJW75RLfy+iCYkMZUdMoQgvFC/yDSMg2HQy4sMXWk8jlkU/0XgRvAlLGoJHCaQhXQoKtEpJB2crP7uk2/GFj6+eq6cwPkr2Z4hKlbC27qzCt+W+kNftGUB0ze9nv0JzIsL3DqcaOLvoJ89Fto8Pvna/DBPDW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9pilAw8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJoElXPF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF06E1F00893;
-	Sun,  7 Jun 2026 10:46:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9pilAw8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7331F00893;
+	Sun,  7 Jun 2026 10:46:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829164;
-	bh=1N15axydbY5K7O7ugpRcPdGm59mkEzRrGMuTwtP8sLM=;
+	s=korg; t=1780829168;
+	bh=12kB0fJWp7E/IPh3hJUvtLb2bD8vtEUwBPxi3NgSPlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uJoElXPFJecXWHC30xBE5R+j+0X1ZmW7mNKc8LXxmfbEsnqIv0yYudrW1lck4CA7A
-	 MhXlYE5srYvBCnzRxaohfWYPSzFLNlZVqOY1Z0m2gNs7tv97UXtOLxStLvcW9gAabR
-	 8TMAnmpooEJhCbycFfiW3Ip4EdbmfBnXY8wyCl2Y=
+	b=L9pilAw8zxZPee99TOBuC1FBQ7hiUHhdaa7kTXiqe4de7RSNcbHAaAnWwbSHrWxoN
+	 ZuHi20ZscHRXF3IL3I0RQMlUPX/U/U0hn+fkGgdWdstmfpqeSJ/XWmLkAzVAwUgFQS
+	 XsObURlrzHjWB3RqwF859Fb5ETUWQOHaBsWo/UNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Peter Chen <peter.chen@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Xu Yang <xu.yang_2@nxp.com>
-Subject: [PATCH 6.18 222/315] usb: chipidea: core: convert ci_role_switch to local variable
-Date: Sun,  7 Jun 2026 12:00:09 +0200
-Message-ID: <20260607095735.728237356@linuxfoundation.org>
+	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.12 201/307] netfilter: conntrack: tcp: do not force CLOSE on invalid-seq RST without direction check
+Date: Sun,  7 Jun 2026 11:59:58 +0200
+Message-ID: <20260607095735.107862699@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,81 +46,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
 
-commit 8f6aa392653e52a45858cff5c063df550028836b upstream.
+commit bed6e04be8e6b9133d8b16d5a42d0e0ce674fa9a upstream.
 
-When a system contains multiple USB controllers, the global ci_role_switch
-variable may be overwritten by subsequent driver initialization code.
+An unintended behavior in the TCP conntrack state machine allows a
+connection to be forced into the CLOSE state using an RST packet with an
+invalid sequence number.
 
-This can cause issues in the following cases:
- - The 2nd ci_hdrc_probe() sees ci_role_switch.fwnode as non-NULL even
-   though the "usb-role-switch" property is not present for the controller.
- - When the ci_hdrc device is unbound and bound again, ci_role_switch
-   fwnode will not be reassigned, and the old value will be used instead.
+Specifically, after a SYN packet is observed, an RST with an invalid SEQ
+can transition the conntrack entry to TCP_CONNTRACK_CLOSE, regardless of
+whether the RST corresponds to the expected reply direction. The relevant
+code path assumes the RST is a response to an outgoing SYN, but does not
+validate packet direction or ensure that a matching SYN was actually sent
+in the opposite direction.
 
-Convert ci_role_switch to a local variable to fix these issues.
+As a result, a crafted packet sequence consisting of a SYN followed by an
+invalid-sequence RST can prematurely terminate an active NAT entry. This
+makes connection teardown easier than intended.
 
-Fixes: 05559f10ed79 ("usb: chipidea: add role switch class support")
-Cc: stable <stable@kernel.org>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://patch.msgid.link/20260427075755.3611217-1-xu.yang_2@nxp.com
+So, tighten the state transition logic to ensure that RST-triggered
+CLOSE transitions only occur when the RST is a valid response to a
+previously observed SYN in the correct direction.
+
+Cc: stable@vger.kernel.org
+Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
+Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/core.c |   16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ net/netfilter/nf_conntrack_proto_tcp.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/chipidea/core.c
-+++ b/drivers/usb/chipidea/core.c
-@@ -669,12 +669,6 @@ static enum ci_role ci_get_role(struct c
- 	return role;
- }
- 
--static struct usb_role_switch_desc ci_role_switch = {
--	.set = ci_usb_role_switch_set,
--	.get = ci_usb_role_switch_get,
--	.allow_userspace_control = true,
--};
--
- static int ci_get_platdata(struct device *dev,
- 		struct ci_hdrc_platform_data *platdata)
- {
-@@ -801,9 +795,6 @@ static int ci_get_platdata(struct device
- 			cable->connected = false;
- 	}
- 
--	if (device_property_read_bool(dev, "usb-role-switch"))
--		ci_role_switch.fwnode = dev->fwnode;
--
- 	platdata->pctl = devm_pinctrl_get(dev);
- 	if (!IS_ERR(platdata->pctl)) {
- 		struct pinctrl_state *p;
-@@ -1045,6 +1036,7 @@ ATTRIBUTE_GROUPS(ci);
- 
- static int ci_hdrc_probe(struct platform_device *pdev)
- {
-+	struct usb_role_switch_desc ci_role_switch = {};
- 	struct device	*dev = &pdev->dev;
- 	struct ci_hdrc	*ci;
- 	struct resource	*res;
-@@ -1191,7 +1183,11 @@ static int ci_hdrc_probe(struct platform
+--- a/net/netfilter/nf_conntrack_proto_tcp.c
++++ b/net/netfilter/nf_conntrack_proto_tcp.c
+@@ -1221,7 +1221,8 @@ int nf_conntrack_tcp_packet(struct nf_co
+ 			new_state = old_state;
  		}
- 	}
- 
--	if (ci_role_switch.fwnode) {
-+	if (device_property_read_bool(dev, "usb-role-switch")) {
-+		ci_role_switch.set = ci_usb_role_switch_set;
-+		ci_role_switch.get = ci_usb_role_switch_get;
-+		ci_role_switch.allow_userspace_control = true;
-+		ci_role_switch.fwnode = dev_fwnode(dev);
- 		ci_role_switch.driver_data = ci;
- 		ci->role_switch = usb_role_switch_register(dev,
- 					&ci_role_switch);
+ 		if (((test_bit(IPS_SEEN_REPLY_BIT, &ct->status)
+-			 && ct->proto.tcp.last_index == TCP_SYN_SET)
++			 && ct->proto.tcp.last_index == TCP_SYN_SET
++			 && ct->proto.tcp.last_dir != dir)
+ 			|| (!test_bit(IPS_ASSURED_BIT, &ct->status)
+ 			    && ct->proto.tcp.last_index == TCP_ACK_SET))
+ 		    && ntohl(th->ack_seq) == ct->proto.tcp.last_end) {
 
 
