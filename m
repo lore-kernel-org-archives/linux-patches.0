@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FFC4204E;
-	Sun,  7 Jun 2026 10:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067134204E;
+	Sun,  7 Jun 2026 10:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829681; cv=none; b=B1vQJdjPb1hlsMLfzPw6S1Z0Xeyx2xq+XxIIGECKZSBRq1K3yUjhIfkTCxmZQJSfxDMjbEn35prgIZ+C3wLkkdiuytaqhX0ozKj/p7E7gFrYWjvqdyK4CklA3H0FBEugf1Fq4cqlVoyWjKkIS1N5HoFxn3FTt8U1peJQCZv8Zlw=
+	t=1780829685; cv=none; b=j3KV9A9fK4H1qiob4maCeOJhlK+7QxqLZmYr7YHgb6LkzwwCDJMNOP7apP1qqqSIUqRB6vFz5DOhLay/vKhgoGOJFT6RF7VWn6+v+bDppua82pT+ZaWGY0pogTccqA6jqG7CxsDQqI7OUgkgwgVPwmhxLkCNI3ag39uGvUC5kTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829681; c=relaxed/simple;
-	bh=9a16s8HBYrstJFSCsmedexhL6YLvEQY3GHAzc0V46W0=;
+	s=arc-20240116; t=1780829685; c=relaxed/simple;
+	bh=1hz7O4KZ2NjrqP2+V+cm/Yx2wNL2DbqaYEIrPdeewcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jjj1dJECa8n8aDbKj7Sm8BOIfExodlHIqVoSgnHpmQ90l4sUBvMBQMLcZu7zaShpTFw92lTbOmAiKcTKA2KMyBI/TxejckZbrd5Krj2Ngj3vaIYDV4SE6etV+knLC8qJ7NTLL7OsD3QnTwonTGFdS2FROz7Q+ReUglp7ozZtZyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7oNc6j6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XvtOpoLctJaL0FsZAv4Q1OEketmQF+2bkvCfaVt76awOBP1uTvAcQQm9DrIRfpVGDVmA0nvbZ6XdPgxh8bsAbZSXuRkudCC2qOh/5VLF4y+Bqj2vjrJfd5alTRjh41755vD3sVDRjllE3o3jWJ5zwbDzLos1XT8kITDRfbey/dQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdlHkP2T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7oNc6j6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA7C91F00893;
-	Sun,  7 Jun 2026 10:54:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdlHkP2T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8D21F00893;
+	Sun,  7 Jun 2026 10:54:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829680;
-	bh=C2aVNaRI+sKyQEEWAlV5ns+fn0d+CczpO7/HYKHEfAw=;
+	s=korg; t=1780829683;
+	bh=XwSrvZ40VsfYMA9dxA7dk1yq6b9F/7MuafSXf3+mUJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G7oNc6j6SjeTHD3EhRokhG5a3yW6WWMseMLuegpFYEO2aSHzlVp5KbobeaOQMUSus
-	 iLyf+f6Q/XT5geFe8CNIyLN+/UCphFxVDtYpVEA8JSCA5PNNTZoF1c+ybKUneTpRwN
-	 AtjG5NATyvhbKeghwv5shBRFb1LtaR7FQz20fae8=
+	b=jdlHkP2TsRM+yqzkpshv+hd0sMRDIPQv2N0kMpEe52hioQZxY7jZ/PjREdCscQbZl
+	 kn6bFRM7nMWC3fgvJAw2FrFBeWj6E4+45l3uFqNxQVrBQtWR4Qd+Q+pSDpWtUDLLVi
+	 R7choKlSakVwbKQRqmpHGBOV5Ownr9yN2W6Z9xKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 270/315] drm/amdgpu: fix lock leak on ENOMEM in AMDGPU_GEM_OP_GET_MAPPING_INFO
-Date: Sun,  7 Jun 2026 12:00:57 +0200
-Message-ID: <20260607095737.482804556@linuxfoundation.org>
+Subject: [PATCH 7.0 305/332] drm/amdgpu: fix lock leak on ENOMEM in AMDGPU_GEM_OP_GET_MAPPING_INFO
+Date: Sun,  7 Jun 2026 12:01:14 +0200
+Message-ID: <20260607095739.277946606@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,7 +46,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -104,7 +104,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-@@ -1075,8 +1075,10 @@ int amdgpu_gem_op_ioctl(struct drm_devic
+@@ -1096,8 +1096,10 @@ int amdgpu_gem_op_ioctl(struct drm_devic
  		 * be retried.
  		 */
  		vm_entries = kvcalloc(args->num_entries, sizeof(*vm_entries), GFP_KERNEL);
