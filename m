@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D7C212564;
-	Sun,  7 Jun 2026 10:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB61328610;
+	Sun,  7 Jun 2026 10:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828724; cv=none; b=R9yQrJxmV1wiRg8/WCNDX/jm7yL4kRILYD9hhNdUkWjVlzzmTWTAGidfpGW/n3kd5M+4rGGQS3Mx1MCqtUGUHstzjUq0CKzwKPb6zY0UHetdimV2n96tsRD1ME0Ir4CftJdm46lfz9tAhTfFdKOaAPk5m2cQoHSdz4gaHNA78dA=
+	t=1780828728; cv=none; b=fa1/GmcpG8PzAzhKXROoR6qCa5Z6IF8X2h5SRLF2gK8dVoPcKolksbxCV5QM+obQuzlJeSqlN+STxIIWzydBCEGB8JXnVhO8MmJ2XuvOpe7vWxAkkzxQq6CD05HpmS3M5Vl/H3wMrCJCQvl7Jh6YzepNa/xhCl08M7UNVSNmzoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828724; c=relaxed/simple;
-	bh=k4UYJ5av6Wv/UL4n87mUzI+mMxakghItkM9HXbXJoOo=;
+	s=arc-20240116; t=1780828728; c=relaxed/simple;
+	bh=7QTnqXMRCxrDZh6IcAMbSUQQ8Wa/zcmxJ2rrFL8BcKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a0mvc7Emx7pii2jigGYUF1Bhw3JRFqMW+sikAlVF37cWYxrrrXH+MRN6vgtV0vmPhjGP+tiBdGtW2UL3lhgNMSVIOW9jYKDw7u+nJmkX43TQNFupCchsNN0rwKxsDP9PsYAOn/ANSQTZiwTel9LvYrAJndNIWVvgQ0x6Ng6uJoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TaMfT4E9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kO7v4LdjanA03AX6ziKI3tAE/sC79MKYrRfTUMouNHAcmhKTc5LbUjgiO1NPTMXCpYsVHvZj0cmNH2BuUvvhL0X/FX//Q/A8G27ZVg74u2Uk40CBYULI8a3+Yd4V0Ngwb3XA8HqIxV+qnnMwuijt+IY5nPOaLTXw+01lsiQoHBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8zFqMoI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaMfT4E9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8CB01F00893;
-	Sun,  7 Jun 2026 10:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8zFqMoI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82DEA1F00893;
+	Sun,  7 Jun 2026 10:38:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828723;
-	bh=TeU/7MDoEbqbTYeCUXX0aAX8joheBvwyWwwX8vrNCEA=;
+	s=korg; t=1780828727;
+	bh=lwNtjT/uQA9UvsQzsBmnwx+KthQMVxvtI7VcquMfNu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TaMfT4E9obQZa/VbjEF4bP7MZDkLKho+Asn0xFdh6BSSQSCvZV66Jx85pQ3amuVtW
-	 Q7udFw587Ekk1CLf1lPgdgbXhz5KwlXTBY0llvFGTut5/gKZuUW0QrYTBerlX3bivf
-	 y6MhfgVqtjX+V6iIREtnhZqtoRE3lRuulg/BLTrI=
+	b=A8zFqMoIwzn9V1Cckd5ekHnCU2eukRGXdl6WKz57D6W2b2JVb2EnEE+ktLduZLHdW
+	 58m/JWEXRTtEUszam9I0NE/z3q5tNXK4ZQUvuDDSn68qxR+ovGoQTOXWKHYotzLSZn
+	 0nckr/i50mZ7Ib2nuSyrRtq7GQMoj5uXAeaNmerk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Chaitanya Sabnis <chaitanya.msabnis@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 7.0 206/332] i2c: davinci: fix division by zero on missing clock-frequency
-Date: Sun,  7 Jun 2026 11:59:35 +0200
-Message-ID: <20260607095735.634458328@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.12 161/307] Disable -Wattribute-alias for clang-23 and newer
+Date: Sun,  7 Jun 2026 11:59:18 +0200
+Message-ID: <20260607095733.633228004@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,51 +45,130 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chaitanya Sabnis <chaitanya.msabnis@gmail.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 030675aa54cf757769b3db65642433d626b3ed7c upstream.
+commit 175db11786bde9061db526bf1ac5107d915f5163 upstream.
 
-When the 'clock-frequency' property is missing from the device tree,
-the driver falls back to DAVINCI_I2C_DEFAULT_BUS_FREQ. However, this
-macro was defined in kHz (100), whereas the device tree property is
-expected in Hz.
+Clang recently added support for -Wattribute-alias [1], which results in
+the same warnings that necessitated commit bee20031772a ("disable
+-Wattribute-alias warning for SYSCALL_DEFINEx()") for GCC.
 
-The probe function divided the fallback value by 1000, causing
-integer truncation that resulted in dev->bus_freq = 0. This triggered
-a deterministic division-by-zero kernel panic when calculating clock
-dividers later in the probe sequence.
+  kernel/time/itimer.c:325:1: error: alias and aliasee have different types 'long (unsigned int)' and 'long (typeof (__builtin_choose_expr((__builtin_types_compatible_p(typeof ((unsigned int)0), typeof (0LL)) || __builtin_types_compatible_p(typeof ((unsigned int)0), typeof (0ULL))), 0LL, 0L)))' (aka 'long (long)') [-Werror,-Wattribute-alias]
+    325 | SYSCALL_DEFINE1(alarm, unsigned int, seconds)
+        | ^
+  include/linux/syscalls.h:225:36: note: expanded from macro 'SYSCALL_DEFINE1'
+    225 | #define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
+        |                                    ^
+  include/linux/syscalls.h:236:2: note: expanded from macro 'SYSCALL_DEFINEx'
+    236 |         __SYSCALL_DEFINEx(x, sname, __VA_ARGS__)
+        |         ^
+  include/linux/syscalls.h:251:18: note: expanded from macro '__SYSCALL_DEFINEx'
+    251 |                 __attribute__((alias(__stringify(__se_sys##name))));    \
+        |                                ^
+  kernel/time/itimer.c:325:1: note: aliasee is declared here
+  include/linux/syscalls.h:225:36: note: expanded from macro 'SYSCALL_DEFINE1'
+    225 | #define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
+        |                                    ^
+  include/linux/syscalls.h:236:2: note: expanded from macro 'SYSCALL_DEFINEx'
+    236 |         __SYSCALL_DEFINEx(x, sname, __VA_ARGS__)
+        |         ^
+  include/linux/syscalls.h:255:18: note: expanded from macro '__SYSCALL_DEFINEx'
+    255 |         asmlinkage long __se_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__))  \
+        |                         ^
+  <scratch space>:16:1: note: expanded from here
+     16 | __se_sys_alarm
+        | ^
 
-Fix this by redefining DAVINCI_I2C_DEFAULT_BUS_FREQ in Hz (100000)
-to match the expected device tree property unit, allowing the existing
-division logic to work correctly for both cases.
+Disable the warnings in the same way for clang-23 and newer. Disable the
+warning about unknown warning options to avoid breaking the build for
+versions of clang-23 that do not have -Wattribute-alias, such as ones
+deployed by vendors like Android or CI systems or when bisecting LLVM
+between llvmorg-23-init and release/23.x.
 
-Fixes: b04ce6385979 ("i2c: davinci: kill platform data")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260514044726.57297C2BCB7@smtp.kernel.org/
-Signed-off-by: Chaitanya Sabnis <chaitanya.msabnis@gmail.com>
-Cc: <stable@vger.kernel.org> # v6.14+
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260526102240.4949-1-chaitanya.msabnis@gmail.com
+Cc: stable@vger.kernel.org
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2163
+Link: https://github.com/llvm/llvm-project/commit/40da6920a0d71d49dfa2392b09153600b0759f5e [1]
+Link: https://patch.msgid.link/20260515-syscall-disable-attribute-alias-for-clang-v1-1-9a9d95d41df6@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-davinci.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/include/asm/syscall_wrapper.h |    4 ++++
+ include/linux/compat.h                   |    4 ++++
+ include/linux/compiler-clang.h           |    6 ++++++
+ include/linux/compiler_types.h           |    4 ++++
+ include/linux/syscalls.h                 |    4 ++++
+ 5 files changed, 22 insertions(+)
 
---- a/drivers/i2c/busses/i2c-davinci.c
-+++ b/drivers/i2c/busses/i2c-davinci.c
-@@ -117,7 +117,7 @@
- /* timeout for pm runtime autosuspend */
- #define DAVINCI_I2C_PM_TIMEOUT	1000	/* ms */
+--- a/arch/riscv/include/asm/syscall_wrapper.h
++++ b/arch/riscv/include/asm/syscall_wrapper.h
+@@ -32,6 +32,10 @@ asmlinkage long __riscv_sys_ni_syscall(c
+ 	__diag_push();									\
+ 	__diag_ignore(GCC, 8, "-Wattribute-alias",					\
+ 			"Type aliasing is used to sanitize syscall arguments");		\
++	__diag_ignore(clang, 23, "-Wunknown-warning-option",				\
++		      "Avoid breaking versions without -Wattribute-alias");		\
++	__diag_ignore(clang, 23, "-Wattribute-alias",					\
++			"Type aliasing is used to sanitize syscall arguments");		\
+ 	static long __se_##prefix##name(ulong, ulong, ulong, ulong, ulong, ulong, 	\
+ 					ulong)						\
+ 			__attribute__((alias(__stringify(___se_##prefix##name))));	\
+--- a/include/linux/compat.h
++++ b/include/linux/compat.h
+@@ -72,6 +72,10 @@
+ 	__diag_push();								\
+ 	__diag_ignore(GCC, 8, "-Wattribute-alias",				\
+ 		      "Type aliasing is used to sanitize syscall arguments");\
++	__diag_ignore(clang, 23, "-Wunknown-warning-option",			\
++		      "Avoid breaking versions without -Wattribute-alias");	\
++	__diag_ignore(clang, 23, "-Wattribute-alias",				\
++		      "Type aliasing is used to sanitize syscall arguments");	\
+ 	asmlinkage long compat_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
+ 		__attribute__((alias(__stringify(__se_compat_sys##name))));	\
+ 	ALLOW_ERROR_INJECTION(compat_sys##name, ERRNO);				\
+--- a/include/linux/compiler-clang.h
++++ b/include/linux/compiler-clang.h
+@@ -133,6 +133,12 @@
+ #define __diag_str(s)		__diag_str1(s)
+ #define __diag(s)		_Pragma(__diag_str(clang diagnostic s))
  
--#define DAVINCI_I2C_DEFAULT_BUS_FREQ	100
-+#define DAVINCI_I2C_DEFAULT_BUS_FREQ	100000
++#if CONFIG_CLANG_VERSION >= 230000
++#define __diag_clang_23(s)	__diag(s)
++#else
++#define __diag_clang_23(s)
++#endif
++
+ #define __diag_clang_13(s)	__diag(s)
  
- struct davinci_i2c_dev {
- 	struct device           *dev;
+ #define __diag_ignore_all(option, comment) \
+--- a/include/linux/compiler_types.h
++++ b/include/linux/compiler_types.h
+@@ -569,6 +569,10 @@ struct ftrace_likely_data {
+ #define __diag_GCC(version, severity, string)
+ #endif
+ 
++#ifndef __diag_clang
++#define __diag_clang(version, severity, string)
++#endif
++
+ #define __diag_push()	__diag(push)
+ #define __diag_pop()	__diag(pop)
+ 
+--- a/include/linux/syscalls.h
++++ b/include/linux/syscalls.h
+@@ -245,6 +245,10 @@ static inline int is_syscall_trace_event
+ 	__diag_push();							\
+ 	__diag_ignore(GCC, 8, "-Wattribute-alias",			\
+ 		      "Type aliasing is used to sanitize syscall arguments");\
++	__diag_ignore(clang, 23, "-Wunknown-warning-option",		\
++		      "Avoid breaking versions without -Wattribute-alias");\
++	__diag_ignore(clang, 23, "-Wattribute-alias",			\
++		      "Type aliasing is used to sanitize syscall arguments");\
+ 	asmlinkage long sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
+ 		__attribute__((alias(__stringify(__se_sys##name))));	\
+ 	ALLOW_ERROR_INJECTION(sys##name, ERRNO);			\
 
 
