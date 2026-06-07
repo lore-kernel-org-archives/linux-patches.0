@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443A4329391;
-	Sun,  7 Jun 2026 10:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B751FE47B;
+	Sun,  7 Jun 2026 10:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828377; cv=none; b=piUxeTM3qS4uYL/cNE3+8UJFiogUoqWh5tJJZ/OQZchtsxL/98Jkz5ipzNJRIZe9K9iN9xwM2dJPSBAm0SaTFF4X7boe/UQI9Q1Yl7O4BuDt/Zdh1ywWZ+6DMODPN7LXRUAE3ZlYqa/+PRDGV2nfSa0FGe7GVfgpMul+jHqztm8=
+	t=1780828381; cv=none; b=ksXQ+WldsFz6ENh1pzWyBroa0JT3vNP0NvOAffmjnzcuaPWpT7LEjEqhWUii7w90O4q1acbdkv87j88OHslIL1DLP0UYVWCWwW2FDydaZYQuaAy6U6yDN1jRqj4t0LIEldWkCdjonYs2+odc5kwgXGOAjq5/bDdI6O/Z0pohEX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828377; c=relaxed/simple;
-	bh=OQkwks1lOXlO3AC0mQ96piCtPiyWRroDy6lrVQW2HuA=;
+	s=arc-20240116; t=1780828381; c=relaxed/simple;
+	bh=xQw5V/GfYRrwS438lovqDyrdeadFp0AB/tfn8r27U6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DQflQeWZ6QrQhTMF29TaMzvt+wG1ZJ1pWWuGqwuAWvdk59Hhj8NAMLvIB3xdeuludFT1KmUpImWZJaWfWZ/2vntH5i53AJUSZtDqWLEFQO22NRQMhoPzvfKKuzqT9eHwRq8iL2+SXPOuqWY0xDAwEFI/abnEgY4OtG/BhtsckvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wga/JxHM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mv88VSNbIJhnKA1UK8VCXGHn2bZrmKfcaKjoARXrl5h2hKG+ccwtd5Ma26mwpTNb9pUptKiWZY1EncQIptB8LPyGZBllHUpMWIJYf30Jem6QqOYhNj80k6+G+P/tObl43bv0HUTyucUnC5F4Sz1Is4IjuynPWp8mNbO3yiEzIiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQRtLISA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wga/JxHM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544201F00893;
-	Sun,  7 Jun 2026 10:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQRtLISA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142B81F00893;
+	Sun,  7 Jun 2026 10:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828376;
-	bh=/CBEKVsBr8lpzMxCLMgwmWCb6oHTzRGfu1Gtxgu9IgE=;
+	s=korg; t=1780828380;
+	bh=GYzpPYFjAlhs61q7QuteXsOXXBgXQK65wIQXN5C61lE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wga/JxHMCHvPGSsAYJsLh31tDLQS7kW7ArjVMLduJYLHqGjonWVAo+tOYGHBsampi
-	 WqImQLm5CkeKRVXXgrBUN11yG7zIN9o/jk5nZfQf4a95qPmVf49Sm+8i6ZQVlK2b4H
-	 2xvCj22RbaxAZ1sSkDAE+tq1k24L4ksFRgyIgrvo=
+	b=jQRtLISAwMkCTYaE/bU/Cbxit6ktP1VxWFbNcQFFReeCaYN3r/dL2B7Ki3VEKrYJu
+	 oEKudmzkAnm3xnSz0yMS3zgBp7x6vWq9Nda4+0e6h8ydtwu8IXEEBLDF+AuFTuulZC
+	 dpiuQqqtwec1tbuS2Yo80YQuVowF2ZJy+KuabpJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Wentao Guan <guanwentao@uniontech.com>
-Subject: [PATCH 7.0 158/332] USB: cdc-acm: Fix bit overlap and move quirk definitions to header
-Date: Sun,  7 Jun 2026 11:58:47 +0200
-Message-ID: <20260607095733.880953763@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 6.18 154/315] iio: adc: npcm: fix unbalanced clk_disable_unprepare()
+Date: Sun,  7 Jun 2026 11:59:01 +0200
+Message-ID: <20260607095733.259898783@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,53 +48,112 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Guan <guanwentao@uniontech.com>
+From: David Carlier <devnexen@gmail.com>
 
-commit 5eb070769ea5e18405535609d1d3f6886f3755bd upstream.
+commit 0d42e2c0bd6ceb89e44c6e065f9bdf9b1df3ef0c upstream.
 
-The VENDOR_CLASS_DATA_IFACE and ALWAYS_POLL_CTRL quirk flags added in
-commit f58752ebcb35 ("USB: cdc-acm: Add quirks for Yoga Book 9 14IAH10
-INGENIC touchscreen") were placed inside the acm_ctrl_msg() function
-rather than in the header with the other quirk flags.  Then, their
-values (BIT(9) and BIT(10)) collided with NO_UNION_12 which is already
-BIT(9).
+The driver acquired the ADC clock with devm_clk_get() and read its
+rate, but never called clk_prepare_enable(). The probe error path and
+npcm_adc_remove() both called clk_disable_unprepare() unconditionally,
+causing the clk framework's enable/prepare counts to underflow on
+probe failure or module unbind.
 
-Move the definitions to drivers/usb/class/cdc-acm.h where they belong
-and shift them to BIT(10) and BIT(11) to avoid the overlap.
+The issue went unnoticed because NPCM BMC firmware leaves the ADC
+clock enabled at boot, so the driver happened to work in practice.
 
-Fixes: f58752ebcb35 ("USB: cdc-acm: Add quirks for Yoga Book 9 14IAH10 INGENIC touchscreen")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Link: https://patch.msgid.link/20260522091357.1301196-1-guanwentao@uniontech.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Switch to devm_clk_get_enabled() so the clock is properly enabled
+during probe and automatically released by the device-managed
+cleanup, and drop the now-redundant clk_disable_unprepare() from
+both the probe error path and remove().
+
+While at it, drop the duplicate error message on devm_request_irq()
+failure since the IRQ core already logs it.
+
+Fixes: 9bf85fbc9d8f ("iio: adc: add NPCM ADC driver")
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-acm.c |    2 --
- drivers/usb/class/cdc-acm.h |    2 ++
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/adc/npcm_adc.c |   25 ++++++++-----------------
+ 1 file changed, 8 insertions(+), 17 deletions(-)
 
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -114,8 +114,6 @@ static int acm_ctrl_msg(struct acm *acm,
- 	int retval;
+--- a/drivers/iio/adc/npcm_adc.c
++++ b/drivers/iio/adc/npcm_adc.c
+@@ -231,7 +231,7 @@ static int npcm_adc_probe(struct platfor
+ 	if (IS_ERR(info->reset))
+ 		return PTR_ERR(info->reset);
  
- 	retval = usb_autopm_get_interface(acm->control);
--#define VENDOR_CLASS_DATA_IFACE		BIT(9)  /* data interface uses vendor-specific class */
--#define ALWAYS_POLL_CTRL		BIT(10) /* keep ctrl URB active even without an open TTY */
- 	if (retval)
- 		return retval;
+-	info->adc_clk = devm_clk_get(&pdev->dev, NULL);
++	info->adc_clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(info->adc_clk)) {
+ 		dev_warn(&pdev->dev, "ADC clock failed: can't read clk\n");
+ 		return PTR_ERR(info->adc_clk);
+@@ -244,17 +244,13 @@ static int npcm_adc_probe(struct platfor
+ 	info->adc_sample_hz = clk_get_rate(info->adc_clk) / ((div + 1) * 2);
  
---- a/drivers/usb/class/cdc-acm.h
-+++ b/drivers/usb/class/cdc-acm.h
-@@ -115,3 +115,5 @@ struct acm {
- #define DISABLE_ECHO			BIT(7)
- #define MISSING_CAP_BRK			BIT(8)
- #define NO_UNION_12			BIT(9)
-+#define VENDOR_CLASS_DATA_IFACE		BIT(10)  /* data interface uses vendor-specific class */
-+#define ALWAYS_POLL_CTRL		BIT(11) /* keep ctrl URB active even without an open TTY */
+ 	irq = platform_get_irq(pdev, 0);
+-	if (irq < 0) {
+-		ret = irq;
+-		goto err_disable_clk;
+-	}
++	if (irq < 0)
++		return irq;
+ 
+ 	ret = devm_request_irq(&pdev->dev, irq, npcm_adc_isr, 0,
+ 			       "NPCM_ADC", indio_dev);
+-	if (ret < 0) {
+-		dev_err(dev, "failed requesting interrupt\n");
+-		goto err_disable_clk;
+-	}
++	if (ret < 0)
++		return ret;
+ 
+ 	reg_con = ioread32(info->regs + NPCM_ADCCON);
+ 	info->vref = devm_regulator_get_optional(&pdev->dev, "vref");
+@@ -262,7 +258,7 @@ static int npcm_adc_probe(struct platfor
+ 		ret = regulator_enable(info->vref);
+ 		if (ret) {
+ 			dev_err(&pdev->dev, "Can't enable ADC reference voltage\n");
+-			goto err_disable_clk;
++			return ret;
+ 		}
+ 
+ 		iowrite32(reg_con & ~NPCM_ADCCON_REFSEL,
+@@ -272,10 +268,8 @@ static int npcm_adc_probe(struct platfor
+ 		 * Any error which is not ENODEV indicates the regulator
+ 		 * has been specified and so is a failure case.
+ 		 */
+-		if (PTR_ERR(info->vref) != -ENODEV) {
+-			ret = PTR_ERR(info->vref);
+-			goto err_disable_clk;
+-		}
++		if (PTR_ERR(info->vref) != -ENODEV)
++			return PTR_ERR(info->vref);
+ 
+ 		/* Use internal reference */
+ 		iowrite32(reg_con | NPCM_ADCCON_REFSEL,
+@@ -314,8 +308,6 @@ err_iio_register:
+ 	iowrite32(reg_con & ~NPCM_ADCCON_ADC_EN, info->regs + NPCM_ADCCON);
+ 	if (!IS_ERR(info->vref))
+ 		regulator_disable(info->vref);
+-err_disable_clk:
+-	clk_disable_unprepare(info->adc_clk);
+ 
+ 	return ret;
+ }
+@@ -332,7 +324,6 @@ static void npcm_adc_remove(struct platf
+ 	iowrite32(regtemp & ~NPCM_ADCCON_ADC_EN, info->regs + NPCM_ADCCON);
+ 	if (!IS_ERR(info->vref))
+ 		regulator_disable(info->vref);
+-	clk_disable_unprepare(info->adc_clk);
+ }
+ 
+ static struct platform_driver npcm_adc_driver = {
 
 
