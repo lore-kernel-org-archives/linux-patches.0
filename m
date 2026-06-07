@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509AF212564;
-	Sun,  7 Jun 2026 10:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93500212564;
+	Sun,  7 Jun 2026 10:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828714; cv=none; b=KXGUi1QX5Sp2yQ7e2N+xOacJSC+z/QWFCopEcH4O1mSqeMxjGLE3D0ChKuZ8sHL8s8bhSwiFUrgyVaPas8MM42za64j0yi1yNO9Xy161W1ylje3EhY5rT2BlNCX53LxAR1APYRMf4sLWAXQNGTDOv06JyhNJVw33UzyK5YWz+PA=
+	t=1780828717; cv=none; b=StzI6FbrzG/Ux1rJUUt5F7F8KeUbmRpg6W32B1eT6/nneW+XcFwZ/MUgPiUj7ZOPIp3CYkLUIsiH3eBZJzjnPMAbvkBwTjhHXIjoVQZNgGsPitxG64eiPGTxg+aLXBf5nEqJxb8ISVxK1Rit6ac7Tg4mj6z3m/omHW3KxeC17ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828714; c=relaxed/simple;
-	bh=HFHaWuVvv/COKMsttcHp56B0kdUGjthrpABjJ6vIjCs=;
+	s=arc-20240116; t=1780828717; c=relaxed/simple;
+	bh=Sqv/a7dvJ6oC8imSVOVswOkj2TSOqBeLOd/a8maADJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DmKsTu2Blyu/3MIJcuDPiabf9YT4uyOPCR5G/ohg+doS8LQDP1SasOhThW1Fn3QTSqt4j4tuajskm7LWiiafjEK6dzGEpPn3DKPOFu99oCYvUBs+5csimqqqEIY4HcFBP3c/TVRPRj9c2Y/CsBci2+KLDJ0jFkIk6gH/WcK1yaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bem741A4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MHprVm8whRLbbDp/OuP5jSJX/62JmaMvMvqZZeHf5YqAiR8CKTEMPHdGyFhizAAU3WZMMcDek/cgpUmm+lIF5OCg0lUbuoQXOCPCEunvcoMifL/80b3Cs2DOB2B9Cm0Cj/xB5rh1BN/Szo/yMsC96mUwPIOBo0R9y5WjggBadXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VJ+Wbtak; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bem741A4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C871F00893;
-	Sun,  7 Jun 2026 10:38:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VJ+Wbtak"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B301F00893;
+	Sun,  7 Jun 2026 10:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828713;
-	bh=Oq2kgl1xvLOm46xHvphg3/a8ByX816oZVZG4HObyfUE=;
+	s=korg; t=1780828716;
+	bh=iN7ZTCmU3Jbes7iS/dF2kKsgzzCZg1jmkadcpcMAXqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bem741A4U+nTi8JfHt1WvV8t7QlkyFVdT8E293Klt4CTn+t18P2Ha/145IpaXq2jM
-	 zFccbocVWWXU9cw1agR/AjWCGMu0qslsMQ89QxFmb9INmdqQ+G8wgen57gJtcZhUeX
-	 rFAFDERtY6GTR+VOAibWudqL7vhoZXnRLXwuDUzs=
+	b=VJ+WbtakSGB7diChhDTbMUlBWgyhagl6/WRemXpigpn3coevTzODh7otaT6xb2vyy
+	 gqHWq9T9EbYOzRxus4nV76s5b1kp2OhrrbJLvvg8gsm0m35MhXvYn/2ffNRlDMkLYc
+	 xGoUJG1IRPnV3E/JsfO+hRmue0mN73ycarpQ2ihs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Michael Roth <michael.roth@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.12 160/307] KVM: SEV: Dont explicitly pass PSC buffer to snp_begin_psc()
-Date: Sun,  7 Jun 2026 11:59:17 +0200
-Message-ID: <20260607095733.600155715@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuqi Xu <xuyq21@lenovo.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 185/315] bpf: sockmap: fix tail fragment offset in bpf_msg_push_data
+Date: Sun,  7 Jun 2026 11:59:32 +0200
+Message-ID: <20260607095734.375000702@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,74 +51,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Yuqi Xu <xuyq21@lenovo.com>
 
-commit ebe4b2dc9cfbfb2d8f665667c4d08f4c6c9bec05 upstream.
+commit f72eed9b84fb771019a955908132410a9ba9ea3f upstream.
 
-Stop explicitly passing the PSC buffer to snp_begin_psc(): it *must*
-be the scratch area.  This will allow fixing a variety of bugs without
-further complicating the code.
+When bpf_msg_push_data() inserts data in the middle of a scatterlist
+entry, it splits the original entry into a left fragment and a right
+fragment.
 
-No functional change intended.
+The right fragment offset is page-local, but the code advances it with
+`start`, which is the message-global insertion point. For inserts into a
+non-first SG entry, this over-advances the offset and leaves the split
+layout inconsistent.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Reviewed-by: Michael Roth <michael.roth@amd.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260501202250.2115252-9-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Advance the right fragment offset by the fragment-local delta,
+`start - offset`, which matches the length removed from the front of the
+original entry.
+
+Fixes: 6fff607e2f14 ("bpf: sk_msg program helper bpf_msg_push_data")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yuqi Xu <xuyq21@lenovo.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Link: https://patch.msgid.link/8b129d10566aa3eb43f61a8f9757bcf51707d324.1779636774.git.xuyq21@lenovo.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/core/filter.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -3675,7 +3675,7 @@ struct psc_buffer {
- 	struct psc_entry entries[];
- } __packed;
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2859,7 +2859,7 @@ BPF_CALL_4(bpf_msg_push_data, struct sk_
  
--static int snp_begin_psc(struct vcpu_svm *svm, struct psc_buffer *psc);
-+static int snp_begin_psc(struct vcpu_svm *svm);
+ 		psge->length = start - offset;
+ 		rsge.length -= psge->length;
+-		rsge.offset += start;
++		rsge.offset += start - offset;
  
- static void snp_complete_psc(struct vcpu_svm *svm, u64 psc_ret)
- {
-@@ -3710,7 +3710,6 @@ static void __snp_complete_one_psc(struc
- static int snp_complete_one_psc(struct kvm_vcpu *vcpu)
- {
- 	struct vcpu_svm *svm = to_svm(vcpu);
--	struct psc_buffer *psc = svm->sev_es.ghcb_sa;
- 
- 	if (vcpu->run->hypercall.ret) {
- 		snp_complete_psc(svm, VMGEXIT_PSC_ERROR_GENERIC);
-@@ -3720,11 +3719,13 @@ static int snp_complete_one_psc(struct k
- 	__snp_complete_one_psc(svm);
- 
- 	/* Handle the next range (if any). */
--	return snp_begin_psc(svm, psc);
-+	return snp_begin_psc(svm);
- }
- 
--static int snp_begin_psc(struct vcpu_svm *svm, struct psc_buffer *psc)
-+static int snp_begin_psc(struct vcpu_svm *svm)
- {
-+	struct vcpu_sev_es_state *sev_es = &svm->sev_es;
-+	struct psc_buffer *psc = sev_es->ghcb_sa;
- 	struct psc_entry *entries = psc->entries;
- 	struct kvm_vcpu *vcpu = &svm->vcpu;
- 	struct psc_hdr *hdr = &psc->hdr;
-@@ -4414,7 +4415,7 @@ int sev_handle_vmgexit(struct kvm_vcpu *
- 		if (ret)
- 			break;
- 
--		ret = snp_begin_psc(svm, svm->sev_es.ghcb_sa);
-+		ret = snp_begin_psc(svm);
- 		break;
- 	case SVM_VMGEXIT_AP_CREATION:
- 		ret = sev_snp_ap_creation(svm);
+ 		sk_msg_iter_var_next(i);
+ 		sg_unmark_end(psge);
 
 
