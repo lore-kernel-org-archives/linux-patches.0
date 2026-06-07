@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F362C1595;
-	Sun,  7 Jun 2026 10:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83AC21FE47B;
+	Sun,  7 Jun 2026 10:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828242; cv=none; b=M1qDcqfdFa+e+grkuTCqzMukIHZZ8HH7licKhK8dmvYp3f3IUc7YR8Zt8PBfWcrnI0R9umNGju9AbiSY8mAgD4yHYJgA4nYfQBiDv9jAV9297/nK/OgTv/3ECP9cMrNvvF/5Kf9K3kVz4b0kEw9hZy/HSqnr0zNSmZo0oUz0KJE=
+	t=1780828245; cv=none; b=T1ZIeJrZCc9XUfWMPVi1WCL+pSwGDmjcBQ4EIPoOlF63Xr2ZQBE0kAGQnHqwsr2PYVFJU+9L579lTm1+RSYe/3GD09CqJ9U/GKFMp2gAWJh3plYSb4wRD4XJ7Xv3ktvlyx19aenJokRzM8csC1mEjQKLo24I9dptZcQkOANINyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828242; c=relaxed/simple;
-	bh=WZHbzYDbEzJqbklql1/fT3BW1MC0EsIIiXK4T7x6dZE=;
+	s=arc-20240116; t=1780828245; c=relaxed/simple;
+	bh=B6hOUfvIr5UivY8JWmucP2bii7LUgIohkTEKDAnu7dw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=de1Xdiz8Rn9q8eB3v/2TG1N7Xwyx6j6CQw5bm9R1M8z2tASKU86XhvkIfG6BtCpIccerICRDrEsADdkV03+VZj+7PGbw3tjdbbTfL9rWRIXyXJVojQYAPnKTxXnUq0QGa8PVvNvNz4CSfDcOOQj/RS2o8Kgih4/yPyOvhF+SuG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k03/Vmof; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ANSJx1lZaEEiBvRPOJjmQ/xl0a0W6LXdXHIM8ukkK8dmhVW/UiFObCNSOzeN8iZ5euAL5Gbc4LHXWgtD96z5K78voupr5WwDqO4iaGI5/eqEzqk0licNLevJQk3f1z+2bLob/7AAIZ3FMAo2u/mz85m8uwLF/+VbLF+Q98Saufs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jz9mfsZ2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k03/Vmof"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC3D1F00893;
-	Sun,  7 Jun 2026 10:30:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jz9mfsZ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8822A1F00893;
+	Sun,  7 Jun 2026 10:30:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828240;
-	bh=2HH33MTybkPLSWucpxEbBqANiLEQbEXA5ZQ167ZS8dM=;
+	s=korg; t=1780828244;
+	bh=0oyTqJrIIr1wsK6w9HRG8BM4jKhtVWDAPnQ+KeCvN+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k03/VmofwJcX+YqIy1LXlTtjEc1Z4G7sWRv5mCarYxJohofT8TVYH6VVujpMOTu4K
-	 4OvUXkIUZ4CMhDlY/3gI3ZaOkAxgZb/7jTA0q2CeQNdx1qwDZrlEM9jHdrztEyU0Aj
-	 ZxiFEKunGzk9dY+960IQooV5oKvxZ442ge1uJoSw=
+	b=jz9mfsZ2LO+q+GjT8lzTSiJGUVh/c86mDe3kKoJuJ2vCEb5lN0hge0KRTttjthgto
+	 kJz9pKIKAUXiF2/509mGsf5sWh5v2Po6Sz5tcaIG0IjzRJ6uP4rAR1U9tK7GuFSPeq
+	 DxX1CBkTjNM4+/Zv+sjmb0gqDbD6iQMz0zdwlfbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Michael Roth <michael.roth@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 7.0 166/332] KVM: SEV: Compute the correct max length of the in-GHCB scratch area
-Date: Sun,  7 Jun 2026 11:58:55 +0200
-Message-ID: <20260607095734.168127622@linuxfoundation.org>
+	Zeng Heng <zengheng4@huawei.com>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 123/307] arm64: io: Extract user memory type in ioremap_prot()
+Date: Sun,  7 Jun 2026 11:58:40 +0200
+Message-ID: <20260607095732.277639306@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,105 +50,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Will Deacon <will@kernel.org>
 
-commit 5867d7e202e09f037cefe77f7af4413c7c0fa088 upstream.
+[ Upstream commit 8f098037139b294050053123ab2bc0f819d08932 ]
 
-When setting the length of the GHCB scratch area, and the area is in the
-GHCB shared buffer, set the effective length of the scratch area to the max
-possible size given the start of the guest-provided pointer, and the end of
-the shared buffer.
+The only caller of ioremap_prot() outside of the generic ioremap()
+implementation is generic_access_phys(), which passes a 'pgprot_t' value
+determined from the user mapping of the target 'pfn' being accessed by
+the kernel. On arm64, the 'pgprot_t' contains all of the non-address
+bits from the pte, including the permission controls, and so we end up
+returning a new user mapping from ioremap_prot() which faults when
+accessed from the kernel on systems with PAN:
 
-The code was "fine" when first introduced, as KVM doesn't consult the
-length of the buffer when emulating MMIO, because the passed in @len always
-specifies the *max* size required.  But for PSC requests, the incoming @len
-is just the minimum length (to process the header), and KVM needs to know
-the full size of the scratch area to avoid buffer overflows (spoiler alert).
+  | Unable to handle kernel read from unreadable memory at virtual address ffff80008ea89000
+  | ...
+  | Call trace:
+  |   __memcpy_fromio+0x80/0xf8
+  |   generic_access_phys+0x20c/0x2b8
+  |   __access_remote_vm+0x46c/0x5b8
+  |   access_remote_vm+0x18/0x30
+  |   environ_read+0x238/0x3e8
+  |   vfs_read+0xe4/0x2b0
+  |   ksys_read+0xcc/0x178
+  |   __arm64_sys_read+0x4c/0x68
 
-Opportunistically rename @len => @min_len to better reflect its role.
+Extract only the memory type from the user 'pgprot_t' in ioremap_prot()
+and assert that we're being passed a user mapping, to protect us against
+any changes in future that may require additional handling. To avoid
+falsely flagging users of ioremap(), provide our own ioremap() macro
+which simply wraps __ioremap_prot().
 
-Fixes: 9b54e248d264 ("KVM: SEV: Add support to handle Page State Change VMGEXIT")
-Cc: stable@vger.kernel.org
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Reviewed-by: Michael Roth <michael.roth@amd.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260501202250.2115252-7-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Zeng Heng <zengheng4@huawei.com>
+Cc: Jinjiang Tu <tujinjiang@huawei.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 893dea9ccd08 ("arm64: Add HAVE_IOREMAP_PROT support")
+Reported-by: Jinjiang Tu <tujinjiang@huawei.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+[ Modified ioremap_prot() parameter, using "unsigned long user_prot" instead of
+"pgprot_t user_prot" to fix conflict with generic header ]
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c |   19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ arch/arm64/include/asm/io.h | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -3617,7 +3617,7 @@ int pre_sev_run(struct vcpu_svm *svm, in
- }
+diff --git a/arch/arm64/include/asm/io.h b/arch/arm64/include/asm/io.h
+index e6ad41131d80b4..46bd37707e080e 100644
+--- a/arch/arm64/include/asm/io.h
++++ b/arch/arm64/include/asm/io.h
+@@ -276,10 +276,23 @@ typedef int (*ioremap_prot_hook_t)(phys_addr_t phys_addr, size_t size,
+ int arm64_ioremap_prot_hook_register(const ioremap_prot_hook_t hook);
+ void __iomem *__ioremap_prot(phys_addr_t phys, size_t size, pgprot_t prot);
  
- #define GHCB_SCRATCH_AREA_LIMIT		(16ULL * PAGE_SIZE)
--static int setup_vmgexit_scratch(struct vcpu_svm *svm, bool sync, u64 len)
-+static int setup_vmgexit_scratch(struct vcpu_svm *svm, bool sync, u64 min_len)
- {
- 	struct vmcb_control_area *control = &svm->vmcb->control;
- 	u64 ghcb_scratch_beg, ghcb_scratch_end;
-@@ -3633,10 +3633,10 @@ static int setup_vmgexit_scratch(struct
- 		goto e_scratch;
- 	}
- 
--	scratch_gpa_end = scratch_gpa_beg + len;
-+	scratch_gpa_end = scratch_gpa_beg + min_len;
- 	if (scratch_gpa_end < scratch_gpa_beg) {
- 		pr_err("vmgexit: scratch length (%#llx) not valid for scratch address (%#llx)\n",
--		       len, scratch_gpa_beg);
-+		       min_len, scratch_gpa_beg);
- 		goto e_scratch;
- 	}
- 
-@@ -3660,6 +3660,8 @@ static int setup_vmgexit_scratch(struct
- 
- 		scratch_va = (void *)svm->sev_es.ghcb;
- 		scratch_va += (scratch_gpa_beg - control->ghcb_gpa);
+-#define ioremap_prot ioremap_prot
++static inline void __iomem *ioremap_prot(phys_addr_t phys, size_t size,
++					 unsigned long user_prot)
++{
++	pgprot_t prot;
++	pteval_t user_prot_val = pgprot_val(__pgprot(user_prot));
 +
-+		svm->sev_es.ghcb_sa_len = ghcb_scratch_end - scratch_gpa_beg;
- 	} else {
- 		/* GHCB v2 requires the scratch area to be within the GHCB. */
- 		if (to_kvm_sev_info(svm->vcpu.kvm)->ghcb_version >= 2)
-@@ -3669,16 +3671,16 @@ static int setup_vmgexit_scratch(struct
- 		 * The guest memory must be read into a kernel buffer, so
- 		 * limit the size
- 		 */
--		if (len > GHCB_SCRATCH_AREA_LIMIT) {
-+		if (min_len > GHCB_SCRATCH_AREA_LIMIT) {
- 			pr_err("vmgexit: scratch area exceeds KVM limits (%#llx requested, %#llx limit)\n",
--			       len, GHCB_SCRATCH_AREA_LIMIT);
-+			       min_len, GHCB_SCRATCH_AREA_LIMIT);
- 			goto e_scratch;
- 		}
--		scratch_va = kvzalloc(len, GFP_KERNEL_ACCOUNT);
-+		scratch_va = kvzalloc(min_len, GFP_KERNEL_ACCOUNT);
- 		if (!scratch_va)
- 			return -ENOMEM;
++	if (WARN_ON_ONCE(!(user_prot_val & PTE_USER)))
++		return NULL;
  
--		if (kvm_read_guest(svm->vcpu.kvm, scratch_gpa_beg, scratch_va, len)) {
-+		if (kvm_read_guest(svm->vcpu.kvm, scratch_gpa_beg, scratch_va, min_len)) {
- 			/* Unable to copy scratch area from guest */
- 			pr_err("vmgexit: kvm_read_guest for scratch area failed\n");
+-#define _PAGE_IOREMAP PROT_DEVICE_nGnRE
++	prot = __pgprot_modify(PAGE_KERNEL, PTE_ATTRINDX_MASK,
++			       user_prot_val & PTE_ATTRINDX_MASK);
++	return __ioremap_prot(phys, size, prot);
++}
++#define ioremap_prot ioremap_prot
  
-@@ -3694,11 +3696,10 @@ static int setup_vmgexit_scratch(struct
- 		 */
- 		svm->sev_es.ghcb_sa_sync = sync;
- 		svm->sev_es.ghcb_sa_free = true;
-+		svm->sev_es.ghcb_sa_len = min_len;
- 	}
- 
- 	svm->sev_es.ghcb_sa = scratch_va;
--	svm->sev_es.ghcb_sa_len = len;
--
- 	return 0;
- 
- e_scratch:
++#define ioremap(addr, size)	\
++	__ioremap_prot((addr), (size), __pgprot(PROT_DEVICE_nGnRE))
+ #define ioremap_wc(addr, size)	\
+ 	__ioremap_prot((addr), (size), __pgprot(PROT_NORMAL_NC))
+ #define ioremap_np(addr, size)	\
+-- 
+2.53.0
+
 
 
