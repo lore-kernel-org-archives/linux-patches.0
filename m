@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45DC4071DA;
-	Sun,  7 Jun 2026 10:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8434071DA;
+	Sun,  7 Jun 2026 10:18:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827523; cv=none; b=rTdZMlm/fKUX9PlzXFnY4rS/EqtKjzbajxWoL9rWfiR4BCvGW92FpR0m9TvLtWL76K0bmZ1drupZGzobR/BlvRpNwtu4fla3+QYiNUCjK/L2Ibkw+4/olUPZXUmZiucLsQH7sPXkEjj7RiLFfvvoL/qRkvGZT8D+BTEGh3pLsXk=
+	t=1780827528; cv=none; b=FDAoDgm5Of3erOO0BASWNK35+gkuG/QhqJhY/+bkpm5O4KQ8IpZWdfebVMsSD80J0sXw0F2gsQPifF7CDFPpRseDSFLF+ETSqTfElLA6/hgKVWzWvcFvbm8zAw/CAWehwVGJjtPGbz7DS2HHSU48icmkaKtO+OkKiaxBGEjP0zQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827523; c=relaxed/simple;
-	bh=+1fu3ItfATl7N9jABB+xx73VI1vGDuolLLQMW4E1wFI=;
+	s=arc-20240116; t=1780827528; c=relaxed/simple;
+	bh=VrWTW2jTaZCxULMLrDmijtR/+JSTr+hAVjsdFm5E/xg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KepSgxKP+2aWRsSHS6ndIdqWn+vCWe4RVLdv0tdS3BPPuO+hX1zGP+Y0RK4VqpiE/nVvkAk2jsD77MaRsfZQubj+zIijNr5eq7WQ4LHwKS2AFU/nhE7rcSGHboL90qvS79PYX1hc5ODfbi0BRuGnGkdSYQlKfKN1iRnNYan5J+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fDhDzOn5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QN5/EllQQbZf6oqnbd/iozmhk4e5BY+/fANemTC2mDEq3kAD4QvRGx/NFRDRs6UubO+2lWopCESxWZJGjPwJxVDU5tYgWszHZLMYp52EfHPFy4+nRHPxr8IuQtFaM4U+atGZXbmJZ6XWn13UBe8yQg1MF6cM9XwKiyOZXGzqFzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vPn9VXWL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fDhDzOn5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE9D1F00893;
-	Sun,  7 Jun 2026 10:18:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vPn9VXWL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 274771F00893;
+	Sun,  7 Jun 2026 10:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827522;
-	bh=GF/750bHVrw3ARdtF6CVWwnUDDj6APUTbdbb6o07+m8=;
+	s=korg; t=1780827526;
+	bh=abgeNCwB39yumgdUBeGdRN8UgAsVW7NKkx+O3NWuKn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fDhDzOn5ah1y2Jo66DPixjQIuGKyXlCjSrnTEvuRQbGcpk3U98b7gxLEXy+utUTrz
-	 i8bEOfowbo1x9UgZhcxfFwQkyj6IImmA8mzlKqZAFspmAXjJuIiwjjijm09stF5yt2
-	 DvjElFt+cdM3FJLHJDJjehzZGhcv7SVQ+g+LMA1c=
+	b=vPn9VXWLf8VMm7Sw5u1/sbRUuWB0BTje8sf2GsBJfXHFQU/qzKT8rXqiNSQaP/DzP
+	 s9e9DfxWnhJ6tEdSwONyjoLf/B0PYjqWYZTPYQtPxW5X+4pPCPUBA22FqCm5WfuLVd
+	 dpzxbumS4EL8/icw7YJW7Vbrr6jhb56Bc4M3SyoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhenghang Xiao <kipreyyy@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Damiano Melotti <melotti@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 080/315] Bluetooth: l2cap: clear chan->ident on ECRED reconfiguration success
-Date: Sun,  7 Jun 2026 11:57:47 +0200
-Message-ID: <20260607095730.553528769@linuxfoundation.org>
+Subject: [PATCH 6.12 062/307] tunnels: do not assume transport header in iptunnel_pmtud_check_icmp()
+Date: Sun,  7 Jun 2026 11:57:39 +0200
+Message-ID: <20260607095730.025830137@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,64 +49,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhenghang Xiao <kipreyyy@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 00e1950716c6ed67d74777b2db286b0fa23b4be9 ]
+[ Upstream commit 509323077ef79a26ba0c60bb556e45c12c398b2d ]
 
-l2cap_ecred_reconf_rsp() returns early on success without clearing
-chan->ident. Every other L2CAP response handler (l2cap_ecred_conn_rsp,
-l2cap_le_connect_rsp, l2cap_config_rsp) clears chan->ident after a
-successful transaction to prevent the channel from matching subsequent
-responses with the recycled ident value.
+In some cases, iptunnel_pmtud_check_icmp() can be called while
+skb transport header is not set.
 
-A remote attacker that completed a reconfiguration as the peer can
-replay a failure response with the stale ident, causing the kernel to
-match and destroy the already-established channel via
-l2cap_chan_del(chan, ECONNRESET).
+This triggers an out-of-bound access, because
+(typeof(skb->transport_header))~0U is 65535.
 
-Clear chan->ident for all matching channels on success, and harden the
-failure path by using l2cap_chan_hold_unless_zero() consistent with
-other L2CAP handlers (l2cap_le_command_rej, __l2cap_get_chan_by_ident).
+Access the icmp header based on IPv4 network header,
+after making sure icmp->type is present in skb linear part.
 
-Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
-Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Note that iptunnel_pmtud_check_icmpv6()) is fine.
+
+Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
+Reported-by: Damiano Melotti <melotti@google.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260522115512.1519110-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/ipv4/ip_tunnel_core.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 87ebe81277c510..57f5e3c7429e79 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -5466,14 +5466,20 @@ static inline int l2cap_ecred_reconf_rsp(struct l2cap_conn *conn,
+diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
+index cf496644d3df6c..d0ceb86e1687a7 100644
+--- a/net/ipv4/ip_tunnel_core.c
++++ b/net/ipv4/ip_tunnel_core.c
+@@ -278,7 +278,6 @@ static int iptunnel_pmtud_build_icmp(struct sk_buff *skb, int mtu)
+  */
+ static int iptunnel_pmtud_check_icmp(struct sk_buff *skb, int mtu)
+ {
+-	const struct icmphdr *icmph = icmp_hdr(skb);
+ 	const struct iphdr *iph = ip_hdr(skb);
  
- 	BT_DBG("result 0x%4.4x", result);
- 
--	if (!result)
-+	if (!result) {
-+		list_for_each_entry(chan, &conn->chan_l, list) {
-+			if (chan->ident == cmd->ident)
-+				chan->ident = 0;
-+		}
+ 	if (mtu < 576 || iph->frag_off != htons(IP_DF))
+@@ -289,9 +288,17 @@ static int iptunnel_pmtud_check_icmp(struct sk_buff *skb, int mtu)
+ 	    ipv4_is_lbcast(iph->saddr)  || ipv4_is_multicast(iph->saddr))
  		return 0;
+ 
+-	if (iph->protocol == IPPROTO_ICMP && icmp_is_err(icmph->type))
+-		return 0;
++	if (iph->protocol == IPPROTO_ICMP) {
++		const struct icmphdr *icmph;
+ 
++		if (!pskb_network_may_pull(skb, iph->ihl * 4 +
++						offsetofend(struct icmphdr, type)))
++			return 0;
++		iph = ip_hdr(skb);
++		icmph = (void *)iph + iph->ihl * 4;
++		if (icmp_is_err(icmph->type))
++			return 0;
 +	}
+ 	return iptunnel_pmtud_build_icmp(skb, mtu);
+ }
  
- 	list_for_each_entry_safe(chan, tmp, &conn->chan_l, list) {
- 		if (chan->ident != cmd->ident)
- 			continue;
- 
--		l2cap_chan_hold(chan);
-+		if (!l2cap_chan_hold_unless_zero(chan))
-+			continue;
- 		l2cap_chan_lock(chan);
- 
- 		l2cap_chan_del(chan, ECONNRESET);
 -- 
 2.53.0
 
