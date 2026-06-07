@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748B94071FE;
-	Sun,  7 Jun 2026 10:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8797A327BFA;
+	Sun,  7 Jun 2026 10:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828185; cv=none; b=JKl5o4rRdckM23uks8TZhOTGecxTefv8MDA/+rfwMeps+W5l4LsWTdymzCb5APF7vv1wez3/ERxi9a/7XPSW2LcQgMjF4HNfmWna49uhoDJRW2npm6A7QNEP1VQa59Yh9GT9Yq6u/H5MhShkg0Us3z+Mq6m7GNi5DCwwYfx/w2M=
+	t=1780828191; cv=none; b=P7dsvPb7CZSQOUpjjwcTpFoWcKf+t3bkisH9dniwe9rhKWwa0iltg2GT4STgGWXpjaHj2vN9miiYRh0+GsO0ozs1y78pc/x1dPGydYOgGU0I2wCgBjoDaj74PcpjKvsM0ZnxIBmvbsgnkVLGe/V8ZIKZ5gLH7niBgdvrKfD+ZoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828185; c=relaxed/simple;
-	bh=j/lvoxwl0QYqlBgu4Mp6UugVGY8xyhvVWwqCEDpoC2I=;
+	s=arc-20240116; t=1780828191; c=relaxed/simple;
+	bh=OanaVxfX0pQzM5V/O74QXp8lugHT3aTjizSUaMWgv80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LcCRiqzZrWPn1hNo4XtQRWh4oQ2FUTCVPqE2r2Lv6+Efmb1pB3G45aiRV032Z70BkzFYtC6fJe1OBHQYvLRrpFx3DaaTXogcfvRVz883Ou9J+BTEDI1UeJW4WuRL3w5mm5mCiSEHclzTl3HIBj+DIhvjAEyDLtUVnDNVaid0RHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIHW7gIC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F3rza+ILDV9ENiJf1mzKgNe2/+WAsSJq3PTexXjjpv9mxtZ8LI6xJ2D/y1S9pnvaAOpAjYV3T6Y8GFYGkTFqIVA4Sb88+SeaqjLCUk8unJVd0UsgC54Tat2d9V6c3UXaoOcYGphYXFb7/Qp3KOPPzFcM/31qOW119aWEa3s5H2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPqRUw1x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIHW7gIC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7801F00898;
-	Sun,  7 Jun 2026 10:29:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPqRUw1x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE581F00893;
+	Sun,  7 Jun 2026 10:29:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828184;
-	bh=cyrTeQkUgUXdQ+YYKkV3/KNgXnbwTvfK6CJSQYBq6BU=;
+	s=korg; t=1780828188;
+	bh=xYiIEgsoxVeIwSNFQe15UTMLOXnQxzJsyrneQQkdFsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RIHW7gICE1RktlSnqymmtwh6fZo5tagPqdgr8auiAJ64m1xVHMTVKlckeRg8NDJJf
-	 d3iFPGH29uqEIOIJWmtWAEcZx8KuOvC0DIs8RUCd+59raV2blxbhxycvHjcoNSeA0L
-	 Eu29j5Id7xZ64FLwxWPicr6jOVYzouPeCA1vs9Oo=
+	b=NPqRUw1xywaN1x0eBNjPJ1lDS1oCNDl+TPhgD32hLu81ydHv1x0oLHCyCveEOAPtF
+	 pyBK/0CQc0dMQQAmrdETOnKGPy+T1TeB6Y9RGXE1QMR31qj4GLA90BQtjxNbWTmNPm
+	 NCsdgYWTQ7++itKekRYqHCusUQVRTr1vp0NUiQ6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 118/307] drm/i915/psr: Add defininitions for INTEL_WA_REGISTER_CAPS DPCD register
-Date: Sun,  7 Jun 2026 11:58:35 +0200
-Message-ID: <20260607095732.100232680@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 6.18 139/315] rust_binder: avoid calling pending_oneway_finished() on TF_UPDATE_TXN
+Date: Sun,  7 Jun 2026 11:58:46 +0200
+Message-ID: <20260607095732.711186097@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,76 +45,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit fbceb39b536e40c2f7cc47ab42037bb7c2b7ced9 upstream.
+commit 4c19719eb8b8df08c5bec7c499f73ddaea6f09fc upstream.
 
-EDP specification says:
+When an outdated transaction is removed from `oneway_todo` due to
+`TF_UPDATE_TXN`, its `Allocation` is dropped. The current implementation
+of `Allocation::drop` calls `pending_oneway_finished()`, assuming the
+transaction was executed. This leads to premature execution of the next
+queued one-way transaction.
 
-"If either VSC SDP is unable to be transmitted 100 ns before the SU region,
-the Source device may optionally transmit the VSC SDP during the prior
-video scan line’s HBlank period There is a Intel specific drm dp register
-currently containing bits related how TCON can support PSR2 with SDP on
-prior line."
+Fix this by taking the `oneway_node` from the `Allocation` of the
+outdated transaction before it is dropped. This prevents
+`Allocation::drop` from signaling completion.
 
-Unfortunately many panels are having problems in implementing this. So
-there is a custom Intel specific DPCD register (INTEL_WA_REGISTER_CAPS) to
-figure out if this is properly implemented on a panel or if panel doesn't
-require that 100 ns delay before the SU region. Here are the definitions in
-this custom DPCD address:
+We do not call `take_oneway_node()` from `Transaction::cancel` because
+it's actually correct to call `pending_oneway_finished()` on cancel if
+the transaction did not come from `oneway_todo`. This ensures that if
+`BINDER_THREAD_EXIT` is invoked and cancels a oneway transaction, then
+the next transaction is taken from `oneway_todo`.
 
-0 = Panel doesn't support SDP on prior line
-1 = Panel supports SDP on prior line
-2 = Panel doesn't have 100ns requirement
-3 = Reserved
+This bug does not lead to any issues in the kernel, but may lead to
+Binder delivering transactions to userspace earlier than userspace
+expected to receive them.
 
-Add definitions for this new register and it's values into new header
-intel_dpcd.h.
-
-v2: add INTEL_DPCD_ prefix to definitions
-
-Bspec: 74741
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260515095756.2799483-2-jouni.hogander@intel.com
-(cherry picked from commit 1da1c9294825f08f622c473480d185680c2a3b75)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable <stable@kernel.org>
+Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+Assisted-by: Antigravity:gemini
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Acked-by: Carlos Llamas <cmllamas@google.com>
+Link: https://patch.msgid.link/20260414-tf-update-txn-fix-v1-1-d2b83303acc9@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_dpcd.h | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
- create mode 100644 drivers/gpu/drm/i915/display/intel_dpcd.h
+ drivers/android/binder/allocation.rs  |    8 ++++++++
+ drivers/android/binder/transaction.rs |   11 ++++++++++-
+ 2 files changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dpcd.h b/drivers/gpu/drm/i915/display/intel_dpcd.h
-new file mode 100644
-index 00000000000000..4aea5326f2ed48
---- /dev/null
-+++ b/drivers/gpu/drm/i915/display/intel_dpcd.h
-@@ -0,0 +1,15 @@
-+/* SPDX-License-Identifier: MIT */
-+/*
-+ * Copyright © 2026 Intel Corporation
-+ */
+--- a/drivers/android/binder/allocation.rs
++++ b/drivers/android/binder/allocation.rs
+@@ -160,6 +160,14 @@ impl Allocation {
+         self.get_or_init_info().target_node = Some(target_node);
+     }
+ 
++    pub(crate) fn take_oneway_node(&mut self) -> Option<DArc<Node>> {
++        if let Some(info) = self.allocation_info.as_mut() {
++            info.oneway_node.take()
++        } else {
++            None
++        }
++    }
 +
-+#ifndef __INTEL_DPCD_H__
-+#define __INTEL_DPCD_H__
-+
-+#define INTEL_DPCD_INTEL_WA_REGISTER_CAPS					0x3f0
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_EARLYSCANLINE_SDP_SUPPORT_MASK	REG_GENMASK(1, 0)
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_FALL_BACK_TO_PSR1			0
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITH_EARLY_SCANLINE		1
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITHOUT_EARLY_SCANLINE		2
-+
-+#endif /* __INTEL_DPCD_H__ */
--- 
-2.53.0
-
+     /// Reserve enough space to push at least `num_fds` fds.
+     pub(crate) fn info_add_fd_reserve(&mut self, num_fds: usize) -> Result {
+         self.get_or_init_info()
+--- a/drivers/android/binder/transaction.rs
++++ b/drivers/android/binder/transaction.rs
+@@ -239,7 +239,8 @@ impl Transaction {
+     /// Not used for replies.
+     pub(crate) fn submit(self: DLArc<Self>) -> BinderResult {
+         // Defined before `process_inner` so that the destructor runs after releasing the lock.
+-        let mut _t_outdated;
++        let _t_outdated;
++        let _oneway_node;
+ 
+         let oneway = self.flags & TF_ONE_WAY != 0;
+         let process = self.to.clone();
+@@ -255,6 +256,14 @@ impl Transaction {
+                         if let Some(t_outdated) =
+                             target_node.take_outdated_transaction(&self, &mut process_inner)
+                         {
++                            let mut alloc_guard = t_outdated.allocation.lock();
++                            if let Some(alloc) = (*alloc_guard).as_mut() {
++                                // Take the oneway node to prevent `Allocation::drop` from calling
++                                // `pending_oneway_finished()`, which would be incorrect as this
++                                // transaction is not being submitted.
++                                _oneway_node = alloc.take_oneway_node();
++                            }
++                            drop(alloc_guard);
+                             // Save the transaction to be dropped after locks are released.
+                             _t_outdated = t_outdated;
+                         }
 
 
