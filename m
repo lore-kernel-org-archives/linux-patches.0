@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711DC308F0A;
-	Sun,  7 Jun 2026 10:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5921E98EF;
+	Sun,  7 Jun 2026 10:12:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827167; cv=none; b=O0cVNO5jjNzj8qjB8gqmPL09jQNI5rb7FI9iXM1TOn0FMaQGzGatz/yVXfea9HFG4W5PZPeOdSRK40eykrrh6GL/F6xsgg2TQPK3fwKTVW3jpf95ZewA3qqZLTSMyTAttFEDTiLXZgZDT61u7LfxlzEnOOqkm+EiY/no3hfwevo=
+	t=1780827170; cv=none; b=MkRxKuBDKd0Ii3RI5TuQ+BLBxHNRwr9asSMsab1qSdGot3Q4QfcZpMW7mRmzY7/MIRSJqVIWUMQyWn7ZzRbmW821JwAuiw31M9SzoDzUguEM8wPAA00mkIglS/HxPsukkS7IhBBFn9RW01kX5C3Zjsyyw6lLaBeMySsLM1SjMKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827167; c=relaxed/simple;
-	bh=RNffxd7TH9RZObSQ/jvvf+U15OKVKnctyFBrbjpOG4g=;
+	s=arc-20240116; t=1780827170; c=relaxed/simple;
+	bh=oglwkuaDT2e6f+WK7y0//OVub5cNDB44SBCrGPg2v3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=drgyuTroPTWJbsiQ46r+TC/MX5z/nxD5PlQXSBMiYZ41yB/dKQTC+rbGSRd+lX4ILHdBeXbW1PHzOD2SlmVaRk3TAD5O/BlpJCys9OAvjRWhI9qLVqUfuZaaGrHXgZ57Az7wCfGgqnKLv4scFyakkRPL393G7eqKJZCy0RFjhSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kbWffeYi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f9/9JJ21Ov89S7WD9B2gB329nCtDvqKEQNjWXr58187i4n54IOcvULI2bDypL/5ct8TjBQ/0qSTFVyUZVSoQs8eLn3Pau0V6nJP7Wu4t+bEmfUnB2xPKfs9F+5cPwaoqIGEZVAfdAM9U7XsLCsgVjflsuJQ9Po8n7IyrNET8lnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eoPWzSRX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kbWffeYi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54511F00893;
-	Sun,  7 Jun 2026 10:12:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoPWzSRX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2F11F00893;
+	Sun,  7 Jun 2026 10:12:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827166;
-	bh=iEvIuEgFSdtJSGMzML5k/rXFaQ0w/hZkvYuaGUVmg7c=;
+	s=korg; t=1780827169;
+	bh=guBv9ZiEINmlNMbZuLP1TSvAMCzHbUsuJnV04OU5MgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kbWffeYiJ0L27o4saEyECMFmSI1ZNUkp1/O4Hov017oeWhwLOzC8ypL9etCJDk2S/
-	 dWV6vuRo9PsQZ3tn6P8+0iLl40qJDssK4U39Rlc59Mcjy/PQhnAxkMQZzYkWRdWo4F
-	 QUS4Ro0WiRDxTO7LQkwIn7jsygL/WO0SiPItINWk=
+	b=eoPWzSRXf7/q73563s/6b7EJeXoz8ZF4pRmXyORm3JXdhif+FKDmq20nYwJcZGp11
+	 vblSZRwMK4H7J6LoMUqyuiCfY+aZTrHLMRGDzq9WlMBzkdkyeXnHilEY0BbQzQbyI2
+	 B9og+vLzvemT0xm8kmH2VmKHvivaWzN4PqrF7HkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carl Lee <carl.lee@amd.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	Luca Stefani <luca.stefani.ge1@gmail.com>,
-	David Heidelberg <david@ixit.cz>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Danielle Ratson <danieller@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 028/307] nfc: nxp-nci: i2c: use rising-edge IRQ on ACPI systems
-Date: Sun,  7 Jun 2026 11:57:05 +0200
-Message-ID: <20260607095728.685380723@linuxfoundation.org>
+Subject: [PATCH 6.18 046/315] ethtool: module: avoid racy updates to dev->ethtool bitfield
+Date: Sun,  7 Jun 2026 11:57:13 +0200
+Message-ID: <20260607095729.266886682@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,85 +48,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carl Lee <carl.lee@amd.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit f23bf992d65a42007c517b060ca35cebdea3525a ]
+[ Upstream commit 7a84b965ffc12030af63cd10a8f3a1123ff39b7a ]
 
-Some ACPI-based platforms report incorrect IRQ trigger types (e.g.
-IRQF_TRIGGER_HIGH), which can lead to interrupt storms.
+When reviewing other changes Gemini points out that we currently
+update module_fw_flash_in_progress without holding any locks.
+Since module_fw_flash_in_progress is part of a bitfield this
+is not great, updates to other fields may be lost.
 
-Use the historically working rising-edge trigger on ACPI systems to
-avoid this regression.
+We could use a bool and sprinkle some READ_ONCE/WRITE_ONCE here
+but seems like the issue is rather than the work is an unusual
+writer. The other writers already hold the right locks. So just
+very briefly take these locks when the work completes.
 
-Device Tree-based systems continue to use the firmware-provided
-trigger type.
+Note that nothing ever cancels the FW update work, so there's
+no concern with deadlocks vs cancel.
 
-Fixes: 57be33f85e36 ("nfc: nxp-nci: remove interrupt trigger type")
-Signed-off-by: Carl Lee <carl.lee@amd.com>
-Tested-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Tested-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Tested-by: Luca Stefani <luca.stefani.ge1@gmail.com>
-Link: https://patch.msgid.link/20260516-nfc-nxp-nci-i2c-restore-irq-trigger-fallback-v3-1-37ba4b6e9086@amd.com
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Fixes: 32b4c8b53ee7 ("ethtool: Add ability to flash transceiver modules' firmware")
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Danielle Ratson <danieller@nvidia.com>
+Link: https://patch.msgid.link/20260522231312.1710836-4-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/nxp-nci/i2c.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ net/ethtool/module.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nfc/nxp-nci/i2c.c b/drivers/nfc/nxp-nci/i2c.c
-index b3d34433bd14a0..a6c08175d9dd93 100644
---- a/drivers/nfc/nxp-nci/i2c.c
-+++ b/drivers/nfc/nxp-nci/i2c.c
-@@ -16,6 +16,7 @@
- #include <linux/delay.h>
- #include <linux/i2c.h>
- #include <linux/interrupt.h>
-+#include <linux/irq.h>
- #include <linux/module.h>
- #include <linux/nfc.h>
- #include <linux/gpio/consumer.h>
-@@ -267,6 +268,7 @@ static int nxp_nci_i2c_probe(struct i2c_client *client)
+diff --git a/net/ethtool/module.c b/net/ethtool/module.c
+index fb61bb47083e62..8929b7fb2fa79c 100644
+--- a/net/ethtool/module.c
++++ b/net/ethtool/module.c
+@@ -221,14 +221,22 @@ static void module_flash_fw_work_list_del(struct list_head *list)
+ static void module_flash_fw_work(struct work_struct *work)
  {
- 	struct device *dev = &client->dev;
- 	struct nxp_nci_i2c_phy *phy;
-+	unsigned long irqflags;
- 	int r;
+ 	struct ethtool_module_fw_flash *module_fw;
++	struct net_device *dev;
  
- 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C)) {
-@@ -303,9 +305,26 @@ static int nxp_nci_i2c_probe(struct i2c_client *client)
- 	if (r < 0)
- 		return r;
+ 	module_fw = container_of(work, struct ethtool_module_fw_flash, work);
++	dev = module_fw->fw_update.dev;
  
-+	/*
-+	 * ACPI platforms may report incorrect IRQ trigger types
-+	 * (e.g. level-high), which can lead to interrupt storms.
-+	 *
-+	 * Use the historically stable rising-edge trigger for ACPI devices.
-+	 *
-+	 * On non-ACPI systems (e.g. Device Tree), prefer the firmware-
-+	 * provided trigger type, falling back to rising-edge if not set.
-+	 */
-+	if (ACPI_COMPANION(dev)) {
-+		irqflags = IRQF_TRIGGER_RISING;
-+	} else {
-+		irqflags = irq_get_trigger_type(client->irq);
-+		if (!irqflags)
-+			irqflags = IRQF_TRIGGER_RISING;
-+	}
+ 	ethtool_cmis_fw_update(&module_fw->fw_update);
+ 
+ 	module_flash_fw_work_list_del(&module_fw->list);
+-	module_fw->fw_update.dev->ethtool->module_fw_flash_in_progress = false;
+-	netdev_put(module_fw->fw_update.dev, &module_fw->dev_tracker);
 +
- 	r = request_threaded_irq(client->irq, NULL,
- 				 nxp_nci_i2c_irq_thread_fn,
--				 IRQF_ONESHOT,
-+				 irqflags | IRQF_ONESHOT,
- 				 NXP_NCI_I2C_DRIVER_NAME, phy);
- 	if (r < 0)
- 		nfc_err(&client->dev, "Unable to register IRQ handler\n");
++	rtnl_lock();
++	netdev_lock_ops(dev);
++	dev->ethtool->module_fw_flash_in_progress = false;
++	netdev_unlock_ops(dev);
++	rtnl_unlock();
++
++	netdev_put(dev, &module_fw->dev_tracker);
+ 	release_firmware(module_fw->fw_update.fw);
+ 	kfree(module_fw);
+ }
 -- 
 2.53.0
 
