@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0187F2D8378;
-	Sun,  7 Jun 2026 10:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3E12D8378;
+	Sun,  7 Jun 2026 10:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829329; cv=none; b=eulE/NaVGR8by07cfKZhW1Vd28LpRqQgTLeO6srbidFVsoYNNiT9mi4lAHbNgi0UKzrLKkm0uecGdaxrfBvFpidHWpXCZzlVgidnpeCOY86yjElBSp/a+4pTiKr8Qom6vpRna8nAHWl/w9dwBj/RbYOI3/TPbyXAizGxmUCn0kU=
+	t=1780829333; cv=none; b=cr6LzV/GuPwB2p5OiHV74C+KrNQ0UdyWgspRWxmr4l0ZGEyj4ZdFKXRd+bTcoSuz0Orzs4xXYzONKyLI4bgWekjPy4Axmfo4x7/CV8rAc8VudWwdUyGXc9Mu/AO7bP/pyj5wObVDEADAz2cuUq3pGlhcHt/fUAyzRt79ZyRau30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829329; c=relaxed/simple;
-	bh=wtenPZQ1kqNaNrsqlFTVz+7idTxJMgp9zzJJsb453KY=;
+	s=arc-20240116; t=1780829333; c=relaxed/simple;
+	bh=9gslOVyyDKGk/rB1XJooOMilYX9SYB78vboBM2tRomM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WXCQ0qaNBY8ObTKLa8/zXltLdzu+qqP32cJYskhOy439taZ15hkt3/KFZf4TfK5mOHKHguibLqxA4yz3i1Vour3dy/Tk9yRDWX7SfOgiiTr028hNy6peNX4KQJDK9bdyhu1eo67q08p+MwVEEFgRLYiil1g5TS4MIIt/WrXgtCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQ35mQuX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MiqwZO99OnzCzfd0m6r8jGRwQtLaiVwxphBH/ucAkqKpV0UGSnYdDqO+rIdSrjyzHpCW944XsIh4MrHYhow0lbDBB02M02Y7cbYdDqwjYuy3yG+2cf+VpGJlaY8enRf9S0NFDhCIc/jYn1wRaKxWPO14Ncuibbxg96elcD+w4aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dv/pGNGj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQ35mQuX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165581F00893;
-	Sun,  7 Jun 2026 10:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dv/pGNGj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F2A1F00893;
+	Sun,  7 Jun 2026 10:48:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829328;
-	bh=ZbrBInn07OVLSGOF6qd8ITI+G6CKVsg0UFBTDSKg7Cg=;
+	s=korg; t=1780829332;
+	bh=qn+fJjq6+WtelGBx7JBYDW8Tjo1ZCMnQi0snJIBVhJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BQ35mQuXhsQwG2fTyQnec9pJYyTvM+e4FclqNij0NZnzw5qioMtx92vsHv0MhfM0n
-	 /5eKKzJi1DFrXdYHOFxyjJ0WbJDCudz2Iln/bhYJ9/cAWlvoNTzRQDkyAgB1bqoGdv
-	 9ePKjvWVzI3lqtzmu75Zg0Ed3GMXQOFk0iEP+Grg=
+	b=dv/pGNGjs9M8/vjTI4kqilj6c+fxj80oblkAAf8GFpk8tdW71UyQJXnpi2PIut5Ae
+	 Lw1nn+M5+9rW3hnXJejtS6zHyHd2wnFvVrc9NM17yJ6EI3JJNygcUSOLmzNEtt9hm1
+	 bXg51tadqNj/VQcKnX/iFh9hG4Qc7XDxEZe5NZzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 236/315] USB: serial: belkin_sa: validate interrupt status length
-Date: Sun,  7 Jun 2026 12:00:23 +0200
-Message-ID: <20260607095736.234798455@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Peter Chen <peter.chen@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Xu Yang <xu.yang_2@nxp.com>
+Subject: [PATCH 6.12 215/307] usb: chipidea: core: convert ci_role_switch to local variable
+Date: Sun,  7 Jun 2026 12:00:12 +0200
+Message-ID: <20260607095735.619177755@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,54 +48,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 4ce058df2ee02cc2a0f0fd5cd64ce6f1482a0b65 upstream.
+commit 8f6aa392653e52a45858cff5c063df550028836b upstream.
 
-The Belkin interrupt callback treats interrupt data as a four-byte
-status report and reads LSR/MSR fields at offsets 2 and 3. The
-interrupt-in buffer length is derived from endpoint wMaxPacketSize, and
-short interrupt transfers may complete successfully with a smaller
-actual_length.
+When a system contains multiple USB controllers, the global ci_role_switch
+variable may be overwritten by subsequent driver initialization code.
 
-Check the completed interrupt packet length before parsing status
-fields so short interrupt endpoints and short successful packets are
-ignored instead of causing out-of-bounds or stale status-byte reads.
+This can cause issues in the following cases:
+ - The 2nd ci_hdrc_probe() sees ci_role_switch.fwnode as non-NULL even
+   though the "usb-role-switch" property is not present for the controller.
+ - When the ci_hdrc device is unbound and bound again, ci_role_switch
+   fwnode will not be reassigned, and the old value will be used instead.
 
-KASAN report as below:
+Convert ci_role_switch to a local variable to fix these issues.
 
-BUG: KASAN: slab-out-of-bounds in belkin_sa_read_int_callback()
-Read of size 1
-Call trace:
-  belkin_sa_read_int_callback() (drivers/usb/serial/belkin_sa.c:202)
-  __usb_hcd_giveback_urb() (drivers/usb/core/hcd.c:1630)
-  dummy_timer() (?:?)
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: 05559f10ed79 ("usb: chipidea: add role switch class support")
+Cc: stable <stable@kernel.org>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://patch.msgid.link/20260427075755.3611217-1-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/belkin_sa.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/chipidea/core.c |   16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
---- a/drivers/usb/serial/belkin_sa.c
-+++ b/drivers/usb/serial/belkin_sa.c
-@@ -194,6 +194,9 @@ static void belkin_sa_read_int_callback(
+--- a/drivers/usb/chipidea/core.c
++++ b/drivers/usb/chipidea/core.c
+@@ -669,12 +669,6 @@ static enum ci_role ci_get_role(struct c
+ 	return role;
+ }
  
- 	usb_serial_debug_data(&port->dev, __func__, urb->actual_length, data);
+-static struct usb_role_switch_desc ci_role_switch = {
+-	.set = ci_usb_role_switch_set,
+-	.get = ci_usb_role_switch_get,
+-	.allow_userspace_control = true,
+-};
+-
+ static int ci_get_platdata(struct device *dev,
+ 		struct ci_hdrc_platform_data *platdata)
+ {
+@@ -801,9 +795,6 @@ static int ci_get_platdata(struct device
+ 			cable->connected = false;
+ 	}
  
-+	if (urb->actual_length < BELKIN_SA_MSR_INDEX + 1)
-+		goto exit;
-+
- 	/* Handle known interrupt data */
- 	/* ignore data[0] and data[1] */
+-	if (device_property_read_bool(dev, "usb-role-switch"))
+-		ci_role_switch.fwnode = dev->fwnode;
+-
+ 	platdata->pctl = devm_pinctrl_get(dev);
+ 	if (!IS_ERR(platdata->pctl)) {
+ 		struct pinctrl_state *p;
+@@ -1045,6 +1036,7 @@ ATTRIBUTE_GROUPS(ci);
  
+ static int ci_hdrc_probe(struct platform_device *pdev)
+ {
++	struct usb_role_switch_desc ci_role_switch = {};
+ 	struct device	*dev = &pdev->dev;
+ 	struct ci_hdrc	*ci;
+ 	struct resource	*res;
+@@ -1191,7 +1183,11 @@ static int ci_hdrc_probe(struct platform
+ 		}
+ 	}
+ 
+-	if (ci_role_switch.fwnode) {
++	if (device_property_read_bool(dev, "usb-role-switch")) {
++		ci_role_switch.set = ci_usb_role_switch_set;
++		ci_role_switch.get = ci_usb_role_switch_get;
++		ci_role_switch.allow_userspace_control = true;
++		ci_role_switch.fwnode = dev_fwnode(dev);
+ 		ci_role_switch.driver_data = ci;
+ 		ci->role_switch = usb_role_switch_register(dev,
+ 					&ci_role_switch);
 
 
