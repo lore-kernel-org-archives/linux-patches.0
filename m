@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75441308F0A;
-	Sun,  7 Jun 2026 10:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8361D2E739E;
+	Sun,  7 Jun 2026 10:12:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827134; cv=none; b=DYQ4n7rJKGGE1UERll5BpPZdr9IqkKbnGAA3K1wsXVUVKYOp60eq1obmc9IUVgovxNF8pCN08LYq0UA0mTIBBi4SCQTfuSpo2tb9LfbRjRSoVdM+7ATQ1dRLrzF5NQV/U9yq3sITCU7Dukm+A1ewrK9jj6sGdsiAaz18aeYv+Mo=
+	t=1780827137; cv=none; b=ljm4wSO071M4hjkMvdpdQqqNWc9omWWSJKPcPPNt61i4QbOEqUIyIYqzZiQP8d5qkYvWcdukQXx851K//M04pNyGLUE8mp5Y7MiSNHt4Jcs0XYxrtTa8yu6GUcJj/KGrfsyMGZx/fZ0kqaRuuIlEY76cSGNKpqoEREv6Dvbqzq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827134; c=relaxed/simple;
-	bh=zdYQxZF3+33pgH3tCmKvQB6A2kCn6agJIaQDZrTzlt4=;
+	s=arc-20240116; t=1780827137; c=relaxed/simple;
+	bh=ipMMFmnq2TO50PgyRX3bbs4HekgMXFTW877/o/tOkLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m54opYJpwwI7VMhMrrOIylHxMZdxSKspNV08uh86eb1BkET4GLHlkrriKVsHgoK7mPmJ9+E6F5UPL2wfU+QZhjsaFUOU1JuFrZVnWQaVAhRwkrHFwPEPjoBtEqqzL4QEUVBvbHDBd2K8ux2eI1FtBoKVXq19rnn5FH1Ng67JSu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KlSxMLYH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QrUm2meEqGdEbChVFoxvYzQwZaHGX9S2nbD3MOxL7k0Zg2J67nK29qd+0sKqekBYKjn2GCN7br3+COn92kgPPXB0OJhMOmWtP0Hin4r+dMz/AM+cPrHUQVsbBQepj8Eog1H+xvftROVuN90+33MpQJ1b5hhBdGkgKaYnX4iKmoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azXWcITl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlSxMLYH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE2C1F00893;
-	Sun,  7 Jun 2026 10:12:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azXWcITl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFDFE1F00893;
+	Sun,  7 Jun 2026 10:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827133;
-	bh=9+eUQEZ9v1qtbCTUxqvVSuHzJZz+XTYoAZXwXuW/j7I=;
+	s=korg; t=1780827136;
+	bh=o0aI2LwvQLxRtiDz7xwDU3un3onjmQPTDed78EwLbz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KlSxMLYHCAvIyGO2rliFrXids09xly6O4t2D0dn4rrawkX6NvCqfYWvsMalbk2Y+v
-	 dri/ZBevFSdNItC4Pl8JPUiBPx7aMY8pWj1LotYLgifVF4aCX4Mvc+Fsm/N7rMGUhK
-	 stQr3wTuwNeWH+UVQ4RsgqwoNEh/fc861zc1MxIA=
+	b=azXWcITlZyhuG7SFCaNSuCqn0v4ewva3QLQHk9ZlwdaPT1nNmHo8srLbjvo50bAwi
+	 kWiEug11uvZ4ucMifmCAhv/jNfExhQMNvaNG4JHBkZoTupxMeGImmPDZxZfJsKkUdw
+	 VANUh/cDljKaZyu8R74s0yEbFWxhF48oY4dmPgY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	David Heidelberg <david@ixit.cz>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 025/307] nfc: llcp: Fix use-after-free in llcp_sock_release()
-Date: Sun,  7 Jun 2026 11:57:02 +0200
-Message-ID: <20260607095728.566631552@linuxfoundation.org>
+Subject: [PATCH 6.18 043/315] ethtool: rss: avoid device context leak on reply-build failure
+Date: Sun,  7 Jun 2026 11:57:10 +0200
+Message-ID: <20260607095729.148188566@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +46,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit f4268b466190dae95a7585f69b4f1f8ad097632c ]
+[ Upstream commit 32a9ecde62731c9f7412507709192c84dafc38d1 ]
 
-llcp_sock_release() unconditionally unlinks the socket from the local
-sockets list.  However, if the socket is still in connecting state, it
-is on the connecting list.
+We wait with filling the reply for new RSS context creation
+until after the driver ->create_rxfh_context call. The driver
+needs to fill some of the defaults in the context. The failure
+of rss_fill_reply() is somewhat theoretical, but doesn't take
+much effort to handle it properly. Call ->remove_rxfh_context().
 
-Fix this by checking the socket state and unlinking from the correct list.
+If the driver's remove callback fails (some implementations like sfc
+can return real command errors from firmware RPCs) - skip the xa_erase
+and kfree, leaving the context in the xarray. This matches how
+ethnl_rss_delete_doit() behaves.
 
-Fixes: b4011239a08e ("NFC: llcp: Fix non blocking sockets connections")
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://patch.msgid.link/20260429134115.3558604-1-lee@kernel.org
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Fixes: a166ab7816c5 ("ethtool: rss: support creating contexts via Netlink")
+Link: https://patch.msgid.link/20260522230647.1705600-7-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/llcp_sock.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ethtool/rss.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/nfc/llcp_sock.c b/net/nfc/llcp_sock.c
-index 57a2f97004e172..915929cd724f90 100644
---- a/net/nfc/llcp_sock.c
-+++ b/net/nfc/llcp_sock.c
-@@ -633,6 +633,8 @@ static int llcp_sock_release(struct socket *sock)
+diff --git a/net/ethtool/rss.c b/net/ethtool/rss.c
+index f745ddec6fbab8..b122f67dbde1d6 100644
+--- a/net/ethtool/rss.c
++++ b/net/ethtool/rss.c
+@@ -1096,7 +1096,7 @@ int ethnl_rss_create_doit(struct sk_buff *skb, struct genl_info *info)
+ 	ntf_fail |= rss_fill_reply(rsp, &req.base, &data.base);
+ 	if (WARN_ON(!hdr || ntf_fail)) {
+ 		ret = -EMSGSIZE;
+-		goto exit_unlock;
++		goto err_remove_ctx;
+ 	}
  
- 	if (sock->type == SOCK_RAW)
- 		nfc_llcp_sock_unlink(&local->raw_sockets, sk);
-+	else if (sk->sk_state == LLCP_CONNECTING)
-+		nfc_llcp_sock_unlink(&local->connecting_sockets, sk);
- 	else
- 		nfc_llcp_sock_unlink(&local->sockets, sk);
+ 	genlmsg_end(rsp, hdr);
+@@ -1124,6 +1124,10 @@ int ethnl_rss_create_doit(struct sk_buff *skb, struct genl_info *info)
+ 	nlmsg_free(rsp);
+ 	return ret;
  
++err_remove_ctx:
++	if (ops->remove_rxfh_context(dev, ctx, req.rss_context, NULL))
++		/* leave the context on failure, like ethnl_rss_delete_doit() */
++		goto exit_unlock;
+ err_ctx_id_free:
+ 	xa_erase(&dev->ethtool->rss_ctx, req.rss_context);
+ err_unlock_free_ctx:
 -- 
 2.53.0
 
