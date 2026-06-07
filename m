@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9622D8378;
-	Sun,  7 Jun 2026 10:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C1B1A6822;
+	Sun,  7 Jun 2026 10:48:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829277; cv=none; b=r4zbJPqe2/1x12MWh47cje/VbITrnSknD+Fxn7gNcGBJrkQSp5JO2bVucgg7t/epDSNyk7XVv6Zs7p05oDqUNOzXhPtLWfNM19r8w8u1nyN9mXq2/IjE1Z1QNhXaH/zrHDHidMjFjCdbAg6ywMBJUUnTJAvWotiuCPAFzKOZWNE=
+	t=1780829281; cv=none; b=cOZYP23rYD1Z1yPZXTXUx7xt3l/SW9i7+Dy++l/ZwT384S4rkzFVlA2tFH6VSJvhcRUTMti4V5XfIMFzfzuQUBdxzVzh2DXGID6Q4xVTImY7GX9jAlJqfO+UDabOx/Recz29N/tcJzu7zIJjPopb/Cqu1wKtFTlKUHmsWOmYIIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829277; c=relaxed/simple;
-	bh=B4mZ2Kqh0C6eg+G66E6Q1nytG34kMvyj0W1frrT8Cuc=;
+	s=arc-20240116; t=1780829281; c=relaxed/simple;
+	bh=xyg9zcKgpqFR46eSBu+yyUVviBOsQWTRUddZTtKNps8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lnIbnaszenK2q7S9RpfdLXbnVuOK3tP2/xa/ba31unLb9I1OYJgsRkwo/QcxakQEOYfplK3tpmuuYC2av958Sjf9m0E9PzWLN/Yb2tauoYBllyhPXYERbB5mMq9wF0Fdspjmgiu22Uk2uoyIgqz1RQItTq2/D+5vPKZolcsDjhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yXM/ocfy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UxH+Zcxwfz3uIFv/ArHaY/WHxqaIw8llNstNM6vut4gYGyYXgjOAwyRgBjDISXoreY+QOk9GjfsFFUIhlepwIUYv9PTwjoWo0J5s/D2xOw3ACouvLoEZtg4BjzSTigeUbhK4E9Verbi+4l9YiyCVC1hI4HB8Nk7MKvcsmjbbPVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KH8TIBZU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXM/ocfy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F941F00893;
-	Sun,  7 Jun 2026 10:47:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KH8TIBZU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340C71F00893;
+	Sun,  7 Jun 2026 10:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829276;
-	bh=4mYMaK7aB9+sjBvdlcsq/maPRJbqhN1tFFIOflQDT94=;
+	s=korg; t=1780829280;
+	bh=NdTOAfPw5+0LADle7PmKYhON3sXCV97QsE+Dj9cv7to=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yXM/ocfykLAQbEHvz2/w+i42gvFaDHOSzL/aoEtXR80PGWW0N9PKsjNtNWoh4moEQ
-	 Oltd7q05Rf/XQi1aPQi5bEy+XLavuLhjRnml4ucov1zT9KkRMNDlOUbiGeq0yihbH5
-	 iFo4bxZzdKBseULT9VBCwj0mQsIhrTAVQeOSuUTg=
+	b=KH8TIBZUM6Ti4CsAf07rZE2lvrqefZnIigffT19M7xAiaddnMp1TSMSH95+t5fbV7
+	 YCMB3UR7DXbx+TRyPe/w6y6fGMKtXGoF4dLAz0bGJm7GAiwr30BvIUjk0g4enNlqSi
+	 ThnDgnSTOlK7X/06osaYzK1T0rchHp4yFcWz0JDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.12 210/307] comedi: comedi_test: fix check for valid scan_begin_src in waveform_ai_cmdtest()
-Date: Sun,  7 Jun 2026 12:00:07 +0200
-Message-ID: <20260607095735.429822124@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 7.0 260/332] usb: typec: tipd: Fix error code in tps6598x_probe()
+Date: Sun,  7 Jun 2026 12:00:29 +0200
+Message-ID: <20260607095737.589709205@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,41 +47,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Dan Carpenter <error27@gmail.com>
 
-commit 542f5248cb481073203e0dadab5bcbd28aeae308 upstream.
+commit b02900c85a6423cf9b3dcc6b47bf060c85075e69 upstream.
 
-Commit 783ddaebd397 ("staging: comedi: comedi_test: support
-scan_begin_src == TRIG_FOLLOW") neglected to add a test that
-`scan_begin_src` has only one bit set.  The allowed values are
-`TRIG_FOLLOW` and `TRIG_TIMER`, but the code incorrectly also allows
-`TRIG_FOLLOW | TRIG_TIMER`.  Add a call to
-`comedi_check_trigger_is_unique()` to check that only one trigger source
-bit is set.
+Set the error code on these two error paths.  The existing code returns
+success.
 
-Fixes: 783ddaebd397 ("staging: comedi: comedi_test: support scan_begin_src == TRIG_FOLLOW")
+Fixes: 77ed2f4538da ("usb: typec: tipd: Use read_power_status function in probe")
+Fixes: 04041fd7d6ec ("usb: typec: tipd: Read data status in probe and cache its value")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260422162138.36003-1-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/agL9o7wUK1dOVBTy@stanley.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/comedi_test.c |    1 +
+ drivers/usb/typec/tipd/core.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/comedi/drivers/comedi_test.c
-+++ b/drivers/comedi/drivers/comedi_test.c
-@@ -273,6 +273,7 @@ static int waveform_ai_cmdtest(struct co
- 	/* Step 2a : make sure trigger sources are unique */
+--- a/drivers/usb/typec/tipd/core.c
++++ b/drivers/usb/typec/tipd/core.c
+@@ -1835,6 +1835,7 @@ static int tps6598x_probe(struct i2c_cli
+ 		goto err_role_put;
  
- 	err |= comedi_check_trigger_is_unique(cmd->convert_src);
-+	err |= comedi_check_trigger_is_unique(cmd->scan_begin_src);
- 	err |= comedi_check_trigger_is_unique(cmd->stop_src);
- 
- 	/* Step 2b : and mutually compatible */
+ 	if (status & TPS_STATUS_PLUG_PRESENT) {
++		ret = -EINVAL;
+ 		if (!tps6598x_read_power_status(tps))
+ 			goto err_unregister_port;
+ 		if (!tps->data->read_data_status(tps))
 
 
