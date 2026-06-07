@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21A82DFF04;
-	Sun,  7 Jun 2026 10:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0D14204E;
+	Sun,  7 Jun 2026 10:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829616; cv=none; b=dMybf0WV7l4JqD4OU10kSLK1AELwXu99NWV5IxtDxBvS2aXHPskQdy6hDq0NynTrxk/mUYmw88+fYOF1BpX4H2gGeVg789m38rlB6lBUz4j79+CDo5NdG1j2VaP+ZajdC02if535yvzzpj0pn9PwOoiG+m1adCfQ6qMm1Yc5Y+A=
+	t=1780829620; cv=none; b=o3B9kp0g6yTgnvV3he5Ih3VwNGoYL/TmHpMv0qUNuDCriF0bBdQtAC88RCLRMQcYJiz4PTBlaxgQidAmApPYhatZf8pAtzDHo2f6lyRpZwfVJwhOv0c9fQzT4gfmYOyX1RzUVtyldHnxYDaQ6+27wLdur1iq/1FB7Yp3tOKOzJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829616; c=relaxed/simple;
-	bh=Sl3VEqUKj5s7j3+MEMCOC9HQx2i8W76wbLp3tr1NXcw=;
+	s=arc-20240116; t=1780829620; c=relaxed/simple;
+	bh=XOjeYQle7wFuXQ4lzk1Tio2gg6fOfVhiE8pnwNimaSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CiToY1rVTeaGO3HnohTijvr4H+SJqnUhnMLGvzKEDXj6VJ4Qb0VJk6lRy+bgN+tlV+3yAAAnXE2UvvgPK5NzVReZfbOdI/dFh/zKbO0FVRpZykUG7er0d8TgkrdiQyIuP1l9UQqvdEEcNOoDHjvDNNNhF3BWcihQHypt0r1Zxhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QU3Kputn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fDEn4JQtPgNDgDAoiz/d4EMpJlAtJRvEfOeerrCEA4Cq06PzGRW34GiRZd6W5edtTXAGqlOgR+D1K0giM4OU39EWEls0YhxBaBV+Wy9sKaLVpqMThYhgkbN+ElNaLv0JGT2/j3HbUrLrK1qFBxuwPt29ORgPUnsCkxTIF/qMrDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+9KD9pl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QU3Kputn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 793F31F00893;
-	Sun,  7 Jun 2026 10:53:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+9KD9pl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8FA1F00893;
+	Sun,  7 Jun 2026 10:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829615;
-	bh=U8mdB9efWnn6/6MqUagxuCcRfY2SCCv/Tas1MvHo+jA=;
+	s=korg; t=1780829618;
+	bh=KzM6UC3lIt2epdle4TFGvgsbhQQ3xOE2Mv77xn3Uiio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QU3KputnWnOk5s6rMjvA/bof7gH11p7hzAJk2OxgwfjnFj3AUEIkgq9oYtzKaM3h0
-	 +YgJPNH6PM7rGSLpv++b/0a2QiBn/8+DOcJ7jkMi+ig+W1+7VvQMrXedtAUTzq1Ljx
-	 alfWrHIlBTnbOyOowkJ3GkudaLIM1ujPoI5pBrkU=
+	b=P+9KD9pl+7kXK8dMn0kudzXvRWRyI50PhtcfMPDULxzHQlH03Z8nJfzh9qxPr5cR9
+	 uE9UrHWpK50YEJGm/7FJEeuN55Le+0NX9ffO9MYSmf3PMOcpcz/bHt/ibkLJWNK4DY
+	 5FdSxt/HPQ7wc/fZtxjNALkL6O3gob1LZAj2+zGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wanquan Zhong <wanquan.zhong@fibocom.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.0 265/332] USB: serial: option: add missing RSVD(5) flag for Rolling RW135R-GL
-Date: Sun,  7 Jun 2026 12:00:34 +0200
-Message-ID: <20260607095737.769924986@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>
+Subject: [PATCH 7.0 295/332] drm/amd/pm/si: Disregard vblank time when no displays are connected
+Date: Sun,  7 Jun 2026 12:01:04 +0200
+Message-ID: <20260607095738.898435104@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
 References: <20260607095728.031258202@linuxfoundation.org>
@@ -44,138 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wanquan Zhong <wanquan.zhong@fibocom.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 689f2facc689c8add11d7ff69fbbad17d65ee596 upstream.
+commit dd4f3ee535b3b0ac027f75dbf9dc5fc88733c765 upstream.
 
-The RW135R-GL entry added in commit 01e8d0f74222 ("USB: serial: option:
-add support for Rolling Wireless RW135R-GL") was missing the
-.driver_info = RSVD(5) flag used by other Rolling Wireless MBIM laptop
-modules (e.g. RW135-GL and RW350-GL).
+When no displays are connected, there is no vblank
+happening so the power management code shouldn't
+worry about it.
 
-Without this flag, the option driver incorrectly binds to the reserved
-ADB interface (If#5) in multi-interface USB modes, causing AT/MBIM
-communication failures after mode switching. This matches the handling
-of other Rolling Wireless MBIM devices.
+This fixes a regression that caused the memory clock
+to be stuck at maximum when there were no displays
+connected to a SI GPU.
 
-- VID:PID 33f8:1003, RW135R-GL for laptop debug M.2 cards (with MBIM
-  interface for Linux/Chrome OS)
-
-  0x1003: mbim, diag, AT, pipe
-
-  Here are the outputs of usb-devices:
-
-T:  Bus=03 Lev=01 Prnt=01 Port=04 Cnt=02 Dev#=  8 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=33f8 ProdID=1003 Rev= 5.15
-S:  Manufacturer=Rolling Wireless S.a.r.l.
-S:  Product=Rolling RW135R-GL Module
-S:  SerialNumber=12345678
-C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-- VID:PID 33f8:1003, RW135R-GL for laptop debug M.2 cards (with MBIM
-  interface for Linux/Chrome OS)
-
-  0x1003: mbim, diag, AT, ADB, pipe
-
-  Here are the outputs of usb-devices:
-
-T:  Bus=03 Lev=01 Prnt=01 Port=04 Cnt=02 Dev#=  7 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=33f8 ProdID=1003 Rev= 5.15
-S:  Manufacturer=Rolling Wireless S.a.r.l.
-S:  Product=Rolling RW135R-GL Module
-S:  SerialNumber=12345678
-C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-- VID:PID 33f8:1003, RW135R-GL for laptop debug M.2 cards (with MBIM
-  interface for Linux/Chrome OS)
-
-  0x1003: mbim, pipe
-
-  Here are the outputs of usb-devices:
-
-T:  Bus=03 Lev=01 Prnt=01 Port=04 Cnt=02 Dev#=  9 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=33f8 ProdID=1003 Rev= 5.15
-S:  Manufacturer=Rolling Wireless S.a.r.l.
-S:  Product=Rolling RW135R-GL Module
-S:  SerialNumber=12345678
-C:* #Ifs= 3 Cfg#= 1 Atr=a0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Fixes: 01e8d0f74222 ("USB: serial: option: add support for Rolling Wireless RW135R-GL")
-Signed-off-by: Wanquan Zhong <wanquan.zhong@fibocom.com>
+Fixes: 9003a0746864 ("drm/amd/pm: Treat zero vblank time as too short in si_dpm (v3)")
+Fixes: 9d73b107a61b ("drm/amd/pm: Use pm_display_cfg in legacy DPM (v2)")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Tested-by: Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 6d87e0199f7b83735b56e422d59f170a201897a8)
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2476,7 +2476,8 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x0302, 0xff) },			/* Rolling RW101R-GL (laptop MBIM) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x0802, 0xff),			/* Rolling RW350-GL (laptop MBIM) */
- 	  .driver_info = RSVD(5) },
--	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x1003, 0xff) },			/* Rolling RW135R-GL (laptop MBIM) */
-+	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x1003, 0xff),			/* Rolling RW135R-GL (laptop MBIM) */
-+	  .driver_info = RSVD(5) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for Global */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0x00, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x40) },
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -3076,6 +3076,10 @@ static bool si_dpm_vblank_too_short(void
+ 	/* we never hit the non-gddr5 limit so disable it */
+ 	u32 switch_limit = adev->gmc.vram_type == AMDGPU_VRAM_TYPE_GDDR5 ? 450 : 0;
+ 
++	/* Disregard vblank time when there are no displays connected */
++	if (!adev->pm.pm_display_cfg.num_display)
++		return false;
++
+ 	/* Consider zero vblank time too short and disable MCLK switching.
+ 	 * Note that the vblank time is set to maximum when no displays are attached,
+ 	 * so we'll still enable MCLK switching in that case.
 
 
