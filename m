@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2771DE8AE;
-	Sun,  7 Jun 2026 10:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE881DE8AE;
+	Sun,  7 Jun 2026 10:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826891; cv=none; b=XY55BU++wGqWwItQwoKsgYQdw/I2OHTA4bgi/g1Z2ql11/CEB5zw7tGDahzC7oHOlMXM6cFGU3tT2j8vR7s9nF7VqQr2iikNSpgc+JGmJTmKbnyAAkKFIavODLBYZVuUOudH/8jh/uAdZBER0Zqngjd1zyOf3oWKGMNg4ZppLxo=
+	t=1780826894; cv=none; b=cRmroyYODyaEzHU+k9Fh8jCZ8A2jMaq/PVcRao28Jutfje1iuRrAmBLJtNKQ1kJEqtmxJvZq6JY9l6bwhMDdE8Vxs/HlflP+xonrwQxdD201iB5x58hBYHQ9LHATmbJpQMgYNGwfJMcyXKAQc6QvIQIVIH7cUI8vvxLSU9hpuWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826891; c=relaxed/simple;
-	bh=PFoCUWaYjgVnl8azmYs7RZaAm/y3dVsMngdyvzpnlOA=;
+	s=arc-20240116; t=1780826894; c=relaxed/simple;
+	bh=ggA9DPppB/FBL4lVBDFieMLMRgSqY3ozZLb6fEdQMfo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rWhVJU/YI117iHlomy+u/wgB6NnVKbtF44ID76h7ZpUbvYGhXKEethJxC0FkV4lVcTTiUuVYjNzjLoXI/yBgpMz2pScMNAaGVr+RvlDRkBhmEURwRPKgQYjrTjap8oRGFzLVT6oml1wXhtg47P+xxIuNHwmx08NWTmhNhJw+6vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/Xf/Th+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FhJTUPlRBWP/IkI/c4A8jjVPth7leon0hhUw1zospgwlhWSshXuZD//FLUaeAkkV5gqO5x15CLVaqfG6V1B/25ypj1uLTnwB3kt+BellYkPCZ8CgxPOtIsKVcxQY9DdDedMXMQeRbq3Nv2ksTtUQF+eA8C2zub9FGxFlxKNvnmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2dC3dHlP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/Xf/Th+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D281B1F00893;
-	Sun,  7 Jun 2026 10:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2dC3dHlP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271A31F00893;
+	Sun,  7 Jun 2026 10:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826890;
-	bh=SJNTW/w9m6sltcXGpVvWjlwNrj3AqwKIkP2yBUelgaY=;
+	s=korg; t=1780826893;
+	bh=pRJ/T7nUeC80afqjn03JgBRdeZAXAsm6XJe4MqkcYN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i/Xf/Th+QRN8d0hboYJHU7CEZLYQO1vqDNvsIWqj8vMT49Hi9IOjBX5tojgknYWQ7
-	 qUK3lWvDHivUDq+6kMV95u6ygobCkQXaGkweZRvGKoMFqvUCTUc5uS4V2r4BwlYTeL
-	 wW3Ob26jTWYOkuuTratwSouaOc3FvMJpPbkBMuZI=
+	b=2dC3dHlPRrLP1BYqAYfYqYjyzc6AAw+OEgiKgW8eSe+TBB8Gq1S9SlGRv0JoaxkYJ
+	 dTaZOSFUd4XuUA1lTz2xg2JHjjmzprrgPiMu4M6Y81jDu7qhY1H0YLNOVY9knUgmUM
+	 n+UFYNEdPimlwD04vPLrUPiwr3+sylaoBUEDmCyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Dongli Zhang <dongli.zhang@oracle.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Davide Caratti <dcaratti@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 020/315] tun: free page on short-frame rejection in tun_xdp_one()
-Date: Sun,  7 Jun 2026 11:56:47 +0200
-Message-ID: <20260607095728.235630824@linuxfoundation.org>
+Subject: [PATCH 6.12 004/307] net/sched: cls_fw: fix NULL dereference of "old" filters before change()
+Date: Sun,  7 Jun 2026 11:56:41 +0200
+Message-ID: <20260607095727.809370504@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,56 +48,123 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Davide Caratti <dcaratti@redhat.com>
 
-[ Upstream commit f4feb1e20058e407cb00f45aff47f5b7e19a6bbf ]
+[ Upstream commit 65782b2db7321d5f97c16718c4c7f6c7205a56be ]
 
-tun_xdp_one() returns -EINVAL on a frame shorter than ETH_HLEN without
-freeing the page that vhost_net_build_xdp() allocated for it.
-tun_sendmsg() discards that -EINVAL and still returns total_len, so
-vhost_tx_batch() takes the success path and never frees the page; each
-short frame in a batch leaks one page-frag chunk.
+Like pointed out by Sashiko [1], since commit ed76f5edccc9 ("net: sched:
+protect filter_chain list with filter_chain_lock mutex") TC filters are
+added to a shared block and published to datapath before their ->change()
+function is called. This is a problem for cls_fw: an invalid filter
+created with the "old" method can still classify some packets before it
+is destroyed by the validation logic added by Xiang.
+Therefore, insisting with repeated runs of the following script:
 
-A local process that can open /dev/net/tun and /dev/vhost-net can hit
-this path: it attaches a tun/tap device as the vhost-net backend and
-feeds TX descriptors whose length minus the virtio-net header is below
-ETH_HLEN. Each kick leaks the page-frag chunks for that batch, and a
-tight submission loop exhausts host memory and triggers an OOM panic.
-Free the page before returning -EINVAL, matching the XDP-program error
-path in the same function.
+ # ip link add dev crash0 type dummy
+ # ip link set dev crash0 up
+ # mausezahn  crash0 -c 100000 -P 10 \
+ > -A 4.3.2.1 -B 1.2.3.4 -t udp "dp=1234" -q &
+ # sleep 1
+ # tc qdisc add dev crash0 egress_block 1 clsact
+ # tc filter add block 1 protocol ip prio 1 matchall \
+ > action skbedit mark 65536 continue
+ # tc filter add block 1 protocol ip prio 2 fw
+ # ip link del dev crash0
 
-Fixes: 049584807f1d ("tun: add missing verification for short frame")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Dongli Zhang <dongli.zhang@oracle.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260520160020.375349-2-bestswngs@gmail.com
+can still make fw_classify() hit the WARN_ON() in [2]:
+
+ WARNING: ./include/net/pkt_cls.h:88 at fw_classify+0x244/0x250 [cls_fw], CPU#18: mausezahn/1399
+ Modules linked in: cls_fw(E) act_skbedit(E)
+ CPU: 18 UID: 0 PID: 1399 Comm: mausezahn Tainted: G            E       7.0.0-rc6-virtme #17 PREEMPT(full)
+ Tainted: [E]=UNSIGNED_MODULE
+ Hardware name: Red Hat KVM, BIOS 1.16.3-2.el9 04/01/2014
+ RIP: 0010:fw_classify+0x244/0x250 [cls_fw]
+ Code: 5c 49 c7 45 00 00 00 00 00 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 5b b8 ff ff ff ff 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 90 <0f> 0b 90 eb a0 0f 1f 80 00 00 00 00 90 90 90 90 90 90 90 90 90 90
+ RSP: 0018:ffffd1b7026bf8a8 EFLAGS: 00010202
+ RAX: ffff8c5ac9c60800 RBX: ffff8c5ac99322c0 RCX: 0000000000000004
+ RDX: 0000000000000001 RSI: ffff8c5b74d7a000 RDI: ffff8c5ac8284f40
+ RBP: ffffd1b7026bf8d0 R08: 0000000000000000 R09: ffffd1b7026bf9b0
+ R10: 00000000ffffffff R11: 0000000000000000 R12: 0000000000010000
+ R13: ffffd1b7026bf930 R14: ffff8c5ac8284f40 R15: 0000000000000000
+ FS:  00007fca40c37740(0000) GS:ffff8c5b74d7a000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007fca40e822a0 CR3: 0000000005ca0001 CR4: 0000000000172ef0
+ Call Trace:
+  <TASK>
+  tcf_classify+0x17d/0x5c0
+  tc_run+0x9d/0x150
+  __dev_queue_xmit+0x2ab/0x14d0
+  ip_finish_output2+0x340/0x8f0
+  ip_output+0xa4/0x250
+  raw_sendmsg+0x147d/0x14b0
+  __sys_sendto+0x1cc/0x1f0
+  __x64_sys_sendto+0x24/0x30
+  do_syscall_64+0x126/0xf80
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ RIP: 0033:0x7fca40e822ba
+ Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 c0 75 15 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 7e c3 0f 1f 44 00 00 41 54 48 83 ec 30 44 89
+ RSP: 002b:00007ffc248a42c8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
+ RAX: ffffffffffffffda RBX: 000055ef233289d0 RCX: 00007fca40e822ba
+ RDX: 000000000000001e RSI: 000055ef23328c30 RDI: 0000000000000003
+ RBP: 000055ef233289d0 R08: 00007ffc248a42d0 R09: 0000000000000010
+ R10: 0000000000000000 R11: 0000000000000246 R12: 000000000000001e
+ R13: 00000000000186a0 R14: 0000000000000000 R15: 00007fca41043000
+  </TASK>
+ irq event stamp: 1045778
+ hardirqs last  enabled at (1045784): [<ffffffff864ec042>] __up_console_sem+0x52/0x60
+ hardirqs last disabled at (1045789): [<ffffffff864ec027>] __up_console_sem+0x37/0x60
+ softirqs last  enabled at (1045426): [<ffffffff874d48c7>] __alloc_skb+0x207/0x260
+ softirqs last disabled at (1045434): [<ffffffff874fe8f8>] __dev_queue_xmit+0x78/0x14d0
+
+Then, because of the value in the packet's mark, dereference on 'q->handle'
+with NULL 'q' occurs:
+
+ BUG: kernel NULL  pointer dereference, address: 0000000000000038
+ [...]
+ RIP: 0010:fw_classify+0x1fe/0x250 [cls_fw]
+ [...]
+
+Skip "old-style" classification on shared blocks, so that the NULL
+dereference is fixed and WARN_ON() is not hit anymore in the short
+lifetime of invalid cls_fw "old-style" filters.
+
+[1] https://sashiko.dev/#/patchset/20260331050217.504278-1-xmei5%40asu.edu
+[2] https://elixir.bootlin.com/linux/v7.0-rc6/source/include/net/pkt_cls.h#L86
+
+Fixes: faeea8bbf6e9 ("net/sched: cls_fw: fix NULL pointer dereference on shared blocks")
+Fixes: ed76f5edccc9 ("net: sched: protect filter_chain list with filter_chain_lock mutex")
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Davide Caratti <dcaratti@redhat.com>
+Link: https://patch.msgid.link/e39cbd3103a337f1e515d186fe697b4459d24757.1775661704.git.dcaratti@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sched/cls_fw.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 8192740357a09c..afba37965ce3b7 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -2392,8 +2392,10 @@ static int tun_xdp_one(struct tun_struct *tun,
- 	bool skb_xdp = false;
- 	struct page *page;
+diff --git a/net/sched/cls_fw.c b/net/sched/cls_fw.c
+index 83a7372ea15c2a..fd9c6c2815a1c2 100644
+--- a/net/sched/cls_fw.c
++++ b/net/sched/cls_fw.c
+@@ -74,9 +74,13 @@ TC_INDIRECT_SCOPE int fw_classify(struct sk_buff *skb,
+ 			}
+ 		}
+ 	} else {
+-		struct Qdisc *q = tcf_block_q(tp->chain->block);
++		struct Qdisc *q;
  
--	if (unlikely(datasize < ETH_HLEN))
-+	if (unlikely(datasize < ETH_HLEN)) {
-+		put_page(virt_to_head_page(xdp->data));
- 		return -EINVAL;
-+	}
- 
- 	xdp_prog = rcu_dereference(tun->xdp_prog);
- 	if (xdp_prog) {
+ 		/* Old method: classify the packet using its skb mark. */
++		if (tcf_block_shared(tp->chain->block))
++			return -1;
++
++		q = tcf_block_q(tp->chain->block);
+ 		if (id && (TC_H_MAJ(id) == 0 ||
+ 			   !(TC_H_MAJ(id ^ q->handle)))) {
+ 			res->classid = id;
 -- 
 2.53.0
 
