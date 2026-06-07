@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289491E98EF;
-	Sun,  7 Jun 2026 10:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3154D2E7373;
+	Sun,  7 Jun 2026 10:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827245; cv=none; b=TW3cd4CNkpJq90I3h9KuU9GTevcVzGD/0QqJyPT5nHPLYDRSOzfLMKZZQf+t1lZ2mopvYFLDZ+wooaoZds9UCb+faQlX9M+Yfeeb5lLK94lRRam6/ZA66UPS9+7E9mo1JdzMvVbLp6+vkXDUcHtLcKyBs9Yd8eHCV3NOHSR9WOw=
+	t=1780827248; cv=none; b=ViSRaJsewAVoHVprcBjyzbkoVNn0UGMF7K5iVLDsV0Odjs2fc9nKVL8lG7cXrlj/d8tNxHkp1DGAJdw8TnIl3+D99k99RIkVmx3IYhiuyDrehI/Yjq7Pcj2Xuq7pC1V9lmgmaGc/F3B2AI3SJgntnjTw61WWcMVviKiQJ9a0Rsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827245; c=relaxed/simple;
-	bh=3v1W6Ij+IQ4BCpOPr6cFiXc675lFMLiKMnKiWSC9m2E=;
+	s=arc-20240116; t=1780827248; c=relaxed/simple;
+	bh=V7TXZifOFZ72pepOKsvBNHLk4FvnQFuWP/x4wdAJPKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I182+TPEhPcDSM44ivvx+uT65+YcI6r0gc/tn3IDt3w2jQ/4urSDejoCclVQWz5c9PPE+TBLe0lhHQ2xCO/qk/vCJOXZ4LBkQwLZEqgX6EB9kbGAkTd2G0LpQvq7JpMDdmv2UZYbLBhdSENQPKv05gpH40f801ML1ZMN+xFRN8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwwEHKdD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BE4uaoBTmNwiSk2nppzaQKaZ5nYzmJzmdUy5Ux5n4GoWfr7ySTPm5punTl7jQ3IXS0vVLIAt+dMTmrwah5CslaYPZ32CThvhJtie2qlYIZFcBHm5dHcyRGvq0bLn/CY24NcSR1buYk7TFNRiZlHjPTeRK4qddTi1vtWi1+TMbZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OyA7Ulfo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwwEHKdD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626A71F00893;
-	Sun,  7 Jun 2026 10:14:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OyA7Ulfo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75AA81F00893;
+	Sun,  7 Jun 2026 10:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827243;
-	bh=a4ohamdEW2dQZ8YDMmoUd3MAEXkVeH0fvAf9xOnJ0GU=;
+	s=korg; t=1780827247;
+	bh=nTLk8kCMJTWBYDYlVuRXYfyZl+5qcH8uhrTdXNBEIC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rwwEHKdDpjJ01Bm/+0ID0p9Vl6137gkPiwC1gz2LqyxuMhRxP1jf9jj2auLbhdPVK
-	 jclKKi7cQTInegNeaok7RorPEEPmWMB9HnSMcje9XXOeAsDgcmFH02i4tRts3cUyiy
-	 zv1DbGuet8xNh1bjrIuyeWVOafCoP1obD/Vd/SWI=
+	b=OyA7UlfoRhDWxKd+Nks5SbgFW2LewyqBYF0gu/hnYgp7DdGWhppwkCcJjfs1wezPw
+	 IqSag4SkqRqumh6jL2EcFkGeLKpb4DUlYnwQJlnraCQgr0VstsGnkcbz8qUn5jwv47
+	 UDb8VskQr2jFloqwA0HlQSQUVqc0CacdipkmvCIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Ming <ming.li@zohomail.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Dongli Zhang <dongli.zhang@oracle.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 053/315] cxl/test: Update mock dev array before calling platform_device_add()
-Date: Sun,  7 Jun 2026 11:57:20 +0200
-Message-ID: <20260607095729.548622699@linuxfoundation.org>
+Subject: [PATCH 6.12 035/307] tun: free page on build_skb failure in tun_xdp_one()
+Date: Sun,  7 Jun 2026 11:57:12 +0200
+Message-ID: <20260607095728.963783983@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,274 +50,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Ming <ming.li@zohomail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit d90f236f8b9e354848bd226f581db27755ab901d ]
+[ Upstream commit aa8963fdce667a42fb7f0bdd2909fadcab02f9a8 ]
 
-CXL test environment hits the following error sometimes.
+When build_skb() fails in tun_xdp_one(), the function sets ret to
+-ENOMEM and jumps to the out label, which returns without freeing the
+page that vhost_net_build_xdp() allocated for the frame. As with the
+short-frame rejection path, tun_sendmsg() discards the per-buffer error
+and still returns total_len, so vhost_tx_batch() takes the success path
+and never frees the page. Each build_skb() failure in a batch leaks one
+page-frag chunk.
 
- cxl_mem mem9: endpoint7 failed probe
+Free the page before taking the error path, matching the put_page() the
+other error exits of tun_xdp_one() already perform.
 
-All mock memdevs are platform firmware devices added by cxl_test module,
-and cxl_test module also provides a platform device driver for them to
-create a memdev device to CXL subsystem. cxl_test module uses
-cxl_rcd/mem_single/mem arrays to store different types of mock memdevs.
-CXL drivers calls registered mock functions for a mock memdev by
-checking if a given memdev is in these arrays.
-
-When cxl_test module adds these mock memdevs, it always calls
-platform_device_add() before adding them to a suitable mock memdev
-array. However, there is a small window where CXL drivers calls mock
-function for a added memdev before it added to a mock memdev array. In
-above case, cxl endpoint driver considers a added memdev was not a mock
-memdev, then calling devm_cxl_endpoint_decoders_setup() for it rather
-than mock_endpoint_decoders_setup().
-
-An appropriate solution is that adding a new mock device to a mock
-device array before calling platform_device_add() for it. It can
-guarantee the new mock device is visible to CXL subsystem.
-
-This patch introduces a new helped called cxl_mock_platform_device_add()
-to handle the issue, and uses the function for all mock devices addition.
-
-Fixes: 3a2b97b3210b ("cxl/test: Improve init-order fidelity relative to real-world systems")
-Signed-off-by: Li Ming <ming.li@zohomail.com>
-Tested-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260520121457.234404-1-ming.li@zohomail.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: 043d222f93ab ("tuntap: accept an array of XDP buffs through sendmsg()")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Dongli Zhang <dongli.zhang@oracle.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260521163312.1479805-2-bestswngs@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/cxl/test/cxl.c | 105 ++++++++++++++---------------------
- 1 file changed, 43 insertions(+), 62 deletions(-)
+ drivers/net/tun.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/cxl/test/cxl.c b/tools/testing/cxl/test/cxl.c
-index 2d135ca533d02b..5771c75bc58893 100644
---- a/tools/testing/cxl/test/cxl.c
-+++ b/tools/testing/cxl/test/cxl.c
-@@ -1132,6 +1132,23 @@ static void mock_companion(struct acpi_device *adev, struct device *dev)
- #define SZ_64G (SZ_32G * 2)
- #endif
- 
-+static int cxl_mock_platform_device_add(struct platform_device *pdev,
-+					struct platform_device **ppdev)
-+{
-+	int rc;
-+
-+	if (ppdev)
-+		*ppdev = pdev;
-+	rc = platform_device_add(pdev);
-+	if (rc) {
-+		platform_device_put(pdev);
-+		if (ppdev)
-+			*ppdev = NULL;
-+	}
-+
-+	return rc;
-+}
-+
- static __init int cxl_rch_topo_init(void)
- {
- 	int rc, i;
-@@ -1146,13 +1163,10 @@ static __init int cxl_rch_topo_init(void)
- 			goto err_bridge;
- 
- 		mock_companion(adev, &pdev->dev);
--		rc = platform_device_add(pdev);
--		if (rc) {
--			platform_device_put(pdev);
-+		rc = cxl_mock_platform_device_add(pdev, &cxl_rch[i]);
-+		if (rc)
- 			goto err_bridge;
--		}
- 
--		cxl_rch[i] = pdev;
- 		mock_pci_bus[idx].bridge = &pdev->dev;
- 		rc = sysfs_create_link(&pdev->dev.kobj, &pdev->dev.kobj,
- 				       "firmware_node");
-@@ -1204,13 +1218,10 @@ static __init int cxl_single_topo_init(void)
- 			goto err_bridge;
- 
- 		mock_companion(adev, &pdev->dev);
--		rc = platform_device_add(pdev);
--		if (rc) {
--			platform_device_put(pdev);
-+		rc = cxl_mock_platform_device_add(pdev, &cxl_hb_single[i]);
-+		if (rc)
- 			goto err_bridge;
--		}
- 
--		cxl_hb_single[i] = pdev;
- 		mock_pci_bus[i + NR_CXL_HOST_BRIDGES].bridge = &pdev->dev;
- 		rc = sysfs_create_link(&pdev->dev.kobj, &pdev->dev.kobj,
- 				       "physical_node");
-@@ -1229,12 +1240,9 @@ static __init int cxl_single_topo_init(void)
- 			goto err_port;
- 		pdev->dev.parent = &bridge->dev;
- 
--		rc = platform_device_add(pdev);
--		if (rc) {
--			platform_device_put(pdev);
-+		rc = cxl_mock_platform_device_add(pdev, &cxl_root_single[i]);
-+		if (rc)
- 			goto err_port;
--		}
--		cxl_root_single[i] = pdev;
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index 19c33d21bab947..d53e60823bf1bb 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -2505,6 +2505,7 @@ static int tun_xdp_one(struct tun_struct *tun,
+ build:
+ 	skb = build_skb(xdp->data_hard_start, buflen);
+ 	if (!skb) {
++		put_page(virt_to_head_page(xdp->data));
+ 		ret = -ENOMEM;
+ 		goto out;
  	}
- 
- 	for (i = 0; i < ARRAY_SIZE(cxl_swu_single); i++) {
-@@ -1247,12 +1255,9 @@ static __init int cxl_single_topo_init(void)
- 			goto err_uport;
- 		pdev->dev.parent = &root_port->dev;
- 
--		rc = platform_device_add(pdev);
--		if (rc) {
--			platform_device_put(pdev);
-+		rc = cxl_mock_platform_device_add(pdev, &cxl_swu_single[i]);
-+		if (rc)
- 			goto err_uport;
--		}
--		cxl_swu_single[i] = pdev;
- 	}
- 
- 	for (i = 0; i < ARRAY_SIZE(cxl_swd_single); i++) {
-@@ -1266,12 +1271,9 @@ static __init int cxl_single_topo_init(void)
- 			goto err_dport;
- 		pdev->dev.parent = &uport->dev;
- 
--		rc = platform_device_add(pdev);
--		if (rc) {
--			platform_device_put(pdev);
-+		rc = cxl_mock_platform_device_add(pdev, &cxl_swd_single[i]);
-+		if (rc)
- 			goto err_dport;
--		}
--		cxl_swd_single[i] = pdev;
- 	}
- 
- 	return 0;
-@@ -1344,12 +1346,9 @@ static int cxl_mem_init(void)
- 		pdev->dev.parent = &dport->dev;
- 		set_dev_node(&pdev->dev, i % 2);
- 
--		rc = platform_device_add(pdev);
--		if (rc) {
--			platform_device_put(pdev);
-+		rc = cxl_mock_platform_device_add(pdev, &cxl_mem[i]);
-+		if (rc)
- 			goto err_mem;
--		}
--		cxl_mem[i] = pdev;
- 	}
- 
- 	for (i = 0; i < ARRAY_SIZE(cxl_mem_single); i++) {
-@@ -1362,12 +1361,9 @@ static int cxl_mem_init(void)
- 		pdev->dev.parent = &dport->dev;
- 		set_dev_node(&pdev->dev, i % 2);
- 
--		rc = platform_device_add(pdev);
--		if (rc) {
--			platform_device_put(pdev);
-+		rc = cxl_mock_platform_device_add(pdev, &cxl_mem_single[i]);
-+		if (rc)
- 			goto err_single;
--		}
--		cxl_mem_single[i] = pdev;
- 	}
- 
- 	for (i = 0; i < ARRAY_SIZE(cxl_rcd); i++) {
-@@ -1381,12 +1377,9 @@ static int cxl_mem_init(void)
- 		pdev->dev.parent = &rch->dev;
- 		set_dev_node(&pdev->dev, i % 2);
- 
--		rc = platform_device_add(pdev);
--		if (rc) {
--			platform_device_put(pdev);
-+		rc = cxl_mock_platform_device_add(pdev, &cxl_rcd[i]);
-+		if (rc)
- 			goto err_rcd;
--		}
--		cxl_rcd[i] = pdev;
- 	}
- 
- 	return 0;
-@@ -1451,13 +1444,10 @@ static __init int cxl_test_init(void)
- 			goto err_bridge;
- 
- 		mock_companion(adev, &pdev->dev);
--		rc = platform_device_add(pdev);
--		if (rc) {
--			platform_device_put(pdev);
-+		rc = cxl_mock_platform_device_add(pdev, &cxl_host_bridge[i]);
-+		if (rc)
- 			goto err_bridge;
--		}
- 
--		cxl_host_bridge[i] = pdev;
- 		mock_pci_bus[i].bridge = &pdev->dev;
- 		rc = sysfs_create_link(&pdev->dev.kobj, &pdev->dev.kobj,
- 				       "physical_node");
-@@ -1475,12 +1465,9 @@ static __init int cxl_test_init(void)
- 			goto err_port;
- 		pdev->dev.parent = &bridge->dev;
- 
--		rc = platform_device_add(pdev);
--		if (rc) {
--			platform_device_put(pdev);
-+		rc = cxl_mock_platform_device_add(pdev, &cxl_root_port[i]);
-+		if (rc)
- 			goto err_port;
--		}
--		cxl_root_port[i] = pdev;
- 	}
- 
- 	BUILD_BUG_ON(ARRAY_SIZE(cxl_switch_uport) != ARRAY_SIZE(cxl_root_port));
-@@ -1493,12 +1480,9 @@ static __init int cxl_test_init(void)
- 			goto err_uport;
- 		pdev->dev.parent = &root_port->dev;
- 
--		rc = platform_device_add(pdev);
--		if (rc) {
--			platform_device_put(pdev);
-+		rc = cxl_mock_platform_device_add(pdev, &cxl_switch_uport[i]);
-+		if (rc)
- 			goto err_uport;
--		}
--		cxl_switch_uport[i] = pdev;
- 	}
- 
- 	for (i = 0; i < ARRAY_SIZE(cxl_switch_dport); i++) {
-@@ -1511,12 +1495,9 @@ static __init int cxl_test_init(void)
- 			goto err_dport;
- 		pdev->dev.parent = &uport->dev;
- 
--		rc = platform_device_add(pdev);
--		if (rc) {
--			platform_device_put(pdev);
-+		rc = cxl_mock_platform_device_add(pdev, &cxl_switch_dport[i]);
-+		if (rc)
- 			goto err_dport;
--		}
--		cxl_switch_dport[i] = pdev;
- 	}
- 
- 	rc = cxl_single_topo_init();
-@@ -1534,9 +1515,9 @@ static __init int cxl_test_init(void)
- 	mock_companion(&acpi0017_mock, &cxl_acpi->dev);
- 	acpi0017_mock.dev.bus = &platform_bus_type;
- 
--	rc = platform_device_add(cxl_acpi);
-+	rc = cxl_mock_platform_device_add(cxl_acpi, NULL);
- 	if (rc)
--		goto err_root;
-+		goto err_rch;
- 
- 	rc = cxl_mem_init();
- 	if (rc)
 -- 
 2.53.0
 
