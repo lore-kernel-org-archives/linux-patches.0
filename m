@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2A913DBA0;
-	Sun,  7 Jun 2026 10:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BAC1C5F27;
+	Sun,  7 Jun 2026 10:26:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828011; cv=none; b=dYP7wesSFvuttYLJgqICSZPv80D8AEEzEzbaTtNBUFWO7XAfeeZZvadsGXNyudsMiKSjTXD0TVrqhbnH2xxtx7ncPzfGRH6aYgYEOgf2HxHZaIhX4n+V6Pj3KxS0fOXc4MjnZJU8uX02LveF4vRmDal1UKonreKjHLw9xVotUYA=
+	t=1780828015; cv=none; b=PufSlk9dMslhY1ryEMt6rYZjaVS9FtRlF8FjGSRFzrJT1Y0KHT/nHqQCGCd9djslv/M9pLgh+Omqss48C67DVb+vXkgMbAOEMpKcOxvcGhBglfM9bi6bn53vIXE472ehP6NVlRVzbvGGmZgD5PK+rt5rf281fTtuI9bvqSbnuRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828011; c=relaxed/simple;
-	bh=9Xjg8iStobOl1cPj7zdjV8McHULpfdRpoRogh2qWn9g=;
+	s=arc-20240116; t=1780828015; c=relaxed/simple;
+	bh=bXfK/s1pi7z5UIefccBNcj/5ph0F36FJyqeXQva9v+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ARfcxuMA2EdjsjBMkCAoH6kQF6YZeSpaj9cB2UHIVGL8LH/5vFLKDfWJqd/esZlUJmlMbvP27Qv46mCNdZRz6iL4PKrMKqfMPq5Z6KKgtzuxJ9ysn0rMDUkJ7vVNop06VbPEycayvUo/OtC7z3LKsdubvqkAn45LcUtV6jcma5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdjfFGaU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QHeXxExU4MhZWzSKH3BTXCbG24i1LUwA3ZvqRAK6VCF0OC9qNKqgxMlnmvY3e7b0tatROjYuXXPSCpWh/FIjAZwEBtv0Mjw5JXYsPyrbbxZ4o08FAJTdYD/Glu0jmVcpi41XVKwLB3u8nqWUvxSef/aDwmeztCbJRs7R1tbY830=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hc/NSJdl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdjfFGaU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0291F00893;
-	Sun,  7 Jun 2026 10:26:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hc/NSJdl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667251F00893;
+	Sun,  7 Jun 2026 10:26:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828010;
-	bh=2KrR1a6pfZPIsr56uFlxu73HaLgk+UkCzwstWeJ1Ofk=;
+	s=korg; t=1780828014;
+	bh=bEunoh0NNjPcsX7tefksX503v/GM/9jHf0WLjdgzwx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VdjfFGaUWSZuQb4vNVLpSX5NMdYOOOR7Hnkbew3UXKMLj2dhMYRnqWwTopBgSiZpD
-	 fzKTuUkBfBxj9UoHHbM4lQiHvAUmB5SM4vgiIsjovNH9dvWn95x7xQieJC4l6UXtpX
-	 lWgzbUdOFkxUbo2+A0VTDohA2/S9DKUEwQVI35es=
+	b=Hc/NSJdlCktgTXuIewgH0ZdJBCSfrwG5Xwq7TK6NypeCkphsjcWscyLVYZmHOeTcN
+	 MZj/bccS1eg0DOFdlbALq8YGT5A5o8nHduA4M3UZm3REtCroLu4rJDS+1NqTeNoDBM
+	 tfISkEgNMfKcBLXZ26RjdzhaDdcUdX8ad4xivq6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 7.0 144/332] auxdisplay: line-display: fix OOB read on zero-length message_store()
-Date: Sun,  7 Jun 2026 11:58:33 +0200
-Message-ID: <20260607095733.387819859@linuxfoundation.org>
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 104/307] s390/cio: Restore GFP_DMA for CHSC allocation
+Date: Sun,  7 Jun 2026 11:58:21 +0200
+Message-ID: <20260607095731.609190802@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,66 +48,156 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: Peter Oberparleiter <oberpar@linux.ibm.com>
 
-commit a7511dcd9dd4bc55d123f9b800c8a4ed2662e5c6 upstream.
+[ Upstream commit ea34567db0a6b3a7ce78ba421592344315c8f90e ]
 
-linedisp_display() unconditionally reads msg[count - 1] before
-checking whether count is zero, so a write of zero bytes to the
-message sysfs attribute hits msg[-1]:
+Re-add GFP_DMA when allocating memory for CHSC control blocks.
+On some supported machines, CHSC cannot access memory outside
+the DMA zone, causing CHSC command failures.
 
-	write(fd, "", 0);
-
-	-> message_store(..., buf, count=0)
-	   -> linedisp_display(linedisp, buf, count=0)
-	      -> msg[count - 1] == '\n'  ; OOB read
-
-The kernfs write buffer for that store is a 1-byte allocation
-(kernfs_fop_write_iter() does kmalloc(len + 1) with len == 0),
-so msg[-1] is a 1-byte read before the slab object. On a
-KASAN-enabled kernel this trips an out-of-bounds report and
-panics; on stock kernels it silently reads adjacent slab data
-and, if that byte happens to be '\n', the following count--
-wraps ssize_t 0 to -1 and is then passed to kmemdup_nul().
-
-linedisp_display() is reached from the message_store() sysfs
-callback (drivers/auxdisplay/line-display.c message attribute,
-mode 0644) and from the in-tree initial-message setup with
-count == -1, so the OOB path is only userspace-triggerable via
-zero-byte writes; vfs_write() does not short-circuit on
-count == 0 and kernfs_fop_write_iter() dispatches the store
-callback regardless.
-
-Guard the trailing-newline trim with a count check. The
-existing if (!count) block then takes the clear-display path
-unchanged.
-
-Affects every auxdisplay driver that registers via
-linedisp_register() / linedisp_attach(): ht16k33, max6959,
-img-ascii-lcd, seg-led-gpio.
-
-Fixes: 7e76aece6f03 ("auxdisplay: Extract character line display core support")
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Fixes: a3a64a4def8d ("s390/cio: remove unneeded DMA zone allocation")
+Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+[ adjusted context to account for missing commit bf4afc53b77ae ]
+Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/auxdisplay/line-display.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/s390/cio/chsc.c     |  4 ++--
+ drivers/s390/cio/chsc_sch.c | 20 ++++++++++----------
+ drivers/s390/cio/scm.c      |  2 +-
+ 3 files changed, 13 insertions(+), 13 deletions(-)
 
---- a/drivers/auxdisplay/line-display.c
-+++ b/drivers/auxdisplay/line-display.c
-@@ -173,7 +173,7 @@ static int linedisp_display(struct lined
- 		count = strlen(msg);
+diff --git a/drivers/s390/cio/chsc.c b/drivers/s390/cio/chsc.c
+index dcc1e1c34ca2e1..8fe6658dcfe1a3 100644
+--- a/drivers/s390/cio/chsc.c
++++ b/drivers/s390/cio/chsc.c
+@@ -1153,8 +1153,8 @@ int __init chsc_init(void)
+ {
+ 	int ret;
  
- 	/* if the string ends with a newline, trim it */
--	if (msg[count - 1] == '\n')
-+	if (count && msg[count - 1] == '\n')
- 		count--;
+-	sei_page = (void *)get_zeroed_page(GFP_KERNEL);
+-	chsc_page = (void *)get_zeroed_page(GFP_KERNEL);
++	sei_page = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
++	chsc_page = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
+ 	if (!sei_page || !chsc_page) {
+ 		ret = -ENOMEM;
+ 		goto out_err;
+diff --git a/drivers/s390/cio/chsc_sch.c b/drivers/s390/cio/chsc_sch.c
+index 1e58ee3cc87db1..9131ce3af1b8eb 100644
+--- a/drivers/s390/cio/chsc_sch.c
++++ b/drivers/s390/cio/chsc_sch.c
+@@ -293,7 +293,7 @@ static int chsc_ioctl_start(void __user *user_area)
+ 	if (!css_general_characteristics.dynio)
+ 		/* It makes no sense to try. */
+ 		return -EOPNOTSUPP;
+-	chsc_area = (void *)get_zeroed_page(GFP_KERNEL);
++	chsc_area = (void *)get_zeroed_page(GFP_DMA | GFP_KERNEL);
+ 	if (!chsc_area)
+ 		return -ENOMEM;
+ 	request = kzalloc(sizeof(*request), GFP_KERNEL);
+@@ -341,7 +341,7 @@ static int chsc_ioctl_on_close_set(void __user *user_area)
+ 		ret = -ENOMEM;
+ 		goto out_unlock;
+ 	}
+-	on_close_chsc_area = (void *)get_zeroed_page(GFP_KERNEL);
++	on_close_chsc_area = (void *)get_zeroed_page(GFP_DMA | GFP_KERNEL);
+ 	if (!on_close_chsc_area) {
+ 		ret = -ENOMEM;
+ 		goto out_free_request;
+@@ -393,7 +393,7 @@ static int chsc_ioctl_start_sync(void __user *user_area)
+ 	struct chsc_sync_area *chsc_area;
+ 	int ret, ccode;
  
- 	if (!count) {
+-	chsc_area = (void *)get_zeroed_page(GFP_KERNEL);
++	chsc_area = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
+ 	if (!chsc_area)
+ 		return -ENOMEM;
+ 	if (copy_from_user(chsc_area, user_area, PAGE_SIZE)) {
+@@ -439,7 +439,7 @@ static int chsc_ioctl_info_channel_path(void __user *user_cd)
+ 		u8 data[PAGE_SIZE - 20];
+ 	} __attribute__ ((packed)) *scpcd_area;
+ 
+-	scpcd_area = (void *)get_zeroed_page(GFP_KERNEL);
++	scpcd_area = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
+ 	if (!scpcd_area)
+ 		return -ENOMEM;
+ 	cd = kzalloc(sizeof(*cd), GFP_KERNEL);
+@@ -501,7 +501,7 @@ static int chsc_ioctl_info_cu(void __user *user_cd)
+ 		u8 data[PAGE_SIZE - 20];
+ 	} __attribute__ ((packed)) *scucd_area;
+ 
+-	scucd_area = (void *)get_zeroed_page(GFP_KERNEL);
++	scucd_area = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
+ 	if (!scucd_area)
+ 		return -ENOMEM;
+ 	cd = kzalloc(sizeof(*cd), GFP_KERNEL);
+@@ -564,7 +564,7 @@ static int chsc_ioctl_info_sch_cu(void __user *user_cud)
+ 		u8 data[PAGE_SIZE - 20];
+ 	} __attribute__ ((packed)) *sscud_area;
+ 
+-	sscud_area = (void *)get_zeroed_page(GFP_KERNEL);
++	sscud_area = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
+ 	if (!sscud_area)
+ 		return -ENOMEM;
+ 	cud = kzalloc(sizeof(*cud), GFP_KERNEL);
+@@ -626,7 +626,7 @@ static int chsc_ioctl_conf_info(void __user *user_ci)
+ 		u8 data[PAGE_SIZE - 20];
+ 	} __attribute__ ((packed)) *sci_area;
+ 
+-	sci_area = (void *)get_zeroed_page(GFP_KERNEL);
++	sci_area = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
+ 	if (!sci_area)
+ 		return -ENOMEM;
+ 	ci = kzalloc(sizeof(*ci), GFP_KERNEL);
+@@ -697,7 +697,7 @@ static int chsc_ioctl_conf_comp_list(void __user *user_ccl)
+ 		u32 res;
+ 	} __attribute__ ((packed)) *cssids_parm;
+ 
+-	sccl_area = (void *)get_zeroed_page(GFP_KERNEL);
++	sccl_area = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
+ 	if (!sccl_area)
+ 		return -ENOMEM;
+ 	ccl = kzalloc(sizeof(*ccl), GFP_KERNEL);
+@@ -757,7 +757,7 @@ static int chsc_ioctl_chpd(void __user *user_chpd)
+ 	int ret;
+ 
+ 	chpd = kzalloc(sizeof(*chpd), GFP_KERNEL);
+-	scpd_area = (void *)get_zeroed_page(GFP_KERNEL);
++	scpd_area = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
+ 	if (!scpd_area || !chpd) {
+ 		ret = -ENOMEM;
+ 		goto out_free;
+@@ -797,7 +797,7 @@ static int chsc_ioctl_dcal(void __user *user_dcal)
+ 		u8 data[PAGE_SIZE - 36];
+ 	} __attribute__ ((packed)) *sdcal_area;
+ 
+-	sdcal_area = (void *)get_zeroed_page(GFP_KERNEL);
++	sdcal_area = (void *)get_zeroed_page(GFP_KERNEL | GFP_DMA);
+ 	if (!sdcal_area)
+ 		return -ENOMEM;
+ 	dcal = kzalloc(sizeof(*dcal), GFP_KERNEL);
+diff --git a/drivers/s390/cio/scm.c b/drivers/s390/cio/scm.c
+index c7894d61306d74..375cbfa31b5373 100644
+--- a/drivers/s390/cio/scm.c
++++ b/drivers/s390/cio/scm.c
+@@ -228,7 +228,7 @@ int scm_update_information(void)
+ 	size_t num;
+ 	int ret;
+ 
+-	scm_info = (void *)__get_free_page(GFP_KERNEL);
++	scm_info = (void *)__get_free_page(GFP_KERNEL | GFP_DMA);
+ 	if (!scm_info)
+ 		return -ENOMEM;
+ 
+-- 
+2.53.0
+
 
 
