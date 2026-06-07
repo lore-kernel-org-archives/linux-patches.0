@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E412C1595;
-	Sun,  7 Jun 2026 10:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AF23254A9;
+	Sun,  7 Jun 2026 10:40:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828800; cv=none; b=vEA/khoUo5ww5PgzSUs5eD2jM8t6oeI/EQwEoI/TCiu8HlUwVjaFoYx3jHj2YActg2NYfVqQw480eXV8UEZuaHrk43zwj6Z80IBN1U8do72/HEumozl2zMdpCOOVCDwHQlKHD5k2LyLYaPlUgIKbALftXyLBnLdr4mJwlazauwQ=
+	t=1780828804; cv=none; b=DlznwJirGoK6ERkWX3GXfxG4QEiW30pRAe4yeQ/QEzt73YKpp1ByLEL8qIq7EEpHNPE07DW1JWLkQBkh1U9zGIITlB0JKJ4cvrjtJYzeG8UjWDxANn4QS7q51bDYEoalepyt8LbqFEyV6g7ifxQtc7brLEdTaj5IBFnoSUhyANI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828800; c=relaxed/simple;
-	bh=GTRducSYqhf7SFFDi2+AL4UEr8lmWdJ7PGORb9NGnY8=;
+	s=arc-20240116; t=1780828804; c=relaxed/simple;
+	bh=szjHBnSjaNnWK7dXMyotDB6N7hnWe+MRNOF3Ignnj8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OqjwPK8G+l7utotUsbIAuyU7GScZQnYp44f0SpiKysywRkmcsSCeE1FdItbkDos3i3gqrrAd+FoI8g5lL+oRNQtKiDWflx6npZxAqhDioe7Cg9Q/h2dvJuekxR5QBkP4pVZbQaivBq+leNvMBB3Xk7UUT2Urlz9YLvDYSCPHlDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfSfxSz9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gPAyoHu5VrSec5eA41uOTYmzfFjA592AzW4eNwK30XCvBu4DOYfhWQI8mOZFmG9MuoCtygevtFawkEYwKIWpqnycjs//lhbb4425A3ur8NrbYJr1Y/hE8dBkI1q1JO4+GqjxyY7BQD5Z6U1UdvU87yVHEmS7dQLttcQq1h7KGS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YB6pADrP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfSfxSz9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97B4D1F00893;
-	Sun,  7 Jun 2026 10:39:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YB6pADrP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D8A1F00893;
+	Sun,  7 Jun 2026 10:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828799;
-	bh=uFX6v4PgSENuHGqtCgJdtIgOGMFTcLmQB9KyWTi8XXE=;
+	s=korg; t=1780828803;
+	bh=6ahDzXR+tfeto6KnaiuGliWvORNOfbwyx9pL7eOSk6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jfSfxSz98BUI5wfg2wSrq9C3Wtd5iSx5GhCOwi91nhZgMaPTPCzjsegeNhNU8BeQU
-	 HrstAeYESpw1/tehPMXj6ekzGh8VRb6VNqgWrTdBDYlXtdIoyh8eflugOw42XL6mFL
-	 cs5T6GM7PICgXJjz9TAkajFwyMc1+SNnYpDhA9yI=
+	b=YB6pADrPjIek0vd09T18uD4wSZIAewFwT+utbpqly29yT6vN0x3kAZ9s84XUMvdPB
+	 Vt/AbpSeThazHRLcPv1rxUj2m/ZCLxrssNqGkHYP6QH+7asvD9QowoOqmEnVepMWTc
+	 QtKqDbBx/Ect+zUvpUdRN1qPLKrlAbCzI+V5a7jU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,12 +34,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhengchuan Liang <zcliangcn@gmail.com>,
 	Ren Wei <n05ec@lzu.edu.cn>,
 	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.18 192/315] xfrm: input: hold netns during deferred transport reinjection
-Date: Sun,  7 Jun 2026 11:59:39 +0200
-Message-ID: <20260607095734.623137267@linuxfoundation.org>
+Subject: [PATCH 7.0 217/332] xfrm: input: hold netns during deferred transport reinjection
+Date: Sun,  7 Jun 2026 11:59:46 +0200
+Message-ID: <20260607095736.028375362@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,7 +51,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -87,7 +87,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/net/xfrm/xfrm_input.c
 +++ b/net/xfrm/xfrm_input.c
-@@ -794,9 +794,12 @@ static void xfrm_trans_reinject(struct w
+@@ -797,9 +797,12 @@ static void xfrm_trans_reinject(struct w
  	spin_unlock_bh(&trans->queue_lock);
  
  	local_bh_disable();
@@ -103,7 +103,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	local_bh_enable();
  }
  
-@@ -805,6 +808,7 @@ int xfrm_trans_queue_net(struct net *net
+@@ -808,6 +811,7 @@ int xfrm_trans_queue_net(struct net *net
  				       struct sk_buff *))
  {
  	struct xfrm_trans_tasklet *trans;
@@ -111,7 +111,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  
  	trans = this_cpu_ptr(&xfrm_trans_tasklet);
  
-@@ -813,8 +817,12 @@ int xfrm_trans_queue_net(struct net *net
+@@ -816,8 +820,12 @@ int xfrm_trans_queue_net(struct net *net
  
  	BUILD_BUG_ON(sizeof(struct xfrm_trans_cb) > sizeof(skb->cb));
  
