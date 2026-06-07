@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5B33195FD;
-	Sun,  7 Jun 2026 10:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8ED3264F5;
+	Sun,  7 Jun 2026 10:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828669; cv=none; b=XodiYoyPNV818LCssWuWbmmgmIXYAMSHUA3mwRmLrWl0fkBFVNWPnEBbt7TFqpand8/TiLL7wVcW9ohtS2PCTehAE+9rurMrvvQcDQUwfHb96G1zciLdl8yE1/Daft7sDkoCAFXf83VWDuRexdZ8YKOd2Q/alICpgpLaMEutQLA=
+	t=1780828673; cv=none; b=P66W22nhcXEYRWx+aKqrLDoUASFKIfcadb0DQIrLGWpmIQdi5gHFccRk2KcQmUzwo4Jy58ynZWu0t9IOz4323kaeGbXNFw7/0zkiYo5JSi7oEZub2heVeq8gpRinS+nRFaa7YSaJjl+10lrc9yZoRfes5SWJsw/kflGoH5AIYTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828669; c=relaxed/simple;
-	bh=xw6CU58FGN2umcQxwlfV3n6BufA23FUuOyq9g7BND4I=;
+	s=arc-20240116; t=1780828673; c=relaxed/simple;
+	bh=7yXeqvtqE81SzpdAEFsFROP7dmpz1uY0h2W2xUAFasA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JMw/1RZekBe7EZ5bwWcZVubLABLK7modA/3vZ0KP0XlITI0hZHOaGEgl3Ecy8qVmeihoAtniTIWhMBP7iwcqTV6JewAbzSjXh/YuLK1KHIKzcOxgi3YhndoOv2jvBhfCqgwHySDxFK1SmZrlkfT32GkDwV4yvJqUZWcftbzRaIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GAc4k10o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nNMkmaGbVudzB/ouFQSl0GWbhpErBTRsFK8yKarmLfbYoADUoL08O95f/eAPvnkW0OiOLwQH860918OiFxm2XLehZHzOaciRBPQiiibzyBoZNJJgC0uaf8T1RwnfdBL1BNgG42KPRDgyCifP3xs6KUvOj2hoVU8mV7taTQzHTCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4VwXaIP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GAc4k10o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5B11F00893;
-	Sun,  7 Jun 2026 10:37:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4VwXaIP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7706C1F00893;
+	Sun,  7 Jun 2026 10:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828668;
-	bh=ftlvWguDQfg1xNGvDBNYzkaR6ojctDK3PaBCnOaHogk=;
+	s=korg; t=1780828672;
+	bh=N8T40cwFvM0Gw+VE5pXCIVvcD/OKmcVe7S2x7wi4+pQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GAc4k10ocQXuzYE8JY3XwjJmNNtqutXErn7uhxsvaaxYznrQUnqje9nse4JPU3g2z
-	 SfWapZ2Z5feSrvhdJ2v4+aWPxlNBXbfrYS5kozHeN/VGCL+rkOreFa+fXeKxRMC1Bm
-	 0IRY+/IKy5jzIBVdvdtYCrzzqTu4zNgKAx0YQWeY=
+	b=M4VwXaIPCI9NEkkpI3s8gjTxjwdU7QGvwWFgPoeC96D4iOAzZLPV7fV2gzeroo5rk
+	 QDvn1RZ50jFE/ZWLtdtd4ilLbtRZqSvPK0xRtxirlTWYbCakyJxNc77aZqpN0qe3rk
+	 FVHytCVJtwrMwopa7wxKTqYkLiT3hwrV3pDj7V9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 181/315] Input: elan_i2c - validate firmware size before use
-Date: Sun,  7 Jun 2026 11:59:28 +0200
-Message-ID: <20260607095734.228106543@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Peter Chen <peter.chen@cixtech.com>
+Subject: [PATCH 7.0 202/332] usb: cdns3: plat: fix leaked usb2_phy initialization on usb3_phy acquisition failure
+Date: Sun,  7 Jun 2026 11:59:31 +0200
+Message-ID: <20260607095735.473720232@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,40 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Peter Chen <peter.chen@cixtech.com>
 
-commit 76b0d0baa9ae9c60e726bbe1b6ff0bec2c993634 upstream.
+commit e6970cda63fd4b4546aeed9d0e2f53a7c95cd09c upstream.
 
-Ensure that the firmware file is large enough to contain the expected
-number of pages and the signature (which resides at the end of the
-firmware blob) before accessing them to prevent potential out-of-bounds
-reads.
+Move usb2_phy initialization after usb3_phy acquisition.
 
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/ae2dOgiFvXRm4BHo@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: f738957277ba ("usb: cdns3: Split core.c into cdns3-plat and core.c file")
+Cc: stable <stable@kernel.org>
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-devicetree/agKaEePSFknhDBg2@nchen-desktop/T/#m21e1d9c1574eb127ce03c0c2a1a49002ce435b52
+Signed-off-by: Peter Chen <peter.chen@cixtech.com>
+Link: https://patch.msgid.link/20260513085310.2217547-2-peter.chen@cixtech.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/elan_i2c_core.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/cdns3/cdns3-plat.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/input/mouse/elan_i2c_core.c
-+++ b/drivers/input/mouse/elan_i2c_core.c
-@@ -645,6 +645,11 @@ static ssize_t elan_sysfs_update_fw(stru
- 		return error;
- 	}
+--- a/drivers/usb/cdns3/cdns3-plat.c
++++ b/drivers/usb/cdns3/cdns3-plat.c
+@@ -126,15 +126,15 @@ static int cdns3_plat_probe(struct platf
+ 		return dev_err_probe(dev, PTR_ERR(cdns->usb2_phy),
+ 				     "Failed to get cdn3,usb2-phy\n");
  
-+	if (fw->size < data->fw_signature_address + sizeof(signature)) {
-+		dev_err(dev, "firmware file too small\n");
-+		return -EBADF;
-+	}
+-	ret = phy_init(cdns->usb2_phy);
+-	if (ret)
+-		return ret;
+-
+ 	cdns->usb3_phy = devm_phy_optional_get(dev, "cdns3,usb3-phy");
+ 	if (IS_ERR(cdns->usb3_phy))
+ 		return dev_err_probe(dev, PTR_ERR(cdns->usb3_phy),
+ 				     "Failed to get cdn3,usb3-phy\n");
+ 
++	ret = phy_init(cdns->usb2_phy);
++	if (ret)
++		return ret;
 +
- 	/* Firmware file must match signature data */
- 	fw_signature = &fw->data[data->fw_signature_address];
- 	if (memcmp(fw_signature, signature, sizeof(signature)) != 0) {
+ 	ret = phy_init(cdns->usb3_phy);
+ 	if (ret)
+ 		goto err_phy3_init;
 
 
