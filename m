@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12083286A4;
-	Sun,  7 Jun 2026 10:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD7E3264C8;
+	Sun,  7 Jun 2026 10:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829126; cv=none; b=Nw62m5vNEKsk5T1wPqtu5kx8KzScI0bLu6QLNHEIAQY+mqrTIbxgsjVp5+7+Dmq33udlvEblE+FN1g6om0/ZH7R+iZcCuJe6nSSqDKkx7mzfmRGVtGwxwbTuNLM6rLb8KmOx/HWP2nvcXsqDtKI8F7R/Dm0ljHzdU3Pll/RqCMM=
+	t=1780829131; cv=none; b=IeRsE8/CEOACET2bSEwa2RnEnrXK/TDnrt9hLuKmVMh1uf+ADFkEeIcjI1ZiflvsObiavIEf8HfS54xGAQC/NV0r7tGRmkvS4J4ssXF/bqFpg/6JhXk/1QixanEZiWSuJEIyLcCO+ENL2nUjNXwGAkFTT5apUxjKdx++b3NG3mI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829126; c=relaxed/simple;
-	bh=/McWc8yAHE0qBvlnZkUxl04/Ndjso83G92JSb/UXSoo=;
+	s=arc-20240116; t=1780829131; c=relaxed/simple;
+	bh=Zf8jZb4l7/xBGx478+3B95enXSEwPt3Ddv8bxOkcCgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H/KYO+VPx/0tofUhw5Yk7MkC/FAmNKQPOv3yP246Fo3VSptUcn995+ixJJHB1hHBVNVf/0YM2tckuA8HlNjP+q7sgW2oMfKBieSEUjCHAMSIbRAonp90BRtwpF07EeLs4qKETkgh4CaqDfRT0qRDEwgN7eVFnS5SdtNiGdOm3M8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JCmpy7Ka; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F4yVqCtFzZVwuF6uE1C+51cIN4u/sQ+CwSaiHyY16vIGBXRiBJ6vfSKsbISfy7hAj+Mpp+aBXOSTsLa5ZAcyhIvrQPzHp/1bQ82uPVl4hCCFVshPXMA1dFSa8demy25T2L4WqCiCDLw9765nGySK4lXNoedCOGNjMUN8TSv6dJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7E0lWIC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JCmpy7Ka"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38F91F00893;
-	Sun,  7 Jun 2026 10:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7E0lWIC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38791F00893;
+	Sun,  7 Jun 2026 10:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829124;
-	bh=/mbSRVP2X8fcS4WBnCaGuueRgevSssDBxd525A1PnW8=;
+	s=korg; t=1780829129;
+	bh=7j1Pziq+ThRl1rDiRVruC774YMde4UGtXAeoaErFzSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JCmpy7Kaj46r0fbiVBKYYtgRqS9NWDhszqrQB6GHSALRs2vUvJ7KeWDM4Ds6PduxZ
-	 Az10WLlPRbURiJqGbD6KYD+TrTyIPad8T9uj/Rf6maUyd3KZtC0fAbaIepMHH/UHwn
-	 0hg3J4L9OrgeT/iJxWYWMxnoq5D/7tXkKTYUqu+s=
+	b=m7E0lWICod+QqlCPuYFpCIkS+wgeuIIyga8BDDzhVKg1bh5X8Q6RIJRgbUGMbJ9O8
+	 5Zpni6zxwyDisphfrp3N7LaBJ5+LH9RmVa+APExamb3V0FJ/9UFQmJs2fnKnuL2M6t
+	 dYaOHFuaVm2WfAUJ2TW6YRtoRWSG1sIQIB/GkEjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	William Breathitt Gray <wbg@kernel.org>
-Subject: [PATCH 6.18 219/315] counter: Fix refcount leak in counter_alloc() error path
-Date: Sun,  7 Jun 2026 12:00:06 +0200
-Message-ID: <20260607095735.623612327@linuxfoundation.org>
+	Maoyi Xie <maoyi.xie@ntu.edu.sg>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.12 198/307] xfrm: route MIGRATE notifications to callers netns
+Date: Sun,  7 Jun 2026 11:59:55 +0200
+Message-ID: <20260607095734.999204406@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,51 +46,165 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit d9eeb0ea0d2de658663bfaa9c26eccdd8fd64440 upstream.
+commit 7e2a4f7ca0952820731ef7bdadfc9a9e9d3571b4 upstream.
 
-After device_initialize(), the lifetime of the embedded struct device
-is expected to be managed through the device core reference counting.
+xfrm_send_migrate() in net/xfrm/xfrm_user.c and pfkey_send_migrate()
+in net/key/af_key.c both hardcode &init_net for the multicast that
+announces a successful XFRM_MSG_MIGRATE / SADB_X_MIGRATE.
 
-In counter_alloc(), if dev_set_name() fails after device_initialize(),
-the error path removes the chrdev, frees the ID, and frees the backing
-allocation directly instead of releasing the device reference with
-put_device(). This bypasses the normal device lifetime rules and may
-leave the reference count of the embedded struct device unbalanced,
-resulting in a refcount leak.
+XFRM_MSG_MIGRATE arrives on a per-netns NETLINK_XFRM socket, and the
+rest of the xfrm/af_key netlink path was made netns-aware in 2008.
+The other 14 multicast paths in xfrm_user.c route their event using
+xs_net(x), xp_net(xp) or sock_net(skb->sk); only the migrate path
+was missed.
 
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
+Two consequences of the init_net hardcoding:
 
-Fix this by using put_device() in the dev_set_name() failure path and
-let counter_device_release() handle the final cleanup.
+  1. The notification (selector, old/new endpoint addresses, and the
+     km_address) is delivered to listeners on init_net's
+     XFRMNLGRP_MIGRATE / pfkey BROADCAST_ALL groups rather than on
+     the issuing netns. An IKE daemon running in init_net therefore
+     receives migration notifications originating from any other
+     netns on the host.
 
-Fixes: 4da08477ea1f ("counter: Set counter device name")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://lore.kernel.org/r/20260413134604.2861772-1-lgs201920130244@gmail.com
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
+  2. An IKE daemon running inside a non-init netns and subscribed
+     to its own XFRMNLGRP_MIGRATE / pfkey groups never receives the
+     notification of its own migration. IKEv2 MOBIKE / address-update
+     handling inside a netns is silently broken.
+
+Thread struct net through km_migrate() and the xfrm_mgr.migrate
+function pointer, drop the &init_net override in xfrm_send_migrate()
+and pfkey_send_migrate(), and pass the caller's net (already in
+scope in xfrm_migrate() via sock_net(skb->sk)) all the way down.
+struct xfrm_mgr is in-tree only and not exported as a stable API,
+so the function-pointer signature change is internal.
+
+pfkey_broadcast() is already netns-aware via net_generic(net,
+pfkey_net_id) since the pernet conversion. The five other
+pfkey_broadcast() callers in af_key.c already pass xs_net(x),
+sock_net(sk) or a per-netns net, so this only removes the
+&init_net outlier.
+
+Fixes: 5c79de6e79cd ("[XFRM]: User interface for handling XFRM_MSG_MIGRATE")
+Cc: stable@vger.kernel.org # v5.15+
+Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/counter/counter-core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/xfrm.h     |    3 ++-
+ net/key/af_key.c       |    6 +++---
+ net/xfrm/xfrm_policy.c |    2 +-
+ net/xfrm/xfrm_state.c  |    4 ++--
+ net/xfrm/xfrm_user.c   |    5 ++---
+ 5 files changed, 10 insertions(+), 10 deletions(-)
 
---- a/drivers/counter/counter-core.c
-+++ b/drivers/counter/counter-core.c
-@@ -124,7 +124,8 @@ struct counter_device *counter_alloc(siz
+--- a/include/net/xfrm.h
++++ b/include/net/xfrm.h
+@@ -650,6 +650,7 @@ struct xfrm_mgr {
+ 					   const struct xfrm_migrate *m,
+ 					   int num_bundles,
+ 					   const struct xfrm_kmaddress *k,
++					   struct net *net,
+ 					   const struct xfrm_encap_tmpl *encap);
+ 	bool			(*is_alive)(const struct km_event *c);
+ };
+@@ -1818,7 +1819,7 @@ int xfrm_sk_policy_insert(struct sock *s
+ #ifdef CONFIG_XFRM_MIGRATE
+ int km_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
+ 	       const struct xfrm_migrate *m, int num_bundles,
+-	       const struct xfrm_kmaddress *k,
++	       const struct xfrm_kmaddress *k, struct net *net,
+ 	       const struct xfrm_encap_tmpl *encap);
+ struct xfrm_state *xfrm_migrate_state_find(struct xfrm_migrate *m, struct net *net,
+ 						u32 if_id);
+--- a/net/key/af_key.c
++++ b/net/key/af_key.c
+@@ -3564,7 +3564,7 @@ static int set_ipsecrequest(struct sk_bu
+ #ifdef CONFIG_NET_KEY_MIGRATE
+ static int pfkey_send_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
+ 			      const struct xfrm_migrate *m, int num_bundles,
+-			      const struct xfrm_kmaddress *k,
++			      const struct xfrm_kmaddress *k, struct net *net,
+ 			      const struct xfrm_encap_tmpl *encap)
+ {
+ 	int i;
+@@ -3669,7 +3669,7 @@ static int pfkey_send_migrate(const stru
+ 	}
  
- err_dev_set_name:
+ 	/* broadcast migrate message to sockets */
+-	pfkey_broadcast(skb, GFP_ATOMIC, BROADCAST_ALL, NULL, &init_net);
++	pfkey_broadcast(skb, GFP_ATOMIC, BROADCAST_ALL, NULL, net);
  
--	counter_chrdev_remove(counter);
-+	put_device(dev);
-+	return NULL;
- err_chrdev_add:
+ 	return 0;
  
- 	ida_free(&counter_ida, dev->id);
+@@ -3680,7 +3680,7 @@ err:
+ #else
+ static int pfkey_send_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
+ 			      const struct xfrm_migrate *m, int num_bundles,
+-			      const struct xfrm_kmaddress *k,
++			      const struct xfrm_kmaddress *k, struct net *net,
+ 			      const struct xfrm_encap_tmpl *encap)
+ {
+ 	return -ENOPROTOOPT;
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -4690,7 +4690,7 @@ int xfrm_migrate(const struct xfrm_selec
+ 	}
+ 
+ 	/* Stage 5 - announce */
+-	km_migrate(sel, dir, type, m, num_migrate, k, encap);
++	km_migrate(sel, dir, type, m, num_migrate, k, net, encap);
+ 
+ 	xfrm_pol_put(pol);
+ 
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -2745,7 +2745,7 @@ EXPORT_SYMBOL(km_policy_expired);
+ #ifdef CONFIG_XFRM_MIGRATE
+ int km_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
+ 	       const struct xfrm_migrate *m, int num_migrate,
+-	       const struct xfrm_kmaddress *k,
++	       const struct xfrm_kmaddress *k, struct net *net,
+ 	       const struct xfrm_encap_tmpl *encap)
+ {
+ 	int err = -EINVAL;
+@@ -2756,7 +2756,7 @@ int km_migrate(const struct xfrm_selecto
+ 	list_for_each_entry_rcu(km, &xfrm_km_list, list) {
+ 		if (km->migrate) {
+ 			ret = km->migrate(sel, dir, type, m, num_migrate, k,
+-					  encap);
++					  net, encap);
+ 			if (!ret)
+ 				err = ret;
+ 		}
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -3183,10 +3183,9 @@ out_cancel:
+ 
+ static int xfrm_send_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
+ 			     const struct xfrm_migrate *m, int num_migrate,
+-			     const struct xfrm_kmaddress *k,
++			     const struct xfrm_kmaddress *k, struct net *net,
+ 			     const struct xfrm_encap_tmpl *encap)
+ {
+-	struct net *net = &init_net;
+ 	struct sk_buff *skb;
+ 	int err;
+ 
+@@ -3204,7 +3203,7 @@ static int xfrm_send_migrate(const struc
+ #else
+ static int xfrm_send_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
+ 			     const struct xfrm_migrate *m, int num_migrate,
+-			     const struct xfrm_kmaddress *k,
++			     const struct xfrm_kmaddress *k, struct net *net,
+ 			     const struct xfrm_encap_tmpl *encap)
+ {
+ 	return -ENOPROTOOPT;
 
 
