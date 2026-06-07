@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14E02D3A69;
-	Sun,  7 Jun 2026 10:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3611E2D3A69;
+	Sun,  7 Jun 2026 10:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828366; cv=none; b=RIThG3Z17hyevMc/71TNhZjQ2Obi4dIhESty/YXB5LT2w4Oq8Yv55ZSI/LfdOk84V4VELRhk4No8/rfg1t/lNQcKMcq/f/o6InvWwQ4kt6CxKBdoEqzNSGkoRGfGkNOyRsCOU77Ray3SmcAz6zqcJSmi4Aexgbw2OmhCsbb3gBw=
+	t=1780828370; cv=none; b=aKLcmVUCfvZS4HhjCqusYiVlO44sDPV/NA+mPeLgcu3eZgXMhll/nMRGoUIsv8ddVHqdPm2/UbB/lY8vtpJb5CX5vqgJa9JrFXTodeV21pv6wNVQVd00OjqmCxi/jh6Bt6MbTgQvPb/gs5n5nW+fCNQ+w+X5h0rroSmADSNPYxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828366; c=relaxed/simple;
-	bh=oRK23O1nueDsaNTQZXNn+skugCrylzEDlxQQC0F9HmA=;
+	s=arc-20240116; t=1780828370; c=relaxed/simple;
+	bh=FLqooaj9o8FuoaLhN/8voNTwn03SDOhMYMqJ7dkN9do=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GX0wsvwyaiBIQcdT2xtwmX8N+7160H7yE6AGNoAjyNK6qB5RWXssr7VWsVi9uq9QKLfEwMr3G83oFhsKvbpquLhCLHuHu1/NwFDF5P3HsHxdH0g+PnuSXigWU+x3oU8HwPuDTs9PztpHRXLr+SPsTHrIlXoE0t1XQEyjTrmXTlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=REB4dBSl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hDgRXVlOEK/3XwTDtzW3pvevrl4OF7faJpr6AGr5oayJeooFYmkNNFPQfC4dcSKld28FcrYt6RfTZZRbjLd1B+QGsVn2MQdoEJEwqlGD2Ec1Wm0g6L0uoy4ygypcWSQlWHnanp6X6oO4yv2OoMrscIPP8dTecmFduj8CpBeoJDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uMicAgFz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="REB4dBSl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E0C1F00893;
-	Sun,  7 Jun 2026 10:32:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uMicAgFz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 570F61F00893;
+	Sun,  7 Jun 2026 10:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828365;
-	bh=vC36tLgAmM57oiDRsZ0cVDpoL4vj6+GtAkzi9Me9IMo=;
+	s=korg; t=1780828369;
+	bh=Wpyi8dOq5UNCUiUay+9cbhfqdFBfW58ReJHCzDJuIe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=REB4dBSlDhpLM+RNGF/4dndZHF4SVWQxT8rlBPN0ySVlocZ+2aScz8q4ysF+rh4RQ
-	 CcUfZ3dOuByPkrYQwipLFVvAwD1mTw8I7ejl7pJ23JOXsUkeK5t60S6dCyjA8rNSVf
-	 8sDUnPzsUviFsk/qzrsjfl5zZ0jBNVTcUMCO/fFw=
+	b=uMicAgFzTM4gag1+dvgj/90Qp7XciU5PI99zTYJxk4NQQhfOLginr8f4//VX33ADH
+	 osxrqrfmduxsykdX6aA2UNZKWCx5oWituPdMZ2nWpovub5cDRF/43yzfsUKL3T+oug
+	 BVbdEmAXrFqvfcUR+9MBpez/UaoB/mNtvLYfhamA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christofer Jonason <christofer.jonason@guidelinegeo.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Salih Erim <salih.erim@amd.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.18 153/315] iio: adc: xilinx-xadc: Fix sequencer mode in postdisable for dual mux
-Date: Sun,  7 Jun 2026 11:59:00 +0200
-Message-ID: <20260607095733.225648689@linuxfoundation.org>
+	Kim Seer Paller <kimseer.paller@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 7.0 176/332] iio: dac: ad3530r: Fix AD3531/AD3531R powerdown mode strings
+Date: Sun,  7 Jun 2026 11:59:05 +0200
+Message-ID: <20260607095734.528306289@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,79 +45,127 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christofer Jonason <christofer.jonason@guidelinegeo.com>
+From: Kim Seer Paller <kimseer.paller@analog.com>
 
-commit 852534744c2d35626a604f128ff0b8ec12805591 upstream.
+commit ebd250c2581ec46c64c73fdfa918c9a7f757505e upstream.
 
-xadc_postdisable() unconditionally sets the sequencer to continuous
-mode. For dual external multiplexer configurations this is incorrect:
-simultaneous sampling mode is required so that ADC-A samples through
-the mux on VAUX[0-7] while ADC-B simultaneously samples through the
-mux on VAUX[8-15]. In continuous mode only ADC-A is active, so
-VAUX[8-15] channels return incorrect data.
+The AD3531/AD3531R has different output operating modes from the
+AD3530/AD3530R. According to the AD3531/AD3531R datasheet, the
+powerdown modes are:
+  01: 500 Ohm output impedance
+  10: 3.85 kOhm output impedance
+  11: 16 kOhm output impedance
 
-Since postdisable is also called from xadc_probe() to set the initial
-idle state, the wrong sequencer mode is active from the moment the
-driver loads.
+The driver currently uses the AD3530R modes (1k, 7.7k, 32k) for all
+variants, which is incorrect for AD3531/AD3531R.
 
-The preenable path already uses xadc_get_seq_mode() which returns
-SIMULTANEOUS for dual mux. Fix postdisable to do the same.
+Add AD3531R-specific powerdown mode strings and assign them to the
+AD3531/AD3531R chip variants.
 
-Fixes: bdc8cda1d010 ("iio:adc: Add Xilinx XADC driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christofer Jonason <christofer.jonason@guidelinegeo.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Salih Erim <salih.erim@amd.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 93583174a3df ("iio: dac: ad3530r: Add driver for AD3530R and AD3531R")
+Signed-off-by: Kim Seer Paller <kimseer.paller@analog.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/xilinx-xadc-core.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/iio/dac/ad3530r.c |   54 ++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 40 insertions(+), 14 deletions(-)
 
---- a/drivers/iio/adc/xilinx-xadc-core.c
-+++ b/drivers/iio/adc/xilinx-xadc-core.c
-@@ -817,6 +817,7 @@ static int xadc_postdisable(struct iio_d
- {
- 	struct xadc *xadc = iio_priv(indio_dev);
- 	unsigned long scan_mask;
-+	int seq_mode;
- 	int ret;
- 	int i;
+--- a/drivers/iio/dac/ad3530r.c
++++ b/drivers/iio/dac/ad3530r.c
+@@ -105,6 +105,12 @@ static const char * const ad3530r_powerd
+ 	"32kohm_to_gnd",
+ };
  
-@@ -824,6 +825,12 @@ static int xadc_postdisable(struct iio_d
- 	for (i = 0; i < indio_dev->num_channels; i++)
- 		scan_mask |= BIT(indio_dev->channels[i].scan_index);
- 
-+	/*
-+	 * Use the correct sequencer mode for the idle state: simultaneous
-+	 * mode for dual external mux configurations, continuous otherwise.
-+	 */
-+	seq_mode = xadc_get_seq_mode(xadc, scan_mask);
++static const char * const ad3531r_powerdown_modes[] = {
++	"500ohm_to_gnd",
++	"3.85kohm_to_gnd",
++	"16kohm_to_gnd",
++};
 +
- 	/* Enable all channels and calibration */
- 	ret = xadc_write_adc_reg(xadc, XADC_REG_SEQ(0), scan_mask & 0xffff);
- 	if (ret)
-@@ -834,11 +841,11 @@ static int xadc_postdisable(struct iio_d
- 		return ret;
+ static int ad3530r_get_powerdown_mode(struct iio_dev *indio_dev,
+ 				      const struct iio_chan_spec *chan)
+ {
+@@ -133,6 +139,13 @@ static const struct iio_enum ad3530r_pow
+ 	.set = ad3530r_set_powerdown_mode,
+ };
  
- 	ret = xadc_update_adc_reg(xadc, XADC_REG_CONF1, XADC_CONF1_SEQ_MASK,
--		XADC_CONF1_SEQ_CONTINUOUS);
-+				  seq_mode);
- 	if (ret)
- 		return ret;
++static const struct iio_enum ad3531r_powerdown_mode_enum = {
++	.items = ad3531r_powerdown_modes,
++	.num_items = ARRAY_SIZE(ad3531r_powerdown_modes),
++	.get = ad3530r_get_powerdown_mode,
++	.set = ad3530r_set_powerdown_mode,
++};
++
+ static ssize_t ad3530r_get_dac_powerdown(struct iio_dev *indio_dev,
+ 					 uintptr_t private,
+ 					 const struct iio_chan_spec *chan,
+@@ -276,7 +289,20 @@ static const struct iio_chan_spec_ext_in
+ 	{ }
+ };
  
--	return xadc_power_adc_b(xadc, XADC_CONF1_SEQ_CONTINUOUS);
-+	return xadc_power_adc_b(xadc, seq_mode);
+-#define AD3530R_CHAN(_chan)					\
++static const struct iio_chan_spec_ext_info ad3531r_ext_info[] = {
++	{
++		.name = "powerdown",
++		.shared = IIO_SEPARATE,
++		.read = ad3530r_get_dac_powerdown,
++		.write = ad3530r_set_dac_powerdown,
++	},
++	IIO_ENUM("powerdown_mode", IIO_SEPARATE, &ad3531r_powerdown_mode_enum),
++	IIO_ENUM_AVAILABLE("powerdown_mode", IIO_SHARED_BY_TYPE,
++			   &ad3531r_powerdown_mode_enum),
++	{ }
++};
++
++#define AD3530R_CHAN(_chan, _ext_info)				\
+ {								\
+ 	.type = IIO_VOLTAGE,					\
+ 	.indexed = 1,						\
+@@ -284,25 +310,25 @@ static const struct iio_chan_spec_ext_in
+ 	.output = 1,						\
+ 	.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |		\
+ 			      BIT(IIO_CHAN_INFO_SCALE),		\
+-	.ext_info = ad3530r_ext_info,				\
++	.ext_info = _ext_info,					\
  }
  
- static int xadc_preenable(struct iio_dev *indio_dev)
+ static const struct iio_chan_spec ad3530r_channels[] = {
+-	AD3530R_CHAN(0),
+-	AD3530R_CHAN(1),
+-	AD3530R_CHAN(2),
+-	AD3530R_CHAN(3),
+-	AD3530R_CHAN(4),
+-	AD3530R_CHAN(5),
+-	AD3530R_CHAN(6),
+-	AD3530R_CHAN(7),
++	AD3530R_CHAN(0, ad3530r_ext_info),
++	AD3530R_CHAN(1, ad3530r_ext_info),
++	AD3530R_CHAN(2, ad3530r_ext_info),
++	AD3530R_CHAN(3, ad3530r_ext_info),
++	AD3530R_CHAN(4, ad3530r_ext_info),
++	AD3530R_CHAN(5, ad3530r_ext_info),
++	AD3530R_CHAN(6, ad3530r_ext_info),
++	AD3530R_CHAN(7, ad3530r_ext_info),
+ };
+ 
+ static const struct iio_chan_spec ad3531r_channels[] = {
+-	AD3530R_CHAN(0),
+-	AD3530R_CHAN(1),
+-	AD3530R_CHAN(2),
+-	AD3530R_CHAN(3),
++	AD3530R_CHAN(0, ad3531r_ext_info),
++	AD3530R_CHAN(1, ad3531r_ext_info),
++	AD3530R_CHAN(2, ad3531r_ext_info),
++	AD3530R_CHAN(3, ad3531r_ext_info),
+ };
+ 
+ static const struct ad3530r_chip_info ad3530_chip = {
 
 
