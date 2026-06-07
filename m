@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF2D2D3A69;
-	Sun,  7 Jun 2026 10:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F9B257855;
+	Sun,  7 Jun 2026 10:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828483; cv=none; b=tXtWCo4hK+VezCmKG6SKKXyLfOFHGrPiskOmmHHaED6kDjft59w3BDlauF2yfLfIsegGbzU4Xf9CpBreQ7pm6gxMI7l4jFN1Odsy8a5ljU6aAzX3NxKqmp3V+W/bMr6v1Bz9RvGEFZzswAajjiKj8NNFEI9CNa6TaatoQ91pkyY=
+	t=1780828487; cv=none; b=pTT6tV7ytbpQCr0VQ63ueSgR8Wero7OliOVRYwmgBBUvx4JqFQC1UErd5jZ5nvVw4jduLWzC135qRkr5MXdWcj5XeXQM5sa1wFQAE40Q5sEOZde3r+G0HsYaYOoVGCiRTMwktd5a6mWEEKpNEjCGJFQZG5RxFaHEfYpJCAwP9ZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828483; c=relaxed/simple;
-	bh=nTQabIpeVBRGRsGWI1BL7TxvEfmm9Vn/XR/4OGII5uU=;
+	s=arc-20240116; t=1780828487; c=relaxed/simple;
+	bh=6mIwxDmw9PBRc4Geg5kEQqZ/manuPL6Z+8L/FGHRplI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UaitCK10sw+y+hf6+0jk/rHF6z3EJkcg8gEYsRn6N9tyCoiRCz9goSLdHS/mvIaaal8o5GxUOxmrBJwzSqew+LWPa69bDVSdvPi/MZzmGfsLx5IIB+W6upP6792OZ35yOa56nU3X8X+8i5Q+EenpjWnR1OnV9lQDio/cO4eg1/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avZhWiGm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jydqwZ0pS9JPB/87/ysNhe422KePG1XTOVQVfHTOMIwEvjnQIVj6MP9b1ELZG3iMv0LZbStonOxprP+GwHWOj7lnuOEAdyNAF+GAwqdW6GuFDQHzykt+FOu61oT+9iNprj00slPwSguWPx0Go0reCC9Jy68sAjVYIDRvQrMqFAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0N3tojb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avZhWiGm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC2D91F00893;
-	Sun,  7 Jun 2026 10:34:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0N3tojb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9511F00893;
+	Sun,  7 Jun 2026 10:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828482;
-	bh=esxG0K32zoW4Ly7JX23GlASS7i3W8gs6AAgkf+Do51w=;
+	s=korg; t=1780828486;
+	bh=tmN2KZrNBYSogCNm3ajut6GAlnyUU+7GQHfsAKubgPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=avZhWiGmLuwNeYtPlaTknZqX2AM2llP7U4Jcu8QIS+neDCoOMYtrMf5yk4FoGKQmr
-	 6hrLRsESxDUfccxEXCBnn1zUkdYtmhgIwSn6aRKnrRtqnQZc02IGFjH/lgKco3eoO+
-	 FcXiiBDjOjcPFO5Pr4HpMuUMSDNu4XUW7qmEDkNw=
+	b=y0N3tojbI6sxnRUn40aTFwuFB7sC/edaoEzGMSMpsD2T8HQoZbCezPCe/3DZcncjL
+	 F5aZHtYHBmdo0HG+k+WKoWYreLxO3FFkXSzSjAAzw3aYhboy4RP2AU6PHQ0xojZaPI
+	 Y8Rg3e5xPKOzr2thqV+K68B8mxDPqP2tDCSh728c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuvam Pandey <shuvampandey1@gmail.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 7.0 187/332] iio: adc: nxp-sar-adc: zero-initialize dma_slave_config
-Date: Sun,  7 Jun 2026 11:59:16 +0200
-Message-ID: <20260607095734.933769833@linuxfoundation.org>
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 6.12 142/307] auxdisplay: line-display: fix OOB read on zero-length message_store()
+Date: Sun,  7 Jun 2026 11:58:59 +0200
+Message-ID: <20260607095732.947228806@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +46,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuvam Pandey <shuvampandey1@gmail.com>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-commit 8ce176501f836634f9c0419c0820140f968e9dc5 upstream.
+commit a7511dcd9dd4bc55d123f9b800c8a4ed2662e5c6 upstream.
 
-nxp_sar_adc_start_cyclic_dma() only fills the RX-side members of
-dma_slave_config before passing it to dmaengine_slave_config().
+linedisp_display() unconditionally reads msg[count - 1] before
+checking whether count is zero, so a write of zero bytes to the
+message sysfs attribute hits msg[-1]:
 
-Zero-initialize the structure so unused members do not contain stack
-garbage. Some DMA engines consult optional dma_slave_config fields, so
-leaving them uninitialized can cause DMA setup failures.
+	write(fd, "", 0);
 
-Fixes: 4434072a893e ("iio: adc: Add the NXP SAR ADC support for the s32g2/3 platforms")
-Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+	-> message_store(..., buf, count=0)
+	   -> linedisp_display(linedisp, buf, count=0)
+	      -> msg[count - 1] == '\n'  ; OOB read
+
+The kernfs write buffer for that store is a 1-byte allocation
+(kernfs_fop_write_iter() does kmalloc(len + 1) with len == 0),
+so msg[-1] is a 1-byte read before the slab object. On a
+KASAN-enabled kernel this trips an out-of-bounds report and
+panics; on stock kernels it silently reads adjacent slab data
+and, if that byte happens to be '\n', the following count--
+wraps ssize_t 0 to -1 and is then passed to kmemdup_nul().
+
+linedisp_display() is reached from the message_store() sysfs
+callback (drivers/auxdisplay/line-display.c message attribute,
+mode 0644) and from the in-tree initial-message setup with
+count == -1, so the OOB path is only userspace-triggerable via
+zero-byte writes; vfs_write() does not short-circuit on
+count == 0 and kernfs_fop_write_iter() dispatches the store
+callback regardless.
+
+Guard the trailing-newline trim with a count check. The
+existing if (!count) block then takes the clear-display path
+unchanged.
+
+Affects every auxdisplay driver that registers via
+linedisp_register() / linedisp_attach(): ht16k33, max6959,
+img-ascii-lcd, seg-led-gpio.
+
+Fixes: 7e76aece6f03 ("auxdisplay: Extract character line display core support")
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/nxp-sar-adc.c |    2 +-
+ drivers/auxdisplay/line-display.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/nxp-sar-adc.c
-+++ b/drivers/iio/adc/nxp-sar-adc.c
-@@ -675,7 +675,7 @@ static void nxp_sar_adc_dma_cb(void *dat
- static int nxp_sar_adc_start_cyclic_dma(struct iio_dev *indio_dev)
- {
- 	struct nxp_sar_adc *info = iio_priv(indio_dev);
--	struct dma_slave_config config;
-+	struct dma_slave_config config = { };
- 	struct dma_async_tx_descriptor *desc;
- 	int ret;
+--- a/drivers/auxdisplay/line-display.c
++++ b/drivers/auxdisplay/line-display.c
+@@ -90,7 +90,7 @@ static int linedisp_display(struct lined
+ 		count = strlen(msg);
  
+ 	/* if the string ends with a newline, trim it */
+-	if (msg[count - 1] == '\n')
++	if (count && msg[count - 1] == '\n')
+ 		count--;
+ 
+ 	if (!count) {
 
 
