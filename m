@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585721E98EF;
-	Sun,  7 Jun 2026 10:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC9831E850;
+	Sun,  7 Jun 2026 10:44:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829088; cv=none; b=dgDE8J1D5aK2ptD9M8ECFN1qGcTANiT7m+MCeHaf9Mjwg1Af/bnlAkFXKOfWlQy1hSo6j5wisqtUPn8CaqLvdHABme1yN0kUyoFCwUNBuKvkNTC461Q+2+Vdx6mvWyBZmbzHVNYxzZmGLccmcxBehcoJiQO+etXk+hXVFS2D/6o=
+	t=1780829091; cv=none; b=of2mYqreZ2sns8MErXVqk/oFxs5udA+vLMQKDW2xjMy3ZJ892bZn9RYdgE9SBStDLwauJ6eYCxJGuci5eGdklt1AojjOUAlQMBfXNf1L3XxvLzp9hl9t6LDBUpAOG161qT6u+hd2KmZdnXsHJdXCnMjmn1Xh4pfQaCwdnDSIWZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829088; c=relaxed/simple;
-	bh=bOuAjwc1l4WNJHd4Vza77QijxH0jiOstN9qjHI4UVEg=;
+	s=arc-20240116; t=1780829091; c=relaxed/simple;
+	bh=zV1kroj2RGY/UOMFSFz9L8qI3/FdTBlNeRtLXjFy6vU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DLDN7Tz6AfPqv82WS8SN1uuORn4FQDHfgMyuWhSVcCFQk/y8spCY5KYTHJPJOVXH42eN5mE0euHG8Bz39FXvG9/1traX6RCeQz8/cbncCuezBkX+MHroVw4kcXzsNXH/sH7xhoe5HWMMJbvHvGKXPw8HBR5tezK3l+H40FLOmgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrmVt4Ba; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lwqrEKl/ChJsLXdjUC23QbdHcSWLy5rtM+zSxM2civMaSr6j6goUD3Q8/R16kFeqcTXuQSAzP7Tcu/j1SKEXvWoHF0vUWMFpbAJ3EAhS/xpiL5d48oayi/m2sT4SuPvhhAoPPP8645eo+fxsQvGouEHdkcef3IkfErAkaYIyV28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcGD3mKj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrmVt4Ba"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 957D51F00893;
-	Sun,  7 Jun 2026 10:44:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcGD3mKj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F361F00893;
+	Sun,  7 Jun 2026 10:44:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829087;
-	bh=uVBjch1I+AaNss7v2iyTNkbIats+EvSWneRGubj3VG0=;
+	s=korg; t=1780829090;
+	bh=ElUubLqaq07/jbx4fdYPrdbQA3kFmiAkpMYoRNV4coM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DrmVt4BaqpAyWVXYFJ5ho39rLiMdU68qyyMoDMZqOLxpRqaaR/Iz+tD26/i38UqL0
-	 M3glOGGK1fZtWeP29yd3vt299ptbu36X/b0tBPNmcfcMPSgwtrQprttyqDtnDD6lCJ
-	 z34mMrLEsI1/V5xsrhg2srVIoWndjIXTwzkXQGi4=
+	b=PcGD3mKjVzmY0+mOqRy2RRyz1qROHPMkwXRXjMbeEYtHGIFuph4WgdIfvi7U52Gcn
+	 0C7mfKRKDrHOjP1SkHHjW78vzPLEqzl7dWho8B4+2tWd5LRhSI6l6oR58FRqphQ2Fb
+	 fn+cLtwbLVR/k00ox6tv7O5hJ1quWmwpSjI8hREo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.18 216/315] gpib: cb7210: Fix region leak when request_irq fails
-Date: Sun,  7 Jun 2026 12:00:03 +0200
-Message-ID: <20260607095735.498837600@linuxfoundation.org>
+	Ping Cheng <ping.cheng@wacom.com>,
+	Lee Jones <lee@kernel.org>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.12 195/307] HID: wacom: Fix OOB write in wacom_hid_set_device_mode()
+Date: Sun,  7 Jun 2026 11:59:52 +0200
+Message-ID: <20260607095734.887739332@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,57 +47,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Lee Jones <lee@kernel.org>
 
-commit 2eae90a457baa0048a96ed38ad93090ee38c8b2f upstream.
+commit c0a8899e02ddebd51e2589835182c239c2e224ae upstream.
 
-When request_irq() fails, the region allocated by request_region()
-is not released. Fix this by adding an error handling path with
-proper goto labels to release the region.
+wacom_hid_set_device_mode() currently assumes that the HID_DG_INPUTMODE
+usage is always located in the first field (field[0]) of the feature report.
+However, a device can specify HID_DG_INPUTMODE in a different field.
 
-Fixes: e9dc69956d4d ("staging: gpib: Add Computer Boards GPIB driver")
-Closes: https://lore.kernel.org/oe-kbuild-all/202605160620.ReBOadPX-lkp@intel.com/
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260518022939.16881-1-zenghongling@kylinos.cn
+If HID_DG_INPUTMODE is in a field other than the first one and the first
+field has a report_count smaller than the usage_index of HID_DG_INPUTMODE,
+this leads to an out-of-bounds write to r->field[0]->value.
+
+Fix this by storing the field index of HID_DG_INPUTMODE in 'struct
+hid_data' during feature mapping.  In wacom_hid_set_device_mode(), use
+this stored field index to access the correct field and add bounds
+checks to ensure both the field index and the value index are within
+valid ranges before writing.
+
+Cc: stable@vger.kernel.org
+Fixes: 5ae6e89f7409 ("HID: wacom: implement the finger part of the HID generic handling")
+Tested-by: Ping Cheng <ping.cheng@wacom.com>
+Reviewed-by: Ping Cheng <ping.cheng@wacom.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/gpib/cb7210/cb7210.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/hid/wacom_sys.c |   13 ++++++++++---
+ drivers/hid/wacom_wac.h |    1 +
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/staging/gpib/cb7210/cb7210.c
-+++ b/drivers/staging/gpib/cb7210/cb7210.c
-@@ -1048,7 +1048,8 @@ static int cb_isa_attach(struct gpib_boa
- 	if (!request_region(config->ibbase, cb7210_iosize, DRV_NAME)) {
- 		dev_err(board->gpib_dev, "ioports starting at 0x%x are already in use\n",
- 			config->ibbase);
--		return -EBUSY;
-+		retval = -EBUSY;
-+		goto err_release_region;
- 	}
- 	nec_priv->iobase = config->ibbase;
- 	cb_priv->fifo_iobase = nec7210_iobase(cb_priv);
-@@ -1061,11 +1062,16 @@ static int cb_isa_attach(struct gpib_boa
- 	// install interrupt handler
- 	if (request_irq(config->ibirq, cb7210_interrupt, isr_flags, DRV_NAME, board)) {
- 		dev_err(board->gpib_dev, "failed to obtain IRQ %d\n", config->ibirq);
--		return -EBUSY;
-+		retval = -EBUSY;
-+		goto err_release_region;
- 	}
- 	cb_priv->irq = config->ibirq;
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -341,6 +341,7 @@ static void wacom_feature_mapping(struct
  
- 	return cb7210_init(cb_priv, board);
+ 		hid_data->inputmode = field->report->id;
+ 		hid_data->inputmode_index = usage->usage_index;
++		hid_data->inputmode_field_index = field->index;
+ 		break;
+ 
+ 	case HID_UP_DIGITIZER:
+@@ -556,9 +557,14 @@ static int wacom_hid_set_device_mode(str
+ 
+ 	re = &(hdev->report_enum[HID_FEATURE_REPORT]);
+ 	r = re->report_id_hash[hid_data->inputmode];
+-	if (r) {
+-		r->field[0]->value[hid_data->inputmode_index] = 2;
+-		hid_hw_request(hdev, r, HID_REQ_SET_REPORT);
++	if (r && hid_data->inputmode_field_index >= 0 &&
++	    hid_data->inputmode_field_index < r->maxfield) {
++		struct hid_field *field = r->field[hid_data->inputmode_field_index];
 +
-+err_release_region:
-+	release_region(nec7210_iobase(cb_priv), cb7210_iosize);
-+	return retval;
++		if (field && hid_data->inputmode_index < field->report_count) {
++			field->value[hid_data->inputmode_index] = 2;
++			hid_hw_request(hdev, r, HID_REQ_SET_REPORT);
++		}
+ 	}
+ 	return 0;
  }
+@@ -2819,6 +2825,7 @@ static int wacom_probe(struct hid_device
+ 		return error;
  
- static void cb_isa_detach(struct gpib_board *board)
+ 	wacom_wac->hid_data.inputmode = -1;
++	wacom_wac->hid_data.inputmode_field_index = -1;
+ 	wacom_wac->mode_report = -1;
+ 
+ 	if (hid_is_usb(hdev)) {
+--- a/drivers/hid/wacom_wac.h
++++ b/drivers/hid/wacom_wac.h
+@@ -298,6 +298,7 @@ struct wacom_shared {
+ struct hid_data {
+ 	__s16 inputmode;	/* InputMode HID feature, -1 if non-existent */
+ 	__s16 inputmode_index;	/* InputMode HID feature index in the report */
++	__s16 inputmode_field_index; /* InputMode HID feature field index in the report */
+ 	bool sense_state;
+ 	bool inrange_state;
+ 	bool invert_state;
 
 
