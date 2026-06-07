@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41BAA227B94;
-	Sun,  7 Jun 2026 10:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5561E98E3;
+	Sun,  7 Jun 2026 10:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827044; cv=none; b=uVvbPQ85jw1VP24T/PvhkEAiXL26hst+2NKpWP0fsIWsdZPdq8xI7hTJZyJaAUJYMWL5LDaZRB7lGtLWkQm4jtImAGqJQoWGz4lHFNxjUiqQABBelZVPSpIItvKylY/xdkORy16GKVwWFY4l7A5G5whYaj9T1h+Aet91G4lG3ts=
+	t=1780827048; cv=none; b=uMRDUMp+ET3szkyi1EGC4xkPAF2Lz7qMZhUxm9kqXivPzemp/gFyF0Jr5kbecGnARPF/6fQRb2Io+IYgA8WPHUKbClwLnfG5o7mY+mWOMl/VUq1dbyC6Q/eHm0yGl+iDZErhFWzP4wC16oZkVmfL7q7C2luR/L+lMM0b4IifnSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827044; c=relaxed/simple;
-	bh=hoEmlAOY++vUipiBFeNSRg71Tqu1UnXsltHB/3RwPo4=;
+	s=arc-20240116; t=1780827048; c=relaxed/simple;
+	bh=YZobfAfVzdRap0qfp+Djeip5ggpIQvjHLmL8pkqAFwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=haARdz7FY8EXOlj76Myp+uDRf3x+pfUEPOB4dl+Bv7QNWXSDX3Bik2nSYJSQktC1Sc51KfskKhLyHom8z7mtQMMxBbuQfsxkgm5XcRw/nM7+OQiaEam5N8tsk5Ou0/Ok+bLLwAoOM63W8NQ/JeIXnjPn9ShC/XeQ984s4b+EDXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAWJgtWE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=npdawHDpHacU2N5fpo8TZQ1aUCBSbAeSJ0Dkt6i31DwvalEj6/4g2uKhSbMUu1idF6/PSLAx8JjXrgiocL3buNKttLvqZEvWZ5lyT5V6eCpWdieQsMn9Ff/vAZTcTV0UxokMBy7DQz3Uiuoed4Y9AZKYOwy9XGY02RstR36cQPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mDVeUBqz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAWJgtWE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 757A11F00893;
-	Sun,  7 Jun 2026 10:10:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mDVeUBqz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 796191F00893;
+	Sun,  7 Jun 2026 10:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827043;
-	bh=n5U2Wqca8d/z4bwB50Hk3c8BarVdVxDeOz5AL7QjARk=;
+	s=korg; t=1780827047;
+	bh=Dvq2j1nW3gBRhbuH2uAKA+oi0pfLMnDiKhy2ALgcqzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IAWJgtWEvxXkNx6p0ML8lcrHPKUqwmZVyeoE5UU7WMubYcv5VmHaWyu5l5tT1TmMo
-	 nNQQyGL2vKeiNiZXN+1fJeWwm4NiYjWFPAca0cjy1k9rujUSoEW/5uQL3jMCMLpT/c
-	 kGbWK7UVbr+rp5nXAd7/PK4XjPon3f/u37ZP66a4=
+	b=mDVeUBqzKEKFFjXmQEQbGJKELMvSd59M2QtA8pFtZ6Ns/IZv2avdRVAMOXgFLSVnW
+	 r7uL4MMCl3MrmsZ6RvLoOPfYgUL7wsBHiYiY46vrUbH25BsJVe7NgCCea+lRUp3sSK
+	 jFS3Wotzdxwum813e363d3+nwOMLyWqbK8k0E50Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
-	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Marc Harvey <marcharvey@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 017/307] arm64: debug: split hardware breakpoint exception entry
-Date: Sun,  7 Jun 2026 11:56:54 +0200
-Message-ID: <20260607095728.258926872@linuxfoundation.org>
+Subject: [PATCH 6.18 035/315] net: team: Rename port_disabled team mode op to port_tx_disabled
+Date: Sun,  7 Jun 2026 11:57:02 +0200
+Message-ID: <20260607095728.821332708@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,211 +49,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+From: Marc Harvey <marcharvey@google.com>
 
-[ Upstream commit 43e2ae77fcab8a01101a2e5da528b5222b338e5f ]
+[ Upstream commit cfa477df2cc62ba53cb936669886361152b594a7 ]
 
-Currently all debug exceptions share common entry code and are routed
-to `do_debug_exception()`, which calls dynamically-registered
-handlers for each specific debug exception. This is unfortunate as
-different debug exceptions have different entry handling requirements,
-and it would be better to handle these distinct requirements earlier.
+This team mode op is only used by the load balance mode, and it only
+uses it in the tx path.
 
-Hardware breakpoints exceptions are generated by the hardware after user
-configuration. As such, they can be exploited when training branch
-predictors outside of the userspace VA range: they still need to call
-`arm64_apply_bp_hardening()` if needed to mitigate against this attack.
-
-However, they do not need to handle the Cortex-A76 erratum #1463225 as
-it only applies to single stepping exceptions.
-It does not set an address in FAR_EL1 either, only the hardware
-watchpoint does.
-
-As the hardware breakpoint handler only returns 0 and never triggers
-the call to `arm64_notify_die()`, we can call it directly from
-`entry-common.c`.
-Split the hardware breakpoint exception entry, adjust
-the function signature, and handling of the Cortex-A76 erratum to fit
-the behaviour of the exception.
-
-Move the call to `arm64_apply_bp_hardening()` to `entry-common.c` so that
-we can do it as early as possible, and only for the exceptions coming
-from EL0, where it is needed.
-This is safe to do as it is `noinstr`, as are all the functions it
-may call. `el0_ia()` and `el0_pc()` already call it this way.
-
-Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Tested-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
-Reviewed-by: Will Deacon <will@kernel.org>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20250707114109.35672-8-ada.coupriediaz@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: Marc Harvey <marcharvey@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260409-teaming-driver-internal-v7-3-f47e7589685d@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 25fe708bbc59 ("net: team: fix NULL pointer dereference in team_xmit during mode change")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/exception.h |  5 +++++
- arch/arm64/kernel/entry-common.c   | 28 ++++++++++++++++++++++++++++
- arch/arm64/kernel/hw_breakpoint.c  | 16 ++++++----------
- 3 files changed, 39 insertions(+), 10 deletions(-)
+ drivers/net/team/team_core.c             | 4 ++--
+ drivers/net/team/team_mode_loadbalance.c | 4 ++--
+ include/linux/if_team.h                  | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/include/asm/exception.h b/arch/arm64/include/asm/exception.h
-index b1d6a65f6d2256..94f46e96515160 100644
---- a/arch/arm64/include/asm/exception.h
-+++ b/arch/arm64/include/asm/exception.h
-@@ -59,6 +59,11 @@ void do_el0_bti(struct pt_regs *regs);
- void do_el1_bti(struct pt_regs *regs, unsigned long esr);
- void do_debug_exception(unsigned long addr_if_watchpoint, unsigned long esr,
- 			struct pt_regs *regs);
-+#ifdef CONFIG_HAVE_HW_BREAKPOINT
-+void do_breakpoint(unsigned long esr, struct pt_regs *regs);
-+#else
-+static inline void do_breakpoint(unsigned long esr, struct pt_regs *regs) {}
-+#endif /* CONFIG_HAVE_HW_BREAKPOINT */
- void do_fpsimd_acc(unsigned long esr, struct pt_regs *regs);
- void do_sve_acc(unsigned long esr, struct pt_regs *regs);
- void do_sme_acc(unsigned long esr, struct pt_regs *regs);
-diff --git a/arch/arm64/kernel/entry-common.c b/arch/arm64/kernel/entry-common.c
-index 2e04e04aaf2ad6..af0d7575dcfd92 100644
---- a/arch/arm64/kernel/entry-common.c
-+++ b/arch/arm64/kernel/entry-common.c
-@@ -508,6 +508,15 @@ static void noinstr el1_bti(struct pt_regs *regs, unsigned long esr)
- 	exit_to_kernel_mode(regs);
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index 712d8043e66e17..11c8e6551dd357 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -969,8 +969,8 @@ static void team_port_disable(struct team *team,
+ {
+ 	if (!team_port_enabled(port))
+ 		return;
+-	if (team->ops.port_disabled)
+-		team->ops.port_disabled(team, port);
++	if (team->ops.port_tx_disabled)
++		team->ops.port_tx_disabled(team, port);
+ 	hlist_del_rcu(&port->hlist);
+ 	__reconstruct_port_hlist(team, port->index);
+ 	port->index = -1;
+diff --git a/drivers/net/team/team_mode_loadbalance.c b/drivers/net/team/team_mode_loadbalance.c
+index b14538bde2f824..b27e44a4df5f6e 100644
+--- a/drivers/net/team/team_mode_loadbalance.c
++++ b/drivers/net/team/team_mode_loadbalance.c
+@@ -655,7 +655,7 @@ static void lb_port_leave(struct team *team, struct team_port *port)
+ 	free_percpu(lb_port_priv->pcpu_stats);
  }
  
-+static void noinstr el1_breakpt(struct pt_regs *regs, unsigned long esr)
-+{
-+	arm64_enter_el1_dbg(regs);
-+	debug_exception_enter(regs);
-+	do_breakpoint(esr, regs);
-+	debug_exception_exit(regs);
-+	arm64_exit_el1_dbg(regs);
-+}
-+
- static void noinstr el1_dbg(struct pt_regs *regs, unsigned long esr)
+-static void lb_port_disabled(struct team *team, struct team_port *port)
++static void lb_port_tx_disabled(struct team *team, struct team_port *port)
  {
- 	unsigned long far = read_sysreg(far_el1);
-@@ -551,6 +560,8 @@ asmlinkage void noinstr el1h_64_sync_handler(struct pt_regs *regs)
- 		el1_bti(regs, esr);
- 		break;
- 	case ESR_ELx_EC_BREAKPT_CUR:
-+		el1_breakpt(regs, esr);
-+		break;
- 	case ESR_ELx_EC_SOFTSTP_CUR:
- 	case ESR_ELx_EC_WATCHPT_CUR:
- 	case ESR_ELx_EC_BRK64:
-@@ -737,6 +748,19 @@ static void noinstr el0_inv(struct pt_regs *regs, unsigned long esr)
- 	exit_to_user_mode(regs);
+ 	lb_tx_hash_to_port_mapping_null_port(team, port);
  }
+@@ -665,7 +665,7 @@ static const struct team_mode_ops lb_mode_ops = {
+ 	.exit			= lb_exit,
+ 	.port_enter		= lb_port_enter,
+ 	.port_leave		= lb_port_leave,
+-	.port_disabled		= lb_port_disabled,
++	.port_tx_disabled	= lb_port_tx_disabled,
+ 	.receive		= lb_receive,
+ 	.transmit		= lb_transmit,
+ };
+diff --git a/include/linux/if_team.h b/include/linux/if_team.h
+index 0d550d44a1c230..cd5acf40040d2e 100644
+--- a/include/linux/if_team.h
++++ b/include/linux/if_team.h
+@@ -121,7 +121,7 @@ struct team_mode_ops {
+ 	int (*port_enter)(struct team *team, struct team_port *port);
+ 	void (*port_leave)(struct team *team, struct team_port *port);
+ 	void (*port_change_dev_addr)(struct team *team, struct team_port *port);
+-	void (*port_disabled)(struct team *team, struct team_port *port);
++	void (*port_tx_disabled)(struct team *team, struct team_port *port);
+ };
  
-+static void noinstr el0_breakpt(struct pt_regs *regs, unsigned long esr)
-+{
-+	if (!is_ttbr0_addr(regs->pc))
-+		arm64_apply_bp_hardening();
-+
-+	enter_from_user_mode(regs);
-+	debug_exception_enter(regs);
-+	do_breakpoint(esr, regs);
-+	debug_exception_exit(regs);
-+	local_daif_restore(DAIF_PROCCTX);
-+	exit_to_user_mode(regs);
-+}
-+
- static void noinstr el0_dbg(struct pt_regs *regs, unsigned long esr)
- {
- 	/* Only watchpoints write FAR_EL1, otherwise its UNKNOWN */
-@@ -813,6 +837,8 @@ asmlinkage void noinstr el0t_64_sync_handler(struct pt_regs *regs)
- 		el0_mops(regs, esr);
- 		break;
- 	case ESR_ELx_EC_BREAKPT_LOW:
-+		el0_breakpt(regs, esr);
-+		break;
- 	case ESR_ELx_EC_SOFTSTP_LOW:
- 	case ESR_ELx_EC_WATCHPT_LOW:
- 	case ESR_ELx_EC_BRK64:
-@@ -933,6 +959,8 @@ asmlinkage void noinstr el0t_32_sync_handler(struct pt_regs *regs)
- 		el0_cp15(regs, esr);
- 		break;
- 	case ESR_ELx_EC_BREAKPT_LOW:
-+		el0_breakpt(regs, esr);
-+		break;
- 	case ESR_ELx_EC_SOFTSTP_LOW:
- 	case ESR_ELx_EC_WATCHPT_LOW:
- 	case ESR_ELx_EC_BKPT32:
-diff --git a/arch/arm64/kernel/hw_breakpoint.c b/arch/arm64/kernel/hw_breakpoint.c
-index 722ac45f9f7b16..d7eede5d869c2b 100644
---- a/arch/arm64/kernel/hw_breakpoint.c
-+++ b/arch/arm64/kernel/hw_breakpoint.c
-@@ -22,6 +22,7 @@
- #include <asm/current.h>
- #include <asm/debug-monitors.h>
- #include <asm/esr.h>
-+#include <asm/exception.h>
- #include <asm/hw_breakpoint.h>
- #include <asm/traps.h>
- #include <asm/cputype.h>
-@@ -618,8 +619,7 @@ NOKPROBE_SYMBOL(toggle_bp_registers);
- /*
-  * Debug exception handlers.
-  */
--static int breakpoint_handler(unsigned long unused, unsigned long esr,
--			      struct pt_regs *regs)
-+void do_breakpoint(unsigned long esr, struct pt_regs *regs)
- {
- 	int i, step = 0, *kernel_step;
- 	u32 ctrl_reg;
-@@ -662,7 +662,7 @@ static int breakpoint_handler(unsigned long unused, unsigned long esr,
- 	}
- 
- 	if (!step)
--		return 0;
-+		return;
- 
- 	if (user_mode(regs)) {
- 		debug_info->bps_disabled = 1;
-@@ -670,7 +670,7 @@ static int breakpoint_handler(unsigned long unused, unsigned long esr,
- 
- 		/* If we're already stepping a watchpoint, just return. */
- 		if (debug_info->wps_disabled)
--			return 0;
-+			return;
- 
- 		if (test_thread_flag(TIF_SINGLESTEP))
- 			debug_info->suspended_step = 1;
-@@ -681,7 +681,7 @@ static int breakpoint_handler(unsigned long unused, unsigned long esr,
- 		kernel_step = this_cpu_ptr(&stepping_kernel_bp);
- 
- 		if (*kernel_step != ARM_KERNEL_STEP_NONE)
--			return 0;
-+			return;
- 
- 		if (kernel_active_single_step()) {
- 			*kernel_step = ARM_KERNEL_STEP_SUSPEND;
-@@ -690,10 +690,8 @@ static int breakpoint_handler(unsigned long unused, unsigned long esr,
- 			kernel_enable_single_step(regs);
- 		}
- 	}
--
--	return 0;
- }
--NOKPROBE_SYMBOL(breakpoint_handler);
-+NOKPROBE_SYMBOL(do_breakpoint);
- 
- /*
-  * Arm64 hardware does not always report a watchpoint hit address that matches
-@@ -988,8 +986,6 @@ static int __init arch_hw_breakpoint_init(void)
- 		core_num_brps, core_num_wrps);
- 
- 	/* Register debug fault handlers. */
--	hook_debug_fault_code(DBG_ESR_EVT_HWBP, breakpoint_handler, SIGTRAP,
--			      TRAP_HWBKPT, "hw-breakpoint handler");
- 	hook_debug_fault_code(DBG_ESR_EVT_HWWP, watchpoint_handler, SIGTRAP,
- 			      TRAP_HWBKPT, "hw-watchpoint handler");
- 
+ extern int team_modeop_port_enter(struct team *team, struct team_port *port);
 -- 
 2.53.0
 
