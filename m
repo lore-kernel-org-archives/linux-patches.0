@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 642654CB5B;
-	Sun,  7 Jun 2026 10:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562204CB5B;
+	Sun,  7 Jun 2026 10:21:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827669; cv=none; b=HJlDaRskmAdjWFS6kcjUZdYM4tdPW4dK4K5YIQOKpiPbwLQZg+dPc+IhAvoUdyeUobxYBPzRhrOq9Rz3S5tmv+Gd3KGHpo55i1kw5hJz5XAFT7m4/kwHGUJYRfosSDxva7Gft4RlcAupfOmD8DDzgthuT8sfawQxxJBYuG/MHmg=
+	t=1780827673; cv=none; b=p0Gt+hDx0YUUnAG/iEBsmVXxl/kCmibkhMBbRVul7sO/qPJcKkGMG1F1U6CbEIg6Bn8TIxH6fNrk7dSrKBJqOCfy5EW8x7sSoLqzd3DN8i8t3EVZrhGp16ww01+QqK6KY5LsBjqS5kkgv7yNi2ljsILuWwBcpq8kzPVPWeKgU8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827669; c=relaxed/simple;
-	bh=TjrvFXsBhLj5o6SZhTj3ljS8q6GyLoPTJGk9b7Y62Sc=;
+	s=arc-20240116; t=1780827673; c=relaxed/simple;
+	bh=7FaXTwVxzqQ5mP9Gwp6j+6ThkUxh2JTpv/R4E23Z7K0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iNp8JVEv2c/rQKdlzjSQrM4hyRiLLdHD++Htp7ZeBXhQw6sIr2blnJUxbu3LKuVx+l8dcMGeg0QtZsDsn2bIjxU5sqU00ItzHqaSZHeO48Q2O5r2v3W7kOBxtWtBE8SHZmiq9zO4pazuqv8AGaMyRwXFLJwupoSJx84neT26LkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUplrpnt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QdzqSPYMRY1QDOkk+Rodz+g4618+8V6P6iJBCodJOn8rZg9lcbvuJbH3vMAfsRPFzs/isoTy1FosPma+9zOD2vxn7cTdr1xk0ZHGpVG7ns3AbLDmIe6rx2D2laSkT+zcx0YntV8NzMpzxNQU1C8TZ9c0OOId7H03zySC98KT984=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eO5jWUKT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUplrpnt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4591F00893;
-	Sun,  7 Jun 2026 10:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eO5jWUKT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF441F00893;
+	Sun,  7 Jun 2026 10:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827668;
-	bh=Lw8/kaSg+hLHEoDkLeJno+9bmmRmBj5TrtVjmM5NLy0=;
+	s=korg; t=1780827671;
+	bh=juhwrVi0IDL0+y2R5QtPK/qEmJXjEAfU4/5j3KzBy0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YUplrpntLzbgEdVzx3XuYIuruShuYhkWSXfqAM3GvT+gDHuKDQ02puT3U7+yuF/F4
-	 sJh9AfpDjS0iOFZZPwDp4FFpHR539WD9UF1YZKNlU/016+MLhxSL8bRjm1+LmH3mvM
-	 uQ60lAsJsNbq8H3RR/hUo0FSTGbGKVbCIdxg+fW0=
+	b=eO5jWUKTMQEn9TlSfL9HRFgYHo5Fwi30+tEmPUr+U9SuS4IqudR1lJTymPtPC2emq
+	 daR9TABXSXusEjNb4wrGlOaB4QdPafSugW6Qc1V+soZctFnIZdah/AW1D0kWzCTQMS
+	 Gune3sG9EmYalEdnSfFlUDLtdUXqgX9tgzcKzfmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Chris Adams <linux@cmadams.net>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 077/307] net: Introduce skb tc depth field to track packet loops
-Date: Sun,  7 Jun 2026 11:57:54 +0200
-Message-ID: <20260607095730.594975098@linuxfoundation.org>
+Subject: [PATCH 7.0 113/332] Revert "ipv6: preserve insertion order for same-scope addresses"
+Date: Sun,  7 Jun 2026 11:58:02 +0200
+Message-ID: <20260607095732.264833069@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,97 +48,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 98b34f3e8c3492cfc89ff943c9d92b4d52863d1d ]
+[ Upstream commit 072aa0f5c3d8f11f3159037418ec45edce7440b8 ]
 
-Add a 2-bit per-skb tc depth field to track packet loops across the stack.
+Chris Adams reported that preserving insertion order for same-scope
+addresses is causing SSH connections to be dropped after stopping a VM
+while running NetworkManager.
 
-The previous per-CPU loop counters like MIRRED_NEST_LIMIT
-assume a single call stack and lose state in two cases:
-1) When a packet is queued and reprocessed later (e.g., egress->ingress
-   via backlog), the per-cpu state is gone by the time it is dequeued.
-2) With XPS/RPS a packet may arrive on one CPU and be processed on
-   another.
+NetworkManager caches the IPv6 address configuration, when a RA arrives,
+it determines the list of addresses to configure and checks if the
+addresses are already in the right order in the kernel. If they aren't,
+NetworkManager removes and re-adds them to achieve the desired order.
 
-A per-skb field solves both by travelling with the packet itself.
+As the order changes, NetworkManager is confused and reconfigures the
+addresses on every update. In addition, this would also affect to cloud
+tooling that relies on IPv6 addresses order to identify primary and
+secondaries addresses.
 
-The field fits in existing padding, using 2 bits that were previously a
-hole:
+This reverts commit cb3de96eea66f5e4a580086c6a1be46e765f97f4.
 
-pahole before(-) and after (+) diff looks like:
-   __u8       slow_gro:1;           /*   132: 3  1 */
-   __u8       csum_not_inet:1;      /*   132: 4  1 */
-   __u8       unreadable:1;         /*   132: 5  1 */
- + __u8       tc_depth:2;           /*   132: 6  1 */
-
- - /* XXX 2 bits hole, try to pack */
-   /* XXX 1 byte hole, try to pack */
-
-   __u16      tc_index;             /*   134     2 */
-
-There used to be a ttl field which was removed as part of tc_verd in commit
-aec745e2c520 ("net-tc: remove unused tc_verd fields").  It was already
-unused by that time, due to remove earlier in commit c19ae86a510c ("tc: remove
-unused redirect ttl").
-
-The first user of this field is netem, which increments tc_depth on
-duplicated packets before re-enqueueing them at the root qdisc.  On
-re-entry, netem skips duplication for any skb with tc_depth already set,
-bounding recursion to a single level regardless of tree topology.
-
-The other user is mirred which increments it on each pass
-and limits to depth to MIRRED_DEFER_LIMIT (3).
-
-The new field was called ttl in earlier versions of this patch
-but renamed to tc_depth to avoid confusion with IP ttl.
-
-Note (looking at you Sashiko! Dont ignore me and continue bringing this up):
-1. Since both mirred and netem utilize the same 2-bit tc_depth field it is
-   possible when netem and mirred are used together that netem qdisc to skip
-   the duplication step. This is a known trade-off, as a 2-bit field cannot
-   independently track both features' recursion depths and it is not considered
-   sane to have a setup that addresses both features on at the same time.
-
-2. skb_scrub_packet does not clear tc_depth. This means a packet's loop history
-  is preserved even across namespaces. While this might be restrictive for
-  some topologies, it is also design intent to provide robustness against loops
-  across namespaces.
-
-Reviewed-by: Stephen Hemminger <stephen@networkplumber.org>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260525122556.973584-2-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: e80ad525fc7e ("net/sched: act_mirred: Fix return code in early mirred redirect error paths")
+Fixes: cb3de96eea66 ("ipv6: preserve insertion order for same-scope addresses")
+Reported-by: Chris Adams <linux@cmadams.net>
+Closes: https://lore.kernel.org/netdev/20260521135310.GC977@cmadams.net/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20260529112357.5079-1-fmancera@suse.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/skbuff.h | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv6/addrconf.c                  | 2 +-
+ tools/testing/selftests/net/ioam6.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
-index 4344724a978212..107a8c3ff07fa2 100644
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -802,6 +802,7 @@ enum skb_tstamp_type {
-  *	@_sk_redir: socket redirection information for skmsg
-  *	@_nfct: Associated connection, if any (with nfctinfo bits)
-  *	@skb_iif: ifindex of device we arrived on
-+ *	@tc_depth: counter for packet duplication
-  *	@tc_index: Traffic control index
-  *	@hash: the packet hash
-  *	@queue_mapping: Queue mapping for multiqueue devices
-@@ -1011,6 +1012,7 @@ struct sk_buff {
- 	__u8			csum_not_inet:1;
- #endif
- 	__u8			unreadable:1;
-+	__u8			tc_depth:2;
- #if defined(CONFIG_NET_SCHED) || defined(CONFIG_NET_XGRESS)
- 	__u16			tc_index;	/* traffic control index */
- #endif
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index dd0b4d80e0f84d..e5276be71062a3 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -1012,7 +1012,7 @@ ipv6_link_dev_addr(struct inet6_dev *idev, struct inet6_ifaddr *ifp)
+ 	list_for_each(p, &idev->addr_list) {
+ 		struct inet6_ifaddr *ifa
+ 			= list_entry(p, struct inet6_ifaddr, if_list);
+-		if (ifp_scope > ipv6_addr_src_scope(&ifa->addr))
++		if (ifp_scope >= ipv6_addr_src_scope(&ifa->addr))
+ 			break;
+ 	}
+ 
+diff --git a/tools/testing/selftests/net/ioam6.sh b/tools/testing/selftests/net/ioam6.sh
+index b2b99889942f75..845c26dd01a932 100755
+--- a/tools/testing/selftests/net/ioam6.sh
++++ b/tools/testing/selftests/net/ioam6.sh
+@@ -273,8 +273,8 @@ setup()
+   ip -netns $ioam_node_beta link set ioam-veth-betaR name veth1 &>/dev/null
+   ip -netns $ioam_node_gamma link set ioam-veth-gamma name veth0 &>/dev/null
+ 
+-  ip -netns $ioam_node_alpha addr add 2001:db8:1::2/64 dev veth0 &>/dev/null
+   ip -netns $ioam_node_alpha addr add 2001:db8:1::50/64 dev veth0 &>/dev/null
++  ip -netns $ioam_node_alpha addr add 2001:db8:1::2/64 dev veth0 &>/dev/null
+   ip -netns $ioam_node_alpha link set veth0 up &>/dev/null
+   ip -netns $ioam_node_alpha link set lo up &>/dev/null
+   ip -netns $ioam_node_alpha route add 2001:db8:2::/64 \
 -- 
 2.53.0
 
