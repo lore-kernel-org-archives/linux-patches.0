@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C7D2D8378;
-	Sun,  7 Jun 2026 10:48:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48732D8378;
+	Sun,  7 Jun 2026 10:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829292; cv=none; b=oWL9MbSwkierZZY4gOFQfxv9PfB0ltM3LWyrgFAmBSHIRCGz+SlJn44kHpDfbU4fEx+GHUSyl6gtXOqKIeJkJvg+a8xuGZLPIkT6ssazp5Fpy1N9RbEjFu+HlsWEWxGVljaE3NPn6jBKC6qKCazGkfgFL2UiQ4JCSkjdyy2yDzU=
+	t=1780829295; cv=none; b=FTVT3GSuarWJq+ahaieaLVpzkyGMlopSk2v4PUOwpJ4yt3JCuZ0pF7SQaRiuiYTfkBPB/mXOaJDDefp6+/if6unv1u/ZtoxycAbPMUhb1E+FihDVKKZ8sVJ2TK3KykvhY4w2rKEncbrcDYIDSOBnw8CwDctV7WwYXhjMTciGsI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829292; c=relaxed/simple;
-	bh=LciETTITXJzhzty/ksCxEeZLD6bktkCbItfWesgn8qM=;
+	s=arc-20240116; t=1780829295; c=relaxed/simple;
+	bh=H82ksxhcrXC002YjSkK5PfDoBDhjHWl2/sFiRcj0ytE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sPX1WnlbnWvE7jasjOX8GwY4RswE9sDTaZyaSmkzq6MnxfheR9weXP2A+FLPvQn2oLj2Xl2Z7sq6ezMoiJb5dGSpZRn4YBoFqR7Wp+JiWFbc1IshIh50wS5C/YM9P0crtIAZ72Yx8nnM0Bp1c55NQtCTyG63w8JhT57Bht2K9DM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzN+ujQh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pmqDkSirIzNuO6/oQ+1WwGdbKPr6g2080n0WmBv8Ts2siAra15OHauumSEk2gdBIYGxpy0vpMO7oInCaHRR4zvl0Yk0xagOHv4UlJAlCM/gYdkR+qP6wi2sV3JGZUkwbEraPFV//nbAuppgnm+XR9NXEkvESWqsQ6F2szqGbw5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xSyWxQSP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzN+ujQh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A7E1F00893;
-	Sun,  7 Jun 2026 10:48:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xSyWxQSP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23261F00893;
+	Sun,  7 Jun 2026 10:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829291;
-	bh=nTF1Z1qHm12ThAmBOlWVU8KZTqXlHe2KY2qccKUYjGU=;
+	s=korg; t=1780829294;
+	bh=0XDHmO9X9MEiX9u+nH1UVPAhTF0LjHMiUCE/gCDqfeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jzN+ujQhEFEqegZ3f2jDl+SBj5wz2eWYnmwId+H9mR5iTUfM207Jo5LGl1M0f09g4
-	 07iply41hRrzQ5kYgOf11GGWg+3xNj3WOXq3B61NDmEJmyRiTiRTLZDjIbldwxKe4D
-	 fD/eZFivP6ElQy6ad1B6h/JMvQITYPL6/mzxn6kE=
+	b=xSyWxQSPhU3ms1eZgklck0Mac26Y+flVKV/hgQ057w695LseNhxqnW0X1cE/wLfDP
+	 GoVXSvaoJdTOoCikekdR1FBD2T3s4NhHwZQRMwRxDcdYA8yjCOvUf8tjnwanBHTdtJ
+	 B+scUUvbrUfgNRNDp2Fa40f/kXfks+xqZSMJdO2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	RD Babiera <rdbabiera@google.com>,
-	Badhri Jagan Sridharan <badhri@google.com>
-Subject: [PATCH 7.0 261/332] usb: typec: tcpm: improve handling of DISCOVER_MODES failures
-Date: Sun,  7 Jun 2026 12:00:30 +0200
-Message-ID: <20260607095737.629781826@linuxfoundation.org>
+	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>
+Subject: [PATCH 6.18 233/315] usb: typec: ucsi: Dont update power_supply on power role change if not connected
+Date: Sun,  7 Jun 2026 12:00:20 +0200
+Message-ID: <20260607095736.127252664@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,189 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
 
-commit c06e6cd488194e37ed4dc29d1488d1ffb760de60 upstream.
+commit d98d413ca65d0790a8f3695d0a5845538958ab84 upstream.
 
-UGREEN USB-C Multifunction Adapter Model CM512 (AKA "Revodok 107")
-exposes two SVIDs: 0xff01 (DP Alt Mode) and 0x1d5c. The DISCOVER_MODES
-step succeeds for 0xff01 and gets a NAK for 0x1d5c. Currently this
-results in DP Alt Mode not being registered either, since the modes
-are only registered once all of them have been discovered. The NAK
-results in the processing being stopped and thus no Alt modes being
-registered.
-
-Improve the situation by handling the NAK gracefully and continue
-processing the other modes.
-
-Before this change, the TCPM log ends like this:
-
-(more log entries before this)
-[    5.028287] AMS DISCOVER_SVIDS finished
-[    5.028291] cc:=4
-[    5.040040] SVID 1: 0xff01
-[    5.040054] SVID 2: 0x1d5c
-[    5.040082] AMS DISCOVER_MODES start
-[    5.040096] PD TX, header: 0x1b6f
-[    5.050946] PD TX complete, status: 0
-[    5.059609] PD RX, header: 0x264f [1]
-[    5.059626] Rx VDM cmd 0xff018043 type 1 cmd 3 len 2
-[    5.059640] AMS DISCOVER_MODES finished
-[    5.059644] cc:=4
-[    5.069994]  Alternate mode 0: SVID 0xff01, VDO 1: 0x000c0045
-[    5.070029] AMS DISCOVER_MODES start
-[    5.070043] PD TX, header: 0x1d6f
-[    5.081139] PD TX complete, status: 0
-[    5.087498] PD RX, header: 0x184f [1]
-[    5.087515] Rx VDM cmd 0x1d5c8083 type 2 cmd 3 len 1
-[    5.087529] AMS DISCOVER_MODES finished
-[    5.087534] cc:=4
-(no further log entries after this point)
-
-After this patch the TCPM log looks exactly the same, but then
-continues like this:
-
-[    5.100222] Skip SVID 0x1d5c (failed to discover mode)
-[    5.101699] AMS DFP_TO_UFP_ENTER_MODE start
-(log goes on as the system initializes DP AltMode)
+We only need to update the power_supply on power role change if the port
+is connected, because otherwise the online status should be the same for
+both cases.
 
 Cc: stable <stable@kernel.org>
-Fixes: 41d9d75344d9 ("usb: typec: tcpm: add discover svids and discover modes support for sop'")
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Reviewed-by: RD Babiera <rdbabiera@google.com>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Link: https://patch.msgid.link/20260429-tcpm-discover-modes-nak-fix-v4-1-75945d0ed30f@collabora.com
+Fixes: 7616f006db07 ("usb: typec: ucsi: Update power_supply on power role change")
+Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+Reported-and-tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Link: https://patch.msgid.link/20260519-ucsi-fix-2-v1-2-6f1239535187@qtmlabs.xyz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |   97 ++++++++++++++++++++++++++----------------
- 1 file changed, 61 insertions(+), 36 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -2002,6 +2002,55 @@ static bool tcpm_cable_vdm_supported(str
- 	       tcpm_can_communicate_sop_prime(port);
- }
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1255,7 +1255,12 @@ static void ucsi_handle_connector_change
  
-+static int tcpm_handle_discover_mode(struct tcpm_port *port, u32 *response,
-+				     enum tcpm_transmit_type rx_sop_type,
-+				     enum tcpm_transmit_type *response_tx_sop_type)
-+{
-+	struct typec_port *typec = port->typec_port;
-+	struct pd_mode_data *modep;
+ 	if ((change & UCSI_CONSTAT_POWER_DIR_CHANGE) && role != prev_role) {
+ 		typec_set_pwr_role(con->port, role);
+-		ucsi_port_psy_changed(con);
 +
-+	if (rx_sop_type == TCPC_TX_SOP) {
-+		modep = &port->mode_data;
-+		modep->svid_index++;
-+
-+		if (modep->svid_index < modep->nsvids) {
-+			u16 svid = modep->svids[modep->svid_index];
-+			*response_tx_sop_type = TCPC_TX_SOP;
-+			response[0] = VDO(svid, 1,
-+					  typec_get_negotiated_svdm_version(typec),
-+					  CMD_DISCOVER_MODES);
-+			return 1;
-+		}
-+
-+		if (tcpm_cable_vdm_supported(port)) {
-+			*response_tx_sop_type = TCPC_TX_SOP_PRIME;
-+			response[0] = VDO(USB_SID_PD, 1,
-+					  typec_get_cable_svdm_version(typec),
-+					  CMD_DISCOVER_SVID);
-+			return 1;
-+		}
-+
-+		tcpm_register_partner_altmodes(port);
-+	} else if (rx_sop_type == TCPC_TX_SOP_PRIME) {
-+		modep = &port->mode_data_prime;
-+		modep->svid_index++;
-+
-+		if (modep->svid_index < modep->nsvids) {
-+			u16 svid = modep->svids[modep->svid_index];
-+			*response_tx_sop_type = TCPC_TX_SOP_PRIME;
-+			response[0] = VDO(svid, 1,
-+					  typec_get_cable_svdm_version(typec),
-+					  CMD_DISCOVER_MODES);
-+			return 1;
-+		}
-+
-+		tcpm_register_plug_altmodes(port);
-+		tcpm_register_partner_altmodes(port);
-+	}
-+
-+	return 0;
-+}
-+
- static int tcpm_pd_svdm(struct tcpm_port *port, struct typec_altmode *adev,
- 			const u32 *p, int cnt, u32 *response,
- 			enum adev_actions *adev_action,
-@@ -2259,41 +2308,11 @@ static int tcpm_pd_svdm(struct tcpm_port
- 			}
- 			break;
- 		case CMD_DISCOVER_MODES:
--			if (rx_sop_type == TCPC_TX_SOP) {
--				/* 6.4.4.3.3 */
--				svdm_consume_modes(port, p, cnt, rx_sop_type);
--				modep->svid_index++;
--				if (modep->svid_index < modep->nsvids) {
--					u16 svid = modep->svids[modep->svid_index];
--					*response_tx_sop_type = TCPC_TX_SOP;
--					response[0] = VDO(svid, 1, svdm_version,
--							  CMD_DISCOVER_MODES);
--					rlen = 1;
--				} else if (tcpm_cable_vdm_supported(port)) {
--					*response_tx_sop_type = TCPC_TX_SOP_PRIME;
--					response[0] = VDO(USB_SID_PD, 1,
--							  typec_get_cable_svdm_version(typec),
--							  CMD_DISCOVER_SVID);
--					rlen = 1;
--				} else {
--					tcpm_register_partner_altmodes(port);
--				}
--			} else if (rx_sop_type == TCPC_TX_SOP_PRIME) {
--				/* 6.4.4.3.3 */
--				svdm_consume_modes(port, p, cnt, rx_sop_type);
--				modep_prime->svid_index++;
--				if (modep_prime->svid_index < modep_prime->nsvids) {
--					u16 svid = modep_prime->svids[modep_prime->svid_index];
--					*response_tx_sop_type = TCPC_TX_SOP_PRIME;
--					response[0] = VDO(svid, 1,
--							  typec_get_cable_svdm_version(typec),
--							  CMD_DISCOVER_MODES);
--					rlen = 1;
--				} else {
--					tcpm_register_plug_altmodes(port);
--					tcpm_register_partner_altmodes(port);
--				}
--			}
-+			/* 6.4.4.3.3 */
-+			svdm_consume_modes(port, p, cnt, rx_sop_type);
-+			rlen = tcpm_handle_discover_mode(port, response,
-+							 rx_sop_type,
-+							 response_tx_sop_type);
- 			break;
- 		case CMD_ENTER_MODE:
- 			*response_tx_sop_type = rx_sop_type;
-@@ -2336,9 +2355,15 @@ static int tcpm_pd_svdm(struct tcpm_port
- 		switch (cmd) {
- 		case CMD_DISCOVER_IDENT:
- 		case CMD_DISCOVER_SVID:
--		case CMD_DISCOVER_MODES:
- 		case VDO_CMD_VENDOR(0) ... VDO_CMD_VENDOR(15):
- 			break;
-+		case CMD_DISCOVER_MODES:
-+			tcpm_log(port, "Skip SVID 0x%04x (failed to discover mode)",
-+				 PD_VDO_SVID_SVID0(p[0]));
-+			rlen = tcpm_handle_discover_mode(port, response,
-+							 rx_sop_type,
-+							 response_tx_sop_type);
-+			break;
- 		case CMD_ENTER_MODE:
- 			/* Back to USB Operation */
- 			*adev_action = ADEV_NOTIFY_USB_AND_QUEUE_VDM;
++		/* Some power_supply properties vary depending on the power direction when
++		 * connected
++		 */
++		if (UCSI_CONSTAT(con, CONNECTED))
++			ucsi_port_psy_changed(con);
+ 
+ 		/* Complete pending power role swap */
+ 		if (!completion_done(&con->complete))
 
 
