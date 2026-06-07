@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA212D3A69;
-	Sun,  7 Jun 2026 10:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56CB2D3A69;
+	Sun,  7 Jun 2026 10:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828629; cv=none; b=sFatPPd2FyI9q7FcHm0KcnKXZFrLN/rdwgA0ek+snJkt+6wPlvLBJzSZuRRygBnIvAZ0+LXSor+S4K+eq7PihI01ikHJNhF6SB3eA+JlBIDEKFQMqAArE6h64VWleJqly7KwUcysluytr0eUBHSW7jE6km0HlYE/4y2p2v8Yp5E=
+	t=1780828632; cv=none; b=ejoAky+r2VA5I4ID4JgQ4vTawTPw/KAOOVRGF+2CuP14fU6FGhFqLOi8bVWAyQ5f0Ca8uN1dTh5ABJjDYA5/oU+qJOFGthQsnpJSV/JhVcxGQIlkrmLy/rIEmwJCNndpNQSBAWsohMamL3mvDiBanEah6vd0MrDRxOQW+UmS2ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828629; c=relaxed/simple;
-	bh=cWtGVnlmTvOdBOk04rTITTEJaroS4ch33lirnj7Uizg=;
+	s=arc-20240116; t=1780828632; c=relaxed/simple;
+	bh=yjjzU48u6eWteE80pHUQcOf4fawusy63Lb7pJtkUMVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=etRNmv7WE3p+oMytabZ7m5xV+wA+MTQbsvuVciI1FtD+ozmg9JF/4scvDQ6GFcfS26fHT9hGjG0p4uO/JWc7OXaAUiBgjADS/9dMwn3aLOT2qCOg+hIljR/0ExTROdB/5HD8E46ZOm5JukZqWY9HZJdwMNbCfCN8SqensGjtG6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gg+PNM0Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qwpnI0OcBjjL9xFWMre6NDAU66mllySEeoEi8gtUhzGXpVAtel8fjwVzruIOmgOUi/Gigpq0qv3QuewXcFCFE6Bc238dTBKjXBaasXm4W8qSQ9ngY7FVPi1cWAVHfU1f0D2IlKc2i5idhRObZ5yy+FVOOJ1noqHpl95TvntO4bQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9RIdKan; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gg+PNM0Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C95F1F00893;
-	Sun,  7 Jun 2026 10:37:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9RIdKan"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B80C11F00893;
+	Sun,  7 Jun 2026 10:37:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828628;
-	bh=UvuouHEXy14jsogNoKCSEReW29hltSAQHzBGD398SP4=;
+	s=korg; t=1780828631;
+	bh=WOQ8jZoeJgQkWreFpwONeETgiCsjW9v8jC69ws39glc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gg+PNM0QtMyIM2NAivMCaZS22ydjoamvN6ctBlMStjsutIRDW3+/KGHCH7nBIVQTE
-	 nc7xg0vUTnGJ2Ql0hnndIXx5QsL/p0U6sleoIA2Ui777neB0gRZgR2/vAQTfSxZtDX
-	 VHvCg1k8BHDn27UijeA83WVD5HvJ5H1nA+XTSBjY=
+	b=w9RIdKanG5G0cFa8FwARFtQXBEXSHf+LURLcg8mDFd/eO6FOuGHfo4StNC+8v3Jjo
+	 ZKQnwAhZ43NbRzO8xYdRdQ6vQaJ0ZgfPh2U5I6lvPmhjcoNSnskvRB5BEd9a3ATk1P
+	 5yWaJr/W/gX/IgSH5JLtMBI81g5Y+nFb3H+gE9FY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 153/307] KVM: SVM: Flush the current TLB when transitioning from xAVIC => x2AVIC
-Date: Sun,  7 Jun 2026 11:59:10 +0200
-Message-ID: <20260607095733.341275256@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Peter Chen <peter.chen@cixtech.com>
+Subject: [PATCH 6.18 178/315] usb: cdns3: plat: fix leaked usb2_phy initialization on usb3_phy acquisition failure
+Date: Sun,  7 Jun 2026 11:59:25 +0200
+Message-ID: <20260607095734.120120263@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,87 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Peter Chen <peter.chen@cixtech.com>
 
-commit a9e18aa3263f356edae305e29830e5fe63d8597a upstream.
+commit e6970cda63fd4b4546aeed9d0e2f53a7c95cd09c upstream.
 
-Flush the current TLB when xAVIC *or* x2AVIC is activated, as KVM is
-(apparently) responsible for purging TLB entries when transitioning from
-xAVIC to x2AVIC.  The APM says a whole lot of nothing about TLB flushing
-with respect to (x2)AVIC, but empirical data strongly suggests hardware
-also does a whole lot of nothing.
+Move usb2_phy initialization after usb3_phy acquisition.
 
-Failure to flush the TLB when enabling x2AVIC can lead to guest accesses
-to the APIC base address getting incorrectly redirected to the virtual
-APIC page.  The flaw most visibly manifests as failures in KVM-Unit-Test's
-verify_disabled_apic_mmio() testcase when x2APIC is enabled (though for
-reasons unknown, the test only reliably fails with EFI builds).
-
-Fixes: 0ccf3e7cb95a ("KVM: SVM: Flush the "current" TLB when activating AVIC")
-Fixes: 4d1d7942e36a ("KVM: SVM: Introduce logic to (de)activate x2AVIC mode")
-Cc: stable@vger.kernel.org
-Cc: Naveen N Rao (AMD) <naveen@kernel.org>
-Link: https://patch.msgid.link/20260515171536.1841645-1-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: f738957277ba ("usb: cdns3: Split core.c into cdns3-plat and core.c file")
+Cc: stable <stable@kernel.org>
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-devicetree/agKaEePSFknhDBg2@nchen-desktop/T/#m21e1d9c1574eb127ce03c0c2a1a49002ce435b52
+Signed-off-by: Peter Chen <peter.chen@cixtech.com>
+Link: https://patch.msgid.link/20260513085310.2217547-2-peter.chen@cixtech.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/avic.c |   35 +++++++++++++++++++++++++++++------
- 1 file changed, 29 insertions(+), 6 deletions(-)
+ drivers/usb/cdns3/cdns3-plat.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -111,6 +111,35 @@ static void avic_activate_vmcb(struct vc
- 	svm_clr_intercept(svm, INTERCEPT_CR8_WRITE);
+--- a/drivers/usb/cdns3/cdns3-plat.c
++++ b/drivers/usb/cdns3/cdns3-plat.c
+@@ -126,15 +126,15 @@ static int cdns3_plat_probe(struct platf
+ 		return dev_err_probe(dev, PTR_ERR(cdns->usb2_phy),
+ 				     "Failed to get cdn3,usb2-phy\n");
  
- 	/*
-+	 * Flush the TLB when enabling (x2)AVIC and when transitioning between
-+	 * xAVIC and x2AVIC, as the CPU may have inserted a TLB entry for the
-+	 * "wrong" mapping.
-+	 *
-+	 * KVM uses a per-VM "scratch" page to back the APIC memslot, because
-+	 * KVM also uses per-VM page tables *and* maintains the page table (NPT
-+	 * or shadow page) mappings for said memslot even if one or more vCPUs
-+	 * have their local APIC hardware-disabled or are in x2APIC mode, i.e.
-+	 * even if one or more vCPUs' APIC MMIO BAR is effectively disabled.
-+	 *
-+	 * If xAVIC is fully enabled, hardware ignores the physical address in
-+	 * KVM's page tables, i.e. in the leaf SPTE for the APIC memslot, and
-+	 * instead redirects the access to the AVIC backing page, i.e. to the
-+	 * vCPU's virtual APIC page.  If xAVIC is not enabled (APIC is either
-+	 * hardware-disabled or in x2APIC mode), then guest accesses will use
-+	 * the page table mapping verbatim, i.e. will access the per-VM scratch
-+	 * page, as normal memory.
-+	 *
-+	 * In both cases, the CPU is allowed to cache TLB entries for the APIC
-+	 * base GPA.  So, KVM needs to flush the TLB when enabling xAVIC, as
-+	 * accesses need to be redirected to the virtual APIC page, but the TLB
-+	 * may contain entries pointing at the scratch page.  KVM also needs to
-+	 * flush the TLB when enabling x2AVIC, as accesses need to go to the
-+	 * scratch page, but the TLB may contain entries tagged as xAVIC, i.e.
-+	 * entries pointing to the vCPU's virtual APIC page.
-+	 */
-+	kvm_make_request(KVM_REQ_TLB_FLUSH_CURRENT, &svm->vcpu);
-+
-+	/*
- 	 * Note: KVM supports hybrid-AVIC mode, where KVM emulates x2APIC MSR
- 	 * accesses, while interrupt injection to a running vCPU can be
- 	 * achieved using AVIC doorbell.  KVM disables the APIC access page
-@@ -123,12 +152,6 @@ static void avic_activate_vmcb(struct vc
- 		/* Disabling MSR intercept for x2APIC registers */
- 		svm_set_x2apic_msr_interception(svm, false);
- 	} else {
--		/*
--		 * Flush the TLB, the guest may have inserted a non-APIC
--		 * mapping into the TLB while AVIC was disabled.
--		 */
--		kvm_make_request(KVM_REQ_TLB_FLUSH_CURRENT, &svm->vcpu);
+-	ret = phy_init(cdns->usb2_phy);
+-	if (ret)
+-		return ret;
 -
- 		/* Enabling MSR intercept for x2APIC registers */
- 		svm_set_x2apic_msr_interception(svm, true);
- 	}
+ 	cdns->usb3_phy = devm_phy_optional_get(dev, "cdns3,usb3-phy");
+ 	if (IS_ERR(cdns->usb3_phy))
+ 		return dev_err_probe(dev, PTR_ERR(cdns->usb3_phy),
+ 				     "Failed to get cdn3,usb3-phy\n");
+ 
++	ret = phy_init(cdns->usb2_phy);
++	if (ret)
++		return ret;
++
+ 	ret = phy_init(cdns->usb3_phy);
+ 	if (ret)
+ 		goto err_phy3_init;
 
 
