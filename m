@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F61D1DE8AE;
-	Sun,  7 Jun 2026 10:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1224E1DE8AE;
+	Sun,  7 Jun 2026 10:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826877; cv=none; b=PV8X7lW0HKOfIUSoilpzRtSKbp20siY92TMO0VPX2t0/HvFX7eFtEFqkYx139YWXEUi9C/IOZlK9JiwhpTPVhIoffNoA+SZWvVukh0YzYR1YyAqgQ3fuinmVCdarCRTtRWpNVhi7QkBbP44F/6hEw8X5QkTiYCYJRi1YhNcnkRk=
+	t=1780826881; cv=none; b=pFrsm9kJC9SAEhMStOcFlxi006iXYJ3RNBnkxKh1iK1nxlDJb7lDerWZQx3zGWbPJbY53O3d7otRkSHS2slh6g5/CA6xkDuaHs1bPEqq+6qxzQTMFWDYLdU/ffCwfqn6tHc1PHp8Dj+B/o8sCwLnw0ZXD/AO74qHA+ioromxM8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826877; c=relaxed/simple;
-	bh=CEfQIfB4iyFNVofTlm3HxkxrXBgI/AVyftcKEDNlVJw=;
+	s=arc-20240116; t=1780826881; c=relaxed/simple;
+	bh=+5QWb+5UNoU03K/uMv2SfFukKZeJ0/zLT4CIAuHBI28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FBpMiz2BcENv3TMbzQ0ZRiuSISEWcfyNDGe1ONsmxYWroU8tL6a+EcgJlaRBj9r91Kuo70/E0xn//ZkUIqQmljB0oTiCSfy7WUcRQrC8hccN481nZNCnIpGokPkf157K6LXEN9PNQ+9phpuMPmXWOpIt+FRvVE29yAMy2XXxZgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fnyAprKj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A5F8D51QVqbFZgRQNmXVnqTT6oHHvjLQJ0D1zdbU0NrKr8dmGS5xt97ngGzW2SH1GiBFY9I1zh4MCi4VU4Th9MU3/LZEOTnu2AzqdDsHgLrZjHqpLAFO/7lp9atWOkX7uNtxs4KSd7gEEhKtWnutUCeG4NePpunZGaJc8KoAesw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wd5wXffe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnyAprKj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD93C1F00893;
-	Sun,  7 Jun 2026 10:07:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wd5wXffe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174481F00893;
+	Sun,  7 Jun 2026 10:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826876;
-	bh=GMsTytIjE82+TTChcMTiWnwgLQKDGKoEIJI+eox1Vzk=;
+	s=korg; t=1780826879;
+	bh=FPwJMT0DlaD9j41lfY+bhEVMmNbQ4z4idHXfk7UNIuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fnyAprKjZOHhtDUnX6YqD3fMXzHI7SWg3DoEoRD5eGgqCk2UCGWuba6bL4IuGw2ij
-	 hwoG7Bx5a4lfHTvkZIurRVj7GQ2EPGkg4ZGVcYllZy3Kg89kVdzatdVChh1WuQt6YO
-	 lyFvXDwpoArtq2qYBC1X3rmvoQUoW7H1DE2ygJDQ=
+	b=Wd5wXffejPjIr0GelCltCHWFE9yFNIP+B1EJt5FPUVS+UNxiwWKHAAmrYETe5Nghn
+	 s/QOc1YckxGPycxN2c1DUF3lUE1fSFXFqgTy0GtxHm8nFKEezfWwjZbMvC8BqnWZqt
+	 HVgNCkkyigtrxDu5448Dm1Xuf4k4y8HwXlwmFQK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Grzelak?= <michal.grzelak@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Jeremy Sowden <jeremy@azazel.net>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 039/332] drm/i915/aux: use polling when irqs are unavailable
-Date: Sun,  7 Jun 2026 11:56:48 +0200
-Message-ID: <20260607095729.548600140@linuxfoundation.org>
+Subject: [PATCH 6.18 019/315] netfilter: nf_tables: fix dst corruption in same register operation
+Date: Sun,  7 Jun 2026 11:56:46 +0200
+Message-ID: <20260607095728.200523499@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,87 +46,145 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michał Grzelak <michal.grzelak@intel.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 202e77cf2e839e1adc804433322dc5c9ee511c9f ]
+[ Upstream commit 18014147d3ee7831dce53fe65d7fc8d428b02552 ]
 
-PTL with physically disconnected display was observed to have 40s longer
-execution time when testing xe_fault_injection@xe_guc_mmio_send_recv.
-The issue has not been seen when reverting commit 40a9f77a28fa ("Revert
-"drm/i915/dp: change aux_ctl reg read to polling read"").
+For lshift and rshift, the shift operations are performed in a loop over
+32-bit words. The loop calculates the shifted value and write it to dst,
+and then immediately reads from src to calculate the carry for the next
+iteration. Because src and dst could point to the same memory location,
+the carry is incorrectly calculated using the newly modified dst value
+instead of the original src value.
 
-Apparently the configuration suffers from not having AUX enabled when
-using interrupts. One probable cause can be xe enabling interrupts too
-late: interrupts need memory allocations which currently can't be done
-before the display FB takeover is done.
+Adding a temporary local variable to cache the original value before
+writing to dst and using it for the carry calculation solves the
+problem. In addition, partial overlap is rejected from control plane for
+all kind of operations including byteorder. This was tested with the
+following bytecode:
 
-As for now, use polling for AUX in case interrupts are unavailable.
+table test_table ip flags 0 use 1 handle 1
+ip test_table test_chain use 3 type filter hook input prio 0 policy accept packets 0 bytes 0 flags 1
+ip test_table test_chain 2
+  [ immediate reg 1 0x44332211 0x88776655 ]
+  [ bitwise reg 1 = ( reg 1 << 0x08000000 ) ]
+  [ cmp eq reg 1 0x66443322 0x00887766 ]
+  [ counter pkts 0 bytes 0 ]
+ip test_table test_chain 4 3
+  [ immediate reg 1 0x44332211 0x88776655 ]
+  [ bitwise reg 1 = ( reg 1 << 0x08000000 ) ]
+  [ cmp eq reg 1 0x55443322 0x00887766 ]
+  [ counter pkts 21794 bytes 1917798 ]
 
-Fixes: 40a9f77a28fa ("Revert "drm/i915/dp: change aux_ctl reg read to polling read"")
-Suggested-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Signed-off-by: Michał Grzelak <michal.grzelak@intel.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patch.msgid.link/20260416163744.288107-1-michal.grzelak@intel.com
-(cherry picked from commit 05e0550b65cd1604bd515fbc65f522bce4c10a87)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Fixes: 567d746b55bc ("netfilter: bitwise: add support for shifts.")
+Acked-by: Jeremy Sowden <jeremy@azazel.net>
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp_aux.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ include/net/netfilter/nf_tables.h |  7 +++++++
+ net/netfilter/nft_bitwise.c       | 18 ++++++++++++++----
+ net/netfilter/nft_byteorder.c     | 13 ++++++++++---
+ 3 files changed, 31 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dp_aux.c b/drivers/gpu/drm/i915/display/intel_dp_aux.c
-index b20ec3e589fadc..9c9b6410366d5c 100644
---- a/drivers/gpu/drm/i915/display/intel_dp_aux.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp_aux.c
-@@ -12,6 +12,7 @@
- #include "intel_dp.h"
- #include "intel_dp_aux.h"
- #include "intel_dp_aux_regs.h"
-+#include "intel_parent.h"
- #include "intel_pps.h"
- #include "intel_quirks.h"
- #include "intel_tc.h"
-@@ -60,18 +61,29 @@ intel_dp_aux_wait_done(struct intel_dp *intel_dp)
- 	struct intel_display *display = to_intel_display(intel_dp);
- 	i915_reg_t ch_ctl = intel_dp->aux_ch_ctl_reg(intel_dp);
- 	const unsigned int timeout_ms = 10;
-+	bool done = true;
- 	u32 status;
--	bool done;
-+	int ret;
- 
-+	if (intel_parent_irq_enabled(display)) {
- #define C (((status = intel_de_read_notrace(display, ch_ctl)) & DP_AUX_CH_CTL_SEND_BUSY) == 0)
--	done = wait_event_timeout(display->gmbus.wait_queue, C,
--				  msecs_to_jiffies_timeout(timeout_ms));
-+		done = wait_event_timeout(display->gmbus.wait_queue, C,
-+					  msecs_to_jiffies_timeout(timeout_ms));
-+
-+#undef C
-+	} else {
-+		ret = intel_de_wait_ms(display, ch_ctl,
-+				       DP_AUX_CH_CTL_SEND_BUSY, 0,
-+				       timeout_ms, &status);
-+
-+		if (ret == -ETIMEDOUT)
-+			done = false;
-+	}
- 
- 	if (!done)
- 		drm_err(display->drm,
- 			"%s: did not complete or timeout within %ums (status 0x%08x)\n",
- 			intel_dp->aux.name, timeout_ms, status);
--#undef C
- 
- 	return status;
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index 4dc080f7f27c65..b35e8c02fadcd5 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -188,6 +188,13 @@ static inline u64 nft_reg_load64(const u32 *sreg)
+ 	return get_unaligned((u64 *)sreg);
  }
+ 
++static inline bool nft_reg_overlap(u8 src, u8 dst, u32 len)
++{
++	unsigned int n = DIV_ROUND_UP(len, sizeof(u32));
++
++	return src != dst && src < dst + n && dst < src + n;
++}
++
+ static inline void nft_data_copy(u32 *dst, const struct nft_data *src,
+ 				 unsigned int len)
+ {
+diff --git a/net/netfilter/nft_bitwise.c b/net/netfilter/nft_bitwise.c
+index af990c600745be..1afb36fb5994db 100644
+--- a/net/netfilter/nft_bitwise.c
++++ b/net/netfilter/nft_bitwise.c
+@@ -43,8 +43,10 @@ static void nft_bitwise_eval_lshift(u32 *dst, const u32 *src,
+ 	u32 carry = 0;
+ 
+ 	for (i = DIV_ROUND_UP(priv->len, sizeof(u32)); i > 0; i--) {
+-		dst[i - 1] = (src[i - 1] << shift) | carry;
+-		carry = src[i - 1] >> (BITS_PER_TYPE(u32) - shift);
++		u32 tmp_src = src[i - 1];
++
++		dst[i - 1] = (tmp_src << shift) | carry;
++		carry = tmp_src >> (BITS_PER_TYPE(u32) - shift);
+ 	}
+ }
+ 
+@@ -56,8 +58,10 @@ static void nft_bitwise_eval_rshift(u32 *dst, const u32 *src,
+ 	u32 carry = 0;
+ 
+ 	for (i = 0; i < DIV_ROUND_UP(priv->len, sizeof(u32)); i++) {
+-		dst[i] = carry | (src[i] >> shift);
+-		carry = src[i] << (BITS_PER_TYPE(u32) - shift);
++		u32 tmp_src = src[i];
++
++		dst[i] = carry | (tmp_src >> shift);
++		carry = tmp_src << (BITS_PER_TYPE(u32) - shift);
+ 	}
+ }
+ 
+@@ -235,6 +239,9 @@ static int nft_bitwise_init_bool(const struct nft_ctx *ctx,
+ 					      &priv->sreg2, priv->len);
+ 		if (err < 0)
+ 			return err;
++
++		if (nft_reg_overlap(priv->sreg2, priv->dreg, priv->len))
++			return -EINVAL;
+ 	}
+ 
+ 	return 0;
+@@ -265,6 +272,9 @@ static int nft_bitwise_init(const struct nft_ctx *ctx,
+ 	if (err < 0)
+ 		return err;
+ 
++	if (nft_reg_overlap(priv->sreg, priv->dreg, priv->len))
++		return -EINVAL;
++
+ 	if (tb[NFTA_BITWISE_OP]) {
+ 		priv->op = ntohl(nla_get_be32(tb[NFTA_BITWISE_OP]));
+ 		switch (priv->op) {
+diff --git a/net/netfilter/nft_byteorder.c b/net/netfilter/nft_byteorder.c
+index af9206a3afd181..5e7a7841b789b0 100644
+--- a/net/netfilter/nft_byteorder.c
++++ b/net/netfilter/nft_byteorder.c
+@@ -144,9 +144,16 @@ static int nft_byteorder_init(const struct nft_ctx *ctx,
+ 	if (err < 0)
+ 		return err;
+ 
+-	return nft_parse_register_store(ctx, tb[NFTA_BYTEORDER_DREG],
+-					&priv->dreg, NULL, NFT_DATA_VALUE,
+-					priv->len);
++	err = nft_parse_register_store(ctx, tb[NFTA_BYTEORDER_DREG],
++				       &priv->dreg, NULL, NFT_DATA_VALUE,
++				       priv->len);
++	if (err < 0)
++		return err;
++
++	if (nft_reg_overlap(priv->sreg, priv->dreg, priv->len))
++		return -EINVAL;
++
++	return 0;
+ }
+ 
+ static int nft_byteorder_dump(struct sk_buff *skb,
 -- 
 2.53.0
 
