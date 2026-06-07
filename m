@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1C231F993;
-	Sun,  7 Jun 2026 10:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2513254BD;
+	Sun,  7 Jun 2026 10:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827796; cv=none; b=g73X7z2fQLgMUUSJvRaRdMK/xC7RAhhD8nXCsna+e+riDji9n8BdCWpb78uw/rqnhTTp/g0y6PacFiYifCE4auf+wwjThjOZ7NxUXYF1qFBfqQQQGeZSObRyaaSmvLzDo6q5tPqLbOzhV7OwRY74aRxVrd4VRM3RgXErbegYcpg=
+	t=1780827801; cv=none; b=B5W8kUebkwNRIT3M+3+veBuLuFKu4ZwbP6Bke682veojiiKNy6dTCI1dIj7O9fdG/0vLcWLte53afoy/H/HzjkIH+tVGj34NyXiYGoyF3WXQIU5BYPvHN5uJsbvE43+yidnAP0U5lKw9NSyJSbK4RGwmUe0wqE318OhFeM80uHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827796; c=relaxed/simple;
-	bh=73vPq6iq4Re5e0PHOnV39sg6Tv0c1hBcHr9qL+X+sDs=;
+	s=arc-20240116; t=1780827801; c=relaxed/simple;
+	bh=hP3J1RTzi3BIZUd84juND0iUd2xMxw/ig/y9S+wgzZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nblim6AT2XaCVDD+hb5pr2A2vLlF3uzp1qrM94am6hHCNSM7G1vL9IBj05e9cMPW9xBXVmSW3k6UfXhjTpgbBQSroouuH+YF774PRv67NhvuAhUhyy7KYj8LsKbuP7E/hzBvKah3UrORETIIHlLx+Sk2NUVP24Vp1fRmo72VmDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfDG9oAq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dt48YwF/7qSvWkJcAju3XeTkspOboprUb1Gfe4pUUjdhqFztAoOO3z1uG9E4ddmPKazspkYcbQlAjd/mteBlfdDvq97q7B8kWB1i8o0HlkrgWK0Hdfh04nul0i9yxcSVyw3/KUWOcH1Tk46hYouCxTdgGApkOHLfrRu9ALjPaL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQfUUInr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfDG9oAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3FA81F00893;
-	Sun,  7 Jun 2026 10:23:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQfUUInr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75AE11F00893;
+	Sun,  7 Jun 2026 10:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827795;
-	bh=36HI4xnjwaYmu/kv6PuJLymjRwNce2RD3a60gYyxHwQ=;
+	s=korg; t=1780827799;
+	bh=B0WhsoYV16B7/y0XwgPy8Y8DDoovg5TYkfybaWP1BFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wfDG9oAqqkcOWPlwoqbfOhIBXomwd8l2La0dAy8c6IBzZWiBRJHW4DRpvMnf5XRTV
-	 Uxg0Ms/aggo13CfsMWjCvcrla3WVrDHiOTpdfio30r+FtohnWEiNUyFkG+CZry+B5Y
-	 4udm2j0vFLqYBM5KhdLtTlFGfBhznte65zwLNIr4=
+	b=RQfUUInrzMRkrof3uFCT/RwSK+TlMrBsWmoW5Ry3vdHx0rXupMBQaE1jqWHDV99pI
+	 Lk5nYRHrqSQ9xKC7OpgBc5XrTgcdVLS8kD2nzMIZsreFRIJEt5ImKnAtUOH8Av4tp/
+	 sVSsNnN/63jv/f07qQTgscNPpcj43qldki5+mjvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 087/307] Bluetooth: L2CAP: Fix possible crash on l2cap_ecred_conn_rsp
-Date: Sun,  7 Jun 2026 11:58:04 +0200
-Message-ID: <20260607095730.969886994@linuxfoundation.org>
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 7.0 123/332] usb: typec: tcpm: bound altmode_desc[] per iteration in svdm_consume_modes()
+Date: Sun,  7 Jun 2026 11:58:12 +0200
+Message-ID: <20260607095732.628057166@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,88 +46,76 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Message-ID: <20260607095804.z46o18KVs1io3063sw7bMmc7fm5p33heGe2-I19Z2Rc@z>
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 41c2713b204e6cb6a94587bc6bf6935107df5479 ]
+commit 3389c149c68c3fea61910ad5d34f7bf3bff44e32 upstream.
 
-If dcid is received for an already-assigned destination CID the spec
-requires that both channels to be discarded, but calling l2cap_chan_del
-may invalidate the tmp cursor created by list_for_each_entry_safe and
-in fact it is the wrong procedure as the chan->dcid may be assigned
-previously it really needs to be disconnected.
+svdm_consume_modes() checks pmdata->altmodes against the array size once
+before the loop over the count, but forgot to check the bound at every
+point in the loop.
 
-Calling l2cap_chan_clone directly may still lead to l2cap_chan_del so
-instead schedule l2cap_chan_timeout with delay 0 to close the channel
-asynchronously.
+In the well-behaved SVDM discovery flow this is harmless because each of
+at most SVID_DISCOVERY_MAX SVIDs contributes at most MODE_DISCOVERY_MAX
+modes, exactly filling altmode_desc[ALTMODE_DISCOVERY_MAX].  But the
+CMDT_RSP_ACK handler in tcpm_pd_svdm() does not correlate an incoming
+ACK with any request the port actually sent.  Once port->partner is set,
+an unsolicited Discover Modes ACK is consumed unconditionally.  A broken
+or malicious port partner can therefore drive altmodes to
+ALTMODE_DISCOVERY_MAX - 1 via the normal flow, and then send one extra
+Discover Modes ACK with seven VDOs.  Because the pre-loop check passes,
+the loop could then writes up to five entries past altmode_desc[].  For
+mode_data_prime the next field in struct tcpm_port is the
+partner_altmode[] pointer array, which then receives partner-chosen
+SVID/VDO bytes.
 
-Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Move the bound check inside the loop so the array can never be indexed
+past ALTMODE_DISCOVERY_MAX regardless of how many VDOs the partner
+supplies or how the function was reached.
+
+Assisted-by: gkh_clanker_t1000
+Cc: Badhri Jagan Sridharan <badhri@google.com>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/2026051351-reshuffle-skillful-90af@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c | 27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 9de5d545966d60..f0b0f347ebc10a 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -5194,6 +5194,7 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
- 	cmd_len -= sizeof(*rsp);
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -1845,23 +1845,19 @@ static void svdm_consume_modes(struct tc
+ 	switch (rx_sop_type) {
+ 	case TCPC_TX_SOP_PRIME:
+ 		pmdata = &port->mode_data_prime;
+-		if (pmdata->altmodes >= ARRAY_SIZE(port->plug_prime_altmode)) {
+-			/* Already logged in svdm_consume_svids() */
+-			return;
+-		}
+ 		break;
+ 	case TCPC_TX_SOP:
+ 		pmdata = &port->mode_data;
+-		if (pmdata->altmodes >= ARRAY_SIZE(port->partner_altmode)) {
+-			/* Already logged in svdm_consume_svids() */
+-			return;
+-		}
+ 		break;
+ 	default:
+ 		return;
+ 	}
  
- 	list_for_each_entry_safe(chan, tmp, &conn->chan_l, list) {
-+		struct l2cap_chan *orig;
- 		u16 dcid;
+ 	for (i = 1; i < cnt; i++) {
++		if (pmdata->altmodes >= ALTMODE_DISCOVERY_MAX) {
++			/* Already logged in svdm_consume_svids() */
++			return;
++		}
+ 		paltmode = &pmdata->altmode_desc[pmdata->altmodes];
+ 		memset(paltmode, 0, sizeof(*paltmode));
  
- 		if (chan->ident != cmd->ident ||
-@@ -5215,8 +5216,10 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
- 
- 		BT_DBG("dcid[%d] 0x%4.4x", i, dcid);
- 
-+		orig = __l2cap_get_chan_by_dcid(conn, dcid);
-+
- 		/* Check if dcid is already in use */
--		if (dcid && __l2cap_get_chan_by_dcid(conn, dcid)) {
-+		if (dcid && orig) {
- 			/* If a device receives a
- 			 * L2CAP_CREDIT_BASED_CONNECTION_RSP packet with an
- 			 * already-assigned Destination CID, then both the
-@@ -5225,10 +5228,24 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
- 			 */
- 			l2cap_chan_del(chan, ECONNREFUSED);
- 			l2cap_chan_unlock(chan);
--			chan = __l2cap_get_chan_by_dcid(conn, dcid);
--			l2cap_chan_lock(chan);
--			l2cap_chan_del(chan, ECONNRESET);
--			l2cap_chan_unlock(chan);
-+
-+			/* Check that the dcid channel mode is
-+			 * L2CAP_MODE_EXT_FLOWCTL since this procedure is only
-+			 * valid for that mode and shouldn't disconnect a dcid
-+			 * in other modes.
-+			 */
-+			if (orig->mode == L2CAP_MODE_EXT_FLOWCTL) {
-+				l2cap_chan_lock(orig);
-+				/* Disconnect the original channel as it may be
-+				 * considered connected since dcid has already
-+				 * been assigned; don't call l2cap_chan_close
-+				 * directly since that could lead to
-+				 * l2cap_chan_del and then removing the channel
-+				 * from the list while we're iterating over it.
-+				 */
-+				__set_chan_timer(orig, 0);
-+				l2cap_chan_unlock(orig);
-+			}
- 			continue;
- 		}
- 
--- 
-2.53.0
-
 
 
