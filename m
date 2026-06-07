@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709441FE47B;
-	Sun,  7 Jun 2026 10:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE312D3A69;
+	Sun,  7 Jun 2026 10:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828304; cv=none; b=Pk5nfQFXxMug8UN7ETwDzJBuxdxXYw+mu+fK9mzHzUnNDLCWZSr23dFmbAvEorNmaokjJeHVFtazUJbdKw+QPqjlOsBhCpb+UpQ5AyzK7A01GqOOarvjTemItlm1ioXaGaobMX48zjPffG2T67PzQuzfG6Do81v5jELGfBisMYI=
+	t=1780828308; cv=none; b=ggkeIwPMsxMbok5jc3JAWunz7LR0C5nBcOeWBUSBJpTEubtclbYReeKpqmPBa6evxTuCdpbjRpZ/Xai6kbPhIoHXyYNHfZ5z8xoc9fniBg0zJxk431PmaFUCCUfL0I8jHLegLoprvQRCu0KwkPZ+zGcaHwgYZgoJUIQZly2hmgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828304; c=relaxed/simple;
-	bh=jOwoi0R01enQSGjADRyCGon2XDtgEpV3VZGRIpACMjA=;
+	s=arc-20240116; t=1780828308; c=relaxed/simple;
+	bh=YzwnZZwrN7XqSRVqo2UkytGC76NZSw6zfjY3NtTaMf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bzXUvPyhsASXT/HdxKdXBzk5jtUvf80dVENYwg+APDHfpYNHzWrUtTeeThJq9lLMO1aZzx/2GbTIa2nrPhxc2Jt55KZCOYVGorf0+LHIVLHotAypneg9HP6CRqLy/FXVpx92FuBmKFGHkpuFtRA6btRUaUDj3mHg7oqUn42DIYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JUATxnJw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dK6SnlZb7Xk6cNPTUauWL7xst+Wvn7kUxNTPNjXgVjK7314RPHCXB48yfATicZcXdFuFQdQaoBd0T4c7ybuP6al19BthD0wpjuRcTT0Tvj3WSH6Y/xUzVg3gLoCJOjC3LyGPbce2AbZYoL3qvVE2bXebnk+R1Q+me396EEh1Jqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQMXk8c/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUATxnJw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A9341F00893;
-	Sun,  7 Jun 2026 10:31:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQMXk8c/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98F31F00893;
+	Sun,  7 Jun 2026 10:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828303;
-	bh=IE4FZ0LVpUQS+ksGW+rq3c8KbjO1r9FAB/nKhlk9GaA=;
+	s=korg; t=1780828307;
+	bh=92CVT4akYco+6UUajsKPPs83gHj6CvCdcoOZW45amqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JUATxnJwt8xiKc2bzaT7XgK08MRBQIsIJIBdhlIaJgYUSrBLgI7q2A67ypQwOs6co
-	 WrttJ4h4JepfiJ4SKVHm/eyB3upIjLQfwKjU2TAH/76Eg6uTXzZwlhoCDtqeK4PU3W
-	 CpAdsZwdLLJuQUTvRAzeUhvEOKxS7fedq9TfTEhk=
+	b=FQMXk8c/Rrhy/UyAQtikCiUX4Xn16K0ghw0K6nkqTExdDcjkvyHAbgNlmOmubDFdl
+	 S6eWlp4PnWnWkhoVKroa5vPThV4M4KLUhSP8QhW1ixYpyixE//YMpX9x5Ks2CRi8JZ
+	 cSnpBhsZ9OgqOc7yMGe0TqPT7vLb/5rbHmR8lyfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Michael Roth <michael.roth@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.18 148/315] KVM: SEV: Compute the correct max length of the in-GHCB scratch area
-Date: Sun,  7 Jun 2026 11:58:55 +0200
-Message-ID: <20260607095733.043452488@linuxfoundation.org>
+	Linus Walleij <linusw@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 7.0 171/332] gpio: shared: fix deadlock on shared proxys parent removal
+Date: Sun,  7 Jun 2026 11:59:00 +0200
+Message-ID: <20260607095734.340516710@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,105 +46,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 5867d7e202e09f037cefe77f7af4413c7c0fa088 upstream.
+commit a1b836607304f71051f9f9dcccf8b5097b86a1fb upstream.
 
-When setting the length of the GHCB scratch area, and the area is in the
-GHCB shared buffer, set the effective length of the scratch area to the max
-possible size given the start of the guest-provided pointer, and the end of
-the shared buffer.
+Commit 710abda58055 ("gpio: shared: call gpio_chip::of_xlate() if set")
+used the mutex embedded in struct gpio_shared_entry to protect the
+offset field which now can be modified after assignment. The critical
+section however is too wide and introduced a potential deadlock on the
+removal of the shared GPIO proxy's parent.
 
-The code was "fine" when first introduced, as KVM doesn't consult the
-length of the buffer when emulating MMIO, because the passed in @len always
-specifies the *max* size required.  But for PSC requests, the incoming @len
-is just the minimum length (to process the header), and KVM needs to know
-the full size of the scratch area to avoid buffer overflows (spoiler alert).
+Make the critical section shorter - only protect the offset when it's
+being read.
 
-Opportunistically rename @len => @min_len to better reflect its role.
+While at it: mention the fact that the entry lock is now also used to
+protect against concurrent access to the offset field in the structure's
+documentation.
 
-Fixes: 9b54e248d264 ("KVM: SEV: Add support to handle Page State Change VMGEXIT")
 Cc: stable@vger.kernel.org
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Reviewed-by: Michael Roth <michael.roth@amd.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260501202250.2115252-7-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: 710abda58055 ("gpio: shared: call gpio_chip::of_xlate() if set")
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260522-gpio-shared-deadlock-v1-1-76bca088f8c0@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |   19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/gpio/gpiolib-shared.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -3610,7 +3610,7 @@ int pre_sev_run(struct vcpu_svm *svm, in
- }
+diff --git a/drivers/gpio/gpiolib-shared.c b/drivers/gpio/gpiolib-shared.c
+index e02d6b93a4ab..087b64c06c9f 100644
+--- a/drivers/gpio/gpiolib-shared.c
++++ b/drivers/gpio/gpiolib-shared.c
+@@ -53,7 +53,7 @@ struct gpio_shared_entry {
+ 	unsigned int offset;
+ 	/* Index in the property value array. */
+ 	size_t index;
+-	/* Synchronizes the modification of shared_desc. */
++	/* Synchronizes the modification of shared_desc and offset. */
+ 	struct mutex lock;
+ 	struct gpio_shared_desc *shared_desc;
+ 	struct kref ref;
+@@ -598,12 +598,11 @@ void gpio_device_teardown_shared(struct gpio_device *gdev)
+ 	struct gpio_shared_ref *ref;
  
- #define GHCB_SCRATCH_AREA_LIMIT		(16ULL * PAGE_SIZE)
--static int setup_vmgexit_scratch(struct vcpu_svm *svm, bool sync, u64 len)
-+static int setup_vmgexit_scratch(struct vcpu_svm *svm, bool sync, u64 min_len)
- {
- 	struct vmcb_control_area *control = &svm->vmcb->control;
- 	u64 ghcb_scratch_beg, ghcb_scratch_end;
-@@ -3626,10 +3626,10 @@ static int setup_vmgexit_scratch(struct
- 		goto e_scratch;
- 	}
- 
--	scratch_gpa_end = scratch_gpa_beg + len;
-+	scratch_gpa_end = scratch_gpa_beg + min_len;
- 	if (scratch_gpa_end < scratch_gpa_beg) {
- 		pr_err("vmgexit: scratch length (%#llx) not valid for scratch address (%#llx)\n",
--		       len, scratch_gpa_beg);
-+		       min_len, scratch_gpa_beg);
- 		goto e_scratch;
- 	}
- 
-@@ -3653,6 +3653,8 @@ static int setup_vmgexit_scratch(struct
- 
- 		scratch_va = (void *)svm->sev_es.ghcb;
- 		scratch_va += (scratch_gpa_beg - control->ghcb_gpa);
-+
-+		svm->sev_es.ghcb_sa_len = ghcb_scratch_end - scratch_gpa_beg;
- 	} else {
- 		/* GHCB v2 requires the scratch area to be within the GHCB. */
- 		if (to_kvm_sev_info(svm->vcpu.kvm)->ghcb_version >= 2)
-@@ -3662,16 +3664,16 @@ static int setup_vmgexit_scratch(struct
- 		 * The guest memory must be read into a kernel buffer, so
- 		 * limit the size
- 		 */
--		if (len > GHCB_SCRATCH_AREA_LIMIT) {
-+		if (min_len > GHCB_SCRATCH_AREA_LIMIT) {
- 			pr_err("vmgexit: scratch area exceeds KVM limits (%#llx requested, %#llx limit)\n",
--			       len, GHCB_SCRATCH_AREA_LIMIT);
-+			       min_len, GHCB_SCRATCH_AREA_LIMIT);
- 			goto e_scratch;
- 		}
--		scratch_va = kvzalloc(len, GFP_KERNEL_ACCOUNT);
-+		scratch_va = kvzalloc(min_len, GFP_KERNEL_ACCOUNT);
- 		if (!scratch_va)
- 			return -ENOMEM;
- 
--		if (kvm_read_guest(svm->vcpu.kvm, scratch_gpa_beg, scratch_va, len)) {
-+		if (kvm_read_guest(svm->vcpu.kvm, scratch_gpa_beg, scratch_va, min_len)) {
- 			/* Unable to copy scratch area from guest */
- 			pr_err("vmgexit: kvm_read_guest for scratch area failed\n");
- 
-@@ -3687,11 +3689,10 @@ static int setup_vmgexit_scratch(struct
- 		 */
- 		svm->sev_es.ghcb_sa_sync = sync;
- 		svm->sev_es.ghcb_sa_free = true;
-+		svm->sev_es.ghcb_sa_len = min_len;
- 	}
- 
- 	svm->sev_es.ghcb_sa = scratch_va;
--	svm->sev_es.ghcb_sa_len = len;
+ 	list_for_each_entry(entry, &gpio_shared_list, list) {
+-		guard(mutex)(&entry->lock);
 -
- 	return 0;
+ 		if (!device_match_fwnode(&gdev->dev, entry->fwnode))
+ 			continue;
  
- e_scratch:
+-		gpiod_free_commit(&gdev->descs[entry->offset]);
++		scoped_guard(mutex, &entry->lock)
++			gpiod_free_commit(&gdev->descs[entry->offset]);
+ 
+ 		list_for_each_entry(ref, &entry->refs, list) {
+ 			guard(mutex)(&ref->lock);
+-- 
+2.54.0
+
 
 
