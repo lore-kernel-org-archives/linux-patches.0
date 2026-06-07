@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D82308F38;
-	Sun,  7 Jun 2026 10:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E84296BCC;
+	Sun,  7 Jun 2026 10:46:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829212; cv=none; b=q2yaS8Cpfs+FzP5icXzLw7bx0UGrVBgdaTSquUgXtPv6zk26iFx1Bnyb3rb52z+wHg0wa9vr4dOvs/6Wuk1y9Pwmj4Ha9sJsTkSNYcye3Zavru6eKTUYjOMt/nQBA2a+kZdy6YRjWYAX7Z+t9okkamkQW+AXbsKuFPpg5hsez0k=
+	t=1780829216; cv=none; b=Phniw0j7YFNdmd4SLzw1ToOpd4KP+UDDU9hVeB3CGYuoA50Y6autGvYYbv+95bjZ9dv8qHpUuaD5vorjSVEutfB5pwmYbzV3z7Nb/F8zMl6iCh2umMb5yXsapiDSUnGUSbpOlSzTE+9mA5Gq4yjQ7hKMkGB51RYGdzKVTVGlOsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829212; c=relaxed/simple;
-	bh=6XkvGIlmfgbVCBZf5ICHrw6RXgzMWDxdP7nH0X/pV64=;
+	s=arc-20240116; t=1780829216; c=relaxed/simple;
+	bh=qk0/Qc0bjqkRSQe4rZC3nONr5Kr6gEKRYqmvfXhwDeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oQXQkDeeSJzMvytAFn6IT3164mBr5FAD22jYChPZLTs9z0FfS40cH3Ljw1OkzK7+4/9RMWt3rJVwyiQli8qUaqKUvA5lyHYO8eTtagvefiL8rUs8VfytT2tFjIho+zUUgImsbyBi9japgBjqBMyaiLExC1GuvbzG54GkNAaFHz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQMM5Aak; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MMKXoVopI0RwbubJcl/fTVOjLU8Xsu6QNzACnSNA66hEv0DCxuqv6n/5RUoqqjNidp1iaeqDF5fAM3FjMiCN9iHU/NeC/futgs4AizHwUsz7OyNbkx07UyOLaISttilSj7IjoErq/jdjn3bs/ahf1DMRPRnrvnTxV/rFyBjThjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDWOEDfk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQMM5Aak"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13BE01F00893;
-	Sun,  7 Jun 2026 10:46:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDWOEDfk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5592C1F00893;
+	Sun,  7 Jun 2026 10:46:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829211;
-	bh=hDxrcmwxqrS1vBNC/lY2F4tPN366poFrHV09BeTCACs=;
+	s=korg; t=1780829214;
+	bh=88wAtQ4im6RvnYVgKe6LQMPK6qTmcqIjqsWLlfTLudc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UQMM5Aak4pobilialBiPe8IDM79VCRzTQnBCzVMdIm6/PyQtG2exxc7Kl/mrUK3bM
-	 3S8Dk9Yz2H/y7NOrKZtY5RhaczGsSxrh6HYQR5u66Yab+Eyk+9iuw+5HK4X1zeATta
-	 Six875azBlJkLtppa9o92XHCvdrfqF6pwa0NZi5Y=
+	b=sDWOEDfklgCuX0DlZI2lvavZ2QeRHk6aqAM29vsV+jlVLjPeAZrN/bsF7Pa1Rzoil
+	 lZVuqQlEoU5DxAVhc5x/hfOKAERFjWJjRBGO56Q6IptfvwqmVItLL/MgVlNCMbA6bb
+	 i1b0dAopVuIKnVpMqFHrnB6/AG4mp5eUs9iBfze0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Wentao Liang <vulab@iscas.ac.cn>
-Subject: [PATCH 7.0 254/332] usb: musb: omap2430: Fix use-after-free in omap2430_probe()
-Date: Sun,  7 Jun 2026 12:00:23 +0200
-Message-ID: <20260607095737.376034073@linuxfoundation.org>
+	Sam Burkels <sam@1a38.nl>,
+	Oliver Neukum <oneukum@suse.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.18 226/315] usb: storage: Add quirks for PNY Elite Portable SSD
+Date: Sun,  7 Jun 2026 12:00:13 +0200
+Message-ID: <20260607095735.875496016@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,53 +47,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Sam Burkels <sam@1a38.nl>
 
-commit e194ce048f5a6c549b3a23a8c568c6470f40f772 upstream.
+commit b53ebb811e00be50a779ce4e7aee604178b4a825 upstream.
 
-In omap2430_probe(), of_node_put(np) is called prematurely before the
-last access to np, leading to a use-after-free if the node's reference
-count drops to zero. Move the of_node_put() calls after the last use of
-np in both the success and error paths.
+The PNY Elite Portable SSD (USB ID 154b:f009) is a sibling of the
+already-quirked PNY Pro Elite SSDs (154b:f00b and 154b:f00d). Like its
+siblings, it uses a Phison-based USB-SATA bridge that exhibits
+firmware bugs when bound to the uas driver.
 
-Fixes: ffbe2feac59b ("usb: musb: omap2430: Fix probe regression for missing resources")
+Without quirks, the device fails to complete READ CAPACITY commands
+when accessed over UAS on a SuperSpeed (USB 3) port. The device
+enumerates and reports as a SCSI direct-access device, but reports
+zero logical blocks and never finishes spin-up:
+
+    usb 2-3: new SuperSpeed USB device number 8 using xhci_hcd
+    usb 2-3: New USB device found, idVendor=154b, idProduct=f009
+    usb 2-3: Product: PNY ELITE PSSD
+    usb 2-3: Manufacturer: PNY
+    scsi host0: uas
+    scsi 0:0:0:0: Direct-Access     PNY      PNY ELITE PSSD   0
+    sd 0:0:0:0: [sda] Spinning up disk...
+    [...10+ seconds of polling, no progress...]
+    sd 0:0:0:0: [sda] Read Capacity(16) failed: hostbyte=DID_ERROR
+    sd 0:0:0:0: [sda] Read Capacity(10) failed: hostbyte=DID_ERROR
+    sd 0:0:0:0: [sda] 0 512-byte logical blocks: (0 B/0 B)
+
+Tested each individual quirk to find the minimum that fixes this:
+  - US_FL_NO_ATA_1X alone: device hangs on spin-up
+  - US_FL_NO_REPORT_OPCODES alone: works on USB 2.0, hangs on USB 3.0
+  - US_FL_NO_ATA_1X | US_FL_NO_REPORT_OPCODES: works on both
+
+With both quirks the device enumerates correctly while still using
+the uas driver, and delivers full UAS throughput (~281 MB/s
+sequential read on a USB 3.0 Gen 1 port).
+
+The existing PNY Pro Elite entries (f00b, f00d) only set NO_ATA_1X,
+but this device additionally chokes on REPORT OPCODES under
+SuperSpeed.
+
+Signed-off-by: Sam Burkels <sam@1a38.nl>
+Acked-by: Oliver Neukum <oneukum@suse.com>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260409101104.480623-1-vulab@iscas.ac.cn
+Link: https://patch.msgid.link/20260501132346.86572-1-sam@1a38.nl
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/musb/omap2430.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/storage/unusual_uas.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/usb/musb/omap2430.c
-+++ b/drivers/usb/musb/omap2430.c
-@@ -337,7 +337,6 @@ static int omap2430_probe(struct platfor
- 	} else {
- 		device_set_of_node_from_dev(&musb->dev, &pdev->dev);
- 	}
--	of_node_put(np);
+--- a/drivers/usb/storage/unusual_uas.h
++++ b/drivers/usb/storage/unusual_uas.h
+@@ -132,6 +132,13 @@ UNUSUAL_DEV(0x152d, 0x0583, 0x0000, 0x99
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_NO_REPORT_OPCODES),
  
- 	glue->dev			= &pdev->dev;
- 	glue->musb			= musb;
-@@ -455,6 +454,7 @@ static int omap2430_probe(struct platfor
- 		dev_err(&pdev->dev, "failed to register musb device\n");
- 		goto err_disable_rpm;
- 	}
-+	of_node_put(np);
- 
- 	return 0;
- 
-@@ -464,6 +464,7 @@ err_put_control_otghs:
- 	if (!IS_ERR(glue->control_otghs))
- 		put_device(glue->control_otghs);
- err_put_musb:
-+	of_node_put(np);
- 	platform_device_put(musb);
- 
- 	return ret;
++/* Reported-by: Sam Burkels <sam@1a38.nl> */
++UNUSUAL_DEV(0x154b, 0xf009, 0x0000, 0x9999,
++		"PNY",
++		"PNY ELITE PSSD",
++		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
++		US_FL_NO_ATA_1X | US_FL_NO_REPORT_OPCODES),
++
+ /* Reported-by: Thinh Nguyen <thinhn@synopsys.com> */
+ UNUSUAL_DEV(0x154b, 0xf00b, 0x0000, 0x9999,
+ 		"PNY",
 
 
