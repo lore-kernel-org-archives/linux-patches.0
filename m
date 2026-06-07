@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A023A212564;
-	Sun,  7 Jun 2026 10:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952E7212564;
+	Sun,  7 Jun 2026 10:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828759; cv=none; b=o3bOpiWNH4q/ElKif27UmIT+5A9WFW/KZO4D5aAii3nZY7jz5ha3XYyWWQntXpUFuA7jRI0f/0pNl5glYKPJ4txZGiwFaf19Ad/eMeQamF4/JREKQkEqN2MhVtA+tKMMdlZrRgHzvRu8V6VscF9PYpaHOBjWAfl5x4jI/qkj/3Y=
+	t=1780828763; cv=none; b=GFTYWKHezSpTrb/rySW4+BRP+z4KwqV48QA0XDAXcKLLKlj/LTRIApPw7poln4EEXqRiU9tI/obJMimhdp0VLKJ8qMopRgwBWg9PBxq3Kdq5ef9AVfCzrWIZB1zDcsHTUBNxGAVZrwcLVTbumo8z6f9BYo93bObZMvnqmEAenpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828759; c=relaxed/simple;
-	bh=F2PQ7SRML4egY9v1teQGMsaipWQ8lIC5M0guJ7Jmseg=;
+	s=arc-20240116; t=1780828763; c=relaxed/simple;
+	bh=JF+cXNKAHCX/YahfjfRxv8K/HjPhOqmSMTMeNzzGXIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AYJvRHWUi588uCK2F7SoDsAaegKMJvVLR+CpBMbxwEogWtYb1jwXsR46YsbAmTePGvcmrU5NH3b7x5oRlJ617KDSpCnrnN827dytjLixd9tnROtfBnLPdOyzvEgnvkSNE/bC562aSDD2TiX78BaZGyLHTKLbRfYnLBRxb1PMvSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PuhELuvp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WD7PB/lJNOTIgxt0N5sP399n48JxxQJlgkxzilPZIi7EpC7nFitj4ZXPCF1+qTi/brxs4CxAgschNove99wsMTqgV42ZbEGvkRdG7YMsJg7uSP+sW/Pu7wlR0klltQtdaJ4oOJxaFVEsQU5o26GzlTrMjF8JOUlJsSVM+bCXRI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9vNYr90; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PuhELuvp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F20751F00893;
-	Sun,  7 Jun 2026 10:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9vNYr90"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D67E11F00893;
+	Sun,  7 Jun 2026 10:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828758;
-	bh=i2fQr/RuZBgGOlvHIrAsBb8Npkv1bG/lxiPWZRhzfs4=;
+	s=korg; t=1780828762;
+	bh=cEzTWsnFBGObOg2Asbr4JHOuDW3mRkoyTgyFFB1/jl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PuhELuvp2TM2lfbzYPhyi8jAOIfVuFKHzdHDJv+wE5mKL5RjWrvcvF3oeBXehPMLP
-	 eZZeW7hlrQkD2vPwRhYRBbCL4npOtlldI7AS56FkUUWY+ao/20sEmLln7Lm3nhm7bc
-	 6sO4rtG2k7cm/oNM2raJ4QcFjeg/6tPzPD4HABvg=
+	b=p9vNYr90gfWAzPiYVGwR0pkWrev9JZTN2qIKTFjj0TfR7RLkzOWk8YLhhEF7VpWpj
+	 T6Awd2Evsq6kWVVqCp1QqcYF3GLzFZDYGPKmiYtqlNOY4gl0Sv24C/cymiUyW665mn
+	 yu6bkdPKL6fMg9tdW1qb5qCa5RGcEmjwnyJuDPaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Farhad Alemi <farhad.alemi@berkeley.edu>
-Subject: [PATCH 6.12 140/307] hpfs: fix a crash if hpfs_map_dnode_bitmap fails
-Date: Sun,  7 Jun 2026 11:58:57 +0200
-Message-ID: <20260607095732.872941711@linuxfoundation.org>
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.18 165/315] iio: gyro: adis16260: fix division by zero in write_raw
+Date: Sun,  7 Jun 2026 11:59:12 +0200
+Message-ID: <20260607095733.654115017@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,38 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-commit 974820a59efde7c1a7e1260bcfe9bb81f833cc9f upstream.
+commit 761e8b489e6cf166c574034b70637f8a7eadd0ee upstream.
 
-If hpfs_map_dnode_bitmap fails, the code would call hpfs_brelse4 on
-uninitialized quad buffer head, causing a crash.
+Add a validation check for the sampling frequency value before using it
+as a divisor. A user writing zero to the sampling_frequency sysfs
+attribute triggers a division by zero in the kernel.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
-Cc: stable@vger.kernel.org
+Fixes: 089a41985c6c ("staging: iio: adis16260 digital gyro driver")
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hpfs/alloc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/gyro/adis16260.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/hpfs/alloc.c
-+++ b/fs/hpfs/alloc.c
-@@ -372,8 +372,8 @@ int hpfs_check_free_dnodes(struct super_
- 				return 0;
- 			}
- 		}
-+		hpfs_brelse4(&qbh);
- 	}
--	hpfs_brelse4(&qbh);
- 	i = 0;
- 	if (hpfs_sb(s)->sb_c_bitmap != -1) {
- 		bmp = hpfs_map_bitmap(s, b, &qbh, "chkdn1");
+--- a/drivers/iio/gyro/adis16260.c
++++ b/drivers/iio/gyro/adis16260.c
+@@ -287,6 +287,9 @@ static int adis16260_write_raw(struct ii
+ 		addr = adis16260_addresses[chan->scan_index][1];
+ 		return adis_write_reg_16(adis, addr, val);
+ 	case IIO_CHAN_INFO_SAMP_FREQ:
++		if (val <= 0)
++			return -EINVAL;
++
+ 		if (spi_get_device_id(adis->spi)->driver_data)
+ 			t = 256 / val;
+ 		else
 
 
