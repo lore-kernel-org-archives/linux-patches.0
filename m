@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AACD257855;
-	Sun,  7 Jun 2026 10:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D79131E849;
+	Sun,  7 Jun 2026 10:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828566; cv=none; b=gXu2XCzjlcuDYBiGpr9w91bOlIu/mEBkqxZ76ErTt6pyrjNQDFafloWEIjfA/+urSKecYbuNnFuMyX4ca35G+WGhgIBNVLqh1k++iAIDMw+noeLt+1DyTUwsoah7XgLRfZZiMMAMuUAGA75ArH5EupNsVNYMCR20O0jbo5iJjdw=
+	t=1780828570; cv=none; b=LPZAuDFwU5GtLP0iH33m0dS86ZJl5i5+mR0r54cMlI4FymelCah3RJU57ZKVIdT1Hlq7buzcRpoTV8yzQVzVlrw4jEV6vVV1bQce+U1t9rUpXI0QBcpEobiKKYa6pykaJLS75SFYwi5d+6mVkPrw2QP2X9GWj8DTj0gZ5Y1o8MY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828566; c=relaxed/simple;
-	bh=LzQYmfzcpFQOREB+wJwd4DJecvcV2G1LZs+bYPfZ708=;
+	s=arc-20240116; t=1780828570; c=relaxed/simple;
+	bh=6ssaO0uIK5O/bkqAq3ZOv4SzyBlZDevqhZBTdIOEpnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WoNexvdS0tSisOWnc3T0GFMJkw3grPSSRDsWcWS3ZTyFIJbo/sIk5ai+/kg5E0ySLoknaptrh3f1nzk9jRhB1Lj9+4NYJ142ek9Sm3edDOxgd3IOl/POvjHBXj8bV8JDBC0Q26c8NXxvAtJfh+6U7u68GR7S1A76Kmqi0zeOpTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2u5wzeo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hx6TCpRUUq/DJnvaSWLZh3og+MUIVI9+o6q8apoHZnbZs0MhbcVDVMrNNouTymQoFwAHt5TTo112cX1SGE2sRfRHwJ0oAp9BDVj6mVFCyT14ipHY4kS0gvrTj+tLGqwNC+YQkcKzY4OfgkQQCvyvfl94kMNQdBgTUdhzjczRN5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjcZBOqx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2u5wzeo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183D31F00893;
-	Sun,  7 Jun 2026 10:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjcZBOqx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F871F00893;
+	Sun,  7 Jun 2026 10:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828565;
-	bh=d5isgzkup+7Tvob8MY0TDm5RXTTRWhNzOc2npVtVnPU=;
+	s=korg; t=1780828569;
+	bh=O7jtCPnUufsNbuNhql9l3/F8TQHwLXN5vaj9Z8buGO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E2u5wzeogWe2oZ4uUxEqKB0Mpz3qY8sCEOZ+Zw6AZM+t4yuN+lKZqA1fXfhFOxgId
-	 n5IfbtgdrTCsLN7jUqPjNbxsG5e8bx3GIy1wKdpAt3k/HunMy7GQ2eJWROxWbN8PUV
-	 l8qR39qMdV+QUfnqyuV7tUBx/EzNMmaUF2lXNsvo=
+	b=EjcZBOqxUHQWdyjcwfJWmv5tPfzhKc28k4JnoapkTjHGIPhdIWjeuNKMyMfbUveJz
+	 dwHM06Z38Ikkt+NS5mfSvEbzCoxBuXOJkYn96K3lQEftA0GDqCgGhZJQrTnUQex4k3
+	 gObLFc5xuKFuk6KVnEwoIzR1J/BDNLNAUeqxa7+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 148/307] Bluetooth: hci_sync: fix UAF in hci_le_create_cis_sync
-Date: Sun,  7 Jun 2026 11:59:05 +0200
-Message-ID: <20260607095733.162649272@linuxfoundation.org>
+	Aldo Conte <aldocontelk@gmail.com>,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 6.18 173/315] iio: light: cm3323: fix reg_conf not being initialized correctly
+Date: Sun,  7 Jun 2026 11:59:20 +0200
+Message-ID: <20260607095733.940965929@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,80 +46,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Aldo Conte <aldocontelk@gmail.com>
 
-commit bfea6091e0fffb270c20e74384b660910277eb6c upstream.
+commit 1f4f0bcc5255dec5c4c3a1551bf49d8c33b69b20 upstream.
 
-hci_le_create_cis_sync() dereferences conn->conn_timeout after releasing
-both rcu_read_lock() and hci_dev_lock(hdev).  The conn pointer was
-obtained from an RCU-protected iteration over hdev->conn_hash.list and
-is not valid once these locks are dropped.  A concurrent disconnect can
-free the hci_conn between the unlock and the dereference, causing a
-use-after-free read.
+The code stores the return value of i2c_smbus_write_word_data()
+in data->reg_conf; however, this value represents the result
+of the write operation and not the value actually written to
+the configuration register. This meant that the contents of
+data->reg_conf did not truly reflect the contents
+of the hardware register.
 
-The cancellation mechanism in hci_conn_del() cannot prevent this because
-hci_le_create_cis_pending() queues hci_create_cis_sync with data=NULL:
+Instead, save the value of the register before the write
+and use this value in the I2C write.
 
-    hci_cmd_sync_queue(hdev, hci_create_cis_sync, NULL, NULL);
+The bug was found by code inspection: i2c_smbus_write_word_data()
+returns 0 on success, not the value written to the register.
 
-While hci_conn_del() dequeues with data=conn:
+Tested using i2c-stub on a Raspberry Pi 3B running a custom 6.19.10
+kernel. Before loading the driver, the configuration register 0x00
+CM3323_CMD_CONF was populated with 0x0030 using
+`i2cset -y 11 0x10 0x00 0x0030 w`, encoding an integration time of 320ms
+in bits[6:4].
 
-    hci_cmd_sync_dequeue(hdev, NULL, conn, NULL);
+Due to incorrect initialization of data->reg_conf in
+cm3323_init(), the print of integration_time returns 0.040000
+instead of the expected 0.320000. This happens because the read of the
+integration_time depends on cm3323_get_it_bits() that is based on the
+value of data->reg_conf, which is erroneously set to 0.
 
-Since NULL != conn, the lookup in _hci_cmd_sync_lookup_entry() never
-matches, and the pending work item is not cancelled.
+With this fix applied, data->reg_conf correctly saves 0x0030 after init
+and the successive integration_time reports 0.320000 as expected.
 
-Fix this by saving conn->conn_timeout into a local variable while the
-locks are still held, so the stale conn pointer is never dereferenced
-after unlock.
-
-This is the same class of bug as the one fixed by commit 035c25007c9e
-("Bluetooth: hci_sync: Fix UAF on le_read_features_complete") which
-addressed the identical pattern in a different function.
-
-This vulnerability was identified using 0sec.ai, an open-source
-automated security auditing platform (https://github.com/0sec-labs).
-
-Fixes: c09b80be6ffc ("Bluetooth: hci_conn: Fix not waiting for HCI_EVT_LE_CIS_ESTABLISHED")
+Fixes: 8b0544263761 ("iio: light: Add support for Capella CM3323 color sensor")
 Cc: stable@vger.kernel.org
-Reported-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Aldo Conte <aldocontelk@gmail.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/iio/light/cm3323.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -6626,6 +6626,7 @@ int hci_le_create_cis_sync(struct hci_de
- 	DEFINE_FLEX(struct hci_cp_le_create_cis, cmd, cis, num_cis, 0x1f);
- 	size_t aux_num_cis = 0;
- 	struct hci_conn *conn;
-+	u16 timeout = 0;
- 	u8 cig = BT_ISO_QOS_CIG_UNSET;
+--- a/drivers/iio/light/cm3323.c
++++ b/drivers/iio/light/cm3323.c
+@@ -89,15 +89,14 @@ static int cm3323_init(struct iio_dev *i
  
- 	/* The spec allows only one pending LE Create CIS command at a time. If
-@@ -6696,6 +6697,7 @@ int hci_le_create_cis_sync(struct hci_de
- 		set_bit(HCI_CONN_CREATE_CIS, &conn->flags);
- 		cis->acl_handle = cpu_to_le16(conn->parent->handle);
- 		cis->cis_handle = cpu_to_le16(conn->handle);
-+		timeout = conn->conn_timeout;
- 		aux_num_cis++;
+ 	/* enable sensor and set auto force mode */
+ 	ret &= ~(CM3323_CONF_SD_BIT | CM3323_CONF_AF_BIT);
++	data->reg_conf = ret;
  
- 		if (aux_num_cis >= cmd->num_cis)
-@@ -6715,7 +6717,7 @@ done:
- 	return __hci_cmd_sync_status_sk(hdev, HCI_OP_LE_CREATE_CIS,
- 					struct_size(cmd, cis, cmd->num_cis),
- 					cmd, HCI_EVT_LE_CIS_ESTABLISHED,
--					conn->conn_timeout, NULL);
-+					timeout, NULL);
+-	ret = i2c_smbus_write_word_data(data->client, CM3323_CMD_CONF, ret);
++	ret = i2c_smbus_write_word_data(data->client, CM3323_CMD_CONF, data->reg_conf);
+ 	if (ret < 0) {
+ 		dev_err(&data->client->dev, "Error writing reg_conf\n");
+ 		return ret;
+ 	}
+ 
+-	data->reg_conf = ret;
+-
+ 	return 0;
  }
  
- int hci_le_remove_cig_sync(struct hci_dev *hdev, u8 handle)
 
 
