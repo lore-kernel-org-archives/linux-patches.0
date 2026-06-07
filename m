@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC181303CAE;
-	Sun,  7 Jun 2026 10:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB871E98EF;
+	Sun,  7 Jun 2026 10:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827127; cv=none; b=Dcym/x9Fg5Ci9ybimFLVhAj+BHpl/DKDyFU39Jov6ZKmEo262qRqYrC87c7bmQ80uum9DtUZKBuLjsQaaBIzTfgmKO82FSvyXLdSPkfBmFquGXxt23UZPqC4JbBWx9M/sz6bqO0O7ZfbtO2Cvd/+BagwvlPfNxN4tqpQqgVjEaE=
+	t=1780827131; cv=none; b=MyTttEsSWi2rCS2a+5EW45+HZzcqm0sYOlFn0ArLeWPQQzocC/zph1dXJCjXaAV6bGyH/qxi0pb7N9aNUnDMsuJFM1JSD9crn+jqKdVhpWNap2bf5n9a950H519YmH9VT/q84CBKr4cglNLNqDKJjmuanvv704XrHFM7cyz1V1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827127; c=relaxed/simple;
-	bh=4qVVScQMlBHclMKvxdeVjxvr/SuTK4wtJbf/ll4EoLg=;
+	s=arc-20240116; t=1780827131; c=relaxed/simple;
+	bh=9jYXHqhqk23B2JQqQW0TcpivhUDm//G1Kxqgu01h98Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sIOMPOlZtstqIBEVS5cZcKh9VdcBCdqAQd5DiBKo4Y83IfxrUAXNMuZ3jUDih0okl9zljrqFXzUDxSkVmhzbGu6uTnLmtlEhxaPnCRlzfJ4wuwjNzBqv3CX8So4eqmBCb7B0gHAJj5/v7d64JMiJGveQiavh2jV18n7jymS574w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXgQa2F4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hp7rYcukR4sIq1Dns96dEWv4sA0pAulWvB9AHPJwHP98H36FW+fmL5Jelbub8n176DGrRY6IIXXJOw4HuYmY1LikXCEflrBzhUruU3WTL53ShARxBdTF8rOInVJHKZGS/1qtmFNKFq2sYHNJ3YIic7U4kArDeaudvo+IzxZa+CA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pgdO4wtK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXgQa2F4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAC91F00893;
-	Sun,  7 Jun 2026 10:12:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pgdO4wtK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002811F00893;
+	Sun,  7 Jun 2026 10:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827126;
-	bh=eS9+2mBHusBQwx1ZlRm7kP1IX8b1OvC6O5DkbQrpxSA=;
+	s=korg; t=1780827129;
+	bh=C0FOKE5PX2uFz0B1Jw4Zri+ICJbhssY0H17s/HfdsUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WXgQa2F4UZMGgnLxm0gI/+qSwRiu9a67B1b2BuT1gk2Qp5s26F7/qbf05SV+P0Hg4
-	 IaJBOBv0OsvlAeadZqZDCXyGv8MibIwXBhwBw6B3RypmbEGj5vwGS7cALWJ2IKJFGw
-	 ANoxm99txLd8u+UBO8SaYeU0tSqyJ4C3V3+ud93o=
+	b=pgdO4wtKuWqhT5tcwT/rcN/O6erjEy4fMCd5i9sBVfjEyjrni3w3fbphGjsCc1B5L
+	 /5w5H94a1SB03+UqQgtsB2HjBuHpiWD/w7/DTNE4VkPjPwTjLkLd7UPc9SHTGMYRub
+	 RrjDnihHFHwi/HRRcgHz2RQd/Pwgplot6AHoHp/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+8ed98cbd0161632bce95@syzkaller.appspotmail.com,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Jay Vosburgh <jv@jvosburgh.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 042/315] ethtool: rss: fix hkey leak when indir_size is 0
-Date: Sun,  7 Jun 2026 11:57:09 +0200
-Message-ID: <20260607095729.106435913@linuxfoundation.org>
+Subject: [PATCH 7.0 065/332] bonding: refuse to enslave CAN devices
+Date: Sun,  7 Jun 2026 11:57:14 +0200
+Message-ID: <20260607095730.521630721@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,49 +49,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 78ccf1a70c6378e1f5073a8c2209b5129067b925 ]
+[ Upstream commit 8ba68464e4787b6a7ec938826e16124df20fd23d ]
 
-rss_get_data_alloc() allocates a single buffer that backs both the
-indirection table and the hash key, but only assigned data->indir_table
-when indir_size was nonzero. The expectation was that no driver
-implements RSS without supporting indirection table but apparently
-enic does just that (it's the only such in-tree driver).
-enic has get_rxfh_key_size but no get_rxfh_indir_size.
-data->indir_table stays as NULL, hkey gets set but rss_get_data_free()
-kfree(data->indir_table) is a nop and the allocation leaks.
+syzbot reported a kernel paging request crash in
+can_rx_unregister() inside net/can/af_can.c. The crash occurs
+because a virtual CAN device (vxcan) is being enslaved to a
+bonding master.
 
-Always store the allocation base in data->indir_table so the free path
-is unambiguous. No caller treats indir_table as a sentinel; everything
-keys off indir_size.
+During the enslavement process, the bonding driver mutates
+and modifies the network device states to fit an Ethernet-like
+aggregation model. However, CAN devices operate on a completely
+different Layer 2 architecture, relying on the CAN mid-layer
+private data structure (can_ml_priv) instead of standard
+Ethernet structures. Since bonding does not initialize or
+maintain these CAN structures, subsequent operations on the
+half-enslaved interface (such as closing associated sockets
+via isotp_release) lead to a null-pointer dereference when
+accessing the CAN receiver lists.
 
-Fixes: 7112a04664bf ("ethtool: add netlink based get rss support")
-Link: https://patch.msgid.link/20260522230647.1705600-6-kuba@kernel.org
+Bonding CAN interfaces is architecturally invalid as CAN lacks
+MAC addresses, ARP capabilities, and standard Ethernet
+link-layer mechanisms. While generic loopback devices are
+blocked globally in net/core/dev.c, virtual CAN devices
+bypass this check because they do not carry the IFF_LOOPBACK
+flag, despite acting as local software-loopbacks.
+
+Fix this by explicitly blocking network devices of type
+ARPHRD_CAN from being enslaved at the very beginning of
+bond_enslave(). This prevents illegal state mutations,
+eliminates the resulting KASAN crashes, and avoids potential
+memory leaks from incomplete socket cleanups.
+
+As the CAN support has been added a long time after bonding
+the Fixes-tag points to the introduction of ARPHRD_CAN that
+would have needed a specific handling in bonding_main.c.
+
+Fixes: cd05acfe65ed ("[CAN]: Allocate protocol numbers for PF_CAN")
+Reported-by: syzbot+8ed98cbd0161632bce95@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=8ed98cbd0161632bce95
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Link: https://patch.msgid.link/20260526-bonding-candev-v1-1-ba1df400918a@hartkopp.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/rss.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/bonding/bond_main.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/ethtool/rss.c b/net/ethtool/rss.c
-index 5416aec13b7fe7..f745ddec6fbab8 100644
---- a/net/ethtool/rss.c
-+++ b/net/ethtool/rss.c
-@@ -132,8 +132,7 @@ rss_get_data_alloc(struct net_device *dev, struct rss_reply_data *data)
- 	if (!rss_config)
- 		return -ENOMEM;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index eb49ce486992de..d6a1e814878f28 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1892,6 +1892,12 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
+ 	struct sockaddr_storage ss;
+ 	int res = 0, i;
  
--	if (data->indir_size)
--		data->indir_table = (u32 *)rss_config;
-+	data->indir_table = (u32 *)rss_config;
- 	if (data->hkey_size)
- 		data->hkey = rss_config + indir_bytes;
- 
++	if (slave_dev->type == ARPHRD_CAN) {
++		BOND_NL_ERR(bond_dev, extack,
++			    "CAN devices cannot be enslaved");
++		return -EPERM;
++	}
++
+ 	if (slave_dev->flags & IFF_MASTER &&
+ 	    !netif_is_bond_master(slave_dev)) {
+ 		BOND_NL_ERR(bond_dev, extack,
 -- 
 2.53.0
 
