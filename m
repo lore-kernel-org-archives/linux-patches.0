@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A5E32AAD6;
-	Sun,  7 Jun 2026 10:30:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774D82C1595;
+	Sun,  7 Jun 2026 10:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828223; cv=none; b=b9hBJYW4SB9V1HbGHCDgsLCCaRM13cCJsT/IB9t9MjWhMyu06iu2kI/0vgn6XlvFR0/vF1VkJRv80AYUyghphrrGhjCTVbzFTXPcUpmZdQgWfY39swq+DN8c6qqfUHaVdTx7BHo7zGRsSHi0IM7JhelZlQOK+DmaQlZq4fgeV9s=
+	t=1780828227; cv=none; b=Au8/S8xBi8x5srJuLTDx0KDhlOI+GpodRSp6WR+ZCIk4KKNf3O6MFi3pTB19J8ESojryGa374uQ/324B7iRGzWfvFbDKMEoq0RrvZuUHAiFuMI7sa+tX2I3/mZ2ldRJJKF4TYq3Hl/mLIcFZQImFQqiunMplH+0jmmhwmZaozwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828223; c=relaxed/simple;
-	bh=UCd5hxF3pqSYUdH1tVljfLAOB8ppj0vUw3cQDyHKVn8=;
+	s=arc-20240116; t=1780828227; c=relaxed/simple;
+	bh=IvR6CgNJ2OuEJrLqppbANO0C/xOGDqP5XKizJLfYziM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mGXD2UNN8AOTR1psDLSqU6o88uIs7LfIUx6ROLyT15KQhh31CBFWtxWnAtDC8OPuD22RwqruBrYt01ViYQCvLxKU0lu1tArJ+jhIRiPh8eZcM2XsYLqZUgKb4N/oUCYNVsGU7jt5Yf5jIo8MmIENqTN+aWlMObtE7C8JmqBWdLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGT8D6KO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SM467uMPrBgCQojHa/sMabgC7t5m42asePdM/QEV3PU8j7oEJfp7bd29Fwfd6vJEN1sSrJOp0od7blMjs7iR3Y31bFVdQXxDkw4LZNOoo/pu+zUBR8SH7MwrEiZfeq+BvgYm3F0E+WS8TiQE5qyQy8ChpEV6mVv0wu1YIEE+hhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZidX1+H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGT8D6KO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB511F00893;
-	Sun,  7 Jun 2026 10:30:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZidX1+H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452CC1F00893;
+	Sun,  7 Jun 2026 10:30:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828222;
-	bh=1TJOKY8YNYzBgzeKN1qBSzB2ng0tQT23eGCLYl88YHw=;
+	s=korg; t=1780828225;
+	bh=IQZYTiLnVtwbOKJUwbDK0/TN9/BfbNUz3DkIVD2V6rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UGT8D6KOLuzXL42KtW3v0OJDHyUnXa5zdbQwXqj1SOY1bm0PuPKcEjLcmyLiAtUu6
-	 0qyplDtpWDozI5wP/ZZ/cw+3CKL6PDa3sUnOEasSxJpgWvZIiHj8gXRXjA8eegkFNb
-	 hBIjaPSWxAUPzJCNEj6/O02/2mGErCl2WDjJv54o=
+	b=pZidX1+H+bVQvpkyxIlCp22y2hA3lfh4At0OhxS2toltDervrULJnCfOFnFv/OFL6
+	 +EAvIj27RKS9f7E306KfdG6oxg3Qf4UzA7uboF+yQ9G3JlJRD6EXKM2a92NAvAHH8G
+	 KLF5lVVP62hVUo6KNw0sFkmUeRjG1EOw4fCbjyGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 121/307] drm/i915/psr: Apply Intel DPCD workaround when SDP on prior line used
-Date: Sun,  7 Jun 2026 11:58:38 +0200
-Message-ID: <20260607095732.207036408@linuxfoundation.org>
+	Qiang Ma <maqianga@uniontech.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.18 142/315] KVM: arm64: PMU: Preserve AArch32 counter low bits
+Date: Sun,  7 Jun 2026 11:58:49 +0200
+Message-ID: <20260607095732.816625615@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,81 +44,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Qiang Ma <maqianga@uniontech.com>
 
-commit 4703049f768fc1c1caac754134118bee1a3af189 upstream.
+commit 1750ad1388e03fb27068cd1f22c9c8b4590fe936 upstream.
 
-There is Intel specific workaround DPCD address containing workaround for
-case where SDP is on prior line. Apply this workaround according to values
-in the offset.
+AArch32 writes to PMU event counters cannot update the top 32 bits,
+even when PMUv3p5 makes the counters 64-bit. KVM therefore needs to
+preserve the existing high half and only update the low half written by
+the guest, unless the caller explicitly forces a full reset through
+PMCR.P.
 
-Fixes: 61e887329e33 ("drm/i915/xelpd: Handle PSR2 SDP indication in the prior scanline")
-Cc: <stable@vger.kernel.org> # v5.15+
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260515095756.2799483-4-jouni.hogander@intel.com
-(cherry picked from commit c3fe899fbeac86ea4a5ca9dd845b2cbc0da46249)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The current code masks @val down to the old high half before taking
+lower_32_bits(val), which means the low half is always zero. As a
+result, AArch32 writes to event counters discard the guest-provided low
+32 bits instead of storing them.
+
+Build the new value from the old high 32 bits and the low 32 bits of
+the value supplied by the guest.
+
+Fixes: 26d2d0594d70 ("KVM: arm64: PMU: Do not let AArch32 change the counters' top 32 bits")
+Signed-off-by: Qiang Ma <maqianga@uniontech.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/20260526074640.791991-1-maqianga@uniontech.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c | 27 +++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/pmu-emul.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index 9c38b957701675..5173f5759ce888 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -1303,6 +1303,30 @@ static bool psr2_granularity_check(struct intel_dp *intel_dp,
- 	return true;
- }
+--- a/arch/arm64/kvm/pmu-emul.c
++++ b/arch/arm64/kvm/pmu-emul.c
+@@ -174,8 +174,8 @@ static void kvm_pmu_set_pmc_value(struct
+ 		 * action is to use PMCR.P, which will reset them to
+ 		 * 0 (the only use of the 'force' parameter).
+ 		 */
+-		val  = __vcpu_sys_reg(vcpu, reg) & GENMASK(63, 32);
+-		val |= lower_32_bits(val);
++		val = (__vcpu_sys_reg(vcpu, reg) & GENMASK(63, 32)) |
++		      lower_32_bits(val);
+ 	}
  
-+static bool apply_scanline_indication_wa(struct intel_dp *intel_dp,
-+					 struct intel_crtc_state *crtc_state)
-+{
-+	u8 early_scanline_support = intel_dp->intel_wa_dpcd &
-+		INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_EARLYSCANLINE_SDP_SUPPORT_MASK;
-+
-+	if (intel_dp->edp_dpcd[0] >= DP_EDP_15)
-+		return true;
-+
-+	switch (early_scanline_support)	{
-+	case INTEL_DPCD_INTEL_WA_REGISTER_CAPS_FALL_BACK_TO_PSR1:
-+		crtc_state->req_psr2_sdp_prior_scanline = false;
-+		return false;
-+	case INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITH_EARLY_SCANLINE:
-+		return true;
-+	case INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITHOUT_EARLY_SCANLINE:
-+		crtc_state->req_psr2_sdp_prior_scanline = false;
-+		return true;
-+	default:
-+		MISSING_CASE(early_scanline_support);
-+		return false;
-+	}
-+}
-+
- static bool _compute_psr2_sdp_prior_scanline_indication(struct intel_dp *intel_dp,
- 							struct intel_crtc_state *crtc_state)
- {
-@@ -1324,7 +1348,8 @@ static bool _compute_psr2_sdp_prior_scanline_indication(struct intel_dp *intel_d
- 		return false;
- 
- 	crtc_state->req_psr2_sdp_prior_scanline = true;
--	return true;
-+
-+	return apply_scanline_indication_wa(intel_dp, crtc_state);
- }
- 
- static int intel_psr_entry_setup_frames(struct intel_dp *intel_dp,
--- 
-2.53.0
-
+ 	__vcpu_assign_sys_reg(vcpu, reg, val);
 
 
