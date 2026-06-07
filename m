@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E5E2AD00;
-	Sun,  7 Jun 2026 10:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D1C4CB5B;
+	Sun,  7 Jun 2026 10:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827533; cv=none; b=IQ8ZtE9smFy+QrBO0ZkX7IaAchTV8HIp9T3FUN7y8D2FVvmsuqNJUo25k8bgLwYzKg15im9MoC4dzgLFTEG5Mevi/pwmjvGV9YXi2x3dPZ81p060RbgJAIy/ULszJIWqhPqawjmzEFk6HZ5j42Jn6z0mxQuk6DULrIfG/pmGvk4=
+	t=1780827536; cv=none; b=sGS5k3SCL8T6PBSAJwajKK2D2EQUfukvpWg+7ubjKzN0YgTyu/t54YoosvCEZvWnCueLQ4f0etB/SisU8IvPBAAr4Y71eTG79EZ5YoKw1DZlwhcSsijYUW2IxRJeM0C2gnsMCoL6Yx/0PY/Ic4kEz2Yqn13d8b/BFygRiqdXspc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827533; c=relaxed/simple;
-	bh=VOA2ptNkxuk/2pyTp1XFdURekvQ5suWAh8pA1ZzlXQY=;
+	s=arc-20240116; t=1780827536; c=relaxed/simple;
+	bh=dBqPjDH+ZlbuUp8WsUlQRnKmJu+eDi4AibBkEtvHCzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kuWJnrDDu7kcHuZiZesVC6vKtGw9nALaZrWDSbvHh0jNB2kBbjNzF6c9S7cDcxZRyXdYbkhha6PuuBC4vIfxA/oy/co6MmDV+8Yp4x//l/0g1jBZnxJOAL9TqVAsWMOMrn5iN4qunXgN2iBn6nH6Bhup4/c8vzVtuCM5CFb9z2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXvqfoZF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RbBXyk/hP+a28kMaM64AOk8HJJ59blmSONTffj6+CL9YG5FIfxbmdcmw9lZpol2Nd1s+wZCNldbXVK/Kj2s1HLYsCy99BY9JovmmdNnW11nOSijI8d5fynPlDBPSVP1WCcSvg6S1t46f/m1utcQQiVsSjRz+46kGm4vnvdPjysI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oqSCelIC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXvqfoZF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA5E1F00893;
-	Sun,  7 Jun 2026 10:18:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oqSCelIC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB28D1F00893;
+	Sun,  7 Jun 2026 10:18:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827531;
-	bh=keGIjmLoipYy0UdlbKdsJLlaf7leDpMgKNMm3rusgGw=;
+	s=korg; t=1780827535;
+	bh=q+nC7WhRp5Ziq/ictXbtkLhbuWStTmO3DLJUIujQnYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gXvqfoZFGB900CbjukPkXR1J7iShNZB1lZ4dklzLwR2cla7KDi9RUVx6lwzr+mCqb
-	 juhMZCR2AOFWPYgEl1IccfZytrWs5y+Qs0z1MF8L5LweNLTuzVaNJDhbXEOi1qS36b
-	 wnPevdO617wDFUjmCeelIJLtvAPO6Wyy/f70zx8w=
+	b=oqSCelICfQ2HLaIAs5SNBaUqRvt3b3GM2kAf77Bva29z7ZRp+g6+iH1QwK3ket4mf
+	 Jzhy4j2SSmTfjNHCyiBp+Z+H1kYv+9rh9s/x/0WBOdCDXPtwSb1Gn0Tr0/z6Uva9jS
+	 FTcCQ3SCNYLSqN4TvlycrcYSZbEq1fuLEMeQs/QY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heitor Alves de Siqueira <halves@igalia.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 100/332] Bluetooth: hci_sync: Reset device counters in hci_dev_close_sync()
-Date: Sun,  7 Jun 2026 11:57:49 +0200
-Message-ID: <20260607095731.813396015@linuxfoundation.org>
+Subject: [PATCH 6.18 081/315] Bluetooth: L2CAP: Fix possible crash on l2cap_ecred_conn_rsp
+Date: Sun,  7 Jun 2026 11:57:48 +0200
+Message-ID: <20260607095730.592865263@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +46,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heitor Alves de Siqueira <halves@igalia.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit cdf88b35e06f1b385f7f6228060ae541d44fbb72 ]
+[ Upstream commit 41c2713b204e6cb6a94587bc6bf6935107df5479 ]
 
-Before resetting or closing the device, protocol counters should also be
-zeroed.
+If dcid is received for an already-assigned destination CID the spec
+requires that both channels to be discarded, but calling l2cap_chan_del
+may invalidate the tmp cursor created by list_for_each_entry_safe and
+in fact it is the wrong procedure as the chan->dcid may be assigned
+previously it really needs to be disconnected.
 
-Fixes: d0b137062b2d ("Bluetooth: hci_sync: Rework init stages")
-Signed-off-by: Heitor Alves de Siqueira <halves@igalia.com>
+Calling l2cap_chan_clone directly may still lead to l2cap_chan_del so
+instead schedule l2cap_chan_timeout with delay 0 to close the channel
+asynchronously.
+
+Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/bluetooth/l2cap_core.c | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 80b71e39656faf..35988eace9e4f4 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -5393,6 +5393,10 @@ int hci_dev_close_sync(struct hci_dev *hdev)
- 	/* Reset device */
- 	skb_queue_purge(&hdev->cmd_q);
- 	atomic_set(&hdev->cmd_cnt, 1);
-+	hdev->acl_cnt = 0;
-+	hdev->sco_cnt = 0;
-+	hdev->le_cnt = 0;
-+	hdev->iso_cnt = 0;
- 	if (hci_test_quirk(hdev, HCI_QUIRK_RESET_ON_CLOSE) &&
- 	    !auto_off && !hci_dev_test_flag(hdev, HCI_UNCONFIGURED)) {
- 		set_bit(HCI_INIT, &hdev->flags);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 57f5e3c7429e79..9805908e6c6a06 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -5268,6 +5268,7 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 	cmd_len -= sizeof(*rsp);
+ 
+ 	list_for_each_entry_safe(chan, tmp, &conn->chan_l, list) {
++		struct l2cap_chan *orig;
+ 		u16 dcid;
+ 
+ 		if (chan->ident != cmd->ident ||
+@@ -5289,8 +5290,10 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 
+ 		BT_DBG("dcid[%d] 0x%4.4x", i, dcid);
+ 
++		orig = __l2cap_get_chan_by_dcid(conn, dcid);
++
+ 		/* Check if dcid is already in use */
+-		if (dcid && __l2cap_get_chan_by_dcid(conn, dcid)) {
++		if (dcid && orig) {
+ 			/* If a device receives a
+ 			 * L2CAP_CREDIT_BASED_CONNECTION_RSP packet with an
+ 			 * already-assigned Destination CID, then both the
+@@ -5299,10 +5302,24 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 			 */
+ 			l2cap_chan_del(chan, ECONNREFUSED);
+ 			l2cap_chan_unlock(chan);
+-			chan = __l2cap_get_chan_by_dcid(conn, dcid);
+-			l2cap_chan_lock(chan);
+-			l2cap_chan_del(chan, ECONNRESET);
+-			l2cap_chan_unlock(chan);
++
++			/* Check that the dcid channel mode is
++			 * L2CAP_MODE_EXT_FLOWCTL since this procedure is only
++			 * valid for that mode and shouldn't disconnect a dcid
++			 * in other modes.
++			 */
++			if (orig->mode == L2CAP_MODE_EXT_FLOWCTL) {
++				l2cap_chan_lock(orig);
++				/* Disconnect the original channel as it may be
++				 * considered connected since dcid has already
++				 * been assigned; don't call l2cap_chan_close
++				 * directly since that could lead to
++				 * l2cap_chan_del and then removing the channel
++				 * from the list while we're iterating over it.
++				 */
++				__set_chan_timer(orig, 0);
++				l2cap_chan_unlock(orig);
++			}
+ 			continue;
+ 		}
+ 
 -- 
 2.53.0
 
