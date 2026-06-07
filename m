@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652BA2C1595;
-	Sun,  7 Jun 2026 10:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C3C2C1595;
+	Sun,  7 Jun 2026 10:35:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828506; cv=none; b=RfbApf+pnaWNRO/Awmqv5iArOD7LBsBVC3eHHkjdcy7LiiKNbjT/BXrJcJdHlcn1tzgpU7KSQCgG2G0/eiVIYE4Wuf7yn77LxQ2WJvNPXIcQzol8ZqA0nruJoDMr0oRx8okfzCjpOOXXu7uF/JD/4Y+MZS3fY54Nr9sEpOnof8k=
+	t=1780828511; cv=none; b=gokO483OoqCc/sTuHDLhsmd1NjkgGn2e62KVre08hhjXlZYo6i0BTxK4mcw6HfJKY4ag7ZS7yTg5nu4a8hPLz4OioAI9KRGPeFXVPjcw5YR/7KcQ0ch/jue9/7p8NYQ7mzm+L9SmkyQ+NMbY0Qx2ykPraIzrAX36TdMvMTRLjbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828506; c=relaxed/simple;
-	bh=qhuxHwAjKZBvGf0hHpaa3c8W9W95WSBaNUvPY/WObjg=;
+	s=arc-20240116; t=1780828511; c=relaxed/simple;
+	bh=tp8EdsB44Otf6g4FxRMFkP0fgH3CFJRTpuIgs3LQzFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aWxbTrv5PvI/IxYkadSlNoYkFpCk08ByvUQ5ABuEcsLGe7f1rXuznfAn1TKD8LLZWvqRB0uhTPQnJHjBjunj0KtfGruOzP2TebdLbmamMX4vfPdw1nBVlWhazqPYyxvHxlkTdGuzweKAHaE4FtSdUfSJ1R+OyXlUMpXmeqglK34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGCePoRP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bM43o8QC0HR91vqpmPujjimka3Zcv29SMRuqeoR27voxfpyHGbVlZR9ymLMswhNu7LG70LKQvlnvrbUNvFmLspBAhTJq4VuC3mtFzv51AnxE49mvtwHSi0RIh9coefJlDz6WmrrHqcPwwQPaYlt8rcQjIMa3ZS5Svp9TLuoXPB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CC7s7G7W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGCePoRP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723C41F00893;
-	Sun,  7 Jun 2026 10:35:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CC7s7G7W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B28A1F00893;
+	Sun,  7 Jun 2026 10:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828505;
-	bh=TH5dmCGQ7huZB02NgR7IR3ga7IViVztpl7JJTNQX4rg=;
+	s=korg; t=1780828510;
+	bh=MlmY9a1HmuNV5KvtEtaLkvPK5kWdK7Z1Z/Z2IFUKkHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rGCePoRPLf97Y4byfmNFMKi/jarqqpbu3HpZlKxOTgdybEOzh68QzXZKgtMFtjTRL
-	 aiWNLOTA6z8bHqQFugacHo4Bskw1/s+frcWmOFuXeX92wD/Pncb9Tf65NJXvvkSTiy
-	 G6jbLPXEfYnlCR8esFZ/SrPsrrNZrV9xSfu4rRYA=
+	b=CC7s7G7WPPikdPVvYLJhnc9CK3d5avnW9jmsSaelVS3eqy1Zyho7h6pDGAoDGWlAU
+	 N65nk7NhsRYnw92tkJbSwlEb+IfA8wDC1wPzPy/BFmNpNnu5cU6bJ2KbaemvEcBzEm
+	 ESHKcoy7xcwCH8NbfMxd32HyjzXSK2cKg3fezodE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	Salah Triki <salah.triki@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Maxwell Doose <m32285159@gmail.com>,
 	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 7.0 189/332] iio: gyro: adis16260: fix division by zero in write_raw
-Date: Sun,  7 Jun 2026 11:59:18 +0200
-Message-ID: <20260607095735.007620001@linuxfoundation.org>
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 6.18 162/315] iio: adc: viperboard: Fix error handling in vprbrd_iio_read_raw
+Date: Sun,  7 Jun 2026 11:59:09 +0200
+Message-ID: <20260607095733.538212996@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,39 +51,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antoniu Miclaus <antoniu.miclaus@analog.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-commit 761e8b489e6cf166c574034b70637f8a7eadd0ee upstream.
+commit 422b5bbf333f75fb486855ad0eedc23cf21f3277 upstream.
 
-Add a validation check for the sampling frequency value before using it
-as a divisor. A user writing zero to the sampling_frequency sysfs
-attribute triggers a division by zero in the kernel.
+The driver proceeds to the reception phase even if the preceding
+transmission fails.
 
-Fixes: 089a41985c6c ("staging: iio: adis16260 digital gyro driver")
-Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+This uses a goto error label for an early bail out and ensures the mutex is
+properly unlocked in case of failure.
+
+Fixes: ffd8a6e7a778 ("iio: adc: Add viperboard adc driver")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Reviewed-by: Maxwell Doose <m32285159@gmail.com>
 Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/gyro/adis16260.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/adc/viperboard_adc.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/gyro/adis16260.c
-+++ b/drivers/iio/gyro/adis16260.c
-@@ -287,6 +287,9 @@ static int adis16260_write_raw(struct ii
- 		addr = adis16260_addresses[chan->scan_index][1];
- 		return adis_write_reg_16(adis, addr, val);
- 	case IIO_CHAN_INFO_SAMP_FREQ:
-+		if (val <= 0)
-+			return -EINVAL;
-+
- 		if (spi_get_device_id(adis->spi)->driver_data)
- 			t = 256 / val;
- 		else
+--- a/drivers/iio/adc/viperboard_adc.c
++++ b/drivers/iio/adc/viperboard_adc.c
+@@ -70,8 +70,10 @@ static int vprbrd_iio_read_raw(struct ii
+ 			VPRBRD_USB_TYPE_OUT, 0x0000, 0x0000, admsg,
+ 			sizeof(struct vprbrd_adc_msg), VPRBRD_USB_TIMEOUT_MS);
+ 		if (ret != sizeof(struct vprbrd_adc_msg)) {
+-			dev_err(&iio_dev->dev, "usb send error on adc read\n");
++			mutex_unlock(&vb->lock);
+ 			error = -EREMOTEIO;
++			dev_err(&iio_dev->dev, "usb send error on adc read\n");
++			goto error;
+ 		}
+ 
+ 		ret = usb_control_msg(vb->usb_dev,
 
 
