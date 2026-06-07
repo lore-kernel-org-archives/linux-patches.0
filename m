@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14201E98EF;
-	Sun,  7 Jun 2026 10:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62221E98EF;
+	Sun,  7 Jun 2026 10:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828990; cv=none; b=N4Bh7xxv+cqqu9rNYn/WegTwRkRvtt0ArF2jQXZsMaRMQ36zdMkIOob7yFIhB6cp7Zx8q9icLi8Xi7k6qqibw/HK1oFlRYLax1xildPLrmJurAw33jEQmDLAlVq8TQmh5mwf98+MMBlA72SAASbE1YZe5sU02Io0iE8WPoraGo0=
+	t=1780828993; cv=none; b=Cjt3ao/brZFEsMNV73TRujiFTfz6pNXvv/WOe9mnS3HYYYHTtJpyeHrt9zQkGe43Kc5m4B3NQs0CvYRAeRsMJxsWQrKJup/4NQ5iL9rg/296JXeyeZ43A4sKuytu+F91kX0OoEipEm0+MJ6h33UbEM+T+Xj0zfCb5gv4c522a1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828990; c=relaxed/simple;
-	bh=BWS15MH46rl47Tx14Fx2r5O1X3YIlYgmNOzbPS5y5y8=;
+	s=arc-20240116; t=1780828993; c=relaxed/simple;
+	bh=9Y3U6Ma0/cDF8MxMU4WEVl4RGuCnzyd9dwTWMe7S3Bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qj52RdBR8Bo0ggRpFdb7ufLw49/7NGo0+QiQjAXTEdewudtvDSalvmobtzrgQSkmtk0OiW0X65Rryj5/MDCqJDGMV6fmuPmMmi7V4IyUfEOf4JvDaNR4DwY9f4tNMDomOjo9Tw/T9rLYgO1+V+74kz/07dj+bL/PSmq8k7jgK4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/6lYh0Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K2NwDk3NTuJn4szcQ+u+HKa2Q2pU+lcR+ftURcL/OFVPUx97pikurwQseeZ23WVBbDvC0wSKS5sK0KgocQFeu5FJ1gTPM80EFszx6aWpi8dmP6yTmOdkPOgTwq4nqbYsh/r2uAqhzb5F4Bcp6BtjqBYi3ypFVDPPbUjwcyRkiko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scgykH0T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/6lYh0Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32971F00893;
-	Sun,  7 Jun 2026 10:43:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scgykH0T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4043C1F00898;
+	Sun,  7 Jun 2026 10:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828989;
-	bh=n+/3iZyy1+sQvwXs4vO+/W5l9BU14CexKYXFY3WwQ3k=;
+	s=korg; t=1780828992;
+	bh=u031KRGHHMlo1QzP1EwYEOZ9aVZCCL1kWSi6a3P8QAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p/6lYh0QcVlxJwjHB+rASPok2YUHt4lkzNUDuloJmYeQifWr5sqVutY5uoflJuVXY
-	 l5g4VyKL6A7vTEVUZwRHZCiY1ZVR2/I4453H9MhXUgQfISFdVyrkccZ19nuhC1X4wv
-	 yAbfKgEJXX/q3KesmFdpM+ekFs3zl8BhMx36rf34=
+	b=scgykH0TsSuzGwFCVn/8SGWqFYqzAqvAHZldpqvYneRJdo49nQB7hnCFdGIntJ8Ve
+	 u5IApzgYAr5twbDUs6k+cmSmXtTR6MOcIG8jqyqg4uQEM7TNy+n3OZzVsG+vKXCYrP
+	 hFxpsmonmtad4u5Jto9UM/Gg744Lj3wwP2ODcvJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 232/332] ASoC: qcom: q6asm-dai: do not set stream state in event and trigger callbacks
-Date: Sun,  7 Jun 2026 12:00:01 +0200
-Message-ID: <20260607095736.572628542@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 185/307] macsec: fix replay protection at XPN lower-PN wrap
+Date: Sun,  7 Jun 2026 11:59:42 +0200
+Message-ID: <20260607095734.514468288@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,71 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit cee3e63e7106c3c81b2053371fdf14240bfba2fc upstream.
+commit e68842b3356471ba56c882209f324613dac47f64 upstream.
 
-The q6asm-dai stream state is used by prepare() to decide whether an
-existing stream setup needs to be closed before opening/configuring a new
-one. Updating the state from trigger or asynchronous DSP callbacks can make
-that state stale or incorrect relative to the actual setup lifetime.
+In macsec_post_decrypt(), when pn is U32_MAX, pn + 1 overflows u32 to 0
+and the first branch never fires. If next_pn_halves.lower is also in the
+upper half, pn_same_half(pn, lower) is true and the XPN else-if does not
+fire either, leaving next_pn_halves unchanged. An attacker that captures
+the legitimate frame carrying pn == 0xFFFFFFFF on an XPN association
+can then replay it indefinitely, since lowest_pn never rises above
+the captured pn and macsec_decrypt() reconstructs the same IV.
 
-In particular, setting Q6ASM_STREAM_STOPPED on STOP or EOS completion can
-make prepare() believe there is no active setup to close, which can result
-in opening/configuring the same stream more than once.
+Extend the XPN else-if to also fire when pn + 1 wraps to 0, so receipt
+of pn == U32_MAX advances next_pn_halves to (upper + 1, 0).
 
-Keep stream state updates tied to prepare(), where the stream is actually
-closed and reopened, and stop changing it from trigger and EOS callbacks.
-
-Fixes: bfbb12dfa144 ("ASoC: qcom: q6asm-dai: perform correct state check before closing")
-Cc: Stable@vger.kernel.org
-Closes: https://lore.kernel.org/all/afS7rTHdc9TyIeLx@rdacayan/
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260518092347.3446946-2-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: a21ecf0e0338 ("macsec: Support XPN frame handling - IEEE 802.1AEbw")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB78813FD49E58F253B989F197AF012@SYBPR01MB7881.ausprd01.prod.outlook.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6asm-dai.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/net/macsec.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/sound/soc/qcom/qdsp6/q6asm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
-@@ -186,7 +186,6 @@ static void event_handler(uint32_t opcod
- 	case ASM_CLIENT_EVENT_CMD_RUN_DONE:
- 		break;
- 	case ASM_CLIENT_EVENT_CMD_EOS_DONE:
--		prtd->state = Q6ASM_STREAM_STOPPED;
- 		break;
- 	case ASM_CLIENT_EVENT_DATA_WRITE_DONE: {
- 		snd_pcm_period_elapsed(substream);
-@@ -349,7 +348,6 @@ static int q6asm_dai_trigger(struct snd_
- 				       0, 0, 0);
- 		break;
- 	case SNDRV_PCM_TRIGGER_STOP:
--		prtd->state = Q6ASM_STREAM_STOPPED;
- 		ret = q6asm_cmd_nowait(prtd->audio_client, prtd->stream_id,
- 				       CMD_EOS);
- 		break;
-@@ -563,8 +561,6 @@ static void compress_event_handler(uint3
- 			snd_compr_drain_notify(prtd->cstream);
- 			prtd->notify_on_drain = false;
- 
--		} else {
--			prtd->state = Q6ASM_STREAM_STOPPED;
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -803,7 +803,8 @@ static bool macsec_post_decrypt(struct s
+ 		if (pn + 1 > rx_sa->next_pn_halves.lower) {
+ 			rx_sa->next_pn_halves.lower = pn + 1;
+ 		} else if (secy->xpn &&
+-			   !pn_same_half(pn, rx_sa->next_pn_halves.lower)) {
++			   (pn + 1 == 0 ||
++			    !pn_same_half(pn, rx_sa->next_pn_halves.lower))) {
+ 			rx_sa->next_pn_halves.upper++;
+ 			rx_sa->next_pn_halves.lower = pn + 1;
  		}
- 		break;
- 
-@@ -1022,7 +1018,6 @@ static int q6asm_dai_compr_trigger(struc
- 				       0, 0, 0);
- 		break;
- 	case SNDRV_PCM_TRIGGER_STOP:
--		prtd->state = Q6ASM_STREAM_STOPPED;
- 		ret = q6asm_cmd_nowait(prtd->audio_client, prtd->stream_id,
- 				       CMD_EOS);
- 		break;
 
 
