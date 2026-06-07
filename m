@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E3B32470F;
-	Sun,  7 Jun 2026 10:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8284322C88;
+	Sun,  7 Jun 2026 10:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827787; cv=none; b=dFrmWU3xy3MXqRT28TsDLfKqfDWXOofc+K711fKAr/dxcXtoKEk8ZzF3NUtVNCl/tI5IKI71sm+abTPorb6YbF3WA6/1vU/mOeo71gq3MsxPEOSsPIjTm+ryVkCRYMDHXURQNO7zDihQM2lw/1Ik5l3Ta3h5ce6fTnzqMKouRwU=
+	t=1780827789; cv=none; b=WsygZh+8GNjV+lhrv9dPGyyFhszzIVN286Spx1cTdYLsgpx4jKc49TKC1XdF3WGCa4SzWqU9GwyHxAy8DaCri19ZupfjpiJw6aB5NGwfVVc/eFuz+jtfakfxi1w8qkYL0tN6/8cijmp94gZUzgaJshMEbk24QQ20ZwvPWpJamVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827787; c=relaxed/simple;
-	bh=ym3YRZqSVlKh/YOe9r9CSovfD43GxTCotNRDa6aWLMs=;
+	s=arc-20240116; t=1780827789; c=relaxed/simple;
+	bh=vEWsiuyI59lh/ujg4essS9FBLCEZ28g9KoJXkvRDjQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oBGOlRsoyYUcJalCZ293bmqIN7/OXnzJq5y+WaPjG7w1DqyDZaozqjodkMJY/PnDTuMTFEHWzVjKIrcQfKy4GMQTz1hAM5NdiBD0rUVnFGDO5bB4/ZJ9kRymljcvPTjpMMeGNrPwerg/4Aa7b2XTtFVxC0kSqcLaozt5r5mu2gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLMbutw6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rTt8xf0tdcf+vSOSz43RzOdrkunSiSCDaYR59q+vw0xAUUfXw/cv00BzBW5xwB/ckYex4FqteXqlocv0wje3c+4cAm+XZSvHBpTRDZOxv6mwAVYw3G9UnN4T0fjHEXyYtPxvk2S5Qz/XhQHGtzZBfIoM71AF5A7iKZarmdVkOFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k7eGCQk9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLMbutw6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDD01F00893;
-	Sun,  7 Jun 2026 10:23:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k7eGCQk9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70B61F00893;
+	Sun,  7 Jun 2026 10:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827785;
-	bh=8iFKAsEzFB5NJtLn4Kial7embpMziybK0VCBcJuyUZY=;
+	s=korg; t=1780827788;
+	bh=KiRWXIk0rfhiFQ1VYZpKY28k/OrUw51A0LMa3ZgaeEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rLMbutw6B2uO0pSap7laYNq5mZkJOK+73BRydfwCBcTuSz9X4PLQwKF2mWu4aBXi2
-	 oe1GSaACpvT0R+ONg83M7P+J4I3GkN2VsBQ2+STD4hKMX8ua7ai+2xmkKr2DbpW37Y
-	 KASHUn28K3YjRLbR0pAsFImPFta92FbydVN63pGY=
+	b=k7eGCQk9cYstSNMAgO6RyxZgGxgilnY/Wu/rRI7QhQHnOv9tXuhZBrNBk9nApI0nQ
+	 tr8YvFOL46jamrMvh+vnzEHURQRFfnS3bzSYPW73rDGumS3LbrepHC2os+ibupg2wX
+	 7f08DZJlJRu4O9XkBIqHPhnALSSZpsV97sKhNd2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhenghang Xiao <kipreyyy@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 086/307] Bluetooth: l2cap: clear chan->ident on ECRED reconfiguration success
-Date: Sun,  7 Jun 2026 11:58:03 +0200
-Message-ID: <20260607095730.932447808@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	stable <stable@kernel.org>,
+	Badhri Jagan Sridharan <badhri@google.com>
+Subject: [PATCH 7.0 122/332] usb: typec: tcpm: validate VDO count in Discover Identity ACK handlers
+Date: Sun,  7 Jun 2026 11:58:11 +0200
+Message-ID: <20260607095732.587984545@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,66 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhenghang Xiao <kipreyyy@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 00e1950716c6ed67d74777b2db286b0fa23b4be9 ]
+commit 8fbc349e8383125dd2d8de1c1e926279d398ab17 upstream.
 
-l2cap_ecred_reconf_rsp() returns early on success without clearing
-chan->ident. Every other L2CAP response handler (l2cap_ecred_conn_rsp,
-l2cap_le_connect_rsp, l2cap_config_rsp) clears chan->ident after a
-successful transaction to prevent the channel from matching subsequent
-responses with the recycled ident value.
+Properly validate the count passed from a device when calling
+svdm_consume_identity() or svdm_consume_identity_sop_prime() as the
+device-controlled value could index off of the static arrays, which
+could leak data.
 
-A remote attacker that completed a reconfiguration as the peer can
-replay a failure response with the stale ident, causing the kernel to
-match and destroy the already-established channel via
-l2cap_chan_del(chan, ECONNRESET).
-
-Clear chan->ident for all matching channels on success, and harden the
-failure path by using l2cap_chan_hold_unless_zero() consistent with
-other L2CAP handlers (l2cap_le_command_rej, __l2cap_get_chan_by_ident).
-
-Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
-Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assisted-by: gkh_clanker_t1000
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc: stable <stable@kernel.org>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Link: https://patch.msgid.link/2026051350-plated-salute-0efe@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index b24e4d8130ddb1..9de5d545966d60 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -5392,14 +5392,20 @@ static inline int l2cap_ecred_reconf_rsp(struct l2cap_conn *conn,
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -1708,6 +1708,9 @@ static void svdm_consume_identity(struct
+ 	u32 vdo = p[VDO_INDEX_IDH];
+ 	u32 product = p[VDO_INDEX_PRODUCT];
  
- 	BT_DBG("result 0x%4.4x", result);
++	if (cnt <= VDO_INDEX_PRODUCT)
++		return;
++
+ 	memset(&port->mode_data, 0, sizeof(port->mode_data));
  
--	if (!result)
-+	if (!result) {
-+		list_for_each_entry(chan, &conn->chan_l, list) {
-+			if (chan->ident == cmd->ident)
-+				chan->ident = 0;
-+		}
- 		return 0;
-+	}
+ 	port->partner_ident.id_header = vdo;
+@@ -1728,6 +1731,9 @@ static void svdm_consume_identity_sop_pr
+ 	u32 product = p[VDO_INDEX_PRODUCT];
+ 	int svdm_version;
  
- 	list_for_each_entry_safe(chan, tmp, &conn->chan_l, list) {
- 		if (chan->ident != cmd->ident)
- 			continue;
- 
--		l2cap_chan_hold(chan);
-+		if (!l2cap_chan_hold_unless_zero(chan))
-+			continue;
- 		l2cap_chan_lock(chan);
- 
- 		l2cap_chan_del(chan, ECONNRESET);
--- 
-2.53.0
-
++	if (cnt <= VDO_INDEX_CABLE_1)
++		return;
++
+ 	/*
+ 	 * Attempt to consume identity only if cable currently is not set
+ 	 */
+@@ -1751,7 +1757,7 @@ static void svdm_consume_identity_sop_pr
+ 	switch (port->negotiated_rev_prime) {
+ 	case PD_REV30:
+ 		port->cable_desc.pd_revision = 0x0300;
+-		if (port->cable_desc.active)
++		if (port->cable_desc.active && cnt > VDO_INDEX_CABLE_2)
+ 			port->cable_ident.vdo[1] = p[VDO_INDEX_CABLE_2];
+ 		break;
+ 	case PD_REV20:
 
 
