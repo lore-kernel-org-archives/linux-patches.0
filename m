@@ -1,40 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183F131E832;
-	Sun,  7 Jun 2026 10:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58A01C5F27;
+	Sun,  7 Jun 2026 10:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828076; cv=none; b=jK1CHIoiyiPhA0W+Q2CPcSKxkNdCpFRvNjt4eqNOoZjhOMxCWU22IxBJgK4LOcm2tZPetHjfWlqc2nQS8Yb/r3d/v0xfxCxSU1zcHarVw27QfoGaazpizvYnbtM0IYv6HILIlbedPSv5q9e2r9tUTtWfY+kbfpl3Yzc1WzlF8v4=
+	t=1780828079; cv=none; b=YH0BXsPF99HxTHVuJvFVljdW41mVkjXZAPwpTB+ovz/y9fugP4SSj6/DkNExIcAlA1AdYS8Dsi2jgpf1cy85UA9iT7YT1A9H2KZLoZCe1ckwa53xfZiQkK+Q4bY8nghWD0FUAelsDGWT9QqNGnGlGxmwJ2JXNT3rCdnKCqdgrHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828076; c=relaxed/simple;
-	bh=4B1TCOht/LJBUnV3/WFBG1s8vagKMLhrsRQg6t7We0o=;
+	s=arc-20240116; t=1780828079; c=relaxed/simple;
+	bh=2t69vI1x6Cvw5WT8n/VkrC3ZWWfe+/beLl1XW+ekufg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FJRGe/c3D/Nq3NnI5F0rbExcz/AZlHlQfYPjI9DsIA65danacMkj005s3yZI5Q9xsGO4S9ucOZfRFWiT9YLfXSot7LIGYbw5Ziorf7otIEOww9cTFhAz7Hzw0tBqaVxBUTrsF3kztzqJ/krqmDHXFB2NBLDFWUMOq+avKxFKYWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJWR0oiA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dRQhqA3k2iua5XPw1+ZuZ3lucb3A2AT45n3cubz5UqbVYTadWQ7I4GpyqQXm8JLdYxtk+CDieysPKhuTLYg4WsORD/X/1qvrQ+ZVmLHpdA8Nrv4bp5sEb7MFJ6exs6kB3mBDDkdrT9/STjMz5NKjGopz3HbUeTIieja4FZgFfX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvPJppBX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJWR0oiA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22FDF1F00893;
-	Sun,  7 Jun 2026 10:27:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvPJppBX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70C31F00893;
+	Sun,  7 Jun 2026 10:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828075;
-	bh=H+2Z5vM/jhsnQu7qrEd3/7Oa/VhAwWu8VA+B5vE059o=;
+	s=korg; t=1780828078;
+	bh=gJfeqlGF4ToxOxMDWyGzFapIWy6wINiq0V1jy082j8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gJWR0oiAJ+Pa+HXqyQYAfqx1V1XeWr7MynRbHbD1Y5HGVZe60KN1BmxsiAwwI3hPY
-	 JRp0bnOi8AOkr0quZy5HT7YuXY9yIzM16X69XUyvP8XfeyrpohOyGltKs6Xjlc2P/D
-	 3ebUB+ZGejsTmKtWHKaALhawci348RSzVVz3clT4=
+	b=fvPJppBXFBya4aZ5YMrLHpBDmN+x0RmH66IMi9HSYAdGtQPK5iIFwH9kq/ei2vGDe
+	 mXw2JhgkHtVNo8V9LllchstAxF+KIZTvn/Q1FdLpcVUyFmnRHOR27FGIH7nmOzO/C/
+	 b8KaSWfKV3ZzqPP/bgJm4CmD1GPQZrgYmH/TVJlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.18 107/315] usb: typec: ucsi: ccg: reject firmware images without a : record header
-Date: Sun,  7 Jun 2026 11:58:14 +0200
-Message-ID: <20260607095731.579239928@linuxfoundation.org>
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Zi Yan <ziy@nvidia.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Brendan Jackman <jackmanb@google.com>,
+	Chris Li <chrisl@kernel.org>,
+	Hugh Dickins <hughd@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Kairui Song <ryncsn@gmail.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Li Wang <li.wang@windriver.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 109/307] mm/page_alloc: clear page->private in free_pages_prepare()
+Date: Sun,  7 Jun 2026 11:58:26 +0200
+Message-ID: <20260607095731.781873154@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,58 +60,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-commit d7486952bf74e546ee3748fb14b2d07881fa6273 upstream.
+[ Upstream commit ac1ea219590c09572ed5992dc233bbf7bb70fef9 ]
 
-do_flash() locates the first .cyacd record with
+Several subsystems (slub, shmem, ttm, etc.) use page->private but don't
+clear it before freeing pages.  When these pages are later allocated as
+high-order pages and split via split_page(), tail pages retain stale
+page->private values.
 
-	p = strnchr(fw->data, fw->size, ':');
-	while (p < eof) {
-		s = strnchr(p + 1, eof - p - 1, ':');
-		...
-	}
+This causes a use-after-free in the swap subsystem.  The swap code uses
+page->private to track swap count continuations, assuming freshly
+allocated pages have page->private == 0.  When stale values are present,
+swap_count_continued() incorrectly assumes the continuation list is valid
+and iterates over uninitialized page->lru containing LIST_POISON values,
+causing a crash:
 
-If the firmware image contains no ':' byte,  strnchr() returns NULL.
-NULL compares less than the valid kernel pointer eof, so the loop body
-runs and strnchr() is called with p + 1 == (void *)1 and a length of
-roughly (unsigned long)eof, causing a wonderful crash.
+  KASAN: maybe wild-memory-access in range [0xdead000000000100-0xdead000000000107]
+  RIP: 0010:__do_sys_swapoff+0x1151/0x1860
 
-The not_signed_fw fallthrough earlier in do_flash() and the chip-state
-branches in ccg_fw_update_needed() allow an unsigned blob to reach this
-loop, so a root user who can place a crafted file under /lib/firmware
-and write the do_flash sysfs attribute can trigger the oops.
+Fix this by clearing page->private in free_pages_prepare(), ensuring all
+freed pages have clean state regardless of previous use.
 
-Bail out with -EINVAL when the initial strnchr() returns NULL.
-
-Assisted-by: gkh_clanker_t1000
-Cc: stable <stable@kernel.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026051405-posture-shrill-7884@gregkh
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20260207173615.146159-1-mikhail.v.gavrilov@gmail.com
+Fixes: 3b8000ae185c ("mm/vmalloc: huge vmalloc backing pages should be split rather than compound")
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Suggested-by: Zi Yan <ziy@nvidia.com>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Brendan Jackman <jackmanb@google.com>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Kairui Song <ryncsn@gmail.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[backport: context only]
+Signed-off-by: Li Wang <li.wang@windriver.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_ccg.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ mm/page_alloc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/typec/ucsi/ucsi_ccg.c
-+++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
-@@ -1242,6 +1242,11 @@ not_signed_fw:
- 	 *****************************************************************/
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index b1a8abe5005e99..259249a37faf01 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -1158,6 +1158,7 @@ __always_inline bool free_pages_prepare(struct page *page,
  
- 	p = strnchr(fw->data, fw->size, ':');
-+	if (!p) {
-+		dev_err(dev, "Bad FW format: no ':' record header found\n");
-+		err = -EINVAL;
-+		goto release_mem;
-+	}
- 	while (p < eof) {
- 		s = strnchr(p + 1, eof - p - 1, ':');
- 
+ 	page_cpupid_reset_last(page);
+ 	page->flags &= ~PAGE_FLAGS_CHECK_AT_PREP;
++	page->private = 0;
+ 	reset_page_owner(page, order);
+ 	page_table_check_free(page, order);
+ 	pgalloc_tag_sub(page, 1 << order);
+-- 
+2.53.0
+
 
 
