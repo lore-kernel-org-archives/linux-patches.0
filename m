@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307034071DA;
-	Sun,  7 Jun 2026 10:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7772C4071DA;
+	Sun,  7 Jun 2026 10:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827428; cv=none; b=fLIwVNzUNQKlVgXxFMOnyD1Jt+pLgExpEvWcOqc1gB52Er6I7wCy4dvBaKY7BN0j/v7JgnokB48+a9u5vqKoo2VyngV8Ew17pgBUss3sJ36QysVxlEme2dAFb35Z70IeY+6KgL+JtUCVj0eez10n8XUR4AqMGv+8yh5mv2POJGo=
+	t=1780827431; cv=none; b=Gowtv51MTYz15izGirxV/1z246G60OHpNMYxb4a8xzmCx4BodeKiop/6ah2PPSRzUiskgGhjPld5D5v9w2G/d9xdRMmZKO24ZX1BnLmGKnvVnxpPmoXE7zM0vXNXkRxsaKpriJvggeSzjN2ZTLfxqLm6xYBpiqRwTFnvxeJ+trQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827428; c=relaxed/simple;
-	bh=GC4LylfI4ZepBXredcUa1GNDMQp7FhMeyyYomBYpfsg=;
+	s=arc-20240116; t=1780827431; c=relaxed/simple;
+	bh=rloNbBoVZhIJaeMTRNyDndefG1wLF3w8Pdn7mLm2C5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hOg1+qWVK1TkCGeHvC75WSWxB5TspSxzbysWisH7fn70WWP1d83D6a1esdG0bsObmB/I7htsxNNBl8hmBaHVNuu9+IHFAYTQxOsiRtBV8mxHnEW6cLRJ16qO9DAffkLRf3fYwd/LM11q3Pw7sDqoh32vekemRXhfZX6ycpOUwsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4b8tE17; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XRT7gwf9UQbk9EI5QLVO2L4RLjlJvWiB/TAF7RV9NQ/JOUw1iMxuatyva8vCRWnVMcgiXBBmB0B09uo7KLU76yXOLvkn3nqrBT+TvHagJiOmyLIXGtwoik3GLAIyyl4wsQT/9mHOcKbfVet7FgUG0APr/cKMZYZEhJ/9DBt3xFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8krhIBE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4b8tE17"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 371491F00893;
-	Sun,  7 Jun 2026 10:17:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8krhIBE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B56651F00893;
+	Sun,  7 Jun 2026 10:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827427;
-	bh=avqjTqABi3zGFyXY8t8zZEfwFw3c9a0vkMXMB/Owu7Y=;
+	s=korg; t=1780827430;
+	bh=0Ke1Bc/T/NK1uZ/jIWWingDLzPFjiYFCfrVC8U4ZAqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V4b8tE17mPbbBx3J4Kw40aL7rnAvjF2Pppos4C8zJSUFkZIII6ezCtXIkdyDY3+zV
-	 mVk7Ae1oISmsOgx0YhrQuv3MR3wW9BwLsLixfgB2y92l6xx3HIA78onn/ZGyx/ZrMK
-	 mRPc3JHdpYaX9lVBrDWzcAAuhBT9sW2idvQAh5Uc=
+	b=u8krhIBELbFbnH0dHOzVjr/qTvUETMm9otRB2MethZcmvVf4R0PuTVdx1BCX0uwot
+	 sNtH4RPJfHQb2b4I8AUBHGR+WNZH4v5ECse9qNw7z+b3v56b/8RCaGrZNyau/aqpSX
+	 lOikj/6suc0wiSwBNptTEsb2AsIlfFLG6oXxDBvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 092/332] net/handshake: Drain pending requests at net namespace exit
-Date: Sun,  7 Jun 2026 11:57:41 +0200
-Message-ID: <20260607095731.531288373@linuxfoundation.org>
+Subject: [PATCH 6.18 073/315] ethtool: eeprom: add more safeties to EEPROM Netlink fallback
+Date: Sun,  7 Jun 2026 11:57:40 +0200
+Message-ID: <20260607095730.295465175@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,114 +47,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit ea5fe6a73ca57e5150b8a38b341aef2636eb72f0 ]
+[ Upstream commit 67cfdd9210b99f260b3e0afeb9525e0acc7be31e ]
 
-The arguments to list_splice_init() in handshake_net_exit() are
-reversed. The call moves the local empty "requests" list onto
-hn->hn_requests, leaving the local list empty, so the subsequent
-drain loop runs zero iterations. Pending handshake requests that
-had not yet been accepted are not torn down when the net namespace
-is destroyed; each one keeps a reference on a socket file and on
-the handshake_req allocation.
+The Netlink fallback path for reading module EEPROM
+(fallback_set_params()) validates that offset < eeprom_len,
+but does not check that offset + length stays within eeprom_len.
+The ioctl equivalent (ethtool_get_any_eeprom() in ioctl.c) has
+always enforced both bounds:
 
-Pass the source and destination in the documented order
-(list_splice_init(list, head) moves list onto head) so the pending
-list is transferred to the local scratch list and drained through
-handshake_complete().
+  if (eeprom.offset + eeprom.len > total_len)
+      return -EINVAL;
 
-Fixing the splice direction exposes a list-corruption race. After
-the splice each req->hr_list still has non-empty link pointers,
-threading the stack-local scratch list rather than hn_requests.
-A concurrent handshake_req_cancel() -- for example, from sunrpc's
-TLS timeout on a kernel socket whose netns reference was not
-taken -- finds the request through the rhashtable, calls
-remove_pending(), and sees !list_empty(&req->hr_list).
-__remove_pending_locked() then list_del_init()s an entry off the
-scratch list while the drain iterates, corrupting it. The same
-call arriving after the drain loop has run list_del() on an
-entry hits LIST_POISON instead.
+This could lead to surprises in both drivers and device FW.
+Add the missing offset + length validation to fallback_set_params(),
+mirroring the ioctl.
 
-Have remove_pending() check HANDSHAKE_F_NET_DRAINING under
-hn_lock and report not-found when drain is in progress. The
-drain has already taken ownership; handshake_complete()'s existing
-test_and_set on HANDSHAKE_F_REQ_COMPLETED still arbitrates
-between drain and cancel for who calls the consumer's hp_done. Use
-list_del_init() rather than list_del() in the drain so req->hr_list
-does not carry LIST_POISON after drain releases the entry.
+Similarly - ethtool core in general, and ethtool_get_any_eeprom()
+in particular tries to zero-init all buffers passed to the drivers
+to avoid any extra work of zeroing things out. eeprom_fallback()
+uses a plain kmalloc(), change it to zalloc.
 
-The DRAINING guard in remove_pending() makes cancel return false,
-but cancel still falls through to test_and_set_bit on
-HANDSHAKE_F_REQ_COMPLETED and drops the request's hr_file reference.
-Without another pin, if that is the last reference, sk_destruct frees
-the request while it is still linked on the drain loop's local list.
-Pin each request's hr_file under hn_lock before releasing the list,
-and drop that drain pin after the loop finishes with the request.
-
-Fixes: 3b3009ea8abb ("net/handshake: Create a NETLINK service for handling handshake requests")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260525-handshake-file-pin-v3-8-66c616906ead@oracle.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 96d971e307cc ("ethtool: Add fallback to get_module_eeprom from netlink command")
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260526153533.2779187-11-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/handshake/netlink.c | 10 ++++++++--
- net/handshake/request.c |  5 ++++-
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ net/ethtool/eeprom.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/handshake/netlink.c b/net/handshake/netlink.c
-index 21d6cbd52fcdb6..3fd4fef9bab1a4 100644
---- a/net/handshake/netlink.c
-+++ b/net/handshake/netlink.c
-@@ -201,13 +201,19 @@ static void __net_exit handshake_net_exit(struct net *net)
- 	 */
- 	spin_lock_bh(&hn->hn_lock);
- 	set_bit(HANDSHAKE_F_NET_DRAINING, &hn->hn_flags);
--	list_splice_init(&requests, &hn->hn_requests);
-+	list_splice_init(&hn->hn_requests, &requests);
-+	list_for_each_entry(req, &requests, hr_list)
-+		get_file(req->hr_file);
- 	spin_unlock_bh(&hn->hn_lock);
+diff --git a/net/ethtool/eeprom.c b/net/ethtool/eeprom.c
+index 03cb418a15823b..80af38a6c76acf 100644
+--- a/net/ethtool/eeprom.c
++++ b/net/ethtool/eeprom.c
+@@ -43,6 +43,9 @@ static int fallback_set_params(struct eeprom_req_info *request,
+ 	if (offset >= modinfo->eeprom_len)
+ 		return -EINVAL;
  
- 	while (!list_empty(&requests)) {
-+		struct file *file;
++	if (length > modinfo->eeprom_len - offset)
++		return -EINVAL;
 +
- 		req = list_first_entry(&requests, struct handshake_req, hr_list);
--		list_del(&req->hr_list);
-+		file = req->hr_file;
-+		list_del_init(&req->hr_list);
- 		handshake_complete(req, -ETIMEDOUT, NULL);
-+		fput(file);
- 	}
- }
+ 	eeprom->cmd = ETHTOOL_GMODULEEEPROM;
+ 	eeprom->len = length;
+ 	eeprom->offset = offset;
+@@ -68,7 +71,7 @@ static int eeprom_fallback(struct eeprom_req_info *request,
+ 	if (err < 0)
+ 		return err;
  
-diff --git a/net/handshake/request.c b/net/handshake/request.c
-index e2d7ee7ce6e0e0..2f1ab6eb9538c5 100644
---- a/net/handshake/request.c
-+++ b/net/handshake/request.c
-@@ -163,13 +163,16 @@ static void __remove_pending_locked(struct handshake_net *hn,
-  * otherwise %false.
-  *
-  * If @req was on a pending list, it has not yet been accepted.
-+ * Returns %false when the net namespace is draining; the drain
-+ * loop has taken ownership of the pending list.
-  */
- static bool remove_pending(struct handshake_net *hn, struct handshake_req *req)
- {
- 	bool ret = false;
- 
- 	spin_lock_bh(&hn->hn_lock);
--	if (!list_empty(&req->hr_list)) {
-+	if (!test_bit(HANDSHAKE_F_NET_DRAINING, &hn->hn_flags) &&
-+	    !list_empty(&req->hr_list)) {
- 		__remove_pending_locked(hn, req);
- 		ret = true;
- 	}
+-	data = kmalloc(eeprom.len, GFP_KERNEL);
++	data = kzalloc(eeprom.len, GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
+ 	err = ethtool_get_module_eeprom_call(dev, &eeprom, data);
 -- 
 2.53.0
 
