@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF27B2D3A69;
-	Sun,  7 Jun 2026 10:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA212D3A69;
+	Sun,  7 Jun 2026 10:37:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828625; cv=none; b=rXrCmQjQgTN/0rqiJ+X7qSGqy2whCR8EPb/vt1KvLHkTHEriWFuJONTkuC0o+nBAq0rY3FFlh9Cq+jkPxKty0dlbPOMvkHzRaLo2KkRgst/RGZetPD/ZY2/3rQ52MaUPm+m6tO6iGGQx4w6tOxT29hNkS3mayIlncHqKIHff7c4=
+	t=1780828629; cv=none; b=sFatPPd2FyI9q7FcHm0KcnKXZFrLN/rdwgA0ek+snJkt+6wPlvLBJzSZuRRygBnIvAZ0+LXSor+S4K+eq7PihI01ikHJNhF6SB3eA+JlBIDEKFQMqAArE6h64VWleJqly7KwUcysluytr0eUBHSW7jE6km0HlYE/4y2p2v8Yp5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828625; c=relaxed/simple;
-	bh=f183WmconoyKUzKyKKyn/u63HYSomnSGPpU/9VOAK9c=;
+	s=arc-20240116; t=1780828629; c=relaxed/simple;
+	bh=cWtGVnlmTvOdBOk04rTITTEJaroS4ch33lirnj7Uizg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k4Dt7J6o+0DkPqXMxG0iqAkKRI8/Vz99P//p974Y5VxOkOUANy593NJtQkaBV4xF5KFgnHAI6R1/H51HquSVfh+Qs1Fmek6OFB/DnbMcI4D3zhxnEYpq9n/H71HP0p0vh8pgbem2jdo3HZHjiFrV9SdqtPws5yYw9dzR7SmAe+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loVxkqy/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=etRNmv7WE3p+oMytabZ7m5xV+wA+MTQbsvuVciI1FtD+ozmg9JF/4scvDQ6GFcfS26fHT9hGjG0p4uO/JWc7OXaAUiBgjADS/9dMwn3aLOT2qCOg+hIljR/0ExTROdB/5HD8E46ZOm5JukZqWY9HZJdwMNbCfCN8SqensGjtG6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gg+PNM0Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loVxkqy/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83541F00893;
-	Sun,  7 Jun 2026 10:37:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gg+PNM0Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C95F1F00893;
+	Sun,  7 Jun 2026 10:37:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828624;
-	bh=oPXyqYgUeHpReow34xMzZ890PqBGWsUGRH4F5p85rO8=;
+	s=korg; t=1780828628;
+	bh=UvuouHEXy14jsogNoKCSEReW29hltSAQHzBGD398SP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=loVxkqy/MmEBeU7jTeeM6uaxIigNCqSmGVTJBrIl2OH4iG3w4u/6vhaFlubU1rVaQ
-	 ppNOTx9OYmS3UwpjzxmgDUAnZHFr4F+MVy68d70PwEAC7dYCRE+wTb+WGvm7aHPiHI
-	 ++l4ZdpAQJUuJXG8RxlckbN3CUwcP8PpVLKqQ+Yw=
+	b=gg+PNM0QtMyIM2NAivMCaZS22ydjoamvN6ctBlMStjsutIRDW3+/KGHCH7nBIVQTE
+	 nc7xg0vUTnGJ2Ql0hnndIXx5QsL/p0U6sleoIA2Ui777neB0gRZgR2/vAQTfSxZtDX
+	 VHvCg1k8BHDn27UijeA83WVD5HvJ5H1nA+XTSBjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko <sashiko-bot@kernel.org>,
-	Felix Gu <ustc.gu@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Maxwell Doose <m32285159@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 7.0 198/332] iio: buffer: hw-consumer: fix use-after-free in error path
-Date: Sun,  7 Jun 2026 11:59:27 +0200
-Message-ID: <20260607095735.326321470@linuxfoundation.org>
+	"Naveen N Rao (AMD)" <naveen@kernel.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.12 153/307] KVM: SVM: Flush the current TLB when transitioning from xAVIC => x2AVIC
+Date: Sun,  7 Jun 2026 11:59:10 +0200
+Message-ID: <20260607095733.341275256@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,58 +44,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 6f5ed4f2c7c83f33344e0ba179f72a12e5dad4a4 upstream.
+commit a9e18aa3263f356edae305e29830e5fe63d8597a upstream.
 
-In the err_put_buffers cleanup path of iio_hw_consumer_alloc(), the code
-was using list_for_each_entry() to iterate through buffers while calling
-iio_buffer_put() which can free the current buffer if refcount drops to 0.
-The list_for_each_entry() loop macro then evaluates buf->head.next to
-continue iteration, accessing the freed buffer.
+Flush the current TLB when xAVIC *or* x2AVIC is activated, as KVM is
+(apparently) responsible for purging TLB entries when transitioning from
+xAVIC to x2AVIC.  The APM says a whole lot of nothing about TLB flushing
+with respect to (x2)AVIC, but empirical data strongly suggests hardware
+also does a whole lot of nothing.
 
-Fix this by using list_for_each_entry_safe().
+Failure to flush the TLB when enabling x2AVIC can lead to guest accesses
+to the APIC base address getting incorrectly redirected to the virtual
+APIC page.  The flaw most visibly manifests as failures in KVM-Unit-Test's
+verify_disabled_apic_mmio() testcase when x2APIC is enabled (though for
+reasons unknown, the test only reliably fails with EFI builds).
 
-Fixes: 48b66f8f936f ("iio: Add hardware consumer buffer support")
-Reported-by: sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260427-iio_buf-v1-1-2bbdac844647%40gmail.com
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Maxwell Doose <m32285159@gmail.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: 0ccf3e7cb95a ("KVM: SVM: Flush the "current" TLB when activating AVIC")
+Fixes: 4d1d7942e36a ("KVM: SVM: Introduce logic to (de)activate x2AVIC mode")
+Cc: stable@vger.kernel.org
+Cc: Naveen N Rao (AMD) <naveen@kernel.org>
+Link: https://patch.msgid.link/20260515171536.1841645-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/buffer/industrialio-hw-consumer.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kvm/svm/avic.c |   35 +++++++++++++++++++++++++++++------
+ 1 file changed, 29 insertions(+), 6 deletions(-)
 
---- a/drivers/iio/buffer/industrialio-hw-consumer.c
-+++ b/drivers/iio/buffer/industrialio-hw-consumer.c
-@@ -82,7 +82,7 @@ static struct hw_consumer_buffer *iio_hw
-  */
- struct iio_hw_consumer *iio_hw_consumer_alloc(struct device *dev)
- {
--	struct hw_consumer_buffer *buf;
-+	struct hw_consumer_buffer *buf, *tmp;
- 	struct iio_hw_consumer *hwc;
- 	struct iio_channel *chan;
- 	int ret;
-@@ -113,7 +113,7 @@ struct iio_hw_consumer *iio_hw_consumer_
- 	return hwc;
+--- a/arch/x86/kvm/svm/avic.c
++++ b/arch/x86/kvm/svm/avic.c
+@@ -111,6 +111,35 @@ static void avic_activate_vmcb(struct vc
+ 	svm_clr_intercept(svm, INTERCEPT_CR8_WRITE);
  
- err_put_buffers:
--	list_for_each_entry(buf, &hwc->buffers, head)
-+	list_for_each_entry_safe(buf, tmp, &hwc->buffers, head)
- 		iio_buffer_put(&buf->buffer);
- 	iio_channel_release_all(hwc->channels);
- err_free_hwc:
+ 	/*
++	 * Flush the TLB when enabling (x2)AVIC and when transitioning between
++	 * xAVIC and x2AVIC, as the CPU may have inserted a TLB entry for the
++	 * "wrong" mapping.
++	 *
++	 * KVM uses a per-VM "scratch" page to back the APIC memslot, because
++	 * KVM also uses per-VM page tables *and* maintains the page table (NPT
++	 * or shadow page) mappings for said memslot even if one or more vCPUs
++	 * have their local APIC hardware-disabled or are in x2APIC mode, i.e.
++	 * even if one or more vCPUs' APIC MMIO BAR is effectively disabled.
++	 *
++	 * If xAVIC is fully enabled, hardware ignores the physical address in
++	 * KVM's page tables, i.e. in the leaf SPTE for the APIC memslot, and
++	 * instead redirects the access to the AVIC backing page, i.e. to the
++	 * vCPU's virtual APIC page.  If xAVIC is not enabled (APIC is either
++	 * hardware-disabled or in x2APIC mode), then guest accesses will use
++	 * the page table mapping verbatim, i.e. will access the per-VM scratch
++	 * page, as normal memory.
++	 *
++	 * In both cases, the CPU is allowed to cache TLB entries for the APIC
++	 * base GPA.  So, KVM needs to flush the TLB when enabling xAVIC, as
++	 * accesses need to be redirected to the virtual APIC page, but the TLB
++	 * may contain entries pointing at the scratch page.  KVM also needs to
++	 * flush the TLB when enabling x2AVIC, as accesses need to go to the
++	 * scratch page, but the TLB may contain entries tagged as xAVIC, i.e.
++	 * entries pointing to the vCPU's virtual APIC page.
++	 */
++	kvm_make_request(KVM_REQ_TLB_FLUSH_CURRENT, &svm->vcpu);
++
++	/*
+ 	 * Note: KVM supports hybrid-AVIC mode, where KVM emulates x2APIC MSR
+ 	 * accesses, while interrupt injection to a running vCPU can be
+ 	 * achieved using AVIC doorbell.  KVM disables the APIC access page
+@@ -123,12 +152,6 @@ static void avic_activate_vmcb(struct vc
+ 		/* Disabling MSR intercept for x2APIC registers */
+ 		svm_set_x2apic_msr_interception(svm, false);
+ 	} else {
+-		/*
+-		 * Flush the TLB, the guest may have inserted a non-APIC
+-		 * mapping into the TLB while AVIC was disabled.
+-		 */
+-		kvm_make_request(KVM_REQ_TLB_FLUSH_CURRENT, &svm->vcpu);
+-
+ 		/* Enabling MSR intercept for x2APIC registers */
+ 		svm_set_x2apic_msr_interception(svm, true);
+ 	}
 
 
