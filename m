@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58AED4CB5B;
-	Sun,  7 Jun 2026 10:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422A42AD00;
+	Sun,  7 Jun 2026 10:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827656; cv=none; b=DAsyINqZCpGzE2XOPqF5Ju9ZuU3aZkNlKOV+HtZE/lX/PbToLv1+mpgto30otLyAr9Rh2+fmqOd9UQKj2CNlHDoctvpNnNC1p86ltULsFHxikf7tPy00lL7R7ecULgzjGe/kLpdLqlDSLoMIPolSGJzk8adFwt91d030EXJ3Lac=
+	t=1780827660; cv=none; b=ucFSBv1aAO6dzpvDlKkG9F4fChlrp/4Brfbh2/rcA00302SZp+26UcjIS5HkBicCd7IbxDz2jPZ3xeZoid5O9lm+dXQvx/zi5PNntEdmkHZyhdggQEKN8+DrSWWjZKnyFh9/2JZJbGwKXsCFFKA+wBUcNoaVqgzlqc5bdMa5A44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827656; c=relaxed/simple;
-	bh=37piqtn05+qk035/rS9KIyOxXNPWja4gkKSzGeK8s0o=;
+	s=arc-20240116; t=1780827660; c=relaxed/simple;
+	bh=GQfoZVCq8o5nUC1rbyE2cOMXBKvRKvHx41K/9Y3yzGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fw8ne4LYuI3XTF/4tKMUjI7SjEL/KsWQd5ItSSujivoJYQVKxHbpTgNuadaR0rmKIOERdhY0f9fxNa7p4QEsgG69ObLliNCrtwhiLRrbrSHDAkkGT0CK8ZhC8IBOVgEUQPtxnwpDSC+w+f5WaaSWZcw0Tt2g0baqivaCRwEHb10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qM8whi7s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OHgGyZdlycJOdgTkR/bMoh9SrY8g1oqGddzwjn6TTO6nWeO2sNS5kQwEvDPHuHlv7oJKWxcnIRYWlTDYq5Bzn9FbfriZVJqOsvsFWNzdTrk2kni9zqNH1O6EnyD5IxltKM4O0qI5UMWgJHnMDloA5GkKA1bVLAUc4wmNBPoC7jQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zsdzHPYn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qM8whi7s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D141F00893;
-	Sun,  7 Jun 2026 10:20:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zsdzHPYn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906521F00893;
+	Sun,  7 Jun 2026 10:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827655;
-	bh=1tInqotr0HA6lTP8l+/Un+kD+QmouETrC2EaSOEtOD0=;
+	s=korg; t=1780827659;
+	bh=/Y9O9t691YeoJYDgrJpsmtZz8HQt17BwQtxl4qjwiGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qM8whi7sth2uS+gDoZYg5mUyIJhBjKDtjqIq4nAAjitJWk8q9W3q4LOm+wabzFnoL
-	 HH/lx4tXgzmDnETjFFd9Us1DFyvqjqAfA9jXz6oJM7KbvNkRQcR4pc5xkoh3I8Ayx6
-	 vO019HEc2dl9lKY36WKqPBZPcoo9Hd+Fa6qAtIwo=
+	b=zsdzHPYnNBhhP66iMS7DF8URC+bCzYCFxzp9H2RL/mgYjg9BMcupaHXA4NvOg7yVL
+	 XFG9zZIlKC8IBgH/Z9anKjqYuOmA/qC2tmnRrmNY9aAeP8M5Sn9FehRcPhZEtQxBws
+	 JtMt3A3Kc+EaVolnePA2QRSHTyk2r3kBDqsEwgM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Minh Nguyen <minhnguyen.080505@gmail.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 076/307] net/sched: act_mirred: add loop detection
-Date: Sun,  7 Jun 2026 11:57:53 +0200
-Message-ID: <20260607095730.555094820@linuxfoundation.org>
+Subject: [PATCH 7.0 112/332] net: skbuff: fix pskb_carve leaking zcopy pages
+Date: Sun,  7 Jun 2026 11:58:01 +0200
+Message-ID: <20260607095732.227474620@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,172 +48,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit fe946a751d9b52b7c45ca34899723b314b79b249 ]
+[ Upstream commit ff6e798c2eac3ebd0501ad7e796f583fab928de8 ]
 
-Commit 0f022d32c3ec ("net/sched: Fix mirred deadlock on device recursion")
-added code in the fast path, even when act_mirred is not used.
+When SKBFL_MANAGED_FRAG_REFS is set, frag pages are not refcounted but
+their lifetime is controlled by the attached ubuf_info. To make a copy
+of the skb_shared_info, we either should clear the flag and reference
+the frags, or keep the flag and have frags unreferenced.
 
-Prepare its revert by implementing loop detection in act_mirred.
+pskb_carve_inside_header() and pskb_carve_inside_nonlinear() don't
+follow the rule and thus can leak page references. Let's clear
+SKBFL_MANAGED_FRAG_REFS from the original skb to fix it. It's the
+simplest way to address it, but there are more performant ways to do
+that if it ever becomes a problem.
 
-Adds an array of device pointers in struct netdev_xmit.
-
-tcf_mirred_is_act_redirect() can detect if the array
-already contains the target device.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Tested-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20251014171907.3554413-4-edumazet@google.com
+Link: https://lore.kernel.org/all/20260523085809.26331-1-nvminh232@clc.fitus.edu.vn/
+Fixes: 753f1ca4e1e50 ("net: introduce managed frags infrastructure")
+Reported-by: Minh Nguyen <minhnguyen.080505@gmail.com>
+Reported-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/1e2086aa69217d7f9c8da3d38f5be7160f1b4cd1.1779993185.git.asml.silence@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e80ad525fc7e ("net/sched: act_mirred: Fix return code in early mirred redirect error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice_xmit.h |  9 ++++-
- net/sched/act_mirred.c         | 62 +++++++++++++---------------------
- 2 files changed, 31 insertions(+), 40 deletions(-)
+ net/core/skbuff.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/include/linux/netdevice_xmit.h b/include/linux/netdevice_xmit.h
-index 848735b3a7c02d..59726e6cd2cc67 100644
---- a/include/linux/netdevice_xmit.h
-+++ b/include/linux/netdevice_xmit.h
-@@ -2,6 +2,12 @@
- #ifndef _LINUX_NETDEVICE_XMIT_H
- #define _LINUX_NETDEVICE_XMIT_H
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 13af6f35428d52..95ef64fad657d3 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -6847,6 +6847,11 @@ static int pskb_carve_inside_header(struct sk_buff *skb, const u32 off,
+ 	skb_copy_from_linear_data_offset(skb, off, data, new_hlen);
+ 	skb->len -= off;
  
-+#if IS_ENABLED(CONFIG_NET_ACT_MIRRED)
-+#define MIRRED_NEST_LIMIT	4
-+#endif
++	/* Remove SKBFL_MANAGED_FRAG_REFS instead of trying to honour it
++	 * while refcounting frags below.
++	 */
++	skb_zcopy_downgrade_managed(skb);
 +
-+struct net_device;
+ 	memcpy((struct skb_shared_info *)(data + size),
+ 	       skb_shinfo(skb),
+ 	       offsetof(struct skb_shared_info,
+@@ -6958,6 +6963,11 @@ static int pskb_carve_inside_nonlinear(struct sk_buff *skb, const u32 off,
+ 		return -ENOMEM;
+ 	size = SKB_WITH_OVERHEAD(size);
+ 
++	/* Remove SKBFL_MANAGED_FRAG_REFS instead of trying to honour it
++	 * while refcounting frags below.
++	 */
++	skb_zcopy_downgrade_managed(skb);
 +
- struct netdev_xmit {
- 	u16 recursion;
- 	u8  more;
-@@ -9,7 +15,8 @@ struct netdev_xmit {
- 	u8  skip_txqueue;
- #endif
- #if IS_ENABLED(CONFIG_NET_ACT_MIRRED)
--	u8 sched_mirred_nest;
-+	u8			sched_mirred_nest;
-+	struct net_device	*sched_mirred_dev[MIRRED_NEST_LIMIT];
- #endif
- };
- 
-diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
-index 18d9378a9c1134..35812b6808e0a8 100644
---- a/net/sched/act_mirred.c
-+++ b/net/sched/act_mirred.c
-@@ -29,31 +29,6 @@
- static LIST_HEAD(mirred_list);
- static DEFINE_SPINLOCK(mirred_list_lock);
- 
--#define MIRRED_NEST_LIMIT    4
--
--#ifndef CONFIG_PREEMPT_RT
--static u8 tcf_mirred_nest_level_inc_return(void)
--{
--	return __this_cpu_inc_return(softnet_data.xmit.sched_mirred_nest);
--}
--
--static void tcf_mirred_nest_level_dec(void)
--{
--	__this_cpu_dec(softnet_data.xmit.sched_mirred_nest);
--}
--
--#else
--static u8 tcf_mirred_nest_level_inc_return(void)
--{
--	return current->net_xmit.sched_mirred_nest++;
--}
--
--static void tcf_mirred_nest_level_dec(void)
--{
--	current->net_xmit.sched_mirred_nest--;
--}
--#endif
--
- static bool tcf_mirred_is_act_redirect(int action)
- {
- 	return action == TCA_EGRESS_REDIR || action == TCA_INGRESS_REDIR;
-@@ -439,44 +414,53 @@ TC_INDIRECT_SCOPE int tcf_mirred_act(struct sk_buff *skb,
- {
- 	struct tcf_mirred *m = to_mirred(a);
- 	int retval = READ_ONCE(m->tcf_action);
--	unsigned int nest_level;
-+	struct netdev_xmit *xmit;
- 	bool m_mac_header_xmit;
- 	struct net_device *dev;
--	int m_eaction;
-+	int i, m_eaction;
- 	u32 blockid;
- 
--	nest_level = tcf_mirred_nest_level_inc_return();
--	if (unlikely(nest_level > MIRRED_NEST_LIMIT)) {
-+#ifdef CONFIG_PREEMPT_RT
-+	xmit = &current->net_xmit;
-+#else
-+	xmit = this_cpu_ptr(&softnet_data.xmit);
-+#endif
-+	if (unlikely(xmit->sched_mirred_nest >= MIRRED_NEST_LIMIT)) {
- 		net_warn_ratelimited("Packet exceeded mirred recursion limit on dev %s\n",
- 				     netdev_name(skb->dev));
--		retval = TC_ACT_SHOT;
--		goto dec_nest_level;
-+		return TC_ACT_SHOT;
- 	}
- 
- 	tcf_lastuse_update(&m->tcf_tm);
- 	tcf_action_update_bstats(&m->common, skb);
- 
- 	blockid = READ_ONCE(m->tcfm_blockid);
--	if (blockid) {
--		retval = tcf_blockcast(skb, m, blockid, res, retval);
--		goto dec_nest_level;
--	}
-+	if (blockid)
-+		return tcf_blockcast(skb, m, blockid, res, retval);
- 
- 	dev = rcu_dereference_bh(m->tcfm_dev);
- 	if (unlikely(!dev)) {
- 		pr_notice_once("tc mirred: target device is gone\n");
- 		tcf_action_inc_overlimit_qstats(&m->common);
--		goto dec_nest_level;
-+		return retval;
- 	}
-+	for (i = 0; i < xmit->sched_mirred_nest; i++) {
-+		if (xmit->sched_mirred_dev[i] != dev)
-+			continue;
-+		pr_notice_once("tc mirred: loop on device %s\n",
-+			       netdev_name(dev));
-+		tcf_action_inc_overlimit_qstats(&m->common);
-+		return retval;
-+	}
-+
-+	xmit->sched_mirred_dev[xmit->sched_mirred_nest++] = dev;
- 
- 	m_mac_header_xmit = READ_ONCE(m->tcfm_mac_header_xmit);
- 	m_eaction = READ_ONCE(m->tcfm_eaction);
- 
- 	retval = tcf_mirred_to_dev(skb, m, dev, m_mac_header_xmit, m_eaction,
- 				   retval);
--
--dec_nest_level:
--	tcf_mirred_nest_level_dec();
-+	xmit->sched_mirred_nest--;
- 
- 	return retval;
- }
+ 	memcpy((struct skb_shared_info *)(data + size),
+ 	       skb_shinfo(skb), offsetof(struct skb_shared_info, frags[0]));
+ 	if (skb_orphan_frags(skb, gfp_mask)) {
 -- 
 2.53.0
 
