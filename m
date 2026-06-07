@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9684204E;
-	Sun,  7 Jun 2026 10:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565724204E;
+	Sun,  7 Jun 2026 10:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829596; cv=none; b=hNysBW694jqYp34dn9v57KXm8kg/DZ/zFNCGdcwl4fZgOTGeoQekA0xmmezMa63L1/9YAmXAtBW9fbW+W5gI5wiRIM6fErCUScDFSoxj6KT3vIrlsfiweT2Jqv3uOIFsvKPUATqK51lIKXHt6ZqRw4emkAhwOaJBzKLUoJNpaxk=
+	t=1780829599; cv=none; b=jMnNLeuIMtWElBfFpKIPZDqyjkw5WhhL1Rw5rGcngVJxoB+LbMkj0+XPL94uS8HyaMSE/7PZoF+aCIZuGPVLSTrvwk0l9IrgBneQiCjfIc4ECv3V+NEYKHrEsxUrgI28Ys8z9h5fG2ZbTlweiuz+zkkX570he+DWrMtvhq6Kgrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829596; c=relaxed/simple;
-	bh=ON6kfq5UlmKMvXa8cFIEFjl29zc8b3PMP/3Yp0QpgZU=;
+	s=arc-20240116; t=1780829599; c=relaxed/simple;
+	bh=7SHlzpfrT58scBviEPPM/oAlsUzY7EJwp2UikSOZUPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rdtXyFRW/x2sIJanJDv5sd+luvcf2pUsaVsA4tB1yYBK/wvXFUj9r5RnNfbuGtyy8k+0zIRHBidzIG92VuP0zL+z2DkH1lUrWh/mWAmvQ3py6OwadW8JDuRa7eRS7tDX9usALQKMEfW7gWLPREn0LDZ32Sx6uRTEt+7v90BD9ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o2lcUti9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=rbPhPaaTXZMFwbvOarwkixRKlGTBCuiR7Axkn9Cfnr7bDTrjD1td2y++fIK7k9fle4LjjdVpZ+8dAYeGm0mcDIoN3yuBIM9huE405bquodkBfq8PpQHHUsTNPahyLfI1jUkkLzL22a+uG7Ty+wBF1U5NAkp1X7ph5GgmW0SHIR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xB8Fd9VV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2lcUti9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081681F00893;
-	Sun,  7 Jun 2026 10:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xB8Fd9VV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D251F00893;
+	Sun,  7 Jun 2026 10:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829594;
-	bh=KWw1eyf9Z72d2mLMJaEeIT78fNjIAoHdDD17+BLdA6A=;
+	s=korg; t=1780829597;
+	bh=DWEtiNskyyYvZ5Jk/F69xfFtHP6t7x5ffBwtBm/mUeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o2lcUti9QSGpwZppm0+WyXY7IpEnf5Zz46jaYkGbOxcPUzE+3QEVhM6N2edGPkNV0
-	 vxi1MYlzZ9v42J2ECO1pSdw4oGcfQXMvGv3LFzaoVoSQHIX+2njQ4G01yQ4vaMjCzs
-	 tcmqp/rhiHNlU3wqm17x61Lk2w9dyO9kd8NWbfRw=
+	b=xB8Fd9VVkBBxnlgMzLYuGMOk0pTovR8urRFQaU2xB4W3AKKTqrPNy70Bubm80B0ch
+	 xZGNRcB8gzkmgcnwP1A/lX4VyisabGb5glIOK0lLcrpdYWoKXyBPm6ixBgglzsfOTM
+	 NPnpFYIdsK4D9+Qoqw+bUcu23MDE8Tp+URxqLszY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.12 238/307] thunderbolt: property: Reject dir_len < 4 to prevent size_t underflow
-Date: Sun,  7 Jun 2026 12:00:35 +0200
-Message-ID: <20260607095736.441963612@linuxfoundation.org>
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Grzelak?= <michal.grzelak@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 7.0 293/332] drm/i915/psr: Use DC_OFF wake reference to block DC6 on vblank enable
+Date: Sun,  7 Jun 2026 12:01:02 +0200
+Message-ID: <20260607095738.820529113@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,81 +45,143 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-commit de21b59c29e31c5108ddc04210631bbfab81b997 upstream.
+commit 3549a9649dc7c5fc586ab12f675279283cdcb2a7 upstream.
 
-On the non-root path, __tb_property_parse_dir() takes dir_len from
-entry->length (u16 widened to size_t).  Two distinct OOB conditions
-follow when entry->length < 4:
+We are observing following warnings:
 
-1. The non-root path begins with kmemdup(&block[dir_offset],
-   sizeof(*dir->uuid), ...) which always reads 4 dwords from
-   dir_offset.  tb_property_entry_valid() only enforces
-   dir_offset + entry->length <= block_len, so a crafted entry
-   with dir_offset close to the end of the property block and
-   entry->length in 0..3 passes that gate but lets the UUID copy
-   run off the block (e.g. dir_offset = 497, dir_len = 3 in a
-   500-dword block reads block[497..501]).
+*ERROR* power well DC_off state mismatch (refcount 0/enabled 1)
 
-2. After the kmemdup, content_len = dir_len - 4 underflows size_t
-   to ~SIZE_MAX, nentries becomes SIZE_MAX / 4, and the entry
-   walk runs OOB on each iteration until an entry fails
-   validation or the kernel oopses on an unmapped page.
+gen9_dc_off_power_well_enabled is considering target state DC_STATE_DISABLE
+as DC_OFF power well being enabled. Fix this by using wakeref for the
+purpose.
 
-Reject dir_len < 4 on the non-root path *before* the UUID kmemdup,
-which closes both holes.
+To achieve this we need to modify notification code as well. Currently it
+is possible that PSR gets notified vblank enable/disable twice on same
+status. This is currently not a problem as it is just triggering call to
+intel_display_power_set_target_dc_state with same target state as a
+parameter. When using wakeref this becomes a problem due to reference
+counting. Fix this storing vbank status on last notification and use that
+to ensure there are no more than one notification with same vblank status.
 
-Also move INIT_LIST_HEAD(&dir->properties) up to immediately after
-the dir allocation so the new error-return path (and the existing
-uuid-alloc failure path) calling tb_property_free_dir() sees a
-walkable list rather than the zero-initialized NULL next/prev that
-list_for_each_entry_safe() would oops on.
+v2: ensure there is no subsequent notifications with same status
 
-Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Fixes: aa451abcffb5 ("drm/i915/display: Prevent DC6 while vblank is enabled for Panel Replay")
+Cc: <stable@vger.kernel.org> # v6.13+
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Michał Grzelak <michal.grzelak@intel.com>
+Link: https://patch.msgid.link/20260520104944.239797-2-jouni.hogander@intel.com
+(cherry picked from commit 35485ac56d878192a3829a58cb26503125ec7104)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/property.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display_core.h  |    1 
+ drivers/gpu/drm/i915/display/intel_display_irq.c   |    8 +++++--
+ drivers/gpu/drm/i915/display/intel_display_types.h |    2 +
+ drivers/gpu/drm/i915/display/intel_psr.c           |   24 +++++++--------------
+ 4 files changed, 18 insertions(+), 17 deletions(-)
 
---- a/drivers/thunderbolt/property.c
-+++ b/drivers/thunderbolt/property.c
-@@ -174,10 +174,16 @@ static struct tb_property_dir *__tb_prop
- 	if (!dir)
- 		return NULL;
+--- a/drivers/gpu/drm/i915/display/intel_display_core.h
++++ b/drivers/gpu/drm/i915/display/intel_display_core.h
+@@ -494,6 +494,7 @@ struct intel_display {
+ 		u8 vblank_enabled;
  
-+	INIT_LIST_HEAD(&dir->properties);
+ 		int vblank_enable_count;
++		bool vblank_status_last_notified;
+ 
+ 		struct work_struct vblank_notify_work;
+ 
+--- a/drivers/gpu/drm/i915/display/intel_display_irq.c
++++ b/drivers/gpu/drm/i915/display/intel_display_irq.c
+@@ -1773,8 +1773,12 @@ static void intel_display_vblank_notify_
+ 	struct intel_display *display =
+ 		container_of(work, typeof(*display), irq.vblank_notify_work);
+ 	int vblank_enable_count = READ_ONCE(display->irq.vblank_enable_count);
++	bool vblank_status = !!vblank_enable_count;
+ 
+-	intel_psr_notify_vblank_enable_disable(display, vblank_enable_count);
++	if (display->irq.vblank_status_last_notified != vblank_status) {
++		intel_psr_notify_vblank_enable_disable(display, vblank_status);
++		display->irq.vblank_status_last_notified = vblank_status;
++	}
+ }
+ 
+ int bdw_enable_vblank(struct drm_crtc *_crtc)
+@@ -1787,10 +1791,10 @@ int bdw_enable_vblank(struct drm_crtc *_
+ 	if (gen11_dsi_configure_te(crtc, true))
+ 		return 0;
+ 
++	spin_lock_irqsave(&display->irq.lock, irqflags);
+ 	if (crtc->vblank_psr_notify && display->irq.vblank_enable_count++ == 0)
+ 		schedule_work(&display->irq.vblank_notify_work);
+ 
+-	spin_lock_irqsave(&display->irq.lock, irqflags);
+ 	bdw_enable_pipe_irq(display, pipe, GEN8_PIPE_VBLANK);
+ 	spin_unlock_irqrestore(&display->irq.lock, irqflags);
+ 
+--- a/drivers/gpu/drm/i915/display/intel_display_types.h
++++ b/drivers/gpu/drm/i915/display/intel_display_types.h
+@@ -1785,6 +1785,8 @@ struct intel_psr {
+ 	u8 active_non_psr_pipes;
+ 
+ 	const char *no_psr_reason;
 +
- 	if (is_root) {
- 		content_offset = dir_offset + 2;
- 		content_len = dir_len;
- 	} else {
-+		if (dir_len < 4) {
-+			tb_property_free_dir(dir);
-+			return NULL;
++	struct ref_tracker *vblank_wakeref;
+ };
+ 
+ struct intel_dp {
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -4141,14 +4141,20 @@ void intel_psr_notify_vblank_enable_disa
+ 					    bool enable)
+ {
+ 	struct intel_encoder *encoder;
+-	bool block_dc_states = false;
+ 
+ 	for_each_intel_encoder_with_psr(display->drm, encoder) {
+ 		struct intel_dp *intel_dp = enc_to_intel_dp(encoder);
+ 
+ 		mutex_lock(&intel_dp->psr.lock);
+-		if (CAN_PANEL_REPLAY(intel_dp))
+-			block_dc_states = true;
++		if (CAN_PANEL_REPLAY(intel_dp)) {
++			if (enable)
++				intel_dp->psr.vblank_wakeref =
++					intel_display_power_get(display,
++								POWER_DOMAIN_DC_OFF);
++			else
++				intel_display_power_put(display, POWER_DOMAIN_DC_OFF,
++							intel_dp->psr.vblank_wakeref);
 +		}
- 		dir->uuid = kmemdup(&block[dir_offset], sizeof(*dir->uuid),
- 				    GFP_KERNEL);
- 		if (!dir->uuid) {
-@@ -191,8 +197,6 @@ static struct tb_property_dir *__tb_prop
- 	entries = (const struct tb_property_entry *)&block[content_offset];
- 	nentries = content_len / (sizeof(*entries) / 4);
  
--	INIT_LIST_HEAD(&dir->properties);
+ 		if (intel_dp->psr.enabled && !intel_dp->psr.panel_replay_enabled &&
+ 		    intel_dp->psr.pkg_c_latency_used)
+@@ -4156,18 +4162,6 @@ void intel_psr_notify_vblank_enable_disa
+ 
+ 		mutex_unlock(&intel_dp->psr.lock);
+ 	}
 -
- 	for (i = 0; i < nentries; i++) {
- 		struct tb_property *property;
+-	/*
+-	 * NOTE: intel_display_power_set_target_dc_state is used
+-	 * only by PSR code for DC3CO handling. DC3CO target
+-	 * state is currently disabled in * PSR code. If DC3CO
+-	 * is taken into use we need take that into account here
+-	 * as well.
+-	 */
+-	if (block_dc_states)
+-		intel_display_power_set_target_dc_state(display, enable ?
+-							DC_STATE_DISABLE :
+-							DC_STATE_EN_UPTO_DC6);
+ }
  
+ static void
 
 
