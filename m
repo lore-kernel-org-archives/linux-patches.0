@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C0336DA14;
-	Sun,  7 Jun 2026 11:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E246A36DA14;
+	Sun,  7 Jun 2026 11:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780830104; cv=none; b=J0+qCF3QTHL0jWN75ItiGVpFat417KD16x68ydxW1IAakaFFUXKInhZ1kIVVzgtMqKStFJBlCmWrEKLfGNfDZ5vhKBLA40F+o1njYIO3kjg6p1J8arVw0DoxCOqxNLH76nxA9GTxTQDjPZ3Z1Bgu2wLGBwC7l4wZTQ4a+sdS6Eo=
+	t=1780830107; cv=none; b=ZWj/xxUSmAoDRyDWstMlqVS0ahNTS0UkzFR0Y4nEXausAS1eXYTlhuZZFkNFMv2Qn2HKhPOODHyb/SkqKn53lhkwQNbtY95DYjr5NDItNCPB7iM1NINSSLGp7ma24DDwx7kbCTPamiud/AKvrexAge3py6dLSNgYPSbmmOVsevc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780830104; c=relaxed/simple;
-	bh=GlRPv9ENVBd/olSbFaps/GDXR0kthzMwmVYAxk00Jv8=;
+	s=arc-20240116; t=1780830107; c=relaxed/simple;
+	bh=atsR76PubCXy/cOlKygtjtL5eQVRSh/JcoQjEWgmWAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uzJ9pwli6n3dSKwtlNtJo6kYKUM2dZTRoTQCC7teJ0v1ltkIMxGST/LtdhqbVabp9HgynJ+cMjaAInk7aPzahCQ9ZWNiKTg1PtIwaxJjsLCxPn05GpfA0UVfOJz4LRve2b9SgakLDx9b6eLIHnPB4NO44xqx0Cbj5xkdlzk0zO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4nMFSeM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h6h/6QLFEN2aDfyEZvfuCW4XF0KgH04CJUVJgDFIDUgUh5xRZ2mM8Oh7MHk2fsjj+SX2nkc/PyWSdCZifZrP0HQR9ir/YPx7C4fDK1Of8//p+eBHbnxCb+oaXAnYEIxB6Y8RokXJ1nKEb3xGbW2Zq73EigW/nWaywe9s2bkG1Ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RDw/di4b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4nMFSeM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725C41F00898;
-	Sun,  7 Jun 2026 11:01:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RDw/di4b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D331F00893;
+	Sun,  7 Jun 2026 11:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780830103;
-	bh=Av53Sujx0iCH4plSYMNxSIOG87dH/ffNsIY9Ye/yHUU=;
+	s=korg; t=1780830106;
+	bh=a1i/K/4SmXdBrn5c0e3VzTcwjmxJZc1p+MtS7ZkjE6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U4nMFSeMMOqVbYbCHawdxJIyp8pXLkogmqcCkw/2RgxHuaNxqNJS0+ekSzBU2Vf6F
-	 lPmLjxrKbwHRpeDf5ycSAzWImgGOET5rmRLVqJLPDOTZzmp53LXHgoDqf4bl5eiHIa
-	 AAN2awJiY9c6ZVSzxSeEWAEmMWaVQCEWUHp9Wr2k=
+	b=RDw/di4b5IW4NnXCPegQx20Rw1wISSNiEFSLTM1TLvD2VvXA6DLfUqoCjfDIg7qpH
+	 FGK5s3KgriTsYZEGdjJyAzE/wciLa5g80NcAC33bHlbhdmuG2pA5oALFDtG67dZVNi
+	 lYdIlY1EwP4d45KNrLcZuWTJ9bhmcqOb9vjwh9Bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 309/315] hwmon: (pmbus/adm1266) serialize GPIO PMBus accesses with pmbus_lock
-Date: Sun,  7 Jun 2026 12:01:36 +0200
-Message-ID: <20260607095738.965460662@linuxfoundation.org>
+Subject: [PATCH 6.12 283/307] mptcp: reset rcv wnd on disconnect
+Date: Sun,  7 Jun 2026 12:01:20 +0200
+Message-ID: <20260607095738.125325952@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,67 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit bab8c6fb5af8df7e753d196c1262cb78e92ca872 ]
+[ Upstream commit 0981f90e1a05773a4c29c6e720f5ea1e3c8f1876 ]
 
-adm1266_gpio_get(), adm1266_gpio_get_multiple(), and
-adm1266_gpio_dbg_show() all issue PMBus reads against the device but
-none of them take pmbus_lock.  The pmbus_core framework holds
-pmbus_lock around its own multi-transaction sequences (notably the
-"set PAGE, then read paged register" pattern used by hwmon
-attributes), so an unlocked GPIO accessor can land between a PAGE
-write and the subsequent paged read in another thread and corrupt
-either side's view of the device state machine.
+If the MPTCP socket fallback to TCP before the MP handshake completion,
+the IASN remain 0, and the rcv_wnd_sent field is not explicitly
+initialized, just incremented over time with the data transfer.
 
-Take pmbus_lock at the top of each of the three accessors via the
-scope-based guard().  The lock is uncontended in the common case and
-adds only a single mutex round-trip per call.
+At disconnect time such value is not cleared. If the next connection falls
+back to TCP before the MP handshake completion, the data transfer will
+keep incrementing the receive window end sequence starting from the last
+value used in the previous connection: the announced window will be
+unrelated from the actual receiver buffer size and likely too big.
 
-Fixes: d98dfad35c38 ("hwmon: (pmbus/adm1266) Add support for GPIOs")
+Address the issue zeroing the field at disconnect time.
+
+Fixes: b29fcfb54cd7 ("mptcp: full disconnect implementation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260518-adm1266-gpio-fixes-v3-6-e425e4f88139@nexthop.ai
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260515-net-mptcp-misc-fixes-7-1-rc4-v2-4-701e96419f2f@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/adm1266.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/mptcp/protocol.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/hwmon/pmbus/adm1266.c
-+++ b/drivers/hwmon/pmbus/adm1266.c
-@@ -173,6 +173,8 @@ static int adm1266_gpio_get(struct gpio_
- 	else
- 		pmbus_cmd = ADM1266_PDIO_STATUS;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3371,6 +3371,7 @@ static int mptcp_disconnect(struct sock
  
-+	guard(pmbus_lock)(data->client);
-+
- 	ret = i2c_smbus_read_block_data(data->client, pmbus_cmd, read_buf);
- 	if (ret < 0)
- 		return ret;
-@@ -195,6 +197,8 @@ static int adm1266_gpio_get_multiple(str
- 	unsigned int gpio_nr;
- 	int ret;
+ 	/* for fallback's sake */
+ 	WRITE_ONCE(msk->ack_seq, 0);
++	atomic64_set(&msk->rcv_wnd_sent, 0);
  
-+	guard(pmbus_lock)(data->client);
-+
- 	ret = i2c_smbus_read_block_data(data->client, ADM1266_GPIO_STATUS, read_buf);
- 	if (ret < 0)
- 		return ret;
-@@ -236,6 +240,8 @@ static void adm1266_gpio_dbg_show(struct
- 	int ret;
- 	int i;
- 
-+	guard(pmbus_lock)(data->client);
-+
- 	for (i = 0; i < ADM1266_GPIO_NR; i++) {
- 		write_cmd = adm1266_gpio_mapping[i][1];
- 		ret = adm1266_pmbus_block_xfer(data, ADM1266_GPIO_CONFIG, 1, &write_cmd, read_buf);
+ 	WRITE_ONCE(sk->sk_shutdown, 0);
+ 	sk_error_report(sk);
 
 
