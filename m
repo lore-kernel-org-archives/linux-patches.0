@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79ED329E7E;
-	Sun,  7 Jun 2026 10:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C7E3195FD;
+	Sun,  7 Jun 2026 10:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828830; cv=none; b=Zk4tL58XzKgaDyFGNbM0OaGBzrVYbZp3xtQ4TtJCUtCtbRRmSx4VxWVitzPSL6+KT5vaE9hDivQ7HtcmxJx/SHlWTi6ByOr29+zq82aa/Rog0eFQEf58M0axe9qpQ553QKKGXTAHMK0bzl6jNWqt20W3+RAqE90Z+oozZgHvjYo=
+	t=1780828833; cv=none; b=dsI6Ow6gHpCsRyQ4Y3NRJZXOUZE7+wdeROd0PNvlLaTSEVF1uYekEf1bwoSwE5mawLCv0w5Mth5a7ZilappCiphznvGxrTlC+cFHplnYCdGeUBYQ2VV7NHNEmxHVMocq9SbZeqBckL+POLyDt8n2MMPV3sy6/K80jnCTzMzAyiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828830; c=relaxed/simple;
-	bh=FTWJTAwN8viDtDyPvThezmYMJRpF/annLn4MBnchmVs=;
+	s=arc-20240116; t=1780828833; c=relaxed/simple;
+	bh=XOAbIzgVLcbhJKvrKaTRQahCmPKiwzog6Wlyoj5lzdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ddv43HmmVMss5TzVGEAgekG8VRjd448bs0LMotai3QRCa2Pzs7iAlgM6oVTFetFsBXcl56qDI8SqFdKHp6nAqY9eQOPSTNgsCUSY29JuZNOZzKI3FwdpiHXgavLcyOjSKHfQ/6lvWL2Bwq9qsYPwhX61Nx6+3TLw3ybG60VOZPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kczK35J/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MAhxpdOibgnNFblxmntI1g1JojP91C4tKgLklElNjm5Fy28ylw+Bwg93whrXpOqQ+GwdtbgE4h+OANQzXJ9Ni1GM/JYZRyZIONI0hKVvZJUeYF1Z0d0ig3w7CW7l2qiWqxQIpBbZO9OBPC4+O6Bct0SRh8XLofCjaUlhxUb+QHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JPc2b8DZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kczK35J/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D93C1F00893;
-	Sun,  7 Jun 2026 10:40:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JPc2b8DZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 624BE1F00893;
+	Sun,  7 Jun 2026 10:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828828;
-	bh=mM2Kr57uc/skvaQkRMXkAgDVOiyM2ofB9asuLglQpE8=;
+	s=korg; t=1780828832;
+	bh=fj10uKCpPrFS3leCU3UuAsOS1msa5jwhwkavcYLT95Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kczK35J/el4j+HmODb6ehLYGujJMfdOk68G2uBRRJBlfpNx80jeY0+E3sKDf39ipU
-	 d0J7C7lSkJ1LMTihoTGn7gPpAow9HMlP3e1Fn716DoV4TEkBrPjZvqbbXnMuWVzPa9
-	 TfYmg32Agx7eJVR9p6zq+FDjZtg3iHGVJlmRUcG0=
+	b=JPc2b8DZDVB7J44A6mtGE9pcgNpwqJTZCv6ZkMlN/75Fi6jZbcMGnEgMTrOKTZ9yI
+	 v3VUsAVnvuXHo/nvqfZTkUaobu734xW+Vq5QnnG43KXmNRp4QtvwOmQlHdHVsERvQH
+	 dT1fcJrW/LqWzmh5C/utAgtg1nFE+uh1hk6ItmvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyi.xie@ntu.edu.sg>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.0 219/332] ip6: vti: Use ip6_tnl.net in vti6_changelink().
-Date: Sun,  7 Jun 2026 11:59:48 +0200
-Message-ID: <20260607095736.105028750@linuxfoundation.org>
+	Salah Triki <salah.triki@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 6.12 172/307] iio: temperature: tsys01: fix broken PROM checksum validation
+Date: Sun,  7 Jun 2026 11:59:29 +0200
+Message-ID: <20260607095734.035705484@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,80 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-commit 11b326fb0a374f4654f9be22d0f0f7abd9f7d3fe upstream.
+commit 4701e471c16866e7aa8f5e6a3a6b0d31e097e2c9 upstream.
 
-ip netns add ns1
-ip netns add ns2
-ip -n ns1 link add vti6_test type vti6 remote ::1 local ::2 key 7
-ip -n ns1 link set vti6_test netns ns2
-ip -n ns2 link set vti6_test type vti6 remote ::3 local ::4 key 9
-ip netns del ns2
-ip netns del ns1
-[  132.495484] ------------[ cut here ]------------
-[  132.497609] kernel BUG at net/core/dev.c:12376!
+The current implementation of tsys01_crc_valid() incorrectly sums the
+first word (n_prom[0]) repeatedly instead of iterating over the 8 words
+retrieved from the PROM. This leads to a checksum mismatch and probe
+failure on hardware.
 
-Commit 61220ab34948 ("vti6: Enable namespace changing") dropped
-NETIF_F_NETNS_LOCAL from vti6 devices. A vti6 tunnel can then
-move through IFLA_NET_NS_FD. After the move dev_net(dev) points
-at the new netns while t->net stays at the creation netns.
+According to the TSYS01 datasheet, the PROM consists of 8 words. A valid
+check must iterate through all 8 words to verify the integrity of the
+calibration data. The current driver only checks the first word 8 times.
 
-vti6_changelink() and vti6_update() still use dev_net(dev) and
-dev_net(t->dev). They unlink from one per netns hash and relink
-into another. The creation netns is left with a stale entry.
-cleanup_net() of that netns later walks freed memory.
+Note: This fix was identified during a code audit and is based on
+datasheet specifications. It has not been tested on real hardware.
 
-Reachable from an unprivileged user namespace (unshare --user
---map-root-user --net). Cross tenant scope on container hosts.
-
-Fixes: 61220ab34948 ("vti6: Enable namespace changing")
-Reported-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Cc: stable@vger.kernel.org # v5.15+
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260521130555.3421684-2-maoyixie.tju@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 43e53407f680 ("Add tsys01 meas-spec driver support")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_vti.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/iio/temperature/tsys01.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/ip6_vti.c
-+++ b/net/ipv6/ip6_vti.c
-@@ -722,10 +722,11 @@ vti6_tnl_change(struct ip6_tnl *t, const
- static int vti6_update(struct ip6_tnl *t, struct __ip6_tnl_parm *p,
- 		       bool keep_mtu)
- {
--	struct net *net = dev_net(t->dev);
--	struct vti6_net *ip6n = net_generic(net, vti6_net_id);
-+	struct net *net = t->net;
-+	struct vti6_net *ip6n;
- 	int err;
+--- a/drivers/iio/temperature/tsys01.c
++++ b/drivers/iio/temperature/tsys01.c
+@@ -119,7 +119,7 @@ static bool tsys01_crc_valid(u16 *n_prom
+ 	u8 sum = 0;
  
-+	ip6n = net_generic(net, vti6_net_id);
- 	vti6_tnl_unlink(ip6n, t);
- 	synchronize_net();
- 	err = vti6_tnl_change(t, p, keep_mtu);
-@@ -1038,11 +1039,12 @@ static int vti6_changelink(struct net_de
- 			   struct nlattr *data[],
- 			   struct netlink_ext_ack *extack)
- {
--	struct ip6_tnl *t;
-+	struct ip6_tnl *t = netdev_priv(dev);
-+	struct net *net = t->net;
- 	struct __ip6_tnl_parm p;
--	struct net *net = dev_net(dev);
--	struct vti6_net *ip6n = net_generic(net, vti6_net_id);
-+	struct vti6_net *ip6n;
+ 	for (cnt = 0; cnt < TSYS01_PROM_WORDS_NB; cnt++)
+-		sum += ((n_prom[0] >> 8) + (n_prom[0] & 0xFF));
++		sum += ((n_prom[cnt] >> 8) + (n_prom[cnt] & 0xFF));
  
-+	ip6n = net_generic(net, vti6_net_id);
- 	if (dev == ip6n->fb_tnl_dev)
- 		return -EINVAL;
- 
+ 	return (sum == 0);
+ }
 
 
