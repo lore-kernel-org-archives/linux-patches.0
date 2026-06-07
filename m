@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92611DE8AE;
-	Sun,  7 Jun 2026 10:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D621DE8AE;
+	Sun,  7 Jun 2026 10:09:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826988; cv=none; b=oAFxWRrzEcoGZTLyfXQiJ1t01TIK9leAueBLlbyM5tVZ6UaWCu4Dz8fFdsKE6givUumdGJJkj9xi4tnKSwf2lE4v45BUPtPm47AGYzl+7nYoyYKtsVWAKCz1C/mbAGZXNGSJ/jpeimYu/DAmBUdk+PEQTxSFgywzaSIBAj+CeYw=
+	t=1780826992; cv=none; b=c3c874bCOlH26AxmLwLVWKKkizNmAAfGChHc9rE1DbVF51TP6GtgQC4aHfw0zKOoNXnv8MKlmERaAnS8uXqnrKOmp+S5j/MkCN6EFQgJwhNgLV/gG43BAReVCAItTl6T0ml1ZP8II1oB1TIiGPSNSWgyi7UFD1zBcDGKB5hz3bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826988; c=relaxed/simple;
-	bh=BLS6S/7FxlHFqJnRhm4lPhH399omtoER/AvxHD4dxNI=;
+	s=arc-20240116; t=1780826992; c=relaxed/simple;
+	bh=us+NBbaijlxxVU7imwvoOWb0r5KUKv4fFb7Gu9yVQm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQm6RXi/QpS3vR/90OAszDrbMDHRb2RfhUfRaUFsLPYBFF5ME00QgIOo9WHfjJEfHi2mi7guORbfqULerZPPyuviyoXJAwIDUbyrrYntvlQ2sSvkUV3WsvQey9V3U516LrD4BREB6TsHA3xp/M48Hx74nz+g7LV4lzJRNjLKO8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WoZLkG2z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gGx6e5rC+10ZTDdDNpgLTyBGe6+00oDm9h8e08D1KT8LbsR0eAS36XeA0sgmVSRC0Ozj1WXWGFMirQS5vAtBtycbTL/n3bm7S+jUWRwEfiNBrDcVbSHburUslnDY2phw34wtRpp8RibBJ5UhJUvmBCw9GfvKMtmntv5fw0O4pvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSh8Tsqv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WoZLkG2z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29FE61F00893;
-	Sun,  7 Jun 2026 10:09:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSh8Tsqv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EDF21F00893;
+	Sun,  7 Jun 2026 10:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826987;
-	bh=osCT1OFlpKgTazNObqSyHHVg/wm+9i3SVJWngFxXXMY=;
+	s=korg; t=1780826991;
+	bh=R6r+xFO4j2PEZ9u8FohbxdkIr4j3iFZmMv8ryha0YEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WoZLkG2zkYfgMaw/OD4LMNGKIUuZ82ow2xwrH5EHAwj6uVZBqILDPmSnnAUHBf+Wv
-	 mFQ6EUsCiqlr7AX41OeoI7iXOroLyEvFnHxXkb0D7BWmaCap8+anJPIZOLOfCnl3SX
-	 7Ryw9qwLL1kiuPot/XSQh7nNzonCORYk39Djrt+I=
+	b=HSh8Tsqv4WnLIdqgBWoEHUXtZkaCh/on0B/NQLbYAhjpihLhjqFUaNjAOnt6JO6F1
+	 VfQc1PPZ3C6O7MPPtbwssNUcikMYttS2SAHSW0o9I+B+ihVjIG0BDSXwGlMOl5ZLHr
+	 bnw6GJu083qPYE9fRiEwye98gCrqmXpGd26vbjSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Lin <leo@depthfirst.com>,
-	David Ahern <dahern@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 009/315] xfrm: Check for underflow in xfrm_state_mtu
-Date: Sun,  7 Jun 2026 11:56:36 +0200
-Message-ID: <20260607095727.849611722@linuxfoundation.org>
+Subject: [PATCH 7.0 025/332] net: netlink: fix sending unassigned nsid after assigned one
+Date: Sun,  7 Jun 2026 11:56:34 +0200
+Message-ID: <20260607095729.001534242@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,87 +48,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Ahern <dahern@nvidia.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit 742b04d0550b0ec89dcbc99537ec88653bd1ad90 ]
+[ Upstream commit 70f8592ee90585272018a725054b6eb2ab7e99ca ]
 
-Leo Lin reported OOB write issue in esp component:
+If the current skb is not shared, it is re-used directly for all the
+sockets subscribed to the notification.  If we have remote all-nsid
+socket receiving a message first, then the 'nsid_is_set' will be
+set to 'true'.  If the nsid is NOT_ASSIGNED for the next socket in
+the list, the 'nsid_is_set' will remain 'true' and the negative value
+is be delivered to the user space.  All subsequent nsid values will be
+delivered as well, since there is no code path that sets the flag
+back to 'false'.
 
-  xfrm_state_mtu() returns u32 but performs its arithmetic in unsigned
-  modulo-2^32 space using an attacker-influenced "header_len + authsize +
-  net_adj" subtracted from a small "mtu" argument. A nobody user can
-  install an IPv4 ESP tunnel SA with a large authentication key
-  (XFRMA_ALG_AUTH_TRUNC, e.g. hmac(sha512), 64-byte key, 64-byte trunc),
-  configure a small interface MTU (68 bytes), and set XFRMA_TFCPAD to a
-  large value. When a single UDP datagram is then sent through the
-  tunnel, xfrm_state_mtu() underflows to a near-2^32 value, and
-  esp_output() consumes it as a signed int via:
+Fix that by always dropping the flag to 'false' first.
 
-        padto      = min(x->tfcpad, xfrm_state_mtu(x, mtu_cached))
-        esp.tfclen = padto - skb->len   (assigned to int)
-
-  esp.tfclen ends up negative (e.g. -207). It is sign-extended to size_t
-  when passed to memset() inside esp_output_fill_trailer(), producing a
-  ~16 EB write of zeroes at skb_tail_pointer(skb). KASAN logs it as
-  "Write of size 18446744073709551537 at addr ffff888...".
-
-Check for underflow and return 1. This causes the sendmsg attempt to
-fail with ENETUNREACH.
-
-Fixes: c5c252389374 ("[XFRM]: Optimize MTU calculation")
-Reported-by: Leo Lin <leo@depthfirst.com>
-Assisted-by: Codex:26.506.31004
-Signed-off-by: David Ahern <dahern@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 7212462fa6fd ("netlink: don't send unknown nsid")
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Acked-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Link: https://patch.msgid.link/20260520172317.175168-2-i.maximets@ovn.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_state.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ net/netlink/af_netlink.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index f6ba58f18ac18e..1b81e92e3eee78 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -3113,10 +3113,14 @@ u32 xfrm_state_mtu(struct xfrm_state *x, int mtu)
- 	const struct xfrm_type *type = READ_ONCE(x->type);
- 	struct crypto_aead *aead;
- 	u32 blksize, net_adj = 0;
-+	u32 overhead, payload_mtu;
- 
- 	if (x->km.state != XFRM_STATE_VALID ||
--	    !type || type->proto != IPPROTO_ESP)
-+	    !type || type->proto != IPPROTO_ESP) {
-+		if (mtu <= x->props.header_len)
-+			return 1;
- 		return mtu - x->props.header_len;
-+	}
- 
- 	aead = x->data;
- 	blksize = ALIGN(crypto_aead_blocksize(aead), 4);
-@@ -3139,8 +3143,17 @@ u32 xfrm_state_mtu(struct xfrm_state *x, int mtu)
- 		break;
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 4d609d5cf40653..441c9852b25714 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1482,6 +1482,7 @@ static void do_one_broadcast(struct sock *sk,
+ 		p->skb2 = NULL;
+ 		goto out;
  	}
- 
--	return ((mtu - x->props.header_len - crypto_aead_authsize(aead) -
--		 net_adj) & ~(blksize - 1)) + net_adj - 2;
-+	overhead = x->props.header_len + crypto_aead_authsize(aead) + net_adj;
-+	if (mtu <= overhead)
-+		return 1;
-+
-+	payload_mtu = mtu - overhead;
-+	payload_mtu &= ~(blksize - 1);
-+	if (payload_mtu <= 2)
-+		return 1;
-+
-+	return payload_mtu + net_adj - 2;
-+
- }
- EXPORT_SYMBOL_GPL(xfrm_state_mtu);
- 
++	NETLINK_CB(p->skb2).nsid_is_set = false;
+ 	NETLINK_CB(p->skb2).nsid = peernet2id(sock_net(sk), p->net);
+ 	if (NETLINK_CB(p->skb2).nsid != NETNSA_NSID_NOT_ASSIGNED)
+ 		NETLINK_CB(p->skb2).nsid_is_set = true;
 -- 
 2.53.0
 
