@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0802D8378;
-	Sun,  7 Jun 2026 10:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C7D2D8378;
+	Sun,  7 Jun 2026 10:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829288; cv=none; b=dDA6oIIvwRq+t1B6wjDY7/Bhx6uhUcN7GkuKtc6OBM2AlO1ijV9eS4UApjsDqjsgFo3olWQWXWPia39oCrw4JIlzcstVI8nW0goyGZggRkA9hvhqCY2i5rnMbC52GzVPcHH7CF7F4dKT4ZXknBnjj9SBTi6oHZ+z5oCB03AosOU=
+	t=1780829292; cv=none; b=oWL9MbSwkierZZY4gOFQfxv9PfB0ltM3LWyrgFAmBSHIRCGz+SlJn44kHpDfbU4fEx+GHUSyl6gtXOqKIeJkJvg+a8xuGZLPIkT6ssazp5Fpy1N9RbEjFu+HlsWEWxGVljaE3NPn6jBKC6qKCazGkfgFL2UiQ4JCSkjdyy2yDzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829288; c=relaxed/simple;
-	bh=+2+S0O5MnTD9qqCf4qimSrznS3JYdxLz+qzd9gVveds=;
+	s=arc-20240116; t=1780829292; c=relaxed/simple;
+	bh=LciETTITXJzhzty/ksCxEeZLD6bktkCbItfWesgn8qM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SipfeGfa+BJz5a1Lwe8fWNWgPKdwZ2Im04iW0zXz+EeLcu9/7HEdqvI4w/40MPJ5tjtKOGkTtXovnQJIzrJR/hvn9QEg3y3Yso7he2FRjRqavvnLeVyVaUsdW3qD4lB6IFkV7ScC3QKgSFMxEuTJYipWyPFWe+uDoV+Qgus6vLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrV3XcXB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sPX1WnlbnWvE7jasjOX8GwY4RswE9sDTaZyaSmkzq6MnxfheR9weXP2A+FLPvQn2oLj2Xl2Z7sq6ezMoiJb5dGSpZRn4YBoFqR7Wp+JiWFbc1IshIh50wS5C/YM9P0crtIAZ72Yx8nnM0Bp1c55NQtCTyG63w8JhT57Bht2K9DM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzN+ujQh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrV3XcXB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A4E1F00893;
-	Sun,  7 Jun 2026 10:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzN+ujQh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A7E1F00893;
+	Sun,  7 Jun 2026 10:48:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829287;
-	bh=vhChUoGk5c+UgBLNFtuJOAM/HnwMPR0iaAISGCnSrwM=;
+	s=korg; t=1780829291;
+	bh=nTF1Z1qHm12ThAmBOlWVU8KZTqXlHe2KY2qccKUYjGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IrV3XcXBgPsfmFfzqFmPwCLrajLpWODhURWS8G8Wz7vLe9CNUZAsglhouNhbQM5KD
-	 u9imeqwp4wJ52QVyQ+AHzp0Au1hpTZYhr4Qnm192vjtmzYvJw3YvBiMAHLrdgZPN/T
-	 Klgsebimfh8lur/xGYb6qJbNaJauMcAiF4UNmncw=
+	b=jzN+ujQhEFEqegZ3f2jDl+SBj5wz2eWYnmwId+H9mR5iTUfM207Jo5LGl1M0f09g4
+	 07iply41hRrzQ5kYgOf11GGWg+3xNj3WOXq3B61NDmEJmyRiTiRTLZDjIbldwxKe4D
+	 fD/eZFivP6ElQy6ad1B6h/JMvQITYPL6/mzxn6kE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.12 211/307] comedi: comedi_test: Fix limiting of convert_arg in waveform_ai_cmdtest()
-Date: Sun,  7 Jun 2026 12:00:08 +0200
-Message-ID: <20260607095735.466927678@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	RD Babiera <rdbabiera@google.com>,
+	Badhri Jagan Sridharan <badhri@google.com>
+Subject: [PATCH 7.0 261/332] usb: typec: tcpm: improve handling of DISCOVER_MODES failures
+Date: Sun,  7 Jun 2026 12:00:30 +0200
+Message-ID: <20260607095737.629781826@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,73 +49,189 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-commit 8a3bee801d420be8a7a0bae4a26547b353b8fe22 upstream.
+commit c06e6cd488194e37ed4dc29d1488d1ffb760de60 upstream.
 
-The function checks and possibly modifies the description of an
-asynchronous command to be run on the analog input subdevice of a comedi
-device attached to the "comedi_test" driver, returning 0 if no
-modifications were required, or a positive value that indicates which
-step of the checking process it failed on.  Step 4 fixes up various
-argument values for various trigger sources.
+UGREEN USB-C Multifunction Adapter Model CM512 (AKA "Revodok 107")
+exposes two SVIDs: 0xff01 (DP Alt Mode) and 0x1d5c. The DISCOVER_MODES
+step succeeds for 0xff01 and gets a NAK for 0x1d5c. Currently this
+results in DP Alt Mode not being registered either, since the modes
+are only registered once all of them have been discovered. The NAK
+results in the processing being stopped and thus no Alt modes being
+registered.
 
-There are two bugs in the fixing up of the `convert_arg` value to keep
-the `scan_begin_arg` value within the range of `unsigned int` when
-`scan_begin_src` and `convert_src` both have the value `TRIG_TIMER`,
-which indicates that the corresponding `_arg` values hold a time period
-in nanoseconds.  The code also uses `scan_end_arg` which hold the number
-of "conversions" within each "scan".  The goal is to end up with the
-scan period being less than or equal to the convert period multiplied by
-the number of conversions per scan.  It intends to do that by clamping
-the `convert_arg` value to a maximum value of `UINT_MAX / scan_end_arg`
-rounded down to a multiple of 1000 (`NSEC_PER_USEC`).
+Improve the situation by handling the NAK gracefully and continue
+processing the other modes.
 
-(The rounding from nanoseconds to microseconds is because the driver is
-modelling a device that uses a 1 MHz clock for timing.  This is partly
-because that is a more typical timing base for real hardware devices
-driven by comedi, and partly because the driver used to use `struct
-timeval` internally.)
+Before this change, the TCPM log ends like this:
 
-The first bug is that the code checks if `scan_begin_arg == TRIG_TIMER`
-when it should be checking if `scan_begin_src == TRIG_TIMER`.  The
-bugged check will always fail because if `scan_begin_src == TRIG_TIMER`,
-then `scan_begin_arg` will be at least 1000 (`NSEC_PER_USEC`), otherwise
-`scan_begin_src == TRIG_FOLLOW` and `scan_begin_arg` will be 0.  (N.B
-`TRIG_TIMER` is defined as `0x10`.)  The second bug is that is rounding
-the maximum value down to a multiple of 1000000000 (`NSEC_PER_SEC`)
-instead of 1000 (`NSEC_PER_USEC`), however this bug is not reached due
-to the first bug.  This patch fixes both bugs.
+(more log entries before this)
+[    5.028287] AMS DISCOVER_SVIDS finished
+[    5.028291] cc:=4
+[    5.040040] SVID 1: 0xff01
+[    5.040054] SVID 2: 0x1d5c
+[    5.040082] AMS DISCOVER_MODES start
+[    5.040096] PD TX, header: 0x1b6f
+[    5.050946] PD TX complete, status: 0
+[    5.059609] PD RX, header: 0x264f [1]
+[    5.059626] Rx VDM cmd 0xff018043 type 1 cmd 3 len 2
+[    5.059640] AMS DISCOVER_MODES finished
+[    5.059644] cc:=4
+[    5.069994]  Alternate mode 0: SVID 0xff01, VDO 1: 0x000c0045
+[    5.070029] AMS DISCOVER_MODES start
+[    5.070043] PD TX, header: 0x1d6f
+[    5.081139] PD TX complete, status: 0
+[    5.087498] PD RX, header: 0x184f [1]
+[    5.087515] Rx VDM cmd 0x1d5c8083 type 2 cmd 3 len 1
+[    5.087529] AMS DISCOVER_MODES finished
+[    5.087534] cc:=4
+(no further log entries after this point)
 
-Fixes: 783ddaebd397 ("staging: comedi: comedi_test: support scan_begin_src == TRIG_FOLLOW")
-Fixes: 5afdcad2f818 ("staging: comedi: comedi_test: limit maximum convert_arg")
+After this patch the TCPM log looks exactly the same, but then
+continues like this:
+
+[    5.100222] Skip SVID 0x1d5c (failed to discover mode)
+[    5.101699] AMS DFP_TO_UFP_ENTER_MODE start
+(log goes on as the system initializes DP AltMode)
+
 Cc: stable <stable@kernel.org>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260422144637.27692-1-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 41d9d75344d9 ("usb: typec: tcpm: add discover svids and discover modes support for sop'")
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: RD Babiera <rdbabiera@google.com>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Link: https://patch.msgid.link/20260429-tcpm-discover-modes-nak-fix-v4-1-75945d0ed30f@collabora.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/comedi_test.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |   97 ++++++++++++++++++++++++++----------------
+ 1 file changed, 61 insertions(+), 36 deletions(-)
 
---- a/drivers/comedi/drivers/comedi_test.c
-+++ b/drivers/comedi/drivers/comedi_test.c
-@@ -324,10 +324,10 @@ static int waveform_ai_cmdtest(struct co
- 		arg = min(arg,
- 			  rounddown(UINT_MAX, (unsigned int)NSEC_PER_USEC));
- 		arg = NSEC_PER_USEC * DIV_ROUND_CLOSEST(arg, NSEC_PER_USEC);
--		if (cmd->scan_begin_arg == TRIG_TIMER) {
-+		if (cmd->scan_begin_src == TRIG_TIMER) {
- 			/* limit convert_arg to keep scan_begin_arg in range */
- 			limit = UINT_MAX / cmd->scan_end_arg;
--			limit = rounddown(limit, (unsigned int)NSEC_PER_SEC);
-+			limit = rounddown(limit, (unsigned int)NSEC_PER_USEC);
- 			arg = min(arg, limit);
- 		}
- 		err |= comedi_check_trigger_arg_is(&cmd->convert_arg, arg);
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -2002,6 +2002,55 @@ static bool tcpm_cable_vdm_supported(str
+ 	       tcpm_can_communicate_sop_prime(port);
+ }
+ 
++static int tcpm_handle_discover_mode(struct tcpm_port *port, u32 *response,
++				     enum tcpm_transmit_type rx_sop_type,
++				     enum tcpm_transmit_type *response_tx_sop_type)
++{
++	struct typec_port *typec = port->typec_port;
++	struct pd_mode_data *modep;
++
++	if (rx_sop_type == TCPC_TX_SOP) {
++		modep = &port->mode_data;
++		modep->svid_index++;
++
++		if (modep->svid_index < modep->nsvids) {
++			u16 svid = modep->svids[modep->svid_index];
++			*response_tx_sop_type = TCPC_TX_SOP;
++			response[0] = VDO(svid, 1,
++					  typec_get_negotiated_svdm_version(typec),
++					  CMD_DISCOVER_MODES);
++			return 1;
++		}
++
++		if (tcpm_cable_vdm_supported(port)) {
++			*response_tx_sop_type = TCPC_TX_SOP_PRIME;
++			response[0] = VDO(USB_SID_PD, 1,
++					  typec_get_cable_svdm_version(typec),
++					  CMD_DISCOVER_SVID);
++			return 1;
++		}
++
++		tcpm_register_partner_altmodes(port);
++	} else if (rx_sop_type == TCPC_TX_SOP_PRIME) {
++		modep = &port->mode_data_prime;
++		modep->svid_index++;
++
++		if (modep->svid_index < modep->nsvids) {
++			u16 svid = modep->svids[modep->svid_index];
++			*response_tx_sop_type = TCPC_TX_SOP_PRIME;
++			response[0] = VDO(svid, 1,
++					  typec_get_cable_svdm_version(typec),
++					  CMD_DISCOVER_MODES);
++			return 1;
++		}
++
++		tcpm_register_plug_altmodes(port);
++		tcpm_register_partner_altmodes(port);
++	}
++
++	return 0;
++}
++
+ static int tcpm_pd_svdm(struct tcpm_port *port, struct typec_altmode *adev,
+ 			const u32 *p, int cnt, u32 *response,
+ 			enum adev_actions *adev_action,
+@@ -2259,41 +2308,11 @@ static int tcpm_pd_svdm(struct tcpm_port
+ 			}
+ 			break;
+ 		case CMD_DISCOVER_MODES:
+-			if (rx_sop_type == TCPC_TX_SOP) {
+-				/* 6.4.4.3.3 */
+-				svdm_consume_modes(port, p, cnt, rx_sop_type);
+-				modep->svid_index++;
+-				if (modep->svid_index < modep->nsvids) {
+-					u16 svid = modep->svids[modep->svid_index];
+-					*response_tx_sop_type = TCPC_TX_SOP;
+-					response[0] = VDO(svid, 1, svdm_version,
+-							  CMD_DISCOVER_MODES);
+-					rlen = 1;
+-				} else if (tcpm_cable_vdm_supported(port)) {
+-					*response_tx_sop_type = TCPC_TX_SOP_PRIME;
+-					response[0] = VDO(USB_SID_PD, 1,
+-							  typec_get_cable_svdm_version(typec),
+-							  CMD_DISCOVER_SVID);
+-					rlen = 1;
+-				} else {
+-					tcpm_register_partner_altmodes(port);
+-				}
+-			} else if (rx_sop_type == TCPC_TX_SOP_PRIME) {
+-				/* 6.4.4.3.3 */
+-				svdm_consume_modes(port, p, cnt, rx_sop_type);
+-				modep_prime->svid_index++;
+-				if (modep_prime->svid_index < modep_prime->nsvids) {
+-					u16 svid = modep_prime->svids[modep_prime->svid_index];
+-					*response_tx_sop_type = TCPC_TX_SOP_PRIME;
+-					response[0] = VDO(svid, 1,
+-							  typec_get_cable_svdm_version(typec),
+-							  CMD_DISCOVER_MODES);
+-					rlen = 1;
+-				} else {
+-					tcpm_register_plug_altmodes(port);
+-					tcpm_register_partner_altmodes(port);
+-				}
+-			}
++			/* 6.4.4.3.3 */
++			svdm_consume_modes(port, p, cnt, rx_sop_type);
++			rlen = tcpm_handle_discover_mode(port, response,
++							 rx_sop_type,
++							 response_tx_sop_type);
+ 			break;
+ 		case CMD_ENTER_MODE:
+ 			*response_tx_sop_type = rx_sop_type;
+@@ -2336,9 +2355,15 @@ static int tcpm_pd_svdm(struct tcpm_port
+ 		switch (cmd) {
+ 		case CMD_DISCOVER_IDENT:
+ 		case CMD_DISCOVER_SVID:
+-		case CMD_DISCOVER_MODES:
+ 		case VDO_CMD_VENDOR(0) ... VDO_CMD_VENDOR(15):
+ 			break;
++		case CMD_DISCOVER_MODES:
++			tcpm_log(port, "Skip SVID 0x%04x (failed to discover mode)",
++				 PD_VDO_SVID_SVID0(p[0]));
++			rlen = tcpm_handle_discover_mode(port, response,
++							 rx_sop_type,
++							 response_tx_sop_type);
++			break;
+ 		case CMD_ENTER_MODE:
+ 			/* Back to USB Operation */
+ 			*adev_action = ADEV_NOTIFY_USB_AND_QUEUE_VDM;
 
 
