@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2513254BD;
-	Sun,  7 Jun 2026 10:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF673246F4;
+	Sun,  7 Jun 2026 10:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827801; cv=none; b=B5W8kUebkwNRIT3M+3+veBuLuFKu4ZwbP6Bke682veojiiKNy6dTCI1dIj7O9fdG/0vLcWLte53afoy/H/HzjkIH+tVGj34NyXiYGoyF3WXQIU5BYPvHN5uJsbvE43+yidnAP0U5lKw9NSyJSbK4RGwmUe0wqE318OhFeM80uHk=
+	t=1780827805; cv=none; b=nDvrlhTmBFbbhrhkaXoEpqsrx1qnb7lkvRPjyTf1HfiJL0VPDc0xXuy0xsGGm7Dsecj7oXni8PzgNOujtxPr/uZ9avl0JzugV4IBYQ/d/PLEzboYv++VhRHQqk7CCdegPKLBaqSMtphbbyH/3Il44nl6JXRi3U/X1DSxO/V+ixI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827801; c=relaxed/simple;
-	bh=hP3J1RTzi3BIZUd84juND0iUd2xMxw/ig/y9S+wgzZc=;
+	s=arc-20240116; t=1780827805; c=relaxed/simple;
+	bh=mTDUxBAV56FCPi+4ZGwqPfiq0rV6C6U8Qw/zvYAWDcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dt48YwF/7qSvWkJcAju3XeTkspOboprUb1Gfe4pUUjdhqFztAoOO3z1uG9E4ddmPKazspkYcbQlAjd/mteBlfdDvq97q7B8kWB1i8o0HlkrgWK0Hdfh04nul0i9yxcSVyw3/KUWOcH1Tk46hYouCxTdgGApkOHLfrRu9ALjPaL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQfUUInr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IzI32IyA5GKeKuYLqlDqdkHG/v1Je9QDCnZizYsdbg4KatMcpkSm3zAYgJL9HYGfnBn3HoPVDWNj88VQu4RdrzHnihzAC5hoW2AcBiHa8KxN2ZuYipeYsdyj3vYjk7Te6PxHW9Hw73c0BsJ+zsuF7x0NmDi+Bq57dYDoPExHqRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuoOYAIw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQfUUInr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75AE11F00893;
-	Sun,  7 Jun 2026 10:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuoOYAIw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7408B1F00893;
+	Sun,  7 Jun 2026 10:23:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827799;
-	bh=B0WhsoYV16B7/y0XwgPy8Y8DDoovg5TYkfybaWP1BFw=;
+	s=korg; t=1780827803;
+	bh=joQ0SfsAVlHTvLDnBU/o01Hi29gSyXRy7gZuY9JPQBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RQfUUInrzMRkrof3uFCT/RwSK+TlMrBsWmoW5Ry3vdHx0rXupMBQaE1jqWHDV99pI
-	 Lk5nYRHrqSQ9xKC7OpgBc5XrTgcdVLS8kD2nzMIZsreFRIJEt5ImKnAtUOH8Av4tp/
-	 sVSsNnN/63jv/f07qQTgscNPpcj43qldki5+mjvY=
+	b=xuoOYAIw06QYuxTWqmU2mINLvgkmzl3EaF0mVuXBxrBHt2h0kntEimb3mGMwbA8cU
+	 XuPzPVPq0coXx/A2xRLkqKyYsA7LxOaRTmolmfdmazDNsFhc9SeriHlCSC0SJj5pbz
+	 Tvc/KW5TBPvW+nMrjsv0eFPReaENb1qwOTgkg1i8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 7.0 123/332] usb: typec: tcpm: bound altmode_desc[] per iteration in svdm_consume_modes()
-Date: Sun,  7 Jun 2026 11:58:12 +0200
-Message-ID: <20260607095732.628057166@linuxfoundation.org>
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 102/315] drm/i915/psr: Apply Intel DPCD workaround when SDP on prior line used
+Date: Sun,  7 Jun 2026 11:58:09 +0200
+Message-ID: <20260607095731.394318870@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,77 +46,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-commit 3389c149c68c3fea61910ad5d34f7bf3bff44e32 upstream.
+commit 4703049f768fc1c1caac754134118bee1a3af189 upstream.
 
-svdm_consume_modes() checks pmdata->altmodes against the array size once
-before the loop over the count, but forgot to check the bound at every
-point in the loop.
+There is Intel specific workaround DPCD address containing workaround for
+case where SDP is on prior line. Apply this workaround according to values
+in the offset.
 
-In the well-behaved SVDM discovery flow this is harmless because each of
-at most SVID_DISCOVERY_MAX SVIDs contributes at most MODE_DISCOVERY_MAX
-modes, exactly filling altmode_desc[ALTMODE_DISCOVERY_MAX].  But the
-CMDT_RSP_ACK handler in tcpm_pd_svdm() does not correlate an incoming
-ACK with any request the port actually sent.  Once port->partner is set,
-an unsolicited Discover Modes ACK is consumed unconditionally.  A broken
-or malicious port partner can therefore drive altmodes to
-ALTMODE_DISCOVERY_MAX - 1 via the normal flow, and then send one extra
-Discover Modes ACK with seven VDOs.  Because the pre-loop check passes,
-the loop could then writes up to five entries past altmode_desc[].  For
-mode_data_prime the next field in struct tcpm_port is the
-partner_altmode[] pointer array, which then receives partner-chosen
-SVID/VDO bytes.
-
-Move the bound check inside the loop so the array can never be indexed
-past ALTMODE_DISCOVERY_MAX regardless of how many VDOs the partner
-supplies or how the function was reached.
-
-Assisted-by: gkh_clanker_t1000
-Cc: Badhri Jagan Sridharan <badhri@google.com>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/2026051351-reshuffle-skillful-90af@gregkh
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 61e887329e33 ("drm/i915/xelpd: Handle PSR2 SDP indication in the prior scanline")
+Cc: <stable@vger.kernel.org> # v5.15+
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patch.msgid.link/20260515095756.2799483-4-jouni.hogander@intel.com
+(cherry picked from commit c3fe899fbeac86ea4a5ca9dd845b2cbc0da46249)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |   12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/i915/display/intel_psr.c | 28 +++++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -1845,23 +1845,19 @@ static void svdm_consume_modes(struct tc
- 	switch (rx_sop_type) {
- 	case TCPC_TX_SOP_PRIME:
- 		pmdata = &port->mode_data_prime;
--		if (pmdata->altmodes >= ARRAY_SIZE(port->plug_prime_altmode)) {
--			/* Already logged in svdm_consume_svids() */
--			return;
--		}
- 		break;
- 	case TCPC_TX_SOP:
- 		pmdata = &port->mode_data;
--		if (pmdata->altmodes >= ARRAY_SIZE(port->partner_altmode)) {
--			/* Already logged in svdm_consume_svids() */
--			return;
--		}
- 		break;
- 	default:
- 		return;
- 	}
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index 802a671b2afaaa..eed281b93cd84d 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -29,6 +29,7 @@
+ #include <drm/drm_vblank.h>
  
- 	for (i = 1; i < cnt; i++) {
-+		if (pmdata->altmodes >= ALTMODE_DISCOVERY_MAX) {
-+			/* Already logged in svdm_consume_svids() */
-+			return;
-+		}
- 		paltmode = &pmdata->altmode_desc[pmdata->altmodes];
- 		memset(paltmode, 0, sizeof(*paltmode));
+ #include "i915_reg.h"
++#include "i915_utils.h"
+ #include "intel_alpm.h"
+ #include "intel_atomic.h"
+ #include "intel_crtc.h"
+@@ -1315,6 +1316,30 @@ static bool psr2_granularity_check(struct intel_dp *intel_dp,
+ 	return true;
+ }
  
++static bool apply_scanline_indication_wa(struct intel_dp *intel_dp,
++					 struct intel_crtc_state *crtc_state)
++{
++	u8 early_scanline_support = intel_dp->intel_wa_dpcd &
++		INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_EARLYSCANLINE_SDP_SUPPORT_MASK;
++
++	if (intel_dp->edp_dpcd[0] >= DP_EDP_15)
++		return true;
++
++	switch (early_scanline_support)	{
++	case INTEL_DPCD_INTEL_WA_REGISTER_CAPS_FALL_BACK_TO_PSR1:
++		crtc_state->req_psr2_sdp_prior_scanline = false;
++		return false;
++	case INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITH_EARLY_SCANLINE:
++		return true;
++	case INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITHOUT_EARLY_SCANLINE:
++		crtc_state->req_psr2_sdp_prior_scanline = false;
++		return true;
++	default:
++		MISSING_CASE(early_scanline_support);
++		return false;
++	}
++}
++
+ static bool _compute_psr2_sdp_prior_scanline_indication(struct intel_dp *intel_dp,
+ 							struct intel_crtc_state *crtc_state)
+ {
+@@ -1336,7 +1361,8 @@ static bool _compute_psr2_sdp_prior_scanline_indication(struct intel_dp *intel_d
+ 		return false;
+ 
+ 	crtc_state->req_psr2_sdp_prior_scanline = true;
+-	return true;
++
++	return apply_scanline_indication_wa(intel_dp, crtc_state);
+ }
+ 
+ static int intel_psr_entry_setup_frames(struct intel_dp *intel_dp,
+-- 
+2.53.0
+
 
 
