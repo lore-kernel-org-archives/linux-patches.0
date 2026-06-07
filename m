@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453E278C9C;
-	Sun,  7 Jun 2026 10:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E372E3709;
+	Sun,  7 Jun 2026 10:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826791; cv=none; b=eFk5yToYwxHFW0nsWW2S7fiXwQfDwlzF+KoTVqetdL6U9DtQDOIiPlRdMkdB8zmTMmt0f8CnUSKwpZMfr3pC7aImuCAS4fxULE6KcLHTAFRVtcgvcEk1f1KiEMSZ/FoMem36vzpiyPLr/VuPoF2Bb9rpUAzm7aqmi01J3GTHYjw=
+	t=1780826794; cv=none; b=hIvmg9A94g5Wo8rLx2+6f5Bwgg7H7YDz0DT6iAEExidGMwb4/iGnXRAfE3weKnxT5ctfe1s7Wl/FBxhE/LeZFYFiJpAl+Q39bHqk5izMVSVRTLDoogpzehhI0HJA9eFQy7pGbBvr49i9+VcRY2hMA7gIsINJx42EfRrqZhblcvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826791; c=relaxed/simple;
-	bh=rQKtHVG7ilWvXcOBUDihxz9sRMpn3DZXEizyknqVlnE=;
+	s=arc-20240116; t=1780826794; c=relaxed/simple;
+	bh=nxTNk9dZlWjU4znMYQZ8ccsN4UprAJzD0/0MRmZB3aQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UdSKWknwcmdmovzLtDb/4NQ/KioeB3PLzAZi/zAP9hiBmsskGs5GKg7ejFWjkd8GUNB9GwBaFsDXvH6PZiQlSN2EiHYa7vj1J0sKtivUPGao6nQIgskztgjwZ6P7FDpFEt6b2gxuTTVFmJGxmkDVIC5BHb+xU1sEBgfWwAGGvWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pi+g3jMr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DHT2DJUsQiM4l/SBsKJQ0lOXejMTEW1BrW53un3kEMUa7ZU9q7/uJqaWcbg1pSNv5zNlHl8kC7uNH6P34W8OFqJjp38SFmGXfEm8vRVM1oir3PYb0RnTPPBWDb//C0bLjGbmKnEaBVH40yKRWhOkYwLXc7auzI7yQCxj5wCWZYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=juCP+L9p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pi+g3jMr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E5141F00893;
-	Sun,  7 Jun 2026 10:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="juCP+L9p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FAB1F00893;
+	Sun,  7 Jun 2026 10:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826789;
-	bh=WUYJIpGG6ZT1CZ2lZajJx5S/UfnWZW7MWC0+eEPH4Kg=;
+	s=korg; t=1780826793;
+	bh=2V1NzbnpgH7K0sPWZ0ACkjEAS4FpVD/ZM2O9HVn9umc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pi+g3jMr0h9+EQuq8kgf6ZaaEquMEQP5jiNvzB+o/T3zrwK2H8MEzWHYOU4C0nS91
-	 7Boe++f+7Eo25yVM4lxkKZ63LEIduwSvMg89vk8sX4D71w2u+Xf69XKmBFgEKaiyHB
-	 moSLMHtuUy7M0yWFoWvOzXLPVWzPg4eHA0iKNEsQ=
+	b=juCP+L9pETXWdcQawhiM1Ge3RQe1vvDhgrz+Shm6hogl1oPlh7rmxG39nnEqfjHK3
+	 hMZPpmANNH9zcONSMcUV28Bl82dEwslfLa7TwtFIxPmjMHVugmzDM8gD5dOqTyCqQy
+	 bp3VqOSzReWH6kVv8RdgYDj34ynT/RTaUdlAqewQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Lin <leo@depthfirst.com>,
-	David Ahern <dahern@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Carl Lee <carl.lee@amd.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Luca Stefani <luca.stefani.ge1@gmail.com>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 009/332] xfrm: Check for underflow in xfrm_state_mtu
-Date: Sun,  7 Jun 2026 11:56:18 +0200
-Message-ID: <20260607095728.366920276@linuxfoundation.org>
+Subject: [PATCH 7.0 010/332] nfc: nxp-nci: i2c: use rising-edge IRQ on ACPI systems
+Date: Sun,  7 Jun 2026 11:56:19 +0200
+Message-ID: <20260607095728.400995836@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
 References: <20260607095728.031258202@linuxfoundation.org>
@@ -52,83 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Ahern <dahern@nvidia.com>
+From: Carl Lee <carl.lee@amd.com>
 
-[ Upstream commit 742b04d0550b0ec89dcbc99537ec88653bd1ad90 ]
+[ Upstream commit f23bf992d65a42007c517b060ca35cebdea3525a ]
 
-Leo Lin reported OOB write issue in esp component:
+Some ACPI-based platforms report incorrect IRQ trigger types (e.g.
+IRQF_TRIGGER_HIGH), which can lead to interrupt storms.
 
-  xfrm_state_mtu() returns u32 but performs its arithmetic in unsigned
-  modulo-2^32 space using an attacker-influenced "header_len + authsize +
-  net_adj" subtracted from a small "mtu" argument. A nobody user can
-  install an IPv4 ESP tunnel SA with a large authentication key
-  (XFRMA_ALG_AUTH_TRUNC, e.g. hmac(sha512), 64-byte key, 64-byte trunc),
-  configure a small interface MTU (68 bytes), and set XFRMA_TFCPAD to a
-  large value. When a single UDP datagram is then sent through the
-  tunnel, xfrm_state_mtu() underflows to a near-2^32 value, and
-  esp_output() consumes it as a signed int via:
+Use the historically working rising-edge trigger on ACPI systems to
+avoid this regression.
 
-        padto      = min(x->tfcpad, xfrm_state_mtu(x, mtu_cached))
-        esp.tfclen = padto - skb->len   (assigned to int)
+Device Tree-based systems continue to use the firmware-provided
+trigger type.
 
-  esp.tfclen ends up negative (e.g. -207). It is sign-extended to size_t
-  when passed to memset() inside esp_output_fill_trailer(), producing a
-  ~16 EB write of zeroes at skb_tail_pointer(skb). KASAN logs it as
-  "Write of size 18446744073709551537 at addr ffff888...".
-
-Check for underflow and return 1. This causes the sendmsg attempt to
-fail with ENETUNREACH.
-
-Fixes: c5c252389374 ("[XFRM]: Optimize MTU calculation")
-Reported-by: Leo Lin <leo@depthfirst.com>
-Assisted-by: Codex:26.506.31004
-Signed-off-by: David Ahern <dahern@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 57be33f85e36 ("nfc: nxp-nci: remove interrupt trigger type")
+Signed-off-by: Carl Lee <carl.lee@amd.com>
+Tested-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Tested-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Tested-by: Luca Stefani <luca.stefani.ge1@gmail.com>
+Link: https://patch.msgid.link/20260516-nfc-nxp-nci-i2c-restore-irq-trigger-fallback-v3-1-37ba4b6e9086@amd.com
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_state.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/nfc/nxp-nci/i2c.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 686014d394298c..f597e4996bb28a 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -3114,10 +3114,14 @@ u32 xfrm_state_mtu(struct xfrm_state *x, int mtu)
- 	const struct xfrm_type *type = READ_ONCE(x->type);
- 	struct crypto_aead *aead;
- 	u32 blksize, net_adj = 0;
-+	u32 overhead, payload_mtu;
+diff --git a/drivers/nfc/nxp-nci/i2c.c b/drivers/nfc/nxp-nci/i2c.c
+index b3d34433bd14a0..a6c08175d9dd93 100644
+--- a/drivers/nfc/nxp-nci/i2c.c
++++ b/drivers/nfc/nxp-nci/i2c.c
+@@ -16,6 +16,7 @@
+ #include <linux/delay.h>
+ #include <linux/i2c.h>
+ #include <linux/interrupt.h>
++#include <linux/irq.h>
+ #include <linux/module.h>
+ #include <linux/nfc.h>
+ #include <linux/gpio/consumer.h>
+@@ -267,6 +268,7 @@ static int nxp_nci_i2c_probe(struct i2c_client *client)
+ {
+ 	struct device *dev = &client->dev;
+ 	struct nxp_nci_i2c_phy *phy;
++	unsigned long irqflags;
+ 	int r;
  
- 	if (x->km.state != XFRM_STATE_VALID ||
--	    !type || type->proto != IPPROTO_ESP)
-+	    !type || type->proto != IPPROTO_ESP) {
-+		if (mtu <= x->props.header_len)
-+			return 1;
- 		return mtu - x->props.header_len;
+ 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C)) {
+@@ -303,9 +305,26 @@ static int nxp_nci_i2c_probe(struct i2c_client *client)
+ 	if (r < 0)
+ 		return r;
+ 
++	/*
++	 * ACPI platforms may report incorrect IRQ trigger types
++	 * (e.g. level-high), which can lead to interrupt storms.
++	 *
++	 * Use the historically stable rising-edge trigger for ACPI devices.
++	 *
++	 * On non-ACPI systems (e.g. Device Tree), prefer the firmware-
++	 * provided trigger type, falling back to rising-edge if not set.
++	 */
++	if (ACPI_COMPANION(dev)) {
++		irqflags = IRQF_TRIGGER_RISING;
++	} else {
++		irqflags = irq_get_trigger_type(client->irq);
++		if (!irqflags)
++			irqflags = IRQF_TRIGGER_RISING;
 +	}
- 
- 	aead = x->data;
- 	blksize = ALIGN(crypto_aead_blocksize(aead), 4);
-@@ -3140,8 +3144,17 @@ u32 xfrm_state_mtu(struct xfrm_state *x, int mtu)
- 		break;
- 	}
- 
--	return ((mtu - x->props.header_len - crypto_aead_authsize(aead) -
--		 net_adj) & ~(blksize - 1)) + net_adj - 2;
-+	overhead = x->props.header_len + crypto_aead_authsize(aead) + net_adj;
-+	if (mtu <= overhead)
-+		return 1;
 +
-+	payload_mtu = mtu - overhead;
-+	payload_mtu &= ~(blksize - 1);
-+	if (payload_mtu <= 2)
-+		return 1;
-+
-+	return payload_mtu + net_adj - 2;
-+
- }
- EXPORT_SYMBOL_GPL(xfrm_state_mtu);
- 
+ 	r = request_threaded_irq(client->irq, NULL,
+ 				 nxp_nci_i2c_irq_thread_fn,
+-				 IRQF_ONESHOT,
++				 irqflags | IRQF_ONESHOT,
+ 				 NXP_NCI_I2C_DRIVER_NAME, phy);
+ 	if (r < 0)
+ 		nfc_err(&client->dev, "Unable to register IRQ handler\n");
 -- 
 2.53.0
 
