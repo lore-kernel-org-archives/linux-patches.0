@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244451E98E3;
-	Sun,  7 Jun 2026 10:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB431E98E3;
+	Sun,  7 Jun 2026 10:10:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827056; cv=none; b=JxIPxQbxT74i49ZsnFKRxq5OITaJFsWCY+2rE2XHnPYMo+rAnXyu3zraU2NMdCHlPTO0CiSRW7/CcHoRbrqUIF2MuIyjnZGb92crT+AdLuHNWWprbBno5n/Fz//6qRLVK+8p63dfl26qSc3w3COgrB2GhJBN0rmNxmlcV5mGaZM=
+	t=1780827059; cv=none; b=LZ9M2itT52onldDPLAu/IBa1By00YKNNnyd0mBsIaV4NUkpSkn7eJSBYCbIfq7x8bgaSCw7ZHaJ7qAmlGggpWFrqFj7gZk/bWwSpaoOCVfs4Srl9+zMlsZR75nKYYb9No02fSKYyH9dn5GS8xianh7crVWb3tOvbkYpIYFSav6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827056; c=relaxed/simple;
-	bh=zN5ab4z29SielyLSOOiATkl+6GUA0ThmWS0K4RG4v4c=;
+	s=arc-20240116; t=1780827059; c=relaxed/simple;
+	bh=Pr1esZdm59llKUTkaNAAxQzUol4uGOsdEF0uhl1im3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ooITE3HZvN99Hi5laA1aSj1ueH3+5SVXZfps6a5Hq9a+ILg2EV/Z0ZvI92PFNHYcbtACLKGiFjOcDDOVs0kaopSyzVaVHY0XG1G//IYA3FkryXhOnsvoq3cqsxKWIdCGF6dYY597fwARIPND+RlSlo0S4K64CqXG0tfa7Dy6npw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eFFLTZoo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=htoQAsqofGezSNxb9WUEkDReP9nat7xM0/PRWz5sqph6OzXBFCwJYkjTZVdtFhVcDjbNTtJ2wo01MsjQxVX7Y6ypeQvFOUcbsV2ovDEdhixzSH3dPOoQAnIPY+dESDYqe4un+ymjMHeiReA9ws5OnHD+x4yXIvaaQwDWqckufco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQ+3kxNu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eFFLTZoo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3218A1F00893;
-	Sun,  7 Jun 2026 10:10:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQ+3kxNu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4821F00893;
+	Sun,  7 Jun 2026 10:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827054;
-	bh=V+92NPoZxn7MCK30YIw3+0a1QMWijYOWhjZsuPEo0oY=;
+	s=korg; t=1780827058;
+	bh=yL3QCrwBVxjHgtqOg/rdL3ybs50lb0W5nZaYBniQIng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eFFLTZoojESQaNkYC6B9O/gcJ+vvvR7UZ2ffbovvzK0VUKyaDUrMLeV6qAt2uri3M
-	 bhcC6hZgNMrXzMGTWhGTATsF/76Fx4qQvmIBO3o93Xd88rCpbYT5Bki1BHmE/pvX6S
-	 BFdHxCVUz+8INerXi7zO/w7KvqaD38xbwfVyoILg=
+	b=KQ+3kxNuFJuDEoWyjqQ3IP9wLjHiTioYbNP6f/QyY2n9YI9yX3MMd/AGwzPKwz7cP
+	 cPMT3ndqtLLkJnmoc/jsLc7DIF7K90bCe+tGycw1yXtZal8wpFEiNFryW/bumG1cnE
+	 3nPsmIjJ4G07LZNiRb2dUT0S7szamaIIHbXljw+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 018/307] arm64: debug: refactor reinstall_suspended_bps()
-Date: Sun,  7 Jun 2026 11:56:55 +0200
-Message-ID: <20260607095728.293000057@linuxfoundation.org>
+Subject: [PATCH 6.18 036/315] net: team: fix NULL pointer dereference in team_xmit during mode change
+Date: Sun,  7 Jun 2026 11:57:03 +0200
+Message-ID: <20260607095728.860267894@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,147 +49,150 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 80691d35523de3292b64c2ffa444aab3d55e51ba ]
+[ Upstream commit 25fe708bbc59289d3d1ea4b126fbc1b460a072a5 ]
 
-`reinstall_suspended_bps()` plays a key part in the stepping process
-when we have hardware breakpoints and watchpoints enabled.
-It checks if we need to step one, will re-enable it if it has
-been handled and will return whether or not we need to proceed with
-a single-step.
+__team_change_mode() clears team->ops with memset() before restoring
+safe dummy handlers via team_adjust_ops(). A concurrent team_xmit()
+running under RCU on another CPU can read team->ops.transmit during
+this window and call a NULL function pointer, crashing the kernel.
 
-However, the current naming and return values make it harder to understand
-the logic and goal of the function.
+The race requires a mode change (CAP_NET_ADMIN) concurrent with
+transmit on the team device.
 
-Rename it `try_step_suspended_breakpoints()` and change the return value
-to a boolean, aligning it with similar functions used in
-`do_el0_undef()` like `try_emulate_mrs()`, and making its behaviour
-more obvious.
+ BUG: kernel NULL pointer dereference, address: 0000000000000000
+ Oops: 0010 [#1] SMP KASAN NOPTI
+ RIP: 0010:0x0
+ Call Trace:
+  team_xmit (drivers/net/team/team_core.c:1853)
+  dev_hard_start_xmit (net/core/dev.c:3904)
+  __dev_queue_xmit (net/core/dev.c:4871)
+  packet_sendmsg (net/packet/af_packet.c:3109)
+  __sys_sendto (net/socket.c:2265)
 
-Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Tested-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: Will Deacon <will@kernel.org>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20250707114109.35672-9-ada.coupriediaz@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+The original code assumed that no ports means no traffic, so mode
+changes could freely memset()/memcpy() the ops.  AF_PACKET with
+forced carrier breaks that assumption.
+
+Prevent the race instead of making it safe: replace memset()/memcpy()
+with per-field updates that never touch transmit or receive.  Those
+two handlers are managed solely by team_adjust_ops(), which already
+installs dummies when tx_en_port_count == 0 (always true during mode
+change since no ports are present).  WRITE_ONCE/READ_ONCE prevent
+store/load tearing on the handler pointers.
+
+synchronize_net() before exit_op() drains in-flight readers that may
+still reference old mode state from before port removal switched the
+handlers to dummies.
+
+Fixes: 3d249d4ca7d0 ("net: introduce ethernet teaming device")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260521081159.1491563-3-bestswngs@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/debug-monitors.h |  6 +++---
- arch/arm64/kernel/debug-monitors.c      |  2 +-
- arch/arm64/kernel/hw_breakpoint.c       | 25 ++++++++++++-------------
- 3 files changed, 16 insertions(+), 17 deletions(-)
+ drivers/net/team/team_core.c | 45 +++++++++++++++++++++++++-----------
+ 1 file changed, 32 insertions(+), 13 deletions(-)
 
-diff --git a/arch/arm64/include/asm/debug-monitors.h b/arch/arm64/include/asm/debug-monitors.h
-index 5319da0f0ca4ea..24c7981abeb0b9 100644
---- a/arch/arm64/include/asm/debug-monitors.h
-+++ b/arch/arm64/include/asm/debug-monitors.h
-@@ -83,11 +83,11 @@ int kernel_active_single_step(void);
- void kernel_rewind_single_step(struct pt_regs *regs);
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index 11c8e6551dd357..ff4dcd6035cd10 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -535,21 +535,23 @@ static void team_adjust_ops(struct team *team)
  
- #ifdef CONFIG_HAVE_HW_BREAKPOINT
--int reinstall_suspended_bps(struct pt_regs *regs);
-+bool try_step_suspended_breakpoints(struct pt_regs *regs);
- #else
--static inline int reinstall_suspended_bps(struct pt_regs *regs)
-+static inline bool try_step_suspended_breakpoints(struct pt_regs *regs)
- {
--	return -ENODEV;
-+	return false;
+ 	if (!team->en_port_count || !team_is_mode_set(team) ||
+ 	    !team->mode->ops->transmit)
+-		team->ops.transmit = team_dummy_transmit;
++		WRITE_ONCE(team->ops.transmit, team_dummy_transmit);
+ 	else
+-		team->ops.transmit = team->mode->ops->transmit;
++		WRITE_ONCE(team->ops.transmit, team->mode->ops->transmit);
+ 
+ 	if (!team->en_port_count || !team_is_mode_set(team) ||
+ 	    !team->mode->ops->receive)
+-		team->ops.receive = team_dummy_receive;
++		WRITE_ONCE(team->ops.receive, team_dummy_receive);
+ 	else
+-		team->ops.receive = team->mode->ops->receive;
++		WRITE_ONCE(team->ops.receive, team->mode->ops->receive);
  }
- #endif
  
-diff --git a/arch/arm64/kernel/debug-monitors.c b/arch/arm64/kernel/debug-monitors.c
-index a28482e25c4c31..b95a135ef10a99 100644
---- a/arch/arm64/kernel/debug-monitors.c
-+++ b/arch/arm64/kernel/debug-monitors.c
-@@ -195,7 +195,7 @@ static int single_step_handler(unsigned long unused, unsigned long esr,
- 	 * If we are stepping a pending breakpoint, call the hw_breakpoint
- 	 * handler first.
- 	 */
--	if (!reinstall_suspended_bps(regs))
-+	if (try_step_suspended_breakpoints(regs))
- 		return 0;
- 
- 	if (call_step_hook(regs, esr) == DBG_HOOK_HANDLED)
-diff --git a/arch/arm64/kernel/hw_breakpoint.c b/arch/arm64/kernel/hw_breakpoint.c
-index d7eede5d869c2b..309ae24d454805 100644
---- a/arch/arm64/kernel/hw_breakpoint.c
-+++ b/arch/arm64/kernel/hw_breakpoint.c
-@@ -847,36 +847,35 @@ NOKPROBE_SYMBOL(watchpoint_handler);
  /*
-  * Handle single-step exception.
+- * We can benefit from the fact that it's ensured no port is present
+- * at the time of mode change. Therefore no packets are in fly so there's no
+- * need to set mode operations in any special way.
++ * team_change_mode() ensures no ports are present during mode change,
++ * but lockless readers can still reach team_xmit().  Avoid touching
++ * transmit/receive -- they are already set to dummies by
++ * team_adjust_ops() since no ports are enabled.  synchronize_net()
++ * drains in-flight readers before destroying old mode state.
   */
--int reinstall_suspended_bps(struct pt_regs *regs)
-+bool try_step_suspended_breakpoints(struct pt_regs *regs)
- {
- 	struct debug_info *debug_info = &current->thread.debug;
--	int handled_exception = 0, *kernel_step;
--
--	kernel_step = this_cpu_ptr(&stepping_kernel_bp);
-+	int *kernel_step = this_cpu_ptr(&stepping_kernel_bp);
-+	bool handled_exception = false;
+ static int __team_change_mode(struct team *team,
+ 			      const struct team_mode *new_mode)
+@@ -558,9 +560,21 @@ static int __team_change_mode(struct team *team,
+ 	if (team_is_mode_set(team)) {
+ 		void (*exit_op)(struct team *team) = team->ops.exit;
  
- 	/*
- 	 * Called from single-step exception handler.
--	 * Return 0 if execution can resume, 1 if a SIGTRAP should be
--	 * reported.
-+	 * Return true if we stepped a breakpoint and can resume execution,
-+	 * false if we need to handle a single-step.
- 	 */
- 	if (user_mode(regs)) {
- 		if (debug_info->bps_disabled) {
- 			debug_info->bps_disabled = 0;
- 			toggle_bp_registers(AARCH64_DBG_REG_BCR, DBG_ACTIVE_EL0, 1);
--			handled_exception = 1;
-+			handled_exception = true;
- 		}
+-		/* Clear ops area so no callback is called any longer */
+-		memset(&team->ops, 0, sizeof(struct team_mode_ops));
+-		team_adjust_ops(team);
++		/* Clear cold-path ops used only under RTNL.  transmit and
++		 * receive are already dummies (no ports) so leave them
++		 * alone -- overwriting them is the source of the race.
++		 */
++		team->ops.init = NULL;
++		team->ops.exit = NULL;
++		team->ops.port_enter = NULL;
++		team->ops.port_leave = NULL;
++		team->ops.port_change_dev_addr = NULL;
++		team->ops.port_tx_disabled = NULL;
++
++		/* Wait for in-flight readers before tearing down mode
++		 * state they may reference.
++		 */
++		synchronize_net();
  
- 		if (debug_info->wps_disabled) {
- 			debug_info->wps_disabled = 0;
- 			toggle_bp_registers(AARCH64_DBG_REG_WCR, DBG_ACTIVE_EL0, 1);
--			handled_exception = 1;
-+			handled_exception = true;
- 		}
- 
- 		if (handled_exception) {
- 			if (debug_info->suspended_step) {
- 				debug_info->suspended_step = 0;
- 				/* Allow exception handling to fall-through. */
--				handled_exception = 0;
-+				handled_exception = false;
- 			} else {
- 				user_disable_single_step(current);
- 			}
-@@ -890,17 +889,17 @@ int reinstall_suspended_bps(struct pt_regs *regs)
- 
- 		if (*kernel_step != ARM_KERNEL_STEP_SUSPEND) {
- 			kernel_disable_single_step();
--			handled_exception = 1;
-+			handled_exception = true;
- 		} else {
--			handled_exception = 0;
-+			handled_exception = false;
- 		}
- 
- 		*kernel_step = ARM_KERNEL_STEP_NONE;
+ 		if (exit_op)
+ 			exit_op(team);
+@@ -583,7 +597,12 @@ static int __team_change_mode(struct team *team,
  	}
  
--	return !handled_exception;
-+	return handled_exception;
- }
--NOKPROBE_SYMBOL(reinstall_suspended_bps);
-+NOKPROBE_SYMBOL(try_step_suspended_breakpoints);
+ 	team->mode = new_mode;
+-	memcpy(&team->ops, new_mode->ops, sizeof(struct team_mode_ops));
++	team->ops.init = new_mode->ops->init;
++	team->ops.exit = new_mode->ops->exit;
++	team->ops.port_enter = new_mode->ops->port_enter;
++	team->ops.port_leave = new_mode->ops->port_leave;
++	team->ops.port_change_dev_addr = new_mode->ops->port_change_dev_addr;
++	team->ops.port_tx_disabled = new_mode->ops->port_tx_disabled;
+ 	team_adjust_ops(team);
  
- /*
-  * Context-switcher for restoring suspended breakpoints.
+ 	return 0;
+@@ -744,7 +763,7 @@ static rx_handler_result_t team_handle_frame(struct sk_buff **pskb)
+ 		/* allow exact match delivery for disabled ports */
+ 		res = RX_HANDLER_EXACT;
+ 	} else {
+-		res = team->ops.receive(team, port, skb);
++		res = READ_ONCE(team->ops.receive)(team, port, skb);
+ 	}
+ 	if (res == RX_HANDLER_ANOTHER) {
+ 		struct team_pcpu_stats *pcpu_stats;
+@@ -1683,7 +1702,7 @@ static netdev_tx_t team_xmit(struct sk_buff *skb, struct net_device *dev)
+ 
+ 	tx_success = team_queue_override_transmit(team, skb);
+ 	if (!tx_success)
+-		tx_success = team->ops.transmit(team, skb);
++		tx_success = READ_ONCE(team->ops.transmit)(team, skb);
+ 	if (tx_success) {
+ 		struct team_pcpu_stats *pcpu_stats;
+ 
 -- 
 2.53.0
 
