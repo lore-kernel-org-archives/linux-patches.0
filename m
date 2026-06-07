@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F9F31E832;
-	Sun,  7 Jun 2026 10:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C4713DBA0;
+	Sun,  7 Jun 2026 10:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827986; cv=none; b=Zgmr/I9WDFI5A/9eoiJ8Kh3PT6YKfH4LBezEHD7vanl/WUso0ni0I2eAHiKAle5GJ3G7Zi3Ijja8kcLlfTHwgH3dfVyY5tdtxn6qApKNYdutjHtv3aT01W0Do11k/8Fr69YRVC1aVuNzjKmHG9xnt8cuN8UutGSsYh/7ZfQhLPM=
+	t=1780827990; cv=none; b=l0rb6Zr7V/nQbHlYayZYWXSeAF5K5ufhE6c056lBPWH5qJ+kflQ18aGS85LOKy1JdC3pPhzczDO5ev1NV19Me0MbHhiSBT74LzE1nvj3siI5vBaPEbBECkD+jMLh5w35lCcgp57UDjmHj+lyifzWrDDGaOtKQ3dtgSjyCSEDe5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827986; c=relaxed/simple;
-	bh=5GDozbC+t8A2artweLq4ZYP5YkYrx5RSCt99hIxjuaY=;
+	s=arc-20240116; t=1780827990; c=relaxed/simple;
+	bh=fp4/Xr2L0BLg2tBddG1LZE/gzsw6Si0kSGRQln3hAXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LtYvaMEuvToNC0bB6gG4EnsWmQRTDPTRSwOPViXm4RnVBGLOEdKIZqFPQsNYsSBxpR06KBLGAXTzS/hG7M3nbqkd0XHPIOgjmeQrNdloWjQkmc96WCKIxIbtoaj96WUdB9pnqnQxwAXWUuVwP4mTTuEZWrac8LrnlyqGUS219Go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PSRaes/p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tTimpjokLEB/bOjcX8EcajAjwm05PCtwQyLr+5crorFUyhjT6qsuwaQTLlqpmhVCAQs1glcPnfPCikpfm8o7F71S+UjJz96oQizGNa5rxmV0+rVtMzcKl5HdJcaAqbw8kZzRtiaHAvsr2mS2AXavqXA6dhtNlySQEFpVNvmNZug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sl8EdRnm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSRaes/p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7CF1F00898;
-	Sun,  7 Jun 2026 10:26:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sl8EdRnm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5414A1F00893;
+	Sun,  7 Jun 2026 10:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827985;
-	bh=qenftwfJ9bIgJoz3Z932psMPza9HC99oak6oeSIRikI=;
+	s=korg; t=1780827989;
+	bh=oCdEzQQga40GqjgLKljtqW0Hkg6f+LDtX1tizGcqMSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PSRaes/pwSyEsFsBerfHJjplNB1dJ5xh2vfzvD5HJQAoqqGnHVz8z6AIxHaISvSmr
-	 AxwfE2edqLywqPHRe9X4p6P4vtrz8HvV3Wo3L4FYCusZlwlHlYH1pUvQCaJyB/fwGp
-	 REq7eSV0VbKMABqMHyuYyso03kQH3mEJIAEt312Q=
+	b=sl8EdRnmWwN8hVEZ8c6RXl7u6K6WnrDh6QiWXGsHFdZ6OrsUDTgoY4TQTNMfPSjDK
+	 sfN3qbXpWO15sy8Qm3ZeUfkyjsIWH+f/ITbUahRwAZPQbsTlUx4eDZmPZP0t6pMc7C
+	 myBxw8HRZpKupP8E61ke6oBwRRQ6Lnjk1fNS07gQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Chang <richardycc@google.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Minchan Kim <minchan@kernel.org>,
-	Brian Geffon <bgeffon@google.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Martin Liu <liumartin@google.com>,
-	wang wei <a929244872@163.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.0 142/332] zram: fix use-after-free in zram_writeback_endio
-Date: Sun,  7 Jun 2026 11:58:31 +0200
-Message-ID: <20260607095733.312280161@linuxfoundation.org>
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 102/307] batman-adv: iv: recover OGM scheduling after forward packet error
+Date: Sun,  7 Jun 2026 11:58:19 +0200
+Message-ID: <20260607095731.532736881@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,120 +45,234 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Chang <richardycc@google.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit bf62f69574b19720ae5fbbbcdf24a0c4e3e05e43 upstream.
+commit aa3153bd139a6c48667dcd02608d3b2c80bff02c upstream.
 
-A crash was observed in zram_writeback_endio due to a NULL pointer
-dereference in wake_up.  The root cause is a race condition between the
-bio completion handler (zram_writeback_endio) and the writeback task.
+When batadv_iv_ogm_schedule_buff() fails to allocate and queue a forward
+packet for OGM transmission, the work item that drives periodic OGM
+scheduling is never re-armed. This silently halts transmission of the
+node's own OGMs on the affected interface — only OGMs from other peers
+continue to be aggregated and forwarded.
 
-In zram_writeback_endio, wake_up() is called on &wb_ctl->done_wait after
-releasing wb_ctl->done_lock.  This creates a race window where the
-writeback task can see num_inflight become 0, return, and free wb_ctl
-before zram_writeback_endio calls wake_up().
+Fix this by tracking whether batadv_iv_ogm_queue_add() (and transitively
+batadv_iv_ogm_aggregate_new()) successfully scheduled a forward packet.
+When scheduling fails, batadv_iv_ogm_schedule_buff() falls back to queuing
+a dedicated recovery work item (reschedule_work) that fires after one
+originator interval and calls batadv_iv_ogm_schedule() again.
 
-CPU 0 (zram_writeback_endio)     CPU 1 (writeback_store)
-============================     ============================
-                                 zram_writeback_slots
-                                   zram_submit_wb_request
-                                   zram_submit_wb_request
-                                   wait_event(wb_ctl->done_wait)
-spin_lock(&wb_ctl->done_lock);
-list_add(&req->entry, &wb_ctl->done_reqs);
-spin_unlock(&wb_ctl->done_lock);
-wake_up(&wb_ctl->done_wait);
-                                   zram_complete_done_reqs
-spin_lock(&wb_ctl->done_lock);
-list_add(&req->entry, &wb_ctl->done_reqs);
-spin_unlock(&wb_ctl->done_lock);
-                                   while (num_inflight) > 0)
-                                     spin_lock(&wb_ctl->done_lock);
-                                     list_del(&req->entry);
-                                     spin_unlock(&wb_ctl->done_lock);
-                                     // num_inflight becomes 0
-                                     atomic_dec(num_inflight);
-
-                                 // Leave zram_writeback_slots
-                                 // Free wb_ctl
-                                 release_wb_ctl(wb_ctl);
-// UAF crash!
-wake_up(&wb_ctl->done_wait);
-
-This patch fixes this race by using RCU.  By protecting wb_ctl with
-rcu_read_lock() in zram_writeback_endio and using kfree_rcu() to free it,
-we ensure that wb_ctl remains valid during the execution of
-zram_writeback_endio.
-
-Link: https://lore.kernel.org/20260512074918.2606208-1-richardycc@google.com
-Fixes: f405066a1f0d ("zram: introduce writeback bio batching")
-Signed-off-by: Richard Chang <richardycc@google.com>
-Suggested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Suggested-by: Minchan Kim <minchan@kernel.org>
-Acked-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Acked-by: Minchan Kim <minchan@kernel.org>
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Martin Liu <liumartin@google.com>
-Cc: wang wei <a929244872@163.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@kernel.org
+Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/zram/zram_drv.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/batman-adv/bat_iv_ogm.c | 76 +++++++++++++++++++++++++++----------
+ net/batman-adv/types.h      |  3 ++
+ 2 files changed, 60 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
-index aebc710f0d6a..07111455eecf 100644
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -33,6 +33,7 @@
- #include <linux/cpuhotplug.h>
- #include <linux/part_stat.h>
- #include <linux/kernel_read_file.h>
-+#include <linux/rcupdate.h>
+diff --git a/net/batman-adv/bat_iv_ogm.c b/net/batman-adv/bat_iv_ogm.c
+index 42b687c1a76807..b37c9fb178ae50 100644
+--- a/net/batman-adv/bat_iv_ogm.c
++++ b/net/batman-adv/bat_iv_ogm.c
+@@ -223,6 +223,8 @@ static void batadv_iv_ogm_iface_disable(struct batadv_hard_iface *hard_iface)
+ 	hard_iface->bat_iv.ogm_buff = NULL;
  
- #include "zram_drv.h"
+ 	mutex_unlock(&hard_iface->bat_iv.ogm_buff_mutex);
++
++	cancel_delayed_work_sync(&hard_iface->bat_iv.reschedule_work);
+ }
  
-@@ -504,6 +505,7 @@ struct zram_wb_ctl {
- 	wait_queue_head_t done_wait;
- 	spinlock_t done_lock;
- 	atomic_t num_inflight;
-+	struct rcu_head rcu;
- };
+ static void batadv_iv_ogm_iface_update_mac(struct batadv_hard_iface *hard_iface)
+@@ -527,8 +529,10 @@ batadv_iv_ogm_can_aggregate(const struct batadv_ogm_packet *new_bat_ogm_packet,
+  * @if_incoming: interface where the packet was received
+  * @if_outgoing: interface for which the retransmission should be considered
+  * @own_packet: true if it is a self-generated ogm
++ *
++ * Return: whether forward packet was scheduled
+  */
+-static void batadv_iv_ogm_aggregate_new(const unsigned char *packet_buff,
++static bool batadv_iv_ogm_aggregate_new(const unsigned char *packet_buff,
+ 					int packet_len, unsigned long send_time,
+ 					bool direct_link,
+ 					struct batadv_hard_iface *if_incoming,
+@@ -552,13 +556,13 @@ static void batadv_iv_ogm_aggregate_new(const unsigned char *packet_buff,
  
- struct zram_wb_req {
-@@ -847,7 +849,7 @@ static void release_wb_ctl(struct zram_wb_ctl *wb_ctl)
- 		release_wb_req(req);
+ 	skb = netdev_alloc_skb_ip_align(NULL, skb_size);
+ 	if (!skb)
+-		return;
++		return false;
+ 
+ 	forw_packet_aggr = batadv_forw_packet_alloc(if_incoming, if_outgoing,
+ 						    queue_left, bat_priv, skb);
+ 	if (!forw_packet_aggr) {
+ 		kfree_skb(skb);
+-		return;
++		return false;
  	}
  
--	kfree(wb_ctl);
-+	kfree_rcu(wb_ctl, rcu);
+ 	forw_packet_aggr->skb->priority = TC_PRIO_CONTROL;
+@@ -580,6 +584,8 @@ static void batadv_iv_ogm_aggregate_new(const unsigned char *packet_buff,
+ 			  batadv_iv_send_outstanding_bat_ogm_packet);
+ 
+ 	batadv_forw_packet_ogmv1_queue(bat_priv, forw_packet_aggr, send_time);
++
++	return true;
  }
  
- static struct zram_wb_ctl *init_wb_ctl(struct zram *zram)
-@@ -964,11 +966,13 @@ static void zram_writeback_endio(struct bio *bio)
- 	struct zram_wb_ctl *wb_ctl = bio->bi_private;
- 	unsigned long flags;
+ /* aggregate a new packet into the existing ogm packet */
+@@ -609,8 +615,10 @@ static void batadv_iv_ogm_aggregate(struct batadv_forw_packet *forw_packet_aggr,
+  * @if_outgoing: interface for which the retransmission should be considered
+  * @own_packet: true if it is a self-generated ogm
+  * @send_time: timestamp (jiffies) when the packet is to be sent
++ *
++ * Return: whether forward packet was scheduled
+  */
+-static void batadv_iv_ogm_queue_add(struct batadv_priv *bat_priv,
++static bool batadv_iv_ogm_queue_add(struct batadv_priv *bat_priv,
+ 				    unsigned char *packet_buff,
+ 				    int packet_len,
+ 				    struct batadv_hard_iface *if_incoming,
+@@ -662,14 +670,16 @@ static void batadv_iv_ogm_queue_add(struct batadv_priv *bat_priv,
+ 		if (!own_packet && atomic_read(&bat_priv->aggregated_ogms))
+ 			send_time += max_aggregation_jiffies;
  
-+	rcu_read_lock();
- 	spin_lock_irqsave(&wb_ctl->done_lock, flags);
- 	list_add(&req->entry, &wb_ctl->done_reqs);
- 	spin_unlock_irqrestore(&wb_ctl->done_lock, flags);
- 
- 	wake_up(&wb_ctl->done_wait);
-+	rcu_read_unlock();
+-		batadv_iv_ogm_aggregate_new(packet_buff, packet_len,
+-					    send_time, direct_link,
+-					    if_incoming, if_outgoing,
+-					    own_packet);
++		return batadv_iv_ogm_aggregate_new(packet_buff, packet_len,
++						   send_time, direct_link,
++						   if_incoming, if_outgoing,
++						   own_packet);
+ 	} else {
+ 		batadv_iv_ogm_aggregate(forw_packet_aggr, packet_buff,
+ 					packet_len, direct_link);
+ 		spin_unlock_bh(&bat_priv->forw_bat_list_lock);
++
++		return true;
+ 	}
  }
  
- static void zram_submit_wb_request(struct zram *zram,
+@@ -781,6 +791,8 @@ static void batadv_iv_ogm_schedule_buff(struct batadv_hard_iface *hard_iface)
+ 	u32 seqno;
+ 	u16 tvlv_len = 0;
+ 	unsigned long send_time;
++	bool reschedule = false;
++	bool scheduled;
+ 	int ret;
+ 
+ 	lockdep_assert_held(&hard_iface->bat_iv.ogm_buff_mutex);
+@@ -809,11 +821,8 @@ static void batadv_iv_ogm_schedule_buff(struct batadv_hard_iface *hard_iface)
+ 						       ogm_buff_len,
+ 						       BATADV_OGM_HLEN);
+ 		if (ret < 0) {
+-			/* OGMs must be queued even when the buffer allocation for
+-			 * TVLVs failed. just fall back to the non-TVLV version
+-			 */
+-			ret = 0;
+-			*ogm_buff_len = BATADV_OGM_HLEN;
++			reschedule = true;
++			goto out;
+ 		}
+ 
+ 		tvlv_len = ret;
+@@ -835,8 +844,11 @@ static void batadv_iv_ogm_schedule_buff(struct batadv_hard_iface *hard_iface)
+ 		/* OGMs from secondary interfaces are only scheduled on their
+ 		 * respective interfaces.
+ 		 */
+-		batadv_iv_ogm_queue_add(bat_priv, *ogm_buff, *ogm_buff_len,
+-					hard_iface, hard_iface, 1, send_time);
++		scheduled = batadv_iv_ogm_queue_add(bat_priv, *ogm_buff, *ogm_buff_len,
++						    hard_iface, hard_iface, 1, send_time);
++		if (!scheduled)
++			reschedule = true;
++
+ 		goto out;
+ 	}
+ 
+@@ -851,15 +863,28 @@ static void batadv_iv_ogm_schedule_buff(struct batadv_hard_iface *hard_iface)
+ 		if (!kref_get_unless_zero(&tmp_hard_iface->refcount))
+ 			continue;
+ 
+-		batadv_iv_ogm_queue_add(bat_priv, *ogm_buff,
+-					*ogm_buff_len, hard_iface,
+-					tmp_hard_iface, 1, send_time);
+-
++		scheduled = batadv_iv_ogm_queue_add(bat_priv, *ogm_buff,
++						    *ogm_buff_len, hard_iface,
++						    tmp_hard_iface, 1, send_time);
+ 		batadv_hardif_put(tmp_hard_iface);
++
++		if (!scheduled && tmp_hard_iface == hard_iface)
++			reschedule = true;
+ 	}
+ 	rcu_read_unlock();
+ 
+ out:
++	if (reschedule) {
++		/* there was a failure scheduling the own forward packet.
++		 * as result, the batadv_iv_send_outstanding_bat_ogm_packet()
++		 * work item is no longer scheduled. it is therefore necessary
++		 * to reschedule it manually
++		 */
++		queue_delayed_work(batadv_event_workqueue,
++				   &hard_iface->bat_iv.reschedule_work,
++				   msecs_to_jiffies(atomic_read(&bat_priv->orig_interval)));
++	}
++
+ 	batadv_hardif_put(primary_if);
+ }
+ 
+@@ -874,6 +899,17 @@ static void batadv_iv_ogm_schedule(struct batadv_hard_iface *hard_iface)
+ 	mutex_unlock(&hard_iface->bat_iv.ogm_buff_mutex);
+ }
+ 
++static void batadv_iv_ogm_reschedule(struct work_struct *work)
++{
++	struct delayed_work *delayed_work = to_delayed_work(work);
++	struct batadv_hard_iface *hard_iface;
++
++	hard_iface = container_of(delayed_work,
++				  struct batadv_hard_iface,
++				  bat_iv.reschedule_work);
++	batadv_iv_ogm_schedule(hard_iface);
++}
++
+ /**
+  * batadv_iv_orig_ifinfo_sum() - Get bcast_own sum for originator over interface
+  * @orig_node: originator which reproadcasted the OGMs directly
+@@ -2277,6 +2313,8 @@ batadv_iv_ogm_neigh_is_sob(struct batadv_neigh_node *neigh1,
+ 
+ static void batadv_iv_iface_enabled(struct batadv_hard_iface *hard_iface)
+ {
++	INIT_DELAYED_WORK(&hard_iface->bat_iv.reschedule_work, batadv_iv_ogm_reschedule);
++
+ 	/* begin scheduling originator messages on that interface */
+ 	batadv_iv_ogm_schedule(hard_iface);
+ }
+diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
+index fe774ec8b80b75..0ccd55b251fa26 100644
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -83,6 +83,9 @@ struct batadv_hard_iface_bat_iv {
+ 	/** @ogm_seqno: OGM sequence number - used to identify each OGM */
+ 	atomic_t ogm_seqno;
+ 
++	/** @reschedule_work: recover OGM schedule after schedule error */
++	struct delayed_work reschedule_work;
++
+ 	/** @ogm_buff_mutex: lock protecting ogm_buff and ogm_buff_len */
+ 	struct mutex ogm_buff_mutex;
+ };
 -- 
-2.54.0
+2.53.0
 
 
 
