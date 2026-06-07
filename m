@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DAEF4071DD;
-	Sun,  7 Jun 2026 10:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7339A4071DD;
+	Sun,  7 Jun 2026 10:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829544; cv=none; b=RauMncKcX4DtWWkrbDVUcxOCnTbAumO4GPeykoFVu2z7uCzHg3nWSCL2RzvGx9g8DECKE1yHpxTtoOXpLHW52SIaWy+uSMSSq8uQ7PZZz8+J3zfaZeOKlAJUCBuwjmuxFMT4aDrVor/GCH9Vt7IfXq51MLRaTlOxFAs8vk0fi4g=
+	t=1780829547; cv=none; b=WM4na5CQCFzWRcTYHGdLHciMZilPXgOgMZvJQZ2C9mcJgk1wLW8Hg5+UmztLZdoEdDJyjNn9UfqzYN3TBHo0j596TQL4BdrFc1sb15OtFimXBQqcF/o4bRKrp9m0pLeenSRLSjvEbkFelBcAkGj7+/tTRNuzxGYhz81leWKlR8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829544; c=relaxed/simple;
-	bh=JjAXWBLJRcW4tN5NAl5spFzlaGnFr7NjanWA0huEdX4=;
+	s=arc-20240116; t=1780829547; c=relaxed/simple;
+	bh=VX+qVOjxPtvodOYAFKjS37teEA9bDqhZphK4UaQQm9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MVtnfNxBmTw7SYnbtCZJSjlTi8pqaCJhK8DSG6jHFSyKlqCyXT7vh42VD2CJpKVtVSOTIUw6XkBQxghNAlIq3iTfcNl69EdJmOzt9GPTvpMbDznj4FZBVjKYIVaANQrPhvd6D/6WbBk5ppuIaOZlkP8yGO/27oAyQsoIlEXzOBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wuaWQgqC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=icfEOtBAjso0eM2qREqu3It9wKaaE2CsDrRX/ExXolqcUZP8Qj/+SAIB/4MmmXpIlSU5h9l8A0InhlNXnYYmhNNZg8JAOrMiYWj9b7XyMtErFq+F7GbfJQ+ZClaTtEWh8rIHJeIrCc6OTJK2C2G96f0HT39Y0kYUqF9YRJPlJ1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zm3MlPpb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuaWQgqC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528F61F00893;
-	Sun,  7 Jun 2026 10:52:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zm3MlPpb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C98B1F00893;
+	Sun,  7 Jun 2026 10:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829542;
-	bh=qoEoC+Kf9s7Cd9R3rfBtEVBJxca/RTqi5ijxRYuyjKE=;
+	s=korg; t=1780829546;
+	bh=7exdBBjHPsJgtftCZe6Qdv5cn0STR9SAXit1vyl0ZYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wuaWQgqCi+uc3WWWp+gQglT6kSkcqtXsODJMkNm69hZs9PfRd2UsR3oo9KZXfGVbu
-	 WxLXWo3k1t9NTnNwoQmyk8fMvn26RnrZKVKH1QQdl4Fn9MgPEwAiTDNqbKPVMkrhaj
-	 VlWZWj5+IMX0Pnmerm8C/Q2sPW7P6ArhBmrttyz8=
+	b=zm3MlPpbBaGypbz3HCQ5WU6CxKB/i//JU7SeRYNoXBalOJAaAnHx8HUNocP1V/4bU
+	 CrZueK0azu3y2GRaw1Vi3U6PUdUZT4RGgwEsYyUCx8eb4DR0K7LSmRRgHWlYywy6F8
+	 x68K9WEe0qlUYuGOg+1UjzoK/TB02uD9dkFBmJAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Berkant Koc <me@berkoc.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Subject: [PATCH 7.0 288/332] drm/hyperv: validate resolution_count and fix WIN8 fallback
-Date: Sun,  7 Jun 2026 12:00:57 +0200
-Message-ID: <20260607095738.624693190@linuxfoundation.org>
+	Zhenghang Xiao <kipreyyy@gmail.com>,
+	Dave Airlie <airlied@redhat.com>
+Subject: [PATCH 6.18 257/315] drm/gem: fix race between change_handle and handle_delete
+Date: Sun,  7 Jun 2026 12:00:44 +0200
+Message-ID: <20260607095736.998485181@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,71 +46,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Berkant Koc <me@berkoc.com>
+From: Zhenghang Xiao <kipreyyy@gmail.com>
 
-commit 13d33b9ef67066c77c84273fac5a1d3fde3533d1 upstream.
+commit 7164d78559b0ff29931a366a840a9e5dd53d4b7c upstream.
 
-A SYNTHVID_RESOLUTION_RESPONSE with resolution_count > 64 walks past
-the supported_resolution[SYNTHVID_MAX_RESOLUTION_COUNT] array in the
-parse loop. Bound resolution_count against the array size, folded
-into the existing zero-check.
+drm_gem_change_handle_ioctl leaves the old handle live in the IDR
+during the window between spin_unlock(table_lock) and the final
+spin_lock(table_lock). A concurrent drm_gem_handle_delete on the old
+handle succeeds in this window, decrements handle_count to 0, and frees
+the GEM object while the new handle's IDR entry still references it.
 
-When the WIN10 resolution probe fails, the caller in
-hyperv_connect_vsp() left hv->screen_*_max / preferred_* unpopulated,
-which sets mode_config.max_width / max_height to 0 and makes
-drm_internal_framebuffer_create() reject every userspace framebuffer
-with -EINVAL. The pre-WIN10 branch had the same gap for
-preferred_width / preferred_height. Use a single post-probe fallback
-guarded by screen_width_max == 0 so both paths converge on the WIN8
-defaults.
+NULL the old handle's IDR entry before dropping table_lock so that any
+concurrent GEM_CLOSE on the old handle sees NULL and returns -EINVAL.
+Restore the old entry on the prime-bookkeeping error path.
 
-Signed-off-by: Berkant Koc <me@berkoc.com>
-Assisted-by: Claude:claude-opus-4-7 berkoc-pipeline
-Fixes: 76c56a5affeb ("drm/hyperv: Add DRM driver for hyperv synthetic video device")
-Cc: stable@vger.kernel.org # 5.14+
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Link: https://patch.msgid.link/6945b22419c7d404b4954a113de2ac9c900dba93.1779542874.git.me@berkoc.com
+Fixes: 5e28b7b94408 ("drm: Set old handle to NULL before prime swap in change_handle")
+Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://patch.msgid.link/20260526085313.26791-1-kipreyyy@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/hyperv/hyperv_drm_proto.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_gem.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
-+++ b/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
-@@ -391,8 +391,11 @@ static int hyperv_get_supported_resoluti
- 		return -ETIMEDOUT;
- 	}
+--- a/drivers/gpu/drm/drm_gem.c
++++ b/drivers/gpu/drm/drm_gem.c
+@@ -1015,6 +1015,7 @@ int drm_gem_change_handle_ioctl(struct d
+ 	       goto out_unlock;
+        }
  
--	if (msg->resolution_resp.resolution_count == 0) {
--		drm_err(dev, "No supported resolutions\n");
-+	if (msg->resolution_resp.resolution_count == 0 ||
-+	    msg->resolution_resp.resolution_count >
-+	    SYNTHVID_MAX_RESOLUTION_COUNT) {
-+		drm_err(dev, "Invalid resolution count: %d\n",
-+			msg->resolution_resp.resolution_count);
- 		return -ENODEV;
- 	}
++	idr_replace(&file_priv->object_idr, NULL, args->handle);
+ 	spin_unlock(&file_priv->table_lock);
  
-@@ -508,9 +511,13 @@ int hyperv_connect_vsp(struct hv_device
- 		ret = hyperv_get_supported_resolution(hdev);
- 		if (ret)
- 			drm_err(dev, "Failed to get supported resolution from host, use default\n");
--	} else {
-+	}
-+
-+	if (!hv->screen_width_max) {
- 		hv->screen_width_max = SYNTHVID_WIDTH_WIN8;
- 		hv->screen_height_max = SYNTHVID_HEIGHT_WIN8;
-+		hv->preferred_width = SYNTHVID_WIDTH_WIN8;
-+		hv->preferred_height = SYNTHVID_HEIGHT_WIN8;
- 	}
- 
- 	hv->mmio_megabytes = hdev->channel->offermsg.offer.mmio_megabytes;
+ 	if (obj->dma_buf) {
+@@ -1023,6 +1024,7 @@ int drm_gem_change_handle_ioctl(struct d
+ 		if (ret < 0) {
+ 			spin_lock(&file_priv->table_lock);
+ 			idr_remove(&file_priv->object_idr, handle);
++			idr_replace(&file_priv->object_idr, obj, args->handle);
+ 			spin_unlock(&file_priv->table_lock);
+ 			goto out_unlock;
+ 		}
 
 
