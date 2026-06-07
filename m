@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFEF1E98EF;
-	Sun,  7 Jun 2026 10:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4F41E98EF;
+	Sun,  7 Jun 2026 10:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827150; cv=none; b=dK3UUCrgbeF/iEWZTJJCyjXN3IrI3xFJ3b5v7lpg1G9HXRJmmNRMm8V6x7qGHGutYK9GFTNwvseY/4wHM8jQnrgafcjeKB++/x4Ubn8yEo5/pbB2v8QgAuUxfTgvXgrr3R2YcXNjuXvJdzc9s720ymXe+yAmX+zInYHdngC54Ns=
+	t=1780827154; cv=none; b=Stxd190O4d6wPuLPFB/nWcAZ+mj5UZ29GANZTtCFMFob+f5Ie5OG6eFWLH9Yp85dQ0Gh8xuyvT8QODfwpKaHEIpiQs110Tx+3O5Ml1VUVCRn3AjrofgRMaSkxnp9eDNOI6JogE6sXxtgMRR2RQ22btg2VUpVVqCnfATfgBwOjmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827150; c=relaxed/simple;
-	bh=HZKZMIlCqtudlU12xEcKtHj0C/YtI4Ba97efJQQwM6k=;
+	s=arc-20240116; t=1780827154; c=relaxed/simple;
+	bh=R0RZwEmeiepXxaGsoMQiXFw+UuYL1UzEXeC5FqQ0/ms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dhKbMD3jWSkqBRIMyhUBvnFGgqGTMF9Ay7gAe3dvoguya5+WOoTqWMQmVIXxzrchzmYFFXpGOmcRv8xQw8TOcXrTBb0LqLl31xcm2ZXSTJrsOwDysbqI66pjzUzdAlpnyV3m8vZfj946l2mNRCtv+UsY94B/3hAWM4p77zirEXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lWWPavtW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gjX/rastBI3uwv6w+Af/Zbb5Epf3EMTT1xKPqkzetyHtFV9OPWpbKCFOp1AHoP9UKfEaATfDqFDMVnmpiKtjsgRqT2xZBBtC83qxg7jg7t3w6alu9e1oaJ+0E9rWNu58Wg9isoe2SDR7KIGJc76breut2isawvBzPsg+jctVrOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XawexAGa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWWPavtW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7F11F00893;
-	Sun,  7 Jun 2026 10:12:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XawexAGa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839641F00893;
+	Sun,  7 Jun 2026 10:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827149;
-	bh=kMU1qE5bQrFnEefM2ohMcjOdaiRDv0RG7TmhXfQGagY=;
+	s=korg; t=1780827153;
+	bh=soYA2lGhCIzN4zQ8DDBJ+c+i+cVN1jHjcuWfAzRrJSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lWWPavtWxpBfeTELiDahTub0CnudJWvo6PAOk7u+pS7/bGQvTO0ToDcjsMKogyZk4
-	 ApT7YIqvU1s/8Uf+jFJabU8QePWQ2xw5GbwMaZ2lKIRhkD8IMPcyZvcPT+4otPOLwg
-	 1t8mgJPDX2DTSAwAW6rJFOADokOCCIFvPgpndHpM=
+	b=XawexAGaxiXhRsqjemlKxKnX2FBPP3NrHC12aOrxPMTknH5D1v5jZmZOvzqsU7Ost
+	 rTkpiYRHCuicMgiK0AABcwu77QqnCvz+YjeC+LGa4JGu2vSJqaIu0OcmCJFrR3JkAM
+	 Z/AhXXd0ZUt9KXl18u7++DgUxH3NJe/soNuZxyoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Danielle Ratson <danieller@nvidia.com>,
+	Nikolay Aleksandrov <nikolay@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 044/315] ethtool: module: call ethnl_ops_complete() on module flash errors
-Date: Sun,  7 Jun 2026 11:57:11 +0200
-Message-ID: <20260607095729.185550577@linuxfoundation.org>
+Subject: [PATCH 7.0 067/332] bridge: Fix sleep in atomic context in sysfs path
+Date: Sun,  7 Jun 2026 11:57:16 +0200
+Message-ID: <20260607095730.597778318@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +48,160 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 84371fb58423f997939aacdcbc02d128d76a54e5 ]
+[ Upstream commit 6d34594cc619d0d4b07d5afcad8b5984f3526dcf ]
 
-When validate() fails we are skipping over ethnl_ops_complete()
-even tho we already called ethnl_ops_begin().
+Since the start of the git history, brport_store() always acquired the
+bridge lock. Back then this decision made sense: The bridge lock
+protects the STP state of the bridge and its ports and at that time the
+function was only used by two STP related attributes (cost and
+priority).
 
-Fixes: 32b4c8b53ee7 ("ethtool: Add ability to flash transceiver modules' firmware")
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Danielle Ratson <danieller@nvidia.com>
-Link: https://patch.msgid.link/20260522231312.1710836-2-kuba@kernel.org
+Nowadays, brport_store() processes a lot more attributes and most of
+them do not need the bridge lock:
+
+* Bridge flags: Only require RTNL. Read locklessly by the data path.
+  Annotations can be added in net-next.
+
+* FDB port flushing: Only requires the FDB lock.
+
+* Multicast attributes: Only require the multicast lock.
+
+* Group forward mask: Only requires RTNL. Read locklessly by the data
+  path. Annotations can be added in net-next.
+
+* Backup port: Only requires RTNL. Read locklessly by the data path.
+
+This is a problem as the bridge calls dev_set_promiscuity() when certain
+bridge port flags change and this function can sleep since the commit
+cited below, resulting in a splat such as [1].
+
+Fix this by reducing the scope of the bridge lock and only take it when
+processing the two STP related attributes that require it. Remove the
+now stale comment from br_switchdev_set_port_flag(). The
+SWITCHDEV_F_DEFER flag can be removed in net-next.
+
+[1]
+BUG: sleeping function called from invalid context at net/core/dev_addr_lists.c:1262
+in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 372, name: bash
+preempt_count: 201, expected: 0
+RCU nest depth: 0, expected: 0
+5 locks held by bash/372:
+#0: ffff88810c51c3f0 (sb_writers#7){.+.+}-{0:0}, at: ksys_write (fs/read_write.c:740)
+#1: ffff888115ce9480 (&of->mutex){+.+.}-{4:4}, at: kernfs_fop_write_iter (fs/kernfs/file.c:343)
+#2: ffff88810b9fd330 (kn->active#37){.+.+}-{0:0}, at: kernfs_fop_write_iter (fs/kernfs/file.c:80 fs/kernfs/file.c:344)
+#3: ffffffffa59473a0 (rtnl_mutex){+.+.}-{4:4}, at: brport_store (net/bridge/br_sysfs_if.c:326)
+#4: ffff8881099d2d58 (&br->lock){+...}-{3:3}, at: brport_store (./include/linux/spinlock.h:348 net/bridge/br_sysfs_if.c:345)
+Preemption disabled at:
+ 0x0
+Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
+Call Trace:
+<TASK>
+dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+__might_resched.cold (kernel/sched/core.c:9163)
+netif_rx_mode_run (net/core/dev_addr_lists.c:1262)
+netif_rx_mode_sync (net/core/dev_addr_lists.c:1428)
+dev_set_promiscuity (net/core/dev_api.c:289)
+br_manage_promisc (net/bridge/br_if.c:135 net/bridge/br_if.c:172)
+br_port_flags_change (net/bridge/br_if.c:242 net/bridge/br_if.c:747)
+store_learning (net/bridge/br_sysfs_if.c:79 net/bridge/br_sysfs_if.c:235)
+brport_store (net/bridge/br_sysfs_if.c:346)
+kernfs_fop_write_iter (fs/kernfs/file.c:352)
+new_sync_write (fs/read_write.c:595)
+vfs_write (fs/read_write.c:688)
+ksys_write (fs/read_write.c:740)
+do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+
+Fixes: 78cd408356fe ("net: add missing instance lock to dev_set_promiscuity")
+Reviewed-by: Nikolay Aleksandrov <nikolay@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260526064818.272516-3-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/module.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/bridge/br_switchdev.c |  1 -
+ net/bridge/br_sysfs_if.c  | 30 ++++++++++++++++++++++--------
+ 2 files changed, 22 insertions(+), 9 deletions(-)
 
-diff --git a/net/ethtool/module.c b/net/ethtool/module.c
-index 4d4e0a82579a2b..05e4c1d785656f 100644
---- a/net/ethtool/module.c
-+++ b/net/ethtool/module.c
-@@ -427,10 +427,11 @@ int ethnl_act_module_fw_flash(struct sk_buff *skb, struct genl_info *info)
+diff --git a/net/bridge/br_switchdev.c b/net/bridge/br_switchdev.c
+index 4fac002922d22a..58257e9e9d30b6 100644
+--- a/net/bridge/br_switchdev.c
++++ b/net/bridge/br_switchdev.c
+@@ -99,7 +99,6 @@ int br_switchdev_set_port_flag(struct net_bridge_port *p,
+ 	attr.u.brport_flags.val = flags;
+ 	attr.u.brport_flags.mask = mask;
  
- 	ret = ethnl_module_fw_flash_validate(dev, info->extack);
- 	if (ret < 0)
--		goto out_unlock;
-+		goto out_complete;
+-	/* We run from atomic context here */
+ 	err = call_switchdev_notifiers(SWITCHDEV_PORT_ATTR_SET, p->dev,
+ 				       &info.info, extack);
+ 	err = notifier_to_errno(err);
+diff --git a/net/bridge/br_sysfs_if.c b/net/bridge/br_sysfs_if.c
+index 1f57c36a7fc097..d6df81fa0d13fe 100644
+--- a/net/bridge/br_sysfs_if.c
++++ b/net/bridge/br_sysfs_if.c
+@@ -86,16 +86,34 @@ static ssize_t show_path_cost(struct net_bridge_port *p, char *buf)
+ 	return sysfs_emit(buf, "%d\n", p->path_cost);
+ }
  
- 	ret = module_flash_fw(dev, tb, skb, info);
+-static BRPORT_ATTR(path_cost, 0644,
+-		   show_path_cost, br_stp_set_path_cost);
++static int store_path_cost(struct net_bridge_port *p, unsigned long v)
++{
++	int ret;
++
++	spin_lock_bh(&p->br->lock);
++	ret = br_stp_set_path_cost(p, v);
++	spin_unlock_bh(&p->br->lock);
++	return ret;
++}
++
++static BRPORT_ATTR(path_cost, 0644, show_path_cost, store_path_cost);
  
-+out_complete:
- 	ethnl_ops_complete(dev);
+ static ssize_t show_priority(struct net_bridge_port *p, char *buf)
+ {
+ 	return sysfs_emit(buf, "%d\n", p->priority);
+ }
  
- out_unlock:
+-static BRPORT_ATTR(priority, 0644,
+-			 show_priority, br_stp_set_port_priority);
++static int store_priority(struct net_bridge_port *p, unsigned long v)
++{
++	int ret;
++
++	spin_lock_bh(&p->br->lock);
++	ret = br_stp_set_port_priority(p, v);
++	spin_unlock_bh(&p->br->lock);
++	return ret;
++}
++
++static BRPORT_ATTR(priority, 0644, show_priority, store_priority);
+ 
+ static ssize_t show_designated_root(struct net_bridge_port *p, char *buf)
+ {
+@@ -334,17 +352,13 @@ static ssize_t brport_store(struct kobject *kobj,
+ 			ret = -ENOMEM;
+ 			goto out_unlock;
+ 		}
+-		spin_lock_bh(&p->br->lock);
+ 		ret = brport_attr->store_raw(p, buf_copy);
+-		spin_unlock_bh(&p->br->lock);
+ 		kfree(buf_copy);
+ 	} else if (brport_attr->store) {
+ 		val = simple_strtoul(buf, &endp, 0);
+ 		if (endp == buf)
+ 			goto out_unlock;
+-		spin_lock_bh(&p->br->lock);
+ 		ret = brport_attr->store(p, val);
+-		spin_unlock_bh(&p->br->lock);
+ 	}
+ 
+ 	if (!ret) {
 -- 
 2.53.0
 
