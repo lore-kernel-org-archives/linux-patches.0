@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19EE4071DD;
-	Sun,  7 Jun 2026 10:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D6C4071DD;
+	Sun,  7 Jun 2026 10:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829530; cv=none; b=XdL2Ve8wUTvjntTpU831V+Mk4WPSc3hJ0rZGTnRHtTYnUHTYy8S4SzqFuE/CFSl/PsZjg3G9G2tgfzixNj9UFjLoH2wvL2UZ0iOuFvBeuYncPiyzXcywYWaLNcHGfzoUIngpmHFV0ayjRhxFQONJ1pakPKN+ZcD8IliFCCbqp2w=
+	t=1780829534; cv=none; b=Rc6/ueQ104onMgaMMRhBPs5k7bouconyJL0sDfrjKxJnb188wfLfYisOm4WXsAnmV5jAGKZ7RRL1RG+EM3QvqdtAfQxhvt9vIA0nBdtP1TMI71U986FCBV4jZGQeOxRKtxproLWPCLRfU7nPUsWbb+UG6S+36A2KapcsGwKlGPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829530; c=relaxed/simple;
-	bh=xr1eMB/eolo9Kwsb3Grbr3YZElv+dW07NFQylb23mvk=;
+	s=arc-20240116; t=1780829534; c=relaxed/simple;
+	bh=gV9BkKgnOm725nnG8gnzQ2ejLbrbqjJ7bI4c49hchHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DlQ1FY4OnVKPL1agepk50rsDobVuQ8twA9mVkJiJu3Nqo6yotYfkEnTgxRlz6u11wQEgqEKi3cHoYzq78DN1bGDCIGuIbPzI74d7JLlwKjxhFtV1zPBXTcYCB5eqatP08JIUq2c7upbVKsEYdyl7HXZLThvytX9TsRVTvIZJteI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yyIMmier; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PUhX4sUQG1cjQVeR3MtJFAsxP5hs+chBEzZ5vLiA8GWLh3gTccyDc44bepEDfOYHng4VXnX5YXDpEQ6tgJ71HmULrmD0rOIUxDsvYcr+3r+l+/qL3OphZUIoUqeP1rFvZ7578hDV7WPO14fcqm9JWnpNcxijbtzgTSRDYUNk9Ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yXGdn4uq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yyIMmier"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B881F00893;
-	Sun,  7 Jun 2026 10:52:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXGdn4uq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC751F00893;
+	Sun,  7 Jun 2026 10:52:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829529;
-	bh=7YAn+5pPq2WBfJKQCDiyHIpRqKCHE8ww0wFOTKSutoI=;
+	s=korg; t=1780829533;
+	bh=MIuhBrQMy+KWLHdowb63rOaSvcq8k2b597my768HPic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yyIMmier9M+ukopBHjZj9dbWqsqjXCGzQxVfYR8lJm4lrqfBw4BGW0GIBgvH90gwh
-	 XIQqMv8qtr0TueRPfzegTuqJ7ITGsRVnMXY47cN2T7wjgAkb8LriaQMxpqZZ5Y4xe7
-	 fcuWhqspA3qH+2oBBWVGhXXCNPuJqHR3U89zW0RU=
+	b=yXGdn4uqZ3Ab7gbOEz7RKwrhUtcLuLIVIX1Gzv+bkPfgzirRSrX6AKexmkL5lgOw8
+	 xGMNSumYQOVIEReXjsEuO3+j3k48Wu+e8hPQ8lcfD1ehgGIz5G766MgkarIDGvQKvE
+	 OPGTZ8MQH1TMGgz9Bya3jzuudTqR8yCSxWpJnMbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandru Hossu <hossu.alexandru@gmail.com>,
-	David Disseldorp <ddiss@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 7.0 287/332] scsi: target: iscsi: Validate CHAP_R length before base64 decode
-Date: Sun,  7 Jun 2026 12:00:56 +0200
-Message-ID: <20260607095738.587083033@linuxfoundation.org>
+	Berkant Koc <me@berkoc.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Subject: [PATCH 6.18 256/315] drm/hyperv: validate VMBus packet size in receive callback
+Date: Sun,  7 Jun 2026 12:00:43 +0200
+Message-ID: <20260607095736.960024915@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,96 +47,191 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandru Hossu <hossu.alexandru@gmail.com>
+From: Berkant Koc <me@berkoc.com>
 
-commit 85db7391310b1304d2dc8ae3b0b12105a9567147 upstream.
+commit 7f87763f47a3c22fb50265a00619ef10f2394b18 upstream.
 
-chap_server_compute_hash() allocates client_digest as
-kzalloc(chap->digest_size) and then, for BASE64-encoded responses,
-passes chap_r directly to chap_base64_decode() without checking whether
-the input length could produce more than digest_size bytes of output.
+hyperv_receive_sub() reads msg->vid_hdr.type and dispatches into one
+of four message-type branches without knowing how many bytes the host
+wrote into hv->recv_buf. The completion path then runs
+memcpy(hv->init_buf, msg, VMBUS_MAX_PACKET_SIZE), so the consumer that
+wakes on wait_for_completion_timeout() can read up to 16 KiB of
+residue from a prior message as if it were the response payload.
 
-chap_base64_decode() writes to the destination unconditionally as long
-as there is input to consume. With MAX_RESPONSE_LENGTH set to 128 and
-the "0b" prefix stripped by extract_param(), up to 127 base64 characters
-can reach the decoder. 127 characters decode to 95 bytes. For SHA-256
-(digest_size=32) this overflows client_digest by 63 bytes; for MD5
-(digest_size=16) the overflow is 79 bytes.
+Pass bytes_recvd into hyperv_receive_sub() and reject any packet that
+does not cover the pipe + synthvid header. A single switch on
+msg->vid_hdr.type then computes the type-specific payload size: the
+three completion-driving types (SYNTHVID_VERSION_RESPONSE,
+SYNTHVID_RESOLUTION_RESPONSE, SYNTHVID_VRAM_LOCATION_ACK) fall through
+to a shared exit that requires that size before memcpy/complete, while
+SYNTHVID_FEATURE_CHANGE validates its own payload and returns before
+reading is_dirt_needed. Unknown types are dropped.
 
-The length check at line 344 fires after the write has already happened.
+SYNTHVID_RESOLUTION_RESPONSE is variable length: the host fills
+resolution_count entries, not the full SYNTHVID_MAX_RESOLUTION_COUNT
+array. Validate the fixed prefix first so resolution_count can be
+read, bound it against the array, then require only the count-sized
+array, so the shorter responses the host actually sends are accepted.
 
-The HEX branch in the same switch statement already validates the length
-up front. Apply the same approach to the BASE64 branch: strip trailing
-base64 padding characters, then reject any input whose data length
-exceeds DIV_ROUND_UP(digest_size * 4, 3) before calling the decoder.
+Only run the sub-handler when vmbus_recvpacket() returned success. The
+memcpy length is bytes_recvd, which is bounded by VMBUS_MAX_PACKET_SIZE
+only on a successful receive; on -ENOBUFS vmbus_recvpacket() instead
+reports the required length, which can exceed hv->recv_buf, so copying
+bytes_recvd would read and write past the 16 KiB buffers. Gating on the
+success return keeps the copy bounded. The nonzero-return path is itself
+a malformed-message case and is now logged rather than silently skipped;
+channel recovery is not attempted.
 
-Stripping trailing '=' before the comparison handles both padded and
-unpadded encodings. chap_base64_decode() already returns early on '=',
-so the full original string is still passed to the decoder unchanged.
+Rejected packets are reported via drm_err_ratelimited() rather than
+silently dropped, matching the CoCo-hardened pattern in
+hv_kvp_onchannelcallback().
 
-The mutual CHAP path decodes CHAP_C into initiatorchg_binhex, which is
-kzalloc(CHAP_CHALLENGE_STR_LEN). extract_param() caps initiatorchg at
-CHAP_CHALLENGE_STR_LEN characters, so at most CHAP_CHALLENGE_STR_LEN-1
-base64 characters reach the decoder. The maximum decoded size,
-DIV_ROUND_UP((CHAP_CHALLENGE_STR_LEN-1) * 3, 4), is less than
-CHAP_CHALLENGE_STR_LEN, so no overflow is possible there. A comment is
-added at the call site to document this.
-
-Fixes: 1e5733883421 ("scsi: target: iscsi: Support base64 in CHAP")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
-Reviewed-by: David Disseldorp <ddiss@suse.de>
-Link: https://patch.msgid.link/20260521151121.808477-1-hossu.alexandru@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 76c56a5affeb ("drm/hyperv: Add DRM driver for hyperv synthetic video device")
+Cc: stable@vger.kernel.org # 5.14+
+Signed-off-by: Berkant Koc <me@berkoc.com>
+Assisted-by: Claude:claude-opus-4-7 berkoc-pipeline
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Link: https://patch.msgid.link/8200dbc199c7a9b75ac7e8af6c748d2189b5ebd5.1779542874.git.me@berkoc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/iscsi/iscsi_target_auth.c |   19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/hyperv/hyperv_drm_proto.c |  100 ++++++++++++++++++++++++++----
+ 1 file changed, 87 insertions(+), 13 deletions(-)
 
---- a/drivers/target/iscsi/iscsi_target_auth.c
-+++ b/drivers/target/iscsi/iscsi_target_auth.c
-@@ -340,13 +340,22 @@ static int chap_server_compute_hash(
- 			goto out;
- 		}
- 		break;
--	case BASE64:
-+	case BASE64: {
-+		size_t r_len = strlen(chap_r);
+--- a/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
++++ b/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
+@@ -425,30 +425,92 @@ static int hyperv_get_supported_resoluti
+ 	return 0;
+ }
+ 
+-static void hyperv_receive_sub(struct hv_device *hdev)
++static void hyperv_receive_sub(struct hv_device *hdev, u32 bytes_recvd)
+ {
+ 	struct hyperv_drm_device *hv = hv_get_drvdata(hdev);
+ 	struct synthvid_msg *msg;
++	size_t hdr_size;
++	size_t need;
+ 
+ 	if (!hv)
+ 		return;
+ 
+-	msg = (struct synthvid_msg *)hv->recv_buf;
+-
+-	/* Complete the wait event */
+-	if (msg->vid_hdr.type == SYNTHVID_VERSION_RESPONSE ||
+-	    msg->vid_hdr.type == SYNTHVID_RESOLUTION_RESPONSE ||
+-	    msg->vid_hdr.type == SYNTHVID_VRAM_LOCATION_ACK) {
+-		memcpy(hv->init_buf, msg, VMBUS_MAX_PACKET_SIZE);
+-		complete(&hv->wait);
++	hdr_size = sizeof(struct pipe_msg_hdr) +
++		   sizeof(struct synthvid_msg_hdr);
++	if (bytes_recvd < hdr_size) {
++		drm_err_ratelimited(&hv->dev,
++				    "synthvid packet too small for header: %u\n",
++				    bytes_recvd);
+ 		return;
+ 	}
+ 
+-	if (msg->vid_hdr.type == SYNTHVID_FEATURE_CHANGE) {
++	msg = (struct synthvid_msg *)hv->recv_buf;
++	need = hdr_size;
 +
-+		while (r_len > 0 && chap_r[r_len - 1] == '=')
-+			r_len--;
-+		if (r_len > DIV_ROUND_UP(chap->digest_size * 4, 3)) {
-+			pr_err("Malformed CHAP_R: base64 payload too long\n");
-+			goto out;
-+		}
- 		if (chap_base64_decode(client_digest, chap_r, strlen(chap_r)) !=
- 		    chap->digest_size) {
- 			pr_err("Malformed CHAP_R: invalid BASE64\n");
- 			goto out;
- 		}
- 		break;
-+	}
- 	default:
- 		pr_err("Could not find CHAP_R\n");
- 		goto out;
-@@ -473,6 +482,14 @@ static int chap_server_compute_hash(
- 		}
- 		break;
- 	case BASE64:
++	switch (msg->vid_hdr.type) {
++	case SYNTHVID_VERSION_RESPONSE:
++		need += sizeof(struct synthvid_version_resp);
++		break;
++	case SYNTHVID_RESOLUTION_RESPONSE:
 +		/*
-+		 * No overflow check needed: initiatorchg_binhex is
-+		 * CHAP_CHALLENGE_STR_LEN bytes and extract_param() caps
-+		 * initiatorchg at CHAP_CHALLENGE_STR_LEN characters, so
-+		 * the decoded output is at most DIV_ROUND_UP(
-+		 * (CHAP_CHALLENGE_STR_LEN - 1) * 3, 4) bytes, which is
-+		 * less than CHAP_CHALLENGE_STR_LEN.
++		 * The resolution response is variable length: the host
++		 * fills resolution_count entries, not the full
++		 * SYNTHVID_MAX_RESOLUTION_COUNT array. Require the fixed
++		 * prefix first so resolution_count can be read, then
++		 * demand exactly the count-sized array.
 +		 */
- 		initiatorchg_len = chap_base64_decode(initiatorchg_binhex,
- 						      initiatorchg,
- 						      strlen(initiatorchg));
++		need += offsetof(struct synthvid_supported_resolution_resp,
++				 supported_resolution);
++		if (bytes_recvd < need)
++			break;
++		if (msg->resolution_resp.resolution_count >
++		    SYNTHVID_MAX_RESOLUTION_COUNT) {
++			drm_err_ratelimited(&hv->dev,
++					    "synthvid resolution count too large: %u\n",
++					    msg->resolution_resp.resolution_count);
++			return;
++		}
++		need += msg->resolution_resp.resolution_count *
++			sizeof(struct hvd_screen_info);
++		break;
++	case SYNTHVID_VRAM_LOCATION_ACK:
++		need += sizeof(struct synthvid_vram_location_ack);
++		break;
++	case SYNTHVID_FEATURE_CHANGE:
++		/*
++		 * Not a completion-driving message: validate its own payload
++		 * and consume it here rather than falling through to the
++		 * memcpy/complete shared by the wait-event responses.
++		 */
++		if (bytes_recvd < need +
++		    sizeof(struct synthvid_feature_change)) {
++			drm_err_ratelimited(&hv->dev,
++					    "synthvid feature change packet too small: %u\n",
++					    bytes_recvd);
++			return;
++		}
+ 		hv->dirt_needed = msg->feature_chg.is_dirt_needed;
+ 		if (hv->dirt_needed)
+ 			hyperv_hide_hw_ptr(hv->hdev);
++		return;
++	default:
++		return;
++	}
++
++	/*
++	 * Shared completion path for the wait-event responses
++	 * (VERSION_RESPONSE, RESOLUTION_RESPONSE, VRAM_LOCATION_ACK):
++	 * require the type-specific payload before handing the buffer to
++	 * the waiter.
++	 */
++	if (bytes_recvd < need) {
++		drm_err_ratelimited(&hv->dev,
++				    "synthvid packet too small for type %u: %u < %zu\n",
++				    msg->vid_hdr.type, bytes_recvd, need);
++		return;
+ 	}
++	memcpy(hv->init_buf, msg, bytes_recvd);
++	complete(&hv->wait);
+ }
+ 
+ static void hyperv_receive(void *ctx)
+@@ -469,9 +531,21 @@ static void hyperv_receive(void *ctx)
+ 		ret = vmbus_recvpacket(hdev->channel, recv_buf,
+ 				       VMBUS_MAX_PACKET_SIZE,
+ 				       &bytes_recvd, &req_id);
+-		if (bytes_recvd > 0 &&
+-		    recv_buf->pipe_hdr.type == PIPE_MSG_DATA)
+-			hyperv_receive_sub(hdev);
++		if (ret) {
++			/*
++			 * A nonzero return (e.g. -ENOBUFS for an oversized
++			 * packet) is itself a malformed message: bytes_recvd
++			 * then reports the required length rather than a copied
++			 * payload, so it must not be forwarded to the
++			 * sub-handler. Channel recovery is not attempted.
++			 */
++			drm_err_ratelimited(&hv->dev,
++					    "vmbus_recvpacket failed: %d (need %u)\n",
++					    ret, bytes_recvd);
++		} else if (bytes_recvd > 0 &&
++			   recv_buf->pipe_hdr.type == PIPE_MSG_DATA) {
++			hyperv_receive_sub(hdev, bytes_recvd);
++		}
+ 	} while (bytes_recvd > 0 && ret == 0);
+ }
+ 
 
 
