@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35FD636F428;
-	Sun,  7 Jun 2026 11:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA3834EF04;
+	Sun,  7 Jun 2026 11:00:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780830012; cv=none; b=Qa6ofb3uvWvSuT/dqhgIUbzCfyniLOVelHoVfvn+v1g89jslIl6Tf0Nw4ZNZr0BAJH4cnkHdQ5c/5GJ5cbMj365h8vlC6ZjzPtSl3SMrYHzQHhOVqrx8pnNWcLxD3WHOPqKOpTB0p2Lq0aAqsPIbx7TIlGzAkeLZmora7x6vGZo=
+	t=1780830017; cv=none; b=TSoKrmiYwQYqjlmSosBy2eTWTwKV5z0Yy5nYP56SxPydZEBNDtydFC5Pl8OawkcsWZfdYl0XKOvgbHVJXj9sxtDhS2fVorQv6VroiFotOFLw4hzm9GBdfN+GmHiPTFp4cb1tbaIYpeGiqZhn4ukNRWZsEitOGWh/9rQ4AUk1d5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780830012; c=relaxed/simple;
-	bh=L0V31AYZeerDVEhmDT8uJgC+EYaZjycKMg7EoBWMuuQ=;
+	s=arc-20240116; t=1780830017; c=relaxed/simple;
+	bh=2MAVcwPn46Ds7I+3S8Nvglb8zyBybs+g6M4+DzNY/7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HC9JY8F/I78dsyUvvT/5+egyYVbjEcMkbVc84fd4ASB0t0JP6GJDQcjlG57UgapeUmnYOjoA3tm591QHh3MaUZyTC1NHxUkHQNWju4rD5ksjRX9bOtb9c32v/8K06Ly0cZAkDrp5XsqP0zbUdC5Bs+AND+X8+yU070IPrS2wRPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/iVdxvM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nBVeApbXSXE1D21Z5CrLP7j1sMhhVDc28Z0sGushhuD30fQwMFfBlzPeznnTWdV114hXPRuJOmYHJ6SNIG9qJXHfhVgChtlOcsgNKjS7zqa/SFrCc4s4GVP7nCeNGFr/csO8T3SoaDdCTtOKbdnOjJbhbfe/g7BsMsfcgzk8UZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fq58Nd44; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/iVdxvM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75B41F00898;
-	Sun,  7 Jun 2026 11:00:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fq58Nd44"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706161F00899;
+	Sun,  7 Jun 2026 11:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780830002;
-	bh=qMEa3gpAJVPpnK5qdnvRE8Je9qdFYi38nq7NVVC2X0o=;
+	s=korg; t=1780830006;
+	bh=RQSFQ1r9efP8M45KBS3dsUhKmc8xnYzpFC7R51tFwLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S/iVdxvMgb0XMoo4zusio/qtQsz1+usTwMgjbn9yaH8/ELejTkleRcoBg32hV523w
-	 aLbCix3SHROTWuwb/wAHREdSYMl7WXTBuuRaGRCKydgjYwWn+dXPu9aImOm4+sqefD
-	 8vbTQFWqG8ZwUwOz0siLpkbuyAE0LBOchgpafC7U=
+	b=fq58Nd44euYSz2Yb3vxuN5erWfR0CUOW9q/gT2Nwqqw1OVrn3k2DERuRJc3vxtIs8
+	 VGjmng+N4rRw+Prlt0zNUlxOhcyJfO6I3WZ4uRr0WFgsD5r2Kp2Ev2RcNh3OQ9YyP6
+	 iLKFm4Ztoow00pfZfEiQpXWDK9WsfbEdqAcx91Dc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Shuai Zhang <shuai.zhang@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 272/307] Bluetooth: hci_qca: Convert timeout from jiffies to ms
-Date: Sun,  7 Jun 2026 12:01:09 +0200
-Message-ID: <20260607095737.702705899@linuxfoundation.org>
+Subject: [PATCH 7.0 324/332] ALSA: hda/realtek: Fix mute and mic-mute LEDs for HP 16 Piston OmniBook X
+Date: Sun,  7 Jun 2026 12:01:33 +0200
+Message-ID: <20260607095740.025632066@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,155 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit 375ba7484132662a4a8c7547d088fb6275c00282 ]
+[ Upstream commit 9e5fb6098d21e1f9be9982b46c3e5b8329d4e7d2 ]
 
-Since the timer uses jiffies as its unit rather than ms, the timeout value
-must be converted from ms to jiffies when configuring the timer. Otherwise,
-the intended 8s timeout is incorrectly set to approximately 33s.
+The ALC245 sound card on this machine requires the quirk
+`ALC245_FIXUP_HP_ENVY_X360_15_FH0XXX` to fix the mic and mute LED.
 
-To improve readability, embed msecs_to_jiffies() directly in the macro
-definitions and drop the _MS suffix from macros that now yield jiffies
-values: MEMDUMP_TIMEOUT, FW_DOWNLOAD_TIMEOUT, IBS_DISABLE_SSR_TIMEOUT,
-CMD_TRANS_TIMEOUT, and IBS_BTSOC_TX_IDLE_TIMEOUT.
-
-IBS_WAKE_RETRANS_TIMEOUT_MS and IBS_HOST_TX_IDLE_TIMEOUT_MS are
-intentionally left unchanged. Their values are stored in the struct fields
-wake_retrans and tx_idle_delay, which hold ms values at runtime and can be
-modified via debugfs. The msecs_to_jiffies() conversion happens at each
-call site against the field value, so it cannot be embedded in the macro.
-
-Wake timer depends on commit c347ca17d62a
-
-Cc: stable@vger.kernel.org
-Fixes: d841502c79e3 ("Bluetooth: hci_qca: Collect controller memory dump during SSR")
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221509
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260519015535.891156-1-zhangheng@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_qca.c |   33 ++++++++++++++++-----------------
- 1 file changed, 16 insertions(+), 17 deletions(-)
+ sound/hda/codecs/realtek/alc269.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -47,13 +47,12 @@
- #define HCI_MAX_IBS_SIZE	10
- 
- #define IBS_WAKE_RETRANS_TIMEOUT_MS	100
--#define IBS_BTSOC_TX_IDLE_TIMEOUT_MS	200
-+#define IBS_BTSOC_TX_IDLE_TIMEOUT	msecs_to_jiffies(200)
- #define IBS_HOST_TX_IDLE_TIMEOUT_MS	2000
--#define CMD_TRANS_TIMEOUT_MS		100
--#define MEMDUMP_TIMEOUT_MS		8000
--#define IBS_DISABLE_SSR_TIMEOUT_MS \
--	(MEMDUMP_TIMEOUT_MS + FW_DOWNLOAD_TIMEOUT_MS)
--#define FW_DOWNLOAD_TIMEOUT_MS		3000
-+#define CMD_TRANS_TIMEOUT		msecs_to_jiffies(100)
-+#define MEMDUMP_TIMEOUT			msecs_to_jiffies(8000)
-+#define FW_DOWNLOAD_TIMEOUT		msecs_to_jiffies(3000)
-+#define IBS_DISABLE_SSR_TIMEOUT		(MEMDUMP_TIMEOUT + FW_DOWNLOAD_TIMEOUT)
- 
- /* susclk rate */
- #define SUSCLK_RATE_32KHZ	32768
-@@ -1078,7 +1077,7 @@ static void qca_controller_memdump(struc
- 
- 			queue_delayed_work(qca->workqueue,
- 					   &qca->ctrl_memdump_timeout,
--					   msecs_to_jiffies(MEMDUMP_TIMEOUT_MS));
-+					   MEMDUMP_TIMEOUT);
- 			skb_pull(skb, sizeof(qca_memdump->ram_dump_size));
- 			qca_memdump->current_seq_no = 0;
- 			qca_memdump->received_dump = 0;
-@@ -1350,7 +1349,7 @@ static int qca_set_baudrate(struct hci_d
- 
- 	if (hu->serdev)
- 		serdev_device_wait_until_sent(hu->serdev,
--		      msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS));
-+		      CMD_TRANS_TIMEOUT);
- 
- 	/* Give the controller time to process the request */
- 	switch (qca_soc_type(hu)) {
-@@ -1381,8 +1380,8 @@ static inline void host_set_baudrate(str
- 
- static int qca_send_power_pulse(struct hci_uart *hu, bool on)
- {
-+	int timeout = CMD_TRANS_TIMEOUT;
- 	int ret;
--	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
- 	u8 cmd = on ? QCA_WCN3990_POWERON_PULSE : QCA_WCN3990_POWEROFF_PULSE;
- 
- 	/* These power pulses are single byte command which are sent
-@@ -1584,7 +1583,7 @@ static void qca_wait_for_dump_collection
- 	struct qca_data *qca = hu->priv;
- 
- 	wait_on_bit_timeout(&qca->flags, QCA_MEMDUMP_COLLECTION,
--			    TASK_UNINTERRUPTIBLE, MEMDUMP_TIMEOUT_MS);
-+			    TASK_UNINTERRUPTIBLE, MEMDUMP_TIMEOUT);
- 
- 	clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
- }
-@@ -2519,7 +2518,7 @@ static void qca_serdev_remove(struct ser
- static void qca_serdev_shutdown(struct serdev_device *serdev)
- {
- 	int ret;
--	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
-+	int timeout = CMD_TRANS_TIMEOUT;
- 	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
- 	struct hci_uart *hu = &qcadev->serdev_hu;
- 	struct hci_dev *hdev = hu->hdev;
-@@ -2576,7 +2575,7 @@ static int __maybe_unused qca_suspend(st
- 	bool tx_pending = false;
- 	int ret = 0;
- 	u8 cmd;
--	u32 wait_timeout = 0;
-+	unsigned long wait_timeout = 0;
- 
- 	set_bit(QCA_SUSPENDING, &qca->flags);
- 
-@@ -2597,15 +2596,15 @@ static int __maybe_unused qca_suspend(st
- 	if (test_bit(QCA_IBS_DISABLED, &qca->flags) ||
- 	    test_bit(QCA_SSR_TRIGGERED, &qca->flags)) {
- 		wait_timeout = test_bit(QCA_SSR_TRIGGERED, &qca->flags) ?
--					IBS_DISABLE_SSR_TIMEOUT_MS :
--					FW_DOWNLOAD_TIMEOUT_MS;
-+					IBS_DISABLE_SSR_TIMEOUT :
-+					FW_DOWNLOAD_TIMEOUT;
- 
- 		/* QCA_IBS_DISABLED flag is set to true, During FW download
- 		 * and during memory dump collection. It is reset to false,
- 		 * After FW download complete.
- 		 */
- 		wait_on_bit_timeout(&qca->flags, QCA_IBS_DISABLED,
--			    TASK_UNINTERRUPTIBLE, msecs_to_jiffies(wait_timeout));
-+			    TASK_UNINTERRUPTIBLE, wait_timeout);
- 
- 		if (test_bit(QCA_IBS_DISABLED, &qca->flags)) {
- 			bt_dev_err(hu->hdev, "SSR or FW download time out");
-@@ -2657,7 +2656,7 @@ static int __maybe_unused qca_suspend(st
- 
- 	if (tx_pending) {
- 		serdev_device_wait_until_sent(hu->serdev,
--					      msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS));
-+					      CMD_TRANS_TIMEOUT);
- 		serial_clock_vote(HCI_IBS_TX_VOTE_CLOCK_OFF, hu);
- 	}
- 
-@@ -2666,7 +2665,7 @@ static int __maybe_unused qca_suspend(st
- 	 */
- 	ret = wait_event_interruptible_timeout(qca->suspend_wait_q,
- 			qca->rx_ibs_state == HCI_IBS_RX_ASLEEP,
--			msecs_to_jiffies(IBS_BTSOC_TX_IDLE_TIMEOUT_MS));
-+			IBS_BTSOC_TX_IDLE_TIMEOUT);
- 	if (ret == 0) {
- 		ret = -ETIMEDOUT;
- 		goto error;
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7182,7 +7182,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x103c, 0x8da0, "HP 16 Clipper OmniBook 7(X360)", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8da1, "HP 16 Clipper OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8da7, "HP 14 Enstrom OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
+-	SND_PCI_QUIRK(0x103c, 0x8da8, "HP 16 Piston OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x103c, 0x8da8, "HP 16 Piston OmniBook X", ALC245_FIXUP_HP_ENVY_X360_15_FH0XXX),
+ 	SND_PCI_QUIRK(0x103c, 0x8dc9, "HP Laptop 15-fc0xxx", ALC236_FIXUP_HP_DMIC),
+ 	SND_PCI_QUIRK(0x103c, 0x8dd4, "HP EliteStudio 8 AIO", ALC274_FIXUP_HP_AIO_BIND_DACS),
+ 	SND_PCI_QUIRK(0x103c, 0x8dd7, "HP Laptop 15-fd0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
 
 
