@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E286B1E98E3;
-	Sun,  7 Jun 2026 10:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDA2285CAE;
+	Sun,  7 Jun 2026 10:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826967; cv=none; b=CW0CRoOKz3mBeQd1tKD0pbEqMs3ZxSNVYPisRpHR3EfLcOwjTOEUpvTXd6Ts3EqnOiMURo4Jdzxc464uAHyeuJTtnKmSYXqhEkc6WS3QUP0mcMt1a5RrE2oXLqtJaoQDF77PxmfXZcCwYLlxPDQ90kQw9cIKkBGPJprBPy035ko=
+	t=1780826971; cv=none; b=TddSOzMgXeN6uBWXB+u7QM9+1/vm3EBlPukg836nmDK9qKyxe0UKGyq/NoX9PLXgZ80tGXdHuS8ffoCRUmWO83G/je710+2unMpnt83+2fWwLnH0xkZHF5A1oiXT466L8ovgq1GS4UBIRcbXp+yfc96/DFX9P+tGF+/gO53jFL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826967; c=relaxed/simple;
-	bh=QnVTGa5kzefUXggIdPs4BXmKP+YgrZPyxw+XIsLPb5g=;
+	s=arc-20240116; t=1780826971; c=relaxed/simple;
+	bh=Dz9r5pkspURZiJ/XJ+Yn0ISsgtYQT+3T6s61w7A4/mQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U4tqDivEIy/1pnAFBSaY243wjDPoCMPzIzAqDXNsI1Vm1WQRW7xu2dwlIkr4XgAHgfjea4MFtPoqDr7Mu6wR66rbxAhhOVUJ6bXhpylaZN20A/GwuDyDOWz+Q2j85imVP4xpcxfyNqpT3d4ynTs13BYc8O6QSZiuiDVFZZVR4gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g3tNQ7C2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LNT+Bc5VuZvCAVKfV7aGJa4p4c3wXxKRsq4TJjam8PXnArAaPJcHHxAMa7cBwE520GV1G1yzQDWd8dRX/WvZA/rSK6mOYlMgiOzwyFx8Os+56gv/lzSCl4FJO/qfy+OmZMLIdQLhiuSaGTudZA+klyXoH102itLD8doBQm59ehM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vf/kSX2n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g3tNQ7C2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D7C1F00893;
-	Sun,  7 Jun 2026 10:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vf/kSX2n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAF91F00893;
+	Sun,  7 Jun 2026 10:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826966;
-	bh=ggaheT4ihXjNbwRn9yD8uSL9/IOk0z/emSOQYEo/QHw=;
+	s=korg; t=1780826970;
+	bh=HTGYa15dyeNXwLNuF3zvWOQ2YdbmzCxxRxmBxOkFRts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g3tNQ7C2QR7n4bm37lGo//zdjIqOpne9Plm9jbQG6bkRwgWkd397/SquA7nVjinTi
-	 WhfBHs0JEbSP2Et+6fZUg/74JwRkels317YkpABhUsIqkpqHJ5HCSqxrtOEztN4X01
-	 cNWeI7x0MqGJhQx73s3Ad+oaLp/FwheIqoh7axg4=
+	b=vf/kSX2nJ7jqRqhQHK5DGjDxb0xuyGEW4NPprnilWhSAHQP+eBfq5PuECm2wNCqsQ
+	 aKVnNglTqeK4ZnSKhig6Fa9D95/WskOE3hoIsihlpJJKPpUW9IRTGXw1/BpaX7epVo
+	 HREQ5v6LcE8NfJbCe3NIfBjLlsDisxyrATIiiPMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Danielle Ratson <danieller@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Jeffery <djeffery@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 047/332] ethtool: module: call ethnl_ops_complete() on module flash errors
-Date: Sun,  7 Jun 2026 11:56:56 +0200
-Message-ID: <20260607095729.849717670@linuxfoundation.org>
+Subject: [PATCH 6.18 027/315] scsi: core: Run queues for all non-SDEV_DEL devices from scsi_run_host_queues
+Date: Sun,  7 Jun 2026 11:56:54 +0200
+Message-ID: <20260607095728.497218331@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +48,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: David Jeffery <djeffery@redhat.com>
 
-[ Upstream commit 84371fb58423f997939aacdcbc02d128d76a54e5 ]
+[ Upstream commit 7205b58702273baf21d6ba7992e6ba15852325f7 ]
 
-When validate() fails we are skipping over ethnl_ops_complete()
-even tho we already called ethnl_ops_begin().
+While a SCSI host is in a recovery state, scsi_mq_requeue_cmd() will not
+set the requeue list for a requeued command to be kicked in the future.
+The expectation is a call to scsi_run_host_queues() will kick all SCSI
+devices once the recovery state is cleared.
 
-Fixes: 32b4c8b53ee7 ("ethtool: Add ability to flash transceiver modules' firmware")
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Danielle Ratson <danieller@nvidia.com>
-Link: https://patch.msgid.link/20260522231312.1710836-2-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+However, scsi_run_host_queues() uses shost_for_each_device() which uses
+scsi_device_get() and so will ignore devices in a partially removed
+state like SDEV_CANCEL. But these devices may also have requeued
+requests, leaving their requests stuck from not being kicked and causing
+the removal process of the device to hang.
+
+scsi_run_host_queues() needs to run against more devices than the macro
+shost_for_each_device() allows. Instead of using the too limiting
+scsi_device_get() state checks, only ignore devices in SDEV_DEL state or
+when unable to acquire a reference. Attempt to run the queues for all
+other devices when scsi_run_host_queues() is called.
+
+Fixes: 8b566edbdbfb ("scsi: core: Only kick the requeue list if necessary")
+Signed-off-by: David Jeffery <djeffery@redhat.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260515180941.9698-1-djeffery@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/module.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/scsi_lib.c | 27 +++++++++++++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/net/ethtool/module.c b/net/ethtool/module.c
-index 0a761bf4771e11..8047c14f7ee370 100644
---- a/net/ethtool/module.c
-+++ b/net/ethtool/module.c
-@@ -427,10 +427,11 @@ int ethnl_act_module_fw_flash(struct sk_buff *skb, struct genl_info *info)
+diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
+index 7ddb73cd6d9fe5..3f7ba6d3987f15 100644
+--- a/drivers/scsi/scsi_lib.c
++++ b/drivers/scsi/scsi_lib.c
+@@ -572,10 +572,33 @@ void scsi_requeue_run_queue(struct work_struct *work)
  
- 	ret = ethnl_module_fw_flash_validate(dev, info->extack);
- 	if (ret < 0)
--		goto out_unlock;
-+		goto out_complete;
+ void scsi_run_host_queues(struct Scsi_Host *shost)
+ {
+-	struct scsi_device *sdev;
++	struct scsi_device *sdev, *prev = NULL;
++	unsigned long flags;
  
- 	ret = module_flash_fw(dev, tb, skb, info);
+-	shost_for_each_device(sdev, shost)
++	spin_lock_irqsave(shost->host_lock, flags);
++	__shost_for_each_device(sdev, shost) {
++		/*
++		 * Only skip devices so deep into removal they will never need
++		 * another kick to their queues. Thus scsi_device_get() cannot
++		 * be used as it would skip devices in SDEV_CANCEL state which
++		 * may need a queue kick.
++		 */
++		if (sdev->sdev_state == SDEV_DEL ||
++		    !get_device(&sdev->sdev_gendev))
++			continue;
++		spin_unlock_irqrestore(shost->host_lock, flags);
++
++		if (prev)
++			put_device(&prev->sdev_gendev);
+ 		scsi_run_queue(sdev->request_queue);
++
++		prev = sdev;
++
++		spin_lock_irqsave(shost->host_lock, flags);
++	}
++	spin_unlock_irqrestore(shost->host_lock, flags);
++	if (prev)
++		put_device(&prev->sdev_gendev);
+ }
  
-+out_complete:
- 	ethnl_ops_complete(dev);
- 
- out_unlock:
+ static void scsi_uninit_cmd(struct scsi_cmnd *cmd)
 -- 
 2.53.0
 
