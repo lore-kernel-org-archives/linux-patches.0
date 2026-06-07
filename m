@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4872FB97B;
-	Sun,  7 Jun 2026 10:21:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA99B2E7179;
+	Sun,  7 Jun 2026 10:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827702; cv=none; b=OyxZ2hy46A1srFNw4xG0SSA/cCFyD8jW6WfDuOai7AFCsWC7qCXCXBa3Lp5BAyqAb4wTdxj6Z0iHnXp+fVata8rohfCT6HrXtj1GXxyyeQigk6fFktx3WIhbcaC1cP0e/nQvEfT4TxnyrkEB8WiMkhGldEYjpm6ueEhQ9NyuFCE=
+	t=1780827705; cv=none; b=qBnhvGoWXWrkgaikV8X9dBD6thj5YJvY/8gg0B95uUpitssbRcjgIwoO2jYdP/Ci4xH/IvscFge+lZBUKEdzL0ZvFf/gfo+qwzF52vGapLAfwp9mvj3ls4atPgfZ87HFcMvyz4RxGpap/Za3FrJxw0WNIMccGLD+RaBg2lyDuWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827702; c=relaxed/simple;
-	bh=TUgZHCkKTaHoHt+13hljNFZ74XRB9cSZuPyBloO4S2Y=;
+	s=arc-20240116; t=1780827705; c=relaxed/simple;
+	bh=EPHHCda4539HO6IuFwkWQTPGhEMSkRJ/H5tnrPcDdXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sEhtn5rpu8+aNbgOlDKRpFoHoJ9PrkjyAmqsD7gF12HD//EaCO8UN90xJsbEyJ6icMr+LCLt/nNU5X/lxaCAuhrZqN9L4k6DMmZOB+AxZfJYIwJKiqfxWDDmvejJF4Fd6a3OWmoEv9HNc9/yN2YPrzGkWe8GOhGohrR++bAT7eI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CmSFgrUs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hYM0DcacYF2WSs7hhTEsAhmRYExoONDN/IcsA9+Gm1SEu4x3T9BMsjVbTRnnF5D9/I2uZMwr3DGJtxqOepx6xZmtqNcy8HBTSwhH0xIIYndl9p872xgQdnX7AgmHoeoJkmCvPcnBDAmID1acCnmCaUyX100S7aRnBOrpPwDqxPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0pvTZRz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CmSFgrUs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D95671F00893;
-	Sun,  7 Jun 2026 10:21:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0pvTZRz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30931F00893;
+	Sun,  7 Jun 2026 10:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827700;
-	bh=Idr4WwI9FdqaQXlKafU76VeExHcx/EGKU2cNCZm+4M4=;
+	s=korg; t=1780827704;
+	bh=O+jovUaDCW8ZEUn6IYCU768i9hguPjmEPYnui8saA5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CmSFgrUsaATH94Si2AOe/8eKrZae989/nJNpaCQNPs2zlXpuyn5QjMroNzV2/Wg0j
-	 4jZi2lMzFYBJ+e01vaZqjmZd6XyvvGWTDHBm6GizGp/+qObS81qNumXkEo0DzACJHz
-	 4uszqqp3+qKVfvMIxwYiAzh8T6837z/ypfnlKKxo=
+	b=f0pvTZRzMwNi7NaMQglGOoDQUWPo2dm/P05KHQSa1wslGG3kv9uDgQ8aE4cwcy4NK
+	 N6rdxUYCiPD3Hk44ek7tYWO5PgI29bHCPKg1EEqyo/wItixmAiPa9UX9EDq6i/FDHm
+	 X3usn7VQEjmj6zy20G09vGliLbj+0kQF4VnGYuCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Minh Nguyen <minhnguyen.080505@gmail.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 115/332] drm/i915/psr: Add defininitions for INTEL_WA_REGISTER_CAPS DPCD register
-Date: Sun,  7 Jun 2026 11:58:04 +0200
-Message-ID: <20260607095732.333749998@linuxfoundation.org>
+Subject: [PATCH 6.18 094/315] net: skbuff: fix pskb_carve leaking zcopy pages
+Date: Sun,  7 Jun 2026 11:58:01 +0200
+Message-ID: <20260607095731.085027954@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,74 +48,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit fbceb39b536e40c2f7cc47ab42037bb7c2b7ced9 upstream.
+[ Upstream commit ff6e798c2eac3ebd0501ad7e796f583fab928de8 ]
 
-EDP specification says:
+When SKBFL_MANAGED_FRAG_REFS is set, frag pages are not refcounted but
+their lifetime is controlled by the attached ubuf_info. To make a copy
+of the skb_shared_info, we either should clear the flag and reference
+the frags, or keep the flag and have frags unreferenced.
 
-"If either VSC SDP is unable to be transmitted 100 ns before the SU region,
-the Source device may optionally transmit the VSC SDP during the prior
-video scan line’s HBlank period There is a Intel specific drm dp register
-currently containing bits related how TCON can support PSR2 with SDP on
-prior line."
+pskb_carve_inside_header() and pskb_carve_inside_nonlinear() don't
+follow the rule and thus can leak page references. Let's clear
+SKBFL_MANAGED_FRAG_REFS from the original skb to fix it. It's the
+simplest way to address it, but there are more performant ways to do
+that if it ever becomes a problem.
 
-Unfortunately many panels are having problems in implementing this. So
-there is a custom Intel specific DPCD register (INTEL_WA_REGISTER_CAPS) to
-figure out if this is properly implemented on a panel or if panel doesn't
-require that 100 ns delay before the SU region. Here are the definitions in
-this custom DPCD address:
-
-0 = Panel doesn't support SDP on prior line
-1 = Panel supports SDP on prior line
-2 = Panel doesn't have 100ns requirement
-3 = Reserved
-
-Add definitions for this new register and it's values into new header
-intel_dpcd.h.
-
-v2: add INTEL_DPCD_ prefix to definitions
-
-Bspec: 74741
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260515095756.2799483-2-jouni.hogander@intel.com
-(cherry picked from commit 1da1c9294825f08f622c473480d185680c2a3b75)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Link: https://lore.kernel.org/all/20260523085809.26331-1-nvminh232@clc.fitus.edu.vn/
+Fixes: 753f1ca4e1e50 ("net: introduce managed frags infrastructure")
+Reported-by: Minh Nguyen <minhnguyen.080505@gmail.com>
+Reported-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/1e2086aa69217d7f9c8da3d38f5be7160f1b4cd1.1779993185.git.asml.silence@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dpcd.h | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
- create mode 100644 drivers/gpu/drm/i915/display/intel_dpcd.h
+ net/core/skbuff.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dpcd.h b/drivers/gpu/drm/i915/display/intel_dpcd.h
-new file mode 100644
-index 00000000000000..4aea5326f2ed48
---- /dev/null
-+++ b/drivers/gpu/drm/i915/display/intel_dpcd.h
-@@ -0,0 +1,15 @@
-+/* SPDX-License-Identifier: MIT */
-+/*
-+ * Copyright © 2026 Intel Corporation
-+ */
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 6618bfa70ca444..a52aa79b0fdbaf 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -6772,6 +6772,11 @@ static int pskb_carve_inside_header(struct sk_buff *skb, const u32 off,
+ 	skb_copy_from_linear_data_offset(skb, off, data, new_hlen);
+ 	skb->len -= off;
+ 
++	/* Remove SKBFL_MANAGED_FRAG_REFS instead of trying to honour it
++	 * while refcounting frags below.
++	 */
++	skb_zcopy_downgrade_managed(skb);
 +
-+#ifndef __INTEL_DPCD_H__
-+#define __INTEL_DPCD_H__
+ 	memcpy((struct skb_shared_info *)(data + size),
+ 	       skb_shinfo(skb),
+ 	       offsetof(struct skb_shared_info,
+@@ -6883,6 +6888,11 @@ static int pskb_carve_inside_nonlinear(struct sk_buff *skb, const u32 off,
+ 		return -ENOMEM;
+ 	size = SKB_WITH_OVERHEAD(size);
+ 
++	/* Remove SKBFL_MANAGED_FRAG_REFS instead of trying to honour it
++	 * while refcounting frags below.
++	 */
++	skb_zcopy_downgrade_managed(skb);
 +
-+#define INTEL_DPCD_INTEL_WA_REGISTER_CAPS					0x3f0
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_EARLYSCANLINE_SDP_SUPPORT_MASK	REG_GENMASK(1, 0)
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_FALL_BACK_TO_PSR1			0
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITH_EARLY_SCANLINE		1
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITHOUT_EARLY_SCANLINE		2
-+
-+#endif /* __INTEL_DPCD_H__ */
+ 	memcpy((struct skb_shared_info *)(data + size),
+ 	       skb_shinfo(skb), offsetof(struct skb_shared_info, frags[0]));
+ 	if (skb_orphan_frags(skb, gfp_mask)) {
 -- 
 2.53.0
 
