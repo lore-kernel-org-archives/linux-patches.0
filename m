@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D193626ED5D;
-	Sun,  7 Jun 2026 10:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2442E1FE47B;
+	Sun,  7 Jun 2026 10:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828328; cv=none; b=hCA4d9FiX2GFPoygKR1QJhk1SQBc4IB/Hzne4gTEldMYFPT1f8i3pTfYS7d3L4Jb74/5+1fXwIagozFCJD9MoUYvhbYSgMIVz+TzLLq1V4Th44g6biLl3FRYKzPZ5VITmiDiKDRnTpRmhXK8oYmKPznWOutElnNb8qT9hqxeVOY=
+	t=1780828332; cv=none; b=bdvkoCqi3PRhN+uI7TkQ8ZiMCoe9ozTka8V+q8J6uGTfAsKcQWRDMYhp1PQ19FJkG76DcwINP87ZFBR7wcBtJtIVOavhRGDzR3Dxq/1lBwPibeP569MGb9PTNlD8hS36s9K4+Sa5jkKF1gW7ZTjkyH6prMBnxU6ySXtuwRAg5c0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828328; c=relaxed/simple;
-	bh=AMoDyPYvBxKmk7q0yOPK0n2T7m3gvxgttDi80fhPCiY=;
+	s=arc-20240116; t=1780828332; c=relaxed/simple;
+	bh=g7ogMmrFGC558+MF5egaRnce0E6NFOU08FwaNBwME1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KUbuIQeVQm+WjIG4U6xHO9+nTSnNJXSJx5K1ZfSoxXbmZXyj7VWa9VZGae0xphtNcUJ01HcMAPixbvT17XFL9rcw5uzCT1+A5cabfMmfkTeBeAoIRKfZx2dJ3b6oY6czQkGCKqGG3BqNi0+z4tcmoA0+eixlOvwLD4K72ZIzovM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nt09YuHl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RNpjf0W2VE9NLoKBky2GoSIo+4J5eL8WG5wV/7RnBAXs7Bl6t8lJHhtB8/b551F2EyJRgMZWR7T2jFKHhc0lOvZ20XI13nrsdzwiodgBl2UOtH1MxaYzYbLnKtscLFAtA/sET+cZ15sHctmst1vAKlcr/Dq/SjAY2FmH+WdlL2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zF47EIOu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nt09YuHl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F651F00893;
-	Sun,  7 Jun 2026 10:32:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zF47EIOu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728BF1F00893;
+	Sun,  7 Jun 2026 10:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828327;
-	bh=pnaVljgu5aTtPElTMnEQ4erxXU253JvZ9TDv+7aLJ10=;
+	s=korg; t=1780828331;
+	bh=Ri5bFlZioRoq0sH1fOy6g5owldBm1Ugwg+oG0aDo4nY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nt09YuHl0OqZL7WIxnrVtnThi39ZtSLy0qPE4yDgYDlvJQNbAEpFJTuboPE4Hp1w1
-	 Ec39R7EJbjNLLzA3k5ELdECZoJ6MZ8ymcmhxvdoPNfu3FaQH5hLPF4I5jSp7jF+vKA
-	 150d7xMJWNSrdJl/sgKfi785Ovy0hf63GTCpLbq8=
+	b=zF47EIOuag6xDNyagMUsXwuNuS1koYm45a3gB0qZQ3XoH2Bq5LSCr/bbT9m//VOlV
+	 WsNl0+RfTXakOxphmRxFyivmwpKKuySEef5h10xj+kCv+ask5llLZfzK7R3gH6YocS
+	 G1MqLls8aXD6nW+NxZrWNzRgGMrhrR2d/97OMX4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.18 150/315] KVM: SEV: Use READ_ONCE() when reading entries/indices from PSC buffer
-Date: Sun,  7 Jun 2026 11:58:57 +0200
-Message-ID: <20260607095733.115233190@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 7.0 173/332] Disable -Wattribute-alias for clang-23 and newer
+Date: Sun,  7 Jun 2026 11:59:02 +0200
+Message-ID: <20260607095734.414575843@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,75 +45,130 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit c8cc238093ca6c99267032f6cfe78f59389f3157 upstream.
+commit 175db11786bde9061db526bf1ac5107d915f5163 upstream.
 
-Use READ_ONCE() when reading entries/indices from the guest-accessible
-Page State Change buffer to defend against TOCTOU bugs.
+Clang recently added support for -Wattribute-alias [1], which results in
+the same warnings that necessitated commit bee20031772a ("disable
+-Wattribute-alias warning for SYSCALL_DEFINEx()") for GCC.
 
-Don't bother with READ_ONCE()/WRITE_ONCE() for cases where KVM is writing
-(and not consuming the result!), as the guest isn't supposed to touch the
-buffer while it's being processed.  I.e. using READ_ONCE() is all about
-protecting against misbehaving guests.
+  kernel/time/itimer.c:325:1: error: alias and aliasee have different types 'long (unsigned int)' and 'long (typeof (__builtin_choose_expr((__builtin_types_compatible_p(typeof ((unsigned int)0), typeof (0LL)) || __builtin_types_compatible_p(typeof ((unsigned int)0), typeof (0ULL))), 0LL, 0L)))' (aka 'long (long)') [-Werror,-Wattribute-alias]
+    325 | SYSCALL_DEFINE1(alarm, unsigned int, seconds)
+        | ^
+  include/linux/syscalls.h:225:36: note: expanded from macro 'SYSCALL_DEFINE1'
+    225 | #define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
+        |                                    ^
+  include/linux/syscalls.h:236:2: note: expanded from macro 'SYSCALL_DEFINEx'
+    236 |         __SYSCALL_DEFINEx(x, sname, __VA_ARGS__)
+        |         ^
+  include/linux/syscalls.h:251:18: note: expanded from macro '__SYSCALL_DEFINEx'
+    251 |                 __attribute__((alias(__stringify(__se_sys##name))));    \
+        |                                ^
+  kernel/time/itimer.c:325:1: note: aliasee is declared here
+  include/linux/syscalls.h:225:36: note: expanded from macro 'SYSCALL_DEFINE1'
+    225 | #define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
+        |                                    ^
+  include/linux/syscalls.h:236:2: note: expanded from macro 'SYSCALL_DEFINEx'
+    236 |         __SYSCALL_DEFINEx(x, sname, __VA_ARGS__)
+        |         ^
+  include/linux/syscalls.h:255:18: note: expanded from macro '__SYSCALL_DEFINEx'
+    255 |         asmlinkage long __se_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__))  \
+        |                         ^
+  <scratch space>:16:1: note: expanded from here
+     16 | __se_sys_alarm
+        | ^
 
-Fixes: 9b54e248d264 ("KVM: SEV: Add support to handle Page State Change VMGEXIT")
+Disable the warnings in the same way for clang-23 and newer. Disable the
+warning about unknown warning options to avoid breaking the build for
+versions of clang-23 that do not have -Wattribute-alias, such as ones
+deployed by vendors like Android or CI systems or when bisecting LLVM
+between llvmorg-23-init and release/23.x.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260501202250.2115252-11-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2163
+Link: https://github.com/llvm/llvm-project/commit/40da6920a0d71d49dfa2392b09153600b0759f5e [1]
+Link: https://patch.msgid.link/20260515-syscall-disable-attribute-alias-for-clang-v1-1-9a9d95d41df6@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/riscv/include/asm/syscall_wrapper.h |    4 ++++
+ include/linux/compat.h                   |    4 ++++
+ include/linux/compiler-clang.h           |    6 ++++++
+ include/linux/compiler_types.h           |    4 ++++
+ include/linux/syscalls.h                 |    4 ++++
+ 5 files changed, 22 insertions(+)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -3820,9 +3820,9 @@ static void __snp_complete_one_psc(struc
- 	 */
- 	for (idx = svm->sev_es.psc_idx; svm->sev_es.psc_inflight;
- 	     svm->sev_es.psc_inflight--, idx++) {
--		struct psc_entry *entry = &entries[idx];
-+		struct psc_entry entry = READ_ONCE(entries[idx]);
+--- a/arch/riscv/include/asm/syscall_wrapper.h
++++ b/arch/riscv/include/asm/syscall_wrapper.h
+@@ -32,6 +32,10 @@ asmlinkage long __riscv_sys_ni_syscall(c
+ 	__diag_push();									\
+ 	__diag_ignore(GCC, 8, "-Wattribute-alias",					\
+ 			"Type aliasing is used to sanitize syscall arguments");		\
++	__diag_ignore(clang, 23, "-Wunknown-warning-option",				\
++		      "Avoid breaking versions without -Wattribute-alias");		\
++	__diag_ignore(clang, 23, "-Wattribute-alias",					\
++			"Type aliasing is used to sanitize syscall arguments");		\
+ 	static long __se_##prefix##name(ulong, ulong, ulong, ulong, ulong, ulong, 	\
+ 					ulong)						\
+ 			__attribute__((alias(__stringify(___se_##prefix##name))));	\
+--- a/include/linux/compat.h
++++ b/include/linux/compat.h
+@@ -72,6 +72,10 @@
+ 	__diag_push();								\
+ 	__diag_ignore(GCC, 8, "-Wattribute-alias",				\
+ 		      "Type aliasing is used to sanitize syscall arguments");\
++	__diag_ignore(clang, 23, "-Wunknown-warning-option",			\
++		      "Avoid breaking versions without -Wattribute-alias");	\
++	__diag_ignore(clang, 23, "-Wattribute-alias",				\
++		      "Type aliasing is used to sanitize syscall arguments");	\
+ 	asmlinkage long compat_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
+ 		__attribute__((alias(__stringify(__se_compat_sys##name))));	\
+ 	ALLOW_ERROR_INJECTION(compat_sys##name, ERRNO);				\
+--- a/include/linux/compiler-clang.h
++++ b/include/linux/compiler-clang.h
+@@ -131,6 +131,12 @@
+ #define __diag_str(s)		__diag_str1(s)
+ #define __diag(s)		_Pragma(__diag_str(clang diagnostic s))
  
--		entry->cur_page = entry->pagesize ? 512 : 1;
-+		entries[idx].cur_page = entry.pagesize ? 512 : 1;
- 	}
++#if CONFIG_CLANG_VERSION >= 230000
++#define __diag_clang_23(s)	__diag(s)
++#else
++#define __diag_clang_23(s)
++#endif
++
+ #define __diag_clang_13(s)	__diag(s)
  
- 	hdr->cur_entry = idx;
-@@ -3885,8 +3885,8 @@ next_range:
- 	 * validation, so take care to only use validated copies of values used
- 	 * for things like array indexing.
- 	 */
--	idx_start = hdr->cur_entry;
--	idx_end = hdr->end_entry;
-+	idx_start = READ_ONCE(hdr->cur_entry);
-+	idx_end = READ_ONCE(hdr->end_entry);
+ #define __diag_ignore_all(option, comment) \
+--- a/include/linux/compiler_types.h
++++ b/include/linux/compiler_types.h
+@@ -718,6 +718,10 @@ struct ftrace_likely_data {
+ #define __diag_GCC(version, severity, string)
+ #endif
  
- 	if (idx_end >= max_nr_entries) {
- 		snp_complete_psc(svm, VMGEXIT_PSC_ERROR_INVALID_HDR);
-@@ -3895,7 +3895,7 @@ next_range:
++#ifndef __diag_clang
++#define __diag_clang(version, severity, string)
++#endif
++
+ #define __diag_push()	__diag(push)
+ #define __diag_pop()	__diag(pop)
  
- 	/* Find the start of the next range which needs processing. */
- 	for (idx = idx_start; idx <= idx_end; idx++, hdr->cur_entry++) {
--		entry_start = entries[idx];
-+		entry_start = READ_ONCE(entries[idx]);
- 
- 		gfn = entry_start.gfn;
- 		huge = entry_start.pagesize;
-@@ -3939,7 +3939,7 @@ next_range:
- 	 * KVM_HC_MAP_GPA_RANGE exit.
- 	 */
- 	while (++idx <= idx_end) {
--		struct psc_entry entry = entries[idx];
-+		struct psc_entry entry = READ_ONCE(entries[idx]);
- 
- 		if (entry.operation != entry_start.operation ||
- 		    entry.gfn != entry_start.gfn + npages ||
+--- a/include/linux/syscalls.h
++++ b/include/linux/syscalls.h
+@@ -247,6 +247,10 @@ static inline int is_syscall_trace_event
+ 	__diag_push();							\
+ 	__diag_ignore(GCC, 8, "-Wattribute-alias",			\
+ 		      "Type aliasing is used to sanitize syscall arguments");\
++	__diag_ignore(clang, 23, "-Wunknown-warning-option",		\
++		      "Avoid breaking versions without -Wattribute-alias");\
++	__diag_ignore(clang, 23, "-Wattribute-alias",			\
++		      "Type aliasing is used to sanitize syscall arguments");\
+ 	asmlinkage long sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
+ 		__attribute__((alias(__stringify(__se_sys##name))));	\
+ 	ALLOW_ERROR_INJECTION(sys##name, ERRNO);			\
 
 
