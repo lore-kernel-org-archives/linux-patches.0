@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5921E98EF;
-	Sun,  7 Jun 2026 10:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A671E98EF;
+	Sun,  7 Jun 2026 10:12:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827170; cv=none; b=MkRxKuBDKd0Ii3RI5TuQ+BLBxHNRwr9asSMsab1qSdGot3Q4QfcZpMW7mRmzY7/MIRSJqVIWUMQyWn7ZzRbmW821JwAuiw31M9SzoDzUguEM8wPAA00mkIglS/HxPsukkS7IhBBFn9RW01kX5C3Zjsyyw6lLaBeMySsLM1SjMKo=
+	t=1780827174; cv=none; b=Skh31amQU5Y51wDq0aAKecnGzfoDJQYAilmFA0CKO6flTevKnaf3g0itOIlWZ1rCH9x4UVR91O9pCGR+HikAAhmsnLFzx2ymK+C8lTy0VszcV69/QOmNYMz9ib+d1L8mVWKsIou8iVEYgk9k8Zqk8I8XsM8AhwpFmm8iUB4Z0wY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827170; c=relaxed/simple;
-	bh=oglwkuaDT2e6f+WK7y0//OVub5cNDB44SBCrGPg2v3g=;
+	s=arc-20240116; t=1780827174; c=relaxed/simple;
+	bh=jbwcLFL5S4f5prFUwnc5ds/6OR781Ntxq3E1Rn6F4Sw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f9/9JJ21Ov89S7WD9B2gB329nCtDvqKEQNjWXr58187i4n54IOcvULI2bDypL/5ct8TjBQ/0qSTFVyUZVSoQs8eLn3Pau0V6nJP7Wu4t+bEmfUnB2xPKfs9F+5cPwaoqIGEZVAfdAM9U7XsLCsgVjflsuJQ9Po8n7IyrNET8lnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eoPWzSRX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lQgwWYvQPu7dPwyqAr2gxQBvzP/Vj7gFDfqrAsXxGwII08TXpxIl13PVRrx2X/gOjtJYEnbyf/DvOCttgT69t2WcgzfVv5y2knyDT6efuqGs2GGp1NhI8mI2C0kOvzJFwVX+KPTBO40i+sbny03hqdDkIdRGaP9OYFCyUpOlFyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FbBE1L8C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoPWzSRX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2F11F00893;
-	Sun,  7 Jun 2026 10:12:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FbBE1L8C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96D9C1F00893;
+	Sun,  7 Jun 2026 10:12:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827169;
-	bh=guBv9ZiEINmlNMbZuLP1TSvAMCzHbUsuJnV04OU5MgA=;
+	s=korg; t=1780827173;
+	bh=RyAnmkUsgB4liN5SjH8KukOuZq5K5ikCziRWbzreijs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eoPWzSRXf7/q73563s/6b7EJeXoz8ZF4pRmXyORm3JXdhif+FKDmq20nYwJcZGp11
-	 vblSZRwMK4H7J6LoMUqyuiCfY+aZTrHLMRGDzq9WlMBzkdkyeXnHilEY0BbQzQbyI2
-	 B9og+vLzvemT0xm8kmH2VmKHvivaWzN4PqrF7HkQ=
+	b=FbBE1L8CyG20GFLmHmBzgnw6da76WN4MqzFzglvU1pmG/LzI0bkwOVOP1Z47NxlxV
+	 4zLv6rxj3qs1Klss3h9KCcMYxgvAE/iEZNxH+f+N6QhM27LTq1yftfh6/UloCf3Wb5
+	 TyFDkBpHr6vmGeRUqjLwbOXH6uGvL9OAtoHv4aTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Danielle Ratson <danieller@nvidia.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Kory Maincent <kory.maincent@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 046/315] ethtool: module: avoid racy updates to dev->ethtool bitfield
-Date: Sun,  7 Jun 2026 11:57:13 +0200
-Message-ID: <20260607095729.266886682@linuxfoundation.org>
+Subject: [PATCH 7.0 069/332] ethtool: tsconfig: fix reply error handling
+Date: Sun,  7 Jun 2026 11:57:18 +0200
+Message-ID: <20260607095730.671990613@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,66 +48,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 7a84b965ffc12030af63cd10a8f3a1123ff39b7a ]
+[ Upstream commit a888bbd43940cada72f7686337741ce86d1cf869 ]
 
-When reviewing other changes Gemini points out that we currently
-update module_fw_flash_in_progress without holding any locks.
-Since module_fw_flash_in_progress is part of a bitfield this
-is not great, updates to other fields may be lost.
+A couple of trivial bugs in error handling in tsconfig_send_reply().
+If we failed to allocate rskb we need to set the error.
+If we did allocate it but failed to send it - we need to remember
+to free it.
 
-We could use a bool and sprinkle some READ_ONCE/WRITE_ONCE here
-but seems like the issue is rather than the work is an unusual
-writer. The other writers already hold the right locks. So just
-very briefly take these locks when the work completes.
-
-Note that nothing ever cancels the FW update work, so there's
-no concern with deadlocks vs cancel.
-
-Fixes: 32b4c8b53ee7 ("ethtool: Add ability to flash transceiver modules' firmware")
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Danielle Ratson <danieller@nvidia.com>
-Link: https://patch.msgid.link/20260522231312.1710836-4-kuba@kernel.org
+Fixes: 6e9e2eed4f39 ("net: ethtool: Add support for tsconfig command to get/set hwtstamp config")
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
+Link: https://patch.msgid.link/20260526153533.2779187-3-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/module.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ net/ethtool/tsconfig.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/ethtool/module.c b/net/ethtool/module.c
-index fb61bb47083e62..8929b7fb2fa79c 100644
---- a/net/ethtool/module.c
-+++ b/net/ethtool/module.c
-@@ -221,14 +221,22 @@ static void module_flash_fw_work_list_del(struct list_head *list)
- static void module_flash_fw_work(struct work_struct *work)
- {
- 	struct ethtool_module_fw_flash *module_fw;
-+	struct net_device *dev;
+diff --git a/net/ethtool/tsconfig.c b/net/ethtool/tsconfig.c
+index e49e612a68c2c0..966c769c72677f 100644
+--- a/net/ethtool/tsconfig.c
++++ b/net/ethtool/tsconfig.c
+@@ -224,16 +224,21 @@ static int tsconfig_send_reply(struct net_device *dev, struct genl_info *info)
+ 	reply_len = ret + ethnl_reply_header_size();
+ 	rskb = ethnl_reply_init(reply_len, dev, ETHTOOL_MSG_TSCONFIG_SET_REPLY,
+ 				ETHTOOL_A_TSCONFIG_HEADER, info, &reply_payload);
+-	if (!rskb)
++	if (!rskb) {
++		ret = -ENOMEM;
+ 		goto err_cleanup;
++	}
  
- 	module_fw = container_of(work, struct ethtool_module_fw_flash, work);
-+	dev = module_fw->fw_update.dev;
+ 	ret = tsconfig_fill_reply(rskb, &req_info->base, &reply_data->base);
+ 	if (ret < 0)
+-		goto err_cleanup;
++		goto err_free_msg;
  
- 	ethtool_cmis_fw_update(&module_fw->fw_update);
+ 	genlmsg_end(rskb, reply_payload);
+ 	ret = genlmsg_reply(rskb, info);
++	rskb = NULL;
  
- 	module_flash_fw_work_list_del(&module_fw->list);
--	module_fw->fw_update.dev->ethtool->module_fw_flash_in_progress = false;
--	netdev_put(module_fw->fw_update.dev, &module_fw->dev_tracker);
-+
-+	rtnl_lock();
-+	netdev_lock_ops(dev);
-+	dev->ethtool->module_fw_flash_in_progress = false;
-+	netdev_unlock_ops(dev);
-+	rtnl_unlock();
-+
-+	netdev_put(dev, &module_fw->dev_tracker);
- 	release_firmware(module_fw->fw_update.fw);
- 	kfree(module_fw);
- }
++err_free_msg:
++	nlmsg_free(rskb);
+ err_cleanup:
+ 	kfree(reply_data);
+ 	kfree(req_info);
 -- 
 2.53.0
 
