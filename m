@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B449309DAF;
-	Sun,  7 Jun 2026 10:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88EDD1E98E3;
+	Sun,  7 Jun 2026 10:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827070; cv=none; b=h7mTIFLPn6sDgMzYlx7u3kqME0HblOVc+bsheFngOg4qMG3brJ3gcWW2Xx+8XKDHux3BSX4xnrfghiHOsxb9mm6Wz0iNmNga05G2oV7u015qlA8V/O9G2F+wFY3mFA/TFUzEpsyOHkSHPENVIirILJH8y4+qKGmxvtnKRv2jqeY=
+	t=1780827073; cv=none; b=EP2j95l2pESJGLKvDelsqrAqzGnux4V2l3ImQOtEMBjec9+w+33JphHQio+gUfNNvX33S6zTU+mvHwoAm9L5fmD3r0oHr9mjezU661PfNfaFjtMoTjSwHu3YCsM4nmY9RMLIshj31pl/rsTL6Px7lCMXHNLhIqEqtqh5mRJGdgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827070; c=relaxed/simple;
-	bh=0fH2SXwGv+8tKhFlMrsRog+JyXYWKDN2XAhCieazW/o=;
+	s=arc-20240116; t=1780827073; c=relaxed/simple;
+	bh=dMjstsMYmN95Okc5M/rSGrW+bYBRKTxISdgzW2rS+Vo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=maqhk+filiRCtSDUy/rTAlD4TzqWrwHk8E10gK5Wd2rfRsj8F6T2JN2mpDeg6ZdSu0nUcZwGT7K1MpLNVaB6O96UzvhE/03aa1ia0CbFvD+B8hHtLc/ctgJXd+H2oY+ntrHj7YYQ42DGE90ZEo01JvEX8r7CssqYKLznPDMFwtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJZZvP51; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=au4rU88x3WPeEFmf5uamDG2lPpt/iZmtdy3PEwMN+ewzk6D9W33XotVilF23Rh8Ne1B3X+0SZbCAFyEhhEQlVhCRDNViq/qSthktHcKKYsnElY93H6wmitcVfki8D2imZ/eG845Z9jGG8H7Rb06ScvBvah+Rg8WIMb+/vSkn1Wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxvu9OK+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJZZvP51"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 737B41F00898;
-	Sun,  7 Jun 2026 10:11:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxvu9OK+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29C51F00893;
+	Sun,  7 Jun 2026 10:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827069;
-	bh=/uD2iRGGO8kF9zK3D+yLkW91DMGO2VT+RznF37Hgqpw=;
+	s=korg; t=1780827072;
+	bh=ppX/yAOZu+BspdI2oNtQfM2ndEQTT43RkA47037bPtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sJZZvP51iWL8+FV77cZOUjIQX6XJIiLS7SaVIxKWSrYzLHkTDXGzzWaWBEMVcWyfN
-	 9fBIV5ohMEzle50sFcOJ/QNywnueaH7HguRNJK3J8iih8Yq3BdoNOsnWSaqnrNIYSJ
-	 9wLSVcufhZJhd1xkUBSD1d2Brf6wsvjQFixRoW7M=
+	b=mxvu9OK+M1dOzKWuL9GyINh95dLTX0VEZ6qbX9WEMQ3xQ9ZvUwFKlRnoLFuNO4gRF
+	 9i8LSN3FfqGvp6FUmnth0uqqD17DG+TuUo3dhVj/P+mdeZjipXsYfaGFk67nqXoh99
+	 uVSdibYH/ARzRkDz2sunHKjf45Kj6+ZrQo7jN704=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
-	Breno Leitao <leitao@debian.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jian Zhou <eilaimemedsnaimel@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 037/315] net: Avoid checksumming unreadable skb tail on trim
-Date: Sun,  7 Jun 2026 11:57:04 +0200
-Message-ID: <20260607095728.903365760@linuxfoundation.org>
+Subject: [PATCH 6.18 028/315] ipv4: free net->ipv4.sysctl_local_reserved_ports after unregister_net_sysctl_table()
+Date: Sun,  7 Jun 2026 11:56:55 +0200
+Message-ID: <20260607095728.538203987@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
 References: <20260607095727.528828913@linuxfoundation.org>
@@ -46,104 +49,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Björn Töpel <bjorn@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2e357f002c61fd76fd8f12468744a06a5ec48eaa ]
+[ Upstream commit 87a1e0fe7776da7ab411be332b4be58ac8840d10 ]
 
-pskb_trim_rcsum_slow() keeps CHECKSUM_COMPLETE valid by subtracting
-the checksum of the bytes removed from the skb tail. That assumes the
-removed bytes can be read.
+ipv4_sysctl_exit_net() is currently freeing net->ipv4.sysctl_local_reserved_ports
+too soon.
 
-io_uring zcrx skbs may contain unreadable net_iov frags. With fbnic
-header/data split, small TCP/IPv4 packets can carry Ethernet padding
-in such a frag. ip_rcv_core() trims the skb to iph->tot_len before TCP
-sees it, and the CHECKSUM_COMPLETE adjustment then calls
-skb_checksum() on the padding.
+Only after unregister_net_sysctl_table() we can be sure no threads can possibly
+use the sysctls, including /proc/sys/net/ipv4/ip_local_reserved_ports.
 
-This is exposed by IPv4 because small TCP/IPv4 frames can be shorter
-than the Ethernet minimum payload. TCP/IPv6 frames are large enough in
-the normal zcrx path, so they do not hit the same padding trim.
-
-Keep the existing checksum adjustment for readable skbs. If the
-remaining packet is fully linear, drop CHECKSUM_COMPLETE and let the
-stack validate the packet after trimming. If unreadable payload would
-remain, fail the trim; the checksum cannot be adjusted without reading
-the trimmed tail.
-
-Also clear skb->unreadable when trimming removes all frags.
-
-Fixes: 65249feb6b3d ("net: add support for skbs with unreadable frags")
-Signed-off-by: Björn Töpel <bjorn@kernel.org>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20260522120643.242974-1-bjorn@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 122ff243f5f1 ("ipv4: make ip_local_reserved_ports per netns")
+Reported-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Cong Wang <xiyou.wangcong@gmail.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260521122147.3584624-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 31 +++++++++++++++++++++++++++----
- 1 file changed, 27 insertions(+), 4 deletions(-)
+ net/ipv4/sysctl_net_ipv4.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index a8911f1b90c15d..6618bfa70ca444 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -2739,6 +2739,8 @@ int ___pskb_trim(struct sk_buff *skb, unsigned int len)
- 		skb->data_len  = 0;
- 		skb_set_tail_pointer(skb, len);
- 	}
-+	if (!skb_shinfo(skb)->nr_frags && !skb_has_frag_list(skb))
-+		skb->unreadable = 0;
- 
- 	if (!skb->sk || skb->destructor == sock_edemux)
- 		skb_condense(skb);
-@@ -2746,16 +2748,37 @@ int ___pskb_trim(struct sk_buff *skb, unsigned int len)
- }
- EXPORT_SYMBOL(___pskb_trim);
- 
-+static int pskb_trim_rcsum_complete(struct sk_buff *skb, unsigned int len)
-+{
-+	int delta = skb->len - len;
-+
-+	if (skb_frags_readable(skb)) {
-+		skb->csum = csum_block_sub(skb->csum,
-+					   skb_checksum(skb, len, delta, 0),
-+					   len);
-+		return 0;
-+	}
-+
-+	if (len > skb_headlen(skb))
-+		return -EFAULT;
-+
-+	/* The trimmed bytes are unreadable, but the remaining packet can be
-+	 * checksummed by software after trimming.
-+	 */
-+	skb->ip_summed = CHECKSUM_NONE;
-+	return 0;
-+}
-+
- /* Note : use pskb_trim_rcsum() instead of calling this directly
-  */
- int pskb_trim_rcsum_slow(struct sk_buff *skb, unsigned int len)
+diff --git a/net/ipv4/sysctl_net_ipv4.c b/net/ipv4/sysctl_net_ipv4.c
+index 0f1dd75dbf37bf..ce9b077343cac2 100644
+--- a/net/ipv4/sysctl_net_ipv4.c
++++ b/net/ipv4/sysctl_net_ipv4.c
+@@ -1669,10 +1669,10 @@ static __net_exit void ipv4_sysctl_exit_net(struct net *net)
  {
- 	if (skb->ip_summed == CHECKSUM_COMPLETE) {
--		int delta = skb->len - len;
-+		int err;
+ 	const struct ctl_table *table;
  
--		skb->csum = csum_block_sub(skb->csum,
--					   skb_checksum(skb, len, delta, 0),
--					   len);
-+		err = pskb_trim_rcsum_complete(skb, len);
-+		if (err)
-+			return err;
- 	} else if (skb->ip_summed == CHECKSUM_PARTIAL) {
- 		int hdlen = (len > skb_headlen(skb)) ? skb_headlen(skb) : len;
- 		int offset = skb_checksum_start_offset(skb) + skb->csum_offset;
+-	kfree(net->ipv4.sysctl_local_reserved_ports);
+ 	table = net->ipv4.ipv4_hdr->ctl_table_arg;
+ 	unregister_net_sysctl_table(net->ipv4.ipv4_hdr);
+ 	kfree(table);
++	kfree(net->ipv4.sysctl_local_reserved_ports);
+ }
+ 
+ static __net_initdata struct pernet_operations ipv4_sysctl_ops = {
 -- 
 2.53.0
 
