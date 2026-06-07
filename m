@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905BC2D8378;
-	Sun,  7 Jun 2026 10:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93162DFF04;
+	Sun,  7 Jun 2026 10:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829347; cv=none; b=dBskbq/ja8vsvnI0XAMXWCbsCVYj9CoMUENYwJk+dl37gZ7ssW6YiGy+s1gRB1Ht5FmHJhRRTKxUwfz2s+Cy+kHefC0ceJhxqPiAv8W7CYsms7YO4n+9oN2Rm6Jg37FcdhOUDTXZkYvyP/z22/iZ1E4VC0cnNzt2mZfqL000aag=
+	t=1780829350; cv=none; b=NTzEBLjogzz+vl4eWUVFuaFyUhlqoQyY8CaGTQ+FX8m+28kO3lXlAZgwd9CWT1AJnqKGtziu0KHhKnnBbnXLlMt4zy8/r6mDIpE9++NSfbz4cOQH0mMFCc04eCe73KeoY+FIqCn92nm4iW68N7O7lk7O8eZcHOfFe1bi74/O0Ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829347; c=relaxed/simple;
-	bh=ArzO638Gce4cYmJI6kH/F3nO4XSKYy3TygyFsCaKBoM=;
+	s=arc-20240116; t=1780829350; c=relaxed/simple;
+	bh=3qmM8CbV78cMB7l2uydIm6jk1+2FLjyPUtFsb3rICO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ek6Z5xPOEghYIN1Iq72+17/aJMPovAWF4i26YoTjpfJ6SPAhKY3usf65tddnZb/2PRcBbLBUGazRO1w1VLpwVBtMEWa/fHUvdxRMsHFI+QbJARlp1GOcEFiMjUl5vJNCSgNAYRC45F+d4F0oUEg7xxALtnw/9ZqP0TuBtKSjWxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bq67ZJvW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l59QRiwbvviBmq54LHBAWGA2kcGKEZ3dax76httyM7+MmXQVQS+8k4hheJ+gMXhWS/DG2BOvQGlHOKjJqQA78J+p4oJoyIt07hz76z5X6f2HNR7f4D2DaLwC4WXVxqfZ8VPIjuU8XDvHhDDY/IkKOVigH37p2X8zPk/8NZS0BF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvJb+QkN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bq67ZJvW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE8531F00893;
-	Sun,  7 Jun 2026 10:49:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvJb+QkN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C88B1F00893;
+	Sun,  7 Jun 2026 10:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829346;
-	bh=wYqfNezPcjyOQFS5+rT6kLpke4u2mv4bZrVeQOBJ+Go=;
+	s=korg; t=1780829349;
+	bh=dXf5DvzPmYx5xHBdSxCNX9LQIYtVfe7N3+2WqfxmjEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bq67ZJvWnpoo5nW1LJKOfZp9J/jmF+pHCkh+wEcAUsTYdhJVjxPDJPTGy+nk8CdGo
-	 NfyTdk30+Oel5x9ksHK44ZYYi6+l2Q8lwQ5hIosQs//AiwOGhhLfOUSM5TQNdHKKuU
-	 /mRrxIUWUdaOPJLXdtOq2TsBSyLhHahJnt8iGeGQ=
+	b=uvJb+QkNxieCWi6HXtZITgwt/WXtSZAk9GTR5mVOB2T5+AUgpaFU5EJUmdIvwVCWJ
+	 UwvnRvfWNWhNVgKI84N3to3tVQ2EE0Wx/IOshquNmhnevPntv79Xu7McHD10NlNvPr
+	 naQBzRgsOyjfq5LM/lGuXb0p9VL8KROHYu0L+RK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Cen <rollkingzzc@gmail.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.0 266/332] USB: serial: belkin_sa: validate interrupt status length
-Date: Sun,  7 Jun 2026 12:00:35 +0200
-Message-ID: <20260607095737.806737277@linuxfoundation.org>
+Subject: [PATCH 7.0 271/332] USB: serial: mct_u232: fix memory corruption with small endpoint
+Date: Sun,  7 Jun 2026 12:00:40 +0200
+Message-ID: <20260607095737.994596907@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
 References: <20260607095728.031258202@linuxfoundation.org>
@@ -50,50 +49,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 4ce058df2ee02cc2a0f0fd5cd64ce6f1482a0b65 upstream.
+commit 915b36d701950503c4ea0f6e314b10868e59fce3 upstream.
 
-The Belkin interrupt callback treats interrupt data as a four-byte
-status report and reads LSR/MSR fields at offsets 2 and 3. The
-interrupt-in buffer length is derived from endpoint wMaxPacketSize, and
-short interrupt transfers may complete successfully with a smaller
-actual_length.
+The driver overrides the maximum transfer size for a specific device
+which only accepts 16 byte packets for its 32 byte bulk-out endpoint.
 
-Check the completed interrupt packet length before parsing status
-fields so short interrupt endpoints and short successful packets are
-ignored instead of causing out-of-bounds or stale status-byte reads.
-
-KASAN report as below:
-
-BUG: KASAN: slab-out-of-bounds in belkin_sa_read_int_callback()
-Read of size 1
-Call trace:
-  belkin_sa_read_int_callback() (drivers/usb/serial/belkin_sa.c:202)
-  __usb_hcd_giveback_urb() (drivers/usb/core/hcd.c:1630)
-  dummy_timer() (?:?)
+Make sure to never increase the maximum transfer size to prevent slab
+corruption should a malicious device report a smaller endpoint max
+packet size than expected.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
 Cc: stable@vger.kernel.org
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/belkin_sa.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/serial/mct_u232.c |   21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/drivers/usb/serial/belkin_sa.c
-+++ b/drivers/usb/serial/belkin_sa.c
-@@ -194,6 +194,9 @@ static void belkin_sa_read_int_callback(
+--- a/drivers/usb/serial/mct_u232.c
++++ b/drivers/usb/serial/mct_u232.c
+@@ -378,6 +378,7 @@ static int mct_u232_port_probe(struct us
+ {
+ 	struct usb_serial *serial = port->serial;
+ 	struct mct_u232_private *priv;
++	u16 pid;
  
- 	usb_serial_debug_data(&port->dev, __func__, urb->actual_length, data);
+ 	/* check first to simplify error handling */
+ 	if (!serial->port[1] || !serial->port[1]->interrupt_in_urb) {
+@@ -385,6 +386,16 @@ static int mct_u232_port_probe(struct us
+ 		return -ENODEV;
+ 	}
  
-+	if (urb->actual_length < BELKIN_SA_MSR_INDEX + 1)
-+		goto exit;
++	/*
++	 * Compensate for a hardware bug: although the Sitecom U232-P25
++	 * device reports a maximum output packet size of 32 bytes,
++	 * it seems to be able to accept only 16 bytes (and that's what
++	 * SniffUSB says too...)
++	 */
++	pid = le16_to_cpu(serial->dev->descriptor.idProduct);
++	if (pid == MCT_U232_SITECOM_PID)
++		port->bulk_out_size = min(16, port->bulk_out_size);
 +
- 	/* Handle known interrupt data */
- 	/* ignore data[0] and data[1] */
+ 	priv = kzalloc_obj(*priv);
+ 	if (!priv)
+ 		return -ENOMEM;
+@@ -410,7 +421,6 @@ static void mct_u232_port_remove(struct
  
+ static int  mct_u232_open(struct tty_struct *tty, struct usb_serial_port *port)
+ {
+-	struct usb_serial *serial = port->serial;
+ 	struct mct_u232_private *priv = usb_get_serial_port_data(port);
+ 	int retval = 0;
+ 	unsigned int control_state;
+@@ -418,15 +428,6 @@ static int  mct_u232_open(struct tty_str
+ 	unsigned char last_lcr;
+ 	unsigned char last_msr;
+ 
+-	/* Compensate for a hardware bug: although the Sitecom U232-P25
+-	 * device reports a maximum output packet size of 32 bytes,
+-	 * it seems to be able to accept only 16 bytes (and that's what
+-	 * SniffUSB says too...)
+-	 */
+-	if (le16_to_cpu(serial->dev->descriptor.idProduct)
+-						== MCT_U232_SITECOM_PID)
+-		port->bulk_out_size = 16;
+-
+ 	/* Do a defined restart: the normal serial device seems to
+ 	 * always turn on DTR and RTS here, so do the same. I'm not
+ 	 * sure if this is really necessary. But it should not harm
 
 
