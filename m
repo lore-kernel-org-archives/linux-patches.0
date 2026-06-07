@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCB94071DA;
-	Sun,  7 Jun 2026 10:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A0E2AD00;
+	Sun,  7 Jun 2026 10:16:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827365; cv=none; b=UPsp+Hx4aMqRGn3/LoDTVCGfT9RNMvfN3tZUm9neVLlob0jUnY8GXPlhRAAAj5rf9c4JxAB1fxNIgmB4iktKRejAaiuhiVktuVHl6T3vW3Dd4lu1ImFi7sKxT+TwPkPyU7dht7W2BbLAR526JhFWFAwtgeexNelzlzZHqf/8Gtc=
+	t=1780827369; cv=none; b=FP923J/otkaYKx2SJv5Exvr6jALeQRVKm+ZT/8y5mEJD3uAZ2J4yS7v6rzloOm1BEgTLOZJdyj0w/MGY8uN3lPYWkcBJbed40RDH1kUXC8lHe/J0Bgscb4gvSgW97OKEAQlCtUMz4cIFai5sQti8yT3My7Hjk/FRJCc77sZl+dI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827365; c=relaxed/simple;
-	bh=wnW4g+At/f8307/l57vrEbo88QjLSRNwSlorU+HrP+A=;
+	s=arc-20240116; t=1780827369; c=relaxed/simple;
+	bh=vQYZ6E8+QBB/WuUBxc8FnJ7p0HfGG8TaMlFaIHavgGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QbDGF3wM9hDSdjjCBtUBoLz2QEswyyogieZDJRbWHmrbebd0wB8dkpaRwa4d9rhKsp1GbZexeWKlLImAQbC2Dz/mjGYeu7CqKlQ/RApHjV5UCnwKPdrPUo3onWZHahbh3buPnjp8GLSzC/jSexOZ5FgJoXFh6lmOJEVaFs7FPlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aczNUCq6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QAV2fL7FwlpmNW5cAFao3DWEVhXzFkR2aeIx4VmtXpa8cyos6frPLrW/MzgN740Z+zhc9xIoKaDoKtUxvsq8zuozmJDmRiV2liLGiB94mkHmVq1fyMEafWgUd/8qUT2ynmNbjILDKg4HZz/4hu7tnRiB+U5wnVNao2E85TLuA70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSFSY5JO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aczNUCq6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7311F00893;
-	Sun,  7 Jun 2026 10:16:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSFSY5JO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75FC61F00893;
+	Sun,  7 Jun 2026 10:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827364;
-	bh=qfZjm2UAn8xVLvZ5LrzNvMLB86izepBTNfWvU7rI6oM=;
+	s=korg; t=1780827368;
+	bh=oY411OjsxxUELtRMfZJJJd94dEEV4TALC+hNjUJH/nU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aczNUCq6nnO9+Yhj+5y8eAntgtp7xjKGCzIKpcrHn9v0jBWvedHYBo5sfHnTKPIJD
-	 lZApJexyCUZe1W9kPRx9LiFHPbY22mxTwTPIH4NYH3zs0ppI8B2SFdvMFFQLnJ/V4I
-	 UJvm/WOYXlnt8PLJ7SfI+S5jIk/F3yjZR/yDo+k0=
+	b=MSFSY5JOGAwx3g+rGTUDDX/6+x/8P6TAqQP2xVLSEOk1dj4tSSRCFyI805yi+sFAk
+	 Rg3838FuWuVBfv6PCyLx/RKX0Q5Xi8Ngg8nVSP/IKIvbEalA7cMuExLY/4ZEfuqOyv
+	 WXfeq9+XvXeTZfOZ98d3iwZUoReFTVHIzBT9pxQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 049/307] ethtool: rss: fix hkey leak when indir_size is 0
-Date: Sun,  7 Jun 2026 11:57:26 +0200
-Message-ID: <20260607095729.516126250@linuxfoundation.org>
+Subject: [PATCH 7.0 087/332] net/handshake: Use spin_lock_bh for hn_lock
+Date: Sun,  7 Jun 2026 11:57:36 +0200
+Message-ID: <20260607095731.342058596@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,49 +48,140 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 78ccf1a70c6378e1f5073a8c2209b5129067b925 ]
+[ Upstream commit cc993e0927ec8bd98ea33377ada03295fcda0f24 ]
 
-rss_get_data_alloc() allocates a single buffer that backs both the
-indirection table and the hash key, but only assigned data->indir_table
-when indir_size was nonzero. The expectation was that no driver
-implements RSS without supporting indirection table but apparently
-enic does just that (it's the only such in-tree driver).
-enic has get_rxfh_key_size but no get_rxfh_indir_size.
-data->indir_table stays as NULL, hkey gets set but rss_get_data_free()
-kfree(data->indir_table) is a nop and the allocation leaks.
+nvmet_tcp_state_change(), a socket callback that runs in BH context,
+can reach handshake_req_cancel() via nvmet_tcp_schedule_release_queue()
+and tls_handshake_cancel().  handshake_req_cancel() acquires
+hn->hn_lock with plain spin_lock().  If a process-context thread on
+the same CPU holds hn->hn_lock when a softirq invokes the cancel path,
+the lock attempt deadlocks.  This is the only caller that invokes
+tls_handshake_cancel() from BH context; every other consumer calls it
+from process context.
 
-Always store the allocation base in data->indir_table so the free path
-is unambiguous. No caller treats indir_table as a sentinel; everything
-keys off indir_size.
+Deferring the cancel to process context in the NVMe target is not
+straightforward: nvmet_tcp_schedule_release_queue() must call
+tls_handshake_cancel() atomically with its state transition to
+DISCONNECTING.  If the cancel were deferred, the handshake completion
+callback could fire in the window before the cancel runs, observe the
+unexpected state, and return without dropping its kref on the queue.
+Reworking that interlock is considerably more invasive than hardening
+the handshake lock.  Convert all hn->hn_lock acquisitions from
+spin_lock/spin_unlock to spin_lock_bh/spin_unlock_bh so the lock is
+never taken with softirqs enabled.
 
-Fixes: 7112a04664bf ("ethtool: add netlink based get rss support")
-Link: https://patch.msgid.link/20260522230647.1705600-6-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 675b453e0241 ("nvmet-tcp: enable TLS handshake upcall")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260525-handshake-file-pin-v3-1-66c616906ead@oracle.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/rss.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/handshake/netlink.c |  4 ++--
+ net/handshake/request.c | 14 +++++++-------
+ net/handshake/tlshd.c   |  2 ++
+ 3 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/net/ethtool/rss.c b/net/ethtool/rss.c
-index 8aa45f3fdfdf08..3570d58c5cca6d 100644
---- a/net/ethtool/rss.c
-+++ b/net/ethtool/rss.c
-@@ -78,8 +78,7 @@ rss_prepare_get(const struct rss_req_info *request, struct net_device *dev,
- 		goto out_ops;
+diff --git a/net/handshake/netlink.c b/net/handshake/netlink.c
+index b989456fc4c5ff..97114ec8027a5a 100644
+--- a/net/handshake/netlink.c
++++ b/net/handshake/netlink.c
+@@ -202,10 +202,10 @@ static void __net_exit handshake_net_exit(struct net *net)
+ 	 * accepted and are in progress will be destroyed when
+ 	 * the socket is closed.
+ 	 */
+-	spin_lock(&hn->hn_lock);
++	spin_lock_bh(&hn->hn_lock);
+ 	set_bit(HANDSHAKE_F_NET_DRAINING, &hn->hn_flags);
+ 	list_splice_init(&requests, &hn->hn_requests);
+-	spin_unlock(&hn->hn_lock);
++	spin_unlock_bh(&hn->hn_lock);
+ 
+ 	while (!list_empty(&requests)) {
+ 		req = list_first_entry(&requests, struct handshake_req, hr_list);
+diff --git a/net/handshake/request.c b/net/handshake/request.c
+index 2829adbeb149b0..5d4a17f902d201 100644
+--- a/net/handshake/request.c
++++ b/net/handshake/request.c
+@@ -167,12 +167,12 @@ static bool remove_pending(struct handshake_net *hn, struct handshake_req *req)
+ {
+ 	bool ret = false;
+ 
+-	spin_lock(&hn->hn_lock);
++	spin_lock_bh(&hn->hn_lock);
+ 	if (!list_empty(&req->hr_list)) {
+ 		__remove_pending_locked(hn, req);
+ 		ret = true;
  	}
+-	spin_unlock(&hn->hn_lock);
++	spin_unlock_bh(&hn->hn_lock);
  
--	if (data->indir_size)
--		data->indir_table = (u32 *)rss_config;
-+	data->indir_table = (u32 *)rss_config;
- 	if (data->hkey_size)
- 		data->hkey = rss_config + indir_bytes;
+ 	return ret;
+ }
+@@ -182,7 +182,7 @@ struct handshake_req *handshake_req_next(struct handshake_net *hn, int class)
+ 	struct handshake_req *req, *pos;
  
+ 	req = NULL;
+-	spin_lock(&hn->hn_lock);
++	spin_lock_bh(&hn->hn_lock);
+ 	list_for_each_entry(pos, &hn->hn_requests, hr_list) {
+ 		if (pos->hr_proto->hp_handler_class != class)
+ 			continue;
+@@ -190,7 +190,7 @@ struct handshake_req *handshake_req_next(struct handshake_net *hn, int class)
+ 		req = pos;
+ 		break;
+ 	}
+-	spin_unlock(&hn->hn_lock);
++	spin_unlock_bh(&hn->hn_lock);
+ 
+ 	return req;
+ }
+@@ -249,7 +249,7 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
+ 	if (READ_ONCE(hn->hn_pending) >= hn->hn_pending_max)
+ 		goto out_err;
+ 
+-	spin_lock(&hn->hn_lock);
++	spin_lock_bh(&hn->hn_lock);
+ 	ret = -EOPNOTSUPP;
+ 	if (test_bit(HANDSHAKE_F_NET_DRAINING, &hn->hn_flags))
+ 		goto out_unlock;
+@@ -258,7 +258,7 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
+ 		goto out_unlock;
+ 	if (!__add_pending_locked(hn, req))
+ 		goto out_unlock;
+-	spin_unlock(&hn->hn_lock);
++	spin_unlock_bh(&hn->hn_lock);
+ 
+ 	ret = handshake_genl_notify(net, req->hr_proto, flags);
+ 	if (ret) {
+@@ -274,7 +274,7 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
+ 	return 0;
+ 
+ out_unlock:
+-	spin_unlock(&hn->hn_lock);
++	spin_unlock_bh(&hn->hn_lock);
+ out_err:
+ 	/* Restore original destructor so socket teardown still runs on failure */
+ 	req->hr_sk->sk_destruct = req->hr_odestruct;
+diff --git a/net/handshake/tlshd.c b/net/handshake/tlshd.c
+index 8f9532a15f43f9..af294c6cc71731 100644
+--- a/net/handshake/tlshd.c
++++ b/net/handshake/tlshd.c
+@@ -425,6 +425,8 @@ EXPORT_SYMBOL(tls_server_hello_psk);
+  * Request cancellation races with request completion. To determine
+  * who won, callers examine the return value from this function.
+  *
++ * Context: May be called from process or softirq context.
++ *
+  * Return values:
+  *   %true - Uncompleted handshake request was canceled
+  *   %false - Handshake request already completed or not found
 -- 
 2.53.0
 
