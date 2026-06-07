@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59313242A9;
-	Sun,  7 Jun 2026 10:22:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A7031F993;
+	Sun,  7 Jun 2026 10:23:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827779; cv=none; b=ZTWRTL27U9B5PLwkv26OrdX5I4rVN6w+hUtfW77JKGeDmHZDKLMXSrYOY6hfmsaz77i2Q2SKYAP4dNEq7D4qvnPvg7f0iMkGz/jB578dvzI1lTVwD7Cw6ZWlCU20McCzZL7kXTitI1ujEHhz8RnNjaoleeVcaDhMdFQ70aQZRK8=
+	t=1780827782; cv=none; b=ujIw+ywD1Ikpg653gOlZldAcQj7uFBP9XcK3ScW6oHdzhSOqaXZzfpuXoKvqwXxubLQB/X8uBLw+ghwQlSymP1WjH+StMpDPZvju7MqCHVCGZYfMbIbRgf2AzZjaaiEjVA+UjhclxjvGGI+O6IgPKszReqq4xgOOYjswXzAQijo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827779; c=relaxed/simple;
-	bh=MSuCzoAGGF6MG7K185ZZ7pccKNbfYX9IZGgst1sVXow=;
+	s=arc-20240116; t=1780827782; c=relaxed/simple;
+	bh=qPDH6iGDjlsfQUvsF3DqFuYJAogfzpf+8qHvCXEprdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B57nrPBnHu4ncSb3R5+lDPBktB+dcgIqgJE+r1b3BpKWl61rsNYYw+cSL0rxXP0wsSkNXW+MlF+JnB429CIqtuY+ZR6rzoHYxxF+SyYJ9M+iJsNF8G4hR5PviLN2PsyyEbh9jO9VDk7UWl1PZLj98HCHmEqNcsHv9Jb6JKjzAiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDeZU4kr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=iFSipLvdWOA+0B5xs59t9zCe0fsz0ZNXombUkuB4ljkQp6KruHddbcalfPsXTbFBOYRVkzIKh4YTnnllsw7OrTHgNklv21+SLf2hcBlFmyOAIv8RMwEMzrme3ZZ8MDo8zbGXFWFk5A+AceyWJGuqYINCp/2YOYombcOTsw1zjiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KLzsGQdf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDeZU4kr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1921F00893;
-	Sun,  7 Jun 2026 10:22:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KLzsGQdf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398F81F00893;
+	Sun,  7 Jun 2026 10:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827777;
-	bh=IaPWyOck4hRgNcEuM4gtZ9Cd3kXvFpKCDxLyAd1OBj4=;
+	s=korg; t=1780827781;
+	bh=EtMYg20IMxfE/l7Pv0Yp2TfhJ7PJTw0XGA33Unkmci4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YDeZU4krpUxW7S8ukI9GbH3dwr7xcsVUQsx1cpA2cNBsDgYQIb+/VcRoZQeAk9DGn
-	 T9QtNB5Er2N2utxzgB842a6Xe87cyFeuVru+0V4cOCfOhHe7iRfrIdg9obVsaRHIdO
-	 HzsBxGCA5TmJDTZ4Cmv7XiI2Msfw2d4Q7K+zn9sY=
+	b=KLzsGQdfOs5RwRmzAlaAJa7jhM254fCT1Dpiku+4NevSpQis0Bk3PswZKpjLhd7dr
+	 sAKecUTMaT9OxdUZ9VBrv0GSXSw5EN7Ka8707RNS3Vx2h9XjJmaa0W/3T0D98FtzW1
+	 /SQyJq4irRe+0B0QvICFwc/Ck5GaBLt0Y2SaFsgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 7.0 121/332] usb: typec: ucsi: ccg: reject firmware images without a : record header
-Date: Sun,  7 Jun 2026 11:58:10 +0200
-Message-ID: <20260607095732.554662922@linuxfoundation.org>
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 100/315] drm/i915/psr: Add defininitions for INTEL_WA_REGISTER_CAPS DPCD register
+Date: Sun,  7 Jun 2026 11:58:07 +0200
+Message-ID: <20260607095731.316005634@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,60 +46,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-commit d7486952bf74e546ee3748fb14b2d07881fa6273 upstream.
+commit fbceb39b536e40c2f7cc47ab42037bb7c2b7ced9 upstream.
 
-do_flash() locates the first .cyacd record with
+EDP specification says:
 
-	p = strnchr(fw->data, fw->size, ':');
-	while (p < eof) {
-		s = strnchr(p + 1, eof - p - 1, ':');
-		...
-	}
+"If either VSC SDP is unable to be transmitted 100 ns before the SU region,
+the Source device may optionally transmit the VSC SDP during the prior
+video scan line’s HBlank period There is a Intel specific drm dp register
+currently containing bits related how TCON can support PSR2 with SDP on
+prior line."
 
-If the firmware image contains no ':' byte,  strnchr() returns NULL.
-NULL compares less than the valid kernel pointer eof, so the loop body
-runs and strnchr() is called with p + 1 == (void *)1 and a length of
-roughly (unsigned long)eof, causing a wonderful crash.
+Unfortunately many panels are having problems in implementing this. So
+there is a custom Intel specific DPCD register (INTEL_WA_REGISTER_CAPS) to
+figure out if this is properly implemented on a panel or if panel doesn't
+require that 100 ns delay before the SU region. Here are the definitions in
+this custom DPCD address:
 
-The not_signed_fw fallthrough earlier in do_flash() and the chip-state
-branches in ccg_fw_update_needed() allow an unsigned blob to reach this
-loop, so a root user who can place a crafted file under /lib/firmware
-and write the do_flash sysfs attribute can trigger the oops.
+0 = Panel doesn't support SDP on prior line
+1 = Panel supports SDP on prior line
+2 = Panel doesn't have 100ns requirement
+3 = Reserved
 
-Bail out with -EINVAL when the initial strnchr() returns NULL.
+Add definitions for this new register and it's values into new header
+intel_dpcd.h.
 
-Assisted-by: gkh_clanker_t1000
-Cc: stable <stable@kernel.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026051405-posture-shrill-7884@gregkh
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+v2: add INTEL_DPCD_ prefix to definitions
+
+Bspec: 74741
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patch.msgid.link/20260515095756.2799483-2-jouni.hogander@intel.com
+(cherry picked from commit 1da1c9294825f08f622c473480d185680c2a3b75)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_ccg.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/i915/display/intel_dpcd.h | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+ create mode 100644 drivers/gpu/drm/i915/display/intel_dpcd.h
 
---- a/drivers/usb/typec/ucsi/ucsi_ccg.c
-+++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
-@@ -1243,6 +1243,11 @@ not_signed_fw:
- 	 *****************************************************************/
- 
- 	p = strnchr(fw->data, fw->size, ':');
-+	if (!p) {
-+		dev_err(dev, "Bad FW format: no ':' record header found\n");
-+		err = -EINVAL;
-+		goto release_mem;
-+	}
- 	while (p < eof) {
- 		s = strnchr(p + 1, eof - p - 1, ':');
- 
+diff --git a/drivers/gpu/drm/i915/display/intel_dpcd.h b/drivers/gpu/drm/i915/display/intel_dpcd.h
+new file mode 100644
+index 00000000000000..4aea5326f2ed48
+--- /dev/null
++++ b/drivers/gpu/drm/i915/display/intel_dpcd.h
+@@ -0,0 +1,15 @@
++/* SPDX-License-Identifier: MIT */
++/*
++ * Copyright © 2026 Intel Corporation
++ */
++
++#ifndef __INTEL_DPCD_H__
++#define __INTEL_DPCD_H__
++
++#define INTEL_DPCD_INTEL_WA_REGISTER_CAPS					0x3f0
++# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_EARLYSCANLINE_SDP_SUPPORT_MASK	REG_GENMASK(1, 0)
++# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_FALL_BACK_TO_PSR1			0
++# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITH_EARLY_SCANLINE		1
++# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITHOUT_EARLY_SCANLINE		2
++
++#endif /* __INTEL_DPCD_H__ */
+-- 
+2.53.0
+
 
 
