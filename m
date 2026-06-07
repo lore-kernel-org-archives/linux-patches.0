@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652A813DBA0;
-	Sun,  7 Jun 2026 10:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229EC326942;
+	Sun,  7 Jun 2026 10:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828048; cv=none; b=R67VXbtLcxEmIpd3As5AI+Pg4v1WZzQ+p8uhmP7IGtS+r84PyeGZxcw9R0YRa3N9YekRgX/Xu5SNDpIU+6DMKCOj6FlWmvx/+vHOWu/plNTB7ODBm40q2zaz83+SZhAYDqof3gtbmWpdPkY0yBHED+JFA64Xua8CbF6wLOrlKqc=
+	t=1780828052; cv=none; b=NEse/6UNp8DYIYLMaHXcabFiIVQLePRAS4K0VAiW6Eb7zdCoX/eLRdFu0iinY+k3hmMTTv53FU6nBforOkY0hB/oSFpxibY2apOAIFmnDD1HH4nYLTloDi0M2BpTcStlA91VzVgAplUTpTVbZJEi3vq9moaPJqI3j7TYBd8GTDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828048; c=relaxed/simple;
-	bh=CKgm7a+/mVEt+I4jmm4hy2jd9QSCJN6qC2ZpZAb49io=;
+	s=arc-20240116; t=1780828052; c=relaxed/simple;
+	bh=K5LAwq0oU9ngAjaa9/eH/A3DE1DgdQNPqqGkUUG2yd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=onArpg20zupsM3v9LPGO5HrZ8Q1ibsX9NKjzs8qa88+7G7fRwFM1jgtCSfAeEd7kEYKhoGWCGYLlFNCGHsfobOUPlaTYAhDja28syAwBi9QNHHSqB2OH/hRjuvOk11e3Gcb5hK5bpgYCbBbuUdILgXKId8dTlrsf3H2hosJOf8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q7XoBHia; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hVH0b2oqzXTuUpUrATiEH+wXR0H7wiUEw3jJ3UeWmUqwPe1BLqvXStQ4+pTWX6WnS8tl6YZdv79zNnouWBcYpu2v21iaP5kHyg3BveK3exKyoYSs5cguB1c+fBG5TGAP9TJcGnW8F4F9RGA4FhVRapqgJKwHGSAkxFB8J6cVTEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/rowmjP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q7XoBHia"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7BA21F00893;
-	Sun,  7 Jun 2026 10:27:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/rowmjP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367F11F00893;
+	Sun,  7 Jun 2026 10:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828047;
-	bh=6CU7yEZt3GoMSgbBf5pDIkAMnW77vt5/GTy+HsFyOj0=;
+	s=korg; t=1780828051;
+	bh=gN03Z4IOWFdeYpGNJvxIPkYB1bY7F5BGeEepnxTHZ5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q7XoBHiaqWyI7sTIKx+jnkNsQHNijPpN7pEqVCXgz222FbXs4po1Vk689DWqZ7e1s
-	 cEBfKkOGOtGX0CjlTJDTKr1+Gh9b393yAAYWw7o9dGsZAm0ZPhL86EsYzZjGPBmr8C
-	 JjvcUNBVY3ZxK/+H6AhIS1APB31HHC8fFha8tIL8=
+	b=U/rowmjP7bTPzzHft1v/McFuQyfU04QOTpnW6V0KhCmgy1uoA+50DT/TrYqcmqTvU
+	 80qCZocTN1b6B3CWg5RKSaiuWG1cocMKgIL2VXh+gUE0VVoB2f7YTSeHEE/yTLuf8C
+	 UM/4V0x1j3N/jh18Vvo2lt9qRcb2CazM0hprbZgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siwei Zhang <oss@fourdim.xyz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.0 147/332] Bluetooth: L2CAP: fix chan ref leak in l2cap_chan_timeout() on !conn
-Date: Sun,  7 Jun 2026 11:58:36 +0200
-Message-ID: <20260607095733.493106215@linuxfoundation.org>
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 107/307] batman-adv: tt: avoid empty VLAN responses
+Date: Sun,  7 Jun 2026 11:58:24 +0200
+Message-ID: <20260607095731.714766859@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,44 +47,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Siwei Zhang <oss@fourdim.xyz>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit 9dbd84990394c51f5cee1e8871bb5ff8af5ed939 upstream.
+commit fa1bd704940b5bcbc32c0b28db9167405c8ee5e0 upstream.
 
-__set_chan_timer() takes a l2cap_chan reference via l2cap_chan_hold()
-before scheduling the delayed work.  The normal path in
-l2cap_chan_timeout() drops this reference with l2cap_chan_put() at the
-end, but the early return when chan->conn is NULL skips the put,
-leaking the reference.
+The commit 16116dac2339 ("batman-adv: prevent TT request storms by not
+sending inconsistent TT TLVLs") added checks to the local (direct) TT
+response code. But the response can also be done indirectly by another node
+using the global TT state. To avoid such inconsistency states reported in
+the original fix, also avoid sending empty VLANs for replies from the
+global TT state.
 
-Add the missing l2cap_chan_put() before the early return.
-
-Fixes: adf0398cee86 ("Bluetooth: l2cap: fix null-ptr-deref in l2cap_chan_timeout")
-Cc: stable@vger.kernel.org
-Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@kernel.org
+Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
+[ Context, drop flex array dependency ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/batman-adv/translation-table.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -411,8 +411,10 @@ static void l2cap_chan_timeout(struct wo
+diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+index d4cebe122e528a..4045ddefc29b47 100644
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -843,17 +843,19 @@ batadv_tt_prepare_tvlv_global_data(struct batadv_orig_node *orig_node,
+ 				   s32 *tt_len)
+ {
+ 	u16 num_vlan = 0;
+-	u16 num_entries = 0;
+ 	u16 tvlv_len = 0;
+ 	unsigned int change_offset;
+ 	struct batadv_tvlv_tt_vlan_data *tt_vlan;
+ 	struct batadv_orig_node_vlan *vlan;
++	u16 total_entries = 0;
+ 	u8 *tt_change_ptr;
++	int vlan_entries;
  
- 	BT_DBG("chan %p state %s", chan, state_to_string(chan->state));
+ 	spin_lock_bh(&orig_node->vlan_list_lock);
+ 	hlist_for_each_entry(vlan, &orig_node->vlan_list, list) {
++		vlan_entries = atomic_read(&vlan->tt.num_entries);
++		total_entries += vlan_entries;
+ 		num_vlan++;
+-		num_entries += atomic_read(&vlan->tt.num_entries);
+ 	}
  
--	if (!conn)
-+	if (!conn) {
-+		l2cap_chan_put(chan);
- 		return;
-+	}
+ 	change_offset = sizeof(**tt_data);
+@@ -861,7 +863,7 @@ batadv_tt_prepare_tvlv_global_data(struct batadv_orig_node *orig_node,
  
- 	mutex_lock(&conn->lock);
- 	/* __set_chan_timer() calls l2cap_chan_hold(chan) while scheduling
+ 	/* if tt_len is negative, allocate the space needed by the full table */
+ 	if (*tt_len < 0)
+-		*tt_len = batadv_tt_len(num_entries);
++		*tt_len = batadv_tt_len(total_entries);
+ 
+ 	if (change_offset > U16_MAX || *tt_len > U16_MAX - change_offset) {
+ 		*tt_len = 0;
+@@ -882,14 +884,27 @@ batadv_tt_prepare_tvlv_global_data(struct batadv_orig_node *orig_node,
+ 	(*tt_data)->num_vlan = htons(num_vlan);
+ 
+ 	tt_vlan = (struct batadv_tvlv_tt_vlan_data *)(*tt_data + 1);
++	num_vlan = 0;
+ 	hlist_for_each_entry(vlan, &orig_node->vlan_list, list) {
++		vlan_entries = atomic_read(&vlan->tt.num_entries);
++		if (vlan_entries < 1)
++			continue;
++
+ 		tt_vlan->vid = htons(vlan->vid);
+ 		tt_vlan->crc = htonl(vlan->tt.crc);
+ 		tt_vlan->reserved = 0;
+ 
+ 		tt_vlan++;
++		num_vlan++;
+ 	}
+ 
++	/* recalculate in case number of VLANs reduced */
++	change_offset = sizeof(**tt_data);
++	change_offset += num_vlan * sizeof(*tt_vlan);
++	tvlv_len = *tt_len + change_offset;
++
++	(*tt_data)->num_vlan = htons(num_vlan);
++
+ 	tt_change_ptr = (u8 *)*tt_data + change_offset;
+ 	*tt_change = (struct batadv_tvlv_tt_change *)tt_change_ptr;
+ 
+-- 
+2.53.0
+
 
 
