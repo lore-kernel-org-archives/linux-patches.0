@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B751FE47B;
-	Sun,  7 Jun 2026 10:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7C11FE47B;
+	Sun,  7 Jun 2026 10:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828381; cv=none; b=ksXQ+WldsFz6ENh1pzWyBroa0JT3vNP0NvOAffmjnzcuaPWpT7LEjEqhWUii7w90O4q1acbdkv87j88OHslIL1DLP0UYVWCWwW2FDydaZYQuaAy6U6yDN1jRqj4t0LIEldWkCdjonYs2+odc5kwgXGOAjq5/bDdI6O/Z0pohEX4=
+	t=1780828384; cv=none; b=nDKeKfBJC9vIVdhg+yqrkVYmtf8Ut/gJVYd+4EpIERohBXFbYFkLlW4dkSOxMLBKR+CFIS+PgnrahDbL6hWeSHAgM1+W4kD57DPC8Al+Ktp74c55aAb2+R4E+r+k7BKnR5TUpSlTPJ64L3dS6A475CdNyTqW9cUOlcNpyhb2Fm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828381; c=relaxed/simple;
-	bh=xQw5V/GfYRrwS438lovqDyrdeadFp0AB/tfn8r27U6U=;
+	s=arc-20240116; t=1780828384; c=relaxed/simple;
+	bh=M9j3WzclR2cYXIuBVOYNd+05bl2X0ZwjQPIhrvK5lag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mv88VSNbIJhnKA1UK8VCXGHn2bZrmKfcaKjoARXrl5h2hKG+ccwtd5Ma26mwpTNb9pUptKiWZY1EncQIptB8LPyGZBllHUpMWIJYf30Jem6QqOYhNj80k6+G+P/tObl43bv0HUTyucUnC5F4Sz1Is4IjuynPWp8mNbO3yiEzIiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQRtLISA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jzYOkuUeDDY01vBQowKAqd6U61CyHP9oXqVBYN6/dqA2o9IJhfSJnjNqw6WjOpjVWm0xMtvfkpKQdQR7ldoYoonsLfSnOXdNdc0Il8yGTcOmNSDYweGeV4s0HrXhuMeHly0ucQdan4/Pu7j+4Cq58t6szv2i4dieRq6uFMNlXXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8Afq3Sh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQRtLISA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142B81F00893;
-	Sun,  7 Jun 2026 10:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8Afq3Sh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44091F00893;
+	Sun,  7 Jun 2026 10:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828380;
-	bh=GYzpPYFjAlhs61q7QuteXsOXXBgXQK65wIQXN5C61lE=;
+	s=korg; t=1780828383;
+	bh=OFqK6/M4kRIl/343VxubFKHJDcnVvF4APlDqXZkVpJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jQRtLISAwMkCTYaE/bU/Cbxit6ktP1VxWFbNcQFFReeCaYN3r/dL2B7Ki3VEKrYJu
-	 oEKudmzkAnm3xnSz0yMS3zgBp7x6vWq9Nda4+0e6h8ydtwu8IXEEBLDF+AuFTuulZC
-	 dpiuQqqtwec1tbuS2Yo80YQuVowF2ZJy+KuabpJ0=
+	b=Q8Afq3Shg+yBw/yEC79l8vjFl9Qz6oMTRHp3+/t9zwOHGE0kWsN1custDJNmm8X/Q
+	 9MYzFHSKEZ4mjZjgvf4DX80cAwff3bM6zcP11FaiQGm2WLlgxbEbQBlst/FRM/pUVe
+	 9vNlYI75bv0dqOHd9+aZULGvLLHVjFwBz6OleJi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
+	Salah Triki <salah.triki@gmail.com>,
 	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 154/315] iio: adc: npcm: fix unbalanced clk_disable_unprepare()
-Date: Sun,  7 Jun 2026 11:59:01 +0200
-Message-ID: <20260607095733.259898783@linuxfoundation.org>
+Subject: [PATCH 7.0 177/332] iio: dac: max5821: fix return value check in powerdown sync
+Date: Sun,  7 Jun 2026 11:59:06 +0200
+Message-ID: <20260607095734.565535323@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,112 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-commit 0d42e2c0bd6ceb89e44c6e065f9bdf9b1df3ef0c upstream.
+commit d0a228d903425e653f18a4341e60c0538afb6d41 upstream.
 
-The driver acquired the ADC clock with devm_clk_get() and read its
-rate, but never called clk_prepare_enable(). The probe error path and
-npcm_adc_remove() both called clk_disable_unprepare() unconditionally,
-causing the clk framework's enable/prepare counts to underflow on
-probe failure or module unbind.
+The function max5821_sync_powerdown_mode() returned the result of
+i2c_master_send() directly. If a partial transfer occurred, it would
+be incorrectly treated as a success by the caller.
 
-The issue went unnoticed because NPCM BMC firmware leaves the ADC
-clock enabled at boot, so the driver happened to work in practice.
+While the caller currently handles the positive return value of 2 as
+success, this patch refactors the function to return 0 on full success
+and -EIO on short writes. This ensures robust error handling for
+incomplete transfers and improves code maintainability by using
+sizeof(outbuf).
 
-Switch to devm_clk_get_enabled() so the clock is properly enabled
-during probe and automatically released by the device-managed
-cleanup, and drop the now-redundant clk_disable_unprepare() from
-both the probe error path and remove().
-
-While at it, drop the duplicate error message on devm_request_irq()
-failure since the IRQ core already logs it.
-
-Fixes: 9bf85fbc9d8f ("iio: adc: add NPCM ADC driver")
-Signed-off-by: David Carlier <devnexen@gmail.com>
+Fixes: 472988972737 ("iio: add support of the max5821")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/npcm_adc.c |   25 ++++++++-----------------
- 1 file changed, 8 insertions(+), 17 deletions(-)
+ drivers/iio/dac/max5821.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/adc/npcm_adc.c
-+++ b/drivers/iio/adc/npcm_adc.c
-@@ -231,7 +231,7 @@ static int npcm_adc_probe(struct platfor
- 	if (IS_ERR(info->reset))
- 		return PTR_ERR(info->reset);
+--- a/drivers/iio/dac/max5821.c
++++ b/drivers/iio/dac/max5821.c
+@@ -90,6 +90,7 @@ static int max5821_sync_powerdown_mode(s
+ 				       const struct iio_chan_spec *chan)
+ {
+ 	u8 outbuf[2];
++	int ret;
  
--	info->adc_clk = devm_clk_get(&pdev->dev, NULL);
-+	info->adc_clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(info->adc_clk)) {
- 		dev_warn(&pdev->dev, "ADC clock failed: can't read clk\n");
- 		return PTR_ERR(info->adc_clk);
-@@ -244,17 +244,13 @@ static int npcm_adc_probe(struct platfor
- 	info->adc_sample_hz = clk_get_rate(info->adc_clk) / ((div + 1) * 2);
+ 	outbuf[0] = MAX5821_EXTENDED_COMMAND_MODE;
  
- 	irq = platform_get_irq(pdev, 0);
--	if (irq < 0) {
--		ret = irq;
--		goto err_disable_clk;
--	}
-+	if (irq < 0)
-+		return irq;
+@@ -103,7 +104,13 @@ static int max5821_sync_powerdown_mode(s
+ 	else
+ 		outbuf[1] |= MAX5821_EXTENDED_POWER_UP;
  
- 	ret = devm_request_irq(&pdev->dev, irq, npcm_adc_isr, 0,
- 			       "NPCM_ADC", indio_dev);
--	if (ret < 0) {
--		dev_err(dev, "failed requesting interrupt\n");
--		goto err_disable_clk;
--	}
+-	return i2c_master_send(data->client, outbuf, 2);
++	ret = i2c_master_send(data->client, outbuf, sizeof(outbuf));
 +	if (ret < 0)
 +		return ret;
- 
- 	reg_con = ioread32(info->regs + NPCM_ADCCON);
- 	info->vref = devm_regulator_get_optional(&pdev->dev, "vref");
-@@ -262,7 +258,7 @@ static int npcm_adc_probe(struct platfor
- 		ret = regulator_enable(info->vref);
- 		if (ret) {
- 			dev_err(&pdev->dev, "Can't enable ADC reference voltage\n");
--			goto err_disable_clk;
-+			return ret;
- 		}
- 
- 		iowrite32(reg_con & ~NPCM_ADCCON_REFSEL,
-@@ -272,10 +268,8 @@ static int npcm_adc_probe(struct platfor
- 		 * Any error which is not ENODEV indicates the regulator
- 		 * has been specified and so is a failure case.
- 		 */
--		if (PTR_ERR(info->vref) != -ENODEV) {
--			ret = PTR_ERR(info->vref);
--			goto err_disable_clk;
--		}
-+		if (PTR_ERR(info->vref) != -ENODEV)
-+			return PTR_ERR(info->vref);
- 
- 		/* Use internal reference */
- 		iowrite32(reg_con | NPCM_ADCCON_REFSEL,
-@@ -314,8 +308,6 @@ err_iio_register:
- 	iowrite32(reg_con & ~NPCM_ADCCON_ADC_EN, info->regs + NPCM_ADCCON);
- 	if (!IS_ERR(info->vref))
- 		regulator_disable(info->vref);
--err_disable_clk:
--	clk_disable_unprepare(info->adc_clk);
- 
- 	return ret;
- }
-@@ -332,7 +324,6 @@ static void npcm_adc_remove(struct platf
- 	iowrite32(regtemp & ~NPCM_ADCCON_ADC_EN, info->regs + NPCM_ADCCON);
- 	if (!IS_ERR(info->vref))
- 		regulator_disable(info->vref);
--	clk_disable_unprepare(info->adc_clk);
++	if (ret != sizeof(outbuf))
++		return -EIO;
++
++	return 0;
  }
  
- static struct platform_driver npcm_adc_driver = {
+ static ssize_t max5821_write_dac_powerdown(struct iio_dev *indio_dev,
 
 
