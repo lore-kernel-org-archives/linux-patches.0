@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B43212CDA5;
-	Sun,  7 Jun 2026 10:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62ABD12CDA5;
+	Sun,  7 Jun 2026 10:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829875; cv=none; b=UmKE8iKcO4RY5ayh6vl+B80O+t/DdaFyreLA3YQdTvxC2Y05O8k3Q4DAnj+Mdqjp5XG8HtDgxWsEXX56SKKCFHuhiXVyuAjbtxtCaAdmn8iHDy+L0tb/oaVtT7Xe7/t6uE1qrI0vCAjaAE0Cb1EG9KIRI50RAr9IuUhl5mP/IMs=
+	t=1780829879; cv=none; b=cgINd3Ru48nkxBVarn59HzzOPVKHQZ8UM/BkhKh1jw1d0SIfdaWDUmEGkEPxfNz18yQgma01ec/8D1Bz+Cn+4hpamUroFp0ArXjeA8no6n/Px+wTMnpnAn21+SAiRfIOFPbSFBY+T7SvTGBk6jw259YDe0YQGkuIbU/qOgfJDvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829875; c=relaxed/simple;
-	bh=JFf0fKO3QP8jgo3mtWS0vZS0kXgbOwAyESmTTTbxWQ0=;
+	s=arc-20240116; t=1780829879; c=relaxed/simple;
+	bh=fbfTn/1wUe008iaoX2XBvkaPWaLlqEOOJT2cLbqRlt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C437sg/WfDqAlFj7y8zKyopucHMgGOD5TKB09Hz5g2RD8eWOeOq9+YKzw/klI+8MJy/Z6SDa1VNT7/rNi+kdO72jditFE9g2Va6O+b7IAlEVG9/NJ6l8UiofZUW6qduqyprlT4SG163qqx36u81JKAfFoOFrxmRJNRvzjw5J8uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1nff0E0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GZXbdioLZzyBJ5UOI+VrfjEACfaTVXb+U7JxBob93NhZdH4PKM/U09vr95CgVT+XJ0I4bHIex9CfELsRyscgOhwDURDfk7VDPoj0l4BAFUeULzSPtGU5zL2pFjLdqjpZY94Fyno8w6kO3sCnUZwGv7ZL5mwMDcXaMTo+NOU6hTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuXDdjUL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1nff0E0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03841F00893;
-	Sun,  7 Jun 2026 10:57:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuXDdjUL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA1E1F00893;
+	Sun,  7 Jun 2026 10:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829874;
-	bh=lSVmZYJ2qu8fg3AlbKo6eu1/ULyiYq3aDpi9dOBaHSg=;
+	s=korg; t=1780829878;
+	bh=vOuHgd6EjX1Slxf/MgompSsHmd6i5wZMIE5TSApg+WQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q1nff0E0FeaciHVNq736mBFVMsTUohARqLbcn4xgefL6zJqvBnHJT6hr4UmflMQp9
-	 Yar36LCMOmFON/qYOFTJDepE34r0J13aWDcMDRXqd30milh7mva+EGzjtNSnq5QazO
-	 fjeBA5CuXNedTmP+efw0HGoQ8FvZox17MFyll36U=
+	b=zuXDdjULKtGP52ZxUWmgKiabPXUg+IsSV2Od/CgyyC33Je0F3LfvzlfE251XYERIk
+	 Ir4bMmPvhTIP6Ztj5xL2ODz/E6/PnF1EEtESxEemfsCKyiwjXEO8dOQifBqhrSqwJq
+	 quvyeUuO3BDqGLlHMQSShEj/v0QTijDwSy2vXeF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David E. Box" <david.e.box@linux.intel.com>,
-	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 320/332] platform/x86/intel/vsec: Make driver_data info const
-Date: Sun,  7 Jun 2026 12:01:29 +0200
-Message-ID: <20260607095739.871419380@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>
+Subject: [PATCH 6.12 261/307] serial: zs: Convert to use a platform device
+Date: Sun,  7 Jun 2026 12:00:58 +0200
+Message-ID: <20260607095737.284279395@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,148 +43,484 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "David E. Box" <david.e.box@linux.intel.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit 9577c74c96f88d807d1ba005adbf5952e7127e55 ]
+commit 7cac59d08a73cb866ec51a483a6f3fe0f531947c upstream.
 
-Treat PCI id->driver_data (intel_vsec_platform_info) as read-only by making
-vsec_priv->info a const pointer and updating all function signatures to
-accept const intel_vsec_platform_info *.
+Prevent a crash from happening as the first serial port is initialised:
 
-This improves const-correctness and clarifies that the platform info data
-from the driver_data table is not meant to be modified at runtime.
+  Console: switching to mono frame buffer device 160x64
+  fb0: PMAG-AA frame buffer device at tc0
+  DECstation Z85C30 serial driver version 0.10
+  CPU 0 Unable to handle kernel paging request at virtual address 0000002c, epc == 803ab00c, ra == 803aafe0
+  Oops[#1]:
+  CPU: 0 PID: 1 Comm: swapper Not tainted 6.4.0-rc3-00031-g84a9582fd203-dirty #57
+  $ 0   : 00000000 10012c00 803aaeb0 00000000
+  $ 4   : 80e12f60 80e12f50 80e12f58 81000030
+  $ 8   : 00000000 805ff37c 00000000 33433538
+  $12   : 65732030 00000006 80c2915d 6c616972
+  $16   : 80e12f00 807b7630 00000000 00000000
+  $20   : 00000004 00000348 000001a0 807623b8
+  $24   : 00000018 00000000
+  $28   : 80c24000 80c25d60 8078b148 803aafe0
+  Hi    : 00000000
+  Lo    : 00000000
+  epc   : 803ab00c serial_base_ctrl_add+0x78/0xf4
+  ra    : 803aafe0 serial_base_ctrl_add+0x4c/0xf4
+  Status: 10012c03	KERNEL EXL IE
+  Cause : 00000008 (ExcCode 02)
+  BadVA : 0000002c
+  PrId  : 00000440 (R4400SC)
+  Modules linked in:
+  Process swapper (pid: 1, threadinfo=(ptrval), task=(ptrval), tls=00000000)
+  Stack : 80760000 00000cc0 00400044 00400040 803aa02c 80d61ab8 00000000 807b7630
+          80760000 807623b8 807b7628 803aa644 80386998 00000000 80e17780 80220f68
+          80e17780 80d61ab8 80c17d80 80e17780 80e17780 8063c798 80e17780 80383fa0
+          00000010 80e17780 00000000 80386998 807a0000 00000000 00400040 8038f848
+          807623b8 80d61ab8 00000004 80e17780 00000000 803a68e4 80c25e2c 803bb884
+          ...
+  Call Trace:
+  [<803ab00c>] serial_base_ctrl_add+0x78/0xf4
+  [<803aa644>] serial_core_register_port+0x174/0x69c
+  [<8077e9ac>] zs_init+0xc8/0xfc
+  [<800404d4>] do_one_initcall+0x40/0x2ac
+  [<8076cecc>] kernel_init_freeable+0x1e4/0x270
+  [<80605bec>] kernel_init+0x20/0x108
+  [<800431e8>] ret_from_kernel_thread+0x14/0x1c
 
-No functional changes intended.
+  Code: 2442aeb0  ae120024  ae0200d0 <8c67002c> 50e00001  8c670000  3c06806e  3c05806e  afb30010
 
-Signed-off-by: David E. Box <david.e.box@linux.intel.com>
-Reviewed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Link: https://patch.msgid.link/20260313015202.3660072-3-david.e.box@linux.intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Stable-dep-of: 348ccc754d89 ("platform/x86/intel/vsec: Fix enable_cnt imbalance on PCIe error recovery")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  ---[ end trace 0000000000000000 ]---
+
+(report at the offending commit) -- where a pointer is dereferenced that
+has been derived from a null pointer to the port's parent device.
+
+Since no device is available with legacy probing and it's not anymore a
+preferable way to discover devices anyway, switch the driver to using a
+platform device and use it as the port's parent device.  Update resource
+handling accordingly and only request the actual span of addresses used
+within the slot, which will have had its resource already requested by
+generic platform device code.
+
+Use platform_driver_probe() not just because SCC devices are fixed with
+solder on board and not straightforward to remove, but foremost because
+the associated TTY's major device number is the same as used by the dz
+driver and the first driver to claim it will prevent the other one from
+using it.  Either one DZ device or some SCC devices will be present in a
+given system but never both at a time, and therefore we want the major
+device number to be claimed by the first driver to actually successfully
+bind to its device and platform_driver_probe() is a way to fulfil that.
+
+An unfortunate consequence of the switch to a platform device is we now
+hand the console over from the bootconsole much later in the bootstrap.
+The firmware console handler appears good enough though to work so late
+and in particular with interrupts enabled.
+
+Since there is one way only remaining to reach zs_reset() now, remove
+the port initialisation marker as no longer needed and go through the
+channel reset unconditionally.
+
+Fixes: 84a9582fd203 ("serial: core: Start managing serial controllers to enable runtime PM")
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Cc: stable@vger.kernel.org # needs to use .remove_new for <= 6.10
+Link: https://patch.msgid.link/alpine.DEB.2.21.2605062328480.46195@angie.orcam.me.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/vsec.c |   20 ++++++++++----------
- include/linux/intel_vsec.h        |    4 ++--
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ arch/mips/dec/platform.c |   60 ++++++++++++++
+ drivers/tty/serial/zs.c  |  190 +++++++++++++++++------------------------------
+ drivers/tty/serial/zs.h  |    1 
+ 3 files changed, 128 insertions(+), 123 deletions(-)
 
---- a/drivers/platform/x86/intel/vsec.c
-+++ b/drivers/platform/x86/intel/vsec.c
-@@ -42,7 +42,7 @@ enum vsec_device_state {
+--- a/arch/mips/dec/platform.c
++++ b/arch/mips/dec/platform.c
+@@ -13,6 +13,7 @@
+ #include <asm/bootinfo.h>
+ 
+ #include <asm/dec/interrupts.h>
++#include <asm/dec/ioasic_addrs.h>
+ #include <asm/dec/kn01.h>
+ #include <asm/dec/kn02.h>
+ #include <asm/dec/system.h>
+@@ -53,10 +54,37 @@ static struct platform_device *dec_dz_de
+ 	&dec_dz_device,
  };
  
- struct vsec_priv {
--	struct intel_vsec_platform_info *info;
-+	const struct intel_vsec_platform_info *info;
- 	struct device *suppliers[VSEC_FEATURE_COUNT];
- 	struct oobmsm_plat_info plat_info;
- 	enum vsec_device_state state[VSEC_FEATURE_COUNT];
-@@ -270,7 +270,7 @@ cleanup_aux:
- EXPORT_SYMBOL_NS_GPL(intel_vsec_add_aux, "INTEL_VSEC");
- 
- static int intel_vsec_add_dev(struct pci_dev *pdev, struct intel_vsec_header *header,
--			      struct intel_vsec_platform_info *info,
-+			      const struct intel_vsec_platform_info *info,
- 			      unsigned long cap_id, u64 base_addr)
++static struct resource dec_zs_resources[][2] = {
++	{
++		{ .name = "scc0", .flags = IORESOURCE_MEM, },
++		{ .name = "scc0", .flags = IORESOURCE_IRQ, },
++	},
++	{
++		{ .name = "scc1", .flags = IORESOURCE_MEM, },
++		{ .name = "scc1", .flags = IORESOURCE_IRQ, },
++	},
++};
++
++static struct platform_device dec_zs_device[] = {
++	{
++		.name = "zs",
++		.id = 0,
++		.resource = dec_zs_resources[0],
++		.num_resources = ARRAY_SIZE(dec_zs_resources[0]),
++	},
++	{
++		.name = "zs",
++		.id = 1,
++		.resource = dec_zs_resources[1],
++		.num_resources = ARRAY_SIZE(dec_zs_resources[1]),
++	},
++};
++
+ static int __init dec_add_devices(void)
  {
- 	struct intel_vsec_device __free(kfree) *intel_vsec_dev = NULL;
-@@ -406,7 +406,7 @@ static int get_cap_id(u32 header_id, uns
+-	int ret1, ret2;
+-	int num_dz;
++	struct platform_device *dec_zs_devices[ARRAY_SIZE(dec_zs_device)];
++	int ret1, ret2, ret3;
++	int num_dz, num_zs;
+ 	int irq, i;
  
- static int intel_vsec_register_device(struct pci_dev *pdev,
- 				      struct intel_vsec_header *header,
--				      struct intel_vsec_platform_info *info,
-+				      const struct intel_vsec_platform_info *info,
- 				      u64 base_addr)
- {
- 	const struct vsec_feature_dependency *consumer_deps;
-@@ -452,7 +452,7 @@ static int intel_vsec_register_device(st
+ 	dec_rtc_resources[0].start = RTC_PORT(0);
+@@ -84,10 +112,36 @@ static int __init dec_add_devices(void)
+ 	}
+ 	num_dz = i;
+ 
++	i = 0;
++	irq = dec_interrupt[DEC_IRQ_SCC0];
++	if (irq >= 0) {
++		resource_size_t base = dec_kn_slot_base + IOASIC_SCC0;
++
++		dec_zs_device[i].resource[0].start = base;
++		dec_zs_device[i].resource[0].end = base + dec_kn_slot_size - 1;
++		dec_zs_device[i].resource[1].start = irq;
++		dec_zs_device[i].resource[1].end = irq;
++		dec_zs_devices[i] = &dec_zs_device[i];
++		i++;
++	}
++	irq = dec_interrupt[DEC_IRQ_SCC1];
++	if (irq >= 0) {
++		resource_size_t base = dec_kn_slot_base + IOASIC_SCC1;
++
++		dec_zs_device[i].resource[0].start = base;
++		dec_zs_device[i].resource[0].end = base + dec_kn_slot_size - 1;
++		dec_zs_device[i].resource[1].start = irq;
++		dec_zs_device[i].resource[1].end = irq;
++		dec_zs_devices[i] = &dec_zs_device[i];
++		i++;
++	}
++	num_zs = i;
++
+ 	ret1 = platform_device_register(&dec_rtc_device);
+ 	ret2 = IS_ENABLED(CONFIG_32BIT) ?
+ 	       platform_add_devices(dec_dz_devices, num_dz) : 0;
+-	return ret1 ? ret1 : ret2;
++	ret3 = platform_add_devices(dec_zs_devices, num_zs);
++	return ret1 ? ret1 : ret2 ? ret2 : ret3;
  }
  
- static bool intel_vsec_walk_header(struct pci_dev *pdev,
--				   struct intel_vsec_platform_info *info)
-+				   const struct intel_vsec_platform_info *info)
+ device_initcall(dec_add_devices);
+--- a/drivers/tty/serial/zs.c
++++ b/drivers/tty/serial/zs.c
+@@ -56,6 +56,7 @@
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/major.h>
++#include <linux/platform_device.h>
+ #include <linux/serial.h>
+ #include <linux/serial_core.h>
+ #include <linux/spinlock.h>
+@@ -66,10 +67,6 @@
+ 
+ #include <linux/atomic.h>
+ 
+-#include <asm/dec/interrupts.h>
+-#include <asm/dec/ioasic_addrs.h>
+-#include <asm/dec/system.h>
+-
+ #include "zs.h"
+ 
+ 
+@@ -79,7 +76,7 @@ MODULE_LICENSE("GPL");
+ 
+ 
+ static char zs_name[] __initdata = "DECstation Z85C30 serial driver version ";
+-static char zs_version[] __initdata = "0.10";
++static char zs_version[] __initdata = "0.11";
+ 
+ /*
+  * It would be nice to dynamically allocate everything that
+@@ -98,12 +95,8 @@ static char zs_version[] __initdata = "0
+ 
+ #define to_zport(uport) container_of(uport, struct zs_port, port)
+ 
+-struct zs_parms {
+-	resource_size_t scc[ZS_NUM_SCCS];
+-	int irq[ZS_NUM_SCCS];
+-};
+-
+ static struct zs_scc zs_sccs[ZS_NUM_SCCS];
++static struct uart_driver zs_reg;
+ 
+ /*
+  * Set parameters in WR5, WR12, WR13 such as not to interfere
+@@ -839,16 +832,15 @@ static void zs_reset(struct zs_port *zpo
+ 
+ 	spin_lock_irqsave(&scc->zlock, flags);
+ 	irq = !irqs_disabled_flags(flags);
+-	if (!zport->initialised) {
+-		/* Reset the pointer first, just in case...  */
+-		read_zsreg(zport, R0);
+-		/* And let the current transmission finish.  */
+-		zs_line_drain(zport, irq);
+-		write_zsreg(zport, R9, zport == zport_a ? CHRA : CHRB);
+-		udelay(10);
+-		write_zsreg(zport, R9, 0);
+-		zport->initialised = 1;
+-	}
++
++	/* Reset the pointer first, just in case...  */
++	read_zsreg(zport, R0);
++	/* And let the current transmission finish.  */
++	zs_line_drain(zport, irq);
++	write_zsreg(zport, R9, zport == zport_a ? CHRA : CHRB);
++	udelay(10);
++	write_zsreg(zport, R9, 0);
++
+ 	load_zsregs(zport, zport->regs, irq);
+ 	spin_unlock_irqrestore(&scc->zlock, flags);
+ }
+@@ -1055,63 +1047,62 @@ static const struct uart_ops zs_ops = {
+ /*
+  * Initialize Z85C30 port structures.
+  */
+-static int __init zs_probe_sccs(void)
++static int __init zs_probe(struct platform_device *pdev)
  {
- 	struct intel_vsec_header **header = info->headers;
- 	bool have_devices = false;
-@@ -468,7 +468,7 @@ static bool intel_vsec_walk_header(struc
+-	static int probed;
+-	struct zs_parms zs_parms;
+-	int chip, side, irq;
+-	int n_chips = 0;
++	struct resource *mem_resource, *irq_resource;
++	int chip, side;
+ 	int i;
+ 
+-	if (probed)
+-		return 0;
++	mem_resource = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	irq_resource = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
++	if (!mem_resource || !irq_resource)
++		return -ENODEV;
++
++	chip = pdev->id;
++	spin_lock_init(&zs_sccs[chip].zlock);
++	for (side = 0; side < ZS_NUM_CHAN; side++) {
++		struct zs_port *zport = &zs_sccs[chip].zport[side];
++		struct uart_port *uport = &zport->port;
+ 
+-	irq = dec_interrupt[DEC_IRQ_SCC0];
+-	if (irq >= 0) {
+-		zs_parms.scc[n_chips] = IOASIC_SCC0;
+-		zs_parms.irq[n_chips] = dec_interrupt[DEC_IRQ_SCC0];
+-		n_chips++;
+-	}
+-	irq = dec_interrupt[DEC_IRQ_SCC1];
+-	if (irq >= 0) {
+-		zs_parms.scc[n_chips] = IOASIC_SCC1;
+-		zs_parms.irq[n_chips] = dec_interrupt[DEC_IRQ_SCC1];
+-		n_chips++;
+-	}
+-	if (!n_chips)
+-		return -ENXIO;
+-
+-	probed = 1;
+-
+-	for (chip = 0; chip < n_chips; chip++) {
+-		spin_lock_init(&zs_sccs[chip].zlock);
+-		for (side = 0; side < ZS_NUM_CHAN; side++) {
+-			struct zs_port *zport = &zs_sccs[chip].zport[side];
+-			struct uart_port *uport = &zport->port;
+-
+-			zport->scc	= &zs_sccs[chip];
+-			zport->clk_mode	= 16;
+-
+-			uport->has_sysrq = IS_ENABLED(CONFIG_SERIAL_ZS_CONSOLE);
+-			uport->irq	= zs_parms.irq[chip];
+-			uport->uartclk	= ZS_CLOCK;
+-			uport->fifosize	= 1;
+-			uport->iotype	= UPIO_MEM;
+-			uport->flags	= UPF_BOOT_AUTOCONF;
+-			uport->ops	= &zs_ops;
+-			uport->line	= chip * ZS_NUM_CHAN + side;
+-			uport->mapbase	= dec_kn_slot_base +
+-					  zs_parms.scc[chip] +
+-					  (side ^ ZS_CHAN_B) * ZS_CHAN_IO_SIZE;
++		zport->scc	= &zs_sccs[chip];
++		zport->clk_mode	= 16;
+ 
+-			for (i = 0; i < ZS_NUM_REGS; i++)
+-				zport->regs[i] = zs_init_regs[i];
+-		}
++		uport->dev	= &pdev->dev;
++		uport->has_sysrq = IS_ENABLED(CONFIG_SERIAL_ZS_CONSOLE);
++		uport->irq	= irq_resource->start;
++		uport->uartclk	= ZS_CLOCK;
++		uport->fifosize	= 1;
++		uport->iotype	= UPIO_MEM;
++		uport->flags	= UPF_BOOT_AUTOCONF;
++		uport->ops	= &zs_ops;
++		uport->line	= chip * ZS_NUM_CHAN + side;
++		uport->mapbase	= mem_resource->start +
++				  (side ^ ZS_CHAN_B) * ZS_CHAN_IO_SIZE;
++
++		for (i = 0; i < ZS_NUM_REGS; i++)
++			zport->regs[i] = zs_init_regs[i];
++
++		if (uart_add_one_port(&zs_reg, uport))
++			uport->dev = NULL;
+ 	}
+ 
+ 	return 0;
  }
  
- static bool intel_vsec_walk_dvsec(struct pci_dev *pdev,
--				  struct intel_vsec_platform_info *info)
-+				  const struct intel_vsec_platform_info *info)
- {
- 	bool have_devices = false;
- 	int pos = 0;
-@@ -519,7 +519,7 @@ static bool intel_vsec_walk_dvsec(struct
++static void __exit zs_remove(struct platform_device *pdev)
++{
++	int chip, side;
++
++	chip = pdev->id;
++	for (side = ZS_NUM_CHAN - 1; side >= 0; side--) {
++		struct zs_port *zport = &zs_sccs[chip].zport[side];
++		struct uart_port *uport = &zport->port;
++
++		if (uport->dev)
++			uart_remove_one_port(&zs_reg, uport);
++	}
++}
++
+ 
+ #ifdef CONFIG_SERIAL_ZS_CONSOLE
+ static void zs_console_putchar(struct uart_port *uport, unsigned char ch)
+@@ -1192,20 +1183,14 @@ static int __init zs_console_setup(struc
+ 	int bits = 8;
+ 	int parity = 'n';
+ 	int flow = 'n';
+-	int ret;
+-
+-	ret = zs_map_port(uport);
+-	if (ret)
+-		return ret;
+-
+-	zs_reset(zport);
+ 
++	if (!zport->scc)
++		return -ENODEV;
+ 	if (options)
+ 		uart_parse_options(options, &baud, &parity, &bits, &flow);
+ 	return uart_set_options(uport, co, baud, parity, bits, flow);
  }
  
- static bool intel_vsec_walk_vsec(struct pci_dev *pdev,
--				 struct intel_vsec_platform_info *info)
-+				 const struct intel_vsec_platform_info *info)
- {
- 	bool have_devices = false;
- 	int pos = 0;
-@@ -565,7 +565,7 @@ static bool intel_vsec_walk_vsec(struct
- }
+-static struct uart_driver zs_reg;
+ static struct console zs_console = {
+ 	.name	= "ttyS",
+ 	.write	= zs_console_write,
+@@ -1216,23 +1201,6 @@ static struct console zs_console = {
+ 	.data	= &zs_reg,
+ };
  
- int intel_vsec_register(struct pci_dev *pdev,
--			 struct intel_vsec_platform_info *info)
-+			const struct intel_vsec_platform_info *info)
- {
- 	if (!pdev || !info || !info->headers)
- 		return -EINVAL;
-@@ -578,7 +578,7 @@ int intel_vsec_register(struct pci_dev *
- EXPORT_SYMBOL_NS_GPL(intel_vsec_register, "INTEL_VSEC");
- 
- static bool intel_vsec_get_features(struct pci_dev *pdev,
--				    struct intel_vsec_platform_info *info)
-+				    const struct intel_vsec_platform_info *info)
- {
- 	bool found = false;
- 
-@@ -622,7 +622,7 @@ static void intel_vsec_skip_missing_depe
- 
- static int intel_vsec_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- {
--	struct intel_vsec_platform_info *info;
-+	const struct intel_vsec_platform_info *info;
- 	struct vsec_priv *priv;
- 	int num_caps, ret;
- 	int run_once = 0;
-@@ -633,7 +633,7 @@ static int intel_vsec_pci_probe(struct p
- 		return ret;
- 
- 	pci_save_state(pdev);
--	info = (struct intel_vsec_platform_info *)id->driver_data;
-+	info = (const struct intel_vsec_platform_info *)id->driver_data;
- 	if (!info)
- 		return -EINVAL;
- 
---- a/include/linux/intel_vsec.h
-+++ b/include/linux/intel_vsec.h
-@@ -200,13 +200,13 @@ static inline struct intel_vsec_device *
- 
- #if IS_ENABLED(CONFIG_INTEL_VSEC)
- int intel_vsec_register(struct pci_dev *pdev,
--			 struct intel_vsec_platform_info *info);
-+			const struct intel_vsec_platform_info *info);
- int intel_vsec_set_mapping(struct oobmsm_plat_info *plat_info,
- 			   struct intel_vsec_device *vsec_dev);
- struct oobmsm_plat_info *intel_vsec_get_mapping(struct pci_dev *pdev);
+-/*
+- *	Register console.
+- */
+-static int __init zs_serial_console_init(void)
+-{
+-	int ret;
+-
+-	ret = zs_probe_sccs();
+-	if (ret)
+-		return ret;
+-	register_console(&zs_console);
+-
+-	return 0;
+-}
+-
+-console_initcall(zs_serial_console_init);
+-
+ #define SERIAL_ZS_CONSOLE	&zs_console
  #else
- static inline int intel_vsec_register(struct pci_dev *pdev,
--				       struct intel_vsec_platform_info *info)
-+				      const struct intel_vsec_platform_info *info)
+ #define SERIAL_ZS_CONSOLE	NULL
+@@ -1248,47 +1216,31 @@ static struct uart_driver zs_reg = {
+ 	.cons			= SERIAL_ZS_CONSOLE,
+ };
+ 
++static struct platform_driver zs_driver = {
++	.remove = __exit_p(zs_remove),
++	.driver = { .name = "zs" },
++};
++
+ /* zs_init inits the driver. */
+ static int __init zs_init(void)
  {
- 	return -ENODEV;
+-	int i, ret;
++	int ret;
+ 
+ 	pr_info("%s%s\n", zs_name, zs_version);
+ 
+-	/* Find out how many Z85C30 SCCs we have.  */
+-	ret = zs_probe_sccs();
+-	if (ret)
+-		return ret;
+-
+ 	ret = uart_register_driver(&zs_reg);
+ 	if (ret)
+ 		return ret;
++	ret = platform_driver_probe(&zs_driver, zs_probe);
++	if (ret)
++		uart_unregister_driver(&zs_reg);
+ 
+-	for (i = 0; i < ZS_NUM_SCCS * ZS_NUM_CHAN; i++) {
+-		struct zs_scc *scc = &zs_sccs[i / ZS_NUM_CHAN];
+-		struct zs_port *zport = &scc->zport[i % ZS_NUM_CHAN];
+-		struct uart_port *uport = &zport->port;
+-
+-		if (zport->scc)
+-			uart_add_one_port(&zs_reg, uport);
+-	}
+-
+-	return 0;
++	return ret;
  }
+ 
+ static void __exit zs_exit(void)
+ {
+-	int i;
+-
+-	for (i = ZS_NUM_SCCS * ZS_NUM_CHAN - 1; i >= 0; i--) {
+-		struct zs_scc *scc = &zs_sccs[i / ZS_NUM_CHAN];
+-		struct zs_port *zport = &scc->zport[i % ZS_NUM_CHAN];
+-		struct uart_port *uport = &zport->port;
+-
+-		if (zport->scc)
+-			uart_remove_one_port(&zs_reg, uport);
+-	}
+-
++	platform_driver_unregister(&zs_driver);
+ 	uart_unregister_driver(&zs_reg);
+ }
+ 
+--- a/drivers/tty/serial/zs.h
++++ b/drivers/tty/serial/zs.h
+@@ -22,7 +22,6 @@
+ struct zs_port {
+ 	struct zs_scc	*scc;			/* Containing SCC.  */
+ 	struct uart_port port;			/* Underlying UART.  */
+-	int		initialised;		/* For the console port.  */
+ 
+ 	int		clk_mode;		/* May be 1, 16, 32, or 64.  */
+ 
 
 
