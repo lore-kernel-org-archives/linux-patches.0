@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928F73254A9;
-	Sun,  7 Jun 2026 10:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F9F31E832;
+	Sun,  7 Jun 2026 10:26:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827982; cv=none; b=SBhW6oC9uPPe2hwwhHwMa0vr1jgYLFfwCZ3hbQz1HdOTtXO8NGZJc1rYZOm0JLKLxKKXS7cLcP6+ziO4nUjxnP0lGtEzGnS1aETiNOCn/J5mDmGf7vGldIrYUGFUiztWrrQaPqgqR+qjBgBHGka61HAlN4u4P8DmBmsbTVpgTAg=
+	t=1780827986; cv=none; b=Zgmr/I9WDFI5A/9eoiJ8Kh3PT6YKfH4LBezEHD7vanl/WUso0ni0I2eAHiKAle5GJ3G7Zi3Ijja8kcLlfTHwgH3dfVyY5tdtxn6qApKNYdutjHtv3aT01W0Do11k/8Fr69YRVC1aVuNzjKmHG9xnt8cuN8UutGSsYh/7ZfQhLPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827982; c=relaxed/simple;
-	bh=q8NeNyW57iXixw7PUrAh4pOExnSIfMUNpF14cAQvMug=;
+	s=arc-20240116; t=1780827986; c=relaxed/simple;
+	bh=5GDozbC+t8A2artweLq4ZYP5YkYrx5RSCt99hIxjuaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LAJEoo8vH+N4oD67BN+jIIuH5rqH3lWKZSVKH6qrw1xmMn0HqVBjcrqRyFYcSwgK5lR2lG4DpDB99MIaJVFEt0Fr79hYGHDHhxY5MdkDMhm+6ju50rwf0aQ24XtC/NmuZKKFvjvdOB0byptlagZ08QzRJWx33g7mA1wdY4Pwiw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8tTomlH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LtYvaMEuvToNC0bB6gG4EnsWmQRTDPTRSwOPViXm4RnVBGLOEdKIZqFPQsNYsSBxpR06KBLGAXTzS/hG7M3nbqkd0XHPIOgjmeQrNdloWjQkmc96WCKIxIbtoaj96WUdB9pnqnQxwAXWUuVwP4mTTuEZWrac8LrnlyqGUS219Go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PSRaes/p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8tTomlH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DBE71F00893;
-	Sun,  7 Jun 2026 10:26:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSRaes/p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7CF1F00898;
+	Sun,  7 Jun 2026 10:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827981;
-	bh=ze9i8MbsCKYZ/B2cY05rJlSvaMCEbSQX/Ad6+zXrMCs=;
+	s=korg; t=1780827985;
+	bh=qenftwfJ9bIgJoz3Z932psMPza9HC99oak6oeSIRikI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e8tTomlHUcHZNiB8M1VqJ0bKv/a0LIWmJOaIZPJMlqcEvFuMNvTZ3iDAeHqErkNpj
-	 7ENiymqbPu6yNZs/R9z7k8q8ZHUNFoNIJxORFr/Ss7IqYTuLBcQ7h272OWbj0QIlvs
-	 L0u1qmFPnbIRYFWar59JNIvPSRtsYIxbxkNB/n8s=
+	b=PSRaes/pwSyEsFsBerfHJjplNB1dJ5xh2vfzvD5HJQAoqqGnHVz8z6AIxHaISvSmr
+	 AxwfE2edqLywqPHRe9X4p6P4vtrz8HvV3Wo3L4FYCusZlwlHlYH1pUvQCaJyB/fwGp
+	 REq7eSV0VbKMABqMHyuYyso03kQH3mEJIAEt312Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	hlleng <a909204013@gmail.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.18 118/315] HID: quirks: Add ALWAYS_POLL quirk for SIGMACHIP USB mouse
-Date: Sun,  7 Jun 2026 11:58:25 +0200
-Message-ID: <20260607095731.966141196@linuxfoundation.org>
+	Richard Chang <richardycc@google.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Minchan Kim <minchan@kernel.org>,
+	Brian Geffon <bgeffon@google.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Martin Liu <liumartin@google.com>,
+	wang wei <a929244872@163.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.0 142/332] zram: fix use-after-free in zram_writeback_endio
+Date: Sun,  7 Jun 2026 11:58:31 +0200
+Message-ID: <20260607095733.312280161@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,52 +52,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: hlleng <a909204013@gmail.com>
+From: Richard Chang <richardycc@google.com>
 
-commit 07466fc91c55532edcfb5c6a7ccd2ea52728d6bd upstream.
+commit bf62f69574b19720ae5fbbbcdf24a0c4e3e05e43 upstream.
 
-The SIGMACHIP USB mouse with VID/PID 1c4f:0034 can disconnect and
-re-enumerate repeatedly after it has been enumerated if its interrupt
-endpoint is not continuously polled.
+A crash was observed in zram_writeback_endio due to a NULL pointer
+dereference in wake_up.  The root cause is a race condition between the
+bio completion handler (zram_writeback_endio) and the writeback task.
 
-This was observed with the device reporting itself as "SIGMACHIP Usb
-Mouse". Keeping the input event device open avoids the disconnects.
+In zram_writeback_endio, wake_up() is called on &wb_ctl->done_wait after
+releasing wb_ctl->done_lock.  This creates a race window where the
+writeback task can see num_inflight become 0, return, and free wb_ctl
+before zram_writeback_endio calls wake_up().
 
-Add HID_QUIRK_ALWAYS_POLL for this device so the HID core keeps polling
-it even when there is no userspace input consumer.
+CPU 0 (zram_writeback_endio)     CPU 1 (writeback_store)
+============================     ============================
+                                 zram_writeback_slots
+                                   zram_submit_wb_request
+                                   zram_submit_wb_request
+                                   wait_event(wb_ctl->done_wait)
+spin_lock(&wb_ctl->done_lock);
+list_add(&req->entry, &wb_ctl->done_reqs);
+spin_unlock(&wb_ctl->done_lock);
+wake_up(&wb_ctl->done_wait);
+                                   zram_complete_done_reqs
+spin_lock(&wb_ctl->done_lock);
+list_add(&req->entry, &wb_ctl->done_reqs);
+spin_unlock(&wb_ctl->done_lock);
+                                   while (num_inflight) > 0)
+                                     spin_lock(&wb_ctl->done_lock);
+                                     list_del(&req->entry);
+                                     spin_unlock(&wb_ctl->done_lock);
+                                     // num_inflight becomes 0
+                                     atomic_dec(num_inflight);
 
-Cc: stable@vger.kernel.org
-Signed-off-by: hlleng <a909204013@gmail.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+                                 // Leave zram_writeback_slots
+                                 // Free wb_ctl
+                                 release_wb_ctl(wb_ctl);
+// UAF crash!
+wake_up(&wb_ctl->done_wait);
+
+This patch fixes this race by using RCU.  By protecting wb_ctl with
+rcu_read_lock() in zram_writeback_endio and using kfree_rcu() to free it,
+we ensure that wb_ctl remains valid during the execution of
+zram_writeback_endio.
+
+Link: https://lore.kernel.org/20260512074918.2606208-1-richardycc@google.com
+Fixes: f405066a1f0d ("zram: introduce writeback bio batching")
+Signed-off-by: Richard Chang <richardycc@google.com>
+Suggested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Suggested-by: Minchan Kim <minchan@kernel.org>
+Acked-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Acked-by: Minchan Kim <minchan@kernel.org>
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Martin Liu <liumartin@google.com>
+Cc: wang wei <a929244872@163.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ids.h    |    1 +
- drivers/hid/hid-quirks.c |    1 +
- 2 files changed, 2 insertions(+)
+ drivers/block/zram/zram_drv.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -1244,6 +1244,7 @@
+diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
+index aebc710f0d6a..07111455eecf 100644
+--- a/drivers/block/zram/zram_drv.c
++++ b/drivers/block/zram/zram_drv.c
+@@ -33,6 +33,7 @@
+ #include <linux/cpuhotplug.h>
+ #include <linux/part_stat.h>
+ #include <linux/kernel_read_file.h>
++#include <linux/rcupdate.h>
  
- #define USB_VENDOR_ID_SIGMA_MICRO	0x1c4f
- #define USB_DEVICE_ID_SIGMA_MICRO_KEYBOARD	0x0002
-+#define USB_DEVICE_ID_SIGMA_MICRO_USB_MOUSE	0x0034
- #define USB_DEVICE_ID_SIGMA_MICRO_KEYBOARD2	0x0059
+ #include "zram_drv.h"
  
- #define USB_VENDOR_ID_SIGMATEL		0x066F
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -186,6 +186,7 @@ static const struct hid_device_id hid_qu
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SEMICO, USB_DEVICE_ID_SEMICO_USB_KEYKOARD), HID_QUIRK_NO_INIT_REPORTS },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SENNHEISER, USB_DEVICE_ID_SENNHEISER_BTD500USB), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SIGMA_MICRO, USB_DEVICE_ID_SIGMA_MICRO_KEYBOARD), HID_QUIRK_NO_INIT_REPORTS },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_SIGMA_MICRO, USB_DEVICE_ID_SIGMA_MICRO_USB_MOUSE), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SIGMATEL, USB_DEVICE_ID_SIGMATEL_STMP3780), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SIS_TOUCH, USB_DEVICE_ID_SIS1030_TOUCH), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SIS_TOUCH, USB_DEVICE_ID_SIS817_TOUCH), HID_QUIRK_NOGET },
+@@ -504,6 +505,7 @@ struct zram_wb_ctl {
+ 	wait_queue_head_t done_wait;
+ 	spinlock_t done_lock;
+ 	atomic_t num_inflight;
++	struct rcu_head rcu;
+ };
+ 
+ struct zram_wb_req {
+@@ -847,7 +849,7 @@ static void release_wb_ctl(struct zram_wb_ctl *wb_ctl)
+ 		release_wb_req(req);
+ 	}
+ 
+-	kfree(wb_ctl);
++	kfree_rcu(wb_ctl, rcu);
+ }
+ 
+ static struct zram_wb_ctl *init_wb_ctl(struct zram *zram)
+@@ -964,11 +966,13 @@ static void zram_writeback_endio(struct bio *bio)
+ 	struct zram_wb_ctl *wb_ctl = bio->bi_private;
+ 	unsigned long flags;
+ 
++	rcu_read_lock();
+ 	spin_lock_irqsave(&wb_ctl->done_lock, flags);
+ 	list_add(&req->entry, &wb_ctl->done_reqs);
+ 	spin_unlock_irqrestore(&wb_ctl->done_lock, flags);
+ 
+ 	wake_up(&wb_ctl->done_wait);
++	rcu_read_unlock();
+ }
+ 
+ static void zram_submit_wb_request(struct zram *zram,
+-- 
+2.54.0
+
 
 
