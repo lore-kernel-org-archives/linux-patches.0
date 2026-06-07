@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAF22D3A69;
-	Sun,  7 Jun 2026 10:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A9D2D3A69;
+	Sun,  7 Jun 2026 10:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828702; cv=none; b=d56ua4FEZy3UA9dz9ZnnxlvCqhoUPBVcPIrDXa0fnmksE2wZqz/k8PSRBf9anvf0bkSIgrKV8ZIr9ouAMy0BLvGzSq88qZli5KLTOm9FHHG3tg50tEm0VwDLSVaqyaqsgmBabf84vJR7QnEhcWmwziOFs2xkkHQWL//X8CUNm9g=
+	t=1780828706; cv=none; b=TQXcMJUxBsOFFvIAmelpIPIDkCxsz56mR/hBUon7lPUaF4r+KNHf/SGUOvJ0zEt8G1oNzlmViLt9Y3MMH0WIeDupK5/4k7bejdGnd30xtEeMKOjH2B6RNZrqIrpkb5Z6nru1POSM6bKWkHp464U2/NLRe+q2yq0iXaVHjBSJ+DY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828702; c=relaxed/simple;
-	bh=lqDreVlh8G8eO8U7jetHbYLaqlkXyzxIoyIRmX4CQBk=;
+	s=arc-20240116; t=1780828706; c=relaxed/simple;
+	bh=87e8ItxBtgjyNhNx+O2t0WNKkJlxlGrZKxr337TuBY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G9L5xduCzBS1Cbkrto1rDHpm+YsIXBRPciAJKDFj27SX3w+k6Xt8lgg8lQzIK3+/VbGIOqKj7nL67sJCpNwJFjzzqdZXwQnIsiSmqh8ufzybXvPVDwzM5in2G3hf08Qwu8byMfZT0Zsn6vYwssPyrvavBVAto9vjL6hIKzCCit4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAet9l5/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uuEa94mmakiXbLrJ0Y6H6jNEVihnkouhI11USQ64TYsYh9Bb69X62MQFwgzlH/5/hipEkPS5dqwFZ3iETXj1IsM0ok8br4yV/CzgMv78G7OrBhNnJXS3N0wncoEsFsvpfn1Krbh0pu0EVNob71hJJhQl6Uag5xdEWHOTwO9aUqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKLxN0cT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAet9l5/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2611F00893;
-	Sun,  7 Jun 2026 10:38:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKLxN0cT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D00B1F00893;
+	Sun,  7 Jun 2026 10:38:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828701;
-	bh=rV4Ek9OVC8OXq+lNBKTigzGQ66hXsDsv1gDYPqIe/mU=;
+	s=korg; t=1780828705;
+	bh=Yv8CDsTFHrJPjEmfZLwQO/r5ftKh8vKqguwZxQ89P+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qAet9l5/948FAqECnW6qlnRrYabTKKuXP6h2LVgq+3qir5TcoXeh7NzUekYqtErBU
-	 M+KTdP+UgXvNTvG+pbHfHFEmGroeLxFY1kpXGeLkH1h92Q6IBA6p0bE0A9Xu2QS2IV
-	 ExBWi7gttFI8xdSFnnOYmA5HKmADpaBPaX4NXcZQ=
+	b=LKLxN0cTLthf84rBN1qMxKrqF28HeHMzuDlKLK/8xeUQ7JHXtwhBRHBlhXiZUF3Bu
+	 xsUvPMXYarwVyvonQTLh0V2WBNDaaTIrzlSG8mtcDB5niQ5wQSlvO7OenlJm5dOpno
+	 9YFL+UYpRwWtzbM53+SmTzjYGoWSGnYG+zdOgjZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.12 159/307] KVM: SEV: Use READ_ONCE() when reading entries/indices from PSC buffer
-Date: Sun,  7 Jun 2026 11:59:16 +0200
-Message-ID: <20260607095733.564711196@linuxfoundation.org>
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 184/315] wireguard: send: append trailer after expanding head
+Date: Sun,  7 Jun 2026 11:59:31 +0200
+Message-ID: <20260607095734.339841135@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,75 +46,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit c8cc238093ca6c99267032f6cfe78f59389f3157 upstream.
+commit f75e3eb08fe31d30a9af6ed80cdd22e6772837e2 upstream.
 
-Use READ_ONCE() when reading entries/indices from the guest-accessible
-Page State Change buffer to defend against TOCTOU bugs.
+With how this is currently written, we add the trailer, zero it out, and
+then add the header space on. If that header space requires a
+reallocation + copy, the zeros in the trailer aren't copied, because the
+skb len hasn't actually been yet expanded to cover that. Instead add the
+padding at the end of the process rather than at the beginning.
 
-Don't bother with READ_ONCE()/WRITE_ONCE() for cases where KVM is writing
-(and not consuming the result!), as the guest isn't supposed to touch the
-buffer while it's being processed.  I.e. using READ_ONCE() is all about
-protecting against misbehaving guests.
-
-Fixes: 9b54e248d264 ("KVM: SEV: Add support to handle Page State Change VMGEXIT")
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
 Cc: stable@vger.kernel.org
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260501202250.2115252-11-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://patch.msgid.link/20260529173134.3080773-2-Jason@zx2c4.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/wireguard/send.c |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -3699,9 +3699,9 @@ static void __snp_complete_one_psc(struc
+--- a/drivers/net/wireguard/send.c
++++ b/drivers/net/wireguard/send.c
+@@ -177,16 +177,6 @@ static bool encrypt_packet(struct sk_buf
+ 	trailer_len = padding_len + noise_encrypted_len(0);
+ 	plaintext_len = skb->len + padding_len;
+ 
+-	/* Expand data section to have room for padding and auth tag. */
+-	num_frags = skb_cow_data(skb, trailer_len, &trailer);
+-	if (unlikely(num_frags < 0 || num_frags > ARRAY_SIZE(sg)))
+-		return false;
+-
+-	/* Set the padding to zeros, and make sure it and the auth tag are part
+-	 * of the skb.
+-	 */
+-	memset(skb_tail_pointer(trailer), 0, padding_len);
+-
+ 	/* Expand head section to have room for our header and the network
+ 	 * stack's headers.
  	 */
- 	for (idx = svm->sev_es.psc_idx; svm->sev_es.psc_inflight;
- 	     svm->sev_es.psc_inflight--, idx++) {
--		struct psc_entry *entry = &entries[idx];
-+		struct psc_entry entry = READ_ONCE(entries[idx]);
+@@ -198,6 +188,16 @@ static bool encrypt_packet(struct sk_buf
+ 		     skb_checksum_help(skb)))
+ 		return false;
  
--		entry->cur_page = entry->pagesize ? 512 : 1;
-+		entries[idx].cur_page = entry.pagesize ? 512 : 1;
- 	}
- 
- 	hdr->cur_entry = idx;
-@@ -3764,8 +3764,8 @@ next_range:
- 	 * validation, so take care to only use validated copies of values used
- 	 * for things like array indexing.
++	/* Expand data section to have room for padding and auth tag. */
++	num_frags = skb_cow_data(skb, trailer_len, &trailer);
++	if (unlikely(num_frags < 0 || num_frags > ARRAY_SIZE(sg)))
++		return false;
++
++	/* Set the padding to zeros, and make sure it and the auth tag are part
++	 * of the skb.
++	 */
++	memset(skb_tail_pointer(trailer), 0, padding_len);
++
+ 	/* Only after checksumming can we safely add on the padding at the end
+ 	 * and the header.
  	 */
--	idx_start = hdr->cur_entry;
--	idx_end = hdr->end_entry;
-+	idx_start = READ_ONCE(hdr->cur_entry);
-+	idx_end = READ_ONCE(hdr->end_entry);
- 
- 	if (idx_end >= max_nr_entries) {
- 		snp_complete_psc(svm, VMGEXIT_PSC_ERROR_INVALID_HDR);
-@@ -3774,7 +3774,7 @@ next_range:
- 
- 	/* Find the start of the next range which needs processing. */
- 	for (idx = idx_start; idx <= idx_end; idx++, hdr->cur_entry++) {
--		entry_start = entries[idx];
-+		entry_start = READ_ONCE(entries[idx]);
- 
- 		gfn = entry_start.gfn;
- 		huge = entry_start.pagesize;
-@@ -3818,7 +3818,7 @@ next_range:
- 	 * KVM_HC_MAP_GPA_RANGE exit.
- 	 */
- 	while (++idx <= idx_end) {
--		struct psc_entry entry = entries[idx];
-+		struct psc_entry entry = READ_ONCE(entries[idx]);
- 
- 		if (entry.operation != entry_start.operation ||
- 		    entry.gfn != entry_start.gfn + npages ||
 
 
