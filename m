@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD403264E0;
-	Sun,  7 Jun 2026 10:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579DB3264F2;
+	Sun,  7 Jun 2026 10:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827813; cv=none; b=mbw4F+AF4NTu6WMQcVKiGUXzYOpbtRVLKYfODJfFFjHw/fHDV1uyuFj1HeRMpDpLooZQY5EVAG0D9zSQAZC2HIo4hsG8ITQdt14qDB/ptBpPfoxu3WQB73kiiE7vNoZNgUdOXc5CWRGRUKgsQMvMLIKtupyCgIPBOSngYlSD7m8=
+	t=1780827817; cv=none; b=N25ysZpyoyBuGqxKK1X+4OzY2ahaidUsOBk8JZQVq50V2j+fDv/OaZE5nYgt3XHy/xSiVvtk7X6aHqCfYQXcCTINAPfshTmFNUQwHX5/XILqnxSZ+DWivz4iQGpR6inzXbiOBVO/8PlFdR5zBtRd64hCogxMkxRbdBiFnGM8IJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827813; c=relaxed/simple;
-	bh=pUv6jaGk8QPiO9u9cr+YbgMLR7Zn6UO+Eis9wbrPkRg=;
+	s=arc-20240116; t=1780827817; c=relaxed/simple;
+	bh=bgIy06b1+JF2q3Wr5FkS4XeZ+wAeP8gZ4UKZ1l2fq78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZY5KGYe8yxHqUkFB00FDV+YHuEBd1SiljOIjN0UlliEdqQgKZGepI/kONJoUq76EB1X8EBLSRChVckF+n3+aVJYdmtKltskVOfTVhN4ETQr+/1DusDyTXg0NoVckBHE9QDadlTF7PBfnZ7uExr9oMcmyX6zIkM8Zy62fGdcORyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EfCG8nVV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dUYtElxK6iKJoBTtSLyD4ryfnFYpYkRALKNc4w8IoNZCy+U94eMpZHsCWVxkaIWJX6wscRlFvS0WwyM23Tq4L9kcZzj2ADzbU8EKb1ckkgFz3X6W570W3o5n8r+KFLmVaovB+yY63WgvawIOBIiinbvhcQpliSX79NjPIznzCSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwMM9dax; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EfCG8nVV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06FA1F00893;
-	Sun,  7 Jun 2026 10:23:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwMM9dax"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37E331F00893;
+	Sun,  7 Jun 2026 10:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827811;
-	bh=Bv8Kw+JAIuwDXT7O/QDI/ctgr9sWFNioXX/E3aBK2hs=;
+	s=korg; t=1780827816;
+	bh=hZhfG8jDuHlfwMaXZX6xsSYjsJyKOS0S2N3oxzgZlPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EfCG8nVVCiKrarSjiZT9wqHh3kFjYyVOe5/9uRNMYS16sdugt1wOS0Sf8LBV30pwk
-	 C8M16vOlL8Kl5yk6ayRw+pgoLOVQ5tr8IA+xV12sp0iXdq/1q/Od9RKMaX1SWScMH1
-	 MLbdUkFLiwkwR7E+aVdwQe7KMtzO3CNrmJrNY0lc=
+	b=CwMM9daxWyLml8G1Qa7gH7ojfc7Id8HNUCUBySw+pFm1BLABG5l5fPuXqbbGAePaH
+	 7l5E3Oy5jm7PGDnG0LMb5pVu/TjZ6jeMLYK/SLKf5BJL5SQfzCCF6OnAdTZID1fF1Q
+	 H3osbc5ihyhFUZ5osB6LVB5ftDCmudoxWhJXWmUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Scardovi <scardracs@disroot.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 103/332] gpio: rockchip: convert bank->clk to devm_clk_get_enabled()
-Date: Sun,  7 Jun 2026 11:57:52 +0200
-Message-ID: <20260607095731.912781481@linuxfoundation.org>
+	Pooja Katiyar <pooja.katiyar@intel.com>,
+	Johan Hovold <johan@kernel.org>,
+	stable <stable@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 7.0 124/332] usb: typec: ucsi: displayport: NAK DP_CMD_CONFIGURE without a payload VDO
+Date: Sun,  7 Jun 2026 11:58:13 +0200
+Message-ID: <20260607095732.662842732@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
 References: <20260607095728.031258202@linuxfoundation.org>
@@ -51,78 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Scardovi <scardracs@disroot.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 3e46c18d5d87f063a93ae0fe7662fbf6660459d5 ]
+commit 167dd8d12226587ee554f520aed0256b7769cd5d upstream.
 
-The bank->clk was previously obtained via of_clk_get() and manually
-prepared/enabled. However, it was missing a corresponding clk_put() in
-both the error paths and the remove function, leading to a reference leak.
+ucsi_displayport_vdm() handles a DP_CMD_CONFIGURE by copying the first
+payload VDO from data[], but unlike the equivalent handler in
+altmodes/displayport.c it does not check that count covers a VDO beyond
+the header.  A header-only Configure VDM (count == 1) would read one u32
+past the caller's array.
 
-Convert the allocation to devm_clk_get_enabled(), which also properly
-propagates failures from clk_prepare_enable() that were previously ignored.
+In the normal UCSI path the caller controls count, so this is hardening
+for non-standard delivery paths.  NAK and bail when no configuration VDO
+is present, matching the generic DP altmode driver's existing guard.
 
-The GPIO bank device uses the same OF node as the previous of_clk_get()
-call, so devm_clk_get_enabled(dev, NULL) correctly resolves the same
-clock provider entry.
-
-Fix the reference leak and simplify the code by removing the manual
-clk_disable_unprepare() calls in the probe error paths and in the
-remove function.
-
-Fixes: 936ee2675eee ("gpio/rockchip: add driver for rockchip gpio")
-Assisted-by: Antigravity:gemini-3.5-flash
-Signed-off-by: Marco Scardovi <scardracs@disroot.org>
-Link: https://patch.msgid.link/20260526171050.12785-2-scardracs@disroot.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assisted-by: gkh_clanker_t1000
+Cc: Pooja Katiyar <pooja.katiyar@intel.com>
+Cc: Johan Hovold <johan@kernel.org>
+Cc: stable <stable@kernel.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/2026051351-vividly-flattered-eb3d@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-rockchip.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/usb/typec/ucsi/displayport.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpio/gpio-rockchip.c b/drivers/gpio/gpio-rockchip.c
-index 0fff4a699f12d1..f910220141f712 100644
---- a/drivers/gpio/gpio-rockchip.c
-+++ b/drivers/gpio/gpio-rockchip.c
-@@ -656,11 +656,10 @@ static int rockchip_get_bank_data(struct rockchip_pin_bank *bank)
- 	if (!bank->irq)
- 		return -EINVAL;
- 
--	bank->clk = of_clk_get(bank->of_node, 0);
-+	bank->clk = devm_clk_get_enabled(bank->dev, NULL);
- 	if (IS_ERR(bank->clk))
- 		return PTR_ERR(bank->clk);
- 
--	clk_prepare_enable(bank->clk);
- 	id = readl(bank->reg_base + gpio_regs_v2.version_id);
- 
- 	switch (id) {
-@@ -672,7 +671,6 @@ static int rockchip_get_bank_data(struct rockchip_pin_bank *bank)
- 		bank->db_clk = of_clk_get(bank->of_node, 1);
- 		if (IS_ERR(bank->db_clk)) {
- 			dev_err(bank->dev, "cannot find debounce clk\n");
--			clk_disable_unprepare(bank->clk);
- 			return -EINVAL;
- 		}
- 		break;
-@@ -751,7 +749,6 @@ static int rockchip_gpio_probe(struct platform_device *pdev)
- 
- 	ret = rockchip_gpiolib_register(bank);
- 	if (ret) {
--		clk_disable_unprepare(bank->clk);
- 		mutex_unlock(&bank->deferred_lock);
- 		return ret;
- 	}
-@@ -792,7 +789,6 @@ static void rockchip_gpio_remove(struct platform_device *pdev)
- {
- 	struct rockchip_pin_bank *bank = platform_get_drvdata(pdev);
- 
--	clk_disable_unprepare(bank->clk);
- 	gpiochip_remove(&bank->gpio_chip);
- }
- 
--- 
-2.53.0
-
+--- a/drivers/usb/typec/ucsi/displayport.c
++++ b/drivers/usb/typec/ucsi/displayport.c
+@@ -240,6 +240,10 @@ static int ucsi_displayport_vdm(struct t
+ 				dp->header |= VDO_CMDT(CMDT_RSP_ACK);
+ 			break;
+ 		case DP_CMD_CONFIGURE:
++			if (count < 2) {
++				dp->header |= VDO_CMDT(CMDT_RSP_NAK);
++				break;
++			}
+ 			dp->data.conf = *data;
+ 			if (ucsi_displayport_configure(dp)) {
+ 				dp->header |= VDO_CMDT(CMDT_RSP_NAK);
 
 
