@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B9C12CDA5;
-	Sun,  7 Jun 2026 10:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED0E12CDA5;
+	Sun,  7 Jun 2026 10:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829933; cv=none; b=q05y9BO2kLnmhxxOenpiaN2wc7RvAIBFAtMqZ2vNdO1Cv6mR0XlW7Jxt8uN5uwf4N0LxA9O2oxBho2TpK/rGSvBFXBIcWgYKDhD2dFTRXi2VhhJCmf7T7Nt38sFEaKIK/AuBcECFTJ8lJ8aCN61/HyfZ2Rt4tCzmVoe6E3oXQkM=
+	t=1780829939; cv=none; b=qT+JhwVwcG1BPrpO1oBWnYtkgNarWGSpwHgJRjiv23is9N9yW21/FKr3nKchRlj+a+KIbw3ysahdBtueTRtANglllJC/TcLUUFxwqI2s/s9snp8AAeyw8121IXiTWuOnuvE7QtE46dtXLF4jBgBR/47A7Qa761LeNCSajlGz4E4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829933; c=relaxed/simple;
-	bh=yhsMyMzMgzsRtR6pRa3hAF5k7wxAxXBTReuPiLle9zE=;
+	s=arc-20240116; t=1780829939; c=relaxed/simple;
+	bh=3SOKXIaBQno+5AaSAjhDpPTO0v9c60Ff3NdKwL6zYrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h8cOjQr+rajgNuEpRirvdhilTPACrzxmSy++zztSdhHldmRBKYdMUdBI1nUDJ2tipylfU0NvALP7XzvC5LAfk2rZ4X8Srkm5RyBxf0hcblJlcxV7QRWG24AGIh6vQUOeetGiyBEQ0iq7QfqKwH+Gxgu52YENdF1TgVRfOJmP1/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhFJSVBv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PKdTSFF7lYmKZuM9Urq9OdP9/IXgob2JX9n+2R8kR0otZ7OdlgXtDfW2pxoPfcFyzHtI8Jsoa65lfprgumPmwyS0HsiLJVul5p9wg7qFWiVIfVbl8mw+Gnh2T22pBsGOW6wkrSKazLByOlM+2RQCvyi7jQjOqMi87shI41kHci4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnrFDTeN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhFJSVBv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC701F00893;
-	Sun,  7 Jun 2026 10:58:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnrFDTeN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49CF1F00893;
+	Sun,  7 Jun 2026 10:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829931;
-	bh=fuvvDGZtqZ3+DfXN6LkrH8S+6bfc7XjPBF72vlypw2A=;
+	s=korg; t=1780829938;
+	bh=/GSDwjDsuQnekFrkVZadFZWEsGU2enI/OuUHlyNImzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zhFJSVBvGqcsqGNSyaS1lfIjoExJ5vI+A/l/pgpnRg2pLclxNzk6U5aJT+2HljYC0
-	 bH64mx8TeJZx+Q7aC7Dsl2pkMi8CC1ThN9kutgvCG2TaZ9NGkEW6FqIWccHUerQWNa
-	 cXhObtcItuWh8/2z7HJY4pk7AegG0/fkK6DB7wqw=
+	b=BnrFDTeNWPHlklClXucl+WArk2X/I0SW9NoIi61wUrC2+zUDvC0TGBsGQuWvpO54Q
+	 wLZoW0p5q0al06Mqk62xRTOB3+olzkGnR7Gm+roMR+QTIWJXg6OHOFtY9cMG2RPXSs
+	 ttdf+auhNr/oTwrmHM7KcoJFgOQrnnF43205JWPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Nogikh <nogikh@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dmitry Vyukov <dvyukov@google.com>,
+	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 267/307] x86/kexec: Disable KCOV instrumentation after load_segments()
-Date: Sun,  7 Jun 2026 12:01:04 +0200
-Message-ID: <20260607095737.512582084@linuxfoundation.org>
+Subject: [PATCH 7.0 328/332] hwmon: (pmbus/adm1266) serialize sequencer_state debugfs read with pmbus_lock
+Date: Sun,  7 Jun 2026 12:01:37 +0200
+Message-ID: <20260607095740.179479064@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,95 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-[ Upstream commit 917e3ad3321e75ca0223d5ccf26ceda116aa51e1 ]
+[ Upstream commit 4e4af55aaca7f6d7673d5f9889ad0529db86a048 ]
 
-The load_segments() function changes segment registers, invalidating GS base
-(which KCOV relies on for per-cpu data). When CONFIG_KCOV is enabled, any
-subsequent instrumented C code call (e.g. native_gdt_invalidate()) begins
-crashing the kernel in an endless loop.
+adm1266_state_read() backs the sequencer_state debugfs entry and
+issues an i2c_smbus_read_word_data(client, ADM1266_READ_STATE)
+against the device without taking pmbus_lock.  pmbus_core holds
+pmbus_lock around its own multi-transaction sequences (notably the
+"set PAGE, then read paged register" pattern used by hwmon
+attributes), so an unlocked debugfs reader can land between a PAGE
+write and the subsequent paged read in another thread.  READ_STATE
+itself is not paged, so it cannot corrupt PAGE in flight, but the
+same defensive serialisation that applies to the GPIO accessors
+applies here: any direct device access from outside pmbus_core
+should be ordered with respect to pmbus_core's own.
 
-To reproduce the problem, it's sufficient to do kexec on a KCOV-instrumented
-kernel:
+Take pmbus_lock at the top of adm1266_state_read() via the
+scope-based guard().
 
-  $ kexec -l /boot/otherKernel
-  $ kexec -e
-
-The real-world context for this problem is enabling crash dump collection in
-syzkaller. For this, the tool loads a panic kernel before fuzzing and then
-calls makedumpfile after the panic. This workflow requires both CONFIG_KEXEC
-and CONFIG_KCOV to be enabled simultaneously.
-
-Adding safeguards directly to the KCOV fast-path (__sanitizer_cov_trace_pc())
-is also undesirable as it would introduce an extra performance overhead.
-
-Disabling instrumentation for the individual functions would be too fragile,
-so disable KCOV instrumentation for the entire machine_kexec_64.c and
-physaddr.c. If coverage-guided fuzzing ever needs these components in the
-future, other approaches should be considered.
-
-The problem is not relevant for 32 bit kernels as CONFIG_KCOV is not supported
-there.
-
-  [ bp: Space out comment for better readability. ]
-
-Fixes: 0d345996e4cb ("x86/kernel: increase kcov coverage under arch/x86/kernel folder")
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Dmitry Vyukov <dvyukov@google.com>
+Fixes: ed1ff457e187 ("hwmon: (pmbus/adm1266) add debugfs for states")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260325154825.551191-1-nogikh@google.com
+Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+Link: https://lore.kernel.org/r/20260518-adm1266-gpio-fixes-v3-8-e425e4f88139@nexthop.ai
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/Makefile | 14 ++++++++++++++
- arch/x86/mm/Makefile     |  2 ++
- 2 files changed, 16 insertions(+)
+ drivers/hwmon/pmbus/adm1266.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/kernel/Makefile b/arch/x86/kernel/Makefile
-index f42c0903ef86d4..5f58b5a38cac17 100644
---- a/arch/x86/kernel/Makefile
-+++ b/arch/x86/kernel/Makefile
-@@ -44,6 +44,20 @@ KCOV_INSTRUMENT_unwind_orc.o				:= n
- KCOV_INSTRUMENT_unwind_frame.o				:= n
- KCOV_INSTRUMENT_unwind_guess.o				:= n
+--- a/drivers/hwmon/pmbus/adm1266.c
++++ b/drivers/hwmon/pmbus/adm1266.c
+@@ -328,6 +328,7 @@ static int adm1266_state_read(struct seq
+ 	struct i2c_client *client = to_i2c_client(dev);
+ 	int ret;
  
-+# Disable KCOV to prevent crashes during kexec: load_segments() invalidates
-+# the GS base, which KCOV relies on for per-CPU data.
-+#
-+# As KCOV and KEXEC compatibility should be preserved (e.g. syzkaller is
-+# using it to collect crash dumps during kernel fuzzing), disabling
-+# KCOV for KEXEC kernels is not an option. Selectively disabling KCOV
-+# instrumentation for individual affected functions can be fragile, while
-+# adding more checks to KCOV would slow it down.
-+#
-+# As a compromise solution, disable KCOV instrumentation for the whole
-+# source code file. If its coverage is ever needed, other approaches
-+# should be considered.
-+KCOV_INSTRUMENT_machine_kexec_64.o			:= n
-+
- CFLAGS_head32.o := -fno-stack-protector
- CFLAGS_head64.o := -fno-stack-protector
- CFLAGS_irq.o := -I $(src)/../include/asm/trace
-diff --git a/arch/x86/mm/Makefile b/arch/x86/mm/Makefile
-index 690fbf48e8538b..60a53baa042793 100644
---- a/arch/x86/mm/Makefile
-+++ b/arch/x86/mm/Makefile
-@@ -5,6 +5,8 @@ KCOV_INSTRUMENT_mem_encrypt.o		:= n
- KCOV_INSTRUMENT_mem_encrypt_amd.o	:= n
- KCOV_INSTRUMENT_mem_encrypt_identity.o	:= n
- KCOV_INSTRUMENT_pgprot.o		:= n
-+# See the "Disable KCOV" comment in arch/x86/kernel/Makefile.
-+KCOV_INSTRUMENT_physaddr.o		:= n
- 
- KASAN_SANITIZE_mem_encrypt.o		:= n
- KASAN_SANITIZE_mem_encrypt_amd.o	:= n
--- 
-2.53.0
-
++	guard(pmbus_lock)(client);
+ 	ret = i2c_smbus_read_word_data(client, ADM1266_READ_STATE);
+ 	if (ret < 0)
+ 		return ret;
 
 
