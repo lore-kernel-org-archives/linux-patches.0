@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B324071E3;
-	Sun,  7 Jun 2026 10:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDE94071E3;
+	Sun,  7 Jun 2026 10:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828142; cv=none; b=RIzy2Kpz4ChDKvQidHn4CJCE9/DEbllQZXegj3KmE2PDv+CqWdT23/oulI1EznaR5VUaD+FCFaFTECizv0t9R/4v15Md/fQLFvOEcvtyuFUl2DAYsBN1EZ21TXM9/XpIhoVuNc7K4sYJxGvZ3oY3NoiMdHhkpBjgQhLMcQ3c7tU=
+	t=1780828146; cv=none; b=ur1t/E/KEzsDj1lYLWRl5s4c504PiOzJhkQTocXozddVa9Wt7wCqX3S7Wq8FEF6OGeGDlBPRVDI4kJ6wbrC1OjscapfPH9VnLQsqokGBN/SbsY2t9iAlONwTBJl37dJc9fzMFAUEXxTZ9ECkqZn+6JuLkXS6R07SV24Zly5Ja2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828142; c=relaxed/simple;
-	bh=oWpgT3B17oPoywMMLmI74vheTEadGUNKTlidEjJmVbA=;
+	s=arc-20240116; t=1780828146; c=relaxed/simple;
+	bh=xcbyC+6KJiVLSYJppWGSC3iWsmKwcXVbxg8SrnN9cuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mz9QWp1RhxmacLLuRHiYQdMfR8CKtXJHNU6KEltUJmoX8WBNyk25yEEQ1o279DNkJbzzJZXkMYaDYhCPjs1BMtr+uw1aQqqMn/gcUPDmFv37y2nQ8r5/0uvr1KkAzQASR5ZCTdCLwsFPdPfeb68irtPN0HqC89YAXdLQTzlu2wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LmD8xS3U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S3s5ocvFknbg84AEGyOdgKSSqGx8KUvtFPoDZNtf9AWeHm0T3EpgsbdzmUe3mVBpJ0lPfhgkIlWPmov7nUuFf/g1JEfl5xCzer43CgsZoC2X6WOwYDcdsnwHTYzmDFPwCISUFl/KXOFfxB67j4csKJhEA6xDlbYpXekv7myJeGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yA3aN373; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LmD8xS3U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A3F1F00893;
-	Sun,  7 Jun 2026 10:29:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yA3aN373"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00EB21F00893;
+	Sun,  7 Jun 2026 10:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828141;
-	bh=uYH3VprZpAOsXgAVd4LqGbdI8TXYnadBaNi3hXVr6Rw=;
+	s=korg; t=1780828145;
+	bh=198dRpYuht8wxvsL57Fyz2hfBEHlV6bqWd9WNf8rhY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LmD8xS3UHL6XY+v7CIlADIymAfm6kD9dAMPdc6rIAGc7NmrrofNjDjaVsYbUTVrhr
-	 zZc1zPFx4YSFNkkv+buWeXkfJ+KIid46um7XHDEDdC1m1L1Rp4ZGsc1DAewCt/nU3P
-	 M1ECJJbivfU1lrFti47pOMh7do6VfyhTik1J6s/s=
+	b=yA3aN373cZcIHD2idlU0XwXV7j/T4AYQyFOKZYMYYOdJZrhHFIUBUiaOFBNdyxPvE
+	 5ZsSjgAPaFujvaCVHy2REHu+SoTaydnrta29dyD3js3EfouIMnzsOaCjULKJHsrWzK
+	 FArTr/T/QjmqRS+PL1fw9U46TMHfQa99Tnhno3NQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.18 131/315] Bluetooth: ISO: fix UAF in iso_recv_frame
-Date: Sun,  7 Jun 2026 11:58:38 +0200
-Message-ID: <20260607095732.427360429@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ben Hutchings <benh@debian.org>,
+	Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Subject: [PATCH 7.0 155/332] parport: Fix race between port and client registration
+Date: Sun,  7 Jun 2026 11:58:44 +0200
+Message-ID: <20260607095733.776359604@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,61 +47,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Ben Hutchings <benh@debian.org>
 
-commit 47f23a259517abbdb8032c057a1e8a6bf3734878 upstream.
+commit ef15ccbb3e8640a723c42ad90eaf81d66ae02017 upstream.
 
-iso_recv_frame reads conn->sk under iso_conn_lock but releases the lock
-before using sk, with no reference held. A concurrent iso_sock_kill()
-can free sk in that window, causing use-after-free on sk->sk_state and
-sock_queue_rcv_skb().
+The parport subsystem registers port devices before they are fully
+initialised, resulting in a race condition where client drivers such
+as lp can attach to ports that are not completely initialised or even
+being torn down.
 
-Fix by replacing the bare pointer read with iso_sock_hold(conn), which
-calls sock_hold() while the spinlock is held, atomically elevating the
-refcount before the lock drops. Add a drop_put label so sock_put() is
-called on all exit paths where the hold succeeded.
+When the port and client drivers are built as modules and loaded
+around the same time during boot, this occasionally results in a
+crash.  I was able to make this happen reliably in a VM with a
+PC-style parallel port by patching parport_pc to fail probing:
 
-Fixes: ccf74f2390d60a2f9a75ef496d2564abb478f46a ("Bluetooth: Add BTPROTO_ISO socket type")
-Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> --- a/drivers/parport/parport_pc.c
+> +++ b/drivers/parport/parport_pc.c
+> @@ -2069,7 +2069,7 @@ static struct parport *__parport_pc_probe_port(unsigned long int base,
+>  	if (!p)
+>  		goto out3;
+>
+> -	base_res = request_region(base, 3, p->name);
+> +	base_res = NULL;
+>  	if (!base_res)
+>  		goto out4;
+>
+
+and then running:
+
+    while true; do
+        modprobe lp & modprobe parport_pc
+	wait
+	rmmod lp parport_pc
+    done
+
+for a few seconds.
+
+In the long term I think port registration should be changed to put
+the call to device_add() inside parport_announce_port(), but since the
+latter currently cannot fail this will require changing all port
+drivers.
+
+For now, add a flag to indicate whether a port has been "announced"
+and only try to attach client drivers to ports when the flag is set.
+
+Fixes: 6fa45a226897 ("parport: add device-model to parport subsystem")
+Closes: https://bugs.debian.org/1130365
+Closes: https://lore.kernel.org/all/6ba903ad-9897-42bb-8c2d-337385cc3746@molgen.mpg.de/
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Link: https://patch.msgid.link/afo6uBv68GDevbMD@decadent.org.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/iso.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/parport/share.c |   11 +++++++++--
+ include/linux/parport.h |    1 +
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -571,7 +571,7 @@ static void iso_recv_frame(struct iso_co
- 	struct sock *sk;
+--- a/drivers/parport/share.c
++++ b/drivers/parport/share.c
+@@ -214,10 +214,14 @@ static void get_lowlevel_driver(void)
+ static int port_check(struct device *dev, void *dev_drv)
+ {
+ 	struct parport_driver *drv = dev_drv;
++	struct parport *port;
  
- 	iso_conn_lock(conn);
--	sk = conn->sk;
-+	sk = iso_sock_hold(conn);
- 	iso_conn_unlock(conn);
- 
- 	if (!sk)
-@@ -580,11 +580,15 @@ static void iso_recv_frame(struct iso_co
- 	BT_DBG("sk %p len %d", sk, skb->len);
- 
- 	if (sk->sk_state != BT_CONNECTED)
--		goto drop;
-+		goto drop_put;
- 
--	if (!sock_queue_rcv_skb(sk, skb))
-+	if (!sock_queue_rcv_skb(sk, skb)) {
-+		sock_put(sk);
- 		return;
+ 	/* only send ports, do not send other devices connected to bus */
+-	if (is_parport(dev))
+-		drv->match_port(to_parport_dev(dev));
++	if (is_parport(dev)) {
++		port = to_parport_dev(dev);
++		if (test_bit(PARPORT_ANNOUNCED, &port->devflags))
++			drv->match_port(port);
 +	}
- 
-+drop_put:
-+	sock_put(sk);
- drop:
- 	kfree_skb(skb);
+ 	return 0;
  }
+ 
+@@ -532,6 +536,7 @@ void parport_announce_port(struct parpor
+ 		if (slave)
+ 			attach_driver_chain(slave);
+ 	}
++	set_bit(PARPORT_ANNOUNCED, &port->devflags);
+ 	mutex_unlock(&registration_lock);
+ }
+ EXPORT_SYMBOL(parport_announce_port);
+@@ -561,6 +566,8 @@ void parport_remove_port(struct parport
+ 
+ 	mutex_lock(&registration_lock);
+ 
++	clear_bit(PARPORT_ANNOUNCED, &port->devflags);
++
+ 	/* Spread the word. */
+ 	detach_driver_chain(port);
+ 
+--- a/include/linux/parport.h
++++ b/include/linux/parport.h
+@@ -240,6 +240,7 @@ struct parport {
+ 
+ 	unsigned long devflags;
+ #define PARPORT_DEVPROC_REGISTERED	0
++#define PARPORT_ANNOUNCED		1
+ 	struct pardevice *proc_device;	/* Currently register proc device */
+ 
+ 	struct list_head full_list;
 
 
