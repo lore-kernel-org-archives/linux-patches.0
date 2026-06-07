@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067134204E;
-	Sun,  7 Jun 2026 10:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFD54204E;
+	Sun,  7 Jun 2026 10:54:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829685; cv=none; b=j3KV9A9fK4H1qiob4maCeOJhlK+7QxqLZmYr7YHgb6LkzwwCDJMNOP7apP1qqqSIUqRB6vFz5DOhLay/vKhgoGOJFT6RF7VWn6+v+bDppua82pT+ZaWGY0pogTccqA6jqG7CxsDQqI7OUgkgwgVPwmhxLkCNI3ag39uGvUC5kTo=
+	t=1780829689; cv=none; b=XQU1ALazGt0IBUkTFothaaI4/Zm/w54U6LKDnvW24s0GnKnqfWpOV43tGcquB2e4Zuu5uQTKI8T8XsdfHh3M7pqdBc/xrELs+D8mvcfDSfU39269nyanFCTOCw55pb1ZQ6A7ElgpRpbhN8AnnFHwDZQCgsGh2Jc6O7ZvqHQtWBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829685; c=relaxed/simple;
-	bh=1hz7O4KZ2NjrqP2+V+cm/Yx2wNL2DbqaYEIrPdeewcU=;
+	s=arc-20240116; t=1780829689; c=relaxed/simple;
+	bh=wxlllxzmLH1Mkv1gTFI4N5X6r6cBhP49dCjJJPQm+64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XvtOpoLctJaL0FsZAv4Q1OEketmQF+2bkvCfaVt76awOBP1uTvAcQQm9DrIRfpVGDVmA0nvbZ6XdPgxh8bsAbZSXuRkudCC2qOh/5VLF4y+Bqj2vjrJfd5alTRjh41755vD3sVDRjllE3o3jWJ5zwbDzLos1XT8kITDRfbey/dQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdlHkP2T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sNLhYX+uY614X+EnsQ10ptVUDg8x7NjpEbZBsNV6fOPYQkjz6qp/fDGCECM2ou4xr/y6v+DJ2wJqohcXrBHaBIj+5sbtP3D2xuSKcolEF7ac+SE1r9hadubIsPJHKkq3c3SuhibEourlUaiZ+lWPpJ7ZLTMd++yeVYd1aLrqQaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mc5JITx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdlHkP2T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8D21F00893;
-	Sun,  7 Jun 2026 10:54:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mc5JITx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 348D61F00893;
+	Sun,  7 Jun 2026 10:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829683;
-	bh=XwSrvZ40VsfYMA9dxA7dk1yq6b9F/7MuafSXf3+mUJ0=;
+	s=korg; t=1780829688;
+	bh=DTBUj+PzswKO0n+RQduS7DfjjcaIqHd3pOhFhOe6kcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jdlHkP2TsRM+yqzkpshv+hd0sMRDIPQv2N0kMpEe52hioQZxY7jZ/PjREdCscQbZl
-	 kn6bFRM7nMWC3fgvJAw2FrFBeWj6E4+45l3uFqNxQVrBQtWR4Qd+Q+pSDpWtUDLLVi
-	 R7choKlSakVwbKQRqmpHGBOV5Ownr9yN2W6Z9xKI=
+	b=1mc5JITxS9jnL8Uj3y0xWfbIJ67VRJxRiBBHMG/0ncdGrSixpNyqG86iqod4wtPxn
+	 zFzzALuBMAqShFLWgq4K91PXfq1dkrRKUDCz0Bt9QBOhgKHlHofg/riBOxUemeKSjb
+	 kk4P3s9W/EIhAeWS+1o3Ca4X3GuWUv8O2dAGFk84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.0 305/332] drm/amdgpu: fix lock leak on ENOMEM in AMDGPU_GEM_OP_GET_MAPPING_INFO
-Date: Sun,  7 Jun 2026 12:01:14 +0200
-Message-ID: <20260607095739.277946606@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>
+Subject: [PATCH 6.12 246/307] drm/amd/pm/si: Disregard vblank time when no displays are connected
+Date: Sun,  7 Jun 2026 12:00:43 +0200
+Message-ID: <20260607095736.732725496@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,78 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 2e7f55eb408c3f72ee1957a0d0ad11d8648a6379 upstream.
+commit dd4f3ee535b3b0ac027f75dbf9dc5fc88733c765 upstream.
 
-The AMDGPU_GEM_OP_GET_MAPPING_INFO branch of amdgpu_gem_op_ioctl()
-holds three cleanup-tracked resources before calling kvcalloc():
-the drm_gem_object reference from drm_gem_object_lookup(), the
-drm_exec lock on the looked-up GEM via drm_exec_lock_obj(), and
-the drm_exec lock on the per-process VM root page directory via
-amdgpu_vm_lock_pd().  All three are released by the out_exec
-label that every other error path in this function jumps to.
-The kvcalloc() failure path returns -ENOMEM directly, skipping
-out_exec and leaking all three.
+When no displays are connected, there is no vblank
+happening so the power management code shouldn't
+worry about it.
 
-The leaked per-process VM root PD dma_resv lock is the
-load-bearing leak: any subsequent operation on the same VM
-(further GEM ops, command-submission, eviction, TTM shrinker
-callbacks) blocks on the held lock.  DRM_IOCTL_AMDGPU_GEM_OP is
-DRM_AUTH | DRM_RENDER_ALLOW, so this is an unprivileged-local
-denial of service against the caller's GPU context, reachable
-by any process with /dev/dri/renderD* access.
+This fixes a regression that caused the memory clock
+to be stuck at maximum when there were no displays
+connected to a SI GPU.
 
-Route the failure through out_exec so drm_exec_fini() and
-drm_gem_object_put() run.
-
-Reproduced on stock 7.0.0-10, Ryzen 7 5700U / Radeon Vega
-(Lucienne): the failing ioctl returns -ENOMEM and a second
-GET_MAPPING_INFO on the same fd then blocks in
-drm_exec_lock_obj() on the leaked dma_resv.  SIGKILL on the
-caller does not reap the task; the fd-release path during
-process exit goes through amdgpu_gem_object_close() ->
-drm_exec_prepare_obj() on the same lock, leaving the task in D
-state until the box is rebooted.  The patched kernel was not
-rebuilt and re-tested on this hardware; the fix is mechanical.
-Tested on a single Lucienne / Vega box only.
-
-Ziyi Guo posted an independent INT_MAX-bound check for
-args->num_entries in the same branch [1]; the two patches are
-complementary and can land in either order.
-
-Fixes: 4d82724f7f2b ("drm/amdgpu: Add mapping info option for GEM_OP ioctl")
-Link: https://lore.kernel.org/all/20260208000255.4073363-1-n7l8m4@u.northwestern.edu/ # [1]
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Assisted-by: Claude:claude-opus-4-7
+Fixes: 9003a0746864 ("drm/amd/pm: Treat zero vblank time as too short in si_dpm (v3)")
+Fixes: 9d73b107a61b ("drm/amd/pm: Use pm_display_cfg in legacy DPM (v2)")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Tested-by: Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b69d3256d79de15f54c322986ff4da68f1d65b0a)
+(cherry picked from commit 6d87e0199f7b83735b56e422d59f170a201897a8)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-@@ -1096,8 +1096,10 @@ int amdgpu_gem_op_ioctl(struct drm_devic
- 		 * be retried.
- 		 */
- 		vm_entries = kvcalloc(args->num_entries, sizeof(*vm_entries), GFP_KERNEL);
--		if (!vm_entries)
--			return -ENOMEM;
-+		if (!vm_entries) {
-+			r = -ENOMEM;
-+			goto out_exec;
-+		}
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -3062,6 +3062,10 @@ static bool si_dpm_vblank_too_short(void
+ 	/* we never hit the non-gddr5 limit so disable it */
+ 	u32 switch_limit = adev->gmc.vram_type == AMDGPU_VRAM_TYPE_GDDR5 ? 450 : 0;
  
- 		amdgpu_vm_bo_va_for_each_valid_mapping(bo_va, mapping) {
- 			if (num_mappings < args->num_entries) {
++	/* Disregard vblank time when there are no displays connected */
++	if (!adev->pm.pm_display_cfg.num_display)
++		return false;
++
+ 	/* Consider zero vblank time too short and disable MCLK switching.
+ 	 * Note that the vblank time is set to maximum when no displays are attached,
+ 	 * so we'll still enable MCLK switching in that case.
 
 
