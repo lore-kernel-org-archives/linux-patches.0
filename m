@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4E9296BCC;
-	Sun,  7 Jun 2026 10:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD4E296BCC;
+	Sun,  7 Jun 2026 10:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829667; cv=none; b=h0jlRbhZWwhErsbRlnqFI5qt5oPOmhcxj2nri0scLktelgHMuT3XVP9D1mxx/h0G9AM9tVpDJ6JG2Sr6bjWSP4bAoMkpDvXaifqnlL8PXLd7QIE1OXAOY81QxNPQHy7IO3oRP1ayuV5bK5Tqf4kbWUP3huOdl7tr9mCDy34KCL8=
+	t=1780829672; cv=none; b=sfgIHjPjCcJ4J02kgYgLF+wsxK0JVd1THvVXCP8/YnaBA7omVxprNLiscO9iFoa+u61SDsnzBGGgVyjJ/Zh7Vd6H3djRPWGI6hBguZ6PvFYGKyMuasrJa0iztoF/iNd2FNYWzxxxOTukZPFQnFRtE20isWYRduKLCISm9hkgwz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829667; c=relaxed/simple;
-	bh=RegwlsIXeh5dzYXliRPanurbA5k1dNoRvS+LnAbrsLQ=;
+	s=arc-20240116; t=1780829672; c=relaxed/simple;
+	bh=5L6CEy9SWMjkYBNs+vq0xYrvi9h7Ep72A/4OJEloNWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GRaFxIKQSMOXhGlauB18rN7rwnnczo0xo2Z0NJO91FeG7n46j9wFm44ksDoz08XiIVbVM755oiHY2AzeYJX6vQpjUArsIjEKe00J0j5w1btTC4F7pceX8Ljn2JCFtktdxSxR5Qw5Ub6HMjyAxRlSK7nrgIXf4saIPJtsBZ9gPRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MpeUlTc3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pCRy0KHQT+UMXcc+/pcQBwlKk1WRagCMNAhN57FYibPGOK3PlaukBYFtpuTCcauiaJmWmClWwFu4H8gTAyhgEubCkfNpS2jM2qfNL79Q7lqtkyw8Jyhj2wvQXoSHEYWcFic2sEDVZr559NXMsVdIE3eFh1tLKn3pWNEbz36xVBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WgUqyymy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpeUlTc3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934D71F00893;
-	Sun,  7 Jun 2026 10:54:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WgUqyymy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0DB1F00893;
+	Sun,  7 Jun 2026 10:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829666;
-	bh=3E3WaD238lru0wqQholobNpE/VIF6oaklsGd7SeO4lM=;
+	s=korg; t=1780829671;
+	bh=yMU/SAWRHWjOdPi/mCVmJcPFwB69RxGCrLxF2Z3mnU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MpeUlTc3p6NQHWtBy2awigNvO5Np9S45EEHuNdUtEl7l+c+G36To+wBM+5uUIlk4q
-	 zd2iZo1kVZSqt0+k0TVIPH04mmAreKAeg5eelYGUEfXGh1PLpDbaWzczh4Lu6EzwWB
-	 pwUCmrtIKxliJT83DOHoWN5xdwZ+/hF6soYkhy5s=
+	b=WgUqyymyhqjcOn2K0DL3vcRch3L2H3QjKxAkb6qLllFdGPb8GaLc4jmGFDX9MhsAl
+	 MAiA2TkBVjz+52C/cWYvhinqWBO7Ym41dY48WVAdo9nchsQ5aehPFkXgxPzRActkhw
+	 gmhxI9fGeuCpQnvoD2mDDFMmDzw5vC8zqMeqVn7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Francis <David.Francis@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 269/315] drm/amdkfd: Check for pdd drm file first in CRIU restore path
-Date: Sun,  7 Jun 2026 12:00:56 +0200
-Message-ID: <20260607095737.447330355@linuxfoundation.org>
+Subject: [PATCH 7.0 304/332] drm/amdkfd: Check for pdd drm file first in CRIU restore path
+Date: Sun,  7 Jun 2026 12:01:13 +0200
+Message-ID: <20260607095739.242416602@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,7 +46,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -73,7 +73,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
 +++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -2253,6 +2253,11 @@ static int criu_restore_devices(struct k
+@@ -2278,6 +2278,11 @@ static int criu_restore_devices(struct k
  			ret = -EINVAL;
  			goto exit;
  		}
@@ -85,7 +85,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  		pdd->user_gpu_id = device_buckets[i].user_gpu_id;
  
  		drm_file = fget(device_buckets[i].drm_fd);
-@@ -2262,11 +2267,6 @@ static int criu_restore_devices(struct k
+@@ -2287,11 +2292,6 @@ static int criu_restore_devices(struct k
  			ret = -EINVAL;
  			goto exit;
  		}
