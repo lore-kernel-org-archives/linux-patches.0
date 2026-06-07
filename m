@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA06926ED5D;
-	Sun,  7 Jun 2026 10:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D033E329E7E;
+	Sun,  7 Jun 2026 10:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828212; cv=none; b=XkHRo2z+3XFno/+5mPvwARlal/i3zd8RZ3iyA/lkNw/mA6WcDAcl4pkUNKx3ejRfoEeoByE90oLG2ETRN4aTT2uD25rHlgYLnbDgxJd2ypg+I/Nr6B/l7GCrVoH92THhNrqeGokj8hqOU3Cya6Jl2oxjPF2NxjNr7J4wAUsTrSU=
+	t=1780828216; cv=none; b=SUnClCDdU3TvvNKGRHCcOejLmTMQ++FOHmqBbH29parcuYdkZ8+fWQuj6uarrdHsdbY3Edu5AzVEpPV6hZUbZHgPYoDmKpiknboyDFOUE5V9hlKf/LVD4IuCJ5NhhwuKx6IM+eKrisIn48HTATF/4J1vpOLmEo/LTtvIEZfSZ1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828212; c=relaxed/simple;
-	bh=PEEzThoPBMicd9j13NrRgahxKXAWVWCil2d1zFFstA0=;
+	s=arc-20240116; t=1780828216; c=relaxed/simple;
+	bh=rHictp+nackwG7xNJ696uWZZC8jcPBOxD+Gcj6mJsmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u+ulj1TZrMOrueMQO8mxGSDzqm3F1WeedhgchzApUOdMI8leMpK7WUTTbMohpHby8WjiCwyFjXzjKYF01tXCm7L81PXDKYo9w/oWA+0wANPbq75czSFjSO5DYcautskmjIpVX3yFZASrvHkOdjQUKzhusK2vRiusUfUNjmMcjK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fbNiwRWF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R7/WMdCppFW4y9pLQjzj53I8TZ17XDU2cjjhDmA9aWssD/yeX7c0P6MyUaodxLZE/Ssb3FKClXGlg4V/x6pF1LksRwxXRdRa5A9r1wBVxBpbT2icXeX9mrkDeClEVMVXvBdc6Z+MA91e3kzlQM9nBP9IiYgntSvBGT9UfEawgLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9129h7b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fbNiwRWF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23CBA1F00898;
-	Sun,  7 Jun 2026 10:30:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9129h7b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DA31F00893;
+	Sun,  7 Jun 2026 10:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828210;
-	bh=beG16EsAL2d492y3LKjLmLQ0n3YYf84lZCkwp+VbBFM=;
+	s=korg; t=1780828214;
+	bh=SI99nOLySRerxcxSUJ2BM0Keu5DGwL0+JoWmkb9soA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fbNiwRWF1LQY2oJSjypLINDISpaXf4c0508RXNVPB11UGeyDks9RlMhOcJwaTefhv
-	 5jWaxlv+Qmzs9+PREfaRmoHFPz3eKvDdMi9/UYP9XjN0zmu2Mnp8YsN40YzG5BC58X
-	 dSw3LqhicJvTsW8TkWLFEqjSAWUapNt27Ro7Wsc0=
+	b=q9129h7b9gN0LgdJa050wlATJ4AOYSz1/+F/P7rUclfuuKufnOHCj+ywQ3rzlcs7t
+	 fpfuq1M79dPt6d2/61GP46z3UcYe3En4VaU5PDtFSu115YjUzl2FHmDyUKq/7OxrWr
+	 +o01tsDWX/y8iccj6LvnyIOhuw7OVcSHOo4GnpnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Arun R Murthy <arun.r.murthy@intel.com>,
-	Ben Kao <ben.kao@intel.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 120/307] drm/dp: Add eDP 1.5 bit definition
-Date: Sun,  7 Jun 2026 11:58:37 +0200
-Message-ID: <20260607095732.170506695@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.18 141/315] KVM: arm64: Correctly cap ZCR_EL2 provided by a guest hypervisor
+Date: Sun,  7 Jun 2026 11:58:48 +0200
+Message-ID: <20260607095732.780900893@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +44,165 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Suraj Kandpal <suraj.kandpal@intel.com>
+From: Mark Brown <broonie@kernel.org>
 
-commit 5dfc37a6b77bf6beedbd30d70184b54e1a08ccac upstream.
+commit 83726330748981372bde86ed5411d7b306612991 upstream.
 
-Add the eDP revision bit value for 1.5.
+ZCR_EL2 can be updated by a VHE guest hypervisor either using ZCR_EL2
+(which traps) or ZCR_EL1 (which does not trap). KVM handles both in
+different way:
 
-Spec: eDPv1.5 Table 16-5
-Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Reviewed-by: Arun R Murthy <arun.r.murthy@intel.com>
-Tested-by: Ben Kao <ben.kao@intel.com>
-Acked-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20250206063253.2827017-2-suraj.kandpal@intel.com
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+- on ZCR_EL2 trap, ZCR_EL2.LEN is immediately capped at the VM's own
+  VL limit. This has the potential to break existing SW that relies
+  on the full LEN field to be stateful.
+
+- on ZCR_EL1 access, we do absolutely nothing.
+
+On restoring the SVE context for an L2 guest, we directly restore the
+guest hypervisor's view of ZCR_EL2 into the physical ZCR_EL2. If the
+guest's view of the register was updated using the ZCR_EL2 accessor,
+the value has already been sanitised (with the caveat mentioned above).
+
+But if the guest used ZCR_EL1, the raw value is written into the HW,
+and the L2 guest can now access VLs that it shouldn't.
+
+Fix all the above by moving the VL capping to the restore points,
+ensuring that:
+
+- the HW is always programmed with a capped value, irrespective of
+  the accessor being used,
+
+- the ZCR_EL2.LEN field is always completely stateful, irrespective
+  of the accessor being used.
+
+Additionally, move ZCR_EL2 to be a sanitised register, ensuring that
+only the LEN field is actually stateful. This requires some creative
+construction of the RES0 mask, as the sysreg generation script does
+not yet generate RAZ/WI fields.
+
+Fixes: b3d29a823099 ("KVM: arm64: nv: Handle ZCR_EL2 traps")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260529-kvm-arm64-fix-zcr-len-nv-v2-1-86cad51992bd@kernel.org
+[maz: rewrote commit message, tidy up access_zcr_el2()]
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/drm/display/drm_dp.h | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/include/asm/kvm_host.h       |    2 +-
+ arch/arm64/kvm/hyp/include/hyp/switch.h |   16 ++++++++++------
+ arch/arm64/kvm/nested.c                 |    5 +++++
+ arch/arm64/kvm/sys_regs.c               |   11 +++--------
+ 4 files changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/include/drm/display/drm_dp.h b/include/drm/display/drm_dp.h
-index 3bd9f482f0c3e6..dd218400a613e3 100644
---- a/include/drm/display/drm_dp.h
-+++ b/include/drm/display/drm_dp.h
-@@ -997,6 +997,7 @@
- # define DP_EDP_14			    0x03
- # define DP_EDP_14a                         0x04    /* eDP 1.4a */
- # define DP_EDP_14b                         0x05    /* eDP 1.4b */
-+# define DP_EDP_15			    0x06    /* eDP 1.5 */
+--- a/arch/arm64/include/asm/kvm_host.h
++++ b/arch/arm64/include/asm/kvm_host.h
+@@ -496,7 +496,6 @@ enum vcpu_sysreg {
+ 	ACTLR_EL2,	/* Auxiliary Control Register (EL2) */
+ 	CPTR_EL2,	/* Architectural Feature Trap Register (EL2) */
+ 	HACR_EL2,	/* Hypervisor Auxiliary Control Register */
+-	ZCR_EL2,	/* SVE Control Register (EL2) */
+ 	TTBR0_EL2,	/* Translation Table Base Register 0 (EL2) */
+ 	TTBR1_EL2,	/* Translation Table Base Register 1 (EL2) */
+ 	TCR_EL2,	/* Translation Control Register (EL2) */
+@@ -527,6 +526,7 @@ enum vcpu_sysreg {
+ 	SCTLR2_EL2,	/* System Control Register 2 (EL2) */
+ 	MDCR_EL2,	/* Monitor Debug Configuration Register (EL2) */
+ 	CNTHCTL_EL2,	/* Counter-timer Hypervisor Control register */
++	ZCR_EL2,	/* SVE Control Register (EL2) */
  
- #define DP_EDP_GENERAL_CAP_1		    0x701
- # define DP_EDP_TCON_BACKLIGHT_ADJUSTMENT_CAP		(1 << 0)
--- 
-2.53.0
-
+ 	/* Any VNCR-capable reg goes after this point */
+ 	MARKER(__VNCR_START__),
+--- a/arch/arm64/kvm/hyp/include/hyp/switch.h
++++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
+@@ -433,11 +433,13 @@ static inline bool kvm_hyp_handle_mops(s
+ 
+ static inline void __hyp_sve_restore_guest(struct kvm_vcpu *vcpu)
+ {
++	u64 zcr_el2 = vcpu_sve_max_vq(vcpu) - 1;
++
+ 	/*
+ 	 * The vCPU's saved SVE state layout always matches the max VL of the
+ 	 * vCPU. Start off with the max VL so we can load the SVE state.
+ 	 */
+-	sve_cond_update_zcr_vq(vcpu_sve_max_vq(vcpu) - 1, SYS_ZCR_EL2);
++	sve_cond_update_zcr_vq(zcr_el2, SYS_ZCR_EL2);
+ 	__sve_restore_state(vcpu_sve_pffr(vcpu),
+ 			    &vcpu->arch.ctxt.fp_regs.fpsr,
+ 			    true);
+@@ -447,8 +449,10 @@ static inline void __hyp_sve_restore_gue
+ 	 * nested guest, as the guest hypervisor could select a smaller VL. Slap
+ 	 * that into hardware before wrapping up.
+ 	 */
+-	if (is_nested_ctxt(vcpu))
+-		sve_cond_update_zcr_vq(__vcpu_sys_reg(vcpu, ZCR_EL2), SYS_ZCR_EL2);
++	if (is_nested_ctxt(vcpu)) {
++		zcr_el2 = min(zcr_el2, __vcpu_sys_reg(vcpu, ZCR_EL2));
++		sve_cond_update_zcr_vq(zcr_el2, SYS_ZCR_EL2);
++	}
+ 
+ 	write_sysreg_el1(__vcpu_sys_reg(vcpu, vcpu_sve_zcr_elx(vcpu)), SYS_ZCR);
+ }
+@@ -472,11 +476,11 @@ static inline void fpsimd_lazy_switch_to
+ 		return;
+ 
+ 	if (vcpu_has_sve(vcpu)) {
++		zcr_el2 = vcpu_sve_max_vq(vcpu) - 1;
++
+ 		/* A guest hypervisor may restrict the effective max VL. */
+ 		if (is_nested_ctxt(vcpu))
+-			zcr_el2 = __vcpu_sys_reg(vcpu, ZCR_EL2);
+-		else
+-			zcr_el2 = vcpu_sve_max_vq(vcpu) - 1;
++			zcr_el2 = min(zcr_el2, __vcpu_sys_reg(vcpu, ZCR_EL2));
+ 
+ 		write_sysreg_el2(zcr_el2, SYS_ZCR);
+ 
+--- a/arch/arm64/kvm/nested.c
++++ b/arch/arm64/kvm/nested.c
+@@ -1772,6 +1772,11 @@ int kvm_init_nv_sysregs(struct kvm_vcpu
+ 	/* VNCR_EL2 */
+ 	set_sysreg_masks(kvm, VNCR_EL2, VNCR_EL2_RES0, VNCR_EL2_RES1);
+ 
++	/* ZCR_EL2 - bits 8:4 are RAZ/WI so treat them as RES0 */
++	resx.res0 = ZCR_ELx_RES0 | GENMASK_ULL(8, 4);
++	resx.res1 = ZCR_ELx_RES1;
++	set_sysreg_masks(kvm, ZCR_EL2, resx);
++
+ out:
+ 	for (enum vcpu_sysreg sr = __SANITISED_REG_START__; sr < NR_SYS_REGS; sr++)
+ 		__vcpu_rmw_sys_reg(vcpu, sr, |=, 0);
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -2749,21 +2749,16 @@ static bool access_zcr_el2(struct kvm_vc
+ 			   struct sys_reg_params *p,
+ 			   const struct sys_reg_desc *r)
+ {
+-	unsigned int vq;
+-
+ 	if (guest_hyp_sve_traps_enabled(vcpu)) {
+ 		kvm_inject_nested_sve_trap(vcpu);
+ 		return false;
+ 	}
+ 
+-	if (!p->is_write) {
++	if (!p->is_write)
+ 		p->regval = __vcpu_sys_reg(vcpu, ZCR_EL2);
+-		return true;
+-	}
++	else
++		__vcpu_assign_sys_reg(vcpu, ZCR_EL2, p->regval);
+ 
+-	vq = SYS_FIELD_GET(ZCR_ELx, LEN, p->regval) + 1;
+-	vq = min(vq, vcpu_sve_max_vq(vcpu));
+-	__vcpu_assign_sys_reg(vcpu, ZCR_EL2, vq - 1);
+ 	return true;
+ }
+ 
 
 
