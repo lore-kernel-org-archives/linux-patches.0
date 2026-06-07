@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C8C1DE8AE;
-	Sun,  7 Jun 2026 10:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8BE1DE8AE;
+	Sun,  7 Jun 2026 10:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826918; cv=none; b=RQQmea/LNMQWPGsthfbCl9j8nvgxy1eEWR8Y8VVr/CsK/vVOnjpXGJkW5poh/nNiLuhX8S21MEWoaAkmhufi/ZjG6ZeznHgTmjV1v8v8f23tqXdrPR27hH+POmP3eSCZj1XQScvJmJG681DT5kVuAE+J1+eOVFZuKL7f2P7WIdM=
+	t=1780826921; cv=none; b=kiisx88dQd5t/MY4p5KyB1r0cPDpQI/LLrHBE9wU2wzd2b9goNMk1XLIFgOO+PsDSZpYH3Py2fWOlkDojkYMcQYtrjwCVgCKnLBp8Ng/zH28jGi0/Rxu3SiOga30q8wEtSSwacNWSSyaCjor5D2b3SF+oWca5/128c6YHiZ6KHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826918; c=relaxed/simple;
-	bh=1LWHhh9kY9om0FEmSR25LekCNViLzpNer7KSznzSFrs=;
+	s=arc-20240116; t=1780826921; c=relaxed/simple;
+	bh=6h3WX728kUUbmex5HA2outUGuNIv61xUWy/KwyZFRgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ipMusKjDUWYmMe2vJkgLYo2ps+fqny5AnC7WImd82/WFAZHqVWVQqej42kUl9dNZIDT3tNFJa/XiurzyJ6LtxtSWFzkVPEd4maea7cbZunDkrEaMdXa1QgK5apkgohnolbv04S0PQuKRHUP7iG/+u4Fo+tTkPq61RTDPZ6UzdKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNhy3iLh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sJuBQlcaDHIyzAMi2mVJAM31kY98mp/1J9gmyBVRTZT47kYZyFm3npYu9Rpx3kGn0u3w+oPoNz3bDuYgxll0G2aiWH+QTY28t5rwsLJYLHZ0gq6Qxfo11yzbjeNsbvJlrGU/kGsyFo41lnngoxpxw8Y/s3SxfZdEGeqkFcpTxWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fCTX0K+H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNhy3iLh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6871F00893;
-	Sun,  7 Jun 2026 10:08:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fCTX0K+H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0065C1F00893;
+	Sun,  7 Jun 2026 10:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826917;
-	bh=aQLq8ppuiU+gmZ4i7G8nKa2cb90rEd2WEaf2Dd7wsDQ=;
+	s=korg; t=1780826920;
+	bh=ukTDgJK7e3z10nFRiHtRT4EpHdpSA8ulfAyeikQFoek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KNhy3iLhVNAekt1zQZ/TjIy6iF99mC0UGUSz13fKFDkfdWV/oEyvXW8QqbnMZBWYm
-	 6Xe5V8u09N9FvIw7N3OFL7Qqa+6L05w70qOBjwy4gAb02eANJ6UwTIyoZMp4HEbxMO
-	 wj6tBjIFhVUqix+0rD1jbZois2F7JF0z5zPCBDqs=
+	b=fCTX0K+HAI0oeEGOzzx2K1wrxZhSNqXEyjqpHXIH/iRHvUTKpX7kchNT9iLAM/33D
+	 NsoeKpuSYDDzGxszYnGhEzZsaDgGU1kAASR08lmmkG7xoBnlkdQviZUgJmAtltSJgc
+	 2vc1c2149SlXSDGfm44kY9Byh+Efy6AspwXvHqL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Halil Pasic <pasic@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 043/332] ethtool: rss: fix falsely ignoring indir table updates
-Date: Sun,  7 Jun 2026 11:56:52 +0200
-Message-ID: <20260607095729.697214699@linuxfoundation.org>
+Subject: [PATCH 7.0 027/332] net/smc: Do not re-initialize smc hashtables
+Date: Sun,  7 Jun 2026 11:56:36 +0200
+Message-ID: <20260607095729.083162424@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
 References: <20260607095728.031258202@linuxfoundation.org>
@@ -50,36 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Alexandra Winter <wintera@linux.ibm.com>
 
-[ Upstream commit 8d60141a32875248ef71d49c9920fa5e2aa40b29 ]
+[ Upstream commit 9e4389b0038781f19f97895186ed941ff8ac1678 ]
 
-rss_set_prep_indir() compares the new indirection table against the
-current one to determine whether any update is needed. The memcmp
-call passes data->indir_size as the length argument, but indir_size
-is the number of u32 entries, not the byte count.
+INIT_HLIST_HEAD(&smc_v*_hashinfo.ht) are called after smc_nl_init(),
+proto_register() and sock_register(). This can lead to smc_v*_hashinfo.ht
+being reset even though hash entries already exist and are being used,
+possibly resulting in a corrupted list.
 
-Fixes: c0ae03588bbb ("ethtool: rss: initial RSS_SET (indirection table handling)")
-Link: https://patch.msgid.link/20260522230647.1705600-4-kuba@kernel.org
+Remove unnecessary and dangerous re-initialisation of smc_v*_hashinfo.ht in
+smc_init(); it is implicitly initialised to zero anyhow. Add
+HLIST_HEAD_INIT to the definitions for clarity.
+
+Fixes: f16a7dd5cf27 ("smc: netlink interface for SMC sockets")
+Suggested-by: Halil Pasic <pasic@linux.ibm.com>
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Acked-by: Halil Pasic <pasic@linux.ibm.com>
+Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Link: https://patch.msgid.link/20260521145639.10317-1-wintera@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/rss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/smc/af_smc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ethtool/rss.c b/net/ethtool/rss.c
-index 688c0e4bba69db..4877655f724419 100644
---- a/net/ethtool/rss.c
-+++ b/net/ethtool/rss.c
-@@ -684,7 +684,7 @@ rss_set_prep_indir(struct net_device *dev, struct genl_info *info,
- 				ethtool_rxfh_indir_default(i, num_rx_rings);
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index f744f791121776..de034a3e5d801f 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -188,10 +188,12 @@ static bool smc_hs_congested(const struct sock *sk)
+ 
+ struct smc_hashinfo smc_v4_hashinfo = {
+ 	.lock = __RW_LOCK_UNLOCKED(smc_v4_hashinfo.lock),
++	.ht = HLIST_HEAD_INIT,
+ };
+ 
+ struct smc_hashinfo smc_v6_hashinfo = {
+ 	.lock = __RW_LOCK_UNLOCKED(smc_v6_hashinfo.lock),
++	.ht = HLIST_HEAD_INIT,
+ };
+ 
+ int smc_hash_sk(struct sock *sk)
+@@ -3522,8 +3524,6 @@ static int __init smc_init(void)
+ 		pr_err("%s: sock_register fails with %d\n", __func__, rc);
+ 		goto out_proto6;
  	}
+-	INIT_HLIST_HEAD(&smc_v4_hashinfo.ht);
+-	INIT_HLIST_HEAD(&smc_v6_hashinfo.ht);
  
--	*mod |= memcmp(rxfh->indir, data->indir_table, data->indir_size);
-+	*mod |= memcmp(rxfh->indir, data->indir_table, alloc_size);
- 
- 	return 0;
- 
+ 	rc = smc_ib_register_client();
+ 	if (rc) {
 -- 
 2.53.0
 
