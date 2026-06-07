@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB501E98E3;
-	Sun,  7 Jun 2026 10:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41FC4204E;
+	Sun,  7 Jun 2026 10:10:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827006; cv=none; b=pBNk3wMBkdQZ0kkpnZ9tB1fB4ap3f3hQZkWxGuGwAjQjPGVXgyzlzX0XXQACzk7cCpzWAHG17e/nysavhmXRI1Y9tgCrM4GMN88w2hNxdGyPyus+ZVIuxPQqm+2DG23gbalSOUxv6mcG0bd4mHpEjOYtY8IrBOabre4BDKtESag=
+	t=1780827010; cv=none; b=YHxsSyBCNm5ZAbMbKggy1eP3JM7VL9XsrI7fhYd9A66wIIQ/6IDSiypWxcFbwtD6ISAyLchtfefUgD9qxilP4Y+r+VHQecI78vKlC66NcK5aWpYvtCPi13XNcJzl+SgQPlrNjdaW3pINM0tPyQBqnCHQh3UMmVN/e41h1hSvZs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827006; c=relaxed/simple;
-	bh=ootf0kiWqqXrGNUydNOKtdvCoXUUsiwJXng6VVKq4HA=;
+	s=arc-20240116; t=1780827010; c=relaxed/simple;
+	bh=lYShQ24XEsndKmCLGqu+2p7LV6bbKjSyZP23grdlBS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aPvvZQ7EYBVEWfcN/2Diu3y3q7OVa7peQC9L1Rnpmux9FZqvwJSa+ASPb98wtxFpuBNcfbmp7M85sOPh8306/28icxeftKBt81NUPQrk/q4ADVuv2UXGfqsBb6I87p0Ybhe26YwSWDfQZYbYeaj04IC072aZVeUQ5oC11LAjr8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGrnvg3X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qMdqyZAQBoADlLF+S5dAOAP8l9Jr4Ijm/bo032xKt82f2ezRNAUToKin0ybqdd9hmN7I7tq5HXGIOLwzDQJGVlMDupVkDOPTFB+A8HwuzWAhHOuU+GyxHRRoEPUNnA0mbbBbHl5YXaBCgvYwZtYlk46THBehDKS1KNkGr3pLEYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdIGc7+X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGrnvg3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090B61F00893;
-	Sun,  7 Jun 2026 10:10:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdIGc7+X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0131F00893;
+	Sun,  7 Jun 2026 10:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827004;
-	bh=jzsQECDsEj2vbNyPaqL9D8j+SFr4YDOHQtNu2FC0/J0=;
+	s=korg; t=1780827008;
+	bh=NHWDb1ufnpeTKvMqADv4oS3ZJc03IjL3l3W9yotcJU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UGrnvg3XmBQk6IsjvxrkXrwXzaXd4nZi7XcmEwX/bAs2KFhDrfPgzar3Risb5hxaA
-	 BKdPQIAgX5n3F9XEl4sOjxVVBvUb8C/x0fS+/i7iF1dZnO40JxtBnAE752WqbD4WCf
-	 U+qYc9oaQw2KD2DKn7jBE+rg5sQa4Ww0Xmvw2BBc=
+	b=WdIGc7+X7J7n6BWuutR3fkII0g4gDonPlhUGzCieLfWmyYYsRrneNvGPTMcdV9/1a
+	 w7nuJQ2cqgAq3nGEN6jlvtBXjL5kH8jHTB9FAIDsQuiKh+Yn8FXdh+l1i5LT4Bff/Q
+	 2me9kFLDKenq6qhf+CdUmjlCGY3yilzrZg6k+DJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Danielle Ratson <danieller@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
+	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 054/332] ethtool: cmis: validate start_cmd_payload_size from module
-Date: Sun,  7 Jun 2026 11:57:03 +0200
-Message-ID: <20260607095730.111843024@linuxfoundation.org>
+Subject: [PATCH 6.12 014/307] arm64: debug: call step handlers statically
+Date: Sun,  7 Jun 2026 11:56:51 +0200
+Message-ID: <20260607095728.151344274@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,98 +50,212 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
 
-[ Upstream commit 12c2496a71f82f63617971ca9b730dffa05cf58b ]
+[ Upstream commit 403b48aad5b3e857b8c2576ce6a421f3d23dd6a6 ]
 
-The CMIS firmware update code reads start_cmd_payload_size from
-the module's FW Management Features CDB reply and uses it directly
-as the byte count for memcpy. The destination buffer is 112 bytes
-(ETHTOOL_CMIS_CDB_LPL_MAX_PL_LENGTH - 8). So a malicious
-module (or corrupted response) can cause a OOB write later on in
-cmis_fw_update_start_download().
+Software stepping checks for the correct handler by iterating over a list
+of dynamically registered handlers and calling all of them until one
+handles the exception.
 
-Let's error out. If modules that expect longer LPL writes actually
-exist we should revisit.
+This is the only generic way to handle software stepping handlers in arm64
+as the exception does not provide an immediate that could be checked,
+contrary to software breakpoints.
 
-struct cmis_cdb_start_fw_download_pl's definition has to move,
-no change there.
+However, the registration mechanism is not exported and has only
+two current users : the KGDB stepping handler, and the uprobe single step
+handler.
+Given that one comes from user mode and the other from kernel mode, call
+the appropriate one by checking the source EL of the exception.
+Add a stand-in that returns DBG_HOOK_ERROR when the configuration
+options are not enabled.
 
-Fixes: c4f78134d45c ("ethtool: cmis_fw_update: add a layer for supporting firmware update using CDB")
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Danielle Ratson <danieller@nvidia.com>
-Link: https://patch.msgid.link/20260522231312.1710836-9-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Remove `arch_init_uprobes()` as it is not useful anymore and is
+specific to arm64.
+
+Unify the naming of the handler to XXX_single_step_handler(), making it
+clear they are related.
+
+Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Tested-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
+Reviewed-by: Will Deacon <will@kernel.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/20250707114109.35672-5-ada.coupriediaz@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/cmis_fw_update.c | 36 ++++++++++++++++++++++--------------
- 1 file changed, 22 insertions(+), 14 deletions(-)
+ arch/arm64/include/asm/kgdb.h      |  9 +++++++++
+ arch/arm64/include/asm/uprobes.h   |  9 +++++++++
+ arch/arm64/kernel/debug-monitors.c | 25 ++++++-------------------
+ arch/arm64/kernel/kgdb.c           | 17 +++--------------
+ arch/arm64/kernel/probes/uprobes.c | 15 +--------------
+ 5 files changed, 28 insertions(+), 47 deletions(-)
 
-diff --git a/net/ethtool/cmis_fw_update.c b/net/ethtool/cmis_fw_update.c
-index df5f344209c47b..16190c97e1f78c 100644
---- a/net/ethtool/cmis_fw_update.c
-+++ b/net/ethtool/cmis_fw_update.c
-@@ -44,6 +44,20 @@ enum cmis_cdb_fw_write_mechanism {
- 	CMIS_CDB_FW_WRITE_MECHANISM_BOTH	= 0x11,
+diff --git a/arch/arm64/include/asm/kgdb.h b/arch/arm64/include/asm/kgdb.h
+index 82a76b2102fb61..3184f5d1e3ae49 100644
+--- a/arch/arm64/include/asm/kgdb.h
++++ b/arch/arm64/include/asm/kgdb.h
+@@ -26,6 +26,15 @@ extern int kgdb_fault_expected;
+ 
+ int kgdb_brk_handler(struct pt_regs *regs, unsigned long esr);
+ int kgdb_compiled_brk_handler(struct pt_regs *regs, unsigned long esr);
++#ifdef CONFIG_KGDB
++int kgdb_single_step_handler(struct pt_regs *regs, unsigned long esr);
++#else
++static inline int kgdb_single_step_handler(struct pt_regs *regs,
++	unsigned long esr)
++{
++	return DBG_HOOK_ERROR;
++}
++#endif
+ 
+ #endif /* !__ASSEMBLY__ */
+ 
+diff --git a/arch/arm64/include/asm/uprobes.h b/arch/arm64/include/asm/uprobes.h
+index 3659a79a9f325f..89bfb0213a500c 100644
+--- a/arch/arm64/include/asm/uprobes.h
++++ b/arch/arm64/include/asm/uprobes.h
+@@ -29,5 +29,14 @@ struct arch_uprobe {
  };
  
-+/* See section 9.7.2 "CMD 0101h: Start Firmware Download" in CMIS standard
-+ * revision 5.2.
-+ * struct cmis_cdb_start_fw_download_pl is a structured layout of the
-+ * flat array, ethtool_cmis_cdb_request::payload.
-+ */
-+struct cmis_cdb_start_fw_download_pl {
-+	__struct_group(cmis_cdb_start_fw_download_pl_h, head, /* no attrs */,
-+			__be32	image_size;
-+			__be32	resv1;
-+	);
-+	u8 vendor_data[ETHTOOL_CMIS_CDB_LPL_MAX_PL_LENGTH -
-+		sizeof(struct cmis_cdb_start_fw_download_pl_h)];
-+};
-+
- static int
- cmis_fw_update_fw_mng_features_get(struct ethtool_cmis_cdb *cdb,
- 				   struct net_device *dev,
-@@ -86,6 +100,14 @@ cmis_fw_update_fw_mng_features_get(struct ethtool_cmis_cdb *cdb,
- 	 */
- 	cdb->read_write_len_ext = rpl->read_write_len_ext;
- 	fw_mng->start_cmd_payload_size = rpl->start_cmd_payload_size;
-+	if (fw_mng->start_cmd_payload_size >
-+	    sizeof_field(struct cmis_cdb_start_fw_download_pl, vendor_data)) {
-+		ethnl_module_fw_flash_ntf_err(dev, ntf_params,
-+					      "Start cmd payload size exceeds max LPL payload",
-+					      NULL);
-+		return -EINVAL;
-+	}
-+
- 	fw_mng->write_mechanism =
- 		rpl->write_mechanism == CMIS_CDB_FW_WRITE_MECHANISM_LPL ?
- 		CMIS_CDB_FW_WRITE_MECHANISM_LPL :
-@@ -97,20 +119,6 @@ cmis_fw_update_fw_mng_features_get(struct ethtool_cmis_cdb *cdb,
- 	return 0;
+ int uprobe_brk_handler(struct pt_regs *regs, unsigned long esr);
++#ifdef CONFIG_UPROBES
++int uprobe_single_step_handler(struct pt_regs *regs, unsigned long esr);
++#else
++static inline int uprobe_single_step_handler(struct pt_regs *regs,
++	unsigned long esr)
++{
++	return DBG_HOOK_ERROR;
++}
++#endif
+ 
+ #endif
+diff --git a/arch/arm64/kernel/debug-monitors.c b/arch/arm64/kernel/debug-monitors.c
+index 5e892448030005..f929b107840de6 100644
+--- a/arch/arm64/kernel/debug-monitors.c
++++ b/arch/arm64/kernel/debug-monitors.c
+@@ -200,30 +200,17 @@ void unregister_kernel_step_hook(struct step_hook *hook)
  }
  
--/* See section 9.7.2 "CMD 0101h: Start Firmware Download" in CMIS standard
-- * revision 5.2.
-- * struct cmis_cdb_start_fw_download_pl is a structured layout of the
-- * flat array, ethtool_cmis_cdb_request::payload.
-- */
--struct cmis_cdb_start_fw_download_pl {
--	__struct_group(cmis_cdb_start_fw_download_pl_h, head, /* no attrs */,
--			__be32	image_size;
--			__be32	resv1;
--	);
--	u8 vendor_data[ETHTOOL_CMIS_CDB_LPL_MAX_PL_LENGTH -
--		sizeof(struct cmis_cdb_start_fw_download_pl_h)];
+ /*
+- * Call registered single step handlers
++ * Call single step handlers
+  * There is no Syndrome info to check for determining the handler.
+- * So we call all the registered handlers, until the right handler is
+- * found which returns zero.
++ * However, there is only one possible handler for user and kernel modes, so
++ * check and call the appropriate one.
+  */
+ static int call_step_hook(struct pt_regs *regs, unsigned long esr)
+ {
+-	struct step_hook *hook;
+-	struct list_head *list;
+-	int retval = DBG_HOOK_ERROR;
++	if (user_mode(regs))
++		return uprobe_single_step_handler(regs, esr);
+ 
+-	list = user_mode(regs) ? &user_step_hook : &kernel_step_hook;
+-
+-	/*
+-	 * Since single-step exception disables interrupt, this function is
+-	 * entirely not preemptible, and we can use rcu list safely here.
+-	 */
+-	list_for_each_entry_rcu(hook, list, node)	{
+-		retval = hook->fn(regs, esr);
+-		if (retval == DBG_HOOK_HANDLED)
+-			break;
+-	}
+-
+-	return retval;
++	return kgdb_single_step_handler(regs, esr);
+ }
+ NOKPROBE_SYMBOL(call_step_hook);
+ 
+diff --git a/arch/arm64/kernel/kgdb.c b/arch/arm64/kernel/kgdb.c
+index e3c9e6e11a318c..f8eaf6084c3d5a 100644
+--- a/arch/arm64/kernel/kgdb.c
++++ b/arch/arm64/kernel/kgdb.c
+@@ -250,7 +250,7 @@ int kgdb_compiled_brk_handler(struct pt_regs *regs, unsigned long esr)
+ }
+ NOKPROBE_SYMBOL(kgdb_compiled_brk_handler);
+ 
+-static int kgdb_step_brk_fn(struct pt_regs *regs, unsigned long esr)
++int kgdb_single_step_handler(struct pt_regs *regs, unsigned long esr)
+ {
+ 	if (!kgdb_single_step)
+ 		return DBG_HOOK_ERROR;
+@@ -258,11 +258,7 @@ static int kgdb_step_brk_fn(struct pt_regs *regs, unsigned long esr)
+ 	kgdb_handle_exception(0, SIGTRAP, 0, regs);
+ 	return DBG_HOOK_HANDLED;
+ }
+-NOKPROBE_SYMBOL(kgdb_step_brk_fn);
+-
+-static struct step_hook kgdb_step_hook = {
+-	.fn		= kgdb_step_brk_fn
+-};
++NOKPROBE_SYMBOL(kgdb_single_step_handler);
+ 
+ static int __kgdb_notify(struct die_args *args, unsigned long cmd)
+ {
+@@ -301,13 +297,7 @@ static struct notifier_block kgdb_notifier = {
+  */
+ int kgdb_arch_init(void)
+ {
+-	int ret = register_die_notifier(&kgdb_notifier);
+-
+-	if (ret != 0)
+-		return ret;
+-
+-	register_kernel_step_hook(&kgdb_step_hook);
+-	return 0;
++	return register_die_notifier(&kgdb_notifier);
+ }
+ 
+ /*
+@@ -317,7 +307,6 @@ int kgdb_arch_init(void)
+  */
+ void kgdb_arch_exit(void)
+ {
+-	unregister_kernel_step_hook(&kgdb_step_hook);
+ 	unregister_die_notifier(&kgdb_notifier);
+ }
+ 
+diff --git a/arch/arm64/kernel/probes/uprobes.c b/arch/arm64/kernel/probes/uprobes.c
+index fc1bd19c827e6f..6ae4396577d4a6 100644
+--- a/arch/arm64/kernel/probes/uprobes.c
++++ b/arch/arm64/kernel/probes/uprobes.c
+@@ -174,7 +174,7 @@ int uprobe_brk_handler(struct pt_regs *regs,
+ 	return DBG_HOOK_ERROR;
+ }
+ 
+-static int uprobe_single_step_handler(struct pt_regs *regs,
++int uprobe_single_step_handler(struct pt_regs *regs,
+ 				      unsigned long esr)
+ {
+ 	struct uprobe_task *utask = current->utask;
+@@ -186,16 +186,3 @@ static int uprobe_single_step_handler(struct pt_regs *regs,
+ 	return DBG_HOOK_ERROR;
+ }
+ 
+-/* uprobe single step handler hook */
+-static struct step_hook uprobes_step_hook = {
+-	.fn = uprobe_single_step_handler,
 -};
 -
- static int
- cmis_fw_update_start_download(struct ethtool_cmis_cdb *cdb,
- 			      struct ethtool_cmis_fw_update_params *fw_update,
+-static int __init arch_init_uprobes(void)
+-{
+-	register_user_step_hook(&uprobes_step_hook);
+-
+-	return 0;
+-}
+-
+-device_initcall(arch_init_uprobes);
 -- 
 2.53.0
 
