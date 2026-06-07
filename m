@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DEB13DBA0;
-	Sun,  7 Jun 2026 10:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5CD13DBA0;
+	Sun,  7 Jun 2026 10:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828037; cv=none; b=dGNka7SKsSMnxfEmFMt63sGhQI2X2upvC8KULNyi8y4EOm7JHgjyghkjRgjxvhsQv0O+sS7J6dUUuFggSHA7EBAwe0pVjqZm8yPFNLGJg3ESx9EQ0rR0MfyfMbwuXR6erppMmPBLpybdwDLPxvWlIxjKqGrnMOCPe56ij7OuIRw=
+	t=1780828041; cv=none; b=M1BElnQvzEVfzqb4LvAQ4m7nlwYTwPxPUjuQkf0LkRPQGPlt7uznDYVGAF64DTLu71wVsMYXRhV6cs1dsXTuLmoCuDtyTTeWQT3/QyNqlXUf8QJkW3VRQ0oM0T0p+v5PeXPFFpxO8mMvoHehIcMBg1ioNUytEkwFI9KR0Mi5ji4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828037; c=relaxed/simple;
-	bh=5VQ90IS7+seK/qLkTmXPd2outVTrjL6LkUSZZue3/nE=;
+	s=arc-20240116; t=1780828041; c=relaxed/simple;
+	bh=w6yRxOKhGBcbaHnLUXkIgnORw7rFFzV/69F50K2TYl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RliwAhhhXlR8PUKbiu/hheu5ToRjmBRrVKt1xh9BBo2G5XksJCw5rgV931ZJOGUShkezbCRwPUYWwqOh0uTRwWNCXdgMhnhYhEUxzTClHTna4bSv/n7VdwT6XKxo0bzy9tHL8a851D5o/BZ0pG1O7UvnpXrRwLEHZXpk+1qhuNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RioDZUM2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KKrso8vBOgvwSXaEF9LuhrYt4iOTkCoVMf4ie8QAYtl/LchKeWUOn9MxaL6wfzx2ChMOZZcUqmFVwuG5coY4/LrUSZEvwtKAskwSnN/QsLP/flKVoOHoymCX+RMe5hQ3MjFfCYVqUexfOZ764GNH++WidXVoDmDKXDZuPeaUFKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWeDKFW5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RioDZUM2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17EBB1F00893;
-	Sun,  7 Jun 2026 10:27:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWeDKFW5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D4531F00893;
+	Sun,  7 Jun 2026 10:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828036;
-	bh=MMTD3b8S7jQkyTensj+AGnbcsXvUUO3GE+Xsk8iU02U=;
+	s=korg; t=1780828040;
+	bh=YkhN06lKk7Ms5Q8DAU4nUv06mf5mTx0AmFaQWWjljx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RioDZUM2IJq6odvLkb3B1Ni/oY618VbclsZZhBT07vG1H2ZcR3RfJtMxisRmDhlqf
-	 ykHaN0whdhMxEsdBlqL+lQAe7n+k94bUzW4jOG+szC5xQT2f55Yn3qiNcoVN3D6SSY
-	 IMKr+gh1LBrmJ/W/DmfEF3F8zomdlbQVWUZNwtZw=
+	b=eWeDKFW5xp9gWgeuhSZ4zZ8vkupsusA/nuqFaj4lZ2qFdZixqkq6FRJ2wfioJ7/SA
+	 VyMdJjDbq67FVEoGLwcoq8Px7y2SS2qh2SrZTjxb0umXKtYa3DzwVKLgRYlIrXhUPn
+	 H3++y5jTADzx7ltA5nUqBFdMXZpWS7EetGVOW47w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siwei Zhang <oss@fourdim.xyz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.0 146/332] Bluetooth: L2CAP: use chan timer to close channels in cleanup_listen()
-Date: Sun,  7 Jun 2026 11:58:35 +0200
-Message-ID: <20260607095733.458616287@linuxfoundation.org>
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 106/307] batman-adv: tt: fix TOCTOU race for reported vlans
+Date: Sun,  7 Jun 2026 11:58:23 +0200
+Message-ID: <20260607095731.678202715@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,73 +47,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Siwei Zhang <oss@fourdim.xyz>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit 8c8e620467a7b51562dbcefbd1f09f288d7d710d upstream.
+commit 94d27005016be15ffc638b2ecbc4d58805ad7b48 upstream.
 
-l2cap_chan_close() removes the channel from conn->chan_l, which
-must be done under conn->lock.  cleanup_listen() runs under the
-parent sk_lock, so acquiring conn->lock would invert the
-established conn->lock -> chan->lock -> sk_lock order.
+The local TT based TVLV is generated by first checking the number of VLANs
+which have at least one TT entry. A new buffer with the correct size for
+the VLANs is then allocated. Only then, the list of VLANs s used to fill
+the VLAN entries in the buffer. During this time, the meshif_vlan_list_lock
+is held. But the actual number of TT entries of each VLAN can still
+increase during this time - just not the number of VLANs in the list.
 
-Instead of calling l2cap_chan_close() directly, schedule
-l2cap_chan_timeout with delay 0 to close the channel
-asynchronously.  The timeout handler already acquires conn->lock
-and chan->lock in the correct order.
+But the prefilter used in the buffer size calculation might still cause an
+increase of the number of VLANs which need to be stored. Simply because a
+VLAN might now suddenly have at least one entry when it had none in the
+pre-alloc check - and then needs to occupy space which was not allocated.
 
-The timer is only armed when chan->conn is still set: if it is
-already NULL, l2cap_conn_del() has already processed this channel
-(l2cap_chan_del + l2cap_sock_teardown_cb + l2cap_sock_close_cb),
-so there is nothing left to do.  If l2cap_conn_del() races in
-after the timer is armed, __clear_chan_timer() inside
-l2cap_chan_del() cancels it; if the timer has already fired, the
-handler returns harmlessly because chan->conn was cleared.
+It is better to overestimate the buffer size at the beginning and then fill
+the buffer only with the VLANs which are not empty.
 
-Fixes: 3df91ea20e74 ("Bluetooth: Revert to mutexes from RCU list")
-Cc: <stable@vger.kernel.org> # 0b58004: Bluetooth: fix UAF in l2cap_sock_cleanup_listen() vs l2cap_conn_del()
-Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@kernel.org
+Fixes: 16116dac2339 ("batman-adv: prevent TT request storms by not sending inconsistent TT TLVLs")
+[ Context, drop flex array dependency ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_sock.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ net/batman-adv/translation-table.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1499,6 +1499,10 @@ static void l2cap_sock_cleanup_listen(st
- 	 * pin it (hold_unless_zero() additionally skips a chan already past
- 	 * its last reference).  We then drop the sk lock before taking
- 	 * chan->lock, so sk and chan locks are never held together.
-+	 *
-+	 * Since we cannot call l2cap_chan_close() without conn->lock,
-+	 * schedule l2cap_chan_timeout to close the channel; it already
-+	 * acquires conn->lock -> chan->lock in the correct order.
- 	 */
- 	while ((sk = bt_accept_dequeue(parent, NULL))) {
- 		struct l2cap_chan *chan;
-@@ -1516,14 +1520,12 @@ static void l2cap_sock_cleanup_listen(st
- 		       state_to_string(chan->state));
+diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+index 8ffebece03c529..d4cebe122e528a 100644
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -934,11 +934,8 @@ batadv_tt_prepare_tvlv_local_data(struct batadv_priv *bat_priv,
+ 	spin_lock_bh(&bat_priv->softif_vlan_list_lock);
+ 	hlist_for_each_entry(vlan, &bat_priv->softif_vlan_list, list) {
+ 		vlan_entries = atomic_read(&vlan->tt.num_entries);
+-		if (vlan_entries < 1)
+-			continue;
+-
+-		num_vlan++;
+ 		total_entries += vlan_entries;
++		num_vlan++;
+ 	}
  
- 		l2cap_chan_lock(chan);
--		__clear_chan_timer(chan);
--		l2cap_chan_close(chan, ECONNRESET);
--		/* l2cap_conn_del() may already have killed this socket
--		 * (it sets SOCK_DEAD); skip the duplicate to avoid a
--		 * double sock_put()/l2cap_chan_put().
-+		/* Since we cannot call l2cap_chan_close() without
-+		 * conn->lock, schedule its timer to trigger the close
-+		 * and cleanup of this channel.
- 		 */
--		if (!sock_flag(sk, SOCK_DEAD))
--			l2cap_sock_kill(sk);
-+		if (chan->conn)
-+			__set_chan_timer(chan, 0);
- 		l2cap_chan_unlock(chan);
+ 	change_offset = sizeof(**tt_data);
+@@ -964,6 +961,7 @@ batadv_tt_prepare_tvlv_local_data(struct batadv_priv *bat_priv,
+ 	(*tt_data)->num_vlan = htons(num_vlan);
  
- 		l2cap_chan_put(chan);
+ 	tt_vlan = (struct batadv_tvlv_tt_vlan_data *)(*tt_data + 1);
++	num_vlan = 0;
+ 	hlist_for_each_entry(vlan, &bat_priv->softif_vlan_list, list) {
+ 		vlan_entries = atomic_read(&vlan->tt.num_entries);
+ 		if (vlan_entries < 1)
+@@ -974,8 +972,16 @@ batadv_tt_prepare_tvlv_local_data(struct batadv_priv *bat_priv,
+ 		tt_vlan->reserved = 0;
+ 
+ 		tt_vlan++;
++		num_vlan++;
+ 	}
+ 
++	/* recalculate in case number of VLANs reduced */
++	change_offset = sizeof(**tt_data);
++	change_offset += num_vlan * sizeof(*tt_vlan);
++	tvlv_len = *tt_len + change_offset;
++
++	(*tt_data)->num_vlan = htons(num_vlan);
++
+ 	tt_change_ptr = (u8 *)*tt_data + change_offset;
+ 	*tt_change = (struct batadv_tvlv_tt_change *)tt_change_ptr;
+ 
+-- 
+2.53.0
+
 
 
