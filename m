@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9834071DD;
-	Sun,  7 Jun 2026 10:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA834071DD;
+	Sun,  7 Jun 2026 10:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829554; cv=none; b=EQDFRdwC1Z9UZ/+3CyvWlzQ4EMpwyduPs4m6RkjGvowvCdx3yI2Q0F1WboeBsmai9jAFl5jd2D5exksRaP9wP3cMdmCdw26KnvQ1daeCcO/2A069V6BhqR/++Eot2WcriVP15M6X2aJ4pf5OcPGwXvvA20HjTgmt/nFcqbpBCcA=
+	t=1780829557; cv=none; b=ZpGjh96To16nTingvZm+DypQMwX1y0pSAgXpKLx1R7gKImuCsPl6jas+Ts0tQISrdh1lACqjkh33DrNsye5yiv7F2xymCXi+8jnE4oDeFKxp5TvW16kwT1Bf1ReHti6iCHiSoOWQ4atgr7/73fKg1cSD6RiaFQnBtJidE9tpZAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829554; c=relaxed/simple;
-	bh=81uKm/hS55y6qE2Fxsqy1O4w/k3/B/jcBjyjqDd0cu8=;
+	s=arc-20240116; t=1780829557; c=relaxed/simple;
+	bh=/jaIVMENPGemub6csbh6eUxHNyughOsplTlYg0QFzWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fG6Zbj/H6W44UVGIp26Lev8XThe96S1p6vt7ZlajFOeLIGBm0k752NZCWxxjFqYk08L09pzD7ZEPYsQvvWIvsvMXaJOsyrmHD5q0sws4DDqOBI325fGVYPnvYmhtkBZ1afd6tnkxjFC0w6dY5jr8I4uM7WlM2Z03CUoPrHbhd0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/LZsetG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=TDX+19/X/YfhwYKAeuscWJAMyzK3glSXn5ZbFkK1s84JJ3ZNFfgDbUHEM9ZInCJjeEg1iOJfqL6Mkxlax/aAd0VeJQrKonfjwr0zdTurS9mdTy263TgamSwW/m54xhrqH6OGTUU3473s3pREU8itwgMDVf9kZDBeteUBARD4Z2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dytO7+Ct; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/LZsetG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D3B1F00893;
-	Sun,  7 Jun 2026 10:52:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dytO7+Ct"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86DC51F00893;
+	Sun,  7 Jun 2026 10:52:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829552;
-	bh=B9TxSx+E/dWd3hSMK8jlwCaan0YH+Nrz2KJyM1uCFxA=;
+	s=korg; t=1780829556;
+	bh=BQQ7rehku++7n70RJrYowjakR6IiUWhf9T7oC7pToEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f/LZsetGMBA/AeG3g+cnWwvqFsWKyMjC4p1BwXWDqa/sHtOrDddVgXgDlXMaRZpLL
-	 wD8BC+i7bi/o6iX9/HgTNZnJIpUQ+lIBvyiUeA1tSCgLtkI/yN3vYDsxWjNlJdK3Ky
-	 t7+FVKyc205yxs139EyADI4aIjx00z96ruOHtkEA=
+	b=dytO7+CtTd5B+Ds7bSh5G7VZhuLX3GzojFKUIHRINxdGUNhZg96Aj/0/rRe+7QEK+
+	 QENWgktBX0wxB6d4EhcmMN6embdSBv5Kq5rNoMG6ky+CuTqne0l1gRacp6Lbfw396P
+	 Nb9f14/5NwSsywq2tSJeMrO5wqCgS32VxID/NlB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Berkant Koc <me@berkoc.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Subject: [PATCH 7.0 289/332] drm/hyperv: validate VMBus packet size in receive callback
-Date: Sun,  7 Jun 2026 12:00:58 +0200
-Message-ID: <20260607095738.663082217@linuxfoundation.org>
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Grzelak?= <michal.grzelak@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 6.18 258/315] drm/i915/psr: Block DC states on vblank enable when Panel Replay supported
+Date: Sun,  7 Jun 2026 12:00:45 +0200
+Message-ID: <20260607095737.037255332@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,193 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Berkant Koc <me@berkoc.com>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-commit 7f87763f47a3c22fb50265a00619ef10f2394b18 upstream.
+commit 8bb9093df555f9e89fdbe1405118b11384c03e04 upstream.
 
-hyperv_receive_sub() reads msg->vid_hdr.type and dispatches into one
-of four message-type branches without knowing how many bytes the host
-wrote into hv->recv_buf. The completion path then runs
-memcpy(hv->init_buf, msg, VMBUS_MAX_PACKET_SIZE), so the consumer that
-wakes on wait_for_completion_timeout() can read up to 16 KiB of
-residue from a prior message as if it were the response payload.
+Currently we are blocking DC states only when Panel Replay is enabled on
+vblank enable. It may happen that Panel Replay is getting enabled when
+vblank is already enabled. Fix this by blocking DC states always if Panel
+Replay is supported.
 
-Pass bytes_recvd into hyperv_receive_sub() and reject any packet that
-does not cover the pipe + synthvid header. A single switch on
-msg->vid_hdr.type then computes the type-specific payload size: the
-three completion-driving types (SYNTHVID_VERSION_RESPONSE,
-SYNTHVID_RESOLUTION_RESPONSE, SYNTHVID_VRAM_LOCATION_ACK) fall through
-to a shared exit that requires that size before memcpy/complete, while
-SYNTHVID_FEATURE_CHANGE validates its own payload and returns before
-reading is_dirt_needed. Unknown types are dropped.
+While at it take care of possible dual eDP case by looping all encoders
+supporting PSR.
 
-SYNTHVID_RESOLUTION_RESPONSE is variable length: the host fills
-resolution_count entries, not the full SYNTHVID_MAX_RESOLUTION_COUNT
-array. Validate the fixed prefix first so resolution_count can be
-read, bound it against the array, then require only the count-sized
-array, so the shorter responses the host actually sends are accepted.
-
-Only run the sub-handler when vmbus_recvpacket() returned success. The
-memcpy length is bytes_recvd, which is bounded by VMBUS_MAX_PACKET_SIZE
-only on a successful receive; on -ENOBUFS vmbus_recvpacket() instead
-reports the required length, which can exceed hv->recv_buf, so copying
-bytes_recvd would read and write past the 16 KiB buffers. Gating on the
-success return keeps the copy bounded. The nonzero-return path is itself
-a malformed-message case and is now logged rather than silently skipped;
-channel recovery is not attempted.
-
-Rejected packets are reported via drm_err_ratelimited() rather than
-silently dropped, matching the CoCo-hardened pattern in
-hv_kvp_onchannelcallback().
-
-Fixes: 76c56a5affeb ("drm/hyperv: Add DRM driver for hyperv synthetic video device")
-Cc: stable@vger.kernel.org # 5.14+
-Signed-off-by: Berkant Koc <me@berkoc.com>
-Assisted-by: Claude:claude-opus-4-7 berkoc-pipeline
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Link: https://patch.msgid.link/8200dbc199c7a9b75ac7e8af6c748d2189b5ebd5.1779542874.git.me@berkoc.com
+Fixes: 0c427ac78a1d ("drm/i915/psr: Add interface to notify PSR of vblank enable/disable")
+Cc: <stable@vger.kernel.org> # v6.16+
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Michał Grzelak <michal.grzelak@intel.com>
+Link: https://patch.msgid.link/20260520104944.239797-1-jouni.hogander@intel.com
+(cherry picked from commit eb5911f990554f7ce947dd53df00c114362e4465)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/hyperv/hyperv_drm_proto.c |  100 ++++++++++++++++++++++++++----
- 1 file changed, 87 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/i915/display/intel_psr.c |   19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
-+++ b/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
-@@ -420,30 +420,92 @@ static int hyperv_get_supported_resoluti
- 	return 0;
- }
- 
--static void hyperv_receive_sub(struct hv_device *hdev)
-+static void hyperv_receive_sub(struct hv_device *hdev, u32 bytes_recvd)
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -3982,32 +3982,33 @@ void intel_psr_notify_vblank_enable_disa
+ 					    bool enable)
  {
- 	struct hyperv_drm_device *hv = hv_get_drvdata(hdev);
- 	struct synthvid_msg *msg;
-+	size_t hdr_size;
-+	size_t need;
+ 	struct intel_encoder *encoder;
++	bool block_dc_states = false;
  
- 	if (!hv)
- 		return;
+ 	for_each_intel_encoder_with_psr(display->drm, encoder) {
+ 		struct intel_dp *intel_dp = enc_to_intel_dp(encoder);
  
--	msg = (struct synthvid_msg *)hv->recv_buf;
--
--	/* Complete the wait event */
--	if (msg->vid_hdr.type == SYNTHVID_VERSION_RESPONSE ||
--	    msg->vid_hdr.type == SYNTHVID_RESOLUTION_RESPONSE ||
--	    msg->vid_hdr.type == SYNTHVID_VRAM_LOCATION_ACK) {
--		memcpy(hv->init_buf, msg, VMBUS_MAX_PACKET_SIZE);
--		complete(&hv->wait);
-+	hdr_size = sizeof(struct pipe_msg_hdr) +
-+		   sizeof(struct synthvid_msg_hdr);
-+	if (bytes_recvd < hdr_size) {
-+		drm_err_ratelimited(&hv->dev,
-+				    "synthvid packet too small for header: %u\n",
-+				    bytes_recvd);
- 		return;
+ 		mutex_lock(&intel_dp->psr.lock);
+-		if (intel_dp->psr.panel_replay_enabled) {
+-			mutex_unlock(&intel_dp->psr.lock);
+-			break;
+-		}
++		if (CAN_PANEL_REPLAY(intel_dp))
++			block_dc_states = true;
+ 
+-		if (intel_dp->psr.enabled && intel_dp->psr.pkg_c_latency_used)
++		if (intel_dp->psr.enabled && !intel_dp->psr.panel_replay_enabled &&
++		    intel_dp->psr.pkg_c_latency_used)
+ 			intel_psr_apply_underrun_on_idle_wa_locked(intel_dp);
+ 
+ 		mutex_unlock(&intel_dp->psr.lock);
+-		return;
  	}
  
--	if (msg->vid_hdr.type == SYNTHVID_FEATURE_CHANGE) {
-+	msg = (struct synthvid_msg *)hv->recv_buf;
-+	need = hdr_size;
-+
-+	switch (msg->vid_hdr.type) {
-+	case SYNTHVID_VERSION_RESPONSE:
-+		need += sizeof(struct synthvid_version_resp);
-+		break;
-+	case SYNTHVID_RESOLUTION_RESPONSE:
-+		/*
-+		 * The resolution response is variable length: the host
-+		 * fills resolution_count entries, not the full
-+		 * SYNTHVID_MAX_RESOLUTION_COUNT array. Require the fixed
-+		 * prefix first so resolution_count can be read, then
-+		 * demand exactly the count-sized array.
-+		 */
-+		need += offsetof(struct synthvid_supported_resolution_resp,
-+				 supported_resolution);
-+		if (bytes_recvd < need)
-+			break;
-+		if (msg->resolution_resp.resolution_count >
-+		    SYNTHVID_MAX_RESOLUTION_COUNT) {
-+			drm_err_ratelimited(&hv->dev,
-+					    "synthvid resolution count too large: %u\n",
-+					    msg->resolution_resp.resolution_count);
-+			return;
-+		}
-+		need += msg->resolution_resp.resolution_count *
-+			sizeof(struct hvd_screen_info);
-+		break;
-+	case SYNTHVID_VRAM_LOCATION_ACK:
-+		need += sizeof(struct synthvid_vram_location_ack);
-+		break;
-+	case SYNTHVID_FEATURE_CHANGE:
-+		/*
-+		 * Not a completion-driving message: validate its own payload
-+		 * and consume it here rather than falling through to the
-+		 * memcpy/complete shared by the wait-event responses.
-+		 */
-+		if (bytes_recvd < need +
-+		    sizeof(struct synthvid_feature_change)) {
-+			drm_err_ratelimited(&hv->dev,
-+					    "synthvid feature change packet too small: %u\n",
-+					    bytes_recvd);
-+			return;
-+		}
- 		hv->dirt_needed = msg->feature_chg.is_dirt_needed;
- 		if (hv->dirt_needed)
- 			hyperv_hide_hw_ptr(hv->hdev);
-+		return;
-+	default:
-+		return;
-+	}
-+
-+	/*
-+	 * Shared completion path for the wait-event responses
-+	 * (VERSION_RESPONSE, RESOLUTION_RESPONSE, VRAM_LOCATION_ACK):
-+	 * require the type-specific payload before handing the buffer to
-+	 * the waiter.
-+	 */
-+	if (bytes_recvd < need) {
-+		drm_err_ratelimited(&hv->dev,
-+				    "synthvid packet too small for type %u: %u < %zu\n",
-+				    msg->vid_hdr.type, bytes_recvd, need);
-+		return;
- 	}
-+	memcpy(hv->init_buf, msg, bytes_recvd);
-+	complete(&hv->wait);
+ 	/*
+ 	 * NOTE: intel_display_power_set_target_dc_state is used
+-	 * only by PSR * code for DC3CO handling. DC3CO target
++	 * only by PSR code for DC3CO handling. DC3CO target
+ 	 * state is currently disabled in * PSR code. If DC3CO
+ 	 * is taken into use we need take that into account here
+ 	 * as well.
+ 	 */
+-	intel_display_power_set_target_dc_state(display, enable ? DC_STATE_DISABLE :
+-						DC_STATE_EN_UPTO_DC6);
++	if (block_dc_states)
++		intel_display_power_set_target_dc_state(display, enable ?
++							DC_STATE_DISABLE :
++							DC_STATE_EN_UPTO_DC6);
  }
  
- static void hyperv_receive(void *ctx)
-@@ -464,9 +526,21 @@ static void hyperv_receive(void *ctx)
- 		ret = vmbus_recvpacket(hdev->channel, recv_buf,
- 				       VMBUS_MAX_PACKET_SIZE,
- 				       &bytes_recvd, &req_id);
--		if (bytes_recvd > 0 &&
--		    recv_buf->pipe_hdr.type == PIPE_MSG_DATA)
--			hyperv_receive_sub(hdev);
-+		if (ret) {
-+			/*
-+			 * A nonzero return (e.g. -ENOBUFS for an oversized
-+			 * packet) is itself a malformed message: bytes_recvd
-+			 * then reports the required length rather than a copied
-+			 * payload, so it must not be forwarded to the
-+			 * sub-handler. Channel recovery is not attempted.
-+			 */
-+			drm_err_ratelimited(&hv->dev,
-+					    "vmbus_recvpacket failed: %d (need %u)\n",
-+					    ret, bytes_recvd);
-+		} else if (bytes_recvd > 0 &&
-+			   recv_buf->pipe_hdr.type == PIPE_MSG_DATA) {
-+			hyperv_receive_sub(hdev, bytes_recvd);
-+		}
- 	} while (bytes_recvd > 0 && ret == 0);
- }
- 
+ static void
 
 
