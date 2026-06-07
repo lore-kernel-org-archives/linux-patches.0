@@ -1,41 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C85CB3254B3;
-	Sun,  7 Jun 2026 10:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096591C5F27;
+	Sun,  7 Jun 2026 10:27:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828064; cv=none; b=QljfRvzk1Urz5ktxTd5HAcabem0X+Tqa1HLHhcKvEV56+Xik1hlUNm9nMJEQ10ky2My4stV+6yJhGxkotvIpvlMR/6sPFNa56jo/+GiQTY/E6JPIC5wC9btpCG6v0nv3Q5nH1+F4O0/jRe7rYCpMV2tdN6X6sZztAryJkha6xvk=
+	t=1780828068; cv=none; b=GrJkvtkhdEUyveVgh9g+ko4FEnwuAS6vmwS/GzWL92O7uQlvZeEGnsQzuk9PyKrY/+FrLbgkpj1qTv76fzYukelcdQe/2rE9Qsl1AVxan1esJ1484SjP2RcQCCe6lVtLu06+RM3Zee8Pv02s2Xpa0/B5INC14lJnUGYxW8YBDtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828064; c=relaxed/simple;
-	bh=Yp26iX1/eLfjEIGbf46CzIqbP8uwNqL1aAMMIylCuWQ=;
+	s=arc-20240116; t=1780828068; c=relaxed/simple;
+	bh=B3q5u0dRVFsDxUIW4XFGWCURrvBfNsgjQ6+4BYdfcOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kZba6f30h5MSMO1YobaHUlhYFy1X+lDra0HzVJx2XbrFGCejgO1bOD47UZFYPPioCHZHI5mkWc2ab+LnCY8wua+pAEo6GRZtme1YOijRKRJF71JCwA6DXoU77g3WuILnXL/txvoT4sr1v7PIaoZkjicZpVxXYd54yTpDDBIbaDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xZi9MTlW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UTfDM8VmkY1OQYAmJogxRPVYUWadMoP9osCVr+cWU3egcwkM4EuVdbPMDfso3l98b/i/qN5PWMSOavtmdv/4oJZtHm0jDzwloOCtZBlDHyVOZZ+45WSsZn+wDdvAsCTwwrinkgPIZ7x9qYnv8DCmqON9yShJDC3tPntW4DjIFAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yK48AjLH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xZi9MTlW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FE9F1F00893;
-	Sun,  7 Jun 2026 10:27:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yK48AjLH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC9FD1F00893;
+	Sun,  7 Jun 2026 10:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828062;
-	bh=zUvJlX8DvEiMi9rCsrq5n413n0LO0Pk8UL3YPADBBP4=;
+	s=korg; t=1780828066;
+	bh=GFV3nffR8RkHWvzKozNGBSCCVDePm/nKTxCbIqCNV2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xZi9MTlWSSZHTWslVhaG0kyuS7Tu/qGAymmaZqDv4DZkWMO1gl0zNpZ0QYrCZejpW
-	 OnOVn5etw472LFGMLUxQybg7cG8uQYukfQNz4QM+xmT6CF+U+PjolSaHGtAwcY9P2q
-	 HFRetWCrAP81AqLQqKI6AL2rfZEdjipQnD8pPqaQ=
+	b=yK48AjLHxctKCFRb4itL299MIV3lDHgPFVKzsleqLeep++45Q3XVOjbl0Dix6R67Q
+	 cwyChq8Pgy5wrCq/VE+RLDD7zV0AuDxhtj0ymObXyIP7pPta0/emRYJNPsb70+FZ+x
+	 H0QBsErLo4z/sZ5ELU+TFvM0jVJmrg6aP5RinY00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 108/307] batman-adv: bla: avoid double decrement of bla.num_requests
-Date: Sun,  7 Jun 2026 11:58:25 +0200
-Message-ID: <20260607095731.748775930@linuxfoundation.org>
+	Dev Jain <dev.jain@arm.com>,
+	Barry Song <baohua@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Harry Yoo <harry@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Rik van Riel <riel@surriel.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 125/315] mm/rmap: initialize nr_pages to 1 at loop start in try_to_unmap_one
+Date: Sun,  7 Jun 2026 11:58:32 +0200
+Message-ID: <20260607095732.216354352@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,236 +56,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Dev Jain <dev.jain@arm.com>
 
-commit 83ab69bd12b80f6ea169c8bea6977701b53a043d upstream.
+commit 3f8968e9cbf95d5d87d32218906cab0b9b9eddbe upstream.
 
-The bla.num_requests is increased when no request_sent was in progress. And
-it is decremented in various places (announcement was received, backbone is
-purged, periodic work). But the check if the request_sent is actually set
-to a specific state and the atomic_dec/_inc are not safe because they are
-not atomic (TOCTOU) and multiple such code portions can run concurrently.
+Initialize nr_pages to 1 at the start of each loop iteration, like
+folio_referenced_one() does.
 
-At the same time, it is necessary to modify request_sent (state) and
-bla.num_requests atomically. Otherwise batadv_bla_send_request() might set
-request_sent to 1 and is interrupted.  batadv_handle_announce() can then
-set request_sent back to 0 and decrement num_requests before
-batadv_bla_send_request() incremented it.
+Without this, nr_pages computed by a previous folio_unmap_pte_batch() call
+can be reused on a later iteration that does not run
+folio_unmap_pte_batch() again.
 
-The two operations must therefore be locked. And since state (request_sent)
-and wait_periods are only accessed inside this lock, they can be converted
-to simpler datatypes. And to avoid that the bla.num_requests is touched by
-a parallel running context with a valid backbone_gw reference after
-batadv_bla_purge_backbone_gw() ran, a third state "stopped" is required to
-correctly signal that a backbone_gw is in the state of being cleaned up.
+mmap a 64K large folio with MAP_ANONYMOUS | MAP_DROPPABLE, then call
+madvise(MADV_FREE), then make the last page device-exclusive via
+HMM_DMIRROR_EXCLUSIVE.
 
-Cc: stable@kernel.org
-Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Trigger node reclaim through sysfs.  Now, in try_to_unmap_one(), we will
+first clear the first 15 out of 16 entries mapping the lazyfree folio.
+This will set nr_pages to 15.  In the next pvmw walk, this nr_pages gets
+reused on a device-exclusive pte, thus potentially corrupting folio
+refcount/mapcount.
+
+At the moment, I have a userspace program which can make the kernel spit
+out a trace, but the blow up is in folio_referenced_one(), because there
+are existing bugs in the interaction between device-private and rmap
+(which too I am investigating).  I did a one liner kernel change to avoid
+going into folio_referenced_one(), and the kernel blows up at
+folio_remove_rmap_ptes in try_to_unmap_one which is what I wanted.
+
+Note that the bug is there not since file folio batching but lazyfree
+folio batching, since device-exclusive only works for anonymous folios.
+
+Userspace visible effect is simply kernel crashing somewhere due to
+refcount/mapcount corruption.
+
+Link: https://lore.kernel.org/20260518063656.3721056-1-dev.jain@arm.com
+Fixes: 354dffd29575 ("mm: support batched unmap for lazyfree large folios during reclamation")
+Signed-off-by: Dev Jain <dev.jain@arm.com>
+Acked-by: Barry Song <baohua@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Harry Yoo <harry@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bridge_loop_avoidance.c | 51 ++++++++++++++++++--------
- net/batman-adv/soft-interface.c        |  1 +
- net/batman-adv/types.h                 | 39 ++++++++++++++++----
- 3 files changed, 67 insertions(+), 24 deletions(-)
+ mm/rmap.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/batman-adv/bridge_loop_avoidance.c b/net/batman-adv/bridge_loop_avoidance.c
-index 17db4191ddb39e..15aeb07285e61f 100644
---- a/net/batman-adv/bridge_loop_avoidance.c
-+++ b/net/batman-adv/bridge_loop_avoidance.c
-@@ -516,8 +516,8 @@ batadv_bla_get_backbone_gw(struct batadv_priv *bat_priv, const u8 *orig,
- 	entry->crc = BATADV_BLA_CRC_INIT;
- 	entry->bat_priv = bat_priv;
- 	spin_lock_init(&entry->crc_lock);
--	atomic_set(&entry->request_sent, 0);
--	atomic_set(&entry->wait_periods, 0);
-+	entry->state = BATADV_BLA_BACKBONE_GW_SYNCED;
-+	entry->wait_periods = 0;
- 	ether_addr_copy(entry->orig, orig);
- 	INIT_WORK(&entry->report_work, batadv_bla_loopdetect_report);
- 	kref_init(&entry->refcount);
-@@ -546,9 +546,13 @@ batadv_bla_get_backbone_gw(struct batadv_priv *bat_priv, const u8 *orig,
- 		batadv_bla_send_announce(bat_priv, entry);
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -1918,6 +1918,8 @@ static bool try_to_unmap_one(struct foli
+ 	mmu_notifier_invalidate_range_start(&range);
  
- 		/* this will be decreased in the worker thread */
--		atomic_inc(&entry->request_sent);
--		atomic_set(&entry->wait_periods, BATADV_BLA_WAIT_PERIODS);
--		atomic_inc(&bat_priv->bla.num_requests);
-+		spin_lock_bh(&bat_priv->bla.num_requests_lock);
-+		if (entry->state == BATADV_BLA_BACKBONE_GW_SYNCED) {
-+			entry->state = BATADV_BLA_BACKBONE_GW_UNSYNCED;
-+			entry->wait_periods = BATADV_BLA_WAIT_PERIODS;
-+			atomic_inc(&bat_priv->bla.num_requests);
-+		}
-+		spin_unlock_bh(&bat_priv->bla.num_requests_lock);
- 	}
- 
- 	return entry;
-@@ -651,10 +655,12 @@ static void batadv_bla_send_request(struct batadv_bla_backbone_gw *backbone_gw)
- 			      backbone_gw->vid, BATADV_CLAIM_TYPE_REQUEST);
- 
- 	/* no local broadcasts should be sent or received, for now. */
--	if (!atomic_read(&backbone_gw->request_sent)) {
-+	spin_lock_bh(&backbone_gw->bat_priv->bla.num_requests_lock);
-+	if (backbone_gw->state == BATADV_BLA_BACKBONE_GW_SYNCED) {
-+		backbone_gw->state = BATADV_BLA_BACKBONE_GW_UNSYNCED;
- 		atomic_inc(&backbone_gw->bat_priv->bla.num_requests);
--		atomic_set(&backbone_gw->request_sent, 1);
- 	}
-+	spin_unlock_bh(&backbone_gw->bat_priv->bla.num_requests_lock);
- }
- 
- /**
-@@ -875,10 +881,12 @@ static bool batadv_handle_announce(struct batadv_priv *bat_priv, u8 *an_addr,
- 		/* if we have sent a request and the crc was OK,
- 		 * we can allow traffic again.
+ 	while (page_vma_mapped_walk(&pvmw)) {
++		nr_pages = 1;
++
+ 		/*
+ 		 * If the folio is in an mlock()d vma, we must not swap it out.
  		 */
--		if (atomic_read(&backbone_gw->request_sent)) {
-+		spin_lock_bh(&bat_priv->bla.num_requests_lock);
-+		if (backbone_gw->state == BATADV_BLA_BACKBONE_GW_UNSYNCED) {
-+			backbone_gw->state = BATADV_BLA_BACKBONE_GW_SYNCED;
- 			atomic_dec(&backbone_gw->bat_priv->bla.num_requests);
--			atomic_set(&backbone_gw->request_sent, 0);
- 		}
-+		spin_unlock_bh(&bat_priv->bla.num_requests_lock);
- 	}
- 
- 	batadv_backbone_gw_put(backbone_gw);
-@@ -1257,9 +1265,13 @@ static void batadv_bla_purge_backbone_gw(struct batadv_priv *bat_priv, int now)
- 				purged = true;
- 
- 				/* don't wait for the pending request anymore */
--				if (atomic_read(&backbone_gw->request_sent))
-+				spin_lock_bh(&bat_priv->bla.num_requests_lock);
-+				if (backbone_gw->state == BATADV_BLA_BACKBONE_GW_UNSYNCED)
- 					atomic_dec(&bat_priv->bla.num_requests);
- 
-+				backbone_gw->state = BATADV_BLA_BACKBONE_GW_STOPPED;
-+				spin_unlock_bh(&bat_priv->bla.num_requests_lock);
-+
- 				batadv_bla_del_backbone_claims(backbone_gw);
- 
- 				hlist_del_rcu(&backbone_gw->hash_entry);
-@@ -1510,7 +1522,7 @@ static void batadv_bla_periodic_work(struct work_struct *work)
- 				batadv_bla_send_loopdetect(bat_priv,
- 							   backbone_gw);
- 
--			/* request_sent is only set after creation to avoid
-+			/* state is only set to unsynced after creation to avoid
- 			 * problems when we are not yet known as backbone gw
- 			 * in the backbone.
- 			 *
-@@ -1519,14 +1531,21 @@ static void batadv_bla_periodic_work(struct work_struct *work)
- 			 * some grace time.
- 			 */
- 
--			if (atomic_read(&backbone_gw->request_sent) == 0)
--				continue;
-+			spin_lock_bh(&bat_priv->bla.num_requests_lock);
-+			if (backbone_gw->state != BATADV_BLA_BACKBONE_GW_UNSYNCED)
-+				goto unlock_next;
- 
--			if (!atomic_dec_and_test(&backbone_gw->wait_periods))
--				continue;
-+			if (backbone_gw->wait_periods > 0)
-+				backbone_gw->wait_periods--;
-+
-+			if (backbone_gw->wait_periods > 0)
-+				goto unlock_next;
- 
-+			backbone_gw->state = BATADV_BLA_BACKBONE_GW_SYNCED;
- 			atomic_dec(&backbone_gw->bat_priv->bla.num_requests);
--			atomic_set(&backbone_gw->request_sent, 0);
-+
-+unlock_next:
-+			spin_unlock_bh(&bat_priv->bla.num_requests_lock);
- 		}
- 		rcu_read_unlock();
- 	}
-diff --git a/net/batman-adv/soft-interface.c b/net/batman-adv/soft-interface.c
-index 2758aba47a2f25..f46064333f3343 100644
---- a/net/batman-adv/soft-interface.c
-+++ b/net/batman-adv/soft-interface.c
-@@ -787,6 +787,7 @@ static int batadv_softif_init_late(struct net_device *dev)
- 	atomic_set(&bat_priv->tt.ogm_append_cnt, 0);
- #ifdef CONFIG_BATMAN_ADV_BLA
- 	atomic_set(&bat_priv->bla.num_requests, 0);
-+	spin_lock_init(&bat_priv->bla.num_requests_lock);
- #endif
- 	atomic_set(&bat_priv->tp_num, 0);
- 
-diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
-index 0ccd55b251fa26..f703d266780d74 100644
---- a/net/batman-adv/types.h
-+++ b/net/batman-adv/types.h
-@@ -1091,6 +1091,12 @@ struct batadv_priv_bla {
- 	/** @num_requests: number of bla requests in flight */
- 	atomic_t num_requests;
- 
-+	/**
-+	 * @num_requests_lock: locks update num_requests +
-+	 * batadv_backbone_gw::state + batadv_backbone_gw::wait_periods update
-+	 */
-+	spinlock_t num_requests_lock;
-+
- 	/**
- 	 * @claim_hash: hash table containing mesh nodes this host has claimed
- 	 */
-@@ -1825,6 +1831,27 @@ struct batadv_priv {
- 
- #ifdef CONFIG_BATMAN_ADV_BLA
- 
-+enum batadv_bla_backbone_gw_state {
-+	/**
-+	 * @BATADV_BLA_BACKBONE_GW_STOPPED: backbone gw is being removed
-+	 * and it must not longer work on requests
-+	 */
-+	BATADV_BLA_BACKBONE_GW_STOPPED,
-+
-+	/**
-+	 * @BATADV_BLA_BACKBONE_GW_UNSYNCED: backbone was detected out
-+	 * of sync and a request was send. No traffic is forwarded until the
-+	 * situation is resolved
-+	 */
-+	BATADV_BLA_BACKBONE_GW_UNSYNCED,
-+
-+	/**
-+	 * @BATADV_BLA_BACKBONE_GW_SYNCED: backbone is consider to be in
-+	 * sync. traffic can be forwarded
-+	 */
-+	BATADV_BLA_BACKBONE_GW_SYNCED,
-+};
-+
- /**
-  * struct batadv_bla_backbone_gw - batman-adv gateway bridged into the LAN
-  */
-@@ -1850,16 +1877,12 @@ struct batadv_bla_backbone_gw {
- 	/**
- 	 * @wait_periods: grace time for bridge forward delays and bla group
- 	 *  forming at bootup phase - no bcast traffic is formwared until it has
--	 *  elapsed
-+	 *  elapsed. Must only be access with num_requests_lock.
- 	 */
--	atomic_t wait_periods;
-+	u8 wait_periods;
- 
--	/**
--	 * @request_sent: if this bool is set to true we are out of sync with
--	 *  this backbone gateway - no bcast traffic is formwared until the
--	 *  situation was resolved
--	 */
--	atomic_t request_sent;
-+	/** @state: sync state. Must only be access with num_requests_lock. */
-+	enum batadv_bla_backbone_gw_state state;
- 
- 	/** @crc: crc16 checksum over all claims */
- 	u16 crc;
--- 
-2.53.0
-
 
 
