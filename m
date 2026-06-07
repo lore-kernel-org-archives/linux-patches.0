@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C60323392F;
-	Sun,  7 Jun 2026 10:20:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58AED4CB5B;
+	Sun,  7 Jun 2026 10:20:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827652; cv=none; b=XSL8lXEMxyi2IzgesvvIiDliVJb/vYESJFlTAS9rJoHm5CS4ImQHClSkBxu1fmaE+0dEdudVTdO255mnB1HQ5fcnc7iqvKd/CY6h4NrN7VSdQMAap3VlwJAntCW7xrgDbf9l52GgrCQba7TqLBxQ3zr9VKzpeqrOVU/wj0STsSI=
+	t=1780827656; cv=none; b=DAsyINqZCpGzE2XOPqF5Ju9ZuU3aZkNlKOV+HtZE/lX/PbToLv1+mpgto30otLyAr9Rh2+fmqOd9UQKj2CNlHDoctvpNnNC1p86ltULsFHxikf7tPy00lL7R7ecULgzjGe/kLpdLqlDSLoMIPolSGJzk8adFwt91d030EXJ3Lac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827652; c=relaxed/simple;
-	bh=L4XEuaVr4buyO5WShRF03ZGq0/N1pSwJ8CPB57F8bEs=;
+	s=arc-20240116; t=1780827656; c=relaxed/simple;
+	bh=37piqtn05+qk035/rS9KIyOxXNPWja4gkKSzGeK8s0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZQgjJh3XmloMx9RXznj1UUIORaU+F3mt9j4FN8zW5oD3xzmfo0HvYuU3R5xhYyYY0w9lt0ZUn71fZ7I66Lbv3BK3o+ED/ATokwoULB+A6KbE9/XnakJ1J1YzBVTKNa1yaAOZEtkZT3JfPkMvkoGNv8wAhSz7Zs++R9Jrr6aTjkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H13NLXlb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fw8ne4LYuI3XTF/4tKMUjI7SjEL/KsWQd5ItSSujivoJYQVKxHbpTgNuadaR0rmKIOERdhY0f9fxNa7p4QEsgG69ObLliNCrtwhiLRrbrSHDAkkGT0CK8ZhC8IBOVgEUQPtxnwpDSC+w+f5WaaSWZcw0Tt2g0baqivaCRwEHb10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qM8whi7s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H13NLXlb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0AAB1F00893;
-	Sun,  7 Jun 2026 10:20:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qM8whi7s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D141F00893;
+	Sun,  7 Jun 2026 10:20:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827651;
-	bh=UAVg3Iq5hnTYyRD0Q4hjIL4hYI6gPMl1dwL0mLtbjWo=;
+	s=korg; t=1780827655;
+	bh=1tInqotr0HA6lTP8l+/Un+kD+QmouETrC2EaSOEtOD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H13NLXlbF3zln4r0NGJvzE3H0tqTWMiLv4xI5e3bLj59p81QMS009k0iy+oWsFFd7
-	 +I2xmZuHhVmGTKOenA6K/jWHkn0iBuxRmjPTZL5KDVehsFCn5XpLbTb4shM1T3/sfk
-	 NR/P7kduo31Prbs8mAlMVEsbPPza0ngZ1jP14q4U=
+	b=qM8whi7sth2uS+gDoZYg5mUyIJhBjKDtjqIq4nAAjitJWk8q9W3q4LOm+wabzFnoL
+	 HH/lx4tXgzmDnETjFFd9Us1DFyvqjqAfA9jXz6oJM7KbvNkRQcR4pc5xkoh3I8Ayx6
+	 vO019HEc2dl9lKY36WKqPBZPcoo9Hd+Fa6qAtIwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhenghang Xiao <kipreyyy@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 090/315] sctp: fix race between sctp_wait_for_connect and peeloff
-Date: Sun,  7 Jun 2026 11:57:57 +0200
-Message-ID: <20260607095730.931617884@linuxfoundation.org>
+Subject: [PATCH 6.12 076/307] net/sched: act_mirred: add loop detection
+Date: Sun,  7 Jun 2026 11:57:53 +0200
+Message-ID: <20260607095730.555094820@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,49 +51,169 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhenghang Xiao <kipreyyy@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f14fe6395a8b3d961a61e138ad7b36ba3626dd4e ]
+[ Upstream commit fe946a751d9b52b7c45ca34899723b314b79b249 ]
 
-sctp_wait_for_connect() drops and re-acquires the socket lock while
-waiting for the association to reach ESTABLISHED state. During this
-window, another thread can peeloff the association to a new socket via
-getsockopt(SCTP_SOCKOPT_PEELOFF), changing asoc->base.sk. After
-re-acquiring the old socket lock, sctp_wait_for_connect() returns
-success without noticing the migration — the caller then accesses
-the association under the wrong lock in sctp_datamsg_from_user().
+Commit 0f022d32c3ec ("net/sched: Fix mirred deadlock on device recursion")
+added code in the fast path, even when act_mirred is not used.
 
-Add the same sk != asoc->base.sk check that sctp_wait_for_sndbuf()
-already has, returning an error if the association was migrated while
-we slept.
+Prepare its revert by implementing loop detection in act_mirred.
 
-Fixes: 668c9beb9020 ("sctp: implement assign_number for sctp_stream_interleave")
-Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260527032411.60959-1-kipreyyy@gmail.com
+Adds an array of device pointers in struct netdev_xmit.
+
+tcf_mirred_is_act_redirect() can detect if the array
+already contains the target device.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Tested-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20251014171907.3554413-4-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e80ad525fc7e ("net/sched: act_mirred: Fix return code in early mirred redirect error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/netdevice_xmit.h |  9 ++++-
+ net/sched/act_mirred.c         | 62 +++++++++++++---------------------
+ 2 files changed, 31 insertions(+), 40 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 2c5ad53984906c..c763eb3296b3ee 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -9350,6 +9350,8 @@ static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
- 		release_sock(sk);
- 		current_timeo = schedule_timeout(current_timeo);
- 		lock_sock(sk);
-+		if (sk != asoc->base.sk)
-+			goto do_error;
+diff --git a/include/linux/netdevice_xmit.h b/include/linux/netdevice_xmit.h
+index 848735b3a7c02d..59726e6cd2cc67 100644
+--- a/include/linux/netdevice_xmit.h
++++ b/include/linux/netdevice_xmit.h
+@@ -2,6 +2,12 @@
+ #ifndef _LINUX_NETDEVICE_XMIT_H
+ #define _LINUX_NETDEVICE_XMIT_H
  
- 		*timeo_p = current_timeo;
++#if IS_ENABLED(CONFIG_NET_ACT_MIRRED)
++#define MIRRED_NEST_LIMIT	4
++#endif
++
++struct net_device;
++
+ struct netdev_xmit {
+ 	u16 recursion;
+ 	u8  more;
+@@ -9,7 +15,8 @@ struct netdev_xmit {
+ 	u8  skip_txqueue;
+ #endif
+ #if IS_ENABLED(CONFIG_NET_ACT_MIRRED)
+-	u8 sched_mirred_nest;
++	u8			sched_mirred_nest;
++	struct net_device	*sched_mirred_dev[MIRRED_NEST_LIMIT];
+ #endif
+ };
+ 
+diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
+index 18d9378a9c1134..35812b6808e0a8 100644
+--- a/net/sched/act_mirred.c
++++ b/net/sched/act_mirred.c
+@@ -29,31 +29,6 @@
+ static LIST_HEAD(mirred_list);
+ static DEFINE_SPINLOCK(mirred_list_lock);
+ 
+-#define MIRRED_NEST_LIMIT    4
+-
+-#ifndef CONFIG_PREEMPT_RT
+-static u8 tcf_mirred_nest_level_inc_return(void)
+-{
+-	return __this_cpu_inc_return(softnet_data.xmit.sched_mirred_nest);
+-}
+-
+-static void tcf_mirred_nest_level_dec(void)
+-{
+-	__this_cpu_dec(softnet_data.xmit.sched_mirred_nest);
+-}
+-
+-#else
+-static u8 tcf_mirred_nest_level_inc_return(void)
+-{
+-	return current->net_xmit.sched_mirred_nest++;
+-}
+-
+-static void tcf_mirred_nest_level_dec(void)
+-{
+-	current->net_xmit.sched_mirred_nest--;
+-}
+-#endif
+-
+ static bool tcf_mirred_is_act_redirect(int action)
+ {
+ 	return action == TCA_EGRESS_REDIR || action == TCA_INGRESS_REDIR;
+@@ -439,44 +414,53 @@ TC_INDIRECT_SCOPE int tcf_mirred_act(struct sk_buff *skb,
+ {
+ 	struct tcf_mirred *m = to_mirred(a);
+ 	int retval = READ_ONCE(m->tcf_action);
+-	unsigned int nest_level;
++	struct netdev_xmit *xmit;
+ 	bool m_mac_header_xmit;
+ 	struct net_device *dev;
+-	int m_eaction;
++	int i, m_eaction;
+ 	u32 blockid;
+ 
+-	nest_level = tcf_mirred_nest_level_inc_return();
+-	if (unlikely(nest_level > MIRRED_NEST_LIMIT)) {
++#ifdef CONFIG_PREEMPT_RT
++	xmit = &current->net_xmit;
++#else
++	xmit = this_cpu_ptr(&softnet_data.xmit);
++#endif
++	if (unlikely(xmit->sched_mirred_nest >= MIRRED_NEST_LIMIT)) {
+ 		net_warn_ratelimited("Packet exceeded mirred recursion limit on dev %s\n",
+ 				     netdev_name(skb->dev));
+-		retval = TC_ACT_SHOT;
+-		goto dec_nest_level;
++		return TC_ACT_SHOT;
  	}
+ 
+ 	tcf_lastuse_update(&m->tcf_tm);
+ 	tcf_action_update_bstats(&m->common, skb);
+ 
+ 	blockid = READ_ONCE(m->tcfm_blockid);
+-	if (blockid) {
+-		retval = tcf_blockcast(skb, m, blockid, res, retval);
+-		goto dec_nest_level;
+-	}
++	if (blockid)
++		return tcf_blockcast(skb, m, blockid, res, retval);
+ 
+ 	dev = rcu_dereference_bh(m->tcfm_dev);
+ 	if (unlikely(!dev)) {
+ 		pr_notice_once("tc mirred: target device is gone\n");
+ 		tcf_action_inc_overlimit_qstats(&m->common);
+-		goto dec_nest_level;
++		return retval;
+ 	}
++	for (i = 0; i < xmit->sched_mirred_nest; i++) {
++		if (xmit->sched_mirred_dev[i] != dev)
++			continue;
++		pr_notice_once("tc mirred: loop on device %s\n",
++			       netdev_name(dev));
++		tcf_action_inc_overlimit_qstats(&m->common);
++		return retval;
++	}
++
++	xmit->sched_mirred_dev[xmit->sched_mirred_nest++] = dev;
+ 
+ 	m_mac_header_xmit = READ_ONCE(m->tcfm_mac_header_xmit);
+ 	m_eaction = READ_ONCE(m->tcfm_eaction);
+ 
+ 	retval = tcf_mirred_to_dev(skb, m, dev, m_mac_header_xmit, m_eaction,
+ 				   retval);
+-
+-dec_nest_level:
+-	tcf_mirred_nest_level_dec();
++	xmit->sched_mirred_nest--;
+ 
+ 	return retval;
+ }
 -- 
 2.53.0
 
