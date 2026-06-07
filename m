@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D52D2E7373;
-	Sun,  7 Jun 2026 10:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F078303CAE;
+	Sun,  7 Jun 2026 10:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827218; cv=none; b=lpE1+jIYhTmswpoCFbSI/Giu98xH55f9XBOgpatp/ihdqrHqKP1g3BtXo90eLbuY2qmoXFTgSi8fqYmonsBlRa9rvM4A+/UJA2lcLz0+MabakEH0f7HaDMnz46cSgwZN/gS16fnCdVi3j4LY/7SnKXH/Ibz5T7DjdFM7r/IG3Jk=
+	t=1780827221; cv=none; b=odQ3PcXMIPeF5vaqDCGMQjlptqMTwDiWxDr7zjLO9cKkXSBbdlH863EXXfh5NMpFlx0Poeb4a4rNfK9efbgOxcztxkYhD0fV//kGflbA94E6klgbhQ4cIjDS/TVHlWbA8F7WEKagfZP7IT1Ox16vXACjIrCiYHmDW3Kv5aaxGfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827218; c=relaxed/simple;
-	bh=9gzf99YeQjE1GdZKuphbaYPK+rtKP8Dr2+wDgna9MWI=;
+	s=arc-20240116; t=1780827221; c=relaxed/simple;
+	bh=i2FTJbf18I4WUmSCrLpaRmxCMHJIfoUBZVs6ARb6fZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i8253Qwed+PYbe+A/1aL0v2iTNwNy3QPDuTLJU5r9jzvRBFvY36Sk+e/ujJ8Uw2AMsyUThe+DARukputoR4NtC230DRBfSjcPqB3GZX5LaIGuEHUwH40q3gyReCeNYv6DlFa2U3RukGyeHInMcHeHLzfxR6PLkLXHQja/t63Vu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhqGmOoS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tER9HJXr96gdkHq0bqNqFHZNtebBk/XF6+xtKoRe7jf8I8CFN1eKvTEY0N+4Q7Kv/mhhPcgeG//RCT6+zJwaqPQ2RqsrbyUwbS14JaPi/o3EMLTIz2F399WRg0D/D9FEzOtruxyrAkc/UZlINAA8i1v/NE6w14Ez6RkxvzauoDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxSyKPUK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhqGmOoS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9511F00893;
-	Sun,  7 Jun 2026 10:13:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxSyKPUK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D31681F00893;
+	Sun,  7 Jun 2026 10:13:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827217;
-	bh=iufm3OKHOH8Z9IYf9cFMbl/fGCcoLeyBVCzHV1yjpks=;
+	s=korg; t=1780827220;
+	bh=j4dw0SxvKO6TsL/1zex1B7PAiGVAtUAzoOFQ0jfDadc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bhqGmOoSINwChd7ctUbM6MO6vn2Yq0qvqr9t9GD5rd8QGTFdoTMJm/pB20uBk+8xs
-	 lfjg4QB94M+vfWrYtHb4lvEz3wv6KnIUlgybnHhrvj/xnQrBlVTP+wisOOo0qJNt+y
-	 4e0YtzKE9Rz0WOZy71vXNKwZeudYBmY8ZDuVoIMY=
+	b=uxSyKPUKTusvuVpz4F1e5G3Hpx8Qm8mDsOcbeOKtDClMjnhpfIxdaIVpR0BPQrUmJ
+	 M1PoQuQB47II1dJTqY4z83GShdHT2KOJMOKrhlPwtcdcrXE8Y+UxQS2m33+UHsAogf
+	 1UNFNBzX8gMgNe/AD1aKVsO+se7VOuZaUbYnqygM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
+	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 073/332] ethtool: tsinfo: fix uninitialized stats on the by-PHC path
-Date: Sun,  7 Jun 2026 11:57:22 +0200
-Message-ID: <20260607095730.818749419@linuxfoundation.org>
+Subject: [PATCH 6.12 012/307] arm64: refactor aarch32_break_handler()
+Date: Sun,  7 Jun 2026 11:56:49 +0200
+Message-ID: <20260607095728.082062843@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,77 +51,108 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
 
-[ Upstream commit 1de405699c62c3a9544bcdcfb9eff8a01cfc7582 ]
+[ Upstream commit b1e2d95524e4d0f5b643394c739212869e95cf6a ]
 
-tsinfo_prepare_data() has two code paths: a "by-PHC" path for
-user-specified hardware timestamping providers, and the old path.
-Commit 89e281ebff72 ("ethtool: init tsinfo stats if requested") added
-ethtool_stats_init() to mark stat slots as ETHTOOL_STAT_NOT_SET before
-the driver callback populates them, but placed the call inside the
-old-path block.
+`aarch32_break_handler()` is called in `do_el0_undef()` when we
+are trying to handle an exception whose Exception Syndrome is unknown.
+It checks if the instruction hit might be a 32-bit arm break (be it
+A32 or T2), and sends a SIGTRAP to userspace if it is so that it can
+be handled.
 
-When commit b9e3f7dc9ed9 ("net: ethtool: tsinfo: Enhance tsinfo to
-support several hwtstamp by net topology") added the by-PHC early
-return, it landed above the stats initialization. On that path
-the stats array retains the zero-fill from ethnl_init_reply_data()'s
-zalloc. This leads to the reply including a stats nest with four
-zero-valued attributes that should have been absent.
+However, this is badly represented in the naming of the function, and
+is not consistent with the other functions called with the same logic
+in `do_el0_undef()`.
 
-Reject GET requests for stats with HWTSTAMP_PROVIDER or dump.
+Rename it `try_handle_aarch32_break()` and change the return value to
+a boolean to align with the logic of the other tentative handlers in
+`do_el0_undef()`, the previous error code being ignored anyway.
 
-Fixes: b9e3f7dc9ed9 ("net: ethtool: tsinfo: Enhance tsinfo to support several hwtstamp by net topology")
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260526153533.2779187-7-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Tested-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20250707114109.35672-3-ada.coupriediaz@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/tsinfo.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ arch/arm64/include/asm/debug-monitors.h |  2 +-
+ arch/arm64/kernel/debug-monitors.c      | 10 +++++-----
+ arch/arm64/kernel/traps.c               |  2 +-
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/net/ethtool/tsinfo.c b/net/ethtool/tsinfo.c
-index c0145c752d2f8b..cb1491e0a28bac 100644
---- a/net/ethtool/tsinfo.c
-+++ b/net/ethtool/tsinfo.c
-@@ -81,6 +81,11 @@ tsinfo_parse_request(struct ethnl_req_info *req_base, struct nlattr **tb,
- 	if (!tb[ETHTOOL_A_TSINFO_HWTSTAMP_PROVIDER])
- 		return 0;
- 
-+	if (req_base->flags & ETHTOOL_FLAG_STATS) {
-+		NL_SET_ERR_MSG(extack, "can't query statistics for a provider");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	return ts_parse_hwtst_provider(tb[ETHTOOL_A_TSINFO_HWTSTAMP_PROVIDER],
- 				       &req->hwprov_desc, extack, &mod);
+diff --git a/arch/arm64/include/asm/debug-monitors.h b/arch/arm64/include/asm/debug-monitors.h
+index 13d437bcbf58c2..3eeea1c9f06664 100644
+--- a/arch/arm64/include/asm/debug-monitors.h
++++ b/arch/arm64/include/asm/debug-monitors.h
+@@ -115,7 +115,7 @@ static inline int reinstall_suspended_bps(struct pt_regs *regs)
  }
-@@ -521,6 +526,12 @@ int ethnl_tsinfo_start(struct netlink_callback *cb)
- 	if (ret < 0)
- 		goto free_reply_data;
+ #endif
  
-+	if (req_info->base.flags & ETHTOOL_FLAG_STATS) {
-+		NL_SET_ERR_MSG(cb->extack, "stats not supported in dump");
-+		ret = -EOPNOTSUPP;
-+		goto err_dev_put;
-+	}
-+
- 	ctx->req_info = req_info;
- 	ctx->reply_data = reply_data;
- 	ctx->pos_ifindex = 0;
-@@ -530,6 +541,8 @@ int ethnl_tsinfo_start(struct netlink_callback *cb)
+-int aarch32_break_handler(struct pt_regs *regs);
++bool try_handle_aarch32_break(struct pt_regs *regs);
  
- 	return 0;
+ void debug_traps_init(void);
  
-+err_dev_put:
-+	ethnl_parse_header_dev_put(&req_info->base);
- free_reply_data:
- 	kfree(reply_data);
- free_req_info:
+diff --git a/arch/arm64/kernel/debug-monitors.c b/arch/arm64/kernel/debug-monitors.c
+index b7a2155bca42b1..8275b7f5754626 100644
+--- a/arch/arm64/kernel/debug-monitors.c
++++ b/arch/arm64/kernel/debug-monitors.c
+@@ -335,7 +335,7 @@ static int brk_handler(unsigned long unused, unsigned long esr,
+ }
+ NOKPROBE_SYMBOL(brk_handler);
+ 
+-int aarch32_break_handler(struct pt_regs *regs)
++bool try_handle_aarch32_break(struct pt_regs *regs)
+ {
+ 	u32 arm_instr;
+ 	u16 thumb_instr;
+@@ -343,7 +343,7 @@ int aarch32_break_handler(struct pt_regs *regs)
+ 	void __user *pc = (void __user *)instruction_pointer(regs);
+ 
+ 	if (!compat_user_mode(regs))
+-		return -EFAULT;
++		return false;
+ 
+ 	if (compat_thumb_mode(regs)) {
+ 		/* get 16-bit Thumb instruction */
+@@ -367,12 +367,12 @@ int aarch32_break_handler(struct pt_regs *regs)
+ 	}
+ 
+ 	if (!bp)
+-		return -EFAULT;
++		return false;
+ 
+ 	send_user_sigtrap(TRAP_BRKPT);
+-	return 0;
++	return true;
+ }
+-NOKPROBE_SYMBOL(aarch32_break_handler);
++NOKPROBE_SYMBOL(try_handle_aarch32_break);
+ 
+ void __init debug_traps_init(void)
+ {
+diff --git a/arch/arm64/kernel/traps.c b/arch/arm64/kernel/traps.c
+index 5e138cf5d4ade3..c38ebf715be764 100644
+--- a/arch/arm64/kernel/traps.c
++++ b/arch/arm64/kernel/traps.c
+@@ -462,7 +462,7 @@ void do_el0_undef(struct pt_regs *regs, unsigned long esr)
+ 	u32 insn;
+ 
+ 	/* check for AArch32 breakpoint instructions */
+-	if (!aarch32_break_handler(regs))
++	if (try_handle_aarch32_break(regs))
+ 		return;
+ 
+ 	if (user_insn_read(regs, &insn))
 -- 
 2.53.0
 
