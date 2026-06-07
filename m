@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383492AF1D;
-	Sun,  7 Jun 2026 10:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E5B2AF1D;
+	Sun,  7 Jun 2026 10:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829229; cv=none; b=DydG1MVnbEglaDwzubvzAgWSpnh3C6s6lW4h3kppR/4QJN8oBpO1BbePF6BbLefQrJkR9X4NznAjFyr780JFp1ZUb/sXOM6A5TgSNbAMsKDtyoPpCCXlnTsCZHz6bDnK8MjonUkN90HHPoW/IeYaZeqRonJcdMYefiSnyMfwknM=
+	t=1780829232; cv=none; b=gBleFE7qjNGJqo8Ws+eZpUHrwXb4/EcXRTKLTBbHhvXurX84rPvyZm75yLXJn+qKcdFqQAN+WxYb80CX1X851wbdGtFUzb7U52K6vyiB6Vw9lwbV9oLEujv9BT3QykgSgt6Lip5BjRt/5pUnMvO/5xvLexgEyXMraUurbWEP99A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829229; c=relaxed/simple;
-	bh=w9Om335OxlWdq/M1yg1Qg7YgcR+T4fBeyOEW0iWeNCc=;
+	s=arc-20240116; t=1780829232; c=relaxed/simple;
+	bh=Bslrw6000OzW7/xlh7JdgxOlUJmDqQiii6I6UJNELF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vDyil42Tz021SiIuvRoUE21qiOigrbEmO2hSdt4rPp+4Fps/RDUsQysAfijCFB5C1UiurniKqV0E9fcABYylsT2kkCvRcy700tHmt9QyVDhHHLjNEfQ+Uqb7cZFK7d5+sdPxgqfP6LYBLDQbqWZNawRW0kzVJ4B3hsIeuvMFjic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l8HSjK9a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mwcX4rerZmzqHlHsqMv2LoMjxUb8jdPoMmL1j/XfiWbo7k/HArR/00jKtvoem3YkeqbzPMPSimKKjFOUlaktazB4Anjg9wV5ExwXLKKY2E+qQ4mOs4dM9vyS80GUElEMe2jYN0Mz/HpXZPllEBimqi19mM18/IZ6jRY6gHDb60Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TgWjyB/A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l8HSjK9a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0BF1F00893;
-	Sun,  7 Jun 2026 10:47:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TgWjyB/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3071F00893;
+	Sun,  7 Jun 2026 10:47:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829228;
-	bh=2AR5p3+2HD7V7AI92VAffGblzMDhbGoB59no1Q8MMNE=;
+	s=korg; t=1780829231;
+	bh=at1HUJmLdYoWm7YmLR9fS7/Q3YQJewCv7YRv+e0gE5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l8HSjK9aCeomcG/4AUNeTMPaaGoIIC/OMcJxTB3AoaqOMxV6yZY9v7paSkxl1dZTi
-	 6m7AffOY23DlSSULbLjB7m+WcCqHBz8QgbUEHSE4bOfmGhrCL+d2J+KQ5PaS6oNHBr
-	 cyQ2ZPphBJHVetVJjGIurkve+lSYprGWOF9Pv4LQ=
+	b=TgWjyB/Ak/6DYVU1AFDMuAz9CeqgZIBl2WIbPvE6hcMKXNcFp7eqk4GlREbabujhf
+	 /VScv4hLRLS2CpGNV2XR7+mlMhkuffJJPHW93vcOsDzggofhfqWuL4+6VjVJkgUTfV
+	 WAEs40+kBZ5lOtI0NSsJhwvjx1h+F8eySOu6s41E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Luxing Yin <tr0jan@lzu.edu.cn>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.12 191/307] xfrm: input: hold netns during deferred transport reinjection
-Date: Sun,  7 Jun 2026 11:59:48 +0200
-Message-ID: <20260607095734.738239046@linuxfoundation.org>
+	Dmitriy Zharov <contact@zharov.dev>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.12 206/307] Input: xpad - add support for ASUS ROG RAIKIRI II
+Date: Sun,  7 Jun 2026 12:00:03 +0200
+Message-ID: <20260607095735.289652843@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
 References: <20260607095727.647295505@linuxfoundation.org>
@@ -55,75 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchuan Liang <zcliangcn@gmail.com>
+From: Dmitriy Zharov <contact@zharov.dev>
 
-commit c16f74dc1d75d0e2e7670076d5375deda110ebeb upstream.
+commit c897cf120696b94f56ed0f3197ba9a77071a59ec upstream.
 
-Transport-mode reinjection stores a struct net pointer in skb->cb and
-uses it later from xfrm_trans_reinject(). That pointer must stay valid
-until the deferred callback runs.
+Add the VID/PIDs for the ASUS ROG RAIKIRI II controller to xpad_device
+and the VID to xpad_table. The controller has a physical PC/XBOX toggle
+which switches between XBOX360 and XBOXONE protocols.
 
-Take a netns reference when queueing deferred reinjection work and drop
-it after the callback completes. Use maybe_get_net() so the queueing
-path does not revive a namespace that is already being torn down.
-
-This keeps the existing workqueue design and fixes the netns lifetime
-handling in one place for all users of xfrm_trans_queue_net().
-
-Fixes: 7b3801927e52 ("xfrm: introduce xfrm_trans_queue_net")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Co-developed-by: Luxing Yin <tr0jan@lzu.edu.cn>
-Signed-off-by: Luxing Yin <tr0jan@lzu.edu.cn>
-Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Assisted-by: Codex:gpt-5.4
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Dmitriy Zharov <contact@zharov.dev>
+Link: https://patch.msgid.link/20260430183522.122151-1-contact@zharov.dev
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_input.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/input/joystick/xpad.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/xfrm/xfrm_input.c
-+++ b/net/xfrm/xfrm_input.c
-@@ -769,9 +769,12 @@ static void xfrm_trans_reinject(struct w
- 	spin_unlock_bh(&trans->queue_lock);
- 
- 	local_bh_disable();
--	while ((skb = __skb_dequeue(&queue)))
--		XFRM_TRANS_SKB_CB(skb)->finish(XFRM_TRANS_SKB_CB(skb)->net,
--					       NULL, skb);
-+	while ((skb = __skb_dequeue(&queue))) {
-+		struct net *net = XFRM_TRANS_SKB_CB(skb)->net;
-+
-+		XFRM_TRANS_SKB_CB(skb)->finish(net, NULL, skb);
-+		put_net(net);
-+	}
- 	local_bh_enable();
- }
- 
-@@ -780,6 +783,7 @@ int xfrm_trans_queue_net(struct net *net
- 				       struct sk_buff *))
- {
- 	struct xfrm_trans_tasklet *trans;
-+	struct net *hold_net;
- 
- 	trans = this_cpu_ptr(&xfrm_trans_tasklet);
- 
-@@ -788,8 +792,12 @@ int xfrm_trans_queue_net(struct net *net
- 
- 	BUILD_BUG_ON(sizeof(struct xfrm_trans_cb) > sizeof(skb->cb));
- 
-+	hold_net = maybe_get_net(net);
-+	if (!hold_net)
-+		return -ENODEV;
-+
- 	XFRM_TRANS_SKB_CB(skb)->finish = finish;
--	XFRM_TRANS_SKB_CB(skb)->net = net;
-+	XFRM_TRANS_SKB_CB(skb)->net = hold_net;
- 	spin_lock_bh(&trans->queue_lock);
- 	__skb_queue_tail(&trans->queue, skb);
- 	spin_unlock_bh(&trans->queue_lock);
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -215,6 +215,10 @@ static const struct xpad_device {
+ 	{ 0x07ff, 0xffff, "Mad Catz GamePad", 0, XTYPE_XBOX360 },
+ 	{ 0x0b05, 0x1a38, "ASUS ROG RAIKIRI", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
+ 	{ 0x0b05, 0x1abb, "ASUS ROG RAIKIRI PRO", 0, XTYPE_XBOXONE },
++	{ 0x0b05, 0x1c91, "ASUS ROG RAIKIRI II", 0, XTYPE_XBOX360 },
++	{ 0x0b05, 0x1c92, "ASUS ROG RAIKIRI II WIRELESS", 0, XTYPE_XBOX360 },
++	{ 0x0b05, 0x1c96, "ASUS ROG RAIKIRI II XBOX", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
++	{ 0x0b05, 0x1d04, "ASUS ROG RAIKIRI II XBOX WIRELESS", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
+ 	{ 0x0c12, 0x0005, "Intec wireless", 0, XTYPE_XBOX },
+ 	{ 0x0c12, 0x8801, "Nyko Xbox Controller", 0, XTYPE_XBOX },
+ 	{ 0x0c12, 0x8802, "Zeroplus Xbox Controller", 0, XTYPE_XBOX },
+@@ -528,6 +532,7 @@ static const struct usb_device_id xpad_t
+ 	{ USB_DEVICE(0x0738, 0x4540) },		/* Mad Catz Beat Pad */
+ 	XPAD_XBOXONE_VENDOR(0x0738),		/* Mad Catz FightStick TE 2 */
+ 	XPAD_XBOX360_VENDOR(0x07ff),		/* Mad Catz Gamepad */
++	XPAD_XBOX360_VENDOR(0x0b05),		/* ASUS controllers */
+ 	XPAD_XBOXONE_VENDOR(0x0b05),		/* ASUS controllers */
+ 	XPAD_XBOX360_VENDOR(0x0c12),		/* Zeroplus X-Box 360 controllers */
+ 	XPAD_XBOX360_VENDOR(0x0db0),		/* Micro Star International X-Box 360 controllers */
 
 
