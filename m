@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51CF3164A1;
-	Sun,  7 Jun 2026 11:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCAE9291C10;
+	Sun,  7 Jun 2026 11:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780830133; cv=none; b=nRsPz6uYG+ndGcGQLgLRtCvFNdGkbJ35ci2D4A9cKPv1deWMClvJaVrNYubtTBYXGOChtxr2tOX9InPc72FY10j6rrVJprWtpMaYk2Shx7o2Ejall1yQF0An06JODvtUBv7mX+avi4YWjgwVduS3bcU/Puib9jJqz9B4YlyvgI4=
+	t=1780830138; cv=none; b=h7/IXoXI1RHjGIj4BrbrAEA6XlN22cfPE20D/oadkhuBre+iVIs3i+Lh6lv3JN6T1UEAXBh71HXNN9WapZdsT5x2vWa84TRajeo1KpK7kr6zYp/MUX9gPaIlh3M5NxUTctFb7amVeg3GBi9by1RszQRPQMHLuJu8lh45qpoGm0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780830133; c=relaxed/simple;
-	bh=9bueCvS5D4PaZQfT5FdIuJQeHt2MHOZ9Bv/qUQdvy6o=;
+	s=arc-20240116; t=1780830138; c=relaxed/simple;
+	bh=jzeB4CrEB4qsqcrZpZYNV8ecwZjkv9IooQ5+yx7r12o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tTK3PwOlH/iJM8lUnGIuw8zDaiXnNSngaVYU1+qGh9J6bwHE2tDFrqA+kVyX0TSVJHLP5BkxAzmH1kc0Rm7tcDBiJrMcFNgX9N/5HC+hCSTC0XSFV+az/XRVu5R5Yv0u374p6KvYtIvm9z72RllQ/tVFRraJ8K5POW7eK+6HfW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V5rL/OWv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QlcNQI3DX+Q7lPfCoX8LoTlzhgdNQ4vcecAO0yGCruOTqKAVVdMGRXWR0jLoDA/SxOYooQVC+lOUAzjobNuzuglZe3bq8o4txGFX2QQIY7xzochacdbUSzR3kvvkzzMNmudKraiw3HPsY2PP+4hiu6l+a6KvdSZMi1AtDg/HplY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gP4K0LHe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V5rL/OWv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E231F00893;
-	Sun,  7 Jun 2026 11:02:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gP4K0LHe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9DC1F00893;
+	Sun,  7 Jun 2026 11:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780830132;
-	bh=ts+/9sQdbTherPFetAYtw08TjzhLY7WVA1HWxHXIFrs=;
+	s=korg; t=1780830136;
+	bh=GAmDCdEyDdr4qxpe7KajtayuwtIWA/FGVhJw4YnCaAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V5rL/OWvGwM3o2yU4GPcMEfIwMR7BoVGqKGpkcS3Nj7i1kv98xbbypJMsnryiVvXz
-	 scVPK2+KvKlTGn99F/ZDKkjr5XWrX65h6ar+wLs5lMhpMYxBwDsPoQM7lOeWqY7EHQ
-	 wUNdkYx9+EbBo8NaDIDrEPM5B/0Y+Awmb5UfPkrM=
+	b=gP4K0LHebLx7droplyrZP9avTncnwUjzAEGRlwyqHcKlBX8QmWacUQTqW1nCPKJBm
+	 gz54/+dIvL77LFBJxNVtFEnC/FUdtVhnJs0A8NJ73Y9t6oCv9xcIpVQsabIwZzU7/J
+	 oCLzKdNcS2yUh4TSmECYDurQo+R2oP4K6O/mj4n4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Geliang Tang <geliang@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Grzelak?= <michal.grzelak@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 286/307] mptcp: introduce the mptcp_init_skb helper
-Date: Sun,  7 Jun 2026 12:01:23 +0200
-Message-ID: <20260607095738.238180170@linuxfoundation.org>
+Subject: [PATCH 6.18 314/315] drm/i915/psr: Use DC_OFF wake reference to block DC6 on vblank enable
+Date: Sun,  7 Jun 2026 12:01:41 +0200
+Message-ID: <20260607095739.156163880@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,180 +46,144 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-[ Upstream commit 9a0afe0db46720ce1a009c7dac168aa0584bd732 ]
+[ Upstream commit 3549a9649dc7c5fc586ab12f675279283cdcb2a7 ]
 
-Factor out all the skb initialization step in a new helper and
-use it. Note that this change moves the MPTCP CB initialization
-earlier: we can do such step as soon as the skb leaves the
-subflow socket receive queues.
+We are observing following warnings:
 
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Tested-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250927-net-next-mptcp-rcv-path-imp-v1-4-5da266aa9c1a@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 50c2d91c5dfa ("mptcp: do not drop partial packets")
+*ERROR* power well DC_off state mismatch (refcount 0/enabled 1)
+
+gen9_dc_off_power_well_enabled is considering target state DC_STATE_DISABLE
+as DC_OFF power well being enabled. Fix this by using wakeref for the
+purpose.
+
+To achieve this we need to modify notification code as well. Currently it
+is possible that PSR gets notified vblank enable/disable twice on same
+status. This is currently not a problem as it is just triggering call to
+intel_display_power_set_target_dc_state with same target state as a
+parameter. When using wakeref this becomes a problem due to reference
+counting. Fix this storing vbank status on last notification and use that
+to ensure there are no more than one notification with same vblank status.
+
+v2: ensure there is no subsequent notifications with same status
+
+Fixes: aa451abcffb5 ("drm/i915/display: Prevent DC6 while vblank is enabled for Panel Replay")
+Cc: <stable@vger.kernel.org> # v6.13+
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Michał Grzelak <michal.grzelak@intel.com>
+Link: https://patch.msgid.link/20260520104944.239797-2-jouni.hogander@intel.com
+(cherry picked from commit 35485ac56d878192a3829a58cb26503125ec7104)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   50 +++++++++++++++++++++++++++-----------------------
- 1 file changed, 27 insertions(+), 23 deletions(-)
+ drivers/gpu/drm/i915/display/intel_display_core.h  |    1 
+ drivers/gpu/drm/i915/display/intel_display_irq.c   |    8 +++++--
+ drivers/gpu/drm/i915/display/intel_display_types.h |    2 +
+ drivers/gpu/drm/i915/display/intel_psr.c           |   24 +++++++--------------
+ 4 files changed, 18 insertions(+), 17 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -321,7 +321,7 @@ end:
- 	mptcp_set_owner_r(skb, sk);
- }
+--- a/drivers/gpu/drm/i915/display/intel_display_core.h
++++ b/drivers/gpu/drm/i915/display/intel_display_core.h
+@@ -472,6 +472,7 @@ struct intel_display {
+ 		u8 vblank_enabled;
  
--static bool mptcp_rmem_schedule(struct sock *sk, struct sock *ssk, int size)
-+static bool mptcp_rmem_schedule(struct sock *sk, int size)
- {
- 	struct mptcp_sock *msk = mptcp_sk(sk);
- 	int amt, amount;
-@@ -339,27 +339,11 @@ static bool mptcp_rmem_schedule(struct s
- 	return true;
- }
+ 		int vblank_enable_count;
++		bool vblank_status_last_notified;
  
--static bool __mptcp_move_skb(struct mptcp_sock *msk, struct sock *ssk,
--			     struct sk_buff *skb, unsigned int offset,
--			     size_t copy_len)
-+static void mptcp_init_skb(struct sock *ssk, struct sk_buff *skb, int offset,
-+			   int copy_len)
- {
--	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
--	struct sock *sk = (struct sock *)msk;
--	struct sk_buff *tail;
--	bool has_rxtstamp;
--
--	__skb_unlink(skb, &ssk->sk_receive_queue);
--
--	skb_ext_reset(skb);
--	skb_orphan(skb);
--
--	/* try to fetch required memory from subflow */
--	if (!mptcp_rmem_schedule(sk, ssk, skb->truesize)) {
--		MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_RCVPRUNED);
--		goto drop;
--	}
--
--	has_rxtstamp = TCP_SKB_CB(skb)->has_rxtstamp;
-+	const struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
-+	bool has_rxtstamp = TCP_SKB_CB(skb)->has_rxtstamp;
+ 		struct work_struct vblank_notify_work;
  
- 	/* the skb map_seq accounts for the skb offset:
- 	 * mptcp_subflow_get_mapped_dsn() is based on the current tp->copied_seq
-@@ -371,6 +355,25 @@ static bool __mptcp_move_skb(struct mptc
- 	MPTCP_SKB_CB(skb)->has_rxtstamp = has_rxtstamp;
- 	MPTCP_SKB_CB(skb)->cant_coalesce = 0;
+--- a/drivers/gpu/drm/i915/display/intel_display_irq.c
++++ b/drivers/gpu/drm/i915/display/intel_display_irq.c
+@@ -1707,8 +1707,12 @@ static void intel_display_vblank_notify_
+ 	struct intel_display *display =
+ 		container_of(work, typeof(*display), irq.vblank_notify_work);
+ 	int vblank_enable_count = READ_ONCE(display->irq.vblank_enable_count);
++	bool vblank_status = !!vblank_enable_count;
  
-+	__skb_unlink(skb, &ssk->sk_receive_queue);
-+
-+	skb_ext_reset(skb);
-+	skb_dst_drop(skb);
-+}
-+
-+static bool __mptcp_move_skb(struct sock *sk, struct sk_buff *skb)
-+{
-+	u64 copy_len = MPTCP_SKB_CB(skb)->end_seq - MPTCP_SKB_CB(skb)->map_seq;
-+	struct mptcp_sock *msk = mptcp_sk(sk);
-+	struct sk_buff *tail;
-+
-+	/* try to fetch required memory from subflow */
-+	if (!mptcp_rmem_schedule(sk, skb->truesize)) {
-+		MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_RCVPRUNED);
-+		mptcp_drop(sk, skb);
-+		return false;
+-	intel_psr_notify_vblank_enable_disable(display, vblank_enable_count);
++	if (display->irq.vblank_status_last_notified != vblank_status) {
++		intel_psr_notify_vblank_enable_disable(display, vblank_status);
++		display->irq.vblank_status_last_notified = vblank_status;
 +	}
-+
- 	if (MPTCP_SKB_CB(skb)->map_seq == msk->ack_seq) {
- 		/* in sequence */
- 		msk->bytes_received += copy_len;
-@@ -391,7 +394,6 @@ static bool __mptcp_move_skb(struct mptc
- 	 * will retransmit as needed, if needed.
- 	 */
- 	MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_DUPDATA);
--drop:
- 	mptcp_drop(sk, skb);
- 	return false;
  }
-@@ -720,7 +722,9 @@ static bool __mptcp_move_skbs_from_subfl
- 			if (tp->urg_data)
- 				done = true;
  
--			if (__mptcp_move_skb(msk, ssk, skb, offset, len))
-+			mptcp_init_skb(ssk, skb, offset, len);
-+			skb_orphan(skb);
-+			if (__mptcp_move_skb(sk, skb))
- 				moved += len;
- 			seq += len;
+ int bdw_enable_vblank(struct drm_crtc *_crtc)
+@@ -1721,10 +1725,10 @@ int bdw_enable_vblank(struct drm_crtc *_
+ 	if (gen11_dsi_configure_te(crtc, true))
+ 		return 0;
  
-
-
-t t;
++	spin_lock_irqsave(&display->irq.lock, irqflags);
+ 	if (crtc->vblank_psr_notify && display->irq.vblank_enable_count++ == 0)
+ 		schedule_work(&display->irq.vblank_notify_work);
  
--	if (!chan || !chan->cl)
-+	if (!chan || !chan->cl || mssg == MBOX_NO_MSG)
- 		return -EINVAL;
+-	spin_lock_irqsave(&display->irq.lock, irqflags);
+ 	bdw_enable_pipe_irq(display, pipe, GEN8_PIPE_VBLANK);
+ 	spin_unlock_irqrestore(&display->irq.lock, irqflags);
  
- 	t = add_to_rbuf(chan, mssg);
-@@ -319,7 +319,7 @@ static int __mbox_bind_client(struct mbo
- 	scoped_guard(spinlock_irqsave, &chan->lock) {
- 		chan->msg_free = 0;
- 		chan->msg_count = 0;
--		chan->active_req = NULL;
-+		chan->active_req = MBOX_NO_MSG;
- 		chan->cl = cl;
- 		init_completion(&chan->tx_complete);
+--- a/drivers/gpu/drm/i915/display/intel_display_types.h
++++ b/drivers/gpu/drm/i915/display/intel_display_types.h
+@@ -1690,6 +1690,8 @@ struct intel_psr {
+ 	bool pkg_c_latency_used;
  
-@@ -477,7 +477,7 @@ void mbox_free_channel(struct mbox_chan
- 	/* The queued TX requests are simply aborted, no callbacks are made */
- 	scoped_guard(spinlock_irqsave, &chan->lock) {
- 		chan->cl = NULL;
--		chan->active_req = NULL;
-+		chan->active_req = MBOX_NO_MSG;
- 		if (chan->txdone_method == TXDONE_BY_ACK)
- 			chan->txdone_method = TXDONE_BY_POLL;
- 	}
-@@ -531,6 +531,7 @@ int mbox_controller_register(struct mbox
- 
- 		chan->cl = NULL;
- 		chan->mbox = mbox;
-+		chan->active_req = MBOX_NO_MSG;
- 		chan->txdone_method = txdone;
- 		spin_lock_init(&chan->lock);
- 	}
---- a/drivers/mailbox/tegra-hsp.c
-+++ b/drivers/mailbox/tegra-hsp.c
-@@ -497,7 +497,7 @@ static int tegra_hsp_mailbox_flush(struc
- 			mbox_chan_txdone(chan, 0);
- 
- 			/* Wait until channel is empty */
--			if (chan->active_req != NULL)
-+			if (chan->active_req != MBOX_NO_MSG)
- 				continue;
- 
- 			return 0;
---- a/include/linux/mailbox_controller.h
-+++ b/include/linux/mailbox_controller.h
-@@ -11,6 +11,9 @@
- 
- struct mbox_chan;
- 
-+/* Sentinel value distinguishing "no active request" from "NULL message data" */
-+#define MBOX_NO_MSG	((void *)-1)
+ 	u8 active_non_psr_pipes;
 +
- /**
-  * struct mbox_chan_ops - methods to control mailbox channels
-  * @send_data:	The API asks the MBOX controller driver, in atomic
++	struct ref_tracker *vblank_wakeref;
+ };
+ 
+ struct intel_dp {
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -3982,14 +3982,20 @@ void intel_psr_notify_vblank_enable_disa
+ 					    bool enable)
+ {
+ 	struct intel_encoder *encoder;
+-	bool block_dc_states = false;
+ 
+ 	for_each_intel_encoder_with_psr(display->drm, encoder) {
+ 		struct intel_dp *intel_dp = enc_to_intel_dp(encoder);
+ 
+ 		mutex_lock(&intel_dp->psr.lock);
+-		if (CAN_PANEL_REPLAY(intel_dp))
+-			block_dc_states = true;
++		if (CAN_PANEL_REPLAY(intel_dp)) {
++			if (enable)
++				intel_dp->psr.vblank_wakeref =
++					intel_display_power_get(display,
++								POWER_DOMAIN_DC_OFF);
++			else
++				intel_display_power_put(display, POWER_DOMAIN_DC_OFF,
++							intel_dp->psr.vblank_wakeref);
++		}
+ 
+ 		if (intel_dp->psr.enabled && !intel_dp->psr.panel_replay_enabled &&
+ 		    intel_dp->psr.pkg_c_latency_used)
+@@ -3997,18 +4003,6 @@ void intel_psr_notify_vblank_enable_disa
+ 
+ 		mutex_unlock(&intel_dp->psr.lock);
+ 	}
+-
+-	/*
+-	 * NOTE: intel_display_power_set_target_dc_state is used
+-	 * only by PSR code for DC3CO handling. DC3CO target
+-	 * state is currently disabled in * PSR code. If DC3CO
+-	 * is taken into use we need take that into account here
+-	 * as well.
+-	 */
+-	if (block_dc_states)
+-		intel_display_power_set_target_dc_state(display, enable ?
+-							DC_STATE_DISABLE :
+-							DC_STATE_EN_UPTO_DC6);
+ }
+ 
+ static void
 
 
