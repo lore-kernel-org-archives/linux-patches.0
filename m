@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881592D3A69;
-	Sun,  7 Jun 2026 10:36:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3749C2D3A69;
+	Sun,  7 Jun 2026 10:36:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828575; cv=none; b=rvA1G5QAjHj+p9zVCB0QncX/Q4U/+napAFPcVEpwqgLfG3fuICMCAq+o6UiRplbqJeHj1bLbfLcTwMipKUglbFg3D+yAo+SP7DrVdCVJ5tONcVowJFGZmz66lZ4rMNkS5PCe4mE0EBVLugUpZ6JChASSDkmBce7IS4lK52Mod/A=
+	t=1780828579; cv=none; b=tw5QxE6z8IyEAj2jF6sxUXDUCik+m19RqIqdGR7+zZMdWUnAfOWvhSu1af1rI1oPYrnSOhEBBtAexducZRg5SA4RxhN2LfEy9OJKNLz3BhzjMXfxgf0tfD6exDcQt2qxawYz4+iIG+qE96zfsWPSmZjsoknW+juig0J+euJWzsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828575; c=relaxed/simple;
-	bh=ZKT4kSsdRfDd+Pe7X4wHESU+sIq3YsPTOIthWMIEII0=;
+	s=arc-20240116; t=1780828579; c=relaxed/simple;
+	bh=McylQNd1GvpJTfwRgqRv0DxP/SU8j4htkU/hRPoy9tk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=idRCdPcR02XE4kdEP4hT+la7slEZHu7ENlZOzOEy5po3ogq0WpyzTFwT+U0SFJvsWsdSaipjGyM3oOvgkrEfqHoongHxHGgyoF1KmkJff4cWYaJrZasIiOMYMft8QU/QTv+CkIpaL4hvDmhY0anQo/hyDHT+m5yT9o/eTaAju+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNtmPsHX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U1MIUsvzeV9AATabStqLVWSsMmUCGDP1xC10tM7wn3XA311K8nLzOP629xUWB0YqJkO9mPQooyzDg6fcADkpa3BMfUZHT+RIs6rmPZ+D6cSqKzp4pJYPJb1pQ8Nj1vu1nNaqMUA9JZiwwQb/RMv4otX6u1WYtF1SyLV8+6SmE0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjBhH/wA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNtmPsHX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C196A1F00893;
-	Sun,  7 Jun 2026 10:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjBhH/wA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 482C81F00893;
+	Sun,  7 Jun 2026 10:36:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828574;
-	bh=BVcr8vnjU5eklYHUW8VRvKsjqbjULtxYt/D6fs3iOLw=;
+	s=korg; t=1780828578;
+	bh=0XxCih5J20vg3yfPPTudKnMTh/jAc5DL4s27ya/p5ww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WNtmPsHXHlhRLpq5Dt/oL342NRQy/pDqQFNi6RlrHJNLMvnzI7LvmMZDbyqHSC+7c
-	 QMzFkXfHfLHy/VlHB8mtaNQMShWpV/PPCufHDsKnk1y52ACVtdKs6lHE3vzicqR2Jf
-	 s8ed7mQpbyqzZf/02d8i675Xs611d4XCBlg5VEnM=
+	b=YjBhH/wAUMBrwQpK3evAstHF8XZC2XL7IE+0NlSMkPIt4y+yluvp/G6OUdfUNIi7B
+	 vYtbCkVzik8x12VIBASLCcQzFdf7RvKT0Fg1PXcxu0ZN4QPOqTz/cT5GiQ6erww9Vg
+	 j9NQ+Y3BoB8ZZKC/EqGMuEbkJpbTx8inxPiRiajk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Svyatoslav Ryhel <clamor95@gmail.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 7.0 194/332] iio: Fix iio_multiply_value use in iio_read_channel_processed_scale
-Date: Sun,  7 Jun 2026 11:59:23 +0200
-Message-ID: <20260607095735.186250735@linuxfoundation.org>
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.12 149/307] Input: xpad - fix out-of-bounds access for Share button
+Date: Sun,  7 Jun 2026 11:59:06 +0200
+Message-ID: <20260607095733.198791924@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +45,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Svyatoslav Ryhel <clamor95@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit bb21ee31f5753a7972148798fd7dfb841dd33bdb upstream.
+commit 6cdc46b38cf146ce81d4831b6472dbf7731849a2 upstream.
 
-The function iio_multiply_value returns IIO_VAL_INT (1) on success or a
-negative error number on failure, while iio_read_channel_processed_scale
-should return an error code or 0. This creates a situation where the
-expected result is treated as an error. Fix this by checking the
-iio_multiply_value result separately, instead of passing it as a return
-value.
+xpadone_process_packet() receives len directly from urb->actual_length
+and uses it to index the share-button byte at data[len - 18] or
+data[len - 26]. Since both len and data[0] are under the device's
+control, a broken controller can send a GIP_CMD_INPUT packet with
+actual_length < 18 (e.g. 5 bytes) and reach this code path, causing
+accesses beyond the actual array.
 
-Fixes: 05f958d003c9 ("iio: Improve iio_read_channel_processed_scale() precision")
-Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fix this by calculating the offset and checking bounds against the
+packet length.
+
+Reported-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4ef46367073b ("Input: xpad - fix Share button on Xbox One controllers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/inkern.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/input/joystick/xpad.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/iio/inkern.c
-+++ b/drivers/iio/inkern.c
-@@ -738,7 +738,11 @@ int iio_read_channel_processed_scale(str
- 		if (ret < 0)
- 			return ret;
- 
--		return iio_multiply_value(val, scale, ret, pval, pval2);
-+		ret = iio_multiply_value(val, scale, ret, pval, pval2);
-+		if (ret < 0)
-+			return ret;
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -1081,10 +1081,10 @@ static void xpadone_process_packet(struc
+ 		input_report_key(dev, BTN_START,  data[4] & BIT(2));
+ 		input_report_key(dev, BTN_SELECT, data[4] & BIT(3));
+ 		if (xpad->mapping & MAP_SHARE_BUTTON) {
+-			if (xpad->mapping & MAP_SHARE_OFFSET)
+-				input_report_key(dev, KEY_RECORD, data[len - 26] & BIT(0));
+-			else
+-				input_report_key(dev, KEY_RECORD, data[len - 18] & BIT(0));
++			u32 offset = (xpad->mapping & MAP_SHARE_OFFSET) ? 26 : 18;
 +
-+		return 0;
- 	} else {
- 		ret = iio_channel_read(chan, val, NULL, IIO_CHAN_INFO_RAW);
- 		if (ret < 0)
++			if (len >= offset)
++				input_report_key(dev, KEY_RECORD, data[len - offset] & BIT(0));
+ 		}
+ 
+ 		/* buttons A,B,X,Y */
 
 
