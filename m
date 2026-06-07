@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3D92E3AF1;
-	Sun,  7 Jun 2026 10:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44DDA4204E;
+	Sun,  7 Jun 2026 10:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829693; cv=none; b=roBIBuYsVAkjlfbXP84ogYIXb3zQ+wUVmUMCshsc/mZO1XlLGkiX8TLSyBcjnR9LwPzOZ1uR+VZnt0IupaoY3I7SbZNA998Nbn0KHfqwydCxd5H8GQHVpBIRzD/XRweTEXTJ0U4eulMjnGHPR49tIhOz31PYWoWmWDop5doYwBY=
+	t=1780829697; cv=none; b=pwGd3I1t7JvFH9AS8LkvYlzlxzWCSZcPQSXqxI04JKfEbgwAhN5+qMyoJNZZpWqh9ExMpgBYaGA2ite7azGjy+HuWvX40VGNB5CEo8cMH50Nk8HgoNfOCpcugP75t4gDse6EmvoEHVuYnvUIJZin37Ej/DrG8sZ/2tSikSErz/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829693; c=relaxed/simple;
-	bh=OFKTwsu4CHn6OcwYCzVp+20D2A8H188dWHzaYhymSVs=;
+	s=arc-20240116; t=1780829697; c=relaxed/simple;
+	bh=SsU8QYoaSYylEmrSYNuU1xobibhAAQcPs6l7eB6Xu5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A2TC1t48VBGwAn0s9RcdxA15eBn/EkC78RNvmAX7sl2G6BQPYJiYo38BBrL5U4ZTM60LU0CuZAkX/YEfazJS10bE/7n8BHm4Cw+kUi4b84DvQOdKXNw7rVfTZ+QdNG+dwfgYrscY5OEpiDCn0sgz7DHCAprseYg9uB2OeWf8/WQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DnWcgzKk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PU7ejsxCuy2b6AE3nacYWFfQCNhv2Uho5XU11GgyGqaEKLt/8RnIF/K16ubAnIs6ikL5/tXmFZNEQOv4g9lbh62zN3/Q4Hd49wCItWYADnVXgR1vmoHbblB5n9KLYJdSZZal/BXGAfyYT9cdPNL2p5AK3KIwz2l4COtdwN8SBCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWrZUH/1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DnWcgzKk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C1FC1F00893;
-	Sun,  7 Jun 2026 10:54:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWrZUH/1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F471F00893;
+	Sun,  7 Jun 2026 10:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829692;
-	bh=5fSG4T46aGGIbtVTWx7N8GEh/EeyHLZaulPiOxJcbgs=;
+	s=korg; t=1780829696;
+	bh=0diksRj4cWQ7i+dUikheq3XA/OaIPJL71J8JQ57oOWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DnWcgzKkJiRFYf8dIbcgzAdhZF3I+IEm0+qUgWqJQBxCO98nheH3AvjmIYirJs/QN
-	 MtWoeU8c097YCb6EkCc0UGiZ5WWZXTh7Uz+n34/1wcmTgRYhorg0wy87sbAM3ynbF5
-	 BbI9ADMgubHhjg5yvAgQiRzktp8hJpdK2OT3hvXo=
+	b=UWrZUH/1O8nXVooRzriBtLaOJ/twChSDsRb8dDiPysJSh/EL7tVEn3ei8otf/9hft
+	 cCxplbM2STGb+Z4D2ByZpW6/bFevg8JWJV1jB5n3x/fIuxtgskNvcfl+F1KzRPyx3H
+	 kVYn4Eo8kLVEfpZmsgvJzG7SCUbiYV/VFchzCe9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,12 +30,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Vitaly Prosyak <vitaly.prosyak@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 271/315] drm/amdgpu: fix calling VM invalidation in amdgpu_hmm_invalidate_gfx
-Date: Sun,  7 Jun 2026 12:00:58 +0200
-Message-ID: <20260607095737.517833520@linuxfoundation.org>
+Subject: [PATCH 7.0 306/332] drm/amdgpu: fix calling VM invalidation in amdgpu_hmm_invalidate_gfx
+Date: Sun,  7 Jun 2026 12:01:15 +0200
+Message-ID: <20260607095739.315557951@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,7 +48,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -83,7 +83,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	mutex_unlock(&adev->notifier_lock);
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -1610,6 +1610,7 @@ int amdgpu_vm_handle_moved(struct amdgpu
+@@ -1613,6 +1613,7 @@ int amdgpu_vm_handle_moved(struct amdgpu
  {
  	struct amdgpu_bo_va *bo_va;
  	struct dma_resv *resv;
@@ -91,7 +91,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	bool clear, unlock;
  	int r;
  
-@@ -1629,11 +1630,13 @@ int amdgpu_vm_handle_moved(struct amdgpu
+@@ -1632,11 +1633,13 @@ int amdgpu_vm_handle_moved(struct amdgpu
  	while (!list_empty(&vm->invalidated)) {
  		bo_va = list_first_entry(&vm->invalidated, struct amdgpu_bo_va,
  					 base.vm_status);
