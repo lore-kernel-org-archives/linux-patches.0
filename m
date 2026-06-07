@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8BE1DE8AE;
-	Sun,  7 Jun 2026 10:08:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046782E1EFC;
+	Sun,  7 Jun 2026 10:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826921; cv=none; b=kiisx88dQd5t/MY4p5KyB1r0cPDpQI/LLrHBE9wU2wzd2b9goNMk1XLIFgOO+PsDSZpYH3Py2fWOlkDojkYMcQYtrjwCVgCKnLBp8Ng/zH28jGi0/Rxu3SiOga30q8wEtSSwacNWSSyaCjor5D2b3SF+oWca5/128c6YHiZ6KHY=
+	t=1780826924; cv=none; b=cgiA4Ia4h/DEJxiTPWfbxPjSBOD5mrD149rlwrmuxo3oCwVgyTsj2wiyDKZ3hEwohS25khSoLDzvBvujbQggYj/eMC8R/t0pYIomt3U/4l1XxZTEEqctIWNrFTwEheObcibUFOjKcFwBn9eNgqblcti5jDTFr8MX4S+JRTEeAT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826921; c=relaxed/simple;
-	bh=6h3WX728kUUbmex5HA2outUGuNIv61xUWy/KwyZFRgc=;
+	s=arc-20240116; t=1780826924; c=relaxed/simple;
+	bh=mrulElXfk0E68t5NqnefzJzMsQ4evp6pIvq3xrNGWHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJuBQlcaDHIyzAMi2mVJAM31kY98mp/1J9gmyBVRTZT47kYZyFm3npYu9Rpx3kGn0u3w+oPoNz3bDuYgxll0G2aiWH+QTY28t5rwsLJYLHZ0gq6Qxfo11yzbjeNsbvJlrGU/kGsyFo41lnngoxpxw8Y/s3SxfZdEGeqkFcpTxWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fCTX0K+H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q8UC4MMEhon7bI//DkIIQ2QdGuQHDXMe1EQ/+KFHF+xV6WMFdQLU2X2NW65g16w1hFOvmnD9XZN4jKPogrRjIwrDwzuQbmTqznVTpbkhCKpU/0C6U1rYdVi59d/2L63IGmcFGLPToPqpjqyZ8hoFivzpQQ15IA2X/y9kyu2WyuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gb65lqAT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fCTX0K+H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0065C1F00893;
-	Sun,  7 Jun 2026 10:08:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gb65lqAT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4571F00893;
+	Sun,  7 Jun 2026 10:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826920;
-	bh=ukTDgJK7e3z10nFRiHtRT4EpHdpSA8ulfAyeikQFoek=;
+	s=korg; t=1780826923;
+	bh=+K1vlW+de/8c45x3YMfq9n0YymkYsCO8z8ctI66MSeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fCTX0K+HAI0oeEGOzzx2K1wrxZhSNqXEyjqpHXIH/iRHvUTKpX7kchNT9iLAM/33D
-	 NsoeKpuSYDDzGxszYnGhEzZsaDgGU1kAASR08lmmkG7xoBnlkdQviZUgJmAtltSJgc
-	 2vc1c2149SlXSDGfm44kY9Byh+Efy6AspwXvHqL0=
+	b=Gb65lqATkKO7qE2lmHGlNXZbwo8OdoTsI5qGyouP8GiY10+h/T3l57WzkD03HQGnK
+	 dIwrNSKj1cCjZ75b1fFl1njuRgahFn7jK4cgh922L8yeDp14eIMLEnqzQy5K3MwPJf
+	 RNex6cI0c+F28f8Nm0yOhc7C/j6BBC0H2oB/fweY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Halil Pasic <pasic@linux.ibm.com>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 027/332] net/smc: Do not re-initialize smc hashtables
-Date: Sun,  7 Jun 2026 11:56:36 +0200
-Message-ID: <20260607095729.083162424@linuxfoundation.org>
+Subject: [PATCH 6.18 023/315] net: netlink: fix sending unassigned nsid after assigned one
+Date: Sun,  7 Jun 2026 11:56:50 +0200
+Message-ID: <20260607095728.342130603@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,61 +48,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit 9e4389b0038781f19f97895186ed941ff8ac1678 ]
+[ Upstream commit 70f8592ee90585272018a725054b6eb2ab7e99ca ]
 
-INIT_HLIST_HEAD(&smc_v*_hashinfo.ht) are called after smc_nl_init(),
-proto_register() and sock_register(). This can lead to smc_v*_hashinfo.ht
-being reset even though hash entries already exist and are being used,
-possibly resulting in a corrupted list.
+If the current skb is not shared, it is re-used directly for all the
+sockets subscribed to the notification.  If we have remote all-nsid
+socket receiving a message first, then the 'nsid_is_set' will be
+set to 'true'.  If the nsid is NOT_ASSIGNED for the next socket in
+the list, the 'nsid_is_set' will remain 'true' and the negative value
+is be delivered to the user space.  All subsequent nsid values will be
+delivered as well, since there is no code path that sets the flag
+back to 'false'.
 
-Remove unnecessary and dangerous re-initialisation of smc_v*_hashinfo.ht in
-smc_init(); it is implicitly initialised to zero anyhow. Add
-HLIST_HEAD_INIT to the definitions for clarity.
+Fix that by always dropping the flag to 'false' first.
 
-Fixes: f16a7dd5cf27 ("smc: netlink interface for SMC sockets")
-Suggested-by: Halil Pasic <pasic@linux.ibm.com>
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Acked-by: Halil Pasic <pasic@linux.ibm.com>
-Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Link: https://patch.msgid.link/20260521145639.10317-1-wintera@linux.ibm.com
+Fixes: 7212462fa6fd ("netlink: don't send unknown nsid")
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Acked-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Link: https://patch.msgid.link/20260520172317.175168-2-i.maximets@ovn.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netlink/af_netlink.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index f744f791121776..de034a3e5d801f 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -188,10 +188,12 @@ static bool smc_hs_congested(const struct sock *sk)
- 
- struct smc_hashinfo smc_v4_hashinfo = {
- 	.lock = __RW_LOCK_UNLOCKED(smc_v4_hashinfo.lock),
-+	.ht = HLIST_HEAD_INIT,
- };
- 
- struct smc_hashinfo smc_v6_hashinfo = {
- 	.lock = __RW_LOCK_UNLOCKED(smc_v6_hashinfo.lock),
-+	.ht = HLIST_HEAD_INIT,
- };
- 
- int smc_hash_sk(struct sock *sk)
-@@ -3522,8 +3524,6 @@ static int __init smc_init(void)
- 		pr_err("%s: sock_register fails with %d\n", __func__, rc);
- 		goto out_proto6;
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 2b46c0cd752a31..0e6dfd01d9b419 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1484,6 +1484,7 @@ static void do_one_broadcast(struct sock *sk,
+ 		p->skb2 = NULL;
+ 		goto out;
  	}
--	INIT_HLIST_HEAD(&smc_v4_hashinfo.ht);
--	INIT_HLIST_HEAD(&smc_v6_hashinfo.ht);
- 
- 	rc = smc_ib_register_client();
- 	if (rc) {
++	NETLINK_CB(p->skb2).nsid_is_set = false;
+ 	NETLINK_CB(p->skb2).nsid = peernet2id(sock_net(sk), p->net);
+ 	if (NETLINK_CB(p->skb2).nsid != NETNSA_NSID_NOT_ASSIGNED)
+ 		NETLINK_CB(p->skb2).nsid_is_set = true;
 -- 
 2.53.0
 
