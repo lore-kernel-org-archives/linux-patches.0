@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8269329E7E;
-	Sun,  7 Jun 2026 11:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAB738C42F;
+	Sun,  7 Jun 2026 11:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780830074; cv=none; b=kNS5Uur0crZh7wixY50ov16RvkfT5/aH+o16LpC/EymE9WEVGRjeU+DPgZzQfH1VDKNs2ITGkwpaXyYlcs9iaECK/Vum2fiMTuxC1pBEODRkv53GbjqH5Szxtl/Z6atRhaCJujaWS/Wc7CRDMDY3zlyJN1yYLNu7p8XGuqylmSA=
+	t=1780830077; cv=none; b=Uc7bOEDxIF07CYUHvlV7DhBmfVIf7WcsoiRU9DOIFsyAol04gPOduB75x/6ONGOkkCZkWtu0RqfVUUB5z17CQeR/DuCZo94ImaZKtiafxH/Xz1xT9fV30lvcP2YF24Y6jH5/gpRqNfPEyCIEdzb1ndO3q190FeaIY0xLt19nH/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780830074; c=relaxed/simple;
-	bh=oETVfUFfp9issG7olJPJkPMpa5hI0+EOWV9zA2ToWHU=;
+	s=arc-20240116; t=1780830077; c=relaxed/simple;
+	bh=WZFh+OlSyc2w3bCVNJIHHj68wtcvkmY5Z/ZAVURhc5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LvBmIAylMNTVDNZBjDkzrXaU81vt0OfVHozmPNYVUHYNZAXwlpJ9sxXTC/QS6+RV4BcQ8Ufyj+4qz3g6Z6xFCRJ/YiO1hm8OFmPjgU5GA9ZFHAkm/4g6kgoECU9w0+yaOPPo5MdkJzBg/uqbHLtVf1eHE4MwBFF0M2STX98XMPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U5WVnfk7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ih82+oKFEE77XW+MjbU7xGIljnJ5qPSWWbDlL8EsKLpinW0kwTNp/5FZ8z6kyGAFMml4yiyUo/eROn1tfteYqVJDwfoHu6azx9BZx6p9rcBwnEYzuY64FT4Cy4wKQMVhcuYikpQKVFSBwtzN56hHk7ayMUp6qUwbFuPhAN6SGn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tMBDwXYi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U5WVnfk7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3951F00893;
-	Sun,  7 Jun 2026 11:01:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tMBDwXYi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7ED1F00898;
+	Sun,  7 Jun 2026 11:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780830070;
-	bh=hibl2AUlHySLgyusV5PJylusDy696cKsefQWjsgsSMQ=;
+	s=korg; t=1780830074;
+	bh=g/5yHgika8yrEts1iVG0Ma2Yo6D8mFL9Sl4iQbrnmNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U5WVnfk7MsPtz+dFMsUEt8tb5CS0YSW6ZJOGNvgRJGDy2n7wlF4ug4nGTX9AdjfuS
-	 Hl7zmSKNRg1Ks1uJI7sRUrI+t/uN/vgkBRxeWsJhHl8ASdoTsVOJz/VcnoMtbeX+9+
-	 anz4OjaaMoEqLxFLYIQLtxE9CDU+gjoQAggbaZ1A=
+	b=tMBDwXYiZq7XuZFbm+cEy6DU/dILhwjUWiHnRZW76DxOTozbug1eJZT8fTgwpZS1X
+	 WdMCjdUrW+9AjnyFiEptFXrRso+qdfFrij/9tAFeLtBPCYMwNnuyEdtcfIH5NpolKa
+	 IQVGCjYU4lGPEnG0BPYW6lQtx7jZef2EHGaSXRls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiasong <lixiasong1@huawei.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 279/307] mptcp: pm: fix ADD_ADDR timer infinite retry on option space insufficient
-Date: Sun,  7 Jun 2026 12:01:16 +0200
-Message-ID: <20260607095737.977563876@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.18 306/315] USB: serial: mct_u232: fix memory corruption with small endpoint
+Date: Sun,  7 Jun 2026 12:01:33 +0200
+Message-ID: <20260607095738.847250526@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,151 +45,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Xiasong <lixiasong1@huawei.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 51e398a3b8961b26a8c0a4ba9a777c5339791707 ]
+commit 915b36d701950503c4ea0f6e314b10868e59fce3 upstream.
 
-When TCP option space is insufficient (e.g., when sending ADD_ADDR with an
-IPv6 address and port while tcp_timestamps is enabled), the original code
-jumped to out_unlock without clearing the addr_signal flag. This caused
-mptcp_pm_add_timer to keep rescheduling indefinitely, not sending ADD_ADDR,
-preventing subsequent addresses in the endpoint list from being announced.
+The driver overrides the maximum transfer size for a specific device
+which only accepts 16 byte packets for its 32 byte bulk-out endpoint.
 
-Handle this case by clearing the ADD_ADDR signal and skipping the matching
-ADD_ADDR retransmission entry. The skip path cancels the matching timer
-(with id check) and advances PM state progression, preserving forward
-progress to subsequent PM work.
+Make sure to never increase the maximum transfer size to prevent slab
+corruption should a malicious device report a smaller endpoint max
+packet size than expected.
 
-This cancellation is inherently best-effort. A concurrent add_timer
-callback may already be running and may acquire pm.lock before the
-cancel path updates entry state. In that case, one final ADD_ADDR
-transmit attempt can still be executed.
-
-Once the cancel path sets entry->retrans_times to ADD_ADDR_RETRANS_MAX,
-the callback-side retrans_times check suppresses further ADD_ADDR
-retransmissions.
-
-Note that when an ADD_ADDR is being prepared, a pure-ACK is queued. On
-the output side, it means that it is fine to skip non-pure-ACK packets,
-when drop_other_suboptions is set: a pure-ACK will be processed soon
-after.
-
-Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260515-net-mptcp-misc-fixes-7-1-rc4-v2-2-701e96419f2f@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm.c         |   40 +++++++++++++++++++++++++++++++++-------
- net/mptcp/pm_netlink.c |   16 +++++++++++++---
- 2 files changed, 46 insertions(+), 10 deletions(-)
+ drivers/usb/serial/mct_u232.c |   21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/net/mptcp/pm.c
-+++ b/net/mptcp/pm.c
-@@ -334,6 +334,7 @@ bool mptcp_pm_add_addr_signal(struct mpt
- 			      struct mptcp_addr_info *addr, bool *echo,
- 			      bool *drop_other_suboptions)
+--- a/drivers/usb/serial/mct_u232.c
++++ b/drivers/usb/serial/mct_u232.c
+@@ -378,6 +378,7 @@ static int mct_u232_port_probe(struct us
  {
-+	bool skip_add_addr = false;
- 	int ret = false;
- 	u8 add_addr;
- 	u8 family;
-@@ -355,24 +356,49 @@ bool mptcp_pm_add_addr_signal(struct mpt
+ 	struct usb_serial *serial = port->serial;
+ 	struct mct_u232_private *priv;
++	u16 pid;
+ 
+ 	/* check first to simplify error handling */
+ 	if (!serial->port[1] || !serial->port[1]->interrupt_in_urb) {
+@@ -385,6 +386,16 @@ static int mct_u232_port_probe(struct us
+ 		return -ENODEV;
  	}
  
- 	*echo = mptcp_pm_should_add_signal_echo(msk);
--	port = !!(*echo ? msk->pm.remote.port : msk->pm.local.port);
--
--	family = *echo ? msk->pm.remote.family : msk->pm.local.family;
--	if (remaining < mptcp_add_addr_len(family, *echo, port))
--		goto out_unlock;
--
- 	if (*echo) {
- 		*addr = msk->pm.remote;
- 		add_addr = msk->pm.addr_signal & ~BIT(MPTCP_ADD_ADDR_ECHO);
-+		port = !!msk->pm.remote.port;
-+		family = msk->pm.remote.family;
- 	} else {
- 		*addr = msk->pm.local;
- 		add_addr = msk->pm.addr_signal & ~BIT(MPTCP_ADD_ADDR_SIGNAL);
-+		port = !!msk->pm.local.port;
-+		family = msk->pm.local.family;
- 	}
--	WRITE_ONCE(msk->pm.addr_signal, add_addr);
-+
-+	if (remaining < mptcp_add_addr_len(family, *echo, port)) {
-+		struct net *net = sock_net((struct sock *)msk);
-+
-+		if (!*drop_other_suboptions)
-+			goto out_unlock;
-+
-+		if (*echo) {
-+			MPTCP_INC_STATS(net, MPTCP_MIB_ECHOADDTXDROP);
-+		} else {
-+			skip_add_addr = true;
-+			MPTCP_INC_STATS(net, MPTCP_MIB_ADDADDRTXDROP);
-+		}
-+		goto drop_signal_mark;
-+	}
-+
- 	ret = true;
- 
-+drop_signal_mark:
-+	WRITE_ONCE(msk->pm.addr_signal, add_addr);
-+
- out_unlock:
- 	spin_unlock_bh(&msk->pm.lock);
-+
-+	/* On pure-ACK option-space exhaustion, stop retrying this ADD_ADDR:
-+	 * clear the signal bit, cancel the matching retransmission timer, and
-+	 * let the PM state machine progress.
++	/*
++	 * Compensate for a hardware bug: although the Sitecom U232-P25
++	 * device reports a maximum output packet size of 32 bytes,
++	 * it seems to be able to accept only 16 bytes (and that's what
++	 * SniffUSB says too...)
 +	 */
-+	if (skip_add_addr) {
-+		mptcp_pm_del_add_timer(msk, addr, true);
-+		mptcp_pm_subflow_established(msk);
-+	}
- 	return ret;
- }
++	pid = le16_to_cpu(serial->dev->descriptor.idProduct);
++	if (pid == MCT_U232_SITECOM_PID)
++		port->bulk_out_size = min(16, port->bulk_out_size);
++
+ 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+ 		return -ENOMEM;
+@@ -410,7 +421,6 @@ static void mct_u232_port_remove(struct
  
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -320,7 +320,13 @@ static void mptcp_pm_add_timer(struct ti
+ static int  mct_u232_open(struct tty_struct *tty, struct usb_serial_port *port)
+ {
+-	struct usb_serial *serial = port->serial;
+ 	struct mct_u232_private *priv = usb_get_serial_port_data(port);
+ 	int retval = 0;
+ 	unsigned int control_state;
+@@ -418,15 +428,6 @@ static int  mct_u232_open(struct tty_str
+ 	unsigned char last_lcr;
+ 	unsigned char last_msr;
  
- 	spin_lock_bh(&msk->pm.lock);
- 
--	if (!mptcp_pm_should_add_signal_addr(msk)) {
-+	/* The cancel path (mptcp_pm_del_add_timer()) can race with this
-+	 * callback. Once cancel updates retrans_times to MAX, suppress further
-+	 * retransmissions here. If this callback acquires pm.lock first, one
-+	 * final transmit attempt is still possible.
-+	 */
-+	if (entry->retrans_times < ADD_ADDR_RETRANS_MAX &&
-+	    !mptcp_pm_should_add_signal_addr(msk)) {
- 		pr_debug("retransmit ADD_ADDR id=%d\n", entry->addr.id);
- 		mptcp_pm_announce_addr(msk, &entry->addr, false);
- 		mptcp_pm_add_addr_send_ack(msk);
-@@ -368,8 +374,12 @@ mptcp_pm_del_add_timer(struct mptcp_sock
- 	/* Note: entry might have been removed by another thread.
- 	 * We hold rcu_read_lock() to ensure it is not freed under us.
- 	 */
--	if (stop_timer)
--		sk_stop_timer_sync(sk, &entry->add_timer);
-+	if (stop_timer) {
-+		if (check_id)
-+			sk_stop_timer(sk, &entry->add_timer);
-+		else
-+			sk_stop_timer_sync(sk, &entry->add_timer);
-+	}
- 
- 	rcu_read_unlock();
- 	return entry;
+-	/* Compensate for a hardware bug: although the Sitecom U232-P25
+-	 * device reports a maximum output packet size of 32 bytes,
+-	 * it seems to be able to accept only 16 bytes (and that's what
+-	 * SniffUSB says too...)
+-	 */
+-	if (le16_to_cpu(serial->dev->descriptor.idProduct)
+-						== MCT_U232_SITECOM_PID)
+-		port->bulk_out_size = 16;
+-
+ 	/* Do a defined restart: the normal serial device seems to
+ 	 * always turn on DTR and RTS here, so do the same. I'm not
+ 	 * sure if this is really necessary. But it should not harm
 
 
