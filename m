@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4800912CDA5;
-	Sun,  7 Jun 2026 10:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD590257855;
+	Sun,  7 Jun 2026 10:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828452; cv=none; b=g05ZXe0+v569gH5VkBtCxAqjiK/UBNAv4s4ZHXXiSkQDVdFSZ3YGvLIrpcBloB2iBAkqtX8W3gAfN+rFc/yYK6u9eiuefemjLQIWAQSHSiY2MFLaTA2GVv82ZaxlTKqm9SOP8+umlSyJ1qtw361jR7tjtcPn3fiVo4Qyvlm3OHQ=
+	t=1780828461; cv=none; b=tNRWNIAQ+RjwBG92j+hdbHtHHl9mOf59NxTJuL1gzrcYQOj70OdgsfEQju1mcwVznFhOmv0aXY1+KhppI0L8wqrrMCQQDOH+8eiG5rw+AoACCyLmDG3ndjftTgf9eRiq5mEUV/IdM4gBn6p7lJmzfBp9zsY3o0xXLnRLSFXhkqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828452; c=relaxed/simple;
-	bh=6OCilophEIHUpoRH48neu2mYotDRu+Qkn8q3tlei2K8=;
+	s=arc-20240116; t=1780828461; c=relaxed/simple;
+	bh=pZ8y7PiBTLiM2jDG/yfTp6Knecl2+ZBZp3h1Vxdr1rE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ifCrvrJdCZ2cy+FO3J3TFaFVaDo1KX330ZegA4f21q5tz5FCW4hxdmlNuLH0Q8cunaLMghq6MyO/jpEOkS6lFBlg5NGpAl3r9EZqK37eb0BMnhffPLyuco2V1dM3KJWBzg7bEcZL1HHo2T0eMsVJvB2GoteOcPLDjhOI8GJRS5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rqi9V8nP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dF7JsKkruCv4uzmGrN5vYjcRS3fGW72t1vmhRTMtGCAeSHz4XYptNbsWBdkWARCHlFhVwyYKhYO+zQSNyvY+tq91EhKs5YvqlhyRW9/W0XHKqHq/KB26rCmTbeIjAYT/maay8PF0Y6upksp9mzwEKz7oSbLDX1T867IMMI+Ot6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DS/vIuoR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rqi9V8nP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232101F00893;
-	Sun,  7 Jun 2026 10:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DS/vIuoR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1393A1F00893;
+	Sun,  7 Jun 2026 10:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828451;
-	bh=GbIB+PNazU5g8Fa4kph1LzNL5Wey/704joyZzd6LkgI=;
+	s=korg; t=1780828460;
+	bh=j7SDc8Rx+Mv1sHgZT1afRD/84N4pW8R1Z+Hllh44XNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rqi9V8nPKOgeQ7PBZGFyBUffn+eHV4V5xMpiCMU13fkWyCsCOJNtWd7lgKQ9OO65p
-	 V4AdoK2Gha+UbbSBFW8nQrKFW/jSV/q5uEYOOEbBC5DY1IcUW7mYuVBg6RTWu1ERKY
-	 ZXHazkUYmjKL1gsuVoCNThc/3RgrQ4hda5pdHeFs=
+	b=DS/vIuoRQAdB4CvM4jh3eRrUIigauOc43sJ/cKcyZX5QvHtWaF3Wu1yp26InDSNQG
+	 TL4DXpEbtCFgisZX+jiNXeiv3qf+kmwAEzoNvvSeI2XV3pe0UnKAqoiSeggc23Fdov
+	 jFcL3rPgurxcCM5wglIylbgM5R80BpnBYp6gtwyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Zhang <shuai.zhang@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 139/307] Bluetooth: btusb: Allow firmware re-download when version matches
-Date: Sun,  7 Jun 2026 11:58:56 +0200
-Message-ID: <20260607095732.837928183@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ben Hutchings <benh@debian.org>,
+	Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Subject: [PATCH 6.18 137/315] parport: Fix race between port and client registration
+Date: Sun,  7 Jun 2026 11:58:44 +0200
+Message-ID: <20260607095732.638885358@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,61 +47,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+From: Ben Hutchings <benh@debian.org>
 
-commit 82855073c1081732656734b74d7d1d5e4cfd0da7 upstream.
+commit ef15ccbb3e8640a723c42ad90eaf81d66ae02017 upstream.
 
-The Bluetooth host decides whether to download firmware by reading the
-controller firmware download completion flag and firmware version
-information.
+The parport subsystem registers port devices before they are fully
+initialised, resulting in a race condition where client drivers such
+as lp can attach to ports that are not completely initialised or even
+being torn down.
 
-If a USB error occurs during the firmware download process (for example
-due to a USB disconnect), the download is aborted immediately. An
-incomplete firmware transfer does not cause the controller to set the
-download completion flag, but the firmware version information may be
-updated at an early stage of the download process.
+When the port and client drivers are built as modules and loaded
+around the same time during boot, this occasionally results in a
+crash.  I was able to make this happen reliably in a VM with a
+PC-style parallel port by patching parport_pc to fail probing:
 
-In this case, after USB reconnection, the host attempts to re-download
-the firmware because the download completion flag is not set. However,
-since the controller reports the same firmware version as the target
-firmware, the download is skipped. This ultimately results in the
-firmware not being properly updated on the controller.
+> --- a/drivers/parport/parport_pc.c
+> +++ b/drivers/parport/parport_pc.c
+> @@ -2069,7 +2069,7 @@ static struct parport *__parport_pc_probe_port(unsigned long int base,
+>  	if (!p)
+>  		goto out3;
+>
+> -	base_res = request_region(base, 3, p->name);
+> +	base_res = NULL;
+>  	if (!base_res)
+>  		goto out4;
+>
 
-This change removes the restriction that skips firmware download when
-the versions are equal. It covers scenarios where the USB connection
-can be disconnected at any time and ensures that firmware download can
-be retriggered after USB reconnection, allowing the Bluetooth firmware
-to be correctly and completely updated.
+and then running:
 
-Fixes: 3267c884cefa ("Bluetooth: btusb: Add support for QCA ROME chipset family")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+    while true; do
+        modprobe lp & modprobe parport_pc
+	wait
+	rmmod lp parport_pc
+    done
+
+for a few seconds.
+
+In the long term I think port registration should be changed to put
+the call to device_add() inside parport_announce_port(), but since the
+latter currently cannot fail this will require changing all port
+drivers.
+
+For now, add a flag to indicate whether a port has been "announced"
+and only try to attach client drivers to ports when the flag is set.
+
+Fixes: 6fa45a226897 ("parport: add device-model to parport subsystem")
+Closes: https://bugs.debian.org/1130365
+Closes: https://lore.kernel.org/all/6ba903ad-9897-42bb-8c2d-337385cc3746@molgen.mpg.de/
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Link: https://patch.msgid.link/afo6uBv68GDevbMD@decadent.org.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/parport/share.c |   11 +++++++++--
+ include/linux/parport.h |    1 +
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3430,7 +3430,13 @@ static int btusb_setup_qca_load_rampatch
- 		    "firmware rome 0x%x build 0x%x",
- 		    rver_rom, rver_patch, ver_rom, ver_patch);
+--- a/drivers/parport/share.c
++++ b/drivers/parport/share.c
+@@ -214,10 +214,14 @@ static void get_lowlevel_driver(void)
+ static int port_check(struct device *dev, void *dev_drv)
+ {
+ 	struct parport_driver *drv = dev_drv;
++	struct parport *port;
  
--	if (rver_rom != ver_rom || rver_patch <= ver_patch) {
-+	/* Allow rampatch when the patch version equals the firmware version.
-+	 * A firmware download may be aborted by a transient USB error (e.g.
-+	 * disconnect) after the controller updates version info but before
-+	 * completion.
-+	 * Allowing equal versions enables re-flashing during recovery.
-+	 */
-+	if (rver_rom != ver_rom || rver_patch < ver_patch) {
- 		bt_dev_err(hdev, "rampatch file version did not match with firmware");
- 		err = -EINVAL;
- 		goto done;
+ 	/* only send ports, do not send other devices connected to bus */
+-	if (is_parport(dev))
+-		drv->match_port(to_parport_dev(dev));
++	if (is_parport(dev)) {
++		port = to_parport_dev(dev);
++		if (test_bit(PARPORT_ANNOUNCED, &port->devflags))
++			drv->match_port(port);
++	}
+ 	return 0;
+ }
+ 
+@@ -532,6 +536,7 @@ void parport_announce_port(struct parpor
+ 		if (slave)
+ 			attach_driver_chain(slave);
+ 	}
++	set_bit(PARPORT_ANNOUNCED, &port->devflags);
+ 	mutex_unlock(&registration_lock);
+ }
+ EXPORT_SYMBOL(parport_announce_port);
+@@ -561,6 +566,8 @@ void parport_remove_port(struct parport
+ 
+ 	mutex_lock(&registration_lock);
+ 
++	clear_bit(PARPORT_ANNOUNCED, &port->devflags);
++
+ 	/* Spread the word. */
+ 	detach_driver_chain(port);
+ 
+--- a/include/linux/parport.h
++++ b/include/linux/parport.h
+@@ -240,6 +240,7 @@ struct parport {
+ 
+ 	unsigned long devflags;
+ #define PARPORT_DEVPROC_REGISTERED	0
++#define PARPORT_ANNOUNCED		1
+ 	struct pardevice *proc_device;	/* Currently register proc device */
+ 
+ 	struct list_head full_list;
 
 
