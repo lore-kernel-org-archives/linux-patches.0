@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E763290C3;
-	Sun,  7 Jun 2026 10:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072AF329C57;
+	Sun,  7 Jun 2026 10:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828172; cv=none; b=QKawphCoIhq+aN8XH+BWWJ8dTKZRR8FCbOXHTs5BAJ1i605TVfq73lx9R0JTcHhawXUkWP0f2/qiW2PVsNh0dLQvakHmbYM/5ismWF1FunKJzU3OMnDRPYjK+hanyrYn37ChyFo9YSVLJy70N5UiaLrJIcNXE98s4EAFKsEY3mQ=
+	t=1780828175; cv=none; b=EVp542EUPjNa+QKI3icH4rNI4jfw5YTaNTPs7sMJjAMbHyrHaJL2abLOM//UYZr3t94lWt28qoDv69F4+7dxusWkk9IRvoyeHAoaCQqIdajB7jCanIpIT06vkhPC3UWXAD3klGW2OCN7dkQy4in70HUsE6DGwkNJN6m1bDAN+/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828172; c=relaxed/simple;
-	bh=+wQ0d6UKEVHBktgTlq6mqJdgzUENBFNYwZ73ZHr4EM8=;
+	s=arc-20240116; t=1780828175; c=relaxed/simple;
+	bh=m9xpfhA5HSKsxrOAavCS+RFywbCU1TMjwyGKJwWi2FI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZUniev0DInPuhEhBWcGexewclwETyR187qEKWw7xhkU5U9ziN+aq4wgwCM6rN/si4B9ESEz61KvnoWE8mD3lfz6N78cZ/iAkNmuutqCu7v6zIb78zpFfZzKquDyLK8o6b3oExiDpY/dxAAiJtqm+1efSjMS+2GbDk/O1TPKK9zU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AEHe9GOI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FUuPu97js8i5tpCeGwWISbxgWPyeZZankKCU1HMm4D5XWqowBma9AM/BAbfbXlElYOoY0DW/CpLhGLj2BbWnKkcD2UtnpPYhwcWOS6qcobPeGUdRdTa3hcKEyxjkjkk8ht6ANNJWRu1Va2tyIHxa3BfQymA7wctlzJTXkIu+RGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11IyC0C0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AEHe9GOI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2C81F00893;
-	Sun,  7 Jun 2026 10:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11IyC0C0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D1E1F00893;
+	Sun,  7 Jun 2026 10:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828170;
-	bh=MkGyi5uoHG6AVpi6qnB03ZwESl0a0ctO5zELKXTj/xA=;
+	s=korg; t=1780828173;
+	bh=0F7PqBRsCyERf+8GJQdAJKGGHAEk5TZZml1cyyqXttc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AEHe9GOIcwS+cJUsW05xKYfqIrH5ZXL6DD0LtW/GdgWPO/7mFt6q4S4VpqkVskhBm
-	 XCOX8EFKozk/uoMcKn5guzOV4mLiTar1X9lu/BC5zDgNu1MO7fhQruUy+BSp7SA6AX
-	 oMI/33/xs9gpZSxni00yq+s4uQqk7y11QoKpHwBQ=
+	b=11IyC0C0CdIqUH4l5XMpQQz8N6XdaWpydkP+gYKg05xyNWDRJEPaY2nUgD2xJwnD6
+	 NQG+5neju6N/cBLcT0MCAyCB1sPTYK2IueQPNlGTjHIV0GHYtRNEAASoO0ZWxuEjaG
+	 aniR5BZ/DkicL0RVFHHyU0OazYg9Ox5d0d3Cp/7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Ma <maqianga@uniontech.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 7.0 160/332] KVM: arm64: PMU: Preserve AArch32 counter low bits
-Date: Sun,  7 Jun 2026 11:58:49 +0200
-Message-ID: <20260607095733.949017022@linuxfoundation.org>
+	Miguel Ojeda <ojeda@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 117/307] HID: core: Fix size_t specifier in hid_report_raw_event()
+Date: Sun,  7 Jun 2026 11:58:34 +0200
+Message-ID: <20260607095732.063958237@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,50 +49,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qiang Ma <maqianga@uniontech.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 1750ad1388e03fb27068cd1f22c9c8b4590fe936 upstream.
+[ Upstream commit 4d3a2a466b8d68d852a1f3bbf11204b718428dc4 ]
 
-AArch32 writes to PMU event counters cannot update the top 32 bits,
-even when PMUv3p5 makes the counters 64-bit. KVM therefore needs to
-preserve the existing high half and only update the low half written by
-the guest, unless the caller explicitly forces a full reset through
-PMCR.P.
+When building for 32-bit platforms, for which 'size_t' is
+'unsigned int', there are warnings around using the incorrect format
+specifier to print bsize in hid_report_raw_event():
 
-The current code masks @val down to the old high half before taking
-lower_32_bits(val), which means the low half is always zero. As a
-result, AArch32 writes to event counters discard the guest-provided low
-32 bits instead of storing them.
+  drivers/hid/hid-core.c:2054:29: error: format specifies type 'long' but the argument has type 'size_t' (aka 'unsigned int') [-Werror,-Wformat]
+   2053 |                 hid_warn_ratelimited(hid, "Event data for report %d is incorrect (%d vs %ld)\n",
+        |                                                                                         ~~~
+        |                                                                                         %zu
+   2054 |                                      report->id, csize, bsize);
+        |                                                         ^~~~~
+  drivers/hid/hid-core.c:2076:29: error: format specifies type 'long' but the argument has type 'size_t' (aka 'unsigned int') [-Werror,-Wformat]
+   2075 |                 hid_warn_ratelimited(hid, "Event data for report %d was too short (%d vs %ld)\n",
+        |                                                                                          ~~~
+        |                                                                                          %zu
+   2076 |                                      report->id, rsize, bsize);
+        |                                                         ^~~~~
 
-Build the new value from the old high 32 bits and the low 32 bits of
-the value supplied by the guest.
+Use the proper 'size_t' format specifier, '%zu', to clear up the
+warnings.
 
-Fixes: 26d2d0594d70 ("KVM: arm64: PMU: Do not let AArch32 change the counters' top 32 bits")
-Signed-off-by: Qiang Ma <maqianga@uniontech.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20260526074640.791991-1-maqianga@uniontech.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2c85c61d1332 ("HID: pass the buffer size to hid_report_raw_event")
+Reported-by: Miguel Ojeda <ojeda@kernel.org>
+Closes: https://lore.kernel.org/20260516020430.110135-1-ojeda@kernel.org/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+(cherry picked from commit 3ab135238832446399614e7a4bb796d620717806)
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/pmu-emul.c |    4 ++--
+ drivers/hid/hid-core.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/kvm/pmu-emul.c
-+++ b/arch/arm64/kvm/pmu-emul.c
-@@ -174,8 +174,8 @@ static void kvm_pmu_set_pmc_value(struct
- 		 * action is to use PMCR.P, which will reset them to
- 		 * 0 (the only use of the 'force' parameter).
- 		 */
--		val  = __vcpu_sys_reg(vcpu, reg) & GENMASK(63, 32);
--		val |= lower_32_bits(val);
-+		val = (__vcpu_sys_reg(vcpu, reg) & GENMASK(63, 32)) |
-+		      lower_32_bits(val);
- 	}
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index d9ea99cdb68e06..87d990ada8688a 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -2015,7 +2015,7 @@ int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *
+ 		return 0;
  
- 	__vcpu_assign_sys_reg(vcpu, reg, val);
+ 	if (unlikely(bsize < csize)) {
+-		hid_warn_ratelimited(hid, "Event data for report %d is incorrect (%d vs %ld)\n",
++		hid_warn_ratelimited(hid, "Event data for report %d is incorrect (%d vs %zu)\n",
+ 				     report->id, csize, bsize);
+ 		return -EINVAL;
+ 	}
+@@ -2037,7 +2037,7 @@ int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *
+ 		rsize = max_buffer_size;
+ 
+ 	if (bsize < rsize) {
+-		hid_warn_ratelimited(hid, "Event data for report %d was too short (%d vs %ld)\n",
++		hid_warn_ratelimited(hid, "Event data for report %d was too short (%d vs %zu)\n",
+ 				     report->id, rsize, bsize);
+ 		return -EINVAL;
+ 	}
+-- 
+2.53.0
+
 
 
