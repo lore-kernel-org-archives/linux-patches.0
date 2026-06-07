@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA556318BB3;
-	Sun,  7 Jun 2026 10:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C8024728F;
+	Sun,  7 Jun 2026 10:15:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827307; cv=none; b=l63/roBwSywev3/uYK8mxRMfI6i2dUwwTdukhf53SLKwgEIiCde9I2enmK3ATxetdWeuJ2Wbc3GvvsVRnTtkwrqQZvmNjaVkQ5n/KtnZnmTscpefyGoaHY/Z8nZCau2WxxE24JbcgAUMrr7521mPEZVQNDzPT42j/uyAwUEoEnw=
+	t=1780827311; cv=none; b=YZkfhYFGFbdHeoZMgLrlxGaE1gf3X9q43O7i8VovmR0V5lVwlXS5ogKI7i6QozGO1dqzEy7mHJUGa1d92iTs5fwC8J/lplmcqtWzLl4vXXigX7tzifEAzkkCr7GWnWBa1txvNE45yu5OI+H9az9mCr9nLVQAXjCATlYTSyh+lsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827307; c=relaxed/simple;
-	bh=DYmMbkxT6Gm5TiCAKte1wUImLUhz78bXW8r5L+RRQ4I=;
+	s=arc-20240116; t=1780827311; c=relaxed/simple;
+	bh=jx9a4B005vx9IIR7f8ijso3LAZqA86o5AtIopA6bBKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cyJRQ728B7281NKaP8wR416gpgpbMVtuWYaZRsiPmET7C4V3pO694OuFpkMnoaDEyu9gGQaOCHAqwQxepK/2dWY4k8MQjfkxX64LRKMUf3Or3JwDk5opKxOEOOhQkV237VgkQpEmTuI7TeA6RTgYVETFlAS/jx+0SVRysRcZCe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sN37Q6m9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=h7gAAWDBIFNieztiw9+6nEUrLT8i8E51TK+19nf3ZrfjFTzSg/EToI5MQesqoNAVegAHYPB+kThRmkFmp6iocv/fDRCWIuYLT9zvNxxGIvfYoH41DY9QzipQeUY3DJZ2Z6Av3swJazDvhYFjslSWYoVsjhiB7Hfy8/rGR8PFhcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yFQDGCCr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sN37Q6m9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180081F00893;
-	Sun,  7 Jun 2026 10:15:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yFQDGCCr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 622BF1F00893;
+	Sun,  7 Jun 2026 10:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827306;
-	bh=fp1jc6GYO7cJbaKRl9qP7N6WADNF8fCkFpqs/lJQbXU=;
+	s=korg; t=1780827310;
+	bh=bS+fIGbd+PjaA6eFSyRjK2OQj1jBvfYyavdoqj3kOQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sN37Q6m9HQKqzMJMBp+GL1pSEPBGNsAwwEkf3Je0Qz6UwvpKbtVbztHeGLTr7bOJE
-	 DruLMXVzMsT0VQ1h+BfrSAPE6jcQfrHkQvwvwVKs8w9i9gJFiZphjO9L3t+axA7MMh
-	 okygfyw+zUnBkXc2DpPkV1u6E6buu76kodqkzomo=
+	b=yFQDGCCrV8dwsXrUpc/mR33oHVrlRcZVmAgTnXoq2i0EBwDUPo00jEZjyovVqAdPB
+	 /co6NWInaTEgqXjCacxU2FDtgyiC/FeyI/I2nTElonoJYqLhgtDLbv4EYT6dzn1w3I
+	 ojZDEcVLvDDA8BU4jZxBCY6I2gJUU/pXbPJgeWww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <nikolay@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 062/315] bridge: Fix sleep in atomic context in netlink path
-Date: Sun,  7 Jun 2026 11:57:29 +0200
-Message-ID: <20260607095729.882803021@linuxfoundation.org>
+Subject: [PATCH 6.12 044/307] ASoC: Intel: bytcht_es8316: Fix MCLK leak on init errors
+Date: Sun,  7 Jun 2026 11:57:21 +0200
+Message-ID: <20260607095729.325309052@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,153 +45,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 5eec4427b89c2fb2beac54920101e55a2f1c0c21 ]
+[ Upstream commit afb2a3a9d8369d18122a0d7cd294eba9a98259c6 ]
 
-Since the introduction of the netlink configuration path for bridge
-ports in commit 25c71c75ac87 ("bridge: bridge port parameters over
-netlink"), br_setport() was always called with the bridge lock held
-around it. Back then this decision made sense: The bridge lock protects
-the STP state of the bridge and its ports and at that time the function
-only processed three STP related netlink attributes (cost, priority and
-state).
+byt_cht_es8316_init() enables MCLK before configuring the codec sysclk
+and creating the headset jack. If either of those later steps fails, the
+function returns without disabling MCLK, leaving the clock enabled after
+card registration fails.
 
-Nowadays, br_setport() processes a lot more attributes and most of them
-do not need the bridge lock:
+Track whether this driver enabled MCLK and disable it on the init error
+paths. Add the matching DAI link exit callback so the same clock enable
+is also balanced when ASoC cleans up a successfully initialized link.
 
-* Bridge flags: Only require RTNL. Read locklessly by the data path.
-  Annotations can be added in net-next.
-
-* FDB port flushing: Only requires the FDB lock.
-
-* Multicast attributes: Only require the multicast lock.
-
-* Group forward mask: Only requires RTNL. Read locklessly by the data
-  path. Annotations can be added in net-next.
-
-* Backup port and NHID: Only require RTNL. Read locklessly by the data
-  path.
-
-This is a problem as the bridge calls dev_set_promiscuity() when certain
-bridge port flags change and this function can sleep since the commit
-cited below, resulting in a splat such as [1].
-
-Fix this by reducing the scope of the bridge lock and only take it when
-processing the three STP related attributes that require it. This is
-consistent with the multicast attributes where each attribute acquires
-the multicast lock instead of having one critical section for all
-relevant attributes.
-
-[1]
-BUG: sleeping function called from invalid context at net/core/dev_addr_lists.c:1262
-in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 356, name: bridge
-preempt_count: 201, expected: 0
-RCU nest depth: 0, expected: 0
-2 locks held by bridge/356:
-#0: ffffffff919473a0 (rtnl_mutex){+.+.}-{4:4}, at: rtnetlink_rcv_msg (net/core/rtnetlink.c:80 net/core/rtnetlink.c:7002)
-#1: ffff888115072d58 (&br->lock){+...}-{3:3}, at: br_setlink (./include/linux/spinlock.h:348 net/bridge/br_netlink.c:1117)
-Preemption disabled at:
- 0x0
-Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
-Call Trace:
-<TASK>
-dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-__might_resched.cold (kernel/sched/core.c:9163)
-netif_rx_mode_run (net/core/dev_addr_lists.c:1262)
-netif_rx_mode_sync (net/core/dev_addr_lists.c:1428)
-dev_set_promiscuity (net/core/dev_api.c:289)
-br_manage_promisc (net/bridge/br_if.c:135 net/bridge/br_if.c:172)
-br_port_flags_change (net/bridge/br_if.c:242 net/bridge/br_if.c:747)
-br_setport (net/bridge/br_netlink.c:1000)
-br_setlink (net/bridge/br_netlink.c:1118)
-rtnl_bridge_setlink (net/core/rtnetlink.c:5572)
-rtnetlink_rcv_msg (net/core/rtnetlink.c:7005)
-netlink_rcv_skb (net/netlink/af_netlink.c:2550)
-netlink_unicast (net/netlink/af_netlink.c:1318 net/netlink/af_netlink.c:1344)
-netlink_sendmsg (net/netlink/af_netlink.c:1894)
-__sock_sendmsg (net/socket.c:787 (discriminator 4) net/socket.c:802 (discriminator 4))
-____sys_sendmsg (net/socket.c:2698)
-___sys_sendmsg (net/socket.c:2752)
-__sys_sendmsg (net/socket.c:2784)
-do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
-entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-
-Fixes: 78cd408356fe ("net: add missing instance lock to dev_set_promiscuity")
-Reviewed-by: Nikolay Aleksandrov <nikolay@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260526064818.272516-2-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a03bdaa565cb ("ASoC: Intel: add machine driver for BYT/CHT + ES8316")
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260519-asoc-bytcht-es8316-mclk-leak-v1-1-b4a11cdc2afd@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_netlink.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ sound/soc/intel/boards/bytcht_es8316.c | 29 ++++++++++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/net/bridge/br_netlink.c b/net/bridge/br_netlink.c
-index 4e2d53b2722104..6d5b2ef5f18d3d 100644
---- a/net/bridge/br_netlink.c
-+++ b/net/bridge/br_netlink.c
-@@ -1000,19 +1000,25 @@ static int br_setport(struct net_bridge_port *p, struct nlattr *tb[],
- 	br_port_flags_change(p, changed_mask);
+diff --git a/sound/soc/intel/boards/bytcht_es8316.c b/sound/soc/intel/boards/bytcht_es8316.c
+index 7975dc0ceb3518..676c08247cfcb9 100644
+--- a/sound/soc/intel/boards/bytcht_es8316.c
++++ b/sound/soc/intel/boards/bytcht_es8316.c
+@@ -40,6 +40,7 @@ struct byt_cht_es8316_private {
+ 	struct gpio_desc *speaker_en_gpio;
+ 	struct device *codec_dev;
+ 	bool speaker_en;
++	bool mclk_enabled;
+ };
  
- 	if (tb[IFLA_BRPORT_COST]) {
-+		spin_lock_bh(&p->br->lock);
- 		err = br_stp_set_path_cost(p, nla_get_u32(tb[IFLA_BRPORT_COST]));
-+		spin_unlock_bh(&p->br->lock);
- 		if (err)
- 			return err;
- 	}
+ enum {
+@@ -170,6 +171,15 @@ static struct snd_soc_jack_pin byt_cht_es8316_jack_pins[] = {
+ 	},
+ };
  
- 	if (tb[IFLA_BRPORT_PRIORITY]) {
-+		spin_lock_bh(&p->br->lock);
- 		err = br_stp_set_port_priority(p, nla_get_u16(tb[IFLA_BRPORT_PRIORITY]));
-+		spin_unlock_bh(&p->br->lock);
- 		if (err)
- 			return err;
- 	}
- 
- 	if (tb[IFLA_BRPORT_STATE]) {
-+		spin_lock_bh(&p->br->lock);
- 		err = br_set_port_state(p, nla_get_u8(tb[IFLA_BRPORT_STATE]));
-+		spin_unlock_bh(&p->br->lock);
- 		if (err)
- 			return err;
- 	}
-@@ -1114,9 +1120,7 @@ int br_setlink(struct net_device *dev, struct nlmsghdr *nlh, u16 flags,
- 			if (err)
- 				return err;
- 
--			spin_lock_bh(&p->br->lock);
- 			err = br_setport(p, tb, extack);
--			spin_unlock_bh(&p->br->lock);
- 		} else {
- 			/* Binary compatibility with old RSTP */
- 			if (nla_len(protinfo) < sizeof(u8))
-@@ -1203,17 +1207,10 @@ static int br_port_slave_changelink(struct net_device *brdev,
- 				    struct nlattr *data[],
- 				    struct netlink_ext_ack *extack)
++static void byt_cht_es8316_disable_mclk(struct byt_cht_es8316_private *priv)
++{
++	if (!priv->mclk_enabled)
++		return;
++
++	clk_disable_unprepare(priv->mclk);
++	priv->mclk_enabled = false;
++}
++
+ static int byt_cht_es8316_init(struct snd_soc_pcm_runtime *runtime)
  {
--	struct net_bridge *br = netdev_priv(brdev);
--	int ret;
--
- 	if (!data)
- 		return 0;
+ 	struct snd_soc_component *codec = snd_soc_rtd_to_codec(runtime, 0)->component;
+@@ -226,12 +236,14 @@ static int byt_cht_es8316_init(struct snd_soc_pcm_runtime *runtime)
+ 	ret = clk_prepare_enable(priv->mclk);
+ 	if (ret)
+ 		dev_err(card->dev, "unable to enable MCLK\n");
++	else
++		priv->mclk_enabled = true;
  
--	spin_lock_bh(&br->lock);
--	ret = br_setport(br_port_get_rtnl(dev), data, extack);
--	spin_unlock_bh(&br->lock);
--
--	return ret;
-+	return br_setport(br_port_get_rtnl(dev), data, extack);
+ 	ret = snd_soc_dai_set_sysclk(snd_soc_rtd_to_codec(runtime, 0), 0, 19200000,
+ 				     SND_SOC_CLOCK_IN);
+ 	if (ret < 0) {
+ 		dev_err(card->dev, "can't set codec clock %d\n", ret);
+-		return ret;
++		goto err_disable_mclk;
+ 	}
+ 
+ 	ret = snd_soc_card_jack_new_pins(card, "Headset",
+@@ -240,13 +252,25 @@ static int byt_cht_es8316_init(struct snd_soc_pcm_runtime *runtime)
+ 					 ARRAY_SIZE(byt_cht_es8316_jack_pins));
+ 	if (ret) {
+ 		dev_err(card->dev, "jack creation failed %d\n", ret);
+-		return ret;
++		goto err_disable_mclk;
+ 	}
+ 
+ 	snd_jack_set_key(priv->jack.jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
+ 	snd_soc_component_set_jack(codec, &priv->jack, NULL);
+ 
+ 	return 0;
++
++err_disable_mclk:
++	byt_cht_es8316_disable_mclk(priv);
++	return ret;
++}
++
++static void byt_cht_es8316_exit(struct snd_soc_pcm_runtime *runtime)
++{
++	struct snd_soc_card *card = runtime->card;
++	struct byt_cht_es8316_private *priv = snd_soc_card_get_drvdata(card);
++
++	byt_cht_es8316_disable_mclk(priv);
  }
  
- static int br_port_fill_slave_info(struct sk_buff *skb,
+ static int byt_cht_es8316_codec_fixup(struct snd_soc_pcm_runtime *rtd,
+@@ -356,6 +380,7 @@ static struct snd_soc_dai_link byt_cht_es8316_dais[] = {
+ 		.dpcm_playback = 1,
+ 		.dpcm_capture = 1,
+ 		.init = byt_cht_es8316_init,
++		.exit = byt_cht_es8316_exit,
+ 		SND_SOC_DAILINK_REG(ssp2_port, ssp2_codec, platform),
+ 	},
+ };
 -- 
 2.53.0
 
