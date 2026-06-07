@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04AE4204E;
-	Sun,  7 Jun 2026 10:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0954204E;
+	Sun,  7 Jun 2026 10:10:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827033; cv=none; b=JB1BX26dJAk7idsUbEkN3F4LrRoet/iAbSQKCM9V6jMFGv+AuYHoRvXyKROw6kfj3fx6C0mlkVmvoa+35cFtF8cfyYwGnC+iPImkg0cIgH6yJEpa2e/jjCc1fTB7fP3xGRbPypbFdQdF7frl3/PMY3Xn0sliw/BZWKHGvxit73Y=
+	t=1780827037; cv=none; b=RUpiX18nFRFN2J5vspEcR4w6/p+nazAqKIc0PuaCRmtTyGzVHOFcKvgxSKGep9nfDz3Kl2CWOv0AP+OtN+aFiy1lQEE8dJI6CT9TeH4u5ncGFR8mrzWVYKwtu/R2cGibds5whO5xALCM4dilTY61t+1ylbrXMo/APCvonNwVZCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827033; c=relaxed/simple;
-	bh=Em2ZzgOBlPFCIrjOFLlJRKv0xXHXxVCadgYHa6nDHHc=;
+	s=arc-20240116; t=1780827037; c=relaxed/simple;
+	bh=pl8DnaH0yRn0a2w8E0qxHRV8Hce6l6+h3G2ALuO3nO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ujiq/UiObDImLKyH0BiM4BgoNWAIenTHSDzV9AIzpPQ47gSGhzjKbq574nyRuEtx3r34nRfr+s0tE2RUwV1yYf+yruXgdA6tCy8gw+ZOI4s3kdby2JLs0iwB9d92c9Psw4aMECFR2tQ6lhNvB4CvgyttuhbKHZEBlPC1N/PM9uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dwm068iM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=My8UD4jB03K82hpnA6cGkqrIGxl3X8Lg00O4RFJt7POnSrjBLdLlct1yMoXstwrhGh8DFNSxfkTI3aY34e4N4ObvZ6MVE6WQ1sXt5iduY/6eIwkFbO58ohPynRZyLWaVeSzpmXyeXK1AVWvLR8lg5nUf1Bx5yNbpESKyWpS1hLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WDP5B+el; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dwm068iM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 315F01F00893;
-	Sun,  7 Jun 2026 10:10:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDP5B+el"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BFD21F00893;
+	Sun,  7 Jun 2026 10:10:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827032;
-	bh=aKhJ3lQTUWKuChJ0XKF4M6EaK8s4RrrsejnJ9r5WCYg=;
+	s=korg; t=1780827036;
+	bh=J+JHHB7FbLehxgLkSPn1S1/cdEf/5IBh90+3P8IzhS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dwm068iM/o2SKsG6vjE7wDDaoIO/d4t/5MJl1jI7LQr9WZzFBUmr7V0NzFsaMfIVw
-	 rg2SDdyuqA4fSNQWmjIF26sfxRFGzHkK8eRF/g3b4NeuF+kiSR8wHdqZv6w5HhWnFy
-	 sR0S+UyGyEaKzNtK9QDTxQ1QLq3vnUQ1vzKpSItw=
+	b=WDP5B+el0UigavCq5hWeXnfER2DpJ4a7PVAUSCxXFCXDod1drEp5+gtVfnyoBXIGK
+	 BrjT4H0e2I09AInwOraXGM9+Y0HyAQ1pnZ9zsyZbrPozFCi/vsaRDF5FVM/XMmAUca
+	 Qkqur1wWarbDkt8ZUk0niCCQFl1+dpeEGJv/ghlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Danielle Ratson <danieller@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Marc Harvey <marcharvey@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 050/332] ethtool: module: check fw_flash_in_progress under rtnl_lock
-Date: Sun,  7 Jun 2026 11:56:59 +0200
-Message-ID: <20260607095729.960635399@linuxfoundation.org>
+Subject: [PATCH 6.18 034/315] net: team: Remove unused team_mode_op, port_enabled
+Date: Sun,  7 Jun 2026 11:57:01 +0200
+Message-ID: <20260607095728.780089408@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +49,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Marc Harvey <marcharvey@google.com>
 
-[ Upstream commit 504eaefa44c8dec50f7499edcb36d24f3aefab2a ]
+[ Upstream commit 014f249121d73909528df320818fba7693d0ec92 ]
 
-ethnl_set_module_validate() inspects module_fw_flash_in_progress
-but validate is meant for _input_ validation, not state validation.
-rtnl_lock is not held, yet. Move the check into ethnl_set_module().
+This team_mode_op wasn't used by any of the team modes, so remove it.
 
-Fixes: 32b4c8b53ee7 ("ethtool: Add ability to flash transceiver modules' firmware")
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Danielle Ratson <danieller@nvidia.com>
-Link: https://patch.msgid.link/20260522231312.1710836-5-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: Marc Harvey <marcharvey@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260409-teaming-driver-internal-v7-2-f47e7589685d@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 25fe708bbc59 ("net: team: fix NULL pointer dereference in team_xmit during mode change")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/module.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/team/team_core.c | 2 --
+ include/linux/if_team.h      | 1 -
+ 2 files changed, 3 deletions(-)
 
-diff --git a/net/ethtool/module.c b/net/ethtool/module.c
-index ce4ce514edca89..373326e49d150e 100644
---- a/net/ethtool/module.c
-+++ b/net/ethtool/module.c
-@@ -120,12 +120,6 @@ ethnl_set_module_validate(struct ethnl_req_info *req_info,
- 	if (!tb[ETHTOOL_A_MODULE_POWER_MODE_POLICY])
- 		return 0;
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index a98f5e5061544c..712d8043e66e17 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -945,8 +945,6 @@ static void team_port_enable(struct team *team,
+ 			   team_port_index_hash(team, port->index));
+ 	team_adjust_ops(team);
+ 	team_queue_override_port_add(team, port);
+-	if (team->ops.port_enabled)
+-		team->ops.port_enabled(team, port);
+ 	team_notify_peers(team);
+ 	team_mcast_rejoin(team);
+ 	team_lower_state_changed(port);
+diff --git a/include/linux/if_team.h b/include/linux/if_team.h
+index ce97d891cf720f..0d550d44a1c230 100644
+--- a/include/linux/if_team.h
++++ b/include/linux/if_team.h
+@@ -121,7 +121,6 @@ struct team_mode_ops {
+ 	int (*port_enter)(struct team *team, struct team_port *port);
+ 	void (*port_leave)(struct team *team, struct team_port *port);
+ 	void (*port_change_dev_addr)(struct team *team, struct team_port *port);
+-	void (*port_enabled)(struct team *team, struct team_port *port);
+ 	void (*port_disabled)(struct team *team, struct team_port *port);
+ };
  
--	if (req_info->dev->ethtool->module_fw_flash_in_progress) {
--		NL_SET_ERR_MSG(info->extack,
--			       "Module firmware flashing is in progress");
--		return -EBUSY;
--	}
--
- 	if (!ops->get_module_power_mode || !ops->set_module_power_mode) {
- 		NL_SET_ERR_MSG_ATTR(info->extack,
- 				    tb[ETHTOOL_A_MODULE_POWER_MODE_POLICY],
-@@ -148,6 +142,12 @@ ethnl_set_module(struct ethnl_req_info *req_info, struct genl_info *info)
- 
- 	ops = dev->ethtool_ops;
- 
-+	if (dev->ethtool->module_fw_flash_in_progress) {
-+		NL_SET_ERR_MSG(info->extack,
-+			       "Module firmware flashing is in progress");
-+		return -EBUSY;
-+	}
-+
- 	power_new.policy = nla_get_u8(tb[ETHTOOL_A_MODULE_POWER_MODE_POLICY]);
- 	ret = ops->get_module_power_mode(dev, &power, info->extack);
- 	if (ret < 0)
 -- 
 2.53.0
 
