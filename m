@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791BA31ED93;
-	Sun,  7 Jun 2026 10:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95E02E3AF1;
+	Sun,  7 Jun 2026 10:53:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829609; cv=none; b=lpAfLEEk0iJ2q7zDd/FZt44XWTeAWqzYHPquPCaFh52C8TRmk81XVJfvMpr9EBEYGHLnTNwBsMtUknSfqd36jHLwLse0uOk0ZLcaO0vlW/+NgTGmguxtioQ0L6ZPpb3Isce7BDC9/9j1JxZHU4Cf6kv7m/ms/8N+HUKBrJ7Ik68=
+	t=1780829612; cv=none; b=s5gdvGNZUHkxJu8I5vmAyTz9RpWvSI7kDqPOX2SKPWVDzbYrwhMY3SZ9ZsJsTJj3lHRb6JiM9fjV5/IxeFehV8XdQ1h1q8gGk7osLrgn3bQz8/qmxN1s9YWWn4G4TFSdzUzxImCPH3EoHyDrMbjq1xbIuINaTDVS98EDJWANwSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829609; c=relaxed/simple;
-	bh=31XNSCMGoqoj8j/S7EnFrG0AiCD8GGvvyogQ3DUuyt8=;
+	s=arc-20240116; t=1780829612; c=relaxed/simple;
+	bh=BvWDT9MNpWqQDM1sTh9IbBVL0RRGq4/dmLGYGxeTSfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=syg5HwIPtVBKj4YDfWZpxS/PwuMjofKsbpuYhix27PxISv0ESUC9j1MPYcIKGiwqEmD/OGFr8lAkWMTZ4XjOj5qrzQgYE1W3YGLB5WHV7yaCIwZ+yZh+/TVOTz9JabvbJyAgNPWMs1+0tS4iUIgISC/s8xN4VSa8AxNtMibGa5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X38U5bNq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OlstIV1lw2k6w64QEW64ui2RAAk66BIZz3pSZm6AXd/tdtS1puVY2QdPuWi5qHHXsV+5O5QAHfOhmaURgZgqmimVQElaCSZVF0veZVeUll7KWB652B3x7WgBFkEQGDuF6kRLYpWY+Mx9ZDaXzFGh5TlekFNE85sCj3DofBM4YdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oCfYzWdX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X38U5bNq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71ABF1F00893;
-	Sun,  7 Jun 2026 10:53:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oCfYzWdX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F1031F00893;
+	Sun,  7 Jun 2026 10:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829608;
-	bh=oGOQo9o4nIBbjdaalmox/EF5FdOGPkplF0RvLy1jjf4=;
+	s=korg; t=1780829611;
+	bh=D60EMbL2ier4Nvt4qb7c8JxruRUPowEB0yq4SCbJbs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X38U5bNqy0gg7r0BeAxvGa3T6k5yTQo6CGj7NHAQ/tg9mHEI1bfZ6Jf3KWij666N2
-	 cupE9nuZNZHBUiE6dZBv1X8MYsW3xfF/Q3JqQUedsndMTKvuxtt9i1KzDhXC8a0yRL
-	 XtVtK7YI8dWgR1/uiBZy6Un4acQ4HzgNg6bwqoqU=
+	b=oCfYzWdX7z0bBylkJk3lDmXNfXh/4YJCOVjX6ceO9DvQbauh3KcaofUbQdZyijsJv
+	 EJBg5qniU+kjuKS0m9ErK+Yyn2WfVQHIWfRbDyW/uvnrBMNIpFZVCs80bNhypoSmm9
+	 w8IO9Gy50a8ebuAS+yW/232mwU1S8w/gOCE5quQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 239/315] USB: serial: mxuport: fix memory corruption with small endpoint
-Date: Sun,  7 Jun 2026 12:00:26 +0200
-Message-ID: <20260607095736.347435396@linuxfoundation.org>
+	Michal Pecio <michal.pecio@gmail.com>,
+	Tao Xue <xuetao09@huawei.com>
+Subject: [PATCH 6.12 216/307] usb: core: Fix up Interrupt IN endpoints with bogus wBytesPerInterval
+Date: Sun,  7 Jun 2026 12:00:13 +0200
+Message-ID: <20260607095735.654318324@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,44 +46,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-commit 4085f0dbb1ce2251c9a5938d693de6593f0ab2bd upstream.
+commit 727d045d064b7c9a24db3bce9c0485a382cb768b upstream.
 
-Make sure that the bulk-out endpoint max packet size is at least eight
-bytes to avoid user-controlled slab corruption should a malicious device
-report a smaller size.
+Tao Xue found that some common devices violate USB 3.x section 9.6.7
+by reporting wBytesPerInterval lower than the size of packets they
+actually send. I confirmed that AX88179 may set it to 0 and RTL8153
+CDC configuration sets it to 8 but sends both 8 and 16 byte packets:
 
-Fixes: ee467a1f2066 ("USB: serial: add Moxa UPORT 12XX/14XX/16XX driver")
-Cc: stable@vger.kernel.org	# 3.14
-Cc: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+S Ii:11:007:3 -115:128 16 <
+C Ii:11:007:3 0:128 8 = a1000000 01000000
+S Ii:11:007:3 -115:128 16 <
+C Ii:11:007:3 0:128 16 = a12a0000 01000800 00000000 00000000
+
+Most xHCI host controllers neglect interrupt bandwidth reservations
+and let such devices exceed theirs, some fail the URB with EOVERFLOW.
+
+Assume that wBytesPerInterval lower than wMaxPacketSize is bogus and
+increase it to the worst case maximum on interrupt IN endpoints. This
+solves xHCI problems and appears to have no other effect. Interrupt
+transfers are not limited to one interval and drivers submit URBs of
+class defined size without looking at wBytesPerInterval. Any multi-
+interval transfer is considered terminated by a packet shorter than
+wMaxPacketSize regardless of wBytesPerInterval - see USB3 8.10.3.
+
+Stay in spec on OUT endpoints and isochronous. No buggy devices are
+known and we don't want to risk sending more data than the device
+is prepared to handle or confusing isoc drivers regarding altsetting
+capacities guaranteed by the device itself. And don't complain when
+wMaxPacketSize <= wBytesPerInterval < wMaxPacketSize * (bMaxBurst+1)
+because enabling this seems to be the exact goal of the spec.
+
+Reported-and-tested-by: Tao Xue <xuetao09@huawei.com>
+Closes: https://lore.kernel.org/linux-usb/20260402021400.28853-1-xuetao09@huawei.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Link: https://patch.msgid.link/20260518073207.5b7d26e7.michal.pecio@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/mxuport.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/core/config.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/mxuport.c
-+++ b/drivers/usb/serial/mxuport.c
-@@ -962,6 +962,14 @@ static int mxuport_calc_num_ports(struct
- 	 */
- 	BUILD_BUG_ON(ARRAY_SIZE(epds->bulk_out) < 16);
- 
+--- a/drivers/usb/core/config.c
++++ b/drivers/usb/core/config.c
+@@ -165,7 +165,14 @@ static void usb_parse_ss_endpoint_compan
+ 			(desc->bMaxBurst + 1);
+ 	else
+ 		max_tx = 999999;
+-	if (le16_to_cpu(desc->wBytesPerInterval) > max_tx) {
 +	/*
-+	 * The bulk-out buffers must be large enough for the four-byte header
-+	 * (and following data), but assume anything smaller than eight bytes
-+	 * is broken.
++	 * wBytesPerInterval > max_tx is bogus, but USB3 spec doesn't forbid the opposite.
++	 * Experience shows that wBytesPerInterval < wMaxPacketSize on common interrupt IN
++	 * endpoints is usually bogus too, and recent HCs enforce interrupt BW limits.
 +	 */
-+	if (usb_endpoint_maxp(epds->bulk_out[0]) < 8)
-+		return -EINVAL;
-+
- 	for (i = 1; i < num_ports; ++i)
- 		epds->bulk_out[i] = epds->bulk_out[0];
- 
++	if (le16_to_cpu(desc->wBytesPerInterval) > max_tx ||
++	    (le16_to_cpu(desc->wBytesPerInterval) < usb_endpoint_maxp(&ep->desc) &&
++	     usb_endpoint_is_int_in(&ep->desc))) {
+ 		dev_notice(ddev, "%s endpoint with wBytesPerInterval of %d in "
+ 				"config %d interface %d altsetting %d ep %d: "
+ 				"setting to %d\n",
 
 
