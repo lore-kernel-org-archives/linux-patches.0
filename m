@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67044234994;
-	Sun,  7 Jun 2026 10:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1386C2F361E;
+	Sun,  7 Jun 2026 10:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826654; cv=none; b=tF1DOytvqNg4dpAcwUJ1RCC1iVdR0u2UGNIHI1rLer269UZRsOjE7KPx0VDUy0pxCcQZoFXldKDGBftqjengfDlh1b9QI396MCCd2htyeVaPKZFnVj8WXBfSCrEz8bYtdDWJN0gOJLCUE4czZD0N+bEQ/Nc/OyUebUfZxS9ykQ0=
+	t=1780826739; cv=none; b=vAPe1aHmnK0kRQHN5fdxDNGF0j1wIUg+nyxkII/qLpK02oIVFV5Hi6hF3zWMOOl0LIriYYrRK0kpBZGUXZ/BZ6zpt42+rkdrgbLj9oR14Liwjkh5HjqiT4l2g2zuFOglsroSOo3wp+HGgQ2XV0t5vC0gCXaUTdY+A3AM8QUp9dY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826654; c=relaxed/simple;
-	bh=sy87G97T2SJvsPwniIiCwna7UmUTXVTOy6DaACszalM=;
+	s=arc-20240116; t=1780826739; c=relaxed/simple;
+	bh=mp9u9W1d7wyNuKkssJnd8U1DUvygKCqnQJ5FsdjE3uU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YByWuLra+gvh+GY6n4SLrNiKuQjs6CncD9X7PKNwKTUBV0umJzbzOZcoq6N5mhIU24i8i/z39A38K3VYWGqyLUp3ZTLeDPphl2kQB0JJmhDjCBTkh6e+J40mAoYXOr0xt7CUd2ozIGEo0z4swZEa4cu0bpaXX71DJrWb/Zo+iC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vrmXmIsi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k3sTTHTG3LO9w6c2eYvCaSIHTDUpuOSciyR/VtFCMp75ysbbjyq6ERGpbRxxpIZc9YHF8u20HQS6/NEwhrAWQEXgPwEPwUxn5CdaEMpoDQWyGOp9cqgRx43UDcha6BkJntolxi2LRy3UKj0UIoGtYb/yKkKYwiq/3vv1Tt5AYwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aPo2SM3W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vrmXmIsi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB26B1F00893;
-	Sun,  7 Jun 2026 10:04:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPo2SM3W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13E531F00893;
+	Sun,  7 Jun 2026 10:05:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826653;
-	bh=p1AMbkG/sK6cOOz7KoK2FtHiDpVIgaVmhNLck9DAfE0=;
+	s=korg; t=1780826736;
+	bh=+0cIbPEKMwvJ08H1bCoxWevVKnXi2dFFYd1OkJ1rYoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vrmXmIsijZ613/5EA2HaJYp1ETrHRXBsminLQURMzffMFL1d1rW/BxhkTLl/N7uKO
-	 xI/9c/nFnn3ZVHd6HWe+WEmBQff1psU1trlyBGXhxUUGHqYkILcxNrMqAztnzi4kt3
-	 G9TAYunwY1U3SW2Dr3FhB7NmycNprI0H0vjY5HaI=
+	b=aPo2SM3Wx1BBgiR30gNLBZ6tzT80VMb6LU3gEyxDMbBJoYQfBv9SxuNYyt6jK/z0e
+	 bJ/Wf5dxRJaNNlEdJra+CXFDOZ1e+iqIvY3BJZ8BcrOceeAgVukfRLOYDXFvC0aHlY
+	 +novmpI6abXgj2iSRQlSdd6+xiuu0+/8ahK4fupY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Victor Nogueria <victor@mojatatu.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 002/307] drm/v3d: Fix use-after-free of CPU job query arrays on error path
-Date: Sun,  7 Jun 2026 11:56:39 +0200
-Message-ID: <20260607095727.732421478@linuxfoundation.org>
+Subject: [PATCH 7.0 005/332] net/sched: sch_sfb: Replace direct dequeue call with peek and qdisc_dequeue_peeked
+Date: Sun,  7 Jun 2026 11:56:14 +0200
+Message-ID: <20260607095728.226039801@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,132 +46,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Victor Nogueria <victor@mojatatu.com>
 
-[ Upstream commit b0fe80c0b9250b35e2211bf3117e7aca814a21b0 ]
+[ Upstream commit 1b9bc71153b01dbde8045b9edede4240f4f5520e ]
 
-The CPU job ioctl's fail label calls kvfree() on cpu_job's timestamp and
-performance query arrays after v3d_job_cleanup(), which drops the job's
-last reference and frees cpu_job. Reading cpu_job at that point is a
-use-after-free. Also, on the early v3d_job_init() failure path, it is a
-NULL dereference, since v3d_job_deallocate() zeroes the local pointer.
+When sfb has children (eg qfq qdisc) whose peek() callback is
+qdisc_peek_dequeued(), we could get a kernel panic. When the parent of such
+qdiscs (eg illustrated in patch #3 as tbf) wants to retrieve an skb from
+its child (sfb in this case), it will do the following:
+ 1a. do a peek() - and when sensing there's an skb the child can offer, then
+     - the child in this case(sfb) calls its child's (qfq) peek.
+        qfq does the right thing and will return the gso_skb queue packet.
+        Note: if there wasnt a gso_skb entry then qfq will store it there.
+ 1b. invoke a dequeue() on the child (sfb). And herein lies the problem.
+     - sfb will call the child's dequeue() which will essentially just
+       try to grab something of qfq's queue.
 
-In the success path, the arrays are released from the scheduler's
-.free_job callback, but on the error path, they are freed manually, as
-the job was never pushed to the scheduler. While the success path deals
-with this correctly, the fail path doesn't.
+[  127.594489][  T453] KASAN: null-ptr-deref in range [0x0000000000000048-0x000000000000004f]
+[  127.594741][  T453] CPU: 2 UID: 0 PID: 453 Comm: ping Not tainted 7.1.0-rc1-00035-gac961974495b-dirty #793 PREEMPT(full)
+[  127.595059][  T453] Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
+[  127.595254][  T453] RIP: 0010:qfq_dequeue+0x35c/0x1650 [sch_qfq]
+[  127.595461][  T453] Code: 00 fc ff df 80 3c 02 00 0f 85 17 0e 00 00 4c 8d 73 48 48 89 9d b8 02 00 00 48 b8 00 00 00 00 00 fc ff df 4c 89 f2 48 c1 ea 03 <80> 3c 02 00 0f 85 76 0c 00 00 48 b8 00 00 00 00 00 fc ff df 4c 8b
+[  127.596081][  T453] RSP: 0018:ffff88810e5af440 EFLAGS: 00010216
+[  127.596337][  T453] RAX: dffffc0000000000 RBX: 0000000000000000 RCX: dffffc0000000000
+[  127.596623][  T453] RDX: 0000000000000009 RSI: 0000001880000000 RDI: ffff888104fd82b0
+[  127.596917][  T453] RBP: ffff888104fd8000 R08: ffff888104fd8280 R09: 1ffff110211893a3
+[  127.597165][  T453] R10: 1ffff110211893a6 R11: 1ffff110211893a7 R12: 0000001880000000
+[  127.597404][  T453] R13: ffff888104fd82b8 R14: 0000000000000048 R15: 0000000040000000
+[  127.597644][  T453] FS:  00007fc380cbfc40(0000) GS:ffff88816f2a8000(0000) knlGS:0000000000000000
+[  127.597956][  T453] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  127.598160][  T453] CR2: 00005610aa9890a8 CR3: 000000010369e000 CR4: 0000000000750ef0
+[  127.598390][  T453] PKRU: 55555554
+[  127.598509][  T453] Call Trace:
+[  127.598629][  T453]  <TASK>
+[  127.598718][  T453]  ? mark_held_locks+0x40/0x70
+[  127.598890][  T453]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  127.599053][  T453]  sfb_dequeue+0x88/0x4d0
+[  127.599174][  T453]  ? ktime_get+0x137/0x230
+[  127.599328][  T453]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  127.599480][  T453]  ? qdisc_peek_dequeued+0x7b/0x350 [sch_qfq]
+[  127.599670][  T453]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  127.599831][  T453]  tbf_dequeue+0x6b1/0x1098 [sch_tbf]
+[  127.599988][  T453]  __qdisc_run+0x169/0x1900
 
-On top of that, the manual kvfree() calls only free the array storage;
-they don't drm_syncobj_put() the per-query syncobjs that
-v3d_timestamp_query_info_free() and v3d_performance_query_info_free()
-release on the success path. So the same fail path that triggers the
-use-after-free also leaks one syncobj reference per query.
+The right thing to do in #1b is to grab the skb off gso_skb queue.
+This patchset fixes that issue by changing #1b to use qdisc_dequeue_peeked()
+method instead.
 
-Unify the CPU job teardown into the CPU job's kref destructor, mirroring
-v3d_render_job_free(). The scheduler's .free_job slot reverts to the
-generic v3d_sched_job_free() and the fail label drops the manual
-kvfree() calls, leaving a single teardown path that is reached from both
-the scheduler and the ioctl error path. That removes the use-after-free,
-the NULL dereference, and the syncobj leak by construction.
-
-Cc: stable@vger.kernel.org
-Fixes: 9ba0ff3e083f ("drm/v3d: Create a CPU job extension for the timestamp query job")
-Assisted-by: Claude:claude-opus-4.7
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20260515-v3d-cpu-job-leaks-v1-1-7f147cbbf935@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Fixes: e13e02a3c68d ("net_sched: SFB flow scheduler")
+Signed-off-by: Victor Nogueria <victor@mojatatu.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260430152957.194015-3-jhs@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/v3d/v3d_sched.c  | 16 +---------------
- drivers/gpu/drm/v3d/v3d_submit.c | 19 ++++++++++++++++---
- 2 files changed, 17 insertions(+), 18 deletions(-)
+ net/sched/sch_sfb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/v3d/v3d_sched.c b/drivers/gpu/drm/v3d/v3d_sched.c
-index c9c88d3ad6698f..90eef062766c8d 100644
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -103,20 +103,6 @@ v3d_performance_query_info_free(struct v3d_performance_query_info *query_info,
- 	}
- }
+diff --git a/net/sched/sch_sfb.c b/net/sched/sch_sfb.c
+index 00286c930b8de7..14ac8897784757 100644
+--- a/net/sched/sch_sfb.c
++++ b/net/sched/sch_sfb.c
+@@ -441,7 +441,7 @@ static struct sk_buff *sfb_dequeue(struct Qdisc *sch)
+ 	struct Qdisc *child = q->qdisc;
+ 	struct sk_buff *skb;
  
--static void
--v3d_cpu_job_free(struct drm_sched_job *sched_job)
--{
--	struct v3d_cpu_job *job = to_cpu_job(sched_job);
--
--	v3d_timestamp_query_info_free(&job->timestamp_query,
--				      job->timestamp_query.count);
--
--	v3d_performance_query_info_free(&job->performance_query,
--					job->performance_query.count);
--
--	v3d_job_cleanup(&job->base);
--}
--
- static void
- v3d_switch_perfmon(struct v3d_dev *v3d, struct v3d_job *job)
- {
-@@ -846,7 +832,7 @@ static const struct drm_sched_backend_ops v3d_cache_clean_sched_ops = {
- static const struct drm_sched_backend_ops v3d_cpu_sched_ops = {
- 	.run_job = v3d_cpu_job_run,
- 	.timedout_job = v3d_generic_job_timedout,
--	.free_job = v3d_cpu_job_free
-+	.free_job = v3d_sched_job_free
- };
+-	skb = child->dequeue(q->qdisc);
++	skb = qdisc_dequeue_peeked(child);
  
- int
-diff --git a/drivers/gpu/drm/v3d/v3d_submit.c b/drivers/gpu/drm/v3d/v3d_submit.c
-index ddc20191a1ceef..40c21aaade0d67 100644
---- a/drivers/gpu/drm/v3d/v3d_submit.c
-+++ b/drivers/gpu/drm/v3d/v3d_submit.c
-@@ -118,6 +118,21 @@ v3d_render_job_free(struct kref *ref)
- 	v3d_job_free(ref);
- }
- 
-+static void
-+v3d_cpu_job_free(struct kref *ref)
-+{
-+	struct v3d_cpu_job *job = container_of(ref, struct v3d_cpu_job,
-+					       base.refcount);
-+
-+	v3d_timestamp_query_info_free(&job->timestamp_query,
-+				      job->timestamp_query.count);
-+
-+	v3d_performance_query_info_free(&job->performance_query,
-+					job->performance_query.count);
-+
-+	v3d_job_free(ref);
-+}
-+
- void v3d_job_cleanup(struct v3d_job *job)
- {
- 	if (!job)
-@@ -1310,7 +1325,7 @@ v3d_submit_cpu_ioctl(struct drm_device *dev, void *data,
- 	trace_v3d_submit_cpu_ioctl(&v3d->drm, cpu_job->job_type);
- 
- 	ret = v3d_job_init(v3d, file_priv, &cpu_job->base,
--			   v3d_job_free, 0, &se, V3D_CPU);
-+			   v3d_cpu_job_free, 0, &se, V3D_CPU);
- 	if (ret) {
- 		v3d_job_deallocate((void *)&cpu_job);
- 		goto fail;
-@@ -1393,8 +1408,6 @@ v3d_submit_cpu_ioctl(struct drm_device *dev, void *data,
- 	v3d_job_cleanup((void *)csd_job);
- 	v3d_job_cleanup(clean_job);
- 	v3d_put_multisync_post_deps(&se);
--	kvfree(cpu_job->timestamp_query.queries);
--	kvfree(cpu_job->performance_query.queries);
- 
- 	return ret;
- }
+ 	if (skb) {
+ 		qdisc_bstats_update(sch, skb);
 -- 
 2.53.0
 
