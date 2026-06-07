@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA834071DD;
-	Sun,  7 Jun 2026 10:52:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE49A4071DD;
+	Sun,  7 Jun 2026 10:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829557; cv=none; b=ZpGjh96To16nTingvZm+DypQMwX1y0pSAgXpKLx1R7gKImuCsPl6jas+Ts0tQISrdh1lACqjkh33DrNsye5yiv7F2xymCXi+8jnE4oDeFKxp5TvW16kwT1Bf1ReHti6iCHiSoOWQ4atgr7/73fKg1cSD6RiaFQnBtJidE9tpZAk=
+	t=1780829560; cv=none; b=Knm/BL8x9WVOaVXmWZtAWfjfxDbURqx/HghVM91qGZUeQyyqe8JKNK2AWVFgZ/U8bEgrkdAQW7HE6zkwSqj8hWdRVG1Jwezub9h3UeL5Ibk+NSuCy7KpveRTMiUmDo3OMc1o40aIu/YEQCo6h6EJgzWcAKrthqWw0rlUho/Kjio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829557; c=relaxed/simple;
-	bh=/jaIVMENPGemub6csbh6eUxHNyughOsplTlYg0QFzWQ=;
+	s=arc-20240116; t=1780829560; c=relaxed/simple;
+	bh=AE2Y6x7vuT0sYO2m9SKPDZ7UTY4i7wtnh+wI9mxHMVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TDX+19/X/YfhwYKAeuscWJAMyzK3glSXn5ZbFkK1s84JJ3ZNFfgDbUHEM9ZInCJjeEg1iOJfqL6Mkxlax/aAd0VeJQrKonfjwr0zdTurS9mdTy263TgamSwW/m54xhrqH6OGTUU3473s3pREU8itwgMDVf9kZDBeteUBARD4Z2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dytO7+Ct; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AupT0faW48TDhj70AICdJ9RPHj/D/gIIwpRwGRogl1JYwfxbkZmXn3YQJiRqkf3LxjgpolLvhmcZI2XR6fefJdMCAb6CPqSk7tbXyx/pAiFFUW2IRUlCbIuxAXb0rGa1s8Tr+7kJsnDN5xe7yZVhGzdH0XL3Uj5n9QunEhC9544=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MhlOGrYL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dytO7+Ct"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86DC51F00893;
-	Sun,  7 Jun 2026 10:52:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhlOGrYL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C1C1F00893;
+	Sun,  7 Jun 2026 10:52:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829556;
-	bh=BQQ7rehku++7n70RJrYowjakR6IiUWhf9T7oC7pToEg=;
+	s=korg; t=1780829559;
+	bh=fVB7IFIuR9hhSoAEb2Bh0yB2jIV6R6uyswggHIkC2MY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dytO7+CtTd5B+Ds7bSh5G7VZhuLX3GzojFKUIHRINxdGUNhZg96Aj/0/rRe+7QEK+
-	 QENWgktBX0wxB6d4EhcmMN6embdSBv5Kq5rNoMG6ky+CuTqne0l1gRacp6Lbfw396P
-	 Nb9f14/5NwSsywq2tSJeMrO5wqCgS32VxID/NlB4=
+	b=MhlOGrYLj8votUL2iKSg7Z2/Lj3xrQ3o7exWI7Rnv7yD8MSB1dgoKDF3wM9Vi7r8o
+	 f1k1yO87O04tj1XvADqS47i0HoHu9xvp21bquoG67JsjG0L+vbKMeykzByzj055LIQ
+	 2Ikn8DCuwqaubjVS5hMj0w0fMtTo18SLlPB2mWOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	=?UTF-8?q?Micha=C5=82=20Grzelak?= <michal.grzelak@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>
-Subject: [PATCH 6.18 258/315] drm/i915/psr: Block DC states on vblank enable when Panel Replay supported
-Date: Sun,  7 Jun 2026 12:00:45 +0200
-Message-ID: <20260607095737.037255332@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Michael Bommarito <michael.bommarito@gmail.com>
+Subject: [PATCH 6.12 235/307] usb: gadget: f_fs: copy only received bytes on short ep0 read
+Date: Sun,  7 Jun 2026 12:00:32 +0200
+Message-ID: <20260607095736.334550798@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,81 +44,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 8bb9093df555f9e89fdbe1405118b11384c03e04 upstream.
+commit 4e036c10e7f4df5d951c69cc3697bc8e209c6d02 upstream.
 
-Currently we are blocking DC states only when Panel Replay is enabled on
-vblank enable. It may happen that Panel Replay is getting enabled when
-vblank is already enabled. Fix this by blocking DC states always if Panel
-Replay is supported.
+ffs_ep0_read() allocates its control-OUT data buffer with
+kmalloc() (not kzalloc) at the Length value from the Setup
+packet, then copies that full len to userspace regardless of
+how many bytes were actually received:
 
-While at it take care of possible dual eDP case by looping all encoders
-supporting PSR.
+    data = kmalloc(len, GFP_KERNEL);
+    ...
+    ret = __ffs_ep0_queue_wait(ffs, data, len);
+    if ((ret > 0) && (copy_to_user(buf, data, len)))
+            ret = -EFAULT;
 
-Fixes: 0c427ac78a1d ("drm/i915/psr: Add interface to notify PSR of vblank enable/disable")
-Cc: <stable@vger.kernel.org> # v6.16+
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Michał Grzelak <michal.grzelak@intel.com>
-Link: https://patch.msgid.link/20260520104944.239797-1-jouni.hogander@intel.com
-(cherry picked from commit eb5911f990554f7ce947dd53df00c114362e4465)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+__ffs_ep0_queue_wait() returns req->actual, which on a short
+control OUT transfer is strictly less than len.  The
+copy_to_user() call still copies len bytes, so on a short OUT
+the last (len - ret) bytes of the kmalloc() buffer --
+uninitialised slab residue -- are delivered to the FunctionFS
+daemon.
+
+Short ep0 OUT completions are specified USB control-transfer
+behavior and are produced by in-tree UDCs:
+
+  * dwc2 continues on req->actual < req->length for ep0 DATA OUT
+    (short-not-ok is the only ep0-OUT stall path).
+  * aspeed_udc ends ep0 OUT on rx_len < ep->ep.maxpacket.
+  * renesas_usbf logs "ep0 short packet" and completes the
+    request.
+  * dwc3 stalls on short IN but not on short OUT.
+
+A short ep0 OUT is therefore not evidence of a broken UDC; it is
+a normal condition f_fs has to cope with.  The sibling gadgetfs
+implementation in drivers/usb/gadget/legacy/inode.c already does
+this correctly via min(len, dev->req->actual) before
+copy_to_user().  This patch brings f_fs.c to the same safe
+pattern rather than trimming at a defensive layer.
+
+The bug is reached from the FunctionFS device node, which in
+real deployments is owned by the privileged gadget daemon
+(adbd, UMS, composite gadget services, etc.); it is not
+reachable from unprivileged userspace.  Linux host stacks
+normally reject short-wLength control OUTs before they reach
+the gadget, so reproducing this required a build that
+bypasses that host-side check.  With the bypass in place, a
+1-byte payload on a 64-byte Setup produces 63 bytes of
+non-canary slab residue in the daemon's read buffer.
+
+Fix by copying only ret (actually received) bytes to
+userspace.
+
+Fixes: ddf8abd25994 ("USB: f_fs: the FunctionFS driver")
+Cc: stable <stable@kernel.org>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260419160359.1577270-1-michael.bommarito@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c |   19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/usb/gadget/function/f_fs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -3982,32 +3982,33 @@ void intel_psr_notify_vblank_enable_disa
- 					    bool enable)
- {
- 	struct intel_encoder *encoder;
-+	bool block_dc_states = false;
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -622,7 +622,7 @@ static ssize_t ffs_ep0_read(struct file
  
- 	for_each_intel_encoder_with_psr(display->drm, encoder) {
- 		struct intel_dp *intel_dp = enc_to_intel_dp(encoder);
+ 		/* unlocks spinlock */
+ 		ret = __ffs_ep0_queue_wait(ffs, data, len);
+-		if ((ret > 0) && (copy_to_user(buf, data, len)))
++		if ((ret > 0) && (copy_to_user(buf, data, ret)))
+ 			ret = -EFAULT;
+ 		goto done_mutex;
  
- 		mutex_lock(&intel_dp->psr.lock);
--		if (intel_dp->psr.panel_replay_enabled) {
--			mutex_unlock(&intel_dp->psr.lock);
--			break;
--		}
-+		if (CAN_PANEL_REPLAY(intel_dp))
-+			block_dc_states = true;
- 
--		if (intel_dp->psr.enabled && intel_dp->psr.pkg_c_latency_used)
-+		if (intel_dp->psr.enabled && !intel_dp->psr.panel_replay_enabled &&
-+		    intel_dp->psr.pkg_c_latency_used)
- 			intel_psr_apply_underrun_on_idle_wa_locked(intel_dp);
- 
- 		mutex_unlock(&intel_dp->psr.lock);
--		return;
- 	}
- 
- 	/*
- 	 * NOTE: intel_display_power_set_target_dc_state is used
--	 * only by PSR * code for DC3CO handling. DC3CO target
-+	 * only by PSR code for DC3CO handling. DC3CO target
- 	 * state is currently disabled in * PSR code. If DC3CO
- 	 * is taken into use we need take that into account here
- 	 * as well.
- 	 */
--	intel_display_power_set_target_dc_state(display, enable ? DC_STATE_DISABLE :
--						DC_STATE_EN_UPTO_DC6);
-+	if (block_dc_states)
-+		intel_display_power_set_target_dc_state(display, enable ?
-+							DC_STATE_DISABLE :
-+							DC_STATE_EN_UPTO_DC6);
- }
- 
- static void
 
 
