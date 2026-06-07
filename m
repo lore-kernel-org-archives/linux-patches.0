@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4DE12CDA5;
-	Sun,  7 Jun 2026 10:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6761C3242DF;
+	Sun,  7 Jun 2026 10:59:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829955; cv=none; b=FnIP5avRy87J3J7k2r7OeyaaBoHQMC9O5pR+MnLiKN14rfvnqx/yoU9vnRUGGRtB3tcikMvjGCwX2USAw8ewG2j5fn7jxTLpYAG6L+OyAprk8rKxWfZXJrux7gV2+GBqQBS7bWxC8VoG2lMJMRpUOiVOO4Lr2FFgATjLF3iCqCY=
+	t=1780829959; cv=none; b=g6+D0CKk25Qlz3oRqebiMf2zGFA/iBtI+Yfih64wOVPYff+1Ih9nqdrRrGca+TajuufnCYiB9Vaki3TJxjEqPAbn+euJG9rHW1UGp6l3/XrhljjY5VenAw0ykls7VjX2PdYukEi6wzY5AqomAUZYMbGVk64/O1WChTi70BVkmXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829955; c=relaxed/simple;
-	bh=TXcTwm7sHGppeF9QKrpsbJV7DzMniGuoN2hQmm82bfg=;
+	s=arc-20240116; t=1780829959; c=relaxed/simple;
+	bh=XpIfhth1euCG4Ky75Ghrags8Wnc7C3XSFfL/Qh5fGpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f/tkT97bZiCFkS6y9LUO3Kk8PG/xq4hdrEaTnCMqnBzrlh4bNpVRwJUNdHikwMUAag7PCrdfN93+4guZe24Ssz0jaaC90Q7Q8a1/Yy6iMHfJPcWEuCXp9sGZH7iEczB/i5Y2ecm18e4Tx3dQo3GJmctO814YKiE4P+FlQDSXRZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JslXi4Ii; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fdzpgIkDTJwfekdWXhf9UMulaBZ8UFLNXG2wClT49grC3wSgEzPYQUS+6dHH/S2jCvtyTUxdosfzUkAVSK4JxAug5Xv3GX7nmFSvPrqM4uVdYtVIyweL58PPfY4kH/HXWllkrrpkBQpym9z59esFdNTAG5MwjY40teXNaTkJytI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ZMeDwtM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JslXi4Ii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C18591F00893;
-	Sun,  7 Jun 2026 10:59:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ZMeDwtM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0D61F00893;
+	Sun,  7 Jun 2026 10:59:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829954;
-	bh=HtbauBaSCFsNTmOA4vzu6hEV0p7tmLM9Ho/moACh6rc=;
+	s=korg; t=1780829958;
+	bh=PyMzI4NqXwgwkEzt0se74Ynj8SwYuV+4WHSVUsVuc88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JslXi4IiEhxnlozD/tuYt9fmPI185SJtWC4LEcHPAE1zNFEnhGLjXMwqDqIHkKgnW
-	 yxOpHZDDlpopJEb2jHHPqNA7zeI0Tonwc3bFYbr3PiTnmcsBOWI4HtF++8UHfyaVQb
-	 D1snBRROLLd9Rfvwz06bkklifaPvp2+R7fjjA5ss=
+	b=0ZMeDwtMUU9q/oSkWgkfMtCJ3KMU2eHLv7T0/zVJoyNLpzhGV0pf+XVVUOKVBs2mP
+	 M6JihdFcYTK9jPfcllL8HF0IFQoE+a5YKwYdFvN89BTC9YH09PTpskOyhg/2UJVmUY
+	 SkgQ86Fkhrp/rIZKK97zFcBUGhU2Z15BAxQPHqNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shardul Bankar <shardul.b@mpiricsoftware.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Fernando Antunez Antonio <fer.antunez24antonio@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 295/315] mptcp: do not drop partial packets
-Date: Sun,  7 Jun 2026 12:01:22 +0200
-Message-ID: <20260607095738.430568169@linuxfoundation.org>
+Subject: [PATCH 7.0 323/332] ALSA: hda/realtek: Fix mute and mic-mute LEDs for HP Envy X360 15-fh0xxx
+Date: Sun,  7 Jun 2026 12:01:32 +0200
+Message-ID: <20260607095739.987565985@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,79 +47,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shardul Bankar <shardul.b@mpiricsoftware.com>
+From: Fernando Antunez Antonio <fer.antunez24antonio@gmail.com>
 
-[ Upstream commit 50c2d91c5dfa0e465826ec1f8dbad9cdc254bd85 ]
+[ Upstream commit dc1e0172be54e742bccb28d5f14c0c395e28c098 ]
 
-When a packet arrives with map_seq < ack_seq < end_seq, the beginning
-of the packet has already been acknowledged but the end contains new
-data. Currently the entire packet is dropped as "old data," forcing
-the sender to retransmit.
+This enables the mute and mic-mute LEDs on the HP Envy X360 15-fh0xxx
+2-in-1 laptops.
+The quirk 'ALC245_FIXUP_HP_ENVY_X360_15_FH0XXX' has been created and
+is now enabled for this device.
 
-Instead, skip the already-acked bytes by adjusting the skb offset and
-enqueue only the new portion. Update bytes_received and ack_seq to
-reflect the new data consumed.
+This is my first patch, and I'm still getting to grips with the code,
+so there's probably a better way to implement this fix.
+I apologize for any inconvenience caused by the constant release of
+new versions of this patch.
 
-A previous attempt at this fix has been sent by Paolo Abeni [1], but had
-issues [2]: it also added a zero-window check and changed rcv_wnd_sent
-initialization, which caused test regressions. This version addresses
-only the partial packet handling without modifying receive window
-accounting.
-
-Fixes: ab174ad8ef76 ("mptcp: move ooo skbs into msk out of order queue.")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/c9b426a4e163aa3c4fe8b80c79f1a610f47ae7d8.1763075056.git.pabeni@redhat.com [1]
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/600 [2]
-Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
-[pabeni@redhat.com: update map]
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260515-net-mptcp-misc-fixes-7-1-rc4-v2-1-701e96419f2f@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Fernando Antunez Antonio <fer.antunez24antonio@gmail.com>
+Link: https://patch.msgid.link/20260504-hpenvy-muteled-fix-v3-1-5567fd9b3d25@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 9e5fb6098d21 ("ALSA: hda/realtek: Fix mute and mic-mute LEDs for HP 16 Piston OmniBook X")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ sound/hda/codecs/realtek/alc269.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -395,12 +395,26 @@ static bool __mptcp_move_skb(struct sock
- 		return false;
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -4132,6 +4132,7 @@ enum {
+ 	ALC245_FIXUP_ACER_MICMUTE_LED,
+ 	ALC245_FIXUP_CS35L41_I2C_2_MUTE_LED,
+ 	ALC236_FIXUP_HP_DMIC,
++	ALC245_FIXUP_HP_ENVY_X360_15_FH0XXX,
+ };
+ 
+ /* A special fixup for Lenovo C940 and Yoga Duet 7;
+@@ -6678,6 +6679,12 @@ static const struct hda_fixup alc269_fix
+ 			{ 0x12, 0x90a60160 }, /* use as internal mic */
+ 			{ }
+ 		},
++	},
++	[ALC245_FIXUP_HP_ENVY_X360_15_FH0XXX] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = cs35l41_fixup_i2c_two,
++		.chained = true,
++		.chain_id = ALC245_FIXUP_HP_X360_MUTE_LEDS
  	}
+ };
  
--	/* old data, keep it simple and drop the whole pkt, sender
--	 * will retransmit as needed, if needed.
-+	/* Completely old data? */
-+	if (!after64(MPTCP_SKB_CB(skb)->end_seq, msk->ack_seq)) {
-+		MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_DUPDATA);
-+		mptcp_drop(sk, skb);
-+		return false;
-+	}
-+
-+	/* Partial packet: map_seq < ack_seq < end_seq.
-+	 * Skip the already-acked bytes and enqueue the new data.
- 	 */
--	MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_DUPDATA);
--	mptcp_drop(sk, skb);
--	return false;
-+	copy_len = MPTCP_SKB_CB(skb)->end_seq - msk->ack_seq;
-+	MPTCP_SKB_CB(skb)->offset += msk->ack_seq - MPTCP_SKB_CB(skb)->map_seq;
-+	MPTCP_SKB_CB(skb)->map_seq += msk->ack_seq -
-+				      MPTCP_SKB_CB(skb)->map_seq;
-+	msk->bytes_received += copy_len;
-+	WRITE_ONCE(msk->ack_seq, msk->ack_seq + copy_len);
-+
-+	skb_set_owner_r(skb, sk);
-+	__skb_queue_tail(&sk->sk_receive_queue, skb);
-+	return true;
- }
- 
- static void mptcp_stop_rtx_timer(struct sock *sk)
+@@ -7096,7 +7103,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x103c, 0x8be6, "HP Envy 16", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8be7, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8be8, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
+-	SND_PCI_QUIRK(0x103c, 0x8be9, "HP Envy 15", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x103c, 0x8be9, "HP Envy x360 2-in-1 Laptop 15-fh0xxx", ALC245_FIXUP_HP_ENVY_X360_15_FH0XXX),
+ 	SND_PCI_QUIRK(0x103c, 0x8bf0, "HP", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8c15, "HP Spectre x360 2-in-1 Laptop 14-eu0xxx", ALC245_FIXUP_HP_SPECTRE_X360_EU0XXX),
+ 	SND_PCI_QUIRK(0x103c, 0x8c16, "HP Spectre x360 2-in-1 Laptop 16-aa0xxx", ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX),
 
 
