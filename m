@@ -1,41 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6761C3242DF;
-	Sun,  7 Jun 2026 10:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39AC12CDA5;
+	Sun,  7 Jun 2026 10:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829959; cv=none; b=g6+D0CKk25Qlz3oRqebiMf2zGFA/iBtI+Yfih64wOVPYff+1Ih9nqdrRrGca+TajuufnCYiB9Vaki3TJxjEqPAbn+euJG9rHW1UGp6l3/XrhljjY5VenAw0ykls7VjX2PdYukEi6wzY5AqomAUZYMbGVk64/O1WChTi70BVkmXw=
+	t=1780829963; cv=none; b=D5G7m/X5Oy8k4WhI997Iz4lJWoc4QXBFstb635xqCZsIrplfPc5PluMIIovuS+MiyJD7UFXKGJzrC8xVwqROqIofXDWUE79n+8vCyP+jGmtKm8UAmVeqZ4R2iMM6YE69Y4zdbZlFRiqvVElrWJuleukf2HfzBEfXd8JiwPmwg+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829959; c=relaxed/simple;
-	bh=XpIfhth1euCG4Ky75Ghrags8Wnc7C3XSFfL/Qh5fGpE=;
+	s=arc-20240116; t=1780829963; c=relaxed/simple;
+	bh=d+5D2QJwuagXENZOGdMO3KuUmK/I4rri9bNiBsvErm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fdzpgIkDTJwfekdWXhf9UMulaBZ8UFLNXG2wClT49grC3wSgEzPYQUS+6dHH/S2jCvtyTUxdosfzUkAVSK4JxAug5Xv3GX7nmFSvPrqM4uVdYtVIyweL58PPfY4kH/HXWllkrrpkBQpym9z59esFdNTAG5MwjY40teXNaTkJytI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ZMeDwtM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gNbA1gn/Xv622iJqmtMuWSI+0Q/3dM4/dNsHbdAiQpSW2vtCKDqZfEvdYefp16w3KGmu4JoBr9ILJoD12uRWDv15nINAma5AyrRE2ccabdcvF2/2CN3Ldadj5E0Ge1FK03+GgpiiprmGnRTKX059xXWFPJV8lVAMXhAMVYitXl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxXtpsEp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ZMeDwtM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0D61F00893;
-	Sun,  7 Jun 2026 10:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxXtpsEp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3537D1F00893;
+	Sun,  7 Jun 2026 10:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829958;
-	bh=PyMzI4NqXwgwkEzt0se74Ynj8SwYuV+4WHSVUsVuc88=;
+	s=korg; t=1780829961;
+	bh=MgH+8Ye7Ad6jQtq1kR42dWN4QeRJRR4CFVEo1hhAejI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0ZMeDwtMUU9q/oSkWgkfMtCJ3KMU2eHLv7T0/zVJoyNLpzhGV0pf+XVVUOKVBs2mP
-	 M6JihdFcYTK9jPfcllL8HF0IFQoE+a5YKwYdFvN89BTC9YH09PTpskOyhg/2UJVmUY
-	 SkgQ86Fkhrp/rIZKK97zFcBUGhU2Z15BAxQPHqNI=
+	b=pxXtpsEpUbbEGh9fueV87Q48IWIzrtMpP337V63Mp/vke2qUBcYdL8yjU8G+XtozR
+	 jAYm7vN3VdqiNbDrbdSo7Aib137aTtrcmgl4G8GILw2fprkMf35Me9Wn1jvCowgYQS
+	 pRqiHZ+A9tmUcy2laiQ0juUMuZgwalzuk6zEebpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Antunez Antonio <fer.antunez24antonio@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	linux-afs@lists.infradead.org,
+	stable@kernel.org,
+	Jeffrey Altman <jaltman@auristor.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 323/332] ALSA: hda/realtek: Fix mute and mic-mute LEDs for HP Envy X360 15-fh0xxx
-Date: Sun,  7 Jun 2026 12:01:32 +0200
-Message-ID: <20260607095739.987565985@linuxfoundation.org>
+Subject: [PATCH 6.12 269/307] rxrpc: Fix RESPONSE packet verification to extract skb to a linear buffer
+Date: Sun,  7 Jun 2026 12:01:06 +0200
+Message-ID: <20260607095737.588024424@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,65 +54,193 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fernando Antunez Antonio <fer.antunez24antonio@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit dc1e0172be54e742bccb28d5f14c0c395e28c098 ]
+[ Upstream commit 8bfab4b6ffc2fe92da86300728fc8c3c7ebffb56 ]
 
-This enables the mute and mic-mute LEDs on the HP Envy X360 15-fh0xxx
-2-in-1 laptops.
-The quirk 'ALC245_FIXUP_HP_ENVY_X360_15_FH0XXX' has been created and
-is now enabled for this device.
+This improves the fix for CVE-2026-43500.
 
-This is my first patch, and I'm still getting to grips with the code,
-so there's probably a better way to implement this fix.
-I apologize for any inconvenience caused by the constant release of
-new versions of this patch.
+Fix the verification of RESPONSE packets to avoid the problem of
+overwriting a RESPONSE packet sent via splice to a local address by
+extracting the contents of the UDP packet into a kmalloc'd linear buffer
+rather than decrypting the data in place in the sk_buff (which may corrupt
+the original buffer).
 
-Signed-off-by: Fernando Antunez Antonio <fer.antunez24antonio@gmail.com>
-Link: https://patch.msgid.link/20260504-hpenvy-muteled-fix-v3-1-5567fd9b3d25@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 9e5fb6098d21 ("ALSA: hda/realtek: Fix mute and mic-mute LEDs for HP 16 Piston OmniBook X")
+Fixes: 24481a7f5733 ("rxrpc: Fix conn-level packet handling to unshare RESPONSE packets")
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Closes: https://lore.kernel.org/r/afKV2zGR6rrelPC7@v4bel/
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Simon Horman <horms@kernel.org>
+cc: Jiayuan Chen <jiayuan.chen@linux.dev>
+cc: linux-afs@lists.infradead.org
+cc: stable@kernel.org
+Reviewed-by: Jeffrey Altman <jaltman@auristor.com>
+Tested-by: Marc Dionne <marc.dionne@auristor.com>
+Link: https://patch.msgid.link/20260515230516.2718212-4-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/realtek/alc269.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/rxrpc/ar-internal.h |    5 +++--
+ net/rxrpc/conn_event.c  |   30 ++++++++++++------------------
+ net/rxrpc/insecure.c    |    5 +++--
+ net/rxrpc/rxkad.c       |   29 ++++++++++-------------------
+ 4 files changed, 28 insertions(+), 41 deletions(-)
 
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -4132,6 +4132,7 @@ enum {
- 	ALC245_FIXUP_ACER_MICMUTE_LED,
- 	ALC245_FIXUP_CS35L41_I2C_2_MUTE_LED,
- 	ALC236_FIXUP_HP_DMIC,
-+	ALC245_FIXUP_HP_ENVY_X360_15_FH0XXX,
- };
+--- a/net/rxrpc/ar-internal.h
++++ b/net/rxrpc/ar-internal.h
+@@ -270,8 +270,9 @@ struct rxrpc_security {
+ 				    struct sk_buff *);
  
- /* A special fixup for Lenovo C940 and Yoga Duet 7;
-@@ -6678,6 +6679,12 @@ static const struct hda_fixup alc269_fix
- 			{ 0x12, 0x90a60160 }, /* use as internal mic */
- 			{ }
- 		},
-+	},
-+	[ALC245_FIXUP_HP_ENVY_X360_15_FH0XXX] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = cs35l41_fixup_i2c_two,
-+		.chained = true,
-+		.chain_id = ALC245_FIXUP_HP_X360_MUTE_LEDS
+ 	/* verify a response */
+-	int (*verify_response)(struct rxrpc_connection *,
+-			       struct sk_buff *);
++	int (*verify_response)(struct rxrpc_connection *conn,
++			       struct sk_buff *response_skb,
++			       void *response, unsigned int len);
+ 
+ 	/* clear connection security */
+ 	void (*clear)(struct rxrpc_connection *);
+--- a/net/rxrpc/conn_event.c
++++ b/net/rxrpc/conn_event.c
+@@ -229,28 +229,22 @@ static void rxrpc_call_is_secure(struct
+ static int rxrpc_verify_response(struct rxrpc_connection *conn,
+ 				 struct sk_buff *skb)
+ {
++	unsigned int len = skb->len - sizeof(struct rxrpc_wire_header);
++	void *buffer;
+ 	int ret;
+ 
+-	if (skb_cloned(skb) || skb_has_frag_list(skb) ||
+-	    skb_has_shared_frag(skb)) {
+-		/* Copy the packet if shared so that we can do in-place
+-		 * decryption.
+-		 */
+-		struct sk_buff *nskb = skb_copy(skb, GFP_NOFS);
++	buffer = kmalloc(len, GFP_NOFS);
++	if (!buffer)
++		return -ENOMEM;
+ 
+-		if (nskb) {
+-			rxrpc_new_skb(nskb, rxrpc_skb_new_unshared);
+-			ret = conn->security->verify_response(conn, nskb);
+-			rxrpc_free_skb(nskb, rxrpc_skb_put_response_copy);
+-		} else {
+-			/* OOM - Drop the packet. */
+-			rxrpc_see_skb(skb, rxrpc_skb_see_unshare_nomem);
+-			ret = -ENOMEM;
+-		}
+-	} else {
+-		ret = conn->security->verify_response(conn, skb);
+-	}
++	ret = skb_copy_bits(skb, sizeof(struct rxrpc_wire_header), buffer, len);
++	if (ret < 0)
++		goto out;
+ 
++	ret = conn->security->verify_response(conn, skb, buffer, len);
++
++out:
++	kfree(buffer);
+ 	return ret;
+ }
+ 
+--- a/net/rxrpc/insecure.c
++++ b/net/rxrpc/insecure.c
+@@ -44,9 +44,10 @@ static int none_respond_to_challenge(str
+ }
+ 
+ static int none_verify_response(struct rxrpc_connection *conn,
+-				struct sk_buff *skb)
++				struct sk_buff *response_skb,
++				void *response, unsigned int len)
+ {
+-	return rxrpc_abort_conn(conn, skb, RX_PROTOCOL_ERROR, -EPROTO,
++	return rxrpc_abort_conn(conn, response_skb, RX_PROTOCOL_ERROR, -EPROTO,
+ 				rxrpc_eproto_rxnull_response);
+ }
+ 
+--- a/net/rxrpc/rxkad.c
++++ b/net/rxrpc/rxkad.c
+@@ -875,7 +875,6 @@ static int rxkad_decrypt_ticket(struct r
+ 	*_expiry = 0;
+ 
+ 	ASSERT(server_key->payload.data[0] != NULL);
+-	ASSERTCMP((unsigned long) ticket & 7UL, ==, 0);
+ 
+ 	memcpy(&iv, &server_key->payload.data[2], sizeof(iv));
+ 
+@@ -1024,14 +1023,15 @@ unlock:
+  * verify a response
+  */
+ static int rxkad_verify_response(struct rxrpc_connection *conn,
+-				 struct sk_buff *skb)
++				 struct sk_buff *skb,
++				 void *buffer, unsigned int len)
+ {
+ 	struct rxkad_response *response;
+ 	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
+ 	struct rxrpc_crypt session_key;
+ 	struct key *server_key;
+ 	time64_t expiry;
+-	void *ticket = NULL;
++	void *ticket;
+ 	u32 version, kvno, ticket_len, level;
+ 	__be32 csum;
+ 	int ret, i;
+@@ -1054,13 +1054,8 @@ static int rxkad_verify_response(struct
+ 		}
  	}
- };
  
-@@ -7096,7 +7103,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x103c, 0x8be6, "HP Envy 16", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8be7, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8be8, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
--	SND_PCI_QUIRK(0x103c, 0x8be9, "HP Envy 15", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x103c, 0x8be9, "HP Envy x360 2-in-1 Laptop 15-fh0xxx", ALC245_FIXUP_HP_ENVY_X360_15_FH0XXX),
- 	SND_PCI_QUIRK(0x103c, 0x8bf0, "HP", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c15, "HP Spectre x360 2-in-1 Laptop 14-eu0xxx", ALC245_FIXUP_HP_SPECTRE_X360_EU0XXX),
- 	SND_PCI_QUIRK(0x103c, 0x8c16, "HP Spectre x360 2-in-1 Laptop 16-aa0xxx", ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX),
+-	ret = -ENOMEM;
+-	response = kzalloc(sizeof(struct rxkad_response), GFP_NOFS);
+-	if (!response)
+-		goto error;
+-
+-	if (skb_copy_bits(skb, sizeof(struct rxrpc_wire_header),
+-			  response, sizeof(*response)) < 0) {
++	response = buffer;
++	if (len < sizeof(*response)) {
+ 		ret = rxrpc_abort_conn(conn, skb, RXKADPACKETSHORT, -EPROTO,
+ 				       rxkad_abort_resp_short);
+ 		goto error;
+@@ -1072,6 +1067,9 @@ static int rxkad_verify_response(struct
+ 
+ 	trace_rxrpc_rx_response(conn, sp->hdr.serial, version, kvno, ticket_len);
+ 
++	buffer	+= sizeof(*response);
++	len	-= sizeof(*response);
++
+ 	if (version != RXKAD_VERSION) {
+ 		ret = rxrpc_abort_conn(conn, skb, RXKADINCONSISTENCY, -EPROTO,
+ 				       rxkad_abort_resp_version);
+@@ -1091,13 +1089,8 @@ static int rxkad_verify_response(struct
+ 	}
+ 
+ 	/* extract the kerberos ticket and decrypt and decode it */
+-	ret = -ENOMEM;
+-	ticket = kmalloc(ticket_len, GFP_NOFS);
+-	if (!ticket)
+-		goto error;
+-
+-	if (skb_copy_bits(skb, sizeof(struct rxrpc_wire_header) + sizeof(*response),
+-			  ticket, ticket_len) < 0) {
++	ticket = buffer;
++	if (ticket_len > len) {
+ 		ret = rxrpc_abort_conn(conn, skb, RXKADPACKETSHORT, -EPROTO,
+ 				       rxkad_abort_resp_short_tkt);
+ 		goto error;
+@@ -1177,8 +1170,6 @@ static int rxkad_verify_response(struct
+ 	ret = rxrpc_get_server_data_key(conn, &session_key, expiry, kvno);
+ 
+ error:
+-	kfree(ticket);
+-	kfree(response);
+ 	key_put(server_key);
+ 	_leave(" = %d", ret);
+ 	return ret;
 
 
