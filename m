@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA1538B7A2;
-	Sun,  7 Jun 2026 11:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328E936F8E7;
+	Sun,  7 Jun 2026 11:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780830043; cv=none; b=ePjPRX8T6SrNuXdmUuDN6IIDKFYN6Ck/W25c9hYmv0e00/PlBvGk8s2+XYZa3vkuGthYHc5iURwA0R98RADF5H0IRBXffXu2/eg1OzwwYpy2WaSTPEBExucCpPuoZdyIo0OV2mmUQ+tMpSPNqxR0EQKrX/17RiGuHaSUFR43d1Y=
+	t=1780830047; cv=none; b=dH7CrOyF7J93OoxQhHAblK6ROTrun/wUSO9r4GI5sWz2OHsr8pS70lCAp/BIzE5j3aCdqQAaBTSTLdG6fBNlmDksoF3XU69lK532fENpzkPY6li6iHg/TIYx+pGIQ282VvJTTT2nk9Tc1WjqST4VddIqty8HxSPjEmhDaBflNEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780830043; c=relaxed/simple;
-	bh=etpNy6RSAimpma6/tU/Frskpn9TKGPsJX70fvKY++8o=;
+	s=arc-20240116; t=1780830047; c=relaxed/simple;
+	bh=7Is6Ikp221plxNJ4kzFhEPMYYu8H0NRCWRvdXP2Dw0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZnaK4wx9hAjYK9QhR4YceYV/gQSdz9Z66hMO1i/1BoLYOSFk6lIsGuGff/0YApFMscuM8KUxdXwmRRIN8ZRiLiK66vF6Y8rSQ1G88v8QhYUnRlSuqHMtvmPpPUlgDYam5VQw58r5URZz3lzv1rKGaPiXwOlj/zsWkngeJBlZekg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUwYhuSg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tBsdxSQV2r0pJ3iD1503yVMfuYXCnyi1WhGnI4ttz26OXy31zVVaI7cCDqX/3U0Px4uLBhsZaMZgwrLxb9G9xPqFt3nJ3sgoWv6OLn5hXFIFfZEY8iKlJcREMPLDgBHTedGNUOy9b7eUd+EK28cDBPEVJSFH6Xh3ratY2p26LLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ApMcfANS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUwYhuSg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9654B1F00893;
-	Sun,  7 Jun 2026 11:00:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ApMcfANS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 478D11F00893;
+	Sun,  7 Jun 2026 11:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780830041;
-	bh=2D7CyNMMY2kySBERPSaOoGaLfZOgrCRkyKKKftvmpho=;
+	s=korg; t=1780830046;
+	bh=/pjqmAq60cEp13N68N/Sjk8/DV1aNyVMY4Zyq9EZPSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VUwYhuSgGPVAfeh0O6xWHs4aXPUsUKYsQJVF/YAjn78praxdqMC+j31XeMiM/NjNU
-	 PVcxAan86sv4KNDOg769DoRLZUz13KFyX8wuL1l0ovQbJpWIQRH/mxbsJAHEWRc/A7
-	 a7a4hL7Y38m233afs3uddJiawmB0GVz3SAEHrL7Q=
+	b=ApMcfANSOaOP8YVKcuGkU1pcrZX5nDb7xJv0qKM1no7goiHdlaAJh4iQaZD3xk7TT
+	 0wLC8LrvnK77/1CuPng6WrnV7y5WrZGoogqS1wVwvz0ik3BNqNzBpKup4DMHcbEFb3
+	 peSzNQ101dA38roKSYRgWjhHuw06Ps6mQQ8f44Zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 276/307] platform/x86/intel/vsec: Fix enable_cnt imbalance on PCIe error recovery
-Date: Sun,  7 Jun 2026 12:01:13 +0200
-Message-ID: <20260607095737.863034376@linuxfoundation.org>
+Subject: [PATCH 6.18 303/315] usb: dwc3: xilinx: fix error handling in zynqmp init error paths
+Date: Sun,  7 Jun 2026 12:01:30 +0200
+Message-ID: <20260607095738.727629876@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,117 +45,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit 348ccc754d8939e21ca5956ff45720b81d6e407f ]
+[ Upstream commit c1a0ecbf32c4b397353204e2ec94c5bb9f3300ed ]
 
-After a PCIe Uncorrectable Error has been reported by a device with
-Intel Vendor Specific Extended Capabilities and has been recovered
-through a Secondary Bus Reset, its driver calls intel_vsec_pci_probe()
-to rescan and reinitialize VSECs.
+Fix error handling and resource cleanup i.e remove invalid
+phy_exit() after failed phy_init(), route failures through
+proper cleanup paths and return 0 explicitly on success.
 
-intel_vsec_pci_probe() invokes pcim_enable_device() and thereby adds
-another devm action which calls pcim_disable_device() on driver unbind.
-
-So once the driver unbinds, pcim_disable_device() will be called as many
-times as an Uncorrectable Error occurred, plus one.  This will lead to
-an enable_cnt imbalance on driver unbind.
-
-Additionally, since commit dc957ab6aa05 ("platform/x86/intel/vsec: Add
-private data for per-device data"), a devm_kzalloc() allocation is
-leaked on every Uncorrectable Error.
-
-Avoid by splitting the VSEC rescan out of intel_vsec_pci_probe() into a
-separate helper and calling that on PCIe error recovery.
-
-Fixes: 936874b77dd0 ("platform/x86/intel/vsec: Add PCI error recovery support to Intel PMT")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org  # v6.0+
-Link: https://patch.msgid.link/bd594d09fa866dc51dddc9a447c3b23f9b1402cc.1778736835.git.lukas@wunner.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 84770f028fab ("usb: dwc3: Add driver for Xilinx platforms")
+Cc: stable@vger.kernel.org
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://patch.msgid.link/20260519115529.2980421-1-radhey.shyam.pandey@amd.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/vsec.c |   36 ++++++++++++++++++++++--------------
- 1 file changed, 22 insertions(+), 14 deletions(-)
+ drivers/usb/dwc3/dwc3-xilinx.c |   27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
---- a/drivers/platform/x86/intel/vsec.c
-+++ b/drivers/platform/x86/intel/vsec.c
-@@ -348,20 +348,10 @@ void intel_vsec_register(struct pci_dev
- }
- EXPORT_SYMBOL_NS_GPL(intel_vsec_register, INTEL_VSEC);
- 
--static int intel_vsec_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
-+static int intel_vsec_pci_init(struct pci_dev *pdev,
-+			       struct intel_vsec_platform_info *info)
- {
--	struct intel_vsec_platform_info *info;
- 	bool have_devices = false;
--	int ret;
--
--	ret = pcim_enable_device(pdev);
--	if (ret)
--		return ret;
--
--	pci_save_state(pdev);
--	info = (struct intel_vsec_platform_info *)id->driver_data;
--	if (!info)
--		return -EINVAL;
- 
- 	if (intel_vsec_walk_dvsec(pdev, info))
- 		have_devices = true;
-@@ -379,6 +369,23 @@ static int intel_vsec_pci_probe(struct p
- 	return 0;
- }
- 
-+static int intel_vsec_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
-+{
-+	struct intel_vsec_platform_info *info;
-+	int ret;
-+
-+	ret = pcim_enable_device(pdev);
-+	if (ret)
-+		return ret;
-+
-+	pci_save_state(pdev);
-+	info = (struct intel_vsec_platform_info *)id->driver_data;
-+	if (!info)
-+		return -EINVAL;
-+
-+	return intel_vsec_pci_init(pdev, info);
-+}
-+
- /* DG1 info */
- static struct intel_vsec_header dg1_header = {
- 	.length = 0x10,
-@@ -467,6 +474,7 @@ static pci_ers_result_t intel_vsec_pci_e
- static pci_ers_result_t intel_vsec_pci_slot_reset(struct pci_dev *pdev)
- {
- 	struct intel_vsec_device *intel_vsec_dev;
-+	struct intel_vsec_platform_info *info;
- 	pci_ers_result_t status = PCI_ERS_RESULT_DISCONNECT;
- 	const struct pci_device_id *pci_dev_id;
- 	unsigned long index;
-@@ -489,10 +497,10 @@ static pci_ers_result_t intel_vsec_pci_s
- 		devm_release_action(&pdev->dev, intel_vsec_remove_aux,
- 				    &intel_vsec_dev->auxdev);
+--- a/drivers/usb/dwc3/dwc3-xilinx.c
++++ b/drivers/usb/dwc3/dwc3-xilinx.c
+@@ -190,15 +190,13 @@ static int dwc3_xlnx_init_zynqmp(struct
  	}
--	pci_disable_device(pdev);
- 	pci_restore_state(pdev);
- 	pci_dev_id = pci_match_id(intel_vsec_pci_ids, pdev);
--	intel_vsec_pci_probe(pdev, pci_dev_id);
-+	info = (struct intel_vsec_platform_info *)pci_dev_id->driver_data;
-+	intel_vsec_pci_init(pdev, info);
  
- out:
- 	return status;
+ 	ret = phy_init(priv_data->usb3_phy);
+-	if (ret < 0) {
+-		phy_exit(priv_data->usb3_phy);
++	if (ret < 0)
+ 		goto err;
+-	}
+ 
+ 	ret = reset_control_deassert(apbrst);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to release APB reset\n");
+-		goto err;
++		goto err_phy_exit;
+ 	}
+ 
+ 	/* Set PIPE Power Present signal in FPD Power Present Register*/
+@@ -210,27 +208,25 @@ static int dwc3_xlnx_init_zynqmp(struct
+ 	ret = reset_control_deassert(crst);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to release core reset\n");
+-		goto err;
++		goto err_phy_exit;
+ 	}
+ 
+ 	ret = reset_control_deassert(hibrst);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to release hibernation reset\n");
+-		goto err;
++		goto err_phy_exit;
+ 	}
+ 
+ 	ret = phy_power_on(priv_data->usb3_phy);
+-	if (ret < 0) {
+-		phy_exit(priv_data->usb3_phy);
+-		goto err;
+-	}
++	if (ret < 0)
++		goto err_phy_exit;
+ 
+ skip_usb3_phy:
+ 	/* ulpi reset via gpio-modepin or gpio-framework driver */
+ 	reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(reset_gpio)) {
+-		return dev_err_probe(dev, PTR_ERR(reset_gpio),
+-				     "Failed to request reset GPIO\n");
++		ret = PTR_ERR(reset_gpio);
++		goto err_phy_power_off;
+ 	}
+ 
+ 	if (reset_gpio) {
+@@ -240,6 +236,13 @@ skip_usb3_phy:
+ 	}
+ 
+ 	dwc3_xlnx_set_coherency(priv_data, XLNX_USB_TRAFFIC_ROUTE_CONFIG);
++
++	return 0;
++
++err_phy_power_off:
++	phy_power_off(priv_data->usb3_phy);
++err_phy_exit:
++	phy_exit(priv_data->usb3_phy);
+ err:
+ 	return ret;
+ }
 
 
