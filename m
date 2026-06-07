@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C9328CF4A;
-	Sun,  7 Jun 2026 10:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E422B4071E3;
+	Sun,  7 Jun 2026 10:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828153; cv=none; b=qUCKPPINJCVStttIJwm5JlSeF9iwWex3vnU4RBxQiqfsqVOAQAQwKiLRWqdqKrUqH8nBKNWRqHAd8odi9Kv+oOnCqMNAfDMZ3yMKwCALh4GmqnipmsikHsAdwgK7nZQX0mMyk0QUM5bhd8WinuOuVwdwZVqRVmQ0Bejbn1NHHCU=
+	t=1780828157; cv=none; b=L16IKjjAHqUWnBYGC3E909KCMDUTGV3hNXEvy7ATl7eRHm9/re1Ma1zNqKM4hxesX4Y3iEEJDM2+eX2x4eNBCf+iPHHP5JmZnLMq5yAs5NRVyNMn8Y6ePLrbdHM53xqembMSfsXrKRUV9ribHi7ZFY11eiuq5kCqyQaYsF+lshg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828153; c=relaxed/simple;
-	bh=0Aflvr9vVyOuNCz79YWfVtKaM/voD+V4Vv6H74OFa5c=;
+	s=arc-20240116; t=1780828157; c=relaxed/simple;
+	bh=FcyKWVG7lVcCDiWbHx+dbp55zDQFYxdiHH0eyLWQy3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TMqqVaF++LQXUdorcDCUkZc5z/TDgLN5LvS0ShaYyO26DO5PEHMfd8AsB5RthyoO3hvrPx1O3KkPZO4oaNHTog0xbWwQ0MG/f+DkGbXYTU+vVmcES6ih84McqvGmyxpz0gZOoz3Gp4WQm8/bKWCUrPGJ/CKkgvDQqH+PNseeHws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DWusDhMi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JZJPVObT1DnD4QM9P0ThZpx2zoNqJGVlUeXzmFUl/TyJ7Usd4aBhKTVa1ThF5Yy5piYViJz3muq+pvA8LTfq7ZfmN8/XgEp17dvVuetMgTok6KMkxcLaydeUGwE8WBHlQiJyoVynFlG4d1A66Ax4z2N8HizLvNb+rSXJMga1mnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CnBqyrkw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DWusDhMi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F8291F00893;
-	Sun,  7 Jun 2026 10:29:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CnBqyrkw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01BE71F0089F;
+	Sun,  7 Jun 2026 10:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828152;
-	bh=vGfG63eFNUKkl9bAxATWG2wkyw1NVSEw9oScTYUpKXM=;
+	s=korg; t=1780828156;
+	bh=9tnQv36PEFNbCvYQAMPbo+Gq/DKmj7RLWkPKWvxVoJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DWusDhMiO/oWNj1sgHn6PL0VNP5ZOmh4Htf1YrtmyynZ5Rageb7v86ntqhSne1z7R
-	 L7/Iq7vXLhrzOnDRyxPKJvv++jBa9svW5tUf41FBf94CuW1SuZDxUcsRHKHhp3tlSB
-	 tfa2zt9Sp5puAmKl1RLcnLxQD1sfF9KbAOhLyLOc=
+	b=CnBqyrkwXp2ZZFrWG1Y2wSj3pLUZ8gOFhc0SqTtjHRyIpRoxT6IE1zwmj9Y45g9Fz
+	 8vqgqfOZ2Po5IxTi4rzWCLr0u8SPmvyjyV0v9xDPC4UC0G33nhbszsD3GaAc9foyYD
+	 YpkdzLnmJcw12aELBCgSby0aCjG2A+X7zh7KW3iI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	stable <stable@kernel.org>,
-	Badhri Jagan Sridharan <badhri@google.com>
-Subject: [PATCH 6.18 108/315] usb: typec: tcpm: validate VDO count in Discover Identity ACK handlers
-Date: Sun,  7 Jun 2026 11:58:15 +0200
-Message-ID: <20260607095731.614388809@linuxfoundation.org>
+	Zhenghang Xiao <kipreyyy@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 092/307] sctp: fix race between sctp_wait_for_connect and peeloff
+Date: Sun,  7 Jun 2026 11:58:09 +0200
+Message-ID: <20260607095731.156749290@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,61 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Zhenghang Xiao <kipreyyy@gmail.com>
 
-commit 8fbc349e8383125dd2d8de1c1e926279d398ab17 upstream.
+[ Upstream commit f14fe6395a8b3d961a61e138ad7b36ba3626dd4e ]
 
-Properly validate the count passed from a device when calling
-svdm_consume_identity() or svdm_consume_identity_sop_prime() as the
-device-controlled value could index off of the static arrays, which
-could leak data.
+sctp_wait_for_connect() drops and re-acquires the socket lock while
+waiting for the association to reach ESTABLISHED state. During this
+window, another thread can peeloff the association to a new socket via
+getsockopt(SCTP_SOCKOPT_PEELOFF), changing asoc->base.sk. After
+re-acquiring the old socket lock, sctp_wait_for_connect() returns
+success without noticing the migration — the caller then accesses
+the association under the wrong lock in sctp_datamsg_from_user().
 
-Assisted-by: gkh_clanker_t1000
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: stable <stable@kernel.org>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Link: https://patch.msgid.link/2026051350-plated-salute-0efe@gregkh
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add the same sk != asoc->base.sk check that sctp_wait_for_sndbuf()
+already has, returning an error if the association was migrated while
+we slept.
+
+Fixes: 668c9beb9020 ("sctp: implement assign_number for sctp_stream_interleave")
+Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260527032411.60959-1-kipreyyy@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/sctp/socket.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -1695,6 +1695,9 @@ static void svdm_consume_identity(struct
- 	u32 vdo = p[VDO_INDEX_IDH];
- 	u32 product = p[VDO_INDEX_PRODUCT];
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 6b562dd1aae110..3e80cf4e63ff00 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -9377,6 +9377,8 @@ static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
+ 		release_sock(sk);
+ 		current_timeo = schedule_timeout(current_timeo);
+ 		lock_sock(sk);
++		if (sk != asoc->base.sk)
++			goto do_error;
  
-+	if (cnt <= VDO_INDEX_PRODUCT)
-+		return;
-+
- 	memset(&port->mode_data, 0, sizeof(port->mode_data));
- 
- 	port->partner_ident.id_header = vdo;
-@@ -1715,6 +1718,9 @@ static void svdm_consume_identity_sop_pr
- 	u32 product = p[VDO_INDEX_PRODUCT];
- 	int svdm_version;
- 
-+	if (cnt <= VDO_INDEX_CABLE_1)
-+		return;
-+
- 	/*
- 	 * Attempt to consume identity only if cable currently is not set
- 	 */
-@@ -1738,7 +1744,7 @@ static void svdm_consume_identity_sop_pr
- 	switch (port->negotiated_rev_prime) {
- 	case PD_REV30:
- 		port->cable_desc.pd_revision = 0x0300;
--		if (port->cable_desc.active)
-+		if (port->cable_desc.active && cnt > VDO_INDEX_CABLE_2)
- 			port->cable_ident.vdo[1] = p[VDO_INDEX_CABLE_2];
- 		break;
- 	case PD_REV20:
+ 		*timeo_p = current_timeo;
+ 	}
+-- 
+2.53.0
+
 
 
