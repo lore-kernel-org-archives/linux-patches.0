@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40490322C88;
-	Sun,  7 Jun 2026 10:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B45831F983;
+	Sun,  7 Jun 2026 10:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827838; cv=none; b=SRWqK6rqP1UPhSowk6U3l8hULzHfjVRdV/zR8gtYv+qOEzARbY9hMUpKkhvqalfZgcdQVHKQmHNjTKCJsq/OOfXsSjKrwBvlnLgtZKNvIsnVDqVPPl/KcZrtsRIPm1R/i3Jt7sapr5sUshdDRNfbWn4Thg3KZKZIRBVd/d8akio=
+	t=1780827842; cv=none; b=CBbHmBW/j6Ho6N1OvzmQDfqxqc/KrSqtf42lxCWebP2GD8gZMgFFciI8zRw2GL6GBZgJSyKNFOdgX0MIu9vYFiFO5woGKCRMwdkwegQxAkXVg/MSOKXRZT6xvKVipYfWkinZdjvRqwk4mXoj9kRSjWpHjTlqmTD/wBJFQPZt8WI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827838; c=relaxed/simple;
-	bh=82Qe7zgZfsXJISx0pTRoVhTSb5gKHszGGPqo+Tib114=;
+	s=arc-20240116; t=1780827842; c=relaxed/simple;
+	bh=7AkqWxJzn5d81XkIc7gAgJVT5neUZlr9XxJNqlsZs/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=re6Lrmw795V1KZaHOqqX6WCPuzr8C1Hfdkgo89j/2+XI4kOaew/e/3mLtOrhixDgWXEEVRLCRMISNbQI6vJfhw7vmot7wcKStg+EhPu1/AqyH1+Qst6z15B8T0AkYusDZbW9oiQP8q0pOqTjhgBA0CdjqYVtQR7ns7a5MW3sZ2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3pmEO0e; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YBb0OFMOlD39Y/hZtqlIqKpojGih2Wl5cJFjpITGgSM0r8ICD2zR71a4Nxuhlnd3LF3aPsld7t5uRVP9tHHC6pjH2tIw9N0xR42KW8qgU4irjMxJk0E5u2Y8NjTLg70rG1+wpU70ABVBxPH5AKQ6Dkuq8ewlSQQBzQmgB6xhJks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEoAPS3d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3pmEO0e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0481F00893;
-	Sun,  7 Jun 2026 10:23:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEoAPS3d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44BA41F00893;
+	Sun,  7 Jun 2026 10:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827837;
-	bh=5oRL7aVeKT7c5lVGfTU45//Eg606jjidqps/dzdfpMY=;
+	s=korg; t=1780827841;
+	bh=5zWBmyj67lcIzfjwe9m7dsNOxH4dvYwLt9PB93z9T68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j3pmEO0e4NFwGcLjnoCJsgT8YxYltYn1XShvro8RC8t6IZ0IKAC6mlp4Ale3xiMyu
-	 tESZqJXX08cDQT99q4HkqL0Lqq2MOa7pNgyTgx+Pl3ZbHO0mN0t3zwb4swNy8WFCa/
-	 yQBUf5fGlZ5TpBj39wEoo9kT+PUb7RQWHCbV0juM=
+	b=JEoAPS3dqfT/a12tNHN7E/kw87Su5L6DiisbRGwH5BOAJLHK6dQlE8TgEa9KsqC1h
+	 J1jzDq3lzQpGhEJ5DSCLOsi2+/HQbXXHiBqgdQz7khM00pvjBUVjyywWrhThWO22Fn
+	 OiR8/gxHf/wiKSfr1gdWDvvf7WJjXhuejj+FzMVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Scardovi <scardracs@disroot.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 090/307] gpio: rockchip: convert bank->clk to devm_clk_get_enabled()
-Date: Sun,  7 Jun 2026 11:58:07 +0200
-Message-ID: <20260607095731.082947802@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 7.0 126/332] usb: typec: wcove: dont write past struct pd_message in wcove_read_rx_buffer()
+Date: Sun,  7 Jun 2026 11:58:15 +0200
+Message-ID: <20260607095732.737538259@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,82 +46,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marco Scardovi <scardracs@disroot.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 3e46c18d5d87f063a93ae0fe7662fbf6660459d5 ]
+commit 4af7ad0e6d7aa4403dbb1dac7b9659b0421efcaa upstream.
 
-The bank->clk was previously obtained via of_clk_get() and manually
-prepared/enabled. However, it was missing a corresponding clk_put() in
-both the error paths and the remove function, leading to a reference leak.
+wcove_read_rx_buffer() copies the PD RX FIFO into the caller's
+struct pd_message with
 
-Convert the allocation to devm_clk_get_enabled(), which also properly
-propagates failures from clk_prepare_enable() that were previously ignored.
+	for (i = 0; i < USBC_RXINFO_RXBYTES(info); i++)
+		regmap_read(wcove->regmap, USBC_RX_DATA + i, msg + i);
 
-The GPIO bank device uses the same OF node as the previous of_clk_get()
-call, so devm_clk_get_enabled(dev, NULL) correctly resolves the same
-clock provider entry.
+which has two problems:
 
-Fix the reference leak and simplify the code by removing the manual
-clk_disable_unprepare() calls in the probe error paths and in the
-remove function.
+USBC_RXINFO_RXBYTES() is a 5-bit field (max 31) while struct pd_message
+is 30 bytes (__le16 header + __le32 payload[PD_MAX_PAYLOAD], packed).
+The byte count latched in RXINFO is the number of bytes the port partner
+put on the wire, so a malicious partner that transmits a 31-byte frame
+can drive the loop one byte past the destination if the WCOVE BMC
+receiver does not enforce the PD object-count limit in hardware. The
+existing FIXME flagged this as unverified.
 
-Fixes: 936ee2675eee ("gpio/rockchip: add driver for rockchip gpio")
-Assisted-by: Antigravity:gemini-3.5-flash
-Signed-off-by: Marco Scardovi <scardracs@disroot.org>
-Link: https://patch.msgid.link/20260526171050.12785-2-scardracs@disroot.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Independently, regmap_read() takes an unsigned int * and stores a full
+unsigned int at the destination. Passing the byte pointer msg + i means
+each iteration writes four bytes; the high three are zero (val_bits is
+8) and are normally overwritten by the next iteration, but the final
+iteration's high bytes are not. With RXBYTES == 30 the i == 29 iteration
+already writes three zero bytes past msg, which sits on the IRQ thread's
+stack in wcove_typec_irq().
+
+Clamp the loop to sizeof(struct pd_message) and read each register into
+a local before storing only its low byte, so the copy can never exceed
+the destination regardless of what RXINFO reports.
+
+Assisted-by: gkh_clanker_t1000
+Cc: stable <stable@kernel.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/2026051347-clustered-deflected-9543@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-rockchip.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/usb/typec/tcpm/wcove.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpio/gpio-rockchip.c b/drivers/gpio/gpio-rockchip.c
-index 4e2132c80be32a..052713bd8d07a9 100644
---- a/drivers/gpio/gpio-rockchip.c
-+++ b/drivers/gpio/gpio-rockchip.c
-@@ -647,11 +647,10 @@ static int rockchip_get_bank_data(struct rockchip_pin_bank *bank)
- 	if (!bank->irq)
- 		return -EINVAL;
- 
--	bank->clk = of_clk_get(bank->of_node, 0);
-+	bank->clk = devm_clk_get_enabled(bank->dev, NULL);
- 	if (IS_ERR(bank->clk))
- 		return PTR_ERR(bank->clk);
- 
--	clk_prepare_enable(bank->clk);
- 	id = readl(bank->reg_base + gpio_regs_v2.version_id);
- 
- 	/* If not gpio v2, that is default to v1. */
-@@ -661,7 +660,6 @@ static int rockchip_get_bank_data(struct rockchip_pin_bank *bank)
- 		bank->db_clk = of_clk_get(bank->of_node, 1);
- 		if (IS_ERR(bank->db_clk)) {
- 			dev_err(bank->dev, "cannot find debounce clk\n");
--			clk_disable_unprepare(bank->clk);
- 			return -EINVAL;
- 		}
- 	} else {
-@@ -735,7 +733,6 @@ static int rockchip_gpio_probe(struct platform_device *pdev)
- 
- 	ret = rockchip_gpiolib_register(bank);
- 	if (ret) {
--		clk_disable_unprepare(bank->clk);
- 		mutex_unlock(&bank->deferred_lock);
- 		return ret;
- 	}
-@@ -776,7 +773,6 @@ static void rockchip_gpio_remove(struct platform_device *pdev)
- {
- 	struct rockchip_pin_bank *bank = platform_get_drvdata(pdev);
- 
--	clk_disable_unprepare(bank->clk);
- 	gpiochip_remove(&bank->gpio_chip);
+--- a/drivers/usb/typec/tcpm/wcove.c
++++ b/drivers/usb/typec/tcpm/wcove.c
+@@ -444,9 +444,11 @@ static int wcove_start_toggling(struct t
+ 	return regmap_write(wcove->regmap, USBC_CONTROL1, usbc_ctrl);
  }
  
--- 
-2.53.0
-
+-static int wcove_read_rx_buffer(struct wcove_typec *wcove, void *msg)
++static int wcove_read_rx_buffer(struct wcove_typec *wcove,
++				struct pd_message *msg)
+ {
+-	unsigned int info;
++	unsigned int info, val, len;
++	u8 *buf = (u8 *)msg;
+ 	int ret;
+ 	int i;
+ 
+@@ -454,12 +456,13 @@ static int wcove_read_rx_buffer(struct w
+ 	if (ret)
+ 		return ret;
+ 
+-	/* FIXME: Check that USBC_RXINFO_RXBYTES(info) matches the header */
++	len = min(USBC_RXINFO_RXBYTES(info), sizeof(*msg));
+ 
+-	for (i = 0; i < USBC_RXINFO_RXBYTES(info); i++) {
+-		ret = regmap_read(wcove->regmap, USBC_RX_DATA + i, msg + i);
++	for (i = 0; i < len; i++) {
++		ret = regmap_read(wcove->regmap, USBC_RX_DATA + i, &val);
+ 		if (ret)
+ 			return ret;
++		buf[i] = val;
+ 	}
+ 
+ 	return regmap_write(wcove->regmap, USBC_RXSTATUS,
 
 
