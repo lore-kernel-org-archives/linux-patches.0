@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C059B3254B2;
-	Sun,  7 Jun 2026 10:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C28320A37;
+	Sun,  7 Jun 2026 10:24:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827874; cv=none; b=Z5LBy+7AkGVgjWolc8zAKoCSiRBv3TRZRalQvuwRHAQ+LaR1YWzhy36w5oj0DmR+6WkXBrgVnex1rOvc6U2ftPyGsofFZVN6s2PqjmSRXsMxxFsvET18czd4EkkO0vbbMNsSQfxuytsk8fksusaRSxmu0ifgIvLCbAtd9tknB+M=
+	t=1780827878; cv=none; b=c2WoP/WLKC2d/c3Q5eHxPnBj/sOEH4ypUa3h0JN6AtwQtC2g+yfRs5Z4aT/ILEB55OxVs/xQPuscU3HA4f3po4rkxoeFKajIdsASGQyZTF9Fy374E9Z2+713LKzyDnj0sCWxifVfVidtcjPOw8GgPzwxrTEkjp7b3Lcs7boSIk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827874; c=relaxed/simple;
-	bh=m/p+9igKWARo/WGxNc4ofs4krwYqXgcTb4f3eDvjRdo=;
+	s=arc-20240116; t=1780827878; c=relaxed/simple;
+	bh=HJiGGhSMglOaI/yOtL84BMdYF7TZ7eNV/ALXnFhriHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X6sedg5fKszdPf6wAM4vkE/RiO04BSv9zsg/ozo2fYmSp59sefXq6ufEIvNswGe887FoyrPQbcdPYvzWPUgUg7tmoNFqxy70OED1LshqA4s2dy2EG6ZBQZgqxU3fdai8h0rGx1QGHNLBiNVIyf07ZGEYwZckLRCxDJcQIlvSGU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bvth/RxU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SmjmS/UVzZLiS1CDOZoEBqhIWTYfET0n11Y77X/II69A307qzAaLlG8rwLE9a3FrB2hMLj/+bxLNeF3faYgO/PD2nu7/jyUPNU5MwdeDCzctMHJ+wo5A703/ZfyKgDYRp8If7f47gaXcTmHyb1C6jKhgiNSP81PhnQBarvF4JLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mimm2zF4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bvth/RxU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E831F00893;
-	Sun,  7 Jun 2026 10:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mimm2zF4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9047D1F00893;
+	Sun,  7 Jun 2026 10:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827873;
-	bh=uk2CZfZAub7Z0XoEURnGx6d0+FcaGp5JEVLwk1Tz9lE=;
+	s=korg; t=1780827877;
+	bh=lYSjjcEmglS12FOwS8jwS+ourZesq7hc+/nztdX/k/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bvth/RxUSWtarQasduwrbDcdl/JGpSpJ3F10AtEaXoCuuWUFMhjkg+sgu45Co59po
-	 6KyouFwVVLxTv5p1rnNdPBlspJ/i0Ns8tQ4u0y5zKEGkMZ0oUVvkKSzxnt4l5DksGs
-	 EQBiW4AQ2R1brRyG0AiqjWlQJ2SJiRzZJS6THVpk=
+	b=Mimm2zF4DbxJWZav4bxQ52eWo3qvX9UmxR7GFpc5UzyOHzzUtjmbWmzCuDKx96UId
+	 TPNiTpD1LG53zjvN3XLBOb+lTSVwPr+CND+UQha0/BwCXNnvIvU1/qjNzyjWJRNH6I
+	 pLhA/B3IpVyTh5fd5oMfdr40AjKU4AwQ7/Xg3Irw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.18 109/315] usb: typec: tcpm: bound altmode_desc[] per iteration in svdm_consume_modes()
-Date: Sun,  7 Jun 2026 11:58:16 +0200
-Message-ID: <20260607095731.647268756@linuxfoundation.org>
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 093/307] ipv6: fix possible infinite loop in rt6_fill_node()
+Date: Sun,  7 Jun 2026 11:58:10 +0200
+Message-ID: <20260607095731.193933206@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,75 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-commit 3389c149c68c3fea61910ad5d34f7bf3bff44e32 upstream.
+[ Upstream commit 9f72412bcf60144f252b0d6205106abf14344abc ]
 
-svdm_consume_modes() checks pmdata->altmodes against the array size once
-before the loop over the count, but forgot to check the bound at every
-point in the loop.
+Sashiko reported this issue [1]. Apply the same fix as
+commit f8d8ce1b515a ("ipv6: fix possible infinite loop in fib6_info_uses_dev()").
 
-In the well-behaved SVDM discovery flow this is harmless because each of
-at most SVID_DISCOVERY_MAX SVIDs contributes at most MODE_DISCOVERY_MAX
-modes, exactly filling altmode_desc[ALTMODE_DISCOVERY_MAX].  But the
-CMDT_RSP_ACK handler in tcpm_pd_svdm() does not correlate an incoming
-ACK with any request the port actually sent.  Once port->partner is set,
-an unsolicited Discover Modes ACK is consumed unconditionally.  A broken
-or malicious port partner can therefore drive altmodes to
-ALTMODE_DISCOVERY_MAX - 1 via the normal flow, and then send one extra
-Discover Modes ACK with seven VDOs.  Because the pre-loop check passes,
-the loop could then writes up to five entries past altmode_desc[].  For
-mode_data_prime the next field in struct tcpm_port is the
-partner_altmode[] pointer array, which then receives partner-chosen
-SVID/VDO bytes.
+Writers holding tb6_lock can list_del_rcu(&rt->fib6_siblings)
+without waiting for RCU readers; rt->fib6_siblings.next then still
+points into the old ring and this softirq-side walker never reaches
+&rt->fib6_siblings, causing a CPU stall. fib6_del_route() always
+WRITE_ONCE()s rt->fib6_nsiblings to 0 before list_del_rcu(), so an
+inside-loop check is a reliable detach signal.
 
-Move the bound check inside the loop so the array can never be indexed
-past ALTMODE_DISCOVERY_MAX regardless of how many VDOs the partner
-supplies or how the function was reached.
+[1] https://sashiko.dev/#/patchset/20260526020227.4857-1-jiayuan.chen%40linux.dev
 
-Assisted-by: gkh_clanker_t1000
-Cc: Badhri Jagan Sridharan <badhri@google.com>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/2026051351-reshuffle-skillful-90af@gregkh
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d9ccb18f83ea ("ipv6: Fix soft lockups in fib6_select_path under high next hop churn")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260527053133.180695-1-jiayuan.chen@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |   12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ net/ipv6/route.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -1832,23 +1832,19 @@ static void svdm_consume_modes(struct tc
- 	switch (rx_sop_type) {
- 	case TCPC_TX_SOP_PRIME:
- 		pmdata = &port->mode_data_prime;
--		if (pmdata->altmodes >= ARRAY_SIZE(port->plug_prime_altmode)) {
--			/* Already logged in svdm_consume_svids() */
--			return;
--		}
- 		break;
- 	case TCPC_TX_SOP:
- 		pmdata = &port->mode_data;
--		if (pmdata->altmodes >= ARRAY_SIZE(port->partner_altmode)) {
--			/* Already logged in svdm_consume_svids() */
--			return;
--		}
- 		break;
- 	default:
- 		return;
- 	}
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 31c9e3b73f2da1..c73218fd82c615 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -5812,6 +5812,8 @@ static int rt6_fill_node(struct net *net, struct sk_buff *skb,
  
- 	for (i = 1; i < cnt; i++) {
-+		if (pmdata->altmodes >= ALTMODE_DISCOVERY_MAX) {
-+			/* Already logged in svdm_consume_svids() */
-+			return;
-+		}
- 		paltmode = &pmdata->altmode_desc[pmdata->altmodes];
- 		memset(paltmode, 0, sizeof(*paltmode));
+ 				goto nla_put_failure;
+ 			}
++			if (!READ_ONCE(rt->fib6_nsiblings))
++				break;
+ 		}
  
+ 		rcu_read_unlock();
+-- 
+2.53.0
+
 
 
