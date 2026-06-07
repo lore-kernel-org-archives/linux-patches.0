@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB871E98EF;
-	Sun,  7 Jun 2026 10:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75441308F0A;
+	Sun,  7 Jun 2026 10:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827131; cv=none; b=MyTttEsSWi2rCS2a+5EW45+HZzcqm0sYOlFn0ArLeWPQQzocC/zph1dXJCjXaAV6bGyH/qxi0pb7N9aNUnDMsuJFM1JSD9crn+jqKdVhpWNap2bf5n9a950H519YmH9VT/q84CBKr4cglNLNqDKJjmuanvv704XrHFM7cyz1V1c=
+	t=1780827134; cv=none; b=DYQ4n7rJKGGE1UERll5BpPZdr9IqkKbnGAA3K1wsXVUVKYOp60eq1obmc9IUVgovxNF8pCN08LYq0UA0mTIBBi4SCQTfuSpo2tb9LfbRjRSoVdM+7ATQ1dRLrzF5NQV/U9yq3sITCU7Dukm+A1ewrK9jj6sGdsiAaz18aeYv+Mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827131; c=relaxed/simple;
-	bh=9jYXHqhqk23B2JQqQW0TcpivhUDm//G1Kxqgu01h98Y=;
+	s=arc-20240116; t=1780827134; c=relaxed/simple;
+	bh=zdYQxZF3+33pgH3tCmKvQB6A2kCn6agJIaQDZrTzlt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hp7rYcukR4sIq1Dns96dEWv4sA0pAulWvB9AHPJwHP98H36FW+fmL5Jelbub8n176DGrRY6IIXXJOw4HuYmY1LikXCEflrBzhUruU3WTL53ShARxBdTF8rOInVJHKZGS/1qtmFNKFq2sYHNJ3YIic7U4kArDeaudvo+IzxZa+CA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pgdO4wtK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m54opYJpwwI7VMhMrrOIylHxMZdxSKspNV08uh86eb1BkET4GLHlkrriKVsHgoK7mPmJ9+E6F5UPL2wfU+QZhjsaFUOU1JuFrZVnWQaVAhRwkrHFwPEPjoBtEqqzL4QEUVBvbHDBd2K8ux2eI1FtBoKVXq19rnn5FH1Ng67JSu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KlSxMLYH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pgdO4wtK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002811F00893;
-	Sun,  7 Jun 2026 10:12:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlSxMLYH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE2C1F00893;
+	Sun,  7 Jun 2026 10:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827129;
-	bh=C0FOKE5PX2uFz0B1Jw4Zri+ICJbhssY0H17s/HfdsUQ=;
+	s=korg; t=1780827133;
+	bh=9+eUQEZ9v1qtbCTUxqvVSuHzJZz+XTYoAZXwXuW/j7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pgdO4wtKuWqhT5tcwT/rcN/O6erjEy4fMCd5i9sBVfjEyjrni3w3fbphGjsCc1B5L
-	 /5w5H94a1SB03+UqQgtsB2HjBuHpiWD/w7/DTNE4VkPjPwTjLkLd7UPc9SHTGMYRub
-	 RrjDnihHFHwi/HRRcgHz2RQd/Pwgplot6AHoHp/Y=
+	b=KlSxMLYHCAvIyGO2rliFrXids09xly6O4t2D0dn4rrawkX6NvCqfYWvsMalbk2Y+v
+	 dri/ZBevFSdNItC4Pl8JPUiBPx7aMY8pWj1LotYLgifVF4aCX4Mvc+Fsm/N7rMGUhK
+	 stQr3wTuwNeWH+UVQ4RsgqwoNEh/fc861zc1MxIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8ed98cbd0161632bce95@syzkaller.appspotmail.com,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 065/332] bonding: refuse to enslave CAN devices
-Date: Sun,  7 Jun 2026 11:57:14 +0200
-Message-ID: <20260607095730.521630721@linuxfoundation.org>
+Subject: [PATCH 6.12 025/307] nfc: llcp: Fix use-after-free in llcp_sock_release()
+Date: Sun,  7 Jun 2026 11:57:02 +0200
+Message-ID: <20260607095728.566631552@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,76 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 8ba68464e4787b6a7ec938826e16124df20fd23d ]
+[ Upstream commit f4268b466190dae95a7585f69b4f1f8ad097632c ]
 
-syzbot reported a kernel paging request crash in
-can_rx_unregister() inside net/can/af_can.c. The crash occurs
-because a virtual CAN device (vxcan) is being enslaved to a
-bonding master.
+llcp_sock_release() unconditionally unlinks the socket from the local
+sockets list.  However, if the socket is still in connecting state, it
+is on the connecting list.
 
-During the enslavement process, the bonding driver mutates
-and modifies the network device states to fit an Ethernet-like
-aggregation model. However, CAN devices operate on a completely
-different Layer 2 architecture, relying on the CAN mid-layer
-private data structure (can_ml_priv) instead of standard
-Ethernet structures. Since bonding does not initialize or
-maintain these CAN structures, subsequent operations on the
-half-enslaved interface (such as closing associated sockets
-via isotp_release) lead to a null-pointer dereference when
-accessing the CAN receiver lists.
+Fix this by checking the socket state and unlinking from the correct list.
 
-Bonding CAN interfaces is architecturally invalid as CAN lacks
-MAC addresses, ARP capabilities, and standard Ethernet
-link-layer mechanisms. While generic loopback devices are
-blocked globally in net/core/dev.c, virtual CAN devices
-bypass this check because they do not carry the IFF_LOOPBACK
-flag, despite acting as local software-loopbacks.
-
-Fix this by explicitly blocking network devices of type
-ARPHRD_CAN from being enslaved at the very beginning of
-bond_enslave(). This prevents illegal state mutations,
-eliminates the resulting KASAN crashes, and avoids potential
-memory leaks from incomplete socket cleanups.
-
-As the CAN support has been added a long time after bonding
-the Fixes-tag points to the introduction of ARPHRD_CAN that
-would have needed a specific handling in bonding_main.c.
-
-Fixes: cd05acfe65ed ("[CAN]: Allocate protocol numbers for PF_CAN")
-Reported-by: syzbot+8ed98cbd0161632bce95@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8ed98cbd0161632bce95
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20260526-bonding-candev-v1-1-ba1df400918a@hartkopp.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b4011239a08e ("NFC: llcp: Fix non blocking sockets connections")
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://patch.msgid.link/20260429134115.3558604-1-lee@kernel.org
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/nfc/llcp_sock.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index eb49ce486992de..d6a1e814878f28 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1892,6 +1892,12 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 	struct sockaddr_storage ss;
- 	int res = 0, i;
+diff --git a/net/nfc/llcp_sock.c b/net/nfc/llcp_sock.c
+index 57a2f97004e172..915929cd724f90 100644
+--- a/net/nfc/llcp_sock.c
++++ b/net/nfc/llcp_sock.c
+@@ -633,6 +633,8 @@ static int llcp_sock_release(struct socket *sock)
  
-+	if (slave_dev->type == ARPHRD_CAN) {
-+		BOND_NL_ERR(bond_dev, extack,
-+			    "CAN devices cannot be enslaved");
-+		return -EPERM;
-+	}
-+
- 	if (slave_dev->flags & IFF_MASTER &&
- 	    !netif_is_bond_master(slave_dev)) {
- 		BOND_NL_ERR(bond_dev, extack,
+ 	if (sock->type == SOCK_RAW)
+ 		nfc_llcp_sock_unlink(&local->raw_sockets, sk);
++	else if (sk->sk_state == LLCP_CONNECTING)
++		nfc_llcp_sock_unlink(&local->connecting_sockets, sk);
+ 	else
+ 		nfc_llcp_sock_unlink(&local->sockets, sk);
+ 
 -- 
 2.53.0
 
