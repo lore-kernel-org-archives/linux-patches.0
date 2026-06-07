@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F46296BCC;
-	Sun,  7 Jun 2026 10:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25EE2AF1D;
+	Sun,  7 Jun 2026 10:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829222; cv=none; b=cEDq+y7Su5iqO2DmLdv6eca2/sTSGLgbYfQ3/5sNB5w62Bf6DgB/ttI393LQQAPbJ+cumDKgvHqydEeY07gPhd+BqnLTFpRu+DAMG+chr8CP8/+/Fe+i8S5XUzaNcU5QbuM7NfjIWDzo15QNd1OJHbqPmoV7qP07wOleDAtiWBQ=
+	t=1780829225; cv=none; b=OG8uq7Ty8SeI4BtEi4MvzjkzmYQYvsDZKKvyiITg4nCGXk+Tb4yic/FEjXxSCbDYw/fOzYSb8J8IokCZOWZTJL9iNJser/ohpLMiPKnIu0YDcJjjTt++7xgOXDgO9YnZQ0HhPfYihyTRaaVeb/Q190CnRNhRCtCQkWvr6Kr6D3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829222; c=relaxed/simple;
-	bh=wigbhd06SQ5mzgYTZhzBvR0IRxlkE9YrjBfzoeHyCkM=;
+	s=arc-20240116; t=1780829225; c=relaxed/simple;
+	bh=x4cTBos7xsYOkM9HRQpWXMkB5CMsZavs6grS7MViIDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P3O06U66LcoD/tSSlSGAsWaPjCafHcBhfbM5OXzEfXexbE+9/n3ktqu3t+9Szx1faUfoSk6jcGDCPd5V0Xwg98jyi1iTrmMwgRC2XsrGF0OlI62cHMUQFK0mTKe9xRTZpiCRa/rDNMmqHbzlUuuT2g6tEMdEkm1aEWw8iX0PHeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrK4gTTu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jqv0XvgAjr+7P/VnIkHaicQpqXiOXHhQV/eU6G14peBJKvoRs2DP2cp2rspP4bz1gBbopNazxFs0v7Z6PeP4YEoqlrkiP0icuvYvUAGwbNstD54RafuHQpN6lMnp8inIDjqa98SruMSOIIcmEmSsBXPi7SGjA7AjQa+XcF6Vr4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gUwBb43i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrK4gTTu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DECE31F00893;
-	Sun,  7 Jun 2026 10:47:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUwBb43i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D39F1F00893;
+	Sun,  7 Jun 2026 10:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829221;
-	bh=nOI9ebQu30qecAVKMwwdpVksF38n2bHLvSsUe28eW1Y=;
+	s=korg; t=1780829224;
+	bh=MItXLdYj2zGIMxRh6rZBGXRHw8lARWEV3hwAvwYNT94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CrK4gTTuV2rUXe77h60ZM6aYnGZbH9VpJpwA6ESGIzkbdpDIdIOqIXJv5SFOSwYob
-	 hqqXEImG67dhJwJ6pnChCZK6xGI/SwT3R1djn39Uvzz7wB3Fd/Nfdz6pGmJ9r0eFTs
-	 1Ag3EW7tuT3XDAXOd0nWix8tQTPlAIyrDjVJaBp8=
+	b=gUwBb43iKSB/s2EQKaQ7e4Y6tfFS5AssmIelXbVf6oTZcRpztACcg2/t5sh9thjR3
+	 jBtoL1udBKYZ6mvm3gV8Cqp8G591PgWvBT3NP8GwUE8TMlNzDPXEVR7EzLStjqGYVE
+	 1tYFHtNLW+Tx386RmEB2fucJaSnRU0V+f8g0GuWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Stephen J. Fuhry" <fuhrysteve@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 7.0 255/332] USB: quirks: add NO_LPM for Lenovo ThinkPad USB-C Dock Gen2 hub controllers
-Date: Sun,  7 Jun 2026 12:00:24 +0200
-Message-ID: <20260607095737.411505900@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.18 227/315] usbip: vudc: Fix use after free bug in vudc_remove due to race condition
+Date: Sun,  7 Jun 2026 12:00:14 +0200
+Message-ID: <20260607095735.913392313@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,44 +48,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephen J. Fuhry <fuhrysteve@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 9ddb9c0deca48d2c2a22ebf4d2f35c925a520328 upstream.
+commit d96209626a29ea64666be98c30b30ac82e5f1be6 upstream.
 
-The Lenovo ThinkPad USB-C Dock Gen2 (17ef:a391, 17ef:a392) hub
-controllers exhibit link instability when USB Link Power Management
-is enabled, similar to the dock's Ethernet adapter (17ef:a387) which
-already carries USB_QUIRK_NO_LPM.
+This patch follows up Zheng Wang's 2023 report of a use-after-free in
+vudc_remove(). The original thread stalled on Shuah Khan's request for
+runtime testing of the unplug/unbind path. This patch supplies that
+testing and keeps Zheng's original fix shape.
 
-When the dock reconnects after a transient disconnect, the hub
-controllers enter LPM states between re-enumeration retries, causing
-repeated disconnect/reconnect cycles lasting up to two minutes.
-Disabling LPM for these devices restores stable enumeration.
+In vudc_probe(), v_init_timer() binds udc->tr_timer.timer to v_timer().
+usbip_sockfd_store() starts the timer via v_start_timer()/v_kick_timer().
+vudc_remove() can then free the containing struct vudc while the timer is
+still pending or executing.
 
-Signed-off-by: Stephen J. Fuhry <fuhrysteve@gmail.com>
+KASAN confirms the race on an unpatched x86_64 QEMU guest with
+CONFIG_KASAN=y, CONFIG_USBIP_VUDC=y, CONFIG_USB_ZERO=y, and a tight loop
+that repeatedly writes a socket fd to usbip_sockfd, closes the socket
+pair, and unbinds/rebinds usbip-vudc.0:
+
+  BUG: KASAN: slab-use-after-free in __run_timer_base.part.0+0x8ba/0x8e0
+  Write of size 8 at addr ffff888001b80740 by task trigger_and_unb/239
+  Allocated by task 239:
+    vudc_probe+0x4d/0xaa0
+  Freed by task 239:
+    kfree+0x18f/0x520
+    device_release_driver_internal+0x388/0x540
+    unbind_store+0xd9/0x100
+
+This lands in the timer core rather than v_timer() itself because the
+embedded timer_list is being walked after its containing struct vudc has
+already been freed. The underlying lifetime bug is the same one Zheng
+reported.
+
+With v_stop_timer() called from vudc_remove() and the timer deleted
+synchronously, the same harness completed 5000 bind/unbind iterations
+with no KASAN report.
+
+Fixes: b6a0ca111867 ("usbip: vudc: Add UDC specific ops")
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260513171419.44849-1-fuhrysteve@gmail.com
+Reported-by: Zheng Wang <zyytlz.wz@163.com>
+Closes: https://lore.kernel.org/linux-usb/20230317100954.2626573-1-zyytlz.wz@163.com/
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://patch.msgid.link/20260417163552.807548-1-michael.bommarito@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/usbip/vudc_dev.c      |    1 +
+ drivers/usb/usbip/vudc_transfer.c |    3 ++-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -513,6 +513,10 @@ static const struct usb_device_id usb_qu
- 	/* Lenovo ThinkPad USB-C Dock Gen2 Ethernet (RTL8153 GigE) */
- 	{ USB_DEVICE(0x17ef, 0xa387), .driver_info = USB_QUIRK_NO_LPM },
+--- a/drivers/usb/usbip/vudc_dev.c
++++ b/drivers/usb/usbip/vudc_dev.c
+@@ -632,6 +632,7 @@ void vudc_remove(struct platform_device
+ {
+ 	struct vudc *udc = platform_get_drvdata(pdev);
  
-+	/* Lenovo ThinkPad USB-C Dock Gen2 USB 3.1 and USB 2.0 hub controllers */
-+	{ USB_DEVICE(0x17ef, 0xa391), .driver_info = USB_QUIRK_NO_LPM },
-+	{ USB_DEVICE(0x17ef, 0xa392), .driver_info = USB_QUIRK_NO_LPM },
-+
- 	/* BUILDWIN Photo Frame */
- 	{ USB_DEVICE(0x1908, 0x1315), .driver_info =
- 			USB_QUIRK_HONOR_BNUMINTERFACES },
++	v_stop_timer(udc);
+ 	usb_del_gadget_udc(&udc->gadget);
+ 	cleanup_vudc_hw(udc);
+ 	kfree(udc);
+--- a/drivers/usb/usbip/vudc_transfer.c
++++ b/drivers/usb/usbip/vudc_transfer.c
+@@ -490,7 +490,8 @@ void v_stop_timer(struct vudc *udc)
+ {
+ 	struct transfer_timer *t = &udc->tr_timer;
+ 
+-	/* timer itself will take care of stopping */
++	/* Delete the timer synchronously before teardown frees udc. */
+ 	dev_dbg(&udc->pdev->dev, "timer stop");
++	timer_delete_sync(&t->timer);
+ 	t->state = VUDC_TR_STOPPED;
+ }
 
 
