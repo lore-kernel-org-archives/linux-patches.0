@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC83117B418;
-	Sun,  7 Jun 2026 10:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225D9308F0A;
+	Sun,  7 Jun 2026 10:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827294; cv=none; b=D/t/M7GNTrqggNTxsNaZ1h1OOLR9hqYEDXtFx0JJQMLVpYhCKM0mFAZ32ZoTOcilU0F84pBNf1d8U62u8jx50Yq0yWy1cKCu+rwJg6qVklNe/ueU6UyiNliq2t8964oJh1DUg0g8aw1ZguwfSfHaCbtEPOsuKQJXozYKIHvk+4o=
+	t=1780827298; cv=none; b=Z5GjAoIm+mVGABS3+l4eEL8kZQtfJH7f1QkJAdp8fD+ujD7V66qgrjdPhWbUNT37FGTHHjfHsVNvVTzAlN+01IZg8thkZCe/mU2ILDKogj0QXQ1psECFveMVOYHJJPKYfnguKC7KX3ua6jCAhpHCgtcpM0X+NdguAItdgqudOzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827294; c=relaxed/simple;
-	bh=gtxzafyjOVjV7AtGzdwT1vjkkf+wmBDf7D2T68j/FtM=;
+	s=arc-20240116; t=1780827298; c=relaxed/simple;
+	bh=7sXM3GnPfmyyci3f0KXt+bNUrzOJJ2eQgPyZMGNNNSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=niPPSgSenUNE/uvoY3YEaArpDZq3MgRYvALmkVymj9s36xtbza3jj1VHHfgw6mSUPPBpavcnuFtoyE7F897qn3CBoep3pE6XTV7He+sN0loOcPt3myuR/bsqYh8WWkjFkYqCg7WbcQUTnbJKW10zo+fGOyNJCimjv5HSIXB36Ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pe/Ry3Ui; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=N2u5x4W5wvvZh7FLj/tylovVz4o2bC7uR1sKBxWqn7BdeZJRgNHR6swZJiN98E4gd6GwkuOJDT/x6iHTChWvoCDY5/64JfdZX4OUvPPsVDq4EH2eOvILNX/Bwv4JEIdggis4PT00R6+OX/5yRucmY4tm4nzcU2K42DDh2ZHb+wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fyHjQBcQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pe/Ry3Ui"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5C91F00893;
-	Sun,  7 Jun 2026 10:14:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyHjQBcQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669B91F00893;
+	Sun,  7 Jun 2026 10:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827293;
-	bh=XudECG4Jnvkg85i5R8vwircVFGyU74VhRcwsBggjHSA=;
+	s=korg; t=1780827297;
+	bh=PWPFsxYScVI4Mc9BnPY6ut8mzNF6R6grdA91b50hVmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pe/Ry3UiK1vfK/bsakRFoLhNhqbX72/o41PT6aIJXccC54Hd76db5pXmdBYG841wr
-	 JotW8dBpbAlv2/kRuBv8xj5+LOAz4lEDGZIGHt04b1OtxwlKvtxzBqJGpTMDpwU4MF
-	 Q7zpABD1bPhwGicbiJz77x/YqjaeJUie1mBQTC2k=
+	b=fyHjQBcQFDWcRsVygMJyLI1+JEx1PU4fnH4z4G3tq/kWlsELMV5qXoMB+CE1cS8qD
+	 on4t2JtnSl4QPOMk7ExqkkLOlbh/JomB5LPlM9UaQDVg2ohxEoSCycOq6m4XcVqo0v
+	 XHTMeUU4eVjzvEy/bAUnOBmABTNb3+XuNYnYY7Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8ed98cbd0161632bce95@syzkaller.appspotmail.com,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+8e498074a794999eb41c@syzkaller.appspotmail.com,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 061/315] bonding: refuse to enslave CAN devices
-Date: Sun,  7 Jun 2026 11:57:28 +0200
-Message-ID: <20260607095729.844750000@linuxfoundation.org>
+Subject: [PATCH 6.12 043/307] ALSA: pcm: oss: Fix setup list UAF on proc write error
+Date: Sun,  7 Jun 2026 11:57:20 +0200
+Message-ID: <20260607095729.285703040@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,78 +46,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 8ba68464e4787b6a7ec938826e16124df20fd23d ]
+[ Upstream commit 4cc54bdd54b337e77115be5b55577d1c58608eae ]
 
-syzbot reported a kernel paging request crash in
-can_rx_unregister() inside net/can/af_can.c. The crash occurs
-because a virtual CAN device (vxcan) is being enslaved to a
-bonding master.
+snd_pcm_oss_proc_write() links a newly allocated setup entry into the
+OSS setup list before duplicating the task name. If the task-name
+allocation fails, the error path frees the already linked entry and
+leaves setup_list pointing at freed memory.
 
-During the enslavement process, the bonding driver mutates
-and modifies the network device states to fit an Ethernet-like
-aggregation model. However, CAN devices operate on a completely
-different Layer 2 architecture, relying on the CAN mid-layer
-private data structure (can_ml_priv) instead of standard
-Ethernet structures. Since bonding does not initialize or
-maintain these CAN structures, subsequent operations on the
-half-enslaved interface (such as closing associated sockets
-via isotp_release) lead to a null-pointer dereference when
-accessing the CAN receiver lists.
+A later OSS device open can then walk the stale list entry in
+snd_pcm_oss_look_for_setup() and dereference freed memory.
 
-Bonding CAN interfaces is architecturally invalid as CAN lacks
-MAC addresses, ARP capabilities, and standard Ethernet
-link-layer mechanisms. While generic loopback devices are
-blocked globally in net/core/dev.c, virtual CAN devices
-bypass this check because they do not carry the IFF_LOOPBACK
-flag, despite acting as local software-loopbacks.
+Allocate the task name and initialize the setup entry before publishing
+the entry on setup_list. Also fetch the initial proc read iterator only
+after taking setup_mutex, so all setup_list traversal follows the same
+list lifetime rules.
 
-Fix this by explicitly blocking network devices of type
-ARPHRD_CAN from being enslaved at the very beginning of
-bond_enslave(). This prevents illegal state mutations,
-eliminates the resulting KASAN crashes, and avoids potential
-memory leaks from incomplete socket cleanups.
-
-As the CAN support has been added a long time after bonding
-the Fixes-tag points to the introduction of ARPHRD_CAN that
-would have needed a specific handling in bonding_main.c.
-
-Fixes: cd05acfe65ed ("[CAN]: Allocate protocol numbers for PF_CAN")
-Reported-by: syzbot+8ed98cbd0161632bce95@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8ed98cbd0161632bce95
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20260526-bonding-candev-v1-1-ba1df400918a@hartkopp.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+8e498074a794999eb41c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6a1062b7.170a0220.35b2b7.0003.GAE@google.com
+Closes: https://syzkaller.appspot.com/bug?extid=8e498074a794999eb41c
+Fixes: 060d77b9c04a ("[ALSA] Fix / clean up PCM-OSS setup hooks")
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260522-alsa-pcm-oss-setup-uaf-v1-1-40bdcc4d17e8@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/core/oss/pcm_oss.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 8b1422dda4c080..2132acff2e52c4 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1860,6 +1860,12 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 	struct sockaddr_storage ss;
- 	int res = 0, i;
- 
-+	if (slave_dev->type == ARPHRD_CAN) {
-+		BOND_NL_ERR(bond_dev, extack,
-+			    "CAN devices cannot be enslaved");
-+		return -EPERM;
-+	}
+diff --git a/sound/core/oss/pcm_oss.c b/sound/core/oss/pcm_oss.c
+index daa7cda98ae6f6..a65a3b8d04b8cb 100644
+--- a/sound/core/oss/pcm_oss.c
++++ b/sound/core/oss/pcm_oss.c
+@@ -2966,8 +2966,10 @@ static void snd_pcm_oss_proc_read(struct snd_info_entry *entry,
+ 				  struct snd_info_buffer *buffer)
+ {
+ 	struct snd_pcm_str *pstr = entry->private_data;
+-	struct snd_pcm_oss_setup *setup = pstr->oss.setup_list;
++	struct snd_pcm_oss_setup *setup;
 +
- 	if (slave_dev->flags & IFF_MASTER &&
- 	    !netif_is_bond_master(slave_dev)) {
- 		BOND_NL_ERR(bond_dev, extack,
+ 	guard(mutex)(&pstr->oss.setup_mutex);
++	setup = pstr->oss.setup_list;
+ 	while (setup) {
+ 		snd_iprintf(buffer, "%s %u %u%s%s%s%s%s%s\n",
+ 			    setup->task_name,
+@@ -3052,6 +3054,13 @@ static void snd_pcm_oss_proc_write(struct snd_info_entry *entry,
+ 				buffer->error = -ENOMEM;
+ 				return;
+ 			}
++			template.task_name = kstrdup(task_name, GFP_KERNEL);
++			if (!template.task_name) {
++				kfree(setup);
++				buffer->error = -ENOMEM;
++				return;
++			}
++			*setup = template;
+ 			if (pstr->oss.setup_list == NULL)
+ 				pstr->oss.setup_list = setup;
+ 			else {
+@@ -3059,12 +3068,7 @@ static void snd_pcm_oss_proc_write(struct snd_info_entry *entry,
+ 				     setup1->next; setup1 = setup1->next);
+ 				setup1->next = setup;
+ 			}
+-			template.task_name = kstrdup(task_name, GFP_KERNEL);
+-			if (! template.task_name) {
+-				kfree(setup);
+-				buffer->error = -ENOMEM;
+-				return;
+-			}
++			continue;
+ 		}
+ 		*setup = template;
+ 	}
 -- 
 2.53.0
 
