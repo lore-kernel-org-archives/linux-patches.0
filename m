@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94AD63242DF;
-	Sun,  7 Jun 2026 10:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A463332FA14;
+	Sun,  7 Jun 2026 10:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829967; cv=none; b=QYob/PGK71RotTiq6Te+RuLgwVz0VGQQEEQi/t7J5xbklhgfDOXWa4dNjq+ZF+4bj/ky4SDg64jF+azbGzihn0A20OpG0v4yOfLnMj3jTaKykszWJ2yyCbpPBcDtSo5P1ZQm9We/AT84L6eSyegZPmfXInR0WFgUEqf6hjqTJaQ=
+	t=1780829976; cv=none; b=HQRnD0GmgpfyRd2YFLc47ui2jBYGlTKqfxF/A6ek/MpX2WMKWa5l6mA0BI5WBbe1ql4TQG0PjyN0E9KujmQHkSmTtwpj6/ULIBuDpYTOyC6OIvJZAhCk6R8QHLLivClEmDhBQYNDhapeCyAVv0KL0tXOlRlOwIrsTrgX1Hrr7Ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829967; c=relaxed/simple;
-	bh=RFpnZP6Vk/gxBAtR7kpO08VGMKcBWNXuSpiFAYV6sck=;
+	s=arc-20240116; t=1780829976; c=relaxed/simple;
+	bh=xA89tAmCTEjTKR9Oni5jyVswrrMSVh3uvBZqpN/nNmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bc4IXl4+3lNESlDA78CyEuQFVC8j1zfYiu/mLitC7S4io+FhsBCxW259TA5E3citP5EE9ykKsUPN/NPZDX4HJpo+E1LEkM1t4r1MZetPnJtkLoFa26n3LEkz1J717x2Z4sI7KZ7vNuTh4aDy3gBKRe4LZsIEM67CGudjv2kQEp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCOnQBOF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ohmRJRfrRjRrJeLO6Qw9zmjv0yd720liLtO6U91KgyToM2XAIK5/qyHdGdtHNYBkjLvVp5EJSARID7JFNG4bNCmkx8el0e4Sd1ibPzbNaqXVIF6N1ULgKr4aSCzO+Vnj8mLwayxME+Ctx35buIG08BDH3ZIyC8uwtRnAy04m91s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wuGP50FN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCOnQBOF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30CD1F00893;
-	Sun,  7 Jun 2026 10:59:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuGP50FN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D231F00898;
+	Sun,  7 Jun 2026 10:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829966;
-	bh=7FtK+LHRnpnemWEg7sobGDiQSA4+UotDG/gQiQBZm9I=;
+	s=korg; t=1780829973;
+	bh=tFs6ZtOuKv0KQ5Hmqg5uzYLxMbGIDcqGeMpXZVNXyRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sCOnQBOFyNxdTkqAZBdYceFLzBmkNiR8WPXV4z770xLyAAtz2KZXOPvBHKr98+m3L
-	 nq7XSqWMHrDoqeljF+J3mx5No2siULUPZpNvOoF4Jp0btZF59UX1Vu5FiTcJwXHpw7
-	 D6+VljeG4o9ymJvQtOp8TITeP7gY1NSU104yAHfw=
+	b=wuGP50FNXavgpcKiI7tyve+ft4QK9qaayv0cP/DsFSmbcn1TDxJkR2LnLMTEOm2nV
+	 8nxbcnmwzGuJ/d6kvlj9mfIQ+GAqyuBk7mOxq8hqF3vdOQ48H9qXbx+hfBihJnf0ck
+	 4eRlF6vOSuKa7OSusn5b/B/tjtvNKhJ6VoKiYGxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robert.marko@sartura.hr>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zeng Heng <zengheng4@huawei.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 330/332] net: phy: micrel: fix LAN8814 QSGMII soft reset
-Date: Sun,  7 Jun 2026 12:01:39 +0200
-Message-ID: <20260607095740.253443213@linuxfoundation.org>
+Subject: [PATCH 6.18 296/315] arm64: tlb: Flush walk cache when unsharing PMD tables
+Date: Sun,  7 Jun 2026 12:01:23 +0200
+Message-ID: <20260607095738.465965195@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,72 +47,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Robert Marko <robert.marko@sartura.hr>
+From: Zeng Heng <zengheng4@huawei.com>
 
-[ Upstream commit e027c218c482c6a0ae1948129ccda3b0a2033368 ]
+[ Upstream commit c2ff4764e03e7a8d758352f4aceb8fe1be6ac971 ]
 
-LAN8814 QSGMII soft reset was moved into the probe function to avoid
-triggering it for each of 4 PHY-s in the package.
+When huge_pmd_unshare() is called to unshare a PMD table, the
+tlb_unshare_pmd_ptdesc() function sets tlb->unshared_tables=true
+but the aarch64 tlb_flush() only checked tlb->freed_tables to
+determine whether to use TLBF_NONE (vae1is, invalidates walk
+cache) or TLBF_NOWALKCACHE (vale1is, leaf-only).
 
-However, that broke QSGMII link between the MAC and PHY on most LAN8814
-PHY-s, specificaly for us on the Microchip LAN969x switch.
-Reading the QSGMII status registers it was visible that lanes were only
-partially synced.
+This caused the stale PMD page table entry to remain in the walk cache
+after unshare, potentially leading to incorrect page table walks.
 
-It looks like the reset timing is crucial, so lets move the reset back
-into the .config_init function but guard it with phy_package_init_once()
-to avoid it being triggered on each of 4 PHY-s in the package.
-Change the probe function to use phy_package_probe_once() for coma and PtP
-setup.
+Fix by including unshared_tables in the check, so that when
+unsharing tables, TLBF_NONE is used and the walk cache is properly
+invalidated.
 
-Fixes: 96a9178a29a6 ("net: phy: micrel: lan8814 fix reset of the QSGMII interface")
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-Link: https://patch.msgid.link/20260428134138.1741253-1-robert.marko@sartura.hr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Here is the detailed distinction between vae1is and vale1is:
+
+| Instruction Combination  | Actual Invalidation Scope                         |
+| ------------------------ | --------------------------------------------------|
+| `VAE1IS`  + TTL=`0`      | All entries at all levels (full invalidation)     |
+| `VAE1IS`  + TTL=`2` (L2) | Non-leaf at Level 0/1 + leaf at Level 2           |
+| `VALE1IS` + TTL=`0`      | Leaf entries at all levels (non-leaf not cleared) |
+| `VALE1IS` + TTL=`2` (L2) | Leaf entry at Level 2 only                        |
+
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
+Fixes: 8ce720d5bd91 ("mm/hugetlb: fix excessive IPI broadcasts when unsharing PMD tables using mmu_gather")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/micrel.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ arch/arm64/include/asm/tlb.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index c6b011a9d63698..23305be8c7fac7 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -4548,6 +4548,13 @@ static int lan8814_config_init(struct phy_device *phydev)
- 	struct kszphy_priv *lan8814 = phydev->priv;
- 	int ret;
+--- a/arch/arm64/include/asm/tlb.h
++++ b/arch/arm64/include/asm/tlb.h
+@@ -53,7 +53,7 @@ static inline int tlb_get_level(struct m
+ static inline void tlb_flush(struct mmu_gather *tlb)
+ {
+ 	struct vm_area_struct vma = TLB_FLUSH_VMA(tlb->mm, 0);
+-	bool last_level = !tlb->freed_tables;
++	bool last_level = !(tlb->freed_tables || tlb->unshared_tables);
+ 	unsigned long stride = tlb_get_unmap_size(tlb);
+ 	int tlb_level = tlb_get_level(tlb);
  
-+	if (phy_package_init_once(phydev))
-+		/* Reset the PHY */
-+		lanphy_modify_page_reg(phydev, LAN8814_PAGE_COMMON_REGS,
-+				       LAN8814_QSGMII_SOFT_RESET,
-+				       LAN8814_QSGMII_SOFT_RESET_BIT,
-+				       LAN8814_QSGMII_SOFT_RESET_BIT);
-+
- 	/* Based on the interface type select how the advertise ability is
- 	 * encoded, to set as SGMII or as USGMII.
- 	 */
-@@ -4655,13 +4662,7 @@ static int lan8814_probe(struct phy_device *phydev)
- 	priv->is_ptp_available = err == LAN8814_REV_LAN8814 ||
- 				 err == LAN8814_REV_LAN8818;
- 
--	if (phy_package_init_once(phydev)) {
--		/* Reset the PHY */
--		lanphy_modify_page_reg(phydev, LAN8814_PAGE_COMMON_REGS,
--				       LAN8814_QSGMII_SOFT_RESET,
--				       LAN8814_QSGMII_SOFT_RESET_BIT,
--				       LAN8814_QSGMII_SOFT_RESET_BIT);
--
-+	if (phy_package_probe_once(phydev)) {
- 		err = lan8814_release_coma_mode(phydev);
- 		if (err)
- 			return err;
--- 
-2.53.0
-
 
 
