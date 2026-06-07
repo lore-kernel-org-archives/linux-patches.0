@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6133264F5;
-	Sun,  7 Jun 2026 10:36:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37DE32AAD6;
+	Sun,  7 Jun 2026 10:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828611; cv=none; b=P7eFB9FpTwct89IMuiznL9MaEvc6YoRVpXo1vm7G09YpkuwPjwr9qlcL9RfdFYDdkLejfkQMTKpKqAUXuOvWvhOLKe+nudB9mJ+H24MK3J6/jY3DELXx5jJp5K6C9HE0o+WL+vXRO66NsY5jbe8tSaDBYU+ebqGWuH/J2hEFQDE=
+	t=1780828615; cv=none; b=NTyPzNiqyrqE8mRWCVTsljgr7vOcwTaGnEE1LbYliaaBsMUbGo26QqpJV9Dlt/7ojARo8uvb1moKlh/ZGCMzN/J9xSpaGbXDVYot9nOGDa57ei9zrGEbz4lMnkJJYI+2Wb1X0TfYmojUOlZJmqZBmvsnCSOe6MvsLJ3lpnZmOMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828611; c=relaxed/simple;
-	bh=PByhFYFvoaNRhXVFTGX6zOrk1OX/j7Z36k2V+i/ff74=;
+	s=arc-20240116; t=1780828615; c=relaxed/simple;
+	bh=sblOlLFgiEDuA0ee8iqH8hiWynqwbqarGLrH/5bdScs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YyMl2VBovdW7NFfYP8SMPlzf3X1gJKezeFpX9Ft0rbq13E/GeBdy5oXPhm/EN8Ds+Lkz5qhmuwJgSPlqtFl9IprUjfYF9r0nEkUI1g/rjMRXHKeml8Byd+8RVtHJBvSPPxpjUAESnzGl4Gnw+4Z4eE4C0PeFu56tX9DnvDmI08k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9CBRNxs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CL7YF5TY6APt5A22O4UErXPvD1ypyC5LrJWpBgpzxXDqBgF9QU6YLzq8kCnS+pu70GNPfw9lX/XjneNRCejgI/ssW/r7ESITmIAVmLyb419OZtq9MH0ES5/6BGqXphrvqSYhA4nLfiwdjxiiXJRnVmHAJHJBRuGNOhrlFNkcBeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FP5k6MEy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9CBRNxs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632091F00893;
-	Sun,  7 Jun 2026 10:36:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FP5k6MEy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6701F00893;
+	Sun,  7 Jun 2026 10:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828610;
-	bh=J/XKcNmlIOlDohe7ZWCpRoy0Z8BR5V4avAn8dLz7lZc=;
+	s=korg; t=1780828613;
+	bh=Lp4q23UUKm/qQR0LJpC/HtVHhwJVhm1gzEh6NUEzXCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k9CBRNxsKFyIOYmrrPuBM7mFjCHHlP3vGMGjJhHUuNehV+dmruD8sh78azMil422W
-	 /2PBeND7ZUYkAC3JBTeUz5o6ou4gyHYlizLv6s6iYXL2B0MlFdtvmZHVv+ohhKc8Sl
-	 qv36wB6k5eQrv5Og5FbwUeCW/oyuY1kfL3zvOtJE=
+	b=FP5k6MEyO1x0VMXPC8pxP5jh4UIJSEjVrRJqRJ/z09KGRjeaox+np1mIVCLosFnTU
+	 k/JKo1rz++emgPFnKHltJYXxwYLjEkU7IFwryiav6siTsMww2Q0XDMr068KIwHFvGC
+	 Ghk/ZwLzcXekeHluiz8QeUz35rD19MDi+K3UTc2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 176/315] USB: serial: omninet: fix memory corruption with small endpoint
-Date: Sun,  7 Jun 2026 11:59:23 +0200
-Message-ID: <20260607095734.049385575@linuxfoundation.org>
+	Aldo Conte <aldocontelk@gmail.com>,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 7.0 197/332] iio: light: cm3323: fix reg_conf not being initialized correctly
+Date: Sun,  7 Jun 2026 11:59:26 +0200
+Message-ID: <20260607095735.293515136@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,59 +46,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Aldo Conte <aldocontelk@gmail.com>
 
-commit 60df93d30f9bdd27db17c4d80ed80ef718d7226b upstream.
+commit 1f4f0bcc5255dec5c4c3a1551bf49d8c33b69b20 upstream.
 
-Make sure that the bulk-out buffers are at least as large as the
-hardcoded transfer size to avoid user-controlled slab corruption should
-a malicious device report a smaller endpoint max packet size than
-expected.
+The code stores the return value of i2c_smbus_write_word_data()
+in data->reg_conf; however, this value represents the result
+of the write operation and not the value actually written to
+the configuration register. This meant that the contents of
+data->reg_conf did not truly reflect the contents
+of the hardware register.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Instead, save the value of the register before the write
+and use this value in the I2C write.
+
+The bug was found by code inspection: i2c_smbus_write_word_data()
+returns 0 on success, not the value written to the register.
+
+Tested using i2c-stub on a Raspberry Pi 3B running a custom 6.19.10
+kernel. Before loading the driver, the configuration register 0x00
+CM3323_CMD_CONF was populated with 0x0030 using
+`i2cset -y 11 0x10 0x00 0x0030 w`, encoding an integration time of 320ms
+in bits[6:4].
+
+Due to incorrect initialization of data->reg_conf in
+cm3323_init(), the print of integration_time returns 0.040000
+instead of the expected 0.320000. This happens because the read of the
+integration_time depends on cm3323_get_it_bits() that is based on the
+value of data->reg_conf, which is erroneously set to 0.
+
+With this fix applied, data->reg_conf correctly saves 0x0030 after init
+and the successive integration_time reports 0.320000 as expected.
+
+Fixes: 8b0544263761 ("iio: light: Add support for Capella CM3323 color sensor")
 Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Aldo Conte <aldocontelk@gmail.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/omninet.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/iio/light/cm3323.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/serial/omninet.c
-+++ b/drivers/usb/serial/omninet.c
-@@ -30,6 +30,10 @@
- /* This one seems to be a re-branded ZyXEL device */
- #define BT_IGNITIONPRO_ID	0x2000
+--- a/drivers/iio/light/cm3323.c
++++ b/drivers/iio/light/cm3323.c
+@@ -89,15 +89,14 @@ static int cm3323_init(struct iio_dev *i
  
-+#define OMNINET_HEADERLEN	4
-+#define OMNINET_BULKOUTSIZE	64
-+#define OMNINET_PAYLOADSIZE	(OMNINET_BULKOUTSIZE - OMNINET_HEADERLEN)
-+
- /* function prototypes */
- static void omninet_process_read_urb(struct urb *urb);
- static int omninet_prepare_write_buffer(struct usb_serial_port *port,
-@@ -54,6 +58,7 @@ static struct usb_serial_driver zyxel_om
- 	.description =		"ZyXEL - omni.net usb",
- 	.id_table =		id_table,
- 	.num_bulk_out =		2,
-+	.bulk_out_size =	OMNINET_BULKOUTSIZE,
- 	.calc_num_ports =	omninet_calc_num_ports,
- 	.port_probe =		omninet_port_probe,
- 	.port_remove =		omninet_port_remove,
-@@ -130,10 +135,6 @@ static void omninet_port_remove(struct u
- 	kfree(od);
+ 	/* enable sensor and set auto force mode */
+ 	ret &= ~(CM3323_CONF_SD_BIT | CM3323_CONF_AF_BIT);
++	data->reg_conf = ret;
+ 
+-	ret = i2c_smbus_write_word_data(data->client, CM3323_CMD_CONF, ret);
++	ret = i2c_smbus_write_word_data(data->client, CM3323_CMD_CONF, data->reg_conf);
+ 	if (ret < 0) {
+ 		dev_err(&data->client->dev, "Error writing reg_conf\n");
+ 		return ret;
+ 	}
+ 
+-	data->reg_conf = ret;
+-
+ 	return 0;
  }
  
--#define OMNINET_HEADERLEN	4
--#define OMNINET_BULKOUTSIZE	64
--#define OMNINET_PAYLOADSIZE	(OMNINET_BULKOUTSIZE - OMNINET_HEADERLEN)
--
- static void omninet_process_read_urb(struct urb *urb)
- {
- 	struct usb_serial_port *port = urb->context;
 
 
