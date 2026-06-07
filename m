@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83AC21FE47B;
-	Sun,  7 Jun 2026 10:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E043290AD;
+	Sun,  7 Jun 2026 10:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828245; cv=none; b=T1ZIeJrZCc9XUfWMPVi1WCL+pSwGDmjcBQ4EIPoOlF63Xr2ZQBE0kAGQnHqwsr2PYVFJU+9L579lTm1+RSYe/3GD09CqJ9U/GKFMp2gAWJh3plYSb4wRD4XJ7Xv3ktvlyx19aenJokRzM8csC1mEjQKLo24I9dptZcQkOANINyA=
+	t=1780828249; cv=none; b=O+1RQ+eRElyLSf7nvrrbEwYRmgCM/KLCR0mtm6M/BPabH3igc6z1KYKr2wlv/IjNJRUDkzIzFFiVZQu0CKFutbhgicBpqA+gJwgJRQTu4nwNP4ub3EzTQ3itZcf/aHVU2ZF/RTBrDCc4wc7HsabJZup72qjb+Pg68vrSCpPmHko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828245; c=relaxed/simple;
-	bh=B6hOUfvIr5UivY8JWmucP2bii7LUgIohkTEKDAnu7dw=;
+	s=arc-20240116; t=1780828249; c=relaxed/simple;
+	bh=06SYuUsHwRzeFoiLNBWzlJyWmV/4uKQl4IfR+n4wRl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ANSJx1lZaEEiBvRPOJjmQ/xl0a0W6LXdXHIM8ukkK8dmhVW/UiFObCNSOzeN8iZ5euAL5Gbc4LHXWgtD96z5K78voupr5WwDqO4iaGI5/eqEzqk0licNLevJQk3f1z+2bLob/7AAIZ3FMAo2u/mz85m8uwLF/+VbLF+Q98Saufs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jz9mfsZ2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aSiqMvIBFhmgo/EdUAg4/DIQB6AimIRokkFVpndI3N0noesWQYSZbNOHKczBak3c0JMS+A3refXuAraefBXZ34+YTyTKhSG+vq2xGbIF3yLvYeftaOtyZP6VKV4ImkaeK6YjC4gvWhFxWL11Y81j+zZahhiOnB1NCLVqxYaOOx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUgqgvX0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jz9mfsZ2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8822A1F00893;
-	Sun,  7 Jun 2026 10:30:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUgqgvX0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05191F00893;
+	Sun,  7 Jun 2026 10:30:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828244;
-	bh=0oyTqJrIIr1wsK6w9HRG8BM4jKhtVWDAPnQ+KeCvN+k=;
+	s=korg; t=1780828248;
+	bh=WYN/BLZ/u0HQvG8PXene2kbkEC3lT6YuMw90C+gmook=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jz9mfsZ2LO+q+GjT8lzTSiJGUVh/c86mDe3kKoJuJ2vCEb5lN0hge0KRTttjthgto
-	 kJz9pKIKAUXiF2/509mGsf5sWh5v2Po6Sz5tcaIG0IjzRJ6uP4rAR1U9tK7GuFSPeq
-	 DxX1CBkTjNM4+/Zv+sjmb0gqDbD6iQMz0zdwlfbU=
+	b=NUgqgvX0LriR2i0XeZuHSKqwag2WpWn4fMyFqkFzjjmlvF7BaxZ8hOOeryIUO7/bb
+	 GqCTja9/jpIsu8CCuvuDm+fHNO9uJMYbGcDEwJmkH195AiyXX4TIYIifLLI9Cxtw9Z
+	 K8KKYvnD1OYy1pOIFnj2o736Vvt0Le9D5xKdVTiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Xiangyu Chen <xiangyu.chen@windriver.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 123/307] arm64: io: Extract user memory type in ioremap_prot()
-Date: Sun,  7 Jun 2026 11:58:40 +0200
-Message-ID: <20260607095732.277639306@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Shuai Zhang <shuai.zhang@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 134/315] Bluetooth: hci_qca: Use 100 ms SSR delay for rampatch and NVM loading
+Date: Sun,  7 Jun 2026 11:58:41 +0200
+Message-ID: <20260607095732.532086379@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,87 +47,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
 
-[ Upstream commit 8f098037139b294050053123ab2bc0f819d08932 ]
+commit fa21e86caba2347e89eb65af926205a36a097c53 upstream.
 
-The only caller of ioremap_prot() outside of the generic ioremap()
-implementation is generic_access_phys(), which passes a 'pgprot_t' value
-determined from the user mapping of the target 'pfn' being accessed by
-the kernel. On arm64, the 'pgprot_t' contains all of the non-address
-bits from the pte, including the permission controls, and so we end up
-returning a new user mapping from ioremap_prot() which faults when
-accessed from the kernel on systems with PAN:
+When bt_en is pulled high by hardware, the host does not re-download
+the firmware after SSR. The controller loads the rampatch and NVM
+internally.
 
-  | Unable to handle kernel read from unreadable memory at virtual address ffff80008ea89000
-  | ...
-  | Call trace:
-  |   __memcpy_fromio+0x80/0xf8
-  |   generic_access_phys+0x20c/0x2b8
-  |   __access_remote_vm+0x46c/0x5b8
-  |   access_remote_vm+0x18/0x30
-  |   environ_read+0x238/0x3e8
-  |   vfs_read+0xe4/0x2b0
-  |   ksys_read+0xcc/0x178
-  |   __arm64_sys_read+0x4c/0x68
+On HMT chip, the rampatch is ~264 KB and the NVM is ~9.4 KB. The
+loading process takes approximately 70 ms. The previous 50 ms delay is
+too short, causing the controller to not respond to the reset command
+sent by the host, which leads to BT initialization failure:
 
-Extract only the memory type from the user 'pgprot_t' in ioremap_prot()
-and assert that we're being passed a user mapping, to protect us against
-any changes in future that may require additional handling. To avoid
-falsely flagging users of ioremap(), provide our own ioremap() macro
-which simply wraps __ioremap_prot().
+ Bluetooth: hci0: QCA memdump Done, received 458752, total 458752
+ Bluetooth: hci0: mem_dump_status: 2
+ Bluetooth: hci0: Opcode 0x0c03 failed: -110
 
-Cc: Zeng Heng <zengheng4@huawei.com>
-Cc: Jinjiang Tu <tujinjiang@huawei.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Fixes: 893dea9ccd08 ("arm64: Add HAVE_IOREMAP_PROT support")
-Reported-by: Jinjiang Tu <tujinjiang@huawei.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-[ Modified ioremap_prot() parameter, using "unsigned long user_prot" instead of
-"pgprot_t user_prot" to fix conflict with generic header ]
-Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Increase the delay to 100 ms, which was confirmed as a safe value by
+the controller, to ensure the controller has finished loading the
+firmware before the host sends commands.
+
+Steps to reproduce:
+1. Trigger SSR and wait for SSR to complete:
+   hcitool cmd 0x3f 0c 26
+2. Run "bluetoothctl power on" and observe that BT fails to start.
+
+Fixes: fce1a9244a0f ("Bluetooth: hci_qca: Fix SSR (SubSystem Restart) fail when BT_EN is pulled up by hw")
+Cc: stable@vger.kernel.org
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/io.h | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/bluetooth/hci_qca.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/include/asm/io.h b/arch/arm64/include/asm/io.h
-index e6ad41131d80b4..46bd37707e080e 100644
---- a/arch/arm64/include/asm/io.h
-+++ b/arch/arm64/include/asm/io.h
-@@ -276,10 +276,23 @@ typedef int (*ioremap_prot_hook_t)(phys_addr_t phys_addr, size_t size,
- int arm64_ioremap_prot_hook_register(const ioremap_prot_hook_t hook);
- void __iomem *__ioremap_prot(phys_addr_t phys, size_t size, pgprot_t prot);
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1676,8 +1676,8 @@ static void qca_hw_error(struct hci_dev
+ 		mod_timer(&qca->tx_idle_timer, jiffies +
+ 				  msecs_to_jiffies(qca->tx_idle_delay));
  
--#define ioremap_prot ioremap_prot
-+static inline void __iomem *ioremap_prot(phys_addr_t phys, size_t size,
-+					 unsigned long user_prot)
-+{
-+	pgprot_t prot;
-+	pteval_t user_prot_val = pgprot_val(__pgprot(user_prot));
-+
-+	if (WARN_ON_ONCE(!(user_prot_val & PTE_USER)))
-+		return NULL;
+-		/* Controller reset completion time is 50ms */
+-		msleep(50);
++		/* Wait for the controller to load the rampatch and NVM. */
++		msleep(100);
  
--#define _PAGE_IOREMAP PROT_DEVICE_nGnRE
-+	prot = __pgprot_modify(PAGE_KERNEL, PTE_ATTRINDX_MASK,
-+			       user_prot_val & PTE_ATTRINDX_MASK);
-+	return __ioremap_prot(phys, size, prot);
-+}
-+#define ioremap_prot ioremap_prot
- 
-+#define ioremap(addr, size)	\
-+	__ioremap_prot((addr), (size), __pgprot(PROT_DEVICE_nGnRE))
- #define ioremap_wc(addr, size)	\
- 	__ioremap_prot((addr), (size), __pgprot(PROT_NORMAL_NC))
- #define ioremap_np(addr, size)	\
--- 
-2.53.0
-
+ 		clear_bit(QCA_SSR_TRIGGERED, &qca->flags);
+ 		clear_bit(QCA_IBS_DISABLED, &qca->flags);
 
 
