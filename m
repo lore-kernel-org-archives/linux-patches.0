@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CFF34071DA;
-	Sun,  7 Jun 2026 10:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F944071DA;
+	Sun,  7 Jun 2026 10:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827435; cv=none; b=hHRPnai2qWZeGSZiYMj/nvJ/dX46D/AUEXVCi5PAqvbdEvZCjZxbCIeLzK9C27/wHECUyRLYp7cqHsGDl/RCzcEC2KtZH2CoN+Vcqg+i/24CtnugLsRX/BMTwXS1pKmeBFhEVFOM5RyCBVUgx7O3CNlz6zVlRACqVmRKTEzUDk0=
+	t=1780827438; cv=none; b=q0v8UyVQWW0kagKRewPFfJeneZ6lWqlC0cRF+nn5pYysL7Q+Z9i0tVKo2iLqDerrst1wyLxio49uCq3A5EDHggc5RJXnb757mYfU2jC6iVJ+GUZsFr2RHWFjtVO6qgITxqu2aBenmxtSq2sE5N01jd9Ldu5ZxTDrr1+tKwwNABw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827435; c=relaxed/simple;
-	bh=acnkdwPXszY2T/PgaEUqGnok8EJwsODBCfc6o3DUYoU=;
+	s=arc-20240116; t=1780827438; c=relaxed/simple;
+	bh=PP3nO/QFg+l1DYB0rfABtXMAzi7BxjS0l15RJWPCPPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PQXqvkckTB5Ve+wpYs7pLD55fbGB5R01V/x2f3TD+S4RiuXr1TU8GLZCfR85TDPt6HxVm1HFNrB0ac2ATKtoyk1G5E1tf9w7uKPMY2gyoX7RYntejiKJfUy1EsXp0pH1ZISOqjHDLCkGKiYdAjZSeUg0D3r+Hjd6WJrtfmsbAXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVKjqrtc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PJqIRctpxNBEjwCeEI0x23s+fqF3TiocZQhF3rulS90hBomVlBGS8YmcjlXp5EKq5iBIL6zxN1vw2NBdTdVx0i06cwwgxlsxgv7JbG19JEVnKNOUEXBUSvPg0WRuqyDDPX/lMAyfTwTtGrUb1y98XZPHP1924LhZMF7v6c9N6l0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PLNxvp7s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVKjqrtc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E801F00893;
-	Sun,  7 Jun 2026 10:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PLNxvp7s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8755C1F00893;
+	Sun,  7 Jun 2026 10:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827433;
-	bh=YsV0suLlUB520UMVFE8UbGZoqTPiNj9DUvZYWd+NlO4=;
+	s=korg; t=1780827437;
+	bh=n51MvPGTzNEqFjf+1JtsqpHFE8nAvqdpP2pYlE/ya+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vVKjqrtcqLYzvZB4p3fnNrWe+pAupbPPwDcLGFAlxxFXtS4gXjkxM/K7QTouJn/IQ
-	 rb3JBeaTtviE5S6Mixth3esOvtHmZdmbGPCCsh3I4PxJJYmo7H1r5BtWRH5L8YeJOl
-	 jl/g6vww7Z1XP0YmAf+L37r3Vl0/Gmfn9FSGWHgU=
+	b=PLNxvp7sLJet04V4AC6ES/254hqc2TE7lK4W/YR8Zdf6GQ7ZL0hULDFAFuNoWzncp
+	 v/6hOyV2luXnhW2ZFg59iCiQ66u1OuWcd3XJM+s7TZfmNU/sVoGG0tS8q6+/uUImR1
+	 sk56giEKUY9FsqWT6vHACftynExqwMQjZFYoyWCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danielle Ratson <danieller@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
+	Ivan Vecera <ivecera@redhat.com>,
 	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 055/307] net: ethtool: Add new parameters and a function to support EPL
-Date: Sun,  7 Jun 2026 11:57:32 +0200
-Message-ID: <20260607095729.749604388@linuxfoundation.org>
+Subject: [PATCH 7.0 093/332] dpll: zl3073x: detect DPLL channel count from chip ID at runtime
+Date: Sun,  7 Jun 2026 11:57:42 +0200
+Message-ID: <20260607095731.571473787@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,205 +48,427 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danielle Ratson <danieller@nvidia.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit edc344568922eb9588e77ba49de1ef0cb9a2ff1c ]
+[ Upstream commit 4845f2fff730f0cdf8f7fe6401c8b871891cf1cb ]
 
-In the CMIS specification for pluggable modules, LPL (Local Payload) and
-EPL (Extended Payload) are two types of data payloads used for managing
-various functions and features of the module.
+Replace the five per-variant zl3073x_chip_info structures and their
+exported symbol definitions with a single consolidated chip ID lookup
+table. The chip variant is now detected at runtime by reading the chip
+ID register from hardware and looking it up in the table, rather than
+being selected at compile time via the bus driver match data.
 
-EPL payloads are used for more complex and extensive management
-functions that require a larger amount of data, so writing firmware
-blocks using EPL is much more efficient.
+Repurpose struct zl3073x_chip_info to hold a single chip ID, its
+channel count, and a flags field. Introduce enum zl3073x_flags with
+ZL3073X_FLAG_REF_PHASE_COMP_32 to replace the chip_id switch statement
+in zl3073x_dev_is_ref_phase_comp_32bit(). Store a pointer to the
+detected chip_info entry in struct zl3073x_dev for runtime access.
 
-Currently, only LPL payload is supported for writing firmware blocks to
-the module.
+This simplifies the bus drivers by removing per-variant .data and
+.driver_data references from the I2C/SPI match tables, and makes
+adding support for new chip variants a single-line table addition.
 
-Add EPL related parameters to the function ethtool_cmis_cdb_compose_args()
-and add a specific function for calculating the maximum allowable length
-extension for EPL. Both will be used in the next patch to add support for
-writing firmware blocks using EPL.
-
-Signed-off-by: Danielle Ratson <danieller@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Link: https://patch.msgid.link/20260227105300.710272-2-ivecera@redhat.com
 Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 12c2496a71f8 ("ethtool: cmis: validate start_cmd_payload_size from module")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: d733f519f644 ("dpll: zl3073x: use __dpll_device_change_ntf() and remove change_work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/cmis.h           | 12 +++++++-----
- net/ethtool/cmis_cdb.c       | 32 +++++++++++++++++++++-----------
- net/ethtool/cmis_fw_update.c | 17 ++++++++++-------
- 3 files changed, 38 insertions(+), 23 deletions(-)
+ drivers/dpll/zl3073x/core.c | 118 ++++++++++--------------------------
+ drivers/dpll/zl3073x/core.h |  57 +++++++++--------
+ drivers/dpll/zl3073x/i2c.c  |  37 ++++-------
+ drivers/dpll/zl3073x/spi.c  |  37 ++++-------
+ 4 files changed, 82 insertions(+), 167 deletions(-)
 
-diff --git a/net/ethtool/cmis.h b/net/ethtool/cmis.h
-index aa32a675b8f8d2..e11e47b3f2fc8f 100644
---- a/net/ethtool/cmis.h
-+++ b/net/ethtool/cmis.h
-@@ -96,13 +96,15 @@ struct ethtool_cmis_cdb_rpl {
- 	u8 payload[ETHTOOL_CMIS_CDB_LPL_MAX_PL_LENGTH];
+diff --git a/drivers/dpll/zl3073x/core.c b/drivers/dpll/zl3073x/core.c
+index 37f3c33570eef2..c8af3430104505 100644
+--- a/drivers/dpll/zl3073x/core.c
++++ b/drivers/dpll/zl3073x/core.c
+@@ -20,79 +20,30 @@
+ #include "dpll.h"
+ #include "regs.h"
+ 
+-/* Chip IDs for zl30731 */
+-static const u16 zl30731_ids[] = {
+-	0x0E93,
+-	0x1E93,
+-	0x2E93,
++#define ZL_CHIP_INFO(_id, _nchannels, _flags)				\
++	{ .id = (_id), .num_channels = (_nchannels), .flags = (_flags) }
++
++static const struct zl3073x_chip_info zl3073x_chip_ids[] = {
++	ZL_CHIP_INFO(0x0E30, 2, ZL3073X_FLAG_REF_PHASE_COMP_32),
++	ZL_CHIP_INFO(0x0E93, 1, ZL3073X_FLAG_REF_PHASE_COMP_32),
++	ZL_CHIP_INFO(0x0E94, 2, ZL3073X_FLAG_REF_PHASE_COMP_32),
++	ZL_CHIP_INFO(0x0E95, 3, ZL3073X_FLAG_REF_PHASE_COMP_32),
++	ZL_CHIP_INFO(0x0E96, 4, ZL3073X_FLAG_REF_PHASE_COMP_32),
++	ZL_CHIP_INFO(0x0E97, 5, ZL3073X_FLAG_REF_PHASE_COMP_32),
++	ZL_CHIP_INFO(0x1E93, 1, 0),
++	ZL_CHIP_INFO(0x1E94, 2, 0),
++	ZL_CHIP_INFO(0x1E95, 3, 0),
++	ZL_CHIP_INFO(0x1E96, 4, 0),
++	ZL_CHIP_INFO(0x1E97, 5, 0),
++	ZL_CHIP_INFO(0x1F60, 2, ZL3073X_FLAG_REF_PHASE_COMP_32),
++	ZL_CHIP_INFO(0x2E93, 1, 0),
++	ZL_CHIP_INFO(0x2E94, 2, 0),
++	ZL_CHIP_INFO(0x2E95, 3, 0),
++	ZL_CHIP_INFO(0x2E96, 4, 0),
++	ZL_CHIP_INFO(0x2E97, 5, 0),
++	ZL_CHIP_INFO(0x3FC4, 2, 0),
  };
  
--u32 ethtool_cmis_get_max_payload_size(u8 num_of_byte_octs);
-+u32 ethtool_cmis_get_max_lpl_size(u8 num_of_byte_octs);
-+u32 ethtool_cmis_get_max_epl_size(u8 num_of_byte_octs);
- 
- void ethtool_cmis_cdb_compose_args(struct ethtool_cmis_cdb_cmd_args *args,
--				   enum ethtool_cmis_cdb_cmd_id cmd, u8 *pl,
--				   u8 lpl_len, u16 max_duration,
--				   u8 read_write_len_ext, u16 msleep_pre_rpl,
--				   u8 rpl_exp_len, u8 flags);
-+				   enum ethtool_cmis_cdb_cmd_id cmd, u8 *lpl,
-+				   u8 lpl_len, u8 *epl, u16 epl_len,
-+				   u16 max_duration, u8 read_write_len_ext,
-+				   u16 msleep_pre_rpl, u8 rpl_exp_len,
-+				   u8 flags);
- 
- void ethtool_cmis_cdb_check_completion_flag(u8 cmis_rev, u8 *flags);
- 
-diff --git a/net/ethtool/cmis_cdb.c b/net/ethtool/cmis_cdb.c
-index 690002366d965a..31142e239cf6b2 100644
---- a/net/ethtool/cmis_cdb.c
-+++ b/net/ethtool/cmis_cdb.c
-@@ -11,25 +11,34 @@
-  * min(i, 15) byte octets where i specifies the allowable additional number of
-  * byte octets in a READ or a WRITE.
-  */
--u32 ethtool_cmis_get_max_payload_size(u8 num_of_byte_octs)
-+u32 ethtool_cmis_get_max_lpl_size(u8 num_of_byte_octs)
- {
- 	return 8 * (1 + min_t(u8, num_of_byte_octs, 15));
+-const struct zl3073x_chip_info zl30731_chip_info = {
+-	.ids = zl30731_ids,
+-	.num_ids = ARRAY_SIZE(zl30731_ids),
+-	.num_channels = 1,
+-};
+-EXPORT_SYMBOL_NS_GPL(zl30731_chip_info, "ZL3073X");
+-
+-/* Chip IDs for zl30732 */
+-static const u16 zl30732_ids[] = {
+-	0x0E30,
+-	0x0E94,
+-	0x1E94,
+-	0x1F60,
+-	0x2E94,
+-	0x3FC4,
+-};
+-
+-const struct zl3073x_chip_info zl30732_chip_info = {
+-	.ids = zl30732_ids,
+-	.num_ids = ARRAY_SIZE(zl30732_ids),
+-	.num_channels = 2,
+-};
+-EXPORT_SYMBOL_NS_GPL(zl30732_chip_info, "ZL3073X");
+-
+-/* Chip IDs for zl30733 */
+-static const u16 zl30733_ids[] = {
+-	0x0E95,
+-	0x1E95,
+-	0x2E95,
+-};
+-
+-const struct zl3073x_chip_info zl30733_chip_info = {
+-	.ids = zl30733_ids,
+-	.num_ids = ARRAY_SIZE(zl30733_ids),
+-	.num_channels = 3,
+-};
+-EXPORT_SYMBOL_NS_GPL(zl30733_chip_info, "ZL3073X");
+-
+-/* Chip IDs for zl30734 */
+-static const u16 zl30734_ids[] = {
+-	0x0E96,
+-	0x1E96,
+-	0x2E96,
+-};
+-
+-const struct zl3073x_chip_info zl30734_chip_info = {
+-	.ids = zl30734_ids,
+-	.num_ids = ARRAY_SIZE(zl30734_ids),
+-	.num_channels = 4,
+-};
+-EXPORT_SYMBOL_NS_GPL(zl30734_chip_info, "ZL3073X");
+-
+-/* Chip IDs for zl30735 */
+-static const u16 zl30735_ids[] = {
+-	0x0E97,
+-	0x1E97,
+-	0x2E97,
+-};
+-
+-const struct zl3073x_chip_info zl30735_chip_info = {
+-	.ids = zl30735_ids,
+-	.num_ids = ARRAY_SIZE(zl30735_ids),
+-	.num_channels = 5,
+-};
+-EXPORT_SYMBOL_NS_GPL(zl30735_chip_info, "ZL3073X");
+-
+ #define ZL_RANGE_OFFSET		0x80
+ #define ZL_PAGE_SIZE		0x80
+ #define ZL_NUM_PAGES		256
+@@ -942,7 +893,7 @@ static void zl3073x_dev_dpll_fini(void *ptr)
  }
  
-+/* For accessing the EPL field on page 9Fh, the allowable length extension is
-+ * min(i, 255) byte octets where i specifies the allowable additional number of
-+ * byte octets in a READ or a WRITE.
-+ */
-+u32 ethtool_cmis_get_max_epl_size(u8 num_of_byte_octs)
-+{
-+	return 8 * (1 + min_t(u8, num_of_byte_octs, 255));
-+}
-+
- void ethtool_cmis_cdb_compose_args(struct ethtool_cmis_cdb_cmd_args *args,
--				   enum ethtool_cmis_cdb_cmd_id cmd, u8 *pl,
--				   u8 lpl_len, u16 max_duration,
--				   u8 read_write_len_ext, u16 msleep_pre_rpl,
--				   u8 rpl_exp_len, u8 flags)
-+				   enum ethtool_cmis_cdb_cmd_id cmd, u8 *lpl,
-+				   u8 lpl_len, u8 *epl, u16 epl_len,
-+				   u16 max_duration, u8 read_write_len_ext,
-+				   u16 msleep_pre_rpl, u8 rpl_exp_len, u8 flags)
+ static int
+-zl3073x_devm_dpll_init(struct zl3073x_dev *zldev, u8 num_dplls)
++zl3073x_devm_dpll_init(struct zl3073x_dev *zldev)
  {
- 	args->req.id = cpu_to_be16(cmd);
- 	args->req.lpl_len = lpl_len;
--	if (pl)
--		memcpy(args->req.payload, pl, args->req.lpl_len);
-+	if (lpl)
-+		memcpy(args->req.payload, lpl, args->req.lpl_len);
+ 	struct kthread_worker *kworker;
+ 	struct zl3073x_dpll *zldpll;
+@@ -952,7 +903,7 @@ zl3073x_devm_dpll_init(struct zl3073x_dev *zldev, u8 num_dplls)
+ 	INIT_LIST_HEAD(&zldev->dplls);
  
- 	args->max_duration = max_duration;
- 	args->read_write_len_ext =
--		ethtool_cmis_get_max_payload_size(read_write_len_ext);
-+		ethtool_cmis_get_max_lpl_size(read_write_len_ext);
- 	args->msleep_pre_rpl = msleep_pre_rpl;
- 	args->rpl_exp_len = rpl_exp_len;
- 	args->flags = flags;
-@@ -183,7 +192,7 @@ cmis_cdb_validate_password(struct ethtool_cmis_cdb *cdb,
+ 	/* Allocate all DPLLs */
+-	for (i = 0; i < num_dplls; i++) {
++	for (i = 0; i < zldev->info->num_channels; i++) {
+ 		zldpll = zl3073x_dpll_alloc(zldev, i);
+ 		if (IS_ERR(zldpll)) {
+ 			dev_err_probe(zldev->dev, PTR_ERR(zldpll),
+@@ -992,14 +943,12 @@ zl3073x_devm_dpll_init(struct zl3073x_dev *zldev, u8 num_dplls)
+ /**
+  * zl3073x_dev_probe - initialize zl3073x device
+  * @zldev: pointer to zl3073x device
+- * @chip_info: chip info based on compatible
+  *
+  * Common initialization of zl3073x device structure.
+  *
+  * Returns: 0 on success, <0 on error
+  */
+-int zl3073x_dev_probe(struct zl3073x_dev *zldev,
+-		      const struct zl3073x_chip_info *chip_info)
++int zl3073x_dev_probe(struct zl3073x_dev *zldev)
+ {
+ 	u16 id, revision, fw_ver;
+ 	unsigned int i;
+@@ -1011,18 +960,17 @@ int zl3073x_dev_probe(struct zl3073x_dev *zldev,
+ 	if (rc)
+ 		return rc;
+ 
+-	/* Check it matches */
+-	for (i = 0; i < chip_info->num_ids; i++) {
+-		if (id == chip_info->ids[i])
++	/* Detect chip variant */
++	for (i = 0; i < ARRAY_SIZE(zl3073x_chip_ids); i++) {
++		if (zl3073x_chip_ids[i].id == id)
+ 			break;
  	}
  
- 	ethtool_cmis_cdb_compose_args(&args, ETHTOOL_CMIS_CDB_CMD_QUERY_STATUS,
--				      (u8 *)&qs_pl, sizeof(qs_pl), 0,
-+				      (u8 *)&qs_pl, sizeof(qs_pl), NULL, 0, 0,
- 				      cdb->read_write_len_ext, 1000,
- 				      sizeof(*rpl),
- 				      CDB_F_COMPLETION_VALID | CDB_F_STATUS_VALID);
-@@ -245,8 +254,9 @@ static int cmis_cdb_module_features_get(struct ethtool_cmis_cdb *cdb,
- 	ethtool_cmis_cdb_check_completion_flag(cdb->cmis_rev, &flags);
- 	ethtool_cmis_cdb_compose_args(&args,
- 				      ETHTOOL_CMIS_CDB_CMD_MODULE_FEATURES,
--				      NULL, 0, 0, cdb->read_write_len_ext,
--				      1000, sizeof(*rpl), flags);
-+				      NULL, 0, NULL, 0, 0,
-+				      cdb->read_write_len_ext, 1000,
-+				      sizeof(*rpl), flags);
+-	if (i == chip_info->num_ids) {
++	if (i == ARRAY_SIZE(zl3073x_chip_ids))
+ 		return dev_err_probe(zldev->dev, -ENODEV,
+-				     "Unknown or non-match chip ID: 0x%0x\n",
+-				     id);
+-	}
+-	zldev->chip_id = id;
++				     "Unknown chip ID: 0x%04x\n", id);
++
++	zldev->info = &zl3073x_chip_ids[i];
  
- 	err = ethtool_cmis_cdb_execute_cmd(dev, &args);
- 	if (err < 0) {
-diff --git a/net/ethtool/cmis_fw_update.c b/net/ethtool/cmis_fw_update.c
-index 655ff5224ffa30..a514127985d44e 100644
---- a/net/ethtool/cmis_fw_update.c
-+++ b/net/ethtool/cmis_fw_update.c
-@@ -54,7 +54,8 @@ cmis_fw_update_fw_mng_features_get(struct ethtool_cmis_cdb *cdb,
- 	ethtool_cmis_cdb_check_completion_flag(cdb->cmis_rev, &flags);
- 	ethtool_cmis_cdb_compose_args(&args,
- 				      ETHTOOL_CMIS_CDB_CMD_FW_MANAGMENT_FEATURES,
--				      NULL, 0, cdb->max_completion_time,
-+				      NULL, 0, NULL, 0,
-+				      cdb->max_completion_time,
- 				      cdb->read_write_len_ext, 1000,
- 				      sizeof(*rpl), flags);
+ 	/* Read revision, firmware version and custom config version */
+ 	rc = zl3073x_read_u16(zldev, ZL_REG_REVISION, &revision);
+@@ -1061,7 +1009,7 @@ int zl3073x_dev_probe(struct zl3073x_dev *zldev,
+ 				     "Failed to initialize mutex\n");
  
-@@ -122,7 +123,7 @@ cmis_fw_update_start_download(struct ethtool_cmis_cdb *cdb,
+ 	/* Register DPLL channels */
+-	rc = zl3073x_devm_dpll_init(zldev, chip_info->num_channels);
++	rc = zl3073x_devm_dpll_init(zldev);
+ 	if (rc)
+ 		return rc;
  
- 	ethtool_cmis_cdb_compose_args(&args,
- 				      ETHTOOL_CMIS_CDB_CMD_START_FW_DOWNLOAD,
--				      (u8 *)&pl, lpl_len,
-+				      (u8 *)&pl, lpl_len, NULL, 0,
- 				      fw_mng->max_duration_start,
- 				      cdb->read_write_len_ext, 1000, 0,
- 				      CDB_F_COMPLETION_VALID | CDB_F_STATUS_VALID);
-@@ -158,7 +159,7 @@ cmis_fw_update_write_image(struct ethtool_cmis_cdb *cdb,
- 	int err;
+diff --git a/drivers/dpll/zl3073x/core.h b/drivers/dpll/zl3073x/core.h
+index fd2af3c62a7d5c..fde5c8371fbd28 100644
+--- a/drivers/dpll/zl3073x/core.h
++++ b/drivers/dpll/zl3073x/core.h
+@@ -30,12 +30,32 @@ struct zl3073x_dpll;
+ #define ZL3073X_NUM_PINS	(ZL3073X_NUM_INPUT_PINS + \
+ 				 ZL3073X_NUM_OUTPUT_PINS)
  
- 	max_lpl_len = min_t(u32,
--			    ethtool_cmis_get_max_payload_size(cdb->read_write_len_ext),
-+			    ethtool_cmis_get_max_lpl_size(cdb->read_write_len_ext),
- 			    ETHTOOL_CMIS_CDB_LPL_MAX_PL_LENGTH);
- 	max_block_size =
- 		max_lpl_len - sizeof_field(struct cmis_cdb_write_fw_block_lpl_pl,
-@@ -183,7 +184,7 @@ cmis_fw_update_write_image(struct ethtool_cmis_cdb *cdb,
++enum zl3073x_flags {
++	ZL3073X_FLAG_REF_PHASE_COMP_32_BIT,
++	ZL3073X_FLAGS_NBITS /* must be last */
++};
++
++#define __ZL3073X_FLAG(name)	BIT(ZL3073X_FLAG_ ## name ## _BIT)
++#define ZL3073X_FLAG_REF_PHASE_COMP_32	__ZL3073X_FLAG(REF_PHASE_COMP_32)
++
++/**
++ * struct zl3073x_chip_info - chip variant identification
++ * @id: chip ID
++ * @num_channels: number of DPLL channels supported by this variant
++ * @flags: chip variant flags
++ */
++struct zl3073x_chip_info {
++	u16		id;
++	u8		num_channels;
++	unsigned long	flags;
++};
++
+ /**
+  * struct zl3073x_dev - zl3073x device
+  * @dev: pointer to device
+  * @regmap: regmap to access device registers
++ * @info: detected chip info
+  * @multiop_lock: to serialize multiple register operations
+- * @chip_id: chip ID read from hardware
+  * @ref: array of input references' invariants
+  * @out: array of outs' invariants
+  * @synth: array of synths' invariants
+@@ -46,10 +66,10 @@ struct zl3073x_dpll;
+  * @phase_avg_factor: phase offset measurement averaging factor
+  */
+ struct zl3073x_dev {
+-	struct device		*dev;
+-	struct regmap		*regmap;
+-	struct mutex		multiop_lock;
+-	u16			chip_id;
++	struct device			*dev;
++	struct regmap			*regmap;
++	const struct zl3073x_chip_info	*info;
++	struct mutex			multiop_lock;
  
- 		ethtool_cmis_cdb_compose_args(&args,
- 					      ETHTOOL_CMIS_CDB_CMD_WRITE_FW_BLOCK_LPL,
--					      (u8 *)&pl, lpl_len,
-+					      (u8 *)&pl, lpl_len, NULL, 0,
- 					      fw_mng->max_duration_write,
- 					      cdb->read_write_len_ext, 1, 0,
- 					      CDB_F_COMPLETION_VALID | CDB_F_STATUS_VALID);
-@@ -212,7 +213,8 @@ cmis_fw_update_complete_download(struct ethtool_cmis_cdb *cdb,
+ 	/* Invariants */
+ 	struct zl3073x_ref	ref[ZL3073X_NUM_REFS];
+@@ -68,22 +88,10 @@ struct zl3073x_dev {
+ 	u8			phase_avg_factor;
+ };
  
- 	ethtool_cmis_cdb_compose_args(&args,
- 				      ETHTOOL_CMIS_CDB_CMD_COMPLETE_FW_DOWNLOAD,
--				      NULL, 0, fw_mng->max_duration_complete,
-+				      NULL, 0, NULL, 0,
-+				      fw_mng->max_duration_complete,
- 				      cdb->read_write_len_ext, 1000, 0,
- 				      CDB_F_COMPLETION_VALID | CDB_F_STATUS_VALID);
+-struct zl3073x_chip_info {
+-	const u16	*ids;
+-	size_t		num_ids;
+-	int		num_channels;
+-};
+-
+-extern const struct zl3073x_chip_info zl30731_chip_info;
+-extern const struct zl3073x_chip_info zl30732_chip_info;
+-extern const struct zl3073x_chip_info zl30733_chip_info;
+-extern const struct zl3073x_chip_info zl30734_chip_info;
+-extern const struct zl3073x_chip_info zl30735_chip_info;
+ extern const struct regmap_config zl3073x_regmap_config;
  
-@@ -294,7 +296,7 @@ cmis_fw_update_run_image(struct ethtool_cmis_cdb *cdb, struct net_device *dev,
- 	int err;
+ struct zl3073x_dev *zl3073x_devm_alloc(struct device *dev);
+-int zl3073x_dev_probe(struct zl3073x_dev *zldev,
+-		      const struct zl3073x_chip_info *chip_info);
++int zl3073x_dev_probe(struct zl3073x_dev *zldev);
  
- 	ethtool_cmis_cdb_compose_args(&args, ETHTOOL_CMIS_CDB_CMD_RUN_FW_IMAGE,
--				      (u8 *)&pl, sizeof(pl),
-+				      (u8 *)&pl, sizeof(pl), NULL, 0,
- 				      cdb->max_completion_time,
- 				      cdb->read_write_len_ext, 1000, 0,
- 				      CDB_F_MODULE_STATE_VALID);
-@@ -326,7 +328,8 @@ cmis_fw_update_commit_image(struct ethtool_cmis_cdb *cdb,
+ int zl3073x_dev_start(struct zl3073x_dev *zldev, bool full);
+ void zl3073x_dev_stop(struct zl3073x_dev *zldev);
+@@ -158,18 +166,7 @@ int zl3073x_ref_phase_offsets_update(struct zl3073x_dev *zldev, int channel);
+ static inline bool
+ zl3073x_dev_is_ref_phase_comp_32bit(struct zl3073x_dev *zldev)
+ {
+-	switch (zldev->chip_id) {
+-	case 0x0E30:
+-	case 0x0E93:
+-	case 0x0E94:
+-	case 0x0E95:
+-	case 0x0E96:
+-	case 0x0E97:
+-	case 0x1F60:
+-		return true;
+-	default:
+-		return false;
+-	}
++	return zldev->info->flags & ZL3073X_FLAG_REF_PHASE_COMP_32;
+ }
  
- 	ethtool_cmis_cdb_compose_args(&args,
- 				      ETHTOOL_CMIS_CDB_CMD_COMMIT_FW_IMAGE,
--				      NULL, 0, cdb->max_completion_time,
-+				      NULL, 0, NULL, 0,
-+				      cdb->max_completion_time,
- 				      cdb->read_write_len_ext, 1000, 0,
- 				      CDB_F_COMPLETION_VALID | CDB_F_STATUS_VALID);
+ static inline bool
+diff --git a/drivers/dpll/zl3073x/i2c.c b/drivers/dpll/zl3073x/i2c.c
+index 7bbfdd4ed8671d..979df85826abcc 100644
+--- a/drivers/dpll/zl3073x/i2c.c
++++ b/drivers/dpll/zl3073x/i2c.c
+@@ -22,40 +22,25 @@ static int zl3073x_i2c_probe(struct i2c_client *client)
+ 		return dev_err_probe(dev, PTR_ERR(zldev->regmap),
+ 				     "Failed to initialize regmap\n");
  
+-	return zl3073x_dev_probe(zldev, i2c_get_match_data(client));
++	return zl3073x_dev_probe(zldev);
+ }
+ 
+ static const struct i2c_device_id zl3073x_i2c_id[] = {
+-	{
+-		.name = "zl30731",
+-		.driver_data = (kernel_ulong_t)&zl30731_chip_info,
+-	},
+-	{
+-		.name = "zl30732",
+-		.driver_data = (kernel_ulong_t)&zl30732_chip_info,
+-	},
+-	{
+-		.name = "zl30733",
+-		.driver_data = (kernel_ulong_t)&zl30733_chip_info,
+-	},
+-	{
+-		.name = "zl30734",
+-		.driver_data = (kernel_ulong_t)&zl30734_chip_info,
+-	},
+-	{
+-		.name = "zl30735",
+-		.driver_data = (kernel_ulong_t)&zl30735_chip_info,
+-	},
++	{ "zl30731" },
++	{ "zl30732" },
++	{ "zl30733" },
++	{ "zl30734" },
++	{ "zl30735" },
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(i2c, zl3073x_i2c_id);
+ 
+ static const struct of_device_id zl3073x_i2c_of_match[] = {
+-	{ .compatible = "microchip,zl30731", .data = &zl30731_chip_info },
+-	{ .compatible = "microchip,zl30732", .data = &zl30732_chip_info },
+-	{ .compatible = "microchip,zl30733", .data = &zl30733_chip_info },
+-	{ .compatible = "microchip,zl30734", .data = &zl30734_chip_info },
+-	{ .compatible = "microchip,zl30735", .data = &zl30735_chip_info },
++	{ .compatible = "microchip,zl30731" },
++	{ .compatible = "microchip,zl30732" },
++	{ .compatible = "microchip,zl30733" },
++	{ .compatible = "microchip,zl30734" },
++	{ .compatible = "microchip,zl30735" },
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, zl3073x_i2c_of_match);
+diff --git a/drivers/dpll/zl3073x/spi.c b/drivers/dpll/zl3073x/spi.c
+index af901b4d6dda06..f024f42b78d05f 100644
+--- a/drivers/dpll/zl3073x/spi.c
++++ b/drivers/dpll/zl3073x/spi.c
+@@ -22,40 +22,25 @@ static int zl3073x_spi_probe(struct spi_device *spi)
+ 		return dev_err_probe(dev, PTR_ERR(zldev->regmap),
+ 				     "Failed to initialize regmap\n");
+ 
+-	return zl3073x_dev_probe(zldev, spi_get_device_match_data(spi));
++	return zl3073x_dev_probe(zldev);
+ }
+ 
+ static const struct spi_device_id zl3073x_spi_id[] = {
+-	{
+-		.name = "zl30731",
+-		.driver_data = (kernel_ulong_t)&zl30731_chip_info
+-	},
+-	{
+-		.name = "zl30732",
+-		.driver_data = (kernel_ulong_t)&zl30732_chip_info,
+-	},
+-	{
+-		.name = "zl30733",
+-		.driver_data = (kernel_ulong_t)&zl30733_chip_info,
+-	},
+-	{
+-		.name = "zl30734",
+-		.driver_data = (kernel_ulong_t)&zl30734_chip_info,
+-	},
+-	{
+-		.name = "zl30735",
+-		.driver_data = (kernel_ulong_t)&zl30735_chip_info,
+-	},
++	{ "zl30731" },
++	{ "zl30732" },
++	{ "zl30733" },
++	{ "zl30734" },
++	{ "zl30735" },
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(spi, zl3073x_spi_id);
+ 
+ static const struct of_device_id zl3073x_spi_of_match[] = {
+-	{ .compatible = "microchip,zl30731", .data = &zl30731_chip_info },
+-	{ .compatible = "microchip,zl30732", .data = &zl30732_chip_info },
+-	{ .compatible = "microchip,zl30733", .data = &zl30733_chip_info },
+-	{ .compatible = "microchip,zl30734", .data = &zl30734_chip_info },
+-	{ .compatible = "microchip,zl30735", .data = &zl30735_chip_info },
++	{ .compatible = "microchip,zl30731" },
++	{ .compatible = "microchip,zl30732" },
++	{ .compatible = "microchip,zl30733" },
++	{ .compatible = "microchip,zl30734" },
++	{ .compatible = "microchip,zl30735" },
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, zl3073x_spi_of_match);
 -- 
 2.53.0
 
