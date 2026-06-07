@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61EE11DE8AE;
-	Sun,  7 Jun 2026 10:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73371E98E3;
+	Sun,  7 Jun 2026 10:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826957; cv=none; b=pIZ4dEDe2/dGKAAaobEnWoCv+BFf+4HKqkQEjKM5Hc2zgWzi5oCyFY6JbIIh7jlNngToLs9fq33J1uYYO3/68hmAVE6siQUEsqk7SEbzpiQgBBUS0/AasardvkssdebDUZ5Bby0+8No2kaDyuLJPtGEGwhpbhTQfqIKIVSOC/3s=
+	t=1780826960; cv=none; b=g5BjC0FB3XY+m/4urneuMFwDyZaS9Hr7ykgMv2RY+Sx0r1IUtdXi1bnWaOJn+5UiLotVmf8UQqutff1nTuSJAhxlY3xD3aU2QqxAi91FwjrksH7Q0lUKaH5kEqnM3GpAMs7JaBIj929s8p1QoBkWuHOE6ax02OhpkN6QyZ0mRmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826957; c=relaxed/simple;
-	bh=E6CjjOX3DAn6sBZqeUgIeuj0GHeynp5xpc34TGmJNYE=;
+	s=arc-20240116; t=1780826960; c=relaxed/simple;
+	bh=Hjj9RBb+GvyjRAsk6/xitc4XLCR3exAKKvs1GsXeCy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tt2W9hPHLdmxYt4V3jLN/2EmixEMGm6KQ0IMHeWRITpq5A56K7X6v2R1vR1z3DR/Vl1V7bmWlRVxxv4xy92Q35ZIPddjj8yiiORxHpwj/hKnBMMAN4w9SGwUbT3skF7wZsyUgPoVDP9UB/KBKw6NCOXDhipqjafD9J5q2YX6134=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LrML7Ys9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zqf1zGk0/HGIi9F8C70GMPOJMxJScxJQm2eF8e7JVmQYaHL6rV0FutKODidnKl8fVttVhs5qY9cyTCw1JZ0x/e/5XtTM7J7GEdU5hIagrVqZ4aIPlJV7MrC1hM5AXuVYqX/x/C94CQFCqKUkC/dENW/ZY5Yk6bDyMpvCyxWB9A4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EPNmJ4jh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LrML7Ys9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D8341F00893;
-	Sun,  7 Jun 2026 10:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EPNmJ4jh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352F51F00893;
+	Sun,  7 Jun 2026 10:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826956;
-	bh=F0/76JCqf5Y/Ej6eYWSN/RNgVbFhEZXdqmG4obSUfFU=;
+	s=korg; t=1780826959;
+	bh=ztNByOwl7kBa09RqWUVIMfUXcH7NXljVyK4RJAXjzeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LrML7Ys9NMkblfwF4JVZTs64RK6WpKRlV3bEJ9Bj58JEgbdMHSLbVPdaPLv8VbzsV
-	 Y9KfBjmVilxdh+z/dpfGwDNh6utpvPPzVpYimXZMCtXjBGRsnWSAchaJ3L5m9nY7so
-	 C7KxkTOXpPLdSVGWxWVGDHIupsLX8maXtSAw9IHo=
+	b=EPNmJ4jhyzjLAnXNw9fJ3VYTRQFCId1WoUykVer1T9qClFj+I31tNzxJ0LbgUmHk7
+	 tyJtv3gJtwCne1Gs9szrmr9rFfsMzxVc/mRvNI/LsKPK6Dy1j6o2F3/p5TrWInS0tn
+	 cvnzGIsGSb0Oz7wAK/ZATO83/w2NDdCmxnUZbbNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Fomichev <sdf.kernel@gmail.com>,
-	Breno Leitao <leitao@debian.org>,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lee Jones <lee@kernel.org>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 026/315] net/iucv: fix locking in .getsockopt
-Date: Sun,  7 Jun 2026 11:56:53 +0200
-Message-ID: <20260607095728.455846802@linuxfoundation.org>
+Subject: [PATCH 6.18 007/315] nfc: llcp: Fix use-after-free in llcp_sock_release()
+Date: Sun,  7 Jun 2026 11:56:34 +0200
+Message-ID: <20260607095727.780756532@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
 References: <20260607095727.528828913@linuxfoundation.org>
@@ -53,85 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 3589d20a666caf30ad100c960a2de7de390fce88 ]
+[ Upstream commit f4268b466190dae95a7585f69b4f1f8ad097632c ]
 
-Mirror iucv_sock_setsockopt() and wrap the whole switch in
-lock_sock()/release_sock(). The pre-existing SO_MSGLIMIT-only lock
-becomes redundant and is removed.
+llcp_sock_release() unconditionally unlinks the socket from the local
+sockets list.  However, if the socket is still in connecting state, it
+is on the connecting list.
 
-Any AF_IUCV HIPER user can potentially crash the kernel by racing
-recvmsg() with getsockopt(SO_MSGSIZE): the SO_MSGSIZE arm dereferences
-iucv->hs_dev->mtu after iucv_sock_close() (called from the racing
-recvmsg()) has set hs_dev to NULL, producing a NULL pointer dereference
-oops.
+Fix this by checking the socket state and unlinking from the correct list.
 
-Suggested-by: Stanislav Fomichev <sdf.kernel@gmail.com>
-Fixes: 51363b8751a6 ("af_iucv: allow retrieval of maximum message size")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Tested-by: Alexandra Winter <wintera@linux.ibm.com>
-Link: https://patch.msgid.link/20260521-af_iucv_fix2-v1-1-f16b1c510aa9@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b4011239a08e ("NFC: llcp: Fix non blocking sockets connections")
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://patch.msgid.link/20260429134115.3558604-1-lee@kernel.org
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/iucv/af_iucv.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ net/nfc/llcp_sock.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
-index 6c717a7ef29283..c66b90c912e78e 100644
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -1538,7 +1538,7 @@ static int iucv_sock_getsockopt(struct socket *sock, int level, int optname,
- 	struct sock *sk = sock->sk;
- 	struct iucv_sock *iucv = iucv_sk(sk);
- 	unsigned int val;
--	int len;
-+	int len, rc;
+diff --git a/net/nfc/llcp_sock.c b/net/nfc/llcp_sock.c
+index 57a2f97004e172..915929cd724f90 100644
+--- a/net/nfc/llcp_sock.c
++++ b/net/nfc/llcp_sock.c
+@@ -633,6 +633,8 @@ static int llcp_sock_release(struct socket *sock)
  
- 	if (level != SOL_IUCV)
- 		return -ENOPROTOOPT;
-@@ -1551,26 +1551,34 @@ static int iucv_sock_getsockopt(struct socket *sock, int level, int optname,
+ 	if (sock->type == SOCK_RAW)
+ 		nfc_llcp_sock_unlink(&local->raw_sockets, sk);
++	else if (sk->sk_state == LLCP_CONNECTING)
++		nfc_llcp_sock_unlink(&local->connecting_sockets, sk);
+ 	else
+ 		nfc_llcp_sock_unlink(&local->sockets, sk);
  
- 	len = min_t(unsigned int, len, sizeof(int));
- 
-+	rc = 0;
-+
-+	lock_sock(sk);
- 	switch (optname) {
- 	case SO_IPRMDATA_MSG:
- 		val = (iucv->flags & IUCV_IPRMDATA) ? 1 : 0;
- 		break;
- 	case SO_MSGLIMIT:
--		lock_sock(sk);
- 		val = (iucv->path != NULL) ? iucv->path->msglim	/* connected */
- 					   : iucv->msglimit;	/* default */
--		release_sock(sk);
- 		break;
- 	case SO_MSGSIZE:
--		if (sk->sk_state == IUCV_OPEN)
--			return -EBADFD;
-+		if (sk->sk_state == IUCV_OPEN) {
-+			rc = -EBADFD;
-+			break;
-+		}
- 		val = (iucv->hs_dev) ? iucv->hs_dev->mtu -
- 				sizeof(struct af_iucv_trans_hdr) - ETH_HLEN :
- 				0x7fffffff;
- 		break;
- 	default:
--		return -ENOPROTOOPT;
-+		rc = -ENOPROTOOPT;
-+		break;
- 	}
-+	release_sock(sk);
-+
-+	if (rc)
-+		return rc;
- 
- 	if (put_user(len, optlen))
- 		return -EFAULT;
 -- 
 2.53.0
 
