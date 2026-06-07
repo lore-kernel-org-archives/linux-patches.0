@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F932D8378;
-	Sun,  7 Jun 2026 10:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789DA3246F4;
+	Sun,  7 Jun 2026 10:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827887; cv=none; b=XnI2hMikJpf1iRR5vtmjcD8Jh5Erjq6v6k8EjmkOHxooyM31kt/n5XAC4KeLajb/HL3qsW7vEHqGrbGq7HvTAbd8gmYNBb47OdNkwwhrZIlloabHCWR0kaRtTtmi9dV/oWOHbl9RB1qM4ce/JA4QoqhyO+rzFtjlAGIxRQZbWFE=
+	t=1780827891; cv=none; b=BoIhaI4t8TNQ/i6X6/7uWarYZW/T/cXuHzVhtUamKU9CiEw8Bclk4/bGf2+lmgVuMAPYkUNQnkKlkG8kpf1BeITL51neSfiFx4EMleVPoNWvUsO4yKr5HwMTD7xEcq89IjlYdMheM4UIuTHIQANeZKBlLlAqnUR3tTCIs/RPT80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827887; c=relaxed/simple;
-	bh=QXgwPMhAowzzPiHtqO2cQxPVVrzlWlx2e20FyEa8oeI=;
+	s=arc-20240116; t=1780827891; c=relaxed/simple;
+	bh=ppMY94VneGK9Quu0avX+cqnXCEsvdUVd0S4uIoGvclI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nVYnToqpY3SfSwCAG65Y5W54H3vaHmT2I6dSX/g6Jm75N6QABAx+SnuiS5oHgI7ebg0m8EG+K3Xe3BSqwNA02YgqqBcDDdpgryYBKVUx16qzbp1PGubiim7pky1mxvNVbYut6vMyq72Iibzyq3B4pHpDLWVXp9SmYsio/uXpUP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGPd59XF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e7F+Sxzqi7Lo4m5C8z+6daPl2AFLIOTku7nRVAyHbcUFVld3nmXTxoQ7uOZUr8VmgwSfczUcYezgzlv0roY/M+buOkbLad23QoglYMCVqmEtvG+S/Re1tFTQvme1Gz/KHqoX1OT4a+FbtpquekgqGHwk+ALA9dkLLfbmu5BElM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JKxSFSWu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGPd59XF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CB11F00893;
-	Sun,  7 Jun 2026 10:24:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JKxSFSWu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE1F61F00893;
+	Sun,  7 Jun 2026 10:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827886;
-	bh=Mo2PpxMEEQT3Tg/38JOf/rMbQx43URcwpLG1D620SmU=;
+	s=korg; t=1780827890;
+	bh=FZ6p11xcZEcM4QKstxewKi3nx7emuLdH638H8Vno+lQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pGPd59XFObxk3B6lIcJ75WiThwdW7XreUGocStVT3y8hlBwYtCZ1FIP/Bv7aZFwJE
-	 UEqhGJiIpwXzN3lnaty5ur9ZA5WPVVmBuwTdynEWJTZbJb5ckTvtdWjZn42GnFGR8v
-	 sMR0LwjuZ4Rsz5rNBS9N2lSG90tLqKcJhDOWeW3U=
+	b=JKxSFSWuNgem3GaJWOc44qAKq1YoFXtLJNakfLsGkS/G+Hwc0FWdVYAo0H1rmlrb5
+	 OkYxhPBCuWb/ZhbThvDcNoojOwOgrpMt9tnDl20tyElJE+I17EoKwf3MthLuQiZOPq
+	 5dddLmBoIPGOZnejHwU19qZqWVl1U1/IAjgOJ6fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pooja Katiyar <pooja.katiyar@intel.com>,
-	Johan Hovold <johan@kernel.org>,
-	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.18 110/315] usb: typec: ucsi: displayport: NAK DP_CMD_CONFIGURE without a payload VDO
-Date: Sun,  7 Jun 2026 11:58:17 +0200
-Message-ID: <20260607095731.685328900@linuxfoundation.org>
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 094/307] ipv6: fix possible infinite loop in fib6_select_path()
+Date: Sun,  7 Jun 2026 11:58:11 +0200
+Message-ID: <20260607095731.230785865@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,47 +48,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-commit 167dd8d12226587ee554f520aed0256b7769cd5d upstream.
+[ Upstream commit 9c7da87c2dc860bb17ca1ece942495d28b1ce3b9 ]
 
-ucsi_displayport_vdm() handles a DP_CMD_CONFIGURE by copying the first
-payload VDO from data[], but unlike the equivalent handler in
-altmodes/displayport.c it does not check that count covers a VDO beyond
-the header.  A header-only Configure VDM (count == 1) would read one u32
-past the caller's array.
+Found while auditing the same pattern Sashiko reported in
+rt6_fill_node() [1]. Apply the same fix as
+commit f8d8ce1b515a ("ipv6: fix possible infinite loop in fib6_info_uses_dev()").
 
-In the normal UCSI path the caller controls count, so this is hardening
-for non-standard delivery paths.  NAK and bail when no configuration VDO
-is present, matching the generic DP altmode driver's existing guard.
+Writers holding tb6_lock can list_del_rcu(&first->fib6_siblings)
+without waiting for RCU readers; first->fib6_siblings.next then
+still points into the old ring and this softirq-side walker never
+reaches &first->fib6_siblings as its terminator. fib6_purge_rt()
+always WRITE_ONCE()s first->fib6_nsiblings to 0 before
+list_del_rcu(), so an inside-loop check is a reliable detach signal.
 
-Assisted-by: gkh_clanker_t1000
-Cc: Pooja Katiyar <pooja.katiyar@intel.com>
-Cc: Johan Hovold <johan@kernel.org>
-Cc: stable <stable@kernel.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/2026051351-vividly-flattered-eb3d@gregkh
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[1] https://sashiko.dev/#/patchset/20260526020227.4857-1-jiayuan.chen%40linux.dev
+
+Fixes: d9ccb18f83ea ("ipv6: Fix soft lockups in fib6_select_path under high next hop churn")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260527053133.180695-2-jiayuan.chen@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/displayport.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv6/route.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/typec/ucsi/displayport.c
-+++ b/drivers/usb/typec/ucsi/displayport.c
-@@ -240,6 +240,10 @@ static int ucsi_displayport_vdm(struct t
- 				dp->header |= VDO_CMDT(CMDT_RSP_ACK);
- 			break;
- 		case DP_CMD_CONFIGURE:
-+			if (count < 2) {
-+				dp->header |= VDO_CMDT(CMDT_RSP_NAK);
-+				break;
-+			}
- 			dp->data.conf = *data;
- 			if (ucsi_displayport_configure(dp)) {
- 				dp->header |= VDO_CMDT(CMDT_RSP_NAK);
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index c73218fd82c615..9e7470e8154429 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -482,6 +482,9 @@ void fib6_select_path(const struct net *net, struct fib6_result *res,
+ 		const struct fib6_nh *nh = sibling->fib6_nh;
+ 		int nh_upper_bound;
+ 
++		if (!READ_ONCE(first->fib6_nsiblings))
++			break;
++
+ 		nh_upper_bound = atomic_read(&nh->fib_nh_upper_bound);
+ 		if (hash > nh_upper_bound)
+ 			continue;
+-- 
+2.53.0
+
 
 
