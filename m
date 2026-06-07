@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6A74071DA;
-	Sun,  7 Jun 2026 10:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C8E4CB5B;
+	Sun,  7 Jun 2026 10:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827607; cv=none; b=mR3CTqF1pD+2VJXH6LSxXbzX90NSfMMCb6T4NROgyOVVZkC5kz8xPdaSHvWA8LnN0TlQIArxxOyJVOkeBIo4tD1o0z9YOo3AFXtpk1ueXSXmPFQ+H/cYM4kIgkmKPYRCBtIQgdEfAhPG/2MUZT7/GW65QccTF6rT9ErJlERZ7tk=
+	t=1780827611; cv=none; b=V3Ga55Wb6I+IlTpBNgmjXBwZ0nHBXsn5kva9uh+rJLGtQUeoWWk9qXz1IP3Ar8FgtwICfD3vt1AZNI7vDXOPdWKLQ3kmHbrj40mQK1XjB+F3qswafBcUtVTnsVN/JC5xyX37Zzv8rOHgaAs9tM1e7NmO3+wkXq3tgw+4Q5q+ovM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827607; c=relaxed/simple;
-	bh=aYJfX+oU82WX9sveeuBE+dTzZ8EuE7FEzuMTkDz3Oo4=;
+	s=arc-20240116; t=1780827611; c=relaxed/simple;
+	bh=+npXqDEyhgESx+Cs3cjkMbfP8LBXHajIqPcBjWDMwuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eMpTFvR+VcNCOkdFy0Oa8f0Qgksodm0Z+b3AR+ZrLHnGnXUTcRLLpOuiRCP36VI7tpjuCsCXQt2+eb88FoVvgnL55fnXsIVeZjATzN9dZZpGVAiReAmMtAZzwps2Sht1xfXv4AyNOFt/lSxnsnAPupEFllOiV7llFbMT7dG8vyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZtMZZPM4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hMyYQvFanyMkyjhNi3NPeNC0WjfF/uv5/4lHNg7IYBWYXoyEw+lS/uqdZoMsUlV3gb6aFTKofJcDbymc0MilyaI/bO2Rf5SGp8/RkWxINpZSzG4wCEyDsCG+/goAuTRe1VvqpYHUshUXVK3EqOx/CxYwUktqCKP90eBdY3nrGfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8LGyCcM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZtMZZPM4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFDB71F00893;
-	Sun,  7 Jun 2026 10:20:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8LGyCcM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD791F00893;
+	Sun,  7 Jun 2026 10:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827606;
-	bh=W0kJmFq2mfpbyeKzIfcsKaxyq8CWsQKRoGvvuLrMbe0=;
+	s=korg; t=1780827610;
+	bh=bAvvnH5zhgw+EBs/NWYSK2JoOPLk5miBwekqHPb+K9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZtMZZPM4WWXZlsHDqtMTLnGWrvC3DNcYQaxLXtlvnV95Xb3pQuVMdm/9wJ2reqayY
-	 EwGsth528cYVnEEz7E86AcbKEQV72G6iilcgHbKGwZskYIWVf5VDVk3yNwWOvkCeBQ
-	 IsmGHpozD/622qvL08OA9bzna4DQCtL/+XFzERw8=
+	b=w8LGyCcMkd2TYu3DgbW74wwBRT77kpKgFh6VVV6cz2gbEBXDDZIivLSiPnOmG7D2U
+	 4VBr6zyp7q1ge98EOLPxDfZ+tXGghvWf3w4TJRMPgYul9DHbz1sLwPNYKY67UitFvm
+	 aSyFamu2+/5/7a1RatZR7Tcz2sDWYzOunWD4d9t8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Chandelkar <rc@rexion.ai>,
+	Frank Wunderlich <frank-w@public-files.de>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 072/307] ipv6: rpl: fix hdrlen overflow in ipv6_rpl_srh_decompress()
-Date: Sun,  7 Jun 2026 11:57:49 +0200
-Message-ID: <20260607095730.406974179@linuxfoundation.org>
+Subject: [PATCH 7.0 108/332] net: pcs: pcs-mtk-lynxi: fix bpi-r3 serdes configuration
+Date: Sun,  7 Jun 2026 11:57:57 +0200
+Message-ID: <20260607095732.087093999@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,64 +48,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rahul Chandelkar <rc@rexion.ai>
+From: Frank Wunderlich <frank-w@public-files.de>
 
-[ Upstream commit 9d5e7a46a9f6d8f503b41bfefef70659845f1679 ]
+[ Upstream commit 422b5233b607476ac7176bfa2a101b9a103d7653 ]
 
-ipv6_rpl_srh_decompress() computes:
+Commit 8871389da151 introduces common pcs dts properties which writes
+rx=normal,tx=normal polarity to register SGMSYS_QPHY_WRAP_CTRL of switch.
+This is initialized with tx-bit set and so change inverts polarity
+compared to before.
 
-    outhdr->hdrlen = (((n + 1) * sizeof(struct in6_addr)) >> 3);
+It looks like mt7531 has tx polarity inverted in hardware and set tx-bit
+by default to restore the normal polarity.
 
-hdrlen is __u8. For n >= 127 the result exceeds 255 and silently
-truncates. With n=127 (cmpri=15, cmpre=15, pad=0, hdrlen=16):
+The MT7531 datasheet quite clearly states:
+Register 000050EC QPHY_WRAP_CTRL -- QPHY wrapper control
+Reset value: 0x00000501
 
-    (128 * 16) >> 3 = 256, truncated to 0 as __u8
+BIT 1 RX_BIT_POLARITY -- RX bit polarity control
+ 1'b0: normal
+ 1'b1: inverted
 
-The caller in ipv6_rpl_srh_rcv() then places the compressed header
-at buf + ((ohdr->hdrlen + 1) << 3). With hdrlen=0 this is buf + 8,
-but the decompressed region occupies buf[0..2055] (8-byte header
-plus 128 full addresses). The compressed header overlaps the
-decompressed data, and ipv6_rpl_srh_compress() writes into this
-overlap, corrupting the routing header of the forwarded packet.
+BIT 0 TX_BIT_POLARITY -- TX bit polarity control (TX default inversed
+in MT7531)
+ 1'b0: normal
+ 1'b1: inverted
 
-The existing guard at exthdrs.c:546 checks (n + 1) > 255, which
-prevents n+1 from overflowing unsigned char (the segments_left
-field), but does not prevent the computed hdrlen from overflowing
-__u8. n=127 passes because 128 <= 255, yet hdrlen=256 does not
-fit.
+Till this patch the register write was only called when mediatek,pnswap
+property was set which cannot be done for switch because the fw-node param
+was always NULL from switch driver in the mtk_pcs_lynxi_create call.
 
-Tighten the bound to (n + 1) > 127. This caps n at 126, giving
-hdrlen = (127 * 16) >> 3 = 254, which fits in __u8. The compressed
-header then lands at buf + ((254 + 1) << 3) = buf + 2040, exactly
-past the decompressed region (buf[0..2039]). No overlap. 127
-segments is well beyond any realistic RPL deployment.
+Do not configure switch side like it's done before.
 
-Fixes: 8610c7c6e3bd ("net: ipv6: add support for rpl sr exthdr")
-Signed-off-by: Rahul Chandelkar <rc@rexion.ai>
-Link: https://patch.msgid.link/20260525154031.2290876-1-rc@rexion.ai
+Fixes: 8871389da151 ("net: pcs: pcs-mtk-lynxi: deprecate "mediatek,pnswap"")
+Signed-off-by: Frank Wunderlich <frank-w@public-files.de>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20260526153239.30194-1-linux@fw-web.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/exthdrs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/pcs/pcs-mtk-lynxi.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
-index 5ef6fbc66beb11..43e34fe448ffe5 100644
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -546,7 +546,7 @@ static int ipv6_rpl_srh_rcv(struct sk_buff *skb)
- 	 * unsigned char which is segments_left field. Should not be
- 	 * higher than that.
- 	 */
--	if (r || (n + 1) > 255) {
-+	if (r || (n + 1) > 127) {
- 		kfree_skb(skb);
- 		return -1;
- 	}
+diff --git a/drivers/net/pcs/pcs-mtk-lynxi.c b/drivers/net/pcs/pcs-mtk-lynxi.c
+index c12f8087af9be5..a753bd88cbc223 100644
+--- a/drivers/net/pcs/pcs-mtk-lynxi.c
++++ b/drivers/net/pcs/pcs-mtk-lynxi.c
+@@ -129,6 +129,9 @@ static int mtk_pcs_config_polarity(struct mtk_pcs_lynxi *mpcs,
+ 	unsigned int val = 0;
+ 	int ret;
+ 
++	if (!fwnode)
++		return 0;
++
+ 	if (fwnode_property_read_bool(fwnode, "mediatek,pnswap"))
+ 		default_pol = PHY_POL_INVERT;
+ 
 -- 
 2.53.0
 
