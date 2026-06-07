@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5502D291C10;
-	Sun,  7 Jun 2026 10:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FE870808;
+	Sun,  7 Jun 2026 10:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828919; cv=none; b=r9tbCXjXtjlhz3PD79mW/J/mivWk3naiyRx/GHtoUv0MfkTRI0GLOjXuKlHP2L0K1Ntus2GWR2O9U8UYu4+C0FpEYDJqpZo8G18ueE9yYQXSOGZO3H6adA/4HVJzsa7FzBK3ILLhSW1MOXK7e4g204FU0q8peuyJwWYN4ly62zA=
+	t=1780828922; cv=none; b=smAjF41uwkLpWHrqhiKchR4K3mxJKPztcJWseFdyUC8/YxUAVl/WRN2UP+nvJNtFLifYAoo5vIgvzqt//HYz+gwatKveYWxzPfSQj0SeJs9vVmVFOiSGrNjlTl/RIql7HwXXIjdoCGddQYTo4zSFQShO50FnRgZ/nhgncu8tVCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828919; c=relaxed/simple;
-	bh=gmZh01dtuI/6Sq7cG1cErXSCOyNT2n8smINk8nNmfz0=;
+	s=arc-20240116; t=1780828922; c=relaxed/simple;
+	bh=9YJIZM4CD3YTrPzFEB315LhCoLHAJ6PwIZE8i5VpmqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c+Zc2RKq2P11VPozMolsiBoHaN0MsCXGtj1J4CXWXLDr675CbITZUF4pxMMr/xkhdC/IyLCbjjPRsBAHbqYRFiOImeL3T/50CJ5Z7fEy3GXeOVVhoJ1mF4LuoFLwnTjDdGCnYhJQHE4gqpyX7lJKXhiGB8GoU924Pz4FezkkkQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/j3lNW2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=icY0ZcjVS6KNwiMrdrTluU4tGgk3YqtGYmjTzEp+r8aE7sAntme/KzQ3O2rediG7Km710yY2jmIrNRzSRuktj7ZWwrDrQ3TJuIUoM0BFE/xIpS2Xv56ZbH3CcNP4X8VtdusW3I3WcPrdIRpKa6rXd/mADwTFAPwa5SRkHU4fCy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqtKrK6K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/j3lNW2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E921F00893;
-	Sun,  7 Jun 2026 10:41:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqtKrK6K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED1181F00893;
+	Sun,  7 Jun 2026 10:42:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828918;
-	bh=fsOUGX/91KiE2DBrzoR4HQ+i1iQV1s5aBwqHlVOi1yY=;
+	s=korg; t=1780828921;
+	bh=qUda5WrcgpgOYob5V66b6JuTrIGvC7mEVthh5WoJs5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V/j3lNW2NS8j+CTskQrwUisSKsj0aiHyg82l4bbgN1pvvf5Q78djb6e9r4TsWa5Db
-	 5DU4uHTHEcAx2b34NgX042G6SNvYY0OvVDBpQCyfZ4hZ1UfNWXa/1wLvn4tKDfXW3M
-	 Yyn6QL7hyATUQchjDkY0DnaG7/cIunY0v38yU0B4=
+	b=qqtKrK6KxVK4HDAUL7ZiYrfVnB7EkO7nX7R93EifCc3Js+FMDsTRSY3z9vwBwsy6d
+	 f4WVs/lEKfD7xylgrKdwBo8G1Z9PelaGrB4g2L7anfrCkXo1Rj9WPh5kXU+hCTv3SH
+	 XLgM05I/CjnUuLtW/EHCtbzvRud5AM3zhVwGVZsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Peter Chen <peter.chen@cixtech.com>
-Subject: [PATCH 6.12 179/307] usb: cdns3: plat: fix leaked usb2_phy initialization on usb3_phy acquisition failure
-Date: Sun,  7 Jun 2026 11:59:36 +0200
-Message-ID: <20260607095734.288174513@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.18 202/315] xfrm: ah: use skb_to_full_sk in async output callbacks
+Date: Sun,  7 Jun 2026 11:59:49 +0200
+Message-ID: <20260607095734.991801580@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +46,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Chen <peter.chen@cixtech.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit e6970cda63fd4b4546aeed9d0e2f53a7c95cd09c upstream.
+commit 79d8be262377f7112cfa3088dfc4142d5a2533f3 upstream.
 
-Move usb2_phy initialization after usb3_phy acquisition.
+When AH output is offloaded to an asynchronous crypto provider
+(hardware accelerators such as AMD CCP, or a forced-async software
+shim used for testing), the digest completion fires
+ah_output_done() / ah6_output_done() on a workqueue.  The egress
+skb at that point may have been originated by a TCP listener
+sending a SYN-ACK, which sets skb->sk to a request_sock via
+skb_set_owner_edemux(); it may also have been originated by an
+inet_timewait_sock retransmit.  Neither is a full struct sock, and
+passing the raw skb->sk to xfrm_output_resume() then forwards a
+non-full socket through the rest of the xfrm output chain.
 
-Fixes: f738957277ba ("usb: cdns3: Split core.c into cdns3-plat and core.c file")
-Cc: stable <stable@kernel.org>
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-devicetree/agKaEePSFknhDBg2@nchen-desktop/T/#m21e1d9c1574eb127ce03c0c2a1a49002ce435b52
-Signed-off-by: Peter Chen <peter.chen@cixtech.com>
-Link: https://patch.msgid.link/20260513085310.2217547-2-peter.chen@cixtech.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+xfrm_output_resume() and its downstream consumers expect a full
+sk where they dereference at all.  The natural egress path
+through ah_output_done() does not crash today because the
+consumers that read past sock_common are either gated by
+sk_fullsock() or short-circuit on flags that are clear on a fresh
+request_sock; an exhaustive walk of the 50 most plausible
+consumers under sch_fq, dev_queue_xmit, netfilter, tc-egress and
+cgroup-egress BPF found no current unguarded deref.  The bug is
+still a real type confusion that future consumer changes could
+turn into a memory-corruption primitive.
+
+This is the same bug class fixed for ESP in commit 1620c88887b1
+("xfrm: Fix the usage of skb->sk").  Apply the analogous fix to
+AH: convert skb->sk to a full socket pointer (or NULL) via
+skb_to_full_sk() before handing it to xfrm_output_resume().
+
+The same async AH callbacks were touched recently for an
+independent ESN-related ICV layout bug in commit ec54093e6a8f
+("xfrm: ah: account for ESN high bits in async callbacks"); the
+sk type-confusion addressed here is orthogonal.  This patch is
+part of an ongoing audit of the AH callback paths; an ah_output
+ihl-validation hardening series is also currently under review on
+netdev.
+
+Reproduced under UML + KASAN + lockdep with a forced-async
+hmac(sha1) shim that registers at priority 9999 and wraps the
+sync in-tree hmac-sha1-lib.  With the shim loaded, ah_output_done
+runs on every SYN-ACK egress through a transport-mode AH SA and
+skb->sk arrives as a request_sock (TCP_NEW_SYN_RECV); after this
+patch, xfrm_output_resume() receives the listener (the result of
+sk_to_full_sk()) and consumer derefs land on full-sock fields as
+intended.
+
+Fixes: 9ab1265d5231 ("xfrm: Use actual socket sk instead of skb socket for xfrm_output_resume")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdns3-plat.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/ipv4/ah4.c |    2 +-
+ net/ipv6/ah6.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/cdns3/cdns3-plat.c
-+++ b/drivers/usb/cdns3/cdns3-plat.c
-@@ -126,15 +126,15 @@ static int cdns3_plat_probe(struct platf
- 		return dev_err_probe(dev, PTR_ERR(cdns->usb2_phy),
- 				     "Failed to get cdn3,usb2-phy\n");
+--- a/net/ipv4/ah4.c
++++ b/net/ipv4/ah4.c
+@@ -143,7 +143,7 @@ static void ah_output_done(void *data, i
+ 	}
  
--	ret = phy_init(cdns->usb2_phy);
--	if (ret)
--		return ret;
--
- 	cdns->usb3_phy = devm_phy_optional_get(dev, "cdns3,usb3-phy");
- 	if (IS_ERR(cdns->usb3_phy))
- 		return dev_err_probe(dev, PTR_ERR(cdns->usb3_phy),
- 				     "Failed to get cdn3,usb3-phy\n");
+ 	kfree(AH_SKB_CB(skb)->tmp);
+-	xfrm_output_resume(skb->sk, skb, err);
++	xfrm_output_resume(skb_to_full_sk(skb), skb, err);
+ }
  
-+	ret = phy_init(cdns->usb2_phy);
-+	if (ret)
-+		return ret;
-+
- 	ret = phy_init(cdns->usb3_phy);
- 	if (ret)
- 		goto err_phy3_init;
+ static int ah_output(struct xfrm_state *x, struct sk_buff *skb)
+--- a/net/ipv6/ah6.c
++++ b/net/ipv6/ah6.c
+@@ -337,7 +337,7 @@ static void ah6_output_done(void *data,
+ 	ah6_restore_hdrs(top_iph, iph_ext, extlen);
+ 
+ 	kfree(AH_SKB_CB(skb)->tmp);
+-	xfrm_output_resume(skb->sk, skb, err);
++	xfrm_output_resume(skb_to_full_sk(skb), skb, err);
+ }
+ 
+ static int ah6_output(struct xfrm_state *x, struct sk_buff *skb)
 
 
