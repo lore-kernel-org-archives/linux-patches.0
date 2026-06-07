@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A166E1E98E3;
-	Sun,  7 Jun 2026 11:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288B91E98E3;
+	Sun,  7 Jun 2026 11:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780830202; cv=none; b=R7r1ghTZfCUjRmAf4JD166Fh3uh8+Up2vqokqn5tNXTros315J9LXCVFsTxhzZYQipXUncxyePJpASD7fkQ9/q6DuA/tUp4PuSOXgHS6bDvVsziYJ9LUn0ZGhtnHGe2ce2kHSUp6JxjX0Gn00j5NM7+pZitVNmeMci4wixT7ZQY=
+	t=1780830206; cv=none; b=jtTKOApZDLy5b/W9ujOYjabATKTO3N+nAmhWWEp0U6/Wek5v8LqX5v2EU3O499UnEVus86yopqnpTo6zp1ps9Qc/8QtVBtqzwvMuL9qaafPrSXcMxlGXHeucVh+WkTrsrVXe08DBGaFLoVl5Efmh9Xj/IktYVwH8ErJQO6ueru4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780830202; c=relaxed/simple;
-	bh=lksUyPrTm5ShDsv8682KG7RHiD5TBazsFva6/Od1bgA=;
+	s=arc-20240116; t=1780830206; c=relaxed/simple;
+	bh=cBsuNYDB1CgDEhGR8tRfpAB05f4zgYcv95PsEY8z/Rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=awb4ZZf75wiCdr4PJmEqHnWBpUQL0dfZaYKnDn34oDBIBYJkIUVvWocuLz/2uTSOjoZdJZyiAPiyw3+UCg4RSGsvrihRNhe7KBYlnRXmEARDJ4kOTCPHj7JcsmEfLe6FQi1wKUWJvojl0TjWFE792VFWze3478S7wcq1kmbgPO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RYCv6+Hy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uGOcCa3mTVlxjn4BBRl8yn7ShotZU2raNkOEVuzNYHp2fQ8W0vLAHeQblXLh2zUD5x0xV8HB06S5cU6lloWCDd7QLa9beuU8wk2OUVdkMmqxPpDIOBXNO5JBg5ABC1F+leZQK3L3uY85ug42+IBcghfqXLQldHz4pMX+nWYcn+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EqSUQPpF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RYCv6+Hy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF5C1F00893;
-	Sun,  7 Jun 2026 11:03:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EqSUQPpF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F27351F00893;
+	Sun,  7 Jun 2026 11:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780830201;
-	bh=8TgwUUbDjvcfzNla/Btr7IsqTJyyTXj+ieBW58/+urE=;
+	s=korg; t=1780830205;
+	bh=B1BP8cqYbJj0Aho+9eH9CkHXLiZ8PXBiIp1Lkx2Vsr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RYCv6+Hy2tZ+QzOs5FLxKIVRe82TkTxfnCOqOZYYwlgSTwmxWfe5OGFpqrVu7YQI+
-	 EfXfq0UQqMr+xK+A7uP8EarpS5p1VZrM512kP8K5irOwF/50p8Rv2L8HNbp+YJgNQh
-	 rubanYRUTLJ3PrltyuTr0w2gvF/lss4Q/8eA0kwI=
+	b=EqSUQPpF/0mieCuKkMZud5HEmfcrr9qRCddhY6PXRIiFE5AMAExGGXNN0F6gu4rtP
+	 uD+lJOTmrF1YmIm9WEaeOd3irOJ53SXy3ruTZbrjig3lamr3gNBIkp83ldTwGjwfUU
+	 y3+HOqu62MEbqWQmXxvi8yASuhsxNBpB0HGfU9D8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
+	Hugh Dickins <hughd@google.com>,
+	Jann Horn <jannh@google.com>,
+	Kalesh Singh <kaleshsingh@google.com>,
+	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Jeff Xu <jeffxu@chromium.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 304/307] hwmon: (pmbus/adm1266) serialize GPIO PMBus accesses with pmbus_lock
-Date: Sun,  7 Jun 2026 12:01:41 +0200
-Message-ID: <20260607095738.921860568@linuxfoundation.org>
+Subject: [PATCH 6.12 305/307] mm: perform all memfd seal checks in a single place
+Date: Sun,  7 Jun 2026 12:01:42 +0200
+Message-ID: <20260607095738.958359410@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
 References: <20260607095727.647295505@linuxfoundation.org>
@@ -52,137 +59,296 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-[ Upstream commit bab8c6fb5af8df7e753d196c1262cb78e92ca872 ]
+[ Upstream commit fa00b8ef1803fe133b4897c25227aa0d298dd093 ]
 
-adm1266_gpio_get(), adm1266_gpio_get_multiple(), and
-adm1266_gpio_dbg_show() all issue PMBus reads against the device but
-none of them take pmbus_lock.  The pmbus_core framework holds
-pmbus_lock around its own multi-transaction sequences (notably the
-"set PAGE, then read paged register" pattern used by hwmon
-attributes), so an unlocked GPIO accessor can land between a PAGE
-write and the subsequent paged read in another thread and corrupt
-either side's view of the device state machine.
+We no longer actually need to perform these checks in the f_op->mmap()
+hook any longer.
 
-Take pmbus_lock at the top of each of the three accessors via the
-scope-based guard().  The lock is uncontended in the common case and
-adds only a single mutex round-trip per call.
+We already moved the operation which clears VM_MAYWRITE on a read-only
+mapping of a write-sealed memfd in order to work around the restrictions
+imposed by commit 5de195060b2e ("mm: resolve faulty mmap_region() error
+path behaviour").
 
-Fixes: d98dfad35c38 ("hwmon: (pmbus/adm1266) Add support for GPIOs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260518-adm1266-gpio-fixes-v3-6-e425e4f88139@nexthop.ai
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ open-coded each `guard(pmbus_lock)(data->client)` as explicit `pmbus_lock_interruptible()`/`pmbus_unlock()` ]
+There is no reason for us not to simply go ahead and additionally check to
+see if any pre-existing seals are in place here rather than defer this to
+the f_op->mmap() hook.
+
+By doing this we remove more logic from shmem_mmap() which doesn't belong
+there, as well as doing the same for hugetlbfs_file_mmap().  We also
+remove dubious shared logic in mm.h which simply does not belong there
+either.
+
+It makes sense to do these checks at the earliest opportunity, we know
+these are shmem (or hugetlbfs) mappings whose relevant VMA flags will not
+change from the invoking do_mmap() so there is simply no need to wait.
+
+This also means the implementation of further memfd seal flags can be done
+within mm/memfd.c and also have the opportunity to modify VMA flags as
+necessary early in the mapping logic.
+
+[lorenzo.stoakes@oracle.com: fix typos in !memfd inline stub]
+  Link: https://lkml.kernel.org/r/7dee6c5d-480b-4c24-b98e-6fa47dbd8a23@lucifer.local
+Link: https://lkml.kernel.org/r/20241206212846.210835-1-lorenzo.stoakes@oracle.com
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Tested-by: Isaac J. Manjarres <isaacmanjarres@google.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Kalesh Singh <kaleshsingh@google.com>
+Cc: Liam R. Howlett <Liam.Howlett@Oracle.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Jeff Xu <jeffxu@chromium.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 3b041514cb6e ("memfd: deny writeable mappings when implying SEAL_WRITE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/adm1266.c |   40 ++++++++++++++++++++++++++++++++++------
- 1 file changed, 34 insertions(+), 6 deletions(-)
+ fs/hugetlbfs/inode.c  |    5 ----
+ include/linux/memfd.h |   23 ++++++++++----------
+ include/linux/mm.h    |   55 --------------------------------------------------
+ mm/memfd.c            |   44 +++++++++++++++++++++++++++++++++++++++-
+ mm/mmap.c             |   12 ++++++++--
+ mm/shmem.c            |    6 -----
+ 6 files changed, 63 insertions(+), 82 deletions(-)
 
---- a/drivers/hwmon/pmbus/adm1266.c
-+++ b/drivers/hwmon/pmbus/adm1266.c
-@@ -173,7 +173,12 @@ static int adm1266_gpio_get(struct gpio_
- 	else
- 		pmbus_cmd = ADM1266_PDIO_STATUS;
- 
-+	ret = pmbus_lock_interruptible(data->client);
-+	if (ret)
-+		return ret;
-+
- 	ret = i2c_smbus_read_block_data(data->client, pmbus_cmd, read_buf);
-+	pmbus_unlock(data->client);
- 	if (ret < 0)
- 		return ret;
- 	if (ret < 2)
-@@ -195,11 +200,19 @@ static int adm1266_gpio_get_multiple(str
- 	unsigned int gpio_nr;
+--- a/fs/hugetlbfs/inode.c
++++ b/fs/hugetlbfs/inode.c
+@@ -96,7 +96,6 @@ static const struct fs_parameter_spec hu
+ static int hugetlbfs_file_mmap(struct file *file, struct vm_area_struct *vma)
+ {
+ 	struct inode *inode = file_inode(file);
+-	struct hugetlbfs_inode_info *info = HUGETLBFS_I(inode);
+ 	loff_t len, vma_len;
  	int ret;
+ 	struct hstate *h = hstate_file(file);
+@@ -113,10 +112,6 @@ static int hugetlbfs_file_mmap(struct fi
+ 	vm_flags_set(vma, VM_HUGETLB | VM_DONTEXPAND);
+ 	vma->vm_ops = &hugetlb_vm_ops;
  
-+	ret = pmbus_lock_interruptible(data->client);
-+	if (ret)
-+		return ret;
-+
- 	ret = i2c_smbus_read_block_data(data->client, ADM1266_GPIO_STATUS, read_buf);
--	if (ret < 0)
-+	if (ret < 0) {
-+		pmbus_unlock(data->client);
- 		return ret;
--	if (ret < 2)
-+	}
-+	if (ret < 2) {
-+		pmbus_unlock(data->client);
- 		return -EIO;
-+	}
+-	ret = seal_check_write(info->seals, vma);
+-	if (ret)
+-		return ret;
+-
+ 	/*
+ 	 * page based offset in vm_pgoff could be sufficiently large to
+ 	 * overflow a loff_t when converted to byte offset.  This can
+--- a/include/linux/memfd.h
++++ b/include/linux/memfd.h
+@@ -7,7 +7,14 @@
+ #ifdef CONFIG_MEMFD_CREATE
+ extern long memfd_fcntl(struct file *file, unsigned int cmd, unsigned int arg);
+ struct folio *memfd_alloc_folio(struct file *memfd, pgoff_t idx);
+-unsigned int *memfd_file_seals_ptr(struct file *file);
++/*
++ * Check for any existing seals on mmap, return an error if access is denied due
++ * to sealing, or 0 otherwise.
++ *
++ * We also update VMA flags if appropriate by manipulating the VMA flags pointed
++ * to by vm_flags_ptr.
++ */
++int memfd_check_seals_mmap(struct file *file, unsigned long *vm_flags_ptr);
+ #else
+ static inline long memfd_fcntl(struct file *f, unsigned int c, unsigned int a)
+ {
+@@ -17,19 +24,11 @@ static inline struct folio *memfd_alloc_
+ {
+ 	return ERR_PTR(-EINVAL);
+ }
+-
+-static inline unsigned int *memfd_file_seals_ptr(struct file *file)
++static inline int memfd_check_seals_mmap(struct file *file,
++					 unsigned long *vm_flags_ptr)
+ {
+-	return NULL;
++	return 0;
+ }
+ #endif
  
- 	status = read_buf[0] + (read_buf[1] << 8);
+-/* Retrieve memfd seals associated with the file, if any. */
+-static inline unsigned int memfd_file_seals(struct file *file)
+-{
+-	unsigned int *sealsp = memfd_file_seals_ptr(file);
+-
+-	return sealsp ? *sealsp : 0;
+-}
+-
+ #endif /* __LINUX_MEMFD_H */
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -4140,61 +4140,6 @@ void mem_dump_obj(void *object);
+ static inline void mem_dump_obj(void *object) {}
+ #endif
  
-@@ -210,10 +223,14 @@ static int adm1266_gpio_get_multiple(str
- 	}
+-static inline bool is_write_sealed(int seals)
+-{
+-	return seals & (F_SEAL_WRITE | F_SEAL_FUTURE_WRITE);
+-}
+-
+-/**
+- * is_readonly_sealed - Checks whether write-sealed but mapped read-only,
+- *                      in which case writes should be disallowing moving
+- *                      forwards.
+- * @seals: the seals to check
+- * @vm_flags: the VMA flags to check
+- *
+- * Returns whether readonly sealed, in which case writess should be disallowed
+- * going forward.
+- */
+-static inline bool is_readonly_sealed(int seals, vm_flags_t vm_flags)
+-{
+-	/*
+-	 * Since an F_SEAL_[FUTURE_]WRITE sealed memfd can be mapped as
+-	 * MAP_SHARED and read-only, take care to not allow mprotect to
+-	 * revert protections on such mappings. Do this only for shared
+-	 * mappings. For private mappings, don't need to mask
+-	 * VM_MAYWRITE as we still want them to be COW-writable.
+-	 */
+-	if (is_write_sealed(seals) &&
+-	    ((vm_flags & (VM_SHARED | VM_WRITE)) == VM_SHARED))
+-		return true;
+-
+-	return false;
+-}
+-
+-/**
+- * seal_check_write - Check for F_SEAL_WRITE or F_SEAL_FUTURE_WRITE flags and
+- *                    handle them.
+- * @seals: the seals to check
+- * @vma: the vma to operate on
+- *
+- * Check whether F_SEAL_WRITE or F_SEAL_FUTURE_WRITE are set; if so, do proper
+- * check/handling on the vma flags.  Return 0 if check pass, or <0 for errors.
+- */
+-static inline int seal_check_write(int seals, struct vm_area_struct *vma)
+-{
+-	if (!is_write_sealed(seals))
+-		return 0;
+-
+-	/*
+-	 * New PROT_WRITE and MAP_SHARED mmaps are not allowed when
+-	 * write seals are active.
+-	 */
+-	if ((vma->vm_flags & VM_SHARED) && (vma->vm_flags & VM_WRITE))
+-		return -EPERM;
+-
+-	return 0;
+-}
+-
+ #ifdef CONFIG_ANON_VMA_NAME
+ int madvise_set_anon_name(struct mm_struct *mm, unsigned long start,
+ 			  unsigned long len_in,
+--- a/mm/memfd.c
++++ b/mm/memfd.c
+@@ -197,7 +197,7 @@ static int memfd_wait_for_pins(struct ad
+ 	return error;
+ }
  
- 	ret = i2c_smbus_read_block_data(data->client, ADM1266_PDIO_STATUS, read_buf);
--	if (ret < 0)
-+	if (ret < 0) {
-+		pmbus_unlock(data->client);
- 		return ret;
--	if (ret < 2)
-+	}
-+	if (ret < 2) {
-+		pmbus_unlock(data->client);
- 		return -EIO;
-+	}
- 
- 	status = read_buf[0] + (read_buf[1] << 8);
- 
-@@ -222,6 +239,8 @@ static int adm1266_gpio_get_multiple(str
- 			set_bit(gpio_nr, bits);
- 	}
- 
-+	pmbus_unlock(data->client);
-+
+-unsigned int *memfd_file_seals_ptr(struct file *file)
++static unsigned int *memfd_file_seals_ptr(struct file *file)
+ {
+ 	if (shmem_file(file))
+ 		return &SHMEM_I(file_inode(file))->seals;
+@@ -354,6 +354,48 @@ static int check_sysctl_memfd_noexec(uns
  	return 0;
  }
  
-@@ -236,11 +255,16 @@ static void adm1266_gpio_dbg_show(struct
- 	int ret;
- 	int i;
- 
-+	if (pmbus_lock_interruptible(data->client))
-+		return;
++static inline bool is_write_sealed(unsigned int seals)
++{
++	return seals & (F_SEAL_WRITE | F_SEAL_FUTURE_WRITE);
++}
 +
- 	for (i = 0; i < ADM1266_GPIO_NR; i++) {
- 		write_cmd = adm1266_gpio_mapping[i][1];
- 		ret = adm1266_pmbus_block_xfer(data, ADM1266_GPIO_CONFIG, 1, &write_cmd, read_buf);
--		if (ret != 2)
-+		if (ret != 2) {
-+			pmbus_unlock(data->client);
- 			return;
-+		}
- 
- 		gpio_config = read_buf[0];
- 		seq_puts(s, adm1266_names[i]);
-@@ -262,8 +286,10 @@ static void adm1266_gpio_dbg_show(struct
- 
- 	write_cmd = 0xFF;
- 	ret = adm1266_pmbus_block_xfer(data, ADM1266_PDIO_CONFIG, 1, &write_cmd, read_buf);
--	if (ret != 32)
-+	if (ret != 32) {
-+		pmbus_unlock(data->client);
- 		return;
-+	}
- 
- 	for (i = 0; i < ADM1266_PDIO_NR; i++) {
- 		seq_puts(s, adm1266_names[ADM1266_GPIO_NR + i]);
-@@ -286,6 +312,8 @@ static void adm1266_gpio_dbg_show(struct
- 
- 		seq_puts(s, ")\n");
- 	}
++static int check_write_seal(unsigned long *vm_flags_ptr)
++{
++	unsigned long vm_flags = *vm_flags_ptr;
++	unsigned long mask = vm_flags & (VM_SHARED | VM_WRITE);
 +
-+	pmbus_unlock(data->client);
- }
++	/* If a private matting then writability is irrelevant. */
++	if (!(mask & VM_SHARED))
++		return 0;
++
++	/*
++	 * New PROT_WRITE and MAP_SHARED mmaps are not allowed when
++	 * write seals are active.
++	 */
++	if (mask & VM_WRITE)
++		return -EPERM;
++
++	/*
++	 * This is a read-only mapping, disallow mprotect() from making a
++	 * write-sealed mapping writable in future.
++	 */
++	*vm_flags_ptr &= ~VM_MAYWRITE;
++
++	return 0;
++}
++
++int memfd_check_seals_mmap(struct file *file, unsigned long *vm_flags_ptr)
++{
++	int err = 0;
++	unsigned int *seals_ptr = memfd_file_seals_ptr(file);
++	unsigned int seals = seals_ptr ? *seals_ptr : 0;
++
++	if (is_write_sealed(seals))
++		err = check_write_seal(vm_flags_ptr);
++
++	return err;
++}
++
+ SYSCALL_DEFINE2(memfd_create,
+ 		const char __user *, uname,
+ 		unsigned int, flags)
+--- a/mm/mmap.c
++++ b/mm/mmap.c
+@@ -369,8 +369,8 @@ unsigned long do_mmap(struct file *file,
  
- static int adm1266_config_gpio(struct adm1266_data *data)
+ 	if (file) {
+ 		struct inode *inode = file_inode(file);
+-		unsigned int seals = memfd_file_seals(file);
+ 		unsigned long flags_mask;
++		int err;
+ 
+ 		if (!file_mmap_ok(file, inode, pgoff, len))
+ 			return -EOVERFLOW;
+@@ -410,8 +410,6 @@ unsigned long do_mmap(struct file *file,
+ 			vm_flags |= VM_SHARED | VM_MAYSHARE;
+ 			if (!(file->f_mode & FMODE_WRITE))
+ 				vm_flags &= ~(VM_MAYWRITE | VM_SHARED);
+-			else if (is_readonly_sealed(seals, vm_flags))
+-				vm_flags &= ~VM_MAYWRITE;
+ 			fallthrough;
+ 		case MAP_PRIVATE:
+ 			if (!(file->f_mode & FMODE_READ))
+@@ -431,6 +429,14 @@ unsigned long do_mmap(struct file *file,
+ 		default:
+ 			return -EINVAL;
+ 		}
++
++		/*
++		 * Check to see if we are violating any seals and update VMA
++		 * flags if necessary to avoid future seal violations.
++		 */
++		err = memfd_check_seals_mmap(file, &vm_flags);
++		if (err)
++			return (unsigned long)err;
+ 	} else {
+ 		switch (flags & MAP_TYPE) {
+ 		case MAP_SHARED:
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -2820,12 +2820,6 @@ out_nomem:
+ static int shmem_mmap(struct file *file, struct vm_area_struct *vma)
+ {
+ 	struct inode *inode = file_inode(file);
+-	struct shmem_inode_info *info = SHMEM_I(inode);
+-	int ret;
+-
+-	ret = seal_check_write(info->seals, vma);
+-	if (ret)
+-		return ret;
+ 
+ 	file_accessed(file);
+ 	/* This is anonymous shared memory if it is unlinked at the time of mmap */
 
 
