@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8388617B418;
-	Sun,  7 Jun 2026 10:14:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC83117B418;
+	Sun,  7 Jun 2026 10:14:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827291; cv=none; b=r9plO/EfaHN8Fnt9FUdcu8Dmq/5NHzg2nTDNsvBMfRtFER854fOIYKvFCOC4XAHbDhrKUK0Zu3FnWX4U2bnZFy9wtr++54wKDdYfTrTfkYrnBLOIiF5lN1OluhmgqIUO3yR9fvVM1EwxC/6axMhVAK8ftXkKFJnOtQw1AjsyJ9A=
+	t=1780827294; cv=none; b=D/t/M7GNTrqggNTxsNaZ1h1OOLR9hqYEDXtFx0JJQMLVpYhCKM0mFAZ32ZoTOcilU0F84pBNf1d8U62u8jx50Yq0yWy1cKCu+rwJg6qVklNe/ueU6UyiNliq2t8964oJh1DUg0g8aw1ZguwfSfHaCbtEPOsuKQJXozYKIHvk+4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827291; c=relaxed/simple;
-	bh=2bcFumZSIjiw9DLOgrepSNgSCNYTgFWDDq6vNt1ClSU=;
+	s=arc-20240116; t=1780827294; c=relaxed/simple;
+	bh=gtxzafyjOVjV7AtGzdwT1vjkkf+wmBDf7D2T68j/FtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s7+eE3FM86n51VPLSyl1+c21VfftoVmOZy+mC+QuqHlEVp4Sh60xQ+y0xbzh4jV0F9kFj6yufKu/QKyQqIeaTV0Zgwwu5ZeDqdTfyJ5MqlPC/fzRRF8ZFxD347cxDzMrSdU0ZNSxv8Ntx309uGs6joPVlOJgKUb63M+OaKiZHxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yYMWSbyC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=niPPSgSenUNE/uvoY3YEaArpDZq3MgRYvALmkVymj9s36xtbza3jj1VHHfgw6mSUPPBpavcnuFtoyE7F897qn3CBoep3pE6XTV7He+sN0loOcPt3myuR/bsqYh8WWkjFkYqCg7WbcQUTnbJKW10zo+fGOyNJCimjv5HSIXB36Ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pe/Ry3Ui; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYMWSbyC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2DD11F00893;
-	Sun,  7 Jun 2026 10:14:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pe/Ry3Ui"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5C91F00893;
+	Sun,  7 Jun 2026 10:14:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827290;
-	bh=QC7ZCjuL+/jK3FWLHgZw9cNKhb4HSVySB0FryRPRURM=;
+	s=korg; t=1780827293;
+	bh=XudECG4Jnvkg85i5R8vwircVFGyU74VhRcwsBggjHSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yYMWSbyCm/fYo2NoaOvdGwcv4BkBhVKScJqPIc4YDqY+Z3A1FW0IZkqkLD1PTCM/d
-	 Luvuctmy/sjX9Tho16s6GSjNthzoUNLmMdQnWStNGhsQXQUsBRujreYwee16zOd3BK
-	 Kh+8k5avwjxwk1vKIFW8fT866LB54dKzcoRTe2TU=
+	b=Pe/Ry3UiK1vfK/bsakRFoLhNhqbX72/o41PT6aIJXccC54Hd76db5pXmdBYG841wr
+	 JotW8dBpbAlv2/kRuBv8xj5+LOAz4lEDGZIGHt04b1OtxwlKvtxzBqJGpTMDpwU4MF
+	 Q7zpABD1bPhwGicbiJz77x/YqjaeJUie1mBQTC2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Liu <will@willsroot.io>,
-	Savino Dicanosa <savy@syst3mfailure.io>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot+8ed98cbd0161632bce95@syzkaller.appspotmail.com,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 080/332] net/sched: fix packet loop on netem when duplicate is on
-Date: Sun,  7 Jun 2026 11:57:29 +0200
-Message-ID: <20260607095731.081949281@linuxfoundation.org>
+Subject: [PATCH 6.18 061/315] bonding: refuse to enslave CAN devices
+Date: Sun,  7 Jun 2026 11:57:28 +0200
+Message-ID: <20260607095729.844750000@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,73 +49,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 9552b11e3edabc97cfcd9f29103d5afbce7ae183 ]
+[ Upstream commit 8ba68464e4787b6a7ec938826e16124df20fd23d ]
 
-When netem duplicates a packet it re-enqueues the copy at the root qdisc.
-If another netem sits in the tree the copy can be duplicated
-again, recursing until the stack or memory is exhausted.
+syzbot reported a kernel paging request crash in
+can_rx_unregister() inside net/can/af_can.c. The crash occurs
+because a virtual CAN device (vxcan) is being enslaved to a
+bonding master.
 
-The original duplication guard temporarily zeroed q->duplicate around
-the re-enqueue, but that does not cover all cases because it is
-per-qdisc state shared across all concurrent enqueue paths
-and is not safe without additional locking.
+During the enslavement process, the bonding driver mutates
+and modifies the network device states to fit an Ethernet-like
+aggregation model. However, CAN devices operate on a completely
+different Layer 2 architecture, relying on the CAN mid-layer
+private data structure (can_ml_priv) instead of standard
+Ethernet structures. Since bonding does not initialize or
+maintain these CAN structures, subsequent operations on the
+half-enslaved interface (such as closing associated sockets
+via isotp_release) lead to a null-pointer dereference when
+accessing the CAN receiver lists.
 
-Use the skb tc_depth field introduced in an earlier patch:
- - increment it on the duplicate before re-enqueue
- - skip duplication for any skb whose tc_depth is already non-zero.
+Bonding CAN interfaces is architecturally invalid as CAN lacks
+MAC addresses, ARP capabilities, and standard Ethernet
+link-layer mechanisms. While generic loopback devices are
+blocked globally in net/core/dev.c, virtual CAN devices
+bypass this check because they do not carry the IFF_LOOPBACK
+flag, despite acting as local software-loopbacks.
 
-This marks the packet itself rather than mutating qdisc state,
-therefore it is safe regardless of tree topology or concurrency.
+Fix this by explicitly blocking network devices of type
+ARPHRD_CAN from being enslaved at the very beginning of
+bond_enslave(). This prevents illegal state mutations,
+eliminates the resulting KASAN crashes, and avoids potential
+memory leaks from incomplete socket cleanups.
 
-Fixes: 0afb51e72855 ("[PKT_SCHED]: netem: reinsert for duplication")
-Reported-by: William Liu <will@willsroot.io>
-Reported-by: Savino Dicanosa <savy@syst3mfailure.io>
-Closes: https://lore.kernel.org/netdev/8DuRWwfqjoRDLDmBMlIfbrsZg9Gx50DHJc1ilxsEBNe2D6NMoigR_eIRIG0LOjMc3r10nUUZtArXx4oZBIdUfZQrwjcQhdinnMis_0G7VEk=@willsroot.io/
-Co-developed-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Reviewed-by: William Liu <will@willsroot.io>
-Reviewed-by: Stephen Hemminger <stephen@networkplumber.org>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260525122556.973584-5-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+As the CAN support has been added a long time after bonding
+the Fixes-tag points to the introduction of ARPHRD_CAN that
+would have needed a specific handling in bonding_main.c.
+
+Fixes: cd05acfe65ed ("[CAN]: Allocate protocol numbers for PF_CAN")
+Reported-by: syzbot+8ed98cbd0161632bce95@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=8ed98cbd0161632bce95
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Link: https://patch.msgid.link/20260526-bonding-candev-v1-1-ba1df400918a@hartkopp.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/net/bonding/bond_main.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index d97acd2f392346..17a79fe2f0911d 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -461,7 +461,8 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	skb->prev = NULL;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 8b1422dda4c080..2132acff2e52c4 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1860,6 +1860,12 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
+ 	struct sockaddr_storage ss;
+ 	int res = 0, i;
  
- 	/* Random duplication */
--	if (q->duplicate && q->duplicate >= get_crandom(&q->dup_cor, &q->prng))
-+	if (q->duplicate && skb->tc_depth == 0 &&
-+	    q->duplicate >= get_crandom(&q->dup_cor, &q->prng))
- 		++count;
- 
- 	/* Drop packet? */
-@@ -540,11 +541,9 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	 */
- 	if (skb2) {
- 		struct Qdisc *rootq = qdisc_root_bh(sch);
--		u32 dupsave = q->duplicate; /* prevent duplicating a dup... */
- 
--		q->duplicate = 0;
-+		skb2->tc_depth++; /* prevent duplicating a dup... */
- 		rootq->enqueue(skb2, rootq, to_free);
--		q->duplicate = dupsave;
- 		skb2 = NULL;
- 	}
- 
++	if (slave_dev->type == ARPHRD_CAN) {
++		BOND_NL_ERR(bond_dev, extack,
++			    "CAN devices cannot be enslaved");
++		return -EPERM;
++	}
++
+ 	if (slave_dev->flags & IFF_MASTER &&
+ 	    !netif_is_bond_master(slave_dev)) {
+ 		BOND_NL_ERR(bond_dev, extack,
 -- 
 2.53.0
 
