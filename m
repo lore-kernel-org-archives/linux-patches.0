@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2DE2D8378;
-	Sun,  7 Jun 2026 10:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F1D2DFF04;
+	Sun,  7 Jun 2026 10:49:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829386; cv=none; b=Q2gGI6g1U5xfFXN5ZtutDPBhFK3R5iVHYbBApZx6sv7uohsz4xAoaDSkBG/rllXnOhYNbaArQ28b4KKerfhViHCTp3z5zP7TtNueQEa4UnMaon0OL7ZwwoXVY6djspoXUvbMRDLAqLRmdtP3nKk+/vuTuCQw6RHmgVT0hszoCjo=
+	t=1780829390; cv=none; b=ipwZVRgptV6y7HeTM/QtOyaJkOYWT/RY4O8lgkkFLg4YAO+jKkevGd/cFCz5mel5hqfV539OCsunRMIvw6bd0ORjjTZfABgUWtbCdCyeOwpIX5np6nBUcL/79yHBUSfs0QmNqMkSvstuxc4L/xtjDBOJemfYEBxvsYoUXOq+MPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829386; c=relaxed/simple;
-	bh=HKcSigawEBWCb+TGNmRCIWZRueMM3+cqUhGcASHKerg=;
+	s=arc-20240116; t=1780829390; c=relaxed/simple;
+	bh=mPnKbLh5bXQnS7O8xbYqVz5uB4A7rxuTS/YzYFIGAwk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KTqwnN6RjBlaDtCpUZo5P6M+1g+TRlob1sVLop5IXVN+1JwAX3Yb8H7iCl42mb66UJ7m2u/DTuTaFemlQs0JZsJu+67ZnU95bXKTvwRlyAiXRQUpHz8zNpbnior/wxnikn3KgZiEzjfhnlMCkJsL59fjEXwmMvBevKKdbSRMIyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RbU2Cqd6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YQV9emYFuENx/qz/T/enoWC5dzKGTcrE6ajFE4/Py4SVCmBOsTqOTIeBwdKaJ3jebn42EUoI0Xpvi/g/KNTqPiERbnSAW5tyUC+9vI742QdIXD3Gf0gI56hTCJLSnKl6aTS13uz+t5kFI9KX8Dgc3N/pdbL4SJ/osd30D53F/HU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1fYwR5Ye; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RbU2Cqd6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0AD01F00893;
-	Sun,  7 Jun 2026 10:49:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1fYwR5Ye"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CECBA1F00893;
+	Sun,  7 Jun 2026 10:49:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829385;
-	bh=lAetAv5+dx7Ssy6RKMjarTH5+1k1wG7/ep7SVAoQShI=;
+	s=korg; t=1780829389;
+	bh=ff2MNLvD1ZY5b3smaIsvt8M6WtIxufWzunk2P2axQn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RbU2Cqd6DjQQcybiY865RENNw7zOxm2P20wqYjvAkLqoiEv8P9SVlYX8cLVHp9xcP
-	 yTlKbTs5kMlW+qBRus7J6SUW2Il6mPnp7GzDNWlZZo/p1g53SQZ9+aBQbnpND3+0en
-	 rACclLJCe1qspoOQJkzea/FIoFksUK93WENMuBs4=
+	b=1fYwR5YeMM9TvHdUomRt9HZbgo8nrXVkx0lepYF5bLR29Y2fclRdFKKJ85drCrOSQ
+	 AE21TlV/mCkki6x2qUWwjk6qC9B7Pisb+4Zx2C54lEqxcN7L/lubW5V3BocWW00gbj
+	 Hn0D0L6rHJtr23A9K6hZ6INa5Ae4iKDB/GhP4vLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.0 267/332] USB: serial: cypress_m8: validate interrupt packet headers
-Date: Sun,  7 Jun 2026 12:00:36 +0200
-Message-ID: <20260607095737.845114431@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>
+Subject: [PATCH 6.18 243/315] usb: gadget: f_hid: fix device reference leak in hidg_alloc()
+Date: Sun,  7 Jun 2026 12:00:30 +0200
+Message-ID: <20260607095736.487151128@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,90 +47,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 9f9bfc80c67f35a275820da7e83a35dface08281 upstream.
+commit 4f88d65def6f3c90121601b4f62a4c967f3063a6 upstream.
 
-cypress_read_int_callback() parses the interrupt-in buffer according to
-the selected Cypress packet format. Format 1 has a two-byte status/count
-header and format 2 has a one-byte combined status/count header. The
-usb-serial core sizes the interrupt-in buffer from the endpoint
-descriptor's wMaxPacketSize, and successful interrupt transfers can
-complete short when URB_SHORT_NOT_OK is not set.
+hidg_alloc() initializes hidg->dev with device_initialize() before
+calling dev_set_name(). If dev_set_name() fails, the function currently
+jumps to err_unlock and returns without calling put_device().
 
-Check that the completed packet contains the selected header before
-reading it. Malformed short reports are ignored and the interrupt URB is
-resubmitted through the existing retry path, preventing out-of-bounds
-header-byte reads.
+This leaves the device reference unbalanced and prevents hidg_release()
+from being called. Calling put_device() here is also safe, since
+hidg_release() only frees resources owned by hidg.
 
-KASAN report as below:
-KASAN slab-out-of-bounds in cypress_read_int_callback+0x240/0x7f0
-Read of size 1
-Call trace:
-  cypress_read_int_callback() (drivers/usb/serial/cypress_m8.c:1009)
-  __usb_hcd_giveback_urb()
-  dummy_timer()
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
 
-Fixes: 3416eaa1f8f8 ("USB: cypress_m8: Packet format is separate from characteristic size")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Fixes: 3416eaa1f8f8 ("USB: cypress_m8: Packet format is separate from characteristic size")
-Cc: stable@vger.kernel.org	# 2.6.26
-[ johan: use constants in header length sanity checks ]
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Route the dev_set_name() failure path through err_put_device so the
+device reference is dropped properly.
+
+Fixes: 89ff3dfac604 ("usb: gadget: f_hid: fix f_hidg lifetime vs cdev")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Johan Hovold johan@kernel.org
+Link: https://patch.msgid.link/20260413142119.2977716-1-lgs201920130244@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/cypress_m8.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_hid.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/usb/serial/cypress_m8.c
-+++ b/drivers/usb/serial/cypress_m8.c
-@@ -1025,8 +1025,8 @@ static void cypress_read_int_callback(st
- 	char tty_flag = TTY_NORMAL;
- 	int bytes = 0;
- 	int result;
--	int i = 0;
- 	int status = urb->status;
-+	int i;
+--- a/drivers/usb/gadget/function/f_hid.c
++++ b/drivers/usb/gadget/function/f_hid.c
+@@ -1621,7 +1621,7 @@ static struct usb_function *hidg_alloc(s
+ 	hidg->dev.devt = MKDEV(major, opts->minor);
+ 	ret = dev_set_name(&hidg->dev, "hidg%d", opts->minor);
+ 	if (ret)
+-		goto err_unlock;
++		goto err_put_device;
  
- 	switch (status) {
- 	case 0: /* success */
-@@ -1064,22 +1064,32 @@ static void cypress_read_int_callback(st
+ 	hidg->bInterfaceSubClass = opts->subclass;
+ 	hidg->bInterfaceProtocol = opts->protocol;
+@@ -1658,7 +1658,6 @@ static struct usb_function *hidg_alloc(s
  
- 	spin_lock_irqsave(&priv->lock, flags);
- 	result = urb->actual_length;
-+	i = 0;
- 	switch (priv->pkt_fmt) {
- 	default:
- 	case packet_format_1:
- 		/* This is for the CY7C64013... */
-+		if (result < 2)
-+			break;
- 		priv->current_status = data[0] & 0xF8;
- 		bytes = data[1] + 2;
- 		i = 2;
- 		break;
- 	case packet_format_2:
- 		/* This is for the CY7C63743... */
-+		if (result < 1)
-+			break;
- 		priv->current_status = data[0] & 0xF8;
- 		bytes = (data[0] & 0x07) + 1;
- 		i = 1;
- 		break;
- 	}
- 	spin_unlock_irqrestore(&priv->lock, flags);
-+	if (i == 0) {
-+		dev_dbg(dev, "%s - short packet received: %d bytes\n",
-+			__func__, result);
-+		goto continue_read;
-+	}
- 	if (result < bytes) {
- 		dev_dbg(dev,
- 			"%s - wrong packet size - received %d bytes but packet said %d bytes\n",
+ err_put_device:
+ 	put_device(&hidg->dev);
+-err_unlock:
+ 	mutex_unlock(&opts->lock);
+ 	return ERR_PTR(ret);
+ }
 
 
