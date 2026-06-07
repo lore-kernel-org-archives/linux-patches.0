@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF4B12CDA5;
-	Sun,  7 Jun 2026 10:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B9C12CDA5;
+	Sun,  7 Jun 2026 10:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829929; cv=none; b=fd968Qbri45NMPWWw8y8uVoK/dNn42Fhke3caPO7n4VHWFhyFWLpn3seYSHxIDw8nUZEZ4UVpxBb37nljaw4yxBvaZdI5x113pcwkWZDNFvYiFMWXM8Hhv5d6SapMJO4kQ/Wh0zbQ+T61crS4bbXGNj2rDRM1vRqDQ45Cb0Q208=
+	t=1780829933; cv=none; b=q05y9BO2kLnmhxxOenpiaN2wc7RvAIBFAtMqZ2vNdO1Cv6mR0XlW7Jxt8uN5uwf4N0LxA9O2oxBho2TpK/rGSvBFXBIcWgYKDhD2dFTRXi2VhhJCmf7T7Nt38sFEaKIK/AuBcECFTJ8lJ8aCN61/HyfZ2Rt4tCzmVoe6E3oXQkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829929; c=relaxed/simple;
-	bh=zE9dlm83pib44OjBCTdDJFlEfMcY5EPCL3lJFgSJWXU=;
+	s=arc-20240116; t=1780829933; c=relaxed/simple;
+	bh=yhsMyMzMgzsRtR6pRa3hAF5k7wxAxXBTReuPiLle9zE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OkvhmFiMYR4U2RExutMwJxxERqopL19ZcZfCukzis7hQyg9gVA0oSVfhiB/X29GNoPeIr/V5u3z/3zJS/ah1WacR+KHnJmwpML8mC/JMxDNlzEdd/CerarupWL8IlTNkE23dWH7pb1eRUSERrpFoOh/0CBTWgssqHgmF2Ue4Roc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnQFgVAJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h8cOjQr+rajgNuEpRirvdhilTPACrzxmSy++zztSdhHldmRBKYdMUdBI1nUDJ2tipylfU0NvALP7XzvC5LAfk2rZ4X8Srkm5RyBxf0hcblJlcxV7QRWG24AGIh6vQUOeetGiyBEQ0iq7QfqKwH+Gxgu52YENdF1TgVRfOJmP1/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhFJSVBv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnQFgVAJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53AD61F00893;
-	Sun,  7 Jun 2026 10:58:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhFJSVBv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC701F00893;
+	Sun,  7 Jun 2026 10:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829928;
-	bh=0OUjMCi510MtCiqAF2CXL6pOdhBU2plYyUvgX9s7gVM=;
+	s=korg; t=1780829931;
+	bh=fuvvDGZtqZ3+DfXN6LkrH8S+6bfc7XjPBF72vlypw2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wnQFgVAJmKYrN6uoNbX2smFKdwazlFo/MUfWSKxQjAs9X2QK2VmJ2v77CNDmwBFkh
-	 e85D9KtO9HzHG3vAxczUvfAXb7HZqBvnmWIzk6vbaNFT6xGhUiqQ2P2MZbDqcgkab7
-	 bVkDNfRpxlw6OgtRNnB++nh3vfaU1YkAT5arYvPM=
+	b=zhFJSVBvGqcsqGNSyaS1lfIjoExJ5vI+A/l/pgpnRg2pLclxNzk6U5aJT+2HljYC0
+	 bH64mx8TeJZx+Q7aC7Dsl2pkMi8CC1ThN9kutgvCG2TaZ9NGkEW6FqIWccHUerQWNa
+	 cXhObtcItuWh8/2z7HJY4pk7AegG0/fkK6DB7wqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Aleksandr Nogikh <nogikh@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Dmitry Vyukov <dvyukov@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 327/332] hwmon: (pmbus) Add support for guarded PMBus lock
-Date: Sun,  7 Jun 2026 12:01:36 +0200
-Message-ID: <20260607095740.144188894@linuxfoundation.org>
+Subject: [PATCH 6.12 267/307] x86/kexec: Disable KCOV instrumentation after load_segments()
+Date: Sun,  7 Jun 2026 12:01:04 +0200
+Message-ID: <20260607095737.512582084@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,68 +48,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-[ Upstream commit 1814f4d3ff358277a5b6957e7f133c2812dc80ec ]
+[ Upstream commit 917e3ad3321e75ca0223d5ccf26ceda116aa51e1 ]
 
-Add support for guard(pmbus_lock)() and scoped_guard(pmbus_lock)()
-to be able to simplify the PMBus code.
+The load_segments() function changes segment registers, invalidating GS base
+(which KCOV relies on for per-cpu data). When CONFIG_KCOV is enabled, any
+subsequent instrumented C code call (e.g. native_gdt_invalidate()) begins
+crashing the kernel in an endless loop.
 
-Also introduce pmbus_lock() as pre-requisite for supporting
-guard().
+To reproduce the problem, it's sufficient to do kexec on a KCOV-instrumented
+kernel:
 
-Reviewed-by: Sanman Pradhan <psanman@juniper.net>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 4e4af55aaca7 ("hwmon: (pmbus/adm1266) serialize sequencer_state debugfs read with pmbus_lock")
+  $ kexec -l /boot/otherKernel
+  $ kexec -e
+
+The real-world context for this problem is enabling crash dump collection in
+syzkaller. For this, the tool loads a panic kernel before fuzzing and then
+calls makedumpfile after the panic. This workflow requires both CONFIG_KEXEC
+and CONFIG_KCOV to be enabled simultaneously.
+
+Adding safeguards directly to the KCOV fast-path (__sanitizer_cov_trace_pc())
+is also undesirable as it would introduce an extra performance overhead.
+
+Disabling instrumentation for the individual functions would be too fragile,
+so disable KCOV instrumentation for the entire machine_kexec_64.c and
+physaddr.c. If coverage-guided fuzzing ever needs these components in the
+future, other approaches should be considered.
+
+The problem is not relevant for 32 bit kernels as CONFIG_KCOV is not supported
+there.
+
+  [ bp: Space out comment for better readability. ]
+
+Fixes: 0d345996e4cb ("x86/kernel: increase kcov coverage under arch/x86/kernel folder")
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Dmitry Vyukov <dvyukov@google.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260325154825.551191-1-nogikh@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/pmbus.h      |    5 +++++
- drivers/hwmon/pmbus/pmbus_core.c |    8 ++++++++
- 2 files changed, 13 insertions(+)
+ arch/x86/kernel/Makefile | 14 ++++++++++++++
+ arch/x86/mm/Makefile     |  2 ++
+ 2 files changed, 16 insertions(+)
 
---- a/drivers/hwmon/pmbus/pmbus.h
-+++ b/drivers/hwmon/pmbus/pmbus.h
-@@ -10,6 +10,7 @@
- #define PMBUS_H
+diff --git a/arch/x86/kernel/Makefile b/arch/x86/kernel/Makefile
+index f42c0903ef86d4..5f58b5a38cac17 100644
+--- a/arch/x86/kernel/Makefile
++++ b/arch/x86/kernel/Makefile
+@@ -44,6 +44,20 @@ KCOV_INSTRUMENT_unwind_orc.o				:= n
+ KCOV_INSTRUMENT_unwind_frame.o				:= n
+ KCOV_INSTRUMENT_unwind_guess.o				:= n
  
- #include <linux/bitops.h>
-+#include <linux/cleanup.h>
- #include <linux/regulator/driver.h>
++# Disable KCOV to prevent crashes during kexec: load_segments() invalidates
++# the GS base, which KCOV relies on for per-CPU data.
++#
++# As KCOV and KEXEC compatibility should be preserved (e.g. syzkaller is
++# using it to collect crash dumps during kernel fuzzing), disabling
++# KCOV for KEXEC kernels is not an option. Selectively disabling KCOV
++# instrumentation for individual affected functions can be fragile, while
++# adding more checks to KCOV would slow it down.
++#
++# As a compromise solution, disable KCOV instrumentation for the whole
++# source code file. If its coverage is ever needed, other approaches
++# should be considered.
++KCOV_INSTRUMENT_machine_kexec_64.o			:= n
++
+ CFLAGS_head32.o := -fno-stack-protector
+ CFLAGS_head64.o := -fno-stack-protector
+ CFLAGS_irq.o := -I $(src)/../include/asm/trace
+diff --git a/arch/x86/mm/Makefile b/arch/x86/mm/Makefile
+index 690fbf48e8538b..60a53baa042793 100644
+--- a/arch/x86/mm/Makefile
++++ b/arch/x86/mm/Makefile
+@@ -5,6 +5,8 @@ KCOV_INSTRUMENT_mem_encrypt.o		:= n
+ KCOV_INSTRUMENT_mem_encrypt_amd.o	:= n
+ KCOV_INSTRUMENT_mem_encrypt_identity.o	:= n
+ KCOV_INSTRUMENT_pgprot.o		:= n
++# See the "Disable KCOV" comment in arch/x86/kernel/Makefile.
++KCOV_INSTRUMENT_physaddr.o		:= n
  
- /*
-@@ -563,7 +564,11 @@ int pmbus_get_fan_rate_device(struct i2c
- int pmbus_get_fan_rate_cached(struct i2c_client *client, int page, int id,
- 			      enum pmbus_fan_mode mode);
- int pmbus_lock_interruptible(struct i2c_client *client);
-+void pmbus_lock(struct i2c_client *client);
- void pmbus_unlock(struct i2c_client *client);
-+
-+DEFINE_GUARD(pmbus_lock, struct i2c_client *, pmbus_lock(_T), pmbus_unlock(_T))
-+
- int pmbus_update_fan(struct i2c_client *client, int page, int id,
- 		     u8 config, u8 mask, u16 command);
- struct dentry *pmbus_get_debugfs_dir(struct i2c_client *client);
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -3871,6 +3871,14 @@ struct dentry *pmbus_get_debugfs_dir(str
- }
- EXPORT_SYMBOL_NS_GPL(pmbus_get_debugfs_dir, "PMBUS");
- 
-+void pmbus_lock(struct i2c_client *client)
-+{
-+	struct pmbus_data *data = i2c_get_clientdata(client);
-+
-+	mutex_lock(&data->update_lock);
-+}
-+EXPORT_SYMBOL_NS_GPL(pmbus_lock, "PMBUS");
-+
- int pmbus_lock_interruptible(struct i2c_client *client)
- {
- 	struct pmbus_data *data = i2c_get_clientdata(client);
+ KASAN_SANITIZE_mem_encrypt.o		:= n
+ KASAN_SANITIZE_mem_encrypt_amd.o	:= n
+-- 
+2.53.0
+
 
 
