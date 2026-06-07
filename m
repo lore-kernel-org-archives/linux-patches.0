@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A6B2D3A69;
-	Sun,  7 Jun 2026 10:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DCE31E842;
+	Sun,  7 Jun 2026 10:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828274; cv=none; b=GfZzDW5V0QPD8j6UhS+9k1p3L2fgwCCWbolTa4baISte+W9PgG49j2JGiAEDMhUtUHcNnu7oSf6LFkXuCsM0jC+bGcUEza1NRdfoC0L83Ng3A4o9rhnYaz4G7/Ewu9m7EXs/r9fGUyyUt6pucL3XvhfKlPre0R0bR40Db9AnRdg=
+	t=1780828278; cv=none; b=V1aw5u0ueYb+9qFXRzFlx3UnKbXHT6Kcss95LFQ+iYzkWXzl+9PFBLq1cXNfD8suYSlAfDvvYQ6VUyPA5PtSGUo/QwnqEbteUrofPiQCkEL48x4k5MwSC/hBd1u1R0FCCV+moBCs6ly5s4Gg8nO9fgxMzqdw5m1ShIlDGja3ucE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828274; c=relaxed/simple;
-	bh=xIKoVwr3Di9/By7Z9iQUhGja/P/AmL9kldtJfb941Vg=;
+	s=arc-20240116; t=1780828278; c=relaxed/simple;
+	bh=MA1c6AGatPpN3nlemQ+bWmO5Qvx6s6KF1AzKyJTHPzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qmCZPCT/JvhQurSNgxaNnEbHCDtL2Lb/x8goqv6rw2AmC3M/OLbScm86mCKN/frhfvKWB58w3bZ40UabJkLKHL4ozh0Bj03nhjP4vUiYcXAXzj16GJlZIK9xYQ38UocPmVe+JqUR4pmkkyWx+EiZknqkKbSwsSYaloRqvOS3ZSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0I9LtI3G; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q71HVQS0wwtj/rmilifugs4P1uN5hhk7HyzLktkYMd9aud57/Tjq2QEw3VhWcay3e9aV4M9okKyk7n9BBkxCe9HoflArLfI1upTVZmaDTviSfLyEdlW3nBGMLhBEr2xmH+JILl2RO/13Fs3eLPaakin/E4slaZ/8KMpWqTteeZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hb99d3c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0I9LtI3G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC4BD1F00893;
-	Sun,  7 Jun 2026 10:31:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hb99d3c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B2B1F00893;
+	Sun,  7 Jun 2026 10:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828273;
-	bh=KCT9grxKy3BAXqvlTqBcmXwm8s8vcZaZ1tsBTF0NWIo=;
+	s=korg; t=1780828277;
+	bh=B37Sh5SWsnrk4rzYmoKvMp080NOAcWelG/aB6eew3I8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0I9LtI3GKEzVH8qGgsTJC1hGV6aMapwo+EgJkn2DQACU3+j56rEv4G/2MXat5glNK
-	 4ZuKltuvLEBcqnImwmfUDzNOQ47OBPTNQMn5QAMhPUr72iBsllDuOVnNd1PivMtrDX
-	 81Y6IHxAursThTVO1IwAAF0Rtxlhm2hKaZtHlRtA=
+	b=0hb99d3ciWDMxO5dlviB/tEOOZmPJ6N3HB8yXztKJYdRATZHnrQXni0jFuTADrJLN
+	 IG3Z9uvVRi8OjLb6fn6MVS0he2OjuGxY2/Y9f+bW+gNYvhnuEH0gCRYxmFru5Kalzw
+	 TmEZHnH94eCYAli6dkZgTWJZxENDVRRJNwCnrry0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 125/307] batman-adv: tt: prevent TVLV entry number overflow
-Date: Sun,  7 Jun 2026 11:58:42 +0200
-Message-ID: <20260607095732.348045111@linuxfoundation.org>
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Michael Roth <michael.roth@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.18 146/315] KVM: SEV: Use the size of the PSC header as the minimum size for PSC requests
+Date: Sun,  7 Jun 2026 11:58:53 +0200
+Message-ID: <20260607095732.965331596@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,84 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 99d9958fa10fb684b2a8e2c48a8d704122721420 upstream.
+commit 2be54670bdc017004c4a4b8bddb6ff02ebe7dbe2 upstream.
 
-The helpers to prepare the buffers for the local and global TT based
-replies are trying to sum up all TT entries which can be found for each
-VLAN. In theory, this sum can be too big for an u16 and therefore overflow.
-A too small buffer would then be allocated for the TVLV.
+When handling a Page State Change (PSC) #VMGEXIT use the size of the PSC
+header as the minimum size for the scratch area.  Per the GHCB spec, PSC
+requests do NOT provide the length, i.e. using control->exit_info_2 for the
+length is completely made up behavior.  The existing code "works", e.g.
+even though Linux-as-a-guest always passes '0', because KVM doesn't do
+anything with the length when the request is in the GHCB's shared buffer.
 
-The too small buffer will be handled gracefully by
-batadv_tt_tvlv_generate() and is not causing a buffer overflow - just a
-truncated reply. But this overflow shouldn't have happened in the first and
-the too small buffer should never have been allocated when an overflow was
-detected.
+Use the header as the min length.  Once the header is retrieved, KVM can
+use the specified indices to compute the full size of the request.
 
-Cc: stable@kernel.org
-Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9b54e248d264 ("KVM: SEV: Add support to handle Page State Change VMGEXIT")
+Cc: stable@vger.kernel.org
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Michael Roth <michael.roth@amd.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260501202250.2115252-6-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/translation-table.c | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ arch/x86/kvm/svm/sev.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
-index 4045ddefc29b47..7041cd69e20070 100644
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -850,11 +850,18 @@ batadv_tt_prepare_tvlv_global_data(struct batadv_orig_node *orig_node,
- 	u16 total_entries = 0;
- 	u8 *tt_change_ptr;
- 	int vlan_entries;
-+	u16 sum_entries;
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -4473,7 +4473,7 @@ int sev_handle_vmgexit(struct kvm_vcpu *
+ 		vcpu->run->system_event.data[0] = control->ghcb_gpa;
+ 		break;
+ 	case SVM_VMGEXIT_PSC:
+-		ret = setup_vmgexit_scratch(svm, true, control->exit_info_2);
++		ret = setup_vmgexit_scratch(svm, true, sizeof(struct psc_hdr));
+ 		if (ret)
+ 			break;
  
- 	spin_lock_bh(&orig_node->vlan_list_lock);
- 	hlist_for_each_entry(vlan, &orig_node->vlan_list, list) {
- 		vlan_entries = atomic_read(&vlan->tt.num_entries);
--		total_entries += vlan_entries;
-+
-+		if (check_add_overflow(vlan_entries, total_entries, &sum_entries)) {
-+			*tt_len = 0;
-+			goto out;
-+		}
-+
-+		total_entries = sum_entries;
- 		num_vlan++;
- 	}
- 
-@@ -941,15 +948,22 @@ batadv_tt_prepare_tvlv_local_data(struct batadv_priv *bat_priv,
- 	struct batadv_softif_vlan *vlan;
- 	size_t change_offset;
- 	u16 num_vlan = 0;
--	u16 vlan_entries = 0;
- 	u16 total_entries = 0;
- 	u16 tvlv_len;
- 	u8 *tt_change_ptr;
-+	int vlan_entries;
-+	u16 sum_entries;
- 
- 	spin_lock_bh(&bat_priv->softif_vlan_list_lock);
- 	hlist_for_each_entry(vlan, &bat_priv->softif_vlan_list, list) {
- 		vlan_entries = atomic_read(&vlan->tt.num_entries);
--		total_entries += vlan_entries;
-+
-+		if (check_add_overflow(vlan_entries, total_entries, &sum_entries)) {
-+			tvlv_len = 0;
-+			goto out;
-+		}
-+
-+		total_entries = sum_entries;
- 		num_vlan++;
- 	}
- 
--- 
-2.53.0
-
 
 
