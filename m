@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4F41E98EF;
-	Sun,  7 Jun 2026 10:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C660E2E7373;
+	Sun,  7 Jun 2026 10:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827154; cv=none; b=Stxd190O4d6wPuLPFB/nWcAZ+mj5UZ29GANZTtCFMFob+f5Ie5OG6eFWLH9Yp85dQ0Gh8xuyvT8QODfwpKaHEIpiQs110Tx+3O5Ml1VUVCRn3AjrofgRMaSkxnp9eDNOI6JogE6sXxtgMRR2RQ22btg2VUpVVqCnfATfgBwOjmE=
+	t=1780827157; cv=none; b=QAOyo221b/NLUo7BcPKvoDBVZm9F/Pe7BUJn51v93/y+4KLmFtKlCpfaoMi2xZj7FWUTgKjZwlTU5oQlUPXZaXL++HuOxNETfwp38ga5vJRgHt7TMGSNh3rkR8AFku5gPu0Ry2ab3QRe/Nq2nu8wBCANz3mo46zdZAWITXw3lAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827154; c=relaxed/simple;
-	bh=R0RZwEmeiepXxaGsoMQiXFw+UuYL1UzEXeC5FqQ0/ms=;
+	s=arc-20240116; t=1780827157; c=relaxed/simple;
+	bh=1bc5xPfLOVPwI0fwu9vyaQKpw2UrVACtVfs5OaZAuqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gjX/rastBI3uwv6w+Af/Zbb5Epf3EMTT1xKPqkzetyHtFV9OPWpbKCFOp1AHoP9UKfEaATfDqFDMVnmpiKtjsgRqT2xZBBtC83qxg7jg7t3w6alu9e1oaJ+0E9rWNu58Wg9isoe2SDR7KIGJc76breut2isawvBzPsg+jctVrOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XawexAGa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kxzaBdJBUaNJoR3UseXywP1PeudpptlG0LOXJbnN++acOmm2y8w0SJYP5RBLqNRSojyf8QArWLrJEq5NoZPXqPKNR4PhwkPJK3iCEZsOqJMgSMcPMmFprxYqZ9Jl8kvlooiyCpKbc9dy6RdbNH1HPCTRa1lDj5m3h72dN24+LkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loA+ykwR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XawexAGa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839641F00893;
-	Sun,  7 Jun 2026 10:12:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loA+ykwR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE27B1F00893;
+	Sun,  7 Jun 2026 10:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827153;
-	bh=soYA2lGhCIzN4zQ8DDBJ+c+i+cVN1jHjcuWfAzRrJSI=;
+	s=korg; t=1780827156;
+	bh=GjM1JlviUvH6vXGYtVpyMH/41kD0tZ98ojdGTYJHzKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XawexAGaxiXhRsqjemlKxKnX2FBPP3NrHC12aOrxPMTknH5D1v5jZmZOvzqsU7Ost
-	 rTkpiYRHCuicMgiK0AABcwu77QqnCvz+YjeC+LGa4JGu2vSJqaIu0OcmCJFrR3JkAM
-	 Z/AhXXd0ZUt9KXl18u7++DgUxH3NJe/soNuZxyoU=
+	b=loA+ykwR1g1n4FjBOkTO+YEfegG8CNe3sHorBCcUqo3qVesJs8oIgDRL/9O8BgLIy
+	 v0mYY+4gfwoL+uXk4/xJTW9UpUChSPrj5fH2SjMsxoWYIeX3pHoIacRaak5qX4MGgW
+	 RE023idp4JZmOBItvkmzetURMkeJ+Z0CmWEZGDQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <nikolay@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Leo Lin <leo@depthfirst.com>,
+	David Ahern <dahern@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 067/332] bridge: Fix sleep in atomic context in sysfs path
-Date: Sun,  7 Jun 2026 11:57:16 +0200
-Message-ID: <20260607095730.597778318@linuxfoundation.org>
+Subject: [PATCH 6.12 027/307] xfrm: Check for underflow in xfrm_state_mtu
+Date: Sun,  7 Jun 2026 11:57:04 +0200
+Message-ID: <20260607095728.647984280@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,160 +48,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: David Ahern <dahern@nvidia.com>
 
-[ Upstream commit 6d34594cc619d0d4b07d5afcad8b5984f3526dcf ]
+[ Upstream commit 742b04d0550b0ec89dcbc99537ec88653bd1ad90 ]
 
-Since the start of the git history, brport_store() always acquired the
-bridge lock. Back then this decision made sense: The bridge lock
-protects the STP state of the bridge and its ports and at that time the
-function was only used by two STP related attributes (cost and
-priority).
+Leo Lin reported OOB write issue in esp component:
 
-Nowadays, brport_store() processes a lot more attributes and most of
-them do not need the bridge lock:
+  xfrm_state_mtu() returns u32 but performs its arithmetic in unsigned
+  modulo-2^32 space using an attacker-influenced "header_len + authsize +
+  net_adj" subtracted from a small "mtu" argument. A nobody user can
+  install an IPv4 ESP tunnel SA with a large authentication key
+  (XFRMA_ALG_AUTH_TRUNC, e.g. hmac(sha512), 64-byte key, 64-byte trunc),
+  configure a small interface MTU (68 bytes), and set XFRMA_TFCPAD to a
+  large value. When a single UDP datagram is then sent through the
+  tunnel, xfrm_state_mtu() underflows to a near-2^32 value, and
+  esp_output() consumes it as a signed int via:
 
-* Bridge flags: Only require RTNL. Read locklessly by the data path.
-  Annotations can be added in net-next.
+        padto      = min(x->tfcpad, xfrm_state_mtu(x, mtu_cached))
+        esp.tfclen = padto - skb->len   (assigned to int)
 
-* FDB port flushing: Only requires the FDB lock.
+  esp.tfclen ends up negative (e.g. -207). It is sign-extended to size_t
+  when passed to memset() inside esp_output_fill_trailer(), producing a
+  ~16 EB write of zeroes at skb_tail_pointer(skb). KASAN logs it as
+  "Write of size 18446744073709551537 at addr ffff888...".
 
-* Multicast attributes: Only require the multicast lock.
+Check for underflow and return 1. This causes the sendmsg attempt to
+fail with ENETUNREACH.
 
-* Group forward mask: Only requires RTNL. Read locklessly by the data
-  path. Annotations can be added in net-next.
-
-* Backup port: Only requires RTNL. Read locklessly by the data path.
-
-This is a problem as the bridge calls dev_set_promiscuity() when certain
-bridge port flags change and this function can sleep since the commit
-cited below, resulting in a splat such as [1].
-
-Fix this by reducing the scope of the bridge lock and only take it when
-processing the two STP related attributes that require it. Remove the
-now stale comment from br_switchdev_set_port_flag(). The
-SWITCHDEV_F_DEFER flag can be removed in net-next.
-
-[1]
-BUG: sleeping function called from invalid context at net/core/dev_addr_lists.c:1262
-in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 372, name: bash
-preempt_count: 201, expected: 0
-RCU nest depth: 0, expected: 0
-5 locks held by bash/372:
-#0: ffff88810c51c3f0 (sb_writers#7){.+.+}-{0:0}, at: ksys_write (fs/read_write.c:740)
-#1: ffff888115ce9480 (&of->mutex){+.+.}-{4:4}, at: kernfs_fop_write_iter (fs/kernfs/file.c:343)
-#2: ffff88810b9fd330 (kn->active#37){.+.+}-{0:0}, at: kernfs_fop_write_iter (fs/kernfs/file.c:80 fs/kernfs/file.c:344)
-#3: ffffffffa59473a0 (rtnl_mutex){+.+.}-{4:4}, at: brport_store (net/bridge/br_sysfs_if.c:326)
-#4: ffff8881099d2d58 (&br->lock){+...}-{3:3}, at: brport_store (./include/linux/spinlock.h:348 net/bridge/br_sysfs_if.c:345)
-Preemption disabled at:
- 0x0
-Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
-Call Trace:
-<TASK>
-dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-__might_resched.cold (kernel/sched/core.c:9163)
-netif_rx_mode_run (net/core/dev_addr_lists.c:1262)
-netif_rx_mode_sync (net/core/dev_addr_lists.c:1428)
-dev_set_promiscuity (net/core/dev_api.c:289)
-br_manage_promisc (net/bridge/br_if.c:135 net/bridge/br_if.c:172)
-br_port_flags_change (net/bridge/br_if.c:242 net/bridge/br_if.c:747)
-store_learning (net/bridge/br_sysfs_if.c:79 net/bridge/br_sysfs_if.c:235)
-brport_store (net/bridge/br_sysfs_if.c:346)
-kernfs_fop_write_iter (fs/kernfs/file.c:352)
-new_sync_write (fs/read_write.c:595)
-vfs_write (fs/read_write.c:688)
-ksys_write (fs/read_write.c:740)
-do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
-entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-
-Fixes: 78cd408356fe ("net: add missing instance lock to dev_set_promiscuity")
-Reviewed-by: Nikolay Aleksandrov <nikolay@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260526064818.272516-3-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c5c252389374 ("[XFRM]: Optimize MTU calculation")
+Reported-by: Leo Lin <leo@depthfirst.com>
+Assisted-by: Codex:26.506.31004
+Signed-off-by: David Ahern <dahern@nvidia.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_switchdev.c |  1 -
- net/bridge/br_sysfs_if.c  | 30 ++++++++++++++++++++++--------
- 2 files changed, 22 insertions(+), 9 deletions(-)
+ net/xfrm/xfrm_state.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/net/bridge/br_switchdev.c b/net/bridge/br_switchdev.c
-index 4fac002922d22a..58257e9e9d30b6 100644
---- a/net/bridge/br_switchdev.c
-+++ b/net/bridge/br_switchdev.c
-@@ -99,7 +99,6 @@ int br_switchdev_set_port_flag(struct net_bridge_port *p,
- 	attr.u.brport_flags.val = flags;
- 	attr.u.brport_flags.mask = mask;
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index 6a92d88f9e0363..4823a9c054ae2b 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -3022,10 +3022,14 @@ u32 xfrm_state_mtu(struct xfrm_state *x, int mtu)
+ 	const struct xfrm_type *type = READ_ONCE(x->type);
+ 	struct crypto_aead *aead;
+ 	u32 blksize, net_adj = 0;
++	u32 overhead, payload_mtu;
  
--	/* We run from atomic context here */
- 	err = call_switchdev_notifiers(SWITCHDEV_PORT_ATTR_SET, p->dev,
- 				       &info.info, extack);
- 	err = notifier_to_errno(err);
-diff --git a/net/bridge/br_sysfs_if.c b/net/bridge/br_sysfs_if.c
-index 1f57c36a7fc097..d6df81fa0d13fe 100644
---- a/net/bridge/br_sysfs_if.c
-+++ b/net/bridge/br_sysfs_if.c
-@@ -86,16 +86,34 @@ static ssize_t show_path_cost(struct net_bridge_port *p, char *buf)
- 	return sysfs_emit(buf, "%d\n", p->path_cost);
- }
+ 	if (x->km.state != XFRM_STATE_VALID ||
+-	    !type || type->proto != IPPROTO_ESP)
++	    !type || type->proto != IPPROTO_ESP) {
++		if (mtu <= x->props.header_len)
++			return 1;
+ 		return mtu - x->props.header_len;
++	}
  
--static BRPORT_ATTR(path_cost, 0644,
--		   show_path_cost, br_stp_set_path_cost);
-+static int store_path_cost(struct net_bridge_port *p, unsigned long v)
-+{
-+	int ret;
-+
-+	spin_lock_bh(&p->br->lock);
-+	ret = br_stp_set_path_cost(p, v);
-+	spin_unlock_bh(&p->br->lock);
-+	return ret;
-+}
-+
-+static BRPORT_ATTR(path_cost, 0644, show_path_cost, store_path_cost);
- 
- static ssize_t show_priority(struct net_bridge_port *p, char *buf)
- {
- 	return sysfs_emit(buf, "%d\n", p->priority);
- }
- 
--static BRPORT_ATTR(priority, 0644,
--			 show_priority, br_stp_set_port_priority);
-+static int store_priority(struct net_bridge_port *p, unsigned long v)
-+{
-+	int ret;
-+
-+	spin_lock_bh(&p->br->lock);
-+	ret = br_stp_set_port_priority(p, v);
-+	spin_unlock_bh(&p->br->lock);
-+	return ret;
-+}
-+
-+static BRPORT_ATTR(priority, 0644, show_priority, store_priority);
- 
- static ssize_t show_designated_root(struct net_bridge_port *p, char *buf)
- {
-@@ -334,17 +352,13 @@ static ssize_t brport_store(struct kobject *kobj,
- 			ret = -ENOMEM;
- 			goto out_unlock;
- 		}
--		spin_lock_bh(&p->br->lock);
- 		ret = brport_attr->store_raw(p, buf_copy);
--		spin_unlock_bh(&p->br->lock);
- 		kfree(buf_copy);
- 	} else if (brport_attr->store) {
- 		val = simple_strtoul(buf, &endp, 0);
- 		if (endp == buf)
- 			goto out_unlock;
--		spin_lock_bh(&p->br->lock);
- 		ret = brport_attr->store(p, val);
--		spin_unlock_bh(&p->br->lock);
+ 	aead = x->data;
+ 	blksize = ALIGN(crypto_aead_blocksize(aead), 4);
+@@ -3045,8 +3049,17 @@ u32 xfrm_state_mtu(struct xfrm_state *x, int mtu)
+ 		break;
  	}
  
- 	if (!ret) {
+-	return ((mtu - x->props.header_len - crypto_aead_authsize(aead) -
+-		 net_adj) & ~(blksize - 1)) + net_adj - 2;
++	overhead = x->props.header_len + crypto_aead_authsize(aead) + net_adj;
++	if (mtu <= overhead)
++		return 1;
++
++	payload_mtu = mtu - overhead;
++	payload_mtu &= ~(blksize - 1);
++	if (payload_mtu <= 2)
++		return 1;
++
++	return payload_mtu + net_adj - 2;
++
+ }
+ EXPORT_SYMBOL_GPL(xfrm_state_mtu);
+ 
 -- 
 2.53.0
 
