@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3D84071DA;
-	Sun,  7 Jun 2026 10:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B272AD00;
+	Sun,  7 Jun 2026 10:16:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827387; cv=none; b=Wg9unpMK2oLBLyJi85rGYkCnVcrxqAc0+fDKY/NuDpmNhpuiZmrGTRhcMYYj6U7r1nYNoR/h4KgT0Rinknu8Eghh1EbldhAzSWjvaaFSTJLLCifJB38fiZ1GIemRLkh+5nhOB16fDXp6H/+8fJacmmPN1uO8NC7JsfX/dDPMDps=
+	t=1780827390; cv=none; b=pmWJvm+d9yuKMR8PCaUI56e+GvzBjQ6ryRSpeSaMRf7rAy6Sl3W8HcGffCLhb6Uqs5Aak0mlRdDPrD5mtPUsij4/d7136yMs4KXrjuscl2VtHevc9SVntGP/9iDTeXSFV6JAkj2hD8qj9IpWoa180doNwmT6rVM6B8Jvd+DHR6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827387; c=relaxed/simple;
-	bh=ovhEUdmEJVY5BlzHSbm6qPTKsg734PwbxqKBnE45k8k=;
+	s=arc-20240116; t=1780827390; c=relaxed/simple;
+	bh=QLUqtQ29Z2D80a8rKb2YLU1lT7ZxWqj5OMvLDIhbttI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aq4WzwrVcKPGWJOH43bmknB3I3NAOL0oO+BKs2U3q++HMk4AEywtUx9s7+CRwmfrNGk45RL7ZCgNpfYMa+gb05yiucCmvKEf+tOqc8hzdRDrfzLw+Dt3RBDtnACxG3D8VSdw9pr8Us/o1UZKCkVtXLNyF/bWF8agBiPC8/fdK4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EN1bp/oJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oW9uxQ4qkoQBaH02z1f1v2L22H4VwRAuFXwjYIiFA8Z7TXGNvy65XMmGt4SX5e+kyg+p7V1tMt7f3Rui2YtKMf85QnSbGaUFfprdjmIgXzTNIyYXareACfistr1ATRXnFyCZC9Hxlao6nHWvRFX+ZQuoPRBdDzmO+M1uAujECXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CFkktho3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EN1bp/oJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9691F00893;
-	Sun,  7 Jun 2026 10:16:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CFkktho3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA15F1F00893;
+	Sun,  7 Jun 2026 10:16:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827385;
-	bh=BtD0iyF50W/7tLqwgXND36AzneOV9KShpOHkjpiYtqA=;
+	s=korg; t=1780827389;
+	bh=0j1VLAUu8DIdgd6L1NVqcuOhiSA9PFeakEiIXh1cPcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EN1bp/oJWqQZk6dIsNkc3s05dPmSdmJUB3R33Nz2Jnw+GvoHwwV8K/6Ml79YYYnHB
-	 +w1rLXZ4YpC2EQxQwZBLsHsXRncE52wQXgZDt79+8X04Q4mXbE29yJ88ZPD2F2N1r6
-	 hgxoIkJTBfvObpBlBIWLQvu9hXMVUB6N8AAW0yBc=
+	b=CFkktho309IK6DPYHpuvA8eiiJEhC1L4fVEZ7BeP/V23s+ReOGBQ1+/DSjAAABCbZ
+	 GEQ5QiSsWqPkkhjK7drSRWz00nMC+iWlSA/vPU9F5cZqHXoyKDJIw1FGG65u+ni59t
+	 b/nufu18itLiUzlg1RpRUfy0+Yw4uWdLJEsEfGJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Danielle Ratson <danieller@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 069/315] ethtool: tsinfo: fix uninitialized stats on the by-PHC path
-Date: Sun,  7 Jun 2026 11:57:36 +0200
-Message-ID: <20260607095730.146499175@linuxfoundation.org>
+Subject: [PATCH 6.12 051/307] ethtool: module: check fw_flash_in_progress under rtnl_lock
+Date: Sun,  7 Jun 2026 11:57:28 +0200
+Message-ID: <20260607095729.593945568@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,77 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 1de405699c62c3a9544bcdcfb9eff8a01cfc7582 ]
+[ Upstream commit 504eaefa44c8dec50f7499edcb36d24f3aefab2a ]
 
-tsinfo_prepare_data() has two code paths: a "by-PHC" path for
-user-specified hardware timestamping providers, and the old path.
-Commit 89e281ebff72 ("ethtool: init tsinfo stats if requested") added
-ethtool_stats_init() to mark stat slots as ETHTOOL_STAT_NOT_SET before
-the driver callback populates them, but placed the call inside the
-old-path block.
+ethnl_set_module_validate() inspects module_fw_flash_in_progress
+but validate is meant for _input_ validation, not state validation.
+rtnl_lock is not held, yet. Move the check into ethnl_set_module().
 
-When commit b9e3f7dc9ed9 ("net: ethtool: tsinfo: Enhance tsinfo to
-support several hwtstamp by net topology") added the by-PHC early
-return, it landed above the stats initialization. On that path
-the stats array retains the zero-fill from ethnl_init_reply_data()'s
-zalloc. This leads to the reply including a stats nest with four
-zero-valued attributes that should have been absent.
-
-Reject GET requests for stats with HWTSTAMP_PROVIDER or dump.
-
-Fixes: b9e3f7dc9ed9 ("net: ethtool: tsinfo: Enhance tsinfo to support several hwtstamp by net topology")
+Fixes: 32b4c8b53ee7 ("ethtool: Add ability to flash transceiver modules' firmware")
 Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260526153533.2779187-7-kuba@kernel.org
+Reviewed-by: Danielle Ratson <danieller@nvidia.com>
+Link: https://patch.msgid.link/20260522231312.1710836-5-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/tsinfo.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ net/ethtool/module.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/ethtool/tsinfo.c b/net/ethtool/tsinfo.c
-index 8c654caa6805a5..fcc28fca526d82 100644
---- a/net/ethtool/tsinfo.c
-+++ b/net/ethtool/tsinfo.c
-@@ -81,6 +81,11 @@ tsinfo_parse_request(struct ethnl_req_info *req_base, struct nlattr **tb,
- 	if (!tb[ETHTOOL_A_TSINFO_HWTSTAMP_PROVIDER])
+diff --git a/net/ethtool/module.c b/net/ethtool/module.c
+index 76d13ef4ba0427..ab1e8a83acd0b1 100644
+--- a/net/ethtool/module.c
++++ b/net/ethtool/module.c
+@@ -119,12 +119,6 @@ ethnl_set_module_validate(struct ethnl_req_info *req_info,
+ 	if (!tb[ETHTOOL_A_MODULE_POWER_MODE_POLICY])
  		return 0;
  
-+	if (req_base->flags & ETHTOOL_FLAG_STATS) {
-+		NL_SET_ERR_MSG(extack, "can't query statistics for a provider");
-+		return -EOPNOTSUPP;
+-	if (req_info->dev->ethtool->module_fw_flash_in_progress) {
+-		NL_SET_ERR_MSG(info->extack,
+-			       "Module firmware flashing is in progress");
+-		return -EBUSY;
+-	}
+-
+ 	if (!ops->get_module_power_mode || !ops->set_module_power_mode) {
+ 		NL_SET_ERR_MSG_ATTR(info->extack,
+ 				    tb[ETHTOOL_A_MODULE_POWER_MODE_POLICY],
+@@ -147,6 +141,12 @@ ethnl_set_module(struct ethnl_req_info *req_info, struct genl_info *info)
+ 
+ 	ops = dev->ethtool_ops;
+ 
++	if (dev->ethtool->module_fw_flash_in_progress) {
++		NL_SET_ERR_MSG(info->extack,
++			       "Module firmware flashing is in progress");
++		return -EBUSY;
 +	}
 +
- 	return ts_parse_hwtst_provider(tb[ETHTOOL_A_TSINFO_HWTSTAMP_PROVIDER],
- 				       &req->hwprov_desc, extack, &mod);
- }
-@@ -521,6 +526,12 @@ int ethnl_tsinfo_start(struct netlink_callback *cb)
+ 	power_new.policy = nla_get_u8(tb[ETHTOOL_A_MODULE_POWER_MODE_POLICY]);
+ 	ret = ops->get_module_power_mode(dev, &power, info->extack);
  	if (ret < 0)
- 		goto free_reply_data;
- 
-+	if (req_info->base.flags & ETHTOOL_FLAG_STATS) {
-+		NL_SET_ERR_MSG(cb->extack, "stats not supported in dump");
-+		ret = -EOPNOTSUPP;
-+		goto err_dev_put;
-+	}
-+
- 	ctx->req_info = req_info;
- 	ctx->reply_data = reply_data;
- 	ctx->pos_ifindex = 0;
-@@ -530,6 +541,8 @@ int ethnl_tsinfo_start(struct netlink_callback *cb)
- 
- 	return 0;
- 
-+err_dev_put:
-+	ethnl_parse_header_dev_put(&req_info->base);
- free_reply_data:
- 	kfree(reply_data);
- free_req_info:
 -- 
 2.53.0
 
