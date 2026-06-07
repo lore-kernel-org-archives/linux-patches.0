@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8567817B418;
-	Sun,  7 Jun 2026 10:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8579D1E98EF;
+	Sun,  7 Jun 2026 10:14:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827268; cv=none; b=ejhYqVAbvC7SsZLxy2liwBdyFNNQiR7INcTT8lvZe8DDBqUwVvNxEcPaJ1VcMvSwu/RxnuXnAnBYghVXkVlQbv4UynnxKnSRv2qoVTL7t4r01Xiaa4b6DdmKsdq6phTkSHDwHgjrOo1NUKdVXdvBa2eK6UIRbhPB4PGjZd5rlUY=
+	t=1780827271; cv=none; b=KD3upxk2Sq64j8IqGHrkGhzFGIgmJEPvAN0QY7qrAISH3rVv+5Vgun59Hhm0Lwhrd4iSi8PD3FWy0KAJ/zRZoR6e8zcgOPu46eCkOXKpqzrQV9Uj40eQ7vVG2uP3cekBYj9zxiB5YKutvuYMyYJgRYeGOpQrQgUfVqwxDRMds3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827268; c=relaxed/simple;
-	bh=0ReXDm08IddqtbQ4jctDWilMK8J7ev1Wg95lwA+1Jpk=;
+	s=arc-20240116; t=1780827271; c=relaxed/simple;
+	bh=v/bs8aqtI5HdZDDKBztVXa9QM88/NghD5rox98VhIqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ubi3GfAlSN96VA1SsIvGtizHbByj/+wv4dym143I3rLy1ADnXIsRJCOkFaHdLz/8G2AN03EonaT/DUamLSckobw88bMwCxAPQK3T5e7IAvEgSaC0tCjKV0QZGzqQoPwE4qAOkRvJ1jDd9ZZBn2BRgXM0ARdZMo0gXO/yAAWWg+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSbEaaQn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sp1hrTj5OHX6Ekrn16G5FVq3NqoTjjOtO8aeFr9o5R0fUfet1PXL4s0EOyVw1TjBIzEcHwZAgr2NKbvd6czz7altf/HFHS1/cg8AIcm94L3P5bU8h//l13/Y89I0UUXgi+peAEki9pOofu7asalXpNC3k8zXcXZbRqIMBsLgUJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvF+bMo9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSbEaaQn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4E41F00893;
-	Sun,  7 Jun 2026 10:14:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvF+bMo9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38E11F00893;
+	Sun,  7 Jun 2026 10:14:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827267;
-	bh=tXw4uIjlmH+tJsPM3cR1op41dY1UtI6aFUJ6+PdU3xk=;
+	s=korg; t=1780827270;
+	bh=9oDlDX6P5QbEKPzQk41v0t3e1No8lITDNOCi6RxaR4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lSbEaaQn5/Z2MCv4CMivjYMNrruQiWlYkx39k3ixRWlAYoePYWX/f+mFfI0fNxSqc
-	 H/Fj6ZaP8kKxcfHdaHe/pyMYN4K/mJcxVzNllRyiB0Wz1nMg4Cr4egalAOJ1Pj497S
-	 Up+hBNoYzTAlnNncrV80WwwJKVLBcnB1sMZxQ95g=
+	b=qvF+bMo9WN9N0ObMaP86OpW8vzGUHuRUK6z9OeR7s9z5EuXkge1WfuLbMoUYd9ZYg
+	 QslzlWJeYjCZJuQlQTT/Y+MyPsv/59b/OpEIqMKEJwiuN3YOj/+RRZOsowUDIhzQzi
+	 TdQZY3IM10zgysN6yYOQyRMNe3heVAhiTGSU1wPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Chandelkar <rc@rexion.ai>,
+	Stanislav Fomichev <sdf.kernel@gmail.com>,
+	Breno Leitao <leitao@debian.org>,
+	Alexandra Winter <wintera@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 078/332] ipv6: rpl: fix hdrlen overflow in ipv6_rpl_srh_decompress()
-Date: Sun,  7 Jun 2026 11:57:27 +0200
-Message-ID: <20260607095731.006470135@linuxfoundation.org>
+Subject: [PATCH 6.12 040/307] net/iucv: fix locking in .getsockopt
+Date: Sun,  7 Jun 2026 11:57:17 +0200
+Message-ID: <20260607095729.166033711@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,64 +49,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rahul Chandelkar <rc@rexion.ai>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 9d5e7a46a9f6d8f503b41bfefef70659845f1679 ]
+[ Upstream commit 3589d20a666caf30ad100c960a2de7de390fce88 ]
 
-ipv6_rpl_srh_decompress() computes:
+Mirror iucv_sock_setsockopt() and wrap the whole switch in
+lock_sock()/release_sock(). The pre-existing SO_MSGLIMIT-only lock
+becomes redundant and is removed.
 
-    outhdr->hdrlen = (((n + 1) * sizeof(struct in6_addr)) >> 3);
+Any AF_IUCV HIPER user can potentially crash the kernel by racing
+recvmsg() with getsockopt(SO_MSGSIZE): the SO_MSGSIZE arm dereferences
+iucv->hs_dev->mtu after iucv_sock_close() (called from the racing
+recvmsg()) has set hs_dev to NULL, producing a NULL pointer dereference
+oops.
 
-hdrlen is __u8. For n >= 127 the result exceeds 255 and silently
-truncates. With n=127 (cmpri=15, cmpre=15, pad=0, hdrlen=16):
-
-    (128 * 16) >> 3 = 256, truncated to 0 as __u8
-
-The caller in ipv6_rpl_srh_rcv() then places the compressed header
-at buf + ((ohdr->hdrlen + 1) << 3). With hdrlen=0 this is buf + 8,
-but the decompressed region occupies buf[0..2055] (8-byte header
-plus 128 full addresses). The compressed header overlaps the
-decompressed data, and ipv6_rpl_srh_compress() writes into this
-overlap, corrupting the routing header of the forwarded packet.
-
-The existing guard at exthdrs.c:546 checks (n + 1) > 255, which
-prevents n+1 from overflowing unsigned char (the segments_left
-field), but does not prevent the computed hdrlen from overflowing
-__u8. n=127 passes because 128 <= 255, yet hdrlen=256 does not
-fit.
-
-Tighten the bound to (n + 1) > 127. This caps n at 126, giving
-hdrlen = (127 * 16) >> 3 = 254, which fits in __u8. The compressed
-header then lands at buf + ((254 + 1) << 3) = buf + 2040, exactly
-past the decompressed region (buf[0..2039]). No overlap. 127
-segments is well beyond any realistic RPL deployment.
-
-Fixes: 8610c7c6e3bd ("net: ipv6: add support for rpl sr exthdr")
-Signed-off-by: Rahul Chandelkar <rc@rexion.ai>
-Link: https://patch.msgid.link/20260525154031.2290876-1-rc@rexion.ai
+Suggested-by: Stanislav Fomichev <sdf.kernel@gmail.com>
+Fixes: 51363b8751a6 ("af_iucv: allow retrieval of maximum message size")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Tested-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://patch.msgid.link/20260521-af_iucv_fix2-v1-1-f16b1c510aa9@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/exthdrs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/iucv/af_iucv.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
-index cf90f933ca1ada..3757317e8151e0 100644
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -544,7 +544,7 @@ static int ipv6_rpl_srh_rcv(struct sk_buff *skb)
- 	 * unsigned char which is segments_left field. Should not be
- 	 * higher than that.
- 	 */
--	if (r || (n + 1) > 255) {
-+	if (r || (n + 1) > 127) {
- 		kfree_skb(skb);
- 		return -1;
+diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
+index 7929df08d4e023..1a0b41fcea8131 100644
+--- a/net/iucv/af_iucv.c
++++ b/net/iucv/af_iucv.c
+@@ -1537,7 +1537,7 @@ static int iucv_sock_getsockopt(struct socket *sock, int level, int optname,
+ 	struct sock *sk = sock->sk;
+ 	struct iucv_sock *iucv = iucv_sk(sk);
+ 	unsigned int val;
+-	int len;
++	int len, rc;
+ 
+ 	if (level != SOL_IUCV)
+ 		return -ENOPROTOOPT;
+@@ -1550,26 +1550,34 @@ static int iucv_sock_getsockopt(struct socket *sock, int level, int optname,
+ 
+ 	len = min_t(unsigned int, len, sizeof(int));
+ 
++	rc = 0;
++
++	lock_sock(sk);
+ 	switch (optname) {
+ 	case SO_IPRMDATA_MSG:
+ 		val = (iucv->flags & IUCV_IPRMDATA) ? 1 : 0;
+ 		break;
+ 	case SO_MSGLIMIT:
+-		lock_sock(sk);
+ 		val = (iucv->path != NULL) ? iucv->path->msglim	/* connected */
+ 					   : iucv->msglimit;	/* default */
+-		release_sock(sk);
+ 		break;
+ 	case SO_MSGSIZE:
+-		if (sk->sk_state == IUCV_OPEN)
+-			return -EBADFD;
++		if (sk->sk_state == IUCV_OPEN) {
++			rc = -EBADFD;
++			break;
++		}
+ 		val = (iucv->hs_dev) ? iucv->hs_dev->mtu -
+ 				sizeof(struct af_iucv_trans_hdr) - ETH_HLEN :
+ 				0x7fffffff;
+ 		break;
+ 	default:
+-		return -ENOPROTOOPT;
++		rc = -ENOPROTOOPT;
++		break;
  	}
++	release_sock(sk);
++
++	if (rc)
++		return rc;
+ 
+ 	if (put_user(len, optlen))
+ 		return -EFAULT;
 -- 
 2.53.0
 
