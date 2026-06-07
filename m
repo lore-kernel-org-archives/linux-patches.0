@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7293254A9;
-	Sun,  7 Jun 2026 10:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942322D3A69;
+	Sun,  7 Jun 2026 10:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828692; cv=none; b=Kvgjt9YFaG86PwZCwkUxyhdaRwtKeqSoBRVdQVK1UmlTnKt7dVMst3qj+iRJqVnEttsZCKtkKhuzoBB0fSyRlG7vIsp/GeBZgbd0nANypOjt480/Q5yIdXN736PBuCul9vIud3m3SY0SU/0vF94kdqlNngeBm0o/88RHramBb/w=
+	t=1780828695; cv=none; b=rPYkDCgH2t1k6/j/5Gwln1PxbtAzEt+3ugjCk4lmxuNByYcid/VJfzCB/WvPUSn/+46znfOj+aiJAPgWXHmXoh4y9+vm7rK+nYrH7W3iQPZvBICf4UXHYLSSE9s2hfl/0aB5aQstH0x1VtKh1vhlv4X609JZzjl7kaAqM6xw5gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828692; c=relaxed/simple;
-	bh=N6CF56alpnWIMRHA+IyMohXQbnm7ZLnrMVVhoimCLuY=;
+	s=arc-20240116; t=1780828695; c=relaxed/simple;
+	bh=JY0y9uMrmDoJlu2lUhwqYpLFU5wlBLDRpP/H56L167A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RTIyhoOdmaeR+ID37Q3HCQLQmxrFILKMmtYXqqiPwr2F3MlHMLYgKHwt5AeIYciHKJz/DMzfXjQFLxGOzn+6dTNuXZdwQo8bgjMW7VSjgMEfI7HUfUDSY+IBdXZ77uNW/L10gwPjieA26SkooloWf7lvRfCM9pc7KYkNFADVnE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWGk2SKQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bIokVxWwc3YXvuX6ttIj6B/jN5Eb/S70DnzaXtEuyK43cO4fQqP0eJumqOA4Vxj3aiKpG+hRzkRY1KMid9AKidUZaVZNW993mFDfRYHftw02vO4qoFce0+sa03omD6U7wyMtf7XFA1i8SUiwKVc9GoXqaI/Fu9jQHRbqQbz2eis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cxZAwxlk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWGk2SKQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A45A1F00893;
-	Sun,  7 Jun 2026 10:38:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cxZAwxlk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5171F00893;
+	Sun,  7 Jun 2026 10:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828691;
-	bh=s/CpIhRHhy6cQOVNu4Fv8AzvR07JRG0WeamZ34vkg38=;
+	s=korg; t=1780828694;
+	bh=Fg9pUg+l87cnvCS6feVCpZQovh8+elwCm/aqDJSohlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iWGk2SKQQWhXqh/XJ8T3hDhAPAP1iKHl19dXUH2PwAsUWw99Xki7FqljZRzvkuJt6
-	 K0UuUJ8xf/X4M7aXyAWwT4xbp8Zu7+htTdfEJPti8vR7A72OreFNxs7eLJELWYxdx5
-	 hMEG049pmL23t9jPBDboY6WyKwKbA5Hpm+y0ZRMY=
+	b=cxZAwxlki5Go5KBy3hiyjxFcVjt4cbunGcG5BWCJqVtYLNdxSC0mUO6XPX1U5nd/g
+	 +e59XGgw9WicePBHYhUMca2f2iEhPkciO5vDCPbMgDXfUNRUUQUpiXub9Nz4YZiIx+
+	 2YPTbJAT+FBl+UxMljP3SHsMvmxFoDnPVE2jIKEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Michael Roth <michael.roth@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.12 158/307] KVM: SEV: Check PSC request indices against the actual size of the buffer
-Date: Sun,  7 Jun 2026 11:59:15 +0200
-Message-ID: <20260607095733.523009597@linuxfoundation.org>
+	=?UTF-8?q?Alexis=20Lothor=C3=A9=20 ?= <alexis.lothore@bootlin.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	stable@kernel.org
+Subject: [PATCH 6.18 183/315] x86/ftrace: Relocate %rip-relative percpu refs in dynamic trampolines
+Date: Sun,  7 Jun 2026 11:59:30 +0200
+Message-ID: <20260607095734.304750433@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,72 +47,105 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
 
-commit 121d88de56bc5c0ba0ce2f6381af67f948a7e7c1 upstream.
+commit a17dc12bfed8868e6a86f3b45c16065a70641acb upstream.
 
-When processing Page State Change (PSC) requests, validate the PSC buffer
-against the effective size of the scratch area, which could be less than
-the maximum size if the guest provided a pointer that isn't exactly at the
-start of the GHCB shared buffer.
+With CONFIG_CALL_DEPTH_TRACKING enabled on an x86 retbleed-affected platform
+(eg: Skylake), with retbleed=stuff, registering a dynamic ftrace trampoline
+crashes on the first call into the traced function:
 
-Fixes: 9b54e248d264 ("KVM: SEV: Add support to handle Page State Change VMGEXIT")
-Cc: stable@vger.kernel.org
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Reviewed-by: Michael Roth <michael.roth@amd.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260501202250.2115252-10-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+  BUG: unable to handle page fault for address: ffff88817ae18880
+  #PF: supervisor write access in kernel mode
+  #PF: error_code(0x0002) - not-present page
+  PGD 4b53067 P4D 4b53067 PUD 0
+  Oops: Oops: 0002 [#1] SMP PTI
+  CPU: 3 UID: 0 PID: 187 Comm: usleep Not tainted 7.0.10 #243 PREEMPT(full)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.17.0-2-2 04/01/2014
+  Code: 24 78 00 00 00 00 48 89 ea 48 89 54 24 20 48 8b b4 24 b8 00 00 00 48 8b bc 24 b0 00 00 00 48 89 bc 24 80 00 00 00 48 83 ef 05 <65> 48 c1 3d 1f a8 b6 02 05 48 8b 15 f6 00 00 00 4c 89 3c 24 4c 89
+  Call Trace:
+   <TASK>
+   ? find_held_lock
+   ? exc_page_fault
+   ? lock_release
+   ? __x64_sys_clock_nanosleep
+   ? lockdep_hardirqs_on_prepare
+   ? trace_hardirqs_on
+   __x64_sys_clock_nanosleep
+   do_syscall_64
+   ? exc_page_fault
+   ? call_depth_return_thunk
+   entry_SYSCALL_64_after_hwframe
+  ...
+  Kernel panic - not syncing: Fatal exception
+
+This small reproducer allows to easily trigger the crash:
+
+  # echo 'p __x64_sys_clock_nanosleep' > /sys/kernel/tracing/kprobe_events
+  # echo 1 > /sys/kernel/tracing/events/kprobes/p___x64_sys_clock_nanosleep_0/enable
+  # usleep 1
+
+Monitoring the crash under GDB points to the exact instruction in charge of
+incrementing the call depth:
+
+  sarq $5, %gs:__x86_call_depth(%rip)
+
+This instruction matches the one inserted by the ftrace_regs_caller from
+ftrace_64.S. This emitted code was likely working fine until the introduction
+of
+
+  59bec00ace28 ("x86/percpu: Introduce %rip-relative addressing to PER_CPU_VAR()"):
+
+it has made the call depth accounting addressing relative to $rip, instead of
+being based on an absolute address.
+
+As this code exact location depends on where the trampoline lives in memory,
+the corresponding displacement needs to be adjusted at runtime to actually
+correctly find the per-cpu __x86_call_depth value, otherwise the targeted
+address is wrong, leading to the page fault seen above.
+
+Fix the %rip-relative displacement of the copied CALL_DEPTH_ACCOUNT
+instruction (from ftrace_regs_caller) by calling text_poke_apply_relocation(),
+as it is done for example by the x86 BPF JIT compiler through
+x86_call_depth_emit_accounting(). This corrects both CALL_DEPTH_ACCOUNT slots,
+in ftrace_caller and ftrace_regs_caller.
+
+  [ bp: Massage. ]
+
+Fixes: 59bec00ace28 ("x86/percpu: Introduce %rip-relative addressing to PER_CPU_VAR()")
+Signed-off-by: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Steven Rostedt <rostedt@goodmis.org>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/20260527-fix_call_depth_in_trampoline-v1-1-1c1abc8ae310@bootlin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |   17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ arch/x86/kernel/ftrace.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -3729,7 +3729,7 @@ static int snp_begin_psc(struct vcpu_svm
- 	struct kvm_vcpu *vcpu = &svm->vcpu;
- 	struct psc_hdr *hdr = &psc->hdr;
- 	struct psc_entry entry_start;
--	u16 idx, idx_start, idx_end;
-+	u16 idx, idx_start, idx_end, max_nr_entries;
- 	int npages;
- 	bool huge;
- 	u64 gfn;
-@@ -3739,6 +3739,19 @@ static int snp_begin_psc(struct vcpu_svm
- 		return 1;
+--- a/arch/x86/kernel/ftrace.c
++++ b/arch/x86/kernel/ftrace.c
+@@ -371,6 +371,13 @@ create_trampoline(struct ftrace_ops *ops
  	}
  
-+	/*
-+	 * GHCB v2 requires the scratch area to reside within the GHCB itself,
-+	 * and PSC requests are only supported for GHCB v2+.  Thus it should be
-+	 * impossible to exceed the max PSC entry count (which is derived from
-+	 * the size of the shared GHCB buffer).
+ 	/*
++	 * Generated trampoline may contain rIP-relative addressing which
++	 * displacement needs to be fixed.
 +	 */
-+	max_nr_entries = (sev_es->ghcb_sa_len - sizeof(struct psc_hdr)) /
-+			 sizeof(struct psc_entry);
-+	if (WARN_ON_ONCE(max_nr_entries > VMGEXIT_PSC_MAX_COUNT)) {
-+		snp_complete_psc(svm, VMGEXIT_PSC_ERROR_GENERIC);
-+		return 1;
-+	}
++	text_poke_apply_relocation(trampoline, trampoline, size,
++				   (void *)start_offset, size);
 +
- next_range:
- 	/* There should be no other PSCs in-flight at this point. */
- 	if (WARN_ON_ONCE(svm->sev_es.psc_inflight)) {
-@@ -3754,7 +3767,7 @@ next_range:
- 	idx_start = hdr->cur_entry;
- 	idx_end = hdr->end_entry;
- 
--	if (idx_end >= VMGEXIT_PSC_MAX_COUNT) {
-+	if (idx_end >= max_nr_entries) {
- 		snp_complete_psc(svm, VMGEXIT_PSC_ERROR_INVALID_HDR);
- 		return 1;
- 	}
++	/*
+ 	 * The address of the ftrace_ops that is used for this trampoline
+ 	 * is stored at the end of the trampoline. This will be used to
+ 	 * load the third parameter for the callback. Basically, that
 
 
