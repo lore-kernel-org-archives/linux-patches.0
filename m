@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAB738C42F;
-	Sun,  7 Jun 2026 11:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B1B282F30;
+	Sun,  7 Jun 2026 11:01:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780830077; cv=none; b=Uc7bOEDxIF07CYUHvlV7DhBmfVIf7WcsoiRU9DOIFsyAol04gPOduB75x/6ONGOkkCZkWtu0RqfVUUB5z17CQeR/DuCZo94ImaZKtiafxH/Xz1xT9fV30lvcP2YF24Y6jH5/gpRqNfPEyCIEdzb1ndO3q190FeaIY0xLt19nH/I=
+	t=1780830080; cv=none; b=R+H/cCKI4gYrpw01B3EHy38omIt/+6tNzw3LnBtovet0xYjSjUH8wlmvh+sL1MyQX3TXzUymE7+tPJe7R6TmnG1MM6Qvq8IIFX5afKqbdTBhpW9eLq3ONpWoKRBzO44vE7qc15Oe946nbQ+v+4WFrvpVQ69wsnrguWWmOeXHP+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780830077; c=relaxed/simple;
-	bh=WZFh+OlSyc2w3bCVNJIHHj68wtcvkmY5Z/ZAVURhc5c=;
+	s=arc-20240116; t=1780830080; c=relaxed/simple;
+	bh=ZM3pYpttLHR/PT4SM51yf67t0300N0hKGBgz1tOQYrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ih82+oKFEE77XW+MjbU7xGIljnJ5qPSWWbDlL8EsKLpinW0kwTNp/5FZ8z6kyGAFMml4yiyUo/eROn1tfteYqVJDwfoHu6azx9BZx6p9rcBwnEYzuY64FT4Cy4wKQMVhcuYikpQKVFSBwtzN56hHk7ayMUp6qUwbFuPhAN6SGn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tMBDwXYi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gu1SXA3XVGRsJgileJeI11LFqsLafpvMpCeZZkX7D9G/wjnFqTfPCphAYFE3ylmppXQJ1DrpkcEmV+WO54h0ljEMdy3vXkEDsgBnCikN3vu/8fdi1udDKNxQk4PcZwjQK1EZZFkLZIhY+LbEMuFqv22uit1XHR7WH/r8SIPaPSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lvb3x12a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tMBDwXYi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D7ED1F00898;
-	Sun,  7 Jun 2026 11:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lvb3x12a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5BC1F00893;
+	Sun,  7 Jun 2026 11:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780830074;
-	bh=g/5yHgika8yrEts1iVG0Ma2Yo6D8mFL9Sl4iQbrnmNs=;
+	s=korg; t=1780830078;
+	bh=/nnWR+oETA5cZ0fT56w4h6i/XnzOK1pXCt7eataVLvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tMBDwXYiZq7XuZFbm+cEy6DU/dILhwjUWiHnRZW76DxOTozbug1eJZT8fTgwpZS1X
-	 WdMCjdUrW+9AjnyFiEptFXrRso+qdfFrij/9tAFeLtBPCYMwNnuyEdtcfIH5NpolKa
-	 IQVGCjYU4lGPEnG0BPYW6lQtx7jZef2EHGaSXRls=
+	b=Lvb3x12a6CQRRTYcdpHdqih+x9PRToQ+fTqAy7Dfc0LhrrJgHsI1npHoLoDxYGWRB
+	 kPvjsVBONbNL6sq8oYUmYzsMv631sdskR/K+/JJ1kgHeCzqT93RQeN3PuPkJCd+3vl
+	 cEDNuwlDzVbsna92ZZcX5bZV/trL8L6rPF4iL3AU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 306/315] USB: serial: mct_u232: fix memory corruption with small endpoint
-Date: Sun,  7 Jun 2026 12:01:33 +0200
-Message-ID: <20260607095738.847250526@linuxfoundation.org>
+	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 280/307] ice: fix VF queue configuration with low MTU values
+Date: Sun,  7 Jun 2026 12:01:17 +0200
+Message-ID: <20260607095738.013537932@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,80 +52,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 
-commit 915b36d701950503c4ea0f6e314b10868e59fce3 upstream.
+[ Upstream commit 3ba4dd024d26372733d1c02e13e076c6016e3320 ]
 
-The driver overrides the maximum transfer size for a specific device
-which only accepts 16 byte packets for its 32 byte bulk-out endpoint.
+The ice driver's VF queue configuration validation rejects
+databuffer_size values below 1024 bytes, which prevents VFs from
+using MTU values below 871 bytes.
 
-Make sure to never increase the maximum transfer size to prevent slab
-corruption should a malicious device report a smaller endpoint max
-packet size than expected.
+The iavf driver calculates databuffer_size based on the MTU using:
+  databuffer_size = ALIGN(MTU + LIBETH_RX_LL_LEN, 128)
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+where LIBETH_RX_LL_LEN = 26 (ETH_HLEN + 2*VLAN_HLEN + ETH_FCS_LEN).
+
+For MTU values below 871:
+  MTU 870: 870 + 26 = 896, aligned to 128 = 896 (< 1024, rejected)
+  MTU 871: 871 + 26 = 897, aligned to 128 = 1024 (>= 1024, accepted)
+
+The 1024-byte minimum seems unnecessarily restrictive, because the hardware
+supports databuffer_size as low as 128 bytes (the alignment boundary),
+which should allow MTU values down to the standard minimum of 68 bytes.
+
+I haven't found the reason why the limit was configured in the commit
+9c7dd7566d18 ("ice: add validation in OP_CONFIG_VSI_QUEUES VF message"), so
+with no more information and since it is working, change the minimum
+databuffer_size validation from 1024 to 128 bytes to allow standard low
+MTU values while still preventing invalid configurations.
+
+Fixes: 9c7dd7566d18 ("ice: add validation in OP_CONFIG_VSI_QUEUES VF message")
+cc: stable@vger.kernel.org
+Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260515182419.1597859-3-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ applied the change to ice_virtchnl.c ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/mct_u232.c |   21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_virtchnl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/mct_u232.c
-+++ b/drivers/usb/serial/mct_u232.c
-@@ -378,6 +378,7 @@ static int mct_u232_port_probe(struct us
- {
- 	struct usb_serial *serial = port->serial;
- 	struct mct_u232_private *priv;
-+	u16 pid;
+--- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
++++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
+@@ -1746,7 +1746,7 @@ static int ice_vc_cfg_qs_msg(struct ice_
  
- 	/* check first to simplify error handling */
- 	if (!serial->port[1] || !serial->port[1]->interrupt_in_urb) {
-@@ -385,6 +386,16 @@ static int mct_u232_port_probe(struct us
- 		return -ENODEV;
- 	}
- 
-+	/*
-+	 * Compensate for a hardware bug: although the Sitecom U232-P25
-+	 * device reports a maximum output packet size of 32 bytes,
-+	 * it seems to be able to accept only 16 bytes (and that's what
-+	 * SniffUSB says too...)
-+	 */
-+	pid = le16_to_cpu(serial->dev->descriptor.idProduct);
-+	if (pid == MCT_U232_SITECOM_PID)
-+		port->bulk_out_size = min(16, port->bulk_out_size);
-+
- 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
- 	if (!priv)
- 		return -ENOMEM;
-@@ -410,7 +421,6 @@ static void mct_u232_port_remove(struct
- 
- static int  mct_u232_open(struct tty_struct *tty, struct usb_serial_port *port)
- {
--	struct usb_serial *serial = port->serial;
- 	struct mct_u232_private *priv = usb_get_serial_port_data(port);
- 	int retval = 0;
- 	unsigned int control_state;
-@@ -418,15 +428,6 @@ static int  mct_u232_open(struct tty_str
- 	unsigned char last_lcr;
- 	unsigned char last_msr;
- 
--	/* Compensate for a hardware bug: although the Sitecom U232-P25
--	 * device reports a maximum output packet size of 32 bytes,
--	 * it seems to be able to accept only 16 bytes (and that's what
--	 * SniffUSB says too...)
--	 */
--	if (le16_to_cpu(serial->dev->descriptor.idProduct)
--						== MCT_U232_SITECOM_PID)
--		port->bulk_out_size = 16;
--
- 	/* Do a defined restart: the normal serial device seems to
- 	 * always turn on DTR and RTS here, so do the same. I'm not
- 	 * sure if this is really necessary. But it should not harm
+ 			if (qpi->rxq.databuffer_size != 0 &&
+ 			    (qpi->rxq.databuffer_size > ((16 * 1024) - 128) ||
+-			     qpi->rxq.databuffer_size < 1024))
++			     qpi->rxq.databuffer_size < 128))
+ 				goto error_param;
+ 			ring->rx_buf_len = qpi->rxq.databuffer_size;
+ 			if (qpi->rxq.max_pkt_size > max_frame_size ||
 
 
