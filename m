@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40C02E739E;
-	Sun,  7 Jun 2026 10:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22302E2DDD;
+	Sun,  7 Jun 2026 10:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827093; cv=none; b=H8fPFdhUuUr+wu7hQ+4/s6hycA5YUQ0y07jKVgEbyPdCnK2pOpEg1WCgDifn1pMTG8/HWHB2qVSHOiNWsOSN/6+Mz8+nlCDOWU+5jbKb11AdctxKjO/WFrtHjBmReI9jyDzffKRBYvdh4VILUs6CoyxXFEXkOTyr6xOlxB0l1Ak=
+	t=1780827098; cv=none; b=FZNGPS+D7Mqbyl2PEvTY4mSvQAp6SKaFDJlA6NbyBTSWQ2bK5R9GRTDJVfo0FGqqvaahC9OGkFEu+PzyxOLPy/FhuVW0pyWACk3GOm6S8+25v/cCI+0xHOvT8bQnsETbOfTvmitNd+WOukaJSDHfei+RlPirOy1qpbdnPAdoT1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827093; c=relaxed/simple;
-	bh=Ov1CTaHwhM/CRWD5fR7ud62UtTPAESDI3yYpicGJlMg=;
+	s=arc-20240116; t=1780827098; c=relaxed/simple;
+	bh=ZysLHZEAFQIs1V9stxUEVhQFfxEV0sNPTuCe5aOflNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fGcEJSZOGVKRhFZwYnYHckx7dgUYluqjji8gov44Zv0q4508aridjJ7oi6Uh1w4ZVYrJvcQO+1lp9/88MnDrEXcCdjHTu5nzxPspJYD+GQ18XLSyXbt2VClS0p24fCMzNjCCNxZ8DmhU07Y7H9+KCSjCEE1ttW2JstMoRfRPBGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PGl0DnTW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NwC6la/HcGpLJ5c66hBbVfWYrYNHUgKCq3TkOfhrzQ3IMji9GKLFdvCBx73YPRnfNUIiuiirv9NlxHzh/GDT8PujvlD+gK+DyuenLPAScmc+mCT/B45wueGwdy2KRegSRztJfNaIBAAWbvbkgxXUw2IjjD4GUforXSFooJlLu70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uy9Tg9OQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PGl0DnTW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A5DA1F00893;
-	Sun,  7 Jun 2026 10:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uy9Tg9OQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919621F00893;
+	Sun,  7 Jun 2026 10:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827092;
-	bh=OWkL5N3MfN5yXsd22M5FmHvSkZ+XUF4LgjQ5qNu1Snw=;
+	s=korg; t=1780827096;
+	bh=BTA3ayOCUI5CvHT1Wu4aEAXEfMdrmTo26xokmgbvU/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PGl0DnTWwMC1T8596qeCf7ldEVq4Yb2UPtBVkOJN3tqmgvJAsI0Hh0+JqS6wDvMWq
-	 09pBnKzezSoVXKc+zpSjSEJCmvfHBC30NQL01aX/hEDEfghSYiLbbHRyOxCEx2Psne
-	 pvXuoluTB2OIFH2tRwCobiffyCzoTIDkEJGM5Ed8=
+	b=uy9Tg9OQn+qgdpI3rFdCsw938jojulK4kahp1e1dTpjPpONpj4WwifmJ96He1ggP1
+	 dHjBBirZ+4F9vlmtCIjn/VuzV/E+k79bxMjh5Azr/Jcm9to9xntF2IQQqfu+d0P+UJ
+	 x2O6KVGzVpUIA1Yjz1XrROqxo778tw+xtrC1VnsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 039/315] ethtool: rss: add missing errno on RSS context delete
-Date: Sun,  7 Jun 2026 11:57:06 +0200
-Message-ID: <20260607095728.984954761@linuxfoundation.org>
+Subject: [PATCH 7.0 062/332] ASoC: codecs: simple-mux: Fix enum control bounds check
+Date: Sun,  7 Jun 2026 11:57:11 +0200
+Message-ID: <20260607095730.408997341@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,44 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 3e6c6e9782ff8a8d8ded774b07ad4590cd61d04c ]
+[ Upstream commit f63ad68e18d774a5d15cd7e405ead63f6b322679 ]
 
-Remember to set ret before jumping out if someone tries
-to delete a context on a device which doesn't support
-contexts.
+simple_mux_control_put() rejects values greater than e->items, but
+enum control values are zero based. For the two-entry mux used by this
+driver, valid values are 0 and 1, so value 2 must be rejected as well.
 
-Fixes: fbe09277fa63 ("ethtool: rss: support removing contexts via Netlink")
-Link: https://patch.msgid.link/20260522230647.1705600-3-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Accepting e->items can store an invalid mux state, pass it to the GPIO
+setter, and pass it on to the DAPM mux update path where it is used as
+an index into the enum text array.
+
+Use the same >= e->items check used by the ASoC enum helpers.
+
+Fixes: 342fbb7578d1 ("ASoC: add simple-mux")
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260527-asoc-simple-mux-enum-bounds-v1-1-3f805b9fc671@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/rss.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/codecs/simple-mux.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ethtool/rss.c b/net/ethtool/rss.c
-index 926be5698ba4cc..688c0e4bba69db 100644
---- a/net/ethtool/rss.c
-+++ b/net/ethtool/rss.c
-@@ -1160,8 +1160,10 @@ int ethnl_rss_delete_doit(struct sk_buff *skb, struct genl_info *info)
- 	dev = req.dev;
- 	ops = dev->ethtool_ops;
+diff --git a/sound/soc/codecs/simple-mux.c b/sound/soc/codecs/simple-mux.c
+index 069555f35f7359..c2f906a3f074ce 100644
+--- a/sound/soc/codecs/simple-mux.c
++++ b/sound/soc/codecs/simple-mux.c
+@@ -51,7 +51,7 @@ static int simple_mux_control_put(struct snd_kcontrol *kcontrol,
+ 	struct snd_soc_component *c = snd_soc_dapm_to_component(dapm);
+ 	struct simple_mux *priv = snd_soc_component_get_drvdata(c);
  
--	if (!ops->create_rxfh_context)
-+	if (!ops->create_rxfh_context) {
-+		ret = -EOPNOTSUPP;
- 		goto exit_free_dev;
-+	}
+-	if (ucontrol->value.enumerated.item[0] > e->items)
++	if (ucontrol->value.enumerated.item[0] >= e->items)
+ 		return -EINVAL;
  
- 	rtnl_lock();
- 	netdev_lock_ops(dev);
+ 	if (priv->mux == ucontrol->value.enumerated.item[0])
 -- 
 2.53.0
 
