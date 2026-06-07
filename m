@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6CA257855;
-	Sun,  7 Jun 2026 10:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060E02C1595;
+	Sun,  7 Jun 2026 10:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828883; cv=none; b=L1Hs2yMoRLwHBz2E/5CvmWfmy7XMVIUJOrlIevW6KGcySfoE1cj0a7+RX92pEVwmcC2nCU6O1zO/dZkp8B1IGsUHFKJ6ZnWHNT71z/uSUDRXr9yKwqAMojzG7RXMdsNt7VwrRslMxR3V0WCzXotwmviI6DEnqRgQ0HJJzatYxro=
+	t=1780828887; cv=none; b=jFvgkq0Yn2z3x/75qC9w6DDKWj13tfJrEJ521W0ZqYE3koQ19IiAaDIQa2AjwUKb7px8JN5lmBx1enrrCkoGoa/b/vtbcIqUIa3oax0OKCirbQJSnH1N6ejPX74REX137YAW8vpN0VjaFtFGiQm5dZWXNtOBr0BxNZZ7MFPJU9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828883; c=relaxed/simple;
-	bh=TcKwQJkkbj8demCcqupgg1vMjphJLZEheJg1zdfbltI=;
+	s=arc-20240116; t=1780828887; c=relaxed/simple;
+	bh=e3qF5TNgq/8FwsWLTJDVFTg0S3QzrKqLoxouKvCLvjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Pf8htESTajnJWz30YyXwzgWw5Lp3efoHUJGF7Jy7YvTDpt3269wVd7kxzyAAEWZ5A6PE2wgGG9i4HEuEog9vv50+YXvGZdcRuLAQCtKo2CevlUiySqhEDOXpkeWP/bXiLCMmoFEVXdMGvEgofwawOJgYeEFzEdIr21t36nQWSyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oomw3dkz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S/90bq0HOReuqz2uR64RmrMoTXEVB6r237OMsKlH/3GcMc9u75klwOig8wUTLVY2bJtAbmDKtBnJMuIr5Y5RTE1qSPmo7HnwP/zDSMvzvN905+IgvmUVXkqq0wQqtz8zrC153CNnnH4s7y66FOsBqplo4OD2cFIo8IcnaJepGMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jts7goZ5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oomw3dkz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A44C1F00893;
-	Sun,  7 Jun 2026 10:41:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jts7goZ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561531F00893;
+	Sun,  7 Jun 2026 10:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828882;
-	bh=kBebDAnQOhp2TMonCtjm/5H8u7KvCArz/u2qHFCoh/I=;
+	s=korg; t=1780828885;
+	bh=SKTARaohvO3beBSjEdFLP0jj7IHZh4ez3cIBT2rn9N4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oomw3dkzkg8PW0aczsyiQik42QicpuASOQ1NWnon/MiRpEPydsDwAkCc9IcuvnAUg
-	 nTEWg+acdtSFmcqFBpimDdHqgeF+Rd83+0OEiqwfVZjuyXOG5eHL3+4exJN6cTdPg+
-	 g4d/4MUy64anwcydqus1GUSLZQIS3FUaI1aSvwXg=
+	b=jts7goZ5UpNKQcWPDzldtuxmSWxt1Bx1aKZWvBpfGfY+j2BlzGh81qka6DVdAf22f
+	 SUU6Nq1A4s2mhOP8JGYoozrIFJLixu68cH7SE//W50TYmcOooKjCDjvr0EPNWLHIpz
+	 h8aGp3em5CP/YAg6QjvkzqCQPNoKKdp5o1rygg7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@bootlin.com>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>,
-	James Nuss <jamesnuss@nanometrics.ca>
-Subject: [PATCH 6.12 176/307] iio: buffer: Fix DMA fence leak in iio_buffer_enqueue_dmabuf()
-Date: Sun,  7 Jun 2026 11:59:33 +0200
-Message-ID: <20260607095734.180033883@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Ashutosh Desai <ashutoshdesai993@gmail.com>,
+	David Heidelberg <david@ixit.cz>
+Subject: [PATCH 6.18 199/315] nfc: hci: fix out-of-bounds read in HCP header parsing
+Date: Sun,  7 Jun 2026 11:59:46 +0200
+Message-ID: <20260607095734.880577528@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +45,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benoît Monin <benoit.monin@bootlin.com>
+From: Ashutosh Desai <ashutoshdesai993@gmail.com>
 
-commit a093999355084bdbfe6e97f1dd232e58a1525f0b upstream.
+commit f040e590c035bfd9553fe79ee9585caf1b14d67b upstream.
 
-iio_buffer_enqueue_dmabuf() allocates a struct iio_dma_fence (104 bytes,
-kmalloc-128) via kmalloc_obj()+dma_fence_init(), which sets the initial
-kref to 1.  It then calls dma_resv_add_fence() which takes a second
-reference (kref=2), and stores a raw pointer in block->fence.
+Both nfc_hci_recv_from_llc() and nci_hci_data_received_cb() read
+packet->header from skb->data at function entry without first checking
+that the buffer holds at least one byte. A malicious NFC peer can send
+a 0-byte HCP frame that passes through the SHDLC layer and reaches
+these functions, causing an out-of-bounds heap read of packet->header.
+The same 0-byte frame, if queued as a non-final fragment, also causes
+the reassembly loop to underflow msg_len to UINT_MAX, triggering
+skb_over_panic() when the reassembled skb is written.
 
-On the success path the function returns without calling dma_fence_put()
-to release the initial reference, so every buffer enqueue permanently
-leaks one kmalloc-128 allocation.
+Fix this by adding a pskb_may_pull() check at the entry of each
+function before packet->header is first accessed. The existing
+pskb_may_pull() checks before the reassembled hcp_skb is cast to
+struct hcp_packet remain in place to guard the 2-byte HCP message
+header.
 
-The iio_buffer_cleanup() work item only releases the temporary reference
-taken during completion signalling by iio_buffer_signal_dmabuf_done();
-the initial reference from dma_fence_init() is never released.
-
-With four iio_rwdev instances at 240kHz and 512 samples per buffer,
-this produces ~1875 kmalloc-128 allocations per second matching the
-observed slab growth exactly. A test with ftrace confirmed that the
-dma_fence_destroy event was never triggered.
-
-Fix by calling dma_fence_put() after dma_resv_add_fence(), transferring
-ownership of the fence to the DMA reservation object. The DMA fence then
-gets properly discarded after being signalled.
-
-Fixes: 3e26d9f08fbe0 ("iio: core: Add new DMABUF interface infrastructure")
-Originally-by: James Nuss <jamesnuss@nanometrics.ca>
-Signed-off-by: Benoît Monin <benoit.monin@bootlin.com>
-Reviewed-by: Paul Cercueil <paul@crapouillou.net>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: 8b8d2e08bf0d ("NFC: HCI support")
+Fixes: 11f54f228643 ("NFC: nci: Add HCI over NCI protocol support")
+Cc: stable@vger.kernel.org
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
+Link: https://patch.msgid.link/20260505170712.96560-1-ashutoshdesai993@gmail.com
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-buffer.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/nfc/hci/core.c |   10 ++++++++++
+ net/nfc/nci/hci.c  |   10 ++++++++++
+ 2 files changed, 20 insertions(+)
 
---- a/drivers/iio/industrialio-buffer.c
-+++ b/drivers/iio/industrialio-buffer.c
-@@ -1911,6 +1911,7 @@ static int iio_buffer_enqueue_dmabuf(str
+--- a/net/nfc/hci/core.c
++++ b/net/nfc/hci/core.c
+@@ -861,6 +861,11 @@ static void nfc_hci_recv_from_llc(struct
+ 	struct sk_buff *frag_skb;
+ 	int msg_len;
  
- 	dma_resv_add_fence(dmabuf->resv, &fence->base,
- 			   dma_to_ram ? DMA_RESV_USAGE_WRITE : DMA_RESV_USAGE_READ);
-+	dma_fence_put(&fence->base);
- 	dma_resv_unlock(dmabuf->resv);
++	if (!pskb_may_pull(skb, NFC_HCI_HCP_PACKET_HEADER_LEN)) {
++		kfree_skb(skb);
++		return;
++	}
++
+ 	packet = (struct hcp_packet *)skb->data;
+ 	if ((packet->header & ~NFC_HCI_FRAGMENT) == 0) {
+ 		skb_queue_tail(&hdev->rx_hcp_frags, skb);
+@@ -904,6 +909,11 @@ static void nfc_hci_recv_from_llc(struct
+ 	 * unblock waiting cmd context. Otherwise, enqueue to dispatch
+ 	 * in separate context where handler can also execute command.
+ 	 */
++	if (!pskb_may_pull(hcp_skb, NFC_HCI_HCP_HEADER_LEN)) {
++		kfree_skb(hcp_skb);
++		return;
++	}
++
+ 	packet = (struct hcp_packet *)hcp_skb->data;
+ 	type = HCP_MSG_GET_TYPE(packet->message.header);
+ 	if (type == NFC_HCI_HCP_RESPONSE) {
+--- a/net/nfc/nci/hci.c
++++ b/net/nfc/nci/hci.c
+@@ -439,6 +439,11 @@ void nci_hci_data_received_cb(void *cont
+ 		return;
+ 	}
  
- 	cookie = dma_fence_begin_signalling();
++	if (!pskb_may_pull(skb, NCI_HCI_HCP_PACKET_HEADER_LEN)) {
++		kfree_skb(skb);
++		return;
++	}
++
+ 	packet = (struct nci_hcp_packet *)skb->data;
+ 	if ((packet->header & ~NCI_HCI_FRAGMENT) == 0) {
+ 		skb_queue_tail(&ndev->hci_dev->rx_hcp_frags, skb);
+@@ -482,6 +487,11 @@ void nci_hci_data_received_cb(void *cont
+ 	 * unblock waiting cmd context. Otherwise, enqueue to dispatch
+ 	 * in separate context where handler can also execute command.
+ 	 */
++	if (!pskb_may_pull(hcp_skb, NCI_HCI_HCP_HEADER_LEN)) {
++		kfree_skb(hcp_skb);
++		return;
++	}
++
+ 	packet = (struct nci_hcp_packet *)hcp_skb->data;
+ 	type = NCI_HCP_MSG_GET_TYPE(packet->message.header);
+ 	if (type == NCI_HCI_HCP_RESPONSE) {
 
 
