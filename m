@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3F4257855;
-	Sun,  7 Jun 2026 10:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CFE7257855;
+	Sun,  7 Jun 2026 10:41:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828859; cv=none; b=eoLzPelC8Nv7Max+9J2OMJlrumMJ2v9BrZKs6uswgciBQgUQ1pn2/CpeVMLwlufuLtSN/+s6CoMWQ92vgt2dzJGIzekniCAWBZWk36ft8gBIcI543ACwjV2PB2GU9995QdFyimPB7HLk8l1cnrE0cus+Tgi8DaWfYvjZzuLxkRY=
+	t=1780828863; cv=none; b=AqOuKGu/b2paZEsslYod6i3mmELZ4SMfQMxb/jMwaxZQ/khewKz7Pwx+gY/OP8jI2uFgDuQfnJlZZdQjo05IO9yvraa6S+Zpku2nIEBlEFgJ3rB6QHsS93aE9S7KORveYhNPmzZjERJyfybjQI2RWkfLjvvdqdpxY4AJ5vufWJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828859; c=relaxed/simple;
-	bh=64M1n/Ao7EBgO8OSQ27osvw5wC7WJOelsDSpfpFgeGc=;
+	s=arc-20240116; t=1780828863; c=relaxed/simple;
+	bh=KWmSYggZwNqmrUd0oORzJoz8usVhf4rlPKv3WklfJNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cVMWxDvlXzGNswNxVhZqITO9sw+U/kJliB5MD84hIJpMYPyKo578pxSvLvNhPTPP0da06Q+MO0JnbY2XmjJy0J7dtWJTvqVokCY7KSWU79CuszdgF6XUwbapAUgIAW6oYFcZQarmHFxGp0J1kwcedMUrnvWjS7zU4Ao1I30SkzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=juEpF4xu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tg1kmH/IoS37/O+oL6Ze0BQt3RdCjpHyl573gtujUFlANY9hml7vpdN6NHWZSptJpdse5ZGr1NLbrYuj3lqRqcxSWXzUSPLWtGawugMvPntzts6pMNkIYN3vnEC8AQJ2XUITIz+AOmbIY2MbKSBU3Pvas8Ach/AOZ9Fd3+aOCsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Le2SwKKn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="juEpF4xu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D8A01F00893;
-	Sun,  7 Jun 2026 10:40:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Le2SwKKn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A1E11F00893;
+	Sun,  7 Jun 2026 10:41:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828858;
-	bh=ZEU2+KSCqvPGdBxUGB0dRk15txfJqm3UeSH2PovxfmQ=;
+	s=korg; t=1780828862;
+	bh=yZQdIH0laiEOmwB9tpQUwLQvPYlq8U/Lcp2vXWK1IUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=juEpF4xu2aR0Xv8eZUqf/mpMInJH3klDEB4lbepWtN2bXeRMCDW1UW5FnJ4sG26he
-	 NrASIqobgOh0q7d+mzqPtXWoxXnxarWOLQd2ly0zKlZnldJk/3rB/4uoRzI1Sh79qo
-	 L7K2vHqLEVrJIEVkh+MVFtVfC13ZZY4nkiS4ht4o=
+	b=Le2SwKKnT5Zi1USNkd8nsvqoVwvr49Gi+cZE7d3xzdWsuJhX0p9/0acC3zivitPFn
+	 1eCw2/YM1JGOApaIPzMpxOgOcfMMSa6Y1IH2QHLwr98y6x0In/mNsZ54RtDUuoTORv
+	 0/2pZjo2u5xt7RrDXz7gkJolmiT3fhv+SLwVzahc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Conte <aldocontelk@gmail.com>,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.12 174/307] iio: light: cm3323: fix reg_conf not being initialized correctly
-Date: Sun,  7 Jun 2026 11:59:31 +0200
-Message-ID: <20260607095734.107987227@linuxfoundation.org>
+	Ping Cheng <ping.cheng@wacom.com>,
+	Lee Jones <lee@kernel.org>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.18 197/315] HID: wacom: Fix OOB write in wacom_hid_set_device_mode()
+Date: Sun,  7 Jun 2026 11:59:44 +0200
+Message-ID: <20260607095734.806347423@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,70 +47,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aldo Conte <aldocontelk@gmail.com>
+From: Lee Jones <lee@kernel.org>
 
-commit 1f4f0bcc5255dec5c4c3a1551bf49d8c33b69b20 upstream.
+commit c0a8899e02ddebd51e2589835182c239c2e224ae upstream.
 
-The code stores the return value of i2c_smbus_write_word_data()
-in data->reg_conf; however, this value represents the result
-of the write operation and not the value actually written to
-the configuration register. This meant that the contents of
-data->reg_conf did not truly reflect the contents
-of the hardware register.
+wacom_hid_set_device_mode() currently assumes that the HID_DG_INPUTMODE
+usage is always located in the first field (field[0]) of the feature report.
+However, a device can specify HID_DG_INPUTMODE in a different field.
 
-Instead, save the value of the register before the write
-and use this value in the I2C write.
+If HID_DG_INPUTMODE is in a field other than the first one and the first
+field has a report_count smaller than the usage_index of HID_DG_INPUTMODE,
+this leads to an out-of-bounds write to r->field[0]->value.
 
-The bug was found by code inspection: i2c_smbus_write_word_data()
-returns 0 on success, not the value written to the register.
+Fix this by storing the field index of HID_DG_INPUTMODE in 'struct
+hid_data' during feature mapping.  In wacom_hid_set_device_mode(), use
+this stored field index to access the correct field and add bounds
+checks to ensure both the field index and the value index are within
+valid ranges before writing.
 
-Tested using i2c-stub on a Raspberry Pi 3B running a custom 6.19.10
-kernel. Before loading the driver, the configuration register 0x00
-CM3323_CMD_CONF was populated with 0x0030 using
-`i2cset -y 11 0x10 0x00 0x0030 w`, encoding an integration time of 320ms
-in bits[6:4].
-
-Due to incorrect initialization of data->reg_conf in
-cm3323_init(), the print of integration_time returns 0.040000
-instead of the expected 0.320000. This happens because the read of the
-integration_time depends on cm3323_get_it_bits() that is based on the
-value of data->reg_conf, which is erroneously set to 0.
-
-With this fix applied, data->reg_conf correctly saves 0x0030 after init
-and the successive integration_time reports 0.320000 as expected.
-
-Fixes: 8b0544263761 ("iio: light: Add support for Capella CM3323 color sensor")
 Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Conte <aldocontelk@gmail.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: 5ae6e89f7409 ("HID: wacom: implement the finger part of the HID generic handling")
+Tested-by: Ping Cheng <ping.cheng@wacom.com>
+Reviewed-by: Ping Cheng <ping.cheng@wacom.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/cm3323.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/hid/wacom_sys.c |   13 ++++++++++---
+ drivers/hid/wacom_wac.h |    1 +
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/iio/light/cm3323.c
-+++ b/drivers/iio/light/cm3323.c
-@@ -89,15 +89,14 @@ static int cm3323_init(struct iio_dev *i
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -356,6 +356,7 @@ static void wacom_feature_mapping(struct
  
- 	/* enable sensor and set auto force mode */
- 	ret &= ~(CM3323_CONF_SD_BIT | CM3323_CONF_AF_BIT);
-+	data->reg_conf = ret;
+ 		hid_data->inputmode = field->report->id;
+ 		hid_data->inputmode_index = usage->usage_index;
++		hid_data->inputmode_field_index = field->index;
+ 		break;
  
--	ret = i2c_smbus_write_word_data(data->client, CM3323_CMD_CONF, ret);
-+	ret = i2c_smbus_write_word_data(data->client, CM3323_CMD_CONF, data->reg_conf);
- 	if (ret < 0) {
- 		dev_err(&data->client->dev, "Error writing reg_conf\n");
- 		return ret;
+ 	case HID_UP_DIGITIZER:
+@@ -571,9 +572,14 @@ static int wacom_hid_set_device_mode(str
+ 
+ 	re = &(hdev->report_enum[HID_FEATURE_REPORT]);
+ 	r = re->report_id_hash[hid_data->inputmode];
+-	if (r) {
+-		r->field[0]->value[hid_data->inputmode_index] = 2;
+-		hid_hw_request(hdev, r, HID_REQ_SET_REPORT);
++	if (r && hid_data->inputmode_field_index >= 0 &&
++	    hid_data->inputmode_field_index < r->maxfield) {
++		struct hid_field *field = r->field[hid_data->inputmode_field_index];
++
++		if (field && hid_data->inputmode_index < field->report_count) {
++			field->value[hid_data->inputmode_index] = 2;
++			hid_hw_request(hdev, r, HID_REQ_SET_REPORT);
++		}
  	}
- 
--	data->reg_conf = ret;
--
  	return 0;
  }
+@@ -2846,6 +2852,7 @@ static int wacom_probe(struct hid_device
+ 		return -ENODEV;
  
+ 	wacom_wac->hid_data.inputmode = -1;
++	wacom_wac->hid_data.inputmode_field_index = -1;
+ 	wacom_wac->mode_report = -1;
+ 
+ 	if (hid_is_usb(hdev)) {
+--- a/drivers/hid/wacom_wac.h
++++ b/drivers/hid/wacom_wac.h
+@@ -295,6 +295,7 @@ struct wacom_shared {
+ struct hid_data {
+ 	__s16 inputmode;	/* InputMode HID feature, -1 if non-existent */
+ 	__s16 inputmode_index;	/* InputMode HID feature index in the report */
++	__s16 inputmode_field_index; /* InputMode HID feature field index in the report */
+ 	bool sense_state;
+ 	bool inrange_state;
+ 	bool eraser;
 
 
