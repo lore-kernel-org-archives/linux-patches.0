@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E41FC4204E;
-	Sun,  7 Jun 2026 10:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5BE4204E;
+	Sun,  7 Jun 2026 10:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827010; cv=none; b=YHxsSyBCNm5ZAbMbKggy1eP3JM7VL9XsrI7fhYd9A66wIIQ/6IDSiypWxcFbwtD6ISAyLchtfefUgD9qxilP4Y+r+VHQecI78vKlC66NcK5aWpYvtCPi13XNcJzl+SgQPlrNjdaW3pINM0tPyQBqnCHQh3UMmVN/e41h1hSvZs8=
+	t=1780827013; cv=none; b=qFoHVPv8cSzFDQ/uFP1JrQN3VjEkKat2ERqYqYMcNRq+ENNC+4cCfftKnr8edoq+rMCJJvmyNWTpsNXKEnytpkZNYvJYxnDgk3X4PpYJ9aYrZ5A2y1rytd7TvnGlUO3Xw/Jzd8zAmE/gW3oLQc7MrWZpvyDdgd7fUsuNFiL58qE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827010; c=relaxed/simple;
-	bh=lYShQ24XEsndKmCLGqu+2p7LV6bbKjSyZP23grdlBS4=;
+	s=arc-20240116; t=1780827013; c=relaxed/simple;
+	bh=Y9lgUfFcYfhOdsPv9X7Ccz1LIQykL64UeMd4Itq5aUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qMdqyZAQBoADlLF+S5dAOAP8l9Jr4Ijm/bo032xKt82f2ezRNAUToKin0ybqdd9hmN7I7tq5HXGIOLwzDQJGVlMDupVkDOPTFB+A8HwuzWAhHOuU+GyxHRRoEPUNnA0mbbBbHl5YXaBCgvYwZtYlk46THBehDKS1KNkGr3pLEYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdIGc7+X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HKIw1VxBzlhld1vPbB9IANGV5qQ5uXE2wYZA+itRhrdx5+EiPwhPxAGytGcS4zJRgRooS9dq8eEMTXcUroNsj41P3XdoPC7VyIuRZ9uNsyRqeX2DeFwJHiDoZqLETI6vlFJMLIOOOLU9b8mVyPmLP8XvIewhIkx1uA4N4+PXYeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=166ttxUS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdIGc7+X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0131F00893;
-	Sun,  7 Jun 2026 10:10:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="166ttxUS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB171F00893;
+	Sun,  7 Jun 2026 10:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827008;
-	bh=NHWDb1ufnpeTKvMqADv4oS3ZJc03IjL3l3W9yotcJU4=;
+	s=korg; t=1780827012;
+	bh=ohGih8nhtqNA6ik+Q5cl5DkHSaqcXGCQjnB+z9VeUCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WdIGc7+X7J7n6BWuutR3fkII0g4gDonPlhUGzCieLfWmyYYsRrneNvGPTMcdV9/1a
-	 w7nuJQ2cqgAq3nGEN6jlvtBXjL5kH8jHTB9FAIDsQuiKh+Yn8FXdh+l1i5LT4Bff/Q
-	 2me9kFLDKenq6qhf+CdUmjlCGY3yilzrZg6k+DJw=
+	b=166ttxUSowU3KCZG8xdCPBTMWU5d8mX64rkaRjcj4uUjaV+/W1Jo1C2F62+q+0BVh
+	 OOvfxQKJFqrfd9uqgcHBYYcvFQGkzW1/4tObhfLtVxVbyUBIYQEmNqNaW1nTvFSiOj
+	 LAp27/HBvXAUViB88TlU8UrA64M3evAhv0DjMv/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
-	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Luka Gejak <luka.gejak@linux.dev>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 014/307] arm64: debug: call step handlers statically
-Date: Sun,  7 Jun 2026 11:56:51 +0200
-Message-ID: <20260607095728.151344274@linuxfoundation.org>
+Subject: [PATCH 6.18 032/315] net: hsr: fix potential OOB access in supervision frame handling
+Date: Sun,  7 Jun 2026 11:56:59 +0200
+Message-ID: <20260607095728.701541087@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,212 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+From: Luka Gejak <luka.gejak@linux.dev>
 
-[ Upstream commit 403b48aad5b3e857b8c2576ce6a421f3d23dd6a6 ]
+[ Upstream commit f229426072fc865654a60978bb7fda790a051ff3 ]
 
-Software stepping checks for the correct handler by iterating over a list
-of dynamically registered handlers and calling all of them until one
-handles the exception.
+Ensure the entire TLV header is linearized before access by adding
+sizeof(struct hsr_sup_tlv) to the pskb_may_pull() calls. Without this,
+a truncated frame could cause an out-of-bounds access.
 
-This is the only generic way to handle software stepping handlers in arm64
-as the exception does not provide an immediate that could be checked,
-contrary to software breakpoints.
-
-However, the registration mechanism is not exported and has only
-two current users : the KGDB stepping handler, and the uprobe single step
-handler.
-Given that one comes from user mode and the other from kernel mode, call
-the appropriate one by checking the source EL of the exception.
-Add a stand-in that returns DBG_HOOK_ERROR when the configuration
-options are not enabled.
-
-Remove `arch_init_uprobes()` as it is not useful anymore and is
-specific to arm64.
-
-Unify the naming of the handler to XXX_single_step_handler(), making it
-clear they are related.
-
-Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Tested-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
-Reviewed-by: Will Deacon <will@kernel.org>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20250707114109.35672-5-ada.coupriediaz@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Fixes: eafaa88b3eb7 ("net: hsr: Add support for redbox supervision frames")
+Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20260523130330.61880-1-luka.gejak@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/kgdb.h      |  9 +++++++++
- arch/arm64/include/asm/uprobes.h   |  9 +++++++++
- arch/arm64/kernel/debug-monitors.c | 25 ++++++-------------------
- arch/arm64/kernel/kgdb.c           | 17 +++--------------
- arch/arm64/kernel/probes/uprobes.c | 15 +--------------
- 5 files changed, 28 insertions(+), 47 deletions(-)
+ net/hsr/hsr_forward.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kgdb.h b/arch/arm64/include/asm/kgdb.h
-index 82a76b2102fb61..3184f5d1e3ae49 100644
---- a/arch/arm64/include/asm/kgdb.h
-+++ b/arch/arm64/include/asm/kgdb.h
-@@ -26,6 +26,15 @@ extern int kgdb_fault_expected;
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index aefc9b6936ba0c..299de290ddaa5c 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -84,7 +84,7 @@ static bool is_supervision_frame(struct hsr_priv *hsr, struct sk_buff *skb)
  
- int kgdb_brk_handler(struct pt_regs *regs, unsigned long esr);
- int kgdb_compiled_brk_handler(struct pt_regs *regs, unsigned long esr);
-+#ifdef CONFIG_KGDB
-+int kgdb_single_step_handler(struct pt_regs *regs, unsigned long esr);
-+#else
-+static inline int kgdb_single_step_handler(struct pt_regs *regs,
-+	unsigned long esr)
-+{
-+	return DBG_HOOK_ERROR;
-+}
-+#endif
+ 	/* Get next tlv */
+ 	total_length += hsr_sup_tag->tlv.HSR_TLV_length;
+-	if (!pskb_may_pull(skb, total_length))
++	if (!pskb_may_pull(skb, total_length + sizeof(struct hsr_sup_tlv)))
+ 		return false;
+ 	skb_pull(skb, total_length);
+ 	hsr_sup_tlv = (struct hsr_sup_tlv *)skb->data;
+@@ -100,7 +100,7 @@ static bool is_supervision_frame(struct hsr_priv *hsr, struct sk_buff *skb)
  
- #endif /* !__ASSEMBLY__ */
+ 		/* make sure another tlv follows */
+ 		total_length += sizeof(struct hsr_sup_tlv) + hsr_sup_tlv->HSR_TLV_length;
+-		if (!pskb_may_pull(skb, total_length))
++		if (!pskb_may_pull(skb, total_length + sizeof(struct hsr_sup_tlv)))
+ 			return false;
  
-diff --git a/arch/arm64/include/asm/uprobes.h b/arch/arm64/include/asm/uprobes.h
-index 3659a79a9f325f..89bfb0213a500c 100644
---- a/arch/arm64/include/asm/uprobes.h
-+++ b/arch/arm64/include/asm/uprobes.h
-@@ -29,5 +29,14 @@ struct arch_uprobe {
- };
- 
- int uprobe_brk_handler(struct pt_regs *regs, unsigned long esr);
-+#ifdef CONFIG_UPROBES
-+int uprobe_single_step_handler(struct pt_regs *regs, unsigned long esr);
-+#else
-+static inline int uprobe_single_step_handler(struct pt_regs *regs,
-+	unsigned long esr)
-+{
-+	return DBG_HOOK_ERROR;
-+}
-+#endif
- 
- #endif
-diff --git a/arch/arm64/kernel/debug-monitors.c b/arch/arm64/kernel/debug-monitors.c
-index 5e892448030005..f929b107840de6 100644
---- a/arch/arm64/kernel/debug-monitors.c
-+++ b/arch/arm64/kernel/debug-monitors.c
-@@ -200,30 +200,17 @@ void unregister_kernel_step_hook(struct step_hook *hook)
- }
- 
- /*
-- * Call registered single step handlers
-+ * Call single step handlers
-  * There is no Syndrome info to check for determining the handler.
-- * So we call all the registered handlers, until the right handler is
-- * found which returns zero.
-+ * However, there is only one possible handler for user and kernel modes, so
-+ * check and call the appropriate one.
-  */
- static int call_step_hook(struct pt_regs *regs, unsigned long esr)
- {
--	struct step_hook *hook;
--	struct list_head *list;
--	int retval = DBG_HOOK_ERROR;
-+	if (user_mode(regs))
-+		return uprobe_single_step_handler(regs, esr);
- 
--	list = user_mode(regs) ? &user_step_hook : &kernel_step_hook;
--
--	/*
--	 * Since single-step exception disables interrupt, this function is
--	 * entirely not preemptible, and we can use rcu list safely here.
--	 */
--	list_for_each_entry_rcu(hook, list, node)	{
--		retval = hook->fn(regs, esr);
--		if (retval == DBG_HOOK_HANDLED)
--			break;
--	}
--
--	return retval;
-+	return kgdb_single_step_handler(regs, esr);
- }
- NOKPROBE_SYMBOL(call_step_hook);
- 
-diff --git a/arch/arm64/kernel/kgdb.c b/arch/arm64/kernel/kgdb.c
-index e3c9e6e11a318c..f8eaf6084c3d5a 100644
---- a/arch/arm64/kernel/kgdb.c
-+++ b/arch/arm64/kernel/kgdb.c
-@@ -250,7 +250,7 @@ int kgdb_compiled_brk_handler(struct pt_regs *regs, unsigned long esr)
- }
- NOKPROBE_SYMBOL(kgdb_compiled_brk_handler);
- 
--static int kgdb_step_brk_fn(struct pt_regs *regs, unsigned long esr)
-+int kgdb_single_step_handler(struct pt_regs *regs, unsigned long esr)
- {
- 	if (!kgdb_single_step)
- 		return DBG_HOOK_ERROR;
-@@ -258,11 +258,7 @@ static int kgdb_step_brk_fn(struct pt_regs *regs, unsigned long esr)
- 	kgdb_handle_exception(0, SIGTRAP, 0, regs);
- 	return DBG_HOOK_HANDLED;
- }
--NOKPROBE_SYMBOL(kgdb_step_brk_fn);
--
--static struct step_hook kgdb_step_hook = {
--	.fn		= kgdb_step_brk_fn
--};
-+NOKPROBE_SYMBOL(kgdb_single_step_handler);
- 
- static int __kgdb_notify(struct die_args *args, unsigned long cmd)
- {
-@@ -301,13 +297,7 @@ static struct notifier_block kgdb_notifier = {
-  */
- int kgdb_arch_init(void)
- {
--	int ret = register_die_notifier(&kgdb_notifier);
--
--	if (ret != 0)
--		return ret;
--
--	register_kernel_step_hook(&kgdb_step_hook);
--	return 0;
-+	return register_die_notifier(&kgdb_notifier);
- }
- 
- /*
-@@ -317,7 +307,6 @@ int kgdb_arch_init(void)
-  */
- void kgdb_arch_exit(void)
- {
--	unregister_kernel_step_hook(&kgdb_step_hook);
- 	unregister_die_notifier(&kgdb_notifier);
- }
- 
-diff --git a/arch/arm64/kernel/probes/uprobes.c b/arch/arm64/kernel/probes/uprobes.c
-index fc1bd19c827e6f..6ae4396577d4a6 100644
---- a/arch/arm64/kernel/probes/uprobes.c
-+++ b/arch/arm64/kernel/probes/uprobes.c
-@@ -174,7 +174,7 @@ int uprobe_brk_handler(struct pt_regs *regs,
- 	return DBG_HOOK_ERROR;
- }
- 
--static int uprobe_single_step_handler(struct pt_regs *regs,
-+int uprobe_single_step_handler(struct pt_regs *regs,
- 				      unsigned long esr)
- {
- 	struct uprobe_task *utask = current->utask;
-@@ -186,16 +186,3 @@ static int uprobe_single_step_handler(struct pt_regs *regs,
- 	return DBG_HOOK_ERROR;
- }
- 
--/* uprobe single step handler hook */
--static struct step_hook uprobes_step_hook = {
--	.fn = uprobe_single_step_handler,
--};
--
--static int __init arch_init_uprobes(void)
--{
--	register_user_step_hook(&uprobes_step_hook);
--
--	return 0;
--}
--
--device_initcall(arch_init_uprobes);
+ 		/* get next tlv */
 -- 
 2.53.0
 
