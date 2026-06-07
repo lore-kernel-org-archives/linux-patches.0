@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8EA12CDA5;
-	Sun,  7 Jun 2026 10:58:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B7012CDA5;
+	Sun,  7 Jun 2026 10:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829892; cv=none; b=IOb2qu1nCu53aOpUfIKrXXHYBxF/8qUnjrwFyMCrxyl7dA2n6MN3l0KvysfnwFf0rDfnQ+7ZSSumIEQIqPpfpY/dZdk2fgeEm5zSn3wwhP/WkjxapiJurF/N8EAlS0Ok2lrtXbUw3zPEEYxWX+YzXRCgN+WPE6bJSMF2k7dSG8M=
+	t=1780829896; cv=none; b=eTKa7PwwMhnHI8kIACYRbytV55OhYjZySAa/kNjpmMNRrK1UyNV0KB+jhbgfQBq1JidzRcpBOyOxNMBfGXKc/buOTZrbtgPrgWS9caRR2jpM9nPd82lgVq1jHXX6gdJBwXWI1dFpNG2TQ7vRPHRH61HKpVUEYrs3Eyo93cnAWs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829892; c=relaxed/simple;
-	bh=2g7e2u6O0Gcph89Z6/VLQderth/WVN+eaeHG9xHeXzQ=;
+	s=arc-20240116; t=1780829896; c=relaxed/simple;
+	bh=tToug/wcliZJCoaz8q5f7YMkzy2pi3F3JF2ok4ZIv5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ma0bV3uOE071P8zYy6+a3bSbsD7quMENSmnE6PejDPK9hSpLlGNmLAgTtMxTKfjSg4lFxJKV+FTY8I1Ed0dwPpAEMfXcFY6l+BjfjXTVBPhTZ4vHZjQbRJwB71REzJiGcP73YT1Mc8ROQi8emSB+oYaC2QFPQsHVVvH/+YM/njc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2VO+EqZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ee9jUznfcpXn30k+5Fwe2tNMn6KttaT8P580PVh5/xxEGqvqTD2eX7g1yLDirlRu31H3qWJEyMdWz+enUSLz9yUTQnh3UwhBhKLOkeM0Y6f08Cu/KgPJwToZv9QAQc6YWySqGVGnjpKem70b+nLpdDadpSZ6zeHrBmRjUGPEUXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFtE2BB9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2VO+EqZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651E51F00893;
-	Sun,  7 Jun 2026 10:58:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFtE2BB9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025E51F00893;
+	Sun,  7 Jun 2026 10:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829891;
-	bh=Rjc0Vch9vRpzV8sNidokWiAtkcFEzkk+zCk85Et6+T0=;
+	s=korg; t=1780829894;
+	bh=cT3i/apdCiQ801wCZNoc9TuHYzu0lg3euxAs4vaVss8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p2VO+EqZBBJKviLlLtj3kdRHKcZG/QTMvp/hLCNshbP8nTn6aRUZ/+KGfMGO8h9+z
-	 8bfHssaIdmOUkzAHSdt8LPfpwfUgc3TQj2GXTVEvS1i1QNBaZhlHPpFjh4dKhPDy6q
-	 YRXt68nMaXmNe1H/2vBigtU+fpSsVb6417aljq8I=
+	b=sFtE2BB9Rz87e2UqDkEIPbyqwcuJCK7xb420Mi9xD9NuCMtzPoYbv2NvQxWfzXqvV
+	 dLGWORqqwlJ94Di1Z1gtKHNSQo7yrYod0DBS7XgocVUbZBNMOqOEv4hJrSwQ2Zyb3G
+	 hQqIZtlXn7QNHC2YFnRKwfzuwtweYjf2ZXDD2jJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -37,12 +37,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Marc Dionne <marc.dionne@auristor.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 287/315] rxrpc: Fix RESPONSE packet verification to extract skb to a linear buffer
-Date: Sun,  7 Jun 2026 12:01:14 +0200
-Message-ID: <20260607095738.132511502@linuxfoundation.org>
+Subject: [PATCH 7.0 322/332] rxrpc: Fix RESPONSE packet verification to extract skb to a linear buffer
+Date: Sun,  7 Jun 2026 12:01:31 +0200
+Message-ID: <20260607095739.947684520@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -54,7 +54,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -618,7 +618,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	}
  
 -	ret = -ENOMEM;
--	response = kzalloc(sizeof(struct rxkad_response), GFP_NOFS);
+-	response = kzalloc_obj(struct rxkad_response, GFP_NOFS);
 -	if (!response)
 -		goto error;
 -
