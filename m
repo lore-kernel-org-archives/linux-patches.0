@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DF81A6822;
-	Sun,  7 Jun 2026 10:47:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCFE1A6822;
+	Sun,  7 Jun 2026 10:47:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829263; cv=none; b=RupVWbuOzxV+IqRzzClvARKsnKn5QxOZZujTKa5HYkaeMgqk1mXublddDrNomXnHinhj6qEd5O+IrAmBZQ/+HFdpJXVNN3kN2gHK/BGKU6hgivNMx7/6ZArptLjFG9KCQ3B62iKi1/MOBk/ZDnWLqDQddhcG05l7tf9KnTdD1Kw=
+	t=1780829267; cv=none; b=teF8FmxEASTxPkJL3yYrYjfEsxnKggaSsTOxO9WjFt4kFQmzUqvSY1P0HWgu/dnNTUcknbHjmAaK9RMJ6ohJB57//33FssQg8p+WJh4bthxIAJO675eKqIAY8GLWPx+qnGf/qRuOn1tox9lnOzwCCxTx6j9T8BjeNL8+WIMGaak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829263; c=relaxed/simple;
-	bh=ujT58J1RoNF8iavbX8RqPVHUIQ0olQo5F7wLZck+Dwo=;
+	s=arc-20240116; t=1780829267; c=relaxed/simple;
+	bh=oY8C1zDvpsjGSxp5tM6e1YFcZqHZWyjdAWdtiBeD0X4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lo065ivzYAYB0tGPMyq3aNFYQzP64eUzMg1I63SBgoroVDTBEIfbIh5LzGM6wJlYypehnOPMmkSILwl4bVSIxM+kt0mulR48ZfUIgYyP2oMtk6DFejTXsAbRxG+Azl0rnkbaBcmJjpU8r+Qu6od3W6BncEzTJ2QqqxqMdIAyQyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZhQYZuK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TAC2u16U/Lp6QbOkInN/oG9F4yZFXLmDEJbQSzdEDQPVIIFEeANE/FjFITiWqM01dMnRCAeY3J0Ol8WbOHOSJsKQFm4qgXCbcOjxlzs3+1S7kW039uma0DGHSlS7C7JFlS+dZ5uBWrPST/rq2QZpW+BhctjUNsOwi9ydhcUzZYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4HV41Zy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZhQYZuK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E3D1F00893;
-	Sun,  7 Jun 2026 10:47:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4HV41Zy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2121D1F00893;
+	Sun,  7 Jun 2026 10:47:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829262;
-	bh=3Gc70VtqN45AjtTf9Ct9P3oZ+iMUrhypcoWiLNHP14Y=;
+	s=korg; t=1780829265;
+	bh=1/DZgY7WmPmHcPQLvsUcVE+fRQ64HPe1BwNZtjT6xf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LZhQYZuKm4GNJYTS0VYg91RKuM/xL5eToED1kFCuePRzMVr6uD5guERJ/3PtX16w8
-	 Scr7iYioDol2PMGsevxLPxGd9HxVaGeQyvsYUCWWklhtQhXM+RgwM/n9SnnIEXSdi5
-	 VzMVG71NdQKwuUG18x3e48r+0XS01nONj/qUUchU=
+	b=H4HV41ZyAun1d3fHi9yyKvohYmfd1Y1jxk3oJegHZY8jD1kqMNEUUW4wsYwVeOLMy
+	 wftIPyw55TizKw5Sb0nXBsS6yLvtXJbEYxKDlDzyjnWEFDoiZNyDhEAyh+bjI70dfl
+	 gT8m/XI7hvp05n6Pzcs0YcGTfKHfb2pgaVUu93IY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nicol=C3=A1s=20Bazaes?= <contacto@bazaes.cl>,
+	Ricardo Ribalda <ribalda@chromium.org>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 209/307] Input: synaptics - add LEN2058 to SMBus passlist for ThinkPad E490
-Date: Sun,  7 Jun 2026 12:00:06 +0200
-Message-ID: <20260607095735.394230380@linuxfoundation.org>
+Subject: [PATCH 7.0 241/332] Input: atmel_mxt_ts - fix boundary check in mxt_prepare_cfg_mem
+Date: Sun,  7 Jun 2026 12:00:10 +0200
+Message-ID: <20260607095736.901915994@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,49 +44,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicolás Bazaes <contacto@bazaes.cl>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 16ca52bc209fa4bf9239cd9e5643e95533476b58 upstream.
+commit baa0210fb6a9dc3882509a9411b6d284d88fe30e upstream.
 
-The Lenovo ThinkPad E490 (PNP ID: LEN2058) has a Synaptics TM3471-020
-touchpad that supports SMBus/RMI4 mode but is not listed in
-smbus_pnp_ids[]. Without this entry, RMI4 over SMBus is not enabled
-by default, and the touchpad falls back to PS/2 mode.
+When a configuration file provides an object size that is larger than the
+driver's known mxt_obj_size(object), the driver intends to discard the
+extra bytes.
 
-Adding LEN2058 to the passlist enables automatic RMI4 detection without
-requiring the psmouse.synaptics_intertouch parameter, and matches
-the behavior of similar ThinkPad models already in the list
-(E480/LEN2054, E580/LEN2055).
+The loop iterates using for (i = 0; i < size; i++). Inside the loop, the
+condition to skip processing extra bytes is:
 
-Tested on ThinkPad E490 with kernel 7.0.5-zen1 and Arch Linux.
-RMI4 over SMBus is confirmed working without any kernel parameters.
+    if (i > mxt_obj_size(object))
+        continue;
 
-Signed-off-by: Nicolás Bazaes <contacto@bazaes.cl>
-Assisted-by: Claude:claude-sonnet-4-6
-Link: https://patch.msgid.link/20260514013552.14234-1-contacto@bazaes.cl
+Since i is a 0-based index, the valid indices for the object are 0 through
+mxt_obj_size(object) - 1.
+
+When i == mxt_obj_size(object), the condition evaluates to false, and the
+code processes the byte instead of discarding it.
+
+This causes the code to calculate byte_offset = reg + i - cfg->start_ofs
+and writes the byte there, overwriting exactly one byte of the adjacent
+instance or object.
+
+Update the boundary check to skip extra bytes correctly by using >=.
+
+Fixes: 50a77c658b80 ("Input: atmel_mxt_ts - download device config using firmware loader")
 Cc: stable@vger.kernel.org
+Assisted-by: Gemini:gemini-3.1-pro
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://patch.msgid.link/20260504185448.4055973-1-dmitry.torokhov@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/synaptics.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/touchscreen/atmel_mxt_ts.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -189,6 +189,7 @@ static const char * const smbus_pnp_ids[
- 	"LEN2044", /* L470  */
- 	"LEN2054", /* E480 */
- 	"LEN2055", /* E580 */
-+	"LEN2058", /* E490 */
- 	"LEN2068", /* T14 Gen 1 */
- 	"SYN1221", /* TUXEDO InfinityBook Pro 14 v5 */
- 	"SYN3003", /* HP EliteBook 850 G1 */
+--- a/drivers/input/touchscreen/atmel_mxt_ts.c
++++ b/drivers/input/touchscreen/atmel_mxt_ts.c
+@@ -1477,7 +1477,7 @@ static int mxt_prepare_cfg_mem(struct mx
+ 			}
+ 			cfg->raw_pos += offset;
+ 
+-			if (i > mxt_obj_size(object))
++			if (i >= mxt_obj_size(object))
+ 				continue;
+ 
+ 			byte_offset = reg + i - cfg->start_ofs;
 
 
