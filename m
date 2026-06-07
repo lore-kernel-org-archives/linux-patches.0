@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1386C2F361E;
-	Sun,  7 Jun 2026 10:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7124B3112A5;
+	Sun,  7 Jun 2026 10:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826739; cv=none; b=vAPe1aHmnK0kRQHN5fdxDNGF0j1wIUg+nyxkII/qLpK02oIVFV5Hi6hF3zWMOOl0LIriYYrRK0kpBZGUXZ/BZ6zpt42+rkdrgbLj9oR14Liwjkh5HjqiT4l2g2zuFOglsroSOo3wp+HGgQ2XV0t5vC0gCXaUTdY+A3AM8QUp9dY=
+	t=1780826742; cv=none; b=n9cYGxR/08TELJ7Onz7RFQgFVyyCaPMqmGFFchw0T/YepTJAXRpm9r7IV7WQ3YBDWR2g+chmsWTsILf3ajthHA6Ibv/TWV4KACzXWgKYp8QDECtu8eFOxWnfbdS5FrHWRCe2afWU9zLkWAWVXxCT/NOHYwkZe9bW2yPdtnwZVqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826739; c=relaxed/simple;
-	bh=mp9u9W1d7wyNuKkssJnd8U1DUvygKCqnQJ5FsdjE3uU=;
+	s=arc-20240116; t=1780826742; c=relaxed/simple;
+	bh=pQguHxGc8ZkzRRitVUchkSvlHu6yTLcL7TGfQvCm0AM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k3sTTHTG3LO9w6c2eYvCaSIHTDUpuOSciyR/VtFCMp75ysbbjyq6ERGpbRxxpIZc9YHF8u20HQS6/NEwhrAWQEXgPwEPwUxn5CdaEMpoDQWyGOp9cqgRx43UDcha6BkJntolxi2LRy3UKj0UIoGtYb/yKkKYwiq/3vv1Tt5AYwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aPo2SM3W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JjNCaUcS7dSamjA6WDT3Wlrvfmellb0cGGtAMpp/r0/DasQOTErljJDjMWUGiDZWq5w1RGQR5tFuN0bZIAsrUPGdYOPD5oLDHRHpgng6pm3RRoPbNcuWQIpIAqr36fz/q4fHbG4j70cLFsxghsXpwtT9+nHW1QRNCJWA100eFpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6jcROVF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPo2SM3W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13E531F00893;
-	Sun,  7 Jun 2026 10:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6jcROVF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFEB1F00898;
+	Sun,  7 Jun 2026 10:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826736;
-	bh=+0cIbPEKMwvJ08H1bCoxWevVKnXi2dFFYd1OkJ1rYoQ=;
+	s=korg; t=1780826740;
+	bh=XkN31PBAK7KC0PiBw0SamjUcQabfIBEyPNg/xq3RBQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aPo2SM3Wx1BBgiR30gNLBZ6tzT80VMb6LU3gEyxDMbBJoYQfBv9SxuNYyt6jK/z0e
-	 bJ/Wf5dxRJaNNlEdJra+CXFDOZ1e+iqIvY3BJZ8BcrOceeAgVukfRLOYDXFvC0aHlY
-	 +novmpI6abXgj2iSRQlSdd6+xiuu0+/8ahK4fupY=
+	b=x6jcROVFBlijybskLo1FPMINb3DiQSF82g1uX62pFn284qe1MzCiAAwLo3nFsmjPi
+	 KKW+EfRCHpMwan6pmAGkbVUmyR3pvWDsgn2YguNaOL4V/c/lm9wMT6bZLx97L0w4Tj
+	 HiViGtWbeHtoz/7pbb4VRDN6JrYNK/JTnmvry2iA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Nogueria <victor@mojatatu.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dhabaleshwar Das <dhabal123@gmail.com>,
+	Tomeu Vizoso <tomeu@tomeuvizoso.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 005/332] net/sched: sch_sfb: Replace direct dequeue call with peek and qdisc_dequeue_peeked
-Date: Sun,  7 Jun 2026 11:56:14 +0200
-Message-ID: <20260607095728.226039801@linuxfoundation.org>
+Subject: [PATCH 7.0 014/332] accel/rocket: fix UAF via dangling GEM handle in create_bo
+Date: Sun,  7 Jun 2026 11:56:23 +0200
+Message-ID: <20260607095728.557187754@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
 References: <20260607095728.031258202@linuxfoundation.org>
@@ -52,76 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueria <victor@mojatatu.com>
+From: Dhabaleshwar Das <dhabal123@gmail.com>
 
-[ Upstream commit 1b9bc71153b01dbde8045b9edede4240f4f5520e ]
+[ Upstream commit f706e6a4ce75585af979aec3dcbdce68bc76306b ]
 
-When sfb has children (eg qfq qdisc) whose peek() callback is
-qdisc_peek_dequeued(), we could get a kernel panic. When the parent of such
-qdiscs (eg illustrated in patch #3 as tbf) wants to retrieve an skb from
-its child (sfb in this case), it will do the following:
- 1a. do a peek() - and when sensing there's an skb the child can offer, then
-     - the child in this case(sfb) calls its child's (qfq) peek.
-        qfq does the right thing and will return the gso_skb queue packet.
-        Note: if there wasnt a gso_skb entry then qfq will store it there.
- 1b. invoke a dequeue() on the child (sfb). And herein lies the problem.
-     - sfb will call the child's dequeue() which will essentially just
-       try to grab something of qfq's queue.
+rocket_ioctl_create_bo() inserts a GEM handle into the file's IDR via
+drm_gem_handle_create() early on, then performs several operations that
+can fail (sgt allocation, drm_mm insert, iommu_map). If any fail after
+the handle is live, the error path calls drm_gem_shmem_object_free()
+which kfree's the object without removing the handle from the IDR.
 
-[  127.594489][  T453] KASAN: null-ptr-deref in range [0x0000000000000048-0x000000000000004f]
-[  127.594741][  T453] CPU: 2 UID: 0 PID: 453 Comm: ping Not tainted 7.1.0-rc1-00035-gac961974495b-dirty #793 PREEMPT(full)
-[  127.595059][  T453] Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
-[  127.595254][  T453] RIP: 0010:qfq_dequeue+0x35c/0x1650 [sch_qfq]
-[  127.595461][  T453] Code: 00 fc ff df 80 3c 02 00 0f 85 17 0e 00 00 4c 8d 73 48 48 89 9d b8 02 00 00 48 b8 00 00 00 00 00 fc ff df 4c 89 f2 48 c1 ea 03 <80> 3c 02 00 0f 85 76 0c 00 00 48 b8 00 00 00 00 00 fc ff df 4c 8b
-[  127.596081][  T453] RSP: 0018:ffff88810e5af440 EFLAGS: 00010216
-[  127.596337][  T453] RAX: dffffc0000000000 RBX: 0000000000000000 RCX: dffffc0000000000
-[  127.596623][  T453] RDX: 0000000000000009 RSI: 0000001880000000 RDI: ffff888104fd82b0
-[  127.596917][  T453] RBP: ffff888104fd8000 R08: ffff888104fd8280 R09: 1ffff110211893a3
-[  127.597165][  T453] R10: 1ffff110211893a6 R11: 1ffff110211893a7 R12: 0000001880000000
-[  127.597404][  T453] R13: ffff888104fd82b8 R14: 0000000000000048 R15: 0000000040000000
-[  127.597644][  T453] FS:  00007fc380cbfc40(0000) GS:ffff88816f2a8000(0000) knlGS:0000000000000000
-[  127.597956][  T453] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  127.598160][  T453] CR2: 00005610aa9890a8 CR3: 000000010369e000 CR4: 0000000000750ef0
-[  127.598390][  T453] PKRU: 55555554
-[  127.598509][  T453] Call Trace:
-[  127.598629][  T453]  <TASK>
-[  127.598718][  T453]  ? mark_held_locks+0x40/0x70
-[  127.598890][  T453]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  127.599053][  T453]  sfb_dequeue+0x88/0x4d0
-[  127.599174][  T453]  ? ktime_get+0x137/0x230
-[  127.599328][  T453]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  127.599480][  T453]  ? qdisc_peek_dequeued+0x7b/0x350 [sch_qfq]
-[  127.599670][  T453]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  127.599831][  T453]  tbf_dequeue+0x6b1/0x1098 [sch_tbf]
-[  127.599988][  T453]  __qdisc_run+0x169/0x1900
+This leaves a dangling handle pointing to freed slab memory. Any
+subsequent ioctl using that handle (PREP_BO, FINI_BO, SUBMIT) calls
+drm_gem_object_lookup() and dereferences freed memory (UAF).
 
-The right thing to do in #1b is to grab the skb off gso_skb queue.
-This patchset fixes that issue by changing #1b to use qdisc_dequeue_peeked()
-method instead.
+Fix by moving drm_gem_handle_create() to after all fallible operations
+succeed, matching the pattern used by panfrost, lima, and etnaviv.
 
-Fixes: e13e02a3c68d ("net_sched: SFB flow scheduler")
-Signed-off-by: Victor Nogueria <victor@mojatatu.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260430152957.194015-3-jhs@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Also fix drm_mm_insert_node_generic() whose return value was silently
+overwritten by iommu_map_sgtable() on the next line. Add the missing
+error check.
+
+[tomeu: Move handle creation to the very end]
+
+Fixes: 658ebeac3351 ("accel/rocket: Add IOCTL for BO creation")
+Reported-by: Dhabaleshwar Das <dhabal123@gmail.com>
+Signed-off-by: Dhabaleshwar Das <dhabal123@gmail.com>
+Reviewed-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
+Link: https://patch.msgid.link/20260521165720.2113571-1-tomeu@tomeuvizoso.net
+Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_sfb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/accel/rocket/rocket_gem.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/net/sched/sch_sfb.c b/net/sched/sch_sfb.c
-index 00286c930b8de7..14ac8897784757 100644
---- a/net/sched/sch_sfb.c
-+++ b/net/sched/sch_sfb.c
-@@ -441,7 +441,7 @@ static struct sk_buff *sfb_dequeue(struct Qdisc *sch)
- 	struct Qdisc *child = q->qdisc;
- 	struct sk_buff *skb;
+diff --git a/drivers/accel/rocket/rocket_gem.c b/drivers/accel/rocket/rocket_gem.c
+index c8084719208a2a..a5fffa51ff3550 100644
+--- a/drivers/accel/rocket/rocket_gem.c
++++ b/drivers/accel/rocket/rocket_gem.c
+@@ -79,11 +79,6 @@ int rocket_ioctl_create_bo(struct drm_device *dev, void *data, struct drm_file *
+ 	rkt_obj->size = args->size;
+ 	rkt_obj->offset = 0;
  
--	skb = child->dequeue(q->qdisc);
-+	skb = qdisc_dequeue_peeked(child);
+-	ret = drm_gem_handle_create(file, gem_obj, &args->handle);
+-	drm_gem_object_put(gem_obj);
+-	if (ret)
+-		goto err;
+-
+ 	sgt = drm_gem_shmem_get_pages_sgt(shmem_obj);
+ 	if (IS_ERR(sgt)) {
+ 		ret = PTR_ERR(sgt);
+@@ -95,6 +90,8 @@ int rocket_ioctl_create_bo(struct drm_device *dev, void *data, struct drm_file *
+ 					 rkt_obj->size, PAGE_SIZE,
+ 					 0, 0);
+ 	mutex_unlock(&rocket_priv->mm_lock);
++	if (ret)
++		goto err;
  
- 	if (skb) {
- 		qdisc_bstats_update(sch, skb);
+ 	ret = iommu_map_sgtable(rocket_priv->domain->domain,
+ 				rkt_obj->mm.start,
+@@ -112,8 +109,18 @@ int rocket_ioctl_create_bo(struct drm_device *dev, void *data, struct drm_file *
+ 	args->offset = drm_vma_node_offset_addr(&gem_obj->vma_node);
+ 	args->dma_address = rkt_obj->mm.start;
+ 
++	ret = drm_gem_handle_create(file, gem_obj, &args->handle);
++	if (ret)
++		goto err_unmap;
++
++	drm_gem_object_put(gem_obj);
++
+ 	return 0;
+ 
++err_unmap:
++	iommu_unmap(rocket_priv->domain->domain,
++		    rkt_obj->mm.start, rkt_obj->size);
++
+ err_remove_node:
+ 	mutex_lock(&rocket_priv->mm_lock);
+ 	drm_mm_remove_node(&rkt_obj->mm);
 -- 
 2.53.0
 
