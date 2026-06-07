@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B1B282F30;
-	Sun,  7 Jun 2026 11:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E59212564;
+	Sun,  7 Jun 2026 11:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780830080; cv=none; b=R+H/cCKI4gYrpw01B3EHy38omIt/+6tNzw3LnBtovet0xYjSjUH8wlmvh+sL1MyQX3TXzUymE7+tPJe7R6TmnG1MM6Qvq8IIFX5afKqbdTBhpW9eLq3ONpWoKRBzO44vE7qc15Oe946nbQ+v+4WFrvpVQ69wsnrguWWmOeXHP+c=
+	t=1780830084; cv=none; b=F9mR5PTVVMTiTAm/wwYsfyAOgy/qvmUPk0QWGiwRreoOFR7pR+6a5E3/UimUvT3R6HIij4pTDL2OzGaKC4B9xhnaHQxb9QjMmTQf3ULzholUS1qumxz/CynmrIq8Xizkn5jQw+NhuxB0VoyCnPyMa35VHjSzCzu/UI0BE+9UPQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780830080; c=relaxed/simple;
-	bh=ZM3pYpttLHR/PT4SM51yf67t0300N0hKGBgz1tOQYrE=;
+	s=arc-20240116; t=1780830084; c=relaxed/simple;
+	bh=rT48XzCqtcQDmmNdzzXuebGWaZ/eGI+lZEShq/yiCl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gu1SXA3XVGRsJgileJeI11LFqsLafpvMpCeZZkX7D9G/wjnFqTfPCphAYFE3ylmppXQJ1DrpkcEmV+WO54h0ljEMdy3vXkEDsgBnCikN3vu/8fdi1udDKNxQk4PcZwjQK1EZZFkLZIhY+LbEMuFqv22uit1XHR7WH/r8SIPaPSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lvb3x12a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OuEC+0IG48Y04A7Iyx6R1SafYstkR+D5+tF8wJ8fWsQHvmGE94CV5sQAnYT8CXtf2F2zH/6BOa/XX2SAyeocXwqqWCT+GzqjVZMxgTqTIG7ow++0J5Afwct7m+Zr+2sc/56lZ76oXz6vwllCtS/qHjQRaS68cWfdIASDLl42pDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wq65jF9D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lvb3x12a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5BC1F00893;
-	Sun,  7 Jun 2026 11:01:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wq65jF9D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22FFB1F00893;
+	Sun,  7 Jun 2026 11:01:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780830078;
-	bh=/nnWR+oETA5cZ0fT56w4h6i/XnzOK1pXCt7eataVLvc=;
+	s=korg; t=1780830083;
+	bh=KNQEHShU8OCmdhs7545npZci5bEezrG3GEJx6wNl/00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lvb3x12a6CQRRTYcdpHdqih+x9PRToQ+fTqAy7Dfc0LhrrJgHsI1npHoLoDxYGWRB
-	 kPvjsVBONbNL6sq8oYUmYzsMv631sdskR/K+/JJ1kgHeCzqT93RQeN3PuPkJCd+3vl
-	 cEDNuwlDzVbsna92ZZcX5bZV/trL8L6rPF4iL3AU=
+	b=Wq65jF9D+909oqcNA3HLYfCIIoUAZYjUKc78seRnhrS4hV2WIdY2QLvX+fgm0NPqG
+	 gFmFkGm/k4yKf6iQi2YUk4vRqHC2Ib9MoHvBBYfSbLZUqh3+nwbl+kUjoiOI1EfUnF
+	 drtogQc/HcEw55q0OZGkLbLB8kAG4qJqSb0tv2XA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 280/307] ice: fix VF queue configuration with low MTU values
-Date: Sun,  7 Jun 2026 12:01:17 +0200
-Message-ID: <20260607095738.013537932@linuxfoundation.org>
+Subject: [PATCH 6.18 307/315] hwmon: (pmbus) Add support for guarded PMBus lock
+Date: Sun,  7 Jun 2026 12:01:34 +0200
+Message-ID: <20260607095738.884512804@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,64 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 3ba4dd024d26372733d1c02e13e076c6016e3320 ]
+[ Upstream commit 1814f4d3ff358277a5b6957e7f133c2812dc80ec ]
 
-The ice driver's VF queue configuration validation rejects
-databuffer_size values below 1024 bytes, which prevents VFs from
-using MTU values below 871 bytes.
+Add support for guard(pmbus_lock)() and scoped_guard(pmbus_lock)()
+to be able to simplify the PMBus code.
 
-The iavf driver calculates databuffer_size based on the MTU using:
-  databuffer_size = ALIGN(MTU + LIBETH_RX_LL_LEN, 128)
+Also introduce pmbus_lock() as pre-requisite for supporting
+guard().
 
-where LIBETH_RX_LL_LEN = 26 (ETH_HLEN + 2*VLAN_HLEN + ETH_FCS_LEN).
-
-For MTU values below 871:
-  MTU 870: 870 + 26 = 896, aligned to 128 = 896 (< 1024, rejected)
-  MTU 871: 871 + 26 = 897, aligned to 128 = 1024 (>= 1024, accepted)
-
-The 1024-byte minimum seems unnecessarily restrictive, because the hardware
-supports databuffer_size as low as 128 bytes (the alignment boundary),
-which should allow MTU values down to the standard minimum of 68 bytes.
-
-I haven't found the reason why the limit was configured in the commit
-9c7dd7566d18 ("ice: add validation in OP_CONFIG_VSI_QUEUES VF message"), so
-with no more information and since it is working, change the minimum
-databuffer_size validation from 1024 to 128 bytes to allow standard low
-MTU values while still preventing invalid configurations.
-
-Fixes: 9c7dd7566d18 ("ice: add validation in OP_CONFIG_VSI_QUEUES VF message")
-cc: stable@vger.kernel.org
-Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260515182419.1597859-3-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ applied the change to ice_virtchnl.c ]
+Reviewed-by: Sanman Pradhan <psanman@juniper.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: 4e4af55aaca7 ("hwmon: (pmbus/adm1266) serialize sequencer_state debugfs read with pmbus_lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_virtchnl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/pmbus/pmbus.h      |    5 +++++
+ drivers/hwmon/pmbus/pmbus_core.c |    8 ++++++++
+ 2 files changed, 13 insertions(+)
 
---- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-+++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-@@ -1746,7 +1746,7 @@ static int ice_vc_cfg_qs_msg(struct ice_
+--- a/drivers/hwmon/pmbus/pmbus.h
++++ b/drivers/hwmon/pmbus/pmbus.h
+@@ -10,6 +10,7 @@
+ #define PMBUS_H
  
- 			if (qpi->rxq.databuffer_size != 0 &&
- 			    (qpi->rxq.databuffer_size > ((16 * 1024) - 128) ||
--			     qpi->rxq.databuffer_size < 1024))
-+			     qpi->rxq.databuffer_size < 128))
- 				goto error_param;
- 			ring->rx_buf_len = qpi->rxq.databuffer_size;
- 			if (qpi->rxq.max_pkt_size > max_frame_size ||
+ #include <linux/bitops.h>
++#include <linux/cleanup.h>
+ #include <linux/regulator/driver.h>
+ 
+ /*
+@@ -563,7 +564,11 @@ int pmbus_get_fan_rate_device(struct i2c
+ int pmbus_get_fan_rate_cached(struct i2c_client *client, int page, int id,
+ 			      enum pmbus_fan_mode mode);
+ int pmbus_lock_interruptible(struct i2c_client *client);
++void pmbus_lock(struct i2c_client *client);
+ void pmbus_unlock(struct i2c_client *client);
++
++DEFINE_GUARD(pmbus_lock, struct i2c_client *, pmbus_lock(_T), pmbus_unlock(_T))
++
+ int pmbus_update_fan(struct i2c_client *client, int page, int id,
+ 		     u8 config, u8 mask, u16 command);
+ struct dentry *pmbus_get_debugfs_dir(struct i2c_client *client);
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -3871,6 +3871,14 @@ struct dentry *pmbus_get_debugfs_dir(str
+ }
+ EXPORT_SYMBOL_NS_GPL(pmbus_get_debugfs_dir, "PMBUS");
+ 
++void pmbus_lock(struct i2c_client *client)
++{
++	struct pmbus_data *data = i2c_get_clientdata(client);
++
++	mutex_lock(&data->update_lock);
++}
++EXPORT_SYMBOL_NS_GPL(pmbus_lock, "PMBUS");
++
+ int pmbus_lock_interruptible(struct i2c_client *client)
+ {
+ 	struct pmbus_data *data = i2c_get_clientdata(client);
 
 
