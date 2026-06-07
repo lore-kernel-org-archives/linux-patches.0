@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE5E30148C;
-	Sun,  7 Jun 2026 10:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060924071DA;
+	Sun,  7 Jun 2026 10:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827472; cv=none; b=bRaSq9ExlKiwlskDlOgcBgYyVnzFkGVtc9FJw+bHJs8TdG/kmenxGSa7K4gmMzO1V9Z2ssRkngO4PQ4udN1iz2tD0yKKBJ9j94wW4hck+Su6yrLLPqXxHWrDI8xmsm4oMqi2itIoVJvhc7iH5TSaOZ39Lx2G/kzWYfb0tyKY8YE=
+	t=1780827476; cv=none; b=eI3+4HIRMd6M0KwHjnbzm42Sp4ZvRVfAlcKv3NWdMBmLCG1ykZza2r3ZKhl4tSZGiQ9V8upvwkpM+6QHFoeQB4/3EbS5KI/zh6Q+jYx96X4wi1NYnTRyuPN3IHpjh618osRow4SGUusKLbOJoH5eD9+Asw56r4+GZIy5xfNCWEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827472; c=relaxed/simple;
-	bh=YYcWbp1rpT0aFuAMNlJZAgpbpQAUJLJovVlitJh6qAk=;
+	s=arc-20240116; t=1780827476; c=relaxed/simple;
+	bh=JXi7HccWNMNfFzXFp7g+ie4gFYE8qqaEjy9ehTMS+7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ojJWY7PhXBiupgTtL0lKNshAtlufWt5sks9HvIvREjlaPpXOcac1TE1b/v1973nwxkYPB4pQvbwaU8EOZQGgae2fGTcjlp2AwV61YpC4z2fP7UK6sh+ohCFfEXS9eaI2Wfvlb1zBPoPjyg4D7MO5lN03xUR3W7JMBXJJ8kO6Jcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJ73uNpM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ecyshwivpoUrkA9yPEhwXLGERBbZHyzF0OGcrX7ZXWlLtnukZ8cvn5C265Y61L0F7jBClvs/hXHqX9CPUO1awhzP1/NHRPbmDYazcH0rWz/BK+cSU1dk9ahgSVzeI2oAPnX597InUdg1DiklHE8cEsPbwSSSOvlFSHAjWqZpODQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tkPu8kQM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJ73uNpM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D0201F0089B;
-	Sun,  7 Jun 2026 10:17:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkPu8kQM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B83431F00893;
+	Sun,  7 Jun 2026 10:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827471;
-	bh=L0iuhq9C578NeD1E+SMxxTFnWgRsTD5LgB2zMQqsRDg=;
+	s=korg; t=1780827474;
+	bh=pPR+DokE4T7k53S90s6xjjynGtCAOtj241rISu9o67o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eJ73uNpMYj7iUOqJf7UluM1EIgGv78nsIXYkJ//kQE0Gv0UCcBURT69E8JDX5EOXG
-	 IkBlrIp61+X4IVr3DN7o2nj+A8PX4E0ZSyDd92WcO/gbMIESJcRP2ZBmn80zQ/lqFj
-	 dagaF2YgjGgcyW5qxU5VZk+9yCDME34ohBOOF0mA=
+	b=tkPu8kQMDO2EfGJebMTQalY2qcw3hO/Xk3bC4fN8y1FBCRKF6/2OuqMvJMSsbOzoh
+	 PKRgvGhJj4HusxlunDQJ1S/wuz5aUd+9HP6uidVaJi4JXhvbxJ/RuP8CCpZlsyu2Zf
+	 BVHtWJjJqWpzno3mjYFbjTvcuky3/9mjXYmPZZl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Hannes Reinecke <hare@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 096/332] dpll: zl3073x: use __dpll_device_change_ntf() and remove change_work
-Date: Sun,  7 Jun 2026 11:57:45 +0200
-Message-ID: <20260607095731.675621521@linuxfoundation.org>
+Subject: [PATCH 6.18 077/315] net/handshake: Use spin_lock_bh for hn_lock
+Date: Sun,  7 Jun 2026 11:57:44 +0200
+Message-ID: <20260607095730.443050343@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,116 +48,140 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit d733f519f6443540f8359461a34e3b0042099bbe ]
+[ Upstream commit cc993e0927ec8bd98ea33377ada03295fcda0f24 ]
 
-The change_work was introduced to send device change notifications
-from DPLL device callbacks without deadlocking on dpll_lock, since
-the callbacks are already invoked under that lock. Now that
-__dpll_device_change_ntf() is exported for callers that already
-hold dpll_lock, use it directly and remove the change_work
-infrastructure entirely.
+nvmet_tcp_state_change(), a socket callback that runs in BH context,
+can reach handshake_req_cancel() via nvmet_tcp_schedule_release_queue()
+and tls_handshake_cancel().  handshake_req_cancel() acquires
+hn->hn_lock with plain spin_lock().  If a process-context thread on
+the same CPU holds hn->hn_lock when a softirq invokes the cancel path,
+the lock attempt deadlocks.  This is the only caller that invokes
+tls_handshake_cancel() from BH context; every other consumer calls it
+from process context.
 
-This eliminates a race condition where change_work could be
-re-scheduled after cancel_work_sync() during device teardown,
-potentially causing the handler to dereference a freed or NULL
-dpll_dev pointer.
+Deferring the cancel to process context in the NVMe target is not
+straightforward: nvmet_tcp_schedule_release_queue() must call
+tls_handshake_cancel() atomically with its state transition to
+DISCONNECTING.  If the cancel were deferred, the handshake completion
+callback could fire in the window before the cancel runs, observe the
+unexpected state, and return without dropping its kref on the queue.
+Reworking that interlock is considerably more invasive than hardening
+the handshake lock.  Convert all hn->hn_lock acquisitions from
+spin_lock/spin_unlock to spin_lock_bh/spin_unlock_bh so the lock is
+never taken with softirqs enabled.
 
-Fixes: 9363b4837659 ("dpll: zl3073x: Allow to configure phase offset averaging factor")
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Link: https://patch.msgid.link/20260526074525.1451008-3-ivecera@redhat.com
+Fixes: 675b453e0241 ("nvmet-tcp: enable TLS handshake upcall")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260525-handshake-file-pin-v3-1-66c616906ead@oracle.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dpll/zl3073x/dpll.c | 26 +++++++++-----------------
- drivers/dpll/zl3073x/dpll.h |  2 --
- 2 files changed, 9 insertions(+), 19 deletions(-)
+ net/handshake/netlink.c |  4 ++--
+ net/handshake/request.c | 14 +++++++-------
+ net/handshake/tlshd.c   |  2 ++
+ 3 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/dpll/zl3073x/dpll.c b/drivers/dpll/zl3073x/dpll.c
-index c201c974a7f9a4..70c91948c7da8d 100644
---- a/drivers/dpll/zl3073x/dpll.c
-+++ b/drivers/dpll/zl3073x/dpll.c
-@@ -1193,15 +1193,6 @@ zl3073x_dpll_phase_offset_avg_factor_get(const struct dpll_device *dpll,
- 	return 0;
- }
- 
--static void
--zl3073x_dpll_change_work(struct work_struct *work)
--{
--	struct zl3073x_dpll *zldpll;
--
--	zldpll = container_of(work, struct zl3073x_dpll, change_work);
--	dpll_device_change_ntf(zldpll->dpll_dev);
--}
--
- static int
- zl3073x_dpll_phase_offset_avg_factor_set(const struct dpll_device *dpll,
- 					 void *dpll_priv, u32 factor,
-@@ -1227,8 +1218,10 @@ zl3073x_dpll_phase_offset_avg_factor_set(const struct dpll_device *dpll,
- 	 * we have to send a notification for other DPLL devices.
+diff --git a/net/handshake/netlink.c b/net/handshake/netlink.c
+index 7e46d130dce2cd..394e270cc505cb 100644
+--- a/net/handshake/netlink.c
++++ b/net/handshake/netlink.c
+@@ -203,10 +203,10 @@ static void __net_exit handshake_net_exit(struct net *net)
+ 	 * accepted and are in progress will be destroyed when
+ 	 * the socket is closed.
  	 */
- 	list_for_each_entry(item, &zldpll->dev->dplls, list) {
--		if (item != zldpll)
--			schedule_work(&item->change_work);
-+		struct dpll_device *dpll_dev = READ_ONCE(item->dpll_dev);
-+
-+		if (item != zldpll && dpll_dev)
-+			__dpll_device_change_ntf(dpll_dev);
- 	}
+-	spin_lock(&hn->hn_lock);
++	spin_lock_bh(&hn->hn_lock);
+ 	set_bit(HANDSHAKE_F_NET_DRAINING, &hn->hn_flags);
+ 	list_splice_init(&requests, &hn->hn_requests);
+-	spin_unlock(&hn->hn_lock);
++	spin_unlock_bh(&hn->hn_lock);
  
- 	return 0;
-@@ -1724,13 +1717,13 @@ zl3073x_dpll_device_register(struct zl3073x_dpll *zldpll)
- static void
- zl3073x_dpll_device_unregister(struct zl3073x_dpll *zldpll)
+ 	while (!list_empty(&requests)) {
+ 		req = list_first_entry(&requests, struct handshake_req, hr_list);
+diff --git a/net/handshake/request.c b/net/handshake/request.c
+index 6b7e3e0bf3996e..654e55b141cded 100644
+--- a/net/handshake/request.c
++++ b/net/handshake/request.c
+@@ -167,12 +167,12 @@ static bool remove_pending(struct handshake_net *hn, struct handshake_req *req)
  {
--	WARN(!zldpll->dpll_dev, "DPLL device is not registered\n");
-+	struct dpll_device *dpll_dev = READ_ONCE(zldpll->dpll_dev);
+ 	bool ret = false;
  
--	cancel_work_sync(&zldpll->change_work);
-+	WARN(!dpll_dev, "DPLL device is not registered\n");
+-	spin_lock(&hn->hn_lock);
++	spin_lock_bh(&hn->hn_lock);
+ 	if (!list_empty(&req->hr_list)) {
+ 		__remove_pending_locked(hn, req);
+ 		ret = true;
+ 	}
+-	spin_unlock(&hn->hn_lock);
++	spin_unlock_bh(&hn->hn_lock);
  
--	dpll_device_unregister(zldpll->dpll_dev, &zldpll->ops, zldpll);
--	dpll_device_put(zldpll->dpll_dev, &zldpll->tracker);
--	zldpll->dpll_dev = NULL;
-+	WRITE_ONCE(zldpll->dpll_dev, NULL);
-+	dpll_device_unregister(dpll_dev, &zldpll->ops, zldpll);
-+	dpll_device_put(dpll_dev, &zldpll->tracker);
+ 	return ret;
  }
+@@ -182,7 +182,7 @@ struct handshake_req *handshake_req_next(struct handshake_net *hn, int class)
+ 	struct handshake_req *req, *pos;
  
- /**
-@@ -1976,7 +1969,6 @@ zl3073x_dpll_alloc(struct zl3073x_dev *zldev, u8 ch)
- 	zldpll->dev = zldev;
- 	zldpll->id = ch;
- 	INIT_LIST_HEAD(&zldpll->pins);
--	INIT_WORK(&zldpll->change_work, zl3073x_dpll_change_work);
+ 	req = NULL;
+-	spin_lock(&hn->hn_lock);
++	spin_lock_bh(&hn->hn_lock);
+ 	list_for_each_entry(pos, &hn->hn_requests, hr_list) {
+ 		if (pos->hr_proto->hp_handler_class != class)
+ 			continue;
+@@ -190,7 +190,7 @@ struct handshake_req *handshake_req_next(struct handshake_net *hn, int class)
+ 		req = pos;
+ 		break;
+ 	}
+-	spin_unlock(&hn->hn_lock);
++	spin_unlock_bh(&hn->hn_lock);
  
- 	return zldpll;
+ 	return req;
  }
-diff --git a/drivers/dpll/zl3073x/dpll.h b/drivers/dpll/zl3073x/dpll.h
-index 278a24f357c9bd..241253212f7d57 100644
---- a/drivers/dpll/zl3073x/dpll.h
-+++ b/drivers/dpll/zl3073x/dpll.h
-@@ -22,7 +22,6 @@
-  * @tracker: tracking object for the acquired reference
-  * @lock_status: last saved DPLL lock status
-  * @pins: list of pins
-- * @change_work: device change notification work
-  */
- struct zl3073x_dpll {
- 	struct list_head		list;
-@@ -37,7 +36,6 @@ struct zl3073x_dpll {
- 	dpll_tracker			tracker;
- 	enum dpll_lock_status		lock_status;
- 	struct list_head		pins;
--	struct work_struct		change_work;
- };
+@@ -249,7 +249,7 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
+ 	if (READ_ONCE(hn->hn_pending) >= hn->hn_pending_max)
+ 		goto out_err;
  
- struct zl3073x_dpll *zl3073x_dpll_alloc(struct zl3073x_dev *zldev, u8 ch);
+-	spin_lock(&hn->hn_lock);
++	spin_lock_bh(&hn->hn_lock);
+ 	ret = -EOPNOTSUPP;
+ 	if (test_bit(HANDSHAKE_F_NET_DRAINING, &hn->hn_flags))
+ 		goto out_unlock;
+@@ -258,7 +258,7 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
+ 		goto out_unlock;
+ 	if (!__add_pending_locked(hn, req))
+ 		goto out_unlock;
+-	spin_unlock(&hn->hn_lock);
++	spin_unlock_bh(&hn->hn_lock);
+ 
+ 	ret = handshake_genl_notify(net, req->hr_proto, flags);
+ 	if (ret) {
+@@ -274,7 +274,7 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
+ 	return 0;
+ 
+ out_unlock:
+-	spin_unlock(&hn->hn_lock);
++	spin_unlock_bh(&hn->hn_lock);
+ out_err:
+ 	/* Restore original destructor so socket teardown still runs on failure */
+ 	req->hr_sk->sk_destruct = req->hr_odestruct;
+diff --git a/net/handshake/tlshd.c b/net/handshake/tlshd.c
+index 8f9532a15f43f9..af294c6cc71731 100644
+--- a/net/handshake/tlshd.c
++++ b/net/handshake/tlshd.c
+@@ -425,6 +425,8 @@ EXPORT_SYMBOL(tls_server_hello_psk);
+  * Request cancellation races with request completion. To determine
+  * who won, callers examine the return value from this function.
+  *
++ * Context: May be called from process or softirq context.
++ *
+  * Return values:
+  *   %true - Uncompleted handshake request was canceled
+  *   %false - Handshake request already completed or not found
 -- 
 2.53.0
 
