@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942322D3A69;
-	Sun,  7 Jun 2026 10:38:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4BC2D3A69;
+	Sun,  7 Jun 2026 10:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828695; cv=none; b=rPYkDCgH2t1k6/j/5Gwln1PxbtAzEt+3ugjCk4lmxuNByYcid/VJfzCB/WvPUSn/+46znfOj+aiJAPgWXHmXoh4y9+vm7rK+nYrH7W3iQPZvBICf4UXHYLSSE9s2hfl/0aB5aQstH0x1VtKh1vhlv4X609JZzjl7kaAqM6xw5gw=
+	t=1780828699; cv=none; b=U0HBwDGoc5Au8b2U55oCz94TgiXCR0LQA7SFmALdcC8ggc6CLXu8QcKAQDzbUY35Mp7t+kcc/2ogc73ZURKltYLe/LiVtx+z8iek9dDNr9otBIGZK7AOCD53hOlfMuvQ/YrJLk0OgTE2F0+0T6pp1ZbZJtVO/UBQlRxAIKND8QI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828695; c=relaxed/simple;
-	bh=JY0y9uMrmDoJlu2lUhwqYpLFU5wlBLDRpP/H56L167A=;
+	s=arc-20240116; t=1780828699; c=relaxed/simple;
+	bh=4XewEGjVAQIgaxyCz4ktmc69/WChgSitI/t2q+4lOkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bIokVxWwc3YXvuX6ttIj6B/jN5Eb/S70DnzaXtEuyK43cO4fQqP0eJumqOA4Vxj3aiKpG+hRzkRY1KMid9AKidUZaVZNW993mFDfRYHftw02vO4qoFce0+sa03omD6U7wyMtf7XFA1i8SUiwKVc9GoXqaI/Fu9jQHRbqQbz2eis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cxZAwxlk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pdwPtPwq3GKnJ9niXVVIihncP0kdF4BvE1Ntrz+948xuFnASNgYoynDIjq17BxQ1ywedH+hPlj2XTAAKwqZeMt3gQLub3qdgwH1qlz5YMm+HUBTwvHgRygHDTnqurbTcF9myJOl7mIoXba15Jc7Qza1N6LwvLqmvoS0/Yg/1f7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHzyiP/h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cxZAwxlk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5171F00893;
-	Sun,  7 Jun 2026 10:38:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHzyiP/h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63EC61F00893;
+	Sun,  7 Jun 2026 10:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828694;
-	bh=Fg9pUg+l87cnvCS6feVCpZQovh8+elwCm/aqDJSohlo=;
+	s=korg; t=1780828698;
+	bh=Qau/mJtFr2HZBMX1oABx2OdkGFSJFS4JmZ5pdSlHSiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cxZAwxlki5Go5KBy3hiyjxFcVjt4cbunGcG5BWCJqVtYLNdxSC0mUO6XPX1U5nd/g
-	 +e59XGgw9WicePBHYhUMca2f2iEhPkciO5vDCPbMgDXfUNRUUQUpiXub9Nz4YZiIx+
-	 2YPTbJAT+FBl+UxMljP3SHsMvmxFoDnPVE2jIKEY=
+	b=JHzyiP/hv8MIlEDIEratL3Kia/KrkKCx14tvm+ksKlVEuvDu9Bl0HaIhBQHIVtq0f
+	 h84vG8w8I+lBWeuHWH2AsN3WfixrvbB2qaQEQnpmI5+iN0KlTlIGH1HhPd6Lt+iB96
+	 CKGjTf/8SRjItU/nGwzLe/WJRMrTvGivzATUvC3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9=20 ?= <alexis.lothore@bootlin.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	stable@kernel.org
-Subject: [PATCH 6.18 183/315] x86/ftrace: Relocate %rip-relative percpu refs in dynamic trampolines
-Date: Sun,  7 Jun 2026 11:59:30 +0200
-Message-ID: <20260607095734.304750433@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Dan Carpenter <error27@gmail.com>
+Subject: [PATCH 7.0 204/332] usb: dwc2: Fix use after free in debug code
+Date: Sun,  7 Jun 2026 11:59:33 +0200
+Message-ID: <20260607095735.555439836@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,105 +44,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
+From: Dan Carpenter <error27@gmail.com>
 
-commit a17dc12bfed8868e6a86f3b45c16065a70641acb upstream.
+commit 9ea06a3fbf9f16e0d98c52cb3b99642be15ec281 upstream.
 
-With CONFIG_CALL_DEPTH_TRACKING enabled on an x86 retbleed-affected platform
-(eg: Skylake), with retbleed=stuff, registering a dynamic ftrace trampoline
-crashes on the first call into the traced function:
+We're not allowed to dereference "urb" after calling
+usb_hcd_giveback_urb() so save the urb->status ahead of time.
 
-  BUG: unable to handle page fault for address: ffff88817ae18880
-  #PF: supervisor write access in kernel mode
-  #PF: error_code(0x0002) - not-present page
-  PGD 4b53067 P4D 4b53067 PUD 0
-  Oops: Oops: 0002 [#1] SMP PTI
-  CPU: 3 UID: 0 PID: 187 Comm: usleep Not tainted 7.0.10 #243 PREEMPT(full)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.17.0-2-2 04/01/2014
-  Code: 24 78 00 00 00 00 48 89 ea 48 89 54 24 20 48 8b b4 24 b8 00 00 00 48 8b bc 24 b0 00 00 00 48 89 bc 24 80 00 00 00 48 83 ef 05 <65> 48 c1 3d 1f a8 b6 02 05 48 8b 15 f6 00 00 00 4c 89 3c 24 4c 89
-  Call Trace:
-   <TASK>
-   ? find_held_lock
-   ? exc_page_fault
-   ? lock_release
-   ? __x64_sys_clock_nanosleep
-   ? lockdep_hardirqs_on_prepare
-   ? trace_hardirqs_on
-   __x64_sys_clock_nanosleep
-   do_syscall_64
-   ? exc_page_fault
-   ? call_depth_return_thunk
-   entry_SYSCALL_64_after_hwframe
-  ...
-  Kernel panic - not syncing: Fatal exception
-
-This small reproducer allows to easily trigger the crash:
-
-  # echo 'p __x64_sys_clock_nanosleep' > /sys/kernel/tracing/kprobe_events
-  # echo 1 > /sys/kernel/tracing/events/kprobes/p___x64_sys_clock_nanosleep_0/enable
-  # usleep 1
-
-Monitoring the crash under GDB points to the exact instruction in charge of
-incrementing the call depth:
-
-  sarq $5, %gs:__x86_call_depth(%rip)
-
-This instruction matches the one inserted by the ftrace_regs_caller from
-ftrace_64.S. This emitted code was likely working fine until the introduction
-of
-
-  59bec00ace28 ("x86/percpu: Introduce %rip-relative addressing to PER_CPU_VAR()"):
-
-it has made the call depth accounting addressing relative to $rip, instead of
-being based on an absolute address.
-
-As this code exact location depends on where the trampoline lives in memory,
-the corresponding displacement needs to be adjusted at runtime to actually
-correctly find the per-cpu __x86_call_depth value, otherwise the targeted
-address is wrong, leading to the page fault seen above.
-
-Fix the %rip-relative displacement of the copied CALL_DEPTH_ACCOUNT
-instruction (from ftrace_regs_caller) by calling text_poke_apply_relocation(),
-as it is done for example by the x86 BPF JIT compiler through
-x86_call_depth_emit_accounting(). This corrects both CALL_DEPTH_ACCOUNT slots,
-in ftrace_caller and ftrace_regs_caller.
-
-  [ bp: Massage. ]
-
-Fixes: 59bec00ace28 ("x86/percpu: Introduce %rip-relative addressing to PER_CPU_VAR()")
-Signed-off-by: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Steven Rostedt <rostedt@goodmis.org>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/20260527-fix_call_depth_in_trampoline-v1-1-1c1abc8ae310@bootlin.com
+Fixes: 7359d482eb4d ("staging: HCD files for the DWC2 driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Link: https://patch.msgid.link/ag1NwBpqT4IEQcdJ@stanley.mountain
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/ftrace.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/dwc2/hcd.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/ftrace.c
-+++ b/arch/x86/kernel/ftrace.c
-@@ -371,6 +371,13 @@ create_trampoline(struct ftrace_ops *ops
- 	}
+--- a/drivers/usb/dwc2/hcd.c
++++ b/drivers/usb/dwc2/hcd.c
+@@ -4804,6 +4804,7 @@ static int _dwc2_hcd_urb_dequeue(struct
+ 	struct dwc2_hsotg *hsotg = dwc2_hcd_to_hsotg(hcd);
+ 	int rc;
+ 	unsigned long flags;
++	int urb_status;
  
- 	/*
-+	 * Generated trampoline may contain rIP-relative addressing which
-+	 * displacement needs to be fixed.
-+	 */
-+	text_poke_apply_relocation(trampoline, trampoline, size,
-+				   (void *)start_offset, size);
-+
-+	/*
- 	 * The address of the ftrace_ops that is used for this trampoline
- 	 * is stored at the end of the trampoline. This will be used to
- 	 * load the third parameter for the callback. Basically, that
+ 	dev_dbg(hsotg->dev, "DWC OTG HCD URB Dequeue\n");
+ 	dwc2_dump_urb_info(hcd, urb, "urb_dequeue");
+@@ -4828,11 +4829,12 @@ static int _dwc2_hcd_urb_dequeue(struct
+ 
+ 	/* Higher layer software sets URB status */
+ 	spin_unlock(&hsotg->lock);
++	urb_status = urb->status;
+ 	usb_hcd_giveback_urb(hcd, urb, status);
+ 	spin_lock(&hsotg->lock);
+ 
+ 	dev_dbg(hsotg->dev, "Called usb_hcd_giveback_urb()\n");
+-	dev_dbg(hsotg->dev, "  urb->status = %d\n", urb->status);
++	dev_dbg(hsotg->dev, "  urb->status = %d\n", urb_status);
+ out:
+ 	spin_unlock_irqrestore(&hsotg->lock, flags);
+ 
 
 
