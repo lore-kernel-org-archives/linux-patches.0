@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D764A285CAE;
-	Sun,  7 Jun 2026 10:11:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613FF1E98EF;
+	Sun,  7 Jun 2026 10:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827103; cv=none; b=Bya4LxhlQlzQnKnWwUKjiKBeMVlNyZa/YL08oLUxVgWeyymtCvh8JbZC9hcBk0hcU2aMmlOqF96cQ032WuJxrbaJfx2eCgNplhjUmAXQwlm4eRyfxtGUBL1N5K6pM2Ft9buFqhZRJCQupjYvjStk21uRkHLeIZnCXGPG8SrIQ6M=
+	t=1780827107; cv=none; b=I2f+Jk/RaIvSTGT4kTtwEuGlu/MHQQHKKaIbtaHDwI3zlupw3BJQFt36upbj55xPo5iSBfn1rKdI50lvlzst5oEw6O98da+MrWRrt7dCXtRQNaHwXiVsaIQaE4LowtOfeXX9eZ+4qI5FIBdL6woI7Sk8vk9YbhozuuRlQohUxvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827103; c=relaxed/simple;
-	bh=e5BtVyWX9kLBaI+tBJ8d8ZDSFkSPR3+2EJMkAmJgp54=;
+	s=arc-20240116; t=1780827107; c=relaxed/simple;
+	bh=sGeie/N9evyiXEry9c7PKDtk2mI2abCfhhzw5zbNTmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p4nth+0cEDAKCy90yFAboD3+yMPkmauggstV0e4sKwRMFGcuzEXJzzDM5luU2gzwurnb7FvIt5+YwQ5oUdpNj+ZfBxoYwMdLFhttLe8414wEKZVHF9etKMEeJ4rvvJQ43NaADDj6MhKYVHAVPXB2tCp4kY0YLh43g66tA2pMUdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LLgEteYs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZMZ1041ADX1z/qXr3DLrHlRNWtTNUSDWbv85fsgcRH2EdnXniPbQFay+v6Hz/V0peumvT3kx66Yv0De9Mw7IafqyIDeG7uc7GGVApRlXEZlBdar9nv40cj1ANVaWN984iaJDyhk+iH0qNK6n4pWNPtY4/fUnwlx3ELwJbtgPxc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1jC3yUNY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLgEteYs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2788B1F00898;
-	Sun,  7 Jun 2026 10:11:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1jC3yUNY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703F21F00893;
+	Sun,  7 Jun 2026 10:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827102;
-	bh=JNwRqtCc/Fy0lucfpdeVEq1DCoYHWX0v1UWlKaCL6JY=;
+	s=korg; t=1780827106;
+	bh=AGJ+WARc0Pn6OhGDxIpA37jI5nWczeW3ITfSvknJlSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LLgEteYs6tpHOzpnSsBv9ZHpkdDtrQZ+3ubIPR+YzojIaSqROnHC3XN4yroRA4LaQ
-	 cGigqFK5dCY7x+tz8V90r4DVsu4tnY9FGrccp4zXLTmybMHmHk9LE9eEcPEmdJNGkt
-	 eeqO69ed9nv1VoRXaHNz665tfvrYV5IyLBgO+N/o=
+	b=1jC3yUNYvREk8Mjp4EVKZQKJyHP1j24PiNmJB46WmcFl+Q+aFuWnjuiy1Q7xe+tok
+	 oKKV8L1Fdzb1I1qBT37DTCyTzmqKJlpUKqkSXUUuWqUE+S7lPRKhOLnj4b7WaJuTMB
+	 Q5dU+wSdeL/vEUixSBpz2ytdywjXxEc9JzKRFkNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 040/315] ethtool: rss: fix falsely ignoring indir table updates
-Date: Sun,  7 Jun 2026 11:57:07 +0200
-Message-ID: <20260607095729.027688125@linuxfoundation.org>
+Subject: [PATCH 7.0 063/332] drm/xe: Restore IDLEDLY regiter on engine reset
+Date: Sun,  7 Jun 2026 11:57:12 +0200
+Message-ID: <20260607095730.447731873@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,39 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
 
-[ Upstream commit 8d60141a32875248ef71d49c9920fa5e2aa40b29 ]
+[ Upstream commit f657a6a3ba4c20bc01f5be3752d53498ee1bfe35 ]
 
-rss_set_prep_indir() compares the new indirection table against the
-current one to determine whether any update is needed. The memcmp
-call passes data->indir_size as the length argument, but indir_size
-is the number of u32 entries, not the byte count.
+Wa_16023105232 programs the register IDLEDLY. The register is reset
+whenever the engine is reset. Therefore it should be added to the GuC
+save-restore register list for it to be restored after reset.
 
-Fixes: c0ae03588bbb ("ethtool: rss: initial RSS_SET (indirection table handling)")
-Link: https://patch.msgid.link/20260522230647.1705600-4-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7c53ff050ba8 ("drm/xe: Apply Wa_16023105232")
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://patch.msgid.link/20260522163531.1365540-2-balasubramani.vivekanandan@intel.com
+Signed-off-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+(cherry picked from commit df1cfe24743a93b71eab27687e148ab8ae9b69e3)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/rss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_guc_ads.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/ethtool/rss.c b/net/ethtool/rss.c
-index 688c0e4bba69db..4877655f724419 100644
---- a/net/ethtool/rss.c
-+++ b/net/ethtool/rss.c
-@@ -684,7 +684,7 @@ rss_set_prep_indir(struct net_device *dev, struct genl_info *info,
- 				ethtool_rxfh_indir_default(i, num_rx_rings);
+diff --git a/drivers/gpu/drm/xe/xe_guc_ads.c b/drivers/gpu/drm/xe/xe_guc_ads.c
+index f4cbc030f4c81b..904225cbff0d8a 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ads.c
++++ b/drivers/gpu/drm/xe/xe_guc_ads.c
+@@ -770,6 +770,11 @@ static unsigned int guc_mmio_regset_write(struct xe_guc_ads *ads,
+ 		}
  	}
  
--	*mod |= memcmp(rxfh->indir, data->indir_table, data->indir_size);
-+	*mod |= memcmp(rxfh->indir, data->indir_table, alloc_size);
- 
- 	return 0;
++	if (XE_GT_WA(hwe->gt, 16023105232))
++		guc_mmio_regset_write_one(ads, regset_map,
++					  RING_IDLEDLY(hwe->mmio_base),
++					  count++);
++
+ 	return count;
+ }
  
 -- 
 2.53.0
