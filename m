@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84584071DD;
-	Sun,  7 Jun 2026 10:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DAEF4071DD;
+	Sun,  7 Jun 2026 10:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829540; cv=none; b=f1u/LSbXZuIMLXvIuVvSntYeQ7b1PYcIDB+m/i+EwXj6/rMtcFNBHuM9kY186CBoZC3bLcRMtJOZ2HhU3j0Q4NnY6TZlBGnfQwdvzHNCsbVfTlOusQ/jn9lLm0ICSoLkrPUCwtgey6UUeSUL+A/6urcSFEyFqRFZ/0dpVlTExy0=
+	t=1780829544; cv=none; b=RauMncKcX4DtWWkrbDVUcxOCnTbAumO4GPeykoFVu2z7uCzHg3nWSCL2RzvGx9g8DECKE1yHpxTtoOXpLHW52SIaWy+uSMSSq8uQ7PZZz8+J3zfaZeOKlAJUCBuwjmuxFMT4aDrVor/GCH9Vt7IfXq51MLRaTlOxFAs8vk0fi4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829540; c=relaxed/simple;
-	bh=vXDaQH8u/H6pec7gq8rNW9YCJ76d6lC19rBaEqLsdNM=;
+	s=arc-20240116; t=1780829544; c=relaxed/simple;
+	bh=JjAXWBLJRcW4tN5NAl5spFzlaGnFr7NjanWA0huEdX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dTKQIRRI348kVRwXLQcJzdBg741euKUOA7ZO/1rdDs/Bo7rfcwLkhIDMg0I3fqLZD6mbn2oyj8mf3seRbBpzOJ8QJfuFBO8VGHkqBQbfAjA2xt4bRwk/HishFSQpDg47FuCP92JbexZpDZ/nvNxEdpMmrznW+IpZ6PM987uG3Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnlKGgAO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MVtnfNxBmTw7SYnbtCZJSjlTi8pqaCJhK8DSG6jHFSyKlqCyXT7vh42VD2CJpKVtVSOTIUw6XkBQxghNAlIq3iTfcNl69EdJmOzt9GPTvpMbDznj4FZBVjKYIVaANQrPhvd6D/6WbBk5ppuIaOZlkP8yGO/27oAyQsoIlEXzOBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wuaWQgqC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnlKGgAO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F37991F00893;
-	Sun,  7 Jun 2026 10:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuaWQgqC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528F61F00893;
+	Sun,  7 Jun 2026 10:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829539;
-	bh=UxEoqBVXQU8nqWcvVHJWJVzwhIBbj7ChCWIPSxs3vxs=;
+	s=korg; t=1780829542;
+	bh=qoEoC+Kf9s7Cd9R3rfBtEVBJxca/RTqi5ijxRYuyjKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PnlKGgAOzE3Rw6gDLimGcEac+YboK7QrUuwr6OfOF9x+V3I6VXEJwR9+ZKMUpzWLN
-	 9oNEu42EJXSzjrZvb63WTiPAD24TwQ0+zamWZhpsSM0zo5OgToh3di0rpqi0Qkr99t
-	 Ii6a43CcWQIBSFnwYWf7gy8+GfBqjDjXxOO8PGr0=
+	b=wuaWQgqCi+uc3WWWp+gQglT6kSkcqtXsODJMkNm69hZs9PfRd2UsR3oo9KZXfGVbu
+	 WxLXWo3k1t9NTnNwoQmyk8fMvn26RnrZKVKH1QQdl4Fn9MgPEwAiTDNqbKPVMkrhaj
+	 VlWZWj5+IMX0Pnmerm8C/Q2sPW7P6ArhBmrttyz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jeremy Erazo <mendozayt13@gmail.com>
-Subject: [PATCH 6.12 233/307] usb: gadget: composite: fix integer underflow in WebUSB GET_URL handling
-Date: Sun,  7 Jun 2026 12:00:30 +0200
-Message-ID: <20260607095736.262070776@linuxfoundation.org>
+	Berkant Koc <me@berkoc.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Subject: [PATCH 7.0 288/332] drm/hyperv: validate resolution_count and fix WIN8 fallback
+Date: Sun,  7 Jun 2026 12:00:57 +0200
+Message-ID: <20260607095738.624693190@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,66 +47,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeremy Erazo <mendozayt13@gmail.com>
+From: Berkant Koc <me@berkoc.com>
 
-commit 6c5dbc104dadd79fc2923497c20bae759a18758c upstream.
+commit 13d33b9ef67066c77c84273fac5a1d3fde3533d1 upstream.
 
-The WebUSB GET_URL handler in composite_setup() narrows
-landing_page_length to fit the host-supplied wLength using
+A SYNTHVID_RESOLUTION_RESPONSE with resolution_count > 64 walks past
+the supported_resolution[SYNTHVID_MAX_RESOLUTION_COUNT] array in the
+parse loop. Bound resolution_count against the array size, folded
+into the existing zero-check.
 
-	landing_page_length = w_length
-		- WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_offset;
+When the WIN10 resolution probe fails, the caller in
+hyperv_connect_vsp() left hv->screen_*_max / preferred_* unpopulated,
+which sets mode_config.max_width / max_height to 0 and makes
+drm_internal_framebuffer_create() reject every userspace framebuffer
+with -EINVAL. The pre-WIN10 branch had the same gap for
+preferred_width / preferred_height. Use a single post-probe fallback
+guarded by screen_width_max == 0 so both paths converge on the WIN8
+defaults.
 
-If wLength is smaller than WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH the
-unsigned subtraction wraps, and the subsequent
-
-	memcpy(url_descriptor->URL,
-	       cdev->landing_page + landing_page_offset,
-	       landing_page_length - landing_page_offset);
-
-ends up copying close to UINT_MAX bytes from cdev->landing_page into
-cdev->req->buf.  KASAN reports a slab-out-of-bounds in composite_setup
-on the kmalloc-2k gadget_info allocation, and FORTIFY_SOURCE traps the
-memcpy as a 4294967293-byte field-spanning write into
-url_descriptor->URL (size 252).
-
-A USB host can reach this from a single SETUP packet against any
-gadget that has webusb/use=1 and a landingPage configured.
-
-Handle the small-wLength case before the math: when the host requested
-fewer bytes than the URL descriptor header, only the header is
-meaningful and no URL bytes need to be copied.  Setting
-landing_page_length to landing_page_offset makes the existing memcpy a
-no-op and leaves the descriptor returned to the host unchanged for all
-larger wLength values.
-
-Fixes: 93c473948c58 ("usb: gadget: add WebUSB landing page support")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jeremy Erazo <mendozayt13@gmail.com>
-Link: https://patch.msgid.link/20260512160530.352318-1-mendozayt13@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Berkant Koc <me@berkoc.com>
+Assisted-by: Claude:claude-opus-4-7 berkoc-pipeline
+Fixes: 76c56a5affeb ("drm/hyperv: Add DRM driver for hyperv synthetic video device")
+Cc: stable@vger.kernel.org # 5.14+
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Link: https://patch.msgid.link/6945b22419c7d404b4954a113de2ac9c900dba93.1779542874.git.me@berkoc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/composite.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/hyperv/hyperv_drm_proto.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/gadget/composite.c
-+++ b/drivers/usb/gadget/composite.c
-@@ -2196,7 +2196,10 @@ unknown:
- 				sizeof(url_descriptor->URL)
- 				- WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_offset);
+--- a/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
++++ b/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
+@@ -391,8 +391,11 @@ static int hyperv_get_supported_resoluti
+ 		return -ETIMEDOUT;
+ 	}
  
--			if (w_length < WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_length)
-+			if (w_length < WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH)
-+				landing_page_length = landing_page_offset;
-+			else if (w_length <
-+				 WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_length)
- 				landing_page_length = w_length
- 				- WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_offset;
+-	if (msg->resolution_resp.resolution_count == 0) {
+-		drm_err(dev, "No supported resolutions\n");
++	if (msg->resolution_resp.resolution_count == 0 ||
++	    msg->resolution_resp.resolution_count >
++	    SYNTHVID_MAX_RESOLUTION_COUNT) {
++		drm_err(dev, "Invalid resolution count: %d\n",
++			msg->resolution_resp.resolution_count);
+ 		return -ENODEV;
+ 	}
  
+@@ -508,9 +511,13 @@ int hyperv_connect_vsp(struct hv_device
+ 		ret = hyperv_get_supported_resolution(hdev);
+ 		if (ret)
+ 			drm_err(dev, "Failed to get supported resolution from host, use default\n");
+-	} else {
++	}
++
++	if (!hv->screen_width_max) {
+ 		hv->screen_width_max = SYNTHVID_WIDTH_WIN8;
+ 		hv->screen_height_max = SYNTHVID_HEIGHT_WIN8;
++		hv->preferred_width = SYNTHVID_WIDTH_WIN8;
++		hv->preferred_height = SYNTHVID_HEIGHT_WIN8;
+ 	}
+ 
+ 	hv->mmio_megabytes = hdev->channel->offermsg.offer.mmio_megabytes;
 
 
