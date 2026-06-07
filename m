@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD8526ED5D;
-	Sun,  7 Jun 2026 10:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D193626ED5D;
+	Sun,  7 Jun 2026 10:32:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828325; cv=none; b=Cz4ny4Sb4fxUhTnLV4gytN9/lmsUQAJroBYb+NUNlnnpqv6qfIv2JnvSceXi+NX453jWyLHWbUhHv0/x0JRAk6Iz/oztUm6rN9MUYxDMfeGtYrYDnt2Q4TlXcq6lqWCf2lAjsxT8Xf/8ePgAm0plL5vq521GZVU0ix3f2J8SSlQ=
+	t=1780828328; cv=none; b=hCA4d9FiX2GFPoygKR1QJhk1SQBc4IB/Hzne4gTEldMYFPT1f8i3pTfYS7d3L4Jb74/5+1fXwIagozFCJD9MoUYvhbYSgMIVz+TzLLq1V4Th44g6biLl3FRYKzPZ5VITmiDiKDRnTpRmhXK8oYmKPznWOutElnNb8qT9hqxeVOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828325; c=relaxed/simple;
-	bh=j9j2ajs18YjDWNhLW+2mlo1kPoQwylr9usKUCYIMxFg=;
+	s=arc-20240116; t=1780828328; c=relaxed/simple;
+	bh=AMoDyPYvBxKmk7q0yOPK0n2T7m3gvxgttDi80fhPCiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nByHARaElWWl5Qhy88fuZKOGCF46AR3gOBElhPiGTdEajwIHcBm4UJ6/EVBIc8Zgs0vRA1wncH/7JcwhFGbe5u4ZUKHZYRVz6WmLXwNxBm62ZE0kuuhFRUigekIBQxxcBzGyP1Uk7Ft+Pl43WzLkhg/cDWQV3vMsx3xs4m7C7O8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xNHBOLhO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KUbuIQeVQm+WjIG4U6xHO9+nTSnNJXSJx5K1ZfSoxXbmZXyj7VWa9VZGae0xphtNcUJ01HcMAPixbvT17XFL9rcw5uzCT1+A5cabfMmfkTeBeAoIRKfZx2dJ3b6oY6czQkGCKqGG3BqNi0+z4tcmoA0+eixlOvwLD4K72ZIzovM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nt09YuHl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xNHBOLhO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB0B1F00893;
-	Sun,  7 Jun 2026 10:32:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nt09YuHl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F651F00893;
+	Sun,  7 Jun 2026 10:32:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828323;
-	bh=oOVyDCMBJJ0g3LJKR1No7K6y1EWpVotb84CvTbWmdV4=;
+	s=korg; t=1780828327;
+	bh=pnaVljgu5aTtPElTMnEQ4erxXU253JvZ9TDv+7aLJ10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xNHBOLhOfZ4yiRXTTSRjF6NvDCC5AWt0Wp8QHuy7U7zBO0RYZ/SBBmWjdY4M5RhHP
-	 bNxzEuwnLLrgJPI02NI1izzcaCvVzb/8XqtE72P7sE60JO8XEZk1Brx8AHr29Dost4
-	 EMYSkmEdNvINq3YUqTPJvzIf6z2CRPJdIm++BmeY=
+	b=nt09YuHl0OqZL7WIxnrVtnThi39ZtSLy0qPE4yDgYDlvJQNbAEpFJTuboPE4Hp1w1
+	 Ec39R7EJbjNLLzA3k5ELdECZoJ6MZ8ymcmhxvdoPNfu3FaQH5hLPF4I5jSp7jF+vKA
+	 150d7xMJWNSrdJl/sgKfi785Ovy0hf63GTCpLbq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.12 129/307] usb: typec: tcpm: bound altmode_desc[] per iteration in svdm_consume_modes()
-Date: Sun,  7 Jun 2026 11:58:46 +0200
-Message-ID: <20260607095732.491993574@linuxfoundation.org>
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.18 150/315] KVM: SEV: Use READ_ONCE() when reading entries/indices from PSC buffer
+Date: Sun,  7 Jun 2026 11:58:57 +0200
+Message-ID: <20260607095733.115233190@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,75 +47,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 3389c149c68c3fea61910ad5d34f7bf3bff44e32 upstream.
+commit c8cc238093ca6c99267032f6cfe78f59389f3157 upstream.
 
-svdm_consume_modes() checks pmdata->altmodes against the array size once
-before the loop over the count, but forgot to check the bound at every
-point in the loop.
+Use READ_ONCE() when reading entries/indices from the guest-accessible
+Page State Change buffer to defend against TOCTOU bugs.
 
-In the well-behaved SVDM discovery flow this is harmless because each of
-at most SVID_DISCOVERY_MAX SVIDs contributes at most MODE_DISCOVERY_MAX
-modes, exactly filling altmode_desc[ALTMODE_DISCOVERY_MAX].  But the
-CMDT_RSP_ACK handler in tcpm_pd_svdm() does not correlate an incoming
-ACK with any request the port actually sent.  Once port->partner is set,
-an unsolicited Discover Modes ACK is consumed unconditionally.  A broken
-or malicious port partner can therefore drive altmodes to
-ALTMODE_DISCOVERY_MAX - 1 via the normal flow, and then send one extra
-Discover Modes ACK with seven VDOs.  Because the pre-loop check passes,
-the loop could then writes up to five entries past altmode_desc[].  For
-mode_data_prime the next field in struct tcpm_port is the
-partner_altmode[] pointer array, which then receives partner-chosen
-SVID/VDO bytes.
+Don't bother with READ_ONCE()/WRITE_ONCE() for cases where KVM is writing
+(and not consuming the result!), as the guest isn't supposed to touch the
+buffer while it's being processed.  I.e. using READ_ONCE() is all about
+protecting against misbehaving guests.
 
-Move the bound check inside the loop so the array can never be indexed
-past ALTMODE_DISCOVERY_MAX regardless of how many VDOs the partner
-supplies or how the function was reached.
-
-Assisted-by: gkh_clanker_t1000
-Cc: Badhri Jagan Sridharan <badhri@google.com>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/2026051351-reshuffle-skillful-90af@gregkh
+Fixes: 9b54e248d264 ("KVM: SEV: Add support to handle Page State Change VMGEXIT")
+Cc: stable@vger.kernel.org
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260501202250.2115252-11-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |   12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ arch/x86/kvm/svm/sev.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -1776,23 +1776,19 @@ static void svdm_consume_modes(struct tc
- 	switch (rx_sop_type) {
- 	case TCPC_TX_SOP_PRIME:
- 		pmdata = &port->mode_data_prime;
--		if (pmdata->altmodes >= ARRAY_SIZE(port->plug_prime_altmode)) {
--			/* Already logged in svdm_consume_svids() */
--			return;
--		}
- 		break;
- 	case TCPC_TX_SOP:
- 		pmdata = &port->mode_data;
--		if (pmdata->altmodes >= ARRAY_SIZE(port->partner_altmode)) {
--			/* Already logged in svdm_consume_svids() */
--			return;
--		}
- 		break;
- 	default:
- 		return;
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -3820,9 +3820,9 @@ static void __snp_complete_one_psc(struc
+ 	 */
+ 	for (idx = svm->sev_es.psc_idx; svm->sev_es.psc_inflight;
+ 	     svm->sev_es.psc_inflight--, idx++) {
+-		struct psc_entry *entry = &entries[idx];
++		struct psc_entry entry = READ_ONCE(entries[idx]);
+ 
+-		entry->cur_page = entry->pagesize ? 512 : 1;
++		entries[idx].cur_page = entry.pagesize ? 512 : 1;
  	}
  
- 	for (i = 1; i < cnt; i++) {
-+		if (pmdata->altmodes >= ALTMODE_DISCOVERY_MAX) {
-+			/* Already logged in svdm_consume_svids() */
-+			return;
-+		}
- 		paltmode = &pmdata->altmode_desc[pmdata->altmodes];
- 		memset(paltmode, 0, sizeof(*paltmode));
+ 	hdr->cur_entry = idx;
+@@ -3885,8 +3885,8 @@ next_range:
+ 	 * validation, so take care to only use validated copies of values used
+ 	 * for things like array indexing.
+ 	 */
+-	idx_start = hdr->cur_entry;
+-	idx_end = hdr->end_entry;
++	idx_start = READ_ONCE(hdr->cur_entry);
++	idx_end = READ_ONCE(hdr->end_entry);
  
+ 	if (idx_end >= max_nr_entries) {
+ 		snp_complete_psc(svm, VMGEXIT_PSC_ERROR_INVALID_HDR);
+@@ -3895,7 +3895,7 @@ next_range:
+ 
+ 	/* Find the start of the next range which needs processing. */
+ 	for (idx = idx_start; idx <= idx_end; idx++, hdr->cur_entry++) {
+-		entry_start = entries[idx];
++		entry_start = READ_ONCE(entries[idx]);
+ 
+ 		gfn = entry_start.gfn;
+ 		huge = entry_start.pagesize;
+@@ -3939,7 +3939,7 @@ next_range:
+ 	 * KVM_HC_MAP_GPA_RANGE exit.
+ 	 */
+ 	while (++idx <= idx_end) {
+-		struct psc_entry entry = entries[idx];
++		struct psc_entry entry = READ_ONCE(entries[idx]);
+ 
+ 		if (entry.operation != entry_start.operation ||
+ 		    entry.gfn != entry_start.gfn + npages ||
 
 
