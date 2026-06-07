@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D033E329E7E;
-	Sun,  7 Jun 2026 10:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1298A32ABC0;
+	Sun,  7 Jun 2026 10:30:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828216; cv=none; b=SUnClCDdU3TvvNKGRHCcOejLmTMQ++FOHmqBbH29parcuYdkZ8+fWQuj6uarrdHsdbY3Edu5AzVEpPV6hZUbZHgPYoDmKpiknboyDFOUE5V9hlKf/LVD4IuCJ5NhhwuKx6IM+eKrisIn48HTATF/4J1vpOLmEo/LTtvIEZfSZ1Y=
+	t=1780828219; cv=none; b=sKrp/Nrzuq0nz8CXXZZFtHjQmfXCSWJV3G6nfjcGf3tQolUmhYbbuN2ZNHj/JEnBe7kARC4gx2RimOpLbLr6SOk2F3i4ZSn/db3VMUYGwME1A/vaBo2RJ3UyGNZUzvhoDpBMax0zvrLkeLOVw0KQsA8hfsBY5Pxqop6IIdONFyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828216; c=relaxed/simple;
-	bh=rHictp+nackwG7xNJ696uWZZC8jcPBOxD+Gcj6mJsmw=;
+	s=arc-20240116; t=1780828219; c=relaxed/simple;
+	bh=EQGAEN+jVcBCLyE8wT/l0TN2tUHkwkaoavpDew7I6SM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R7/WMdCppFW4y9pLQjzj53I8TZ17XDU2cjjhDmA9aWssD/yeX7c0P6MyUaodxLZE/Ssb3FKClXGlg4V/x6pF1LksRwxXRdRa5A9r1wBVxBpbT2icXeX9mrkDeClEVMVXvBdc6Z+MA91e3kzlQM9nBP9IiYgntSvBGT9UfEawgLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9129h7b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u0cpF2xMoEdokHUHc4j62soDZ3UYCHnOz/nuz1TdJRUShjQHT8XF8R7TjDUF0I3I5DB3ByIzU/NVhew3phKPUAcqBTnUmQ87mP+PoZwcelWVCrPM0LbXfSLVgolNu354TWO4tr1q3eR4ALkFXzzkBSPe2lftrUObcP9dauvHJHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rcol/Xwc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9129h7b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DA31F00893;
-	Sun,  7 Jun 2026 10:30:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rcol/Xwc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB231F00893;
+	Sun,  7 Jun 2026 10:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828214;
-	bh=SI99nOLySRerxcxSUJ2BM0Keu5DGwL0+JoWmkb9soA8=;
+	s=korg; t=1780828218;
+	bh=ELTP6eK8Q7+dIBBlOKMl9i1RsLQRU7ZLRTrYQ+YxRBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q9129h7b9gN0LgdJa050wlATJ4AOYSz1/+F/P7rUclfuuKufnOHCj+ywQ3rzlcs7t
-	 fpfuq1M79dPt6d2/61GP46z3UcYe3En4VaU5PDtFSu115YjUzl2FHmDyUKq/7OxrWr
-	 +o01tsDWX/y8iccj6LvnyIOhuw7OVcSHOo4GnpnA=
+	b=Rcol/XwcZUxpS61Ko3D9ARZHxoY5rZPuEZ1B3yFrqJ9Yc4fZsCDHorn0TJyyIIpgb
+	 FCNze67G6bTBYYBBzlM8GZ2Evbmgy/Fbcy3qV/wj9V+w5TE+u6IYNCH8qMcJDJ9eea
+	 ZX4/Yf/TTjagC38cEs325AV3vWOu7H2gCq83eKx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.18 141/315] KVM: arm64: Correctly cap ZCR_EL2 provided by a guest hypervisor
-Date: Sun,  7 Jun 2026 11:58:48 +0200
-Message-ID: <20260607095732.780900893@linuxfoundation.org>
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Michael Roth <michael.roth@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 7.0 164/332] KVM: SEV: Use the size of the PSC header as the minimum size for PSC requests
+Date: Sun,  7 Jun 2026 11:58:53 +0200
+Message-ID: <20260607095734.091247459@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,163 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 83726330748981372bde86ed5411d7b306612991 upstream.
+commit 2be54670bdc017004c4a4b8bddb6ff02ebe7dbe2 upstream.
 
-ZCR_EL2 can be updated by a VHE guest hypervisor either using ZCR_EL2
-(which traps) or ZCR_EL1 (which does not trap). KVM handles both in
-different way:
+When handling a Page State Change (PSC) #VMGEXIT use the size of the PSC
+header as the minimum size for the scratch area.  Per the GHCB spec, PSC
+requests do NOT provide the length, i.e. using control->exit_info_2 for the
+length is completely made up behavior.  The existing code "works", e.g.
+even though Linux-as-a-guest always passes '0', because KVM doesn't do
+anything with the length when the request is in the GHCB's shared buffer.
 
-- on ZCR_EL2 trap, ZCR_EL2.LEN is immediately capped at the VM's own
-  VL limit. This has the potential to break existing SW that relies
-  on the full LEN field to be stateful.
+Use the header as the min length.  Once the header is retrieved, KVM can
+use the specified indices to compute the full size of the request.
 
-- on ZCR_EL1 access, we do absolutely nothing.
-
-On restoring the SVE context for an L2 guest, we directly restore the
-guest hypervisor's view of ZCR_EL2 into the physical ZCR_EL2. If the
-guest's view of the register was updated using the ZCR_EL2 accessor,
-the value has already been sanitised (with the caveat mentioned above).
-
-But if the guest used ZCR_EL1, the raw value is written into the HW,
-and the L2 guest can now access VLs that it shouldn't.
-
-Fix all the above by moving the VL capping to the restore points,
-ensuring that:
-
-- the HW is always programmed with a capped value, irrespective of
-  the accessor being used,
-
-- the ZCR_EL2.LEN field is always completely stateful, irrespective
-  of the accessor being used.
-
-Additionally, move ZCR_EL2 to be a sanitised register, ensuring that
-only the LEN field is actually stateful. This requires some creative
-construction of the RES0 mask, as the sysreg generation script does
-not yet generate RAZ/WI fields.
-
-Fixes: b3d29a823099 ("KVM: arm64: nv: Handle ZCR_EL2 traps")
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 9b54e248d264 ("KVM: SEV: Add support to handle Page State Change VMGEXIT")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260529-kvm-arm64-fix-zcr-len-nv-v2-1-86cad51992bd@kernel.org
-[maz: rewrote commit message, tidy up access_zcr_el2()]
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Michael Roth <michael.roth@amd.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260501202250.2115252-6-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_host.h       |    2 +-
- arch/arm64/kvm/hyp/include/hyp/switch.h |   16 ++++++++++------
- arch/arm64/kvm/nested.c                 |    5 +++++
- arch/arm64/kvm/sys_regs.c               |   11 +++--------
- 4 files changed, 19 insertions(+), 15 deletions(-)
+ arch/x86/kvm/svm/sev.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -496,7 +496,6 @@ enum vcpu_sysreg {
- 	ACTLR_EL2,	/* Auxiliary Control Register (EL2) */
- 	CPTR_EL2,	/* Architectural Feature Trap Register (EL2) */
- 	HACR_EL2,	/* Hypervisor Auxiliary Control Register */
--	ZCR_EL2,	/* SVE Control Register (EL2) */
- 	TTBR0_EL2,	/* Translation Table Base Register 0 (EL2) */
- 	TTBR1_EL2,	/* Translation Table Base Register 1 (EL2) */
- 	TCR_EL2,	/* Translation Control Register (EL2) */
-@@ -527,6 +526,7 @@ enum vcpu_sysreg {
- 	SCTLR2_EL2,	/* System Control Register 2 (EL2) */
- 	MDCR_EL2,	/* Monitor Debug Configuration Register (EL2) */
- 	CNTHCTL_EL2,	/* Counter-timer Hypervisor Control register */
-+	ZCR_EL2,	/* SVE Control Register (EL2) */
- 
- 	/* Any VNCR-capable reg goes after this point */
- 	MARKER(__VNCR_START__),
---- a/arch/arm64/kvm/hyp/include/hyp/switch.h
-+++ b/arch/arm64/kvm/hyp/include/hyp/switch.h
-@@ -433,11 +433,13 @@ static inline bool kvm_hyp_handle_mops(s
- 
- static inline void __hyp_sve_restore_guest(struct kvm_vcpu *vcpu)
- {
-+	u64 zcr_el2 = vcpu_sve_max_vq(vcpu) - 1;
-+
- 	/*
- 	 * The vCPU's saved SVE state layout always matches the max VL of the
- 	 * vCPU. Start off with the max VL so we can load the SVE state.
- 	 */
--	sve_cond_update_zcr_vq(vcpu_sve_max_vq(vcpu) - 1, SYS_ZCR_EL2);
-+	sve_cond_update_zcr_vq(zcr_el2, SYS_ZCR_EL2);
- 	__sve_restore_state(vcpu_sve_pffr(vcpu),
- 			    &vcpu->arch.ctxt.fp_regs.fpsr,
- 			    true);
-@@ -447,8 +449,10 @@ static inline void __hyp_sve_restore_gue
- 	 * nested guest, as the guest hypervisor could select a smaller VL. Slap
- 	 * that into hardware before wrapping up.
- 	 */
--	if (is_nested_ctxt(vcpu))
--		sve_cond_update_zcr_vq(__vcpu_sys_reg(vcpu, ZCR_EL2), SYS_ZCR_EL2);
-+	if (is_nested_ctxt(vcpu)) {
-+		zcr_el2 = min(zcr_el2, __vcpu_sys_reg(vcpu, ZCR_EL2));
-+		sve_cond_update_zcr_vq(zcr_el2, SYS_ZCR_EL2);
-+	}
- 
- 	write_sysreg_el1(__vcpu_sys_reg(vcpu, vcpu_sve_zcr_elx(vcpu)), SYS_ZCR);
- }
-@@ -472,11 +476,11 @@ static inline void fpsimd_lazy_switch_to
- 		return;
- 
- 	if (vcpu_has_sve(vcpu)) {
-+		zcr_el2 = vcpu_sve_max_vq(vcpu) - 1;
-+
- 		/* A guest hypervisor may restrict the effective max VL. */
- 		if (is_nested_ctxt(vcpu))
--			zcr_el2 = __vcpu_sys_reg(vcpu, ZCR_EL2);
--		else
--			zcr_el2 = vcpu_sve_max_vq(vcpu) - 1;
-+			zcr_el2 = min(zcr_el2, __vcpu_sys_reg(vcpu, ZCR_EL2));
- 
- 		write_sysreg_el2(zcr_el2, SYS_ZCR);
- 
---- a/arch/arm64/kvm/nested.c
-+++ b/arch/arm64/kvm/nested.c
-@@ -1772,6 +1772,11 @@ int kvm_init_nv_sysregs(struct kvm_vcpu
- 	/* VNCR_EL2 */
- 	set_sysreg_masks(kvm, VNCR_EL2, VNCR_EL2_RES0, VNCR_EL2_RES1);
- 
-+	/* ZCR_EL2 - bits 8:4 are RAZ/WI so treat them as RES0 */
-+	resx.res0 = ZCR_ELx_RES0 | GENMASK_ULL(8, 4);
-+	resx.res1 = ZCR_ELx_RES1;
-+	set_sysreg_masks(kvm, ZCR_EL2, resx);
-+
- out:
- 	for (enum vcpu_sysreg sr = __SANITISED_REG_START__; sr < NR_SYS_REGS; sr++)
- 		__vcpu_rmw_sys_reg(vcpu, sr, |=, 0);
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -2749,21 +2749,16 @@ static bool access_zcr_el2(struct kvm_vc
- 			   struct sys_reg_params *p,
- 			   const struct sys_reg_desc *r)
- {
--	unsigned int vq;
--
- 	if (guest_hyp_sve_traps_enabled(vcpu)) {
- 		kvm_inject_nested_sve_trap(vcpu);
- 		return false;
- 	}
- 
--	if (!p->is_write) {
-+	if (!p->is_write)
- 		p->regval = __vcpu_sys_reg(vcpu, ZCR_EL2);
--		return true;
--	}
-+	else
-+		__vcpu_assign_sys_reg(vcpu, ZCR_EL2, p->regval);
- 
--	vq = SYS_FIELD_GET(ZCR_ELx, LEN, p->regval) + 1;
--	vq = min(vq, vcpu_sve_max_vq(vcpu));
--	__vcpu_assign_sys_reg(vcpu, ZCR_EL2, vq - 1);
- 	return true;
- }
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -4519,7 +4519,7 @@ int sev_handle_vmgexit(struct kvm_vcpu *
+ 		vcpu->run->system_event.data[0] = control->ghcb_gpa;
+ 		break;
+ 	case SVM_VMGEXIT_PSC:
+-		ret = setup_vmgexit_scratch(svm, true, control->exit_info_2);
++		ret = setup_vmgexit_scratch(svm, true, sizeof(struct psc_hdr));
+ 		if (ret)
+ 			break;
  
 
 
