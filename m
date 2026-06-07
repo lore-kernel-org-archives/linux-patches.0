@@ -1,47 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC34D1E98EF;
-	Sun,  7 Jun 2026 10:43:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133091E98EF;
+	Sun,  7 Jun 2026 10:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829031; cv=none; b=UkVOhOAPDrIUcbgcey/hDR2BzjcGbN6gDFcNHx8vbMV7eCFW+KxM72H3cU8ASqx59KX/O9Hj0O5SKG8CAIG+LyXHJc/6bzSqg0DgOnhv1Y9J6OvDnTYIulWgddViFTHA922lWhz0TvboKjRIXBL5W27xr4VW4AZ/LVrHIOCKVwo=
+	t=1780829035; cv=none; b=BX28MMIKmZSO0VOosZfqMnCw3rcJ1taxnOSTgEoehnvsVtadG6iv5ytk9srUceoL1G0Iy5wONAbpPiK9fBHOaDZ0EAxYD9s//OhMze9RhlvfyCXYfL8JE7J3mVgbd98xnW2OpXdBVdFm4w5MBsZ1hjeMmi4x9hqvzvbUB4Ij5jU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829031; c=relaxed/simple;
-	bh=whFJa1RQ7ersFtUbyHInAOE21L1T6PCQRgeIh7Dnmrw=;
+	s=arc-20240116; t=1780829035; c=relaxed/simple;
+	bh=cX/oruR2RRnaeqXM+RJg26JqYCgdkKlzUnks4OBJcmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ikY2l0aMmNl0mbZ+fv5LtzJfCchPS1LtSgz3hDdTMJT/Zvbu5RpAuwC0dB8z/S1E7JOkSKd91nJFXUF2iAdDnPHLtRWAjR7RcoRltn5MErBVqW6zhnIiVbLEzxlbIZcUseK9Rr9eD18M/PuXiBp/Wt2YPZ86Ap3H/6f0rCWq39I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ao/oKCCN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s3eGgksQqHCGAmcLx7CKINNQVmzhowHDZu0X6e/ZJSBVCDi50q9B5oJnvsqnk8YMiylifx3iN/ef5TkeCrnyFM6OIoT1nfF1fx6Ip8vvYaNTfdQmuj/kd0oRRdo1BPCTP0O7c9y4TVprq6USQ4n66GTPhaRluOdG6NvQGkfXU5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwJgZalW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ao/oKCCN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14DE31F00893;
-	Sun,  7 Jun 2026 10:43:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwJgZalW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8B91F00893;
+	Sun,  7 Jun 2026 10:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829030;
-	bh=EPfP7hniqJdSu3oaLi36efEsm0SRHBw3A6E7+0Y/HB0=;
+	s=korg; t=1780829034;
+	bh=Ie4oKlKSQ/tUsrWDEzXHNl5Khp4cgdFhlg5YZNFF1BM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ao/oKCCNPziNHWg+1hZ6l6NwWuPE8EilOmJal1hm1fnq6AdA2wIR9BosUwu5A+FGN
-	 nVuHiLo//OO+LVDDAkJgysjAqJ1XrOeV53TfP7OH+UzaNR8glcHv/OR0335AA4AQK1
-	 REetB7dHuTVVvI1zZ4yd8kJLTANheJYTx9KfHpdg=
+	b=RwJgZalW4tfxSQj6KUQzR5flE8ifL3k3OM7KFhOyVo7U0etomxHD3c7lVgUgUHHg2
+	 S0h6lyX5EqjkiE0LRY0kpOEKQh3pv65H8nxkxxVnt3CZvCl5bgyDXHquLxyuv0RT8j
+	 1r0MipiDVBTW3nkFsCJYYpn7YC2ZFrgUfORHaXVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Luxing Yin <tr0jan@lzu.edu.cn>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Justin Iurman <justin.iurman@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 188/307] ipv6: exthdrs: refresh nh after handling HAO option
-Date: Sun,  7 Jun 2026 11:59:45 +0200
-Message-ID: <20260607095734.623548073@linuxfoundation.org>
+	Dmitriy Zharov <contact@zharov.dev>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.18 211/315] Input: xpad - add support for ASUS ROG RAIKIRI II
+Date: Sun,  7 Jun 2026 11:59:58 +0200
+Message-ID: <20260607095735.307021880@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -53,52 +46,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhengchuan Liang <zcliangcn@gmail.com>
+From: Dmitriy Zharov <contact@zharov.dev>
 
-commit f7b52afe3592eae66e160586b45a3f2242972c63 upstream.
+commit c897cf120696b94f56ed0f3197ba9a77071a59ec upstream.
 
-ip6_parse_tlv() caches skb_network_header(skb) in nh while walking
-IPv6 TLVs.
+Add the VID/PIDs for the ASUS ROG RAIKIRI II controller to xpad_device
+and the VID to xpad_table. The controller has a physical PC/XBOX toggle
+which switches between XBOX360 and XBOXONE protocols.
 
-ipv6_dest_hao() may call pskb_expand_head() for a cloned skb, which can
-move the skb head and invalidate the cached network header pointer.
-Refresh nh after ipv6_dest_hao() returns so any trailing padding or TLVs
-are parsed from the current skb head.
-
-This matches the existing pattern used in ip6_parse_tlv() after helpers
-that can modify skb header storage.
-
-Fixes: a831f5bbc89a ("[IPV6] MIP6: Add inbound interface of home address option.")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Co-developed-by: Luxing Yin <tr0jan@lzu.edu.cn>
-Signed-off-by: Luxing Yin <tr0jan@lzu.edu.cn>
-Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/7aba1debc2196189172499e5769802b026f8caf8.1779247873.git.zcliangcn@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Dmitriy Zharov <contact@zharov.dev>
+Link: https://patch.msgid.link/20260430183522.122151-1-contact@zharov.dev
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/exthdrs.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/input/joystick/xpad.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -203,6 +203,8 @@ static bool ip6_parse_tlv(bool hopbyhop,
- 				case IPV6_TLV_HAO:
- 					if (!ipv6_dest_hao(skb, off))
- 						return false;
-+
-+					nh = skb_network_header(skb);
- 					break;
- #endif
- 				default:
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -220,6 +220,10 @@ static const struct xpad_device {
+ 	{ 0x07ff, 0xffff, "Mad Catz GamePad", 0, XTYPE_XBOX360 },
+ 	{ 0x0b05, 0x1a38, "ASUS ROG RAIKIRI", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
+ 	{ 0x0b05, 0x1abb, "ASUS ROG RAIKIRI PRO", 0, XTYPE_XBOXONE },
++	{ 0x0b05, 0x1c91, "ASUS ROG RAIKIRI II", 0, XTYPE_XBOX360 },
++	{ 0x0b05, 0x1c92, "ASUS ROG RAIKIRI II WIRELESS", 0, XTYPE_XBOX360 },
++	{ 0x0b05, 0x1c96, "ASUS ROG RAIKIRI II XBOX", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
++	{ 0x0b05, 0x1d04, "ASUS ROG RAIKIRI II XBOX WIRELESS", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
+ 	{ 0x0c12, 0x0005, "Intec wireless", 0, XTYPE_XBOX },
+ 	{ 0x0c12, 0x8801, "Nyko Xbox Controller", 0, XTYPE_XBOX },
+ 	{ 0x0c12, 0x8802, "Zeroplus Xbox Controller", 0, XTYPE_XBOX },
+@@ -542,6 +546,7 @@ static const struct usb_device_id xpad_t
+ 	{ USB_DEVICE(0x0738, 0x4540) },		/* Mad Catz Beat Pad */
+ 	XPAD_XBOXONE_VENDOR(0x0738),		/* Mad Catz FightStick TE 2 */
+ 	XPAD_XBOX360_VENDOR(0x07ff),		/* Mad Catz Gamepad */
++	XPAD_XBOX360_VENDOR(0x0b05),		/* ASUS controllers */
+ 	XPAD_XBOXONE_VENDOR(0x0b05),		/* ASUS controllers */
+ 	XPAD_XBOX360_VENDOR(0x0c12),		/* Zeroplus X-Box 360 controllers */
+ 	XPAD_XBOX360_VENDOR(0x0db0),		/* Micro Star International X-Box 360 controllers */
 
 
