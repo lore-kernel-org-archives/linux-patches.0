@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925452D3A69;
-	Sun,  7 Jun 2026 10:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB7E2D3A69;
+	Sun,  7 Jun 2026 10:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828537; cv=none; b=GvcGM4A3A47aEcvbzEQSj6+XTK/t32ZQdbYeoC/22XM34rCLDLdWDg0SCsB/y7KhUW9B8xF8UXx/vKckJ/ebceMArj0P8YgwoStw5YQb/J76h7XHg0LxZBgWNsS3TwkhmmiedaQ7HABEHbvkfSjwjWs5Z9zyXk3pyQE2DU5UCEc=
+	t=1780828541; cv=none; b=tvfzPzkWtYdiLbLg7NLPHX69ekKSxuZ0sIFN5LpNyHjxlP2tkHarxvg6IKDlC/IIoqjlW9qsibqGNmZqOaXw/cOrAs+u768F99COG8OLsqwXHVYxHOLkt0RvVA9D/2UQe8aIXRbL9zNqu9nvBMQ/rtI+inZYMcq/AYEMJCu1Wbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828537; c=relaxed/simple;
-	bh=ykX1TT8wdY6kop1e1oydICvZOZk+Q3FmMstz6mZyh6s=;
+	s=arc-20240116; t=1780828541; c=relaxed/simple;
+	bh=g4fsEwOp08cUIrM3DqzTe8fb+VYf5O8WH6eALWvOVAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ENNedNH9i6W6I35stW6uO+aRkzvEvYdM0Aqo5Jho0vPDZoXL0amM/Nmg063jPUMnCPbEC3YNQwa2960IIOhHrghlOaTK5DCL4zW6Wm6CkWQcJhQzVpz2VcMJJsmLYoPqlGuxkQZ/cVnyukaWSwFNrpLKBmB/jPShocOOzJaW3yM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hh+IewrP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YVNqvDrDUkepWseDItchvjkbWJRCRKIw4bud7XYHOoK2CKAEheBZdWH5ADjnB0jdeCheC+ES52ep8wTQZbxNFkspvuncX/KhL0FXKlCNXJLY0cqxsIxyvgjtzYySI6ySYp9NizvyNRZKtcC8jf6QeZ/d0mDiZ9MEmQAY+67GrU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQjt/B5G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hh+IewrP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF501F00893;
-	Sun,  7 Jun 2026 10:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQjt/B5G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C2F71F00893;
+	Sun,  7 Jun 2026 10:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828536;
-	bh=0R53gYc2buAC0Tbn+tYjgU6MdsU8agYftCPw1v0ZFy0=;
+	s=korg; t=1780828540;
+	bh=AkDVIPJ5NuJdq/bV3yE1KzU+gsI0PfPmDC78782xj0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hh+IewrPD+a8ZQxYvzeE6PT6dZF6KgClk4v9w2b0qow4F9NmEpz8zAKV4OeIIxdwY
-	 DGNh5MTmyyfVbVBBH5iVdwiKo+r30Q4/MXA0pML0WzteH+fY3s/VCf67F8k9oZkao/
-	 fIZD85Cy++ENyY8wCYjCKAQb8bIEe48XR925CVKc=
+	b=FQjt/B5G250tg+CwYo903DeEHepcTJC3udnhDTtClRNuT4m/mqaqgRMWWDqMUkzvR
+	 DdSI94fftUlEHzBwpr6j8fbCecTvZfrccfYOd5Pnf6UW51WiSkRAWMOTiELie7sLKk
+	 ReQLLXto769C45JqPWQRatS9CBO59APr+merk1ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.12 146/307] Bluetooth: ISO: fix UAF in iso_recv_frame
-Date: Sun,  7 Jun 2026 11:59:03 +0200
-Message-ID: <20260607095733.093033022@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Gyeyoung Baek <gye976@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.18 171/315] iio: chemical: mhz19b: reject oversized serial replies
+Date: Sun,  7 Jun 2026 11:59:18 +0200
+Message-ID: <20260607095733.870093514@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,61 +47,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 47f23a259517abbdb8032c057a1e8a6bf3734878 upstream.
+commit 673478bc29cf72010faaf293c1c8c667393335a0 upstream.
 
-iso_recv_frame reads conn->sk under iso_conn_lock but releases the lock
-before using sk, with no reference held. A concurrent iso_sock_kill()
-can free sk in that window, causing use-after-free on sk->sk_state and
-sock_queue_rcv_skb().
+mhz19b_receive_buf() appends each serdev chunk into the fixed
+MHZ19B_CMD_SIZE receive buffer and advances buf_idx by len without
+checking that the chunk fits in the remaining space. A large callback
+can therefore overflow st->buf before the command path validates the
+reply.
 
-Fix by replacing the bare pointer read with iso_sock_hold(conn), which
-calls sock_hold() while the spinlock is held, atomically elevating the
-refcount before the lock drops. Add a drop_put label so sock_put() is
-called on all exit paths where the hold succeeded.
+Reset the reply state before each command and reject oversized serial
+replies before copying them into the fixed buffer. When an oversized
+reply is detected, wake the waiter and report -EMSGSIZE instead of
+overwriting st->buf.
 
-Fixes: ccf74f2390d60a2f9a75ef496d2564abb478f46a ("Bluetooth: Add BTPROTO_ISO socket type")
+Fixes: 4572a70b3681 ("iio: chemical: Add support for Winsen MHZ19B CO2 sensor")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Acked-by: Gyeyoung Baek <gye976@gmail.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/iso.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/iio/chemical/mhz19b.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -553,7 +553,7 @@ static void iso_recv_frame(struct iso_co
- 	struct sock *sk;
+--- a/drivers/iio/chemical/mhz19b.c
++++ b/drivers/iio/chemical/mhz19b.c
+@@ -52,6 +52,8 @@ struct mhz19b_state {
+ 	struct completion buf_ready;
  
- 	iso_conn_lock(conn);
--	sk = conn->sk;
-+	sk = iso_sock_hold(conn);
- 	iso_conn_unlock(conn);
+ 	u8 buf_idx;
++	bool buf_overflow;
++
+ 	/*
+ 	 * Serdev receive buffer.
+ 	 * When data is received from the MH-Z19B,
+@@ -106,6 +108,10 @@ static int mhz19b_serdev_cmd(struct iio_
+ 	cmd_buf[8] = mhz19b_get_checksum(cmd_buf);
  
- 	if (!sk)
-@@ -562,11 +562,15 @@ static void iso_recv_frame(struct iso_co
- 	BT_DBG("sk %p len %d", sk, skb->len);
+ 	/* Write buf to uart ctrl synchronously */
++	st->buf_idx = 0;
++	st->buf_overflow = false;
++	reinit_completion(&st->buf_ready);
++
+ 	ret = serdev_device_write(serdev, cmd_buf, MHZ19B_CMD_SIZE, 0);
+ 	if (ret < 0)
+ 		return ret;
+@@ -121,6 +127,9 @@ static int mhz19b_serdev_cmd(struct iio_
+ 		if (!ret)
+ 			return -ETIMEDOUT;
  
- 	if (sk->sk_state != BT_CONNECTED)
--		goto drop;
-+		goto drop_put;
- 
--	if (!sock_queue_rcv_skb(sk, skb))
-+	if (!sock_queue_rcv_skb(sk, skb)) {
-+		sock_put(sk);
- 		return;
++		if (st->buf_overflow)
++			return -EMSGSIZE;
++
+ 		if (st->buf[8] != mhz19b_get_checksum(st->buf)) {
+ 			dev_err(dev, "checksum err");
+ 			return -EINVAL;
+@@ -240,6 +249,14 @@ static size_t mhz19b_receive_buf(struct
+ {
+ 	struct iio_dev *indio_dev = dev_get_drvdata(&serdev->dev);
+ 	struct mhz19b_state *st = iio_priv(indio_dev);
++	size_t remaining = MHZ19B_CMD_SIZE - st->buf_idx;
++
++	if (len > remaining) {
++		st->buf_idx = 0;
++		st->buf_overflow = true;
++		complete(&st->buf_ready);
++		return len;
 +	}
  
-+drop_put:
-+	sock_put(sk);
- drop:
- 	kfree_skb(skb);
- }
+ 	memcpy(st->buf + st->buf_idx, data, len);
+ 	st->buf_idx += len;
 
 
