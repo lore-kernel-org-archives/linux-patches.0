@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214651FE47B;
-	Sun,  7 Jun 2026 10:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D4E1FE47B;
+	Sun,  7 Jun 2026 10:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828355; cv=none; b=uJbrfwRYZG3PINhO0754Zvt1FgCl3ECTgRV48QD9gur1fW1npIoqGCfo4Yfvkc1bVh1rs9W7ZDkH3bj8P5RkQFwllXHHlKDIifCMbVU2xicagombHPFcRc+jWlJLbXKcI3RezO7mgP4Z5uM72Q4NX+4YeITiHx5qeFMhZwqIhyI=
+	t=1780828359; cv=none; b=jTnKsXM2ZmVb+8n+sKlb5PHoAJ0+Ujojg2idUP2oV6Rl7c6uofOmYSbupn91BOZ5Gg1nl7AfRlPNozdYTgqDbRYKxJzO+ukEYHrC6jCMipJ/gWcE6kO1LM+WXhFHkVOjotoLdOaO6rCBU4q2RMA+kKuwN9yWyIXD6NbExuvRNgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828355; c=relaxed/simple;
-	bh=sVq3wJAw7CTzFqEp2vUDQpkuhJOUHkaKIBNhmoHqDeI=;
+	s=arc-20240116; t=1780828359; c=relaxed/simple;
+	bh=iJ0JfIbH6OAIP3bQrvdJMCJORCyfYYnJ8Ky/iQQwpC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lz5mkZqqdH/AQIjmS7XC9RWhg5Y1kY24jkgAh5w/H1oRbnaaYWh1DK+3uaKrIgtk+MNGhR4Ysane0Oqsk4cRug09SzMOJrOsuZEFy3ta5IkbHiMoJ+rwIn2oivxizmMrzGnD+Vy4flMXXTtnC5i4SQ8tZz7ldJhLPQae9CUPFcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tsjcuku5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UZYgp2bM5WbbWaZiwcAds/lYUwr+fHdxB1cPF1X1PX+cuybpqqYbrHLhTeaMypkTGZuM7P5Pn57Ol5sUeguWKXuQMHo2JTEUYX1jrjL3JNLnxTpLjLmUPizIN/w8GhJY09v76p8gCb7P9zAPenxHwnIKoMbUaMaR1d1aPPD3+co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rT2MuIfa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tsjcuku5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD8F1F00893;
-	Sun,  7 Jun 2026 10:32:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rT2MuIfa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C341F00893;
+	Sun,  7 Jun 2026 10:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828353;
-	bh=P6dbCCIGK3NZP0qtF+EUf08NuwpHsLSrhG/Hi+cHqv0=;
+	s=korg; t=1780828358;
+	bh=DqQWgk8CWmIXXi3eKkK2bDFwdVC6e+Eb6W6wF0LIe4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tsjcuku51CDKdxN6QiPUqPS0NXDRcqUf9nNNK6TzmQbW4rfmQKVYZl+wYLDIHnv5u
-	 qeNyx6FzoCs6l8fw9dUUBV6H6rO0irhhOnPlr5VzoU1/LX2+g7c+YoXvrrWFXacH2u
-	 7O6PG1LqwiaGbMvsltL4AmoEgN3v+plFHEucMNGU=
+	b=rT2MuIfako1GKdshtUgUjNXXxSm79bWTY5EVhoHx+wPUThUPLdNU4BLgMLJZ/gHYt
+	 OWt1tXPisJ5IPYFb+q89yVdtHywp58VAVfoRlRd8Rke4r5hIaW9JXEdHYEjSfl8boH
+	 t4yAIeXMaXNV979KnjJKGT1ZMmHMxxj3XkCmsna8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.18 152/315] Disable -Wattribute-alias for clang-23 and newer
-Date: Sun,  7 Jun 2026 11:58:59 +0200
-Message-ID: <20260607095733.189792177@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 7.0 175/332] iio: adc: npcm: fix unbalanced clk_disable_unprepare()
+Date: Sun,  7 Jun 2026 11:59:04 +0200
+Message-ID: <20260607095734.489622812@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,130 +48,112 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: David Carlier <devnexen@gmail.com>
 
-commit 175db11786bde9061db526bf1ac5107d915f5163 upstream.
+commit 0d42e2c0bd6ceb89e44c6e065f9bdf9b1df3ef0c upstream.
 
-Clang recently added support for -Wattribute-alias [1], which results in
-the same warnings that necessitated commit bee20031772a ("disable
--Wattribute-alias warning for SYSCALL_DEFINEx()") for GCC.
+The driver acquired the ADC clock with devm_clk_get() and read its
+rate, but never called clk_prepare_enable(). The probe error path and
+npcm_adc_remove() both called clk_disable_unprepare() unconditionally,
+causing the clk framework's enable/prepare counts to underflow on
+probe failure or module unbind.
 
-  kernel/time/itimer.c:325:1: error: alias and aliasee have different types 'long (unsigned int)' and 'long (typeof (__builtin_choose_expr((__builtin_types_compatible_p(typeof ((unsigned int)0), typeof (0LL)) || __builtin_types_compatible_p(typeof ((unsigned int)0), typeof (0ULL))), 0LL, 0L)))' (aka 'long (long)') [-Werror,-Wattribute-alias]
-    325 | SYSCALL_DEFINE1(alarm, unsigned int, seconds)
-        | ^
-  include/linux/syscalls.h:225:36: note: expanded from macro 'SYSCALL_DEFINE1'
-    225 | #define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
-        |                                    ^
-  include/linux/syscalls.h:236:2: note: expanded from macro 'SYSCALL_DEFINEx'
-    236 |         __SYSCALL_DEFINEx(x, sname, __VA_ARGS__)
-        |         ^
-  include/linux/syscalls.h:251:18: note: expanded from macro '__SYSCALL_DEFINEx'
-    251 |                 __attribute__((alias(__stringify(__se_sys##name))));    \
-        |                                ^
-  kernel/time/itimer.c:325:1: note: aliasee is declared here
-  include/linux/syscalls.h:225:36: note: expanded from macro 'SYSCALL_DEFINE1'
-    225 | #define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
-        |                                    ^
-  include/linux/syscalls.h:236:2: note: expanded from macro 'SYSCALL_DEFINEx'
-    236 |         __SYSCALL_DEFINEx(x, sname, __VA_ARGS__)
-        |         ^
-  include/linux/syscalls.h:255:18: note: expanded from macro '__SYSCALL_DEFINEx'
-    255 |         asmlinkage long __se_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__))  \
-        |                         ^
-  <scratch space>:16:1: note: expanded from here
-     16 | __se_sys_alarm
-        | ^
+The issue went unnoticed because NPCM BMC firmware leaves the ADC
+clock enabled at boot, so the driver happened to work in practice.
 
-Disable the warnings in the same way for clang-23 and newer. Disable the
-warning about unknown warning options to avoid breaking the build for
-versions of clang-23 that do not have -Wattribute-alias, such as ones
-deployed by vendors like Android or CI systems or when bisecting LLVM
-between llvmorg-23-init and release/23.x.
+Switch to devm_clk_get_enabled() so the clock is properly enabled
+during probe and automatically released by the device-managed
+cleanup, and drop the now-redundant clk_disable_unprepare() from
+both the probe error path and remove().
 
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2163
-Link: https://github.com/llvm/llvm-project/commit/40da6920a0d71d49dfa2392b09153600b0759f5e [1]
-Link: https://patch.msgid.link/20260515-syscall-disable-attribute-alias-for-clang-v1-1-9a9d95d41df6@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+While at it, drop the duplicate error message on devm_request_irq()
+failure since the IRQ core already logs it.
+
+Fixes: 9bf85fbc9d8f ("iio: adc: add NPCM ADC driver")
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/syscall_wrapper.h |    4 ++++
- include/linux/compat.h                   |    4 ++++
- include/linux/compiler-clang.h           |    6 ++++++
- include/linux/compiler_types.h           |    4 ++++
- include/linux/syscalls.h                 |    4 ++++
- 5 files changed, 22 insertions(+)
+ drivers/iio/adc/npcm_adc.c |   25 ++++++++-----------------
+ 1 file changed, 8 insertions(+), 17 deletions(-)
 
---- a/arch/riscv/include/asm/syscall_wrapper.h
-+++ b/arch/riscv/include/asm/syscall_wrapper.h
-@@ -32,6 +32,10 @@ asmlinkage long __riscv_sys_ni_syscall(c
- 	__diag_push();									\
- 	__diag_ignore(GCC, 8, "-Wattribute-alias",					\
- 			"Type aliasing is used to sanitize syscall arguments");		\
-+	__diag_ignore(clang, 23, "-Wunknown-warning-option",				\
-+		      "Avoid breaking versions without -Wattribute-alias");		\
-+	__diag_ignore(clang, 23, "-Wattribute-alias",					\
-+			"Type aliasing is used to sanitize syscall arguments");		\
- 	static long __se_##prefix##name(ulong, ulong, ulong, ulong, ulong, ulong, 	\
- 					ulong)						\
- 			__attribute__((alias(__stringify(___se_##prefix##name))));	\
---- a/include/linux/compat.h
-+++ b/include/linux/compat.h
-@@ -72,6 +72,10 @@
- 	__diag_push();								\
- 	__diag_ignore(GCC, 8, "-Wattribute-alias",				\
- 		      "Type aliasing is used to sanitize syscall arguments");\
-+	__diag_ignore(clang, 23, "-Wunknown-warning-option",			\
-+		      "Avoid breaking versions without -Wattribute-alias");	\
-+	__diag_ignore(clang, 23, "-Wattribute-alias",				\
-+		      "Type aliasing is used to sanitize syscall arguments");	\
- 	asmlinkage long compat_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
- 		__attribute__((alias(__stringify(__se_compat_sys##name))));	\
- 	ALLOW_ERROR_INJECTION(compat_sys##name, ERRNO);				\
---- a/include/linux/compiler-clang.h
-+++ b/include/linux/compiler-clang.h
-@@ -131,6 +131,12 @@
- #define __diag_str(s)		__diag_str1(s)
- #define __diag(s)		_Pragma(__diag_str(clang diagnostic s))
+--- a/drivers/iio/adc/npcm_adc.c
++++ b/drivers/iio/adc/npcm_adc.c
+@@ -231,7 +231,7 @@ static int npcm_adc_probe(struct platfor
+ 	if (IS_ERR(info->reset))
+ 		return PTR_ERR(info->reset);
  
-+#if CONFIG_CLANG_VERSION >= 230000
-+#define __diag_clang_23(s)	__diag(s)
-+#else
-+#define __diag_clang_23(s)
-+#endif
-+
- #define __diag_clang_13(s)	__diag(s)
+-	info->adc_clk = devm_clk_get(&pdev->dev, NULL);
++	info->adc_clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(info->adc_clk)) {
+ 		dev_warn(&pdev->dev, "ADC clock failed: can't read clk\n");
+ 		return PTR_ERR(info->adc_clk);
+@@ -244,17 +244,13 @@ static int npcm_adc_probe(struct platfor
+ 	info->adc_sample_hz = clk_get_rate(info->adc_clk) / ((div + 1) * 2);
  
- #define __diag_ignore_all(option, comment) \
---- a/include/linux/compiler_types.h
-+++ b/include/linux/compiler_types.h
-@@ -636,6 +636,10 @@ struct ftrace_likely_data {
- #define __diag_GCC(version, severity, string)
- #endif
+ 	irq = platform_get_irq(pdev, 0);
+-	if (irq < 0) {
+-		ret = irq;
+-		goto err_disable_clk;
+-	}
++	if (irq < 0)
++		return irq;
  
-+#ifndef __diag_clang
-+#define __diag_clang(version, severity, string)
-+#endif
-+
- #define __diag_push()	__diag(push)
- #define __diag_pop()	__diag(pop)
+ 	ret = devm_request_irq(&pdev->dev, irq, npcm_adc_isr, 0,
+ 			       "NPCM_ADC", indio_dev);
+-	if (ret < 0) {
+-		dev_err(dev, "failed requesting interrupt\n");
+-		goto err_disable_clk;
+-	}
++	if (ret < 0)
++		return ret;
  
---- a/include/linux/syscalls.h
-+++ b/include/linux/syscalls.h
-@@ -247,6 +247,10 @@ static inline int is_syscall_trace_event
- 	__diag_push();							\
- 	__diag_ignore(GCC, 8, "-Wattribute-alias",			\
- 		      "Type aliasing is used to sanitize syscall arguments");\
-+	__diag_ignore(clang, 23, "-Wunknown-warning-option",		\
-+		      "Avoid breaking versions without -Wattribute-alias");\
-+	__diag_ignore(clang, 23, "-Wattribute-alias",			\
-+		      "Type aliasing is used to sanitize syscall arguments");\
- 	asmlinkage long sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
- 		__attribute__((alias(__stringify(__se_sys##name))));	\
- 	ALLOW_ERROR_INJECTION(sys##name, ERRNO);			\
+ 	reg_con = ioread32(info->regs + NPCM_ADCCON);
+ 	info->vref = devm_regulator_get_optional(&pdev->dev, "vref");
+@@ -262,7 +258,7 @@ static int npcm_adc_probe(struct platfor
+ 		ret = regulator_enable(info->vref);
+ 		if (ret) {
+ 			dev_err(&pdev->dev, "Can't enable ADC reference voltage\n");
+-			goto err_disable_clk;
++			return ret;
+ 		}
+ 
+ 		iowrite32(reg_con & ~NPCM_ADCCON_REFSEL,
+@@ -272,10 +268,8 @@ static int npcm_adc_probe(struct platfor
+ 		 * Any error which is not ENODEV indicates the regulator
+ 		 * has been specified and so is a failure case.
+ 		 */
+-		if (PTR_ERR(info->vref) != -ENODEV) {
+-			ret = PTR_ERR(info->vref);
+-			goto err_disable_clk;
+-		}
++		if (PTR_ERR(info->vref) != -ENODEV)
++			return PTR_ERR(info->vref);
+ 
+ 		/* Use internal reference */
+ 		iowrite32(reg_con | NPCM_ADCCON_REFSEL,
+@@ -314,8 +308,6 @@ err_iio_register:
+ 	iowrite32(reg_con & ~NPCM_ADCCON_ADC_EN, info->regs + NPCM_ADCCON);
+ 	if (!IS_ERR(info->vref))
+ 		regulator_disable(info->vref);
+-err_disable_clk:
+-	clk_disable_unprepare(info->adc_clk);
+ 
+ 	return ret;
+ }
+@@ -332,7 +324,6 @@ static void npcm_adc_remove(struct platf
+ 	iowrite32(regtemp & ~NPCM_ADCCON_ADC_EN, info->regs + NPCM_ADCCON);
+ 	if (!IS_ERR(info->vref))
+ 		regulator_disable(info->vref);
+-	clk_disable_unprepare(info->adc_clk);
+ }
+ 
+ static struct platform_driver npcm_adc_driver = {
 
 
