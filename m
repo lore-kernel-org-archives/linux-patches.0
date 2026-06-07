@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7402C1595;
-	Sun,  7 Jun 2026 10:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A6B2D3A69;
+	Sun,  7 Jun 2026 10:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828270; cv=none; b=G0mNVHIogDPlBZprW0OlkGuhxpn5AGZj7pioz8mE07FHmH291Idsn1MYkYY1kaKMjzxeH9M/t6udpg+HJc0Sicam9LRGsJIuDhv6+w/Q7EeqV1D6DxviFeTh4Qrpoz0TWKHZR32nW9QhQXgEW9tmIipEygDNfDtcRFHFABGjsqU=
+	t=1780828274; cv=none; b=GfZzDW5V0QPD8j6UhS+9k1p3L2fgwCCWbolTa4baISte+W9PgG49j2JGiAEDMhUtUHcNnu7oSf6LFkXuCsM0jC+bGcUEza1NRdfoC0L83Ng3A4o9rhnYaz4G7/Ewu9m7EXs/r9fGUyyUt6pucL3XvhfKlPre0R0bR40Db9AnRdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828270; c=relaxed/simple;
-	bh=Ocfd8TAq3Gr4LFAuNzxM3nGJLlziq1kC5Thq3CAYGZI=;
+	s=arc-20240116; t=1780828274; c=relaxed/simple;
+	bh=xIKoVwr3Di9/By7Z9iQUhGja/P/AmL9kldtJfb941Vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OmW/7sOhhz1xrlw+yVDHHQbw4ythDkTVrl1CYtaEYsaiM3wYY3myueHFWmpdu8jmNFFhiL6wMq1/ceYRLpD5Be+3kL1TRRxG6Yz7bPDMoiUpslu6UOe9d94wx8s+g6tW0CMDbxx8NsEn9Z/1SFEK3sGKQHLkxe+J58TDI/3kj5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uHzINwwt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qmCZPCT/JvhQurSNgxaNnEbHCDtL2Lb/x8goqv6rw2AmC3M/OLbScm86mCKN/frhfvKWB58w3bZ40UabJkLKHL4ozh0Bj03nhjP4vUiYcXAXzj16GJlZIK9xYQ38UocPmVe+JqUR4pmkkyWx+EiZknqkKbSwsSYaloRqvOS3ZSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0I9LtI3G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uHzINwwt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118251F00893;
-	Sun,  7 Jun 2026 10:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0I9LtI3G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC4BD1F00893;
+	Sun,  7 Jun 2026 10:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828269;
-	bh=KyE8BDJ5llr8LhONmtA+qJqbQ62+cWqfdiJplROhqPM=;
+	s=korg; t=1780828273;
+	bh=KCT9grxKy3BAXqvlTqBcmXwm8s8vcZaZ1tsBTF0NWIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uHzINwwtWnyibEt14gLBSFCffMOhHa86vcpqNIzsvQ2aBjjeIV20WIk1UTD2WtLlu
-	 sa/IAwtVMsrHMPFnN8I1ZMLiQws7dtqFFw8sBprCRkNfOfbETJbDxUGzsHJpRi5cUH
-	 YYhWpECKFeVPjTO82wI5qVhbfu056AFklNYYDtVM=
+	b=0I9LtI3GKEzVH8qGgsTJC1hGV6aMapwo+EgJkn2DQACU3+j56rEv4G/2MXat5glNK
+	 4ZuKltuvLEBcqnImwmfUDzNOQ47OBPTNQMn5QAMhPUr72iBsllDuOVnNd1PivMtrDX
+	 81Y6IHxAursThTVO1IwAAF0Rtxlhm2hKaZtHlRtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 7.0 168/332] KVM: SEV: Use READ_ONCE() when reading entries/indices from PSC buffer
-Date: Sun,  7 Jun 2026 11:58:57 +0200
-Message-ID: <20260607095734.236463960@linuxfoundation.org>
+	stable@kernel.org,
+	Sven Eckelmann <sven@narfation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 125/307] batman-adv: tt: prevent TVLV entry number overflow
+Date: Sun,  7 Jun 2026 11:58:42 +0200
+Message-ID: <20260607095732.348045111@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,75 +47,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit c8cc238093ca6c99267032f6cfe78f59389f3157 upstream.
+commit 99d9958fa10fb684b2a8e2c48a8d704122721420 upstream.
 
-Use READ_ONCE() when reading entries/indices from the guest-accessible
-Page State Change buffer to defend against TOCTOU bugs.
+The helpers to prepare the buffers for the local and global TT based
+replies are trying to sum up all TT entries which can be found for each
+VLAN. In theory, this sum can be too big for an u16 and therefore overflow.
+A too small buffer would then be allocated for the TVLV.
 
-Don't bother with READ_ONCE()/WRITE_ONCE() for cases where KVM is writing
-(and not consuming the result!), as the guest isn't supposed to touch the
-buffer while it's being processed.  I.e. using READ_ONCE() is all about
-protecting against misbehaving guests.
+The too small buffer will be handled gracefully by
+batadv_tt_tvlv_generate() and is not causing a buffer overflow - just a
+truncated reply. But this overflow shouldn't have happened in the first and
+the too small buffer should never have been allocated when an overflow was
+detected.
 
-Fixes: 9b54e248d264 ("KVM: SEV: Add support to handle Page State Change VMGEXIT")
-Cc: stable@vger.kernel.org
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260501202250.2115252-11-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@kernel.org
+Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/batman-adv/translation-table.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -3827,9 +3827,9 @@ static void __snp_complete_one_psc(struc
- 	 */
- 	for (idx = svm->sev_es.psc_idx; svm->sev_es.psc_inflight;
- 	     svm->sev_es.psc_inflight--, idx++) {
--		struct psc_entry *entry = &entries[idx];
-+		struct psc_entry entry = READ_ONCE(entries[idx]);
+diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+index 4045ddefc29b47..7041cd69e20070 100644
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -850,11 +850,18 @@ batadv_tt_prepare_tvlv_global_data(struct batadv_orig_node *orig_node,
+ 	u16 total_entries = 0;
+ 	u8 *tt_change_ptr;
+ 	int vlan_entries;
++	u16 sum_entries;
  
--		entry->cur_page = entry->pagesize ? 512 : 1;
-+		entries[idx].cur_page = entry.pagesize ? 512 : 1;
+ 	spin_lock_bh(&orig_node->vlan_list_lock);
+ 	hlist_for_each_entry(vlan, &orig_node->vlan_list, list) {
+ 		vlan_entries = atomic_read(&vlan->tt.num_entries);
+-		total_entries += vlan_entries;
++
++		if (check_add_overflow(vlan_entries, total_entries, &sum_entries)) {
++			*tt_len = 0;
++			goto out;
++		}
++
++		total_entries = sum_entries;
+ 		num_vlan++;
  	}
  
- 	hdr->cur_entry = idx;
-@@ -3892,8 +3892,8 @@ next_range:
- 	 * validation, so take care to only use validated copies of values used
- 	 * for things like array indexing.
- 	 */
--	idx_start = hdr->cur_entry;
--	idx_end = hdr->end_entry;
-+	idx_start = READ_ONCE(hdr->cur_entry);
-+	idx_end = READ_ONCE(hdr->end_entry);
+@@ -941,15 +948,22 @@ batadv_tt_prepare_tvlv_local_data(struct batadv_priv *bat_priv,
+ 	struct batadv_softif_vlan *vlan;
+ 	size_t change_offset;
+ 	u16 num_vlan = 0;
+-	u16 vlan_entries = 0;
+ 	u16 total_entries = 0;
+ 	u16 tvlv_len;
+ 	u8 *tt_change_ptr;
++	int vlan_entries;
++	u16 sum_entries;
  
- 	if (idx_end >= max_nr_entries) {
- 		snp_complete_psc(svm, VMGEXIT_PSC_ERROR_INVALID_HDR);
-@@ -3902,7 +3902,7 @@ next_range:
+ 	spin_lock_bh(&bat_priv->softif_vlan_list_lock);
+ 	hlist_for_each_entry(vlan, &bat_priv->softif_vlan_list, list) {
+ 		vlan_entries = atomic_read(&vlan->tt.num_entries);
+-		total_entries += vlan_entries;
++
++		if (check_add_overflow(vlan_entries, total_entries, &sum_entries)) {
++			tvlv_len = 0;
++			goto out;
++		}
++
++		total_entries = sum_entries;
+ 		num_vlan++;
+ 	}
  
- 	/* Find the start of the next range which needs processing. */
- 	for (idx = idx_start; idx <= idx_end; idx++, hdr->cur_entry++) {
--		entry_start = entries[idx];
-+		entry_start = READ_ONCE(entries[idx]);
- 
- 		gfn = entry_start.gfn;
- 		huge = entry_start.pagesize;
-@@ -3946,7 +3946,7 @@ next_range:
- 	 * KVM_HC_MAP_GPA_RANGE exit.
- 	 */
- 	while (++idx <= idx_end) {
--		struct psc_entry entry = entries[idx];
-+		struct psc_entry entry = READ_ONCE(entries[idx]);
- 
- 		if (entry.operation != entry_start.operation ||
- 		    entry.gfn != entry_start.gfn + npages ||
+-- 
+2.53.0
+
 
 
