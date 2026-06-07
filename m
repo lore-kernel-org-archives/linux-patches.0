@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE324204E;
-	Sun,  7 Jun 2026 10:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DAC4204E;
+	Sun,  7 Jun 2026 10:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829654; cv=none; b=VmiBPivlqn2H9NG/+Ikv6NWGkEK5UTNGPJDRCyN5WhLLRMqtmxt3Ibbbo5zhgVybyohjJ67rDYdXtS9ZQQbZZd/vnUdlvStyLA4SHFtlolOrhADNg1truY2r32Pm6OGAi7dehk8V5mra1CuGEcn7D7V5MT/mog5wyCuJivDOhOc=
+	t=1780829657; cv=none; b=cwE3b49ERTruN/CVdSoKHuDCNb3bCdeXQ0QJu0oMAbYmTbTjlrkLwjkCzHvM1kJBmc/nIeXmT+50k1VaFGD2qLfnxtPbvaLramibHGoRzOjCNo4fY3rqE+T08MMVn46Aw1436mvASF3r+9pPYCFyQb7maWdJtqMJVzXFpKNnudU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829654; c=relaxed/simple;
-	bh=ZQz4tJlmM+sP700Pz3QHeyhiwcq6ilz2HZmm2b899K8=;
+	s=arc-20240116; t=1780829657; c=relaxed/simple;
+	bh=lUOV5tVU3xztjOmLIKS9G7YtZPMFe+QWPEj+3K5XGmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qfPG0uWyyMd4Lo24k5Q3q1B8V+3VfpXOAqOzy6cLFMDzS5WfoXFfWUjkOrDAYzdd3f2qx6oJTeYyRhOoT8WRyiutzEqB1dhkYs65+6zculbN8LELqRmS9nGr/nJzqpT9GtkSytU5ViXdI+fxfsPcz5j/nA6hhTTLttirHf7dtrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nxNsyVtP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VQ0T1lPNNvvI9DqzBL7r646xsO7qQGCA1hOpE2t8MLEnm1CaUkaACRqelZLcW3hvMkbL9WHjZPPpnBViTI7KIJD7ZBxEc+UDqty2ZhB7ZyHCasAslrooD6FUu//gg4g3DFQEQly6X6cbIYjg8sPUGQscLE383vzZ77zvRvjRasI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ncuwHg3N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxNsyVtP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 363E51F00893;
-	Sun,  7 Jun 2026 10:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ncuwHg3N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB7D1F00893;
+	Sun,  7 Jun 2026 10:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829653;
-	bh=hKZxpqwu30QNRGkfW3Q3BTOMfNk3t7AHQURx3C6tp2s=;
+	s=korg; t=1780829656;
+	bh=/hpBoBFUwtuvzJqfrvZt0e/5hwHwqSQmiJpNNgggRrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nxNsyVtPddyRNmgyxoF+iXXu7ljWoYfBqsAK1680q9oq2BlzHviZ0ggKkayD3BzJM
-	 hnqDfdV2mBo4yPuLp1BlLjn4wADdzmq1w34cb61ZGBKPrBnkiIBu4G9vp/iIhXo2Ac
-	 Dkvt3DR+erxE6c4KZjO2/IsmCvSoYP2sc4EkbnBk=
+	b=ncuwHg3N7tNGyEpmBP4quOdrO2n/tqCNskxKDXw9jMoIbNmPqwaDGTOaOFTQ8yV/H
+	 SowOsEgCUNJmT22/w79DGOTxF87sSs+pZil2Qj2XYl/gki16DxzwMKUkO/pMvugejq
+	 w/qtG2G+fKEbPf1eUiPcTqgoNHHVZCaY/IEu/VlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Huang <jinhuieric.huang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 268/315] drm/amdkfd: fix a vulnerability of integer overflow in kfd debugger
-Date: Sun,  7 Jun 2026 12:00:55 +0200
-Message-ID: <20260607095737.412247963@linuxfoundation.org>
+Subject: [PATCH 7.0 303/332] drm/amdkfd: fix a vulnerability of integer overflow in kfd debugger
+Date: Sun,  7 Jun 2026 12:01:12 +0200
+Message-ID: <20260607095739.203933778@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,7 +46,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -70,7 +70,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
 +++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-@@ -3292,12 +3292,14 @@ static void copy_context_work_handler(st
+@@ -3296,12 +3296,14 @@ static void copy_context_work_handler(st
  
  static uint32_t *get_queue_ids(uint32_t num_queues, uint32_t *usr_queue_id_array)
  {
