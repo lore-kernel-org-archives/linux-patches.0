@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13AD2D8378;
-	Sun,  7 Jun 2026 10:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFCA296BCC;
+	Sun,  7 Jun 2026 10:46:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829205; cv=none; b=D3nrRgxBvIayoulKFpgyQffmMXinctEYZ7dUuWYG8ynbDtg49hscX7JyHGDVFH3mT29eCnS3LvCbaRIT9S1ZfMal/Q18O25ytCIo63WRtuY6aDPUXjtEGnwQB2mzrEzKRDVAtK1Es7xCJmVdeHcB66oqYuTB0oabtM7G2iyARLs=
+	t=1780829209; cv=none; b=M27b7M1h2B2Re1zJkd/2nVVFskDxQQDNRAaKxj4tYVzQw9SCamhFsImfLdbks+94SfI+RMpiKr29oSI0GQus5ORytAoYZILpU50b8KoWzv4T1xeFVFCli540GBC9sg1Be9Jts1nJSjMkRGHlm6HXWIsOmP0KrRFFdVYqHkkRC7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829205; c=relaxed/simple;
-	bh=utcWprRp2SVuI3kU+8Phuouqwewnlmj+FLhckQFfWhI=;
+	s=arc-20240116; t=1780829209; c=relaxed/simple;
+	bh=PaDwSN5X5ItMcREwnGTN39DXmLPe+RuFg817u2pJA44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SsD25zQFl6ojYUt4lRYowKigQkid1Iw8QunlF/B+K5Wt7uJWsTbAomugSKA+VBXbjfjsIEEMoMzIJtbMY1FA/uaVpq0kmw20il9IRqZqyfFd04ksK06Y166xSiAn9oekxbhR2Q2UuwKZTtB+IVBBd/dFxyF6k/K3kWDmeHzF6Ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b92lgxJR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F1AZjbFJYLXKs7tEaPRr1GJUF8zWWfaXWIPNRPL4/MJLqFvLJ6m1dS/pfQvUeVTIvdEd/MMWX0qZCvdpJ+w8/Tet3xzDU3LxFHMBYUSqFDrhDeZjr0koQh8CtYk650aCYTHVv+pmlUF77Qoe8HCn3zhEObBaTLyMuC8FtYPS3Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+JNovZV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b92lgxJR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 021DB1F00893;
-	Sun,  7 Jun 2026 10:46:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+JNovZV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A9E1F00893;
+	Sun,  7 Jun 2026 10:46:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829204;
-	bh=wXZ23LO1H6490i3gvzaTZeV8+RthJs5WYw2wQ2qdhrc=;
+	s=korg; t=1780829208;
+	bh=OPn8mxyDIFr4tPNPN21HY+5x2ohmwgaADYPzjFxKKGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b92lgxJRHMHj73H5Qe5NBax9NftWxhfRaT/3WXdv5gLXp8DkKRa96LmeySEjb8rOz
-	 pF4aKgnIFSA/OPgH0IfJKcmvGjayHYpUgPcZOLqQDOWpm5pFJl2NIATFxSH/zWYwNH
-	 eeznhk5bJMpY5XeXc+snpwnvhefK6gOXfktD7BuU=
+	b=K+JNovZVZ0mbW6ziyk0ciZZ6Bt6oOuFeL8/9eRMS3SUAbAEp/9mlfLrdFeFTlcyxy
+	 T75yUHeQIJmtKobZxPUYKLRwLtvO7QHAWOaesavOF8v4XTuGXY92boiIub8ZiJy0pt
+	 LzMp4t8gOgaZkdhswxlpE5fZLncpx92JriP5czsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Stephen J. Fuhry" <fuhrysteve@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.18 225/315] USB: quirks: add NO_LPM for Lenovo ThinkPad USB-C Dock Gen2 hub controllers
-Date: Sun,  7 Jun 2026 12:00:12 +0200
-Message-ID: <20260607095735.839885275@linuxfoundation.org>
+	Lin Ma <malin89@huawei.com>,
+	Chenyuan Mi <michenyuan@huawei.com>,
+	Jingguo Tan <tanjingguo@huawei.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.12 204/307] xfrm: esp: restore combined single-frag length gate
+Date: Sun,  7 Jun 2026 12:00:01 +0200
+Message-ID: <20260607095735.216763202@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,44 +49,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephen J. Fuhry <fuhrysteve@gmail.com>
+From: Jingguo Tan <tanjingguo@huawei.com>
 
-commit 9ddb9c0deca48d2c2a22ebf4d2f35c925a520328 upstream.
+commit dfa0d7b0ff1eb6b2c416b8fdb9b4f2cefba57a40 upstream.
 
-The Lenovo ThinkPad USB-C Dock Gen2 (17ef:a391, 17ef:a392) hub
-controllers exhibit link instability when USB Link Power Management
-is enabled, similar to the dock's Ethernet adapter (17ef:a387) which
-already carries USB_QUIRK_NO_LPM.
+The ESP out-of-place fast path appends the trailer in esp_output_head()
+before esp_output_tail() allocates the destination page frag. The
+head-side gate currently checks skb->data_len and tailen separately, but
+the tail code allocates a single destination frag from the combined
+post-trailer skb->data_len.
 
-When the dock reconnects after a transient disconnect, the hub
-controllers enter LPM states between re-enumeration retries, causing
-repeated disconnect/reconnect cycles lasting up to two minutes.
-Disabling LPM for these devices restores stable enumeration.
+Reject the page-frag fast path when the combined aligned length exceeds a
+page. Otherwise skb_page_frag_refill() may fall back to a single page while
+the destination sg still spans the combined skb->data_len.
 
-Signed-off-by: Stephen J. Fuhry <fuhrysteve@gmail.com>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260513171419.44849-1-fuhrysteve@gmail.com
+Restore this combined-length page gate for both IPv4 and IPv6.
+
+Fixes: 5bd8baab087d ("esp: limit skb_page_frag_refill use to a single page")
+Cc: stable@vger.kernel.org
+Signed-off-by: Lin Ma <malin89@huawei.com>
+Signed-off-by: Chenyuan Mi <michenyuan@huawei.com>
+Signed-off-by: Jingguo Tan <tanjingguo@huawei.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv4/esp4.c |    4 ++--
+ net/ipv6/esp6.c |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -514,6 +514,10 @@ static const struct usb_device_id usb_qu
- 	/* Lenovo ThinkPad USB-C Dock Gen2 Ethernet (RTL8153 GigE) */
- 	{ USB_DEVICE(0x17ef, 0xa387), .driver_info = USB_QUIRK_NO_LPM },
+--- a/net/ipv4/esp4.c
++++ b/net/ipv4/esp4.c
+@@ -419,8 +419,8 @@ int esp_output_head(struct xfrm_state *x
+ 			return err;
+ 	}
  
-+	/* Lenovo ThinkPad USB-C Dock Gen2 USB 3.1 and USB 2.0 hub controllers */
-+	{ USB_DEVICE(0x17ef, 0xa391), .driver_info = USB_QUIRK_NO_LPM },
-+	{ USB_DEVICE(0x17ef, 0xa392), .driver_info = USB_QUIRK_NO_LPM },
-+
- 	/* BUILDWIN Photo Frame */
- 	{ USB_DEVICE(0x1908, 0x1315), .driver_info =
- 			USB_QUIRK_HONOR_BNUMINTERFACES },
+-	if (ALIGN(tailen, L1_CACHE_BYTES) > PAGE_SIZE ||
+-	    ALIGN(skb->data_len, L1_CACHE_BYTES) > PAGE_SIZE)
++	if (ALIGN(skb->data_len + tailen, L1_CACHE_BYTES) >
++	    PAGE_SIZE)
+ 		goto cow;
+ 
+ 	if (!skb_cloned(skb)) {
+--- a/net/ipv6/esp6.c
++++ b/net/ipv6/esp6.c
+@@ -448,8 +448,8 @@ int esp6_output_head(struct xfrm_state *
+ 			return err;
+ 	}
+ 
+-	if (ALIGN(tailen, L1_CACHE_BYTES) > PAGE_SIZE ||
+-	    ALIGN(skb->data_len, L1_CACHE_BYTES) > PAGE_SIZE)
++	if (ALIGN(skb->data_len + tailen, L1_CACHE_BYTES) >
++	    PAGE_SIZE)
+ 		goto cow;
+ 
+ 	if (!skb_cloned(skb)) {
 
 
