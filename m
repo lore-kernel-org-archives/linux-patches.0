@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBEC234994;
-	Sun,  7 Jun 2026 10:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFDB234994;
+	Sun,  7 Jun 2026 10:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826840; cv=none; b=Rs0wkDONZS16KsXMhrW6ATCQVZzVKhTDg5E40fLByBnKd9DKtJEXbIJNCavjhxHGigwZecKP6uvzABEr7BPHV4vQc5yGOSy4xVbbw2/+MY+FkuOECiz8QywaeOqqKJUnWLIGdIX+CCS52Ljhv6LlcMAn+qxKkipXPncHnqMa8ko=
+	t=1780826844; cv=none; b=SNgnfS0GqUoNAV3IMMS5FDYYwHGGnNblxwR9IXVQjAIiHTgkdOeWjD0b5At5geP7hyZlCC+o2nNxN8U7f1aKa8EiXiUubcEajd0SzPbvwfFdEtrtWX6Q5txOw1MPyNK9e9LTTP2VPDPhrHAyeC2utnVJYKTntuOzBRrW7KwpvTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826840; c=relaxed/simple;
-	bh=ZbbotknhWcylVXe8sNN7jpS1lkiwVUj2xG5xrTtJMFs=;
+	s=arc-20240116; t=1780826844; c=relaxed/simple;
+	bh=8Tl6UTu9SDVCnFNdfFH8C+TbN5I0DAd/2DAcrZxcTTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O8i4vsulkIsTgBegXKY6UFNwRP27PkFqv8vhFs51l5EbBcEn9sIGQAarUhQlARfjP9h3hryZCy0oa/gKDPUijRhvFJnQWMTCdlTVnNd6qwOQDwwTCNm1h9sDu2or+vDrjfscRxOEJ1k5NBkWO7jgrR50PfeUyqLQ1fU1/CY/fwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnagz0ZA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iQrowuRHzUDHBoxpvJYqeU7eg8Tzw0hKmKh1vHXNJQMZlG7YZfdU/BjvuPJ19xXn0RxYuZKn1c0kQsRfMMQP9r5U5sxllWnHptaZjFOcwve+nZh50/zGbUB8ezfUv1oV14oLOuodWDFSA8q9OQlhyEE2qI1eEdlRxqtaAQO9G/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrImDkLl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnagz0ZA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8781F00893;
-	Sun,  7 Jun 2026 10:07:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrImDkLl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B051F00893;
+	Sun,  7 Jun 2026 10:07:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826839;
-	bh=Ty25WKT8XsLbvQ//0KlOqYSav23lSOz+L55OS3rJ/+A=;
+	s=korg; t=1780826843;
+	bh=PVQ3qiq2Y19uSkZY/eLmqobk/8dl5DsuEmddqn+qawI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wnagz0ZAVmPAnmgRTwuEXwpNHS2DyOTzdTpC/hFHTflaZu9nyeIzqapSjQbcxRKt7
-	 Tv+Kf53TcbuIeVbLKLpWtB53+NdgRLSg/tdJ0u2rhPfyzIHVubmZhZu+N4GoyUaOQk
-	 ZWEcVezA69TAHw9seDCZ5XdgWH+OdmA3SY/y+fZI=
+	b=qrImDkLl42Zc7yTDMjczk/ULeBxPe65MrXIVT0OTA4UniEHOKuMZ2A3kYQH0i0EC0
+	 aeeYaDTv+7uCX3mjILWn7FVD1yGxLhfi6bCwHSd0b/hKM4nywykRP/KIvKjC1xdCFh
+	 /31VLihblKEfzuRkfpkfUiSpigiKN3Uk2g3UEyI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Dhabaleshwar Das <dhabal123@gmail.com>,
+	Tomeu Vizoso <tomeu@tomeuvizoso.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 034/332] ASoC: Intel: bytcht_es8316: Fix MCLK leak on init errors
-Date: Sun,  7 Jun 2026 11:56:43 +0200
-Message-ID: <20260607095729.348996909@linuxfoundation.org>
+Subject: [PATCH 6.18 014/315] accel/rocket: fix UAF via dangling GEM handle in create_bo
+Date: Sun,  7 Jun 2026 11:56:41 +0200
+Message-ID: <20260607095728.019743749@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,114 +45,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Dhabaleshwar Das <dhabal123@gmail.com>
 
-[ Upstream commit afb2a3a9d8369d18122a0d7cd294eba9a98259c6 ]
+[ Upstream commit f706e6a4ce75585af979aec3dcbdce68bc76306b ]
 
-byt_cht_es8316_init() enables MCLK before configuring the codec sysclk
-and creating the headset jack. If either of those later steps fails, the
-function returns without disabling MCLK, leaving the clock enabled after
-card registration fails.
+rocket_ioctl_create_bo() inserts a GEM handle into the file's IDR via
+drm_gem_handle_create() early on, then performs several operations that
+can fail (sgt allocation, drm_mm insert, iommu_map). If any fail after
+the handle is live, the error path calls drm_gem_shmem_object_free()
+which kfree's the object without removing the handle from the IDR.
 
-Track whether this driver enabled MCLK and disable it on the init error
-paths. Add the matching DAI link exit callback so the same clock enable
-is also balanced when ASoC cleans up a successfully initialized link.
+This leaves a dangling handle pointing to freed slab memory. Any
+subsequent ioctl using that handle (PREP_BO, FINI_BO, SUBMIT) calls
+drm_gem_object_lookup() and dereferences freed memory (UAF).
 
-Fixes: a03bdaa565cb ("ASoC: Intel: add machine driver for BYT/CHT + ES8316")
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260519-asoc-bytcht-es8316-mclk-leak-v1-1-b4a11cdc2afd@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix by moving drm_gem_handle_create() to after all fallible operations
+succeed, matching the pattern used by panfrost, lima, and etnaviv.
+
+Also fix drm_mm_insert_node_generic() whose return value was silently
+overwritten by iommu_map_sgtable() on the next line. Add the missing
+error check.
+
+[tomeu: Move handle creation to the very end]
+
+Fixes: 658ebeac3351 ("accel/rocket: Add IOCTL for BO creation")
+Reported-by: Dhabaleshwar Das <dhabal123@gmail.com>
+Signed-off-by: Dhabaleshwar Das <dhabal123@gmail.com>
+Reviewed-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
+Link: https://patch.msgid.link/20260521165720.2113571-1-tomeu@tomeuvizoso.net
+Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcht_es8316.c | 29 ++++++++++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
+ drivers/accel/rocket/rocket_gem.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/intel/boards/bytcht_es8316.c b/sound/soc/intel/boards/bytcht_es8316.c
-index 192e2a394ff3d0..ea387dc7427382 100644
---- a/sound/soc/intel/boards/bytcht_es8316.c
-+++ b/sound/soc/intel/boards/bytcht_es8316.c
-@@ -40,6 +40,7 @@ struct byt_cht_es8316_private {
- 	struct gpio_desc *speaker_en_gpio;
- 	struct device *codec_dev;
- 	bool speaker_en;
-+	bool mclk_enabled;
- };
+diff --git a/drivers/accel/rocket/rocket_gem.c b/drivers/accel/rocket/rocket_gem.c
+index c3c86e1abd25a3..b1b24d60973e82 100644
+--- a/drivers/accel/rocket/rocket_gem.c
++++ b/drivers/accel/rocket/rocket_gem.c
+@@ -78,11 +78,6 @@ int rocket_ioctl_create_bo(struct drm_device *dev, void *data, struct drm_file *
+ 	rkt_obj->size = args->size;
+ 	rkt_obj->offset = 0;
  
- enum {
-@@ -170,6 +171,15 @@ static struct snd_soc_jack_pin byt_cht_es8316_jack_pins[] = {
- 	},
- };
+-	ret = drm_gem_handle_create(file, gem_obj, &args->handle);
+-	drm_gem_object_put(gem_obj);
+-	if (ret)
+-		goto err;
+-
+ 	sgt = drm_gem_shmem_get_pages_sgt(shmem_obj);
+ 	if (IS_ERR(sgt)) {
+ 		ret = PTR_ERR(sgt);
+@@ -94,6 +89,8 @@ int rocket_ioctl_create_bo(struct drm_device *dev, void *data, struct drm_file *
+ 					 rkt_obj->size, PAGE_SIZE,
+ 					 0, 0);
+ 	mutex_unlock(&rocket_priv->mm_lock);
++	if (ret)
++		goto err;
  
-+static void byt_cht_es8316_disable_mclk(struct byt_cht_es8316_private *priv)
-+{
-+	if (!priv->mclk_enabled)
-+		return;
+ 	ret = iommu_map_sgtable(rocket_priv->domain->domain,
+ 				rkt_obj->mm.start,
+@@ -111,8 +108,18 @@ int rocket_ioctl_create_bo(struct drm_device *dev, void *data, struct drm_file *
+ 	args->offset = drm_vma_node_offset_addr(&gem_obj->vma_node);
+ 	args->dma_address = rkt_obj->mm.start;
+ 
++	ret = drm_gem_handle_create(file, gem_obj, &args->handle);
++	if (ret)
++		goto err_unmap;
 +
-+	clk_disable_unprepare(priv->mclk);
-+	priv->mclk_enabled = false;
-+}
++	drm_gem_object_put(gem_obj);
 +
- static int byt_cht_es8316_init(struct snd_soc_pcm_runtime *runtime)
- {
- 	struct snd_soc_component *codec = snd_soc_rtd_to_codec(runtime, 0)->component;
-@@ -227,12 +237,14 @@ static int byt_cht_es8316_init(struct snd_soc_pcm_runtime *runtime)
- 	ret = clk_prepare_enable(priv->mclk);
- 	if (ret)
- 		dev_err(card->dev, "unable to enable MCLK\n");
-+	else
-+		priv->mclk_enabled = true;
- 
- 	ret = snd_soc_dai_set_sysclk(snd_soc_rtd_to_codec(runtime, 0), 0, 19200000,
- 				     SND_SOC_CLOCK_IN);
- 	if (ret < 0) {
- 		dev_err(card->dev, "can't set codec clock %d\n", ret);
--		return ret;
-+		goto err_disable_mclk;
- 	}
- 
- 	ret = snd_soc_card_jack_new_pins(card, "Headset",
-@@ -241,13 +253,25 @@ static int byt_cht_es8316_init(struct snd_soc_pcm_runtime *runtime)
- 					 ARRAY_SIZE(byt_cht_es8316_jack_pins));
- 	if (ret) {
- 		dev_err(card->dev, "jack creation failed %d\n", ret);
--		return ret;
-+		goto err_disable_mclk;
- 	}
- 
- 	snd_jack_set_key(priv->jack.jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
- 	snd_soc_component_set_jack(codec, &priv->jack, NULL);
- 
  	return 0;
-+
-+err_disable_mclk:
-+	byt_cht_es8316_disable_mclk(priv);
-+	return ret;
-+}
-+
-+static void byt_cht_es8316_exit(struct snd_soc_pcm_runtime *runtime)
-+{
-+	struct snd_soc_card *card = runtime->card;
-+	struct byt_cht_es8316_private *priv = snd_soc_card_get_drvdata(card);
-+
-+	byt_cht_es8316_disable_mclk(priv);
- }
  
- static int byt_cht_es8316_codec_fixup(struct snd_soc_pcm_runtime *rtd,
-@@ -353,6 +377,7 @@ static struct snd_soc_dai_link byt_cht_es8316_dais[] = {
- 						| SND_SOC_DAIFMT_CBC_CFC,
- 		.be_hw_params_fixup = byt_cht_es8316_codec_fixup,
- 		.init = byt_cht_es8316_init,
-+		.exit = byt_cht_es8316_exit,
- 		SND_SOC_DAILINK_REG(ssp2_port, ssp2_codec, platform),
- 	},
- };
++err_unmap:
++	iommu_unmap(rocket_priv->domain->domain,
++		    rkt_obj->mm.start, rkt_obj->size);
++
+ err_remove_node:
+ 	mutex_lock(&rocket_priv->mm_lock);
+ 	drm_mm_remove_node(&rkt_obj->mm);
 -- 
 2.53.0
 
