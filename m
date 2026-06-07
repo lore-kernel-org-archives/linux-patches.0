@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D107234994;
-	Sun,  7 Jun 2026 10:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0ECF234994;
+	Sun,  7 Jun 2026 10:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826834; cv=none; b=a/9T0TikLaoGfg9y4LuSFZbMnYufn6ujTVSSvRtsDwIMWrXRvwYJxw+NbD2cLyAcoNCj6P6bY/ZwwL0OH+FTMsC7AEaT6S9Vw9tI2C7tm1RAfqP31n/kC/qRQsQJCQSBWy/Aitp9mIrGK9VmOx4+QclgK6GlXzss1Syhz1g2xzM=
+	t=1780826838; cv=none; b=UInm3gRFbWGmO5yatJ/WzsG6EjB6/IACOpdQ8UJ5UsynQmSQs0RdD8+GKz3ecfu77T15ICM/uPvMD41OHFHeLR0lsigxyZGvQKIRMkYjZTbbPXHOIfyoafI+I+9aYO/c6P5GnrdGj9ZIPJOCC9JP0+SAqMTCw+Vu8vscX6FKv2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826834; c=relaxed/simple;
-	bh=KCeP6r4WcKOYd0Orv8+Zs2ax3pvSCEEZBcuOEQGfh3Y=;
+	s=arc-20240116; t=1780826838; c=relaxed/simple;
+	bh=BWHDKKcp9yikAAUTfDlYUauAitMTmlZAkXu65+RNDvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KQOAZ2xENc/e1weOQD+hZ6yMWkl16pUOp6GNz47oTgermOibiQd2GUqC7qJXaQDyTMI91pn2NywiGyB+tgFmPvdJ3hzqrvhmTWCga4AYL/Ct7Z6+nhJ3Tkxm4dpyCFyA00JpPVtSEJmIKWsj5Wpma3afpoVbMV6KFnzEDkGsr0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0p8nsbm6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KC7VDNNSrj4MGGEWkl1BoApPfduLEK/rQkaNoSvMELh7f4d5QAQAWozft48B5iTSJk40Cfz24e3KvZDMBDOEC6QoEqHrUuR2XKhEkiiprdQSSBDwUNgOd4BozBCPLGiNmnx3OYIJwciJUDZwWS9Cf55GfaywUDxKs608lnzGxec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBRmraY3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0p8nsbm6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F251F00893;
-	Sun,  7 Jun 2026 10:07:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBRmraY3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90061F00893;
+	Sun,  7 Jun 2026 10:07:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826833;
-	bh=WpaUjSySEJqcVpIYaX1c4bukNrWW8ixaa3GAdX05Ays=;
+	s=korg; t=1780826836;
+	bh=s1yRAzqh3C4CZ4Suhr3PepImh//VWdqQDcfGGVP+tkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0p8nsbm6CC+UQdgyFq2kZlZ9/eibjNYJ49iR9EJgbQ5V5gMdcX4FXzz4DLLaAP4uM
-	 ENOQOezEdZLD8geGj1K0RTQWn7HbOZym52nFjGwF5ldppNlmLD6PzBcj4cSafIhVkx
-	 8q0v4+/i5Z2BQYskk0fVmaMoLyGXxGOJOEXR2+kU=
+	b=XBRmraY3jchWxg/8IuicKTV7/+jCGo0dHXreCwKQwzkuQSJozo35KxfiXGTI29gxu
+	 hZJ53ZImA+xrLeXQ0p8Lf6jGfo3YI8SOG0dZ/l99CgFgjHwmrnLU7J3w0yFFlsPwIY
+	 mDNQ3cRnz9hFXGy4tpgX0CClwXLH6vkajXR7eyUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8e498074a794999eb41c@syzkaller.appspotmail.com,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Florian Schmaus <florian.schmaus@codasip.com>,
+	Martin Kaiser <martin@kaiser.cx>,
+	David Gow <david@davidgow.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 033/332] ALSA: pcm: oss: Fix setup list UAF on proc write error
-Date: Sun,  7 Jun 2026 11:56:42 +0200
-Message-ID: <20260607095729.310033227@linuxfoundation.org>
+Subject: [PATCH 6.18 013/315] kunit: fix use-after-free in debugfs when using kunit.filter
+Date: Sun,  7 Jun 2026 11:56:40 +0200
+Message-ID: <20260607095727.984960558@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,86 +47,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Florian Schmaus <florian.schmaus@codasip.com>
 
-[ Upstream commit 4cc54bdd54b337e77115be5b55577d1c58608eae ]
+[ Upstream commit fb6988b83b4cafe8db63999c1ddff1b7c66d2ff5 ]
 
-snd_pcm_oss_proc_write() links a newly allocated setup entry into the
-OSS setup list before duplicating the task name. If the task-name
-allocation fails, the error path frees the already linked entry and
-leaves setup_list pointing at freed memory.
+When the kernel is booted with a kunit filter (e.g.,
+kunit.filter="speed!=slow"), the kunit executor dynamically allocates
+copies of the filtered test suites using kmalloc/kmemdup.
 
-A later OSS device open can then walk the stale list entry in
-snd_pcm_oss_look_for_setup() and dereference freed memory.
+During the initial boot execution, kunit_debugfs_create_suite() creates
+debugfs files (such as /sys/kernel/debug/kunit/<suite>/run) and
+permanently stores a pointer to the dynamically allocated suite in the
+inode's i_private field.
 
-Allocate the task name and initialize the setup entry before publishing
-the entry on setup_list. Also fetch the initial proc read iterator only
-after taking setup_mutex, so all setup_list traversal follows the same
-list lifetime rules.
+Previously, the executor freed this dynamically allocated suite_set
+immediately after executing the boot-time tests. Because the debugfs
+nodes were not destroyed, any subsequent interaction with the debugfs
+`run` file from userspace triggered a use-after-free (UAF). On systems
+with architectural capabilities, like CHERI RISC-V, this resulted in
+an immediate fatal hardware exception due to the invalidation of the
+capability tags on the reclaimed memory. On other architectures, it
+resulted in silent memory corruption.
 
-Reported-by: syzbot+8e498074a794999eb41c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6a1062b7.170a0220.35b2b7.0003.GAE@google.com
-Closes: https://syzkaller.appspot.com/bug?extid=8e498074a794999eb41c
-Fixes: 060d77b9c04a ("[ALSA] Fix / clean up PCM-OSS setup hooks")
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260522-alsa-pcm-oss-setup-uaf-v1-1-40bdcc4d17e8@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fix this UAF by properly coupling the lifetime of the filtered suite
+memory allocation to the lifetime of the kunit subsystem and its
+associated VFS nodes. Ownership of the boot-time suite_set is now
+transferred to a global tracker ('kunit_boot_suites'), and the memory
+is cleanly released in kunit_exit() during module teardown.
+
+Link: https://lore.kernel.org/r/20260507084854.233984-1-florian.schmaus@codasip.com
+Fixes: e2219db280e3 ("kunit: add debugfs /sys/kernel/debug/kunit/<suite>/results display")
+Signed-off-by: Florian Schmaus <florian.schmaus@codasip.com>
+Reviewed-by: Martin Kaiser <martin@kaiser.cx>
+Reviewed-by: David Gow <david@davidgow.net>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/oss/pcm_oss.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ include/kunit/test.h |  1 +
+ lib/kunit/executor.c | 19 ++++++++++++++++---
+ lib/kunit/test.c     |  1 +
+ 3 files changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/sound/core/oss/pcm_oss.c b/sound/core/oss/pcm_oss.c
-index 6af26ec2ecfd59..b1b4c7d017beea 100644
---- a/sound/core/oss/pcm_oss.c
-+++ b/sound/core/oss/pcm_oss.c
-@@ -2968,8 +2968,10 @@ static void snd_pcm_oss_proc_read(struct snd_info_entry *entry,
- 				  struct snd_info_buffer *buffer)
- {
- 	struct snd_pcm_str *pstr = entry->private_data;
--	struct snd_pcm_oss_setup *setup = pstr->oss.setup_list;
-+	struct snd_pcm_oss_setup *setup;
+diff --git a/include/kunit/test.h b/include/kunit/test.h
+index 5ec5182b5e5751..aedffe2f2d49de 100644
+--- a/include/kunit/test.h
++++ b/include/kunit/test.h
+@@ -613,6 +613,7 @@ unsigned long kunit_vm_mmap(struct kunit *test, struct file *file,
+ 			    unsigned long offset);
+ 
+ void kunit_cleanup(struct kunit *test);
++void kunit_free_boot_suites(void);
+ 
+ void __printf(2, 3) kunit_log_append(struct string_stream *log, const char *fmt, ...);
+ 
+diff --git a/lib/kunit/executor.c b/lib/kunit/executor.c
+index 0061d4c7e35170..9abaed8275845f 100644
+--- a/lib/kunit/executor.c
++++ b/lib/kunit/executor.c
+@@ -15,6 +15,16 @@ extern struct kunit_suite * const __kunit_suites_end[];
+ extern struct kunit_suite * const __kunit_init_suites_start[];
+ extern struct kunit_suite * const __kunit_init_suites_end[];
+ 
++static struct kunit_suite_set kunit_boot_suites;
 +
- 	guard(mutex)(&pstr->oss.setup_mutex);
-+	setup = pstr->oss.setup_list;
- 	while (setup) {
- 		snd_iprintf(buffer, "%s %u %u%s%s%s%s%s%s\n",
- 			    setup->task_name,
-@@ -3054,6 +3056,13 @@ static void snd_pcm_oss_proc_write(struct snd_info_entry *entry,
- 				buffer->error = -ENOMEM;
- 				return;
- 			}
-+			template.task_name = kstrdup(task_name, GFP_KERNEL);
-+			if (!template.task_name) {
-+				kfree(setup);
-+				buffer->error = -ENOMEM;
-+				return;
-+			}
-+			*setup = template;
- 			if (pstr->oss.setup_list == NULL)
- 				pstr->oss.setup_list = setup;
- 			else {
-@@ -3061,12 +3070,7 @@ static void snd_pcm_oss_proc_write(struct snd_info_entry *entry,
- 				     setup1->next; setup1 = setup1->next);
- 				setup1->next = setup;
- 			}
--			template.task_name = kstrdup(task_name, GFP_KERNEL);
--			if (! template.task_name) {
--				kfree(setup);
--				buffer->error = -ENOMEM;
--				return;
--			}
-+			continue;
- 		}
- 		*setup = template;
- 	}
++void kunit_free_boot_suites(void)
++{
++	if (kunit_boot_suites.start) {
++		kunit_free_suite_set(kunit_boot_suites);
++		kunit_boot_suites = (struct kunit_suite_set){ NULL, NULL };
++	}
++}
++
+ static char *action_param;
+ 
+ module_param_named(action, action_param, charp, 0400);
+@@ -409,9 +419,12 @@ int kunit_run_all_tests(void)
+ 		pr_err("kunit executor: unknown action '%s'\n", action_param);
+ 
+ free_out:
+-	if (filter_glob_param || filter_param)
+-		kunit_free_suite_set(suite_set);
+-	else if (init_num_suites > 0)
++	if (filter_glob_param || filter_param) {
++		if (err)
++			kunit_free_suite_set(suite_set);
++		else
++			kunit_boot_suites = suite_set;
++	} else if (init_num_suites > 0)
+ 		/* Don't use kunit_free_suite_set because suites aren't individually allocated */
+ 		kfree(suite_set.start);
+ 
+diff --git a/lib/kunit/test.c b/lib/kunit/test.c
+index 62eb529824c657..f0e1e02a98d8b3 100644
+--- a/lib/kunit/test.c
++++ b/lib/kunit/test.c
+@@ -1056,6 +1056,7 @@ static void __exit kunit_exit(void)
+ 	kunit_bus_shutdown();
+ 
+ 	kunit_debugfs_cleanup();
++	kunit_free_boot_suites();
+ }
+ module_exit(kunit_exit);
+ 
 -- 
 2.53.0
 
