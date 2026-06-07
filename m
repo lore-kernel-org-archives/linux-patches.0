@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19D12D3ECF;
-	Sun,  7 Jun 2026 18:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934B81BD9C9;
+	Sun,  7 Jun 2026 18:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780857827; cv=none; b=Fm/xxcKYpRHdDwD3GYJ00I69X1v5Ce5zSLjtYgv0V/pkhy57fK5728aKujgydstNNW4nTJiVZxiebRx3B6TJGEbvhGXt55ueHtOG10vrrheLzc7gIftt4OAyP+EV7NhYZqDc6Aom21YJxrVf0A0Aj5oK00ucP6wIRzNgvWls/aE=
+	t=1780857879; cv=none; b=HT18el/adUd094I0SWiWaomncDYzIpma5G3Kom756DjFvNCDOvhB06b0m1c+8CPxTG1V1NNV47/mwq95MJrHxKxqcFVxm1m7nEEtwEO1pHZqw7bizZOl9hfAFKPYbLF6oaUDyLHvDFbqTnuvqXkaEton+BcXPnhe2AnMht90VRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780857827; c=relaxed/simple;
-	bh=7HzqzMuc3ofXnI5vCVU67os1/8gsS7DsbHTCwjddAMY=;
+	s=arc-20240116; t=1780857879; c=relaxed/simple;
+	bh=7yZxF2UMVwXMaKLziKlcZXqPXJCVcrz9+UAwCS1rdFI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ko6UWagTw7fZMN41vFgdiLc5jP+IggkIN7ma8gPkMZo0fmpM5KbE1hZ/jr4djISLnwucblXRiPNh5Tv8ESlQofG7GgKslqAuTlVnnrZXtYh8SiPPchhkl9MQTn0FQ+dfWGp/tt4L1yefHMC5+pqs5qDjE1gOpvMzUb4HRSaiHfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gL2foLEk; arc=none smtp.client-ip=100.103.45.18
+	 In-Reply-To:Content-Type; b=cZOyxjodzcPw+XjFgHdcroKSBlzgBat8C9N2gwAxKhL/qJuXCk1gVMz1iD4XTuqx+sF+Wzf6ctTEz+vj1GVdQWwxvxbLH0RykI2aXDEADu4beDibcpluhyAE2O8THudcmJvoXdI5o+9OjwxVC1UhO6GlzTCXSO3si9kdn2p4ED4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vbm9yYaS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gL2foLEk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2217B1F00893;
-	Sun,  7 Jun 2026 18:43:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vbm9yYaS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 101321F00893;
+	Sun,  7 Jun 2026 18:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780857826;
-	bh=IYcS9qd8NGPrhWDiq3bV+IGAIyt7OX+OMs6BafJIq3U=;
+	s=k20260515; t=1780857878;
+	bh=UQvXkO+DoHYxYwFn5fP55zszm2KanotFEhO1BqL9ktk=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=gL2foLEk3Eeyx+lsHM4Tj8CxIOo5OpCAF0NtsnLhGRB5c0bRh2WZLCCtSrXEYHI0F
-	 VG2vHCvUFQga736X1nC2e5HN3rzhZittardBJ/Uruz+fZLh7FSGkBPtvyYfOddVhfJ
-	 LDzENOAYs4fwCXQiXu+pa2lE6m45DdOEqzTFeyMP5S/BnPWEh2t1z1W9mbg4BuFGC2
-	 NNRbA68c3ZIjHaG4LxYKznVMSlhR6mjyhnVRKGWILPYUcQY8CHrD2dt9XGOfx4qOvC
-	 wdt0xNt7+H/iqTPGSGKgsObl7ALB9fG8T6xok3664UpNXejtC2KaRO1CYt3RbtYlE8
-	 nBipasDQsXhTw==
-Message-ID: <148e4311-5d45-4c89-b93d-898282282f7b@kernel.org>
-Date: Sun, 7 Jun 2026 20:43:42 +0200
+	b=Vbm9yYaSrpAL0Ufyn8i6slEAH2rKYnSYG3RnMBgecKuAnVG6yMEoRdZguTpk3PNSV
+	 VZcF2AGFkIM1m0eDL60yzqk2VcZIalOkQyZj+/lN99o5RVxABbojNC5Y0XQCqyJh0V
+	 W24jj1b6ISRv6eVQ13g+K5LBGczvJakjgcwWJLbGep10gOZbrAyztt6GiF+CUY83pu
+	 PoNSSDOVmL0Z1l9tEVBj5jATY2eWg/qE+sFZhGPZRFVtkFpbxeHbfnGQdGphp42hg4
+	 OMcUmQQi32Csx0B2bmAzJIyCd3OMDxBwTMBeMnjZPeHk2xg+knsSz+0qWIdn0ATn54
+	 CwyFO/SHSJQmQ==
+Message-ID: <dd36757c-62b3-476e-bc9f-09231c495ebc@kernel.org>
+Date: Sun, 7 Jun 2026 20:44:35 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,13 +35,14 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.0 243/332] gpib: cb7210: Fix region leak when
- request_irq fails
+Subject: Re: [PATCH 7.0 016/332] esp: fix page frag reference leak on
+ skb_to_sgvec failure
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Hongling Zeng <zenghongling@kylinos.cn>,
- stable <stable@kernel.org>
+Cc: patches@lists.linux.dev, Alessandro Schino <7991aleschino@gmail.com>,
+ Steffen Klassert <steffen.klassert@secunet.com>,
+ Sasha Levin <sashal@kernel.org>
 References: <20260607095728.031258202@linuxfoundation.org>
- <20260607095736.972391850@linuxfoundation.org>
+ <20260607095728.644422375@linuxfoundation.org>
 Content-Language: en-US
 From: Jiri Slaby <jirislaby@kernel.org>
 Autocrypt: addr=jirislaby@kernel.org; keydata=
@@ -86,20 +87,20 @@ Autocrypt: addr=jirislaby@kernel.org; keydata=
  f/bIWIr0cqQmqQ33FgRhrG1+Xml6UXyJ2jExmlO8JljuOGeXYh6ZkIEyzqzffzBLXZCujlYQ
  DFXpyMNVJ2ZwPmX2mWEoYuaBU0JN7wM+/zWgOf2zRwhEuD3A2cO2PxoiIfyUEfB9SSmffaK/
  S4xXoB6wvGENZ85Hg37C7WDNdaAt6Xh2uQIly5grkgvWppkNy4ZHxE+jeNsU7tg=
-In-Reply-To: <20260607095736.972391850@linuxfoundation.org>
+In-Reply-To: <20260607095728.644422375@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 07. 06. 26, 12:00, Greg Kroah-Hartman wrote:
+On 07. 06. 26, 11:56, Greg Kroah-Hartman wrote:
 > 7.0-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
-> From: Hongling Zeng <zenghongling@kylinos.cn>
+> From: e521588 <alessandro.schino@sbb.ch>
 > 
-> commit 2eae90a457baa0048a96ed38ad93090ee38c8b2f upstream.
+> [ Upstream commit 2982e599fff6faa21c8df147d96fc7af6c1a2f24 ]
 
-This was reverted by 05d5d79440c2cc0784f91b61f2012753e66be472.
+This was reverted by 6851161feb01cea41358c9ec304bd2f981fc8505.
 
 thanks,
 -- 
