@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300DA4071E3;
-	Sun,  7 Jun 2026 10:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E60329395;
+	Sun,  7 Jun 2026 10:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828178; cv=none; b=Y1NeOc7HqFkUkNRo6Idbo8tCtmtUpHSv7JMH/SQaQapZW1ocZFVnCU9HaDOW7HQVuJdayB71aJwp15RkVD2Uz0ryPMt98iyUvGNwAJtm/Esik5pibThhA6w7jze5nye4ZzgFgPZbfVBTN7GQZNHeO74LEdsoh141GlhHTPSo2mE=
+	t=1780828184; cv=none; b=q1l6Mukc3trUiqmiD2LGSg5OmRSy2nbpxwjJuMI7NKvG2vq4k9zZyVthA9Q9OLRdFTb3687av17EKyaj7MFTbgCQalM9jJ8gf0o6lCujuEXWEX7hnevjaa2y56hYaT1s40nUc50pk5qqWfABoELTjMVuUrACK4ZrfwJQJJafrSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828178; c=relaxed/simple;
-	bh=OyqxCUvIM7lqLKg6h0iChMLbaR7O78h7yYopTG1PfGg=;
+	s=arc-20240116; t=1780828184; c=relaxed/simple;
+	bh=Ged89xz9dgG26aJ+zKbxgcMQ1teUnjxQxl/785kajr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nAJ1+/+X9BDGufCRN5HRXfB3BEeXtB3NU9bS8O4Rq4OJF4sblvIrO1rlrCEsdPnXbP/F7BLdMhMwhwVaMaoJonhDsGAZ0f512cBBO/OBScmeCovSS6Dtn6g0EOWQ926N6cnKnFn9tTRFwxDDwcG0xM81H4qTGAdjYk/JbmE7DHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lpPbYtm8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H5fizywrS1mcFlyugffHg6yOJ5yE13OOaMlpgOEBw+Bt8xF7uvik4Vpz6WwqVWeubWX76MzZyHR4ClNYT4l0lmpZfJua+Zc5emLv3ld4Eqb4oPshUV+9/d6eAXNNC5662KGtQvoqPOOV4eVd+RYSRbrYjkTv4RkAmUgcMmACroQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKcPuK93; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lpPbYtm8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B86E1F00893;
-	Sun,  7 Jun 2026 10:29:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKcPuK93"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65EEB1F00893;
+	Sun,  7 Jun 2026 10:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828177;
-	bh=hx7AwKF8bQTtZq1lKzzKum8xu0Kl2CV5YXIWpOzeAGg=;
+	s=korg; t=1780828181;
+	bh=l9bhdVv+qWb4cWisLzBLpcx26CvtxoPOQzqcES6PZXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lpPbYtm85ZI0vuhnMkxcKJ0j73PCzoAsEgmZnJYQS9/hdOmj0arjTFzSAIWRp3R0n
-	 7UZ1mELktC6BjWjINNmV2SKozTK6WQYzmOYo5BZtl0kAeTUjqXZ8ACrUnsKL8+hTXK
-	 UiKxEk+pAjdrvaaBSIWg6zO8h7ucUhZopKGuJBBk=
+	b=SKcPuK93t8lh9r5oGLksbrZjSLtuRr/UA6DtvN1JDUdaE3Vk4eaeIf/vENg6bSpjh
+	 SaemFZlHfTNDXobWA0JiIoEpPX1f+ANNMGFlUqaQJjCSEDd9SxkXdqUv+b2WbyYgcD
+	 4HvSLJfO0YsJ0JuTs1+2q6wmAx77GpkHp5MNgV2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Stevens <stevensd@google.com>,
-	Matthew Maurer <mmaurer@google.com>,
-	stable <stable@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 6.18 138/315] rust_binder: Avoid holding lock when dropping delivered_death
-Date: Sun,  7 Jun 2026 11:58:45 +0200
-Message-ID: <20260607095732.674036613@linuxfoundation.org>
+	"Naveen N Rao (AMD)" <naveen@kernel.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 7.0 161/332] KVM: SVM: Flush the current TLB when transitioning from xAVIC => x2AVIC
+Date: Sun,  7 Jun 2026 11:58:50 +0200
+Message-ID: <20260607095733.985069440@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,56 +46,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Maurer <mmaurer@google.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit f6d8fea9e3953151a4adb4f603503dc3dc9c69da upstream.
+commit a9e18aa3263f356edae305e29830e5fe63d8597a upstream.
 
-In 6c37bebd8c926, we switched to looping over the list and dropping each
-individual node, ostensibly without the lock held in the loop body.
+Flush the current TLB when xAVIC *or* x2AVIC is activated, as KVM is
+(apparently) responsible for purging TLB entries when transitioning from
+xAVIC to x2AVIC.  The APM says a whole lot of nothing about TLB flushing
+with respect to (x2)AVIC, but empirical data strongly suggests hardware
+also does a whole lot of nothing.
 
-If the kernel were using Rust Edition 2024, the comment would be
-accurate, and the lock would not be held across the drop. However, the
-kernel is currently using 2021, so tail expression lifetime extension
-results in the lock being held across the drop. Explicitly binding the
-expression result to a variable makes the lockguard no longer part of a
-tail expression, causing the lock to be dropped before entering the loop
-body.
+Failure to flush the TLB when enabling x2AVIC can lead to guest accesses
+to the APIC base address getting incorrectly redirected to the virtual
+APIC page.  The flaw most visibly manifests as failures in KVM-Unit-Test's
+verify_disabled_apic_mmio() testcase when x2APIC is enabled (though for
+reasons unknown, the test only reliably fails with EFI builds).
 
-This was detected via `CONFIG_PROVE_LOCKING` identifying an invalid wait
-context at the drop site.
-
-Reported-by: David Stevens <stevensd@google.com>
-Signed-off-by: Matthew Maurer <mmaurer@google.com>
-Cc: stable <stable@kernel.org>
-Fixes: 6c37bebd8c92 ("rust_binder: avoid mem::take on delivered_deaths")
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Acked-by: Carlos Llamas <cmllamas@google.com>
-Link: https://patch.msgid.link/20260403-lockhold-v1-1-c332b56cd8ae@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0ccf3e7cb95a ("KVM: SVM: Flush the "current" TLB when activating AVIC")
+Fixes: 4d1d7942e36a ("KVM: SVM: Introduce logic to (de)activate x2AVIC mode")
+Cc: stable@vger.kernel.org
+Cc: Naveen N Rao (AMD) <naveen@kernel.org>
+Link: https://patch.msgid.link/20260515171536.1841645-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder/process.rs |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/kvm/svm/avic.c |   35 +++++++++++++++++++++++++++++------
+ 1 file changed, 29 insertions(+), 6 deletions(-)
 
---- a/drivers/android/binder/process.rs
-+++ b/drivers/android/binder/process.rs
-@@ -1366,7 +1366,12 @@ impl Process {
-         // Clear delivered_deaths list.
-         //
-         // Scope ensures that MutexGuard is dropped while executing the body.
--        while let Some(delivered_death) = { self.inner.lock().delivered_deaths.pop_front() } {
-+        while let Some(delivered_death) = {
-+            // Explicitly bind to avoid tail expression lifetime extension of the lockguard
-+            // Can be removed when the kernel moves to edition 2024
-+            let maybe_death = self.inner.lock().delivered_deaths.pop_front();
-+            maybe_death
-+        } {
-             drop(delivered_death);
-         }
+--- a/arch/x86/kvm/svm/avic.c
++++ b/arch/x86/kvm/svm/avic.c
+@@ -196,6 +196,35 @@ static void avic_activate_vmcb(struct vc
+ 	svm_clr_intercept(svm, INTERCEPT_CR8_WRITE);
  
+ 	/*
++	 * Flush the TLB when enabling (x2)AVIC and when transitioning between
++	 * xAVIC and x2AVIC, as the CPU may have inserted a TLB entry for the
++	 * "wrong" mapping.
++	 *
++	 * KVM uses a per-VM "scratch" page to back the APIC memslot, because
++	 * KVM also uses per-VM page tables *and* maintains the page table (NPT
++	 * or shadow page) mappings for said memslot even if one or more vCPUs
++	 * have their local APIC hardware-disabled or are in x2APIC mode, i.e.
++	 * even if one or more vCPUs' APIC MMIO BAR is effectively disabled.
++	 *
++	 * If xAVIC is fully enabled, hardware ignores the physical address in
++	 * KVM's page tables, i.e. in the leaf SPTE for the APIC memslot, and
++	 * instead redirects the access to the AVIC backing page, i.e. to the
++	 * vCPU's virtual APIC page.  If xAVIC is not enabled (APIC is either
++	 * hardware-disabled or in x2APIC mode), then guest accesses will use
++	 * the page table mapping verbatim, i.e. will access the per-VM scratch
++	 * page, as normal memory.
++	 *
++	 * In both cases, the CPU is allowed to cache TLB entries for the APIC
++	 * base GPA.  So, KVM needs to flush the TLB when enabling xAVIC, as
++	 * accesses need to be redirected to the virtual APIC page, but the TLB
++	 * may contain entries pointing at the scratch page.  KVM also needs to
++	 * flush the TLB when enabling x2AVIC, as accesses need to go to the
++	 * scratch page, but the TLB may contain entries tagged as xAVIC, i.e.
++	 * entries pointing to the vCPU's virtual APIC page.
++	 */
++	kvm_make_request(KVM_REQ_TLB_FLUSH_CURRENT, &svm->vcpu);
++
++	/*
+ 	 * Note: KVM supports hybrid-AVIC mode, where KVM emulates x2APIC MSR
+ 	 * accesses, while interrupt injection to a running vCPU can be
+ 	 * achieved using AVIC doorbell.  KVM disables the APIC access page
+@@ -208,12 +237,6 @@ static void avic_activate_vmcb(struct vc
+ 		/* Disabling MSR intercept for x2APIC registers */
+ 		avic_set_x2apic_msr_interception(svm, false);
+ 	} else {
+-		/*
+-		 * Flush the TLB, the guest may have inserted a non-APIC
+-		 * mapping into the TLB while AVIC was disabled.
+-		 */
+-		kvm_make_request(KVM_REQ_TLB_FLUSH_CURRENT, &svm->vcpu);
+-
+ 		/* Enabling MSR intercept for x2APIC registers */
+ 		avic_set_x2apic_msr_interception(svm, true);
+ 	}
 
 
