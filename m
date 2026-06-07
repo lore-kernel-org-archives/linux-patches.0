@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2442E1FE47B;
-	Sun,  7 Jun 2026 10:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB6A1FE47B;
+	Sun,  7 Jun 2026 10:32:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828332; cv=none; b=bdvkoCqi3PRhN+uI7TkQ8ZiMCoe9ozTka8V+q8J6uGTfAsKcQWRDMYhp1PQ19FJkG76DcwINP87ZFBR7wcBtJtIVOavhRGDzR3Dxq/1lBwPibeP569MGb9PTNlD8hS36s9K4+Sa5jkKF1gW7ZTjkyH6prMBnxU6ySXtuwRAg5c0=
+	t=1780828335; cv=none; b=mLaTpRa65rUAJhWMW28eBvwTIp62va94ZpNOenanKcKlDW4DT5hW1M1gZm9tMkf2VUPkXoG+6q0GD2wTCuVWUnGQ/gt/Ey50QcsJlOFeJoUVJ9Tvk0iAdUtPMHtL2PG5/2683pyjx4BFUNPe7c1xXXgKjc0O5jeWeIq2BG7MHUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828332; c=relaxed/simple;
-	bh=g7ogMmrFGC558+MF5egaRnce0E6NFOU08FwaNBwME1c=;
+	s=arc-20240116; t=1780828335; c=relaxed/simple;
+	bh=1qIjaoSXE1EXN0+XmK1R+rqXxNDz7FUyyio36L/oGsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RNpjf0W2VE9NLoKBky2GoSIo+4J5eL8WG5wV/7RnBAXs7Bl6t8lJHhtB8/b551F2EyJRgMZWR7T2jFKHhc0lOvZ20XI13nrsdzwiodgBl2UOtH1MxaYzYbLnKtscLFAtA/sET+cZ15sHctmst1vAKlcr/Dq/SjAY2FmH+WdlL2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zF47EIOu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KXQ69qh12aCmdOb5SG1Mh/F+5iNMkoBzfylXSKsfiJoxkzlcb+zzcmQESyi889OYmWFhu2z/0zy/j6yCvH3HzBVE2W212GaxjlVr3YSDQMXVlUzfOseX+kfoWwn8AO3R6v2RvZF67ok6r258JP/5Os4PUyCUvo4brJm322lJVzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GzP7DTdv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zF47EIOu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728BF1F00893;
-	Sun,  7 Jun 2026 10:32:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GzP7DTdv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251031F00893;
+	Sun,  7 Jun 2026 10:32:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828331;
-	bh=Ri5bFlZioRoq0sH1fOy6g5owldBm1Ugwg+oG0aDo4nY=;
+	s=korg; t=1780828334;
+	bh=2XzJtx20YVW7dUOmBFT7SO9yWLaSLbFEKKksY7YTEGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zF47EIOuag6xDNyagMUsXwuNuS1koYm45a3gB0qZQ3XoH2Bq5LSCr/bbT9m//VOlV
-	 WsNl0+RfTXakOxphmRxFyivmwpKKuySEef5h10xj+kCv+ask5llLZfzK7R3gH6YocS
-	 G1MqLls8aXD6nW+NxZrWNzRgGMrhrR2d/97OMX4c=
+	b=GzP7DTdvvqukzAzDll71Mr/1SXf+PgQEPT77zpFQmo5INUEzrJBxgJNX8h0x3AhpK
+	 C7fbdp40esjMhoxAkLRoZPg0+p8fuqY2s+kqUDAv0yvcooZVeADEi3Tp1Ktxmm1I+s
+	 73qMYbAiDgSkS80XgxeDwxIsYEiJ5TvbpdFYn6Ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 7.0 173/332] Disable -Wattribute-alias for clang-23 and newer
-Date: Sun,  7 Jun 2026 11:59:02 +0200
-Message-ID: <20260607095734.414575843@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 135/315] Bluetooth: hci_sync: fix UAF in hci_le_create_cis_sync
+Date: Sun,  7 Jun 2026 11:58:42 +0200
+Message-ID: <20260607095732.568853552@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,130 +46,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit 175db11786bde9061db526bf1ac5107d915f5163 upstream.
+commit bfea6091e0fffb270c20e74384b660910277eb6c upstream.
 
-Clang recently added support for -Wattribute-alias [1], which results in
-the same warnings that necessitated commit bee20031772a ("disable
--Wattribute-alias warning for SYSCALL_DEFINEx()") for GCC.
+hci_le_create_cis_sync() dereferences conn->conn_timeout after releasing
+both rcu_read_lock() and hci_dev_lock(hdev).  The conn pointer was
+obtained from an RCU-protected iteration over hdev->conn_hash.list and
+is not valid once these locks are dropped.  A concurrent disconnect can
+free the hci_conn between the unlock and the dereference, causing a
+use-after-free read.
 
-  kernel/time/itimer.c:325:1: error: alias and aliasee have different types 'long (unsigned int)' and 'long (typeof (__builtin_choose_expr((__builtin_types_compatible_p(typeof ((unsigned int)0), typeof (0LL)) || __builtin_types_compatible_p(typeof ((unsigned int)0), typeof (0ULL))), 0LL, 0L)))' (aka 'long (long)') [-Werror,-Wattribute-alias]
-    325 | SYSCALL_DEFINE1(alarm, unsigned int, seconds)
-        | ^
-  include/linux/syscalls.h:225:36: note: expanded from macro 'SYSCALL_DEFINE1'
-    225 | #define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
-        |                                    ^
-  include/linux/syscalls.h:236:2: note: expanded from macro 'SYSCALL_DEFINEx'
-    236 |         __SYSCALL_DEFINEx(x, sname, __VA_ARGS__)
-        |         ^
-  include/linux/syscalls.h:251:18: note: expanded from macro '__SYSCALL_DEFINEx'
-    251 |                 __attribute__((alias(__stringify(__se_sys##name))));    \
-        |                                ^
-  kernel/time/itimer.c:325:1: note: aliasee is declared here
-  include/linux/syscalls.h:225:36: note: expanded from macro 'SYSCALL_DEFINE1'
-    225 | #define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
-        |                                    ^
-  include/linux/syscalls.h:236:2: note: expanded from macro 'SYSCALL_DEFINEx'
-    236 |         __SYSCALL_DEFINEx(x, sname, __VA_ARGS__)
-        |         ^
-  include/linux/syscalls.h:255:18: note: expanded from macro '__SYSCALL_DEFINEx'
-    255 |         asmlinkage long __se_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__))  \
-        |                         ^
-  <scratch space>:16:1: note: expanded from here
-     16 | __se_sys_alarm
-        | ^
+The cancellation mechanism in hci_conn_del() cannot prevent this because
+hci_le_create_cis_pending() queues hci_create_cis_sync with data=NULL:
 
-Disable the warnings in the same way for clang-23 and newer. Disable the
-warning about unknown warning options to avoid breaking the build for
-versions of clang-23 that do not have -Wattribute-alias, such as ones
-deployed by vendors like Android or CI systems or when bisecting LLVM
-between llvmorg-23-init and release/23.x.
+    hci_cmd_sync_queue(hdev, hci_create_cis_sync, NULL, NULL);
 
+While hci_conn_del() dequeues with data=conn:
+
+    hci_cmd_sync_dequeue(hdev, NULL, conn, NULL);
+
+Since NULL != conn, the lookup in _hci_cmd_sync_lookup_entry() never
+matches, and the pending work item is not cancelled.
+
+Fix this by saving conn->conn_timeout into a local variable while the
+locks are still held, so the stale conn pointer is never dereferenced
+after unlock.
+
+This is the same class of bug as the one fixed by commit 035c25007c9e
+("Bluetooth: hci_sync: Fix UAF on le_read_features_complete") which
+addressed the identical pattern in a different function.
+
+This vulnerability was identified using 0sec.ai, an open-source
+automated security auditing platform (https://github.com/0sec-labs).
+
+Fixes: c09b80be6ffc ("Bluetooth: hci_conn: Fix not waiting for HCI_EVT_LE_CIS_ESTABLISHED")
 Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2163
-Link: https://github.com/llvm/llvm-project/commit/40da6920a0d71d49dfa2392b09153600b0759f5e [1]
-Link: https://patch.msgid.link/20260515-syscall-disable-attribute-alias-for-clang-v1-1-9a9d95d41df6@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reported-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/syscall_wrapper.h |    4 ++++
- include/linux/compat.h                   |    4 ++++
- include/linux/compiler-clang.h           |    6 ++++++
- include/linux/compiler_types.h           |    4 ++++
- include/linux/syscalls.h                 |    4 ++++
- 5 files changed, 22 insertions(+)
+ net/bluetooth/hci_sync.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/include/asm/syscall_wrapper.h
-+++ b/arch/riscv/include/asm/syscall_wrapper.h
-@@ -32,6 +32,10 @@ asmlinkage long __riscv_sys_ni_syscall(c
- 	__diag_push();									\
- 	__diag_ignore(GCC, 8, "-Wattribute-alias",					\
- 			"Type aliasing is used to sanitize syscall arguments");		\
-+	__diag_ignore(clang, 23, "-Wunknown-warning-option",				\
-+		      "Avoid breaking versions without -Wattribute-alias");		\
-+	__diag_ignore(clang, 23, "-Wattribute-alias",					\
-+			"Type aliasing is used to sanitize syscall arguments");		\
- 	static long __se_##prefix##name(ulong, ulong, ulong, ulong, ulong, ulong, 	\
- 					ulong)						\
- 			__attribute__((alias(__stringify(___se_##prefix##name))));	\
---- a/include/linux/compat.h
-+++ b/include/linux/compat.h
-@@ -72,6 +72,10 @@
- 	__diag_push();								\
- 	__diag_ignore(GCC, 8, "-Wattribute-alias",				\
- 		      "Type aliasing is used to sanitize syscall arguments");\
-+	__diag_ignore(clang, 23, "-Wunknown-warning-option",			\
-+		      "Avoid breaking versions without -Wattribute-alias");	\
-+	__diag_ignore(clang, 23, "-Wattribute-alias",				\
-+		      "Type aliasing is used to sanitize syscall arguments");	\
- 	asmlinkage long compat_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
- 		__attribute__((alias(__stringify(__se_compat_sys##name))));	\
- 	ALLOW_ERROR_INJECTION(compat_sys##name, ERRNO);				\
---- a/include/linux/compiler-clang.h
-+++ b/include/linux/compiler-clang.h
-@@ -131,6 +131,12 @@
- #define __diag_str(s)		__diag_str1(s)
- #define __diag(s)		_Pragma(__diag_str(clang diagnostic s))
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6656,6 +6656,7 @@ int hci_le_create_cis_sync(struct hci_de
+ 	DEFINE_FLEX(struct hci_cp_le_create_cis, cmd, cis, num_cis, 0x1f);
+ 	size_t aux_num_cis = 0;
+ 	struct hci_conn *conn;
++	u16 timeout = 0;
+ 	u8 cig = BT_ISO_QOS_CIG_UNSET;
  
-+#if CONFIG_CLANG_VERSION >= 230000
-+#define __diag_clang_23(s)	__diag(s)
-+#else
-+#define __diag_clang_23(s)
-+#endif
-+
- #define __diag_clang_13(s)	__diag(s)
+ 	/* The spec allows only one pending LE Create CIS command at a time. If
+@@ -6726,6 +6727,7 @@ int hci_le_create_cis_sync(struct hci_de
+ 		set_bit(HCI_CONN_CREATE_CIS, &conn->flags);
+ 		cis->acl_handle = cpu_to_le16(conn->parent->handle);
+ 		cis->cis_handle = cpu_to_le16(conn->handle);
++		timeout = conn->conn_timeout;
+ 		aux_num_cis++;
  
- #define __diag_ignore_all(option, comment) \
---- a/include/linux/compiler_types.h
-+++ b/include/linux/compiler_types.h
-@@ -718,6 +718,10 @@ struct ftrace_likely_data {
- #define __diag_GCC(version, severity, string)
- #endif
+ 		if (aux_num_cis >= cmd->num_cis)
+@@ -6745,7 +6747,7 @@ done:
+ 	return __hci_cmd_sync_status_sk(hdev, HCI_OP_LE_CREATE_CIS,
+ 					struct_size(cmd, cis, cmd->num_cis),
+ 					cmd, HCI_EVT_LE_CIS_ESTABLISHED,
+-					conn->conn_timeout, NULL);
++					timeout, NULL);
+ }
  
-+#ifndef __diag_clang
-+#define __diag_clang(version, severity, string)
-+#endif
-+
- #define __diag_push()	__diag(push)
- #define __diag_pop()	__diag(pop)
- 
---- a/include/linux/syscalls.h
-+++ b/include/linux/syscalls.h
-@@ -247,6 +247,10 @@ static inline int is_syscall_trace_event
- 	__diag_push();							\
- 	__diag_ignore(GCC, 8, "-Wattribute-alias",			\
- 		      "Type aliasing is used to sanitize syscall arguments");\
-+	__diag_ignore(clang, 23, "-Wunknown-warning-option",		\
-+		      "Avoid breaking versions without -Wattribute-alias");\
-+	__diag_ignore(clang, 23, "-Wattribute-alias",			\
-+		      "Type aliasing is used to sanitize syscall arguments");\
- 	asmlinkage long sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
- 		__attribute__((alias(__stringify(__se_sys##name))));	\
- 	ALLOW_ERROR_INJECTION(sys##name, ERRNO);			\
+ int hci_le_remove_cig_sync(struct hci_dev *hdev, u8 handle)
 
 
