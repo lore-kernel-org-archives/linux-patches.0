@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713654071DA;
-	Sun,  7 Jun 2026 10:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BC24071DA;
+	Sun,  7 Jun 2026 10:16:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827376; cv=none; b=XCCt/lBeqceM5kP+Clm+ZW3vVUv4YL9Z3Sty+Fo77Bqv3bb+NAXCmeGL0OJbQ3Th6Pg2zEKg1gb45X/Qf1E21Bxa7iqa9QgG+emrK8+Gf4iXuC/NF98XFVh18New/D6epfsRxBK/xFIpHqxrBoTIgf8yDghUSwWt51tNphyJVwI=
+	t=1780827379; cv=none; b=brAfIKGrx3zGvPG1eQhHIkqUVfVdQJM9LoqP0zRSh9MPrnRsIjKywxFdgwZTHDUCB4nYcKimRlwLwZ73IS37ZutWcp0BNckkerL2LsM2J/PhhC/UVK9lLrvwGc4/gHw+0EnOgkOL9Sy08MXALfXiEmDzxvplbkZ2yvDauL7hygk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827376; c=relaxed/simple;
-	bh=OFihKPREbREYtcxDRzraHfZbZgGBsj5wRVjXBRQycms=;
+	s=arc-20240116; t=1780827379; c=relaxed/simple;
+	bh=vER7IxFvcDIaQc52pHcghVfe2nHO3FMljuvl6MaC4IY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=th6igREASPHqXa+l6hw5rIk1pfo4yjoooozd0Yesi2+mb8nGvDldnVytDWN3XzUm7DeQFHX7DQ7seZdlcG88W2eV9Mr9jbnhLqz87sBEzoNAMmmgJklghwcwnkp6uV8v2tv0shCjTBWg4XoInr2Cr0BaWEGHUOfQ+jW2UfTDpHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=can+/x7F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U+6tJiXUZy2U8f0mpbCgftDh0I+InnNpLQRZ/dSD+J6th0rPDNpRlg+IyIkW9T8KcL2zXhpBP7T4xPwxYQpSE9Xlyyj6kfgKIfZTkBd7QXbobKLoUsOBq+GVF1WPDpUGQIHVY9EelKlaOVpwtSQpfi6+01tb1oekLeIkwHGAIcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dP2p06Zh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="can+/x7F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B608B1F00893;
-	Sun,  7 Jun 2026 10:16:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dP2p06Zh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6351F00893;
+	Sun,  7 Jun 2026 10:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827375;
-	bh=SEKqhB9Qy/iK02YqfGPqB23ioiX8H34OdbYZ6/QSnHI=;
+	s=korg; t=1780827378;
+	bh=vzbGFkamduSPaXp5XIBhSmapCtSZeawq5o4wT0NZY4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=can+/x7FJxvyV7TLcvIG4KObKrvRTiDBWrD7S9QfWAsJBhGT5vykKn4GdHyWiNtHV
-	 3DpbKVr0/ya+wYUg/md90FStiMnue7XWLsKF3XEPhvDXE5n+sNgMzCiPf0Pkp5TKX8
-	 LVNWtnH4ksqY9JHS6DCIZS5qsQ8/YxYgybk++xMo=
+	b=dP2p06ZhEdrjFsbDmfnKQR3x/4LURSEkVNOL23G+q5pLIqxK6eKXUTwvYLh3lYQpo
+	 gHIfoaEa1ZFUVRhSPYnZXksq+KNsToN8dR+PZqHj/GJIP2/fidD+vTKjJeJShUPGsz
+	 Pso9RcJrA16a9TAcgTQ6zOEWvcKlvQNU+4YGtsmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damiano Melotti <melotti@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Danielle Ratson <danieller@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 056/315] tunnels: do not assume transport header in iptunnel_pmtud_check_icmp()
-Date: Sun,  7 Jun 2026 11:57:23 +0200
-Message-ID: <20260607095729.662907615@linuxfoundation.org>
+Subject: [PATCH 6.12 050/307] ethtool: module: avoid leaking a netdev ref on module flash errors
+Date: Sun,  7 Jun 2026 11:57:27 +0200
+Message-ID: <20260607095729.553902630@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,68 +48,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 509323077ef79a26ba0c60bb556e45c12c398b2d ]
+[ Upstream commit fb7f511d62692661846c47f199e0afe25c2982db ]
 
-In some cases, iptunnel_pmtud_check_icmp() can be called while
-skb transport header is not set.
+module_flash_fw_schedule() is missing undo for setting
+the "in_progress" flag and taking the netdev reference.
+Delay taking these, the device can't disappear while
+we are holding rtnl_lock.
 
-This triggers an out-of-bound access, because
-(typeof(skb->transport_header))~0U is 65535.
-
-Access the icmp header based on IPv4 network header,
-after making sure icmp->type is present in skb linear part.
-
-Note that iptunnel_pmtud_check_icmpv6()) is fine.
-
-Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
-Reported-by: Damiano Melotti <melotti@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260522115512.1519110-1-edumazet@google.com
+Fixes: 32b4c8b53ee7 ("ethtool: Add ability to flash transceiver modules' firmware")
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Danielle Ratson <danieller@nvidia.com>
+Link: https://patch.msgid.link/20260522231312.1710836-3-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_tunnel_core.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/ethtool/module.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
-index d5a63155a05597..4b5fd4b13722ca 100644
---- a/net/ipv4/ip_tunnel_core.c
-+++ b/net/ipv4/ip_tunnel_core.c
-@@ -280,7 +280,6 @@ static int iptunnel_pmtud_build_icmp(struct sk_buff *skb, int mtu)
-  */
- static int iptunnel_pmtud_check_icmp(struct sk_buff *skb, int mtu)
- {
--	const struct icmphdr *icmph = icmp_hdr(skb);
- 	const struct iphdr *iph = ip_hdr(skb);
+diff --git a/net/ethtool/module.c b/net/ethtool/module.c
+index 6988e07bdcd6d4..76d13ef4ba0427 100644
+--- a/net/ethtool/module.c
++++ b/net/ethtool/module.c
+@@ -318,8 +318,6 @@ module_flash_fw_schedule(struct net_device *dev, const char *file_name,
+ 	if (err < 0)
+ 		goto err_release_firmware;
  
- 	if (mtu < 576 || iph->frag_off != htons(IP_DF))
-@@ -291,9 +290,17 @@ static int iptunnel_pmtud_check_icmp(struct sk_buff *skb, int mtu)
- 	    ipv4_is_lbcast(iph->saddr)  || ipv4_is_multicast(iph->saddr))
- 		return 0;
+-	dev->ethtool->module_fw_flash_in_progress = true;
+-	netdev_hold(dev, &module_fw->dev_tracker, GFP_KERNEL);
+ 	fw_update->dev = dev;
+ 	fw_update->ntf_params.portid = info->snd_portid;
+ 	fw_update->ntf_params.seq = info->snd_seq;
+@@ -334,6 +332,9 @@ module_flash_fw_schedule(struct net_device *dev, const char *file_name,
+ 	if (err < 0)
+ 		goto err_release_firmware;
  
--	if (iph->protocol == IPPROTO_ICMP && icmp_is_err(icmph->type))
--		return 0;
-+	if (iph->protocol == IPPROTO_ICMP) {
-+		const struct icmphdr *icmph;
++	dev->ethtool->module_fw_flash_in_progress = true;
++	netdev_hold(dev, &module_fw->dev_tracker, GFP_KERNEL);
++
+ 	schedule_work(&module_fw->work);
  
-+		if (!pskb_network_may_pull(skb, iph->ihl * 4 +
-+						offsetofend(struct icmphdr, type)))
-+			return 0;
-+		iph = ip_hdr(skb);
-+		icmph = (void *)iph + iph->ihl * 4;
-+		if (icmp_is_err(icmph->type))
-+			return 0;
-+	}
- 	return iptunnel_pmtud_build_icmp(skb, mtu);
- }
- 
+ 	return 0;
 -- 
 2.53.0
 
