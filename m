@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8AC2D8378;
-	Sun,  7 Jun 2026 10:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AED2DFF04;
+	Sun,  7 Jun 2026 10:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829312; cv=none; b=Ukf4n94z3WucVtiYrsldHXLBsSWJOkT9rM4wu0fJoi2aX8pJ6qiDFOd+n+tAn3d/jghrR//46MZKVmNvhFAOWJI4ZOHiLuo4TA/PQ9w3skJhPVvLkRKWONFQ2EkJSrSK6u8S9W73RpWoDY1ajWPDN0jrLsfIgvxy8WBDoK6B5nU=
+	t=1780829315; cv=none; b=AX4UZliAEB93MBgd+fENdj0ATmGwHqyf2anCVk43Gfn8qZSZqO5UtHC/jyu+Xz9ncL+V0qL3QoKncmEtJSnQH993sQa/Z7xZIx5g79kWE5OowvJxHDKC6RUFhWoZnHAenBO42qRd5wa7gmEzoQeLYhdEltM9Jh2o/EeXreRn4ZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829312; c=relaxed/simple;
-	bh=ubQNtz/qHVMM369DDNpLbhQNzHxnkEvNvtK+TJGHRRI=;
+	s=arc-20240116; t=1780829315; c=relaxed/simple;
+	bh=hcn5CH4o/bhPOePiFTCU+NoiE1H5ATZOmvXBp30TwIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=px9CxdvMNirGF59lYZ0xGSUyCzSb7PvKNw+tgkYmh/ko43nIhcCYzkCU7DKCDd/kZn/csmgwgCLEgdYg9FA2bthx1rsovkFbmYFoerqk3NDacz/9H0+6xLiYiFICCPRkkIAWENh5SyPBQFhEI5z2FpoF3MaBOGnZXUoCgP96lzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZytawLs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HgE2Bnb2HMn1RJEb9UiIcy5RV3W0O6ViEkoUeLPqVlwJqleqO2KJ+7QTuOhovpvyZZn+KAWS0j0kfRoyPexCsVuu0Tiajf3uRVkOjtiIuTBvA7/uudD6uDvNC3tAKEFbjCkiANAG2CqWW2yOJyXX2ynBij5wPon1soU/JoR5bm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhy+zmDJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZytawLs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DFEA1F00893;
-	Sun,  7 Jun 2026 10:48:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhy+zmDJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85CF1F00893;
+	Sun,  7 Jun 2026 10:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829311;
-	bh=qxDD2NxsKR5Lqy2z/oy9en/jsLPc4eb8rIjB/veX140=;
+	s=korg; t=1780829314;
+	bh=lEYufNNEG/ORUiMSjMEvUO7tgi12bSx8eLS3tXmCc+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OZytawLsSicTBTDgTxRS5B9+7L/KMqAEGoSzcdvHZBDyzAzuqgaX1mCK4gDEpj4Ae
-	 1sIOT+yHqyCYR45kTAsiX0VoiAJgRBisWSIKzHzakJyZkBEZ9ITJmqR4cv2luMgXyA
-	 Stqd+EkA2vP32nPlja2GexBQMPwIa3r45zl0V0FQ=
+	b=uhy+zmDJn2tTpBePqdJ9Iq1YTarcZXI1Nn7xsIakeofNRq5YpyZdyz9mwv7qI//M7
+	 mDN+28pcSDBjJTdFlO8E/JTDyKO5NccZDwRGwLnQfjM3ubVlrtHyyBHKMMw41XSrX1
+	 /6ZbFyAVNsCyMDgv5SWJ80+z8GRS7hND8fVY+poE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Zhaoyang Yu <2426767509@qq.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.12 213/307] tty: serial: pch_uart: add check for dma_alloc_coherent()
-Date: Sun,  7 Jun 2026 12:00:10 +0200
-Message-ID: <20260607095735.544832482@linuxfoundation.org>
+	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>
+Subject: [PATCH 7.0 263/332] usb: typec: ucsi: Dont update power_supply on power role change if not connected
+Date: Sun,  7 Jun 2026 12:00:32 +0200
+Message-ID: <20260607095737.699141619@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,72 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhaoyang Yu <2426767509@qq.com>
+From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
 
-commit 6fe472c1bbbe238e91141f7cabc1226e96a60d43 upstream.
+commit d98d413ca65d0790a8f3695d0a5845538958ab84 upstream.
 
-Add a check for dma_alloc_coherent() failure to prevent a potential
-NULL pointer dereference in dma_handle_rx(). Properly release DMA
-channels and the PCI device reference using a goto ladder if the
-allocation fails.
+We only need to update the power_supply on power role change if the port
+is connected, because otherwise the online status should be the same for
+both cases.
 
-Fixes: 3c6a483275f4 ("Serial: EG20T: add PCH_UART driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Zhaoyang Yu <2426767509@qq.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/tencent_E328416B7CFD436F6029F2DF02AD7ED89C08@qq.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7616f006db07 ("usb: typec: ucsi: Update power_supply on power role change")
+Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+Reported-and-tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Link: https://patch.msgid.link/20260519-ucsi-fix-2-v1-2-6f1239535187@qtmlabs.xyz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/pch_uart.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/pch_uart.c
-+++ b/drivers/tty/serial/pch_uart.c
-@@ -689,8 +689,7 @@ static void pch_request_dma(struct uart_
- 	if (!chan) {
- 		dev_err(priv->port.dev, "%s:dma_request_channel FAILS(Tx)\n",
- 			__func__);
--		pci_dev_put(dma_dev);
--		return;
-+		goto err_pci_get;
- 	}
- 	priv->chan_tx = chan;
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1298,7 +1298,12 @@ static void ucsi_handle_connector_change
  
-@@ -704,18 +703,26 @@ static void pch_request_dma(struct uart_
- 	if (!chan) {
- 		dev_err(priv->port.dev, "%s:dma_request_channel FAILS(Rx)\n",
- 			__func__);
--		dma_release_channel(priv->chan_tx);
--		priv->chan_tx = NULL;
--		pci_dev_put(dma_dev);
--		return;
-+		goto err_req_tx;
- 	}
- 
- 	/* Get Consistent memory for DMA */
- 	priv->rx_buf_virt = dma_alloc_coherent(port->dev, port->fifosize,
- 				    &priv->rx_buf_dma, GFP_KERNEL);
-+	if (!priv->rx_buf_virt)
-+		goto err_req_rx;
- 	priv->chan_rx = chan;
- 
- 	pci_dev_put(dma_dev);
-+	return;
+ 	if ((change & UCSI_CONSTAT_POWER_DIR_CHANGE) && role != prev_role) {
+ 		typec_set_pwr_role(con->port, role);
+-		ucsi_port_psy_changed(con);
 +
-+err_req_rx:
-+	dma_release_channel(chan);
-+err_req_tx:
-+	dma_release_channel(priv->chan_tx);
-+	priv->chan_tx = NULL;
-+err_pci_get:
-+	pci_dev_put(dma_dev);
- }
++		/* Some power_supply properties vary depending on the power direction when
++		 * connected
++		 */
++		if (UCSI_CONSTAT(con, CONNECTED))
++			ucsi_port_psy_changed(con);
  
- static void pch_dma_rx_complete(void *arg)
+ 		/* Complete pending power role swap */
+ 		if (!completion_done(&con->complete))
 
 
