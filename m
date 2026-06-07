@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C69130F81A;
-	Sun,  7 Jun 2026 10:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F273148A8;
+	Sun,  7 Jun 2026 10:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827744; cv=none; b=diepwjDmziahU4J2B7JCll4R0UoW/9xpxcZsV5ccCxktRiGJLNkpDavH7Y47y2Ra5JZLCoGJeWuTxjZ7ud3c5XokCWiF3eHKgUaLOGc89/o2WWBlI73V6yjmoPVOSr0qDmFDgLJW2XbkN1msJVtNHOwXCzcdINGx7s74gYpTWaQ=
+	t=1780827748; cv=none; b=k73c9sKEOwNCiSuEYOk6122dxQpZGt4Tdxbx6GddIh+q22W4dLBKdnJFCsdqcbAoDtEoQiJVxUNP4G2my2EeZJocoGsfUeN66I+i8XAOwR4XPR5OjHZ6BDcIHFHXoWIm/Z718jrpTd9KmALOE8/tLzbzdyStKq68f7PNfo/zk8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827744; c=relaxed/simple;
-	bh=H98AvtxROZFnAwUWBebg4GlTBQqQNSBkhYPnxCp8gU8=;
+	s=arc-20240116; t=1780827748; c=relaxed/simple;
+	bh=V+xexobf7HRZ4ATChQbSzCfikaO2WN/HpDjG1qlM0+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k58sSI2prVMhtJ674p8cPwUi/zOc9SGKJ7/M5iKgCQufZx0BVuMmY+NO1wpjtzRi4o5mahpB6p0uFTOJ+27fqW5/dlywh6RjzDcA6oyvsrlJ44GRj0sPkuO7yor4fflFvDYDffoQ8kZhVEk14t5ZH5LoHwEbaZNxX4N4DwJODIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAHZy9vA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uXwB3pqD9HhiVridC4dMidjHpfjUKRe+6WnhloZDevERxL2jFfmxX884X/fFxXnPihq8DvIq+YYJMI53EidkEeOm5bIrd5NTbRw6bdq62SBC/o5jgkZ5GYOVzahLU710u/br3SP0t/0a5TIYBWLMtldr3umyAZnYign83LOmFWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSHqXWJF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAHZy9vA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D10D1F00893;
-	Sun,  7 Jun 2026 10:22:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSHqXWJF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC18A1F00893;
+	Sun,  7 Jun 2026 10:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827743;
-	bh=8q+MTPKJouittlS7dDoH5P3QPD3punad2mfj1bJTdhE=;
+	s=korg; t=1780827746;
+	bh=AU+m2P2QhMIMoM67Ootoiyd/CR3J6KohfuA0pszryfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VAHZy9vAbfH/1ZYAwxsDAPGG98aRBZtTxt4iHrRz5IVCRRVdZwY45xF41dhcVz7Ct
-	 IHkg3JePz6cUCkW0epVVPHxPwqgn/bWsiAB2j+/J2w23HEkJ9PlIlAV02sVbv7EXBS
-	 Xrj8/oB7CW8b+0TD8gMPKxplNaZ5Yy/0XIEByjiE=
+	b=zSHqXWJFItXL4Rt+4Xey8JCtLtanlFe3/+L4lBrOk49mOxTYzY9bf196HoLw1pryS
+	 ROcf2Qoj3inybfNFMtPlR0Kf2jfGGij/hCG7jr0CbzqaLfuamqOI+BNj0v+iLDRoU1
+	 y5OtgPa/AvJgOcA4G5NiVrZiGKaTXOOEEKnX2AjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Steve French <stfrench@microsoft.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 097/315] smb: client: validate the whole DACL before rewriting it in cifsacl
-Date: Sun,  7 Jun 2026 11:58:04 +0200
-Message-ID: <20260607095731.200261524@linuxfoundation.org>
+Subject: [PATCH 6.12 083/307] remove pointless includes of <linux/fdtable.h>
+Date: Sun,  7 Jun 2026 11:58:00 +0200
+Message-ID: <20260607095730.821106213@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,231 +47,230 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 0a8cf165566ba55a39fd0f4de172119dd646d39a ]
+[ Upstream commit be5498cac2ddb112c5bd7433d5e834a1a2493427 ]
 
-build_sec_desc() and id_mode_to_cifs_acl() derive a DACL pointer from a
-server-supplied dacloffset and then use the incoming ACL to rebuild the
-chmod/chown security descriptor.
+some of those used to be needed, some had been cargo-culted for
+no reason...
 
-The original fix only checked that the struct smb_acl header fits before
-reading dacl_ptr->size or dacl_ptr->num_aces.  That avoids the immediate
-header-field OOB read, but the rewrite helpers still walk ACEs based on
-pdacl->num_aces with no structural validation of the incoming DACL body.
-
-A malicious server can return a truncated DACL that still contains a
-header, claims one or more ACEs, and then drive
-replace_sids_and_copy_aces() or set_chmod_dacl() past the validated
-extent while they compare or copy attacker-controlled ACEs.
-
-Factor the DACL structural checks into validate_dacl(), extend them to
-validate each ACE against the DACL bounds, and use the shared validator
-before the chmod/chown rebuild paths.  parse_dacl() reuses the same
-validator so the read-side parser and write-side rewrite paths agree on
-what constitutes a well-formed incoming DACL.
-
-Fixes: bc3e9dd9d104 ("cifs: Change SIDs in ACEs while transferring file ownership.")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Stable-dep-of: ea5fe6a73ca5 ("net/handshake: Drain pending requests at net namespace exit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsacl.c | 116 +++++++++++++++++++++++++++++-----------
- 1 file changed, 85 insertions(+), 31 deletions(-)
+ fs/fcntl.c                         | 1 -
+ fs/file_table.c                    | 1 -
+ fs/notify/fanotify/fanotify.c      | 1 -
+ fs/notify/fanotify/fanotify_user.c | 1 -
+ fs/overlayfs/copy_up.c             | 1 -
+ fs/proc/base.c                     | 1 -
+ io_uring/io_uring.c                | 1 -
+ kernel/bpf/bpf_inode_storage.c     | 1 -
+ kernel/bpf/bpf_task_storage.c      | 1 -
+ kernel/bpf/token.c                 | 1 -
+ kernel/exit.c                      | 1 -
+ kernel/module/dups.c               | 1 -
+ kernel/module/kmod.c               | 1 -
+ kernel/umh.c                       | 1 -
+ net/handshake/request.c            | 1 -
+ security/apparmor/domain.c         | 1 -
+ 16 files changed, 16 deletions(-)
 
-diff --git a/fs/smb/client/cifsacl.c b/fs/smb/client/cifsacl.c
-index e2948835587094..d17912beb28ec5 100644
---- a/fs/smb/client/cifsacl.c
-+++ b/fs/smb/client/cifsacl.c
-@@ -757,6 +757,77 @@ static void dump_ace(struct smb_ace *pace, char *end_of_acl)
- }
- #endif
+diff --git a/fs/fcntl.c b/fs/fcntl.c
+index 3d89de31066ae0..a7947a615db6b4 100644
+--- a/fs/fcntl.c
++++ b/fs/fcntl.c
+@@ -12,7 +12,6 @@
+ #include <linux/fs.h>
+ #include <linux/filelock.h>
+ #include <linux/file.h>
+-#include <linux/fdtable.h>
+ #include <linux/capability.h>
+ #include <linux/dnotify.h>
+ #include <linux/slab.h>
+diff --git a/fs/file_table.c b/fs/file_table.c
+index f7661a70874640..2a08bc93b0b9c1 100644
+--- a/fs/file_table.c
++++ b/fs/file_table.c
+@@ -9,7 +9,6 @@
+ #include <linux/string.h>
+ #include <linux/slab.h>
+ #include <linux/file.h>
+-#include <linux/fdtable.h>
+ #include <linux/init.h>
+ #include <linux/module.h>
+ #include <linux/fs.h>
+diff --git a/fs/notify/fanotify/fanotify.c b/fs/notify/fanotify/fanotify.c
+index bb00e1e1683838..4d86a05258b970 100644
+--- a/fs/notify/fanotify/fanotify.c
++++ b/fs/notify/fanotify/fanotify.c
+@@ -1,6 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <linux/fanotify.h>
+-#include <linux/fdtable.h>
+ #include <linux/fsnotify_backend.h>
+ #include <linux/init.h>
+ #include <linux/jiffies.h>
+diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
+index 93c1619cdad659..b89ad128bf09cf 100644
+--- a/fs/notify/fanotify/fanotify_user.c
++++ b/fs/notify/fanotify/fanotify_user.c
+@@ -1,7 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <linux/fanotify.h>
+ #include <linux/fcntl.h>
+-#include <linux/fdtable.h>
+ #include <linux/file.h>
+ #include <linux/fs.h>
+ #include <linux/anon_inodes.h>
+diff --git a/fs/overlayfs/copy_up.c b/fs/overlayfs/copy_up.c
+index 57f635d050eb5a..75e804bc152ccf 100644
+--- a/fs/overlayfs/copy_up.c
++++ b/fs/overlayfs/copy_up.c
+@@ -16,7 +16,6 @@
+ #include <linux/sched/signal.h>
+ #include <linux/cred.h>
+ #include <linux/namei.h>
+-#include <linux/fdtable.h>
+ #include <linux/ratelimit.h>
+ #include <linux/exportfs.h>
+ #include "overlayfs.h"
+diff --git a/fs/proc/base.c b/fs/proc/base.c
+index d060af34a6e837..704cf6a0612ede 100644
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+@@ -58,7 +58,6 @@
+ #include <linux/init.h>
+ #include <linux/capability.h>
+ #include <linux/file.h>
+-#include <linux/fdtable.h>
+ #include <linux/generic-radix-tree.h>
+ #include <linux/string.h>
+ #include <linux/seq_file.h>
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index eef59b9eccfab1..e515aeafa87813 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -51,7 +51,6 @@
+ #include <linux/sched/signal.h>
+ #include <linux/fs.h>
+ #include <linux/file.h>
+-#include <linux/fdtable.h>
+ #include <linux/mm.h>
+ #include <linux/mman.h>
+ #include <linux/percpu.h>
+diff --git a/kernel/bpf/bpf_inode_storage.c b/kernel/bpf/bpf_inode_storage.c
+index 29da6d3838f678..e16e79f8cd6dc3 100644
+--- a/kernel/bpf/bpf_inode_storage.c
++++ b/kernel/bpf/bpf_inode_storage.c
+@@ -16,7 +16,6 @@
+ #include <uapi/linux/btf.h>
+ #include <linux/bpf_lsm.h>
+ #include <linux/btf_ids.h>
+-#include <linux/fdtable.h>
+ #include <linux/rcupdate_trace.h>
  
-+static int validate_dacl(struct smb_acl *pdacl, char *end_of_acl)
-+{
-+	int i, ace_hdr_size, ace_size, min_ace_size;
-+	u16 dacl_size, num_aces;
-+	char *acl_base, *end_of_dacl;
-+	struct smb_ace *pace;
-+
-+	if (!pdacl)
-+		return 0;
-+
-+	if (end_of_acl < (char *)pdacl + sizeof(struct smb_acl)) {
-+		cifs_dbg(VFS, "ACL too small to parse DACL\n");
-+		return -EINVAL;
-+	}
-+
-+	dacl_size = le16_to_cpu(pdacl->size);
-+	if (dacl_size < sizeof(struct smb_acl) ||
-+	    end_of_acl < (char *)pdacl + dacl_size) {
-+		cifs_dbg(VFS, "ACL too small to parse DACL\n");
-+		return -EINVAL;
-+	}
-+
-+	num_aces = le16_to_cpu(pdacl->num_aces);
-+	if (!num_aces)
-+		return 0;
-+
-+	ace_hdr_size = offsetof(struct smb_ace, sid) +
-+		offsetof(struct smb_sid, sub_auth);
-+	min_ace_size = ace_hdr_size + sizeof(__le32);
-+	if (num_aces > (dacl_size - sizeof(struct smb_acl)) / min_ace_size) {
-+		cifs_dbg(VFS, "ACL too small to parse DACL\n");
-+		return -EINVAL;
-+	}
-+
-+	end_of_dacl = (char *)pdacl + dacl_size;
-+	acl_base = (char *)pdacl;
-+	ace_size = sizeof(struct smb_acl);
-+
-+	for (i = 0; i < num_aces; ++i) {
-+		if (end_of_dacl - acl_base < ace_size) {
-+			cifs_dbg(VFS, "ACL too small to parse ACE\n");
-+			return -EINVAL;
-+		}
-+
-+		pace = (struct smb_ace *)(acl_base + ace_size);
-+		acl_base = (char *)pace;
-+
-+		if (end_of_dacl - acl_base < ace_hdr_size ||
-+		    pace->sid.num_subauth == 0 ||
-+		    pace->sid.num_subauth > SID_MAX_SUB_AUTHORITIES) {
-+			cifs_dbg(VFS, "ACL too small to parse ACE\n");
-+			return -EINVAL;
-+		}
-+
-+		ace_size = ace_hdr_size + sizeof(__le32) * pace->sid.num_subauth;
-+		if (end_of_dacl - acl_base < ace_size ||
-+		    le16_to_cpu(pace->size) < ace_size) {
-+			cifs_dbg(VFS, "ACL too small to parse ACE\n");
-+			return -EINVAL;
-+		}
-+
-+		ace_size = le16_to_cpu(pace->size);
-+		if (end_of_dacl - acl_base < ace_size) {
-+			cifs_dbg(VFS, "ACL too small to parse ACE\n");
-+			return -EINVAL;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static void parse_dacl(struct smb_acl *pdacl, char *end_of_acl,
- 		       struct smb_sid *pownersid, struct smb_sid *pgrpsid,
- 		       struct cifs_fattr *fattr, bool mode_from_special_sid)
-@@ -764,7 +835,7 @@ static void parse_dacl(struct smb_acl *pdacl, char *end_of_acl,
- 	int i;
- 	u16 num_aces = 0;
- 	int acl_size;
--	char *acl_base;
-+	char *acl_base, *end_of_dacl;
- 	struct smb_ace **ppace;
+ DEFINE_BPF_STORAGE_CACHE(inode_cache);
+diff --git a/kernel/bpf/bpf_task_storage.c b/kernel/bpf/bpf_task_storage.c
+index adf6dfe0ba68a4..1eb9852a9f8ebb 100644
+--- a/kernel/bpf/bpf_task_storage.c
++++ b/kernel/bpf/bpf_task_storage.c
+@@ -16,7 +16,6 @@
+ #include <linux/filter.h>
+ #include <uapi/linux/btf.h>
+ #include <linux/btf_ids.h>
+-#include <linux/fdtable.h>
+ #include <linux/rcupdate_trace.h>
  
- 	/* BB need to add parm so we can store the SID BB */
-@@ -776,12 +847,8 @@ static void parse_dacl(struct smb_acl *pdacl, char *end_of_acl,
- 		return;
- 	}
+ DEFINE_BPF_STORAGE_CACHE(task_cache);
+diff --git a/kernel/bpf/token.c b/kernel/bpf/token.c
+index dcbec1a0dfb33f..26057aa1350398 100644
+--- a/kernel/bpf/token.c
++++ b/kernel/bpf/token.c
+@@ -1,6 +1,5 @@
+ #include <linux/bpf.h>
+ #include <linux/vmalloc.h>
+-#include <linux/fdtable.h>
+ #include <linux/file.h>
+ #include <linux/fs.h>
+ #include <linux/kernel.h>
+diff --git a/kernel/exit.c b/kernel/exit.c
+index b91124b2d334ee..e798078f958c89 100644
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -25,7 +25,6 @@
+ #include <linux/acct.h>
+ #include <linux/tsacct_kern.h>
+ #include <linux/file.h>
+-#include <linux/fdtable.h>
+ #include <linux/freezer.h>
+ #include <linux/binfmts.h>
+ #include <linux/nsproxy.h>
+diff --git a/kernel/module/dups.c b/kernel/module/dups.c
+index 9a92f2f8c9d382..bd2149fbe11738 100644
+--- a/kernel/module/dups.c
++++ b/kernel/module/dups.c
+@@ -18,7 +18,6 @@
+ #include <linux/completion.h>
+ #include <linux/cred.h>
+ #include <linux/file.h>
+-#include <linux/fdtable.h>
+ #include <linux/workqueue.h>
+ #include <linux/security.h>
+ #include <linux/mount.h>
+diff --git a/kernel/module/kmod.c b/kernel/module/kmod.c
+index 0800d989169219..25f25381251281 100644
+--- a/kernel/module/kmod.c
++++ b/kernel/module/kmod.c
+@@ -15,7 +15,6 @@
+ #include <linux/completion.h>
+ #include <linux/cred.h>
+ #include <linux/file.h>
+-#include <linux/fdtable.h>
+ #include <linux/workqueue.h>
+ #include <linux/security.h>
+ #include <linux/mount.h>
+diff --git a/kernel/umh.c b/kernel/umh.c
+index ff1f13a27d29fd..be923427077731 100644
+--- a/kernel/umh.c
++++ b/kernel/umh.c
+@@ -13,7 +13,6 @@
+ #include <linux/completion.h>
+ #include <linux/cred.h>
+ #include <linux/file.h>
+-#include <linux/fdtable.h>
+ #include <linux/fs_struct.h>
+ #include <linux/workqueue.h>
+ #include <linux/security.h>
+diff --git a/net/handshake/request.c b/net/handshake/request.c
+index 2f58d74f16554b..62efb7e32730ea 100644
+--- a/net/handshake/request.c
++++ b/net/handshake/request.c
+@@ -13,7 +13,6 @@
+ #include <linux/module.h>
+ #include <linux/skbuff.h>
+ #include <linux/inet.h>
+-#include <linux/fdtable.h>
+ #include <linux/rhashtable.h>
  
--	/* validate that we do not go past end of acl */
--	if (end_of_acl < (char *)pdacl + sizeof(struct smb_acl) ||
--	    end_of_acl < (char *)pdacl + le16_to_cpu(pdacl->size)) {
--		cifs_dbg(VFS, "ACL too small to parse DACL\n");
-+	if (validate_dacl(pdacl, end_of_acl))
- 		return;
--	}
+ #include <net/sock.h>
+diff --git a/security/apparmor/domain.c b/security/apparmor/domain.c
+index cccd61cca509ce..fbfb1d48dc88f2 100644
+--- a/security/apparmor/domain.c
++++ b/security/apparmor/domain.c
+@@ -9,7 +9,6 @@
+  */
  
- 	cifs_dbg(NOISY, "DACL revision %d size %d num aces %d\n",
- 		 le16_to_cpu(pdacl->revision), le16_to_cpu(pdacl->size),
-@@ -792,6 +859,7 @@ static void parse_dacl(struct smb_acl *pdacl, char *end_of_acl,
- 	   user/group/other have no permissions */
- 	fattr->cf_mode &= ~(0777);
- 
-+	end_of_dacl = (char *)pdacl + le16_to_cpu(pdacl->size);
- 	acl_base = (char *)pdacl;
- 	acl_size = sizeof(struct smb_acl);
- 
-@@ -799,36 +867,16 @@ static void parse_dacl(struct smb_acl *pdacl, char *end_of_acl,
- 	if (num_aces > 0) {
- 		umode_t denied_mode = 0;
- 
--		if (num_aces > (le16_to_cpu(pdacl->size) - sizeof(struct smb_acl)) /
--				(offsetof(struct smb_ace, sid) +
--				 offsetof(struct smb_sid, sub_auth) + sizeof(__le16)))
--			return;
--
- 		ppace = kmalloc_array(num_aces, sizeof(struct smb_ace *),
- 				      GFP_KERNEL);
- 		if (!ppace)
- 			return;
- 
- 		for (i = 0; i < num_aces; ++i) {
--			if (end_of_acl - acl_base < acl_size)
--				break;
--
- 			ppace[i] = (struct smb_ace *) (acl_base + acl_size);
--			acl_base = (char *)ppace[i];
--			acl_size = offsetof(struct smb_ace, sid) +
--				offsetof(struct smb_sid, sub_auth);
--
--			if (end_of_acl - acl_base < acl_size ||
--			    ppace[i]->sid.num_subauth == 0 ||
--			    ppace[i]->sid.num_subauth > SID_MAX_SUB_AUTHORITIES ||
--			    (end_of_acl - acl_base <
--			     acl_size + sizeof(__le32) * ppace[i]->sid.num_subauth) ||
--			    (le16_to_cpu(ppace[i]->size) <
--			     acl_size + sizeof(__le32) * ppace[i]->sid.num_subauth))
--				break;
- 
- #ifdef CONFIG_CIFS_DEBUG2
--			dump_ace(ppace[i], end_of_acl);
-+			dump_ace(ppace[i], end_of_dacl);
- #endif
- 			if (mode_from_special_sid &&
- 			    ppace[i]->sid.num_subauth >= 3 &&
-@@ -871,6 +919,7 @@ static void parse_dacl(struct smb_acl *pdacl, char *end_of_acl,
- 				(void *)ppace[i],
- 				sizeof(struct smb_ace)); */
- 
-+			acl_base = (char *)ppace[i];
- 			acl_size = le16_to_cpu(ppace[i]->size);
- 		}
- 
-@@ -1316,10 +1365,9 @@ static int build_sec_desc(struct smb_ntsd *pntsd, struct smb_ntsd *pnntsd,
- 		}
- 
- 		dacl_ptr = (struct smb_acl *)((char *)pntsd + dacloffset);
--		if (end_of_acl < (char *)dacl_ptr + le16_to_cpu(dacl_ptr->size)) {
--			cifs_dbg(VFS, "Server returned illegal ACL size\n");
--			return -EINVAL;
--		}
-+		rc = validate_dacl(dacl_ptr, end_of_acl);
-+		if (rc)
-+			return rc;
- 	}
- 
- 	owner_sid_ptr = (struct smb_sid *)((char *)pntsd +
-@@ -1698,6 +1746,12 @@ id_mode_to_cifs_acl(struct inode *inode, const char *path, __u64 *pnmode,
- 			}
- 
- 			dacl_ptr = (struct smb_acl *)((char *)pntsd + dacloffset);
-+			rc = validate_dacl(dacl_ptr, (char *)pntsd + secdesclen);
-+			if (rc) {
-+				kfree(pntsd);
-+				cifs_put_tlink(tlink);
-+				return rc;
-+			}
- 			if (mode_from_sid)
- 				nsecdesclen +=
- 					le16_to_cpu(dacl_ptr->num_aces) * sizeof(struct smb_ace);
+ #include <linux/errno.h>
+-#include <linux/fdtable.h>
+ #include <linux/fs.h>
+ #include <linux/file.h>
+ #include <linux/mount.h>
 -- 
 2.53.0
 
