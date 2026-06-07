@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB17633030F;
-	Sun,  7 Jun 2026 10:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A902C287510;
+	Sun,  7 Jun 2026 10:55:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829745; cv=none; b=BDP2hU8GK6dX10LaQxr1hOSwxTZ3gZ89eUChq8e5F9Uo6MVbQ0jJEp+RXyN35pIWBYIEDZmAeQH4sh8Cka6Y1H5KuQMc1neLqNtTaW1hOiBkdmitP83DIYPr+2SzCXGIPydNuT18xtgbZPDsF/0UV5mVrmE7kU3qu8XUAIpTNL8=
+	t=1780829749; cv=none; b=DxMcyOG3BTOdZv2zl9FRzBMjzxfC2VuJJq8OldRb6gtE2R8Mrzg7Oo51Q3nN9YmQFCCEKYH3B+opgaFcgIgKqeGxriGu9MQBNykP1QHSwZh1f9DEX8o9hisFVKnyc+SpYO44EhfJcOK9abTh2ZnuH4NPiFeXF34SLOdOAchqgrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829745; c=relaxed/simple;
-	bh=JrDai66vPxzRWwxH7WNkugo+bCBJe4CptbvjaoCoU1g=;
+	s=arc-20240116; t=1780829749; c=relaxed/simple;
+	bh=3AiO4rjrRzJ36m0aUEiqkcNaJm6tXkuKysXa2szPxlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oOPNLcCvkZjcJS3ylG1hKJahXIXe/y7sLCqz9rinLcGrP10wnVemE8A6KyDIUj4qRgJG72FslQFpUHmqILXGry74VMVEqkIK6VDVvXXC1sjdObPbXU/skg/05M8A11OMG6OzM/TzV3VtXlT9VTo+6Xah/yjX2LwFxvWrXy4S1b8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKf7jG0Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MRTgdyGstuFji7yRMUIIjxaEqm6Sit7e5h1gA4+BgqVirjuisIJarLbwOsjMe5Dc5epn0eZSNmItMoUIHkw4VmeAWPgwgYsXt91wlS3Sx9tZGXerAyP1wgV3zre65Fhb2p2WSSLywp6aioxWEiwS3LlJDaScgreD/FndKPhGIg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gyae2a0n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKf7jG0Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F3271F00899;
-	Sun,  7 Jun 2026 10:55:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gyae2a0n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE5B1F00893;
+	Sun,  7 Jun 2026 10:55:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829743;
-	bh=lrCC310r+8PwHbkBv3y2uW8IcFf6lrk4261S0uJh3rg=;
+	s=korg; t=1780829748;
+	bh=6qqwH0qR5Cgy7u99HXK8xcwiR+Mt85TqSFe9T0fqhQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MKf7jG0Z8KSD98ETs3UhuZKmHfZthHvLam32o1rbEmk8YPaGvULIIoxzZtvlzpf7S
-	 iXBdpJbrZ2Z0gvyUf70BTDT2u/TtpMLVaVkm32zkZVZdZaOu12GdCX9l7Eh9fXawi+
-	 63lm7tEJU8i0cko+Wr85mteBt9/oSG7rkBl8Rzto=
+	b=Gyae2a0nXsv+LATI9OTXKqXLY7zSN2DxrpzexY5jfc1Q1B1+OgOAcYrCGCxr6l7qi
+	 I6wqF0dNK+aqPR9vtjDhBSZ03hc6GNFJMmlPdtQfEUaLWSxQY1rBvbX8tteCE1wEKC
+	 VFtLEJ3zqApFhJp19Jq+uEieNiJUmg2lnZWhSU/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>
-Subject: [PATCH 6.18 275/315] serial: dz: Convert to use a platform device
-Date: Sun,  7 Jun 2026 12:01:02 +0200
-Message-ID: <20260607095737.673577825@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.18 263/315] serial: qcom_geni: fix kfifo underflow when flush precedes DMA completion IRQ
+Date: Sun,  7 Jun 2026 12:00:50 +0200
+Message-ID: <20260607095737.228643623@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
 References: <20260607095727.528828913@linuxfoundation.org>
@@ -49,408 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
 
-commit 5d7a49d60b8fda66da60e240fd7315232fa1754f upstream.
+commit 452d6fa37ae9b021f4f6d397dbae077f7296f6f4 upstream.
 
-Prevent a crash from happening as the first serial port is initialised:
+When uart_flush_buffer() runs before the DMA completion IRQ is delivered,
+the following race can occur (all steps serialized by uart_port_lock):
 
-  Console: switching to colour frame buffer device 160x64
-  tgafb: SFB+ detected, rev=0x02
-  fb0: Digital ZLX-E1 frame buffer device at 0x1e000000
-  DECstation DZ serial driver version 1.04
-  CPU 0 Unable to handle kernel paging request at virtual address 000000bc, epc == 8048b3a4, ra == 80470a78
-  Oops[#1]:
-  CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.19.0-dirty #35 NONE
-  $ 0   : 00000000 1000ac00 00000004 804707ac
-  $ 4   : 00000000 80e20850 80e20858 81000030
-  $ 8   : 00000000 8072c81c 00000008 fefefeff
-  $12   : 6c616972 00000006 80c5917f 69726420
-  $16   : 80e20800 00000000 808f8968 80e20800
-  $20   : 00000000 807f5a90 808b0094 808d3bc8
-  $24   : 00000018 80479030
-  $28   : 80c2e000 80c2fd70 00000069 80470a78
-  Hi    : 00000004
-  Lo    : 00000000
-  epc   : 8048b3a4 __dev_fwnode+0x0/0xc
-  ra    : 80470a78 serial_base_ctrl_add+0xa0/0x168
-  Status: 1000ac04	IEp
-  Cause : 30000008 (ExcCode 02)
-  BadVA : 000000bc
-  PrId  : 00000220 (R3000)
-  Modules linked in:
-  Process swapper/0 (pid: 1, threadinfo=(ptrval), task=(ptrval), tls=00000000)
-  Stack : 00400044 00400040 8046f4cc 00000000 808a6148 808a0000 808f8968 8086983c
-          808e0000 8046fc84 1000ac01 00000028 80e20700 802ba3f8 80e20700 80d34a94
-          80c1b900 80e20700 80e20700 80e20700 80e20700 80444650 00000000 00000000
-          00000000 807f5a90 808b0094 80447080 00400040 808e0000 80d34a94 808a6148
-          80d34a94 00000004 80e20700 00000000 8076974c 80469810 80c2fe3c 1000ac01
-          ...
-  Call Trace:
-  [<8048b3a4>] __dev_fwnode+0x0/0xc
-  [<80470a78>] serial_base_ctrl_add+0xa0/0x168
-  [<8046fc84>] serial_core_register_port+0x1c8/0x974
-  [<808c6af0>] dz_init+0x74/0xc8
-  [<800470e0>] do_one_initcall+0x44/0x2d4
-  [<808b111c>] kernel_init_freeable+0x258/0x308
-  [<8072e434>] kernel_init+0x20/0x114
-  [<80049cd0>] ret_from_kernel_thread+0x14/0x1c
+  1. DMA starts: tx_remaining = N, kfifo contains N bytes
+  2. DMA completes in hardware; IRQ is pending but not yet delivered
+  3. uart_flush_buffer() acquires the port lock and calls kfifo_reset(),
+     making kfifo_len() = 0 while tx_remaining remains N
+  4. uart_flush_buffer() releases the port lock
+  5. DMA IRQ fires; handle_tx_dma() acquires the port lock and calls
+     uart_xmit_advance(uport, tx_remaining) on an empty kfifo
 
-  Code: 27bd0018  03e00008  2402ffea <8c8200bc> 03e00008  00000000  27bdffc0  afbe0038  afb30024
+uart_xmit_advance() increments kfifo->out by tx_remaining. Since
+kfifo_reset() already set both in and out to 0, out wraps past in,
+causing kfifo_len() to return UART_XMIT_SIZE - tx_remaining. The next
+start_tx_dma() call then submits a DMA transfer of stale buffer data.
 
-  ---[ end trace 0000000000000000 ]---
+Fix this by snapshotting kfifo_len() at the start of handle_tx_dma()
+and skipping uart_xmit_advance() when fifo_len < tx_remaining, which
+indicates the kfifo was reset by a preceding flush.
 
--- where a pointer is dereferenced that has been derived from a null
-pointer to the port's parent device.
-
-Since no device is available with legacy probing and it's not anymore a
-preferable way to discover devices anyway, switch the driver to using a
-platform device and use it as the port's parent device.  Update resource
-handling accordingly and only request the actual span of addresses used
-within the slot, which will have had its resource already requested by
-generic platform device code.
-
-Use platform_driver_probe() not just because the DZ device is fixed with
-solder on board and not straightforward to remove, but foremost because
-the associated TTY's major device number is the same as used by the zs
-driver and the first driver to claim it will prevent the other one from
-using it.  Either one DZ device or some SCC devices will be present in a
-given system but never both at a time, and therefore we want the major
-device number to be claimed by the first driver to actually successfully
-bind to its device and platform_driver_probe() is a way to fulfil that.
-
-An unfortunate consequence of the switch to a platform device is we now
-hand the console over from the bootconsole much later in the bootstrap.
-The firmware console handler appears good enough though to work so late
-and in particular with interrupts enabled.
-
-Conversely only starting the console port so late lets the reset code
-fully utilise our delay handlers, so switch from udelay() to fsleep()
-for transmitter draining so as to avoid busy-waiting for an excessive
-amount of time.
-
-Fixes: 84a9582fd203 ("serial: core: Start managing serial controllers to enable runtime PM")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Cc: stable@vger.kernel.org # needs to use .remove_new for <= 6.10
-Link: https://patch.msgid.link/alpine.DEB.2.21.2605062326540.46195@angie.orcam.me.uk
+Fixes: 2aaa43c70778 ("tty: serial: qcom-geni-serial: add support for serial engine DMA")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260506-serial-dma-stale-tx-buf-v1-1-e3ccb360d719@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/dec/platform.c |   55 +++++++++++++++++++++-
- drivers/tty/serial/dz.c  |  116 ++++++++++++++++++++++-------------------------
- 2 files changed, 110 insertions(+), 61 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/arch/mips/dec/platform.c
-+++ b/arch/mips/dec/platform.c
-@@ -10,6 +10,13 @@
- #include <linux/mc146818rtc.h>
- #include <linux/platform_device.h>
- 
-+#include <asm/bootinfo.h>
-+
-+#include <asm/dec/interrupts.h>
-+#include <asm/dec/kn01.h>
-+#include <asm/dec/kn02.h>
-+#include <asm/dec/system.h>
-+
- static struct resource dec_rtc_resources[] = {
- 	{
- 		.name = "rtc",
-@@ -30,11 +37,57 @@ static struct platform_device dec_rtc_de
- 	.num_resources = ARRAY_SIZE(dec_rtc_resources),
- };
- 
-+static struct resource dec_dz_resources[] = {
-+	{ .name = "dz", .flags = IORESOURCE_MEM, },
-+	{ .name = "dz", .flags = IORESOURCE_IRQ, },
-+};
-+
-+static struct platform_device dec_dz_device = {
-+	.name = "dz",
-+	.id = PLATFORM_DEVID_NONE,
-+	.resource = dec_dz_resources,
-+	.num_resources = ARRAY_SIZE(dec_dz_resources),
-+};
-+
-+static struct platform_device *dec_dz_devices[] __initdata = {
-+	&dec_dz_device,
-+};
-+
- static int __init dec_add_devices(void)
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -1022,8 +1022,20 @@ static void qcom_geni_serial_handle_tx_d
  {
-+	int ret1, ret2;
-+	int num_dz;
-+	int irq, i;
+ 	struct qcom_geni_serial_port *port = to_dev_port(uport);
+ 	struct tty_port *tport = &uport->state->port;
++	unsigned int fifo_len = kfifo_len(&tport->xmit_fifo);
 +
- 	dec_rtc_resources[0].start = RTC_PORT(0);
- 	dec_rtc_resources[0].end = RTC_PORT(0) + dec_kn_slot_size - 1;
--	return platform_device_register(&dec_rtc_device);
-+
-+	i = 0;
-+	irq = dec_interrupt[DEC_IRQ_DZ11];
-+	if (IS_ENABLED(CONFIG_32BIT) && irq >= 0) {
-+		resource_size_t base;
-+
-+		switch (mips_machtype) {
-+		case MACH_DS23100:
-+		case MACH_DS5100:
-+			base = dec_kn_slot_base + KN01_DZ11;
-+			break;
-+		default:
-+			base = dec_kn_slot_base + KN02_DZ11;
-+			break;
-+		}
-+		dec_dz_device.resource[0].start = base;
-+		dec_dz_device.resource[0].end = base + dec_kn_slot_size - 1;
-+		dec_dz_device.resource[1].start = irq;
-+		dec_dz_device.resource[1].end = irq;
-+		i++;
-+	}
-+	num_dz = i;
-+
-+	ret1 = platform_device_register(&dec_rtc_device);
-+	ret2 = IS_ENABLED(CONFIG_32BIT) ?
-+	       platform_add_devices(dec_dz_devices, num_dz) : 0;
-+	return ret1 ? ret1 : ret2;
- }
++	/*
++	 * Only advance the kfifo if it still contains the bytes that were
++	 * transferred. uart_flush_buffer() may have run before this IRQ
++	 * fired: it calls kfifo_reset() under the port lock, making
++	 * fifo_len = 0 while tx_remaining remains non-zero. Calling
++	 * uart_xmit_advance() in that case would underflow kfifo->out past
++	 * kfifo->in, making kfifo_len() wrap to UART_XMIT_SIZE - tx_remaining
++	 * and triggering a spurious large DMA transfer of stale data.
++	 */
++	if (fifo_len >= port->tx_remaining)
++		uart_xmit_advance(uport, port->tx_remaining);
  
- device_initcall(dec_add_devices);
---- a/drivers/tty/serial/dz.c
-+++ b/drivers/tty/serial/dz.c
-@@ -40,6 +40,7 @@
- #include <linux/kernel.h>
- #include <linux/major.h>
- #include <linux/module.h>
-+#include <linux/platform_device.h>
- #include <linux/serial.h>
- #include <linux/serial_core.h>
- #include <linux/sysrq.h>
-@@ -48,14 +49,6 @@
- 
- #include <linux/atomic.h>
- #include <linux/io.h>
--#include <asm/bootinfo.h>
--
--#include <asm/dec/interrupts.h>
--#include <asm/dec/kn01.h>
--#include <asm/dec/kn02.h>
--#include <asm/dec/machtype.h>
--#include <asm/dec/prom.h>
--#include <asm/dec/system.h>
- 
- #include "dz.h"
- 
-@@ -65,7 +58,9 @@ MODULE_LICENSE("GPL");
- 
- 
- static char dz_name[] __initdata = "DECstation DZ serial driver version ";
--static char dz_version[] __initdata = "1.04";
-+static char dz_version[] __initdata = "1.05";
-+
-+#define DZ_IO_SIZE 0x20			/* IOMEM space size.  */
- 
- struct dz_port {
- 	struct dz_mux		*mux;
-@@ -81,6 +76,7 @@ struct dz_mux {
- };
- 
- static struct dz_mux dz_mux;
-+static struct uart_driver dz_reg;
- 
- static inline struct dz_port *to_dport(struct uart_port *uport)
- {
-@@ -564,7 +560,7 @@ static void dz_reset(struct dz_port *dpo
- 			iob();
- 			udelay(2);		/* 1.4us TRDY recovery.  */
- 		}
--		udelay(1200);			/* Transmitter drain.  */
-+		fsleep(1200);			/* Transmitter drain.  */
- 	}
- 
- 	dz_out(dport, DZ_CSR, DZ_CLR);
-@@ -681,14 +677,13 @@ static void dz_release_port(struct uart_
- 
- 	map_guard = atomic_add_return(-1, &mux->map_guard);
- 	if (!map_guard)
--		release_mem_region(uport->mapbase, dec_kn_slot_size);
-+		release_mem_region(uport->mapbase, DZ_IO_SIZE);
- }
- 
- static int dz_map_port(struct uart_port *uport)
- {
- 	if (!uport->membase)
--		uport->membase = ioremap(uport->mapbase,
--						 dec_kn_slot_size);
-+		uport->membase = ioremap(uport->mapbase, DZ_IO_SIZE);
- 	if (!uport->membase) {
- 		printk(KERN_ERR "dz: Cannot map MMIO\n");
- 		return -ENOMEM;
-@@ -704,8 +699,7 @@ static int dz_request_port(struct uart_p
- 
- 	map_guard = atomic_add_return(1, &mux->map_guard);
- 	if (map_guard == 1) {
--		if (!request_mem_region(uport->mapbase, dec_kn_slot_size,
--					"dz")) {
-+		if (!request_mem_region(uport->mapbase, DZ_IO_SIZE, "dz")) {
- 			atomic_add(-1, &mux->map_guard);
- 			printk(KERN_ERR
- 			       "dz: Unable to reserve MMIO resource\n");
-@@ -716,7 +710,7 @@ static int dz_request_port(struct uart_p
- 	if (ret) {
- 		map_guard = atomic_add_return(-1, &mux->map_guard);
- 		if (!map_guard)
--			release_mem_region(uport->mapbase, dec_kn_slot_size);
-+			release_mem_region(uport->mapbase, DZ_IO_SIZE);
- 		return ret;
- 	}
- 	return 0;
-@@ -768,20 +762,15 @@ static const struct uart_ops dz_ops = {
- 	.verify_port	= dz_verify_port,
- };
- 
--static void __init dz_init_ports(void)
-+static int __init dz_probe(struct platform_device *pdev)
- {
--	static int first = 1;
--	unsigned long base;
-+	struct resource *mem_resource, *irq_resource;
- 	int line;
- 
--	if (!first)
--		return;
--	first = 0;
--
--	if (mips_machtype == MACH_DS23100 || mips_machtype == MACH_DS5100)
--		base = dec_kn_slot_base + KN01_DZ11;
--	else
--		base = dec_kn_slot_base + KN02_DZ11;
-+	mem_resource = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	irq_resource = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
-+	if (!mem_resource || !irq_resource)
-+		return -ENODEV;
- 
- 	for (line = 0; line < DZ_NB_PORT; line++) {
- 		struct dz_port *dport = &dz_mux.dport[line];
-@@ -789,14 +778,33 @@ static void __init dz_init_ports(void)
- 
- 		dport->mux	= &dz_mux;
- 
--		uport->irq	= dec_interrupt[DEC_IRQ_DZ11];
-+		uport->dev	= &pdev->dev;
-+		uport->irq	= irq_resource->start;
- 		uport->fifosize	= 1;
- 		uport->iotype	= UPIO_MEM;
- 		uport->flags	= UPF_BOOT_AUTOCONF;
- 		uport->ops	= &dz_ops;
- 		uport->line	= line;
--		uport->mapbase	= base;
-+		uport->mapbase	= mem_resource->start;
- 		uport->has_sysrq = IS_ENABLED(CONFIG_SERIAL_DZ_CONSOLE);
-+
-+		if (uart_add_one_port(&dz_reg, uport))
-+			uport->dev = NULL;
-+	}
-+
-+	return 0;
-+}
-+
-+static void __exit dz_remove(struct platform_device *pdev)
-+{
-+	int line;
-+
-+	for (line = DZ_NB_PORT - 1; line >= 0; line--) {
-+		struct dz_port *dport = &dz_mux.dport[line];
-+		struct uart_port *uport = &dport->port;
-+
-+		if (uport->dev)
-+			uart_remove_one_port(&dz_reg, uport);
- 	}
- }
- 
-@@ -879,21 +887,14 @@ static int __init dz_console_setup(struc
- 	int bits = 8;
- 	int parity = 'n';
- 	int flow = 'n';
--	int ret;
--
--	ret = dz_map_port(uport);
--	if (ret)
--		return ret;
--
--	dz_reset(dport);
- 
-+	if (!dport->mux)
-+		return -ENODEV;
- 	if (options)
- 		uart_parse_options(options, &baud, &parity, &bits, &flow);
--
--	return uart_set_options(&dport->port, co, baud, parity, bits, flow);
-+	return uart_set_options(uport, co, baud, parity, bits, flow);
- }
- 
--static struct uart_driver dz_reg;
- static struct console dz_console = {
- 	.name	= "ttyS",
- 	.write	= dz_console_print,
-@@ -904,18 +905,6 @@ static struct console dz_console = {
- 	.data	= &dz_reg,
- };
- 
--static int __init dz_serial_console_init(void)
--{
--	if (!IOASIC) {
--		dz_init_ports();
--		register_console(&dz_console);
--		return 0;
--	} else
--		return -ENXIO;
--}
--
--console_initcall(dz_serial_console_init);
--
- #define SERIAL_DZ_CONSOLE	&dz_console
- #else
- #define SERIAL_DZ_CONSOLE	NULL
-@@ -931,25 +920,32 @@ static struct uart_driver dz_reg = {
- 	.cons			= SERIAL_DZ_CONSOLE,
- };
- 
-+static struct platform_driver dz_driver = {
-+	.remove = __exit_p(dz_remove),
-+	.driver = { .name = "dz" },
-+};
-+
- static int __init dz_init(void)
- {
--	int ret, i;
--
--	if (IOASIC)
--		return -ENXIO;
-+	int ret;
- 
- 	printk("%s%s\n", dz_name, dz_version);
- 
--	dz_init_ports();
--
- 	ret = uart_register_driver(&dz_reg);
- 	if (ret)
- 		return ret;
-+	ret = platform_driver_probe(&dz_driver, dz_probe);
-+	if (ret)
-+		uart_unregister_driver(&dz_reg);
- 
--	for (i = 0; i < DZ_NB_PORT; i++)
--		uart_add_one_port(&dz_reg, &dz_mux.dport[i].port);
-+	return ret;
-+}
- 
--	return 0;
-+static void __exit dz_exit(void)
-+{
-+	platform_driver_unregister(&dz_driver);
-+	uart_unregister_driver(&dz_reg);
- }
- 
- module_init(dz_init);
-+module_exit(dz_exit);
+-	uart_xmit_advance(uport, port->tx_remaining);
+ 	geni_se_tx_dma_unprep(&port->se, port->tx_dma_addr, port->tx_remaining);
+ 	port->tx_dma_addr = 0;
+ 	port->tx_remaining = 0;
 
 
