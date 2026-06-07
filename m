@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BEC070808;
-	Sun,  7 Jun 2026 10:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AB11E98EF;
+	Sun,  7 Jun 2026 10:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828963; cv=none; b=YACf9ysVzmNG0yAjr7MnQlB4+RNvrjRombBluDhTAbtXM+5jseeFBKefzFRt50soeLZiVjJzwun8j8+L2bBJV9YoVXyZgKxTXFFLGd4Xqur8OZVJEdLHIKTjzAE9eXTEZXfjkUu7jfa79I7O5EyO9W2016o4OPK7e2mpKlTLkoE=
+	t=1780828967; cv=none; b=kXCRkDrcuHDmc0xzjzHKUSxosECNiI7nXsQFqMZXvIGzNeBaJ7i1f+EIX0OfPp5L0zA7gjncgGYl1crPsmXZU7B9dNWCVZcGaqinUeE/TgsUiXLVBJ+pK/l5JnyEepaiCbcfehEHTwZTOROLXa2uxzfucG8ws1BmBNTsIct/y30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828963; c=relaxed/simple;
-	bh=IvJOACamxAmTmzJuTR5oLMs+Fw7JF9SLZOrAUR0KJ7A=;
+	s=arc-20240116; t=1780828967; c=relaxed/simple;
+	bh=h7oJQ/XCm+HoCWyKxM/yKkfIuz4g659D06jOufRPUNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AqUbVQc7votIbFhVm7Gm575ZtqW6N/tpQEzO+R22TOuIQTBIYX6OGfsqc3Eo+hjcTpnoFo/d9lm6vGdvaVEqcbUQ2Db37PjRkqrO3ezJ0hK/hBLyuImNMYfkrFrGKqzD1xYe39idiX4H6MyZOJ9EdgIfZEPzLYCOydpV9zHCFkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WA1WiKbR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jfrId0AZfu49yIOASB9d9hmaEd0C/JsNYUECaahsQE4yuW1hKcnnHGc0S/I/1LE+od60dJomlSfN4Ba0m+40hy9ximUvgxk+jS43Fx7m3IcTHY2Sjof2WekfTNMifd3Zv3lxpIt/tTBQ1dYmvaaZReaEBCYuFikC8/6j+LyYMHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzLE3wvc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WA1WiKbR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC0681F00893;
-	Sun,  7 Jun 2026 10:42:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzLE3wvc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE291F00893;
+	Sun,  7 Jun 2026 10:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828962;
-	bh=HJtyKJl0iGmZ4mXlVMGr8lyjLScsLrf0JLtikD/XLhE=;
+	s=korg; t=1780828966;
+	bh=zxCTDucRo87qOGLD3HGVaqsFlm4p4Y5XceebMr/0Ci0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WA1WiKbR8lqYu6vBQHqWrPxdrqhvP4L0rScix+YpgvXBZ0+Vi7A8IA2XrUsuwhkzV
-	 7kCzJcDSurOCacvmzzNVnX7Yn7knjCheHXWAiaOc8Rvxryz5m4rmeWkL6x79xXh5Cj
-	 smN0BlY0iBI/faDqIaNvKGhbRhQE5gTM1FNjoHR4=
+	b=XzLE3wvc8/91T9MM5eRgOgiqD4zt7MaTPhdUS8KP4MJIPQL2Ab/FHHK22v2GsLvxF
+	 s2Rx4rvjeVEuz81zTtWFFfgKSInGr/yZIPmBNNNBZig6ZtaWaagBWt19//MdmcXYPE
+	 udyOKIYdT1DhFvEGwfqUd2pk8YCo0X2YZ3U6wbOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
-	Florian Westphal <fw@strlen.de>
-Subject: [PATCH 7.0 230/332] netfilter: conntrack: tcp: do not force CLOSE on invalid-seq RST without direction check
-Date: Sun,  7 Jun 2026 11:59:59 +0200
-Message-ID: <20260607095736.501441492@linuxfoundation.org>
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 183/307] wireguard: send: append trailer after expanding head
+Date: Sun,  7 Jun 2026 11:59:40 +0200
+Message-ID: <20260607095734.435516284@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,53 +46,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit bed6e04be8e6b9133d8b16d5a42d0e0ce674fa9a upstream.
+commit f75e3eb08fe31d30a9af6ed80cdd22e6772837e2 upstream.
 
-An unintended behavior in the TCP conntrack state machine allows a
-connection to be forced into the CLOSE state using an RST packet with an
-invalid sequence number.
+With how this is currently written, we add the trailer, zero it out, and
+then add the header space on. If that header space requires a
+reallocation + copy, the zeros in the trailer aren't copied, because the
+skb len hasn't actually been yet expanded to cover that. Instead add the
+padding at the end of the process rather than at the beginning.
 
-Specifically, after a SYN packet is observed, an RST with an invalid SEQ
-can transition the conntrack entry to TCP_CONNTRACK_CLOSE, regardless of
-whether the RST corresponds to the expected reply direction. The relevant
-code path assumes the RST is a response to an outgoing SYN, but does not
-validate packet direction or ensure that a matching SYN was actually sent
-in the opposite direction.
-
-As a result, a crafted packet sequence consisting of a SYN followed by an
-invalid-sequence RST can prematurely terminate an active NAT entry. This
-makes connection teardown easier than intended.
-
-So, tighten the state transition logic to ensure that RST-triggered
-CLOSE transitions only occur when the RST is a valid response to a
-previously observed SYN in the correct direction.
-
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
 Cc: stable@vger.kernel.org
-Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
-Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://patch.msgid.link/20260529173134.3080773-2-Jason@zx2c4.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_proto_tcp.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireguard/send.c |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
---- a/net/netfilter/nf_conntrack_proto_tcp.c
-+++ b/net/netfilter/nf_conntrack_proto_tcp.c
-@@ -1221,7 +1221,8 @@ int nf_conntrack_tcp_packet(struct nf_co
- 			new_state = old_state;
- 		}
- 		if (((test_bit(IPS_SEEN_REPLY_BIT, &ct->status)
--			 && ct->proto.tcp.last_index == TCP_SYN_SET)
-+			 && ct->proto.tcp.last_index == TCP_SYN_SET
-+			 && ct->proto.tcp.last_dir != dir)
- 			|| (!test_bit(IPS_ASSURED_BIT, &ct->status)
- 			    && ct->proto.tcp.last_index == TCP_ACK_SET))
- 		    && ntohl(th->ack_seq) == ct->proto.tcp.last_end) {
+--- a/drivers/net/wireguard/send.c
++++ b/drivers/net/wireguard/send.c
+@@ -177,16 +177,6 @@ static bool encrypt_packet(struct sk_buf
+ 	trailer_len = padding_len + noise_encrypted_len(0);
+ 	plaintext_len = skb->len + padding_len;
+ 
+-	/* Expand data section to have room for padding and auth tag. */
+-	num_frags = skb_cow_data(skb, trailer_len, &trailer);
+-	if (unlikely(num_frags < 0 || num_frags > ARRAY_SIZE(sg)))
+-		return false;
+-
+-	/* Set the padding to zeros, and make sure it and the auth tag are part
+-	 * of the skb.
+-	 */
+-	memset(skb_tail_pointer(trailer), 0, padding_len);
+-
+ 	/* Expand head section to have room for our header and the network
+ 	 * stack's headers.
+ 	 */
+@@ -198,6 +188,16 @@ static bool encrypt_packet(struct sk_buf
+ 		     skb_checksum_help(skb)))
+ 		return false;
+ 
++	/* Expand data section to have room for padding and auth tag. */
++	num_frags = skb_cow_data(skb, trailer_len, &trailer);
++	if (unlikely(num_frags < 0 || num_frags > ARRAY_SIZE(sg)))
++		return false;
++
++	/* Set the padding to zeros, and make sure it and the auth tag are part
++	 * of the skb.
++	 */
++	memset(skb_tail_pointer(trailer), 0, padding_len);
++
+ 	/* Only after checksumming can we safely add on the padding at the end
+ 	 * and the header.
+ 	 */
 
 
