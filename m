@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E8D2DFF04;
-	Sun,  7 Jun 2026 10:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E1F308F38;
+	Sun,  7 Jun 2026 10:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829510; cv=none; b=MPD5WFeLfeSqyFQEuhliTgRIa7ruA2K3ebe+YcVYNltN843+anfqryigXNE8lG3psUBezHvQqAPXEhdXYbpsz37to6qZUxahSa3JMqosfTqkk28yzkO4jFptVIT5EN6ZP1hv9iC4qjjs4ATPdgHabjteb70EM87OwKxkjaEdZD0=
+	t=1780829513; cv=none; b=ERumj7wjP7evJaxMCOCwqnzuNy+iHvM0BJeCFEv6Kejv/aVY1Q+hgdipidi+EweNCA72W3Gj/0Z88Rp4br39/02gw4RxBnVzMne6hxOjeXS3LKHCi6BQvt2ZdgOLNqDtsrTXE9N/B9evsSdcFYWOrGhcNHZgd+NhdZhgiw/r19s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829510; c=relaxed/simple;
-	bh=QnvOPBw0zzC2497CBEamSCRcrRdyXGdm18rCxRcdA7U=;
+	s=arc-20240116; t=1780829513; c=relaxed/simple;
+	bh=tcJMvRwGXB3K+fYgOC7yhxCX36UEuN7j7XzRPuHcnSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SU4bvQ0fwZcnSk6HI07e+8PgPfCJgxW4p2dKbvossBcIBraaFcU1EJadEEHvM6h0sBmz16kYH0yr4FxbaJfOTZSc0D8xpFAoyQX26MmUhreXnIwtkYUOkn6qbnG0VH8D2MJet/L2fJo/wQFGJHg6DQzsT438aDUWuOIEbTi+aXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ei2KjDkK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bdJtz4zQ6t9q/jWltlxMO/NeFjNwr+L43DUG2Pl44g/7FbWzpqGgoNaMg79Iw2imStmOEx2XC30sVWQTpYM8vA1WapvFREc2gKsYQLCHAz6Qcb042imw8Prwir4Lz+pE6HhKBzY94oyIimcsqvRtfW1T+oA/nt0b0MZZzXhx5RM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jR/L8KZq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ei2KjDkK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD4C1F00893;
-	Sun,  7 Jun 2026 10:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jR/L8KZq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313351F00893;
+	Sun,  7 Jun 2026 10:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829509;
-	bh=XO5GXOUrEXKjasZRdHnQLbCHFfzh5UE+lso1wSfYpN4=;
+	s=korg; t=1780829512;
+	bh=eATmb3JAXdpdPIDWkWPwIy0VlAvej8ZQ7WzfHGhsG+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ei2KjDkKW0ilfcaj6gMc61ANB3sExxxDuE+CaDvttRMsSlh5lbZ3N3FPSf0iOmRXt
-	 ZG/kwSZNSgm5Y60pmRc5fxTvwfiT2EUcvVGaTQldpS/PSrz4qsJd1WJJZWjH4plDSE
-	 Ytybvt4e4mzf7ZD8DPG1TBnA07KrnYh49S3tX8t8=
+	b=jR/L8KZqzAIFEIIXz9FZoE3s94xFxTbVpitfOE8eKRWPt2Z1tYNPFzi4ngbCDIeKc
+	 M1St82d7/JBlXyz0hdG5qGBKQsIQ93n3PD7LrEL7HDJCYmqq30J8OunfqjFH/bPldq
+	 irzBZEI54TTxs6+1mksvteJlknMQ4rQJ9XFdkS3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	John Garry <john.g.garry@oracle.com>,
+	Alexandru Hossu <hossu.alexandru@gmail.com>,
+	David Disseldorp <ddiss@suse.de>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 7.0 285/332] scsi: target: iscsi: Fix CRC overread and double-free in iscsit_handle_text_cmd()
-Date: Sun,  7 Jun 2026 12:00:54 +0200
-Message-ID: <20260607095738.516471824@linuxfoundation.org>
+Subject: [PATCH 6.18 254/315] scsi: target: iscsi: Validate CHAP_R length before base64 decode
+Date: Sun,  7 Jun 2026 12:00:41 +0200
+Message-ID: <20260607095736.885408938@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,123 +47,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Alexandru Hossu <hossu.alexandru@gmail.com>
 
-commit 778c2ab142c625a8a8afa570e0f9b7873f445d99 upstream.
+commit 85db7391310b1304d2dc8ae3b0b12105a9567147 upstream.
 
-Two latent bugs in the Text-phase handler, both present since the
-original LIO integration in commit e48354ce078c ("iscsi-target: Add
-iSCSI fabric support for target v4.1"):
+chap_server_compute_hash() allocates client_digest as
+kzalloc(chap->digest_size) and then, for BASE64-encoded responses,
+passes chap_r directly to chap_base64_decode() without checking whether
+the input length could produce more than digest_size bytes of output.
 
-1) DataDigest CRC buffer overread (4 bytes past text_in).
+chap_base64_decode() writes to the destination unconditionally as long
+as there is input to consume. With MAX_RESPONSE_LENGTH set to 128 and
+the "0b" prefix stripped by extract_param(), up to 127 base64 characters
+can reach the decoder. 127 characters decode to 95 bytes. For SHA-256
+(digest_size=32) this overflows client_digest by 63 bytes; for MD5
+(digest_size=16) the overflow is 79 bytes.
 
-   text_in is kzalloc()'d at ALIGN(payload_length, 4).  rx_size is then
-   incremented by ISCSI_CRC_LEN to make room for the received DataDigest
-   in the iovec, but the same (now-bumped) rx_size is passed as the
-   buffer length to iscsit_crc_buf():
+The length check at line 344 fires after the write has already happened.
 
-       if (conn->conn_ops->DataDigest) {
-               ...
-               rx_size += ISCSI_CRC_LEN;
-       }
-       ...
-       if (conn->conn_ops->DataDigest) {
-               data_crc = iscsit_crc_buf(text_in, rx_size, 0, NULL);
+The HEX branch in the same switch statement already validates the length
+up front. Apply the same approach to the BASE64 branch: strip trailing
+base64 padding characters, then reject any input whose data length
+exceeds DIV_ROUND_UP(digest_size * 4, 3) before calling the decoder.
 
-   iscsit_crc_buf() walks rx_size bytes of text_in with crc32c(), so
-   when DataDigest is negotiated it reads 4 bytes past the end of the
-   text_in allocation.  KASAN reproduces this directly on the unpatched
-   mainline tree as slab-out-of-bounds in crc32c() called from the Text
-   PDU path.  The OOB bytes feed crc32c() and are then compared against
-   the initiator-supplied checksum, so the value does not flow back to
-   the attacker, but the kernel does read past the buffer on every Text
-   PDU with DataDigest=CRC32C.
+Stripping trailing '=' before the comparison handles both padded and
+unpadded encodings. chap_base64_decode() already returns early on '=',
+so the full original string is still passed to the decoder unchanged.
 
-   Fix by passing the actual padded payload length
-   (ALIGN(payload_length, 4)) that was used for the kzalloc().
+The mutual CHAP path decodes CHAP_C into initiatorchg_binhex, which is
+kzalloc(CHAP_CHALLENGE_STR_LEN). extract_param() caps initiatorchg at
+CHAP_CHALLENGE_STR_LEN characters, so at most CHAP_CHALLENGE_STR_LEN-1
+base64 characters reach the decoder. The maximum decoded size,
+DIV_ROUND_UP((CHAP_CHALLENGE_STR_LEN-1) * 3, 4), is less than
+CHAP_CHALLENGE_STR_LEN, so no overflow is possible there. A comment is
+added at the call site to document this.
 
-2) Stale cmd->text_in_ptr re-free (double-free) on ERL>0 bad DataDigest
-   drop.
-
-   On DataDigest mismatch with ErrorRecoveryLevel > 0 the handler
-   silently drops the PDU and lets the initiator plug the CmdSN gap:
-
-               kfree(text_in);
-               return 0;
-
-   cmd->text_in_ptr still points at the freed buffer.  The next Text
-   Request on the same ITT re-enters iscsit_setup_text_cmd(), which
-   unconditionally does
-
-       kfree(cmd->text_in_ptr);
-       cmd->text_in_ptr = NULL;
-
-   freeing the same pointer a second time.  Session teardown via
-   iscsit_release_cmd() has the same shape and hits the same double-free
-   if the connection is dropped before a second Text Request arrives.
-
-   On an unmodified mainline tree the bug-1 CRC overread fires first on
-   the initial valid Text Request and perturbs the subsequent state, so
-   #4 was isolated by building a kernel with only the bug-1 hunk of this
-   patch applied plus temporary printk() observability around the three
-   relevant kfree() sites.  The observability prints are not part of
-   this patch.  On that build, a three-PDU Text Request sequence after
-   login produces two back-to-back splats:
-
-       BUG: KASAN: double-free in iscsit_setup_text_cmd+0x??
-       BUG: KASAN: double-free in iscsit_release_cmd+0x??
-
-   showing the same pointer freed in the ERL>0 drop path and again in
-   iscsit_setup_text_cmd() (next Text Request on the same ITT) and once
-   more in iscsit_release_cmd() (session teardown).  On distro kernels
-   with CONFIG_SLAB_FREELIST_HARDENED=y (default) the double-free
-   becomes a remote kernel BUG(); on non-hardened kernels it corrupts
-   the slab freelist.
-
-   Fix by clearing cmd->text_in_ptr after the kfree() in the ERL>0 drop
-   path.  With both hunks applied #4 is directly observable on the stock
-   tree without observability printks; fixing bug-1 alone would mask #4
-   less, not more, so the hunks are submitted together.
-
-Both fixes are one-liners.  The Text PDU state machine is unchanged and
-the wire protocol is unaffected.
-
-Fixes: e48354ce078c ("iscsi-target: Add iSCSI fabric support for target v4.1")
+Fixes: 1e5733883421 ("scsi: target: iscsi: Support base64 in CHAP")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Tested-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
+Reviewed-by: David Disseldorp <ddiss@suse.de>
+Link: https://patch.msgid.link/20260521151121.808477-1-hossu.alexandru@gmail.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/iscsi/iscsi_target.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/target/iscsi/iscsi_target_auth.c |   19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
---- a/drivers/target/iscsi/iscsi_target.c
-+++ b/drivers/target/iscsi/iscsi_target.c
-@@ -2281,7 +2281,9 @@ iscsit_handle_text_cmd(struct iscsit_con
- 			goto reject;
- 
- 		if (conn->conn_ops->DataDigest) {
--			data_crc = iscsit_crc_buf(text_in, rx_size, 0, NULL);
-+			data_crc = iscsit_crc_buf(text_in,
-+						  ALIGN(payload_length, 4),
-+						  0, NULL);
- 			if (checksum != data_crc) {
- 				pr_err("Text data CRC32C DataDigest"
- 					" 0x%08x does not match computed"
-@@ -2300,6 +2302,7 @@ iscsit_handle_text_cmd(struct iscsit_con
- 					" Command CmdSN: 0x%08x due to"
- 					" DataCRC error.\n", hdr->cmdsn);
- 					kfree(text_in);
-+					cmd->text_in_ptr = NULL;
- 					return 0;
- 				}
- 			} else {
+--- a/drivers/target/iscsi/iscsi_target_auth.c
++++ b/drivers/target/iscsi/iscsi_target_auth.c
+@@ -339,13 +339,22 @@ static int chap_server_compute_hash(
+ 			goto out;
+ 		}
+ 		break;
+-	case BASE64:
++	case BASE64: {
++		size_t r_len = strlen(chap_r);
++
++		while (r_len > 0 && chap_r[r_len - 1] == '=')
++			r_len--;
++		if (r_len > DIV_ROUND_UP(chap->digest_size * 4, 3)) {
++			pr_err("Malformed CHAP_R: base64 payload too long\n");
++			goto out;
++		}
+ 		if (chap_base64_decode(client_digest, chap_r, strlen(chap_r)) !=
+ 		    chap->digest_size) {
+ 			pr_err("Malformed CHAP_R: invalid BASE64\n");
+ 			goto out;
+ 		}
+ 		break;
++	}
+ 	default:
+ 		pr_err("Could not find CHAP_R\n");
+ 		goto out;
+@@ -472,6 +481,14 @@ static int chap_server_compute_hash(
+ 		}
+ 		break;
+ 	case BASE64:
++		/*
++		 * No overflow check needed: initiatorchg_binhex is
++		 * CHAP_CHALLENGE_STR_LEN bytes and extract_param() caps
++		 * initiatorchg at CHAP_CHALLENGE_STR_LEN characters, so
++		 * the decoded output is at most DIV_ROUND_UP(
++		 * (CHAP_CHALLENGE_STR_LEN - 1) * 3, 4) bytes, which is
++		 * less than CHAP_CHALLENGE_STR_LEN.
++		 */
+ 		initiatorchg_len = chap_base64_decode(initiatorchg_binhex,
+ 						      initiatorchg,
+ 						      strlen(initiatorchg));
 
 
