@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB05C4071DD;
-	Sun,  7 Jun 2026 10:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5EC2E3AF1;
+	Sun,  7 Jun 2026 10:52:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829521; cv=none; b=G15nB2ZLRv7ie3wNWO5SxodpheVxxFh8V57hhZNUUObmqVZ+GXdYQtkhQBjtkB5YE8plexXhAhey/9MGQJf77NV5vQpEtD2G8Rr2d37Y7ZkfIF7ik5wdCyt2QlUnY0O6lo9epcfZt7Q8RJ29xhCB9Ed6t5fpWh15sRk0Wq1rCQs=
+	t=1780829524; cv=none; b=lBjKe37duB1bB3kYBoNL9WEmM3vqSra1VLs1C8Bw0CfOx1+j5agr0Au3rbHLxoH1w+4oK3VGb/tdwaAFbGhoQ7ILVF4dNmgewWs0hOYiyyTNgl3acUv6RAGXxAMpSJGKnlh7oUTi2imhiyEoI2BHyIY00nRGhKSpKCrGcSwph/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829521; c=relaxed/simple;
-	bh=CFtHhAUyAz+zSagu1hb0BctVbZ7IhXWC3Gp5YPaOqQQ=;
+	s=arc-20240116; t=1780829524; c=relaxed/simple;
+	bh=fNQ+1Q6cJrJxOgalrcDc2Er+vlcaF0NWl3YbJIlIV3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IEjXa/2P8a5lJ80iDHiDr3UOYEI/3xGQlt4UbsIfkZ0V1HVbfVLPH5ZXF6vALmcOqeq1nsiAoLgxqKROZ7p7v+ytcAn0cRVmOLLYdKdyQM+2CnrTvTOqVtpd5+kZ9D3Dk/4t3LaBpwgz2koAMo6eWelFPDi9+HwmjhAdtRDJYTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vRtleF5q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u1ew5xN8ugI5I4IJ7f78GzSmLWVqZ6G80BNXyEJ6Se31GZhr4XyY08yHTjyblJ+/QXuereoJY0w3CwKWJPSf+ITSvVo2ENHAfHqxoiKL+KnZXM/dpxz2oMdCggkEeb7t6EwFbHRenf5wXoKH0vYpBLp0uoy3f02ZaHJcFzSV2Rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15R5dd6L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRtleF5q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030801F00893;
-	Sun,  7 Jun 2026 10:51:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15R5dd6L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8422F1F00893;
+	Sun,  7 Jun 2026 10:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829519;
-	bh=0HlZZh0tdX96vAW0e5PI/Wlf9Tm70l/TEMztqCqc6qc=;
+	s=korg; t=1780829523;
+	bh=QNw9iYfU20TSJlMP2c1mkDCAk3CtIBYSIjBPK55p3L8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vRtleF5q5HZ9q6vslrsrhAa3vX9QOlRsFwbukE8lCVlGfpEwA4u3TETcYAldoZp28
-	 LemXI5m2Bn0MQbZbKj6RZO4MQn3gu462HzXi78uyMF0sn9aIbCZkFy/UaGO/KEOgzE
-	 JBII17DAc8h3TJt3YPcRS/5ML1s27W1xZuNukDxw=
+	b=15R5dd6L8Zet1lqkUgqr3Bx2xpGXy8POuFuCOVVVJVzAaXgl54JMt3+iZQDHok1Rr
+	 JeFQ7DJFbuGQ9yZcC1HyNeNVDnD1BPP1ypXn5hWb6/XSWQAToQRI3oaAKumsCGxUWb
+	 RF6ViA0Vl5uTk+/aBAHkfH3XmK8IzJOmpa5SmdV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 7.0 286/332] scsi: target: iscsi: Bound iscsi_encode_text_output() appends to rsp_buf
-Date: Sun,  7 Jun 2026 12:00:55 +0200
-Message-ID: <20260607095738.549633162@linuxfoundation.org>
+	Berkant Koc <me@berkoc.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Subject: [PATCH 6.18 255/315] drm/hyperv: validate resolution_count and fix WIN8 fallback
+Date: Sun,  7 Jun 2026 12:00:42 +0200
+Message-ID: <20260607095736.922886117@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,203 +47,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Berkant Koc <me@berkoc.com>
 
-commit bf33e01f88388c43e285492a63e539df6ffed64c upstream.
+commit 13d33b9ef67066c77c84273fac5a1d3fde3533d1 upstream.
 
-iscsi_encode_text_output() concatenates "key=value\0" records into
-login->rsp_buf, an 8192-byte kzalloc(MAX_KEY_VALUE_PAIRS) buffer
-allocated in iscsit_alloc_login_setup_buffer(). The three sprintf() call
-sites in this function (lines 1398, 1411, 1424 in v7.1-rc2) never check
-the remaining buffer capacity:
+A SYNTHVID_RESOLUTION_RESPONSE with resolution_count > 64 walks past
+the supported_resolution[SYNTHVID_MAX_RESOLUTION_COUNT] array in the
+parse loop. Bound resolution_count against the array size, folded
+into the existing zero-check.
 
-	*length += sprintf(output_buf, "%s=%s", er->key, er->value);
-	*length += 1;
-	output_buf = textbuf + *length;
+When the WIN10 resolution probe fails, the caller in
+hyperv_connect_vsp() left hv->screen_*_max / preferred_* unpopulated,
+which sets mode_config.max_width / max_height to 0 and makes
+drm_internal_framebuffer_create() reject every userspace framebuffer
+with -EINVAL. The pre-WIN10 branch had the same gap for
+preferred_width / preferred_height. Use a single post-probe fallback
+guarded by screen_width_max == 0 so both paths converge on the WIN8
+defaults.
 
-The 8192-byte ceiling at iscsi_target_check_login_request() bounds the
-*input* Login PDU payload, but a single PDU can carry up to 2048 minimal
-four-byte "a=b\0" pairs, each unknown key expanding to a 16-byte
-"a=NotUnderstood\0" output record via iscsi_add_notunderstood_response().
-2048 * 16 = 32 KiB of output into an 8 KiB buffer, producing a ~24 KiB
-heap overrun in the kmalloc-8k slab.
-
-The fix introduces a static iscsi_encode_text_record() helper that uses
-snprintf() with a per-call bounds check against the remaining buffer,
-and threads a u32 textbuf_size parameter through
-iscsi_encode_text_output(). Both call sites in
-iscsi_target_handle_csg_zero() (PHASE_SECURITY) and
-iscsi_target_handle_csg_one() (PHASE_OPERATIONAL) pass
-MAX_KEY_VALUE_PAIRS. On overflow the encoder logs the condition, calls
-iscsi_release_extra_responses() to drop queued records, and returns -1;
-both caller sites now emit ISCSI_STATUS_CLS_INITIATOR_ERR /
-ISCSI_LOGIN_STATUS_INIT_ERR via iscsit_tx_login_rsp() before returning,
-so the initiator sees an explicit failed-login response rather than a
-silent connection drop. (Prior to this patch only the PHASE_OPERATIONAL
-caller did that; the PHASE_SECURITY caller is converted to the same
-shape.)
-
-Fixes: e48354ce078c ("iscsi-target: Add iSCSI fabric support for target v4.1")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Tested-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Berkant Koc <me@berkoc.com>
+Assisted-by: Claude:claude-opus-4-7 berkoc-pipeline
+Fixes: 76c56a5affeb ("drm/hyperv: Add DRM driver for hyperv synthetic video device")
+Cc: stable@vger.kernel.org # 5.14+
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Link: https://patch.msgid.link/6945b22419c7d404b4954a113de2ac9c900dba93.1779542874.git.me@berkoc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/iscsi/iscsi_target_nego.c       |    7 ++
- drivers/target/iscsi/iscsi_target_parameters.c |   62 +++++++++++++++++++------
- drivers/target/iscsi/iscsi_target_parameters.h |    2 
- 3 files changed, 55 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/hyperv/hyperv_drm_proto.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/target/iscsi/iscsi_target_nego.c
-+++ b/drivers/target/iscsi/iscsi_target_nego.c
-@@ -899,10 +899,14 @@ static int iscsi_target_handle_csg_zero(
- 			SENDER_TARGET,
- 			login->rsp_buf,
- 			&login->rsp_length,
-+			MAX_KEY_VALUE_PAIRS,
- 			conn->param_list,
- 			conn->tpg->tpg_attrib.login_keys_workaround);
--	if (ret < 0)
-+	if (ret < 0) {
-+		iscsit_tx_login_rsp(conn, ISCSI_STATUS_CLS_INITIATOR_ERR,
-+				ISCSI_LOGIN_STATUS_INIT_ERR);
- 		return -1;
+--- a/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
++++ b/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
+@@ -396,8 +396,11 @@ static int hyperv_get_supported_resoluti
+ 		return -ETIMEDOUT;
+ 	}
+ 
+-	if (msg->resolution_resp.resolution_count == 0) {
+-		drm_err(dev, "No supported resolutions\n");
++	if (msg->resolution_resp.resolution_count == 0 ||
++	    msg->resolution_resp.resolution_count >
++	    SYNTHVID_MAX_RESOLUTION_COUNT) {
++		drm_err(dev, "Invalid resolution count: %d\n",
++			msg->resolution_resp.resolution_count);
+ 		return -ENODEV;
+ 	}
+ 
+@@ -513,9 +516,13 @@ int hyperv_connect_vsp(struct hv_device
+ 		ret = hyperv_get_supported_resolution(hdev);
+ 		if (ret)
+ 			drm_err(dev, "Failed to get supported resolution from host, use default\n");
+-	} else {
 +	}
- 
- 	if (!iscsi_check_negotiated_keys(conn->param_list)) {
- 		bool auth_required = iscsi_conn_auth_required(conn);
-@@ -986,6 +990,7 @@ static int iscsi_target_handle_csg_one(s
- 			SENDER_TARGET,
- 			login->rsp_buf,
- 			&login->rsp_length,
-+			MAX_KEY_VALUE_PAIRS,
- 			conn->param_list,
- 			conn->tpg->tpg_attrib.login_keys_workaround);
- 	if (ret < 0) {
---- a/drivers/target/iscsi/iscsi_target_parameters.c
-+++ b/drivers/target/iscsi/iscsi_target_parameters.c
-@@ -1371,19 +1371,42 @@ free_buffer:
- 	return -1;
- }
- 
-+/*
-+ * Append "key=value" plus a trailing NUL into @textbuf at *@length.
-+ * Returns 0 on success and advances *@length, or -EMSGSIZE if the
-+ * record (including the NUL) would not fit in the remaining buffer.
-+ */
-+static int iscsi_encode_text_record(char *textbuf, u32 *length,
-+				    u32 textbuf_size,
-+				    const char *key, const char *value)
-+{
-+	int n;
-+	u32 avail;
 +
-+	if (*length >= textbuf_size)
-+		return -EMSGSIZE;
-+
-+	avail = textbuf_size - *length;
-+	n = snprintf(textbuf + *length, avail, "%s=%s", key, value);
-+	if (n < 0 || (u32)n + 1 > avail)
-+		return -EMSGSIZE;
-+
-+	*length += n + 1;
-+	return 0;
-+}
-+
- int iscsi_encode_text_output(
- 	u8 phase,
- 	u8 sender,
- 	char *textbuf,
- 	u32 *length,
-+	u32 textbuf_size,
- 	struct iscsi_param_list *param_list,
- 	bool keys_workaround)
- {
--	char *output_buf = NULL;
- 	struct iscsi_extra_response *er;
- 	struct iscsi_param *param;
--
--	output_buf = textbuf + *length;
-+	int ret;
- 
- 	if (iscsi_enforce_integrity_rules(phase, param_list) < 0)
- 		return -1;
-@@ -1395,10 +1418,12 @@ int iscsi_encode_text_output(
- 		    !IS_PSTATE_RESPONSE_SENT(param) &&
- 		    !IS_PSTATE_REPLY_OPTIONAL(param) &&
- 		    (param->phase & phase)) {
--			*length += sprintf(output_buf, "%s=%s",
--				param->name, param->value);
--			*length += 1;
--			output_buf = textbuf + *length;
-+			ret = iscsi_encode_text_record(textbuf, length,
-+						       textbuf_size,
-+						       param->name,
-+						       param->value);
-+			if (ret < 0)
-+				goto err_overflow;
- 			SET_PSTATE_RESPONSE_SENT(param);
- 			pr_debug("Sending key: %s=%s\n",
- 				param->name, param->value);
-@@ -1408,10 +1433,12 @@ int iscsi_encode_text_output(
- 		    !IS_PSTATE_ACCEPTOR(param) &&
- 		    !IS_PSTATE_PROPOSER(param) &&
- 		    (param->phase & phase)) {
--			*length += sprintf(output_buf, "%s=%s",
--				param->name, param->value);
--			*length += 1;
--			output_buf = textbuf + *length;
-+			ret = iscsi_encode_text_record(textbuf, length,
-+						       textbuf_size,
-+						       param->name,
-+						       param->value);
-+			if (ret < 0)
-+				goto err_overflow;
- 			SET_PSTATE_PROPOSER(param);
- 			iscsi_check_proposer_for_optional_reply(param,
- 							        keys_workaround);
-@@ -1421,14 +1448,21 @@ int iscsi_encode_text_output(
++	if (!hv->screen_width_max) {
+ 		hv->screen_width_max = SYNTHVID_WIDTH_WIN8;
+ 		hv->screen_height_max = SYNTHVID_HEIGHT_WIN8;
++		hv->preferred_width = SYNTHVID_WIDTH_WIN8;
++		hv->preferred_height = SYNTHVID_HEIGHT_WIN8;
  	}
  
- 	list_for_each_entry(er, &param_list->extra_response_list, er_list) {
--		*length += sprintf(output_buf, "%s=%s", er->key, er->value);
--		*length += 1;
--		output_buf = textbuf + *length;
-+		ret = iscsi_encode_text_record(textbuf, length, textbuf_size,
-+					       er->key, er->value);
-+		if (ret < 0)
-+			goto err_overflow;
- 		pr_debug("Sending key: %s=%s\n", er->key, er->value);
- 	}
- 	iscsi_release_extra_responses(param_list);
- 
- 	return 0;
-+
-+err_overflow:
-+	pr_err("iSCSI login response buffer (%u bytes) exhausted, dropping login.\n",
-+	       textbuf_size);
-+	iscsi_release_extra_responses(param_list);
-+	return -1;
- }
- 
- int iscsi_check_negotiated_keys(struct iscsi_param_list *param_list)
---- a/drivers/target/iscsi/iscsi_target_parameters.h
-+++ b/drivers/target/iscsi/iscsi_target_parameters.h
-@@ -43,7 +43,7 @@ extern struct iscsi_param *iscsi_find_pa
- extern int iscsi_extract_key_value(char *, char **, char **);
- extern int iscsi_update_param_value(struct iscsi_param *, char *);
- extern int iscsi_decode_text_input(u8, u8, char *, u32, struct iscsit_conn *);
--extern int iscsi_encode_text_output(u8, u8, char *, u32 *,
-+extern int iscsi_encode_text_output(u8, u8, char *, u32 *, u32,
- 			struct iscsi_param_list *, bool);
- extern int iscsi_check_negotiated_keys(struct iscsi_param_list *);
- extern void iscsi_set_connection_parameters(struct iscsi_conn_ops *,
+ 	hv->mmio_megabytes = hdev->channel->offermsg.offer.mmio_megabytes;
 
 
