@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5CD13DBA0;
-	Sun,  7 Jun 2026 10:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE52713DBA0;
+	Sun,  7 Jun 2026 10:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828041; cv=none; b=M1BElnQvzEVfzqb4LvAQ4m7nlwYTwPxPUjuQkf0LkRPQGPlt7uznDYVGAF64DTLu71wVsMYXRhV6cs1dsXTuLmoCuDtyTTeWQT3/QyNqlXUf8QJkW3VRQ0oM0T0p+v5PeXPFFpxO8mMvoHehIcMBg1ioNUytEkwFI9KR0Mi5ji4=
+	t=1780828044; cv=none; b=n1/5TdayV2Ngs6+/xwNEO+8VmF5PJSpb59zc3c8EN28u2ikT1kFQdGgHL5ueKz9BltTX+dvANoJswVBjpMlJVHIMWpQ626rr2w47QUJIpHCExiTA0YlFzN5sTDkYkCtqg1VxKJ7O1mlp2XlkDzN/UCBqZ7QKP0oS2q5/012pblE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828041; c=relaxed/simple;
-	bh=w6yRxOKhGBcbaHnLUXkIgnORw7rFFzV/69F50K2TYl4=;
+	s=arc-20240116; t=1780828044; c=relaxed/simple;
+	bh=ZH6vr0a4hDIyD1rfUv1B0mbqreQNZT7RWKVoUOcbPU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KKrso8vBOgvwSXaEF9LuhrYt4iOTkCoVMf4ie8QAYtl/LchKeWUOn9MxaL6wfzx2ChMOZZcUqmFVwuG5coY4/LrUSZEvwtKAskwSnN/QsLP/flKVoOHoymCX+RMe5hQ3MjFfCYVqUexfOZ764GNH++WidXVoDmDKXDZuPeaUFKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWeDKFW5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DkmInysLYOFosOQxZeZrgAVo4Gryx9qPvrjTuGcyC8NSpWYJR5hevoQ3gkMfxR522dzGFYNyyVl+lOrYgKZezv7ZS+mbIZ7CYFPFTkvPbB4LoCstRmo/yn3MtyPMJ69lIJWdyuX0YY5B5/8lNreuHToySlSJgcgUctg7Ym6hgMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inYLF/Bq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWeDKFW5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D4531F00893;
-	Sun,  7 Jun 2026 10:27:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inYLF/Bq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6BF1F00893;
+	Sun,  7 Jun 2026 10:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828040;
-	bh=YkhN06lKk7Ms5Q8DAU4nUv06mf5mTx0AmFaQWWjljx4=;
+	s=korg; t=1780828043;
+	bh=rYRO317r3RDvQTX8Lo7TevHbMnCUWUsUFuYCLGEWNvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eWeDKFW5xp9gWgeuhSZ4zZ8vkupsusA/nuqFaj4lZ2qFdZixqkq6FRJ2wfioJ7/SA
-	 VyMdJjDbq67FVEoGLwcoq8Px7y2SS2qh2SrZTjxb0umXKtYa3DzwVKLgRYlIrXhUPn
-	 H3++y5jTADzx7ltA5nUqBFdMXZpWS7EetGVOW47w=
+	b=inYLF/Bq+aqUoJDJCjvtXFifjqy9cds/Zsf5UVT2wqgxi6g9oWUPDrazsmXO7mZJV
+	 zqq5LACkSTo9X0fi74NUQDQvF9t2t6d96IYSsS5KwuEcbCZZfewB+95S3EWYpVqyeM
+	 IQZ1LfdPkY+PLyLkpzYkGFIiGXpl/2E4gBSOTh3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 106/307] batman-adv: tt: fix TOCTOU race for reported vlans
-Date: Sun,  7 Jun 2026 11:58:23 +0200
-Message-ID: <20260607095731.678202715@linuxfoundation.org>
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	"Harry Yoo (Oracle)" <harry@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 123/315] mm: memcontrol: propagate NMI slab stats to memcg vmstats
+Date: Sun,  7 Jun 2026 11:58:30 +0200
+Message-ID: <20260607095732.139902805@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,82 +52,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Alexandre Ghiti <alex@ghiti.fr>
 
-commit 94d27005016be15ffc638b2ecbc4d58805ad7b48 upstream.
+commit e16f17a9c5af50221184d1ef4be4056bf3c4209e upstream.
 
-The local TT based TVLV is generated by first checking the number of VLANs
-which have at least one TT entry. A new buffer with the correct size for
-the VLANs is then allocated. Only then, the list of VLANs s used to fill
-the VLAN entries in the buffer. During this time, the meshif_vlan_list_lock
-is held. But the actual number of TT entries of each VLAN can still
-increase during this time - just not the number of VLANs in the list.
+flush_nmi_stats() drains per-node NMI slab atomics into the per-node
+lruvec_stats, but does not propagate them to the memcg-level vmstats.
 
-But the prefilter used in the buffer size calculation might still cause an
-increase of the number of VLANs which need to be stored. Simply because a
-VLAN might now suddenly have at least one entry when it had none in the
-pre-alloc check - and then needs to occupy space which was not allocated.
+For non NMI case, account_slab_nmi_safe() calls mod_memcg_lruvec_state()
+which updates both per-node lruvec_stats and memcg-level vmstats, so
+flush_nmi_stats() needs to flush to per-node lruvec_stats as well as
+memcg-level vmstats.
 
-It is better to overestimate the buffer size at the beginning and then fill
-the buffer only with the VLANs which are not empty.
+So fix this by flushing to the memcg-level vmstats for NMI too.
 
-Cc: stable@kernel.org
-Fixes: 16116dac2339 ("batman-adv: prevent TT request storms by not sending inconsistent TT TLVLs")
-[ Context, drop flex array dependency ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/20260518082830.599102-1-alex@ghiti.fr
+Fixes: 940b01fc8dc1 ("memcg: nmi safe memcg stats for specific archs")
+Signed-off-by: Alexandre Ghiti <alex@ghiti.fr>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Harry Yoo (Oracle) <harry@kernel.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/translation-table.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ mm/memcontrol.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
-index 8ffebece03c529..d4cebe122e528a 100644
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -934,11 +934,8 @@ batadv_tt_prepare_tvlv_local_data(struct batadv_priv *bat_priv,
- 	spin_lock_bh(&bat_priv->softif_vlan_list_lock);
- 	hlist_for_each_entry(vlan, &bat_priv->softif_vlan_list, list) {
- 		vlan_entries = atomic_read(&vlan->tt.num_entries);
--		if (vlan_entries < 1)
--			continue;
--
--		num_vlan++;
- 		total_entries += vlan_entries;
-+		num_vlan++;
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -4044,6 +4044,9 @@ static void flush_nmi_stats(struct mem_c
+ 			lstats->state[index] += slab;
+ 			if (plstats)
+ 				plstats->state_pending[index] += slab;
++			memcg->vmstats->state[index] += slab;
++			if (parent)
++				parent->vmstats->state_pending[index] += slab;
+ 		}
+ 		if (atomic_read(&pn->slab_unreclaimable)) {
+ 			int slab = atomic_xchg(&pn->slab_unreclaimable, 0);
+@@ -4052,6 +4055,9 @@ static void flush_nmi_stats(struct mem_c
+ 			lstats->state[index] += slab;
+ 			if (plstats)
+ 				plstats->state_pending[index] += slab;
++			memcg->vmstats->state[index] += slab;
++			if (parent)
++				parent->vmstats->state_pending[index] += slab;
+ 		}
  	}
- 
- 	change_offset = sizeof(**tt_data);
-@@ -964,6 +961,7 @@ batadv_tt_prepare_tvlv_local_data(struct batadv_priv *bat_priv,
- 	(*tt_data)->num_vlan = htons(num_vlan);
- 
- 	tt_vlan = (struct batadv_tvlv_tt_vlan_data *)(*tt_data + 1);
-+	num_vlan = 0;
- 	hlist_for_each_entry(vlan, &bat_priv->softif_vlan_list, list) {
- 		vlan_entries = atomic_read(&vlan->tt.num_entries);
- 		if (vlan_entries < 1)
-@@ -974,8 +972,16 @@ batadv_tt_prepare_tvlv_local_data(struct batadv_priv *bat_priv,
- 		tt_vlan->reserved = 0;
- 
- 		tt_vlan++;
-+		num_vlan++;
- 	}
- 
-+	/* recalculate in case number of VLANs reduced */
-+	change_offset = sizeof(**tt_data);
-+	change_offset += num_vlan * sizeof(*tt_vlan);
-+	tvlv_len = *tt_len + change_offset;
-+
-+	(*tt_data)->num_vlan = htons(num_vlan);
-+
- 	tt_change_ptr = (u8 *)*tt_data + change_offset;
- 	*tt_change = (struct batadv_tvlv_tt_change *)tt_change_ptr;
- 
--- 
-2.53.0
-
+ }
 
 
