@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECA03164A1;
-	Sun,  7 Jun 2026 11:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D61BF1E98E3;
+	Sun,  7 Jun 2026 11:02:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780830164; cv=none; b=DchYSOuOJuzOvCpvC6nENP4sM1GelG3ARXG4S6QWyf/5K5NIDWCaC0S2Z6P5oMyIbHafFXz1rDQF6uXyhiJsY4/Y5CyQaOeftWpAdDhJnmPG1IMkpzuGt2dYUIuR5rcWh6ZS3x7A8DY9ZipsISgHGUNBlWpCHuERs1tXUJXH5Tc=
+	t=1780830168; cv=none; b=DtqJEolempTxh/BGvjRs42WCRk5c92BByjzCJJ/c+8j6e63oVUWbjoNYVOb58A7bcdYACeKJOB65N98p4kSFNNdnogcxN3edSBNe+iugcYGyL4HbJXPjGi015tiT62mjvqmaGWG9UC/Ugrom3F8b3k8dGk73TTroHmjodxLtbog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780830164; c=relaxed/simple;
-	bh=sF86zZB+/jYcCZBRxfCdDIovnqb4U/fZB9VuxmyJgjs=;
+	s=arc-20240116; t=1780830168; c=relaxed/simple;
+	bh=z3Zp6ln7POkJV6ROj+BjiEnHsENJyCIT8Eown8z2JqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H98KEJuTHLgVaboq2blfgOLiZ3iUFWC1PfXga+033FM/ArqhiFTypZkXk3TXKI72nD6GJcz4EwO93owa/3EuphnStCjUkzT3JHvwj5djViH1UnrES+qteMCmHwYD5Kik/d07RHRkqW8Bu3/n6yt1TYe+BRvGrJOZo4UWjwxWPtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VEEsbNBn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qm1s8J0Ikpqnujp7xXTctsfbJ4pkBUvfvSrDGrdQZXugzE7p85ValsM+M5uColIvAyzyw6AveFcig86HAN9nL/jvTsx6wvijsVwB0d7o7spUTu0RsoFJxCf8SO5Na4laZJqV8OM+pWv5HGXuERhVNgxOmKDrmQwSizN63l4lyOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ljx21+IV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VEEsbNBn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4261F00893;
-	Sun,  7 Jun 2026 11:02:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ljx21+IV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 765A01F00893;
+	Sun,  7 Jun 2026 11:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780830163;
-	bh=PO9fF1KAz86Cz1Ztsbp8KGd15IAngVZz6JDx8GzGdAU=;
+	s=korg; t=1780830167;
+	bh=X9KQHTEZvZ0VopZIhWU31h+gC07D2HgZhOVdpemzuYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VEEsbNBni0No0zdwwASdzVnE6ZJpiCEC4VS84iLlN53aQs1hDqMM/XU0ft9uRECqq
-	 7qkiDP6Q9uK/FzxY/loRGpLkkRxLraLfNBRhA7qTZgNRfopPTVa1yDggBXmAcmAf0l
-	 BbuJOHHnKh2CHHT2WJZB3xwdeIsjRERvVaSEDhJg=
+	b=ljx21+IV1sFAi3yG1solCXHFLbcMO51I8MvT8+ApOsW8KJ9e8ZMiO5tI5ddCC04e9
+	 Su8NJmLlmuR9mx7BHXSjOt6oVQK9ku3aD7tFe6oSBGL7viKGTNdA2lupMK3phw0Wcq
+	 p2YIbJF9JEo7Fs1SDTQpWqKd5O8Pxa1/d0eCysSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shardul Bankar <shardul.b@mpiricsoftware.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 288/307] mptcp: do not drop partial packets
-Date: Sun,  7 Jun 2026 12:01:25 +0200
-Message-ID: <20260607095738.312405525@linuxfoundation.org>
+Subject: [PATCH 6.12 297/307] thunderbolt: property: Cap recursion depth in __tb_property_parse_dir()
+Date: Sun,  7 Jun 2026 12:01:34 +0200
+Message-ID: <20260607095738.647710222@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
 References: <20260607095727.647295505@linuxfoundation.org>
@@ -52,75 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shardul Bankar <shardul.b@mpiricsoftware.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 50c2d91c5dfa0e465826ec1f8dbad9cdc254bd85 ]
+[ Upstream commit 928abe19fbf0127003abcb1ea69cabc1c897d0ab ]
 
-When a packet arrives with map_seq < ack_seq < end_seq, the beginning
-of the packet has already been acknowledged but the end contains new
-data. Currently the entire packet is dropped as "old data," forcing
-the sender to retransmit.
+A DIRECTORY entry's value field is used as the dir_offset for a
+recursive call into __tb_property_parse_dir() with no depth counter.
+A crafted peer that chains DIRECTORY entries into a back-reference
+loop drives the parser until the kernel stack is exhausted and the
+guard page fires.  Any untrusted XDomain peer (cable, dock, in-line
+inspector, adjacent host) that reaches the PROPERTIES_REQUEST
+control-plane exchange can trigger this without authentication.
 
-Instead, skip the already-acked bytes by adjusting the skb offset and
-enqueue only the new portion. Update bytes_received and ack_seq to
-reflect the new data consumed.
+Thread a depth counter through tb_property_parse() and
+__tb_property_parse_dir(), and reject blocks that exceed
+TB_PROPERTY_MAX_DEPTH = 8.  That is comfortably larger than any
+observed legitimate XDomain layout.
 
-A previous attempt at this fix has been sent by Paolo Abeni [1], but had
-issues [2]: it also added a zero-window check and changed rcv_wnd_sent
-initialization, which caused test regressions. This version addresses
-only the partial packet handling without modifying receive window
-accounting.
+Operators who do not need XDomain host-to-host discovery can disable
+the path entirely with thunderbolt.xdomain=0 on the kernel command
+line.
 
-Fixes: ab174ad8ef76 ("mptcp: move ooo skbs into msk out of order queue.")
+Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/c9b426a4e163aa3c4fe8b80c79f1a610f47ae7d8.1763075056.git.pabeni@redhat.com [1]
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/600 [2]
-Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
-[pabeni@redhat.com: update map]
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260515-net-mptcp-misc-fixes-7-1-rc4-v2-1-701e96419f2f@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Assisted-by: Claude:claude-opus-4-6
+Assisted-by: Codex:gpt-5-4
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ drivers/thunderbolt/property.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -390,12 +390,26 @@ static bool __mptcp_move_skb(struct sock
- 		return false;
- 	}
+--- a/drivers/thunderbolt/property.c
++++ b/drivers/thunderbolt/property.c
+@@ -35,10 +35,11 @@ struct tb_property_dir_entry {
+ };
  
--	/* old data, keep it simple and drop the whole pkt, sender
--	 * will retransmit as needed, if needed.
-+	/* Completely old data? */
-+	if (!after64(MPTCP_SKB_CB(skb)->end_seq, msk->ack_seq)) {
-+		MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_DUPDATA);
-+		mptcp_drop(sk, skb);
-+		return false;
-+	}
-+
-+	/* Partial packet: map_seq < ack_seq < end_seq.
-+	 * Skip the already-acked bytes and enqueue the new data.
- 	 */
--	MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_DUPDATA);
--	mptcp_drop(sk, skb);
--	return false;
-+	copy_len = MPTCP_SKB_CB(skb)->end_seq - msk->ack_seq;
-+	MPTCP_SKB_CB(skb)->offset += msk->ack_seq - MPTCP_SKB_CB(skb)->map_seq;
-+	MPTCP_SKB_CB(skb)->map_seq += msk->ack_seq -
-+				      MPTCP_SKB_CB(skb)->map_seq;
-+	msk->bytes_received += copy_len;
-+	WRITE_ONCE(msk->ack_seq, msk->ack_seq + copy_len);
-+
-+	skb_set_owner_r(skb, sk);
-+	__skb_queue_tail(&sk->sk_receive_queue, skb);
-+	return true;
+ #define TB_PROPERTY_ROOTDIR_MAGIC	0x55584401
++#define TB_PROPERTY_MAX_DEPTH		8
+ 
+ static struct tb_property_dir *__tb_property_parse_dir(const u32 *block,
+ 	size_t block_len, unsigned int dir_offset, size_t dir_len,
+-	bool is_root);
++	bool is_root, unsigned int depth);
+ 
+ static inline void parse_dwdata(void *dst, const void *src, size_t dwords)
+ {
+@@ -97,7 +98,8 @@ tb_property_alloc(const char *key, enum
  }
  
- static void mptcp_stop_rtx_timer(struct sock *sk)
+ static struct tb_property *tb_property_parse(const u32 *block, size_t block_len,
+-					const struct tb_property_entry *entry)
++					const struct tb_property_entry *entry,
++					unsigned int depth)
+ {
+ 	char key[TB_PROPERTY_KEY_SIZE + 1];
+ 	struct tb_property *property;
+@@ -118,7 +120,7 @@ static struct tb_property *tb_property_p
+ 	switch (property->type) {
+ 	case TB_PROPERTY_TYPE_DIRECTORY:
+ 		dir = __tb_property_parse_dir(block, block_len, entry->value,
+-					      entry->length, false);
++					      entry->length, false, depth + 1);
+ 		if (!dir) {
+ 			kfree(property);
+ 			return NULL;
+@@ -163,13 +165,17 @@ static struct tb_property *tb_property_p
+ }
+ 
+ static struct tb_property_dir *__tb_property_parse_dir(const u32 *block,
+-	size_t block_len, unsigned int dir_offset, size_t dir_len, bool is_root)
++	size_t block_len, unsigned int dir_offset, size_t dir_len, bool is_root,
++	unsigned int depth)
+ {
+ 	const struct tb_property_entry *entries;
+ 	size_t i, content_len, nentries;
+ 	unsigned int content_offset;
+ 	struct tb_property_dir *dir;
+ 
++	if (depth > TB_PROPERTY_MAX_DEPTH)
++		return NULL;
++
+ 	dir = kzalloc(sizeof(*dir), GFP_KERNEL);
+ 	if (!dir)
+ 		return NULL;
+@@ -200,7 +206,7 @@ static struct tb_property_dir *__tb_prop
+ 	for (i = 0; i < nentries; i++) {
+ 		struct tb_property *property;
+ 
+-		property = tb_property_parse(block, block_len, &entries[i]);
++		property = tb_property_parse(block, block_len, &entries[i], depth);
+ 		if (!property) {
+ 			tb_property_free_dir(dir);
+ 			return NULL;
+@@ -237,7 +243,7 @@ struct tb_property_dir *tb_property_pars
+ 		return NULL;
+ 
+ 	return __tb_property_parse_dir(block, block_len, 0, rootdir->length,
+-				       true);
++				       true, 0);
+ }
+ 
+ /**
 
 
