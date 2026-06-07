@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5512D8378;
-	Sun,  7 Jun 2026 10:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA78F4071DD;
+	Sun,  7 Jun 2026 10:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829444; cv=none; b=CGq81hZIcsZmoLHz0wRT6NItD8Lgil2n6iUyeDqv9gkqm5j51RuafgsWmN+eC6h2vdZH2TBVorb5ZGZXawRGFx4ROYz9HoOOdQsf0EajbHMnZIAnT2ADmxFNifG0MZqJwDimYqDXtLsmCW7GUcxojrzprl+JcDBqLfvue/Frvpo=
+	t=1780829449; cv=none; b=V01sG9TK58xRv/Wo362mPb8Yun3z+yOVbzjChj81GVpbdCineYl795PzuZ+tnFg6pwL/xrnu4fpMwRlq9WLDqdY36kKBDmWTTGqLF69l6+OJDpXgkMSgiFQFuLmQRXmFP/4EdpjBTDQHJji5m95DWrFDiPxdlkpf0XXPF4qcyDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829444; c=relaxed/simple;
-	bh=pEdvXqFfL8nBL0ggNvC4w1TQaNos2pqW9nol8C1W77k=;
+	s=arc-20240116; t=1780829449; c=relaxed/simple;
+	bh=73bGdKsYW6bAH716Hg4brE63MeU7jRxuGULAryZuLqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=od1mib4t8tfyYNeArV14zLm/EcrBzirQ8APr1OO6mFoL2faaaS2JnDOGD5Uo/57BlAKOB9pcVhSakRBXwAoN1C6UAPfN/OUZ+1sAHI+F90TE0TT1/C4hVLEJ4q0lg1KRzhRqitsBblKYsr4wEXBVFQcicdsL9Vv5YyV2yQRV6EU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrDLLJYW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AU3qENFsHdr+dCOysnLDzVjPy+2HKxGErQCaKU2j/qiQ0+IZQRlbCaY9MDQ7wl6EJhrDylR766af3Ersgq55otYI0GaC1PUHxyVDI3prqrMZS+nfWilIUnNiPHnxXxFVUMi8CvdABqHg6viBfHcG5hUypWTtr0DUbxe2tQnfmdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DYxMBFXc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrDLLJYW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DF21F00893;
-	Sun,  7 Jun 2026 10:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DYxMBFXc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE23A1F00893;
+	Sun,  7 Jun 2026 10:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829443;
-	bh=SARjY/jo74MDWr/Yn/ITP/9voX936nX9p7938Eq5EfQ=;
+	s=korg; t=1780829446;
+	bh=Jym0Zq/wYDIMn5dZmtTJhmL209ejBwlRdfM4vO4N+FQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xrDLLJYWMgUiXSjIBL1//Ps63mhZ+3JhiPsd3U09hflrhY8mbxPU4oWp1MrBxRDDq
-	 T1gnSMTf5PYHFan+9FJFyUImVYMC7uqhdFuj/q5TBp2muY3mK+jv32OgPTQUfYQMj7
-	 qSuyfx6SUgtOjoSZLmxqN7zC8XZ3Qicgr98tWyz4=
+	b=DYxMBFXcJQ1DdTdyx0w1Aw/O6BDbNXboWeRNf7LzKbdelIBqg2FzPPtPb5yqqXxjd
+	 YxbgiFWzC/KV+7wJqzDGOriQZufYhN4jtb6aSTrj+VW6FIx47e+tIvRRjcQ9/pBFBc
+	 b114kqWi0HxqZWx4Tgm7Q/0+3tIHm4QcXcV3UoT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.18 248/315] thunderbolt: property: Reject u32 wrap in tb_property_entry_valid()
-Date: Sun,  7 Jun 2026 12:00:35 +0200
-Message-ID: <20260607095736.672184981@linuxfoundation.org>
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 225/307] USB: serial: belkin_sa: validate interrupt status length
+Date: Sun,  7 Jun 2026 12:00:22 +0200
+Message-ID: <20260607095735.970298498@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,69 +46,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-commit 01deda0152066c6c955f0619114ea6afa070aaec upstream.
+commit 4ce058df2ee02cc2a0f0fd5cd64ce6f1482a0b65 upstream.
 
-entry->value is u32 and entry->length is u16; the sum is performed in
-u32 and wraps.  A malicious XDomain peer can pick
-value = 0xffffff00, length = 0x100 so the sum 0x100000000 wraps to 0
-and passes the > block_len check.  tb_property_parse() then passes
-entry->value to parse_dwdata() as a dword offset into the property
-block, reading attacker-directed memory far past the allocation.
+The Belkin interrupt callback treats interrupt data as a four-byte
+status report and reads LSR/MSR fields at offsets 2 and 3. The
+interrupt-in buffer length is derived from endpoint wMaxPacketSize, and
+short interrupt transfers may complete successfully with a smaller
+actual_length.
 
-For TEXT-typed entries with the "deviceid" or "vendorid" keys this
-lands in xd->device_name / xd->vendor_name and is readable back via
-the per-XDomain device_name / vendor_name sysfs attributes; the leak
-is NUL-bounded (kstrdup() stops at the first zero byte) and
-untargeted (the attacker picks a delta, not an absolute address).
-DATA-typed entries are parsed into property->value.data but not
-generically surfaced to userspace.
+Check the completed interrupt packet length before parsing status
+fields so short interrupt endpoints and short successful packets are
+ignored instead of causing out-of-bounds or stale status-byte reads.
 
-Use check_add_overflow() so a wrapped sum is rejected.
+KASAN report as below:
 
-Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
+BUG: KASAN: slab-out-of-bounds in belkin_sa_read_int_callback()
+Read of size 1
+Call trace:
+  belkin_sa_read_int_callback() (drivers/usb/serial/belkin_sa.c:202)
+  __usb_hcd_giveback_urb() (drivers/usb/core/hcd.c:1630)
+  dummy_timer() (?:?)
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/property.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/usb/serial/belkin_sa.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/thunderbolt/property.c
-+++ b/drivers/thunderbolt/property.c
-@@ -8,6 +8,7 @@
-  */
+--- a/drivers/usb/serial/belkin_sa.c
++++ b/drivers/usb/serial/belkin_sa.c
+@@ -194,6 +194,9 @@ static void belkin_sa_read_int_callback(
  
- #include <linux/err.h>
-+#include <linux/overflow.h>
- #include <linux/slab.h>
- #include <linux/string.h>
- #include <linux/uuid.h>
-@@ -52,13 +53,16 @@ static inline void format_dwdata(void *d
- static bool tb_property_entry_valid(const struct tb_property_entry *entry,
- 				  size_t block_len)
- {
-+	u32 end;
+ 	usb_serial_debug_data(&port->dev, __func__, urb->actual_length, data);
+ 
++	if (urb->actual_length < BELKIN_SA_MSR_INDEX + 1)
++		goto exit;
 +
- 	switch (entry->type) {
- 	case TB_PROPERTY_TYPE_DIRECTORY:
- 	case TB_PROPERTY_TYPE_DATA:
- 	case TB_PROPERTY_TYPE_TEXT:
- 		if (entry->length > block_len)
- 			return false;
--		if (entry->value + entry->length > block_len)
-+		if (check_add_overflow(entry->value, entry->length, &end) ||
-+		    end > block_len)
- 			return false;
- 		break;
+ 	/* Handle known interrupt data */
+ 	/* ignore data[0] and data[1] */
  
 
 
