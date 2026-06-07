@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFDB234994;
-	Sun,  7 Jun 2026 10:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1887234994;
+	Sun,  7 Jun 2026 10:07:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826844; cv=none; b=SNgnfS0GqUoNAV3IMMS5FDYYwHGGnNblxwR9IXVQjAIiHTgkdOeWjD0b5At5geP7hyZlCC+o2nNxN8U7f1aKa8EiXiUubcEajd0SzPbvwfFdEtrtWX6Q5txOw1MPyNK9e9LTTP2VPDPhrHAyeC2utnVJYKTntuOzBRrW7KwpvTE=
+	t=1780826847; cv=none; b=pzKIKbx5fYhImNjG57EipyTi1NGjmFLhKj7bSf7lDlpsN9CgmloTpiGc8ZJ1Y1p85+nBgwiKm5M5xwXii49ECd9GG650FK4XZdTmCn4YhCVp1SLLy1fJsSvo1gWUaORk4qeeFg+B8T8eHRL3AD+FE7w66zG0XHa6RqU7eZvhCGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826844; c=relaxed/simple;
-	bh=8Tl6UTu9SDVCnFNdfFH8C+TbN5I0DAd/2DAcrZxcTTM=;
+	s=arc-20240116; t=1780826847; c=relaxed/simple;
+	bh=0WwRARwZC859f3CAnmIDuO7CGLlOdH7ktUbhP13H/1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iQrowuRHzUDHBoxpvJYqeU7eg8Tzw0hKmKh1vHXNJQMZlG7YZfdU/BjvuPJ19xXn0RxYuZKn1c0kQsRfMMQP9r5U5sxllWnHptaZjFOcwve+nZh50/zGbUB8ezfUv1oV14oLOuodWDFSA8q9OQlhyEE2qI1eEdlRxqtaAQO9G/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrImDkLl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mmpW/ktPXHDz9Trcv2CSOUCsYsp+Fe8Yi83g80qk2NC9yySi9rCX2VbaqGqtZKxfhf67xRvnFihh7v7DVLKSjEJf8Dm+MyVomTAnLrBBNzFUnkRVf2qnd/+10SemU+0na2tkAhCZPPR7g2KH5bnnkSktKbwMSgN2kDD98Y6yXYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEPzxLdP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrImDkLl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B051F00893;
-	Sun,  7 Jun 2026 10:07:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEPzxLdP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13E91F00893;
+	Sun,  7 Jun 2026 10:07:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826843;
-	bh=PVQ3qiq2Y19uSkZY/eLmqobk/8dl5DsuEmddqn+qawI=;
+	s=korg; t=1780826846;
+	bh=Ihcf8isKcbKGBaSnDHmKUO9h7R8k5T0Sg+LQj65ZIHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qrImDkLl42Zc7yTDMjczk/ULeBxPe65MrXIVT0OTA4UniEHOKuMZ2A3kYQH0i0EC0
-	 aeeYaDTv+7uCX3mjILWn7FVD1yGxLhfi6bCwHSd0b/hKM4nywykRP/KIvKjC1xdCFh
-	 /31VLihblKEfzuRkfpkfUiSpigiKN3Uk2g3UEyI8=
+	b=aEPzxLdPpufuIxHnZiwXlVRTlLVOwYLaBfjq923FagFvzkp0QPahd/K4coj/Ejgxc
+	 Hgh+EJIaOXvrsbD/tpVxsv/ZzjHyqbmx/4AqWuEa4loZugg5dA4fn28q/AifC15x5i
+	 YmKRAo8PW9u7l2Zr9SAv4CZG5rp9c7Hv9ffRzEK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dhabaleshwar Das <dhabal123@gmail.com>,
-	Tomeu Vizoso <tomeu@tomeuvizoso.net>,
+	Matteo Perin <matteo.perin@canonical.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 014/315] accel/rocket: fix UAF via dangling GEM handle in create_bo
-Date: Sun,  7 Jun 2026 11:56:41 +0200
-Message-ID: <20260607095728.019743749@linuxfoundation.org>
+Subject: [PATCH 7.0 026/332] net: netlink: dont set nsid on local notifications
+Date: Sun,  7 Jun 2026 11:56:35 +0200
+Message-ID: <20260607095729.040718762@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,88 +49,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dhabaleshwar Das <dhabal123@gmail.com>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit f706e6a4ce75585af979aec3dcbdce68bc76306b ]
+[ Upstream commit 88b126b39f9757e9debc322d4679239e9af089c7 ]
 
-rocket_ioctl_create_bo() inserts a GEM handle into the file's IDR via
-drm_gem_handle_create() early on, then performs several operations that
-can fail (sgt allocation, drm_mm insert, iommu_map). If any fail after
-the handle is live, the error path calls drm_gem_shmem_object_free()
-which kfree's the object without removing the handle from the IDR.
+In most cases, notifications on sockets with NETLINK_LISTEN_ALL_NSID
+do not contain NSID in their ancillary data in case the event is local
+to the listener.
 
-This leaves a dangling handle pointing to freed slab memory. Any
-subsequent ioctl using that handle (PREP_BO, FINI_BO, SUBMIT) calls
-drm_gem_object_lookup() and dereferences freed memory (UAF).
+However, when a self-referential NSID is allocated for a namespace,
+every local notification starts sending this ID to the user space.
 
-Fix by moving drm_gem_handle_create() to after all fallible operations
-succeed, matching the pattern used by panfrost, lima, and etnaviv.
+This is problematic, because the listener cannot tell if those
+notifications are local or not anymore without making extra requests
+to figure out if the provided NSID is local or not.  The listener
+can also not figure out the local NSID beforehand as it can be
+allocated at any point in time by other processes, changing the
+structure of the future notifications for everyone.
 
-Also fix drm_mm_insert_node_generic() whose return value was silently
-overwritten by iommu_map_sgtable() on the next line. Add the missing
-error check.
+The value is practically not useful, since it's the namespace's own
+ID that the application has to obtain from other sources in order to
+figure out if it's the same or not.  So, for the application it's
+just an extra busy work with no benefits.  Moreover, applications
+that do not know about this quirk may be mishandling notifications
+with NSID set as notifications from remote namespaces.  This is the
+case for ovs-vswitchd and the iproute2's 'ip monitor' that stops
+printing 'current' and starts printing the nsid number mid-session.
 
-[tomeu: Move handle creation to the very end]
+Lack of clear documentation for this behavior is also not helping.
 
-Fixes: 658ebeac3351 ("accel/rocket: Add IOCTL for BO creation")
-Reported-by: Dhabaleshwar Das <dhabal123@gmail.com>
-Signed-off-by: Dhabaleshwar Das <dhabal123@gmail.com>
-Reviewed-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
-Link: https://patch.msgid.link/20260521165720.2113571-1-tomeu@tomeuvizoso.net
-Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
+A search though open-source projects doesn't reveal any projects
+that use NETNSA_NSID_NOT_ASSIGNED and rely on metadata to contain
+self-referential NSIDs (expected, since the value is not useful).
+Quite the opposite, as already mentioned, there are few applications
+that rely on NSID to not be present in local events.
+
+Since the value is not useful and actively harmful in some cases,
+let's not report it for local events, making the notifications more
+consistent.
+
+Also adding some blank lines for readability.
+
+Fixes: 59324cf35aba ("netlink: allow to listen "all" netns")
+Reported-by: Matteo Perin <matteo.perin@canonical.com>
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Acked-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Link: https://patch.msgid.link/20260520172317.175168-3-i.maximets@ovn.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/rocket/rocket_gem.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ net/netlink/af_netlink.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/accel/rocket/rocket_gem.c b/drivers/accel/rocket/rocket_gem.c
-index c3c86e1abd25a3..b1b24d60973e82 100644
---- a/drivers/accel/rocket/rocket_gem.c
-+++ b/drivers/accel/rocket/rocket_gem.c
-@@ -78,11 +78,6 @@ int rocket_ioctl_create_bo(struct drm_device *dev, void *data, struct drm_file *
- 	rkt_obj->size = args->size;
- 	rkt_obj->offset = 0;
- 
--	ret = drm_gem_handle_create(file, gem_obj, &args->handle);
--	drm_gem_object_put(gem_obj);
--	if (ret)
--		goto err;
--
- 	sgt = drm_gem_shmem_get_pages_sgt(shmem_obj);
- 	if (IS_ERR(sgt)) {
- 		ret = PTR_ERR(sgt);
-@@ -94,6 +89,8 @@ int rocket_ioctl_create_bo(struct drm_device *dev, void *data, struct drm_file *
- 					 rkt_obj->size, PAGE_SIZE,
- 					 0, 0);
- 	mutex_unlock(&rocket_priv->mm_lock);
-+	if (ret)
-+		goto err;
- 
- 	ret = iommu_map_sgtable(rocket_priv->domain->domain,
- 				rkt_obj->mm.start,
-@@ -111,8 +108,18 @@ int rocket_ioctl_create_bo(struct drm_device *dev, void *data, struct drm_file *
- 	args->offset = drm_vma_node_offset_addr(&gem_obj->vma_node);
- 	args->dma_address = rkt_obj->mm.start;
- 
-+	ret = drm_gem_handle_create(file, gem_obj, &args->handle);
-+	if (ret)
-+		goto err_unmap;
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 441c9852b25714..c47f530b9ff7d9 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1482,10 +1482,14 @@ static void do_one_broadcast(struct sock *sk,
+ 		p->skb2 = NULL;
+ 		goto out;
+ 	}
 +
-+	drm_gem_object_put(gem_obj);
+ 	NETLINK_CB(p->skb2).nsid_is_set = false;
+-	NETLINK_CB(p->skb2).nsid = peernet2id(sock_net(sk), p->net);
+-	if (NETLINK_CB(p->skb2).nsid != NETNSA_NSID_NOT_ASSIGNED)
+-		NETLINK_CB(p->skb2).nsid_is_set = true;
++	if (!net_eq(sock_net(sk), p->net)) {
++		NETLINK_CB(p->skb2).nsid = peernet2id(sock_net(sk), p->net);
++		if (NETLINK_CB(p->skb2).nsid != NETNSA_NSID_NOT_ASSIGNED)
++			NETLINK_CB(p->skb2).nsid_is_set = true;
++	}
 +
- 	return 0;
- 
-+err_unmap:
-+	iommu_unmap(rocket_priv->domain->domain,
-+		    rkt_obj->mm.start, rkt_obj->size);
-+
- err_remove_node:
- 	mutex_lock(&rocket_priv->mm_lock);
- 	drm_mm_remove_node(&rkt_obj->mm);
+ 	val = netlink_broadcast_deliver(sk, p->skb2);
+ 	if (val < 0) {
+ 		netlink_overrun(sk);
 -- 
 2.53.0
 
