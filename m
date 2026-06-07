@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225D9308F0A;
-	Sun,  7 Jun 2026 10:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EAD717B418;
+	Sun,  7 Jun 2026 10:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827298; cv=none; b=Z5GjAoIm+mVGABS3+l4eEL8kZQtfJH7f1QkJAdp8fD+ujD7V66qgrjdPhWbUNT37FGTHHjfHsVNvVTzAlN+01IZg8thkZCe/mU2ILDKogj0QXQ1psECFveMVOYHJJPKYfnguKC7KX3ua6jCAhpHCgtcpM0X+NdguAItdgqudOzM=
+	t=1780827301; cv=none; b=XOWl6hLy0+vrN9uv5r47pwOwEbPEyeOjPo69wWNATEURWqG+FVi/8G5QyAUqxkGVLj163Y2fFB0HF3iyw/MazXPYSEbqBa3p6dCIdRzbdmEuwjLKuoyTErxYlsWZIr0cIYjDm4QxQXPWBZePTtuzun9PGEws5QdieD+/3vJCrAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827298; c=relaxed/simple;
-	bh=7sXM3GnPfmyyci3f0KXt+bNUrzOJJ2eQgPyZMGNNNSw=;
+	s=arc-20240116; t=1780827301; c=relaxed/simple;
+	bh=WNhQqWvxJJGgs+wDlOyH/mdoI7vn9SZaEt46WedtQBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N2u5x4W5wvvZh7FLj/tylovVz4o2bC7uR1sKBxWqn7BdeZJRgNHR6swZJiN98E4gd6GwkuOJDT/x6iHTChWvoCDY5/64JfdZX4OUvPPsVDq4EH2eOvILNX/Bwv4JEIdggis4PT00R6+OX/5yRucmY4tm4nzcU2K42DDh2ZHb+wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fyHjQBcQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H9bge/7xCajgC453wHxOVflfYISdA9HPnW4Kmymb0vmOrP2nMJJGdahQSB9+OB1ZCltG8F71OK5VTi7WYXlIRTyIiL+zgzwtTEg+iZUxI6Qsrvk5hlfnJ4Lx/4wd/QHHMIE3jtHZzHWUnoGMyRaG/VGARRWV/grd+Ey+BpvZR/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5bgQjNu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyHjQBcQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669B91F00893;
-	Sun,  7 Jun 2026 10:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5bgQjNu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2BBF1F00893;
+	Sun,  7 Jun 2026 10:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827297;
-	bh=PWPFsxYScVI4Mc9BnPY6ut8mzNF6R6grdA91b50hVmE=;
+	s=korg; t=1780827300;
+	bh=I7rIoXRgoHgyiWXvHd6UmcPyzBmj0qOnnZfs+0ztr2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fyHjQBcQFDWcRsVygMJyLI1+JEx1PU4fnH4z4G3tq/kWlsELMV5qXoMB+CE1cS8qD
-	 on4t2JtnSl4QPOMk7ExqkkLOlbh/JomB5LPlM9UaQDVg2ohxEoSCycOq6m4XcVqo0v
-	 XHTMeUU4eVjzvEy/bAUnOBmABTNb3+XuNYnYY7Dg=
+	b=R5bgQjNuO59s/qpZhL7xF6DFNcgzf5L57TD+zHISRXYDLARd/APfqR+QuNOmbGeXq
+	 zzpByUND8cJ62YBjigkiT/8U4yFFiSBMNzLO0HKzOh14wm8oVFSMf9lEwCKZxxhRub
+	 ewdbfUmzwGGwzayCb0+mimdbFrfFjXMKz+/9q4a4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8e498074a794999eb41c@syzkaller.appspotmail.com,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/307] ALSA: pcm: oss: Fix setup list UAF on proc write error
-Date: Sun,  7 Jun 2026 11:57:20 +0200
-Message-ID: <20260607095729.285703040@linuxfoundation.org>
+Subject: [PATCH 6.18 055/315] vxlan: do not reuse cached ip_hdr() value after skb_tunnel_check_pmtu()
+Date: Sun,  7 Jun 2026 11:57:22 +0200
+Message-ID: <20260607095729.624110156@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,86 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4cc54bdd54b337e77115be5b55577d1c58608eae ]
+[ Upstream commit 7d9ef0cb271555d8cf39fefe6c981e1493b25ecf ]
 
-snd_pcm_oss_proc_write() links a newly allocated setup entry into the
-OSS setup list before duplicating the task name. If the task-name
-allocation fails, the error path frees the already linked entry and
-leaves setup_list pointing at freed memory.
+skb_tunnel_check_pmtu() can change skb->head.
 
-A later OSS device open can then walk the stale list entry in
-snd_pcm_oss_look_for_setup() and dereference freed memory.
+Reusing old_iph afer skb_tunnel_check_pmtu() can cause an UAF.
 
-Allocate the task name and initialize the setup entry before publishing
-the entry on setup_list. Also fetch the initial proc read iterator only
-after taking setup_mutex, so all setup_list traversal follows the same
-list lifetime rules.
+Use instead ip_hdr(skb) as done in drivers/net/bareudp.c
+and drivers/net/geneve.c.
 
-Reported-by: syzbot+8e498074a794999eb41c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6a1062b7.170a0220.35b2b7.0003.GAE@google.com
-Closes: https://syzkaller.appspot.com/bug?extid=8e498074a794999eb41c
-Fixes: 060d77b9c04a ("[ALSA] Fix / clean up PCM-OSS setup hooks")
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260522-alsa-pcm-oss-setup-uaf-v1-1-40bdcc4d17e8@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Found by Sashiko.
+
+Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Link: https://patch.msgid.link/20260525203642.2389723-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/oss/pcm_oss.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/net/vxlan/vxlan_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/core/oss/pcm_oss.c b/sound/core/oss/pcm_oss.c
-index daa7cda98ae6f6..a65a3b8d04b8cb 100644
---- a/sound/core/oss/pcm_oss.c
-+++ b/sound/core/oss/pcm_oss.c
-@@ -2966,8 +2966,10 @@ static void snd_pcm_oss_proc_read(struct snd_info_entry *entry,
- 				  struct snd_info_buffer *buffer)
- {
- 	struct snd_pcm_str *pstr = entry->private_data;
--	struct snd_pcm_oss_setup *setup = pstr->oss.setup_list;
-+	struct snd_pcm_oss_setup *setup;
-+
- 	guard(mutex)(&pstr->oss.setup_mutex);
-+	setup = pstr->oss.setup_list;
- 	while (setup) {
- 		snd_iprintf(buffer, "%s %u %u%s%s%s%s%s%s\n",
- 			    setup->task_name,
-@@ -3052,6 +3054,13 @@ static void snd_pcm_oss_proc_write(struct snd_info_entry *entry,
- 				buffer->error = -ENOMEM;
- 				return;
- 			}
-+			template.task_name = kstrdup(task_name, GFP_KERNEL);
-+			if (!template.task_name) {
-+				kfree(setup);
-+				buffer->error = -ENOMEM;
-+				return;
-+			}
-+			*setup = template;
- 			if (pstr->oss.setup_list == NULL)
- 				pstr->oss.setup_list = setup;
- 			else {
-@@ -3059,12 +3068,7 @@ static void snd_pcm_oss_proc_write(struct snd_info_entry *entry,
- 				     setup1->next; setup1 = setup1->next);
- 				setup1->next = setup;
- 			}
--			template.task_name = kstrdup(task_name, GFP_KERNEL);
--			if (! template.task_name) {
--				kfree(setup);
--				buffer->error = -ENOMEM;
--				return;
--			}
-+			continue;
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index d2d0e0bd43716c..a4ff66e354f532 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -2532,7 +2532,7 @@ void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 			goto out_unlock;
  		}
- 		*setup = template;
- 	}
+ 
+-		tos = ip_tunnel_ecn_encap(tos, old_iph, skb);
++		tos = ip_tunnel_ecn_encap(tos, ip_hdr(skb), skb);
+ 		ttl = ttl ? : ip4_dst_hoplimit(&rt->dst);
+ 		err = vxlan_build_skb(skb, ndst, sizeof(struct iphdr),
+ 				      vni, md, flags, udp_sum);
+@@ -2606,7 +2606,7 @@ void vxlan_xmit_one(struct sk_buff *skb, struct net_device *dev,
+ 			goto out_unlock;
+ 		}
+ 
+-		tos = ip_tunnel_ecn_encap(tos, old_iph, skb);
++		tos = ip_tunnel_ecn_encap(tos, ip_hdr(skb), skb);
+ 		ttl = ttl ? : ip6_dst_hoplimit(ndst);
+ 		skb_scrub_packet(skb, xnet);
+ 		err = vxlan_build_skb(skb, ndst, sizeof(struct ipv6hdr),
 -- 
 2.53.0
 
