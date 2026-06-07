@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E69E1E98E3;
-	Sun,  7 Jun 2026 10:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92611DE8AE;
+	Sun,  7 Jun 2026 10:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826985; cv=none; b=SoRqmOWW+JRML1mv5Y/S0iYWcD0ff6XYENa/57aaPVFLOj4Qtg/2SgjGHfxiZGloPQ7z5Yom7HnUfd1TDkNXMJGO554w2h+Cj76xG8sodPWuYcaR9k056WxaqVvIUHNPb/XEddpf2IXVTYMfnYHslXy//LyfnyLIWBy+FTT72g8=
+	t=1780826988; cv=none; b=oAFxWRrzEcoGZTLyfXQiJ1t01TIK9leAueBLlbyM5tVZ6UaWCu4Dz8fFdsKE6givUumdGJJkj9xi4tnKSwf2lE4v45BUPtPm47AGYzl+7nYoyYKtsVWAKCz1C/mbAGZXNGSJ/jpeimYu/DAmBUdk+PEQTxSFgywzaSIBAj+CeYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826985; c=relaxed/simple;
-	bh=iBiUnP2x21hwy3rOCuyzv2hDYC19xUxXtt58nnd4lNI=;
+	s=arc-20240116; t=1780826988; c=relaxed/simple;
+	bh=BLS6S/7FxlHFqJnRhm4lPhH399omtoER/AvxHD4dxNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GcrC5ivKPeinMr3Rz4wG09u9xYcNMEx5UeFCIuUmdJViVDMl45VIFzLp82kXdE0Cts++pmg6z4dcP6V84CYO/dox3bGL/VmPO4/WtpkRQODJHkZwkJzWZypPcKbGmS2ZIL04L4gZOfPalsTlGxLw8i3DFefKrD9m0o6hikVx6bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Or2I3UTz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lQm6RXi/QpS3vR/90OAszDrbMDHRb2RfhUfRaUFsLPYBFF5ME00QgIOo9WHfjJEfHi2mi7guORbfqULerZPPyuviyoXJAwIDUbyrrYntvlQ2sSvkUV3WsvQey9V3U516LrD4BREB6TsHA3xp/M48Hx74nz+g7LV4lzJRNjLKO8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WoZLkG2z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Or2I3UTz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F021F00893;
-	Sun,  7 Jun 2026 10:09:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WoZLkG2z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29FE61F00893;
+	Sun,  7 Jun 2026 10:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826984;
-	bh=ol6dp+oi84BRRHqTxyeBdMxOs2ptSiqz4iLdGAx+a9s=;
+	s=korg; t=1780826987;
+	bh=osCT1OFlpKgTazNObqSyHHVg/wm+9i3SVJWngFxXXMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Or2I3UTzjcl/8ei7VeUibVz1s+yYVTDrAZ7b4UsNTO6YyfudPXfOOhPcvOoCLOT3A
-	 gXLkXhhPeBoMvJ4/R2QIJ+6mjS+81+LAuw4c14TGljQKb+g1ze6cxRBj0o9/jm0qXo
-	 uLSmX2SFS8VwYioRsjNLOYVdSs994en7831kx1Uw=
+	b=WoZLkG2zkYfgMaw/OD4LMNGKIUuZ82ow2xwrH5EHAwj6uVZBqILDPmSnnAUHBf+Wv
+	 mFQ6EUsCiqlr7AX41OeoI7iXOroLyEvFnHxXkb0D7BWmaCap8+anJPIZOLOfCnl3SX
+	 7Ryw9qwLL1kiuPot/XSQh7nNzonCORYk39Djrt+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Jeffery <djeffery@redhat.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Leo Lin <leo@depthfirst.com>,
+	David Ahern <dahern@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 029/332] scsi: core: Run queues for all non-SDEV_DEL devices from scsi_run_host_queues
-Date: Sun,  7 Jun 2026 11:56:38 +0200
-Message-ID: <20260607095729.159355138@linuxfoundation.org>
+Subject: [PATCH 6.18 009/315] xfrm: Check for underflow in xfrm_state_mtu
+Date: Sun,  7 Jun 2026 11:56:36 +0200
+Message-ID: <20260607095727.849611722@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,81 +48,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Jeffery <djeffery@redhat.com>
+From: David Ahern <dahern@nvidia.com>
 
-[ Upstream commit 7205b58702273baf21d6ba7992e6ba15852325f7 ]
+[ Upstream commit 742b04d0550b0ec89dcbc99537ec88653bd1ad90 ]
 
-While a SCSI host is in a recovery state, scsi_mq_requeue_cmd() will not
-set the requeue list for a requeued command to be kicked in the future.
-The expectation is a call to scsi_run_host_queues() will kick all SCSI
-devices once the recovery state is cleared.
+Leo Lin reported OOB write issue in esp component:
 
-However, scsi_run_host_queues() uses shost_for_each_device() which uses
-scsi_device_get() and so will ignore devices in a partially removed
-state like SDEV_CANCEL. But these devices may also have requeued
-requests, leaving their requests stuck from not being kicked and causing
-the removal process of the device to hang.
+  xfrm_state_mtu() returns u32 but performs its arithmetic in unsigned
+  modulo-2^32 space using an attacker-influenced "header_len + authsize +
+  net_adj" subtracted from a small "mtu" argument. A nobody user can
+  install an IPv4 ESP tunnel SA with a large authentication key
+  (XFRMA_ALG_AUTH_TRUNC, e.g. hmac(sha512), 64-byte key, 64-byte trunc),
+  configure a small interface MTU (68 bytes), and set XFRMA_TFCPAD to a
+  large value. When a single UDP datagram is then sent through the
+  tunnel, xfrm_state_mtu() underflows to a near-2^32 value, and
+  esp_output() consumes it as a signed int via:
 
-scsi_run_host_queues() needs to run against more devices than the macro
-shost_for_each_device() allows. Instead of using the too limiting
-scsi_device_get() state checks, only ignore devices in SDEV_DEL state or
-when unable to acquire a reference. Attempt to run the queues for all
-other devices when scsi_run_host_queues() is called.
+        padto      = min(x->tfcpad, xfrm_state_mtu(x, mtu_cached))
+        esp.tfclen = padto - skb->len   (assigned to int)
 
-Fixes: 8b566edbdbfb ("scsi: core: Only kick the requeue list if necessary")
-Signed-off-by: David Jeffery <djeffery@redhat.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260515180941.9698-1-djeffery@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+  esp.tfclen ends up negative (e.g. -207). It is sign-extended to size_t
+  when passed to memset() inside esp_output_fill_trailer(), producing a
+  ~16 EB write of zeroes at skb_tail_pointer(skb). KASAN logs it as
+  "Write of size 18446744073709551537 at addr ffff888...".
+
+Check for underflow and return 1. This causes the sendmsg attempt to
+fail with ENETUNREACH.
+
+Fixes: c5c252389374 ("[XFRM]: Optimize MTU calculation")
+Reported-by: Leo Lin <leo@depthfirst.com>
+Assisted-by: Codex:26.506.31004
+Signed-off-by: David Ahern <dahern@nvidia.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_lib.c | 27 +++++++++++++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
+ net/xfrm/xfrm_state.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index d3a8cd4166f92f..1da52f07d299b5 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -574,10 +574,33 @@ void scsi_requeue_run_queue(struct work_struct *work)
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index f6ba58f18ac18e..1b81e92e3eee78 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -3113,10 +3113,14 @@ u32 xfrm_state_mtu(struct xfrm_state *x, int mtu)
+ 	const struct xfrm_type *type = READ_ONCE(x->type);
+ 	struct crypto_aead *aead;
+ 	u32 blksize, net_adj = 0;
++	u32 overhead, payload_mtu;
  
- void scsi_run_host_queues(struct Scsi_Host *shost)
- {
--	struct scsi_device *sdev;
-+	struct scsi_device *sdev, *prev = NULL;
-+	unsigned long flags;
- 
--	shost_for_each_device(sdev, shost)
-+	spin_lock_irqsave(shost->host_lock, flags);
-+	__shost_for_each_device(sdev, shost) {
-+		/*
-+		 * Only skip devices so deep into removal they will never need
-+		 * another kick to their queues. Thus scsi_device_get() cannot
-+		 * be used as it would skip devices in SDEV_CANCEL state which
-+		 * may need a queue kick.
-+		 */
-+		if (sdev->sdev_state == SDEV_DEL ||
-+		    !get_device(&sdev->sdev_gendev))
-+			continue;
-+		spin_unlock_irqrestore(shost->host_lock, flags);
-+
-+		if (prev)
-+			put_device(&prev->sdev_gendev);
- 		scsi_run_queue(sdev->request_queue);
-+
-+		prev = sdev;
-+
-+		spin_lock_irqsave(shost->host_lock, flags);
+ 	if (x->km.state != XFRM_STATE_VALID ||
+-	    !type || type->proto != IPPROTO_ESP)
++	    !type || type->proto != IPPROTO_ESP) {
++		if (mtu <= x->props.header_len)
++			return 1;
+ 		return mtu - x->props.header_len;
 +	}
-+	spin_unlock_irqrestore(shost->host_lock, flags);
-+	if (prev)
-+		put_device(&prev->sdev_gendev);
- }
  
- static void scsi_uninit_cmd(struct scsi_cmnd *cmd)
+ 	aead = x->data;
+ 	blksize = ALIGN(crypto_aead_blocksize(aead), 4);
+@@ -3139,8 +3143,17 @@ u32 xfrm_state_mtu(struct xfrm_state *x, int mtu)
+ 		break;
+ 	}
+ 
+-	return ((mtu - x->props.header_len - crypto_aead_authsize(aead) -
+-		 net_adj) & ~(blksize - 1)) + net_adj - 2;
++	overhead = x->props.header_len + crypto_aead_authsize(aead) + net_adj;
++	if (mtu <= overhead)
++		return 1;
++
++	payload_mtu = mtu - overhead;
++	payload_mtu &= ~(blksize - 1);
++	if (payload_mtu <= 2)
++		return 1;
++
++	return payload_mtu + net_adj - 2;
++
+ }
+ EXPORT_SYMBOL_GPL(xfrm_state_mtu);
+ 
 -- 
 2.53.0
 
