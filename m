@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1E94071DA;
-	Sun,  7 Jun 2026 10:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE752AD00;
+	Sun,  7 Jun 2026 10:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827417; cv=none; b=KI1UMNGpJOgRwoneq6kmixu/cINRTgqp0CZInxrU2ZG7z2qcfbJotStilpDIVa+hkCTof6545ZuxMSy+P/CFj8V0uCpss1Cz6BR2N6cPoQqwQp86KjxAy1/gq9XIX548vCnmM57IY5EwoG6k7lvIToG2ckvnf14JXiHNd56X7Xc=
+	t=1780827420; cv=none; b=HD45zwTrFtFhJvznmkvtsMjU52OYvp4fAM+M6ZYt+AW9FF43HoD+uDRwVx8cp1Yen4W1QoO+MdurG5LFCFhbAm9KPVZzHVDq9zt/kU6ZQAwMQgDvW6ldFc6Uiq00SCvF4zuZ8vopUAEVP7sDwWMLqOLaQhAACvZUa1qJ5osMyfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827417; c=relaxed/simple;
-	bh=7RK5vjIpE904Ok9e9Q9eG6o5fP6PkfOIU5CIbyK2W78=;
+	s=arc-20240116; t=1780827420; c=relaxed/simple;
+	bh=k20N0kdZnWvi8hzgqnlRKO7hl2PVCcZFcqPc2REa0e4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nsRJAJcoBhNJfw3rXbGOewDeL438BJPnkvEa5FAsiCGWou2n9PGGXn5XGVVEazerMM/GI3YpokYmBxoko7NvyZUpnSwAecLzGBDdxPeScQ2ssr1RQwvc955sVEUMxUcy9IaW9iLPKBK+pFUwP+acMmiFHr1chCuGYDDj9TA8+iY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fC7T8r5b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k/zowUrX5scv3fD8j36yPnrODkYXEJDQmA06YNz6kflbMzzVQXviQw2sZgQ1kF7N2LJdSrRMOrRh7AQFg7vLK59NEkVjwx42hJ3LuVhZ6WJxuzjC7MQ+VjmylElIwsGjeOkiBwlLrOg+s3zy4hCX3oE3okdPQLR5xB1p6Dp83pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vCauaYI1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fC7T8r5b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74541F00893;
-	Sun,  7 Jun 2026 10:16:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vCauaYI1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B57B1F00893;
+	Sun,  7 Jun 2026 10:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827416;
-	bh=yNN28r6YKDI8iMfQHZFB5JiDIRMozxnjl2VIjQb3Yj0=;
+	s=korg; t=1780827419;
+	bh=15geUMSGi4ufT+FLP0QjA/4NztakTxcJ2Xynf/bon/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fC7T8r5bTNBcmiNDLCQfEcU6PN+jhpnzOYw42+U734e3o+KqmIdPanioZcpsW10dJ
-	 QQv/Hq4IPQGVK//gB6nD6hTagYqK+aJarSfhEWDhuSdYKl8gB9U8rrTS/tNsXQjQlS
-	 neMjv3pZlin30CXbMeIgELcCQU1UnPzEzoJN211o=
+	b=vCauaYI1Nn2Fa8U1dwf9tyshXqSEDsGZkyfF8SRNvZ2LgX7wgI//4tjn9xhvO9Zg4
+	 7k3j/8aSnptqDCbtfSEd59cV0EiL6RSWW8xv/LXWPhJp5lXi2Wa72Pf8tVu+oJIOco
+	 Diqkn2kpc8tzO7mvpF/cN1EiMh4QfzhSwzS1Ph/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 091/332] net/handshake: Take a long-lived file reference at submit
-Date: Sun,  7 Jun 2026 11:57:40 +0200
-Message-ID: <20260607095731.494933194@linuxfoundation.org>
+Subject: [PATCH 6.18 072/315] ethtool: eeprom: add missing ethnl_ops_begin() / _complete() during fallback
+Date: Sun,  7 Jun 2026 11:57:39 +0200
+Message-ID: <20260607095730.259392573@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,189 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 09dba37eee70d0596e26645015f1aa95a9848e9d ]
+[ Upstream commit 2376586f85f972fefe701f095bb37dcfe7405d21 ]
 
-handshake_nl_accept_doit() needs the file pointer backing
-req->hr_sk->sk_socket to survive the window between
-handshake_req_next() and the subsequent FD_PREPARE() and get_file().
-The submit-side sock_hold() does not provide that.  sk_refcnt keeps
-struct sock alive, but struct socket is owned by sock->file: when
-the consumer fputs the last file reference, sock_release() tears
-the socket down regardless of any sock_hold.
+All ethtool driver op calls should be sandwiched between
+ethnl_ops_begin() / ethnl_ops_complete(). In Netlink eeprom code,
+if the paged access failed we fall back to old API, but we
+first call _complete() and the fallback never does its own
+ethnl_ops_begin(). Move the fallback into the _begin() / _complete()
+section.
 
-Add an hr_file pointer to struct handshake_req and acquire an
-explicit reference on sock->file during handshake_req_submit().
-handshake_complete() and handshake_req_cancel() release the
-reference on the completion-bit-winning path.
-
-The submit error path must also release the file reference, but
-after rhashtable insertion a concurrent handshake_req_cancel() can
-discover the request and race the error path.  Gate the error-path
-cleanup -- sk_destruct restoration, fput, and request destruction
--- with test_and_set_bit(HANDSHAKE_F_REQ_COMPLETED), the same
-serialization handshake_complete() and handshake_req_cancel()
-already use.  When cancel has already claimed ownership, the submit
-error path returns without touching the request; socket teardown
-handles final destruction.
-
-The accept-side dereferences are not yet retargeted; that change
-comes in the next patch.
-
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Link: https://patch.msgid.link/20260525-handshake-file-pin-v3-4-66c616906ead@oracle.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: ea5fe6a73ca5 ("net/handshake: Drain pending requests at net namespace exit")
+Fixes: 96d971e307cc ("ethtool: Add fallback to get_module_eeprom from netlink command")
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260526153533.2779187-10-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/handshake/handshake.h |  2 ++
- net/handshake/netlink.c   |  6 ------
- net/handshake/request.c   | 42 ++++++++++++++++++++++++++++++++-------
- 3 files changed, 37 insertions(+), 13 deletions(-)
+ net/ethtool/eeprom.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/handshake/handshake.h b/net/handshake/handshake.h
-index 2289b0e274f40a..da61cadd1ad3e7 100644
---- a/net/handshake/handshake.h
-+++ b/net/handshake/handshake.h
-@@ -24,6 +24,7 @@ enum hn_flags_bits {
- 	HANDSHAKE_F_NET_DRAINING,
- };
+diff --git a/net/ethtool/eeprom.c b/net/ethtool/eeprom.c
+index 3b8209e930fd3a..03cb418a15823b 100644
+--- a/net/ethtool/eeprom.c
++++ b/net/ethtool/eeprom.c
+@@ -140,12 +140,11 @@ static int eeprom_prepare_data(const struct ethnl_req_info *req_base,
+ 	return 0;
  
-+struct file;
- struct handshake_proto;
- 
- /* One handshake request */
-@@ -32,6 +33,7 @@ struct handshake_req {
- 	struct rhash_head		hr_rhash;
- 	unsigned long			hr_flags;
- 	const struct handshake_proto	*hr_proto;
-+	struct file			*hr_file;
- 	struct sock			*hr_sk;
- 	void				(*hr_odestruct)(struct sock *sk);
- 
-diff --git a/net/handshake/netlink.c b/net/handshake/netlink.c
-index 561dfa6fa7711a..21d6cbd52fcdb6 100644
---- a/net/handshake/netlink.c
-+++ b/net/handshake/netlink.c
-@@ -207,12 +207,6 @@ static void __net_exit handshake_net_exit(struct net *net)
- 	while (!list_empty(&requests)) {
- 		req = list_first_entry(&requests, struct handshake_req, hr_list);
- 		list_del(&req->hr_list);
+ err_ops:
++	if (ret == -EOPNOTSUPP)
++		ret = eeprom_fallback(request, reply);
+ 	ethnl_ops_complete(dev);
+ err_free:
+ 	kfree(page_data.data);
 -
--		/*
--		 * Requests on this list have not yet been
--		 * accepted, so they do not have an fd to put.
--		 */
--
- 		handshake_complete(req, -ETIMEDOUT, NULL);
- 	}
- }
-diff --git a/net/handshake/request.c b/net/handshake/request.c
-index 22e4b414ad1d7f..e2d7ee7ce6e0e0 100644
---- a/net/handshake/request.c
-+++ b/net/handshake/request.c
-@@ -13,6 +13,7 @@
- #include <linux/module.h>
- #include <linux/skbuff.h>
- #include <linux/inet.h>
-+#include <linux/file.h>
- #include <linux/rhashtable.h>
- 
- #include <net/sock.h>
-@@ -233,9 +234,16 @@ EXPORT_SYMBOL_IF_KUNIT(handshake_req_next);
-  * A zero return value from handshake_req_submit() means that
-  * exactly one subsequent completion callback is guaranteed.
-  *
-- * A negative return value from handshake_req_submit() means that
-- * no completion callback will be done and that @req has been
-- * destroyed.
-+ * A negative return value from handshake_req_submit() guarantees that
-+ * no completion callback will occur and that @req is no longer owned by
-+ * the caller. If cancellation wins the completion race after the request
-+ * has been published, final destruction is deferred until socket teardown.
-+ *
-+ * The caller must hold a reference on @sock->file for the duration
-+ * of this call. Once the request is published to the accept side, a
-+ * concurrent completion or cancellation may release the request's pin on
-+ * @sock->file; the caller's reference is what keeps @sock->sk valid until
-+ * handshake_req_submit() returns.
-  */
- int handshake_req_submit(struct socket *sock, struct handshake_req *req,
- 			 gfp_t flags)
-@@ -254,6 +262,14 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
- 		kfree(req);
- 		return -EINVAL;
- 	}
-+
-+	/*
-+	 * Pin sock->file for the lifetime of the request so the
-+	 * accept side does not race a consumer that releases the
-+	 * socket while a handshake is pending.
-+	 */
-+	req->hr_file = get_file(sock->file);
-+
- 	req->hr_odestruct = req->hr_sk->sk_destruct;
- 	req->hr_sk->sk_destruct = handshake_sk_destruct;
- 
-@@ -285,7 +301,11 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
- 			goto out_err;
- 	}
- 
--	/* Prevent socket release while a handshake request is pending */
-+	/*
-+	 * Pin struct sock so sk_destruct does not run until the
-+	 * handshake completion path releases it; struct socket is
-+	 * held separately via hr_file above.
-+	 */
- 	sock_hold(req->hr_sk);
- 
- 	trace_handshake_submit(net, req, req->hr_sk);
-@@ -294,10 +314,13 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
- out_unlock:
- 	spin_unlock_bh(&hn->hn_lock);
- out_err:
--	/* Restore original destructor so socket teardown still runs on failure */
--	req->hr_sk->sk_destruct = req->hr_odestruct;
- 	trace_handshake_submit_err(net, req, req->hr_sk, ret);
--	handshake_req_destroy(req);
-+	if (!test_and_set_bit(HANDSHAKE_F_REQ_COMPLETED, &req->hr_flags)) {
-+		/* Restore original destructor so socket teardown still runs. */
-+		req->hr_sk->sk_destruct = req->hr_odestruct;
-+		fput(req->hr_file);
-+		handshake_req_destroy(req);
-+	}
+-	if (ret == -EOPNOTSUPP)
+-		return eeprom_fallback(request, reply);
  	return ret;
  }
- EXPORT_SYMBOL(handshake_req_submit);
-@@ -309,11 +332,15 @@ void handshake_complete(struct handshake_req *req, int status,
- 	struct net *net = sock_net(sk);
  
- 	if (!test_and_set_bit(HANDSHAKE_F_REQ_COMPLETED, &req->hr_flags)) {
-+		struct file *file = req->hr_file;
-+
- 		trace_handshake_complete(net, req, sk, status);
- 		req->hr_proto->hp_done(req, status, info);
- 
- 		/* Handshake request is no longer pending */
- 		sock_put(sk);
-+
-+		fput(file);
- 	}
- }
- EXPORT_SYMBOL_IF_KUNIT(handshake_complete);
-@@ -362,6 +389,7 @@ bool handshake_req_cancel(struct sock *sk)
- 
- 	/* Handshake request is no longer pending */
- 	sock_put(sk);
-+	fput(req->hr_file);
- 	return true;
- }
- EXPORT_SYMBOL(handshake_req_cancel);
 -- 
 2.53.0
 
