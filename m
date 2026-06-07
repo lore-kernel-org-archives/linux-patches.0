@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE05C320A37;
-	Sun,  7 Jun 2026 10:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBEE202C46;
+	Sun,  7 Jun 2026 10:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827847; cv=none; b=c3oeKrj1APR7q3arzjIaK7l1qTmKIGUdg7OSjiLtAiS9bdFmMZi9iOG++pT+EFOZp6JhywNROWpAMTYkdV9cg/fnoEcbG5Pxi8uSmv6MqlJJ0aUXwLcIHAZynfAsvolC+p+y87Qg+KG3giC6+u7ly6XcQ/9HAZNK8LROfsNr6qs=
+	t=1780827852; cv=none; b=T5yISd3m3VY2YZOutE4SX9HXLV/xSl9Itb1MlOoKP2epTE0whWEmxdncL/fOYHK8MqrZcTdQ+Cwze+3h5z+K6NASQFlGkD2o//3F5muqoxeDPZFW0NduujGzuRJ2n5unH0+tT6nihoszbO1RKMNYHpsuBCHj6pv2D2+psdG2498=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827847; c=relaxed/simple;
-	bh=FGzg3kRUoSzvSxNZ1eUmxVrz4bVkEgLKLLBkZeYYgFc=;
+	s=arc-20240116; t=1780827852; c=relaxed/simple;
+	bh=cS07nr/Uo87VVZdWSJguISvuJsTAGCwucqK5Wl6/FPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MbIwSBUdT7L/QmOo3VKc8A1XP1C3epUQ/5DjmEhhRVuV+fd59e00CDwOeGMZrbbiG3KXL+sUG/kWG29VEe8rMo9kCYVBvpTGkdDzbzG3/OLiYIKKLlV7jkXYfb+jFawfOpJipIFozM2SJlE3gjHK+ky5gEpa529H6kZgW4C+2fY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ks8578sZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bWtLEqxq13S9JTM8CZKcVmwlbM0Gf3Xcf4aWiGhUVmHeXkdda2UoNbxLBIKx9ot4gVswaKUzqVFJ14ORNRJErpysXibWBXPQ6QzPpdC9NX33FmZp3Y4tGIM9c+n1ZOWCxwLHR6dClBrrhzs1uLlELgHIGhh/SJzhFO/uThIQrU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MeVxheJV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ks8578sZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9831F00893;
-	Sun,  7 Jun 2026 10:24:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeVxheJV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD251F00893;
+	Sun,  7 Jun 2026 10:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827846;
-	bh=R7oOpDNWfQBGfV9aHBMRj3g6dcpQhCfLxGQg++QBhOA=;
+	s=korg; t=1780827851;
+	bh=K+wWvuXNclzkg1X64WdRJrTUYu4+odcahLUT8NZrEE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ks8578sZgHcc0wOSyoOXgS+0MzASk6pQA4s7b5kib0vJ6SlAzluPNsd9Io1z9AXQM
-	 Iszq6Sdm+cjXR8Mu/WSf40D7+nSXt91IHyMqBw1T3VNmz2kQ+EIa8pzSBajiysJh0E
-	 Eki3uY/I95dBU4PzEtiJuttM+1DZgveSf9UHmam4=
+	b=MeVxheJVimQtZ6dAW8JM0hqjyUlDdUnYDXD0P15ScQdi455WvRXmL5aVE76LfeISY
+	 rD3CQOp5PJSRMKFAeCFQFiVZ+8HSy287iGHRBpWdTq70oN4Zs9xiMVKCoo+lbKd+Ec
+	 hIJhlzGTyyr75adAaeXTUXfSuv1jfARJW58rWnWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Michael Hennerich <Michael.Hennerich@analog.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	David Lechner <dlechner@baylibre.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.18 105/315] iio: imu: adis16550: fix stack leak in trigger handler
-Date: Sun,  7 Jun 2026 11:58:12 +0200
-Message-ID: <20260607095731.502250534@linuxfoundation.org>
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Dipayaan Roy <dipayanroy@linux.microsoft.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 091/307] net: mana: Add NULL guards in teardown path to prevent panic on attach failure
+Date: Sun,  7 Jun 2026 11:58:08 +0200
+Message-ID: <20260607095731.119261425@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,53 +46,153 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Dipayaan Roy <dipayanroy@linux.microsoft.com>
 
-commit 474f8928d50b09f7dcf507049f08732640b88b49 upstream.
+[ Upstream commit 17bfe0a8c014ee1d542ad352cd6a0a505361664a ]
 
-adis16550_trigger_handler() declares the scan data array on the stack
-without initializing it.  The memcpy() at the bottom fills only the
-first 28 bytes (TEMP + 6 channels of GYRO/ACCEL data), and
-iio_push_to_buffers_with_timestamp() writes the s64 timestamp at the
-8-byte-aligned offset 32.  Bytes 28-31 remain uninitialized stack data
-which leaks to userspace on ever trigger.
+When queue allocation fails partway through, the error cleanup frees
+and NULLs apc->tx_qp and apc->rxqs. Multiple teardown paths such as
+mana_remove(), mana_change_mtu() recovery, and internal error handling
+in mana_alloc_queues() can subsequently call into functions that
+dereference these pointers without NULL checks:
 
-Fix this all by just zero-initializing the structure on the stack.
+- mana_chn_setxdp() dereferences apc->rxqs[0], causing a NULL pointer
+  dereference panic (CR2: 0000000000000000 at mana_chn_setxdp+0x26).
+- mana_destroy_vport() iterates apc->rxqs without a NULL check.
+- mana_fence_rqs() iterates apc->rxqs without a NULL check.
+- mana_dealloc_queues() iterates apc->tx_qp without a NULL check.
 
-Cc: Lars-Peter Clausen <lars@metafoo.de>
-Cc: Michael Hennerich <Michael.Hennerich@analog.com>
-Cc: Jonathan Cameron <jic23@kernel.org>
-Cc: David Lechner <dlechner@baylibre.com>
-Cc: "Nuno Sá" <nuno.sa@analog.com>
-Cc: Andy Shevchenko <andy@kernel.org>
-Fixes: e4570f4bb231 ("iio: imu: adis16550: align buffers for timestamp")
-Cc: stable <stable@kernel.org>
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add NULL guards for apc->rxqs in mana_fence_rqs(),
+mana_destroy_vport(), and before the mana_chn_setxdp() call. Add a
+NULL guard for apc->tx_qp in mana_dealloc_queues() to skip TX queue
+draining when TX queues were never allocated or already freed.
+
+Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
+Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
+Signed-off-by: Dipayaan Roy <dipayanroy@linux.microsoft.com>
+Link: https://patch.msgid.link/20260525081129.1230035-2-dipayanroy@linux.microsoft.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/adis16550.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/microsoft/mana/mana_en.c | 70 +++++++++++--------
+ 1 file changed, 41 insertions(+), 29 deletions(-)
 
---- a/drivers/iio/imu/adis16550.c
-+++ b/drivers/iio/imu/adis16550.c
-@@ -836,7 +836,7 @@ static irqreturn_t adis16550_trigger_han
- 	u16 dummy;
- 	bool valid;
- 	struct iio_poll_func *pf = p;
--	__be32 data[ADIS16550_MAX_SCAN_DATA] __aligned(8);
-+	__be32 data[ADIS16550_MAX_SCAN_DATA] __aligned(8) = { };
- 	struct iio_dev *indio_dev = pf->indio_dev;
- 	struct adis16550 *st = iio_priv(indio_dev);
- 	struct adis *adis = iio_device_get_drvdata(indio_dev);
+diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
+index e527139936dee4..0e4b0ac4acf86b 100644
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -1304,6 +1304,9 @@ static void mana_fence_rqs(struct mana_port_context *apc)
+ 	struct mana_rxq *rxq;
+ 	int err;
+ 
++	if (!apc->rxqs)
++		return;
++
+ 	for (rxq_idx = 0; rxq_idx < apc->num_queues; rxq_idx++) {
+ 		rxq = apc->rxqs[rxq_idx];
+ 		err = mana_fence_rq(apc, rxq);
+@@ -2324,13 +2327,16 @@ static void mana_destroy_vport(struct mana_port_context *apc)
+ 	struct mana_rxq *rxq;
+ 	u32 rxq_idx;
+ 
+-	for (rxq_idx = 0; rxq_idx < apc->num_queues; rxq_idx++) {
+-		rxq = apc->rxqs[rxq_idx];
+-		if (!rxq)
+-			continue;
++	if (apc->rxqs) {
+ 
+-		mana_destroy_rxq(apc, rxq, true);
+-		apc->rxqs[rxq_idx] = NULL;
++		for (rxq_idx = 0; rxq_idx < apc->num_queues; rxq_idx++) {
++			rxq = apc->rxqs[rxq_idx];
++			if (!rxq)
++				continue;
++
++			mana_destroy_rxq(apc, rxq, true);
++			apc->rxqs[rxq_idx] = NULL;
++		}
+ 	}
+ 
+ 	mana_destroy_txq(apc);
+@@ -2633,7 +2639,8 @@ static int mana_dealloc_queues(struct net_device *ndev)
+ 	if (apc->port_is_up)
+ 		return -EINVAL;
+ 
+-	mana_chn_setxdp(apc, NULL);
++	if (apc->rxqs)
++		mana_chn_setxdp(apc, NULL);
+ 
+ 	if (gd->gdma_context->is_pf)
+ 		mana_pf_deregister_filter(apc);
+@@ -2651,33 +2658,38 @@ static int mana_dealloc_queues(struct net_device *ndev)
+ 	 * number of queues.
+ 	 */
+ 
+-	for (i = 0; i < apc->num_queues; i++) {
+-		txq = &apc->tx_qp[i].txq;
+-		tsleep = 1000;
+-		while (atomic_read(&txq->pending_sends) > 0 &&
+-		       time_before(jiffies, timeout)) {
+-			usleep_range(tsleep, tsleep + 1000);
+-			tsleep <<= 1;
+-		}
+-		if (atomic_read(&txq->pending_sends)) {
+-			err = pcie_flr(to_pci_dev(gd->gdma_context->dev));
+-			if (err) {
+-				netdev_err(ndev, "flr failed %d with %d pkts pending in txq %u\n",
+-					   err, atomic_read(&txq->pending_sends),
+-					   txq->gdma_txq_id);
++	if (apc->tx_qp) {
++		for (i = 0; i < apc->num_queues; i++) {
++			txq = &apc->tx_qp[i].txq;
++			tsleep = 1000;
++			while (atomic_read(&txq->pending_sends) > 0 &&
++			       time_before(jiffies, timeout)) {
++				usleep_range(tsleep, tsleep + 1000);
++				tsleep <<= 1;
++			}
++			if (atomic_read(&txq->pending_sends)) {
++				err =
++				    pcie_flr(to_pci_dev(gd->gdma_context->dev));
++				if (err) {
++					netdev_err(ndev, "flr failed %d with %d pkts pending in txq %u\n",
++						   err,
++					    atomic_read(&txq->pending_sends),
++					    txq->gdma_txq_id);
++				}
++				break;
+ 			}
+-			break;
+ 		}
+-	}
+ 
+-	for (i = 0; i < apc->num_queues; i++) {
+-		txq = &apc->tx_qp[i].txq;
+-		while ((skb = skb_dequeue(&txq->pending_skbs))) {
+-			mana_unmap_skb(skb, apc);
+-			dev_kfree_skb_any(skb);
++		for (i = 0; i < apc->num_queues; i++) {
++			txq = &apc->tx_qp[i].txq;
++			while ((skb = skb_dequeue(&txq->pending_skbs))) {
++				mana_unmap_skb(skb, apc);
++				dev_kfree_skb_any(skb);
++			}
++			atomic_set(&txq->pending_sends, 0);
+ 		}
+-		atomic_set(&txq->pending_sends, 0);
+ 	}
++
+ 	/* We're 100% sure the queues can no longer be woken up, because
+ 	 * we're sure now mana_poll_tx_cq() can't be running.
+ 	 */
+-- 
+2.53.0
+
 
 
