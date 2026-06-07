@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103F72E1EFC;
-	Sun,  7 Jun 2026 10:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CCDC78C9C;
+	Sun,  7 Jun 2026 10:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826758; cv=none; b=hRiXT5XdgZq5DOSTnmtcEs49EkpJJH/rInE5OltHW17UsYwvNVuG69GjOG7Vpid1waRKdBOdg739gOscBTo6dT71N0aQmd1O5CYjqIL0sK/SjXtpDYtkiBsrRgk3Xst1FjGS9uC442a4aFmdp/NSeA7r1ZPxu+2iOr+7qVpWC5g=
+	t=1780826761; cv=none; b=bXVr+VGo/XavtjNLaAiTNEM+utUlCj9PgOKYsSJh8Ve4LZ8cUl/Wt5o9gSmLAcmjM9d/xkcS3UCeKU5ljbfgUCi//gouIfnUIMAP7KrXrAIsWoMry0ozMdWdRdjrcJvB0ku0UhE95Ld8HLTmUJpDRySSFtNGRNH7iSbDak0LHUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826758; c=relaxed/simple;
-	bh=YukAIboKwEXQC+7pBlLMzeofF19VLAeQb0iTWeIrrME=;
+	s=arc-20240116; t=1780826761; c=relaxed/simple;
+	bh=bMNrDpj/bFYF6yXGnjuTZaQwBBwkXhiAfsYyxJ+1cmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WyUXJfFTek4VfMgK4Rwd0XUbELmDW2A02kn67X9BdTKsrvNRttML9xdYKtkS5jGLEsAYmcgIb78hxL70HguHlFuytWYVeObdc2GKOZwjuWLiiar9TOiCP7jl4uHH54q+ScJ6GJff2zN1A3zA3sYy6P7322NG4HgeC8/RK26THKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oS7T18d/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MP5GTeFIUGJddUBHZV0aQCZE62MxRrD6tM77u5tyb6myuWNWrEhhz0wXoZGg3ONuq2KbmfLqNiacYjiuQiFhEqA2xII8X6T2QqhdjnQOXGte9ZMYz1grgnS4ki9bpDC/6s2Co+JGCEdkJ+BJPX6K7Avx7XTuIn9GBEUrHIG0naQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddBnXfew; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oS7T18d/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F0551F00893;
-	Sun,  7 Jun 2026 10:05:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddBnXfew"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62AD51F00893;
+	Sun,  7 Jun 2026 10:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826756;
-	bh=GxDU3CWxN+XgjC5IPhODwTcMqbyvHHA7xx2GWnMU9Xc=;
+	s=korg; t=1780826760;
+	bh=rAZ+qhUowvJsHeLGsINdRbgjD0oyg4KBFkLwWk/2Q1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oS7T18d/mGinvSADG0GSFflWjsbUJXV654BX3BydJvZzlB+LCjrRinX55DR9F2rbZ
-	 7MYZrjuF9ZxNZZUhzihPGq+NO7nW2kjf2r66rJVGvvnyT46GG7oJNqk3BUsmRSRb/b
-	 hQWxaxt4UzY1mON677YFVlSDeFQjiYMQHxQdtBMI=
+	b=ddBnXfew76nTYvcyitU8XvXzpv83/c1qy0leGNe7NSJJFaXJzc5ebmQlaWGAPdS7e
+	 UBWbmuxmy6YR9VvcgMo4Jvv0gZSwWs71e5mkV/MaQj+8PuTgJ2zmDmYvapEaOEn2L6
+	 V9oNJ6HYS85CoYjK+3WVxNlMOo9aQ/B7ZjKXvD8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
+	Jeremy Sowden <jeremy@azazel.net>,
 	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 019/332] netfilter: ebtables: fix OOB read in compat_mtw_from_user
-Date: Sun,  7 Jun 2026 11:56:28 +0200
-Message-ID: <20260607095728.766022257@linuxfoundation.org>
+Subject: [PATCH 7.0 020/332] netfilter: nf_tables: fix dst corruption in same register operation
+Date: Sun,  7 Jun 2026 11:56:29 +0200
+Message-ID: <20260607095728.805036992@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
 References: <20260607095728.031258202@linuxfoundation.org>
@@ -57,105 +52,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit f438d1786d657d57790c5d138d6db3fc9fdac392 ]
+[ Upstream commit 18014147d3ee7831dce53fe65d7fc8d428b02552 ]
 
-Luxiao Xu says:
+For lshift and rshift, the shift operations are performed in a loop over
+32-bit words. The loop calculates the shifted value and write it to dst,
+and then immediately reads from src to calculate the carry for the next
+iteration. Because src and dst could point to the same memory location,
+the carry is incorrectly calculated using the newly modified dst value
+instead of the original src value.
 
- The function compat_mtw_from_user() converts ebtables extensions from
- 32-bit user structures to kernel native structures. However, it lacks
- proper validation of the user-supplied match_size/target_size.
+Adding a temporary local variable to cache the original value before
+writing to dst and using it for the carry calculation solves the
+problem. In addition, partial overlap is rejected from control plane for
+all kind of operations including byteorder. This was tested with the
+following bytecode:
 
- When certain extensions are processed, the kernel-side translation
- logic may perform memory accesses based on the extension's expected
- size. If the user provides a size smaller than what the extension
- requires, it results in an out-of-bounds read as reported by KASAN.
+table test_table ip flags 0 use 1 handle 1
+ip test_table test_chain use 3 type filter hook input prio 0 policy accept packets 0 bytes 0 flags 1
+ip test_table test_chain 2
+  [ immediate reg 1 0x44332211 0x88776655 ]
+  [ bitwise reg 1 = ( reg 1 << 0x08000000 ) ]
+  [ cmp eq reg 1 0x66443322 0x00887766 ]
+  [ counter pkts 0 bytes 0 ]
+ip test_table test_chain 4 3
+  [ immediate reg 1 0x44332211 0x88776655 ]
+  [ bitwise reg 1 = ( reg 1 << 0x08000000 ) ]
+  [ cmp eq reg 1 0x55443322 0x00887766 ]
+  [ counter pkts 21794 bytes 1917798 ]
 
- This fix introduces a check to ensure match_size is at least as large
- as the extension's required compatsize. This covers matches, watchers,
- and targets, while maintaining compatibility with standard targets.
-
-AFAIU this is relevant for matches that need to go though
-match->compat_from_user() call.  Those that use plain memcpy with the
-user-provided size are ok because the caller checks that size vs the
-start of the next rule entry offset (which itself is checked vs. total
-size copied from userspace).
-
-The ->compat_from_user() callbacks assume they can read compatsize bytes,
-so they need this extra check.
-
-Based on an earlier patch from Luxiao Xu.
-
-Fixes: 81e675c227ec ("netfilter: ebtables: add CONFIG_COMPAT support")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Fixes: 567d746b55bc ("netfilter: bitwise: add support for shifts.")
+Acked-by: Jeremy Sowden <jeremy@azazel.net>
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/ebtables.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ include/net/netfilter/nf_tables.h |  7 +++++++
+ net/netfilter/nft_bitwise.c       | 18 ++++++++++++++----
+ net/netfilter/nft_byteorder.c     | 13 ++++++++++---
+ 3 files changed, 31 insertions(+), 7 deletions(-)
 
-diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
-index b9f4daac09af36..8a6a069329d21d 100644
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -1956,6 +1956,25 @@ enum compat_mwt {
- 	EBT_COMPAT_TARGET,
- };
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index 3ec41574af776c..668b401f5147b4 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -187,6 +187,13 @@ static inline u64 nft_reg_load64(const u32 *sreg)
+ 	return get_unaligned((u64 *)sreg);
+ }
  
-+static bool match_size_ok(const struct xt_match *match, unsigned int match_size)
++static inline bool nft_reg_overlap(u8 src, u8 dst, u32 len)
 +{
-+	u16 csize;
++	unsigned int n = DIV_ROUND_UP(len, sizeof(u32));
 +
-+	if (match->matchsize == -1) /* cannot validate ebt_among */
-+		return true;
-+
-+	csize = match->compatsize ? : match->matchsize;
-+
-+	return match_size >= csize;
++	return src != dst && src < dst + n && dst < src + n;
 +}
 +
-+static bool tgt_size_ok(const struct xt_target *tgt, unsigned int tgt_size)
-+{
-+	u16 csize = tgt->compatsize ? : tgt->targetsize;
-+
-+	return tgt_size >= csize;
-+}
-+
- static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
- 				enum compat_mwt compat_mwt,
- 				struct ebt_entries_buf_state *state,
-@@ -1981,6 +2000,11 @@ static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
- 		if (IS_ERR(match))
- 			return PTR_ERR(match);
+ static inline void nft_data_copy(u32 *dst, const struct nft_data *src,
+ 				 unsigned int len)
+ {
+diff --git a/net/netfilter/nft_bitwise.c b/net/netfilter/nft_bitwise.c
+index af990c600745be..1afb36fb5994db 100644
+--- a/net/netfilter/nft_bitwise.c
++++ b/net/netfilter/nft_bitwise.c
+@@ -43,8 +43,10 @@ static void nft_bitwise_eval_lshift(u32 *dst, const u32 *src,
+ 	u32 carry = 0;
  
-+		if (!match_size_ok(match, match_size)) {
-+			module_put(match->me);
-+			return -EINVAL;
-+		}
+ 	for (i = DIV_ROUND_UP(priv->len, sizeof(u32)); i > 0; i--) {
+-		dst[i - 1] = (src[i - 1] << shift) | carry;
+-		carry = src[i - 1] >> (BITS_PER_TYPE(u32) - shift);
++		u32 tmp_src = src[i - 1];
 +
- 		off = ebt_compat_match_offset(match, match_size);
- 		if (dst) {
- 			if (match->compat_from_user)
-@@ -2000,6 +2024,12 @@ static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
- 					    mwt->u.revision);
- 		if (IS_ERR(wt))
- 			return PTR_ERR(wt);
-+
-+		if (!tgt_size_ok(wt, match_size)) {
-+			module_put(wt->me);
-+			return -EINVAL;
-+		}
-+
- 		off = xt_compat_target_offset(wt);
++		dst[i - 1] = (tmp_src << shift) | carry;
++		carry = tmp_src >> (BITS_PER_TYPE(u32) - shift);
+ 	}
+ }
  
- 		if (dst) {
+@@ -56,8 +58,10 @@ static void nft_bitwise_eval_rshift(u32 *dst, const u32 *src,
+ 	u32 carry = 0;
+ 
+ 	for (i = 0; i < DIV_ROUND_UP(priv->len, sizeof(u32)); i++) {
+-		dst[i] = carry | (src[i] >> shift);
+-		carry = src[i] << (BITS_PER_TYPE(u32) - shift);
++		u32 tmp_src = src[i];
++
++		dst[i] = carry | (tmp_src >> shift);
++		carry = tmp_src << (BITS_PER_TYPE(u32) - shift);
+ 	}
+ }
+ 
+@@ -235,6 +239,9 @@ static int nft_bitwise_init_bool(const struct nft_ctx *ctx,
+ 					      &priv->sreg2, priv->len);
+ 		if (err < 0)
+ 			return err;
++
++		if (nft_reg_overlap(priv->sreg2, priv->dreg, priv->len))
++			return -EINVAL;
+ 	}
+ 
+ 	return 0;
+@@ -265,6 +272,9 @@ static int nft_bitwise_init(const struct nft_ctx *ctx,
+ 	if (err < 0)
+ 		return err;
+ 
++	if (nft_reg_overlap(priv->sreg, priv->dreg, priv->len))
++		return -EINVAL;
++
+ 	if (tb[NFTA_BITWISE_OP]) {
+ 		priv->op = ntohl(nla_get_be32(tb[NFTA_BITWISE_OP]));
+ 		switch (priv->op) {
+diff --git a/net/netfilter/nft_byteorder.c b/net/netfilter/nft_byteorder.c
+index af9206a3afd181..5e7a7841b789b0 100644
+--- a/net/netfilter/nft_byteorder.c
++++ b/net/netfilter/nft_byteorder.c
+@@ -144,9 +144,16 @@ static int nft_byteorder_init(const struct nft_ctx *ctx,
+ 	if (err < 0)
+ 		return err;
+ 
+-	return nft_parse_register_store(ctx, tb[NFTA_BYTEORDER_DREG],
+-					&priv->dreg, NULL, NFT_DATA_VALUE,
+-					priv->len);
++	err = nft_parse_register_store(ctx, tb[NFTA_BYTEORDER_DREG],
++				       &priv->dreg, NULL, NFT_DATA_VALUE,
++				       priv->len);
++	if (err < 0)
++		return err;
++
++	if (nft_reg_overlap(priv->sreg, priv->dreg, priv->len))
++		return -EINVAL;
++
++	return 0;
+ }
+ 
+ static int nft_byteorder_dump(struct sk_buff *skb,
 -- 
 2.53.0
 
