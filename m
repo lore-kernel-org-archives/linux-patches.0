@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56CB2D3A69;
-	Sun,  7 Jun 2026 10:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2294F2D3A69;
+	Sun,  7 Jun 2026 10:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828632; cv=none; b=ejoAky+r2VA5I4ID4JgQ4vTawTPw/KAOOVRGF+2CuP14fU6FGhFqLOi8bVWAyQ5f0Ca8uN1dTh5ABJjDYA5/oU+qJOFGthQsnpJSV/JhVcxGQIlkrmLy/rIEmwJCNndpNQSBAWsohMamL3mvDiBanEah6vd0MrDRxOQW+UmS2ao=
+	t=1780828636; cv=none; b=NR07yZUL5qrCItB9H2PaUxMOb0ORGYbL/6fPubbI3Mv9Scqgn6Ysm4WboPqkH0L+aiQn8sBvfgcFCtYlnARMFkiih/DIhOMph9kAq3pDXol+YfZKrQFlU1fljJDnfPRUkoddvL+euxvBPq88GJ4i6TywMl+tV9OCab/9sA8lO+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828632; c=relaxed/simple;
-	bh=yjjzU48u6eWteE80pHUQcOf4fawusy63Lb7pJtkUMVM=;
+	s=arc-20240116; t=1780828636; c=relaxed/simple;
+	bh=JsvOcWUtBF8MHkseFQCnmKQ/pzDDv2qvELzIQVrBwYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qwpnI0OcBjjL9xFWMre6NDAU66mllySEeoEi8gtUhzGXpVAtel8fjwVzruIOmgOUi/Gigpq0qv3QuewXcFCFE6Bc238dTBKjXBaasXm4W8qSQ9ngY7FVPi1cWAVHfU1f0D2IlKc2i5idhRObZ5yy+FVOOJ1noqHpl95TvntO4bQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9RIdKan; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=B98JctygjPEExjkPYA47HIEehdWhL6qAJC+AsUE8QPh6jZ3cRYyDTMk27dx7n7z9NDvCjKm6nmHqCWJhNCOz4gab4rUzOigzF7bx65dHnitSVfnkkcsl4hwbXVZ7hsJt2Jau52Ok7+Z5M7G6nTkPqV4kqZ4CCMYO2TZBh5b7iis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/j/kwkR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9RIdKan"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B80C11F00893;
-	Sun,  7 Jun 2026 10:37:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/j/kwkR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BFD81F00893;
+	Sun,  7 Jun 2026 10:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828631;
-	bh=WOQ8jZoeJgQkWreFpwONeETgiCsjW9v8jC69ws39glc=;
+	s=korg; t=1780828634;
+	bh=qTNIXDG+g5TXhcwNzrJbQMb4axWskkt6PJ+JX00fH38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w9RIdKanG5G0cFa8FwARFtQXBEXSHf+LURLcg8mDFd/eO6FOuGHfo4StNC+8v3Jjo
-	 ZKQnwAhZ43NbRzO8xYdRdQ6vQaJ0ZgfPh2U5I6lvPmhjcoNSnskvRB5BEd9a3ATk1P
-	 5yWaJr/W/gX/IgSH5JLtMBI81g5Y+nFb3H+gE9FY=
+	b=R/j/kwkRT4XP2EGta6FERVNOFwIuT874MXey+A6P0l0k8ZdxmvsOk/+/hEbbICYCf
+	 9Woaa+kqgVCgP3vxok3djGJEqoX5FD1EL/DxHtxGCm40j/SqGG1yqubJxecpd48Mpp
+	 e01uv6xnC6RUyJo0o/YWZlEmJcdp14Y76pxStYRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Peter Chen <peter.chen@cixtech.com>
-Subject: [PATCH 6.18 178/315] usb: cdns3: plat: fix leaked usb2_phy initialization on usb3_phy acquisition failure
-Date: Sun,  7 Jun 2026 11:59:25 +0200
-Message-ID: <20260607095734.120120263@linuxfoundation.org>
+	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@bootlin.com>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>,
+	James Nuss <jamesnuss@nanometrics.ca>
+Subject: [PATCH 7.0 199/332] iio: buffer: Fix DMA fence leak in iio_buffer_enqueue_dmabuf()
+Date: Sun,  7 Jun 2026 11:59:28 +0200
+Message-ID: <20260607095735.363715538@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,51 +47,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Chen <peter.chen@cixtech.com>
+From: Benoît Monin <benoit.monin@bootlin.com>
 
-commit e6970cda63fd4b4546aeed9d0e2f53a7c95cd09c upstream.
+commit a093999355084bdbfe6e97f1dd232e58a1525f0b upstream.
 
-Move usb2_phy initialization after usb3_phy acquisition.
+iio_buffer_enqueue_dmabuf() allocates a struct iio_dma_fence (104 bytes,
+kmalloc-128) via kmalloc_obj()+dma_fence_init(), which sets the initial
+kref to 1.  It then calls dma_resv_add_fence() which takes a second
+reference (kref=2), and stores a raw pointer in block->fence.
 
-Fixes: f738957277ba ("usb: cdns3: Split core.c into cdns3-plat and core.c file")
-Cc: stable <stable@kernel.org>
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-devicetree/agKaEePSFknhDBg2@nchen-desktop/T/#m21e1d9c1574eb127ce03c0c2a1a49002ce435b52
-Signed-off-by: Peter Chen <peter.chen@cixtech.com>
-Link: https://patch.msgid.link/20260513085310.2217547-2-peter.chen@cixtech.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+On the success path the function returns without calling dma_fence_put()
+to release the initial reference, so every buffer enqueue permanently
+leaks one kmalloc-128 allocation.
+
+The iio_buffer_cleanup() work item only releases the temporary reference
+taken during completion signalling by iio_buffer_signal_dmabuf_done();
+the initial reference from dma_fence_init() is never released.
+
+With four iio_rwdev instances at 240kHz and 512 samples per buffer,
+this produces ~1875 kmalloc-128 allocations per second matching the
+observed slab growth exactly. A test with ftrace confirmed that the
+dma_fence_destroy event was never triggered.
+
+Fix by calling dma_fence_put() after dma_resv_add_fence(), transferring
+ownership of the fence to the DMA reservation object. The DMA fence then
+gets properly discarded after being signalled.
+
+Fixes: 3e26d9f08fbe0 ("iio: core: Add new DMABUF interface infrastructure")
+Originally-by: James Nuss <jamesnuss@nanometrics.ca>
+Signed-off-by: Benoît Monin <benoit.monin@bootlin.com>
+Reviewed-by: Paul Cercueil <paul@crapouillou.net>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdns3-plat.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/industrialio-buffer.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/cdns3/cdns3-plat.c
-+++ b/drivers/usb/cdns3/cdns3-plat.c
-@@ -126,15 +126,15 @@ static int cdns3_plat_probe(struct platf
- 		return dev_err_probe(dev, PTR_ERR(cdns->usb2_phy),
- 				     "Failed to get cdn3,usb2-phy\n");
+--- a/drivers/iio/industrialio-buffer.c
++++ b/drivers/iio/industrialio-buffer.c
+@@ -1909,6 +1909,7 @@ static int iio_buffer_enqueue_dmabuf(str
  
--	ret = phy_init(cdns->usb2_phy);
--	if (ret)
--		return ret;
--
- 	cdns->usb3_phy = devm_phy_optional_get(dev, "cdns3,usb3-phy");
- 	if (IS_ERR(cdns->usb3_phy))
- 		return dev_err_probe(dev, PTR_ERR(cdns->usb3_phy),
- 				     "Failed to get cdn3,usb3-phy\n");
+ 	dma_resv_add_fence(dmabuf->resv, &fence->base,
+ 			   dma_to_ram ? DMA_RESV_USAGE_WRITE : DMA_RESV_USAGE_READ);
++	dma_fence_put(&fence->base);
+ 	dma_resv_unlock(dmabuf->resv);
  
-+	ret = phy_init(cdns->usb2_phy);
-+	if (ret)
-+		return ret;
-+
- 	ret = phy_init(cdns->usb3_phy);
- 	if (ret)
- 		goto err_phy3_init;
+ 	cookie = dma_fence_begin_signalling();
 
 
