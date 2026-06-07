@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3154D2E7373;
-	Sun,  7 Jun 2026 10:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A11D308F0A;
+	Sun,  7 Jun 2026 10:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827248; cv=none; b=ViSRaJsewAVoHVprcBjyzbkoVNn0UGMF7K5iVLDsV0Odjs2fc9nKVL8lG7cXrlj/d8tNxHkp1DGAJdw8TnIl3+D99k99RIkVmx3IYhiuyDrehI/Yjq7Pcj2Xuq7pC1V9lmgmaGc/F3B2AI3SJgntnjTw61WWcMVviKiQJ9a0Rsc=
+	t=1780827251; cv=none; b=qzhK1t9b0+prcepohzU8itC0G0XwqhRYY6ZT01sYu7xRkRziqN0oMxMXbvPqfB6mbS+tepSiiYZf0rSsjPTGWvzMRC+6IAB8UIvv3axWjqIP7KVIi/U/nkNJ08KJWGcQ9WJvy7UN84xE7EqkcH1pC+7H9jg9Z5Z4xpxHqRNkNTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827248; c=relaxed/simple;
-	bh=V7TXZifOFZ72pepOKsvBNHLk4FvnQFuWP/x4wdAJPKw=;
+	s=arc-20240116; t=1780827251; c=relaxed/simple;
+	bh=Yk7sQAK8bFqPWIfVOdksr/89MNVX7+L2oFvFsYoPSeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BE4uaoBTmNwiSk2nppzaQKaZ5nYzmJzmdUy5Ux5n4GoWfr7ySTPm5punTl7jQ3IXS0vVLIAt+dMTmrwah5CslaYPZ32CThvhJtie2qlYIZFcBHm5dHcyRGvq0bLn/CY24NcSR1buYk7TFNRiZlHjPTeRK4qddTi1vtWi1+TMbZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OyA7Ulfo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K8r+s+xMGt9kVMXsd8KYfKzvOdYGjf5SrJmK4k7W+olj7wekupJi/vZKcqfMnmcKRmRfzgSxc/92KVfXQFwSxvG64JND8X0NP9ilIlCEMPDBOWiC8SE7pbwrX/JTKhU239pN7Ds5Dd34tkWM2/TxQi2JFintVx3gNRBHT+pk7u0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODCkKbJJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OyA7Ulfo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75AA81F00893;
-	Sun,  7 Jun 2026 10:14:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODCkKbJJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE75B1F00893;
+	Sun,  7 Jun 2026 10:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827247;
-	bh=nTLk8kCMJTWBYDYlVuRXYfyZl+5qcH8uhrTdXNBEIC8=;
+	s=korg; t=1780827250;
+	bh=9b93u4VKf4CqtXjpPaW5NlA6qUqnGhw5mGpJ02qGvxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OyA7UlfoRhDWxKd+Nks5SbgFW2LewyqBYF0gu/hnYgp7DdGWhppwkCcJjfs1wezPw
-	 IqSag4SkqRqumh6jL2EcFkGeLKpb4DUlYnwQJlnraCQgr0VstsGnkcbz8qUn5jwv47
-	 UDb8VskQr2jFloqwA0HlQSQUVqc0CacdipkmvCIs=
+	b=ODCkKbJJsYZAxYztu4w74NUKwTwJeliXO6PRwEVU5PjG290haZsisuzV1nKTqx5M2
+	 etcBxN7mRavHL/soO692Y39h4GDnTRegqElJS+CDAu0esqvH2qA18H4sQm0owhu3CN
+	 z5kqwJ/QFHQSAq+K4xLbpycX1ybi+v8xZRvEOGIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Dongli Zhang <dongli.zhang@oracle.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 035/307] tun: free page on build_skb failure in tun_xdp_one()
-Date: Sun,  7 Jun 2026 11:57:12 +0200
-Message-ID: <20260607095728.963783983@linuxfoundation.org>
+Subject: [PATCH 7.0 076/332] ethtool: eeprom: add missing ethnl_ops_begin() / _complete() during fallback
+Date: Sun,  7 Jun 2026 11:57:25 +0200
+Message-ID: <20260607095730.931582265@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,49 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit aa8963fdce667a42fb7f0bdd2909fadcab02f9a8 ]
+[ Upstream commit 2376586f85f972fefe701f095bb37dcfe7405d21 ]
 
-When build_skb() fails in tun_xdp_one(), the function sets ret to
--ENOMEM and jumps to the out label, which returns without freeing the
-page that vhost_net_build_xdp() allocated for the frame. As with the
-short-frame rejection path, tun_sendmsg() discards the per-buffer error
-and still returns total_len, so vhost_tx_batch() takes the success path
-and never frees the page. Each build_skb() failure in a batch leaks one
-page-frag chunk.
+All ethtool driver op calls should be sandwiched between
+ethnl_ops_begin() / ethnl_ops_complete(). In Netlink eeprom code,
+if the paged access failed we fall back to old API, but we
+first call _complete() and the fallback never does its own
+ethnl_ops_begin(). Move the fallback into the _begin() / _complete()
+section.
 
-Free the page before taking the error path, matching the put_page() the
-other error exits of tun_xdp_one() already perform.
-
-Fixes: 043d222f93ab ("tuntap: accept an array of XDP buffs through sendmsg()")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Dongli Zhang <dongli.zhang@oracle.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260521163312.1479805-2-bestswngs@gmail.com
+Fixes: 96d971e307cc ("ethtool: Add fallback to get_module_eeprom from netlink command")
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260526153533.2779187-10-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ethtool/eeprom.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 19c33d21bab947..d53e60823bf1bb 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -2505,6 +2505,7 @@ static int tun_xdp_one(struct tun_struct *tun,
- build:
- 	skb = build_skb(xdp->data_hard_start, buflen);
- 	if (!skb) {
-+		put_page(virt_to_head_page(xdp->data));
- 		ret = -ENOMEM;
- 		goto out;
- 	}
+diff --git a/net/ethtool/eeprom.c b/net/ethtool/eeprom.c
+index 3b8209e930fd3a..03cb418a15823b 100644
+--- a/net/ethtool/eeprom.c
++++ b/net/ethtool/eeprom.c
+@@ -140,12 +140,11 @@ static int eeprom_prepare_data(const struct ethnl_req_info *req_base,
+ 	return 0;
+ 
+ err_ops:
++	if (ret == -EOPNOTSUPP)
++		ret = eeprom_fallback(request, reply);
+ 	ethnl_ops_complete(dev);
+ err_free:
+ 	kfree(page_data.data);
+-
+-	if (ret == -EOPNOTSUPP)
+-		return eeprom_fallback(request, reply);
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
