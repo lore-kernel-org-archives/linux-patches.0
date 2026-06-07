@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3E32DB7A3;
-	Sun,  7 Jun 2026 10:16:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCB94071DA;
+	Sun,  7 Jun 2026 10:16:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827362; cv=none; b=eCktxT699y+DLmFQB4ux0UjGFuGVKLKdJdtzqqkMgkXyN+lMYW5u/DC0uxCAtv4951yBrX+ur/HDbyvW+TyBL4IVDwqYiTMkcZMtkcvmsI8NYog4c4q1Xqog0MoA3MAIy5DR5gNXul96LoNRAHWCJuGZ9tlp4NH4EQVL2THUElU=
+	t=1780827365; cv=none; b=UPsp+Hx4aMqRGn3/LoDTVCGfT9RNMvfN3tZUm9neVLlob0jUnY8GXPlhRAAAj5rf9c4JxAB1fxNIgmB4iktKRejAaiuhiVktuVHl6T3vW3Dd4lu1ImFi7sKxT+TwPkPyU7dht7W2BbLAR526JhFWFAwtgeexNelzlzZHqf/8Gtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827362; c=relaxed/simple;
-	bh=mofzdPcuOSy5bc7EYV5tIs9g6CpK+xyEwVPZnnbKFrA=;
+	s=arc-20240116; t=1780827365; c=relaxed/simple;
+	bh=wnW4g+At/f8307/l57vrEbo88QjLSRNwSlorU+HrP+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TTMSB6J0l5CcqmzayWlSm+zpQnSkqIJdlik3UbC2kMsBQ6u367fjl1+zS1l4IEQk4e7h7K34mkY6jUffbVnn4ovntVUQR3Si3vWOC9YSutjxzt18c3+6zQ5UEJhJdwLfYNEMwhjDDp9iRl0gJy3FUYSstUeY8GAoL2Ahk8COWLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zp9bk0UW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QbDGF3wM9hDSdjjCBtUBoLz2QEswyyogieZDJRbWHmrbebd0wB8dkpaRwa4d9rhKsp1GbZexeWKlLImAQbC2Dz/mjGYeu7CqKlQ/RApHjV5UCnwKPdrPUo3onWZHahbh3buPnjp8GLSzC/jSexOZ5FgJoXFh6lmOJEVaFs7FPlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aczNUCq6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zp9bk0UW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23BF1F00893;
-	Sun,  7 Jun 2026 10:16:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aczNUCq6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7311F00893;
+	Sun,  7 Jun 2026 10:16:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827361;
-	bh=17lJEl5vNYP9TDsomidzSgCJLpU60Q/SERjlBPhxmKQ=;
+	s=korg; t=1780827364;
+	bh=qfZjm2UAn8xVLvZ5LrzNvMLB86izepBTNfWvU7rI6oM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zp9bk0UWPvcPDtpHGUd1peNTgXuRVjn5gu4ZWzm/AF9IiUTMGClfcCM2M8+CwyyyQ
-	 XXbVjJjwZdYfi2VGXaRdc2yd4taKUPDSF/klAFAafMfS5dPR/3K3JodrLtbHlji0gC
-	 cNFtHqNVOg4kDt7QoL4cmc0e0+nyqLeIHLjop9fo=
+	b=aczNUCq6nnO9+Yhj+5y8eAntgtp7xjKGCzIKpcrHn9v0jBWvedHYBo5sfHnTKPIJD
+	 lZApJexyCUZe1W9kPRx9LiFHPbY22mxTwTPIH4NYH3zs0ppI8B2SFdvMFFQLnJ/V4I
+	 UJvm/WOYXlnt8PLJ7SfI+S5jIk/F3yjZR/yDo+k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 067/315] ethtool: pse-pd: fix missing ethnl_ops_complete()
-Date: Sun,  7 Jun 2026 11:57:34 +0200
-Message-ID: <20260607095730.074982055@linuxfoundation.org>
+Subject: [PATCH 6.12 049/307] ethtool: rss: fix hkey leak when indir_size is 0
+Date: Sun,  7 Jun 2026 11:57:26 +0200
+Message-ID: <20260607095729.516126250@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +46,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit ab5bf428fb6bd361163c7247b92750d1d24ca2ed ]
+[ Upstream commit 78ccf1a70c6378e1f5073a8c2209b5129067b925 ]
 
-pse_prepare_data() is missing ethnl_ops_complete() if
-ethnl_req_get_phydev() returned an error. Move getting
-phydev up so that we don't have to worry about this
-(similar order to linkstate_prepare_data()).
+rss_get_data_alloc() allocates a single buffer that backs both the
+indirection table and the hash key, but only assigned data->indir_table
+when indir_size was nonzero. The expectation was that no driver
+implements RSS without supporting indirection table but apparently
+enic does just that (it's the only such in-tree driver).
+enic has get_rxfh_key_size but no get_rxfh_indir_size.
+data->indir_table stays as NULL, hkey gets set but rss_get_data_free()
+kfree(data->indir_table) is a nop and the allocation leaks.
 
-Note that phydev may still be NULL (this is checked in
-pse_get_pse_attributes()), the goal isn't really to avoid
-the _begin() / _complete() calls, only to simplify the error
-handling.
+Always store the allocation base in data->indir_table so the free path
+is unambiguous. No caller treats indir_table as a sentinel; everything
+keys off indir_size.
 
-While at it propagate the original error. Why this code
-overrides the error with -ENODEV but !phydev generates
--EOPNOTSUPP is unclear to me...
-
-Fixes: 31748765bed3 ("net: ethtool: pse-pd: Target the command to the requested PHY")
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260526153533.2779187-5-kuba@kernel.org
+Fixes: 7112a04664bf ("ethtool: add netlink based get rss support")
+Link: https://patch.msgid.link/20260522230647.1705600-6-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/pse-pd.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/ethtool/rss.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/ethtool/pse-pd.c b/net/ethtool/pse-pd.c
-index 24def9c9dd54bf..aa4514333d13bd 100644
---- a/net/ethtool/pse-pd.c
-+++ b/net/ethtool/pse-pd.c
-@@ -61,14 +61,14 @@ static int pse_prepare_data(const struct ethnl_req_info *req_base,
- 	struct phy_device *phydev;
- 	int ret;
+diff --git a/net/ethtool/rss.c b/net/ethtool/rss.c
+index 8aa45f3fdfdf08..3570d58c5cca6d 100644
+--- a/net/ethtool/rss.c
++++ b/net/ethtool/rss.c
+@@ -78,8 +78,7 @@ rss_prepare_get(const struct rss_req_info *request, struct net_device *dev,
+ 		goto out_ops;
+ 	}
  
--	ret = ethnl_ops_begin(dev);
--	if (ret < 0)
--		return ret;
--
- 	phydev = ethnl_req_get_phydev(req_base, tb, ETHTOOL_A_PSE_HEADER,
- 				      info->extack);
- 	if (IS_ERR(phydev))
--		return -ENODEV;
-+		return PTR_ERR(phydev);
-+
-+	ret = ethnl_ops_begin(dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	ret = pse_get_pse_attributes(phydev, info->extack, data);
+-	if (data->indir_size)
+-		data->indir_table = (u32 *)rss_config;
++	data->indir_table = (u32 *)rss_config;
+ 	if (data->hkey_size)
+ 		data->hkey = rss_config + indir_bytes;
  
 -- 
 2.53.0
