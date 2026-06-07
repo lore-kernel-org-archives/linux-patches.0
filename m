@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21661296BCC;
-	Sun,  7 Jun 2026 10:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791BA31ED93;
+	Sun,  7 Jun 2026 10:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829606; cv=none; b=r//wtHeE+R4Vf890cOwNPTRxQlTtIHnKzCf1UMVW6GQbuEXRcyUPaS7T8TlOI8QrO5oAHZttA/SR5b+fHHshZgd459na+Z6fgy/FMcfmeSWXvlPj9N7vgIGf2AcT04bzfqTKnTQlLRtAIo+v3SLChKInKN4MYFmFKSkNdUsmUkc=
+	t=1780829609; cv=none; b=lpAfLEEk0iJ2q7zDd/FZt44XWTeAWqzYHPquPCaFh52C8TRmk81XVJfvMpr9EBEYGHLnTNwBsMtUknSfqd36jHLwLse0uOk0ZLcaO0vlW/+NgTGmguxtioQ0L6ZPpb3Isce7BDC9/9j1JxZHU4Cf6kv7m/ms/8N+HUKBrJ7Ik68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829606; c=relaxed/simple;
-	bh=uwweY3IP2xjT5lFbjnKVl6vuK3kGKcRE1L+kCBG/fVo=;
+	s=arc-20240116; t=1780829609; c=relaxed/simple;
+	bh=31XNSCMGoqoj8j/S7EnFrG0AiCD8GGvvyogQ3DUuyt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k2QDt1oMxJQ47QSoGGEAVWhBtUYDJjrtne540nnuO0z+TnRdZV+O9dZJkav4I94zw6mUkkUBvf8adrzIXcsY8KWDY095L0qBZHYzjh5bDEK24kcWl4uPvDPZpkPphtdkO48bZMFMFWXn1Swyw2U11b+XXr2b58FYtwHlbjaLyMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XmFpXYR2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=syg5HwIPtVBKj4YDfWZpxS/PwuMjofKsbpuYhix27PxISv0ESUC9j1MPYcIKGiwqEmD/OGFr8lAkWMTZ4XjOj5qrzQgYE1W3YGLB5WHV7yaCIwZ+yZh+/TVOTz9JabvbJyAgNPWMs1+0tS4iUIgISC/s8xN4VSa8AxNtMibGa5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X38U5bNq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XmFpXYR2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 268651F00893;
-	Sun,  7 Jun 2026 10:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X38U5bNq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71ABF1F00893;
+	Sun,  7 Jun 2026 10:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829604;
-	bh=zRvihZZzJe/in2qW9FaxXeLqvG2x8AtsDb3YCSizxHQ=;
+	s=korg; t=1780829608;
+	bh=oGOQo9o4nIBbjdaalmox/EF5FdOGPkplF0RvLy1jjf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XmFpXYR2D0wczWT39DYvXUC8Nx7jSOZSCS7/9a6eh4xM2PneUR/nocZYLRhgDCq6J
-	 ClofGkLS+ZY56WKJsTj8rKGF2txUQLoroGk1dgQto9C7K6KUkHm0dzMdDSDeDq/h4j
-	 9cCvrwnIFgcHj+8uWdBO+1xywvr/vLZY9s+yFIIQ=
+	b=X38U5bNqy0gg7r0BeAxvGa3T6k5yTQo6CGj7NHAQ/tg9mHEI1bfZ6Jf3KWij666N2
+	 cupE9nuZNZHBUiE6dZBv1X8MYsW3xfF/Q3JqQUedsndMTKvuxtt9i1KzDhXC8a0yRL
+	 XtVtK7YI8dWgR1/uiBZy6Un4acQ4HzgNg6bwqoqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.12 239/307] scsi: fcoe: Reject FIP descriptors with zero fip_dlen in CVL walker
-Date: Sun,  7 Jun 2026 12:00:36 +0200
-Message-ID: <20260607095736.477535172@linuxfoundation.org>
+	Andrew Lunn <andrew@lunn.ch>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.18 239/315] USB: serial: mxuport: fix memory corruption with small endpoint
+Date: Sun,  7 Jun 2026 12:00:26 +0200
+Message-ID: <20260607095736.347435396@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +46,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 9eed1bd59937e6828b00d2f2dfef631d964f3636 upstream.
+commit 4085f0dbb1ce2251c9a5938d693de6593f0ab2bd upstream.
 
-drivers/scsi/fcoe/fcoe_ctlr.c::fcoe_ctlr_recv_clr_vlink() advanced the
-descriptor cursor by an attacker-supplied fip_dlen without ever
-requiring dlen >= sizeof(struct fip_desc) in the default branch.  The
-named descriptor cases (FIP_DT_MAC, FIP_DT_NAME, FIP_DT_VN_ID) checked
-their per-type minimum lengths, but a FIP_DT_NON_CRITICAL descriptor
-(fip_dtype >= 128, which the standard requires receivers to silently
-ignore) skipped that check entirely.
+Make sure that the bulk-out endpoint max packet size is at least eight
+bytes to avoid user-controlled slab corruption should a malicious device
+report a smaller size.
 
-An unauthenticated L2 peer on the FCoE control VLAN could hang
-fcoe_ctlr_recv_work on an fcoe, qedf, or bnx2fc initiator indefinitely
-by emitting one FIP CVL frame whose single descriptor had fip_dtype ==
-FIP_DT_NON_CRITICAL and fip_dlen == 0: the cursor advanced zero bytes
-per iteration and the loop condition rlen >= sizeof(*desc) stayed true
-forever, blocking every subsequent FIP frame on that controller.
-
-Tighten the outer dlen guard to also reject dlen < sizeof(struct
-fip_desc), so a malformed descriptor whose length cannot even cover the
-descriptor header is rejected before the switch.  This is the same
-lower-bound the named cases already apply and is the minimum scope that
-closes the loop.
-
-Fixes: 97c8389d54b9 ("[SCSI] fcoe, libfcoe: Add support for FIP. FCoE discovery and keep-alive.")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260518144307.2820961-1-michael.bommarito@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: ee467a1f2066 ("USB: serial: add Moxa UPORT 12XX/14XX/16XX driver")
+Cc: stable@vger.kernel.org	# 3.14
+Cc: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/fcoe/fcoe_ctlr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/mxuport.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/scsi/fcoe/fcoe_ctlr.c
-+++ b/drivers/scsi/fcoe/fcoe_ctlr.c
-@@ -1386,7 +1386,7 @@ static void fcoe_ctlr_recv_clr_vlink(str
+--- a/drivers/usb/serial/mxuport.c
++++ b/drivers/usb/serial/mxuport.c
+@@ -962,6 +962,14 @@ static int mxuport_calc_num_ports(struct
+ 	 */
+ 	BUILD_BUG_ON(ARRAY_SIZE(epds->bulk_out) < 16);
  
- 	while (rlen >= sizeof(*desc)) {
- 		dlen = desc->fip_dlen * FIP_BPW;
--		if (dlen > rlen)
-+		if (dlen < sizeof(*desc) || dlen > rlen)
- 			goto err;
- 		/* Drop CVL if there are duplicate critical descriptors */
- 		if ((desc->fip_dtype < 32) &&
++	/*
++	 * The bulk-out buffers must be large enough for the four-byte header
++	 * (and following data), but assume anything smaller than eight bytes
++	 * is broken.
++	 */
++	if (usb_endpoint_maxp(epds->bulk_out[0]) < 8)
++		return -EINVAL;
++
+ 	for (i = 1; i < num_ports; ++i)
+ 		epds->bulk_out[i] = epds->bulk_out[0];
+ 
 
 
