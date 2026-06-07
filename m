@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFC22D8378;
-	Sun,  7 Jun 2026 10:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA4B2D8378;
+	Sun,  7 Jun 2026 10:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829401; cv=none; b=M7XxYBzGEAtbWOg+dOrdjOkqA8lH+vtw2oHwEgwAsuAJQ2cXBzA/uVYZ8+G6OKhdxB1Klj4mPAbKMR39EvrSya8N/V3J0azipFaOUPNvrGqxcWp02El+Ba1jKZwv2xCzKUYWnIulJ9JNudzHlI2LmWEAIsPIxJJMg7w/HzmANZE=
+	t=1780829404; cv=none; b=JK2RK/LaQAKm0nlmzQiYAcKgd7VFUs9x3fQiSjzHqP/u5BH0NGXtaEv9TjSCS4/IPAANeT/jTHS+HxSx2qL239P/xH5TcnXwPKNUX+8Y3VlTbUYmTUvC/wO98lsxftF8Ku/rl11HBTHEsFxB9U5M/95/apingLpPYpqyXT1lN60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829401; c=relaxed/simple;
-	bh=K04kdKlfCIxv7cs233NKl60hYblISM6B9HyLIFZ2kRE=;
+	s=arc-20240116; t=1780829404; c=relaxed/simple;
+	bh=PzWQ/qh8PtmNxocsCEZTGpIC6ZC0Hp7n78HAKIiUfJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rpsGH5OjBeID1XSDuyRnv3pZCpr0BIOkl8V39FiP7dho8DvQJtNVtUsyWC6uGb76h/r01Xm0t3ZshRkeVxPnDg/VeL8JuQmqSHfW3M8dYdR+3r4iwn+RQW6SFFBfqUd09LfxJt2Zklt3JfieUON3P2sSPFKGDZYKcm16WOm2DZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sADZulKq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QV1sMMA6jJ803mwk6KKqmWDYzqoI46nABv9UvY1mfGgD0gLvo0D7RnFMefty/lTtLwG84QwZqq9zPXrhW8fNN/FnH9pAm6sUUMjN5GO6LD2s1yo2Y4PxPcbv6E8V/7jvDrSdSa02owCTDQfEaIl5J6ynn6rDY+fDOLMlWgfiri0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxzDFj5Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sADZulKq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46001F00893;
-	Sun,  7 Jun 2026 10:49:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxzDFj5Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120A71F00893;
+	Sun,  7 Jun 2026 10:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829400;
-	bh=BI/HmYPpoQQh6knniOy+KZ2ck7KHBEYD0LRV57LEKdQ=;
+	s=korg; t=1780829403;
+	bh=oYJwRtJO4sfiTff5UajtZGBbxHxS1NukCaHI8flAXhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sADZulKqz21PFRbrXf5tTAxg1K8tbT6p7Bx+NGU8kgqcJZ5js4gFR4J4Z596o1QRQ
-	 o6vRAsrU4kPjA4Y8tI/MMbdLKbxG3iuwPLjySow2AWx99IgUDjgUU4wpfDTCQSH2Vf
-	 5P3QdXZfrh8dA8pqaLjOxIAsIt0xPrMfe+xzSKUc=
+	b=dxzDFj5ZjcPdbSI/UYMlaI+gj1tKLRMcW/XCYqKfMaJaIqjBej5FRpq+mj1usXZ1g
+	 VHTxZIREeZtLDl+veQgeSAmY03hk0xT2V2WLjp8r5eTg4zMIFE80Q5BeYqZdYjgCNe
+	 kSUDF3ZHxAaQzC1GxbZwhevuGHyKd3XieRcuElQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Jeremy Erazo <mendozayt13@gmail.com>
-Subject: [PATCH 6.18 244/315] usb: gadget: composite: fix integer underflow in WebUSB GET_URL handling
-Date: Sun,  7 Jun 2026 12:00:31 +0200
-Message-ID: <20260607095736.525559152@linuxfoundation.org>
+	Michal Pecio <michal.pecio@gmail.com>,
+	Heitor Alves de Siqueira <halves@igalia.com>
+Subject: [PATCH 6.12 221/307] usb: usbtmc: reject interrupt endpoints with small wMaxPacketSize
+Date: Sun,  7 Jun 2026 12:00:18 +0200
+Message-ID: <20260607095735.829207870@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,66 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeremy Erazo <mendozayt13@gmail.com>
+From: Heitor Alves de Siqueira <halves@igalia.com>
 
-commit 6c5dbc104dadd79fc2923497c20bae759a18758c upstream.
+commit 121d2f682ba912b1427cddca7cf84840f41cc620 upstream.
 
-The WebUSB GET_URL handler in composite_setup() narrows
-landing_page_length to fit the host-supplied wLength using
+The USB488 subclass specification requires interrupt wMaxPacketSize to
+be 0x02, unless the device sends vendor-specific notifications.
+Endpoints that advertise less than 2 bytes for wMaxPacketSize are
+unlikely to work with the current driver, as URBs will not have enough
+space for interrupt headers. Considering that any notification URBs will
+be ignored by the driver, reject these endpoints early during probe.
 
-	landing_page_length = w_length
-		- WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_offset;
-
-If wLength is smaller than WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH the
-unsigned subtraction wraps, and the subsequent
-
-	memcpy(url_descriptor->URL,
-	       cdev->landing_page + landing_page_offset,
-	       landing_page_length - landing_page_offset);
-
-ends up copying close to UINT_MAX bytes from cdev->landing_page into
-cdev->req->buf.  KASAN reports a slab-out-of-bounds in composite_setup
-on the kmalloc-2k gadget_info allocation, and FORTIFY_SOURCE traps the
-memcpy as a 4294967293-byte field-spanning write into
-url_descriptor->URL (size 252).
-
-A USB host can reach this from a single SETUP packet against any
-gadget that has webusb/use=1 and a landingPage configured.
-
-Handle the small-wLength case before the math: when the host requested
-fewer bytes than the URL descriptor header, only the header is
-meaningful and no URL bytes need to be copied.  Setting
-landing_page_length to landing_page_offset makes the existing memcpy a
-no-op and leaves the descriptor returned to the host unchanged for all
-larger wLength values.
-
-Fixes: 93c473948c58 ("usb: gadget: add WebUSB landing page support")
+Fixes: 041370cce889 ("USB: usbtmc: refactor endpoint retrieval")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Jeremy Erazo <mendozayt13@gmail.com>
-Link: https://patch.msgid.link/20260512160530.352318-1-mendozayt13@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Heitor Alves de Siqueira <halves@igalia.com>
+Link: https://patch.msgid.link/20260505-usbtmc-iin-size-v3-2-a36113f62db7@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/composite.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/class/usbtmc.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/usb/gadget/composite.c
-+++ b/drivers/usb/gadget/composite.c
-@@ -2172,7 +2172,10 @@ unknown:
- 				sizeof(url_descriptor->URL)
- 				- WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_offset);
- 
--			if (w_length < WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_length)
-+			if (w_length < WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH)
-+				landing_page_length = landing_page_offset;
-+			else if (w_length <
-+				 WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_length)
- 				landing_page_length = w_length
- 				- WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_offset;
- 
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -2444,6 +2444,12 @@ static int usbtmc_probe(struct usb_inter
+ 		data->iin_ep = int_in->bEndpointAddress;
+ 		data->iin_wMaxPacketSize = usb_endpoint_maxp(int_in);
+ 		data->iin_interval = int_in->bInterval;
++		/* wMaxPacketSize should be 0x02 or more as per USB488 Table 22 */
++		if (iface_desc->desc.bInterfaceProtocol == 1 &&
++		    data->iin_wMaxPacketSize < 2) {
++			retcode = -EINVAL;
++			goto err_put;
++		}
+ 		dev_dbg(&intf->dev, "Found Int in endpoint at %u\n",
+ 				data->iin_ep);
+ 	}
 
 
