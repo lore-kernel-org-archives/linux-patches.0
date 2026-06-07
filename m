@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFCA296BCC;
-	Sun,  7 Jun 2026 10:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D82308F38;
+	Sun,  7 Jun 2026 10:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829209; cv=none; b=M27b7M1h2B2Re1zJkd/2nVVFskDxQQDNRAaKxj4tYVzQw9SCamhFsImfLdbks+94SfI+RMpiKr29oSI0GQus5ORytAoYZILpU50b8KoWzv4T1xeFVFCli540GBC9sg1Be9Jts1nJSjMkRGHlm6HXWIsOmP0KrRFFdVYqHkkRC7I=
+	t=1780829212; cv=none; b=q2yaS8Cpfs+FzP5icXzLw7bx0UGrVBgdaTSquUgXtPv6zk26iFx1Bnyb3rb52z+wHg0wa9vr4dOvs/6Wuk1y9Pwmj4Ha9sJsTkSNYcye3Zavru6eKTUYjOMt/nQBA2a+kZdy6YRjWYAX7Z+t9okkamkQW+AXbsKuFPpg5hsez0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829209; c=relaxed/simple;
-	bh=PaDwSN5X5ItMcREwnGTN39DXmLPe+RuFg817u2pJA44=;
+	s=arc-20240116; t=1780829212; c=relaxed/simple;
+	bh=6XkvGIlmfgbVCBZf5ICHrw6RXgzMWDxdP7nH0X/pV64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F1AZjbFJYLXKs7tEaPRr1GJUF8zWWfaXWIPNRPL4/MJLqFvLJ6m1dS/pfQvUeVTIvdEd/MMWX0qZCvdpJ+w8/Tet3xzDU3LxFHMBYUSqFDrhDeZjr0koQh8CtYk650aCYTHVv+pmlUF77Qoe8HCn3zhEObBaTLyMuC8FtYPS3Vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+JNovZV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oQXQkDeeSJzMvytAFn6IT3164mBr5FAD22jYChPZLTs9z0FfS40cH3Ljw1OkzK7+4/9RMWt3rJVwyiQli8qUaqKUvA5lyHYO8eTtagvefiL8rUs8VfytT2tFjIho+zUUgImsbyBi9japgBjqBMyaiLExC1GuvbzG54GkNAaFHz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQMM5Aak; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+JNovZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A9E1F00893;
-	Sun,  7 Jun 2026 10:46:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQMM5Aak"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13BE01F00893;
+	Sun,  7 Jun 2026 10:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829208;
-	bh=OPn8mxyDIFr4tPNPN21HY+5x2ohmwgaADYPzjFxKKGw=;
+	s=korg; t=1780829211;
+	bh=hDxrcmwxqrS1vBNC/lY2F4tPN366poFrHV09BeTCACs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K+JNovZVZ0mbW6ziyk0ciZZ6Bt6oOuFeL8/9eRMS3SUAbAEp/9mlfLrdFeFTlcyxy
-	 T75yUHeQIJmtKobZxPUYKLRwLtvO7QHAWOaesavOF8v4XTuGXY92boiIub8ZiJy0pt
-	 LzMp4t8gOgaZkdhswxlpE5fZLncpx92JriP5czsE=
+	b=UQMM5Aak4pobilialBiPe8IDM79VCRzTQnBCzVMdIm6/PyQtG2exxc7Kl/mrUK3bM
+	 3S8Dk9Yz2H/y7NOrKZtY5RhaczGsSxrh6HYQR5u66Yab+Eyk+9iuw+5HK4X1zeATta
+	 Six875azBlJkLtppa9o92XHCvdrfqF6pwa0NZi5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <malin89@huawei.com>,
-	Chenyuan Mi <michenyuan@huawei.com>,
-	Jingguo Tan <tanjingguo@huawei.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 6.12 204/307] xfrm: esp: restore combined single-frag length gate
-Date: Sun,  7 Jun 2026 12:00:01 +0200
-Message-ID: <20260607095735.216763202@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>
+Subject: [PATCH 7.0 254/332] usb: musb: omap2430: Fix use-after-free in omap2430_probe()
+Date: Sun,  7 Jun 2026 12:00:23 +0200
+Message-ID: <20260607095737.376034073@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,64 +46,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jingguo Tan <tanjingguo@huawei.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit dfa0d7b0ff1eb6b2c416b8fdb9b4f2cefba57a40 upstream.
+commit e194ce048f5a6c549b3a23a8c568c6470f40f772 upstream.
 
-The ESP out-of-place fast path appends the trailer in esp_output_head()
-before esp_output_tail() allocates the destination page frag. The
-head-side gate currently checks skb->data_len and tailen separately, but
-the tail code allocates a single destination frag from the combined
-post-trailer skb->data_len.
+In omap2430_probe(), of_node_put(np) is called prematurely before the
+last access to np, leading to a use-after-free if the node's reference
+count drops to zero. Move the of_node_put() calls after the last use of
+np in both the success and error paths.
 
-Reject the page-frag fast path when the combined aligned length exceeds a
-page. Otherwise skb_page_frag_refill() may fall back to a single page while
-the destination sg still spans the combined skb->data_len.
-
-Restore this combined-length page gate for both IPv4 and IPv6.
-
-Fixes: 5bd8baab087d ("esp: limit skb_page_frag_refill use to a single page")
-Cc: stable@vger.kernel.org
-Signed-off-by: Lin Ma <malin89@huawei.com>
-Signed-off-by: Chenyuan Mi <michenyuan@huawei.com>
-Signed-off-by: Jingguo Tan <tanjingguo@huawei.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: ffbe2feac59b ("usb: musb: omap2430: Fix probe regression for missing resources")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260409101104.480623-1-vulab@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/esp4.c |    4 ++--
- net/ipv6/esp6.c |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/musb/omap2430.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/ipv4/esp4.c
-+++ b/net/ipv4/esp4.c
-@@ -419,8 +419,8 @@ int esp_output_head(struct xfrm_state *x
- 			return err;
+--- a/drivers/usb/musb/omap2430.c
++++ b/drivers/usb/musb/omap2430.c
+@@ -337,7 +337,6 @@ static int omap2430_probe(struct platfor
+ 	} else {
+ 		device_set_of_node_from_dev(&musb->dev, &pdev->dev);
  	}
+-	of_node_put(np);
  
--	if (ALIGN(tailen, L1_CACHE_BYTES) > PAGE_SIZE ||
--	    ALIGN(skb->data_len, L1_CACHE_BYTES) > PAGE_SIZE)
-+	if (ALIGN(skb->data_len + tailen, L1_CACHE_BYTES) >
-+	    PAGE_SIZE)
- 		goto cow;
- 
- 	if (!skb_cloned(skb)) {
---- a/net/ipv6/esp6.c
-+++ b/net/ipv6/esp6.c
-@@ -448,8 +448,8 @@ int esp6_output_head(struct xfrm_state *
- 			return err;
+ 	glue->dev			= &pdev->dev;
+ 	glue->musb			= musb;
+@@ -455,6 +454,7 @@ static int omap2430_probe(struct platfor
+ 		dev_err(&pdev->dev, "failed to register musb device\n");
+ 		goto err_disable_rpm;
  	}
++	of_node_put(np);
  
--	if (ALIGN(tailen, L1_CACHE_BYTES) > PAGE_SIZE ||
--	    ALIGN(skb->data_len, L1_CACHE_BYTES) > PAGE_SIZE)
-+	if (ALIGN(skb->data_len + tailen, L1_CACHE_BYTES) >
-+	    PAGE_SIZE)
- 		goto cow;
+ 	return 0;
  
- 	if (!skb_cloned(skb)) {
+@@ -464,6 +464,7 @@ err_put_control_otghs:
+ 	if (!IS_ERR(glue->control_otghs))
+ 		put_device(glue->control_otghs);
+ err_put_musb:
++	of_node_put(np);
+ 	platform_device_put(musb);
+ 
+ 	return ret;
 
 
