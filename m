@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C093242DF;
-	Sun,  7 Jun 2026 10:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A127433372A;
+	Sun,  7 Jun 2026 10:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829795; cv=none; b=OJVo9McOU6JVTYxziXr1NzVhiDv54qAK398wPk3S0xcois34lyTZxmegq7KOPCOBB5TihX33vyTv3bo2HFolNARzc2wT46SKQy5DBGbGREhDoWyKRAFY9mSBkn4WvYDi/sInnws/Hy9mPzJ85kD3TDsg4hR7yjbuHhHhX3WlRo8=
+	t=1780829800; cv=none; b=bkqtjxpKYjX5Q02IX0WtnUHSFgJ/hEtLiyEmcf9pfTKz++i/wMXoblpre8qqOmuuUew5DunqG71zJkLW1uvCMxx5gkuyLLKq85Mc083zOYpsMtXLtDoTTKrCzTa7brNoUc7Qn1BVDXHFPrf+HjRR98nWQ/vypsOD2YVAYhLT2bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829795; c=relaxed/simple;
-	bh=ZrXTcrD6ZoY2Frgzzr8BzmQB4kPPVsWM4/zybF3ziYA=;
+	s=arc-20240116; t=1780829800; c=relaxed/simple;
+	bh=16iL4hKQ8WirjK9BYKbWrW6nBwJ59QtlnI29tacsdMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XcHX3yH1oezzaghqaEx1WfZBQQfe+WRQ3VzCShb2sWcSRIYxWdIcZ0rwLYqC5U+NMdAF5XZxFh4QtC/CJI3LoYXyIfwDClicO3O1i0aZnJXU05Gl73wTjva8pDGRkG5BzUb7yg3XCoDELbhyLqxeK9xij3PJdatS2OzYgRYzYkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYvM5IYE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tlRYkKPzZ9gFhQg5Do7IR57+SrDlK8PIan3fzfNHk9miuUZIZuWXTpOP2h7u8WOxIHN4DOYPqYwkWI2MzvhpNlyEhm6y4wqkS29C+Tft3c7Lofyg7NLNPMnDlha4b0LlhftlFSZqFb1kn9M2QaaqJzei0YMeam7rfBKJMS1cqDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wB36/WNV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYvM5IYE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA7F1F00893;
-	Sun,  7 Jun 2026 10:56:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wB36/WNV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 734421F00893;
+	Sun,  7 Jun 2026 10:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829793;
-	bh=pLoPHCVaz+sBquB/o6Us+FFMfJYX5QeGjY3P5QkKACk=;
+	s=korg; t=1780829797;
+	bh=Z5Z6PWR6qyixSQFlBjAQyxBQnA9rbbQ6+oQJHWMy4jk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vYvM5IYEVV+11mLv9coHsHytJXVb+ApkUCpV0SGggxzUpI5cy5u8BQEhgi/ANNaJ6
-	 UbYo+zw0aj5GMGgv99Fd2ZJ9P2UnunNjDWGazGQ27gDb8AUX2Ay4g0sXMQpMw2MuJS
-	 x5li1Ze9eaunuzeNVitdRj/K5GYeBBxvGCmP+BoE=
+	b=wB36/WNVdHqQaRcKDsKT1oLxYq4i8ZX5jqXZ2AstNu/z+TK93qSEGmtFNRMs6thXM
+	 ioGSGzxRz3DYV9gfwLOdL5XugodiAXxwCBIxsS8LlFSaAspfwVo1O+fpKgcvWo3tQk
+	 8hx9NewZ/oyngUGV5RRT7rXI81MZHYgrrG3Qi1RE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 7.0 298/332] serial: qcom_geni: fix kfifo underflow when flush precedes DMA completion IRQ
-Date: Sun,  7 Jun 2026 12:01:07 +0200
-Message-ID: <20260607095739.006909366@linuxfoundation.org>
+	Eric Huang <jinhuieric.huang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 254/307] drm/amdkfd: fix a vulnerability of integer overflow in kfd debugger
+Date: Sun,  7 Jun 2026 12:00:51 +0200
+Message-ID: <20260607095737.017968802@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,68 +46,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+From: Eric Huang <jinhuieric.huang@amd.com>
 
-commit 452d6fa37ae9b021f4f6d397dbae077f7296f6f4 upstream.
+commit 93f5534b35a05ef8a0109c1eefa800062fee810a upstream.
 
-When uart_flush_buffer() runs before the DMA completion IRQ is delivered,
-the following race can occur (all steps serialized by uart_port_lock):
+get_queue_ids() computes array_size = num_queues * sizeof(uint32_t),
+which could overflow on 32-bit size_t build. using array_size()
+instead, it saturates to SIZE_MAX on overflow.
 
-  1. DMA starts: tx_remaining = N, kfifo contains N bytes
-  2. DMA completes in hardware; IRQ is pending but not yet delivered
-  3. uart_flush_buffer() acquires the port lock and calls kfifo_reset(),
-     making kfifo_len() = 0 while tx_remaining remains N
-  4. uart_flush_buffer() releases the port lock
-  5. DMA IRQ fires; handle_tx_dma() acquires the port lock and calls
-     uart_xmit_advance(uport, tx_remaining) on an empty kfifo
-
-uart_xmit_advance() increments kfifo->out by tx_remaining. Since
-kfifo_reset() already set both in and out to 0, out wraps past in,
-causing kfifo_len() to return UART_XMIT_SIZE - tx_remaining. The next
-start_tx_dma() call then submits a DMA transfer of stale buffer data.
-
-Fix this by snapshotting kfifo_len() at the start of handle_tx_dma()
-and skipping uart_xmit_advance() when fifo_len < tx_remaining, which
-indicates the kfifo was reset by a preceding flush.
-
-Fixes: 2aaa43c70778 ("tty: serial: qcom-geni-serial: add support for serial engine DMA")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260506-serial-dma-stale-tx-buf-v1-1-e3ccb360d719@oss.qualcomm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Eric Huang <jinhuieric.huang@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 2d57a0475f085c08b49312dfd8edcb461845f285)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1030,8 +1030,20 @@ static void qcom_geni_serial_handle_tx_d
- {
- 	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 	struct tty_port *tport = &uport->state->port;
-+	unsigned int fifo_len = kfifo_len(&tport->xmit_fifo);
-+
-+	/*
-+	 * Only advance the kfifo if it still contains the bytes that were
-+	 * transferred. uart_flush_buffer() may have run before this IRQ
-+	 * fired: it calls kfifo_reset() under the port lock, making
-+	 * fifo_len = 0 while tx_remaining remains non-zero. Calling
-+	 * uart_xmit_advance() in that case would underflow kfifo->out past
-+	 * kfifo->in, making kfifo_len() wrap to UART_XMIT_SIZE - tx_remaining
-+	 * and triggering a spurious large DMA transfer of stale data.
-+	 */
-+	if (fifo_len >= port->tx_remaining)
-+		uart_xmit_advance(uport, port->tx_remaining);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -3194,12 +3194,14 @@ static void copy_context_work_handler (s
  
--	uart_xmit_advance(uport, port->tx_remaining);
- 	geni_se_tx_dma_unprep(&port->se, port->tx_dma_addr, port->tx_remaining);
- 	port->tx_dma_addr = 0;
- 	port->tx_remaining = 0;
+ static uint32_t *get_queue_ids(uint32_t num_queues, uint32_t *usr_queue_id_array)
+ {
+-	size_t array_size = num_queues * sizeof(uint32_t);
+-
+ 	if (!usr_queue_id_array)
+ 		return NULL;
+ 
+-	return memdup_user(usr_queue_id_array, array_size);
++	if (num_queues > KFD_MAX_NUM_OF_QUEUES_PER_PROCESS)
++		return ERR_PTR(-EINVAL);
++
++	return memdup_user(usr_queue_id_array,
++			   array_size(num_queues, sizeof(uint32_t)));
+ }
+ 
+ int resume_queues(struct kfd_process *p,
 
 
