@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3E12D8378;
-	Sun,  7 Jun 2026 10:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96D22D8378;
+	Sun,  7 Jun 2026 10:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829333; cv=none; b=cr6LzV/GuPwB2p5OiHV74C+KrNQ0UdyWgspRWxmr4l0ZGEyj4ZdFKXRd+bTcoSuz0Orzs4xXYzONKyLI4bgWekjPy4Axmfo4x7/CV8rAc8VudWwdUyGXc9Mu/AO7bP/pyj5wObVDEADAz2cuUq3pGlhcHt/fUAyzRt79ZyRau30=
+	t=1780829337; cv=none; b=SsIEsmbd4gRX2pxOYnkTOKxvFi7JLBkZBWK/8NtvvcULR0K/wAvMe5ZgUC3+X2GbCuQvtnWGL21/8GMxsmJKEz9+rI0Y8lAN/3pNQtxL1smuFwCIIQ+qiYjw0sM0YZf+X4qSKhbk3eaSpaewzxDdnsItXmKd4vfjEeo6nywzjc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829333; c=relaxed/simple;
-	bh=9gslOVyyDKGk/rB1XJooOMilYX9SYB78vboBM2tRomM=;
+	s=arc-20240116; t=1780829337; c=relaxed/simple;
+	bh=lK6mgW+fReOoddmQ4NWyAWWGCRLTCWOgPKcJwVeOC7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MiqwZO99OnzCzfd0m6r8jGRwQtLaiVwxphBH/ucAkqKpV0UGSnYdDqO+rIdSrjyzHpCW944XsIh4MrHYhow0lbDBB02M02Y7cbYdDqwjYuy3yG+2cf+VpGJlaY8enRf9S0NFDhCIc/jYn1wRaKxWPO14Ncuibbxg96elcD+w4aU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dv/pGNGj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d1wZx/st8UE7USRH7GP7u30Mqg2LWRVOUPfla3Jud9V2F1E3ro8DivGLz+xo0fcwDvQOf83Fc6/bJdA+ywemYfZK22lLSrkR/oUBw3V3BPsFqy7EVLTEPHWEV0B5zjc0mwPWuh/P1M7Exc7w+s2hFHpMn/1B7JUz59X+vAuOCfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1nW25rDe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dv/pGNGj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F2A1F00893;
-	Sun,  7 Jun 2026 10:48:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1nW25rDe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BE61F00893;
+	Sun,  7 Jun 2026 10:48:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829332;
-	bh=qn+fJjq6+WtelGBx7JBYDW8Tjo1ZCMnQi0snJIBVhJo=;
+	s=korg; t=1780829336;
+	bh=QNpt8Kg7o/bwJH1bcTH2WxWFeUjNCDhgdIBeOsmRw78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dv/pGNGjs9M8/vjTI4kqilj6c+fxj80oblkAAf8GFpk8tdW71UyQJXnpi2PIut5Ae
-	 Lw1nn+M5+9rW3hnXJejtS6zHyHd2wnFvVrc9NM17yJ6EI3JJNygcUSOLmzNEtt9hm1
-	 bXg51tadqNj/VQcKnX/iFh9hG4Qc7XDxEZe5NZzk=
+	b=1nW25rDejM+IWEFiB/FgqWTdKjZVdXbxdf3VUUsntczE1lnpcS+kDtM9wqJ1jkDAJ
+	 Alvz5JOW3XmR9t/nm4iWJYv8ShbNr/9tKFxxlfHTGLt5O8aUwrwkuXUAHkqFybbASY
+	 4YaMLNcM4Jt/Fn8iM+y2U647kq95W6SIbiJ5uvTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Peter Chen <peter.chen@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Xu Yang <xu.yang_2@nxp.com>
-Subject: [PATCH 6.12 215/307] usb: chipidea: core: convert ci_role_switch to local variable
-Date: Sun,  7 Jun 2026 12:00:12 +0200
-Message-ID: <20260607095735.619177755@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	James Chapman <jchapman@katalix.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 192/307] l2tp: use refcount_inc_not_zero in l2tp_session_get_by_ifname
+Date: Sun,  7 Jun 2026 11:59:49 +0200
+Message-ID: <20260607095734.776054607@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
 References: <20260607095727.647295505@linuxfoundation.org>
@@ -52,77 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 8f6aa392653e52a45858cff5c063df550028836b upstream.
+commit 05f95729ca844704d15e49ce14868af4b403b32b upstream.
 
-When a system contains multiple USB controllers, the global ci_role_switch
-variable may be overwritten by subsequent driver initialization code.
+A reader in l2tp_session_get_by_ifname() can return a pointer to a
+session whose refcount has reached zero. The getter takes its
+reference with plain refcount_inc(), but every other session getter
+in the same file (l2tp_v2_session_get, l2tp_v3_session_get, and the
+corresponding _get_next variants) uses refcount_inc_not_zero()
+because the IDR/RCU lookup can race with refcount_dec_and_test() ->
+l2tp_session_free() -> kfree_rcu(). The ifname getter is the only
+outlier; the inconsistency was raised on-list after 979c017803c4
+("l2tp: use list_del_rcu in l2tp_session_unhash").
 
-This can cause issues in the following cases:
- - The 2nd ci_hdrc_probe() sees ci_role_switch.fwnode as non-NULL even
-   though the "usb-role-switch" property is not present for the controller.
- - When the ci_hdrc device is unbound and bound again, ci_role_switch
-   fwnode will not be reassigned, and the old value will be used instead.
+A reader inside rcu_read_lock_bh() that matches session->ifname can
+be preempted between the strcmp() and the refcount_inc(). If the
+last reference drops on another CPU in that window, the reader's
+refcount_inc() runs on a counter that has reached zero. refcount_t
+catches the addition-on-zero, prints "refcount_t: addition on 0;
+use-after-free", saturates the counter, and returns the saturated
+pointer to the caller. Session memory is held live by the in-flight
+RCU read section, but the kfree_rcu() callback queued from
+l2tp_session_free() will free it once the grace period closes; a
+caller that dereferences the returned session past that point hits
+a slab-use-after-free. On PREEMPT_RT local_bh_disable() is a per-CPU
+sleeping lock and the preemption window is real; on stock PREEMPT
+kernels local_bh_disable() is a preempt_count increment that closes
+the cross-CPU race in practice (see below).
 
-Convert ci_role_switch to a local variable to fix these issues.
+Use refcount_inc_not_zero() and continue the list walk on failure,
+matching the other session getters in the file. The ifname getter
+is the only session getter in net/l2tp/ that still uses the bare
+refcount_inc() pattern; this change restores file-internal
+consistency. The success path is unchanged.
 
-Fixes: 05559f10ed79 ("usb: chipidea: add role switch class support")
-Cc: stable <stable@kernel.org>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://patch.msgid.link/20260427075755.3611217-1-xu.yang_2@nxp.com
+Fixes: abe7a1a7d0b6 ("l2tp: improve tunnel/session refcount helpers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: James Chapman <jchapman@katalix.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260523023423.2568972-1-michael.bommarito@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/core.c |   16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ net/l2tp/l2tp_core.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/chipidea/core.c
-+++ b/drivers/usb/chipidea/core.c
-@@ -669,12 +669,6 @@ static enum ci_role ci_get_role(struct c
- 	return role;
- }
+--- a/net/l2tp/l2tp_core.c
++++ b/net/l2tp/l2tp_core.c
+@@ -441,12 +441,13 @@ struct l2tp_session *l2tp_session_get_by
+ 	idr_for_each_entry_ul(&pn->l2tp_tunnel_idr, tunnel, tmp, tunnel_id) {
+ 		if (tunnel) {
+ 			list_for_each_entry_rcu(session, &tunnel->session_list, list) {
+-				if (!strcmp(session->ifname, ifname)) {
+-					refcount_inc(&session->ref_count);
+-					rcu_read_unlock_bh();
++				if (strcmp(session->ifname, ifname))
++					continue;
++				if (!refcount_inc_not_zero(&session->ref_count))
++					continue;
++				rcu_read_unlock_bh();
  
--static struct usb_role_switch_desc ci_role_switch = {
--	.set = ci_usb_role_switch_set,
--	.get = ci_usb_role_switch_get,
--	.allow_userspace_control = true,
--};
--
- static int ci_get_platdata(struct device *dev,
- 		struct ci_hdrc_platform_data *platdata)
- {
-@@ -801,9 +795,6 @@ static int ci_get_platdata(struct device
- 			cable->connected = false;
- 	}
- 
--	if (device_property_read_bool(dev, "usb-role-switch"))
--		ci_role_switch.fwnode = dev->fwnode;
--
- 	platdata->pctl = devm_pinctrl_get(dev);
- 	if (!IS_ERR(platdata->pctl)) {
- 		struct pinctrl_state *p;
-@@ -1045,6 +1036,7 @@ ATTRIBUTE_GROUPS(ci);
- 
- static int ci_hdrc_probe(struct platform_device *pdev)
- {
-+	struct usb_role_switch_desc ci_role_switch = {};
- 	struct device	*dev = &pdev->dev;
- 	struct ci_hdrc	*ci;
- 	struct resource	*res;
-@@ -1191,7 +1183,11 @@ static int ci_hdrc_probe(struct platform
+-					return session;
+-				}
++				return session;
+ 			}
  		}
  	}
- 
--	if (ci_role_switch.fwnode) {
-+	if (device_property_read_bool(dev, "usb-role-switch")) {
-+		ci_role_switch.set = ci_usb_role_switch_set;
-+		ci_role_switch.get = ci_usb_role_switch_get;
-+		ci_role_switch.allow_userspace_control = true;
-+		ci_role_switch.fwnode = dev_fwnode(dev);
- 		ci_role_switch.driver_data = ci;
- 		ci->role_switch = usb_role_switch_register(dev,
- 					&ci_role_switch);
 
 
