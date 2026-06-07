@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109A2325706;
-	Sun,  7 Jun 2026 10:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DECF3264F2;
+	Sun,  7 Jun 2026 10:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829862; cv=none; b=C6Wt3jMROxGw5pyxmQTshUdfUZfKtOUBxcvEODH0W4YdlowYoDILHw2uLH3wVdioZjpcXIGkTSwWpJZVMh1wJG3c1LiBa2ua5HNGwL+MflUwsRFx591RCzZIRt5kDXM3fnLiy4enzuDWGb3nSuoaLb4FX4rVbiDbU43kCjY+hNo=
+	t=1780829865; cv=none; b=jF0VpfgRoJWrzWiZ7pFJnp0kUTWB2M3dztw4kvI9bnVUjKeA0LAp7XkHosS8qbrJR2YberRO7/2P6o9sZqsuCFQK3pNZr3sBRVSz49wrwxAU5wVmLJeQZBDbj8bBz6pfsSRHgEi7VV/IztpeMepTs1cE7dYQpITsDIDvdcvd6tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829862; c=relaxed/simple;
-	bh=PaVgC7liIF5uGnqcWT24I4//WWJggikaW5u50e/Xtu0=;
+	s=arc-20240116; t=1780829865; c=relaxed/simple;
+	bh=Vh7ncekoALkAoBAu5QAK8blQ69NULmnqkM0+bvofugI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a2xRK5ERzsQ2e4dWqLvjRiZqwooyy3XpdfXOhD/orLujqSHRWKzPt6LA7IwKYcaCVpOE52dVR4YnxIAU4tvp0iyh8SO2nuRIVy2ENc9+e5bkFyRxuFDdD5dO8SEZ+QXWXWq7ZdD/V3zrejj0udVVuk712PU2EFUgbHxyX5XZo6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZw0k63W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T7cycAw5d46si7sFIhgJeMeNEA5g60aBgR6sNF8lMqB0Y0cx2GWkvWcGDXBzftIjWswev8j9sE9OklvmGpCyQcGqOJ24gdSJLCj6hl+wwA3J+P/l8E89kHXA2ib+2QL7EdtohRzK4QhMrFSfMMn/+P0pGxJKLgy3ubRtV34U1BI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=biy+psE3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZw0k63W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15ED71F00893;
-	Sun,  7 Jun 2026 10:57:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="biy+psE3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF011F00893;
+	Sun,  7 Jun 2026 10:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829860;
-	bh=aUv6YvCi28VNPRUy68Z1Fdec3KtkKaTQCroA0M16hQQ=;
+	s=korg; t=1780829864;
+	bh=NtGenD7i2eCaosJvND/lsYF7u9iXPNr0lFFo2d7X44o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZZw0k63WMCVyE1dnPqz0rE+mg925g8eg3jRUX9INGz1el8yOE3jeCBDLbgFPEfvTk
-	 hI0pw0Yuv5tYtAJR2+a3R+y3X7J3c9lh1HHH5h12lYiIH9fO34X0l+M4eTFtVit5VP
-	 ZWCMJ6mpsYWh1l0UaQ4WhPMy+6xXzHgF324JnA5s=
+	b=biy+psE3NTwYqJfKHlGH+Vky1Mo/aWpZTnP5toV13tavjRNsOKS7VT1+1p9ecJpu7
+	 /JCD7b+gH08QuRkX1sAlCvtrF8hSR4RH8QtPj96s3hpdZv8Kg7dOiO3qwbJZovaIMM
+	 9UNzIbE7jYIQNW/3jqWkTaCSlpmIskjicWaLLzSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David E. Box" <david.e.box@linux.intel.com>,
-	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 319/332] platform/x86/intel/vsec: Refactor base_addr handling
-Date: Sun,  7 Jun 2026 12:01:28 +0200
-Message-ID: <20260607095739.833305807@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>
+Subject: [PATCH 6.12 260/307] serial: zs: Switch to using channel reset
+Date: Sun,  7 Jun 2026 12:00:57 +0200
+Message-ID: <20260607095737.245802507@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,128 +43,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "David E. Box" <david.e.box@linux.intel.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit 904b333fc51cc045941df9656302449a0fc9978e ]
+commit 8572955630f30948837088aa98bcbe0532d1ceac upstream.
 
-The base_addr field in intel_vsec_platform_info was originally added to
-support devices that emulate PCI VSEC capabilities in MMIO. Previously,
-the code would check at registration time whether base_addr was set,
-falling back to the PCI BAR if not.
+Switch the driver to using the channel reset rather than hardware reset,
+simplifying handling by removing an interference between channels that
+causes the other channel to become uninitialised afterwards.
 
-Refactor this by making base_addr an explicit function parameter. This
-clarifies ownership of the value and removes conditional logic from
-intel_vsec_add_dev(). It also enables making intel_vsec_platform_info
-const in a later patch, since the function no longer needs to write to
-info->base_addr.
+There is little difference between the two kinds of reset in terms of
+register settings that result, and we initialise the whole register set
+right away anyway.  However this prevents a hang from happening should
+the console output handler in the firmware try to access the other port
+whose transmitter has been disabled and line parameters messed up.
 
-No functional change intended.
+For example this will happen if the keyboard port (port A) is chosen for
+the system console, unusually but not insanely for a headless system, as
+the port is wired to a standard DA-15 connector and an adapter can be
+easily made.  Or with the next change in place this would happen for the
+regular console port (port B), since the keyboard port (port A) will be
+initialised first.
 
-Signed-off-by: David E. Box <david.e.box@linux.intel.com>
-Reviewed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Link: https://patch.msgid.link/20260313015202.3660072-2-david.e.box@linux.intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Stable-dep-of: 348ccc754d89 ("platform/x86/intel/vsec: Fix enable_cnt imbalance on PCIe error recovery")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Just remove the unnecessary complication then, a channel reset is good
+enough.  We still need the initialisation marker, now per channel rather
+than per SCC, as for the console port zs_reset() will be called twice:
+once early on via zs_serial_console_init() for the console setup only,
+and then again via zs_config_port() as the port is associated with a TTY
+device.
+
+Fixes: 8b4a40809e53 ("zs: move to the serial subsystem")
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Cc: stable@vger.kernel.org # v2.6.23+
+Link: https://patch.msgid.link/alpine.DEB.2.21.2605062323430.46195@angie.orcam.me.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/vsec.c |   23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ drivers/tty/serial/zs.c |    7 ++++---
+ drivers/tty/serial/zs.h |    2 +-
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/platform/x86/intel/vsec.c
-+++ b/drivers/platform/x86/intel/vsec.c
-@@ -271,14 +271,13 @@ EXPORT_SYMBOL_NS_GPL(intel_vsec_add_aux,
+--- a/drivers/tty/serial/zs.c
++++ b/drivers/tty/serial/zs.c
+@@ -832,21 +832,22 @@ static void zs_shutdown(struct uart_port
  
- static int intel_vsec_add_dev(struct pci_dev *pdev, struct intel_vsec_header *header,
- 			      struct intel_vsec_platform_info *info,
--			      unsigned long cap_id)
-+			      unsigned long cap_id, u64 base_addr)
+ static void zs_reset(struct zs_port *zport)
  {
- 	struct intel_vsec_device __free(kfree) *intel_vsec_dev = NULL;
- 	struct resource __free(kfree) *res = NULL;
- 	struct resource *tmp;
- 	struct device *parent;
- 	unsigned long quirks = info->quirks;
--	u64 base_addr;
- 	int i;
++	struct zs_port *zport_a = &zport->scc->zport[ZS_CHAN_A];
+ 	struct zs_scc *scc = zport->scc;
+ 	int irq;
+ 	unsigned long flags;
  
- 	if (info->parent)
-@@ -310,11 +309,6 @@ static int intel_vsec_add_dev(struct pci
- 	if (quirks & VSEC_QUIRK_TABLE_SHIFT)
- 		header->offset >>= TABLE_OFFSET_SHIFT;
- 
--	if (info->base_addr)
--		base_addr = info->base_addr;
--	else
--		base_addr = pdev->resource[header->tbir].start;
--
- 	/*
- 	 * The DVSEC/VSEC contains the starting offset and count for a block of
- 	 * discovery tables. Create a resource array of these tables to the
-@@ -412,7 +406,8 @@ static int get_cap_id(u32 header_id, uns
- 
- static int intel_vsec_register_device(struct pci_dev *pdev,
- 				      struct intel_vsec_header *header,
--				      struct intel_vsec_platform_info *info)
-+				      struct intel_vsec_platform_info *info,
-+				      u64 base_addr)
- {
- 	const struct vsec_feature_dependency *consumer_deps;
- 	struct vsec_priv *priv;
-@@ -428,7 +423,7 @@ static int intel_vsec_register_device(st
- 	 * For others using the exported APIs, add the device directly.
- 	 */
- 	if (!pci_match_id(intel_vsec_pci_ids, pdev))
--		return intel_vsec_add_dev(pdev, header, info, cap_id);
-+		return intel_vsec_add_dev(pdev, header, info, cap_id, base_addr);
- 
- 	priv = pci_get_drvdata(pdev);
- 	if (priv->state[cap_id] == STATE_REGISTERED ||
-@@ -444,7 +439,7 @@ static int intel_vsec_register_device(st
- 
- 	consumer_deps = get_consumer_dependencies(priv, cap_id);
- 	if (!consumer_deps || suppliers_ready(priv, consumer_deps, cap_id)) {
--		ret = intel_vsec_add_dev(pdev, header, info, cap_id);
-+		ret = intel_vsec_add_dev(pdev, header, info, cap_id, base_addr);
- 		if (ret)
- 			priv->state[cap_id] = STATE_SKIP;
- 		else
-@@ -464,7 +459,7 @@ static bool intel_vsec_walk_header(struc
- 	int ret;
- 
- 	for ( ; *header; header++) {
--		ret = intel_vsec_register_device(pdev, *header, info);
-+		ret = intel_vsec_register_device(pdev, *header, info, info->base_addr);
- 		if (!ret)
- 			have_devices = true;
+ 	spin_lock_irqsave(&scc->zlock, flags);
+ 	irq = !irqs_disabled_flags(flags);
+-	if (!scc->initialised) {
++	if (!zport->initialised) {
+ 		/* Reset the pointer first, just in case...  */
+ 		read_zsreg(zport, R0);
+ 		/* And let the current transmission finish.  */
+ 		zs_line_drain(zport, irq);
+-		write_zsreg(zport, R9, FHWRES);
++		write_zsreg(zport, R9, zport == zport_a ? CHRA : CHRB);
+ 		udelay(10);
+ 		write_zsreg(zport, R9, 0);
+-		scc->initialised = 1;
++		zport->initialised = 1;
  	}
-@@ -512,7 +507,8 @@ static bool intel_vsec_walk_dvsec(struct
- 		pci_read_config_dword(pdev, pos + PCI_DVSEC_HEADER2, &hdr);
- 		header.id = PCI_DVSEC_HEADER2_ID(hdr);
+ 	load_zsregs(zport, zport->regs, irq);
+ 	spin_unlock_irqrestore(&scc->zlock, flags);
+--- a/drivers/tty/serial/zs.h
++++ b/drivers/tty/serial/zs.h
+@@ -22,6 +22,7 @@
+ struct zs_port {
+ 	struct zs_scc	*scc;			/* Containing SCC.  */
+ 	struct uart_port port;			/* Underlying UART.  */
++	int		initialised;		/* For the console port.  */
  
--		ret = intel_vsec_register_device(pdev, &header, info);
-+		ret = intel_vsec_register_device(pdev, &header, info,
-+						 pci_resource_start(pdev, header.tbir));
- 		if (ret)
- 			continue;
+ 	int		clk_mode;		/* May be 1, 16, 32, or 64.  */
  
-@@ -557,7 +553,8 @@ static bool intel_vsec_walk_vsec(struct
- 		header.tbir = INTEL_DVSEC_TABLE_BAR(table);
- 		header.offset = INTEL_DVSEC_TABLE_OFFSET(table);
+@@ -41,7 +42,6 @@ struct zs_scc {
+ 	struct zs_port	zport[2];
+ 	spinlock_t	zlock;
+ 	atomic_t	irq_guard;
+-	int		initialised;
+ };
  
--		ret = intel_vsec_register_device(pdev, &header, info);
-+		ret = intel_vsec_register_device(pdev, &header, info,
-+						 pci_resource_start(pdev, header.tbir));
- 		if (ret)
- 			continue;
- 
+ #endif /* __KERNEL__ */
 
 
