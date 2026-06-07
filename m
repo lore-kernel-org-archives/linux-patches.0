@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0398F2DB7A3;
-	Sun,  7 Jun 2026 10:20:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D28C2EB87F;
+	Sun,  7 Jun 2026 10:20:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827626; cv=none; b=fc8SM0UqD2uqHNR/mNdpNZTyvESRfHu3iuKnVPG3myIYjD8gMjvDDfQ+IZgwr0Vlii18g/g0+1qaJZUlqSrGDC2fhSiPvD14LGAd0YCpu98d9yQL6IlQJD+a2utGPpa3ifv54WOIOwN2HDuIUJ0MrZGUZNJmlhCDYkiUhkM9Woo=
+	t=1780827630; cv=none; b=iaz+4cjcz8CdEqQ+yMdxWJ29WC4YwhHL5z7NGcYtV4OzPlRN0HklFI//4uFh+fi7l2IzOTrkmtwFCUz0DQ0qsuJtsqReh1V6hdwRexQRxaDDrl52Era6wTV+liFYRi6+5lojPfPxMse6LSRqSlzoBrn9AiT+qhWXTqTHNh39e3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827626; c=relaxed/simple;
-	bh=zGAMjeIJ+MDOTyXZqOUzrQEVtyh198KlyRaybkRZZtI=;
+	s=arc-20240116; t=1780827630; c=relaxed/simple;
+	bh=mFiFUUhrdTUfVzD6H0mr3IGkVg8uHo6t88ZzTCqdj+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WQO98x0Hzr9uebUDl085vfqFZIT71UNFzrYODikf5I9KxtGiknMNkBjUTOE4/ZP+dYtPjujgcNaMDX539z6/tMNn4k3XvY5JNuA1GmQnsMwX5Qn6yqyDc0a1Z6Lcyuz+olLToyTAXIb4869xZQi57qzzwmiiI5B4uqALk3s22d8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XQnXMSL1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DitjmaFzdiOCwxMdqctYP7qMNuuWMqzESz9N0cuVA3tRd3+eZkGF3QHg/ISIjYZLL0EoqhjXyxvnkNDXCgW6olrM/kKvRO506fpfVaBiDamppPide5/NRuJFmRyxRJfBp1qIZ1DQxaMr5QKI9t9C1gL+YGBPInuc9mVdHuDUNUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWbSrVb3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XQnXMSL1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090D01F00893;
-	Sun,  7 Jun 2026 10:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWbSrVb3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83A31F00893;
+	Sun,  7 Jun 2026 10:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827624;
-	bh=0oqRpPFOe4622ln5HWYzalJ5fubuz5OmEC9oGzarCQ0=;
+	s=korg; t=1780827629;
+	bh=QFdFqSJKhqzo83ll3291rcxA0rwKDKkf0yHd4oev+pU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XQnXMSL1HU8QR5lxYXz6wDIZw+m2MQpfj1T8cdUuLP+BcVhu/qMhu3MM/V3b5liQC
-	 0pk/J1OSssM/hNqSiC6h2JW+WhXhGYqlx4KV7oNR+9/Qcf3kPiP9TYkuIj+5yEE3yS
-	 Vx6BGTVnJsCM05rRr4YoDDFF609s+UIgq3P4tbFk=
+	b=sWbSrVb3ywGdidSPSG9Me1hE8i/8+/h2p3GRPc6OzBoG/9xbAJJtsb1lfM3x6s61i
+	 oDOeQ002lOtGpkZhdedjX9GYs5Ie+2UGdm5nlEHecdIHpYzEd4jJOkZOoGUoWPAZ3U
+	 fme7GUhtjFS9DX8LVbaN9VT3/Ul70UNEP/OJu6QE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Dipayaan Roy <dipayanroy@linux.microsoft.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	William Liu <will@willsroot.io>,
+	Savino Dicanosa <savy@syst3mfailure.io>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 088/315] net: mana: Add NULL guards in teardown path to prevent panic on attach failure
-Date: Sun,  7 Jun 2026 11:57:55 +0200
-Message-ID: <20260607095730.856002198@linuxfoundation.org>
+Subject: [PATCH 6.12 074/307] net/sched: fix packet loop on netem when duplicate is on
+Date: Sun,  7 Jun 2026 11:57:51 +0200
+Message-ID: <20260607095730.481390690@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,149 +51,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dipayaan Roy <dipayanroy@linux.microsoft.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 17bfe0a8c014ee1d542ad352cd6a0a505361664a ]
+[ Upstream commit 9552b11e3edabc97cfcd9f29103d5afbce7ae183 ]
 
-When queue allocation fails partway through, the error cleanup frees
-and NULLs apc->tx_qp and apc->rxqs. Multiple teardown paths such as
-mana_remove(), mana_change_mtu() recovery, and internal error handling
-in mana_alloc_queues() can subsequently call into functions that
-dereference these pointers without NULL checks:
+When netem duplicates a packet it re-enqueues the copy at the root qdisc.
+If another netem sits in the tree the copy can be duplicated
+again, recursing until the stack or memory is exhausted.
 
-- mana_chn_setxdp() dereferences apc->rxqs[0], causing a NULL pointer
-  dereference panic (CR2: 0000000000000000 at mana_chn_setxdp+0x26).
-- mana_destroy_vport() iterates apc->rxqs without a NULL check.
-- mana_fence_rqs() iterates apc->rxqs without a NULL check.
-- mana_dealloc_queues() iterates apc->tx_qp without a NULL check.
+The original duplication guard temporarily zeroed q->duplicate around
+the re-enqueue, but that does not cover all cases because it is
+per-qdisc state shared across all concurrent enqueue paths
+and is not safe without additional locking.
 
-Add NULL guards for apc->rxqs in mana_fence_rqs(),
-mana_destroy_vport(), and before the mana_chn_setxdp() call. Add a
-NULL guard for apc->tx_qp in mana_dealloc_queues() to skip TX queue
-draining when TX queues were never allocated or already freed.
+Use the skb tc_depth field introduced in an earlier patch:
+ - increment it on the duplicate before re-enqueue
+ - skip duplication for any skb whose tc_depth is already non-zero.
 
-Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Signed-off-by: Dipayaan Roy <dipayanroy@linux.microsoft.com>
-Link: https://patch.msgid.link/20260525081129.1230035-2-dipayanroy@linux.microsoft.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This marks the packet itself rather than mutating qdisc state,
+therefore it is safe regardless of tree topology or concurrency.
+
+Fixes: 0afb51e72855 ("[PKT_SCHED]: netem: reinsert for duplication")
+Reported-by: William Liu <will@willsroot.io>
+Reported-by: Savino Dicanosa <savy@syst3mfailure.io>
+Closes: https://lore.kernel.org/netdev/8DuRWwfqjoRDLDmBMlIfbrsZg9Gx50DHJc1ilxsEBNe2D6NMoigR_eIRIG0LOjMc3r10nUUZtArXx4oZBIdUfZQrwjcQhdinnMis_0G7VEk=@willsroot.io/
+Co-developed-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Reviewed-by: William Liu <will@willsroot.io>
+Reviewed-by: Stephen Hemminger <stephen@networkplumber.org>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260525122556.973584-5-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c | 70 +++++++++++--------
- 1 file changed, 41 insertions(+), 29 deletions(-)
+ net/sched/sch_netem.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
-index d1eb77d540427d..6ef2a3ee44c6b0 100644
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -1720,6 +1720,9 @@ static void mana_fence_rqs(struct mana_port_context *apc)
- 	struct mana_rxq *rxq;
- 	int err;
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index 1fdebf2ab7ee46..136b7d81296eff 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -459,7 +459,8 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 	skb->prev = NULL;
  
-+	if (!apc->rxqs)
-+		return;
-+
- 	for (rxq_idx = 0; rxq_idx < apc->num_queues; rxq_idx++) {
- 		rxq = apc->rxqs[rxq_idx];
- 		err = mana_fence_rq(apc, rxq);
-@@ -2830,13 +2833,16 @@ static void mana_destroy_vport(struct mana_port_context *apc)
- 	struct mana_rxq *rxq;
- 	u32 rxq_idx;
+ 	/* Random duplication */
+-	if (q->duplicate && q->duplicate >= get_crandom(&q->dup_cor, &q->prng))
++	if (q->duplicate && skb->tc_depth == 0 &&
++	    q->duplicate >= get_crandom(&q->dup_cor, &q->prng))
+ 		++count;
  
--	for (rxq_idx = 0; rxq_idx < apc->num_queues; rxq_idx++) {
--		rxq = apc->rxqs[rxq_idx];
--		if (!rxq)
--			continue;
-+	if (apc->rxqs) {
+ 	/* Drop packet? */
+@@ -538,11 +539,9 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 	 */
+ 	if (skb2) {
+ 		struct Qdisc *rootq = qdisc_root_bh(sch);
+-		u32 dupsave = q->duplicate; /* prevent duplicating a dup... */
  
--		mana_destroy_rxq(apc, rxq, true);
--		apc->rxqs[rxq_idx] = NULL;
-+		for (rxq_idx = 0; rxq_idx < apc->num_queues; rxq_idx++) {
-+			rxq = apc->rxqs[rxq_idx];
-+			if (!rxq)
-+				continue;
-+
-+			mana_destroy_rxq(apc, rxq, true);
-+			apc->rxqs[rxq_idx] = NULL;
-+		}
+-		q->duplicate = 0;
++		skb2->tc_depth++; /* prevent duplicating a dup... */
+ 		rootq->enqueue(skb2, rootq, to_free);
+-		q->duplicate = dupsave;
+ 		skb2 = NULL;
  	}
  
- 	mana_destroy_txq(apc);
-@@ -3241,7 +3247,8 @@ static int mana_dealloc_queues(struct net_device *ndev)
- 	if (apc->port_is_up)
- 		return -EINVAL;
- 
--	mana_chn_setxdp(apc, NULL);
-+	if (apc->rxqs)
-+		mana_chn_setxdp(apc, NULL);
- 
- 	if (gd->gdma_context->is_pf && !apc->ac->bm_hostmode)
- 		mana_pf_deregister_filter(apc);
-@@ -3259,33 +3266,38 @@ static int mana_dealloc_queues(struct net_device *ndev)
- 	 * number of queues.
- 	 */
- 
--	for (i = 0; i < apc->num_queues; i++) {
--		txq = &apc->tx_qp[i].txq;
--		tsleep = 1000;
--		while (atomic_read(&txq->pending_sends) > 0 &&
--		       time_before(jiffies, timeout)) {
--			usleep_range(tsleep, tsleep + 1000);
--			tsleep <<= 1;
--		}
--		if (atomic_read(&txq->pending_sends)) {
--			err = pcie_flr(to_pci_dev(gd->gdma_context->dev));
--			if (err) {
--				netdev_err(ndev, "flr failed %d with %d pkts pending in txq %u\n",
--					   err, atomic_read(&txq->pending_sends),
--					   txq->gdma_txq_id);
-+	if (apc->tx_qp) {
-+		for (i = 0; i < apc->num_queues; i++) {
-+			txq = &apc->tx_qp[i].txq;
-+			tsleep = 1000;
-+			while (atomic_read(&txq->pending_sends) > 0 &&
-+			       time_before(jiffies, timeout)) {
-+				usleep_range(tsleep, tsleep + 1000);
-+				tsleep <<= 1;
-+			}
-+			if (atomic_read(&txq->pending_sends)) {
-+				err =
-+				    pcie_flr(to_pci_dev(gd->gdma_context->dev));
-+				if (err) {
-+					netdev_err(ndev, "flr failed %d with %d pkts pending in txq %u\n",
-+						   err,
-+					    atomic_read(&txq->pending_sends),
-+					    txq->gdma_txq_id);
-+				}
-+				break;
- 			}
--			break;
- 		}
--	}
- 
--	for (i = 0; i < apc->num_queues; i++) {
--		txq = &apc->tx_qp[i].txq;
--		while ((skb = skb_dequeue(&txq->pending_skbs))) {
--			mana_unmap_skb(skb, apc);
--			dev_kfree_skb_any(skb);
-+		for (i = 0; i < apc->num_queues; i++) {
-+			txq = &apc->tx_qp[i].txq;
-+			while ((skb = skb_dequeue(&txq->pending_skbs))) {
-+				mana_unmap_skb(skb, apc);
-+				dev_kfree_skb_any(skb);
-+			}
-+			atomic_set(&txq->pending_sends, 0);
- 		}
--		atomic_set(&txq->pending_sends, 0);
- 	}
-+
- 	/* We're 100% sure the queues can no longer be woken up, because
- 	 * we're sure now mana_poll_tx_cq() can't be running.
- 	 */
 -- 
 2.53.0
 
