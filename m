@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE881DE8AE;
-	Sun,  7 Jun 2026 10:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382EE1DE8AE;
+	Sun,  7 Jun 2026 10:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826894; cv=none; b=cRmroyYODyaEzHU+k9Fh8jCZ8A2jMaq/PVcRao28Jutfje1iuRrAmBLJtNKQ1kJEqtmxJvZq6JY9l6bwhMDdE8Vxs/HlflP+xonrwQxdD201iB5x58hBYHQ9LHATmbJpQMgYNGwfJMcyXKAQc6QvIQIVIH7cUI8vvxLSU9hpuWI=
+	t=1780826898; cv=none; b=kJB1lkVKTvfarimBJFS00JN68RpWwxlY6Tfz/RmCrgAD6k/LLCajLcrTOptaNQGCh+WDgPICm6rB63p1DXFqz+fbNLH3767MOpQ4ziUI7oUFJq454Bv9xgVVj2X5u8z9GEpm+yvfxrLYZbfTitZ14V0B2dGKxz6ov9gvXetncok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826894; c=relaxed/simple;
-	bh=ggA9DPppB/FBL4lVBDFieMLMRgSqY3ozZLb6fEdQMfo=;
+	s=arc-20240116; t=1780826898; c=relaxed/simple;
+	bh=NbBApvIgM2sBGcXnE9c9e1M9OuL7ZRWXDDGmMGrSs9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FhJTUPlRBWP/IkI/c4A8jjVPth7leon0hhUw1zospgwlhWSshXuZD//FLUaeAkkV5gqO5x15CLVaqfG6V1B/25ypj1uLTnwB3kt+BellYkPCZ8CgxPOtIsKVcxQY9DdDedMXMQeRbq3Nv2ksTtUQF+eA8C2zub9FGxFlxKNvnmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2dC3dHlP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rki2bNYGLXX2suihuFRvJr8+HnrJ9qVDnPnIra1R9l99bOGjK8/HYqCylXb2tN7kCYEX52f1EheTIj3LS7SEnsV0UmqDWcAh8AxVavqqYwMCFXB7bws1QRMvWm2XNQvgnXw5ZUnGiooWym1ExLLt/GgiqaFvIBkGnpdoVBuXrhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmjHOfs0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2dC3dHlP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271A31F00893;
-	Sun,  7 Jun 2026 10:08:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmjHOfs0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F94E1F00893;
+	Sun,  7 Jun 2026 10:08:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826893;
-	bh=pRJ/T7nUeC80afqjn03JgBRdeZAXAsm6XJe4MqkcYN4=;
+	s=korg; t=1780826897;
+	bh=wj+gpk04cvi96B3e5NrV0kYN1KXnQaWGn+X5xtd2nUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2dC3dHlPRrLP1BYqAYfYqYjyzc6AAw+OEgiKgW8eSe+TBB8Gq1S9SlGRv0JoaxkYJ
-	 dTaZOSFUd4XuUA1lTz2xg2JHjjmzprrgPiMu4M6Y81jDu7qhY1H0YLNOVY9knUgmUM
-	 n+UFYNEdPimlwD04vPLrUPiwr3+sylaoBUEDmCyI=
+	b=tmjHOfs0T3xLQ+320De9aYk76wfdp2gyfK5VJ9i20YmmVsDuSHJdc5f0aAGP2LJYK
+	 r9ln9dmw2a8z3Rd06zqNgcl6xf8BnLA++dsx0bfORn2q1KRzHeazktU+I3GIOo9flE
+	 80yPTC/zFGOnbV+3brjxBRU+xnRG4U1pmgkdEY3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Davide Caratti <dcaratti@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 004/307] net/sched: cls_fw: fix NULL dereference of "old" filters before change()
-Date: Sun,  7 Jun 2026 11:56:41 +0200
-Message-ID: <20260607095727.809370504@linuxfoundation.org>
+Subject: [PATCH 7.0 041/332] ethtool: rss: avoid modifying the RSS context response
+Date: Sun,  7 Jun 2026 11:56:50 +0200
+Message-ID: <20260607095729.624283502@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,123 +46,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Davide Caratti <dcaratti@redhat.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 65782b2db7321d5f97c16718c4c7f6c7205a56be ]
+[ Upstream commit c75b6f6eaacd0b74b832414cc3b9289c3686e941 ]
 
-Like pointed out by Sashiko [1], since commit ed76f5edccc9 ("net: sched:
-protect filter_chain list with filter_chain_lock mutex") TC filters are
-added to a shared block and published to datapath before their ->change()
-function is called. This is a problem for cls_fw: an invalid filter
-created with the "old" method can still classify some packets before it
-is destroyed by the validation logic added by Xiang.
-Therefore, insisting with repeated runs of the following script:
+Gemini says that we're modifying the RSS_CREATE response skb.
+I think it's right, the comment says that unicast() should
+unshare the skb but I'm not entirely sure what I meant there.
+netlink_trim() does a copy but only if skb is not well sized
+(it's at least 2x larger than necessary for the payload).
 
- # ip link add dev crash0 type dummy
- # ip link set dev crash0 up
- # mausezahn  crash0 -c 100000 -P 10 \
- > -A 4.3.2.1 -B 1.2.3.4 -t udp "dp=1234" -q &
- # sleep 1
- # tc qdisc add dev crash0 egress_block 1 clsact
- # tc filter add block 1 protocol ip prio 1 matchall \
- > action skbedit mark 65536 continue
- # tc filter add block 1 protocol ip prio 2 fw
- # ip link del dev crash0
-
-can still make fw_classify() hit the WARN_ON() in [2]:
-
- WARNING: ./include/net/pkt_cls.h:88 at fw_classify+0x244/0x250 [cls_fw], CPU#18: mausezahn/1399
- Modules linked in: cls_fw(E) act_skbedit(E)
- CPU: 18 UID: 0 PID: 1399 Comm: mausezahn Tainted: G            E       7.0.0-rc6-virtme #17 PREEMPT(full)
- Tainted: [E]=UNSIGNED_MODULE
- Hardware name: Red Hat KVM, BIOS 1.16.3-2.el9 04/01/2014
- RIP: 0010:fw_classify+0x244/0x250 [cls_fw]
- Code: 5c 49 c7 45 00 00 00 00 00 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 5b b8 ff ff ff ff 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 90 <0f> 0b 90 eb a0 0f 1f 80 00 00 00 00 90 90 90 90 90 90 90 90 90 90
- RSP: 0018:ffffd1b7026bf8a8 EFLAGS: 00010202
- RAX: ffff8c5ac9c60800 RBX: ffff8c5ac99322c0 RCX: 0000000000000004
- RDX: 0000000000000001 RSI: ffff8c5b74d7a000 RDI: ffff8c5ac8284f40
- RBP: ffffd1b7026bf8d0 R08: 0000000000000000 R09: ffffd1b7026bf9b0
- R10: 00000000ffffffff R11: 0000000000000000 R12: 0000000000010000
- R13: ffffd1b7026bf930 R14: ffff8c5ac8284f40 R15: 0000000000000000
- FS:  00007fca40c37740(0000) GS:ffff8c5b74d7a000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007fca40e822a0 CR3: 0000000005ca0001 CR4: 0000000000172ef0
- Call Trace:
-  <TASK>
-  tcf_classify+0x17d/0x5c0
-  tc_run+0x9d/0x150
-  __dev_queue_xmit+0x2ab/0x14d0
-  ip_finish_output2+0x340/0x8f0
-  ip_output+0xa4/0x250
-  raw_sendmsg+0x147d/0x14b0
-  __sys_sendto+0x1cc/0x1f0
-  __x64_sys_sendto+0x24/0x30
-  do_syscall_64+0x126/0xf80
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
- RIP: 0033:0x7fca40e822ba
- Code: d8 64 89 02 48 c7 c0 ff ff ff ff eb b8 0f 1f 00 f3 0f 1e fa 41 89 ca 64 8b 04 25 18 00 00 00 85 c0 75 15 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 7e c3 0f 1f 44 00 00 41 54 48 83 ec 30 44 89
- RSP: 002b:00007ffc248a42c8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
- RAX: ffffffffffffffda RBX: 000055ef233289d0 RCX: 00007fca40e822ba
- RDX: 000000000000001e RSI: 000055ef23328c30 RDI: 0000000000000003
- RBP: 000055ef233289d0 R08: 00007ffc248a42d0 R09: 0000000000000010
- R10: 0000000000000000 R11: 0000000000000246 R12: 000000000000001e
- R13: 00000000000186a0 R14: 0000000000000000 R15: 00007fca41043000
-  </TASK>
- irq event stamp: 1045778
- hardirqs last  enabled at (1045784): [<ffffffff864ec042>] __up_console_sem+0x52/0x60
- hardirqs last disabled at (1045789): [<ffffffff864ec027>] __up_console_sem+0x37/0x60
- softirqs last  enabled at (1045426): [<ffffffff874d48c7>] __alloc_skb+0x207/0x260
- softirqs last disabled at (1045434): [<ffffffff874fe8f8>] __dev_queue_xmit+0x78/0x14d0
-
-Then, because of the value in the packet's mark, dereference on 'q->handle'
-with NULL 'q' occurs:
-
- BUG: kernel NULL  pointer dereference, address: 0000000000000038
- [...]
- RIP: 0010:fw_classify+0x1fe/0x250 [cls_fw]
- [...]
-
-Skip "old-style" classification on shared blocks, so that the NULL
-dereference is fixed and WARN_ON() is not hit anymore in the short
-lifetime of invalid cls_fw "old-style" filters.
-
-[1] https://sashiko.dev/#/patchset/20260331050217.504278-1-xmei5%40asu.edu
-[2] https://elixir.bootlin.com/linux/v7.0-rc6/source/include/net/pkt_cls.h#L86
-
-Fixes: faeea8bbf6e9 ("net/sched: cls_fw: fix NULL pointer dereference on shared blocks")
-Fixes: ed76f5edccc9 ("net: sched: protect filter_chain list with filter_chain_lock mutex")
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Davide Caratti <dcaratti@redhat.com>
-Link: https://patch.msgid.link/e39cbd3103a337f1e515d186fe697b4459d24757.1775661704.git.dcaratti@redhat.com
+Fixes: a166ab7816c5 ("ethtool: rss: support creating contexts via Netlink")
+Link: https://patch.msgid.link/20260522230647.1705600-2-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_fw.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/ethtool/rss.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/net/sched/cls_fw.c b/net/sched/cls_fw.c
-index 83a7372ea15c2a..fd9c6c2815a1c2 100644
---- a/net/sched/cls_fw.c
-+++ b/net/sched/cls_fw.c
-@@ -74,9 +74,13 @@ TC_INDIRECT_SCOPE int fw_classify(struct sk_buff *skb,
- 			}
- 		}
- 	} else {
--		struct Qdisc *q = tcf_block_q(tp->chain->block);
-+		struct Qdisc *q;
+diff --git a/net/ethtool/rss.c b/net/ethtool/rss.c
+index da5934cceb0757..926be5698ba4cc 100644
+--- a/net/ethtool/rss.c
++++ b/net/ethtool/rss.c
+@@ -974,11 +974,17 @@ ethnl_rss_create_validate(struct net_device *dev, struct genl_info *info)
+ }
  
- 		/* Old method: classify the packet using its skb mark. */
-+		if (tcf_block_shared(tp->chain->block))
-+			return -1;
+ static void
+-ethnl_rss_create_send_ntf(struct sk_buff *rsp, struct net_device *dev)
++ethnl_rss_create_send_ntf(const struct sk_buff *rsp, struct net_device *dev)
+ {
+-	struct nlmsghdr *nlh = (void *)rsp->data;
+ 	struct genlmsghdr *genl_hdr;
++	struct nlmsghdr *nlh;
++	struct sk_buff *ntf;
 +
-+		q = tcf_block_q(tp->chain->block);
- 		if (id && (TC_H_MAJ(id) == 0 ||
- 			   !(TC_H_MAJ(id ^ q->handle)))) {
- 			res->classid = id;
++	ntf = skb_copy_expand(rsp, 0, 0, GFP_KERNEL);
++	if (!ntf)
++		return;
+ 
++	nlh = nlmsg_hdr(ntf);
+ 	/* Convert the reply into a notification */
+ 	nlh->nlmsg_pid = 0;
+ 	nlh->nlmsg_seq = ethnl_bcast_seq_next();
+@@ -986,7 +992,7 @@ ethnl_rss_create_send_ntf(struct sk_buff *rsp, struct net_device *dev)
+ 	genl_hdr = nlmsg_data(nlh);
+ 	genl_hdr->cmd =	ETHTOOL_MSG_RSS_CREATE_NTF;
+ 
+-	ethnl_multicast(rsp, dev);
++	ethnl_multicast(ntf, dev);
+ }
+ 
+ int ethnl_rss_create_doit(struct sk_buff *skb, struct genl_info *info)
+@@ -1094,12 +1100,8 @@ int ethnl_rss_create_doit(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	genlmsg_end(rsp, hdr);
+ 
+-	/* Use the same skb for the response and the notification,
+-	 * genlmsg_reply() will copy the skb if it has elevated user count.
+-	 */
+-	skb_get(rsp);
+-	ret = genlmsg_reply(rsp, info);
+ 	ethnl_rss_create_send_ntf(rsp, dev);
++	ret = genlmsg_reply(rsp, info);
+ 	rsp = NULL;
+ 
+ exit_unlock:
 -- 
 2.53.0
 
