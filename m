@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789DA3246F4;
-	Sun,  7 Jun 2026 10:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438882D8378;
+	Sun,  7 Jun 2026 10:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827891; cv=none; b=BoIhaI4t8TNQ/i6X6/7uWarYZW/T/cXuHzVhtUamKU9CiEw8Bclk4/bGf2+lmgVuMAPYkUNQnkKlkG8kpf1BeITL51neSfiFx4EMleVPoNWvUsO4yKr5HwMTD7xEcq89IjlYdMheM4UIuTHIQANeZKBlLlAqnUR3tTCIs/RPT80=
+	t=1780827895; cv=none; b=T0fVSY6KaW3yKUef9QyD+O86xvCJLHXGsjWb4u0784gvrwABy+mFYOf9eqODeAJks5B2VC1yO87A3KiS1MEFddpsl2fr3nos7KqiWTIbnZFgNiVqUDYVow2GuvXSMqm0xTEY9aTj3IutvOJZqaXHqxswZsg9yuT2XvJfGPhvcvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827891; c=relaxed/simple;
-	bh=ppMY94VneGK9Quu0avX+cqnXCEsvdUVd0S4uIoGvclI=;
+	s=arc-20240116; t=1780827895; c=relaxed/simple;
+	bh=wv95eBAffzmJfaNPAb+/Qb7MWJy5nx1DW/6xxuIcFsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e7F+Sxzqi7Lo4m5C8z+6daPl2AFLIOTku7nRVAyHbcUFVld3nmXTxoQ7uOZUr8VmgwSfczUcYezgzlv0roY/M+buOkbLad23QoglYMCVqmEtvG+S/Re1tFTQvme1Gz/KHqoX1OT4a+FbtpquekgqGHwk+ALA9dkLLfbmu5BElM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JKxSFSWu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o9yM/Y2iX5lfNtQErbJmf9icBi+tIHnpuYq5mA/qrUrE+JPPNii/lYcIx43lDN5IeeEpMh5lGYiBWFqAESB71DJOMddceKRhrcIMbI3X5ElSFzdTEI58wKOw33UBRAb841Ue5HntsZM9DMg6NVL1Iycw+XFdQQdFgaZyRa2gSx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVk8zEBQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JKxSFSWu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE1F61F00893;
-	Sun,  7 Jun 2026 10:24:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVk8zEBQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B68B1F00893;
+	Sun,  7 Jun 2026 10:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827890;
-	bh=FZ6p11xcZEcM4QKstxewKi3nx7emuLdH638H8Vno+lQ=;
+	s=korg; t=1780827894;
+	bh=11a4o+6jgSvW5V15VIvr7uCcsZLa3Zwsvv2q53klrm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JKxSFSWuNgem3GaJWOc44qAKq1YoFXtLJNakfLsGkS/G+Hwc0FWdVYAo0H1rmlrb5
-	 OkYxhPBCuWb/ZhbThvDcNoojOwOgrpMt9tnDl20tyElJE+I17EoKwf3MthLuQiZOPq
-	 5dddLmBoIPGOZnejHwU19qZqWVl1U1/IAjgOJ6fc=
+	b=AVk8zEBQvdHIrXapY91X0C0bRMPzPTdBfy106vaEIgXFA7C6fX2P5Mb2whE6kvhTt
+	 3YdLHPUDnOZr/QLUJsZMzgDvF8y2bfCz+0sU/LjN3NXmbakh5J2fsV1L1cXpWN8EUL
+	 aB2yzuEIshRpbUNeZmbmL4HEzjP9O+ADkpnE1u0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
 	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 094/307] ipv6: fix possible infinite loop in fib6_select_path()
-Date: Sun,  7 Jun 2026 11:58:11 +0200
-Message-ID: <20260607095731.230785865@linuxfoundation.org>
+	syzbot+8b12fc6e0fb139765b58@syzkaller.appspotmail.com,
+	Baoquan He <baoquan.he@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.0 135/332] mm/vmalloc: do not trigger BUG() on BH disabled context
+Date: Sun,  7 Jun 2026 11:58:24 +0200
+Message-ID: <20260607095733.055996331@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +49,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Uladzislau Rezki (Sony) <urezki@gmail.com>
 
-[ Upstream commit 9c7da87c2dc860bb17ca1ece942495d28b1ce3b9 ]
+commit 04aa71da5f35aacdc9ae9cb5150947daa624f641 upstream.
 
-Found while auditing the same pattern Sashiko reported in
-rt6_fill_node() [1]. Apply the same fix as
-commit f8d8ce1b515a ("ipv6: fix possible infinite loop in fib6_info_uses_dev()").
+__get_vm_area_node() currently triggers a BUG() if in_interrupt() returns
+true.  However, in_interrupt() also reports true when BH are disabled.
 
-Writers holding tb6_lock can list_del_rcu(&first->fib6_siblings)
-without waiting for RCU readers; first->fib6_siblings.next then
-still points into the old ring and this softirq-side walker never
-reaches &first->fib6_siblings as its terminator. fib6_purge_rt()
-always WRITE_ONCE()s first->fib6_nsiblings to 0 before
-list_del_rcu(), so an inside-loop check is a reliable detach signal.
+The bridge code can call rhashtable_lookup_insert_fast() with bottom
+halves disabled:
 
-[1] https://sashiko.dev/#/patchset/20260526020227.4857-1-jiayuan.chen%40linux.dev
+__vlan_add()
+ -> br_fdb_add_local()
+  spin_lock_bh(&br->hash_lock); <-- Disable BH
+   -> fdb_add_local()
+    -> fdb_create()
+     -> rhashtable_lookup_insert_fast()
+      -> kvmalloc()
+       -> vmalloc()
+        -> __get_vm_area_node()
+         -> BUG_ON(in_interrupt())
+  spin_unlock_bh(&br->hash_lock)
 
-Fixes: d9ccb18f83ea ("ipv6: Fix soft lockups in fib6_select_path under high next hop churn")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260527053133.180695-2-jiayuan.chen@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+this triggers the BUG() despite the caller not being in NMI or
+hard IRQ context.
+
+Replace the in_interrupt() check with in_nmi() || in_hardirq().
+
+Link: https://lore.kernel.org/20260515153009.2296191-1-urezki@gmail.com
+Fixes: c6307674ed82 ("mm: kvmalloc: add non-blocking support for vmalloc")
+Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
+Cc: Ido Schimmel <idosch@nvidia.com>
+Reported-by: syzbot+8b12fc6e0fb139765b58@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69ff8c7c.050a0220.1036b8.000b.GAE@google.com/
+Reviewed-by: Baoquan He <baoquan.he@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/route.c | 3 +++
- 1 file changed, 3 insertions(+)
+ mm/vmalloc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index c73218fd82c615..9e7470e8154429 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -482,6 +482,9 @@ void fib6_select_path(const struct net *net, struct fib6_result *res,
- 		const struct fib6_nh *nh = sibling->fib6_nh;
- 		int nh_upper_bound;
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -3209,7 +3209,7 @@ struct vm_struct *__get_vm_area_node(uns
+ 	struct vm_struct *area;
+ 	unsigned long requested_size = size;
  
-+		if (!READ_ONCE(first->fib6_nsiblings))
-+			break;
-+
- 		nh_upper_bound = atomic_read(&nh->fib_nh_upper_bound);
- 		if (hash > nh_upper_bound)
- 			continue;
--- 
-2.53.0
-
+-	BUG_ON(in_interrupt());
++	BUG_ON(in_nmi() || in_hardirq());
+ 	size = ALIGN(size, 1ul << shift);
+ 	if (unlikely(!size))
+ 		return NULL;
 
 
