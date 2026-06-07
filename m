@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA7131F993;
-	Sun,  7 Jun 2026 10:23:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1C231F993;
+	Sun,  7 Jun 2026 10:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827793; cv=none; b=FRh5llikEdnBNh21Bh8qGAYwrxECQJRHriSxBbdKu7du3e8mkbdxhJQWB+xRDFgRZ3ZVAZ4AeRTy1oEd7A6ft/nn/i24+Z3cUD0E7KWW/npIKRAPgTi7UVhxwo9mRRUdZ82hT/o+0W2/mSDz6R2U7+qCiwp9+FrQ4XpXj60KZts=
+	t=1780827796; cv=none; b=g73X7z2fQLgMUUSJvRaRdMK/xC7RAhhD8nXCsna+e+riDji9n8BdCWpb78uw/rqnhTTp/g0y6PacFiYifCE4auf+wwjThjOZ7NxUXYF1qFBfqQQQGeZSObRyaaSmvLzDo6q5tPqLbOzhV7OwRY74aRxVrd4VRM3RgXErbegYcpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827793; c=relaxed/simple;
-	bh=T2kZI8L5wiuspX/lOXXjYgIk4IXkYzTCWgeKhdFycxI=;
+	s=arc-20240116; t=1780827796; c=relaxed/simple;
+	bh=73vPq6iq4Re5e0PHOnV39sg6Tv0c1hBcHr9qL+X+sDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iGSKt7Uxx7S1BcdPUsT6KbJ4TLzRmtHuDCQkXmzITjxayq8bvxQqDpH6Slt/njeH8w5oq6tRRHmoScSVGpCehjy1RYOByxxeKBHfWKBT/QmmlNDNkaFep4pOxRmaGw/BdIk59PRUJn5cTwCr7gxVjxNotocWnnoYwSCubhA12Xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InytbgY/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nblim6AT2XaCVDD+hb5pr2A2vLlF3uzp1qrM94am6hHCNSM7G1vL9IBj05e9cMPW9xBXVmSW3k6UfXhjTpgbBQSroouuH+YF774PRv67NhvuAhUhyy7KYj8LsKbuP7E/hzBvKah3UrORETIIHlLx+Sk2NUVP24Vp1fRmo72VmDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfDG9oAq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InytbgY/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F5621F00893;
-	Sun,  7 Jun 2026 10:23:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfDG9oAq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3FA81F00893;
+	Sun,  7 Jun 2026 10:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827792;
-	bh=+/CgDUKqf2FM99tH5OZUOJCDQKMQquN+tYmHqxKfV9k=;
+	s=korg; t=1780827795;
+	bh=36HI4xnjwaYmu/kv6PuJLymjRwNce2RD3a60gYyxHwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=InytbgY/NknMjwg2k87lpES2XpHwi0gtJPyuEwEJ6Ny8GRIkdM9/Ugl7Bu6CpxlsT
-	 vmOp8rXzOjjHDw/H2eiMdPLec/qCDAkg5W0H+lKuO76VyNT9mPp+SQ/Eqbm0TEy15R
-	 cuRs93KDoaT9HNUXcstACOt8l+kZvE+LRIgsY2L8=
+	b=wfDG9oAqqkcOWPlwoqbfOhIBXomwd8l2La0dAy8c6IBzZWiBRJHW4DRpvMnf5XRTV
+	 Uxg0Ms/aggo13CfsMWjCvcrla3WVrDHiOTpdfio30r+FtohnWEiNUyFkG+CZry+B5Y
+	 4udm2j0vFLqYBM5KhdLtTlFGfBhznte65zwLNIr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 101/315] drm/i915/psr: Read Intel DPCD workaround register
-Date: Sun,  7 Jun 2026 11:58:08 +0200
-Message-ID: <20260607095731.356111500@linuxfoundation.org>
+Subject: [PATCH 6.12 087/307] Bluetooth: L2CAP: Fix possible crash on l2cap_ecred_conn_rsp
+Date: Sun,  7 Jun 2026 11:58:04 +0200
+Message-ID: <20260607095730.969886994@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,69 +44,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Message-ID: <20260607095804.z46o18KVs1io3063sw7bMmc7fm5p33heGe2-I19Z2Rc@z>
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit f30bece421a4ae34359254e1dc2a187a42b6af9b upstream.
+[ Upstream commit 41c2713b204e6cb6a94587bc6bf6935107df5479 ]
 
-Read Intel DPCD workaround register and store it into
-intel_connector->dp.psr_caps. psr_caps was chosen as currently it contains
-only PSR workaround for PSR2 SDP on prior scanline implementation.
+If dcid is received for an already-assigned destination CID the spec
+requires that both channels to be discarded, but calling l2cap_chan_del
+may invalidate the tmp cursor created by list_for_each_entry_safe and
+in fact it is the wrong procedure as the chan->dcid may be assigned
+previously it really needs to be disconnected.
 
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260515095756.2799483-3-jouni.hogander@intel.com
-(cherry picked from commit c48ff24d0f4ab7ad696b2d35ad64ce7e049c668c)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Calling l2cap_chan_clone directly may still lead to l2cap_chan_del so
+instead schedule l2cap_chan_timeout with delay 0 to close the channel
+asynchronously.
+
+Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_display_types.h | 1 +
- drivers/gpu/drm/i915/display/intel_psr.c           | 7 +++++++
- 2 files changed, 8 insertions(+)
+ net/bluetooth/l2cap_core.c | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_display_types.h b/drivers/gpu/drm/i915/display/intel_display_types.h
-index 39dd7389f1a71a..197bdb6592a7f9 100644
---- a/drivers/gpu/drm/i915/display/intel_display_types.h
-+++ b/drivers/gpu/drm/i915/display/intel_display_types.h
-@@ -1710,6 +1710,7 @@ struct intel_dp {
- 	u8 lttpr_common_caps[DP_LTTPR_COMMON_CAP_SIZE];
- 	u8 lttpr_phy_caps[DP_MAX_LTTPR_COUNT][DP_LTTPR_PHY_CAP_SIZE];
- 	u8 pcon_dsc_dpcd[DP_PCON_DSC_ENCODER_CAP_SIZE];
-+	u8 intel_wa_dpcd;
- 	/* source rates */
- 	int num_source_rates;
- 	const int *source_rates;
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index 1da20065ea7763..802a671b2afaaa 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -41,6 +41,7 @@
- #include "intel_display_types.h"
- #include "intel_dmc.h"
- #include "intel_dp.h"
-+#include "intel_dpcd.h"
- #include "intel_dp_aux.h"
- #include "intel_dsb.h"
- #include "intel_frontbuffer.h"
-@@ -679,6 +680,12 @@ static void _psr_init_dpcd(struct intel_dp *intel_dp)
- 		drm_dbg_kms(display->drm, "PSR2 %ssupported\n",
- 			    intel_dp->psr.sink_psr2_support ? "" : "not ");
- 	}
-+
-+	if (intel_dp->psr.sink_psr2_support)
-+		drm_dp_dpcd_read(&intel_dp->aux,
-+				 INTEL_DPCD_INTEL_WA_REGISTER_CAPS,
-+				 &intel_dp->intel_wa_dpcd,
-+				 sizeof(intel_dp->intel_wa_dpcd));
- }
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 9de5d545966d60..f0b0f347ebc10a 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -5194,6 +5194,7 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 	cmd_len -= sizeof(*rsp);
  
- void intel_psr_init_dpcd(struct intel_dp *intel_dp)
+ 	list_for_each_entry_safe(chan, tmp, &conn->chan_l, list) {
++		struct l2cap_chan *orig;
+ 		u16 dcid;
+ 
+ 		if (chan->ident != cmd->ident ||
+@@ -5215,8 +5216,10 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 
+ 		BT_DBG("dcid[%d] 0x%4.4x", i, dcid);
+ 
++		orig = __l2cap_get_chan_by_dcid(conn, dcid);
++
+ 		/* Check if dcid is already in use */
+-		if (dcid && __l2cap_get_chan_by_dcid(conn, dcid)) {
++		if (dcid && orig) {
+ 			/* If a device receives a
+ 			 * L2CAP_CREDIT_BASED_CONNECTION_RSP packet with an
+ 			 * already-assigned Destination CID, then both the
+@@ -5225,10 +5228,24 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 			 */
+ 			l2cap_chan_del(chan, ECONNREFUSED);
+ 			l2cap_chan_unlock(chan);
+-			chan = __l2cap_get_chan_by_dcid(conn, dcid);
+-			l2cap_chan_lock(chan);
+-			l2cap_chan_del(chan, ECONNRESET);
+-			l2cap_chan_unlock(chan);
++
++			/* Check that the dcid channel mode is
++			 * L2CAP_MODE_EXT_FLOWCTL since this procedure is only
++			 * valid for that mode and shouldn't disconnect a dcid
++			 * in other modes.
++			 */
++			if (orig->mode == L2CAP_MODE_EXT_FLOWCTL) {
++				l2cap_chan_lock(orig);
++				/* Disconnect the original channel as it may be
++				 * considered connected since dcid has already
++				 * been assigned; don't call l2cap_chan_close
++				 * directly since that could lead to
++				 * l2cap_chan_del and then removing the channel
++				 * from the list while we're iterating over it.
++				 */
++				__set_chan_timer(orig, 0);
++				l2cap_chan_unlock(orig);
++			}
+ 			continue;
+ 		}
+ 
 -- 
 2.53.0
 
