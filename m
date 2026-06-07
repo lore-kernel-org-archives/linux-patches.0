@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0ECF234994;
-	Sun,  7 Jun 2026 10:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBEC234994;
+	Sun,  7 Jun 2026 10:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826838; cv=none; b=UInm3gRFbWGmO5yatJ/WzsG6EjB6/IACOpdQ8UJ5UsynQmSQs0RdD8+GKz3ecfu77T15ICM/uPvMD41OHFHeLR0lsigxyZGvQKIRMkYjZTbbPXHOIfyoafI+I+9aYO/c6P5GnrdGj9ZIPJOCC9JP0+SAqMTCw+Vu8vscX6FKv2w=
+	t=1780826840; cv=none; b=Rs0wkDONZS16KsXMhrW6ATCQVZzVKhTDg5E40fLByBnKd9DKtJEXbIJNCavjhxHGigwZecKP6uvzABEr7BPHV4vQc5yGOSy4xVbbw2/+MY+FkuOECiz8QywaeOqqKJUnWLIGdIX+CCS52Ljhv6LlcMAn+qxKkipXPncHnqMa8ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826838; c=relaxed/simple;
-	bh=BWHDKKcp9yikAAUTfDlYUauAitMTmlZAkXu65+RNDvU=;
+	s=arc-20240116; t=1780826840; c=relaxed/simple;
+	bh=ZbbotknhWcylVXe8sNN7jpS1lkiwVUj2xG5xrTtJMFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KC7VDNNSrj4MGGEWkl1BoApPfduLEK/rQkaNoSvMELh7f4d5QAQAWozft48B5iTSJk40Cfz24e3KvZDMBDOEC6QoEqHrUuR2XKhEkiiprdQSSBDwUNgOd4BozBCPLGiNmnx3OYIJwciJUDZwWS9Cf55GfaywUDxKs608lnzGxec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBRmraY3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=O8i4vsulkIsTgBegXKY6UFNwRP27PkFqv8vhFs51l5EbBcEn9sIGQAarUhQlARfjP9h3hryZCy0oa/gKDPUijRhvFJnQWMTCdlTVnNd6qwOQDwwTCNm1h9sDu2or+vDrjfscRxOEJ1k5NBkWO7jgrR50PfeUyqLQ1fU1/CY/fwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnagz0ZA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBRmraY3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90061F00893;
-	Sun,  7 Jun 2026 10:07:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnagz0ZA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8781F00893;
+	Sun,  7 Jun 2026 10:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826836;
-	bh=s1yRAzqh3C4CZ4Suhr3PepImh//VWdqQDcfGGVP+tkg=;
+	s=korg; t=1780826839;
+	bh=Ty25WKT8XsLbvQ//0KlOqYSav23lSOz+L55OS3rJ/+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XBRmraY3jchWxg/8IuicKTV7/+jCGo0dHXreCwKQwzkuQSJozo35KxfiXGTI29gxu
-	 hZJ53ZImA+xrLeXQ0p8Lf6jGfo3YI8SOG0dZ/l99CgFgjHwmrnLU7J3w0yFFlsPwIY
-	 mDNQ3cRnz9hFXGy4tpgX0CClwXLH6vkajXR7eyUQ=
+	b=wnagz0ZAVmPAnmgRTwuEXwpNHS2DyOTzdTpC/hFHTflaZu9nyeIzqapSjQbcxRKt7
+	 Tv+Kf53TcbuIeVbLKLpWtB53+NdgRLSg/tdJ0u2rhPfyzIHVubmZhZu+N4GoyUaOQk
+	 ZWEcVezA69TAHw9seDCZ5XdgWH+OdmA3SY/y+fZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Schmaus <florian.schmaus@codasip.com>,
-	Martin Kaiser <martin@kaiser.cx>,
-	David Gow <david@davidgow.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 013/315] kunit: fix use-after-free in debugfs when using kunit.filter
-Date: Sun,  7 Jun 2026 11:56:40 +0200
-Message-ID: <20260607095727.984960558@linuxfoundation.org>
+Subject: [PATCH 7.0 034/332] ASoC: Intel: bytcht_es8316: Fix MCLK leak on init errors
+Date: Sun,  7 Jun 2026 11:56:43 +0200
+Message-ID: <20260607095729.348996909@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,114 +45,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Schmaus <florian.schmaus@codasip.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit fb6988b83b4cafe8db63999c1ddff1b7c66d2ff5 ]
+[ Upstream commit afb2a3a9d8369d18122a0d7cd294eba9a98259c6 ]
 
-When the kernel is booted with a kunit filter (e.g.,
-kunit.filter="speed!=slow"), the kunit executor dynamically allocates
-copies of the filtered test suites using kmalloc/kmemdup.
+byt_cht_es8316_init() enables MCLK before configuring the codec sysclk
+and creating the headset jack. If either of those later steps fails, the
+function returns without disabling MCLK, leaving the clock enabled after
+card registration fails.
 
-During the initial boot execution, kunit_debugfs_create_suite() creates
-debugfs files (such as /sys/kernel/debug/kunit/<suite>/run) and
-permanently stores a pointer to the dynamically allocated suite in the
-inode's i_private field.
+Track whether this driver enabled MCLK and disable it on the init error
+paths. Add the matching DAI link exit callback so the same clock enable
+is also balanced when ASoC cleans up a successfully initialized link.
 
-Previously, the executor freed this dynamically allocated suite_set
-immediately after executing the boot-time tests. Because the debugfs
-nodes were not destroyed, any subsequent interaction with the debugfs
-`run` file from userspace triggered a use-after-free (UAF). On systems
-with architectural capabilities, like CHERI RISC-V, this resulted in
-an immediate fatal hardware exception due to the invalidation of the
-capability tags on the reclaimed memory. On other architectures, it
-resulted in silent memory corruption.
-
-Fix this UAF by properly coupling the lifetime of the filtered suite
-memory allocation to the lifetime of the kunit subsystem and its
-associated VFS nodes. Ownership of the boot-time suite_set is now
-transferred to a global tracker ('kunit_boot_suites'), and the memory
-is cleanly released in kunit_exit() during module teardown.
-
-Link: https://lore.kernel.org/r/20260507084854.233984-1-florian.schmaus@codasip.com
-Fixes: e2219db280e3 ("kunit: add debugfs /sys/kernel/debug/kunit/<suite>/results display")
-Signed-off-by: Florian Schmaus <florian.schmaus@codasip.com>
-Reviewed-by: Martin Kaiser <martin@kaiser.cx>
-Reviewed-by: David Gow <david@davidgow.net>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: a03bdaa565cb ("ASoC: Intel: add machine driver for BYT/CHT + ES8316")
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260519-asoc-bytcht-es8316-mclk-leak-v1-1-b4a11cdc2afd@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/kunit/test.h |  1 +
- lib/kunit/executor.c | 19 ++++++++++++++++---
- lib/kunit/test.c     |  1 +
- 3 files changed, 18 insertions(+), 3 deletions(-)
+ sound/soc/intel/boards/bytcht_es8316.c | 29 ++++++++++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/include/kunit/test.h b/include/kunit/test.h
-index 5ec5182b5e5751..aedffe2f2d49de 100644
---- a/include/kunit/test.h
-+++ b/include/kunit/test.h
-@@ -613,6 +613,7 @@ unsigned long kunit_vm_mmap(struct kunit *test, struct file *file,
- 			    unsigned long offset);
+diff --git a/sound/soc/intel/boards/bytcht_es8316.c b/sound/soc/intel/boards/bytcht_es8316.c
+index 192e2a394ff3d0..ea387dc7427382 100644
+--- a/sound/soc/intel/boards/bytcht_es8316.c
++++ b/sound/soc/intel/boards/bytcht_es8316.c
+@@ -40,6 +40,7 @@ struct byt_cht_es8316_private {
+ 	struct gpio_desc *speaker_en_gpio;
+ 	struct device *codec_dev;
+ 	bool speaker_en;
++	bool mclk_enabled;
+ };
  
- void kunit_cleanup(struct kunit *test);
-+void kunit_free_boot_suites(void);
+ enum {
+@@ -170,6 +171,15 @@ static struct snd_soc_jack_pin byt_cht_es8316_jack_pins[] = {
+ 	},
+ };
  
- void __printf(2, 3) kunit_log_append(struct string_stream *log, const char *fmt, ...);
- 
-diff --git a/lib/kunit/executor.c b/lib/kunit/executor.c
-index 0061d4c7e35170..9abaed8275845f 100644
---- a/lib/kunit/executor.c
-+++ b/lib/kunit/executor.c
-@@ -15,6 +15,16 @@ extern struct kunit_suite * const __kunit_suites_end[];
- extern struct kunit_suite * const __kunit_init_suites_start[];
- extern struct kunit_suite * const __kunit_init_suites_end[];
- 
-+static struct kunit_suite_set kunit_boot_suites;
-+
-+void kunit_free_boot_suites(void)
++static void byt_cht_es8316_disable_mclk(struct byt_cht_es8316_private *priv)
 +{
-+	if (kunit_boot_suites.start) {
-+		kunit_free_suite_set(kunit_boot_suites);
-+		kunit_boot_suites = (struct kunit_suite_set){ NULL, NULL };
-+	}
++	if (!priv->mclk_enabled)
++		return;
++
++	clk_disable_unprepare(priv->mclk);
++	priv->mclk_enabled = false;
 +}
 +
- static char *action_param;
+ static int byt_cht_es8316_init(struct snd_soc_pcm_runtime *runtime)
+ {
+ 	struct snd_soc_component *codec = snd_soc_rtd_to_codec(runtime, 0)->component;
+@@ -227,12 +237,14 @@ static int byt_cht_es8316_init(struct snd_soc_pcm_runtime *runtime)
+ 	ret = clk_prepare_enable(priv->mclk);
+ 	if (ret)
+ 		dev_err(card->dev, "unable to enable MCLK\n");
++	else
++		priv->mclk_enabled = true;
  
- module_param_named(action, action_param, charp, 0400);
-@@ -409,9 +419,12 @@ int kunit_run_all_tests(void)
- 		pr_err("kunit executor: unknown action '%s'\n", action_param);
+ 	ret = snd_soc_dai_set_sysclk(snd_soc_rtd_to_codec(runtime, 0), 0, 19200000,
+ 				     SND_SOC_CLOCK_IN);
+ 	if (ret < 0) {
+ 		dev_err(card->dev, "can't set codec clock %d\n", ret);
+-		return ret;
++		goto err_disable_mclk;
+ 	}
  
- free_out:
--	if (filter_glob_param || filter_param)
--		kunit_free_suite_set(suite_set);
--	else if (init_num_suites > 0)
-+	if (filter_glob_param || filter_param) {
-+		if (err)
-+			kunit_free_suite_set(suite_set);
-+		else
-+			kunit_boot_suites = suite_set;
-+	} else if (init_num_suites > 0)
- 		/* Don't use kunit_free_suite_set because suites aren't individually allocated */
- 		kfree(suite_set.start);
+ 	ret = snd_soc_card_jack_new_pins(card, "Headset",
+@@ -241,13 +253,25 @@ static int byt_cht_es8316_init(struct snd_soc_pcm_runtime *runtime)
+ 					 ARRAY_SIZE(byt_cht_es8316_jack_pins));
+ 	if (ret) {
+ 		dev_err(card->dev, "jack creation failed %d\n", ret);
+-		return ret;
++		goto err_disable_mclk;
+ 	}
  
-diff --git a/lib/kunit/test.c b/lib/kunit/test.c
-index 62eb529824c657..f0e1e02a98d8b3 100644
---- a/lib/kunit/test.c
-+++ b/lib/kunit/test.c
-@@ -1056,6 +1056,7 @@ static void __exit kunit_exit(void)
- 	kunit_bus_shutdown();
+ 	snd_jack_set_key(priv->jack.jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
+ 	snd_soc_component_set_jack(codec, &priv->jack, NULL);
  
- 	kunit_debugfs_cleanup();
-+	kunit_free_boot_suites();
+ 	return 0;
++
++err_disable_mclk:
++	byt_cht_es8316_disable_mclk(priv);
++	return ret;
++}
++
++static void byt_cht_es8316_exit(struct snd_soc_pcm_runtime *runtime)
++{
++	struct snd_soc_card *card = runtime->card;
++	struct byt_cht_es8316_private *priv = snd_soc_card_get_drvdata(card);
++
++	byt_cht_es8316_disable_mclk(priv);
  }
- module_exit(kunit_exit);
  
+ static int byt_cht_es8316_codec_fixup(struct snd_soc_pcm_runtime *rtd,
+@@ -353,6 +377,7 @@ static struct snd_soc_dai_link byt_cht_es8316_dais[] = {
+ 						| SND_SOC_DAIFMT_CBC_CFC,
+ 		.be_hw_params_fixup = byt_cht_es8316_codec_fixup,
+ 		.init = byt_cht_es8316_init,
++		.exit = byt_cht_es8316_exit,
+ 		SND_SOC_DAILINK_REG(ssp2_port, ssp2_codec, platform),
+ 	},
+ };
 -- 
 2.53.0
 
