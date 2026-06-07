@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C0838A73C;
-	Sun,  7 Jun 2026 11:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487F630D405;
+	Sun,  7 Jun 2026 11:04:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780830242; cv=none; b=GvQvqnde/a+WaIQHPklqz6LVtUMDsvSTsgV9LmnsTisLqNaZWAW/wLkrX/EJNv5m5vhkpERo3xSg307qcrAbjWq0yMxFQ+WJbcohU5zNXaBgpjRSC1FomEiDBp9RFN9FehKT8Hky1sd0jzAlzV2N2Dd0ZCyfXqr2NHFBSPAdhKA=
+	t=1780830245; cv=none; b=FAqAnXx0KKz8eDPZbD3P5cOiQu8aVEy9EWSTDZbYpXB+/H9F9Uj5D8vvlSKg+7kHPmrxcArgNk+IKRpQSabm0UkJf7lOerSOH7ZriVMhuTsr1Bq8AFFTTvF6wtc1Cct8kX8Ed4eOeZkhP5wSNNN/Xc35F+iieP5VE+o/NeDVbOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780830242; c=relaxed/simple;
-	bh=8B9YCnOJUWTMlZM8In1MqpJmHQ3aPNjQ8kXLkqvp7ts=;
+	s=arc-20240116; t=1780830245; c=relaxed/simple;
+	bh=I9T7DTC8DTjiOo3eSwbmpphP8d26H1RghXQQ1ATpO4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kndaWCozSIG0l5bn3mG9rb4oe5PsCNstqxE6a0E5f+ovnkeu3Z5jd5YCV7/1mb1xAJ4Dtjvz02yCxnXfeqhUTyBbrU55C0OhCWAXHRdHIX0EA5d4Ko1g/seDJFhvYAeODxSDbuZaXcgNFw9y3wcGNoUuMVSROD1Fn74kBBFTzMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pkkgc2SF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LAGApOADzl4o5+jFLe71l6iHm7YY/i/X+QM48XN/jk0IeK/2lXJnP7KFwE22iQqcj0NFVuNaubACfnnWzjZcx6PNp20n3Io1IKurKOGnaea8pwfL3vs4ZglzMALTGqrTni+USHGComZ/NaKyhcw6phPtTDZ/nkqj911kz3UqBMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqsqNR1L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pkkgc2SF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 445D71F00893;
-	Sun,  7 Jun 2026 11:04:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqsqNR1L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DFBC1F00893;
+	Sun,  7 Jun 2026 11:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780830240;
-	bh=VdWPqy7ebjkh65d0WGJq7Zk4MpJngARs9YUKXKjOz6Q=;
+	s=korg; t=1780830244;
+	bh=zu7NHpX+CTIHlT9AkJdsEyG+55kSUnaxoV1/78Qpcf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pkkgc2SFssNABWY6XGuitArWomuyoIYVTKQG/E7GaPJ+0sSK4R4MqNiFevz9VcT5s
-	 ZMphX/yZPTGvAT5YJQ4STcoMjgDX9Sy9vMbyfZRCUTyYYiNEq1Aj00enKqaNVUrHRP
-	 NYagkDlbRYbupkYJgO3Fe6uTxOPCN+9gb7uoAGKo=
+	b=wqsqNR1LoDiE2khkBhqmimmoe5XaMD+20bhcg//mkkdNJLMZjICe1OBLKSEbNur4C
+	 mwsKvAX1hI+P2aOAAHnhsACs/xvRR36N8qOm9s0oXBOz/uTq8eoVQtHQW8ogUwlK4H
+	 sN9baUm4igWaeTRySysyMBrpDD80yknD/wdQ0vX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>
-Subject: [PATCH 6.12 296/307] usb: typec: ucsi: Check if power role change actually happened before handling
-Date: Sun,  7 Jun 2026 12:01:33 +0200
-Message-ID: <20260607095738.611620998@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 315/315] thunderbolt: property: Cap recursion depth in __tb_property_parse_dir()
+Date: Sun,  7 Jun 2026 12:01:42 +0200
+Message-ID: <20260607095739.198260850@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,69 +47,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit b80e7d34c7ea6a564525119d6138fbb577a23dba ]
+[ Upstream commit 928abe19fbf0127003abcb1ea69cabc1c897d0ab ]
 
-The CrOS EC may send a connector status change event with the power
-direction changed flag set even if the power direction hasn't actually
-changed after initiating a SET_PDR command internally [1]. In practice
-this happens on every system suspend due to other changes performed by
-the EC [2][3][4], causing suspend to fail.
+A DIRECTORY entry's value field is used as the dir_offset for a
+recursive call into __tb_property_parse_dir() with no depth counter.
+A crafted peer that chains DIRECTORY entries into a back-reference
+loop drives the parser until the kernel stack is exhausted and the
+guard page fires.  Any untrusted XDomain peer (cable, dock, in-line
+inspector, adjacent host) that reaches the PROPERTIES_REQUEST
+control-plane exchange can trigger this without authentication.
 
-Fix this by checking if the power role change actually happened before
-handling it.
+Thread a depth counter through tb_property_parse() and
+__tb_property_parse_dir(), and reject blocks that exceed
+TB_PROPERTY_MAX_DEPTH = 8.  That is comfortably larger than any
+observed legitimate XDomain layout.
 
-[1]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=1689;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
-[2]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=3923;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
-[3]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=5094;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
-[4]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=2229;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
+Operators who do not need XDomain host-to-host discovery can disable
+the path entirely with thunderbolt.xdomain=0 on the kernel command
+line.
 
-Cc: stable <stable@kernel.org>
-Fixes: 7616f006db07 ("usb: typec: ucsi: Update power_supply on power role change")
-Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
-Reported-and-tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260519-ucsi-fix-2-v1-1-6f1239535187@qtmlabs.xyz
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-6
+Assisted-by: Codex:gpt-5-4
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/thunderbolt/property.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1201,7 +1201,7 @@ static void ucsi_handle_connector_change
- 	struct ucsi_connector *con = container_of(work, struct ucsi_connector,
- 						  work);
- 	struct ucsi *ucsi = con->ucsi;
--	enum typec_role role;
-+	enum typec_role role, prev_role;
- 	u64 command;
- 	int ret;
+--- a/drivers/thunderbolt/property.c
++++ b/drivers/thunderbolt/property.c
+@@ -35,10 +35,11 @@ struct tb_property_dir_entry {
+ };
  
-@@ -1211,6 +1211,8 @@ static void ucsi_handle_connector_change
- 		dev_err_once(ucsi->dev, "%s entered without EVENT_PENDING\n",
- 			     __func__);
+ #define TB_PROPERTY_ROOTDIR_MAGIC	0x55584401
++#define TB_PROPERTY_MAX_DEPTH		8
  
-+	prev_role = !!(con->status.flags & UCSI_CONSTAT_PWR_DIR);
+ static struct tb_property_dir *__tb_property_parse_dir(const u32 *block,
+ 	size_t block_len, unsigned int dir_offset, size_t dir_len,
+-	bool is_root);
++	bool is_root, unsigned int depth);
+ 
+ static inline void parse_dwdata(void *dst, const void *src, size_t dwords)
+ {
+@@ -97,7 +98,8 @@ tb_property_alloc(const char *key, enum
+ }
+ 
+ static struct tb_property *tb_property_parse(const u32 *block, size_t block_len,
+-					const struct tb_property_entry *entry)
++					const struct tb_property_entry *entry,
++					unsigned int depth)
+ {
+ 	char key[TB_PROPERTY_KEY_SIZE + 1];
+ 	struct tb_property *property;
+@@ -118,7 +120,7 @@ static struct tb_property *tb_property_p
+ 	switch (property->type) {
+ 	case TB_PROPERTY_TYPE_DIRECTORY:
+ 		dir = __tb_property_parse_dir(block, block_len, entry->value,
+-					      entry->length, false);
++					      entry->length, false, depth + 1);
+ 		if (!dir) {
+ 			kfree(property);
+ 			return NULL;
+@@ -163,13 +165,17 @@ static struct tb_property *tb_property_p
+ }
+ 
+ static struct tb_property_dir *__tb_property_parse_dir(const u32 *block,
+-	size_t block_len, unsigned int dir_offset, size_t dir_len, bool is_root)
++	size_t block_len, unsigned int dir_offset, size_t dir_len, bool is_root,
++	unsigned int depth)
+ {
+ 	const struct tb_property_entry *entries;
+ 	size_t i, content_len, nentries;
+ 	unsigned int content_offset;
+ 	struct tb_property_dir *dir;
+ 
++	if (depth > TB_PROPERTY_MAX_DEPTH)
++		return NULL;
 +
- 	command = UCSI_GET_CONNECTOR_STATUS | UCSI_CONNECTOR_NUMBER(con->num);
+ 	dir = kzalloc(sizeof(*dir), GFP_KERNEL);
+ 	if (!dir)
+ 		return NULL;
+@@ -200,7 +206,7 @@ static struct tb_property_dir *__tb_prop
+ 	for (i = 0; i < nentries; i++) {
+ 		struct tb_property *property;
  
- 	ret = ucsi_send_command_common(ucsi, command, &con->status,
-@@ -1229,7 +1231,7 @@ static void ucsi_handle_connector_change
+-		property = tb_property_parse(block, block_len, &entries[i]);
++		property = tb_property_parse(block, block_len, &entries[i], depth);
+ 		if (!property) {
+ 			tb_property_free_dir(dir);
+ 			return NULL;
+@@ -239,7 +245,7 @@ struct tb_property_dir *tb_property_pars
+ 		return NULL;
  
- 	role = !!(con->status.flags & UCSI_CONSTAT_PWR_DIR);
+ 	return __tb_property_parse_dir(block, block_len, 0, rootdir->length,
+-				       true);
++				       true, 0);
+ }
  
--	if (con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) {
-+	if ((con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) && role != prev_role) {
- 		typec_set_pwr_role(con->port, role);
- 		ucsi_port_psy_changed(con);
- 
+ /**
 
 
