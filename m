@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE60531ED80;
-	Sun,  7 Jun 2026 11:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C0838A73C;
+	Sun,  7 Jun 2026 11:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780830238; cv=none; b=U9Vc8pGjBVmyboBzygw/YXk+xAc0GbMEhLcWXgntIqZblKTUKQ8/tFlX8XdPUARuF5IXt4sZRmz6nJRecwakGQLhblc7hqnBBp91NvekmhTw4XQDCU4LzWJavDISMQafdegOjPP8dCzUcfsJxJ8qaO1A5IA6AVKMZCp1ef4/TBI=
+	t=1780830242; cv=none; b=GvQvqnde/a+WaIQHPklqz6LVtUMDsvSTsgV9LmnsTisLqNaZWAW/wLkrX/EJNv5m5vhkpERo3xSg307qcrAbjWq0yMxFQ+WJbcohU5zNXaBgpjRSC1FomEiDBp9RFN9FehKT8Hky1sd0jzAlzV2N2Dd0ZCyfXqr2NHFBSPAdhKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780830238; c=relaxed/simple;
-	bh=pZgvohKSvAi9lgELWVf3I8ZbKoBqOmrQC8l36r3jW7E=;
+	s=arc-20240116; t=1780830242; c=relaxed/simple;
+	bh=8B9YCnOJUWTMlZM8In1MqpJmHQ3aPNjQ8kXLkqvp7ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q4STs9N03Li0klE+QsH5CyqsBDY5O0/w9EJ8oEkbh2aX9sK1dP9mx/12k0QCX6OUeD+qr985FFE8pkYIjop46LzyEye28aiHVguk4NCqpP32WxbfFZbJf7zAZatFm3I8a9ATbUGhR0V/vOpUt8U0j+wjTQlfKIL3jqM067FYfEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVGaQctl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kndaWCozSIG0l5bn3mG9rb4oe5PsCNstqxE6a0E5f+ovnkeu3Z5jd5YCV7/1mb1xAJ4Dtjvz02yCxnXfeqhUTyBbrU55C0OhCWAXHRdHIX0EA5d4Ko1g/seDJFhvYAeODxSDbuZaXcgNFw9y3wcGNoUuMVSROD1Fn74kBBFTzMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pkkgc2SF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVGaQctl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF621F00893;
-	Sun,  7 Jun 2026 11:03:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pkkgc2SF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 445D71F00893;
+	Sun,  7 Jun 2026 11:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780830237;
-	bh=mE1BrKILJY4O+Bqtywf5KUfdVfvPXsYlhwTNk70yTMg=;
+	s=korg; t=1780830240;
+	bh=VdWPqy7ebjkh65d0WGJq7Zk4MpJngARs9YUKXKjOz6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tVGaQctldUmY7+iqLxp4wSmUmVyDCzP587E1hZDctPpzg3FegmBbUxaOoJJ9WDt2R
-	 X8jE0f87wbJBclslQjDmcy/FpMg3hTucTNKNSwnJXPh3zGBdVe36S9mltwrXf4JYCV
-	 4sxW7HyVLIK0iaC0wN+lbnTKUiQ8K8hjfR5Po5gg=
+	b=Pkkgc2SFssNABWY6XGuitArWomuyoIYVTKQG/E7GaPJ+0sSK4R4MqNiFevz9VcT5s
+	 ZMphX/yZPTGvAT5YJQ4STcoMjgDX9Sy9vMbyfZRCUTyYYiNEq1Aj00enKqaNVUrHRP
+	 NYagkDlbRYbupkYJgO3Fe6uTxOPCN+9gb7uoAGKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 295/307] usb: musb: omap2430: Fix use-after-free in omap2430_probe()
-Date: Sun,  7 Jun 2026 12:01:32 +0200
-Message-ID: <20260607095738.574948809@linuxfoundation.org>
+	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>
+Subject: [PATCH 6.12 296/307] usb: typec: ucsi: Check if power role change actually happened before handling
+Date: Sun,  7 Jun 2026 12:01:33 +0200
+Message-ID: <20260607095738.611620998@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
 References: <20260607095727.647295505@linuxfoundation.org>
@@ -51,51 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
 
-[ Upstream commit e194ce048f5a6c549b3a23a8c568c6470f40f772 ]
+[ Upstream commit b80e7d34c7ea6a564525119d6138fbb577a23dba ]
 
-In omap2430_probe(), of_node_put(np) is called prematurely before the
-last access to np, leading to a use-after-free if the node's reference
-count drops to zero. Move the of_node_put() calls after the last use of
-np in both the success and error paths.
+The CrOS EC may send a connector status change event with the power
+direction changed flag set even if the power direction hasn't actually
+changed after initiating a SET_PDR command internally [1]. In practice
+this happens on every system suspend due to other changes performed by
+the EC [2][3][4], causing suspend to fail.
 
-Fixes: ffbe2feac59b ("usb: musb: omap2430: Fix probe regression for missing resources")
+Fix this by checking if the power role change actually happened before
+handling it.
+
+[1]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=1689;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
+[2]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=3923;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
+[3]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=5094;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
+[4]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=2229;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
+
 Cc: stable <stable@kernel.org>
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260409101104.480623-1-vulab@iscas.ac.cn
+Fixes: 7616f006db07 ("usb: typec: ucsi: Update power_supply on power role change")
+Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+Reported-and-tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260519-ucsi-fix-2-v1-1-6f1239535187@qtmlabs.xyz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/musb/omap2430.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/musb/omap2430.c
-+++ b/drivers/usb/musb/omap2430.c
-@@ -340,7 +340,6 @@ static int omap2430_probe(struct platfor
- 	} else {
- 		device_set_of_node_from_dev(&musb->dev, &pdev->dev);
- 	}
--	of_node_put(np);
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1201,7 +1201,7 @@ static void ucsi_handle_connector_change
+ 	struct ucsi_connector *con = container_of(work, struct ucsi_connector,
+ 						  work);
+ 	struct ucsi *ucsi = con->ucsi;
+-	enum typec_role role;
++	enum typec_role role, prev_role;
+ 	u64 command;
+ 	int ret;
  
- 	glue->dev			= &pdev->dev;
- 	glue->musb			= musb;
-@@ -458,6 +457,7 @@ static int omap2430_probe(struct platfor
- 		dev_err(&pdev->dev, "failed to register musb device\n");
- 		goto err3;
- 	}
-+	of_node_put(np);
+@@ -1211,6 +1211,8 @@ static void ucsi_handle_connector_change
+ 		dev_err_once(ucsi->dev, "%s entered without EVENT_PENDING\n",
+ 			     __func__);
  
- 	return 0;
++	prev_role = !!(con->status.flags & UCSI_CONSTAT_PWR_DIR);
++
+ 	command = UCSI_GET_CONNECTOR_STATUS | UCSI_CONNECTOR_NUMBER(con->num);
  
-@@ -467,6 +467,7 @@ err_put_control_otghs:
- 	if (!IS_ERR(glue->control_otghs))
- 		put_device(glue->control_otghs);
- err2:
-+	of_node_put(np);
- 	platform_device_put(musb);
+ 	ret = ucsi_send_command_common(ucsi, command, &con->status,
+@@ -1229,7 +1231,7 @@ static void ucsi_handle_connector_change
  
- err0:
+ 	role = !!(con->status.flags & UCSI_CONSTAT_PWR_DIR);
+ 
+-	if (con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) {
++	if ((con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) && role != prev_role) {
+ 		typec_set_pwr_role(con->port, role);
+ 		ucsi_port_psy_changed(con);
+ 
 
 
