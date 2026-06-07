@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 121D23254A9;
-	Sun,  7 Jun 2026 10:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AACD257855;
+	Sun,  7 Jun 2026 10:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828562; cv=none; b=s/GML3dm3yuMuWxMMEVjHTJNIoYslSpNwQYzYLiMyifPY+SK4DaT5panoQqojnuG6gfCJAwjCNw8esEDQ6SDIczU6twuBWfQjqddgNjdZmQejK/VJsf0nt7BKcwz1zAYbl5iVzu/61yhSQNFvT5xMHC6L35i3kuQTD0N+9iD5Ec=
+	t=1780828566; cv=none; b=gXu2XCzjlcuDYBiGpr9w91bOlIu/mEBkqxZ76ErTt6pyrjNQDFafloWEIjfA/+urSKecYbuNnFuMyX4ca35G+WGhgIBNVLqh1k++iAIDMw+noeLt+1DyTUwsoah7XgLRfZZiMMAMuUAGA75ArH5EupNsVNYMCR20O0jbo5iJjdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828562; c=relaxed/simple;
-	bh=LzPaYzC1OcdGh1C6+QtCJ/B87ZC5diAcE3bS2ufOxjk=;
+	s=arc-20240116; t=1780828566; c=relaxed/simple;
+	bh=LzQYmfzcpFQOREB+wJwd4DJecvcV2G1LZs+bYPfZ708=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jodm9XfReVsDG1Ovx4z58TDGyHNv8JVBmv+uiu0Qlm1zEY2G9LiHhZFuHlyGKtRc6dy4LVZPEq7a7sNG0fGCLsYsCwB7RCpStYFbLVpqiz5F1kLi+A9G1a4Ayb7Ro8A78JNBTTcrcWzNoJVm8+KDuX+iOzH9VBEBC6L3sZhL8qI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dDc3jyNe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WoNexvdS0tSisOWnc3T0GFMJkw3grPSSRDsWcWS3ZTyFIJbo/sIk5ai+/kg5E0ySLoknaptrh3f1nzk9jRhB1Lj9+4NYJ142ek9Sm3edDOxgd3IOl/POvjHBXj8bV8JDBC0Q26c8NXxvAtJfh+6U7u68GR7S1A76Kmqi0zeOpTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2u5wzeo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dDc3jyNe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FB91F00893;
-	Sun,  7 Jun 2026 10:36:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2u5wzeo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183D31F00893;
+	Sun,  7 Jun 2026 10:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828561;
-	bh=8fX8dfvgFCns5Z/F5RZuLDGB+91Ke6sEt1Rp/Dz4ZZI=;
+	s=korg; t=1780828565;
+	bh=d5isgzkup+7Tvob8MY0TDm5RXTTRWhNzOc2npVtVnPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dDc3jyNeFf4KydSbwnVGusZtfnZ+4dVFbrfhp4ERkx2HQgBHVtZysDChzE1ePYIXV
-	 N2OOcEUwiaqOrtnisVrkb05USvPpcoOWKMAO23ySgcsvO3Sw8Hhvesd+HuAM1aNqJ8
-	 AB4wpP4oK5bKnCi0UWVpR9Ee/ovLtTszdzGT2lrM=
+	b=E2u5wzeogWe2oZ4uUxEqKB0Mpz3qY8sCEOZ+Zw6AZM+t4yuN+lKZqA1fXfhFOxgId
+	 n5IfbtgdrTCsLN7jUqPjNbxsG5e8bx3GIy1wKdpAt3k/HunMy7GQ2eJWROxWbN8PUV
+	 l8qR39qMdV+QUfnqyuV7tUBx/EzNMmaUF2lXNsvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Felix Gu <ustc.gu@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 7.0 193/332] iio: light: veml6070: Fix resource leak in probe error path
-Date: Sun,  7 Jun 2026 11:59:22 +0200
-Message-ID: <20260607095735.153462210@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 148/307] Bluetooth: hci_sync: fix UAF in hci_le_create_cis_sync
+Date: Sun,  7 Jun 2026 11:59:05 +0200
+Message-ID: <20260607095733.162649272@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,68 +46,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit b66f922f6a4fa92840f662fbcfeb4f8a0f774bcc upstream.
+commit bfea6091e0fffb270c20e74384b660910277eb6c upstream.
 
-The driver calls i2c_new_dummy_device() to create a dummy device,
-then calls i2c_smbus_write_byte(). If i2c_smbus_write_byte() fails and
-returns, the cleanup via devm_add_action_or_reset() was never registered,
-so the dummy device leaks.
+hci_le_create_cis_sync() dereferences conn->conn_timeout after releasing
+both rcu_read_lock() and hci_dev_lock(hdev).  The conn pointer was
+obtained from an RCU-protected iteration over hdev->conn_hash.list and
+is not valid once these locks are dropped.  A concurrent disconnect can
+free the hci_conn between the unlock and the dereference, causing a
+use-after-free read.
 
-Switch to devm_i2c_new_dummy_device() which registers cleanup atomically
-with device creation, eliminating the error-path window.
+The cancellation mechanism in hci_conn_del() cannot prevent this because
+hci_le_create_cis_pending() queues hci_create_cis_sync with data=NULL:
 
-Fixes: 7501bff87c3e ("iio: light: veml6070: add action for i2c_unregister_device")
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+    hci_cmd_sync_queue(hdev, hci_create_cis_sync, NULL, NULL);
+
+While hci_conn_del() dequeues with data=conn:
+
+    hci_cmd_sync_dequeue(hdev, NULL, conn, NULL);
+
+Since NULL != conn, the lookup in _hci_cmd_sync_lookup_entry() never
+matches, and the pending work item is not cancelled.
+
+Fix this by saving conn->conn_timeout into a local variable while the
+locks are still held, so the stale conn pointer is never dereferenced
+after unlock.
+
+This is the same class of bug as the one fixed by commit 035c25007c9e
+("Bluetooth: hci_sync: Fix UAF on le_read_features_complete") which
+addressed the identical pattern in a different function.
+
+This vulnerability was identified using 0sec.ai, an open-source
+automated security auditing platform (https://github.com/0sec-labs).
+
+Fixes: c09b80be6ffc ("Bluetooth: hci_conn: Fix not waiting for HCI_EVT_LE_CIS_ESTABLISHED")
+Cc: stable@vger.kernel.org
+Reported-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/veml6070.c |   14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ net/bluetooth/hci_sync.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/light/veml6070.c
-+++ b/drivers/iio/light/veml6070.c
-@@ -245,13 +245,6 @@ static const struct iio_info veml6070_in
- 	.write_raw = veml6070_write_raw,
- };
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6626,6 +6626,7 @@ int hci_le_create_cis_sync(struct hci_de
+ 	DEFINE_FLEX(struct hci_cp_le_create_cis, cmd, cis, num_cis, 0x1f);
+ 	size_t aux_num_cis = 0;
+ 	struct hci_conn *conn;
++	u16 timeout = 0;
+ 	u8 cig = BT_ISO_QOS_CIG_UNSET;
  
--static void veml6070_i2c_unreg(void *p)
--{
--	struct veml6070_data *data = p;
--
--	i2c_unregister_device(data->client2);
--}
--
- static int veml6070_probe(struct i2c_client *client)
- {
- 	struct veml6070_data *data;
-@@ -281,7 +274,8 @@ static int veml6070_probe(struct i2c_cli
- 	if (ret < 0)
- 		return ret;
+ 	/* The spec allows only one pending LE Create CIS command at a time. If
+@@ -6696,6 +6697,7 @@ int hci_le_create_cis_sync(struct hci_de
+ 		set_bit(HCI_CONN_CREATE_CIS, &conn->flags);
+ 		cis->acl_handle = cpu_to_le16(conn->parent->handle);
+ 		cis->cis_handle = cpu_to_le16(conn->handle);
++		timeout = conn->conn_timeout;
+ 		aux_num_cis++;
  
--	data->client2 = i2c_new_dummy_device(client->adapter, VEML6070_ADDR_DATA_LSB);
-+	data->client2 = devm_i2c_new_dummy_device(&client->dev, client->adapter,
-+						  VEML6070_ADDR_DATA_LSB);
- 	if (IS_ERR(data->client2))
- 		return dev_err_probe(&client->dev, PTR_ERR(data->client2),
- 				     "i2c device for second chip address failed\n");
-@@ -292,10 +286,6 @@ static int veml6070_probe(struct i2c_cli
- 	if (ret < 0)
- 		return ret;
- 
--	ret = devm_add_action_or_reset(&client->dev, veml6070_i2c_unreg, data);
--	if (ret < 0)
--		return ret;
--
- 	return devm_iio_device_register(&client->dev, indio_dev);
+ 		if (aux_num_cis >= cmd->num_cis)
+@@ -6715,7 +6717,7 @@ done:
+ 	return __hci_cmd_sync_status_sk(hdev, HCI_OP_LE_CREATE_CIS,
+ 					struct_size(cmd, cis, cmd->num_cis),
+ 					cmd, HCI_EVT_LE_CIS_ESTABLISHED,
+-					conn->conn_timeout, NULL);
++					timeout, NULL);
  }
  
+ int hci_le_remove_cig_sync(struct hci_dev *hdev, u8 handle)
 
 
