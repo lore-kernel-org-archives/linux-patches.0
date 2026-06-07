@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28261E98EF;
-	Sun,  7 Jun 2026 10:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC4F1E98EF;
+	Sun,  7 Jun 2026 10:43:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829001; cv=none; b=kz2c9Sf1Ipetzubr0ofzoruPzl/iXtC9shKXh0Whu99ndyFo00shC6pA8A5ThFzZsA4yv3LJ9n2OxQBPZef+CpUbHeoGVvqx9qO6DuPh6o8eSwYjQF0Bx7uWTH2zOGYvx19inZ2zERu74aj2GLWXHkfCY84UQmWjsnf9jU5/YV8=
+	t=1780829005; cv=none; b=awMuVAwIhfgyFXaBl0+g/dSEq2Fl1mtOgLYd7Jm1s/v8ZPEu3+X84627YJSWb0qirOc5U4z3IHnJDXFtzpbWBCcL6KsFrwPmet84HngymPkLuNlTARV//k3sEb1uaoK8t578qLpCzoi2oICXdfWz88gejh5hQxV2XIHYlHcu24I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829001; c=relaxed/simple;
-	bh=hd7IMPv6Sacz5h7+/GpaMDk5V4M35okDHdvqrKkq4nM=;
+	s=arc-20240116; t=1780829005; c=relaxed/simple;
+	bh=I6Bdj8AD4V+I79JZ6o6IMig3jQSYDrWCd6vrjAg64PE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SzM0e5DMH2pOuci9Lxs+FjsxKy7UhZZRlclUm25M6qzc7Vq00SFUa8a62Q2OMEW58NahMOWgCUTpU0HLTTpkAacutFcp9gs5mPDDpMxVol/15E4vtiVpfoAE92MnvZVgIcgzpHSwaMncSk0DgwEK3Rdvyk6YTz8oi31j8H87YD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tNcJEBuw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DVLitEw3eK4wjmttCU5xf+7xIv6/p5ei/GPXxYjjqawh05V5rU/dBcl+BGF5PvpLIfRONknIbSBP3fZ8k6DXvScPeH7m5f0dB7VKjAj6WTlyFQRSa1+M3Zuw7+H7hI37kBKxdNDicF3BqVkW5lolQGym2S4Awfhj6/h9WEgZnbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOQeZY3k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNcJEBuw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3236A1F00893;
-	Sun,  7 Jun 2026 10:43:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOQeZY3k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF811F00893;
+	Sun,  7 Jun 2026 10:43:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829000;
-	bh=jwDCZCg5CCqdldXG4uwzsQbfKqdTu53eLXs4fPZvu24=;
+	s=korg; t=1780829004;
+	bh=+zcdGxaVN+HhNRTQb+8BSXcA5WHGH8Mx0aDcFbExOCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tNcJEBuwmMANY0a/P+72iqiIIYU+o3vSCqOa38QC+oHwbltpnpDMzKHf4VYRHqR8W
-	 3ZMUMp2H3S3c2n1Ke9PPR/mnYGWdhHScFXVwiVlTM9fVlzrOMnH99skKDBWutqUhPE
-	 CrIe8mUC1q1/W5ii1YrHppDWRfrk0+cAvAcZ2VRY=
+	b=sOQeZY3k4B97fcxGF4UjQzi1V5ulgSt/DvF+i/f3dfW6pxviHyFudlaQwb2HFDfA7
+	 fWOe7reFflBYZBQ7lS2ZpQtMlH2he6NWlTlnnlk2u92cys+EA9ifxr1sJhSTtJmR+y
+	 KcmxJmz8Y8zCf4W97RrnB0NBkNLbc3/EaaiUTpRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <malin89@huawei.com>,
-	Chenyuan Mi <michenyuan@huawei.com>,
-	Jingguo Tan <tanjingguo@huawei.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 7.0 233/332] xfrm: esp: restore combined single-frag length gate
-Date: Sun,  7 Jun 2026 12:00:02 +0200
-Message-ID: <20260607095736.612695227@linuxfoundation.org>
+	Justin Iurman <justin.iurman@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 186/307] ipv6: exthdrs: refresh nh pointer after ipv6_hop_jumbo()
+Date: Sun,  7 Jun 2026 11:59:43 +0200
+Message-ID: <20260607095734.549260978@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,64 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jingguo Tan <tanjingguo@huawei.com>
+From: Justin Iurman <justin.iurman@gmail.com>
 
-commit dfa0d7b0ff1eb6b2c416b8fdb9b4f2cefba57a40 upstream.
+commit d47548a36639095939f4747d4c43f2271366f565 upstream.
 
-The ESP out-of-place fast path appends the trailer in esp_output_head()
-before esp_output_tail() allocates the destination page frag. The
-head-side gate currently checks skb->data_len and tailen separately, but
-the tail code allocates a single destination frag from the combined
-post-trailer skb->data_len.
+ipv6_hop_jumbo() calls pskb_trim_rcsum(), which can change skb pointers.
+Let's recompute nh pointer to make sure any change won't mess things up.
 
-Reject the page-frag fast path when the combined aligned length exceeds a
-page. Otherwise skb_page_frag_refill() may fall back to a single page while
-the destination sg still spans the combined skb->data_len.
-
-Restore this combined-length page gate for both IPv4 and IPv6.
-
-Fixes: 5bd8baab087d ("esp: limit skb_page_frag_refill use to a single page")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Lin Ma <malin89@huawei.com>
-Signed-off-by: Chenyuan Mi <michenyuan@huawei.com>
-Signed-off-by: Jingguo Tan <tanjingguo@huawei.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Justin Iurman <justin.iurman@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260522112013.12342-1-justin.iurman@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/esp4.c |    4 ++--
- net/ipv6/esp6.c |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ net/ipv6/exthdrs.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/ipv4/esp4.c
-+++ b/net/ipv4/esp4.c
-@@ -419,8 +419,8 @@ int esp_output_head(struct xfrm_state *x
- 			return err;
- 	}
- 
--	if (ALIGN(tailen, L1_CACHE_BYTES) > PAGE_SIZE ||
--	    ALIGN(skb->data_len, L1_CACHE_BYTES) > PAGE_SIZE)
-+	if (ALIGN(skb->data_len + tailen, L1_CACHE_BYTES) >
-+	    PAGE_SIZE)
- 		goto cow;
- 
- 	if (!skb_cloned(skb)) {
---- a/net/ipv6/esp6.c
-+++ b/net/ipv6/esp6.c
-@@ -448,8 +448,8 @@ int esp6_output_head(struct xfrm_state *
- 			return err;
- 	}
- 
--	if (ALIGN(tailen, L1_CACHE_BYTES) > PAGE_SIZE ||
--	    ALIGN(skb->data_len, L1_CACHE_BYTES) > PAGE_SIZE)
-+	if (ALIGN(skb->data_len + tailen, L1_CACHE_BYTES) >
-+	    PAGE_SIZE)
- 		goto cow;
- 
- 	if (!skb_cloned(skb)) {
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -184,6 +184,8 @@ static bool ip6_parse_tlv(bool hopbyhop,
+ 				case IPV6_TLV_JUMBO:
+ 					if (!ipv6_hop_jumbo(skb, off))
+ 						return false;
++
++					nh = skb_network_header(skb);
+ 					break;
+ 				case IPV6_TLV_CALIPSO:
+ 					if (!ipv6_hop_calipso(skb, off))
 
 
