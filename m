@@ -1,144 +1,98 @@
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F2123F417
-	for <patches@lists.linux.dev>; Sun,  7 Jun 2026 14:00:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780840807; cv=pass; b=uDOp+LI7z4WAevjQHoCPwusyAxFg12oJS7NscR+C5teB0p7m9L+Glp+2kz7r9yzD+kTFiPKZ4uEPWIFOmNLUmKwI2Qd/dAlmIn0ARIUxBz5Mt/ehiEonYU5ByiX1xDlhimROL3Ayx2eFUiis70VcEXxutO2JsOGNRLhg66uxItU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780840807; c=relaxed/simple;
-	bh=FFaZCZCI1aLwrKSfB/eohEPXsMJlsUISmfq99wdbCHk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LQ1S0wzmJ1OFBZ1/hTN07Eoj/h0Fn21R021zXa2mpKY+sElcL0KxG54rcXxSM2Zgy2L8B1qddHcYEs3uLWC6fbGdZkUXmCRgg3FYitJwE0YtwadshciAQ8GVh6FwZ6F6dE2mrRbbSKlxI3oybz9gjTUaf5u/xu1PxkYueCCk5SQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=DtZ60w7a; arc=pass smtp.client-ip=74.125.82.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076FF243387;
+	Sun,  7 Jun 2026 15:03:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780844624; cv=none; b=nwLiWbH1a537sDVQ9dlnfKTzPNiTvHyJOafahoG1tjSnp2sy14nBjdH0rtTcovokqmSuQHOs8tDyHxJwJgrpuXjy4gCub5tWaawi/2NwMwbx1grzuckxwKQogBLUE6/aJJS0VAqvafM0YBGvAhMvX2bSqteCp4RpVOd7wQsg9Qc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780844624; c=relaxed/simple;
+	bh=/J5n8J3YoaYjsjj0/1RcMbmCp33LRAswhlJXies9Sbo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mKr1z57rKmozDzL2fbbmLUcv4crK5Jv+kRB3dDwWANtTkscLnthefpJJAs8YhZsk60Xxa5WD/4vOYawln63J6h2XcjoAk6FLW644xluV0b/Ku1HKIWOk5ksDPT3pHCo9aHFIm9gFulWp48fko20hhdwducbhfNIRrj8piqMhtRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OemTHbqs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="DtZ60w7a"
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-1363fe80fe8so4970460c88.0
-        for <patches@lists.linux.dev>; Sun, 07 Jun 2026 07:00:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780840805; cv=none;
-        d=google.com; s=arc-20240605;
-        b=forMRyP8wq8gqCd23nfJ0PIPmVp+4Z3L9nNUyV1i+FUV6v7i4muQxQp/1NaIrAmRuo
-         vyPaba89q2knjPO9skE239bwHcIvosMdn7jWpp9xuY0rASnfXVpvOuG8t4G7JTv1ch7u
-         Gfcsm4kD8n7tPadoz+/KBcEj0GLxUZ1ZVu6gzNOib+YuDkTiiKBWrFfSwsyvIce+9aqp
-         UkYgZc8B/BpUxqcSe3u/vGRDA8xAfcYZeaUtguVj7IRriKJ3L89IjaHmaGYlvK30puIZ
-         mck/EckyrLLYw4ebCF1yxCpsfF8BJCkPF5/5tb/CuiSJGp6TpH2qqvhTbEUXjTUNvUtX
-         EOJA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=RkQeYfFIuOUrnCngJydWaqMe29Hx6hUsX++EJF0iQCc=;
-        fh=6nN+KbQsxWGzqFtnHWXsqwPqZIi5x7WfprYgibiR1BI=;
-        b=f8V3iFQj9fTmCaYKfjdDVeevzj5mzlHMPYQVl+3xS355LxvfF80Mwr80z1G8Oyo2cM
-         uQiwPSrsJUHwSQPEPDeyPcq3Xfq9e3gXRhGOcRMKt78uRzpKyS4smwnMgZSaLKhmMPjG
-         c5e0db0AEZ45mdsLGMWlytqz34tYz0mx18BRpCqcwIyfRZ3qldeVKF1n1FpFxYl0i1IL
-         2FEZg9hbWnAy3d1KTyuxmgtEfg1P14uV4W8hRDrbWRvDvKWnGv0uR97kP2C4JTa5yKuo
-         q+g6CHZG+UafLfK0jI+2quhCqVqcl7VE4Dm8xzZ5V6LQz5sBluq8O1yc/yNNyjYT2BYh
-         KLBg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl.com; s=google; t=1780840805; x=1781445605; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RkQeYfFIuOUrnCngJydWaqMe29Hx6hUsX++EJF0iQCc=;
-        b=DtZ60w7avkjG8btpDSDPeptK7IpqT0m+KJrLkw0AIUNuoUOnSDApYVIjA3MchZAZXr
-         B8XkARnEYgMaYB/gIaovNBugBtEz+NmfOVmkJBa+X3elypA4hcpTcneSAYzOOqcZtbJ3
-         0S1T4b038CNRtIlF12Nq3GartPGBLQPMqsGSR59OS14M8rSpzWzAXojte8xX79C5HVKG
-         cxxVz8u150cgZgyA/ImAcU+2Qv3J4idqzBhTFIDQsIoDMeMUtZiCzCERapuAEXUYvq5k
-         UdAIOssTfn5ar5MDodwFx8nPsSnMUDdyot3YAhsfjoBuo8EvOATbssrhHj4b+gUo6IV2
-         4S4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780840805; x=1781445605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=RkQeYfFIuOUrnCngJydWaqMe29Hx6hUsX++EJF0iQCc=;
-        b=Xk2XsEor0sPDpGG75fHjC2a0ycgkPlgnxyxPZKvHQxJFxVZxeFmqIGuP2n5nDAXOAY
-         ntVH4beMK9DR2PHVqGRNvauYQIkrex0t1/Oz/YjfDplRlUE3Ef4GscaDz1E0MnS/5PG9
-         Z9gavKWoDPhriBEndBvzHtTjwPf1HAegOda9JlREF4LDQytrGPK9vTfHeuqruHtZRMKb
-         u2Ghmq5sEqnMF+GkBXJrPDagK8m6FdIQrUCeKpibDGzZ317ErWUUmsXkB5llNKpb6KNw
-         JiA2W+cTQlwS7pPFu2mDXIxExy2oEcQJGP/woIyCK+eDUGkMU9X+rHyiJKGkQqxU1OFa
-         b1Kw==
-X-Forwarded-Encrypted: i=1; AFNElJ//2e/9JVBSJjciddcYUyvcoczNzqbVq/tKTaLwNoDQZN6sqFzmpbLvqUkzL8VSgmS/bqiBoZ4V@lists.linux.dev
-X-Gm-Message-State: AOJu0Yybec+mK9FGdwshEf8cA4Yx5+fF3OxiQRrHyWBEEHXPwcviRqtT
-	4oENzvSZlbI7ZFiJLqf1dFJcMpjDGMdQi33Muo7HPN+L+Va+xZ6a6ILFPIq6k/jrheQ+oUEJcWu
-	k6+2WZDttBhT6zQbELNHSYO27QA8kJ/dFr4AAKe5SYA==
-X-Gm-Gg: Acq92OEvZ2rJh63Ng6YuMoKIyXgQRLM8zDIKVdBV2/0fbQ1GF13Nf60MhXrCu7JPjZU
-	myF+ja0LAaNLBzhFQ/3musGOKob5Lq2N9tn+Cd0srIHXZzzXBNNenQMN4u57NCcSIgrv7wUgpEi
-	LY8bVkVq9M1sezE8CMA3TmhvcX5FacUNcwLUvIhnk2yxQ8yY8BOJlX98PWBB8BEO3bBinAwauNl
-	g+aVdHDKuGWfAi9DKDcfZsC0umKno3nhYnOmkyWbhZMzhLgIkrNg3xYKjTsuL7HsqtF2hCDMIUh
-	fDaGARU+iMBKpOd+VGA=
-X-Received: by 2002:a05:7022:1e11:b0:138:12fa:378d with SMTP id
- a92af1059eb24-13812fa38ddmr4360570c88.22.1780840805119; Sun, 07 Jun 2026
- 07:00:05 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OemTHbqs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93871F00893;
+	Sun,  7 Jun 2026 15:03:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1780844623;
+	bh=SYGPCVsO0pzj7zz/LmnIqaKwdK1SmteuqABvRk6oT2M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=OemTHbqsDFvau4drDS9ZPHG7N2dLJ63KyYsaptuuMAGwqJEnHOoQR7Fx7TQjjjJm2
+	 C8Et0M7tBsNHqbM3QLe5zAHx13PDWqD4jEpQHxG6H/ZIobLdhLp6NFT3N/ysB9O6ku
+	 gZ4642dYOSvP8iQj+QgLYvpJuiUulWD67cfaqhO8=
+Date: Sun, 7 Jun 2026 16:50:56 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Oleg Nesterov <oleg@redhat.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Deepanshu Kartikey <Kartikey406@gmail.com>,
+	syzbot+bbe6b99feefc3a0842de@syzkaller.appspotmail.com,
+	Michal Hocko <mhocko@suse.com>, Ben Segall <bsegall@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Ingo Molnar <mingo@redhat.com>, Juri Lelli <juri.lelli@redhat.com>,
+	Kees Cook <kees@kernel.org>, Liam Howlett <liam@infradead.org>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Mel Gorman <mgorman@suse.de>, Mike Rapoport <rppt@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Valentin Schneider <vschneid@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 7.0 015/332] kernel/fork: validate exit_signal in
+ kernel_clone()
+Message-ID: <2026060759-anyway-straining-d394@gregkh>
+References: <20260607095728.031258202@linuxfoundation.org>
+ <20260607095728.598854921@linuxfoundation.org>
+ <aiVOEKt9QL5cvkwz@redhat.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260607095728.031258202@linuxfoundation.org>
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Sun, 7 Jun 2026 22:59:47 +0900
-X-Gm-Features: AVVi8Cd2KuRVPwE0_H31aM_kSW1Og_JUoZOaOfYaAHe7xAiu1CLPvdl7yB5cjr0
-Message-ID: <CAKL4bV7=32jD92C9yJ2d40Z3dnWLC3zZt2b_74JExDsu0SJovQ@mail.gmail.com>
-Subject: Re: [PATCH 7.0 000/332] 7.0.12-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aiVOEKt9QL5cvkwz@redhat.com>
 
-Hi Greg
+On Sun, Jun 07, 2026 at 12:55:12PM +0200, Oleg Nesterov wrote:
+> On 06/07, Greg Kroah-Hartman wrote:
+> >
+> > 7.0-stable review patch.  If anyone has any objections, please let me know.
+> >
+> > ------------------
+> >
+> > From: Deepanshu Kartikey <kartikey406@gmail.com>
+> >
+> > [ Upstream commit 09e7827e785729f391c8d46dc71becce70d296ab ]
+> 
+> I don't think this is the -stable material.
+> 
+> > Note that this is a user-visible change: previously, passing an invalid
+> > exit_signal to clone() was silently accepted.  The man page for clone()
+> > does not document any defined behavior for invalid exit_signal values, so
+> > rejecting them with -EINVAL is the correct behavior.  It is unlikely that
+> > any sane application relies on passing an invalid exit_signal.
+> 
+> Yes...
+> 
+> This patch is the preparation for another commit 0f8e38eeb995b
+> ("do_notify_parent: sanitize the valid_signal() checks").
 
-On Sun, Jun 7, 2026 at 7:03=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 7.0.12 release.
-> There are 332 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Tue, 09 Jun 2026 09:56:44 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-=
-7.0.12-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-7.0.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
+Then why does it have:
+	Fixes: 3f2c788a1314 ("fork: prevent accidental access to clone3 features")
+in the body of the changelog?  That's why we picked it up, is that not
+correct?
 
-Linux version 7.0.12-rc1 tested.
+Should it be dropped from all stable queues then?
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
+thanks,
 
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
-
-[    0.000000] Linux version 7.0.12-rc1rv-g877a01113f80
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 16.1.1 20260430, GNU ld (GNU
-Binutils) 2.46.0) #1 SMP PREEMPT_DYNAMIC Sun Jun  7 21:38:28 JST 2026
-
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+greg k-h
