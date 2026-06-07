@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19E1212564;
-	Sun,  7 Jun 2026 10:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04DF26ED5D;
+	Sun,  7 Jun 2026 10:39:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828781; cv=none; b=tXPH7a8aCmqe9WZ+HF9L090LLDHxt1UMxwWbqE+Uh+300O3Yf5ObjxTsAzT6JeCYaS9D8NiNNw9Sshh5WMzgB5Dhzpcb3+n3ueh1p2a//NC9/0l5Y4TBh+nC+9hndIg9vT3SKjGEyut8+XUlhAxlUmYYgODdXkwxN/0m/libwg8=
+	t=1780828785; cv=none; b=Wad8NMF0HxKJUBtqRTqztFrkdnPlkiZi5yqFlgbQNuYZmZZmpbfp189Wiq2fgy//J95Ci5kv1O9IQg5yZWT00hAzdHEsHGq3CgD8Q+G4fohp0nvuLiv8AGAG66CkqSkxtPzDhYx+k/23CFzFbUuiclpKEPJDoYRDPBZfNJMxvGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828781; c=relaxed/simple;
-	bh=7zq+6Ybzg+9caJS7gIP588uYZBLXmdORmrE3s4aLFOU=;
+	s=arc-20240116; t=1780828785; c=relaxed/simple;
+	bh=R+knhguAC4rqb+GZ0FyAePOTn6NO/vXYivT3zlwZark=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dtH22VqXOcKvn1f/Hw7EHW/No7dHc7/BaNDt//YR1VpqGHHDQ04ApiRWuE5toMWgYL4hBYnVlH2AzZGW2GD/QIvLasYiySOVFQGlbaVKOugkOjEh5lrkij9ySOo9nGveqt1xOkch2asI0zWyJQijGnOTf7Uly6xvV12LUNNqsUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nnxV0al3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=e5HxLU/za11GCf/OnHFMZCa88W+9FsjwshesWnKtBkhnqIQxXJkflF9Ok3z318yFEVWsL8JBjvlx+LOY8o0zdFO5EHoxM+kNMkn3nhmGiVmaWR37hW4etGdMNP6/j2lHA70410mYOCmY/y8AeIDkbI+yyrVLNh39KZY2mkeSbsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCf3pswj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nnxV0al3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32331F00893;
-	Sun,  7 Jun 2026 10:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCf3pswj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F1E1F00893;
+	Sun,  7 Jun 2026 10:39:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828780;
-	bh=SOEozNNOznMcxcxRsDCsLbLMzeiYqmaJVbQ1m86d2OQ=;
+	s=korg; t=1780828784;
+	bh=aaxe+tWhnThRFLhrvQWdmrIr+lVGF9FMmlFo8JrlsyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nnxV0al3vL3q/GPtn8FJUpwH+osslnWhxi5WKbxi54jw9XkQvWbw/9mZhbXFW921T
-	 iPeHL3X+gLYdr2+HmTjZUoMhcWCxFA//3a8ZK5M7s8wuHHjsnwzG/8P5EyreuyWDEo
-	 7IOIl2k+Q5c6CEvmvK8QW1Cjo3Yi/KHrUSsEPnx8=
+	b=HCf3pswjaBjrsFzkpVcjiC5nAj+/3si8WPlA0SQoFPFAzOJH+RB5GqZ7OL5s38BZq
+	 9XdLSczpKiKfk2WGJuQAg2x2KQnemk8duEtDMem0I6sh3lKmuHq/HzqaB14t85aMk/
+	 Dcyq35h1VuzEyJpJ1NKnW7fRP15CfaanEvruGlv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Xiao Liang <shaw.leon@gmail.com>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.0 215/332] ip6: vti: Use ip6_tnl.net in vti6_siocdevprivate().
-Date: Sun,  7 Jun 2026 11:59:44 +0200
-Message-ID: <20260607095735.956763258@linuxfoundation.org>
+	Salah Triki <salah.triki@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Maxwell Doose <m32285159@gmail.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 6.12 168/307] iio: adc: viperboard: Fix error handling in vprbrd_iio_read_raw
+Date: Sun,  7 Jun 2026 11:59:25 +0200
+Message-ID: <20260607095733.894380958@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,94 +48,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-commit 8b484efd5cb4eeef9021a661e198edc5349dacf6 upstream.
+commit 422b5bbf333f75fb486855ad0eedc23cf21f3277 upstream.
 
-After patch 1/2 in this series, vti6_update() unlinks and relinks
-the tunnel through t->net. vti6_siocdevprivate() still uses
-dev_net(dev) for the collision lookup. For a tunnel moved through
-IFLA_NET_NS_FD, dev_net(dev) is the new netns, not t->net.
+The driver proceeds to the reception phase even if the preceding
+transmission fails.
 
-SIOCCHGTUNNEL on a migrated tunnel then runs:
+This uses a goto error label for an early bail out and ensures the mutex is
+properly unlocked in case of failure.
 
-  net = dev_net(dev)                    /* migrated netns */
-  t   = vti6_locate(net, &p1, false)    /* misses target in t->net */
-  ...
-  t   = netdev_priv(dev)
-  vti6_update(t, &p1, false)            /* mutates t->net's hash */
-
-A caller in the migrated netns picks params that match a tunnel
-in the creation netns. The lookup in dev_net(dev) finds nothing.
-vti6_update() prepends the migrated tunnel at the head of the
-creation netns hash bucket for those params. Later lookups in
-the creation netns resolve to the migrated device. xfrm receive
-delivers the matched packets through a device the caller controls.
-
-Reachable from an unprivileged user namespace (unshare --user
---map-root-user --net). Cross tenant scope on container hosts.
-
-Switch the SIOCCHGTUNNEL path on a non fallback device to use
-t->net for the lookup. The lookup now matches the netns
-vti6_update() operates on.
-
-Also add ns_capable(self->net->user_ns, CAP_NET_ADMIN) before
-the lookup. The check at the top of the case is against
-dev_net(dev)->user_ns, which after migration is the attacker's
-netns. A caller there can pick params absent from self->net,
-the lookup returns NULL, t becomes self, and vti6_update()
-inserts the device into the creation netns hash. The new check
-requires CAP_NET_ADMIN in the creation netns user_ns too.
-
-SIOCADDTUNNEL and SIOCCHGTUNNEL on the fallback device keep
-dev_net(dev), which equals init_net there.
-
-Fixes: 61220ab34948 ("vti6: Enable namespace changing")
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Suggested-by: Xiao Liang <shaw.leon@gmail.com>
-Cc: stable@vger.kernel.org # v5.15+
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Link: https://patch.msgid.link/20260521130555.3421684-3-maoyixie.tju@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: ffd8a6e7a778 ("iio: adc: Add viperboard adc driver")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Reviewed-by: Maxwell Doose <m32285159@gmail.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_vti.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/iio/adc/viperboard_adc.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/ipv6/ip6_vti.c
-+++ b/net/ipv6/ip6_vti.c
-@@ -834,17 +834,24 @@ vti6_siocdevprivate(struct net_device *d
- 		if (p.proto != IPPROTO_IPV6  && p.proto != 0)
- 			break;
- 		vti6_parm_from_user(&p1, &p);
--		t = vti6_locate(net, &p1, cmd == SIOCADDTUNNEL);
- 		if (dev != ip6n->fb_tnl_dev && cmd == SIOCCHGTUNNEL) {
-+			struct ip6_tnl *self = netdev_priv(dev);
-+
-+			err = -EPERM;
-+			if (!ns_capable(self->net->user_ns, CAP_NET_ADMIN))
-+				break;
-+			t = vti6_locate(self->net, &p1, false);
- 			if (t) {
- 				if (t->dev != dev) {
- 					err = -EEXIST;
- 					break;
- 				}
- 			} else
--				t = netdev_priv(dev);
-+				t = self;
- 
- 			err = vti6_update(t, &p1, false);
-+		} else {
-+			t = vti6_locate(net, &p1, cmd == SIOCADDTUNNEL);
+--- a/drivers/iio/adc/viperboard_adc.c
++++ b/drivers/iio/adc/viperboard_adc.c
+@@ -70,8 +70,10 @@ static int vprbrd_iio_read_raw(struct ii
+ 			VPRBRD_USB_TYPE_OUT, 0x0000, 0x0000, admsg,
+ 			sizeof(struct vprbrd_adc_msg), VPRBRD_USB_TIMEOUT_MS);
+ 		if (ret != sizeof(struct vprbrd_adc_msg)) {
+-			dev_err(&iio_dev->dev, "usb send error on adc read\n");
++			mutex_unlock(&vb->lock);
+ 			error = -EREMOTEIO;
++			dev_err(&iio_dev->dev, "usb send error on adc read\n");
++			goto error;
  		}
- 		if (t) {
- 			err = 0;
+ 
+ 		ret = usb_control_msg(vb->usb_dev,
 
 
