@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B11E327C13;
-	Sun,  7 Jun 2026 10:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187F43290D8;
+	Sun,  7 Jun 2026 10:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828114; cv=none; b=C9nyBp2GYcoszCWvQnoz4S4eDdZahqFhbuamzdrfa+wSup6WV8JwUxoBhvI6XIYJuikfwmjURrdQ2JmBvfCvssYZ4FxuGS7+5wIliVPQ0UZ5iLv8a2FYh2d3gUWjJPiFQDhoxPZeXaau5uqphxEYA/EyVqqqQNnPe88DCRnNVOk=
+	t=1780828119; cv=none; b=FdGYKqzMGv8FEAsfJ2sacDnR697yIpi5xZ12MWZbjK6M07ZuPIb2uru070cYGNRro1eUvbfckHhrlaETQzHX/ZLey10eS7/tCs3UmarIzJI4HVlij31wdGUxaEH7SJsWDTEIYggmtrc+bbb5wIZnfzFrwuzpEl/9eTQpKygV7I0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828114; c=relaxed/simple;
-	bh=AXPwGbwdGOZkumY3kLoJOd+7gE1H9y8wUvozL32kB+Y=;
+	s=arc-20240116; t=1780828119; c=relaxed/simple;
+	bh=ieAfsMDttXmf9n0TZ8gVBs9JTqz4O1bP0o+ooS+Lyck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IF80hJ+wTAZAaBj73Ea8gs+QObcijKfnY20No3kCXrepEscFv+jPIavM+6EAecyWoUkDgNRUbD95L4UoVHBmGHXvNK0FKTx6Z9yiiWVKv6opKQ851zh0e7wtW4JIrjRJIJRUuzG3aB2b1sPKxvmBEk+ZPpRXAMlI5ZPzoFYIXys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHVPqyhm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r3oHbyWvTnkesrolMrZZTMHH8MiU4PNVtuvlLU05CoPuRVZRGowyQ/CPj4jr0pe034btZo6Z5NeyEWZjJT3SrBV6fLbL6P4qWzGQUuSNn3Aiw1EeBnfci0P/1QH3UsJb1vs2ceJoOs++Hv6iS+sVq4SVsEUpWpwcVmjB8Wv4T1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCgjIkH0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHVPqyhm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 352071F00893;
-	Sun,  7 Jun 2026 10:28:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCgjIkH0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 284F21F00893;
+	Sun,  7 Jun 2026 10:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828113;
-	bh=wJQL1TpQHnse8rLxomBH/oaSR1Bo+JPlp0ttHHFtMcI=;
+	s=korg; t=1780828116;
+	bh=1z0/jljo8vg6a/aJwmPGpJVWk5OCgPHed0Gw8f9S3co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZHVPqyhm70rbsHp2KTta4jsEfcRYhpqvk23cq86IfbFcPHUHFWyiKMw5L6SoMwn+1
-	 zmPcWFbomnxVEXtnYM6yovghAZ6jW2SVYnprqTAXkA4hop/hKYyiZoWvKX9++LKtjl
-	 JhVLFxgTSd1VPrKiiUehK3FKumOgurUu8IhvUN0o=
+	b=lCgjIkH0g0KZCuxNBhAGT1QgMSawDd/3g2ZbYcxXdv3xyrFBPHD6fooZvNTDP/J98
+	 fknDYD/jCnIp6Iyw04xRlMnC9Sn7Yb7Mehik8ZvP07Un5cRnL+9X1dwljOaFmO6dLt
+	 SznVbHWDCypbh1N6HOTjVtq0oCV0rJcDlB6p3dKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Rajani Kantha <681739313@139.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 112/307] inet: frags: add inet_frag_queue_flush()
-Date: Sun,  7 Jun 2026 11:58:29 +0200
-Message-ID: <20260607095731.890384221@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 7.0 132/332] USB: serial: cypress_m8: fix memory corruption with small endpoint
+Date: Sun,  7 Jun 2026 11:58:21 +0200
+Message-ID: <20260607095732.946549670@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,102 +45,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 1231eec6994be29d6bb5c303dfa54731ed9fc0e6 ]
+commit e1a9d791fd66ab2431b9e6f6f835823809869047 upstream.
 
-Instead of exporting inet_frag_rbtree_purge() which requires that
-caller takes care of memory accounting, add a new helper. We will
-need to call it from a few places in the next patch.
+Make sure that the interrupt-out endpoint max packet size is at least
+eight bytes to avoid user-controlled slab corruption or NULL-pointer
+dereference should a malicious device report a smaller size.
 
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20251207010942.1672972-3-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Rajani Kantha <681739313@139.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3416eaa1f8f8 ("USB: cypress_m8: Packet format is separate from characteristic size")
+Cc: stable@vger.kernel.org	# 2.6.26
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/inet_frag.h  |  5 ++---
- net/ipv4/inet_fragment.c | 15 ++++++++++++---
- net/ipv4/ip_fragment.c   |  6 +-----
- 3 files changed, 15 insertions(+), 11 deletions(-)
+ drivers/usb/serial/cypress_m8.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/include/net/inet_frag.h b/include/net/inet_frag.h
-index 5af6eb14c5db15..94edc0e130d2c4 100644
---- a/include/net/inet_frag.h
-+++ b/include/net/inet_frag.h
-@@ -141,9 +141,8 @@ void inet_frag_kill(struct inet_frag_queue *q);
- void inet_frag_destroy(struct inet_frag_queue *q);
- struct inet_frag_queue *inet_frag_find(struct fqdir *fqdir, void *key);
- 
--/* Free all skbs in the queue; return the sum of their truesizes. */
--unsigned int inet_frag_rbtree_purge(struct rb_root *root,
--				    enum skb_drop_reason reason);
-+void inet_frag_queue_flush(struct inet_frag_queue *q,
-+			   enum skb_drop_reason reason);
- 
- static inline void inet_frag_put(struct inet_frag_queue *q)
- {
-diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
-index d179a2c8422276..70640906337757 100644
---- a/net/ipv4/inet_fragment.c
-+++ b/net/ipv4/inet_fragment.c
-@@ -264,8 +264,8 @@ static void inet_frag_destroy_rcu(struct rcu_head *head)
- 	kmem_cache_free(f->frags_cachep, q);
- }
- 
--unsigned int inet_frag_rbtree_purge(struct rb_root *root,
--				    enum skb_drop_reason reason)
-+static unsigned int
-+inet_frag_rbtree_purge(struct rb_root *root, enum skb_drop_reason reason)
- {
- 	struct rb_node *p = rb_first(root);
- 	unsigned int sum = 0;
-@@ -285,7 +285,16 @@ unsigned int inet_frag_rbtree_purge(struct rb_root *root,
- 	}
- 	return sum;
- }
--EXPORT_SYMBOL(inet_frag_rbtree_purge);
-+
-+void inet_frag_queue_flush(struct inet_frag_queue *q,
-+			   enum skb_drop_reason reason)
-+{
-+	unsigned int sum;
-+
-+	sum = inet_frag_rbtree_purge(&q->rb_fragments, reason);
-+	sub_frag_mem_limit(q->fqdir, sum);
-+}
-+EXPORT_SYMBOL(inet_frag_queue_flush);
- 
- void inet_frag_destroy(struct inet_frag_queue *q)
- {
-diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
-index 183856b0b74094..eb5f6060b85d52 100644
---- a/net/ipv4/ip_fragment.c
-+++ b/net/ipv4/ip_fragment.c
-@@ -253,16 +253,12 @@ static int ip_frag_too_far(struct ipq *qp)
- 
- static int ip_frag_reinit(struct ipq *qp)
- {
--	unsigned int sum_truesize = 0;
--
- 	if (!mod_timer(&qp->q.timer, jiffies + qp->q.fqdir->timeout)) {
- 		refcount_inc(&qp->q.refcnt);
- 		return -ETIMEDOUT;
+--- a/drivers/usb/serial/cypress_m8.c
++++ b/drivers/usb/serial/cypress_m8.c
+@@ -445,6 +445,14 @@ static int cypress_generic_port_probe(st
+ 		return -ENODEV;
  	}
  
--	sum_truesize = inet_frag_rbtree_purge(&qp->q.rb_fragments,
--					      SKB_DROP_REASON_FRAG_TOO_FAR);
--	sub_frag_mem_limit(qp->q.fqdir, sum_truesize);
-+	inet_frag_queue_flush(&qp->q, SKB_DROP_REASON_FRAG_TOO_FAR);
- 
- 	qp->q.flags = 0;
- 	qp->q.len = 0;
--- 
-2.53.0
-
++	/*
++	 * The buffer must be large enough for the one or two-byte header (and
++	 * following data), but assume anything smaller than eight bytes is
++	 * broken.
++	 */
++	if (port->interrupt_out_size < 8)
++		return -EINVAL;
++
+ 	priv = kzalloc_obj(struct cypress_private);
+ 	if (!priv)
+ 		return -ENOMEM;
 
 
