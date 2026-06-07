@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9364071DA;
-	Sun,  7 Jun 2026 10:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B5D4071DA;
+	Sun,  7 Jun 2026 10:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827445; cv=none; b=VQFmB95/CJtcGEEC2FYaDMbpZKvniYiIzfCxG+U2gB0HWk+vIU4wZpxaY3pDjWpNoo9PmVspIv4HhDQjpHtGPx2Wal4R8EiTdHefa1iEMB5nqtjRNFOZKHKmgspIfdsvNl4z6K9J2XfJjuMcOLSthOvvxQmxwOmQchdWLeM6ea0=
+	t=1780827448; cv=none; b=AziEGTW9c03qFqWsNDheb52avosMvjLRhX3jDcUyvsGdJZnxrh/+8jke+gIcBD6pkzflln+Zo38NzhgpbULIa/NMGi+LNIn3yo+WEHkCTf2Sst1IN4u9mZW0zOF+dZp7GRWZIoAMfaJiIULxNOyiLE5uuet0OwyptEKzg7QbBZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827445; c=relaxed/simple;
-	bh=8Vo8V+GAWNAoCobwzEMN3VJuAHZqVoZQPu4vGkVc5VM=;
+	s=arc-20240116; t=1780827448; c=relaxed/simple;
+	bh=lT8slr/76CdZeHRNjv5+r+NufwKa+sP5FlTYgHAzGNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PwlN6aYRCjAFyssAcxGxUw38wvsqH/BguiisBA0/hkeXS821DErkQdkaKjembjLmoPbF6mTooEvhdfY+3wY7oyCGSsLURadAbzDVp9PcbLszZhVRqdnYuR7xLmhMJhhGe15obJIqwDtkvyZND0u0uX3fWBtyTg7+E0UnpK7ycG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+7GAgJR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G06Z84gLTUKzeCNsBK5jgVK5G7/IOvOE5ra0nScf7/sz9gy1eE4UGBquqMmpc/ySE2h5jQEK8gOtLCuq9N3VhuWwUYq9uPlksXrPl14HWyn1yeOPNW6lIHPdB//YWdFkEhdNCiGnkTcA4CEwl6KVpW29SMpKc/gmd6ovvE1Rpwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WumLK0DL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+7GAgJR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366761F00893;
-	Sun,  7 Jun 2026 10:17:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WumLK0DL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A790C1F00893;
+	Sun,  7 Jun 2026 10:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827443;
-	bh=z+jXFP4jy21DeC9fSOc+l8PY6+f4TiJXMwlu2S7z008=;
+	s=korg; t=1780827447;
+	bh=uqk+8wpgbZ5E8VAAQSGKGyRxrJz947yE2PIuXsdeFyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f+7GAgJRTASFZq/6ZLfy/8osNb9PVS2N8h/38bYpn5+hghyj9nlHgO4ZhOPUF7ICg
-	 Ma/jV4f52iGAbyRcw2n32WE0ShXexsEN+0XGcdHjhiNuTOe1tFt278kiZbu2XGwxxx
-	 XJgerDWBuoGXU+KynWCP7he0wlKe/KejMWz7hCFk=
+	b=WumLK0DLYC7Twzq3yJWj2FR65fU97e65QXHBAjYjzFfl4uPSd08tUVljEvnABUIsW
+	 A7XZC2NoXXEQjWCsixZgr2IV6JkwqT5oKZr7WWrl27MQQokgQQn8QrCDjo0fkL561/
+	 OlCvoKc/OFe/GWm7ZYJSN1xYgXvVm2OjdlTthIeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danielle Ratson <danieller@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
+	Ivan Vecera <ivecera@redhat.com>,
 	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/307] net: ethtool: Add support for writing firmware blocks using EPL payload
-Date: Sun,  7 Jun 2026 11:57:33 +0200
-Message-ID: <20260607095729.789170031@linuxfoundation.org>
+Subject: [PATCH 7.0 094/332] dpll: zl3073x: add die temperature reporting for supported chips
+Date: Sun,  7 Jun 2026 11:57:43 +0200
+Message-ID: <20260607095731.606011208@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,324 +48,185 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danielle Ratson <danieller@nvidia.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 9a3b0d078bd825613c0821bf7bf5a2e1d8d60057 ]
+[ Upstream commit 3a97e02b3e91e4d40095ad9bb6e466d8d7c1a1bc ]
 
-In the CMIS specification for pluggable modules, LPL (Local Payload) and
-EPL (Extended Payload) are two types of data payloads used for managing
-various functions and features of the module.
+Some zl3073x chip variants (0x1Exx, 0x2Exx and 0x3FC4) provide a die
+temperature status register with 0.1 C resolution.
 
-EPL payloads are used for more complex and extensive management
-functions that require a larger amount of data, so writing firmware
-blocks using EPL is much more efficient.
+Add a ZL3073X_FLAG_DIE_TEMP chip flag to identify these variants and
+implement zl3073x_dpll_temp_get() as the dpll_device_ops.temp_get
+callback. The register value is converted from 0.1 C units to
+millidegrees as expected by the DPLL subsystem.
 
-Currently, only LPL payload is supported for writing firmware blocks to
-the module.
+To support per-instance ops selection, copy the base dpll_device_ops
+into struct zl3073x_dpll and conditionally set .temp_get during device
+registration based on the chip flag.
 
-Add support for writing firmware block using EPL payload, both to
-support modules that supports only EPL write mechanism, and to optimize
-the flashing process of modules that support LPL and EPL.
-
-Signed-off-by: Danielle Ratson <danieller@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Link: https://patch.msgid.link/20260227105300.710272-3-ivecera@redhat.com
 Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 12c2496a71f8 ("ethtool: cmis: validate start_cmd_payload_size from module")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: d733f519f644 ("dpll: zl3073x: use __dpll_device_change_ntf() and remove change_work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/cmis.h           |  4 ++
- net/ethtool/cmis_cdb.c       | 66 ++++++++++++++++++++++++--
- net/ethtool/cmis_fw_update.c | 91 ++++++++++++++++++++++++++++++++----
- 3 files changed, 148 insertions(+), 13 deletions(-)
+ drivers/dpll/zl3073x/core.c | 22 +++++++++++-----------
+ drivers/dpll/zl3073x/core.h |  2 ++
+ drivers/dpll/zl3073x/dpll.c | 28 +++++++++++++++++++++++++---
+ drivers/dpll/zl3073x/dpll.h |  2 ++
+ drivers/dpll/zl3073x/regs.h |  2 ++
+ 5 files changed, 42 insertions(+), 14 deletions(-)
 
-diff --git a/net/ethtool/cmis.h b/net/ethtool/cmis.h
-index e11e47b3f2fc8f..1ab96bdd2c6f92 100644
---- a/net/ethtool/cmis.h
-+++ b/net/ethtool/cmis.h
-@@ -1,6 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0-only */
- 
- #define ETHTOOL_CMIS_CDB_LPL_MAX_PL_LENGTH		120
-+#define ETHTOOL_CMIS_CDB_EPL_MAX_PL_LENGTH		2048
- #define ETHTOOL_CMIS_CDB_CMD_PAGE			0x9F
- #define ETHTOOL_CMIS_CDB_PAGE_I2C_ADDR			0x50
- 
-@@ -23,6 +24,7 @@ enum ethtool_cmis_cdb_cmd_id {
- 	ETHTOOL_CMIS_CDB_CMD_FW_MANAGMENT_FEATURES	= 0x0041,
- 	ETHTOOL_CMIS_CDB_CMD_START_FW_DOWNLOAD		= 0x0101,
- 	ETHTOOL_CMIS_CDB_CMD_WRITE_FW_BLOCK_LPL		= 0x0103,
-+	ETHTOOL_CMIS_CDB_CMD_WRITE_FW_BLOCK_EPL		= 0x0104,
- 	ETHTOOL_CMIS_CDB_CMD_COMPLETE_FW_DOWNLOAD	= 0x0107,
- 	ETHTOOL_CMIS_CDB_CMD_RUN_FW_IMAGE		= 0x0109,
- 	ETHTOOL_CMIS_CDB_CMD_COMMIT_FW_IMAGE		= 0x010A,
-@@ -38,6 +40,7 @@ enum ethtool_cmis_cdb_cmd_id {
-  * @resv1: Added to match the CMIS standard request continuity.
-  * @resv2: Added to match the CMIS standard request continuity.
-  * @payload: Payload for the CDB commands.
-+ * @epl: Extended payload for the CDB commands.
-  */
- struct ethtool_cmis_cdb_request {
- 	__be16 id;
-@@ -49,6 +52,7 @@ struct ethtool_cmis_cdb_request {
- 		u8 resv2;
- 		u8 payload[ETHTOOL_CMIS_CDB_LPL_MAX_PL_LENGTH];
- 	);
-+	u8 *epl;	/* Everything above this field checksummed. */
+diff --git a/drivers/dpll/zl3073x/core.c b/drivers/dpll/zl3073x/core.c
+index c8af3430104505..10e036ccf08f05 100644
+--- a/drivers/dpll/zl3073x/core.c
++++ b/drivers/dpll/zl3073x/core.c
+@@ -30,18 +30,18 @@ static const struct zl3073x_chip_info zl3073x_chip_ids[] = {
+ 	ZL_CHIP_INFO(0x0E95, 3, ZL3073X_FLAG_REF_PHASE_COMP_32),
+ 	ZL_CHIP_INFO(0x0E96, 4, ZL3073X_FLAG_REF_PHASE_COMP_32),
+ 	ZL_CHIP_INFO(0x0E97, 5, ZL3073X_FLAG_REF_PHASE_COMP_32),
+-	ZL_CHIP_INFO(0x1E93, 1, 0),
+-	ZL_CHIP_INFO(0x1E94, 2, 0),
+-	ZL_CHIP_INFO(0x1E95, 3, 0),
+-	ZL_CHIP_INFO(0x1E96, 4, 0),
+-	ZL_CHIP_INFO(0x1E97, 5, 0),
++	ZL_CHIP_INFO(0x1E93, 1, ZL3073X_FLAG_DIE_TEMP),
++	ZL_CHIP_INFO(0x1E94, 2, ZL3073X_FLAG_DIE_TEMP),
++	ZL_CHIP_INFO(0x1E95, 3, ZL3073X_FLAG_DIE_TEMP),
++	ZL_CHIP_INFO(0x1E96, 4, ZL3073X_FLAG_DIE_TEMP),
++	ZL_CHIP_INFO(0x1E97, 5, ZL3073X_FLAG_DIE_TEMP),
+ 	ZL_CHIP_INFO(0x1F60, 2, ZL3073X_FLAG_REF_PHASE_COMP_32),
+-	ZL_CHIP_INFO(0x2E93, 1, 0),
+-	ZL_CHIP_INFO(0x2E94, 2, 0),
+-	ZL_CHIP_INFO(0x2E95, 3, 0),
+-	ZL_CHIP_INFO(0x2E96, 4, 0),
+-	ZL_CHIP_INFO(0x2E97, 5, 0),
+-	ZL_CHIP_INFO(0x3FC4, 2, 0),
++	ZL_CHIP_INFO(0x2E93, 1, ZL3073X_FLAG_DIE_TEMP),
++	ZL_CHIP_INFO(0x2E94, 2, ZL3073X_FLAG_DIE_TEMP),
++	ZL_CHIP_INFO(0x2E95, 3, ZL3073X_FLAG_DIE_TEMP),
++	ZL_CHIP_INFO(0x2E96, 4, ZL3073X_FLAG_DIE_TEMP),
++	ZL_CHIP_INFO(0x2E97, 5, ZL3073X_FLAG_DIE_TEMP),
++	ZL_CHIP_INFO(0x3FC4, 2, ZL3073X_FLAG_DIE_TEMP),
  };
  
- #define CDB_F_COMPLETION_VALID		BIT(0)
-diff --git a/net/ethtool/cmis_cdb.c b/net/ethtool/cmis_cdb.c
-index 31142e239cf6b2..606d88df31f235 100644
---- a/net/ethtool/cmis_cdb.c
-+++ b/net/ethtool/cmis_cdb.c
-@@ -33,12 +33,19 @@ void ethtool_cmis_cdb_compose_args(struct ethtool_cmis_cdb_cmd_args *args,
- {
- 	args->req.id = cpu_to_be16(cmd);
- 	args->req.lpl_len = lpl_len;
--	if (lpl)
-+	if (lpl) {
- 		memcpy(args->req.payload, lpl, args->req.lpl_len);
-+		args->read_write_len_ext =
-+			ethtool_cmis_get_max_lpl_size(read_write_len_ext);
-+	}
-+	if (epl) {
-+		args->req.epl_len = cpu_to_be16(epl_len);
-+		args->req.epl = epl;
-+		args->read_write_len_ext =
-+			ethtool_cmis_get_max_epl_size(read_write_len_ext);
-+	}
+ #define ZL_RANGE_OFFSET		0x80
+diff --git a/drivers/dpll/zl3073x/core.h b/drivers/dpll/zl3073x/core.h
+index fde5c8371fbd28..b6f22ee1c0bd1b 100644
+--- a/drivers/dpll/zl3073x/core.h
++++ b/drivers/dpll/zl3073x/core.h
+@@ -32,11 +32,13 @@ struct zl3073x_dpll;
  
- 	args->max_duration = max_duration;
--	args->read_write_len_ext =
--		ethtool_cmis_get_max_lpl_size(read_write_len_ext);
- 	args->msleep_pre_rpl = msleep_pre_rpl;
- 	args->rpl_exp_len = rpl_exp_len;
- 	args->flags = flags;
-@@ -561,6 +568,49 @@ __ethtool_cmis_cdb_execute_cmd(struct net_device *dev,
- 	return err;
- }
- 
-+#define CMIS_CDB_EPL_PAGE_START			0xA0
-+#define CMIS_CDB_EPL_PAGE_END			0xAF
-+#define CMIS_CDB_EPL_FW_BLOCK_OFFSET_START	128
-+#define CMIS_CDB_EPL_FW_BLOCK_OFFSET_END	255
-+
-+static int
-+ethtool_cmis_cdb_execute_epl_cmd(struct net_device *dev,
-+				 struct ethtool_cmis_cdb_cmd_args *args,
-+				 struct ethtool_module_eeprom *page_data)
-+{
-+	u16 epl_len = be16_to_cpu(args->req.epl_len);
-+	u32 bytes_written = 0;
-+	u8 page;
-+	int err;
-+
-+	for (page = CMIS_CDB_EPL_PAGE_START;
-+	     page <= CMIS_CDB_EPL_PAGE_END && bytes_written < epl_len; page++) {
-+		u16 offset = CMIS_CDB_EPL_FW_BLOCK_OFFSET_START;
-+
-+		while (offset <= CMIS_CDB_EPL_FW_BLOCK_OFFSET_END &&
-+		       bytes_written < epl_len) {
-+			u32 bytes_left = epl_len - bytes_written;
-+			u16 space_left, bytes_to_write;
-+
-+			space_left = CMIS_CDB_EPL_FW_BLOCK_OFFSET_END - offset + 1;
-+			bytes_to_write = min_t(u16, bytes_left,
-+					       min_t(u16, space_left,
-+						     args->read_write_len_ext));
-+
-+			err = __ethtool_cmis_cdb_execute_cmd(dev, page_data,
-+							     page, offset,
-+							     bytes_to_write,
-+							     args->req.epl + bytes_written);
-+			if (err < 0)
-+				return err;
-+
-+			offset += bytes_to_write;
-+			bytes_written += bytes_to_write;
-+		}
-+	}
-+	return 0;
-+}
-+
- static u8 cmis_cdb_calc_checksum(const void *data, size_t size)
- {
- 	const u8 *bytes = (const u8 *)data;
-@@ -582,7 +632,9 @@ int ethtool_cmis_cdb_execute_cmd(struct net_device *dev,
- 	int err;
- 
- 	args->req.chk_code =
--		cmis_cdb_calc_checksum(&args->req, sizeof(args->req));
-+		cmis_cdb_calc_checksum(&args->req,
-+				       offsetof(struct ethtool_cmis_cdb_request,
-+						epl));
- 
- 	if (args->req.lpl_len > args->read_write_len_ext) {
- 		args->err_msg = "LPL length is longer than CDB read write length extension allows";
-@@ -604,6 +656,12 @@ int ethtool_cmis_cdb_execute_cmd(struct net_device *dev,
- 	if (err < 0)
- 		return err;
- 
-+	if (args->req.epl_len) {
-+		err = ethtool_cmis_cdb_execute_epl_cmd(dev, args, &page_data);
-+		if (err < 0)
-+			return err;
-+	}
-+
- 	offset = CMIS_CDB_CMD_ID_OFFSET +
- 		offsetof(struct ethtool_cmis_cdb_request, id);
- 	err = __ethtool_cmis_cdb_execute_cmd(dev, &page_data,
-diff --git a/net/ethtool/cmis_fw_update.c b/net/ethtool/cmis_fw_update.c
-index a514127985d44e..48aef6220f0094 100644
---- a/net/ethtool/cmis_fw_update.c
-+++ b/net/ethtool/cmis_fw_update.c
-@@ -9,6 +9,7 @@
- 
- struct cmis_fw_update_fw_mng_features {
- 	u8	start_cmd_payload_size;
-+	u8	write_mechanism;
- 	u16	max_duration_start;
- 	u16	max_duration_write;
- 	u16	max_duration_complete;
-@@ -36,7 +37,9 @@ struct cmis_cdb_fw_mng_features_rpl {
+ enum zl3073x_flags {
+ 	ZL3073X_FLAG_REF_PHASE_COMP_32_BIT,
++	ZL3073X_FLAG_DIE_TEMP_BIT,
+ 	ZL3073X_FLAGS_NBITS /* must be last */
  };
  
- enum cmis_cdb_fw_write_mechanism {
-+	CMIS_CDB_FW_WRITE_MECHANISM_NONE	= 0x00,
- 	CMIS_CDB_FW_WRITE_MECHANISM_LPL		= 0x01,
-+	CMIS_CDB_FW_WRITE_MECHANISM_EPL		= 0x10,
- 	CMIS_CDB_FW_WRITE_MECHANISM_BOTH	= 0x11,
- };
+ #define __ZL3073X_FLAG(name)	BIT(ZL3073X_FLAG_ ## name ## _BIT)
+ #define ZL3073X_FLAG_REF_PHASE_COMP_32	__ZL3073X_FLAG(REF_PHASE_COMP_32)
++#define ZL3073X_FLAG_DIE_TEMP		__ZL3073X_FLAG(DIE_TEMP)
  
-@@ -68,10 +71,9 @@ cmis_fw_update_fw_mng_features_get(struct ethtool_cmis_cdb *cdb,
- 	}
- 
- 	rpl = (struct cmis_cdb_fw_mng_features_rpl *)args.req.payload;
--	if (!(rpl->write_mechanism == CMIS_CDB_FW_WRITE_MECHANISM_LPL ||
--	      rpl->write_mechanism == CMIS_CDB_FW_WRITE_MECHANISM_BOTH)) {
-+	if (rpl->write_mechanism == CMIS_CDB_FW_WRITE_MECHANISM_NONE) {
- 		ethnl_module_fw_flash_ntf_err(dev, ntf_params,
--					      "Write LPL is not supported",
-+					      "CDB write mechanism is not supported",
- 					      NULL);
- 		return  -EOPNOTSUPP;
- 	}
-@@ -83,6 +85,10 @@ cmis_fw_update_fw_mng_features_get(struct ethtool_cmis_cdb *cdb,
- 	 */
- 	cdb->read_write_len_ext = rpl->read_write_len_ext;
- 	fw_mng->start_cmd_payload_size = rpl->start_cmd_payload_size;
-+	fw_mng->write_mechanism =
-+		rpl->write_mechanism == CMIS_CDB_FW_WRITE_MECHANISM_LPL ?
-+		CMIS_CDB_FW_WRITE_MECHANISM_LPL :
-+		CMIS_CDB_FW_WRITE_MECHANISM_EPL;
- 	fw_mng->max_duration_start = be16_to_cpu(rpl->max_duration_start);
- 	fw_mng->max_duration_write = be16_to_cpu(rpl->max_duration_write);
- 	fw_mng->max_duration_complete = be16_to_cpu(rpl->max_duration_complete);
-@@ -149,9 +155,9 @@ struct cmis_cdb_write_fw_block_lpl_pl {
- };
- 
- static int
--cmis_fw_update_write_image(struct ethtool_cmis_cdb *cdb,
--			   struct ethtool_cmis_fw_update_params *fw_update,
--			   struct cmis_fw_update_fw_mng_features *fw_mng)
-+cmis_fw_update_write_image_lpl(struct ethtool_cmis_cdb *cdb,
-+			       struct ethtool_cmis_fw_update_params *fw_update,
-+			       struct cmis_fw_update_fw_mng_features *fw_mng)
- {
- 	u8 start = fw_mng->start_cmd_payload_size;
- 	u32 offset, max_block_size, max_lpl_len;
-@@ -202,6 +208,67 @@ cmis_fw_update_write_image(struct ethtool_cmis_cdb *cdb,
+ /**
+  * struct zl3073x_chip_info - chip variant identification
+diff --git a/drivers/dpll/zl3073x/dpll.c b/drivers/dpll/zl3073x/dpll.c
+index aaa14ea5e670fd..c201c974a7f9a4 100644
+--- a/drivers/dpll/zl3073x/dpll.c
++++ b/drivers/dpll/zl3073x/dpll.c
+@@ -1065,6 +1065,25 @@ zl3073x_dpll_output_pin_state_on_dpll_get(const struct dpll_pin *dpll_pin,
  	return 0;
  }
  
-+struct cmis_cdb_write_fw_block_epl_pl {
-+	u8 fw_block[ETHTOOL_CMIS_CDB_EPL_MAX_PL_LENGTH];
-+};
-+
 +static int
-+cmis_fw_update_write_image_epl(struct ethtool_cmis_cdb *cdb,
-+			       struct ethtool_cmis_fw_update_params *fw_update,
-+			       struct cmis_fw_update_fw_mng_features *fw_mng)
++zl3073x_dpll_temp_get(const struct dpll_device *dpll, void *dpll_priv,
++		      s32 *temp, struct netlink_ext_ack *extack)
 +{
-+	u8 start = fw_mng->start_cmd_payload_size;
-+	u32 image_size = fw_update->fw->size;
-+	u32 offset, lpl_len;
-+	int err;
++	struct zl3073x_dpll *zldpll = dpll_priv;
++	struct zl3073x_dev *zldev = zldpll->dev;
++	u16 val;
++	int rc;
 +
-+	lpl_len = sizeof_field(struct cmis_cdb_write_fw_block_lpl_pl,
-+			       block_address);
++	rc = zl3073x_read_u16(zldev, ZL_REG_DIE_TEMP_STATUS, &val);
++	if (rc)
++		return rc;
 +
-+	for (offset = start; offset < image_size;
-+	     offset += ETHTOOL_CMIS_CDB_EPL_MAX_PL_LENGTH) {
-+		struct cmis_cdb_write_fw_block_lpl_pl lpl = {
-+			.block_address = cpu_to_be32(offset - start),
-+		};
-+		struct cmis_cdb_write_fw_block_epl_pl *epl;
-+		struct ethtool_cmis_cdb_cmd_args args = {};
-+		u32 epl_len;
-+
-+		ethnl_module_fw_flash_ntf_in_progress(fw_update->dev,
-+						      &fw_update->ntf_params,
-+						      offset - start,
-+						      image_size);
-+
-+		epl_len = min_t(u32, ETHTOOL_CMIS_CDB_EPL_MAX_PL_LENGTH,
-+				image_size - offset);
-+		epl = kmalloc_array(epl_len, sizeof(u8), GFP_KERNEL);
-+		if (!epl)
-+			return -ENOMEM;
-+
-+		memcpy(epl->fw_block, &fw_update->fw->data[offset], epl_len);
-+
-+		ethtool_cmis_cdb_compose_args(&args,
-+					      ETHTOOL_CMIS_CDB_CMD_WRITE_FW_BLOCK_EPL,
-+					      (u8 *)&lpl, lpl_len, (u8 *)epl,
-+					      epl_len,
-+					      fw_mng->max_duration_write,
-+					      cdb->read_write_len_ext, 1, 0,
-+					      CDB_F_COMPLETION_VALID | CDB_F_STATUS_VALID);
-+
-+		err = ethtool_cmis_cdb_execute_cmd(fw_update->dev, &args);
-+		kfree(epl);
-+		if (err < 0) {
-+			ethnl_module_fw_flash_ntf_err(fw_update->dev,
-+						      &fw_update->ntf_params,
-+						      "Write FW block EPL command failed",
-+						      args.err_msg);
-+			return err;
-+		}
-+	}
++	/* Register value is in units of 0.1 C, convert to millidegrees */
++	*temp = (s16)val * 100;
 +
 +	return 0;
 +}
 +
  static int
- cmis_fw_update_complete_download(struct ethtool_cmis_cdb *cdb,
- 				 struct net_device *dev,
-@@ -238,9 +305,15 @@ cmis_fw_update_download_image(struct ethtool_cmis_cdb *cdb,
- 	if (err < 0)
- 		return err;
+ zl3073x_dpll_lock_status_get(const struct dpll_device *dpll, void *dpll_priv,
+ 			     enum dpll_lock_status *status,
+@@ -1671,6 +1690,10 @@ zl3073x_dpll_device_register(struct zl3073x_dpll *zldpll)
+ 	zldpll->forced_ref = FIELD_GET(ZL_DPLL_MODE_REFSEL_REF,
+ 				       dpll_mode_refsel);
  
--	err = cmis_fw_update_write_image(cdb, fw_update, fw_mng);
--	if (err < 0)
--		return err;
-+	if (fw_mng->write_mechanism == CMIS_CDB_FW_WRITE_MECHANISM_LPL) {
-+		err = cmis_fw_update_write_image_lpl(cdb, fw_update, fw_mng);
-+		if (err < 0)
-+			return err;
-+	} else {
-+		err = cmis_fw_update_write_image_epl(cdb, fw_update, fw_mng);
-+		if (err < 0)
-+			return err;
-+	}
++	zldpll->ops = zl3073x_dpll_device_ops;
++	if (zldev->info->flags & ZL3073X_FLAG_DIE_TEMP)
++		zldpll->ops.temp_get = zl3073x_dpll_temp_get;
++
+ 	zldpll->dpll_dev = dpll_device_get(zldev->clock_id, zldpll->id,
+ 					   THIS_MODULE, &zldpll->tracker);
+ 	if (IS_ERR(zldpll->dpll_dev)) {
+@@ -1682,7 +1705,7 @@ zl3073x_dpll_device_register(struct zl3073x_dpll *zldpll)
  
- 	err = cmis_fw_update_complete_download(cdb, fw_update->dev, fw_mng,
- 					       &fw_update->ntf_params);
+ 	rc = dpll_device_register(zldpll->dpll_dev,
+ 				  zl3073x_prop_dpll_type_get(zldev, zldpll->id),
+-				  &zl3073x_dpll_device_ops, zldpll);
++				  &zldpll->ops, zldpll);
+ 	if (rc) {
+ 		dpll_device_put(zldpll->dpll_dev, &zldpll->tracker);
+ 		zldpll->dpll_dev = NULL;
+@@ -1705,8 +1728,7 @@ zl3073x_dpll_device_unregister(struct zl3073x_dpll *zldpll)
+ 
+ 	cancel_work_sync(&zldpll->change_work);
+ 
+-	dpll_device_unregister(zldpll->dpll_dev, &zl3073x_dpll_device_ops,
+-			       zldpll);
++	dpll_device_unregister(zldpll->dpll_dev, &zldpll->ops, zldpll);
+ 	dpll_device_put(zldpll->dpll_dev, &zldpll->tracker);
+ 	zldpll->dpll_dev = NULL;
+ }
+diff --git a/drivers/dpll/zl3073x/dpll.h b/drivers/dpll/zl3073x/dpll.h
+index c65c798c37927f..278a24f357c9bd 100644
+--- a/drivers/dpll/zl3073x/dpll.h
++++ b/drivers/dpll/zl3073x/dpll.h
+@@ -17,6 +17,7 @@
+  * @forced_ref: selected reference in forced reference lock mode
+  * @check_count: periodic check counter
+  * @phase_monitor: is phase offset monitor enabled
++ * @ops: DPLL device operations for this instance
+  * @dpll_dev: pointer to registered DPLL device
+  * @tracker: tracking object for the acquired reference
+  * @lock_status: last saved DPLL lock status
+@@ -31,6 +32,7 @@ struct zl3073x_dpll {
+ 	u8				forced_ref;
+ 	u8				check_count;
+ 	bool				phase_monitor;
++	struct dpll_device_ops		ops;
+ 	struct dpll_device		*dpll_dev;
+ 	dpll_tracker			tracker;
+ 	enum dpll_lock_status		lock_status;
+diff --git a/drivers/dpll/zl3073x/regs.h b/drivers/dpll/zl3073x/regs.h
+index 5573d7188406bb..19c598daa784ca 100644
+--- a/drivers/dpll/zl3073x/regs.h
++++ b/drivers/dpll/zl3073x/regs.h
+@@ -78,6 +78,8 @@
+ #define ZL_REG_RESET_STATUS			ZL_REG(0, 0x18, 1)
+ #define ZL_REG_RESET_STATUS_RESET		BIT(0)
+ 
++#define ZL_REG_DIE_TEMP_STATUS			ZL_REG(0, 0x44, 2)
++
+ /*************************
+  * Register Page 2, Status
+  *************************/
 -- 
 2.53.0
 
