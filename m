@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A96132AAD6;
-	Sun,  7 Jun 2026 10:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7402C1595;
+	Sun,  7 Jun 2026 10:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828267; cv=none; b=WpJoApdqPNh9UvNEls6U9JaAtRnHjWUNPbfi9/7O/vQJQktInRuEtIF5pB42kekz5IjDiSkF8dDxd+e5O+xpewt3nMR8vGa87bf7FL2ozfZ4ZM2wji4FT+PLX5dgW0aBjhNaLpVafpZ1xdhDoyNXzjMpGbe/IhoaOVVktAN6ke0=
+	t=1780828270; cv=none; b=G0mNVHIogDPlBZprW0OlkGuhxpn5AGZj7pioz8mE07FHmH291Idsn1MYkYY1kaKMjzxeH9M/t6udpg+HJc0Sicam9LRGsJIuDhv6+w/Q7EeqV1D6DxviFeTh4Qrpoz0TWKHZR32nW9QhQXgEW9tmIipEygDNfDtcRFHFABGjsqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828267; c=relaxed/simple;
-	bh=HPDpCw4WfpzWGLOdk4nttvcXC+MD2kaPyErePkipZlI=;
+	s=arc-20240116; t=1780828270; c=relaxed/simple;
+	bh=Ocfd8TAq3Gr4LFAuNzxM3nGJLlziq1kC5Thq3CAYGZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZjmsKuXBtLRNsWFnaNEVJXDj2yXdsnnBoQ+Zrz5UDM2lzNtektRMw6UCv3hsUaxAZc51zbHYsmbvJXaMimvYJCcKXhBTdol2lxhbrAq3nLkvKVYzkMIJg4mcKIeEplXI0ve/hAZQlQ2iot+CgajUsct7rUwtP7ZZ0Sx+8KGioc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QxksFNLA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OmW/7sOhhz1xrlw+yVDHHQbw4ythDkTVrl1CYtaEYsaiM3wYY3myueHFWmpdu8jmNFFhiL6wMq1/ceYRLpD5Be+3kL1TRRxG6Yz7bPDMoiUpslu6UOe9d94wx8s+g6tW0CMDbxx8NsEn9Z/1SFEK3sGKQHLkxe+J58TDI/3kj5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uHzINwwt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QxksFNLA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D4981F00893;
-	Sun,  7 Jun 2026 10:31:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uHzINwwt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118251F00893;
+	Sun,  7 Jun 2026 10:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828266;
-	bh=GltwVCuo4e65V/mRlWN2NUcOMsewYnSrLYzWrJ1weUs=;
+	s=korg; t=1780828269;
+	bh=KyE8BDJ5llr8LhONmtA+qJqbQ62+cWqfdiJplROhqPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QxksFNLA1Hn3fYH/inAGeMcD41dzaZrPEhcaQJqEa3CiVx8ecVre7Lrc8X5IdR6jB
-	 QGPBuubJ5vb+wSnOkRZ/3PKA92QgUBKIgQG1btH+rjQI9ZRI4jFFEW9S9aA7991J+j
-	 mto+g8DqF3nae/UyVHJhGnwgPjEKu2EQ9I2e2S3o=
+	b=uHzINwwtWnyibEt14gLBSFCffMOhHa86vcpqNIzsvQ2aBjjeIV20WIk1UTD2WtLlu
+	 sa/IAwtVMsrHMPFnN8I1ZMLiQws7dtqFFw8sBprCRkNfOfbETJbDxUGzsHJpRi5cUH
+	 YYhWpECKFeVPjTO82wI5qVhbfu056AFklNYYDtVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,12 +30,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tom Lendacky <thomas.lendacky@amd.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.18 145/315] KVM: SEV: Ignore Port I/O requests of length 0
-Date: Sun,  7 Jun 2026 11:58:52 +0200
-Message-ID: <20260607095732.929090398@linuxfoundation.org>
+Subject: [PATCH 7.0 168/332] KVM: SEV: Use READ_ONCE() when reading entries/indices from PSC buffer
+Date: Sun,  7 Jun 2026 11:58:57 +0200
+Message-ID: <20260607095734.236463960@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +47,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 3988bd2723de407ae90fa7a6f6029b4e60238c58 upstream.
+commit c8cc238093ca6c99267032f6cfe78f59389f3157 upstream.
 
-Explicitly ignore Port I/O requests of length '0' (or count '0'), so that
-setting up the software scratch area (and other code) doesn't have to
-worry about underflowing the length, and to allow for WARNing on trying
-to configure the scratch area with len==0.
+Use READ_ONCE() when reading entries/indices from the guest-accessible
+Page State Change buffer to defend against TOCTOU bugs.
 
-Fixes: 291bd20d5d88 ("KVM: SVM: Add initial support for a VMGEXIT VMEXIT")
+Don't bother with READ_ONCE()/WRITE_ONCE() for cases where KVM is writing
+(and not consuming the result!), as the guest isn't supposed to touch the
+buffer while it's being processed.  I.e. using READ_ONCE() is all about
+protecting against misbehaving guests.
+
+Fixes: 9b54e248d264 ("KVM: SEV: Add support to handle Page State Change VMGEXIT")
 Cc: stable@vger.kernel.org
 Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260501202250.2115252-5-seanjc@google.com>
+Message-ID: <20260501202250.2115252-11-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/x86/kvm/svm/sev.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 --- a/arch/x86/kvm/svm/sev.c
 +++ b/arch/x86/kvm/svm/sev.c
-@@ -4499,6 +4499,11 @@ int sev_handle_vmgexit(struct kvm_vcpu *
- 			    control->exit_info_1, control->exit_info_2);
- 		ret = -EINVAL;
- 		break;
-+	case SVM_EXIT_IOIO:
-+		if (!((control->exit_info_1 & SVM_IOIO_SIZE_MASK) >> SVM_IOIO_SIZE_SHIFT))
-+			return 1;
-+
-+		fallthrough;
- 	default:
- 		ret = svm_invoke_exit_handler(vcpu, exit_code);
- 	}
-@@ -4519,6 +4524,9 @@ int sev_es_string_io(struct vcpu_svm *sv
- 	if (unlikely(check_mul_overflow(count, size, &bytes)))
- 		return -EINVAL;
+@@ -3827,9 +3827,9 @@ static void __snp_complete_one_psc(struc
+ 	 */
+ 	for (idx = svm->sev_es.psc_idx; svm->sev_es.psc_inflight;
+ 	     svm->sev_es.psc_inflight--, idx++) {
+-		struct psc_entry *entry = &entries[idx];
++		struct psc_entry entry = READ_ONCE(entries[idx]);
  
-+	if (!bytes)
-+		return 1;
-+
- 	r = setup_vmgexit_scratch(svm, in, bytes);
- 	if (r)
- 		return r;
+-		entry->cur_page = entry->pagesize ? 512 : 1;
++		entries[idx].cur_page = entry.pagesize ? 512 : 1;
+ 	}
+ 
+ 	hdr->cur_entry = idx;
+@@ -3892,8 +3892,8 @@ next_range:
+ 	 * validation, so take care to only use validated copies of values used
+ 	 * for things like array indexing.
+ 	 */
+-	idx_start = hdr->cur_entry;
+-	idx_end = hdr->end_entry;
++	idx_start = READ_ONCE(hdr->cur_entry);
++	idx_end = READ_ONCE(hdr->end_entry);
+ 
+ 	if (idx_end >= max_nr_entries) {
+ 		snp_complete_psc(svm, VMGEXIT_PSC_ERROR_INVALID_HDR);
+@@ -3902,7 +3902,7 @@ next_range:
+ 
+ 	/* Find the start of the next range which needs processing. */
+ 	for (idx = idx_start; idx <= idx_end; idx++, hdr->cur_entry++) {
+-		entry_start = entries[idx];
++		entry_start = READ_ONCE(entries[idx]);
+ 
+ 		gfn = entry_start.gfn;
+ 		huge = entry_start.pagesize;
+@@ -3946,7 +3946,7 @@ next_range:
+ 	 * KVM_HC_MAP_GPA_RANGE exit.
+ 	 */
+ 	while (++idx <= idx_end) {
+-		struct psc_entry entry = entries[idx];
++		struct psc_entry entry = READ_ONCE(entries[idx]);
+ 
+ 		if (entry.operation != entry_start.operation ||
+ 		    entry.gfn != entry_start.gfn + npages ||
 
 
