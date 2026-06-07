@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C521E98E3;
-	Sun,  7 Jun 2026 11:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C593382C8;
+	Sun,  7 Jun 2026 11:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780830217; cv=none; b=sbpvtJELX4NoxtoYP3NmuXrUqKmNvzs/XeB8J/qmCYnLrQMRsELfMV1V2pV3tFdUNGJ431A/gRGSbUZDXSKYPfe95oSb1+IDkT/5q6kn9ywHMOr9jcPWSSNjT7tMyQpCTd3JmyNNu2vhqTSHOgY3jGGgmrb3cDvAgyvC1h/b1w4=
+	t=1780830220; cv=none; b=qXgt2eJu1lYw+ofmnHix0h/Ry142CbPEIKWIed8RJF66TQsQuYmOaDkqFIWki+xzhtRDGeoQBK98CFnKN8H3WLvSUck7r06N+jDYAZ1XSsfXQ8itJOnn4BXUPyiTxWIqlICChIfkwnGlI1Ui1tZGPPT1xoKPchlnylXLjUxzwPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780830217; c=relaxed/simple;
-	bh=m6IlMUatR634hhQb0U8CKnpOmPBlDTFxiJhVPvPt5S0=;
+	s=arc-20240116; t=1780830220; c=relaxed/simple;
+	bh=sy8H0S8I48+ggF0hb1L4jKw9iRd/c4QULSmwAw7kb9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fMKCzMN3DNXFTX9l316VIDD7MepxqnA2Ex1m9WVnl1dN2tMBITHTtF4icknDlkmuMqbpiByyLPmyaqAqGGx/bpLdEx/1usJ4X3LdvXG2i9u6M/tCedudsLxakwfbebeb93/rO0BUuid/eA1pZtDVslqUXLNBeSqlSIBvwmbNbsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdMZsY6I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u9WdrXXp7as6UvpzPlYzCREnlXU9m8gyUDPAjWE7DBah8ppkp76mZSNCcxtIiOEpPsjxQ0ozwZ/3VfqVtTcVnHK5CfRWjPh5PmmQneSTIOtw8enL6L2hoOtAugfziDode5Gp0/AxqicsZxhgc2wE7CX5HRbJoblC8Noo9GtedcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c6n7x321; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdMZsY6I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ADBF1F00893;
-	Sun,  7 Jun 2026 11:03:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6n7x321"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26C5E1F00893;
+	Sun,  7 Jun 2026 11:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780830216;
-	bh=XVOkPyFaQLBQL8CaM3W/O7I1+CEVVjW5QKIwlcyRYfQ=;
+	s=korg; t=1780830219;
+	bh=yDQcQwtA6pA11UUVgSVH3PvqaifjgMIPQj3ezCpLW9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pdMZsY6IAqNZsp0EuXBGJUuKqJjGKA9GDNKEqG2fu0PQ32+bgOQOVoyh0mTMW3gGE
-	 7eIulzlSLWULPjf+b6zJPyrzsM6zIurpsR6mVwvEGkrFLBFyiImT5pbOGT6GAju4hp
-	 xNnpoFL7i581tvxJSqTthq9m13ccUlnn4+l6hz1A=
+	b=c6n7x321zfTFxVWEfN0+N8C7zeYicsDJ+aW+B7wdj96VScMFXLBNl/Hi+XEZ2/kZB
+	 FlZ84kwMZf/nxbrGBlBW0p9OJO/DScVn3voVr66NUsyOJN+M/hH8GVt7V2GAsjtgtj
+	 BXbylCH4a3QKw5O9ZVrREFgXT5uHITPRPEoZqHrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Jeff Xu <jeffxu@google.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Brendan Jackman <jackmanb@google.com>,
-	Greg Thelen <gthelen@google.com>,
-	Hugh Dickins <hughd@google.com>,
-	Kees Cook <kees@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Tomasz Duszynski <tomasz.duszynski@octakon.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 307/307] memfd: deny writeable mappings when implying SEAL_WRITE
-Date: Sun,  7 Jun 2026 12:01:44 +0200
-Message-ID: <20260607095739.038536709@linuxfoundation.org>
+Subject: [PATCH 6.12 290/307] iio: chemical: scd30: Use guard(mutex) to allow early returns
+Date: Sun,  7 Jun 2026 12:01:27 +0200
+Message-ID: <20260607095738.387250652@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
 References: <20260607095727.647295505@linuxfoundation.org>
@@ -59,68 +52,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Pratyush Yadav (Google)" <pratyush@kernel.org>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit 3b041514cb6eae45869b020f743c14d983363222 ]
+[ Upstream commit 5feb5532870fbced5d6f450b8061a33f461b88ca ]
 
-When SEAL_EXEC is added, SEAL_WRITE is implied to make W^X.  But the
-implied seal is set after the check that makes sure the memfd can not have
-any writable mappings.  This means one can use SEAL_EXEC to apply
-SEAL_WRITE while having writeable mappings.
+Auto cleanup based release of the lock allows for simpler code flow in a
+few functions with large multiplexing style switch statements and no
+common operations following the switch.
 
-This breaks the contract that SEAL_WRITE provides and can be used by an
-attacker to pass a memfd that appears to be write sealed but can still be
-modified arbitrarily.
-
-Fix this by adding the implied seals before the call for
-mapping_deny_writable() is done.
-
-Link: https://lore.kernel.org/20260505133922.797635-1-pratyush@kernel.org
-Fixes: c4f75bc8bd6b ("mm/memfd: add write seals when apply SEAL_EXEC to executable memfd")
-Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
-Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
-Acked-by: Jeff Xu <jeffxu@google.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: Greg Thelen <gthelen@google.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Kees Cook <kees@kernel.org>
-Cc: "David Hildenbrand (Arm)" <david@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Suggested-by: David Lechner <dlechner@baylibre.com>
+Cc: Tomasz Duszynski <tomasz.duszynski@octakon.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20250209180624.701140-3-jic23@kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 5aba4f94b225 ("iio: chemical: scd30: fix division by zero in write_raw")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memfd.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/iio/chemical/scd30_core.c |   63 ++++++++++++++++----------------------
+ 1 file changed, 28 insertions(+), 35 deletions(-)
 
---- a/mm/memfd.c
-+++ b/mm/memfd.c
-@@ -273,6 +273,12 @@ static int memfd_add_seals(struct file *
- 		goto unlock;
- 	}
+--- a/drivers/iio/chemical/scd30_core.c
++++ b/drivers/iio/chemical/scd30_core.c
+@@ -5,6 +5,7 @@
+  * Copyright (c) 2020 Tomasz Duszynski <tomasz.duszynski@octakon.com>
+  */
+ #include <linux/bits.h>
++#include <linux/cleanup.h>
+ #include <linux/completion.h>
+ #include <linux/delay.h>
+ #include <linux/device.h>
+@@ -198,112 +199,104 @@ static int scd30_read_raw(struct iio_dev
+ 			  int *val, int *val2, long mask)
+ {
+ 	struct scd30_state *state = iio_priv(indio_dev);
+-	int ret = -EINVAL;
++	int ret;
+ 	u16 tmp;
  
-+	/*
-+	 * SEAL_EXEC implies SEAL_WRITE, making W^X from the start.
-+	 */
-+	if (seals & F_SEAL_EXEC && inode->i_mode & 0111)
-+		seals |= F_SEAL_SHRINK|F_SEAL_GROW|F_SEAL_WRITE|F_SEAL_FUTURE_WRITE;
-+
- 	if ((seals & F_SEAL_WRITE) && !(*file_seals & F_SEAL_WRITE)) {
- 		error = mapping_deny_writable(file->f_mapping);
- 		if (error)
-@@ -285,12 +291,6 @@ static int memfd_add_seals(struct file *
+-	mutex_lock(&state->lock);
++	guard(mutex)(&state->lock);
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_RAW:
+ 	case IIO_CHAN_INFO_PROCESSED:
+ 		if (chan->output) {
+ 			*val = state->pressure_comp;
+-			ret = IIO_VAL_INT;
+-			break;
++			return IIO_VAL_INT;
  		}
+ 
+ 		ret = iio_device_claim_direct_mode(indio_dev);
+ 		if (ret)
+-			break;
++			return ret;
+ 
+ 		ret = scd30_read(state);
+ 		if (ret) {
+ 			iio_device_release_direct_mode(indio_dev);
+-			break;
++			return ret;
+ 		}
+ 
+ 		*val = state->meas[chan->address];
+ 		iio_device_release_direct_mode(indio_dev);
+-		ret = IIO_VAL_INT;
+-		break;
++		return IIO_VAL_INT;
+ 	case IIO_CHAN_INFO_SCALE:
+ 		*val = 0;
+ 		*val2 = 1;
+-		ret = IIO_VAL_INT_PLUS_MICRO;
+-		break;
++		return IIO_VAL_INT_PLUS_MICRO;
+ 	case IIO_CHAN_INFO_SAMP_FREQ:
+ 		ret = scd30_command_read(state, CMD_MEAS_INTERVAL, &tmp);
+ 		if (ret)
+-			break;
++			return ret;
+ 
+ 		*val = 0;
+ 		*val2 = 1000000000 / tmp;
+-		ret = IIO_VAL_INT_PLUS_NANO;
+-		break;
++		return IIO_VAL_INT_PLUS_NANO;
+ 	case IIO_CHAN_INFO_CALIBBIAS:
+ 		ret = scd30_command_read(state, CMD_TEMP_OFFSET, &tmp);
+ 		if (ret)
+-			break;
++			return ret;
+ 
+ 		*val = tmp;
+-		ret = IIO_VAL_INT;
+-		break;
++		return IIO_VAL_INT;
++	default:
++		return -EINVAL;
  	}
- 
--	/*
--	 * SEAL_EXEC implies SEAL_WRITE, making W^X from the start.
--	 */
--	if (seals & F_SEAL_EXEC && inode->i_mode & 0111)
--		seals |= F_SEAL_SHRINK|F_SEAL_GROW|F_SEAL_WRITE|F_SEAL_FUTURE_WRITE;
+-	mutex_unlock(&state->lock);
 -
- 	*file_seals |= seals;
- 	error = 0;
+-	return ret;
+ }
  
+ static int scd30_write_raw(struct iio_dev *indio_dev, struct iio_chan_spec const *chan,
+ 			   int val, int val2, long mask)
+ {
+ 	struct scd30_state *state = iio_priv(indio_dev);
+-	int ret = -EINVAL;
++	int ret;
+ 
+-	mutex_lock(&state->lock);
++	guard(mutex)(&state->lock);
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_SAMP_FREQ:
+ 		if (val)
+-			break;
++			return -EINVAL;
+ 
+ 		val = 1000000000 / val2;
+ 		if (val < SCD30_MEAS_INTERVAL_MIN_S || val > SCD30_MEAS_INTERVAL_MAX_S)
+-			break;
++			return -EINVAL;
+ 
+ 		ret = scd30_command_write(state, CMD_MEAS_INTERVAL, val);
+ 		if (ret)
+-			break;
++			return ret;
+ 
+ 		state->meas_interval = val;
+-		break;
++		return 0;
+ 	case IIO_CHAN_INFO_RAW:
+ 		switch (chan->type) {
+ 		case IIO_PRESSURE:
+ 			if (val < SCD30_PRESSURE_COMP_MIN_MBAR ||
+ 			    val > SCD30_PRESSURE_COMP_MAX_MBAR)
+-				break;
++				return -EINVAL;
+ 
+ 			ret = scd30_command_write(state, CMD_START_MEAS, val);
+ 			if (ret)
+-				break;
++				return ret;
+ 
+ 			state->pressure_comp = val;
+-			break;
++			return 0;
+ 		default:
+-			break;
++			return -EINVAL;
+ 		}
+-		break;
+ 	case IIO_CHAN_INFO_CALIBBIAS:
+ 		if (val < 0 || val > SCD30_TEMP_OFFSET_MAX)
+-			break;
++			return -EINVAL;
+ 		/*
+ 		 * Manufacturer does not explicitly specify min/max sensible
+ 		 * values hence check is omitted for simplicity.
+ 		 */
+-		ret = scd30_command_write(state, CMD_TEMP_OFFSET / 10, val);
++		return scd30_command_write(state, CMD_TEMP_OFFSET / 10, val);
++	default:
++		return -EINVAL;
+ 	}
+-	mutex_unlock(&state->lock);
+-
+-	return ret;
+ }
+ 
+ static int scd30_write_raw_get_fmt(struct iio_dev *indio_dev, struct iio_chan_spec const *chan,
 
 
