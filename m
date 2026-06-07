@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231321DE8AE;
-	Sun,  7 Jun 2026 10:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C8C1DE8AE;
+	Sun,  7 Jun 2026 10:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826915; cv=none; b=kuKY8iRldJvF9efHhqt00IwvKkUbqtznCoZrr6audYDUIEHJlCFXykG7yFClvYYTeMzBlAYG6uao0PUAAMmcSyoNN39TWizJ58MM1g8gtbf+PiDQE7UNvRF1gL2XNNDpKdJejoIIxc/+NHarWJ3l60EzGh2h71Vj9SLdzcNDGyo=
+	t=1780826918; cv=none; b=RQQmea/LNMQWPGsthfbCl9j8nvgxy1eEWR8Y8VVr/CsK/vVOnjpXGJkW5poh/nNiLuhX8S21MEWoaAkmhufi/ZjG6ZeznHgTmjV1v8v8f23tqXdrPR27hH+POmP3eSCZj1XQScvJmJG681DT5kVuAE+J1+eOVFZuKL7f2P7WIdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826915; c=relaxed/simple;
-	bh=/LUKfYqnL0Cm/G2uLE2v60RgDlOpdKbrU6v3BskY4NM=;
+	s=arc-20240116; t=1780826918; c=relaxed/simple;
+	bh=1LWHhh9kY9om0FEmSR25LekCNViLzpNer7KSznzSFrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F5DkWZqIH/UhRp4ZRuIc91+CKO39JSxzr6GFXy6Ff4ZZR73u6bhcj50UsCVHAZuLPINC1pqX+NHA/2xWjty5smY6uzk//zWXt7JRG0uxiESY1gUakav9VHL3X480Qhy/sXp+wJN62qhkG42Ktdolx0H9o3NWzfqoMSJwKspzbD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ct4oSH7z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ipMusKjDUWYmMe2vJkgLYo2ps+fqny5AnC7WImd82/WFAZHqVWVQqej42kUl9dNZIDT3tNFJa/XiurzyJ6LtxtSWFzkVPEd4maea7cbZunDkrEaMdXa1QgK5apkgohnolbv04S0PQuKRHUP7iG/+u4Fo+tTkPq61RTDPZ6UzdKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNhy3iLh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ct4oSH7z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DCD1F00893;
-	Sun,  7 Jun 2026 10:08:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNhy3iLh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6871F00893;
+	Sun,  7 Jun 2026 10:08:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826914;
-	bh=Pp+SwRgmy/wuvZdSR9F+QrHFiGnkPv/vIWJgllDMKHg=;
+	s=korg; t=1780826917;
+	bh=aQLq8ppuiU+gmZ4i7G8nKa2cb90rEd2WEaf2Dd7wsDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ct4oSH7zK1nxJ/dAiSUOziFpB2NUIaxcFGpzperk/FpAS1bg5Ctcd6kFafm1foBOk
-	 KkFhMD++XUYidvNlEmPlJKPUP2l2M0vSK4gGjlgK/TEs2ljIe6/aJKV0DGBuuyrtqE
-	 kinqCwHJc+kwYcce7GYaaoV+HrCzS6EeuoriuvHY=
+	b=KNhy3iLhVNAekt1zQZ/TjIy6iF99mC0UGUSz13fKFDkfdWV/oEyvXW8QqbnMZBWYm
+	 6Xe5V8u09N9FvIw7N3OFL7Qqa+6L05w70qOBjwy4gAb02eANJ6UwTIyoZMp4HEbxMO
+	 wj6tBjIFhVUqix+0rD1jbZois2F7JF0z5zPCBDqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Usama Arif <usama.arif@linux.dev>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 006/307] xfrm: move policy_bydst RCU sync from per-netns .exit to .pre_exit
-Date: Sun,  7 Jun 2026 11:56:43 +0200
-Message-ID: <20260607095727.876486296@linuxfoundation.org>
+Subject: [PATCH 7.0 043/332] ethtool: rss: fix falsely ignoring indir table updates
+Date: Sun,  7 Jun 2026 11:56:52 +0200
+Message-ID: <20260607095729.697214699@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,94 +46,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Usama Arif <usama.arif@linux.dev>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 3e52417318473782012b236d0325bf7d2266a597 ]
+[ Upstream commit 8d60141a32875248ef71d49c9920fa5e2aa40b29 ]
 
-The struct pernet_operations docstring in include/net/net_namespace.h
-explicitly warns against blocking RCU primitives in .exit handlers:
+rss_set_prep_indir() compares the new indirection table against the
+current one to determine whether any update is needed. The memcmp
+call passes data->indir_size as the length argument, but indir_size
+is the number of u32 entries, not the byte count.
 
-    Exit methods using blocking RCU primitives, such as
-    synchronize_rcu(), should be implemented via exit_batch.
-    [...]
-    Please, avoid synchronize_rcu() at all, where it's possible.
-
-    Note that a combination of pre_exit() and exit() can
-    be used, since a synchronize_rcu() is guaranteed between
-    the calls.
-
-xfrm_policy_fini() violates this: it calls synchronize_rcu() before
-freeing the policy_bydst hash tables (so no RCU reader is mid-
-traversal at free time), but runs from xfrm_net_ops.exit -- once per
-namespace -- so a cleanup_net() of N namespaces pays N full RCU
-grace periods serially.
-
-Use the documented pre_exit/exit split. Move the policy flush (and
-the workqueue drains it depends on) into a new .pre_exit handler;
-xfrm_policy_fini() then runs in .exit and frees the hash tables
-after the synchronize_rcu_expedited() that cleanup_net() guarantees
-between the two phases. Providing O(1) RCU grace periods per batch
-instead of O(N).
-
-Observed on Linux 6.18 with a workload doing unshare(CLONE_NEWNET)
-at ~13/sec sustained: cleanup_net() and the netns_wq rescuer kthread
-both stuck in xfrm_policy_fini()'s synchronize_rcu(), >300k struct
-net accumulated in the cleanup queue, Percpu in /proc/meminfo climbed
-to 130+ GB on 256-CPU hosts, and memcg OOMs followed. setup_net and
-__put_net counts were balanced, ruling out a refcount leak.
-
-Fixes: 069daad4f2ae ("xfrm: Wait for RCU readers during policy netns exit")
-Signed-off-by: Usama Arif <usama.arif@linux.dev>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: c0ae03588bbb ("ethtool: rss: initial RSS_SET (indirection table handling)")
+Link: https://patch.msgid.link/20260522230647.1705600-4-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_policy.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ net/ethtool/rss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index fca07f8e60749a..863e37d3d7f0f7 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -4264,21 +4264,21 @@ static int __net_init xfrm_policy_init(struct net *net)
- 	return -ENOMEM;
- }
+diff --git a/net/ethtool/rss.c b/net/ethtool/rss.c
+index 688c0e4bba69db..4877655f724419 100644
+--- a/net/ethtool/rss.c
++++ b/net/ethtool/rss.c
+@@ -684,7 +684,7 @@ rss_set_prep_indir(struct net_device *dev, struct genl_info *info,
+ 				ethtool_rxfh_indir_default(i, num_rx_rings);
+ 	}
  
--static void xfrm_policy_fini(struct net *net)
-+static void __net_exit xfrm_net_pre_exit(struct net *net)
- {
--	struct xfrm_pol_inexact_bin *b, *t;
--	unsigned int sz;
--	int dir;
--
- 	disable_work_sync(&net->xfrm.policy_hthresh.work);
--
- 	flush_work(&net->xfrm.policy_hash_work);
- #ifdef CONFIG_XFRM_SUB_POLICY
- 	xfrm_policy_flush(net, XFRM_POLICY_TYPE_SUB, false);
- #endif
- 	xfrm_policy_flush(net, XFRM_POLICY_TYPE_MAIN, false);
-+}
+-	*mod |= memcmp(rxfh->indir, data->indir_table, data->indir_size);
++	*mod |= memcmp(rxfh->indir, data->indir_table, alloc_size);
  
--	synchronize_rcu();
-+static void xfrm_policy_fini(struct net *net)
-+{
-+	struct xfrm_pol_inexact_bin *b, *t;
-+	unsigned int sz;
-+	int dir;
- 
- 	WARN_ON(!list_empty(&net->xfrm.policy_all));
- 
-@@ -4356,6 +4356,7 @@ static void __net_exit xfrm_net_exit(struct net *net)
- 
- static struct pernet_operations __net_initdata xfrm_net_ops = {
- 	.init = xfrm_net_init,
-+	.pre_exit = xfrm_net_pre_exit,
- 	.exit = xfrm_net_exit,
- };
+ 	return 0;
  
 -- 
 2.53.0
