@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E84296BCC;
-	Sun,  7 Jun 2026 10:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50799296BCC;
+	Sun,  7 Jun 2026 10:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829216; cv=none; b=Phniw0j7YFNdmd4SLzw1ToOpd4KP+UDDU9hVeB3CGYuoA50Y6autGvYYbv+95bjZ9dv8qHpUuaD5vorjSVEutfB5pwmYbzV3z7Nb/F8zMl6iCh2umMb5yXsapiDSUnGUSbpOlSzTE+9mA5Gq4yjQ7hKMkGB51RYGdzKVTVGlOsc=
+	t=1780829219; cv=none; b=FvF6MCxGMU4gN3g9oekAwQ7xq1OdmacmVeHQdFucorb33hgXa85PV0AkRv3P5oVbxMVP//MS1uRMGfWWv05MYqbMPpUeolwq59LALHAEmQVxnqKverHFKMNU59+ifteqwdOuoKn0u+mtl6w8S+9ZV40KpNPsIamS2/IT8fbDXLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829216; c=relaxed/simple;
-	bh=qk0/Qc0bjqkRSQe4rZC3nONr5Kr6gEKRYqmvfXhwDeM=;
+	s=arc-20240116; t=1780829219; c=relaxed/simple;
+	bh=qkKZP1BErSepaU5JmEyvzM9VpPABHH0gADfs5Rg/TZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MMKXoVopI0RwbubJcl/fTVOjLU8Xsu6QNzACnSNA66hEv0DCxuqv6n/5RUoqqjNidp1iaeqDF5fAM3FjMiCN9iHU/NeC/futgs4AizHwUsz7OyNbkx07UyOLaISttilSj7IjoErq/jdjn3bs/ahf1DMRPRnrvnTxV/rFyBjThjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDWOEDfk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SbPx8SInD254sUuUDkza25m/EfnztVDY/qHLrgEQB/RRqJb9JieClPByP4Qk6pndcYfpnLpbqbuuiFDhbxRmAEScmd76iPn76ryLyRl37oS2MLyv7iiEccIVjXIHINnE12j2xx6x4YgdVsM8HeIRDx5tdwmH1rEnGZcz2J45YM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKKp7Q+Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDWOEDfk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5592C1F00893;
-	Sun,  7 Jun 2026 10:46:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKKp7Q+Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95BFD1F00893;
+	Sun,  7 Jun 2026 10:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829214;
-	bh=88wAtQ4im6RvnYVgKe6LQMPK6qTmcqIjqsWLlfTLudc=;
+	s=korg; t=1780829218;
+	bh=XJJuf0ZWm+3TyhguEOEci2uxApaggbLqZ3gOXKUnaiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sDWOEDfklgCuX0DlZI2lvavZ2QeRHk6aqAM29vsV+jlVLjPeAZrN/bsF7Pa1Rzoil
-	 lZVuqQlEoU5DxAVhc5x/hfOKAERFjWJjRBGO56Q6IptfvwqmVItLL/MgVlNCMbA6bb
-	 i1b0dAopVuIKnVpMqFHrnB6/AG4mp5eUs9iBfze0=
+	b=zKKp7Q+ZE6dxuoSLUsdIjwshnZH44u2cB5yM/JSuNnnP8ba3gPARoFrY8Tgu8AFaJ
+	 Y1ploqgr0boYXo0HnkNJLt/LH6L/9yjV5UgaFLbxAH2ilkPelo/ddsMdugRILQD8Am
+	 5Pf4jGx7EEgcueaZVWu1u51jgmSC7TDHoyC2tiGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Burkels <sam@1a38.nl>,
-	Oliver Neukum <oneukum@suse.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.18 226/315] usb: storage: Add quirks for PNY Elite Portable SSD
-Date: Sun,  7 Jun 2026 12:00:13 +0200
-Message-ID: <20260607095735.875496016@linuxfoundation.org>
+	Qbeliw Tanaka <q.tanaka@gmx.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.12 205/307] Input: xpad - add "Nova 2 Lite" from GameSir
+Date: Sun,  7 Jun 2026 12:00:02 +0200
+Message-ID: <20260607095735.253884191@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,73 +46,35 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sam Burkels <sam@1a38.nl>
+From: Qbeliw Tanaka <q.tanaka@gmx.com>
 
-commit b53ebb811e00be50a779ce4e7aee604178b4a825 upstream.
+commit 1f6ac0f8441c48c4cc250141e1da8486c13512ba upstream.
 
-The PNY Elite Portable SSD (USB ID 154b:f009) is a sibling of the
-already-quirked PNY Pro Elite SSDs (154b:f00b and 154b:f00d). Like its
-siblings, it uses a Phison-based USB-SATA bridge that exhibits
-firmware bugs when bound to the uas driver.
+Add support for the gamepad "Nova 2 Lite" from GameSir, compatible with
+the Xbox 360 gamepad.
 
-Without quirks, the device fails to complete READ CAPACITY commands
-when accessed over UAS on a SuperSpeed (USB 3) port. The device
-enumerates and reports as a SCSI direct-access device, but reports
-zero logical blocks and never finishes spin-up:
-
-    usb 2-3: new SuperSpeed USB device number 8 using xhci_hcd
-    usb 2-3: New USB device found, idVendor=154b, idProduct=f009
-    usb 2-3: Product: PNY ELITE PSSD
-    usb 2-3: Manufacturer: PNY
-    scsi host0: uas
-    scsi 0:0:0:0: Direct-Access     PNY      PNY ELITE PSSD   0
-    sd 0:0:0:0: [sda] Spinning up disk...
-    [...10+ seconds of polling, no progress...]
-    sd 0:0:0:0: [sda] Read Capacity(16) failed: hostbyte=DID_ERROR
-    sd 0:0:0:0: [sda] Read Capacity(10) failed: hostbyte=DID_ERROR
-    sd 0:0:0:0: [sda] 0 512-byte logical blocks: (0 B/0 B)
-
-Tested each individual quirk to find the minimum that fixes this:
-  - US_FL_NO_ATA_1X alone: device hangs on spin-up
-  - US_FL_NO_REPORT_OPCODES alone: works on USB 2.0, hangs on USB 3.0
-  - US_FL_NO_ATA_1X | US_FL_NO_REPORT_OPCODES: works on both
-
-With both quirks the device enumerates correctly while still using
-the uas driver, and delivers full UAS throughput (~281 MB/s
-sequential read on a USB 3.0 Gen 1 port).
-
-The existing PNY Pro Elite entries (f00b, f00d) only set NO_ATA_1X,
-but this device additionally chokes on REPORT OPCODES under
-SuperSpeed.
-
-Signed-off-by: Sam Burkels <sam@1a38.nl>
-Acked-by: Oliver Neukum <oneukum@suse.com>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260501132346.86572-1-sam@1a38.nl
+Signed-off-by: Qbeliw Tanaka <q.tanaka@gmx.com>
+Link: https://patch.msgid.link/20260429.162040.930225048583399359.q.tanaka@gmx.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/unusual_uas.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/input/joystick/xpad.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/storage/unusual_uas.h
-+++ b/drivers/usb/storage/unusual_uas.h
-@@ -132,6 +132,13 @@ UNUSUAL_DEV(0x152d, 0x0583, 0x0000, 0x99
- 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
- 		US_FL_NO_REPORT_OPCODES),
- 
-+/* Reported-by: Sam Burkels <sam@1a38.nl> */
-+UNUSUAL_DEV(0x154b, 0xf009, 0x0000, 0x9999,
-+		"PNY",
-+		"PNY ELITE PSSD",
-+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
-+		US_FL_NO_ATA_1X | US_FL_NO_REPORT_OPCODES),
-+
- /* Reported-by: Thinh Nguyen <thinhn@synopsys.com> */
- UNUSUAL_DEV(0x154b, 0xf00b, 0x0000, 0x9999,
- 		"PNY",
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -415,6 +415,7 @@ static const struct xpad_device {
+ 	{ 0x3285, 0x0662, "Nacon Revolution5 Pro", 0, XTYPE_XBOX360 },
+ 	{ 0x3285, 0x0663, "Nacon Evol-X", 0, XTYPE_XBOXONE },
+ 	{ 0x3537, 0x1004, "GameSir T4 Kaleid", 0, XTYPE_XBOX360 },
++	{ 0x3537, 0x100f, "GameSir Nova 2 Lite", 0, XTYPE_XBOX360 },
+ 	{ 0x3537, 0x1010, "GameSir G7 SE", 0, XTYPE_XBOXONE },
+ 	{ 0x3767, 0x0101, "Fanatec Speedster 3 Forceshock Wheel", 0, XTYPE_XBOX },
+ 	{ 0x413d, 0x2104, "Black Shark Green Ghost Gamepad", 0, XTYPE_XBOX360 },
 
 
