@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D186C2FB97B;
-	Sun,  7 Jun 2026 10:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694721E98EF;
+	Sun,  7 Jun 2026 10:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828979; cv=none; b=DJFZ8+O8mA+Q6Q2dohJjoq/ZMtDyohsB3FyzIHGgZaUlDa/cp8G8n9IjUhilO8kWwQKKXWFZbtAdUCOlH8lJK7ZQldDjPZF++YIyW5QReffWLznHiof8mEIJBCfKUTEaNocRycUqkLzgXQ85QkjCQHDqCMmxKldUxvBW0iFSvdk=
+	t=1780828983; cv=none; b=QBxWAYa2QpOqhVGF5iL5ZwR8aogwT9x0E8jxq+oCQ9B6bV9lb/keLczSdWyEYZXtaxNF9zv9sDgv9iaq0ZGM3l+smdPIqXtUoTGE1b4VY81gTl/Hn47/2tSXcs+SHQbv7OC7RnrEk6CP8vOW0cw7hqLvzIUrp9cUuNJ95CYYFFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828979; c=relaxed/simple;
-	bh=ZMqy/CkSkVypEgFSFa0Z+9glSvdGSRRfib+1yvF/kiI=;
+	s=arc-20240116; t=1780828983; c=relaxed/simple;
+	bh=suTgiXbI5TJZirGIvS6IyYbc0TAYdNh0CxbV+WMSvZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I48ntoeCZwwxL8/vtMpmmoQQAmUGg5RaaWA6jOqS6qikmh4gypPreIHwzSIht9RDkThFb2j1t4mc7C7EVBIdth8Eiglz5sCScICLmRrYiShdc0mdSNpokSvKnKoRxn+CQB1SnT7ZE1069v9g2qUQfxUQfdHeW6puEuJffGsKUg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kua1nKMO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QQ5VdWJLu45QBg8CRz30HUdoYDSugGmfSGthxh7B5R5JFkbJJlLV8XqTomvfIm7ro3i87MCGeh4UoHwDdhve0BDQwljph60PrZ6tO4Kd13YtaLz1vKajfFcex1nAMfaZ/KinDb/D9UAnFZ1SdtdoAeOTpzQCvlWdJq+CUuAU9Ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scp2HD45; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kua1nKMO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A49B1F00893;
-	Sun,  7 Jun 2026 10:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scp2HD45"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB2E1F00893;
+	Sun,  7 Jun 2026 10:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828978;
-	bh=O6jMeNgqdL+Nm1s487mxMviiSQPF65w307WEdUE6U6A=;
+	s=korg; t=1780828982;
+	bh=vs/gxlNSn5CsYj4zxYf3Z5xIp+Echpv/oVnY9h/AqAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kua1nKMOiasmbivxYl4L4X83Mfz40wUui5E7kbVBnZigqkXHgQ+N9uKDuLS9vazqc
-	 mM7DKLjPKXOL9JhsgoAv9linGwV8gLZwaUkw8i4v9oicDO1PNluLEI91XhP7Di0MyF
-	 klbxaqAfNZd4B8hpVQxJ3W05ksp6cAqAAAVd1fvg=
+	b=scp2HD451F8YjXXuWh57tQRIF3Hp9If9VgVKCJLfQkQYl7nSw48rbqkYKi3mWHTD2
+	 2bekULh0yUbBxOo33o20MnLUO4BMesB2D9NOg86aE02siyDWgt/C9oP7S2qyfpo7/G
+	 XKmDXURRdmjg+hp7i9xZtSul2m2asyj642XT1+qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 7.0 231/332] ASoC: qcom: q6asm-dai: close stream only when running
-Date: Sun,  7 Jun 2026 12:00:00 +0200
-Message-ID: <20260607095736.536337478@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuqi Xu <xuyq21@lenovo.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 184/307] bpf: sockmap: fix tail fragment offset in bpf_msg_push_data
+Date: Sun,  7 Jun 2026 11:59:41 +0200
+Message-ID: <20260607095734.474415851@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,76 +51,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Yuqi Xu <xuyq21@lenovo.com>
 
-commit 048c540ee76ded666bda74f9dae1ca3254e0633c upstream.
+commit f72eed9b84fb771019a955908132410a9ba9ea3f upstream.
 
-q6asm_dai_close() and q6asm_dai_compr_free() currently issue CMD_CLOSE
-whenever prtd->state is non-zero.
+When bpf_msg_push_data() inserts data in the middle of a scatterlist
+entry, it splits the original entry into a left fragment and a right
+fragment.
 
-After prepare() closes an existing stream, the state is updated to
-Q6ASM_STREAM_STOPPED. Since this state is also non-zero, the close and
-free paths can send CMD_CLOSE again for a stream that has already been
-closed.
+The right fragment offset is page-local, but the code advances it with
+`start`, which is the message-global insertion point. For inserts into a
+non-first SG entry, this over-advances the offset and leaves the split
+layout inconsistent.
 
-Restrict CMD_CLOSE to the Q6ASM_STREAM_RUNNING state so the command is
-sent only when the ASM stream is still active.
+Advance the right fragment offset by the fragment-local delta,
+`start - offset`, which matches the length removed from the front of the
+original entry.
 
-Fixes: 2a9e92d371db ("ASoC: qdsp6: q6asm: Add q6asm dai driver")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260518092347.3446946-3-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 6fff607e2f14 ("bpf: sk_msg program helper bpf_msg_push_data")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yuqi Xu <xuyq21@lenovo.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Link: https://patch.msgid.link/8b129d10566aa3eb43f61a8f9757bcf51707d324.1779636774.git.xuyq21@lenovo.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6asm-dai.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/core/filter.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/qcom/qdsp6/q6asm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
-@@ -465,12 +465,12 @@ static int q6asm_dai_close(struct snd_so
- 	struct q6asm_dai_rtd *prtd = runtime->private_data;
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2867,7 +2867,7 @@ BPF_CALL_4(bpf_msg_push_data, struct sk_
  
- 	if (prtd->audio_client) {
--		if (prtd->state)
-+		if (prtd->state == Q6ASM_STREAM_RUNNING) {
- 			q6asm_cmd(prtd->audio_client, prtd->stream_id,
- 				  CMD_CLOSE);
--
--		q6asm_unmap_memory_regions(substream->stream,
-+			q6asm_unmap_memory_regions(substream->stream,
- 					   prtd->audio_client);
-+		}
- 		q6asm_audio_client_free(prtd->audio_client);
- 		prtd->audio_client = NULL;
- 	}
-@@ -682,7 +682,7 @@ static int q6asm_dai_compr_free(struct s
- 	struct snd_soc_pcm_runtime *rtd = stream->private_data;
+ 		psge->length = start - offset;
+ 		rsge.length -= psge->length;
+-		rsge.offset += start;
++		rsge.offset += start - offset;
  
- 	if (prtd->audio_client) {
--		if (prtd->state) {
-+		if (prtd->state == Q6ASM_STREAM_RUNNING) {
- 			q6asm_cmd(prtd->audio_client, prtd->stream_id,
- 				  CMD_CLOSE);
- 			if (prtd->next_track_stream_id) {
-@@ -690,11 +690,11 @@ static int q6asm_dai_compr_free(struct s
- 					  prtd->next_track_stream_id,
- 					  CMD_CLOSE);
- 			}
--		}
- 
--		snd_dma_free_pages(&prtd->dma_buffer);
--		q6asm_unmap_memory_regions(stream->direction,
-+			q6asm_unmap_memory_regions(stream->direction,
- 					   prtd->audio_client);
-+		}
-+		snd_dma_free_pages(&prtd->dma_buffer);
- 		q6asm_audio_client_free(prtd->audio_client);
- 		prtd->audio_client = NULL;
- 	}
+ 		sk_msg_iter_var_next(i);
+ 		sg_unmark_end(psge);
 
 
