@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88EDD1E98E3;
-	Sun,  7 Jun 2026 10:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3B41E98E3;
+	Sun,  7 Jun 2026 10:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827073; cv=none; b=EP2j95l2pESJGLKvDelsqrAqzGnux4V2l3ImQOtEMBjec9+w+33JphHQio+gUfNNvX33S6zTU+mvHwoAm9L5fmD3r0oHr9mjezU661PfNfaFjtMoTjSwHu3YCsM4nmY9RMLIshj31pl/rsTL6Px7lCMXHNLhIqEqtqh5mRJGdgM=
+	t=1780827077; cv=none; b=VJFfKqgRB3gT+YubcUmx1/5v91Z9x6dmPm7eJ3Bn9kNfXrbY9BLK0jXVbFLM9ng/THVkg96bh9YrBA8UUvy2qjh/edF8ZPjW8+ITnH0Mtyer8gNNMJ3tBNwfM+FgrvR3f/0Ui6HKCYH92zbqCbVsxiKa5Lq3IBirQlw2KNYnthk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827073; c=relaxed/simple;
-	bh=dMjstsMYmN95Okc5M/rSGrW+bYBRKTxISdgzW2rS+Vo=;
+	s=arc-20240116; t=1780827077; c=relaxed/simple;
+	bh=mSU8fWBWZ0vH9TIybKUrk/PzAgGsHkNxcXBjJuH8w8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=au4rU88x3WPeEFmf5uamDG2lPpt/iZmtdy3PEwMN+ewzk6D9W33XotVilF23Rh8Ne1B3X+0SZbCAFyEhhEQlVhCRDNViq/qSthktHcKKYsnElY93H6wmitcVfki8D2imZ/eG845Z9jGG8H7Rb06ScvBvah+Rg8WIMb+/vSkn1Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxvu9OK+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bgQeK9kQYaxlXcfMDFTYqUfUGHkgtXvWj3eeQqNVDKnFOJMOmauoqlY9w5eJ4Fe8deGrLhTjdcjAueK1RM7aN9xlqRa3dGKvIlyPS6fibBNPXjUvnjB0SZ4AjdLuws2kYldnDqF7Jdk2CJQZrlYVjO0J1qLrKgLD+EH/c+6yAEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKfNiWea; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxvu9OK+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29C51F00893;
-	Sun,  7 Jun 2026 10:11:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKfNiWea"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F841F00893;
+	Sun,  7 Jun 2026 10:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827072;
-	bh=ppX/yAOZu+BspdI2oNtQfM2ndEQTT43RkA47037bPtQ=;
+	s=korg; t=1780827075;
+	bh=7aH0j074gRAZROKx2enKM4b7AnLs1JfU2lHj/SAkTyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mxvu9OK+M1dOzKWuL9GyINh95dLTX0VEZ6qbX9WEMQ3xQ9ZvUwFKlRnoLFuNO4gRF
-	 9i8LSN3FfqGvp6FUmnth0uqqD17DG+TuUo3dhVj/P+mdeZjipXsYfaGFk67nqXoh99
-	 uVSdibYH/ARzRkDz2sunHKjf45Kj6+ZrQo7jN704=
+	b=iKfNiWealPRIsPBqPJfzUW7M1P2nw5BdPh+48E1F7Cxg5J7vf0I9qwn52X7Gk6Lvx
+	 AhEZqMr66tg3emyY6qGobhnCvArhaOJZmwSv3sV4J/Q6D8CQmEiN6GruDTEGEMvwm2
+	 HlSVVzxcRvpAC8imCXdgCDS2c/Q5Lb+tQTkY2DmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Zhou <eilaimemedsnaimel@gmail.com>,
+	Damiano Melotti <melotti@google.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 028/315] ipv4: free net->ipv4.sysctl_local_reserved_ports after unregister_net_sysctl_table()
-Date: Sun,  7 Jun 2026 11:56:55 +0200
-Message-ID: <20260607095728.538203987@linuxfoundation.org>
+Subject: [PATCH 7.0 060/332] tunnels: do not assume transport header in iptunnel_pmtud_check_icmp()
+Date: Sun,  7 Jun 2026 11:57:09 +0200
+Message-ID: <20260607095730.334902589@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,49 +49,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 87a1e0fe7776da7ab411be332b4be58ac8840d10 ]
+[ Upstream commit 509323077ef79a26ba0c60bb556e45c12c398b2d ]
 
-ipv4_sysctl_exit_net() is currently freeing net->ipv4.sysctl_local_reserved_ports
-too soon.
+In some cases, iptunnel_pmtud_check_icmp() can be called while
+skb transport header is not set.
 
-Only after unregister_net_sysctl_table() we can be sure no threads can possibly
-use the sysctls, including /proc/sys/net/ipv4/ip_local_reserved_ports.
+This triggers an out-of-bound access, because
+(typeof(skb->transport_header))~0U is 65535.
 
-Fixes: 122ff243f5f1 ("ipv4: make ip_local_reserved_ports per netns")
-Reported-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
+Access the icmp header based on IPv4 network header,
+after making sure icmp->type is present in skb linear part.
+
+Note that iptunnel_pmtud_check_icmpv6()) is fine.
+
+Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
+Reported-by: Damiano Melotti <melotti@google.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Cong Wang <xiyou.wangcong@gmail.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260521122147.3584624-1-edumazet@google.com
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260522115512.1519110-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/sysctl_net_ipv4.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/ip_tunnel_core.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/sysctl_net_ipv4.c b/net/ipv4/sysctl_net_ipv4.c
-index 0f1dd75dbf37bf..ce9b077343cac2 100644
---- a/net/ipv4/sysctl_net_ipv4.c
-+++ b/net/ipv4/sysctl_net_ipv4.c
-@@ -1669,10 +1669,10 @@ static __net_exit void ipv4_sysctl_exit_net(struct net *net)
+diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
+index a52ba6f671fedf..fc993c78cbcc5e 100644
+--- a/net/ipv4/ip_tunnel_core.c
++++ b/net/ipv4/ip_tunnel_core.c
+@@ -280,7 +280,6 @@ static int iptunnel_pmtud_build_icmp(struct sk_buff *skb, int mtu)
+  */
+ static int iptunnel_pmtud_check_icmp(struct sk_buff *skb, int mtu)
  {
- 	const struct ctl_table *table;
+-	const struct icmphdr *icmph = icmp_hdr(skb);
+ 	const struct iphdr *iph = ip_hdr(skb);
  
--	kfree(net->ipv4.sysctl_local_reserved_ports);
- 	table = net->ipv4.ipv4_hdr->ctl_table_arg;
- 	unregister_net_sysctl_table(net->ipv4.ipv4_hdr);
- 	kfree(table);
-+	kfree(net->ipv4.sysctl_local_reserved_ports);
+ 	if (mtu < 576 || iph->frag_off != htons(IP_DF))
+@@ -291,9 +290,17 @@ static int iptunnel_pmtud_check_icmp(struct sk_buff *skb, int mtu)
+ 	    ipv4_is_lbcast(iph->saddr)  || ipv4_is_multicast(iph->saddr))
+ 		return 0;
+ 
+-	if (iph->protocol == IPPROTO_ICMP && icmp_is_err(icmph->type))
+-		return 0;
++	if (iph->protocol == IPPROTO_ICMP) {
++		const struct icmphdr *icmph;
+ 
++		if (!pskb_network_may_pull(skb, iph->ihl * 4 +
++						offsetofend(struct icmphdr, type)))
++			return 0;
++		iph = ip_hdr(skb);
++		icmph = (void *)iph + iph->ihl * 4;
++		if (icmp_is_err(icmph->type))
++			return 0;
++	}
+ 	return iptunnel_pmtud_build_icmp(skb, mtu);
  }
  
- static __net_initdata struct pernet_operations ipv4_sysctl_ops = {
 -- 
 2.53.0
 
