@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3614071DA;
-	Sun,  7 Jun 2026 10:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8104071DA;
+	Sun,  7 Jun 2026 10:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827540; cv=none; b=n9a1asrQRzjpc0syfXWuRaKZCJVv6wbjn2dPSpQrMTF6T3EApPSrUL2WHqeeAGWoOZaKhJv2zuRMTh9h0yhT9xY4dxUEQZne+lWWJ27Cb1Or4QiZ2e7YkODfdmamoIaMBaPx3pXxWyM1I7UMDZJ53Oy7uoD+2u5kYq35MuwJ0Z0=
+	t=1780827544; cv=none; b=EYl3V6sCN7extdsi43eOmC4WSk6s2W80cGzB0anPtv/3sSE9mOBBFC85XiGst9847p+rjLqE4G4qMTfFyz0EWUWT2ZT51zZg/FsjfWzKCwMml3oJnm3fjaACSkkmaRMBQhQ8RQnUS2c7WeCthjwQAE0YioYAGwiS+CiNbZ8N0Cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827540; c=relaxed/simple;
-	bh=SK+Gn+zYckg+EQkW5gzi/vnuCbPzeBJAJpcBT7IlCk8=;
+	s=arc-20240116; t=1780827544; c=relaxed/simple;
+	bh=LLH2YNDum+KJvUY7NppnfPACVWEvmqVQmPFhDD+zBgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QfelgQRAfhdAxZ0oc38rZQ3PYwOthrcPH++DvcMqNsZfDBgdn4Ics2womQdwSepBNh4BOz5q4wrdWYBcstkquhAx6MpwfndYWsdFcdy3WKykfXrDAY1TjZFmGpw9hABaNY/T/1XZO+ewzRPsJWqJtpC9GL/yC9p+qLfHzGy2qnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gnR0lwSd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=i2ivfSLWEAAxQDF7luj6waz0/bW+Fx/qViKOZ/2XLekI7nKVB8kQGvNWZZjBYaCa5TxBHhGORSEy0H2vN0skKhMMiCSf7qPGm4BsQrEIGwuGi5eRMAGUI28VVYyFO3gUw26COyBI4BYIrkyLxCBobkeU9eYUHBsVuj5nrIVPipE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qMfZ2FCT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gnR0lwSd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 228321F00893;
-	Sun,  7 Jun 2026 10:18:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMfZ2FCT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0A01F00893;
+	Sun,  7 Jun 2026 10:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827539;
-	bh=vrZdYgcyjQwLZSetS+29B1G/SRvXciS5ZNB/kogFCk8=;
+	s=korg; t=1780827543;
+	bh=wdiL1nJhOmT9OyiJrrhXJmHMgZVjf7ksN4PWLc+vpIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gnR0lwSdvNyBMp6SxyjP+lZZgGS6/aMhr97qYEdO0vMOyeIOpBWJAUDxwQ9xoFui/
-	 AOQJ4EIZ8aCmdNHzJtoMW77KyHA4xBf7nXBo2Y5GV1/OHQGgfg18SfHL9W/CnC6rq2
-	 9RRyV6/vIFoGgdtfNoSK/JXamiyI96NJHkOKn3og=
+	b=qMfZ2FCTkt20/c1uxeIOlUsnckvAaMKZhHmBwal3dPMsmXEW8KdcPXoIKy0fAaFby
+	 ohn1AV3grnxpJIIyVzlafi9xrNq6UjwK1L/hGpQNYVC3t8fK9ENiJj8N7o1rDMPkPd
+	 VF92rpNtg5PquGejH7ystdHqtJjnmsyGxpFfzyqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 077/332] ethtool: eeprom: add more safeties to EEPROM Netlink fallback
-Date: Sun,  7 Jun 2026 11:57:26 +0200
-Message-ID: <20260607095730.970757286@linuxfoundation.org>
+Subject: [PATCH 6.18 058/315] ASoC: codecs: simple-mux: Fix enum control bounds check
+Date: Sun,  7 Jun 2026 11:57:25 +0200
+Message-ID: <20260607095729.737496285@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,66 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 67cfdd9210b99f260b3e0afeb9525e0acc7be31e ]
+[ Upstream commit f63ad68e18d774a5d15cd7e405ead63f6b322679 ]
 
-The Netlink fallback path for reading module EEPROM
-(fallback_set_params()) validates that offset < eeprom_len,
-but does not check that offset + length stays within eeprom_len.
-The ioctl equivalent (ethtool_get_any_eeprom() in ioctl.c) has
-always enforced both bounds:
+simple_mux_control_put() rejects values greater than e->items, but
+enum control values are zero based. For the two-entry mux used by this
+driver, valid values are 0 and 1, so value 2 must be rejected as well.
 
-  if (eeprom.offset + eeprom.len > total_len)
-      return -EINVAL;
+Accepting e->items can store an invalid mux state, pass it to the GPIO
+setter, and pass it on to the DAPM mux update path where it is used as
+an index into the enum text array.
 
-This could lead to surprises in both drivers and device FW.
-Add the missing offset + length validation to fallback_set_params(),
-mirroring the ioctl.
+Use the same >= e->items check used by the ASoC enum helpers.
 
-Similarly - ethtool core in general, and ethtool_get_any_eeprom()
-in particular tries to zero-init all buffers passed to the drivers
-to avoid any extra work of zeroing things out. eeprom_fallback()
-uses a plain kmalloc(), change it to zalloc.
-
-Fixes: 96d971e307cc ("ethtool: Add fallback to get_module_eeprom from netlink command")
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260526153533.2779187-11-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 342fbb7578d1 ("ASoC: add simple-mux")
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260527-asoc-simple-mux-enum-bounds-v1-1-3f805b9fc671@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/eeprom.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/soc/codecs/simple-mux.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ethtool/eeprom.c b/net/ethtool/eeprom.c
-index 03cb418a15823b..80af38a6c76acf 100644
---- a/net/ethtool/eeprom.c
-+++ b/net/ethtool/eeprom.c
-@@ -43,6 +43,9 @@ static int fallback_set_params(struct eeprom_req_info *request,
- 	if (offset >= modinfo->eeprom_len)
+diff --git a/sound/soc/codecs/simple-mux.c b/sound/soc/codecs/simple-mux.c
+index 3906964401557d..cedd181ffdaf46 100644
+--- a/sound/soc/codecs/simple-mux.c
++++ b/sound/soc/codecs/simple-mux.c
+@@ -51,7 +51,7 @@ static int simple_mux_control_put(struct snd_kcontrol *kcontrol,
+ 	struct snd_soc_component *c = snd_soc_dapm_to_component(dapm);
+ 	struct simple_mux *priv = snd_soc_component_get_drvdata(c);
+ 
+-	if (ucontrol->value.enumerated.item[0] > e->items)
++	if (ucontrol->value.enumerated.item[0] >= e->items)
  		return -EINVAL;
  
-+	if (length > modinfo->eeprom_len - offset)
-+		return -EINVAL;
-+
- 	eeprom->cmd = ETHTOOL_GMODULEEEPROM;
- 	eeprom->len = length;
- 	eeprom->offset = offset;
-@@ -68,7 +71,7 @@ static int eeprom_fallback(struct eeprom_req_info *request,
- 	if (err < 0)
- 		return err;
- 
--	data = kmalloc(eeprom.len, GFP_KERNEL);
-+	data = kzalloc(eeprom.len, GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
- 	err = ethtool_get_module_eeprom_call(dev, &eeprom, data);
+ 	if (priv->mux == ucontrol->value.enumerated.item[0])
 -- 
 2.53.0
 
