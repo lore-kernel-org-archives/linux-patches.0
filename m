@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072AF329C57;
-	Sun,  7 Jun 2026 10:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300DA4071E3;
+	Sun,  7 Jun 2026 10:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828175; cv=none; b=EVp542EUPjNa+QKI3icH4rNI4jfw5YTaNTPs7sMJjAMbHyrHaJL2abLOM//UYZr3t94lWt28qoDv69F4+7dxusWkk9IRvoyeHAoaCQqIdajB7jCanIpIT06vkhPC3UWXAD3klGW2OCN7dkQy4in70HUsE6DGwkNJN6m1bDAN+/8=
+	t=1780828178; cv=none; b=Y1NeOc7HqFkUkNRo6Idbo8tCtmtUpHSv7JMH/SQaQapZW1ocZFVnCU9HaDOW7HQVuJdayB71aJwp15RkVD2Uz0ryPMt98iyUvGNwAJtm/Esik5pibThhA6w7jze5nye4ZzgFgPZbfVBTN7GQZNHeO74LEdsoh141GlhHTPSo2mE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828175; c=relaxed/simple;
-	bh=m9xpfhA5HSKsxrOAavCS+RFywbCU1TMjwyGKJwWi2FI=;
+	s=arc-20240116; t=1780828178; c=relaxed/simple;
+	bh=OyqxCUvIM7lqLKg6h0iChMLbaR7O78h7yYopTG1PfGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FUuPu97js8i5tpCeGwWISbxgWPyeZZankKCU1HMm4D5XWqowBma9AM/BAbfbXlElYOoY0DW/CpLhGLj2BbWnKkcD2UtnpPYhwcWOS6qcobPeGUdRdTa3hcKEyxjkjkk8ht6ANNJWRu1Va2tyIHxa3BfQymA7wctlzJTXkIu+RGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11IyC0C0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nAJ1+/+X9BDGufCRN5HRXfB3BEeXtB3NU9bS8O4Rq4OJF4sblvIrO1rlrCEsdPnXbP/F7BLdMhMwhwVaMaoJonhDsGAZ0f512cBBO/OBScmeCovSS6Dtn6g0EOWQ926N6cnKnFn9tTRFwxDDwcG0xM81H4qTGAdjYk/JbmE7DHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lpPbYtm8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11IyC0C0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D1E1F00893;
-	Sun,  7 Jun 2026 10:29:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lpPbYtm8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B86E1F00893;
+	Sun,  7 Jun 2026 10:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828173;
-	bh=0F7PqBRsCyERf+8GJQdAJKGGHAEk5TZZml1cyyqXttc=;
+	s=korg; t=1780828177;
+	bh=hx7AwKF8bQTtZq1lKzzKum8xu0Kl2CV5YXIWpOzeAGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=11IyC0C0CdIqUH4l5XMpQQz8N6XdaWpydkP+gYKg05xyNWDRJEPaY2nUgD2xJwnD6
-	 NQG+5neju6N/cBLcT0MCAyCB1sPTYK2IueQPNlGTjHIV0GHYtRNEAASoO0ZWxuEjaG
-	 aniR5BZ/DkicL0RVFHHyU0OazYg9Ox5d0d3Cp/7w=
+	b=lpPbYtm85ZI0vuhnMkxcKJ0j73PCzoAsEgmZnJYQS9/hdOmj0arjTFzSAIWRp3R0n
+	 7UZ1mELktC6BjWjINNmV2SKozTK6WQYzmOYo5BZtl0kAeTUjqXZ8ACrUnsKL8+hTXK
+	 UiKxEk+pAjdrvaaBSIWg6zO8h7ucUhZopKGuJBBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 117/307] HID: core: Fix size_t specifier in hid_report_raw_event()
-Date: Sun,  7 Jun 2026 11:58:34 +0200
-Message-ID: <20260607095732.063958237@linuxfoundation.org>
+	David Stevens <stevensd@google.com>,
+	Matthew Maurer <mmaurer@google.com>,
+	stable <stable@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 6.18 138/315] rust_binder: Avoid holding lock when dropping delivered_death
+Date: Sun,  7 Jun 2026 11:58:45 +0200
+Message-ID: <20260607095732.674036613@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,71 +49,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Matthew Maurer <mmaurer@google.com>
 
-[ Upstream commit 4d3a2a466b8d68d852a1f3bbf11204b718428dc4 ]
+commit f6d8fea9e3953151a4adb4f603503dc3dc9c69da upstream.
 
-When building for 32-bit platforms, for which 'size_t' is
-'unsigned int', there are warnings around using the incorrect format
-specifier to print bsize in hid_report_raw_event():
+In 6c37bebd8c926, we switched to looping over the list and dropping each
+individual node, ostensibly without the lock held in the loop body.
 
-  drivers/hid/hid-core.c:2054:29: error: format specifies type 'long' but the argument has type 'size_t' (aka 'unsigned int') [-Werror,-Wformat]
-   2053 |                 hid_warn_ratelimited(hid, "Event data for report %d is incorrect (%d vs %ld)\n",
-        |                                                                                         ~~~
-        |                                                                                         %zu
-   2054 |                                      report->id, csize, bsize);
-        |                                                         ^~~~~
-  drivers/hid/hid-core.c:2076:29: error: format specifies type 'long' but the argument has type 'size_t' (aka 'unsigned int') [-Werror,-Wformat]
-   2075 |                 hid_warn_ratelimited(hid, "Event data for report %d was too short (%d vs %ld)\n",
-        |                                                                                          ~~~
-        |                                                                                          %zu
-   2076 |                                      report->id, rsize, bsize);
-        |                                                         ^~~~~
+If the kernel were using Rust Edition 2024, the comment would be
+accurate, and the lock would not be held across the drop. However, the
+kernel is currently using 2021, so tail expression lifetime extension
+results in the lock being held across the drop. Explicitly binding the
+expression result to a variable makes the lockguard no longer part of a
+tail expression, causing the lock to be dropped before entering the loop
+body.
 
-Use the proper 'size_t' format specifier, '%zu', to clear up the
-warnings.
+This was detected via `CONFIG_PROVE_LOCKING` identifying an invalid wait
+context at the drop site.
 
-Cc: stable@vger.kernel.org
-Fixes: 2c85c61d1332 ("HID: pass the buffer size to hid_report_raw_event")
-Reported-by: Miguel Ojeda <ojeda@kernel.org>
-Closes: https://lore.kernel.org/20260516020430.110135-1-ojeda@kernel.org/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-(cherry picked from commit 3ab135238832446399614e7a4bb796d620717806)
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: David Stevens <stevensd@google.com>
+Signed-off-by: Matthew Maurer <mmaurer@google.com>
+Cc: stable <stable@kernel.org>
+Fixes: 6c37bebd8c92 ("rust_binder: avoid mem::take on delivered_deaths")
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Acked-by: Carlos Llamas <cmllamas@google.com>
+Link: https://patch.msgid.link/20260403-lockhold-v1-1-c332b56cd8ae@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/android/binder/process.rs |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index d9ea99cdb68e06..87d990ada8688a 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -2015,7 +2015,7 @@ int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *
- 		return 0;
+--- a/drivers/android/binder/process.rs
++++ b/drivers/android/binder/process.rs
+@@ -1366,7 +1366,12 @@ impl Process {
+         // Clear delivered_deaths list.
+         //
+         // Scope ensures that MutexGuard is dropped while executing the body.
+-        while let Some(delivered_death) = { self.inner.lock().delivered_deaths.pop_front() } {
++        while let Some(delivered_death) = {
++            // Explicitly bind to avoid tail expression lifetime extension of the lockguard
++            // Can be removed when the kernel moves to edition 2024
++            let maybe_death = self.inner.lock().delivered_deaths.pop_front();
++            maybe_death
++        } {
+             drop(delivered_death);
+         }
  
- 	if (unlikely(bsize < csize)) {
--		hid_warn_ratelimited(hid, "Event data for report %d is incorrect (%d vs %ld)\n",
-+		hid_warn_ratelimited(hid, "Event data for report %d is incorrect (%d vs %zu)\n",
- 				     report->id, csize, bsize);
- 		return -EINVAL;
- 	}
-@@ -2037,7 +2037,7 @@ int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *
- 		rsize = max_buffer_size;
- 
- 	if (bsize < rsize) {
--		hid_warn_ratelimited(hid, "Event data for report %d was too short (%d vs %ld)\n",
-+		hid_warn_ratelimited(hid, "Event data for report %d was too short (%d vs %zu)\n",
- 				     report->id, rsize, bsize);
- 		return -EINVAL;
- 	}
--- 
-2.53.0
-
 
 
