@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56B6175A75;
-	Sun,  7 Jun 2026 10:16:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713654071DA;
+	Sun,  7 Jun 2026 10:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827372; cv=none; b=t2RDhnBKxhPiNYLVjq6oYzJ5ycz0uIBWa88X0MtyKWePCZ//D31iv29zFOT3wWF1GgbKrkY2B0R2L3zGtNuEKZrR9/hWURCDo33Dx6mLLr6yZRpWx4DE6hj1aXYQ2tqqpEo4/yEEkokvwU7d03bN7jh+aHFqsjdvIcyKVq9UQJY=
+	t=1780827376; cv=none; b=XCCt/lBeqceM5kP+Clm+ZW3vVUv4YL9Z3Sty+Fo77Bqv3bb+NAXCmeGL0OJbQ3Th6Pg2zEKg1gb45X/Qf1E21Bxa7iqa9QgG+emrK8+Gf4iXuC/NF98XFVh18New/D6epfsRxBK/xFIpHqxrBoTIgf8yDghUSwWt51tNphyJVwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827372; c=relaxed/simple;
-	bh=3XEo4qFqDARvNKWnk/yWX+tSZypywgJNkPOmm8swsBQ=;
+	s=arc-20240116; t=1780827376; c=relaxed/simple;
+	bh=OFihKPREbREYtcxDRzraHfZbZgGBsj5wRVjXBRQycms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d4TyaKvkV2Eu/YjjOgACPjv4bPM61r9L8BsQKqeZaKQXT9zJ6VoUA/nm+tfgAee3gbm76rsPjRymoHJE5APbwDuS5EOpmVxLWgLdv4Y7o7WH5VICgBwuA+75pbYIRYrD3rdzHf6cDfpdj5QT9OVNX5v1eDLk0qi1cqq0zYjwHV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ReQDiSJw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=th6igREASPHqXa+l6hw5rIk1pfo4yjoooozd0Yesi2+mb8nGvDldnVytDWN3XzUm7DeQFHX7DQ7seZdlcG88W2eV9Mr9jbnhLqz87sBEzoNAMmmgJklghwcwnkp6uV8v2tv0shCjTBWg4XoInr2Cr0BaWEGHUOfQ+jW2UfTDpHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=can+/x7F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ReQDiSJw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E7E1F00893;
-	Sun,  7 Jun 2026 10:16:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="can+/x7F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B608B1F00893;
+	Sun,  7 Jun 2026 10:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827371;
-	bh=ilMgWaqN0Y1tZ/Db1VcTyNdprmA1o6XfOM89JxCDlOw=;
+	s=korg; t=1780827375;
+	bh=SEKqhB9Qy/iK02YqfGPqB23ioiX8H34OdbYZ6/QSnHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ReQDiSJw7S7ag4aXVj/+fQMTjdRGPKlGODajrDF9Bn6cxxjI0ttRAqnk1QGV7Ub7w
-	 GCxdPCNDoOVVStd001/EnQ16DMILcyl2F8tgkJp9pL3qEsJMcGoB1glXnDRSIVDAAR
-	 LrYU6HwU+UQSqaS/WJ3mjQkmuntEaPj9AeH5FzV8=
+	b=can+/x7FJxvyV7TLcvIG4KObKrvRTiDBWrD7S9QfWAsJBhGT5vykKn4GdHyWiNtHV
+	 3DpbKVr0/ya+wYUg/md90FStiMnue7XWLsKF3XEPhvDXE5n+sNgMzCiPf0Pkp5TKX8
+	 LVNWtnH4ksqY9JHS6DCIZS5qsQ8/YxYgybk++xMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Kory Maincent <kory.maincent@bootlin.com>,
+	Damiano Melotti <melotti@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 068/315] ethtool: tsconfig: fix missing ethnl_ops_complete()
-Date: Sun,  7 Jun 2026 11:57:35 +0200
-Message-ID: <20260607095730.109739126@linuxfoundation.org>
+Subject: [PATCH 6.18 056/315] tunnels: do not assume transport header in iptunnel_pmtud_check_icmp()
+Date: Sun,  7 Jun 2026 11:57:23 +0200
+Message-ID: <20260607095729.662907615@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
 References: <20260607095727.528828913@linuxfoundation.org>
@@ -52,40 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6386bd772de64e6760306eb91c7e86163af6c22f ]
+[ Upstream commit 509323077ef79a26ba0c60bb556e45c12c398b2d ]
 
-tsconfig_prepare_data() calls ethnl_ops_begin(), we need to call
-ethnl_ops_complete() before returning the error.
+In some cases, iptunnel_pmtud_check_icmp() can be called while
+skb transport header is not set.
 
-Fixes: 6e9e2eed4f39 ("net: ethtool: Add support for tsconfig command to get/set hwtstamp config")
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://patch.msgid.link/20260526153533.2779187-6-kuba@kernel.org
+This triggers an out-of-bound access, because
+(typeof(skb->transport_header))~0U is 65535.
+
+Access the icmp header based on IPv4 network header,
+after making sure icmp->type is present in skb linear part.
+
+Note that iptunnel_pmtud_check_icmpv6()) is fine.
+
+Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
+Reported-by: Damiano Melotti <melotti@google.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260522115512.1519110-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/tsconfig.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/ipv4/ip_tunnel_core.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/net/ethtool/tsconfig.c b/net/ethtool/tsconfig.c
-index 041de8687472bd..a121928038b055 100644
---- a/net/ethtool/tsconfig.c
-+++ b/net/ethtool/tsconfig.c
-@@ -69,8 +69,10 @@ static int tsconfig_prepare_data(const struct ethnl_req_info *req_base,
- 		if (ret)
- 			goto out;
+diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
+index d5a63155a05597..4b5fd4b13722ca 100644
+--- a/net/ipv4/ip_tunnel_core.c
++++ b/net/ipv4/ip_tunnel_core.c
+@@ -280,7 +280,6 @@ static int iptunnel_pmtud_build_icmp(struct sk_buff *skb, int mtu)
+  */
+ static int iptunnel_pmtud_check_icmp(struct sk_buff *skb, int mtu)
+ {
+-	const struct icmphdr *icmph = icmp_hdr(skb);
+ 	const struct iphdr *iph = ip_hdr(skb);
  
--		if (ts_info.phc_index == -1)
--			return -ENODEV;
-+		if (ts_info.phc_index == -1) {
-+			ret = -ENODEV;
-+			goto out;
-+		}
+ 	if (mtu < 576 || iph->frag_off != htons(IP_DF))
+@@ -291,9 +290,17 @@ static int iptunnel_pmtud_check_icmp(struct sk_buff *skb, int mtu)
+ 	    ipv4_is_lbcast(iph->saddr)  || ipv4_is_multicast(iph->saddr))
+ 		return 0;
  
- 		data->hwprov_desc.index = ts_info.phc_index;
- 		data->hwprov_desc.qualifier = ts_info.phc_qualifier;
+-	if (iph->protocol == IPPROTO_ICMP && icmp_is_err(icmph->type))
+-		return 0;
++	if (iph->protocol == IPPROTO_ICMP) {
++		const struct icmphdr *icmph;
+ 
++		if (!pskb_network_may_pull(skb, iph->ihl * 4 +
++						offsetofend(struct icmphdr, type)))
++			return 0;
++		iph = ip_hdr(skb);
++		icmph = (void *)iph + iph->ihl * 4;
++		if (icmp_is_err(icmph->type))
++			return 0;
++	}
+ 	return iptunnel_pmtud_build_icmp(skb, mtu);
+ }
+ 
 -- 
 2.53.0
 
