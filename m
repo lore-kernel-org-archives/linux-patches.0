@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001DE1E98EF;
-	Sun,  7 Jun 2026 10:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E803231E850;
+	Sun,  7 Jun 2026 10:44:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829064; cv=none; b=A7jB01q59FldLZI5ZV/LoWXEDzwhDSwCBOxF3pTqIkgYb9kyDfaeW9ICZP/yZ/7GAWKzoSw3FPkwDhZXRp258+JHvCs8zeu3TLFRfOFu06IeQ0r50Hv0r35M8eIX0zp8EN91bjMgKFloA5OvHijLE45Fb4f1/gpH6NUsT544D0g=
+	t=1780829068; cv=none; b=KdD6Wh1DOmUETAf0lA2eyr83etmBQqWeDOVJ44jLk2NajfptT1S8h800bjmdJWpZ914nuqv1Syz5EpFRo8W25M49/HU/r3yKQE4Mh4hC6IDvBkEjNN2NpulCmZizKfHmw+Yy6R5/MPljDU58+g3Vw9rhIRVSkvkMUe0bPGNiR3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829064; c=relaxed/simple;
-	bh=+5Kd9I/GW7gVMYzDQsvL3KrxhLLFNjIhwP+BxC5mQNA=;
+	s=arc-20240116; t=1780829068; c=relaxed/simple;
+	bh=HTJRl2QBh8+zYof+BmbauA5GG7DRyXEjcwh9xe29T4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ot9K85rpnqh4VV6D4gIUfgtiMijDHmlR1TfOTV+jSmG9o8BeJOfQpL6Y1i1JSgLAgKYe0TYcaed2AiX7s+RDWGMv2M3wIYCEAKh3eDzk+1r4H2cbNi27l4ABOzc66/xlgq6RXXM4xXm0qrjpYeR3YjbqtHKKKVD+m7AMwCyUG2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJMZwEUZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IW4IRkYrEDoou1vW4C/WEV4uUWReU8LqKNw/gINvmVv7FSSl25LAFOGxRn5mpdohU6eJfBgsY4HqGMN0W3Y8slvCYkTQCxQbLcXvFLlFeNWsiDMjxWwXY6sgW+JSJtbrF0BUoRZ5z5rxGz/8hku2ICn5ev71T6Cool9bCSnVjCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8AMiFwj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJMZwEUZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE951F00893;
-	Sun,  7 Jun 2026 10:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8AMiFwj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EFC1F00893;
+	Sun,  7 Jun 2026 10:44:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829063;
-	bh=ly6S4eI+jc0zylrlKgxvrZJbA4i9O5SfHg6pjuqytKs=;
+	s=korg; t=1780829067;
+	bh=rpL2EJtGlmgRk0JPttRncWP9s/TKzz8SxMFUOjA3VEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dJMZwEUZS9DddDsGQT72DIbgDPuCgu06WfOjG7zB8hwalhuYdIaK5Bkwox48KCyDo
-	 seiX8gN1sEyRVbsanRafqC7udbKT3reN4YSFG0LjldMwjnWaoIm4Y9f8GIrVdJus5G
-	 NszQTowbl+IDqynO1ID6CGCSvTfd3j8Zac/YJ2/Q=
+	b=d8AMiFwjV7oUt8kifW8hLsMfsu5z84KUaJptWgd6l0OJjEAD4rz+z1XVAyfeMZ186
+	 5T1OmfD7YADOFo3/xzjEyxLvMoKcY+V8uyKjMqK1WPBMK7IzLA21DJCU47QS1R6Xmx
+	 U96S5HOua0w2XG0E97vczpohSzsWHlI5hNQ5W7Qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 214/315] Input: atmel_mxt_ts - fix boundary check in mxt_prepare_cfg_mem
-Date: Sun,  7 Jun 2026 12:00:01 +0200
-Message-ID: <20260607095735.419454606@linuxfoundation.org>
+	Maoyi Xie <maoyi.xie@ntu.edu.sg>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 193/307] ip6: vti: Use ip6_tnl.net in vti6_changelink().
+Date: Sun,  7 Jun 2026 11:59:50 +0200
+Message-ID: <20260607095734.810708382@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,57 +48,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit baa0210fb6a9dc3882509a9411b6d284d88fe30e upstream.
+commit 11b326fb0a374f4654f9be22d0f0f7abd9f7d3fe upstream.
 
-When a configuration file provides an object size that is larger than the
-driver's known mxt_obj_size(object), the driver intends to discard the
-extra bytes.
+ip netns add ns1
+ip netns add ns2
+ip -n ns1 link add vti6_test type vti6 remote ::1 local ::2 key 7
+ip -n ns1 link set vti6_test netns ns2
+ip -n ns2 link set vti6_test type vti6 remote ::3 local ::4 key 9
+ip netns del ns2
+ip netns del ns1
+[  132.495484] ------------[ cut here ]------------
+[  132.497609] kernel BUG at net/core/dev.c:12376!
 
-The loop iterates using for (i = 0; i < size; i++). Inside the loop, the
-condition to skip processing extra bytes is:
+Commit 61220ab34948 ("vti6: Enable namespace changing") dropped
+NETIF_F_NETNS_LOCAL from vti6 devices. A vti6 tunnel can then
+move through IFLA_NET_NS_FD. After the move dev_net(dev) points
+at the new netns while t->net stays at the creation netns.
 
-    if (i > mxt_obj_size(object))
-        continue;
+vti6_changelink() and vti6_update() still use dev_net(dev) and
+dev_net(t->dev). They unlink from one per netns hash and relink
+into another. The creation netns is left with a stale entry.
+cleanup_net() of that netns later walks freed memory.
 
-Since i is a 0-based index, the valid indices for the object are 0 through
-mxt_obj_size(object) - 1.
+Reachable from an unprivileged user namespace (unshare --user
+--map-root-user --net). Cross tenant scope on container hosts.
 
-When i == mxt_obj_size(object), the condition evaluates to false, and the
-code processes the byte instead of discarding it.
-
-This causes the code to calculate byte_offset = reg + i - cfg->start_ofs
-and writes the byte there, overwriting exactly one byte of the adjacent
-instance or object.
-
-Update the boundary check to skip extra bytes correctly by using >=.
-
-Fixes: 50a77c658b80 ("Input: atmel_mxt_ts - download device config using firmware loader")
-Cc: stable@vger.kernel.org
-Assisted-by: Gemini:gemini-3.1-pro
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://patch.msgid.link/20260504185448.4055973-1-dmitry.torokhov@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 61220ab34948 ("vti6: Enable namespace changing")
+Reported-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Cc: stable@vger.kernel.org # v5.15+
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260521130555.3421684-2-maoyixie.tju@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/atmel_mxt_ts.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/ip6_vti.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/input/touchscreen/atmel_mxt_ts.c
-+++ b/drivers/input/touchscreen/atmel_mxt_ts.c
-@@ -1477,7 +1477,7 @@ static int mxt_prepare_cfg_mem(struct mx
- 			}
- 			cfg->raw_pos += offset;
+--- a/net/ipv6/ip6_vti.c
++++ b/net/ipv6/ip6_vti.c
+@@ -722,10 +722,11 @@ vti6_tnl_change(struct ip6_tnl *t, const
+ static int vti6_update(struct ip6_tnl *t, struct __ip6_tnl_parm *p,
+ 		       bool keep_mtu)
+ {
+-	struct net *net = dev_net(t->dev);
+-	struct vti6_net *ip6n = net_generic(net, vti6_net_id);
++	struct net *net = t->net;
++	struct vti6_net *ip6n;
+ 	int err;
  
--			if (i > mxt_obj_size(object))
-+			if (i >= mxt_obj_size(object))
- 				continue;
++	ip6n = net_generic(net, vti6_net_id);
+ 	vti6_tnl_unlink(ip6n, t);
+ 	synchronize_net();
+ 	err = vti6_tnl_change(t, p, keep_mtu);
+@@ -1036,11 +1037,12 @@ static int vti6_changelink(struct net_de
+ 			   struct nlattr *data[],
+ 			   struct netlink_ext_ack *extack)
+ {
+-	struct ip6_tnl *t;
++	struct ip6_tnl *t = netdev_priv(dev);
++	struct net *net = t->net;
+ 	struct __ip6_tnl_parm p;
+-	struct net *net = dev_net(dev);
+-	struct vti6_net *ip6n = net_generic(net, vti6_net_id);
++	struct vti6_net *ip6n;
  
- 			byte_offset = reg + i - cfg->start_ofs;
++	ip6n = net_generic(net, vti6_net_id);
+ 	if (dev == ip6n->fb_tnl_dev)
+ 		return -EINVAL;
+ 
 
 
