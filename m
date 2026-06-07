@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B672D3A69;
-	Sun,  7 Jun 2026 10:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D7C212564;
+	Sun,  7 Jun 2026 10:38:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828720; cv=none; b=Bn7mzGCFpGGhzgnx68B7sOPj3ldTwFr0l/xpFztpAkQ0uJ4w10Ej/1JKbm692TB10AM43a8THiRBN8oXVMeE0WdhEmoKCIUFgWDJ49wjS4BORbWJf+6X267UkHsMUqeGOMExv3xiXbOMJjSQ/osL+RrB++jGVB2KzuAo17Lr+E8=
+	t=1780828724; cv=none; b=R9yQrJxmV1wiRg8/WCNDX/jm7yL4kRILYD9hhNdUkWjVlzzmTWTAGidfpGW/n3kd5M+4rGGQS3Mx1MCqtUGUHstzjUq0CKzwKPb6zY0UHetdimV2n96tsRD1ME0Ir4CftJdm46lfz9tAhTfFdKOaAPk5m2cQoHSdz4gaHNA78dA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828720; c=relaxed/simple;
-	bh=+rEs2CPjIVdFBy/fjiFBqRxy/O8A5lqRkerZaAun0Dc=;
+	s=arc-20240116; t=1780828724; c=relaxed/simple;
+	bh=k4UYJ5av6Wv/UL4n87mUzI+mMxakghItkM9HXbXJoOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tEfHj1VdD2TnYWt4lS2biV9gsHDTCyXfrxkJ0quRUAoe9PBrp+wpAFan/Ec2oCgThMAt5R7DJErzTgFNqGfmpPSJ2DMBwcKyQcUWjSotr2LIHvlZSDjASd20yvg9j/YixKeekW1g0AFWtv86o+u22KyHt1wNzZNqJ8vU+7OQtzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbZnYJGH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a0mvc7Emx7pii2jigGYUF1Bhw3JRFqMW+sikAlVF37cWYxrrrXH+MRN6vgtV0vmPhjGP+tiBdGtW2UL3lhgNMSVIOW9jYKDw7u+nJmkX43TQNFupCchsNN0rwKxsDP9PsYAOn/ANSQTZiwTel9LvYrAJndNIWVvgQ0x6Ng6uJoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TaMfT4E9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbZnYJGH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B2D1F00893;
-	Sun,  7 Jun 2026 10:38:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaMfT4E9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8CB01F00893;
+	Sun,  7 Jun 2026 10:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828719;
-	bh=xJi/thO8sFrfG4hedfP28zeXRlCIBQsnajSTwQwmssY=;
+	s=korg; t=1780828723;
+	bh=TeU/7MDoEbqbTYeCUXX0aAX8joheBvwyWwwX8vrNCEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gbZnYJGHQiXV4ZNH1D+7Iv+N/aIscw/nthci2zL7Jzi4gFJi9qpYhpinIiHlm68vV
-	 8aaX0LdVqujcyasXgXn8C2y/MC0EjSnJtpVBvx8PM7yWdeDF4h4Fx4csDoTFd+gZrt
-	 Jh4Ncjz4T6M+3lhoQZqMgOv1WToACajDHdhqQt+A=
+	b=TaMfT4E9obQZa/VbjEF4bP7MZDkLKho+Asn0xFdh6BSSQSCvZV66Jx85pQ3amuVtW
+	 Q7udFw587Ekk1CLf1lPgdgbXhz5KwlXTBY0llvFGTut5/gKZuUW0QrYTBerlX3bivf
+	 y6MhfgVqtjX+V6iIREtnhZqtoRE3lRuulg/BLTrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoniu Miclaus <antoniu.miclaus@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 7.0 185/332] iio: adc: nxp-sar-adc: fix division by zero in write_raw
-Date: Sun,  7 Jun 2026 11:59:14 +0200
-Message-ID: <20260607095734.862092427@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Chaitanya Sabnis <chaitanya.msabnis@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 7.0 206/332] i2c: davinci: fix division by zero on missing clock-frequency
+Date: Sun,  7 Jun 2026 11:59:35 +0200
+Message-ID: <20260607095735.634458328@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
 References: <20260607095728.031258202@linuxfoundation.org>
@@ -51,52 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoniu Miclaus <antoniu.miclaus@analog.com>
+From: Chaitanya Sabnis <chaitanya.msabnis@gmail.com>
 
-commit a9aba21a539c668a66b58eeb08ad3909e5a54c2a upstream.
+commit 030675aa54cf757769b3db65642433d626b3ed7c upstream.
 
-Add a validation check for the sampling frequency value before using it
-as a divisor. A user writing zero or a negative value to the
-sampling_frequency sysfs attribute triggers a division by zero in the
-kernel.
+When the 'clock-frequency' property is missing from the device tree,
+the driver falls back to DAVINCI_I2C_DEFAULT_BUS_FREQ. However, this
+macro was defined in kHz (100), whereas the device tree property is
+expected in Hz.
 
-Also prevent unsigned integer underflow when the computed cycle count is
-smaller than NXP_SAR_ADC_CONV_TIME, which would wrap the u32 inpsamp to
-a huge value.
+The probe function divided the fallback value by 1000, causing
+integer truncation that resulted in dev->bus_freq = 0. This triggered
+a deterministic division-by-zero kernel panic when calculating clock
+dividers later in the probe sequence.
 
-Fixes: 4434072a893e ("iio: adc: Add the NXP SAR ADC support for the s32g2/3 platforms")
-Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fix this by redefining DAVINCI_I2C_DEFAULT_BUS_FREQ in Hz (100000)
+to match the expected device tree property unit, allowing the existing
+division logic to work correctly for both cases.
+
+Fixes: b04ce6385979 ("i2c: davinci: kill platform data")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260514044726.57297C2BCB7@smtp.kernel.org/
+Signed-off-by: Chaitanya Sabnis <chaitanya.msabnis@gmail.com>
+Cc: <stable@vger.kernel.org> # v6.14+
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260526102240.4949-1-chaitanya.msabnis@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/nxp-sar-adc.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-davinci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/nxp-sar-adc.c
-+++ b/drivers/iio/adc/nxp-sar-adc.c
-@@ -559,6 +559,9 @@ static int nxp_sar_adc_write_raw(struct
+--- a/drivers/i2c/busses/i2c-davinci.c
++++ b/drivers/i2c/busses/i2c-davinci.c
+@@ -117,7 +117,7 @@
+ /* timeout for pm runtime autosuspend */
+ #define DAVINCI_I2C_PM_TIMEOUT	1000	/* ms */
  
- 	switch (mask) {
- 	case IIO_CHAN_INFO_SAMP_FREQ:
-+		if (val <= 0)
-+			return -EINVAL;
-+
- 		/*
- 		 * Configures the sample period duration in terms of the SAR
- 		 * controller clock. The minimum acceptable value is 8.
-@@ -567,7 +570,11 @@ static int nxp_sar_adc_write_raw(struct
- 		 * sampling timing which gives us the number of cycles expected.
- 		 * The value is 8-bit wide, consequently the max value is 0xFF.
- 		 */
--		inpsamp = clk_get_rate(info->clk) / val - NXP_SAR_ADC_CONV_TIME;
-+		inpsamp = clk_get_rate(info->clk) / val;
-+		if (inpsamp < NXP_SAR_ADC_CONV_TIME)
-+			return -EINVAL;
-+
-+		inpsamp -= NXP_SAR_ADC_CONV_TIME;
- 		nxp_sar_adc_conversion_timing_set(info, inpsamp);
- 		return 0;
+-#define DAVINCI_I2C_DEFAULT_BUS_FREQ	100
++#define DAVINCI_I2C_DEFAULT_BUS_FREQ	100000
  
+ struct davinci_i2c_dev {
+ 	struct device           *dev;
 
 
