@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED46431E849;
-	Sun,  7 Jun 2026 10:36:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2537A32A3C9;
+	Sun,  7 Jun 2026 10:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828582; cv=none; b=tB+e+ulK/YYEq9qpJqhJ3pJf6vXe9iC7esUMbBLcqR0Y54Jzr9wBFiEQW+N8GBrY+4CEdxPVorTczzvyx6dXVrlIcWwFZqIt75mZnKuh5aXkg0yMp+igQpHpHS1em/gZ4w+CDehlPy1VTPJLUuNCW9OAeWAIxK4II/eYha7QOXY=
+	t=1780828587; cv=none; b=p10wShRWi05qzkex1P/BOWrRRZa6PzmoBKMlSOZyXfO/+VxwCZ5rqcisHPZ9FB8W1DVV5E3Z6OxZToGNnITSEKqGuJpjt1/kfbmdacbK26+C0ZMlWBE5mIhxe0rrensXM8OwMLreavyzBVfM/nub+E3IRdD6o6H5Dkgp8ZoJXOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828582; c=relaxed/simple;
-	bh=E49HJwdpy8YLSvgFe90KvbZc8xOlpRx/NKCiFJLLXYM=;
+	s=arc-20240116; t=1780828587; c=relaxed/simple;
+	bh=85/puwfzhwyxZ0jMgGEDpcoLRCmAFPtDLx2jIuzI4qQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Waa6GGyhLRszTgtQJkmfnFq3UBKuR2af1mL3tbZ7230mmA9JD/EIvMj5lZ+1nfG2c6gHUcNOJcQiIuNYQ03yTpByTTKIPtXVH/G84QuGDkgWpFfVKu5YuA+vcWIQzRwzMNgcqTPN9Dhrrl0/s28B/Em9fX419N+aFRrBd5m2aCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PICcUcQH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gd4C1o2plZQ83JbN9EmS73+t4payFzvfzFPTmuToNOvTmlagUEwbTbock+h+dYnv0Dfae8Z8AnMkGpvzUkqVWw7LPtK2pGcsDnoZDGgZT+yON1244UDOyiEiEuefxVzJ63ZNcYCf6MoB1mJCI1TeP6Ibx8H4yY0N3sqYYg99u8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kNaeah6n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PICcUcQH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1675F1F00893;
-	Sun,  7 Jun 2026 10:36:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kNaeah6n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0681D1F00893;
+	Sun,  7 Jun 2026 10:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828581;
-	bh=Du6xW42/HYJ/VrZGWE0R4a+25M9EcJeypF+Hn0Zlo/o=;
+	s=korg; t=1780828586;
+	bh=xIxnEEqer6lCmfc/RdlEvRGCjCthy8DWt29MGgQyazI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PICcUcQHfZyJXbcXIUoG1Sk8ztPQF2AjGSz5PDMj7ERqH89JW2sxWoGxcGkKeJp/m
-	 Ym/0qaJ0FDw70LKm0zX8pCTJhJ96l6DgcgzzzcRjEddkQsOyEeUbQzSg4vANiUEfdw
-	 /AThony60JLKglqOD4vV3LP5hqBssOTU28wksYc8=
+	b=kNaeah6n303yaDw/TLo4tfolKp2KExhpOAsnv1Ky0ow0A7c3oS9C/1xobsh2sqXam
+	 ewepfSsw70Y52hl3Ex+6jIZ1qHylMYuZRC7HVxfjdWvYiwsV3I5d9NTSe6shZKkTGF
+	 9R6uiF8YWr/WHz/RcQjnntHQHMgcLj6SAFsNZwco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko <sashiko-bot@kernel.org>,
-	Felix Gu <ustc.gu@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Maxwell Doose <m32285159@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 174/315] iio: buffer: hw-consumer: fix use-after-free in error path
-Date: Sun,  7 Jun 2026 11:59:21 +0200
-Message-ID: <20260607095733.977851832@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Gyeyoung Baek <gye976@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 7.0 195/332] iio: chemical: mhz19b: reject oversized serial replies
+Date: Sun,  7 Jun 2026 11:59:24 +0200
+Message-ID: <20260607095735.221369933@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,58 +45,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 6f5ed4f2c7c83f33344e0ba179f72a12e5dad4a4 upstream.
+commit 673478bc29cf72010faaf293c1c8c667393335a0 upstream.
 
-In the err_put_buffers cleanup path of iio_hw_consumer_alloc(), the code
-was using list_for_each_entry() to iterate through buffers while calling
-iio_buffer_put() which can free the current buffer if refcount drops to 0.
-The list_for_each_entry() loop macro then evaluates buf->head.next to
-continue iteration, accessing the freed buffer.
+mhz19b_receive_buf() appends each serdev chunk into the fixed
+MHZ19B_CMD_SIZE receive buffer and advances buf_idx by len without
+checking that the chunk fits in the remaining space. A large callback
+can therefore overflow st->buf before the command path validates the
+reply.
 
-Fix this by using list_for_each_entry_safe().
+Reset the reply state before each command and reject oversized serial
+replies before copying them into the fixed buffer. When an oversized
+reply is detected, wake the waiter and report -EMSGSIZE instead of
+overwriting st->buf.
 
-Fixes: 48b66f8f936f ("iio: Add hardware consumer buffer support")
-Reported-by: sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260427-iio_buf-v1-1-2bbdac844647%40gmail.com
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Maxwell Doose <m32285159@gmail.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: 4572a70b3681 ("iio: chemical: Add support for Winsen MHZ19B CO2 sensor")
+Cc: stable@vger.kernel.org
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Acked-by: Gyeyoung Baek <gye976@gmail.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/buffer/industrialio-hw-consumer.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/chemical/mhz19b.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/iio/buffer/industrialio-hw-consumer.c
-+++ b/drivers/iio/buffer/industrialio-hw-consumer.c
-@@ -82,7 +82,7 @@ static struct hw_consumer_buffer *iio_hw
-  */
- struct iio_hw_consumer *iio_hw_consumer_alloc(struct device *dev)
- {
--	struct hw_consumer_buffer *buf;
-+	struct hw_consumer_buffer *buf, *tmp;
- 	struct iio_hw_consumer *hwc;
- 	struct iio_channel *chan;
- 	int ret;
-@@ -113,7 +113,7 @@ struct iio_hw_consumer *iio_hw_consumer_
- 	return hwc;
+--- a/drivers/iio/chemical/mhz19b.c
++++ b/drivers/iio/chemical/mhz19b.c
+@@ -52,6 +52,8 @@ struct mhz19b_state {
+ 	struct completion buf_ready;
  
- err_put_buffers:
--	list_for_each_entry(buf, &hwc->buffers, head)
-+	list_for_each_entry_safe(buf, tmp, &hwc->buffers, head)
- 		iio_buffer_put(&buf->buffer);
- 	iio_channel_release_all(hwc->channels);
- err_free_hwc:
+ 	u8 buf_idx;
++	bool buf_overflow;
++
+ 	/*
+ 	 * Serdev receive buffer.
+ 	 * When data is received from the MH-Z19B,
+@@ -106,6 +108,10 @@ static int mhz19b_serdev_cmd(struct iio_
+ 	cmd_buf[8] = mhz19b_get_checksum(cmd_buf);
+ 
+ 	/* Write buf to uart ctrl synchronously */
++	st->buf_idx = 0;
++	st->buf_overflow = false;
++	reinit_completion(&st->buf_ready);
++
+ 	ret = serdev_device_write(serdev, cmd_buf, MHZ19B_CMD_SIZE, 0);
+ 	if (ret < 0)
+ 		return ret;
+@@ -121,6 +127,9 @@ static int mhz19b_serdev_cmd(struct iio_
+ 		if (!ret)
+ 			return -ETIMEDOUT;
+ 
++		if (st->buf_overflow)
++			return -EMSGSIZE;
++
+ 		if (st->buf[8] != mhz19b_get_checksum(st->buf)) {
+ 			dev_err(dev, "checksum err");
+ 			return -EINVAL;
+@@ -240,6 +249,14 @@ static size_t mhz19b_receive_buf(struct
+ {
+ 	struct iio_dev *indio_dev = dev_get_drvdata(&serdev->dev);
+ 	struct mhz19b_state *st = iio_priv(indio_dev);
++	size_t remaining = MHZ19B_CMD_SIZE - st->buf_idx;
++
++	if (len > remaining) {
++		st->buf_idx = 0;
++		st->buf_overflow = true;
++		complete(&st->buf_ready);
++		return len;
++	}
+ 
+ 	memcpy(st->buf + st->buf_idx, data, len);
+ 	st->buf_idx += len;
 
 
