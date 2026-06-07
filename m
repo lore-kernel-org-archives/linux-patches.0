@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505AC2D3A69;
-	Sun,  7 Jun 2026 10:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7E9212564;
+	Sun,  7 Jun 2026 10:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828767; cv=none; b=RMm7a2o9z4Ls91KAO2HgTYXhiHgkUhY2+cZ8L1d1G6fLE7lcUwo0f9OzVZespu6YlvMAwvWKCc077GigSEbIIAx1kPkgrxbANrIo9kdkMrrwfXKCFze9A0rOMzWP3S7SxQKz0dHUezsW6UUWtYOcYb4dVmw+XtQPs3IAky/EdW4=
+	t=1780828771; cv=none; b=IZE8iUfi7aLv0AT4cROFJ1k8Y+TzgrsahNZZTM0E05MwWWp91fKeS122xXDPcXT3XX0Z9oVXDhjw8WO16bzeRvwag5Sxv3UQ3Ls6d5AyGQa5NKm82YG46/UGJJImlVo9R3prIRwATAxe1u9oDaQlWcwIidxVcgd8mYf5d2K5LzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828767; c=relaxed/simple;
-	bh=shBthcWBQe1VwxNj4WahceN/nZmNpYKjDPam1cVPw44=;
+	s=arc-20240116; t=1780828771; c=relaxed/simple;
+	bh=4OXHpfFKsp+Md0/xYHSkTIBOq2nMGxYyV0oJQ5WIZcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AxFjXm0YP9mPb/8LF4B5+PDJAhFbUdosyS/aD0+B4KEoZX8D2wL+2V2YSID2Bjq12vfHTvnJoa1Qyp9qz1785tKhyJ68xLcCaR/sRHEm5S7WiHbjJhetQJ4ohZbzQTkZKrtJRiRTuU4ylm074x0Xzk3YIGJy7oOiSEcuXPnurmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fs0x/ljn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RpqSDKJabePEwi20XU923esbOj0oVvNTo04a11GCooq/O7p2g51JmQwwKkMXpmKio05vCEI6wfvzzwdOKEDL4Slgj+WETXBwiHJ4nrMyN66DaCVbeqQKXWIcfZb/Pt4124TZ+umVERR0UwtQ1LuEBvEd8kQ0d5ew8Mg9Nx8g/8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4XkPpdZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fs0x/ljn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F3141F00893;
-	Sun,  7 Jun 2026 10:39:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4XkPpdZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C781F00893;
+	Sun,  7 Jun 2026 10:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828766;
-	bh=0Uyo9TfhgBG2t12ReH8jkAcSphtqAFwMQZDSV1/ZGpo=;
+	s=korg; t=1780828770;
+	bh=nMFZqEID5k4gjNVJI5c5ZRfaULSEJZO4j3I+cYI5Chc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fs0x/ljnTa9KwXWV33h+vAtv4KecQVAoyvT5b9KXfkThem3P+HiHUpyEv9+2F7RP0
-	 rzvRMHFhijZ1Pw7UfzoMOYj8HGXu0FK82AJjeYW2o6H5v9nZQ23ghZo3UM3vBHmNj0
-	 m78EUfbUw50DcUAigOMg1Q+KRLB5BHcwVUKU94uo=
+	b=i4XkPpdZ2bmNmFJdQzScin2F7zcWAf/CFTMkD9Asob6uytViqeqhcLZeK9dwANWqS
+	 7zdwTDxj3uEkGUZL/fDzQd5QIL627zZxM2oa5O0JxeMaBQBxsrQBKXi59qI2MB8pa7
+	 HtTlMFd9DcKUWaofgSSAvOgLUTkR7v2FXU4QiRqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Alencar <rodrigo.alencar@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 160/315] iio: dac: ad5686: fix powerdown control on dual-channel devices
-Date: Sun,  7 Jun 2026 11:59:07 +0200
-Message-ID: <20260607095733.470777819@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 210/332] macsec: fix replay protection at XPN lower-PN wrap
+Date: Sun,  7 Jun 2026 11:59:39 +0200
+Message-ID: <20260607095735.779924163@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,134 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rodrigo Alencar <rodrigo.alencar@analog.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 8aeaf25a85263a7a43357e16ad78ab969f6f8aeb upstream.
+commit e68842b3356471ba56c882209f324613dac47f64 upstream.
 
-Fix powerdown control by using a proper bit shift for the powerdown mask
-values. During initialization, powerdown bits are initialized so that
-unused bits are set to 1 and the correct bit shift is used. Dual-channel
-devices use one-hot encoding in the address and that reflects on the
-position of the powerdown bits, which are not channel-index based
-for that case. Quad-channel devices also use one-hot encoding for the
-channel address but the result of log2(address) coincides with the channel
-index value. Mask as 0x3U is used rather than 0x3, because shift can reach
-value of 30 (last channel of a 16-channel device), which would mess with
-the sign bit. The issue was introduced when first adding support for
-dual-channel devices, which overlooked powerdown control differences.
+In macsec_post_decrypt(), when pn is U32_MAX, pn + 1 overflows u32 to 0
+and the first branch never fires. If next_pn_halves.lower is also in the
+upper half, pn_same_half(pn, lower) is true and the XPN else-if does not
+fire either, leaving next_pn_halves unchanged. An attacker that captures
+the legitimate frame carrying pn == 0xFFFFFFFF on an XPN association
+can then replay it indefinitely, since lowest_pn never rises above
+the captured pn and macsec_decrypt() reconstructs the same IV.
 
-Fixes: 7dc8faeab3e3 ("iio: dac: ad5686: add support for AD5338R")
-Signed-off-by: Rodrigo Alencar <rodrigo.alencar@analog.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Extend the XPN else-if to also fire when pn + 1 wraps to 0, so receipt
+of pn == U32_MAX advances next_pn_halves to (upper + 1, 0).
+
+Fixes: a21ecf0e0338 ("macsec: Support XPN frame handling - IEEE 802.1AEbw")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB78813FD49E58F253B989F197AF012@SYBPR01MB7881.ausprd01.prod.outlook.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/ad5686.c |   40 ++++++++++++++++++++++++++++++----------
- 1 file changed, 30 insertions(+), 10 deletions(-)
+ drivers/net/macsec.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/dac/ad5686.c
-+++ b/drivers/iio/dac/ad5686.c
-@@ -25,26 +25,37 @@ static const char * const ad5686_powerdo
- 	"three_state"
- };
- 
-+static inline unsigned int ad5686_pd_mask_shift(const struct iio_chan_spec *chan)
-+{
-+	if (chan->channel == chan->address)
-+		return chan->channel * 2;
-+
-+	/* one-hot encoding is used in dual/quad channel devices */
-+	return __ffs(chan->address) * 2;
-+}
-+
- static int ad5686_get_powerdown_mode(struct iio_dev *indio_dev,
- 				     const struct iio_chan_spec *chan)
- {
-+	unsigned int shift = ad5686_pd_mask_shift(chan);
- 	struct ad5686_state *st = iio_priv(indio_dev);
- 
- 	guard(mutex)(&st->lock);
- 
--	return ((st->pwr_down_mode >> (chan->channel * 2)) & 0x3) - 1;
-+	return ((st->pwr_down_mode >> shift) & 0x3U) - 1;
- }
- 
- static int ad5686_set_powerdown_mode(struct iio_dev *indio_dev,
- 				     const struct iio_chan_spec *chan,
- 				     unsigned int mode)
- {
-+	unsigned int shift = ad5686_pd_mask_shift(chan);
- 	struct ad5686_state *st = iio_priv(indio_dev);
- 
- 	guard(mutex)(&st->lock);
- 
--	st->pwr_down_mode &= ~(0x3 << (chan->channel * 2));
--	st->pwr_down_mode |= ((mode + 1) << (chan->channel * 2));
-+	st->pwr_down_mode &= ~(0x3U << shift);
-+	st->pwr_down_mode |= (mode + 1) << shift;
- 
- 	return 0;
- }
-@@ -59,12 +70,12 @@ static const struct iio_enum ad5686_powe
- static ssize_t ad5686_read_dac_powerdown(struct iio_dev *indio_dev,
- 		uintptr_t private, const struct iio_chan_spec *chan, char *buf)
- {
-+	unsigned int shift = ad5686_pd_mask_shift(chan);
- 	struct ad5686_state *st = iio_priv(indio_dev);
- 
- 	guard(mutex)(&st->lock);
- 
--	return sysfs_emit(buf, "%d\n", !!(st->pwr_down_mask &
--				       (0x3 << (chan->channel * 2))));
-+	return sysfs_emit(buf, "%d\n", !!(st->pwr_down_mask & (0x3U << shift)));
- }
- 
- static ssize_t ad5686_write_dac_powerdown(struct iio_dev *indio_dev,
-@@ -86,9 +97,9 @@ static ssize_t ad5686_write_dac_powerdow
- 	guard(mutex)(&st->lock);
- 
- 	if (readin)
--		st->pwr_down_mask |= (0x3 << (chan->channel * 2));
-+		st->pwr_down_mask |= 0x3U << ad5686_pd_mask_shift(chan);
- 	else
--		st->pwr_down_mask &= ~(0x3 << (chan->channel * 2));
-+		st->pwr_down_mask &= ~(0x3U << ad5686_pd_mask_shift(chan));
- 
- 	switch (st->chip_info->regmap_type) {
- 	case AD5310_REGMAP:
-@@ -468,7 +479,7 @@ int ad5686_probe(struct device *dev,
- {
- 	struct ad5686_state *st;
- 	struct iio_dev *indio_dev;
--	unsigned int val, ref_bit_msk;
-+	unsigned int val, ref_bit_msk, shift;
- 	bool has_external_vref;
- 	u8 cmd;
- 	int ret, i;
-@@ -492,9 +503,18 @@ int ad5686_probe(struct device *dev,
- 	has_external_vref = ret != -ENODEV;
- 	st->vref_mv = has_external_vref ? ret / 1000 : st->chip_info->int_vref_mv;
- 
-+	/* Initialize masks to all ones provided the max shift (last channel) */
-+	shift = ad5686_pd_mask_shift(&st->chip_info->channels[st->chip_info->num_channels - 1]);
-+	st->pwr_down_mask = GENMASK(shift + 1, 0);
-+	st->pwr_down_mode = GENMASK(shift + 1, 0);
-+
- 	/* Set all the power down mode for all channels to 1K pulldown */
--	for (i = 0; i < st->chip_info->num_channels; i++)
--		st->pwr_down_mode |= (0x01 << (i * 2));
-+	for (i = 0; i < st->chip_info->num_channels; i++) {
-+		shift = ad5686_pd_mask_shift(&st->chip_info->channels[i]);
-+		st->pwr_down_mask &= ~(0x3U << shift); /* powered up state */
-+		st->pwr_down_mode &= ~(0x3U << shift);
-+		st->pwr_down_mode |= 0x01U << shift;
-+	}
- 
- 	indio_dev->name = name;
- 	indio_dev->info = &ad5686_info;
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -804,7 +804,8 @@ static bool macsec_post_decrypt(struct s
+ 		if (pn + 1 > rx_sa->next_pn_halves.lower) {
+ 			rx_sa->next_pn_halves.lower = pn + 1;
+ 		} else if (secy->xpn &&
+-			   !pn_same_half(pn, rx_sa->next_pn_halves.lower)) {
++			   (pn + 1 == 0 ||
++			    !pn_same_half(pn, rx_sa->next_pn_halves.lower))) {
+ 			rx_sa->next_pn_halves.upper++;
+ 			rx_sa->next_pn_halves.lower = pn + 1;
+ 		}
 
 
