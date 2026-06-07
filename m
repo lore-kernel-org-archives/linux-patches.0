@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB61328610;
-	Sun,  7 Jun 2026 10:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34693195FD;
+	Sun,  7 Jun 2026 10:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828728; cv=none; b=fa1/GmcpG8PzAzhKXROoR6qCa5Z6IF8X2h5SRLF2gK8dVoPcKolksbxCV5QM+obQuzlJeSqlN+STxIIWzydBCEGB8JXnVhO8MmJ2XuvOpe7vWxAkkzxQq6CD05HpmS3M5Vl/H3wMrCJCQvl7Jh6YzepNa/xhCl08M7UNVSNmzoo=
+	t=1780828732; cv=none; b=MtReBSgr8X3h2/OcXa+g07QX/NpNTosRur7LEo3XybORfEwxW4eWTAJcLioaBXYYjk6Mlz85zbVYI7w+Ak7zRGcvIPs0ZeBHxlKuxIEIFcgpd3E776TRlvy2rMm6Rk9huYhUipSEoesckppz8f9Rtqo29FqG4bg8r8/GKuNY+Qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828728; c=relaxed/simple;
-	bh=7QTnqXMRCxrDZh6IcAMbSUQQ8Wa/zcmxJ2rrFL8BcKU=;
+	s=arc-20240116; t=1780828732; c=relaxed/simple;
+	bh=1CO4siLUEg3P2uFyf0VJIEnOVLgVEHrcvT5pNocHyqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kO7v4LdjanA03AX6ziKI3tAE/sC79MKYrRfTUMouNHAcmhKTc5LbUjgiO1NPTMXCpYsVHvZj0cmNH2BuUvvhL0X/FX//Q/A8G27ZVg74u2Uk40CBYULI8a3+Yd4V0Ngwb3XA8HqIxV+qnnMwuijt+IY5nPOaLTXw+01lsiQoHBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8zFqMoI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F4LRVwpMIkQC+hqeAN/dNmGGJRcyWEhAXBOZSuwZvAzf1c75eWvMkG5p9pK49Vu6J2vrWx7R5GfrHI1DPhoxipOdL1TIP0xVB3CZXPsXF3ij8qK0YhC14IEudZX8XPtUYgxNGycPIieHUcTjaA3XrIaQ8f001ir1HThc+lNdd+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jiA4lN7b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8zFqMoI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82DEA1F00893;
-	Sun,  7 Jun 2026 10:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jiA4lN7b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6B51F00893;
+	Sun,  7 Jun 2026 10:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828727;
-	bh=lwNtjT/uQA9UvsQzsBmnwx+KthQMVxvtI7VcquMfNu8=;
+	s=korg; t=1780828731;
+	bh=vkND0//e2cPumWGeKISX5K0jme8gezpVAMzNl3R8d5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A8zFqMoIwzn9V1Cckd5ekHnCU2eukRGXdl6WKz57D6W2b2JVb2EnEE+ktLduZLHdW
-	 58m/JWEXRTtEUszam9I0NE/z3q5tNXK4ZQUvuDDSn68qxR+ovGoQTOXWKHYotzLSZn
-	 0nckr/i50mZ7Ib2nuSyrRtq7GQMoj5uXAeaNmerk=
+	b=jiA4lN7blf6HXzJ7ygpiVxMwygr3/BFJEdmSy1o4NfDND6N5Yw49vIzv4rP649xFi
+	 ZTkCrZ4RBpsc5qHvk23sv26PHF2y0t/TaT6+MHZ4Is0o7A5Zlg6VNiiKV2KbPkNHlt
+	 ZFouLxLp3BZAV/PEKP8p8N2COUl0+0wv0gploRm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.12 161/307] Disable -Wattribute-alias for clang-23 and newer
-Date: Sun,  7 Jun 2026 11:59:18 +0200
-Message-ID: <20260607095733.633228004@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 186/315] macsec: fix replay protection at XPN lower-PN wrap
+Date: Sun,  7 Jun 2026 11:59:33 +0200
+Message-ID: <20260607095734.412116941@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,130 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 175db11786bde9061db526bf1ac5107d915f5163 upstream.
+commit e68842b3356471ba56c882209f324613dac47f64 upstream.
 
-Clang recently added support for -Wattribute-alias [1], which results in
-the same warnings that necessitated commit bee20031772a ("disable
--Wattribute-alias warning for SYSCALL_DEFINEx()") for GCC.
+In macsec_post_decrypt(), when pn is U32_MAX, pn + 1 overflows u32 to 0
+and the first branch never fires. If next_pn_halves.lower is also in the
+upper half, pn_same_half(pn, lower) is true and the XPN else-if does not
+fire either, leaving next_pn_halves unchanged. An attacker that captures
+the legitimate frame carrying pn == 0xFFFFFFFF on an XPN association
+can then replay it indefinitely, since lowest_pn never rises above
+the captured pn and macsec_decrypt() reconstructs the same IV.
 
-  kernel/time/itimer.c:325:1: error: alias and aliasee have different types 'long (unsigned int)' and 'long (typeof (__builtin_choose_expr((__builtin_types_compatible_p(typeof ((unsigned int)0), typeof (0LL)) || __builtin_types_compatible_p(typeof ((unsigned int)0), typeof (0ULL))), 0LL, 0L)))' (aka 'long (long)') [-Werror,-Wattribute-alias]
-    325 | SYSCALL_DEFINE1(alarm, unsigned int, seconds)
-        | ^
-  include/linux/syscalls.h:225:36: note: expanded from macro 'SYSCALL_DEFINE1'
-    225 | #define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
-        |                                    ^
-  include/linux/syscalls.h:236:2: note: expanded from macro 'SYSCALL_DEFINEx'
-    236 |         __SYSCALL_DEFINEx(x, sname, __VA_ARGS__)
-        |         ^
-  include/linux/syscalls.h:251:18: note: expanded from macro '__SYSCALL_DEFINEx'
-    251 |                 __attribute__((alias(__stringify(__se_sys##name))));    \
-        |                                ^
-  kernel/time/itimer.c:325:1: note: aliasee is declared here
-  include/linux/syscalls.h:225:36: note: expanded from macro 'SYSCALL_DEFINE1'
-    225 | #define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
-        |                                    ^
-  include/linux/syscalls.h:236:2: note: expanded from macro 'SYSCALL_DEFINEx'
-    236 |         __SYSCALL_DEFINEx(x, sname, __VA_ARGS__)
-        |         ^
-  include/linux/syscalls.h:255:18: note: expanded from macro '__SYSCALL_DEFINEx'
-    255 |         asmlinkage long __se_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__))  \
-        |                         ^
-  <scratch space>:16:1: note: expanded from here
-     16 | __se_sys_alarm
-        | ^
+Extend the XPN else-if to also fire when pn + 1 wraps to 0, so receipt
+of pn == U32_MAX advances next_pn_halves to (upper + 1, 0).
 
-Disable the warnings in the same way for clang-23 and newer. Disable the
-warning about unknown warning options to avoid breaking the build for
-versions of clang-23 that do not have -Wattribute-alias, such as ones
-deployed by vendors like Android or CI systems or when bisecting LLVM
-between llvmorg-23-init and release/23.x.
-
+Fixes: a21ecf0e0338 ("macsec: Support XPN frame handling - IEEE 802.1AEbw")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2163
-Link: https://github.com/llvm/llvm-project/commit/40da6920a0d71d49dfa2392b09153600b0759f5e [1]
-Link: https://patch.msgid.link/20260515-syscall-disable-attribute-alias-for-clang-v1-1-9a9d95d41df6@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB78813FD49E58F253B989F197AF012@SYBPR01MB7881.ausprd01.prod.outlook.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/syscall_wrapper.h |    4 ++++
- include/linux/compat.h                   |    4 ++++
- include/linux/compiler-clang.h           |    6 ++++++
- include/linux/compiler_types.h           |    4 ++++
- include/linux/syscalls.h                 |    4 ++++
- 5 files changed, 22 insertions(+)
+ drivers/net/macsec.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/include/asm/syscall_wrapper.h
-+++ b/arch/riscv/include/asm/syscall_wrapper.h
-@@ -32,6 +32,10 @@ asmlinkage long __riscv_sys_ni_syscall(c
- 	__diag_push();									\
- 	__diag_ignore(GCC, 8, "-Wattribute-alias",					\
- 			"Type aliasing is used to sanitize syscall arguments");		\
-+	__diag_ignore(clang, 23, "-Wunknown-warning-option",				\
-+		      "Avoid breaking versions without -Wattribute-alias");		\
-+	__diag_ignore(clang, 23, "-Wattribute-alias",					\
-+			"Type aliasing is used to sanitize syscall arguments");		\
- 	static long __se_##prefix##name(ulong, ulong, ulong, ulong, ulong, ulong, 	\
- 					ulong)						\
- 			__attribute__((alias(__stringify(___se_##prefix##name))));	\
---- a/include/linux/compat.h
-+++ b/include/linux/compat.h
-@@ -72,6 +72,10 @@
- 	__diag_push();								\
- 	__diag_ignore(GCC, 8, "-Wattribute-alias",				\
- 		      "Type aliasing is used to sanitize syscall arguments");\
-+	__diag_ignore(clang, 23, "-Wunknown-warning-option",			\
-+		      "Avoid breaking versions without -Wattribute-alias");	\
-+	__diag_ignore(clang, 23, "-Wattribute-alias",				\
-+		      "Type aliasing is used to sanitize syscall arguments");	\
- 	asmlinkage long compat_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
- 		__attribute__((alias(__stringify(__se_compat_sys##name))));	\
- 	ALLOW_ERROR_INJECTION(compat_sys##name, ERRNO);				\
---- a/include/linux/compiler-clang.h
-+++ b/include/linux/compiler-clang.h
-@@ -133,6 +133,12 @@
- #define __diag_str(s)		__diag_str1(s)
- #define __diag(s)		_Pragma(__diag_str(clang diagnostic s))
- 
-+#if CONFIG_CLANG_VERSION >= 230000
-+#define __diag_clang_23(s)	__diag(s)
-+#else
-+#define __diag_clang_23(s)
-+#endif
-+
- #define __diag_clang_13(s)	__diag(s)
- 
- #define __diag_ignore_all(option, comment) \
---- a/include/linux/compiler_types.h
-+++ b/include/linux/compiler_types.h
-@@ -569,6 +569,10 @@ struct ftrace_likely_data {
- #define __diag_GCC(version, severity, string)
- #endif
- 
-+#ifndef __diag_clang
-+#define __diag_clang(version, severity, string)
-+#endif
-+
- #define __diag_push()	__diag(push)
- #define __diag_pop()	__diag(pop)
- 
---- a/include/linux/syscalls.h
-+++ b/include/linux/syscalls.h
-@@ -245,6 +245,10 @@ static inline int is_syscall_trace_event
- 	__diag_push();							\
- 	__diag_ignore(GCC, 8, "-Wattribute-alias",			\
- 		      "Type aliasing is used to sanitize syscall arguments");\
-+	__diag_ignore(clang, 23, "-Wunknown-warning-option",		\
-+		      "Avoid breaking versions without -Wattribute-alias");\
-+	__diag_ignore(clang, 23, "-Wattribute-alias",			\
-+		      "Type aliasing is used to sanitize syscall arguments");\
- 	asmlinkage long sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
- 		__attribute__((alias(__stringify(__se_sys##name))));	\
- 	ALLOW_ERROR_INJECTION(sys##name, ERRNO);			\
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -804,7 +804,8 @@ static bool macsec_post_decrypt(struct s
+ 		if (pn + 1 > rx_sa->next_pn_halves.lower) {
+ 			rx_sa->next_pn_halves.lower = pn + 1;
+ 		} else if (secy->xpn &&
+-			   !pn_same_half(pn, rx_sa->next_pn_halves.lower)) {
++			   (pn + 1 == 0 ||
++			    !pn_same_half(pn, rx_sa->next_pn_halves.lower))) {
+ 			rx_sa->next_pn_halves.upper++;
+ 			rx_sa->next_pn_halves.lower = pn + 1;
+ 		}
 
 
