@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC03A2D3A69;
-	Sun,  7 Jun 2026 10:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7293254A9;
+	Sun,  7 Jun 2026 10:38:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828687; cv=none; b=C2fsuKM9kXd4TFQTFQ2QeNw4XK2lgGYQ49LjEO9FaG0AmLqJj8CfaEaiSQJkJiAjy9rqX7W4o5QxpbyUWNCWDlS0bhkYxO5c9T4JxAVBmLTeu1qhpwR2e2asOVjA0Qi2Qn7ccNkPX6r6d1H5/NUwDTpKEJkTaL2Q4RDgx/jkVvs=
+	t=1780828692; cv=none; b=Kvgjt9YFaG86PwZCwkUxyhdaRwtKeqSoBRVdQVK1UmlTnKt7dVMst3qj+iRJqVnEttsZCKtkKhuzoBB0fSyRlG7vIsp/GeBZgbd0nANypOjt480/Q5yIdXN736PBuCul9vIud3m3SY0SU/0vF94kdqlNngeBm0o/88RHramBb/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828687; c=relaxed/simple;
-	bh=3nJruFdg9dxWHu4nWqJKs7BmukAgFE7gdlQoGm8dc68=;
+	s=arc-20240116; t=1780828692; c=relaxed/simple;
+	bh=N6CF56alpnWIMRHA+IyMohXQbnm7ZLnrMVVhoimCLuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dT7UkvBMDQ7sPILfPcGOteplhMnvykCCaPjKo+t6DYVwDXN+EiPH8ga1G1B8Vx5HTyojqvl3wjaqdRdo6XRjIOL1VEhguflLUYHZl/mGXIH9AYXFmO74ofaGw3lg0HYwDyNXWs+a/QYQ9aN85zfsxGWWBd2ptPYfB/xhgl6tPD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=flLwnYMz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RTIyhoOdmaeR+ID37Q3HCQLQmxrFILKMmtYXqqiPwr2F3MlHMLYgKHwt5AeIYciHKJz/DMzfXjQFLxGOzn+6dTNuXZdwQo8bgjMW7VSjgMEfI7HUfUDSY+IBdXZ77uNW/L10gwPjieA26SkooloWf7lvRfCM9pc7KYkNFADVnE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWGk2SKQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="flLwnYMz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B75E71F00893;
-	Sun,  7 Jun 2026 10:38:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWGk2SKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A45A1F00893;
+	Sun,  7 Jun 2026 10:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828686;
-	bh=yPfFr8nxWIuOjTzGneXu0E7LsenZkyx9zN+bXJMYGLI=;
+	s=korg; t=1780828691;
+	bh=s/CpIhRHhy6cQOVNu4Fv8AzvR07JRG0WeamZ34vkg38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=flLwnYMzd9y1TL/pjqAlFHLiXbkE7te7C0Ht57OddZP0HkZqW4L3Ung2bkREjV7J9
-	 6nqFyeBCpYY/+HSKVJ+Gp60tNc0RrXQaNhKaWgpXIY7TMDeAOEbKw4LUoC9ZQJuIRX
-	 T2tGhYvKVyWwVhrHInqOkhXg+8mcb84Zx7cC1YTU=
+	b=iWGk2SKQQWhXqh/XJ8T3hDhAPAP1iKHl19dXUH2PwAsUWw99Xki7FqljZRzvkuJt6
+	 K0UuUJ8xf/X4M7aXyAWwT4xbp8Zu7+htTdfEJPti8vR7A72OreFNxs7eLJELWYxdx5
+	 hMEG049pmL23t9jPBDboY6WyKwKbA5Hpm+y0ZRMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Peter Chen <peter.chen@cixtech.com>
-Subject: [PATCH 7.0 203/332] usb: cdns3: plat: fix unbalanced pm_runtime_forbid() call permanently leaks the runtime PM usage counter across bind/unbind cycles
-Date: Sun,  7 Jun 2026 11:59:32 +0200
-Message-ID: <20260607095735.514676205@linuxfoundation.org>
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Michael Roth <michael.roth@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.12 158/307] KVM: SEV: Check PSC request indices against the actual size of the buffer
+Date: Sun,  7 Jun 2026 11:59:15 +0200
+Message-ID: <20260607095733.523009597@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +48,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Chen <peter.chen@cixtech.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit ae6f3b82324e4f39ad8443c9020787e6fc889637 upstream.
+commit 121d88de56bc5c0ba0ce2f6381af67f948a7e7c1 upstream.
 
-Call pm_runtime_allow(dev) conditionally at cdns3_plat_remove.
+When processing Page State Change (PSC) requests, validate the PSC buffer
+against the effective size of the scratch area, which could be less than
+the maximum size if the guest provided a pointer that isn't exactly at the
+start of the GHCB shared buffer.
 
-Fixes: f738957277ba ("usb: cdns3: Split core.c into cdns3-plat and core.c file")
-Cc: stable <stable@kernel.org>
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-devicetree/agKaEePSFknhDBg2@nchen-desktop/T/#m21e1d9c1574eb127ce03c0c2a1a49002ce435b52
-Signed-off-by: Peter Chen <peter.chen@cixtech.com>
-Link: https://patch.msgid.link/20260513085310.2217547-3-peter.chen@cixtech.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9b54e248d264 ("KVM: SEV: Add support to handle Page State Change VMGEXIT")
+Cc: stable@vger.kernel.org
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Michael Roth <michael.roth@amd.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260501202250.2115252-10-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdns3-plat.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/kvm/svm/sev.c |   17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/cdns3/cdns3-plat.c
-+++ b/drivers/usb/cdns3/cdns3-plat.c
-@@ -186,6 +186,9 @@ static void cdns3_plat_remove(struct pla
- 	struct device *dev = cdns->dev;
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -3729,7 +3729,7 @@ static int snp_begin_psc(struct vcpu_svm
+ 	struct kvm_vcpu *vcpu = &svm->vcpu;
+ 	struct psc_hdr *hdr = &psc->hdr;
+ 	struct psc_entry entry_start;
+-	u16 idx, idx_start, idx_end;
++	u16 idx, idx_start, idx_end, max_nr_entries;
+ 	int npages;
+ 	bool huge;
+ 	u64 gfn;
+@@ -3739,6 +3739,19 @@ static int snp_begin_psc(struct vcpu_svm
+ 		return 1;
+ 	}
  
- 	pm_runtime_get_sync(dev);
-+	if (!(cdns->pdata && (cdns->pdata->quirks & CDNS3_DEFAULT_PM_RUNTIME_ALLOW)))
-+		pm_runtime_allow(dev);
++	/*
++	 * GHCB v2 requires the scratch area to reside within the GHCB itself,
++	 * and PSC requests are only supported for GHCB v2+.  Thus it should be
++	 * impossible to exceed the max PSC entry count (which is derived from
++	 * the size of the shared GHCB buffer).
++	 */
++	max_nr_entries = (sev_es->ghcb_sa_len - sizeof(struct psc_hdr)) /
++			 sizeof(struct psc_entry);
++	if (WARN_ON_ONCE(max_nr_entries > VMGEXIT_PSC_MAX_COUNT)) {
++		snp_complete_psc(svm, VMGEXIT_PSC_ERROR_GENERIC);
++		return 1;
++	}
 +
- 	pm_runtime_disable(dev);
- 	pm_runtime_put_noidle(dev);
- 	cdns_remove(cdns);
+ next_range:
+ 	/* There should be no other PSCs in-flight at this point. */
+ 	if (WARN_ON_ONCE(svm->sev_es.psc_inflight)) {
+@@ -3754,7 +3767,7 @@ next_range:
+ 	idx_start = hdr->cur_entry;
+ 	idx_end = hdr->end_entry;
+ 
+-	if (idx_end >= VMGEXIT_PSC_MAX_COUNT) {
++	if (idx_end >= max_nr_entries) {
+ 		snp_complete_psc(svm, VMGEXIT_PSC_ERROR_INVALID_HDR);
+ 		return 1;
+ 	}
 
 
