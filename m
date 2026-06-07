@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E3D2E1EFC;
-	Sun,  7 Jun 2026 10:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F61D1DE8AE;
+	Sun,  7 Jun 2026 10:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826874; cv=none; b=nJH5AHoxUwTe7TAHpWoRiwc5dxtLxFcrLAGRZjG17nwFEAeLahOBjMTtYrmpaXaskFrrB+OBB2zUh1fNO5Zm+/2Z0hQsY01/PHDdLzF6JI59BLefPfDPcgrl1piETRqzEd4jInLkASX3YBj4RHtTPa3HkO8CdsgTehJd+Eg+h0M=
+	t=1780826877; cv=none; b=PV8X7lW0HKOfIUSoilpzRtSKbp20siY92TMO0VPX2t0/HvFX7eFtEFqkYx139YWXEUi9C/IOZlK9JiwhpTPVhIoffNoA+SZWvVukh0YzYR1YyAqgQ3fuinmVCdarCRTtRWpNVhi7QkBbP44F/6hEw8X5QkTiYCYJRi1YhNcnkRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826874; c=relaxed/simple;
-	bh=cvNq+WGxUVR88rGaKKw4d28LMulSLFhYGAlXk/gCx4Q=;
+	s=arc-20240116; t=1780826877; c=relaxed/simple;
+	bh=CEfQIfB4iyFNVofTlm3HxkxrXBgI/AVyftcKEDNlVJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QN0+N9mp0zT87XC6W3Bz3FituKIscSyq5MqQ40QI7mo1rby6rvC+WHYhdDWHusfJJ4+vtQs5lC6KtvERn0pBPCFDrO7wywJoNSF55TwanM1NzWHP2FNdIIAzz/3Sxf4XA03hDBbMv3MTED1L2cUm12ZouP1fBDacrmiSX1vIjz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NryYx/jD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=FBpMiz2BcENv3TMbzQ0ZRiuSISEWcfyNDGe1ONsmxYWroU8tL6a+EcgJlaRBj9r91Kuo70/E0xn//ZkUIqQmljB0oTiCSfy7WUcRQrC8hccN481nZNCnIpGokPkf157K6LXEN9PNQ+9phpuMPmXWOpIt+FRvVE29yAMy2XXxZgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fnyAprKj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NryYx/jD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574701F00893;
-	Sun,  7 Jun 2026 10:07:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnyAprKj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD93C1F00893;
+	Sun,  7 Jun 2026 10:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826872;
-	bh=M1B7MsJZbsRSC9XOXom+Aa5GtwG1TTCB+fJ0sk9KqQY=;
+	s=korg; t=1780826876;
+	bh=GMsTytIjE82+TTChcMTiWnwgLQKDGKoEIJI+eox1Vzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NryYx/jDZgWn+wxz9mAv8WmE+GXutKvItVS0KR7OqaVKiDkHW/6yycVRtrEd49NYF
-	 mzndDMxvY2JqPVcdw92SlON3DySevKw8mDe1aNyz3FoLFtQYrEdN6TPFqKCWJsIeLF
-	 CSGmhbAGYg2BBNlVPWb9yQ8C1CvazNZ3y3M0zJA0=
+	b=fnyAprKjZOHhtDUnX6YqD3fMXzHI7SWg3DoEoRD5eGgqCk2UCGWuba6bL4IuGw2ij
+	 hwoG7Bx5a4lfHTvkZIurRVj7GQ2EPGkg4ZGVcYllZy3Kg89kVdzatdVChh1WuQt6YO
+	 lyFvXDwpoArtq2qYBC1X3rmvoQUoW7H1DE2ygJDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Florian Westphal <fw@strlen.de>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Grzelak?= <michal.grzelak@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 018/315] netfilter: ebtables: fix OOB read in compat_mtw_from_user
-Date: Sun,  7 Jun 2026 11:56:45 +0200
-Message-ID: <20260607095728.163515304@linuxfoundation.org>
+Subject: [PATCH 7.0 039/332] drm/i915/aux: use polling when irqs are unavailable
+Date: Sun,  7 Jun 2026 11:56:48 +0200
+Message-ID: <20260607095729.548600140@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,111 +46,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Michał Grzelak <michal.grzelak@intel.com>
 
-[ Upstream commit f438d1786d657d57790c5d138d6db3fc9fdac392 ]
+[ Upstream commit 202e77cf2e839e1adc804433322dc5c9ee511c9f ]
 
-Luxiao Xu says:
+PTL with physically disconnected display was observed to have 40s longer
+execution time when testing xe_fault_injection@xe_guc_mmio_send_recv.
+The issue has not been seen when reverting commit 40a9f77a28fa ("Revert
+"drm/i915/dp: change aux_ctl reg read to polling read"").
 
- The function compat_mtw_from_user() converts ebtables extensions from
- 32-bit user structures to kernel native structures. However, it lacks
- proper validation of the user-supplied match_size/target_size.
+Apparently the configuration suffers from not having AUX enabled when
+using interrupts. One probable cause can be xe enabling interrupts too
+late: interrupts need memory allocations which currently can't be done
+before the display FB takeover is done.
 
- When certain extensions are processed, the kernel-side translation
- logic may perform memory accesses based on the extension's expected
- size. If the user provides a size smaller than what the extension
- requires, it results in an out-of-bounds read as reported by KASAN.
+As for now, use polling for AUX in case interrupts are unavailable.
 
- This fix introduces a check to ensure match_size is at least as large
- as the extension's required compatsize. This covers matches, watchers,
- and targets, while maintaining compatibility with standard targets.
-
-AFAIU this is relevant for matches that need to go though
-match->compat_from_user() call.  Those that use plain memcpy with the
-user-provided size are ok because the caller checks that size vs the
-start of the next rule entry offset (which itself is checked vs. total
-size copied from userspace).
-
-The ->compat_from_user() callbacks assume they can read compatsize bytes,
-so they need this extra check.
-
-Based on an earlier patch from Luxiao Xu.
-
-Fixes: 81e675c227ec ("netfilter: ebtables: add CONFIG_COMPAT support")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 40a9f77a28fa ("Revert "drm/i915/dp: change aux_ctl reg read to polling read"")
+Suggested-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Signed-off-by: Michał Grzelak <michal.grzelak@intel.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patch.msgid.link/20260416163744.288107-1-michal.grzelak@intel.com
+(cherry picked from commit 05e0550b65cd1604bd515fbc65f522bce4c10a87)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/ebtables.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ drivers/gpu/drm/i915/display/intel_dp_aux.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
-index 77df9e856c2e73..ecd7baa25d7268 100644
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -1956,6 +1956,25 @@ enum compat_mwt {
- 	EBT_COMPAT_TARGET,
- };
+diff --git a/drivers/gpu/drm/i915/display/intel_dp_aux.c b/drivers/gpu/drm/i915/display/intel_dp_aux.c
+index b20ec3e589fadc..9c9b6410366d5c 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp_aux.c
++++ b/drivers/gpu/drm/i915/display/intel_dp_aux.c
+@@ -12,6 +12,7 @@
+ #include "intel_dp.h"
+ #include "intel_dp_aux.h"
+ #include "intel_dp_aux_regs.h"
++#include "intel_parent.h"
+ #include "intel_pps.h"
+ #include "intel_quirks.h"
+ #include "intel_tc.h"
+@@ -60,18 +61,29 @@ intel_dp_aux_wait_done(struct intel_dp *intel_dp)
+ 	struct intel_display *display = to_intel_display(intel_dp);
+ 	i915_reg_t ch_ctl = intel_dp->aux_ch_ctl_reg(intel_dp);
+ 	const unsigned int timeout_ms = 10;
++	bool done = true;
+ 	u32 status;
+-	bool done;
++	int ret;
  
-+static bool match_size_ok(const struct xt_match *match, unsigned int match_size)
-+{
-+	u16 csize;
++	if (intel_parent_irq_enabled(display)) {
+ #define C (((status = intel_de_read_notrace(display, ch_ctl)) & DP_AUX_CH_CTL_SEND_BUSY) == 0)
+-	done = wait_event_timeout(display->gmbus.wait_queue, C,
+-				  msecs_to_jiffies_timeout(timeout_ms));
++		done = wait_event_timeout(display->gmbus.wait_queue, C,
++					  msecs_to_jiffies_timeout(timeout_ms));
 +
-+	if (match->matchsize == -1) /* cannot validate ebt_among */
-+		return true;
++#undef C
++	} else {
++		ret = intel_de_wait_ms(display, ch_ctl,
++				       DP_AUX_CH_CTL_SEND_BUSY, 0,
++				       timeout_ms, &status);
 +
-+	csize = match->compatsize ? : match->matchsize;
-+
-+	return match_size >= csize;
-+}
-+
-+static bool tgt_size_ok(const struct xt_target *tgt, unsigned int tgt_size)
-+{
-+	u16 csize = tgt->compatsize ? : tgt->targetsize;
-+
-+	return tgt_size >= csize;
-+}
-+
- static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
- 				enum compat_mwt compat_mwt,
- 				struct ebt_entries_buf_state *state,
-@@ -1981,6 +2000,11 @@ static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
- 		if (IS_ERR(match))
- 			return PTR_ERR(match);
++		if (ret == -ETIMEDOUT)
++			done = false;
++	}
  
-+		if (!match_size_ok(match, match_size)) {
-+			module_put(match->me);
-+			return -EINVAL;
-+		}
-+
- 		off = ebt_compat_match_offset(match, match_size);
- 		if (dst) {
- 			if (match->compat_from_user)
-@@ -2000,6 +2024,12 @@ static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
- 					    mwt->u.revision);
- 		if (IS_ERR(wt))
- 			return PTR_ERR(wt);
-+
-+		if (!tgt_size_ok(wt, match_size)) {
-+			module_put(wt->me);
-+			return -EINVAL;
-+		}
-+
- 		off = xt_compat_target_offset(wt);
+ 	if (!done)
+ 		drm_err(display->drm,
+ 			"%s: did not complete or timeout within %ums (status 0x%08x)\n",
+ 			intel_dp->aux.name, timeout_ms, status);
+-#undef C
  
- 		if (dst) {
+ 	return status;
+ }
 -- 
 2.53.0
 
