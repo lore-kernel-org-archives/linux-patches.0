@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7387A4204E;
-	Sun,  7 Jun 2026 10:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32EE4204E;
+	Sun,  7 Jun 2026 10:10:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827020; cv=none; b=b8/67zbFwy1+C459NMF4c1HQKwCbosfqMlZ8MFJj2UBmpRUsD6w4LZQZ1RcE3dSUNRkWOFax4dFLo58K1B8GzBPUXcW/r8pprN/k/NuD5FL8TFKuwWTXBY5sCDEneTAgTh5Rna1TLnKS84m+gZHpOc+dDvHZVQwmFZPCwQmbqF0=
+	t=1780827023; cv=none; b=HFy33SyWtf8s1aaNlMd4Fch5++vwcYST1XXYvxJ3QWEv+nt8if/n1ZmKotB3Wa5UuDxO5Sa0iFuMtZkCOV6TMIA3GWbiiquIUIpOn+GWvVmpgAtiXHprRBW7+5vSbSyFDrCQdy3IUy9eyKRAwYBqTNTARyLR3NVnp+qUg118mW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827020; c=relaxed/simple;
-	bh=gvszWEZmrEXzsp9RqL2E9USzcjZADJwm8oncXFOBDqQ=;
+	s=arc-20240116; t=1780827023; c=relaxed/simple;
+	bh=KJ7IpcAoj2C+UChnS+csKMN4+tHRCZ2Jp/YpwFz1YK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S5dWzNKhhOXJ6v3yT2DrXJ/xqy8KvL1y5zSV8es4yY1cLPv62dPdMBLvCWQR71wsxWJrrTvUBHcLR0m3i/Toih/LW0YSV781yt3FdXo4frGTLgs3xfMmsQjji6oSHkN2PFzbDb7I4fFegB4+zCXt0k1A/cb+B4ohAgjN8Z5IjiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SVjhcgQ5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VGnuOm9pXcwfnf0JE8wTdYULlpOsJgfyNUXbQ21VGE+JJzVFnUG5llEJ0psvYXH4N2y0qHjWWFK6A0x2SkCrqevTZYbvaUwQagPzT3wtxA66ZibUqoFTJpKM21/TGOpcqmQb97u84QLfShH+FkFxbRIoPCXSx4TVyQR2KSn9gdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pl48kf3V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVjhcgQ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B371F00893;
-	Sun,  7 Jun 2026 10:10:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pl48kf3V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F311F00893;
+	Sun,  7 Jun 2026 10:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827019;
-	bh=8qHjOC1C8dSHgPetpN4PXzo8MES1Rr3I43s4xtFOY74=;
+	s=korg; t=1780827022;
+	bh=rqDf5cIM2uBE982oIZb5Qeu+eUSLtY3c6BBH/dhLJQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SVjhcgQ5f25woJb5djpKbWsEYcibJS/Oi6/BnJ2YY0g1f3UyCceuqDTPQAV8yYoM8
-	 Yvcf2ZPz0JCy/vUyy4JFsF1hhKAgQGKqaV+Emp6VXdGZQ5pXQB8vwHnvrNwjZo4FwL
-	 FpgUtYmSpYWpBtXlHI2Drp6L8iPOTAiuJMZGnXSE=
+	b=Pl48kf3V37YVAeHAmBhpzsLLkYNSu8OW3BqpKQejb54teRkKJHCI13eYV44fK3/RB
+	 06k2vxc8J+YV3SdRuvMmPz4n4WC/JMu893SMJ2v9zfED7aFn5UAVd+EJrd6sfho6Bx
+	 EGLXg0wgVKjEw2HsX9CZ9E0cnOu/CSdQhtwgqPTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 015/307] arm64: debug: remove break/step handler registration infrastructure
-Date: Sun,  7 Jun 2026 11:56:52 +0200
-Message-ID: <20260607095728.185653732@linuxfoundation.org>
+Subject: [PATCH 6.18 033/315] gpio: mxc: fix irq_high handling
+Date: Sun,  7 Jun 2026 11:57:00 +0200
+Message-ID: <20260607095728.739380393@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,148 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit d4e0b12620946a4011ad695490211fc38bf5cb42 ]
+[ Upstream commit dac917ed5aead741004db8d0d5151dd577802df8 ]
 
-Remove all infrastructure for the dynamic registration previously used by
-software breakpoints and stepping handlers.
+If port->irq_high is -1 (fsl,imx21-gpio compatible) and gpio_idx is >= 16
+enable_irq_wake() is called with -1 which is wrong.
 
-Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Tested-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Reviewed-by: Will Deacon <will@kernel.org>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20250707114109.35672-6-ada.coupriediaz@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Fixes: 5f6d1998adeb ("gpio: mxc: release the parent IRQ in runtime suspend")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260526063504.25916-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/debug-monitors.h | 24 ----------
- arch/arm64/kernel/debug-monitors.c      | 63 -------------------------
- 2 files changed, 87 deletions(-)
+ drivers/gpio/gpio-mxc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/debug-monitors.h b/arch/arm64/include/asm/debug-monitors.h
-index 3eeea1c9f06664..5319da0f0ca4ea 100644
---- a/arch/arm64/include/asm/debug-monitors.h
-+++ b/arch/arm64/include/asm/debug-monitors.h
-@@ -62,30 +62,6 @@ struct task_struct;
- #define DBG_HOOK_HANDLED	0
- #define DBG_HOOK_ERROR		1
- 
--struct step_hook {
--	struct list_head node;
--	int (*fn)(struct pt_regs *regs, unsigned long esr);
--};
--
--void register_user_step_hook(struct step_hook *hook);
--void unregister_user_step_hook(struct step_hook *hook);
--
--void register_kernel_step_hook(struct step_hook *hook);
--void unregister_kernel_step_hook(struct step_hook *hook);
--
--struct break_hook {
--	struct list_head node;
--	int (*fn)(struct pt_regs *regs, unsigned long esr);
--	u16 imm;
--	u16 mask; /* These bits are ignored when comparing with imm */
--};
--
--void register_user_break_hook(struct break_hook *hook);
--void unregister_user_break_hook(struct break_hook *hook);
--
--void register_kernel_break_hook(struct break_hook *hook);
--void unregister_kernel_break_hook(struct break_hook *hook);
--
- u8 debug_monitors_arch(void);
- 
- enum dbg_active_el {
-diff --git a/arch/arm64/kernel/debug-monitors.c b/arch/arm64/kernel/debug-monitors.c
-index f929b107840de6..a28482e25c4c31 100644
---- a/arch/arm64/kernel/debug-monitors.c
-+++ b/arch/arm64/kernel/debug-monitors.c
-@@ -159,46 +159,6 @@ NOKPROBE_SYMBOL(clear_user_regs_spsr_ss);
- #define set_regs_spsr_ss(r)	set_user_regs_spsr_ss(&(r)->user_regs)
- #define clear_regs_spsr_ss(r)	clear_user_regs_spsr_ss(&(r)->user_regs)
- 
--static DEFINE_SPINLOCK(debug_hook_lock);
--static LIST_HEAD(user_step_hook);
--static LIST_HEAD(kernel_step_hook);
--
--static void register_debug_hook(struct list_head *node, struct list_head *list)
--{
--	spin_lock(&debug_hook_lock);
--	list_add_rcu(node, list);
--	spin_unlock(&debug_hook_lock);
--
--}
--
--static void unregister_debug_hook(struct list_head *node)
--{
--	spin_lock(&debug_hook_lock);
--	list_del_rcu(node);
--	spin_unlock(&debug_hook_lock);
--	synchronize_rcu();
--}
--
--void register_user_step_hook(struct step_hook *hook)
--{
--	register_debug_hook(&hook->node, &user_step_hook);
--}
--
--void unregister_user_step_hook(struct step_hook *hook)
--{
--	unregister_debug_hook(&hook->node);
--}
--
--void register_kernel_step_hook(struct step_hook *hook)
--{
--	register_debug_hook(&hook->node, &kernel_step_hook);
--}
--
--void unregister_kernel_step_hook(struct step_hook *hook)
--{
--	unregister_debug_hook(&hook->node);
--}
--
- /*
-  * Call single step handlers
-  * There is no Syndrome info to check for determining the handler.
-@@ -264,29 +224,6 @@ static int single_step_handler(unsigned long unused, unsigned long esr,
- }
- NOKPROBE_SYMBOL(single_step_handler);
- 
--static LIST_HEAD(user_break_hook);
--static LIST_HEAD(kernel_break_hook);
--
--void register_user_break_hook(struct break_hook *hook)
--{
--	register_debug_hook(&hook->node, &user_break_hook);
--}
--
--void unregister_user_break_hook(struct break_hook *hook)
--{
--	unregister_debug_hook(&hook->node);
--}
--
--void register_kernel_break_hook(struct break_hook *hook)
--{
--	register_debug_hook(&hook->node, &kernel_break_hook);
--}
--
--void unregister_kernel_break_hook(struct break_hook *hook)
--{
--	unregister_debug_hook(&hook->node);
--}
--
- static int call_break_hook(struct pt_regs *regs, unsigned long esr)
- {
- 	if (user_mode(regs)) {
+diff --git a/drivers/gpio/gpio-mxc.c b/drivers/gpio/gpio-mxc.c
+index 441ba95b38cf9b..dbdf0f41b6bb91 100644
+--- a/drivers/gpio/gpio-mxc.c
++++ b/drivers/gpio/gpio-mxc.c
+@@ -469,7 +469,7 @@ static int mxc_gpio_probe(struct platform_device *pdev)
+ 		 * the handler is needed only once, but doing it for every port
+ 		 * is more robust and easier.
+ 		 */
+-		port->irq_high = -1;
++		port->irq_high = 0;
+ 		port->mx_irq_handler = mx2_gpio_irq_handler;
+ 	} else
+ 		port->mx_irq_handler = mx3_gpio_irq_handler;
 -- 
 2.53.0
 
