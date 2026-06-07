@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77E330C157;
-	Sun,  7 Jun 2026 10:10:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41BAA227B94;
+	Sun,  7 Jun 2026 10:10:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827040; cv=none; b=F2lQwqcZZGspyalKyJCU/pISf5D6OG+HCYM0sIIlcsOskqC0ZlLZ3buUlhKtX6rp0WPeC78Nl5fapuO0pJr6EWzEogW/eq2WH5Xs3nBWTKwjxpGK4qzsS6sMLxxQJ4Y8I78xMNKmGqi+uu6qtXciNnPhKKbt0Ld4cPn/6Z8ohCY=
+	t=1780827044; cv=none; b=uVvbPQ85jw1VP24T/PvhkEAiXL26hst+2NKpWP0fsIWsdZPdq8xI7hTJZyJaAUJYMWL5LDaZRB7lGtLWkQm4jtImAGqJQoWGz4lHFNxjUiqQABBelZVPSpIItvKylY/xdkORy16GKVwWFY4l7A5G5whYaj9T1h+Aet91G4lG3ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827040; c=relaxed/simple;
-	bh=AUZd4ez5+rwgppmG5hqCO7NGnTjdQbl3dju2Dd6SNmU=;
+	s=arc-20240116; t=1780827044; c=relaxed/simple;
+	bh=hoEmlAOY++vUipiBFeNSRg71Tqu1UnXsltHB/3RwPo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sn5KOzqQZ13WSBBBK6RM6IMqIGBzYE6R1bt1pfTXTokWN0Wqz2SXmOrx0O/fw/nT+dsxC6k8gBGKwUHkIlqR3zhOaaxev+/MUQyK0bJIvphi6jstVnbv83qTX4Mg9rm3em5ZNQX5GaJEFWxSAdBVLJmJhp6Onz3DQnqgNJRliys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SShXd8v6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=haARdz7FY8EXOlj76Myp+uDRf3x+pfUEPOB4dl+Bv7QNWXSDX3Bik2nSYJSQktC1Sc51KfskKhLyHom8z7mtQMMxBbuQfsxkgm5XcRw/nM7+OQiaEam5N8tsk5Ou0/Ok+bLLwAoOM63W8NQ/JeIXnjPn9ShC/XeQ984s4b+EDXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAWJgtWE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SShXd8v6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2CC11F00893;
-	Sun,  7 Jun 2026 10:10:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAWJgtWE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 757A11F00893;
+	Sun,  7 Jun 2026 10:10:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827039;
-	bh=w3QXtdO3w3g6UjpJAoe2TGtL43tR+mHfm98y4IyEWmk=;
+	s=korg; t=1780827043;
+	bh=n5U2Wqca8d/z4bwB50Hk3c8BarVdVxDeOz5AL7QjARk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SShXd8v697oTHurIbA4lnpA+3AtYTDPmGcPXxlAKzqIr4BMVCxyBjc4gwPGMG7BBx
-	 hOWJtnO8gglmTmljS5sSm06CAzJVH9xgBZN8yDL99Lg8D0OT0mRmTOVS6LppXa2djs
-	 6ef3FU6/EEtKyngLYDHtfls+Vr6eriSoCqNQStsg=
+	b=IAWJgtWEvxXkNx6p0ML8lcrHPKUqwmZVyeoE5UU7WMubYcv5VmHaWyu5l5tT1TmMo
+	 nNQQyGL2vKeiNiZXN+1fJeWwm4NiYjWFPAca0cjy1k9rujUSoEW/5uQL3jMCMLpT/c
+	 kGbWK7UVbr+rp5nXAd7/PK4XjPon3f/u37ZP66a4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <tom.leiming@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
+	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 057/332] blk-mq: reinsert cached request to the list
-Date: Sun,  7 Jun 2026 11:57:06 +0200
-Message-ID: <20260607095730.222279896@linuxfoundation.org>
+Subject: [PATCH 6.12 017/307] arm64: debug: split hardware breakpoint exception entry
+Date: Sun,  7 Jun 2026 11:56:54 +0200
+Message-ID: <20260607095728.258926872@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,46 +50,211 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
 
-[ Upstream commit b051bb6bf0a231117036aa607cadf55be8e63910 ]
+[ Upstream commit 43e2ae77fcab8a01101a2e5da528b5222b338e5f ]
 
-A previous commit removed an optimization out of caution for a scenario
-that turns out not to be real: all the "queue_exit" goto's are safe to
-reinsert the request into the cached_rq's plug list as they are either
-from a non-blocking path, or a successful merge that already holds the
-queue reference. This optimization is most needed for small sequential
-workloads that successfully merge into larger requests.
+Currently all debug exceptions share common entry code and are routed
+to `do_debug_exception()`, which calls dynamically-registered
+handlers for each specific debug exception. This is unfortunate as
+different debug exceptions have different entry handling requirements,
+and it would be better to handle these distinct requirements earlier.
 
-Fixes: dc278e9bf2b9 ("blk-mq: pop cached request if it is usable")
-Suggested-by: Ming Lei <tom.leiming@gmail.com>
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Link: https://patch.msgid.link/20260526153531.2365935-1-kbusch@meta.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Hardware breakpoints exceptions are generated by the hardware after user
+configuration. As such, they can be exploited when training branch
+predictors outside of the userspace VA range: they still need to call
+`arm64_apply_bp_hardening()` if needed to mitigate against this attack.
+
+However, they do not need to handle the Cortex-A76 erratum #1463225 as
+it only applies to single stepping exceptions.
+It does not set an address in FAR_EL1 either, only the hardware
+watchpoint does.
+
+As the hardware breakpoint handler only returns 0 and never triggers
+the call to `arm64_notify_die()`, we can call it directly from
+`entry-common.c`.
+Split the hardware breakpoint exception entry, adjust
+the function signature, and handling of the Cortex-A76 erratum to fit
+the behaviour of the exception.
+
+Move the call to `arm64_apply_bp_hardening()` to `entry-common.c` so that
+we can do it as early as possible, and only for the exceptions coming
+from EL0, where it is needed.
+This is safe to do as it is `noinstr`, as are all the functions it
+may call. `el0_ia()` and `el0_pc()` already call it this way.
+
+Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Tested-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
+Reviewed-by: Will Deacon <will@kernel.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/20250707114109.35672-8-ada.coupriediaz@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/exception.h |  5 +++++
+ arch/arm64/kernel/entry-common.c   | 28 ++++++++++++++++++++++++++++
+ arch/arm64/kernel/hw_breakpoint.c  | 16 ++++++----------
+ 3 files changed, 39 insertions(+), 10 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 39986a742b981a..061c8ef4484a25 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -3244,7 +3244,7 @@ void blk_mq_submit_bio(struct bio *bio)
- 	if (!rq)
- 		blk_queue_exit(q);
- 	else
--		blk_mq_free_request(rq);
-+		rq_list_add_head(&plug->cached_rqs, rq);
+diff --git a/arch/arm64/include/asm/exception.h b/arch/arm64/include/asm/exception.h
+index b1d6a65f6d2256..94f46e96515160 100644
+--- a/arch/arm64/include/asm/exception.h
++++ b/arch/arm64/include/asm/exception.h
+@@ -59,6 +59,11 @@ void do_el0_bti(struct pt_regs *regs);
+ void do_el1_bti(struct pt_regs *regs, unsigned long esr);
+ void do_debug_exception(unsigned long addr_if_watchpoint, unsigned long esr,
+ 			struct pt_regs *regs);
++#ifdef CONFIG_HAVE_HW_BREAKPOINT
++void do_breakpoint(unsigned long esr, struct pt_regs *regs);
++#else
++static inline void do_breakpoint(unsigned long esr, struct pt_regs *regs) {}
++#endif /* CONFIG_HAVE_HW_BREAKPOINT */
+ void do_fpsimd_acc(unsigned long esr, struct pt_regs *regs);
+ void do_sve_acc(unsigned long esr, struct pt_regs *regs);
+ void do_sme_acc(unsigned long esr, struct pt_regs *regs);
+diff --git a/arch/arm64/kernel/entry-common.c b/arch/arm64/kernel/entry-common.c
+index 2e04e04aaf2ad6..af0d7575dcfd92 100644
+--- a/arch/arm64/kernel/entry-common.c
++++ b/arch/arm64/kernel/entry-common.c
+@@ -508,6 +508,15 @@ static void noinstr el1_bti(struct pt_regs *regs, unsigned long esr)
+ 	exit_to_kernel_mode(regs);
  }
  
- #ifdef CONFIG_BLK_MQ_STACKING
++static void noinstr el1_breakpt(struct pt_regs *regs, unsigned long esr)
++{
++	arm64_enter_el1_dbg(regs);
++	debug_exception_enter(regs);
++	do_breakpoint(esr, regs);
++	debug_exception_exit(regs);
++	arm64_exit_el1_dbg(regs);
++}
++
+ static void noinstr el1_dbg(struct pt_regs *regs, unsigned long esr)
+ {
+ 	unsigned long far = read_sysreg(far_el1);
+@@ -551,6 +560,8 @@ asmlinkage void noinstr el1h_64_sync_handler(struct pt_regs *regs)
+ 		el1_bti(regs, esr);
+ 		break;
+ 	case ESR_ELx_EC_BREAKPT_CUR:
++		el1_breakpt(regs, esr);
++		break;
+ 	case ESR_ELx_EC_SOFTSTP_CUR:
+ 	case ESR_ELx_EC_WATCHPT_CUR:
+ 	case ESR_ELx_EC_BRK64:
+@@ -737,6 +748,19 @@ static void noinstr el0_inv(struct pt_regs *regs, unsigned long esr)
+ 	exit_to_user_mode(regs);
+ }
+ 
++static void noinstr el0_breakpt(struct pt_regs *regs, unsigned long esr)
++{
++	if (!is_ttbr0_addr(regs->pc))
++		arm64_apply_bp_hardening();
++
++	enter_from_user_mode(regs);
++	debug_exception_enter(regs);
++	do_breakpoint(esr, regs);
++	debug_exception_exit(regs);
++	local_daif_restore(DAIF_PROCCTX);
++	exit_to_user_mode(regs);
++}
++
+ static void noinstr el0_dbg(struct pt_regs *regs, unsigned long esr)
+ {
+ 	/* Only watchpoints write FAR_EL1, otherwise its UNKNOWN */
+@@ -813,6 +837,8 @@ asmlinkage void noinstr el0t_64_sync_handler(struct pt_regs *regs)
+ 		el0_mops(regs, esr);
+ 		break;
+ 	case ESR_ELx_EC_BREAKPT_LOW:
++		el0_breakpt(regs, esr);
++		break;
+ 	case ESR_ELx_EC_SOFTSTP_LOW:
+ 	case ESR_ELx_EC_WATCHPT_LOW:
+ 	case ESR_ELx_EC_BRK64:
+@@ -933,6 +959,8 @@ asmlinkage void noinstr el0t_32_sync_handler(struct pt_regs *regs)
+ 		el0_cp15(regs, esr);
+ 		break;
+ 	case ESR_ELx_EC_BREAKPT_LOW:
++		el0_breakpt(regs, esr);
++		break;
+ 	case ESR_ELx_EC_SOFTSTP_LOW:
+ 	case ESR_ELx_EC_WATCHPT_LOW:
+ 	case ESR_ELx_EC_BKPT32:
+diff --git a/arch/arm64/kernel/hw_breakpoint.c b/arch/arm64/kernel/hw_breakpoint.c
+index 722ac45f9f7b16..d7eede5d869c2b 100644
+--- a/arch/arm64/kernel/hw_breakpoint.c
++++ b/arch/arm64/kernel/hw_breakpoint.c
+@@ -22,6 +22,7 @@
+ #include <asm/current.h>
+ #include <asm/debug-monitors.h>
+ #include <asm/esr.h>
++#include <asm/exception.h>
+ #include <asm/hw_breakpoint.h>
+ #include <asm/traps.h>
+ #include <asm/cputype.h>
+@@ -618,8 +619,7 @@ NOKPROBE_SYMBOL(toggle_bp_registers);
+ /*
+  * Debug exception handlers.
+  */
+-static int breakpoint_handler(unsigned long unused, unsigned long esr,
+-			      struct pt_regs *regs)
++void do_breakpoint(unsigned long esr, struct pt_regs *regs)
+ {
+ 	int i, step = 0, *kernel_step;
+ 	u32 ctrl_reg;
+@@ -662,7 +662,7 @@ static int breakpoint_handler(unsigned long unused, unsigned long esr,
+ 	}
+ 
+ 	if (!step)
+-		return 0;
++		return;
+ 
+ 	if (user_mode(regs)) {
+ 		debug_info->bps_disabled = 1;
+@@ -670,7 +670,7 @@ static int breakpoint_handler(unsigned long unused, unsigned long esr,
+ 
+ 		/* If we're already stepping a watchpoint, just return. */
+ 		if (debug_info->wps_disabled)
+-			return 0;
++			return;
+ 
+ 		if (test_thread_flag(TIF_SINGLESTEP))
+ 			debug_info->suspended_step = 1;
+@@ -681,7 +681,7 @@ static int breakpoint_handler(unsigned long unused, unsigned long esr,
+ 		kernel_step = this_cpu_ptr(&stepping_kernel_bp);
+ 
+ 		if (*kernel_step != ARM_KERNEL_STEP_NONE)
+-			return 0;
++			return;
+ 
+ 		if (kernel_active_single_step()) {
+ 			*kernel_step = ARM_KERNEL_STEP_SUSPEND;
+@@ -690,10 +690,8 @@ static int breakpoint_handler(unsigned long unused, unsigned long esr,
+ 			kernel_enable_single_step(regs);
+ 		}
+ 	}
+-
+-	return 0;
+ }
+-NOKPROBE_SYMBOL(breakpoint_handler);
++NOKPROBE_SYMBOL(do_breakpoint);
+ 
+ /*
+  * Arm64 hardware does not always report a watchpoint hit address that matches
+@@ -988,8 +986,6 @@ static int __init arch_hw_breakpoint_init(void)
+ 		core_num_brps, core_num_wrps);
+ 
+ 	/* Register debug fault handlers. */
+-	hook_debug_fault_code(DBG_ESR_EVT_HWBP, breakpoint_handler, SIGTRAP,
+-			      TRAP_HWBKPT, "hw-breakpoint handler");
+ 	hook_debug_fault_code(DBG_ESR_EVT_HWWP, watchpoint_handler, SIGTRAP,
+ 			      TRAP_HWBKPT, "hw-watchpoint handler");
+ 
 -- 
 2.53.0
 
