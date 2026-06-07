@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B45831F983;
-	Sun,  7 Jun 2026 10:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE05C320A37;
+	Sun,  7 Jun 2026 10:24:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827842; cv=none; b=CBbHmBW/j6Ho6N1OvzmQDfqxqc/KrSqtf42lxCWebP2GD8gZMgFFciI8zRw2GL6GBZgJSyKNFOdgX0MIu9vYFiFO5woGKCRMwdkwegQxAkXVg/MSOKXRZT6xvKVipYfWkinZdjvRqwk4mXoj9kRSjWpHjTlqmTD/wBJFQPZt8WI=
+	t=1780827847; cv=none; b=c3oeKrj1APR7q3arzjIaK7l1qTmKIGUdg7OSjiLtAiS9bdFmMZi9iOG++pT+EFOZp6JhywNROWpAMTYkdV9cg/fnoEcbG5Pxi8uSmv6MqlJJ0aUXwLcIHAZynfAsvolC+p+y87Qg+KG3giC6+u7ly6XcQ/9HAZNK8LROfsNr6qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827842; c=relaxed/simple;
-	bh=7AkqWxJzn5d81XkIc7gAgJVT5neUZlr9XxJNqlsZs/A=;
+	s=arc-20240116; t=1780827847; c=relaxed/simple;
+	bh=FGzg3kRUoSzvSxNZ1eUmxVrz4bVkEgLKLLBkZeYYgFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YBb0OFMOlD39Y/hZtqlIqKpojGih2Wl5cJFjpITGgSM0r8ICD2zR71a4Nxuhlnd3LF3aPsld7t5uRVP9tHHC6pjH2tIw9N0xR42KW8qgU4irjMxJk0E5u2Y8NjTLg70rG1+wpU70ABVBxPH5AKQ6Dkuq8ewlSQQBzQmgB6xhJks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEoAPS3d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=MbIwSBUdT7L/QmOo3VKc8A1XP1C3epUQ/5DjmEhhRVuV+fd59e00CDwOeGMZrbbiG3KXL+sUG/kWG29VEe8rMo9kCYVBvpTGkdDzbzG3/OLiYIKKLlV7jkXYfb+jFawfOpJipIFozM2SJlE3gjHK+ky5gEpa529H6kZgW4C+2fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ks8578sZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEoAPS3d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44BA41F00893;
-	Sun,  7 Jun 2026 10:24:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ks8578sZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9831F00893;
+	Sun,  7 Jun 2026 10:24:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827841;
-	bh=5zWBmyj67lcIzfjwe9m7dsNOxH4dvYwLt9PB93z9T68=;
+	s=korg; t=1780827846;
+	bh=R7oOpDNWfQBGfV9aHBMRj3g6dcpQhCfLxGQg++QBhOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JEoAPS3dqfT/a12tNHN7E/kw87Su5L6DiisbRGwH5BOAJLHK6dQlE8TgEa9KsqC1h
-	 J1jzDq3lzQpGhEJ5DSCLOsi2+/HQbXXHiBqgdQz7khM00pvjBUVjyywWrhThWO22Fn
-	 OiR8/gxHf/wiKSfr1gdWDvvf7WJjXhuejj+FzMVE=
+	b=ks8578sZgHcc0wOSyoOXgS+0MzASk6pQA4s7b5kib0vJ6SlAzluPNsd9Io1z9AXQM
+	 Iszq6Sdm+cjXR8Mu/WSf40D7+nSXt91IHyMqBw1T3VNmz2kQ+EIa8pzSBajiysJh0E
+	 Eki3uY/I95dBU4PzEtiJuttM+1DZgveSf9UHmam4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 7.0 126/332] usb: typec: wcove: dont write past struct pd_message in wcove_read_rx_buffer()
-Date: Sun,  7 Jun 2026 11:58:15 +0200
-Message-ID: <20260607095732.737538259@linuxfoundation.org>
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Michael Hennerich <Michael.Hennerich@analog.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.18 105/315] iio: imu: adis16550: fix stack leak in trigger handler
+Date: Sun,  7 Jun 2026 11:58:12 +0200
+Message-ID: <20260607095731.502250534@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,85 +49,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 4af7ad0e6d7aa4403dbb1dac7b9659b0421efcaa upstream.
+commit 474f8928d50b09f7dcf507049f08732640b88b49 upstream.
 
-wcove_read_rx_buffer() copies the PD RX FIFO into the caller's
-struct pd_message with
+adis16550_trigger_handler() declares the scan data array on the stack
+without initializing it.  The memcpy() at the bottom fills only the
+first 28 bytes (TEMP + 6 channels of GYRO/ACCEL data), and
+iio_push_to_buffers_with_timestamp() writes the s64 timestamp at the
+8-byte-aligned offset 32.  Bytes 28-31 remain uninitialized stack data
+which leaks to userspace on ever trigger.
 
-	for (i = 0; i < USBC_RXINFO_RXBYTES(info); i++)
-		regmap_read(wcove->regmap, USBC_RX_DATA + i, msg + i);
+Fix this all by just zero-initializing the structure on the stack.
 
-which has two problems:
-
-USBC_RXINFO_RXBYTES() is a 5-bit field (max 31) while struct pd_message
-is 30 bytes (__le16 header + __le32 payload[PD_MAX_PAYLOAD], packed).
-The byte count latched in RXINFO is the number of bytes the port partner
-put on the wire, so a malicious partner that transmits a 31-byte frame
-can drive the loop one byte past the destination if the WCOVE BMC
-receiver does not enforce the PD object-count limit in hardware. The
-existing FIXME flagged this as unverified.
-
-Independently, regmap_read() takes an unsigned int * and stores a full
-unsigned int at the destination. Passing the byte pointer msg + i means
-each iteration writes four bytes; the high three are zero (val_bits is
-8) and are normally overwritten by the next iteration, but the final
-iteration's high bytes are not. With RXBYTES == 30 the i == 29 iteration
-already writes three zero bytes past msg, which sits on the IRQ thread's
-stack in wcove_typec_irq().
-
-Clamp the loop to sizeof(struct pd_message) and read each register into
-a local before storing only its low byte, so the copy can never exceed
-the destination regardless of what RXINFO reports.
-
-Assisted-by: gkh_clanker_t1000
+Cc: Lars-Peter Clausen <lars@metafoo.de>
+Cc: Michael Hennerich <Michael.Hennerich@analog.com>
+Cc: Jonathan Cameron <jic23@kernel.org>
+Cc: David Lechner <dlechner@baylibre.com>
+Cc: "Nuno Sá" <nuno.sa@analog.com>
+Cc: Andy Shevchenko <andy@kernel.org>
+Fixes: e4570f4bb231 ("iio: imu: adis16550: align buffers for timestamp")
 Cc: stable <stable@kernel.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/2026051347-clustered-deflected-9543@gregkh
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/wcove.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/iio/imu/adis16550.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/typec/tcpm/wcove.c
-+++ b/drivers/usb/typec/tcpm/wcove.c
-@@ -444,9 +444,11 @@ static int wcove_start_toggling(struct t
- 	return regmap_write(wcove->regmap, USBC_CONTROL1, usbc_ctrl);
- }
- 
--static int wcove_read_rx_buffer(struct wcove_typec *wcove, void *msg)
-+static int wcove_read_rx_buffer(struct wcove_typec *wcove,
-+				struct pd_message *msg)
- {
--	unsigned int info;
-+	unsigned int info, val, len;
-+	u8 *buf = (u8 *)msg;
- 	int ret;
- 	int i;
- 
-@@ -454,12 +456,13 @@ static int wcove_read_rx_buffer(struct w
- 	if (ret)
- 		return ret;
- 
--	/* FIXME: Check that USBC_RXINFO_RXBYTES(info) matches the header */
-+	len = min(USBC_RXINFO_RXBYTES(info), sizeof(*msg));
- 
--	for (i = 0; i < USBC_RXINFO_RXBYTES(info); i++) {
--		ret = regmap_read(wcove->regmap, USBC_RX_DATA + i, msg + i);
-+	for (i = 0; i < len; i++) {
-+		ret = regmap_read(wcove->regmap, USBC_RX_DATA + i, &val);
- 		if (ret)
- 			return ret;
-+		buf[i] = val;
- 	}
- 
- 	return regmap_write(wcove->regmap, USBC_RXSTATUS,
+--- a/drivers/iio/imu/adis16550.c
++++ b/drivers/iio/imu/adis16550.c
+@@ -836,7 +836,7 @@ static irqreturn_t adis16550_trigger_han
+ 	u16 dummy;
+ 	bool valid;
+ 	struct iio_poll_func *pf = p;
+-	__be32 data[ADIS16550_MAX_SCAN_DATA] __aligned(8);
++	__be32 data[ADIS16550_MAX_SCAN_DATA] __aligned(8) = { };
+ 	struct iio_dev *indio_dev = pf->indio_dev;
+ 	struct adis16550 *st = iio_priv(indio_dev);
+ 	struct adis *adis = iio_device_get_drvdata(indio_dev);
 
 
