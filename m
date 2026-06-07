@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C31EE2E7179;
-	Sun,  7 Jun 2026 10:20:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503322AD00;
+	Sun,  7 Jun 2026 10:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827641; cv=none; b=ctozHuFZI+TTUDHc1Ge2rMI6TJvn2J7rFSh8bQXVrB1BTkXEe3poGA17mKCDxcJfqAqFreg1LnVre0JGW1xrb5anJkAbJBHgW0FnnOVfxM25R1UYIcQlJEj4F0iwvW7VBv+y3cVxtpwLmfvUWiHxwwNohcDtXAmZgeG0ApQzJE0=
+	t=1780827645; cv=none; b=P3kAKi3aXYSSbjJMUN3U24mrvjXuY+liVVhAAxeC93eHj0kGE6CfjXVkzw4VuGxgfhn1o6htdA9OwrRvKLLZSLwMLdalFQX0+iHn05L4sD71cc9tqvC9XUcE/g5srdY+6PCJ7/6F5xu9ukjCciEIJysDkBcJis+9sPg6uNNRTiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827641; c=relaxed/simple;
-	bh=G3x/BkbsLJsEGubDo3EW+qg3Mjq8MxVwz7UOrURjcbI=;
+	s=arc-20240116; t=1780827645; c=relaxed/simple;
+	bh=hrpCifZjnyjEyGkhb0Slv1O6f/7jjzhMZxgKEmPSi3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=juHGqnjXihDCrNHn8T0shwNI+rxRUSjHJMvsKJjjwVwCefv6hCpt3BM1/Y2k/rgpNN7XTg7EcyNLKkTAD3P+0brnIwlQdlejVO99yctLGTL4EnnpiPlzGAu4/bEyPLydwga+0C2tSuzVy+GN5fyrwykN2qfdX8mVNhvA2WKRfuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kdLo9s5w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dXs2DOWj9tZgbcHL+harWOuqShqD1sB0nVy3lSD2CX5cJzuxUnTjy2KVim7rtvVPpSVMsAi2IxXtLL8gzV57+jDtgBXmlS681pZZYn4tjaLIglpMsqrTxxO9fJfePITt1lI9GRAJz7mA+EyGhZJLijKE1BhxGyK0l0fn/dDDmUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eSMxfP1K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdLo9s5w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136171F00893;
-	Sun,  7 Jun 2026 10:20:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSMxfP1K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ABE71F00893;
+	Sun,  7 Jun 2026 10:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827640;
-	bh=eHVvPkN246vfKlNkYET54RExpyb8eKC4c3mQiWEsiL4=;
+	s=korg; t=1780827644;
+	bh=+6XBEoaklgE3Fb/th2jipRfbHOagvpqRxZLb8VgqlWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kdLo9s5wglwGDQOGMeUWT8k8X8R+qDYSXn6KlcFn/+WaesS8fyVEapZmTqpHbWapB
-	 ldHSr/NUkyOMTQqbBBdkBIDq2RbhadUZ8pvN4FzLqtRm6VobkE7DBS6OtbuT+hrBmb
-	 bBxY8lt2zDsfJuPrPNdy64gZH2p/lfADYtK3k37Y=
+	b=eSMxfP1Kjeyc26W9WV359d2KUwsbmWPE0EqUQwlcQGX8GvhAMYZgQorCCXro9l8nm
+	 CHxsq9YwYxo2ZfIZUeF2+BdgEaxdMgujZTVLVxKeL8qTDeU6GRs3XDzUd8C3eLMF2Q
+	 FyBjpFhxI+DjhaMM4me30ltvlBP/unT8g8+gFv1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Jiri Pirko <jiri@resnulli.us>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 101/332] gpio: adnp: fix flow control regression caused by scoped_guard()
-Date: Sun,  7 Jun 2026 11:57:50 +0200
-Message-ID: <20260607095731.846226095@linuxfoundation.org>
+Subject: [PATCH 6.12 075/307] net/sched: act_mirred: Move the recursion counter struct netdev_xmit
+Date: Sun,  7 Jun 2026 11:57:52 +0200
+Message-ID: <20260607095730.518453501@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,45 +51,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit a5c627d90809b793fc053849b3a00609db305776 ]
+[ Upstream commit 7fe70c06a182a140be9996b02256d907e114479a ]
 
-scoped_guard() is implemented as a for loop. Using it to protect code
-using the continue statement changes the flow as we now only break out
-of the hidden loop inside scoped_guard(), not the original for loop. Use
-a regular code block instead.
+mirred_nest_level is a per-CPU variable and relies on disabled BH for its
+locking. Without per-CPU locking in local_bh_disable() on PREEMPT_RT
+this data structure requires explicit locking.
 
-Fixes: c7fe19ed3973 ("gpio: adnp: use lock guards for the I2C lock")
-Reported-by: David Lechner <dlechner@baylibre.com>
-Closes: https://lore.kernel.org/all/cde2abb2-4cc8-4fc9-b34a-0c5d2b95779f@baylibre.com/
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260522073527.9812-1-bartosz.golaszewski@oss.qualcomm.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Move mirred_nest_level to struct netdev_xmit as u8, provide wrappers.
+
+Cc: Jamal Hadi Salim <jhs@mojatatu.com>
+Cc: Cong Wang <xiyou.wangcong@gmail.com>
+Cc: Jiri Pirko <jiri@resnulli.us>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
+Link: https://patch.msgid.link/20250512092736.229935-11-bigeasy@linutronix.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: e80ad525fc7e ("net/sched: act_mirred: Fix return code in early mirred redirect error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-adnp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/linux/netdevice_xmit.h |  3 +++
+ net/sched/act_mirred.c         | 28 +++++++++++++++++++++++++---
+ 2 files changed, 28 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpio-adnp.c b/drivers/gpio/gpio-adnp.c
-index e5ac2d2110137f..fe5bcaa90496aa 100644
---- a/drivers/gpio/gpio-adnp.c
-+++ b/drivers/gpio/gpio-adnp.c
-@@ -237,7 +237,9 @@ static irqreturn_t adnp_irq(int irq, void *data)
- 		unsigned long pending;
- 		int err;
+diff --git a/include/linux/netdevice_xmit.h b/include/linux/netdevice_xmit.h
+index 38325e07029685..848735b3a7c02d 100644
+--- a/include/linux/netdevice_xmit.h
++++ b/include/linux/netdevice_xmit.h
+@@ -8,6 +8,9 @@ struct netdev_xmit {
+ #ifdef CONFIG_NET_EGRESS
+ 	u8  skip_txqueue;
+ #endif
++#if IS_ENABLED(CONFIG_NET_ACT_MIRRED)
++	u8 sched_mirred_nest;
++#endif
+ };
  
--		scoped_guard(mutex, &adnp->i2c_lock) {
-+		{
-+			guard(mutex)(&adnp->i2c_lock);
+ #endif
+diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
+index b1b0049d7a0e9d..18d9378a9c1134 100644
+--- a/net/sched/act_mirred.c
++++ b/net/sched/act_mirred.c
+@@ -30,7 +30,29 @@ static LIST_HEAD(mirred_list);
+ static DEFINE_SPINLOCK(mirred_list_lock);
+ 
+ #define MIRRED_NEST_LIMIT    4
+-static DEFINE_PER_CPU(unsigned int, mirred_nest_level);
 +
- 			err = adnp_read(adnp, GPIO_PLR(adnp) + i, &level);
- 			if (err < 0)
- 				continue;
++#ifndef CONFIG_PREEMPT_RT
++static u8 tcf_mirred_nest_level_inc_return(void)
++{
++	return __this_cpu_inc_return(softnet_data.xmit.sched_mirred_nest);
++}
++
++static void tcf_mirred_nest_level_dec(void)
++{
++	__this_cpu_dec(softnet_data.xmit.sched_mirred_nest);
++}
++
++#else
++static u8 tcf_mirred_nest_level_inc_return(void)
++{
++	return current->net_xmit.sched_mirred_nest++;
++}
++
++static void tcf_mirred_nest_level_dec(void)
++{
++	current->net_xmit.sched_mirred_nest--;
++}
++#endif
+ 
+ static bool tcf_mirred_is_act_redirect(int action)
+ {
+@@ -423,7 +445,7 @@ TC_INDIRECT_SCOPE int tcf_mirred_act(struct sk_buff *skb,
+ 	int m_eaction;
+ 	u32 blockid;
+ 
+-	nest_level = __this_cpu_inc_return(mirred_nest_level);
++	nest_level = tcf_mirred_nest_level_inc_return();
+ 	if (unlikely(nest_level > MIRRED_NEST_LIMIT)) {
+ 		net_warn_ratelimited("Packet exceeded mirred recursion limit on dev %s\n",
+ 				     netdev_name(skb->dev));
+@@ -454,7 +476,7 @@ TC_INDIRECT_SCOPE int tcf_mirred_act(struct sk_buff *skb,
+ 				   retval);
+ 
+ dec_nest_level:
+-	__this_cpu_dec(mirred_nest_level);
++	tcf_mirred_nest_level_dec();
+ 
+ 	return retval;
+ }
 -- 
 2.53.0
 
