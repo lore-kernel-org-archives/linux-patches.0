@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1BC2E7373;
-	Sun,  7 Jun 2026 10:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F7E17B418;
+	Sun,  7 Jun 2026 10:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827258; cv=none; b=fGRY5IshR3y6EWEWRPIMSZN5QskYHra4FPikBNvuYo0WyY92a7B/6DWSjpafoLD2DHDo8BKTULA7S5IneicHhuYULW9yy2AwKyhqRaU2iUFBC9strjGfPBjZx7HuVj89v8hDhUR0ofej2Eq4mF2yiXyjZ6J9W/qW0e2mkFU5a7A=
+	t=1780827261; cv=none; b=bfvgC/9AgBT1z8Nyq4z/ygwAv0lAc4+SK/8ArBwiSHIhPzctHYciDeUfh7Cj5LlIy4ckYXIIzkVU805fQtEM1EYKZC5FGwuI01rhCJXTefSN/9iGK4xN7YPl8CXUez1Be9EadC0qSfoTFpTPnj6kdbkwlLYnhadZ8cpMZLUak8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827258; c=relaxed/simple;
-	bh=KDiqfulrI7AzqYDG5qOhhO3SzLhqgQdx/czQtqEij7c=;
+	s=arc-20240116; t=1780827261; c=relaxed/simple;
+	bh=HZ8bPFuhl19wXW/YcuV02KK+iOiGaTc+c5JvEQmmO5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aif5N/qHJbr6irlNgjCOBFtgPAS/9Cy56QfcKqJvoOUuhxcO3psM9pINhpFUq5b0covCteYE/cu/OVahYbXDz/bKIelBP+QABsWKDdY0JiwbMO87b1ylJgiqxlWQaGvVO7o9QP3M87UOo6vGl2gihBSIbBiIMUxXuYJ+Jhr1Gvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p6UQteVv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gRTf1g0aI/Dh1VF8J+BZhj8QUo8+084Moz2AN3DLyEs3uiUge5vSsboC3rjW7eLibbxESnry/BX0LQ4qESHX2SyYWw+OgL6pKh33GSjEMs45xE0iMP/XEwn2S9TSV3X/mHWizCoWmQR2xF9lZ++7lDNGceSJxtbD7sf3X0zEH1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBLVbXUt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6UQteVv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4291F00893;
-	Sun,  7 Jun 2026 10:14:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBLVbXUt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70491F00893;
+	Sun,  7 Jun 2026 10:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827257;
-	bh=YGyxuzZbC4vlPv9xRFI/4Y0j3hAsJSzKnWTLu4IY0pQ=;
+	s=korg; t=1780827260;
+	bh=EnOzmdPbQ1N28Nt4UMTT/pQKvIL2fLroKpjC/UYzv+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p6UQteVvnmh9EReAQHHTkQms9EP1krA8R+Ix7JxSnAeunVyeXLmbORDFtmMP8iWKh
-	 TLgSrqPQDA1t1MNlXrE4Wme/9WTfq5DfwDCgzFJL+vmLqiXEXxp2hotDQTxj50ql2x
-	 C2MPiJLK6Ls+3xJS6YvKWm6KJAbOUvwMgHPcGiQ8=
+	b=kBLVbXUtBS9eGlxjQyl+3vNOVsisPKn3nZRkEAi+KX6sA+vPkJ9UPEZEgr/J3mtuh
+	 bZ05HuM47OZfo/2Akkfc2G63lkRnuJxYv9HsRs/jIuFyZFZCxqQLZkALkZbD0ztx86
+	 8JwTJDaz8TMrKc0e7iKjVdMc/ybzLIZy17ENUyLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Danielle Ratson <danieller@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 053/332] ethtool: cmis: fix u16-to-u8 truncation of msleep_pre_rpl
-Date: Sun,  7 Jun 2026 11:57:02 +0200
-Message-ID: <20260607095730.073996594@linuxfoundation.org>
+Subject: [PATCH 7.0 048/332] ethtool: module: avoid leaking a netdev ref on module flash errors
+Date: Sun,  7 Jun 2026 11:56:57 +0200
+Message-ID: <20260607095729.887396691@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
 References: <20260607095728.031258202@linuxfoundation.org>
@@ -54,48 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 3e8c3d464c36bb342fe377b026577c7ec27fdbb4 ]
+[ Upstream commit fb7f511d62692661846c47f199e0afe25c2982db ]
 
-ethtool_cmis_cdb_compose_args() accepts msleep_pre_rpl as u16 but stores
-it into the u8 field ethtool_cmis_cdb_cmd_args::msleep_pre_rpl, silently
-truncating values >= 256. Seven of the nine call sites pass 1000 ms
-(it's the third argument from the end).
+module_flash_fw_schedule() is missing undo for setting
+the "in_progress" flag and taking the netdev reference.
+Delay taking these, the device can't disappear while
+we are holding rtnl_lock.
 
-Fixes: a39c84d79625 ("ethtool: cmis_cdb: Add a layer for supporting CDB commands")
+Fixes: 32b4c8b53ee7 ("ethtool: Add ability to flash transceiver modules' firmware")
 Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 Reviewed-by: Danielle Ratson <danieller@nvidia.com>
-Link: https://patch.msgid.link/20260522231312.1710836-8-kuba@kernel.org
+Link: https://patch.msgid.link/20260522231312.1710836-3-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/cmis.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ethtool/module.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/ethtool/cmis.h b/net/ethtool/cmis.h
-index 4a9a946cabf05d..778783a0f23c0b 100644
---- a/net/ethtool/cmis.h
-+++ b/net/ethtool/cmis.h
-@@ -63,9 +63,9 @@ struct ethtool_cmis_cdb_request {
-  * struct ethtool_cmis_cdb_cmd_args - CDB commands execution arguments
-  * @req: CDB command fields as described in the CMIS standard.
-  * @max_duration: Maximum duration time for command completion in msec.
-+ * @msleep_pre_rpl: Waiting time before checking reply in msec.
-  * @read_write_len_ext: Allowable additional number of byte octets to the LPL
-  *			in a READ or a WRITE commands.
-- * @msleep_pre_rpl: Waiting time before checking reply in msec.
-  * @rpl_exp_len: Expected reply length in bytes.
-  * @flags: Validation flags for CDB commands.
-  * @err_msg: Error message to be sent to user space.
-@@ -73,8 +73,8 @@ struct ethtool_cmis_cdb_request {
- struct ethtool_cmis_cdb_cmd_args {
- 	struct ethtool_cmis_cdb_request req;
- 	u16				max_duration;
-+	u16				msleep_pre_rpl;
- 	u8				read_write_len_ext;
--	u8				msleep_pre_rpl;
- 	u8                              rpl_exp_len;
- 	u8				flags;
- 	char				*err_msg;
+diff --git a/net/ethtool/module.c b/net/ethtool/module.c
+index 8047c14f7ee370..594a49fdd7fd06 100644
+--- a/net/ethtool/module.c
++++ b/net/ethtool/module.c
+@@ -319,8 +319,6 @@ module_flash_fw_schedule(struct net_device *dev, const char *file_name,
+ 	if (err < 0)
+ 		goto err_release_firmware;
+ 
+-	dev->ethtool->module_fw_flash_in_progress = true;
+-	netdev_hold(dev, &module_fw->dev_tracker, GFP_KERNEL);
+ 	fw_update->dev = dev;
+ 	fw_update->ntf_params.portid = info->snd_portid;
+ 	fw_update->ntf_params.seq = info->snd_seq;
+@@ -335,6 +333,9 @@ module_flash_fw_schedule(struct net_device *dev, const char *file_name,
+ 	if (err < 0)
+ 		goto err_release_firmware;
+ 
++	dev->ethtool->module_fw_flash_in_progress = true;
++	netdev_hold(dev, &module_fw->dev_tracker, GFP_KERNEL);
++
+ 	schedule_work(&module_fw->work);
+ 
+ 	return 0;
 -- 
 2.53.0
 
