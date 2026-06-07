@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0954204E;
-	Sun,  7 Jun 2026 10:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77E330C157;
+	Sun,  7 Jun 2026 10:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827037; cv=none; b=RUpiX18nFRFN2J5vspEcR4w6/p+nazAqKIc0PuaCRmtTyGzVHOFcKvgxSKGep9nfDz3Kl2CWOv0AP+OtN+aFiy1lQEE8dJI6CT9TeH4u5ncGFR8mrzWVYKwtu/R2cGibds5whO5xALCM4dilTY61t+1ylbrXMo/APCvonNwVZCs=
+	t=1780827040; cv=none; b=F2lQwqcZZGspyalKyJCU/pISf5D6OG+HCYM0sIIlcsOskqC0ZlLZ3buUlhKtX6rp0WPeC78Nl5fapuO0pJr6EWzEogW/eq2WH5Xs3nBWTKwjxpGK4qzsS6sMLxxQJ4Y8I78xMNKmGqi+uu6qtXciNnPhKKbt0Ld4cPn/6Z8ohCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827037; c=relaxed/simple;
-	bh=pl8DnaH0yRn0a2w8E0qxHRV8Hce6l6+h3G2ALuO3nO0=;
+	s=arc-20240116; t=1780827040; c=relaxed/simple;
+	bh=AUZd4ez5+rwgppmG5hqCO7NGnTjdQbl3dju2Dd6SNmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=My8UD4jB03K82hpnA6cGkqrIGxl3X8Lg00O4RFJt7POnSrjBLdLlct1yMoXstwrhGh8DFNSxfkTI3aY34e4N4ObvZ6MVE6WQ1sXt5iduY/6eIwkFbO58ohPynRZyLWaVeSzpmXyeXK1AVWvLR8lg5nUf1Bx5yNbpESKyWpS1hLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WDP5B+el; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sn5KOzqQZ13WSBBBK6RM6IMqIGBzYE6R1bt1pfTXTokWN0Wqz2SXmOrx0O/fw/nT+dsxC6k8gBGKwUHkIlqR3zhOaaxev+/MUQyK0bJIvphi6jstVnbv83qTX4Mg9rm3em5ZNQX5GaJEFWxSAdBVLJmJhp6Onz3DQnqgNJRliys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SShXd8v6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDP5B+el"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BFD21F00893;
-	Sun,  7 Jun 2026 10:10:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SShXd8v6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2CC11F00893;
+	Sun,  7 Jun 2026 10:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827036;
-	bh=J+JHHB7FbLehxgLkSPn1S1/cdEf/5IBh90+3P8IzhS8=;
+	s=korg; t=1780827039;
+	bh=w3QXtdO3w3g6UjpJAoe2TGtL43tR+mHfm98y4IyEWmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WDP5B+el0UigavCq5hWeXnfER2DpJ4a7PVAUSCxXFCXDod1drEp5+gtVfnyoBXIGK
-	 BrjT4H0e2I09AInwOraXGM9+Y0HyAQ1pnZ9zsyZbrPozFCi/vsaRDF5FVM/XMmAUca
-	 Qkqur1wWarbDkt8ZUk0niCCQFl1+dpeEGJv/ghlo=
+	b=SShXd8v697oTHurIbA4lnpA+3AtYTDPmGcPXxlAKzqIr4BMVCxyBjc4gwPGMG7BBx
+	 hOWJtnO8gglmTmljS5sSm06CAzJVH9xgBZN8yDL99Lg8D0OT0mRmTOVS6LppXa2djs
+	 6ef3FU6/EEtKyngLYDHtfls+Vr6eriSoCqNQStsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@nvidia.com>,
-	Marc Harvey <marcharvey@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ming Lei <tom.leiming@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 034/315] net: team: Remove unused team_mode_op, port_enabled
-Date: Sun,  7 Jun 2026 11:57:01 +0200
-Message-ID: <20260607095728.780089408@linuxfoundation.org>
+Subject: [PATCH 7.0 057/332] blk-mq: reinsert cached request to the list
+Date: Sun,  7 Jun 2026 11:57:06 +0200
+Message-ID: <20260607095730.222279896@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,53 +50,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marc Harvey <marcharvey@google.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 014f249121d73909528df320818fba7693d0ec92 ]
+[ Upstream commit b051bb6bf0a231117036aa607cadf55be8e63910 ]
 
-This team_mode_op wasn't used by any of the team modes, so remove it.
+A previous commit removed an optimization out of caution for a scenario
+that turns out not to be real: all the "queue_exit" goto's are safe to
+reinsert the request into the cached_rq's plug list as they are either
+from a non-blocking path, or a successful merge that already holds the
+queue reference. This optimization is most needed for small sequential
+workloads that successfully merge into larger requests.
 
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Marc Harvey <marcharvey@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260409-teaming-driver-internal-v7-2-f47e7589685d@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 25fe708bbc59 ("net: team: fix NULL pointer dereference in team_xmit during mode change")
+Fixes: dc278e9bf2b9 ("blk-mq: pop cached request if it is usable")
+Suggested-by: Ming Lei <tom.leiming@gmail.com>
+Suggested-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Link: https://patch.msgid.link/20260526153531.2365935-1-kbusch@meta.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team_core.c | 2 --
- include/linux/if_team.h      | 1 -
- 2 files changed, 3 deletions(-)
+ block/blk-mq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
-index a98f5e5061544c..712d8043e66e17 100644
---- a/drivers/net/team/team_core.c
-+++ b/drivers/net/team/team_core.c
-@@ -945,8 +945,6 @@ static void team_port_enable(struct team *team,
- 			   team_port_index_hash(team, port->index));
- 	team_adjust_ops(team);
- 	team_queue_override_port_add(team, port);
--	if (team->ops.port_enabled)
--		team->ops.port_enabled(team, port);
- 	team_notify_peers(team);
- 	team_mcast_rejoin(team);
- 	team_lower_state_changed(port);
-diff --git a/include/linux/if_team.h b/include/linux/if_team.h
-index ce97d891cf720f..0d550d44a1c230 100644
---- a/include/linux/if_team.h
-+++ b/include/linux/if_team.h
-@@ -121,7 +121,6 @@ struct team_mode_ops {
- 	int (*port_enter)(struct team *team, struct team_port *port);
- 	void (*port_leave)(struct team *team, struct team_port *port);
- 	void (*port_change_dev_addr)(struct team *team, struct team_port *port);
--	void (*port_enabled)(struct team *team, struct team_port *port);
- 	void (*port_disabled)(struct team *team, struct team_port *port);
- };
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 39986a742b981a..061c8ef4484a25 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -3244,7 +3244,7 @@ void blk_mq_submit_bio(struct bio *bio)
+ 	if (!rq)
+ 		blk_queue_exit(q);
+ 	else
+-		blk_mq_free_request(rq);
++		rq_list_add_head(&plug->cached_rqs, rq);
+ }
  
+ #ifdef CONFIG_BLK_MQ_STACKING
 -- 
 2.53.0
 
