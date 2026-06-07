@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9EF678C9C;
-	Sun,  7 Jun 2026 10:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103F72E1EFC;
+	Sun,  7 Jun 2026 10:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826754; cv=none; b=U57frpP9RJJ/XgNMvS4hKPS1MV6uFZfTCMgvShhPEKrVrAmIHWaxOr/HRDA1gLxBTa7ZXL0JL6zenCS28SXXyfupOnIZ8PrTLLtNRVVjzHmpSCh6av3Wij4aKDPA/kjle622zUK61Wi73qjA90yNMesLTe7uPMGxaae6YUVAk60=
+	t=1780826758; cv=none; b=hRiXT5XdgZq5DOSTnmtcEs49EkpJJH/rInE5OltHW17UsYwvNVuG69GjOG7Vpid1waRKdBOdg739gOscBTo6dT71N0aQmd1O5CYjqIL0sK/SjXtpDYtkiBsrRgk3Xst1FjGS9uC442a4aFmdp/NSeA7r1ZPxu+2iOr+7qVpWC5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826754; c=relaxed/simple;
-	bh=jYAMuvO9XLt/2FN1OGueJiYOK+dQa8IBSVid5jtPCWY=;
+	s=arc-20240116; t=1780826758; c=relaxed/simple;
+	bh=YukAIboKwEXQC+7pBlLMzeofF19VLAeQb0iTWeIrrME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FBYt7T6ZFx2UbbIj9LzLplqwe0SpMPRrJ1d/HXQ8ppz7MHyWi34nWlm2KZ94OOukNLTW+XAD8FfzO6e6aGHngStq3cuqvgX+KdoOqN+HVxJ98ySgNvulxwxV959NOLXM3yRzH2qPyaPzSCzfUl15vwl5c82m5OfPp6evgbacfFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mtqj194+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WyUXJfFTek4VfMgK4Rwd0XUbELmDW2A02kn67X9BdTKsrvNRttML9xdYKtkS5jGLEsAYmcgIb78hxL70HguHlFuytWYVeObdc2GKOZwjuWLiiar9TOiCP7jl4uHH54q+ScJ6GJff2zN1A3zA3sYy6P7322NG4HgeC8/RK26THKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oS7T18d/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mtqj194+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C218F1F00893;
-	Sun,  7 Jun 2026 10:05:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oS7T18d/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F0551F00893;
+	Sun,  7 Jun 2026 10:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826753;
-	bh=r+t2PC5X2LNOEkEiPh39GExsX6wdCunSHCwnIirCFXM=;
+	s=korg; t=1780826756;
+	bh=GxDU3CWxN+XgjC5IPhODwTcMqbyvHHA7xx2GWnMU9Xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mtqj194+WeWG1UvcpoUnQ4YydBqxwQaoO1L2ppbL/5fJXqKxYmmqU6vXWTZWPxbjh
-	 aDYfs4ilBbENIxjWzH3vBqtVoj1ZihU0hzHTTEhjwlkMlSO8N+ie6cFdHS3URn05Fw
-	 ApindMO/OovNeghIZBMa/5OTUH6xp8VcjLBIKZPM=
+	b=oS7T18d/mGinvSADG0GSFflWjsbUJXV654BX3BydJvZzlB+LCjrRinX55DR9F2rbZ
+	 7MYZrjuF9ZxNZZUhzihPGq+NO7nW2kjf2r66rJVGvvnyT46GG7oJNqk3BUsmRSRb/b
+	 hQWxaxt4UzY1mON677YFVlSDeFQjiYMQHxQdtBMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+690d3e3ffa7335ac10eb@syzkaller.appspotmail.com,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Luxiao Xu <rakukuip@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 018/332] netfilter: xt_cpu: prefer raw_smp_processor_id
-Date: Sun,  7 Jun 2026 11:56:27 +0200
-Message-ID: <20260607095728.726487484@linuxfoundation.org>
+Subject: [PATCH 7.0 019/332] netfilter: ebtables: fix OOB read in compat_mtw_from_user
+Date: Sun,  7 Jun 2026 11:56:28 +0200
+Message-ID: <20260607095728.766022257@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
 References: <20260607095728.031258202@linuxfoundation.org>
@@ -53,44 +59,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit c376f07e16c02239ed44cabb97145d03f65b4d15 ]
+[ Upstream commit f438d1786d657d57790c5d138d6db3fc9fdac392 ]
 
-With PREEMPT_RCU we get splat:
+Luxiao Xu says:
 
-BUG: using smp_processor_id() in preemptible [..]
-caller is cpu_mt+0x53/0xd0 net/netfilter/xt_cpu.c:37
-CPU: 1 .. Comm: syz.3.1377 #0 PREEMPT(full)
-Call Trace:
- <TASK>
- dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
- check_preemption_disabled+0xd3/0xe0 lib/smp_processor_id.c:47
- cpu_mt+0x53/0xd0 net/netfilter/xt_cpu.c:37
- [..]
+ The function compat_mtw_from_user() converts ebtables extensions from
+ 32-bit user structures to kernel native structures. However, it lacks
+ proper validation of the user-supplied match_size/target_size.
 
-Just use raw version instead.
-This is similar to 14d14a5d2957 ("netfilter: nft_meta: use raw_smp_processor_id()").
+ When certain extensions are processed, the kernel-side translation
+ logic may perform memory accesses based on the extension's expected
+ size. If the user provides a size smaller than what the extension
+ requires, it results in an out-of-bounds read as reported by KASAN.
 
-Fixes: 0ca743a55991 ("netfilter: nf_tables: add compatibility layer for x_tables")
-Reported-by: syzbot+690d3e3ffa7335ac10eb@syzkaller.appspotmail.com
+ This fix introduces a check to ensure match_size is at least as large
+ as the extension's required compatsize. This covers matches, watchers,
+ and targets, while maintaining compatibility with standard targets.
+
+AFAIU this is relevant for matches that need to go though
+match->compat_from_user() call.  Those that use plain memcpy with the
+user-provided size are ok because the caller checks that size vs the
+start of the next rule entry offset (which itself is checked vs. total
+size copied from userspace).
+
+The ->compat_from_user() callbacks assume they can read compatsize bytes,
+so they need this extra check.
+
+Based on an earlier patch from Luxiao Xu.
+
+Fixes: 81e675c227ec ("netfilter: ebtables: add CONFIG_COMPAT support")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bridge/netfilter/ebtables.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/net/netfilter/xt_cpu.c b/net/netfilter/xt_cpu.c
-index 3bdc302a0f9137..9cb259902a586b 100644
---- a/net/netfilter/xt_cpu.c
-+++ b/net/netfilter/xt_cpu.c
-@@ -34,7 +34,7 @@ static bool cpu_mt(const struct sk_buff *skb, struct xt_action_param *par)
- {
- 	const struct xt_cpu_info *info = par->matchinfo;
+diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
+index b9f4daac09af36..8a6a069329d21d 100644
+--- a/net/bridge/netfilter/ebtables.c
++++ b/net/bridge/netfilter/ebtables.c
+@@ -1956,6 +1956,25 @@ enum compat_mwt {
+ 	EBT_COMPAT_TARGET,
+ };
  
--	return (info->cpu == smp_processor_id()) ^ info->invert;
-+	return (info->cpu == raw_smp_processor_id()) ^ info->invert;
- }
++static bool match_size_ok(const struct xt_match *match, unsigned int match_size)
++{
++	u16 csize;
++
++	if (match->matchsize == -1) /* cannot validate ebt_among */
++		return true;
++
++	csize = match->compatsize ? : match->matchsize;
++
++	return match_size >= csize;
++}
++
++static bool tgt_size_ok(const struct xt_target *tgt, unsigned int tgt_size)
++{
++	u16 csize = tgt->compatsize ? : tgt->targetsize;
++
++	return tgt_size >= csize;
++}
++
+ static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
+ 				enum compat_mwt compat_mwt,
+ 				struct ebt_entries_buf_state *state,
+@@ -1981,6 +2000,11 @@ static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
+ 		if (IS_ERR(match))
+ 			return PTR_ERR(match);
  
- static struct xt_match cpu_mt_reg __read_mostly = {
++		if (!match_size_ok(match, match_size)) {
++			module_put(match->me);
++			return -EINVAL;
++		}
++
+ 		off = ebt_compat_match_offset(match, match_size);
+ 		if (dst) {
+ 			if (match->compat_from_user)
+@@ -2000,6 +2024,12 @@ static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
+ 					    mwt->u.revision);
+ 		if (IS_ERR(wt))
+ 			return PTR_ERR(wt);
++
++		if (!tgt_size_ok(wt, match_size)) {
++			module_put(wt->me);
++			return -EINVAL;
++		}
++
+ 		off = xt_compat_target_offset(wt);
+ 
+ 		if (dst) {
 -- 
 2.53.0
 
