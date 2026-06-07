@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44EB36F428;
-	Sun,  7 Jun 2026 11:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F213382C8;
+	Sun,  7 Jun 2026 11:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780830231; cv=none; b=nHpJ0lQu4Zl/0pCW1C/JrXtNWyGb+V2IbNrRAXNxme7MYeqikbAgOBGyiKGCbahyluVKDn0zecVDutYJROvRYOvzVbbSyDCgHt3MxaaJ/oNmLDB2Reg5fr/jWfR3dqW6wFf7sEx6KBIe8febSO/4JeCBLPvtyMjAtaFLQZCkPHE=
+	t=1780830235; cv=none; b=rCS7ci7YgMrMyPzlkR9QDFz5K3BDxs0Oze+PLblMR6OXCL4wxE7gyWLCKQlV7O0KcXoaMT7+LZIMwT8Ara7f84QFJ+MNZr3iHqx7UK7IJw0FnOM0+ZDUltnnS5dOw5xYPn5g4Efr3t+gPFVaB6AUn22eKldW0XcH7PEcyVgvHss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780830231; c=relaxed/simple;
-	bh=4fJMov6P+n7qkbOv43ZyxycYa4K9BTCt47UHlp7ILJM=;
+	s=arc-20240116; t=1780830235; c=relaxed/simple;
+	bh=MFWH4c+sYWIOnvB1mZs2U6e9m8eaCAJ7qfh7GPl0V6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m+/TcHdD04CwBEqgaH+DW4G2xV0TUE0vMGotmOBkAxjWijvWs1jEP/NgaDzBKAFMv1Pw+3u4xXo4q/nrt05sXUIzT6sdZXd+3DMcMN+pUmIK6Oo9LyHMm71NNlYaghAd8o+C7SyeTckAYe/WGwplva1plywGFE4fWHtfywc8V94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpY7C+BK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mS0OgAbMHK7zuUKSXbcJM55JFvIy6UxX8zh8G5fUOJIrKPxr7OnP99Mu0kl/hZgYGMsNeHi1Mej2DnKPdT++JljPmm7gxYWKMseX/a+NAIoUGV4ewtccXeNkGKRl5cNFXKwUYdalvB+N5xPAIwxRR/KNOjn9z76E7kH45EFnQew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+g7RPpB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpY7C+BK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388751F00893;
-	Sun,  7 Jun 2026 11:03:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+g7RPpB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A46FE1F00893;
+	Sun,  7 Jun 2026 11:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780830230;
-	bh=sq7AD/BfqRYzmBbksECHNbS3MBSTpi8OxjO249Hatuw=;
+	s=korg; t=1780830234;
+	bh=xm/vSUI34GgBG5SBBfK9imbFCYumkh8pr4FdBM0iEkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JpY7C+BKA3c82SA88lDJnHev8IhDJOjk+fK6Zd9lAcVjdzVcSGXeR9HMrm90VMsv0
-	 19mL7ZQR3RlNZMwYO7Vp6BEvh89yaVCRDn4ylTU16t86Muu5NWmw1wRIO3px0TYjLy
-	 7OKfsCnFjXvWaFdDaw4CYyhZM2Y7G5XxVYdG15A4=
+	b=x+g7RPpBN846OYdqvD1m9k51Vgs1ZVqqwl06KYTpOBRn/q+i3YqJmSLwTSUU1SmBs
+	 gn3Ewwpqtgu2mWQhfmneB86ssTuk9IPSe8g1o7vGfJeW1aO4tphVKCkDmPW/XefZAk
+	 lYKvmvUnIdvPLETSSY4zo3tLdOftAdUhOss55d6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Takashi Iwai <tiwai@suse.de>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 293/307] ALSA: firewire-motu: Protect register DSP event queue positions
-Date: Sun,  7 Jun 2026 12:01:30 +0200
-Message-ID: <20260607095738.503932730@linuxfoundation.org>
+Subject: [PATCH 6.12 294/307] usb: dwc3: xilinx: fix error handling in zynqmp init error paths
+Date: Sun,  7 Jun 2026 12:01:31 +0200
+Message-ID: <20260607095738.538776474@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
 References: <20260607095727.647295505@linuxfoundation.org>
@@ -46,78 +45,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-[ Upstream commit 98fb1c1bb11e29eb609b7200a25e136e05aa4498 ]
+[ Upstream commit c1a0ecbf32c4b397353204e2ec94c5bb9f3300ed ]
 
-The register DSP event queue is updated under parser->lock, but
-snd_motu_register_dsp_message_parser_count_event() reads pull_pos and
-push_pos without the lock.
-snd_motu_register_dsp_message_parser_copy_event() also reads both queue
-positions before taking the lock.
+Fix error handling and resource cleanup i.e remove invalid
+phy_exit() after failed phy_init(), route failures through
+proper cleanup paths and return 0 explicitly on success.
 
-Protect these accesses with parser->lock as well. This keeps the hwdep
-poll/read path consistent with the producer side and with the cached
-meter/parameter accessors.
-
-Fixes: 634ec0b2906e ("ALSA: firewire-motu: notify event for parameter change in register DSP model")
+Fixes: 84770f028fab ("usb: dwc3: Add driver for Xilinx platforms")
 Cc: stable@vger.kernel.org
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260521-alsa-firewire-motu-event-locking-v1-1-708e1c2b5e56@gmail.com
-[ converted copy_event() from manual spin_lock_irqsave/spin_unlock_irqrestore to guard(spinlock_irqsave) ]
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://patch.msgid.link/20260519115529.2980421-1-radhey.shyam.pandey@amd.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/firewire/motu/motu-register-dsp-message-parser.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/usb/dwc3/dwc3-xilinx.c |   26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
---- a/sound/firewire/motu/motu-register-dsp-message-parser.c
-+++ b/sound/firewire/motu/motu-register-dsp-message-parser.c
-@@ -393,6 +393,8 @@ unsigned int snd_motu_register_dsp_messa
- {
- 	struct msg_parser *parser = motu->message_parser;
+--- a/drivers/usb/dwc3/dwc3-xilinx.c
++++ b/drivers/usb/dwc3/dwc3-xilinx.c
+@@ -170,15 +170,13 @@ static int dwc3_xlnx_init_zynqmp(struct
+ 	}
  
-+	guard(spinlock_irqsave)(&parser->lock);
+ 	ret = phy_init(priv_data->usb3_phy);
+-	if (ret < 0) {
+-		phy_exit(priv_data->usb3_phy);
++	if (ret < 0)
+ 		goto err;
+-	}
+ 
+ 	ret = reset_control_deassert(apbrst);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to release APB reset\n");
+-		goto err;
++		goto err_phy_exit;
+ 	}
+ 
+ 	/* Set PIPE Power Present signal in FPD Power Present Register*/
+@@ -190,27 +188,25 @@ static int dwc3_xlnx_init_zynqmp(struct
+ 	ret = reset_control_deassert(crst);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to release core reset\n");
+-		goto err;
++		goto err_phy_exit;
+ 	}
+ 
+ 	ret = reset_control_deassert(hibrst);
+ 	if (ret < 0) {
+ 		dev_err(dev, "Failed to release hibernation reset\n");
+-		goto err;
++		goto err_phy_exit;
+ 	}
+ 
+ 	ret = phy_power_on(priv_data->usb3_phy);
+-	if (ret < 0) {
+-		phy_exit(priv_data->usb3_phy);
+-		goto err;
+-	}
++	if (ret < 0)
++		goto err_phy_exit;
+ 
+ skip_usb3_phy:
+ 	/* ulpi reset via gpio-modepin or gpio-framework driver */
+ 	reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(reset_gpio)) {
+-		return dev_err_probe(dev, PTR_ERR(reset_gpio),
+-				     "Failed to request reset GPIO\n");
++		ret = PTR_ERR(reset_gpio);
++		goto err_phy_power_off;
+ 	}
+ 
+ 	if (reset_gpio) {
+@@ -230,6 +226,12 @@ skip_usb3_phy:
+ 		writel(reg, priv_data->regs + XLNX_USB_TRAFFIC_ROUTE_CONFIG);
+ 	}
+ 
++	return 0;
 +
- 	if (parser->pull_pos > parser->push_pos)
- 		return EVENT_QUEUE_SIZE - parser->pull_pos + parser->push_pos;
- 	else
-@@ -402,14 +404,14 @@ unsigned int snd_motu_register_dsp_messa
- bool snd_motu_register_dsp_message_parser_copy_event(struct snd_motu *motu, u32 *event)
- {
- 	struct msg_parser *parser = motu->message_parser;
--	unsigned int pos = parser->pull_pos;
--	unsigned long flags;
-+	unsigned int pos;
- 
--	if (pos == parser->push_pos)
--		return false;
-+	guard(spinlock_irqsave)(&parser->lock);
- 
--	spin_lock_irqsave(&parser->lock, flags);
-+	if (parser->pull_pos == parser->push_pos)
-+		return false;
- 
-+	pos = parser->pull_pos;
- 	*event = parser->event_queue[pos];
- 
- 	++pos;
-@@ -417,7 +419,5 @@ bool snd_motu_register_dsp_message_parse
- 		pos = 0;
- 	parser->pull_pos = pos;
- 
--	spin_unlock_irqrestore(&parser->lock, flags);
--
- 	return true;
++err_phy_power_off:
++	phy_power_off(priv_data->usb3_phy);
++err_phy_exit:
++	phy_exit(priv_data->usb3_phy);
+ err:
+ 	return ret;
  }
 
 
