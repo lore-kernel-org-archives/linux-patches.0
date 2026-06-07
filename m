@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060924071DA;
-	Sun,  7 Jun 2026 10:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131F12DB7A3;
+	Sun,  7 Jun 2026 10:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827476; cv=none; b=eI3+4HIRMd6M0KwHjnbzm42Sp4ZvRVfAlcKv3NWdMBmLCG1ykZza2r3ZKhl4tSZGiQ9V8upvwkpM+6QHFoeQB4/3EbS5KI/zh6Q+jYx96X4wi1NYnTRyuPN3IHpjh618osRow4SGUusKLbOJoH5eD9+Asw56r4+GZIy5xfNCWEc=
+	t=1780827484; cv=none; b=r0nevuwvx/3mDpqiXvbxxNxHc7OGYsJS0uaZ+kyq139hJTz2+LDexkPhpc7I6oWGCAa8/5hDyJCD+189VbIpbeQtagp+QQdqgaJZd3xbsYzC0nIUp8W2p1IrxLc3V+8C+i7eE7VLLKbj3Hx85hwpY9jTX6zeV+8G4ZRVUXUnwek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827476; c=relaxed/simple;
-	bh=JXi7HccWNMNfFzXFp7g+ie4gFYE8qqaEjy9ehTMS+7U=;
+	s=arc-20240116; t=1780827484; c=relaxed/simple;
+	bh=X06o6peZPVjDhX3xUTY5ofoBql9wI2bIfUABBeJf8wM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ecyshwivpoUrkA9yPEhwXLGERBbZHyzF0OGcrX7ZXWlLtnukZ8cvn5C265Y61L0F7jBClvs/hXHqX9CPUO1awhzP1/NHRPbmDYazcH0rWz/BK+cSU1dk9ahgSVzeI2oAPnX597InUdg1DiklHE8cEsPbwSSSOvlFSHAjWqZpODQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tkPu8kQM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j/UqtojWryNLYh26a0IXdeAkzPlKwb2rb+Cz11da7q9SPR8QjS0nSvdSmSRZdj3RD8DVT6Ic2VLcBxwLfi3mzsV2B5OVAkoxApdEkUNiQVOrkit90+4TWHQLuzcEtDM0usaMvd9KmoWhc7LicV/SO1eR53zT9vt9iIiI5i90FGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPrRljTE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkPu8kQM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B83431F00893;
-	Sun,  7 Jun 2026 10:17:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPrRljTE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BF51F00893;
+	Sun,  7 Jun 2026 10:18:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827474;
-	bh=pPR+DokE4T7k53S90s6xjjynGtCAOtj241rISu9o67o=;
+	s=korg; t=1780827482;
+	bh=WXdz+lZ8F5lLxXi4aTrHvlip2HMglQ1XbRAXnAQhkyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tkPu8kQMDO2EfGJebMTQalY2qcw3hO/Xk3bC4fN8y1FBCRKF6/2OuqMvJMSsbOzoh
-	 PKRgvGhJj4HusxlunDQJ1S/wuz5aUd+9HP6uidVaJi4JXhvbxJ/RuP8CCpZlsyu2Zf
-	 BVHtWJjJqWpzno3mjYFbjTvcuky3/9mjXYmPZZl8=
+	b=NPrRljTECOW6nJOYsJx2Jpc+zeq6JPiiutfzYh/gfRUnyln5MyITByow/uNvki6Jn
+	 7pPJ5qt97mTuR2sygJhRB46LdPTZMHwT0Qco9RFc7Jt/TOuM6Qw1c7hTUwlvyIeNni
+	 w1LM5irVEwkY0DIGoCDcbrP4STibPeCtZnkV1uRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Hannes Reinecke <hare@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Li Ming <ming.li@zohomail.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 077/315] net/handshake: Use spin_lock_bh for hn_lock
-Date: Sun,  7 Jun 2026 11:57:44 +0200
-Message-ID: <20260607095730.443050343@linuxfoundation.org>
+Subject: [PATCH 6.12 059/307] cxl/test: Update mock dev array before calling platform_device_add()
+Date: Sun,  7 Jun 2026 11:57:36 +0200
+Message-ID: <20260607095729.910425596@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,140 +48,274 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Li Ming <ming.li@zohomail.com>
 
-[ Upstream commit cc993e0927ec8bd98ea33377ada03295fcda0f24 ]
+[ Upstream commit d90f236f8b9e354848bd226f581db27755ab901d ]
 
-nvmet_tcp_state_change(), a socket callback that runs in BH context,
-can reach handshake_req_cancel() via nvmet_tcp_schedule_release_queue()
-and tls_handshake_cancel().  handshake_req_cancel() acquires
-hn->hn_lock with plain spin_lock().  If a process-context thread on
-the same CPU holds hn->hn_lock when a softirq invokes the cancel path,
-the lock attempt deadlocks.  This is the only caller that invokes
-tls_handshake_cancel() from BH context; every other consumer calls it
-from process context.
+CXL test environment hits the following error sometimes.
 
-Deferring the cancel to process context in the NVMe target is not
-straightforward: nvmet_tcp_schedule_release_queue() must call
-tls_handshake_cancel() atomically with its state transition to
-DISCONNECTING.  If the cancel were deferred, the handshake completion
-callback could fire in the window before the cancel runs, observe the
-unexpected state, and return without dropping its kref on the queue.
-Reworking that interlock is considerably more invasive than hardening
-the handshake lock.  Convert all hn->hn_lock acquisitions from
-spin_lock/spin_unlock to spin_lock_bh/spin_unlock_bh so the lock is
-never taken with softirqs enabled.
+ cxl_mem mem9: endpoint7 failed probe
 
-Fixes: 675b453e0241 ("nvmet-tcp: enable TLS handshake upcall")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260525-handshake-file-pin-v3-1-66c616906ead@oracle.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+All mock memdevs are platform firmware devices added by cxl_test module,
+and cxl_test module also provides a platform device driver for them to
+create a memdev device to CXL subsystem. cxl_test module uses
+cxl_rcd/mem_single/mem arrays to store different types of mock memdevs.
+CXL drivers calls registered mock functions for a mock memdev by
+checking if a given memdev is in these arrays.
+
+When cxl_test module adds these mock memdevs, it always calls
+platform_device_add() before adding them to a suitable mock memdev
+array. However, there is a small window where CXL drivers calls mock
+function for a added memdev before it added to a mock memdev array. In
+above case, cxl endpoint driver considers a added memdev was not a mock
+memdev, then calling devm_cxl_endpoint_decoders_setup() for it rather
+than mock_endpoint_decoders_setup().
+
+An appropriate solution is that adding a new mock device to a mock
+device array before calling platform_device_add() for it. It can
+guarantee the new mock device is visible to CXL subsystem.
+
+This patch introduces a new helped called cxl_mock_platform_device_add()
+to handle the issue, and uses the function for all mock devices addition.
+
+Fixes: 3a2b97b3210b ("cxl/test: Improve init-order fidelity relative to real-world systems")
+Signed-off-by: Li Ming <ming.li@zohomail.com>
+Tested-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260520121457.234404-1-ming.li@zohomail.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/handshake/netlink.c |  4 ++--
- net/handshake/request.c | 14 +++++++-------
- net/handshake/tlshd.c   |  2 ++
- 3 files changed, 11 insertions(+), 9 deletions(-)
+ tools/testing/cxl/test/cxl.c | 105 ++++++++++++++---------------------
+ 1 file changed, 43 insertions(+), 62 deletions(-)
 
-diff --git a/net/handshake/netlink.c b/net/handshake/netlink.c
-index 7e46d130dce2cd..394e270cc505cb 100644
---- a/net/handshake/netlink.c
-+++ b/net/handshake/netlink.c
-@@ -203,10 +203,10 @@ static void __net_exit handshake_net_exit(struct net *net)
- 	 * accepted and are in progress will be destroyed when
- 	 * the socket is closed.
- 	 */
--	spin_lock(&hn->hn_lock);
-+	spin_lock_bh(&hn->hn_lock);
- 	set_bit(HANDSHAKE_F_NET_DRAINING, &hn->hn_flags);
- 	list_splice_init(&requests, &hn->hn_requests);
--	spin_unlock(&hn->hn_lock);
-+	spin_unlock_bh(&hn->hn_lock);
+diff --git a/tools/testing/cxl/test/cxl.c b/tools/testing/cxl/test/cxl.c
+index 050725afa45d16..0d0c434426e7bf 100644
+--- a/tools/testing/cxl/test/cxl.c
++++ b/tools/testing/cxl/test/cxl.c
+@@ -1058,6 +1058,23 @@ static void mock_companion(struct acpi_device *adev, struct device *dev)
+ #define SZ_64G (SZ_32G * 2)
+ #endif
  
- 	while (!list_empty(&requests)) {
- 		req = list_first_entry(&requests, struct handshake_req, hr_list);
-diff --git a/net/handshake/request.c b/net/handshake/request.c
-index 6b7e3e0bf3996e..654e55b141cded 100644
---- a/net/handshake/request.c
-+++ b/net/handshake/request.c
-@@ -167,12 +167,12 @@ static bool remove_pending(struct handshake_net *hn, struct handshake_req *req)
++static int cxl_mock_platform_device_add(struct platform_device *pdev,
++					struct platform_device **ppdev)
++{
++	int rc;
++
++	if (ppdev)
++		*ppdev = pdev;
++	rc = platform_device_add(pdev);
++	if (rc) {
++		platform_device_put(pdev);
++		if (ppdev)
++			*ppdev = NULL;
++	}
++
++	return rc;
++}
++
+ static __init int cxl_rch_topo_init(void)
  {
- 	bool ret = false;
+ 	int rc, i;
+@@ -1072,13 +1089,10 @@ static __init int cxl_rch_topo_init(void)
+ 			goto err_bridge;
  
--	spin_lock(&hn->hn_lock);
-+	spin_lock_bh(&hn->hn_lock);
- 	if (!list_empty(&req->hr_list)) {
- 		__remove_pending_locked(hn, req);
- 		ret = true;
+ 		mock_companion(adev, &pdev->dev);
+-		rc = platform_device_add(pdev);
+-		if (rc) {
+-			platform_device_put(pdev);
++		rc = cxl_mock_platform_device_add(pdev, &cxl_rch[i]);
++		if (rc)
+ 			goto err_bridge;
+-		}
+ 
+-		cxl_rch[i] = pdev;
+ 		mock_pci_bus[idx].bridge = &pdev->dev;
+ 		rc = sysfs_create_link(&pdev->dev.kobj, &pdev->dev.kobj,
+ 				       "firmware_node");
+@@ -1130,13 +1144,10 @@ static __init int cxl_single_topo_init(void)
+ 			goto err_bridge;
+ 
+ 		mock_companion(adev, &pdev->dev);
+-		rc = platform_device_add(pdev);
+-		if (rc) {
+-			platform_device_put(pdev);
++		rc = cxl_mock_platform_device_add(pdev, &cxl_hb_single[i]);
++		if (rc)
+ 			goto err_bridge;
+-		}
+ 
+-		cxl_hb_single[i] = pdev;
+ 		mock_pci_bus[i + NR_CXL_HOST_BRIDGES].bridge = &pdev->dev;
+ 		rc = sysfs_create_link(&pdev->dev.kobj, &pdev->dev.kobj,
+ 				       "physical_node");
+@@ -1155,12 +1166,9 @@ static __init int cxl_single_topo_init(void)
+ 			goto err_port;
+ 		pdev->dev.parent = &bridge->dev;
+ 
+-		rc = platform_device_add(pdev);
+-		if (rc) {
+-			platform_device_put(pdev);
++		rc = cxl_mock_platform_device_add(pdev, &cxl_root_single[i]);
++		if (rc)
+ 			goto err_port;
+-		}
+-		cxl_root_single[i] = pdev;
  	}
--	spin_unlock(&hn->hn_lock);
-+	spin_unlock_bh(&hn->hn_lock);
  
- 	return ret;
- }
-@@ -182,7 +182,7 @@ struct handshake_req *handshake_req_next(struct handshake_net *hn, int class)
- 	struct handshake_req *req, *pos;
+ 	for (i = 0; i < ARRAY_SIZE(cxl_swu_single); i++) {
+@@ -1173,12 +1181,9 @@ static __init int cxl_single_topo_init(void)
+ 			goto err_uport;
+ 		pdev->dev.parent = &root_port->dev;
  
- 	req = NULL;
--	spin_lock(&hn->hn_lock);
-+	spin_lock_bh(&hn->hn_lock);
- 	list_for_each_entry(pos, &hn->hn_requests, hr_list) {
- 		if (pos->hr_proto->hp_handler_class != class)
- 			continue;
-@@ -190,7 +190,7 @@ struct handshake_req *handshake_req_next(struct handshake_net *hn, int class)
- 		req = pos;
- 		break;
+-		rc = platform_device_add(pdev);
+-		if (rc) {
+-			platform_device_put(pdev);
++		rc = cxl_mock_platform_device_add(pdev, &cxl_swu_single[i]);
++		if (rc)
+ 			goto err_uport;
+-		}
+-		cxl_swu_single[i] = pdev;
  	}
--	spin_unlock(&hn->hn_lock);
-+	spin_unlock_bh(&hn->hn_lock);
  
- 	return req;
- }
-@@ -249,7 +249,7 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
- 	if (READ_ONCE(hn->hn_pending) >= hn->hn_pending_max)
- 		goto out_err;
+ 	for (i = 0; i < ARRAY_SIZE(cxl_swd_single); i++) {
+@@ -1192,12 +1197,9 @@ static __init int cxl_single_topo_init(void)
+ 			goto err_dport;
+ 		pdev->dev.parent = &uport->dev;
  
--	spin_lock(&hn->hn_lock);
-+	spin_lock_bh(&hn->hn_lock);
- 	ret = -EOPNOTSUPP;
- 	if (test_bit(HANDSHAKE_F_NET_DRAINING, &hn->hn_flags))
- 		goto out_unlock;
-@@ -258,7 +258,7 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
- 		goto out_unlock;
- 	if (!__add_pending_locked(hn, req))
- 		goto out_unlock;
--	spin_unlock(&hn->hn_lock);
-+	spin_unlock_bh(&hn->hn_lock);
+-		rc = platform_device_add(pdev);
+-		if (rc) {
+-			platform_device_put(pdev);
++		rc = cxl_mock_platform_device_add(pdev, &cxl_swd_single[i]);
++		if (rc)
+ 			goto err_dport;
+-		}
+-		cxl_swd_single[i] = pdev;
+ 	}
  
- 	ret = handshake_genl_notify(net, req->hr_proto, flags);
- 	if (ret) {
-@@ -274,7 +274,7 @@ int handshake_req_submit(struct socket *sock, struct handshake_req *req,
  	return 0;
+@@ -1270,12 +1272,9 @@ static int cxl_mem_init(void)
+ 		pdev->dev.parent = &dport->dev;
+ 		set_dev_node(&pdev->dev, i % 2);
  
- out_unlock:
--	spin_unlock(&hn->hn_lock);
-+	spin_unlock_bh(&hn->hn_lock);
- out_err:
- 	/* Restore original destructor so socket teardown still runs on failure */
- 	req->hr_sk->sk_destruct = req->hr_odestruct;
-diff --git a/net/handshake/tlshd.c b/net/handshake/tlshd.c
-index 8f9532a15f43f9..af294c6cc71731 100644
---- a/net/handshake/tlshd.c
-+++ b/net/handshake/tlshd.c
-@@ -425,6 +425,8 @@ EXPORT_SYMBOL(tls_server_hello_psk);
-  * Request cancellation races with request completion. To determine
-  * who won, callers examine the return value from this function.
-  *
-+ * Context: May be called from process or softirq context.
-+ *
-  * Return values:
-  *   %true - Uncompleted handshake request was canceled
-  *   %false - Handshake request already completed or not found
+-		rc = platform_device_add(pdev);
+-		if (rc) {
+-			platform_device_put(pdev);
++		rc = cxl_mock_platform_device_add(pdev, &cxl_mem[i]);
++		if (rc)
+ 			goto err_mem;
+-		}
+-		cxl_mem[i] = pdev;
+ 	}
+ 
+ 	for (i = 0; i < ARRAY_SIZE(cxl_mem_single); i++) {
+@@ -1288,12 +1287,9 @@ static int cxl_mem_init(void)
+ 		pdev->dev.parent = &dport->dev;
+ 		set_dev_node(&pdev->dev, i % 2);
+ 
+-		rc = platform_device_add(pdev);
+-		if (rc) {
+-			platform_device_put(pdev);
++		rc = cxl_mock_platform_device_add(pdev, &cxl_mem_single[i]);
++		if (rc)
+ 			goto err_single;
+-		}
+-		cxl_mem_single[i] = pdev;
+ 	}
+ 
+ 	for (i = 0; i < ARRAY_SIZE(cxl_rcd); i++) {
+@@ -1307,12 +1303,9 @@ static int cxl_mem_init(void)
+ 		pdev->dev.parent = &rch->dev;
+ 		set_dev_node(&pdev->dev, i % 2);
+ 
+-		rc = platform_device_add(pdev);
+-		if (rc) {
+-			platform_device_put(pdev);
++		rc = cxl_mock_platform_device_add(pdev, &cxl_rcd[i]);
++		if (rc)
+ 			goto err_rcd;
+-		}
+-		cxl_rcd[i] = pdev;
+ 	}
+ 
+ 	return 0;
+@@ -1373,13 +1366,10 @@ static __init int cxl_test_init(void)
+ 			goto err_bridge;
+ 
+ 		mock_companion(adev, &pdev->dev);
+-		rc = platform_device_add(pdev);
+-		if (rc) {
+-			platform_device_put(pdev);
++		rc = cxl_mock_platform_device_add(pdev, &cxl_host_bridge[i]);
++		if (rc)
+ 			goto err_bridge;
+-		}
+ 
+-		cxl_host_bridge[i] = pdev;
+ 		mock_pci_bus[i].bridge = &pdev->dev;
+ 		rc = sysfs_create_link(&pdev->dev.kobj, &pdev->dev.kobj,
+ 				       "physical_node");
+@@ -1397,12 +1387,9 @@ static __init int cxl_test_init(void)
+ 			goto err_port;
+ 		pdev->dev.parent = &bridge->dev;
+ 
+-		rc = platform_device_add(pdev);
+-		if (rc) {
+-			platform_device_put(pdev);
++		rc = cxl_mock_platform_device_add(pdev, &cxl_root_port[i]);
++		if (rc)
+ 			goto err_port;
+-		}
+-		cxl_root_port[i] = pdev;
+ 	}
+ 
+ 	BUILD_BUG_ON(ARRAY_SIZE(cxl_switch_uport) != ARRAY_SIZE(cxl_root_port));
+@@ -1415,12 +1402,9 @@ static __init int cxl_test_init(void)
+ 			goto err_uport;
+ 		pdev->dev.parent = &root_port->dev;
+ 
+-		rc = platform_device_add(pdev);
+-		if (rc) {
+-			platform_device_put(pdev);
++		rc = cxl_mock_platform_device_add(pdev, &cxl_switch_uport[i]);
++		if (rc)
+ 			goto err_uport;
+-		}
+-		cxl_switch_uport[i] = pdev;
+ 	}
+ 
+ 	for (i = 0; i < ARRAY_SIZE(cxl_switch_dport); i++) {
+@@ -1433,12 +1417,9 @@ static __init int cxl_test_init(void)
+ 			goto err_dport;
+ 		pdev->dev.parent = &uport->dev;
+ 
+-		rc = platform_device_add(pdev);
+-		if (rc) {
+-			platform_device_put(pdev);
++		rc = cxl_mock_platform_device_add(pdev, &cxl_switch_dport[i]);
++		if (rc)
+ 			goto err_dport;
+-		}
+-		cxl_switch_dport[i] = pdev;
+ 	}
+ 
+ 	rc = cxl_single_topo_init();
+@@ -1456,9 +1437,9 @@ static __init int cxl_test_init(void)
+ 	mock_companion(&acpi0017_mock, &cxl_acpi->dev);
+ 	acpi0017_mock.dev.bus = &platform_bus_type;
+ 
+-	rc = platform_device_add(cxl_acpi);
++	rc = cxl_mock_platform_device_add(cxl_acpi, NULL);
+ 	if (rc)
+-		goto err_root;
++		goto err_rch;
+ 
+ 	rc = cxl_mem_init();
+ 	if (rc)
 -- 
 2.53.0
 
