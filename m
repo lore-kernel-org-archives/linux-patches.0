@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C984071DD;
-	Sun,  7 Jun 2026 10:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4ED2DFF04;
+	Sun,  7 Jun 2026 10:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829575; cv=none; b=ryvjgmb/9LovSK4Uag4iWrOlZGbMCS28lHusXYNdjqcs8pyAe62mItPlFBf1ZU7gGXHaBzcA8JPxlDsa8H3h4BmJESHi8jAkpTbtr9+PVyeRGZYBXgAisIrk+J1SXMCvRL4Kk7Ee0sE0tCLtF/SGMXFCeRUnyI9VPC6Ps8RiWJc=
+	t=1780829578; cv=none; b=HxNXG3D+GubZAZVBuZImEezQvfPUSQDmybM17Hd20WceByxF4dK7itbw9YuuUf2OSI1nF4xQeBeazsOOtoUY2cijWwJ4e87i8Ks69zkG8XTGubYTl63/nklN5pghh2uPO39qoItB7he7lPv7/wu28Hy8kccTJkFsMnCUjBY1zWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829575; c=relaxed/simple;
-	bh=Ng/BSM1M0b2qV8HSLf5jLt5n8HT4wItl/xFjirA1jPg=;
+	s=arc-20240116; t=1780829578; c=relaxed/simple;
+	bh=8diRm4w09Kms5kKLa76RYY59yoV4PBmp02fW+DiONiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R21Wf4k7YrTRBeh7zUUS1hwBf5ONaj/yLYdlZ9kpN0hGIXJAzokMBYnYnD8uAzgIYEo0D3PxohPfJ04R6KzvLgIUVd9vFx2ahog7EipyGlJ45EolEW1Rcvz+XagSAAw+oCaO/glu8eP88LazRvjWlb47OwhoKkx3PyBs16uI9PA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNHph5vz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZhjLqim22e+XvEkowU1mnMV8/Dr2RdnkRKLAie0FNBrCTT0ufrZH7nOh/GstVvLl9a10PTAZ0ladjL+KMejEPYs7DcsyZgphXdSR98OAApHW+O1Htx+BwyKTJtiiqQOSmwv1hYKUvLYxfCXabYDQEUXjnq6iw7+iW4U62XpbfxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y+534sKQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNHph5vz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5879D1F00893;
-	Sun,  7 Jun 2026 10:52:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y+534sKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B66FA1F00893;
+	Sun,  7 Jun 2026 10:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829574;
-	bh=uwdSMhxYFaAWTlSS9x37sJaShDbNFTuPOpLPOrjrbX8=;
+	s=korg; t=1780829577;
+	bh=eXKh1Dcqohsd14C71rd+LRa86L2rwouG8kyrZLC/jBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eNHph5vzl90PFfHyNDtzjgiw0gfY7+8yPeEtEJL6+lqd3rgxukflir/v3i9J5YSVz
-	 4hZDzoU8Cq8/CNstPNgIXrQE8thWGAEFL3kFooa0joN/QjrbnWyiBsN68fM/WRpVb3
-	 NLY06S7aNzCCmMUkg/u8x+VNvkmo8A1oH5XXptNo=
+	b=y+534sKQkigBnpbUyhA1lr51xDuLnNnLn3JWZfnoOCie9sO9Fjy/I9VqCp0oBOCXv
+	 IN8WRcbv7XFQ0Qbl7lPeql0cS07U30OVNPjUf84InpcyhxnFSX6eyvTNzLbGRmZ4kx
+	 bqzFxClLnKgNN5ykxJYLBgeIX3DuBIKovjUusf0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.0 270/332] USB: serial: mxuport: fix memory corruption with small endpoint
-Date: Sun,  7 Jun 2026 12:00:39 +0200
-Message-ID: <20260607095737.957454547@linuxfoundation.org>
+	Pranay Samala <pranay.samala@intel.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Uma Shankar <uma.shankar@intel.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 7.0 291/332] drm/i915/color: Fix HDR pre-CSC LUT programming loop
+Date: Sun,  7 Jun 2026 12:01:00 +0200
+Message-ID: <20260607095738.741059446@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
 References: <20260607095728.031258202@linuxfoundation.org>
@@ -50,40 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Pranay Samala <pranay.samala@intel.com>
 
-commit 4085f0dbb1ce2251c9a5938d693de6593f0ab2bd upstream.
+commit d196136a988051173f68f91de0b5a1bd32122dd7 upstream.
 
-Make sure that the bulk-out endpoint max packet size is at least eight
-bytes to avoid user-controlled slab corruption should a malicious device
-report a smaller size.
+The integer lut programming loop never executes completely due to
+incorrect condition (i++ > 130).
 
-Fixes: ee467a1f2066 ("USB: serial: add Moxa UPORT 12XX/14XX/16XX driver")
-Cc: stable@vger.kernel.org	# 3.14
-Cc: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fix to properly program 129th+ entries for values > 1.0.
+
+Cc: <stable@vger.kernel.org> #v6.19
+Fixes: 82caa1c8813f ("drm/i915/color: Program Pre-CSC registers")
+Signed-off-by: Pranay Samala <pranay.samala@intel.com>
+Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patch.msgid.link/20260519075308.383877-1-pranay.samala@intel.com
+(cherry picked from commit f33862ec3e8849ad7c0a3dd46719083b13ade248)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/mxuport.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/i915/display/intel_color.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/mxuport.c
-+++ b/drivers/usb/serial/mxuport.c
-@@ -962,6 +962,14 @@ static int mxuport_calc_num_ports(struct
- 	 */
- 	BUILD_BUG_ON(ARRAY_SIZE(epds->bulk_out) < 16);
- 
-+	/*
-+	 * The bulk-out buffers must be large enough for the four-byte header
-+	 * (and following data), but assume anything smaller than eight bytes
-+	 * is broken.
-+	 */
-+	if (usb_endpoint_maxp(epds->bulk_out[0]) < 8)
-+		return -EINVAL;
-+
- 	for (i = 1; i < num_ports; ++i)
- 		epds->bulk_out[i] = epds->bulk_out[0];
- 
+diff --git a/drivers/gpu/drm/i915/display/intel_color.c b/drivers/gpu/drm/i915/display/intel_color.c
+index e7950655434b..6d1cffc6d2be 100644
+--- a/drivers/gpu/drm/i915/display/intel_color.c
++++ b/drivers/gpu/drm/i915/display/intel_color.c
+@@ -3976,7 +3976,7 @@ xelpd_program_plane_pre_csc_lut(struct intel_dsb *dsb,
+ 				intel_de_write_dsb(display, dsb,
+ 						   PLANE_PRE_CSC_GAMC_DATA_ENH(pipe, plane, 0),
+ 						   (1 << 24));
+-			} while (i++ > 130);
++			} while (i++ < 130);
+ 		} else {
+ 			for (i = 0; i < lut_size; i++) {
+ 				u32 v = (i * ((1 << 24) - 1)) / (lut_size - 1);
+-- 
+2.54.0
+
 
 
