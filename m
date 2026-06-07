@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891731FE47B;
-	Sun,  7 Jun 2026 10:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4899F1FE47B;
+	Sun,  7 Jun 2026 10:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828404; cv=none; b=ZdvISoK0hiEYbwtO3wzvEnk7ZOvXW13TMm3YsxfhDO+1Ob+zDqfIvp9SyZpU4Y4YuqSgqz7zaEnqGT/1J/VDomzyMSCxThCrQIeACW6dVZS4ZrXfw+ij6py7SjBcCYT2BS2hJCaWPpHH/AXEgZrfg1bGxySP6iECGBkwspoJ8cY=
+	t=1780828408; cv=none; b=rOV6M4V3LYrFKQSk5xVPZ2oC/eRxbqKXwMrv6JAfnxXCOVgOLWCP2hN1SI87hbo9r8k/X+BbwOX7j7ASsWnyz7fs5Do5imgrwkaLlqfWaEi+jH3mq07GzpvEhW9LjJe/inZFXtISde74iVo5a5riS34fU4CNVDhw6cg2FpGVD08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828404; c=relaxed/simple;
-	bh=yG6XSsN3vvaCIId1Pvd6Z8aj26+t91x8LUiPHKZudvA=;
+	s=arc-20240116; t=1780828408; c=relaxed/simple;
+	bh=omf4+G8klq6fCSMncJfkgw9vxlzvAVyMyIuNNDDq6/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hJjaNnhDbW5pNkfm7a7nyKvaKx0JMWnsJmNI9mThLBlQnkb257r0/AZH0bGNgQ2zb0rno19Q9CJgh1f1A5B95eWR9CVJDb9FfRPBx7zEJSeFRkMUo6EJjsDO91nSX1xyfX3Uv9XafcdRGyAOog9moPRUctUogW5DDwYnM2ba8MU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Msq2oRQa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MkErzHeAWfcruzGyM2/S6detoeROBRzsx3Q6VGtbiltzmMJa4fO0g8pRGH1RnU7M1Awslch8Qs0tfpTjD9nM91UZCPkzzoWf/xb0cRUwwlz2iu6kNaMAbYCksW3egA83Xs6WrkATElplH5Qz8EqcA62plalBNqVBIQcR9VHoOHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRJ/gDRi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Msq2oRQa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1A951F00893;
-	Sun,  7 Jun 2026 10:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRJ/gDRi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 590841F00893;
+	Sun,  7 Jun 2026 10:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828403;
-	bh=nrsMtx5XfrtDwdRLEWAbR0T29FcE8V8BykrCU82j450=;
+	s=korg; t=1780828407;
+	bh=naekHRJOnBQetlT2bzwVcdtTbFrKrJ3GZw2xZhSQqBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Msq2oRQaIeyKD4WWMeM0Hkc3PdCoXJ4zX6V1S36cnr1Y9y/KdzSC3jyruZJ5lY01z
-	 pt4uj6ZKfSOWod7aGPkgxnWcNgtlNApJ2m0/SfETdTq6VeAdcRKkNcPH7YwCB9riyO
-	 ItK9EvsUcuir9SVjkvpDLlED4MW8xcj5TMJ0M4WA=
+	b=eRJ/gDRiU++y+yAEkRuRXx012vb9FmL9iwnbUwOxyDK6LHobGiOhz89ad5uu++3er
+	 D4GxyliMBFZktaPrZf7SGX8X4X+BPOGWToOYYZ91fTUFLFp2fSAqzxnFf8laAqsVMa
+	 U7rVpEg4gotANpRDnoWTkakwaWAFcxh8y+lqj6uY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
 	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Rodrigo Alencar <rodrigo.alencar@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 156/315] iio: dac: max5821: fix return value check in powerdown sync
-Date: Sun,  7 Jun 2026 11:59:03 +0200
-Message-ID: <20260607095733.328970061@linuxfoundation.org>
+Subject: [PATCH 7.0 179/332] iio: dac: ad5686: fix input raw value check
+Date: Sun,  7 Jun 2026 11:59:08 +0200
+Message-ID: <20260607095734.636911154@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Rodrigo Alencar <rodrigo.alencar@analog.com>
 
-commit d0a228d903425e653f18a4341e60c0538afb6d41 upstream.
+commit d01220ee5e43c65a206df827b39bf5cf5f7b9dce upstream.
 
-The function max5821_sync_powerdown_mode() returned the result of
-i2c_master_send() directly. If a partial transfer occurred, it would
-be incorrectly treated as a success by the caller.
+Fix range check for input raw value, which is off by one, i.e., for a
+10-bit DAC the max valid value is 1023, but 1 << 10 equals 1024, which
+passes the previous check, allowing an out-of-range write. The issue
+exists since the ad5686 driver was first introduced.
 
-While the caller currently handles the positive return value of 2 as
-success, this patch refactors the function to return 0 on full success
-and -EIO on short writes. This ensures robust error handling for
-incomplete transfers and improves code maintainability by using
-sizeof(outbuf).
-
-Fixes: 472988972737 ("iio: add support of the max5821")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Fixes: c2f37c8dcadc ("iio: dac: New driver for AD5686R, AD5685R, AD5684R Digital to analog converters")
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Rodrigo Alencar <rodrigo.alencar@analog.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/max5821.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/iio/dac/ad5686.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/dac/max5821.c
-+++ b/drivers/iio/dac/max5821.c
-@@ -90,6 +90,7 @@ static int max5821_sync_powerdown_mode(s
- 				       const struct iio_chan_spec *chan)
- {
- 	u8 outbuf[2];
-+	int ret;
+--- a/drivers/iio/dac/ad5686.c
++++ b/drivers/iio/dac/ad5686.c
+@@ -154,7 +154,7 @@ static int ad5686_write_raw(struct iio_d
  
- 	outbuf[0] = MAX5821_EXTENDED_COMMAND_MODE;
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_RAW:
+-		if (val > (1 << chan->scan_type.realbits) || val < 0)
++		if (val >= (1 << chan->scan_type.realbits) || val < 0)
+ 			return -EINVAL;
  
-@@ -103,7 +104,13 @@ static int max5821_sync_powerdown_mode(s
- 	else
- 		outbuf[1] |= MAX5821_EXTENDED_POWER_UP;
- 
--	return i2c_master_send(data->client, outbuf, 2);
-+	ret = i2c_master_send(data->client, outbuf, sizeof(outbuf));
-+	if (ret < 0)
-+		return ret;
-+	if (ret != sizeof(outbuf))
-+		return -EIO;
-+
-+	return 0;
- }
- 
- static ssize_t max5821_write_dac_powerdown(struct iio_dev *indio_dev,
+ 		mutex_lock(&st->lock);
 
 
