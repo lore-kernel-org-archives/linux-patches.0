@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078492D8378;
-	Sun,  7 Jun 2026 10:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802433254BD;
+	Sun,  7 Jun 2026 10:25:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827948; cv=none; b=NADeQEtojLwoSUO4OZVmgQaJ+O7kdY1XUlxPTC7wNrgEIaaJndZsnydia3T/T/iZYX1NLIhK5oPXjQMB731F1sIyiVudscGq1T6QQ8snt+5BbiOFsqr1QXn9w7WiWaIwHpfLjSRnwqJ318j02U7CE8iO/XZoTbgPa7ODKltkm9k=
+	t=1780827951; cv=none; b=EAhscRTtrcJ7y6cwdAuMgaY+8pd/8oqRo/z1GLuwTnpsoYsZENdHAVJD31kEusYsSy+ka6I4Ibbfmo/WWTp8zLvWCYRhvIcTbxWwGWvC4Rk3d0DtK7lOhRTVLOTxWV358XdW7hFvX1veBNptG/USkPFBc4r+uGpfurad6edNeQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827948; c=relaxed/simple;
-	bh=gyqNyBtqWf/171q/XKdiO7CWuvDCvx9lWeOUVCJwROM=;
+	s=arc-20240116; t=1780827951; c=relaxed/simple;
+	bh=oSD/gwpNsqk7r9yxPSOo9CAN7XvRIKq/rUbMWFq3x8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SRNcpSd4HtL2QLxw1F5moNno2o0B6luC6x1X7yJTTCy2Fody57aLq3A7FWcYiBcy+D6I91mDsgTyYXjTanxhETgUnIJPJ+etSePC8UcIg69zCSlhcaALR+qFyiF6lKPz7y8MfxsmIDb0tZexOVyzOmraKdnSsAhhBbhQ6Cv71RA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMjWPwjF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ReTx3pWAh0taOlUNBMa+J8TR2OIqomNPeNbiRQi5HYOrblagGs+PnZxSgHs6+UY0oOVWshtm4C4BeBjJJuOX/ZYrigKyqpRKM7YE/4k1xM1ckGyBazBczYHNeJss1gjNdeHdyK0n1pUMRe3jjy5y4GBSEGPoQdZh6kjJTZX+0OM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXiX6fcR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMjWPwjF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D17A1F00893;
-	Sun,  7 Jun 2026 10:25:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXiX6fcR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 971011F00893;
+	Sun,  7 Jun 2026 10:25:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827946;
-	bh=kmH/ILhPhgM5Zz/0T6x9/ReQSPjyDRp74j3KHGSV6Mc=;
+	s=korg; t=1780827950;
+	bh=pYPqPPXbETWcAT0PAvDXizT31zfJ+eR9+vtQ+srUHjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hMjWPwjFURiZByc9BJ90Z/byJhnjqYe5aQJrA1MmjhP8Vg4sPF4MDxmhU4BWTENuh
-	 642BWf5HZZr9Li5qvprUwRq0dldMQ8GzCSGQvNU00tmf2HIzjK8QEWTa4PhaQ/g5Ir
-	 oGjX05dsDFTwdTeWcIMe7q/XneO0ZlXpYw8ceEI8=
+	b=bXiX6fcRIVxpJwvjesNdXvHx3OYEXmAeMtcma9Cs9I1bKjOEPc/zsoXEvf7zfDD0+
+	 0dnJK3eravjvWBLCLIvH1OSItwrQlEXAiuK+M0WgQljBY19JSj/DFqrusLEVBPr2Sq
+	 tlIy4HDXGeaeyVvnGcmj/TxYhsD42O2HusXyB9CQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 115/315] USB: serial: safe_serial: fix memory corruption with small endpoint
-Date: Sun,  7 Jun 2026 11:58:22 +0200
-Message-ID: <20260607095731.860845342@linuxfoundation.org>
+	syzbot+11f0e4f957c7c3bf3d51@syzkaller.appspotmail.com,
+	Henri A <contact@henrialfonso.com>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 7.0 130/332] media: rc: igorplugusb: fix control request setup packet
+Date: Sun,  7 Jun 2026 11:58:19 +0200
+Message-ID: <20260607095732.878861598@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,53 +48,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Henri A <contact@henrialfonso.com>
 
-commit 438061ed1ad85e6743e2dce826671772d81089ec upstream.
+commit 171022c7d594c133a45f92357a2a91475edabe20 upstream.
 
-Make sure that the bulk-out buffer size is at least eight bytes to avoid
-user-controlled slab corruption in "safe" mode should a malicious device
-report a smaller size.
+Commit eac69475b01f ("media: rc: igorplugusb: heed coherency
+rules") changed the control request storage from an embedded struct to
+an allocated pointer so it can obey DMA coherency rules.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+However, the driver still passes &ir->request to usb_fill_control_urb().
+That points the URB setup packet at the pointer field itself rather than
+at the allocated struct usb_ctrlrequest.
+
+USB core then interprets pointer bytes as the setup packet. This can
+produce an invalid bRequestType and trigger the control direction warning
+reported by syzbot:
+
+  usb 2-1: BOGUS control dir, pipe 80003580 doesn't match bRequestType 0
+
+Pass ir->request itself as the setup packet.
+
+Fixes: eac69475b01f ("media: rc: igorplugusb: heed coherency rules")
+Reported-by: syzbot+11f0e4f957c7c3bf3d51@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=11f0e4f957c7c3bf3d51
+Tested-by: syzbot+11f0e4f957c7c3bf3d51@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Assisted-by: Codex:GPT-5.5
+Signed-off-by: Henri A <contact@henrialfonso.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/safe_serial.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/media/rc/igorplugusb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/safe_serial.c
-+++ b/drivers/usb/serial/safe_serial.c
-@@ -259,6 +259,7 @@ static int safe_prepare_write_buffer(str
- static int safe_startup(struct usb_serial *serial)
- {
- 	struct usb_interface_descriptor	*desc;
-+	int bulk_out_size;
+--- a/drivers/media/rc/igorplugusb.c
++++ b/drivers/media/rc/igorplugusb.c
+@@ -184,7 +184,7 @@ static int igorplugusb_probe(struct usb_
+ 	if (!ir->buf_in)
+ 		goto fail;
+ 	usb_fill_control_urb(ir->urb, udev,
+-		usb_rcvctrlpipe(udev, 0), (uint8_t *)&ir->request,
++		usb_rcvctrlpipe(udev, 0), (uint8_t *)ir->request,
+ 		ir->buf_in, MAX_PACKET, igorplugusb_callback, ir);
  
- 	if (serial->dev->descriptor.bDeviceClass != CDC_DEVICE_CLASS)
- 		return -ENODEV;
-@@ -279,6 +280,16 @@ static int safe_startup(struct usb_seria
- 	default:
- 		return -EINVAL;
- 	}
-+
-+	/*
-+	 * The bulk-out buffer needs to be large enough for the two-byte
-+	 * trailer in safe mode, but assume anything smaller than eight bytes
-+	 * is broken.
-+	 */
-+	bulk_out_size = serial->port[0]->bulk_out_size;
-+	if (bulk_out_size > 0 && bulk_out_size < 8)
-+		return -EINVAL;
-+
- 	return 0;
- }
- 
+ 	usb_make_path(udev, ir->phys, sizeof(ir->phys));
 
 
