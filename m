@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C83AD31E850;
-	Sun,  7 Jun 2026 10:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001DE1E98EF;
+	Sun,  7 Jun 2026 10:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829060; cv=none; b=UNdikd/7rZcrnamYYJB/YdxjuDGnb1ZjaIt2SlZoViYuM3L7OlES5XrHAxqV424Digb8jZ1BlLO9oCJc3s58wrbuoRvEaTK3BVYPy8pgDii5WHQsYsrRtKoLz6+fuuUdok4wH1DhQESxwWrKVY47qBsqvq2lOtciu7NpAwuK9AY=
+	t=1780829064; cv=none; b=A7jB01q59FldLZI5ZV/LoWXEDzwhDSwCBOxF3pTqIkgYb9kyDfaeW9ICZP/yZ/7GAWKzoSw3FPkwDhZXRp258+JHvCs8zeu3TLFRfOFu06IeQ0r50Hv0r35M8eIX0zp8EN91bjMgKFloA5OvHijLE45Fb4f1/gpH6NUsT544D0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829060; c=relaxed/simple;
-	bh=xZI373oqv0VUUSaMoovOlZw91uTy4guvT+e+ow8eGFM=;
+	s=arc-20240116; t=1780829064; c=relaxed/simple;
+	bh=+5Kd9I/GW7gVMYzDQsvL3KrxhLLFNjIhwP+BxC5mQNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cTqnh+QZBs6ymnG4x+MbFeEwa3lt825J416nc0tncYG/Ms/5bd3z6EbQl+J1c0A/CPStV5A2DjAG+rixbBAai48uJvoZLYnGf+V0A/6vy0M+L09rpznn4Krd59zBux2BY43hOOyPdINOX2c65N+Luguq5UbOA7tiKivQkRvwwuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QV5RH2Dr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ot9K85rpnqh4VV6D4gIUfgtiMijDHmlR1TfOTV+jSmG9o8BeJOfQpL6Y1i1JSgLAgKYe0TYcaed2AiX7s+RDWGMv2M3wIYCEAKh3eDzk+1r4H2cbNi27l4ABOzc66/xlgq6RXXM4xXm0qrjpYeR3YjbqtHKKKVD+m7AMwCyUG2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJMZwEUZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QV5RH2Dr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 290CB1F00893;
-	Sun,  7 Jun 2026 10:44:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJMZwEUZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE951F00893;
+	Sun,  7 Jun 2026 10:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829059;
-	bh=3NaIamDMyXw+tPSF8M1+7nDW0+FmZt9bZPh30Tzof1E=;
+	s=korg; t=1780829063;
+	bh=ly6S4eI+jc0zylrlKgxvrZJbA4i9O5SfHg6pjuqytKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QV5RH2DrwgZZzbVudF/lcU93LUQy9/29fiTkYalLznX+nYKhYhhWzfbSX0MuYf49O
-	 gxf7SkbwSYivHiJmXxCcjShfLz+ba6J2bPL2Tar0oqUVN7oFupYUMV6j0Pf7EnnR1U
-	 QBpHY5t9dKIAJd6+EmlsaeVR1EJGo74wfToUgW64=
+	b=dJMZwEUZS9DddDsGQT72DIbgDPuCgu06WfOjG7zB8hwalhuYdIaK5Bkwox48KCyDo
+	 seiX8gN1sEyRVbsanRafqC7udbKT3reN4YSFG0LjldMwjnWaoIm4Y9f8GIrVdJus5G
+	 NszQTowbl+IDqynO1ID6CGCSvTfd3j8Zac/YJ2/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitriy Zharov <contact@zharov.dev>,
+	Ricardo Ribalda <ribalda@chromium.org>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 7.0 238/332] Input: xpad - add support for ASUS ROG RAIKIRI II
-Date: Sun,  7 Jun 2026 12:00:07 +0200
-Message-ID: <20260607095736.794792882@linuxfoundation.org>
+Subject: [PATCH 6.18 214/315] Input: atmel_mxt_ts - fix boundary check in mxt_prepare_cfg_mem
+Date: Sun,  7 Jun 2026 12:00:01 +0200
+Message-ID: <20260607095735.419454606@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,47 +46,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitriy Zharov <contact@zharov.dev>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit c897cf120696b94f56ed0f3197ba9a77071a59ec upstream.
+commit baa0210fb6a9dc3882509a9411b6d284d88fe30e upstream.
 
-Add the VID/PIDs for the ASUS ROG RAIKIRI II controller to xpad_device
-and the VID to xpad_table. The controller has a physical PC/XBOX toggle
-which switches between XBOX360 and XBOXONE protocols.
+When a configuration file provides an object size that is larger than the
+driver's known mxt_obj_size(object), the driver intends to discard the
+extra bytes.
 
-Signed-off-by: Dmitriy Zharov <contact@zharov.dev>
-Link: https://patch.msgid.link/20260430183522.122151-1-contact@zharov.dev
+The loop iterates using for (i = 0; i < size; i++). Inside the loop, the
+condition to skip processing extra bytes is:
+
+    if (i > mxt_obj_size(object))
+        continue;
+
+Since i is a 0-based index, the valid indices for the object are 0 through
+mxt_obj_size(object) - 1.
+
+When i == mxt_obj_size(object), the condition evaluates to false, and the
+code processes the byte instead of discarding it.
+
+This causes the code to calculate byte_offset = reg + i - cfg->start_ofs
+and writes the byte there, overwriting exactly one byte of the adjacent
+instance or object.
+
+Update the boundary check to skip extra bytes correctly by using >=.
+
+Fixes: 50a77c658b80 ("Input: atmel_mxt_ts - download device config using firmware loader")
 Cc: stable@vger.kernel.org
+Assisted-by: Gemini:gemini-3.1-pro
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://patch.msgid.link/20260504185448.4055973-1-dmitry.torokhov@gmail.com
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/input/touchscreen/atmel_mxt_ts.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -220,6 +220,10 @@ static const struct xpad_device {
- 	{ 0x07ff, 0xffff, "Mad Catz GamePad", 0, XTYPE_XBOX360 },
- 	{ 0x0b05, 0x1a38, "ASUS ROG RAIKIRI", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
- 	{ 0x0b05, 0x1abb, "ASUS ROG RAIKIRI PRO", 0, XTYPE_XBOXONE },
-+	{ 0x0b05, 0x1c91, "ASUS ROG RAIKIRI II", 0, XTYPE_XBOX360 },
-+	{ 0x0b05, 0x1c92, "ASUS ROG RAIKIRI II WIRELESS", 0, XTYPE_XBOX360 },
-+	{ 0x0b05, 0x1c96, "ASUS ROG RAIKIRI II XBOX", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
-+	{ 0x0b05, 0x1d04, "ASUS ROG RAIKIRI II XBOX WIRELESS", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
- 	{ 0x0c12, 0x0005, "Intec wireless", 0, XTYPE_XBOX },
- 	{ 0x0c12, 0x8801, "Nyko Xbox Controller", 0, XTYPE_XBOX },
- 	{ 0x0c12, 0x8802, "Zeroplus Xbox Controller", 0, XTYPE_XBOX },
-@@ -542,6 +546,7 @@ static const struct usb_device_id xpad_t
- 	{ USB_DEVICE(0x0738, 0x4540) },		/* Mad Catz Beat Pad */
- 	XPAD_XBOXONE_VENDOR(0x0738),		/* Mad Catz FightStick TE 2 */
- 	XPAD_XBOX360_VENDOR(0x07ff),		/* Mad Catz Gamepad */
-+	XPAD_XBOX360_VENDOR(0x0b05),		/* ASUS controllers */
- 	XPAD_XBOXONE_VENDOR(0x0b05),		/* ASUS controllers */
- 	XPAD_XBOX360_VENDOR(0x0c12),		/* Zeroplus X-Box 360 controllers */
- 	XPAD_XBOX360_VENDOR(0x0db0),		/* Micro Star International X-Box 360 controllers */
+--- a/drivers/input/touchscreen/atmel_mxt_ts.c
++++ b/drivers/input/touchscreen/atmel_mxt_ts.c
+@@ -1477,7 +1477,7 @@ static int mxt_prepare_cfg_mem(struct mx
+ 			}
+ 			cfg->raw_pos += offset;
+ 
+-			if (i > mxt_obj_size(object))
++			if (i >= mxt_obj_size(object))
+ 				continue;
+ 
+ 			byte_offset = reg + i - cfg->start_ofs;
 
 
