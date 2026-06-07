@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DAF12CDA5;
-	Sun,  7 Jun 2026 10:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109A2325706;
+	Sun,  7 Jun 2026 10:57:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829858; cv=none; b=lBB/m3ACY7SX85TdpWGVcSeH4wb5irAWlIU+ALTUZ5joR6JsOUrUzHKlkmNxNqn8l7QLYYO9utGxJRS+GI4BgjFtXo9CcaABYx2KEWRoI6jnbCWJ5djR2/Baxxyqx7+A4LdJTAUNGssA/11Enqmr1wgDN6Lb3b3eAhWQoJ/NohU=
+	t=1780829862; cv=none; b=C6Wt3jMROxGw5pyxmQTshUdfUZfKtOUBxcvEODH0W4YdlowYoDILHw2uLH3wVdioZjpcXIGkTSwWpJZVMh1wJG3c1LiBa2ua5HNGwL+MflUwsRFx591RCzZIRt5kDXM3fnLiy4enzuDWGb3nSuoaLb4FX4rVbiDbU43kCjY+hNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829858; c=relaxed/simple;
-	bh=SMV3i2ldu0Noo1phd0z9Z86nXxD5voA40ADjoyLfmx4=;
+	s=arc-20240116; t=1780829862; c=relaxed/simple;
+	bh=PaVgC7liIF5uGnqcWT24I4//WWJggikaW5u50e/Xtu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CelTNBoVZOgjzTlH4P/0uyZY1u/lrlR5aSg022zPD2sWObKSDm2pOkSRZISWgsVVuRQ9qvAs+fZESrUVD7cYdNoNV7X9FT32h8n+QJYR8yoL3ISAbv6OqQ2c6HhgpBHB2N5NOJqf+s5laYOP+lHkRy68R25JiAYJQO+7BUSXiQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pei5QrX4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=a2xRK5ERzsQ2e4dWqLvjRiZqwooyy3XpdfXOhD/orLujqSHRWKzPt6LA7IwKYcaCVpOE52dVR4YnxIAU4tvp0iyh8SO2nuRIVy2ENc9+e5bkFyRxuFDdD5dO8SEZ+QXWXWq7ZdD/V3zrejj0udVVuk712PU2EFUgbHxyX5XZo6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZw0k63W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pei5QrX4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D757F1F00893;
-	Sun,  7 Jun 2026 10:57:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZw0k63W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15ED71F00893;
+	Sun,  7 Jun 2026 10:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829857;
-	bh=Vy9K3jNkI+SPEKqOvdOu4qJMzEkjm3/CAoIlTB2dmts=;
+	s=korg; t=1780829860;
+	bh=aUv6YvCi28VNPRUy68Z1Fdec3KtkKaTQCroA0M16hQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pei5QrX4l5tmYfGejWz2LtDQe5rvMgdQnQjtxfmKwFbjl5hvWsSBtAmQb5V1exNpo
-	 RN2kqfz2hxAFrfFmBP0MeWKsP7EvtFuSKuZhGTg4Sqc0xwFu/bdUBJor2hJcwr8NOE
-	 xXbVv8xRG30KJAoJuxVm5hUHqUesug49iFl/89cQ=
+	b=ZZw0k63WMCVyE1dnPqz0rE+mg925g8eg3jRUX9INGz1el8yOE3jeCBDLbgFPEfvTk
+	 hI0pw0Yuv5tYtAJR2+a3R+y3X7J3c9lh1HHH5h12lYiIH9fO34X0l+M4eTFtVit5VP
+	 ZWCMJ6mpsYWh1l0UaQ4WhPMy+6xXzHgF324JnA5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
+	"David E. Box" <david.e.box@linux.intel.com>,
+	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 284/315] platform/x86/intel/vsec: Fix enable_cnt imbalance on PCIe error recovery
-Date: Sun,  7 Jun 2026 12:01:11 +0200
-Message-ID: <20260607095738.018307323@linuxfoundation.org>
+Subject: [PATCH 7.0 319/332] platform/x86/intel/vsec: Refactor base_addr handling
+Date: Sun,  7 Jun 2026 12:01:28 +0200
+Message-ID: <20260607095739.833305807@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,132 +49,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: "David E. Box" <david.e.box@linux.intel.com>
 
-[ Upstream commit 348ccc754d8939e21ca5956ff45720b81d6e407f ]
+[ Upstream commit 904b333fc51cc045941df9656302449a0fc9978e ]
 
-After a PCIe Uncorrectable Error has been reported by a device with
-Intel Vendor Specific Extended Capabilities and has been recovered
-through a Secondary Bus Reset, its driver calls intel_vsec_pci_probe()
-to rescan and reinitialize VSECs.
+The base_addr field in intel_vsec_platform_info was originally added to
+support devices that emulate PCI VSEC capabilities in MMIO. Previously,
+the code would check at registration time whether base_addr was set,
+falling back to the PCI BAR if not.
 
-intel_vsec_pci_probe() invokes pcim_enable_device() and thereby adds
-another devm action which calls pcim_disable_device() on driver unbind.
+Refactor this by making base_addr an explicit function parameter. This
+clarifies ownership of the value and removes conditional logic from
+intel_vsec_add_dev(). It also enables making intel_vsec_platform_info
+const in a later patch, since the function no longer needs to write to
+info->base_addr.
 
-So once the driver unbinds, pcim_disable_device() will be called as many
-times as an Uncorrectable Error occurred, plus one.  This will lead to
-an enable_cnt imbalance on driver unbind.
+No functional change intended.
 
-Additionally, since commit dc957ab6aa05 ("platform/x86/intel/vsec: Add
-private data for per-device data"), a devm_kzalloc() allocation is
-leaked on every Uncorrectable Error.
-
-Avoid by splitting the VSEC rescan out of intel_vsec_pci_probe() into a
-separate helper and calling that on PCIe error recovery.
-
-Fixes: 936874b77dd0 ("platform/x86/intel/vsec: Add PCI error recovery support to Intel PMT")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org  # v6.0+
-Link: https://patch.msgid.link/bd594d09fa866dc51dddc9a447c3b23f9b1402cc.1778736835.git.lukas@wunner.de
+Signed-off-by: David E. Box <david.e.box@linux.intel.com>
+Reviewed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
+Link: https://patch.msgid.link/20260313015202.3660072-2-david.e.box@linux.intel.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Stable-dep-of: 348ccc754d89 ("platform/x86/intel/vsec: Fix enable_cnt imbalance on PCIe error recovery")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/vsec.c |   54 +++++++++++++++++++++-----------------
- 1 file changed, 30 insertions(+), 24 deletions(-)
+ drivers/platform/x86/intel/vsec.c |   23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
 --- a/drivers/platform/x86/intel/vsec.c
 +++ b/drivers/platform/x86/intel/vsec.c
-@@ -620,29 +620,13 @@ static void intel_vsec_skip_missing_depe
+@@ -271,14 +271,13 @@ EXPORT_SYMBOL_NS_GPL(intel_vsec_add_aux,
+ 
+ static int intel_vsec_add_dev(struct pci_dev *pdev, struct intel_vsec_header *header,
+ 			      struct intel_vsec_platform_info *info,
+-			      unsigned long cap_id)
++			      unsigned long cap_id, u64 base_addr)
+ {
+ 	struct intel_vsec_device __free(kfree) *intel_vsec_dev = NULL;
+ 	struct resource __free(kfree) *res = NULL;
+ 	struct resource *tmp;
+ 	struct device *parent;
+ 	unsigned long quirks = info->quirks;
+-	u64 base_addr;
+ 	int i;
+ 
+ 	if (info->parent)
+@@ -310,11 +309,6 @@ static int intel_vsec_add_dev(struct pci
+ 	if (quirks & VSEC_QUIRK_TABLE_SHIFT)
+ 		header->offset >>= TABLE_OFFSET_SHIFT;
+ 
+-	if (info->base_addr)
+-		base_addr = info->base_addr;
+-	else
+-		base_addr = pdev->resource[header->tbir].start;
+-
+ 	/*
+ 	 * The DVSEC/VSEC contains the starting offset and count for a block of
+ 	 * discovery tables. Create a resource array of these tables to the
+@@ -412,7 +406,8 @@ static int get_cap_id(u32 header_id, uns
+ 
+ static int intel_vsec_register_device(struct pci_dev *pdev,
+ 				      struct intel_vsec_header *header,
+-				      struct intel_vsec_platform_info *info)
++				      struct intel_vsec_platform_info *info,
++				      u64 base_addr)
+ {
+ 	const struct vsec_feature_dependency *consumer_deps;
+ 	struct vsec_priv *priv;
+@@ -428,7 +423,7 @@ static int intel_vsec_register_device(st
+ 	 * For others using the exported APIs, add the device directly.
+ 	 */
+ 	if (!pci_match_id(intel_vsec_pci_ids, pdev))
+-		return intel_vsec_add_dev(pdev, header, info, cap_id);
++		return intel_vsec_add_dev(pdev, header, info, cap_id, base_addr);
+ 
+ 	priv = pci_get_drvdata(pdev);
+ 	if (priv->state[cap_id] == STATE_REGISTERED ||
+@@ -444,7 +439,7 @@ static int intel_vsec_register_device(st
+ 
+ 	consumer_deps = get_consumer_dependencies(priv, cap_id);
+ 	if (!consumer_deps || suppliers_ready(priv, consumer_deps, cap_id)) {
+-		ret = intel_vsec_add_dev(pdev, header, info, cap_id);
++		ret = intel_vsec_add_dev(pdev, header, info, cap_id, base_addr);
+ 		if (ret)
+ 			priv->state[cap_id] = STATE_SKIP;
+ 		else
+@@ -464,7 +459,7 @@ static bool intel_vsec_walk_header(struc
+ 	int ret;
+ 
+ 	for ( ; *header; header++) {
+-		ret = intel_vsec_register_device(pdev, *header, info);
++		ret = intel_vsec_register_device(pdev, *header, info, info->base_addr);
+ 		if (!ret)
+ 			have_devices = true;
  	}
- }
+@@ -512,7 +507,8 @@ static bool intel_vsec_walk_dvsec(struct
+ 		pci_read_config_dword(pdev, pos + PCI_DVSEC_HEADER2, &hdr);
+ 		header.id = PCI_DVSEC_HEADER2_ID(hdr);
  
--static int intel_vsec_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
-+static int intel_vsec_pci_init(struct pci_dev *pdev)
- {
--	const struct intel_vsec_platform_info *info;
--	struct vsec_priv *priv;
--	int num_caps, ret;
-+	struct vsec_priv *priv = pci_get_drvdata(pdev);
-+	const struct intel_vsec_platform_info *info = priv->info;
- 	int run_once = 0;
- 	bool found_any = false;
--
--	ret = pcim_enable_device(pdev);
--	if (ret)
--		return ret;
--
--	pci_save_state(pdev);
--	info = (const struct intel_vsec_platform_info *)id->driver_data;
--	if (!info)
--		return -EINVAL;
--
--	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
--	if (!priv)
--		return -ENOMEM;
--
--	priv->info = info;
--	pci_set_drvdata(pdev, priv);
-+	int num_caps;
+-		ret = intel_vsec_register_device(pdev, &header, info);
++		ret = intel_vsec_register_device(pdev, &header, info,
++						 pci_resource_start(pdev, header.tbir));
+ 		if (ret)
+ 			continue;
  
- 	num_caps = hweight_long(info->caps);
- 	while (num_caps--) {
-@@ -663,6 +647,31 @@ static int intel_vsec_pci_probe(struct p
- 	return 0;
- }
+@@ -557,7 +553,8 @@ static bool intel_vsec_walk_vsec(struct
+ 		header.tbir = INTEL_DVSEC_TABLE_BAR(table);
+ 		header.offset = INTEL_DVSEC_TABLE_OFFSET(table);
  
-+static int intel_vsec_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
-+{
-+	const struct intel_vsec_platform_info *info;
-+	struct vsec_priv *priv;
-+	int ret;
-+
-+	ret = pcim_enable_device(pdev);
-+	if (ret)
-+		return ret;
-+
-+	pci_save_state(pdev);
-+	info = (const struct intel_vsec_platform_info *)id->driver_data;
-+	if (!info)
-+		return -EINVAL;
-+
-+	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
-+
-+	priv->info = info;
-+	pci_set_drvdata(pdev, priv);
-+
-+	return intel_vsec_pci_init(pdev);
-+}
-+
- int intel_vsec_set_mapping(struct oobmsm_plat_info *plat_info,
- 			   struct intel_vsec_device *vsec_dev)
- {
-@@ -796,7 +805,6 @@ static pci_ers_result_t intel_vsec_pci_s
- {
- 	struct intel_vsec_device *intel_vsec_dev;
- 	pci_ers_result_t status = PCI_ERS_RESULT_DISCONNECT;
--	const struct pci_device_id *pci_dev_id;
- 	unsigned long index;
+-		ret = intel_vsec_register_device(pdev, &header, info);
++		ret = intel_vsec_register_device(pdev, &header, info,
++						 pci_resource_start(pdev, header.tbir));
+ 		if (ret)
+ 			continue;
  
- 	dev_info(&pdev->dev, "Resetting PCI slot\n");
-@@ -817,10 +825,8 @@ static pci_ers_result_t intel_vsec_pci_s
- 		devm_release_action(&pdev->dev, intel_vsec_remove_aux,
- 				    &intel_vsec_dev->auxdev);
- 	}
--	pci_disable_device(pdev);
- 	pci_restore_state(pdev);
--	pci_dev_id = pci_match_id(intel_vsec_pci_ids, pdev);
--	intel_vsec_pci_probe(pdev, pci_dev_id);
-+	intel_vsec_pci_init(pdev);
- 
- out:
- 	return status;
 
 
