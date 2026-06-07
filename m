@@ -1,54 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58A01C5F27;
-	Sun,  7 Jun 2026 10:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C275A1C5F27;
+	Sun,  7 Jun 2026 10:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828079; cv=none; b=YH0BXsPF99HxTHVuJvFVljdW41mVkjXZAPwpTB+ovz/y9fugP4SSj6/DkNExIcAlA1AdYS8Dsi2jgpf1cy85UA9iT7YT1A9H2KZLoZCe1ckwa53xfZiQkK+Q4bY8nghWD0FUAelsDGWT9QqNGnGlGxmwJ2JXNT3rCdnKCqdgrHM=
+	t=1780828083; cv=none; b=Li35oLSIf3cuJmyqIMEhykukRXU+u8yrEo+ts5Y9hcV5VsNZPdITEi/YdOVTBcEM510uzDm2XvnZPcUmdQtC6OpM8b1cKO6u3RJiHneijRmPLu6bK9nIb1eghAMJ3wsvp14IkWXERXfaff8Wt64ccjF12EDX1KuhS4w9qwg4PL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828079; c=relaxed/simple;
-	bh=2t69vI1x6Cvw5WT8n/VkrC3ZWWfe+/beLl1XW+ekufg=;
+	s=arc-20240116; t=1780828083; c=relaxed/simple;
+	bh=sbghbp5XOfV3Cel44i0q4TbTsC/4L4ctTXzywgLnEIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dRQhqA3k2iua5XPw1+ZuZ3lucb3A2AT45n3cubz5UqbVYTadWQ7I4GpyqQXm8JLdYxtk+CDieysPKhuTLYg4WsORD/X/1qvrQ+ZVmLHpdA8Nrv4bp5sEb7MFJ6exs6kB3mBDDkdrT9/STjMz5NKjGopz3HbUeTIieja4FZgFfX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvPJppBX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G7pZJXZhWJ/QzQf7pynC6MBpneSoTwuiT583r1z+KBnXaf500JaU0Yxoib0f7QXl4OnkSLcngEhJLMp3cPo48KXAeOiSAaWYvGkDX9hNHhz4D9DaZSRZ+iLSHf+FnnMXr9Vj6co+BD2/xcbJbkPtE4R78V3r2geDWmpHWPsAzC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UxovZlJt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvPJppBX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70C31F00893;
-	Sun,  7 Jun 2026 10:27:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UxovZlJt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 149F71F00893;
+	Sun,  7 Jun 2026 10:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828078;
-	bh=gJfeqlGF4ToxOxMDWyGzFapIWy6wINiq0V1jy082j8s=;
+	s=korg; t=1780828082;
+	bh=nqDKrTSF1weEnYfYqt+TRk+GuOKYVIgjCycaHElzx0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fvPJppBXFBya4aZ5YMrLHpBDmN+x0RmH66IMi9HSYAdGtQPK5iIFwH9kq/ei2vGDe
-	 mXw2JhgkHtVNo8V9LllchstAxF+KIZTvn/Q1FdLpcVUyFmnRHOR27FGIH7nmOzO/C/
-	 b8KaSWfKV3ZzqPP/bgJm4CmD1GPQZrgYmH/TVJlk=
+	b=UxovZlJtHM6fxPEketOghHlmWm5RFMXB1nDeqDP5O7jWxqLb66wjCPgxNqgJFZrE8
+	 q7fu6+bi8fol2fM1CD7cndvyg8fEDZXTS9eUdcXIcNDthc5PKo2B01oirjaFNMz4XW
+	 f8+qntJbpNTXoRtF5vRY0pAnnW69NKBURIPmOp1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Zi Yan <ziy@nvidia.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Brendan Jackman <jackmanb@google.com>,
-	Chris Li <chrisl@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Kairui Song <ryncsn@gmail.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Li Wang <li.wang@windriver.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 109/307] mm/page_alloc: clear page->private in free_pages_prepare()
-Date: Sun,  7 Jun 2026 11:58:26 +0200
-Message-ID: <20260607095731.781873154@linuxfoundation.org>
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 6.18 126/315] auxdisplay: line-display: fix OOB read on zero-length message_store()
+Date: Sun,  7 Jun 2026 11:58:33 +0200
+Message-ID: <20260607095732.255084134@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -60,71 +46,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-[ Upstream commit ac1ea219590c09572ed5992dc233bbf7bb70fef9 ]
+commit a7511dcd9dd4bc55d123f9b800c8a4ed2662e5c6 upstream.
 
-Several subsystems (slub, shmem, ttm, etc.) use page->private but don't
-clear it before freeing pages.  When these pages are later allocated as
-high-order pages and split via split_page(), tail pages retain stale
-page->private values.
+linedisp_display() unconditionally reads msg[count - 1] before
+checking whether count is zero, so a write of zero bytes to the
+message sysfs attribute hits msg[-1]:
 
-This causes a use-after-free in the swap subsystem.  The swap code uses
-page->private to track swap count continuations, assuming freshly
-allocated pages have page->private == 0.  When stale values are present,
-swap_count_continued() incorrectly assumes the continuation list is valid
-and iterates over uninitialized page->lru containing LIST_POISON values,
-causing a crash:
+	write(fd, "", 0);
 
-  KASAN: maybe wild-memory-access in range [0xdead000000000100-0xdead000000000107]
-  RIP: 0010:__do_sys_swapoff+0x1151/0x1860
+	-> message_store(..., buf, count=0)
+	   -> linedisp_display(linedisp, buf, count=0)
+	      -> msg[count - 1] == '\n'  ; OOB read
 
-Fix this by clearing page->private in free_pages_prepare(), ensuring all
-freed pages have clean state regardless of previous use.
+The kernfs write buffer for that store is a 1-byte allocation
+(kernfs_fop_write_iter() does kmalloc(len + 1) with len == 0),
+so msg[-1] is a 1-byte read before the slab object. On a
+KASAN-enabled kernel this trips an out-of-bounds report and
+panics; on stock kernels it silently reads adjacent slab data
+and, if that byte happens to be '\n', the following count--
+wraps ssize_t 0 to -1 and is then passed to kmemdup_nul().
 
-Link: https://lkml.kernel.org/r/20260207173615.146159-1-mikhail.v.gavrilov@gmail.com
-Fixes: 3b8000ae185c ("mm/vmalloc: huge vmalloc backing pages should be split rather than compound")
-Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Suggested-by: Zi Yan <ziy@nvidia.com>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: Chris Li <chrisl@kernel.org>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Kairui Song <ryncsn@gmail.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[backport: context only]
-Signed-off-by: Li Wang <li.wang@windriver.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+linedisp_display() is reached from the message_store() sysfs
+callback (drivers/auxdisplay/line-display.c message attribute,
+mode 0644) and from the in-tree initial-message setup with
+count == -1, so the OOB path is only userspace-triggerable via
+zero-byte writes; vfs_write() does not short-circuit on
+count == 0 and kernfs_fop_write_iter() dispatches the store
+callback regardless.
+
+Guard the trailing-newline trim with a count check. The
+existing if (!count) block then takes the clear-display path
+unchanged.
+
+Affects every auxdisplay driver that registers via
+linedisp_register() / linedisp_attach(): ht16k33, max6959,
+img-ascii-lcd, seg-led-gpio.
+
+Fixes: 7e76aece6f03 ("auxdisplay: Extract character line display core support")
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/auxdisplay/line-display.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index b1a8abe5005e99..259249a37faf01 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -1158,6 +1158,7 @@ __always_inline bool free_pages_prepare(struct page *page,
+--- a/drivers/auxdisplay/line-display.c
++++ b/drivers/auxdisplay/line-display.c
+@@ -90,7 +90,7 @@ static int linedisp_display(struct lined
+ 		count = strlen(msg);
  
- 	page_cpupid_reset_last(page);
- 	page->flags &= ~PAGE_FLAGS_CHECK_AT_PREP;
-+	page->private = 0;
- 	reset_page_owner(page, order);
- 	page_table_check_free(page, order);
- 	pgalloc_tag_sub(page, 1 << order);
--- 
-2.53.0
-
+ 	/* if the string ends with a newline, trim it */
+-	if (msg[count - 1] == '\n')
++	if (count && msg[count - 1] == '\n')
+ 		count--;
+ 
+ 	if (!count) {
 
 
