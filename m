@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D79131E849;
-	Sun,  7 Jun 2026 10:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881592D3A69;
+	Sun,  7 Jun 2026 10:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828570; cv=none; b=LPZAuDFwU5GtLP0iH33m0dS86ZJl5i5+mR0r54cMlI4FymelCah3RJU57ZKVIdT1Hlq7buzcRpoTV8yzQVzVlrw4jEV6vVV1bQce+U1t9rUpXI0QBcpEobiKKYa6pykaJLS75SFYwi5d+6mVkPrw2QP2X9GWj8DTj0gZ5Y1o8MY=
+	t=1780828575; cv=none; b=rvA1G5QAjHj+p9zVCB0QncX/Q4U/+napAFPcVEpwqgLfG3fuICMCAq+o6UiRplbqJeHj1bLbfLcTwMipKUglbFg3D+yAo+SP7DrVdCVJ5tONcVowJFGZmz66lZ4rMNkS5PCe4mE0EBVLugUpZ6JChASSDkmBce7IS4lK52Mod/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828570; c=relaxed/simple;
-	bh=6ssaO0uIK5O/bkqAq3ZOv4SzyBlZDevqhZBTdIOEpnI=;
+	s=arc-20240116; t=1780828575; c=relaxed/simple;
+	bh=ZKT4kSsdRfDd+Pe7X4wHESU+sIq3YsPTOIthWMIEII0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hx6TCpRUUq/DJnvaSWLZh3og+MUIVI9+o6q8apoHZnbZs0MhbcVDVMrNNouTymQoFwAHt5TTo112cX1SGE2sRfRHwJ0oAp9BDVj6mVFCyT14ipHY4kS0gvrTj+tLGqwNC+YQkcKzY4OfgkQQCvyvfl94kMNQdBgTUdhzjczRN5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjcZBOqx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=idRCdPcR02XE4kdEP4hT+la7slEZHu7ENlZOzOEy5po3ogq0WpyzTFwT+U0SFJvsWsdSaipjGyM3oOvgkrEfqHoongHxHGgyoF1KmkJff4cWYaJrZasIiOMYMft8QU/QTv+CkIpaL4hvDmhY0anQo/hyDHT+m5yT9o/eTaAju+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNtmPsHX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjcZBOqx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F871F00893;
-	Sun,  7 Jun 2026 10:36:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNtmPsHX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C196A1F00893;
+	Sun,  7 Jun 2026 10:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828569;
-	bh=O7jtCPnUufsNbuNhql9l3/F8TQHwLXN5vaj9Z8buGO0=;
+	s=korg; t=1780828574;
+	bh=BVcr8vnjU5eklYHUW8VRvKsjqbjULtxYt/D6fs3iOLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EjcZBOqxUHQWdyjcwfJWmv5tPfzhKc28k4JnoapkTjHGIPhdIWjeuNKMyMfbUveJz
-	 dwHM06Z38Ikkt+NS5mfSvEbzCoxBuXOJkYn96K3lQEftA0GDqCgGhZJQrTnUQex4k3
-	 gObLFc5xuKFuk6KVnEwoIzR1J/BDNLNAUeqxa7+o=
+	b=WNtmPsHXHlhRLpq5Dt/oL342NRQy/pDqQFNi6RlrHJNLMvnzI7LvmMZDbyqHSC+7c
+	 QMzFkXfHfLHy/VlHB8mtaNQMShWpV/PPCufHDsKnk1y52ACVtdKs6lHE3vzicqR2Jf
+	 s8ed7mQpbyqzZf/02d8i675Xs611d4XCBlg5VEnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Conte <aldocontelk@gmail.com>,
+	Svyatoslav Ryhel <clamor95@gmail.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 173/315] iio: light: cm3323: fix reg_conf not being initialized correctly
-Date: Sun,  7 Jun 2026 11:59:20 +0200
-Message-ID: <20260607095733.940965929@linuxfoundation.org>
+Subject: [PATCH 7.0 194/332] iio: Fix iio_multiply_value use in iio_read_channel_processed_scale
+Date: Sun,  7 Jun 2026 11:59:23 +0200
+Message-ID: <20260607095735.186250735@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,70 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aldo Conte <aldocontelk@gmail.com>
+From: Svyatoslav Ryhel <clamor95@gmail.com>
 
-commit 1f4f0bcc5255dec5c4c3a1551bf49d8c33b69b20 upstream.
+commit bb21ee31f5753a7972148798fd7dfb841dd33bdb upstream.
 
-The code stores the return value of i2c_smbus_write_word_data()
-in data->reg_conf; however, this value represents the result
-of the write operation and not the value actually written to
-the configuration register. This meant that the contents of
-data->reg_conf did not truly reflect the contents
-of the hardware register.
+The function iio_multiply_value returns IIO_VAL_INT (1) on success or a
+negative error number on failure, while iio_read_channel_processed_scale
+should return an error code or 0. This creates a situation where the
+expected result is treated as an error. Fix this by checking the
+iio_multiply_value result separately, instead of passing it as a return
+value.
 
-Instead, save the value of the register before the write
-and use this value in the I2C write.
-
-The bug was found by code inspection: i2c_smbus_write_word_data()
-returns 0 on success, not the value written to the register.
-
-Tested using i2c-stub on a Raspberry Pi 3B running a custom 6.19.10
-kernel. Before loading the driver, the configuration register 0x00
-CM3323_CMD_CONF was populated with 0x0030 using
-`i2cset -y 11 0x10 0x00 0x0030 w`, encoding an integration time of 320ms
-in bits[6:4].
-
-Due to incorrect initialization of data->reg_conf in
-cm3323_init(), the print of integration_time returns 0.040000
-instead of the expected 0.320000. This happens because the read of the
-integration_time depends on cm3323_get_it_bits() that is based on the
-value of data->reg_conf, which is erroneously set to 0.
-
-With this fix applied, data->reg_conf correctly saves 0x0030 after init
-and the successive integration_time reports 0.320000 as expected.
-
-Fixes: 8b0544263761 ("iio: light: Add support for Capella CM3323 color sensor")
-Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Conte <aldocontelk@gmail.com>
+Fixes: 05f958d003c9 ("iio: Improve iio_read_channel_processed_scale() precision")
+Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/cm3323.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/iio/inkern.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/light/cm3323.c
-+++ b/drivers/iio/light/cm3323.c
-@@ -89,15 +89,14 @@ static int cm3323_init(struct iio_dev *i
+--- a/drivers/iio/inkern.c
++++ b/drivers/iio/inkern.c
+@@ -738,7 +738,11 @@ int iio_read_channel_processed_scale(str
+ 		if (ret < 0)
+ 			return ret;
  
- 	/* enable sensor and set auto force mode */
- 	ret &= ~(CM3323_CONF_SD_BIT | CM3323_CONF_AF_BIT);
-+	data->reg_conf = ret;
- 
--	ret = i2c_smbus_write_word_data(data->client, CM3323_CMD_CONF, ret);
-+	ret = i2c_smbus_write_word_data(data->client, CM3323_CMD_CONF, data->reg_conf);
- 	if (ret < 0) {
- 		dev_err(&data->client->dev, "Error writing reg_conf\n");
- 		return ret;
- 	}
- 
--	data->reg_conf = ret;
--
- 	return 0;
- }
- 
+-		return iio_multiply_value(val, scale, ret, pval, pval2);
++		ret = iio_multiply_value(val, scale, ret, pval, pval2);
++		if (ret < 0)
++			return ret;
++
++		return 0;
+ 	} else {
+ 		ret = iio_channel_read(chan, val, NULL, IIO_CHAN_INFO_RAW);
+ 		if (ret < 0)
 
 
