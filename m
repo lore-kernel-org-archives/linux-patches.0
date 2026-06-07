@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8562378C9C;
-	Sun,  7 Jun 2026 10:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846FD30C153;
+	Sun,  7 Jun 2026 10:06:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780826805; cv=none; b=eIq+Owtg7CnhP5LaV9NwvKUKY1RP6QqjGmfSDmun+qVc/flg0dtSBp+1u3gLkLdxOUK9KQ+JeJUwbyZY2HKLJvy/t26/B86TFqP3cTjl3ZZy2Q3F967gOP/XSL0nstzdVKCb1EQu/OVqT6Hp6dkx+vLo2BMOdxe3Y+ahuh9HmU0=
+	t=1780826807; cv=none; b=GUzL6YoTEAnhJqtTYr+8fsXc9k1jfzkv4YGhQlokb2kiY+ulpZAgI0/2RPxuH+KLAqwmYKPdNIw0PQrO/Uj5CA4eOSxv2k6d4mzJ6Obj/sEBOJ+PF6rxm5turMWV8y7jJTz32jf7SEIjHNEogO6uaNkPYg2cwJ5kLy91IxI7++s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780826805; c=relaxed/simple;
-	bh=iGhCnIY5XkL1h9eEB9dTeHKqgcnY8MOTNHH9x3B1XsA=;
+	s=arc-20240116; t=1780826807; c=relaxed/simple;
+	bh=gUy+pMe4S221N0uuRtqzNOE8DAvnwGwnmyu7XCOQmfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mkc1cQCbSZzFrpwRovGwU5o4/hEIB41b4cUFygf8W6A+ZY0zQrSIz/G9dq1BRr28Jtf4eGOnQgiFRaGjk9q7bTIrCEwxNBWz4DNRNK+oTVfDgMqVfqwIsjo6g9VxbhvjxqOHu8an47cohQwHsCQNKACJg60yMWJSJF2ZZjf2TnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mAYfd4bx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hMxVK6biWecz57WPWRA8LEY3qdSJzN8KeQWFw0UeCGXoE2+lG10JagP3OQI4w/JPMLPVNfKPIlKen3DmP9qVFCNVIQm0nQ3YkOjGo5pY/J/dMSqgAZDIfsLLa6tNva1urlxc1VDSrCdVu5MveJaAopufxxNKEB8bwcezSA7mLRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iisAsiDW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mAYfd4bx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 757351F00893;
-	Sun,  7 Jun 2026 10:06:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iisAsiDW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C9D1F00898;
+	Sun,  7 Jun 2026 10:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780826803;
-	bh=bsxdCk996hMbeJNntipLiFkgkv9xCi+HN4YMmKHYM20=;
+	s=korg; t=1780826806;
+	bh=jB/8ppo0QQVGHJ+EYIQm7gHDqjKgQwMo6JD1hyvDDow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mAYfd4bxaQwEbeF3LoZ1HoqdFHwOZ7/Byza2SH8GiNiLZ3Qj7KZ98KUeu0uGt7qGP
-	 gu/tkSqXhUa2fNeYPQw7Jq4qrNm0la99XMRV37QVBf98kkYyohVQhzM0x/wpi0mx48
-	 Ik4mO3PmPBEg08L2h4JHCIDH0IzsM6VH2Dlvk7SQ=
+	b=iisAsiDWEHbFK4E9NTfgoabS+wHb7UZ/jG4e9fa6Kq7Hc1602a6Hj5XFoakFPgmjm
+	 hIoW8wPXI72YIE2m47yuF0OtvE+ee7kkGGuzL294bmLtI+Aww3DMoRjY4gtIHc8l6v
+	 HxOjNgOGMuZ2qSd3s7P5FG7kdBhVSXHZ18FTqFfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Schmaus <florian.schmaus@codasip.com>,
-	Martin Kaiser <martin@kaiser.cx>,
-	David Gow <david@davidgow.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Usama Arif <usama.arif@linux.dev>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 013/332] kunit: fix use-after-free in debugfs when using kunit.filter
-Date: Sun,  7 Jun 2026 11:56:22 +0200
-Message-ID: <20260607095728.517799019@linuxfoundation.org>
+Subject: [PATCH 7.0 004/332] xfrm: move policy_bydst RCU sync from per-netns .exit to .pre_exit
+Date: Sun,  7 Jun 2026 11:56:13 +0200
+Message-ID: <20260607095728.192985321@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
 References: <20260607095728.031258202@linuxfoundation.org>
@@ -53,107 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Schmaus <florian.schmaus@codasip.com>
+From: Usama Arif <usama.arif@linux.dev>
 
-[ Upstream commit fb6988b83b4cafe8db63999c1ddff1b7c66d2ff5 ]
+[ Upstream commit 3e52417318473782012b236d0325bf7d2266a597 ]
 
-When the kernel is booted with a kunit filter (e.g.,
-kunit.filter="speed!=slow"), the kunit executor dynamically allocates
-copies of the filtered test suites using kmalloc/kmemdup.
+The struct pernet_operations docstring in include/net/net_namespace.h
+explicitly warns against blocking RCU primitives in .exit handlers:
 
-During the initial boot execution, kunit_debugfs_create_suite() creates
-debugfs files (such as /sys/kernel/debug/kunit/<suite>/run) and
-permanently stores a pointer to the dynamically allocated suite in the
-inode's i_private field.
+    Exit methods using blocking RCU primitives, such as
+    synchronize_rcu(), should be implemented via exit_batch.
+    [...]
+    Please, avoid synchronize_rcu() at all, where it's possible.
 
-Previously, the executor freed this dynamically allocated suite_set
-immediately after executing the boot-time tests. Because the debugfs
-nodes were not destroyed, any subsequent interaction with the debugfs
-`run` file from userspace triggered a use-after-free (UAF). On systems
-with architectural capabilities, like CHERI RISC-V, this resulted in
-an immediate fatal hardware exception due to the invalidation of the
-capability tags on the reclaimed memory. On other architectures, it
-resulted in silent memory corruption.
+    Note that a combination of pre_exit() and exit() can
+    be used, since a synchronize_rcu() is guaranteed between
+    the calls.
 
-Fix this UAF by properly coupling the lifetime of the filtered suite
-memory allocation to the lifetime of the kunit subsystem and its
-associated VFS nodes. Ownership of the boot-time suite_set is now
-transferred to a global tracker ('kunit_boot_suites'), and the memory
-is cleanly released in kunit_exit() during module teardown.
+xfrm_policy_fini() violates this: it calls synchronize_rcu() before
+freeing the policy_bydst hash tables (so no RCU reader is mid-
+traversal at free time), but runs from xfrm_net_ops.exit -- once per
+namespace -- so a cleanup_net() of N namespaces pays N full RCU
+grace periods serially.
 
-Link: https://lore.kernel.org/r/20260507084854.233984-1-florian.schmaus@codasip.com
-Fixes: e2219db280e3 ("kunit: add debugfs /sys/kernel/debug/kunit/<suite>/results display")
-Signed-off-by: Florian Schmaus <florian.schmaus@codasip.com>
-Reviewed-by: Martin Kaiser <martin@kaiser.cx>
-Reviewed-by: David Gow <david@davidgow.net>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Use the documented pre_exit/exit split. Move the policy flush (and
+the workqueue drains it depends on) into a new .pre_exit handler;
+xfrm_policy_fini() then runs in .exit and frees the hash tables
+after the synchronize_rcu_expedited() that cleanup_net() guarantees
+between the two phases. Providing O(1) RCU grace periods per batch
+instead of O(N).
+
+Observed on Linux 6.18 with a workload doing unshare(CLONE_NEWNET)
+at ~13/sec sustained: cleanup_net() and the netns_wq rescuer kthread
+both stuck in xfrm_policy_fini()'s synchronize_rcu(), >300k struct
+net accumulated in the cleanup queue, Percpu in /proc/meminfo climbed
+to 130+ GB on 256-CPU hosts, and memcg OOMs followed. setup_net and
+__put_net counts were balanced, ruling out a refcount leak.
+
+Fixes: 069daad4f2ae ("xfrm: Wait for RCU readers during policy netns exit")
+Signed-off-by: Usama Arif <usama.arif@linux.dev>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/kunit/test.h |  1 +
- lib/kunit/executor.c | 19 ++++++++++++++++---
- lib/kunit/test.c     |  1 +
- 3 files changed, 18 insertions(+), 3 deletions(-)
+ net/xfrm/xfrm_policy.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/include/kunit/test.h b/include/kunit/test.h
-index 9cd1594ab697d9..ce0573e196ce75 100644
---- a/include/kunit/test.h
-+++ b/include/kunit/test.h
-@@ -613,6 +613,7 @@ unsigned long kunit_vm_mmap(struct kunit *test, struct file *file,
- 			    unsigned long offset);
- 
- void kunit_cleanup(struct kunit *test);
-+void kunit_free_boot_suites(void);
- 
- void __printf(2, 3) kunit_log_append(struct string_stream *log, const char *fmt, ...);
- 
-diff --git a/lib/kunit/executor.c b/lib/kunit/executor.c
-index 1fef217de11db1..b0f8a41d61d367 100644
---- a/lib/kunit/executor.c
-+++ b/lib/kunit/executor.c
-@@ -15,6 +15,16 @@ extern struct kunit_suite * const __kunit_suites_end[];
- extern struct kunit_suite * const __kunit_init_suites_start[];
- extern struct kunit_suite * const __kunit_init_suites_end[];
- 
-+static struct kunit_suite_set kunit_boot_suites;
-+
-+void kunit_free_boot_suites(void)
-+{
-+	if (kunit_boot_suites.start) {
-+		kunit_free_suite_set(kunit_boot_suites);
-+		kunit_boot_suites = (struct kunit_suite_set){ NULL, NULL };
-+	}
-+}
-+
- static char *action_param;
- 
- module_param_named(action, action_param, charp, 0400);
-@@ -411,9 +421,12 @@ int kunit_run_all_tests(void)
- 		pr_err("kunit executor: unknown action '%s'\n", action_param);
- 
- free_out:
--	if (filter_glob_param || filter_param)
--		kunit_free_suite_set(suite_set);
--	else if (init_num_suites > 0)
-+	if (filter_glob_param || filter_param) {
-+		if (err)
-+			kunit_free_suite_set(suite_set);
-+		else
-+			kunit_boot_suites = suite_set;
-+	} else if (init_num_suites > 0)
- 		/* Don't use kunit_free_suite_set because suites aren't individually allocated */
- 		kfree(suite_set.start);
- 
-diff --git a/lib/kunit/test.c b/lib/kunit/test.c
-index 41e1c89799b6a7..99773e000e1b77 100644
---- a/lib/kunit/test.c
-+++ b/lib/kunit/test.c
-@@ -1075,6 +1075,7 @@ static void __exit kunit_exit(void)
- 	kunit_bus_shutdown();
- 
- 	kunit_debugfs_cleanup();
-+	kunit_free_boot_suites();
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index a872af5610dc95..71bdb781cb0292 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -4276,21 +4276,21 @@ static int __net_init xfrm_policy_init(struct net *net)
+ 	return -ENOMEM;
  }
- module_exit(kunit_exit);
+ 
+-static void xfrm_policy_fini(struct net *net)
++static void __net_exit xfrm_net_pre_exit(struct net *net)
+ {
+-	struct xfrm_pol_inexact_bin *b, *t;
+-	unsigned int sz;
+-	int dir;
+-
+ 	disable_work_sync(&net->xfrm.policy_hthresh.work);
+-
+ 	flush_work(&net->xfrm.policy_hash_work);
+ #ifdef CONFIG_XFRM_SUB_POLICY
+ 	xfrm_policy_flush(net, XFRM_POLICY_TYPE_SUB, false);
+ #endif
+ 	xfrm_policy_flush(net, XFRM_POLICY_TYPE_MAIN, false);
++}
+ 
+-	synchronize_rcu();
++static void xfrm_policy_fini(struct net *net)
++{
++	struct xfrm_pol_inexact_bin *b, *t;
++	unsigned int sz;
++	int dir;
+ 
+ 	WARN_ON(!list_empty(&net->xfrm.policy_all));
+ 
+@@ -4368,6 +4368,7 @@ static void __net_exit xfrm_net_exit(struct net *net)
+ 
+ static struct pernet_operations __net_initdata xfrm_net_ops = {
+ 	.init = xfrm_net_init,
++	.pre_exit = xfrm_net_pre_exit,
+ 	.exit = xfrm_net_exit,
+ };
  
 -- 
 2.53.0
