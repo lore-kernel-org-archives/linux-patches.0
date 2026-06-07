@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E03524F;
-	Sun,  7 Jun 2026 11:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECA03164A1;
+	Sun,  7 Jun 2026 11:02:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780830160; cv=none; b=KQWEeZqdV9MsRopIZDLLOQ3LCNL7V4f+UbHNaiyrs6VvA6+XQhu+vTQmz4P1XzzsE0G5qpbRByo2553ccDgbygmH2+01Re8k6VAA8WqQOZXZOpDMy6LNNNk8nNHbYEm8j8oUBN6xpra/BchswYLwOmTxl1mM/AktgqfrQmT0nng=
+	t=1780830164; cv=none; b=DchYSOuOJuzOvCpvC6nENP4sM1GelG3ARXG4S6QWyf/5K5NIDWCaC0S2Z6P5oMyIbHafFXz1rDQF6uXyhiJsY4/Y5CyQaOeftWpAdDhJnmPG1IMkpzuGt2dYUIuR5rcWh6ZS3x7A8DY9ZipsISgHGUNBlWpCHuERs1tXUJXH5Tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780830160; c=relaxed/simple;
-	bh=Fk7h1y1u+5E0RZrOZs0Na4VchIJW8X0s3/IbPu/cD7g=;
+	s=arc-20240116; t=1780830164; c=relaxed/simple;
+	bh=sF86zZB+/jYcCZBRxfCdDIovnqb4U/fZB9VuxmyJgjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nI18oERgC8ZCrKUcdxVnWbbIexzXgCQ7hdGe4bLMMrpiiggpM6O80u62NBCkn07qHA3f5MBwkWJzMjwhq1OJ04kzw7vXXBeSNK6dx18F91mBwAF2Z/RKjHBllgVxZ9r+uRhH8VfQhrShjlH7jwuM+DTj+vyiy5tArD15Kuf2C84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfXulBwO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H98KEJuTHLgVaboq2blfgOLiZ3iUFWC1PfXga+033FM/ArqhiFTypZkXk3TXKI72nD6GJcz4EwO93owa/3EuphnStCjUkzT3JHvwj5djViH1UnrES+qteMCmHwYD5Kik/d07RHRkqW8Bu3/n6yt1TYe+BRvGrJOZo4UWjwxWPtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VEEsbNBn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfXulBwO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0321F00893;
-	Sun,  7 Jun 2026 11:02:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VEEsbNBn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA4261F00893;
+	Sun,  7 Jun 2026 11:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780830159;
-	bh=ZtR8H50f5BzBufwQd8VFx1xnAFuEUNj/NkkXklb1GDQ=;
+	s=korg; t=1780830163;
+	bh=PO9fF1KAz86Cz1Ztsbp8KGd15IAngVZz6JDx8GzGdAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NfXulBwOGUl4YY3IuWZXyMTyXbna1LxrSdxcGroLyI+7oA9r3QRmDo6rvPZvr30eJ
-	 kuvlUChsodXmpmnjM4wbaSxI+FsHojKqNJGDH/Ne0rGhrhy9y70JQRikuJ5V9kun2K
-	 4f1Av989aDF5HyZUi8LlIf1yHt43BAun26J0o3U4=
+	b=VEEsbNBni0No0zdwwASdzVnE6ZJpiCEC4VS84iLlN53aQs1hDqMM/XU0ft9uRECqq
+	 7qkiDP6Q9uK/FzxY/loRGpLkkRxLraLfNBRhA7qTZgNRfopPTVa1yDggBXmAcmAf0l
+	 BbuJOHHnKh2CHHT2WJZB3xwdeIsjRERvVaSEDhJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Shardul Bankar <shardul.b@mpiricsoftware.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 288/315] serdev: Provide a bustype shutdown function
-Date: Sun,  7 Jun 2026 12:01:15 +0200
-Message-ID: <20260607095738.172324104@linuxfoundation.org>
+Subject: [PATCH 6.12 288/307] mptcp: do not drop partial packets
+Date: Sun,  7 Jun 2026 12:01:25 +0200
+Message-ID: <20260607095738.312405525@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,92 +46,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Shardul Bankar <shardul.b@mpiricsoftware.com>
 
-[ Upstream commit 6d71c62b13c33ea858ab298fe20beaec5736edc7 ]
+[ Upstream commit 50c2d91c5dfa0e465826ec1f8dbad9cdc254bd85 ]
 
-To prepare serdev driver to migrate away from struct device_driver::shutdown
-(and then eventually remove that callback) create a serdev driver shutdown
-callback and migration code to keep the existing behaviour. Note this
-introduces a warning for each driver at register time that isn't converted
-yet to that callback.
+When a packet arrives with map_seq < ack_seq < end_seq, the beginning
+of the packet has already been acknowledged but the end contains new
+data. Currently the entire packet is dropped as "old data," forcing
+the sender to retransmit.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/ab518883e3ed0976a19cb5b5b5faf42bd3a655b7.1765526117.git.u.kleine-koenig@baylibre.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 375ba7484132 ("Bluetooth: hci_qca: Convert timeout from jiffies to ms")
+Instead, skip the already-acked bytes by adjusting the skb offset and
+enqueue only the new portion. Update bytes_received and ack_seq to
+reflect the new data consumed.
+
+A previous attempt at this fix has been sent by Paolo Abeni [1], but had
+issues [2]: it also added a zero-window check and changed rcv_wnd_sent
+initialization, which caused test regressions. This version addresses
+only the partial packet handling without modifying receive window
+accounting.
+
+Fixes: ab174ad8ef76 ("mptcp: move ooo skbs into msk out of order queue.")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/c9b426a4e163aa3c4fe8b80c79f1a610f47ae7d8.1763075056.git.pabeni@redhat.com [1]
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/600 [2]
+Signed-off-by: Shardul Bankar <shardul.b@mpiricsoftware.com>
+[pabeni@redhat.com: update map]
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260515-net-mptcp-misc-fixes-7-1-rc4-v2-1-701e96419f2f@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serdev/core.c |   21 +++++++++++++++++++++
- include/linux/serdev.h    |    1 +
- 2 files changed, 22 insertions(+)
+ net/mptcp/protocol.c |   24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
---- a/drivers/tty/serdev/core.c
-+++ b/drivers/tty/serdev/core.c
-@@ -414,11 +414,21 @@ static void serdev_drv_remove(struct dev
- 		sdrv->remove(to_serdev_device(dev));
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -390,12 +390,26 @@ static bool __mptcp_move_skb(struct sock
+ 		return false;
+ 	}
+ 
+-	/* old data, keep it simple and drop the whole pkt, sender
+-	 * will retransmit as needed, if needed.
++	/* Completely old data? */
++	if (!after64(MPTCP_SKB_CB(skb)->end_seq, msk->ack_seq)) {
++		MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_DUPDATA);
++		mptcp_drop(sk, skb);
++		return false;
++	}
++
++	/* Partial packet: map_seq < ack_seq < end_seq.
++	 * Skip the already-acked bytes and enqueue the new data.
+ 	 */
+-	MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_DUPDATA);
+-	mptcp_drop(sk, skb);
+-	return false;
++	copy_len = MPTCP_SKB_CB(skb)->end_seq - msk->ack_seq;
++	MPTCP_SKB_CB(skb)->offset += msk->ack_seq - MPTCP_SKB_CB(skb)->map_seq;
++	MPTCP_SKB_CB(skb)->map_seq += msk->ack_seq -
++				      MPTCP_SKB_CB(skb)->map_seq;
++	msk->bytes_received += copy_len;
++	WRITE_ONCE(msk->ack_seq, msk->ack_seq + copy_len);
++
++	skb_set_owner_r(skb, sk);
++	__skb_queue_tail(&sk->sk_receive_queue, skb);
++	return true;
  }
  
-+static void serdev_drv_shutdown(struct device *dev)
-+{
-+	const struct serdev_device_driver *sdrv =
-+		to_serdev_device_driver(dev->driver);
-+
-+	if (dev->driver && sdrv->shutdown)
-+		sdrv->shutdown(to_serdev_device(dev));
-+}
-+
- static const struct bus_type serdev_bus_type = {
- 	.name		= "serial",
- 	.match		= serdev_device_match,
- 	.probe		= serdev_drv_probe,
- 	.remove		= serdev_drv_remove,
-+	.shutdown	= serdev_drv_shutdown,
- };
- 
- /**
-@@ -814,6 +824,14 @@ void serdev_controller_remove(struct ser
- }
- EXPORT_SYMBOL_GPL(serdev_controller_remove);
- 
-+static void serdev_legacy_shutdown(struct serdev_device *serdev)
-+{
-+	struct device *dev = &serdev->dev;
-+	struct device_driver *driver = dev->driver;
-+
-+	driver->shutdown(dev);
-+}
-+
- /**
-  * __serdev_device_driver_register() - Register client driver with serdev core
-  * @sdrv:	client driver to be associated with client-device.
-@@ -830,6 +848,9 @@ int __serdev_device_driver_register(stru
- 	/* force drivers to async probe so I/O is possible in probe */
-         sdrv->driver.probe_type = PROBE_PREFER_ASYNCHRONOUS;
- 
-+	if (!sdrv->shutdown && sdrv->driver.shutdown)
-+		sdrv->shutdown = serdev_legacy_shutdown;
-+
- 	return driver_register(&sdrv->driver);
- }
- EXPORT_SYMBOL_GPL(__serdev_device_driver_register);
---- a/include/linux/serdev.h
-+++ b/include/linux/serdev.h
-@@ -65,6 +65,7 @@ struct serdev_device_driver {
- 	struct device_driver driver;
- 	int	(*probe)(struct serdev_device *);
- 	void	(*remove)(struct serdev_device *);
-+	void	(*shutdown)(struct serdev_device *);
- };
- 
- static inline struct serdev_device_driver *to_serdev_device_driver(struct device_driver *d)
+ static void mptcp_stop_rtx_timer(struct sock *sk)
 
 
