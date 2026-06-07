@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40D732E6BD;
-	Sun,  7 Jun 2026 10:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7782D3A69;
+	Sun,  7 Jun 2026 10:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828472; cv=none; b=cKI5//VtszYUmfYRZsDYSy1QNAys0oZ5RoYLx5nLv8aEna217LyhKdxITRvzH84wBPrE3X5OeFB9H7ucgtteUfsIJEUjPZud22WaCrAZKqlpaRNgtLg5WNkwSIKY4gEHQ19/6du5IezrVlj8IB2ALsVmSupt482RxB5tPsN92+g=
+	t=1780828473; cv=none; b=V9PUBsg0CT1vvwK7d0Z/UMJF50aCta0JT3QCSygh31zh78zX9GQ+bTnmGxJ/9b4U5UgUS8aRrb78lV2PpnTSxdUsO6KgzJIxKHioIWbV56terTbaH7wAimljKrRil9TxN8/cIDGZTrRbGQJ7y4RwQFfF1L1kvFfB61Rjs+OK9wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828472; c=relaxed/simple;
-	bh=0kvcD4T94HysqgVe5YKtTv2jqTXq0stxOloc88nDUMo=;
+	s=arc-20240116; t=1780828473; c=relaxed/simple;
+	bh=zuRei42meaVO2eOD19O9V33gRpMm0J0JDhtQ9n8h1/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i9KUFiLYetTFzNadgMKrEOYGGUn4TY02HVXiQiq3wFWzTXGdvRsYMpa2xG65q88dVjHda3PTUElIDquuI9IMUK+/cljYXBhr39ABJBh8Ge1mvY/+yUsrJogrMxjTcMZeKXMq3XvHxWj1SfLGykRlyrsIXS7I1jUPNMRpn7BzReE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRo5gJMh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HdH8JqrxjGuvS6MQ0ImgTr22+gMDb1Ex5xeGHLwffnGPIt0UHQoN+ywJDbv+9xncf7sfgYxpw9DV+FWvhQwmMnOKtl4CH6VL4atMWwnWSSzMmbpPEsRI+KVPVRUe+dauWWI1Sc0aQA/69xsjvjtm19YRHULIJUT7ouUgEABHFNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ZRzxqgI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRo5gJMh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF901F00893;
-	Sun,  7 Jun 2026 10:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ZRzxqgI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7253A1F00899;
+	Sun,  7 Jun 2026 10:34:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828468;
-	bh=+Kf+iZU/nto8StDDjKDzx2qZEonqXBPoSbBfBAxUK6k=;
+	s=korg; t=1780828472;
+	bh=dsc4H21x3RzBDtQ/3bsiwMc6PT+f6NPIq7ecBw3epbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wRo5gJMhqCYVDJKCaDLanLRdIKJpiENYYM4GBxGXzy6TpvxS3Z5PXSUWoqEHEeOQn
-	 ZXJBOqIxW9KLP6cK2AkFXDAFAUOmeJ0bbyQJQfpgJGx71aHwINgRFGQA9a2Rqs1BqT
-	 Cisy/X9EZDpZstuzpY/XuXqu8Lj6pnzl29kQM8E4=
+	b=1ZRzxqgIvsu0rIonw2e7U0neiXgmhSSMrOEI14zUm8Fg/IJKgQaJUUYajTMfk4YJ5
+	 mkIgzLTOJhXCoWaUIRgBzdThYFbm907WbZLrYjQfYQmSo+BGywKUHKfHDk++LcQy/e
+	 14UloXD8of0J/EvqHCIPCvHXTe49pV8sO97fco0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
+	kernel test robot <lkp@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 161/315] iio: adc: mt6359: fix unchecked return value in mt6358_read_imp
-Date: Sun,  7 Jun 2026 11:59:08 +0200
-Message-ID: <20260607095733.506113106@linuxfoundation.org>
+Subject: [PATCH 7.0 186/332] iio: adc: nxp-sar-adc: Avoid division by zero
+Date: Sun,  7 Jun 2026 11:59:15 +0200
+Message-ID: <20260607095734.896842374@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +49,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit f9bbd943c34a9ad60e593a4b99ce2394e4e2381b upstream.
+commit 7e5c0f97c66ad538b87c04a640573371fb434b4f upstream.
 
-In mt6358_read_imp(), the variable val_v is passed to regmap_read()
-but the return value is not checked. If the read fails, val_v remains
-uninitialized and its random stack content is subsequently reported
-as a measurement result.
+When Common Clock Framework is disabled, clk_get_rate() returns 0.
+This is used as part of the divisor to perform nanosecond delays
+with help of ndelay(). When the above condition occurs the compiler,
+due to unspecified behaviour, is free to do what it wants to. Here
+it saturates the value, which is logical from mathematics point of
+view. However, the ndelay() implementation has set a reasonable
+upper threshold and refuses to provide anything for such a long
+delay. That's why code may not be linked under these circumstances.
 
-Initialize val_v to zero to ensure a predictable value is reported
-in case of bus failure and to prevent potential stack data leakage.
-This also satisfies static analyzers that might otherwise flag the
-variable as used uninitialized.
+To solve the issue, provide a wrapper that calls ndelay() when
+the value is known not to be zero.
 
-Fixes: 3587914bf61d ("iio: adc: Add support for MediaTek MT6357/8/9 Auxiliary ADC")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Fixes: 4434072a893e ("iio: adc: Add the NXP SAR ADC support for the s32g2/3 platforms")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202603311958.ly6uROit-lkp@intel.com/
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/mt6359-auxadc.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/adc/nxp-sar-adc.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/adc/mt6359-auxadc.c
-+++ b/drivers/iio/adc/mt6359-auxadc.c
-@@ -497,6 +497,7 @@ static int mt6358_read_imp(struct mt6359
- 		return ret;
+--- a/drivers/iio/adc/nxp-sar-adc.c
++++ b/drivers/iio/adc/nxp-sar-adc.c
+@@ -198,6 +198,15 @@ static void nxp_sar_adc_irq_cfg(struct n
+ 		writel(0, NXP_SAR_ADC_IMR(info->regs));
+ }
  
- 	/* Read the params before stopping */
-+	val_v = 0;
- 	regmap_read(regmap, reg_adc0 + (cinfo->imp_adc_num << 1), &val_v);
++static void nxp_sar_adc_wait_for(struct nxp_sar_adc *info, unsigned int cycles)
++{
++	u64 rate;
++
++	rate = clk_get_rate(info->clk);
++	if (rate)
++		ndelay(div64_u64(NSEC_PER_SEC, rate * cycles));
++}
++
+ static bool nxp_sar_adc_set_enabled(struct nxp_sar_adc *info, bool enable)
+ {
+ 	u32 mcr;
+@@ -221,7 +230,7 @@ static bool nxp_sar_adc_set_enabled(stru
+ 	 * configuration of NCMR and the setting of NSTART.
+ 	 */
+ 	if (enable)
+-		ndelay(div64_u64(NSEC_PER_SEC, clk_get_rate(info->clk) * 3));
++		nxp_sar_adc_wait_for(info, 3);
  
- 	mt6358_stop_imp_conv(adc_dev);
+ 	return pwdn;
+ }
+@@ -468,7 +477,7 @@ static void nxp_sar_adc_stop_conversion(
+ 	 * only when the capture finishes. The delay will be very
+ 	 * short, usec-ish, which is acceptable in the atomic context.
+ 	 */
+-	ndelay(div64_u64(NSEC_PER_SEC, clk_get_rate(info->clk)) * 80);
++	nxp_sar_adc_wait_for(info, 80);
+ }
+ 
+ static int nxp_sar_adc_start_conversion(struct nxp_sar_adc *info, bool raw)
 
 
