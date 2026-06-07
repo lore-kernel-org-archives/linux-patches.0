@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4544F3242DF;
-	Sun,  7 Jun 2026 10:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C518D12CDA5;
+	Sun,  7 Jun 2026 10:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829812; cv=none; b=dn+afx16w+INpNsbi4N6AqhqZ/ZQKGn+cjEEwe3SsMjAr7ogPxAcUqjqOBwn/kdsLPpZxUkwZWH2XrlqiUQesporMBpWcFFxx06wgKBaxOWCZ4UDwrlN/eoH3F5LQ1qnsif4f2B5AECXEPV7lj7Kzt3NkN6Z1j1qmytUNXV/wzA=
+	t=1780829815; cv=none; b=Oqw5Aw+d/lGEM0ykmNlSxEkEL7zJ5XE+SL/iIuDNNffvFtDR8BoyD91VcJJ5FvJTlyfO9MXSDdmSTWlwvYJc1pJnOdtnv15P7OhMbiM2s8QL7YLpn8YWSLraHuxEOlQfAHYqs8NaHL/9K8ZmrYQgSFX4t5VuY0g20crhPXTtYcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829812; c=relaxed/simple;
-	bh=6qqY0AewLkFknwKTjbUbCJKsTjtY8EZwfYWVG7RDip8=;
+	s=arc-20240116; t=1780829815; c=relaxed/simple;
+	bh=USR1GX/iTwimqhGLrdvXZsIGU0IGQBW0jj1gPXYpNZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YAUPAtQpAVST1iOvaCeY5jOOVlJCNNEWUtPw/lf1lD0/nZaVvB8EgG48DLvln6AghNzROktFE4xrWO2Reo1JpNLskfVhrXSXY8FnQMNXxDKP09INCxf2MMXLN8jlFOwnpaURfULtQQt1I5/OueVYcXfvmVlneRJVTpPGCTi3KIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vqlaoI2j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=uv6Nc1w/urv/derZ7rUEInVk2377HgUQPi+iFHCKMeQuySDjwsSy2ZZA+fumTus7xIDgoEmpXP2ui8Q8vFgsTQ240W3rJt43Mri/kT2GzTvMD0/JDYAoJLg6r+g/ctpDIzoo5VIZWvyuMc8JJwIewySkSHvdlMD44AFd+9CBWJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qwqtEPEV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vqlaoI2j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871AB1F00893;
-	Sun,  7 Jun 2026 10:56:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwqtEPEV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D15491F00893;
+	Sun,  7 Jun 2026 10:56:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829811;
-	bh=NDyN2wbk6WsCkjycMhg3/fCgUrXEVC4kMj5l4ary3pk=;
+	s=korg; t=1780829814;
+	bh=nF52bDA+Vo84wxrabO2Wc8tnNemC579h98qNHl+Ul+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vqlaoI2j/qIUOfK0cXzP9HwaS+xwKciIdfaWdyUr0yITuSK9eSwR54bFvTucgKlm9
-	 cXgiiBBeCRT6KliTiQ+Xc4oqGheTHBz6S1TZMqitMAIHUuNIovTcPKL2OR1rq5Z3HW
-	 RH6qAB8q76pZbxYokAvlJ6s+DAocYgkq5TsGQa3o=
+	b=qwqtEPEVn0xyrNySPtd4V52D4yeKFNVGfne9ZPRThMxsjlOvJNu/uqjPLLL521BD4
+	 4OaL0yKLebQrQ8lqd0O2m3K7sBnSQWWdjug2I1pLDvCXWgBKKlmZrKqUzgzz2jCTux
+	 2KoY5XkrkqhZNtMqgbobc5WSip5piRNWxaoMpQS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Jacques Nilo <jnilo@free.fr>
-Subject: [PATCH 6.18 280/315] serial: 8250: dispatch SysRq character in serial8250_handle_irq()
-Date: Sun,  7 Jun 2026 12:01:07 +0200
-Message-ID: <20260607095737.873581177@linuxfoundation.org>
+	Jacques Nilo <jnilo@free.fr>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 7.0 315/332] serial: core: introduce guard(uart_port_lock_check_sysrq_irqsave)
+Date: Sun,  7 Jun 2026 12:01:24 +0200
+Message-ID: <20260607095739.688716201@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,79 +47,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Jacques Nilo <jnilo@free.fr>
 
-commit 71f42b2149a1307a97165b409493665579462ea0 upstream.
+commit c3cce2e67bb22a223f5b8ef05db0fcde70994068 upstream.
 
-serial8250_handle_irq() captures a SysRq character into port->sysrq_ch
-inside serial8250_handle_irq_locked() via uart_prepare_sysrq_char()
-(reached from serial8250_read_char()). Dispatch of that captured
-character to handle_sysrq() is expected to happen at port-unlock time,
-through uart_unlock_and_check_sysrq[_irqrestore]().
+uart_handle_break() and uart_prepare_sysrq_char() (in
+include/linux/serial_core.h) capture a SysRq character into
+port->sysrq_ch while the port lock is held and rely on the unlock
+helper -- uart_unlock_and_check_sysrq_irqrestore() -- to dispatch the
+captured character to handle_sysrq() on scope exit.
 
-After commit 8324a54f604d ("serial: 8250: Add
-serial8250_handle_irq_locked()") the function was reduced to a wrapper
-that takes the port lock via guard(uart_port_lock_irqsave) whose
-destructor is plain uart_port_unlock_irqrestore(). The sysrq-aware
-unlock helper is no longer called, so port->sysrq_ch is captured but
-never dispatched: BREAK + SysRq key is consumed silently.
+The existing guard(uart_port_lock_irqsave) cannot be used by IRQ
+handlers that process RX, because its destructor calls plain
+uart_port_unlock_irqrestore() and silently drops port->sysrq_ch.
 
-This was the very condition Johan Hovold's 853a9ae29e978 ("serial:
-8250: fix handle_irq locking", 2021) introduced
-uart_unlock_and_check_sysrq_irqrestore() to address.
+Add a dedicated guard(uart_port_lock_check_sysrq_irqsave) variant
+whose destructor is the sysrq-aware unlock helper. The lock side is
+identical to uart_port_lock_irqsave -- only the unlock-time behaviour
+differs. Callers that may capture SysRq characters must use
+guard(uart_port_lock_check_sysrq_irqsave); the existing
+guard(uart_port_lock_irqsave) keeps its current plain-unlock semantics
+for the many callers that do not process RX.
 
-Switch to the new guard(uart_port_lock_check_sysrq_irqsave), whose
-destructor is the sysrq-aware unlock helper, restoring the pre-split
-behaviour. Update the Context: comment on serial8250_handle_irq_locked()
-so future HW-specific 8250 wrappers know to use the same guard or the
-explicit sysrq-aware unlock.
+The new macro is placed after the CONFIG_MAGIC_SYSRQ_SERIAL block so
+both definitions of uart_unlock_and_check_sysrq_irqrestore() (sysrq
+enabled and disabled) are visible at expansion time. When
+CONFIG_MAGIC_SYSRQ_SERIAL=n the destructor degenerates to plain
+uart_port_unlock_irqrestore(), so there is no overhead.
 
-Verified on RTL8196E with CONFIG_MAGIC_SYSRQ_SERIAL=y: BREAK + 'h' on
-the console UART produces the SysRq help dump in dmesg and the brk
-counter in /proc/tty/driver/serial increments correctly.
+No functional change on its own; users are converted in the following
+patches.
 
-Fixes: 8324a54f604d ("serial: 8250: Add serial8250_handle_irq_locked()")
 Cc: stable@vger.kernel.org
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Jacques Nilo <jnilo@free.fr>
-Link: https://patch.msgid.link/52692ae6c3501f7940347cef364ad7fcacaab7e5.1778675349.git.jnilo@free.fr
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://patch.msgid.link/3849af4bc55d5d2a424fa850844e94d641b2f8a6.1778675349.git.jnilo@free.fr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_port.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/linux/serial_core.h |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index af78cc02f38e..c66ba714caa5 100644
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -1784,7 +1784,10 @@ static bool handle_rx_dma(struct uart_8250_port *up, unsigned int iir)
- }
+--- a/include/linux/serial_core.h
++++ b/include/linux/serial_core.h
+@@ -1275,6 +1275,18 @@ static inline void uart_unlock_and_check
+ #endif	/* CONFIG_MAGIC_SYSRQ_SERIAL */
  
  /*
-- * Context: port's lock must be held by the caller.
-+ * Context: port's lock must be held by the caller. The caller must
-+ * release it via guard(uart_port_lock_check_sysrq_irqsave) or
-+ * uart_unlock_and_check_sysrq_irqrestore(), which captures SysRq
-+ * character on unlock.
++ * Variant of guard(uart_port_lock_irqsave) for IRQ handlers that may capture
++ * a SysRq character via uart_prepare_sysrq_char(). The destructor uses the
++ * sysrq-aware unlock helper so that a captured port->sysrq_ch is dispatched
++ * to handle_sysrq() on scope exit. The plain guard variant silently drops
++ * sysrq_ch and must not be used by callers that process RX.
++ */
++DEFINE_LOCK_GUARD_1(uart_port_lock_check_sysrq_irqsave, struct uart_port,
++                    uart_port_lock_irqsave(_T->lock, &_T->flags),
++                    uart_unlock_and_check_sysrq_irqrestore(_T->lock, _T->flags),
++                    unsigned long flags);
++
++/*
+  * We do the SysRQ and SAK checking like this...
   */
- void serial8250_handle_irq_locked(struct uart_port *port, unsigned int iir)
- {
-@@ -1837,7 +1840,7 @@ int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
- 	if (iir & UART_IIR_NO_INT)
- 		return 0;
- 
--	guard(uart_port_lock_irqsave)(port);
-+	guard(uart_port_lock_check_sysrq_irqsave)(port);
- 	serial8250_handle_irq_locked(port, iir);
- 
- 	return 1;
--- 
-2.54.0
-
+ static inline int uart_handle_break(struct uart_port *port)
 
 
