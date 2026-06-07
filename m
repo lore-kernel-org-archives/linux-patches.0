@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFFD63195FD;
-	Sun,  7 Jun 2026 10:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9313332AAA3;
+	Sun,  7 Jun 2026 10:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828836; cv=none; b=hH6fheEtJ/huPhcWQiKDaUddRI5uCClB8jQGh3JTf0zq4KlFVSOoDiaVJeLm2066ZYUvrgCEVCnpcXQNp3lq2+9+DzJ49ykjg5mmIcO/jFHZhatJVrAQu8lr9+pR0B3AwFGGlb0SBhbACPAQ0+bTnbQ0GlN3YWBTwZyECNWX9kE=
+	t=1780828841; cv=none; b=CqSFEBxbss3vI7QD8BMK0e6si2rx826YTgv4UAjXCXONtbw1yQ/NCjtrbdrPI3ucBllXucXsDERDQR3GcDYnUV3WaNasfD6sM7tEoUv4E1uybdxsby5Sf0w64+wTJPH6gQIgE4n/hHhXXVCFu53kDe6Vtcj7KYcUwAoMjEM/fKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828836; c=relaxed/simple;
-	bh=t9jippoU550E8rjpGxXKcft1YDaP7HqzO231UuknUR4=;
+	s=arc-20240116; t=1780828841; c=relaxed/simple;
+	bh=UozR8mgIIK/gu834K8gPuJDPpIilxrg80NwXg6li6hY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nO+0qG9PeeiDpXgHVpoda+DcU7QQ/g6pD6DOLcICChGdih/7WTNy4Qye+lecPIeK++DGmU0jKYCVOZDNH4DRUi8E8vW6OwNh9go1QVs9l/aZJkBMTXUTRDawxZlOb5E/zMnbdTvFnMMKoB+xmbwzk6qW1TIOmszKCym2JCixses=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkJCiwlP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BJ5EPW217uxZenedgrXLMciRPCuCHtBj0YpIN5V0I8Xi3QwXXaVmya2FienN2BE89k1dxrbuhqPH+SvIinfk91JBkyQrNi5yOzgQIuvn4ip5M3FIVKt75LAB9KWlQcn4138LPrG2edf+e6HSkzk2dc+EKS5WPY39bbxUvkCfxtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tMLfJWBQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkJCiwlP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253C71F00893;
-	Sun,  7 Jun 2026 10:40:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tMLfJWBQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32D01F00893;
+	Sun,  7 Jun 2026 10:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828835;
-	bh=pSp6qhXD3kQiT0zQ6YEWiptWT3ZRi/OUTQ7K9AXjJyk=;
+	s=korg; t=1780828839;
+	bh=xbuXXqw16+LACYj0GrTw3z0Oky/4s533Gsf309FSXMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SkJCiwlPbjF+VBa9xxF0RXF3AerRHEYpAMocYTNoMykFX4algHPOJYrsf1F1wlFzm
-	 NTQov47BDt0jFBqa6/Qk0fudSW9o3t6GjWroHG3zr08GavSd+5tR93hQm7czRTe4RA
-	 8ujgavWsjb7oo1uawUoa8v7snfvzOtgHbqrKPZwM=
+	b=tMLfJWBQXjJIsMgVMuXoJteAtI1Tp76l2GhE2S/Z5uDTvmH9VEXVrXJz2oL13c3N/
+	 GYpwg71SFJr3zH5cORLaSIRZLEY7jEqsy18gWGcTO9H6tBVYgNISWwuIYk7s53rpeU
+	 GQ4NjDh5VednHgQGqmcOWWtLtOK2Dhf9LirIPUOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,12 +30,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Minh Nguyen <minhnguyen.080505@gmail.com>,
 	Willem de Bruijn <willemb@google.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 195/315] net: skbuff: fix missing zerocopy reference in pskb_carve helpers
-Date: Sun,  7 Jun 2026 11:59:42 +0200
-Message-ID: <20260607095734.732953179@linuxfoundation.org>
+Subject: [PATCH 7.0 220/332] net: skbuff: fix missing zerocopy reference in pskb_carve helpers
+Date: Sun,  7 Jun 2026 11:59:49 +0200
+Message-ID: <20260607095736.144576583@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,7 +47,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -116,7 +116,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/net/core/skbuff.c
 +++ b/net/core/skbuff.c
-@@ -6787,6 +6787,8 @@ static int pskb_carve_inside_header(stru
+@@ -6862,6 +6862,8 @@ static int pskb_carve_inside_header(stru
  			skb_kfree_head(data, size);
  			return -ENOMEM;
  		}
@@ -125,7 +125,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  		for (i = 0; i < skb_shinfo(skb)->nr_frags; i++)
  			skb_frag_ref(skb, i);
  		if (skb_has_frag_list(skb))
-@@ -6935,6 +6937,8 @@ static int pskb_carve_inside_nonlinear(s
+@@ -7010,6 +7012,8 @@ static int pskb_carve_inside_nonlinear(s
  		skb_kfree_head(data, size);
  		return -ENOMEM;
  	}
