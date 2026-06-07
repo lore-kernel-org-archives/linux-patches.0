@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA9832143D;
-	Sun,  7 Jun 2026 10:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC30322C6D;
+	Sun,  7 Jun 2026 10:22:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827752; cv=none; b=prxikFdM39UKsiDzwBq1XZyDgmN8m/Ri+ylLtSfAv7PNgjHsQdwHfGUpzsXiNYbs5d9Vf+x7B6xoOr+wEtIQ8YuchIDWyvn+KmnG2EZx5EngbjiQF+Ecx+j5Jcfr7jv7ow1ABNa4epwTTq+kWN7igTk21vO07dta5h1jDc00OAg=
+	t=1780827756; cv=none; b=q+QQtYRWMRF4XdwbXHTW9FSxKkTNV1YxsoTbkr1Da6M20ZYFOKf4Rv6pQ3/nQhlbDOK+u6ZRcurwLRhI8RJuPTRJUwA0BPMTs3D80j8nzZ7j0ycBwpAwOkLaVJgTMKT8F69LEXGaNemwo6SZsauQ1xM84Ma0Kk/OT5hEg4FkkcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827752; c=relaxed/simple;
-	bh=8Yez7Q5s08A6ezYFfwjfJFUIrCQdAdZXVmtq3BXpxzc=;
+	s=arc-20240116; t=1780827756; c=relaxed/simple;
+	bh=NkYqs61n6pZsDVsx/GTQJrBzgyc45s7/Z8UQkDjI+D4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V/pXoiOIytFnfjIltjPx/oJHmRKxSXwjd2h4101/ogmyZdT89fckBA2bkAtHlVgVBNrwCG7cr7z4+zwmrv9cBjKONXLDUovV6DwCm2iyBNt8XvwJ9lq185nmMLas963t/aQAolbGYTHV1gwzMaFCAaqovZv9xGSxzYXiy/MiRwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1VYq+g2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qD0lDM79uF1cr+Hu88RYj90usmD+zHUUKbZgTnXZlohI6xpSLxaL++2uBfNo4Rqcgx1kXV6TZsHpNH21PFfTTntQUu/Dy1CxGqPLcaFZsTKDYrs6Gj6x0LHBGQjvAB/wdOw2BjV6RMJW9vMiZaXZr785a+2k71IYys6TAsZ3MyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDU58xzq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1VYq+g2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E391F00893;
-	Sun,  7 Jun 2026 10:22:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDU58xzq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626E51F00893;
+	Sun,  7 Jun 2026 10:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827750;
-	bh=FfGu/DlmdDGzU02x3H671MCrhLj0560uTwMNjh4Z5Tk=;
+	s=korg; t=1780827754;
+	bh=mpOI8JKnFIXVp4VHOa8wazG4NEV+emsX/Ooo8qrBIeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q1VYq+g2B51DnLBWraVCHXIFBvx9Q0WahVDzEGnkwdEh3560of59WBgN8Vy/08rTc
-	 Y7PCoZ3wykXYunDJ2XK/kY25c9KmB7mpoPFYjnyRRB8iv4PJdozWd4AbVf2S0Pf6hb
-	 C6q/IwVDYHxYOec34EQH9takebt7F2EaHF/mNxoA=
+	b=ZDU58xzqgPB8r0EzfFOMhxhoywlxc06CWpL1hyB3lCEZ5YhRk6b5mXUlb4M/ssc7h
+	 S+du4tfVP0Nflseue+GX1qRVU9BgR5CG6zMEyujS6ByFXzHBv8wuq8fPCdjTHIbHwj
+	 wS5FzbpG/JTeCBTpe/P8lDvBF/eFmmvv3oe5Gy5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Michael Hennerich <Michael.Hennerich@analog.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	David Lechner <dlechner@baylibre.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	stable <stable@kernel.org>
-Subject: [PATCH 7.0 119/332] iio: imu: adis16550: fix stack leak in trigger handler
-Date: Sun,  7 Jun 2026 11:58:08 +0200
-Message-ID: <20260607095732.483634970@linuxfoundation.org>
+	Andrei Vagin <avagin@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"Chang S. Bae" <chang.seok.bae@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 098/315] Revert "x86/fpu: Refine and simplify the magic number check during signal return"
+Date: Sun,  7 Jun 2026 11:58:05 +0200
+Message-ID: <20260607095731.237874056@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,53 +46,105 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Andrei Vagin <avagin@google.com>
 
-commit 474f8928d50b09f7dcf507049f08732640b88b49 upstream.
+[ Upstream commit 44eeff9bc467bc7d1fec34fc3f6001f385fe462c ]
 
-adis16550_trigger_handler() declares the scan data array on the stack
-without initializing it.  The memcpy() at the bottom fills only the
-first 28 bytes (TEMP + 6 channels of GYRO/ACCEL data), and
-iio_push_to_buffers_with_timestamp() writes the s64 timestamp at the
-8-byte-aligned offset 32.  Bytes 28-31 remain uninitialized stack data
-which leaks to userspace on ever trigger.
+This reverts
 
-Fix this all by just zero-initializing the structure on the stack.
+  dc8aa31a7ac2 ("x86/fpu: Refine and simplify the magic number check during signal return").
 
-Cc: Lars-Peter Clausen <lars@metafoo.de>
-Cc: Michael Hennerich <Michael.Hennerich@analog.com>
-Cc: Jonathan Cameron <jic23@kernel.org>
-Cc: David Lechner <dlechner@baylibre.com>
-Cc: "Nuno Sá" <nuno.sa@analog.com>
-Cc: Andy Shevchenko <andy@kernel.org>
-Fixes: e4570f4bb231 ("iio: imu: adis16550: align buffers for timestamp")
-Cc: stable <stable@kernel.org>
-Assisted-by: gregkh_clanker_t1000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The aforementioned commit broke applications that construct signal frames in
+userspace (such as CRIU and gVisor) if the frame's xstate size is smaller than
+the kernel's fpstate->user_size.
+
+Furthermore, this introduces a critical issue for checkpoint/restore tools
+like CRIU. If a process is checkpointed while inside a signal handler, its
+stack contains a signal frame formatted according to the source host's xstate
+capabilities.
+
+If that process is later restored on a destination host with larger xstate
+capabilities (e.g., a newer CPU with more features enabled, resulting in
+a larger fpstate->user_size), the kernel will look for FP_XSTATE_MAGIC2 at the
+destination host's larger user_size offset instead of the offset encoded in
+the frame's fx_sw->xstate_size.
+
+This causes the magic2 check to fail, forcing sigreturn to silently fall back
+to "FX-only" mode. Upon return from the signal handler, the process's extended
+state is reset to initial values instead of being restored, leading to silent
+data corruption.
+
+The aforementioned commit cited
+
+  d877550eaf2d ("x86/fpu: Stop relying on userspace for info to fault in xsave buffer")
+
+as justification to stop relying on userspace for the magic number check.
+
+However, these two changes are fundamentally different. The last one only
+changed how much memory the kernel ensures is paged-in before running XRSTOR
+to prevent an infinite loop. It did not change the signal frame format or how
+the layout is validated.
+
+Reverting this change restores the use of fx_sw->xstate_size for
+locating magic2 and restores the necessary sanity checks, ensuring that
+the signal frame remains self-describing and portable.
+
+  [ bp: Massage commit message. ]
+
+Fixes: dc8aa31a7ac2 ("x86/fpu: Refine and simplify the magic number check during signal return")
+Signed-off-by: Andrei Vagin <avagin@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Chang S. Bae <chang.seok.bae@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20260429000623.3356606-1-avagin@google.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/adis16550.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/fpu/signal.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/iio/imu/adis16550.c
-+++ b/drivers/iio/imu/adis16550.c
-@@ -836,7 +836,7 @@ static irqreturn_t adis16550_trigger_han
- 	u16 dummy;
- 	bool valid;
- 	struct iio_poll_func *pf = p;
--	__be32 data[ADIS16550_MAX_SCAN_DATA] __aligned(8);
-+	__be32 data[ADIS16550_MAX_SCAN_DATA] __aligned(8) = { };
- 	struct iio_dev *indio_dev = pf->indio_dev;
- 	struct adis16550 *st = iio_priv(indio_dev);
- 	struct adis *adis = iio_device_get_drvdata(indio_dev);
+diff --git a/arch/x86/kernel/fpu/signal.c b/arch/x86/kernel/fpu/signal.c
+index c3ec2512f2bbe4..20b638c507ca2d 100644
+--- a/arch/x86/kernel/fpu/signal.c
++++ b/arch/x86/kernel/fpu/signal.c
+@@ -27,14 +27,19 @@
+ static inline bool check_xstate_in_sigframe(struct fxregs_state __user *fxbuf,
+ 					    struct _fpx_sw_bytes *fx_sw)
+ {
++	int min_xstate_size = sizeof(struct fxregs_state) +
++			      sizeof(struct xstate_header);
+ 	void __user *fpstate = fxbuf;
+ 	unsigned int magic2;
+ 
+ 	if (__copy_from_user(fx_sw, &fxbuf->sw_reserved[0], sizeof(*fx_sw)))
+ 		return false;
+ 
+-	/* Check for the first magic field */
+-	if (fx_sw->magic1 != FP_XSTATE_MAGIC1)
++	/* Check for the first magic field and other error scenarios. */
++	if (fx_sw->magic1 != FP_XSTATE_MAGIC1 ||
++	    fx_sw->xstate_size < min_xstate_size ||
++	    fx_sw->xstate_size > x86_task_fpu(current)->fpstate->user_size ||
++	    fx_sw->xstate_size > fx_sw->extended_size)
+ 		goto setfx;
+ 
+ 	/*
+@@ -43,7 +48,7 @@ static inline bool check_xstate_in_sigframe(struct fxregs_state __user *fxbuf,
+ 	 * fpstate layout with out copying the extended state information
+ 	 * in the memory layout.
+ 	 */
+-	if (__get_user(magic2, (__u32 __user *)(fpstate + x86_task_fpu(current)->fpstate->user_size)))
++	if (__get_user(magic2, (__u32 __user *)(fpstate + fx_sw->xstate_size)))
+ 		return false;
+ 
+ 	if (likely(magic2 == FP_XSTATE_MAGIC2))
+-- 
+2.53.0
+
 
 
