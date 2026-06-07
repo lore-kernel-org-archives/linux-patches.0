@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774D82C1595;
-	Sun,  7 Jun 2026 10:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADA32C1595;
+	Sun,  7 Jun 2026 10:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828227; cv=none; b=Au8/S8xBi8x5srJuLTDx0KDhlOI+GpodRSp6WR+ZCIk4KKNf3O6MFi3pTB19J8ESojryGa374uQ/324B7iRGzWfvFbDKMEoq0RrvZuUHAiFuMI7sa+tX2I3/mZ2ldRJJKF4TYq3Hl/mLIcFZQImFQqiunMplH+0jmmhwmZaozwk=
+	t=1780828230; cv=none; b=gDTqgy8MVzvXrq5cLvxkvl50enltyEAvHQ4xn6YulUmL/wK4x591DHi6V/rc8nbfoR70y0xje9pySZMIygugsGxR9vTT+p6fA2TDug40alfFwRj2FnRbWgx++IthRyw0BERAr56mGKCrdWsrd6+GzgcsGWhkvOtsbkkuWLt9ZWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828227; c=relaxed/simple;
-	bh=IvR6CgNJ2OuEJrLqppbANO0C/xOGDqP5XKizJLfYziM=;
+	s=arc-20240116; t=1780828230; c=relaxed/simple;
+	bh=P5nAU+CVGErc3WES3zgn4l9dcxuNRWCTgt5y7MiQJMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SM467uMPrBgCQojHa/sMabgC7t5m42asePdM/QEV3PU8j7oEJfp7bd29Fwfd6vJEN1sSrJOp0od7blMjs7iR3Y31bFVdQXxDkw4LZNOoo/pu+zUBR8SH7MwrEiZfeq+BvgYm3F0E+WS8TiQE5qyQy8ChpEV6mVv0wu1YIEE+hhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZidX1+H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MjrWD/tuhN43rAdyAKeq/CxeB6Wqm1Z0q3Z12GcWvQaDLfS0JFHnB0FB7iJuWjjhZLohk6Gl/Rsn7YGDitoDjH3PDEEZ5MGGJNdZv93C9owL8tPXRXdiICNVPufCf+fvu1xPbJYtR3E1lXggalYuDPmxTgk8KQaCZUGHph4L7rI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2aN1xp+z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZidX1+H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452CC1F00893;
-	Sun,  7 Jun 2026 10:30:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2aN1xp+z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1281C1F00893;
+	Sun,  7 Jun 2026 10:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828225;
-	bh=IQZYTiLnVtwbOKJUwbDK0/TN9/BfbNUz3DkIVD2V6rc=;
+	s=korg; t=1780828229;
+	bh=VQ0s9yG0ivWZPDIVs6F6O3lummEHIM4u4glwyuCJ2Zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pZidX1+H+bVQvpkyxIlCp22y2hA3lfh4At0OhxS2toltDervrULJnCfOFnFv/OFL6
-	 +EAvIj27RKS9f7E306KfdG6oxg3Qf4UzA7uboF+yQ9G3JlJRD6EXKM2a92NAvAHH8G
-	 KLF5lVVP62hVUo6KNw0sFkmUeRjG1EOw4fCbjyGg=
+	b=2aN1xp+zcCsZHvNYKknhqReKV0ZnA8+JvlaNHcDLBxlgBO2b/c/5NA7mTZzHzX2tR
+	 Qam0UodhRSTw7k06abSY/2wuW+vd3ttCw7ArAlf1MrBqrZIlpS7/vHSpjmoUMi9Ncf
+	 hG277ZeDpn36f9TuPRh/usSHiPgcjMRRDyWi1X/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Ma <maqianga@uniontech.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.18 142/315] KVM: arm64: PMU: Preserve AArch32 counter low bits
-Date: Sun,  7 Jun 2026 11:58:49 +0200
-Message-ID: <20260607095732.816625615@linuxfoundation.org>
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Michael Roth <michael.roth@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 7.0 165/332] KVM: SEV: WARN if KVM attempts to setup scratch area with min_len==0
+Date: Sun,  7 Jun 2026 11:58:54 +0200
+Message-ID: <20260607095734.126902131@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,50 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qiang Ma <maqianga@uniontech.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 1750ad1388e03fb27068cd1f22c9c8b4590fe936 upstream.
+commit f185e05dce6f170f83c4ba602e969b1c3c7a22e6 upstream.
 
-AArch32 writes to PMU event counters cannot update the top 32 bits,
-even when PMUv3p5 makes the counters 64-bit. KVM therefore needs to
-preserve the existing high half and only update the low half written by
-the guest, unless the caller explicitly forces a full reset through
-PMCR.P.
+Now that all paths in KVM properly validate the length needed for the
+scratch area, and are guaranteed to pass in a non-zero length, WARN if KVM
+attempts to configured the scratch area with min_len==0 to guard against
+future bugs.
 
-The current code masks @val down to the old high half before taking
-lower_32_bits(val), which means the low half is always zero. As a
-result, AArch32 writes to event counters discard the guest-provided low
-32 bits instead of storing them.
-
-Build the new value from the old high 32 bits and the low 32 bits of
-the value supplied by the guest.
-
-Fixes: 26d2d0594d70 ("KVM: arm64: PMU: Do not let AArch32 change the counters' top 32 bits")
-Signed-off-by: Qiang Ma <maqianga@uniontech.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20260526074640.791991-1-maqianga@uniontech.com
 Cc: stable@vger.kernel.org
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Michael Roth <michael.roth@amd.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260501202250.2115252-8-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/pmu-emul.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kvm/svm/sev.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/arm64/kvm/pmu-emul.c
-+++ b/arch/arm64/kvm/pmu-emul.c
-@@ -174,8 +174,8 @@ static void kvm_pmu_set_pmc_value(struct
- 		 * action is to use PMCR.P, which will reset them to
- 		 * 0 (the only use of the 'force' parameter).
- 		 */
--		val  = __vcpu_sys_reg(vcpu, reg) & GENMASK(63, 32);
--		val |= lower_32_bits(val);
-+		val = (__vcpu_sys_reg(vcpu, reg) & GENMASK(63, 32)) |
-+		      lower_32_bits(val);
- 	}
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -3624,6 +3624,9 @@ static int setup_vmgexit_scratch(struct
+ 	u64 scratch_gpa_beg, scratch_gpa_end;
+ 	void *scratch_va;
  
- 	__vcpu_assign_sys_reg(vcpu, reg, val);
++	if (WARN_ON_ONCE(!min_len))
++		goto e_scratch;
++
+ 	scratch_gpa_beg = svm->sev_es.sw_scratch;
+ 	if (!scratch_gpa_beg) {
+ 		pr_err("vmgexit: scratch gpa not provided\n");
 
 
