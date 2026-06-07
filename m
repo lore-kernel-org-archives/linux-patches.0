@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6668D257855;
-	Sun,  7 Jun 2026 10:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 121D23254A9;
+	Sun,  7 Jun 2026 10:36:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828558; cv=none; b=TBOXuwCigs6Ka31rXI6ZY/vuzYDPlhyT64zmbWwUWv/EOqvdTe4wbGzm1oLPpDzYvnzBdPP0LdKWmLW9KARFYWgW4NYH12zTzfHFWDbT3/zak4xUQ17bLYyZ7CXtXhpK7f7TgknIyxEd890yuyd/YP5XdUcnWMQTXEjiwmNv1oU=
+	t=1780828562; cv=none; b=s/GML3dm3yuMuWxMMEVjHTJNIoYslSpNwQYzYLiMyifPY+SK4DaT5panoQqojnuG6gfCJAwjCNw8esEDQ6SDIczU6twuBWfQjqddgNjdZmQejK/VJsf0nt7BKcwz1zAYbl5iVzu/61yhSQNFvT5xMHC6L35i3kuQTD0N+9iD5Ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828558; c=relaxed/simple;
-	bh=uC71Pn7JU1ZuVv8TWDuRAmn99rjJdcBJumwgg8dPN+A=;
+	s=arc-20240116; t=1780828562; c=relaxed/simple;
+	bh=LzPaYzC1OcdGh1C6+QtCJ/B87ZC5diAcE3bS2ufOxjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l1J/FHikFoTXZRusZCGcsWavxtY+uanMos3wTB64P+oIpZ634wIXc9FBZSB9qD1AnW4iTaCAqmiXzoNYSodt1g57rsIZMVWhhl2YmDQYfssQx3faYi+T8MMlfJE92DypYHHSR3ZsCEDlHydhveGPbkqyvTFdVetdd1XliYDFzHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arIbB2zn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jodm9XfReVsDG1Ovx4z58TDGyHNv8JVBmv+uiu0Qlm1zEY2G9LiHhZFuHlyGKtRc6dy4LVZPEq7a7sNG0fGCLsYsCwB7RCpStYFbLVpqiz5F1kLi+A9G1a4Ayb7Ro8A78JNBTTcrcWzNoJVm8+KDuX+iOzH9VBEBC6L3sZhL8qI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dDc3jyNe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arIbB2zn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F7541F00893;
-	Sun,  7 Jun 2026 10:35:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dDc3jyNe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FB91F00893;
+	Sun,  7 Jun 2026 10:36:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828557;
-	bh=CQ1BdSo9LLSlrypeM5km6Ra9U3CPXb3DNIbg8p2kkbo=;
+	s=korg; t=1780828561;
+	bh=8fX8dfvgFCns5Z/F5RZuLDGB+91Ke6sEt1Rp/Dz4ZZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=arIbB2znPRSSlWfDGGLAQuejIOyy8uOcs9uppusSDTM2pzUisXqgbq7+mVtpNWrDl
-	 2847cs53DCvujz7RXQGpSDXHX4HTBP+ec3Rilc6wlbwSa0M5n6NQRATyVtw4hH4Ixw
-	 5N3/KqeGrkr4bgx/gvhYu4KJBdx7wN0J7eoo3eEQ=
+	b=dDc3jyNeFf4KydSbwnVGusZtfnZ+4dVFbrfhp4ERkx2HQgBHVtZysDChzE1ePYIXV
+	 N2OOcEUwiaqOrtnisVrkb05USvPpcoOWKMAO23ySgcsvO3Sw8Hhvesd+HuAM1aNqJ8
+	 AB4wpP4oK5bKnCi0UWVpR9Ee/ovLtTszdzGT2lrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Felix Gu <ustc.gu@gmail.com>,
 	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.18 172/315] iio: chemical: scd30: fix division by zero in write_raw
-Date: Sun,  7 Jun 2026 11:59:19 +0200
-Message-ID: <20260607095733.905000185@linuxfoundation.org>
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 7.0 193/332] iio: light: veml6070: Fix resource leak in probe error path
+Date: Sun,  7 Jun 2026 11:59:22 +0200
+Message-ID: <20260607095735.153462210@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,38 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antoniu Miclaus <antoniu.miclaus@analog.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-commit 5aba4f94b225617a55fed442a70329b2ee19c0a5 upstream.
+commit b66f922f6a4fa92840f662fbcfeb4f8a0f774bcc upstream.
 
-Add a zero check for val2 before using it as a divisor when setting the
-sampling frequency. A user writing a zero fractional part to the
-sampling_frequency sysfs attribute triggers a division by zero in the
-kernel.
+The driver calls i2c_new_dummy_device() to create a dummy device,
+then calls i2c_smbus_write_byte(). If i2c_smbus_write_byte() fails and
+returns, the cleanup via devm_add_action_or_reset() was never registered,
+so the dummy device leaks.
 
-Fixes: 64b3d8b1b0f5 ("iio: chemical: scd30: add core driver")
-Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Switch to devm_i2c_new_dummy_device() which registers cleanup atomically
+with device creation, eliminating the error-path window.
+
+Fixes: 7501bff87c3e ("iio: light: veml6070: add action for i2c_unregister_device")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
 Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/chemical/scd30_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/light/veml6070.c |   14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
---- a/drivers/iio/chemical/scd30_core.c
-+++ b/drivers/iio/chemical/scd30_core.c
-@@ -256,7 +256,7 @@ static int scd30_write_raw(struct iio_de
- 	guard(mutex)(&state->lock);
- 	switch (mask) {
- 	case IIO_CHAN_INFO_SAMP_FREQ:
--		if (val)
-+		if (val || !val2)
- 			return -EINVAL;
+--- a/drivers/iio/light/veml6070.c
++++ b/drivers/iio/light/veml6070.c
+@@ -245,13 +245,6 @@ static const struct iio_info veml6070_in
+ 	.write_raw = veml6070_write_raw,
+ };
  
- 		val = 1000000000 / val2;
+-static void veml6070_i2c_unreg(void *p)
+-{
+-	struct veml6070_data *data = p;
+-
+-	i2c_unregister_device(data->client2);
+-}
+-
+ static int veml6070_probe(struct i2c_client *client)
+ {
+ 	struct veml6070_data *data;
+@@ -281,7 +274,8 @@ static int veml6070_probe(struct i2c_cli
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	data->client2 = i2c_new_dummy_device(client->adapter, VEML6070_ADDR_DATA_LSB);
++	data->client2 = devm_i2c_new_dummy_device(&client->dev, client->adapter,
++						  VEML6070_ADDR_DATA_LSB);
+ 	if (IS_ERR(data->client2))
+ 		return dev_err_probe(&client->dev, PTR_ERR(data->client2),
+ 				     "i2c device for second chip address failed\n");
+@@ -292,10 +286,6 @@ static int veml6070_probe(struct i2c_cli
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	ret = devm_add_action_or_reset(&client->dev, veml6070_i2c_unreg, data);
+-	if (ret < 0)
+-		return ret;
+-
+ 	return devm_iio_device_register(&client->dev, indio_dev);
+ }
+ 
 
 
