@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BD5A59;
-	Sun,  7 Jun 2026 10:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7064C32AADE;
+	Sun,  7 Jun 2026 10:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829114; cv=none; b=e/G3bi7lUTGRYccYQwYqJ8BNge/nC56wofEpAQqlQUJtfPmpH4/0lj6ubuzoy64/XrfmF7+mK0kxeYNO1U49fYuoSHA68DWJkWTCOu4VnNXGhXCioaNtud0PjVwzFN4Z0x7b58Vdqkd9KtwEIiSJFTChiEzctNU65++vD6yHALs=
+	t=1780829118; cv=none; b=FY+Uxa2a92d0bKTAzDbMQfxT5jK3ML8u988KTFCl0cyIDx+W7PuBzFtIb8WeXjZftp2g9beLp+p8FX+JJKzEfS9x3W6WOaiAEZZ0K8xjbVa9OsAhiQgrzHMiKIbf5WOc8OTYS9GvmXBUHJ1FXZFF/TcHyNFaEkysyX9zyaWyon0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829114; c=relaxed/simple;
-	bh=Hr8HIK4tlFx2OYVp4fkAm/iuW9Njc3/N3BsyGQVbVNE=;
+	s=arc-20240116; t=1780829118; c=relaxed/simple;
+	bh=dSM2jRUD4+//WBsRAlw6atVt44wg9hroS5C00xPC9UI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fhrCDlLQtJB1kPWjEMFQA2cGYjHMToJ++ZATWZC1/XiGFvAgd9BwTzLKwyH0+yYQuinPXFr44Mbk2uweyV/zBCv1g8F0QHliHf1Chz+rGeIVp7ybkwgOlWGZg0GoOjh9za3Ad/728Cw+OeFShJe75Ui5tcmTTcumS9jsUI5Kg68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4JkChic; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UZ3HmwZ4/OPiyAYrmUeEmxff/t2ktswzfAAw/Cvlbymli43iTMJI+JmmccsUCsx3FhWVnvQ065kHC2t5axAeHj1foIHJDmsaUj6GWZM1i+J3Om9K00HArcNRDXWfLYz26nzfu7gheG6Gc2srDlSgPmZEmkTTeuQVUh5zQW7ZHlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kcCymVw3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4JkChic"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E1E1F00893;
-	Sun,  7 Jun 2026 10:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kcCymVw3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1FBB1F00893;
+	Sun,  7 Jun 2026 10:45:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829113;
-	bh=uSPGb8bCgyPbzO13W4mY4EYPx/isG09+1coiYHoFcJ0=;
+	s=korg; t=1780829117;
+	bh=klhNjuasL9+78YRrfoxh1/xRjP4gifyrq/C5+SHimT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d4JkChicSU3X1SRpqG1Ks9h/5UUlHOkEOJ/1odwtgqHGa2b3ARTxp4I6oo1XxrvvL
-	 4DXUXweRBCx5NAG/IF1r7dPbZOqiOqYY1JWbhFCWKS7hqnB7iiKXvEz9cofVp9iTSD
-	 MEq3tjGWOB2jteaYXY51c5ABvaKfmUzErd4s2LLM=
+	b=kcCymVw3E75mgyp8hatIR5FMX9UTCOM/OqTid+3LLlYzHfk1izoHAL5grgzB0d09g
+	 L9/AAF5WqmCAIdkJXm0lZxqul916HMQLRw1X/lkPug/3QpCfIQU7ZfL4QKe1UXiDvo
+	 Afb9hmEaF3duup/o+q5odhMpspgt3ViIwL7rx/mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.18 218/315] comedi: comedi_test: Fix limiting of convert_arg in waveform_ai_cmdtest()
-Date: Sun,  7 Jun 2026 12:00:05 +0200
-Message-ID: <20260607095735.583551579@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Ashutosh Desai <ashutoshdesai993@gmail.com>,
+	David Heidelberg <david@ixit.cz>
+Subject: [PATCH 6.12 197/307] nfc: hci: fix out-of-bounds read in HCP header parsing
+Date: Sun,  7 Jun 2026 11:59:54 +0200
+Message-ID: <20260607095734.958487081@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,73 +47,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Ashutosh Desai <ashutoshdesai993@gmail.com>
 
-commit 8a3bee801d420be8a7a0bae4a26547b353b8fe22 upstream.
+commit f040e590c035bfd9553fe79ee9585caf1b14d67b upstream.
 
-The function checks and possibly modifies the description of an
-asynchronous command to be run on the analog input subdevice of a comedi
-device attached to the "comedi_test" driver, returning 0 if no
-modifications were required, or a positive value that indicates which
-step of the checking process it failed on.  Step 4 fixes up various
-argument values for various trigger sources.
+Both nfc_hci_recv_from_llc() and nci_hci_data_received_cb() read
+packet->header from skb->data at function entry without first checking
+that the buffer holds at least one byte. A malicious NFC peer can send
+a 0-byte HCP frame that passes through the SHDLC layer and reaches
+these functions, causing an out-of-bounds heap read of packet->header.
+The same 0-byte frame, if queued as a non-final fragment, also causes
+the reassembly loop to underflow msg_len to UINT_MAX, triggering
+skb_over_panic() when the reassembled skb is written.
 
-There are two bugs in the fixing up of the `convert_arg` value to keep
-the `scan_begin_arg` value within the range of `unsigned int` when
-`scan_begin_src` and `convert_src` both have the value `TRIG_TIMER`,
-which indicates that the corresponding `_arg` values hold a time period
-in nanoseconds.  The code also uses `scan_end_arg` which hold the number
-of "conversions" within each "scan".  The goal is to end up with the
-scan period being less than or equal to the convert period multiplied by
-the number of conversions per scan.  It intends to do that by clamping
-the `convert_arg` value to a maximum value of `UINT_MAX / scan_end_arg`
-rounded down to a multiple of 1000 (`NSEC_PER_USEC`).
+Fix this by adding a pskb_may_pull() check at the entry of each
+function before packet->header is first accessed. The existing
+pskb_may_pull() checks before the reassembled hcp_skb is cast to
+struct hcp_packet remain in place to guard the 2-byte HCP message
+header.
 
-(The rounding from nanoseconds to microseconds is because the driver is
-modelling a device that uses a 1 MHz clock for timing.  This is partly
-because that is a more typical timing base for real hardware devices
-driven by comedi, and partly because the driver used to use `struct
-timeval` internally.)
-
-The first bug is that the code checks if `scan_begin_arg == TRIG_TIMER`
-when it should be checking if `scan_begin_src == TRIG_TIMER`.  The
-bugged check will always fail because if `scan_begin_src == TRIG_TIMER`,
-then `scan_begin_arg` will be at least 1000 (`NSEC_PER_USEC`), otherwise
-`scan_begin_src == TRIG_FOLLOW` and `scan_begin_arg` will be 0.  (N.B
-`TRIG_TIMER` is defined as `0x10`.)  The second bug is that is rounding
-the maximum value down to a multiple of 1000000000 (`NSEC_PER_SEC`)
-instead of 1000 (`NSEC_PER_USEC`), however this bug is not reached due
-to the first bug.  This patch fixes both bugs.
-
-Fixes: 783ddaebd397 ("staging: comedi: comedi_test: support scan_begin_src == TRIG_FOLLOW")
-Fixes: 5afdcad2f818 ("staging: comedi: comedi_test: limit maximum convert_arg")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260422144637.27692-1-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8b8d2e08bf0d ("NFC: HCI support")
+Fixes: 11f54f228643 ("NFC: nci: Add HCI over NCI protocol support")
+Cc: stable@vger.kernel.org
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
+Link: https://patch.msgid.link/20260505170712.96560-1-ashutoshdesai993@gmail.com
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/comedi_test.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/nfc/hci/core.c |   10 ++++++++++
+ net/nfc/nci/hci.c  |   10 ++++++++++
+ 2 files changed, 20 insertions(+)
 
---- a/drivers/comedi/drivers/comedi_test.c
-+++ b/drivers/comedi/drivers/comedi_test.c
-@@ -325,10 +325,10 @@ static int waveform_ai_cmdtest(struct co
- 		arg = min(arg,
- 			  rounddown(UINT_MAX, (unsigned int)NSEC_PER_USEC));
- 		arg = NSEC_PER_USEC * DIV_ROUND_CLOSEST(arg, NSEC_PER_USEC);
--		if (cmd->scan_begin_arg == TRIG_TIMER) {
-+		if (cmd->scan_begin_src == TRIG_TIMER) {
- 			/* limit convert_arg to keep scan_begin_arg in range */
- 			limit = UINT_MAX / cmd->scan_end_arg;
--			limit = rounddown(limit, (unsigned int)NSEC_PER_SEC);
-+			limit = rounddown(limit, (unsigned int)NSEC_PER_USEC);
- 			arg = min(arg, limit);
- 		}
- 		err |= comedi_check_trigger_arg_is(&cmd->convert_arg, arg);
+--- a/net/nfc/hci/core.c
++++ b/net/nfc/hci/core.c
+@@ -861,6 +861,11 @@ static void nfc_hci_recv_from_llc(struct
+ 	struct sk_buff *frag_skb;
+ 	int msg_len;
+ 
++	if (!pskb_may_pull(skb, NFC_HCI_HCP_PACKET_HEADER_LEN)) {
++		kfree_skb(skb);
++		return;
++	}
++
+ 	packet = (struct hcp_packet *)skb->data;
+ 	if ((packet->header & ~NFC_HCI_FRAGMENT) == 0) {
+ 		skb_queue_tail(&hdev->rx_hcp_frags, skb);
+@@ -904,6 +909,11 @@ static void nfc_hci_recv_from_llc(struct
+ 	 * unblock waiting cmd context. Otherwise, enqueue to dispatch
+ 	 * in separate context where handler can also execute command.
+ 	 */
++	if (!pskb_may_pull(hcp_skb, NFC_HCI_HCP_HEADER_LEN)) {
++		kfree_skb(hcp_skb);
++		return;
++	}
++
+ 	packet = (struct hcp_packet *)hcp_skb->data;
+ 	type = HCP_MSG_GET_TYPE(packet->message.header);
+ 	if (type == NFC_HCI_HCP_RESPONSE) {
+--- a/net/nfc/nci/hci.c
++++ b/net/nfc/nci/hci.c
+@@ -439,6 +439,11 @@ void nci_hci_data_received_cb(void *cont
+ 		return;
+ 	}
+ 
++	if (!pskb_may_pull(skb, NCI_HCI_HCP_PACKET_HEADER_LEN)) {
++		kfree_skb(skb);
++		return;
++	}
++
+ 	packet = (struct nci_hcp_packet *)skb->data;
+ 	if ((packet->header & ~NCI_HCI_FRAGMENT) == 0) {
+ 		skb_queue_tail(&ndev->hci_dev->rx_hcp_frags, skb);
+@@ -482,6 +487,11 @@ void nci_hci_data_received_cb(void *cont
+ 	 * unblock waiting cmd context. Otherwise, enqueue to dispatch
+ 	 * in separate context where handler can also execute command.
+ 	 */
++	if (!pskb_may_pull(hcp_skb, NCI_HCI_HCP_HEADER_LEN)) {
++		kfree_skb(hcp_skb);
++		return;
++	}
++
+ 	packet = (struct nci_hcp_packet *)hcp_skb->data;
+ 	type = NCI_HCP_MSG_GET_TYPE(packet->message.header);
+ 	if (type == NCI_HCI_HCP_RESPONSE) {
 
 
