@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E803231E850;
-	Sun,  7 Jun 2026 10:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76C21E98EF;
+	Sun,  7 Jun 2026 10:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829068; cv=none; b=KdD6Wh1DOmUETAf0lA2eyr83etmBQqWeDOVJ44jLk2NajfptT1S8h800bjmdJWpZ914nuqv1Syz5EpFRo8W25M49/HU/r3yKQE4Mh4hC6IDvBkEjNN2NpulCmZizKfHmw+Yy6R5/MPljDU58+g3Vw9rhIRVSkvkMUe0bPGNiR3g=
+	t=1780829072; cv=none; b=Z/NzcaN68CCXMS+ywsydhe3UhxQs2kSWwRz8A0tfHLBrZTdKrybs8jUEc1X/YrCkNW1jle0/ImVLEbeu6NOCae1Tv05QdOj75E662CnYLg7PQ42v+ynXrBW4AilmxOK2cDvSzH8aSL0RY+iYtLvugu/4bHG3MIBsXuJk+XSBxLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829068; c=relaxed/simple;
-	bh=HTJRl2QBh8+zYof+BmbauA5GG7DRyXEjcwh9xe29T4s=;
+	s=arc-20240116; t=1780829072; c=relaxed/simple;
+	bh=fhzpCDNUnQ1IiczapelJpnkC9LgSgcHLhKNG2rfUc7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IW4IRkYrEDoou1vW4C/WEV4uUWReU8LqKNw/gINvmVv7FSSl25LAFOGxRn5mpdohU6eJfBgsY4HqGMN0W3Y8slvCYkTQCxQbLcXvFLlFeNWsiDMjxWwXY6sgW+JSJtbrF0BUoRZ5z5rxGz/8hku2ICn5ev71T6Cool9bCSnVjCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8AMiFwj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a9kYx3RLUS1k/tIpoG+cOWZiPVOu43djzih8UsscD3G0g52DDA01YZ7HnnYwb4LgON3UnFSvsvJw8ew2v3zuGuevXLwDR3A8pfz0200S0AkqmECGZGScgElFltSONwN5neK+wV3oz2o58/1d7KZK60JVNHAYUzxjGzeJewwLfW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fI0XGoTO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8AMiFwj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EFC1F00893;
-	Sun,  7 Jun 2026 10:44:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fI0XGoTO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0EA81F00893;
+	Sun,  7 Jun 2026 10:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829067;
-	bh=rpL2EJtGlmgRk0JPttRncWP9s/TKzz8SxMFUOjA3VEQ=;
+	s=korg; t=1780829071;
+	bh=NSTOCLxVj83RpxtcypVEgmoy/AWesUKcnwDXh9wvU7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d8AMiFwjV7oUt8kifW8hLsMfsu5z84KUaJptWgd6l0OJjEAD4rz+z1XVAyfeMZ186
-	 5T1OmfD7YADOFo3/xzjEyxLvMoKcY+V8uyKjMqK1WPBMK7IzLA21DJCU47QS1R6Xmx
-	 U96S5HOua0w2XG0E97vczpohSzsWHlI5hNQ5W7Qw=
+	b=fI0XGoTOsS8ln6Xz7mBukRGvVOphN1hFzKzTsDZJtqmBcRTdGM7hHb+XXFM0hd7tO
+	 1UIsAAgX/GczpE4wOwOCBI3GxZeGSOgdqwAAXU62HPsu7X8epOwdRqEcSrYBZh0hj2
+	 n7qlBVa90w/Zg+/ELTHy2+55MBMsyxrMA61lsMck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyi.xie@ntu.edu.sg>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 193/307] ip6: vti: Use ip6_tnl.net in vti6_changelink().
-Date: Sun,  7 Jun 2026 11:59:50 +0200
-Message-ID: <20260607095734.810708382@linuxfoundation.org>
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	stable <stable@kernel.org>
+Subject: [PATCH 7.0 243/332] gpib: cb7210: Fix region leak when request_irq fails
+Date: Sun,  7 Jun 2026 12:00:12 +0200
+Message-ID: <20260607095736.972391850@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,80 +46,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Hongling Zeng <zenghongling@kylinos.cn>
 
-commit 11b326fb0a374f4654f9be22d0f0f7abd9f7d3fe upstream.
+commit 2eae90a457baa0048a96ed38ad93090ee38c8b2f upstream.
 
-ip netns add ns1
-ip netns add ns2
-ip -n ns1 link add vti6_test type vti6 remote ::1 local ::2 key 7
-ip -n ns1 link set vti6_test netns ns2
-ip -n ns2 link set vti6_test type vti6 remote ::3 local ::4 key 9
-ip netns del ns2
-ip netns del ns1
-[  132.495484] ------------[ cut here ]------------
-[  132.497609] kernel BUG at net/core/dev.c:12376!
+When request_irq() fails, the region allocated by request_region()
+is not released. Fix this by adding an error handling path with
+proper goto labels to release the region.
 
-Commit 61220ab34948 ("vti6: Enable namespace changing") dropped
-NETIF_F_NETNS_LOCAL from vti6 devices. A vti6 tunnel can then
-move through IFLA_NET_NS_FD. After the move dev_net(dev) points
-at the new netns while t->net stays at the creation netns.
-
-vti6_changelink() and vti6_update() still use dev_net(dev) and
-dev_net(t->dev). They unlink from one per netns hash and relink
-into another. The creation netns is left with a stale entry.
-cleanup_net() of that netns later walks freed memory.
-
-Reachable from an unprivileged user namespace (unshare --user
---map-root-user --net). Cross tenant scope on container hosts.
-
-Fixes: 61220ab34948 ("vti6: Enable namespace changing")
-Reported-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Cc: stable@vger.kernel.org # v5.15+
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260521130555.3421684-2-maoyixie.tju@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e9dc69956d4d ("staging: gpib: Add Computer Boards GPIB driver")
+Closes: https://lore.kernel.org/oe-kbuild-all/202605160620.ReBOadPX-lkp@intel.com/
+Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260518022939.16881-1-zenghongling@kylinos.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_vti.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/gpib/cb7210/cb7210.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/net/ipv6/ip6_vti.c
-+++ b/net/ipv6/ip6_vti.c
-@@ -722,10 +722,11 @@ vti6_tnl_change(struct ip6_tnl *t, const
- static int vti6_update(struct ip6_tnl *t, struct __ip6_tnl_parm *p,
- 		       bool keep_mtu)
- {
--	struct net *net = dev_net(t->dev);
--	struct vti6_net *ip6n = net_generic(net, vti6_net_id);
-+	struct net *net = t->net;
-+	struct vti6_net *ip6n;
- 	int err;
+--- a/drivers/gpib/cb7210/cb7210.c
++++ b/drivers/gpib/cb7210/cb7210.c
+@@ -1049,7 +1049,8 @@ static int cb_isa_attach(struct gpib_boa
+ 	if (!request_region(config->ibbase, cb7210_iosize, DRV_NAME)) {
+ 		dev_err(board->gpib_dev, "ioports starting at 0x%x are already in use\n",
+ 			config->ibbase);
+-		return -EBUSY;
++		retval = -EBUSY;
++		goto err_release_region;
+ 	}
+ 	nec_priv->iobase = config->ibbase;
+ 	cb_priv->fifo_iobase = nec7210_iobase(cb_priv);
+@@ -1062,11 +1063,16 @@ static int cb_isa_attach(struct gpib_boa
+ 	// install interrupt handler
+ 	if (request_irq(config->ibirq, cb7210_interrupt, isr_flags, DRV_NAME, board)) {
+ 		dev_err(board->gpib_dev, "failed to obtain IRQ %d\n", config->ibirq);
+-		return -EBUSY;
++		retval = -EBUSY;
++		goto err_release_region;
+ 	}
+ 	cb_priv->irq = config->ibirq;
  
-+	ip6n = net_generic(net, vti6_net_id);
- 	vti6_tnl_unlink(ip6n, t);
- 	synchronize_net();
- 	err = vti6_tnl_change(t, p, keep_mtu);
-@@ -1036,11 +1037,12 @@ static int vti6_changelink(struct net_de
- 			   struct nlattr *data[],
- 			   struct netlink_ext_ack *extack)
- {
--	struct ip6_tnl *t;
-+	struct ip6_tnl *t = netdev_priv(dev);
-+	struct net *net = t->net;
- 	struct __ip6_tnl_parm p;
--	struct net *net = dev_net(dev);
--	struct vti6_net *ip6n = net_generic(net, vti6_net_id);
-+	struct vti6_net *ip6n;
+ 	return cb7210_init(cb_priv, board);
++
++err_release_region:
++	release_region(nec7210_iobase(cb_priv), cb7210_iosize);
++	return retval;
+ }
  
-+	ip6n = net_generic(net, vti6_net_id);
- 	if (dev == ip6n->fb_tnl_dev)
- 		return -EINVAL;
- 
+ static void cb_isa_detach(struct gpib_board *board)
 
 
