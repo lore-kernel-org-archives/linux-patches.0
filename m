@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D383195FD;
-	Sun,  7 Jun 2026 10:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC2F3264F5;
+	Sun,  7 Jun 2026 10:41:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828890; cv=none; b=VQ8+FennezbBSYqylS5Sozv+c+bEdp7d1g0JQeJSy3OcYbZhBAf749AinEG/WdqmMwcbW5xoCs35zQgH1MHXFnbq4xphbMdT7JH/mcUn+VbJ7ykXzCKk65u4V3EOIuidEOpWqaihlBBfMuKp2t93N+Uff0/xLMEEtm0VYurwWdQ=
+	t=1780828894; cv=none; b=rnOh0/5/uaAnK9OLxtX/bc8rr37NRvrBz7TN4yMoAQdq1bumtrxocvRSed9mwAADUtPadnZBdBXrv1/tGbazoAehmoubLe5i4GLBXT3v0K4/4RXaWbDFAmAFUTDQ36bv0uqO0LIjnh/5k4enfetHYUij5UoYCLtpDy5vae0OU5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828890; c=relaxed/simple;
-	bh=uWD7qhNlA0IruWataiQQ9jom8D3+DkTrB4NRp9SdbUg=;
+	s=arc-20240116; t=1780828894; c=relaxed/simple;
+	bh=JLWBrGm5lEZt87kz0Iiclsj1leE1DXu3pzwPwBSlj0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MLxZcIzPwsMMZec4uKh7E0dSDT5M1S5nN2NK9n6BoFJ0sXDV4HJp+R3wvs31RS9UJ2houjAsWa6UOtjJyXXNBf+j3a62OanoHCF9+StbEBGLvQpc21rgRF9hHfRuSyZxSVnZ2bv9r9jtM2lX44rad/RgcyqkCZyeYfOUxTADZUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XaMpdWZE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZuEpJ/38BI9leG2L9f+uZY3q6f9SsAz+fLKAyNg6CjgcmF/p1+2JDne+unvBoXBsqczn7CHRcVTOidK4nxXV58tjMkeJRk1fIcvudSV8pEIyA6Aaus83+uWTljmd6VsunNkxi5dG1UyGyFS1h+39ouYzyDmzb8MxLHBrMlZ8Ha4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DVssAphq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XaMpdWZE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01141F00893;
-	Sun,  7 Jun 2026 10:41:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVssAphq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B6381F00893;
+	Sun,  7 Jun 2026 10:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828889;
-	bh=H/ec0fARklH0Fz/G+PAIpR3udwOOFdIaeoVG2QFhuEQ=;
+	s=korg; t=1780828892;
+	bh=btV+a4iPjVwdgssJ29uR6wa+WNkPzXKGyoJSDwwz8f0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XaMpdWZE2agC9+5bA15jcglT25m4mQSiuqe6u3uQjMH86v1tk1MGwfnNP9KuMhD4P
-	 kohbwJdbLzgKd+YoZsZhsmz145gls3UT9krMCKzzL025PFMaJ5h+1NyszEiY37ADYV
-	 /PsvcqYA4xKIrvFPdjlcA18Sqm8sWjzm1DnaW56k=
+	b=DVssAphq/2ecp/n6dVhqnGYrbv2R+m+esaZhyWV64UTPFO1vJ/zTIgDPKS1klemXB
+	 X1EhTfvLrKc1MOs11aGXuM2Mt2nPa69xblsh4dt1R+U0HytVFAXcjXiztihbMtoIl3
+	 DbjZSipBSpBQBwZq4estpbe4TULxdFMBGrdHr+8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Ashutosh Desai <ashutoshdesai993@gmail.com>,
-	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 7.0 224/332] nfc: hci: fix out-of-bounds read in HCP header parsing
-Date: Sun,  7 Jun 2026 11:59:53 +0200
-Message-ID: <20260607095736.288072684@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.0 212/332] ASoC: qcom: q6asm-dai: fix error handling in prepare and set_params
+Date: Sun,  7 Jun 2026 11:59:41 +0200
+Message-ID: <20260607095735.853117753@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
 References: <20260607095728.031258202@linuxfoundation.org>
@@ -51,89 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashutosh Desai <ashutoshdesai993@gmail.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit f040e590c035bfd9553fe79ee9585caf1b14d67b upstream.
+commit 4b4db09f283df65d780bc7cee66cb4a7e9bf4770 upstream.
 
-Both nfc_hci_recv_from_llc() and nci_hci_data_received_cb() read
-packet->header from skb->data at function entry without first checking
-that the buffer holds at least one byte. A malicious NFC peer can send
-a 0-byte HCP frame that passes through the SHDLC layer and reaches
-these functions, causing an out-of-bounds heap read of packet->header.
-The same 0-byte frame, if queued as a non-final fragment, also causes
-the reassembly loop to underflow msg_len to UINT_MAX, triggering
-skb_over_panic() when the reassembled skb is written.
+Fix error handling in q6asm_dai_compr_set_params() and q6asm_dai_prepare()
+for both CMD_CLOSE and q6asm_unmap_memory_regions().
 
-Fix this by adding a pskb_may_pull() check at the entry of each
-function before packet->header is first accessed. The existing
-pskb_may_pull() checks before the reassembled hcp_skb is cast to
-struct hcp_packet remain in place to guard the 2-byte HCP message
-header.
+In both the functions, we are doing q6asm_audio_client_free in failure
+cases, which means if prepare or set_params fail, we can never recover.
+Now open and close are done in respective dai_open/close functions.
 
-Fixes: 8b8d2e08bf0d ("NFC: HCI support")
-Fixes: 11f54f228643 ("NFC: nci: Add HCI over NCI protocol support")
-Cc: stable@vger.kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
-Link: https://patch.msgid.link/20260505170712.96560-1-ashutoshdesai993@gmail.com
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Fixes: 2a9e92d371db ("ASoC: qdsp6: q6asm: Add q6asm dai driver")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260518092347.3446946-4-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/hci/core.c |   10 ++++++++++
- net/nfc/nci/hci.c  |   10 ++++++++++
- 2 files changed, 20 insertions(+)
+ sound/soc/qcom/qdsp6/q6asm-dai.c |   24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
---- a/net/nfc/hci/core.c
-+++ b/net/nfc/hci/core.c
-@@ -861,6 +861,11 @@ static void nfc_hci_recv_from_llc(struct
- 	struct sk_buff *frag_skb;
- 	int msg_len;
+--- a/sound/soc/qcom/qdsp6/q6asm-dai.c
++++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
+@@ -227,9 +227,19 @@ static int q6asm_dai_prepare(struct snd_
+ 	/* rate and channels are sent to audio driver */
+ 	if (prtd->state == Q6ASM_STREAM_RUNNING) {
+ 		/* clear the previous setup if any  */
+-		q6asm_cmd(prtd->audio_client, prtd->stream_id, CMD_CLOSE);
+-		q6asm_unmap_memory_regions(substream->stream,
+-					   prtd->audio_client);
++		ret = q6asm_cmd(prtd->audio_client, prtd->stream_id, CMD_CLOSE);
++		if (ret < 0) {
++			dev_err(dev, "Failed to close q6asm stream %d\n", prtd->stream_id);
++			return ret;
++		}
++
++		ret = q6asm_unmap_memory_regions(substream->stream, prtd->audio_client);
++		if (ret < 0) {
++			dev_err(dev, "Failed to unmap memory regions for q6asm stream %d\n",
++				prtd->stream_id);
++			return ret;
++		}
++
+ 		q6routing_stream_close(soc_prtd->dai_link->id,
+ 					 substream->stream);
+ 		prtd->state = Q6ASM_STREAM_STOPPED;
+@@ -297,8 +307,6 @@ routing_err:
+ 	q6asm_cmd(prtd->audio_client, prtd->stream_id,  CMD_CLOSE);
+ open_err:
+ 	q6asm_unmap_memory_regions(substream->stream, prtd->audio_client);
+-	q6asm_audio_client_free(prtd->audio_client);
+-	prtd->audio_client = NULL;
  
-+	if (!pskb_may_pull(skb, NFC_HCI_HCP_PACKET_HEADER_LEN)) {
-+		kfree_skb(skb);
-+		return;
-+	}
-+
- 	packet = (struct hcp_packet *)skb->data;
- 	if ((packet->header & ~NFC_HCI_FRAGMENT) == 0) {
- 		skb_queue_tail(&hdev->rx_hcp_frags, skb);
-@@ -904,6 +909,11 @@ static void nfc_hci_recv_from_llc(struct
- 	 * unblock waiting cmd context. Otherwise, enqueue to dispatch
- 	 * in separate context where handler can also execute command.
- 	 */
-+	if (!pskb_may_pull(hcp_skb, NFC_HCI_HCP_HEADER_LEN)) {
-+		kfree_skb(hcp_skb);
-+		return;
-+	}
-+
- 	packet = (struct hcp_packet *)hcp_skb->data;
- 	type = HCP_MSG_GET_TYPE(packet->message.header);
- 	if (type == NFC_HCI_HCP_RESPONSE) {
---- a/net/nfc/nci/hci.c
-+++ b/net/nfc/nci/hci.c
-@@ -439,6 +439,11 @@ void nci_hci_data_received_cb(void *cont
- 		return;
+ 	return ret;
+ }
+@@ -916,7 +924,7 @@ static int q6asm_dai_compr_set_params(st
+ 			      prtd->session_id, dir);
+ 	if (ret) {
+ 		dev_err(dev, "Stream reg failed ret:%d\n", ret);
+-		goto q6_err;
++		goto routing_err;
  	}
  
-+	if (!pskb_may_pull(skb, NCI_HCI_HCP_PACKET_HEADER_LEN)) {
-+		kfree_skb(skb);
-+		return;
-+	}
-+
- 	packet = (struct nci_hcp_packet *)skb->data;
- 	if ((packet->header & ~NCI_HCI_FRAGMENT) == 0) {
- 		skb_queue_tail(&ndev->hci_dev->rx_hcp_frags, skb);
-@@ -482,6 +487,11 @@ void nci_hci_data_received_cb(void *cont
- 	 * unblock waiting cmd context. Otherwise, enqueue to dispatch
- 	 * in separate context where handler can also execute command.
- 	 */
-+	if (!pskb_may_pull(hcp_skb, NCI_HCI_HCP_HEADER_LEN)) {
-+		kfree_skb(hcp_skb);
-+		return;
-+	}
-+
- 	packet = (struct nci_hcp_packet *)hcp_skb->data;
- 	type = NCI_HCP_MSG_GET_TYPE(packet->message.header);
- 	if (type == NCI_HCI_HCP_RESPONSE) {
+ 	ret = __q6asm_dai_compr_set_codec_params(component, stream,
+@@ -942,11 +950,11 @@ static int q6asm_dai_compr_set_params(st
+ 	return 0;
+ 
+ q6_err:
++	q6routing_stream_close(rtd->dai_link->id, dir);
++routing_err:
+ 	q6asm_cmd(prtd->audio_client, prtd->stream_id, CMD_CLOSE);
+ 
+ open_err:
+-	q6asm_audio_client_free(prtd->audio_client);
+-	prtd->audio_client = NULL;
+ 	return ret;
+ }
+ 
 
 
