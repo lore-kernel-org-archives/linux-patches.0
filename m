@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2D3335081;
-	Sun,  7 Jun 2026 11:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F804224D6;
+	Sun,  7 Jun 2026 11:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780830144; cv=none; b=GYuIIONLAyYZOPq1iDlQiCk3K6JDj64sqcKkSe3+cMKj6/zIa5PswgVx4I2xqUI+jVDeo9MOtb30Y8CI8FR1pPuIhUtrv8yhd3YBC1eTdgDDM+vJ1gvzC2uqCDNnEalOaBO13Vq/GbtM3LeTcAvWKKq6yEl88vvm2oxc7LOtbm8=
+	t=1780830149; cv=none; b=qTH7ZR2qpViMj7EgJHlUfKpXJfhHqO6lFK8EfkuK7sMG8sqo+dtY9mUtP97TgFE3CAaM3K9YuAxWUOFbk43gS3car3s/KiaA9C7606AhHDD5cXLZoiSB4cvzOAAi0e1UX0nW9pN9xv/PPV7QsrbLx4Zed5uv4laOF78XBHerDfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780830144; c=relaxed/simple;
-	bh=hQTcuCkQ0pqzMBTV3ipVzCnhKf3i9w3ywbyppCehqNU=;
+	s=arc-20240116; t=1780830149; c=relaxed/simple;
+	bh=Gnpz1PMGhK3r5LRhdyCuDXLIoJ+6qaDZWxA6P69lITY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dgmGnxRqoMb1JW+nJh+yAnxGX2lk7fdCdopTw+p6qt8tkWNgY18+ihOPHCc5ghlRRjmn9/Eb9FwZVW2DOXL7H8YSB31riDCLBM9fgAN7r2Oqm4FIZArX5uSJVdVhCeQMIDAZFiklcE4E0T3msTcoqFScTZxvs/Opw19re4i8lgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQGcffKp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a0ln6HAUKCpediTrOXJ+wwH6qDypmP8X6U0bpTdA0uKrd31+zza6DGoyQazC+PSXjVNTKa0yW9M7xqDsgy06ftxChyI7toONKEU+0oJtnH3Da0OV6U84vuzzd/7Zep1W6qOh+/X28XfWb1bXN+MpgMtxilf+JDYf2duWfGpjbvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2DZdCjn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQGcffKp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362CC1F00893;
-	Sun,  7 Jun 2026 11:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2DZdCjn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D15A1F00893;
+	Sun,  7 Jun 2026 11:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780830143;
-	bh=hiW+cNMfhwvAuH+CEVdAa9Rnb3TC73GyyM7MM7I5d1A=;
+	s=korg; t=1780830148;
+	bh=bNvIrh3rK8nPiwy5zlhsHWQEXBJlvFccxkueBvFj4xg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SQGcffKpO/DF/FsrU3JkM+XkkUmIv9kfA+2f+JJpSSvlxWQycCYgAKqdEh7KfZqHh
-	 bC1U6v2uPZ89uTqnnjRl8ceiM9gZFqKTJqQV9mUtgFL/zhZ7uiiOGL52+mgovIvQIG
-	 YlmI96swC/ajE8PIq9Y7+mN5SNUUQHbhOy8Rd5nc=
+	b=T2DZdCjnwBuUoK5gihUd7Qjc8UR6Dp+7iGV18OZq9c5Y1kz86GKiPXGhPYEa7DYqV
+	 Gsst/iPMuk8mWv2h4R+UhxZ6W6HNQkHdBK4SnUnJ/NaL7TPhrJCsXcktgfTZDT2WwC
+	 6MxZU5lNgkTPdpnNa91kr6ena5mVjMavqwfaS6G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 325/332] arm64: tlb: Flush walk cache when unsharing PMD tables
-Date: Sun,  7 Jun 2026 12:01:34 +0200
-Message-ID: <20260607095740.066147551@linuxfoundation.org>
+Subject: [PATCH 6.18 291/315] selftests: mptcp: drop nanoseconds width specifier
+Date: Sun,  7 Jun 2026 12:01:18 +0200
+Message-ID: <20260607095738.284626226@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,56 +47,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-[ Upstream commit c2ff4764e03e7a8d758352f4aceb8fe1be6ac971 ]
+[ Upstream commit 01ff78e4b3d98689184c52d97f9575dfbdc3b10f ]
 
-When huge_pmd_unshare() is called to unshare a PMD table, the
-tlb_unshare_pmd_ptdesc() function sets tlb->unshared_tables=true
-but the aarch64 tlb_flush() only checked tlb->freed_tables to
-determine whether to use TLBF_NONE (vae1is, invalidates walk
-cache) or TLBF_NOWALKCACHE (vale1is, leaf-only).
+Using the format specifier +%s%3N with GNU date is honoured, and only
+prints 3 digits of the nanoseconds portion of the seconds since epoch,
+which corresponds to the milliseconds.
 
-This caused the stale PMD page table entry to remain in the walk cache
-after unshare, potentially leading to incorrect page table walks.
+The uutils implementation of date currently does not honour this, and
+always prints all 9 digits. This is a known issue [1], but can be worked
+around by adapting this test to use nanoseconds instead of microseconds,
+and then divide it by 1e6.
 
-Fix by including unshared_tables in the check, so that when
-unsharing tables, TLBF_NONE is used and the walk cache is properly
-invalidated.
+This fix is similar to what has been done on systemd side [2], and it is
+needed to run the selftests on Ubuntu 26.04, containing uutils 0.8.0.
 
-Here is the detailed distinction between vae1is and vale1is:
+Note that the Fixes tag is there even if this patch doesn't fix an issue
+in the kernel selftests, but it is useful for those using uutils 0.8.0.
 
-| Instruction Combination  | Actual Invalidation Scope                         |
-| ------------------------ | --------------------------------------------------|
-| `VAE1IS`  + TTL=`0`      | All entries at all levels (full invalidation)     |
-| `VAE1IS`  + TTL=`2` (L2) | Non-leaf at Level 0/1 + leaf at Level 2           |
-| `VALE1IS` + TTL=`0`      | Leaf entries at all levels (non-leaf not cleared) |
-| `VALE1IS` + TTL=`2` (L2) | Leaf entry at Level 2 only                        |
-
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Fixes: 8ce720d5bd91 ("mm/hugetlb: fix excessive IPI broadcasts when unsharing PMD tables using mmu_gather")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 048d19d444be ("mptcp: add basic kselftest for mptcp")
+Cc: stable@vger.kernel.org
+Link: https://github.com/uutils/coreutils/issues/11658 [1]
+Link: https://github.com/systemd/systemd/pull/41627 [2]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260515-net-mptcp-misc-fixes-7-1-rc4-v2-6-701e96419f2f@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ kept `timeout ${timeout_test}` wrapper in do_transfer() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/tlb.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/mptcp/mptcp_connect.sh |    6 +++---
+ tools/testing/selftests/net/mptcp/mptcp_lib.sh     |   10 +++++-----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
---- a/arch/arm64/include/asm/tlb.h
-+++ b/arch/arm64/include/asm/tlb.h
-@@ -53,7 +53,7 @@ static inline int tlb_get_level(struct m
- static inline void tlb_flush(struct mmu_gather *tlb)
- {
- 	struct vm_area_struct vma = TLB_FLUSH_VMA(tlb->mm, 0);
--	bool last_level = !tlb->freed_tables;
-+	bool last_level = !(tlb->freed_tables || tlb->unshared_tables);
- 	unsigned long stride = tlb_get_unmap_size(tlb);
- 	int tlb_level = tlb_get_level(tlb);
+--- a/tools/testing/selftests/net/mptcp/mptcp_connect.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_connect.sh
+@@ -415,7 +415,7 @@ do_transfer()
+ 	mptcp_lib_wait_local_port_listen "${listener_ns}" "${port}"
  
+ 	local start
+-	start=$(date +%s%3N)
++	start=$(date +%s%N)
+ 	timeout ${timeout_test} \
+ 		ip netns exec ${connector_ns} \
+ 			./mptcp_connect -t ${timeout_poll} -p $port -s ${cl_proto} \
+@@ -428,7 +428,7 @@ do_transfer()
+ 	local rets=$?
+ 
+ 	local stop
+-	stop=$(date +%s%3N)
++	stop=$(date +%s%N)
+ 
+ 	if $capture; then
+ 		sleep 1
+@@ -444,7 +444,7 @@ do_transfer()
+ 	fi
+ 
+ 	local duration
+-	duration=$((stop-start))
++	duration=$(((stop-start) / 1000000))
+ 	printf "(duration %05sms) " "${duration}"
+ 	if [ ${rets} -ne 0 ] || [ ${retc} -ne 0 ]; then
+ 		mptcp_lib_pr_fail "client exit code $retc, server $rets"
+--- a/tools/testing/selftests/net/mptcp/mptcp_lib.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_lib.sh
+@@ -28,7 +28,7 @@ declare -rx MPTCP_LIB_AF_INET6=10
+ MPTCP_LIB_SUBTESTS=()
+ MPTCP_LIB_SUBTESTS_DUPLICATED=0
+ MPTCP_LIB_SUBTEST_FLAKY=0
+-MPTCP_LIB_SUBTESTS_LAST_TS_MS=
++MPTCP_LIB_SUBTESTS_LAST_TS_NS=
+ MPTCP_LIB_TEST_COUNTER=0
+ MPTCP_LIB_TEST_FORMAT="%02u %-50s"
+ MPTCP_LIB_IP_MPTCP=0
+@@ -227,7 +227,7 @@ mptcp_lib_kversion_ge() {
+ }
+ 
+ mptcp_lib_subtests_last_ts_reset() {
+-	MPTCP_LIB_SUBTESTS_LAST_TS_MS="$(date +%s%3N)"
++	MPTCP_LIB_SUBTESTS_LAST_TS_NS="$(date +%s%N)"
+ }
+ mptcp_lib_subtests_last_ts_reset
+ 
+@@ -246,7 +246,7 @@ __mptcp_lib_result_check_duplicated() {
+ __mptcp_lib_result_add() {
+ 	local result="${1}"
+ 	local time="time="
+-	local ts_prev_ms
++	local ts_prev_ns
+ 	shift
+ 
+ 	local id=$((${#MPTCP_LIB_SUBTESTS[@]} + 1))
+@@ -256,9 +256,9 @@ __mptcp_lib_result_add() {
+ 	# not to add two '#'
+ 	[[ "${*}" != *"#"* ]] && time="# ${time}"
+ 
+-	ts_prev_ms="${MPTCP_LIB_SUBTESTS_LAST_TS_MS}"
++	ts_prev_ns="${MPTCP_LIB_SUBTESTS_LAST_TS_NS}"
+ 	mptcp_lib_subtests_last_ts_reset
+-	time+="$((MPTCP_LIB_SUBTESTS_LAST_TS_MS - ts_prev_ms))ms"
++	time+="$(((MPTCP_LIB_SUBTESTS_LAST_TS_NS - ts_prev_ns) / 1000000))ms"
+ 
+ 	MPTCP_LIB_SUBTESTS+=("${result} ${id} - ${KSFT_TEST}: ${*} ${time}")
+ }
 
 
