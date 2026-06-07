@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342A72D3A69;
-	Sun,  7 Jun 2026 10:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78963195FD;
+	Sun,  7 Jun 2026 10:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828651; cv=none; b=QMeqR69FyhD1tfh8yQ3yx9d9l7wx9cEjmtPuPH09ViZPF84y2aSF41LASRMtpcxFa6rSWKH6bkGfdQ9OqoDL0pqVyJPdiPUNY5OabQiwjHu6xUEqRRFrwmnBFeGUSkGuvKrsLIpvGHvMg6vJjjFSLkMAapwJY5/HvTKUcdzybwg=
+	t=1780828654; cv=none; b=h70RxI+QLxKa1OqQoyHZgfZ6TqqbtMRwsqebJAwHAi21kgkHTXRk8MnBM6FchG1esNwmRtd6086kbw4RpCdbPta+84wFRzzTTzYnivT9S6LvkxMyFQdW4RymZn5oVpe49JcQuyrGNfL7PMwD/KXVwVbsRujI6R9l8jjZqJ31OwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828651; c=relaxed/simple;
-	bh=oSnUttzP8pY6pVE+MtfbIZf920FTRoVTwdCR5YrghhA=;
+	s=arc-20240116; t=1780828654; c=relaxed/simple;
+	bh=SCDe8gn50z8OlV6FgRA+nljFO3EMjfpjgGzM5keoJ7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=puL5suvP2wlCgfCiGgWj/ateBZHxIx35RowK6U85tKY0wNbuUSfPtpUK+yeIb2heZowo/eGhrr3dzqmz7+VuXUoGYgTl/wKTdzdR+MXSW+PagXTV58EunLe4BJt+M3nh8/0NYo0zdXvQv1acTs0xBCqm4wruS1rSFmWNMeqKiDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IYb/3WWZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uKmsH2TypzOQ93apZldOYKdslKle30KjcD+LRmekOf924nKSn50XfFb6YKFJiKtu4UJQ7upaE5mxSVEn21JFLqRaHtauZpQtOarIQY/D5FZmZj8O7Gkzx0tFTI6+gAHHX2+yOmD3Nu1fty1ZYCOi48kQLhhHDSyueplJOS8kz+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFZ7LrUn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYb/3WWZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 389971F00893;
-	Sun,  7 Jun 2026 10:37:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFZ7LrUn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9AA1F00893;
+	Sun,  7 Jun 2026 10:37:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828649;
-	bh=gyuR+EuvzNuqeEqTktt2uRJanoULfmfdrWeKUJdGtJ0=;
+	s=korg; t=1780828653;
+	bh=hh4MMXIBlWkdihi6h0aOJ/Sj4j2ciOobemSrXhVps6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IYb/3WWZyH/1j1zFbEI/clQqL5zZPDbsx7kEVLQysfaPYXWZyIOfFT0fYST/kbnaU
-	 D7g53q91uF6ZYlQfy6fVipVpgE8ZTt4A9Prd9xmDH0m/YkLIa4cBauY2+ZuBz059Ie
-	 3NvxtkNBbckNmL4J1/SOcmm5Nohpl1vMvQoZX4L0=
+	b=UFZ7LrUn8sRGZ7iZnhe2QufLX5g1fyU61fNyzkOr6V++hdPf9zzBIC1bSLlWrw3IM
+	 zzLIqPAH1ADerRWZPAmMJOC+d7R6pvCgpE5NqYmBgrZpdfsGwxZ04FhcQVRNuH/sUI
+	 SyIXfDrWwlPEV7TW7QeamqCaYiINvh1Y8ThqQa7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.0 200/332] USB: serial: omninet: fix memory corruption with small endpoint
-Date: Sun,  7 Jun 2026 11:59:29 +0200
-Message-ID: <20260607095735.399243168@linuxfoundation.org>
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Michael Roth <michael.roth@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.12 155/307] KVM: SEV: Use the size of the PSC header as the minimum size for PSC requests
+Date: Sun,  7 Jun 2026 11:59:12 +0200
+Message-ID: <20260607095733.414777545@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,59 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 60df93d30f9bdd27db17c4d80ed80ef718d7226b upstream.
+commit 2be54670bdc017004c4a4b8bddb6ff02ebe7dbe2 upstream.
 
-Make sure that the bulk-out buffers are at least as large as the
-hardcoded transfer size to avoid user-controlled slab corruption should
-a malicious device report a smaller endpoint max packet size than
-expected.
+When handling a Page State Change (PSC) #VMGEXIT use the size of the PSC
+header as the minimum size for the scratch area.  Per the GHCB spec, PSC
+requests do NOT provide the length, i.e. using control->exit_info_2 for the
+length is completely made up behavior.  The existing code "works", e.g.
+even though Linux-as-a-guest always passes '0', because KVM doesn't do
+anything with the length when the request is in the GHCB's shared buffer.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Use the header as the min length.  Once the header is retrieved, KVM can
+use the specified indices to compute the full size of the request.
+
+Fixes: 9b54e248d264 ("KVM: SEV: Add support to handle Page State Change VMGEXIT")
 Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Michael Roth <michael.roth@amd.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260501202250.2115252-6-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/omninet.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/x86/kvm/svm/sev.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/omninet.c
-+++ b/drivers/usb/serial/omninet.c
-@@ -30,6 +30,10 @@
- /* This one seems to be a re-branded ZyXEL device */
- #define BT_IGNITIONPRO_ID	0x2000
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -4393,7 +4393,7 @@ int sev_handle_vmgexit(struct kvm_vcpu *
+ 		vcpu->run->system_event.data[0] = control->ghcb_gpa;
+ 		break;
+ 	case SVM_VMGEXIT_PSC:
+-		ret = setup_vmgexit_scratch(svm, true, control->exit_info_2);
++		ret = setup_vmgexit_scratch(svm, true, sizeof(struct psc_hdr));
+ 		if (ret)
+ 			break;
  
-+#define OMNINET_HEADERLEN	4
-+#define OMNINET_BULKOUTSIZE	64
-+#define OMNINET_PAYLOADSIZE	(OMNINET_BULKOUTSIZE - OMNINET_HEADERLEN)
-+
- /* function prototypes */
- static void omninet_process_read_urb(struct urb *urb);
- static int omninet_prepare_write_buffer(struct usb_serial_port *port,
-@@ -54,6 +58,7 @@ static struct usb_serial_driver zyxel_om
- 	.description =		"ZyXEL - omni.net usb",
- 	.id_table =		id_table,
- 	.num_bulk_out =		2,
-+	.bulk_out_size =	OMNINET_BULKOUTSIZE,
- 	.calc_num_ports =	omninet_calc_num_ports,
- 	.port_probe =		omninet_port_probe,
- 	.port_remove =		omninet_port_remove,
-@@ -130,10 +135,6 @@ static void omninet_port_remove(struct u
- 	kfree(od);
- }
- 
--#define OMNINET_HEADERLEN	4
--#define OMNINET_BULKOUTSIZE	64
--#define OMNINET_PAYLOADSIZE	(OMNINET_BULKOUTSIZE - OMNINET_HEADERLEN)
--
- static void omninet_process_read_urb(struct urb *urb)
- {
- 	struct usb_serial_port *port = urb->context;
 
 
