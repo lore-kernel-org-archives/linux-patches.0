@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADC831F9AC;
-	Sun,  7 Jun 2026 10:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5072C1595;
+	Sun,  7 Jun 2026 10:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828853; cv=none; b=Eo78fGWeSfV6CYV6SdR/mYLVVcAibGdl8Qg83XrS9VJN6kam+Vvyqc4XDxLYTsjg+wWAmZXFNOHMe83qrz/Gda3t3LwmhIRbG+So1kOH5IrPIDYNq88tOa40SZfN3+8og9Ei1uM5Mm8szJZ5lye68x0wEjVu1dMGhp/W2NARVak=
+	t=1780828856; cv=none; b=uHTBeWB8YoBmGfl2N7nZG2sHrEQdUVilh92fNSUGVzziYY4JamM+e05rBx9RzNKOmycU8yBW2/IbrVKiSbdsMGKP3nlGSqtcKW0oS9UdXyTdfbxOuyo5V2FG95b2SDQFfQfAllK3LdJ7e4t7zSUE2ZnVJKU5mRe/nctvjF7pYDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828853; c=relaxed/simple;
-	bh=caEQiqMQ9TzF5VLIGO1Vxa+BbUjBEaUzvHdbGfaPgDw=;
+	s=arc-20240116; t=1780828856; c=relaxed/simple;
+	bh=WAK9zWcLvKwvRe9Vz/SjTjyA2F7h4EDjd1yVTR6KuNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u55QsjZHo++kQnP/VmzP5jEhaw7AxChd5nYv64zeTfo/3e1aIZwyoQmJdqWokqw8NyL7rLJ854folc8feehuX4TXhjGtROIiY9dUWpbFe1TMqbcgZFXSFLlYh+NQWvpyBtNZBe7EjnbocaPWP/qnChNCozO+ibtILK14xhIeDoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGao/6Ob; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ex99WmK8s41XnVBfS8jXc15NxKgOaK5OapsfPsduEBhzZpgWDfSJXqnyo31o6ZRzQfCThH2Xef0qcYKtb8A/HV37waxaeUEgUnNgzgZh5ca6q2DJIWOPO0/rViFDap36Avcix8kUZrNa+8BQ35b5HgzUIjFsidgvgdOt0WaU8FM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SvybQSdI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGao/6Ob"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF971F00893;
-	Sun,  7 Jun 2026 10:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SvybQSdI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E4A1F00893;
+	Sun,  7 Jun 2026 10:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828851;
-	bh=CIAGThb6xSd3DLdksFxMtitGpoe0RMJfUGx7m9dMtkA=;
+	s=korg; t=1780828854;
+	bh=FdtpPhfXosVpDWN+zIPentIGCWjaBIQbLsYrsQ5ah70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VGao/6Ob+CUcsFxGefWxx31dPeWZxEZDq6QSvw7w9ILnJb+kQcnZoAZdlByMbdjFQ
-	 ayhpD92Dfmt22WN0WF8qDzNXwyE/azJO8VgCjKXjekOdD9VInxjoklOPG4rf8uGjLg
-	 63MgiAx8wzNPXKfLomIStQ4qtJ3VcEvMVsGlqCM8=
+	b=SvybQSdIizOfoXCzX0F2DdLLWpmAdtOYOAdZZd09f0r0Ev4gVRpVps8C02skR8Kbd
+	 1tjBJ41ZtnzFAPgRKPHT42aSrNRg4d8RKDm6uiIUmffnW8WYL2hIUOh0PAHXn+ZKnB
+	 UBbrJZqu+MOYt5XDVOPZRjkRvhiqGeuZJYm4cut0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.12 164/307] iio: dac: max5821: fix return value check in powerdown sync
-Date: Sun,  7 Jun 2026 11:59:21 +0200
-Message-ID: <20260607095733.745828139@linuxfoundation.org>
+	Tianyu Xu <xtydtc@gmail.com>,
+	Santhosh Kumar K <s-k6@ti.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 7.0 221/332] spi: spi-mem: avoid mutating op template in spi_mem_supports_op()
+Date: Sun,  7 Jun 2026 11:59:50 +0200
+Message-ID: <20260607095736.178830239@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-References: <20260607095727.647295505@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +48,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Santhosh Kumar K <s-k6@ti.com>
 
-commit d0a228d903425e653f18a4341e60c0538afb6d41 upstream.
+commit 79378db6a86c7014cce40b65252e6c18f5b8bcc2 upstream.
 
-The function max5821_sync_powerdown_mode() returned the result of
-i2c_master_send() directly. If a partial transfer occurred, it would
-be incorrectly treated as a success by the caller.
+spi_mem_supports_op() accepts a const struct spi_mem_op pointer but
+casts away const internally to call spi_mem_adjust_op_freq(). This
+mutates the caller's op template, which causes stale max_freq values
+when callers reuse persistent templates - subsequent calls won't
+re-apply the device frequency cap since spi_mem_adjust_op_freq()
+skips non-zero values.
 
-While the caller currently handles the positive return value of 2 as
-success, this patch refactors the function to return 0 on full success
-and -EIO on short writes. This ensures robust error handling for
-incomplete transfers and improves code maintainability by using
-sizeof(outbuf).
+Fix by operating on a stack-local copy instead.
 
-Fixes: 472988972737 ("iio: add support of the max5821")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: a4f8e70d75dd ("spi: spi-mem: add spi_mem_adjust_op_freq() in spi_mem_supports_op()")
+Cc: Tianyu Xu <xtydtc@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Santhosh Kumar K <s-k6@ti.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/20260527173736.2243004-1-s-k6@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/max5821.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/spi/spi-mem.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/drivers/iio/dac/max5821.c
-+++ b/drivers/iio/dac/max5821.c
-@@ -91,6 +91,7 @@ static int max5821_sync_powerdown_mode(s
- 				       const struct iio_chan_spec *chan)
+--- a/drivers/spi/spi-mem.c
++++ b/drivers/spi/spi-mem.c
+@@ -279,13 +279,20 @@ static bool spi_mem_internal_supports_op
+  */
+ bool spi_mem_supports_op(struct spi_mem *mem, const struct spi_mem_op *op)
  {
- 	u8 outbuf[2];
-+	int ret;
+-	/* Make sure the operation frequency is correct before going futher */
+-	spi_mem_adjust_op_freq(mem, (struct spi_mem_op *)op);
++	struct spi_mem_op eval_op = *op;
  
- 	outbuf[0] = MAX5821_EXTENDED_COMMAND_MODE;
- 
-@@ -104,7 +105,13 @@ static int max5821_sync_powerdown_mode(s
- 	else
- 		outbuf[1] |= MAX5821_EXTENDED_POWER_UP;
- 
--	return i2c_master_send(data->client, outbuf, 2);
-+	ret = i2c_master_send(data->client, outbuf, sizeof(outbuf));
-+	if (ret < 0)
-+		return ret;
-+	if (ret != sizeof(outbuf))
-+		return -EIO;
+-	if (spi_mem_check_op(op))
++	/*
++	 * Work on a local copy; this is a pure capability check and must
++	 * not modify the caller's op. Stored templates with max_freq == 0
++	 * must remain unset so their frequency is always re-capped to the
++	 * current device maximum at execution time.
++	 */
++	spi_mem_adjust_op_freq(mem, &eval_op);
 +
-+	return 0;
- }
++	if (spi_mem_check_op(&eval_op))
+ 		return false;
  
- static ssize_t max5821_write_dac_powerdown(struct iio_dev *indio_dev,
+-	return spi_mem_internal_supports_op(mem, op);
++	return spi_mem_internal_supports_op(mem, &eval_op);
+ }
+ EXPORT_SYMBOL_GPL(spi_mem_supports_op);
+ 
 
 
