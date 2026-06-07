@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C86526ED5D;
-	Sun,  7 Jun 2026 10:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFD226ED5D;
+	Sun,  7 Jun 2026 10:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828420; cv=none; b=SOP20J2OzT6VpsoqRAAHL1G3LrRU4TVzrDoM/x/ds30a8XW7mBm4/UiDzTmoMiABbNMjCfxVRHDax97GmYpnj/LSz6mhWSnuHf/fwuWhgGCCBK11rjylcnVlV77EZ1SlxDZ9KL5wBGYyHRmTulVRWejeMuT/eR5RQS+uwNsiEP8=
+	t=1780828423; cv=none; b=rQHNKq+5pmLHrX2C+ykLpKV+jZ1AaHYEhMuOVEilNhwuxOBjeClLjZxwH5fJr844w5b1z5Hh30A9ZpQ6nD/kvHebLr+bhxEH6S5PYBqSsoFm31ArXxWDT+75zgvuKwS7RU+DWKuisqtzs05+UGrC0wvN26LG6V9euKHXmu9nKGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828420; c=relaxed/simple;
-	bh=oWuoaZS16oLDOfbhTEMgcYmsSnWKOoaji/izKaoOhqk=;
+	s=arc-20240116; t=1780828423; c=relaxed/simple;
+	bh=unvv92yXqRx35JHKJHUGWndSRcqsx/TUtAeo0eAsppA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ep7U5jWR7UK1Nd6R+qKLbLCWrn4WzwkeQLBM8zcVNfAJCycSh+xV2C5h1bgbs1XpZpX43S6PgF1WPiqiqWr/k4ZgQdnCqmYA5CqqAjZdIJwZ9Bazt+XnSUqL47X/8D4YVuWobhOJFxTsnJz/WzATf365yFuiaXAUvzrsDUz/AjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7Q8v3Mi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Csp12LOVwXINToa39WhNTHyEa/2NSI3dhD9xR0j9EnWC69j8lg7UH0eX7AGmg4yruwQgR8hQ0lOFIg5OmOXOQCRSZleb7LPLjQQsTYBgzoLmz5cjnx0Fk6EJjKZfSIcP80x2iecu+V45mlZfgiA4QI9+wap1R6rVAk2MHJWq9D8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wh18nrrT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7Q8v3Mi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E71F1F00893;
-	Sun,  7 Jun 2026 10:33:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wh18nrrT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB091F00893;
+	Sun,  7 Jun 2026 10:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828419;
-	bh=wumAIwWUfEu9BeP08gFtUhw3oUJStzoaLyrJy7mAxzc=;
+	s=korg; t=1780828422;
+	bh=GbhM/BbBS8kKbzxdjZx2/zAour/giJyNtZYdiiY84z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g7Q8v3MiGB+Tt1nmN+jbi3OgrC8Xd/Ks853xGFzq/6Nr1MXp0EqZWnISSRPMt6vvv
-	 G3R6G/761EH925zZ+c5VpLXs+gmEGFJ2q6l8hYBBYK5CL6hzmCOvqzt14aW5P9Z+7x
-	 015JavEFK1xAVqCD3HzIHC5OEQ5JP7TCKDSo/eIw=
+	b=wh18nrrTre3p7rVKcCM0cbdP32TxMtC+QUpWHETGkPJThKMAx9eK5Etqww2NI2/Au
+	 wbPFpXxcUpnqIyjQH2niTwQnckgPxcAja01xzvjHjy0lG4RWgqfhsvNOB6VgA1o3kR
+	 GoZAWA4HkNOAZ85GHbcw2j4gisfrRumJJcOwvJa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 136/315] Input: xpad - fix out-of-bounds access for Share button
-Date: Sun,  7 Jun 2026 11:58:43 +0200
-Message-ID: <20260607095732.604339626@linuxfoundation.org>
+	Rodrigo Alencar <rodrigo.alencar@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 7.0 180/332] iio: dac: ad5686: acquire lock when doing powerdown control
+Date: Sun,  7 Jun 2026 11:59:09 +0200
+Message-ID: <20260607095734.675123273@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,49 +47,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Rodrigo Alencar <rodrigo.alencar@analog.com>
 
-commit 6cdc46b38cf146ce81d4831b6472dbf7731849a2 upstream.
+commit 5237c3175cae5ab05f18878cec3301a04403859e upstream.
 
-xpadone_process_packet() receives len directly from urb->actual_length
-and uses it to index the share-button byte at data[len - 18] or
-data[len - 26]. Since both len and data[0] are under the device's
-control, a broken controller can send a GIP_CMD_INPUT packet with
-actual_length < 18 (e.g. 5 bytes) and reach this code path, causing
-accesses beyond the actual array.
+Protect access of pwr_down_mode and pwr_down_mask fields with existing
+mutex lock. Each channel exposes their own attributes for controlling
+powerdown modes and powerdown state. This fixes potential race conditions
+as those the write functions perform non-atomic read-modify-write
+operations to those pwr_down_* fields. This issue exists since the ad5686
+driver was first introduced.
 
-Fix this by calculating the offset and checking bounds against the
-packet length.
-
-Reported-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Fixes: 4ef46367073b ("Input: xpad - fix Share button on Xbox One controllers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: c2f37c8dcadc ("iio: dac: New driver for AD5686R, AD5685R, AD5684R Digital to analog converters")
+Signed-off-by: Rodrigo Alencar <rodrigo.alencar@analog.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/dac/ad5686.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -1110,10 +1110,10 @@ static void xpadone_process_packet(struc
- 		input_report_key(dev, BTN_START,  data[4] & BIT(2));
- 		input_report_key(dev, BTN_SELECT, data[4] & BIT(3));
- 		if (xpad->mapping & MAP_SHARE_BUTTON) {
--			if (xpad->mapping & MAP_SHARE_OFFSET)
--				input_report_key(dev, KEY_RECORD, data[len - 26] & BIT(0));
--			else
--				input_report_key(dev, KEY_RECORD, data[len - 18] & BIT(0));
-+			u32 offset = (xpad->mapping & MAP_SHARE_OFFSET) ? 26 : 18;
-+
-+			if (len >= offset)
-+				input_report_key(dev, KEY_RECORD, data[len - offset] & BIT(0));
- 		}
+--- a/drivers/iio/dac/ad5686.c
++++ b/drivers/iio/dac/ad5686.c
+@@ -30,6 +30,8 @@ static int ad5686_get_powerdown_mode(str
+ {
+ 	struct ad5686_state *st = iio_priv(indio_dev);
  
- 		/* buttons A,B,X,Y */
++	guard(mutex)(&st->lock);
++
+ 	return ((st->pwr_down_mode >> (chan->channel * 2)) & 0x3) - 1;
+ }
+ 
+@@ -39,6 +41,8 @@ static int ad5686_set_powerdown_mode(str
+ {
+ 	struct ad5686_state *st = iio_priv(indio_dev);
+ 
++	guard(mutex)(&st->lock);
++
+ 	st->pwr_down_mode &= ~(0x3 << (chan->channel * 2));
+ 	st->pwr_down_mode |= ((mode + 1) << (chan->channel * 2));
+ 
+@@ -57,6 +61,8 @@ static ssize_t ad5686_read_dac_powerdown
+ {
+ 	struct ad5686_state *st = iio_priv(indio_dev);
+ 
++	guard(mutex)(&st->lock);
++
+ 	return sysfs_emit(buf, "%d\n", !!(st->pwr_down_mask &
+ 				       (0x3 << (chan->channel * 2))));
+ }
+@@ -77,6 +83,8 @@ static ssize_t ad5686_write_dac_powerdow
+ 	if (ret)
+ 		return ret;
+ 
++	guard(mutex)(&st->lock);
++
+ 	if (readin)
+ 		st->pwr_down_mask |= (0x3 << (chan->channel * 2));
+ 	else
 
 
