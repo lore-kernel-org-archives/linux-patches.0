@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DCE31E842;
-	Sun,  7 Jun 2026 10:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DAD51FE47B;
+	Sun,  7 Jun 2026 10:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828278; cv=none; b=V1aw5u0ueYb+9qFXRzFlx3UnKbXHT6Kcss95LFQ+iYzkWXzl+9PFBLq1cXNfD8suYSlAfDvvYQ6VUyPA5PtSGUo/QwnqEbteUrofPiQCkEL48x4k5MwSC/hBd1u1R0FCCV+moBCs6ly5s4Gg8nO9fgxMzqdw5m1ShIlDGja3ucE=
+	t=1780828281; cv=none; b=gVLjHu+jMsM3AyD2+sTl/zIv7VEF4gUGk2RH2RtEyXUjpG0U6jJqgA5wryZxWaOSBOycwv2hrSlpTWOwGPOeWgVRMODXZZEMP4GksThYFdrbuRXa0Rx1bm2T0Q1aAvUfoYVlCxepFinD9dysNVGKzuWMrH19WfFTvmnVUg7b0+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828278; c=relaxed/simple;
-	bh=MA1c6AGatPpN3nlemQ+bWmO5Qvx6s6KF1AzKyJTHPzY=;
+	s=arc-20240116; t=1780828281; c=relaxed/simple;
+	bh=YiQUKA+eUIdtnP2u+RR8N2O7VAbCNjt24X6X1nEcGGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q71HVQS0wwtj/rmilifugs4P1uN5hhk7HyzLktkYMd9aud57/Tjq2QEw3VhWcay3e9aV4M9okKyk7n9BBkxCe9HoflArLfI1upTVZmaDTviSfLyEdlW3nBGMLhBEr2xmH+JILl2RO/13Fs3eLPaakin/E4slaZ/8KMpWqTteeZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hb99d3c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WWMZS82eQF1oK2UGVoGn6p8l0kdgaxtv0djBcrrAMZErWVupah/11OfwaKnA9GxX5MGJcnG3c0GfKNZq6o3kQkquyqHtqRsOaHUYfwMUpsmSMZH+XW+gUY3ujlDu4aWz9a4dKO9JVxU2DQXVAZutQHbxPUCV4WAfxC0TYs8VyBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N3z7oMz4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hb99d3c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B2B1F00893;
-	Sun,  7 Jun 2026 10:31:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N3z7oMz4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8871F00893;
+	Sun,  7 Jun 2026 10:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828277;
-	bh=B37Sh5SWsnrk4rzYmoKvMp080NOAcWelG/aB6eew3I8=;
+	s=korg; t=1780828280;
+	bh=s1iHB3UmF5IyG0XsOJIyMtJAaNLzRevvT4/6WStR2Tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0hb99d3ciWDMxO5dlviB/tEOOZmPJ6N3HB8yXztKJYdRATZHnrQXni0jFuTADrJLN
-	 IG3Z9uvVRi8OjLb6fn6MVS0he2OjuGxY2/Y9f+bW+gNYvhnuEH0gCRYxmFru5Kalzw
-	 TmEZHnH94eCYAli6dkZgTWJZxENDVRRJNwCnrry0=
+	b=N3z7oMz45g4ANYZH8WIpcCMqc54dUWco+TD9Zja+c1d3EzQfAz4pyducfgh2bVFlz
+	 MIa1wQCxUOor1ZEnZi9JSuln0FCSAdonywq4RyuEBiAbBJ3eFqyNECJFX+NbLsZoVA
+	 CNfNhkjssfxFl3C7n9AomkFtZoD5K4synuxx64Wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,12 +31,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Roth <michael.roth@amd.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.18 146/315] KVM: SEV: Use the size of the PSC header as the minimum size for PSC requests
-Date: Sun,  7 Jun 2026 11:58:53 +0200
-Message-ID: <20260607095732.965331596@linuxfoundation.org>
+Subject: [PATCH 7.0 169/332] KVM: SEV: Dont explicitly pass PSC buffer to snp_begin_psc()
+Date: Sun,  7 Jun 2026 11:58:58 +0200
+Message-ID: <20260607095734.272859508@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +48,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 2be54670bdc017004c4a4b8bddb6ff02ebe7dbe2 upstream.
+commit ebe4b2dc9cfbfb2d8f665667c4d08f4c6c9bec05 upstream.
 
-When handling a Page State Change (PSC) #VMGEXIT use the size of the PSC
-header as the minimum size for the scratch area.  Per the GHCB spec, PSC
-requests do NOT provide the length, i.e. using control->exit_info_2 for the
-length is completely made up behavior.  The existing code "works", e.g.
-even though Linux-as-a-guest always passes '0', because KVM doesn't do
-anything with the length when the request is in the GHCB's shared buffer.
+Stop explicitly passing the PSC buffer to snp_begin_psc(): it *must*
+be the scratch area.  This will allow fixing a variety of bugs without
+further complicating the code.
 
-Use the header as the min length.  Once the header is retrieved, KVM can
-use the specified indices to compute the full size of the request.
+No functional change intended.
 
-Fixes: 9b54e248d264 ("KVM: SEV: Add support to handle Page State Change VMGEXIT")
 Cc: stable@vger.kernel.org
 Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
 Reviewed-by: Michael Roth <michael.roth@amd.com>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260501202250.2115252-6-seanjc@google.com>
+Message-ID: <20260501202250.2115252-9-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/svm/sev.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 --- a/arch/x86/kvm/svm/sev.c
 +++ b/arch/x86/kvm/svm/sev.c
-@@ -4473,7 +4473,7 @@ int sev_handle_vmgexit(struct kvm_vcpu *
- 		vcpu->run->system_event.data[0] = control->ghcb_gpa;
- 		break;
- 	case SVM_VMGEXIT_PSC:
--		ret = setup_vmgexit_scratch(svm, true, control->exit_info_2);
-+		ret = setup_vmgexit_scratch(svm, true, sizeof(struct psc_hdr));
+@@ -3796,7 +3796,7 @@ struct psc_buffer {
+ 	struct psc_entry entries[];
+ } __packed;
+ 
+-static int snp_begin_psc(struct vcpu_svm *svm, struct psc_buffer *psc);
++static int snp_begin_psc(struct vcpu_svm *svm);
+ 
+ static void snp_complete_psc(struct vcpu_svm *svm, u64 psc_ret)
+ {
+@@ -3838,7 +3838,6 @@ static void __snp_complete_one_psc(struc
+ static int snp_complete_one_psc(struct kvm_vcpu *vcpu)
+ {
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+-	struct psc_buffer *psc = svm->sev_es.ghcb_sa;
+ 
+ 	if (vcpu->run->hypercall.ret) {
+ 		snp_complete_psc(svm, VMGEXIT_PSC_ERROR_GENERIC);
+@@ -3848,11 +3847,13 @@ static int snp_complete_one_psc(struct k
+ 	__snp_complete_one_psc(svm);
+ 
+ 	/* Handle the next range (if any). */
+-	return snp_begin_psc(svm, psc);
++	return snp_begin_psc(svm);
+ }
+ 
+-static int snp_begin_psc(struct vcpu_svm *svm, struct psc_buffer *psc)
++static int snp_begin_psc(struct vcpu_svm *svm)
+ {
++	struct vcpu_sev_es_state *sev_es = &svm->sev_es;
++	struct psc_buffer *psc = sev_es->ghcb_sa;
+ 	struct psc_entry *entries = psc->entries;
+ 	struct kvm_vcpu *vcpu = &svm->vcpu;
+ 	struct psc_hdr *hdr = &psc->hdr;
+@@ -4540,7 +4541,7 @@ int sev_handle_vmgexit(struct kvm_vcpu *
  		if (ret)
  			break;
  
+-		ret = snp_begin_psc(svm, svm->sev_es.ghcb_sa);
++		ret = snp_begin_psc(svm);
+ 		break;
+ 	case SVM_VMGEXIT_AP_CREATION:
+ 		ret = sev_snp_ap_creation(svm);
 
 
