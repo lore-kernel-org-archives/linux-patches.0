@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A463332FA14;
-	Sun,  7 Jun 2026 10:59:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637EF33557D;
+	Sun,  7 Jun 2026 10:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829976; cv=none; b=HQRnD0GmgpfyRd2YFLc47ui2jBYGlTKqfxF/A6ek/MpX2WMKWa5l6mA0BI5WBbe1ql4TQG0PjyN0E9KujmQHkSmTtwpj6/ULIBuDpYTOyC6OIvJZAhCk6R8QHLLivClEmDhBQYNDhapeCyAVv0KL0tXOlRlOwIrsTrgX1Hrr7Ks=
+	t=1780829981; cv=none; b=jYL9KRYEybzjAG2hYdCGwUm8FdvPsH4owmRMyI7QkAHTlOz62+KiBRA/FuHW8d0dgd22bfM4n3Dkb5eRpACI0LmXF0zX5cnOruhWHtjhlckwq9hvltxfO9WsHFKqIQNYSZ861PV7CFo0oFWxXTZ9UXLg+tEOMO8nguGP7Q9djGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829976; c=relaxed/simple;
-	bh=xA89tAmCTEjTKR9Oni5jyVswrrMSVh3uvBZqpN/nNmc=;
+	s=arc-20240116; t=1780829981; c=relaxed/simple;
+	bh=SyYFA/Eejufz977lLqyGT6s/b7ZlPr0kpk8v4WgcWcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ohmRJRfrRjRrJeLO6Qw9zmjv0yd720liLtO6U91KgyToM2XAIK5/qyHdGdtHNYBkjLvVp5EJSARID7JFNG4bNCmkx8el0e4Sd1ibPzbNaqXVIF6N1ULgKr4aSCzO+Vnj8mLwayxME+Ctx35buIG08BDH3ZIyC8uwtRnAy04m91s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wuGP50FN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=suolHpTWSW2UseOoJkUlteEhyNKBHnbK7pLoQ4WFfaXEE9UxRdiMLis+0cAEvRF9PrsBYE6gXIutTMJv6yW9t3qfXfqbhdTqIJzh3qNmC+Sp2AnBJkpiI3PiWo+mOds12Ecm/gRKp/rJ0aBJWgoaAbGsbJtVB7Afb1TkmLbD1Bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j1ZySZK7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuGP50FN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D231F00898;
-	Sun,  7 Jun 2026 10:59:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j1ZySZK7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 731531F00893;
+	Sun,  7 Jun 2026 10:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829973;
-	bh=tFs6ZtOuKv0KQ5Hmqg5uzYLxMbGIDcqGeMpXZVNXyRk=;
+	s=korg; t=1780829977;
+	bh=1zRR1DFqf05L96SJU9WRF+/phQAwvgkCITJZjnorZfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wuGP50FNXavgpcKiI7tyve+ft4QK9qaayv0cP/DsFSmbcn1TDxJkR2LnLMTEOm2nV
-	 8nxbcnmwzGuJ/d6kvlj9mfIQ+GAqyuBk7mOxq8hqF3vdOQ48H9qXbx+hfBihJnf0ck
-	 4eRlF6vOSuKa7OSusn5b/B/tjtvNKhJ6VoKiYGxQ=
+	b=j1ZySZK7eyTJTSKw/X4Mme2wlAi7AeEJNkCCcqvEJSYeD9gjBlaQTE0OJ6XS8cuEv
+	 wOk2F6+/yWYZaMRD0lwVAqWX/0lxl7nnFtlthZZHZ5WT0jO0b3cyX/M7vyBGBS9eH7
+	 STjzuojdE/6/cs9xWrM9gd7ucJOVtzDE1Ano5FlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 296/315] arm64: tlb: Flush walk cache when unsharing PMD tables
-Date: Sun,  7 Jun 2026 12:01:23 +0200
-Message-ID: <20260607095738.465965195@linuxfoundation.org>
+Subject: [PATCH 6.12 270/307] serdev: Provide a bustype shutdown function
+Date: Sun,  7 Jun 2026 12:01:07 +0200
+Message-ID: <20260607095737.627486772@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
-References: <20260607095727.528828913@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,58 +44,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit c2ff4764e03e7a8d758352f4aceb8fe1be6ac971 ]
+[ Upstream commit 6d71c62b13c33ea858ab298fe20beaec5736edc7 ]
 
-When huge_pmd_unshare() is called to unshare a PMD table, the
-tlb_unshare_pmd_ptdesc() function sets tlb->unshared_tables=true
-but the aarch64 tlb_flush() only checked tlb->freed_tables to
-determine whether to use TLBF_NONE (vae1is, invalidates walk
-cache) or TLBF_NOWALKCACHE (vale1is, leaf-only).
+To prepare serdev driver to migrate away from struct device_driver::shutdown
+(and then eventually remove that callback) create a serdev driver shutdown
+callback and migration code to keep the existing behaviour. Note this
+introduces a warning for each driver at register time that isn't converted
+yet to that callback.
 
-This caused the stale PMD page table entry to remain in the walk cache
-after unshare, potentially leading to incorrect page table walks.
-
-Fix by including unshared_tables in the check, so that when
-unsharing tables, TLBF_NONE is used and the walk cache is properly
-invalidated.
-
-Here is the detailed distinction between vae1is and vale1is:
-
-| Instruction Combination  | Actual Invalidation Scope                         |
-| ------------------------ | --------------------------------------------------|
-| `VAE1IS`  + TTL=`0`      | All entries at all levels (full invalidation)     |
-| `VAE1IS`  + TTL=`2` (L2) | Non-leaf at Level 0/1 + leaf at Level 2           |
-| `VALE1IS` + TTL=`0`      | Leaf entries at all levels (non-leaf not cleared) |
-| `VALE1IS` + TTL=`2` (L2) | Leaf entry at Level 2 only                        |
-
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Fixes: 8ce720d5bd91 ("mm/hugetlb: fix excessive IPI broadcasts when unsharing PMD tables using mmu_gather")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://patch.msgid.link/ab518883e3ed0976a19cb5b5b5faf42bd3a655b7.1765526117.git.u.kleine-koenig@baylibre.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 375ba7484132 ("Bluetooth: hci_qca: Convert timeout from jiffies to ms")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/tlb.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serdev/core.c |   21 +++++++++++++++++++++
+ include/linux/serdev.h    |    1 +
+ 2 files changed, 22 insertions(+)
 
---- a/arch/arm64/include/asm/tlb.h
-+++ b/arch/arm64/include/asm/tlb.h
-@@ -53,7 +53,7 @@ static inline int tlb_get_level(struct m
- static inline void tlb_flush(struct mmu_gather *tlb)
- {
- 	struct vm_area_struct vma = TLB_FLUSH_VMA(tlb->mm, 0);
--	bool last_level = !tlb->freed_tables;
-+	bool last_level = !(tlb->freed_tables || tlb->unshared_tables);
- 	unsigned long stride = tlb_get_unmap_size(tlb);
- 	int tlb_level = tlb_get_level(tlb);
+--- a/drivers/tty/serdev/core.c
++++ b/drivers/tty/serdev/core.c
+@@ -431,11 +431,21 @@ static void serdev_drv_remove(struct dev
+ 	dev_pm_domain_detach(dev, true);
+ }
  
++static void serdev_drv_shutdown(struct device *dev)
++{
++	const struct serdev_device_driver *sdrv =
++		to_serdev_device_driver(dev->driver);
++
++	if (dev->driver && sdrv->shutdown)
++		sdrv->shutdown(to_serdev_device(dev));
++}
++
+ static const struct bus_type serdev_bus_type = {
+ 	.name		= "serial",
+ 	.match		= serdev_device_match,
+ 	.probe		= serdev_drv_probe,
+ 	.remove		= serdev_drv_remove,
++	.shutdown	= serdev_drv_shutdown,
+ };
+ 
+ /**
+@@ -832,6 +842,14 @@ void serdev_controller_remove(struct ser
+ }
+ EXPORT_SYMBOL_GPL(serdev_controller_remove);
+ 
++static void serdev_legacy_shutdown(struct serdev_device *serdev)
++{
++	struct device *dev = &serdev->dev;
++	struct device_driver *driver = dev->driver;
++
++	driver->shutdown(dev);
++}
++
+ /**
+  * __serdev_device_driver_register() - Register client driver with serdev core
+  * @sdrv:	client driver to be associated with client-device.
+@@ -848,6 +866,9 @@ int __serdev_device_driver_register(stru
+ 	/* force drivers to async probe so I/O is possible in probe */
+         sdrv->driver.probe_type = PROBE_PREFER_ASYNCHRONOUS;
+ 
++	if (!sdrv->shutdown && sdrv->driver.shutdown)
++		sdrv->shutdown = serdev_legacy_shutdown;
++
+ 	return driver_register(&sdrv->driver);
+ }
+ EXPORT_SYMBOL_GPL(__serdev_device_driver_register);
+--- a/include/linux/serdev.h
++++ b/include/linux/serdev.h
+@@ -65,6 +65,7 @@ struct serdev_device_driver {
+ 	struct device_driver driver;
+ 	int	(*probe)(struct serdev_device *);
+ 	void	(*remove)(struct serdev_device *);
++	void	(*shutdown)(struct serdev_device *);
+ };
+ 
+ static inline struct serdev_device_driver *to_serdev_device_driver(struct device_driver *d)
 
 
