@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D7070808;
-	Sun,  7 Jun 2026 10:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A372C1595;
+	Sun,  7 Jun 2026 10:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780828940; cv=none; b=Z6PzqIWgB4l/0hRrDU45QeCwFO0EkTrSH57xpYBr2QRstylbAdJXEe/V7HJJVreKbHHk60txpdevM7zBSiPWVzcsGCVuGhcRqbpeLoQ3OQaTXocJI4Bx5OuGY9BqZbdIi9c5FHinAJ2lfVqMS5LY0fnpI36Dp5qvLovsUAHs4nA=
+	t=1780828944; cv=none; b=C2x/yX3LSEYcgFWOSrg5+c/a9sGx52KhcP8+0ds0asyv2E0+QbWi+HXwWcEIlobHqDPq4bX9r2uHHENlvtxS1sib9qUUXTN9ZPP/tu5QnnF+iWopzhE/GG9wKWnSVLwuQL51Vx9DTxrxcjgovDUl+JMrGEk7GVC5lEXTcLCWaSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780828940; c=relaxed/simple;
-	bh=5BBafiM9uQb/Y92P+aDpzqTnZlkntdH96eXY9m7zpHQ=;
+	s=arc-20240116; t=1780828944; c=relaxed/simple;
+	bh=pnFqJCok0laRNvp32fN1epAjiMMUDebBZQpCH01UTHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jq2y0fnpDoeCjT9brQoUipkArDARz/sDscMX7XFVt2QbRhxK0yk8m9oUh9ZgHzps9RNhAaiy5d5Q1XhMGeqi6L4RDeG5nPdiHmyhgEmWoLVUrBxHVvbBiBO9up9Q1cAKW07owIsuW6JKQQw319yHK4RAnaU0Mg2uWEXoNLn2fPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PFpNMKWQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tnrFYkOAo6Z+Hz21c0OeR1z+P9YkxXLrOjnenSLgIoz4kDgtqM66z0ZnmHzbh/5VBA0SVTPmdmIgKSWaTV44i9jQZHZEeDPEnNLw8r+LVSMZe9MR/ofOrOF1pflHNFuEd/xObrSlzvJBCeLFnFo1kULr9NvFp3zVRgjqn6mMxiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8pyoxyV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PFpNMKWQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0CA91F00893;
-	Sun,  7 Jun 2026 10:42:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8pyoxyV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA201F00893;
+	Sun,  7 Jun 2026 10:42:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780828939;
-	bh=5C6yow/H+lZ/5ha4hySv3D5GurVSWjWpwfg0MaLzgNA=;
+	s=korg; t=1780828943;
+	bh=Zydrbej5QSpZoMejegKVsD7v6wmv8udVqSYQPmAzW+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PFpNMKWQyZeWkB5aX2e/Sx0DwNtOLd8pRAqZCBIzHK4kPoBC4NLtr9Iq6waTfNe8Y
-	 KX/PnmMZDiCaOI7sVFiDokMLFN5dW8OFpjXaOZMThbvAkB90SGo84ZOlhIKrhBjRcY
-	 QdKDYCaWFwmwSMLPsFIxTQMvqXfz5wcpW8NA9f2E=
+	b=c8pyoxyVAHzBPLxZ8sjfS+Kx/E7r5c1BMQwNKiEeDsLRGvGvaRnywtn1n6aQ5ZZw6
+	 4PcnrB/tc55CORPYIRemJ7WUuTApuLWDGsda0SaOY6Yqo2So/icCW/6nj5gxx1jmsj
+	 Af2hS5r5EfCZnH1KlslPujVkEMtZvyrn4POGGOiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.0 228/332] ALSA: scarlett2: Fix 2i2 Gen 4 direct monitor gain on firmware 2417
-Date: Sun,  7 Jun 2026 11:59:57 +0200
-Message-ID: <20260607095736.432591052@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Dan Carpenter <error27@gmail.com>
+Subject: [PATCH 6.12 181/307] usb: dwc2: Fix use after free in debug code
+Date: Sun,  7 Jun 2026 11:59:38 +0200
+Message-ID: <20260607095734.361192383@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,113 +46,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geoffrey D. Bennett <g@b4.vu>
+From: Dan Carpenter <error27@gmail.com>
 
-commit db37cf47b67e38ade40de5cd74a4d4d772ff1416 upstream.
+commit 9ea06a3fbf9f16e0d98c52cb3b99642be15ec281 upstream.
 
-Firmware 2417 for the Scarlett 4th Gen 2i2 moved the direct monitor
-gain parameter by 4 bytes, from offset 0x2a0 to 0x2a4, breaking the
-"Direct Monitor X Mix Y" controls.
+We're not allowed to dereference "urb" after calling
+usb_hcd_giveback_urb() so save the urb->status ahead of time.
 
-Special-case the offset in the get/set config helpers when the
-running firmware is 2417 or later.
-
-Fixes: 4e809a299677 ("ALSA: scarlett2: Add support for Solo, 2i2, and 4i4 Gen 4")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Link: https://patch.msgid.link/ahIWTueUlWA5xiV+@m.b4.vu
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 7359d482eb4d ("staging: HCD files for the DWC2 driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Link: https://patch.msgid.link/ag1NwBpqT4IEQcdJ@stanley.mountain
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_scarlett2.c |   33 +++++++++++++++++++++++++++++----
- 1 file changed, 29 insertions(+), 4 deletions(-)
+ drivers/usb/dwc2/hcd.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/usb/mixer_scarlett2.c
-+++ b/sound/usb/mixer_scarlett2.c
-@@ -2504,6 +2504,27 @@ static int scarlett2_has_config_item(
- 	return !!private->config_set->items[config_item_num].offset;
- }
+--- a/drivers/usb/dwc2/hcd.c
++++ b/drivers/usb/dwc2/hcd.c
+@@ -4804,6 +4804,7 @@ static int _dwc2_hcd_urb_dequeue(struct
+ 	struct dwc2_hsotg *hsotg = dwc2_hcd_to_hsotg(hcd);
+ 	int rc;
+ 	unsigned long flags;
++	int urb_status;
  
-+/* Return the configuration item's offset, applying any per-firmware
-+ * overrides.
-+ *
-+ * Firmware 2417 for the 2i2 Gen 4 moved DIRECT_MONITOR_GAIN by 4
-+ * bytes. Apply that shift here so that the rest of the driver can
-+ * keep using the single config set. This override can be removed
-+ * once the multi-config-set framework lands.
-+ */
-+static int scarlett2_config_item_offset(
-+	struct scarlett2_data *private, int config_item_num)
-+{
-+	int offset = private->config_set->items[config_item_num].offset;
-+
-+	if (config_item_num == SCARLETT2_CONFIG_DIRECT_MONITOR_GAIN &&
-+	    private->info == &s2i2_gen4_info &&
-+	    private->firmware_version >= 2417)
-+		offset = 0x2a4;
-+
-+	return offset;
-+}
-+
- /* Send a USB message to get configuration parameters; result placed in *buf */
- static int scarlett2_usb_get_config(
- 	struct usb_mixer_interface *mixer,
-@@ -2513,6 +2534,7 @@ static int scarlett2_usb_get_config(
- 	const struct scarlett2_config *config_item =
- 		&private->config_set->items[config_item_num];
- 	int size, err, i;
-+	int item_offset;
- 	u8 *buf_8;
- 	u8 value;
+ 	dev_dbg(hsotg->dev, "DWC OTG HCD URB Dequeue\n");
+ 	dwc2_dump_urb_info(hcd, urb, "urb_dequeue");
+@@ -4828,11 +4829,12 @@ static int _dwc2_hcd_urb_dequeue(struct
  
-@@ -2522,13 +2544,15 @@ static int scarlett2_usb_get_config(
- 	if (!config_item->offset)
- 		return -EFAULT;
+ 	/* Higher layer software sets URB status */
+ 	spin_unlock(&hsotg->lock);
++	urb_status = urb->status;
+ 	usb_hcd_giveback_urb(hcd, urb, status);
+ 	spin_lock(&hsotg->lock);
  
-+	item_offset = scarlett2_config_item_offset(private, config_item_num);
-+
- 	/* Writes to the parameter buffer are always 1 byte */
- 	size = config_item->size ? config_item->size : 8;
+ 	dev_dbg(hsotg->dev, "Called usb_hcd_giveback_urb()\n");
+-	dev_dbg(hsotg->dev, "  urb->status = %d\n", urb->status);
++	dev_dbg(hsotg->dev, "  urb->status = %d\n", urb_status);
+ out:
+ 	spin_unlock_irqrestore(&hsotg->lock, flags);
  
- 	/* For byte-sized parameters, retrieve directly into buf */
- 	if (size >= 8) {
- 		size = size / 8 * count;
--		err = scarlett2_usb_get(mixer, config_item->offset, buf, size);
-+		err = scarlett2_usb_get(mixer, item_offset, buf, size);
- 		if (err < 0)
- 			return err;
- 		if (config_item->size == 16) {
-@@ -2546,7 +2570,7 @@ static int scarlett2_usb_get_config(
- 	}
- 
- 	/* For bit-sized parameters, retrieve into value */
--	err = scarlett2_usb_get(mixer, config_item->offset, &value, 1);
-+	err = scarlett2_usb_get(mixer, item_offset, &value, 1);
- 	if (err < 0)
- 		return err;
- 
-@@ -2696,7 +2720,8 @@ static int scarlett2_usb_set_config(
- 	 */
- 	if (config_item->size >= 8) {
- 		size = config_item->size / 8;
--		offset = config_item->offset + index * size;
-+		offset = scarlett2_config_item_offset(private, config_item_num) +
-+			 index * size;
- 
- 	/* If updating a bit, retrieve the old value, set/clear the
- 	 * bit as needed, and update value
-@@ -2705,7 +2730,7 @@ static int scarlett2_usb_set_config(
- 		u8 tmp;
- 
- 		size = 1;
--		offset = config_item->offset;
-+		offset = scarlett2_config_item_offset(private, config_item_num);
- 
- 		err = scarlett2_usb_get(mixer, offset, &tmp, 1);
- 		if (err < 0)
 
 
