@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3B41E98E3;
-	Sun,  7 Jun 2026 10:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533531E98E3;
+	Sun,  7 Jun 2026 10:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780827077; cv=none; b=VJFfKqgRB3gT+YubcUmx1/5v91Z9x6dmPm7eJ3Bn9kNfXrbY9BLK0jXVbFLM9ng/THVkg96bh9YrBA8UUvy2qjh/edF8ZPjW8+ITnH0Mtyer8gNNMJ3tBNwfM+FgrvR3f/0Ui6HKCYH92zbqCbVsxiKa5Lq3IBirQlw2KNYnthk=
+	t=1780827080; cv=none; b=HZtvS0ZQf43AEf8sgDi6J5KHVIredlI/zOyKXpXrmKHsiUOBjypvXCPggcAQVXlvQHvDVE8SJShF0jhug/CG6N4cZjz7pHzh0CcGFeNn1DXnZ1uyQsIlfjb/eLKQCHLL0PpE70TIdYQy6d+6nDTQhsmPoPKENBKT+F1Qc5/kMuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780827077; c=relaxed/simple;
-	bh=mSU8fWBWZ0vH9TIybKUrk/PzAgGsHkNxcXBjJuH8w8w=;
+	s=arc-20240116; t=1780827080; c=relaxed/simple;
+	bh=81vi1bICPZDhlLXfF8nMsoDGByFuzPvKR2V/UhBthKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bgQeK9kQYaxlXcfMDFTYqUfUGHkgtXvWj3eeQqNVDKnFOJMOmauoqlY9w5eJ4Fe8deGrLhTjdcjAueK1RM7aN9xlqRa3dGKvIlyPS6fibBNPXjUvnjB0SZ4AjdLuws2kYldnDqF7Jdk2CJQZrlYVjO0J1qLrKgLD+EH/c+6yAEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKfNiWea; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IgpyHRQjdsLDAdZTpYD9IFh94G6eg9QPHJb8mVlx/P4SWxukqqpO0Ma8Q/+BnWd/VhEEF1iVwCTeAiqpHmGIsUKaQgKuf8PilgRgI2PGOO7g2Ts6I/61Aq7JZGWHDxHiVzZS4OkcW7i7BMG9gk3+X+dG4NFF3V8cSwJay5c7SR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=acOsOkXI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKfNiWea"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F841F00893;
-	Sun,  7 Jun 2026 10:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="acOsOkXI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96F991F00893;
+	Sun,  7 Jun 2026 10:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780827075;
-	bh=7aH0j074gRAZROKx2enKM4b7AnLs1JfU2lHj/SAkTyk=;
+	s=korg; t=1780827079;
+	bh=3UiZ3xWeCfoy5Z+O9WgSwfhslvpgEotaT1avrDQRucE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iKfNiWealPRIsPBqPJfzUW7M1P2nw5BdPh+48E1F7Cxg5J7vf0I9qwn52X7Gk6Lvx
-	 AhEZqMr66tg3emyY6qGobhnCvArhaOJZmwSv3sV4J/Q6D8CQmEiN6GruDTEGEMvwm2
-	 HlSVVzxcRvpAC8imCXdgCDS2c/Q5Lb+tQTkY2DmI=
+	b=acOsOkXIsg0NSfJZD3XlDHFgLtTfLVku9OMZC2uMSLgey52jqSAOvkY+XcXpR0a9I
+	 o8IMC09qqfyB+BkpFEgmpovqfpPIB+OD9wVEIYs9/JrLwSOXac/7u7pqN4X3oI70X8
+	 UZ0bO3Ebn29rrdr+Rr74gPlpfkuLpS0utRDt3D2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damiano Melotti <melotti@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
+	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 060/332] tunnels: do not assume transport header in iptunnel_pmtud_check_icmp()
-Date: Sun,  7 Jun 2026 11:57:09 +0200
-Message-ID: <20260607095730.334902589@linuxfoundation.org>
+Subject: [PATCH 6.12 020/307] arm64: debug: split hardware watchpoint exception entry
+Date: Sun,  7 Jun 2026 11:56:57 +0200
+Message-ID: <20260607095728.368664422@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,68 +50,199 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ada Couprie Diaz <ada.coupriediaz@arm.com>
 
-[ Upstream commit 509323077ef79a26ba0c60bb556e45c12c398b2d ]
+[ Upstream commit 413f0bba005dacf2484bb8ecce212fab9be79d81 ]
 
-In some cases, iptunnel_pmtud_check_icmp() can be called while
-skb transport header is not set.
+Currently all debug exceptions share common entry code and are routed
+to `do_debug_exception()`, which calls dynamically-registered
+handlers for each specific debug exception. This is unfortunate as
+different debug exceptions have different entry handling requirements,
+and it would be better to handle these distinct requirements earlier.
 
-This triggers an out-of-bound access, because
-(typeof(skb->transport_header))~0U is 65535.
+Hardware watchpoints are the only debug exceptions that will write
+FAR_EL1, so we need to preserve it and pass it down.
+However, they cannot be used to maliciously train branch predictors, so
+we can omit calling `arm64_bp_hardening()`, nor do they need to handle
+the Cortex-A76 erratum #1463225, as it only applies to single stepping
+exceptions.
 
-Access the icmp header based on IPv4 network header,
-after making sure icmp->type is present in skb linear part.
+As the hardware watchpoint handler only returns 0 and never triggers
+the call to `arm64_notify_die()`, we can call it directly from
+`entry-common.c`.
+Split the hardware watchpoint exception entry and adjust the behaviour
+to match the lack of needed mitigations.
 
-Note that iptunnel_pmtud_check_icmpv6()) is fine.
-
-Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
-Reported-by: Damiano Melotti <melotti@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260522115512.1519110-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
+Tested-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
+Reviewed-by: Will Deacon <will@kernel.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/20250707114109.35672-11-ada.coupriediaz@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Ada Couprie Diaz <ada.coupriediaz@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_tunnel_core.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ arch/arm64/include/asm/exception.h |  4 ++++
+ arch/arm64/kernel/entry-common.c   | 31 ++++++++++++++++++++++++++++++
+ arch/arm64/kernel/hw_breakpoint.c  | 17 +++++-----------
+ 3 files changed, 40 insertions(+), 12 deletions(-)
 
-diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
-index a52ba6f671fedf..fc993c78cbcc5e 100644
---- a/net/ipv4/ip_tunnel_core.c
-+++ b/net/ipv4/ip_tunnel_core.c
-@@ -280,7 +280,6 @@ static int iptunnel_pmtud_build_icmp(struct sk_buff *skb, int mtu)
-  */
- static int iptunnel_pmtud_check_icmp(struct sk_buff *skb, int mtu)
- {
--	const struct icmphdr *icmph = icmp_hdr(skb);
- 	const struct iphdr *iph = ip_hdr(skb);
- 
- 	if (mtu < 576 || iph->frag_off != htons(IP_DF))
-@@ -291,9 +290,17 @@ static int iptunnel_pmtud_check_icmp(struct sk_buff *skb, int mtu)
- 	    ipv4_is_lbcast(iph->saddr)  || ipv4_is_multicast(iph->saddr))
- 		return 0;
- 
--	if (iph->protocol == IPPROTO_ICMP && icmp_is_err(icmph->type))
--		return 0;
-+	if (iph->protocol == IPPROTO_ICMP) {
-+		const struct icmphdr *icmph;
- 
-+		if (!pskb_network_may_pull(skb, iph->ihl * 4 +
-+						offsetofend(struct icmphdr, type)))
-+			return 0;
-+		iph = ip_hdr(skb);
-+		icmph = (void *)iph + iph->ihl * 4;
-+		if (icmp_is_err(icmph->type))
-+			return 0;
-+	}
- 	return iptunnel_pmtud_build_icmp(skb, mtu);
+diff --git a/arch/arm64/include/asm/exception.h b/arch/arm64/include/asm/exception.h
+index 6d40efc28be401..594350e552e112 100644
+--- a/arch/arm64/include/asm/exception.h
++++ b/arch/arm64/include/asm/exception.h
+@@ -61,8 +61,12 @@ void do_debug_exception(unsigned long addr_if_watchpoint, unsigned long esr,
+ 			struct pt_regs *regs);
+ #ifdef CONFIG_HAVE_HW_BREAKPOINT
+ void do_breakpoint(unsigned long esr, struct pt_regs *regs);
++void do_watchpoint(unsigned long addr, unsigned long esr,
++			struct pt_regs *regs);
+ #else
+ static inline void do_breakpoint(unsigned long esr, struct pt_regs *regs) {}
++static inline void do_watchpoint(unsigned long addr, unsigned long esr,
++			struct pt_regs *regs) {}
+ #endif /* CONFIG_HAVE_HW_BREAKPOINT */
+ void do_el0_softstep(unsigned long esr, struct pt_regs *regs);
+ void do_el1_softstep(unsigned long esr, struct pt_regs *regs);
+diff --git a/arch/arm64/kernel/entry-common.c b/arch/arm64/kernel/entry-common.c
+index c22cc4d0052d54..b90babcf2e2b10 100644
+--- a/arch/arm64/kernel/entry-common.c
++++ b/arch/arm64/kernel/entry-common.c
+@@ -535,6 +535,18 @@ static void noinstr el1_softstp(struct pt_regs *regs, unsigned long esr)
+ 	arm64_exit_el1_dbg(regs);
  }
  
++static void noinstr el1_watchpt(struct pt_regs *regs, unsigned long esr)
++{
++	/* Watchpoints are the only debug exception to write FAR_EL1 */
++	unsigned long far = read_sysreg(far_el1);
++
++	arm64_enter_el1_dbg(regs);
++	debug_exception_enter(regs);
++	do_watchpoint(far, esr, regs);
++	debug_exception_exit(regs);
++	arm64_exit_el1_dbg(regs);
++}
++
+ static void noinstr el1_dbg(struct pt_regs *regs, unsigned long esr)
+ {
+ 	unsigned long far = read_sysreg(far_el1);
+@@ -584,6 +596,8 @@ asmlinkage void noinstr el1h_64_sync_handler(struct pt_regs *regs)
+ 		el1_softstp(regs, esr);
+ 		break;
+ 	case ESR_ELx_EC_WATCHPT_CUR:
++		el1_watchpt(regs, esr);
++		break;
+ 	case ESR_ELx_EC_BRK64:
+ 		el1_dbg(regs, esr);
+ 		break;
+@@ -800,6 +814,19 @@ static void noinstr el0_softstp(struct pt_regs *regs, unsigned long esr)
+ 	exit_to_user_mode(regs);
+ }
+ 
++static void noinstr el0_watchpt(struct pt_regs *regs, unsigned long esr)
++{
++	/* Watchpoints are the only debug exception to write FAR_EL1 */
++	unsigned long far = read_sysreg(far_el1);
++
++	enter_from_user_mode(regs);
++	debug_exception_enter(regs);
++	do_watchpoint(far, esr, regs);
++	debug_exception_exit(regs);
++	local_daif_restore(DAIF_PROCCTX);
++	exit_to_user_mode(regs);
++}
++
+ static void noinstr el0_dbg(struct pt_regs *regs, unsigned long esr)
+ {
+ 	/* Only watchpoints write FAR_EL1, otherwise its UNKNOWN */
+@@ -882,6 +909,8 @@ asmlinkage void noinstr el0t_64_sync_handler(struct pt_regs *regs)
+ 		el0_softstp(regs, esr);
+ 		break;
+ 	case ESR_ELx_EC_WATCHPT_LOW:
++		el0_watchpt(regs, esr);
++		break;
+ 	case ESR_ELx_EC_BRK64:
+ 		el0_dbg(regs, esr);
+ 		break;
+@@ -1006,6 +1035,8 @@ asmlinkage void noinstr el0t_32_sync_handler(struct pt_regs *regs)
+ 		el0_softstp(regs, esr);
+ 		break;
+ 	case ESR_ELx_EC_WATCHPT_LOW:
++		el0_watchpt(regs, esr);
++		break;
+ 	case ESR_ELx_EC_BKPT32:
+ 		el0_dbg(regs, esr);
+ 		break;
+diff --git a/arch/arm64/kernel/hw_breakpoint.c b/arch/arm64/kernel/hw_breakpoint.c
+index 8a80e13347c88f..ab76b36dce820b 100644
+--- a/arch/arm64/kernel/hw_breakpoint.c
++++ b/arch/arm64/kernel/hw_breakpoint.c
+@@ -750,8 +750,7 @@ static int watchpoint_report(struct perf_event *wp, unsigned long addr,
+ 	return step;
+ }
+ 
+-static int watchpoint_handler(unsigned long addr, unsigned long esr,
+-			      struct pt_regs *regs)
++void do_watchpoint(unsigned long addr, unsigned long esr, struct pt_regs *regs)
+ {
+ 	int i, step = 0, *kernel_step, access, closest_match = 0;
+ 	u64 min_dist = -1, dist;
+@@ -806,7 +805,7 @@ static int watchpoint_handler(unsigned long addr, unsigned long esr,
+ 	rcu_read_unlock();
+ 
+ 	if (!step)
+-		return 0;
++		return;
+ 
+ 	/*
+ 	 * We always disable EL0 watchpoints because the kernel can
+@@ -819,7 +818,7 @@ static int watchpoint_handler(unsigned long addr, unsigned long esr,
+ 
+ 		/* If we're already stepping a breakpoint, just return. */
+ 		if (debug_info->bps_disabled)
+-			return 0;
++			return;
+ 
+ 		if (test_thread_flag(TIF_SINGLESTEP))
+ 			debug_info->suspended_step = 1;
+@@ -830,7 +829,7 @@ static int watchpoint_handler(unsigned long addr, unsigned long esr,
+ 		kernel_step = this_cpu_ptr(&stepping_kernel_bp);
+ 
+ 		if (*kernel_step != ARM_KERNEL_STEP_NONE)
+-			return 0;
++			return;
+ 
+ 		if (kernel_active_single_step()) {
+ 			*kernel_step = ARM_KERNEL_STEP_SUSPEND;
+@@ -839,10 +838,8 @@ static int watchpoint_handler(unsigned long addr, unsigned long esr,
+ 			kernel_enable_single_step(regs);
+ 		}
+ 	}
+-
+-	return 0;
+ }
+-NOKPROBE_SYMBOL(watchpoint_handler);
++NOKPROBE_SYMBOL(do_watchpoint);
+ 
+ /*
+  * Handle single-step exception.
+@@ -984,10 +981,6 @@ static int __init arch_hw_breakpoint_init(void)
+ 	pr_info("found %d breakpoint and %d watchpoint registers.\n",
+ 		core_num_brps, core_num_wrps);
+ 
+-	/* Register debug fault handlers. */
+-	hook_debug_fault_code(DBG_ESR_EVT_HWWP, watchpoint_handler, SIGTRAP,
+-			      TRAP_HWBKPT, "hw-watchpoint handler");
+-
+ 	/*
+ 	 * Reset the breakpoint resources. We assume that a halting
+ 	 * debugger will leave the world in a nice state for us.
 -- 
 2.53.0
 
