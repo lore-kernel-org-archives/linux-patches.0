@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089C52D8378;
-	Sun,  7 Jun 2026 10:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0187F2D8378;
+	Sun,  7 Jun 2026 10:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829326; cv=none; b=W+faN+pZv/tyj+tDpvD94c2IjBktdk/OKEMDHI9sGom/ZwYaAdTMUpLLY4JQE4NgI4RONyzBBtn49VPQqkDClKsEqETT/QsNYsPmXLt0SYAvdWTSsEVwrZubdPQG7d3ZFLJzvcU0tY0Ncv4EJenD+vjhfVdq9vTOtb1xJH0Xdww=
+	t=1780829329; cv=none; b=eulE/NaVGR8by07cfKZhW1Vd28LpRqQgTLeO6srbidFVsoYNNiT9mi4lAHbNgi0UKzrLKkm0uecGdaxrfBvFpidHWpXCZzlVgidnpeCOY86yjElBSp/a+4pTiKr8Qom6vpRna8nAHWl/w9dwBj/RbYOI3/TPbyXAizGxmUCn0kU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829326; c=relaxed/simple;
-	bh=knTw+xrD8r+1NZwfH1rN97dzT7GY0UfC0IpR5lJZkVg=;
+	s=arc-20240116; t=1780829329; c=relaxed/simple;
+	bh=wtenPZQ1kqNaNrsqlFTVz+7idTxJMgp9zzJJsb453KY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ASmjBGfprcDYMVCgr2M2Cs+bciOAdxwMuH3qKTR1FqSZBnPJjE/T+au6L1oJkz/oNwS0s6FpnHrYonX0NHlurdgOqs1ARgeMTItQf+iMlBVh3ttR0yGLFYX56tXocUFFiCZkvPKFtwfHeum9cNlxAb9SGeT34htW12dKbLpg7aE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAxqNpuu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WXCQ0qaNBY8ObTKLa8/zXltLdzu+qqP32cJYskhOy439taZ15hkt3/KFZf4TfK5mOHKHguibLqxA4yz3i1Vour3dy/Tk9yRDWX7SfOgiiTr028hNy6peNX4KQJDK9bdyhu1eo67q08p+MwVEEFgRLYiil1g5TS4MIIt/WrXgtCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQ35mQuX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAxqNpuu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF261F00893;
-	Sun,  7 Jun 2026 10:48:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQ35mQuX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165581F00893;
+	Sun,  7 Jun 2026 10:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829324;
-	bh=jvLXZk2kkImueNRkqaHrSMelGwX/i+vydjpawjA6JdQ=;
+	s=korg; t=1780829328;
+	bh=ZbrBInn07OVLSGOF6qd8ITI+G6CKVsg0UFBTDSKg7Cg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pAxqNpuuGmH/1MqGBERZLXE55s4j47tkTHhI0JhQnVCdfaU26Z/QCDsS5Qtnz/n/G
-	 0C8eoCT+inD2axrsnEN24ibqZrkpxVGXxESJGNi10B8HGaZp79wHS5ptrUOlgMyVPo
-	 0+EjeIrGXFmFmAmrq7XqB0BDE4UVVm5izxp8cSSU=
+	b=BQ35mQuXhsQwG2fTyQnec9pJYyTvM+e4FclqNij0NZnzw5qioMtx92vsHv0MhfM0n
+	 /5eKKzJi1DFrXdYHOFxyjJ0WbJDCudz2Iln/bhYJ9/cAWlvoNTzRQDkyAgB1bqoGdv
+	 9ePKjvWVzI3lqtzmu75Zg0Ed3GMXQOFk0iEP+Grg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Volckaert <janvolck@gmail.com>,
+	Zhang Cen <rollkingzzc@gmail.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 7.0 264/332] USB: serial: option: add MeiG SRM813Q
-Date: Sun,  7 Jun 2026 12:00:33 +0200
-Message-ID: <20260607095737.734679934@linuxfoundation.org>
+Subject: [PATCH 6.18 236/315] USB: serial: belkin_sa: validate interrupt status length
+Date: Sun,  7 Jun 2026 12:00:23 +0200
+Message-ID: <20260607095736.234798455@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.528828913@linuxfoundation.org>
+References: <20260607095727.528828913@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,98 +46,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Volckaert <janvolck@gmail.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-commit 7d2b37d3e42d19071b62f4ddbee6e16e905efbf1 upstream.
+commit 4ce058df2ee02cc2a0f0fd5cd64ce6f1482a0b65 upstream.
 
-Add support for the Qualcomm Technology Snapdragon X35-based MeiG
-SRM813Q module.
+The Belkin interrupt callback treats interrupt data as a four-byte
+status report and reads LSR/MSR fields at offsets 2 and 3. The
+interrupt-in buffer length is derived from endpoint wMaxPacketSize, and
+short interrupt transfers may complete successfully with a smaller
+actual_length.
 
-The module can be put in different modes via AT commands to
-enable/disable GPS functionality:
+Check the completed interrupt packet length before parsing status
+fields so short interrupt endpoints and short successful packets are
+ignored instead of causing out-of-bounds or stale status-byte reads.
 
-MODEM - PPP mode(2dee:4d63): AT+SER=1,1
+KASAN report as below:
 
-If#= 0: RMNET
-If#= 1: DIAG/ADB
-If#= 2: MODEM
-If#= 3: AT
+BUG: KASAN: slab-out-of-bounds in belkin_sa_read_int_callback()
+Read of size 1
+Call trace:
+  belkin_sa_read_int_callback() (drivers/usb/serial/belkin_sa.c:202)
+  __usb_hcd_giveback_urb() (drivers/usb/core/hcd.c:1630)
+  dummy_timer() (?:?)
 
-P:  Vendor=2dee ProdID=4d63 Rev=05.15
-S:  Manufacturer=MEIG
-S:  Product=LTE-A Module
-S:  SerialNumber=1bd51f0e
-C:  #Ifs= 4 Cfg#= 1 Atr=80 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-
-NMEA mode(2dee:4d64): AT+SER=51,1
-
-If#= 0: RMNET
-If#= 1: DIAG/ADB
-If#= 2: NMEA
-If#= 3: AT
-
-P:  Vendor=2dee ProdID=4d64 Rev=05.15
-S:  Manufacturer=MEIG
-S:  Product=LTE-A Module
-S:  SerialNumber=1bd51f0e
-C:  #Ifs= 4 Cfg#= 1 Atr=80 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-
-Signed-off-by: Jan Volckaert <janvolck@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/serial/belkin_sa.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2450,6 +2450,12 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x30) },	/* MeiG Smart SRM825WN (Diag) */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x40) },	/* MeiG Smart SRM825WN (AT) */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d38, 0xff, 0xff, 0x60) },	/* MeiG Smart SRM825WN (NMEA) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d63, 0xff, 0xff, 0x30) },	/* MeiG SRM813Q (Diag) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d63, 0xff, 0xff, 0x40) },	/* MeiG SRM813Q (AT) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d64, 0xff, 0xff, 0x30) },	/* MeiG SRM813Q (Diag) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d64, 0xff, 0xff, 0x40) },	/* MeiG SRM813Q (AT) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2dee, 0x4d64, 0xff, 0xff, 0x60) },	/* MeiG SRM813Q (NMEA) */
+--- a/drivers/usb/serial/belkin_sa.c
++++ b/drivers/usb/serial/belkin_sa.c
+@@ -194,6 +194,9 @@ static void belkin_sa_read_int_callback(
+ 
+ 	usb_serial_debug_data(&port->dev, __func__, urb->actual_length, data);
+ 
++	if (urb->actual_length < BELKIN_SA_MSR_INDEX + 1)
++		goto exit;
 +
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2df3, 0x9d03, 0xff) },			/* LongSung M5710 */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1404, 0xff) },			/* GosunCn GM500 RNDIS */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x305a, 0x1405, 0xff) },			/* GosunCn GM500 MBIM */
+ 	/* Handle known interrupt data */
+ 	/* ignore data[0] and data[1] */
+ 
 
 
