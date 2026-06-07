@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129461E98EF;
-	Sun,  7 Jun 2026 10:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B2D257855;
+	Sun,  7 Jun 2026 10:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829017; cv=none; b=OqU3Kx/qZ08caR29B1NCgww9WID9r1hsgqSX6GePlwScqiieQzWlO+f6piiMl2h1UyLVkdh+S2RqwMCY5mFNPL8V/nIQu+zE5yCas1JFkf42u0eJJwcLCbhfmEvP4WwXDYVesqizJHrpR+gKv81Mdi8C8xhOjjVl0pbVlxfBl/c=
+	t=1780829020; cv=none; b=VVC7AVKFT4W6PDiRZs2MgDwq08sGMmz1S1qnXtu6uUChrC8v6xO815uO56XjoE9sqh/T/Y55C5PclkY9mSlnuyB+mZkm7Q37M6ETS5mGOO31OUxFfE2gafcEqFb6HCvgyg+1RAvSOXYwRfGTenJzMCAsMH6oF8xaY3wvOAdqc6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829017; c=relaxed/simple;
-	bh=ZOGWVz03phVcVckJwUhGLPBTy7gZ1nMGX3dr0gzgYyg=;
+	s=arc-20240116; t=1780829020; c=relaxed/simple;
+	bh=gXmSscQ2LZ1zC6Q2trSL8LS3eCHjJm08KUi3xje77E4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=otBIJPSHoPkSPiSsTv3VXfJ2ZaFCjKI9GhHrbR/QLPl7CxUh6M1kLCtCCXYgxHWZOARUOsdvZIfc8YQp/cL8Z4eSbKBVDJ2pSgXXIadTDD23sWtOULhOvHAY0yO+E5e7uWr3fgN9BNH/jh292go4UpaeL5UfXy6kyAdgLmsNKi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6h8NvZu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u+tF0AapB49EkpuTPgR2edz9pbQcDV3GYZPvifsnCoF/QtgHMboFUP3+s4w2XXANEEeI8dTHU6A2UlB3wuUmOg/tKEwb+Lty/Ja1BuqRYQWYo8cp0B1zX3W5VGyhby2VwznEdlJfC6HMDlAK25grPKqWJNlwEWRreWlBo+ofsuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=st6+BVHV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6h8NvZu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2567C1F00893;
-	Sun,  7 Jun 2026 10:43:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="st6+BVHV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2601F00893;
+	Sun,  7 Jun 2026 10:43:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829016;
-	bh=BNNTjM3vcK0gzvAGuthVPyKo0Y/PshorzIzA5VGJ8SE=;
+	s=korg; t=1780829019;
+	bh=FuAGwswN7TyyOjXzvAKaLUrR/F8eURFqStUEeDv6e0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i6h8NvZut7zX1JZlbxgMGZXtTMLSJHztnSQvRotqb/a3WrdCzqt617FwlMWhsgmR5
-	 eFcI/4hiz6toDczWSGG11Ba5OKkekMTvA1apMjEzbbGNpGENvzHjEFZRdabnL9X4sc
-	 ETQCTSu76i1pS/xzEsH8MsVmMeKWxqvRHpiiMDog=
+	b=st6+BVHVx5XTkCxfWl6IpeXz3TsOWimSMgmyKReE9Rn7jHYkhoL3MHVs434ij2Ito
+	 jTnde2qbj0WOLmjCptrtcMkyi6eP/ggHVg/gMNMMoumZJhN2WIhTW3j7UKgFTPCjZF
+	 VnraI5y8GTw0fET4RLGOlpziOYU0SO4sUAIdbm7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Alencar <rodrigo.alencar@analog.com>,
 	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.12 166/307] iio: dac: ad5686: acquire lock when doing powerdown control
-Date: Sun,  7 Jun 2026 11:59:23 +0200
-Message-ID: <20260607095733.820319450@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 187/307] ASoC: qcom: q6asm-dai: fix error handling in prepare and set_params
+Date: Sun,  7 Jun 2026 11:59:44 +0200
+Message-ID: <20260607095734.589561561@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
 References: <20260607095727.647295505@linuxfoundation.org>
@@ -51,63 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rodrigo Alencar <rodrigo.alencar@analog.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit 5237c3175cae5ab05f18878cec3301a04403859e upstream.
+commit 4b4db09f283df65d780bc7cee66cb4a7e9bf4770 upstream.
 
-Protect access of pwr_down_mode and pwr_down_mask fields with existing
-mutex lock. Each channel exposes their own attributes for controlling
-powerdown modes and powerdown state. This fixes potential race conditions
-as those the write functions perform non-atomic read-modify-write
-operations to those pwr_down_* fields. This issue exists since the ad5686
-driver was first introduced.
+Fix error handling in q6asm_dai_compr_set_params() and q6asm_dai_prepare()
+for both CMD_CLOSE and q6asm_unmap_memory_regions().
 
-Fixes: c2f37c8dcadc ("iio: dac: New driver for AD5686R, AD5685R, AD5684R Digital to analog converters")
-Signed-off-by: Rodrigo Alencar <rodrigo.alencar@analog.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+In both the functions, we are doing q6asm_audio_client_free in failure
+cases, which means if prepare or set_params fail, we can never recover.
+Now open and close are done in respective dai_open/close functions.
+
+Fixes: 2a9e92d371db ("ASoC: qdsp6: q6asm: Add q6asm dai driver")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260518092347.3446946-4-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/ad5686.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/soc/qcom/qdsp6/q6asm-dai.c |   24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
---- a/drivers/iio/dac/ad5686.c
-+++ b/drivers/iio/dac/ad5686.c
-@@ -30,6 +30,8 @@ static int ad5686_get_powerdown_mode(str
- {
- 	struct ad5686_state *st = iio_priv(indio_dev);
- 
-+	guard(mutex)(&st->lock);
+--- a/sound/soc/qcom/qdsp6/q6asm-dai.c
++++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
+@@ -234,9 +234,19 @@ static int q6asm_dai_prepare(struct snd_
+ 	/* rate and channels are sent to audio driver */
+ 	if (prtd->state == Q6ASM_STREAM_RUNNING) {
+ 		/* clear the previous setup if any  */
+-		q6asm_cmd(prtd->audio_client, prtd->stream_id, CMD_CLOSE);
+-		q6asm_unmap_memory_regions(substream->stream,
+-					   prtd->audio_client);
++		ret = q6asm_cmd(prtd->audio_client, prtd->stream_id, CMD_CLOSE);
++		if (ret < 0) {
++			dev_err(dev, "Failed to close q6asm stream %d\n", prtd->stream_id);
++			return ret;
++		}
 +
- 	return ((st->pwr_down_mode >> (chan->channel * 2)) & 0x3) - 1;
++		ret = q6asm_unmap_memory_regions(substream->stream, prtd->audio_client);
++		if (ret < 0) {
++			dev_err(dev, "Failed to unmap memory regions for q6asm stream %d\n",
++				prtd->stream_id);
++			return ret;
++		}
++
+ 		q6routing_stream_close(soc_prtd->dai_link->id,
+ 					 substream->stream);
+ 		prtd->state = Q6ASM_STREAM_STOPPED;
+@@ -304,8 +314,6 @@ routing_err:
+ 	q6asm_cmd(prtd->audio_client, prtd->stream_id,  CMD_CLOSE);
+ open_err:
+ 	q6asm_unmap_memory_regions(substream->stream, prtd->audio_client);
+-	q6asm_audio_client_free(prtd->audio_client);
+-	prtd->audio_client = NULL;
+ 
+ 	return ret;
+ }
+@@ -902,7 +910,7 @@ static int q6asm_dai_compr_set_params(st
+ 			      prtd->session_id, dir);
+ 	if (ret) {
+ 		dev_err(dev, "Stream reg failed ret:%d\n", ret);
+-		goto q6_err;
++		goto routing_err;
+ 	}
+ 
+ 	ret = __q6asm_dai_compr_set_codec_params(component, stream,
+@@ -928,11 +936,11 @@ static int q6asm_dai_compr_set_params(st
+ 	return 0;
+ 
+ q6_err:
++	q6routing_stream_close(rtd->dai_link->id, dir);
++routing_err:
+ 	q6asm_cmd(prtd->audio_client, prtd->stream_id, CMD_CLOSE);
+ 
+ open_err:
+-	q6asm_audio_client_free(prtd->audio_client);
+-	prtd->audio_client = NULL;
+ 	return ret;
  }
  
-@@ -39,6 +41,8 @@ static int ad5686_set_powerdown_mode(str
- {
- 	struct ad5686_state *st = iio_priv(indio_dev);
- 
-+	guard(mutex)(&st->lock);
-+
- 	st->pwr_down_mode &= ~(0x3 << (chan->channel * 2));
- 	st->pwr_down_mode |= ((mode + 1) << (chan->channel * 2));
- 
-@@ -57,6 +61,8 @@ static ssize_t ad5686_read_dac_powerdown
- {
- 	struct ad5686_state *st = iio_priv(indio_dev);
- 
-+	guard(mutex)(&st->lock);
-+
- 	return sysfs_emit(buf, "%d\n", !!(st->pwr_down_mask &
- 				       (0x3 << (chan->channel * 2))));
- }
-@@ -77,6 +83,8 @@ static ssize_t ad5686_write_dac_powerdow
- 	if (ret)
- 		return ret;
- 
-+	guard(mutex)(&st->lock);
-+
- 	if (readin)
- 		st->pwr_down_mask |= (0x3 << (chan->channel * 2));
- 	else
 
 
