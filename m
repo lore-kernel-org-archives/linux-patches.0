@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C518D12CDA5;
-	Sun,  7 Jun 2026 10:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E0C12CDA5;
+	Sun,  7 Jun 2026 10:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780829815; cv=none; b=Oqw5Aw+d/lGEM0ykmNlSxEkEL7zJ5XE+SL/iIuDNNffvFtDR8BoyD91VcJJ5FvJTlyfO9MXSDdmSTWlwvYJc1pJnOdtnv15P7OhMbiM2s8QL7YLpn8YWSLraHuxEOlQfAHYqs8NaHL/9K8ZmrYQgSFX4t5VuY0g20crhPXTtYcc=
+	t=1780829819; cv=none; b=ZguwhpWkdvmUlFZj1stkZTeVnEesP90P8qsAwsCBf/MCEWaTrOwTYeJYZhnwAM9hnvmaMB565c9shTpaBhd5bLXs8pg9+wpdE0infLnX1506fQbf1S4LCslBfkO3zNUbIqZMxrguxa18aZIbjY1QdXrrniXKZNjVi2vsmYRIIh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780829815; c=relaxed/simple;
-	bh=USR1GX/iTwimqhGLrdvXZsIGU0IGQBW0jj1gPXYpNZ8=;
+	s=arc-20240116; t=1780829819; c=relaxed/simple;
+	bh=2QClxc/yndcg+9eQrGm84UC3eryGi/chh3MGEfK7RKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uv6Nc1w/urv/derZ7rUEInVk2377HgUQPi+iFHCKMeQuySDjwsSy2ZZA+fumTus7xIDgoEmpXP2ui8Q8vFgsTQ240W3rJt43Mri/kT2GzTvMD0/JDYAoJLg6r+g/ctpDIzoo5VIZWvyuMc8JJwIewySkSHvdlMD44AFd+9CBWJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qwqtEPEV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ORW/8Aa8Fy+uing0jA6ubpliJ3oc/serX3ZuVP2LcAI847N2A983d5BaT5/Qw3w+jZ/cDW7bQnhzOA3N8UkUHR9Q73LIynPMRISbVZ9n91Zxyk6qlB8wKEiUxip/+zuwUfK6mJDRCLoOPeEjvCdWEcUX4tskiTWKOvvMbFV5TRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NgdYRqqd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwqtEPEV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D15491F00893;
-	Sun,  7 Jun 2026 10:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NgdYRqqd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B3AA1F00893;
+	Sun,  7 Jun 2026 10:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1780829814;
-	bh=nF52bDA+Vo84wxrabO2Wc8tnNemC579h98qNHl+Ul+M=;
+	s=korg; t=1780829818;
+	bh=8TliwwyjX/P7+9QtvYdXmgcH3I54CvQ4ltvcwDsSLv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qwqtEPEVn0xyrNySPtd4V52D4yeKFNVGfne9ZPRThMxsjlOvJNu/uqjPLLL521BD4
-	 4OaL0yKLebQrQ8lqd0O2m3K7sBnSQWWdjug2I1pLDvCXWgBKKlmZrKqUzgzz2jCTux
-	 2KoY5XkrkqhZNtMqgbobc5WSip5piRNWxaoMpQS0=
+	b=NgdYRqqdPwK9xdrcbQ8w3fj9wC9DUh8UheJyUKoX/8IQZHHq381swvJPCGeM50cun
+	 PAo4j5Qu/Ef37bu82UuC4IPdSvp93ZKOd8ABZW6313yK+VJcA6kAvZgSbMdUTdvvlq
+	 p2asGKdvO6k9YBxI0UVMVr01q4k64uwVkw9CobQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacques Nilo <jnilo@free.fr>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 7.0 315/332] serial: core: introduce guard(uart_port_lock_check_sysrq_irqsave)
-Date: Sun,  7 Jun 2026 12:01:24 +0200
-Message-ID: <20260607095739.688716201@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>
+Subject: [PATCH 6.12 256/307] serial: dz: Fix bootconsole message clobbering at chip reset
+Date: Sun,  7 Jun 2026 12:00:53 +0200
+Message-ID: <20260607095737.093155872@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,73 +43,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacques Nilo <jnilo@free.fr>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit c3cce2e67bb22a223f5b8ef05db0fcde70994068 upstream.
+commit ca904f4b42355287bc5ce8b7550ebe909cda4c2c upstream.
 
-uart_handle_break() and uart_prepare_sysrq_char() (in
-include/linux/serial_core.h) capture a SysRq character into
-port->sysrq_ch while the port lock is held and rely on the unlock
-helper -- uart_unlock_and_check_sysrq_irqrestore() -- to dispatch the
-captured character to handle_sysrq() on scope exit.
+In the DZ interface as implemented by the DC7085 gate array the serial
+transmitters are double buffered, meaning that at the time a transmitter
+is ready to accept the next character there is one in the transmit shift
+register still being sent to the line.  Issuing a master clear at this
+time causes this character to be lost, so wait an extra amount of time
+sufficient for the transmit shift register to drain at 9600bps, which is
+the baud rate setting used by the firmware console.
 
-The existing guard(uart_port_lock_irqsave) cannot be used by IRQ
-handlers that process RX, because its destructor calls plain
-uart_port_unlock_irqrestore() and silently drops port->sysrq_ch.
+Mind the specified 1.4us TRDY recovery time in the course and continue
+using iob() as the completion barrier, since the platforms involved use
+a write buffer that can delay and combine writes, and reorder them with
+respect to reads regardless of the MMIO locations accessed and we still
+lack a platform-independent handler for that.
 
-Add a dedicated guard(uart_port_lock_check_sysrq_irqsave) variant
-whose destructor is the sysrq-aware unlock helper. The lock side is
-identical to uart_port_lock_irqsave -- only the unlock-time behaviour
-differs. Callers that may capture SysRq characters must use
-guard(uart_port_lock_check_sysrq_irqsave); the existing
-guard(uart_port_lock_irqsave) keeps its current plain-unlock semantics
-for the many callers that do not process RX.
+When called from dz_serial_console_init() this is too early for fsleep()
+to work and even before lpj has been calculated and therefore the delay
+is actually not sufficient for the transmitter to drain and is merely a
+placeholder now.  This will be addressed in a follow-up change.
 
-The new macro is placed after the CONFIG_MAGIC_SYSRQ_SERIAL block so
-both definitions of uart_unlock_and_check_sysrq_irqrestore() (sysrq
-enabled and disabled) are visible at expansion time. When
-CONFIG_MAGIC_SYSRQ_SERIAL=n the destructor degenerates to plain
-uart_port_unlock_irqrestore(), so there is no overhead.
-
-No functional change on its own; users are converted in the following
-patches.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Jacques Nilo <jnilo@free.fr>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://patch.msgid.link/3849af4bc55d5d2a424fa850844e94d641b2f8a6.1778675349.git.jnilo@free.fr
+Fixes: e6ee512f5a77 ("dz.c: Resource management")
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Cc: stable@vger.kernel.org # v2.6.25+
+Link: https://patch.msgid.link/alpine.DEB.2.21.2605062259080.46195@angie.orcam.me.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/serial_core.h |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/tty/serial/dz.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
---- a/include/linux/serial_core.h
-+++ b/include/linux/serial_core.h
-@@ -1275,6 +1275,18 @@ static inline void uart_unlock_and_check
- #endif	/* CONFIG_MAGIC_SYSRQ_SERIAL */
+--- a/drivers/tty/serial/dz.c
++++ b/drivers/tty/serial/dz.c
+@@ -542,10 +542,31 @@ static int dz_encode_baud_rate(unsigned
+ static void dz_reset(struct dz_port *dport)
+ {
+ 	struct dz_mux *mux = dport->mux;
++	unsigned short tcr;
++	int loops = 10000;
  
- /*
-+ * Variant of guard(uart_port_lock_irqsave) for IRQ handlers that may capture
-+ * a SysRq character via uart_prepare_sysrq_char(). The destructor uses the
-+ * sysrq-aware unlock helper so that a captured port->sysrq_ch is dispatched
-+ * to handle_sysrq() on scope exit. The plain guard variant silently drops
-+ * sysrq_ch and must not be used by callers that process RX.
-+ */
-+DEFINE_LOCK_GUARD_1(uart_port_lock_check_sysrq_irqsave, struct uart_port,
-+                    uart_port_lock_irqsave(_T->lock, &_T->flags),
-+                    uart_unlock_and_check_sysrq_irqrestore(_T->lock, _T->flags),
-+                    unsigned long flags);
+ 	if (mux->initialised)
+ 		return;
+ 
++	tcr = dz_in(dport, DZ_TCR);
 +
-+/*
-  * We do the SysRQ and SAK checking like this...
-  */
- static inline int uart_handle_break(struct uart_port *port)
++	/* Do not disturb any ongoing transmissions.  */
++	if (dz_in(dport, DZ_CSR) & DZ_MSE) {
++		unsigned short csr, mask;
++
++		mask = tcr;
++		while ((mask & DZ_LNENB) && loops--) {
++			csr = dz_in(dport, DZ_CSR);
++			if (!(csr & DZ_TRDY))
++				continue;
++			mask &= ~(1 << ((csr & DZ_TLINE) >> 8));
++			dz_out(dport, DZ_TCR, mask);
++			iob();
++			udelay(2);		/* 1.4us TRDY recovery.  */
++		}
++		udelay(1200);			/* Transmitter drain.  */
++	}
++
+ 	dz_out(dport, DZ_CSR, DZ_CLR);
+ 	while (dz_in(dport, DZ_CSR) & DZ_CLR);
+ 	iob();
 
 
