@@ -1,105 +1,264 @@
-Received: from mail-dy1-f173.google.com (mail-dy1-f173.google.com [74.125.82.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-180.mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE77F3AE6F3
-	for <patches@lists.linux.dev>; Mon,  8 Jun 2026 21:53:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12073AF66C
+	for <patches@lists.linux.dev>; Mon,  8 Jun 2026 22:38:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780955605; cv=none; b=Q7kSZbJ1H4fSinElCK9s3OlQL33fU7ZejIZ4kn85A175aLD261lN+DQVzBdghRKw5tyu53e4mdj5qE3Pi50kBl/0MTGhnVvTZ2ums+igODm9cqcL5XBcn9FQfpGRceV4bnl1sdja6AoJOhHa8Z6ZwKh/9ZG8fOv1AhGUHKPX42I=
+	t=1780958336; cv=none; b=vE+QZ/jVaXiUmHR2N7W9txpJJTe8hqjxcIChVDi5jho5gy7aDep9hSF4rUUzzoW5AYV55ubO2w5GDganfZipwK9/x886L9tBbDoeYorhS9Jp/hNahtUoRNKD5n+nlfV4KJol6SaKnN8X23nMB+cXfLvDvxKxAFpZLpQWh+NyCDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780955605; c=relaxed/simple;
-	bh=Juxb26ldXOFarDgZU/fCdttEflHVZH3q1oRndyT2/q4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WK8GTdIUIK+4825T7WO8yz+Df8znGe5FUrWQpT1W6CsYLC6SuEbVVqmpTelLhde9rm/HnDy18xG8NPuwdh+9eIqZbwVXGM1XZQK+yxGgftf5tsg4NVUA3KTqmzb6xv5itE0CE9ev+lLW2coEe+wq6FKq0Vz4gVvq5+cSlcpLhls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=Zm7t2TR1; arc=none smtp.client-ip=74.125.82.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+	s=arc-20240116; t=1780958336; c=relaxed/simple;
+	bh=B38Yul90LSZo0cGkliS/GfsPhioOiokBBuCkxDKeA+E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=u7WUVVODO5PDW0jDtPUfisRd0O2+UEOWsGanoFMuMiX3PmEQk//7D/EIUiJ7UdzRNaj6ewLNXEGLUPRLjvNQEtSgwceZlNamX0208ouGEZoLfkp4UEHXgRG8Kf+L/QnyKhWVlhkbbP3nwo2VMjA0aNEoBfjWltyjQivuKYgHkVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=FjJ+SKc0; arc=none smtp.client-ip=95.215.58.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="Zm7t2TR1"
-Received: by mail-dy1-f173.google.com with SMTP id 5a478bee46e88-304f590dd91so5259335eec.0
-        for <patches@lists.linux.dev>; Mon, 08 Jun 2026 14:53:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1780955602; x=1781560402; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EoYFOw7ak7HsB04OfAmg+EGUR7pul8Hb3G9gCGfENs8=;
-        b=Zm7t2TR12Ew6yNRX3jbnXSOVQ9FWZ16vyNpCARVj++1VFklKdSRXdcw6PsBEKu5MuD
-         KD1Jw7xEI5RD6SYpl5NogqU3Hf4oL2zjJEkYoIbKLp2UMc8aLFftODp5fZjVmSuN6QiO
-         Np20b8s6wP8WhveN1otAHQODI7i1kAM/dHyFs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780955602; x=1781560402;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=EoYFOw7ak7HsB04OfAmg+EGUR7pul8Hb3G9gCGfENs8=;
-        b=lvqqlguvJkINYAngwTMJ5KFTcu0eSufbIIdeVgwZRZCuA18pbTUfe1wcn2zsQnaxpi
-         rev1eHR4Y7xMym5Uqh5bveciwft+B0uZTSvectO6kHlWKzSkpqpgFfXu+M7aIh8O4jDJ
-         G/ldFbgNMX8uAwcyl35YvRPa5lM3YOIKTjSNwkj28SI+oJb768Oh4Gywfxqf8BYZG/Hz
-         prXbdeuSC/vKMr64McQvvUyjgjNWSRaF8cLk+Z04vYSVzDdYDgZCNLOq5Gb0d0Qnigau
-         y2p/7oCuAvmSV+j5kpCO14bdWqgJPqANFebgvPbwoIhfAY94LcFYMyElDYLrQmjzMM/y
-         lY/g==
-X-Forwarded-Encrypted: i=1; AFNElJ/NQHeUJmdcrdSqfjIicPBFwBsjWHa+ujikRQAeddTcKO79j+EzsRlWsm80lPtmcpxpSNoane3g@lists.linux.dev
-X-Gm-Message-State: AOJu0YwwqBWzbDe+PzkvNXQHoOm7mMBEIEiRVHlnrbEdZHBLKxKvR53y
-	5wGAUafu0nBN/Q9LQQ/vOne5QqNCRoFaIF6/MVgioBqKwZGb0UViHLloZrQ/J3kT7g==
-X-Gm-Gg: Acq92OEt9vZsgwtglKHZs/9ZBJuZLo0BoMqa3GzKaDO11asoNq0iI9AcwU3mJQD9YzH
-	D5KlFZ69Ahb7XGE3o71nXwI/8Giez9GehRf8XjOUvWYoxCcfghAROeCJ6Z04rHNaD6eju1YPDqL
-	2B/RjVwwyHUmVyDpiT4gujSsybzXPzSczIvUJGCoQGrx7UZnDzNDs9tZbQM7E/3lwrRUdAcCqpo
-	WOjB5kzlRsDxAFubdokPRGkYx/tAAKkG1ZA/nYiidyZy/5vJdpsk+xN/a+wYMPHg/wkHh3/595+
-	ICIYaXpRzLRMjiaf2KshCrEgaJhqN2mjjXMaAqQJ85giwaBc2d1H/z7aTy2FVTHeldmzNK6QRnt
-	L85+gC1ycmhKCB7zzslAOuAEvqe+RR5NTbsYsYo2eXmggeP8oEr/OfFmzcyKS44bVZsos4D5JPr
-	zOc45+vS7uqshKzRQFy8ZJvs/+V4SG1amvBW4BkCAR9EZZZ3ykZxJx
-X-Received: by 2002:a05:7300:2327:b0:304:5db8:da95 with SMTP id 5a478bee46e88-3077b7855c1mr9162330eec.23.1780955601933;
-        Mon, 08 Jun 2026 14:53:21 -0700 (PDT)
-Received: from fedora64.linuxtx.org ([98.97.105.250])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074db528dcsm22171093eec.3.2026.06.08.14.53.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jun 2026 14:53:20 -0700 (PDT)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Mon, 8 Jun 2026 15:53:17 -0600
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 7.0 000/332] 7.0.12-rc1 review
-Message-ID: <aic5zUJBp3i6jCin@fedora64.linuxtx.org>
-References: <20260607095728.031258202@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="FjJ+SKc0"
+Message-ID: <22629c63-ca98-4af7-9e3b-480b89be6ce1@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1780958331;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=OsMGa7C/qI7GXavChWSxY7UqoXopVpbWUaHr6eY8dLo=;
+	b=FjJ+SKc03d6gNs35mSU14MrmFANRZ8G6efWRp1Bx7YGsC+DNOeNKT/uGShtknCh6AXgJ3z
+	sXtZpKjNy5gIN2XrUoyJhYbM0QYMMCTJYwgYYinhz8a7GVK4Jq2ZyFLK0wtFwOxy9w05pp
+	H9nqL/Fr/CSH2QYVJnZb3blCFQIBL3U=
+Date: Mon, 8 Jun 2026 15:38:32 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
+Subject: Re: [PATCH] RDMA: During rereg_mr ensure that REREG_ACCESS is
+ compatible
+To: Jason Gunthorpe <jgg@nvidia.com>,
+ Junxian Huang <huangjunxian6@hisilicon.com>,
+ Krzysztof Czurylo <krzysztof.czurylo@intel.com>, linux-rdma@vger.kernel.org,
+ Chengchang Tang <tangchengchang@huawei.com>,
+ Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
+ Yishai Hadas <yishaih@nvidia.com>, Zhu Yanjun <zyjzyj2000@gmail.com>,
+ Zhu Yanjun <yanjun.zhu@linux.dev>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+ David Hildenbrand <david@redhat.com>, Leon Romanovsky <leon@kernel.org>,
+ patches@lists.linux.dev, Philip Tsukerman <philiptsukerman@gmail.com>,
+ stable@vger.kernel.org
+References: <0-v1-06fb1a2d6cf5+107-rereg_access_jgg@nvidia.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "yanjun.zhu" <yanjun.zhu@linux.dev>
+In-Reply-To: <0-v1-06fb1a2d6cf5+107-rereg_access_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Sun, Jun 07, 2026 at 11:56:09AM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 7.0.12 release.
-> There are 332 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 6/8/26 9:44 AM, Jason Gunthorpe wrote:
+> If IB_MR_REREG_ACCESS changes from RO to RW then the umem has to be
+> re-evaluated to ensure it is properly pinned as RW. Since the umem is
+> hidden inside each driver's mr struct add a ib_umem_check_rereg() function
+> that each driver has to call before processing IB_MR_REREG_ACCESS.
 > 
-> Responses should be made by Tue, 09 Jun 2026 09:56:44 +0000.
-> Anything received after that time might be too late.
+> mlx4 has to retain its duplicate ib_access_writable check because it
+> implements IB_MR_REREG_ACCESS | IB_MR_REREG_TRANS by changing both items
+> in place sequentially while the MR is live, so it will continue to not
+> support this combination.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.0.12-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.0.y
-> and the diffstat can be found below.
+> Cc: stable@vger.kernel.org
+> Fixes: b40656aa7d55 ("RDMA/umem: remove FOLL_FORCE usage")
+> Reported-by: Philip Tsukerman <philiptsukerman@gmail.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>   drivers/infiniband/core/umem.c          | 16 ++++++++++++++++
+>   drivers/infiniband/hw/hns/hns_roce_mr.c |  4 ++++
+>   drivers/infiniband/hw/irdma/verbs.c     |  4 ++++
+>   drivers/infiniband/hw/mlx4/mr.c         |  4 ++++
+>   drivers/infiniband/hw/mlx5/mr.c         |  4 ++++
+>   drivers/infiniband/sw/rxe/rxe_verbs.c   |  5 +++++
+>   include/rdma/ib_umem.h                  |  8 ++++++++
+>   7 files changed, 45 insertions(+)
 > 
-> thanks,
-> 
-> greg k-h
+> diff --git a/drivers/infiniband/core/umem.c b/drivers/infiniband/core/umem.c
+> index 786fa1aa8e552b..4b055712b0d0db 100644
+> --- a/drivers/infiniband/core/umem.c
+> +++ b/drivers/infiniband/core/umem.c
+> @@ -332,3 +332,19 @@ int ib_umem_copy_from(void *dst, struct ib_umem *umem, size_t offset,
+>   		return 0;
+>   }
+>   EXPORT_SYMBOL(ib_umem_copy_from);
+> +
+> +/*
+> + * Called during rereg mr if the driver is able to re-use a umem for
+> + * IB_MR_REREG_ACCESS.
+> + */
+> +int ib_umem_check_rereg(struct ib_umem *umem, int flags, int new_access_flags)
+> +{
+> +	if (!umem)
+> +		return 0;
+> +
+> +	if ((flags & IB_MR_REREG_ACCESS) && !(flags & IB_MR_REREG_TRANS))
+> +		if (ib_access_writable(new_access_flags) && !umem->writable)
+> +			return -EACCES;
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL(ib_umem_check_rereg);
+> diff --git a/drivers/infiniband/hw/hns/hns_roce_mr.c b/drivers/infiniband/hw/hns/hns_roce_mr.c
+> index 896af1828a38de..25bfd3970f5b6e 100644
+> --- a/drivers/infiniband/hw/hns/hns_roce_mr.c
+> +++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
+> @@ -300,6 +300,10 @@ struct ib_mr *hns_roce_rereg_user_mr(struct ib_mr *ibmr, int flags, u64 start,
+>   		goto err_out;
+>   	}
+>   
+> +	ret = ib_umem_check_rereg(mr->pbl_mtr.umem, flags, mr_access_flags);
+> +	if (ret)
+> +		goto err_out;
+> +
+>   	mailbox = hns_roce_alloc_cmd_mailbox(hr_dev);
+>   	ret = PTR_ERR_OR_ZERO(mailbox);
+>   	if (ret)
+> diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+> index 17086048d2d7fc..8cd4275328052e 100644
+> --- a/drivers/infiniband/hw/irdma/verbs.c
+> +++ b/drivers/infiniband/hw/irdma/verbs.c
+> @@ -3803,6 +3803,10 @@ static struct ib_mr *irdma_rereg_user_mr(struct ib_mr *ib_mr, int flags,
+>   	if (flags & ~(IB_MR_REREG_TRANS | IB_MR_REREG_PD | IB_MR_REREG_ACCESS))
+>   		return ERR_PTR(-EOPNOTSUPP);
+>   
+> +	ret = ib_umem_check_rereg(iwmr->region, flags, new_access);
+> +	if (ret)
+> +		return ERR_PTR(ret);
+> +
+>   	if (dmabuf_revocable) {
+>   		umem_dmabuf = to_ib_umem_dmabuf(iwmr->region);
+>   
+> diff --git a/drivers/infiniband/hw/mlx4/mr.c b/drivers/infiniband/hw/mlx4/mr.c
+> index 650b4a9121ff6d..6747bca3067770 100644
+> --- a/drivers/infiniband/hw/mlx4/mr.c
+> +++ b/drivers/infiniband/hw/mlx4/mr.c
+> @@ -209,6 +209,10 @@ struct ib_mr *mlx4_ib_rereg_user_mr(struct ib_mr *mr, int flags, u64 start,
+>   	struct mlx4_mpt_entry **pmpt_entry = &mpt_entry;
+>   	int err;
+>   
+> +	err = ib_umem_check_rereg(mmr->umem, flags, mr_access_flags);
+> +	if (err)
+> +		return ERR_PTR(err);
+> +
+>   	/* Since we synchronize this call and mlx4_ib_dereg_mr via uverbs,
+>   	 * we assume that the calls can't run concurrently. Otherwise, a
+>   	 * race exists.
+> diff --git a/drivers/infiniband/hw/mlx5/mr.c b/drivers/infiniband/hw/mlx5/mr.c
+> index 3b6da45061a552..fb40b44496f47a 100644
+> --- a/drivers/infiniband/hw/mlx5/mr.c
+> +++ b/drivers/infiniband/hw/mlx5/mr.c
+> @@ -1179,6 +1179,10 @@ struct ib_mr *mlx5_ib_rereg_user_mr(struct ib_mr *ib_mr, int flags, u64 start,
+>   	if (flags & ~(IB_MR_REREG_TRANS | IB_MR_REREG_PD | IB_MR_REREG_ACCESS))
+>   		return ERR_PTR(-EOPNOTSUPP);
+>   
+> +	err = ib_umem_check_rereg(mr->umem, flags, new_access_flags);
+> +	if (err)
+> +		return ERR_PTR(err);
+> +
+>   	if (!(flags & IB_MR_REREG_ACCESS))
+>   		new_access_flags = mr->access_flags;
+>   	if (!(flags & IB_MR_REREG_PD))
+> diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
+> index 4d4891dc28846b..4cf04a44189c64 100644
+> --- a/drivers/infiniband/sw/rxe/rxe_verbs.c
+> +++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
+> @@ -1319,6 +1319,7 @@ static struct ib_mr *rxe_rereg_user_mr(struct ib_mr *ibmr, int flags,
+>   	struct rxe_mr *mr = to_rmr(ibmr);
+>   	struct rxe_pd *old_pd = to_rpd(ibmr->pd);
+>   	struct rxe_pd *pd = to_rpd(ibpd);
+> +	int err;
+>   
+>   	/* for now only support the two easy cases:
+>   	 * rereg_pd and rereg_access
+> @@ -1328,6 +1329,10 @@ static struct ib_mr *rxe_rereg_user_mr(struct ib_mr *ibmr, int flags,
+>   		return ERR_PTR(-EOPNOTSUPP);
+>   	}
+>   
+> +	err = ib_umem_check_rereg(mr->umem, flags, access);
+> +	if (err)
+> +		return ERR_PTR(err);
+> +
 
-Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
-x86_64), and boot tested x86_64. No regressions noted.
+Thanks a lot. I am fine with this.
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+
+But I found the following problem. I am not sure if we fix this problem 
+in this commit or file a new commit.
+
+diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c 
+b/drivers/infiniband/sw/rxe/rxe_verbs.c
+index 4d4891dc2884..3b99649c342d 100644
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.c
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
+@@ -1319,6 +1319,7 @@ static struct ib_mr *rxe_rereg_user_mr(struct 
+ib_mr *ibmr, int flags,
+         struct rxe_mr *mr = to_rmr(ibmr);
+         struct rxe_pd *old_pd = to_rpd(ibmr->pd);
+         struct rxe_pd *pd = to_rpd(ibpd);
++       struct ib_pd *old_ibpd;
+
+         /* for now only support the two easy cases:
+          * rereg_pd and rereg_access
+@@ -1331,12 +1332,18 @@ static struct ib_mr *rxe_rereg_user_mr(struct 
+ib_mr *ibmr, int flags,
+         if (flags & IB_MR_REREG_PD) {
+                 rxe_put(old_pd);
+                 rxe_get(pd);
++               old_ibpd = mr->ibmr.pd;
+                 mr->ibmr.pd = ibpd;
+         }
+
+         if (flags & IB_MR_REREG_ACCESS) {
+                 if (access & ~RXE_ACCESS_SUPPORTED_MR) {
+                         rxe_err_mr(mr, "access = %#x not supported\n", 
+access);
++                       if (flags & IB_MR_REREG_PD) {
++                               rxe_get(old_pd);
++                               rxe_put(pd);
++                               mr->ibmr.pd = old_ibpd;
++                       }
+                         return ERR_PTR(-EOPNOTSUPP);
+                 }
+                 mr->access = access;
+
+Zhu Yanjun
+
+>   	if (flags & IB_MR_REREG_PD) {
+>   		rxe_put(old_pd);
+>   		rxe_get(pd);
+> diff --git a/include/rdma/ib_umem.h b/include/rdma/ib_umem.h
+> index 2ad52cc1d52bdd..49172098a8de14 100644
+> --- a/include/rdma/ib_umem.h
+> +++ b/include/rdma/ib_umem.h
+> @@ -156,6 +156,8 @@ void ib_umem_dmabuf_revoke_lock(struct ib_umem_dmabuf *umem_dmabuf);
+>   void ib_umem_dmabuf_revoke_unlock(struct ib_umem_dmabuf *umem_dmabuf);
+>   void ib_umem_dmabuf_revoke(struct ib_umem_dmabuf *umem_dmabuf);
+>   
+> +int ib_umem_check_rereg(struct ib_umem *umem, int flags, int new_access_flags);
+> +
+>   #else /* CONFIG_INFINIBAND_USER_MEM */
+>   
+>   #include <linux/err.h>
+> @@ -230,5 +232,11 @@ static inline void ib_umem_dmabuf_revoke_lock(struct ib_umem_dmabuf *umem_dmabuf
+>   static inline void ib_umem_dmabuf_revoke_unlock(struct ib_umem_dmabuf *umem_dmabuf) {}
+>   static inline void ib_umem_dmabuf_revoke(struct ib_umem_dmabuf *umem_dmabuf) {}
+>   
+> +static inline int ib_umem_check_rereg(struct ib_umem *umem, int flags,
+> +				      int new_access_flags)
+> +{
+> +	return -EOPNOTSUPP;
+> +}
+> +
+>   #endif /* CONFIG_INFINIBAND_USER_MEM */
+>   #endif /* IB_UMEM_H */
+> 
+> base-commit: 323c98a4ff06aa28114f2bf658fb43eb3b536bbc
+
