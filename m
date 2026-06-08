@@ -1,151 +1,171 @@
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011040.outbound.protection.outlook.com [52.101.62.40])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BD23D75C0
-	for <patches@lists.linux.dev>; Mon,  8 Jun 2026 17:19:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780939175; cv=none; b=APgI7XxiORbG2fttNOFaPCBLOZ4yahtdgvlSW1zKf7ObZFtlJvjQYXh4ZmZIUoBwBpRCGktcXXVwabr3CTQ1ky79fk5RrbDG+Ekc1ak2tyKfAolCPQWL4DcgDYvCE14OxgzsDZF16U7EhGcFhFyVapU050eKMkRKJG0mDk+mIvU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780939175; c=relaxed/simple;
-	bh=9Qlf++86pYiT70fbPC622/UMipUmxzwFQY0KTr4SwmE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fe61wpN/FPwmX0zSSIc9qBSTzW/GP8zeLOSyALc1vqSSsUzOqOw87G4dlDtmk8HucSrwoMCLQM60e+vHIiI8erJcrcTNumgdWQcRCeeVTuxbUppN1Rf7XlSydJzLbhD3POwSNjM5xGolZHpbVUBj9OZ9XRmPcCcJsfDkjfBBRTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=UvkMWN8K; arc=none smtp.client-ip=148.163.156.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039A73546FD
+	for <patches@lists.linux.dev>; Mon,  8 Jun 2026 17:52:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.40
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780941176; cv=fail; b=HKFsnsuwPdWuZCgAa351tg4+Wee90TOyAsxM4dz0hOdT4N2BjHk+Qr3skQVz0/r/4j9UwaqlQOYSzQ7fzhOm5Q5xHxR5ERvfYCQzN4CRLZ+StCWASqT8kj+47jkGPFBpGg1KpCHDWgQTs4//A7rzbJrvjvfhtN1q6yU5ba6obNA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780941176; c=relaxed/simple;
+	bh=95WwnHGnauXQFMezLhdJB3LOUjnBb875G0eAHsUEpCI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=qOMnKV/r+naJrO17KSOfIuQLLZQw1iXwaRD4XvL566MmIefFUMhG45AlCGzm5MugA14ulJABrITdcIhUJwNKFipV00+7PzMfsBtuR+FZa2VVhBk5n3Ib7Z7nUnhYsDAGhjw+m4HwX0kSHF3/rYgg16vmH9zSodV8h0AK1POpClA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=ZMk9GCWE; arc=fail smtp.client-ip=52.101.62.40
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="UvkMWN8K"
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65898RFG2767293;
-	Mon, 8 Jun 2026 17:19:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=pp1; bh=DBoyFy+ciaxzSZRoZcPAmZj6N0IP7+
-	wC188AvkIvM0c=; b=UvkMWN8KLfEzxmLpZ1sY2LmMpEnsERZql/SZu79GcacmVG
-	nJ8RDAA/EWJu0QTBT9I8rhEVGVjsvw491qHDLjkWbtTj+G1ErEbNucmYNgefck3n
-	sXb71UYeyoOJ3iHb9uGTlQa1c7zijbhSwJ3CbUZLqUDhfodU85OeYwZ9H99mdnC3
-	r3SaOq0YfnLKUBrzEI/NDGMC4tmmsMbWreWWLpwy6XtaZOHoNm/OFg4ZwV0/I59G
-	4KkrTmCjUm399k2RFD4LQ1FZWu4IhVjrWGpXHlQ1bMOozcExaJDEQwFU+NbG0yrW
-	VBNpihqdOr0erSNa3EBLl3w2maw+J6eaZD+zOt1Q==
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4emb23rg7k-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 08 Jun 2026 17:19:21 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 658H4d0F008374;
-	Mon, 8 Jun 2026 17:19:20 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4emwvpxgua-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 08 Jun 2026 17:19:20 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
-	by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 658HJIV950528622
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 8 Jun 2026 17:19:18 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id A157720040;
-	Mon,  8 Jun 2026 17:19:18 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 52D852004B;
-	Mon,  8 Jun 2026 17:19:18 +0000 (GMT)
-Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.87.85.9])
-	by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
-	Mon,  8 Jun 2026 17:19:18 +0000 (GMT)
-Date: Mon, 8 Jun 2026 19:19:17 +0200
-From: Alexander Gordeev <agordeev@linux.ibm.com>
-To: Askar Safin <safinaskar@gmail.com>
-Cc: linux-fsdevel@vger.kernel.org, Christian Brauner <brauner@kernel.org>,
-        Alexander Viro <viro@zeniv.linux.org.uk>, Jan Kara <jack@suse.cz>,
-        linux-kernel@vger.kernel.org, linux-mm@kvack.org,
-        linux-api@vger.kernel.org, netdev@vger.kernel.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Matthew Wilcox <willy@infradead.org>, Jens Axboe <axboe@kernel.dk>,
-        Christoph Hellwig <hch@infradead.org>,
-        David Howells <dhowells@redhat.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        David Hildenbrand <david@kernel.org>, Pedro Falcato <pfalcato@suse.de>,
-        Miklos Szeredi <miklos@szeredi.hu>, patches@lists.linux.dev,
-        linux-s390@vger.kernel.org, linux-next@vger.kernel.org
-Subject: Re: [PATCH 2/3] vmsplice: make vmsplice a trivial wrapper for
- preadv2/pwritev2
-Message-ID: <20260608171917.3195488Afc-agordeev@linux.ibm.com>
-References: <20260531010107.1953702-1-safinaskar@gmail.com>
- <20260531010107.1953702-3-safinaskar@gmail.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="ZMk9GCWE"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PcKIyb04Ozp/c6iNxW+w3iiIMsBlGGTBJDiBw4gAWm9RfVx9jvu0iREBp9DHBFwj//ipwEV8BeuR/dWfQkqFkFZ0kCPLWckJiS8hBZPCZANfemwes61DTfpch7ATBs+LgZ+DiHotzLmC8QJOOyCyqmXLKN1c6CsNDqEjYnqA2Y825ImUzwGxuB5iGpSOiOmRrFjjwNRnlEw1cmC8Ke1ZVUisBoAS9fCWN8YmbxyG14lEdYV36EKDB7z0G1homAiEwnyBtEU/WVxKiFBZg880yPtNnq4+vmKmgPq4nZT9AWcH70QU4bBNNGP4/gxg3AVmukC8N0FKI62dpLA/toPPKw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6t8llLgmBTdXhJTHItn2do4fZeEK2sZKXSofbyaGY24=;
+ b=KmY6Dlh8QkrBLFzz/nj9ADBzl7bVqAXEcF2WnSwyFbqbXY0zDogBP0QlpXFI+IudhIK470CdFX5Iv44xMeuNRYdzz6mz+Br5HsuJCfwDXQXOpwQn0qZBWocvdHCntE0dwj1ZUdjrp1aDAJs5q3or20qvzprlMrlEEdm0aCMRo75KpJUM9JQEKQa6aMFeHrRthO54h02zQ21Lz/JUmvi1W5fIxynAEAH7d/n7YVxCRmuzEhKOkksj7OVLkZhifCLk9DvP6pcg2XZQqYN6m1lv/H0fcUg30o4y9wHM4veZm2ugDTxnJEfUrJAyX6z7vhHYVjPt7JehQnNwJtmCy9pjUQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6t8llLgmBTdXhJTHItn2do4fZeEK2sZKXSofbyaGY24=;
+ b=ZMk9GCWEPPE/w4uiUAELHSWR4eq3/JSdZm6B+vjMVZa7WhF3fiku7avaTDqw3bErYnOoZmjAHCqq50GE69FN7Jf/tDD5QNYKTdu2V+iJOGwwfxVwhUR6sHOT24ZSCRexZ15R8IMLXpSmgr9zS7m/4CVsJ+99ya8CB9LXKVs0eTcAB0/wo2muSLtSIj4qprDn2nJT22rt2MivEAdAZhw1GQG5TO8s2XOILQ6iviLH3OgtftMSWrjdWpNehyhw7rvrQOMnHNcy/yccZnt2q++GVsIuU/xLCbfb0dFAjh9gFB1u7UFi9OHzAfwl5dvQb2B8mRWn7d8CFL3I4lzrQVfNyQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by MN0PR12MB5763.namprd12.prod.outlook.com (2603:10b6:208:376::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Mon, 8 Jun 2026
+ 17:52:51 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0092.011; Mon, 8 Jun 2026
+ 17:52:51 +0000
+Date: Mon, 8 Jun 2026 14:52:49 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Leon Romanovsky <leon@kernel.org>, linux-rdma@vger.kernel.org
+Cc: Doug Ledford <dledford@redhat.com>, Edward Srouji <edwards@nvidia.com>,
+	Leon Romanovsky <leonro@mellanox.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Matan Barak <matanb@mellanox.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Noa Osherovich <noaos@mellanox.com>, patches@lists.linux.dev,
+	Steve Wise <swise@opengridcomputing.com>
+Subject: Re: [PATCH 00/10] Fix races around IB_MR_REREG_PD and mr->pd
+Message-ID: <20260608175249.GA66752@nvidia.com>
+References: <0-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0-v1-29ebd2c229b5+fd5-ib_mr_pd_jgg@nvidia.com>
+X-ClientProxiedBy: YT1PR01CA0086.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:2d::25) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260531010107.1953702-3-safinaskar@gmail.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=b4uCJNGx c=1 sm=1 tr=0 ts=6a26f99a cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=pGLkceISAAAA:8
- a=hJLVOhpQ1X8ZOlOX64cA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-ORIG-GUID: 3tuSXdak2Lf5xEGsGyO-r87wQWc8i8Fn
-X-Proofpoint-GUID: j7w4f90-NzR3nJF25rOJJ_HWDzfwaa30
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA4MDE2MiBTYWx0ZWRfXwxgojXL3enTK
- T61FdACtj+lsvXJkGTaZ1LMntG/SQAyNxsqx7qEQDYTGBkhW1iVkn9xU8IIeIAi6Kga5+V+7UtL
- iYIpMyO4DXfaAYbvQTNintFAu1aBmf88vRo5JGUI7xPtSdf7U27HnjHgKO1xllzes1rUkqEpRCY
- 0RK4JOOXoKptl9erTAE1uuredrMJXx2/J3b8CwV3QH88pSOZjm1JTRh7dN4oJ5fYs3VruCq4RYL
- 2GY1JMaYgK0/dUlN9NXbxIFqt4YJsSuPxljFE7Bpm3cRD/BP6J0hZfbb/hvkJTaEqdRiJhiqUNt
- cKbtnKDwPQnTxeaZT9RKCKFsZf8G3p1shpV729SHu0m/RmJ3eMXqf/h22pjUEdP+tdOuVgJjWP6
- hcZnF3TOL6+y6UNOYsSgIsXQ8pphcaCfchOhsJ0XFT6pCWKtZ5yLbG8ytOVO04FBxbyXDcZm48B
- UQ2ogQT/HXxlK2bArQA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-08_04,2026-06-05_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 spamscore=0 bulkscore=0 phishscore=0 priorityscore=1501
- lowpriorityscore=0 adultscore=0 malwarescore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606080162
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|MN0PR12MB5763:EE_
+X-MS-Office365-Filtering-Correlation-Id: bedc039a-c88e-4f36-6375-08dec586c22d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|366016|1800799024|18002099003|22082099003|3023799007|6133799003|11063799006|5023799004|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	IwNc2WBhey94E5edr5QTWrjIVdu8JeDGwbTnkC1/UgqUCs4dxbYIXoHfMrB6vLBNEHa5hjo+E1meqyB1oOgYUqXJypgcsDVJhP8KyhwIM4Q/oKWhyWLqMwXhr3R6q5wmSdfj+kp9/p1NKunkZTrj4g1db/WfPkMP1piNH9gSRgciV7TO8SVg6pG5rFKYR3vCMiCnWeRVH93jGGDNeWUc+TOFY8DqasPAoCmC+UTRIUNFewU/xtQqRQnqCvju5jqIIBDcXP+tqwVbuQx8M5vHXNL8fsGQqh+7eyMEhD668j3ZQMYhob9RbQ/tuFNSXvAZYZO75oYtmCxCxyWg3Qm5KLxpikET8Jr0YE1f7Aq4EhA5kqBSW/o1c10sPuMaSZ6BfFvRqbEBzFr7TGbxjraSTPlXMIDrh3gF7utuesHyL+XKSDwTD70SFEs5qxSpispP58e04uktzE1gKNoBH1ulEb53laX05UFlEI69q328Ku4+s9sJZ+Vn7FzBDS1r792A6ZsLI1b71CDtWggFS0sSrkQaBTzUDV6Ux8RprBsahOYBcGOtHsi5nOHapK7lrajaAOWSsMOB0AQyXC2FRiVItoeMy8Vtf4nX9PpcCk0IEKWBBauXCwt/Z3Son8arqgkELJkn7qfNm8Y2j8MNhhst0yAJI8a9mZt4pjA7S8rTb4ZHph6gizTcelUFUyNQNtx4
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(18002099003)(22082099003)(3023799007)(6133799003)(11063799006)(5023799004)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?kSPpW4UBYr5sWdYC0etkquSaRVC4krqE9M+oP5e0smMRo6IEzwV9VdkRRPOV?=
+ =?us-ascii?Q?yuoyrVc2ND626eoWpDFJdV1fPrnPf+mLI9ih4SIsl39X4Pgqd3wsUeMMSV/w?=
+ =?us-ascii?Q?6d5yXj4nZIgHAjs7OoesAgpk0WOi03XZEEv6/X72sx0VWnRilLfIFmmGfkC/?=
+ =?us-ascii?Q?gFotnHIxMROXibqbaN1NJEaJAqHYuDdUl6aWW9tcWOvK1fNubhQkk04ckzom?=
+ =?us-ascii?Q?lTJ0awfWwmSid2phVyJMy672iShT5ViHVtdMd7TbpThtFfK7wdJZEoYdtHL6?=
+ =?us-ascii?Q?CKRcT6ZncOIThCXzrv5Nv9Ym0MZRO7F568DNpDKV7YbqKVTyaZVzPX04Xn0a?=
+ =?us-ascii?Q?m/BcFqm5OvGkm+kqw8HyA6/jfZjmOHbluzcL+Ob5PearzAN06mwLJEGWTIPc?=
+ =?us-ascii?Q?csMR13qdvUbWMvnbi6ppXrSj85YUG5Wn/HbgOwc542Y0j9jsRE3QgFwDeO7T?=
+ =?us-ascii?Q?BLg7RfRdVeXeNb1G27QXyid6m7Iv6zjTWOxY/7Lr+b4y+ekNUBnHXEc+gehN?=
+ =?us-ascii?Q?sBi4fiG1qbuf9LbUiK2rOlKD4IWyz2jLlSKrVK8+SIgdPhRTO83qZiH71O0+?=
+ =?us-ascii?Q?/oS8xSXteISm1CaA+9MsFnQI8qowHgOpu+knzd8JLmTxBS8lioFIKy9JQ2Kt?=
+ =?us-ascii?Q?JO14xO6BVn8DYvsODcSeySNis95YxJ+mjUdnFNXULjnD8gpGWI7zk3riKaeg?=
+ =?us-ascii?Q?w5wSjxgQ+kU+oxKLnds7cnY8vUJJkS2eOnaCPjva1iArRZdrJJDd4beVgsmR?=
+ =?us-ascii?Q?uaAuOK0ScRfkFSqoz7WS/bU/sIOCeZ7f0Dvn8tIQ8PUcZHR+9ZhmmkXHceac?=
+ =?us-ascii?Q?4CtVT9QOwviz7R8jMBSkNVcKuM9c3J4Qu1DRCulSgBT7yx7faNDct7VuIFos?=
+ =?us-ascii?Q?JnxgXwXWO8SJFdUxJqVDqVTyKQfJzE/fC1NcNoP6FbItu87BD8TvOfu9WKZp?=
+ =?us-ascii?Q?H2IA+LYBZ67CI30WuY8+qPXk4CYL16zZ6QuhS4XzlLwIefPrE5Lq/hRuvzmg?=
+ =?us-ascii?Q?5/IRhAzrWtJBXrCxlgrFpJ8OL2XA0bIpqQMzvvRw6gMIjipTccQ6MMVInvLB?=
+ =?us-ascii?Q?dGDq9O8bRRWLzyP9SbX7Bp82xRYNNrTR45Q8IlNklzTffgsrqTBGEYHFSppS?=
+ =?us-ascii?Q?bIHgHnuDcOj9BFvMzO3/lbyL3cB1hTUm5XgUDQw1QhphKHYyH5w4jDo/DuaZ?=
+ =?us-ascii?Q?3grxs4n0KKmv6aTmNjQbRZcMGCxoPKt2K0oKsAO2cI6fx6uRbsLr+gaVqLzj?=
+ =?us-ascii?Q?ZRxJSacLe+Om6A2+jlnklCqDH5xp5ROcPBwUe+q2EQiyDIKFqJNF9/m0WE8f?=
+ =?us-ascii?Q?sychLQuqVieOUmhzq43RclwyGjeF4nmFKH1xSmkkX8vsvMWGatz+uwOy0ULW?=
+ =?us-ascii?Q?Mbqw/PGIytWd24XLzrtOhJp4gE9SVbwTIOiOvpFP5c/cKMeEQT5i+0eqt/W/?=
+ =?us-ascii?Q?b5Cs/8jTDRSBeuxBgfgZU2NxLBFPs+a6mTXjjTlNAZDyg4JSl/7bTO2J+0Vi?=
+ =?us-ascii?Q?8funxmrqP3ek1yvotfchW+lriMuSfMRmjbN7pUXAtrv3T409puDP+ZBOLBbg?=
+ =?us-ascii?Q?MkhprA4fWMRlqPOH3ItJHjPXnAN76TP8Dkns9NWI8KmsuXxANCNMC+dbB7o7?=
+ =?us-ascii?Q?MO4oswfkGh1VJegiE00Ie7B6MQo1ekuV4ifEzkZkHuWdWGO4qUDctG+X6sTL?=
+ =?us-ascii?Q?crlL93ImIGLqkR8QuLJaAEPH5grGLaAvwPc3MlHOYbSN2LAB?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bedc039a-c88e-4f36-6375-08dec586c22d
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jun 2026 17:52:51.0010
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: I70xLi5awrv3axZsRpHRFp/tRDMc18IH2aPVsUTGhfLRFPo8wEqEDtxEa8WrH686
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB5763
 
-On Sun, May 31, 2026 at 01:01:06AM +0000, Askar Safin wrote:
-> vmsplice behavior on writable pipe became equivalent to pwritev2.
-> vmsplice behavior on readable pipe already was nearly
-> equivalent to preadv2, but I made this explicit. I. e. I made it
-> obvious from code that vmsplice now is equivalent to preadv2/pwritev2.
+On Wed, Jun 03, 2026 at 10:27:39PM -0300, Jason Gunthorpe wrote:
+> Sashiko pointed out an existing bug related to mr->pd: when IB_MR_REREG_PD
+> is used the mr->pd is changed while only holding the write side of the
+> MR's uobject lock.
 > 
-> Also I moved vmsplice to fs/read_write.c, because now it arguably
-> belongs there.
+> Effectively, because IB_MR_REREG_PD is usually implemented by changing the
+> MR in-place, the mr->pd becomes unreadable outside an MR-specific system
+> call that holds the uobject lock. All the readers in this series could
+> race with an IB_MR_REREG_PD and potentially UAF the mr->pd.
 > 
-> Note that SPLICE_F_NONBLOCK behavior slightly changed: previously
-> vmsplice ignored whether the pipe was opened with O_NONBLOCK, and mode
-> of operation depended on whether SPLICE_F_NONBLOCK was passed only.
-> Now the operation will be non-blocking if O_NONBLOCK was passed when
-> opening *or* SPLICE_F_NONBLOCK was passed to vmsplice. Previous
-> behavior was arguably buggy, and new behavior is arguably better.
+>  https://sashiko.dev/#/patchset/20260427-security-bug-fixes-v3-0-4621fa52de0e%40nvidia.com?part=4
 > 
-> Now SPLICE_F_GIFT is always ignored by all 3 syscalls: splice, tee
-> and vmsplice.
+> This was presented as a simple 'oh look it can race with nldev' which is
+> correct. However, asking AI to fully audit mr->pd touches also revealed a
+> much more convoluted issue inside mlx5 ODP that is also using mr->pd from
+> the page fault work queue, advise mr work queue and advise mr system call
+> without any locking.
 > 
-> Signed-off-by: Askar Safin <safinaskar@gmail.com>
-> ---
->  fs/read_write.c          |  23 +++++
->  fs/splice.c              | 192 +--------------------------------------
->  include/linux/skbuff.h   |   4 +-
->  include/linux/splice.h   |   2 +-
->  include/linux/syscalls.h |   4 +-
->  5 files changed, 29 insertions(+), 196 deletions(-)
+> It turns out this mlx5 problem is entirely unnecessary since outside
+> implicit mr there are only three cases where the UMR actually flags the
+> PDN to be read by HW, umr_rereg_pas(), mlx5_ib_init_odp_mr() and
+> mlx5_ib_init_dmabuf_mr(). umr_rereg_pas() is particularly tricky because
+> it illegaly updates mr->pd inside the driver.  Reorganize the giant call
+> chain from mlx5r_umr_set_update_xlt_mkey_seg() upward so that pdn is
+> passed down from those three functions instead of unconditionally picked
+> out at the bottom.
+> 
+> nldev however is trickier to fix. To avoid disurbing the happy paths build
+> a synchronize barrier by removing the mr from the xarray and then putting
+> it right back. The kref completion acts as a positive signal that the
+> mr->pd is no longer being used.
+> 
+> Jason Gunthorpe (10):
+>   IB/mlx5: Don't take the rereg_mr fallback without a new translation
+>   RDMA/mlx5: Create ODP EQ for non-pinned dmabuf MRs
+>   IB/mlx5: Properly support implicit ODP rereg_mr
+>   RDMA/nldev: Fix locking when accessing mr->pd
+>   IB/mlx5: Remove unused mkc bits in mlx5r_umr_update_mr_page_shift()
+>   IB/mlx5: Pull the pdn out of the depths of the umr machinery
+>   IB/mlx5: Don't mangle the mr->pd inside the rereg callback
+>   IB/mlx5: Push pdn above mlx5r_umr_update_xlt()
+>   IB/mlx5: Push pdn above pagfault_real_mr()
+>   IB/mlx5: Push pdn above pagefault_dmabuf_mr()
 
-Hi All,
+Applied to for-next
 
-This patch as commit e2c0b2368081b ("vmsplice: make vmsplice a trivial
-wrapper for preadv2/pwritev2") in linux-next on s390 causes the selftest
-tools/testing/selftests/mm/cow.c to hang:
-
-# [RUN] vmsplice() + unmap in child ... with PTE-mapped THP (128 kB)
-
-Recently there has been changes in THP area, so the problem is not
-necessary linked to this patch per se.
-
-Please, let me know if you need any additional information.
-
-Thanks!
+Thanks,
+Jason
