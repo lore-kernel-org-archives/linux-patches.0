@@ -1,196 +1,154 @@
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010060.outbound.protection.outlook.com [52.101.46.60])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22592C11C4;
-	Mon,  8 Jun 2026 18:10:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.60
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780942213; cv=fail; b=o+45/5xy9ZhqpSchWcaEwumHaO+k6CHtxqiXfNsrffVuVv1IaxdO2LC19IFx/rm9Zfz4/2zRZ4s/uv4yvJD6zHR5uSKK/+esjfUnKWkwflGdJQ66DNRpIvk9OD157h74d22z0TJLSzjaB8PIKZ7rwuGgbtg0urRxaKlp1vbJ6UE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780942213; c=relaxed/simple;
-	bh=fLfsaH6NtoikyoGfO/Qjlaf+JxfVTYpCEisVnOaX4eo=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=gRIVSGKBSLWcvarqJKBud3X4TpVX0FkgYh09J92XOLO5Fr1KHfbDBjFyvBJDRFsazRLmKrc1ECqh57Fl9oYAxZbTwYIgN6gbbj7uuhiuw4MZxllVH/GbmJg/XW3spnZkuY3bkWjc0APZ0z7gxLm3iQzp1VdwNODyaXrXncYwBW4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=dBURuuT9; arc=fail smtp.client-ip=52.101.46.60
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32BA3E3C73;
+	Mon,  8 Jun 2026 18:42:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780944151; cv=none; b=lKQ12s2B6g2fQlm4+J0PVwSyu/sPK4zSJnDDNK/atVCuw26JzG/emcE7dPO3BxYMZ1z6fLpX53iXNXs0hIDKDLHFuXXMy42DdfvVuN4yuKlEWhzNtIG4eAhLKrcoWDuJ2lP4zJjlEVbdCCTrWJs6q/mzbUIJ95KWu8B/xxXiekY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780944151; c=relaxed/simple;
+	bh=Qn/8Hql1frodTukYIvzJEFhJnbdEad1dXeCLKcJl3hc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FGLnlMjpWJJiRkN8J9Trz9kjDBnYLMe8jNEYsJCnJ1Yl9ndaYI8wHMTQCAaXzuBrMxDiKv8O0SZBgJuajw4Y2rGM/5VYuraVmNkbM1QLR974V7ZCkWyDYtkaK6I4Z/yMcFvr900mtHZmlE8s5c3JWKf9PNORLL0XPZGU58nzENg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z0HZKfaV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="dBURuuT9"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=L12S8114G2WPZDvAWAnM0kpagKw+xnFfAIo9jDNXSjMysm/dMHLehwwJHgSYOxEuFW7/AxL+H5YAH8e2aWiSD00sDJSghTQ8KOYr4obee6Ktj3TK+8kAwA7fwRamXINAOa5JfmxofGLqBjevV0zwkgihyZNurkffv+IPhLcbETdLHfLdjiqNJ/5KvNo0BP2CDDGjRHLkgdDePZvo05Gkzm93ccpyuk31VRZInNUx75+9/Hd2PVp73/3UovhzoZG2mQ6W5UpwkVQPMBoObIz+hNgihzshy05GY51be+jOtSe6hcwucQYkPSbBuUlj+l6jWUxncfMxHb6HylgPllMr6w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Dy1k6aoCLXX+zrz/2o8VTh8qoN9YMrt9dofiaZv3mqY=;
- b=Sz1A3gDFP7u1S5fDSbcw6/Iy5g8hKhXdjnJK4RaunKaACC17D5W5eBFLcwZmc2VvU1K0RgVVzNqcx9JSksgVAOPbyd8O7sk7cHB7WlR06EOrECnIJ9eFJg3SWagCuzYFP3ULImGxLmCh5m1UUCDnGseOTbpATZ9tNeFBJqn1/BA35Wx3Fgj7JBVeO6tPEVm5Hb/fUjHlrbEYia5DuhpSeW9jatPWm4wDmtJPfm73l5z/u0X53CfjvuYx2+xJ5BQOnf7UleWcRA/nyERAlTo5AqubaqatfZcSSHImyK2zsi1UKK3bbqd747so1wNLrWygFSZEufEolSe9qCq4/AFQDA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Dy1k6aoCLXX+zrz/2o8VTh8qoN9YMrt9dofiaZv3mqY=;
- b=dBURuuT9qsr43UwsFE9uU7nDkjQqxDKYXiKlfFySDHK5S16sKVt2EKMfumkMYSFbh7QclBM1slHcaACyYvE+vIpS16RTHiBlbmRZp/fl7PhANcxxFlr37Mtw6Z+/AOQPvmL7SGddjVhev2kHDmoudFkmx/+6JFrGN5HGYKNRSS8H4q9ytzwAOGdSilCDFVMnreZxTNk06lBx9RQkp2NSwTWmjjw2A+fffAN2vOmt3BfXIzjw62SoyK1V12aqQES1z+5FztJ8poWgbSNjkanxNcmQEOEUVwdSfmjgV7KpUJCzoei0G6OXixpN/4gYSnLzeGj0pWZVo8SmAd91H+YkQQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by IA0PPF6E99B1BC1.namprd12.prod.outlook.com (2603:10b6:20f:fc04::bd1) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.10; Mon, 8 Jun 2026
- 18:10:06 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%4]) with mapi id 15.21.0092.011; Mon, 8 Jun 2026
- 18:10:06 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: iommu@lists.linux.dev,
-	"Joerg Roedel (AMD)" <joro@8bytes.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>
-Cc: Jens Axboe <axboe@kernel.dk>,
-	Christoph Hellwig <hch@lst.de>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Mark Lord <mlord@pobox.com>,
-	patches@lists.linux.dev,
-	stable@vger.kernel.org
-Subject: [PATCH rc] iommu/dma: Do not try to iommu_map a 0 length region in swiotlb
-Date: Mon,  8 Jun 2026 15:10:04 -0300
-Message-ID: <0-v1-8536728bc89f+469-swiotlb_warn_jgg@nvidia.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: LV3P220CA0018.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:408:234::19) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z0HZKfaV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01E01F00893;
+	Mon,  8 Jun 2026 18:42:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780944150;
+	bh=QTurqwAonbHqex2EQ+XolDLMRIFlrC/dSa0htwEu82g=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=Z0HZKfaVAqzMbu2qFZkeUKh44K090vkZHhr2CreO4dU8mj5GgCXvKHTG7KXIGt93i
+	 RBGKr5AwaZ656gtjGUMPa1zrG09sZj9D7+00WSGAuTa62mfSlSFn008n5LgoEynZUV
+	 gO6DlohPsodQ7MCnG4Pu8vQrEbJZRt0J+VCPvcwiKk0Yl30jqnhE+LLQcXAqIp/9fV
+	 pTs+I6Hi8Ft1phAEeMZW8xdMiamy4aru//jt7fMVDpwSn6Gtyyce9pTg0u/8xm40bb
+	 g2ave37PYfMp9QvraQN7iN4kpvyx1Z5CCr0zwk2++i/A7FiIn86nyxOPs2AoLaDrQj
+	 xwTvnsa49ol4Q==
+Message-ID: <fa093778-d0fd-4c32-b229-74dd18796565@kernel.org>
+Date: Mon, 8 Jun 2026 20:42:24 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|IA0PPF6E99B1BC1:EE_
-X-MS-Office365-Filtering-Correlation-Id: 79904bf9-b2c6-4f71-d324-08dec5892b1d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|7416014|376014|1800799024|11063799006|56012099006|6133799003|18002099003|3023799007;
-X-Microsoft-Antispam-Message-Info:
-	h5wo4zvtbwSxkJyZY3AmvM2nw361aH/T3UpgoFBe7MlZ5n+y0oVpFxK2bXho61VlsysUM9d9APpMtDpGavK+YN+dbVzNq0ofIOtgTPV/3IX0QfVx/oqgMdnhKixVinWlglty5Zt6Xfu9cOBi4VJmaJ/dTeaFLib1H1tABeLOSy6cxtyQqZjTBw6Eoyn9YvP3DQu87hMi0YsKHCr5hktpAPZrmSszwkCI0ttNvZspzxd4uV+nqCytYbTw+Yxnvn6Zbl3Ll01mfGvAY8jE3WAee3ueOl9j046FQj4gTFSm4gIEj8aOQkOenNkaFoG3BzErULHYkpab4xQAZTHyREQLibLfoIaux8gZ+2eAYVlMfNSyqtFwqvJOHMoZO9du3CO7WMr92PgaCYuE6nQgb/lV8AnmTFSkl4fgGlDykZ+s2B0lLjJclE/Z/IuAuQeqvsQZNiBBuTevR0kRCV//AerGHujnraswZ4S0F0zvp9L8VXIGucf4BqTj5pzElfoSiS2mzfrXX+9zAGvM8t0V3SWSPHrsxkFzfQSFuGRxTL3oPQ2XiUrl3/m+kfFZAhq46pmqeFKiHKp3qIB5FCsQ4/ObAH6lK2/qSataLzGQwP20BNrUTk/JZzxPo2cle+90honvb7xcD/C6h/hEpzbkZfeNAMm1kom0wNcjPgqHEzh575ROSB5+f9r7CELmUVISRuwa
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024)(11063799006)(56012099006)(6133799003)(18002099003)(3023799007);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?pR2w3e+6/eCVAuRswKiZKZMInj+WmZOfIXbN/JwzTjb4aUTjLYtFm5Cc09Dm?=
- =?us-ascii?Q?Z6NImWQigObmeOxYc6lose4yo/PLv+4SJQWuPRLnPd0Gcy0AM6RidtP3vypb?=
- =?us-ascii?Q?bEb8mli7Z6cCCVSzM6zNUQMUjChSK1WyZ0NOdHgpKiABc9ALG5D9BfBSrLOa?=
- =?us-ascii?Q?+4C0GyR9nO/36bbVDGmuuU9lyRvS6Y5ME6QVl4DT4Nz638mw/Rrpdwa5xpy4?=
- =?us-ascii?Q?kwj41AZRy0pkZ2CKUkCeyk5a+u24Dve5FNuLcKT2nXp/k5A7LJ5VhQhB/q24?=
- =?us-ascii?Q?kWvevtVrBQOAgX5nIRWu7EEiQ3tHOu3rxbKhZ1gvNrbf5+Syx0ktXFmug5rQ?=
- =?us-ascii?Q?YiNz1K/21OTNcmGY0olsFWMeAavu6LnxNeSGTY53hmTrC2E4VqeyVynAY7Ic?=
- =?us-ascii?Q?Jrcsm1ei2UrsWNWSeRatd9cM1eOffQM3kIGcpMB5c7KDQfOnzkI2gOOpCMtP?=
- =?us-ascii?Q?w4SIOTMnjQmGsV2Bd1kt2jRbsmSSLbAMER/hEHvTtHBnsIO6aTIjE+64ePPY?=
- =?us-ascii?Q?IHhJlEXrpawwFh5Y3pavFZGMsBGYoG7cwnD6/gbEpleiIABpnLQzR1vIBJSI?=
- =?us-ascii?Q?HnaQJHM4D5lUh1qhf5S71GNfkj+RQWjun3XGp9LbyHcuASqNqrsd6k4C9Vgy?=
- =?us-ascii?Q?nyq/AGswICIzype3NBelMC7m0OoUtnrbDoWIWofRJ/M1p2hTFQ2YXk04rTIg?=
- =?us-ascii?Q?xIVGrQmMfg+1tD3VpYgdVFSroISA06pcYLm8ArdFYqv1x2r358TA1HATa/TE?=
- =?us-ascii?Q?2s0RDsIIjtdQmi2Tm2ETjk54rRuRnxRhcbtPKPV87OznrYCwqorBr9CiQdvd?=
- =?us-ascii?Q?AnNH9adXd3gonscuh/IPDsgrvR37rL2YsYAUudQCH7d5w2RCI7aMm1B7RNVI?=
- =?us-ascii?Q?ve5e4qw8bgs3UI6FfHMta+VmLM+j+HUERRxzZwF6kMNzOOU0ViFEDV0OcHWh?=
- =?us-ascii?Q?8nyLbA7YuEM2qdVkEGR9zr6UHpa1snv53BIZcGHRBiNLftcLE1jZqW4hueRX?=
- =?us-ascii?Q?eCXW7LQo8cZoWE/YTIAU8PUB/FWsxgJ4WZuNCYm1P5rVMxwlMRoTnZuP2GPg?=
- =?us-ascii?Q?m97L4xCfAiCqHukY5i+HR5GuBEJyS6hie6mjxUskXrxpouvgoHnfEPyf1Sdm?=
- =?us-ascii?Q?dpw+SmoBPkdeyeqSnL3qypH9feoCdwhb+9HSseKukRp/3GC1TONTOFrEU5qH?=
- =?us-ascii?Q?I8g1NFdQersxmyTP5xVu1eLQEAK6A0S7ADPPpxo82o+1bNoq9++ogcL24iD1?=
- =?us-ascii?Q?MFTIOmP4OTRjcWW2uq+381QWpS+4N9zl0gdcIzlO4TacTU78AxmsXVx0Bx3E?=
- =?us-ascii?Q?vb3KFIphVpGl+Kcx64Mwz9nu+32B+K+GLvfsYX/2lEyfsAgacgrRQExizbWZ?=
- =?us-ascii?Q?XPf7d6xeOvrKappUrw+kW5/TsnEJ/W3z5SaXZnPk4svjVJ6VM9Ug7mVIcI0A?=
- =?us-ascii?Q?7RvyeQp9wpmiyQZvRv9t+PZAGpeCUAUMDzCAU7FQTdfL75qX8bUb2hMJpd1z?=
- =?us-ascii?Q?UdppIEkY7DHu7/NVi7L0K8j61/8w8/kRBYtmSCpyujpziWVN2L6orQ2BZ7eK?=
- =?us-ascii?Q?ceXhmAT06zUDV0YwcGTnXaPL0WSxWPdCdq2Cy505aOF59NVjs/RVXFRWC5Hb?=
- =?us-ascii?Q?w2uO4Qo+1tIrjGpiN6D82kHxJX2wlrGS5529FxBYXuseY0AOOTVPiatA5R6c?=
- =?us-ascii?Q?/kIzhEJZFW3IsPqDFbmza5H36mkMXnHru04m4cHzqSOgq3xC?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 79904bf9-b2c6-4f71-d324-08dec5892b1d
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jun 2026 18:10:06.1316
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: rjdcpRRuyZIDahLphBoI30+MerJCY8f30e0i+XRQAy4h4UQ5spZiYPsdNwmXDJJ0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PPF6E99B1BC1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] vmsplice: make vmsplice a trivial wrapper for
+ preadv2/pwritev2
+To: Alexander Gordeev <agordeev@linux.ibm.com>,
+ Askar Safin <safinaskar@gmail.com>
+Cc: linux-fsdevel@vger.kernel.org, Christian Brauner <brauner@kernel.org>,
+ Alexander Viro <viro@zeniv.linux.org.uk>, Jan Kara <jack@suse.cz>,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, linux-api@vger.kernel.org,
+ netdev@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>,
+ Matthew Wilcox <willy@infradead.org>, Jens Axboe <axboe@kernel.dk>,
+ Christoph Hellwig <hch@infradead.org>, David Howells <dhowells@redhat.com>,
+ Andrew Morton <akpm@linux-foundation.org>, Pedro Falcato <pfalcato@suse.de>,
+ Miklos Szeredi <miklos@szeredi.hu>, patches@lists.linux.dev,
+ linux-s390@vger.kernel.org, linux-next@vger.kernel.org
+References: <20260531010107.1953702-1-safinaskar@gmail.com>
+ <20260531010107.1953702-3-safinaskar@gmail.com>
+ <20260608171917.3195488Afc-agordeev@linux.ibm.com>
+From: "David Hildenbrand (Arm)" <david@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=david@kernel.org; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <20260608171917.3195488Afc-agordeev@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-iommu_dma_iova_link_swiotlb() processes a mapping that is unaligned in three
-parts, the head, middle and trailer. If the middle is empty because there
-are no aligned pages it will call down to iommu_map() with a 0 size
-which the iommupt implementation will fail as illegal.
+On 6/8/26 19:19, Alexander Gordeev wrote:
+> On Sun, May 31, 2026 at 01:01:06AM +0000, Askar Safin wrote:
+>> vmsplice behavior on writable pipe became equivalent to pwritev2.
+>> vmsplice behavior on readable pipe already was nearly
+>> equivalent to preadv2, but I made this explicit. I. e. I made it
+>> obvious from code that vmsplice now is equivalent to preadv2/pwritev2.
+>>
+>> Also I moved vmsplice to fs/read_write.c, because now it arguably
+>> belongs there.
+>>
+>> Note that SPLICE_F_NONBLOCK behavior slightly changed: previously
+>> vmsplice ignored whether the pipe was opened with O_NONBLOCK, and mode
+>> of operation depended on whether SPLICE_F_NONBLOCK was passed only.
+>> Now the operation will be non-blocking if O_NONBLOCK was passed when
+>> opening *or* SPLICE_F_NONBLOCK was passed to vmsplice. Previous
+>> behavior was arguably buggy, and new behavior is arguably better.
+>>
+>> Now SPLICE_F_GIFT is always ignored by all 3 syscalls: splice, tee
+>> and vmsplice.
+>>
+>> Signed-off-by: Askar Safin <safinaskar@gmail.com>
+>> ---
+>>  fs/read_write.c          |  23 +++++
+>>  fs/splice.c              | 192 +--------------------------------------
+>>  include/linux/skbuff.h   |   4 +-
+>>  include/linux/splice.h   |   2 +-
+>>  include/linux/syscalls.h |   4 +-
+>>  5 files changed, 29 insertions(+), 196 deletions(-)
+> 
+> Hi All,
+> 
+> This patch as commit e2c0b2368081b ("vmsplice: make vmsplice a trivial
+> wrapper for preadv2/pwritev2") in linux-next on s390 causes the selftest
+> tools/testing/selftests/mm/cow.c to hang:
+> 
+> # [RUN] vmsplice() + unmap in child ... with PTE-mapped THP (128 kB)
+> 
+> Recently there has been changes in THP area, so the problem is not
+> necessary linked to this patch per se.
 
-It then tries to do an error unwind and starts from the wrong spot
-corrupting the mapping so the eventual destruction triggers a WARN_ON.
+If we reach 128 kB, then 64 kB likely worked. Which might hint at a similar problem
+as found by the vmsplice01 ltp test case (blocking instead of returning once the
+pipe is full).
 
-Check for 0 length and avoid mapping and use offset not 0 as the starting
-point to unlink.
+https://lore.kernel.org/r/20260603-raumfahrt-unmerklich-ertrugen-c4ecae70d5f9@brauner
 
-This is frequently triggered by using some kinds of thunderbolt NVMe
-drives that trigger forced SWIOTLB for unaligned memory. NVMe seems to
-pass in oddly aligned buffers for the passthrough commands from smartctl
-that hit this condition.
 
-Cc: stable@vger.kernel.org
-Fixes: 433a76207dcf ("dma-mapping: Implement link/unlink ranges API")
-Reported-by: Mark Lord <mlord@pobox.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- drivers/iommu/dma-iommu.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
-
-This was discovered because iommupt errors on mapping length=0 instead of
-making it a NOP, so it is an became an issue since commit d6c65b0fd621
-("iommupt: Avoid rewalking during map") making it a regression this merge
-window.
-
-diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-index 54d96e847f161b..381b60d9e7ceaf 100644
---- a/drivers/iommu/dma-iommu.c
-+++ b/drivers/iommu/dma-iommu.c
-@@ -1918,12 +1918,18 @@ static int iommu_dma_iova_link_swiotlb(struct device *dev,
- 			return 0;
- 	}
- 
-+	/*
-+	 * After removing the partial head and tail, there may be no aligned
-+	 * middle left to map.  The tail still gets bounced below.
-+	 */
- 	size -= iova_end_pad;
--	error = __dma_iova_link(dev, addr + mapped, phys + mapped, size, dir,
--			attrs);
--	if (error)
--		goto out_unmap;
--	mapped += size;
-+	if (size) {
-+		error = __dma_iova_link(dev, addr + mapped, phys + mapped,
-+				size, dir, attrs);
-+		if (error)
-+			goto out_unmap;
-+		mapped += size;
-+	}
- 
- 	if (iova_end_pad) {
- 		error = iommu_dma_iova_bounce_and_link(dev, addr + mapped,
-@@ -1936,7 +1942,8 @@ static int iommu_dma_iova_link_swiotlb(struct device *dev,
- 	return 0;
- 
- out_unmap:
--	dma_iova_unlink(dev, state, 0, mapped, dir, attrs);
-+	if (mapped)
-+		dma_iova_unlink(dev, state, offset, mapped, dir, attrs);
- 	return error;
- }
- 
-
-base-commit: 4549871118cf616eecdd2d939f78e3b9e1dddc48
 -- 
-2.43.0
+Cheers,
 
+David
