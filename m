@@ -1,155 +1,105 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-dy1-f173.google.com (mail-dy1-f173.google.com [74.125.82.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F3739B4A5
-	for <patches@lists.linux.dev>; Mon,  8 Jun 2026 20:36:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780950971; cv=pass; b=IN71DmmPRxoPWdv2NU/QMUcWr1Dtb6ylR3iMaHwArRxC7WPnKlfOK2GNyFI/rax7r6FSUZo/cgKLTyEHfsMhBcKJTwzFbh8To4GzRt5pSoveDhhEs5/6zf/9hAWlZE9DgyhdbG9wzWE/f5xDvBrYLjOpDnuVPl3Zu1c+HWwq6rY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780950971; c=relaxed/simple;
-	bh=B2tN+Ldk/5pCXIYwJUJf0VGuPcRdSjXr3Cs1XxacmqI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=b1cCsSdF0iByClLBc0smPUOdX8jqWp6woKNNQpCAEVcAPXU2I9XgVHfhdOYuDBOK7v89FRvj0crcLQ++v7eFSSh2y9gJMRhw0L6JgsAozyVN635hiMrHU58oz2OU7P/GwdAE4s4ajkk57Kdb4rNlNvsSkqs/1aqSE59UNhzmjkw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mojatatu.com; spf=none smtp.mailfrom=mojatatu.com; dkim=pass (1024-bit key) header.d=mojatatu.com header.i=@mojatatu.com header.b=Tk7TNslX; arc=pass smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mojatatu.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=mojatatu.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE77F3AE6F3
+	for <patches@lists.linux.dev>; Mon,  8 Jun 2026 21:53:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.173
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780955605; cv=none; b=Q7kSZbJ1H4fSinElCK9s3OlQL33fU7ZejIZ4kn85A175aLD261lN+DQVzBdghRKw5tyu53e4mdj5qE3Pi50kBl/0MTGhnVvTZ2ums+igODm9cqcL5XBcn9FQfpGRceV4bnl1sdja6AoJOhHa8Z6ZwKh/9ZG8fOv1AhGUHKPX42I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780955605; c=relaxed/simple;
+	bh=Juxb26ldXOFarDgZU/fCdttEflHVZH3q1oRndyT2/q4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WK8GTdIUIK+4825T7WO8yz+Df8znGe5FUrWQpT1W6CsYLC6SuEbVVqmpTelLhde9rm/HnDy18xG8NPuwdh+9eIqZbwVXGM1XZQK+yxGgftf5tsg4NVUA3KTqmzb6xv5itE0CE9ev+lLW2coEe+wq6FKq0Vz4gVvq5+cSlcpLhls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=Zm7t2TR1; arc=none smtp.client-ip=74.125.82.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mojatatu.com header.i=@mojatatu.com header.b="Tk7TNslX"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-8423610ec93so3726222b3a.2
-        for <patches@lists.linux.dev>; Mon, 08 Jun 2026 13:36:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780950970; cv=none;
-        d=google.com; s=arc-20240605;
-        b=J3JRm7jy9XbsTqWNc6ZYIoU5WKJt3/vbRUTlDNo0BpYImdsqu9pLORxMmZInCj6YX4
-         H+6gFop0jeODRyDgKelbjDKTEgs8ZUzVusXdSdOogSQ0gqDDKFNu8kIV+GdHQtjNzFdx
-         +u6SQbK1bAXQJe1fN5VEc68oAL0UANA6y8LOhqZ9wpbmVfr48d5+iCgN2Dotyaio8WZo
-         KU3p8BlTlOTvguHmtzmxvDREC+H+XOjlc17ZWgEmpC9LRWY4IIP/F2yx3za8SXJyqFio
-         G6S47KH5zILJF82R2wP2y+xW/QFi8yNG3WkdnA636HUT0OBpuzmZ89z4BQ/B6aUkUoqj
-         XaEw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=oVe+ITC2ml8n3gt+xHvgBn+FPMhVSI7g98/qjcMm7ZU=;
-        fh=hLYRZHcBmx3E8RZbSyVPb8fKI0JGZsAjAEXdVxFGW/M=;
-        b=eOc5XpwRwqcmI3jYR5U61NBXz+la9opb89RqRAfUeDE9oWfOKgaVYXGoJA/61fvVu3
-         HE+/qQqfyq3dNEgjt7WsyNSAMKwHq65njE6487dOa2JTM9qGc6lnGWSvWGi881DPHGP6
-         lZM4ZE95kc/d49x3VwiKC78J2hrCBs+X1FYeE2b8RPUE0uEXhnnKKqPA4IF1S3UphWVB
-         vqcnlEUhP3BrMBt7wbNE6GFyre7KufqdV3oA0KWQsgtOK0YtCc/URFAuLFa3cWuLJGFn
-         y8DHIfKnana7vZRwZHFQ5qiQkgFL94XiDHVLnFj/063ZBtshPQs3bcbHV8iomMdsg3JN
-         SwaA==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="Zm7t2TR1"
+Received: by mail-dy1-f173.google.com with SMTP id 5a478bee46e88-304f590dd91so5259335eec.0
+        for <patches@lists.linux.dev>; Mon, 08 Jun 2026 14:53:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mojatatu.com; s=google; t=1780950970; x=1781555770; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oVe+ITC2ml8n3gt+xHvgBn+FPMhVSI7g98/qjcMm7ZU=;
-        b=Tk7TNslXCcKFB2h3u/3WFbydA0u2D33VG2Q2L25TNDHnGMcBl4NZyLdatnb36vEsI4
-         RhALp8UKdqqKIkrti41NvsZcAc47GLTtOoI5kLk0uvBZLXa+OxZRNIEVkiwSfvqasfYx
-         lymFPHj0baoH/vGiRLl0nL6jGpwsthDGVCub8=
+        d=linuxtx.org; s=google; t=1780955602; x=1781560402; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EoYFOw7ak7HsB04OfAmg+EGUR7pul8Hb3G9gCGfENs8=;
+        b=Zm7t2TR12Ew6yNRX3jbnXSOVQ9FWZ16vyNpCARVj++1VFklKdSRXdcw6PsBEKu5MuD
+         KD1Jw7xEI5RD6SYpl5NogqU3Hf4oL2zjJEkYoIbKLp2UMc8aLFftODp5fZjVmSuN6QiO
+         Np20b8s6wP8WhveN1otAHQODI7i1kAM/dHyFs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780950970; x=1781555770;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=oVe+ITC2ml8n3gt+xHvgBn+FPMhVSI7g98/qjcMm7ZU=;
-        b=LXUiVoXUv44eS0UyTHSABBZOP7FxonrZjC+GgZQxXTLf8YVHcFXpgaIydO1UYXfLH7
-         9qX8l6Q6fWQy9PcIWtX8B8D5iygafLtHUzQ22z4M9sZ2R3HQcYjUMWItIK8/k8qUVwCE
-         vn6JDi0XGAp1er6YKCcF5ykDCfdD505vvo7zD3GNiZ8nGFKiJpVYkabxAvDxm8gkjV2B
-         LLLLESjmmpw/SsAA4ewYE/Lu2/LjgACdhV/vJf+hTaWxzQ6t5ptlJ5q9d4SIerWfSeYW
-         Hph5YQP9jEYhoxpZVk0AW3lz4ro22J83QCaDU6ywtSsOAUFmLwOhnwuK1rUjQ/lRvX2p
-         Xu3A==
-X-Forwarded-Encrypted: i=1; AFNElJ+bqnMkfxCrXQ2dWk+lyTwhYpgzwZTN7GYC82agXzhKlvQLDF7gV5Ahzo6RF/aHhPkdyJjUf/KQ@lists.linux.dev
-X-Gm-Message-State: AOJu0YxXKEMdlQ2rkWFo45n0iESiXTIVcZf/0WSNNjmvqQ2ehdP6bvct
-	2yZ04BqhHpDooCL8AnwO6ym1nIqYbyEr1AYMJ30FJVJ35PYqRhjlR3oqOr6s6g8q+JK2U1RvwpK
-	9vVQ4tjmoMFqsxyc/O9cXeldnHXAXXYj3Cv81qurE
-X-Gm-Gg: Acq92OFwKGSQKfba+TtoUZ5fkiYIRKtwiaUdbedEP+MjEOpWOew3LNXDbSPV/s5kXNe
-	Hs8LAvQXYhp+zL5d4XaeU9Cs7ATjJUaLSDoskhfPsCsqrOzLv5layPl6rat8VTaYvI7qsYboATk
-	tknGMQMJxY+5TbMQOhkrhQL8IWw1fswLTMoBfP6sJ9JqaNc1v7p//oR1PhUSr6tVT+AV2uig+P5
-	x+h+L4qoe1hPTzWozJkQUn5hQz6HDNymCb5bezEugdo4gsvITnRve1KJCZc4OJuGZcYQPaz2d5g
-	I27ieV3A7ovdfxg6iq8=
-X-Received: by 2002:a05:6a00:4b04:b0:83e:d427:9817 with SMTP id
- d2e1a72fcca58-842b0db7dbamr16329172b3a.11.1780950970140; Mon, 08 Jun 2026
- 13:36:10 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780955602; x=1781560402;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=EoYFOw7ak7HsB04OfAmg+EGUR7pul8Hb3G9gCGfENs8=;
+        b=lvqqlguvJkINYAngwTMJ5KFTcu0eSufbIIdeVgwZRZCuA18pbTUfe1wcn2zsQnaxpi
+         rev1eHR4Y7xMym5Uqh5bveciwft+B0uZTSvectO6kHlWKzSkpqpgFfXu+M7aIh8O4jDJ
+         G/ldFbgNMX8uAwcyl35YvRPa5lM3YOIKTjSNwkj28SI+oJb768Oh4Gywfxqf8BYZG/Hz
+         prXbdeuSC/vKMr64McQvvUyjgjNWSRaF8cLk+Z04vYSVzDdYDgZCNLOq5Gb0d0Qnigau
+         y2p/7oCuAvmSV+j5kpCO14bdWqgJPqANFebgvPbwoIhfAY94LcFYMyElDYLrQmjzMM/y
+         lY/g==
+X-Forwarded-Encrypted: i=1; AFNElJ/NQHeUJmdcrdSqfjIicPBFwBsjWHa+ujikRQAeddTcKO79j+EzsRlWsm80lPtmcpxpSNoane3g@lists.linux.dev
+X-Gm-Message-State: AOJu0YwwqBWzbDe+PzkvNXQHoOm7mMBEIEiRVHlnrbEdZHBLKxKvR53y
+	5wGAUafu0nBN/Q9LQQ/vOne5QqNCRoFaIF6/MVgioBqKwZGb0UViHLloZrQ/J3kT7g==
+X-Gm-Gg: Acq92OEt9vZsgwtglKHZs/9ZBJuZLo0BoMqa3GzKaDO11asoNq0iI9AcwU3mJQD9YzH
+	D5KlFZ69Ahb7XGE3o71nXwI/8Giez9GehRf8XjOUvWYoxCcfghAROeCJ6Z04rHNaD6eju1YPDqL
+	2B/RjVwwyHUmVyDpiT4gujSsybzXPzSczIvUJGCoQGrx7UZnDzNDs9tZbQM7E/3lwrRUdAcCqpo
+	WOjB5kzlRsDxAFubdokPRGkYx/tAAKkG1ZA/nYiidyZy/5vJdpsk+xN/a+wYMPHg/wkHh3/595+
+	ICIYaXpRzLRMjiaf2KshCrEgaJhqN2mjjXMaAqQJ85giwaBc2d1H/z7aTy2FVTHeldmzNK6QRnt
+	L85+gC1ycmhKCB7zzslAOuAEvqe+RR5NTbsYsYo2eXmggeP8oEr/OfFmzcyKS44bVZsos4D5JPr
+	zOc45+vS7uqshKzRQFy8ZJvs/+V4SG1amvBW4BkCAR9EZZZ3ykZxJx
+X-Received: by 2002:a05:7300:2327:b0:304:5db8:da95 with SMTP id 5a478bee46e88-3077b7855c1mr9162330eec.23.1780955601933;
+        Mon, 08 Jun 2026 14:53:21 -0700 (PDT)
+Received: from fedora64.linuxtx.org ([98.97.105.250])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074db528dcsm22171093eec.3.2026.06.08.14.53.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Jun 2026 14:53:20 -0700 (PDT)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Mon, 8 Jun 2026 15:53:17 -0600
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 7.0 000/332] 7.0.12-rc1 review
+Message-ID: <aic5zUJBp3i6jCin@fedora64.linuxtx.org>
+References: <20260607095728.031258202@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260607095727.647295505@linuxfoundation.org> <20260607173214.92693-1-ojeda@kernel.org>
- <CAM0EoMkszTXv82To=KnEYTgzQSmEdRW9XrAMVtJsUaDn=Akf6A@mail.gmail.com>
- <CANiq72mJNbNzYO37VK7s=ua5v31xBrRp8EnHDvEnKF8Z77jDmA@mail.gmail.com>
- <CAM0EoMmHd10iivCpDoEd3h+eae9fSnoGWAH_AkwFhrnS6PN63g@mail.gmail.com> <CANiq72k6J7FYT89svtX5qbCUWg-MKuhUHaT07cjk8o7PqaF8+A@mail.gmail.com>
-In-Reply-To: <CANiq72k6J7FYT89svtX5qbCUWg-MKuhUHaT07cjk8o7PqaF8+A@mail.gmail.com>
-From: Jamal Hadi Salim <jhs@mojatatu.com>
-Date: Mon, 8 Jun 2026 16:35:59 -0400
-X-Gm-Features: AVVi8CekC54iinBDQEVgU-dJ9AL5uhMqEzLEARHoPqKy0ZaeCQmHeP3rPtW0Dmw
-Message-ID: <CAM0EoMn9EA_TS80QzXsTscBpCgfJHssq0GHtiNbrMU3FAiP2mw@mail.gmail.com>
-Subject: Re: [PATCH 6.12 000/307] 6.12.93-rc1 review
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, gregkh@linuxfoundation.org, achill@achill.org, 
-	akpm@linux-foundation.org, broonie@kernel.org, conor@kernel.org, 
-	f.fainelli@gmail.com, hargar@microsoft.com, jonathanh@nvidia.com, 
-	linux-kernel@vger.kernel.org, linux@roeck-us.net, 
-	lkft-triage@lists.linaro.org, patches@kernelci.org, patches@lists.linux.dev, 
-	pavel@nabladev.com, rwarsow@gmx.de, shuah@kernel.org, sr@sladewatkins.com, 
-	stable@vger.kernel.org, sudipm.mukherjee@gmail.com, 
-	torvalds@linux-foundation.org, "Kito Xu (veritas501)" <hxzene@gmail.com>, 
-	Victor Nogueira <victor@mojatatu.com>, Paolo Abeni <pabeni@redhat.com>, Jiri Pirko <jiri@resnulli.us>, 
-	netdev@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260607095728.031258202@linuxfoundation.org>
 
-Hi Miguel,
+On Sun, Jun 07, 2026 at 11:56:09AM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.0.12 release.
+> There are 332 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Tue, 09 Jun 2026 09:56:44 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.0.12-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.0.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-On Mon, Jun 8, 2026 at 7:16=E2=80=AFAM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
->
-> On Mon, Jun 8, 2026 at 12:57=E2=80=AFPM Jamal Hadi Salim <jhs@mojatatu.co=
-m> wrote:
-> >
-> > I believe this bug slipped in during a small window but was fixed very
-> > quickly. Probably some fix never trickled to stable.
->
-> Yeah, as I mentioned above, I think commit a005fa5d7502 ("net/sched:
-> act_mirred: Fix blockcast recursion bypass leading to stack overflow")
-> is missing (at least).
->
-> I would suggest reviewing the entire chain to see what needs to be backpo=
-rted.
->
-> > If you can point me to the exact tree where this happens i can take a l=
-ook.
->
-> This is the 6.12.y -rc tree:
->
->   git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi=
-t
-> linux-6.12.y
->
-> The stable kernel team puts the link to the repository at the top of
-> the thread too:
->
->   https://lore.kernel.org/stable/20260607095727.647295505@linuxfoundation=
-.org/
->
-> > Still curious: So only the arm compiler catches this?
->
-> It likely gets caught by other arches too, i.e. I just happened to
-> catch it in my arm64 build.
->
-> This is Clang, not GCC, by the way.
->
+Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
+x86_64), and boot tested x86_64. No regressions noted.
 
-I think it was too early AM here when i was looking at this.
-The answer was right there all along in what you said: The missing
-piece is commit a005fa5d7502
-
-cheers,
-jamal
-> I hope this helps!
->
-> Cheers,
-> Miguel
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
