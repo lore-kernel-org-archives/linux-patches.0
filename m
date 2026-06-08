@@ -1,154 +1,155 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32BA3E3C73;
-	Mon,  8 Jun 2026 18:42:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780944151; cv=none; b=lKQ12s2B6g2fQlm4+J0PVwSyu/sPK4zSJnDDNK/atVCuw26JzG/emcE7dPO3BxYMZ1z6fLpX53iXNXs0hIDKDLHFuXXMy42DdfvVuN4yuKlEWhzNtIG4eAhLKrcoWDuJ2lP4zJjlEVbdCCTrWJs6q/mzbUIJ95KWu8B/xxXiekY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780944151; c=relaxed/simple;
-	bh=Qn/8Hql1frodTukYIvzJEFhJnbdEad1dXeCLKcJl3hc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FGLnlMjpWJJiRkN8J9Trz9kjDBnYLMe8jNEYsJCnJ1Yl9ndaYI8wHMTQCAaXzuBrMxDiKv8O0SZBgJuajw4Y2rGM/5VYuraVmNkbM1QLR974V7ZCkWyDYtkaK6I4Z/yMcFvr900mtHZmlE8s5c3JWKf9PNORLL0XPZGU58nzENg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z0HZKfaV; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F3739B4A5
+	for <patches@lists.linux.dev>; Mon,  8 Jun 2026 20:36:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.181
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780950971; cv=pass; b=IN71DmmPRxoPWdv2NU/QMUcWr1Dtb6ylR3iMaHwArRxC7WPnKlfOK2GNyFI/rax7r6FSUZo/cgKLTyEHfsMhBcKJTwzFbh8To4GzRt5pSoveDhhEs5/6zf/9hAWlZE9DgyhdbG9wzWE/f5xDvBrYLjOpDnuVPl3Zu1c+HWwq6rY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780950971; c=relaxed/simple;
+	bh=B2tN+Ldk/5pCXIYwJUJf0VGuPcRdSjXr3Cs1XxacmqI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=b1cCsSdF0iByClLBc0smPUOdX8jqWp6woKNNQpCAEVcAPXU2I9XgVHfhdOYuDBOK7v89FRvj0crcLQ++v7eFSSh2y9gJMRhw0L6JgsAozyVN635hiMrHU58oz2OU7P/GwdAE4s4ajkk57Kdb4rNlNvsSkqs/1aqSE59UNhzmjkw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mojatatu.com; spf=none smtp.mailfrom=mojatatu.com; dkim=pass (1024-bit key) header.d=mojatatu.com header.i=@mojatatu.com header.b=Tk7TNslX; arc=pass smtp.client-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mojatatu.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=mojatatu.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z0HZKfaV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01E01F00893;
-	Mon,  8 Jun 2026 18:42:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780944150;
-	bh=QTurqwAonbHqex2EQ+XolDLMRIFlrC/dSa0htwEu82g=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=Z0HZKfaVAqzMbu2qFZkeUKh44K090vkZHhr2CreO4dU8mj5GgCXvKHTG7KXIGt93i
-	 RBGKr5AwaZ656gtjGUMPa1zrG09sZj9D7+00WSGAuTa62mfSlSFn008n5LgoEynZUV
-	 gO6DlohPsodQ7MCnG4Pu8vQrEbJZRt0J+VCPvcwiKk0Yl30jqnhE+LLQcXAqIp/9fV
-	 pTs+I6Hi8Ft1phAEeMZW8xdMiamy4aru//jt7fMVDpwSn6Gtyyce9pTg0u/8xm40bb
-	 g2ave37PYfMp9QvraQN7iN4kpvyx1Z5CCr0zwk2++i/A7FiIn86nyxOPs2AoLaDrQj
-	 xwTvnsa49ol4Q==
-Message-ID: <fa093778-d0fd-4c32-b229-74dd18796565@kernel.org>
-Date: Mon, 8 Jun 2026 20:42:24 +0200
+	dkim=pass (1024-bit key) header.d=mojatatu.com header.i=@mojatatu.com header.b="Tk7TNslX"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-8423610ec93so3726222b3a.2
+        for <patches@lists.linux.dev>; Mon, 08 Jun 2026 13:36:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780950970; cv=none;
+        d=google.com; s=arc-20240605;
+        b=J3JRm7jy9XbsTqWNc6ZYIoU5WKJt3/vbRUTlDNo0BpYImdsqu9pLORxMmZInCj6YX4
+         H+6gFop0jeODRyDgKelbjDKTEgs8ZUzVusXdSdOogSQ0gqDDKFNu8kIV+GdHQtjNzFdx
+         +u6SQbK1bAXQJe1fN5VEc68oAL0UANA6y8LOhqZ9wpbmVfr48d5+iCgN2Dotyaio8WZo
+         KU3p8BlTlOTvguHmtzmxvDREC+H+XOjlc17ZWgEmpC9LRWY4IIP/F2yx3za8SXJyqFio
+         G6S47KH5zILJF82R2wP2y+xW/QFi8yNG3WkdnA636HUT0OBpuzmZ89z4BQ/B6aUkUoqj
+         XaEw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=oVe+ITC2ml8n3gt+xHvgBn+FPMhVSI7g98/qjcMm7ZU=;
+        fh=hLYRZHcBmx3E8RZbSyVPb8fKI0JGZsAjAEXdVxFGW/M=;
+        b=eOc5XpwRwqcmI3jYR5U61NBXz+la9opb89RqRAfUeDE9oWfOKgaVYXGoJA/61fvVu3
+         HE+/qQqfyq3dNEgjt7WsyNSAMKwHq65njE6487dOa2JTM9qGc6lnGWSvWGi881DPHGP6
+         lZM4ZE95kc/d49x3VwiKC78J2hrCBs+X1FYeE2b8RPUE0uEXhnnKKqPA4IF1S3UphWVB
+         vqcnlEUhP3BrMBt7wbNE6GFyre7KufqdV3oA0KWQsgtOK0YtCc/URFAuLFa3cWuLJGFn
+         y8DHIfKnana7vZRwZHFQ5qiQkgFL94XiDHVLnFj/063ZBtshPQs3bcbHV8iomMdsg3JN
+         SwaA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=mojatatu.com; s=google; t=1780950970; x=1781555770; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oVe+ITC2ml8n3gt+xHvgBn+FPMhVSI7g98/qjcMm7ZU=;
+        b=Tk7TNslXCcKFB2h3u/3WFbydA0u2D33VG2Q2L25TNDHnGMcBl4NZyLdatnb36vEsI4
+         RhALp8UKdqqKIkrti41NvsZcAc47GLTtOoI5kLk0uvBZLXa+OxZRNIEVkiwSfvqasfYx
+         lymFPHj0baoH/vGiRLl0nL6jGpwsthDGVCub8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780950970; x=1781555770;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=oVe+ITC2ml8n3gt+xHvgBn+FPMhVSI7g98/qjcMm7ZU=;
+        b=LXUiVoXUv44eS0UyTHSABBZOP7FxonrZjC+GgZQxXTLf8YVHcFXpgaIydO1UYXfLH7
+         9qX8l6Q6fWQy9PcIWtX8B8D5iygafLtHUzQ22z4M9sZ2R3HQcYjUMWItIK8/k8qUVwCE
+         vn6JDi0XGAp1er6YKCcF5ykDCfdD505vvo7zD3GNiZ8nGFKiJpVYkabxAvDxm8gkjV2B
+         LLLLESjmmpw/SsAA4ewYE/Lu2/LjgACdhV/vJf+hTaWxzQ6t5ptlJ5q9d4SIerWfSeYW
+         Hph5YQP9jEYhoxpZVk0AW3lz4ro22J83QCaDU6ywtSsOAUFmLwOhnwuK1rUjQ/lRvX2p
+         Xu3A==
+X-Forwarded-Encrypted: i=1; AFNElJ+bqnMkfxCrXQ2dWk+lyTwhYpgzwZTN7GYC82agXzhKlvQLDF7gV5Ahzo6RF/aHhPkdyJjUf/KQ@lists.linux.dev
+X-Gm-Message-State: AOJu0YxXKEMdlQ2rkWFo45n0iESiXTIVcZf/0WSNNjmvqQ2ehdP6bvct
+	2yZ04BqhHpDooCL8AnwO6ym1nIqYbyEr1AYMJ30FJVJ35PYqRhjlR3oqOr6s6g8q+JK2U1RvwpK
+	9vVQ4tjmoMFqsxyc/O9cXeldnHXAXXYj3Cv81qurE
+X-Gm-Gg: Acq92OFwKGSQKfba+TtoUZ5fkiYIRKtwiaUdbedEP+MjEOpWOew3LNXDbSPV/s5kXNe
+	Hs8LAvQXYhp+zL5d4XaeU9Cs7ATjJUaLSDoskhfPsCsqrOzLv5layPl6rat8VTaYvI7qsYboATk
+	tknGMQMJxY+5TbMQOhkrhQL8IWw1fswLTMoBfP6sJ9JqaNc1v7p//oR1PhUSr6tVT+AV2uig+P5
+	x+h+L4qoe1hPTzWozJkQUn5hQz6HDNymCb5bezEugdo4gsvITnRve1KJCZc4OJuGZcYQPaz2d5g
+	I27ieV3A7ovdfxg6iq8=
+X-Received: by 2002:a05:6a00:4b04:b0:83e:d427:9817 with SMTP id
+ d2e1a72fcca58-842b0db7dbamr16329172b3a.11.1780950970140; Mon, 08 Jun 2026
+ 13:36:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] vmsplice: make vmsplice a trivial wrapper for
- preadv2/pwritev2
-To: Alexander Gordeev <agordeev@linux.ibm.com>,
- Askar Safin <safinaskar@gmail.com>
-Cc: linux-fsdevel@vger.kernel.org, Christian Brauner <brauner@kernel.org>,
- Alexander Viro <viro@zeniv.linux.org.uk>, Jan Kara <jack@suse.cz>,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, linux-api@vger.kernel.org,
- netdev@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>,
- Matthew Wilcox <willy@infradead.org>, Jens Axboe <axboe@kernel.dk>,
- Christoph Hellwig <hch@infradead.org>, David Howells <dhowells@redhat.com>,
- Andrew Morton <akpm@linux-foundation.org>, Pedro Falcato <pfalcato@suse.de>,
- Miklos Szeredi <miklos@szeredi.hu>, patches@lists.linux.dev,
- linux-s390@vger.kernel.org, linux-next@vger.kernel.org
-References: <20260531010107.1953702-1-safinaskar@gmail.com>
- <20260531010107.1953702-3-safinaskar@gmail.com>
- <20260608171917.3195488Afc-agordeev@linux.ibm.com>
-From: "David Hildenbrand (Arm)" <david@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=david@kernel.org; keydata=
- xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
- dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
- QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
- XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
- Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
- PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
- WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
- UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
- jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
- B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzS5EYXZpZCBIaWxk
- ZW5icmFuZCAoQ3VycmVudCkgPGRhdmlkQGtlcm5lbC5vcmc+wsGQBBMBCAA6AhsDBQkmWAik
- AgsJBBUKCQgCFgICHgUCF4AWIQQb2cqtc1xMOkYN/MpN3hD3AP+DWgUCaYJt/AIZAQAKCRBN
- 3hD3AP+DWriiD/9BLGEKG+N8L2AXhikJg6YmXom9ytRwPqDgpHpVg2xdhopoWdMRXjzOrIKD
- g4LSnFaKneQD0hZhoArEeamG5tyo32xoRsPwkbpIzL0OKSZ8G6mVbFGpjmyDLQCAxteXCLXz
- ZI0VbsuJKelYnKcXWOIndOrNRvE5eoOfTt2XfBnAapxMYY2IsV+qaUXlO63GgfIOg8RBaj7x
- 3NxkI3rV0SHhI4GU9K6jCvGghxeS1QX6L/XI9mfAYaIwGy5B68kF26piAVYv/QZDEVIpo3t7
- /fjSpxKT8plJH6rhhR0epy8dWRHk3qT5tk2P85twasdloWtkMZ7FsCJRKWscm1BLpsDn6EQ4
- jeMHECiY9kGKKi8dQpv3FRyo2QApZ49NNDbwcR0ZndK0XFo15iH708H5Qja/8TuXCwnPWAcJ
- DQoNIDFyaxe26Rx3ZwUkRALa3iPcVjE0//TrQ4KnFf+lMBSrS33xDDBfevW9+Dk6IISmDH1R
- HFq2jpkN+FX/PE8eVhV68B2DsAPZ5rUwyCKUXPTJ/irrCCmAAb5Jpv11S7hUSpqtM/6oVESC
- 3z/7CzrVtRODzLtNgV4r5EI+wAv/3PgJLlMwgJM90Fb3CB2IgbxhjvmB1WNdvXACVydx55V7
- LPPKodSTF29rlnQAf9HLgCphuuSrrPn5VQDaYZl4N/7zc2wcWM7BTQRVy5+RARAA59fefSDR
- 9nMGCb9LbMX+TFAoIQo/wgP5XPyzLYakO+94GrgfZjfhdaxPXMsl2+o8jhp/hlIzG56taNdt
- VZtPp3ih1AgbR8rHgXw1xwOpuAd5lE1qNd54ndHuADO9a9A0vPimIes78Hi1/yy+ZEEvRkHk
- /kDa6F3AtTc1m4rbbOk2fiKzzsE9YXweFjQvl9p+AMw6qd/iC4lUk9g0+FQXNdRs+o4o6Qvy
- iOQJfGQ4UcBuOy1IrkJrd8qq5jet1fcM2j4QvsW8CLDWZS1L7kZ5gT5EycMKxUWb8LuRjxzZ
- 3QY1aQH2kkzn6acigU3HLtgFyV1gBNV44ehjgvJpRY2cC8VhanTx0dZ9mj1YKIky5N+C0f21
- zvntBqcxV0+3p8MrxRRcgEtDZNav+xAoT3G0W4SahAaUTWXpsZoOecwtxi74CyneQNPTDjNg
- azHmvpdBVEfj7k3p4dmJp5i0U66Onmf6mMFpArvBRSMOKU9DlAzMi4IvhiNWjKVaIE2Se9BY
- FdKVAJaZq85P2y20ZBd08ILnKcj7XKZkLU5FkoA0udEBvQ0f9QLNyyy3DZMCQWcwRuj1m73D
- sq8DEFBdZ5eEkj1dCyx+t/ga6x2rHyc8Sl86oK1tvAkwBNsfKou3v+jP/l14a7DGBvrmlYjO
- 59o3t6inu6H7pt7OL6u6BQj7DoMAEQEAAcLBfAQYAQgAJgIbDBYhBBvZyq1zXEw6Rg38yk3e
- EPcA/4NaBQJonNqrBQkmWAihAAoJEE3eEPcA/4NaKtMQALAJ8PzprBEXbXcEXwDKQu+P/vts
- IfUb1UNMfMV76BicGa5NCZnJNQASDP/+bFg6O3gx5NbhHHPeaWz/VxlOmYHokHodOvtL0WCC
- 8A5PEP8tOk6029Z+J+xUcMrJClNVFpzVvOpb1lCbhjwAV465Hy+NUSbbUiRxdzNQtLtgZzOV
- Zw7jxUCs4UUZLQTCuBpFgb15bBxYZ/BL9MbzxPxvfUQIPbnzQMcqtpUs21CMK2PdfCh5c4gS
- sDci6D5/ZIBw94UQWmGpM/O1ilGXde2ZzzGYl64glmccD8e87OnEgKnH3FbnJnT4iJchtSvx
- yJNi1+t0+qDti4m88+/9IuPqCKb6Stl+s2dnLtJNrjXBGJtsQG/sRpqsJz5x1/2nPJSRMsx9
- 5YfqbdrJSOFXDzZ8/r82HgQEtUvlSXNaXCa95ez0UkOG7+bDm2b3s0XahBQeLVCH0mw3RAQg
- r7xDAYKIrAwfHHmMTnBQDPJwVqxJjVNr7yBic4yfzVWGCGNE4DnOW0vcIeoyhy9vnIa3w1uZ
- 3iyY2Nsd7JxfKu1PRhCGwXzRw5TlfEsoRI7V9A8isUCoqE2Dzh3FvYHVeX4Us+bRL/oqareJ
- CIFqgYMyvHj7Q06kTKmauOe4Nf0l0qEkIuIzfoLJ3qr5UyXc2hLtWyT9Ir+lYlX9efqh7mOY
- qIws/H2t
-In-Reply-To: <20260608171917.3195488Afc-agordeev@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20260607095727.647295505@linuxfoundation.org> <20260607173214.92693-1-ojeda@kernel.org>
+ <CAM0EoMkszTXv82To=KnEYTgzQSmEdRW9XrAMVtJsUaDn=Akf6A@mail.gmail.com>
+ <CANiq72mJNbNzYO37VK7s=ua5v31xBrRp8EnHDvEnKF8Z77jDmA@mail.gmail.com>
+ <CAM0EoMmHd10iivCpDoEd3h+eae9fSnoGWAH_AkwFhrnS6PN63g@mail.gmail.com> <CANiq72k6J7FYT89svtX5qbCUWg-MKuhUHaT07cjk8o7PqaF8+A@mail.gmail.com>
+In-Reply-To: <CANiq72k6J7FYT89svtX5qbCUWg-MKuhUHaT07cjk8o7PqaF8+A@mail.gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
+Date: Mon, 8 Jun 2026 16:35:59 -0400
+X-Gm-Features: AVVi8CekC54iinBDQEVgU-dJ9AL5uhMqEzLEARHoPqKy0ZaeCQmHeP3rPtW0Dmw
+Message-ID: <CAM0EoMn9EA_TS80QzXsTscBpCgfJHssq0GHtiNbrMU3FAiP2mw@mail.gmail.com>
+Subject: Re: [PATCH 6.12 000/307] 6.12.93-rc1 review
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, gregkh@linuxfoundation.org, achill@achill.org, 
+	akpm@linux-foundation.org, broonie@kernel.org, conor@kernel.org, 
+	f.fainelli@gmail.com, hargar@microsoft.com, jonathanh@nvidia.com, 
+	linux-kernel@vger.kernel.org, linux@roeck-us.net, 
+	lkft-triage@lists.linaro.org, patches@kernelci.org, patches@lists.linux.dev, 
+	pavel@nabladev.com, rwarsow@gmx.de, shuah@kernel.org, sr@sladewatkins.com, 
+	stable@vger.kernel.org, sudipm.mukherjee@gmail.com, 
+	torvalds@linux-foundation.org, "Kito Xu (veritas501)" <hxzene@gmail.com>, 
+	Victor Nogueira <victor@mojatatu.com>, Paolo Abeni <pabeni@redhat.com>, Jiri Pirko <jiri@resnulli.us>, 
+	netdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 6/8/26 19:19, Alexander Gordeev wrote:
-> On Sun, May 31, 2026 at 01:01:06AM +0000, Askar Safin wrote:
->> vmsplice behavior on writable pipe became equivalent to pwritev2.
->> vmsplice behavior on readable pipe already was nearly
->> equivalent to preadv2, but I made this explicit. I. e. I made it
->> obvious from code that vmsplice now is equivalent to preadv2/pwritev2.
->>
->> Also I moved vmsplice to fs/read_write.c, because now it arguably
->> belongs there.
->>
->> Note that SPLICE_F_NONBLOCK behavior slightly changed: previously
->> vmsplice ignored whether the pipe was opened with O_NONBLOCK, and mode
->> of operation depended on whether SPLICE_F_NONBLOCK was passed only.
->> Now the operation will be non-blocking if O_NONBLOCK was passed when
->> opening *or* SPLICE_F_NONBLOCK was passed to vmsplice. Previous
->> behavior was arguably buggy, and new behavior is arguably better.
->>
->> Now SPLICE_F_GIFT is always ignored by all 3 syscalls: splice, tee
->> and vmsplice.
->>
->> Signed-off-by: Askar Safin <safinaskar@gmail.com>
->> ---
->>  fs/read_write.c          |  23 +++++
->>  fs/splice.c              | 192 +--------------------------------------
->>  include/linux/skbuff.h   |   4 +-
->>  include/linux/splice.h   |   2 +-
->>  include/linux/syscalls.h |   4 +-
->>  5 files changed, 29 insertions(+), 196 deletions(-)
-> 
-> Hi All,
-> 
-> This patch as commit e2c0b2368081b ("vmsplice: make vmsplice a trivial
-> wrapper for preadv2/pwritev2") in linux-next on s390 causes the selftest
-> tools/testing/selftests/mm/cow.c to hang:
-> 
-> # [RUN] vmsplice() + unmap in child ... with PTE-mapped THP (128 kB)
-> 
-> Recently there has been changes in THP area, so the problem is not
-> necessary linked to this patch per se.
+Hi Miguel,
 
-If we reach 128 kB, then 64 kB likely worked. Which might hint at a similar problem
-as found by the vmsplice01 ltp test case (blocking instead of returning once the
-pipe is full).
+On Mon, Jun 8, 2026 at 7:16=E2=80=AFAM Miguel Ojeda
+<miguel.ojeda.sandonis@gmail.com> wrote:
+>
+> On Mon, Jun 8, 2026 at 12:57=E2=80=AFPM Jamal Hadi Salim <jhs@mojatatu.co=
+m> wrote:
+> >
+> > I believe this bug slipped in during a small window but was fixed very
+> > quickly. Probably some fix never trickled to stable.
+>
+> Yeah, as I mentioned above, I think commit a005fa5d7502 ("net/sched:
+> act_mirred: Fix blockcast recursion bypass leading to stack overflow")
+> is missing (at least).
+>
+> I would suggest reviewing the entire chain to see what needs to be backpo=
+rted.
+>
+> > If you can point me to the exact tree where this happens i can take a l=
+ook.
+>
+> This is the 6.12.y -rc tree:
+>
+>   git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi=
+t
+> linux-6.12.y
+>
+> The stable kernel team puts the link to the repository at the top of
+> the thread too:
+>
+>   https://lore.kernel.org/stable/20260607095727.647295505@linuxfoundation=
+.org/
+>
+> > Still curious: So only the arm compiler catches this?
+>
+> It likely gets caught by other arches too, i.e. I just happened to
+> catch it in my arm64 build.
+>
+> This is Clang, not GCC, by the way.
+>
 
-https://lore.kernel.org/r/20260603-raumfahrt-unmerklich-ertrugen-c4ecae70d5f9@brauner
+I think it was too early AM here when i was looking at this.
+The answer was right there all along in what you said: The missing
+piece is commit a005fa5d7502
 
-
--- 
-Cheers,
-
-David
+cheers,
+jamal
+> I hope this helps!
+>
+> Cheers,
+> Miguel
