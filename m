@@ -1,82 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775383A7D73;
-	Mon,  8 Jun 2026 10:32:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8AD3382E1
+	for <patches@lists.linux.dev>; Mon,  8 Jun 2026 10:42:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780914780; cv=none; b=dDzuD3pEFqqP9Yy/E2ZgkNd9DT4XYrlXFUcjdj6oWhsck+dZTLMEPUIzoB8QAWgAYUKPXGFgmV6mwVdwMNB9CnQjcvv1uryMLMEhIYPp1io3qrNZrnkN1B0qbgV2Kux26dEQG0v3Ewu1x9zB7mPAXMXjG6DIFLSjekr8zapK+ys=
+	t=1780915343; cv=none; b=RyywQqbtf2epYdvspQ24ol0Cg6KEflvyDATp2npzesuxEHN8qvzy6PPFIer0uY40XeSd361fDgtPTtjSbZ2w4EO51/zkzTRdKfRg96YxXqt3nvT0fTshkhidxKVKSABe0nhXDIWyWm7MVc3AdNt848RVMBDB6O3h+9ryn4cPuxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780914780; c=relaxed/simple;
-	bh=ucsg0y+vPwq8t29TzyjveuC8ZlV9NyOnmMvknbjahTY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=unGnrxaJ0YqT5zDpNOvrWsdfeDrs3w8VqCJnp9E9pd+bERau4FHTAXfW/fnriuZd8dRu+MWU+VrpM2CHUuTiytnlCDrtUWCgtEAV6GdVzTtDGVQhN88p7OT5Pk4/UkZtwkYybezd8qdKVxOMDTK5VqTUVa8IUJSgreid6o82sks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DGtuydwv; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1780915343; c=relaxed/simple;
+	bh=tyFm1ydanooCPaPGXWuuurLw9oSfDkDuy+Vhi+8VaDA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WzhJkMZGKXAoOBwFVDyH+vXiFwOj6q1hoIdSAp13MRv+cypmKzifFikcUxi7BRNXq2pXvHjxYJ5n2hgEOMOTCRfGddNcxBn6FTm2g1d231ESj0qqvJlkAEt1o1f3DhqJ/QgyJBQugiMV0Ehy5UXgS3YCfdsLyJaTpv8ag7opWsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CrhbKyNC; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DGtuydwv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944981F00893;
-	Mon,  8 Jun 2026 10:32:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780914779;
-	bh=VrgTX6maMXqQRQypmSw+j2+O4a8NeO8G77HvRI4t32Y=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=DGtuydwvDZAb+N5ZktMkc3Xhzt+vVuaNGoVeYSDc+WzEvES33AHrUixW5MsfzSYbt
-	 guhA1OfI5cBsvaUJbAqvvS46T63vjThPjX2VfjWKRtnPxfBdKYKkf70396kEc5pSXA
-	 xtVNuF/Yf7JWop+FBx8yzxHfhfgsG9BT1qROEwQCyHOU+plIQIrgzXjq2wZIttiv8t
-	 tdlrkHA5Czw3Wr1VEdZoVxUDtZoKgAiHnsqDxjGu/kTqBWZZpI40cfyUlONCmHfw7y
-	 nnjy19VwdA7uptTtcKFfeqA+dRn5m3PKpVk6PC7A2LJFaZLi/l+cZ7HFXfwNrh8TKS
-	 Zvh5c3ApvEi8w==
-Date: Mon, 8 Jun 2026 11:32:53 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 6.12 000/307] 6.12.93-rc1 review
-Message-ID: <a6279a93-5d07-4f82-8049-9309de8fee0d@sirena.org.uk>
-References: <20260607095727.647295505@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CrhbKyNC"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-490b64c8311so46555625e9.3
+        for <patches@lists.linux.dev>; Mon, 08 Jun 2026 03:42:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780915340; x=1781520140; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=azxfeq+XTXz75Qe37REfwqMLQybd94mTkxsSsjtZPaw=;
+        b=CrhbKyNCdGFQrkdnHZLrYb9Xb95U9UaILRbBESwZMcIjoWcjnSg8U48qcOie4UCcO6
+         epLaqyrLQgjWX3FZG8JXUA4b9CXUPByieYGNkuRYDlw7nbpz1rBr1MlryRSHTLCMuIWZ
+         t0ch27s9bqWQ3XX80THAJH4FIcDt5s+2sNJZp39UPIBM/d5mI11k9tB85U7vT+Vw0i7b
+         Ky0l/ybPwIz4iCXrl5/y8mk80VsweBhv1tfXGugnPjHSLUp5ee9UJZbz8Uzq0UzDbw1u
+         VNvcEFRkHQVm3suNejfnQfXN+SutRJjVX1e3sd4b/RNz8a9hDMBDugT7np1TexlyBbWy
+         1cDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780915340; x=1781520140;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=azxfeq+XTXz75Qe37REfwqMLQybd94mTkxsSsjtZPaw=;
+        b=k0hMa/h4Gh2iiravTOJyl9mIQaWARjLzDoWEzbj1E9V9atZGRvJuduvsqPC2cJyfo6
+         /VfiZi6OyOWkW8mM2MbNQcTYQ3SLaqxsre/YI6gzmh//UN5jG5gaR8eOgkON5jmPZutO
+         K23++IdPR0D4kw0lvAgHvCG4aZ6+Pbrn0bekUktXlISaWuuyN+mCNQz2AAqkQ9x0ElPD
+         gT/QSdX3fP5W/s5Rghor82j0Pyy2JYTPCsryUSY56aAy/Dwb2pzBRNGM0bsjve75ltkD
+         2IxI/ZSZrN8qM5Pq5Qx8BoyzTbzC5ItwhI1IO86BPE99btD51+vwz+ZrOEqfQPXyFV1t
+         n/IQ==
+X-Gm-Message-State: AOJu0YxaNkIvRwvZZuvBoHYea6uyFg4VDy/DHKugRysul1WDm+qjIDcg
+	5dgg6ur94wv+K6Rc0F9eJL57ak8aF030PhPjo/bjXee8qRblcA991GKQukNi6z13
+X-Gm-Gg: Acq92OFUuE29S1kmvm3Q3Y1hrzGgIkoKTz0t7hKEuO2YksPrLo8ybTvyM4K1u2JT4WN
+	vSJGaW7Cw8XEJxALtKxGT/pXljCSTVHSQTX8cI+NQsr44o8nNPCAegh1+QdI4PfS0VfU94ePrHr
+	VSxZCUC233rC/eE7Jxa1qlPvZ4sNl0zkNXC/NxWFvK9vJSvPcjAd9+Gw/kApT+3y1SFj1ap38HV
+	9v//LvVnQBOX6IPFTHXpyGEs1kAgVONr3GlGY0ZRgPzkWg9shg2j91vCLOdz324Olp8Ql9pqFNx
+	2SgiRWjGIR8GoO6/sio12gUd0+iUfkjZ2XSteptnblVJivAVU07wkvJMZrvX+yv+oW8IPF0P9ur
+	qHeInxdNPPK87w5qqvWS+7jOWcOHH00nBaz/XZdtEtuWamoLGBN2FZoS3Qv8dSbrfTn09j7acNy
+	vGu7upGwRE8z4T07IofkZVq88ipPRoaRJDM2ovtuCuSkKLQHusvU8USHh38ZCX0K3UCZyUUK8bU
+	4usrMcdCwM=
+X-Received: by 2002:a05:600c:458a:b0:48f:e518:d110 with SMTP id 5b1f17b1804b1-490c2614beemr218939445e9.32.1780915340086;
+        Mon, 08 Jun 2026 03:42:20 -0700 (PDT)
+Received: from [192.168.0.105] (88-187-52-200.subs.proxad.net. [88.187.52.200])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490c2d37edbsm290366725e9.2.2026.06.08.03.42.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Jun 2026 03:42:18 -0700 (PDT)
+Message-ID: <e35f543d-d0ee-4ab4-869e-8d01191a5240@gmail.com>
+Date: Mon, 8 Jun 2026 03:42:21 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="dM0toQ9JXTHWE8gW"
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.12 000/307] 6.12.93-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20260607095727.647295505@linuxfoundation.org>
+Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
 In-Reply-To: <20260607095727.647295505@linuxfoundation.org>
-X-Cookie: We've upped our standards, so up yours!
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
---dM0toQ9JXTHWE8gW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-On Sun, Jun 07, 2026 at 11:56:37AM +0200, Greg Kroah-Hartman wrote:
+On 6/7/2026 2:56 AM, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.12.93 release.
 > There are 307 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+> 
+> Responses should be made by Tue, 09 Jun 2026 09:56:47 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.93-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Tested-by: Mark Brown <broonie@kernel.org>
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
---dM0toQ9JXTHWE8gW
-Content-Type: application/pgp-signature; name="signature.asc"
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmommlQACgkQJNaLcl1U
-h9DHigf9FzMOyfAsTo7ZvRwSI56WikxRKJv0gqpYs9lJ49bUu0Ql0ZBhJDfF3zBi
-Ngn9izGW4jqXQGXvNPxDh2uzmHzjxT3NCjgWJRh1TZI5v7hjhVMpN6uMVzlDlSIW
-3/LX4d0/5tiVKDOPmklTDTGPtydx9D3QyRdJZbzdvSJTOXw8HSCdgH5MN8jXSqls
-6Lwenj+zY65FNjQDn32NWCpL2jT/BKsxkkhJlYmhxhzBSViqBREWA+Dsbd2EV7e6
-912AiU6jCoF9hhmv6b9tABnRf4mhzbZt/nV3L7nKAR7Q/QKk1AoYqER9BGYNI9jD
-8qbpskT9akSQehNZ3ONiXNzaFxsv4A==
-=Ft6G
------END PGP SIGNATURE-----
-
---dM0toQ9JXTHWE8gW--
