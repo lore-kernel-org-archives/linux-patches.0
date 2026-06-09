@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F393DCD86
-	for <patches@lists.linux.dev>; Tue,  9 Jun 2026 21:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7CE3914E4
+	for <patches@lists.linux.dev>; Tue,  9 Jun 2026 21:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781038982; cv=none; b=u39oAkYJtoSv19IcFu0hBwHAP9xOJs8fFCmgRdijzfwxgq47VmC6D34YLDzuzGYNLcZZevjjgsFKPxb66Spqgw7lKtmrlbMT5DNg8XNZtk4dwKoXUJwaFhvvK3YY5ntVFaatOXJv5hUtyb4TydaNF54R+INszRdiyBtiGhwo464=
+	t=1781038989; cv=none; b=ctBaxVbGGwQodbyXo2KDyWKuLxs1SZmObsg1CK0gr1F8M1YCx4PahKe5Ejtb+1JTfPWGonhMUSg1oVxneAxJEKdJ25yuqVNckIrXBXBOOWlCNhbKAcdna5GMyUi4siWs3K8xVsPfpuQPYVNHlSdrnwYNBk67x9sEWL4iGRuWLfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781038982; c=relaxed/simple;
-	bh=bQGZ3Gi1hecEzRonc8KkP4mUrFcfRliOT9dqTRLLRN4=;
+	s=arc-20240116; t=1781038989; c=relaxed/simple;
+	bh=LI3fWkBiCZaOC31ilZkPdUqLlp43WfXVSeGsZHEYUvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ik1o/Cp1ySXsmjy+Jg/kppcT1tNXL9YNat9kLtd2lzIQrTY8RNOcfppEEVxwMl2NvxBVduvskWu+Ef8OKCx9BfUmSaqae38yhOuTWriaBJGkvTnKYwMg16hBR/WGjXxMnuqSJtpZoRHjTKnb6ABeFazg2+sfeqLY2fDP81vR24w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Evfu3nvh; arc=none smtp.client-ip=198.175.65.21
+	 MIME-Version; b=thpiFkqE4UCAIlcVqsqhyas4S2lbKN550kJmIMntlNoyRnJPdw322R4xbqoiH1h7rdXAMh8cOGE9K0HatcgfxIWkZZauOW472+Q0lfoDXEB3qCvtTNHmskKSAdz8GFDrZ8kafLTKHNx3YR+W6bXX9MWyGyYd5Ie6reFQpiQv0Ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Q1HzgAhV; arc=none smtp.client-ip=198.175.65.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Evfu3nvh"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Q1HzgAhV"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1781038977; x=1812574977;
+  t=1781038983; x=1812574983;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=bQGZ3Gi1hecEzRonc8KkP4mUrFcfRliOT9dqTRLLRN4=;
-  b=Evfu3nvhFQk62Z75UYE+kQZDQs6qC5atr6E55E1BJrLLf1LUi/RfsHrY
-   QJNCcYDaoCuRqMeE1CKQzxCk/DCOIsWdbIIJVm+4Bc55lgNHa6Q6psSMs
-   fAHmlaKf6kHkkwLp/7T02o30F9GAICvbMzw2VC8SkqplFe4iS1hbuz9b2
-   zaekRP9c833umwnA4cYLjoBw46Dkp9l5hNM5jnYYAmi+9YH8RgHp2yQWh
-   BQdijdxLDFioGISk7Nu+4IJ0ZeeT2Cqz7VQna69GLItXu6sNR38iOLV3E
-   430M7erTOjNu9YXzvy6VkXH3Ayqi+qSZ2B5nZPc5ne8ljbcWBiy0h0HjY
-   w==;
-X-CSE-ConnectionGUID: Tl6XkbmhQsGymDlDJQhQtg==
-X-CSE-MsgGUID: tOw2Ybz4TN6HsT5IFNMd6Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11812"; a="81725079"
+  bh=LI3fWkBiCZaOC31ilZkPdUqLlp43WfXVSeGsZHEYUvs=;
+  b=Q1HzgAhVHcHV4SMmOl/cQVD0megN88WeE/kpVfryNh3mFX1d/91aXtbf
+   7l4uN6JWcspvpHVb1Skzq/GwefQfmbkVl9eq1qx861beDpenynhmtmMTO
+   sz1skuvVhXzu1QD5Ju4VzQjXdxgAg2DlpSh5iJpKxP4AeJ/yeXpIzfvOt
+   Dc1MMwHkVRZySD8tL+HCmsBlV2zrUQE4bV4GhIXJgP6wsqfxgdhUnfEby
+   SqG+IAe3LXRnQLFXkldRorlW36sAZ0wQaGInUkAvohckChw7/CQD1SqfT
+   b1x7RUN60m8p/wzPYVmbE8n4HpHTCTmNjlv4lsBVarwS7A49i+FRbvXAs
+   g==;
+X-CSE-ConnectionGUID: zy157sp/QhOZQsAOZGzbgQ==
+X-CSE-MsgGUID: 6hpOgGToR8q/Tsb/eX4cRg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11812"; a="81725097"
 X-IronPort-AV: E=Sophos;i="6.24,196,1774335600"; 
-   d="scan'208";a="81725079"
+   d="scan'208";a="81725097"
 Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 14:02:56 -0700
-X-CSE-ConnectionGUID: rq9mlczNR2C0OTwo24NvLA==
-X-CSE-MsgGUID: JbXnfTi0STaH4dmC7jMfrg==
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 14:02:59 -0700
+X-CSE-ConnectionGUID: sFmORcTHTb+hZXHhtm8v/w==
+X-CSE-MsgGUID: YfnJtOCjRmehp5+yT9DXSA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.24,196,1774335600"; 
-   d="scan'208";a="251045719"
+   d="scan'208";a="251045755"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 14:02:54 -0700
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 14:02:57 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
 To: tony.luck@intel.com,
 	james.morse@arm.com,
@@ -61,9 +61,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v5 07/11] fs/resctrl: Prevent use-after-free in rdtgroup_kn_put()
-Date: Tue,  9 Jun 2026 14:02:33 -0700
-Message-ID: <9bfb3dc321d46b9d28d9952addc9c7e8a84437dc.1781029125.git.reinette.chatre@intel.com>
+Subject: [PATCH v5 10/11] x86/resctrl: Ensure domain fully initialized before placed on RCU list
+Date: Tue,  9 Jun 2026 14:02:36 -0700
+Message-ID: <a5cc102786aa388ea11b114f12b67c19c00b8ed0.1781029125.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1781029125.git.reinette.chatre@intel.com>
 References: <cover.1781029125.git.reinette.chatre@intel.com>
@@ -75,89 +75,140 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A struct rdtgroup is reference counted via rdtgroup::waitcount. Callers
-that need the structure to remain valid across a sleep (while waiting on
-acquiring rdtgroup_mutex) take a reference with rdtgroup_kn_get() and
-release it with rdtgroup_kn_put(). The release path is intended to serve
-as the fallback freer: if the count drops to zero and the group has
-already been marked RDT_DELETED, rdtgroup_kn_put() frees the structure.
-The bulk teardown paths free_all_child_rdtgrp() and rmdir_all_sub()
-resulting from a resctrl directory remove or resctrl fs unmount act as
-the primary freer: they hold rdtgroup_mutex and free each rdtgroup whose
-waitcount is zero, otherwise they set RDT_DELETED and leave the freeing
-to the last waiter.
+A resctrl domain consists of the domain structure self that includes
+pointers to dynamically allocated filesystem as well as architecture
+specific data. For example, the L3 monitoring domain structure consists
+of the architecture specific struct rdt_hw_l3_mon_domain that contains
+the dynamically allocated rdt_hw_l3_mon_domain::arch_mbm_states
+architectural state and the embedded struct rdt_l3_mon_domain contains
+the dynamically allocated rdt_l3_mon_domain::mbm_states resctrl fs state.
 
-These two freers race. rdtgroup_kn_put() commits waitcount == 0 with
-atomic_dec_and_test() outside rdtgroup_mutex, then reads rdtgroup::flags.
-Between those two operations a concurrent caller of free_all_child_rdtgrp()
-or rmdir_all_sub() (which holds the mutex) can observe waitcount == 0 via
-atomic_read(), call rdtgroup_remove(), and kfree() the structure. The
-subsequent read of rdtgroup::flags in rdtgroup_kn_put() is then a
-use-after-free, and the structure may even be freed twice if the freed
-memory happens to satisfy the RDT_DELETED flag check.
+The domains are added to and removed from an RCU protected list while
+cpus_write_lock() is held so that readers could access domains via
+cpus_read_lock() or from an RCU read-side critical section.
 
-Replace the bare atomic_dec_and_test() with atomic_dec_and_mutex_lock()
-so that the decrement-to-zero takes rdtgroup_mutex before the count
-becomes globally visible. The inspection of rdtgroup::flags then runs
-under the same mutex held by the bulk freers, making the two paths
-mutually exclusive. The common case where the count does not reach
-zero remains lock-free. Defer kernfs_unbreak_active_protection() until
-after the mutex is dropped since kernfs active protections functionally
-wrap rdtgroup_mutex. Remove resource group, which in turn drops its kernfs
-reference, after kernfs protection is restored.
+A reader accessing a domain via the RCU list expects that the domain and
+all its dynamically allocated data is accessible. Only place the domain on
+the RCU list when all its dynamically allocated data is ready, similarly
+unlink it from RCU list (again with cpus_write_lock() held) before removing
+any of its dynamically allocated data.
 
-Fixes: b8511ccc75c0 ("x86/resctrl: Fix use-after-free when deleting resource groups")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260515193944.15114-1-tony.luck%40intel.com?part=1
-Assisted-by: GitHub_Copilot:gemini-3.1-pro
+Calling resctrl_online_mon_domain() before adding the domain to the RCU
+list creates the kernfs files that expose the domain's monitoring data to
+user space before adding the domain to the RCU list. This is safe because
+rdtgroup_mondata_show() acquires cpus_read_lock() before it traverses the
+RCU list and will thus block until the domain is added to the RCU list.
+
+There are no readers accessing a domain via RCU list. Ensure safety of
+access when such a reader arrives.
+
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Ben Horgan <ben.horgan@arm.com>
 Reviewed-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
 ---
 Changes since V2:
 - New patch
 
 Changes since V3:
-- Add Ben's Reviewed-by tag.
 - Add Tony's Reviewed-by tag.
+- Add Chenyu's Reviewed-by tag.
+- Grammar fixes in changelog.
+- Add snippet to changelog about possible race with rdtgroup_mondata_show().
 ---
- fs/resctrl/rdtgroup.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ arch/x86/kernel/cpu/resctrl/core.c      | 18 +++++++-----------
+ arch/x86/kernel/cpu/resctrl/intel_aet.c |  5 ++---
+ 2 files changed, 9 insertions(+), 14 deletions(-)
 
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 0d073d4db734..c04424c081a4 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -2606,15 +2606,24 @@ static void rdtgroup_kn_get(struct rdtgroup *rdtgrp, struct kernfs_node *kn)
- 
- static void rdtgroup_kn_put(struct rdtgroup *rdtgrp, struct kernfs_node *kn)
- {
--	if (atomic_dec_and_test(&rdtgrp->waitcount) &&
--	    (rdtgrp->flags & RDT_DELETED)) {
-+	bool needs_free;
-+
-+	if (!atomic_dec_and_mutex_lock(&rdtgrp->waitcount, &rdtgroup_mutex)) {
-+		kernfs_unbreak_active_protection(kn);
-+		return;
-+	}
-+
-+	needs_free = rdtgrp->flags & RDT_DELETED;
-+
-+	mutex_unlock(&rdtgroup_mutex);
-+
-+	kernfs_unbreak_active_protection(kn);
-+
-+	if (needs_free) {
- 		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
- 		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
- 			rdtgroup_pseudo_lock_remove(rdtgrp);
--		kernfs_unbreak_active_protection(kn);
- 		rdtgroup_remove(rdtgrp);
--	} else {
--		kernfs_unbreak_active_protection(kn);
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 9c01d2562b7a..bca782050198 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -515,14 +515,12 @@ static void domain_add_cpu_ctrl(int cpu, struct rdt_resource *r)
+ 		return;
  	}
+ 
+-	list_add_tail_rcu(&d->hdr.list, add_pos);
+-
+ 	err = resctrl_online_ctrl_domain(r, d);
+ 	if (err) {
+-		list_del_rcu(&d->hdr.list);
+-		synchronize_rcu();
+ 		ctrl_domain_free(hw_dom);
++		return;
+ 	}
++	list_add_tail_rcu(&d->hdr.list, add_pos);
  }
  
+ static void l3_mon_domain_setup(int cpu, int id, struct rdt_resource *r, struct list_head *add_pos)
+@@ -556,14 +554,12 @@ static void l3_mon_domain_setup(int cpu, int id, struct rdt_resource *r, struct
+ 		return;
+ 	}
+ 
+-	list_add_tail_rcu(&d->hdr.list, add_pos);
+-
+ 	err = resctrl_online_mon_domain(r, &d->hdr);
+ 	if (err) {
+-		list_del_rcu(&d->hdr.list);
+-		synchronize_rcu();
+ 		l3_mon_domain_free(hw_dom);
++		return;
+ 	}
++	list_add_tail_rcu(&d->hdr.list, add_pos);
+ }
+ 
+ static void domain_add_cpu_mon(int cpu, struct rdt_resource *r)
+@@ -642,9 +638,9 @@ static void domain_remove_cpu_ctrl(int cpu, struct rdt_resource *r)
+ 	d = container_of(hdr, struct rdt_ctrl_domain, hdr);
+ 	hw_dom = resctrl_to_arch_ctrl_dom(d);
+ 
+-	resctrl_offline_ctrl_domain(r, d);
+ 	list_del_rcu(&hdr->list);
+ 	synchronize_rcu();
++	resctrl_offline_ctrl_domain(r, d);
+ 
+ 	/*
+ 	 * rdt_ctrl_domain "d" is going to be freed below, so clear
+@@ -689,9 +685,9 @@ static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
+ 
+ 		d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
+ 		hw_dom = resctrl_to_arch_mon_dom(d);
+-		resctrl_offline_mon_domain(r, hdr);
+ 		list_del_rcu(&hdr->list);
+ 		synchronize_rcu();
++		resctrl_offline_mon_domain(r, hdr);
+ 		l3_mon_domain_free(hw_dom);
+ 		break;
+ 	}
+@@ -702,9 +698,9 @@ static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
+ 			return;
+ 
+ 		pkgd = container_of(hdr, struct rdt_perf_pkg_mon_domain, hdr);
+-		resctrl_offline_mon_domain(r, hdr);
+ 		list_del_rcu(&hdr->list);
+ 		synchronize_rcu();
++		resctrl_offline_mon_domain(r, hdr);
+ 		kfree(pkgd);
+ 		break;
+ 	}
+diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+index 89b8b619d5d5..c22c3cf5167d 100644
+--- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
++++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
+@@ -398,12 +398,11 @@ void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
+ 	d->hdr.type = RESCTRL_MON_DOMAIN;
+ 	d->hdr.rid = RDT_RESOURCE_PERF_PKG;
+ 	cpumask_set_cpu(cpu, &d->hdr.cpu_mask);
+-	list_add_tail_rcu(&d->hdr.list, add_pos);
+ 
+ 	err = resctrl_online_mon_domain(r, &d->hdr);
+ 	if (err) {
+-		list_del_rcu(&d->hdr.list);
+-		synchronize_rcu();
+ 		kfree(d);
++		return;
+ 	}
++	list_add_tail_rcu(&d->hdr.list, add_pos);
+ }
 -- 
 2.50.1
 
