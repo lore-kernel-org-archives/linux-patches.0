@@ -1,47 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3330B40D574
-	for <patches@lists.linux.dev>; Tue,  9 Jun 2026 21:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BFD1F4C8E
+	for <patches@lists.linux.dev>; Tue,  9 Jun 2026 21:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781038972; cv=none; b=icCdipUyVKM5b9qhvrt5f/lEMvtiLRL9BRxD++q8tWy5ZvStwqlRbcRU85Os3q9oHcn1NFdB2AwWXQp+DSkroPrgx8v6Nu5bRm0mefvZ44DiEx/VZfL9wHnVVoLZggGnQeuMMJr5ceOvGNfb9UCNsUfMExDHJEDuvVbI26ar8c4=
+	t=1781038972; cv=none; b=DBbSY/2uYWYojftyYeMhRm5gIsNk6rMQZgrplyNCDN/q8wGLHexR3MZmjj9s7/cUtnyg18wmz0/hIdrIrAmF1gAZEuq+623cpp9s5jY+PCcm9Gc719P1nTSOgC1YhtD5n+s5N2k9kX2vOE5a9fCqhqbVziUUvbIC4HbSZR3f/EE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1781038972; c=relaxed/simple;
-	bh=yr3wUOmLRM1szI4050WBuMXfAinstpDgC0NOj7XulGc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PmhM+RZXe/+i+E1y4OBMy4MFvVvYTq9xb1UCbcQDDLmnOtlrHvX7746GEZY2eWEIm6PN9XZXEQ6rJu/+xSJuVEVwQgTPx6ijJrY1/dDp22N/W0rKslxQxfiNJWIlPAvqlfheBY2jve7i05PZYWY1ZLwR4IMR2desQSYdbukXSvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kUxBqCje; arc=none smtp.client-ip=198.175.65.21
+	bh=f/Q5dw5XVz+ZpO56KFHZP9zsoZeVoBUTIdNJsq6xYdk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=mJ8Y2E3dWSuiFUhvQ44gcGJV+uDygEttaJ7RGBxqUWa95Bcrd3Z1cJQvUiV3RbZcP1+IByo6l0aDu94tEbgg86OS+mf3y07V+ldK13kIXEcpjoNumQl6AixYWNMHUTtsMuB6t5wouORYWY5Mw3x4V1GZH/CXK5USyBU0ia32pj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YEG8veQ8; arc=none smtp.client-ip=198.175.65.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kUxBqCje"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YEG8veQ8"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1781038971; x=1812574971;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=yr3wUOmLRM1szI4050WBuMXfAinstpDgC0NOj7XulGc=;
-  b=kUxBqCjeYP5IF4c5zpBHSHck9HaSqDZ9J7d7mPx6Hm+66uxG0oa/Z44m
-   AEAtpacs2Pdknod8X8KIbM8c42H9T4dBP3oLMODZ6rI8JLfONwSJAdxgD
-   JUB8WB29w+B07bw1+J/BgVYgMb1WEKLde2Tpb/AVvhc9qXEPQacOcS6YI
-   s/V/NH1jQ8ssXzHrFr4ra3nKF5A4GOESzwR8tEk//qRE4Bgdp4zeXeiMO
-   OfGMdU5WZo1O3sOBgbE2lY/4irdMIyPb1C6NEawAjJkrcrgpssWQ2SMEz
-   gczcXGF8A+rSS9Cy2km7EHAG9ZWcSEYBQm6un6SRGRuraO/4AUpQ08nWv
-   w==;
-X-CSE-ConnectionGUID: zc6uQtiaRjap/0oRYHtnZQ==
-X-CSE-MsgGUID: GfKaibVXSyKxyNf0nObt2w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11812"; a="81725044"
+  t=1781038972; x=1812574972;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=f/Q5dw5XVz+ZpO56KFHZP9zsoZeVoBUTIdNJsq6xYdk=;
+  b=YEG8veQ8bAw9Ke588T0il9LJNo022klHdXm5RkIMQYXINR6J4JLWTcxv
+   LLzi+jj2iSgxaryiQyCC+mbZ72eERASg8zfhmNSJDj4F+z5/P9rLv/jqr
+   r4PWL+Jv1G1r0jrijvpCUGbEJD0vLz6Bu/nXB6QZsJ9XVe6vLdYV+ug3U
+   Z5zRqYj7K/aRa82VsYwKsYJyWBNYJxn5HP2IqDlG/p+KPoMnBGB5tltnD
+   Q+zaLxKWPrbNzwRFCNkkZFAvAOH5sD9TItRWdy6s9lVUZpTTcQKnQD8ue
+   GC57ULjwPqEWRRAi/gmq/oKuQUUixy49D6fYk645ys7OjwQXmPN3UVlSE
+   Q==;
+X-CSE-ConnectionGUID: 9CJqxCQATt244D10oUccIg==
+X-CSE-MsgGUID: NszVOuI4RQ6HV1OXS0Ys5A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11812"; a="81725046"
 X-IronPort-AV: E=Sophos;i="6.24,196,1774335600"; 
-   d="scan'208";a="81725044"
+   d="scan'208";a="81725046"
 Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 14:02:50 -0700
-X-CSE-ConnectionGUID: 48ag1mGTRbSvoSoUjh3wDw==
-X-CSE-MsgGUID: GEo2BAsYSEucMuS03O4bDA==
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 14:02:51 -0700
+X-CSE-ConnectionGUID: wEv00hnMRoyHInxHDUY4gw==
+X-CSE-MsgGUID: utlzelpgTnuL2HoRrTj/qg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.24,196,1774335600"; 
-   d="scan'208";a="251045634"
+   d="scan'208";a="251045646"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 14:02:48 -0700
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 14:02:49 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
 To: tony.luck@intel.com,
 	james.morse@arm.com,
@@ -60,10 +61,12 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v5 00/11] x86,fs/resctrl: Fix long-standing issues
-Date: Tue,  9 Jun 2026 14:02:26 -0700
-Message-ID: <cover.1781029125.git.reinette.chatre@intel.com>
+Subject: [PATCH v5 01/11] x86,fs/resctrl: Prevent out-of-bounds access while offlining CPU when SNC enabled
+Date: Tue,  9 Jun 2026 14:02:27 -0700
+Message-ID: <16137433df42f85013b2f7a53626795cbd6637b9.1781029125.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <cover.1781029125.git.reinette.chatre@intel.com>
+References: <cover.1781029125.git.reinette.chatre@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -72,66 +75,117 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-v4: https://lore.kernel.org/lkml/cover.1780456704.git.reinette.chatre@intel.com/
-v3: https://lore.kernel.org/lkml/cover.1779476724.git.reinette.chatre@intel.com/
-v2: https://lore.kernel.org/lkml/20260515193944.15114-1-tony.luck@intel.com/
-v1: https://lore.kernel.org/all/20260508182143.14592-1-tony.luck@intel.com/
+The architecture updates the cpu_mask in a domain's header to track which
+online CPUs are associated with the domain. When this mask becomes empty
+the architecture initiates offline of the domain that includes calling
+on resctrl fs to offline the domain. If it is a monitoring domain in
+which LLC occupancy is tracked resctrl fs forces the limbo handler to
+clear all busy RMID state associated with the domain.
 
-While reviewing the AET series [1] Sashiko reported a deadlock during mount,
-and a use-after-free when an L3 domain is removed during CPU offline. More issues
-were uncovered as fixes were developed and reviewed. While the goal is to
-fix all issues the races surrounding pseudo-locked regions are not yet
-solved and have been removed from this series (last appearance was in V3 of
-this series).
+The limbo handler always reads the current event value associated with a
+busy RMID irrespective of it being checked as part of regular "is it still
+busy" check or whether it will be forced released anyway. When reading an
+RMID on a system with SNC enabled the "logical RMID" is converted to the
+"physical RMID" and this conversion requires the NUMA node ID of the
+resctrl monitoring domain that is in turn determined by querying the NUMA
+node ID of any CPU belonging to the monitoring domain.
 
-Applies against tip/master to ensure it considers pending x86/cache changes
-as well as the lockdep_is_cpus_held() stubs available in smp/core.
+When the monitoring domain is going offline its cpu_mask is empty causing
+the NUMA node ID query via cpu_to_node() to be done with "nr_cpu_ids" as
+argument resulting in an out-of-bounds access.
 
-Changes since V4:
-- Add new fix to prevent out-of-bouds read when SNC is enabled and domain
-  with busy RMID goes offline.
-- Add substitute for "is domain going offline" check to workers to avoid
-  reading any event counters on soon-to-be-offline domain since its
-  cpu_mask is empty and reading an event counter on an SNC enabled system
-  depends on knowing a CPU associated with the domain.
+Refactor the limbo handler to skip reading the RMID when the RMID will
+just be forced to no longer be dirty in the domain anyway. Add a safety
+check to the architecture's RMID reader to protect against this scenario.
 
-Changes since V3:
-- Drop majority of pseudo-locking fixes, only keep the double free/double
-  list add fix.
-- Add patch to help document safe RCU list traversal.
-- See individual patches for detailed changes.
+Fixes: e13db55b5a0d ("x86/resctrl: Introduce snc_nodes_per_l3_cache")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/cover.1780456704.git.reinette.chatre%40intel.com?part=9
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+---
+Changes since v4:
+- New patch
+---
+ arch/x86/kernel/cpu/resctrl/monitor.c |  5 ++++
+ fs/resctrl/monitor.c                  | 39 +++++++++++++++------------
+ 2 files changed, 27 insertions(+), 17 deletions(-)
 
-[1] https://sashiko.dev/#/patchset/20260429184858.36423-1-tony.luck%40intel.com
-
-Reinette Chatre (8):
-  x86,fs/resctrl: Prevent out-of-bounds access while offlining CPU when
-    SNC enabled
-  x86,fs/resctrl: Document safe RCU list traversal
-  fs/resctrl: Fix deadlock on errors during mount
-  fs/resctrl: Prevent use-after-free in rdtgroup_kn_put()
-  fs/resctrl: Fix double-add of pseudo-locked region's RMID to free list
-  fs/resctrl: Prevent deadlock and use-after-free in info file handlers
-  x86/resctrl: Ensure domain fully initialized before placed on RCU list
-  fs/resctrl: Fix UAF from worker threads when domains are removed
-
-Tony Luck (3):
-  fs/resctrl: Move functions to avoid forward references in subsequent
-    fixes
-  fs/resctrl: Free mon_data structures on rdt_get_tree() failure
-  fs/resctrl: Fix use-after-free during unmount
-
- arch/x86/kernel/cpu/resctrl/core.c        |  18 +-
- arch/x86/kernel/cpu/resctrl/ctrlmondata.c |   4 +-
- arch/x86/kernel/cpu/resctrl/intel_aet.c   |   5 +-
- arch/x86/kernel/cpu/resctrl/monitor.c     |   7 +-
- arch/x86/kernel/cpu/resctrl/rdtgroup.c    |   4 +-
- fs/resctrl/ctrlmondata.c                  |  50 +-
- fs/resctrl/internal.h                     |   3 +-
- fs/resctrl/monitor.c                      | 170 +++--
- fs/resctrl/pseudo_lock.c                  |   2 +-
- fs/resctrl/rdtgroup.c                     | 859 ++++++++++++++--------
- 10 files changed, 698 insertions(+), 424 deletions(-)
-
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index 03ee6102ab07..569894d6e5c8 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -259,6 +259,11 @@ int resctrl_arch_rmid_read(struct rdt_resource *r, struct rdt_domain_hdr *hdr,
+ 	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3))
+ 		return -EINVAL;
+ 
++	if (cpumask_empty(&hdr->cpu_mask)) {
++		pr_warn_once("Domain %d has no CPUs\n", hdr->id);
++		return -EINVAL;
++	}
++
+ 	d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
+ 	hw_dom = resctrl_to_arch_mon_dom(d);
+ 	cpu = cpumask_any(&hdr->cpu_mask);
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 0e6a389a16bf..a932a1fea818 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -135,10 +135,10 @@ void __check_limbo(struct rdt_l3_mon_domain *d, bool force_free)
+ 	struct rdt_resource *r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
+ 	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
+ 	struct rmid_entry *entry;
++	bool rmid_dirty = true;
+ 	u32 idx, cur_idx = 1;
+ 	void *arch_mon_ctx;
+ 	void *arch_priv;
+-	bool rmid_dirty;
+ 	u64 val = 0;
+ 
+ 	arch_priv = mon_event_all[QOS_L3_OCCUP_EVENT_ID].arch_priv;
+@@ -161,22 +161,27 @@ void __check_limbo(struct rdt_l3_mon_domain *d, bool force_free)
+ 			break;
+ 
+ 		entry = __rmid_entry(idx);
+-		if (resctrl_arch_rmid_read(r, &d->hdr, entry->closid, entry->rmid,
+-					   QOS_L3_OCCUP_EVENT_ID, arch_priv, &val,
+-					   arch_mon_ctx)) {
+-			rmid_dirty = true;
+-		} else {
+-			rmid_dirty = (val >= resctrl_rmid_realloc_threshold);
+-
+-			/*
+-			 * x86's CLOSID and RMID are independent numbers, so the entry's
+-			 * CLOSID is an empty CLOSID (X86_RESCTRL_EMPTY_CLOSID). On Arm the
+-			 * RMID (PMG) extends the CLOSID (PARTID) space with bits that aren't
+-			 * used to select the configuration. It is thus necessary to track both
+-			 * CLOSID and RMID because there may be dependencies between them
+-			 * on some architectures.
+-			 */
+-			trace_mon_llc_occupancy_limbo(entry->closid, entry->rmid, d->hdr.id, val);
++		if (!force_free) {
++			if (resctrl_arch_rmid_read(r, &d->hdr, entry->closid,
++						   entry->rmid, QOS_L3_OCCUP_EVENT_ID,
++						   arch_priv, &val, arch_mon_ctx)) {
++				rmid_dirty = true;
++			} else {
++				rmid_dirty = (val >= resctrl_rmid_realloc_threshold);
++
++				/*
++				 * x86's CLOSID and RMID are independent numbers,
++				 * so the entry's CLOSID is an empty CLOSID
++				 * (X86_RESCTRL_EMPTY_CLOSID). On Arm the RMID
++				 * (PMG) extends the CLOSID (PARTID) space with
++				 * bits that aren't used to select the configuration.
++				 * It is thus necessary to track both CLOSID and
++				 * RMID because there may be dependencies between
++				 * them on some architectures.
++				 */
++				trace_mon_llc_occupancy_limbo(entry->closid, entry->rmid,
++							      d->hdr.id, val);
++			}
+ 		}
+ 
+ 		if (force_free || !rmid_dirty) {
 -- 
 2.50.1
 
