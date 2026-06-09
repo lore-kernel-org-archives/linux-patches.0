@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E027D3988E1
-	for <patches@lists.linux.dev>; Tue,  9 Jun 2026 21:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51961F4C8E
+	for <patches@lists.linux.dev>; Tue,  9 Jun 2026 21:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781038975; cv=none; b=gTxPWfEptOFocKifNqENCIdsJ33MXk0NaAjgJzNRLpZA7KPispEHgAf7RpcYxYxs4tu9FaqyRtnGrTduXfa/n6S2pKfjsjlfKRVFtqURj2TUrzP2WYfatVLQ9KZ5jCno1s0YmiWDVwGF39mz6FTIRyTXbuD3OHEntRo0g7W+p4Y=
+	t=1781038975; cv=none; b=fS9iqJxc+veMDccDkrdb7CwsWFukxLcjNCu3OaOnsM58Wuw500P5SZN8UkVclgSGl9MJw8SwV81zpgsrdiipNrnRthE1UJQiPSZtRGH7LDuSYPcXIlPjpnlTrfkC9Yc+9mZhr+JMptrNuUi0WiYQ1JEGZDSG5mQIKURCDo+dKXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1781038975; c=relaxed/simple;
-	bh=uj2HbwpeVZoI2H2eNfrEoI9yD3Oy3gxW4pyNDQE7YT4=;
+	bh=6ATno5HyYAEBpGTzLDqq16Sa/353TxzmxUBOAQq6ObE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HMHYmjwJuhMcFhVKnByggD/T9LMyQGEVVPanOr0LlK01f1B8u6blKB9X+JPgvQOpHclv22yZbtAmYTNfZp+sgoIewp74RLd9OqOgSpB4ROlWsMmH8vUbh4B9O7c5nNqg9kFs69qDY3sYJTf2oFs9cqW8RiR/dwkgF0W/wK0YJaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HsMFe1q6; arc=none smtp.client-ip=198.175.65.21
+	 MIME-Version; b=fu1QRFhB9iqPcYBDAp/klNR0otBppgRmCCT/jAMkKxlHOedZAyVssWNI4F6ZM0U/DXiJixIxfoXLw3Tf7RKusz4paJi0gpnSR4IsxkK0tTzZfrDiBU4KZRqnujhmyJ92HKU6Sj6cy5d5YDlD0PZcTudUcwmmY3OtGw44Q1HQSqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Dq2dKzpH; arc=none smtp.client-ip=198.175.65.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HsMFe1q6"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Dq2dKzpH"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1781038974; x=1812574974;
+  t=1781038973; x=1812574973;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=uj2HbwpeVZoI2H2eNfrEoI9yD3Oy3gxW4pyNDQE7YT4=;
-  b=HsMFe1q65O3e3yN6Adx4DvQU8tUkUyNG0xTXsxBUD8dXzfNjj+r62kKt
-   hG7U9UvImKm5lEPRhFyfD8SulNq/GvUaVh0ydxNVZlK3JMuup8/LB9ju4
-   njZr2Rk8ebloU6rvGTyP940X6lfYhPOQUgzdpFEvA5vt3yhiGXqtMTv5d
-   zz3qNQsAUvqhahCs2/t0KTSl1L5lu3lfYDKJ2/9iJ0Ez08l49L0tj6Kv1
-   n63rRiIx2Y6dQ59brIwMSpqlor2Sw+1LvvAMxYWqqej2y3cvLs3hloOc2
-   JBQ+GcXFYq7Rs4MuuZRrfu1UV/bV9KBPJ09wVYMaHOP9Wp5+vQEY3Libj
+  bh=6ATno5HyYAEBpGTzLDqq16Sa/353TxzmxUBOAQq6ObE=;
+  b=Dq2dKzpHaqn2V6xFJfX+tvI5xi3ON5n73BaUG+yraTJbp3WVveqOBcH8
+   DO+SuMA/MgSjmI4cmGCpBO/OXiyGBYyFXNF4wfwPbno6yBJ6U1GTxll/i
+   Axf8fey2BYGOVcSwX4xKWZzsxA3lgIYJzscFI4Yz+TIQmsgrvCm0/PBB0
+   hKXGFlGwkcXDZV0qu2WfmwkNP8y4digb45JLZPywcQbFAseNbabhsHzKY
+   P3iiNsCbOuXXA+p/4SnSQpTcmZvus/8m0t21IXVIhEzv2jx7E32Va+v2d
+   ofWrUUG18upySmTrXRR43OkaGdEh30+5p9pDBNrW1tHPgvF0Yfkx7/FxN
    A==;
-X-CSE-ConnectionGUID: /veYos8FSq6sM3uxacdBUw==
-X-CSE-MsgGUID: +/DZ9zxuQ66d/MHnvWyjnA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11812"; a="81725068"
+X-CSE-ConnectionGUID: 3usMmWshRWmBz0mCSIpEgA==
+X-CSE-MsgGUID: TKGLkLxbS2CLZQu1e24ghg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11812"; a="81725056"
 X-IronPort-AV: E=Sophos;i="6.24,196,1774335600"; 
-   d="scan'208";a="81725068"
+   d="scan'208";a="81725056"
 Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 14:02:54 -0700
-X-CSE-ConnectionGUID: lcR9f0kHSIS/7sHizfJRrQ==
-X-CSE-MsgGUID: CH8OTXeQSMyKH9X/TyOMhQ==
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 14:02:52 -0700
+X-CSE-ConnectionGUID: S8p8/S1KT5K0gi63bjav0g==
+X-CSE-MsgGUID: 8yfeY/LQRKK/O2fCvb39UA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.24,196,1774335600"; 
-   d="scan'208";a="251045686"
+   d="scan'208";a="251045663"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 14:02:52 -0700
+  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jun 2026 14:02:51 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
 To: tony.luck@intel.com,
 	james.morse@arm.com,
@@ -61,9 +61,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v5 05/11] fs/resctrl: Fix use-after-free during unmount
-Date: Tue,  9 Jun 2026 14:02:31 -0700
-Message-ID: <bd5ef3e15218a4163187e914a6a8f6fed84597bd.1781029125.git.reinette.chatre@intel.com>
+Subject: [PATCH v5 03/11] fs/resctrl: Move functions to avoid forward references in subsequent fixes
+Date: Tue,  9 Jun 2026 14:02:29 -0700
+Message-ID: <8217111523c55851d88b12cb5f6c0413a9732b4d.1781029125.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1781029125.git.reinette.chatre@intel.com>
 References: <cover.1781029125.git.reinette.chatre@intel.com>
@@ -77,138 +77,423 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Luck <tony.luck@intel.com>
 
-During unmount or failure teardown all mon_data structures that contain
-monitoring event file private data are freed after which kernfs nodes are
-removed. However, the RDT_DELETED flag is never set for the statically
-allocated default resource group.
+rdt_get_tree() manages resctrl fs mount and rdt_kill_sb() manages resctrl
+fs unmount.
 
-A concurrent reader of an event file associated with the default resource
-group may, after dropping kernfs active protection, block on rdtgroup_mutex
-while unmount proceeds to free the file private data and destroy the kernfs
-node without waiting for the reader.
+There is significant overlap between error cleanup during resctrl mount
+failure and cleanup on resctrl unmount yet the cleanup is not done
+consistently in these two flows.
 
-When the mutex is released, the reader wakes up, observes that RDT_DELETED
-is not set for the default group, and dereferences the already-freed
-file private data.
+Pull some cleanup functions before rdt_get_tree() in preparation for
+a new helper that can be shared between mount and unmount.
 
-The scenario can be depicted as follows:
-  CPU0                                      CPU1
-   /*
-    * Default resource group's
-    * monitoring data accessible via
-    * kernfs file with kernfs_node::priv
-    * pointing to a struct mon_data.
-    * User opens the file for reading.
-    */
-   rdtgroup_mondata_show()                 /* arch encounters fatal error */
-    rdtgroup_kn_lock_live()                 resctrl_exit()
-     atomic_inc(&rdtgroup_default.waitcount) cpus_read_lock()
-     kernfs_break_active_protection(kn)      mutex_lock(&rdtgroup_mutex)
-     cpus_read_lock()                        resctrl_fs_teardown()
-     mutex_lock(&rdtgroup_mutex)              rmdir_all_sub()
-                                              mon_put_kn_priv()
-                                               /* Delete all mon_data structures */
-                                              rdtgroup_destroy_root()
-                                               kernfs_destroy_root()
-                                               rdtgroup_default.kn = NULL
-                                             mutex_unlock(&rdtgroup_mutex)
-     /*
-      * rdtgroup_default.flags is empty so
-      * rdtgroup_kn_lock_live() returns
-      * &rdtgroup_default
-      */
-     md = of->kn->priv;
-
-     /* md points to freed mon_data */
-
-Set RDT_DELETED for the default group unconditionally since the flag does
-not lead to the freeing of this statically allocated group.
-
-Do not allow a new resctrl mount if there are any waiters on default group
-of previous mount. A new mount will re-initialize the default group that
-would appear to waiters from previous mount as though the default group is
-accessible causing them to access the mon_data structures from the previous
-mount that have been removed.
-
-Fixes: 2a6566038544 ("x86/resctrl: Expand the width of domid by replacing mon_data_bits")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260508182143.14592-1-tony.luck%40intel.com?part=2 [1]
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Reviewed-by: Ben Horgan <ben.horgan@arm.com>
 ---
 Changes since V2:
-- Rewrite changelog to not describe code as much.
-- Rework changelog to switch to "Reported-by/Closes".
-- Merge the duplicate rdtgroup_remove() comment with the function comment.
-- Fix changelog to not mention that RDT_DELETED flag is set conditionally.
-- Change "Fixes:" tag to point to commit that introduced dynamically
-  allocated mon_data this bug involves.
+- Rewrite changelog.
 
 Changes since V3:
-- Depict the race. (Chenyu)
-- Add Chenyu's Reviewed-by tag.
-- Changelog grammar fixes.
+- Add Ben's Reviewed-by tag.
 ---
- fs/resctrl/rdtgroup.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ fs/resctrl/rdtgroup.c | 376 +++++++++++++++++++++---------------------
+ 1 file changed, 188 insertions(+), 188 deletions(-)
 
 diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 31cfb54a5488..809f0965474c 100644
+index 2a6221925767..2b624cf02147 100644
 --- a/fs/resctrl/rdtgroup.c
 +++ b/fs/resctrl/rdtgroup.c
-@@ -585,14 +585,20 @@ static ssize_t rdtgroup_cpus_write(struct kernfs_open_file *of,
-  *
-  * On resource group creation via a mkdir, an extra kernfs_node reference is
-  * taken to ensure that the rdtgroup structure remains accessible for the
-- * rdtgroup_kn_unlock() calls where it is removed.
-+ * rdtgroup_kn_unlock() calls where it is removed. The default group is
-+ * statically allocated: it does not have an extra reference but will have
-+ * RDT_DELETED set on unmount to support safe access to its associated files
-+ * via rdtgroup_kn_lock_live/rdtgroup_kn_unlock().
-  *
-- * Drop the extra reference here, then free the rdtgroup structure.
-+ * For all but the default group: drop the extra reference, then free the
-+ * rdtgroup structure.
-  *
-  * Return: void
-  */
- static void rdtgroup_remove(struct rdtgroup *rdtgrp)
- {
-+	if (rdtgrp == &rdtgroup_default)
-+		return;
- 	kernfs_put(rdtgrp->kn);
- 	kfree(rdtgrp);
- }
-@@ -2975,6 +2981,7 @@ static void resctrl_fs_teardown(void)
- 	mon_put_kn_priv();
- 	rdt_pseudo_lock_release();
- 	rdtgroup_default.mode = RDT_MODE_SHAREABLE;
-+	rdtgroup_default.flags = RDT_DELETED;
- 	closid_exit();
- 	schemata_list_destroy();
- 	rdtgroup_destroy_root();
-@@ -3000,6 +3007,12 @@ static int rdt_get_tree(struct fs_context *fc)
- 		goto out;
+@@ -2792,6 +2792,194 @@ static void schemata_list_destroy(void)
  	}
+ }
  
-+	/* Avoid races from pending operations from a previous mount */
-+	if (atomic_read(&rdtgroup_default.waitcount) != 0) {
-+		ret = -EBUSY;
-+		goto out;
++/*
++ * Move tasks from one to the other group. If @from is NULL, then all tasks
++ * in the systems are moved unconditionally (used for teardown).
++ *
++ * If @mask is not NULL the cpus on which moved tasks are running are set
++ * in that mask so the update smp function call is restricted to affected
++ * cpus.
++ */
++static void rdt_move_group_tasks(struct rdtgroup *from, struct rdtgroup *to,
++				 struct cpumask *mask)
++{
++	struct task_struct *p, *t;
++
++	read_lock(&tasklist_lock);
++	for_each_process_thread(p, t) {
++		if (!from || is_closid_match(t, from) ||
++		    is_rmid_match(t, from)) {
++			resctrl_arch_set_closid_rmid(t, to->closid,
++						     to->mon.rmid);
++
++			/*
++			 * Order the closid/rmid stores above before the loads
++			 * in task_curr(). This pairs with the full barrier
++			 * between the rq->curr update and
++			 * resctrl_arch_sched_in() during context switch.
++			 */
++			smp_mb();
++
++			/*
++			 * If the task is on a CPU, set the CPU in the mask.
++			 * The detection is inaccurate as tasks might move or
++			 * schedule before the smp function call takes place.
++			 * In such a case the function call is pointless, but
++			 * there is no other side effect.
++			 */
++			if (IS_ENABLED(CONFIG_SMP) && mask && task_curr(t))
++				cpumask_set_cpu(task_cpu(t), mask);
++		}
++	}
++	read_unlock(&tasklist_lock);
++}
++
++static void free_all_child_rdtgrp(struct rdtgroup *rdtgrp)
++{
++	struct rdtgroup *sentry, *stmp;
++	struct list_head *head;
++
++	head = &rdtgrp->mon.crdtgrp_list;
++	list_for_each_entry_safe(sentry, stmp, head, mon.crdtgrp_list) {
++		rdtgroup_unassign_cntrs(sentry);
++		free_rmid(sentry->closid, sentry->mon.rmid);
++		list_del(&sentry->mon.crdtgrp_list);
++
++		if (atomic_read(&sentry->waitcount) != 0)
++			sentry->flags = RDT_DELETED;
++		else
++			rdtgroup_remove(sentry);
++	}
++}
++
++/*
++ * Forcibly remove all of subdirectories under root.
++ */
++static void rmdir_all_sub(void)
++{
++	struct rdtgroup *rdtgrp, *tmp;
++
++	/* Move all tasks to the default resource group */
++	rdt_move_group_tasks(NULL, &rdtgroup_default, NULL);
++
++	list_for_each_entry_safe(rdtgrp, tmp, &rdt_all_groups, rdtgroup_list) {
++		/* Free any child rmids */
++		free_all_child_rdtgrp(rdtgrp);
++
++		/* Remove each rdtgroup other than root */
++		if (rdtgrp == &rdtgroup_default)
++			continue;
++
++		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
++		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
++			rdtgroup_pseudo_lock_remove(rdtgrp);
++
++		/*
++		 * Give any CPUs back to the default group. We cannot copy
++		 * cpu_online_mask because a CPU might have executed the
++		 * offline callback already, but is still marked online.
++		 */
++		cpumask_or(&rdtgroup_default.cpu_mask,
++			   &rdtgroup_default.cpu_mask, &rdtgrp->cpu_mask);
++
++		rdtgroup_unassign_cntrs(rdtgrp);
++
++		free_rmid(rdtgrp->closid, rdtgrp->mon.rmid);
++
++		kernfs_remove(rdtgrp->kn);
++		list_del(&rdtgrp->rdtgroup_list);
++
++		if (atomic_read(&rdtgrp->waitcount) != 0)
++			rdtgrp->flags = RDT_DELETED;
++		else
++			rdtgroup_remove(rdtgrp);
++	}
++	/* Notify online CPUs to update per cpu storage and PQR_ASSOC MSR */
++	update_closid_rmid(cpu_online_mask, &rdtgroup_default);
++
++	kernfs_remove(kn_info);
++	kernfs_remove(kn_mongrp);
++	kernfs_remove(kn_mondata);
++}
++
++/**
++ * mon_get_kn_priv() - Get the mon_data priv data for this event.
++ *
++ * The same values are used across the mon_data directories of all control and
++ * monitor groups for the same event in the same domain. Keep a list of
++ * allocated structures and re-use an existing one with the same values for
++ * @rid, @domid, etc.
++ *
++ * @rid:    The resource id for the event file being created.
++ * @domid:  The domain id for the event file being created.
++ * @mevt:   The type of event file being created.
++ * @do_sum: Whether SNC summing monitors are being created. Only set
++ *	    when @rid == RDT_RESOURCE_L3.
++ *
++ * Return: Pointer to mon_data private data of the event, NULL on failure.
++ */
++static struct mon_data *mon_get_kn_priv(enum resctrl_res_level rid, int domid,
++					struct mon_evt *mevt,
++					bool do_sum)
++{
++	struct mon_data *priv;
++
++	lockdep_assert_held(&rdtgroup_mutex);
++
++	list_for_each_entry(priv, &mon_data_kn_priv_list, list) {
++		if (priv->rid == rid && priv->domid == domid &&
++		    priv->sum == do_sum && priv->evt == mevt)
++			return priv;
 +	}
 +
- 	ret = setup_rmid_lru_list();
- 	if (ret)
- 		goto out;
-@@ -4275,6 +4288,7 @@ static int rdtgroup_setup_root(struct rdt_fs_context *ctx)
- 
- 	ctx->kfc.root = rdt_root;
- 	rdtgroup_default.kn = kernfs_root_to_node(rdt_root);
-+	rdtgroup_default.flags = 0;
- 
++	priv = kzalloc_obj(*priv);
++	if (!priv)
++		return NULL;
++
++	priv->rid = rid;
++	priv->domid = domid;
++	priv->sum = do_sum;
++	priv->evt = mevt;
++	list_add_tail(&priv->list, &mon_data_kn_priv_list);
++
++	return priv;
++}
++
++/**
++ * mon_put_kn_priv() - Free all allocated mon_data structures.
++ *
++ * Called when resctrl file system is unmounted.
++ */
++static void mon_put_kn_priv(void)
++{
++	struct mon_data *priv, *tmp;
++
++	lockdep_assert_held(&rdtgroup_mutex);
++
++	list_for_each_entry_safe(priv, tmp, &mon_data_kn_priv_list, list) {
++		list_del(&priv->list);
++		kfree(priv);
++	}
++}
++
++static void resctrl_fs_teardown(void)
++{
++	lockdep_assert_held(&rdtgroup_mutex);
++
++	/* Cleared by rdtgroup_destroy_root() */
++	if (!rdtgroup_default.kn)
++		return;
++
++	rmdir_all_sub();
++	rdtgroup_unassign_cntrs(&rdtgroup_default);
++	mon_put_kn_priv();
++	rdt_pseudo_lock_release();
++	rdtgroup_default.mode = RDT_MODE_SHAREABLE;
++	closid_exit();
++	schemata_list_destroy();
++	rdtgroup_destroy_root();
++}
++
+ static int rdt_get_tree(struct fs_context *fc)
+ {
+ 	struct rdt_fs_context *ctx = rdt_fc2context(fc);
+@@ -2991,194 +3179,6 @@ static int rdt_init_fs_context(struct fs_context *fc)
  	return 0;
  }
+ 
+-/*
+- * Move tasks from one to the other group. If @from is NULL, then all tasks
+- * in the systems are moved unconditionally (used for teardown).
+- *
+- * If @mask is not NULL the cpus on which moved tasks are running are set
+- * in that mask so the update smp function call is restricted to affected
+- * cpus.
+- */
+-static void rdt_move_group_tasks(struct rdtgroup *from, struct rdtgroup *to,
+-				 struct cpumask *mask)
+-{
+-	struct task_struct *p, *t;
+-
+-	read_lock(&tasklist_lock);
+-	for_each_process_thread(p, t) {
+-		if (!from || is_closid_match(t, from) ||
+-		    is_rmid_match(t, from)) {
+-			resctrl_arch_set_closid_rmid(t, to->closid,
+-						     to->mon.rmid);
+-
+-			/*
+-			 * Order the closid/rmid stores above before the loads
+-			 * in task_curr(). This pairs with the full barrier
+-			 * between the rq->curr update and
+-			 * resctrl_arch_sched_in() during context switch.
+-			 */
+-			smp_mb();
+-
+-			/*
+-			 * If the task is on a CPU, set the CPU in the mask.
+-			 * The detection is inaccurate as tasks might move or
+-			 * schedule before the smp function call takes place.
+-			 * In such a case the function call is pointless, but
+-			 * there is no other side effect.
+-			 */
+-			if (IS_ENABLED(CONFIG_SMP) && mask && task_curr(t))
+-				cpumask_set_cpu(task_cpu(t), mask);
+-		}
+-	}
+-	read_unlock(&tasklist_lock);
+-}
+-
+-static void free_all_child_rdtgrp(struct rdtgroup *rdtgrp)
+-{
+-	struct rdtgroup *sentry, *stmp;
+-	struct list_head *head;
+-
+-	head = &rdtgrp->mon.crdtgrp_list;
+-	list_for_each_entry_safe(sentry, stmp, head, mon.crdtgrp_list) {
+-		rdtgroup_unassign_cntrs(sentry);
+-		free_rmid(sentry->closid, sentry->mon.rmid);
+-		list_del(&sentry->mon.crdtgrp_list);
+-
+-		if (atomic_read(&sentry->waitcount) != 0)
+-			sentry->flags = RDT_DELETED;
+-		else
+-			rdtgroup_remove(sentry);
+-	}
+-}
+-
+-/*
+- * Forcibly remove all of subdirectories under root.
+- */
+-static void rmdir_all_sub(void)
+-{
+-	struct rdtgroup *rdtgrp, *tmp;
+-
+-	/* Move all tasks to the default resource group */
+-	rdt_move_group_tasks(NULL, &rdtgroup_default, NULL);
+-
+-	list_for_each_entry_safe(rdtgrp, tmp, &rdt_all_groups, rdtgroup_list) {
+-		/* Free any child rmids */
+-		free_all_child_rdtgrp(rdtgrp);
+-
+-		/* Remove each rdtgroup other than root */
+-		if (rdtgrp == &rdtgroup_default)
+-			continue;
+-
+-		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
+-		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
+-			rdtgroup_pseudo_lock_remove(rdtgrp);
+-
+-		/*
+-		 * Give any CPUs back to the default group. We cannot copy
+-		 * cpu_online_mask because a CPU might have executed the
+-		 * offline callback already, but is still marked online.
+-		 */
+-		cpumask_or(&rdtgroup_default.cpu_mask,
+-			   &rdtgroup_default.cpu_mask, &rdtgrp->cpu_mask);
+-
+-		rdtgroup_unassign_cntrs(rdtgrp);
+-
+-		free_rmid(rdtgrp->closid, rdtgrp->mon.rmid);
+-
+-		kernfs_remove(rdtgrp->kn);
+-		list_del(&rdtgrp->rdtgroup_list);
+-
+-		if (atomic_read(&rdtgrp->waitcount) != 0)
+-			rdtgrp->flags = RDT_DELETED;
+-		else
+-			rdtgroup_remove(rdtgrp);
+-	}
+-	/* Notify online CPUs to update per cpu storage and PQR_ASSOC MSR */
+-	update_closid_rmid(cpu_online_mask, &rdtgroup_default);
+-
+-	kernfs_remove(kn_info);
+-	kernfs_remove(kn_mongrp);
+-	kernfs_remove(kn_mondata);
+-}
+-
+-/**
+- * mon_get_kn_priv() - Get the mon_data priv data for this event.
+- *
+- * The same values are used across the mon_data directories of all control and
+- * monitor groups for the same event in the same domain. Keep a list of
+- * allocated structures and re-use an existing one with the same values for
+- * @rid, @domid, etc.
+- *
+- * @rid:    The resource id for the event file being created.
+- * @domid:  The domain id for the event file being created.
+- * @mevt:   The type of event file being created.
+- * @do_sum: Whether SNC summing monitors are being created. Only set
+- *	    when @rid == RDT_RESOURCE_L3.
+- *
+- * Return: Pointer to mon_data private data of the event, NULL on failure.
+- */
+-static struct mon_data *mon_get_kn_priv(enum resctrl_res_level rid, int domid,
+-					struct mon_evt *mevt,
+-					bool do_sum)
+-{
+-	struct mon_data *priv;
+-
+-	lockdep_assert_held(&rdtgroup_mutex);
+-
+-	list_for_each_entry(priv, &mon_data_kn_priv_list, list) {
+-		if (priv->rid == rid && priv->domid == domid &&
+-		    priv->sum == do_sum && priv->evt == mevt)
+-			return priv;
+-	}
+-
+-	priv = kzalloc_obj(*priv);
+-	if (!priv)
+-		return NULL;
+-
+-	priv->rid = rid;
+-	priv->domid = domid;
+-	priv->sum = do_sum;
+-	priv->evt = mevt;
+-	list_add_tail(&priv->list, &mon_data_kn_priv_list);
+-
+-	return priv;
+-}
+-
+-/**
+- * mon_put_kn_priv() - Free all allocated mon_data structures.
+- *
+- * Called when resctrl file system is unmounted.
+- */
+-static void mon_put_kn_priv(void)
+-{
+-	struct mon_data *priv, *tmp;
+-
+-	lockdep_assert_held(&rdtgroup_mutex);
+-
+-	list_for_each_entry_safe(priv, tmp, &mon_data_kn_priv_list, list) {
+-		list_del(&priv->list);
+-		kfree(priv);
+-	}
+-}
+-
+-static void resctrl_fs_teardown(void)
+-{
+-	lockdep_assert_held(&rdtgroup_mutex);
+-
+-	/* Cleared by rdtgroup_destroy_root() */
+-	if (!rdtgroup_default.kn)
+-		return;
+-
+-	rmdir_all_sub();
+-	rdtgroup_unassign_cntrs(&rdtgroup_default);
+-	mon_put_kn_priv();
+-	rdt_pseudo_lock_release();
+-	rdtgroup_default.mode = RDT_MODE_SHAREABLE;
+-	closid_exit();
+-	schemata_list_destroy();
+-	rdtgroup_destroy_root();
+-}
+-
+ static void rdt_kill_sb(struct super_block *sb)
+ {
+ 	struct rdt_resource *r;
 -- 
 2.50.1
 
