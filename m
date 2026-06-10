@@ -1,122 +1,125 @@
-Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A596F4028E8
-	for <patches@lists.linux.dev>; Wed, 10 Jun 2026 13:09:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781096945; cv=pass; b=PubL+C9x5TH9ivetVdvMsoo3rr/dRKJUi2fou9Cvf7Kmb0lI2LCie3Y/7cKLo0HFJ160q+NC/ai8RQFU1V4ycbJkTP3hmhOLyLdsp2H1+xnUoyqHLPLqZbrPaLZS6w9pUw9eKnWUEXtbbDrLk+oR0kdVSzTrR6CZwzaYrbfxc0E=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781096945; c=relaxed/simple;
-	bh=vMO+q+CyPLuQfigTmgGUaVN+qKKBldwqNdWDRJi9STE=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A35F289E13
+	for <patches@lists.linux.dev>; Wed, 10 Jun 2026 14:18:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781101091; cv=none; b=bZXe7mAYv0BQDVAWGCKBv92mHGgF5S6sykr2As3w/NXgWJjGbza0SXiV0h0hcSjy3hlflXUMy6W9Jo1B852zT54qiPOrIsDtF4yE7xuDjdI2h7e0pM0xGb6yk1rxlz5UtuSDvNav2nxOUL5te8lauXUNwATbDcruKGcsVhlZ3Tk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781101091; c=relaxed/simple;
+	bh=BJ9c/ol6w+Ube8nVPNM3mIfu3An8puBsF+RZnr8il0U=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FZlnixBm2/8h81zdukvrk2agG+7QPJpzWGNKpda41RrCHD/CyTTfvvK40S0pcY1pcUJmAhk0lNjBKml8XIs7SmxoAohjV5AadOydx93N9y70MxM4saSNB1xpp8CAblh9rg/igJnkDiwMQYsTvP51Xejp58F/bKsefIStm3Q3NqI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pOYUglee; arc=pass smtp.client-ip=74.125.82.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=tvz3VGof2iriulayIEZaN2Id2JjssCgbZLKwTk2H/ruHaOUTSOHJ82kWAqAjBWO/F6IIrhU3tk643PaSJbTmzVKJsHpG4LamZI1I53WYgGQ4fdONfo8bPBuB7Y4ngGk4WsglAG7udTYQzKsYOWl7GJYUob6NxG2uAJI+2lRId7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=akK8rF7t; arc=none smtp.client-ip=209.85.210.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pOYUglee"
-Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-304d3d3d8f8so479106eec.2
-        for <patches@lists.linux.dev>; Wed, 10 Jun 2026 06:09:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781096944; cv=none;
-        d=google.com; s=arc-20240605;
-        b=BaDMW/+pm7LkGumU3csj7QRFy1qqHnCuntBCWui8eiHc683eLJQW+ZTrryHPZfu2Uc
-         dxgAwMCpX2RC92hWyzcy1+ZPzjuBGIU6GoZNnUrNeFNmJYlsPnj4M4JF7/3Y+zBpEsQc
-         rEkF2nZ+sf5EsjqXeqBIjJVV15GKUdmrgVnsDAiJfD3N1IFah+HcuBkW44rBHnEWEc10
-         AHBgxtEwF8Rr+eia2p4CVJ2BQhVYcbkuu78oX3u9INZ5R/ThmcoQhyDURxexZBEB55SL
-         znMEgXkmlwQtmygayqkUfFIbX6C3xRPJveAJCdMlqo1pghg38zDvHqHFjXffyHIsDxfm
-         hyEw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=vMO+q+CyPLuQfigTmgGUaVN+qKKBldwqNdWDRJi9STE=;
-        fh=MLOcv99Omi9bsF3wREIIXDoEkCVZg3HPytysumQw0v4=;
-        b=kZq4BtPNjZ4OzusiorQ5OSdNIAMFz8EvIJ3q9d/PnjeOcf247muR68Csh/eq0NCFb9
-         saLyzEywh4MXSGNKBRFKGjonbfp+xsEWUyk7LQKFqEZo17oisPOCfo7f/TY7a3x6swls
-         gQAb9vg5Vvv8Yez8pNkQkCX9GS/D0hzDi2jlHv5v6yXag3MMjJABITABZA9GloaenTSV
-         rdIlZ2j6Cxv6rdM0rvcePx6OLFwEonohmqddBD7BMpQtVmhjnOepYoGArdACzdJCT01Q
-         txR31ausrsrP+iEp+P2itnNSrP0IWGBhNhBm+iOLL/6GbHBCJ25PQl9hXGPbi57aiLBT
-         MwFQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="akK8rF7t"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-8423f52af13so4759854b3a.2
+        for <patches@lists.linux.dev>; Wed, 10 Jun 2026 07:18:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781096944; x=1781701744; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vMO+q+CyPLuQfigTmgGUaVN+qKKBldwqNdWDRJi9STE=;
-        b=pOYUglee4NGd6o3xyGsW1i7EaB17WT3+zdYr47360GNynZWaAOomBDfY+kr3O8kLSH
-         5a/prayE4zxFYtXKVt8+wmWwi86EggarrLaZBhivhdOjSRa7N9yv6TUSh1gHDJznIWcJ
-         MD8cVUSSKP9OJuOsWaGrL9xSj7zIPJgF+K9nSmE+VEXWagBGp2RujsKSkRyTOS5m0t5J
-         rjDkPbEkKmRA+zGVZvtSWNms02soOqefwWgp7rRmbLe96raHj+wSqSAtDIC8+/0g87w+
-         q9uEBuKVnDOjsJpx+gFB1x05GsjuOHEv6IQ0ouAWSjouNO2Cjn+VGn8YstA8UQnbGSvX
-         z17w==
+        d=linux-foundation.org; s=google; t=1781101089; x=1781705889; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=TtsvHh9Pn+Rylz6+XRT7TQz3RFIWkIYkOyPrXmDgVAQ=;
+        b=akK8rF7t/an1vt8kY4c6+fUg79XEM4stxUI0iEIn+OXpjgrqoftNAG+Lx+mTcOYK3t
+         w33XI8QyRT8ByqFzbzMVYpNsFhHMVrQD7AyTVW7Xqr5McemmDctrR2xwyZVnsTnguHrQ
+         oaQDL5wh8onF5Ox8KZNoUxjemTJxVoOX9JuG8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781096944; x=1781701744;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=vMO+q+CyPLuQfigTmgGUaVN+qKKBldwqNdWDRJi9STE=;
-        b=Zgad2vkYq5MpLghfoR+5EnMWrz2oWOnqit2saz5aJELK7EV0wBayxXZNxUZQSM81Fi
-         jd96hSNa9UIh75tk5XH8RkRk7JV0Mmu3xRXW5gekGqrOGN2mXAQNQGSRqSAuA0ybUU83
-         8AG8SBZCUGkHZHolVwIUnIZTFIO05Uy469hCkcG7UA8/60+r044ahABgOFBQcXy+t15b
-         O44IrIiBXnxhhsP3EjrZ0/twoHCTGirLi28PDCnw0YJlxhtpR8DkVzyY/TIQSvVEL4x9
-         8eajZRQJU+8wYfs9Q57ntcfOy/FNMsRpsbGvWdJatXmB9XUDUReJXkBiMQw+/pcDby+q
-         Th6w==
-X-Forwarded-Encrypted: i=1; AFNElJ/Ow1HAFYAv0NLQamxPvuKMvkLcdK4+tvIMpTwJ2o5h49TIWV5wUzm+qPJePYaVVhgmHisBiEbG@lists.linux.dev
-X-Gm-Message-State: AOJu0YwnGWCmeAoUg0r9kGw6tIvSBw9K8hyyftrZ/Rf7R8c9wlqF8rW+
-	9n6RMrPIpq1Jd06uhnyIuPIhVDWqfs8KsKVnzK34/eyp+oPzQU3UQbGuVgIfw9LfwL3pTQ22uUH
-	swD6NNG1ZtHPaPsk9w0LYAABo4/Ir8zI=
-X-Gm-Gg: Acq92OGOXfr8S4+ZuDrMa95ux4mSBA5lEdByI/dDH/NtnJJfootenv8f/BUuJ76VXE6
-	kq1xmFhK7AVPhI5/5PYgc6ALEOR37Pw3QTnqeKzQcrV0NAAz5J1PkJj2Q0lNlqQwg02uUTkTvUZ
-	7uqLtBvyXs61jDCibFlIXWY/LBzzMJXOhDSku0a34eMunBYchu2V1zOzVHYnpeBMCVTZBFbrfO9
-	yLfTuQr9nlPXtqmohTjiGJ8431g0NElStVOoUGlrJB1uxjgWCZUckwL9uFf+3b451Tc7jGio7O+
-	/cmdR/KwbhZlsy52WccLYSnm2NIlG+v2bAyd//cEjywqQX/Vu1p/bwCem+pH6dat5cNHkRZsLi3
-	3MXBwpwydeiCiI0r/tkw7EFu2B8O733aLrg==
-X-Received: by 2002:a05:7300:1352:b0:304:c73b:79ea with SMTP id
- 5a478bee46e88-3077b576885mr6517116eec.3.1781096943682; Wed, 10 Jun 2026
- 06:09:03 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781101089; x=1781705889;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TtsvHh9Pn+Rylz6+XRT7TQz3RFIWkIYkOyPrXmDgVAQ=;
+        b=G6lVD844CA9L38tCbEjHPkjU7srREN4Bd7LGV22y2iNfckp6eOmV33nECbORcswVNB
+         ame+RwZh9CgKhwD2IMxHM/NhKJKFzv+XuYTHibceaXm1G/I32THaNotA6SE9FoCaG1nQ
+         FcbOhn/6eGznnHPFB1FbKugyuLwqYzy2u4RGkHqKs19vsbbaF+HbrndetboM8TWQGZWC
+         OAKRzjjff4Ykv+IptDbKysE1LwaLIV8h9DU6dSNcQhqnpQQmcPcVOfkhVW0j+HZ0pSu2
+         cInW3LBim0wllcjUrXpz48iLeoaYg4OPYVXRERobywLOjRg/hgFV5Harq0v4wmWYwhmk
+         zPrg==
+X-Forwarded-Encrypted: i=1; AFNElJ/imVOmKR+dVZjZ1b2mwDM62/UbSSBT7XmsIg8GfhTWW/28Ab6hPyDAFFcRYwymDQek6tbr1hGs@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw/fMQaZ+n8CvcyP/yCR5l1HqrguMXgDWafO0Sx+O/GiN51YtGz
+	7J9HRjo6mfzZ/IyHyQV7KSuIoPc1HyeDMh8il0LbLnaehElttqZ0YL+XwPaWiT+5dRwoYRk7ylJ
+	qJtrauRM=
+X-Gm-Gg: Acq92OFdPz6c+gwsJITqlfD0+D/vS8kaGl6p/UugYhZhwCLPIvUX8fvbdkmBfRd1hrg
+	4RE2Zwr+fMMQBIBlGSrh+tmZR0sk9chsonlfv+L8OPM55kjqN84y35ODscIBCSfQOPgl9gEwweI
+	2Ss2E5unsOi0aErYGOXmvGsxW664hvi6OmDkBTDYxBo3x/KWaB66oIhIElgpPfAKm7qIIVKDTkM
+	X8YRNcYKDkW23tsqqeOQxNj5Si0EaESVfBpwqRmLELFmpGDlO1wwfkARjaW2tp5xh9j+f0e0cic
+	BfUpDs55eera1oAR7r5RmLm1L/7pvnhDqEOLj5VN8kWpDxEGYQS5IcVG9a3Az2hUwybO6p5kVuc
+	oB5sgsh6uPIQ2AGeAWt4oCi53/xkQ+aVEwzFNt3efxCPflDCmjbRLY5duOPOf17tecmXtf1BhiJ
+	8D/bgjpr8+/VY+UgzTkC+2aRSRMKbTUkeF5R1isGoJNcI0zRutV3k+Qql0Wl+VxTmH/MWw9plxQ
+	EoTWzyEIfMCgNE=
+X-Received: by 2002:a05:6a00:4c0a:b0:842:708f:39a6 with SMTP id d2e1a72fcca58-842b0e1e208mr26244552b3a.10.1781101089493;
+        Wed, 10 Jun 2026 07:18:09 -0700 (PDT)
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com. [209.85.214.173])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8428288217bsm29061313b3a.37.2026.06.10.07.18.06
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Jun 2026 07:18:07 -0700 (PDT)
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2bf3781ca51so62517705ad.0
+        for <patches@lists.linux.dev>; Wed, 10 Jun 2026 07:18:06 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ9YGifKO73+ni8Xov6aAEkhdOUNQ1qINhX//A+mPBkKOQzk5pNgTb6lN5GxuhDMfheHcCxZo+Y5@lists.linux.dev
+X-Received: by 2002:a17:903:244e:b0:2c0:ab92:584c with SMTP id
+ d9443c01a7336-2c1e8209b98mr287326215ad.25.1781101086478; Wed, 10 Jun 2026
+ 07:18:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260607095727.647295505@linuxfoundation.org> <20260607173214.92693-1-ojeda@kernel.org>
- <CAM0EoMkszTXv82To=KnEYTgzQSmEdRW9XrAMVtJsUaDn=Akf6A@mail.gmail.com>
- <CANiq72mJNbNzYO37VK7s=ua5v31xBrRp8EnHDvEnKF8Z77jDmA@mail.gmail.com>
- <CAM0EoMmHd10iivCpDoEd3h+eae9fSnoGWAH_AkwFhrnS6PN63g@mail.gmail.com>
- <CANiq72k6J7FYT89svtX5qbCUWg-MKuhUHaT07cjk8o7PqaF8+A@mail.gmail.com> <CAM0EoMn9EA_TS80QzXsTscBpCgfJHssq0GHtiNbrMU3FAiP2mw@mail.gmail.com>
-In-Reply-To: <CAM0EoMn9EA_TS80QzXsTscBpCgfJHssq0GHtiNbrMU3FAiP2mw@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 10 Jun 2026 15:08:50 +0200
-X-Gm-Features: AVVi8CfHlwkVTHo8xz3kijx6SbCXBkd0w80sby_--JSQFG4p4xR4OJZ4-aRIac8
-Message-ID: <CANiq72ki_YW=0UbadZ8pp0Np3Je3W6gLvAw3GJgRmzjXZ5RBVA@mail.gmail.com>
-Subject: Re: [PATCH 6.12 000/307] 6.12.93-rc1 review
-To: Jamal Hadi Salim <jhs@mojatatu.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, gregkh@linuxfoundation.org, achill@achill.org, 
-	akpm@linux-foundation.org, broonie@kernel.org, conor@kernel.org, 
-	f.fainelli@gmail.com, hargar@microsoft.com, jonathanh@nvidia.com, 
-	linux-kernel@vger.kernel.org, linux@roeck-us.net, 
-	lkft-triage@lists.linaro.org, patches@kernelci.org, patches@lists.linux.dev, 
-	pavel@nabladev.com, rwarsow@gmx.de, shuah@kernel.org, sr@sladewatkins.com, 
-	stable@vger.kernel.org, sudipm.mukherjee@gmail.com, 
-	torvalds@linux-foundation.org, "Kito Xu (veritas501)" <hxzene@gmail.com>, 
-	Victor Nogueira <victor@mojatatu.com>, Paolo Abeni <pabeni@redhat.com>, Jiri Pirko <jiri@resnulli.us>, 
-	netdev@vger.kernel.org
+References: <CAHk-=whL0oLvmh3FO9SapDhgrXMT_d6qkP2V3OBjysOWXod2Og@mail.gmail.com>
+ <aijyuX14ahOf53zM@gondor.apana.org.au>
+In-Reply-To: <aijyuX14ahOf53zM@gondor.apana.org.au>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Wed, 10 Jun 2026 07:17:46 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wjeLy2n9H82_THob=wzOEfsQT_yP05ZH9qY7NTWgj2R_A@mail.gmail.com>
+X-Gm-Features: AVVi8Cf89LEbA8IWp6kUXfdfvHtLXSvqRDQpEPExTR6LsZaq3LaagKRbHX8i3Yg
+Message-ID: <CAHk-=wjeLy2n9H82_THob=wzOEfsQT_yP05ZH9qY7NTWgj2R_A@mail.gmail.com>
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
+To: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: metze@samba.org, luto@amacapital.net, safinaskar@gmail.com, 
+	akpm@linux-foundation.org, axboe@kernel.dk, brauner@kernel.org, 
+	david@kernel.org, dhowells@redhat.com, hch@infradead.org, jack@suse.cz, 
+	linux-api@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-mm@kvack.org, miklos@szeredi.hu, 
+	netdev@vger.kernel.org, patches@lists.linux.dev, pfalcato@suse.de, 
+	viro@zeniv.linux.org.uk, willy@infradead.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 8, 2026 at 10:36=E2=80=AFPM Jamal Hadi Salim <jhs@mojatatu.com>=
- wrote:
+On Tue, 9 Jun 2026 at 22:14, Herbert Xu <herbert@gondor.apana.org.au> wrote:
 >
-> I think it was too early AM here when i was looking at this.
-> The answer was right there all along in what you said: The missing
-> piece is commit a005fa5d7502
+> How about using write access as the gate to zero copy?
 
-No worries, it happens :)
+Well, it's too late now - no sane user would open files for writing
+just to read from them.
 
-I see a005fa5d7502 is now in the release.
+And if the file isn't opened for writing originally, it won't show up
+in the fd. So we'd have to do some after-the-fact "is this writable
+using the credentials we had at open time" thing.
 
-Cheers,
-Miguel
+Which we do for some /proc stuff etc, but it's disgusting, and it
+isn't how any of this should work.
+
+Plus honestly, in any *good* setup, the normal case really shouldn't
+be that the source is writable anyway. In benchmarks, sure. But in
+real life? Hell no.
+
+If you're doing web serving of static content, your web server simply
+should not have write access to what it is serving. If it does, your
+web server setup is simply hot garbage and probably riddled with
+security issues anyway, because you clearly spent absolutely zero time
+on any kind of "minimal privileges" model.
+
+(I'm not saying that splice would be primarily for web serving or that
+serving static pages like that is an interesting load - I'm using it
+purely as an example of why saying that writable files should get
+better treatment is crazy: it's not how *any* of this should work at
+any level at all).
+
+So no. We should not treat writable files as some kind of preferred
+model for performance. We should discourage that kind of behavior, not
+encourage it.
+
+                  Linus
