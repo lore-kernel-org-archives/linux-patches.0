@@ -1,127 +1,122 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CE73AD509
-	for <patches@lists.linux.dev>; Wed, 10 Jun 2026 09:55:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781085346; cv=none; b=c5XI0Tp+nndS28bFDsHyMrIH3i8T3HmmlG+UcadAsJ88Da4eJjgudpK6bwNVDZKf6vzQprPwW4APMIj6ShmGi+ZKLHZwAjT3aAhJHRHgFm7DOY2YA2F9lGJEWVCWtdya0Q+rIwjW+EupHuyLzXycINbMdS7dLPes+A+ALf/YMw0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781085346; c=relaxed/simple;
-	bh=RxYtaOzOjvXLhABsTLKT5rUdf2WjHUzZ4ozMxheKOIQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iGDeUFRKkF5Nl62tKs7KM36P5GQZJUV0Z0GUSRPbpaUqPpaHAslOj+hrF1X73ymq8e430lFs6y30h7f4Uk3RF/vOlRTCJGx1IJ3sPGDyYcAv8XfQSPd3iuNeyVMM7dnZdbVPlkP2tc5xnROFFSnorW9lDqjVhXZeTXKXF3jmF+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fwKuDqxy; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A596F4028E8
+	for <patches@lists.linux.dev>; Wed, 10 Jun 2026 13:09:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.182
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781096945; cv=pass; b=PubL+C9x5TH9ivetVdvMsoo3rr/dRKJUi2fou9Cvf7Kmb0lI2LCie3Y/7cKLo0HFJ160q+NC/ai8RQFU1V4ycbJkTP3hmhOLyLdsp2H1+xnUoyqHLPLqZbrPaLZS6w9pUw9eKnWUEXtbbDrLk+oR0kdVSzTrR6CZwzaYrbfxc0E=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781096945; c=relaxed/simple;
+	bh=vMO+q+CyPLuQfigTmgGUaVN+qKKBldwqNdWDRJi9STE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FZlnixBm2/8h81zdukvrk2agG+7QPJpzWGNKpda41RrCHD/CyTTfvvK40S0pcY1pcUJmAhk0lNjBKml8XIs7SmxoAohjV5AadOydx93N9y70MxM4saSNB1xpp8CAblh9rg/igJnkDiwMQYsTvP51Xejp58F/bKsefIStm3Q3NqI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pOYUglee; arc=pass smtp.client-ip=74.125.82.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fwKuDqxy"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-490b8ac62baso51335195e9.0
-        for <patches@lists.linux.dev>; Wed, 10 Jun 2026 02:55:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pOYUglee"
+Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-304d3d3d8f8so479106eec.2
+        for <patches@lists.linux.dev>; Wed, 10 Jun 2026 06:09:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781096944; cv=none;
+        d=google.com; s=arc-20240605;
+        b=BaDMW/+pm7LkGumU3csj7QRFy1qqHnCuntBCWui8eiHc683eLJQW+ZTrryHPZfu2Uc
+         dxgAwMCpX2RC92hWyzcy1+ZPzjuBGIU6GoZNnUrNeFNmJYlsPnj4M4JF7/3Y+zBpEsQc
+         rEkF2nZ+sf5EsjqXeqBIjJVV15GKUdmrgVnsDAiJfD3N1IFah+HcuBkW44rBHnEWEc10
+         AHBgxtEwF8Rr+eia2p4CVJ2BQhVYcbkuu78oX3u9INZ5R/ThmcoQhyDURxexZBEB55SL
+         znMEgXkmlwQtmygayqkUfFIbX6C3xRPJveAJCdMlqo1pghg38zDvHqHFjXffyHIsDxfm
+         hyEw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=vMO+q+CyPLuQfigTmgGUaVN+qKKBldwqNdWDRJi9STE=;
+        fh=MLOcv99Omi9bsF3wREIIXDoEkCVZg3HPytysumQw0v4=;
+        b=kZq4BtPNjZ4OzusiorQ5OSdNIAMFz8EvIJ3q9d/PnjeOcf247muR68Csh/eq0NCFb9
+         saLyzEywh4MXSGNKBRFKGjonbfp+xsEWUyk7LQKFqEZo17oisPOCfo7f/TY7a3x6swls
+         gQAb9vg5Vvv8Yez8pNkQkCX9GS/D0hzDi2jlHv5v6yXag3MMjJABITABZA9GloaenTSV
+         rdIlZ2j6Cxv6rdM0rvcePx6OLFwEonohmqddBD7BMpQtVmhjnOepYoGArdACzdJCT01Q
+         txR31ausrsrP+iEp+P2itnNSrP0IWGBhNhBm+iOLL/6GbHBCJ25PQl9hXGPbi57aiLBT
+         MwFQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781085342; x=1781690142; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1781096944; x=1781701744; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DXXf5kDNkZaZma579LeFr3+QRDi52FtRCi+F8Ah0BJ0=;
-        b=fwKuDqxyvuHVxF4C6bcRUD/XvYTVaBccqk3bfUrq+8Bd9tdRL4SFXPn0YIytSMza38
-         aBMLIax6EeCNm+Y9JE6f9Gz6DVAv76Nj/SdNgk8BJlLOwsm0jzDb8zyogC4YKPcy9Cn3
-         yCMmsBM6x3xAh5Zx8OOL9GduyFhOKkbrbmQRn0taV0pgGwifrKgp6hWrA5fqPAiBTsxC
-         wmYkzYPVCIX7ZBiamJkq4+C474T2egBhyaPF4v7i8//zARHn/pxm0M2YaGepwcBvckyC
-         qLSae8yXWkjHUAfK5IvJ7jNSc4csu2x+WYXQC4WQDUXNQAGPpyWJf0z5SJ1eAmeHJdYE
-         vPEw==
+        bh=vMO+q+CyPLuQfigTmgGUaVN+qKKBldwqNdWDRJi9STE=;
+        b=pOYUglee4NGd6o3xyGsW1i7EaB17WT3+zdYr47360GNynZWaAOomBDfY+kr3O8kLSH
+         5a/prayE4zxFYtXKVt8+wmWwi86EggarrLaZBhivhdOjSRa7N9yv6TUSh1gHDJznIWcJ
+         MD8cVUSSKP9OJuOsWaGrL9xSj7zIPJgF+K9nSmE+VEXWagBGp2RujsKSkRyTOS5m0t5J
+         rjDkPbEkKmRA+zGVZvtSWNms02soOqefwWgp7rRmbLe96raHj+wSqSAtDIC8+/0g87w+
+         q9uEBuKVnDOjsJpx+gFB1x05GsjuOHEv6IQ0ouAWSjouNO2Cjn+VGn8YstA8UQnbGSvX
+         z17w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781085342; x=1781690142;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1781096944; x=1781701744;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=DXXf5kDNkZaZma579LeFr3+QRDi52FtRCi+F8Ah0BJ0=;
-        b=glpGTu2AVORNEGfJWdv1cA8zs5e6sUUps88i4FtRiyAzoyjdDvGSlGlTZ8mvpjYV5Y
-         2rjQFkiyMYXi67AbtSeWLH0jkaxeH+Cmdyt0l3f+2qqUdkb69jAXa5WGU3gErqAC411U
-         4Ny13pl73kMX5LJzPxr2OhEXq/Kprchnk83+mhQKe4adXjXeOTQtsGxwFlDsXr2iwrKx
-         5e9wjn0E/flMzDkrfVASyrG3N/8K5GRz3JVQMABwQN5n7yUffnL2TMiCR+AKDKSaSUXn
-         ayaLKXNILeT/UYdUIAycsPqCbWr+QjY+Vu5rXAYjYIXEEJBkdq0zFuiYuOGfSSH7A+IH
-         gLig==
-X-Forwarded-Encrypted: i=1; AFNElJ+1W8WziHYZNt6i/H9CV+UJU/dS7QQ6S4zCSEil4I+7Nrpw9ULGBcR2BZJJGoc9sGc6q+VF6Llg@lists.linux.dev
-X-Gm-Message-State: AOJu0YzKA3UCGML9bYA7kgsmozGilvRrWFFA1aKr39pENqUwBaiH6Iu5
-	Spk3GnyocLHcp94jpev3Shh8oHB7H8wKX64uu7VLQu349v0dVP9cBAXE
-X-Gm-Gg: Acq92OFOd5KCRpgp+K3GA4gp+JkG65L3LkzujCuDGadRtsT9JeCcdDLhG4d2NTj/8hO
-	K1vlS+orPiHGWHcyEOxjTkHQnQ+EFazFqeIuepB88V83Uyr2VIG+hgRufpixjX7lXApNjVy0sk6
-	/QnXC20SaA/nQlI3A97diJItRH0CkFlZvrZFzC05lTPN0MIXXUlLfVF1JA8OnpFExCUtrAdIGV1
-	gsPLCIvVEPUX/H2NWX9kdUui9ehOzZJN3/mq2j/GqVWhT+JbXWMGnuQROpftn6FJg2QrUo6nf5g
-	gfeTsYY21utq+ZIxqlXljvoaGc1/fZyNk+E0m/EflE88bSPpx5SRf9/RoO02nu2Owl4oy0u1370
-	7nUDR8SmjFyZ/ejT6j7sYiNwT37IbU424Eqnt3gzPuuRCaIFichTLVaD/Q6kvMo7NDx/pLCuYLE
-	Mt6QAPz8ajdHb1j8rk/lj5n4cgPVfFiarG/PioHWSHrLma6OIgKuxrYWNS9EhjS5iSFpBl81n5J
-	6cs1UsVyQ==
-X-Received: by 2002:a05:600c:6096:b0:490:c1cb:48f4 with SMTP id 5b1f17b1804b1-490c2d038e8mr309043665e9.12.1781085342059;
-        Wed, 10 Jun 2026 02:55:42 -0700 (PDT)
-Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490be1f69bcsm591850845e9.8.2026.06.10.02.55.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2026 02:55:41 -0700 (PDT)
-Date: Wed, 10 Jun 2026 10:55:40 +0100
-From: David Laight <david.laight.linux@gmail.com>
-To: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, luto@amacapital.net,
- safinaskar@gmail.com, akpm@linux-foundation.org, axboe@kernel.dk,
- brauner@kernel.org, david@kernel.org, dhowells@redhat.com,
- hch@infradead.org, jack@suse.cz, linux-api@vger.kernel.org,
- linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org, miklos@szeredi.hu, netdev@vger.kernel.org,
- patches@lists.linux.dev, pfalcato@suse.de, viro@zeniv.linux.org.uk,
- willy@infradead.org
-Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for
- preadv2/pwritev2
-Message-ID: <20260610105540.5901a5be@pumpkin>
-In-Reply-To: <aijxfxXrWLCVqV6-@gondor.apana.org.au>
-References: <CAHk-=wh5bFj1a7eaGp9sixDg3UXu7xUGfU=YJo+ckpGxGAyhXQ@mail.gmail.com>
-	<aijxfxXrWLCVqV6-@gondor.apana.org.au>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
+        bh=vMO+q+CyPLuQfigTmgGUaVN+qKKBldwqNdWDRJi9STE=;
+        b=Zgad2vkYq5MpLghfoR+5EnMWrz2oWOnqit2saz5aJELK7EV0wBayxXZNxUZQSM81Fi
+         jd96hSNa9UIh75tk5XH8RkRk7JV0Mmu3xRXW5gekGqrOGN2mXAQNQGSRqSAuA0ybUU83
+         8AG8SBZCUGkHZHolVwIUnIZTFIO05Uy469hCkcG7UA8/60+r044ahABgOFBQcXy+t15b
+         O44IrIiBXnxhhsP3EjrZ0/twoHCTGirLi28PDCnw0YJlxhtpR8DkVzyY/TIQSvVEL4x9
+         8eajZRQJU+8wYfs9Q57ntcfOy/FNMsRpsbGvWdJatXmB9XUDUReJXkBiMQw+/pcDby+q
+         Th6w==
+X-Forwarded-Encrypted: i=1; AFNElJ/Ow1HAFYAv0NLQamxPvuKMvkLcdK4+tvIMpTwJ2o5h49TIWV5wUzm+qPJePYaVVhgmHisBiEbG@lists.linux.dev
+X-Gm-Message-State: AOJu0YwnGWCmeAoUg0r9kGw6tIvSBw9K8hyyftrZ/Rf7R8c9wlqF8rW+
+	9n6RMrPIpq1Jd06uhnyIuPIhVDWqfs8KsKVnzK34/eyp+oPzQU3UQbGuVgIfw9LfwL3pTQ22uUH
+	swD6NNG1ZtHPaPsk9w0LYAABo4/Ir8zI=
+X-Gm-Gg: Acq92OGOXfr8S4+ZuDrMa95ux4mSBA5lEdByI/dDH/NtnJJfootenv8f/BUuJ76VXE6
+	kq1xmFhK7AVPhI5/5PYgc6ALEOR37Pw3QTnqeKzQcrV0NAAz5J1PkJj2Q0lNlqQwg02uUTkTvUZ
+	7uqLtBvyXs61jDCibFlIXWY/LBzzMJXOhDSku0a34eMunBYchu2V1zOzVHYnpeBMCVTZBFbrfO9
+	yLfTuQr9nlPXtqmohTjiGJ8431g0NElStVOoUGlrJB1uxjgWCZUckwL9uFf+3b451Tc7jGio7O+
+	/cmdR/KwbhZlsy52WccLYSnm2NIlG+v2bAyd//cEjywqQX/Vu1p/bwCem+pH6dat5cNHkRZsLi3
+	3MXBwpwydeiCiI0r/tkw7EFu2B8O733aLrg==
+X-Received: by 2002:a05:7300:1352:b0:304:c73b:79ea with SMTP id
+ 5a478bee46e88-3077b576885mr6517116eec.3.1781096943682; Wed, 10 Jun 2026
+ 06:09:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <20260607095727.647295505@linuxfoundation.org> <20260607173214.92693-1-ojeda@kernel.org>
+ <CAM0EoMkszTXv82To=KnEYTgzQSmEdRW9XrAMVtJsUaDn=Akf6A@mail.gmail.com>
+ <CANiq72mJNbNzYO37VK7s=ua5v31xBrRp8EnHDvEnKF8Z77jDmA@mail.gmail.com>
+ <CAM0EoMmHd10iivCpDoEd3h+eae9fSnoGWAH_AkwFhrnS6PN63g@mail.gmail.com>
+ <CANiq72k6J7FYT89svtX5qbCUWg-MKuhUHaT07cjk8o7PqaF8+A@mail.gmail.com> <CAM0EoMn9EA_TS80QzXsTscBpCgfJHssq0GHtiNbrMU3FAiP2mw@mail.gmail.com>
+In-Reply-To: <CAM0EoMn9EA_TS80QzXsTscBpCgfJHssq0GHtiNbrMU3FAiP2mw@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Wed, 10 Jun 2026 15:08:50 +0200
+X-Gm-Features: AVVi8CfHlwkVTHo8xz3kijx6SbCXBkd0w80sby_--JSQFG4p4xR4OJZ4-aRIac8
+Message-ID: <CANiq72ki_YW=0UbadZ8pp0Np3Je3W6gLvAw3GJgRmzjXZ5RBVA@mail.gmail.com>
+Subject: Re: [PATCH 6.12 000/307] 6.12.93-rc1 review
+To: Jamal Hadi Salim <jhs@mojatatu.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, gregkh@linuxfoundation.org, achill@achill.org, 
+	akpm@linux-foundation.org, broonie@kernel.org, conor@kernel.org, 
+	f.fainelli@gmail.com, hargar@microsoft.com, jonathanh@nvidia.com, 
+	linux-kernel@vger.kernel.org, linux@roeck-us.net, 
+	lkft-triage@lists.linaro.org, patches@kernelci.org, patches@lists.linux.dev, 
+	pavel@nabladev.com, rwarsow@gmx.de, shuah@kernel.org, sr@sladewatkins.com, 
+	stable@vger.kernel.org, sudipm.mukherjee@gmail.com, 
+	torvalds@linux-foundation.org, "Kito Xu (veritas501)" <hxzene@gmail.com>, 
+	Victor Nogueira <victor@mojatatu.com>, Paolo Abeni <pabeni@redhat.com>, Jiri Pirko <jiri@resnulli.us>, 
+	netdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 10 Jun 2026 13:09:19 +0800
-Herbert Xu <herbert@gondor.apana.org.au> wrote:
+On Mon, Jun 8, 2026 at 10:36=E2=80=AFPM Jamal Hadi Salim <jhs@mojatatu.com>=
+ wrote:
+>
+> I think it was too early AM here when i was looking at this.
+> The answer was right there all along in what you said: The missing
+> piece is commit a005fa5d7502
 
-> Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> >
-> > Because I think splice() is a *cool* feature. It was always *clever*.
-> > I just don't think it's worth the pain it has cause.
-> > 
-> > And it's been around for a long long time, and after more than two
-> > decades it's still most definitely not _widely_ used.  
-> 
-> A couple of years ago I used tee(2) in dash(1) so that we could
-> avoid reading the input line byte-by-byte which is what every other
-> shell does in order to pass the rest of stdin to the executed
-> command.
+No worries, it happens :)
 
-The shell just needs something like MSG_PEEK to do a non-consuming
-read from a pipe.
-(Without the strange behaviour of a second offset.)
+I see a005fa5d7502 is now in the release.
 
-That would be simple and could have been implemented 40 years ago.
-
--- David
-
-> 
-> https://git.kernel.org/pub/scm/utils/dash/dash.git/commit/?id=44b15ea09a9ee5872cf477e4ffc6b42ef37d1e46
-> 
-> It's definitely niche but made a huge performance difference to
-> this rather common scenario:
-> 
-> echo 'command
-> ...
-> rest of stdin' | sh
-> 
-> I didn't even know tee(2) prior to this, even though it was added
-> way back.
-> 
-> Thanks,
-
+Cheers,
+Miguel
