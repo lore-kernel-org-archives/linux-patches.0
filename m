@@ -1,125 +1,228 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A35F289E13
-	for <patches@lists.linux.dev>; Wed, 10 Jun 2026 14:18:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781101091; cv=none; b=bZXe7mAYv0BQDVAWGCKBv92mHGgF5S6sykr2As3w/NXgWJjGbza0SXiV0h0hcSjy3hlflXUMy6W9Jo1B852zT54qiPOrIsDtF4yE7xuDjdI2h7e0pM0xGb6yk1rxlz5UtuSDvNav2nxOUL5te8lauXUNwATbDcruKGcsVhlZ3Tk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781101091; c=relaxed/simple;
-	bh=BJ9c/ol6w+Ube8nVPNM3mIfu3An8puBsF+RZnr8il0U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tvz3VGof2iriulayIEZaN2Id2JjssCgbZLKwTk2H/ruHaOUTSOHJ82kWAqAjBWO/F6IIrhU3tk643PaSJbTmzVKJsHpG4LamZI1I53WYgGQ4fdONfo8bPBuB7Y4ngGk4WsglAG7udTYQzKsYOWl7GJYUob6NxG2uAJI+2lRId7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=akK8rF7t; arc=none smtp.client-ip=209.85.210.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C1333FE1F
+	for <patches@lists.linux.dev>; Wed, 10 Jun 2026 15:27:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.19
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781105244; cv=fail; b=l4ZtFz7FH2cjnxyqHh6ZEztl6l5B9P6Rs/XUNxjyVzhoTAryZ4aBgWFKFWqIRUV8WpKdeQo7HrVEVDJLVhFcRa1HLfcm+AMo8UsrNI2+9ctQZwPA6FVZqlqXK3nZpzPZwUauSqvFFlIMtsoeniIrcfFIbJdmQsSLIf0bLPXGLTU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781105244; c=relaxed/simple;
+	bh=JP6yyi5WpTDP/wNB8FgQq1zOkOyWVWG0T9lRtVOJmKU=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=sYXsh46j3mqrnN0Wh2Jij895SN6CgL1fVovWM5UmJCvIuaqlyL32sGyL2TyiBEDU8dmdrWbYuVAY30uJDuRteX5f0EphVUUGuUtKZOMFAu2xDl7hO2VgtalB1WZWGNW+GTqeFPJJ/oUB26M6wyrFdcV5htJjYN4bJT6lSrJc9FM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IzYapde4; arc=fail smtp.client-ip=198.175.65.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="akK8rF7t"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-8423f52af13so4759854b3a.2
-        for <patches@lists.linux.dev>; Wed, 10 Jun 2026 07:18:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1781101089; x=1781705889; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=TtsvHh9Pn+Rylz6+XRT7TQz3RFIWkIYkOyPrXmDgVAQ=;
-        b=akK8rF7t/an1vt8kY4c6+fUg79XEM4stxUI0iEIn+OXpjgrqoftNAG+Lx+mTcOYK3t
-         w33XI8QyRT8ByqFzbzMVYpNsFhHMVrQD7AyTVW7Xqr5McemmDctrR2xwyZVnsTnguHrQ
-         oaQDL5wh8onF5Ox8KZNoUxjemTJxVoOX9JuG8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781101089; x=1781705889;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TtsvHh9Pn+Rylz6+XRT7TQz3RFIWkIYkOyPrXmDgVAQ=;
-        b=G6lVD844CA9L38tCbEjHPkjU7srREN4Bd7LGV22y2iNfckp6eOmV33nECbORcswVNB
-         ame+RwZh9CgKhwD2IMxHM/NhKJKFzv+XuYTHibceaXm1G/I32THaNotA6SE9FoCaG1nQ
-         FcbOhn/6eGznnHPFB1FbKugyuLwqYzy2u4RGkHqKs19vsbbaF+HbrndetboM8TWQGZWC
-         OAKRzjjff4Ykv+IptDbKysE1LwaLIV8h9DU6dSNcQhqnpQQmcPcVOfkhVW0j+HZ0pSu2
-         cInW3LBim0wllcjUrXpz48iLeoaYg4OPYVXRERobywLOjRg/hgFV5Harq0v4wmWYwhmk
-         zPrg==
-X-Forwarded-Encrypted: i=1; AFNElJ/imVOmKR+dVZjZ1b2mwDM62/UbSSBT7XmsIg8GfhTWW/28Ab6hPyDAFFcRYwymDQek6tbr1hGs@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw/fMQaZ+n8CvcyP/yCR5l1HqrguMXgDWafO0Sx+O/GiN51YtGz
-	7J9HRjo6mfzZ/IyHyQV7KSuIoPc1HyeDMh8il0LbLnaehElttqZ0YL+XwPaWiT+5dRwoYRk7ylJ
-	qJtrauRM=
-X-Gm-Gg: Acq92OFdPz6c+gwsJITqlfD0+D/vS8kaGl6p/UugYhZhwCLPIvUX8fvbdkmBfRd1hrg
-	4RE2Zwr+fMMQBIBlGSrh+tmZR0sk9chsonlfv+L8OPM55kjqN84y35ODscIBCSfQOPgl9gEwweI
-	2Ss2E5unsOi0aErYGOXmvGsxW664hvi6OmDkBTDYxBo3x/KWaB66oIhIElgpPfAKm7qIIVKDTkM
-	X8YRNcYKDkW23tsqqeOQxNj5Si0EaESVfBpwqRmLELFmpGDlO1wwfkARjaW2tp5xh9j+f0e0cic
-	BfUpDs55eera1oAR7r5RmLm1L/7pvnhDqEOLj5VN8kWpDxEGYQS5IcVG9a3Az2hUwybO6p5kVuc
-	oB5sgsh6uPIQ2AGeAWt4oCi53/xkQ+aVEwzFNt3efxCPflDCmjbRLY5duOPOf17tecmXtf1BhiJ
-	8D/bgjpr8+/VY+UgzTkC+2aRSRMKbTUkeF5R1isGoJNcI0zRutV3k+Qql0Wl+VxTmH/MWw9plxQ
-	EoTWzyEIfMCgNE=
-X-Received: by 2002:a05:6a00:4c0a:b0:842:708f:39a6 with SMTP id d2e1a72fcca58-842b0e1e208mr26244552b3a.10.1781101089493;
-        Wed, 10 Jun 2026 07:18:09 -0700 (PDT)
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com. [209.85.214.173])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8428288217bsm29061313b3a.37.2026.06.10.07.18.06
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Jun 2026 07:18:07 -0700 (PDT)
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2bf3781ca51so62517705ad.0
-        for <patches@lists.linux.dev>; Wed, 10 Jun 2026 07:18:06 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ9YGifKO73+ni8Xov6aAEkhdOUNQ1qINhX//A+mPBkKOQzk5pNgTb6lN5GxuhDMfheHcCxZo+Y5@lists.linux.dev
-X-Received: by 2002:a17:903:244e:b0:2c0:ab92:584c with SMTP id
- d9443c01a7336-2c1e8209b98mr287326215ad.25.1781101086478; Wed, 10 Jun 2026
- 07:18:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IzYapde4"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1781105243; x=1812641243;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=JP6yyi5WpTDP/wNB8FgQq1zOkOyWVWG0T9lRtVOJmKU=;
+  b=IzYapde4ggHPwVQ3VxO1njghKe/EYej31Mt5PRArA19BNUiPqexK+01T
+   EnAGARHSebhIbgLOr68qwfW1FKV83LBjkNS98Xv4foTVM/lcxGAYgHtMc
+   9c2YWmaI7w+TrEOjdI2SYCmJr3dq2tBRqMIg/cI096RKnDsL4oVaXfGJC
+   Af7EHSpk4vQQPBjHJL6Y7E9QxFaK6HjebTZREy2/tYNtWwou6YLcf/VdX
+   1t2IyL6+oMndloBRrLBAHmk6Y4rM7P/y7rAA/yL2ypx+nnh9BR9g8oyx6
+   HAqW0XG74sPQfVlvaya4eP0rACgpEZGdj9y8CL7vCdkI1ouhVfoa5l6b2
+   g==;
+X-CSE-ConnectionGUID: kafYXYYBR0qKfpG2R+pXJg==
+X-CSE-MsgGUID: 8oL9JdkfRbaL+imhuDcXNg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11813"; a="81877378"
+X-IronPort-AV: E=Sophos;i="6.24,197,1774335600"; 
+   d="scan'208";a="81877378"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2026 08:27:22 -0700
+X-CSE-ConnectionGUID: vXM/SQgHQzKFLJTSTPuloA==
+X-CSE-MsgGUID: REIPIouSTaebpZRqoiklLw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,197,1774335600"; 
+   d="scan'208";a="276398028"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+  by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2026 08:27:22 -0700
+Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Wed, 10 Jun 2026 08:27:21 -0700
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Wed, 10 Jun 2026 08:27:21 -0700
+Received: from DM1PR04CU001.outbound.protection.outlook.com (52.101.61.57) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Wed, 10 Jun 2026 08:27:21 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=BFvSZTF2WE6T0JYVA1fOCoUGXf7JKUgk94GFdOJcS3tuhNdky0m0nxIUbm9qVHdg0I6C2czaWVZC7Uvv97QT+wxWpAHlhylPlWC68gCOH07p+0nFIZiJ9MXMl1WTMwrAJUlESZyiP2EYdrAixQmy/U43b5/iI3lmm/bGYSifPMsV1XDHa/b4SeYqLy+7PlucsdMuhgVO+BOLIlEkV9ZVOZJLT/D/41YXttCroDE1Vp100dC8NgtnbXmdfdFOYtS+VdV09ByyuLqyPfeviCSrC99I97sI3nojnwuBII5JfUHArqGvxvNld2cb8xRb75oiUekCZZaVGQaYdQftau1KKQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=3YPujtgrlc20q2VYLL1xZRAoit443Sw4cedl15S4DUo=;
+ b=DittQA7jbnFEiAkOfMXmsQN0XoJ1d8dwd1sQmLHRt8xGT6GqFPaDiuJWbchzLn1m//C7i3zRxTTIEeCD+AzF8MKPP00yNMG0rErEyT3QiyQbCaGHpNQF+A9qdUnm3aHqkiPpMm9+nwvrL/yGzD+hbAv8cJ8LqnOcLsxKR8pZAt+UPkeHff7GWvmQZ9XY8gi8VX6hhg8GXrxr5FXTh9o9QB+5HgiSzTdWcBfopX7P7jlZkyGAh0nB9MZCE0PjXwnm26gYX7GUyUzlAjU+kuFdRkdW3+ImedouPVASRO2vauICyqj1dIEC1s+xaUwqE8TTVrQ2nAiWT8d2r+uvBXjT3A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ2PR11MB8370.namprd11.prod.outlook.com (2603:10b6:a03:540::20)
+ by PH0PR11MB4870.namprd11.prod.outlook.com (2603:10b6:510:34::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.14; Wed, 10 Jun
+ 2026 15:27:18 +0000
+Received: from SJ2PR11MB8370.namprd11.prod.outlook.com
+ ([fe80::b6cf:ce77:3cdf:7cc]) by SJ2PR11MB8370.namprd11.prod.outlook.com
+ ([fe80::b6cf:ce77:3cdf:7cc%4]) with mapi id 15.21.0092.011; Wed, 10 Jun 2026
+ 15:27:18 +0000
+Message-ID: <387cc53d-7e55-4c1a-bf0d-635f4f7590f6@intel.com>
+Date: Wed, 10 Jun 2026 08:27:15 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 11/14] mpam,x86/resctrl: Resolve INTEL_PMT_TELEMETRY
+ symbols at runtime
+To: "Luck, Tony" <tony.luck@intel.com>
+CC: Fenghua Yu <fenghuay@nvidia.com>, Maciej Wieczor-Retman
+	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
+ Fustini" <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>, Chen Yu
+	<yu.c.chen@intel.com>, David E Box <david.e.box@intel.com>, <x86@kernel.org>,
+	Christoph Hellwig <hch@infradead.org>, <linux-kernel@vger.kernel.org>,
+	<patches@lists.linux.dev>
+References: <20260601195632.15876-1-tony.luck@intel.com>
+ <20260601195632.15876-12-tony.luck@intel.com>
+ <03d45c09-b392-420a-9b38-1c1f213a7dcc@intel.com>
+ <aiiq55x6fs2ddS91@agluck-desk3>
+Content-Language: en-US
+From: Reinette Chatre <reinette.chatre@intel.com>
+In-Reply-To: <aiiq55x6fs2ddS91@agluck-desk3>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4PR03CA0236.namprd03.prod.outlook.com
+ (2603:10b6:303:b9::31) To SJ2PR11MB8370.namprd11.prod.outlook.com
+ (2603:10b6:a03:540::20)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAHk-=whL0oLvmh3FO9SapDhgrXMT_d6qkP2V3OBjysOWXod2Og@mail.gmail.com>
- <aijyuX14ahOf53zM@gondor.apana.org.au>
-In-Reply-To: <aijyuX14ahOf53zM@gondor.apana.org.au>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Wed, 10 Jun 2026 07:17:46 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wjeLy2n9H82_THob=wzOEfsQT_yP05ZH9qY7NTWgj2R_A@mail.gmail.com>
-X-Gm-Features: AVVi8Cf89LEbA8IWp6kUXfdfvHtLXSvqRDQpEPExTR6LsZaq3LaagKRbHX8i3Yg
-Message-ID: <CAHk-=wjeLy2n9H82_THob=wzOEfsQT_yP05ZH9qY7NTWgj2R_A@mail.gmail.com>
-Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
-To: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: metze@samba.org, luto@amacapital.net, safinaskar@gmail.com, 
-	akpm@linux-foundation.org, axboe@kernel.dk, brauner@kernel.org, 
-	david@kernel.org, dhowells@redhat.com, hch@infradead.org, jack@suse.cz, 
-	linux-api@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-mm@kvack.org, miklos@szeredi.hu, 
-	netdev@vger.kernel.org, patches@lists.linux.dev, pfalcato@suse.de, 
-	viro@zeniv.linux.org.uk, willy@infradead.org
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB8370:EE_|PH0PR11MB4870:EE_
+X-MS-Office365-Filtering-Correlation-Id: 23202872-09d1-4ad0-cf6c-08dec704c1d1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|23010399003|7416014|376014|6133799003|22082099003|18002099003|11063799006|5023799004|4143699003|56012099006;
+X-Microsoft-Antispam-Message-Info: ZdjsgA3DQ45wDMPLdICdx5DLpkfxzrQO1Om0M81U2aN1iRhckD6akRn/BqaWfbcXgdMG5ioll9Po7ItqtTYDJZiXxVjJHBIiGJ4G5NJoHVQnFZouv3R9RDnXy7YK2QgEcaOZ8ebNmUwsNm0u7Fj2o4CHX3ExRvRjzP2hsnTCCPQYZWpv1Z/kvEvQ4vv2nFzlpMyaJrei2b0ID3rAtFIz+cl4m1EJtc4Nubo8X+u5x1xen+z6zESZbT4Eu8X7RddvoRYsSmsN0tmDB+3sKOAIqFQzzyeLxJDoDaquKhxx6FthR0QxCr4JeqI/bQrRUqrJe2DWRfYQ5Qo9jmGLMH3LSJ9z4sDUX1v9fOo/9XJHDOEqqln9kKGGN+bQX1QVCVZ52HDy0WhlyG4qluIKcSNIjPlsMbIhPbNpy+iRHPRBTKyEs5W4W6yk3POIAsWufLfseF5fAuKwd9Jy/5ph5fKA7HTFX/0zdtBiAmixDKvy+OInPWJYV1hYUcH7pKG3/0oUNC+fE+E7jLb/1IwjpX90+GsgJW+qYX6wiXLVjNAZBIUMVuT0dOeSXte0s3EA/9whJYu8RXwWkx6YOjF1sUefv5k4RVS1NEaVlwzgyjZ8h7CdbZkwe3bsD7b04oTI70hCetZKSYTSwyQyOmEU8LW0947EYAgW9n5BSzy8pjkT9jJzDiOSxVjLYxS+QgD+wZHi
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB8370.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(23010399003)(7416014)(376014)(6133799003)(22082099003)(18002099003)(11063799006)(5023799004)(4143699003)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UUtxb1RIQXhqK0pGWXM3ZjJsVzNxNlJtZlNPc1N1MmhLTHNqQkZOYVYrWHhO?=
+ =?utf-8?B?bHlCRGk1cGVyZk1ZYXBKeHBOSGNhQm5XcUFkNmVOaWI3M2xiN05VeHNtSGVR?=
+ =?utf-8?B?WTRkbjI1aWRBQlljZ0pZNkpnWmw5aVJHQlpBQ3BVUWppaFhkMHVCSStzNUha?=
+ =?utf-8?B?cjl5ekZDTkRGaXZCVnB3TnMxd2JydlFyWUNhRlZ4endjcklVUUNaWlpMMHVu?=
+ =?utf-8?B?Ujd1MXpNTmkvUVFsVlpvOTJVTVpZUk9lZGI5SHBrWjFoekY1RW9FWlY3YmFk?=
+ =?utf-8?B?a2t1MEpBNUhHYlJrOTF2N2R3dnc4dEtwa1JCcmxqNnRZbFQ1QisyVjlRbDU2?=
+ =?utf-8?B?clFKajQ2R2FQMVF2elQ4V2t1MDFtQXNaZTgwM09pcGFKanp3WE94UjhQanZM?=
+ =?utf-8?B?ZVkxOWdRc2kvbUdWME15dC8vY3U4a0diRVJ4dWt3MVYzZTRxdlFBNHNNb0RB?=
+ =?utf-8?B?UGlCc0RMVGpyOE8ydTNCYzhJNUdYd3ZMMDZXN2lYdHNmNVFYTFd3R2tUbk9j?=
+ =?utf-8?B?dTBxTHRDRDd5Q3FDZTNlTS9NVFA3cngrNnFuZ3BhUFQ2enE2bTZNWjM4NTda?=
+ =?utf-8?B?d1hrMXVtRHNkaUpUVjhibVVxWGtUMG1wRzVSUElkMGpnanRFZWYvSU5XWFhI?=
+ =?utf-8?B?d3gyZmNFSnlYbkhNUWMybUp0ZmcrWm1YeUZFVnJwd2lDZjBsM2N6cHlEWEVB?=
+ =?utf-8?B?Rm41c2UxNDZ5Wkw1U1FoUkFtRWdkSFZ6c2Y1Tkt6NnVhQS9uRm9FSExFR0pn?=
+ =?utf-8?B?RHgveUJUVm41cnVXR05ZYk0ycmZ6VTdFbFpNNVF2ZFZuMGdVQW9vbzVVRyt5?=
+ =?utf-8?B?M1NPaU51YmFvenJtVDVOQWNaOHJ1ZWh4VVdzZGtrNWNMUlBpbFdnRTlPTGQz?=
+ =?utf-8?B?WDFGOHZ3ME1WM0Q3ckU0T0hBaVBrU3dpeEpaR0htdDludE9lcGFOcDVqcGlE?=
+ =?utf-8?B?eUNnZXRmK1dvMnNIRUMzL2t0MjZZL29xYUhGKzhHV2xyMWlTc3FNTXdIZEli?=
+ =?utf-8?B?QnhQME9tQ1dhQVpWUFBiakFkN1hWcnhVR1VtTGdtVllIcXc4OEQ1d1QxMDBN?=
+ =?utf-8?B?c3owc2g2YVVNRHhIU3hVU2RLUjdHalVYazJaWU5RR1pETjhsQmIzUWpHaGEz?=
+ =?utf-8?B?L01FOU51YS96ZnVlV0VYaE1MVlNVa3pDdGpORjFPT0xkS0V1aEt0QjZDVUo1?=
+ =?utf-8?B?Sk4rVlZyYnRYL0JydVFWdEF5VUxKZlhpOUFOTUlONjBJMWZIZnJIa2kzZzJz?=
+ =?utf-8?B?a09iY3Z4M3h5UWV5SEluVGRldWFPQk9WdWttbWpwZlU4R3ZHUG5iekVPdzJl?=
+ =?utf-8?B?ZkNnUzVwSTdzS1hqeGcxc2JucWRRTUNWUHFIK2NwNW9reXU1OU5SdDdVZVZB?=
+ =?utf-8?B?ODVsd2Q0UHJ4dE5HRjFmNXEweHdla3hLYVN2NHVHdmUvZCtXdTg1UWYzOWZO?=
+ =?utf-8?B?cDN0dk1rbDVJMUFJWEpUc2s3RklHK294b3hOSkVzVUdxSnlEMUMvRU5hZ0J2?=
+ =?utf-8?B?anJmTzBUakU3TjFIdGNCa2xxVStoUjBJc1p6N1BhWEc1WEhHaW5CNmw1MXRQ?=
+ =?utf-8?B?L2NMMm9tM0lzOSs4RlkyaHJUOEZGSXlxTHpVWC81dXZxSTg3MFJpZHBVS3Ar?=
+ =?utf-8?B?MFdzb2NKcmdlYTcrR0FUWmYzbVhKay9EeXBwOWdDUTRXZERNRUdYc1ZTRkhi?=
+ =?utf-8?B?TFV6UlpzQ1NBSVJFOUFkVVJEUWM0ZnY0OXdEVy9IY1ZsNnpSTkR0dWN5SXdM?=
+ =?utf-8?B?eUJET3dyak1tbDA5VlJuUUkzUEJKc2tCNzI0RmpvaU1rWHlBbUpRK0NYRDhL?=
+ =?utf-8?B?L2piZzUyclRzSUNCWTdsL3Z2UCtJVEQrdnF0by9HS1pYN1A5ZVR5akx1SXkw?=
+ =?utf-8?B?Yk5yRm9nRnVKcXdySjd2aEpTcXlCOVQybkg5VVJvaUR1SDFHVml4RlZxalBv?=
+ =?utf-8?B?UFdrRjhlTVJ0WDFtOGVlR0YrN0J3SWFYRnNUeU1MZXRxNUxBQy9GSDFXM2Q0?=
+ =?utf-8?B?QVFwUGE1akpiYzM3akhsN3labnRvd1RxMklka1k2UWFZdjloaXkydkNEQzk5?=
+ =?utf-8?B?Y2ltV3VlQWRPd2ZTZmozSEtCeUVKUEdwOE44dGh4OC9EZ3VMbWJ4QnkwRngr?=
+ =?utf-8?B?a09SRFc5M2ZEU09MRmlRdFE1WHNWWHc2MEhKWDhybkdDZ0dmczh2dkVYLzQ3?=
+ =?utf-8?B?RXlzai9ualVOWTl1aW04cTdZcmhVTnplaDYxSXNRWm53WnRKWnpRelVnOVpR?=
+ =?utf-8?B?S1dMTEVHZHZtcVBPYlhXM2lWcG1CenpYUHRYSW40eXp3bzVjMWtRNzAvY0FB?=
+ =?utf-8?B?ejdEQXJwWmM1UHJOZ29EUEFWSnhUUVJhQ1ZmcG94bzN1YlNZd1JFbjdUSFd4?=
+ =?utf-8?Q?Z0K/kPSF+SPF9X+A=3D?=
+X-Exchange-RoutingPolicyChecked: YiUjEGt3NfgIn0aSu2l6UGjsChGk/9rv0JEYJwEfqz0CxzBkgQ9PSA4PoC4nQZ5jGZMzpQVd72kUIEd9+6W8OizrUnO/fgq2eBxFC770xXn3BSlskabf4vQ6r0GSalnz2rzhfTH2cYVHT6QKsBbpuGK/xKmlrCpKAdYReOoxVHU7UaKyUIlmM7jykwSmC9XvVJhXxqrMVrTO7rt0ogDi0HPPLcorsyOwgYoobUD70X/p2kD6J4bDUQgU6WnjFr+typ5pZcx/X6RpvYxYgctjQCdRHdCnJnJQO1AbTt0KkHfJ0Fmg94mAtAIK//a1vqeW6xQHhjkSIUkuAsx9ArqHQA==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 23202872-09d1-4ad0-cf6c-08dec704c1d1
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB8370.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jun 2026 15:27:18.1842
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: WzAq1ld7C/sPcjl0BH4S8FZGZcoo4AxD429GGrPQCauOzxRdy6rUaFWS0x9Zc1m5jKar8moq51wdO20NGkImaIu4NKXdBm5GrE9RuXJ0wAk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB4870
+X-OriginatorOrg: intel.com
 
-On Tue, 9 Jun 2026 at 22:14, Herbert Xu <herbert@gondor.apana.org.au> wrote:
->
-> How about using write access as the gate to zero copy?
+Hi Tony,
 
-Well, it's too late now - no sane user would open files for writing
-just to read from them.
+On 6/9/26 5:08 PM, Luck, Tony wrote:
+> On Mon, Jun 08, 2026 at 04:25:51PM -0700, Reinette Chatre wrote:
 
-And if the file isn't opened for writing originally, it won't show up
-in the fd. So we'd have to do some after-the-fact "is this writable
-using the credentials we had at open time" thing.
 
-Which we do for some /proc stuff etc, but it's disgusting, and it
-isn't how any of this should work.
+>>> instead of direct link-time references to PMT symbols.
+>>>
+>>> Prepare for the file system to call resctrl_arch_pre_mount() on every mount
+>>> by moving AET enumeration into resctrl_arch_pre_mount() and cleanup into
+>>> resctrl_arch_unmount(). This allows the PMT module to be unloaded whenever
+>>> the filesystem is not mounted.
+>>>
+>>> Remove intel_aet_exit because all cleanup now happens in the unmount path.
+>>>
+>>> Note that the Linux file system code does not serialize calls to
+>>> fs_context_operations::get_tree(), so there may be arbitrarily many
+>>> parallel calls if users invoke mount(2) multiple times.
+>>>
+>>> Add locking and state (resctrl_arch_mount_entries) to avoid repeated
+>>> enumeration on nested mount requests from file system code (which will be
+>>> failed with -EBUSY status).
+>>>
+>>> event_group::num_rmid may be reset (reduced) during enumeration. This is
+>>> not worth resetting on unmount because the same reduction would occur on
+>>> each subsequent mount.
+>>
+>> Even more important to ensure that PMT is done with its enumeration when
+>> AET enumeration starts?
+> 
+> Would be nice, but I still don't know a way to make that happen.
 
-Plus honestly, in any *good* setup, the normal case really shouldn't
-be that the source is writable anyway. In benchmarks, sure. But in
-real life? Hell no.
+Could it help to have AET depends on PMT probe being complete?
 
-If you're doing web serving of static content, your web server simply
-should not have write access to what it is serving. If it does, your
-web server setup is simply hot garbage and probably riddled with
-security issues anyway, because you clearly spent absolutely zero time
-on any kind of "minimal privileges" model.
+...
 
-(I'm not saying that splice would be primarily for web serving or that
-serving static pages like that is an interesting load - I'm using it
-purely as an example of why saying that writable files should get
-better treatment is crazy: it's not how *any* of this should work at
-any level at all).
+>>> +void intel_aet_unmount(void)
+>>>  {
+>>>  	struct event_group **peg;
+>>>  
+>>> +	guard(mutex)(&aet_register_lock);
+>>
+>> Could this get a short-circuit to make behavior on AMD obvious?
+> 
+> Like this?
+> 
+> 	if (boot_cpu_data.x86_vendor != X86_VENDOR_INTEL)
+> 		return;
+> 
+> Same in intel_aet_pre_mount() for symmetry??
 
-So no. We should not treat writable files as some kind of preferred
-model for performance. We should discourage that kind of behavior, not
-encourage it.
+I do not see that this requires to be architecture specific. This capability
+introduces AET register()/unregister() and pre_mount()/unmount().
+pre_mount() already does no-op if (essentially) nothing is registered. Could
+unmount() similarly be a no-op if (essentially) nothing is registered?
 
-                  Linus
+Reinette
