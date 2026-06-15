@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37EB033508E
-	for <patches@lists.linux.dev>; Mon, 15 Jun 2026 18:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6883164BB
+	for <patches@lists.linux.dev>; Mon, 15 Jun 2026 18:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781547915; cv=none; b=Ptw1PO8DW+51SOpsz+vRGtWpXMTb9MytCuH5Zl6aa8mErfI7VEa5gMeBQbUJTZNaBNJzNLbLlQjVCbyYW9620rTYSmkIzDjVdz40eUmyPRL+nN0F+nJrXJvW6vm+4xlIr2J0wu+Q8wmImlTLuZLP7UavuOMeLMzNOtDk3miHFTM=
+	t=1781547916; cv=none; b=nDvRyVUdZIS6pJ29CDtmw0wvjaZ7wglPfGnb+S7ZNOYHSop7VRQQSSZ12KcSN6bvYyboZvTPDxAYjaFSec1lSAvuTqG/UaLmiwYmOZjXAVngMBMTGTde/pk5Me35JUNFM42hh7zTqjlvF2oL+64zpbZQIp57sovQcTgeuEJDaIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781547915; c=relaxed/simple;
-	bh=8s+4l5dBFT8j0RbC0XLevFKHwJIItgN5f7cvG24Wo00=;
+	s=arc-20240116; t=1781547916; c=relaxed/simple;
+	bh=Phroedg9xgFNldBgvX+72+A5/sONrbvincUmkJpw8XU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KjhRYB6NAm6j0zNwKU37usZCqdh0E5dBxU52ZWbrdrKMJaZzuKmnWchcwXNgNOhE60jymO2YWEyOSYIkKR9vILz/Aqs8wUmDU5lhbNZjg/oKcjmdZvJAhLLyU7qPHEuxBOQ8amL1Hhk0xbvJu5YOAOWBVWvFlLVQsHR+c2cczd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JnAhQ1xo; arc=none smtp.client-ip=198.175.65.12
+	 MIME-Version; b=Vaqhqv3pxmZja/1/5sU1xJ36DcQRR7co8KZitxKo/fAnFQ6gN1216OgEzj6/7kcOFdUpjtkpc07E/ZaPmcX5l/+stoVMALi11/dUffScuxFEzOlj73Eokfmv7UyfVxhJ03Fd4QdVhLa0Cq2H77Y5Qd+xfWFeBCl+mGvKsT5Qk2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bOYoSOFN; arc=none smtp.client-ip=198.175.65.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JnAhQ1xo"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bOYoSOFN"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1781547914; x=1813083914;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=8s+4l5dBFT8j0RbC0XLevFKHwJIItgN5f7cvG24Wo00=;
-  b=JnAhQ1xoR0DScEL24Sbg46Z4hb0zj/12BoW/0o/P111ieadvBf+QhKc0
-   +KTGyJrRZR/vnSpvWJs7vVRo5Q6sz+KFzXy9eP0GToIsaTjgSp2/4KbTt
-   jDFMh7E5IQUnBfRol8SZraOuScqrd6xb7RD6LHQeP8FbCZNaUCby+mfm3
-   oc/hLZ2VowoI94E3AU4cvueYCntpmj3DEVQYhkYWFJmbLAm07l8hMhq7m
-   wrdwN9n5FaA4rlVZbM3dSBF4uk0Zi7ANXU52GC/EbzbSLsCGBAD/guXfJ
-   pG659aVNWcfqtrkNvWofc+O9q7h29s5KEhLW6Dbmlemn0piz8xXhCBXHQ
-   g==;
-X-CSE-ConnectionGUID: P1CscsMOQJaygIGmG8Il5A==
-X-CSE-MsgGUID: eQ287OhxR6KYhrM90X6xzA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11818"; a="93789997"
+  bh=Phroedg9xgFNldBgvX+72+A5/sONrbvincUmkJpw8XU=;
+  b=bOYoSOFNgLtN6maQ/O1GO6zIt7LlnzhYOnYTfCCG/dkKWPwoG/MAz3mB
+   8pYtlo3/iN9734uPvwFYmYFlcps2q38aGNJbEQXCjTp14lbWmZrXvghGB
+   evD9bpSO11EnhsRzSvQq1w3fwRfQQ/xBW26YXIzzB+xpoDTwQSpvJtZ/L
+   hrvYDHJ5W8lzKx2SAaRdywRUrvlq/RHSlcTVxefVU8mt5ablCgT6av+jn
+   MpJFEaiq4F1Bh0fwcZTUCn5J/XjJtbPpmbmous/wEo+Uihguz/Fgshi9K
+   LfUReyxrQnHAs1YiBQdWa+g9Pit8p8qjH5qiDNiBz2PMxW3Pr2Za7XtoD
+   A==;
+X-CSE-ConnectionGUID: d2KxqPfsQ0mtXz2Suq61QA==
+X-CSE-MsgGUID: WBPfnibVSdeP+Xua/insfg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11818"; a="93789990"
 X-IronPort-AV: E=Sophos;i="6.24,206,1774335600"; 
-   d="scan'208";a="93789997"
+   d="scan'208";a="93789990"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
   by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2026 11:25:10 -0700
-X-CSE-ConnectionGUID: XClgXzk2SYyjjKjvSLE7wA==
-X-CSE-MsgGUID: dO6kUSfjR6Cy2fqolPdk4Q==
+X-CSE-ConnectionGUID: FGKnyo4xQwynXnR07FUgEA==
+X-CSE-MsgGUID: Ix5WBpwmQR6PB7vSGDT6GQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.24,206,1774335600"; 
-   d="scan'208";a="247620639"
+   d="scan'208";a="247620635"
 Received: from spandruv-desk1.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.221.121])
   by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2026 11:25:09 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -59,9 +59,9 @@ Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v8 09/16] x86/resctrl: Drop global 'rdt_mon_capable' flag
-Date: Mon, 15 Jun 2026 11:24:50 -0700
-Message-ID: <20260615182457.14725-10-tony.luck@intel.com>
+Subject: [PATCH v8 08/16] fs/resctrl: Add interface to disable a monitor event
+Date: Mon, 15 Jun 2026 11:24:49 -0700
+Message-ID: <20260615182457.14725-9-tony.luck@intel.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260615182457.14725-1-tony.luck@intel.com>
 References: <20260615182457.14725-1-tony.luck@intel.com>
@@ -73,118 +73,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-File system code calls resctrl_arch_mon_capable() to determine if the
-system supports any monitoring features.
+resctrl currently assumes all monitor events are enabled before any domain
+is created, because per-domain state is allocated by the architecture's CPU
+hotplug callbacks. There is no way to disable an event once registered.
 
-x86 architecture code sets a global flag to support implementation of
-resctrl_arch_mon_capable() but the upcoming change to enumerate AET
-(Application Energy Telemetry) features on each mount introduces a new
-corner case.
+AET events are enumerated by the INTEL_PMT_TELEMETRY driver. To allow that
+driver to be a loadable module, resctrl must tolerate AET events appearing
+and disappearing, which requires the ability to disable an event when the
+driver is unloaded.
 
-Specifically when AET is the only monitoring feature, loading and
-unloading the pmt_telemetry module between resctrl mounts may result
-in monitoring support enabled on some mounts, but not on others.
-
-Replace the global flag with a scan of resources to check if any are
-marked mon_capable.
+Add resctrl_disable_mon_event(). The architecture owns domain lifetime
+and knows mount state, so it is responsible for calling this only while
+resctrl is unmounted and for cleaning up any per-domain state. Document
+those requirements in the kerneldoc since they are not enforced in code.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-
 ---
 v8:
-	Change from a count of monitor features to a scan of the
-	rdt_resources checking for any that are mon_capable.
+	Updated commit message
+	Clear all architecture controlled mon_event::* fields.
 
- arch/x86/include/asm/resctrl.h        |  6 +-----
- arch/x86/kernel/cpu/resctrl/core.c    | 18 +++++++++++++++---
- arch/x86/kernel/cpu/resctrl/monitor.c |  6 ------
- 3 files changed, 16 insertions(+), 14 deletions(-)
+ include/linux/resctrl.h | 34 ++++++++++++++++++++++++++++++++++
+ fs/resctrl/monitor.c    | 15 +++++++++++++++
+ 2 files changed, 49 insertions(+)
 
-diff --git a/arch/x86/include/asm/resctrl.h b/arch/x86/include/asm/resctrl.h
-index 575f8408a9e7..a9f481b7a8ed 100644
---- a/arch/x86/include/asm/resctrl.h
-+++ b/arch/x86/include/asm/resctrl.h
-@@ -43,7 +43,6 @@ struct resctrl_pqr_state {
- DECLARE_PER_CPU(struct resctrl_pqr_state, pqr_state);
+diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+index 006e57fd7ca5..138810ada049 100644
+--- a/include/linux/resctrl.h
++++ b/include/linux/resctrl.h
+@@ -414,9 +414,43 @@ u32 resctrl_arch_get_num_closid(struct rdt_resource *r);
+ u32 resctrl_arch_system_num_rmid_idx(void);
+ int resctrl_arch_update_domains(struct rdt_resource *r, u32 closid);
  
- extern bool rdt_alloc_capable;
--extern bool rdt_mon_capable;
++/**
++ * resctrl_enable_mon_event() - Enable monitoring event
++ * @eventid:	ID of the event
++ * @any_cpu:	True if event data can be read from any CPU.
++ * @binary_bits: Number of binary places of the fixed-point value expected to
++ *		back a floating point event. Can only be set for floating point
++ *		events.
++ * @arch_priv:  Architecture private data associated with event. Passed back to
++ *		architecture when reading the event via resctrl_arch_rmid_read().
++ *
++ * The file system must not be mounted when enabling an event.
++ *
++ * Events that require per-domain (architectural and/or filesystem) state must
++ * be enabled before the domain structures are allocated. For example before
++ * CPU hotplug callbacks that allocate domain structures are registered. If the
++ * architecture discovers a resource after initialization it should enable
++ * events needing per-domain state before any domain structure allocation which
++ * should be coordinated with the CPU hotplug callbacks.
++ *
++ * Return:
++ * true if event was successfully enabled, false otherwise.
++ */
+ bool resctrl_enable_mon_event(enum resctrl_event_id eventid, bool any_cpu,
+ 			      unsigned int binary_bits, void *arch_priv);
  
- DECLARE_STATIC_KEY_FALSE(rdt_enable_key);
- DECLARE_STATIC_KEY_FALSE(rdt_alloc_enable_key);
-@@ -66,10 +65,7 @@ static inline void resctrl_arch_disable_alloc(void)
- 	static_branch_dec_cpuslocked(&rdt_enable_key);
++/**
++ * resctrl_disable_mon_event() - Disable monitoring event
++ * @eventid:	ID of the event
++ *
++ * The file system must not be mounted when disabling an event.
++ *
++ * Events that require per-domain (architectural and/or filesystem) state
++ * will require additional cleanup which should be coordinated with the CPU
++ * hotplug callbacks.
++ */
++void resctrl_disable_mon_event(enum resctrl_event_id eventid);
++
+ bool resctrl_is_mon_event_enabled(enum resctrl_event_id eventid);
+ 
+ bool resctrl_arch_is_evt_configurable(enum resctrl_event_id evt);
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 3df188bee433..8178fc65318e 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -1012,6 +1012,21 @@ bool resctrl_enable_mon_event(enum resctrl_event_id eventid, bool any_cpu,
+ 	return true;
  }
  
--static inline bool resctrl_arch_mon_capable(void)
--{
--	return rdt_mon_capable;
--}
-+bool resctrl_arch_mon_capable(void);
- 
- static inline void resctrl_arch_enable_mon(void)
- {
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 7667cf7c4e94..fb6d52ea3406 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -50,6 +50,20 @@ DEFINE_PER_CPU(struct resctrl_pqr_state, pqr_state);
-  */
- bool rdt_alloc_capable;
- 
-+/*
-+ * Need to re-evaluate on each mount whether any mon_capable resources
-+ * are enabled.
-+ */
-+bool resctrl_arch_mon_capable(void)
++void resctrl_disable_mon_event(enum resctrl_event_id eventid)
 +{
-+	struct rdt_resource *r;
++	if (WARN_ON_ONCE(eventid < QOS_FIRST_EVENT || eventid >= QOS_NUM_EVENTS))
++		return;
++	if (!mon_event_all[eventid].enabled) {
++		pr_warn("Repeat disable for event %d\n", eventid);
++		return;
++	}
 +
-+	for_each_mon_capable_rdt_resource(r)
-+		return true;
-+
-+	return false;
++	mon_event_all[eventid].any_cpu = false;
++	mon_event_all[eventid].binary_bits = 0;
++	mon_event_all[eventid].arch_priv = NULL;
++	mon_event_all[eventid].enabled = false;
 +}
 +
- static void mba_wrmsr_intel(struct msr_param *m);
- static void cat_wrmsr(struct msr_param *m);
- static void mba_wrmsr_amd(struct msr_param *m);
-@@ -779,7 +793,6 @@ void resctrl_arch_pre_mount(void)
- 	cpus_read_lock();
- 	mutex_lock(&domain_list_lock);
- 	r->mon_capable = true;
--	rdt_mon_capable = true;
- 	for_each_online_cpu(cpu)
- 		domain_add_cpu_mon(cpu, r);
- 	mutex_unlock(&domain_list_lock);
-@@ -1013,9 +1026,8 @@ static __init void check_quirks(void)
- static __init bool get_rdt_resources(void)
+ bool resctrl_is_mon_event_enabled(enum resctrl_event_id eventid)
  {
- 	rdt_alloc_capable = get_rdt_alloc_resources();
--	rdt_mon_capable = get_rdt_mon_resources();
- 
--	return (rdt_mon_capable || rdt_alloc_capable);
-+	return get_rdt_mon_resources() || rdt_alloc_capable;
- }
- 
- static __init void rdt_init_res_defs_intel(void)
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index 59215fef3924..682585fffe46 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -25,12 +25,6 @@
- 
- #include "internal.h"
- 
--/*
-- * Global boolean for rdt_monitor which is true if any
-- * resource monitoring is enabled.
-- */
--bool rdt_mon_capable;
--
- #define CF(cf)	((unsigned long)(1048576 * (cf) + 0.5))
- 
- static int snc_nodes_per_l3_cache = 1;
+ 	return eventid >= QOS_FIRST_EVENT && eventid < QOS_NUM_EVENTS &&
 -- 
 2.54.0
 
