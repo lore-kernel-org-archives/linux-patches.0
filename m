@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD60B31355B
-	for <patches@lists.linux.dev>; Mon, 15 Jun 2026 18:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10514318B83
+	for <patches@lists.linux.dev>; Mon, 15 Jun 2026 18:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781547912; cv=none; b=rR+M4Enk5BQbO8/c76LVTMcGLJKbxxmZ86wbKdJ620xa9Ifr9KkK8PZwh8Rh3HJOLxB9kgXBB+yBcP3Z4tZJrBIZ5SvQIjJGCijWuyjFxK8ipd+ekI4q+29y0Pk7MO8DLiFsG9AsxVw0wkj0PcTQZ6tkGoYMEGuYNXOxeIBPObM=
+	t=1781547913; cv=none; b=Rt1CWNB8JDhVqEsIGmxaEczaSiXbPbDTyTLyQ/DZFbkELHZhGTCPZ/3Hue/2YdLjrN5U3upn3WfsSpE/88W8s92cQRBvVsot4NJm2NARRFsyJPLyZLYrLjB96RGA4b5CdjlCld/lVvqaiVmUlLVpJQTBQT84BLhiIE8YGH1zwYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781547912; c=relaxed/simple;
-	bh=rrS+ShOnTIe+Z2HmkEebbrrhPJuER4oUO425uK51bII=;
+	s=arc-20240116; t=1781547913; c=relaxed/simple;
+	bh=0iKcIZsqX45bD5N+at4BI0K+0YFsdRGRBhddBITR9bM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QsVmdkDEBHnveaN+/W2zrzYkfLgDIFctIMtNsiPvYu4fYz93VYqgkEaPzl5E+JkPrcLLwn+D+X5W9sULMmJPHbf1UN3aKhCGYln6P4rB9+0KkTbFuwzeWLcQBiVXbyKJ3+e/j7rkTriuuF4dJLjs1IoKg349Dk5T8Rmk+YojVJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gFV2Hvvg; arc=none smtp.client-ip=198.175.65.12
+	 MIME-Version; b=Dkp0s8y7T7PtJmP7r6hBFajJ/3Ag5XxivNYi5l/OICyVj5TWkB2Dc8q3vSpznz4X3vizAc8DyqplMcgJxhAk9Zg4APrgpdnnFdUaJ+VxzP/CABOq2+UE6oucsGikxsRw2IjsEhpFmd+eweceLwHNSq53STg+3mNswSAYBsy3n5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=D59bdVo0; arc=none smtp.client-ip=198.175.65.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gFV2Hvvg"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="D59bdVo0"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1781547910; x=1813083910;
+  t=1781547912; x=1813083912;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=rrS+ShOnTIe+Z2HmkEebbrrhPJuER4oUO425uK51bII=;
-  b=gFV2Hvvg0Zb53yWfvwLkPV7tgl1UYBTooz4X/hlgXtGNIqDxZEOtuj+c
-   OZ3MakyAglN8e5vFsbbuZNbLjixVNxGJvlVu8anTxKkozvHMyO0saJVdJ
-   ZKpTjLQr/F0ti85HJOJ5HRnRE6EkbB/PAtZx/Li/dUT15qZx8MlWE3RxZ
-   xySukeGz9n1365hucq9eJ8Fp60eJuwDhn17XoZPHpTT7/OV4mmbizeYQN
-   cMDchRYAuwBMaRGQNJ2teF1QzvGyt1zHK2gnDP3UjQBnrUStosl6FpD37
-   Eg+e0hE4AxW++2UkbpB7CdIizBh46NVsCVGZN4KWuyVJbxvbkw/NMgPdM
-   A==;
-X-CSE-ConnectionGUID: D724ucs1TCG1awAKBuqaCg==
-X-CSE-MsgGUID: 658XR2UaRXKMMgUw/WV9hg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11818"; a="93789929"
+  bh=0iKcIZsqX45bD5N+at4BI0K+0YFsdRGRBhddBITR9bM=;
+  b=D59bdVo0BlWRfV8ffk6zpYxkraiMRRviJkA56JylrZkpwNz6sBIue6gb
+   z6cL0wsE2zb/V8KWrfTrNntxe7qy895Di7FeIU2OpimmmMOQ7yBuaJLCz
+   ACpHFOJFYbd+egyKhOKDaNJQyKV3vNtFkava6t0ICPu/qzUBM7trUlT1K
+   UNWYwUjEaNt1F9CiRKJzgNbu4mGhuruc2XrdXK8YePZQKEOYmQr+k2ekL
+   OsjIDtEjey/QqhY/t93b3jP7T2esfCrjOZ9zA7CBVkMCTDid1mncIMvly
+   z7MayvMgIwTqcpdSc3F0UVUmM9iW7F57uLOfThI7zj27+FSmzu1g8VJYI
+   Q==;
+X-CSE-ConnectionGUID: zgUEc504SnGPlbLsRYKICQ==
+X-CSE-MsgGUID: UblkQfyyTXatCF1HUV9OYQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11818"; a="93789958"
 X-IronPort-AV: E=Sophos;i="6.24,206,1774335600"; 
-   d="scan'208";a="93789929"
+   d="scan'208";a="93789958"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2026 11:25:06 -0700
-X-CSE-ConnectionGUID: Hiw8gGhmTdSRUJDF0M5Pjw==
-X-CSE-MsgGUID: YWU09aL2SBSc7ZRCMbp/dQ==
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2026 11:25:08 -0700
+X-CSE-ConnectionGUID: PJAP5uxIRBCBVnijK3BMRw==
+X-CSE-MsgGUID: ehw1ztdFRZeM5dMTtITsiQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.24,206,1774335600"; 
-   d="scan'208";a="247620593"
+   d="scan'208";a="247620619"
 Received: from spandruv-desk1.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.221.121])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2026 11:25:06 -0700
+  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2026 11:25:07 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -58,11 +58,10 @@ To: Fenghua Yu <fenghuay@nvidia.com>,
 Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>,
-	Ben Horgan <ben.horgan@arm.com>
-Subject: [PATCH v8 02/16] fs/resctrl: Free mon_data structures on rdt_get_tree() failure
-Date: Mon, 15 Jun 2026 11:24:43 -0700
-Message-ID: <20260615182457.14725-3-tony.luck@intel.com>
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v8 05/16] platform/x86/intel/pmt: Prevent unbind of PMT telemetry driver
+Date: Mon, 15 Jun 2026 11:24:46 -0700
+Message-ID: <20260615182457.14725-6-tony.luck@intel.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260615182457.14725-1-tony.luck@intel.com>
 References: <20260615182457.14725-1-tony.luck@intel.com>
@@ -74,35 +73,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-If mkdir_mondata_all() or a subsequent call in rdt_get_tree() fails, the
-mon_data structures allocated by mon_get_kn_priv() are leaked.
+The resctrl AET code uses intel_pmt_get_regions_by_feature() (exported
+by the pmt_telemetry module) to obtain pmt_feature_group instances that
+are populated using data from the pmt_discovery module. The returned
+telemetry_region::addr values are MMIO mappings created in the
+telemetry driver's probe path, and resctrl reads from them while a
+mount is active.
 
-Add mon_put_kn_priv() to the out_mongrp error path to free the mon_data
-structures.
+However, a user can unbind the auxiliary driver from its device
+via the sysfs "unbind" attribute. Unbinding the telemetry driver would
+tear down the MMIO mappings, leaving resctrl with stale pointers and
+causing a fault on the next access.
 
-Fixes: 2a6566038544 ("x86/resctrl: Expand the width of domid by replacing mon_data_bits")
-Reported-by: Reinette Chatre <reinette.chatre@intel.com>
-Closes: https://lore.kernel.org/lkml/5d38c1fb-8f91-472b-8897-24b2f50c772b@intel.com/
+It is safe for the discovery driver to be unbound. It does all its work
+at initial probe time and saves a copy of the features and RMID count.
+
+Set device_driver::suppress_bind_attrs in the telemetry driver so
+that the "bind" and "unbind" sysfs attributes are not exposed and the
+user cannot detach the driver from its devices while resctrl (or
+any other in-kernel consumer) may be using the resources.
+
+Fixes: 1fb2daa60de6 ("x86/resctrl: Discover hardware telemetry events")
+Assisted-by: Claude:Opus-4.7
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Chen Yu <yu.c.chen@intel.com>
-Reviewed-by: Ben Horgan <ben.horgan@arm.com>
+--
+v8:
+	New patch
 ---
- fs/resctrl/rdtgroup.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/intel/pmt/telemetry.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index a6376a3fc4c3..506b40dc9430 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -3071,6 +3071,7 @@ static int rdt_get_tree(struct fs_context *fc)
- 		kernfs_remove(kn_mondata);
- out_mongrp:
- 	if (resctrl_arch_mon_capable()) {
-+		mon_put_kn_priv();
- 		rdtgroup_unassign_cntrs(&rdtgroup_default);
- 		kernfs_remove(kn_mongrp);
- 	}
+diff --git a/drivers/platform/x86/intel/pmt/telemetry.c b/drivers/platform/x86/intel/pmt/telemetry.c
+index bdc7c24a3678..daa6da9bad2a 100644
+--- a/drivers/platform/x86/intel/pmt/telemetry.c
++++ b/drivers/platform/x86/intel/pmt/telemetry.c
+@@ -421,6 +421,9 @@ static struct auxiliary_driver pmt_telem_aux_driver = {
+ 	.id_table	= pmt_telem_id_table,
+ 	.remove		= pmt_telem_remove,
+ 	.probe		= pmt_telem_probe,
++	.driver = {
++		.suppress_bind_attrs = true,
++	},
+ };
+ 
+ static int __init pmt_telem_init(void)
 -- 
 2.54.0
 
