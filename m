@@ -1,45 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6094D31327F
-	for <patches@lists.linux.dev>; Mon, 15 Jun 2026 18:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC78D31355C
+	for <patches@lists.linux.dev>; Mon, 15 Jun 2026 18:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781547908; cv=none; b=heFbrCNN6J1VY4YJzlU/utk5c25Zdnax7eHoLe2bRjsVO/eBMcCEW6z7Zt64ty1ZFnSEGJuhMQrHrB9Q8hGIWVY/M5LyLx16n6Jhy5qu/mJBvtHnCX0hdUgWhlWNcEPBJ3tzzydhcSomC8UYgvYgLGnWHY9tQr6eHSbFVIEKYoA=
+	t=1781547909; cv=none; b=hJKLlANrq0zC5+mrZK5vRJo47Hhn6AyI9PJ0nPOi1+1wbMby9dNOLEnqf5OE0mf7yfvoiatbHjTto/SxtCw1z6BpW8XA86qWMVqZQ9SZfkiUZUXREovNN2xj+1SCq801UvZBEViDPhO0sis3x7UTClarSSPyy7x0EBInX0oXqOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781547908; c=relaxed/simple;
-	bh=3vHxne4NIxTNOcsc4bDpun1DKziAdTnkQYxLrh6xKsA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fmsi5nNr53DVYFMnYJgYib2E1U+3QHrDMTrJTJiiUcRw4oGt/X8WDChd0QaN2iOUfy8rbbxxvNrQV+nz5DWZA+xUrSBEfrvn4bMbzWG5tEnbhKnXIhlzAkkb6qFFxwYKsnTqe3yqm2HCp1Nubkxs7fVCgjfx6TbZbOTc6rUPAIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VoE3ShAM; arc=none smtp.client-ip=198.175.65.12
+	s=arc-20240116; t=1781547909; c=relaxed/simple;
+	bh=O5uisUIU0S7xYoADy958jPSZY+kSfiqxIs0NzJ2DqfM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=uOWE8PmeMQcsGakkRfMoEpQM+nsDOYvqBa+AD7oxJR9XtuMuD3fpJv3eZx7o53gAQU/cjPo0q9L/6Xy10KWbpfmmFz4JXoFVOnqCjv35qO5eXfCWAqvKL+4+9swlSfUpyezEu+w3tVXOnM31/x4HVBUjnDCKumC8YsF7IXk9GZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SdcpAksX; arc=none smtp.client-ip=198.175.65.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VoE3ShAM"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SdcpAksX"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1781547906; x=1813083906;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=3vHxne4NIxTNOcsc4bDpun1DKziAdTnkQYxLrh6xKsA=;
-  b=VoE3ShAMklqgRevSJMfjEBUm2j3ihaZxylQGFDV3YdaL62np7yKIpMEy
-   QDM/6VpkEqwEMMIev4xAFUtf17/Of//MtFngODv0iMRk3FUMhNvdmzLL7
-   hOrRg3gmARRwxAmUhz2KTSJ+qL4C4OWVOjHMK+hYDJNpSHHy7UqFf0wAM
-   BbfxUXFT8o1WB9nkYcVoEFEPQ9N94176pJTdDIpwc7QWc2KmNcKWuN4Lr
-   EtzkBiuw1hrs+/SwDYWE4lRB4BdCnngpvO9H7bqadqpm5ndzfP4nXbySn
-   mm4iv4+Y19mfTZEk7CaMnNUjRCfl4AhMcd38kNQ14D/5R1BzSLKsnNyaG
-   w==;
-X-CSE-ConnectionGUID: IcqP5Fx1SFuyBsBQI9yAew==
-X-CSE-MsgGUID: 8u2Ir54sQX210ono4S1yJw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11818"; a="93789907"
+  t=1781547907; x=1813083907;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=O5uisUIU0S7xYoADy958jPSZY+kSfiqxIs0NzJ2DqfM=;
+  b=SdcpAksXNsL+QXT2iMXh4oDQyw/yg6kY7D/XS56WVe0avdZKzAF8WRdO
+   JyTw5D1X4l+sXgbQ9kaGc2bk7MwlPZ6Zhy/zvqjzZqvCMRO6Hot86xlAK
+   qHjmzWzl6bJGN6ylSZq+ZUejICZOtrjPQu1Rby/qebYpVsNvgus5bxE5K
+   4blXPnLrKaVDO8ZoeN0AUG0hXLiI23L34poOjLWnDQmUceqTJ0g5uGS8h
+   10+djf87+5laD0GqgviY86BEToLKjbmoyu/iIEzoAa13fNIinOHaGBe5S
+   yS8PNidNG4WP6jXN/OwYX51exlS8RNKJmZ1Tu9QG+2KejSEbkdHAdMUj2
+   g==;
+X-CSE-ConnectionGUID: UY1M7rEbS1WVTgZewp/chA==
+X-CSE-MsgGUID: HXgYGobLTOq/bEQ8oPEMwg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11818"; a="93789919"
 X-IronPort-AV: E=Sophos;i="6.24,206,1774335600"; 
-   d="scan'208";a="93789907"
+   d="scan'208";a="93789919"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2026 11:25:05 -0700
-X-CSE-ConnectionGUID: JRkjs3WYQPOBLJ02avnHlg==
-X-CSE-MsgGUID: UbuCqcU+RWa+45bPjt5YnA==
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2026 11:25:06 -0700
+X-CSE-ConnectionGUID: 9LIU0lkNRhGvg/3aKuAT6Q==
+X-CSE-MsgGUID: eBAGd1vORO2KX5rWjyEFww==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.24,206,1774335600"; 
-   d="scan'208";a="247620573"
+   d="scan'208";a="247620581"
 Received: from spandruv-desk1.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.221.121])
   by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jun 2026 11:25:05 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -57,11 +58,14 @@ To: Fenghua Yu <fenghuay@nvidia.com>,
 Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v8 00/16] Allow AET to use PMT as loadable module
-Date: Mon, 15 Jun 2026 11:24:41 -0700
-Message-ID: <20260615182457.14725-1-tony.luck@intel.com>
+	Tony Luck <tony.luck@intel.com>,
+	Ben Horgan <ben.horgan@arm.com>
+Subject: [PATCH v8 01/16] fs/resctrl: Move functions to avoid forward references in subsequent fixes
+Date: Mon, 15 Jun 2026 11:24:42 -0700
+Message-ID: <20260615182457.14725-2-tony.luck@intel.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260615182457.14725-1-tony.luck@intel.com>
+References: <20260615182457.14725-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -70,80 +74,417 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Requiring INTEL_PMT_TELEMETRY=y to enable AET is a functional workaround
-to enable enumeration of Application Energy Telemetry (AET) events, but
-unacceptable to many users. It results in increased configration complexity,
-increased kernel memory footprint and inability to patch problems by unloading
-a module and loading an updated version.
+rdt_get_tree() manages resctrl fs mount and rdt_kill_sb() manages resctrl
+fs unmount.
 
-Add a registration function to the AET code that can be used by
-INTEL_PMT_TELEMETRY to provide the enumeration functions.
+There is significant overlap between error cleanup during resctrl mount
+failure and cleanup on resctrl unmount yet the cleanup is not done
+consistently in these two flows.
 
-INTEL_PMT_TELEMETRY can be loaded/unloaded independently of
-resctrl file system mount/unmount. Perform enumeration on
-every mount and cleanup on every unmount.
+Pull some cleanup functions before rdt_get_tree() in preparation for
+a new helper that can be shared between mount and unmount.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
-
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Reviewed-by: Ben Horgan <ben.horgan@arm.com>
 ---
+ fs/resctrl/rdtgroup.c | 376 +++++++++++++++++++++---------------------
+ 1 file changed, 188 insertions(+), 188 deletions(-)
 
-Changes since v7:
-Link: https://lore.kernel.org/all/20260601195632.15876-1-tony.luck@intel.com/
-
-Rebased to v7.1
-
-Patches 1-4 updated from latest (v5) series from Reinette:
-Link: https://lore.kernel.org/all/cover.1781029125.git.reinette.chatre@intel.co
-Those four patches had their own review and (hopefully) will be included
-in TIP tree during this v7.2-rc* cycle.
-
-Patch 5 is new to resolve the issue that the PMT driver could be unbound
-from the pmt_telemtry module which would unmap all the MMIO register
-space. Discussed offline with David Box, but needs his Ack/Review tag
-here.
-
-Patches 6-14 and 16 all have updates based on review comments see the
-individual patches for change log after the "---"
-
-Reinette Chatre (1):
-  fs/resctrl: Fix deadlock on errors during mount
-
-Tony Luck (15):
-  fs/resctrl: Move functions to avoid forward references in subsequent
-    fixes
-  fs/resctrl: Free mon_data structures on rdt_get_tree() failure
-  fs/resctrl: Fix use-after-free during unmount
-  platform/x86/intel/pmt: Prevent unbind of PMT telemetry driver
-  fs/resctrl: Remove redundant calls to resctrl_arch_mon_capable()
-  x86/resctrl: Honor rdt=perf option to force enable AET perf events
-  fs/resctrl: Add interface to disable a monitor event
-  x86/resctrl: Drop global 'rdt_mon_capable' flag
-  arm,x86,fs/resctrl: Handle change in number of RMIDs on each mount
-  x86/resctrl: Add PMT registration API for AET enumeration callbacks
-  platform/x86/intel/pmt: Register enumeration functions with resctrl
-  arm,x86/resctrl: Resolve INTEL_PMT_TELEMETRY symbols at runtime
-  fs/resctrl: Call architecture hooks for every mount/unmount
-  x86/resctrl: Simplify Kconfig options for resctrl
-  Documentation/filesystems/resctrl: Add footnote for telemetry fstab
-    mount caveat
-
- Documentation/filesystems/resctrl.rst      |   7 +-
- include/linux/resctrl.h                    |  47 ++-
- arch/x86/include/asm/resctrl.h             |  21 +-
- arch/x86/kernel/cpu/resctrl/internal.h     |  24 +-
- arch/x86/kernel/cpu/resctrl/core.c         |  69 ++-
- arch/x86/kernel/cpu/resctrl/intel_aet.c    |  91 +++-
- arch/x86/kernel/cpu/resctrl/monitor.c      |   6 -
- drivers/platform/x86/intel/pmt/telemetry.c |   9 +
- drivers/resctrl/mpam_resctrl.c             |   9 +
- fs/resctrl/monitor.c                       |  93 +++--
- fs/resctrl/rdtgroup.c                      | 464 ++++++++++++---------
- arch/x86/Kconfig                           |  15 +-
- arch/x86/kernel/cpu/resctrl/Makefile       |   2 +-
- 13 files changed, 565 insertions(+), 292 deletions(-)
-
-
-base-commit: 8cd9520d35a6c38db6567e97dd93b1f11f185dc6
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index 5dfdaa6f9d8f..a6376a3fc4c3 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -2782,6 +2782,194 @@ static void schemata_list_destroy(void)
+ 	}
+ }
+ 
++/*
++ * Move tasks from one to the other group. If @from is NULL, then all tasks
++ * in the systems are moved unconditionally (used for teardown).
++ *
++ * If @mask is not NULL the cpus on which moved tasks are running are set
++ * in that mask so the update smp function call is restricted to affected
++ * cpus.
++ */
++static void rdt_move_group_tasks(struct rdtgroup *from, struct rdtgroup *to,
++				 struct cpumask *mask)
++{
++	struct task_struct *p, *t;
++
++	read_lock(&tasklist_lock);
++	for_each_process_thread(p, t) {
++		if (!from || is_closid_match(t, from) ||
++		    is_rmid_match(t, from)) {
++			resctrl_arch_set_closid_rmid(t, to->closid,
++						     to->mon.rmid);
++
++			/*
++			 * Order the closid/rmid stores above before the loads
++			 * in task_curr(). This pairs with the full barrier
++			 * between the rq->curr update and
++			 * resctrl_arch_sched_in() during context switch.
++			 */
++			smp_mb();
++
++			/*
++			 * If the task is on a CPU, set the CPU in the mask.
++			 * The detection is inaccurate as tasks might move or
++			 * schedule before the smp function call takes place.
++			 * In such a case the function call is pointless, but
++			 * there is no other side effect.
++			 */
++			if (IS_ENABLED(CONFIG_SMP) && mask && task_curr(t))
++				cpumask_set_cpu(task_cpu(t), mask);
++		}
++	}
++	read_unlock(&tasklist_lock);
++}
++
++static void free_all_child_rdtgrp(struct rdtgroup *rdtgrp)
++{
++	struct rdtgroup *sentry, *stmp;
++	struct list_head *head;
++
++	head = &rdtgrp->mon.crdtgrp_list;
++	list_for_each_entry_safe(sentry, stmp, head, mon.crdtgrp_list) {
++		rdtgroup_unassign_cntrs(sentry);
++		free_rmid(sentry->closid, sentry->mon.rmid);
++		list_del(&sentry->mon.crdtgrp_list);
++
++		if (atomic_read(&sentry->waitcount) != 0)
++			sentry->flags = RDT_DELETED;
++		else
++			rdtgroup_remove(sentry);
++	}
++}
++
++/*
++ * Forcibly remove all of subdirectories under root.
++ */
++static void rmdir_all_sub(void)
++{
++	struct rdtgroup *rdtgrp, *tmp;
++
++	/* Move all tasks to the default resource group */
++	rdt_move_group_tasks(NULL, &rdtgroup_default, NULL);
++
++	list_for_each_entry_safe(rdtgrp, tmp, &rdt_all_groups, rdtgroup_list) {
++		/* Free any child rmids */
++		free_all_child_rdtgrp(rdtgrp);
++
++		/* Remove each rdtgroup other than root */
++		if (rdtgrp == &rdtgroup_default)
++			continue;
++
++		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
++		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
++			rdtgroup_pseudo_lock_remove(rdtgrp);
++
++		/*
++		 * Give any CPUs back to the default group. We cannot copy
++		 * cpu_online_mask because a CPU might have executed the
++		 * offline callback already, but is still marked online.
++		 */
++		cpumask_or(&rdtgroup_default.cpu_mask,
++			   &rdtgroup_default.cpu_mask, &rdtgrp->cpu_mask);
++
++		rdtgroup_unassign_cntrs(rdtgrp);
++
++		free_rmid(rdtgrp->closid, rdtgrp->mon.rmid);
++
++		kernfs_remove(rdtgrp->kn);
++		list_del(&rdtgrp->rdtgroup_list);
++
++		if (atomic_read(&rdtgrp->waitcount) != 0)
++			rdtgrp->flags = RDT_DELETED;
++		else
++			rdtgroup_remove(rdtgrp);
++	}
++	/* Notify online CPUs to update per cpu storage and PQR_ASSOC MSR */
++	update_closid_rmid(cpu_online_mask, &rdtgroup_default);
++
++	kernfs_remove(kn_info);
++	kernfs_remove(kn_mongrp);
++	kernfs_remove(kn_mondata);
++}
++
++/**
++ * mon_get_kn_priv() - Get the mon_data priv data for this event.
++ *
++ * The same values are used across the mon_data directories of all control and
++ * monitor groups for the same event in the same domain. Keep a list of
++ * allocated structures and re-use an existing one with the same values for
++ * @rid, @domid, etc.
++ *
++ * @rid:    The resource id for the event file being created.
++ * @domid:  The domain id for the event file being created.
++ * @mevt:   The type of event file being created.
++ * @do_sum: Whether SNC summing monitors are being created. Only set
++ *	    when @rid == RDT_RESOURCE_L3.
++ *
++ * Return: Pointer to mon_data private data of the event, NULL on failure.
++ */
++static struct mon_data *mon_get_kn_priv(enum resctrl_res_level rid, int domid,
++					struct mon_evt *mevt,
++					bool do_sum)
++{
++	struct mon_data *priv;
++
++	lockdep_assert_held(&rdtgroup_mutex);
++
++	list_for_each_entry(priv, &mon_data_kn_priv_list, list) {
++		if (priv->rid == rid && priv->domid == domid &&
++		    priv->sum == do_sum && priv->evt == mevt)
++			return priv;
++	}
++
++	priv = kzalloc_obj(*priv);
++	if (!priv)
++		return NULL;
++
++	priv->rid = rid;
++	priv->domid = domid;
++	priv->sum = do_sum;
++	priv->evt = mevt;
++	list_add_tail(&priv->list, &mon_data_kn_priv_list);
++
++	return priv;
++}
++
++/**
++ * mon_put_kn_priv() - Free all allocated mon_data structures.
++ *
++ * Called when resctrl file system is unmounted.
++ */
++static void mon_put_kn_priv(void)
++{
++	struct mon_data *priv, *tmp;
++
++	lockdep_assert_held(&rdtgroup_mutex);
++
++	list_for_each_entry_safe(priv, tmp, &mon_data_kn_priv_list, list) {
++		list_del(&priv->list);
++		kfree(priv);
++	}
++}
++
++static void resctrl_fs_teardown(void)
++{
++	lockdep_assert_held(&rdtgroup_mutex);
++
++	/* Cleared by rdtgroup_destroy_root() */
++	if (!rdtgroup_default.kn)
++		return;
++
++	rmdir_all_sub();
++	rdtgroup_unassign_cntrs(&rdtgroup_default);
++	mon_put_kn_priv();
++	rdt_pseudo_lock_release();
++	rdtgroup_default.mode = RDT_MODE_SHAREABLE;
++	closid_exit();
++	schemata_list_destroy();
++	rdtgroup_destroy_root();
++}
++
+ static int rdt_get_tree(struct fs_context *fc)
+ {
+ 	struct rdt_fs_context *ctx = rdt_fc2context(fc);
+@@ -2981,194 +3169,6 @@ static int rdt_init_fs_context(struct fs_context *fc)
+ 	return 0;
+ }
+ 
+-/*
+- * Move tasks from one to the other group. If @from is NULL, then all tasks
+- * in the systems are moved unconditionally (used for teardown).
+- *
+- * If @mask is not NULL the cpus on which moved tasks are running are set
+- * in that mask so the update smp function call is restricted to affected
+- * cpus.
+- */
+-static void rdt_move_group_tasks(struct rdtgroup *from, struct rdtgroup *to,
+-				 struct cpumask *mask)
+-{
+-	struct task_struct *p, *t;
+-
+-	read_lock(&tasklist_lock);
+-	for_each_process_thread(p, t) {
+-		if (!from || is_closid_match(t, from) ||
+-		    is_rmid_match(t, from)) {
+-			resctrl_arch_set_closid_rmid(t, to->closid,
+-						     to->mon.rmid);
+-
+-			/*
+-			 * Order the closid/rmid stores above before the loads
+-			 * in task_curr(). This pairs with the full barrier
+-			 * between the rq->curr update and
+-			 * resctrl_arch_sched_in() during context switch.
+-			 */
+-			smp_mb();
+-
+-			/*
+-			 * If the task is on a CPU, set the CPU in the mask.
+-			 * The detection is inaccurate as tasks might move or
+-			 * schedule before the smp function call takes place.
+-			 * In such a case the function call is pointless, but
+-			 * there is no other side effect.
+-			 */
+-			if (IS_ENABLED(CONFIG_SMP) && mask && task_curr(t))
+-				cpumask_set_cpu(task_cpu(t), mask);
+-		}
+-	}
+-	read_unlock(&tasklist_lock);
+-}
+-
+-static void free_all_child_rdtgrp(struct rdtgroup *rdtgrp)
+-{
+-	struct rdtgroup *sentry, *stmp;
+-	struct list_head *head;
+-
+-	head = &rdtgrp->mon.crdtgrp_list;
+-	list_for_each_entry_safe(sentry, stmp, head, mon.crdtgrp_list) {
+-		rdtgroup_unassign_cntrs(sentry);
+-		free_rmid(sentry->closid, sentry->mon.rmid);
+-		list_del(&sentry->mon.crdtgrp_list);
+-
+-		if (atomic_read(&sentry->waitcount) != 0)
+-			sentry->flags = RDT_DELETED;
+-		else
+-			rdtgroup_remove(sentry);
+-	}
+-}
+-
+-/*
+- * Forcibly remove all of subdirectories under root.
+- */
+-static void rmdir_all_sub(void)
+-{
+-	struct rdtgroup *rdtgrp, *tmp;
+-
+-	/* Move all tasks to the default resource group */
+-	rdt_move_group_tasks(NULL, &rdtgroup_default, NULL);
+-
+-	list_for_each_entry_safe(rdtgrp, tmp, &rdt_all_groups, rdtgroup_list) {
+-		/* Free any child rmids */
+-		free_all_child_rdtgrp(rdtgrp);
+-
+-		/* Remove each rdtgroup other than root */
+-		if (rdtgrp == &rdtgroup_default)
+-			continue;
+-
+-		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
+-		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
+-			rdtgroup_pseudo_lock_remove(rdtgrp);
+-
+-		/*
+-		 * Give any CPUs back to the default group. We cannot copy
+-		 * cpu_online_mask because a CPU might have executed the
+-		 * offline callback already, but is still marked online.
+-		 */
+-		cpumask_or(&rdtgroup_default.cpu_mask,
+-			   &rdtgroup_default.cpu_mask, &rdtgrp->cpu_mask);
+-
+-		rdtgroup_unassign_cntrs(rdtgrp);
+-
+-		free_rmid(rdtgrp->closid, rdtgrp->mon.rmid);
+-
+-		kernfs_remove(rdtgrp->kn);
+-		list_del(&rdtgrp->rdtgroup_list);
+-
+-		if (atomic_read(&rdtgrp->waitcount) != 0)
+-			rdtgrp->flags = RDT_DELETED;
+-		else
+-			rdtgroup_remove(rdtgrp);
+-	}
+-	/* Notify online CPUs to update per cpu storage and PQR_ASSOC MSR */
+-	update_closid_rmid(cpu_online_mask, &rdtgroup_default);
+-
+-	kernfs_remove(kn_info);
+-	kernfs_remove(kn_mongrp);
+-	kernfs_remove(kn_mondata);
+-}
+-
+-/**
+- * mon_get_kn_priv() - Get the mon_data priv data for this event.
+- *
+- * The same values are used across the mon_data directories of all control and
+- * monitor groups for the same event in the same domain. Keep a list of
+- * allocated structures and re-use an existing one with the same values for
+- * @rid, @domid, etc.
+- *
+- * @rid:    The resource id for the event file being created.
+- * @domid:  The domain id for the event file being created.
+- * @mevt:   The type of event file being created.
+- * @do_sum: Whether SNC summing monitors are being created. Only set
+- *	    when @rid == RDT_RESOURCE_L3.
+- *
+- * Return: Pointer to mon_data private data of the event, NULL on failure.
+- */
+-static struct mon_data *mon_get_kn_priv(enum resctrl_res_level rid, int domid,
+-					struct mon_evt *mevt,
+-					bool do_sum)
+-{
+-	struct mon_data *priv;
+-
+-	lockdep_assert_held(&rdtgroup_mutex);
+-
+-	list_for_each_entry(priv, &mon_data_kn_priv_list, list) {
+-		if (priv->rid == rid && priv->domid == domid &&
+-		    priv->sum == do_sum && priv->evt == mevt)
+-			return priv;
+-	}
+-
+-	priv = kzalloc_obj(*priv);
+-	if (!priv)
+-		return NULL;
+-
+-	priv->rid = rid;
+-	priv->domid = domid;
+-	priv->sum = do_sum;
+-	priv->evt = mevt;
+-	list_add_tail(&priv->list, &mon_data_kn_priv_list);
+-
+-	return priv;
+-}
+-
+-/**
+- * mon_put_kn_priv() - Free all allocated mon_data structures.
+- *
+- * Called when resctrl file system is unmounted.
+- */
+-static void mon_put_kn_priv(void)
+-{
+-	struct mon_data *priv, *tmp;
+-
+-	lockdep_assert_held(&rdtgroup_mutex);
+-
+-	list_for_each_entry_safe(priv, tmp, &mon_data_kn_priv_list, list) {
+-		list_del(&priv->list);
+-		kfree(priv);
+-	}
+-}
+-
+-static void resctrl_fs_teardown(void)
+-{
+-	lockdep_assert_held(&rdtgroup_mutex);
+-
+-	/* Cleared by rdtgroup_destroy_root() */
+-	if (!rdtgroup_default.kn)
+-		return;
+-
+-	rmdir_all_sub();
+-	rdtgroup_unassign_cntrs(&rdtgroup_default);
+-	mon_put_kn_priv();
+-	rdt_pseudo_lock_release();
+-	rdtgroup_default.mode = RDT_MODE_SHAREABLE;
+-	closid_exit();
+-	schemata_list_destroy();
+-	rdtgroup_destroy_root();
+-}
+-
+ static void rdt_kill_sb(struct super_block *sb)
+ {
+ 	struct rdt_resource *r;
 -- 
 2.54.0
 
