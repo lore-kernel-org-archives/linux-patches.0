@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12DB835DA78;
-	Tue, 16 Jun 2026 19:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDD834751B;
+	Tue, 16 Jun 2026 19:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636961; cv=none; b=j70iB8q7Gss0cFaV7uhvKuFlqKEoHOAb/nu2aKhsOfztiSCBHLGkRa7GE07fJJv+MVy4aT9U9g+ZfYwLdLAx5TjtuOajIsdFaSjnDM69nF9xunur5jOBaNKgm4dZOw/qAP4dAhAzUypwn2ewZHkDOlvoJlEuOMCzjHgbXg2rzsY=
+	t=1781636966; cv=none; b=g6sZ787BEGooPNllUhe6CN4aA73vtDpeBUeOh2hcgvR/wlTMdS88/KsyjG8W5ObNqXvsMC2D35oZ+Uv0+8TOGO4TBMWqC0dQSafZ8zQdSxQkhZ8DXvSsoszTQl8n46ariygw+GfxJ57F55a6mgRxMOAsQtOkwe577EWSVD1BXNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636961; c=relaxed/simple;
-	bh=e7JxBBoCGlZjhXKDES2z+/aj9ZB/oE1JgpneWTIedvU=;
+	s=arc-20240116; t=1781636966; c=relaxed/simple;
+	bh=YJwaDD8IE9+MDqJbzJaCD2SEqS+obel1AvPryElIg5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cPmMhBPMPk6buPeQcHy6ZJqvjwRrPq/lCwHnTCMl7FoHE4TwTM74u1DEaStsCyTss3J6qCirlR/PWH9zroucWjilaX/ilxnuas2ZMY4QiqOZ7QjAl466PYqPpdHpvQae9dwmupyiiO8lqw5IVZ2OQz5Ln/AcPcwP8SuPNd4NCck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dHr04kLJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l5BrFUHiEb4TM6IgJ+hmgnggtYI8t3pqvl+0EmCBQQKVDpA18sn3F6DKH8Ql5UHztgdI8hFNtfEOc+S8y3Wr1v+ZnVA+mkm+BjqvNSY+mIArSESGAcPwcl4dBRNfIPTRKCpD2ycHP8+4akpaC6pOWV98waD3Hz1HJPgEmdpsXbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=enA6XO/p; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dHr04kLJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD7F1F000E9;
-	Tue, 16 Jun 2026 19:09:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="enA6XO/p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF961F000E9;
+	Tue, 16 Jun 2026 19:09:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636960;
-	bh=GtwX8DFTgJIPmV1MNSOIXb/JsiPx29zgryNvkLmrhf8=;
+	s=korg; t=1781636965;
+	bh=EwzQtJCRiKf3DmXmXeginpA7MP+XFUH/qT7i8O0ak10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dHr04kLJLc18qeWqnog+VUX7r8rH0RMt3AtpFvsmoL6Y7xBeLNn46T/YPWFI7uQ3y
-	 7dMqh7MeBSGlaibakhw08ZSRoPJqXn//PFFyVuhDRA15Xw5ZwFzvijYryD5jVWCWGb
-	 sx0aQo8nT3uIGGUL0ueHsT1GJoses3auT8/UGz5o=
+	b=enA6XO/pjo1TTltPCg27U2QKcnSCE8LwfmdM15gz9IgYIs//uhA5AstP6JtYH1cFs
+	 x3Nkh65G/utLPL4sioqr6EYICQ05eX1TvmcS+BH9UiK3K4Iijentg4YAuD3byXTGMV
+	 t8jAQV+B/TJxhfGzgsNqUsVzS7KMuPUcZxyjX0Vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Tomasz Duszynski <tomasz.duszynski@octakon.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 321/342] iio: chemical: scd30: Use guard(mutex) to allow early returns
-Date: Tue, 16 Jun 2026 20:30:17 +0530
-Message-ID: <20260616145103.511529455@linuxfoundation.org>
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>
+Subject: [PATCH 5.10 339/342] arm64: errata: Mitigate TLBI errata on Microsoft Azure Cobalt 100 CPU
+Date: Tue, 16 Jun 2026 20:30:35 +0530
+Message-ID: <20260616145104.436198861@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -52,175 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Will Deacon <will@kernel.org>
 
-[ Upstream commit 5feb5532870fbced5d6f450b8061a33f461b88ca ]
+commit 1940e70a8144bf75e6df26bf6f600862ea7f7ea1 upstream.
 
-Auto cleanup based release of the lock allows for simpler code flow in a
-few functions with large multiplexing style switch statements and no
-common operations following the switch.
+Commit fb091ff39479 ("arm64: Subscribe Microsoft Azure Cobalt 100 to ARM
+Neoverse N2 errata") states that Microsoft Azure Cobalt 100 CPU "is a
+Microsoft implemented CPU based on r0p0 of the ARM Neoverse N2 CPU, and
+therefore suffers from all the same errata.".
 
-Suggested-by: David Lechner <dlechner@baylibre.com>
-Cc: Tomasz Duszynski <tomasz.duszynski@octakon.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250209180624.701140-3-jic23@kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 5aba4f94b225 ("iio: chemical: scd30: fix division by zero in write_raw")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+So enable the workaround for the latest broadcast TLB invalidation bug
+on these parts.
+
+Signed-off-by: Will Deacon <will@kernel.org>
+[Mark: backport to v5.10.y]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/chemical/scd30_core.c |   63 ++++++++++++++++----------------------
- 1 file changed, 28 insertions(+), 35 deletions(-)
+ Documentation/arm64/silicon-errata.rst |    3 +++
+ arch/arm64/Kconfig                     |    1 +
+ arch/arm64/kernel/cpu_errata.c         |    1 +
+ 3 files changed, 5 insertions(+)
 
---- a/drivers/iio/chemical/scd30_core.c
-+++ b/drivers/iio/chemical/scd30_core.c
-@@ -5,6 +5,7 @@
-  * Copyright (c) 2020 Tomasz Duszynski <tomasz.duszynski@octakon.com>
-  */
- #include <linux/bits.h>
-+#include <linux/cleanup.h>
- #include <linux/completion.h>
- #include <linux/delay.h>
- #include <linux/device.h>
-@@ -198,112 +199,104 @@ static int scd30_read_raw(struct iio_dev
- 			  int *val, int *val2, long mask)
- {
- 	struct scd30_state *state = iio_priv(indio_dev);
--	int ret = -EINVAL;
-+	int ret;
- 	u16 tmp;
+--- a/Documentation/arm64/silicon-errata.rst
++++ b/Documentation/arm64/silicon-errata.rst
+@@ -262,3 +262,6 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | Fujitsu        | A64FX           | E#010001        | FUJITSU_ERRATUM_010001      |
+ +----------------+-----------------+-----------------+-----------------------------+
+++----------------+-----------------+-----------------+-----------------------------+
++| Microsoft      | Azure Cobalt 100| #4193789        | ARM64_ERRATUM_4118414       |
+++----------------+-----------------+-----------------+-----------------------------+
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -772,6 +772,7 @@ config ARM64_ERRATUM_4118414
+ 	  * ARM Neoverse-V2 erratum 4193787
+ 	  * ARM Neoverse-V3 erratum 4193784
+ 	  * ARM Neoverse-V3AE erratum 4193784
++	  * Microsoft Azure Cobalt 100 4193789
+ 	  * NVIDIA Olympus erratum T410-OLY-1029
  
--	mutex_lock(&state->lock);
-+	guard(mutex)(&state->lock);
- 	switch (mask) {
- 	case IIO_CHAN_INFO_RAW:
- 	case IIO_CHAN_INFO_PROCESSED:
- 		if (chan->output) {
- 			*val = state->pressure_comp;
--			ret = IIO_VAL_INT;
--			break;
-+			return IIO_VAL_INT;
- 		}
- 
- 		ret = iio_device_claim_direct_mode(indio_dev);
- 		if (ret)
--			break;
-+			return ret;
- 
- 		ret = scd30_read(state);
- 		if (ret) {
- 			iio_device_release_direct_mode(indio_dev);
--			break;
-+			return ret;
- 		}
- 
- 		*val = state->meas[chan->address];
- 		iio_device_release_direct_mode(indio_dev);
--		ret = IIO_VAL_INT;
--		break;
-+		return IIO_VAL_INT;
- 	case IIO_CHAN_INFO_SCALE:
- 		*val = 0;
- 		*val2 = 1;
--		ret = IIO_VAL_INT_PLUS_MICRO;
--		break;
-+		return IIO_VAL_INT_PLUS_MICRO;
- 	case IIO_CHAN_INFO_SAMP_FREQ:
- 		ret = scd30_command_read(state, CMD_MEAS_INTERVAL, &tmp);
- 		if (ret)
--			break;
-+			return ret;
- 
- 		*val = 0;
- 		*val2 = 1000000000 / tmp;
--		ret = IIO_VAL_INT_PLUS_NANO;
--		break;
-+		return IIO_VAL_INT_PLUS_NANO;
- 	case IIO_CHAN_INFO_CALIBBIAS:
- 		ret = scd30_command_read(state, CMD_TEMP_OFFSET, &tmp);
- 		if (ret)
--			break;
-+			return ret;
- 
- 		*val = tmp;
--		ret = IIO_VAL_INT;
--		break;
-+		return IIO_VAL_INT;
-+	default:
-+		return -EINVAL;
- 	}
--	mutex_unlock(&state->lock);
--
--	return ret;
- }
- 
- static int scd30_write_raw(struct iio_dev *indio_dev, struct iio_chan_spec const *chan,
- 			   int val, int val2, long mask)
- {
- 	struct scd30_state *state = iio_priv(indio_dev);
--	int ret = -EINVAL;
-+	int ret;
- 
--	mutex_lock(&state->lock);
-+	guard(mutex)(&state->lock);
- 	switch (mask) {
- 	case IIO_CHAN_INFO_SAMP_FREQ:
- 		if (val)
--			break;
-+			return -EINVAL;
- 
- 		val = 1000000000 / val2;
- 		if (val < SCD30_MEAS_INTERVAL_MIN_S || val > SCD30_MEAS_INTERVAL_MAX_S)
--			break;
-+			return -EINVAL;
- 
- 		ret = scd30_command_write(state, CMD_MEAS_INTERVAL, val);
- 		if (ret)
--			break;
-+			return ret;
- 
- 		state->meas_interval = val;
--		break;
-+		return 0;
- 	case IIO_CHAN_INFO_RAW:
- 		switch (chan->type) {
- 		case IIO_PRESSURE:
- 			if (val < SCD30_PRESSURE_COMP_MIN_MBAR ||
- 			    val > SCD30_PRESSURE_COMP_MAX_MBAR)
--				break;
-+				return -EINVAL;
- 
- 			ret = scd30_command_write(state, CMD_START_MEAS, val);
- 			if (ret)
--				break;
-+				return ret;
- 
- 			state->pressure_comp = val;
--			break;
-+			return 0;
- 		default:
--			break;
-+			return -EINVAL;
- 		}
--		break;
- 	case IIO_CHAN_INFO_CALIBBIAS:
- 		if (val < 0 || val > SCD30_TEMP_OFFSET_MAX)
--			break;
-+			return -EINVAL;
- 		/*
- 		 * Manufacturer does not explicitly specify min/max sensible
- 		 * values hence check is omitted for simplicity.
- 		 */
--		ret = scd30_command_write(state, CMD_TEMP_OFFSET / 10, val);
-+		return scd30_command_write(state, CMD_TEMP_OFFSET / 10, val);
-+	default:
-+		return -EINVAL;
- 	}
--	mutex_unlock(&state->lock);
--
--	return ret;
- }
- 
- static int scd30_write_raw_get_fmt(struct iio_dev *indio_dev, struct iio_chan_spec const *chan,
+ 	  On affected cores, some memory accesses might not be completed by
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -251,6 +251,7 @@ static const struct arm64_cpu_capabiliti
+ 			MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V3),
+ 			MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V3AE),
+ 			MIDR_ALL_VERSIONS(MIDR_NVIDIA_OLYMPUS),
++			MIDR_ALL_VERSIONS(MIDR_MICROSOFT_AZURE_COBALT_100),
+ 			{}
+ 		})),
+ 	},
 
 
