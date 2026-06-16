@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BF445107D;
-	Tue, 16 Jun 2026 15:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005C64657F3;
+	Tue, 16 Jun 2026 15:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624526; cv=none; b=MU3MMIgV4TjR3K6dGxHitGkwceZy4ZUF3zaBb4r5k7NBElObH8LTE+cMf+9krBBxAaVKOZDPsbnd1FFwWe448nXzrkAagASNxfzRhZH1+D9GvKVP/JFHuQ/EjYE49ySS6u2ajK48Pmt2gDXzOTujEEj1aU/Rea4bXhZyAVxxuWQ=
+	t=1781624533; cv=none; b=uw10LvFDEsceKn7DT0+F8MZUyUNeef2hyhrxRpgzPlnviN/JGQjP97huj7murRfmZxPxCT2yVRFKvaiIClhstNHIVK4ZtoyrhAeOBtr5x/ov/9ZY4WSyh/o1cTT8OFGLzvBbQmNairOPHuQ9KAIB3AeHwpQh+6KP5PhwOhtZMKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624526; c=relaxed/simple;
-	bh=2UwTMCcefVmsKnU9uryUbQIZK3Kv/twe3OvpKn1K/6I=;
+	s=arc-20240116; t=1781624533; c=relaxed/simple;
+	bh=aJGd4EBLy2brfJuDigUXoK+vZMp004RmgGUAVhD//AU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V5hGbIwXBsbc79CK2/JyGl5WP0nl+MdUNMA7L8qWrXRqL7qyDMhcd7z3kSNXi0yYEdOGkf5NgTO8Pm8L3FMMiqVMj69IbTAxBPfECAzNVzIth8t/KYBaZtJsrK4x1WsuwAugy/TC6cClu+9/G3YWS7kzOhwTihMRfsh52cF+TC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wniR7lM5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kEWkDNsu8vTnkG5VBJM16mkDhm3yRMNKgpNewnI8ed6YDnS80kqXDssA+kXqzUVWwTGkNzjmYsGn7dmosPP9waPk/4MeNVhnNUMKOoGNYs1I4et05zuViqJRVUeoHGoeMaD/sdN4D71WQSLeRIuFlSBR+FZiUlRLRkwJ+8xTFnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iGwsRw+F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wniR7lM5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4B61F000E9;
-	Tue, 16 Jun 2026 15:42:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iGwsRw+F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC571F000E9;
+	Tue, 16 Jun 2026 15:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624524;
-	bh=AqxbF55NUW6arnm5/OkxLiMsck4cmKH3KgTHOB/ZHpE=;
+	s=korg; t=1781624531;
+	bh=tGoRHHelSX3OBiy68MazwML/p7rbaURtyDuSj0fHpbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wniR7lM5GUHgx7h7wRjVCdf0UaKHOkdDaOXQMNqWiJ5ZX0Kv5qNrsBnVbU7aKxqyB
-	 P/jY0HD7ZRl59DtaGcbP5mBm0+vpfKr0UlsvCUns4SbhT2/dwCUSyOauWqIL6c+nU8
-	 v29gyrBrnjrqPxPNKQ2aTzPisOOXfv8zaS2YPdRI=
+	b=iGwsRw+FDEypK/lgpMsohhuJGVIk2RiqcwRpuzesTEY2nlELyloSmTUQ0vXMNsIBg
+	 lemgFc+Xlq0M5NdJhPl2b+ZtfViu7IVMzUnN5CjeWObs/iVbkd7iJdlwtxiXsMU8xW
+	 vkUspL3cVeij8WkhoDcRO5ab6utkPT4oPoDSrCMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Martin <andrew.martin@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.0 336/378] drm/amdkfd: Fix buffer overflow in SDMA queue checkpoint/restore on GFX11
-Date: Tue, 16 Jun 2026 20:29:27 +0530
-Message-ID: <20260616145127.900277952@linuxfoundation.org>
+Subject: [PATCH 7.0 354/378] drm/amd/display: Clamp VBIOS HDMI retimer register count to array size
+Date: Tue, 16 Jun 2026 20:29:45 +0530
+Message-ID: <20260616145128.771964018@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -50,118 +53,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Martin <andrew.martin@amd.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-commit 352ea59028ea48a6fff77f19ae28f98f71946a80 upstream.
+commit fb0707ce00eef4e2d60c3020e1c0432739703e4a upstream.
 
-The v11 MQD manager incorrectly assigned the CP-compute variants of
-checkpoint_mqd/restore_mqd for KFD_MQD_TYPE_SDMA queues. These functions
-use sizeof(struct v11_compute_mqd) (2048 bytes) instead of sizeof(struct
-v11_sdma_mqd) (512 bytes), causing a 1536-byte overflow.
+[Why & How]
+The VBIOS integrated info tables (v1_11 and v2_1) contain HdmiRegNum and
+Hdmi6GRegNum fields that are used as loop bounds when copying retimer I2C
+register settings into fixed-size arrays (dp*_ext_hdmi_reg_settings[9]
+and dp*_ext_hdmi_6g_reg_settings[3]). These u8 fields are not validated
+before use, so a malformed VBIOS can specify values up to 255, causing an
+out-of-bounds heap write during driver probe.
 
-During CRIU checkpoint of an SDMA queue on Navi3x:
-- checkpoint_mqd() reads 2048 bytes from a 512-byte SDMA MQD buffer,
-  leaking 1536 bytes of adjacent GTT memory to userspace
+Clamp each register count to the destination array size using min_t()
+before the copy loops, in both get_integrated_info_v11() and
+get_integrated_info_v2_1().
 
-During CRIU restore:
-- restore_mqd() writes 2048 bytes into a 512-byte SDMA MQD buffer,
-  corrupting 1536 bytes of adjacent GTT memory (often the ring buffer
-  or neighboring MQDs)
-
-This is a copy-paste regression unique to v11. All other ASIC backends
-(cik, vi, v9, v10, v12) correctly use the SDMA-specific variants.
-
-Add checkpoint_mqd_sdma() and restore_mqd_sdma() functions that properly
-handle the smaller v11_sdma_mqd structure, matching the pattern used in
-other MQD managers.
-
-Fixes: cc009e613de6 ("drm/amdkfd: Add KFD support for soc21 v3")
-Assisted-by: Claude:Sonnet 4-5
-Signed-off-by: Andrew Martin <andrew.martin@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Assisted-by: GitHub Copilot:claude-opus-4.6
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6fa41db7ffdec97d62433adf03b7b9b759af8c2c)
+(cherry picked from commit 5a7f0ef90195940c54b0f5bb85b87da55f038c69)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c |   49 +++++++++++++++++++----
- 1 file changed, 41 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c |   48 ++++++++++++++-------
+ 1 file changed, 32 insertions(+), 16 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
-@@ -320,8 +320,7 @@ static void checkpoint_mqd(struct mqd_ma
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+@@ -2602,14 +2602,16 @@ static enum bp_result get_integrated_inf
+ 	info_v11->extdispconninfo.checksum;
  
- static void restore_mqd(struct mqd_manager *mm, void **mqd,
- 			struct kfd_mem_obj *mqd_mem_obj, uint64_t *gart_addr,
--			struct queue_properties *qp,
--			const void *mqd_src,
-+			struct queue_properties *qp, const void *mqd_src,
- 			const void *ctl_stack_src, const u32 ctl_stack_size)
- {
- 	uint64_t addr;
-@@ -337,14 +336,48 @@ static void restore_mqd(struct mqd_manag
- 		*gart_addr = addr;
+ 	info->dp0_ext_hdmi_slv_addr = info_v11->dp0_retimer_set.HdmiSlvAddr;
+-	info->dp0_ext_hdmi_reg_num = info_v11->dp0_retimer_set.HdmiRegNum;
++	info->dp0_ext_hdmi_reg_num = min_t(u8, info_v11->dp0_retimer_set.HdmiRegNum,
++					    ARRAY_SIZE(info->dp0_ext_hdmi_reg_settings));
+ 	for (i = 0; i < info->dp0_ext_hdmi_reg_num; i++) {
+ 		info->dp0_ext_hdmi_reg_settings[i].i2c_reg_index =
+ 				info_v11->dp0_retimer_set.HdmiRegSetting[i].ucI2cRegIndex;
+ 		info->dp0_ext_hdmi_reg_settings[i].i2c_reg_val =
+ 				info_v11->dp0_retimer_set.HdmiRegSetting[i].ucI2cRegVal;
+ 	}
+-	info->dp0_ext_hdmi_6g_reg_num = info_v11->dp0_retimer_set.Hdmi6GRegNum;
++	info->dp0_ext_hdmi_6g_reg_num = min_t(u8, info_v11->dp0_retimer_set.Hdmi6GRegNum,
++					       ARRAY_SIZE(info->dp0_ext_hdmi_6g_reg_settings));
+ 	for (i = 0; i < info->dp0_ext_hdmi_6g_reg_num; i++) {
+ 		info->dp0_ext_hdmi_6g_reg_settings[i].i2c_reg_index =
+ 				info_v11->dp0_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegIndex;
+@@ -2618,14 +2620,16 @@ static enum bp_result get_integrated_inf
+ 	}
  
- 	m->cp_hqd_pq_doorbell_control =
--		qp->doorbell_off <<
--			CP_HQD_PQ_DOORBELL_CONTROL__DOORBELL_OFFSET__SHIFT;
--	pr_debug("cp_hqd_pq_doorbell_control 0x%x\n",
--			m->cp_hqd_pq_doorbell_control);
-+		qp->doorbell_off << CP_HQD_PQ_DOORBELL_CONTROL__DOORBELL_OFFSET__SHIFT;
-+	pr_debug("cp_hqd_pq_doorbell_control 0x%x\n", m->cp_hqd_pq_doorbell_control);
+ 	info->dp1_ext_hdmi_slv_addr = info_v11->dp1_retimer_set.HdmiSlvAddr;
+-	info->dp1_ext_hdmi_reg_num = info_v11->dp1_retimer_set.HdmiRegNum;
++	info->dp1_ext_hdmi_reg_num = min_t(u8, info_v11->dp1_retimer_set.HdmiRegNum,
++					    ARRAY_SIZE(info->dp1_ext_hdmi_reg_settings));
+ 	for (i = 0; i < info->dp1_ext_hdmi_reg_num; i++) {
+ 		info->dp1_ext_hdmi_reg_settings[i].i2c_reg_index =
+ 				info_v11->dp1_retimer_set.HdmiRegSetting[i].ucI2cRegIndex;
+ 		info->dp1_ext_hdmi_reg_settings[i].i2c_reg_val =
+ 				info_v11->dp1_retimer_set.HdmiRegSetting[i].ucI2cRegVal;
+ 	}
+-	info->dp1_ext_hdmi_6g_reg_num = info_v11->dp1_retimer_set.Hdmi6GRegNum;
++	info->dp1_ext_hdmi_6g_reg_num = min_t(u8, info_v11->dp1_retimer_set.Hdmi6GRegNum,
++					       ARRAY_SIZE(info->dp1_ext_hdmi_6g_reg_settings));
+ 	for (i = 0; i < info->dp1_ext_hdmi_6g_reg_num; i++) {
+ 		info->dp1_ext_hdmi_6g_reg_settings[i].i2c_reg_index =
+ 				info_v11->dp1_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegIndex;
+@@ -2634,14 +2638,16 @@ static enum bp_result get_integrated_inf
+ 	}
  
- 	qp->is_active = 0;
- }
+ 	info->dp2_ext_hdmi_slv_addr = info_v11->dp2_retimer_set.HdmiSlvAddr;
+-	info->dp2_ext_hdmi_reg_num = info_v11->dp2_retimer_set.HdmiRegNum;
++	info->dp2_ext_hdmi_reg_num = min_t(u8, info_v11->dp2_retimer_set.HdmiRegNum,
++					    ARRAY_SIZE(info->dp2_ext_hdmi_reg_settings));
+ 	for (i = 0; i < info->dp2_ext_hdmi_reg_num; i++) {
+ 		info->dp2_ext_hdmi_reg_settings[i].i2c_reg_index =
+ 				info_v11->dp2_retimer_set.HdmiRegSetting[i].ucI2cRegIndex;
+ 		info->dp2_ext_hdmi_reg_settings[i].i2c_reg_val =
+ 				info_v11->dp2_retimer_set.HdmiRegSetting[i].ucI2cRegVal;
+ 	}
+-	info->dp2_ext_hdmi_6g_reg_num = info_v11->dp2_retimer_set.Hdmi6GRegNum;
++	info->dp2_ext_hdmi_6g_reg_num = min_t(u8, info_v11->dp2_retimer_set.Hdmi6GRegNum,
++					       ARRAY_SIZE(info->dp2_ext_hdmi_6g_reg_settings));
+ 	for (i = 0; i < info->dp2_ext_hdmi_6g_reg_num; i++) {
+ 		info->dp2_ext_hdmi_6g_reg_settings[i].i2c_reg_index =
+ 				info_v11->dp2_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegIndex;
+@@ -2650,14 +2656,16 @@ static enum bp_result get_integrated_inf
+ 	}
  
-+static void checkpoint_mqd_sdma(struct mqd_manager *mm,
-+				void *mqd,
-+				void *mqd_dst,
-+				void *ctl_stack_dst)
-+{
-+	struct v11_sdma_mqd *m;
-+
-+	m = get_sdma_mqd(mqd);
-+
-+	memcpy(mqd_dst, m, sizeof(struct v11_sdma_mqd));
-+}
-+
-+static void restore_mqd_sdma(struct mqd_manager *mm, void **mqd,
-+			     struct kfd_mem_obj *mqd_mem_obj, uint64_t *gart_addr,
-+			     struct queue_properties *qp,
-+			     const void *mqd_src,
-+			     const void *ctl_stack_src,
-+			     const u32 ctl_stack_size)
-+{
-+	uint64_t addr;
-+	struct v11_sdma_mqd *m;
-+
-+	m = (struct v11_sdma_mqd *) mqd_mem_obj->cpu_ptr;
-+	addr = mqd_mem_obj->gpu_addr;
-+
-+	memcpy(m, mqd_src, sizeof(*m));
-+
-+	m->sdmax_rlcx_doorbell_offset =
-+		qp->doorbell_off << SDMA0_QUEUE0_DOORBELL_OFFSET__OFFSET__SHIFT;
-+
-+	*mqd = m;
-+	if (gart_addr)
-+		*gart_addr = addr;
-+
-+	qp->is_active = 0;
-+}
- 
- static void init_mqd_hiq(struct mqd_manager *mm, void **mqd,
- 			struct kfd_mem_obj *mqd_mem_obj, uint64_t *gart_addr,
-@@ -529,8 +562,8 @@ struct mqd_manager *mqd_manager_init_v11
- 		mqd->update_mqd = update_mqd_sdma;
- 		mqd->destroy_mqd = kfd_destroy_mqd_sdma;
- 		mqd->is_occupied = kfd_is_occupied_sdma;
--		mqd->checkpoint_mqd = checkpoint_mqd;
--		mqd->restore_mqd = restore_mqd;
-+		mqd->checkpoint_mqd = checkpoint_mqd_sdma;
-+		mqd->restore_mqd = restore_mqd_sdma;
- 		mqd->mqd_size = sizeof(struct v11_sdma_mqd);
- 		mqd->mqd_stride = kfd_mqd_stride;
- #if defined(CONFIG_DEBUG_FS)
+ 	info->dp3_ext_hdmi_slv_addr = info_v11->dp3_retimer_set.HdmiSlvAddr;
+-	info->dp3_ext_hdmi_reg_num = info_v11->dp3_retimer_set.HdmiRegNum;
++	info->dp3_ext_hdmi_reg_num = min_t(u8, info_v11->dp3_retimer_set.HdmiRegNum,
++					    ARRAY_SIZE(info->dp3_ext_hdmi_reg_settings));
+ 	for (i = 0; i < info->dp3_ext_hdmi_reg_num; i++) {
+ 		info->dp3_ext_hdmi_reg_settings[i].i2c_reg_index =
+ 				info_v11->dp3_retimer_set.HdmiRegSetting[i].ucI2cRegIndex;
+ 		info->dp3_ext_hdmi_reg_settings[i].i2c_reg_val =
+ 				info_v11->dp3_retimer_set.HdmiRegSetting[i].ucI2cRegVal;
+ 	}
+-	info->dp3_ext_hdmi_6g_reg_num = info_v11->dp3_retimer_set.Hdmi6GRegNum;
++	info->dp3_ext_hdmi_6g_reg_num = min_t(u8, info_v11->dp3_retimer_set.Hdmi6GRegNum,
++					       ARRAY_SIZE(info->dp3_ext_hdmi_6g_reg_settings));
+ 	for (i = 0; i < info->dp3_ext_hdmi_6g_reg_num; i++) {
+ 		info->dp3_ext_hdmi_6g_reg_settings[i].i2c_reg_index =
+ 				info_v11->dp3_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegIndex;
+@@ -2807,14 +2815,16 @@ static enum bp_result get_integrated_inf
+ 	info->ext_disp_conn_info.checksum =
+ 		info_v2_1->extdispconninfo.checksum;
+ 	info->dp0_ext_hdmi_slv_addr = info_v2_1->dp0_retimer_set.HdmiSlvAddr;
+-	info->dp0_ext_hdmi_reg_num = info_v2_1->dp0_retimer_set.HdmiRegNum;
++	info->dp0_ext_hdmi_reg_num = min_t(u8, info_v2_1->dp0_retimer_set.HdmiRegNum,
++					    ARRAY_SIZE(info->dp0_ext_hdmi_reg_settings));
+ 	for (i = 0; i < info->dp0_ext_hdmi_reg_num; i++) {
+ 		info->dp0_ext_hdmi_reg_settings[i].i2c_reg_index =
+ 				info_v2_1->dp0_retimer_set.HdmiRegSetting[i].ucI2cRegIndex;
+ 		info->dp0_ext_hdmi_reg_settings[i].i2c_reg_val =
+ 				info_v2_1->dp0_retimer_set.HdmiRegSetting[i].ucI2cRegVal;
+ 	}
+-	info->dp0_ext_hdmi_6g_reg_num = info_v2_1->dp0_retimer_set.Hdmi6GRegNum;
++	info->dp0_ext_hdmi_6g_reg_num = min_t(u8, info_v2_1->dp0_retimer_set.Hdmi6GRegNum,
++					       ARRAY_SIZE(info->dp0_ext_hdmi_6g_reg_settings));
+ 	for (i = 0; i < info->dp0_ext_hdmi_6g_reg_num; i++) {
+ 		info->dp0_ext_hdmi_6g_reg_settings[i].i2c_reg_index =
+ 				info_v2_1->dp0_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegIndex;
+@@ -2822,14 +2832,16 @@ static enum bp_result get_integrated_inf
+ 				info_v2_1->dp0_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegVal;
+ 	}
+ 	info->dp1_ext_hdmi_slv_addr = info_v2_1->dp1_retimer_set.HdmiSlvAddr;
+-	info->dp1_ext_hdmi_reg_num = info_v2_1->dp1_retimer_set.HdmiRegNum;
++	info->dp1_ext_hdmi_reg_num = min_t(u8, info_v2_1->dp1_retimer_set.HdmiRegNum,
++					    ARRAY_SIZE(info->dp1_ext_hdmi_reg_settings));
+ 	for (i = 0; i < info->dp1_ext_hdmi_reg_num; i++) {
+ 		info->dp1_ext_hdmi_reg_settings[i].i2c_reg_index =
+ 				info_v2_1->dp1_retimer_set.HdmiRegSetting[i].ucI2cRegIndex;
+ 		info->dp1_ext_hdmi_reg_settings[i].i2c_reg_val =
+ 				info_v2_1->dp1_retimer_set.HdmiRegSetting[i].ucI2cRegVal;
+ 	}
+-	info->dp1_ext_hdmi_6g_reg_num = info_v2_1->dp1_retimer_set.Hdmi6GRegNum;
++	info->dp1_ext_hdmi_6g_reg_num = min_t(u8, info_v2_1->dp1_retimer_set.Hdmi6GRegNum,
++					       ARRAY_SIZE(info->dp1_ext_hdmi_6g_reg_settings));
+ 	for (i = 0; i < info->dp1_ext_hdmi_6g_reg_num; i++) {
+ 		info->dp1_ext_hdmi_6g_reg_settings[i].i2c_reg_index =
+ 				info_v2_1->dp1_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegIndex;
+@@ -2837,14 +2849,16 @@ static enum bp_result get_integrated_inf
+ 				info_v2_1->dp1_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegVal;
+ 	}
+ 	info->dp2_ext_hdmi_slv_addr = info_v2_1->dp2_retimer_set.HdmiSlvAddr;
+-	info->dp2_ext_hdmi_reg_num = info_v2_1->dp2_retimer_set.HdmiRegNum;
++	info->dp2_ext_hdmi_reg_num = min_t(u8, info_v2_1->dp2_retimer_set.HdmiRegNum,
++					    ARRAY_SIZE(info->dp2_ext_hdmi_reg_settings));
+ 	for (i = 0; i < info->dp2_ext_hdmi_reg_num; i++) {
+ 		info->dp2_ext_hdmi_reg_settings[i].i2c_reg_index =
+ 				info_v2_1->dp2_retimer_set.HdmiRegSetting[i].ucI2cRegIndex;
+ 		info->dp2_ext_hdmi_reg_settings[i].i2c_reg_val =
+ 				info_v2_1->dp2_retimer_set.HdmiRegSetting[i].ucI2cRegVal;
+ 	}
+-	info->dp2_ext_hdmi_6g_reg_num = info_v2_1->dp2_retimer_set.Hdmi6GRegNum;
++	info->dp2_ext_hdmi_6g_reg_num = min_t(u8, info_v2_1->dp2_retimer_set.Hdmi6GRegNum,
++					       ARRAY_SIZE(info->dp2_ext_hdmi_6g_reg_settings));
+ 	for (i = 0; i < info->dp2_ext_hdmi_6g_reg_num; i++) {
+ 		info->dp2_ext_hdmi_6g_reg_settings[i].i2c_reg_index =
+ 				info_v2_1->dp2_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegIndex;
+@@ -2852,14 +2866,16 @@ static enum bp_result get_integrated_inf
+ 				info_v2_1->dp2_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegVal;
+ 	}
+ 	info->dp3_ext_hdmi_slv_addr = info_v2_1->dp3_retimer_set.HdmiSlvAddr;
+-	info->dp3_ext_hdmi_reg_num = info_v2_1->dp3_retimer_set.HdmiRegNum;
++	info->dp3_ext_hdmi_reg_num = min_t(u8, info_v2_1->dp3_retimer_set.HdmiRegNum,
++					    ARRAY_SIZE(info->dp3_ext_hdmi_reg_settings));
+ 	for (i = 0; i < info->dp3_ext_hdmi_reg_num; i++) {
+ 		info->dp3_ext_hdmi_reg_settings[i].i2c_reg_index =
+ 				info_v2_1->dp3_retimer_set.HdmiRegSetting[i].ucI2cRegIndex;
+ 		info->dp3_ext_hdmi_reg_settings[i].i2c_reg_val =
+ 				info_v2_1->dp3_retimer_set.HdmiRegSetting[i].ucI2cRegVal;
+ 	}
+-	info->dp3_ext_hdmi_6g_reg_num = info_v2_1->dp3_retimer_set.Hdmi6GRegNum;
++	info->dp3_ext_hdmi_6g_reg_num = min_t(u8, info_v2_1->dp3_retimer_set.Hdmi6GRegNum,
++					       ARRAY_SIZE(info->dp3_ext_hdmi_6g_reg_settings));
+ 	for (i = 0; i < info->dp3_ext_hdmi_6g_reg_num; i++) {
+ 		info->dp3_ext_hdmi_6g_reg_settings[i].i2c_reg_index =
+ 				info_v2_1->dp3_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegIndex;
 
 
