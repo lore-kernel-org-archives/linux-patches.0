@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C88169AD2;
-	Tue, 16 Jun 2026 17:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BF73D34AD;
+	Tue, 16 Jun 2026 17:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632167; cv=none; b=vGHewqDAPG6LyPTwuMSLXhd+PV+x0HN6p0AThgx2Um2oqBL/ZAoZYBOwaA50akHCcB/Ybn/7rlWwuRka2eQdX3H1Tzf+Ovt2bRX0EzuPMtTkecw0inLHgMz/INUoiddBrcNIqPxG7K6GStdnpTWvBCjqu/x0D5jjos5hDZFw4Oo=
+	t=1781632172; cv=none; b=UJy0fZA0Z1MR/iLdPZC3wgvieqllxkUyMXVUv7s3qJ3bqfZUZx5qJRZRUoFGWeSjSs6oDzwkVqGgePBzb6txrAB2y0xYqrT5N5deNTXYESMIpz8CtB7fjZzJvhOM8MOboctXmxTdJ3a6LeBfVPQFMaYIcSYdwQfkuYpd/woIt7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632167; c=relaxed/simple;
-	bh=+Ti3V6iMTg6WiMsAcH8GTqZD7rBw5B0XxBj7tXMvGts=;
+	s=arc-20240116; t=1781632172; c=relaxed/simple;
+	bh=OZyfNbKbqqihu8Ob8khTIb3LSQlKXmdsJAAmKJzGMrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oj9/RIUZPNOlTDOamiCqHHBN166Vg4fWdT/oTs77Ot5nOGv2Mv6n2od/iBn1KOiJcHNgxAOMhV9y4mjPqERNuVxgzsol0Yr8l2KTLoLqcJyPU/1rLbZHISMQAfsabvf4bqMq1xDV1IiTe4iMpq6eQPgIRnglL9fSFu2GMAogwbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NF7DEywv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rI5awFEBPYWeo7WRON5tIXfUH28Eha9qAj6ybxsoPYJHANH0nnT5B2V6TqGmHhGguF+wf9aD5X5q95B8DGjY1tTi8yjvv7r9yPPtDDhXcnSf55CcPH1si21eKS10stI2alkScXEDRPUcd7pZANThT8i8Cf9UTcxygggUJ3sB/m4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pa+vlEMg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NF7DEywv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E8E11F000E9;
-	Tue, 16 Jun 2026 17:49:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pa+vlEMg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2430E1F00A3A;
+	Tue, 16 Jun 2026 17:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632166;
-	bh=/5dVrAT7uhjJwp/3ziRkQhobDp9+5nETBa4W5ShB3sY=;
+	s=korg; t=1781632171;
+	bh=ymwhCjvUtq1TF2FfnvtuPG3IUelqknuBfaoGIjVjF0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NF7DEywvl4RU1s1WftfRN9cdC0voTANZTbW3weysKIZxl0KDXhzvJbsexlVcbARmt
-	 JiSxDLtsIchR1DxbZefPGbednEmVX2giemj5m+DPkjSGF9BTwix2/i5lkVX0NSVnjZ
-	 1AmPHjJwb+nZO8jZvefu9ICyTfy8Og1ndAfUTZXo=
+	b=pa+vlEMgMHFAUwAdRu7F6zSQgMgJrBh68g0O5f4UP9xuOWdukb28U7M7rkenjVf/z
+	 woMK20/gsHDbnKA9WwiVn92P5CgzLLuTtGWYLPc+dJUSDdxZJNBURx8TPA0DdQAkkF
+	 ib2fwhtQzvmIhnptmr2cyklYiechZIqrpscEyypY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d80abb5b890d39261e72@syzkaller.appspotmail.com,
+	Zilin Guan <zilin@seu.edu.cn>,
 	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Charalampos Mitrodimas <charmitro@posteo.net>,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 359/522] hfsplus: fix uninit-value by validating catalog record size
-Date: Tue, 16 Jun 2026 20:28:26 +0530
-Message-ID: <20260616145142.588558724@linuxfoundation.org>
+Subject: [PATCH 6.1 360/522] hfsplus: fix held lock freed on hfsplus_fill_super()
+Date: Tue, 16 Jun 2026 20:28:27 +0530
+Message-ID: <20260616145142.635023777@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,186 +51,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit b6b592275aeff184aa82fcf6abccd833fb71b393 ]
+[ Upstream commit 90c500e4fd83fa33c09bc7ee23b6d9cc487ac733 ]
 
-Syzbot reported a KMSAN uninit-value issue in hfsplus_strcasecmp(). The
-root cause is that hfs_brec_read() doesn't validate that the on-disk
-record size matches the expected size for the record type being read.
+hfsplus_fill_super() calls hfs_find_init() to initialize a search
+structure, which acquires tree->tree_lock. If the subsequent call to
+hfsplus_cat_build_key() fails, the function jumps to the out_put_root
+error label without releasing the lock. The later cleanup path then
+frees the tree data structure with the lock still held, triggering a
+held lock freed warning.
 
-When mounting a corrupted filesystem, hfs_brec_read() may read less data
-than expected. For example, when reading a catalog thread record, the
-debug output showed:
+Fix this by adding the missing hfs_find_exit(&fd) call before jumping
+to the out_put_root error label. This ensures that tree->tree_lock is
+properly released on the error path.
 
-  HFSPLUS_BREC_READ: rec_len=520, fd->entrylength=26
-  HFSPLUS_BREC_READ: WARNING - entrylength (26) < rec_len (520) - PARTIAL READ!
+The bug was originally detected on v6.13-rc1 using an experimental
+static analysis tool we are developing, and we have verified that the
+issue persists in the latest mainline kernel. The tool is specifically
+designed to detect memory management issues. It is currently under active
+development and not yet publicly available.
 
-hfs_brec_read() only validates that entrylength is not greater than the
-buffer size, but doesn't check if it's less than expected. It successfully
-reads 26 bytes into a 520-byte structure and returns success, leaving 494
-bytes uninitialized.
+We confirmed the bug by runtime testing under QEMU with x86_64 defconfig,
+lockdep enabled, and CONFIG_HFSPLUS_FS=y. To trigger the error path, we
+used GDB to dynamically shrink the max_unistr_len parameter to 1 before
+hfsplus_asc2uni() is called. This forces hfsplus_asc2uni() to naturally
+return -ENAMETOOLONG, which propagates to hfsplus_cat_build_key() and
+exercises the faulty error path. The following warning was observed
+during mount:
 
-This uninitialized data in tmp.thread.nodeName then gets copied by
-hfsplus_cat_build_key_uni() and used by hfsplus_strcasecmp(), triggering
-the KMSAN warning when the uninitialized bytes are used as array indices
-in case_fold().
+	=========================
+	WARNING: held lock freed!
+	7.0.0-rc3-00016-gb4f0dd314b39 #4 Not tainted
+	-------------------------
+	mount/174 is freeing memory ffff888103f92000-ffff888103f92fff, with a lock still held there!
+	ffff888103f920b0 (&tree->tree_lock){+.+.}-{4:4}, at: hfsplus_find_init+0x154/0x1e0
+	2 locks held by mount/174:
+	#0: ffff888103f960e0 (&type->s_umount_key#42/1){+.+.}-{4:4}, at: alloc_super.constprop.0+0x167/0xa40
+	#1: ffff888103f920b0 (&tree->tree_lock){+.+.}-{4:4}, at: hfsplus_find_init+0x154/0x1e0
 
-Fix by introducing hfsplus_brec_read_cat() wrapper that:
-1. Calls hfs_brec_read() to read the data
-2. Validates the record size based on the type field:
-   - Fixed size for folder and file records
-   - Variable size for thread records (depends on string length)
-3. Returns -EIO if size doesn't match expected
+	stack backtrace:
+	CPU: 2 UID: 0 PID: 174 Comm: mount Not tainted 7.0.0-rc3-00016-gb4f0dd314b39 #4 PREEMPT(lazy)
+	Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
+	Call Trace:
+	<TASK>
+	dump_stack_lvl+0x82/0xd0
+	debug_check_no_locks_freed+0x13a/0x180
+	kfree+0x16b/0x510
+	? hfsplus_fill_super+0xcb4/0x18a0
+	hfsplus_fill_super+0xcb4/0x18a0
+	? __pfx_hfsplus_fill_super+0x10/0x10
+	? srso_return_thunk+0x5/0x5f
+	? bdev_open+0x65f/0xc30
+	? srso_return_thunk+0x5/0x5f
+	? pointer+0x4ce/0xbf0
+	? trace_contention_end+0x11c/0x150
+	? __pfx_pointer+0x10/0x10
+	? srso_return_thunk+0x5/0x5f
+	? bdev_open+0x79b/0xc30
+	? srso_return_thunk+0x5/0x5f
+	? srso_return_thunk+0x5/0x5f
+	? vsnprintf+0x6da/0x1270
+	? srso_return_thunk+0x5/0x5f
+	? __mutex_unlock_slowpath+0x157/0x740
+	? __pfx_vsnprintf+0x10/0x10
+	? srso_return_thunk+0x5/0x5f
+	? srso_return_thunk+0x5/0x5f
+	? mark_held_locks+0x49/0x80
+	? srso_return_thunk+0x5/0x5f
+	? srso_return_thunk+0x5/0x5f
+	? irqentry_exit+0x17b/0x5e0
+	? trace_irq_disable.constprop.0+0x116/0x150
+	? __pfx_hfsplus_fill_super+0x10/0x10
+	? __pfx_hfsplus_fill_super+0x10/0x10
+	get_tree_bdev_flags+0x302/0x580
+	? __pfx_get_tree_bdev_flags+0x10/0x10
+	? vfs_parse_fs_qstr+0x129/0x1a0
+	? __pfx_vfs_parse_fs_qstr+0x3/0x10
+	vfs_get_tree+0x89/0x320
+	fc_mount+0x10/0x1d0
+	path_mount+0x5c5/0x21c0
+	? __pfx_path_mount+0x10/0x10
+	? trace_irq_enable.constprop.0+0x116/0x150
+	? trace_irq_enable.constprop.0+0x116/0x150
+	? srso_return_thunk+0x5/0x5f
+	? srso_return_thunk+0x5/0x5f
+	? kmem_cache_free+0x307/0x540
+	? user_path_at+0x51/0x60
+	? __x64_sys_mount+0x212/0x280
+	? srso_return_thunk+0x5/0x5f
+	__x64_sys_mount+0x212/0x280
+	? __pfx___x64_sys_mount+0x10/0x10
+	? srso_return_thunk+0x5/0x5f
+	? trace_irq_enable.constprop.0+0x116/0x150
+	? srso_return_thunk+0x5/0x5f
+	do_syscall_64+0x111/0x680
+	entry_SYSCALL_64_after_hwframe+0x77/0x7f
+	RIP: 0033:0x7ffacad55eae
+	Code: 48 8b 0d 85 1f 0f 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 49 89 ca b8 a5 00 00 8
+	RSP: 002b:00007fff1ab55718 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
+	RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ffacad55eae
+	RDX: 000055740c64e5b0 RSI: 000055740c64e630 RDI: 000055740c651ab0
+	RBP: 000055740c64e380 R08: 0000000000000000 R09: 0000000000000001
+	R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+	R13: 000055740c64e5b0 R14: 000055740c651ab0 R15: 000055740c64e380
+	</TASK>
 
-For thread records, check against HFSPLUS_MIN_THREAD_SZ before reading
-nodeName.length to avoid reading uninitialized data at call sites that
-don't zero-initialize the entry structure.
+After applying this patch, the warning no longer appears.
 
-Also initialize the tmp variable in hfsplus_find_cat() as defensive
-programming to ensure no uninitialized data even if validation is
-bypassed.
-
-Reported-by: syzbot+d80abb5b890d39261e72@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d80abb5b890d39261e72
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Tested-by: syzbot+d80abb5b890d39261e72@syzkaller.appspotmail.com
+Fixes: 89ac9b4d3d1a ("hfsplus: fix longname handling")
+CC: stable@vger.kernel.org
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
 Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Tested-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Suggested-by: Charalampos Mitrodimas <charmitro@posteo.net>
-Link: https://lore.kernel.org/all/20260120051114.1281285-1-kartikey406@gmail.com/ [v1]
-Link: https://lore.kernel.org/all/20260121063109.1830263-1-kartikey406@gmail.com/ [v2]
-Link: https://lore.kernel.org/all/20260212014233.2422046-1-kartikey406@gmail.com/ [v3]
-Link: https://lore.kernel.org/all/20260214002100.436125-1-kartikey406@gmail.com/T/ [v4]
-Link: https://lore.kernel.org/all/20260221061626.15853-1-kartikey406@gmail.com/T/ [v5]
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
 Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20260307010302.41547-1-kartikey406@gmail.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Stable-dep-of: 90c500e4fd83 ("hfsplus: fix held lock freed on hfsplus_fill_super()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfsplus/bfind.c      |   51 ++++++++++++++++++++++++++++++++++++++++++++++++
- fs/hfsplus/catalog.c    |    4 +--
- fs/hfsplus/dir.c        |    2 -
- fs/hfsplus/hfsplus_fs.h |    9 ++++++++
- fs/hfsplus/super.c      |    2 -
- 5 files changed, 64 insertions(+), 4 deletions(-)
+ fs/hfsplus/super.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/hfsplus/bfind.c
-+++ b/fs/hfsplus/bfind.c
-@@ -287,3 +287,54 @@ out:
- 	fd->bnode = bnode;
- 	return res;
- }
-+
-+/**
-+ * hfsplus_brec_read_cat - read and validate a catalog record
-+ * @fd: find data structure
-+ * @entry: pointer to catalog entry to read into
-+ *
-+ * Reads a catalog record and validates its size matches the expected
-+ * size based on the record type.
-+ *
-+ * Returns 0 on success, or negative error code on failure.
-+ */
-+int hfsplus_brec_read_cat(struct hfs_find_data *fd, hfsplus_cat_entry *entry)
-+{
-+	int res;
-+	u32 expected_size;
-+
-+	res = hfs_brec_read(fd, entry, sizeof(hfsplus_cat_entry));
-+	if (res)
-+		return res;
-+
-+	/* Validate catalog record size based on type */
-+	switch (be16_to_cpu(entry->type)) {
-+	case HFSPLUS_FOLDER:
-+		expected_size = sizeof(struct hfsplus_cat_folder);
-+		break;
-+	case HFSPLUS_FILE:
-+		expected_size = sizeof(struct hfsplus_cat_file);
-+		break;
-+	case HFSPLUS_FOLDER_THREAD:
-+	case HFSPLUS_FILE_THREAD:
-+		/* Ensure we have at least the fixed fields before reading nodeName.length */
-+		if (fd->entrylength < HFSPLUS_MIN_THREAD_SZ) {
-+			pr_err("thread record too short (got %u)\n", fd->entrylength);
-+			return -EIO;
-+		}
-+		expected_size = hfsplus_cat_thread_size(&entry->thread);
-+		break;
-+	default:
-+		pr_err("unknown catalog record type %d\n",
-+		       be16_to_cpu(entry->type));
-+		return -EIO;
-+	}
-+
-+	if (fd->entrylength != expected_size) {
-+		pr_err("catalog record size mismatch (type %d, got %u, expected %u)\n",
-+		       be16_to_cpu(entry->type), fd->entrylength, expected_size);
-+		return -EIO;
-+	}
-+
-+	return 0;
-+}
---- a/fs/hfsplus/catalog.c
-+++ b/fs/hfsplus/catalog.c
-@@ -194,12 +194,12 @@ static int hfsplus_fill_cat_thread(struc
- int hfsplus_find_cat(struct super_block *sb, u32 cnid,
- 		     struct hfs_find_data *fd)
- {
--	hfsplus_cat_entry tmp;
-+	hfsplus_cat_entry tmp = {0};
- 	int err;
- 	u16 type;
- 
- 	hfsplus_cat_build_key_with_cnid(sb, fd->search_key, cnid);
--	err = hfs_brec_read(fd, &tmp, sizeof(hfsplus_cat_entry));
-+	err = hfsplus_brec_read_cat(fd, &tmp);
- 	if (err)
- 		return err;
- 
---- a/fs/hfsplus/dir.c
-+++ b/fs/hfsplus/dir.c
-@@ -49,7 +49,7 @@ static struct dentry *hfsplus_lookup(str
- 	if (unlikely(err < 0))
- 		goto fail;
- again:
--	err = hfs_brec_read(&fd, &entry, sizeof(entry));
-+	err = hfsplus_brec_read_cat(&fd, &entry);
- 	if (err) {
- 		if (err == -ENOENT) {
- 			hfs_find_exit(&fd);
---- a/fs/hfsplus/hfsplus_fs.h
-+++ b/fs/hfsplus/hfsplus_fs.h
-@@ -535,6 +535,15 @@ int hfsplus_submit_bio(struct super_bloc
- 		       void **data, blk_opf_t opf);
- int hfsplus_read_wrapper(struct super_block *sb);
- 
-+static inline u32 hfsplus_cat_thread_size(const struct hfsplus_cat_thread *thread)
-+{
-+	return offsetof(struct hfsplus_cat_thread, nodeName) +
-+	       offsetof(struct hfsplus_unistr, unicode) +
-+	       be16_to_cpu(thread->nodeName.length) * sizeof(hfsplus_unichr);
-+}
-+
-+int hfsplus_brec_read_cat(struct hfs_find_data *fd, hfsplus_cat_entry *entry);
-+
- /*
-  * time helpers: convert between 1904-base and 1970-base timestamps
-  *
 --- a/fs/hfsplus/super.c
 +++ b/fs/hfsplus/super.c
-@@ -541,7 +541,7 @@ static int hfsplus_fill_super(struct sup
- 	err = hfsplus_cat_build_key(sb, fd.search_key, HFSPLUS_ROOT_CNID, &str);
- 	if (unlikely(err < 0))
+@@ -539,8 +539,10 @@ static int hfsplus_fill_super(struct sup
+ 	if (err)
  		goto out_put_root;
--	if (!hfs_brec_read(&fd, &entry, sizeof(entry))) {
-+	if (!hfsplus_brec_read_cat(&fd, &entry)) {
+ 	err = hfsplus_cat_build_key(sb, fd.search_key, HFSPLUS_ROOT_CNID, &str);
+-	if (unlikely(err < 0))
++	if (unlikely(err < 0)) {
++		hfs_find_exit(&fd);
+ 		goto out_put_root;
++	}
+ 	if (!hfsplus_brec_read_cat(&fd, &entry)) {
  		hfs_find_exit(&fd);
  		if (entry.type != cpu_to_be16(HFSPLUS_FOLDER)) {
- 			err = -EIO;
 
 
