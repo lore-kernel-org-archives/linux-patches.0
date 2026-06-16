@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C7943E4BA;
-	Tue, 16 Jun 2026 16:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76483A8746;
+	Tue, 16 Jun 2026 16:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627095; cv=none; b=I3K62yIUHCOG2GnlORWDaRAsru+Pc5pOWMVSCoADssQA9ow6k05jhP80q5B67Ul+s1+Q1z6fJ37yQmFTxLNUebL45HuzvUcLmLyHyI06g/giwe42XralXuLQmxue2stnTveAkUlmo+fFItusCqL8u8Sq3yUt/zvqFqXt0XNL8hM=
+	t=1781627100; cv=none; b=WnEThaXgQ0SguZtDW+3R5BaMGr4RJww8ft6IRhTA3ypYlqkGNeIcfPUIR1DC3RWhIlQpyYbGc8PaQT94e3hDzVwCBVjEx4BmE4UAddOeZppatmoOAqaRdpfCtKyLODoA58/cnAxwT3ysJ2+/hM3VKk/R4Y7Wi2EwNTFLPB+Xph4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627095; c=relaxed/simple;
-	bh=6dtBOF36sVse/C6KzLTMC2Cyn585+QZQTlpt8KiZdzI=;
+	s=arc-20240116; t=1781627100; c=relaxed/simple;
+	bh=n5ORY4Q5WqgBv6l7NH0UYU/hWGVCS7Xg8/ZmIiMuME8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/ROyzO+K/MrnaPZQrq804d3tZFd8y92pydyrnax13V+CVQiMAh/vBMji9omo4GvUdDBeikIz3etu4hfGIXKEYurCrLEvhLOjWL6uQhhRr0Ft32XG8OzTcyvJYnLpeQKQapBT9ky3z/itT4OEuwvas/hNSZKHflBey8o1HZamdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KiwE/VB3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QfZrTKbfBLGDP5Uw6uJBHg3sAvatAQ/56U2ay6TTbm13yawYehN4Cxw4e6T4vCUuDsu49Cui9enuhx1vDsnk3uQvAHrMdBK71LmsTjPzZb5rID/SE7nxbFZvBWbvSbE4Ugd7W2/N5cFFo+4wIHaq5LVGJfuIDFtvdpdc/OgUwPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thrlyqBY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KiwE/VB3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6389A1F000E9;
-	Tue, 16 Jun 2026 16:24:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thrlyqBY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F1C1F000E9;
+	Tue, 16 Jun 2026 16:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627094;
-	bh=YwCTaIrl3HC3yrWM3PDAFf0jvQOtr8cGifHxByOWS9o=;
+	s=korg; t=1781627099;
+	bh=JuRPHFLF5ByS0ed1kqlAbcfjULqsf2mlXeh65PfJ7Gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KiwE/VB3ljcUjwfKfuIqG0MIE1vb8i8Lm32TqBsXwBd2ugEL5cQI8O0DFANjZEt8X
-	 gGFecc3KtP+QjC8svkhDP48tUdv/qrAwnRsCRAnSiYbBFVtoqlZQhEAhC9NQMPuXvG
-	 AzJGXEVfqX0G+iZlYU+GiaAzDAoppPihW2DXA89o=
+	b=thrlyqBYCDPPWX/GSWj5j5rZz0LWjZRtMqv3XjtRODviePW1uyf3NSf2GujNwTDG1
+	 ZOwkB6Z7enoulaPPuwz51Ap7y/LcP8WGh0u0R76iaAChMMTrtRZ6N2zvc6QFP5+nPr
+	 vGyih7KnmlC9TOgbecxGrZ8P9tlkqbsHcbvG9hvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 119/261] drm/xe: fix refcount leak in xe_range_fence_insert()
-Date: Tue, 16 Jun 2026 20:29:17 +0530
-Message-ID: <20260616145050.568811387@linuxfoundation.org>
+	Tristan Madani <tristan@talencesecurity.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.12 120/261] netfilter: nft_tunnel: fix use-after-free on object destroy
+Date: Tue, 16 Jun 2026 20:29:18 +0530
+Message-ID: <20260616145050.612390110@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -51,52 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit ba36786b21d19082e696eda85bfcd49e7071944a ]
+commit c32b26aaa2f9216520a38b3f4bfeec846eb3eb8a upstream.
 
-xe_range_fence_insert() acquires a reference on fence via
-dma_fence_get() and stores it in rfence->fence.  It then calls
-dma_fence_add_callback() and handles two cases: when the callback
-is successfully registered (err == 0) the fence is transferred to
-the tree for later cleanup; when the fence is already signaled
-(err == -ENOENT) it manually drops the extra reference with
-dma_fence_put(fence).
+nft_tunnel_obj_destroy() calls metadata_dst_free() which directly
+kfree()s the metadata_dst, ignoring the dst_entry refcount. Packets
+that took a reference via dst_hold() in nft_tunnel_obj_eval() and
+are still queued (e.g. in a netem qdisc) are left with a dangling
+pointer. When these packets are eventually dequeued, dst_release()
+operates on freed memory.
 
-However, dma_fence_add_callback() can fail with other errors
-(e.g. -EINVAL) and in that case the code falls through to the free:
-label without releasing the acquired reference, leaking it.
+Replace metadata_dst_free() with dst_release() so the metadata_dst
+is freed only after all references are dropped. The dst subsystem
+already handles metadata_dst cleanup in dst_destroy() when
+DST_METADATA is set.
 
-Fix the leak by adding an else branch that calls dma_fence_put()
-before jumping to free: for any error other than -ENOENT.
-
-Fixes: 845f64bdbfc9 ("drm/xe: Introduce a range-fence utility")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260610172705.3450560-1-matthew.brost@intel.com
-(cherry picked from commit 98c4a4201290823c2c5c7ba21692bd9a64b61021)
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: af308b94a2a4 ("netfilter: nf_tables: add tunnel support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_range_fence.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nft_tunnel.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_range_fence.c b/drivers/gpu/drm/xe/xe_range_fence.c
-index 372378e89e9892..3d8fa194a7b0eb 100644
---- a/drivers/gpu/drm/xe/xe_range_fence.c
-+++ b/drivers/gpu/drm/xe/xe_range_fence.c
-@@ -77,6 +77,8 @@ int xe_range_fence_insert(struct xe_range_fence_tree *tree,
- 	} else if (err == 0) {
- 		xe_range_fence_tree_insert(rfence, &tree->root);
- 		return 0;
-+	} else {
-+		dma_fence_put(fence);
- 	}
+--- a/net/netfilter/nft_tunnel.c
++++ b/net/netfilter/nft_tunnel.c
+@@ -705,7 +705,7 @@ static void nft_tunnel_obj_destroy(const
+ {
+ 	struct nft_tunnel_obj *priv = nft_obj_data(obj);
  
- free:
--- 
-2.53.0
-
+-	metadata_dst_free(priv->md);
++	dst_release(&priv->md->dst);
+ }
+ 
+ static struct nft_object_type nft_tunnel_obj_type;
 
 
