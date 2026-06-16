@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D49C44E042;
-	Tue, 16 Jun 2026 18:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF82F3D45CB;
+	Tue, 16 Jun 2026 18:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633368; cv=none; b=c/D0tkXKJZy/oubz+ajjzEy3mZSS9P1KP/eVwnbt4+6W3gsTxjLg8GkqPeTOKjM5SYpSOgP2pTDZ+V1ImzWQoeVZWXPMVs4ce3FO5erHXy1/vW85oL0elirY5mlOFGgBAAN4H/lna+xtXa1IVQuaWbcYqoAPc8kGgEIa+1/cIaY=
+	t=1781633373; cv=none; b=JdXuRdIUkkKH9aefNViq2M0c2Nd/pnRc94Ik7U8/ZiymGUYfucAihx0bGirq3mZWLEffocXvC3auFcRrozqYs9P90aUb+n/5UYb22TPZDrJ0Hf8Duc6DI8wxWHowUe6IsylkBgz2MNDcULSZYNGSFVBriI+CpVBV/s0J/IELMMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633368; c=relaxed/simple;
-	bh=KCnO1bgY1ce1mcN/t+OHqxIvkuGazBYdNrS6Xs+q9eU=;
+	s=arc-20240116; t=1781633373; c=relaxed/simple;
+	bh=SNCt+cBrJXgkvIJ0lpE3oVsqGWRhknvYHSc9vl8Yb4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qhi1dNPSwxhX3p46FpAdw2olzsYy7UF2aSYA1EmsBXK49l0hU9ZugmKCsk/3yChQAYKdB6nzbmQdV3Tf0cEOpPjWiahuFhG3LB3c2vFeLsxZd561RvBLYIJMqins9jIOT4yjOqg5grTnPl4MRyFmxVxJDs5OrxsVJhQBYHkisBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCcWLdvm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bpVKJD7/p5a0U1MuuKIS91e6VHLdFGqVFd1tfEOynLS1Y8vTcwUtgy1sMrhHEZ1LW1IsSIpKoXphEPXJHBydjb6MfcyPLJQMgbZiESD/6GcuTuC/0wC5fztpTuP/4i4xk74oOFGFw6tbhCwbODkuytybpYkZffeSDcGVN1zf2ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UaqXRy2S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCcWLdvm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B24B1F000E9;
-	Tue, 16 Jun 2026 18:09:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UaqXRy2S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978261F000E9;
+	Tue, 16 Jun 2026 18:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633367;
-	bh=nScfTDXQiFoUdvUhgVXLQjIHUWukNUwzVNW+bSobHHM=;
+	s=korg; t=1781633372;
+	bh=cue1zg8pZ0opkEoayGgHbI6zLuVP5Zf+d6D3b47lOEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HCcWLdvmB3aox7k8i+XXVx+go1DzvUwd3kjdMqsdPObqMCGOdyeypheoDqfEurHtF
-	 CwTi54HbCo3nZ6PLXimDFzkb1qPAxO6y9q2o2iYNcdE3AdXjOyQRpToKhDywM6EkBG
-	 +BRlhNCRZU/eMPlJMPRuzUNbAjjeVpqMYui0V9SE=
+	b=UaqXRy2SPQFxftFuH+cOUkyDBkgmy6fG4jcgOwdDYIJAUIMniHYZlo7jEajlBY11z
+	 cBx6LubW4ibkDj0/Bf5bIO8y5atCnKAdWi5TvOTt5pjVCJU0Nj/e5JENjJc8ha6kaz
+	 OR5DvT+mg3rIXgPQ//BfIbjRet61XJj42/pczX1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.15 066/411] Bluetooth: HIDP: fix missing length checks in hidp_input_report()
-Date: Tue, 16 Jun 2026 20:25:04 +0530
-Message-ID: <20260616145103.792200462@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ben Hutchings <benh@debian.org>,
+	Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Subject: [PATCH 5.15 067/411] parport: Fix race between port and client registration
+Date: Tue, 16 Jun 2026 20:25:05 +0530
+Message-ID: <20260616145103.845505561@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,80 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Ben Hutchings <benh@debian.org>
 
-commit 2a3ac9ee11dbb9845f3947cef4a79dba658cf6f6 upstream.
+commit ef15ccbb3e8640a723c42ad90eaf81d66ae02017 upstream.
 
-hidp_input_report() reads keyboard and mouse payload data from an skb
-without first verifying that skb->len contains enough data.
+The parport subsystem registers port devices before they are fully
+initialised, resulting in a race condition where client drivers such
+as lp can attach to ports that are not completely initialised or even
+being torn down.
 
-hidp_recv_intr_frame() pulls the 1-byte HIDP header before dispatching
-to hidp_input_report(). If a paired device sends a truncated packet,
-the handler reads beyond the valid skb data, resulting in an
-out-of-bounds read of skb data. The OOB bytes may be interpreted as
-phantom key presses or spurious mouse movement.
+When the port and client drivers are built as modules and loaded
+around the same time during boot, this occasionally results in a
+crash.  I was able to make this happen reliably in a VM with a
+PC-style parallel port by patching parport_pc to fail probing:
 
-Replace the open-coded length tracking and pointer arithmetic with
-skb_pull_data() calls. skb_pull_data() returns NULL if the requested
-bytes are not present, eliminating the need for a manual size variable
-and the separate skb->len guard.
+> --- a/drivers/parport/parport_pc.c
+> +++ b/drivers/parport/parport_pc.c
+> @@ -2069,7 +2069,7 @@ static struct parport *__parport_pc_probe_port(unsigned long int base,
+>  	if (!p)
+>  		goto out3;
+>
+> -	base_res = request_region(base, 3, p->name);
+> +	base_res = NULL;
+>  	if (!base_res)
+>  		goto out4;
+>
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+and then running:
+
+    while true; do
+        modprobe lp & modprobe parport_pc
+	wait
+	rmmod lp parport_pc
+    done
+
+for a few seconds.
+
+In the long term I think port registration should be changed to put
+the call to device_add() inside parport_announce_port(), but since the
+latter currently cannot fail this will require changing all port
+drivers.
+
+For now, add a flag to indicate whether a port has been "announced"
+and only try to attach client drivers to ports when the flag is set.
+
+Fixes: 6fa45a226897 ("parport: add device-model to parport subsystem")
+Closes: https://bugs.debian.org/1130365
+Closes: https://lore.kernel.org/all/6ba903ad-9897-42bb-8c2d-337385cc3746@molgen.mpg.de/
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Link: https://patch.msgid.link/afo6uBv68GDevbMD@decadent.org.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hidp/core.c |   23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ drivers/parport/share.c |   11 +++++++++--
+ include/linux/parport.h |    1 +
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
---- a/net/bluetooth/hidp/core.c
-+++ b/net/bluetooth/hidp/core.c
-@@ -179,12 +179,21 @@ static void hidp_input_report(struct hid
+--- a/drivers/parport/share.c
++++ b/drivers/parport/share.c
+@@ -223,10 +223,14 @@ static void get_lowlevel_driver(void)
+ static int port_check(struct device *dev, void *dev_drv)
  {
- 	struct input_dev *dev = session->input;
- 	unsigned char *keys = session->keys;
--	unsigned char *udata = skb->data + 1;
--	signed char *sdata = skb->data + 1;
--	int i, size = skb->len - 1;
-+	unsigned char *udata;
-+	signed char *sdata;
-+	u8 *hdr;
-+	int i;
-+
-+	hdr = skb_pull_data(skb, 1);
-+	if (!hdr)
-+		return;
+ 	struct parport_driver *drv = dev_drv;
++	struct parport *port;
  
--	switch (skb->data[0]) {
-+	switch (*hdr) {
- 	case 0x01:	/* Keyboard report */
-+		udata = skb_pull_data(skb, 8);
-+		if (!udata)
-+			break;
-+
- 		for (i = 0; i < 8; i++)
- 			input_report_key(dev, hidp_keycode[i + 224], (udata[0] >> i) & 1);
+ 	/* only send ports, do not send other devices connected to bus */
+-	if (is_parport(dev))
+-		drv->match_port(to_parport_dev(dev));
++	if (is_parport(dev)) {
++		port = to_parport_dev(dev);
++		if (test_bit(PARPORT_ANNOUNCED, &port->devflags))
++			drv->match_port(port);
++	}
+ 	return 0;
+ }
  
-@@ -213,6 +222,10 @@ static void hidp_input_report(struct hid
- 		break;
- 
- 	case 0x02:	/* Mouse report */
-+		sdata = skb_pull_data(skb, 3);
-+		if (!sdata)
-+			break;
-+
- 		input_report_key(dev, BTN_LEFT,   sdata[0] & 0x01);
- 		input_report_key(dev, BTN_RIGHT,  sdata[0] & 0x02);
- 		input_report_key(dev, BTN_MIDDLE, sdata[0] & 0x04);
-@@ -222,7 +235,7 @@ static void hidp_input_report(struct hid
- 		input_report_rel(dev, REL_X, sdata[1]);
- 		input_report_rel(dev, REL_Y, sdata[2]);
- 
--		if (size > 3)
-+		if (skb->len > 0)
- 			input_report_rel(dev, REL_WHEEL, sdata[3]);
- 		break;
+@@ -553,6 +557,7 @@ void parport_announce_port(struct parpor
+ 		if (slave)
+ 			attach_driver_chain(slave);
  	}
++	set_bit(PARPORT_ANNOUNCED, &port->devflags);
+ 	mutex_unlock(&registration_lock);
+ }
+ EXPORT_SYMBOL(parport_announce_port);
+@@ -582,6 +587,8 @@ void parport_remove_port(struct parport
+ 
+ 	mutex_lock(&registration_lock);
+ 
++	clear_bit(PARPORT_ANNOUNCED, &port->devflags);
++
+ 	/* Spread the word. */
+ 	detach_driver_chain(port);
+ 
+--- a/include/linux/parport.h
++++ b/include/linux/parport.h
+@@ -245,6 +245,7 @@ struct parport {
+ 
+ 	unsigned long devflags;
+ #define PARPORT_DEVPROC_REGISTERED	0
++#define PARPORT_ANNOUNCED		1
+ 	struct pardevice *proc_device;	/* Currently register proc device */
+ 
+ 	struct list_head full_list;
 
 
