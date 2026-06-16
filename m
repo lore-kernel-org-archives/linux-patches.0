@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9A13D8105;
-	Tue, 16 Jun 2026 18:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF119478E3E;
+	Tue, 16 Jun 2026 18:21:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634095; cv=none; b=dSAASx+AIX5DuOlUn8MXaRVV4W9I4LPyAgtOvDX/0KA8ig+kyBGCMKlSmDG5xXDyT+bPIYpcC4j8gm/hONAnQLReRM9ezkvrt4BoEbNxtcM2mTnt4I83Qnh0wlRopozJbC5813JPaLC1Bhqt7ic4kn+T2xvGBEyV/8+IbGisFlw=
+	t=1781634101; cv=none; b=IJtRUWup7FJYig7GOyTrXasDY/TUfINdPYfeghMV7BHAMNjLC7mCazA7auX2YjwhvoXqxtL9qyGyL4ilzSyEppASHLjCIVX1TWV2T9FNeGQyDiERh9ZxVCG/WVf9abNA80qXZZdlONwsPz5rfVzh3DsC8Rhk+gi3iSuoFHKcxfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634095; c=relaxed/simple;
-	bh=DujW0d6AAV6C1cmzampMBg2OLvcgwdIELoFQreImK/4=;
+	s=arc-20240116; t=1781634101; c=relaxed/simple;
+	bh=EMrPMx+/Uqh1qd1t306NDT88Kfq5Vdmpk4g6vKWka9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uXDEQD9YPu4dSho0uT9qlAw6eujv1/8dMGVZRGwsJHmCdSUzWjbPzd8x7jDgUOA6W3i5Ln/tL1WNzSP6dQZ+Eef0Cmwzq/TmpW3/w7H79nccGrZ8aKPEn/ZU/mF6q8inBRH7Uya7ZYGFyXaZIZ2WkDJvOoc8YK3AU781SARvYCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cL1xXWIE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SZTOanD3Z8KSZZ2DWMUoqVVQHAZ/jFiWvhRjldpJfypEJDp816scr87cm/ElZJQ/sBWX3LygcdL4HSIhbplZhIseBOsZpZqepO0KW/ufLbzBijPjBNEHyODpaFuWk913wB6ebzyYvR24mZUuyCRaqIPCyo1gH/qmPLB16HHOKnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kfAMwIrQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cL1xXWIE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81911F000E9;
-	Tue, 16 Jun 2026 18:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kfAMwIrQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E613B1F000E9;
+	Tue, 16 Jun 2026 18:21:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634094;
-	bh=b7/9rAoE0o4H6GyT0pfdJWac0P7Bx5SQLaWG6tqNX90=;
+	s=korg; t=1781634099;
+	bh=Yoe+kIhY8NS/fdv4lPp6OhMRwRi1P1gt707ezv/1HbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cL1xXWIExsaXz3sHNAmOFDbFw/z/d6l4M7UBCEWHxN2gcrM8xjegUT9UGZhyicD6L
-	 5g4ZmNZgN/fOVytRn1uspTnMzsVGuKNuIa7vc16IDGRBP7Pgln1gnGUCx3z5ZTRgG4
-	 DKJuKsxXFtEpdC3IjgzR8b12lK0FDIZyIVpEMTmE=
+	b=kfAMwIrQkjfqkX4eqDOxdyfMqDa/n2LIZ8oQ7FpA4rEbwsVYtGF5kw2Hw/X/C0urP
+	 B0nRLVkUfjy83Ck1QUhXb24EruRXHNLVDY43XE0tc253zqV9o7IFCEtDIiQNkDAace
+	 OqQEjwmfddAKi6ll1nnvkr97R7YnPpVpqJ7qTr78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamir Shahar <tamirthesis@gmail.com>,
-	Amit Klein <aksecurity@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Oscar Maes <oscmaes92@gmail.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 168/411] ipv4: restrict IPOPT_SSRR and IPOPT_LSRR options
-Date: Tue, 16 Jun 2026 20:26:46 +0530
-Message-ID: <20260616145109.549721040@linuxfoundation.org>
+Subject: [PATCH 5.15 159/411] pcnet32: stop holding device spin lock during napi_complete_done
+Date: Tue, 16 Jun 2026 20:26:37 +0530
+Message-ID: <20260616145108.940199509@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -55,52 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Oscar Maes <oscmaes92@gmail.com>
 
-[ Upstream commit d3915a1f5a4bc0ac911032903c3c6ab8df9fcc7c ]
+[ Upstream commit 73bf3cca7de6a73f53b6a52dc3b1c82ae5667a4d ]
 
-This patch restricts setting Loose Source and Record Route (LSRR)
-and Strict Source and Record Route (SSRR) IP options to users
-with CAP_NET_RAW capability.
+napi_complete_done may call gro_flush_normal (though not currently, as GRO
+is unsupported at the moment), which may result in packet TX. This will
+eventually result in calling pcnet32_start_xmit - resulting in a deadlock
+while trying to re-acquire the already locked spin lock.
 
-This prevents unprivileged applications from forcing packets to route
-through attacker-controlled nodes to leak TCP ISN and possibly other
-protocol information.
+It is safe to split the spinlock block into two, because the hardware
+registers are still protected from concurrent access, and the two blocks
+perform unrelated operations that don't need to happen atomically.
 
-While LSRR and SSRR are commonly filtered in many network environments,
-they may still be supported and forwarded along some network paths.
-
-RFC 7126 (Recommendations on Filtering of IPv4 Packets Containing
-IPv4 Options) recommend to drop these options in 4.3 and 4.4.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Tamir Shahar <tamirthesis@gmail.com>
-Reported-by: Amit Klein <aksecurity@gmail.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260602161547.2642155-1-edumazet@google.com
+Fixes: 5b2ec6f2be51 ("pcnet32: use napi_complete_done()")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Oscar Maes <oscmaes92@gmail.com>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Link: https://patch.msgid.link/20260528140320.5556-1-oscmaes92@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_options.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/amd/pcnet32.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/ip_options.c b/net/ipv4/ip_options.c
-index da1b5038bdfd04..4afdaaab616239 100644
---- a/net/ipv4/ip_options.c
-+++ b/net/ipv4/ip_options.c
-@@ -543,6 +543,10 @@ int ip_options_get(struct net *net, struct ip_options_rcu **optp,
- 		kfree(opt);
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/amd/pcnet32.c b/drivers/net/ethernet/amd/pcnet32.c
+index 70d76fdb9f569d..58a59b2d70cf2b 100644
+--- a/drivers/net/ethernet/amd/pcnet32.c
++++ b/drivers/net/ethernet/amd/pcnet32.c
+@@ -1399,8 +1399,10 @@ static int pcnet32_poll(struct napi_struct *napi, int budget)
+ 		pcnet32_restart(dev, CSR0_START);
+ 		netif_wake_queue(dev);
  	}
-+	if (opt->opt.srr && !ns_capable(net->user_ns, CAP_NET_RAW)) {
-+		kfree(opt);
-+		return -EPERM;
-+	}
- 	kfree(*optp);
- 	*optp = opt;
- 	return 0;
++	spin_unlock_irqrestore(&lp->lock, flags);
+ 
+ 	if (work_done < budget && napi_complete_done(napi, work_done)) {
++		spin_lock_irqsave(&lp->lock, flags);
+ 		/* clear interrupt masks */
+ 		val = lp->a->read_csr(ioaddr, CSR3);
+ 		val &= 0x00ff;
+@@ -1408,9 +1410,9 @@ static int pcnet32_poll(struct napi_struct *napi, int budget)
+ 
+ 		/* Set interrupt enable. */
+ 		lp->a->write_csr(ioaddr, CSR0, CSR0_INTEN);
++		spin_unlock_irqrestore(&lp->lock, flags);
+ 	}
+ 
+-	spin_unlock_irqrestore(&lp->lock, flags);
+ 	return work_done;
+ }
+ 
 -- 
 2.53.0
 
