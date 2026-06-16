@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003F144BCBE;
-	Tue, 16 Jun 2026 17:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D60543D4E8;
+	Tue, 16 Jun 2026 17:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629742; cv=none; b=RQgTs2J6O3eVOgYo15AhjXZnPPSQoT5Yz+u+C7hA00QSkSDGyJjQk5BY8TNMCIPwgvMARZQ7Yt8ud8MTtRD7ilwqo658KZVdhCLS1MXdPDixhGhlIYW6MsB1pcxkLzDwpAntGNggpyXBpjOiBSuM+x4SXEZTDC3oJSKXnmQx/4A=
+	t=1781629747; cv=none; b=FU9omTL9iLCKGX3YnZXfw+Lw8sfrUdlMLV0AlT9C2YsBMCBuB+EK9w86ddUrHFzKaqcrIvyGDqpXj4Rro99xP45zeMHDyaiyML6nNXggl76t9WHc1Tkuj0zWgkjvm3OgVHXnFeYwayvD/hVOQMEF8QIJ2rZVy7OIdAy0/DF0hK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629742; c=relaxed/simple;
-	bh=+WnRWjDDZbRrHgET2hwG8A6xqVwDeAZOzaQeRYa+XOo=;
+	s=arc-20240116; t=1781629747; c=relaxed/simple;
+	bh=6PAPdGmtPV2sucS21WBJj8EYTJCEu8Crxv2747e1kqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p4AWXRDNgaSuxJEqAv7d9DTMeJaKn3oTLIqeFVZ0cRIAmMPr2JvQb7yGhnPtrdCkaF3AM6pvyJfcsgFNZ1EBk86vq/oYRemL0zekgnQEoM+UaowtGC9xA4YR+KRswYpvGLqxrEipxUoER9NEXSREoSBvdaBHoTnJX0DaplrCgDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N43QIcct; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YQnVSHoM0xdNrA8jEMNtORSUpW5kkq949+vW91PyG0LEKD5jvykHQca6YHPd+K0IqqwFhE/EO6taVdWM8NqUcq1845n3Wiw7Xv57WB6LtATyZgm0kXNYQhdEaE6m9l+sLjgcGkxb8suwVx/OeIKYZ3pmqzuKzlaPpFOTPm85Uig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fs1RfmEY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N43QIcct"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6EFB1F000E9;
-	Tue, 16 Jun 2026 17:08:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fs1RfmEY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C321F000E9;
+	Tue, 16 Jun 2026 17:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629740;
-	bh=TcgZMFpOaj+M1BBykg+oyGnFEjL1Tv+nV7uDXKD8uh0=;
+	s=korg; t=1781629746;
+	bh=gVLVN1WV2MKQo8g4CSxaTE1IJ55PuuLstoDa1Al10Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N43QIcctJmrhgSW76pil38OexyZEopgVzJk3VbFIZQZ2oFBoPc9BVeJGmco981KJS
-	 SUvKwa7vISWsiEa5Ggfc/pvqyzFYnGQomnl5qMAjc+mJ3p59nT4kP3k+f1LsgvLijI
-	 Ho5IK2D1/fOMT/HNuyT6ZyOPdF3ZYoxsQBYb0R0M=
+	b=fs1RfmEYTTrBZG1CcPkBMWsOfawgvVFJF6y2uTmZrL1xpsDbPmncJCfpq/ZTYvAkg
+	 DsbZdpSqGJQkkXLZh+qIT3qjNCUNBJhVQU4RtRd/rnJ+glrIEmFzzJ/FPPZGo4WM64
+	 B7W8Y2ko0LQn2oB4HiKtmA1DLuVogF+fPeaN8XYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.6 336/452] misc: fastrpc: Fix NULL pointer dereference in rpmsg callback
-Date: Tue, 16 Jun 2026 20:29:23 +0530
-Message-ID: <20260616145134.983152591@linuxfoundation.org>
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Zhenzhong Wu <jt26wzz@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 345/452] selftests/bpf: Tests for per-insn sync_linked_regs() precision tracking
+Date: Tue, 16 Jun 2026 20:29:32 +0530
+Message-ID: <20260616145135.379399111@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,79 +52,220 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-commit 5401fb4fe10fac6134c308495df18ed74aebb9c4 upstream.
+[ Upstream commit bebc17b1c03b224a0b4aec6a171815e39f8ba9bc ]
 
-A NULL pointer dereference was observed on Hawi at boot when the DSP
-sends a glink message before fastrpc_rpmsg_probe() has completed
-initialization:
+Add a few test cases to verify precision tracking for scalars gaining
+range because of sync_linked_regs():
+- check what happens when more than 6 registers might gain range in
+  sync_linked_regs();
+- check if precision is propagated correctly when operand of
+  conditional jump gained range in sync_linked_regs() and one of
+  linked registers is marked precise;
+- check if precision is propagated correctly when operand of
+  conditional jump gained range in sync_linked_regs() and a
+  other-linked operand of the conditional jump is marked precise;
+- add a minimized reproducer for precision tracking bug reported in [0];
+- Check that mark_chain_precision() for one of the conditional jump
+  operands does not trigger equal scalars precision propagation.
 
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000178
-  pc : _raw_spin_lock_irqsave+0x34/0x8c
-  lr : fastrpc_rpmsg_callback+0x3c/0xcc [fastrpc]
-  ...
-  Call trace:
-   _raw_spin_lock_irqsave+0x34/0x8c (P)
-   fastrpc_rpmsg_callback+0x3c/0xcc [fastrpc]
-   qcom_glink_native_rx+0x538/0x6a4
-   qcom_glink_smem_intr+0x14/0x24 [qcom_glink_smem]
+[0] https://lore.kernel.org/bpf/CAEf4BzZ0xidVCqB47XnkXcNhkPWF6_nTV7yt+_Lf0kcFEut2Mg@mail.gmail.com/
 
-The faulting address 0x178 corresponds to the lock variable inside
-struct fastrpc_channel_ctx, confirming that cctx is NULL when
-fastrpc_rpmsg_callback() attempts to take the spinlock.
-
-There are two issues here. First, dev_set_drvdata() is called before
-spin_lock_init() and idr_init(), leaving a window where the callback
-can retrieve a valid cctx pointer but operate on an uninitialized
-spinlock. Second, the rpmsg channel becomes live as soon as the driver
-is bound, so fastrpc_rpmsg_callback() can fire before dev_set_drvdata()
-is called at all, resulting in dev_get_drvdata() returning NULL.
-
-Fix both issues by moving all cctx initialization ahead of
-dev_set_drvdata() so the structure is fully initialized before it
-becomes visible to the callback, and add a NULL check in
-fastrpc_rpmsg_callback() as a guard against any remaining window.
-
-Fixes: f6f9279f2bf0 ("misc: fastrpc: Add Qualcomm fastrpc basic driver model")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204528.116920-4-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20240718202357.1746514-4-eddyz87@gmail.com
+[ zhenzhong: keep the linked_regs_broken_link_2 reject check, but
+  drop the mark_precise log expectations because 6.6.y does not derive
+  the scalar-vs-scalar range for that non-constant JMP_X comparison. ]
+Signed-off-by: Zhenzhong Wu <jt26wzz@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/fastrpc.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ .../selftests/bpf/progs/verifier_scalar_ids.c | 162 ++++++++++++++++++
+ 1 file changed, 162 insertions(+)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -2392,7 +2392,6 @@ static int fastrpc_rpmsg_probe(struct rp
+diff --git a/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c b/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c
+index f70392bf696c62..2eb85eb3a06ccb 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c
++++ b/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c
+@@ -47,6 +47,72 @@ __naked void linked_regs_bpf_k(void)
+ 	: __clobber_all);
+ }
  
- 	kref_init(&data->refcount);
- 
--	dev_set_drvdata(&rpdev->dev, data);
- 	rdev->dma_mask = &data->dma_mask;
- 	dma_set_mask_and_coherent(rdev, DMA_BIT_MASK(32));
- 	INIT_LIST_HEAD(&data->users);
-@@ -2401,6 +2400,7 @@ static int fastrpc_rpmsg_probe(struct rp
- 	idr_init(&data->ctx_idr);
- 	data->domain_id = domain_id;
- 	data->rpdev = rpdev;
-+	dev_set_drvdata(&rpdev->dev, data);
- 
- 	err = of_platform_populate(rdev->of_node, NULL, NULL, rdev);
- 	if (err)
-@@ -2474,6 +2474,9 @@ static int fastrpc_rpmsg_callback(struct
- 	if (len < sizeof(*rsp))
- 		return -EINVAL;
- 
-+	if (!cctx)
-+		return -ENODEV;
++/* Registers r{0,1,2} share same ID when 'if r1 > ...' insn is processed,
++ * check that verifier marks r{1,2} as precise while backtracking
++ * 'if r1 > ...' with r0 already marked.
++ */
++SEC("socket")
++__success __log_level(2)
++__flag(BPF_F_TEST_STATE_FREQ)
++__msg("frame0: regs=r0 stack= before 5: (2d) if r1 > r3 goto pc+0")
++__msg("frame0: parent state regs=r0,r1,r2,r3 stack=:")
++__msg("frame0: regs=r0,r1,r2,r3 stack= before 4: (b7) r3 = 7")
++__naked void linked_regs_bpf_x_src(void)
++{
++	asm volatile (
++	/* r0 = random number up to 0xff */
++	"call %[bpf_ktime_get_ns];"
++	"r0 &= 0xff;"
++	/* tie r0.id == r1.id == r2.id */
++	"r1 = r0;"
++	"r2 = r0;"
++	"r3 = 7;"
++	"if r1 > r3 goto +0;"
++	/* force r0 to be precise, this eventually marks r1 and r2 as
++	 * precise as well because of shared IDs
++	 */
++	"r4 = r10;"
++	"r4 += r0;"
++	"r0 = 0;"
++	"exit;"
++	:
++	: __imm(bpf_ktime_get_ns)
++	: __clobber_all);
++}
 +
- 	ctxid = ((rsp->ctx & FASTRPC_CTXID_MASK) >> 4);
++/* Registers r{0,1,2} share same ID when 'if r1 > r3' insn is processed,
++ * check that verifier marks r{0,1,2} as precise while backtracking
++ * 'if r1 > r3' with r3 already marked.
++ */
++SEC("socket")
++__success __log_level(2)
++__flag(BPF_F_TEST_STATE_FREQ)
++__msg("frame0: regs=r3 stack= before 5: (2d) if r1 > r3 goto pc+0")
++__msg("frame0: parent state regs=r0,r1,r2,r3 stack=:")
++__msg("frame0: regs=r0,r1,r2,r3 stack= before 4: (b7) r3 = 7")
++__naked void linked_regs_bpf_x_dst(void)
++{
++	asm volatile (
++	/* r0 = random number up to 0xff */
++	"call %[bpf_ktime_get_ns];"
++	"r0 &= 0xff;"
++	/* tie r0.id == r1.id == r2.id */
++	"r1 = r0;"
++	"r2 = r0;"
++	"r3 = 7;"
++	"if r1 > r3 goto +0;"
++	/* force r0 to be precise, this eventually marks r1 and r2 as
++	 * precise as well because of shared IDs
++	 */
++	"r4 = r10;"
++	"r4 += r3;"
++	"r0 = 0;"
++	"exit;"
++	:
++	: __imm(bpf_ktime_get_ns)
++	: __clobber_all);
++}
++
+ /* Same as linked_regs_bpf_k, but break one of the
+  * links, note that r1 is absent from regs=... in __msg below.
+  */
+@@ -280,6 +346,102 @@ __naked void precision_two_ids(void)
+ 	: __clobber_all);
+ }
  
- 	spin_lock_irqsave(&cctx->lock, flags);
++SEC("socket")
++__success __log_level(2)
++__flag(BPF_F_TEST_STATE_FREQ)
++/* check thar r0 and r6 have different IDs after 'if',
++ * collect_linked_regs() can't tie more than 6 registers for a single insn.
++ */
++__msg("8: (25) if r0 > 0x7 goto pc+0         ; R0=scalar(id=1")
++__msg("9: (bf) r6 = r6                       ; R6_w=scalar(id=2")
++/* check that r{0-5} are marked precise after 'if' */
++__msg("frame0: regs=r0 stack= before 8: (25) if r0 > 0x7 goto pc+0")
++__msg("frame0: parent state regs=r0,r1,r2,r3,r4,r5 stack=:")
++__naked void linked_regs_too_many_regs(void)
++{
++	asm volatile (
++	/* r0 = random number up to 0xff */
++	"call %[bpf_ktime_get_ns];"
++	"r0 &= 0xff;"
++	/* tie r{0-6} IDs */
++	"r1 = r0;"
++	"r2 = r0;"
++	"r3 = r0;"
++	"r4 = r0;"
++	"r5 = r0;"
++	"r6 = r0;"
++	/* propagate range for r{0-6} */
++	"if r0 > 7 goto +0;"
++	/* make r6 appear in the log */
++	"r6 = r6;"
++	/* force r0 to be precise,
++	 * this would cause r{0-4} to be precise because of shared IDs
++	 */
++	"r7 = r10;"
++	"r7 += r0;"
++	"r0 = 0;"
++	"exit;"
++	:
++	: __imm(bpf_ktime_get_ns)
++	: __clobber_all);
++}
++
++SEC("socket")
++__failure __log_level(2)
++__flag(BPF_F_TEST_STATE_FREQ)
++__msg("div by zero")
++__naked void linked_regs_broken_link_2(void)
++{
++	asm volatile (
++	"call %[bpf_get_prandom_u32];"
++	"r7 = r0;"
++	"r8 = r0;"
++	"call %[bpf_get_prandom_u32];"
++	"if r0 > 1 goto +0;"
++	/* r7.id == r8.id,
++	 * thus r7 precision implies r8 precision,
++	 * which implies r0 precision because of the conditional below.
++	 */
++	"if r8 >= r0 goto 1f;"
++	/* break id relation between r7 and r8 */
++	"r8 += r8;"
++	/* make r7 precise */
++	"if r7 == 0 goto 1f;"
++	"r0 /= 0;"
++"1:"
++	"r0 = 42;"
++	"exit;"
++	:
++	: __imm(bpf_get_prandom_u32)
++	: __clobber_all);
++}
++
++/* Check that mark_chain_precision() for one of the conditional jump
++ * operands does not trigger equal scalars precision propagation.
++ */
++SEC("socket")
++__success __log_level(2)
++__msg("3: (25) if r1 > 0x100 goto pc+0")
++__msg("frame0: regs=r1 stack= before 2: (bf) r1 = r0")
++__naked void cjmp_no_linked_regs_trigger(void)
++{
++	asm volatile (
++	/* r0 = random number up to 0xff */
++	"call %[bpf_ktime_get_ns];"
++	"r0 &= 0xff;"
++	/* tie r0.id == r1.id */
++	"r1 = r0;"
++	/* the jump below would be predicted, thus r1 would be marked precise,
++	 * this should not imply precision mark for r0
++	 */
++	"if r1 > 256 goto +0;"
++	"r0 = 0;"
++	"exit;"
++	:
++	: __imm(bpf_ktime_get_ns)
++	: __clobber_all);
++}
++
+ /* Verify that check_ids() is used by regsafe() for scalars.
+  *
+  * r9 = ... some pointer with range X ...
+-- 
+2.53.0
+
 
 
