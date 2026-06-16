@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87AEA478E2B;
-	Tue, 16 Jun 2026 17:16:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFC447B434;
+	Tue, 16 Jun 2026 17:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630194; cv=none; b=hM35IZwrVVLnVKPwBCGdZv10S3YwJVvoPmJeS/biAPux22xnQuUCW1zGRwUk+0UR9cEpLtumNpT1GR2UAur6scnOQsx2QNauGCCs+Jzr388IHp5Sms7fFAOz9FnW96rePyYNfWLDN3viII/Jbxzz+nurFzDW+v7LbEYpPXHe7rg=
+	t=1781630200; cv=none; b=AcyubUkQf55iGDETeroQBOXFzA8sCrErit6QEWSZT4MgZxprkhPQWV53eb1D7TeDsP4Zgwdlr8KTYW7qmn1qLJJEZfVAUag+L2VB0vZlaRmQPHGUyFZKvZjJuA6D7TLeLFrAf1aHH0yIBu+hrxE3wEmJ4Qox2ye7DJRbF1OWusQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630194; c=relaxed/simple;
-	bh=K/WT5SLtgJjVRNCgemDbXS4sjJqt37RIiNmUkkqJlrU=;
+	s=arc-20240116; t=1781630200; c=relaxed/simple;
+	bh=xBSXlqOKaHbhKZkqKPsumH10DmF9ooTgVuzwq6lccsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GaLhycji2sjp0KmzNdmDqKtdoAByUr5pYt2jSEw4bXvDQ4t31RjQC0SIy9ebtTmxz4jS86dGH3wg/J+WZK+jnEvPUpnwT+lQGFD2xsc7W77D9jHInNE0owK85hjq/8h7gUvglUvhc3ZlR37VH337ftxGiiEL890ajoD4exNmTPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pk5qOi+I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aP9y06ea6wvSn/cxongGmEMbyKEbjWHGCuzTHIdTNqi6QzI5hTornP1+RPRLs9vKt/9R7pgZzgyTiJ+7NSy6YKYGVytz53ClDiXgDXnRFo+i0f8p32Fz5hPVrIwU2CGHsgF104I7bzP530OCWuTAjxFSFRFy2LMxQwmnjbKeXWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uuhd4grZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pk5qOi+I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40211F00A3A;
-	Tue, 16 Jun 2026 17:16:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uuhd4grZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57ED21F000E9;
+	Tue, 16 Jun 2026 17:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630188;
-	bh=CAnLZT4awvxgzGC9tgqw+rHG4Q7OytV3r7zOh3j1i9U=;
+	s=korg; t=1781630193;
+	bh=2RiaefZRNsM3b86r/MJQv2wzPdpE9coO3VOblNUyJ8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pk5qOi+I+Gg40KNn7/E55AC1HPEJYKqiq9lIA/TylPNooVOQ8IcbIyqD2gxDjufKC
-	 3ifBa3VbLSvdROXnzBiXaqcC6jrIhpqjZPm5oBO3O70EqP3f5EC25IHhC1kHvuU4f5
-	 juUJmqY9NpEfptWTnEh4TYAQRk0Uh99Lpj6PSvbI=
+	b=Uuhd4grZt8mgpP/v9UvWVBs3djg7Yzyk9eiW9aZyzZvw3q2K49lLjjN8IE7NL0L/v
+	 WDiWC8zj1HCceAfCfzOpS23wx/5weaLALRaKDyqmsa5osCNa2QWMvrEMAQhSmo129Y
+	 sxhcf3AaSk+2vEaOCR6RCivEGoXjIiD58ST+S2HQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Davide Ornaghi <d.ornaghi97@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	David Hildenbrand <david@redhat.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 427/452] netfilter: nft_fib: fix stale stack leak via the OIFNAME register
-Date: Tue, 16 Jun 2026 20:30:54 +0530
-Message-ID: <20260616145139.121131858@linuxfoundation.org>
+Subject: [PATCH 6.6 428/452] mm/hugetlb: rename isolate_hugetlb() to folio_isolate_hugetlb()
+Date: Tue, 16 Jun 2026 20:30:55 +0530
+Message-ID: <20260616145139.166167401@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,83 +55,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davide Ornaghi <d.ornaghi97@gmail.com>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit ab185e0c4fb82dfba6fb86f8271e06f931d9c64c ]
+[ Upstream commit 4c640f128074e0d4459ecf072595a44df5c2ae18 ]
 
-For NFT_FIB_RESULT_OIFNAME the destination register is declared with
-len = IFNAMSIZ (four 32-bit registers), but on the lookup-fail,
-RTN_LOCAL and oif-mismatch paths nft_fib{4,6}_eval() only writes one
-register via "*dest = 0". The remaining three registers are left as
-whatever was on the stack in nft_do_chain()'s struct nft_regs, and a
-downstream expression that loads the register span can leak that
-uninitialised kernel stack to userspace.
+Let's make the function name match "folio_isolate_lru()", and add some
+kernel doc.
 
-The NFTA_FIB_F_PRESENT existence check has the same shape: it is only
-meaningful for NFT_FIB_RESULT_OIF, yet it was accepted for any result type
-while the eval stores a single byte via nft_reg_store8(), leaving the rest
-of the declared span stale.
-
-Fix both:
-
- - replace the bare "*dest = 0" in the eval with nft_fib_store_result(),
-   which strscpy_pad()s the whole IFNAMSIZ for OIFNAME (and is already
-   used on the other early-return path), and
-
- - restrict NFTA_FIB_F_PRESENT to NFT_FIB_RESULT_OIF and declare its
-   destination as a single u8, so the marked span matches the one byte
-   the eval writes.
-
-Fixes: f6d0cbcf09c5 ("netfilter: nf_tables: add fib expression")
-Suggested-by: Florian Westphal <fw@strlen.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Davide Ornaghi <d.ornaghi97@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-[ kept the tree's existing `ip6_route_lookup`/`rt6_info` machinery (missing `fib6_lookup` refactor) and changed only `*dest = 0;` to `nft_fib_store_result(dest, priv, NULL)` ]
+Link: https://lkml.kernel.org/r/20250113131611.2554758-3-david@redhat.com
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 3c2d42b8ee34 ("mm/memory-failure: fix hugetlb_lock AA deadlock in get_huge_page_for_hwpoison")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/netfilter/nft_fib_ipv4.c |    2 +-
- net/ipv6/netfilter/nft_fib_ipv6.c |    2 +-
- net/netfilter/nft_fib.c           |    6 ++++++
- 3 files changed, 8 insertions(+), 2 deletions(-)
+ include/linux/hugetlb.h |    4 ++--
+ mm/gup.c                |    2 +-
+ mm/hugetlb.c            |   25 +++++++++++++++++++------
+ mm/memory-failure.c     |    2 +-
+ mm/memory_hotplug.c     |    2 +-
+ mm/mempolicy.c          |    2 +-
+ mm/migrate.c            |    4 ++--
+ 7 files changed, 27 insertions(+), 14 deletions(-)
 
---- a/net/ipv4/netfilter/nft_fib_ipv4.c
-+++ b/net/ipv4/netfilter/nft_fib_ipv4.c
-@@ -122,7 +122,7 @@ void nft_fib4_eval(const struct nft_expr
- 		fl4.saddr = get_saddr(iph->daddr);
- 	}
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -162,7 +162,7 @@ bool hugetlb_reserve_pages(struct inode
+ 						vm_flags_t vm_flags);
+ long hugetlb_unreserve_pages(struct inode *inode, long start, long end,
+ 						long freed);
+-bool isolate_hugetlb(struct folio *folio, struct list_head *list);
++bool folio_isolate_hugetlb(struct folio *folio, struct list_head *list);
+ int get_hwpoison_hugetlb_folio(struct folio *folio, bool *hugetlb, bool unpoison);
+ int get_huge_page_for_hwpoison(unsigned long pfn, int flags,
+ 				bool *migratable_cleared);
+@@ -446,7 +446,7 @@ static inline pte_t *huge_pte_offset(str
+ 	return NULL;
+ }
  
--	*dest = 0;
-+	nft_fib_store_result(dest, priv, NULL);
+-static inline bool isolate_hugetlb(struct folio *folio, struct list_head *list)
++static inline bool folio_isolate_hugetlb(struct folio *folio, struct list_head *list)
+ {
+ 	return false;
+ }
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -1971,7 +1971,7 @@ static unsigned long collect_longterm_un
+ 			continue;
  
- 	if (fib_lookup(nft_net(pkt), &fl4, &res, FIB_LOOKUP_IGNORE_LINKSTATE))
- 		return;
---- a/net/ipv6/netfilter/nft_fib_ipv6.c
-+++ b/net/ipv6/netfilter/nft_fib_ipv6.c
-@@ -193,7 +193,7 @@ void nft_fib6_eval(const struct nft_expr
+ 		if (folio_test_hugetlb(folio)) {
+-			isolate_hugetlb(folio, movable_page_list);
++			folio_isolate_hugetlb(folio, movable_page_list);
+ 			continue;
  		}
- 	}
  
--	*dest = 0;
-+	nft_fib_store_result(dest, priv, NULL);
- 	rt = (void *)ip6_route_lookup(nft_net(pkt), &fl6, pkt->skb,
- 				      lookup_flags);
- 	if (rt->dst.error)
---- a/net/netfilter/nft_fib.c
-+++ b/net/netfilter/nft_fib.c
-@@ -107,6 +107,12 @@ int nft_fib_init(const struct nft_ctx *c
- 		return -EINVAL;
- 	}
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -2969,7 +2969,7 @@ retry:
+ 		 * Fail with -EBUSY if not possible.
+ 		 */
+ 		spin_unlock_irq(&hugetlb_lock);
+-		isolated = isolate_hugetlb(old_folio, list);
++		isolated = folio_isolate_hugetlb(old_folio, list);
+ 		ret = isolated ? 0 : -EBUSY;
+ 		spin_lock_irq(&hugetlb_lock);
+ 		goto free_new;
+@@ -3045,7 +3045,7 @@ int isolate_or_dissolve_huge_page(struct
+ 	if (hstate_is_gigantic(h))
+ 		return -ENOMEM;
  
-+	if (priv->flags & NFTA_FIB_F_PRESENT) {
-+		if (priv->result != NFT_FIB_RESULT_OIF)
-+			return -EINVAL;
-+		len = sizeof(u8);
-+	}
-+
- 	err = nft_parse_register_store(ctx, tb[NFTA_FIB_DREG], &priv->dreg,
- 				       NULL, NFT_DATA_VALUE, len);
- 	if (err < 0)
+-	if (folio_ref_count(folio) && isolate_hugetlb(folio, list))
++	if (folio_ref_count(folio) && folio_isolate_hugetlb(folio, list))
+ 		ret = 0;
+ 	else if (!folio_ref_count(folio))
+ 		ret = alloc_and_dissolve_hugetlb_folio(h, folio, list);
+@@ -7246,11 +7246,24 @@ __weak unsigned long hugetlb_mask_last_p
+ 
+ #endif /* CONFIG_ARCH_WANT_GENERAL_HUGETLB */
+ 
+-/*
+- * These functions are overwritable if your architecture needs its own
+- * behavior.
++/**
++ * folio_isolate_hugetlb - try to isolate an allocated hugetlb folio
++ * @folio: the folio to isolate
++ * @list: the list to add the folio to on success
++ *
++ * Isolate an allocated (refcount > 0) hugetlb folio, marking it as
++ * isolated/non-migratable, and moving it from the active list to the
++ * given list.
++ *
++ * Isolation will fail if @folio is not an allocated hugetlb folio, or if
++ * it is already isolated/non-migratable.
++ *
++ * On success, an additional folio reference is taken that must be dropped
++ * using folio_putback_active_hugetlb() to undo the isolation.
++ *
++ * Return: True if isolation worked, otherwise False.
+  */
+-bool isolate_hugetlb(struct folio *folio, struct list_head *list)
++bool folio_isolate_hugetlb(struct folio *folio, struct list_head *list)
+ {
+ 	bool ret = true;
+ 
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -2639,7 +2639,7 @@ static bool isolate_page(struct page *pa
+ 	bool isolated = false;
+ 
+ 	if (PageHuge(page)) {
+-		isolated = isolate_hugetlb(page_folio(page), pagelist);
++		isolated = folio_isolate_hugetlb(page_folio(page), pagelist);
+ 	} else {
+ 		bool lru = !__PageMovable(page);
+ 
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1720,7 +1720,7 @@ static void do_migrate_range(unsigned lo
+ 
+ 		if (PageHuge(page)) {
+ 			pfn = page_to_pfn(head) + compound_nr(head) - 1;
+-			isolate_hugetlb(folio, &source);
++			folio_isolate_hugetlb(folio, &source);
+ 			continue;
+ 		} else if (PageTransHuge(page))
+ 			pfn = page_to_pfn(head) + thp_nr_pages(page) - 1;
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -608,7 +608,7 @@ static int queue_folios_hugetlb(pte_t *p
+ 	 */
+ 	if ((flags & MPOL_MF_MOVE_ALL) ||
+ 	    (folio_estimated_sharers(folio) == 1 && !hugetlb_pmd_shared(pte)))
+-		if (!isolate_hugetlb(folio, qp->pagelist))
++		if (!folio_isolate_hugetlb(folio, qp->pagelist))
+ 			qp->nr_failed++;
+ unlock:
+ 	spin_unlock(ptl);
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -142,7 +142,7 @@ static void putback_movable_folio(struct
+  *
+  * This function shall be used whenever the isolated pageset has been
+  * built from lru, balloon, hugetlbfs page. See isolate_migratepages_range()
+- * and isolate_hugetlb().
++ * and folio_isolate_hugetlb().
+  */
+ void putback_movable_pages(struct list_head *l)
+ {
+@@ -2113,7 +2113,7 @@ static int add_page_for_migration(struct
+ 
+ 	if (PageHuge(page)) {
+ 		if (PageHead(page)) {
+-			isolated = isolate_hugetlb(page_folio(page), pagelist);
++			isolated = folio_isolate_hugetlb(page_folio(page), pagelist);
+ 			err = isolated ? 1 : -EBUSY;
+ 		}
+ 	} else {
 
 
