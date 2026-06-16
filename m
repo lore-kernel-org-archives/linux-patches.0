@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8483D091A;
-	Tue, 16 Jun 2026 18:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCAF43D5656;
+	Tue, 16 Jun 2026 18:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633637; cv=none; b=O+wQ6YH0ls/Aiar8TX7kEAEplN4z6FSvKVeO9zIicNCnuRwoOsURkKcZWwA54XCpTcnI6WG1lCmZOihVv41WUbaai+EkZr9iEogUGY0qaHdIeiVFIpaeTN3dJnGKWohRSpd6kh6tdSVp6LZpDK97wBcYLOQBO1gwapOpY8ocdSo=
+	t=1781633642; cv=none; b=R2TwngXwNY51ETh0+OCGHIuF3YMPeO/WXCEN8Nj+V8FTuK/dlvtm31vSck30A7mZq7mhLwlKlNP2Zdaosy+LflFj2ns4+jekehjY2j+qd6QADrNBvzuP9o6Uk5VS0mKxLy8lK9z2RL0Gf6O9IPZ3pLMj+tAEFDig9q8AeuSwkic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633637; c=relaxed/simple;
-	bh=k9taSoh8+Qijw9M2rPCrnEXZS5pRN3Q2S1jjbND5jKk=;
+	s=arc-20240116; t=1781633642; c=relaxed/simple;
+	bh=0irLk/tSY6dQuF1QnRwMp/hDAxr2vqh7R3HT91AyExU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jW3McXkIz9TecMxWa8mgPmOHiURuSvyV0ahfUdEMcDR1L2QxEcVjTJ1EupTp1ytbyAhMhHUWkXIK4+p93dtcaMKhbZ2XrOwyW/loFIITnKUcQjqT7zMkgXV6JSM6ABc95D6+91GBA+/xXi6F+tnBgh4sC45/A7VIPEFcciZlwkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkE8d3UC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FdHXdF0JtP9e3KExOMWRIgHKAvAH3N7tupXnOG6IupvArV2IHMizMGFRtD8PeQJmIOI7+FWnF3CxokCgZvXHiriYx4ZyMIj+sLpmX3VgbiYMHnh3T/JAiNkWlqXgqawdCWVdFvkcFXw2WWc1h0eBCG23MqLISNdhVrEP0CI4skw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dM0PROcx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkE8d3UC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298611F000E9;
-	Tue, 16 Jun 2026 18:13:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dM0PROcx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F85A1F000E9;
+	Tue, 16 Jun 2026 18:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633636;
-	bh=uNczgTlQG1g2UqxexCUDKgnC3HiFuaU/JdKMBG392M0=;
+	s=korg; t=1781633641;
+	bh=d3NQ2B9tt6MsttF+uduu335r8oA7Xjd1b+fnqJIO+S0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SkE8d3UCQZa4w/7PoEa7hsk94jq4xeSSUnc50XZu5G5TSMZygfjpe00wvLhri+qP7
-	 u9SLbcnnrIZNslAhhWy8eVCTyiFdpyXnhqp5/5rXIw6iCwSkXSmd5QMQJdeZEhFDdm
-	 U1EJe3xw6AZHRwXAxRBsROvbnLcZkXiBB/hKBmjM=
+	b=dM0PROcx1NO5QB5/ygh/yM/YzBmnrlzq8P1bMy9vh9lAPJJwv/YZD1pb786oqXCB7
+	 onHYW9VhbRyTMSFoM9D2BeQsf9hYOx6uYcgZm40sugUMRfgNQzyBVhLSMxpcf3AZJx
+	 b0YuWLUqbJvpSzPSdaRGBLirZmZXXy+MKOygIzO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wanquan Zhong <wanquan.zhong@fibocom.com>,
+	Zhang Cen <rollkingzzc@gmail.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 115/411] USB: serial: option: add missing RSVD(5) flag for Rolling RW135R-GL
-Date: Tue, 16 Jun 2026 20:25:53 +0530
-Message-ID: <20260616145106.415422547@linuxfoundation.org>
+Subject: [PATCH 5.15 116/411] USB: serial: belkin_sa: validate interrupt status length
+Date: Tue, 16 Jun 2026 20:25:54 +0530
+Message-ID: <20260616145106.469684611@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,132 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wanquan Zhong <wanquan.zhong@fibocom.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-commit 689f2facc689c8add11d7ff69fbbad17d65ee596 upstream.
+commit 4ce058df2ee02cc2a0f0fd5cd64ce6f1482a0b65 upstream.
 
-The RW135R-GL entry added in commit 01e8d0f74222 ("USB: serial: option:
-add support for Rolling Wireless RW135R-GL") was missing the
-.driver_info = RSVD(5) flag used by other Rolling Wireless MBIM laptop
-modules (e.g. RW135-GL and RW350-GL).
+The Belkin interrupt callback treats interrupt data as a four-byte
+status report and reads LSR/MSR fields at offsets 2 and 3. The
+interrupt-in buffer length is derived from endpoint wMaxPacketSize, and
+short interrupt transfers may complete successfully with a smaller
+actual_length.
 
-Without this flag, the option driver incorrectly binds to the reserved
-ADB interface (If#5) in multi-interface USB modes, causing AT/MBIM
-communication failures after mode switching. This matches the handling
-of other Rolling Wireless MBIM devices.
+Check the completed interrupt packet length before parsing status
+fields so short interrupt endpoints and short successful packets are
+ignored instead of causing out-of-bounds or stale status-byte reads.
 
-- VID:PID 33f8:1003, RW135R-GL for laptop debug M.2 cards (with MBIM
-  interface for Linux/Chrome OS)
+KASAN report as below:
 
-  0x1003: mbim, diag, AT, pipe
+BUG: KASAN: slab-out-of-bounds in belkin_sa_read_int_callback()
+Read of size 1
+Call trace:
+  belkin_sa_read_int_callback() (drivers/usb/serial/belkin_sa.c:202)
+  __usb_hcd_giveback_urb() (drivers/usb/core/hcd.c:1630)
+  dummy_timer() (?:?)
 
-  Here are the outputs of usb-devices:
-
-T:  Bus=03 Lev=01 Prnt=01 Port=04 Cnt=02 Dev#=  8 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=33f8 ProdID=1003 Rev= 5.15
-S:  Manufacturer=Rolling Wireless S.a.r.l.
-S:  Product=Rolling RW135R-GL Module
-S:  SerialNumber=12345678
-C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-- VID:PID 33f8:1003, RW135R-GL for laptop debug M.2 cards (with MBIM
-  interface for Linux/Chrome OS)
-
-  0x1003: mbim, diag, AT, ADB, pipe
-
-  Here are the outputs of usb-devices:
-
-T:  Bus=03 Lev=01 Prnt=01 Port=04 Cnt=02 Dev#=  7 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=33f8 ProdID=1003 Rev= 5.15
-S:  Manufacturer=Rolling Wireless S.a.r.l.
-S:  Product=Rolling RW135R-GL Module
-S:  SerialNumber=12345678
-C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-- VID:PID 33f8:1003, RW135R-GL for laptop debug M.2 cards (with MBIM
-  interface for Linux/Chrome OS)
-
-  0x1003: mbim, pipe
-
-  Here are the outputs of usb-devices:
-
-T:  Bus=03 Lev=01 Prnt=01 Port=04 Cnt=02 Dev#=  9 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=33f8 ProdID=1003 Rev= 5.15
-S:  Manufacturer=Rolling Wireless S.a.r.l.
-S:  Product=Rolling RW135R-GL Module
-S:  SerialNumber=12345678
-C:* #Ifs= 3 Cfg#= 1 Atr=a0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Fixes: 01e8d0f74222 ("USB: serial: option: add support for Rolling Wireless RW135R-GL")
-Signed-off-by: Wanquan Zhong <wanquan.zhong@fibocom.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/serial/belkin_sa.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2476,7 +2476,8 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x0302, 0xff) },			/* Rolling RW101R-GL (laptop MBIM) */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x0802, 0xff),			/* Rolling RW350-GL (laptop MBIM) */
- 	  .driver_info = RSVD(5) },
--	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x1003, 0xff) },			/* Rolling RW135R-GL (laptop MBIM) */
-+	{ USB_DEVICE_INTERFACE_CLASS(0x33f8, 0x1003, 0xff),			/* Rolling RW135R-GL (laptop MBIM) */
-+	  .driver_info = RSVD(5) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for Global */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0x00, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0100, 0xff, 0xff, 0x40) },
+--- a/drivers/usb/serial/belkin_sa.c
++++ b/drivers/usb/serial/belkin_sa.c
+@@ -194,6 +194,9 @@ static void belkin_sa_read_int_callback(
+ 
+ 	usb_serial_debug_data(&port->dev, __func__, urb->actual_length, data);
+ 
++	if (urb->actual_length < BELKIN_SA_MSR_INDEX + 1)
++		goto exit;
++
+ 	/* Handle known interrupt data */
+ 	/* ignore data[0] and data[1] */
+ 
 
 
