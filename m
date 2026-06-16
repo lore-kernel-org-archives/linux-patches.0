@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192F43043C8;
-	Tue, 16 Jun 2026 17:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09BF03043C8;
+	Tue, 16 Jun 2026 17:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632589; cv=none; b=KOsYQJqB2dJUKihJUfel3bXwEW4NsxxAfS3KNvWF8jkMhNO7Qlv/i08I+mf9A8VDYNRfL5BZOXnTWIY4v/ElYjezFBBegA1IJfZYwJDrDf3SiHtTxTzTn+VMJ5ZrGF0LU3+OitdGCpKdW7RH3CruSrl3MtfmXc99I4X1bZxeYoM=
+	t=1781632595; cv=none; b=WO/oN2MiAVDHkCeiCU4q9IjBW0ipf6t2icz+ItRPRhAHYESOuCRDySsmqV9P4agnoOMZ59SxVRIWpIfP9Ru7ZADCrCSjMHxK0Ucv6i2XyTjXqXnUJXB1Wee9czSQTEXwBlWEq0pZ+iEe56rS3lVloRAm5DoGqRxAy75q3k4TTDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632589; c=relaxed/simple;
-	bh=3/afSunTpEHLDU15gmxGSA4G4ROIPXrhNQqgLBvsaoU=;
+	s=arc-20240116; t=1781632595; c=relaxed/simple;
+	bh=UFyl6jESsqJf9UfDXvp2r6a+EiujMpZmDrYpJBremYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aUwXM/ChgXqr3Aelx8oa8LWg+nFLM+oM/qs00zSM0d6XHLqLz3Syc0dyqwKxL0cpXyEBKhU1Wi+W+5lvkBaM60gXc/LGV3eNBjqPTTcQLTupKc2FkAXOHg+nMKrm3kP5YjLFhpykEG9fjmOBu+duArfXyIUCtHH5tTXtZ9vOo7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1r2LN+F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U9uh1MyLwzZImGRju2tSbBh+BWONYC4LphIfCZL5mXF/N26a9d9171Dl9GnipzxXqXeP8ln6JJ20jI2jq+vdf/G1sX4Qou5jA8gh48+pTIHjq6N6/uSB8cQgphR2NquvE6srP0CTa/J0UwomTiv/zy3bn3nsVGnOFkgrU0N4/F4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKcNsl87; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1r2LN+F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C6F1F000E9;
-	Tue, 16 Jun 2026 17:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKcNsl87"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88F51F000E9;
+	Tue, 16 Jun 2026 17:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632587;
-	bh=5SV2sqebCVJZSpWiLBlM32jWYg6/JDFMUG/uF8hEmWA=;
+	s=korg; t=1781632593;
+	bh=irC/sh9LcE70WnitiL0ng+lm1oXonRL6lpdUWnPgU1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O1r2LN+FIVzLkzgHGOVZoZyPNnncqw3KJa0n2YXkkbT/FYCUdoE7VB0VTEMofFIDn
-	 bbZ6CLHVfoqeojONsRZmbtBDCsdIkJ9Xb6oHJKnhA9qh7et/toChUlH6MaqmeNx7u8
-	 xON3Uo0XNtzejQGLhPlig6OjFEnPC76rQ/Jotp1M=
+	b=iKcNsl87PD9xYspdTWwRFMq6BrUfktHtWi0JdUJkbOpKDT9mozhov1B9VYR+tgwYW
+	 5GwiqDJH9Xq6vXyhVTFSad+udrnQSDUWCmB+pJ+UpJ0nN+cFXjI6pH2rcT8DNa5zXd
+	 /aE3QqsfsejK9AFX0V2DrhwKWJeaEh1FWNJoEIF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
+	Justin Iurman <justin.iurman@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 438/522] net: hsr: defer node table free until after RCU readers
-Date: Tue, 16 Jun 2026 20:29:45 +0530
-Message-ID: <20260616145146.443216927@linuxfoundation.org>
+Subject: [PATCH 6.1 439/522] ipv6: ioam: add NULL check for idev in ipv6_hop_ioam()
+Date: Tue, 16 Jun 2026 20:29:46 +0530
+Message-ID: <20260616145146.487747866@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,52 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Justin Iurman <justin.iurman@gmail.com>
 
-[ Upstream commit aaec7096f9961eb223b5b149abe9495525c205d9 ]
+[ Upstream commit d4ea0dfd75011b78cebf3808f98ac4c4f51a6fb9 ]
 
-HSR node-list and node-status generic-netlink operations run under
-rcu_read_lock(). They walk hsr->node_db through hsr_get_next_node() and
-hsr_get_node_data(), but RTM_DELLINK teardown removes the same node table
-with plain list_del() and frees each node immediately.
+Reported by Sashiko:
 
-That lets a generic-netlink reader hold a struct hsr_node pointer across
-hsr_dellink(). In a KASAN build, widening the reader window after
-hsr_get_next_node() obtains the node reproduces a slab-use-after-free
-when the reader copies node->macaddress_A; the freeing stack is
-hsr_del_nodes() from hsr_dellink().
+The function ipv6_hop_ioam() accesses
+__in6_dev_get(skb->dev)->cnf.ioam6_enabled without validating the returned
+idev pointer. Because addrconf_ifdown() can concurrently clear dev->ip6_ptr
+via RCU, __in6_dev_get() can return NULL during interface teardown, which
+could cause a NULL pointer dereference when processing an IOAM Hop-by-Hop
+option.
 
-Use list_del_rcu() and defer the free through the existing
-hsr_free_node_rcu() callback. This matches the lifetime rule used by the
-HSR prune paths, which already delete nodes with list_del_rcu() and
-call_rcu().
+Let's add a check and use SKB_DROP_REASON_IPV6DISABLED accordingly.
 
-Fixes: b9a1e627405d ("hsr: implement dellink to clean up resources")
-Cc: stable@vger.kernel.org # v5.3+
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260513233838.3064715-2-michael.bommarito@gmail.com
+Fixes: 9ee11f0fff20 ("ipv6: ioam: Data plane support for Pre-allocated Trace")
+Cc: stable@vger.kernel.org
+Signed-off-by: Justin Iurman <justin.iurman@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260517183059.29140-1-justin.iurman@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ replaced `list_del`+`call_rcu(hsr_free_node_rcu)` with `list_del_rcu`+`kfree_rcu(node, rcu_head)` ]
+[ dropped READ_ONCE() wrapper from idev->cnf.ioam6_enabled ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/hsr/hsr_framereg.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/ipv6/exthdrs.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/net/hsr/hsr_framereg.c
-+++ b/net/hsr/hsr_framereg.c
-@@ -121,8 +121,10 @@ void hsr_del_nodes(struct list_head *nod
- 	struct hsr_node *node;
- 	struct hsr_node *tmp;
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -952,16 +952,27 @@ static bool ipv6_hop_ra(struct sk_buff *
  
--	list_for_each_entry_safe(node, tmp, node_db, mac_list)
--		kfree(node);
-+	list_for_each_entry_safe(node, tmp, node_db, mac_list) {
-+		list_del_rcu(&node->mac_list);
-+		kfree_rcu(node, rcu_head);
+ static bool ipv6_hop_ioam(struct sk_buff *skb, int optoff)
+ {
++	enum skb_drop_reason drop_reason;
+ 	struct ioam6_trace_hdr *trace;
+ 	struct ioam6_namespace *ns;
++	struct inet6_dev *idev;
+ 	struct ioam6_hdr *hdr;
+ 
++	drop_reason = SKB_DROP_REASON_IP_INHDR;
++
+ 	/* Bad alignment (must be 4n-aligned) */
+ 	if (optoff & 3)
+ 		goto drop;
+ 
++	/* Does the device still have IPv6 configuration? */
++	idev = __in6_dev_get(skb->dev);
++	if (!idev) {
++		drop_reason = SKB_DROP_REASON_IPV6DISABLED;
++		goto drop;
 +	}
++
+ 	/* Ignore if IOAM is not enabled on ingress */
+-	if (!__in6_dev_get(skb->dev)->cnf.ioam6_enabled)
++	if (!idev->cnf.ioam6_enabled)
+ 		goto ignore;
+ 
+ 	/* Truncated Option header */
+@@ -1011,7 +1022,7 @@ ignore:
+ 	return true;
+ 
+ drop:
+-	kfree_skb_reason(skb, SKB_DROP_REASON_IP_INHDR);
++	kfree_skb_reason(skb, drop_reason);
+ 	return false;
  }
  
- void prp_handle_san_frame(bool san, enum hsr_port_type port,
 
 
