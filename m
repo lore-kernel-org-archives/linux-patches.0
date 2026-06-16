@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C2326B0A9;
-	Tue, 16 Jun 2026 15:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E80B43E9F5;
+	Tue, 16 Jun 2026 15:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623455; cv=none; b=ppt2cBw6KqqsPYgRfzDxJ6Mrs2O/KpMhJYGT074rUL3z8Wf4bAAeLbdOo8Vh4zXvqQxX25j4OskoiKjv286kA50s2pb7AelqgWuF/Z3scsreWoVePXj1SxqoyS2YLE+8CFSZ+Sfu18vQpZJGT6IPwn8NRFJoG6NhA0NntdtpdFU=
+	t=1781623461; cv=none; b=p6uPh+bhlWkJv0dK/m5Tkz6shQl0anZZtBliqQWZw0bRJpUaDw4+IsaLX3fQTNFtWUek8Q2BNeqkL1reWzgH0yKJgeN3Z6PhsCYXLhMF0KxI/xLOwNZpJtG3tbydV14BFAZIQlF4ZAnnGctG+jeg9apZFHpht3n7eOfvlPuEnNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623455; c=relaxed/simple;
-	bh=q+kVimrAmrrwoJcs25KgMmgSaJGUFc3lBc33eDLm6Ug=;
+	s=arc-20240116; t=1781623461; c=relaxed/simple;
+	bh=QG8hhY9dO6xfEsPqbNiPI8zE6wME1jVTFIk0Na8Jkc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hgJ1GOSA2Un9TKOQMJoaB1fFUH3yEh1ZOVDxUk1tjDxbdRQ6tIVYKIoErHBSUehWMh/7XIH3KcRbZqZumAFzioZNY5odMvHRkmgpIkHOcTjC6XMf+5OiCi2AWHrhFqHqbjiOI35AaQVYjIVvunnPi+xEAnB159VXwMJaZnZfI3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7xq3mTz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FHhiQH3DV1/j17FMIIYzGMuRfTLvhgRO+n2vpyR1/pgtvd+G4mal5jPVWDMivl9X7g8aoHEXNxOj9ZB/VqHuDwov48/HNEZ2CfCaZnmhZRLLco56P4gZeIhQ8NDs3s1LFkSXiB/pv99touL9//GSKlPHzy632G7QCGdZ918Yz44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWVM0JY0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7xq3mTz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A491F00A3A;
-	Tue, 16 Jun 2026 15:24:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWVM0JY0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 347F01F000E9;
+	Tue, 16 Jun 2026 15:24:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623454;
-	bh=1XfJxFAGsj5StyTqXXpThjCQQmsMP4p9P+Q6rLPoJEM=;
+	s=korg; t=1781623460;
+	bh=EXq21p3rRYGIYAihDJpR3NfALZT55Clh+f94i/kqAxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G7xq3mTzGCk4Q5HMFchwZxDuIh4wD/pY7/grvGZ6Lq53ioGruBlHyC8AhTnJoZnEu
-	 d28nafNJ43RtsvDr3fzxpJdlIAvL+GL3Y+SM1HCOZnYp81ZBTiReqF2CgoaJoQlbWT
-	 YKzloWngIM5yUglCXUbfpgGHUPokyX2zvihSCSxY=
+	b=rWVM0JY0qikBt5J2MQ3YzvqjeSIhcJvPGSrSBdSjtSXBEHzYibizH6Bxk7L91MBUE
+	 9nehrBb7I+rrdUFRlAqRlg40OCbVd846GRXmG7s002+DS4VbUyJcs2lmVT9Q0ImIxt
+	 KcoHlAPoCav9WrarfoqR5xw5+qGIlWf1wxgJuFCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
+	Jian Zhou <eilaimemedsnaimel@gmail.com>,
+	David Ahern <dahern@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 152/378] net: txgbe: initialize PHY interface to 0
-Date: Tue, 16 Jun 2026 20:26:23 +0530
-Message-ID: <20260616145118.245115286@linuxfoundation.org>
+Subject: [PATCH 7.0 153/378] ipv6: Fix a potential NPD in cleanup_prefix_route()
+Date: Tue, 16 Jun 2026 20:26:24 +0530
+Message-ID: <20260616145118.296273743@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,60 +53,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 47f848aac4e79bdb197f849fa86e71fff1ad36ef ]
+[ Upstream commit b70c687b7cf267fb08586667a3946c8851cad672 ]
 
-DECLARE_PHY_INTERFACE_MASK() does not guarantee zeroed contents. Add a
-new macro DECLARE_PHY_INTERFACE_MASK_ZERO(), make the stack variable to
-be zeroed before setting supported interfaces.
+addrconf_get_prefix_route() can return the fib6_null_entry sentinel
+entry which has a NULL fib6_table pointer. Therefore, before setting the
+route's expiration time, check that we are not working with this entry,
+as otherwise a NPD will be triggered [1].
 
-Fixes: 57d39faed4c9 ("net: txgbe: improve functions of AML 40G devices")
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Link: https://patch.msgid.link/20260608070842.36504-4-jiawenwu@trustnetic.com
+Note that the other callers of addrconf_get_prefix_route() are not
+susceptible to this bug:
+
+1. addrconf_prefix_rcv(): Requests a route with the 'RTF_ADDRCONF |
+   RTF_PREFIX_RT' flags which are not set on fib6_null_entry.
+
+2. modify_prefix_route(): Fixed by commit a747e02430df ("ipv6: avoid
+   possible NULL deref in modify_prefix_route()").
+
+3. __ipv6_ifa_notify(): Calls ip6_del_rt() which specifically checks for
+   fib6_null_entry and returns an error.
+
+[1]
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006: 0000 [#1] SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
+[...]
+Call Trace:
+<TASK>
+__kasan_check_byte (mm/kasan/common.c:573)
+lock_acquire.part.0 (kernel/locking/lockdep.c:5842 (discriminator 1))
+_raw_spin_lock_bh (kernel/locking/spinlock.c:182 (discriminator 1))
+cleanup_prefix_route (net/ipv6/addrconf.c:1280)
+ipv6_del_addr (net/ipv6/addrconf.c:1342)
+inet6_addr_del.isra.0 (net/ipv6/addrconf.c:3119)
+inet6_rtm_deladdr (net/ipv6/addrconf.c:4812)
+rtnetlink_rcv_msg (net/core/rtnetlink.c:6997)
+netlink_rcv_skb (net/netlink/af_netlink.c:2555)
+netlink_unicast (net/netlink/af_netlink.c:1344)
+netlink_sendmsg (net/netlink/af_netlink.c:1899)
+__sock_sendmsg (net/socket.c:802 (discriminator 4))
+____sys_sendmsg (net/socket.c:2698)
+___sys_sendmsg (net/socket.c:2752)
+__sys_sendmsg (net/socket.c:2784)
+do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+
+Fixes: 5eb902b8e719 ("net/ipv6: Remove expired routes with a separated list of routes.")
+Reported-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
+Reviewed-by: David Ahern <dahern@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260609145448.768318-1-idosch@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c  | 4 ++--
- drivers/net/ethernet/wangxun/txgbe/txgbe_type.h | 3 +++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ net/ipv6/addrconf.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c b/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
-index bdac654a236465..8fc32df8e49a44 100644
---- a/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
-+++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
-@@ -204,7 +204,7 @@ int txgbe_set_phy_link(struct wx *wx)
- static int txgbe_sfp_to_linkmodes(struct wx *wx, struct txgbe_sff_id *id)
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index e5276be71062a3..8f8fdc9cfce224 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -1264,6 +1264,7 @@ static void
+ cleanup_prefix_route(struct inet6_ifaddr *ifp, unsigned long expires,
+ 		     bool del_rt, bool del_peer)
  {
- 	__ETHTOOL_DECLARE_LINK_MODE_MASK(modes) = { 0, };
--	DECLARE_PHY_INTERFACE_MASK(interfaces);
-+	DECLARE_PHY_INTERFACE_MASK_ZERO(interfaces);
- 	struct txgbe *txgbe = wx->priv;
++	struct net *net = dev_net(ifp->idev->dev);
+ 	struct fib6_table *table;
+ 	struct fib6_info *f6i;
  
- 	if (id->cable_tech & TXGBE_SFF_DA_PASSIVE_CABLE) {
-@@ -271,7 +271,7 @@ static int txgbe_sfp_to_linkmodes(struct wx *wx, struct txgbe_sff_id *id)
- static int txgbe_qsfp_to_linkmodes(struct wx *wx, struct txgbe_sff_id *id)
- {
- 	__ETHTOOL_DECLARE_LINK_MODE_MASK(modes) = { 0, };
--	DECLARE_PHY_INTERFACE_MASK(interfaces);
-+	DECLARE_PHY_INTERFACE_MASK_ZERO(interfaces);
- 	struct txgbe *txgbe = wx->priv;
+@@ -1272,9 +1273,10 @@ cleanup_prefix_route(struct inet6_ifaddr *ifp, unsigned long expires,
+ 					ifp->idev->dev, 0, RTF_DEFAULT, true);
+ 	if (f6i) {
+ 		if (del_rt)
+-			ip6_del_rt(dev_net(ifp->idev->dev), f6i, false);
++			ip6_del_rt(net, f6i, false);
+ 		else {
+-			if (!(f6i->fib6_flags & RTF_EXPIRES)) {
++			if (f6i != net->ipv6.fib6_null_entry &&
++			    !(f6i->fib6_flags & RTF_EXPIRES)) {
+ 				table = f6i->fib6_table;
+ 				spin_lock_bh(&table->tb6_lock);
  
- 	if (id->transceiver_type & TXGBE_SFF_ETHERNET_40G_CR4) {
-diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h b/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
-index 6b05f32b4a0109..877234e3fdc2b6 100644
---- a/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
-+++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
-@@ -315,6 +315,9 @@ void txgbe_up(struct wx *wx);
- int txgbe_setup_tc(struct net_device *dev, u8 tc);
- void txgbe_do_reset(struct net_device *netdev);
- 
-+#define DECLARE_PHY_INTERFACE_MASK_ZERO(name) \
-+	unsigned long name[PHY_INTERFACE_MODE_MAX] = { 0, }
-+
- #define TXGBE_LINK_SPEED_UNKNOWN        0
- #define TXGBE_LINK_SPEED_10GB_FULL      4
- #define TXGBE_LINK_SPEED_25GB_FULL      0x10
 -- 
 2.53.0
 
