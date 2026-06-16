@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA16F477E57;
-	Tue, 16 Jun 2026 17:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2A121C16A;
+	Tue, 16 Jun 2026 17:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631765; cv=none; b=be4stMm6HDfCQbyZOXTFg8y9lWeKiLh8/Jxd5wdqou3vEJTYrCn8VRhjM5Ws8/frL8iPnNYp5UPXZUXEmVfMMPyjS14WXZVu9ZV46DKYBupKVDVNCJGqHjmQNMbiLcaMRs4vD2xUwm9/JpcQvTBIPyJI1IOAYIS9A5yrDFESigU=
+	t=1781631771; cv=none; b=jH4HvJbDiROy6AjKx9liVTYzy5N/C5YbA6qkY38hFvwE41SegzlIpEO3aUfd6Q0wEymor5Wle+xqwISi6rtCAG1JrdyOQ6BUOLfxkOo6/gLgpiazBAxUlWgTH4YalOnjBgpPNpMRLagv2ZsoxShtxXzzk5mV6K8mdDAnoAXPIjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631765; c=relaxed/simple;
-	bh=D51MsWQstVpPJESnld4qTgpXhBm/dAe9YptY4S16+2s=;
+	s=arc-20240116; t=1781631771; c=relaxed/simple;
+	bh=dK22F0HUs+t8y9FIoa2ymLrcP/etMrg8HuMsOnVPbo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z0IXYcD6hnc8BIPHKA0hXiwcskQGOJjWnoUS/6XViDYbP4rTHabx5qCCCMDE4zPr0Q6o6BDKFPrNyi6srYvqCPd4k8wA3hkV4eX9sZvj4JWnil/gZTlA5oDHLeQVyy69iCA51LUaeqb9VTer8SRqr5ldFTeokBUwORsG1Zwn/NA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VmliKXpV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i/jbiehmTqKCfI2vGmXVVzKBhaRbYQTO8grz8ZhoDuDKV2c8VRMqpj4wpW4Uyrdigd5UYc3+V9Vl4VSKEC33T20T/sV2OxbbDTb22RvNGClk99LDZIDiutbEqsxsmQ6b5r8HBHvXSspmjZP2SMyUgknN/p3cV9DCBba/o0vK4pU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCnW3O59; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VmliKXpV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2D41F000E9;
-	Tue, 16 Jun 2026 17:42:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCnW3O59"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CBD1F000E9;
+	Tue, 16 Jun 2026 17:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631762;
-	bh=3RZ2SB1hXUxdATIQd3R5TCbYyPVC1dSvI9MPBFEidxY=;
+	s=korg; t=1781631768;
+	bh=0R+gDhRpUY1Aa4TGNg1D4+WZZmHNGMGYWtbrRJtgp5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VmliKXpVSmStKHzRcaNMuBwuOz5QGO5EqxvsfSloEs31H+vqQIiFDWfJZge5/wQQD
-	 rQC38+cM+RCitoFpvekSwJMAcHMh20l38SmcUAtT+2ZHsCgkUPJ9Vt7exkOyCd4gmF
-	 VBcUs8JURXgMoHsO6ivuhxE1jjcR155+QTCNgDC0=
+	b=xCnW3O59w8WEmtBIIpFnhOeaoDLRsnBxHraW/rN871tO1k3ZASWJncNOcmmGdEo/D
+	 q9OpIzjAtEOPkiSbWzL0zDa4g2UAu7T8ZyqQ9MUdGHQwLxSmtZCKw/Vo747RJpm0o9
+	 tcrKmON2uvqkLBMdnmLuqw1G0oqMmbOizDXmGyJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 251/522] sctp: fix uninit-value in __sctp_rcv_asconf_lookup()
-Date: Tue, 16 Jun 2026 20:26:38 +0530
-Message-ID: <20260616145137.712469584@linuxfoundation.org>
+Subject: [PATCH 6.1 242/522] ASoC: wm_adsp: Fix NULL dereference when removing firmware controls
+Date: Tue, 16 Jun 2026 20:26:29 +0530
+Message-ID: <20260616145137.303655475@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,58 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit f8373d7090b745728de66308deeecc67e8d319ce ]
+[ Upstream commit 7d3fb78b550301e43fdc60312aed733069694426 ]
 
-__sctp_rcv_asconf_lookup() in net/sctp/input.c only checks that the ASCONF
-chunk can hold the ADDIP header and a parameter header, then calls
-af->from_addr_param(), which reads the full address (16 bytes for IPv6)
-trusting the parameter's declared length.
+In wm_adsp_control_remove() check that the priv pointer is not NULL
+before attempting to cleanup what it points to.
 
-An unauthenticated peer can send a truncated trailing ASCONF chunk that
-declares an IPv6 address parameter but stops after the 4-byte parameter
-header; reached from the no-association lookup path, from_addr_param() then
-reads uninitialized bytes past the parameter.
+When cs_dsp creates a control it calls wm_adsp_control_add_cb() so that
+wm_adsp can create its own private control data. There are two cases
+where private data is not created:
 
-Impact: an unauthenticated SCTP peer makes the receive path read up to 16
-bytes of uninitialized memory past a truncated ASCONF address parameter.
+1. The control is a SYSTEM control, so an ALSA control is not created.
 
-The sibling __sctp_rcv_init_lookup() bounds parameters with
-sctp_walk_params(); this path open-codes the fetch and omits the bound.
-Verify the whole address parameter lies within the chunk before
-from_addr_param() reads it, the same class of fix as commit 51e5ad549c43
-("net: sctp: fix KMSAN uninit-value in sctp_inq_pop").
+2. The codec driver has registered a control_add() callback that
+   hides the control, so wm_adsp_control_add() is not called.
 
-Fixes: df2185771439 ("[SCTP]: Update association lookup to look at ASCONF chunks as well")
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260608122234.459098-1-michael.bommarito@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+When cs_dsp_remove destroys its control list it calls
+wm_adsp_control_remove() for each control. But wm_adsp_control_remove()
+was attempting to cleanup the private data pointed to by cs_ctl->priv
+without checking the pointer for NULL.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 0700bc2fb94c ("ASoC: wm_adsp: Separate generic cs_dsp_coeff_ctl handling")
+Link: https://patch.msgid.link/20260604101244.1402862-1-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/input.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/soc/codecs/wm_adsp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/sctp/input.c b/net/sctp/input.c
-index 182898cb754a52..70530cbe57d0a7 100644
---- a/net/sctp/input.c
-+++ b/net/sctp/input.c
-@@ -1197,6 +1197,14 @@ static struct sctp_association *__sctp_rcv_asconf_lookup(
- 	/* Skip over the ADDIP header and find the Address parameter */
- 	param = (union sctp_addr_param *)(asconf + 1);
+diff --git a/sound/soc/codecs/wm_adsp.c b/sound/soc/codecs/wm_adsp.c
+index 47a4c363227ccd..bc9798ea5a25e2 100644
+--- a/sound/soc/codecs/wm_adsp.c
++++ b/sound/soc/codecs/wm_adsp.c
+@@ -666,6 +666,9 @@ static void wm_adsp_control_remove(struct cs_dsp_coeff_ctl *cs_ctl)
+ {
+ 	struct wm_coeff_ctl *ctl = cs_ctl->priv;
  
-+	/* The whole address parameter must lie within the chunk before
-+	 * af->from_addr_param() reads the variable-length address; otherwise a
-+	 * truncated trailing ASCONF chunk lets it read uninitialized bytes past
-+	 * the parameter.
-+	 */
-+	if (sizeof(*asconf) + ntohs(param->p.length) > ntohs(ch->length))
-+		return NULL;
++	if (!ctl)
++		return;
 +
- 	af = sctp_get_af_specific(param_type2af(param->p.type));
- 	if (unlikely(!af))
- 		return NULL;
+ 	cancel_work_sync(&ctl->work);
+ 
+ 	kfree(ctl->name);
 -- 
 2.53.0
 
