@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1072243E4A8;
-	Tue, 16 Jun 2026 15:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F6044102E;
+	Tue, 16 Jun 2026 15:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623163; cv=none; b=YMANRsk1UOGqaRCqlyRCXaQeSfwzExSePOv0xseqgFSG12eBexMhWApsD2wvBBArfUYHUBWHmx7b+fle8MHd4mRsFF0JD5UyN9XNi+tH1bKstTXstfpl0F8gGKc6Jpm/Akb4uiHW/jhsC50Hcvhq9EQ5riljaVRwJQxvC3HPkMs=
+	t=1781623169; cv=none; b=aclQcdK8egg+BQRThyS6yRB06fHgMByf2jZkLKOMlbCVcNRIQEClUTPx+iiizUdFO3HE8PMgIaNKS8wVZbmm/MhbdghyLHgzuJbTFJYXtITCvKFkzSwYEQqhSNiutm29up9ppKE12LJgf+w4bv16UNIrigUMruPx1erRVm5xgNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623163; c=relaxed/simple;
-	bh=Ega/VDBZG9TDgn0YQBU31PznhOFhm9gN9tA1qN/1NCs=;
+	s=arc-20240116; t=1781623169; c=relaxed/simple;
+	bh=UTOyUb4dJRb13JMpHp8QyidOR4r+fHEUWtKHIwqcMNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TAXXw+pSQ/1ZCSi37lGB7/HauQuakmGM78ogRU+kP9YPEgvhCA2qTlR+DCkCv2irKfwyR5BLKJcPEqNpKpgTtsyBPv6SVwItPQuyW0A2it/3NyRQNhVgzqtZ4wegObbqCRC7evgpwxqN15uTt4kSY2G7sZ1auao+KtE60siFYR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0Y/olgW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y3u/oD6kE4Ux82H7G6q/VEPqzJ7lTp46RtK6GEXq0DstzJ7rYlsMG3GtnwVBXX7AsAiopTlq6QkbL1N5jkVJLsnAMpzBZ3H0dR4H7HWi+1TqtlNxzZtW0Sk2GDvgATbaRBi1ebtlUOYaFjh8DQehLHZiERSvzTa5gCTwTl6f1w8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWAYGKYJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0Y/olgW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE8E1F000E9;
-	Tue, 16 Jun 2026 15:19:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWAYGKYJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3235B1F00A3D;
+	Tue, 16 Jun 2026 15:19:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623162;
-	bh=tReeCiwfSfVAphbR4uNQduo8d5XlLvNGRui48V+OqEo=;
+	s=korg; t=1781623168;
+	bh=NEXUzJ19eGVMUi7TswUQaPRGuuwdjV1nd2fwHKFUFOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b0Y/olgWFAXRPSbSKNF9/IdnBLKGIwEoMydWvqKdlI/HTJWpxgP0FpX3hzRgprwWi
-	 KosOl97HQx09rLKeVOw4uwwAKfIEWU2tJAN+Lg72h9GPgNpoAMBF6YDXNn7cAQxwqc
-	 GDVlZujLYdcsGJiak9MkxuT4WiqswPMSlDdtnCJc=
+	b=WWAYGKYJzAszWSaRZoeIyQ63AFzPhHtEbAPOJaR2KF1Q2ARTMrNnOohTgiq9q0qUd
+	 nRD9VzcDF0X5AI4hg3cNDTB+Ttzz43YTSlIRKEuO4CUeFYLNnEypDc2GHkjdrK5Sne
+	 E9BGfsKuktLezcoSNWZ/UQlTw3NEfOwNk8yrG4SM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhenghang Xiao <kipreyyy@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Andy Gospodarek <gospo@broadcom.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	linux-rdma@vger.kernel.org,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 098/378] xfrm: iptfs: fix use-after-free on first_skb in __input_process_payload
-Date: Tue, 16 Jun 2026 20:25:29 +0530
-Message-ID: <20260616145115.483082193@linuxfoundation.org>
+Subject: [PATCH 7.0 072/378] fwctl/bnxt_en: Move common definitions to include/linux/bnxt/
+Date: Tue, 16 Jun 2026 20:25:03 +0530
+Message-ID: <20260616145113.934194834@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -45,73 +48,189 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhenghang Xiao <kipreyyy@gmail.com>
+From: Pavan Chebbi <pavan.chebbi@broadcom.com>
 
-[ Upstream commit eb48730bb827d1550401a5d391903f9d90b493c8 ]
+[ Upstream commit 7be18a1fa00eab5283b35c13e26c6b76fcaab9ce ]
 
-__input_process_payload() stores first_skb into xtfs->ra_newskb under
-drop_lock when starting partial reassembly, then unlocks and breaks out
-of the processing loop. The post-loop check reads xtfs->ra_newskb
-without the lock to decide whether first_skb is still owned:
+We have common definitions that are now going to be used
+by more than one component outside of bnxt (bnxt_re and
+fwctl)
 
-    if (first_skb && first_iplen && !defer && first_skb != xtfs->ra_newskb)
+Move bnxt_ulp.h to include/linux/bnxt/ as ulp.h.
 
-Between spin_unlock and this read, a concurrent CPU running
-iptfs_reassem_cont() (or the drop_timer hrtimer) can complete
-reassembly, NULL xtfs->ra_newskb, and free the skb. The check then
-evaluates first_skb != NULL as true, and pskb_trim/ip_summed/consume_skb
-operate on the freed skb — a use-after-free in skbuff_head_cache.
-
-Replace the unlocked read with a local bool that records whether
-first_skb was handed to the reassembly state in the current call. The
-flag is set after the existing spin_unlock, before the break, using the
-pointer equality that is stable at that point (first_skb == skb iff
-first_skb was stored in ra_newskb).
-
-Fixes: 3f3339885fb3 ("xfrm: iptfs: add reusing received skb for the tunnel egress packet")
-Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Link: https://patch.msgid.link/r/20260314151605.932749-2-pavan.chebbi@broadcom.com
+Reviewed-by: Andy Gospodarek <gospo@broadcom.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Cc: linux-rdma@vger.kernel.org
+Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: b6197b386677 ("Reapply "bnxt_en: bring back rtnl_lock() in the bnxt_open() path"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_iptfs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/bnxt_re/debugfs.c                         | 2 +-
+ drivers/infiniband/hw/bnxt_re/main.c                            | 2 +-
+ drivers/infiniband/hw/bnxt_re/qplib_fp.c                        | 2 +-
+ drivers/infiniband/hw/bnxt_re/qplib_res.h                       | 2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c                       | 2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c               | 2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c               | 2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt_sriov.c                 | 2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c                   | 2 +-
+ .../broadcom/bnxt/bnxt_ulp.h => include/linux/bnxt/ulp.h        | 0
+ 10 files changed, 9 insertions(+), 9 deletions(-)
+ rename drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.h => include/linux/bnxt/ulp.h (100%)
 
-diff --git a/net/xfrm/xfrm_iptfs.c b/net/xfrm/xfrm_iptfs.c
-index 6c6bbc0405170c..f25504610d8b23 100644
---- a/net/xfrm/xfrm_iptfs.c
-+++ b/net/xfrm/xfrm_iptfs.c
-@@ -954,6 +954,7 @@ static bool __input_process_payload(struct xfrm_state *x, u32 data,
- 	u32 first_iplen, iphlen, iplen, remaining, tail;
- 	u32 capturelen;
- 	u64 seq;
-+	bool first_skb_partial = false;
+diff --git a/drivers/infiniband/hw/bnxt_re/debugfs.c b/drivers/infiniband/hw/bnxt_re/debugfs.c
+index a2ad79c3bbd021..5fed2cf66be30a 100644
+--- a/drivers/infiniband/hw/bnxt_re/debugfs.c
++++ b/drivers/infiniband/hw/bnxt_re/debugfs.c
+@@ -10,8 +10,8 @@
+ #include <linux/pci.h>
+ #include <linux/seq_file.h>
+ #include <rdma/ib_addr.h>
++#include <linux/bnxt/ulp.h>
  
- 	xtfs = x->mode_data;
- 	net = xs_net(x);
-@@ -1161,6 +1162,7 @@ static bool __input_process_payload(struct xfrm_state *x, u32 data,
+-#include "bnxt_ulp.h"
+ #include "roce_hsi.h"
+ #include "qplib_res.h"
+ #include "qplib_sp.h"
+diff --git a/drivers/infiniband/hw/bnxt_re/main.c b/drivers/infiniband/hw/bnxt_re/main.c
+index b576f05e3b26b2..47afccddf55e57 100644
+--- a/drivers/infiniband/hw/bnxt_re/main.c
++++ b/drivers/infiniband/hw/bnxt_re/main.c
+@@ -55,8 +55,8 @@
+ #include <rdma/ib_umem.h>
+ #include <rdma/ib_addr.h>
+ #include <linux/hashtable.h>
++#include <linux/bnxt/ulp.h>
  
- 			spin_unlock(&xtfs->drop_lock);
+-#include "bnxt_ulp.h"
+ #include "roce_hsi.h"
+ #include "qplib_res.h"
+ #include "qplib_sp.h"
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+index 2d7932b3c492fa..b4c7b8f582ba9f 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+@@ -46,6 +46,7 @@
+ #include <linux/delay.h>
+ #include <linux/prefetch.h>
+ #include <linux/if_ether.h>
++#include <linux/bnxt/ulp.h>
+ #include <rdma/ib_mad.h>
  
-+			first_skb_partial = (first_skb == skb);
- 			break;
- 		}
+ #include "roce_hsi.h"
+@@ -55,7 +56,6 @@
+ #include "qplib_sp.h"
+ #include "qplib_fp.h"
+ #include <rdma/ib_addr.h>
+-#include "bnxt_ulp.h"
+ #include "bnxt_re.h"
+ #include "ib_verbs.h"
  
-@@ -1172,7 +1174,7 @@ static bool __input_process_payload(struct xfrm_state *x, u32 data,
- 		/* this should not happen from the above code */
- 		XFRM_INC_STATS(net, LINUX_MIB_XFRMINIPTFSERROR);
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.h b/drivers/infiniband/hw/bnxt_re/qplib_res.h
+index 9a5dcf97b6f440..0a4a03efeb0bab 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_res.h
++++ b/drivers/infiniband/hw/bnxt_re/qplib_res.h
+@@ -39,7 +39,7 @@
+ #ifndef __BNXT_QPLIB_RES_H__
+ #define __BNXT_QPLIB_RES_H__
  
--	if (first_skb && first_iplen && !defer && first_skb != xtfs->ra_newskb) {
-+	if (first_skb && first_iplen && !defer && !first_skb_partial) {
- 		/* first_skb is queued b/c !defer and not partial */
- 		if (pskb_trim(first_skb, first_iplen)) {
- 			/* error trimming */
+-#include "bnxt_ulp.h"
++#include <linux/bnxt/ulp.h>
+ 
+ extern const struct bnxt_qplib_gid bnxt_qplib_gid_zero;
+ 
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 3f775196ef8194..5d05084e32d93f 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -59,10 +59,10 @@
+ #include <net/netdev_rx_queue.h>
+ #include <linux/pci-tph.h>
+ #include <linux/bnxt/hsi.h>
++#include <linux/bnxt/ulp.h>
+ 
+ #include "bnxt.h"
+ #include "bnxt_hwrm.h"
+-#include "bnxt_ulp.h"
+ #include "bnxt_sriov.h"
+ #include "bnxt_ethtool.h"
+ #include "bnxt_dcb.h"
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c
+index 15de802bbac48e..230cd95d30a269 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c
+@@ -13,12 +13,12 @@
+ #include <net/devlink.h>
+ #include <net/netdev_lock.h>
+ #include <linux/bnxt/hsi.h>
++#include <linux/bnxt/ulp.h>
+ #include "bnxt.h"
+ #include "bnxt_hwrm.h"
+ #include "bnxt_vfr.h"
+ #include "bnxt_devlink.h"
+ #include "bnxt_ethtool.h"
+-#include "bnxt_ulp.h"
+ #include "bnxt_ptp.h"
+ #include "bnxt_coredump.h"
+ #include "bnxt_nvm_defs.h"
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index 0407aa1b3190e4..ef646a3463b1ec 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -27,9 +27,9 @@
+ #include <net/netdev_queues.h>
+ #include <net/netlink.h>
+ #include <linux/bnxt/hsi.h>
++#include <linux/bnxt/ulp.h>
+ #include "bnxt.h"
+ #include "bnxt_hwrm.h"
+-#include "bnxt_ulp.h"
+ #include "bnxt_xdp.h"
+ #include "bnxt_ptp.h"
+ #include "bnxt_ethtool.h"
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_sriov.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_sriov.c
+index 7f9829287c4950..edcc002e4ca358 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_sriov.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_sriov.c
+@@ -17,9 +17,9 @@
+ #include <linux/etherdevice.h>
+ #include <net/dcbnl.h>
+ #include <linux/bnxt/hsi.h>
++#include <linux/bnxt/ulp.h>
+ #include "bnxt.h"
+ #include "bnxt_hwrm.h"
+-#include "bnxt_ulp.h"
+ #include "bnxt_sriov.h"
+ #include "bnxt_vfr.h"
+ #include "bnxt_ethtool.h"
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c
+index e1e82a72cf1bb8..11ced44ead29b3 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c
+@@ -22,10 +22,10 @@
+ #include <linux/auxiliary_bus.h>
+ #include <net/netdev_lock.h>
+ #include <linux/bnxt/hsi.h>
++#include <linux/bnxt/ulp.h>
+ 
+ #include "bnxt.h"
+ #include "bnxt_hwrm.h"
+-#include "bnxt_ulp.h"
+ 
+ static DEFINE_IDA(bnxt_aux_dev_ids);
+ 
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.h b/include/linux/bnxt/ulp.h
+similarity index 100%
+rename from drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.h
+rename to include/linux/bnxt/ulp.h
 -- 
 2.53.0
 
