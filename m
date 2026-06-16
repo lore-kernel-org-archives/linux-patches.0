@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3844647A0D7;
-	Tue, 16 Jun 2026 17:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0DB1A6803;
+	Tue, 16 Jun 2026 17:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630592; cv=none; b=W1kgGu7nZTplqylanotpAKsKVoz/PBTlbl/k7Y8CPezAiqAYA5QU2FgFWswKUe1VC3+wmJCHRlKCIg9YSI8dIEQLGfk2y8sUepOpRVss/YJc1xCP+sIzxQknOv0tutm5FKRjN+0SjqyB98po5EkmVi1ws5YuKmw6pkoc8G69NFg=
+	t=1781630596; cv=none; b=lVwQwhShrc88yJta5BLEyQzJYuPUoQOeAQlGsQzsg/3tx5Oup3/ckT1bhswL+/QjNhH+dUTvBoLCPjo/a8PObTLS7RFU4z5SjhrPdCV+enmh5lxst5kOkFb2P5so+mDWV3b4Qtro8s6idQHXoXYzUgZ2EaOkjXCSkfvl78T8CgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630592; c=relaxed/simple;
-	bh=dz4W9qfm9Rxt2VYTzlTwaUJ/deEfk1Yc/w0tiHBIgCU=;
+	s=arc-20240116; t=1781630596; c=relaxed/simple;
+	bh=7CyMGBwKuNq+UBX0z5mgzusLurkVrL1uu20KbthexVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qo9k7Z6JUxItD4ks6aLPlNNiO91bY4wdkdGxK+P5DBhNaND7p6EUTNwPlXnHE6Ey3AUOaw83fCmduRYGqLsDtfWFJ5bIqnQtY/GIcW6Z18JlUPJfDLci7u7jzcFygVv3AuZKRgerpX75CHi3jtqopylPgPiVsCk0HCXb2f58Sw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TA8/VGB9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hquMrH6grZfqNoLIysMZ0pBtZnlauzKnkFELbfSoCBTRqVV6k9oUnxOqDhhKaoE+Tpuibrwk3hd0abCbhQEelcRqeHPMFtxw6AwexY7hDwNs0KxDjRuF6gY3f9PnK/QAVtDNbkP6+NyGiYIUEri/jC3wTrRxEW1AY7TxCgsFggw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHQbGxcH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TA8/VGB9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3342A1F000E9;
-	Tue, 16 Jun 2026 17:23:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHQbGxcH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00251F000E9;
+	Tue, 16 Jun 2026 17:23:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630590;
-	bh=ZmZ2aUJSuJeUBfAhSpPSHAbmcutHrNmJiFzu2tmMgQs=;
+	s=korg; t=1781630594;
+	bh=/O1nIiXq7m8eECmpSTDRR13dzuN4VnLwVSmn6mFTqxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TA8/VGB9d6dnm62jT1zYiAaZ2+UfXeZQhxIuGRIHO5TswEnXse6A5rE7+L8K5v6/C
-	 X/xSCTtkpXHPlNQG25w6nLtNVZCCITqs0vI0X18Q0znLvKaSfwwRErFF5151YlBt71
-	 tLLr2NOG8aOimWxUDv4KTKxPd83jhI39lg00vLTg=
+	b=NHQbGxcH2IgVyXBppX6nPUTQFRcrT0ZrfVrSJDX6HWhTzOWe/GTBpAcN/TVk4RmrE
+	 DOUaF9aH8FRGPqIwh/e//5SADyi0Sgnk0nsYY1dHdPcH7vI6FXDTUzobF5bm5WCI6x
+	 MuEzDa7WNkPY8Tp6yFwdV3nnfs0nUWPwXZbh2JtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Paul Chaignon <paul.chaignon@gmail.com>,
 	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/522] Revert "selftests/bpf: Add tests for _opts variants of bpf_*_get_fd_by_id()"
-Date: Tue, 16 Jun 2026 20:23:24 +0530
-Message-ID: <20260616145128.451168149@linuxfoundation.org>
+Subject: [PATCH 6.1 058/522] selftests/bpf: Add read_build_id function
+Date: Tue, 16 Jun 2026 20:23:25 +0530
+Message-ID: <20260616145128.496758161@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,170 +53,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-This reverts commit 45108a7b4866 ("selftests/bpf: Add tests for _opts
-variants of bpf_*_get_fd_by_id()"). As explained in the previous patch,
-it introduces a new selftest for a feature that doesn't exist in 6.1. It
-was backported as a stable-dep of a1914d146622 ("selftests/bpf:
-Workaround strict bpf_lsm return value check"), also reverted in the
-previous patch.
+[ Upstream commit 88dc8b3605b38a440fba45edcc53a6c7a98eee3b ]
 
+Adding read_build_id function that parses out build id from
+specified binary.
+
+It will replace extract_build_id and also be used in following
+changes.
+
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20230331093157.1749137-3-jolsa@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: be4e85369e5a ("selftests/bpf: Replace extract_build_id with read_build_id")
 Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
 Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/DENYLIST.s390x    |  1 -
- .../bpf/prog_tests/libbpf_get_fd_by_id_opts.c | 87 -------------------
- .../bpf/progs/test_libbpf_get_fd_by_id_opts.c | 36 --------
- 3 files changed, 124 deletions(-)
- delete mode 100644 tools/testing/selftests/bpf/prog_tests/libbpf_get_fd_by_id_opts.c
- delete mode 100644 tools/testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c
+ tools/testing/selftests/bpf/trace_helpers.c | 82 +++++++++++++++++++++
+ tools/testing/selftests/bpf/trace_helpers.h |  5 ++
+ 2 files changed, 87 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/DENYLIST.s390x b/tools/testing/selftests/bpf/DENYLIST.s390x
-index beef1232a47aeb..0fb03b8047d535 100644
---- a/tools/testing/selftests/bpf/DENYLIST.s390x
-+++ b/tools/testing/selftests/bpf/DENYLIST.s390x
-@@ -76,4 +76,3 @@ lookup_key                               # JIT does not support calling kernel f
- verify_pkcs7_sig                         # JIT does not support calling kernel function                                (kfunc)
- kfunc_dynptr_param                       # JIT does not support calling kernel function                                (kfunc)
- deny_namespace                           # failed to attach: ERROR: strerror_r(-524)=22                                (trampoline)
--libbpf_get_fd_by_id_opts                 # failed to attach: ERROR: strerror_r(-524)=22                                (trampoline)
-diff --git a/tools/testing/selftests/bpf/prog_tests/libbpf_get_fd_by_id_opts.c b/tools/testing/selftests/bpf/prog_tests/libbpf_get_fd_by_id_opts.c
-deleted file mode 100644
-index 25e5dfa9c315ce..00000000000000
---- a/tools/testing/selftests/bpf/prog_tests/libbpf_get_fd_by_id_opts.c
-+++ /dev/null
-@@ -1,87 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--
--/*
-- * Copyright (C) 2022 Huawei Technologies Duesseldorf GmbH
-- *
-- * Author: Roberto Sassu <roberto.sassu@huawei.com>
-- */
--
--#include <test_progs.h>
--
--#include "test_libbpf_get_fd_by_id_opts.skel.h"
--
--void test_libbpf_get_fd_by_id_opts(void)
--{
--	struct test_libbpf_get_fd_by_id_opts *skel;
--	struct bpf_map_info info_m = {};
--	__u32 len = sizeof(info_m), value;
--	int ret, zero = 0, fd = -1;
--	LIBBPF_OPTS(bpf_get_fd_by_id_opts, fd_opts_rdonly,
--		.open_flags = BPF_F_RDONLY,
--	);
--
--	skel = test_libbpf_get_fd_by_id_opts__open_and_load();
--	if (!ASSERT_OK_PTR(skel,
--			   "test_libbpf_get_fd_by_id_opts__open_and_load"))
--		return;
--
--	ret = test_libbpf_get_fd_by_id_opts__attach(skel);
--	if (!ASSERT_OK(ret, "test_libbpf_get_fd_by_id_opts__attach"))
--		goto close_prog;
--
--	ret = bpf_obj_get_info_by_fd(bpf_map__fd(skel->maps.data_input),
--				     &info_m, &len);
--	if (!ASSERT_OK(ret, "bpf_obj_get_info_by_fd"))
--		goto close_prog;
--
--	fd = bpf_map_get_fd_by_id(info_m.id);
--	if (!ASSERT_LT(fd, 0, "bpf_map_get_fd_by_id"))
--		goto close_prog;
--
--	fd = bpf_map_get_fd_by_id_opts(info_m.id, NULL);
--	if (!ASSERT_LT(fd, 0, "bpf_map_get_fd_by_id_opts"))
--		goto close_prog;
--
--	fd = bpf_map_get_fd_by_id_opts(info_m.id, &fd_opts_rdonly);
--	if (!ASSERT_GE(fd, 0, "bpf_map_get_fd_by_id_opts"))
--		goto close_prog;
--
--	/* Map lookup should work with read-only fd. */
--	ret = bpf_map_lookup_elem(fd, &zero, &value);
--	if (!ASSERT_OK(ret, "bpf_map_lookup_elem"))
--		goto close_prog;
--
--	if (!ASSERT_EQ(value, 0, "map value mismatch"))
--		goto close_prog;
--
--	/* Map update should not work with read-only fd. */
--	ret = bpf_map_update_elem(fd, &zero, &len, BPF_ANY);
--	if (!ASSERT_LT(ret, 0, "bpf_map_update_elem"))
--		goto close_prog;
--
--	/* Map update should work with read-write fd. */
--	ret = bpf_map_update_elem(bpf_map__fd(skel->maps.data_input), &zero,
--				  &len, BPF_ANY);
--	if (!ASSERT_OK(ret, "bpf_map_update_elem"))
--		goto close_prog;
--
--	/* Prog get fd with opts set should not work (no kernel support). */
--	ret = bpf_prog_get_fd_by_id_opts(0, &fd_opts_rdonly);
--	if (!ASSERT_EQ(ret, -EINVAL, "bpf_prog_get_fd_by_id_opts"))
--		goto close_prog;
--
--	/* Link get fd with opts set should not work (no kernel support). */
--	ret = bpf_link_get_fd_by_id_opts(0, &fd_opts_rdonly);
--	if (!ASSERT_EQ(ret, -EINVAL, "bpf_link_get_fd_by_id_opts"))
--		goto close_prog;
--
--	/* BTF get fd with opts set should not work (no kernel support). */
--	ret = bpf_btf_get_fd_by_id_opts(0, &fd_opts_rdonly);
--	ASSERT_EQ(ret, -EINVAL, "bpf_btf_get_fd_by_id_opts");
--
--close_prog:
--	if (fd >= 0)
--		close(fd);
--
--	test_libbpf_get_fd_by_id_opts__destroy(skel);
--}
-diff --git a/tools/testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c b/tools/testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c
-deleted file mode 100644
-index f5ac5f3e89196f..00000000000000
---- a/tools/testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c
-+++ /dev/null
-@@ -1,36 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--
--/*
-- * Copyright (C) 2022 Huawei Technologies Duesseldorf GmbH
-- *
-- * Author: Roberto Sassu <roberto.sassu@huawei.com>
-- */
--
--#include "vmlinux.h"
--#include <errno.h>
--#include <bpf/bpf_helpers.h>
--#include <bpf/bpf_tracing.h>
--
--/* From include/linux/mm.h. */
--#define FMODE_WRITE	0x2
--
--struct {
--	__uint(type, BPF_MAP_TYPE_ARRAY);
--	__uint(max_entries, 1);
--	__type(key, __u32);
--	__type(value, __u32);
--} data_input SEC(".maps");
--
--char _license[] SEC("license") = "GPL";
--
--SEC("lsm/bpf_map")
--int BPF_PROG(check_access, struct bpf_map *map, fmode_t fmode)
--{
--	if (map != (struct bpf_map *)&data_input)
--		return 0;
--
--	if (fmode & FMODE_WRITE)
--		return -EACCES;
--
--	return 0;
--}
+diff --git a/tools/testing/selftests/bpf/trace_helpers.c b/tools/testing/selftests/bpf/trace_helpers.c
+index 9c4be2cdb21a02..afc33ba36ccc6e 100644
+--- a/tools/testing/selftests/bpf/trace_helpers.c
++++ b/tools/testing/selftests/bpf/trace_helpers.c
+@@ -11,6 +11,9 @@
+ #include <linux/perf_event.h>
+ #include <sys/mman.h>
+ #include "trace_helpers.h"
++#include <linux/limits.h>
++#include <libelf.h>
++#include <gelf.h>
+ 
+ #define DEBUGFS "/sys/kernel/debug/tracing/"
+ 
+@@ -224,3 +227,82 @@ ssize_t get_rel_offset(uintptr_t addr)
+ 	fclose(f);
+ 	return -EINVAL;
+ }
++
++static int
++parse_build_id_buf(const void *note_start, Elf32_Word note_size, char *build_id)
++{
++	Elf32_Word note_offs = 0;
++
++	while (note_offs + sizeof(Elf32_Nhdr) < note_size) {
++		Elf32_Nhdr *nhdr = (Elf32_Nhdr *)(note_start + note_offs);
++
++		if (nhdr->n_type == 3 && nhdr->n_namesz == sizeof("GNU") &&
++		    !strcmp((char *)(nhdr + 1), "GNU") && nhdr->n_descsz > 0 &&
++		    nhdr->n_descsz <= BPF_BUILD_ID_SIZE) {
++			memcpy(build_id, note_start + note_offs +
++			       ALIGN(sizeof("GNU"), 4) + sizeof(Elf32_Nhdr), nhdr->n_descsz);
++			memset(build_id + nhdr->n_descsz, 0, BPF_BUILD_ID_SIZE - nhdr->n_descsz);
++			return (int) nhdr->n_descsz;
++		}
++
++		note_offs = note_offs + sizeof(Elf32_Nhdr) +
++			   ALIGN(nhdr->n_namesz, 4) + ALIGN(nhdr->n_descsz, 4);
++	}
++
++	return -ENOENT;
++}
++
++/* Reads binary from *path* file and returns it in the *build_id* buffer
++ * with *size* which is expected to be at least BPF_BUILD_ID_SIZE bytes.
++ * Returns size of build id on success. On error the error value is
++ * returned.
++ */
++int read_build_id(const char *path, char *build_id, size_t size)
++{
++	int fd, err = -EINVAL;
++	Elf *elf = NULL;
++	GElf_Ehdr ehdr;
++	size_t max, i;
++
++	if (size < BPF_BUILD_ID_SIZE)
++		return -EINVAL;
++
++	fd = open(path, O_RDONLY | O_CLOEXEC);
++	if (fd < 0)
++		return -errno;
++
++	(void)elf_version(EV_CURRENT);
++
++	elf = elf_begin(fd, ELF_C_READ_MMAP, NULL);
++	if (!elf)
++		goto out;
++	if (elf_kind(elf) != ELF_K_ELF)
++		goto out;
++	if (!gelf_getehdr(elf, &ehdr))
++		goto out;
++
++	for (i = 0; i < ehdr.e_phnum; i++) {
++		GElf_Phdr mem, *phdr;
++		char *data;
++
++		phdr = gelf_getphdr(elf, i, &mem);
++		if (!phdr)
++			goto out;
++		if (phdr->p_type != PT_NOTE)
++			continue;
++		data = elf_rawfile(elf, &max);
++		if (!data)
++			goto out;
++		if (phdr->p_offset + phdr->p_memsz > max)
++			goto out;
++		err = parse_build_id_buf(data + phdr->p_offset, phdr->p_memsz, build_id);
++		if (err > 0)
++			break;
++	}
++
++out:
++	if (elf)
++		elf_end(elf);
++	close(fd);
++	return err;
++}
+diff --git a/tools/testing/selftests/bpf/trace_helpers.h b/tools/testing/selftests/bpf/trace_helpers.h
+index 238a9c98cde27f..709871f3285256 100644
+--- a/tools/testing/selftests/bpf/trace_helpers.h
++++ b/tools/testing/selftests/bpf/trace_helpers.h
+@@ -4,6 +4,9 @@
+ 
+ #include <bpf/libbpf.h>
+ 
++#define __ALIGN_MASK(x, mask)	(((x)+(mask))&~(mask))
++#define ALIGN(x, a)		__ALIGN_MASK(x, (typeof(x))(a)-1)
++
+ struct ksym {
+ 	long addr;
+ 	char *name;
+@@ -21,4 +24,6 @@ void read_trace_pipe(void);
+ ssize_t get_uprobe_offset(const void *addr);
+ ssize_t get_rel_offset(uintptr_t addr);
+ 
++int read_build_id(const char *path, char *build_id, size_t size);
++
+ #endif
 -- 
 2.53.0
 
