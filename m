@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008373DA5A8;
-	Tue, 16 Jun 2026 19:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8613DA5A8;
+	Tue, 16 Jun 2026 19:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636711; cv=none; b=jJ+ax9xu+oPKXnMjpUKqH+Yh3qZIyEQmq98LVwOYgqXFgW8x1H3mBpChvzhQXeIHOpkxttexnTuuMMUUJ7+w3XvHtQD3TC1MUbn55n7ZUHnt+PesfTVMIxeCO/j5LWrRshgU/weMXtjAbkcp7J73Uywc2UeLU29gC5WRXFxuA2U=
+	t=1781636716; cv=none; b=q2TbgjfI1nlToYpS4IwSA7dA3f9y1AX/2c9D4uM0AgqmJ8waGsArgEAhsrLHAElTUWEaONY8IFZ4vTuqqpU9m7XpWlfEDqTM6CtR98bO8zq4nLDkbQ8e5kxqS9d7pt7ucVhuL+r1QSOHbQgEQNKnS2ivYFzOL0OlCuKmqVo6fRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636711; c=relaxed/simple;
-	bh=tE1jMWTkkNdKZcYRP1Z2jPLWy1m2TjkaIdnceIFmOfs=;
+	s=arc-20240116; t=1781636716; c=relaxed/simple;
+	bh=cOKmtjqLETH7CFIeTranu1CrqlIcA1G3tVHVTK31U2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dquaakdax6bPpCgpc9v5rdoacKY/fDU+11KlCR25Mk696UIy3ICVXW/nWg0yD1lpB2TLOYo+FFcxzGSAq/e4MPRg3whN6Vten5Ru7aV8zlc/gltuyc6KLfRTj2zskv9PPgkQVCSihM8ACda7hmf7tuYlaLGlssb0n5pX6UKoKME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRCnbjCj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eqt0D+zueoMKXnu141a5xRDOd1GmY5hkbhYoxp0M+BpuBNOrYH1rTpFMADEL7h/p5eGoRbbr32hfC9h09HLZHFAw2mZ8gMSgIJL0kE1aCJ0kax/z5h/Xp0lvwdCs1R26CIqoN6xp8Y6usQA1afSJ9mSV/370obuAG6U7faEfTRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAJpB2Le; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRCnbjCj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08EC81F000E9;
-	Tue, 16 Jun 2026 19:05:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAJpB2Le"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F2A81F000E9;
+	Tue, 16 Jun 2026 19:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636709;
-	bh=g2nDv6+/FxUVRnsBvKZnsiU512YVzdOrX1CteChstyc=;
+	s=korg; t=1781636715;
+	bh=7C1IT9mdaG3Gk064FTpq1V4QHb+InuQ3JGGKj2/+nIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eRCnbjCjsc0sEcglM2l5TS+qUkqHD1YCiiH4s/QJsO8M1CcI61K2UhAMx6plDsFgf
-	 mHn2blzFmDD+XOCrQoIAbD7/xl2KUDWZtUuOSRuGYDaSgX7wQq9xdmiSFowUHRO4o7
-	 NYLzM4aXEzVMzxS8YYmVzPGcudQFj7D8zbMSV6og=
+	b=fAJpB2Le2/EJjUE8LIxB0lwnu6duJZcQZQB6NZTN6ft9Qh5EoHX0+G8qCx9563Bqa
+	 Tfo7HM81DqG7AEZ6xJOdYiuHnL2CZyE9MW4FrNZqIjYMjwUAnusGMad8BYrICcktlq
+	 bujfPaSZjJ6y4+mEmfGISpggC914Nsl9SSOT28gU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 248/342] ceph: only d_add() negative dentries when they are unhashed
-Date: Tue, 16 Jun 2026 20:29:04 +0530
-Message-ID: <20260616145059.781630544@linuxfoundation.org>
+Subject: [PATCH 5.10 284/342] Bluetooth: Consolidate code around sk_alloc into a helper function
+Date: Tue, 16 Jun 2026 20:29:40 +0530
+Message-ID: <20260616145101.637450836@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -52,110 +50,201 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 803447f93d75ab6e40c85e6d12b5630d281d70d6 ]
+[ Upstream commit 6bfa273e533d7b25eee3d74e28a7fe8e6a8e7a93 ]
 
-Ceph can call d_add(dentry, NULL) on a negative dentry that is already
-present in the primary dcache hash.
+This consolidates code around sk_alloc into bt_sock_alloc which does
+take care of common initialization.
 
-In the current VFS that is not safe.  d_add() goes through __d_add()
-to __d_rehash(), which unconditionally reinserts dentry->d_hash into
-the hlist_bl bucket.  If the dentry is already hashed, reinserting the
-same node can corrupt the bucket, including creating a self-loop.
-Once that happens, __d_lookup() can spin forever in the hlist_bl walk,
-typically looping only on the d_name.hash mismatch check and
-eventually triggering RCU stall reports like this one:
-
- rcu: INFO: rcu_sched self-detected stall on CPU
- rcu:         87-....: (2100 ticks this GP) idle=3a4c/1/0x4000000000000000 softirq=25003319/25003319 fqs=829
- rcu:         (t=2101 jiffies g=79058445 q=698988 ncpus=192)
- CPU: 87 UID: 2952868916 PID: 3933303 Comm: php-cgi8.3 Not tainted 6.18.17-i1-amd #950 NONE
- Hardware name: Dell Inc. PowerEdge R7615/0G9DHV, BIOS 1.6.6 09/22/2023
- RIP: 0010:__d_lookup+0x46/0xb0
- Code: c1 e8 07 48 8d 04 c2 48 8b 00 49 89 fc 49 89 f5 48 89 c3 48 83 e3 fe 48 83 f8 01 77 0f eb 2d 0f 1f 44 00 00 48 8b 1b 48 85 db <74> 20 39 6b 18 75 f3 48 8d 7b 78 e8 ba 85 d0 00 4c 39 63 10 74 1f
- RSP: 0018:ff745a70c8253898 EFLAGS: 00000282
- RAX: ff26e470054cb208 RBX: ff26e470054cb208 RCX: 000000006e958966
- RDX: ff26e48267340000 RSI: ff745a70c82539b0 RDI: ff26e458f74655c0
- RBP: 000000006e958966 R08: 0000000000000180 R09: 9cd08d909b919a89
- R10: ff26e458f74655c0 R11: 0000000000000000 R12: ff26e458f74655c0
- R13: ff745a70c82539b0 R14: d0d0d0d0d0d0d0d0 R15: 2f2f2f2f2f2f2f2f
- FS:  00007f5770896980(0000) GS:ff26e482c5d88000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007f5764de50c0 CR3: 000000a72abb5001 CR4: 0000000000771ef0
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  lookup_fast+0x9f/0x100
-  walk_component+0x1f/0x150
-  link_path_walk+0x20e/0x3d0
-  path_lookupat+0x68/0x180
-  filename_lookup+0xdc/0x1e0
-  vfs_statx+0x6c/0x140
-  vfs_fstatat+0x67/0xa0
-  __do_sys_newfstatat+0x24/0x60
-  do_syscall_64+0x6a/0x230
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-This is reachable with reused cached negative dentries.  A Ceph lookup
-or atomic_open can be handed a negative dentry that is already hashed,
-and fs/ceph/dir.c then hits one of two paths that incorrectly assume
-"negative" also means "unhashed":
-
-  - ceph_finish_lookup():
-      MDS reply is -ENOENT with no trace
-      -> d_add(dentry, NULL)
-
-  - ceph_lookup():
-      local ENOENT fast path for a complete directory with shared caps
-      -> d_add(dentry, NULL)
-
-Both paths can therefore re-add an already-hashed negative dentry.
-
-Ceph already uses the correct pattern elsewhere: ceph_fill_trace() only
-calls d_add(dn, NULL) for a negative null-dentry reply when d_unhashed(dn)
-is true.
-
-Fix both fs/ceph/dir.c sites the same way: only call d_add() for a
-negative dentry when it is actually unhashed.  If the negative dentry
-is already hashed, leave it in place and reuse it as-is.
-
-This preserves the existing behavior for unhashed dentries while
-avoiding d_hash list corruption for reused hashed negatives.
-
-Cc: stable@vger.kernel.org
-Fixes: 2817b000b02c ("ceph: directory operations")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-[ kept existing dout() debug call instead of upstream's doutc() form when adding the d_unhashed() guard around d_add() ]
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: e83f5e24da74 ("Bluetooth: serialize accept_q access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/dir.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/net/bluetooth/bluetooth.h |    2 ++
+ net/bluetooth/af_bluetooth.c      |   21 +++++++++++++++++++++
+ net/bluetooth/bnep/sock.c         |   10 +---------
+ net/bluetooth/hci_sock.c          |   10 ++--------
+ net/bluetooth/l2cap_sock.c        |   10 +---------
+ net/bluetooth/rfcomm/sock.c       |   13 +++----------
+ net/bluetooth/sco.c               |   10 +---------
+ 7 files changed, 31 insertions(+), 45 deletions(-)
 
---- a/fs/ceph/dir.c
-+++ b/fs/ceph/dir.c
-@@ -719,7 +719,8 @@ struct dentry *ceph_finish_lookup(struct
- 				d_drop(dentry);
- 				err = -ENOENT;
- 			} else {
--				d_add(dentry, NULL);
-+				if (d_unhashed(dentry))
-+					d_add(dentry, NULL);
- 			}
- 		}
- 	}
-@@ -775,7 +776,8 @@ static struct dentry *ceph_lookup(struct
- 			__ceph_touch_fmode(ci, mdsc, CEPH_FILE_MODE_RD);
- 			spin_unlock(&ci->i_ceph_lock);
- 			dout(" dir %p complete, -ENOENT\n", dir);
--			d_add(dentry, NULL);
-+			if (d_unhashed(dentry))
-+				d_add(dentry, NULL);
- 			di->lease_shared_gen = atomic_read(&ci->i_shared_gen);
- 			return NULL;
- 		}
+--- a/include/net/bluetooth/bluetooth.h
++++ b/include/net/bluetooth/bluetooth.h
+@@ -314,6 +314,8 @@ int  bt_sock_register(int proto, const s
+ void bt_sock_unregister(int proto);
+ void bt_sock_link(struct bt_sock_list *l, struct sock *s);
+ void bt_sock_unlink(struct bt_sock_list *l, struct sock *s);
++struct sock *bt_sock_alloc(struct net *net, struct socket *sock,
++			   struct proto *prot, int proto, gfp_t prio, int kern);
+ int  bt_sock_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 		     int flags);
+ int  bt_sock_stream_recvmsg(struct socket *sock, struct msghdr *msg,
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -138,6 +138,27 @@ static int bt_sock_create(struct net *ne
+ 	return err;
+ }
+ 
++struct sock *bt_sock_alloc(struct net *net, struct socket *sock,
++			   struct proto *prot, int proto, gfp_t prio, int kern)
++{
++	struct sock *sk;
++
++	sk = sk_alloc(net, PF_BLUETOOTH, prio, prot, kern);
++	if (!sk)
++		return NULL;
++
++	sock_init_data(sock, sk);
++	INIT_LIST_HEAD(&bt_sk(sk)->accept_q);
++
++	sock_reset_flag(sk, SOCK_ZAPPED);
++
++	sk->sk_protocol = proto;
++	sk->sk_state    = BT_OPEN;
++
++	return sk;
++}
++EXPORT_SYMBOL(bt_sock_alloc);
++
+ void bt_sock_link(struct bt_sock_list *l, struct sock *sk)
+ {
+ 	write_lock(&l->lock);
+--- a/net/bluetooth/bnep/sock.c
++++ b/net/bluetooth/bnep/sock.c
+@@ -204,21 +204,13 @@ static int bnep_sock_create(struct net *
+ 	if (sock->type != SOCK_RAW)
+ 		return -ESOCKTNOSUPPORT;
+ 
+-	sk = sk_alloc(net, PF_BLUETOOTH, GFP_ATOMIC, &bnep_proto, kern);
++	sk = bt_sock_alloc(net, sock, &bnep_proto, protocol, GFP_ATOMIC, kern);
+ 	if (!sk)
+ 		return -ENOMEM;
+ 
+-	sock_init_data(sock, sk);
+-
+ 	sock->ops = &bnep_sock_ops;
+-
+ 	sock->state = SS_UNCONNECTED;
+ 
+-	sock_reset_flag(sk, SOCK_ZAPPED);
+-
+-	sk->sk_protocol = protocol;
+-	sk->sk_state	= BT_OPEN;
+-
+ 	bt_sock_link(&bnep_sk_list, sk);
+ 	return 0;
+ }
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -2091,18 +2091,12 @@ static int hci_sock_create(struct net *n
+ 
+ 	sock->ops = &hci_sock_ops;
+ 
+-	sk = sk_alloc(net, PF_BLUETOOTH, GFP_ATOMIC, &hci_sk_proto, kern);
++	sk = bt_sock_alloc(net, sock, &hci_sk_proto, protocol, GFP_ATOMIC,
++			   kern);
+ 	if (!sk)
+ 		return -ENOMEM;
+ 
+-	sock_init_data(sock, sk);
+-
+-	sock_reset_flag(sk, SOCK_ZAPPED);
+-
+-	sk->sk_protocol = protocol;
+-
+ 	sock->state = SS_UNCONNECTED;
+-	sk->sk_state = BT_OPEN;
+ 	sk->sk_destruct = hci_sock_destruct;
+ 
+ 	bt_sock_link(&hci_sk_list, sk);
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1901,21 +1901,13 @@ static struct sock *l2cap_sock_alloc(str
+ 	struct sock *sk;
+ 	struct l2cap_chan *chan;
+ 
+-	sk = sk_alloc(net, PF_BLUETOOTH, prio, &l2cap_proto, kern);
++	sk = bt_sock_alloc(net, sock, &l2cap_proto, proto, prio, kern);
+ 	if (!sk)
+ 		return NULL;
+ 
+-	sock_init_data(sock, sk);
+-	INIT_LIST_HEAD(&bt_sk(sk)->accept_q);
+-
+ 	sk->sk_destruct = l2cap_sock_destruct;
+ 	sk->sk_sndtimeo = L2CAP_CONN_TIMEOUT;
+ 
+-	sock_reset_flag(sk, SOCK_ZAPPED);
+-
+-	sk->sk_protocol = proto;
+-	sk->sk_state = BT_OPEN;
+-
+ 	chan = l2cap_chan_create();
+ 	if (!chan) {
+ 		sk_free(sk);
+--- a/net/bluetooth/rfcomm/sock.c
++++ b/net/bluetooth/rfcomm/sock.c
+@@ -280,18 +280,16 @@ static struct proto rfcomm_proto = {
+ 	.obj_size	= sizeof(struct rfcomm_pinfo)
+ };
+ 
+-static struct sock *rfcomm_sock_alloc(struct net *net, struct socket *sock, int proto, gfp_t prio, int kern)
++static struct sock *rfcomm_sock_alloc(struct net *net, struct socket *sock,
++				      int proto, gfp_t prio, int kern)
+ {
+ 	struct rfcomm_dlc *d;
+ 	struct sock *sk;
+ 
+-	sk = sk_alloc(net, PF_BLUETOOTH, prio, &rfcomm_proto, kern);
++	sk = bt_sock_alloc(net, sock, &rfcomm_proto, proto, prio, kern);
+ 	if (!sk)
+ 		return NULL;
+ 
+-	sock_init_data(sock, sk);
+-	INIT_LIST_HEAD(&bt_sk(sk)->accept_q);
+-
+ 	d = rfcomm_dlc_alloc(prio);
+ 	if (!d) {
+ 		sk_free(sk);
+@@ -310,11 +308,6 @@ static struct sock *rfcomm_sock_alloc(st
+ 	sk->sk_sndbuf = RFCOMM_MAX_CREDITS * RFCOMM_DEFAULT_MTU * 10;
+ 	sk->sk_rcvbuf = RFCOMM_MAX_CREDITS * RFCOMM_DEFAULT_MTU * 10;
+ 
+-	sock_reset_flag(sk, SOCK_ZAPPED);
+-
+-	sk->sk_protocol = proto;
+-	sk->sk_state    = BT_OPEN;
+-
+ 	bt_sock_link(&rfcomm_sk_list, sk);
+ 
+ 	BT_DBG("sk %p", sk);
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -491,21 +491,13 @@ static struct sock *sco_sock_alloc(struc
+ {
+ 	struct sock *sk;
+ 
+-	sk = sk_alloc(net, PF_BLUETOOTH, prio, &sco_proto, kern);
++	sk = bt_sock_alloc(net, sock, &sco_proto, proto, prio, kern);
+ 	if (!sk)
+ 		return NULL;
+ 
+-	sock_init_data(sock, sk);
+-	INIT_LIST_HEAD(&bt_sk(sk)->accept_q);
+-
+ 	sk->sk_destruct = sco_sock_destruct;
+ 	sk->sk_sndtimeo = SCO_CONN_TIMEOUT;
+ 
+-	sock_reset_flag(sk, SOCK_ZAPPED);
+-
+-	sk->sk_protocol = proto;
+-	sk->sk_state    = BT_OPEN;
+-
+ 	sco_pi(sk)->setting = BT_VOICE_CVSD_16BIT;
+ 
+ 	bt_sock_link(&sco_sk_list, sk);
 
 
