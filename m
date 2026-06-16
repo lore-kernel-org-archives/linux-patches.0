@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30DE47B43E;
-	Tue, 16 Jun 2026 16:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D6533AD9B;
+	Tue, 16 Jun 2026 16:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629100; cv=none; b=YLdcT8cBwpXxgXqEATEPAoedOzxLKHjp7iKF6e8xr6k9+wK2+XN/MlrwBJ9+dAK7i3FGP/AvLEGzvScHELP9yhkBX1pph/NN0DYuGSWrFjPbmqgrJ6alV1IK0sv0cjrusHojXDbDpaioERcpVyFtKT/EQLt7NnWyMbi2GSUsphA=
+	t=1781629106; cv=none; b=c+grWkoaIeelCOV37BczhnaGMV+K1h4BJcYduydvJNbYEg9ml5KoDpsq6UFjWmbAwvH9mioMeVB5BFmr+SLOuhkqKBSRm+JyB9rc6YAkcxIRSeroebAW9JtTx4HZich7x3juVgFGQ2HIKgdfKX3WLe656yyG4yHxHmjz3o19UnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629100; c=relaxed/simple;
-	bh=N+xWc0Xl/Y+0O/sQZZH+bViF7u8dFqZEm/fxsd5+c2c=;
+	s=arc-20240116; t=1781629106; c=relaxed/simple;
+	bh=j2Esxb0GJkg990F5mMfvOsxfS1oy0DgqujgQiBRsnWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sZEQSHJwmSbkpcSzqszkU7fHHRe/JQo9sPZ5FN2of3aUSPtIelRrFyvwattxckZFyPLSaKn79Gd23fLEwnPp1CrdP2hRp3Gwu2q8NvpCxhTfrJQPeayqUt3Y6cJ6yOeaflSrMLHXFgnLYgr4VUNWOdlKlQf+ws3BLRY+cx3lOzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6ebP4Bz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KSjrH7cnF++V6MiO3cX7E8nl4lY9zj2K8+3dmZ5X7BZXk1o61atauql7DXBPoKfp/FRQdfJLSD0urp19SB8jltgOd9lfamwYz13dWd4nns6OqX/spGxRDLIuuKpNpzu/Cb9SBWh8gEZDdo9MnMg34R79WXqj9XrbtJO6vP5qFsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1MxY0bvr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6ebP4Bz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0471F000E9;
-	Tue, 16 Jun 2026 16:58:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1MxY0bvr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 308621F000E9;
+	Tue, 16 Jun 2026 16:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629099;
-	bh=pUT4jeHynNiQFGlQXSTJFln1fc0MS5UN5LMOF3XKCNQ=;
+	s=korg; t=1781629105;
+	bh=IeEXgRFqVFPm8kT0hg+U3KvSNqEv57ofmrmIGbReSoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h6ebP4Bz4DOoGjo/kQHZywGuDIo4+7p+LYfR0vBMrxlWGUTdOSdYMalJP829/G2W3
-	 SWK/o1IrS1RcO5qJf+fYol89ICqm2jB1f0P3+I24SPvkfWn5zfVVP16JAmDgwuiLUd
-	 wXYOIg7OIlT7y5fh5FiNmDgAIBMgX3/8Epm6S9D0=
+	b=1MxY0bvrafdsv17vC3zP+GOBVG9NHd0qaRxMR83jVy8W+JsSjhxT/YNhfky1v3pX8
+	 xD2uFiZj4LwShpbP/KM5AMY82iMYoEzG77O3VqEGnMr6MJ/8dYYYME1tO1M94BGe5W
+	 TpUURHNgT8kmpjiUGn4+ZzGxCuciZvnbqYqAkKGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>
-Subject: [PATCH 6.6 189/452] serial: zs: Fix bootconsole handover lockup
-Date: Tue, 16 Jun 2026 20:26:56 +0530
-Message-ID: <20260616145127.763061490@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>
+Subject: [PATCH 6.6 180/452] serial: altera_jtaguart: handle uart_add_one_port() failures
+Date: Tue, 16 Jun 2026 20:26:47 +0530
+Message-ID: <20260616145127.316664532@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -49,100 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 6c05cf72e13314ce9b770b5951695dc5a2152920 upstream.
+commit ea66be25f0e934f49d24cd0c5845d13cdba3520b upstream.
 
-Calling zs_reset() in the course of setting up the serial device causes
-line parameters to be reset and the transmitter disabled.  We've been
-lucky in that no message is usually produced to the kernel log between
-this call and the later call to uart_set_options() in the course of
-console setup done by zs_serial_console_init(), or the system would hang
-as the console output handler in the firmware tried to access a port the
-transmitter of which has been disabled and line parameters messed up.
+altera_jtaguart_probe() maps the register window before registering the
+UART port, but it ignores failures from uart_add_one_port(). If port
+registration fails, probe still returns success and the mapping remains
+live until a later remove path that is not part of probe failure cleanup.
 
-This will change with the next change to the driver, so fix zs_reset()
-such that line parameters are set for 9600n8 console operation as with
-the system firmware and the transmitter re-enabled after reset.  This
-also means zs_pm() serves no purpose anymore, so drop it.
+Return the uart_add_one_port() error and unmap the register window on
+that failure path.
 
-Fixes: 8b4a40809e53 ("zs: move to the serial subsystem")
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Cc: stable@vger.kernel.org # v2.6.23+
-Link: https://patch.msgid.link/alpine.DEB.2.21.2605062308040.46195@angie.orcam.me.uk
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
+
+Fixes: 5bcd601049c6 ("serial: Add driver for the Altera JTAG UART")
+Cc: stable <stable@kernel.org>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260512065837.79528-1-mhun512@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/zs.c |   29 ++++++++---------------------
- 1 file changed, 8 insertions(+), 21 deletions(-)
+ drivers/tty/serial/altera_jtaguart.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/zs.c
-+++ b/drivers/tty/serial/zs.c
-@@ -105,18 +105,24 @@ struct zs_parms {
+--- a/drivers/tty/serial/altera_jtaguart.c
++++ b/drivers/tty/serial/altera_jtaguart.c
+@@ -381,6 +381,7 @@ static int altera_jtaguart_probe(struct
+ 	struct resource *res_mem;
+ 	int i = pdev->id;
+ 	int irq;
++	int ret;
  
- static struct zs_scc zs_sccs[ZS_NUM_SCCS];
+ 	/* -1 emphasizes that the platform must have one port, no .N suffix */
+ 	if (i == -1)
+@@ -420,7 +421,11 @@ static int altera_jtaguart_probe(struct
+ 	port->flags = UPF_BOOT_AUTOCONF;
+ 	port->dev = &pdev->dev;
  
-+/*
-+ * Set parameters in WR5, WR12, WR13 such as not to interfere
-+ * with the initial PROM-based console.  Otherwise any output
-+ * produced before the console handover would cause the system
-+ * firmware to hang (TxENAB) or produce rubbish (Tx8, B9600).
-+ */
- static u8 zs_init_regs[ZS_NUM_REGS] __initdata = {
- 	0,				/* write 0 */
- 	PAR_SPEC,			/* write 1 */
- 	0,				/* write 2 */
- 	0,				/* write 3 */
- 	X16CLK | SB1,			/* write 4 */
--	0,				/* write 5 */
-+	Tx8 | TxENAB,			/* write 5 */
- 	0, 0, 0,			/* write 6, 7, 8 */
- 	MIE | DLC | NV,			/* write 9 */
- 	NRZ,				/* write 10 */
- 	TCBR | RCBR,			/* write 11 */
--	0, 0,				/* BRG time constant, write 12 + 13 */
-+	0x16, 0x00,			/* BRG time constant, write 12 + 13 */
- 	BRSRC | BRENABL,		/* write 14 */
- 	0,				/* write 15 */
- };
-@@ -955,23 +961,6 @@ static void zs_set_termios(struct uart_p
- 	spin_unlock_irqrestore(&scc->zlock, flags);
+-	uart_add_one_port(&altera_jtaguart_driver, port);
++	ret = uart_add_one_port(&altera_jtaguart_driver, port);
++	if (ret) {
++		iounmap(port->membase);
++		return ret;
++	}
+ 
+ 	return 0;
  }
- 
--/*
-- * Hack alert!
-- * Required solely so that the initial PROM-based console
-- * works undisturbed in parallel with this one.
-- */
--static void zs_pm(struct uart_port *uport, unsigned int state,
--		  unsigned int oldstate)
--{
--	struct zs_port *zport = to_zport(uport);
--
--	if (state < 3)
--		zport->regs[5] |= TxENAB;
--	else
--		zport->regs[5] &= ~TxENAB;
--	write_zsreg(zport, R5, zport->regs[5]);
--}
--
- 
- static const char *zs_type(struct uart_port *uport)
- {
-@@ -1054,7 +1043,6 @@ static const struct uart_ops zs_ops = {
- 	.startup	= zs_startup,
- 	.shutdown	= zs_shutdown,
- 	.set_termios	= zs_set_termios,
--	.pm		= zs_pm,
- 	.type		= zs_type,
- 	.release_port	= zs_release_port,
- 	.request_port	= zs_request_port,
-@@ -1209,7 +1197,6 @@ static int __init zs_console_setup(struc
- 		return ret;
- 
- 	zs_reset(zport);
--	zs_pm(uport, 0, -1);
- 
- 	if (options)
- 		uart_parse_options(options, &baud, &parity, &bits, &flow);
 
 
