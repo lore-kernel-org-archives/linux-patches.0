@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F8138837F;
-	Tue, 16 Jun 2026 15:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 158CC357D14;
+	Tue, 16 Jun 2026 15:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624021; cv=none; b=AtHKsm/LNsUT1LIwJGpIfUgk8TM/Tl++/d0ziVL0PKA6kvHv7EWtxiJTQB0L3l3hUCFVoYPuAbZBbGW4JUY0Ut6iUNqaYRhOJzjeH4rng1OvBJGfuSZJYs5jsXOFcKnI/UJQRnFc/h5RnQFtrpvySoLhl7NnS9HVY+h6d4PF0bA=
+	t=1781624026; cv=none; b=iOebUNmTbfnGbBEdQBg+CqRaJK0tZTliitdGEMNUlXsybQiWjjW+mcSnUoyf0NZoAeIXqYkLziPnFVzQYdkZENR8JxUEKkJIRxdvHlrGt2DnMsM5eWVtX/sAsTVqDFOuxyLlVKGu8yscnb+fQhpsjkEmmDaqTfMzE1KgTnY/r9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624021; c=relaxed/simple;
-	bh=CjgPnMW71Q4gHGPWkjSva7yKrIoN0IKmg0dXowjQ1cU=;
+	s=arc-20240116; t=1781624026; c=relaxed/simple;
+	bh=3Wl7aw1NMhBSn+S0QfdHQ4jSCuj0jhyvxIr25ghK2SE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PkCvHidm0/FGS1t9/ykcJLtU3GJuKOBEtLtMhUVImuD6ZleliLkp8r8ZZ/XSYUA5QrG2NZnffWzTfo1ugYoE/Fj2K+fNikgguVf698sTmwCJVFDOyDKKGMYaKRA2pV12MjagrVh8mcAeTcaH0A+oFB4U/7DBGggSLuXrngyqpEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGmMH6h7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VSyZRWMmkYYrE1cS5LPaKwDipIs8vtu3nuSgiuq+v8fz9GgzaWpfvdWF1Gxi3GSj9KshjG6Lg4XcFkizXdMWxZJfagthM0FMMd6PVJNTd1GNdwZzFyFDv7eivcy5RI4NtzwXVIdIXKIk5qrfxAA/cdyRb/xR2lLzVK44z46dTMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4ZvDgqL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGmMH6h7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B5DF1F000E9;
-	Tue, 16 Jun 2026 15:33:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4ZvDgqL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2570C1F000E9;
+	Tue, 16 Jun 2026 15:33:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624020;
-	bh=X9BPs0/KkGn3pPKoqQc9QubUXcyH+bxpjzjIEG6VwSM=;
+	s=korg; t=1781624025;
+	bh=a9mnk0o5gOghuskrYkxkrLnfY/5lVOxbo64dMuSfa3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rGmMH6h752J2H7nnx/YoShLZxmLubFP4XYPNT0bcUh/Kwee/15wpmp4UH9V70PQNs
-	 wzOHFAECla9A9F/MpIho4P2km/gCV3njuwJyef/wLLZ3Ied7uYYULsCzMZ0XsefK/S
-	 /jI+yUqfzp2O0F4rsUbXbi0YJdt9T8PUTCNGMnYE=
+	b=k4ZvDgqLr46TfeeEXiiBSjAFCpHLN5/8aDPIjb/6THlLewoVrPtVk2phbq0sJO7eb
+	 FiUe+lqiJWyRk34tuKjI2j2dQL02oFpyYJ8fr6sGJaiJSUotfluq4Qv0MSd/h2iYJD
+	 MjqiTKzQhMPshANmrUgmGiO58AY7BpQxHnjqTGzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.0 257/378] pidfd: refuse access to tasks that have started exiting harder
-Date: Tue, 16 Jun 2026 20:28:08 +0530
-Message-ID: <20260616145123.649831527@linuxfoundation.org>
+	Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 7.0 258/378] s390: Remove GENERIC_LOCKBREAK Kconfig option
+Date: Tue, 16 Jun 2026 20:28:09 +0530
+Message-ID: <20260616145123.693127672@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -49,46 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 62c4d31d78294bd61cf3403626b789e854357177 upstream.
+commit 1f57f68c4dd101e5e8ffc9ffa6428f45bcdd776a upstream.
 
-The recent ptrace fix closed a hole where someone could rely on task->mm
-becoming NULL during do_exit() to bypass dumpability checks. This api
-here leans on on the very same check and so inherits the fix.
+s390 selects GENERIC_LOCKBREAK if PREEMPT is enabled. Reason is a historic
+18 years old commit [1] which fixed a compile error for PREEMPT enabled
+kernels. Back than only PREEMPT_NONE and PREEMPT_VOLUNTARY kernels were
+considered to be important for s390. PREEMPT should "just work".
 
-But there is no good reason to let it succeed at all once the target has
-entered do_exit(). PF_EXITING is set by exit_signals() at the very top
-of do_exit(), before exit_mm() and exit_files() run. Once we observe it,
-the task is committed to dying and exit_files() will release the fdtable
-shortly.
+However, since recently PREEMPT is always enabled [2], which also causes
+GENERIC_LOCKBREAK to be always enabled. For some workloads this leads to
+massive performance degradation; e.g. a simple kernel compile on machines
+with many CPUs may take up to four times longer.
 
-Fixes: 8649c322f75c ("pid: Implement pidfd_getfd syscall")
+To fix this just remove the GENERIC_LOCKBREAK from s390's Kconfig, since
+the compile error from 18 years ago does not exist anymore.
+
+[1] commit b6b40c532a36 ("[S390] Define GENERIC_LOCKBREAK.")
+[2] commit 7dadeaa6e851 ("sched: Further restrict the preemption modes")
+
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260518-obgleich-petersilie-2d77ccccf9b9@brauner
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Reported-by: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/pid.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/s390/Kconfig |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/kernel/pid.c
-+++ b/kernel/pid.c
-@@ -878,10 +878,12 @@ static struct file *__pidfd_fget(struct
- 	if (ret)
- 		return ERR_PTR(ret);
+--- a/arch/s390/Kconfig
++++ b/arch/s390/Kconfig
+@@ -29,9 +29,6 @@ config GENERIC_BUG
+ config GENERIC_BUG_RELATIVE_POINTERS
+ 	def_bool y
  
--	if (ptrace_may_access(task, PTRACE_MODE_ATTACH_REALCREDS))
--		file = fget_task(task, fd);
--	else
-+	if (!ptrace_may_access(task, PTRACE_MODE_ATTACH_REALCREDS))
- 		file = ERR_PTR(-EPERM);
-+	else if (task->flags & PF_EXITING)
-+		file = ERR_PTR(-ESRCH);
-+	else
-+		file = fget_task(task, fd);
- 
- 	up_read(&task->signal->exec_update_lock);
+-config GENERIC_LOCKBREAK
+-	def_bool y if PREEMPTION
+-
+ config AUDIT_ARCH
+ 	def_bool y
  
 
 
