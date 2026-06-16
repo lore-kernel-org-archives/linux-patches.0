@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF32A3DA7E1;
-	Tue, 16 Jun 2026 18:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C289F34FF79;
+	Tue, 16 Jun 2026 18:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634769; cv=none; b=ORgrUA/+lHWTwLNel1AdGMLvz14eHax6tByqf9wgRQ0chTJFLDK6WY8hRA1ZzCyMqrsKccLMnKVOhPfYsxOv0BfNl6H5M2ax9y8RB8PljtzuMH4fzJy1eGSgNYayoaeUMy0o9wAqQMhjrzjpF1PY/a9vhtwZQU+/XkG4roewCoM=
+	t=1781634774; cv=none; b=clH/2PABaha90/Xmg23MuvNsphSyIsaVK3X8AxUbiwOl8T9tIA6gx0kX1SDUlDXVSAd1UDi4XH9nevYbpGP0p6ujMmlSdgUvDuF/abbY8xWESFhfK7LaFQ7/tuQX5xb38lFEMKGyhsHXaAEd4xuZnUwLGKGQ2DEtufT96XidCDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634769; c=relaxed/simple;
-	bh=HrxoYq7FWAadK/+JbfNa621LhOfO7MDvpDei9zfi7WI=;
+	s=arc-20240116; t=1781634774; c=relaxed/simple;
+	bh=U7AsURxa5ZqxmcO1Gc6Lmx93jvKGAOQQ59vhcCbpXtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YXWF3ky0UPDL8GZLViOWbEtguijlI5dCfQoc2JO8lOLwu+LHkXSh315d5v8Gr/a/OpCMbklk6BitY/ILC8bxPhFM8Hf+ufEmZzzZ2ZWaK+72ZfgLAsMy3RPMqloBDnkdUk/ilvo5V58KjStqlPSW36tYBNcqnt9AxMAc1TEgKjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6f57STr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QcYh0AHOd4VydVJQu/NVJiP6ugGeNhQmLLaM6alQ83hYpBQ9meP2L2TICudjIccR8zZCIYgCUyDdVbMKI2MBMfNlTp7vgngICvAKHUAxZSx/6WW026oxskQdMdjszJTnmcqoWUaY1dNF+I/JUdndT0rG+QsS0pqv+eei29u1KE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKUsm6jm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6f57STr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A101F000E9;
-	Tue, 16 Jun 2026 18:32:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKUsm6jm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874DA1F000E9;
+	Tue, 16 Jun 2026 18:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634767;
-	bh=53hrTjHJR2zEmroBOg26MjFpXVY3fCHxIPAv9np7w/E=;
+	s=korg; t=1781634773;
+	bh=a7p4sCgW/NMzlR/wLScdfovi7I3jiqw57WDPaZgHD88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E6f57STreBYvsjcI/7eGAzQMP53QhP5XkpLGXZiIRWjpH9hQsTYKu0et7ENvsWzuJ
-	 sZdUQt+tInSK8qfwXzWBiSlE5nYPNUSIF3drSLMZH1Cz9Cg2xFa4qE62XiA4pT3r+O
-	 RSdlDY3lNu1KngduXuDWRemDf8CssuWwwx0nJAn0=
+	b=IKUsm6jmJVl2nOoH3QF3T3OGLeRgpk9vljikXgefjVQEOx19f7Vj992x92NqLupCa
+	 gxfsb+E0fktru4FE7e56iBSDiMtXGffWSnZptsH2kle/DzjZkMtFUXUbhYaII5hgWc
+	 6ky6pppOO+g/Ct2Q6IgYU9OtKSfI4SwFk6E98AMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 326/411] pmdomain: core: Fix detach procedure for virtual devices in genpd
-Date: Tue, 16 Jun 2026 20:29:24 +0530
-Message-ID: <20260616145118.483217964@linuxfoundation.org>
+Subject: [PATCH 5.15 296/411] scsi: sd: Add error handling support for add_disk()
+Date: Tue, 16 Jun 2026 20:28:54 +0530
+Message-ID: <20260616145116.888978054@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,69 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Luis Chamberlain <mcgrof@kernel.org>
 
-[ Upstream commit 26735dfdd8930d9ef1fa92e590a9bf77726efdf6 ]
+[ Upstream commit 2a7a891f4c406822801ecd676b076c64de072c9e ]
 
-If a device is attached to a PM domain through genpd_dev_pm_attach_by_id(),
-genpd calls pm_runtime_enable() for the corresponding virtual device that
-it registers. While this avoids boilerplate code in drivers, there is no
-corresponding call to pm_runtime_disable() in genpd_dev_pm_detach().
+We never checked for errors on add_disk() as this function returned
+void. Now that this is fixed, use the shiny new error handling.
 
-This means these virtual devices are typically detached from its genpd,
-while runtime PM remains enabled for them, which is not how things are
-designed to work. In worst cases it may lead to critical errors, like a
-NULL pointer dereference bug in genpd_runtime_suspend(), which was recently
-reported. For another case, we may end up keeping an unnecessary vote for a
-performance state for the device.
+As with the error handling for device_add() we follow the same logic and
+just put the device so that cleanup is done via the scsi_disk_release().
 
-To fix these problems, let's add this missing call to pm_runtime_disable()
-in genpd_dev_pm_detach().
-
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Closes: https://lore.kernel.org/all/CAMuHMdWapT40hV3c+CSBqFOW05aWcV1a6v_NiJYgoYi0i9_PDQ@mail.gmail.com/
-Fixes: 3c095f32a92b ("PM / Domains: Add support for multi PM domains per device to genpd")
-Cc: stable@vger.kernel.org
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lore.kernel.org/r/20211015233028.2167651-2-mcgrof@kernel.org
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Acked-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 1e111c4b3a72 ("scsi: sd: fix missing put_disk() when device_add(&disk_dev) fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/power/domain.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/scsi/sd.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -2596,6 +2596,7 @@ static struct bus_type genpd_bus_type =
- static void genpd_dev_pm_detach(struct device *dev, bool power_off)
- {
- 	struct generic_pm_domain *pd;
-+	bool is_virt_dev;
- 	unsigned int i;
- 	int ret = 0;
- 
-@@ -2605,6 +2606,13 @@ static void genpd_dev_pm_detach(struct d
- 
- 	dev_dbg(dev, "removing from PM domain %s\n", pd->name);
- 
-+	/* Check if the device was created by genpd at attach. */
-+	is_virt_dev = dev->bus == &genpd_bus_type;
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -3458,7 +3458,13 @@ static int sd_probe(struct device *dev)
+ 		pm_runtime_set_autosuspend_delay(dev,
+ 			sdp->host->hostt->rpm_autosuspend_delay);
+ 	}
+-	device_add_disk(dev, gd, NULL);
 +
-+	/* Disable runtime PM if we enabled it at attach. */
-+	if (is_virt_dev)
-+		pm_runtime_disable(dev);
++	error = device_add_disk(dev, gd, NULL);
++	if (error) {
++		put_device(&sdkp->dev);
++		goto out;
++	}
 +
- 	/* Drop the default performance state */
- 	if (dev_gpd_data(dev)->default_pstate) {
- 		dev_pm_genpd_set_performance_state(dev, 0);
-@@ -2630,7 +2638,7 @@ static void genpd_dev_pm_detach(struct d
- 	genpd_queue_power_off_work(pd);
- 
- 	/* Unregister the device if it was created by genpd. */
--	if (dev->bus == &genpd_bus_type)
-+	if (is_virt_dev)
- 		device_unregister(dev);
- }
+ 	if (sdkp->capacity)
+ 		sd_dif_config_host(sdkp);
  
 
 
