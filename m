@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E388431328E;
-	Tue, 16 Jun 2026 16:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D8B43E9FE;
+	Tue, 16 Jun 2026 16:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629069; cv=none; b=k60aDfG3K9Tc9Q8mq1sg3VBKUYJvnMt0bjwmbpPlHTX5WLQNv8VA1/jy9Whu5W0cZFgTXKcZ2zSbQjTm5D7CBZ/bFqlG33B2eXO4/uUJYJ4L2RKoPIG2KvcaLWYUZCGPjTwwGvq8HRtsbcDjRF1gncy/3ZLKBbVrqupgg9FxACE=
+	t=1781629075; cv=none; b=UdmnvL2TfjqQQT82PyPdYHJKCvC7C7CZqM8MRfkW/Gt43aYQDlNbTEePr6BXAQ/AiiFLAw0kP6RVJviPKJ1Kh/b8iXK0nBFfifRky2bTyKzQ+v2g9bKjdK9dkhClV8QYfvo3YDBz8+IcFbQ2a8k4F/bQm/PfE+PorTmTdY0Sais=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629069; c=relaxed/simple;
-	bh=PbJuk+FFMVxuUflrGXw5rwLguWcxDM2aRxQi74vwtYU=;
+	s=arc-20240116; t=1781629075; c=relaxed/simple;
+	bh=muX9/UnsyIvbtlsGN95hzJ+CnUQiiQ76GuRf6FwB/tw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tr5XV0KVnl6O0/BdCuWJ3xNuv1QUNjDdufdNbZfSoBk7DyuGA3c6XhA2Zb+pDDvGVzRktwIxnGmXKBWmqzW3jh14cY6MyfwcvWHVkiOhtpEszJBWXb4tnBfvdeg3PGWeJzEMJ3ZLhtYFWCmCv77/MWUUYds78AtuVTVFm8h3w5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/snFwsc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OVdgpVENeqRKo4TSpzkbM3mzsN5bQOvpHm+DLuPOaMv+21Br3T+dJ2gjwCX9hZgHwn7V5qpjFsaCqf04MtN9rkrsN2GdW2L25cdR8d4M2UGWzfIuLfHotmXDObD0jTYAU6dMz/GqX364dpW9A0q0G33lC9xWRsP0v2K0As4Eu+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJ7v1OjJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/snFwsc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A131F000E9;
-	Tue, 16 Jun 2026 16:57:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJ7v1OjJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91481F00A3A;
+	Tue, 16 Jun 2026 16:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629068;
-	bh=AvPl+v6o3Asd8DnkWADI9+FcZjVZu1VhurFIzJlTkIg=;
+	s=korg; t=1781629073;
+	bh=HxpYuL1x1XtON/N8BeMNoL1s0DEVjA4Y4SlnE8VBKmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v/snFwsc1M98IbJpDhEh3ZLbnOynssa/rcrjjRZbly0Z4SYxgwwR/5aAwORlX9XE2
-	 7lFaDuk7r6uVXCB17IXTKGa/uKBLqoo9vkh9WMsWqZSL0RuANK+IGr4BIWJZMDWn7b
-	 NhXNa8LgFMpC3nY6n8mxjXwoXg3yE1xh1NUjGRJA=
+	b=iJ7v1OjJGWXxN7eUuMyjQT3jsOURGEOQxMv57lS+lx98C0abEunrbHbFkppY2KCaW
+	 1T5RZmBX04zDNvKZnl601GRk1UF41Sv+RCSmRJ8+fttGGj5KYdqz/hTJXdMQI5pANi
+	 abi4kx61F+nLBF50g2lHX4SpbClvjYIh9OOWpGvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Portnoy <dddhkts1@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 214/452] ksmbd: fix NULL-deref of opinfo->conn in oplock/lease break notifiers
-Date: Tue, 16 Jun 2026 20:27:21 +0530
-Message-ID: <20260616145129.037375824@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.6 184/452] serial: fsl_lpuart: fix rx buffer and DMA map leaks in start_rx_dma
+Date: Tue, 16 Jun 2026 20:26:51 +0530
+Message-ID: <20260616145127.503462715@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,75 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gil Portnoy <dddhkts1@gmail.com>
+From: Shitalkumar Gandhi <shital.gandhi45@gmail.com>
 
-[ Upstream commit b003086d76968298f22e7cf62239833b5a3a06b1 ]
+commit 9a9254c4a2a3ca2b3da16d173f3b0dd01f397ff6 upstream.
 
-smb2_oplock_break_noti() and smb2_lease_break_noti() read opinfo->conn
-into a local with neither READ_ONCE() nor a NULL check.  Both run from
-oplock_break() after opinfo_get_list() has dropped ci->m_lock, so a
-concurrent SMB2 LOGOFF (session_fd_check()) can set op->conn = NULL
-under ci->m_lock within that window.  ksmbd_conn_r_count_inc(conn) then
-writes through NULL at offset 0xc4 -- a remotely triggerable oops.
+lpuart_start_rx_dma() allocates sport->rx_ring.buf with kzalloc() and
+then maps a scatterlist via dma_map_sg().  On three subsequent error
+paths the function returns directly without releasing those resources:
 
-Guard both reads the way compare_guid_key() already does: read
-opinfo->conn with READ_ONCE() and return early if it is NULL, before
-allocating the work struct so nothing leaks.  A NULL conn means the
-client is gone and the break is moot, so return 0; oplock_break() treats
-that as success and runs the normal teardown.
+  - when dma_map_sg() returns 0 (-EINVAL):
+      ring->buf is leaked.
+  - when dmaengine_slave_config() fails:
+      ring->buf and the DMA mapping are leaked.
+  - when dmaengine_prep_dma_cyclic() returns NULL:
+      ring->buf and the DMA mapping are leaked.
 
-Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
-Assisted-by: Henry (Claude):claude-opus-4
-Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The sole cleanup path, lpuart_dma_rx_free(), is only reached when
+lpuart_dma_rx_use is set, and the caller lpuart_rx_dma_startup() clears
+that flag on failure of lpuart_start_rx_dma().  So these resources are
+permanently leaked on every failure in this function.  Repeated port
+open/close or termios changes under error conditions will slowly consume
+memory and leave stale streaming DMA mappings behind.
+
+Fix it by introducing two error labels that unmap the scatterlist and
+free the ring buffer as appropriate.  While here, replace the misleading
+-EFAULT (bad userspace pointer) returned when dmaengine_prep_dma_cyclic()
+fails with the more accurate -ENOMEM, matching how other dmaengine users
+in the tree treat this failure.
+
+No functional change on the success path.
+
+Fixes: 5887ad43ee02 ("tty: serial: fsl_lpuart: Use cyclic DMA for Rx")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260420135903.2062024-1-shitalkumar.gandhi@cambiumnetworks.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/oplock.c | 15 ++++++++++++---
+ drivers/tty/serial/fsl_lpuart.c |   15 ++++++++++++---
  1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index 5302c30a4a91d7..bba17ea84023e2 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -714,11 +714,16 @@ static void __smb2_oplock_break_noti(struct work_struct *wk)
-  */
- static int smb2_oplock_break_noti(struct oplock_info *opinfo)
- {
--	struct ksmbd_conn *conn = opinfo->conn;
-+	struct ksmbd_conn *conn;
- 	struct oplock_break_info *br_info;
- 	int ret = 0;
--	struct ksmbd_work *work = ksmbd_alloc_work_struct();
-+	struct ksmbd_work *work;
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -1383,7 +1383,8 @@ static inline int lpuart_start_rx_dma(st
+ 
+ 	if (!nent) {
+ 		dev_err(sport->port.dev, "DMA Rx mapping error\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto err_free_buf;
+ 	}
+ 
+ 	dma_rx_sconfig.src_addr = lpuart_dma_datareg_addr(sport);
+@@ -1395,7 +1396,7 @@ static inline int lpuart_start_rx_dma(st
+ 	if (ret < 0) {
+ 		dev_err(sport->port.dev,
+ 				"DMA Rx slave config failed, err = %d\n", ret);
+-		return ret;
++		goto err_unmap_sg;
+ 	}
+ 
+ 	sport->dma_rx_desc = dmaengine_prep_dma_cyclic(chan,
+@@ -1406,7 +1407,8 @@ static inline int lpuart_start_rx_dma(st
+ 				 DMA_PREP_INTERRUPT);
+ 	if (!sport->dma_rx_desc) {
+ 		dev_err(sport->port.dev, "Cannot prepare cyclic DMA\n");
+-		return -EFAULT;
++		ret = -ENOMEM;
++		goto err_unmap_sg;
+ 	}
+ 
+ 	sport->dma_rx_desc->callback = lpuart_dma_rx_complete;
+@@ -1430,6 +1432,13 @@ static inline int lpuart_start_rx_dma(st
+ 	}
+ 
+ 	return 0;
 +
-+	conn = READ_ONCE(opinfo->conn);
-+	if (!conn)
-+		return 0;
++err_unmap_sg:
++	dma_unmap_sg(chan->device->dev, &sport->rx_sgl, 1, DMA_FROM_DEVICE);
++err_free_buf:
++	kfree(ring->buf);
++	ring->buf = NULL;
++	return ret;
+ }
  
-+	work = ksmbd_alloc_work_struct();
- 	if (!work)
- 		return -ENOMEM;
- 
-@@ -818,11 +823,15 @@ static void __smb2_lease_break_noti(struct work_struct *wk)
-  */
- static int smb2_lease_break_noti(struct oplock_info *opinfo)
- {
--	struct ksmbd_conn *conn = opinfo->conn;
-+	struct ksmbd_conn *conn;
- 	struct ksmbd_work *work;
- 	struct lease_break_info *br_info;
- 	struct lease *lease = opinfo->o_lease;
- 
-+	conn = READ_ONCE(opinfo->conn);
-+	if (!conn)
-+		return 0;
-+
- 	work = ksmbd_alloc_work_struct();
- 	if (!work)
- 		return -ENOMEM;
--- 
-2.53.0
-
+ static void lpuart_dma_rx_free(struct uart_port *port)
 
 
