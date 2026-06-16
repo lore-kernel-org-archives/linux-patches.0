@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A0336E46F;
-	Tue, 16 Jun 2026 15:05:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E8B3F65FB;
+	Tue, 16 Jun 2026 15:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622329; cv=none; b=BGL9DCMJGUbp/yzA+3MI8ypPxw2qXC6SAjhuKbiZPExxB1Ox+/V6W6+NJfi+kmIFAZ/HwMu+YWDe4zcyAvbK1uzEU7MVM7i5iXhk9mS2KZmWmgvETGF+ZWpfpJ4ZRoYcamoJIdsupYvfZDxPjklZ/aMjpcrAed1H7PowChntbBE=
+	t=1781622451; cv=none; b=ZCCkxfa7FzaVvLPYpcAexcTjDTN9Wh++svymAytbuuvIBD1ZnHhnoEmKGcJeGUuT07jZ8JLt9d/IzeoOFVmRXiMniF+N+pSEgkXqZP3hPsXI/x6fP04r6Yr8HeSlq16LTiVLX8yW9+DN38C/sg21mjL5KjEuFo8RE76vysVCOCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622329; c=relaxed/simple;
-	bh=/sgoGBQ83jJTEVWOqmB95R8Vr1DxsdRrB1N7DlMZVmo=;
+	s=arc-20240116; t=1781622451; c=relaxed/simple;
+	bh=VgxE+PdmA30vJ2mOWyXFMsNffb1v64/HYdHZjlPHZqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qx0wXZpyZXDBxL5gTBR9dsukiit3hXP7xafPJOt/B0cQOHDolHNVUIrm7qWjxCgQLCOLqS2SVt4w+/ea6t7fqhG3MkaGxGdIc2G6raj0H/dJ4lOUUOtdCLQTzxcA+2eYUEtlOq5D/NOyYklh/LDp2cnepBH8/JP1sondg6YFaMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ihsymsQt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IdWRdMJfiO6eYqCtt5fKL6XS8GXEmDsOYmG8O6vUB/SXgH+RuG3fxvK7HGJmwPBeQdjnwlB6WWS3PEziJ42UJ9CuoCpe4UoDOBJEHDkXXvw+q/esZ85tP1eCfeA2oZxA/d9OYSWzdsdsIXnjnpsTW4xixA5GpKiDY4IeFXzXCx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+5Fb81F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihsymsQt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46AD61F00A3A;
-	Tue, 16 Jun 2026 15:05:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+5Fb81F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A681F000E9;
+	Tue, 16 Jun 2026 15:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622328;
-	bh=NRJ75pINHJxLr6Sl1FQzO4c3srqj/rK9TpWsu0Pxups=;
+	s=korg; t=1781622449;
+	bh=WrnMIxAtwiypOr8qrbnDncoUl/KhJxlz6yRKhHZ3bt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ihsymsQteZOBqYFOd/6MjpdnpmKfq0nBZPhmPH5zs0VLsqVe8dKjdblWxWA6bA1B4
-	 Rs2ORKqfZCrWeXY5VQQFHtDxPhhVKJB1QjWZJ+VDl4D7KKMhcXqm6K0qTGnMItogFa
-	 3pMZFbvm/tMoQ2ekBdOpjnLCHgCUQk40eED3Igco=
+	b=a+5Fb81F+k8ObeMslgl1Lzyk1rtqvv2EACjipa/2zSvMnbylDI9bTr47p2iqQIx1B
+	 /gCH8Tj7gV/I9HI6GR5rwinRtdLggnRUn4I/pO+IjI/iAAuuWJi5MFGzGIOtvlnqRz
+	 KEeTWn9lyuthNTLKGd3MpKC6BFduWGe+WTsaB+Z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <cyeaa@connect.ust.hk>,
-	Takashi Iwai <tiwai@suse.de>,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 002/342] ALSA: usb-audio: fix null pointer dereference on pointer cs_desc
-Date: Tue, 16 Jun 2026 20:24:58 +0530
-Message-ID: <20260616145048.461969387@linuxfoundation.org>
+	Leo Lin <leo@depthfirst.com>,
+	David Ahern <dahern@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 005/378] ipv6: mcast: Fix use-after-free when processing MLD queries
+Date: Tue, 16 Jun 2026 20:23:56 +0530
+Message-ID: <20260616145110.054767142@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
-References: <20260616145048.348037099@linuxfoundation.org>
+In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
+References: <20260616145109.744539446@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,59 +50,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengfeng Ye <cyeaa@connect.ust.hk>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit b97053df0f04747c3c1e021ecbe99db675342954 upstream.
+commit 791c91dc7a9dfb2457d5e29b8216a6484b9c4b40 upstream.
 
-The pointer cs_desc return from snd_usb_find_clock_source could
-be null, so there is a potential null pointer dereference issue.
-Fix this by adding a null check before dereference.
+When processing an MLD query, a pointer to the multicast group address
+is retrieved when initially parsing the packet. This pointer is later
+dereferenced without being reloaded despite the fact that the skb header
+might have been reallocated following the pskb_may_pull() calls, leading
+to a use-after-free [1].
 
-Signed-off-by: Chengfeng Ye <cyeaa@connect.ust.hk>
-Link: https://lore.kernel.org/r/20211024111736.11342-1-cyeaa@connect.ust.hk
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Fixes: 1dc669fed61a ("ALSA: usb-audio: UAC2: support read-only freq control")
-[ kovalev: bp to fix CVE-2021-47211; added Fixes tag; the null
-  check was added into both UAC2 and UAC3 branches since the
-  older kernel still has the clock source lookup split between
-  snd_usb_find_clock_source() and snd_usb_find_clock_source_v3()
-  (see upstream commit 9ec730052fa2); return -ENXIO instead of 0
-  to match upstream behavior, where the caller reaches the clock
-  validation path and returns -ENXIO ]
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix by copying the multicast group address when the packet is initially
+parsed.
+
+[1]
+BUG: KASAN: slab-use-after-free in __mld_query_work (net/ipv6/mcast.c:1512)
+Read of size 8 at addr ffff8881154b8e90 by task kworker/4:1/118
+
+Workqueue: mld mld_query_work
+Call Trace:
+<TASK>
+dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+print_address_description.constprop.0 (mm/kasan/report.c:378)
+print_report (mm/kasan/report.c:482)
+kasan_report (mm/kasan/report.c:595)
+__mld_query_work (net/ipv6/mcast.c:1512)
+mld_query_work (net/ipv6/mcast.c:1563)
+process_one_work (kernel/workqueue.c:3314)
+worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
+kthread (kernel/kthread.c:436)
+ret_from_fork (arch/x86/kernel/process.c:158)
+ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+</TASK>
+
+[...]
+
+Freed by task 118:
+kasan_save_stack (mm/kasan/common.c:57)
+kasan_save_track (mm/kasan/common.c:78)
+kasan_save_free_info (mm/kasan/generic.c:584)
+__kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
+kfree (./include/linux/kasan.h:235 mm/slub.c:2689 mm/slub.c:6251 mm/slub.c:6566)
+pskb_expand_head (net/core/skbuff.c:2335)
+__pskb_pull_tail (net/core/skbuff.c:2878 (discriminator 4))
+__mld_query_work (net/ipv6/mcast.c:1495 (discriminator 1))
+mld_query_work (net/ipv6/mcast.c:1563)
+process_one_work (kernel/workqueue.c:3314)
+worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
+kthread (kernel/kthread.c:436)
+ret_from_fork (arch/x86/kernel/process.c:158)
+ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+
+Fixes: 97300b5fdfe2 ("[MCAST] IPv6: Check packet size when process Multicast")
+Reported-by: Leo Lin <leo@depthfirst.com>
+Reviewed-by: David Ahern <dahern@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260603101811.612594-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/clock.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/ipv6/mcast.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/usb/clock.c b/sound/usb/clock.c
-index 197a6b7d8ad6f9..8759e20c419ed5 100644
---- a/sound/usb/clock.c
-+++ b/sound/usb/clock.c
-@@ -646,11 +646,17 @@ static int set_sample_rate_v2v3(struct snd_usb_audio *chip, int iface,
- 		struct uac3_clock_source_descriptor *cs_desc;
+--- a/net/ipv6/mcast.c
++++ b/net/ipv6/mcast.c
+@@ -1424,9 +1424,9 @@ out:
+ static void __mld_query_work(struct sk_buff *skb)
+ {
+ 	struct mld2_query *mlh2 = NULL;
+-	const struct in6_addr *group;
+ 	unsigned long max_delay;
+ 	struct inet6_dev *idev;
++	struct in6_addr group;
+ 	struct ifmcaddr6 *ma;
+ 	struct mld_msg *mld;
+ 	int group_type;
+@@ -1458,8 +1458,8 @@ static void __mld_query_work(struct sk_b
+ 		goto kfree_skb;
  
- 		cs_desc = snd_usb_find_clock_source_v3(chip->ctrl_intf, clock);
-+
-+		if (!cs_desc)
-+			return -ENXIO;
- 		bmControls = le32_to_cpu(cs_desc->bmControls);
+ 	mld = (struct mld_msg *)icmp6_hdr(skb);
+-	group = &mld->mld_mca;
+-	group_type = ipv6_addr_type(group);
++	group = mld->mld_mca;
++	group_type = ipv6_addr_type(&group);
+ 
+ 	if (group_type != IPV6_ADDR_ANY &&
+ 	    !(group_type&IPV6_ADDR_MULTICAST))
+@@ -1509,7 +1509,7 @@ static void __mld_query_work(struct sk_b
+ 		}
  	} else {
- 		struct uac_clock_source_descriptor *cs_desc;
- 
- 		cs_desc = snd_usb_find_clock_source(chip->ctrl_intf, clock);
-+
-+		if (!cs_desc)
-+			return -ENXIO;
- 		bmControls = cs_desc->bmControls;
- 	}
- 
--- 
-2.53.0
-
+ 		for_each_mc_mclock(idev, ma) {
+-			if (!ipv6_addr_equal(group, &ma->mca_addr))
++			if (!ipv6_addr_equal(&group, &ma->mca_addr))
+ 				continue;
+ 			if (ma->mca_flags & MAF_TIMER_RUNNING) {
+ 				/* gsquery <- gsquery && mark */
 
 
