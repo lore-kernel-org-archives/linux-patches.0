@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A033DA7C0;
-	Tue, 16 Jun 2026 18:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B89B3DC4D9;
+	Tue, 16 Jun 2026 18:39:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635137; cv=none; b=kUnQWyp9woCQPwh+EadXYzP52IEjsaCrsn/9wG2CvugZi2josB1erioi/SGcJRjEzI9qLQeODQlq6E8p04S9c3Eg/GVsBD+vetb8A+nBvAOLbUp5wEyaB4wYzxrWnghRowdFwv1F0y/0Wz8HxPO8xA1RJcXYlxp4upvf9XzfQkA=
+	t=1781635142; cv=none; b=V4zapP0G2/fjw6q8lIdsi8U8sNWbDaC3Q1o9P1hybuo5bPLp3yoXg20d0oHBDpf/rnzvCcQCgW4pb9EGVAVAzd06xs7jJVBv4HEqe2xHyFN+ml2pj/6WbMMQHOtEGTplZedjreQRIAPKmnEq1ucmBhFjb9V2s2bTU0UxP5Nu9Yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635137; c=relaxed/simple;
-	bh=VMMIjoscUoRAImBxNuWcYBifIj7XuBtXaK3qTUrHgGQ=;
+	s=arc-20240116; t=1781635142; c=relaxed/simple;
+	bh=AQ9Xdij0cJ5Ui5B9nwJ2o2z1sanK93xfz51B0FqSA54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IFHn0lGmuGC2mjWB2WVY6UaPbb8uBeZin4jh3IsQZcRgVUD7WWarlgxAtZaLcM1Hc/fLrryAQLvfs+gVL5x0oGzV8WtqTv/oixO8xgQwKeeclwUNN5AZ4+zfqPeHxj0FU/clOmYO5zqXxWy8WMweVyXqZm7LRYucz5REoN2RWkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oULkDfNC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cIqjmO8dWZGVGVYfHhhPNil77YzHxl56aM2K+5s+W3EiKEjzGU5nu71D35md+OUvrDTiot04CzFel2WCOhDC3jcE2gA42LTsuKY7jTLDV6Av2CE7rodTZv7MkHSi5Gp56fM6FJAabdrpkIOZxYw1euBdRGSEvBS6YrT7VCM57iY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9OmfknY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oULkDfNC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59DA61F000E9;
-	Tue, 16 Jun 2026 18:38:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9OmfknY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33CA51F000E9;
+	Tue, 16 Jun 2026 18:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635136;
-	bh=0BTnAfr0SCTmtF45UEkyz6Lqy0JI+/a8tFmvlMmRpkA=;
+	s=korg; t=1781635141;
+	bh=vzQdmuS19j5P1t3wEcyea2OlFLE21X9Cbo63jXrnZQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oULkDfNCA25upom3nmLQnd0OGi1/2nlV2OFtxTvy1ua3g9jMxSqlDosRXVKRKbeQG
-	 UnvjcLUThCcnrC4l3W8xHF7wLd31kdRxVD3bQvPYpEzWxrTiS22LUJKGirLER5KGrZ
-	 6Iz+gV07+G2ZdI75nCS5PoS9ES0YZ/AI/XXXE0Sg=
+	b=t9OmfknYJ4gQ/YQqqnsTCA9GVPi2h5T82fIIzM091otnQ1ULnxJdUb1waYkYudqN2
+	 5b5lOz27Kezg7qHRIfY7Kz7AQ/xu5z/1v2OZFxBhPlA0vODyZPpqc0QBPJkkODealm
+	 gpaEGaMQlIafRXk9X8hFpY/X+7vldgC3VuRX5DhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 5.15 396/411] batman-adv: tp_meter: fix tp_num leak on kmalloc failure
-Date: Tue, 16 Jun 2026 20:30:34 +0530
-Message-ID: <20260616145122.254659376@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Justin Iurman <justin.iurman@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Li hongliang <1468888505@139.com>
+Subject: [PATCH 5.15 397/411] net/ipv6: ioam6: prevent schema length wraparound in trace fill
+Date: Tue, 16 Jun 2026 20:30:35 +0530
+Message-ID: <20260616145122.298220289@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,52 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit ce425dd05d0fe7594930a0fb103634f35ac47bb6 upstream.
+[ Upstream commit 5e67ba9bb531e1ec6599a82a065dea9040b9ce50 ]
 
-When batadv_tp_start() or batadv_tp_init_recv() fail to allocate a new
-tp_vars object, the previously incremented bat_priv->tp_num counter is
-never decremented. This causes tp_num to drift upward on each allocation
-failure. Since only BATADV_TP_MAX_NUM sessions can be started and the count
-is never reduced for these failed allocations, it causes to an exhaustion
-of throughput meter sessions. In worst case, no new throughput meter
-session can be started until the mesh interface is removed.
+ioam6_fill_trace_data() stores the schema contribution to the trace
+length in a u8. With bit 22 enabled and the largest schema payload,
+sclen becomes 1 + 1020 / 4, wraps from 256 to 0, and bypasses the
+remaining-space check. __ioam6_fill_trace_data() then positions the
+write cursor without reserving the schema area but still copies the
+4-byte schema header and the full schema payload, overrunning the trace
+buffer.
 
-The error handling must decrement tp_num releasing the lock and aborting
-the creation of an throughput meter session
+Keep sclen in an unsigned int so the remaining-space check and the write
+cursor calculation both see the full schema length.
 
-Cc: stable@kernel.org
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-[ Context ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Fixes: 8c6f6fa67726 ("ipv6: ioam: IOAM Generic Netlink API")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/tp_meter.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/ipv6/ioam6.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -991,6 +991,7 @@ void batadv_tp_start(struct batadv_priv
+--- a/net/ipv6/ioam6.c
++++ b/net/ipv6/ioam6.c
+@@ -645,7 +645,7 @@ static void __ioam6_fill_trace_data(stru
+ 				    struct ioam6_namespace *ns,
+ 				    struct ioam6_trace_hdr *trace,
+ 				    struct ioam6_schema *sc,
+-				    u8 sclen)
++				    unsigned int sclen)
+ {
+ 	struct __kernel_sock_timeval ts;
+ 	u64 raw64;
+@@ -863,7 +863,7 @@ void ioam6_fill_trace_data(struct sk_buf
+ 			   struct ioam6_trace_hdr *trace)
+ {
+ 	struct ioam6_schema *sc;
+-	u8 sclen = 0;
++	unsigned int sclen = 0;
  
- 	tp_vars = kmalloc(sizeof(*tp_vars), GFP_ATOMIC);
- 	if (!tp_vars) {
-+		atomic_dec(&bat_priv->tp_num);
- 		spin_unlock_bh(&bat_priv->tp_list_lock);
- 		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
- 			   "Meter: %s cannot allocate list elements\n",
-@@ -1367,8 +1368,10 @@ batadv_tp_init_recv(struct batadv_priv *
- 	}
- 
- 	tp_vars = kmalloc(sizeof(*tp_vars), GFP_ATOMIC);
--	if (!tp_vars)
-+	if (!tp_vars) {
-+		atomic_dec(&bat_priv->tp_num);
- 		goto out_unlock;
-+	}
- 
- 	ether_addr_copy(tp_vars->other_end, icmp->orig);
- 	tp_vars->role = BATADV_TP_RECEIVER;
+ 	/* Skip if Overflow flag is set
+ 	 */
 
 
