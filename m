@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD6EE3CC303;
-	Tue, 16 Jun 2026 18:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D674779BF;
+	Tue, 16 Jun 2026 18:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636061; cv=none; b=oXSpB55VR+uO7TDU/hWgo4YzgrWOY+XsitrBNFoJ3yZb0U7Q4ZhTwi8VtbFar1VdeDjd4I8emjnfQsXe43s4msMjxipXirLq3LAA5m1dch5atJOkDDOqkL3FGwMKJREOmYZKousi/QXEGn3FFB5Jk4E5day+24J2o6hm5je5ixk=
+	t=1781636067; cv=none; b=nzM2pz8y8+AsCaKt7V01+dxJHbS97EuoqMK3Pjj1eGC8yy4c3C9LUy+4lUi3gBrvc/S8jHFM6FXJGAd3gjJTyykddVhYaktjhWGY3Mh1He9BF4rpYrPgOXFUNVWgxAnZCOEnrI7CmypjuyZiqKtT5kKWnOXiDEQ3PrwjuZFfsX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636061; c=relaxed/simple;
-	bh=kcxcSLBjzie0abp3QLTGX6cDmPq99aTOrYt9AS6rNIA=;
+	s=arc-20240116; t=1781636067; c=relaxed/simple;
+	bh=LB8rf8qRCUuDASKnUxcf01FnXh2H8iwsJbMuWa3q1Mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YArB3Gsah1mjG95PxFWi0xILmCPtl0ZNJ7fBq1/baOPcyqccozmxMvNaVTHrHNwQZSqUPNdZein1+UoJT5P6wTUXQINWT5cXdTnQzOpyLpD30/eajkhjuc++Sxh7koUlKrg6Q68M9K8lE+CISEciqLxhMX2vOXXyvZCZY+JpBVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJI0MkEQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KMgJPmxaHMqk07/JdvG+jMWU7HgRgn68nWN5fPX9JPDG3+cxpHzV4ZzZgdgMMZvCttQvGYIiLK4DUjiVh199WcRZl4rGVh/dRqF9tiap1789kwgLYb1nJzAScGiXHxR0u9Wt9ILsj5TmiidlZ3TUWIVxQ7oO1Uz4SQXZSEusg0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SlrndwjU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJI0MkEQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F29A1F000E9;
-	Tue, 16 Jun 2026 18:54:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SlrndwjU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B0B1F000E9;
+	Tue, 16 Jun 2026 18:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636060;
-	bh=hGRbcdhQRVhpR/XYwMYXxK9n4n5qaHeg8RcgwAvGuVE=;
+	s=korg; t=1781636066;
+	bh=REez0DD0fUg7sTZgI2eh7OHirS15rJ8Bv7dQ+7N6rI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EJI0MkEQcuVhnU+DRuRpVvStsrSU9X6FR2xoZ8mqADBOCoQTZyveibUP8+bemyD0T
-	 +/BArzi3nWAie7u5DvLiBAxG6VeWUfKNwYcvfnjuEBRBPhxybappLysSqIJTkLk3m7
-	 aeHWERxuT9tYe5a+sc6+alkXtk4u8Jpk8NmAP9vE=
+	b=SlrndwjU6yMGBohu3NCjdkjzMo7PWrctxMWIC9m9jnAzIBB6XKj18443QXukTmLkn
+	 ris0Fj/wA8GdTiivckXEU9p7Yqs/yXOTKb8IAv/+CKoT255qiGE6gXcJMhzN+KqaCE
+	 cpIKRei8FjuqS8Botg0GLmto7NhZznqxGtEPJt0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Eric Dumazet <edumazet@google.com>,
-	syzbot+6eb9ca986d80f6f88cf9@syzkaller.appspotmail.com,
+	Adrian Moreno <amorenoz@redhat.com>,
+	Aaron Conole <aconole@redhat.com>,
+	Eelco Chaudron <echaudro@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 168/342] ipv6: sit: reload inner IPv6 header after GSO offloads
-Date: Tue, 16 Jun 2026 20:27:44 +0530
-Message-ID: <20260616145056.024084124@linuxfoundation.org>
+Subject: [PATCH 5.10 169/342] net: openvswitch: fix possible kfree_skb of ERR_PTR
+Date: Tue, 16 Jun 2026 20:27:45 +0530
+Message-ID: <20260616145056.073706213@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -53,51 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Adrian Moreno <amorenoz@redhat.com>
 
-[ Upstream commit f0e42f0c4337b1f220de1ddd63f47197c7dee4de ]
+[ Upstream commit ee30dd2909d8b98619f4341c70ec8dc8e155ab02 ]
 
-ipip6_tunnel_xmit() caches the inner IPv6 header pointer at function
-entry and continues using it after iptunnel_handle_offloads().
+After the patch in the "Fixes" tag, the allocation of the "reply" skb
+can happen either before or after locking the ovs_mutex.
 
-For GSO skbs, iptunnel_handle_offloads() calls skb_header_unclone().
-When the skb header is cloned, skb_header_unclone() can call
-pskb_expand_head(), which may move the skb head. The pskb_expand_head()
-contract requires pointers into the skb header to be reloaded after the
-call.
+However, error cleanups still follow the classical reversed order,
+assuming "reply" is allocated before locking: it is freed after unlocking.
 
-If the later skb_realloc_headroom() branch is not taken, SIT uses the
-stale iph6 pointer to read the inner hop limit and DS field. That can
-read from a freed skb head after the old head's remaining clone is
-released.
+If "reply" allocation happens after locking the mutex and it fails,
+"reply" is left with an ERR_PTR, and execution jumps to the correspondent
+cleanup stage which will try to free an invalid pointer.
 
-Reload iph6 after the offload helper succeeds and before subsequent
-reads from the inner IPv6 header. Keep the existing reload after
-skb_realloc_headroom(), since that branch can also replace the skb.
+Fix this by setting the pointer to NULL after having saved its error
+value.
 
-Fixes: 14909664e4e1 ("sit: Setup and TX path for sit/UDP foo-over-udp encapsulation")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reported-by: syzbot+6eb9ca986d80f6f88cf9@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/20260605073448.6524-1-kylebot@openai.com
+Fixes: 893f139b9a6c ("openvswitch: Minimize ovs_flow_cmd_new|set critical sections.")
+Signed-off-by: Adrian Moreno <amorenoz@redhat.com>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Acked-by: Eelco Chaudron <echaudro@redhat.com>
+Link: https://patch.msgid.link/20260604121946.942164-1-amorenoz@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/sit.c | 1 +
+ net/openvswitch/datapath.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
-index 9806bd56b95f12..387b48ba4aac71 100644
---- a/net/ipv6/sit.c
-+++ b/net/ipv6/sit.c
-@@ -964,6 +964,7 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
- 		ip_rt_put(rt);
- 		goto tx_error;
- 	}
-+	iph6 = ipv6_hdr(skb);
+diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
+index 1c69aa986633af..5fb74fbcb2f382 100644
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -1248,6 +1248,7 @@ static int ovs_flow_cmd_set(struct sk_buff *skb, struct genl_info *info)
  
- 	if (df) {
- 		mtu = dst_mtu(&rt->dst) - t_hlen;
+ 		if (IS_ERR(reply)) {
+ 			error = PTR_ERR(reply);
++			reply = NULL;
+ 			goto err_unlock_ovs;
+ 		}
+ 	}
 -- 
 2.53.0
 
