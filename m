@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCA143D4E8;
-	Tue, 16 Jun 2026 17:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC6F47CC7F;
+	Tue, 16 Jun 2026 17:08:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629704; cv=none; b=na5ucrxtYjf2VYS2rfFkE7jTFLuIuaCfg/8TK51d7LYvO5ZI0P8ausLBEwpD9Ru8djaY7gQacFUFuBHxMg4pBPtDqswUewYZEAz7E03nORSt7xVmPKLUXH4VOtA8nFavznonb/J+jrx8x52RB5sTWCg15iKXvoYJqd2kq76jdQI=
+	t=1781629710; cv=none; b=IfTyDUP/75pBckV/eFRoNXUNJoWf2888eVRZb6Ml9bi7f5WUSRy41aI93JedLfa7eU0BwPFJu76nFo6Oelq7r54zAVNgUmbwbEOsQrzGEOO/X5/Usdlmq7cJ/0zjpWSl1PDXWZLvBXUeDu2o7JgvmocONj7lH5plFRVtIFQd34E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629704; c=relaxed/simple;
-	bh=NmuUfcfvE5+fPFaHeuEO5cjvGQ3PTNJ/ZU/GrReRUgI=;
+	s=arc-20240116; t=1781629710; c=relaxed/simple;
+	bh=M1LbFfkyhU8Uo5GVV154Vas9WAXuFxQiLWQ11wKB7G4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZPmcD/HOE5+3eeanmdO9gssnKPck+sO35DUikn0vLNqPl7WetUwiyX461B84eWvGKPHpJNPLgWVwvyyf9f4wdkfKL2Y8ancqzqIbumF7/30DILkXBAXNCKhAlMVXYQxR3KyTZScQHXqNlApOgkBYfINEWg885iQNdhSl2dr1Hcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1f0iFacj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O2TaGOYosXxVSqbPLp8upE8ZMoPeEzDj3TKLbk8+v+YM2nnINjLIfn2Kv9YjIY5Ms6H6LSDt9/S3W/iMLaLFv2QZ5kPYh2I2pIpcnUxYB9a8dECZGXfCyjqOBnYAJO5AA+2w1EWVe+jmc57h1ZUmVB47kPuPN6gUNicwa17AeQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFNEtZvR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1f0iFacj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFEA11F000E9;
-	Tue, 16 Jun 2026 17:08:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFNEtZvR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36A01F000E9;
+	Tue, 16 Jun 2026 17:08:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629703;
-	bh=gQiwKkREEkwrlC+x8KwKJrAKOeT6Nb1lXehExpT82GM=;
+	s=korg; t=1781629708;
+	bh=nDphKQB/rc+HpjwkKFJ+ErbaMqIFH6nq9uZPOV0FTxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1f0iFacj9HZMjKoFV0e2Dx2nwnnCyGEFfhvz1VWSoi7WjWJYLlRPX6J1GpPND7hJ7
-	 MUWTIb6l/BylkMpM5DT+zyMzmb3/TWYH3aq0Bo6IHGuUjtwAlLkCMCzj1Ca/ZaBU00
-	 yU3xt7ywhj2GgFAUL/BDxxfocF7+IjG+bg3+aZyk=
+	b=RFNEtZvRL8tKJbSFZ/G4nEfmMjpVXIvPEqGArbRytSYMtovfEV8BDpQGo0pQm8r+l
+	 cDDgnEHUAh4I/ElSBryRcS4SIo7SEZ9fxOzCVbMBueULUK4osQQrOyTBCJzTSklINC
+	 uvtO8NpQKTdYRpGT+WMTH2tfn6B+PcZZrdqymu8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 306/452] drm/amd/display: Reject gpio_bitshift >= 32 in bios_parser_get_gpio_pin_info()
-Date: Tue, 16 Jun 2026 20:28:53 +0530
-Message-ID: <20260616145133.581174825@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Fernand Sieber <sieberf@amazon.com>,
+	Leonard Foerster <foersleo@amazon.de>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 307/452] mm/damon/ops-common: call folio_test_lru() after folio_get()
+Date: Tue, 16 Jun 2026 20:28:54 +0530
+Message-ID: <20260616145133.633519397@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -53,48 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit 49c3da65961fe9857c831d47fa1989084e87514a upstream.
+commit d6b8b02a27b3dd09ec12144322b3dac46d9bc9ef upstream.
 
-[Why & How]
-gpio_bitshift is a uint8_t read directly from the VBIOS GPIO pin table.
-If the value is >= 32, the expression "1 << gpio_bitshift" triggers
-undefined behaviour in C (shift count exceeds type width). On x86 the
-shift is silently masked to 5 bits, producing an incorrect GPIO mask
-that may cause wrong MMIO register bits to be toggled.
+damon_get_folio() speculatively calls folio_test_lru() before
+folio_try_get().  The folio can get freed and reallocated to a tail page.
+In the case, VM_BUG_ON_PGFLAGS() in const_folio_flags() can be triggered.
+Remove the speculative call.
 
-Validate gpio_bitshift before use and return BP_RESULT_BADBIOSTABLE for
-out-of-range values.
+Also mark folio_test_lru() check right after folio_try_get() success as no
+more unlikely.
 
-Fixes: ae79c310b1a6 ("drm/amd/display: Add DCE12 bios parser support")
-Assisted-by: Copilot:claude-opus-4.6
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit eadf438ab8d370b9d19acee9359918c85afeb80d)
-Cc: stable@vger.kernel.org
+The race should be rare.  Also the problem can happen only if the kernel
+has enabled CONFIG_DEBUG_VM_PGFLAGS.  No real world report of this issue
+has been made so far.  This fix is based on only theoretical analysis.
+That said, a bug is a bug.  A similar issue was also fixed via commit
+3203b3ab0fcf ("mm/filemap: don't call folio_test_locked() without a
+reference in next_uptodate_folio()").  I don't expect this change will
+make a meaningful impact to DAMON performance in the real world, though I
+will be happy to be corrected from the real world reports.
+
+The issue was discovered [1] by Sashiko.
+
+
+Link: https://lore.kernel.org/20260525162256.8317-1-sj@kernel.org
+Link: https://lore.kernel.org/20260517234112.89245-1-sj@kernel.org [1]
+Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: Fernand Sieber <sieberf@amazon.com>
+Cc: Leonard Foerster <foersleo@amazon.de>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: <stable@vger.kernel.org> # 5.15.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ mm/damon/ops-common.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-@@ -697,8 +697,10 @@ static enum bp_result bios_parser_get_gp
- 		info->offset_en = info->offset + 1;
- 		info->offset_mask = info->offset - 1;
+--- a/mm/damon/ops-common.c
++++ b/mm/damon/ops-common.c
+@@ -28,9 +28,9 @@ struct folio *damon_get_folio(unsigned l
+ 		return NULL;
  
--		info->mask = (uint32_t) (1 <<
--			header->gpio_pin[i].gpio_bitshift);
-+		if (header->gpio_pin[i].gpio_bitshift >= 32)
-+			return BP_RESULT_BADBIOSTABLE;
-+
-+		info->mask = 1u << header->gpio_pin[i].gpio_bitshift;
- 		info->mask_y = info->mask + 2;
- 		info->mask_en = info->mask + 1;
- 		info->mask_mask = info->mask - 1;
+ 	folio = page_folio(page);
+-	if (!folio_test_lru(folio) || !folio_try_get(folio))
++	if (!folio_try_get(folio))
+ 		return NULL;
+-	if (unlikely(page_folio(page) != folio || !folio_test_lru(folio))) {
++	if (unlikely(page_folio(page) != folio) || !folio_test_lru(folio)) {
+ 		folio_put(folio);
+ 		folio = NULL;
+ 	}
 
 
