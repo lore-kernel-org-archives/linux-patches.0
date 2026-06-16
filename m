@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707D847A0D4;
-	Tue, 16 Jun 2026 18:28:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7560466B5E;
+	Tue, 16 Jun 2026 18:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634523; cv=none; b=mWmTg+v2WyeCZcvgA9tCsLJl53SVWc5C2r+4fq+MUoNRKMX0/06OqXGGjZIN22GCugMLMFVJifiqYLZmInvUPL/pnZsNbkoFyicmtnQrQhBzXbomBXXjJ1rk1fs89/+UkuAU/Zp8tP3fUeRa6d/aGUwKiRKBBpcAYFGLunuSHmk=
+	t=1781634528; cv=none; b=FBhj1xs9RDGWZrRTdVhVBbnFx9T082z4AeVeJDfD5IcyJWsnljWxWIiASY8SB1rLq4Bz13Zm9yanF8LaKTqrLkY/qPc8rn+P8oatAWPSv3GNaM1sGPIi1lS2hBB0taCVBltQCnZnEVind9iO/cUwtRVp3AEBq8uK/GmgspFY7ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634523; c=relaxed/simple;
-	bh=4r3o1CTV3Mqq3NyKVTafoQUvlEEbcUD6pf/+wVAIkk4=;
+	s=arc-20240116; t=1781634528; c=relaxed/simple;
+	bh=dNBjmBoGZyThkA8W1+mLbLg2GKdTh4GpENpxNbuAa8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FbC8mZ5p+1Lpky88VTTipPcbsvJ9kwvgC8viL7YG9gR4/5/BkjExUIvZedu6SBxPXZ3mFOqW2TaYXvmm0uN8slsxZ2EjjABjLuSy46zrJpzIv2s+jFRsmldAyue2UCWZ6Fz6oyUPZViE/nW40oz10IZYGaJj0aVGtEwfjTxl3pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1zcHoyl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eMmPJwsNpCt0QaYB5K9Z+EyYK9EFSXvfojLNYSkEq4EXu5OrrsldZUk+zWhK4290/MX9wCjTQTqVlfabUSZElJAP1FoSiZhf1yNsyvKQHQ+I9zRzV5z4jebwXnJV+8y4lYA1LllKO7jza8R5+wktq91HxVJibTNk470SUn/5oY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaYE1OQs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1zcHoyl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE1B1F000E9;
-	Tue, 16 Jun 2026 18:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaYE1OQs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C616A1F000E9;
+	Tue, 16 Jun 2026 18:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634522;
-	bh=uyZPzpr+FkyGubVmzrtPl/QZf12N1ZmLm86dvvwVDAE=;
+	s=korg; t=1781634527;
+	bh=vgeSvnw6gDrNOUdNIjQYt2RVFfJRKylw3p60IIA9gbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z1zcHoylRo/fHn+QcITb1iu47mKJb2ldud0CNdtOV+1EPWR9VFYhaxrfBDfONtJKp
-	 l0waLq9R3s8QXDH7F6OhepYezGK/tENKzB7maOlkJ6Ke0wU9IEwcwfLagOadnSl3h+
-	 uwS1oPSbYFM9q3qr4RxCKlXig1vpCSNCI6Lx/glk=
+	b=aaYE1OQs4LQcOz1lpYB/ldXmsPU6WmNhDZxZzqNOgLwYlY1eDTschv9fI0e2mQAuo
+	 UemC0B0ryOrzXdAQvsvLrNV0jUGDFowiCZxuc0XbsBJpfIAESQFcXnNg93+NaYBqCv
+	 xfKr7d2MEU+gvbLiuRwjtR921pfQr12zqpqGcHBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Kees Cook <kees@kernel.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 281/411] randomize_kstack: Maintain kstack_offset per task
-Date: Tue, 16 Jun 2026 20:28:39 +0530
-Message-ID: <20260616145116.083461501@linuxfoundation.org>
+Subject: [PATCH 5.15 282/411] mmc: sdhci-of-dwcmshc: Disable clock before DLL configuration
+Date: Tue, 16 Jun 2026 20:28:40 +0530
+Message-ID: <20260616145116.142166448@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,165 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Roberts <ryan.roberts@arm.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit 37beb42560165869838e7d91724f3e629db64129 ]
+[ Upstream commit 6546a49bbe656981d99a389195560999058c89c4 ]
 
-kstack_offset was previously maintained per-cpu, but this caused a
-couple of issues. So let's instead make it per-task.
+According to the ASIC design recommendations, the clock must be
+disabled before operating the DLL to prevent glitches that could
+affect the internal digital logic. In extreme cases, failing to
+do so may cause the controller to malfunction completely.
 
-Issue 1: add_random_kstack_offset() and choose_random_kstack_offset()
-expected and required to be called with interrupts and preemption
-disabled so that it could manipulate per-cpu state. But arm64, loongarch
-and risc-v are calling them with interrupts and preemption enabled. I
-don't _think_ this causes any functional issues, but it's certainly
-unexpected and could lead to manipulating the wrong cpu's state, which
-could cause a minor performance degradation due to bouncing the cache
-lines. By maintaining the state per-task those functions can safely be
-called in preemptible context.
+Adds a step to disable the clock before DLL configuration and
+re-enables it at the end.
 
-Issue 2: add_random_kstack_offset() is called before executing the
-syscall and expands the stack using a previously chosen random offset.
-choose_random_kstack_offset() is called after executing the syscall and
-chooses and stores a new random offset for the next syscall. With
-per-cpu storage for this offset, an attacker could force cpu migration
-during the execution of the syscall and prevent the offset from being
-updated for the original cpu such that it is predictable for the next
-syscall on that cpu. By maintaining the state per-task, this problem
-goes away because the per-task random offset is updated after the
-syscall regardless of which cpu it is executing on.
-
-Fixes: 39218ff4c625 ("stack: Optionally randomize kernel stack offset each syscall")
-Closes: https://lore.kernel.org/all/dd8c37bc-795f-4c7a-9086-69e584d8ab24@arm.com/
+Fixes: 08f3dff799d4 ("mmc: sdhci-of-dwcmshc: add rockchip platform support")
 Cc: stable@vger.kernel.org
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Link: https://patch.msgid.link/20260303150840.3789438-2-ryan.roberts@arm.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+[ dropped HS200/HS400 block and BIT(4) line, converted the single `return` in `if (clock <= 400000)` to `goto enable_clk` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/randomize_kstack.h |   44 +++++++++++++++++++++++++++++++--------
- include/linux/sched.h            |    4 +++
- init/main.c                      |    1 
- kernel/fork.c                    |    2 +
- 4 files changed, 42 insertions(+), 9 deletions(-)
+ drivers/mmc/host/sdhci-of-dwcmshc.c |   17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
---- a/include/linux/randomize_kstack.h
-+++ b/include/linux/randomize_kstack.h
-@@ -8,7 +8,6 @@
+--- a/drivers/mmc/host/sdhci-of-dwcmshc.c
++++ b/drivers/mmc/host/sdhci-of-dwcmshc.c
+@@ -213,10 +213,13 @@ static void dwcmshc_rk3568_set_clock(str
+ 	extra &= ~BIT(0);
+ 	sdhci_writel(host, extra, reg);
  
- DECLARE_STATIC_KEY_MAYBE(CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT,
- 			 randomize_kstack_offset);
--DECLARE_PER_CPU(u32, kstack_offset);
- 
- /*
-  * Do not use this anywhere else in the kernel. This is used here because
-@@ -39,28 +38,57 @@ DECLARE_PER_CPU(u32, kstack_offset);
-  */
- #define KSTACK_OFFSET_MAX(x)	((x) & 0x3FF)
- 
--/*
-- * These macros must be used during syscall entry when interrupts and
-- * preempt are disabled, and after user registers have been stored to
-- * the stack.
-+/**
-+ * add_random_kstack_offset - Increase stack utilization by previously
-+ *			      chosen random offset
-+ *
-+ * This should be used in the syscall entry path after user registers have been
-+ * stored to the stack. Preemption may be enabled. For testing the resulting
-+ * entropy, please see: tools/testing/selftests/lkdtm/stack-entropy.sh
-  */
- #define add_random_kstack_offset() do {					\
- 	if (static_branch_maybe(CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT,	\
- 				&randomize_kstack_offset)) {		\
--		u32 offset = raw_cpu_read(kstack_offset);		\
-+		u32 offset = current->kstack_offset;			\
- 		u8 *ptr = __kstack_alloca(KSTACK_OFFSET_MAX(offset));	\
- 		/* Keep allocation even after "ptr" loses scope. */	\
- 		asm volatile("" :: "r"(ptr) : "memory");		\
- 	}								\
- } while (0)
- 
-+/**
-+ * choose_random_kstack_offset - Choose the random offset for the next
-+ *				 add_random_kstack_offset()
-+ *
-+ * This should only be used during syscall exit. Preemption may be enabled. This
-+ * position in the syscall flow is done to frustrate attacks from userspace
-+ * attempting to learn the next offset:
-+ * - Maximize the timing uncertainty visible from userspace: if the
-+ *   offset is chosen at syscall entry, userspace has much more control
-+ *   over the timing between choosing offsets. "How long will we be in
-+ *   kernel mode?" tends to be more difficult to predict than "how long
-+ *   will we be in user mode?"
-+ * - Reduce the lifetime of the new offset sitting in memory during
-+ *   kernel mode execution. Exposure of "thread-local" memory content
-+ *   (e.g. current, percpu, etc) tends to be easier than arbitrary
-+ *   location memory exposure.
-+ */
- #define choose_random_kstack_offset(rand) do {				\
- 	if (static_branch_maybe(CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT,	\
- 				&randomize_kstack_offset)) {		\
--		u32 offset = raw_cpu_read(kstack_offset);		\
-+		u32 offset = current->kstack_offset;			\
- 		offset = ror32(offset, 5) ^ (rand);			\
--		raw_cpu_write(kstack_offset, offset);			\
-+		current->kstack_offset = offset;			\
- 	}								\
- } while (0)
- 
-+#ifdef CONFIG_HAVE_ARCH_RANDOMIZE_KSTACK_OFFSET
-+static inline void random_kstack_task_init(struct task_struct *tsk)
-+{
-+	tsk->kstack_offset = 0;
-+}
-+#else
-+#define random_kstack_task_init(tsk)		do { } while (0)
-+#endif
++	/* Disable clock while config DLL */
++	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
 +
- #endif
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -1461,6 +1461,10 @@ struct task_struct {
- 	unsigned long			prev_lowest_stack;
- #endif
+ 	if (clock <= 400000) {
+ 		/* Disable DLL to reset sample clock */
+ 		sdhci_writel(host, 0, DWCMSHC_EMMC_DLL_CTRL);
+-		return;
++		goto enable_clk;
+ 	}
  
-+#ifdef CONFIG_HAVE_ARCH_RANDOMIZE_KSTACK_OFFSET
-+	u32				kstack_offset;
-+#endif
+ 	/* Reset DLL */
+@@ -234,7 +237,7 @@ static void dwcmshc_rk3568_set_clock(str
+ 				 500 * USEC_PER_MSEC);
+ 	if (err) {
+ 		dev_err(mmc_dev(host->mmc), "DLL lock timeout!\n");
+-		return;
++		goto enable_clk;
+ 	}
+ 
+ 	extra = 0x1 << 16 | /* tune clock stop en */
+@@ -255,6 +258,16 @@ static void dwcmshc_rk3568_set_clock(str
+ 		DLL_STRBIN_TAPNUM_DEFAULT |
+ 		DLL_STRBIN_TAPNUM_FROM_SW;
+ 	sdhci_writel(host, extra, DWCMSHC_EMMC_DLL_STRBIN);
 +
- #ifdef CONFIG_X86_MCE
- 	void __user			*mce_vaddr;
- 	__u64				mce_kflags;
---- a/init/main.c
-+++ b/init/main.c
-@@ -882,7 +882,6 @@ static void __init mm_init(void)
- #ifdef CONFIG_HAVE_ARCH_RANDOMIZE_KSTACK_OFFSET
- DEFINE_STATIC_KEY_MAYBE_RO(CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT,
- 			   randomize_kstack_offset);
--DEFINE_PER_CPU(u32, kstack_offset);
++enable_clk:
++	/*
++	 * The sdclk frequency select bits in SDHCI_CLOCK_CONTROL are not functional
++	 * on Rockchip's SDHCI implementation. Instead, the clock frequency is fully
++	 * controlled via external clk provider by calling clk_set_rate(). Consequently,
++	 * passing 0 to sdhci_enable_clk() only re-enables the already-configured clock,
++	 * which matches the hardware's actual behavior.
++	 */
++	sdhci_enable_clk(host, 0);
+ }
  
- static int __init early_randomize_kstack_offset(char *buf)
- {
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -94,6 +94,7 @@
- #include <linux/thread_info.h>
- #include <linux/stackleak.h>
- #include <linux/kasan.h>
-+#include <linux/randomize_kstack.h>
- #include <linux/scs.h>
- #include <linux/io_uring.h>
- #include <linux/bpf.h>
-@@ -2300,6 +2301,7 @@ static __latent_entropy struct task_stru
- 	if (retval)
- 		goto bad_fork_cleanup_io;
- 
-+	random_kstack_task_init(p);
- 	stackleak_task_init(p);
- 
- 	if (pid != &init_struct_pid) {
+ static void rk35xx_sdhci_reset(struct sdhci_host *host, u8 mask)
 
 
