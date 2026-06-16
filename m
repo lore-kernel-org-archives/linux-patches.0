@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCFF477994;
-	Tue, 16 Jun 2026 16:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CE0477E2B;
+	Tue, 16 Jun 2026 16:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627572; cv=none; b=ZyhAbP5AUp50MPa4u7EFWsSuUHKkG9lI8U3Omxf+pJb88Cae9GgfZPEJlZi5oRTk9NbpDCxDE/2FRZ7e36TyR4YHFHmCm8MXE3KgFBefyGBsOchxtBrELxtKCgCRLZ9aOoZVKs0eHsp5DeyFhYwIxCUwukovpLZ+h3Y4Ozbszo0=
+	t=1781627586; cv=none; b=Ng9yWe0hPe0EmYjrKRjl4EcN2PQjlnsvYyM5EDChiqxc3nX75bKIRkbZTY2//By1IOuOk/ryjsIGMsfBBBDN5+EjOqXdu4maegDapehdosvaSA5mkMYPWkcoBHE6D93tZWf6cmzIkY+dzg03PnhY5yHyrkPAF12yvdh7I6Q0o6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627572; c=relaxed/simple;
-	bh=js95/L1PRUzd7Qk9VgZtAY9v1DzxeyZ0Bqn8gDdB9VQ=;
+	s=arc-20240116; t=1781627586; c=relaxed/simple;
+	bh=s4q6M7Jsb3wdGv7INkYWzB/97/0hXjWOFhcNMGvJ2Q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cHnv/VpVfeZW6/P+zAbNZ6PeYplEg5hUsRI9tL8I4QYwLXzFUvICj6EewjxHiMuv5fMSJgyyXLLT6f9Ifu4XsBHmH3ek48o7guV1iS+ESbOjgIm0uqrGup5yOydVn5DNOaKpQkdq3NcyHTCZqbDssI3vnVxJkTELS+USrrK+/6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sy9u49fz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YXTfvoWrspHVOpVYIsFRZ/NKmNM01e/Mv73BmP1cdVkLyhPMEjE+KKIMbrKNcNXe2D82tjwJNRynciovERkyedPNWoIOO6CKy4tU9M2++2ExLzv77k2shxigsa2nGkBNsL4b5ygq0QJXMrh28rirkU9jn6gmBX04euVZNUnnFbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yDwFM9Nr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sy9u49fz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC5D1F000E9;
-	Tue, 16 Jun 2026 16:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yDwFM9Nr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719FF1F000E9;
+	Tue, 16 Jun 2026 16:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627570;
-	bh=sPzk5KUu+KnTQqDxBvtSAIjN837FnV67xqNDf+dRu1A=;
+	s=korg; t=1781627584;
+	bh=HzB+Ab0f+ajAW0VA0mVsI0wvms5xa5WkWn49VghstcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sy9u49fzRa3Ez2MHg99osn4+Rt4d7SGikk2+8zmVZun2ZaW5M962uRf7KUbX6FzMZ
-	 THIzfMsmDCTmG4qhJ6dh6xHVUheCTnSCuWlEO2pulG7i9GBJQ4O2jdw4/prA9bSNJB
-	 ++AuY+yfg5scvanS9sJiBGvyQ1jIgCQJHBzjK6sE=
+	b=yDwFM9NrMnyzeB8o/U0oYKNE6x7f9bWxaqkV8YpI+M07bMWRWC0fjdQEaQ1ZtoKVc
+	 tmoW9WjmKSA4Ig9p4bmyVD3P416qr+3iBoNbhfiMf0lBZxsI4Al/leFyqRW/N5PTKb
+	 P7Orsy6hYhEz4uvFH40oC9BcR0xggweULUOBXtDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongfei Ren <lcrhf@outlook.com>,
-	stable@kernel.org,
-	Cryolitia PukNgae <cryolitia.pukngae@linux.dev>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 176/261] Input: atkbd - skip deactivate for HONOR BCC-Ns internal keyboard
-Date: Tue, 16 Jun 2026 20:30:14 +0530
-Message-ID: <20260616145053.237178247@linuxfoundation.org>
+	Inochi Amaoto <inochiama@gmail.com>,
+	Gabriel Somlo <gsomlo@gmail.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.12 194/261] mmc: litex_mmc: Set mandatory idle clocks before CMD0
+Date: Tue, 16 Jun 2026 20:30:32 +0530
+Message-ID: <20260616145054.048671677@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,45 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
+From: Inochi Amaoto <inochiama@gmail.com>
 
-commit fb402386af4cdce108ff991a796386de55439735 upstream.
+commit 99982b743e5ba72bd1f5de0e03e3b96ae70b1e51 upstream.
 
-After commit 9cf6e24c9fbf17e52de9fff07f12be7565ea6d61 ("Input: atkbd -
-do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID"), HONOR
-BCC-N, aka HONOR MagicBook 14 2026's internal keyboard stops
-working. Adding the atkbd_deactivate_fixup quirk fixes it.
+The litex_mmc driver assumes the card is already probed in the BIOS
+and skip the phy initialization. This will cause the command fail
+like the following when the old card is unplugged and then insert
+a new card:
 
-DMI: HONOR BCC-N/BCC-N-PCB, BIOS 1.04 04/07/2026
+[   62.923593] litex-mmc f0004000.mmc: Command (cmd 8) error, status -110
+[   62.949717] litex-mmc f0004000.mmc: Command (cmd 55) error, status -110
+[   62.976606] litex-mmc f0004000.mmc: Command (cmd 55) error, status -110
+[   63.002516] litex-mmc f0004000.mmc: Command (cmd 55) error, status -110
+[   63.028442] litex-mmc f0004000.mmc: Command (cmd 55) error, status -110
 
-Fixes: 9cf6e24c9fbf17e52de9fff07f12be7565ea6d61 ("Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID")
-Reported-by: Hongfei Ren <lcrhf@outlook.com>
-Link: https://github.com/colorcube/Linux-on-Honor-Magicbook-14-Pro/issues/1#issuecomment-4562679891
-Tested-by: Hongfei Ren <lcrhf@outlook.com>
-Cc: stable@kernel.org
-Signed-off-by: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
-Link: https://patch.msgid.link/20260605-honor-v1-1-78e05e491193@linux.dev
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Add required clock settings and initialization for the CMD 0, so it can
+probe the new card.
+
+Fixes: 92e099104729 ("mmc: Add driver for LiteX's LiteSDCard interface")
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Reviewed-by: Gabriel Somlo <gsomlo@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/atkbd.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/mmc/host/litex_mmc.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -1945,6 +1945,13 @@ static const struct dmi_system_id atkbd_
- 		},
- 		.callback = atkbd_deactivate_fixup,
- 	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "HONOR"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "BCC-N"),
-+		},
-+		.callback = atkbd_deactivate_fixup,
-+	},
- 	{ }
- };
+--- a/drivers/mmc/host/litex_mmc.c
++++ b/drivers/mmc/host/litex_mmc.c
+@@ -69,6 +69,9 @@
+ #define SD_SLEEP_US       5
+ #define SD_TIMEOUT_US 20000
  
++#define SD_INIT_DELAY_US  1000
++#define SD_INIT_CLK_HZ    400000
++
+ #define SDIRQ_CARD_DETECT    1
+ #define SDIRQ_SD_TO_MEM_DONE 2
+ #define SDIRQ_MEM_TO_SD_DONE 4
+@@ -450,6 +453,17 @@ static void litex_mmc_set_ios(struct mmc
+ 	struct litex_mmc_host *host = mmc_priv(mmc);
+ 
+ 	/*
++	 * The SD specification requires at least 74 idle clocks before CMD0.
++	 * These dummy cycles is generated by writing LITEX_PHY_INITIALIZE.
++	 */
++	if (ios->chip_select == MMC_CS_HIGH) {
++		litex_mmc_setclk(host, SD_INIT_CLK_HZ);
++		litex_write8(host->sdphy + LITEX_PHY_INITIALIZE, 1);
++		fsleep(SD_INIT_DELAY_US);
++		return;
++	}
++
++	/*
+ 	 * NOTE: Ignore any ios->bus_width updates; they occur right after
+ 	 * the mmc core sends its own acmd6 bus-width change notification,
+ 	 * which is redundant since we snoop on the command flow and inject
 
 
