@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F7C46AEF6;
-	Tue, 16 Jun 2026 16:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1C24657F3;
+	Tue, 16 Jun 2026 16:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625852; cv=none; b=RDWYhbJ0yiRBJ9xma6NQSYoDUx45FK2285LcmO+7Y+vHnTUV5D8FSX38kGsx6he9BZZTcC9w3LjGrabge+K7JspWzfm/BwiBu55MU19XRpyDLjHtGuHVtlGYwbbkv+IeGg0YJ7ieFUdrOyEIDtduRDEyA7U1mG/PyItvFe3zTvI=
+	t=1781625858; cv=none; b=jsFuNJMu7aNqIvnMsXvd6ZXrjmQrN6y6Yekqm+1r/YdxD/XMUDbIi2lLxr96Ot6X+J4RwFXv0zfdNAXkn6KGkJnE40T2E/9Mg9DK7cKnbWWMFML02e0ZGFSYMOUEgouiLjeW/NaGEhqT42R1lKnUcpF1JDoEvarmU/Vt53EKSVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625852; c=relaxed/simple;
-	bh=w87SwZTUFHyXcvea9TgHVDAquCpGZfFQZEcMP8ooWaU=;
+	s=arc-20240116; t=1781625858; c=relaxed/simple;
+	bh=JYg2H/GckTx8b5cmF7+TxsFHJrth5j87+AIVPY3Lde0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HYPcrWmQt2LBEuKPZ7I+56z+TC98nU1BcYODZQxFX5z4f17LezdJCGt7CfSXr4/v17aPRHF+ZDatGWIwkw0cQGkq1rGaxW7i2dxeAVfqefkesukWjYvPzBJqzJTO7TgEMBAo05PXtjw0i5/7JqKPa1Vls1EskIApn6ARJ+ua5WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1xeYtFED; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ddaJhBgaTmCU7EonwAOLCI5CE2cr8H9ybO5of+4N0OyIfssvMhdwVC84tKybKIl2O6P7nN1Gndxw9dB+KwoBu3GUNq9CM9IZj6owRobKn8jlG3666M5TTVPjxiW5cRu0Y3vsWadykldIH+NOcC5OIvBpzWWETFJh/ZTD8UNuBQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rg07836g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1xeYtFED"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A0B1F00A3D;
-	Tue, 16 Jun 2026 16:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rg07836g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4991A1F000E9;
+	Tue, 16 Jun 2026 16:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625851;
-	bh=evVfZk4JzmIDAODz/i7Rwsq8I0rUu7XpKhfNag1sfwE=;
+	s=korg; t=1781625857;
+	bh=pa7ukq4QtdJr+HjOLjQuf3uCZUKNZkrjMN0AOsFHHlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1xeYtFEDkqDnbftoFq2bq2jjrmCJOoIeexcpvVhw4tRErKR9AngZypMXTDyo87J8V
-	 SN2gcFRUgiREtpGcT+Du18BTIDvdxebf/tiWJrsN6zRvyE8p+4oo1NjLEYjARgYIzy
-	 npMZxjq6fpInr6HTftLOn9H+B94AdHWqjxjjNevs=
+	b=Rg07836gj7jT6zpuetn7uiSiz0jHjEFxq4JvMyMtIDRKGYQH7okbRTvgoIR91tiLA
+	 Wt0w3mj2AGhtjSATgpH6l3d6w0ueEl9sfqT47/sgDhA/LdbGKRJid6w8eqslfnCwpC
+	 RC2G6GhwUrxLx3XcJz/O0F3GYVOPSLnBxmWes2lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Carlos Song <carlos.song@nxp.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.18 220/325] i2c: imx-lpi2c: fix resource leaks switching to devm_dma_request_chan()
-Date: Tue, 16 Jun 2026 20:30:16 +0530
-Message-ID: <20260616145109.176170980@linuxfoundation.org>
+Subject: [PATCH 6.18 221/325] i2c: imx: fix clock and pinctrl state inconsistency in runtime PM
+Date: Tue, 16 Jun 2026 20:30:17 +0530
+Message-ID: <20260616145109.228051317@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -53,124 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Carlos Song <carlos.song@nxp.com>
 
-commit 695fcefd4a81466ef9c529790b4e96f1ea2ba051 upstream.
+commit 8783fb8031799f1230997c16df8c8dce9fcd1841 upstream.
 
-The LPI2C driver requests DMA channels using dma_request_chan(), but
-never releases them in lpi2c_imx_remove(), resulting in DMA channel
-leaks every time the driver is unloaded.
+In i2c_imx_runtime_suspend(), the clock is disabled before switching
+the pinctrl state to sleep. If pinctrl_pm_select_sleep_state() fails,
+the runtime suspend is aborted but the clock remains disabled, causing
+a system crash when the hardware is subsequently accessed.
 
-Additionally, when lpi2c_dma_init() successfully requests the TX DMA
-channel but fails to request the RX DMA channel, the probe falls back
-to PIO mode and completes successfully. Since probe succeeds, the devres
-framework will not trigger any cleanup, leaving the TX DMA channel and
-the memory allocated for the dma structure held for the lifetime of the
-device even though DMA is never used.
+Fix this by switching the pinctrl state before disabling the clock so
+that a pinctrl failure leaves the clock enabled and the hardware
+accessible.
 
-Switch to devm_dma_request_chan() to let the device core manage DMA
-channel lifetime automatically. Wrap all allocations within a devres
-group so that devres_release_group() can release all partially acquired
-resources when DMA init fails and probe continues in PIO mode.
+In i2c_imx_runtime_resume(), restore the pinctrl state back to sleep
+if clk_enable() fails to keep the consistent.
 
-Fixes: a09c8b3f9047 ("i2c: imx-lpi2c: add eDMA mode support for LPI2C")
+Fixes: 576eba03c994 ("i2c: imx: switch different pinctrl state in different system power status")
 Signed-off-by: Carlos Song <carlos.song@nxp.com>
 Cc: <stable@vger.kernel.org> # v6.14+
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260520093323.2882070-1-carlos.song@oss.nxp.com
+Link: https://lore.kernel.org/r/20260521065038.2954998-1-carlos.song@oss.nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-imx-lpi2c.c |   53 ++++++++++++++++++++++---------------
- 1 file changed, 32 insertions(+), 21 deletions(-)
+ drivers/i2c/busses/i2c-imx.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/drivers/i2c/busses/i2c-imx-lpi2c.c
-+++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
-@@ -1362,55 +1362,66 @@ static int lpi2c_imx_init_recovery_info(
- 	return 0;
- }
- 
--static void dma_exit(struct device *dev, struct lpi2c_imx_dma *dma)
--{
--	if (dma->chan_rx)
--		dma_release_channel(dma->chan_rx);
--
--	if (dma->chan_tx)
--		dma_release_channel(dma->chan_tx);
--
--	devm_kfree(dev, dma);
--}
--
- static int lpi2c_dma_init(struct device *dev, dma_addr_t phy_addr)
+--- a/drivers/i2c/busses/i2c-imx.c
++++ b/drivers/i2c/busses/i2c-imx.c
+@@ -1892,9 +1892,15 @@ static void i2c_imx_remove(struct platfo
+ static int i2c_imx_runtime_suspend(struct device *dev)
  {
- 	struct lpi2c_imx_struct *lpi2c_imx = dev_get_drvdata(dev);
- 	struct lpi2c_imx_dma *dma;
-+	void *group;
- 	int ret;
- 
--	dma = devm_kzalloc(dev, sizeof(*dma), GFP_KERNEL);
--	if (!dma)
-+	/*
-+	 * Open a devres group so that all resources allocated within
-+	 * this function can be released together if DMA init fails but
-+	 * probe continues in PIO mode.
-+	 */
-+	group = devres_open_group(dev, NULL, GFP_KERNEL);
-+	if (!group)
- 		return -ENOMEM;
- 
-+	dma = devm_kzalloc(dev, sizeof(*dma), GFP_KERNEL);
-+	if (!dma) {
-+		ret = -ENOMEM;
-+		goto release_group;
-+	}
+ 	struct imx_i2c_struct *i2c_imx = dev_get_drvdata(dev);
++	int ret;
 +
- 	dma->phy_addr = phy_addr;
++	ret = pinctrl_pm_select_sleep_state(dev);
++	if (ret)
++		return ret;
  
- 	/* Prepare for TX DMA: */
--	dma->chan_tx = dma_request_chan(dev, "tx");
-+	dma->chan_tx = devm_dma_request_chan(dev, "tx");
- 	if (IS_ERR(dma->chan_tx)) {
- 		ret = PTR_ERR(dma->chan_tx);
- 		if (ret != -ENODEV && ret != -EPROBE_DEFER)
- 			dev_err(dev, "can't request DMA tx channel (%d)\n", ret);
--		dma->chan_tx = NULL;
--		goto dma_exit;
-+		goto release_group;
- 	}
- 
- 	/* Prepare for RX DMA: */
--	dma->chan_rx = dma_request_chan(dev, "rx");
-+	dma->chan_rx = devm_dma_request_chan(dev, "rx");
- 	if (IS_ERR(dma->chan_rx)) {
- 		ret = PTR_ERR(dma->chan_rx);
- 		if (ret != -ENODEV && ret != -EPROBE_DEFER)
- 			dev_err(dev, "can't request DMA rx channel (%d)\n", ret);
--		dma->chan_rx = NULL;
--		goto dma_exit;
-+		goto release_group;
- 	}
- 
-+	/*
-+	 * DMA init succeeded. Remove the group marker but keep all resources
-+	 * bound to the device, they will be freed at device removal.
-+	 */
-+	devres_remove_group(dev, group);
+ 	clk_disable(i2c_imx->clk);
+-	return pinctrl_pm_select_sleep_state(dev);
 +
- 	lpi2c_imx->can_use_dma = true;
- 	lpi2c_imx->dma = dma;
- 	return 0;
- 
--dma_exit:
--	dma_exit(dev, dma);
-+release_group:
-+	/*
-+	 * DMA init failed. Release ALL resources allocated inside this
-+	 * group (dma memory, TX channel if already acquired, etc.) so
-+	 * that a successful PIO-mode probe does not hold unused resources
-+	 * for the entire device lifetime.
-+	 */
-+	devres_release_group(dev, group);
- 	return ret;
++	return 0;
  }
  
+ static int i2c_imx_runtime_resume(struct device *dev)
+@@ -1907,10 +1913,13 @@ static int i2c_imx_runtime_resume(struct
+ 		return ret;
+ 
+ 	ret = clk_enable(i2c_imx->clk);
+-	if (ret)
++	if (ret) {
+ 		dev_err(dev, "can't enable I2C clock, ret=%d\n", ret);
++		pinctrl_pm_select_sleep_state(dev);
++		return ret;
++	}
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static int i2c_imx_suspend(struct device *dev)
 
 
