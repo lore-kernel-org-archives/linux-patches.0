@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1081E31D367;
-	Tue, 16 Jun 2026 16:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C7943E4BA;
+	Tue, 16 Jun 2026 16:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627090; cv=none; b=bgRWByZ/ikbi/6JbkTtqYv7BzP+kXNXiZ7K09y27/8Tc4qzmHw30JZc2i41urCB2NW8KmvL5pnQ7X22vXXyWTfRgXd85Grn0xz5VepeEA5takqjV8E8qK7VZVl5hYfINhsPeZwuBlrZnszAh0cPEZdyeMjC6wI+j6D8RWc2RS0Y=
+	t=1781627095; cv=none; b=I3K62yIUHCOG2GnlORWDaRAsru+Pc5pOWMVSCoADssQA9ow6k05jhP80q5B67Ul+s1+Q1z6fJ37yQmFTxLNUebL45HuzvUcLmLyHyI06g/giwe42XralXuLQmxue2stnTveAkUlmo+fFItusCqL8u8Sq3yUt/zvqFqXt0XNL8hM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627090; c=relaxed/simple;
-	bh=L4cPo9vhpVhkNvFQ8u0wketqJlZ2F+OsCFD5C/3vjvg=;
+	s=arc-20240116; t=1781627095; c=relaxed/simple;
+	bh=6dtBOF36sVse/C6KzLTMC2Cyn585+QZQTlpt8KiZdzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SNq+1lBkzxmN2DfiFEZvlSbUM3wdxY5fRs/LJkAvayYcOE5NjGyxtmFFk+SvCylkyRWmo1rrS0r0DPg19K/6sXovG2vuukhAJ5mZuavmego0YVJ28mphnQeY7MFPbAjK/TRdXGODSF8BSUUG+8G8TKiLyp4nTBzzJ1BjdnK3k6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fLl2smHz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m/ROyzO+K/MrnaPZQrq804d3tZFd8y92pydyrnax13V+CVQiMAh/vBMji9omo4GvUdDBeikIz3etu4hfGIXKEYurCrLEvhLOjWL6uQhhRr0Ft32XG8OzTcyvJYnLpeQKQapBT9ky3z/itT4OEuwvas/hNSZKHflBey8o1HZamdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KiwE/VB3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLl2smHz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131661F000E9;
-	Tue, 16 Jun 2026 16:24:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KiwE/VB3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6389A1F000E9;
+	Tue, 16 Jun 2026 16:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627089;
-	bh=s48YGyFtp+KZhsq1jxH9lKFMGy1ZD7ORW2C+m7CB5Hc=;
+	s=korg; t=1781627094;
+	bh=YwCTaIrl3HC3yrWM3PDAFf0jvQOtr8cGifHxByOWS9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fLl2smHzweh7zBmDRpvbgWWxqfFasxspTPkwVFStocT7ns8D3jUKcC91bW3DgYr7C
-	 S5AI2L3N62WDYh+qdZq5EwoM51Tzsxy0L2icpDSdcrQAaEKfJo3ZK04tEU15GbasbT
-	 GRZtP1nv33h0h34VbUodvnzHZmUt9SnTd/P7+ojI=
+	b=KiwE/VB3ljcUjwfKfuIqG0MIE1vb8i8Lm32TqBsXwBd2ugEL5cQI8O0DFANjZEt8X
+	 gGFecc3KtP+QjC8svkhDP48tUdv/qrAwnRsCRAnSiYbBFVtoqlZQhEAhC9NQMPuXvG
+	 AzJGXEVfqX0G+iZlYU+GiaAzDAoppPihW2DXA89o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Matthew Brost <matthew.brost@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 118/261] drm/vc4: fix krealloc() memory leak
-Date: Tue, 16 Jun 2026 20:29:16 +0530
-Message-ID: <20260616145050.525408385@linuxfoundation.org>
+Subject: [PATCH 6.12 119/261] drm/xe: fix refcount leak in xe_range_fence_insert()
+Date: Tue, 16 Jun 2026 20:29:17 +0530
+Message-ID: <20260616145050.568811387@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -45,69 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander A. Klimov <grandmaster@al2klimov.de>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 5d563a5da8717629ae72f9eadf1e0e340bd1658b ]
+[ Upstream commit ba36786b21d19082e696eda85bfcd49e7071944a ]
 
-Don't just overwrite the original pointer passed to krealloc()
-with its return value without checking latter:
+xe_range_fence_insert() acquires a reference on fence via
+dma_fence_get() and stores it in rfence->fence.  It then calls
+dma_fence_add_callback() and handles two cases: when the callback
+is successfully registered (err == 0) the fence is transferred to
+the tree for later cleanup; when the fence is already signaled
+(err == -ENOENT) it manually drops the extra reference with
+dma_fence_put(fence).
 
-    MEM = krealloc(MEM, SZ, GFP);
+However, dma_fence_add_callback() can fail with other errors
+(e.g. -EINVAL) and in that case the code falls through to the free:
+label without releasing the acquired reference, leaking it.
 
-If krealloc() returns NULL, that erases the pointer
-to the still allocated memory, hence leaks this memory.
-Instead, use a temporary variable, check it's not NULL
-and only then assign it to the original pointer:
+Fix the leak by adding an else branch that calls dma_fence_put()
+before jumping to free: for any error other than -ENOENT.
 
-    TMP = krealloc(MEM, SZ, GFP);
-    if (!TMP) return;
-    MEM = TMP;
-
-While on it, use krealloc_array().
-
-Fixes: 6d45c81d229d ("drm/vc4: Add support for branching in shader validation.")
-Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patch.msgid.link/20260606123817.37222-1-grandmaster@al2klimov.de
+Fixes: 845f64bdbfc9 ("drm/xe: Introduce a range-fence utility")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260610172705.3450560-1-matthew.brost@intel.com
+(cherry picked from commit 98c4a4201290823c2c5c7ba21692bd9a64b61021)
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_validate_shaders.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/xe/xe_range_fence.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_validate_shaders.c b/drivers/gpu/drm/vc4/vc4_validate_shaders.c
-index afb1a4d8268465..792e2d90aecf10 100644
---- a/drivers/gpu/drm/vc4/vc4_validate_shaders.c
-+++ b/drivers/gpu/drm/vc4/vc4_validate_shaders.c
-@@ -288,15 +288,16 @@ static bool require_uniform_address_uniform(struct vc4_validated_shader_info *va
- {
- 	uint32_t o = validated_shader->num_uniform_addr_offsets;
- 	uint32_t num_uniforms = validated_shader->uniforms_size / 4;
-+	u32 *offsets;
+diff --git a/drivers/gpu/drm/xe/xe_range_fence.c b/drivers/gpu/drm/xe/xe_range_fence.c
+index 372378e89e9892..3d8fa194a7b0eb 100644
+--- a/drivers/gpu/drm/xe/xe_range_fence.c
++++ b/drivers/gpu/drm/xe/xe_range_fence.c
+@@ -77,6 +77,8 @@ int xe_range_fence_insert(struct xe_range_fence_tree *tree,
+ 	} else if (err == 0) {
+ 		xe_range_fence_tree_insert(rfence, &tree->root);
+ 		return 0;
++	} else {
++		dma_fence_put(fence);
+ 	}
  
--	validated_shader->uniform_addr_offsets =
--		krealloc(validated_shader->uniform_addr_offsets,
--			 (o + 1) *
--			 sizeof(*validated_shader->uniform_addr_offsets),
--			 GFP_KERNEL);
--	if (!validated_shader->uniform_addr_offsets)
-+	offsets = krealloc_array(validated_shader->uniform_addr_offsets,
-+				 o + 1,
-+				 sizeof(*validated_shader->uniform_addr_offsets),
-+				 GFP_KERNEL);
-+	if (!offsets)
- 		return false;
- 
-+	validated_shader->uniform_addr_offsets = offsets;
- 	validated_shader->uniform_addr_offsets[o] = num_uniforms;
- 	validated_shader->num_uniform_addr_offsets++;
- 
+ free:
 -- 
 2.53.0
 
