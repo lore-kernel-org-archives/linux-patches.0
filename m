@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB3B3A9627;
-	Tue, 16 Jun 2026 17:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C2F47CC75;
+	Tue, 16 Jun 2026 17:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631527; cv=none; b=D3Bc5E3HzXseOe8xwdbXfpORFLyEsxyr2jN65AGjq+k8qHGPjDM/tYpZB8Y1VW+0xCq3o0h52VliOw7mBXXZv9bSm+JG4xfaNpK7MgPgzWjOWZCRwk3TrYOhiwC/W5cgE8WKRrIXm4NWpiIcHmCo15tqEnkgdxukOhCPqcV661A=
+	t=1781631533; cv=none; b=uaEx1oXfV07/6E3MVD89rVDibj+D1onaBSQFnoxerQ/Cuhfv1UBU3OO/879f5IsgEmiJ/QfWXNQqDjenl/3FTeD0EUC46YvozzofcZZIpngPUMwG7yTRjZg9ogU6fmo1Aep3tY6gZb3OLv3SWlOEKvmAl1SpP39mbyikEqdbEWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631527; c=relaxed/simple;
-	bh=HmAQNL+ZiOEhx+k8anFzRKbq69MUlO/gF0fPUODSScc=;
+	s=arc-20240116; t=1781631533; c=relaxed/simple;
+	bh=8mnfP17HscjIIEIsOOtfBvg9kFRU2L4WJo7U83fwRRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iOSEGPqpE0idrO2ttpgFlOYt8FdDtClxXWTEV6wo172nHXrxmySmKjelVbXZsl/KhIo7DIz6lD6fVXsKBAPlkRtAnLJ1bCQAZApXZiKKJ45usjNnO2Tb3vCvTjHfEHTrjXtf0XH6DkPGpHUJHdelAFWdztZHtDnVreiUt02akzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSefbziS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rqPKMRX4548hwk+uPaeAVg6q/dgoRv9s+OZ5MjZIR964JDrYTP6Lf/BWZMcqAsR2fl3Nxe1aSLPZB5Er9/UqXiOaJ3tY1c9yhoz4A9LvdN2TyURoyP8brZoPRIXYcbAayww7aMFPLwntz0Tafc8FP16K/CUrcIJ4wz7ITAJqIQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uUmtDHRb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSefbziS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71561F000E9;
-	Tue, 16 Jun 2026 17:38:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uUmtDHRb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BD91F000E9;
+	Tue, 16 Jun 2026 17:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631526;
-	bh=nwD3mMxp8qMrobDsj9kfxltByAgB65DvpkjsGJmNEU4=;
+	s=korg; t=1781631531;
+	bh=aVe+bkfgqYHF2uO1aqoQCKKI4ycNpFFkGB+QK4UmvrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VSefbziSnIJSLgmgovlskbV93WftzW3kGNhdRwE6Zn2/7iBUglDHLgpNE4HXw3P2w
-	 hDPzB2i5Q2YjrpjQk7JXNseRLIA66Nu5t4krvlIK6dk/bFDZ9796cxJM+3RK0F4sWC
-	 hYfJd5fkxffrtosZhT2rLCHq35C8UPrW15t9D8UA=
+	b=uUmtDHRbYtjBiqbFC2510aOIn0uoBXZjlcp3I/P6VT1JCqq2ZGNXYW9wccIL4WhAz
+	 zARDXYNNtxhTloij0QKOQp7mdXEuATlGcFjmZ7FriiGr60Xf5MK+WeiX9MzIv7Dsl0
+	 FmgXqj1pQ/e97WZ5HUn4+au0zI9JfJpdOMscXM2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Thompson <davthompson@nvidia.com>,
-	Thangaraj Samynathan <Thangaraj.s@microchip.com>,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oupton@kernel.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 210/522] net: lan743x: permit VLAN-tagged packets up to configured MTU
-Date: Tue, 16 Jun 2026 20:25:57 +0530
-Message-ID: <20260616145135.879870539@linuxfoundation.org>
+Subject: [PATCH 6.1 237/522] arm64: tlb: Allow XZR argument to TLBI ops
+Date: Tue, 16 Jun 2026 20:26:24 +0530
+Message-ID: <20260616145137.073017364@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,96 +55,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Thompson <davthompson@nvidia.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 8173d22b211f615015f7b35f48ab11a6dd78dc99 ]
+commit bfd9c931d19aa59fb8371d557774fa169b15db9a upstream.
 
-VLAN-tagged interfaces on lan743x devices were previously unreachable via
-SSH and failed to respond to large ping packets (e.g. "ping -s 1469" given
-MTU=1500). In these scenarios, "ethtool -S" reports non-zero "RX Oversize
-Frame Errors". According to Microchip AN2948, the MAC_RX FSE (VLAN field
-size enforcement) bit determines whether frames with VLAN tags exceeding
-the base MTU plus tag length are discarded.
+The TLBI instruction accepts XZR as a register argument, and for TLBI
+operations with a register argument, there is no functional difference
+between using XZR or another GPR which contains zeroes. Operations
+without a register argument are encoded as if XZR were used.
 
-The driver must set the MAC_RX.FSE bit before setting MAC_RX.RXEN to allow
-VLAN-tagged frames up to the interface MTU, preventing them from being
-treated as oversized. As a result, both the base and VLAN-tagged interfaces
-can use the same MTU without receive errors.
+Allow the __TLBI_1() macro to use XZR when a register argument is all
+zeroes.
 
-Fixes: 23f0703c125b ("lan743x: Add main source files for new lan743x driver")
-Signed-off-by: David Thompson <davthompson@nvidia.com>
-Reviewed-by: Thangaraj Samynathan <Thangaraj.s@microchip.com>
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Tested-by: Nicolai Buchwitz <nb@tipi-net.de> # lan7430 on arm64 (RevPi
-Link: https://patch.msgid.link/20260529210300.433135-1-davthompson@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Today this only results in a trivial code saving in
+__do_compat_cache_op()'s workaround for Neoverse-N1 erratum #1542419. In
+subsequent patches this pattern will be used more generally.
+
+There should be no functional change as a result of this patch.
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Oliver Upton <oupton@kernel.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[Mark: Backport to v6.1.y]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan743x_main.c | 32 +++++++++++++++++++
- drivers/net/ethernet/microchip/lan743x_main.h |  1 +
- 2 files changed, 33 insertions(+)
+ arch/arm64/include/asm/tlbflush.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.c b/drivers/net/ethernet/microchip/lan743x_main.c
-index 5dacc786db4559..c51d316ccdfb86 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.c
-+++ b/drivers/net/ethernet/microchip/lan743x_main.c
-@@ -1271,6 +1271,36 @@ static void lan743x_mac_set_address(struct lan743x_adapter *adapter,
- 		   "MAC address set to %pM\n", addr);
- }
+diff --git a/arch/arm64/include/asm/tlbflush.h b/arch/arm64/include/asm/tlbflush.h
+index 412a3b9a3c25dc..2626a45849c241 100644
+--- a/arch/arm64/include/asm/tlbflush.h
++++ b/arch/arm64/include/asm/tlbflush.h
+@@ -37,12 +37,12 @@
+ 			    : : )
  
-+static void lan743x_mac_rx_enable_fse(struct lan743x_adapter *adapter)
-+{
-+	u32 mac_rx;
-+	bool rxen;
-+
-+	mac_rx = lan743x_csr_read(adapter, MAC_RX);
-+	if (mac_rx & MAC_RX_FSE_)
-+		return;
-+
-+	rxen = mac_rx & MAC_RX_RXEN_;
-+	if (rxen) {
-+		mac_rx &= ~MAC_RX_RXEN_;
-+		lan743x_csr_write(adapter, MAC_RX, mac_rx);
-+		lan743x_csr_wait_for_bit(adapter, MAC_RX, MAC_RX_RXD_,
-+					 1, 1000, 20000, 100);
-+	}
-+
-+	/* Per AN2948, hardware prevents modification of the FSE bit while the
-+	 * MAC receiver is enabled (RXEN bit set). Use separate register write
-+	 * to assert the FSE bit before enabling the RXEN bit in MAC_RX
-+	 */
-+	mac_rx |= MAC_RX_FSE_;
-+	lan743x_csr_write(adapter, MAC_RX, mac_rx);
-+
-+	if (rxen) {
-+		mac_rx |= MAC_RX_RXEN_;
-+		lan743x_csr_write(adapter, MAC_RX, mac_rx);
-+	}
-+}
-+
- static int lan743x_mac_init(struct lan743x_adapter *adapter)
- {
- 	bool mac_address_valid = true;
-@@ -1310,6 +1340,8 @@ static int lan743x_mac_init(struct lan743x_adapter *adapter)
- 	lan743x_mac_set_address(adapter, adapter->mac_address);
- 	eth_hw_addr_set(netdev, adapter->mac_address);
+ #define __TLBI_1(op, arg) asm (ARM64_ASM_PREAMBLE			       \
+-			       "tlbi " #op ", %0\n"			       \
++			       "tlbi " #op ", %x0\n"			       \
+ 		   ALTERNATIVE("nop\n			nop",		       \
+-			       "dsb ish\n		tlbi " #op ", %0",     \
++			       "dsb ish\n		tlbi " #op ", %x0",    \
+ 			       ARM64_WORKAROUND_REPEAT_TLBI,		       \
+ 			       CONFIG_ARM64_WORKAROUND_REPEAT_TLBI)	       \
+-			    : : "r" (arg))
++			    : : "rZ" (arg))
  
-+	lan743x_mac_rx_enable_fse(adapter);
-+
- 	return 0;
- }
- 
-diff --git a/drivers/net/ethernet/microchip/lan743x_main.h b/drivers/net/ethernet/microchip/lan743x_main.h
-index c0d209f36188a1..9f20c727a7e137 100644
---- a/drivers/net/ethernet/microchip/lan743x_main.h
-+++ b/drivers/net/ethernet/microchip/lan743x_main.h
-@@ -180,6 +180,7 @@
- #define MAC_RX				(0x104)
- #define MAC_RX_MAX_SIZE_SHIFT_		(16)
- #define MAC_RX_MAX_SIZE_MASK_		(0x3FFF0000)
-+#define MAC_RX_FSE_			BIT(2)
- #define MAC_RX_RXD_			BIT(1)
- #define MAC_RX_RXEN_			BIT(0)
+ #define __TLBI_N(op, arg, n, ...) __TLBI_##n(op, arg)
  
 -- 
 2.53.0
