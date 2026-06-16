@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936C73CFF55;
-	Tue, 16 Jun 2026 18:04:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11AC3C09E1;
+	Tue, 16 Jun 2026 18:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633078; cv=none; b=J5kDY6/WQtCcnF9zpfpZuQmtqbVjaj51Vj747i9CsBPaCMZWzQ5UY/QoJy9rgqxsfO86XPex4ICtW9MkIs6Im4vgZF40gn3rhtVEdHEiKbY9pJkx8hgx6eIqRger5RlkjMD81Tu0aPhSMxy/CGLxVuRhBwfG846jGC0vchJ8F0g=
+	t=1781633084; cv=none; b=gDGzxMFOEKFfk2/sv7A/x9q0UTlxcY/xDR0cH8Jds+jyG+DXiOnKfus3SBpZgEgY8nuz+3zhSjApGluf2zCdyczh4Nk0pel131i1ZRFam0mgOSGsQtF01V6Zz0oZmS4FtlTd69aR3zTQ4xQlMalyOcuTIc3X7uwEJ0f1ZrCEWc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633078; c=relaxed/simple;
-	bh=N0BPnj6045ixAw9KjPL9yMrz5Xl31dWMu4ixdVCbEK4=;
+	s=arc-20240116; t=1781633084; c=relaxed/simple;
+	bh=8qB1rSUiAbgixj3XVRWPxgJ++PkPL6tDDaz+1itdO+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aniYXWdQrDBCho2pZ8QtZlrkHHbyqWprJ+1Qd7fOVPl5PnHccduOY4pNg3vMMbdd9pcnNvVFJ3ToOM2mt3Hg6sc0p6hpgI/fpJyHsduLdnna52Jxlh9Lzf/t3EL6tza7hlGMvsLBdJdtbdWZYPtU38Amv9Tvg8V/Vbj8ndEwDzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9AotZB0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S0M7fk8lerdgE9jI/fSUxGupQiar/uv6ucYGPockNkDYExDM+rQgp/6wlXrnnSNNzTuddQ2tTxj9//tjUMQ8/TJPu8x1jvrt68wGP6ysbyy4fbzXYNmDItXjktWbVJWz78XaFmv0yr6UKPe2pAKLNKNWt3uDQxuHtwMPH0hmLec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/0eU4Sk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9AotZB0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58AA31F000E9;
-	Tue, 16 Jun 2026 18:04:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/0eU4Sk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A21671F000E9;
+	Tue, 16 Jun 2026 18:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633077;
-	bh=3ZQ0DR90CBo1M++HLnno2LInh+U2Fvz8E7iB+QyZc1g=;
+	s=korg; t=1781633083;
+	bh=3IwV/crOlCAwPMC8yGgLgexcylYC1RnU5E46lfBnmao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N9AotZB0bjT9wGy75r+hxgAa0p8G3SdyoqOUXPSMHXdzwN58p5+fsoRh8OPj1UZbC
-	 tehqnWdsjFb9LItNaalLnUPCrkOcU1B91h+2HB5ErUbqm6sjJx/oeGiBNchmeKRn7A
-	 liPwufKCqALrpDZJchWH4PpYcZmMUcu3N33lOJq8=
+	b=R/0eU4SkyFqEWwT4I+cQAPHxbDH0USPtSDYjUWwKBJlEumfsmtNJZqykl7cQwfjvV
+	 94n9Sg8fcGvGgLfY8AGQdpvZyNriSezgNFFPMulKdZMwkiPHcmB3asfV2zf2kpLedD
+	 3O7vobOP699hyiGbWTat9qhLS5xdYNtwOfqTQpeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hao <haokexin@gmail.com>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Wenshan Lan <jetlan9@163.com>,
+	Lee Jones <lee@kernel.org>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 007/411] net: cpsw_new: Fix potential unregister of netdev that has not been registered yet
-Date: Tue, 16 Jun 2026 20:24:05 +0530
-Message-ID: <20260616145100.755647772@linuxfoundation.org>
+Subject: [PATCH 5.15 008/411] nfc: llcp: Fix use-after-free in llcp_sock_release()
+Date: Tue, 16 Jun 2026 20:24:06 +0530
+Message-ID: <20260616145100.803677689@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -53,52 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Hao <haokexin@gmail.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 9d724b34fbe13b71865ad0906a4be97571f19cf5 ]
+[ Upstream commit f4268b466190dae95a7585f69b4f1f8ad097632c ]
 
-If an error occurs during register_netdev() for the first MAC in
-cpsw_register_ports(), even though cpsw->slaves[0].ndev is set to NULL,
-cpsw->slaves[1].ndev would remain unchanged. This could later cause
-cpsw_unregister_ports() to attempt unregistering the second MAC.
-To address this, add a check for ndev->reg_state before calling
-unregister_netdev(). With this change, setting cpsw->slaves[i].ndev
-to NULL becomes unnecessary and can be removed accordingly.
+llcp_sock_release() unconditionally unlinks the socket from the local
+sockets list.  However, if the socket is still in connecting state, it
+is on the connecting list.
 
-Fixes: ed3525eda4c4 ("net: ethernet: ti: introduce cpsw switchdev based driver part 1 - dual-emac")
-Signed-off-by: Kevin Hao <haokexin@gmail.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-Link: https://patch.msgid.link/20260205-cpsw-error-path-v1-2-6e58bae6b299@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Wenshan Lan <jetlan9@163.com>
+Fix this by checking the socket state and unlinking from the correct list.
+
+Fixes: b4011239a08e ("NFC: llcp: Fix non blocking sockets connections")
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://patch.msgid.link/20260429134115.3558604-1-lee@kernel.org
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/cpsw_new.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/nfc/llcp_sock.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/ti/cpsw_new.c b/drivers/net/ethernet/ti/cpsw_new.c
-index 9d52b949ae3f95..bef2c71b905972 100644
---- a/drivers/net/ethernet/ti/cpsw_new.c
-+++ b/drivers/net/ethernet/ti/cpsw_new.c
-@@ -1447,7 +1447,8 @@ static void cpsw_unregister_ports(struct cpsw_common *cpsw)
- 	int i = 0;
+diff --git a/net/nfc/llcp_sock.c b/net/nfc/llcp_sock.c
+index 6e1fba2084930e..54af85d939c6b9 100644
+--- a/net/nfc/llcp_sock.c
++++ b/net/nfc/llcp_sock.c
+@@ -640,6 +640,8 @@ static int llcp_sock_release(struct socket *sock)
  
- 	for (i = 0; i < cpsw->data.slaves; i++) {
--		if (!cpsw->slaves[i].ndev)
-+		if (!cpsw->slaves[i].ndev ||
-+		    cpsw->slaves[i].ndev->reg_state != NETREG_REGISTERED)
- 			continue;
+ 	if (sock->type == SOCK_RAW)
+ 		nfc_llcp_sock_unlink(&local->raw_sockets, sk);
++	else if (sk->sk_state == LLCP_CONNECTING)
++		nfc_llcp_sock_unlink(&local->connecting_sockets, sk);
+ 	else
+ 		nfc_llcp_sock_unlink(&local->sockets, sk);
  
- 		unregister_netdev(cpsw->slaves[i].ndev);
-@@ -1467,7 +1468,6 @@ static int cpsw_register_ports(struct cpsw_common *cpsw)
- 		if (ret) {
- 			dev_err(cpsw->dev,
- 				"cpsw: err registering net device%d\n", i);
--			cpsw->slaves[i].ndev = NULL;
- 			break;
- 		}
- 	}
 -- 
 2.53.0
 
