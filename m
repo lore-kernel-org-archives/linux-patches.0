@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E078B46AF1E;
-	Tue, 16 Jun 2026 17:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1357E3C4178;
+	Tue, 16 Jun 2026 17:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631613; cv=none; b=WSNjQX0plMVrgjINfdL3uzkh7UCcIp+Qa2V3c+nPQenv0GcDpwpmNZm85PA5hxB3/VmfnrJHixqzw6R67DW23LQtZITn/knI2ruBybfMAiA7So9o3g2tYf+9tJ6vnpVJ43c5oQ9FZpJgbYWR98xbp/sJWLfQYcp1EK+jCp7YUjE=
+	t=1781631619; cv=none; b=VBUPB2QP4MpBt9S5RL1UhhKvNrFbCcoG2n78kC9eowkRteXVaagFHf9yULjqdPJc/70BlUjohrGjeJ2NdHeKV0gZDASw8HQKD3LFVrkeFU/jeAXRUVi1HuCv7Zeat+6ieklDgPkX6V03xLYXbsFAWzTQLigMKOWD248KQZFgSGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631613; c=relaxed/simple;
-	bh=44D5rCpwou7DvtjJvgKasFuto6MguzY6FrCxo/ijG/o=;
+	s=arc-20240116; t=1781631619; c=relaxed/simple;
+	bh=YxFPCEt0No1AmGNlp2Bacdkff37VJe+uBX1l0z7tIOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eFKd78kcaiL7yTR0MxQD3oqrCz7zhf3umShqCEIuoIMUha5ydmeEdzDiTN2pmu/qsTvG4Dt5uK/g6zIjUNNqHqvRdSRPYBlmQRpSfqOIkomfLgOQQhDCw1eDOR2odQMZ9k2QWMK3FxrTajrubBwjYssidHv+1W46CE7l6oLqW4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSyaThiy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Plqxmr+18BaMZBvDQm2hcFxJRkrMwEgx+neqtZrjYLFWRZlXjA+buuS/ogB8ErSZMhom94rv9ysNcmMi4SY6l0KowWBk7veraNPT1fI22+hNuXK5s87bJDIY6hDDVyNHMQa+HSh5uhfHhZBn7hlV06s41t1uCg08uqsiEnxdOAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UVGH9VKT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSyaThiy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C588A1F000E9;
-	Tue, 16 Jun 2026 17:40:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UVGH9VKT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162B01F000E9;
+	Tue, 16 Jun 2026 17:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631612;
-	bh=27FkKA7wSvXGcLjG0xtzd1O6W2B67MWoUPFZe/JyzAA=;
+	s=korg; t=1781631618;
+	bh=AVks9yqtnzdjy0ZGD2Yrn4PRC63vPGNn5NKa2RSlrFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wSyaThiylhNuNi2Zyv+AOJmjI8duw22en1BZAcjWSublT+r/bfawdKxhOwsA0Apgg
-	 0LRkWlDqx7wPhhNmjpMTP3qoJXXQVhwmBBhbfHROOkOgGpeGaqpsEKH7R+dADULxVv
-	 yd0dft32FHkHpQBxTZGibDpPrOd17cI3AiHuB4fk=
+	b=UVGH9VKTmMiTsz9t7g8t4lQoKrY7xbgDhzeMRrap87JP891aQy8uzL6QpPGvhZv1u
+	 YU6FgKHh7IQ9ryVZLzRujocZU7zfmGH4Gb5JAyT2Er3ZTewO79Mmt4hCcS60qG26B1
+	 aSVwUarFjMpOiMT5JAZ+O1N2xrJ9h+1XS3iBS8qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Breno Leitao <leitao@debian.org>,
+	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 254/522] ip6_vti: fix incorrect tunnel matching in vti6_tnl_lookup()
-Date: Tue, 16 Jun 2026 20:26:41 +0530
-Message-ID: <20260616145137.842720147@linuxfoundation.org>
+Subject: [PATCH 6.1 255/522] rds: mark snapshot pages dirty in rds_info_getsockopt()
+Date: Tue, 16 Jun 2026 20:26:42 +0530
+Message-ID: <20260616145137.884996400@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,57 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit a5c0359f5cbc51a2e2b114d6041e0f3c73f903e9 ]
+[ Upstream commit 512db8267b73a220a64180d95ab5eebe7c4964a8 ]
 
-In vti6_tnl_lookup(), when an exact match for a tunnel fails,
-the code falls back to searching for wildcard tunnels:
+rds_info_getsockopt() pins the destination user pages with FOLL_WRITE and
+the RDS_INFO_* producers memcpy the snapshot into them through
+kmap_atomic(). Because that copy goes through the kernel direct map, the
+dirty bit on the user PTE is never set, so unpin_user_pages() releases the
+pages without marking them dirty. A file-backed destination page can then
+be reclaimed without writeback, silently discarding the copied data.
 
-- Tunnels matching the packet's local address, with any remote address
-  wildcard remote).
+Use unpin_user_pages_dirty_lock() with make_dirty=true so the modified
+pages are marked dirty before they are unpinned.
 
-- Tunnels matching the packet's remote address, with any local address
-  (wildcard local).
-
-However, vti6 stores all these different types of tunnels in the same
-hash table (ip6n->tnls_r_l) prone to hash collisions.
-
-The bug is that the fallback search loops in vti6_tnl_lookup() were
-missing checks to ensure that the candidate tunnel actually has
-a wildcard address.
-
-Fixes: fbe68ee87522 ("vti6: Add a lookup method for tunnels with wildcard endpoints.")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Link: https://patch.msgid.link/20260608164613.933023-1-edumazet@google.com
+Fixes: a8c879a7ee98 ("RDS: Info and stats")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260608-rds_fix-v1-1-006c88543408@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_vti.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/rds/info.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ip6_vti.c b/net/ipv6/ip6_vti.c
-index ead8f1ecd8271b..8808067df5168c 100644
---- a/net/ipv6/ip6_vti.c
-+++ b/net/ipv6/ip6_vti.c
-@@ -105,6 +105,7 @@ vti6_tnl_lookup(struct net *net, const struct in6_addr *remote,
- 	hash = HASH(&any, local);
- 	for_each_vti6_tunnel_rcu(ip6n->tnls_r_l[hash]) {
- 		if (ipv6_addr_equal(local, &t->parms.laddr) &&
-+		    ipv6_addr_any(&t->parms.raddr) &&
- 		    (t->dev->flags & IFF_UP))
- 			return t;
- 	}
-@@ -112,6 +113,7 @@ vti6_tnl_lookup(struct net *net, const struct in6_addr *remote,
- 	hash = HASH(remote, &any);
- 	for_each_vti6_tunnel_rcu(ip6n->tnls_r_l[hash]) {
- 		if (ipv6_addr_equal(remote, &t->parms.raddr) &&
-+		    ipv6_addr_any(&t->parms.laddr) &&
- 		    (t->dev->flags & IFF_UP))
- 			return t;
- 	}
+diff --git a/net/rds/info.c b/net/rds/info.c
+index b6b46a8214a0a5..b3ee5f8238c44d 100644
+--- a/net/rds/info.c
++++ b/net/rds/info.c
+@@ -235,7 +235,7 @@ int rds_info_getsockopt(struct socket *sock, int optname, char __user *optval,
+ 
+ out:
+ 	if (pages)
+-		unpin_user_pages(pages, nr_pages);
++		unpin_user_pages_dirty_lock(pages, nr_pages, true);
+ 	kfree(pages);
+ 
+ 	return ret;
 -- 
 2.53.0
 
