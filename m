@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC9D441035;
-	Tue, 16 Jun 2026 15:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89FA44B69C;
+	Tue, 16 Jun 2026 15:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625149; cv=none; b=DwMaomp3LDEppB8YiBaG3FgEA1OeVxx8yuStBZ4xnPD+mxGZpkq03AVeqSRyOxnFW7sQhiztgF2dAzhRMt44xz40M+QjukYYwzCSglt0hLXZcA0jBqFKuzsjNr4Hva/r3xE4rVsiCm4MaiH89f5RZ/6PytBwfEv113CLvXrjMXM=
+	t=1781625153; cv=none; b=t06qPaQ9hcYXCZiYZdEZJEKmbfjmlWu1orD6gEWLDve/YGLmaFGKWQ0J3jBJWx5ziuPD3WhM6Agb8zJ4QrYsg2uhDkfT/8S4y3LneGv+lMKh+FT3vILdyszh3IKrQFgOIg18Wd9QqfKzwV8rdt5zWwTIAh+O5L5P+R0S93ov/Ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625149; c=relaxed/simple;
-	bh=I7h8jufXjMLXRo8XBRYiqeF5cGCbWckrPdErbTSquOs=;
+	s=arc-20240116; t=1781625153; c=relaxed/simple;
+	bh=nDZXqIHA2yRZ9d1fd1rn/yim4nX9+s2bAGDfxTE8PG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aai/Oyt8DB1uPpuv4aNVV335tvJMyRf0zb0FmnFMUSqx30OH6KQTLqgE+WsAZGWwAvWyrtLoplXbtOhquJODtRkjcBi1BC+Lttk00Uc3kt6qDywflH5dcV9WcX71+lhsEPjuC2ANB2XweLjcKOJYxGT9VG5SfCbxRm4jHQMAUOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUjzSEHg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l8bJSUE6rOgYHdeHerkAf36F+TUW3PH605JEbEF+/SNpKwnnfxhEhVtehBh5ThdcI9YjbCKHHUIxYRg1YavatSBm3R+pjcok02EIwujXzuNJVcr7yJngt9nlzclzsyMCi5na3uSKWK7Uy+Qcl13u5+8FwFVWOekxiydk9ZuiHPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Z5oAAIR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUjzSEHg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C9B1F000E9;
-	Tue, 16 Jun 2026 15:52:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Z5oAAIR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD14C1F00A3A;
+	Tue, 16 Jun 2026 15:52:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625147;
-	bh=Ut9Mw2I4KB1xaz3XJYcxDrb4C0twQW6tp2yb4y0yPEk=;
+	s=korg; t=1781625152;
+	bh=4OlQFSGs20+NGHxHTIBjMKOBDgJSna5z7MBS1RuP//E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BUjzSEHgpUZZSpkwQr6Ao+LwsLVtFyw/jGpJKd4M2vSOYKqkP3/HZqBl73oP8FfM8
-	 iz0VBvODjYXWnCK2UxikjaXW2V3GRamEI2pqg3K70zrLyfS0cp80Zc8gGJavShwqeW
-	 4k8rkdshiKyAoltTAGuyKI6qpyxybn0a89TX1K/c=
+	b=0Z5oAAIR3kmfFubvc0GVsKrkxNop30epZrYfVMAdwncFC90S4qVZbl47uqSaIAdi6
+	 SWYwvTQeThbvq37JTbF5g9J4wvzI9nuiqBycBk5scleauwIQNinhrM6r/1QyPEzLW7
+	 jnU/s6yVf6H1to49avkt77VCHXDZLHQmhsAQO+aQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	unknownbbqrx <dev@unknownbbqr.xyz>,
-	Gabriele Monaco <gmonaco@redhat.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 079/325] tools/rv: Ensure monitor name and desc are NUL-terminated
-Date: Tue, 16 Jun 2026 20:27:55 +0530
-Message-ID: <20260616145101.664623424@linuxfoundation.org>
+Subject: [PATCH 6.18 088/325] dma-debug: fix physical address retrieval in debug_dma_sync_sg_for_device
+Date: Tue, 16 Jun 2026 20:28:04 +0530
+Message-ID: <20260616145102.094944316@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -51,45 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabriele Monaco <gmonaco@redhat.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 08904765bb941f98306ae6841c33cfd299343faf ]
+[ Upstream commit 9bfaa86b405381326c971984fd6da184c289713f ]
 
-ikm_fill_monitor_definition() copies monitor name and description with
-strncpy(), but does not guarantee NUL termination when source strings are
-equal to or longer than the destination buffers.
+In debug_dma_sync_sg_for_device(), when iterating over a scatterlist,
+the debug entry population mistakenly uses the head of the scatterlist
+'sg' to fetch the physical address via sg_phys(), instead of using the
+current iterator variable 's'.
 
-Clamp copies to sizeof(dst) - 1 and explicitly append '\0' for both fields
-to keep them safe for later string operations.
+This causes dma-debug to track the physical address of the very first
+scatterlist entry for all subsequent entries in the list.
 
-Suggested-by: unknownbbqrx <dev@unknownbbqr.xyz>
-Fixes: 6d60f89691fc9 ("tools/rv: Add in-kernel monitor interface")
-Link: https://lore.kernel.org/r/20260604120946.90302-2-gmonaco@redhat.com
-Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
+Fix this by passing the correct loop iterator 's' to sg_phys()
+
+Fixes: 9d4f645a1fd49ee ("dma-debug: store a phys_addr_t in struct dma_debug_entry")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20260603123708.1665-1-lirongqing@baidu.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/verification/rv/src/in_kernel.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ kernel/dma/debug.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/verification/rv/src/in_kernel.c b/tools/verification/rv/src/in_kernel.c
-index 4bb746ea6e1735..d324538249d3ab 100644
---- a/tools/verification/rv/src/in_kernel.c
-+++ b/tools/verification/rv/src/in_kernel.c
-@@ -215,10 +215,11 @@ static int ikm_fill_monitor_definition(char *name, struct monitor *ikm, char *co
- 		return -1;
- 	}
- 
--	strncpy(ikm->name, nested_name, MAX_DA_NAME_LEN);
-+	strncpy(ikm->name, nested_name, sizeof(ikm->name) - 1);
-+	ikm->name[sizeof(ikm->name) - 1] = '\0';
- 	ikm->enabled = enabled;
--	strncpy(ikm->desc, desc, MAX_DESCRIPTION);
--
-+	strncpy(ikm->desc, desc, sizeof(ikm->desc) - 1);
-+	ikm->desc[sizeof(ikm->desc) - 1] = '\0';
- 	free(desc);
- 
- 	return 0;
+diff --git a/kernel/dma/debug.c b/kernel/dma/debug.c
+index fa4aac33391723..03780f39613cca 100644
+--- a/kernel/dma/debug.c
++++ b/kernel/dma/debug.c
+@@ -1555,7 +1555,7 @@ void debug_dma_sync_sg_for_device(struct device *dev, struct scatterlist *sg,
+ 		struct dma_debug_entry ref = {
+ 			.type           = dma_debug_sg,
+ 			.dev            = dev,
+-			.paddr		= sg_phys(sg),
++			.paddr		= sg_phys(s),
+ 			.dev_addr       = sg_dma_address(s),
+ 			.size           = sg_dma_len(s),
+ 			.direction      = direction,
 -- 
 2.53.0
 
