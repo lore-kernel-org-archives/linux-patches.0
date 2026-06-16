@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D6544CAF5;
-	Tue, 16 Jun 2026 16:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F0418871F;
+	Tue, 16 Jun 2026 16:54:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628886; cv=none; b=enn+eKFurN3W64+2grGf3xqQDRqL2vD0r5rD2QL9M21u15HVC2wnrrDpgYvTVE60P1Adf9tG0UFaM26cCkN2pUfnX5anF2lIjz24X1lsu8Im++ewuNLZE2w7pi6TZgFQGlSxw/nRftBY2f0l742uu9C7Nnp3gNpLp6qmberqdv8=
+	t=1781628891; cv=none; b=iAY/Y+vQexSoGBRrs5ON31vdqTJi90gXAwpawKiNKnuUOiMdVCpuk+0AWBsu/U1D/APlt8xas289mPmBQJMQLKlI/MlMgGbk/+O1rRFtoMkpOIP3dkXH6erxrkjpmo8iodSUNeOAace8usTNQu1L/7umqgE7qN0omiCkgCFh7oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628886; c=relaxed/simple;
-	bh=msDjPLtyyQi3vbjV/z282oEwxkyzvUKX/2Yr17nm7SM=;
+	s=arc-20240116; t=1781628891; c=relaxed/simple;
+	bh=T07io1lhnP9wYMNDKvKSYJkM98sjkML0Acn8SaWeIhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qdGgaFzBF15UI6Tr+G16rYsQpToqd3vuQeaLsCRj6bXU8hdVr6u1LKnEo/H0M8jSiXc2hFpdRX3m4SooHlaeAozSiKGXSV95m5erPYSy4JOFVUdvmVFn6boc/bEXw/1z1PK36JxY41LkSDGzzR8xAQR0oOQFEFlSNs/BBwFDEHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVTDh6FX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jCpx3WA9VxeCxulld7Ah8sAj4c+9oP7biLur9Tphj4xeEeCnMSfLfbgHmXeSMLFQYSEvtDM+Bf3d1zfWjW7x1cp8XieCOS0OQ2eoFDnsMkyIBLj2rUUrDStJRr8vtANSbpf2Q/x9jk2jaaHS4xN9kJO3ZUqwlymXYunCJJEPIa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdBRscuq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVTDh6FX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C7991F00A3D;
-	Tue, 16 Jun 2026 16:54:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdBRscuq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4501F000E9;
+	Tue, 16 Jun 2026 16:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628885;
-	bh=rw4hYbe4ipEVYlKQurrjXQjPkcMvM1j8v0ysgV0w6hM=;
+	s=korg; t=1781628890;
+	bh=BtnK/llcg0ftEzqb6ATsbw/WWKblPf14K30FGw8neWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NVTDh6FXY8860IMFdA7WUYX1JWgZHe9IedodgWSiDzoSUoc4GME+6CXjPG0UPBGU+
-	 Zo4cbhMjC5GUcaa3WpV0jxiVd3x2Rj4fDSA2Zd1vJlyTtDlBQe4v3w4FiimLlP2pep
-	 7bSysZyI/moUcmQpDWn6AIlDfU86K82jKYPCPElc=
+	b=sdBRscuqWZObCYc6FMLbOypGX0aWiEaNbSfCdfrCnIdFWpR8fQFOmWg4/lVRRp5wL
+	 8n0s8ZDh33ZX94C5pl00riMdOStMBfZu4N/ynXy6PiqJpRe3ADMjSsiD+f5nnwQH5C
+	 d5q/5PrgUqXzYKm8R73X8VI+P3NcmGA9i6Egg4Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>
-Subject: [PATCH 6.6 179/452] drm/amd/pm/si: Disregard vblank time when no displays are connected
-Date: Tue, 16 Jun 2026 20:26:46 +0530
-Message-ID: <20260616145127.266629262@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 6.6 148/452] comedi: comedi_test: Fix limiting of convert_arg in waveform_ai_cmdtest()
+Date: Tue, 16 Jun 2026 20:26:15 +0530
+Message-ID: <20260616145125.471081155@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -45,50 +44,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit dd4f3ee535b3b0ac027f75dbf9dc5fc88733c765 upstream.
+commit 8a3bee801d420be8a7a0bae4a26547b353b8fe22 upstream.
 
-When no displays are connected, there is no vblank
-happening so the power management code shouldn't
-worry about it.
+The function checks and possibly modifies the description of an
+asynchronous command to be run on the analog input subdevice of a comedi
+device attached to the "comedi_test" driver, returning 0 if no
+modifications were required, or a positive value that indicates which
+step of the checking process it failed on.  Step 4 fixes up various
+argument values for various trigger sources.
 
-This fixes a regression that caused the memory clock
-to be stuck at maximum when there were no displays
-connected to a SI GPU.
+There are two bugs in the fixing up of the `convert_arg` value to keep
+the `scan_begin_arg` value within the range of `unsigned int` when
+`scan_begin_src` and `convert_src` both have the value `TRIG_TIMER`,
+which indicates that the corresponding `_arg` values hold a time period
+in nanoseconds.  The code also uses `scan_end_arg` which hold the number
+of "conversions" within each "scan".  The goal is to end up with the
+scan period being less than or equal to the convert period multiplied by
+the number of conversions per scan.  It intends to do that by clamping
+the `convert_arg` value to a maximum value of `UINT_MAX / scan_end_arg`
+rounded down to a multiple of 1000 (`NSEC_PER_USEC`).
 
-Fixes: 9003a0746864 ("drm/amd/pm: Treat zero vblank time as too short in si_dpm (v3)")
-Fixes: 9d73b107a61b ("drm/amd/pm: Use pm_display_cfg in legacy DPM (v2)")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Tested-by: Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6d87e0199f7b83735b56e422d59f170a201897a8)
-Cc: stable@vger.kernel.org
+(The rounding from nanoseconds to microseconds is because the driver is
+modelling a device that uses a 1 MHz clock for timing.  This is partly
+because that is a more typical timing base for real hardware devices
+driven by comedi, and partly because the driver used to use `struct
+timeval` internally.)
+
+The first bug is that the code checks if `scan_begin_arg == TRIG_TIMER`
+when it should be checking if `scan_begin_src == TRIG_TIMER`.  The
+bugged check will always fail because if `scan_begin_src == TRIG_TIMER`,
+then `scan_begin_arg` will be at least 1000 (`NSEC_PER_USEC`), otherwise
+`scan_begin_src == TRIG_FOLLOW` and `scan_begin_arg` will be 0.  (N.B
+`TRIG_TIMER` is defined as `0x10`.)  The second bug is that is rounding
+the maximum value down to a multiple of 1000000000 (`NSEC_PER_SEC`)
+instead of 1000 (`NSEC_PER_USEC`), however this bug is not reached due
+to the first bug.  This patch fixes both bugs.
+
+Fixes: 783ddaebd397 ("staging: comedi: comedi_test: support scan_begin_src == TRIG_FOLLOW")
+Fixes: 5afdcad2f818 ("staging: comedi: comedi_test: limit maximum convert_arg")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260422144637.27692-1-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/comedi/drivers/comedi_test.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-@@ -3062,6 +3062,10 @@ static bool si_dpm_vblank_too_short(void
- 	/* we never hit the non-gddr5 limit so disable it */
- 	u32 switch_limit = adev->gmc.vram_type == AMDGPU_VRAM_TYPE_GDDR5 ? 450 : 0;
- 
-+	/* Disregard vblank time when there are no displays connected */
-+	if (!adev->pm.pm_display_cfg.num_display)
-+		return false;
-+
- 	/* Consider zero vblank time too short and disable MCLK switching.
- 	 * Note that the vblank time is set to maximum when no displays are attached,
- 	 * so we'll still enable MCLK switching in that case.
+--- a/drivers/comedi/drivers/comedi_test.c
++++ b/drivers/comedi/drivers/comedi_test.c
+@@ -324,10 +324,10 @@ static int waveform_ai_cmdtest(struct co
+ 		arg = min(arg,
+ 			  rounddown(UINT_MAX, (unsigned int)NSEC_PER_USEC));
+ 		arg = NSEC_PER_USEC * DIV_ROUND_CLOSEST(arg, NSEC_PER_USEC);
+-		if (cmd->scan_begin_arg == TRIG_TIMER) {
++		if (cmd->scan_begin_src == TRIG_TIMER) {
+ 			/* limit convert_arg to keep scan_begin_arg in range */
+ 			limit = UINT_MAX / cmd->scan_end_arg;
+-			limit = rounddown(limit, (unsigned int)NSEC_PER_SEC);
++			limit = rounddown(limit, (unsigned int)NSEC_PER_USEC);
+ 			arg = min(arg, limit);
+ 		}
+ 		err |= comedi_check_trigger_arg_is(&cmd->convert_arg, arg);
 
 
