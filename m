@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC103D45CB;
-	Tue, 16 Jun 2026 18:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973333D45CB;
+	Tue, 16 Jun 2026 18:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633300; cv=none; b=HNhjcTfN0feJhBVxTIvAD+CEaN6ssZoTu+hCUgGW8G8VAfwZBHNMWWWgeKOGpeS4AYNdKHpEPM5ZHOs021nk/fRXs0c/euDwzi9A/zXiUpi2l3OXZT70I15hqP83UFF6QboIOUXOvzASxqCXuyQEWy7gMGvS6ARfZW/JnpSCsAU=
+	t=1781633305; cv=none; b=CZOtPHeB2fZvwHCcDy2/1YIOdILmFUGbgOcZ2+Qczx/Ule+clhzjcRwRy4ydQ+VFZI2tO7PYaqTpN7I/Nfe3ejhWRqWyBPrZ1Xr3Y318R7Kq4dD5TVcMC2cQVsFRLfW8raywpcBOLVJ7x1LvPmRpMYOm/pE2elPyU2gLkZrkWh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633300; c=relaxed/simple;
-	bh=+u/zyOq3AHe331UweUAigjygqtWfeUGb8hea/PiUI4c=;
+	s=arc-20240116; t=1781633305; c=relaxed/simple;
+	bh=j7qc3fkERYNHZpNElpxEFCNvrn1AtNbTTmRIJjuXPjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPd5aC8Lsli3mT4hmpONJLEL4JbGUrmAMvvGRbuTtJm/kW0sEkApqJHtszMl0lnTLY3pBZi9P1cJxr6PZ8HxVmfxrgcZFAW8J7XGYWByv7FCMCMjLiY/9D7CmDqe1ckjD+8eTJ+tav8rkOPJINaLQstzER8Bit8mNZ0nYPhExVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/jsa4Nq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CkgcosM8rDXFCLxX8RGmKOPyYYIrpj4p86OiogbZLfIwXWTVrNajtZsKt10VE27vp0xdbOC2QR9+McGbzACe95GtQKmMGxF0bmgzr+ucXozBVcCSny3OqfUWQrOs+PKXBypHXMt1Ty7Dqfdk3x6Go62GCU/673CKq/E5Tmd85Y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i5MTuwKv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/jsa4Nq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A78F1F000E9;
-	Tue, 16 Jun 2026 18:08:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5MTuwKv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B92D1F000E9;
+	Tue, 16 Jun 2026 18:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633299;
-	bh=X7xz2iv3AiNOLtmd9H+zdzGLhcBc66YnyAxefFB/CaA=;
+	s=korg; t=1781633304;
+	bh=R5o91Pju35wpGyyHH2jn3P17Ime9vIa39/90oC1Qgno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c/jsa4NqD+L7txV3YIDjcTX3cL6eb3kHJK1w0VdgS+BdTWd6CGddLq0TdWXjbcFOu
-	 Z5csE6Qz8TOLTpxGqlEm0f5T8n6vEdhRfGrJQBdNmA0JArxMAY14xUIU6XB3nXqbfZ
-	 /UaJltB3cmpNFDr79S1EJYnzhKPgjTdXbV2j91N4=
+	b=i5MTuwKvhgQkYcwt6MVhMlPNSPPKY5sLPazItYTBsgqJb71RtXuTK9rg5eXIn7HR5
+	 AvS/mwrJOG+l9UmtkWXeNw9AOb2t2iUuScFi5ku7Kf+GVSX7x5lXMUrwillCj7ymOF
+	 NhM/nE1ei8g97L1TZgtljMZrDHNAKfjGEyQgkBSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Fomichev <sdf.kernel@gmail.com>,
-	Breno Leitao <leitao@debian.org>,
-	Alexandra Winter <wintera@linux.ibm.com>,
+	Jian Zhou <eilaimemedsnaimel@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 019/411] net/iucv: fix locking in .getsockopt
-Date: Tue, 16 Jun 2026 20:24:17 +0530
-Message-ID: <20260616145101.407519169@linuxfoundation.org>
+Subject: [PATCH 5.15 020/411] ipv4: free net->ipv4.sysctl_local_reserved_ports after unregister_net_sysctl_table()
+Date: Tue, 16 Jun 2026 20:24:18 +0530
+Message-ID: <20260616145101.457048648@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -53,85 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3589d20a666caf30ad100c960a2de7de390fce88 ]
+[ Upstream commit 87a1e0fe7776da7ab411be332b4be58ac8840d10 ]
 
-Mirror iucv_sock_setsockopt() and wrap the whole switch in
-lock_sock()/release_sock(). The pre-existing SO_MSGLIMIT-only lock
-becomes redundant and is removed.
+ipv4_sysctl_exit_net() is currently freeing net->ipv4.sysctl_local_reserved_ports
+too soon.
 
-Any AF_IUCV HIPER user can potentially crash the kernel by racing
-recvmsg() with getsockopt(SO_MSGSIZE): the SO_MSGSIZE arm dereferences
-iucv->hs_dev->mtu after iucv_sock_close() (called from the racing
-recvmsg()) has set hs_dev to NULL, producing a NULL pointer dereference
-oops.
+Only after unregister_net_sysctl_table() we can be sure no threads can possibly
+use the sysctls, including /proc/sys/net/ipv4/ip_local_reserved_ports.
 
-Suggested-by: Stanislav Fomichev <sdf.kernel@gmail.com>
-Fixes: 51363b8751a6 ("af_iucv: allow retrieval of maximum message size")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Tested-by: Alexandra Winter <wintera@linux.ibm.com>
-Link: https://patch.msgid.link/20260521-af_iucv_fix2-v1-1-f16b1c510aa9@debian.org
+Fixes: 122ff243f5f1 ("ipv4: make ip_local_reserved_ports per netns")
+Reported-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Cong Wang <xiyou.wangcong@gmail.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260521122147.3584624-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/iucv/af_iucv.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ net/ipv4/sysctl_net_ipv4.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
-index e6cb3e1cbbf9b8..3188d719a2e42d 100644
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -1533,7 +1533,7 @@ static int iucv_sock_getsockopt(struct socket *sock, int level, int optname,
- 	struct sock *sk = sock->sk;
- 	struct iucv_sock *iucv = iucv_sk(sk);
- 	unsigned int val;
--	int len;
-+	int len, rc;
+diff --git a/net/ipv4/sysctl_net_ipv4.c b/net/ipv4/sysctl_net_ipv4.c
+index 1f22e72074fdca..a7d335ab000403 100644
+--- a/net/ipv4/sysctl_net_ipv4.c
++++ b/net/ipv4/sysctl_net_ipv4.c
+@@ -1415,10 +1415,10 @@ static __net_exit void ipv4_sysctl_exit_net(struct net *net)
+ {
+ 	struct ctl_table *table;
  
- 	if (level != SOL_IUCV)
- 		return -ENOPROTOOPT;
-@@ -1546,26 +1546,34 @@ static int iucv_sock_getsockopt(struct socket *sock, int level, int optname,
+-	kfree(net->ipv4.sysctl_local_reserved_ports);
+ 	table = net->ipv4.ipv4_hdr->ctl_table_arg;
+ 	unregister_net_sysctl_table(net->ipv4.ipv4_hdr);
+ 	kfree(table);
++	kfree(net->ipv4.sysctl_local_reserved_ports);
+ }
  
- 	len = min_t(unsigned int, len, sizeof(int));
- 
-+	rc = 0;
-+
-+	lock_sock(sk);
- 	switch (optname) {
- 	case SO_IPRMDATA_MSG:
- 		val = (iucv->flags & IUCV_IPRMDATA) ? 1 : 0;
- 		break;
- 	case SO_MSGLIMIT:
--		lock_sock(sk);
- 		val = (iucv->path != NULL) ? iucv->path->msglim	/* connected */
- 					   : iucv->msglimit;	/* default */
--		release_sock(sk);
- 		break;
- 	case SO_MSGSIZE:
--		if (sk->sk_state == IUCV_OPEN)
--			return -EBADFD;
-+		if (sk->sk_state == IUCV_OPEN) {
-+			rc = -EBADFD;
-+			break;
-+		}
- 		val = (iucv->hs_dev) ? iucv->hs_dev->mtu -
- 				sizeof(struct af_iucv_trans_hdr) - ETH_HLEN :
- 				0x7fffffff;
- 		break;
- 	default:
--		return -ENOPROTOOPT;
-+		rc = -ENOPROTOOPT;
-+		break;
- 	}
-+	release_sock(sk);
-+
-+	if (rc)
-+		return rc;
- 
- 	if (put_user(len, optlen))
- 		return -EFAULT;
+ static __net_initdata struct pernet_operations ipv4_sysctl_ops = {
 -- 
 2.53.0
 
