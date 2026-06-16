@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8905466B74;
-	Tue, 16 Jun 2026 16:10:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 480D933688F;
+	Tue, 16 Jun 2026 16:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626246; cv=none; b=JkcjmVFVoBkSCSl3WwqmOCYzTBCzUMs12etQ5XsIRBZ1wwxcsR57JRaRHcafFCpFdYusYtehQfY0WVzvhcGZ6jH16h3xVrxAKm90kSFVLN0GbRwyTtzO4jLgSryzPUOdCoU456tsnx6lTR77/S2gwNHpaI64WMQ80EKWxj36YMY=
+	t=1781626252; cv=none; b=WR6q+b3YjaGVRqNZJRnfMGFsG7z6u6GeZeCiotfKGzXiLVyD0pCuqvzp4GZ/0INd6J0te2/BXLqyHgeEcj8AjrkzoPmFXc16xquCOyRRR/zGHiJZeR+oDKzqlHGfdaM9wdhX7rlGp/IWhWEDUKzhstbSTZ9UOV+oIOGXBDv18M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626246; c=relaxed/simple;
-	bh=MDOeOo/6SLgRCrFbfHQMLaCK8VMtzsewGbvBv/rv9qY=;
+	s=arc-20240116; t=1781626252; c=relaxed/simple;
+	bh=M4fXxsmjdfECFfEELb/GpgMyCwtznCy9j1oV9T8z2Ik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tQnjZ3+UAwCVFENbMGhmp41g2iLbqdr4F+vQIjyFeXL/rzRrADnyObMUQ5lhU5tJafnduWzn8lM7Dve7qGprldXQ3vKt5kupKJn5HRa9jyAsxv+tcRmT77GKLHMNX2x/XOmso10LmHuhvKsL34KXqYauXNFnyBeb98runUPaoAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4d6wHiu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OAeG5xDaQUAq90y9ROYzv1l8GwY1uv+g91H6aovwvj016Q5ZZb4cWGdJz4z8L5V6brZel3bRyQibCAb8xo1u/ckG62YU5iqnLmVLZroMFi2jfRb1K1X5EKMs0uHgm7y2N414bsvow0NM+vyFVW+zE4Q2zezWnVSAwRgEvU+NzVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvLTZMoo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4d6wHiu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98CB1F000E9;
-	Tue, 16 Jun 2026 16:10:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvLTZMoo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5981F000E9;
+	Tue, 16 Jun 2026 16:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626245;
-	bh=G8caWg0dV06aoJc4OAdnG/ejJzNkhlLDC6rLjffgP/M=;
+	s=korg; t=1781626251;
+	bh=uie7/Qtigzc4kFFIs7yHfh1dBEVSOdT4fIv79TVa8K0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c4d6wHiuCD/KTGSQp9/I5fUWqVAKVGcHV1hdwMbsRSkdYrBLyZ3ZmctGnKC3JNkq9
-	 a7ViWDVFTYdAGALjY861P1rMfqP0Y+qnIaA0AXR2wzeeHQ7vl3x1EizVEqRW/pnPoy
-	 ic0qeMyWyxGlwUsUSKMq2byme7HhldEslYKJmWOY=
+	b=dvLTZMooHGzhtJ3c9UWUuJjAvgSfB8BmekuqYx624IBBafWOF3vVe4PARgpTcw7S4
+	 EQIk7OPASqjAyp6kEhFRlq8CSpH6eEap2cu8A0xOp6EgKZC+o0ZM5x0V+TQ61ydr/3
+	 nvrxL4lU1FR6d/RuIs57kwfGLL6VYxiZ19ylVu70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 292/325] drm/amdgpu: restart the CS if some parts of the VM are still invalidated
-Date: Tue, 16 Jun 2026 20:31:28 +0530
-Message-ID: <20260616145113.358474596@linuxfoundation.org>
+	Christian Koenig <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>
+Subject: [PATCH 6.18 293/325] drm/amdgpu: set noretry=1 as default for GFX 10.1.x (Navi10/12/14)
+Date: Tue, 16 Jun 2026 20:31:29 +0530
+Message-ID: <20260616145113.412930190@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,45 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Vitaly Prosyak <vitaly.prosyak@amd.com>
 
-commit 40396ffdf6120e2380706c59e1a84d7e765a37b6 upstream.
+commit e47b0056a08dc70430ffc44bbf62197e7d1ff8ea upstream.
 
-Make sure that we only submit work with full up to date VM page tables.
+Problem:
+While developing the amd_close_race IGT test (which intentionally triggers
+execute permission faults by removing VM_PAGE_EXECUTABLE from GPU page table
+entries), we discovered that on Navi10 (GFX 10.1.x) these faults produce
+zero diagnostic output. The GPU simply hangs silently for ~10s until the
+scheduler timeout fires. There is no way to distinguish an execute
+permission fault from any other type of GPU hang.
 
-Backport to 7.1 and older.
+Root cause:
+GFX 10.1.x defaults to noretry=0, which sets
+RETRY_PERMISSION_OR_INVALID_PAGE_FAULT=1 in the GFXHUB UTCL2 registers
+(gfxhub_v2_0.c line 313). With this bit set, permission faults (valid PTE,
+wrong R/W/X bits) are handled entirely within the UTCL1/UTCL2 hardware
+loop: UTCL2 returns an XNACK to UTCL1, and UTCL1 re-requests the
+translation indefinitely, expecting software to eventually fix the
+permission bits (as happens in SVM/HMM recovery). No interrupt of any kind
+reaches the IH ring.
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Tested-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+This is different from invalid-page faults (V=0) which DO generate a retry
+fault interrupt that the driver can escalate to a no-retry fault. Permission
+faults with valid PTEs loop silently forever in hardware.
+
+GFX 10.3+ already defaults to noretry=1, which makes permission faults
+generate immediate L2 protection fault interrupts. GFX 10.1.x was
+inadvertently left out of this default.
+
+Fix:
+Change the noretry=1 threshold from IP_VERSION(10, 3, 0) to
+IP_VERSION(10, 1, 0) in amdgpu_gmc_noretry_set(). This is a one-line
+change that aligns GFX 10.1.x behavior with GFX 10.3+ and all newer
+generations.
+
+With noretry=1, the existing non-retry fault handler
+(gmc_v10_0_process_interrupt) already decodes and prints the full
+GCVM_L2_PROTECTION_FAULT_STATUS register including PERMISSION_FAULTS,
+faulting address, VMID, PASID, and process name. No additional logging
+code is needed — the fix is purely routing permission faults to the
+existing, fully-capable non-retry interrupt handler.
+
+v2: Dropped GFX10-specific logging from gmc_v10_0.c and
+kfd_int_process_v10.c (Felix Kuehling). v1 added logging in the retry
+fault handler, but with noretry=1 permission faults take the non-retry
+path — the v1 retry handler code was dead and would never execute.
+
+Tested on Navi10 (GFX 10.1.10):
+- Execute permission faults now produce immediate, clear output:
+    [gfxhub] page fault (src_id:0 ring:64 vmid:4 pasid:592)
+     Process amd_close_race pid 13380 thread amd_close_race pid 13384
+      in page at address 0x40001000 from client 0x1b (UTCL2)
+    GCVM_L2_PROTECTION_FAULT_STATUS:0x00700881
+         PERMISSION_FAULTS: 0x8
+- No regressions with properly-mapped GPU workloads
+
+Cc: Christian Koenig <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 59720bfd8c6dbebeb8d5a7ab64241b007efd9213)
+(cherry picked from commit eb21edd24c40d81066753f8ac6f23bce15745395)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -1282,6 +1282,7 @@ static int amdgpu_cs_submit(struct amdgp
- {
- 	struct amdgpu_fpriv *fpriv = p->filp->driver_priv;
- 	struct amdgpu_job *leader = p->gang_leader;
-+	struct amdgpu_vm *vm = &fpriv->vm;
- 	struct amdgpu_bo_list_entry *e;
- 	struct drm_gem_object *gobj;
- 	unsigned long index;
-@@ -1327,7 +1328,8 @@ static int amdgpu_cs_submit(struct amdgp
- 							e->range);
- 		e->range = NULL;
- 	}
--	if (r) {
-+
-+	if (r || !list_empty(&vm->invalidated)) {
- 		r = -EAGAIN;
- 		mutex_unlock(&p->adev->notifier_lock);
- 		return r;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
+@@ -953,7 +953,7 @@ void amdgpu_gmc_noretry_set(struct amdgp
+ 				gc_ver == IP_VERSION(9, 4, 3) ||
+ 				gc_ver == IP_VERSION(9, 4, 4) ||
+ 				gc_ver == IP_VERSION(9, 5, 0) ||
+-				gc_ver >= IP_VERSION(10, 3, 0));
++				gc_ver >= IP_VERSION(10, 1, 0));
+ 
+ 	if (!amdgpu_sriov_xnack_support(adev))
+ 		gmc->noretry = 1;
 
 
