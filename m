@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9AE38C437;
-	Tue, 16 Jun 2026 18:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B2D38C437;
+	Tue, 16 Jun 2026 18:42:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635321; cv=none; b=XgnYJfVTEfoSnQKv3hKhIROU1jPEZPWjth47An556AQNj6kYUg4PCbGB+IcOv2/EswfQJ7z6ulT+OaEKEu4lQv0BT66O2X9eNR6xjtzZMAY9lmHf6s2ZDXjtQRduxX8YCzw9LRegNwDjK48LUtgd70Y2h7pATxtfgRCtxhD7aWc=
+	t=1781635326; cv=none; b=plyPNoPXRHrWBGIkWeTLEdFoBhLlkR/LNZCXTViRF7v6Nz9080rptecLsJF1tYrftQ0M0f/oW716fIofBPckK17y9Hh1zNrSQM5qXi6OnHIn6/fk79lByt2B/oT+kwBvXj/FY1Kcli07UOW3O8YMGiOQ7FZIgwRfMQZKnkDphjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635321; c=relaxed/simple;
-	bh=NDoxrjUdxl8CrAZtDfZFDpoi5ExozlaDRYMdp+rqkVo=;
+	s=arc-20240116; t=1781635326; c=relaxed/simple;
+	bh=FB22KC/jibS//Q4HwMhYedqlfMig7mEbWSCPoRG7SHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g3UhJ8EJfE8ZILz4DYZ0ZIL2C8kJnBquQWQvKnrNgVb1POFoTaO7VpQ8v8eQboXoIUWLhXkKMnqBArjztdgy3kN+K4m5ka3mszkUPrljktbTIi1W+wbnYQTRRMaXUSjpg7VpX+er7bPskpJ381vmSAZHqR/j944GZ6/jpoiVyYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/fNQWbw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J9+hAeRx1wIdEHXfyv2evjYqGqWvFfH7a8dHAe02hPE/Qg1V2+D4V7BZ6bTT6/IXsvz4xF+NErgyBeADfQktIRkuQScreyOCSKbHlcD4FPHNtoBURpVzIBDrCiUu+FTQmyD0H965oR74fbFBRxoYo3LEw6+b7pzqjxehJEwGghE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tlz8y9lJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/fNQWbw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710A71F000E9;
-	Tue, 16 Jun 2026 18:41:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tlz8y9lJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCA91F000E9;
+	Tue, 16 Jun 2026 18:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635320;
-	bh=wlcS3djamP12kdvyruNFLq0RywAwJE2DQSIilur/u9g=;
+	s=korg; t=1781635325;
+	bh=f46pBipB4Oh44cWPxroOr2x9Pyk/7/Js6ia7ZX9kCAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y/fNQWbwOk5WvQ4lwzayq75Z1ivm0LOiFGpwXLPUoKQZoBM7qKbGsvIMMw+2mJxMz
-	 daifFUHq18gkwxNy/DNHsuyuBMA3AMCMCl8rCEx9gQKhc7rovz4Eo9JQ5PEM3b9qyf
-	 NiEZTniSW5N3hSdr14DKKfDA00mkARLdDSrvq0dM=
+	b=tlz8y9lJzq6gO+wcaTXY31F7glf/8wFsp9w/9bYh4APGb9bMmTCWg0ssG2y1eHm4b
+	 4eF7bKRVVOHWmaprhHgT/uZCvh0Wh4+DNLTzIFf/tAE9nOo4r3DeNyaNeU98R1Dgf7
+	 u+9xZGdEW/hXynpqHM2PNtpSLqMDq4/1uy+jLp1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhenghang Xiao <kipreyyy@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 027/342] Bluetooth: l2cap: clear chan->ident on ECRED reconfiguration success
-Date: Tue, 16 Jun 2026 20:25:23 +0530
-Message-ID: <20260616145049.523585737@linuxfoundation.org>
+Subject: [PATCH 5.10 028/342] Bluetooth: L2CAP: Fix possible crash on l2cap_ecred_conn_rsp
+Date: Tue, 16 Jun 2026 20:25:24 +0530
+Message-ID: <20260616145049.568957286@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -51,60 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenghang Xiao <kipreyyy@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 00e1950716c6ed67d74777b2db286b0fa23b4be9 ]
+[ Upstream commit 41c2713b204e6cb6a94587bc6bf6935107df5479 ]
 
-l2cap_ecred_reconf_rsp() returns early on success without clearing
-chan->ident. Every other L2CAP response handler (l2cap_ecred_conn_rsp,
-l2cap_le_connect_rsp, l2cap_config_rsp) clears chan->ident after a
-successful transaction to prevent the channel from matching subsequent
-responses with the recycled ident value.
+If dcid is received for an already-assigned destination CID the spec
+requires that both channels to be discarded, but calling l2cap_chan_del
+may invalidate the tmp cursor created by list_for_each_entry_safe and
+in fact it is the wrong procedure as the chan->dcid may be assigned
+previously it really needs to be disconnected.
 
-A remote attacker that completed a reconfiguration as the peer can
-replay a failure response with the stale ident, causing the kernel to
-match and destroy the already-established channel via
-l2cap_chan_del(chan, ECONNRESET).
-
-Clear chan->ident for all matching channels on success, and harden the
-failure path by using l2cap_chan_hold_unless_zero() consistent with
-other L2CAP handlers (l2cap_le_command_rej, __l2cap_get_chan_by_ident).
+Calling l2cap_chan_clone directly may still lead to l2cap_chan_del so
+instead schedule l2cap_chan_timeout with delay 0 to close the channel
+asynchronously.
 
 Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
-Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/bluetooth/l2cap_core.c | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
 diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 45e1e8192e3b63..f30624d20bb09c 100644
+index f30624d20bb09c..89e770f359ef20 100644
 --- a/net/bluetooth/l2cap_core.c
 +++ b/net/bluetooth/l2cap_core.c
-@@ -6432,14 +6432,20 @@ static inline int l2cap_ecred_reconf_rsp(struct l2cap_conn *conn,
- 
- 	BT_DBG("result 0x%4.4x", result);
- 
--	if (!result)
-+	if (!result) {
-+		list_for_each_entry(chan, &conn->chan_l, list) {
-+			if (chan->ident == cmd->ident)
-+				chan->ident = 0;
-+		}
- 		return 0;
-+	}
+@@ -6232,6 +6232,7 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 	cmd_len -= sizeof(*rsp);
  
  	list_for_each_entry_safe(chan, tmp, &conn->chan_l, list) {
- 		if (chan->ident != cmd->ident)
++		struct l2cap_chan *orig;
+ 		u16 dcid;
+ 
+ 		if (chan->ident != cmd->ident ||
+@@ -6253,8 +6254,10 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 
+ 		BT_DBG("dcid[%d] 0x%4.4x", i, dcid);
+ 
++		orig = __l2cap_get_chan_by_dcid(conn, dcid);
++
+ 		/* Check if dcid is already in use */
+-		if (dcid && __l2cap_get_chan_by_dcid(conn, dcid)) {
++		if (dcid && orig) {
+ 			/* If a device receives a
+ 			 * L2CAP_CREDIT_BASED_CONNECTION_RSP packet with an
+ 			 * already-assigned Destination CID, then both the
+@@ -6263,10 +6266,24 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 			 */
+ 			l2cap_chan_del(chan, ECONNREFUSED);
+ 			l2cap_chan_unlock(chan);
+-			chan = __l2cap_get_chan_by_dcid(conn, dcid);
+-			l2cap_chan_lock(chan);
+-			l2cap_chan_del(chan, ECONNRESET);
+-			l2cap_chan_unlock(chan);
++
++			/* Check that the dcid channel mode is
++			 * L2CAP_MODE_EXT_FLOWCTL since this procedure is only
++			 * valid for that mode and shouldn't disconnect a dcid
++			 * in other modes.
++			 */
++			if (orig->mode == L2CAP_MODE_EXT_FLOWCTL) {
++				l2cap_chan_lock(orig);
++				/* Disconnect the original channel as it may be
++				 * considered connected since dcid has already
++				 * been assigned; don't call l2cap_chan_close
++				 * directly since that could lead to
++				 * l2cap_chan_del and then removing the channel
++				 * from the list while we're iterating over it.
++				 */
++				__set_chan_timer(orig, 0);
++				l2cap_chan_unlock(orig);
++			}
  			continue;
+ 		}
  
--		l2cap_chan_hold(chan);
-+		if (!l2cap_chan_hold_unless_zero(chan))
-+			continue;
- 		l2cap_chan_lock(chan);
- 
- 		l2cap_chan_del(chan, ECONNRESET);
 -- 
 2.53.0
 
