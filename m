@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEAA46AEC5;
-	Tue, 16 Jun 2026 16:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0C346AEC5;
+	Tue, 16 Jun 2026 16:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626578; cv=none; b=WXkP3dZJDUTULpO68YeAxD9x/fKqIQcTGxAzXTyKyMVPhlndNK7roSoIXyMokElnV6zhwndGXh0PNH0FnAhOcSK9qE1pejX6/sCFkNBvFLzrg22UC8/pVxcwsJ3t547orFkm5pyjj8Sb3vDVlaHo8tVX6XoBhIKxMN97XJQxYDQ=
+	t=1781626583; cv=none; b=T/h7EnEZv5Kv6mkrdweYeztpI74M1o/iqU6ot5hMxkuO77LQSiLUpUbOmopqqWKA8v3v6P+KoxXJoqJVzM/TnVvDrUatd9WuZu70+PvNy3Cnvt7uKwQ01CelgL9w/WcuQWiYdNS/OtTnVW0HyyUF5g/KR+9Zerf9A9/wYEv8pD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626578; c=relaxed/simple;
-	bh=FJyD4ZhEyoPmkQg/X1ux0qg9iQTKAW7h0j1Ss6xH3+4=;
+	s=arc-20240116; t=1781626583; c=relaxed/simple;
+	bh=MkogXLHjx4agOgTzuXsTl/cZ/2WinE7Jk8rZJcZujBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L/9njpdYvVrpWDuWjR+rlpICRf/CRLbX/jUpqbjaZDEZZl4QiyznAfrWnmOSvqSdzaocy80jO0VKgNWZyBdcgrRzlqVBUzc6SyNEx6a1tg7AVyKrmqy1PKJQJIZpqB/Xn2u1KAD5ZmTjVzU8e2Lsw51O66VndT1JDjJCwN8P/CY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMRpA9h2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=blZynaAp3rhG4MkLRQfDhZfqIARB+e4f9o5+XUSsPdKqeXjcRv5h45qlo+gcDbaKSE4PD+v9kI9/nBoYZHxFkeZQl547+7iPk8Si7JSLfyLqn8nubkcDirTzBookpF2rtdH7Xj785Yavm67KbExyT6KBtr9ToqQJmdAtp3PclHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KdKQMiOu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMRpA9h2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB3591F000E9;
-	Tue, 16 Jun 2026 16:16:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdKQMiOu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B23C1F000E9;
+	Tue, 16 Jun 2026 16:16:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626576;
-	bh=0bKSuI9FLAhdnVHltZxb3cw3x8EQaFRuHekW7evcjpY=;
+	s=korg; t=1781626582;
+	bh=hjNaVkV5S0sHbObasAllgeH9G6t0XDjTSCCwvNad3b0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yMRpA9h2Hjlx4KhWAC8SbjG+H4iMtVr5L57mOnmlrlvL0oApHsnnBlnI1DSNQ6rRn
-	 1Utpvh60SUhXMj9bo9WZmnAgRKJzPo7r5MxDgob78BZoG0eL96mTqg9fuM2nBEwXP2
-	 zQDhlqD8+471m1zNDZYcVKybYWlvICtwsQwhk/cs=
+	b=KdKQMiOuJHTXqXTb7yqH+NVdm5CYMrO43QEEkfCzdbkEiesE0k120JsQrzopWdyju
+	 5jte7Lu2sXGiYs0FPgCiPdbC8CUmralytdeYwdifgcahdT3juxL6nx4ayok7OTJWCx
+	 WtB9Gmw52Sd7NrCZiJfwG+WAPe9ldwdSH61GXUp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunhai Guo <guochunhai@vivo.com>,
+	Chao Yu <chao@kernel.org>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 014/261] erofs: add sysfs node to drop internal caches
-Date: Tue, 16 Jun 2026 20:27:32 +0530
-Message-ID: <20260616145045.681277847@linuxfoundation.org>
+Subject: [PATCH 6.12 015/261] erofs: tidy up synchronous decompression
+Date: Tue, 16 Jun 2026 20:27:33 +0530
+Message-ID: <20260616145045.723163477@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -51,117 +51,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chunhai Guo <guochunhai@vivo.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit db80b98305f73ca83891e4228ead5f0324118b00 ]
+[ Upstream commit cc831ab33644088c1eef78936de24701014d520a ]
 
-Add a sysfs node to drop compression-related caches, currently used to
-drop in-memory pclusters and cached compressed folios.
+ - Get rid of `sbi->opt.max_sync_decompress_pages` since it's fixed as
+   3 all the time;
 
-Signed-off-by: Chunhai Guo <guochunhai@vivo.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20241113041148.749129-1-guochunhai@vivo.com
+ - Add Z_EROFS_MAX_SYNC_DECOMPRESS_BYTES in bytes instead of in pages,
+   since for non-4K pages, 3-page limitation makes no sense;
+
+ - Move `sync_decompress` to sbi to avoid unexpected remount impact;
+
+ - Fold z_erofs_is_sync_decompress() into its caller;
+
+ - Better description of sysfs entry `sync_decompress`.
+
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Stable-dep-of: 1aee05e814d2 ("erofs: fix use-after-free on sbi->sync_decompress")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-fs-erofs | 11 +++++++++++
- fs/erofs/internal.h                      |  2 ++
- fs/erofs/sysfs.c                         | 17 +++++++++++++++++
- fs/erofs/zdata.c                         |  1 -
- 4 files changed, 30 insertions(+), 1 deletion(-)
+ Documentation/ABI/testing/sysfs-fs-erofs | 14 ++++++----
+ fs/erofs/internal.h                      |  5 +---
+ fs/erofs/super.c                         |  3 +-
+ fs/erofs/sysfs.c                         |  2 +-
+ fs/erofs/zdata.c                         | 35 +++++++++---------------
+ 5 files changed, 25 insertions(+), 34 deletions(-)
 
 diff --git a/Documentation/ABI/testing/sysfs-fs-erofs b/Documentation/ABI/testing/sysfs-fs-erofs
-index 284224d1b56fe1..b134146d735bc5 100644
+index b134146d735bc5..d76de22b6ef31c 100644
 --- a/Documentation/ABI/testing/sysfs-fs-erofs
 +++ b/Documentation/ABI/testing/sysfs-fs-erofs
-@@ -16,3 +16,14 @@ Description:	Control strategy of sync decompression:
- 		  readahead on atomic contexts only.
- 		- 1 (force on): enable for readpage and readahead.
- 		- 2 (force off): disable for all situations.
-+
-+What:		/sys/fs/erofs/<disk>/drop_caches
-+Date:		November 2024
-+Contact:	"Guo Chunhai" <guochunhai@vivo.com>
-+Description:	Writing to this will drop compression-related caches,
-+		currently used to drop in-memory pclusters and cached
-+		compressed folios:
-+
-+		- 1 : invalidate cached compressed folios
-+		- 2 : drop in-memory pclusters
-+		- 3 : drop in-memory pclusters and cached compressed folios
+@@ -10,12 +10,16 @@ Description:	Shows all enabled kernel features.
+ What:		/sys/fs/erofs/<disk>/sync_decompress
+ Date:		November 2021
+ Contact:	"Huang Jianan" <huangjianan@oppo.com>
+-Description:	Control strategy of sync decompression:
++Description:	Control strategy of synchronous decompression. Synchronous
++		decompression tries to decompress in the reader thread for
++		synchronous reads and small asynchronous reads (<= 12 KiB):
+ 
+-		- 0 (default, auto): enable for readpage, and enable for
+-		  readahead on atomic contexts only.
+-		- 1 (force on): enable for readpage and readahead.
+-		- 2 (force off): disable for all situations.
++		- 0 (auto, default): apply to synchronous reads only, but will
++		                     switch to 1 (force on) if any decompression
++		                     request is detected in atomic contexts;
++		- 1 (force on): apply to synchronous reads and small
++		                asynchronous reads;
++		- 2 (force off): disable synchronous decompression completely.
+ 
+ What:		/sys/fs/erofs/<disk>/drop_caches
+ Date:		November 2024
 diff --git a/fs/erofs/internal.h b/fs/erofs/internal.h
-index 1c003412677ef6..24e01d9135c60d 100644
+index 24e01d9135c60d..89dfb3736daa41 100644
 --- a/fs/erofs/internal.h
 +++ b/fs/erofs/internal.h
-@@ -443,6 +443,8 @@ static inline void erofs_pagepool_add(struct page **pagepool, struct page *page)
- void erofs_release_pages(struct page **pagepool);
+@@ -66,10 +66,6 @@ enum {
+ struct erofs_mount_opts {
+ 	/* current strategy of how to use managed cache */
+ 	unsigned char cache_strategy;
+-	/* strategy of sync decompression (0 - auto, 1 - force on, 2 - force off) */
+-	unsigned int sync_decompress;
+-	/* threshold for decompression synchronously */
+-	unsigned int max_sync_decompress_pages;
+ 	unsigned int mount_opt;
+ };
  
+@@ -123,6 +119,7 @@ struct erofs_sb_info {
+ 	/* managed XArray arranged in physical block number */
+ 	struct xarray managed_pslots;
+ 
++	unsigned int sync_decompress;	/* strategy for sync decompression */
+ 	unsigned int shrinker_run_no;
+ 	u16 available_compr_algs;
+ 
+diff --git a/fs/erofs/super.c b/fs/erofs/super.c
+index bc968cf812bac4..1640ebc26ac9c4 100644
+--- a/fs/erofs/super.c
++++ b/fs/erofs/super.c
+@@ -370,8 +370,7 @@ static void erofs_default_options(struct erofs_sb_info *sbi)
+ {
  #ifdef CONFIG_EROFS_FS_ZIP
-+#define MNGD_MAPPING(sbi)	((sbi)->managed_cache->i_mapping)
-+
- extern atomic_long_t erofs_global_shrink_cnt;
- void erofs_shrinker_register(struct super_block *sb);
- void erofs_shrinker_unregister(struct super_block *sb);
+ 	sbi->opt.cache_strategy = EROFS_ZIP_CACHE_READAROUND;
+-	sbi->opt.max_sync_decompress_pages = 3;
+-	sbi->opt.sync_decompress = EROFS_SYNC_DECOMPRESS_AUTO;
++	sbi->sync_decompress = EROFS_SYNC_DECOMPRESS_AUTO;
+ #endif
+ #ifdef CONFIG_EROFS_FS_XATTR
+ 	set_opt(&sbi->opt, XATTR_USER);
 diff --git a/fs/erofs/sysfs.c b/fs/erofs/sysfs.c
-index 63cffd0fd26195..19d586273b7091 100644
+index 19d586273b7091..3fbce0864a66f0 100644
 --- a/fs/erofs/sysfs.c
 +++ b/fs/erofs/sysfs.c
-@@ -10,6 +10,7 @@
- 
- enum {
- 	attr_feature,
-+	attr_drop_caches,
- 	attr_pointer_ui,
- 	attr_pointer_bool,
- };
-@@ -57,11 +58,13 @@ static struct erofs_attr erofs_attr_##_name = {			\
+@@ -57,7 +57,7 @@ static struct erofs_attr erofs_attr_##_name = {			\
+ #define ATTR_LIST(name) (&erofs_attr_##name.attr)
  
  #ifdef CONFIG_EROFS_FS_ZIP
- EROFS_ATTR_RW_UI(sync_decompress, erofs_mount_opts);
-+EROFS_ATTR_FUNC(drop_caches, 0200);
+-EROFS_ATTR_RW_UI(sync_decompress, erofs_mount_opts);
++EROFS_ATTR_RW_UI(sync_decompress, erofs_sb_info);
+ EROFS_ATTR_FUNC(drop_caches, 0200);
  #endif
  
- static struct attribute *erofs_attrs[] = {
- #ifdef CONFIG_EROFS_FS_ZIP
- 	ATTR_LIST(sync_decompress),
-+	ATTR_LIST(drop_caches),
- #endif
- 	NULL,
- };
-@@ -163,6 +166,20 @@ static ssize_t erofs_attr_store(struct kobject *kobj, struct attribute *attr,
- 			return -EINVAL;
- 		*(bool *)ptr = !!t;
- 		return len;
-+#ifdef CONFIG_EROFS_FS_ZIP
-+	case attr_drop_caches:
-+		ret = kstrtoul(skip_spaces(buf), 0, &t);
-+		if (ret)
-+			return ret;
-+		if (t < 1 || t > 3)
-+			return -EINVAL;
-+
-+		if (t & 2)
-+			z_erofs_shrink_scan(sbi, ~0UL);
-+		if (t & 1)
-+			invalidate_mapping_pages(MNGD_MAPPING(sbi), 0, -1);
-+		return len;
-+#endif
- 	}
- 	return 0;
- }
 diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index a81b6e6aee59ad..8192eb9b23bc7b 100644
+index 8192eb9b23bc7b..da421fe310df11 100644
 --- a/fs/erofs/zdata.c
 +++ b/fs/erofs/zdata.c
-@@ -109,7 +109,6 @@ static inline unsigned int z_erofs_pclusterpages(struct z_erofs_pcluster *pcl)
- 	return PAGE_ALIGN(pcl->pclustersize) >> PAGE_SHIFT;
+@@ -9,6 +9,7 @@
+ #include <linux/cpuhotplug.h>
+ #include <trace/events/erofs.h>
+ 
++#define Z_EROFS_MAX_SYNC_DECOMPRESS_BYTES	12288
+ #define Z_EROFS_PCLUSTER_MAX_PAGES	(Z_EROFS_PCLUSTER_MAX_SIZE / PAGE_SIZE)
+ #define Z_EROFS_INLINE_BVECS		2
+ 
+@@ -1077,21 +1078,6 @@ static int z_erofs_scan_folio(struct z_erofs_frontend *f,
+ 	return err;
  }
  
--#define MNGD_MAPPING(sbi)	((sbi)->managed_cache->i_mapping)
- static bool erofs_folio_is_managed(struct erofs_sb_info *sbi, struct folio *fo)
+-static bool z_erofs_is_sync_decompress(struct erofs_sb_info *sbi,
+-				       unsigned int readahead_pages)
+-{
+-	/* auto: enable for read_folio, disable for readahead */
+-	if ((sbi->opt.sync_decompress == EROFS_SYNC_DECOMPRESS_AUTO) &&
+-	    !readahead_pages)
+-		return true;
+-
+-	if ((sbi->opt.sync_decompress == EROFS_SYNC_DECOMPRESS_FORCE_ON) &&
+-	    (readahead_pages <= sbi->opt.max_sync_decompress_pages))
+-		return true;
+-
+-	return false;
+-}
+-
+ static bool z_erofs_page_is_invalidated(struct page *page)
  {
- 	return fo->mapping == MNGD_MAPPING(sbi);
+ 	return !page_folio(page)->mapping && !z_erofs_is_shortlived_page(page);
+@@ -1454,9 +1440,9 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
+ #else
+ 		queue_work(z_erofs_workqueue, &io->u.work);
+ #endif
+-		/* enable sync decompression for readahead */
+-		if (sbi->opt.sync_decompress == EROFS_SYNC_DECOMPRESS_AUTO)
+-			sbi->opt.sync_decompress = EROFS_SYNC_DECOMPRESS_FORCE_ON;
++		/* See `sync_decompress` in sysfs-fs-erofs for more details */
++		if (sbi->sync_decompress == EROFS_SYNC_DECOMPRESS_AUTO)
++			sbi->sync_decompress = EROFS_SYNC_DECOMPRESS_FORCE_ON;
+ 		return;
+ 	}
+ 	gfp_flag = memalloc_noio_save();
+@@ -1777,16 +1763,21 @@ static void z_erofs_submit_queue(struct z_erofs_frontend *f,
+ 	z_erofs_decompress_kickoff(q[JQ_SUBMIT], nr_bios);
+ }
+ 
+-static int z_erofs_runqueue(struct z_erofs_frontend *f, unsigned int rapages)
++static int z_erofs_runqueue(struct z_erofs_frontend *f, unsigned int rabytes)
+ {
+ 	struct z_erofs_decompressqueue io[NR_JOBQUEUES];
+ 	struct erofs_sb_info *sbi = EROFS_I_SB(f->inode);
+-	bool force_fg = z_erofs_is_sync_decompress(sbi, rapages);
++	int syncmode = sbi->sync_decompress;
++	bool force_fg;
+ 	int err;
+ 
++	force_fg = (syncmode == EROFS_SYNC_DECOMPRESS_AUTO && !rabytes) ||
++		(syncmode == EROFS_SYNC_DECOMPRESS_FORCE_ON &&
++			(rabytes <= Z_EROFS_MAX_SYNC_DECOMPRESS_BYTES));
++
+ 	if (f->head == Z_EROFS_PCLUSTER_TAIL)
+ 		return 0;
+-	z_erofs_submit_queue(f, io, &force_fg, !!rapages);
++	z_erofs_submit_queue(f, io, &force_fg, !!rabytes);
+ 
+ 	/* handle bypass queue (no i/o pclusters) immediately */
+ 	err = z_erofs_decompress_queue(&io[JQ_BYPASS], &f->pagepool);
+@@ -1907,7 +1898,7 @@ static void z_erofs_readahead(struct readahead_control *rac)
+ 	z_erofs_pcluster_readmore(&f, rac, false);
+ 	z_erofs_pcluster_end(&f);
+ 
+-	(void)z_erofs_runqueue(&f, nrpages);
++	(void)z_erofs_runqueue(&f, nrpages << PAGE_SHIFT);
+ 	erofs_put_metabuf(&f.map.buf);
+ 	erofs_release_pages(&f.pagepool);
+ }
 -- 
 2.53.0
 
