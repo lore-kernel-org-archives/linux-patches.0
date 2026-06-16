@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D0A477990;
-	Tue, 16 Jun 2026 16:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135B846AF15;
+	Tue, 16 Jun 2026 16:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627512; cv=none; b=KchKjEd2byF7elfP0/mV4sLhGwYuKimipxCxnYh2HSZ6hIQ8ZF8l2Js4ZMP78PiXPAN2zM5tZ6QGuOC6qiHRwwIOPYlWSnkFh4FlKVbGPnCJm1P6ZVe4leBMunXltFJWMKM7CyRx8k/DSSwN7TjbNqAuiJ0XdQ6Fu3zpjcTa9LE=
+	t=1781627517; cv=none; b=b2g/GIyX3eUU5nmCI4Nm49cP5rrwVw7sgsrmMdoBcAyBOz5Ip8ggs5Xa+60JQ1BOwRNGJGBDipl5PPmBGv+T3WKnysHyTYnYJYXk77j8fLHQPWyBJrUw2y5wPzq2jsldUB0KOXYlSqBz/9imC5pyZCD/zjWVq5L3NBIai8g1hh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627512; c=relaxed/simple;
-	bh=RVEfSoE4OlBuTaogbbF0d8pgrWJ+KrETF3UKL/fUXIQ=;
+	s=arc-20240116; t=1781627517; c=relaxed/simple;
+	bh=mub0T502W2Gm4L38sOJIoh763S3vs1Za9X3hwYXQao0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aF8yRnjRNxg4mywIrKp40BlTNsNATxhSE2Lys8Mv2lRXMPbMTZxXldt/LGykvVwCpl18fEGmRqu0yMtyiax/JWDQ3nSGSvU4ITHuSsz48+HdM+tBSAyRrBxJKaXGLKRmSCzgkZ1PxOV7L3VoNdKcB0mEIbFfe2x5JlZ8z5YPuQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gwguyQ9i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b05XOr/vr5bM9aKTx7NBapzXRbJg6LWE0lZXFixNXCtgRt2r0dpO+gZjOTxiuQHl8CcRNzlLVW8GysfWBxbMhm5APMYyCC27L6qZHbNoGEi8/m5+YPcV/zlqcfVIO+TdZFctPA5dEREXfBUwpcNkeE8G0IRggssGn6lZjW945dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fY9dAd7R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gwguyQ9i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A201F000E9;
-	Tue, 16 Jun 2026 16:31:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fY9dAd7R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23B121F000E9;
+	Tue, 16 Jun 2026 16:31:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627510;
-	bh=YIKC/JeG03SRJDB2ujYUFmVH/gHvvIdE2e0ku91Nifw=;
+	s=korg; t=1781627516;
+	bh=KhVEBz7D2Fw2p8CIJgfuMHuf7B2Fr2pYw4bYFNv2+JE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gwguyQ9iobn8yPCdEDxDBEAwPjsbZoS2xyoE4iers+bOOF19GoEDfAjA6e3YRiCjK
-	 h7Z7vmUzhX99H+ECRyf1Ln/i+iSKxE0mWDEVRA97GW1hMVIRcR0qUA4EWkP1JnpEnY
-	 OZoLF+zjC/GzjdOXXOVu7kkypYK9RtnVI9jbvJw8=
+	b=fY9dAd7Rp0deimphl66njELJOyW7lFaLWKS3C8tQh1DIs7i9zhR6GeAPPt6gqwh/s
+	 oIQk7QEN1sZTeeslWSKYqfqFeWt/lbnqlukYv7rHr2mH8KMDtXHY7AlCIK26KmYQh5
+	 nY8RIoOO+PYgpZlOQ6oGF0S8IXqZEwPo4xRSqRCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuqi Xu <xuyq21@lenovo.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 185/261] net: rds: clear i_sends on setup unwind
-Date: Tue, 16 Jun 2026 20:30:23 +0530
-Message-ID: <20260616145053.640822844@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: [PATCH 6.12 186/261] nvmem: core: fix use-after-free bugs in error paths
+Date: Tue, 16 Jun 2026 20:30:24 +0530
+Message-ID: <20260616145053.687357948@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -56,47 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuqi Xu <xuyq21@lenovo.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 20cf0fb715c41111469577e85e35d15f099473e0 upstream.
+commit 5b6b6fc491899d583eaa75344e094796ae9b530b upstream.
 
-The RDS IB connection teardown path is written so it can run during
-partial startup and on repeated shutdown attempts. It uses NULL
-pointers to distinguish resources that are still owned from resources
-that have already been released.
+Fix several instances of error paths in which we call
+__nvmem_device_put() - which may end up freeing the underlying memory
+and other resources - and then keep on using the nvmem structure. Always
+put the reference to the nvmem device as the last step before returning
+the error code.
 
-When rds_ib_setup_qp() fails after allocating i_sends but before
-allocating i_recvs, the sends_out path frees i_sends without clearing
-the pointer. A later shutdown pass can still treat that stale pointer
-as a live send ring allocation.
-
-Clear i_sends after vfree() in the error unwind path so the existing
-shutdown logic continues to use the correct ownership state.
-
-Fixes: 3b12f73a5c29 ("rds: ib: add error handle")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yuqi Xu <xuyq21@lenovo.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/5a0f7624bb9845a7b67d26166a150b59e7f394ce.1779632468.git.xuyq21@lenovo.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 7ae6478b304b ("nvmem: core: rework nvmem cell instance creation")
+Fixes: e888d445ac33 ("nvmem: resolve cells from DT at registration time")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260530204340.116743-3-srini@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rds/ib_cm.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvmem/core.c |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
---- a/net/rds/ib_cm.c
-+++ b/net/rds/ib_cm.c
-@@ -656,6 +656,7 @@ static int rds_ib_setup_qp(struct rds_co
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -1501,18 +1501,16 @@ struct nvmem_cell *of_nvmem_cell_get(str
+ 	cell_entry = nvmem_find_cell_entry_by_node(nvmem, cell_np);
+ 	of_node_put(cell_np);
+ 	if (!cell_entry) {
+-		__nvmem_device_put(nvmem);
+ 		nvmem_layout_module_put(nvmem);
+-		if (nvmem->layout)
+-			return ERR_PTR(-EPROBE_DEFER);
+-		else
+-			return ERR_PTR(-ENOENT);
++		ret = nvmem->layout ? -EPROBE_DEFER : -ENOENT;
++		__nvmem_device_put(nvmem);
++		return ERR_PTR(ret);
+ 	}
  
- sends_out:
- 	vfree(ic->i_sends);
-+	ic->i_sends = NULL;
+ 	cell = nvmem_create_cell(cell_entry, id, cell_index);
+ 	if (IS_ERR(cell)) {
+-		__nvmem_device_put(nvmem);
+ 		nvmem_layout_module_put(nvmem);
++		__nvmem_device_put(nvmem);
+ 	}
  
- ack_dma_out:
- 	rds_dma_hdr_free(rds_ibdev->dev, ic->i_ack, ic->i_ack_dma,
+ 	return cell;
+@@ -1626,8 +1624,8 @@ void nvmem_cell_put(struct nvmem_cell *c
+ 		kfree_const(cell->id);
+ 
+ 	kfree(cell);
+-	__nvmem_device_put(nvmem);
+ 	nvmem_layout_module_put(nvmem);
++	__nvmem_device_put(nvmem);
+ }
+ EXPORT_SYMBOL_GPL(nvmem_cell_put);
+ 
 
 
