@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7F5169AD2;
-	Tue, 16 Jun 2026 17:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF6032A3C9;
+	Tue, 16 Jun 2026 17:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632130; cv=none; b=Gq3ShYWyIGjxQzcLy+h3TDevAT2XBD5OvTppE2YXLNdMwt1mYToMw+2a4UPIKhDfmetuukpxsDop/23c0XqiR9IBKay9sKjSRtdNU/8wGws24kINin7seiMZgyS8qOQ4mzW2kYqawawWVqvmKwSyhlOKebU5rSYL0eqT3Mz816U=
+	t=1781632135; cv=none; b=MAQ1k2Ty6jZmbnWgy5+zRO7fBQNd2xxv22OyjDMA0rPE23G7kEgHDc88Tx4d46RmeYAqgMPE+UUWVRVZL8xdeZsAgFr5R7caouGE1iYAe344RUTQccRV8Utw76ExGTnHHecb0U5T0lOD9cAwojhewsZJ900CGW90Dr8zA8ixMNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632130; c=relaxed/simple;
-	bh=6+RW/tjJ2Q4PCJHiJydTTH+W5YpVmqOLyPfHU4kB6yo=;
+	s=arc-20240116; t=1781632135; c=relaxed/simple;
+	bh=GA0Di/tzcpFAdhyiXH7YWkmnJjrO16EdYWyBBJyJ4/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PCF4x8OiIolNjOz33gpR2gzMVx1vFOKXXgIy1qe1H8pAeg4oUawAJ2yZqT3AYvMTDy4WRhkWo94JTY4yZFwNH8HXsn52T+dSpGBuXI6+lrOalWObK028SNN+ngyqiUyT6xdpQjHQEK6ZPiZlUiOrUffhElzkHtbaOfmADf7suRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWRknijC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EZ6wGpMbxQfeMApSjwmVDb0bEvyLjKqPIOKS5Eq3PxiZTYH5vXnOPnNfpfWul/BBTFe841cOcEiLdJuRp3xNmaVh468Ey+boBaTWvn9p+QWVXgRFoSinjQ3jaC601sb2kuhAQufo4+tK9/OQkEYVr+fq9iG+56urCDF5piyzpNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvHv9CLO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWRknijC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D061F000E9;
-	Tue, 16 Jun 2026 17:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvHv9CLO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE081F00A3A;
+	Tue, 16 Jun 2026 17:48:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632128;
-	bh=Xu+T77irdz0xcl5dEaGmHkUB+bijGCy0JJ878ikSm7g=;
+	s=korg; t=1781632134;
+	bh=EHTDeZElCiVyvRJ825ycGCIVTLxgVgw8vI67p8XANT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GWRknijC4epjMr3fwx022nSC5OgwycLFEMnFlGpIniAN8xA9PpNAizXSolFv1Nsc4
-	 A38GNs2eCzaeewULXWeBWrKH9/dIm8So2CRvejkD7Pdn50xaHusPZ/lW2YqmDwWiI2
-	 D7UaykVnJRKRYsdxNsVMSh3jroM/nr19OsgZOLg8=
+	b=vvHv9CLOpVrqcJEEySnC0cDHhlENi/SEC3MPW0/75p8iNN7ZSOcsqMx9WW0XvCBQD
+	 hPHa8KXFYVu/8ByNONX/zIZGKI+b2wvX2/dhcNfeRNLVmKCmzLe9ZPlOhOu/wzoWFn
+	 erbjkagOxIM46FOKFt/a8BS3hNMAkZ515/ZTnIqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 353/522] net: qrtr: ns: Limit the total number of nodes
-Date: Tue, 16 Jun 2026 20:28:20 +0530
-Message-ID: <20260616145142.310613761@linuxfoundation.org>
+Subject: [PATCH 6.1 336/522] LoongArch: Add spectre boundry for syscall dispatch table
+Date: Tue, 16 Jun 2026 20:28:03 +0530
+Message-ID: <20260616145141.540830242@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,69 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 27d5e84e810b0849d08b9aec68e48570461ce313 ]
+[ Upstream commit 0c965d2784fbbd7f8e3b96d875c9cfdf7c00da3d ]
 
-Currently, the nameserver doesn't limit the number of nodes it handles.
-This can be an attack vector if a malicious client starts registering
-random nodes, leading to memory exhaustion.
-
-Hence, limit the maximum number of nodes to 64. Note that, limit of 64 is
-chosen based on the current platform requirements. If requirement changes
-in the future, this limit can be increased.
+The LoongArch syscall number is directly controlled by userspace, but
+does not have a array_index_nospec() boundry to prevent access past the
+syscall function pointer tables.
 
 Cc: stable@vger.kernel.org
-Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260409-qrtr-fix-v3-4-00a8a5ff2b51@oss.qualcomm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ dropped node_count-- hunk since ctrl_cmd_bye() has no delete_node ]
+Assisted-by: gkh_clanker_2000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/qrtr/ns.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ arch/loongarch/kernel/syscall.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/qrtr/ns.c
-+++ b/net/qrtr/ns.c
-@@ -75,6 +75,16 @@ struct qrtr_node {
-  */
- #define QRTR_NS_MAX_LOOKUPS 64
+--- a/arch/loongarch/kernel/syscall.c
++++ b/arch/loongarch/kernel/syscall.c
+@@ -9,6 +9,7 @@
+ #include <linux/entry-common.h>
+ #include <linux/errno.h>
+ #include <linux/linkage.h>
++#include <linux/nospec.h>
+ #include <linux/syscalls.h>
+ #include <linux/unistd.h>
  
-+/* Max nodes, server, lookup limits are chosen based on the current platform
-+ * requirements. If the requirement changes in the future, these values can be
-+ * increased.
-+ */
-+#define QRTR_NS_MAX_NODES   64
-+#define QRTR_NS_MAX_SERVERS 256
-+#define QRTR_NS_MAX_LOOKUPS 64
-+
-+static u8 node_count;
-+
- static struct qrtr_node *node_get(unsigned int node_id)
- {
- 	struct qrtr_node *node;
-@@ -83,6 +93,11 @@ static struct qrtr_node *node_get(unsign
- 	if (node)
- 		return node;
+@@ -54,7 +55,7 @@ void noinstr do_syscall(struct pt_regs *
+ 	nr = syscall_enter_from_user_mode(regs, nr);
  
-+	if (node_count >= QRTR_NS_MAX_NODES) {
-+		pr_err_ratelimited("QRTR clients exceed max node limit!\n");
-+		return NULL;
-+	}
-+
- 	/* If node didn't exist, allocate and insert it to the tree */
- 	node = kzalloc(sizeof(*node), GFP_KERNEL);
- 	if (!node)
-@@ -96,6 +111,8 @@ static struct qrtr_node *node_get(unsign
- 		return NULL;
+ 	if (nr < NR_syscalls) {
+-		syscall_fn = sys_call_table[nr];
++		syscall_fn = sys_call_table[array_index_nospec(nr, NR_syscalls)];
+ 		regs->regs[4] = syscall_fn(regs->orig_a0, regs->regs[5], regs->regs[6],
+ 					   regs->regs[7], regs->regs[8], regs->regs[9]);
  	}
- 
-+	node_count++;
-+
- 	return node;
- }
- 
 
 
