@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC35046AF36;
-	Tue, 16 Jun 2026 16:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE27847277F;
+	Tue, 16 Jun 2026 16:28:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627282; cv=none; b=pczXvbQCZPZyPDVIVo6m0mdG23snsPrI6acczrMcVo+nm53YAwFUNC/gmQpZrZI6a+JJ5/FWmw5/L5PAqCdWwG1ePzD3d1WSFRegOUw3rJqbshAc9qbOUMMzi4v9ODKrK4M0PcxcZ0LxhBDMmBNrNebAUUP46lRGK+8s4PboesI=
+	t=1781627289; cv=none; b=tUKo4fx4E/qxhiuY3/o/jDqGtPoWcleXdaLo7+fFeWZlxen/lYNxlPNv4Ckqa06LuiieBghvMy/Er/AQgp1Hl2qlMd4fA2ss2WZbJIvznSdy+iBbYLx2Wc5teGALcRrdS9SIgwXKRHsfnczB3gdfTYIM4nQl3hGDOHF0Et0E0ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627282; c=relaxed/simple;
-	bh=cF+SCW8eww92Z20HGzpbJTzTFiMK9WHtShd3ZSqiDEc=;
+	s=arc-20240116; t=1781627289; c=relaxed/simple;
+	bh=Va1I41W4CtZDK8pd6bw8uefeHj6AIrj43wk1jOk9y7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/KJMV2K4m1BH5Ct+A1ubawBnZ/xBItVZx+HALZlostkBsf5Zqext4N/bAb4zYVS1ZxzlXgQYeLIwELCa0XlDzTDQZynsSLnNv1XsR9vUPA0VnkiiTEJXf+7CbiUMSs6kwdGVrI9kgkAdFqyANj2F0LpU2FCe0yONXpbZv4VJCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LE8TpNu0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YddSeNSO2rKhxbh7Y+eIZ9HBXi7ukvmWv2KdGMOJh0Cbjv7D4W0rsg7Z2SrAL0EGb9m8hMgBiKBUj1eb0yXuXllRHk0IF7DhYy7wdhphZy9BNATBpE4UZJuoD6bcbu0TZzzO7gBX8/XdVgo/qrlFFZd4Syow+6S2zdYv2QeMaC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OsQ2TR+m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LE8TpNu0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A031F000E9;
-	Tue, 16 Jun 2026 16:28:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OsQ2TR+m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB011F000E9;
+	Tue, 16 Jun 2026 16:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627281;
-	bh=yKZuhaQQcBouawGDUw1l97AkYeco5Tm9uQTR2GcdCJQ=;
+	s=korg; t=1781627287;
+	bh=jsJXFlXIGHHQaabXqmfSxJex3TLAJ+Afx0ppmGyILLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LE8TpNu0KLw+xtHqhtdXpPi/dMbf00QB8tBD9ruw5lzRMcr1DgMqiDYnz7rzOgEPs
-	 c97kTDOo4LDTeincQprE48x3Y4eabTM91qJ10lyqtAc70qWhIj36XcPfM/c5wm8WC9
-	 63VrCbzRXr9NlIY/Yv6RQEgqN/HelRAiEDOikJt0=
+	b=OsQ2TR+mqAdPd/bncM0qvc4l3JPIOuq70DheDu8Lvw5QvTo6tixy7NfSPatg0kzzy
+	 cGl2b+dXFJqfPcAjOakMcS4gq3Z4fwOSJl75JPmDS6v7ttfswsE+TIKRVTvb6/ILhT
+	 RAfJ2+Gis4lBNLTnBgOEKaRI7QU/n8HvU4St7Rt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Bo Ye <bo.ye@mediatek.com>,
-	Isaac Manjarres <isaacmanjarres@google.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Sami Tolvanen <samitolvanen@google.com>
-Subject: [PATCH 6.12 130/261] rust: arm64: set uwtable llvm module flag for CONFIG_UNWIND_TABLES
-Date: Tue, 16 Jun 2026 20:29:28 +0530
-Message-ID: <20260616145051.112762993@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 142/261] USB: serial: kl5kusb105: fix bulk-out buffer overflow
+Date: Tue, 16 Jun 2026 20:29:40 +0530
+Message-ID: <20260616145051.662977615@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -54,67 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit ac35b5580ace12e5d0a0b5e61e36d2c4e1ffa29c upstream.
+commit 96d47e40bf9db4a9efd5c8fb53287a508d165f14 upstream.
 
-Due to a rustc bug [1] the -Cforce-unwind-tables=y flag only emits the
-uwtable annotation for functions, but not for the module. This means
-that compiler-generated functions such as 'asan.module_ctor' do not
-receive the uwtable annotation.
+klsi_105_prepare_write_buffer() is called by the generic write path
+with the bulk-out buffer and its size (bulk_out_size, 64 bytes). It
+stores a two-byte length header at the start of the buffer and copies
+the payload from the write fifo starting at buf + KLSI_HDR_LEN, but
+passes the full buffer size as the number of bytes to copy:
 
-When CONFIG_UNWIND_PATCH_PAC_INTO_SCS is enabled, this leads to boot
-failures because the dwarf information emitted for the kasan
-constructors is wrong, which causes the SCS boot patching code to
-patch the constructor in an illegal manner. Specifically, the paciasp
-instruction is patched, but the autiasp instruction is not. This
-mismatch leads to a crash when the constructor is called during boot.
+  count = kfifo_out_locked(&port->write_fifo, buf + KLSI_HDR_LEN,
+                           size, &port->lock);
 
-	==================================================================
-	BUG: KASAN: global-out-of-bounds in do_basic_setup+0x4c/0x90
-	Read of size 8 at addr ffffffe3cc7eb488 by task swapper/0/1
+When the fifo holds at least size bytes, size bytes are copied starting
+two bytes into the size-byte buffer, writing KLSI_HDR_LEN bytes past its
+end. Copy at most size - KLSI_HDR_LEN bytes instead, leaving room for
+the header as safe_serial already does.
 
-Specifically the faulting instruction is the (*fn)() to invoke the
-constructor in do_ctors() of the init/main.c file.
+Writing bulk_out_size or more bytes to the tty triggers a slab
+out-of-bounds write, observed with KASAN by emulating the device with
+dummy_hcd and raw-gadget:
 
-Once the fix lands in rustc, this flag can be made conditional on the
-rustc version. Note that passing the flag on a rustc with the fix
-present has no effect.
+  BUG: KASAN: slab-out-of-bounds in kfifo_copy_out+0x83/0xc0
+  Write of size 64 at addr ffff888112c62202 by task python3
+   kfifo_copy_out
+   klsi_105_prepare_write_buffer [kl5kusb105]
+   usb_serial_generic_write_start [usbserial]
+  Allocated by task 139:
+   usb_serial_probe [usbserial]
+  The buggy address is located 2 bytes inside of allocated 64-byte region
 
-[ The fix [1] has landed for Rust 1.98.0 (expected release on
-  2026-08-20).
+The out-of-bounds write no longer occurs with this change applied.
 
-  Thus add a version check as discussed.
-
-    - Miguel ]
-
-Fixes: d077242d68a3 ("rust: support for shadow call stack sanitizer")
-Cc: stable@kernel.org
-Link: https://github.com/rust-lang/rust/pull/156973 [1]
-Reported-by: Bo Ye <bo.ye@mediatek.com>
-Debugged-by: Isaac Manjarres <isaacmanjarres@google.com>
-Debugged-by: Sami Tolvanen <samitolvanen@google.com>
-Tested-by: Isaac Manjarres <isaacmanjarres@google.com>
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260527-uwtable-module-flag-v1-1-caa41342be4b@google.com
-[ Adjusted link and comment. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 60b3013cdaf3 ("USB: kl5usb105: reimplement using generic framework")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/Makefile |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/serial/kl5kusb105.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/Makefile
-+++ b/arch/arm64/Makefile
-@@ -66,6 +66,9 @@ else
- KBUILD_CFLAGS	+= -fasynchronous-unwind-tables
- KBUILD_AFLAGS	+= -fasynchronous-unwind-tables
- KBUILD_RUSTFLAGS += -Cforce-unwind-tables=y -Zuse-sync-unwind=n
-+# Work around rustc bug on compilers without
-+# https://github.com/rust-lang/rust/pull/156973.
-+KBUILD_RUSTFLAGS += $(if $(call rustc-min-version,109800),,-Zllvm_module_flag=uwtable:u32:2:max)
- endif
+--- a/drivers/usb/serial/kl5kusb105.c
++++ b/drivers/usb/serial/kl5kusb105.c
+@@ -330,8 +330,8 @@ static int klsi_105_prepare_write_buffer
+ 	unsigned char *buf = dest;
+ 	int count;
  
- ifeq ($(CONFIG_STACKPROTECTOR_PER_TASK),y)
+-	count = kfifo_out_locked(&port->write_fifo, buf + KLSI_HDR_LEN, size,
+-								&port->lock);
++	count = kfifo_out_locked(&port->write_fifo, buf + KLSI_HDR_LEN,
++				 size - KLSI_HDR_LEN, &port->lock);
+ 	put_unaligned_le16(count, buf);
+ 
+ 	return count + KLSI_HDR_LEN;
 
 
