@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815FA477E37;
-	Tue, 16 Jun 2026 16:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C580478E34;
+	Tue, 16 Jun 2026 16:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625610; cv=none; b=Dyniov4h27GLRhS/uaHKkZBV/beXSuu3f00rQ5SMeeoZMnmzdQaOZOS2oyBXXnX1kQIRkue9XRL9w3hed+QQ+USwHS4OnLsHnsAh16ScdHCxRy4lFj0tqs32WzLhhKXk2Y+NVXWPz4WuSyYcyj8AGlv4mpp1GY7uCZ+Y3FDwBxs=
+	t=1781625616; cv=none; b=qggXbTl1Bx7tW4xJ7DmVdWhKJMW3wVTuilD/8tKK0FuwD1ebgHKkoWGyfqh9udk8F92gGP7vrUN4rOlhUW9pZ0TcuPF+wBLj1cVp6R2RYzSHLzwsqWG0RqTUn7Ieke1Tzzm9ZEzjERG/dWi3nm4yuKPakH45o++oMAyIHMOesOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625610; c=relaxed/simple;
-	bh=7YveC6kSKmjghzwW1+Hez5WASt25ancWuclBxIN/5Po=;
+	s=arc-20240116; t=1781625616; c=relaxed/simple;
+	bh=c1AMncTBU9/5kCRgT8VmSft46jyu9SwcvKZ3P88p/oo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qcc6DWcidIuXnqFzN8z59uX6XO6sTA/wHFr82QGrQogBGMSp5OB7ISHhdSaLZfhd6luVDTwq3IxKP+V0QQX0CqXhgQ5NuV0TSYIZzWWHxgF0ZkzciwwA1BWP+uyEsz95WiblVjiLx+zan2bHXmlzBxjQ7KAkEXnFcbhpHHEtyZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGyiMfJy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rHLmaRNYUO2fMQK8CET1IBgjt9Y6AkaR/UkkQJEtBm2/OQdm1NotR2N9DWGZhF/h4RpuQZLkQq6PaxsUDyzNIyRfo22VTQb9cEXQLP8AprioPeXukX0xEnU+LUpL/8uhEUZJ22uWECD3ux2UGaNnVVt5pldcBJua8IWO/K9SxaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h12K9M97; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGyiMfJy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3C41F00A3D;
-	Tue, 16 Jun 2026 16:00:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h12K9M97"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0174F1F000E9;
+	Tue, 16 Jun 2026 16:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625609;
-	bh=KJJXYa01wjjpe8vL1RevYACbuGkuIGlPUeSQ+7woFHg=;
+	s=korg; t=1781625613;
+	bh=zPwsvtTqRkGzb9va4SCYy8Ff2t6KRe7dNhHdtIZobls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yGyiMfJyrac9EBFk5fZEKmzLlwLWp96f8UiwECMgslGRo1R8XMUL0qq996leOKmwA
-	 eb8ZbpVbXeyrZqS+H+lDf152kuieeBOBhsuFKT1/P669LcmKakOiSMASPqfnaGs6O4
-	 hzGcC21R0dHv9iYyVlUMBQjd1r79ZqlDL0UPCCiQ=
+	b=h12K9M97qZUQrm8pIla3Qk1thRbuj2EDYWx4JXiqJsdMb58Nnifdutt/FuUgAs5dc
+	 MmKKLCW4jIAV+FkUGy39K5Gk17Feu4xuFKd45iYICLAno3kAlu8zhtG3SXpujz5HAD
+	 Ekf5SfZ6Z+wmu48BH56UA2IgdR9MBNp/Q247x/PA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 6.18 158/325] tracing/probes: Point the error offset correctly for eprobe argument error
-Date: Tue, 16 Jun 2026 20:29:14 +0530
-Message-ID: <20260616145105.623584897@linuxfoundation.org>
+	lvc-project@linuxtesting.org,
+	Georgiy Osokin <g.osokin@auroraos.dev>,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>
+Subject: [PATCH 6.18 149/325] tee: shm: fix shm leak in register_shm_helper()
+Date: Tue, 16 Jun 2026 20:29:05 +0530
+Message-ID: <20260616145105.140312722@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -50,51 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Georgiy Osokin <g.osokin@auroraos.dev>
 
-commit 85e0f27dd1396307913ffc5745b0c05137e9beac upstream.
+commit 26682f5efc276e3ad96d102019472bfbf03833b2 upstream.
 
-Fix to point the error offset correctly for eprobe argument error.
-In the cleanup commit 1b8b0cd754cd ("tracing/probes: Move event parameter
-fetching code to common parser"), due to incorrect backward compatibility
-aimed at conforming to the test specifications, the error location was set
-to 0 when a non-existent formal parameter was specified for Eprobe.
-However, this should be corrected in both the test and the implementation
-to point correct error position.
+register_shm_helper() allocates shm before calling
+iov_iter_npages(). If iov_iter_npages() returns 0, the function
+jumps to err_ctx_put and leaks shm.
 
-Link: https://lore.kernel.org/all/177967567399.209006.1451571244515632097.stgit@devnote2/
+This can be triggered by TEE_IOC_SHM_REGISTER with
+struct tee_ioctl_shm_register_data where length is 0.
 
-Fixes: 1b8b0cd754cd ("tracing/probes: Move event parameter fetching code to common parser")
+Jump to err_free_shm instead.
+
+Fixes: 7bdee4157591 ("tee: Use iov_iter to better support shared buffer registration")
 Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
+Cc: lvc-project@linuxtesting.org
+Signed-off-by: Georgiy Osokin <g.osokin@auroraos.dev>
+Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe.c                                              |    2 --
- tools/testing/selftests/ftrace/test.d/dynevent/eprobes_syntax_errors.tc |    2 +-
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ drivers/tee/tee_shm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -962,8 +962,6 @@ static int parse_probe_vars(char *orig_a
- 			code->op = FETCH_OP_COMM;
- 			return 0;
- 		}
--		/* backward compatibility */
--		ctx->offset = 0;
- 		goto inval;
+--- a/drivers/tee/tee_shm.c
++++ b/drivers/tee/tee_shm.c
+@@ -435,7 +435,7 @@ register_shm_helper(struct tee_context *
+ 	num_pages = iov_iter_npages(iter, INT_MAX);
+ 	if (!num_pages) {
+ 		ret = ERR_PTR(-ENOMEM);
+-		goto err_ctx_put;
++		goto err_free_shm;
  	}
  
---- a/tools/testing/selftests/ftrace/test.d/dynevent/eprobes_syntax_errors.tc
-+++ b/tools/testing/selftests/ftrace/test.d/dynevent/eprobes_syntax_errors.tc
-@@ -20,7 +20,7 @@ check_error 'e:foo/^12345678901234567890
- check_error 'e:foo/^bar.1 syscalls/sys_enter_openat'	# BAD_EVENT_NAME
- 
- check_error 'e:foo/bar syscalls/sys_enter_openat arg=^dfd'	# BAD_FETCH_ARG
--check_error 'e:foo/bar syscalls/sys_enter_openat ^arg=$foo'	# BAD_ATTACH_ARG
-+check_error 'e:foo/bar syscalls/sys_enter_openat arg=^$foo'	# BAD_ATTACH_ARG
- 
- if grep -q '<attached-group>\.<attached-event>.*\[if <filter>\]' README; then
-   check_error 'e:foo/bar syscalls/sys_enter_openat if ^'	# NO_EP_FILTER
+ 	shm->pages = kcalloc(num_pages, sizeof(*shm->pages), GFP_KERNEL);
 
 
