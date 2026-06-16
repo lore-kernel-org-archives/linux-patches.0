@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9FEE44CAF5;
-	Tue, 16 Jun 2026 18:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C14346AF1B;
+	Tue, 16 Jun 2026 18:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634259; cv=none; b=HyQimXF1cbl+I8raPkJq/1w+BZhVJidcH0yFT0zhnojJJL7VlIsg5QtwoVR/v7mxnTTTPTLpUHIXBQ+Iucm30r06m7lv4tKRzf6KRbLDo5IOEzwr8iZeTgLZFkHjykQxnFf2OqMXKoDl9bLOF4nHfHPrHr72Nzshaik+4O0nHkQ=
+	t=1781634264; cv=none; b=PLEnfio+DJYoKqOEQD2ghNr+oQrxo4vFYT/+Xh9r65qc6XxUfPzcVJWwmrXiCfU2KA2xFFJflwv5xARprua+nOt8QBk4Gd7qAq5zAIGGl8xmXRsR9bePgSy0HkuQBBHquq+emcvZ5ubnkkZeTPwbe98C+6pJ2ZLMfgv9OkxJs8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634259; c=relaxed/simple;
-	bh=lELsn283IpVqnawYVvshJKY4WaihOEUgwiRTpH6w93M=;
+	s=arc-20240116; t=1781634264; c=relaxed/simple;
+	bh=cf/92yuffpGojz05p1pe4/wMczQwalnB5Lz9/XUqoFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KhLV7I435++fkqwxH5vdS1uJTJrCIoeAmwP1njF4jwOkHlzTSm1BUxyshZdDmtgeOUxy8RlTYl06t+UutopMjo65spnjAxwe0XiGUSxlmTBYjT7lmYosKog4RT+lxrMuJ4xUX5U9PX2KIFxQ/H8s+bWIlNbqrxkd4BN6+10Qhx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=URQu307r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nnz3+VNLoiyYGH7+JBQCrcmicZqJlnT37p9negsYxVaKxg2q3IIvk7W0Xle462Hjz9eZYwR9kkcZBIgFcTyE92gvMHP80heZp+kTfox6yLxQwvSkk3c6hiD6Oq09pVEM0Jfel2I0y3boX+w2EVUMBH8PksZnnQfc0ZbvX6M5UBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmNH9VfM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URQu307r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF36E1F000E9;
-	Tue, 16 Jun 2026 18:24:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmNH9VfM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846521F000E9;
+	Tue, 16 Jun 2026 18:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634258;
-	bh=I9UwopcsS7NNhSERGT2Gzbid3TBrBNGwcUY30fXBZD4=;
+	s=korg; t=1781634263;
+	bh=ZIUmRDxzl7LaCCMHXLreiT227SMIhq6IkSf1vsA6GsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=URQu307rUyOgGH9Rcy8RxhlahI1yVlqacL+okDjYbqHxz/aXa4SdNgP6Ou2e194hT
-	 94WvU7wLj9EtMg7SRf2S+Bvgx8rL8+mgrQLkuD0ceCPUyklm8MfMSYH/wTwbJSIwaJ
-	 AsYnqBD0fDlrr+7yRNzle5CntA3vWZGuiZ9l1M5Q=
+	b=cmNH9VfMvQDI/FZUS/cFRnF5QRyDqwEhU3sfoYwftAsvQgvpSArIV4e5bZ6sxNM0w
+	 NC86qVsG86R+HYc7RLpGrmibtoGULSMah2FxuM5mgwKNIlK28t3WUf7RdbTY2CXcTm
+	 gVGmOHl8sy5m8eF/NRYzKpkgG8Bz1MgfkTeYtVZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 232/411] mmc: core: Fix host controller programming for fixed driver type
-Date: Tue, 16 Jun 2026 20:27:50 +0530
-Message-ID: <20260616145113.159106450@linuxfoundation.org>
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 5.15 233/411] mmc: renesas_sdhi: Add OF entry for RZ/G2H SoC
+Date: Tue, 16 Jun 2026 20:27:51 +0530
+Message-ID: <20260616145113.218914401@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -51,46 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamal Dasu <kamal.dasu@broadcom.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-commit 5a52c5701a67d5176eb1afbf1bdaf7d6dfeec597 upstream.
+commit f48ee49726ee4ab545fd2dc644f169c0809b19b3 upstream.
 
-When using the fixed-emmc-driver-type device tree property, the MMC core
-correctly selects the driver strength for the card but fails to program
-the host controller accordingly. This causes a mismatch where the card
-uses the specified driver type while the host controller defaults to
-Type B (since ios->drv_type remains zero).
+The RZ/G2H (R8A774E1) SoC was previously handled via the generic
+"renesas,rcar-gen3-sdhi" fallback compatible string. However, because
+the SDHI IP on RZ/G2H is identical with the R-Car H3-N (R8A77951), it
+requires the specific quirks and configuration defined in
+`of_r8a7795_compatible` rather than the generic Gen3 data.
 
-Split the driver type programming logic to handle both fixed and dynamic
-driver type selection paths. For fixed driver types, program the host
-controller with the selected drive_strength value. For dynamic selection,
-use the existing drv_type as before.
+Add the explicit "renesas,sdhi-r8a774e1" match entry to map it correctly.
+Note that the DT binding file renesas,sdhi.yaml does not need an update
+as the entry for this SoC is already present.
 
-This ensures both the eMMC device and host controller use matching driver
-strengths, preventing potential signal integrity issues.
-
-Fixes: 6186d06c519e ("mmc: parse new binding for eMMC fixed driver type")
-Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
+Fixes: 31941342888d ("arm64: dts: renesas: r8a774e1: Add SDHI nodes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/mmc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mmc/host/renesas_sdhi_internal_dmac.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mmc/core/mmc.c
-+++ b/drivers/mmc/core/mmc.c
-@@ -1339,7 +1339,9 @@ static void mmc_select_driver_type(struc
- 
- 	card->drive_strength = drive_strength;
- 
--	if (drv_type)
-+	if (fixed_drv_type >= 0 && drive_strength)
-+		mmc_set_driver_type(card->host, drive_strength);
-+	else if (drv_type)
- 		mmc_set_driver_type(card->host, drv_type);
- }
- 
+--- a/drivers/mmc/host/renesas_sdhi_internal_dmac.c
++++ b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
+@@ -231,6 +231,7 @@ static const struct renesas_sdhi_of_data
+ static const struct of_device_id renesas_sdhi_internal_dmac_of_match[] = {
+ 	{ .compatible = "renesas,sdhi-r7s9210", .data = &of_rza2_compatible, },
+ 	{ .compatible = "renesas,sdhi-mmc-r8a77470", .data = &of_rcar_gen3_compatible, },
++	{ .compatible = "renesas,sdhi-r8a774e1", .data = &of_r8a7795_compatible, },
+ 	{ .compatible = "renesas,sdhi-r8a7795", .data = &of_r8a7795_compatible, },
+ 	{ .compatible = "renesas,sdhi-r8a7796", .data = &of_rcar_gen3_compatible, },
+ 	{ .compatible = "renesas,sdhi-r8a77961", .data = &of_r8a77961_compatible, },
 
 
