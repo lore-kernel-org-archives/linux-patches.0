@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2A33A9627;
-	Tue, 16 Jun 2026 17:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 425631A6803;
+	Tue, 16 Jun 2026 17:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630532; cv=none; b=iNbuw79m+2fZi2zf4XRWYOS82adx4Yx8ahvL+KVF7romgfMQ6Kn+wiUBrlm2ZyRsrgerH8gcSjEiNMj6QN/sqUMMUaSEAx8UYZ+fdjoywJSfYAssFH896sgPON/xsTPBBQPGVEycuShg44rR+OeQb71JSrwFR0glLyOID9EeOFQ=
+	t=1781630537; cv=none; b=tVCLCalFcSTTQsJGOsInKkwydtcuAfyo/zHH6TCOz77A38XZCngRyyrwNctiWAKz3cJxGDEvIv11I5M5tigbJOg9Ofxud71ltukK6/ZhUDOBpjv16wbhfuvWJ7eS3vH9f/q7D1lOy72yzM2okQAJ4ekzbt5xz83MaetoQ+fSz+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630532; c=relaxed/simple;
-	bh=hZM87Sgxz3E35N+7ePSGQL/ElW+LPcAnoJXRkHj0Txo=;
+	s=arc-20240116; t=1781630537; c=relaxed/simple;
+	bh=kRgu9an0fPD5AlCsYK3Yky+pe5hhnl1ZxlUZOf4cy5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TyU4slsLPmxoyvHzHoUBP/Q6OLhaK7b70F2gwryoZGYKwHxOjh+XKOrMwqK8N+P34jC55nNq7h7LH9jBWQMMJX0iYHjoImkQviBJQYkYgWADT0pRhSZH223d3JSbepVlvQnUtWAC1dHeOT0y1OdF/iNgLFOtMpEAf0us6m3Qn0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QvM8IU8X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JqL+cZLj1Ye/JJqLOcnZQHlmeNFva7LCFl7kJe9E4jY+SFgHE5wpSqndiGseCUBv3WttYa8xqRAIJSu6a6Jpat2LiCQLRoGnOhlAr5ptKBYmZ73yUJwX/DyqefaDLKqcS8OpQgtdKa3P1gCCHO6xjaETeLh7g5UNTk2Vh6Eikkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZoJPldY9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QvM8IU8X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8941F000E9;
-	Tue, 16 Jun 2026 17:22:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZoJPldY9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51CA01F000E9;
+	Tue, 16 Jun 2026 17:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630530;
-	bh=3W0pkySAAxWykIYYwmQTi15K6BIvrIp+P/aCrSlKFnE=;
+	s=korg; t=1781630536;
+	bh=jSMAB7jMGqM3z7A61bgtmhmQEtu+Td0HX86O8POEEP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QvM8IU8XqF2rGjUnpN5rb0UiwJE21W5Q59JeHhkOLemCcKdn3XNaBabkjoBMZ7xL7
-	 Dj1WfM1DuHHUPCV4jDiGGDrxhzZw420y4cg76v+tCbEhaWNCqp9fJ7Ma2ncm62+DZ3
-	 NTfb7EQsqwHFj77PvOKZvf+lR8CUbPE6PCpDXPVk=
+	b=ZoJPldY9Z/DJZUS+JlNXpuPPuC0i9srUZMxfkSBJZfAx43kkAWr1WXYazBiiN6AzF
+	 OmLMqmF4mtChh/PnSM+6ElFBtRqklA+ylCUPKXuAbmHSvjt7QmuHDVYOPoMaEooMEs
+	 qOr2oR1AP9gyv9BNjuVG2x80ylPwjQFS6WFy6ITM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
+	Petr Machata <petrm@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Ben Hutchings <benh@debian.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/522] batman-adv: iv: recover OGM scheduling after forward packet error
-Date: Tue, 16 Jun 2026 20:23:14 +0530
-Message-ID: <20260616145127.966025973@linuxfoundation.org>
+Subject: [PATCH 6.1 048/522] selftests: forwarding: lib: Add helpers for checksum handling
+Date: Tue, 16 Jun 2026 20:23:15 +0530
+Message-ID: <20260616145128.017265167@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -45,232 +47,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Petr Machata <petrm@nvidia.com>
 
-commit aa3153bd139a6c48667dcd02608d3b2c80bff02c upstream.
+commit 952e0ee38c7215c45192d8c899acd1830873f28b upstream.
 
-When batadv_iv_ogm_schedule_buff() fails to allocate and queue a forward
-packet for OGM transmission, the work item that drives periodic OGM
-scheduling is never re-armed. This silently halts transmission of the
-node's own OGMs on the affected interface — only OGMs from other peers
-continue to be aggregated and forwarded.
+In order to generate IGMPv3 and MLDv2 packets on the fly, we will need
+helpers to calculate the packet checksum.
 
-Fix this by tracking whether batadv_iv_ogm_queue_add() (and transitively
-batadv_iv_ogm_aggregate_new()) successfully scheduled a forward packet.
-When scheduling fails, batadv_iv_ogm_schedule_buff() falls back to queuing
-a dedicated recovery work item (reschedule_work) that fires after one
-originator interval and calls batadv_iv_ogm_schedule() again.
+The approach presented in this patch revolves around payload templates
+for mausezahn. These are mausezahn-like payload strings (01:23:45:...)
+with possibly one 2-byte sequence replaced with the word PAYLOAD. The
+main function is payload_template_calc_checksum(), which calculates
+RFC 1071 checksum of the message. There are further helpers to then
+convert the checksum to the payload format, and to expand it.
 
-Cc: stable@kernel.org
-Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+For IPv6, MLDv2 message checksum is computed using a pseudoheader that
+differs from the header used in the payload itself. The fact that the
+two messages are different means that the checksum needs to be
+returned as a separate quantity, instead of being expanded in-place in
+the payload itself. Furthermore, the pseudoheader includes a length of
+the message. Much like the checksum, this needs to be expanded in
+mausezahn format. And likewise for number of addresses for (S,G)
+entries. Thus we have several places where a computed quantity needs
+to be presented in the payload format. Add a helper u16_to_bytes(),
+which will be used in all these cases.
+
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 02cb2e6bacbb ("selftests: forwarding: vxlan_bridge_1d: fix test failure with br_netfilter enabled")
+[bwh: Backported to 6,1: adjust context]
+Signed-off-by: Ben Hutchings <benh@debian.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/bat_iv_ogm.c | 76 +++++++++++++++++++++++++++----------
- net/batman-adv/types.h      |  3 ++
- 2 files changed, 60 insertions(+), 19 deletions(-)
+ tools/testing/selftests/net/forwarding/lib.sh | 56 +++++++++++++++++++
+ 1 file changed, 56 insertions(+)
 
-diff --git a/net/batman-adv/bat_iv_ogm.c b/net/batman-adv/bat_iv_ogm.c
-index c93d30462054ce..c52e3b82889868 100644
---- a/net/batman-adv/bat_iv_ogm.c
-+++ b/net/batman-adv/bat_iv_ogm.c
-@@ -224,6 +224,8 @@ static void batadv_iv_ogm_iface_disable(struct batadv_hard_iface *hard_iface)
- 	hard_iface->bat_iv.ogm_buff = NULL;
+diff --git a/tools/testing/selftests/net/forwarding/lib.sh b/tools/testing/selftests/net/forwarding/lib.sh
+index 06027772cf79af..48d913341af267 100755
+--- a/tools/testing/selftests/net/forwarding/lib.sh
++++ b/tools/testing/selftests/net/forwarding/lib.sh
+@@ -1701,3 +1701,59 @@ hw_stats_monitor_test()
  
- 	mutex_unlock(&hard_iface->bat_iv.ogm_buff_mutex);
-+
-+	cancel_delayed_work_sync(&hard_iface->bat_iv.reschedule_work);
+ 	log_test "${type}_stats notifications"
  }
- 
- static void batadv_iv_ogm_iface_update_mac(struct batadv_hard_iface *hard_iface)
-@@ -528,8 +530,10 @@ batadv_iv_ogm_can_aggregate(const struct batadv_ogm_packet *new_bat_ogm_packet,
-  * @if_incoming: interface where the packet was received
-  * @if_outgoing: interface for which the retransmission should be considered
-  * @own_packet: true if it is a self-generated ogm
-+ *
-+ * Return: whether forward packet was scheduled
-  */
--static void batadv_iv_ogm_aggregate_new(const unsigned char *packet_buff,
-+static bool batadv_iv_ogm_aggregate_new(const unsigned char *packet_buff,
- 					int packet_len, unsigned long send_time,
- 					bool direct_link,
- 					struct batadv_hard_iface *if_incoming,
-@@ -553,13 +557,13 @@ static void batadv_iv_ogm_aggregate_new(const unsigned char *packet_buff,
- 
- 	skb = netdev_alloc_skb_ip_align(NULL, skb_size);
- 	if (!skb)
--		return;
-+		return false;
- 
- 	forw_packet_aggr = batadv_forw_packet_alloc(if_incoming, if_outgoing,
- 						    queue_left, bat_priv, skb);
- 	if (!forw_packet_aggr) {
- 		kfree_skb(skb);
--		return;
-+		return false;
- 	}
- 
- 	forw_packet_aggr->skb->priority = TC_PRIO_CONTROL;
-@@ -581,6 +585,8 @@ static void batadv_iv_ogm_aggregate_new(const unsigned char *packet_buff,
- 			  batadv_iv_send_outstanding_bat_ogm_packet);
- 
- 	batadv_forw_packet_ogmv1_queue(bat_priv, forw_packet_aggr, send_time);
 +
-+	return true;
- }
- 
- /* aggregate a new packet into the existing ogm packet */
-@@ -610,8 +616,10 @@ static void batadv_iv_ogm_aggregate(struct batadv_forw_packet *forw_packet_aggr,
-  * @if_outgoing: interface for which the retransmission should be considered
-  * @own_packet: true if it is a self-generated ogm
-  * @send_time: timestamp (jiffies) when the packet is to be sent
-+ *
-+ * Return: whether forward packet was scheduled
-  */
--static void batadv_iv_ogm_queue_add(struct batadv_priv *bat_priv,
-+static bool batadv_iv_ogm_queue_add(struct batadv_priv *bat_priv,
- 				    unsigned char *packet_buff,
- 				    int packet_len,
- 				    struct batadv_hard_iface *if_incoming,
-@@ -663,14 +671,16 @@ static void batadv_iv_ogm_queue_add(struct batadv_priv *bat_priv,
- 		if (!own_packet && atomic_read(&bat_priv->aggregated_ogms))
- 			send_time += max_aggregation_jiffies;
- 
--		batadv_iv_ogm_aggregate_new(packet_buff, packet_len,
--					    send_time, direct_link,
--					    if_incoming, if_outgoing,
--					    own_packet);
-+		return batadv_iv_ogm_aggregate_new(packet_buff, packet_len,
-+						   send_time, direct_link,
-+						   if_incoming, if_outgoing,
-+						   own_packet);
- 	} else {
- 		batadv_iv_ogm_aggregate(forw_packet_aggr, packet_buff,
- 					packet_len, direct_link);
- 		spin_unlock_bh(&bat_priv->forw_bat_list_lock);
-+
-+		return true;
- 	}
- }
- 
-@@ -782,6 +792,8 @@ static void batadv_iv_ogm_schedule_buff(struct batadv_hard_iface *hard_iface)
- 	u32 seqno;
- 	u16 tvlv_len = 0;
- 	unsigned long send_time;
-+	bool reschedule = false;
-+	bool scheduled;
- 	int ret;
- 
- 	lockdep_assert_held(&hard_iface->bat_iv.ogm_buff_mutex);
-@@ -810,11 +822,8 @@ static void batadv_iv_ogm_schedule_buff(struct batadv_hard_iface *hard_iface)
- 						       ogm_buff_len,
- 						       BATADV_OGM_HLEN);
- 		if (ret < 0) {
--			/* OGMs must be queued even when the buffer allocation for
--			 * TVLVs failed. just fall back to the non-TVLV version
--			 */
--			ret = 0;
--			*ogm_buff_len = BATADV_OGM_HLEN;
-+			reschedule = true;
-+			goto out;
- 		}
- 
- 		tvlv_len = ret;
-@@ -836,8 +845,11 @@ static void batadv_iv_ogm_schedule_buff(struct batadv_hard_iface *hard_iface)
- 		/* OGMs from secondary interfaces are only scheduled on their
- 		 * respective interfaces.
- 		 */
--		batadv_iv_ogm_queue_add(bat_priv, *ogm_buff, *ogm_buff_len,
--					hard_iface, hard_iface, 1, send_time);
-+		scheduled = batadv_iv_ogm_queue_add(bat_priv, *ogm_buff, *ogm_buff_len,
-+						    hard_iface, hard_iface, 1, send_time);
-+		if (!scheduled)
-+			reschedule = true;
-+
- 		goto out;
- 	}
- 
-@@ -852,15 +864,28 @@ static void batadv_iv_ogm_schedule_buff(struct batadv_hard_iface *hard_iface)
- 		if (!kref_get_unless_zero(&tmp_hard_iface->refcount))
- 			continue;
- 
--		batadv_iv_ogm_queue_add(bat_priv, *ogm_buff,
--					*ogm_buff_len, hard_iface,
--					tmp_hard_iface, 1, send_time);
--
-+		scheduled = batadv_iv_ogm_queue_add(bat_priv, *ogm_buff,
-+						    *ogm_buff_len, hard_iface,
-+						    tmp_hard_iface, 1, send_time);
- 		batadv_hardif_put(tmp_hard_iface);
-+
-+		if (!scheduled && tmp_hard_iface == hard_iface)
-+			reschedule = true;
- 	}
- 	rcu_read_unlock();
- 
- out:
-+	if (reschedule) {
-+		/* there was a failure scheduling the own forward packet.
-+		 * as result, the batadv_iv_send_outstanding_bat_ogm_packet()
-+		 * work item is no longer scheduled. it is therefore necessary
-+		 * to reschedule it manually
-+		 */
-+		queue_delayed_work(batadv_event_workqueue,
-+				   &hard_iface->bat_iv.reschedule_work,
-+				   msecs_to_jiffies(atomic_read(&bat_priv->orig_interval)));
-+	}
-+
- 	batadv_hardif_put(primary_if);
- }
- 
-@@ -875,6 +900,17 @@ static void batadv_iv_ogm_schedule(struct batadv_hard_iface *hard_iface)
- 	mutex_unlock(&hard_iface->bat_iv.ogm_buff_mutex);
- }
- 
-+static void batadv_iv_ogm_reschedule(struct work_struct *work)
++u16_to_bytes()
 +{
-+	struct delayed_work *delayed_work = to_delayed_work(work);
-+	struct batadv_hard_iface *hard_iface;
++	local u16=$1; shift
 +
-+	hard_iface = container_of(delayed_work,
-+				  struct batadv_hard_iface,
-+				  bat_iv.reschedule_work);
-+	batadv_iv_ogm_schedule(hard_iface);
++	printf "%04x" $u16 | sed 's/^/000/;s/^.*\(..\)\(..\)$/\1:\2/'
 +}
 +
- /**
-  * batadv_iv_orig_ifinfo_sum() - Get bcast_own sum for originator over interface
-  * @orig_node: originator which reproadcasted the OGMs directly
-@@ -2278,6 +2314,8 @@ batadv_iv_ogm_neigh_is_sob(struct batadv_neigh_node *neigh1,
- 
- static void batadv_iv_iface_enabled(struct batadv_hard_iface *hard_iface)
- {
-+	INIT_DELAYED_WORK(&hard_iface->bat_iv.reschedule_work, batadv_iv_ogm_reschedule);
++# Given a mausezahn-formatted payload (colon-separated bytes given as %02x),
++# possibly with a keyword CHECKSUM stashed where a 16-bit checksum should be,
++# calculate checksum as per RFC 1071, assuming the CHECKSUM field (if any)
++# stands for 00:00.
++payload_template_calc_checksum()
++{
++	local payload=$1; shift
 +
- 	/* begin scheduling originator messages on that interface */
- 	batadv_iv_ogm_schedule(hard_iface);
- }
-diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
-index afd71f061c409a..41959a4eea7d3f 100644
---- a/net/batman-adv/types.h
-+++ b/net/batman-adv/types.h
-@@ -82,6 +82,9 @@ struct batadv_hard_iface_bat_iv {
- 	/** @ogm_seqno: OGM sequence number - used to identify each OGM */
- 	atomic_t ogm_seqno;
- 
-+	/** @reschedule_work: recover OGM schedule after schedule error */
-+	struct delayed_work reschedule_work;
++	(
++	    # Set input radix.
++	    echo "16i"
++	    # Push zero for the initial checksum.
++	    echo 0
 +
- 	/** @ogm_buff_mutex: lock protecting ogm_buff and ogm_buff_len */
- 	struct mutex ogm_buff_mutex;
- };
++	    # Pad the payload with a terminating 00: in case we get an odd
++	    # number of bytes.
++	    echo "${payload%:}:00:" |
++		sed 's/CHECKSUM/00:00/g' |
++		tr '[:lower:]' '[:upper:]' |
++		# Add the word to the checksum.
++		sed 's/\(..\):\(..\):/\1\2+\n/g' |
++		# Strip the extra odd byte we pushed if left unconverted.
++		sed 's/\(..\):$//'
++
++	    echo "10000 ~ +"	# Calculate and add carry.
++	    echo "FFFF r - p"	# Bit-flip and print.
++	) |
++	    dc |
++	    tr '[:upper:]' '[:lower:]'
++}
++
++payload_template_expand_checksum()
++{
++	local payload=$1; shift
++	local checksum=$1; shift
++
++	local ckbytes=$(u16_to_bytes $checksum)
++
++	echo "$payload" | sed "s/CHECKSUM/$ckbytes/g"
++}
++
++payload_template_nbytes()
++{
++	local payload=$1; shift
++
++	payload_template_expand_checksum "${payload%:}" 0 |
++		sed 's/:/\n/g' | wc -l
++}
 -- 
 2.53.0
 
