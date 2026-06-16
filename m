@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3903DDDD5;
-	Tue, 16 Jun 2026 19:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217A63DDDAE;
+	Tue, 16 Jun 2026 19:07:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636862; cv=none; b=ZYpDVPvG3PpmMT95PIajAoxOvofzdD92qjlN9/Azdyq6oWR41muukwxLRagyYW8RWLW0idG7KShz0P1Bj5L5EAhG0Fv4TCBD3IhWTpKpXXbvN1IcW6DeEbxspxIPF+7/D/xANYl020ZA0GosMTc6fBtxOh5AFspM5GmJSA+yJZo=
+	t=1781636867; cv=none; b=jbd2Jep2PmLSemTg2D9VLnK78+DQ7wCWgjYCp5EHSMy7S/pXzbizgBMKNALSX3CPLB/na9zy9aDkyLsVv7ArpaduzdYPECxUvrq6NzMXVSroRhycSmcD/Kv6jk1X5TuTMO+ZhNVQ1lpe+zkxfCcVv3qVwPKI3FiicdhtSJ7bqMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636862; c=relaxed/simple;
-	bh=I8L0CPy12vKmV098ZQQETW4KljdHIVm5bl7/ADQBF2Q=;
+	s=arc-20240116; t=1781636867; c=relaxed/simple;
+	bh=lxjMowLb2T2xGSfzvcAwR5nNBAQACQFuEE2QepWqAL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cc85okrxA7PUSRcWBFXv6XlvMPDjZfFvd1qQ83MHQKd8lroGbMc0hlDW/ACbNDSrqTHUMcqW+yqEn9eBzEy3JdW6SO7vlMPSgF5pvhUCr77CephrAP2nABBEYXq/cRmY3rmCUIdDomdmo4UcrmyHQHZFN9LRSlGoA4AErMLaa1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VamNrb+B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l0RJSGxe/IXNojCyWDwILuOqJfmHTY0+hLbdwXqtVF0ExfoMcwL+Kt/4KznGl+H3fOKFiZ1As6IsVFjHOBSALJagfFKb5sgfJfXobl9XvGSvwoZBXAIp9g6KmuJaNRYG2ngGhs8IZ0jyVgoEIPVna3TaFcf5a9cUV1oCbcHyYMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8qc15Ey; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VamNrb+B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6226C1F000E9;
-	Tue, 16 Jun 2026 19:07:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8qc15Ey"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103641F000E9;
+	Tue, 16 Jun 2026 19:07:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636861;
-	bh=63RvxcQaUVvo4LhNBnpIjbrOhaAPTOWcvSxma8sk4Rg=;
+	s=korg; t=1781636866;
+	bh=qHs+Zo74bEqnezQGdQWt8FUVgRnvrPH0a41JhgRPsbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VamNrb+Byel7XPBwQtcNGl1uYf+QEV5k7emzQ8/31JR7wRGhNtFQEve5kRArA2aap
-	 oAPBB4ssvdRFcTYTW16xIkFqszpG6CHNCj2QG07wr1WSlEeGXAr1jivnAPiHfLKw9M
-	 63imonsAGdhsszOAuf+FUVBvZLU+JzU3QlaFx7og=
+	b=E8qc15EyU4sdRmXuGgTtq5S1TvdyvIGNQ02yVgEQOXNdCHvygomMe4TO6j0dZidSD
+	 5k94rsTpislY2v35+7Jd71BTpccXQvjGpxHQspfS2bfqMcuuaTuQo7axG/oE37emJR
+	 XpJG1OZZCS4u5RjqnX8ihnvG0lX91uVRZDgsnv6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Erhardt <aer@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 318/342] ALSA: hda/hdmi: Add quirk for TUXEDO IBS14G6
-Date: Tue, 16 Jun 2026 20:30:14 +0530
-Message-ID: <20260616145103.350856660@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 287/342] net: hsr: defer node table free until after RCU readers
+Date: Tue, 16 Jun 2026 20:29:43 +0530
+Message-ID: <20260616145101.780240492@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -51,33 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Erhardt <aer@tuxedocomputers.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit d649c58bcad8fb9b749e3837136a201632fa109d upstream.
+[ Upstream commit aaec7096f9961eb223b5b149abe9495525c205d9 ]
 
-Depending on the timing during boot, the BIOS might report wrong pin
-capabilities, which can lead to HDMI audio being disabled. Therefore,
-force HDMI audio connection on TUXEDO InfinityBook S 14 Gen6.
+HSR node-list and node-status generic-netlink operations run under
+rcu_read_lock(). They walk hsr->node_db through hsr_get_next_node() and
+hsr_get_node_data(), but RTM_DELLINK teardown removes the same node table
+with plain list_del() and frees each node immediately.
 
-Signed-off-by: Aaron Erhardt <aer@tuxedocomputers.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20260218213234.429686-1-wse@tuxedocomputers.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+That lets a generic-netlink reader hold a struct hsr_node pointer across
+hsr_dellink(). In a KASAN build, widening the reader window after
+hsr_get_next_node() obtains the node reproduces a slab-use-after-free
+when the reader copies node->macaddress_A; the freeing stack is
+hsr_del_nodes() from hsr_dellink().
+
+Use list_del_rcu() and defer the free through the existing
+hsr_free_node_rcu() callback. This matches the lifetime rule used by the
+HSR prune paths, which already delete nodes with list_del_rcu() and
+call_rcu().
+
+Fixes: b9a1e627405d ("hsr: implement dellink to clean up resources")
+Cc: stable@vger.kernel.org # v5.3+
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260513233838.3064715-2-michael.bommarito@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ replaced `list_del`+`call_rcu(hsr_free_node_rcu)` with `list_del_rcu`+`kfree_rcu(node, rcu_head)` ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_hdmi.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/hsr/hsr_framereg.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -1973,6 +1973,7 @@ static const struct snd_pci_quirk force_
- 	SND_PCI_QUIRK(0x1043, 0x86ae, "ASUS", 1),  /* Z170 PRO */
- 	SND_PCI_QUIRK(0x1043, 0x86c7, "ASUS", 1),  /* Z170M PLUS */
- 	SND_PCI_QUIRK(0x1462, 0xec94, "MS-7C94", 1),
-+	SND_PCI_QUIRK(0x1558, 0x14a1, "TUXEDO InfinityBook S 14 Gen6", 1),
- 	SND_PCI_QUIRK(0x8086, 0x2060, "Intel NUC5CPYB", 1),
- 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", 1),
- 	{}
+--- a/net/hsr/hsr_framereg.c
++++ b/net/hsr/hsr_framereg.c
+@@ -123,8 +123,10 @@ void hsr_del_nodes(struct list_head *nod
+ 	struct hsr_node *node;
+ 	struct hsr_node *tmp;
+ 
+-	list_for_each_entry_safe(node, tmp, node_db, mac_list)
+-		kfree(node);
++	list_for_each_entry_safe(node, tmp, node_db, mac_list) {
++		list_del_rcu(&node->mac_list);
++		kfree_rcu(node, rcu_head);
++	}
+ }
+ 
+ void prp_handle_san_frame(bool san, enum hsr_port_type port,
 
 
