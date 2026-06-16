@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D8544A71C;
-	Tue, 16 Jun 2026 15:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D764343E486;
+	Tue, 16 Jun 2026 15:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623538; cv=none; b=pthB94SuxBCpHSLpsgv7poOLtzYxDK24WCS87lhT2AsgAVtESpgudkuLCI5uhjATSB/5DwF/+VVWky+M5ZLh/opKFeBuIxEzRBD6lv5B6ISd6+oqdZwE+wkl4bt/pQIFC+p9XNDNmFc43leKHUktrFs+IeZxlUETrYUaK7x+lcY=
+	t=1781623543; cv=none; b=WHDP29bpyigUidCU7018i4bx0rjDQTs8/Zy80FsXDmpdoSBJ7FTYn4fuXbkEWE28S7lp1SbUCSTLyDDGY9qd1K9Bia1AC6BL+gPPBJRmm+GEJdcc1lMO9OM2PDfOLG4qyKEClQmdCVGyvHnCMc1NERxuQ+fGqMYpM5GGaHNXbuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623538; c=relaxed/simple;
-	bh=OnRxLllq0+gAUr1YnzgjYwzACeX6y20C8UIqexUC244=;
+	s=arc-20240116; t=1781623543; c=relaxed/simple;
+	bh=6krX0OjVdnJD/4qdUcNyIrjgLskBucxEMMdqIFaThzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q/q1wKNd/0z8ysfgA0NURVUih46u8MqzbXVgfC1qOt8VtiSY2P01hUwIDlkMobdX9BLB4z55BUDex66az0sBKVd+ESKu8o9nZLyHQ6662PI9zr0L+axQ8h/UAbEdcFQvs7vGljFHaW7qOwl+5hL7su7i1VZ3nwlZdBe0M1hcv8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMrMLQh9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WXZKGC546qp/ypiCJpBD15pJgcahyfLqtcJ8RCWXdhMFn8bH61fcd0rpNZbJO4qQ3FUHIpVGCBCOOHrekNiNNkU1h7wfFNk0WIBO7XQEMyXuAdXEOZG45l40wxwqOdoKFrreMp2QR+lPjF7yCZmVmZbn96UmhpFsnTG5MjvqBUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ntPB7oGR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMrMLQh9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A3D1F00A3A;
-	Tue, 16 Jun 2026 15:25:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ntPB7oGR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBDE1F000E9;
+	Tue, 16 Jun 2026 15:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623537;
-	bh=VhJd4H6MAnXiBrM02q07Di5Xc85Rj3vvMDzknZ2aq/8=;
+	s=korg; t=1781623542;
+	bh=fYZYuYb/P4iXPUMEtd0nSuRjC0FTjSywXmI1QuGhNDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mMrMLQh9h6Fr39UVKk5NDuj4hRG6+36yOnGr1kZGYQ4V22OWwtX6JfxXYTJndPOk+
-	 pnFgIRh3E33PomRx3TYuJS8rWVooBQT+0XQIZFHxbCumlBPA9PQ11I6JlzSBccEs+Q
-	 2v2+TbfoTIoW8FKs5QPeSy6OwQ6WAjJqks193vzE=
+	b=ntPB7oGRc1e/5UM5lOPaZ9tSWG6hsAOWW/nCLbLJAC4VaoQuZzw3HAUI8al3Ufxm8
+	 TCYCf1wSUEM+g+60cwC0nvvCQUP8jFMx3Qg0gqGjqhqcGilVRpH9Ru4nYsGE1lowZn
+	 Sx5eEqqYrqicU79Kd0VlGvsZbl/ERMYrFg6+PeMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 167/378] accel/amdxdna: Fix mm_struct reference leak in aie2_populate_range()
-Date: Tue, 16 Jun 2026 20:26:38 +0530
-Message-ID: <20260616145119.096948480@linuxfoundation.org>
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	stable@kernel.org,
+	Jann Horn <jannh@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 7.0 168/378] namespace: restrict OPEN_TREE_NAMESPACE/FSMOUNT_NAMESPACE to directories
+Date: Tue, 16 Jun 2026 20:26:39 +0530
+Message-ID: <20260616145119.152117642@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,52 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 2f41af638c92bac6f1f9275ea2d1901baef578f3 ]
+commit 805d5a2b792819171be100c50c9ddafa0f8c2231 upstream.
 
-aie2_populate_range() jumps back to the again label without calling
-mmput(mm), leaking a reference to the mm_struct.
+open_tree(..., OPEN_TREE_NAMESPACE) and
+fsmount(..., FSMOUNT_NAMESPACE, ...) currently work on non-directories,
+like regular files. That's bad for two reasons:
 
-Add the missing mmput() before jumping to again.
+ - It ends up mounting a regular file over the inherited namespace root,
+   which is a directory; mounting a non-directory over a directory is
+   normally explicitly forbidden, see for example do_move_mount()
 
-Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260610151127.2994185-1-lizhi.hou@amd.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ - It causes setns() on the new namespace to set the cwd to a regular
+   file, which the rest of VFS does not expect
+
+Fix it by restricting create_new_namespace() (which is used by both of
+these flags) to directories.
+
+Leave the behavior for OPEN_TREE_CLONE as-is, that seems unproblematic.
+
+Fixes: 9b8a0ba68246 ("mount: add OPEN_TREE_NAMESPACE")
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Cc: stable@kernel.org
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/amdxdna/aie2_ctx.c | 3 +++
+ fs/namespace.c |    3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
-index c0d348884f7494..4c7264c6e6e76f 100644
---- a/drivers/accel/amdxdna/aie2_ctx.c
-+++ b/drivers/accel/amdxdna/aie2_ctx.c
-@@ -928,6 +928,7 @@ static int aie2_populate_range(struct amdxdna_gem_obj *abo)
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -3098,6 +3098,9 @@ static struct mnt_namespace *create_new_
+ 	unsigned int copy_flags = 0;
+ 	bool locked = false;
  
- 		if (ret == -EBUSY) {
- 			amdxdna_umap_put(mapp);
-+			mmput(mm);
- 			goto again;
- 		}
++	if (unlikely(!d_can_lookup(path->dentry)))
++		return ERR_PTR(-ENOTDIR);
++
+ 	if (user_ns != ns->user_ns)
+ 		copy_flags |= CL_SLAVE;
  
-@@ -938,11 +939,13 @@ static int aie2_populate_range(struct amdxdna_gem_obj *abo)
- 	if (mmu_interval_read_retry(&mapp->notifier, mapp->range.notifier_seq)) {
- 		up_write(&xdna->notifier_lock);
- 		amdxdna_umap_put(mapp);
-+		mmput(mm);
- 		goto again;
- 	}
- 	mapp->invalid = false;
- 	up_write(&xdna->notifier_lock);
- 	amdxdna_umap_put(mapp);
-+	mmput(mm);
- 	goto again;
- 
- put_mm:
--- 
-2.53.0
-
 
 
