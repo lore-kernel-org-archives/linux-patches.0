@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42144611CF;
-	Tue, 16 Jun 2026 17:33:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D764502F;
+	Tue, 16 Jun 2026 17:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631235; cv=none; b=ZZxQynp2OqzV2vYNAIh1rEbHtcaeK4CEJBj3SawAjO3AgdlR0PEK7rlMknsNJ0vz3zPDyztyemdw3+Y7WLreTSWcm+tWhIq8FHScZRpFEBo1wRXlWiDAVMsEfczl16i8NIvzhONa6VgUSb7GQoN0kFOdeenIf31YjjHB+K2lXwo=
+	t=1781631241; cv=none; b=GtyjCrEZmWd+fRkl8+ToZVwCxTPmhtUD51Ovvz7f4Xr1SjbMZ7UBbKtUC+COlDGqqLGS5H7UNy7u3EEhBnNzelII8FzjF9rTrM22RiXK0t52QZiriCEiPA3QQLvP1jO9CEQvvzhPBG5LwEOAR1gpM+RufgX6k7vEWxRIRhRVMWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631235; c=relaxed/simple;
-	bh=vWqEL+yO2ahv6ZgMcfR103WCRrp+4VW7OjbbZ6YjNH4=;
+	s=arc-20240116; t=1781631241; c=relaxed/simple;
+	bh=eliPfGWWKko4vlliecowt7ozxYbXaY61PuHYSSLNSos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cRffQwxIc7/ELXWKe23y1Q3KerCpYjOA5jNQjCvJuFgz3bviiVBqbK95vHgsoRNcRY0h18qD1dIovsYfi85XgsygD2UiPRL6FDKAbUmASXNTyxm4YpbCOTtpXt8zhW/2xjz5gXWGGcScf+LRI181s5xsfIfWNoDIWp+0wonSbJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dDtrwRrB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kxeWTJvZioPZaygw93+QZXLHVtznEQ9J6K7Yc6aalBHGkWw3h/AvXddphsuU8zg6dnxqJ/z/7FZMImYezWLR2towPwA2duwFrxUYIrjsBLLrweyhBaq/GhIYfQNr42zTPB+QvYvJTP857U7Fe0nb4ssIACKGNU3eg8LW4QcD3Oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZol5tVS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dDtrwRrB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C4B41F000E9;
-	Tue, 16 Jun 2026 17:33:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZol5tVS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 178621F000E9;
+	Tue, 16 Jun 2026 17:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631234;
-	bh=z3pYI2puQbFYTIa/yKREeBBHlyVKGK0LDeMcotztVoE=;
+	s=korg; t=1781631240;
+	bh=tR1JCSMvHR1tTfkwnYS78PSFp51qkIqL7r/GSPPC9Ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dDtrwRrBwzdz5LZIuSgvlvR0Yr1RapFqSZr9Bk92Cpu+Lxwf/bt0TqwJeU7JhOmly
-	 KSjTRTfvII+mvmQJ+SV+eqnFN4sb1CA3gufNa8OkU0d/ORJnAh57nLr3pXQ/0PKeJ9
-	 RvbCeuPVjNAso3C12fncRWt8RGIQ+iU4f6xg6RuQ=
+	b=TZol5tVSNmKJWvIKncJ9wrB9jTXBeIwzy6utv6PNNA8E8RO5nHoHCl4MjKNeRBG50
+	 mBUNT9/erM6vjHrdWh8btR9qzaByGQlRkCDCsdEg8WCqC3DChn01HXGdvEr6PvdSee
+	 82WUmA24KND+BRHgb9TEqqxip06DC1ETMb85K/TQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
+	Wei-Cheng Chen <weichengc@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 183/522] USB: serial: digi_acceleport: fix memory corruption with small endpoints
-Date: Tue, 16 Jun 2026 20:25:30 +0530
-Message-ID: <20260616145134.683667600@linuxfoundation.org>
+Subject: [PATCH 6.1 184/522] xhci: tegra: Fix ghost USB device on dual-role port unplug
+Date: Tue, 16 Jun 2026 20:25:31 +0530
+Message-ID: <20260616145134.726368907@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -50,64 +50,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Wei-Cheng Chen <weichengc@nvidia.com>
 
-commit cb3560e8eab1dfa1cac1ed52631adf8ec6ff2cd5 upstream.
+[ Upstream commit 5a4c828b8b29b47534814ade26d9aee09d5101fc ]
 
-Add the missing bulk-out buffer size sanity checks to avoid
-out-of-bounds memory accesses or slab corruption should a malicious
-device report smaller buffers than expected.
+When a USB device is unplugged from the dual-role port, the device-mode
+path in tegra_xhci_id_work() explicitly clears both SS and HS port power
+via direct hub_control ClearPortFeature(POWER) calls. This preempts the
+xHCI controller's normal disconnect processing -- PORT_CSC is never
+generated, the USB core never sees the disconnect, and the device remains
+in its internal tree as a ghost visible in lsusb.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Add an otg_set_port_power flag to control whether the dual-role switch
+path performs explicit port power management. SoCs that need it
+(Tegra124 / Tegra210 / Tegra186) set the flag; later SoCs (Tegra194 and
+beyond) rely on the PHY mode change to handle disconnect naturally and
+skip all port power calls.
+
+Within the port power path, otg_reset_sspi additionally gates the SSPI
+reset sequence on host-mode entry for SoCs that require it.
+
+Flags set per SoC:
+  Tegra124, Tegra186  -> otg_set_port_power
+  Tegra210            -> otg_set_port_power, otg_reset_sspi
+  Tegra194 and later  -> (none)
+
+[ Backport to 6.1.y: keep the host-mode snapshot in the existing
+  tegra->lock section, retain pm_runtime_mark_last_busy() in the host
+  port-power path, and omit the newer Tegra234 entry. ]
+
+Fixes: f836e7843036 ("usb: xhci-tegra: Add OTG support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Wei-Cheng Chen <weichengc@nvidia.com>
+Link: https://patch.msgid.link/20260505112630.217704-1-weichengc@nvidia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/digi_acceleport.c | 23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ drivers/usb/host/xhci-tegra.c | 78 ++++++++++++++++++++---------------
+ 1 file changed, 44 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/usb/serial/digi_acceleport.c b/drivers/usb/serial/digi_acceleport.c
-index 45d688e9b93f68..eb23f7bb41e728 100644
---- a/drivers/usb/serial/digi_acceleport.c
-+++ b/drivers/usb/serial/digi_acceleport.c
-@@ -1230,15 +1230,34 @@ static int digi_port_init(struct usb_serial_port *port, unsigned port_num)
- static int digi_startup(struct usb_serial *serial)
- {
- 	struct digi_serial *serial_priv;
-+	int oob_port_num;
+diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
+index 14a772feab7946..0f936aeb88d064 100644
+--- a/drivers/usb/host/xhci-tegra.c
++++ b/drivers/usb/host/xhci-tegra.c
+@@ -210,6 +210,7 @@ struct tegra_xusb_soc {
+ 	bool has_ipfs;
+ 	bool lpm_support;
+ 	bool otg_reset_sspi;
++	bool otg_set_port_power;
+ };
+ 
+ struct tegra_xusb_context {
+@@ -1211,14 +1212,17 @@ static void tegra_xhci_id_work(struct work_struct *work)
+ 	struct tegra_xusb_mbox_msg msg;
+ 	struct phy *phy = tegra_xusb_get_phy(tegra, "usb2",
+ 						    tegra->otg_usb2_port);
++	bool host_mode;
+ 	u32 status;
  	int ret;
-+	int i;
+ 
+-	dev_dbg(tegra->dev, "host mode %s\n", tegra->host_mode ? "on" : "off");
+-
+ 	mutex_lock(&tegra->lock);
+ 
+-	if (tegra->host_mode)
++	host_mode = tegra->host_mode;
 +
-+	/*
-+	 * The port bulk-out buffers must be large enough for header and
-+	 * buffered data.
-+	 */
-+	for (i = 0; i < serial->type->num_ports; i++) {
-+		if (serial->port[i]->bulk_out_size < DIGI_OUT_BUF_SIZE + 2)
-+			return -EINVAL;
-+	}
++	dev_dbg(tegra->dev, "host mode %s\n", host_mode ? "on" : "off");
 +
-+	/*
-+	 * The OOB port bulk-out buffer must be large enough for the two
-+	 * commands in digi_set_modem_signals().
-+	 */
-+	oob_port_num = serial->type->num_ports;
-+	if (serial->port[oob_port_num]->bulk_out_size < 8)
-+		return -EINVAL;
++	if (host_mode)
+ 		phy_set_mode_ext(phy, PHY_MODE_USB_OTG, USB_ROLE_HOST);
+ 	else
+ 		phy_set_mode_ext(phy, PHY_MODE_USB_OTG, USB_ROLE_NONE);
+@@ -1229,42 +1233,44 @@ static void tegra_xhci_id_work(struct work_struct *work)
+ 								    tegra->otg_usb2_port);
  
- 	serial_priv = kzalloc(sizeof(*serial_priv), GFP_KERNEL);
- 	if (!serial_priv)
- 		return -ENOMEM;
+ 	pm_runtime_get_sync(tegra->dev);
+-	if (tegra->host_mode) {
+-		/* switch to host mode */
+-		if (tegra->otg_usb3_port >= 0) {
+-			if (tegra->soc->otg_reset_sspi) {
+-				/* set PP=0 */
+-				tegra_xhci_hc_driver.hub_control(
+-					xhci->shared_hcd, GetPortStatus,
+-					0, tegra->otg_usb3_port+1,
+-					(char *) &status, sizeof(status));
+-				if (status & USB_SS_PORT_STAT_POWER)
+-					tegra_xhci_set_port_power(tegra, false,
+-								  false);
+-
+-				/* reset OTG port SSPI */
+-				msg.cmd = MBOX_CMD_RESET_SSPI;
+-				msg.data = tegra->otg_usb3_port+1;
+-
+-				ret = tegra_xusb_mbox_send(tegra, &msg);
+-				if (ret < 0) {
+-					dev_info(tegra->dev,
+-						"failed to RESET_SSPI %d\n",
+-						ret);
++	if (tegra->soc->otg_set_port_power) {
++		if (host_mode) {
++			/* switch to host mode */
++			if (tegra->otg_usb3_port >= 0) {
++				if (tegra->soc->otg_reset_sspi) {
++					/* set PP=0 */
++					tegra_xhci_hc_driver.hub_control(
++						xhci->shared_hcd, GetPortStatus,
++						0, tegra->otg_usb3_port+1,
++						(char *) &status, sizeof(status));
++					if (status & USB_SS_PORT_STAT_POWER)
++						tegra_xhci_set_port_power(tegra, false,
++									  false);
++
++					/* reset OTG port SSPI */
++					msg.cmd = MBOX_CMD_RESET_SSPI;
++					msg.data = tegra->otg_usb3_port+1;
++
++					ret = tegra_xusb_mbox_send(tegra, &msg);
++					if (ret < 0) {
++						dev_info(tegra->dev,
++							"failed to RESET_SSPI %d\n",
++							ret);
++					}
+ 				}
+-			}
  
- 	spin_lock_init(&serial_priv->ds_serial_lock);
--	serial_priv->ds_oob_port_num = serial->type->num_ports;
--	serial_priv->ds_oob_port = serial->port[serial_priv->ds_oob_port_num];
-+	serial_priv->ds_oob_port_num = oob_port_num;
-+	serial_priv->ds_oob_port = serial->port[oob_port_num];
+-			tegra_xhci_set_port_power(tegra, false, true);
+-		}
++				tegra_xhci_set_port_power(tegra, false, true);
++			}
  
- 	ret = digi_port_init(serial_priv->ds_oob_port,
- 						serial_priv->ds_oob_port_num);
+-		tegra_xhci_set_port_power(tegra, true, true);
+-		pm_runtime_mark_last_busy(tegra->dev);
++			tegra_xhci_set_port_power(tegra, true, true);
++			pm_runtime_mark_last_busy(tegra->dev);
+ 
+-	} else {
+-		if (tegra->otg_usb3_port >= 0)
+-			tegra_xhci_set_port_power(tegra, false, false);
++		} else {
++			if (tegra->otg_usb3_port >= 0)
++				tegra_xhci_set_port_power(tegra, false, false);
+ 
+-		tegra_xhci_set_port_power(tegra, true, false);
++			tegra_xhci_set_port_power(tegra, true, false);
++		}
+ 	}
+ 	pm_runtime_put_autosuspend(tegra->dev);
+ }
+@@ -2289,6 +2295,7 @@ static const struct tegra_xusb_soc tegra124_soc = {
+ 	.scale_ss_clock = true,
+ 	.has_ipfs = true,
+ 	.otg_reset_sspi = false,
++	.otg_set_port_power = true,
+ 	.mbox = {
+ 		.cmd = 0xe4,
+ 		.data_in = 0xe8,
+@@ -2325,6 +2332,7 @@ static const struct tegra_xusb_soc tegra210_soc = {
+ 	.scale_ss_clock = false,
+ 	.has_ipfs = true,
+ 	.otg_reset_sspi = true,
++	.otg_set_port_power = true,
+ 	.mbox = {
+ 		.cmd = 0xe4,
+ 		.data_in = 0xe8,
+@@ -2366,6 +2374,7 @@ static const struct tegra_xusb_soc tegra186_soc = {
+ 	.scale_ss_clock = false,
+ 	.has_ipfs = false,
+ 	.otg_reset_sspi = false,
++	.otg_set_port_power = true,
+ 	.mbox = {
+ 		.cmd = 0xe4,
+ 		.data_in = 0xe8,
+@@ -2397,6 +2406,7 @@ static const struct tegra_xusb_soc tegra194_soc = {
+ 	.scale_ss_clock = false,
+ 	.has_ipfs = false,
+ 	.otg_reset_sspi = false,
++	.otg_set_port_power = false,
+ 	.mbox = {
+ 		.cmd = 0x68,
+ 		.data_in = 0x6c,
 -- 
 2.53.0
 
