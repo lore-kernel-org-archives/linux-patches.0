@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2723A3E78;
-	Tue, 16 Jun 2026 17:35:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBF3335081;
+	Tue, 16 Jun 2026 17:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631344; cv=none; b=Woc1QsPNQo7dzIycydXFsIIhy5Le/awBlap3ICIzpFL71uAfv69aK0ZpkNx7uuTyLW4/NXx813kIZbZFlqacJbkBRRRYppPjji/WnXy6OURs91NikfZDGoYrGZDab0q1QaIBwM/HBJgC8umyJV3fw0aHKOME+72WlVFzRS5fF3I=
+	t=1781631349; cv=none; b=WAjQUMTfE3uSMSr6S22zDqs0+mlsPJYXwfdNQuaZUp4dO+SCzJ0vCTZU/Lp68vVZGp1LyhFsDhX5mT5O3/VE2CkrVNPuDJWyw/DdKcDDpBeO1R+Sq7GA4YEAzYp34UBJ74sF4+3s0gAMI16uDQmfEThAQhGbMoNyA/90IASOo5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631344; c=relaxed/simple;
-	bh=RsdvbxMwFG24G01lltH/m9WqCEWG/xAbmXqg9g/YMMs=;
+	s=arc-20240116; t=1781631349; c=relaxed/simple;
+	bh=6Oix1n8M6TrjsRkU3lr8rdJrG0CwVKtYVb3OhUQtLmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XpW/wLWpYtP0aCdJO8wXmi5x9xYpD4U6Nk/ZVpr9Q4B8pc9uX8p8HVRx80JhBleBsTnKc7H9skHYl6K0MIg3aeOj+GZPSnIPcRu81r29f+Bn8/7i3K7jRnWHAhZ8l4lhmNzPpMZyySvKLqMeUONozXUU0hrtfbwawLYY5z52sSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJogcx6E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E3I5Lay3F0YNMPyUwwpihwlx+zKrGNdTh2+KfON00szrrcr8rMiChkdcO3iB9MCW6SIE03TyxwF2C6zLFJxyvhr4hF+ev1FTP93Q4FPSvcklFrTlHf0Nx6WbIOdez9xFFjWfszpJCHwqtXthHL/DAOfopkyNJVu35ePCIXNNGuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InSyps6O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJogcx6E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C8E1F000E9;
-	Tue, 16 Jun 2026 17:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InSyps6O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B1701F000E9;
+	Tue, 16 Jun 2026 17:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631342;
-	bh=NtsuB34w4+rUvQKglxJAfjwB4RcY2epBp7Gvm9IbO6o=;
+	s=korg; t=1781631348;
+	bh=c3DGczNgkDFH8laobuQmIhNZBQEEO/fotqVghpQBE7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YJogcx6EGz0i7diAMPHN5X6gdtxh4jGTEzqLyFU9FRk6krZB/51lF6s7yJfGh58It
-	 beETt/KWyJr5uOvpJ044i3rpG8u2ojkszvLm0BQUTqeh5IeBAOd40eXpPJzVMKzZk9
-	 WtGqYmELm4wSQKF8y7z55kaS99VUMSSkcZEjzBwE=
+	b=InSyps6OXGrm+KRPm+QSrUL7FLCPqj8ktVwY2GgfTyX+J7Xcnz3AL+sQ/vSPoBQST
+	 jPB2u1jTs5gI/w6aWPR1Nij3WQNKidmH1cc3e8FhVT54W1PYLeEEYoh7GMaHEHuSpE
+	 PB8O55YnkDmM5wTVpjyslbZqEOEdNy1b7g2Vri9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 202/522] netfilter: bridge: make ebt_snat ARP rewrite writable
-Date: Tue, 16 Jun 2026 20:25:49 +0530
-Message-ID: <20260616145135.528386482@linuxfoundation.org>
+Subject: [PATCH 6.1 203/522] dm cache policy smq: check allocation under invalidate lock
+Date: Tue, 16 Jun 2026 20:25:50 +0530
+Message-ID: <20260616145135.572231161@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,56 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yiming Qian <yimingqian591@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 67ba971ae02514d85818fe0c32549ab4bfa3bf49 ]
+[ Upstream commit d3f0a606b9f278ece8a0df626ded9c4044071235 ]
 
-The ebtables SNAT target keeps the Ethernet source address rewrite
-behind skb_ensure_writable(skb, 0).  This is intentional: at the bridge
-ebtables hooks the Ethernet header is addressed through
-skb_mac_header()/eth_hdr(), while skb->data points at the Ethernet
-payload.  Asking skb_ensure_writable() for ETH_HLEN bytes would check
-the payload, not the Ethernet header, and would reintroduce the small
-packet regression fixed by commit 63137bc5882a.
+commit 2d1f7b65f5de ("dm cache policy smq: fix missing locks in
+invalidating cache blocks") added mq->lock around the destructive part of
+smq_invalidate_mapping(), but left the e->allocated check outside the
+critical section.
 
-However, the optional ARP sender hardware address rewrite is different.
-It writes through skb_store_bits() at an offset relative to skb->data:
+That leaves a check-then-act race. Two concurrent invalidators can both
+observe e->allocated as true before either of them takes mq->lock. The
+first invalidator that acquires the lock removes the entry from the
+queues and hash table and then calls free_entry(), which clears
+e->allocated and puts the entry back on the free list. The second
+invalidator can then acquire mq->lock and continue with the stale result
+of the unlocked check.
 
-        skb_store_bits(skb, sizeof(struct arphdr), info->mac, ETH_ALEN)
+This can corrupt the SMQ queues or hash table by deleting an entry that
+is no longer on those structures. It can also hit the allocation check in
+free_entry() when the same entry is freed again.
 
-skb_header_pointer() only safely reads the ARP header; it does not make
-the later sender hardware address range writable.  If that range is
-still held in a nonlinear skb fragment backed by a splice-imported file
-page, skb_store_bits() maps the frag page and copies the new MAC address
-directly into it.
+Move the allocation check under mq->lock so the predicate and the
+destructive operations are serialized by the same lock.
 
-Ensure the ARP SHA range is writable before reading the ARP header and
-before calling skb_store_bits().
-
-Fixes: 63137bc5882a ("netfilter: ebtables: Fixes dropping of small packets in bridge nat")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 2d1f7b65f5de ("dm cache policy smq: fix missing locks in invalidating cache blocks")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/ebt_snat.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/md/dm-cache-policy-smq.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/bridge/netfilter/ebt_snat.c b/net/bridge/netfilter/ebt_snat.c
-index 7dfbcdfc30e5d2..c9e229af0366b8 100644
---- a/net/bridge/netfilter/ebt_snat.c
-+++ b/net/bridge/netfilter/ebt_snat.c
-@@ -31,6 +31,9 @@ ebt_snat_tg(struct sk_buff *skb, const struct xt_action_param *par)
- 		const struct arphdr *ap;
- 		struct arphdr _ah;
+diff --git a/drivers/md/dm-cache-policy-smq.c b/drivers/md/dm-cache-policy-smq.c
+index d4c2bc5c0ef457..38fe5c31699bc1 100644
+--- a/drivers/md/dm-cache-policy-smq.c
++++ b/drivers/md/dm-cache-policy-smq.c
+@@ -1588,18 +1588,22 @@ static int smq_invalidate_mapping(struct dm_cache_policy *p, dm_cblock_t cblock)
+ 	struct smq_policy *mq = to_smq_policy(p);
+ 	struct entry *e = get_entry(&mq->cache_alloc, from_cblock(cblock));
+ 	unsigned long flags;
+-
+-	if (!e->allocated)
+-		return -ENODATA;
++	int r = 0;
  
-+		if (skb_ensure_writable(skb, sizeof(_ah) + ETH_ALEN))
-+			return EBT_DROP;
+ 	spin_lock_irqsave(&mq->lock, flags);
++	if (!e->allocated) {
++		r = -ENODATA;
++		goto out;
++	}
+ 	// FIXME: what if this block has pending background work?
+ 	del_queue(mq, e);
+ 	h_remove(&mq->table, e);
+ 	free_entry(&mq->cache_alloc, e);
 +
- 		ap = skb_header_pointer(skb, 0, sizeof(_ah), &_ah);
- 		if (ap == NULL)
- 			return EBT_DROP;
++out:
+ 	spin_unlock_irqrestore(&mq->lock, flags);
+ 
+-	return 0;
++	return r;
+ }
+ 
+ static uint32_t smq_get_hint(struct dm_cache_policy *p, dm_cblock_t cblock)
 -- 
 2.53.0
 
