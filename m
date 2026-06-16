@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48234534AE;
-	Tue, 16 Jun 2026 16:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F9044BCB8;
+	Tue, 16 Jun 2026 16:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625909; cv=none; b=XOGfx29HPRSborMNx/P8t0wQZ6vL+EU8IHJA45Nml0sgplLwVEZYnza8ONhobcKIxzz8wAdikDllB7CuFNwF5nK9ZG/mLRcNIJruVYrI313NMqDhbfL3odAVzW18qcDqHDZV3YmaEfTZkJ3w4h/uUl+QGSdgV4gArX1dvVXr/Fo=
+	t=1781625914; cv=none; b=jukYE3k1iBaOTfmRad3TZbWnEUdIHZO95KuHrKN6m0kPHHyYAvo+3Vz0y0AF8ElxjiVrXBqplh7dNXTZk4ltRzRKiB9AVyQxxwvodJyf0N08OVTWxKiptRaf+L2pGfsU1yWZBe5fwrC9OtB3Ljt6DtchMpHvmFcdq0nJYSra2BE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625909; c=relaxed/simple;
-	bh=7kI2m5/3K1Dhe2cdOR+bsfl2XDz15SHxvDnmU3q4gy0=;
+	s=arc-20240116; t=1781625914; c=relaxed/simple;
+	bh=sbCduKEt5+PUKfClRJmeU4Pay5KsYKtT2iOkbctm0xc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7YLl/gyL14nEPeLdmSHvvoilh5/hRQAkwYiAg/RqVo3fQd4lfVk8Iur7PlMMNqSCkGmibIGuawNiwVy3grcoVZ5InKx7GVqzM7rDL5y+cxTgK3F4CBXlkPOqT/ASJK2AgW1xUQpEmhyOIVk+FU2hU2o/yitAzske47Ls6IVTHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kyncqown; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=usH01st4p5AVOFImyQ89yBG0/rxnlui08VDGJ/522Y9pnpHcPIkezM9rLXrc+/LJi+c2OKr0WiRemjtAlxU+3S+YTp0KPpUU4U0lndkMnFBe0kVDVge7kcN7fSUUk0N/G92RXc5ZWkq79z0QwNOsxUcy5oDElPBuyye9uj7Q4yM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZB3SoWN3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kyncqown"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D1A1F000E9;
-	Tue, 16 Jun 2026 16:05:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZB3SoWN3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EEAD1F000E9;
+	Tue, 16 Jun 2026 16:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625908;
-	bh=p0i9lTnut6wmW6RCNkeM7j2ovFHZPFhGATLgzjKW4Vs=;
+	s=korg; t=1781625913;
+	bh=JwFo5yt8GLdFE44SJhxpWkBYYu/nMTzxo4HHEqUSmiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kyncqown2whGdhir872W14cljtUGLfLaAK7+ijTPMUKosHG7Z96Va/sZfpxgVfkzN
-	 Bp/cLxlcOgj9shHPlJQ8UUqoRi59JY7JK6W52MrhE1XMVcKx2bnLVGA1o0l21lcPSf
-	 5HSiMQIVa2aXvxcNSXb5SMk0PSGfpSA6CLFT3P70=
+	b=ZB3SoWN3ICWyPuD6rQUgejPxbTr+xyfpzyeasec3xITIxc7XM2wCYUsFsrB0VktMr
+	 6oHO5ZFmaigOgWxEh4QBQ3vUrrEaHZTwXQiGHvhP1LWJ3VReM1NgAvo6JXIPna6rb7
+	 5Rl/xDNLjg8TDv8KMy5k0o62m9fOA0qSrsL4U2MI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Harry Yoo <harry@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 230/325] memcg: use round-robin victim selection in refill_stock
-Date: Tue, 16 Jun 2026 20:30:26 +0530
-Message-ID: <20260616145109.861740375@linuxfoundation.org>
+	stable@kernel.org,
+	Anandu Krishnan E <anandu.e@oss.qualcomm.com>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: [PATCH 6.18 231/325] misc: fastrpc: fix use-after-free of fastrpc_user in workqueue context
+Date: Tue, 16 Jun 2026 20:30:27 +0530
+Message-ID: <20260616145109.907808870@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -49,68 +45,211 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shakeel Butt <shakeel.butt@linux.dev>
+From: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
 
-commit c0cafe24d3f6534294c4b2bc2d47734ff7cbd313 upstream.
+commit e85eb5feca8e254905ffa6c57a3c99c89a674a0f upstream.
 
-Harry Yoo reported that get_random_u32_below() is not safe to call in the
-nmi context and memcg charge draining can happen in nmi context.
+There is a race between fastrpc_device_release() and the workqueue
+that processes DSP responses. When the user closes the file descriptor,
+fastrpc_device_release() frees the fastrpc_user structure. Concurrently,
+an in-flight DSP invocation can complete and fastrpc_rpmsg_callback()
+schedules context cleanup via schedule_work(&ctx->put_work). If the
+workqueue runs fastrpc_context_free() in parallel with or after
+fastrpc_device_release() has freed the user structure, it dereferences
+the freed fastrpc_user. Depending on the state of the context at the
+time of the race, any one of the following accesses can be hit:
 
-More specifically get_random_u32_below() is neither reentrant- nor
-NMI-safe: it acquires a per-cpu local_lock via local_lock_irqsave() on the
-batched_entropy_u32 state.  An NMI that lands on a CPU mid-update of the
-ChaCha batch state and recurses into the random subsystem would corrupt
-that state.  The memcg_stock local_trylock prevents re-entry on the percpu
-stock itself, but cannot protect an unrelated subsystem's per-cpu lock.
+ 1. fastrpc_buf_free() calls fastrpc_ipa_to_dma_addr(buf->fl->cctx, ...)
+    to strip the SID bits from the stored IOVA before passing the
+    physical address to dma_free_coherent().
 
-Replace the random pick with a per-cpu round-robin counter stored in
-memcg_stock_pcp and serialized by the same local_trylock that already
-guards cached[] and nr_pages[].  No atomics, no random calls, no extra
-locks needed.
+ 2. fastrpc_free_map() reads map->fl->cctx->vmperms[0].vmid to
+    reconstruct the source permission bitmask needed for the
+    qcom_scm_assign_mem() call that returns memory from the DSP VM
+    back to HLOS.
 
-Link: https://lore.kernel.org/20260521223751.3794625-1-shakeel.butt@linux.dev
-Fixes: f735eebe55f8f ("memcg: multi-memcg percpu charge cache")
-Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
-Reported-by: Harry Yoo <harry@kernel.org>
-Closes: https://lore.kernel.org/4e20f643-6983-4b6e-b12d-c6c4eb20ae0c@kernel.org/
-Acked-by: Harry Yoo (Oracle) <harry@kernel.org>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+ 3. fastrpc_free_map() acquires map->fl->lock to safely remove the
+    map node from the fl->maps list.
+
+The resulting use-after-free manifests as:
+
+  pc : fastrpc_buf_free+0x38/0x80 [fastrpc]
+  lr : fastrpc_context_free+0xa8/0x1b0 [fastrpc]
+  fastrpc_context_free+0xa8/0x1b0 [fastrpc]
+  fastrpc_context_put_wq+0x78/0xa0 [fastrpc]
+  process_one_work+0x180/0x450
+  worker_thread+0x26c/0x388
+
+Add kref-based reference counting to fastrpc_user. Have each invoke
+context take a reference on the user at allocation time and release it
+when the context is freed. Release the initial reference in
+fastrpc_device_release() at file close. Move the teardown of the user
+structure — freeing pending contexts, maps, mmaps, and the channel
+context reference — into the kref release callback fastrpc_user_free(),
+so that it runs only when the last reference is dropped, regardless of
+whether that happens at device close or after the final in-flight
+context completes.
+
+Fixes: 6cffd79504ce ("misc: fastrpc: Add support for dmabuf exporter")
+Cc: stable@kernel.org
+Signed-off-by: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260530204528.116920-2-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/misc/fastrpc.c |   75 +++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 52 insertions(+), 23 deletions(-)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -1754,6 +1754,7 @@ struct memcg_stock_pcp {
- 
- 	struct work_struct work;
- 	unsigned long flags;
-+	uint8_t drain_idx;
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -303,6 +303,8 @@ struct fastrpc_user {
+ 	spinlock_t lock;
+ 	/* lock for allocations */
+ 	struct mutex mutex;
++	/* Reference count */
++	struct kref refcount;
  };
  
- static DEFINE_PER_CPU_ALIGNED(struct memcg_stock_pcp, memcg_stock) = {
-@@ -1937,7 +1938,9 @@ static void refill_stock(struct mem_cgro
- 	if (!success) {
- 		i = empty_slot;
- 		if (i == -1) {
--			i = get_random_u32_below(NR_MEMCG_STOCK);
-+			i = stock->drain_idx++;
-+			if (stock->drain_idx == NR_MEMCG_STOCK)
-+				stock->drain_idx = 0;
- 			drain_stock(stock, i);
- 		}
- 		css_get(&memcg->css);
+ static void fastrpc_free_map(struct kref *ref)
+@@ -471,15 +473,57 @@ static void fastrpc_channel_ctx_put(stru
+ 	kref_put(&cctx->refcount, fastrpc_channel_ctx_free);
+ }
+ 
++static void fastrpc_context_put(struct fastrpc_invoke_ctx *ctx);
++
++static void fastrpc_user_free(struct kref *ref)
++{
++	struct fastrpc_user *fl = container_of(ref, struct fastrpc_user, refcount);
++	struct fastrpc_invoke_ctx *ctx, *n;
++	struct fastrpc_map *map, *m;
++	struct fastrpc_buf *buf, *b;
++
++	if (fl->init_mem)
++		fastrpc_buf_free(fl->init_mem);
++
++	list_for_each_entry_safe(ctx, n, &fl->pending, node) {
++		list_del(&ctx->node);
++		fastrpc_context_put(ctx);
++	}
++
++	list_for_each_entry_safe(map, m, &fl->maps, node)
++		fastrpc_map_put(map);
++
++	list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
++		list_del(&buf->node);
++		fastrpc_buf_free(buf);
++	}
++
++	fastrpc_channel_ctx_put(fl->cctx);
++	mutex_destroy(&fl->mutex);
++	kfree(fl);
++}
++
++static void fastrpc_user_get(struct fastrpc_user *fl)
++{
++	kref_get(&fl->refcount);
++}
++
++static void fastrpc_user_put(struct fastrpc_user *fl)
++{
++	kref_put(&fl->refcount, fastrpc_user_free);
++}
++
+ static void fastrpc_context_free(struct kref *ref)
+ {
+ 	struct fastrpc_invoke_ctx *ctx;
+ 	struct fastrpc_channel_ctx *cctx;
++	struct fastrpc_user *fl;
+ 	unsigned long flags;
+ 	int i;
+ 
+ 	ctx = container_of(ref, struct fastrpc_invoke_ctx, refcount);
+ 	cctx = ctx->cctx;
++	fl = ctx->fl;
+ 
+ 	for (i = 0; i < ctx->nbufs; i++)
+ 		fastrpc_map_put(ctx->maps[i]);
+@@ -495,6 +539,8 @@ static void fastrpc_context_free(struct
+ 	kfree(ctx->olaps);
+ 	kfree(ctx);
+ 
++	/* Release the reference taken in fastrpc_context_alloc() */
++	fastrpc_user_put(fl);
+ 	fastrpc_channel_ctx_put(cctx);
+ }
+ 
+@@ -604,6 +650,8 @@ static struct fastrpc_invoke_ctx *fastrp
+ 
+ 	/* Released in fastrpc_context_put() */
+ 	fastrpc_channel_ctx_get(cctx);
++	/* Take a reference to user, released in fastrpc_context_free() */
++	fastrpc_user_get(user);
+ 
+ 	ctx->sc = sc;
+ 	ctx->retval = -1;
+@@ -634,6 +682,7 @@ err_idr:
+ 	spin_lock(&user->lock);
+ 	list_del(&ctx->node);
+ 	spin_unlock(&user->lock);
++	fastrpc_user_put(user);
+ 	fastrpc_channel_ctx_put(cctx);
+ 	kfree(ctx->maps);
+ 	kfree(ctx->olaps);
+@@ -1548,9 +1597,6 @@ static int fastrpc_device_release(struct
+ {
+ 	struct fastrpc_user *fl = (struct fastrpc_user *)file->private_data;
+ 	struct fastrpc_channel_ctx *cctx = fl->cctx;
+-	struct fastrpc_invoke_ctx *ctx, *n;
+-	struct fastrpc_map *map, *m;
+-	struct fastrpc_buf *buf, *b;
+ 	unsigned long flags;
+ 
+ 	fastrpc_release_current_dsp_process(fl);
+@@ -1559,28 +1605,10 @@ static int fastrpc_device_release(struct
+ 	list_del(&fl->user);
+ 	spin_unlock_irqrestore(&cctx->lock, flags);
+ 
+-	if (fl->init_mem)
+-		fastrpc_buf_free(fl->init_mem);
+-
+-	list_for_each_entry_safe(ctx, n, &fl->pending, node) {
+-		list_del(&ctx->node);
+-		fastrpc_context_put(ctx);
+-	}
+-
+-	list_for_each_entry_safe(map, m, &fl->maps, node)
+-		fastrpc_map_put(map);
+-
+-	list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
+-		list_del(&buf->node);
+-		fastrpc_buf_free(buf);
+-	}
+-
+ 	fastrpc_session_free(cctx, fl->sctx);
+-	fastrpc_channel_ctx_put(cctx);
+-
+-	mutex_destroy(&fl->mutex);
+-	kfree(fl);
+ 	file->private_data = NULL;
++	/* Release the reference taken in fastrpc_device_open */
++	fastrpc_user_put(fl);
+ 
+ 	return 0;
+ }
+@@ -1624,6 +1652,7 @@ static int fastrpc_device_open(struct in
+ 	spin_lock_irqsave(&cctx->lock, flags);
+ 	list_add_tail(&fl->user, &cctx->users);
+ 	spin_unlock_irqrestore(&cctx->lock, flags);
++	kref_init(&fl->refcount);
+ 
+ 	return 0;
+ }
 
 
