@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F6334751B;
-	Tue, 16 Jun 2026 19:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659803DEAD8;
+	Tue, 16 Jun 2026 19:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636635; cv=none; b=dDV/PweJFKv2tHelzcCwyib8DXc284fkjYqowE+xp6ehKTyteOVrq9wWGUSMOdLJ6wq2CfmkJEWUahgZkhRfUyTrMTPQiwBCJpDo5S518TmHwaFRZQkysEnRnbiDDgirRugQDhHjwWRWy8j0UGOhZnumzsHWlPpIGMk3U2oUKE0=
+	t=1781636641; cv=none; b=U8GpnU9RwARagdTqPOQ1gcdEl9LvG5fQtY/HL1HhuupqNw7P3MvhSquIwsFXvQNOdgrsngsY4twn4SXpdx83t0YnN8kycaGl3XmciZk/GBMcGJ0rIKsSNo/3Q7w7M0gMG0HVtAOaJ2TnvvoJjB4oHcXYv/MLIAAKJVpJ4kZGkb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636635; c=relaxed/simple;
-	bh=nxuMTjzTRft1bQPUcqSi1dyOoRPYuiCGcqt/1Cr42fY=;
+	s=arc-20240116; t=1781636641; c=relaxed/simple;
+	bh=ZqigasSOjEEe0hbCIm3CE02fiY9bL0cSMSyMD2lVFQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WdOObIwiMe5vX35WcXof2Ro6tgudzmVCNHxYVf9mZ088BU+v+oFLt8+gk2JwjAgQIvfa/6jfsyyH1DyZA/SJuheuKXQMkd8W5kUvmRFXgyFHKzfofgvauJ5rfByjiMGOW3GJrzGz4BqeYrHuvB43PTT+QhejHymXvHpO5qC7pNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U51F19yY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y3Nfi1PN2Bo3Cef08xBblgAnl3vPytsYyY9jvrusicncR9HdoH9Qom55i0bbk/kWg6Fo/KxsTQN8nK6/+3nEAXwn6A2o3S1DwKxE7jG2jt6EfNOy4guiYzuz66XP/pjYsj9b8A9xwH9DSZ4eOaI4mIR+v3O8b5F2Zj7rbtvR+QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzqaaU7Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U51F19yY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F15321F000E9;
-	Tue, 16 Jun 2026 19:03:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzqaaU7Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 570B61F000E9;
+	Tue, 16 Jun 2026 19:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636634;
-	bh=iO04L7J8X0t6ThtJXlzgEmQwHwkW01+HmFiFsNkeKd4=;
+	s=korg; t=1781636640;
+	bh=aajQ19UjW11YvDf8z1zgdTLrZ8ovXFHgpuzsYzgSlVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U51F19yYBqMfyZtw1S+IBRTM32A8EpbXGPAALewxOuVaORvuz7ywgVAvE9hJSPhrM
-	 GzvTn8uUVf0llx4U056IIYRRudrykQiVpD202c3sslicalIoW4X9Xq9MOmPGrfj+ke
-	 1zI/WPO46Js+QueUclDSpZ7pLtoyi4EKXrO4vnZ0=
+	b=nzqaaU7Qkc5Osuz3rsXMS4sdNtKgebXSaaKwR9HksEHjyXVtz/dtLz9flkqelI8+Z
+	 oZEIZWPxuJfdw0WoB/QOlJd02a6V++bx4rSeI6r0yD69WBeczx3MwnY11+gV9b5JaK
+	 6sLa2uVTwsUVvZQvzLBsoB/DekWj4d1U0aTxW2ic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
+	Hauke Mehrtens <hauke@hauke-m.de>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 276/342] spi: st-ssc4: fix controller deregistration
-Date: Tue, 16 Jun 2026 20:29:32 +0530
-Message-ID: <20260616145101.231752207@linuxfoundation.org>
+Subject: [PATCH 5.10 277/342] spi: lantiq-ssc: fix controller deregistration
+Date: Tue, 16 Jun 2026 20:29:33 +0530
+Message-ID: <20260616145101.285063242@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -54,51 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 19857374010d06ca6a2f7c2c53464122eb804df0 ]
+[ Upstream commit b99206710d032c16b7f8b75e4bc18414d8e4b9f4 ]
 
-Make sure to deregister the controller before disabling underlying
+Make sure to deregister the controller before releasing underlying
 resources like clocks during driver unbind.
 
-Fixes: 9e862375c542 ("spi: Add new driver for STMicroelectronics' SPI Controller")
-Cc: stable@vger.kernel.org	# 4.0
-Cc: Lee Jones <lee@kernel.org>
+Fixes: 17f84b793c01 ("spi: lantiq-ssc: add support for Lantiq SSC SPI controller")
+Cc: stable@vger.kernel.org	# 4.11
+Cc: Hauke Mehrtens <hauke@hauke-m.de>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-18-johan@kernel.org
+Link: https://patch.msgid.link/20260409120419.388546-17-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
-[ changed spi_controller/host API calls to spi_master/master equivalents ]
+[ adapted spi_controller/host naming to spi_master/master and preserved the int-returning remove() with trailing return 0 ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-st-ssc4.c |    8 +++++++-
+ drivers/spi/spi-lantiq-ssc.c |    8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-st-ssc4.c
-+++ b/drivers/spi/spi-st-ssc4.c
-@@ -372,7 +372,7 @@ static int spi_st_probe(struct platform_
+--- a/drivers/spi/spi-lantiq-ssc.c
++++ b/drivers/spi/spi-lantiq-ssc.c
+@@ -1003,7 +1003,7 @@ static int lantiq_ssc_probe(struct platf
+ 		"Lantiq SSC SPI controller (Rev %i, TXFS %u, RXFS %u, DMA %u)\n",
+ 		revision, spi->tx_fifo_size, spi->rx_fifo_size, supports_dma);
  
- 	platform_set_drvdata(pdev, master);
+-	err = devm_spi_register_master(dev, master);
++	err = spi_register_master(master);
+ 	if (err) {
+ 		dev_err(dev, "failed to register spi_master\n");
+ 		goto err_wq_destroy;
+@@ -1027,6 +1027,10 @@ static int lantiq_ssc_remove(struct plat
+ {
+ 	struct lantiq_ssc_spi *spi = platform_get_drvdata(pdev);
  
--	ret = devm_spi_register_master(&pdev->dev, master);
-+	ret = spi_register_master(master);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Failed to register master\n");
- 		goto rpm_disable;
-@@ -394,10 +394,16 @@ static int spi_st_remove(struct platform
- 	struct spi_master *master = platform_get_drvdata(pdev);
- 	struct spi_st *spi_st = spi_master_get_devdata(master);
- 
-+	spi_master_get(master);
++	spi_master_get(spi->master);
 +
-+	spi_unregister_master(master);
++	spi_unregister_master(spi->master);
 +
- 	pm_runtime_disable(&pdev->dev);
+ 	lantiq_ssc_writel(spi, 0, LTQ_SPI_IRNEN);
+ 	lantiq_ssc_writel(spi, 0, LTQ_SPI_CLC);
+ 	rx_fifo_flush(spi);
+@@ -1037,6 +1041,8 @@ static int lantiq_ssc_remove(struct plat
+ 	clk_disable_unprepare(spi->spi_clk);
+ 	clk_put(spi->fpi_clk);
  
- 	clk_disable_unprepare(spi_st->clk);
- 
-+	spi_master_put(master);
++	spi_master_put(spi->master);
 +
- 	pinctrl_pm_select_sleep_state(&pdev->dev);
- 
  	return 0;
+ }
+ 
 
 
