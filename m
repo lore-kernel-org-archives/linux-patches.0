@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FA047B425;
-	Tue, 16 Jun 2026 17:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2CE03AE71F;
+	Tue, 16 Jun 2026 17:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629917; cv=none; b=PygRO0PQFOeyUI+YefVZcV8q5R0fHoYaO8CrgNpSWuGGr7SL7zk+eLMNxDOVny3IkcWZaegakPY2QRZHwGjWtvpuRhz3GNvmVQrz022ZAiIcCiPNAb4cLwaTU5jZvoKmfdHxq+OX/9EjIcmPprPJcZ82kdcm+jqQnHYnxj7+mbk=
+	t=1781629922; cv=none; b=itfn0xBWmefnXe2QhULK0gbzv5eANXEfKAnMziH6l1EHp/pB3chC/Jb7nYD1BObFi+OgoW8iNdYSiQu3/pwEBvnMR76prlvRn7vl4yF0pwI0yWSUrNw3psp1HSwMzyYT5MkHpn+AITSqu0EXxiLfuWWKTntqZuf+qC3w+fK66vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629917; c=relaxed/simple;
-	bh=82Ll4xJ1VBYx8M7tzR/Szg7nyloKdIRJIjiof6aRYjc=;
+	s=arc-20240116; t=1781629922; c=relaxed/simple;
+	bh=HAYRGm7Tkb4GEF9XA7R9XGsuyZZQYBNtS5+X3oVK3Js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gvZjsfZJL5/PKNU8xvVEFE6HBy3VgucguoZRu9CSUS+sHI82NZjdeYUjc/eJf6wjJvJfe12CRLSd8ViHOgu+k+rm2QAPRWGPaCSDaiPtiF+6rXrBBs95Jjnhk/k6yJ7PFF1EkCOXRHgP/8X6WEqJ0WZdHRpRtG7tvQzP3+O/LKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVraaxqN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QLCRCmPKpQ5SdEa3rC51kdb5aYXHnyxSbrawhg+MZwV2aY/CWDpm4kAOod/+U+TrUTGLvBfVoXO7We9s9sj/NLlI3z4VdG1ANSGsDoOoPEoSUjPMvKTUGJCnIDIjQUoBLNVFD0pyHJdaiEFhpJ5XjvEkWUwQrrDnck8es9uP0yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IW082UHl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVraaxqN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB2311F000E9;
-	Tue, 16 Jun 2026 17:11:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IW082UHl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F27DB1F00A3A;
+	Tue, 16 Jun 2026 17:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629915;
-	bh=8QPOc3vhzHSAXHV3dV/0xlNIJewCc9x7V/AZ9Ekf8RY=;
+	s=korg; t=1781629920;
+	bh=6Em/4uj8GvyAp4L4m9p8HZXCKXgDJFr53jfdgLX6ykY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pVraaxqNB6k+Y5NoPoJIKjTBi1UNO2tjYH5FnBhVS0ny5YPVJusJhArs5iMH6nsIv
-	 CG4VikroLWVCBbAk3C+4J1KeLgk9s5NPx71YPlCd9t4fG+4g+ZreAFXV3wmdVHKdBL
-	 gp0qzeWhPrPgnmVUVy3o/oHIZaxIIWgA3z2sPzK8=
+	b=IW082UHl8Z+XuUZyU2OFgDCoylo7/FFzpd9RnjAqW0D7XPuoiU79HB4WXN2CgJVQR
+	 OPFbx8qrsRWblKtnu8EUsYxCUxk5wkLS3OviP5oOrGWkK4gV6LxQrUl8eGYuDTCVyk
+	 ROiuo1m1PU5Rn2xlmq23KvTTZ1My38pMOWpQyaXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Sun <sunhao.th@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
 	Eduard Zingerman <eddyz87@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Zhenzhong Wu <jt26wzz@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 343/452] bpf: Track equal scalars history on per-instruction level
-Date: Tue, 16 Jun 2026 20:29:30 +0530
-Message-ID: <20260616145135.289901493@linuxfoundation.org>
+Subject: [PATCH 6.6 344/452] bpf: Remove mark_precise_scalar_ids()
+Date: Tue, 16 Jun 2026 20:29:31 +0530
+Message-ID: <20260616145135.334630711@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -55,546 +54,469 @@ Content-Transfer-Encoding: 8bit
 
 From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 4bf79f9be434e000c8e12fe83b2f4402480f1460 ]
+[ Upstream commit 842edb5507a1038e009d27e69d13b94b6f085763 ]
 
-Use bpf_verifier_state->jmp_history to track which registers were
-updated by find_equal_scalars() (renamed to collect_linked_regs())
-when conditional jump was verified. Use recorded information in
-backtrack_insn() to propagate precision.
+Function mark_precise_scalar_ids() is superseded by
+bt_sync_linked_regs() and equal scalars tracking in jump history.
+mark_precise_scalar_ids() propagates precision over registers sharing
+same ID on parent/child state boundaries, while jump history records
+allow bt_sync_linked_regs() to propagate same information with
+instruction level granularity, which is strictly more precise.
 
-E.g. for the following program:
+This commit removes mark_precise_scalar_ids() and updates test cases
+in progs/verifier_scalar_ids to reflect new verifier behavior.
 
-            while verifying instructions
-  1: r1 = r0              |
-  2: if r1 < 8  goto ...  | push r0,r1 as linked registers in jmp_history
-  3: if r0 > 16 goto ...  | push r0,r1 as linked registers in jmp_history
-  4: r2 = r10             |
-  5: r2 += r0             v mark_chain_precision(r0)
+The tests are updated in the following manner:
+- mark_precise_scalar_ids() propagated precision regardless of
+  presence of conditional jumps, while new jump history based logic
+  only kicks in when conditional jumps are present.
+  Hence test cases are augmented with conditional jumps to still
+  trigger precision propagation.
+- As equal scalars tracking no longer relies on parent/child state
+  boundaries some test cases are no longer interesting,
+  such test cases are removed, namely:
+  - precision_same_state and precision_cross_state are superseded by
+    linked_regs_bpf_k;
+  - precision_same_state_broken_link and equal_scalars_broken_link
+    are superseded by linked_regs_broken_link.
 
-            while doing mark_chain_precision(r0)
-  5: r2 += r0             | mark r0 precise
-  4: r2 = r10             |
-  3: if r0 > 16 goto ...  | mark r0,r1 as precise
-  2: if r1 < 8  goto ...  | mark r0,r1 as precise
-  1: r1 = r0              v
-
-Technically, do this as follows:
-- Use 10 bits to identify each register that gains range because of
-  sync_linked_regs():
-  - 3 bits for frame number;
-  - 6 bits for register or stack slot number;
-  - 1 bit to indicate if register is spilled.
-- Use u64 as a vector of 6 such records + 4 bits for vector length.
-- Augment struct bpf_jmp_history_entry with a field 'linked_regs'
-  representing such vector.
-- When doing check_cond_jmp_op() remember up to 6 registers that
-  gain range because of sync_linked_regs() in such a vector.
-- Don't propagate range information and reset IDs for registers that
-  don't fit in 6-value vector.
-- Push a pair {instruction index, linked registers vector}
-  to bpf_verifier_state->jmp_history.
-- When doing backtrack_insn() check if any of recorded linked
-  registers is currently marked precise, if so mark all linked
-  registers as precise.
-
-This also requires fixes for two test_verifier tests:
-- precise: test 1
-- precise: test 2
-
-Both tests contain the following instruction sequence:
-
-19: (bf) r2 = r9                      ; R2=scalar(id=3) R9=scalar(id=3)
-20: (a5) if r2 < 0x8 goto pc+1        ; R2=scalar(id=3,umin=8)
-21: (95) exit
-22: (07) r2 += 1                      ; R2_w=scalar(id=3+1,...)
-23: (bf) r1 = r10                     ; R1_w=fp0 R10=fp0
-24: (07) r1 += -8                     ; R1_w=fp-8
-25: (b7) r3 = 0                       ; R3_w=0
-26: (85) call bpf_probe_read_kernel#113
-
-The call to bpf_probe_read_kernel() at (26) forces r2 to be precise.
-Previously, this forced all registers with same id to become precise
-immediately when mark_chain_precision() is called.
-After this change, the precision is propagated to registers sharing
-same id only when 'if' instruction is backtracked.
-Hence verification log for both tests is changed:
-regs=r2,r9 -> regs=r2 for instructions 25..20.
-
-Fixes: 904e6ddf4133 ("bpf: Use scalar ids in mark_chain_precision()")
-Reported-by: Hao Sun <sunhao.th@gmail.com>
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
 Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20240718202357.1746514-2-eddyz87@gmail.com
-Closes: https://lore.kernel.org/bpf/CAEf4BzZ0xidVCqB47XnkXcNhkPWF6_nTV7yt+_Lf0kcFEut2Mg@mail.gmail.com/
-[ zhenzhong: backport to 6.6.y verifier layout and adapt
-  sync_linked_regs() to the pre-BPF_ADD_CONST scalar-id code. ]
+Link: https://lore.kernel.org/bpf/20240718202357.1746514-3-eddyz87@gmail.com
+[ zhenzhong: backport to 6.6.y after adapting the first linked-regs
+  history commit to the older scalar-id verifier layout. ]
 Signed-off-by: Zhenzhong Wu <jt26wzz@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_verifier.h                  |   4 +
- kernel/bpf/verifier.c                         | 256 ++++++++++++++++--
- .../bpf/progs/verifier_subprog_precision.c    |   2 +-
- 3 files changed, 239 insertions(+), 23 deletions(-)
+ kernel/bpf/verifier.c                         | 115 ------------
+ .../selftests/bpf/progs/verifier_scalar_ids.c | 171 ++++++------------
+ .../testing/selftests/bpf/verifier/precise.c  |   2 +-
+ 3 files changed, 56 insertions(+), 232 deletions(-)
 
-diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
-index dba211d3bb9a0d..9a3b93c24f19f5 100644
---- a/include/linux/bpf_verifier.h
-+++ b/include/linux/bpf_verifier.h
-@@ -345,6 +345,10 @@ struct bpf_jmp_history_entry {
- 	u32 prev_idx : 22;
- 	/* special flags, e.g., whether insn is doing register stack spill/load */
- 	u32 flags : 10;
-+	/* additional registers that need precision tracking when this
-+	 * jump is backtracked, vector of six 10-bit records
-+	 */
-+	u64 linked_regs;
- };
- 
- /* Maximum number of register states that can exist at once */
 diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 0d90236d0ad94f..3cc0fc90244f7b 100644
+index 3cc0fc90244f7b..55a5a5bed1ab68 100644
 --- a/kernel/bpf/verifier.c
 +++ b/kernel/bpf/verifier.c
-@@ -3461,9 +3461,87 @@ static bool is_jmp_point(struct bpf_verifier_env *env, int insn_idx)
- 	return env->insn_aux_data[insn_idx].jmp_point;
+@@ -4265,96 +4265,6 @@ static void mark_all_scalars_imprecise(struct bpf_verifier_env *env, struct bpf_
+ 	}
  }
  
-+#define LR_FRAMENO_BITS	3
-+#define LR_SPI_BITS	6
-+#define LR_ENTRY_BITS	(LR_SPI_BITS + LR_FRAMENO_BITS + 1)
-+#define LR_SIZE_BITS	4
-+#define LR_FRAMENO_MASK	((1ull << LR_FRAMENO_BITS) - 1)
-+#define LR_SPI_MASK	((1ull << LR_SPI_BITS)     - 1)
-+#define LR_SIZE_MASK	((1ull << LR_SIZE_BITS)    - 1)
-+#define LR_SPI_OFF	LR_FRAMENO_BITS
-+#define LR_IS_REG_OFF	(LR_SPI_BITS + LR_FRAMENO_BITS)
-+#define LINKED_REGS_MAX	6
-+
-+struct linked_reg {
-+	u8 frameno;
-+	union {
-+		u8 spi;
-+		u8 regno;
-+	};
-+	bool is_reg;
-+};
-+
-+struct linked_regs {
-+	int cnt;
-+	struct linked_reg entries[LINKED_REGS_MAX];
-+};
-+
-+static struct linked_reg *linked_regs_push(struct linked_regs *s)
-+{
-+	if (s->cnt < LINKED_REGS_MAX)
-+		return &s->entries[s->cnt++];
-+
-+	return NULL;
-+}
-+
-+/* Use u64 as a vector of 6 10-bit values, use first 4-bits to track
-+ * number of elements currently in stack.
-+ * Pack one history entry for linked registers as 10 bits in the following format:
-+ * - 3-bits frameno
-+ * - 6-bits spi_or_reg
-+ * - 1-bit  is_reg
-+ */
-+static u64 linked_regs_pack(struct linked_regs *s)
-+{
-+	u64 val = 0;
-+	int i;
-+
-+	for (i = 0; i < s->cnt; ++i) {
-+		struct linked_reg *e = &s->entries[i];
-+		u64 tmp = 0;
-+
-+		tmp |= e->frameno;
-+		tmp |= e->spi << LR_SPI_OFF;
-+		tmp |= (e->is_reg ? 1 : 0) << LR_IS_REG_OFF;
-+
-+		val <<= LR_ENTRY_BITS;
-+		val |= tmp;
-+	}
-+	val <<= LR_SIZE_BITS;
-+	val |= s->cnt;
-+	return val;
-+}
-+
-+static void linked_regs_unpack(u64 val, struct linked_regs *s)
-+{
-+	int i;
-+
-+	s->cnt = val & LR_SIZE_MASK;
-+	val >>= LR_SIZE_BITS;
-+
-+	for (i = 0; i < s->cnt; ++i) {
-+		struct linked_reg *e = &s->entries[i];
-+
-+		e->frameno =  val & LR_FRAMENO_MASK;
-+		e->spi     = (val >> LR_SPI_OFF) & LR_SPI_MASK;
-+		e->is_reg  = (val >> LR_IS_REG_OFF) & 0x1;
-+		val >>= LR_ENTRY_BITS;
-+	}
-+}
-+
- /* for any branch, call, exit record the history of jmps in the given state */
- static int push_jmp_history(struct bpf_verifier_env *env, struct bpf_verifier_state *cur,
--			    int insn_flags)
-+			    int insn_flags, u64 linked_regs)
+-static bool idset_contains(struct bpf_idset *s, u32 id)
+-{
+-	u32 i;
+-
+-	for (i = 0; i < s->count; ++i)
+-		if (s->ids[i] == id)
+-			return true;
+-
+-	return false;
+-}
+-
+-static int idset_push(struct bpf_idset *s, u32 id)
+-{
+-	if (WARN_ON_ONCE(s->count >= ARRAY_SIZE(s->ids)))
+-		return -EFAULT;
+-	s->ids[s->count++] = id;
+-	return 0;
+-}
+-
+-static void idset_reset(struct bpf_idset *s)
+-{
+-	s->count = 0;
+-}
+-
+-/* Collect a set of IDs for all registers currently marked as precise in env->bt.
+- * Mark all registers with these IDs as precise.
+- */
+-static int mark_precise_scalar_ids(struct bpf_verifier_env *env, struct bpf_verifier_state *st)
+-{
+-	struct bpf_idset *precise_ids = &env->idset_scratch;
+-	struct backtrack_state *bt = &env->bt;
+-	struct bpf_func_state *func;
+-	struct bpf_reg_state *reg;
+-	DECLARE_BITMAP(mask, 64);
+-	int i, fr;
+-
+-	idset_reset(precise_ids);
+-
+-	for (fr = bt->frame; fr >= 0; fr--) {
+-		func = st->frame[fr];
+-
+-		bitmap_from_u64(mask, bt_frame_reg_mask(bt, fr));
+-		for_each_set_bit(i, mask, 32) {
+-			reg = &func->regs[i];
+-			if (!reg->id || reg->type != SCALAR_VALUE)
+-				continue;
+-			if (idset_push(precise_ids, reg->id))
+-				return -EFAULT;
+-		}
+-
+-		bitmap_from_u64(mask, bt_frame_stack_mask(bt, fr));
+-		for_each_set_bit(i, mask, 64) {
+-			if (i >= func->allocated_stack / BPF_REG_SIZE)
+-				break;
+-			if (!is_spilled_scalar_reg(&func->stack[i]))
+-				continue;
+-			reg = &func->stack[i].spilled_ptr;
+-			if (!reg->id)
+-				continue;
+-			if (idset_push(precise_ids, reg->id))
+-				return -EFAULT;
+-		}
+-	}
+-
+-	for (fr = 0; fr <= st->curframe; ++fr) {
+-		func = st->frame[fr];
+-
+-		for (i = BPF_REG_0; i < BPF_REG_10; ++i) {
+-			reg = &func->regs[i];
+-			if (!reg->id)
+-				continue;
+-			if (!idset_contains(precise_ids, reg->id))
+-				continue;
+-			bt_set_frame_reg(bt, fr, i);
+-		}
+-		for (i = 0; i < func->allocated_stack / BPF_REG_SIZE; ++i) {
+-			if (!is_spilled_scalar_reg(&func->stack[i]))
+-				continue;
+-			reg = &func->stack[i].spilled_ptr;
+-			if (!reg->id)
+-				continue;
+-			if (!idset_contains(precise_ids, reg->id))
+-				continue;
+-			bt_set_frame_slot(bt, fr, i);
+-		}
+-	}
+-
+-	return 0;
+-}
+-
+ /*
+  * __mark_chain_precision() backtracks BPF program instruction sequence and
+  * chain of verifier states making sure that register *regno* (if regno >= 0)
+@@ -4487,31 +4397,6 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno)
+ 				bt->frame, last_idx, first_idx, subseq_idx);
+ 		}
+ 
+-		/* If some register with scalar ID is marked as precise,
+-		 * make sure that all registers sharing this ID are also precise.
+-		 * This is needed to estimate effect of sync_linked_regs().
+-		 * Do this at the last instruction of each state,
+-		 * bpf_reg_state::id fields are valid for these instructions.
+-		 *
+-		 * Allows to track precision in situation like below:
+-		 *
+-		 *     r2 = unknown value
+-		 *     ...
+-		 *   --- state #0 ---
+-		 *     ...
+-		 *     r1 = r2                 // r1 and r2 now share the same ID
+-		 *     ...
+-		 *   --- state #1 {r1.id = A, r2.id = A} ---
+-		 *     ...
+-		 *     if (r2 > 10) goto exit; // sync_linked_regs() assigns range to r1
+-		 *     ...
+-		 *   --- state #2 {r1.id = A, r2.id = A} ---
+-		 *     r3 = r10
+-		 *     r3 += r1                // need to mark both r1 and r2
+-		 */
+-		if (mark_precise_scalar_ids(env, st))
+-			return -EFAULT;
+-
+ 		if (last_idx < 0) {
+ 			/* we are at the entry into subprog, which
+ 			 * is expected for global funcs, but only if
+diff --git a/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c b/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c
+index 22a6cf6e8255df..f70392bf696c62 100644
+--- a/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c
++++ b/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c
+@@ -5,54 +5,27 @@
+ #include "bpf_misc.h"
+ 
+ /* Check that precision marks propagate through scalar IDs.
+- * Registers r{0,1,2} have the same scalar ID at the moment when r0 is
+- * marked to be precise, this mark is immediately propagated to r{1,2}.
++ * Registers r{0,1,2} have the same scalar ID.
++ * Range information is propagated for scalars sharing same ID.
++ * Check that precision mark for r0 causes precision marks for r{1,2}
++ * when range information is propagated for 'if <reg> <op> <const>' insn.
+  */
+ SEC("socket")
+ __success __log_level(2)
+-__msg("frame0: regs=r0,r1,r2 stack= before 4: (bf) r3 = r10")
+-__msg("frame0: regs=r0,r1,r2 stack= before 3: (bf) r2 = r0")
+-__msg("frame0: regs=r0,r1 stack= before 2: (bf) r1 = r0")
+-__msg("frame0: regs=r0 stack= before 1: (57) r0 &= 255")
+-__msg("frame0: regs=r0 stack= before 0: (85) call bpf_ktime_get_ns")
+-__flag(BPF_F_TEST_STATE_FREQ)
+-__naked void precision_same_state(void)
+-{
+-	asm volatile (
+-	/* r0 = random number up to 0xff */
+-	"call %[bpf_ktime_get_ns];"
+-	"r0 &= 0xff;"
+-	/* tie r0.id == r1.id == r2.id */
+-	"r1 = r0;"
+-	"r2 = r0;"
+-	/* force r0 to be precise, this immediately marks r1 and r2 as
+-	 * precise as well because of shared IDs
+-	 */
+-	"r3 = r10;"
+-	"r3 += r0;"
+-	"r0 = 0;"
+-	"exit;"
+-	:
+-	: __imm(bpf_ktime_get_ns)
+-	: __clobber_all);
+-}
+-
+-/* Same as precision_same_state, but mark propagates through state /
+- * parent state boundary.
+- */
+-SEC("socket")
+-__success __log_level(2)
+-__msg("frame0: last_idx 6 first_idx 5 subseq_idx -1")
+-__msg("frame0: regs=r0,r1,r2 stack= before 5: (bf) r3 = r10")
++/* first 'if' branch */
++__msg("6: (0f) r3 += r0")
++__msg("frame0: regs=r0 stack= before 4: (25) if r1 > 0x7 goto pc+0")
+ __msg("frame0: parent state regs=r0,r1,r2 stack=:")
+-__msg("frame0: regs=r0,r1,r2 stack= before 4: (05) goto pc+0")
+ __msg("frame0: regs=r0,r1,r2 stack= before 3: (bf) r2 = r0")
+-__msg("frame0: regs=r0,r1 stack= before 2: (bf) r1 = r0")
+-__msg("frame0: regs=r0 stack= before 1: (57) r0 &= 255")
+-__msg("frame0: parent state regs=r0 stack=:")
+-__msg("frame0: regs=r0 stack= before 0: (85) call bpf_ktime_get_ns")
++/* second 'if' branch */
++__msg("from 4 to 5: ")
++__msg("6: (0f) r3 += r0")
++__msg("frame0: regs=r0 stack= before 5: (bf) r3 = r10")
++__msg("frame0: regs=r0 stack= before 4: (25) if r1 > 0x7 goto pc+0")
++/* parent state already has r{0,1,2} as precise */
++__msg("frame0: parent state regs= stack=:")
+ __flag(BPF_F_TEST_STATE_FREQ)
+-__naked void precision_cross_state(void)
++__naked void linked_regs_bpf_k(void)
  {
- 	u32 cnt = cur->jmp_history_cnt;
- 	struct bpf_jmp_history_entry *p;
-@@ -3479,6 +3557,10 @@ static int push_jmp_history(struct bpf_verifier_env *env, struct bpf_verifier_st
- 			  "verifier insn history bug: insn_idx %d cur flags %x new flags %x\n",
- 			  env->insn_idx, env->cur_hist_ent->flags, insn_flags);
- 		env->cur_hist_ent->flags |= insn_flags;
-+		WARN_ONCE(env->cur_hist_ent->linked_regs != 0,
-+			  "verifier insn history bug: insn_idx %d linked_regs != 0: %#llx\n",
-+			  env->insn_idx, env->cur_hist_ent->linked_regs);
-+		env->cur_hist_ent->linked_regs = linked_regs;
- 		return 0;
- 	}
- 
-@@ -3493,6 +3575,7 @@ static int push_jmp_history(struct bpf_verifier_env *env, struct bpf_verifier_st
- 	p->idx = env->insn_idx;
- 	p->prev_idx = env->prev_insn_idx;
- 	p->flags = insn_flags;
-+	p->linked_regs = linked_regs;
- 	cur->jmp_history_cnt = cnt;
- 	env->cur_hist_ent = p;
- 
-@@ -3668,6 +3751,11 @@ static inline bool bt_is_reg_set(struct backtrack_state *bt, u32 reg)
- 	return bt->reg_masks[bt->frame] & (1 << reg);
+ 	asm volatile (
+ 	/* r0 = random number up to 0xff */
+@@ -61,9 +34,8 @@ __naked void precision_cross_state(void)
+ 	/* tie r0.id == r1.id == r2.id */
+ 	"r1 = r0;"
+ 	"r2 = r0;"
+-	/* force checkpoint */
+-	"goto +0;"
+-	/* force r0 to be precise, this immediately marks r1 and r2 as
++	"if r1 > 7 goto +0;"
++	/* force r0 to be precise, this eventually marks r1 and r2 as
+ 	 * precise as well because of shared IDs
+ 	 */
+ 	"r3 = r10;"
+@@ -75,59 +47,18 @@ __naked void precision_cross_state(void)
+ 	: __clobber_all);
  }
  
-+static inline bool bt_is_frame_reg_set(struct backtrack_state *bt, u32 frame, u32 reg)
-+{
-+	return bt->reg_masks[frame] & (1 << reg);
-+}
-+
- static inline bool bt_is_frame_slot_set(struct backtrack_state *bt, u32 frame, u32 slot)
+-/* Same as precision_same_state, but break one of the
++/* Same as linked_regs_bpf_k, but break one of the
+  * links, note that r1 is absent from regs=... in __msg below.
+  */
+ SEC("socket")
+ __success __log_level(2)
+-__msg("frame0: regs=r0,r2 stack= before 5: (bf) r3 = r10")
+-__msg("frame0: regs=r0,r2 stack= before 4: (b7) r1 = 0")
+-__msg("frame0: regs=r0,r2 stack= before 3: (bf) r2 = r0")
+-__msg("frame0: regs=r0 stack= before 2: (bf) r1 = r0")
+-__msg("frame0: regs=r0 stack= before 1: (57) r0 &= 255")
+-__msg("frame0: regs=r0 stack= before 0: (85) call bpf_ktime_get_ns")
+-__flag(BPF_F_TEST_STATE_FREQ)
+-__naked void precision_same_state_broken_link(void)
+-{
+-	asm volatile (
+-	/* r0 = random number up to 0xff */
+-	"call %[bpf_ktime_get_ns];"
+-	"r0 &= 0xff;"
+-	/* tie r0.id == r1.id == r2.id */
+-	"r1 = r0;"
+-	"r2 = r0;"
+-	/* break link for r1, this is the only line that differs
+-	 * compared to the previous test
+-	 */
+-	"r1 = 0;"
+-	/* force r0 to be precise, this immediately marks r1 and r2 as
+-	 * precise as well because of shared IDs
+-	 */
+-	"r3 = r10;"
+-	"r3 += r0;"
+-	"r0 = 0;"
+-	"exit;"
+-	:
+-	: __imm(bpf_ktime_get_ns)
+-	: __clobber_all);
+-}
+-
+-/* Same as precision_same_state_broken_link, but with state /
+- * parent state boundary.
+- */
+-SEC("socket")
+-__success __log_level(2)
+-__msg("frame0: regs=r0,r2 stack= before 6: (bf) r3 = r10")
+-__msg("frame0: regs=r0,r2 stack= before 5: (b7) r1 = 0")
+-__msg("frame0: parent state regs=r0,r2 stack=:")
+-__msg("frame0: regs=r0,r1,r2 stack= before 4: (05) goto pc+0")
+-__msg("frame0: regs=r0,r1,r2 stack= before 3: (bf) r2 = r0")
+-__msg("frame0: regs=r0,r1 stack= before 2: (bf) r1 = r0")
+-__msg("frame0: regs=r0 stack= before 1: (57) r0 &= 255")
++__msg("7: (0f) r3 += r0")
++__msg("frame0: regs=r0 stack= before 6: (bf) r3 = r10")
+ __msg("frame0: parent state regs=r0 stack=:")
+-__msg("frame0: regs=r0 stack= before 0: (85) call bpf_ktime_get_ns")
++__msg("frame0: regs=r0 stack= before 5: (25) if r0 > 0x7 goto pc+0")
++__msg("frame0: parent state regs=r0,r2 stack=:")
+ __flag(BPF_F_TEST_STATE_FREQ)
+-__naked void precision_cross_state_broken_link(void)
++__naked void linked_regs_broken_link(void)
  {
- 	return bt->stack_masks[frame] & (1ull << slot);
-@@ -3717,6 +3805,42 @@ static void fmt_stack_mask(char *buf, ssize_t buf_sz, u64 stack_mask)
- 	}
- }
- 
-+/* If any register R in hist->linked_regs is marked as precise in bt,
-+ * do bt_set_frame_{reg,slot}(bt, R) for all registers in hist->linked_regs.
-+ */
-+static void bt_sync_linked_regs(struct backtrack_state *bt, struct bpf_jmp_history_entry *hist)
-+{
-+	struct linked_regs linked_regs;
-+	bool some_precise = false;
-+	int i;
-+
-+	if (!hist || hist->linked_regs == 0)
-+		return;
-+
-+	linked_regs_unpack(hist->linked_regs, &linked_regs);
-+	for (i = 0; i < linked_regs.cnt; ++i) {
-+		struct linked_reg *e = &linked_regs.entries[i];
-+
-+		if ((e->is_reg && bt_is_frame_reg_set(bt, e->frameno, e->regno)) ||
-+		    (!e->is_reg && bt_is_frame_slot_set(bt, e->frameno, e->spi))) {
-+			some_precise = true;
-+			break;
-+		}
-+	}
-+
-+	if (!some_precise)
-+		return;
-+
-+	for (i = 0; i < linked_regs.cnt; ++i) {
-+		struct linked_reg *e = &linked_regs.entries[i];
-+
-+		if (e->is_reg)
-+			bt_set_frame_reg(bt, e->frameno, e->regno);
-+		else
-+			bt_set_frame_slot(bt, e->frameno, e->spi);
-+	}
-+}
-+
- static bool calls_callback(struct bpf_verifier_env *env, int insn_idx);
- 
- /* For given verifier state backtrack_insn() is called from the last insn to
-@@ -3756,6 +3880,12 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
- 		print_bpf_insn(&cbs, insn, env->allow_ptr_leaks);
- 	}
- 
-+	/* If there is a history record that some registers gained range at this insn,
-+	 * propagate precision marks to those registers, so that bt_is_reg_set()
-+	 * accounts for these registers.
-+	 */
-+	bt_sync_linked_regs(bt, hist);
-+
- 	if (class == BPF_ALU || class == BPF_ALU64) {
- 		if (!bt_is_reg_set(bt, dreg))
- 			return 0;
-@@ -3985,7 +4115,8 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
- 			 */
- 			bt_set_reg(bt, dreg);
- 			bt_set_reg(bt, sreg);
--			 /* else dreg <cond> K
-+		} else if (BPF_SRC(insn->code) == BPF_K) {
-+			 /* dreg <cond> K
- 			  * Only dreg still needs precision before
- 			  * this insn, so for the K-based conditional
- 			  * there is nothing new to be marked.
-@@ -4003,6 +4134,10 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
- 			/* to be analyzed */
- 			return -ENOTSUPP;
- 	}
-+	/* Propagate precision marks to linked registers, to account for
-+	 * registers marked as precise in this function.
-+	 */
-+	bt_sync_linked_regs(bt, hist);
- 	return 0;
- }
- 
-@@ -4354,7 +4489,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno)
- 
- 		/* If some register with scalar ID is marked as precise,
- 		 * make sure that all registers sharing this ID are also precise.
--		 * This is needed to estimate effect of find_equal_scalars().
-+		 * This is needed to estimate effect of sync_linked_regs().
- 		 * Do this at the last instruction of each state,
- 		 * bpf_reg_state::id fields are valid for these instructions.
- 		 *
-@@ -4368,7 +4503,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno)
- 		 *     ...
- 		 *   --- state #1 {r1.id = A, r2.id = A} ---
- 		 *     ...
--		 *     if (r2 > 10) goto exit; // find_equal_scalars() assigns range to r1
-+		 *     if (r2 > 10) goto exit; // sync_linked_regs() assigns range to r1
- 		 *     ...
- 		 *   --- state #2 {r1.id = A, r2.id = A} ---
- 		 *     r3 = r10
-@@ -4736,7 +4871,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 	}
- 
- 	if (insn_flags)
--		return push_jmp_history(env, env->cur_state, insn_flags);
-+		return push_jmp_history(env, env->cur_state, insn_flags, 0);
- 	return 0;
- }
- 
-@@ -5032,7 +5167,7 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
- 		insn_flags = 0; /* we are not restoring spilled register */
- 	}
- 	if (insn_flags)
--		return push_jmp_history(env, env->cur_state, insn_flags);
-+		return push_jmp_history(env, env->cur_state, insn_flags, 0);
- 	return 0;
- }
- 
-@@ -13540,7 +13675,7 @@ static int adjust_reg_min_max_vals(struct bpf_verifier_env *env,
- 		ptr_reg = dst_reg;
- 	else
- 		/* Make sure ID is cleared otherwise dst_reg min/max could be
--		 * incorrectly propagated into other registers by find_equal_scalars()
-+		 * incorrectly propagated into other registers by sync_linked_regs()
- 		 */
- 		dst_reg->id = 0;
- 	if (BPF_SRC(insn->code) == BPF_X) {
-@@ -13700,7 +13835,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
- 					 */
- 					if (need_id)
- 						/* Assign src and dst registers the same ID
--						 * that will be used by find_equal_scalars()
-+						 * that will be used by sync_linked_regs()
- 						 * to propagate min/max range.
- 						 */
- 						src_reg->id = ++env->id_gen;
-@@ -13746,7 +13881,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
- 						copy_register_state(dst_reg, src_reg);
- 						/* Make sure ID is cleared if src_reg is not in u32
- 						 * range otherwise dst_reg min/max could be incorrectly
--						 * propagated into src_reg by find_equal_scalars()
-+						 * propagated into src_reg by sync_linked_regs()
- 						 */
- 						if (!is_src_reg_u32)
- 							dst_reg->id = 0;
-@@ -14564,19 +14699,78 @@ static bool try_match_pkt_pointers(const struct bpf_insn *insn,
- 	return true;
- }
- 
--static void find_equal_scalars(struct bpf_verifier_state *vstate,
--			       struct bpf_reg_state *known_reg)
-+static void __collect_linked_regs(struct linked_regs *reg_set, struct bpf_reg_state *reg,
-+				  u32 id, u32 frameno, u32 spi_or_reg, bool is_reg)
+ 	asm volatile (
+ 	/* r0 = random number up to 0xff */
+@@ -136,18 +67,13 @@ __naked void precision_cross_state_broken_link(void)
+ 	/* tie r0.id == r1.id == r2.id */
+ 	"r1 = r0;"
+ 	"r2 = r0;"
+-	/* force checkpoint, although link between r1 and r{0,2} is
+-	 * broken by the next statement current precision tracking
+-	 * algorithm can't react to it and propagates mark for r1 to
+-	 * the parent state.
+-	 */
+-	"goto +0;"
+ 	/* break link for r1, this is the only line that differs
+-	 * compared to precision_cross_state()
++	 * compared to the previous test
+ 	 */
+ 	"r1 = 0;"
+-	/* force r0 to be precise, this immediately marks r1 and r2 as
+-	 * precise as well because of shared IDs
++	"if r0 > 7 goto +0;"
++	/* force r0 to be precise,
++	 * this eventually marks r2 as precise because of shared IDs
+ 	 */
+ 	"r3 = r10;"
+ 	"r3 += r0;"
+@@ -164,10 +90,16 @@ __naked void precision_cross_state_broken_link(void)
+  */
+ SEC("socket")
+ __success __log_level(2)
+-__msg("11: (0f) r2 += r1")
++__msg("12: (0f) r2 += r1")
+ /* Current state */
+-__msg("frame2: last_idx 11 first_idx 10 subseq_idx -1")
+-__msg("frame2: regs=r1 stack= before 10: (bf) r2 = r10")
++__msg("frame2: last_idx 12 first_idx 11 subseq_idx -1 ")
++__msg("frame2: regs=r1 stack= before 11: (bf) r2 = r10")
++__msg("frame2: parent state regs=r1 stack=")
++__msg("frame1: parent state regs= stack=")
++__msg("frame0: parent state regs= stack=")
++/* Parent state */
++__msg("frame2: last_idx 10 first_idx 10 subseq_idx 11 ")
++__msg("frame2: regs=r1 stack= before 10: (25) if r1 > 0x7 goto pc+0")
+ __msg("frame2: parent state regs=r1 stack=")
+ /* frame1.r{6,7} are marked because mark_precise_scalar_ids()
+  * looks for all registers with frame2.r1.id in the current state
+@@ -192,7 +124,7 @@ __msg("frame1: regs=r1 stack= before 4: (85) call pc+1")
+ __msg("frame0: parent state regs=r1,r6 stack=")
+ /* Parent state */
+ __msg("frame0: last_idx 3 first_idx 1 subseq_idx 4")
+-__msg("frame0: regs=r0,r1,r6 stack= before 3: (bf) r6 = r0")
++__msg("frame0: regs=r1,r6 stack= before 3: (bf) r6 = r0")
+ __msg("frame0: regs=r0,r1 stack= before 2: (bf) r1 = r0")
+ __msg("frame0: regs=r0 stack= before 1: (57) r0 &= 255")
+ __flag(BPF_F_TEST_STATE_FREQ)
+@@ -230,7 +162,8 @@ static __naked __noinline __used
+ void precision_many_frames__bar(void)
  {
--	struct bpf_func_state *state;
-+	struct linked_reg *e;
-+
-+	if (reg->type != SCALAR_VALUE || reg->id != id)
-+		return;
-+
-+	e = linked_regs_push(reg_set);
-+	if (e) {
-+		e->frameno = frameno;
-+		e->is_reg = is_reg;
-+		e->regno = spi_or_reg;
-+	} else {
-+		reg->id = 0;
-+	}
-+}
-+
-+/* For all R being scalar registers or spilled scalar registers
-+ * in verifier state, save R in linked_regs if R->id == id.
-+ * If there are too many Rs sharing same id, reset id for leftover Rs.
-+ */
-+static void collect_linked_regs(struct bpf_verifier_state *vstate, u32 id,
-+				struct linked_regs *linked_regs)
-+{
-+	struct bpf_func_state *func;
- 	struct bpf_reg_state *reg;
-+	int i, j;
- 
--	bpf_for_each_reg_in_vstate(vstate, state, reg, ({
--		if (reg->type == SCALAR_VALUE && reg->id == known_reg->id) {
-+	for (i = vstate->curframe; i >= 0; i--) {
-+		func = vstate->frame[i];
-+		for (j = 0; j < BPF_REG_FP; j++) {
-+			reg = &func->regs[j];
-+			__collect_linked_regs(linked_regs, reg, id, i, j, true);
-+		}
-+		for (j = 0; j < func->allocated_stack / BPF_REG_SIZE; j++) {
-+			if (!is_spilled_reg(&func->stack[j]))
-+				continue;
-+			reg = &func->stack[j].spilled_ptr;
-+			__collect_linked_regs(linked_regs, reg, id, i, j, false);
-+		}
-+	}
-+
-+	if (linked_regs->cnt == 1)
-+		linked_regs->cnt = 0;
-+}
-+
-+/* For all R in linked_regs, copy known_reg range into R
-+ * if R->id == known_reg->id.
-+ */
-+static void sync_linked_regs(struct bpf_verifier_state *vstate, struct bpf_reg_state *known_reg,
-+			     struct linked_regs *linked_regs)
-+{
-+	struct bpf_reg_state *reg;
-+	struct linked_reg *e;
-+	int i;
-+
-+	for (i = 0; i < linked_regs->cnt; ++i) {
-+		e = &linked_regs->entries[i];
-+		reg = e->is_reg ? &vstate->frame[e->frameno]->regs[e->regno]
-+				: &vstate->frame[e->frameno]->stack[e->spi].spilled_ptr;
-+		if (reg->type != SCALAR_VALUE || reg == known_reg)
-+			continue;
-+		if (reg->id != known_reg->id)
-+			continue;
-+		{
- 			s32 saved_subreg_def = reg->subreg_def;
-+
- 			copy_register_state(reg, known_reg);
- 			reg->subreg_def = saved_subreg_def;
- 		}
--	}));
-+	}
- }
- 
- static int check_cond_jmp_op(struct bpf_verifier_env *env,
-@@ -14587,6 +14781,7 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 	struct bpf_reg_state *regs = this_branch->frame[this_branch->curframe]->regs;
- 	struct bpf_reg_state *dst_reg, *other_branch_regs, *src_reg = NULL;
- 	struct bpf_reg_state *eq_branch_regs;
-+	struct linked_regs linked_regs = {};
- 	u8 opcode = BPF_OP(insn->code);
- 	bool is_jmp32;
- 	int pred = -1;
-@@ -14704,6 +14899,21 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 		return 0;
- 	}
- 
-+	/* Push scalar registers sharing same ID to jump history,
-+	 * do this before creating 'other_branch', so that both
-+	 * 'this_branch' and 'other_branch' share this history
-+	 * if parent state is created.
-+	 */
-+	if (BPF_SRC(insn->code) == BPF_X && src_reg->type == SCALAR_VALUE && src_reg->id)
-+		collect_linked_regs(this_branch, src_reg->id, &linked_regs);
-+	if (dst_reg->type == SCALAR_VALUE && dst_reg->id)
-+		collect_linked_regs(this_branch, dst_reg->id, &linked_regs);
-+	if (linked_regs.cnt > 0) {
-+		err = push_jmp_history(env, this_branch, 0, linked_regs_pack(&linked_regs));
-+		if (err)
-+			return err;
-+	}
-+
- 	other_branch = push_stack(env, *insn_idx + insn->off + 1, *insn_idx,
- 				  false);
- 	if (!other_branch)
-@@ -14746,8 +14956,9 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 						    src_reg, dst_reg, opcode);
- 			if (src_reg->id &&
- 			    !WARN_ON_ONCE(src_reg->id != other_branch_regs[insn->src_reg].id)) {
--				find_equal_scalars(this_branch, src_reg);
--				find_equal_scalars(other_branch, &other_branch_regs[insn->src_reg]);
-+				sync_linked_regs(this_branch, src_reg, &linked_regs);
-+				sync_linked_regs(other_branch, &other_branch_regs[insn->src_reg],
-+						 &linked_regs);
- 			}
- 
- 		}
-@@ -14759,8 +14970,9 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
- 
- 	if (dst_reg->type == SCALAR_VALUE && dst_reg->id &&
- 	    !WARN_ON_ONCE(dst_reg->id != other_branch_regs[insn->dst_reg].id)) {
--		find_equal_scalars(this_branch, dst_reg);
--		find_equal_scalars(other_branch, &other_branch_regs[insn->dst_reg]);
-+		sync_linked_regs(this_branch, dst_reg, &linked_regs);
-+		sync_linked_regs(other_branch, &other_branch_regs[insn->dst_reg],
-+				 &linked_regs);
- 	}
- 
- 	/* if one pointer register is compared to another pointer
-@@ -16182,7 +16394,7 @@ static bool regsafe(struct bpf_verifier_env *env, struct bpf_reg_state *rold,
- 		 *
- 		 * First verification path is [1-6]:
- 		 * - at (4) same bpf_reg_state::id (b) would be assigned to r6 and r7;
--		 * - at (5) r6 would be marked <= X, find_equal_scalars() would also mark
-+		 * - at (5) r6 would be marked <= X, sync_linked_regs() would also mark
- 		 *   r7 <= X, because r6 and r7 share same id.
- 		 * Next verification path is [1-4, 6].
- 		 *
-@@ -16915,7 +17127,7 @@ static int is_state_visited(struct bpf_verifier_env *env, int insn_idx)
- 			 * the current state.
- 			 */
- 			if (is_jmp_point(env, env->insn_idx))
--				err = err ? : push_jmp_history(env, cur, 0);
-+				err = err ? : push_jmp_history(env, cur, 0, 0);
- 			err = err ? : propagate_precision(env, &sl->state);
- 			if (err)
- 				return err;
-@@ -17181,7 +17393,7 @@ static int do_check(struct bpf_verifier_env *env)
- 		}
- 
- 		if (is_jmp_point(env, env->insn_idx)) {
--			err = push_jmp_history(env, state, 0);
-+			err = push_jmp_history(env, state, 0, 0);
- 			if (err)
- 				return err;
- 		}
-diff --git a/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c b/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c
-index 4b8b0f45d17d71..a188e26f04da70 100644
---- a/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c
-@@ -141,7 +141,7 @@ __msg("mark_precise: frame0: last_idx 14 first_idx 9")
- __msg("mark_precise: frame0: regs=r6 stack= before 13: (bf) r1 = r7")
- __msg("mark_precise: frame0: regs=r6 stack= before 12: (27) r6 *= 4")
- __msg("mark_precise: frame0: regs=r6 stack= before 11: (25) if r6 > 0x3 goto pc+4")
--__msg("mark_precise: frame0: regs=r6 stack= before 10: (bf) r6 = r0")
-+__msg("mark_precise: frame0: regs=r0,r6 stack= before 10: (bf) r6 = r0")
- __msg("mark_precise: frame0: regs=r0 stack= before 9: (85) call bpf_loop")
- /* State entering callback body popped from states stack */
- __msg("from 9 to 17: frame1:")
+ 	asm volatile (
+-	/* force r1 to be precise, this immediately marks:
++	"if r1 > 7 goto +0;"
++	/* force r1 to be precise, this eventually marks:
+ 	 * - bar frame r1
+ 	 * - foo frame r{1,6,7}
+ 	 * - main frame r{1,6}
+@@ -247,14 +180,16 @@ void precision_many_frames__bar(void)
+  */
+ SEC("socket")
+ __success __log_level(2)
++__msg("11: (0f) r2 += r1")
+ /* foo frame */
+-__msg("frame1: regs=r1 stack=-8,-16 before 9: (bf) r2 = r10")
++__msg("frame1: regs=r1 stack= before 10: (bf) r2 = r10")
++__msg("frame1: regs=r1 stack= before 9: (25) if r1 > 0x7 goto pc+0")
+ __msg("frame1: regs=r1 stack=-8,-16 before 8: (7b) *(u64 *)(r10 -16) = r1")
+ __msg("frame1: regs=r1 stack=-8 before 7: (7b) *(u64 *)(r10 -8) = r1")
+ __msg("frame1: regs=r1 stack= before 4: (85) call pc+2")
+ /* main frame */
+-__msg("frame0: regs=r0,r1 stack=-8 before 3: (7b) *(u64 *)(r10 -8) = r1")
+-__msg("frame0: regs=r0,r1 stack= before 2: (bf) r1 = r0")
++__msg("frame0: regs=r1 stack=-8 before 3: (7b) *(u64 *)(r10 -8) = r1")
++__msg("frame0: regs=r1 stack= before 2: (bf) r1 = r0")
+ __msg("frame0: regs=r0 stack= before 1: (57) r0 &= 255")
+ __flag(BPF_F_TEST_STATE_FREQ)
+ __naked void precision_stack(void)
+@@ -283,7 +218,8 @@ void precision_stack__foo(void)
+ 	 */
+ 	"*(u64*)(r10 - 8) = r1;"
+ 	"*(u64*)(r10 - 16) = r1;"
+-	/* force r1 to be precise, this immediately marks:
++	"if r1 > 7 goto +0;"
++	/* force r1 to be precise, this eventually marks:
+ 	 * - foo frame r1,fp{-8,-16}
+ 	 * - main frame r1,fp{-8}
+ 	 */
+@@ -299,15 +235,17 @@ void precision_stack__foo(void)
+ SEC("socket")
+ __success __log_level(2)
+ /* r{6,7} */
+-__msg("11: (0f) r3 += r7")
+-__msg("frame0: regs=r6,r7 stack= before 10: (bf) r3 = r10")
++__msg("12: (0f) r3 += r7")
++__msg("frame0: regs=r7 stack= before 11: (bf) r3 = r10")
++__msg("frame0: regs=r7 stack= before 9: (25) if r7 > 0x7 goto pc+0")
+ /* ... skip some insns ... */
+ __msg("frame0: regs=r6,r7 stack= before 3: (bf) r7 = r0")
+ __msg("frame0: regs=r0,r6 stack= before 2: (bf) r6 = r0")
+ /* r{8,9} */
+-__msg("12: (0f) r3 += r9")
+-__msg("frame0: regs=r8,r9 stack= before 11: (0f) r3 += r7")
++__msg("13: (0f) r3 += r9")
++__msg("frame0: regs=r9 stack= before 12: (0f) r3 += r7")
+ /* ... skip some insns ... */
++__msg("frame0: regs=r9 stack= before 10: (25) if r9 > 0x7 goto pc+0")
+ __msg("frame0: regs=r8,r9 stack= before 7: (bf) r9 = r0")
+ __msg("frame0: regs=r0,r8 stack= before 6: (bf) r8 = r0")
+ __flag(BPF_F_TEST_STATE_FREQ)
+@@ -328,8 +266,9 @@ __naked void precision_two_ids(void)
+ 	"r9 = r0;"
+ 	/* clear r0 id */
+ 	"r0 = 0;"
+-	/* force checkpoint */
+-	"goto +0;"
++	/* propagate equal scalars precision */
++	"if r7 > 7 goto +0;"
++	"if r9 > 7 goto +0;"
+ 	"r3 = r10;"
+ 	/* force r7 to be precise, this also marks r6 */
+ 	"r3 += r7;"
+diff --git a/tools/testing/selftests/bpf/verifier/precise.c b/tools/testing/selftests/bpf/verifier/precise.c
+index 8a2ff81d835088..17fbc1e6150e3f 100644
+--- a/tools/testing/selftests/bpf/verifier/precise.c
++++ b/tools/testing/selftests/bpf/verifier/precise.c
+@@ -106,7 +106,7 @@
+ 	mark_precise: frame0: regs=r2 stack= before 22\
+ 	mark_precise: frame0: parent state regs=r2 stack=:\
+ 	mark_precise: frame0: last_idx 20 first_idx 20\
+-	mark_precise: frame0: regs=r2,r9 stack= before 20\
++	mark_precise: frame0: regs=r2 stack= before 20\
+ 	mark_precise: frame0: parent state regs=r2,r9 stack=:\
+ 	mark_precise: frame0: last_idx 19 first_idx 17\
+ 	mark_precise: frame0: regs=r2,r9 stack= before 19\
 -- 
 2.53.0
 
