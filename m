@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FA147AF75;
-	Tue, 16 Jun 2026 17:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C407247B425;
+	Tue, 16 Jun 2026 17:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631189; cv=none; b=EG3zPmIACIC4sKEXW/FS5HAjbhfa393bMgc9mtX2+rIHbMxKNKV8SBPSRq7H7mfQTyBwn9iMQj8gNodam9uZanZ9XE6woIvwxAluMRpW4lirKlHIqLF2Yj9GyQBYCKP1nda5JmQLXmYIlF5Zkm4zHsV/D5Zv+uiufobAnCL2P7E=
+	t=1781631193; cv=none; b=uikzDzcOOtAR5zR9R8WFTTsrGv64cPhONw3DfbnZ0gyE4+AA8ykCfrudHTVz4rd/r/NDBcr57drjxuTKWVcRpA+R06+2kc3oZ0/UTWA7QTXdMKVTnwiOWLAJEbobOytEXl8in6ngzkoK61T2ItI48zSz10J0Fkhkc3+1uFzNAQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631189; c=relaxed/simple;
-	bh=GTPo8wT532wlCMQK29wFl1HlQE7Cto43T8PI4RbtWDE=;
+	s=arc-20240116; t=1781631193; c=relaxed/simple;
+	bh=HCBejHZfA8VEvV5aEwQyP+SLFAiqFGwla0BSRJQCWKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CVxg9Tv+FAMXfZjznB1/FbsYti9u5qZwZbITd81SMHT+AwGijnfFiXH0hJP6voo6NAazbMH2NsMbbArVS2Sleq1kiP7pdkSx41kxw2Bnpsv1tnvIRbPhPzOREu2PGlHMbq3cWBEvB1mhXeQYvoAX61wyUcu+ToRbG9DQqeWR97Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnJwqItN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Apnj6Qoa69RQ9+OBgjzkE2tcgQKG+FuEtF/yyeRYlTRq//Yhpy7nA0EcOYwSjKp+QgWhMr1yO4tuyWqk1poWNfc6PpgUEeHzcJ17OpzW8amBQpTubZiR0jrxDiyYjz4Uu7fRk3E7klznotoyo+jgAEqFgyoQc6UqzkHOPvenK7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwsbPrQM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnJwqItN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 309451F000E9;
-	Tue, 16 Jun 2026 17:33:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwsbPrQM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C99F01F000E9;
+	Tue, 16 Jun 2026 17:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631188;
-	bh=UcImETCVU5TCTuhOZOhccrNb9WuDstET+inY36bO7T8=;
+	s=korg; t=1781631192;
+	bh=4YCrzIHn12pryU4ST9iHloZ37PYEVrqunUpvgpg68Dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pnJwqItNY1bm5xNEJzVyLwIiG49OOVZ9V4VOggRNwToMTJObIKxY3ETxeFXzR1U7u
-	 DTGStm5/Zz2TLVZ1qq+nfx9iKpoWygSaVUKbOOE5k/eorme+Rzn10hGmjKs/2INkwL
-	 h+WaZ3K9rP4D1QwmZ7XVaj4aRwwKc6HEpU+l2YDY=
+	b=xwsbPrQMYmw37X5eZRHj7I4d3RgtzJ6G27BA5/3bjEbcUoWfCGzcPWHBnrFE7gJ1T
+	 0N4/JqAyHyvRFxzviHmcyWbAEdkB1Yr2h6VjZggZ/Ew7LRDN5DxwpMpQB4+fY8W/qq
+	 c74rzl9htvqUDeSFcURKXnw+KDuAQOdW//m0rcBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.1 140/522] comedi: comedi_test: Fix limiting of convert_arg in waveform_ai_cmdtest()
-Date: Tue, 16 Jun 2026 20:24:47 +0530
-Message-ID: <20260616145132.642048833@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	William Breathitt Gray <wbg@kernel.org>
+Subject: [PATCH 6.1 141/522] counter: Fix refcount leak in counter_alloc() error path
+Date: Tue, 16 Jun 2026 20:24:48 +0530
+Message-ID: <20260616145132.686979893@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -50,69 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 8a3bee801d420be8a7a0bae4a26547b353b8fe22 upstream.
+commit d9eeb0ea0d2de658663bfaa9c26eccdd8fd64440 upstream.
 
-The function checks and possibly modifies the description of an
-asynchronous command to be run on the analog input subdevice of a comedi
-device attached to the "comedi_test" driver, returning 0 if no
-modifications were required, or a positive value that indicates which
-step of the checking process it failed on.  Step 4 fixes up various
-argument values for various trigger sources.
+After device_initialize(), the lifetime of the embedded struct device
+is expected to be managed through the device core reference counting.
 
-There are two bugs in the fixing up of the `convert_arg` value to keep
-the `scan_begin_arg` value within the range of `unsigned int` when
-`scan_begin_src` and `convert_src` both have the value `TRIG_TIMER`,
-which indicates that the corresponding `_arg` values hold a time period
-in nanoseconds.  The code also uses `scan_end_arg` which hold the number
-of "conversions" within each "scan".  The goal is to end up with the
-scan period being less than or equal to the convert period multiplied by
-the number of conversions per scan.  It intends to do that by clamping
-the `convert_arg` value to a maximum value of `UINT_MAX / scan_end_arg`
-rounded down to a multiple of 1000 (`NSEC_PER_USEC`).
+In counter_alloc(), if dev_set_name() fails after device_initialize(),
+the error path removes the chrdev, frees the ID, and frees the backing
+allocation directly instead of releasing the device reference with
+put_device(). This bypasses the normal device lifetime rules and may
+leave the reference count of the embedded struct device unbalanced,
+resulting in a refcount leak.
 
-(The rounding from nanoseconds to microseconds is because the driver is
-modelling a device that uses a 1 MHz clock for timing.  This is partly
-because that is a more typical timing base for real hardware devices
-driven by comedi, and partly because the driver used to use `struct
-timeval` internally.)
+The issue was identified by a static analysis tool I developed and
+confirmed by manual review.
 
-The first bug is that the code checks if `scan_begin_arg == TRIG_TIMER`
-when it should be checking if `scan_begin_src == TRIG_TIMER`.  The
-bugged check will always fail because if `scan_begin_src == TRIG_TIMER`,
-then `scan_begin_arg` will be at least 1000 (`NSEC_PER_USEC`), otherwise
-`scan_begin_src == TRIG_FOLLOW` and `scan_begin_arg` will be 0.  (N.B
-`TRIG_TIMER` is defined as `0x10`.)  The second bug is that is rounding
-the maximum value down to a multiple of 1000000000 (`NSEC_PER_SEC`)
-instead of 1000 (`NSEC_PER_USEC`), however this bug is not reached due
-to the first bug.  This patch fixes both bugs.
+Fix this by using put_device() in the dev_set_name() failure path and
+let counter_device_release() handle the final cleanup.
 
-Fixes: 783ddaebd397 ("staging: comedi: comedi_test: support scan_begin_src == TRIG_FOLLOW")
-Fixes: 5afdcad2f818 ("staging: comedi: comedi_test: limit maximum convert_arg")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260422144637.27692-1-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4da08477ea1f ("counter: Set counter device name")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://lore.kernel.org/r/20260413134604.2861772-1-lgs201920130244@gmail.com
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/comedi_test.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/counter/counter-core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/comedi/drivers/comedi_test.c
-+++ b/drivers/comedi/drivers/comedi_test.c
-@@ -322,10 +322,10 @@ static int waveform_ai_cmdtest(struct co
- 		arg = min(arg,
- 			  rounddown(UINT_MAX, (unsigned int)NSEC_PER_USEC));
- 		arg = NSEC_PER_USEC * DIV_ROUND_CLOSEST(arg, NSEC_PER_USEC);
--		if (cmd->scan_begin_arg == TRIG_TIMER) {
-+		if (cmd->scan_begin_src == TRIG_TIMER) {
- 			/* limit convert_arg to keep scan_begin_arg in range */
- 			limit = UINT_MAX / cmd->scan_end_arg;
--			limit = rounddown(limit, (unsigned int)NSEC_PER_SEC);
-+			limit = rounddown(limit, (unsigned int)NSEC_PER_USEC);
- 			arg = min(arg, limit);
- 		}
- 		err |= comedi_check_trigger_arg_is(&cmd->convert_arg, arg);
+--- a/drivers/counter/counter-core.c
++++ b/drivers/counter/counter-core.c
+@@ -123,7 +123,8 @@ struct counter_device *counter_alloc(siz
+ 
+ err_dev_set_name:
+ 
+-	counter_chrdev_remove(counter);
++	put_device(dev);
++	return NULL;
+ err_chrdev_add:
+ 
+ 	ida_free(&counter_ida, dev->id);
 
 
