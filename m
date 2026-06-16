@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD73472760;
-	Tue, 16 Jun 2026 17:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5587C3C76AF;
+	Tue, 16 Jun 2026 17:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632374; cv=none; b=of29BxJAfBYfJBXX8nyUgmcz0P0zFBEoCsG2jbO+cl/4WJ787Rc1HmCS2h4AsuJWr24Qh9EC3NFuxwCcg01YhWKfmVURP2wdwXadHHD85mO+rK9spAbVhel61a+lvwW5/avnOjPdeAkEqesXm/AhVzg2IH71/QfoVs2BfMEEeHs=
+	t=1781632380; cv=none; b=KZqaZrg43GRPuMhpo+qguPw3y2nimaaeDSsw4hIcmwtlP0QjWEQcrWUQ7oeCupzv269RVkeIm0SnolBcmhEg6yzjrOydd1x2eloMZZh8C3VGZ0ONeutLVp5sNrBqppwTgzt1AEIiYAh86pdGTClZB411dexhv8dGF/QBYKre9LI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632374; c=relaxed/simple;
-	bh=kMZcvg484cnXjBiQ/Q1GhHjdSYzfitujl7fr70r7t/0=;
+	s=arc-20240116; t=1781632380; c=relaxed/simple;
+	bh=nygm+PE+0lKYrsCXc32lrs90u6ZgPWxgp7dbGIUB66E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oTBmtGfhUlUhlMgDlOAcGhQhgMx0w8bU/Ltq+ku8gzbG1dxpX5/hE1F89WVTRMCUlp7cUpOU3yR9E4KXQGNtgJxLfzFZmDSjNLvviep5Zf0twhk0oe8tHDAtyZWhciaSLlcMzTr96l3ZBWAV8+Ik5XPPF7AlGwie/BsxyqDH3uE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWtCl3vE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kz/i4++QikHr6lhTex0ATcc/JIuwWkLmowEuTiTGaDwrhdKSxx32v4DNpZAoS4fe3ictxhZKKogpL1mVIQ82c0CiB4ruwodID3xGCQdfausJrQXmO0DkCVR0wrpUcbjb6yV+zJO5erD1nZERfSEtKdUDpMAYjgnaRnC2/T135zM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KU7kes/E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWtCl3vE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A7921F000E9;
-	Tue, 16 Jun 2026 17:52:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KU7kes/E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BD0A1F000E9;
+	Tue, 16 Jun 2026 17:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632372;
-	bh=hHcTtI0XPrmvaFMuj8vTDQzCxihKrkoHFiuIuLxh1+A=;
+	s=korg; t=1781632377;
+	bh=R+rU7486WVez4f2z15OCPAl6fJxmNgG6PZjz/4TaSK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IWtCl3vEDc+uBjAu+LhVzQUrcRVS/TVkShnKUAMemYQxLVn6Duj3GW9hQ1tbtK804
-	 tHyaKVfh3XvHXmdUgYuyltxlPu8vOsE+udnzG+ooeSzlN3N5tBx98t4i7rZ69Gj7Pz
-	 UsfX+Uxst8V2seq7Q5YlbT7phCm2fGm/vJZz5m50=
+	b=KU7kes/EAIwU1xXSOjcAmLF1CMqenVd/mX180koEKhRYl3OFOjL3bIZnmFYOr6t0v
+	 cQKETYK1CZHIo4JcIiGIDN4JnPyrZJDuP6JZtqI5RlEzzKLxtbD5HO59OJ/N1OGNEq
+	 0pbqhgR8bcv+/lMV3sWAWDAe9Q4AapSzkiAa7Aqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Takahiro Kuwano <takahiro.kuwano@infineon.com>,
-	Michael Walle <mwalle@kernel.org>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 398/522] mtd: spi-nor: debugfs: fix out-of-bounds read in spi_nor_params_show()
-Date: Tue, 16 Jun 2026 20:29:05 +0530
-Message-ID: <20260616145144.693842984@linuxfoundation.org>
+Subject: [PATCH 6.1 372/522] wifi: mac80211: remove station if connection prep fails
+Date: Tue, 16 Jun 2026 20:28:39 +0530
+Message-ID: <20260616145143.177105383@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -54,62 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit e47029b977e747cb3a9174308fd55762cce70147 ]
+[ Upstream commit 283fc9e44ff5b5ac967439b4951b80bd4299f4e4 ]
 
-Sashiko noticed an out-of-bounds read [1].
+If connection preparation fails for MLO connections, then the
+interface is completely reset to non-MLD. In this case, we must
+not keep the station since it's related to the link of the vif
+being removed. Delete an existing station. Any "new_sta" is
+already being removed, so that doesn't need changes.
 
-In spi_nor_params_show(), the snor_f_names array is passed to
-spi_nor_print_flags() using sizeof(snor_f_names).
-
-Since snor_f_names is an array of pointers, sizeof() returns the total
-number of bytes occupied by the pointers
-	(element_count * sizeof(void *))
-rather than the element count itself. On 64-bit systems, this makes the
-passed length 8x larger than intended.
-
-Inside spi_nor_print_flags(), the 'names_len' argument is used to
-bounds-check the 'names' array access. An out-of-bounds read occurs
-if a flag bit is set that exceeds the array's actual element count
-but is within the inflated byte-size count.
-
-Correct this by using ARRAY_SIZE() to pass the actual number of
-string pointers in the array.
+This fixes a use-after-free/double-free in debugfs if that's
+enabled, because a vif going from MLD (and to MLD, but that's
+not relevant here) recreates its entire debugfs.
 
 Cc: stable@vger.kernel.org
-Fixes: 0257be79fc4a ("mtd: spi-nor: expose internal parameters via debugfs")
-Closes: https://sashiko.dev/#/patchset/20260417-die-erase-fix-v2-1-73bb7004ebad%40infineon.com [1]
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Reviewed-by: Takahiro Kuwano <takahiro.kuwano@infineon.com>
-Reviewed-by: Michael Walle <mwalle@kernel.org>
-Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-[ adjusted include-block context to keep 6.1.y's existing non-alphabetical header order while still adding `#include <linux/array_size.h>` at the top ]
+Fixes: 81151ce462e5 ("wifi: mac80211: support MLO authentication/association with one link")
+Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260505151533.c4e52deb06ad.Iafe56cec7de8512626169496b134bce3a6c17010@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ used sta_info_destroy_addr() instead of __sta_info_destroy() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/debugfs.c |    4 +++-
+ net/mac80211/mlme.c |    4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/spi-nor/debugfs.c
-+++ b/drivers/mtd/spi-nor/debugfs.c
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -6586,7 +6586,7 @@ static int ieee80211_prep_connection(str
+ 	struct ieee80211_bss *bss = (void *)cbss->priv;
+ 	struct sta_info *new_sta = NULL;
+ 	struct ieee80211_link_data *link;
+-	bool have_sta = false;
++	struct sta_info *have_sta = NULL;
+ 	bool mlo;
+ 	int err;
  
-+#include <linux/array_size.h>
- #include <linux/mtd/spi-nor.h>
- #include <linux/spi/spi.h>
- #include <linux/spi/spi-mem.h>
-@@ -91,7 +92,8 @@ static int spi_nor_params_show(struct se
- 	seq_printf(s, "address nbytes\t%u\n", nor->addr_nbytes);
+@@ -6751,6 +6751,8 @@ static int ieee80211_prep_connection(str
  
- 	seq_puts(s, "flags\t\t");
--	spi_nor_print_flags(s, nor->flags, snor_f_names, sizeof(snor_f_names));
-+	spi_nor_print_flags(s, nor->flags, snor_f_names,
-+			    ARRAY_SIZE(snor_f_names));
- 	seq_puts(s, "\n");
- 
- 	seq_puts(s, "\nopcodes\n");
+ out_err:
+ 	ieee80211_link_release_channel(&sdata->deflink);
++	if (mlo && have_sta)
++		WARN_ON(sta_info_destroy_addr(sdata, ap_mld_addr));
+ 	ieee80211_vif_set_links(sdata, 0);
+ 	return err;
+ }
 
 
