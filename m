@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1D53370EA;
-	Tue, 16 Jun 2026 15:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 289A51D7995;
+	Tue, 16 Jun 2026 15:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622467; cv=none; b=HXRVlAbGrbABn7OrQdT3xArPFp6PpCuvgJbu/IeoyeBMGrHWi77600kBoKA0XakKxPEGgAin/CjCmqmsReJi6dEc/hWhloMja9R6DgXLO34goBqbAht4rhorZPU2UvVgd/4xYiFz2FXSCSalnGhfKSQm4LxQ1YetryONvXhb9Us=
+	t=1781622472; cv=none; b=fulHdI3BuBkGXfn0hcP5YiR+Yo6MRizFrnKP4yEQyZYrIOgNb8ZXm/wil/ASS/X2YuUf82JstKwUR/FtXzGscUtYldbZ0eGwDB2RRnclqLDyEz1BV/C26+13LJWuHUvxwYhLcYquTQgJTG+Ed4Jd2OrZJR/TMkP5itQ32u9Ohpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622467; c=relaxed/simple;
-	bh=p5RcP/6FM5TiVKBU2ZlhHQlg2JQU08xxcI5+Vz+6KoE=;
+	s=arc-20240116; t=1781622472; c=relaxed/simple;
+	bh=CjvNZSgtIRLqY9YXF9ksAx0hLkEjp1Bu58FKDkZbg8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=poX/ioQdOQY+GATAZqK7R0CherS/A0yV6Rl6rdO740ovc4AslF8kbv63uoEcnjr8muLYuVrpEotPRnQ5sDAooMtUbBEA/WXUhQCsE8+lyV7nGngvOHbHhuibHjiSiAFQa6VHra6PO33UbuiDv+CrDAD2r3gxe6oV7gBi4iR54wE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFYxjE2m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Eb5C9xRsmMdO1R+/DxRcxTxw55wzkf4hlwC/B9ddVcyT4Mb1qMG4QfnhaSECUjl/0L/BZ8rGnRABWlI6J/OwQjKoMhM4XmH10G4eGQESHBzf5Wf7B8/PnPtOlaZzEwxmnXjvJuPzcrLnEXY5cuqvdTrjzk/YJm7Qm2+s3NjcwuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZS7ZLrji; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFYxjE2m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5FB1F000E9;
-	Tue, 16 Jun 2026 15:07:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZS7ZLrji"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19B5B1F000E9;
+	Tue, 16 Jun 2026 15:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622466;
-	bh=1S53ksa2rhLU/XaZH8vIK6lblCGY05wJZMMpebgIRHE=;
+	s=korg; t=1781622471;
+	bh=m6hyAp89qplNZWTKbVpoo3a1SELJINCR1Cu0tr9ub2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VFYxjE2mGXYRqOBFMRmSAe9RAwrxaYZwA9auk1KvUwyb7k4FLHBfJkgUj0D0qERH3
-	 SH8gVh40VmkSE0t25TLcTZwSOQG2gkyqGqZ4zXiyGZdQ3xIn4aC7qKBLx72HZkoYmF
-	 BWQYtcN3eb5ZWSbv8WytzB8n7OSX6jik09UvpUbY=
+	b=ZS7ZLrjioq9YXvQU8NEyKb9YcbxLczc3KnMX2sfCcClIahsVRedlO9N5kk1KYatnm
+	 LPsMugNYvzkGOK9TPnDOcyOWKiCWrzHlnSzgxgF4J7O8uErdgBQnlZytIvb62Bo4HY
+	 hKhak8Az6WC4TL1/TQJCCkoE+eVrPMeKxhRLzj2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Yuanbin <xieyuanbin1@huawei.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 005/325] ARM: fix branch predictor hardening
-Date: Tue, 16 Jun 2026 20:26:41 +0530
-Message-ID: <20260616145058.095123041@linuxfoundation.org>
+	Oliver Upton <oupton@kernel.org>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.18 006/325] KVM: arm64: Take the SRCU lock for page table walks in fault injection and AT emulation
+Date: Tue, 16 Jun 2026 20:26:42 +0530
+Message-ID: <20260616145058.139350030@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,159 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit fd2dee1c6e2256f726ba33fd3083a7be0efc80d3 upstream.
+commit f2ca45b50d4216c9cc7ffabf50d9ad1932209251 upstream.
 
-__do_user_fault() may be called with indeterminent interrupt enable
-state, which means we may be preemptive at this point. This causes
-problems when calling harden_branch_predictor(). For example, when
-called from a data abort, do_alignment_fault()->do_bad_area().
+walk_s1() and kvm_walk_nested_s2() expect to be called while holding
+kvm->srcu to guard against memslot changes. While this is generally
+the case, __kvm_at_s12() and __kvm_find_s1_desc_level() call into the
+respective walkers without taking kvm->srcu.
 
-Move harden_branch_predictor() out of __do_user_fault() and into the
-calling contexts.
+Fix by acquiring kvm->srcu prior to the table walk in both instances.
 
-Moving it into do_kernel_address_page_fault(), we can be sure that
-interrupts will be disabled here.
-
-Converting do_translation_fault() to use do_kernel_address_page_fault()
-rather than do_bad_area() means that we keep branch predictor handling
-for translation faults. Interrupts will also be disabled at this call
-site.
-
-do_sect_fault() needs special handling, so detect user mode accesses
-to kernel-addresses, and add an explicit call to branch predictor
-hardening.
-
-Finally, add branch predictor hardening to do_alignment() for the
-faulting case (user mode accessing kernel addresses) before interrupts
-are enabled.
-
-This should cover all cases where harden_branch_predictor() is called,
-ensuring that it is always has interrupts disabled, also ensuring that
-it is called early in each call path.
-
-Reviewed-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Tested-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 50f77dc87f13 ("KVM: arm64: Populate level on S1PTW SEA injection")
+Fixes: be04cebf3e78 ("KVM: arm64: nv: Add emulation of AT S12E{0,1}{R,W}")
+Suggested-by: Oliver Upton <oupton@kernel.org>
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Oliver Upton <oupton@kernel.org>
+Link: https://patch.msgid.link/aiAZfdeyanIvP8SD@v4bel
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+[ Hyunwoo Kim: __kvm_at_s12() still returns void in 6.18.y, so the
+  surrounding context differs from upstream (return; instead of
+  return ret;); the added scoped_guard() is unchanged. ]
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mm/alignment.c |  6 +++++-
- arch/arm/mm/fault.c     | 39 ++++++++++++++++++++++++++-------------
- 2 files changed, 31 insertions(+), 14 deletions(-)
+ arch/arm64/kvm/at.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/mm/alignment.c b/arch/arm/mm/alignment.c
-index 3c6ddb1afdc463..812380f30ae36a 100644
---- a/arch/arm/mm/alignment.c
-+++ b/arch/arm/mm/alignment.c
-@@ -19,10 +19,11 @@
- #include <linux/init.h>
- #include <linux/sched/signal.h>
- #include <linux/uaccess.h>
-+#include <linux/unaligned.h>
+--- a/arch/arm64/kvm/at.c
++++ b/arch/arm64/kvm/at.c
+@@ -1528,7 +1528,8 @@ void __kvm_at_s12(struct kvm_vcpu *vcpu,
+ 	/* Do the stage-2 translation */
+ 	ipa = (par & GENMASK_ULL(47, 12)) | (vaddr & GENMASK_ULL(11, 0));
+ 	out.esr = 0;
+-	ret = kvm_walk_nested_s2(vcpu, ipa, &out);
++	scoped_guard(srcu, &vcpu->kvm->srcu)
++		ret = kvm_walk_nested_s2(vcpu, ipa, &out);
+ 	if (ret < 0)
+ 		return;
  
- #include <asm/cp15.h>
- #include <asm/system_info.h>
--#include <linux/unaligned.h>
-+#include <asm/system_misc.h>
- #include <asm/opcodes.h>
+@@ -1623,7 +1624,8 @@ int __kvm_find_s1_desc_level(struct kvm_
+ 	}
  
- #include "fault.h"
-@@ -809,6 +810,9 @@ do_alignment(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
- 	int thumb2_32b = 0;
- 	int fault;
- 
-+	if (addr >= TASK_SIZE && user_mode(regs))
-+		harden_branch_predictor();
-+
- 	if (interrupts_enabled(regs))
- 		local_irq_enable();
- 
-diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
-index 0e5b4bc7b21760..ed4330cc3f4e6f 100644
---- a/arch/arm/mm/fault.c
-+++ b/arch/arm/mm/fault.c
-@@ -198,9 +198,6 @@ __do_user_fault(unsigned long addr, unsigned int fsr, unsigned int sig,
- {
- 	struct task_struct *tsk = current;
- 
--	if (addr > TASK_SIZE)
--		harden_branch_predictor();
--
- #ifdef CONFIG_DEBUG_USER
- 	if (((user_debug & UDBG_SEGV) && (sig == SIGSEGV)) ||
- 	    ((user_debug & UDBG_BUS)  && (sig == SIGBUS))) {
-@@ -269,8 +266,10 @@ do_kernel_address_page_fault(struct mm_struct *mm, unsigned long addr,
- 		/*
- 		 * Fault from user mode for a kernel space address. User mode
- 		 * should not be faulting in kernel space, which includes the
--		 * vector/khelper page. Send a SIGSEGV.
-+		 * vector/khelper page. Handle the branch predictor hardening
-+		 * while interrupts are still disabled, then send a SIGSEGV.
- 		 */
-+		harden_branch_predictor();
- 		__do_user_fault(addr, fsr, SIGSEGV, SEGV_MAPERR, regs);
- 	} else {
- 		/*
-@@ -485,16 +484,20 @@ do_page_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
-  * We enter here because the first level page table doesn't contain
-  * a valid entry for the address.
-  *
-- * If the address is in kernel space (>= TASK_SIZE), then we are
-- * probably faulting in the vmalloc() area.
-+ * If this is a user address (addr < TASK_SIZE), we handle this as a
-+ * normal page fault. This leaves the remainder of the function to handle
-+ * kernel address translation faults.
-  *
-- * If the init_task's first level page tables contains the relevant
-- * entry, we copy the it to this task.  If not, we send the process
-- * a signal, fixup the exception, or oops the kernel.
-+ * Since user mode is not permitted to access kernel addresses, pass these
-+ * directly to do_kernel_address_page_fault() to handle.
-  *
-- * NOTE! We MUST NOT take any locks for this case. We may be in an
-- * interrupt or a critical region, and should only copy the information
-- * from the master page table, nothing more.
-+ * Otherwise, we're probably faulting in the vmalloc() area, so try to fix
-+ * that up. Note that we must not take any locks or enable interrupts in
-+ * this case.
-+ *
-+ * If vmalloc() fixup fails, that means the non-leaf page tables did not
-+ * contain an entry for this address, so handle this via
-+ * do_kernel_address_page_fault().
-  */
- #ifdef CONFIG_MMU
- static int __kprobes
-@@ -560,7 +563,8 @@ do_translation_fault(unsigned long addr, unsigned int fsr,
- 	return 0;
- 
- bad_area:
--	do_bad_area(addr, fsr, regs);
-+	do_kernel_address_page_fault(current->mm, addr, fsr, regs);
-+
- 	return 0;
- }
- #else					/* CONFIG_MMU */
-@@ -580,7 +584,16 @@ do_translation_fault(unsigned long addr, unsigned int fsr,
- static int
- do_sect_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
- {
-+	/*
-+	 * If this is a kernel address, but from user mode, then userspace
-+	 * is trying bad stuff. Invoke the branch predictor handling.
-+	 * Interrupts are disabled here.
-+	 */
-+	if (addr >= TASK_SIZE && user_mode(regs))
-+		harden_branch_predictor();
-+
- 	do_bad_area(addr, fsr, regs);
-+
- 	return 0;
- }
- #endif /* CONFIG_ARM_LPAE */
--- 
-2.53.0
-
+ 	/* Walk the guest's PT, looking for a match along the way */
+-	ret = walk_s1(vcpu, &wi, &wr, va);
++	scoped_guard(srcu, &vcpu->kvm->srcu)
++		ret = walk_s1(vcpu, &wi, &wr, va);
+ 	switch (ret) {
+ 	case -EINTR:
+ 		/* We interrupted the walk on a match, return the level */
 
 
