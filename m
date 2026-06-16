@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8543A3E78;
-	Tue, 16 Jun 2026 17:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E4C47CC6C;
+	Tue, 16 Jun 2026 17:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630898; cv=none; b=S6PZX2tD8ncaB5pIEVb2n5JR9vEuAJRxoLV+WenZWQiFk23wTQXiEWcsrENK7C+559BK2SaPuluE1dvGiq1mqGa1IenCETUK1+r7IXl+YZlcSSnJkMNLy/oMdN6wGxzk84VqLfsI8f7uM4150PRfZOkR5Z7uAtxu5nbeUj+m/tY=
+	t=1781630904; cv=none; b=Qgn8MBD0tJZqxepSe+w0n0lhcA0ZkMINQFV1KBBtiH/TGtG+Xf0IGIkUzQGHrYRji24X/D/GLw4BEh12UhvU+xGoTeA3ncIT/oUAU1CxzvdtT/fV0KjrZ6QaHrELkvPqYkeHM3hDmyg8KEDpJo2NtWM97AeJCdBeUOhHGiTHADM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630898; c=relaxed/simple;
-	bh=1W0Th9IAdNoLknYIk2M3IrtRTXfATEWEXbuJRlf4mTg=;
+	s=arc-20240116; t=1781630904; c=relaxed/simple;
+	bh=CGnNxVuaxxW67+UDLtp69/ru5GKBW/mROMDJyZw70OE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BlfGzqQviGbSyyrzBGiNTFfvmgFcuKHVngavnUe/v3tURnlaJeuGGtVDk/tK1r6uZ+5pAXNZ3vPTgxMkxn21sHOKv6TYbir9fYYHoV3mNNuXZ7UddIewWi+NIV5kPWVOiKCnm/Z1tjrZlPGPGpAVQ+r7RxD5GNQBNYwSKOfx7Do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O96yPWpM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hUaDAPvr6NVRcO5tVCjJWMfl/bR2lgbdmylIKtd/zPCQfFGZzMsyGCqU0E9M/7HNykS8OstZhAJ7JQOH+V3+ya2CQq4stWT/GEY9Vb0pR2eYf47GVV+5KWfhM+vuYSo86k/rlsti+BZat1tJuwVQO+c5wO2EHIQXgzYpny6PCF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+wybfwN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O96yPWpM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45D61F00A3A;
-	Tue, 16 Jun 2026 17:28:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+wybfwN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E491F000E9;
+	Tue, 16 Jun 2026 17:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630895;
-	bh=MVBiA6k1ekSEa8ErPAaB4ssmyxbSWd0uCrIW0fKw2nY=;
+	s=korg; t=1781630901;
+	bh=+XNkSsCU/is+UMNmRhxYyua19BV3+Y/10QziHF8/uZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O96yPWpMpOq+rFTsXlWSKn1RhZ11+EaFvrGTyfX2lA9cYMfn1X9U37tEHhcvdtksV
-	 4GDXh/6FU7C4DEsEi2oqtWfnRSh8quBrGsOkspMqBiw9BqBwO6ZGuf6n2EtFXBJvBA
-	 Xtp8zIFF8asEscB34Wq5VdT5UehXQa6sut5OjFIc=
+	b=B+wybfwNBOAfcqbVl44CYTUz2xFOENM4/NPRez18kwKWz1jOc3Y1qLSQY42+Ni/Lf
+	 jAX1wnvpzRuu0UbgeBpYaPxJcGwUeSxN613aCDbGUyYaxWGfTSSCfJ4sClDliNN6wv
+	 rlRzLOVkj2A13Ez8h/NCXE26YrUeinCUE5gAlWLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 118/522] Input: elan_i2c - validate firmware size before use
-Date: Tue, 16 Jun 2026 20:24:25 +0530
-Message-ID: <20260616145131.493328465@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Wentao Guan <guanwentao@uniontech.com>
+Subject: [PATCH 6.1 101/522] USB: cdc-acm: Fix bit overlap and move quirk definitions to header
+Date: Tue, 16 Jun 2026 20:24:08 +0530
+Message-ID: <20260616145130.650458212@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -49,36 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-commit 76b0d0baa9ae9c60e726bbe1b6ff0bec2c993634 upstream.
+commit 5eb070769ea5e18405535609d1d3f6886f3755bd upstream.
 
-Ensure that the firmware file is large enough to contain the expected
-number of pages and the signature (which resides at the end of the
-firmware blob) before accessing them to prevent potential out-of-bounds
-reads.
+The VENDOR_CLASS_DATA_IFACE and ALWAYS_POLL_CTRL quirk flags added in
+commit f58752ebcb35 ("USB: cdc-acm: Add quirks for Yoga Book 9 14IAH10
+INGENIC touchscreen") were placed inside the acm_ctrl_msg() function
+rather than in the header with the other quirk flags.  Then, their
+values (BIT(9) and BIT(10)) collided with NO_UNION_12 which is already
+BIT(9).
 
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/ae2dOgiFvXRm4BHo@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Move the definitions to drivers/usb/class/cdc-acm.h where they belong
+and shift them to BIT(10) and BIT(11) to avoid the overlap.
+
+Fixes: f58752ebcb35 ("USB: cdc-acm: Add quirks for Yoga Book 9 14IAH10 INGENIC touchscreen")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Link: https://patch.msgid.link/20260522091357.1301196-1-guanwentao@uniontech.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/elan_i2c_core.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/class/cdc-acm.c |    2 --
+ drivers/usb/class/cdc-acm.h |    2 ++
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/input/mouse/elan_i2c_core.c
-+++ b/drivers/input/mouse/elan_i2c_core.c
-@@ -646,6 +646,11 @@ static ssize_t elan_sysfs_update_fw(stru
- 		return error;
- 	}
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -113,8 +113,6 @@ static int acm_ctrl_msg(struct acm *acm,
+ 	int retval;
  
-+	if (fw->size < data->fw_signature_address + sizeof(signature)) {
-+		dev_err(dev, "firmware file too small\n");
-+		return -EBADF;
-+	}
-+
- 	/* Firmware file must match signature data */
- 	fw_signature = &fw->data[data->fw_signature_address];
- 	if (memcmp(fw_signature, signature, sizeof(signature)) != 0) {
+ 	retval = usb_autopm_get_interface(acm->control);
+-#define VENDOR_CLASS_DATA_IFACE		BIT(9)  /* data interface uses vendor-specific class */
+-#define ALWAYS_POLL_CTRL		BIT(10) /* keep ctrl URB active even without an open TTY */
+ 	if (retval)
+ 		return retval;
+ 
+--- a/drivers/usb/class/cdc-acm.h
++++ b/drivers/usb/class/cdc-acm.h
+@@ -115,3 +115,5 @@ struct acm {
+ #define DISABLE_ECHO			BIT(7)
+ #define MISSING_CAP_BRK			BIT(8)
+ #define NO_UNION_12			BIT(9)
++#define VENDOR_CLASS_DATA_IFACE		BIT(10)  /* data interface uses vendor-specific class */
++#define ALWAYS_POLL_CTRL		BIT(11) /* keep ctrl URB active even without an open TTY */
 
 
