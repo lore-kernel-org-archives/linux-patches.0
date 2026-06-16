@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9939F169AD2;
-	Tue, 16 Jun 2026 18:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1283D8105;
+	Tue, 16 Jun 2026 18:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635035; cv=none; b=M8IVQrEF440+mCAhJYbNQhwvI7yfTnlGSxMAEkqDTXOhLJzpOegTC03248F34UMl0PP4egSI3J4vsdwGW23NK5f9d2h29PJQzhMlrEAfEqaUvYMdiwTEaiA1wrQrb4bDuTtwO8gOvCbWBW7Zzhld68xSzdoystHxFzqJtDR2Jqg=
+	t=1781635040; cv=none; b=Fg0Bqrjqhj0dEQAGdlQMrHSBpseJ/8aaPbcNeQA/21ldTDM80egUoNiMj3JBbLdQGBC860yJqhqMpecVlL1EDARb5++2bq7zeKvcRUvbfh0m/JVCfWV5jbc30VyL2uhx4p4RQd80RzkYn/3nq3DP2+MPOxNzyIy1guu89atcht4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635035; c=relaxed/simple;
-	bh=9y0YRrQ17nHpQWlaEJBzX1GuWuPpuizERA0MTZYQw/w=;
+	s=arc-20240116; t=1781635040; c=relaxed/simple;
+	bh=2sV+GB0ijThM3NJgqsL0UHQfPE96R5nRtHt4Uud8+xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DrUKl29yGtNqVD5nAUO6A5JQMlVy1r9RpUcMeOsyUWyZgupmFzQoTwXml8R/1qJGUe8rzAdKwpDV8GYiNxnsBVxJayusQOpbRp7R64BCh9gBKimX8jnxrF3mcEMp6obZ/iHCbxSOOPLUQPHmmbtBD54zHZQQj/x7TVFM8Z5s6XY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ovxwj27o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kkL0MmER8WFMIbvXql9KY2xywfSlzcHR0aOnK+e1AD1jT1+kASXl0pLPTcE44Z90zIyL0q8xuBYz39lGzlaR08502yglIzlAI14BADqWuOCxSDVHyrEBbOKIS9pwK19wkzhsOsqVkR84HVFldveaArHaHca+IklBqDRgTDOcdRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGYFjUwq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ovxwj27o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7856B1F000E9;
-	Tue, 16 Jun 2026 18:37:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGYFjUwq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F3051F000E9;
+	Tue, 16 Jun 2026 18:37:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635034;
-	bh=/n4xd2TZY20MOdWFffiewBUlD/gNM2D5ma7iHOfAvGY=;
+	s=korg; t=1781635039;
+	bh=rMEORZ3nocbfspl4LzbdeI4GRthLU/VqlTnQrUrip08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ovxwj27olRrjCvYnmWYd110QW2M36nIbZwmKCBLkJgIOHhx7gBpYA6N+fylWwZBuS
-	 fWe1B6kKNaym4R8SHObGdxuhtf6XkT7HcMh4+9NmEl0Atg50iiwNe636QkZEWh2LDj
-	 z7NsAcUhiyGqmQ3N7m+f3mOCxWSL5YCVLBVynhu4=
+	b=fGYFjUwqUSrt/6Q1ptEpnA2rRKjlDVKTOvOQzFhKNovm9ZjJCF3B7RzC1RzLVgLEX
+	 7hSAfanIlarJdS7emmGxIR3YOuhCRaLlDwp15dCcCpSIwXBXoZCk6VL5Rsspe/mBUH
+	 n2QIIzwHv0lvGDRlto6mXgx02f8ha6iz8CEWRxic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mikelley@microsoft.com>,
-	Deepak Rawat <drawat.floss@gmail.com>,
-	"Andrea Parri (Microsoft)" <parri.andrea@gmail.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Berkant Koc <me@berkoc.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 379/411] drm/hyperv: Remove support for Hyper-V 2008 and 2008R2/Win7
-Date: Tue, 16 Jun 2026 20:30:17 +0530
-Message-ID: <20260616145121.434658929@linuxfoundation.org>
+Subject: [PATCH 5.15 380/411] drm/hyperv: validate resolution_count and fix WIN8 fallback
+Date: Tue, 16 Jun 2026 20:30:18 +0530
+Message-ID: <20260616145121.481758001@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -53,88 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Kelley <mikelley@microsoft.com>
+From: Berkant Koc <me@berkoc.com>
 
-[ Upstream commit ac6811a9b36f3ceb549d8b84bd8aeedf6026df02 ]
+[ Upstream commit 13d33b9ef67066c77c84273fac5a1d3fde3533d1 ]
 
-The DRM Hyper-V driver has special case code for running on the first
-released versions of Hyper-V: 2008 and 2008 R2/Windows 7.  These versions
-are now out of support (except for extended security updates) and lack
-support for performance features that are needed for effective production
-usage of Linux guests.
+A SYNTHVID_RESOLUTION_RESPONSE with resolution_count > 64 walks past
+the supported_resolution[SYNTHVID_MAX_RESOLUTION_COUNT] array in the
+parse loop. Bound resolution_count against the array size, folded
+into the existing zero-check.
 
-The negotiation of the VMbus protocol versions required by these old
-Hyper-V versions has been removed from the VMbus driver.  So now remove
-the handling of these VMbus protocol versions from the DRM Hyper-V
-driver.
+When the WIN10 resolution probe fails, the caller in
+hyperv_connect_vsp() left hv->screen_*_max / preferred_* unpopulated,
+which sets mode_config.max_width / max_height to 0 and makes
+drm_internal_framebuffer_create() reject every userspace framebuffer
+with -EINVAL. The pre-WIN10 branch had the same gap for
+preferred_width / preferred_height. Use a single post-probe fallback
+guarded by screen_width_max == 0 so both paths converge on the WIN8
+defaults.
 
-Signed-off-by: Michael Kelley <mikelley@microsoft.com>
-Reviewed-by: Deepak Rawat <drawat.floss@gmail.com>
-Reviewed-by: Andrea Parri (Microsoft) <parri.andrea@gmail.com>
-Link: https://lore.kernel.org/r/1651509391-2058-5-git-send-email-mikelley@microsoft.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Stable-dep-of: 13d33b9ef670 ("drm/hyperv: validate resolution_count and fix WIN8 fallback")
+Signed-off-by: Berkant Koc <me@berkoc.com>
+Assisted-by: Claude:claude-opus-4-7 berkoc-pipeline
+Fixes: 76c56a5affeb ("drm/hyperv: Add DRM driver for hyperv synthetic video device")
+Cc: stable@vger.kernel.org # 5.14+
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Link: https://patch.msgid.link/6945b22419c7d404b4954a113de2ac9c900dba93.1779542874.git.me@berkoc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/hyperv/hyperv_drm_proto.c |   23 +++++++----------------
- 1 file changed, 7 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/hyperv/hyperv_drm_proto.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
 --- a/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
 +++ b/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
-@@ -18,16 +18,16 @@
- #define SYNTHVID_VERSION(major, minor) ((minor) << 16 | (major))
- #define SYNTHVID_VER_GET_MAJOR(ver) (ver & 0x0000ffff)
- #define SYNTHVID_VER_GET_MINOR(ver) ((ver & 0xffff0000) >> 16)
-+
-+/* Support for VERSION_WIN7 is removed. #define is retained for reference. */
- #define SYNTHVID_VERSION_WIN7 SYNTHVID_VERSION(3, 0)
- #define SYNTHVID_VERSION_WIN8 SYNTHVID_VERSION(3, 2)
- #define SYNTHVID_VERSION_WIN10 SYNTHVID_VERSION(3, 5)
- 
--#define SYNTHVID_DEPTH_WIN7 16
- #define SYNTHVID_DEPTH_WIN8 32
--#define SYNTHVID_FB_SIZE_WIN7 (4 * 1024 * 1024)
-+#define SYNTHVID_WIDTH_WIN8 1600
-+#define SYNTHVID_HEIGHT_WIN8 1200
- #define SYNTHVID_FB_SIZE_WIN8 (8 * 1024 * 1024)
--#define SYNTHVID_WIDTH_MAX_WIN7 1600
--#define SYNTHVID_HEIGHT_MAX_WIN7 1200
- 
- enum pipe_msg_type {
- 	PIPE_MSG_INVALID,
-@@ -570,12 +570,6 @@ int hyperv_connect_vsp(struct hv_device
- 	case VERSION_WIN8:
- 	case VERSION_WIN8_1:
- 		ret = hyperv_negotiate_version(hdev, SYNTHVID_VERSION_WIN8);
--		if (!ret)
--			break;
--		fallthrough;
--	case VERSION_WS2008:
--	case VERSION_WIN7:
--		ret = hyperv_negotiate_version(hdev, SYNTHVID_VERSION_WIN7);
- 		break;
- 	default:
- 		ret = hyperv_negotiate_version(hdev, SYNTHVID_VERSION_WIN10);
-@@ -587,18 +581,15 @@ int hyperv_connect_vsp(struct hv_device
- 		goto error;
+@@ -396,8 +396,11 @@ static int hyperv_get_supported_resoluti
+ 		return -ETIMEDOUT;
  	}
  
--	if (hv->synthvid_version == SYNTHVID_VERSION_WIN7)
--		hv->screen_depth = SYNTHVID_DEPTH_WIN7;
--	else
--		hv->screen_depth = SYNTHVID_DEPTH_WIN8;
-+	hv->screen_depth = SYNTHVID_DEPTH_WIN8;
+-	if (msg->resolution_resp.resolution_count == 0) {
+-		drm_err(dev, "No supported resolutions\n");
++	if (msg->resolution_resp.resolution_count == 0 ||
++	    msg->resolution_resp.resolution_count >
++	    SYNTHVID_MAX_RESOLUTION_COUNT) {
++		drm_err(dev, "Invalid resolution count: %d\n",
++			msg->resolution_resp.resolution_count);
+ 		return -ENODEV;
+ 	}
  
- 	if (hyperv_version_ge(hv->synthvid_version, SYNTHVID_VERSION_WIN10)) {
+@@ -587,9 +590,13 @@ int hyperv_connect_vsp(struct hv_device
  		ret = hyperv_get_supported_resolution(hdev);
  		if (ret)
  			drm_err(dev, "Failed to get supported resolution from host, use default\n");
- 	} else {
--		hv->screen_width_max = SYNTHVID_WIDTH_MAX_WIN7;
--		hv->screen_height_max = SYNTHVID_HEIGHT_MAX_WIN7;
-+		hv->screen_width_max = SYNTHVID_WIDTH_WIN8;
-+		hv->screen_height_max = SYNTHVID_HEIGHT_WIN8;
+-	} else {
++	}
++
++	if (!hv->screen_width_max) {
+ 		hv->screen_width_max = SYNTHVID_WIDTH_WIN8;
+ 		hv->screen_height_max = SYNTHVID_HEIGHT_WIN8;
++		hv->preferred_width = SYNTHVID_WIDTH_WIN8;
++		hv->preferred_height = SYNTHVID_HEIGHT_WIN8;
  	}
  
  	hv->mmio_megabytes = hdev->channel->offermsg.offer.mmio_megabytes;
