@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3892C47AF5F;
-	Tue, 16 Jun 2026 18:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494C9477E33;
+	Tue, 16 Jun 2026 18:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633815; cv=none; b=Dda7LmdStC3UbJl3JcbcfvaB7k6XrtZI4Ab1z2CMOZ1JBL0jCFQnv5jt5UlCm0D2QPmnuzsGNCnzp1ZNseFU9/T5qujo7yXeOeIxUJUdVLKhHLuuqhgQmtbM4Tkksa3S/37ClGTg8WmNTE8AinoHw0Sc0rfv29slR9MS+74PoyI=
+	t=1781633819; cv=none; b=qZMpQ7SZsDT1MsTD4fcNKQ40OJ4KR270/H9I3iZh8wrt+BG4gm528p60xungvkEFY4xeX5hu0FOXZs+sPIPdV9brdtnZrOf65ZZn3/4UI4uFb05pgyUAXUl2jZA2HaeIVtcj0dnnI+8k9Nc2qhiL0pVECUSTp13eOZ33oJgHzKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633815; c=relaxed/simple;
-	bh=/T5fegjlblW69Cx23Pg1gw7rosMwnD43TRjpiwD9/pE=;
+	s=arc-20240116; t=1781633819; c=relaxed/simple;
+	bh=tY5fNEKNEfOlLtkLpogG/h5LN6ZsREnFmM3IgO0pnWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fXkn0rtmbF2fflCbAxSX9AzC9aqd5+jV42pMHC/65Q6Wbn2XGVIZtPpeg3yZPRC+CpB7TgJPQQxjyQEutWY8im2vaoNPcPSiUheJMEI8fEbpAx2H7u2R31TFex2oIEML0ycHjkuno/YaTxy4fqc8ZCuV7EDkfNEfhcCZoF9SbF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sO3kLN8T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kFJ4ULMQl3nRB4ImHF3qRvl07c47ivqo2af/1D0+vBiQiMlPgavmd/B4ERzT+4ISPWyj0zL6T7X5XjpwpfvJc1d9dQ3dwNr5c9ogjouZ2Z24oT/KgNwcUPPowdTE9Q0ratRvPT0DfoxSyGuZH6lnsWRBEmnTSDInFcP5+WRsOSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUArkhMh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sO3kLN8T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05A71F00A3A;
-	Tue, 16 Jun 2026 18:16:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUArkhMh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F238C1F000E9;
+	Tue, 16 Jun 2026 18:16:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633812;
-	bh=SfzWys6qnzmaY1imixRUQfyzLLm376lo8J+gg8wTXmI=;
+	s=korg; t=1781633818;
+	bh=bqfjwdlpGzHAOY7/Bidl4gIURQCBLYc/OC0DlQ8LFh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sO3kLN8TJUKEMJbP6aY5BxVCmX03biY7cZQ6LF5O2iA0rQNEZR6U4NbhfuZjpRYLr
-	 LBrXCZiSGqkxQdOEbTsYoKRfermlTGHXP5RIFSm6Aztg29/jqEtn47RFe81eN9RvQj
-	 raB9NVbfueKO+HdSLtTplw1CphOAruDLfyo43Uxc=
+	b=NUArkhMh51CeXdE9WwN9l6EB3Rz9HhU+LSUlDpOiN085iDhGCX574VAvJRxvDxlcv
+	 rWXlQx74B9RqRsAcx5GQe1CiZZLude3eitl5mrGBcRqmPqZV51vHo8Qxqk3PxYYBPY
+	 8NCk0MJ3hwiXp7zou23MD59X7sIC8XF1Bya6YxTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 150/411] netfilter: xt_NFQUEUE: prefer raw_smp_processor_id
-Date: Tue, 16 Jun 2026 20:26:28 +0530
-Message-ID: <20260616145108.390049001@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 5.15 124/411] thunderbolt: property: Reject u32 wrap in tb_property_entry_valid()
+Date: Tue, 16 Jun 2026 20:26:02 +0530
+Message-ID: <20260616145106.915946217@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,41 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit c6c5327dd18bec1e1bbf139b2cf5ae53608a9d30 ]
+commit 01deda0152066c6c955f0619114ea6afa070aaec upstream.
 
-With PREEMPT_RCU this triggers a splat because smp_processor_id() can be
-preempted while inside a RCU critical section. If xt_NFQUEUE target is
-invoked via nft_compat_eval() path, we are inside a RCU critical
-section.
+entry->value is u32 and entry->length is u16; the sum is performed in
+u32 and wraps.  A malicious XDomain peer can pick
+value = 0xffffff00, length = 0x100 so the sum 0x100000000 wraps to 0
+and passes the > block_len check.  tb_property_parse() then passes
+entry->value to parse_dwdata() as a dword offset into the property
+block, reading attacker-directed memory far past the allocation.
 
-Just use the raw version instead.
+For TEXT-typed entries with the "deviceid" or "vendorid" keys this
+lands in xd->device_name / xd->vendor_name and is readable back via
+the per-XDomain device_name / vendor_name sysfs attributes; the leak
+is NUL-bounded (kstrdup() stops at the first zero byte) and
+untargeted (the attacker picks a delta, not an absolute address).
+DATA-typed entries are parsed into property->value.data but not
+generically surfaced to userspace.
 
-Fixes: 0ca743a55991 ("netfilter: nf_tables: add compatibility layer for x_tables")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Use check_add_overflow() so a wrapped sum is rejected.
+
+Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-6
+Assisted-by: Codex:gpt-5-4
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/xt_NFQUEUE.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thunderbolt/property.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/xt_NFQUEUE.c b/net/netfilter/xt_NFQUEUE.c
-index 466da23e36ff47..b32d153e3a1862 100644
---- a/net/netfilter/xt_NFQUEUE.c
-+++ b/net/netfilter/xt_NFQUEUE.c
-@@ -91,7 +91,7 @@ nfqueue_tg_v3(struct sk_buff *skb, const struct xt_action_param *par)
+--- a/drivers/thunderbolt/property.c
++++ b/drivers/thunderbolt/property.c
+@@ -8,6 +8,7 @@
+  */
  
- 	if (info->queues_total > 1) {
- 		if (info->flags & NFQ_FLAG_CPU_FANOUT) {
--			int cpu = smp_processor_id();
-+			int cpu = raw_smp_processor_id();
+ #include <linux/err.h>
++#include <linux/overflow.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
+ #include <linux/uuid.h>
+@@ -52,13 +53,16 @@ static inline void format_dwdata(void *d
+ static bool tb_property_entry_valid(const struct tb_property_entry *entry,
+ 				  size_t block_len)
+ {
++	u32 end;
++
+ 	switch (entry->type) {
+ 	case TB_PROPERTY_TYPE_DIRECTORY:
+ 	case TB_PROPERTY_TYPE_DATA:
+ 	case TB_PROPERTY_TYPE_TEXT:
+ 		if (entry->length > block_len)
+ 			return false;
+-		if (entry->value + entry->length > block_len)
++		if (check_add_overflow(entry->value, entry->length, &end) ||
++		    end > block_len)
+ 			return false;
+ 		break;
  
- 			queue = info->queuenum + cpu % info->queues_total;
- 		} else {
--- 
-2.53.0
-
 
 
