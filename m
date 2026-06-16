@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1C24657F3;
-	Tue, 16 Jun 2026 16:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B24F4534A3;
+	Tue, 16 Jun 2026 16:04:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625858; cv=none; b=jsFuNJMu7aNqIvnMsXvd6ZXrjmQrN6y6Yekqm+1r/YdxD/XMUDbIi2lLxr96Ot6X+J4RwFXv0zfdNAXkn6KGkJnE40T2E/9Mg9DK7cKnbWWMFML02e0ZGFSYMOUEgouiLjeW/NaGEhqT42R1lKnUcpF1JDoEvarmU/Vt53EKSVs=
+	t=1781625863; cv=none; b=cNJsu5ojhbuEfItJ6gnpJqbtHQ6LPq9cwu4g0tZ0FlZXOWsrwpt2jGglXG23KFq7gtVOrLIzaUnLw9MYplcK/qJ352ajYYkNLqC6iaIV+CAKkWwqqCoEo5v8i0WF+suP6na8AW7/qvM4tJuLTnEiyOB2Wf1pFtDmtuV8gXJ1H9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625858; c=relaxed/simple;
-	bh=JYg2H/GckTx8b5cmF7+TxsFHJrth5j87+AIVPY3Lde0=;
+	s=arc-20240116; t=1781625863; c=relaxed/simple;
+	bh=q+oKQJdwZlhFWf7/wQ+SMKsZl1BQAvQumNAaDInzlZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ddaJhBgaTmCU7EonwAOLCI5CE2cr8H9ybO5of+4N0OyIfssvMhdwVC84tKybKIl2O6P7nN1Gndxw9dB+KwoBu3GUNq9CM9IZj6owRobKn8jlG3666M5TTVPjxiW5cRu0Y3vsWadykldIH+NOcC5OIvBpzWWETFJh/ZTD8UNuBQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rg07836g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iLBT6hi+SPuFrPP4VkxRjhdAK5PfEuKoasHuz/ea7eQpriHw3ss5TQ1AurjICBRGV5W1r94d4dbyFmP0pQWn37MCGve0H29LMqYbSA8g5q5MmHn+7gLtLft9FhEhlR2yy/BGH22xJkjESHbBQNZi9N+JyptqSSHSbJ5jxppLIgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGa2zf5i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rg07836g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4991A1F000E9;
-	Tue, 16 Jun 2026 16:04:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGa2zf5i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 977A81F000E9;
+	Tue, 16 Jun 2026 16:04:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625857;
-	bh=pa7ukq4QtdJr+HjOLjQuf3uCZUKNZkrjMN0AOsFHHlU=;
+	s=korg; t=1781625862;
+	bh=G88E46/qgTFGJVBAvWaiid/+xuKTrhrD9wkj9/AIhNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rg07836gj7jT6zpuetn7uiSiz0jHjEFxq4JvMyMtIDRKGYQH7okbRTvgoIR91tiLA
-	 Wt0w3mj2AGhtjSATgpH6l3d6w0ueEl9sfqT47/sgDhA/LdbGKRJid6w8eqslfnCwpC
-	 RC2G6GhwUrxLx3XcJz/O0F3GYVOPSLnBxmWes2lA=
+	b=lGa2zf5i7OpdKpSi+ub8e37xT2ftmZYwVyILZCcg59LKHYhn9OREC/0vFb4Sd4b3s
+	 gNdfaZ/2dQHyMys/R2B9hCh54oXTbCdJ6AINwCyLcgST78oh43u+qVWrLQnRSR4oGX
+	 7ZJ3vCOGExKo8lOjH1LipmTrGg4qNRILf92vrGuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.18 221/325] i2c: imx: fix clock and pinctrl state inconsistency in runtime PM
-Date: Tue, 16 Jun 2026 20:30:17 +0530
-Message-ID: <20260616145109.228051317@linuxfoundation.org>
+Subject: [PATCH 6.18 222/325] i2c: qcom-cci: Fix NULL pointer dereference in cci_remove()
+Date: Tue, 16 Jun 2026 20:30:18 +0530
+Message-ID: <20260616145109.279417552@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -51,67 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-commit 8783fb8031799f1230997c16df8c8dce9fcd1841 upstream.
+commit 729ac5a4b966aac42e08a94dea966f4429008548 upstream.
 
-In i2c_imx_runtime_suspend(), the clock is disabled before switching
-the pinctrl state to sleep. If pinctrl_pm_select_sleep_state() fails,
-the runtime suspend is aborted but the clock remains disabled, causing
-a system crash when the hardware is subsequently accessed.
+On all modern platforms Qualcomm CCI controller provides two I2C masters,
+and on particular boards only one I2C master may be initialized, and in
+such cases the device unbinding or driver removal causes a NULL pointer
+dereference, because cci_halt() is called for all two I2C masters, but
+a completion is initialized only for the single enabled master:
 
-Fix this by switching the pinctrl state before disabling the clock so
-that a pinctrl failure leaves the clock enabled and the hardware
-accessible.
+    % rmmod i2c-qcom-cci
+    Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+    <snip>
+    Call trace:
+    __wait_for_common+0x194/0x1a8 (P)
+    wait_for_completion_timeout+0x20/0x2c
+    cci_remove+0xc4/0x138 [i2c_qcom_cci]
+    platform_remove+0x20/0x30
+    device_remove+0x4c/0x80
+    device_release_driver_internal+0x1c8/0x224
+    driver_detach+0x50/0x98
+    bus_remove_driver+0x6c/0xbc
+    driver_unregister+0x30/0x60
+    platform_driver_unregister+0x14/0x20
+    qcom_cci_driver_exit+0x18/0x1008 [i2c_qcom_cci]
+    ....
 
-In i2c_imx_runtime_resume(), restore the pinctrl state back to sleep
-if clk_enable() fails to keep the consistent.
-
-Fixes: 576eba03c994 ("i2c: imx: switch different pinctrl state in different system power status")
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Cc: <stable@vger.kernel.org> # v6.14+
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: <stable@vger.kernel.org> # v5.8+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260521065038.2954998-1-carlos.song@oss.nxp.com
+Link: https://lore.kernel.org/r/20260515234121.1607425-2-vladimir.zapolskiy@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-imx.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/i2c/busses/i2c-qcom-cci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-imx.c
-+++ b/drivers/i2c/busses/i2c-imx.c
-@@ -1892,9 +1892,15 @@ static void i2c_imx_remove(struct platfo
- static int i2c_imx_runtime_suspend(struct device *dev)
- {
- 	struct imx_i2c_struct *i2c_imx = dev_get_drvdata(dev);
-+	int ret;
-+
-+	ret = pinctrl_pm_select_sleep_state(dev);
-+	if (ret)
-+		return ret;
+--- a/drivers/i2c/busses/i2c-qcom-cci.c
++++ b/drivers/i2c/busses/i2c-qcom-cci.c
+@@ -663,8 +663,8 @@ static void cci_remove(struct platform_d
+ 		if (cci->master[i].cci) {
+ 			i2c_del_adapter(&cci->master[i].adap);
+ 			of_node_put(cci->master[i].adap.dev.of_node);
++			cci_halt(cci, i);
+ 		}
+-		cci_halt(cci, i);
+ 	}
  
- 	clk_disable(i2c_imx->clk);
--	return pinctrl_pm_select_sleep_state(dev);
-+
-+	return 0;
- }
- 
- static int i2c_imx_runtime_resume(struct device *dev)
-@@ -1907,10 +1913,13 @@ static int i2c_imx_runtime_resume(struct
- 		return ret;
- 
- 	ret = clk_enable(i2c_imx->clk);
--	if (ret)
-+	if (ret) {
- 		dev_err(dev, "can't enable I2C clock, ret=%d\n", ret);
-+		pinctrl_pm_select_sleep_state(dev);
-+		return ret;
-+	}
- 
--	return ret;
-+	return 0;
- }
- 
- static int i2c_imx_suspend(struct device *dev)
+ 	disable_irq(cci->irq);
 
 
