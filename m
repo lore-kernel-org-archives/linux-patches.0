@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CF3449EAB;
-	Tue, 16 Jun 2026 15:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96431449EAB;
+	Tue, 16 Jun 2026 15:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623897; cv=none; b=PbusA/JlkCJt0kTU7VCoav7JyPKMiBO1YWV3k0rQ+DyTRamcQXGA5RPYByU8udhVyy9h0SvVMlLPjlhfltpUokSe1+ZKN8A2R5tMqAVjpnffbym5rLFvSa40uPesKzVOHbSgmToIOF9GI8iCmu1C4MrFqRtO7dxAx4b0ce5bKo4=
+	t=1781623903; cv=none; b=ZC+nTUqrb7vy0u3DEpqY6fhSzu4Bhqyo7h2q/v8uWfjefBT52ib9PnFcWenjqqlx28oQvJgBu/6DV9cXAmwoBdNJkL0Q0yBMyCBRbAPD9zZrRpO36epbMWG9vSJRDg76Fx6Xt4VbWySBAqMtyUxjWjqnIPGqPG5QWrWmoYprEyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623897; c=relaxed/simple;
-	bh=yUV+HHTO8Rseyr7Tr777DfFKIJc926VZs8EYkfv74u0=;
+	s=arc-20240116; t=1781623903; c=relaxed/simple;
+	bh=KHp2bYdZWaD/VOgNiSozfu90otSaqVpGYw1SkYt5Zcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ki/Yf/ZRM4gfTJMIoiyKQ3M+3ke5I69Jry1jHrTpcyTRyYx530pSWvjS8g9u+fY9fiVzwxOUyJu4+llW2UyX04AsSbhq90RPif3pgGwQkSCjCoYmRWqpbc4mdhpba60naFwo9w60PiK3++FzW10hY3SMn9T9rEfQ3RqTfBUCyts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k72VoVJY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aBPugzGVMeQorOtrPdY0Kz8a1VCjvGPcA4SZxahv5gydLhz2z8FkGCll63C+65sFqW1s4QIQI1d0BLmcAj03L6nuYPHD/FckGKufEq0yRcAYdzDAc6+fQbAuIlQwZJnGXq3CKMfUhYcBmAk5bTnAdONvYUayNaorrc1BkSw0tgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Wa7TpUr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k72VoVJY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F191F000E9;
-	Tue, 16 Jun 2026 15:31:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Wa7TpUr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227DA1F000E9;
+	Tue, 16 Jun 2026 15:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623896;
-	bh=BR9mM1k+GrbSjfTYaJqUEAxtiBUYb6JxF822Bao7vG8=;
+	s=korg; t=1781623902;
+	bh=lyqegWc+yhyQq4QSfic8r1FoW4GPH19kb7mGPrCouyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k72VoVJYtL358niKVA8X1CGQ6wGDJELnveGAPS55PP+ELhp7qdNjShsEUNUD/ji0d
-	 SorMUDp2VQBh+d6zC2cmMcv1hyA0vvZXx4PbYtlt7LKktmVpVWOn0mQxOMYCK+rUCU
-	 keWy3E/g/DNTOIJUL+2+x9BPqfa6H5Fna+IM0vEU=
+	b=1Wa7TpUrfdmhGQ6pbnFX1S9YGPIILOxTQNYlYIr3ow1EYJL8erLPChBwMN51D0sTU
+	 br/QZagCPmJ3kgkhdEbgTr+bFhGgqic0NGzlGihx12J8iUts80KDz9UCUhGPNhhWth
+	 jouaOkv9CGFA6iMN25+bz/uRCViDtQIeZarxqW2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
+	Tao Cui <cuitao@kylinos.cn>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 237/378] mptcp: sockopt: set sockopt on all subflows
-Date: Tue, 16 Jun 2026 20:27:48 +0530
-Message-ID: <20260616145122.710509630@linuxfoundation.org>
+Subject: [PATCH 7.0 238/378] selftests: mptcp: add test for extra_subflows underflow on userspace PM
+Date: Tue, 16 Jun 2026 20:27:49 +0530
+Message-ID: <20260616145122.757899592@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,46 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Tao Cui <cuitao@kylinos.cn>
 
-commit 7690137e70ab0fb1f8b5a30e6f087f8ee908b680 upstream.
+commit 06fd2bec7aebf393288e4b78924482fe170caabc upstream.
 
-The mptcp_setsockopt_all_sf(), currently used only with TCP_MAXSEG,
-stopped when one subflow returned an error.
+Add a test to verify that when userspace PM fails to create a subflow
+(e.g. using an unreachable address), the extra_subflows counter is not
+decremented below zero.
 
-Even if it is not wrong, this is different from the other helpers trying
-to set the option on all subflows, and then returning an error if at
-least one of them had an issue.
-
-Follow this behaviour, for a question of uniformity.
-
-Fixes: 51c5fd09e1b4 ("mptcp: add TCP_MAXSEG sockopt support")
+Fixes: 77e4b94a3de6 ("mptcp: update userspace pm infos")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260602-net-mptcp-misc-fixes-7-1-rc7-v2-8-856831229976@kernel.org
+Link: https://patch.msgid.link/20260602-net-mptcp-misc-fixes-7-1-rc7-v2-6-856831229976@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/sockopt.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -811,10 +811,11 @@ static int mptcp_setsockopt_all_sf(struc
- 
- 	mptcp_for_each_subflow(msk, subflow) {
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
-+		int err;
- 
--		ret = tcp_setsockopt(ssk, level, optname, optval, optlen);
--		if (ret)
--			break;
-+		err = tcp_setsockopt(ssk, level, optname, optval, optlen);
-+		if (err < 0 && ret == 0)
-+			ret = err;
- 	}
- 
- 	if (!ret)
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -4069,6 +4069,10 @@ userspace_tests()
+ 		chk_rm_nr 0 1
+ 		chk_mptcp_info subflows 0 subflows 0
+ 		chk_subflows_total 1 1
++		# check counters are not affected by errors at creation time
++		userspace_pm_add_sf $ns2 10.0.12.2 10 2>/dev/null
++		chk_mptcp_info subflows 0 subflows 0
++		chk_subflows_total 1 1
+ 		kill_events_pids
+ 		mptcp_lib_kill_group_wait $tests_pid
+ 	fi
 
 
