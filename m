@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDFC35AC1E;
-	Tue, 16 Jun 2026 16:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCDFB477980;
+	Tue, 16 Jun 2026 16:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626765; cv=none; b=g7Cx27bID5nlgYrYeW/cH6uId3oGc6xC/OuLcSqlD4gTBQ/woWZlv8SU/B/7ylqJT+FciRCaRf9VcMnwOYsnXpAGDqlleIB1Az96JwJx4Q7DiBejALybUPRBWhq2K3XyrZp+zQ+iuM8kZz5SpOtJU3lhpkFM0AIhkTh1sJt4frs=
+	t=1781626769; cv=none; b=MvrYSyZi0VsHq04MXt/coe5s68bbhyeV0LIBTpTeX4XqSuNivX9NGYEFgPNC56KFdbeLk7BE3so0lvOsqeoS7VELLF0ACTVHvet0xA6mKaqX5eup6YXqvDfXxk4wpEsb06FObWmR2TK2mGFl8RGfbh6FMtqcFVrOKtFyAw/jKYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626765; c=relaxed/simple;
-	bh=H3ylqDn7VvFP4JRa9keKA/RwbAcLgv2Fx30iC4IisiY=;
+	s=arc-20240116; t=1781626769; c=relaxed/simple;
+	bh=SDRzk7OGQKCz7M7MHAImrOD8R6krBm6WXBS/WVRPPHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xiv2IAbunvFv4yFUh2YG3sOKRe5ePHHA/pESpMVT/o6N6Wp8c2XeoJcQJbcU4ApSP53QtISxRmNgeI5rqtjTo4k46rdOC+nnlycSlLc2zDQAHS1isN9nd3SCgzq4BUNowviRkakLXdKGQoZcbU3lYhqZLjRWTN6Ku6qV+IkK958=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KCfEeoiA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ILAxmjRxwUIJnMHXhAka4EPrCxX7PZjQT4TNNxRSfqUsyYDDM9MmQ1ZvE21qReX61AP27zOtol9ooq9Ve35+eqRn6fhQ4IpwRCWxNnfyEnCtMcG8FI4BKZHBTYljQKvVe7KQj/7rgUtrBCTSjz8DJqj03YPjEKz4onZPd5mrmk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9IsXmB3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KCfEeoiA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B901F000E9;
-	Tue, 16 Jun 2026 16:19:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9IsXmB3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D07C11F000E9;
+	Tue, 16 Jun 2026 16:19:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626764;
-	bh=uXWfakZ9MVCJ0NvhA2aHjSGMb8PVnLL72dOnEiWZS2Y=;
+	s=korg; t=1781626768;
+	bh=35gSvAlbR93GT8ks9M2WN0VHkugxRZysdxxxvGNowlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KCfEeoiA7JrhHXq+w+ixg2ZBSSQ0O1mGi4yMlHDZ9Xcc6m1JHQR8jSRKZ10gBqQiK
-	 ftTOBI0BiGrgOBFZCjjvJ4a+j2CDr8G9Ok+JQYcgTR+2KzFXr+dM3K7IqEmsXdyFpt
-	 CRjRK/3eml1G6RkyXAz6aCEwaytH7Qx8ABWNmmYQ=
+	b=X9IsXmB3gyEkIF1gv1sOMy47FdGnsGpldqo3pYI4iy5sdU1aUt3QNnKKbUNsvaQnK
+	 uop81nl3mWAS61oMkfu/teOqltqpN70pm69n7cBGjpmi3l+CcjDim0WsFw7UXm5YFe
+	 30pj3FFLi6+h+79BKiVzqzGUlyzxkRnp7610ULEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/261] net: Annotate sk->sk_write_space() for UDP SOCKMAP.
-Date: Tue, 16 Jun 2026 20:27:50 +0530
-Message-ID: <20260616145046.533521847@linuxfoundation.org>
+Subject: [PATCH 6.12 023/261] netfilter: bridge: make ebt_snat ARP rewrite writable
+Date: Tue, 16 Jun 2026 20:27:41 +0530
+Message-ID: <20260616145046.065640664@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,58 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Yiming Qian <yimingqian591@gmail.com>
 
-[ Upstream commit b748765019fe9e9234660327090fc1a9665cdbdd ]
+[ Upstream commit 67ba971ae02514d85818fe0c32549ab4bfa3bf49 ]
 
-UDP TX skb->destructor() is sock_wfree(), and UDP holds lock_sock()
-only for UDP_CORK / MSG_MORE sendmsg().
+The ebtables SNAT target keeps the Ethernet source address rewrite
+behind skb_ensure_writable(skb, 0).  This is intentional: at the bridge
+ebtables hooks the Ethernet header is addressed through
+skb_mac_header()/eth_hdr(), while skb->data points at the Ethernet
+payload.  Asking skb_ensure_writable() for ETH_HLEN bytes would check
+the payload, not the Ethernet header, and would reintroduce the small
+packet regression fixed by commit 63137bc5882a.
 
-Otherwise, sk->sk_write_space() may be read locklessly while SOCKMAP
-rewrites sk->sk_write_space().
+However, the optional ARP sender hardware address rewrite is different.
+It writes through skb_store_bits() at an offset relative to skb->data:
 
-Let's use WRITE_ONCE() and READ_ONCE() for sk->sk_write_space().
+        skb_store_bits(skb, sizeof(struct arphdr), info->mac, ETH_ALEN)
 
-Note that the write side is annotated by commit 2ef2b20cf4e0
-("net: annotate data-races around sk->sk_{data_ready,write_space}").
+skb_header_pointer() only safely reads the ARP header; it does not make
+the later sender hardware address range writable.  If that range is
+still held in a nonlinear skb fragment backed by a splice-imported file
+page, skb_store_bits() maps the frag page and copies the new MAC address
+directly into it.
 
-Fixes: 7b98cd42b049 ("bpf: sockmap: Add UDP support")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://patch.msgid.link/20260529193941.3897256-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Ensure the ARP SHA range is writable before reading the ARP header and
+before calling skb_store_bits().
+
+Fixes: 63137bc5882a ("netfilter: ebtables: Fixes dropping of small packets in bridge nat")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/bridge/netfilter/ebt_snat.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 58f3f0d979540f..7b6ed7c85a58cc 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -2591,8 +2591,12 @@ void sock_wfree(struct sk_buff *skb)
- 	bool free;
+diff --git a/net/bridge/netfilter/ebt_snat.c b/net/bridge/netfilter/ebt_snat.c
+index 7dfbcdfc30e5d2..c9e229af0366b8 100644
+--- a/net/bridge/netfilter/ebt_snat.c
++++ b/net/bridge/netfilter/ebt_snat.c
+@@ -31,6 +31,9 @@ ebt_snat_tg(struct sk_buff *skb, const struct xt_action_param *par)
+ 		const struct arphdr *ap;
+ 		struct arphdr _ah;
  
- 	if (!sock_flag(sk, SOCK_USE_WRITE_QUEUE)) {
-+		void (*sk_write_space)(struct sock *sk);
++		if (skb_ensure_writable(skb, sizeof(_ah) + ETH_ALEN))
++			return EBT_DROP;
 +
-+		sk_write_space = READ_ONCE(sk->sk_write_space);
-+
- 		if (sock_flag(sk, SOCK_RCU_FREE) &&
--		    sk->sk_write_space == sock_def_write_space) {
-+		    sk_write_space == sock_def_write_space) {
- 			rcu_read_lock();
- 			free = refcount_sub_and_test(len, &sk->sk_wmem_alloc);
- 			sock_def_write_space_wfree(sk);
-@@ -2607,7 +2611,7 @@ void sock_wfree(struct sk_buff *skb)
- 		 * after sk_write_space() call
- 		 */
- 		WARN_ON(refcount_sub_and_test(len - 1, &sk->sk_wmem_alloc));
--		sk->sk_write_space(sk);
-+		sk_write_space(sk);
- 		len = 1;
- 	}
- 	/*
+ 		ap = skb_header_pointer(skb, 0, sizeof(_ah), &_ah);
+ 		if (ap == NULL)
+ 			return EBT_DROP;
 -- 
 2.53.0
 
