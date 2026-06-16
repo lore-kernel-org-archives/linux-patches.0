@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6531843C05C;
-	Tue, 16 Jun 2026 15:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE93F43C05C;
+	Tue, 16 Jun 2026 15:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623138; cv=none; b=RojsRBOqvu3G8FT5jbwW4pGQVp/Ve2Tqn80uCtxPso77jTzv5+mPiKgpTvInxjVXy7N27R0qmXc4PsrRq3OBLkDYAXuZftO/b9Ej0Mye89QWqwGv+MSlv96Vdq4azVLg/CFhqs/5aAxwgn0fwtTlX1MHHXimu3qEGSGbcLRwTwA=
+	t=1781623144; cv=none; b=uJf9hntdSa1EXzhWYNkU1+gapmTGU3jGPfXqejKvh4YZzIZoRLQmUBQY1fxmE5vbCf5rr10CyRHEM1dRtFzdaKKmbTyR3WmyntgeogIWJ+Nf6CbOxWpM9vEAuUDpbwboTbbrxXDAawNgNPQyBalEGZ3xKqPM8EuXUWS9Me7dcas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623138; c=relaxed/simple;
-	bh=RnM8x/r/esLzHy7XJ8ZnggB/NkQ5IDYT/zYkdwet6W0=;
+	s=arc-20240116; t=1781623144; c=relaxed/simple;
+	bh=pFz25esQru+2zYgtdSWBDAZrYgPsCkcLZ2Wa44RRsn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AVzjLyto24AS7kFIwyjaiXHQO9C3fBZvplTkv6t4tg0+UazTekya001aS10ns23FuTKiaY7pUmFd0RPIJnpsO7h2zy/DHPlKSv4gk3p/LcX3f39Fu5igoDEQ/YL4YzlJM1O6xVwXIgAD8Hsk/jnyJtdbFZFcQ9Epo2j5NMsq7ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRw9Cv/0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WLWbDhu2B9l4e8NJoFZ2nZKRn7Tq9IKlBz4Ie52tZbMYxBWqWnS5Fsuf/mpRavyEF85bBnzgOvH0bhQfTHtSb7bKYjbez171CmN3xcTzW3XLnGg9Z2V+BFWK4czK430vJB1S0yHwpgiWU6UMPGWjBOg/QD3e0rxmuMmOfNYWUFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=twsS4onr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRw9Cv/0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4194A1F000E9;
-	Tue, 16 Jun 2026 15:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="twsS4onr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69AF51F000E9;
+	Tue, 16 Jun 2026 15:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623137;
-	bh=RGcmIxo8zh5jI+dESpb2B0u//7RA8I7/4136Y6cyE1Y=;
+	s=korg; t=1781623143;
+	bh=tu08nH1X7DXQArVZZgn0bAPRnoSjW7jrDMdail15UnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dRw9Cv/0FO8ps2H7aMg448tLp0nWQA7sUrxzLN1LnapZQn+eC06Mu94hl0+GCnFwk
-	 Cma4Unv4mbAXpJfvhH3g+4rm+SdNs8EdoOX1xJCuXgDTqSpa9+/vB8bB7OkGysL0zz
-	 Ruj0sffIj1SZdMdbZRaAGELaYa4LobNJsbHDJ7GM=
+	b=twsS4onrGxpa+gHpu0YxnMJKLhsd+klIr+blA+30wxE+qvoreMNYhwCtBBCqXNakH
+	 /VLj8KDTHzcqzt0MhUw7feGsKPIxjInc9l5FVXzVUmSgu0kLAzpz9FWKxkYL0imJfF
+	 PcRE6/mdf3Bqs3vG46Sda/2S9SNtRVX9MHFHv6Go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nam Cao <namcao@linutronix.de>,
 	Gabriele Monaco <gmonaco@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 094/378] verification/rvgen: Fix options shared among commands
-Date: Tue, 16 Jun 2026 20:25:25 +0530
-Message-ID: <20260616145115.237573127@linuxfoundation.org>
+Subject: [PATCH 7.0 095/378] verification/rvgen: Fix ltl2k writing True as a literal
+Date: Tue, 16 Jun 2026 20:25:26 +0530
+Message-ID: <20260616145115.292148638@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -53,62 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Gabriele Monaco <gmonaco@redhat.com>
 
-[ Upstream commit 5f845ad706c0b394ae274e9a930044f78bef782e ]
+[ Upstream commit df996599cc69a9b74ff437c67751cf8a61f62e39 ]
 
-After rvgen was refactored to use subparsers, the common options (-a and
--D) were left in the main parser. This meant that they needed to be
-called /before/ the subcommand and using them without subcommand was
-allowed. This is not the original intent.
+The rvgen parser for LTL stores literal true values in the python
+representation (capitalised True), this doesn't build in C.
+The Literal class should already handle this case but ASTNode skips its
+strigification method and converts the value (true/false) directly.
 
-  rvgen -D "some description" container -n name
+Fix by delegating ASTNode stringification to the Literal and Variable
+classes instead of bypassing them.
 
-Define the options as parent in the subparsers to allow them to be used
-from both subcommands together with other options.
-
-  rvgen container -n name -D "some description"
-
-Fixes: 5270a0e3041c ("verification/dot2k: Replace is_container() hack with subparsers")
+Fixes: 97ffa4ce6ab32 ("verification/rvgen: Add support for linear temporal logic")
 Reviewed-by: Nam Cao <namcao@linutronix.de>
-Link: https://lore.kernel.org/r/20260514152055.229162-7-gmonaco@redhat.com
+Link: https://lore.kernel.org/r/20260514152055.229162-8-gmonaco@redhat.com
 Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/verification/rvgen/__main__.py | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ tools/verification/rvgen/rvgen/ltl2ba.py | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/tools/verification/rvgen/__main__.py b/tools/verification/rvgen/__main__.py
-index fa6fc1f4de2f7e..5198bccccd107b 100644
---- a/tools/verification/rvgen/__main__.py
-+++ b/tools/verification/rvgen/__main__.py
-@@ -17,14 +17,16 @@ if __name__ == '__main__':
-     import sys
+diff --git a/tools/verification/rvgen/rvgen/ltl2ba.py b/tools/verification/rvgen/rvgen/ltl2ba.py
+index f14e6760ac3db8..aada15ec83a3c2 100644
+--- a/tools/verification/rvgen/rvgen/ltl2ba.py
++++ b/tools/verification/rvgen/rvgen/ltl2ba.py
+@@ -121,10 +121,8 @@ class ASTNode:
+         return self.op.expand(self, node, node_set)
  
-     parser = argparse.ArgumentParser(description='Generate kernel rv monitor')
--    parser.add_argument("-D", "--description", dest="description", required=False)
--    parser.add_argument("-a", "--auto_patch", dest="auto_patch",
+     def __str__(self):
+-        if isinstance(self.op, Literal):
+-            return str(self.op.value)
+-        if isinstance(self.op, Variable):
+-            return self.op.name.lower()
++        if isinstance(self.op, (Literal, Variable)):
++            return str(self.op)
+         return "val" + str(self.id)
+ 
+     def normalize(self):
+@@ -381,6 +379,9 @@ class Variable:
+     def __iter__(self):
+         yield from ()
+ 
++    def __str__(self):
++        return self.name.lower()
 +
-+    parent_parser = argparse.ArgumentParser(add_help=False)
-+    parent_parser.add_argument("-D", "--description", dest="description", required=False)
-+    parent_parser.add_argument("-a", "--auto_patch", dest="auto_patch",
-                         action="store_true", required=False,
-                         help="Patch the kernel in place")
- 
-     subparsers = parser.add_subparsers(dest="subcmd", required=True)
- 
--    monitor_parser = subparsers.add_parser("monitor")
-+    monitor_parser = subparsers.add_parser("monitor", parents=[parent_parser])
-     monitor_parser.add_argument('-n', "--model_name", dest="model_name")
-     monitor_parser.add_argument("-p", "--parent", dest="parent",
-                                 required=False, help="Create a monitor nested to parent")
-@@ -34,7 +36,7 @@ if __name__ == '__main__':
-     monitor_parser.add_argument('-t', "--monitor_type", dest="monitor_type",
-                                 help=f"Available options: {', '.join(Monitor.monitor_types.keys())}")
- 
--    container_parser = subparsers.add_parser("container")
-+    container_parser = subparsers.add_parser("container", parents=[parent_parser])
-     container_parser.add_argument('-n', "--model_name", dest="model_name", required=True)
- 
-     params = parser.parse_args()
+     def negate(self):
+         new = ASTNode(self)
+         return NotOp(new)
 -- 
 2.53.0
 
