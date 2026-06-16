@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95BA472798;
-	Tue, 16 Jun 2026 18:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6279247CC96;
+	Tue, 16 Jun 2026 18:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636352; cv=none; b=Z4FqLN6zPRG8FQLp90acukmVCQBCKDmwxFAAwz9Ds734YJmUJJ7EPJ1xpWyUVQXiokj8YFg1F3AQ/elHJVu6lr7tEFQFb4L5Anq+ioSwtRyzhmYCnr9bmm4JCEjG+B5ju3wU8VS73TYlHvoS7TE/KXNjDc766HnwzBhwircPqMY=
+	t=1781636357; cv=none; b=udwLMnbHf3gJjV2PqXmkijSI8f1le3PP6x/V0ktBonTCX7UnzRTv/vFGJjqFVXqkOBSVH9w+E3HBhTkkY4FeKBUvxYegZxDXb2a6+CFydE8Q31qaNtpON4HEzpL7QPrNeaO+bPDWB7RTWr+13hvU+lSnwt3NcA6p1Vgq1hDuNwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636352; c=relaxed/simple;
-	bh=/ZjBbvbDX6DSQaIB50xh/t9zv9VG0s8e+F+vCm0szWs=;
+	s=arc-20240116; t=1781636357; c=relaxed/simple;
+	bh=WU+vBU2kgOYwCRxtg+dx++jny3PIg4ycVNyA3DzMSi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pux+J+D7v1+g7uWY3xshwvFwsBNlohbxRptN8h6IQUPOYJD70fcyJMQ2h6OZultyLk87hOJ1X8rLDATIbZ+1LZI7svCckQaKGHEOiD7PHncUpdTKMu3QgN/e3PUuGMXm0wenztIdqkwRF2wCvCwFgh8Bp4KpDpq15aLM4A1P1sQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4wF1Tjs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i+7tR1FOgxjntPHS1iHQ2ee3tjHzJ//vpmxiC0XBR08B2cBLJBQP9c+ZkePq4OM5QBGe4bqmodgdZQQPF3MW/K/VkYJQCSo0XddHONmjdMDlQA5yO/RDueXkRNQtleBYIHz6IXrQNSWK22wOQ3ylQx50VgmKLikOCo5BXYxifm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JtG0r09r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4wF1Tjs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA901F000E9;
-	Tue, 16 Jun 2026 18:59:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JtG0r09r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AFC1F000E9;
+	Tue, 16 Jun 2026 18:59:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636350;
-	bh=N1mzZMy7A3cALvWXRjZDWukE6Ir9SaE4nRs0XNeW2Nw=;
+	s=korg; t=1781636356;
+	bh=x+NqU4jW1fFQVLLnyLVP6CuGXTBeOSEY2FZ7M/jvUM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s4wF1TjswcJi8ebu6Mde6w+Vy5OH8LukiOf1FYGKPu7bMlDxzVuE/vjvp5H3y/V21
-	 P85VSqWpsWVBaXuF76we+MyERofSN4KS18WtCwo8qIJkwGJJYP/OOdjIlaaMSewtod
-	 Bb6qX7+2cy0OWrdgw9HunfNvU00zbXfshb+2Jjlw=
+	b=JtG0r09r88mHmQ0GQxWEWKuFW0Xwqm0663huaIxqVZrYH98e+OGtnihbNmAIF+BS+
+	 KjdxhO3aIFg+2Z0oo7aTuu5hvgfjft8Hb9cjY6GlpL/3FAWgALKPOFSMmJ1kKfbe01
+	 67NeXhlA28x4Bt1LIV7q1r1AE7Hs2kLWvMp6j12M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 223/342] arm64/mm: Enable batched TLB flush in unmap_hotplug_range()
-Date: Tue, 16 Jun 2026 20:28:39 +0530
-Message-ID: <20260616145058.588020672@linuxfoundation.org>
+Subject: [PATCH 5.10 224/342] thermal: core: Fix thermal zone governor cleanup issues
+Date: Tue, 16 Jun 2026 20:28:40 +0530
+Message-ID: <20260616145058.635809566@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -56,134 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anshuman Khandual <anshuman.khandual@arm.com>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 48478b9f791376b4b89018d7afdfd06865498f65 ]
+[ Upstream commit 41ff66baf81c6541f4f985dd7eac4494d03d9440 ]
 
-During a memory hot remove operation, both linear and vmemmap mappings for
-the memory range being removed, get unmapped via unmap_hotplug_range() but
-mapped pages get freed only for vmemmap mapping. This is just a sequential
-operation where each table entry gets cleared, followed by a leaf specific
-TLB flush, and then followed by memory free operation when applicable.
+If thermal_zone_device_register_with_trips() fails after adding
+a thermal governor to the thermal zone being registered, the
+governor is not removed from it as appropriate which may lead to
+a memory leak.
 
-This approach was simple and uniform both for vmemmap and linear mappings.
-But linear mapping might contain CONT marked block memory where it becomes
-necessary to first clear out all entire in the range before a TLB flush.
-This is as per the architecture requirement. Hence batch all TLB flushes
-during the table tear down walk and finally do it in unmap_hotplug_range().
+In turn, thermal_zone_device_unregister() calls thermal_set_governor()
+without acquiring the thermal zone lock beforehand which may race with
+a governor update via sysfs and may lead to a use-after-free in that
+case.
 
-Prior to this fix, it was hypothetically possible for a speculative access
-to a higher address in the contiguous block to fill the TLB with shattered
-entries for the entire contiguous range after a lower address had already
-been cleared and invalidated. Due to the table entries being shattered, the
-subsequent TLB invalidation for the higher address would not then clear the
-TLB entries for the lower address, meaning stale TLB entries could persist.
+Address these issues by adding two thermal_set_governor() calls, one to
+thermal_release() to remove the governor from the given thermal zone,
+and one to the thermal zone registration error path to cover failures
+preceding the thermal zone device registration.
 
-Besides it also helps in improving the performance via TLBI range operation
-along with reduced synchronization instructions. The time spent executing
-unmap_hotplug_range() improved 97% measured over a 2GB memory hot removal
-in KVM guest.
-
-This scheme is not applicable during vmemmap mapping tear down where memory
-needs to be freed and hence a TLB flush is required after clearing out page
-table entry.
-
-Cc: Will Deacon <will@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-kernel@vger.kernel.org
-Closes: https://lore.kernel.org/all/aWZYXhrT6D2M-7-N@willie-the-truck/
-Fixes: bbd6ec605c0f ("arm64/mm: Enable memory hot remove")
-Cc: stable@vger.kernel.org
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Ryan Roberts <ryan.roberts@arm.com>
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-[ renamed `__pte_clear()` to `pte_clear()` and inlined `pmd_cont(pmd)` as `pmd_val(pmd) & PMD_SECT_CONT` ]
+Fixes: e33df1d2f3a0 ("thermal: let governors have private data for each thermal zone")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/5092923.31r3eYUQgx@rafael.j.wysocki
+[ adapted context for missing mutex_destroy/complete ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/mmu.c |   36 ++++++++++++++++++++----------------
- 1 file changed, 20 insertions(+), 16 deletions(-)
+ drivers/thermal/thermal_core.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -862,10 +862,14 @@ static void unmap_hotplug_pte_range(pmd_
+--- a/drivers/thermal/thermal_core.c
++++ b/drivers/thermal/thermal_core.c
+@@ -986,6 +986,7 @@ static void thermal_release(struct devic
+ 		     sizeof("thermal_zone") - 1)) {
+ 		tz = to_thermal_zone(dev);
+ 		thermal_zone_destroy_device_groups(tz);
++		thermal_set_governor(tz, NULL);
+ 		kfree(tz);
+ 	} else if (!strncmp(dev_name(dev), "cooling_device",
+ 			    sizeof("cooling_device") - 1)) {
+@@ -1447,8 +1448,10 @@ thermal_zone_device_register(const char
+ 	/* sys I/F */
+ 	/* Add nodes that are always present via .groups */
+ 	result = thermal_zone_create_device_groups(tz, mask);
+-	if (result)
++	if (result) {
++		thermal_set_governor(tz, NULL);
+ 		goto remove_id;
++	}
  
- 		WARN_ON(!pte_present(pte));
- 		pte_clear(&init_mm, addr, ptep);
--		flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
--		if (free_mapped)
-+		if (free_mapped) {
-+			/* CONT blocks are not supported in the vmemmap */
-+			WARN_ON(pte_cont(pte));
-+			flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
- 			free_hotplug_page_range(pte_page(pte),
- 						PAGE_SIZE, altmap);
-+		}
-+		/* unmap_hotplug_range() flushes TLB for !free_mapped */
- 	} while (addr += PAGE_SIZE, addr < end);
- }
+ 	/* A new thermal zone needs to be updated anyway. */
+ 	atomic_set(&tz->need_update, 1);
+@@ -1571,8 +1574,6 @@ void thermal_zone_device_unregister(stru
  
-@@ -886,15 +890,14 @@ static void unmap_hotplug_pmd_range(pud_
- 		WARN_ON(!pmd_present(pmd));
- 		if (pmd_sect(pmd)) {
- 			pmd_clear(pmdp);
+ 	cancel_delayed_work_sync(&tz->poll_queue);
+ 
+-	thermal_set_governor(tz, NULL);
 -
--			/*
--			 * One TLBI should be sufficient here as the PMD_SIZE
--			 * range is mapped with a single block entry.
--			 */
--			flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
--			if (free_mapped)
-+			if (free_mapped) {
-+				/* CONT blocks are not supported in the vmemmap */
-+				WARN_ON(pmd_val(pmd) & PMD_SECT_CONT);
-+				flush_tlb_kernel_range(addr, addr + PMD_SIZE);
- 				free_hotplug_page_range(pmd_page(pmd),
- 							PMD_SIZE, altmap);
-+			}
-+			/* unmap_hotplug_range() flushes TLB for !free_mapped */
- 			continue;
- 		}
- 		WARN_ON(!pmd_table(pmd));
-@@ -919,15 +922,12 @@ static void unmap_hotplug_pud_range(p4d_
- 		WARN_ON(!pud_present(pud));
- 		if (pud_sect(pud)) {
- 			pud_clear(pudp);
--
--			/*
--			 * One TLBI should be sufficient here as the PUD_SIZE
--			 * range is mapped with a single block entry.
--			 */
--			flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
--			if (free_mapped)
-+			if (free_mapped) {
-+				flush_tlb_kernel_range(addr, addr + PUD_SIZE);
- 				free_hotplug_page_range(pud_page(pud),
- 							PUD_SIZE, altmap);
-+			}
-+			/* unmap_hotplug_range() flushes TLB for !free_mapped */
- 			continue;
- 		}
- 		WARN_ON(!pud_table(pud));
-@@ -957,6 +957,7 @@ static void unmap_hotplug_p4d_range(pgd_
- static void unmap_hotplug_range(unsigned long addr, unsigned long end,
- 				bool free_mapped, struct vmem_altmap *altmap)
- {
-+	unsigned long start = addr;
- 	unsigned long next;
- 	pgd_t *pgdp, pgd;
- 
-@@ -978,6 +979,9 @@ static void unmap_hotplug_range(unsigned
- 		WARN_ON(!pgd_present(pgd));
- 		unmap_hotplug_p4d_range(pgdp, addr, next, free_mapped, altmap);
- 	} while (addr = next, addr < end);
-+
-+	if (!free_mapped)
-+		flush_tlb_kernel_range(start, end);
- }
- 
- static void free_empty_pte_table(pmd_t *pmdp, unsigned long addr,
+ 	thermal_remove_hwmon_sysfs(tz);
+ 	ida_simple_remove(&thermal_tz_ida, tz->id);
+ 	ida_destroy(&tz->ida);
 
 
