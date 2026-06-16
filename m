@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903644418D7;
-	Tue, 16 Jun 2026 18:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2932E2DCF4C;
+	Tue, 16 Jun 2026 18:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634640; cv=none; b=MoRad4+XuIzk3qpBOlEmyoeD5xUQPFTxSnpqtTmUuWOWyoa3Sbmmeng46BammokpaLA4e2hw1hIeEb649B1iYvAvzXhpSGDFdC/7pJAx1uZ8+YsYV486Ei6pBWIERQnUx25ct5OuS1Fsu634TuD0gbKJz9saMPwZZPPuDIHMCJU=
+	t=1781634645; cv=none; b=GOX3C0b4pgbiOzAD63q5J+D2GcaWePN9B2MinZuUmV1mQA6Cs8fmDm8qZv+HEW5h7cIHqFvQhhOskRWvTpptQO1Cq9swWkV5SPkeSWanZy/X6sOotMbZHsKTxElSwDTKhQC7XO867ftksA/wVg9/7AeoN7x0iiYyr23/x+nzFOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634640; c=relaxed/simple;
-	bh=5UJH0UoqVZffacw4+0mLrjTnse9yxOlkSh7YunMWujc=;
+	s=arc-20240116; t=1781634645; c=relaxed/simple;
+	bh=wK4LeFcnKyqu5jIPiZzPF/HTopmYpCX9hfXmKbtfSQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SpLGB19+H4VSsaP5q8ZUdWhGHBOh4SEkpQq+3kolqOvep1GXxUdumUv5mlQOXA2ULXPT43gYH/aLnkYHCJXyv0EJ1D/hcnarXK7CIKPmTUMSZtRHDa/Tq5VtYFTHnVw7haEwS3ZqUmdiav7TzosDpmFzYRG9KEtg5iSm5YdjdJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OqNqDLAy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G6yF4ZDQ76D10KiIOmG90QaEpQgJjNfuiTV3UxZiuyrXKxNCdYMhxoGxGOr5pIoco7aTndt0aJChN9uNANou9ZIIZMIvS5OT+vmrr/+XMHaeQK/73xuGOvdnrePw0dkkDk7NmEiIvoWCwpb4sisVlLgEFTSBFyIKVvPBAVIc/SQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LFtW+mXq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OqNqDLAy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9457C1F000E9;
-	Tue, 16 Jun 2026 18:30:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LFtW+mXq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F7F1F000E9;
+	Tue, 16 Jun 2026 18:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634639;
-	bh=G3taWQjl1BfsPxdjG5iodc2cSxnqUL9MLYVql2ioS6Y=;
+	s=korg; t=1781634644;
+	bh=d9K0YtrlUHaAfKD2rSwX0UF3diS9cDwGROzGw1kk2aw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OqNqDLAy1/9Suf7Cnh21ioWaKobXzYT/NuL39wzq3wwBCFnEZrmc7qxfEN3MWJVrx
-	 IKSBtPeQPE72oJgNeQ7EbTb3rZE7fa3HIUk0cLwV6Ao0M4AO1K2HZqa0dvFJUXVQHA
-	 WnBM1sy4/1/emyP4Aq9d8HrGdyry/0WHnKPddrCc=
+	b=LFtW+mXq+f7fQDXpP3Q1l+w79Tut2TOjpUMFx7KMU5/s8BxVg+qk+XFwxf4Im+QEi
+	 JHycCH9pQbc6fzwR1Cfyw9Ac1GBrg7GIGZnZW3UJyUt7rLoNTHgzcQawMWCq23Gl7I
+	 txD0g0OyI9khBUwEnKMS98NXAxzvQLkAdzMVcJwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Sunil Dhamne <amitsd@google.com>,
-	stable <stable@kernel.org>,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 304/411] usb: typec: tcpm: reset internal port states on soft reset AMS
-Date: Tue, 16 Jun 2026 20:29:02 +0530
-Message-ID: <20260616145117.309810031@linuxfoundation.org>
+Subject: [PATCH 5.15 305/411] wifi: brcmfmac: Fix potential use-after-free issue when stopping watchdog task
+Date: Tue, 16 Jun 2026 20:29:03 +0530
+Message-ID: <20260616145117.362364755@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -53,87 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Sunil Dhamne <amitsd@google.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 2909f0d4994fb4306bf116df5ccee797791fce2c ]
+[ Upstream commit c623b63580880cc742255eaed3d79804c1b91143 ]
 
-Reset internal port states (such as vdm_sm_running and
-explicit_contract) on soft reset AMS as the port needs to negotiate a
-new contract. The consequence of leaving the states in as-is cond are as
-follows:
-  * port is in SRC power role and an explicit contract is negotiated
-    with the port partner (in sink role)
-  * port partner sends a Soft Reset AMS while VDM State Machine is
-    running
-  * port accepts the Soft Reset request and the port advertises src caps
-  * port partner sends a Request message but since the explicit_contract
-    and vdm_sm_running are true from previous negotiation, the port ends
-    up sending Soft Reset instead of Accept msg.
+Watchdog task might end between send_sig() and kthread_stop() calls, what
+results in the use-after-free issue. Fix this by increasing watchdog task
+reference count before calling send_sig() and dropping it by switching to
+kthread_stop_put().
 
-Stub Log:
-[  203.653942] AMS DISCOVER_IDENTITY start
-[  203.653947] PD TX, header: 0x176f
-[  203.655901] PD TX complete, status: 0
-[  203.657470] PD RX, header: 0x124f [1]
-[  203.657477] Rx VDM cmd 0xff008081 type 2 cmd 1 len 1
-[  203.657482] AMS DISCOVER_IDENTITY finished
-[  203.657484] cc:=4
-[  204.155698] PD RX, header: 0x144f [1]
-[  204.155718] Rx VDM cmd 0xeeee8001 type 0 cmd 1 len 1
-[  204.155741] PD TX, header: 0x196f
-[  204.157622] PD TX complete, status: 0
-[  204.160060] PD RX, header: 0x4d [1]
-[  204.160066] state change SRC_READY -> SOFT_RESET [rev2 SOFT_RESET_AMS]
-[  204.160076] PD TX, header: 0x163
-[  204.162486] PD TX complete, status: 0
-[  204.162832] AMS SOFT_RESET_AMS finished
-[  204.162840] cc:=4
-[  204.162891] AMS POWER_NEGOTIATION start
-[  204.162896] state change SOFT_RESET -> AMS_START [rev2 POWER_NEGOTIATION]
-[  204.162908] state change AMS_START -> SRC_SEND_CAPABILITIES [rev2 POWER_NEGOTIATION]
-[  204.162913] PD TX, header: 0x1361
-[  204.165529] PD TX complete, status: 0
-[  204.165571] pending state change SRC_SEND_CAPABILITIES -> SRC_SEND_CAPABILITIES_TIMEOUT @ 60 ms [rev2 POWER_NEGOTIATION]
-[  204.166996] PD RX, header: 0x1242 [1]
-[  204.167009] state change SRC_SEND_CAPABILITIES -> SRC_SOFT_RESET_WAIT_SNK_TX [rev2 POWER_NEGOTIATION]
-[  204.167019] AMS POWER_NEGOTIATION finished
-[  204.167020] cc:=4
-[  204.167083] AMS SOFT_RESET_AMS start
-[  204.167086] state change SRC_SOFT_RESET_WAIT_SNK_TX -> SOFT_RESET_SEND [rev2 SOFT_RESET_AMS]
-[  204.167092] PD TX, header: 0x16d
-[  204.168824] PD TX complete, status: 0
-[  204.168854] pending state change SOFT_RESET_SEND -> HARD_RESET_SEND @ 60 ms [rev2 SOFT_RESET_AMS]
-[  204.171876] PD RX, header: 0x43 [1]
-[  204.171879] AMS SOFT_RESET_AMS finished
-
-This causes COMMON.PROC.PD.11.2 check failure for
-TEST.PD.VDM.SRC.2_Rev2Src test on the PD compliance tester.
-
-Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
-Fixes: 8d3a0578ad1a ("usb: typec: tcpm: Respond Wait if VDM state machine is running")
-Fixes: f0690a25a140 ("staging: typec: USB Type-C Port Manager (tcpm)")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260414-fix-soft-reset-v1-1-01d7cb9764e2@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ kept `tcpm_pd_send_control(port, PD_CTRL_ACCEPT)` call unchanged ]
+Cc: stable@vger.kernel.org
+Fixes: 373c83a801f1 ("brcmfmac: stop watchdog before detach and free everything")
+Fixes: a9ffda88be74 ("brcm80211: fmac: abstract bus_stop interface function pointer")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20260416093339.2066829-1-m.szyprowski@samsung.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ replaced kthread_stop_put() with open-coded kthread_stop() + put_task_struct() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -4576,6 +4576,8 @@ static void run_state_machine(struct tcp
- 		port->message_id = 0;
- 		port->rx_msgid = -1;
- 		tcpm_pd_send_control(port, PD_CTRL_ACCEPT);
-+		port->vdm_sm_running = false;
-+		port->explicit_contract = false;
- 		tcpm_ams_finish(port);
- 		if (port->pwr_role == TYPEC_SOURCE) {
- 			port->upcoming_state = SRC_SEND_CAPABILITIES;
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+@@ -2474,8 +2474,10 @@ static void brcmf_sdio_bus_stop(struct d
+ 	brcmf_dbg(TRACE, "Enter\n");
+ 
+ 	if (bus->watchdog_tsk) {
++		get_task_struct(bus->watchdog_tsk);
+ 		send_sig(SIGTERM, bus->watchdog_tsk, 1);
+ 		kthread_stop(bus->watchdog_tsk);
++		put_task_struct(bus->watchdog_tsk);
+ 		bus->watchdog_tsk = NULL;
+ 	}
+ 
+@@ -4549,8 +4551,10 @@ void brcmf_sdio_remove(struct brcmf_sdio
+ 	if (bus) {
+ 		/* Stop watchdog task */
+ 		if (bus->watchdog_tsk) {
++			get_task_struct(bus->watchdog_tsk);
+ 			send_sig(SIGTERM, bus->watchdog_tsk, 1);
+ 			kthread_stop(bus->watchdog_tsk);
++			put_task_struct(bus->watchdog_tsk);
+ 			bus->watchdog_tsk = NULL;
+ 		}
+ 
 
 
