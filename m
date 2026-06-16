@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295AD318EDA;
-	Tue, 16 Jun 2026 19:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A087C3DD851;
+	Tue, 16 Jun 2026 19:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636920; cv=none; b=XfXoEGr0M2gxuWgklQEJ1Iw/FyKfyROgB1GeOganI5JXP9kaD3o8YPHwHXuGoJnUM73K7Qs/Es2Gq56hs6blIzqaDwZLFAoBLG179sk3523qWb/kLU5slnzb3SW8Pf0ii7vcfLkf+ebwtGSJtjyCZ2b9MVppdRZT5Ud0HxPD+a4=
+	t=1781636925; cv=none; b=Y8/2fikeuyC2bi0YinKQNHHH7vEGXQGDQP+byhmxn8s75s7UZ+eSdX6BzOEZDIeYjk9eILv+2iNAv5smWFH9a7X6Z8uzmL1IgYKfCF920fQMW/35TzqDvG2Cb5AMUEEaSLo0YCt15LVnAHKPJ3HMgf49C/A9/TS9c38ApM12fJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636920; c=relaxed/simple;
-	bh=erDUTmeowwzJbWNwcainYAcvOZElMOvHfQDMtVzvFLU=;
+	s=arc-20240116; t=1781636925; c=relaxed/simple;
+	bh=AJebVowShW+xem6PnrZmee6NIgwDmTUTvHf2BAUWQHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EbvQK4CiE6N9m9y3PpbHPV/004rILjFHj9Fv5PhuEtBWtH3Ji1lCcPMGR0wJmqscP9lXszVM6iN+1LajqYvFMlGRtXrMO0r42GrV0r3psGWh8Snt7O9ZuI53mQ9vrT3cQ/FShckQi7bEiXLZ940jcrl2VhiprrsN3RrHtUEuGxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oPghjM8Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OlnRtNVbyVI/VqD8/zj1CmU31g3CiR2s4X4QAEdEy2SHW/s14v5sUGp/WSXczRTV4MkDtmZSwR6kB1L5uVfAnpOoAqZtrMgPtB0DSTu9P97ZHOWbECSwQJiPNcLk7KPh8oyD27JV54QdEBDQ/nXCrlZ+qy8qO/wnFeFC7Pe+orU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5bU4fKV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oPghjM8Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 124301F000E9;
-	Tue, 16 Jun 2026 19:08:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5bU4fKV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FF91F00A3F;
+	Tue, 16 Jun 2026 19:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636919;
-	bh=G0ogQNKzHdgbBfg5QepRAGfGDAA/W84YV0FOEX1IvZY=;
+	s=korg; t=1781636924;
+	bh=8OQX8acm0kScIt/ZivFEGgkc7YJx0DGUaQABLmMz5Eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oPghjM8Qyvr1+cGkZ3/A6/CGUSbUpBqJniCOOHukljnl49Q4xjQ+jIjde91tQ3M66
-	 XkObdVpvAZ7xt4g/E3irH7QaYb7LvDZ5y9MmZPyNdL4aX4+jZ5kTzDNsV38vlOFqaB
-	 8ihc119JBo4OCNhbmYaCvQnlB1akpeeHSLuYLP1A=
+	b=v5bU4fKVJjYjv141Ak1DQAHg6NgJhXyi/m5bCals/HYtmRDUEyoHsZWDLTdgAE6wA
+	 V+tN52ZcjPZjfWmMLywtTb1p8AjmKvTsyCq6BchAEm3f8TsjP8yaNwRdyUUVFNKnye
+	 +6GAdvSFai2MDnNwdlgIyh9pEhe4sQzVFPFIkcFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 331/342] usb: gadget: f_hid: fix device reference leak in hidg_alloc()
-Date: Tue, 16 Jun 2026 20:30:27 +0530
-Message-ID: <20260616145104.020283500@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Ignat Korchagin <ignat@linux.win>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Yiming Qian <yimingqian591@gmail.com>
+Subject: [PATCH 5.10 332/342] lib/crypto: mpi: Fix integer underflow in mpi_read_raw_from_sgl()
+Date: Tue, 16 Jun 2026 20:30:28 +0530
+Message-ID: <20260616145104.070101494@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -52,55 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 4f88d65def6f3c90121601b4f62a4c967f3063a6 ]
+commit 8c2f1288250a90a4b5cabed5d888d7e3aeed4035 upstream.
 
-hidg_alloc() initializes hidg->dev with device_initialize() before
-calling dev_set_name(). If dev_set_name() fails, the function currently
-jumps to err_unlock and returns without calling put_device().
+Yiming reports an integer underflow in mpi_read_raw_from_sgl() when
+subtracting "lzeros" from the unsigned "nbytes".
 
-This leaves the device reference unbalanced and prevents hidg_release()
-from being called. Calling put_device() here is also safe, since
-hidg_release() only frees resources owned by hidg.
+For this to happen, the scatterlist "sgl" needs to occupy more bytes
+than the "nbytes" parameter and the first "nbytes + 1" bytes of the
+scatterlist must be zero.  Under these conditions, the while loop
+iterating over the scatterlist will count more zeroes than "nbytes",
+subtract the number of zeroes from "nbytes" and cause the underflow.
 
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
+When commit 2d4d1eea540b ("lib/mpi: Add mpi sgl helpers") originally
+introduced the bug, it couldn't be triggered because all callers of
+mpi_read_raw_from_sgl() passed a scatterlist whose length was equal to
+"nbytes".
 
-Route the dev_set_name() failure path through err_put_device so the
-device reference is dropped properly.
+However since commit 63ba4d67594a ("KEYS: asymmetric: Use new crypto
+interface without scatterlists"), the underflow can now actually be
+triggered.  When invoking a KEYCTL_PKEY_ENCRYPT system call with a
+larger "out_len" than "in_len" and filling the "in" buffer with zeroes,
+crypto_akcipher_sync_prep() will create an all-zero scatterlist used for
+both the "src" and "dst" member of struct akcipher_request and thereby
+fulfil the conditions to trigger the bug:
 
-Fixes: 89ff3dfac604 ("usb: gadget: f_hid: fix f_hidg lifetime vs cdev")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Johan Hovold johan@kernel.org
-Link: https://patch.msgid.link/20260413142119.2977716-1-lgs201920130244@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  sys_keyctl()
+    keyctl_pkey_e_d_s()
+      asymmetric_key_eds_op()
+        software_key_eds_op()
+          crypto_akcipher_sync_encrypt()
+            crypto_akcipher_sync_prep()
+              crypto_akcipher_encrypt()
+                rsa_enc()
+                  mpi_read_raw_from_sgl()
+
+To the user this will be visible as a DoS as the kernel spins forever,
+causing soft lockup splats as a side effect.
+
+Fix it.
+
+Reported-by: Yiming Qian <yimingqian591@gmail.com> # off-list
+Fixes: 2d4d1eea540b ("lib/mpi: Add mpi sgl helpers")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org # v4.4+
+Reviewed-by: Ignat Korchagin <ignat@linux.win>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/59eca92ff4f87e2081777f1423a0efaaadcfdb39.1776003111.git.lukas@wunner.de
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_hid.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ lib/mpi/mpicoder.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -1278,7 +1278,7 @@ static struct usb_function *hidg_alloc(s
- 	hidg->dev.devt = MKDEV(major, opts->minor);
- 	ret = dev_set_name(&hidg->dev, "hidg%d", opts->minor);
- 	if (ret)
--		goto err_unlock;
-+		goto err_put_device;
- 
- 	hidg->bInterfaceSubClass = opts->subclass;
- 	hidg->bInterfaceProtocol = opts->protocol;
-@@ -1313,7 +1313,6 @@ static struct usb_function *hidg_alloc(s
- 
- err_put_device:
- 	put_device(&hidg->dev);
--err_unlock:
- 	mutex_unlock(&opts->lock);
- 	return ERR_PTR(ret);
- }
+--- a/lib/mpi/mpicoder.c
++++ b/lib/mpi/mpicoder.c
+@@ -453,7 +453,7 @@ MPI mpi_read_raw_from_sgl(struct scatter
+ 	lzeros = 0;
+ 	len = 0;
+ 	while (nbytes > 0) {
+-		while (len && !*buff) {
++		while (len && !*buff && lzeros < nbytes) {
+ 			lzeros++;
+ 			len--;
+ 			buff++;
 
 
