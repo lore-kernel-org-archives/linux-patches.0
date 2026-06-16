@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F36E13777E;
-	Tue, 16 Jun 2026 18:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9AE38C437;
+	Tue, 16 Jun 2026 18:42:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635316; cv=none; b=VF34MWtAgsss+6zh0LHxUYflnZUkoh80zzOXpICpvUsApV/oyNb4SjHAnhv2kFCw61lfLxG27LnmbaSZqPt5uYzg5OCBV5teLW/bWMwG3EUCEsDTK58nAeaZhJcV2mheXS0fuMW9kRNC+eZvkiRCx52JoWjjD6NLmpqNMYOfHoY=
+	t=1781635321; cv=none; b=XgnYJfVTEfoSnQKv3hKhIROU1jPEZPWjth47An556AQNj6kYUg4PCbGB+IcOv2/EswfQJ7z6ulT+OaEKEu4lQv0BT66O2X9eNR6xjtzZMAY9lmHf6s2ZDXjtQRduxX8YCzw9LRegNwDjK48LUtgd70Y2h7pATxtfgRCtxhD7aWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635316; c=relaxed/simple;
-	bh=yx1HpeLTRxcTfsp5McpnFxQrMPzcTrctVu9RosfqiZk=;
+	s=arc-20240116; t=1781635321; c=relaxed/simple;
+	bh=NDoxrjUdxl8CrAZtDfZFDpoi5ExozlaDRYMdp+rqkVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kaLEwUoNf7F38/Rr8vukHKPPu2njPA6/YgGPx4vARq0iqveV+0b3BWkRybaevGmNTun5B76zvelpD41smD9oNGUsFw8xpCt/B8sbRvRQDf/tc8KD9fq2GNUq2UB/nUZYJw+1yEVrZV4uZVBYABwhiI29OsNIlImbWbOzwxfmt+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZO2Rwgd8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g3UhJ8EJfE8ZILz4DYZ0ZIL2C8kJnBquQWQvKnrNgVb1POFoTaO7VpQ8v8eQboXoIUWLhXkKMnqBArjztdgy3kN+K4m5ka3mszkUPrljktbTIi1W+wbnYQTRRMaXUSjpg7VpX+er7bPskpJ381vmSAZHqR/j944GZ6/jpoiVyYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/fNQWbw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZO2Rwgd8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CC1E1F000E9;
-	Tue, 16 Jun 2026 18:41:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/fNQWbw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710A71F000E9;
+	Tue, 16 Jun 2026 18:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635315;
-	bh=nUwWsFoTfoSyg896OypkHQFkKdUtINxwPNho0nu2VDU=;
+	s=korg; t=1781635320;
+	bh=wlcS3djamP12kdvyruNFLq0RywAwJE2DQSIilur/u9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZO2Rwgd8aQdrrY9F64bzqwSH3vsF3lHFL+CnqZH5yECX7QFdczAUneGHIv1vsWml0
-	 4LOw62J4ffPCp8Xgr/EPjG1k0xBMrQDsPb9QJxuGH2bpGh6gHFUm2LgqZ1j+5AtqLs
-	 5dySEg4H2qcBt2YZy1i8nJPITI5B5dU71aRTV9q0=
+	b=Y/fNQWbwOk5WvQ4lwzayq75Z1ivm0LOiFGpwXLPUoKQZoBM7qKbGsvIMMw+2mJxMz
+	 daifFUHq18gkwxNy/DNHsuyuBMA3AMCMCl8rCEx9gQKhc7rovz4Eo9JQ5PEM3b9qyf
+	 NiEZTniSW5N3hSdr14DKKfDA00mkARLdDSrvq0dM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ji-Soo Chung <jschung2@proton.me>,
-	Gerlinde <lrGerlinde@mailfence.com>,
-	zyc zyc <zyc199902@zohomail.cn>,
-	Manas Ghandat <ghandatmanas@gmail.com>,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zhenghang Xiao <kipreyyy@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 026/342] net/sched: Revert "net/sched: Restrict conditions for adding duplicating netems to qdisc tree"
-Date: Tue, 16 Jun 2026 20:25:22 +0530
-Message-ID: <20260616145049.479421675@linuxfoundation.org>
+Subject: [PATCH 5.10 027/342] Bluetooth: l2cap: clear chan->ident on ECRED reconfiguration success
+Date: Tue, 16 Jun 2026 20:25:23 +0530
+Message-ID: <20260616145049.523585737@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -56,99 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Zhenghang Xiao <kipreyyy@gmail.com>
 
-[ Upstream commit eda0b7f203bb166c98d1418b204135bd566ac83b ]
+[ Upstream commit 00e1950716c6ed67d74777b2db286b0fa23b4be9 ]
 
-This reverts commit ec8e0e3d7adef940cdf9475e2352c0680189d14e.
+l2cap_ecred_reconf_rsp() returns early on success without clearing
+chan->ident. Every other L2CAP response handler (l2cap_ecred_conn_rsp,
+l2cap_le_connect_rsp, l2cap_config_rsp) clears chan->ident after a
+successful transaction to prevent the channel from matching subsequent
+responses with the recycled ident value.
 
-The original patch rejects any tree containing two netems when
-either has duplication set, even when they sit on unrelated classes
-of the same classful parent. That broke configurations that have
-worked since netem was introduced.
+A remote attacker that completed a reconfiguration as the peer can
+replay a failure response with the stale ident, causing the kernel to
+match and destroy the already-established channel via
+l2cap_chan_del(chan, ECONNRESET).
 
-The re-entrancy problem the original commit was trying to solve is
-handled by later patch using tc_depth flag.
+Clear chan->ident for all matching channels on success, and harden the
+failure path by using l2cap_chan_hold_unless_zero() consistent with
+other L2CAP handlers (l2cap_le_command_rej, __l2cap_get_chan_by_ident).
 
-Doing this revert will (re)expose the original bug with multiple
-netem duplication. When this patch is backported make sure
-and get the full series.
-
-Fixes: ec8e0e3d7ade ("net/sched: Restrict conditions for adding duplicating netems to qdisc tree")
-Reported-by: Ji-Soo Chung <jschung2@proton.me>
-Reported-by: Gerlinde <lrGerlinde@mailfence.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220774
-Reported-by: zyc zyc <zyc199902@zohomail.cn>
-Closes: https://lore.kernel.org/all/19adda5a1e2.12410b78222774.9191120410578703463@zohomail.cn/
-Reported-by: Manas Ghandat <ghandatmanas@gmail.com>
-Closes: https://lore.kernel.org/netdev/f69b2c8f-8325-4c2e-a011-6dbc089f30e4@gmail.com/
-Reviewed-by: Stephen Hemminger <stephen@networkplumber.org>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260525122556.973584-3-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
+Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 40 ----------------------------------------
- 1 file changed, 40 deletions(-)
+ net/bluetooth/l2cap_core.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index 3e3bced82c564d..3dc6411b0a33c7 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -985,41 +985,6 @@ static int parse_attr(struct nlattr *tb[], int maxtype, struct nlattr *nla,
- 	return 0;
- }
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 45e1e8192e3b63..f30624d20bb09c 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6432,14 +6432,20 @@ static inline int l2cap_ecred_reconf_rsp(struct l2cap_conn *conn,
  
--static const struct Qdisc_class_ops netem_class_ops;
--
--static int check_netem_in_tree(struct Qdisc *sch, bool duplicates,
--			       struct netlink_ext_ack *extack)
--{
--	struct Qdisc *root, *q;
--	unsigned int i;
--
--	root = qdisc_root_sleeping(sch);
--
--	if (sch != root && root->ops->cl_ops == &netem_class_ops) {
--		if (duplicates ||
--		    ((struct netem_sched_data *)qdisc_priv(root))->duplicate)
--			goto err;
--	}
--
--	if (!qdisc_dev(root))
--		return 0;
--
--	hash_for_each(qdisc_dev(root)->qdisc_hash, i, q, hash) {
--		if (sch != q && q->ops->cl_ops == &netem_class_ops) {
--			if (duplicates ||
--			    ((struct netem_sched_data *)qdisc_priv(q))->duplicate)
--				goto err;
--		}
--	}
--
--	return 0;
--
--err:
--	NL_SET_ERR_MSG(extack,
--		       "netem: cannot mix duplicating netems with other netems in tree");
--	return -EINVAL;
--}
--
- /* Parse netlink message to set options */
- static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 			struct netlink_ext_ack *extack)
-@@ -1087,11 +1052,6 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
- 	q->gap = qopt->gap;
- 	q->counter = 0;
- 	q->loss = qopt->loss;
--
--	ret = check_netem_in_tree(sch, qopt->duplicate, extack);
--	if (ret)
--		goto unlock;
--
- 	q->duplicate = qopt->duplicate;
+ 	BT_DBG("result 0x%4.4x", result);
  
- 	/* for compatibility with earlier versions.
+-	if (!result)
++	if (!result) {
++		list_for_each_entry(chan, &conn->chan_l, list) {
++			if (chan->ident == cmd->ident)
++				chan->ident = 0;
++		}
+ 		return 0;
++	}
+ 
+ 	list_for_each_entry_safe(chan, tmp, &conn->chan_l, list) {
+ 		if (chan->ident != cmd->ident)
+ 			continue;
+ 
+-		l2cap_chan_hold(chan);
++		if (!l2cap_chan_hold_unless_zero(chan))
++			continue;
+ 		l2cap_chan_lock(chan);
+ 
+ 		l2cap_chan_del(chan, ECONNRESET);
 -- 
 2.53.0
 
