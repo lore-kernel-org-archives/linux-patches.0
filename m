@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B2D38C437;
-	Tue, 16 Jun 2026 18:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11ED213777E;
+	Tue, 16 Jun 2026 18:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635326; cv=none; b=plyPNoPXRHrWBGIkWeTLEdFoBhLlkR/LNZCXTViRF7v6Nz9080rptecLsJF1tYrftQ0M0f/oW716fIofBPckK17y9Hh1zNrSQM5qXi6OnHIn6/fk79lByt2B/oT+kwBvXj/FY1Kcli07UOW3O8YMGiOQ7FZIgwRfMQZKnkDphjA=
+	t=1781635332; cv=none; b=YLkiPwNNzDoOzJkzl4h2k3FZ5XCRN3DHBwcR1+5Zkxd81w2CLAbTFLRAIFdnDbQMYP5j2v2YV9ebnOpASh8NC/kEui7y+Z1V6ZVo3MWkALUXsgVOH8VV2Wj4ktz7UCD/2HMDwxAhoF8GQh9l9RlsGXknS2lSZv4jznC4HSFNmQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635326; c=relaxed/simple;
-	bh=FB22KC/jibS//Q4HwMhYedqlfMig7mEbWSCPoRG7SHo=;
+	s=arc-20240116; t=1781635332; c=relaxed/simple;
+	bh=6tFLVvnjX/mjLyTl6gDpYzP5q1Q36G7HQONwcpfYYrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J9+hAeRx1wIdEHXfyv2evjYqGqWvFfH7a8dHAe02hPE/Qg1V2+D4V7BZ6bTT6/IXsvz4xF+NErgyBeADfQktIRkuQScreyOCSKbHlcD4FPHNtoBURpVzIBDrCiUu+FTQmyD0H965oR74fbFBRxoYo3LEw6+b7pzqjxehJEwGghE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tlz8y9lJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=If7AglRzPRT0EhzreLU0Q5voqF68QRwtgZ0/9a5p5IPF+jkG9X2MfNij+Lg/ndcgCxKR+lFiJX6mPCtNKqRkwNUWDmdDzdgx40pFHhT1WlKYWdrZICf/s3TTiJquxm9hrLLqeEP/2fDCsqbphQxjoto4VHnOXtxNt8KFQ8m4KxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h+N6C/BW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tlz8y9lJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCA91F000E9;
-	Tue, 16 Jun 2026 18:42:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+N6C/BW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEC431F000E9;
+	Tue, 16 Jun 2026 18:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635325;
-	bh=f46pBipB4Oh44cWPxroOr2x9Pyk/7/Js6ia7ZX9kCAE=;
+	s=korg; t=1781635330;
+	bh=oZt9o1Jjxn8slingVgrjEsc94/h1sFe0fXLm7pg4Bxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tlz8y9lJzq6gO+wcaTXY31F7glf/8wFsp9w/9bYh4APGb9bMmTCWg0ssG2y1eHm4b
-	 4eF7bKRVVOHWmaprhHgT/uZCvh0Wh4+DNLTzIFf/tAE9nOo4r3DeNyaNeU98R1Dgf7
-	 u+9xZGdEW/hXynpqHM2PNtpSLqMDq4/1uy+jLp1Y=
+	b=h+N6C/BWKhznFfwltPOOB7Pl1G3HRknB8h94hIjaSsu4kOMpshq1WT6h2x/hcURUt
+	 mppXmMmSCXNUUJN+Lfxob5TGe3vno9+vb0ybDuirWZtkydIPnoVSixpV5dKAmTQdc5
+	 fR8Pi9e9fu6I3vzj3EF1+a8gjbpQKP0+Xr/VSq0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Zhenghang Xiao <kipreyyy@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 028/342] Bluetooth: L2CAP: Fix possible crash on l2cap_ecred_conn_rsp
-Date: Tue, 16 Jun 2026 20:25:24 +0530
-Message-ID: <20260616145049.568957286@linuxfoundation.org>
+Subject: [PATCH 5.10 029/342] sctp: fix race between sctp_wait_for_connect and peeloff
+Date: Tue, 16 Jun 2026 20:25:25 +0530
+Message-ID: <20260616145049.615551755@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -44,86 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Zhenghang Xiao <kipreyyy@gmail.com>
 
-[ Upstream commit 41c2713b204e6cb6a94587bc6bf6935107df5479 ]
+[ Upstream commit f14fe6395a8b3d961a61e138ad7b36ba3626dd4e ]
 
-If dcid is received for an already-assigned destination CID the spec
-requires that both channels to be discarded, but calling l2cap_chan_del
-may invalidate the tmp cursor created by list_for_each_entry_safe and
-in fact it is the wrong procedure as the chan->dcid may be assigned
-previously it really needs to be disconnected.
+sctp_wait_for_connect() drops and re-acquires the socket lock while
+waiting for the association to reach ESTABLISHED state. During this
+window, another thread can peeloff the association to a new socket via
+getsockopt(SCTP_SOCKOPT_PEELOFF), changing asoc->base.sk. After
+re-acquiring the old socket lock, sctp_wait_for_connect() returns
+success without noticing the migration — the caller then accesses
+the association under the wrong lock in sctp_datamsg_from_user().
 
-Calling l2cap_chan_clone directly may still lead to l2cap_chan_del so
-instead schedule l2cap_chan_timeout with delay 0 to close the channel
-asynchronously.
+Add the same sk != asoc->base.sk check that sctp_wait_for_sndbuf()
+already has, returning an error if the association was migrated while
+we slept.
 
-Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 668c9beb9020 ("sctp: implement assign_number for sctp_stream_interleave")
+Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260527032411.60959-1-kipreyyy@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ net/sctp/socket.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index f30624d20bb09c..89e770f359ef20 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -6232,6 +6232,7 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
- 	cmd_len -= sizeof(*rsp);
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 8c7bdf01e32a17..150235d861411d 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -9133,6 +9133,8 @@ static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
+ 		release_sock(sk);
+ 		current_timeo = schedule_timeout(current_timeo);
+ 		lock_sock(sk);
++		if (sk != asoc->base.sk)
++			goto do_error;
  
- 	list_for_each_entry_safe(chan, tmp, &conn->chan_l, list) {
-+		struct l2cap_chan *orig;
- 		u16 dcid;
- 
- 		if (chan->ident != cmd->ident ||
-@@ -6253,8 +6254,10 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
- 
- 		BT_DBG("dcid[%d] 0x%4.4x", i, dcid);
- 
-+		orig = __l2cap_get_chan_by_dcid(conn, dcid);
-+
- 		/* Check if dcid is already in use */
--		if (dcid && __l2cap_get_chan_by_dcid(conn, dcid)) {
-+		if (dcid && orig) {
- 			/* If a device receives a
- 			 * L2CAP_CREDIT_BASED_CONNECTION_RSP packet with an
- 			 * already-assigned Destination CID, then both the
-@@ -6263,10 +6266,24 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
- 			 */
- 			l2cap_chan_del(chan, ECONNREFUSED);
- 			l2cap_chan_unlock(chan);
--			chan = __l2cap_get_chan_by_dcid(conn, dcid);
--			l2cap_chan_lock(chan);
--			l2cap_chan_del(chan, ECONNRESET);
--			l2cap_chan_unlock(chan);
-+
-+			/* Check that the dcid channel mode is
-+			 * L2CAP_MODE_EXT_FLOWCTL since this procedure is only
-+			 * valid for that mode and shouldn't disconnect a dcid
-+			 * in other modes.
-+			 */
-+			if (orig->mode == L2CAP_MODE_EXT_FLOWCTL) {
-+				l2cap_chan_lock(orig);
-+				/* Disconnect the original channel as it may be
-+				 * considered connected since dcid has already
-+				 * been assigned; don't call l2cap_chan_close
-+				 * directly since that could lead to
-+				 * l2cap_chan_del and then removing the channel
-+				 * from the list while we're iterating over it.
-+				 */
-+				__set_chan_timer(orig, 0);
-+				l2cap_chan_unlock(orig);
-+			}
- 			continue;
- 		}
- 
+ 		*timeo_p = current_timeo;
+ 	}
 -- 
 2.53.0
 
