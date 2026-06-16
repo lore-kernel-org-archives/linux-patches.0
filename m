@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5244D43D4E9;
-	Tue, 16 Jun 2026 17:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C03035675A;
+	Tue, 16 Jun 2026 17:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629378; cv=none; b=HkQ6zz9sT9Zf4H+ebMwXwzM0RUSYNRuyvCNdHbce4DpJMDwzhn8VwDzSm9wMMTOOY1D9EGXmm9VLAU5pFw5SF4RwKj5FD5XF5aTUyRpzjaC5IrT/yiGwmT4Nkiw3N7XZkeH1iSn8fNVw6XPA/kQ4sOyG99axMfFnbD8ReZGEiFE=
+	t=1781629383; cv=none; b=abWipSmrlwZBclBdYkfBidyL73JCPeUTuJT6JbixDiLI96VZHURlB5hNr8nur0GEZhP7M7EBEIY3sQbWIeujIhLdLoobTjlhvCZJsR0fD9P3pkbNXoyrOGJGqCMSIPXq6FXZKr7PUihyyRJ0Uc/UnYPftlbQuX/GuYiprrFNW3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629378; c=relaxed/simple;
-	bh=6IhlO+CgGed6YAk6zkoPouwqNqhT4UawIlSD8Uxjb0w=;
+	s=arc-20240116; t=1781629383; c=relaxed/simple;
+	bh=IpVfi7gvvIH6KKSWsGFI2X4GIPZbzzvxr0B0FFKdn8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kOQajSucP6FjiEFJoILgIcQbaruxm8PwA8xWyJOJ1RrZ3iqba3vifhjEHKwiaSXsIT/BMGtn7hDPSHQir/el0H/VUtrHRmKHREN2VlwRovG+1F88dqF7JFcwEMWo4Mwzt5uWb4GOXBtdtKM0f5+1AXx8KBNEVGNU4i/OPE8TGQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U38RD4OG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e08z2c9KiuGAts8IzGd9oG2Pbf/B2DLhUr/6kiFPABwHL5oo4KETondRxBYshj7OKlKUk5ZVKcf64ZJ14OC7Js3VehHdqT+knS5YLfaYmGdXsou7xC2nYOYrymwf4voC0Ne+oQ8A4f3zuTuhWvGKCNCBAYkDDel+CuLNTinJhpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSt2aFXi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U38RD4OG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526201F000E9;
-	Tue, 16 Jun 2026 17:02:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSt2aFXi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 036AC1F000E9;
+	Tue, 16 Jun 2026 17:03:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629377;
-	bh=YJ46YoB6AdvSWQf3jRV+9+IYRHyvwhNVa0BuD0paBXk=;
+	s=korg; t=1781629382;
+	bh=/D33JY0z7IWH/J21OFfw0C3HgaTMX4flQT9pn8kKOXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U38RD4OGtIqVIWOCOFY9Gyembrmv+HXAEHNlPUKu/OVId0iQ9w8dfZR5NUxDbaBHp
-	 2cck5v3/cFLDH+JebRSgMe5vrY820uJYQz4OdmMDxdWiEDf+xhejy9+7NWUwu/mb9c
-	 vTY8+9q9qpSzu4qgo8ubg6TQHh5HOj2diSK/rNx4=
+	b=rSt2aFXiO6LreudO+R6gczaXMqS6T0n5qYja55j8T0FOkF5krrHWWHLrc79aYOCIb
+	 8sm+HmkV+cK+iyuXn75pUDvnTSxFdjvH29WUgChEQ/IlxBn0jnXBFx2qcvoNaGg7lm
+	 XQ5sN6EPRYyqHkvTwnUnPxAh2bElfVtJ/TBIpWcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 273/452] net: guard timestamp cmsgs to real error queue skbs
-Date: Tue, 16 Jun 2026 20:28:20 +0530
-Message-ID: <20260616145131.916364075@linuxfoundation.org>
+Subject: [PATCH 6.6 274/452] net/rds: fix NULL deref in rds_ib_send_cqe_handler() on masked atomic completion
+Date: Tue, 16 Jun 2026 20:28:21 +0530
+Message-ID: <20260616145131.965303465@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -53,103 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 1ee90b77b727df903033db873c75caac5c27ec98 ]
+[ Upstream commit 34080db3e70ddf94c38512ad2331e3c3afca6cc1 ]
 
-skb_is_err_queue() treats PACKET_OUTGOING as the sole marker for an skb
-from sk_error_queue. That assumption is not true for AF_PACKET sockets:
-outgoing packet taps are also delivered to packet sockets with
-skb->pkt_type == PACKET_OUTGOING, but their skb->cb is owned by AF_PACKET
-instead of struct sock_exterr_skb.
+rds_ib_xmit_atomic() always programs a masked atomic opcode
+(IB_WR_MASKED_ATOMIC_CMP_AND_SWP or IB_WR_MASKED_ATOMIC_FETCH_AND_ADD)
+for every RDS atomic cmsg.  But the completion-side switch in
+rds_ib_send_unmap_op() only handles the non-masked opcodes, so a masked
+atomic completion falls through to default and returns rm == NULL while
+send->s_op is left set.  rds_ib_send_cqe_handler() then dereferences the
+NULL rm via rm->m_final_op, oopsing in softirq context.  An unprivileged
+AF_RDS sendmsg() of an atomic cmsg over an active RDS/IB connection
+triggers it; on hardware that natively accepts masked atomics (mlx4,
+mlx5) no extra setup is needed.
 
-If such an skb is received with timestamping enabled, the generic
-timestamp cmsg path can read AF_PACKET control-buffer state as
-sock_exterr_skb::opt_stats. With SO_RXQ_OVFL enabled, the packet drop
-counter overlaps opt_stats. An odd drop count makes the path emit
-SCM_TIMESTAMPING_OPT_STATS with skb->len and skb->data. For non-linear
-skbs this copies past the linear head and can trigger hardened usercopy or
-disclose adjacent heap contents.
+  RDS/IB: rds_ib_send_unmap_op: unexpected opcode 0xd in WR!
+  Oops: general protection fault [#1] SMP KASAN
+  KASAN: null-ptr-deref in range [0x0000000000000190-0x0000000000000197]
+  RIP: rds_ib_send_cqe_handler+0x25c/0xb10 (net/rds/ib_send.c:282)
+  Call Trace:
+   <IRQ>
+   rds_ib_send_cqe_handler (net/rds/ib_send.c:282)
+   poll_scq (net/rds/ib_cm.c:274)
+   rds_ib_tasklet_fn_send (net/rds/ib_cm.c:294)
+   tasklet_action_common (kernel/softirq.c:943)
+   handle_softirqs (kernel/softirq.c:573)
+   run_ksoftirqd (kernel/softirq.c:479)
+   </IRQ>
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-Keep skb_is_err_queue() local to net/socket.c, but make it verify that
-the PACKET_OUTGOING marker is paired with the sock_rmem_free destructor
-installed by sock_queue_err_skb(). AF_PACKET receive skbs use normal
-receive ownership and no longer pass as error-queue skbs, while legitimate
-sk_error_queue entries keep the PACKET_OUTGOING marker and sock_rmem_free
-ownership.
+Handle the masked atomic opcodes in the same case as the non-masked
+ones: they map to the same struct rds_message.atomic union member, so
+the existing container_of()/rds_ib_send_unmap_atomic() body is correct
+for them.
 
-Fixes: 8605330aac5a ("tcp: fix SCM_TIMESTAMPING_OPT_STATS for normal skbs")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260607021819.49698-1-kylebot@openai.com
+Fixes: 20c72bd5f5f9 ("RDS: Implement masked atomic operations")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260606192447.1179255-2-bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h |  1 +
- net/core/skbuff.c  |  6 +++---
- net/socket.c       | 11 ++++++-----
- 3 files changed, 10 insertions(+), 8 deletions(-)
+ net/rds/ib_send.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index d516ed80500844..a6944844553afe 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1921,6 +1921,7 @@ struct sk_buff *sock_omalloc(struct sock *sk, unsigned long size,
- 			     gfp_t priority);
- void skb_orphan_partial(struct sk_buff *skb);
- void sock_rfree(struct sk_buff *skb);
-+void sock_rmem_free(struct sk_buff *skb);
- void sock_efree(struct sk_buff *skb);
- #ifdef CONFIG_INET
- void sock_edemux(struct sk_buff *skb);
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 5f45a52cc8ca66..c5e2ae6d0406bd 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -5120,7 +5120,7 @@ int skb_cow_data(struct sk_buff *skb, int tailbits, struct sk_buff **trailer)
- }
- EXPORT_SYMBOL_GPL(skb_cow_data);
- 
--static void sock_rmem_free(struct sk_buff *skb)
-+void sock_rmem_free(struct sk_buff *skb)
- {
- 	struct sock *sk = skb->sk;
- 
-@@ -5129,8 +5129,8 @@ static void sock_rmem_free(struct sk_buff *skb)
- 
- static void skb_set_err_queue(struct sk_buff *skb)
- {
--	/* pkt_type of skbs received on local sockets is never PACKET_OUTGOING.
--	 * So, it is safe to (mis)use it to mark skbs on the error queue.
-+	/* The error-queue test in skb_is_err_queue() matches this marker
-+	 * with the sock_rmem_free destructor installed by sock_queue_err_skb().
- 	 */
- 	skb->pkt_type = PACKET_OUTGOING;
- 	BUILD_BUG_ON(PACKET_OUTGOING == 0);
-diff --git a/net/socket.c b/net/socket.c
-index 94c38c73fc6982..fa242d7e51c791 100644
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -823,12 +823,13 @@ EXPORT_SYMBOL(kernel_sendmsg_locked);
- 
- static bool skb_is_err_queue(const struct sk_buff *skb)
- {
--	/* pkt_type of skbs enqueued on the error queue are set to
--	 * PACKET_OUTGOING in skb_set_err_queue(). This is only safe to do
--	 * in recvmsg, since skbs received on a local socket will never
--	 * have a pkt_type of PACKET_OUTGOING.
-+	/* Error-queue skbs are marked as PACKET_OUTGOING in
-+	 * skb_set_err_queue() and use the destructor installed by
-+	 * sock_queue_err_skb(). PACKET_OUTGOING alone is not unique:
-+	 * AF_PACKET outgoing taps use the same pkt_type.
- 	 */
--	return skb->pkt_type == PACKET_OUTGOING;
-+	return skb->pkt_type == PACKET_OUTGOING &&
-+	       skb->destructor == sock_rmem_free;
- }
- 
- /* On transmit, software and hardware timestamps are returned independently.
+diff --git a/net/rds/ib_send.c b/net/rds/ib_send.c
+index 4190b90ff3b18a..1909cd440a4b66 100644
+--- a/net/rds/ib_send.c
++++ b/net/rds/ib_send.c
+@@ -170,6 +170,8 @@ static struct rds_message *rds_ib_send_unmap_op(struct rds_ib_connection *ic,
+ 		break;
+ 	case IB_WR_ATOMIC_FETCH_AND_ADD:
+ 	case IB_WR_ATOMIC_CMP_AND_SWP:
++	case IB_WR_MASKED_ATOMIC_FETCH_AND_ADD:
++	case IB_WR_MASKED_ATOMIC_CMP_AND_SWP:
+ 		if (send->s_op) {
+ 			rm = container_of(send->s_op, struct rds_message, atomic);
+ 			rds_ib_send_unmap_atomic(ic, send->s_op, wc_status);
 -- 
 2.53.0
 
