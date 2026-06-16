@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FD243E490;
-	Tue, 16 Jun 2026 16:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CB8466B77;
+	Tue, 16 Jun 2026 16:12:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626316; cv=none; b=ocO1d4s+CQ029TL9jCOXiS+QXpTQ64w2K/pzg34xq1kd7spbpdlhjnxlJNW6gMDUaubZfXBoHrbc8Jibl0jx9A9/EcDVay4kyBF/JGO21snYN2q/yCM5BAzzcoq0H1G96813r1aadg11vTl1YL7DH+tZQlPzMKf1Aiadn46BTcY=
+	t=1781626322; cv=none; b=gozTi5GussMYF0I99sKylGNdWec4h3sZ1Gz/JzGtosSFMBRPwcEC75+I6Da4MzqPNL/sU51eU5i/leLEUZeUpeKAy0JpBS8Wa1UJe2uzEaHffB8bxrMsTrJiL65+xXiT20NgOz6zZS1ahiYZAgeQtfi9btxc8J3akmUgnH1DkVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626316; c=relaxed/simple;
-	bh=SsqvLyeAYBvtgDIItkHqF4YjVu9t6J0eyVi70F77CXc=;
+	s=arc-20240116; t=1781626322; c=relaxed/simple;
+	bh=6dHzV1ydSOWRCaO+LfnR8iA6QF66T8nU3GKibcU/7m8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KXrOpeENIJY4/nNNofM9IPyCecnnSKaLD9oWa+k0E6EMMfqJiAuBYNu+YH7mGZod0qpnOq7tkCoN5z/eOYabvlDXEY+oHWugP3i0SwbwY8ABs4qna0rSw2wjnRBKZErUKuoITDYf5rZHgxwt2bjt/O3U8zTomm4fe6SXj3+HnpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ABMUCmt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JUizjs0nwbOAGhJ5fQ8jWvgi8XBP9+sEVIyFhq1j/Ui6+8WucD8MVTA8OSsVbvKjur+MXymcmMnYX8YeJXii4SGpP9CBsql4ADNZJsSdrk3InS8Jo1fArNiyPo8ssyJo9bvFDsQ/tDNB6CCV87YsIy+3pyEMsRoiwApyhVhk/vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z9Q9Ve12; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ABMUCmt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33ACC1F000E9;
-	Tue, 16 Jun 2026 16:11:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z9Q9Ve12"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B4D1F000E9;
+	Tue, 16 Jun 2026 16:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626315;
-	bh=k11RfGcs79kRJvKUKd6UoznGzVWLAkaTbvLKjEG/aYA=;
+	s=korg; t=1781626321;
+	bh=8QQGUhMTNiNc0Z2QttLNLD90uaYktQVIYIr7gZ7l0d8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2ABMUCmtlXwORBVqL8+C81oHlYi9mtTfZMIs+DpzwmD5EkDCTfkaRRxcdMxcwE1z2
-	 b2Px98y+NI7Ga+g5uIuoYgGqM57qobllOpMzHYB13wXdwaElWqAtbb7ngiycWIbyaD
-	 mQV8mBl06M1fYe2Pr7GqlXJMgG9nBxBxh8a5ImUM=
+	b=Z9Q9Ve12SwUQ3Iy/vW1emP61rKr1cONFE8/Qr0mnuAZbgXak3C6IllTVy/TC1GNLI
+	 MYlgqIjfr4ZV1xtebWBwOP+iJRwLpuH5RV/abeX365zaVXgfCpfrSBhj5yuukU0VOh
+	 HXvnK2Y0Jca7GX+2X2AQoKJ5j/u2PcIOhJ/rQ74c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
 	Harry Wentland <harry.wentland@amd.com>,
 	Ray Wu <ray.wu@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 301/325] drm/amd/display: Fix NULL deref and buffer over-read in SDP debugfs
-Date: Tue, 16 Jun 2026 20:31:37 +0530
-Message-ID: <20260616145113.934494034@linuxfoundation.org>
+Subject: [PATCH 6.18 302/325] drm/amd/display: Fix out-of-bounds read in dp_get_eq_aux_rd_interval()
+Date: Tue, 16 Jun 2026 20:31:38 +0530
+Message-ID: <20260616145113.985927946@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -55,51 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Harry Wentland <harry.wentland@amd.com>
 
-commit adf67034b1f61f7119295208085bfd43f85f56af upstream.
+commit e8b4d37eba05141ee01794fc6b7f2da808cee83b upstream.
 
 [Why & How]
-dp_sdp_message_debugfs_write() dereferences connector->base.state->crtc
-without checking for NULL. A connector can be connected but not bound to
-any CRTC (e.g. after hot-plug before the next atomic commit), causing a
-kernel crash when writing to the sdp_message debugfs node.
+The aux_rd_interval array in struct dc_lttpr_caps is declared with
+MAX_REPEATER_CNT - 1 (7) elements, indexed 0..6. However, the offset
+parameter passed to dp_get_eq_aux_rd_interval() can be as large as
+MAX_REPEATER_CNT (8) when a sink reports 8 LTTPR repeaters via DPCD.
+This leads to an out-of-bounds read of aux_rd_interval[7] when offset
+is 8.
 
-The function also ignores the user-provided size argument and always
-passes 36 bytes to copy_from_user(), reading past the user buffer when
-size < 36.
+Fix this by growing aux_rd_interval to MAX_REPEATER_CNT elements to
+accommodate the full range of valid repeater counts defined by the DP
+spec.
 
-Fix both issues by:
-- Returning -ENODEV when connector->base.state or state->crtc is NULL
-- Clamping write_size to min(size, sizeof(data))
-
-Fixes: c7ba3653e977 ("drm/amd/display: Generic SDP message access in amdgpu")
-Assisted-by: Copilot:claude-opus-4.6
-Reviewed-by: Alex Hung <alex.hung@amd.com>
+Assisted-by: GitHub Copilot:Claude claude-4-opus
 Signed-off-by: Harry Wentland <harry.wentland@amd.com>
 Signed-off-by: Ray Wu <ray.wu@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6ab4c36a522842ff70474a1c0af2e40e50fc8300)
+(cherry picked from commit a55a458a8df37a65ffda5cf721d554a8f74f6b04)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dc_dp_types.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
-@@ -1339,8 +1339,13 @@ static ssize_t dp_sdp_message_debugfs_wr
- 	if (size == 0)
- 		return 0;
- 
-+	if (!connector->base.state || !connector->base.state->crtc)
-+		return -ENODEV;
-+
- 	acrtc_state = to_dm_crtc_state(connector->base.state->crtc->state);
- 
-+	write_size = min_t(size_t, size, sizeof(data));
-+
- 	r = copy_from_user(data, buf, write_size);
- 
- 	write_size -= r;
+--- a/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_dp_types.h
+@@ -1188,7 +1188,7 @@ struct dc_lttpr_caps {
+ 	union dp_main_link_channel_coding_lttpr_cap main_link_channel_coding;
+ 	union dp_128b_132b_supported_lttpr_link_rates supported_128b_132b_rates;
+ 	union dp_alpm_lttpr_cap alpm;
+-	uint8_t aux_rd_interval[MAX_REPEATER_CNT - 1];
++	uint8_t aux_rd_interval[MAX_REPEATER_CNT];
+ 	uint8_t lttpr_ieee_oui[3]; // Always read from closest LTTPR to host
+ 	uint8_t lttpr_device_id[6]; // Always read from closest LTTPR to host
+ };
 
 
