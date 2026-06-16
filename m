@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E0447D923;
-	Tue, 16 Jun 2026 18:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0024B47D923;
+	Tue, 16 Jun 2026 18:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635528; cv=none; b=uUPEsXI7TlUiKbfie96WV5ok38ieShzFsgeK+2euPGQ1iBKdlyunXJA20kkpbOV21IPSYAFsmW5dCcYHoPyI2bAkIEIB0sKINxMF6QT3iFAARuhjrXk/Wdd3bI8Rq1L+owxYBhHd8e4+s9lnqBCLH776ou8/bSaAP6P3r/7zEZI=
+	t=1781635536; cv=none; b=VbNgsuxWH4XMw1m4IZr07fzMCJ3YW0Esah81QkKUvomB+m8axOH1snTwowFbZnqD5wIq8wAeNmt06vSySO1/PO+Z8TfZBvMiKe3KSkhiDBV6c+zKd42zSO/Jog7CUDV/g6K+64CdpGqGMz2KcodylO/J8BXwrt887cFiWUYSJds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635528; c=relaxed/simple;
-	bh=0sBsRXxj6pMChM2AfCYjXS487mXfBQV7Mmff9dVvLF0=;
+	s=arc-20240116; t=1781635536; c=relaxed/simple;
+	bh=BZBI1/0o2gp0lB6buHRLdCM8/uiYkC7bRbSvwvo5EJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tARJLbSb8Aynk5eoRbFE9fbqh0RPOQJHWNla6LhlVZw7cZ0P9iZGaDbSEQMvvGEg/zw3c0I/amJty67nZwfS/gIlfGpUpj9Of4YGpPkrRiwWWxNbfB0C1G8ROH4vetT+2IPREajpPnwVNiYJfAwANtK9/dwkxYUiv6jtRDPCTWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cgn533D2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UhtNelFs+bNPoGf0mPtEYQVvyY6Pmjp+QMCZw0YHuWsN9zfIX8N3wb324wZ0orCHeT//vSqCW1AakL0XRKy8zh6UrU1k21G9qSLEkAw6/qEk90NBgxFUfqVKAq+BqUgXzgutEuR0EmePn5bywzH3Ko1mB1QPcHQdw+H9MPFnMNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAaYUKqH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cgn533D2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4411F000E9;
-	Tue, 16 Jun 2026 18:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAaYUKqH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F25D1F000E9;
+	Tue, 16 Jun 2026 18:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635525;
-	bh=yhIMKxDsPYPskknQPPE/yZuNqdbmiyOhRZKGh2xMIY4=;
+	s=korg; t=1781635530;
+	bh=6S87i8PXX23z9mLWMRCUBBOn1YImpmt9i0Zrf0xE2Kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cgn533D2FbUcJ/pNQrTlNVg7mByAtrzRFInc8mbnH1xstGELsLpm4vh+t7lSZMyRj
-	 hCuCbTQBtME7rXK7/d/1ZjYUcd4dVWyDY7sTlrHyUsK1Bedcbff4LmTa7AL4Nru1zY
-	 QAVXqfC92TvPzDHmov6lnjbg8OSLyvb5lSPxKL48=
+	b=hAaYUKqHZNxzRDTZabty+pvajycx4C5RS1l4bz1kqswyyChxqjapTS1Sp0WL1LjcS
+	 SMMdpLIYp/S0/roPY/K1RfPWp8UYTuPONLppcAzqyxKehQjeTw1gbXaej2O/UvO4tU
+	 oPAd+5PT3O+TH7Xrg6Tt6ksr8yxqqDv9MFXuh6GQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Dan Carpenter <error27@gmail.com>
-Subject: [PATCH 5.10 066/342] usb: dwc2: Fix use after free in debug code
-Date: Tue, 16 Jun 2026 20:26:02 +0530
-Message-ID: <20260616145051.327053147@linuxfoundation.org>
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 067/342] Input: elan_i2c - validate firmware size before use
+Date: Tue, 16 Jun 2026 20:26:03 +0530
+Message-ID: <20260616145051.371504537@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -50,46 +49,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit 9ea06a3fbf9f16e0d98c52cb3b99642be15ec281 upstream.
+commit 76b0d0baa9ae9c60e726bbe1b6ff0bec2c993634 upstream.
 
-We're not allowed to dereference "urb" after calling
-usb_hcd_giveback_urb() so save the urb->status ahead of time.
+Ensure that the firmware file is large enough to contain the expected
+number of pages and the signature (which resides at the end of the
+firmware blob) before accessing them to prevent potential out-of-bounds
+reads.
 
-Fixes: 7359d482eb4d ("staging: HCD files for the DWC2 driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Link: https://patch.msgid.link/ag1NwBpqT4IEQcdJ@stanley.mountain
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/ae2dOgiFvXRm4BHo@google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc2/hcd.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/input/mouse/elan_i2c_core.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/usb/dwc2/hcd.c
-+++ b/drivers/usb/dwc2/hcd.c
-@@ -4718,6 +4718,7 @@ static int _dwc2_hcd_urb_dequeue(struct
- 	struct dwc2_hsotg *hsotg = dwc2_hcd_to_hsotg(hcd);
- 	int rc;
- 	unsigned long flags;
-+	int urb_status;
+--- a/drivers/input/mouse/elan_i2c_core.c
++++ b/drivers/input/mouse/elan_i2c_core.c
+@@ -608,6 +608,11 @@ static ssize_t elan_sysfs_update_fw(stru
+ 		return error;
+ 	}
  
- 	dev_dbg(hsotg->dev, "DWC OTG HCD URB Dequeue\n");
- 	dwc2_dump_urb_info(hcd, urb, "urb_dequeue");
-@@ -4742,11 +4743,12 @@ static int _dwc2_hcd_urb_dequeue(struct
- 
- 	/* Higher layer software sets URB status */
- 	spin_unlock(&hsotg->lock);
-+	urb_status = urb->status;
- 	usb_hcd_giveback_urb(hcd, urb, status);
- 	spin_lock(&hsotg->lock);
- 
- 	dev_dbg(hsotg->dev, "Called usb_hcd_giveback_urb()\n");
--	dev_dbg(hsotg->dev, "  urb->status = %d\n", urb->status);
-+	dev_dbg(hsotg->dev, "  urb->status = %d\n", urb_status);
- out:
- 	spin_unlock_irqrestore(&hsotg->lock, flags);
- 
++	if (fw->size < data->fw_signature_address + sizeof(signature)) {
++		dev_err(dev, "firmware file too small\n");
++		return -EBADF;
++	}
++
+ 	/* Firmware file must match signature data */
+ 	fw_signature = &fw->data[data->fw_signature_address];
+ 	if (memcmp(fw_signature, signature, sizeof(signature)) != 0) {
 
 
