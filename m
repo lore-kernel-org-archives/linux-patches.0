@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8102F745E;
-	Tue, 16 Jun 2026 16:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591B132ED55;
+	Tue, 16 Jun 2026 16:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628291; cv=none; b=ecnfnDu++ZGcGg5ICrEGjP/vSHnlIrKySRBitCI6Vv4Z4LnmHQsw5M4yWU4BMUKJwEO4bKE6qmMOeSzN/0qbQEqDBtdZAo/3s2VoxvtsSBMrQg/x38YcMPaJbSvq3PpXdLVXkd0BdqZ1MSdYanbr5aPJw973+xp9a7/fJrc4DYw=
+	t=1781628297; cv=none; b=acGqMExKLyCPfZkEea4pO2OG5sxDcIuRGi/LvFzONhfbE9x9N/IxuU1NBffWUj1m2ZaDjthU7Hfj9hhKs0DawYjr3LpfL0PUXAMe8DxyAohYJVbNc8Wz1HZnwwX2hwCu+H1mTDZG+4VtkSx0eiDhlK93u+Okzo3dX82zY8sj3ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628291; c=relaxed/simple;
-	bh=9Ms2/AOQJ21mnM0u/bZZF8bfcZ53zEh3oIvL++CZub4=;
+	s=arc-20240116; t=1781628297; c=relaxed/simple;
+	bh=flH9Zfv08hBebaKTuC84Oh216AfWmxS8my3oKlkqclA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RHGtuhlhVR//2zipiS7B+oU1a4mCpfla6bIR1AmImspNKwh+41WKjEgNYDKQ2hFWb/IgpA5EZxmKzBcvnXTDFFF0Yge+9/ujaHy8mlAPUX4ewLDqDBTwUqHWHVmymWYA9oj5zaSrC/8vFy36b/CNKpvpy/Zy8pNLIHWA/+7T6yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e4RbV1PF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tPgUiwBHbVits2CZogADnFOYEYpPc4tWIfvJSiEd3dGOmaWvaOJiG7oEY0xbQTmCCfTvUJbP9AA2ecNuB22CTVRZJdPVXkYKe8b4WBel25gq5siFol7o4Y605gLilwkNmEM9sqb/oN3uCUzyHEuNGNnavRwB/wDlJTzXp0Jb9Qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVElt/Pn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e4RbV1PF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE3D1F000E9;
-	Tue, 16 Jun 2026 16:44:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVElt/Pn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5BC1F000E9;
+	Tue, 16 Jun 2026 16:44:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628290;
-	bh=+GlUeeZcUnoLpYbYe2e6z4ODrLyfz7Xwlj+Ytn+q0EU=;
+	s=korg; t=1781628295;
+	bh=7xFWD2Cmc6pfmkplvIvbT4loAVBxOvnTiVDxOu6y+h4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e4RbV1PFOMapKy5WelCdp0u79WcuHykLDgxOW7uoXtUSjG+X4Coaw9AB4Rlidbsak
-	 EcE/nCozNifJyxS2a5B8ElwfG/4tRAmN0/VdgGrKFaiIbxIBTPPt5LSdezGg3D9IlV
-	 ams/ev+WqQE3SngRGIrjQ405uceVEcsrYMgmsnao=
+	b=TVElt/PnlNfEMoQnovo6fBOFpQFWz45/bwLKBgum38C9J0+YQmAdfjLGSjbhHytXR
+	 b0YirfzC9mZfWUxy48/RaDLZ35HEVB/keO1bgNmMXdnkBm1f0+UaDaBwWI276UMq5e
+	 Ey2pm+xsIIWwDH2b41COZ7iJ4VhfY7yQ/dldkAok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Rajani Kantha <681739313@139.com>,
+	Zhenghang Xiao <kipreyyy@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 067/452] inet: frags: add inet_frag_queue_flush()
-Date: Tue, 16 Jun 2026 20:24:54 +0530
-Message-ID: <20260616145121.458781338@linuxfoundation.org>
+Subject: [PATCH 6.6 041/452] Bluetooth: l2cap: clear chan->ident on ECRED reconfiguration success
+Date: Tue, 16 Jun 2026 20:24:28 +0530
+Message-ID: <20260616145120.097541083@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,96 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Zhenghang Xiao <kipreyyy@gmail.com>
 
-[ Upstream commit 1231eec6994be29d6bb5c303dfa54731ed9fc0e6 ]
+[ Upstream commit 00e1950716c6ed67d74777b2db286b0fa23b4be9 ]
 
-Instead of exporting inet_frag_rbtree_purge() which requires that
-caller takes care of memory accounting, add a new helper. We will
-need to call it from a few places in the next patch.
+l2cap_ecred_reconf_rsp() returns early on success without clearing
+chan->ident. Every other L2CAP response handler (l2cap_ecred_conn_rsp,
+l2cap_le_connect_rsp, l2cap_config_rsp) clears chan->ident after a
+successful transaction to prevent the channel from matching subsequent
+responses with the recycled ident value.
 
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20251207010942.1672972-3-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Rajani Kantha <681739313@139.com>
+A remote attacker that completed a reconfiguration as the peer can
+replay a failure response with the stale ident, causing the kernel to
+match and destroy the already-established channel via
+l2cap_chan_del(chan, ECONNRESET).
+
+Clear chan->ident for all matching channels on success, and harden the
+failure path by using l2cap_chan_hold_unless_zero() consistent with
+other L2CAP handlers (l2cap_le_command_rej, __l2cap_get_chan_by_ident).
+
+Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
+Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet_frag.h  |  5 ++---
- net/ipv4/inet_fragment.c | 15 ++++++++++++---
- net/ipv4/ip_fragment.c   |  6 +-----
- 3 files changed, 15 insertions(+), 11 deletions(-)
+ net/bluetooth/l2cap_core.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/inet_frag.h b/include/net/inet_frag.h
-index 5af6eb14c5db15..94edc0e130d2c4 100644
---- a/include/net/inet_frag.h
-+++ b/include/net/inet_frag.h
-@@ -141,9 +141,8 @@ void inet_frag_kill(struct inet_frag_queue *q);
- void inet_frag_destroy(struct inet_frag_queue *q);
- struct inet_frag_queue *inet_frag_find(struct fqdir *fqdir, void *key);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index bbaf0070ca6176..0295a18a1cb3d7 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -5393,14 +5393,20 @@ static inline int l2cap_ecred_reconf_rsp(struct l2cap_conn *conn,
  
--/* Free all skbs in the queue; return the sum of their truesizes. */
--unsigned int inet_frag_rbtree_purge(struct rb_root *root,
--				    enum skb_drop_reason reason);
-+void inet_frag_queue_flush(struct inet_frag_queue *q,
-+			   enum skb_drop_reason reason);
+ 	BT_DBG("result 0x%4.4x", result);
  
- static inline void inet_frag_put(struct inet_frag_queue *q)
- {
-diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
-index 496308c0238485..1e390d24f11440 100644
---- a/net/ipv4/inet_fragment.c
-+++ b/net/ipv4/inet_fragment.c
-@@ -264,8 +264,8 @@ static void inet_frag_destroy_rcu(struct rcu_head *head)
- 	kmem_cache_free(f->frags_cachep, q);
- }
+-	if (!result)
++	if (!result) {
++		list_for_each_entry(chan, &conn->chan_l, list) {
++			if (chan->ident == cmd->ident)
++				chan->ident = 0;
++		}
+ 		return 0;
++	}
  
--unsigned int inet_frag_rbtree_purge(struct rb_root *root,
--				    enum skb_drop_reason reason)
-+static unsigned int
-+inet_frag_rbtree_purge(struct rb_root *root, enum skb_drop_reason reason)
- {
- 	struct rb_node *p = rb_first(root);
- 	unsigned int sum = 0;
-@@ -285,7 +285,16 @@ unsigned int inet_frag_rbtree_purge(struct rb_root *root,
- 	}
- 	return sum;
- }
--EXPORT_SYMBOL(inet_frag_rbtree_purge);
-+
-+void inet_frag_queue_flush(struct inet_frag_queue *q,
-+			   enum skb_drop_reason reason)
-+{
-+	unsigned int sum;
-+
-+	sum = inet_frag_rbtree_purge(&q->rb_fragments, reason);
-+	sub_frag_mem_limit(q->fqdir, sum);
-+}
-+EXPORT_SYMBOL(inet_frag_queue_flush);
+ 	list_for_each_entry_safe(chan, tmp, &conn->chan_l, list) {
+ 		if (chan->ident != cmd->ident)
+ 			continue;
  
- void inet_frag_destroy(struct inet_frag_queue *q)
- {
-diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
-index 484edc8513e4b7..7214d5bcc647e5 100644
---- a/net/ipv4/ip_fragment.c
-+++ b/net/ipv4/ip_fragment.c
-@@ -253,16 +253,12 @@ static int ip_frag_too_far(struct ipq *qp)
+-		l2cap_chan_hold(chan);
++		if (!l2cap_chan_hold_unless_zero(chan))
++			continue;
+ 		l2cap_chan_lock(chan);
  
- static int ip_frag_reinit(struct ipq *qp)
- {
--	unsigned int sum_truesize = 0;
--
- 	if (!mod_timer(&qp->q.timer, jiffies + qp->q.fqdir->timeout)) {
- 		refcount_inc(&qp->q.refcnt);
- 		return -ETIMEDOUT;
- 	}
- 
--	sum_truesize = inet_frag_rbtree_purge(&qp->q.rb_fragments,
--					      SKB_DROP_REASON_FRAG_TOO_FAR);
--	sub_frag_mem_limit(qp->q.fqdir, sum_truesize);
-+	inet_frag_queue_flush(&qp->q, SKB_DROP_REASON_FRAG_TOO_FAR);
- 
- 	qp->q.flags = 0;
- 	qp->q.len = 0;
+ 		l2cap_chan_del(chan, ECONNRESET);
 -- 
 2.53.0
 
