@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8710B3C6A2B;
-	Tue, 16 Jun 2026 16:12:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E5E44CF44;
+	Tue, 16 Jun 2026 16:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626355; cv=none; b=bS7q3ntwhyGyZ2HzQFUd+w8S04q1QeptxC2Uy5OPGpUffU7fhCsMZev9C7uaoGVQft9bgng69jNN2HEX300H4Ktv7jWF5MnppxfTVG4qb8a4fkzMZnBBz5/IZNeNPv+r84vmgpS6r9NyYXdDzRofEIHhBh/ZqYbp7YeU1tzyiwU=
+	t=1781626364; cv=none; b=LaTohRdVi/Jq3MYcAtMYubU9FV7LKJCymV/0YosdS5lIvF1x3QM2Z/Gnsiia+Ar8oCaKk0r5Pfcx4Jz169GZHJo3NXyJIJ65Tzkn9AKMLSzktkNvhMFlJNypDlvYBgMFkqPd55gpfJj4GdSHkCxsip+OQkAYGDCU94gwWO/BeFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626355; c=relaxed/simple;
-	bh=F/YBdCNWc6640uEoKejLR18slvXafOraWgMYITvY6t4=;
+	s=arc-20240116; t=1781626364; c=relaxed/simple;
+	bh=f4o8MGSgJXmNp3Ev+sbAog8wGSTot0KdnEHDaVzJ90Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pYBFf6G0xijnzfKzexIwLRlUiihViNoEbxQcPO4BNGgnMaTG3D7xtCf5DZSAZVf2zUoDEcDHSxUMU1KjP4FFGMbu8bN0zrMSvkpmeO60wlP+AdtG9BEK3b205EPt0awMbQ+n8UN9tHwKe81wPJZt23p6U42iR8VzFfUrzhOL9uY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vaQUPdJN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lGX1QCmEnQp8+KLzZrtlXy9q/Xwp8I7HSoYl0GzFt3/7HJ6g5Rdp6LaQ8DlyCNhsYI7WsIWmRhJXLVEbPxSTp+oZqIdg+0ko/MJrwNldigx0TfnLjGCMrgHicEGvUvUIhYrhKAgv4vYhfNoatqfmuq8+enwubKqlMTLTT/7nfOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xw5XYs9X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vaQUPdJN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 956441F000E9;
-	Tue, 16 Jun 2026 16:12:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xw5XYs9X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC221F000E9;
+	Tue, 16 Jun 2026 16:12:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626354;
-	bh=LLbQXadQzmTjXu90ytQJynkUEdshscfNWlU0z/JCyjo=;
+	s=korg; t=1781626363;
+	bh=1RDT6R4K7TLD9+2rSQtG9/jCYb6fAZftPPOGJY7TuO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vaQUPdJNOvqCN3UeeGBt8tHBnB7V4Hhtm9n+zXf0W9oUmrK/JwY1bf9qSqXT6Mf2z
-	 tZvFveT+dbUMRAnvvAZJvY83JTk4KF0EqRA+NM8ExGj8ZUjBY9sHtMx1/XQ0g0M5K8
-	 v2oaL+ud8uYkT6aHturykdXaPFuExgqAOvhQ3lYM=
+	b=xw5XYs9XRjiOdmhZnSWdYe0OUodLOsb2Bukt8sfpAL/qXQFlAVKjqggJh/1oD3wpS
+	 GjqKrzP0QTHu738QygOdX67yNFmNBhsIOiyArfeM5UEONaB8UY3kP20YW7r6eSVukt
+	 AIBfc5jwyxXWt3yBkE2nZj6vlPsWNJIcYy8/ITUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rio Liu <rio@r26.me>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 306/325] wifi: mac80211: skip ieee80211_verify_sta_ht_mcs_support check in non-strict mode
-Date: Tue, 16 Jun 2026 20:31:42 +0530
-Message-ID: <20260616145114.236874854@linuxfoundation.org>
+Subject: [PATCH 6.18 307/325] wifi: mac80211: tests: mark HT check strict
+Date: Tue, 16 Jun 2026 20:31:43 +0530
+Message-ID: <20260616145114.290726111@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -50,42 +49,29 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rio Liu <rio@r26.me>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 711a9c018ad252b2807f85d44e1267b595644f9b upstream.
+commit 0cfff13c94cb5fa818bb374945ff280e08dc1bb9 upstream.
 
-Some Xfinity XB8 firmware advertises >1 spatial stream MCS indexes in
-their basic HT-MCS set. On cards with lower spatial streams, the check
-would fail, and we'd be stuck with no HT when in fact work fine with its
-own supported rate. This change makes it so the check is only performed
-in strict mode.
+The HT check now only applies in strict mode since APs
+were found to be broken. Mark it as such.
 
-Fixes: 574faa0e936d ("wifi: mac80211: add HT and VHT basic set verification")
-Signed-off-by: Rio Liu <rio@r26.me>
-Link: https://patch.msgid.link/99Mv9QEceyPrQhSP52MtAVmz0_kWJmzqotJjD9YW6LGLqk-AZloAueUyHCURilFkuqOh6Ecv8i2KKdSE1ujP3AnbU5QEouVisT1w_V3xdfc=@r26.me
+Fixes: 711a9c018ad2 ("wifi: mac80211: skip ieee80211_verify_sta_ht_mcs_support check in non-strict mode")
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mlme.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/mac80211/tests/chan-mode.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -364,6 +364,15 @@ ieee80211_verify_sta_ht_mcs_support(stru
- 	ieee80211_apply_htcap_overrides(sdata, &sta_ht_cap);
- 
- 	/*
-+	 * Some Xfinity XB8 firmware advertises >1 spatial stream MCS indexes in
-+	 * their basic HT-MCS set. On cards with lower spatial streams, the check
-+	 * would fail, and we'd be stuck with no HT when it in fact work fine with
-+	 * its own supported rate. So check it only in strict mode.
-+	 */
-+	if (!ieee80211_hw_check(&sdata->local->hw, STRICT))
-+		return true;
-+
-+	/*
- 	 * P802.11REVme/D7.0 - 6.5.4.2.4
- 	 * ...
- 	 * If the MLME of an HT STA receives an MLME-JOIN.request primitive
+--- a/net/mac80211/tests/chan-mode.c
++++ b/net/mac80211/tests/chan-mode.c
+@@ -65,6 +65,7 @@ static const struct determine_chan_mode_
+ 		.ht_capa_mask = {
+ 			.mcs.rx_mask[0] = 0xf7,
+ 		},
++		.strict = true,
+ 	}, {
+ 		.desc = "Masking out a RX rate in VHT capabilities",
+ 		.conn_mode = IEEE80211_CONN_MODE_EHT,
 
 
