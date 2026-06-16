@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C10D43DA2C;
-	Tue, 16 Jun 2026 15:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867051A682B;
+	Tue, 16 Jun 2026 15:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623655; cv=none; b=VslE5REhF0LYkFdsNf3n16T0cTEabktUhcFnGID7tdzUrgpBxvaYIADuP0GZEOavlq3R95FXIgcFdExEbfPvGitm7XH5m3doUPKQrnhq21TMYWRuGdz4hCMvmSiHDkuAXNKMrwF70zShVT6wi06HFzYjYjAR1Fgzxd2jSOWZFig=
+	t=1781623660; cv=none; b=B4D95jxbuVSfbfbW0Sl0TpaNOiGMixJ9+DSdQjLBzvRp0CJAsar94ZZkLR8RT4c6H+YYePW0Wfv/U0Tl/KrZDCffeP5dcMl4lK5SDL/y5sn869ZG6Gmu9fuqcHoQZ9mNdRg+cH1tMHIhuN4FSVB8dmEWiCTk1h7J9nbMsKlALo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623655; c=relaxed/simple;
-	bh=9ODJL55irshWtOSSHpqaZA5nAHi3YLnM0mCNc7jgWOk=;
+	s=arc-20240116; t=1781623660; c=relaxed/simple;
+	bh=Wl0G0XKuXMk1MYTpsrXgqPWDptJcSjXetzCOIsfYuKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=abgXyHk4NaY3eqmgrhxWWXtAGV44xhLgq0+MHucWV5CzhJ3zfCj+QNJoxD5acbT6QGu3cLqndneb2Yoc9IAOgj2vSo4TuHAUeLBqqdTqoM6YjALD961kv104BLQuFdmID0YW+REhQ8s/LCgYXushjJsCld34s+W0UBCra2DClT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=se4o1ayp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=enqkFeQavuPmZOhrYEjgwiD16cJbbwnT+1/4oTzEkErKQk7gxiG2M0uCgZEe7PByn9yKW4PkDetqQDUDlBeWOMi/+BdRKnTaW5cPmoRZjehm+KykGiHbcTNACB8MWHEBcHCiVRz70RN+L8ZP13au2ahcb5P/tpUWiU76bLKO5u0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/kivOQ3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="se4o1ayp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3BBE1F000E9;
-	Tue, 16 Jun 2026 15:27:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/kivOQ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6BC1F000E9;
+	Tue, 16 Jun 2026 15:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623654;
-	bh=MkloERE88vPO7bQKPxIT+JqW9LiGCAu+na2InM3rr/U=;
+	s=korg; t=1781623659;
+	bh=UnP5TFa4a5T5FgSdIPM+CQazdADuGZJPSnAuAzDRpN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=se4o1aypFYUU0+nhFVtsImH2bt/ID0K10SFcoIVhte9iFK6uwGpFu0/vSsGtL4faV
-	 Cw4M95wDdqj2cNUbQvaX2m1MM4kabdF1Tlpj/ajiFpe8hg2G2tPShJHuhn7GngGZoQ
-	 NAU10u1vBn+Nyl/nMx2ie854GSMQq4izuPt8en+M=
+	b=N/kivOQ3IpwDRaaFlYjdKnO1ISUpJZAB65YXjS0WZ6HZ6Vk00EdWVtLTSget1W7Wr
+	 qLaKG8I3OjZC5K2kjFXW97D/7HlGNocQFW2FV0PyKcRbrO81WranpurJm/9wR7wJLx
+	 oxkYGdhImSY/mv4ZgusCx3JsYK6r6tHc2ZA8CUzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 7.0 191/378] rust: kasan/kbuild: fix rustc-option when cross-compiling
-Date: Tue, 16 Jun 2026 20:27:02 +0530
-Message-ID: <20260616145120.433180599@linuxfoundation.org>
+	Inochi Amaoto <inochiama@gmail.com>,
+	Gabriel Somlo <gsomlo@gmail.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 7.0 192/378] mmc: litex_mmc: Use DIV_ROUND_UP for more accurate clock calculation
+Date: Tue, 16 Jun 2026 20:27:03 +0530
+Message-ID: <20260616145120.484189456@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -50,121 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Inochi Amaoto <inochiama@gmail.com>
 
-commit 4a44b17406cb5a93f90af3df9392b3a45eb336fb upstream.
+commit b837e38c255dd9f8b53511d52e87f1fda32b3dfe upstream.
 
-The Makefile version of rustc-option currently checks whether the option
-exists for the host target instead of the target actually being compiled
-for. It was done this way in commit 46e24a545cdb ("rust: kasan/kbuild:
-fix missing flags on first build") to avoid a circular dependency on
-target.json. However, because of this, rustc-option currently does not
-function when cross-compiling from x86_64 to aarch64 if
-CONFIG_SHADOW_CALL_STACK is enabled. This is because KBUILD_RUSTFLAGS
-contains -Zfixed-x18 under this configuration. Since that flag does not
-exist on the host target, rustc-option runs into a compilation failure
-every time, leading to all flags being rejected as unsupported.
+The previous clock uses roundup_pow_of_two() to calculate the core
+clock frequency. It does not meet the actual hardware meaning.
+The actual frequency is calculated by "ref_clk / ((div >> 1) << 1)".
 
-To fix this, update rustc-option to pass a --target parameter so that
-the host target is not used. For targets using target.json, use a
-built-in target that is as close as possible to the target created with
-target.json to avoid the circular dependency on target.json.
+Fix the clock divider calculation.
 
-One scenario where this causes a boot failure:
-* Cross-compiled from x86_64 to aarch64.
-* With CONFIG_SHADOW_CALL_STACK=y
-* With CONFIG_KASAN_SW_TAGS=y
-* With CONFIG_KASAN_INLINE=n
-Then the resulting kernel image will fail to boot when it first calls
-into Rust code with a crash along the lines of "Unable to handle kernel
-paging request at virtual address 0ffffffc08541796". This is because the
-call threshold is not specified, so rustc will inline kasan operations,
-but the kasan shadow offset is not specified, which leads to the inlined
-kasan instructions being incorrect.
-
-Note that the -Zsanitizer=kernel-hwaddress parameter itself does not
-lead to a rustc-option failure despite being aarch64-specific because
-RUSTFLAGS_KASAN has not yet been added to KBUILD_RUSTFLAGS when
-rustc-option is evaluated by the kasan Makefile.
-
+Fixes: 92e099104729 ("mmc: Add driver for LiteX's LiteSDCard interface")
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Reviewed-by: Gabriel Somlo <gsomlo@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: 46e24a545cdb ("rust: kasan/kbuild: fix missing flags on first build")
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260507-rustc-option-cross-v2-1-2f650a49c2b5@google.com
-[ Edited slightly:
-    - Reset variable to avoid using the environment.
-    - Use a simply expanded variable flavor for simplicity.
-    - Export variable so that behavior in sub-`make`s is consistent.
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
-  This matches other variables. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- Makefile                  |    3 ++-
- arch/x86/Makefile         |    4 ++++
- arch/x86/Makefile.um      |    8 ++++++++
- scripts/Makefile.compiler |    2 +-
- 4 files changed, 15 insertions(+), 2 deletions(-)
+ drivers/mmc/host/litex_mmc.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -606,6 +606,7 @@ KBUILD_RUSTFLAGS := $(rust_common_flags)
- 		    -Crelocation-model=static \
- 		    -Zfunction-sections=n \
- 		    -Wclippy::float_arithmetic
-+KBUILD_RUSTFLAGS_OPTION_CHKS :=
+--- a/drivers/mmc/host/litex_mmc.c
++++ b/drivers/mmc/host/litex_mmc.c
+@@ -16,6 +16,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/iopoll.h>
+ #include <linux/litex.h>
++#include <linux/math.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+@@ -436,11 +437,10 @@ static void litex_mmc_setclk(struct lite
+ 	struct device *dev = mmc_dev(host->mmc);
+ 	u32 div;
  
- KBUILD_AFLAGS_KERNEL :=
- KBUILD_CFLAGS_KERNEL :=
-@@ -642,7 +643,7 @@ export KBUILD_USERCFLAGS KBUILD_USERLDFL
- 
- export KBUILD_CPPFLAGS NOSTDINC_FLAGS LINUXINCLUDE OBJCOPYFLAGS KBUILD_LDFLAGS
- export KBUILD_CFLAGS CFLAGS_KERNEL CFLAGS_MODULE
--export KBUILD_RUSTFLAGS RUSTFLAGS_KERNEL RUSTFLAGS_MODULE
-+export KBUILD_RUSTFLAGS RUSTFLAGS_KERNEL RUSTFLAGS_MODULE KBUILD_RUSTFLAGS_OPTION_CHKS
- export KBUILD_AFLAGS AFLAGS_KERNEL AFLAGS_MODULE
- export KBUILD_AFLAGS_MODULE KBUILD_CFLAGS_MODULE KBUILD_RUSTFLAGS_MODULE KBUILD_LDFLAGS_MODULE
- export KBUILD_AFLAGS_KERNEL KBUILD_CFLAGS_KERNEL KBUILD_RUSTFLAGS_KERNEL
---- a/arch/x86/Makefile
-+++ b/arch/x86/Makefile
-@@ -81,6 +81,10 @@ KBUILD_CFLAGS += -mno-sse -mno-mmx -mno-
- KBUILD_RUSTFLAGS += --target=$(objtree)/scripts/target.json
- KBUILD_RUSTFLAGS += -Ctarget-feature=-sse,-sse2,-sse3,-ssse3,-sse4.1,-sse4.2,-avx,-avx2
- 
-+# The target.json file is not available when invoking rustc-option, so use the
-+# built-in target when checking whether flags are supported instead.
-+KBUILD_RUSTFLAGS_OPTION_CHKS += --target=x86_64-unknown-none
-+
- #
- # CFLAGS for compiling floating point code inside the kernel.
- #
---- a/arch/x86/Makefile.um
-+++ b/arch/x86/Makefile.um
-@@ -14,6 +14,14 @@ endif
- 
- KBUILD_RUSTFLAGS += --target=$(objtree)/scripts/target.json
- 
-+# The target.json file is not available when invoking rustc-option, so use the
-+# built-in target when checking whether flags are supported instead.
-+ifeq ($(CONFIG_X86_32),y)
-+KBUILD_RUSTFLAGS_OPTION_CHKS += --target=i686-unknown-linux-gnu
-+else
-+KBUILD_RUSTFLAGS_OPTION_CHKS += --target=x86_64-unknown-linux-gnu
-+endif
-+
- ifeq ($(CONFIG_X86_32),y)
- START := 0x8048000
- 
---- a/scripts/Makefile.compiler
-+++ b/scripts/Makefile.compiler
-@@ -80,7 +80,7 @@ ld-option = $(call try-run, $(LD) $(KBUI
- # TODO: remove RUSTC_BOOTSTRAP=1 when we raise the minimum GNU Make version to 4.4
- __rustc-option = $(call try-run,\
- 	echo '$(pound)![allow(missing_docs)]$(pound)![feature(no_core)]$(pound)![no_core]' | RUSTC_BOOTSTRAP=1\
--	$(1) --sysroot=/dev/null $(filter-out --sysroot=/dev/null --target=%,$(2)) $(3)\
-+	$(1) --sysroot=/dev/null $(KBUILD_RUSTFLAGS_OPTION_CHKS) $(filter-out --sysroot=/dev/null --target=%target.json,$(2)) $(3)\
- 	--crate-type=rlib --out-dir=$(TMPOUT) --emit=obj=- - >/dev/null,$(3),$(4))
- 
- # rustc-option
+-	div = freq ? host->ref_clk / freq : 256U;
+-	div = roundup_pow_of_two(div);
++	div = freq ? DIV_ROUND_UP(host->ref_clk, freq) : 256U;
+ 	div = clamp(div, 2U, 256U);
+ 	dev_dbg(dev, "sd_clk_freq=%d: set to %d via div=%d\n",
+-		freq, host->ref_clk / div, div);
++		freq, host->ref_clk / ((div + 1) & ~1U), div);
+ 	litex_write16(host->sdphy + LITEX_PHY_CLOCKERDIV, div);
+ 	host->sd_clk = freq;
+ }
 
 
