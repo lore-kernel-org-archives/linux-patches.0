@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BAE43DA2C;
-	Tue, 16 Jun 2026 15:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDA2357D14;
+	Tue, 16 Jun 2026 15:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624143; cv=none; b=RKjvhPQz9Y5DYNOGPUpiHykUZFNcXP317rZsftwnM5OFTiR/ByQO9ewPpJYGRIQLYM4EEEAxZX5fln8IbDcZchbcS3qII8yEJaetjio9jAqW6X4yxToSfvV1aeO/n6YWAsCEL37/pASA3w5kA4117mbmwMKOLymHGNHg0/Ni/7U=
+	t=1781624150; cv=none; b=A83S6AqnQRiHQmzUpwqXzj/AnfpHBxo3Y76pT9IWry0RdKqGIQPRgY5M/PuVxm077omZu70/GH2JO3qegCqKGRDzrgUBtAPpZE7yc1KakgtUQ50YbW6+n6rTm5z9c73ctQsfu9IisSw7Aza63+VQO0F7auVjclbkZxdxWPjAsX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624143; c=relaxed/simple;
-	bh=8P7IdZQhk8xq/rryjv89XZGqMAXjZ7MCz2iuWk3fZS4=;
+	s=arc-20240116; t=1781624150; c=relaxed/simple;
+	bh=LdXpNx0r59w3ORUlRDxKkGXnGASJ6B56i+x8hWiP/Zs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ag4swJHw7WvGcW0QdTlkw+EA5dNNc8MKsil9QfN6uyt0azW+9eI8cXln6A79mbDbdfiujdREjFeuFn5ZYgmuPqENhv19x8ftZidS7kCkOrgWJ4W/KOozOL+uPvyT62dnyUndk7hRm3hR5+YKBrV9TDD5Q0bf7iM0lWmVxDPLnsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o7Zyfo+Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VSwqu5UiNhTflz/irGOUrcTxzfWu2SwtNGNekxr0YwhXQwjGkSO/E3EgmRjRC8vJ5n14K2mgtEZNjpZsDHw+ZyZCGOqz3Xi68z0iT+uC4IftmgYMBlRZdLltlU0H8weHSJVMTg/OG3tsmerubctz2oE5zqZFs/ika9ZrJC/WOo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XFjLtyZR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o7Zyfo+Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281271F00A3F;
-	Tue, 16 Jun 2026 15:35:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XFjLtyZR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 643E41F000E9;
+	Tue, 16 Jun 2026 15:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624142;
-	bh=Y6z81KPimm1TgXGDcM6EsYfO09+Lu6fCKCl0LC3CMAo=;
+	s=korg; t=1781624148;
+	bh=ryKkHSL6PDMycnxx7jr82vG4xIap+tKOSeuazt7oXOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o7Zyfo+Q/rdYreAhOmmnen/bMK8Ib/OcJUp8gmWSP1ZF86T2AJOY2XT5M3H06jWg3
-	 Pd3dvOWwJQVOoW4QTzh2qEYFXtxMh+fEJzdJk4ZbWgib6jgmDBy9drJzGC8c7OsaTz
-	 QvZIJ07nrWIFdyXgeuNVHazXtWhZdQ7Ad3iJ98lw=
+	b=XFjLtyZRadZYVelBTzsN1ZnQRf/J+lvcaCXTS+m8s6rOxr/BEdcLNwZM5O2ZahXdH
+	 fjnP21ZuyO50kfDGVSNsSWUZlrhdvYmMrAMGf8V2hprN5J7maIV6tEqf5SB/aJFa/2
+	 taCVp65IA6km+35LHNrgR2kZ2JnZJfXffSJcksNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Anandu Krishnan E <anandu.e@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 7.0 282/378] misc: fastrpc: fix use-after-free of fastrpc_user in workqueue context
-Date: Tue, 16 Jun 2026 20:28:33 +0530
-Message-ID: <20260616145124.948021311@linuxfoundation.org>
+	Arpith Kalaginanavoor <arpithk@nvidia.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.0 265/378] fs/qnx6: fix pointer arithmetic in directory iteration
+Date: Tue, 16 Jun 2026 20:28:16 +0530
+Message-ID: <20260616145124.041486752@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -45,211 +44,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
+From: Arpith Kalaginanavoor <arpithk@nvidia.com>
 
-commit e85eb5feca8e254905ffa6c57a3c99c89a674a0f upstream.
+commit 89c4a1167f3a0a0efd2ec3e1801036d2eb65ae1a upstream.
 
-There is a race between fastrpc_device_release() and the workqueue
-that processes DSP responses. When the user closes the file descriptor,
-fastrpc_device_release() frees the fastrpc_user structure. Concurrently,
-an in-flight DSP invocation can complete and fastrpc_rpmsg_callback()
-schedules context cleanup via schedule_work(&ctx->put_work). If the
-workqueue runs fastrpc_context_free() in parallel with or after
-fastrpc_device_release() has freed the user structure, it dereferences
-the freed fastrpc_user. Depending on the state of the context at the
-time of the race, any one of the following accesses can be hit:
+The conversion to qnx6_get_folio() in commit b2aa61556fcf
+("qnx6: Convert qnx6_get_page() to qnx6_get_folio()")
+introduced a regression in directory iteration. The pointer 'de'
+and the 'limit' address were calculated using byte offsets from
+a char pointer without scaling by the size of a QNX6 directory
+entry.
 
- 1. fastrpc_buf_free() calls fastrpc_ipa_to_dma_addr(buf->fl->cctx, ...)
-    to strip the SID bits from the stored IOVA before passing the
-    physical address to dma_free_coherent().
+This causes the driver to read from incorrect memory offsets,
+leading to "invalid direntry size" errors and premature
+termination of directory scans.
 
- 2. fastrpc_free_map() reads map->fl->cctx->vmperms[0].vmid to
-    reconstruct the source permission bitmask needed for the
-    qcom_scm_assign_mem() call that returns memory from the DSP VM
-    back to HLOS.
+Fix this by casting 'kaddr' to 'struct qnx6_dir_entry *' before
+applying the offset and last_entry(...) increments. This allows the
+compiler to correctly scale the pointer arithmetic by the 32-byte
+stride of the directory entry structure.
 
- 3. fastrpc_free_map() acquires map->fl->lock to safely remove the
-    map node from the fl->maps list.
-
-The resulting use-after-free manifests as:
-
-  pc : fastrpc_buf_free+0x38/0x80 [fastrpc]
-  lr : fastrpc_context_free+0xa8/0x1b0 [fastrpc]
-  fastrpc_context_free+0xa8/0x1b0 [fastrpc]
-  fastrpc_context_put_wq+0x78/0xa0 [fastrpc]
-  process_one_work+0x180/0x450
-  worker_thread+0x26c/0x388
-
-Add kref-based reference counting to fastrpc_user. Have each invoke
-context take a reference on the user at allocation time and release it
-when the context is freed. Release the initial reference in
-fastrpc_device_release() at file close. Move the teardown of the user
-structure — freeing pending contexts, maps, mmaps, and the channel
-context reference — into the kref release callback fastrpc_user_free(),
-so that it runs only when the last reference is dropped, regardless of
-whether that happens at device close or after the final in-flight
-context completes.
-
-Fixes: 6cffd79504ce ("misc: fastrpc: Add support for dmabuf exporter")
-Cc: stable@kernel.org
-Signed-off-by: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204528.116920-2-srini@kernel.org
+Fixes: b2aa61556fcf ("qnx6: Convert qnx6_get_page() to qnx6_get_folio()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Arpith Kalaginanavoor <arpithk@nvidia.com>
+Link: https://patch.msgid.link/20260526123858.1683035-1-arpithk@nvidia.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |   75 +++++++++++++++++++++++++++++++++----------------
- 1 file changed, 52 insertions(+), 23 deletions(-)
+ fs/qnx6/dir.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -310,6 +310,8 @@ struct fastrpc_user {
- 	spinlock_t lock;
- 	/* lock for allocations */
- 	struct mutex mutex;
-+	/* Reference count */
-+	struct kref refcount;
- };
+--- a/fs/qnx6/dir.c
++++ b/fs/qnx6/dir.c
+@@ -132,16 +132,16 @@ static int qnx6_readdir(struct file *fil
+ 		struct qnx6_dir_entry *de;
+ 		struct folio *folio;
+ 		char *kaddr = qnx6_get_folio(inode, n, &folio);
+-		char *limit;
++		struct qnx6_dir_entry *limit;
  
- /* Extract SMMU PA from consolidated IOVA */
-@@ -497,15 +499,57 @@ static void fastrpc_channel_ctx_put(stru
- 	kref_put(&cctx->refcount, fastrpc_channel_ctx_free);
- }
+ 		if (IS_ERR(kaddr)) {
+ 			pr_err("%s(): read failed\n", __func__);
+ 			ctx->pos = (n + 1) << PAGE_SHIFT;
+ 			return PTR_ERR(kaddr);
+ 		}
+-		de = (struct qnx6_dir_entry *)(kaddr + offset);
+-		limit = kaddr + last_entry(inode, n);
+-		for (; (char *)de < limit; de++, ctx->pos += QNX6_DIR_ENTRY_SIZE) {
++		de = (struct qnx6_dir_entry *)kaddr + offset;
++		limit = (struct qnx6_dir_entry *)kaddr + last_entry(inode, n);
++		for (; de < limit; de++, ctx->pos += QNX6_DIR_ENTRY_SIZE) {
+ 			int size = de->de_size;
+ 			u32 no_inode = fs32_to_cpu(sbi, de->de_inode);
  
-+static void fastrpc_context_put(struct fastrpc_invoke_ctx *ctx);
-+
-+static void fastrpc_user_free(struct kref *ref)
-+{
-+	struct fastrpc_user *fl = container_of(ref, struct fastrpc_user, refcount);
-+	struct fastrpc_invoke_ctx *ctx, *n;
-+	struct fastrpc_map *map, *m;
-+	struct fastrpc_buf *buf, *b;
-+
-+	if (fl->init_mem)
-+		fastrpc_buf_free(fl->init_mem);
-+
-+	list_for_each_entry_safe(ctx, n, &fl->pending, node) {
-+		list_del(&ctx->node);
-+		fastrpc_context_put(ctx);
-+	}
-+
-+	list_for_each_entry_safe(map, m, &fl->maps, node)
-+		fastrpc_map_put(map);
-+
-+	list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
-+		list_del(&buf->node);
-+		fastrpc_buf_free(buf);
-+	}
-+
-+	fastrpc_channel_ctx_put(fl->cctx);
-+	mutex_destroy(&fl->mutex);
-+	kfree(fl);
-+}
-+
-+static void fastrpc_user_get(struct fastrpc_user *fl)
-+{
-+	kref_get(&fl->refcount);
-+}
-+
-+static void fastrpc_user_put(struct fastrpc_user *fl)
-+{
-+	kref_put(&fl->refcount, fastrpc_user_free);
-+}
-+
- static void fastrpc_context_free(struct kref *ref)
- {
- 	struct fastrpc_invoke_ctx *ctx;
- 	struct fastrpc_channel_ctx *cctx;
-+	struct fastrpc_user *fl;
- 	unsigned long flags;
- 	int i;
- 
- 	ctx = container_of(ref, struct fastrpc_invoke_ctx, refcount);
- 	cctx = ctx->cctx;
-+	fl = ctx->fl;
- 
- 	for (i = 0; i < ctx->nbufs; i++)
- 		fastrpc_map_put(ctx->maps[i]);
-@@ -521,6 +565,8 @@ static void fastrpc_context_free(struct
- 	kfree(ctx->olaps);
- 	kfree(ctx);
- 
-+	/* Release the reference taken in fastrpc_context_alloc() */
-+	fastrpc_user_put(fl);
- 	fastrpc_channel_ctx_put(cctx);
- }
- 
-@@ -628,6 +674,8 @@ static struct fastrpc_invoke_ctx *fastrp
- 
- 	/* Released in fastrpc_context_put() */
- 	fastrpc_channel_ctx_get(cctx);
-+	/* Take a reference to user, released in fastrpc_context_free() */
-+	fastrpc_user_get(user);
- 
- 	ctx->sc = sc;
- 	ctx->retval = -1;
-@@ -658,6 +706,7 @@ err_idr:
- 	spin_lock(&user->lock);
- 	list_del(&ctx->node);
- 	spin_unlock(&user->lock);
-+	fastrpc_user_put(user);
- 	fastrpc_channel_ctx_put(cctx);
- 	kfree(ctx->maps);
- 	kfree(ctx->olaps);
-@@ -1579,9 +1628,6 @@ static int fastrpc_device_release(struct
- {
- 	struct fastrpc_user *fl = (struct fastrpc_user *)file->private_data;
- 	struct fastrpc_channel_ctx *cctx = fl->cctx;
--	struct fastrpc_invoke_ctx *ctx, *n;
--	struct fastrpc_map *map, *m;
--	struct fastrpc_buf *buf, *b;
- 	unsigned long flags;
- 
- 	fastrpc_release_current_dsp_process(fl);
-@@ -1590,28 +1636,10 @@ static int fastrpc_device_release(struct
- 	list_del(&fl->user);
- 	spin_unlock_irqrestore(&cctx->lock, flags);
- 
--	if (fl->init_mem)
--		fastrpc_buf_free(fl->init_mem);
--
--	list_for_each_entry_safe(ctx, n, &fl->pending, node) {
--		list_del(&ctx->node);
--		fastrpc_context_put(ctx);
--	}
--
--	list_for_each_entry_safe(map, m, &fl->maps, node)
--		fastrpc_map_put(map);
--
--	list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
--		list_del(&buf->node);
--		fastrpc_buf_free(buf);
--	}
--
- 	fastrpc_session_free(cctx, fl->sctx);
--	fastrpc_channel_ctx_put(cctx);
--
--	mutex_destroy(&fl->mutex);
--	kfree(fl);
- 	file->private_data = NULL;
-+	/* Release the reference taken in fastrpc_device_open */
-+	fastrpc_user_put(fl);
- 
- 	return 0;
- }
-@@ -1655,6 +1683,7 @@ static int fastrpc_device_open(struct in
- 	spin_lock_irqsave(&cctx->lock, flags);
- 	list_add_tail(&fl->user, &cctx->users);
- 	spin_unlock_irqrestore(&cctx->lock, flags);
-+	kref_init(&fl->refcount);
- 
- 	return 0;
- }
 
 
