@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D82D43DA24;
-	Tue, 16 Jun 2026 15:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5210E43DA38;
+	Tue, 16 Jun 2026 15:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622906; cv=none; b=eiB66YTzxl74XhPZDQk62vMEJkNSGMpHC+1E9K6JxJYafsVn3YGoe0DUTMvPer6h58iKd9zQPBARORbWdJuUyKbRRZyP6j7I86yrDjavP7x8MHcGDgbqXzkKpvz6x6BdeHqWUKOrEkCYjS6XKaPt2nclZDvx1oEgIRce8f+DqKI=
+	t=1781622912; cv=none; b=VwZFUyr9Z/ztAyvEnWv8C3b55T1sQ5irOkTtxViKoaz3KOYZWz5HtHvAAAlCrExGakJZUzFCJTTO5AY0sp4KXjhlqe3m5C4aA8jmU2/VaXhDwm3/TMrX3oZqQR5E45MtEV6qc+dkXjUDcTrP6niFDgxNdAnEzqJCgmupiYMbHSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622906; c=relaxed/simple;
-	bh=/xDfKsJOO+HXtX62uCsWXUOcdMrpRO2mORchtRiziBk=;
+	s=arc-20240116; t=1781622912; c=relaxed/simple;
+	bh=AGvFh145iIcYqLskhcXI/JvPGOS4rFJfiP0FopzPzOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XdU4Ov5mwr2LoeCmsg9/QqeakZP51G4nwX+iwFkdabzMh1Ptj2KC3Rn7jFlSXgkPKKS9eAJ8pQDXOl/hVWpC+UQzTzAs5bosSUtyFS9gSnT+Gp/sslD0ezqiQQMMB8jX302fiRiQa5Q9bUOyAaWHvXT08xBYGqTU0/LgM1sryVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7HD3QoT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i7hpbOdm6QmIKjC+UAL8H++V0DSkEznBXXR2XgRkeOosWBvfUG2vjZGJEDvduUfqx3Lec6mJwM37HAKoNM5YlLoGfKUJB+4BEK8V1U8L46tgFrIDHji8QiErn/Pk4HwrkD1dgY5V7TNSbQNmOQZTE2eYgoob1ZFKuii/8BsgFRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z2fwmOIF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7HD3QoT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D781F000E9;
-	Tue, 16 Jun 2026 15:15:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z2fwmOIF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D537C1F000E9;
+	Tue, 16 Jun 2026 15:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622905;
-	bh=iY61nlxyS9cO90LhkPm44kIE55BGPwverjnYR1m+K8A=;
+	s=korg; t=1781622910;
+	bh=x7MI8HtFQQnVLgBb8tdeokYU25k2BnnGrRobbv4ywDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M7HD3QoTzubCan6Jz1u2JWdu34+TJohha0wOpioIgt1Xsu96AmpCTALVy0Lv322D1
-	 FFkxMWEFr8uB0NZSP/rzHfMPpgp8MHHOALc/49w8VnpwXMqih6AszNZlXzmTE/+PNV
-	 khr4vzE895tfITKLhrKLaL4FhuGOjBCNEtd4rDT0=
+	b=z2fwmOIFj11VljpV9p/YoNeTh0dpb6mbfD1x+gkwhI9AFIKfadF3r4cAQVRW1mlSr
+	 KEPnChUouZLzoxzlqWeqKiIPkoueVOOKWBueZw9PFCwjTO2KddFNTVdIFhdZHOzL2m
+	 dnYMBLhr+JXNCMHKp1obcht0ASf5BM4uXMNAtWMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeungJu Cheon <suunj1331@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	syzbot+652670cf249077eb498b@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 052/378] Bluetooth: SCO: Fix data-race on sco_pi fields in sco_connect
-Date: Tue, 16 Jun 2026 20:24:43 +0530
-Message-ID: <20260616145112.695541109@linuxfoundation.org>
+Subject: [PATCH 7.0 035/378] hsr: Remove WARN_ONCE() in hsr_addr_is_self().
+Date: Tue, 16 Jun 2026 20:24:26 +0530
+Message-ID: <20260616145111.720908858@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,94 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeungJu Cheon <suunj1331@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 4847c5bca22227100ae69e96af86618b6fd2671f ]
+[ Upstream commit afd0f17ca46258cec3a5cc48b8df9327fe772490 ]
 
-sco_sock_connect() copies the destination address into sco_pi(sk)->dst
-under lock_sock(), then releases the lock and calls sco_connect(),
-which reads dst, src, setting, and codec without holding lock_sock() in
-hci_get_route() and hci_connect_sco().
+syzbot reported the warning [0] in hsr_addr_is_self(),
+whose assumption is simply wrong.
 
-These fields may be modified concurrently by connect(), bind(), or
-setsockopt() on the same socket, resulting in data-races reported by
-KCSAN.
+hsr->self_node is cleared in hsr_del_self_node(), which
+is called from hsr_dellink().
 
-Fix this by snapshotting dst, src, setting, and codec under lock_sock()
-at the start of sco_connect() before passing them to hci_get_route()
-and hci_connect_sco().
+Since dev->rtnl_link_ops->dellink() is called before
+unregister_netdevice_many(), there is a window when
+user can find the device but without hsr->self_node.
 
-BUG: KCSAN: data-race in memcmp+0x45/0xb0
+Let's remove WARN_ONCE() in hsr_addr_is_self().
 
-race at unknown origin, with read to 0xffff88800e6b0dd0 of 1 bytes
-by task 315 on cpu 0:
- memcmp+0x45/0xb0
- hci_connect_acl+0x1b7/0x6b0
- hci_connect_sco+0x4d/0xb30
- sco_sock_connect+0x27b/0xd60
- __sys_connect_file+0xbd/0xe0
- __sys_connect+0xe0/0x110
- __x64_sys_connect+0x40/0x50
- x64_sys_call+0xcad/0x1c60
- do_syscall_64+0x133/0x590
+[0]:
+HSR: No self node
+WARNING: net/hsr/hsr_framereg.c:39 at hsr_addr_is_self+0x211/0x3f0 net/hsr/hsr_framereg.c:39, CPU#0: syz.4.16848/17220
+Modules linked in:
+CPU: 0 UID: 0 PID: 17220 Comm: syz.4.16848 Tainted: G             L      syzkaller #0 PREEMPT_{RT,(full)}
+Tainted: [L]=SOFTLOCKUP
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/18/2026
+RIP: 0010:hsr_addr_is_self+0x211/0x3f0 net/hsr/hsr_framereg.c:39
+Code: 33 2f 41 0f b7 dd 89 ee 09 de 31 ff e8 c8 b4 c6 f6 09 dd 74 54 e8 0f b0 c6 f6 31 ed eb 53 e8 06 b0 c6 f6 48 8d 3d 2f 50 9c 04 <67> 48 0f b9 3a 31 ed eb 42 e8 c1 13 1f 00 89 c5 31 ff 89 c6 e8 96
+RSP: 0018:ffffc900041c70e0 EFLAGS: 00010283
+RAX: ffffffff8afdc6ca RBX: ffffffff8afdc4e6 RCX: 0000000000080000
+RDX: ffffc90010493000 RSI: 0000000000000948 RDI: ffffffff8f9a1700
+RBP: 0000000000000001 R08: 0000000000000000 R09: 0000000000000000
+R10: ffffc900041c71e8 R11: fffff52000838e3f R12: dffffc0000000000
+R13: ffff888041f9e3c0 R14: ffff888086ee3802 R15: 0000000000000000
+FS:  00007f6fe985d6c0(0000) GS:ffff888126176000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f80bd437dac CR3: 0000000025096000 CR4: 00000000003526f0
+DR0: ffffffffffffffff DR1: 00000000000001f8 DR2: 0000000000000002
+DR3: ffffffffefffff15 DR6: 00000000ffff0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ check_local_dest net/hsr/hsr_forward.c:592 [inline]
+ fill_frame_info net/hsr/hsr_forward.c:728 [inline]
+ hsr_forward_skb+0xa11/0x2a80 net/hsr/hsr_forward.c:739
+ hsr_dev_xmit+0x253/0x370 net/hsr/hsr_device.c:236
+ __netdev_start_xmit include/linux/netdevice.h:5368 [inline]
+ netdev_start_xmit include/linux/netdevice.h:5377 [inline]
+ xmit_one net/core/dev.c:3888 [inline]
+ dev_hard_start_xmit+0x2df/0x860 net/core/dev.c:3904
+ __dev_queue_xmit+0x1428/0x3900 net/core/dev.c:4870
+ neigh_output include/net/neighbour.h:556 [inline]
+ ip_finish_output2+0xcec/0x10b0 net/ipv4/ip_output.c:237
+ ip_send_skb net/ipv4/ip_output.c:1510 [inline]
+ ip_push_pending_frames+0x8b/0x110 net/ipv4/ip_output.c:1530
+ raw_sendmsg+0x1547/0x1a50 net/ipv4/raw.c:659
+ sock_sendmsg_nosec net/socket.c:787 [inline]
+ __sock_sendmsg net/socket.c:802 [inline]
+ ____sys_sendmsg+0x7da/0x9c0 net/socket.c:2698
+ ___sys_sendmsg+0x2a5/0x360 net/socket.c:2752
+ __sys_sendmsg net/socket.c:2784 [inline]
+ __do_sys_sendmsg net/socket.c:2789 [inline]
+ __se_sys_sendmsg net/socket.c:2787 [inline]
+ __x64_sys_sendmsg+0x1c3/0x2a0 net/socket.c:2787
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x15f/0xf80 arch/x86/entry/syscall_64.c:94
  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f6feb62ce59
+Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f6fe985d028 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 00007f6feb8a6090 RCX: 00007f6feb62ce59
+RDX: 0000000000000000 RSI: 0000200000000000 RDI: 0000000000000004
+RBP: 00007f6feb6c2d6f R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f6feb8a6128 R14: 00007f6feb8a6090 R15: 00007ffcf01cc488
+ </TASK>
 
-Fixes: 9a8ec9e8ebb5 ("Bluetooth: SCO: Fix possible circular locking dependency on sco_connect_cfm")
-Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: f266a683a480 ("net/hsr: Better frame dispatch")
+Reported-by: syzbot+652670cf249077eb498b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a1a861e.b111c304.35cd64.0016.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20260530064300.340793-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/sco.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ net/hsr/hsr_framereg.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index 770b9d6fad88f9..47ff4b8d1ae2cd 100644
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -312,11 +312,21 @@ static int sco_connect(struct sock *sk)
- 	struct sco_conn *conn;
- 	struct hci_conn *hcon;
- 	struct hci_dev  *hdev;
-+	bdaddr_t src, dst;
-+	struct bt_codec codec;
-+	__u16 setting;
- 	int err, type;
+diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
+index f268e469af4f09..7f55e12edc8341 100644
+--- a/net/hsr/hsr_framereg.c
++++ b/net/hsr/hsr_framereg.c
+@@ -35,10 +35,8 @@ bool hsr_addr_is_self(struct hsr_priv *hsr, unsigned char *addr)
  
--	BT_DBG("%pMR -> %pMR", &sco_pi(sk)->src, &sco_pi(sk)->dst);
-+	lock_sock(sk);
-+	bacpy(&src, &sco_pi(sk)->src);
-+	bacpy(&dst, &sco_pi(sk)->dst);
-+	setting = sco_pi(sk)->setting;
-+	codec = sco_pi(sk)->codec;
-+	release_sock(sk);
-+
-+	BT_DBG("%pMR -> %pMR", &src, &dst);
+ 	rcu_read_lock();
+ 	sn = rcu_dereference(hsr->self_node);
+-	if (!sn) {
+-		WARN_ONCE(1, "HSR: No self node\n");
++	if (!sn)
+ 		goto out;
+-	}
  
--	hdev = hci_get_route(&sco_pi(sk)->dst, &sco_pi(sk)->src, BDADDR_BREDR);
-+	hdev = hci_get_route(&dst, &src, BDADDR_BREDR);
- 	if (!hdev)
- 		return -EHOSTUNREACH;
- 
-@@ -327,7 +337,7 @@ static int sco_connect(struct sock *sk)
- 	else
- 		type = SCO_LINK;
- 
--	switch (sco_pi(sk)->setting & SCO_AIRMODE_MASK) {
-+	switch (setting & SCO_AIRMODE_MASK) {
- 	case SCO_AIRMODE_TRANSP:
- 		if (!lmp_transp_capable(hdev) || !lmp_esco_capable(hdev)) {
- 			err = -EOPNOTSUPP;
-@@ -336,8 +346,8 @@ static int sco_connect(struct sock *sk)
- 		break;
- 	}
- 
--	hcon = hci_connect_sco(hdev, type, &sco_pi(sk)->dst,
--			       sco_pi(sk)->setting, &sco_pi(sk)->codec,
-+	hcon = hci_connect_sco(hdev, type, &dst,
-+			       setting, &codec,
- 			       READ_ONCE(sk->sk_sndtimeo));
- 	if (IS_ERR(hcon)) {
- 		err = PTR_ERR(hcon);
+ 	if (ether_addr_equal(addr, sn->macaddress_A) ||
+ 	    ether_addr_equal(addr, sn->macaddress_B))
 -- 
 2.53.0
 
