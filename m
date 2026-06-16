@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9F0466B77;
-	Tue, 16 Jun 2026 16:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A5E46AEEA;
+	Tue, 16 Jun 2026 16:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626505; cv=none; b=scgFVcOYM/OoZqzO05tR5LRawsc1r4a2axv7d2jFfE3xlfdurC2zjNBlTZ+7EiyCS4cY+xjW6QLfwfggZca68PFzwsbLj7cQid4/iLx8KguM9O/Kvds7RtoEWcNJj3MhvHC0VjnF2tOVI/1VXGc15kLACnzDeoz6dEzN5EF59IU=
+	t=1781626510; cv=none; b=MOjrJrnwl9Z2EV0UQWUBNIC3OnqqDGrTDURoMQI3LLM9xW1igCz/802Jf3pgL6LBEyY0jA67VpbsRS6uVtHcJs/k9YNdL1T7yPLmZctIrdVVh+4Rzo5aKYiHfcGFm7P1g9n7XG0iet6tjmRj38VDFkCpoTKgc2A5MA1zlnqRJuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626505; c=relaxed/simple;
-	bh=ukjWm/nKZ710i3LG63NU81bvSy+RbcYtikEdGxrKG7I=;
+	s=arc-20240116; t=1781626510; c=relaxed/simple;
+	bh=qiuYUrFvwlWUb+lcnkCpGd7w8Uqrr5Z26i/esgpSlD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sOJuaIPuGKw7Lq4b8xOv6Rxlw3mMfMc61zma71kXRIs9QI6cJlRFbOypmzelOYqxFXYU33oI/HMU6vzyq2VpW5rUa++h1xIugxIpwjHBfOLpAJISxYJi8pAfIhtlhqmaVZG//ZCNeSAt4DhQYUujN2iITB5h8dfZ06qT0PTlFxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tWP3Gf+P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g6MofYJo7UAludVZEJFUEN48ZkNnTAM6T6dagSWLHHQPRvsa7qVmKofXlsBKgHMAVFzTtux3bDlFDbjm/4Z0U/+3rA7wjizL0DAgZ4Sn8VM49S6P8kGhjm4tiytprrTYQKupohhGbCDFA32ZEAI/+8nfOSVIuVF0ncTqOYPdQs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6wn7czW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tWP3Gf+P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8208E1F000E9;
-	Tue, 16 Jun 2026 16:15:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6wn7czW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D531F000E9;
+	Tue, 16 Jun 2026 16:15:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626504;
-	bh=9MWXL/lCT2QdEQVJxJOSkfdi4H8t+rkcZ3eVCj7cusQ=;
+	s=korg; t=1781626509;
+	bh=jGsN11JQgvk8qovklzqjKkJUn6cJAyWMb6Tqq1yXJYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tWP3Gf+Per2AIYrQ4MBsouOB8pVyeWMJEvDkSapNFLKFM+tju4a4q0WnWvQ8YS3Yh
-	 Qe2AaLXZCyG8NvOV/z+8UA/fech4+7gZKrI3KtZpwMviNTRYiSqTOoyyFXq1++bxDf
-	 7Plixjg0g3HBLpiCpKVkhyLYPa9b+JTGUhwcuA9o=
+	b=l6wn7czWkb68DuGoK4vfBZdAc08PghtTN8K4dvxNdeONSz3iMG5KXmtVp+7C8ejn6
+	 fBeB9HOaE6cX+ASuEC8wY5YiwLt8XZUaOtk5AO6xI4FjOSUON2UQ8AblwuUpsLlu5b
+	 4aRPXzfCNrrb+ErZXgZRNcYbW3rpjBDuXggt+UyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Marko <robert.marko@sartura.hr>,
-	Jakub Kicinski <kuba@kernel.org>,
-	=?UTF-8?q?Jo=C3=ABl=20Esponde?= <joel.esponde@leroy-agon.com>,
+	syzbot+52bae5c495dbe261a0bc@syzkaller.appspotmail.com,
+	Chao Yu <chao@kernel.org>,
+	Jianan Huang <jnhuang95@gmail.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 007/261] net: phy: micrel: fix LAN8814 QSGMII soft reset
-Date: Tue, 16 Jun 2026 20:27:25 +0530
-Message-ID: <20260616145045.369235953@linuxfoundation.org>
+Subject: [PATCH 6.12 016/261] erofs: fix use-after-free on sbi->sync_decompress
+Date: Tue, 16 Jun 2026 20:27:34 +0530
+Message-ID: <20260616145045.770032214@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -46,74 +47,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Robert Marko <robert.marko@sartura.hr>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit e027c218c482c6a0ae1948129ccda3b0a2033368 ]
+[ Upstream commit 1aee05e814d292064bf5fa15733741040cdc48ba ]
 
-LAN8814 QSGMII soft reset was moved into the probe function to avoid
-triggering it for each of 4 PHY-s in the package.
+z_erofs_decompress_kickoff() can race with filesystem unmount, causing
+a use-after-free on sbi->sync_decompress.
 
-However, that broke QSGMII link between the MAC and PHY on most LAN8814
-PHY-s, specificaly for us on the Microchip LAN969x switch.
-Reading the QSGMII status registers it was visible that lanes were only
-partially synced.
+When I/O completes, z_erofs_endio() calls z_erofs_decompress_kickoff()
+to queue z_erofs_decompressqueue_work() asynchronously. Then, after all
+folios are unlocked, unmount workflow can proceed and sbi will be freed
+before accessing to sbi->sync_decompress.
 
-It looks like the reset timing is crucial, so lets move the reset back
-into the .config_init function but guard it with phy_package_init_once()
-to avoid it being triggered on each of 4 PHY-s in the package.
-Change the probe function to use phy_package_probe_once() for coma and PtP
-setup.
+Thread (unmount)        I/O completion        kworker
+                        queue_work
+                                              z_erofs_decompressqueue_work
+                                               (all folios are unlocked)
+cleanup_mnt
+ ..
+ erofs_kill_sb
+  erofs_sb_free
+   kfree(sbi)
+                        access sbi->sync_decompress  // UAF!!
 
-Fixes: 347bf638d39f ("net: phy: micrel: lan8814 fix reset of the QSGMII interface")
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
-Link: https://patch.msgid.link/20260428134138.1741253-1-robert.marko@sartura.hr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Joël Esponde <joel.esponde@leroy-agon.com>
+Fixes: 40452ffca3c1 ("erofs: add sysfs node to control sync decompression strategy")
+Reported-by: syzbot+52bae5c495dbe261a0bc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=52bae5c495dbe261a0bc
+Reviewed-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Jianan Huang <jnhuang95@gmail.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ fs/erofs/zdata.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index f0c068075322f9..2dca6e8a5fce5c 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -4093,6 +4093,13 @@ static int lan8814_config_init(struct phy_device *phydev)
- {
- 	struct kszphy_priv *lan8814 = phydev->priv;
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index da421fe310df11..d625e3be9ec6ce 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -1424,6 +1424,9 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
+ 	if (atomic_add_return(bios, &io->pending_bios))
+ 		return;
+ 	if (z_erofs_in_atomic()) {
++		/* See `sync_decompress` in sysfs-fs-erofs for more details */
++		if (sbi->sync_decompress == EROFS_SYNC_DECOMPRESS_AUTO)
++			sbi->sync_decompress = EROFS_SYNC_DECOMPRESS_FORCE_ON;
+ #ifdef CONFIG_EROFS_FS_PCPU_KTHREAD
+ 		struct kthread_worker *worker;
  
-+	if (phy_package_init_once(phydev))
-+		/* Reset the PHY */
-+		lanphy_modify_page_reg(phydev, LAN8814_PAGE_COMMON_REGS,
-+				       LAN8814_QSGMII_SOFT_RESET,
-+				       LAN8814_QSGMII_SOFT_RESET_BIT,
-+				       LAN8814_QSGMII_SOFT_RESET_BIT);
-+
- 	/* Disable ANEG with QSGMII PCS Host side */
- 	lanphy_modify_page_reg(phydev, LAN8814_PAGE_PORT_REGS,
- 			       LAN8814_QSGMII_PCS1G_ANEG_CONFIG,
-@@ -4177,13 +4184,7 @@ static int lan8814_probe(struct phy_device *phydev)
- 	devm_phy_package_join(&phydev->mdio.dev, phydev,
- 			      addr, sizeof(struct lan8814_shared_priv));
- 
--	if (phy_package_init_once(phydev)) {
--		/* Reset the PHY */
--		lanphy_modify_page_reg(phydev, LAN8814_PAGE_COMMON_REGS,
--				       LAN8814_QSGMII_SOFT_RESET,
--				       LAN8814_QSGMII_SOFT_RESET_BIT,
--				       LAN8814_QSGMII_SOFT_RESET_BIT);
--
-+	if (phy_package_probe_once(phydev)) {
- 		err = lan8814_release_coma_mode(phydev);
- 		if (err)
- 			return err;
+@@ -1440,9 +1443,6 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
+ #else
+ 		queue_work(z_erofs_workqueue, &io->u.work);
+ #endif
+-		/* See `sync_decompress` in sysfs-fs-erofs for more details */
+-		if (sbi->sync_decompress == EROFS_SYNC_DECOMPRESS_AUTO)
+-			sbi->sync_decompress = EROFS_SYNC_DECOMPRESS_FORCE_ON;
+ 		return;
+ 	}
+ 	gfp_flag = memalloc_noio_save();
 -- 
 2.53.0
 
