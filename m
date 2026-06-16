@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84FB2478E5E;
-	Tue, 16 Jun 2026 18:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F36E13777E;
+	Tue, 16 Jun 2026 18:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635311; cv=none; b=Bhc5Fr5687FPVNzwspGD7fo9CJES4IkR7pUcWzqfQagOmnR9Vpcr/8li19XsIh4UIL+bQ+uPlYEI/6BCggp7GJ/7QT8TS6gq6xYeRLHenifV5qwfkCQP9i0qo062+MWJ76pBBIqnFvQsQzC0ZDDxERAv5Znhv4JEc/GBO/av+d0=
+	t=1781635316; cv=none; b=VF34MWtAgsss+6zh0LHxUYflnZUkoh80zzOXpICpvUsApV/oyNb4SjHAnhv2kFCw61lfLxG27LnmbaSZqPt5uYzg5OCBV5teLW/bWMwG3EUCEsDTK58nAeaZhJcV2mheXS0fuMW9kRNC+eZvkiRCx52JoWjjD6NLmpqNMYOfHoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635311; c=relaxed/simple;
-	bh=T0q1+v1C0rcc/J32AGYFG9IR/7QoI4g9q16GdwOcOUs=;
+	s=arc-20240116; t=1781635316; c=relaxed/simple;
+	bh=yx1HpeLTRxcTfsp5McpnFxQrMPzcTrctVu9RosfqiZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HrV9Y3Av4X1KXPbU+6gkXRvTPvOtWxbcDyn8KpIPaPTQ69JyYW/OYPOVY/QVRknhBDpTdSZcmJphd98gjY9mMMfwbfJec7O79EgUpd8JTTpkX6iWNJZ3GuGrPlTHNGLwki7/wz6//qDpX9kIqDT53NVmuOAvPZAixajxgMlWjck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MQyU/V9A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kaLEwUoNf7F38/Rr8vukHKPPu2njPA6/YgGPx4vARq0iqveV+0b3BWkRybaevGmNTun5B76zvelpD41smD9oNGUsFw8xpCt/B8sbRvRQDf/tc8KD9fq2GNUq2UB/nUZYJw+1yEVrZV4uZVBYABwhiI29OsNIlImbWbOzwxfmt+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZO2Rwgd8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MQyU/V9A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B80B1F000E9;
-	Tue, 16 Jun 2026 18:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZO2Rwgd8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CC1E1F000E9;
+	Tue, 16 Jun 2026 18:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635310;
-	bh=Fs8PZerIXY+zTb+PziJVIPfJjLrdWvbRmvxmKs1XVkc=;
+	s=korg; t=1781635315;
+	bh=nUwWsFoTfoSyg896OypkHQFkKdUtINxwPNho0nu2VDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MQyU/V9AS95uA3JVZuRHKdA3FjZsxU+o71Kx147M+5R9ilXCQLQxKhakkncIz1lzk
-	 9PbTUwpYkBq8B5iY/P88/Q+9F7j0LUF+Sruzg3S0KxkPgVVfJ5PORAv6HoIXEgsR8+
-	 1289EDICUNWlNTXXHvn6SW461bZ/iMBxCtTTgR1I=
+	b=ZO2Rwgd8aQdrrY9F64bzqwSH3vsF3lHFL+CnqZH5yECX7QFdczAUneGHIv1vsWml0
+	 4LOw62J4ffPCp8Xgr/EPjG1k0xBMrQDsPb9QJxuGH2bpGh6gHFUm2LgqZ1j+5AtqLs
+	 5dySEg4H2qcBt2YZy1i8nJPITI5B5dU71aRTV9q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Chandelkar <rc@rexion.ai>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ji-Soo Chung <jschung2@proton.me>,
+	Gerlinde <lrGerlinde@mailfence.com>,
+	zyc zyc <zyc199902@zohomail.cn>,
+	Manas Ghandat <ghandatmanas@gmail.com>,
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 025/342] ipv6: rpl: fix hdrlen overflow in ipv6_rpl_srh_decompress()
-Date: Tue, 16 Jun 2026 20:25:21 +0530
-Message-ID: <20260616145049.431194665@linuxfoundation.org>
+Subject: [PATCH 5.10 026/342] net/sched: Revert "net/sched: Restrict conditions for adding duplicating netems to qdisc tree"
+Date: Tue, 16 Jun 2026 20:25:22 +0530
+Message-ID: <20260616145049.479421675@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -51,60 +56,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Chandelkar <rc@rexion.ai>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 9d5e7a46a9f6d8f503b41bfefef70659845f1679 ]
+[ Upstream commit eda0b7f203bb166c98d1418b204135bd566ac83b ]
 
-ipv6_rpl_srh_decompress() computes:
+This reverts commit ec8e0e3d7adef940cdf9475e2352c0680189d14e.
 
-    outhdr->hdrlen = (((n + 1) * sizeof(struct in6_addr)) >> 3);
+The original patch rejects any tree containing two netems when
+either has duplication set, even when they sit on unrelated classes
+of the same classful parent. That broke configurations that have
+worked since netem was introduced.
 
-hdrlen is __u8. For n >= 127 the result exceeds 255 and silently
-truncates. With n=127 (cmpri=15, cmpre=15, pad=0, hdrlen=16):
+The re-entrancy problem the original commit was trying to solve is
+handled by later patch using tc_depth flag.
 
-    (128 * 16) >> 3 = 256, truncated to 0 as __u8
+Doing this revert will (re)expose the original bug with multiple
+netem duplication. When this patch is backported make sure
+and get the full series.
 
-The caller in ipv6_rpl_srh_rcv() then places the compressed header
-at buf + ((ohdr->hdrlen + 1) << 3). With hdrlen=0 this is buf + 8,
-but the decompressed region occupies buf[0..2055] (8-byte header
-plus 128 full addresses). The compressed header overlaps the
-decompressed data, and ipv6_rpl_srh_compress() writes into this
-overlap, corrupting the routing header of the forwarded packet.
-
-The existing guard at exthdrs.c:546 checks (n + 1) > 255, which
-prevents n+1 from overflowing unsigned char (the segments_left
-field), but does not prevent the computed hdrlen from overflowing
-__u8. n=127 passes because 128 <= 255, yet hdrlen=256 does not
-fit.
-
-Tighten the bound to (n + 1) > 127. This caps n at 126, giving
-hdrlen = (127 * 16) >> 3 = 254, which fits in __u8. The compressed
-header then lands at buf + ((254 + 1) << 3) = buf + 2040, exactly
-past the decompressed region (buf[0..2039]). No overlap. 127
-segments is well beyond any realistic RPL deployment.
-
-Fixes: 8610c7c6e3bd ("net: ipv6: add support for rpl sr exthdr")
-Signed-off-by: Rahul Chandelkar <rc@rexion.ai>
-Link: https://patch.msgid.link/20260525154031.2290876-1-rc@rexion.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ec8e0e3d7ade ("net/sched: Restrict conditions for adding duplicating netems to qdisc tree")
+Reported-by: Ji-Soo Chung <jschung2@proton.me>
+Reported-by: Gerlinde <lrGerlinde@mailfence.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220774
+Reported-by: zyc zyc <zyc199902@zohomail.cn>
+Closes: https://lore.kernel.org/all/19adda5a1e2.12410b78222774.9191120410578703463@zohomail.cn/
+Reported-by: Manas Ghandat <ghandatmanas@gmail.com>
+Closes: https://lore.kernel.org/netdev/f69b2c8f-8325-4c2e-a011-6dbc089f30e4@gmail.com/
+Reviewed-by: Stephen Hemminger <stephen@networkplumber.org>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260525122556.973584-3-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/exthdrs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_netem.c | 40 ----------------------------------------
+ 1 file changed, 40 deletions(-)
 
-diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
-index 924f3d7901f09c..1bef03e2d8fc98 100644
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -544,7 +544,7 @@ static int ipv6_rpl_srh_rcv(struct sk_buff *skb)
- 	 * unsigned char which is segments_left field. Should not be
- 	 * higher than that.
- 	 */
--	if (r || (n + 1) > 255) {
-+	if (r || (n + 1) > 127) {
- 		kfree_skb(skb);
- 		return -1;
- 	}
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index 3e3bced82c564d..3dc6411b0a33c7 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -985,41 +985,6 @@ static int parse_attr(struct nlattr *tb[], int maxtype, struct nlattr *nla,
+ 	return 0;
+ }
+ 
+-static const struct Qdisc_class_ops netem_class_ops;
+-
+-static int check_netem_in_tree(struct Qdisc *sch, bool duplicates,
+-			       struct netlink_ext_ack *extack)
+-{
+-	struct Qdisc *root, *q;
+-	unsigned int i;
+-
+-	root = qdisc_root_sleeping(sch);
+-
+-	if (sch != root && root->ops->cl_ops == &netem_class_ops) {
+-		if (duplicates ||
+-		    ((struct netem_sched_data *)qdisc_priv(root))->duplicate)
+-			goto err;
+-	}
+-
+-	if (!qdisc_dev(root))
+-		return 0;
+-
+-	hash_for_each(qdisc_dev(root)->qdisc_hash, i, q, hash) {
+-		if (sch != q && q->ops->cl_ops == &netem_class_ops) {
+-			if (duplicates ||
+-			    ((struct netem_sched_data *)qdisc_priv(q))->duplicate)
+-				goto err;
+-		}
+-	}
+-
+-	return 0;
+-
+-err:
+-	NL_SET_ERR_MSG(extack,
+-		       "netem: cannot mix duplicating netems with other netems in tree");
+-	return -EINVAL;
+-}
+-
+ /* Parse netlink message to set options */
+ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 			struct netlink_ext_ack *extack)
+@@ -1087,11 +1052,6 @@ static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+ 	q->gap = qopt->gap;
+ 	q->counter = 0;
+ 	q->loss = qopt->loss;
+-
+-	ret = check_netem_in_tree(sch, qopt->duplicate, extack);
+-	if (ret)
+-		goto unlock;
+-
+ 	q->duplicate = qopt->duplicate;
+ 
+ 	/* for compatibility with earlier versions.
 -- 
 2.53.0
 
