@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3EC4502F;
-	Tue, 16 Jun 2026 16:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCFF477994;
+	Tue, 16 Jun 2026 16:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627561; cv=none; b=ibeMFpmdfzY+twdAx3BkJFfkF9m3JFP+UWA2fwPElloBEPohVycOKkmu5GrOt9HdG32oHSYLAsn77t7r5g+4RHynNgbKUemMl4J90NW0ygH/E4DfC8y0b/m/m4WDPc+QaK3aY6tZH3QHsUpuXib8sKxN5BVZAOOjHVLOzmh4i6U=
+	t=1781627572; cv=none; b=ZyhAbP5AUp50MPa4u7EFWsSuUHKkG9lI8U3Omxf+pJb88Cae9GgfZPEJlZi5oRTk9NbpDCxDE/2FRZ7e36TyR4YHFHmCm8MXE3KgFBefyGBsOchxtBrELxtKCgCRLZ9aOoZVKs0eHsp5DeyFhYwIxCUwukovpLZ+h3Y4Ozbszo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627561; c=relaxed/simple;
-	bh=ZW9PrIuO9k3J3UhjPhTxDdEb2f/BXPZtVNmLCQRTdhY=;
+	s=arc-20240116; t=1781627572; c=relaxed/simple;
+	bh=js95/L1PRUzd7Qk9VgZtAY9v1DzxeyZ0Bqn8gDdB9VQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fa9bEtJtoN7V52H8fgKaiIatkk2QfgDGBAvdlop2xaL1fCrNPfYUlmUVnHhKXnq1CLK13q+Ysz7AIu+1crXnO0JwWIX0wqxqffYByV4WM4v6i+rW6W8p5LIl8XBYTuO4fVT87VkR+lRudnxY7+5sh9iiZL7pn4MkRFPjyzoigXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7sJdWyi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cHnv/VpVfeZW6/P+zAbNZ6PeYplEg5hUsRI9tL8I4QYwLXzFUvICj6EewjxHiMuv5fMSJgyyXLLT6f9Ifu4XsBHmH3ek48o7guV1iS+ESbOjgIm0uqrGup5yOydVn5DNOaKpQkdq3NcyHTCZqbDssI3vnVxJkTELS+USrrK+/6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sy9u49fz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7sJdWyi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D8A1F000E9;
-	Tue, 16 Jun 2026 16:32:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sy9u49fz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC5D1F000E9;
+	Tue, 16 Jun 2026 16:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627560;
-	bh=ji70dKrK2fgvdzFhqeR2EFOnE/pCRaqiVkNdiN6P6oQ=;
+	s=korg; t=1781627570;
+	bh=sPzk5KUu+KnTQqDxBvtSAIjN837FnV67xqNDf+dRu1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x7sJdWyi7XWepwx2KvOSg+p4B6DF7EdGw0cWClgO7Y0Ypl0aDE4tlh6tnX8fBloS9
-	 TPAx9z+iqU4J8DU0Jw3VQvZm+N5PgnnLldn7gyAJNvJ6KQHRmjIcc3j7raypzYDtXQ
-	 Wew67ZHr+28zFLhQD3FQME0KA+4/Papvfte1wOj4=
+	b=Sy9u49fzRa3Ez2MHg99osn4+Rt4d7SGikk2+8zmVZun2ZaW5M962uRf7KUbX6FzMZ
+	 THIzfMsmDCTmG4qhJ6dh6xHVUheCTnSCuWlEO2pulG7i9GBJQ4O2jdw4/prA9bSNJB
+	 ++AuY+yfg5scvanS9sJiBGvyQ1jIgCQJHBzjK6sE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko@sntech.de>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.12 193/261] mmc: dw_mmc-rockchip: Add missing private data for very old controllers
-Date: Tue, 16 Jun 2026 20:30:31 +0530
-Message-ID: <20260616145054.007145798@linuxfoundation.org>
+	Hongfei Ren <lcrhf@outlook.com>,
+	stable@kernel.org,
+	Cryolitia PukNgae <cryolitia.pukngae@linux.dev>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.12 176/261] Input: atkbd - skip deactivate for HONOR BCC-Ns internal keyboard
+Date: Tue, 16 Jun 2026 20:30:14 +0530
+Message-ID: <20260616145053.237178247@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -51,69 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Stuebner <heiko@sntech.de>
+From: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
 
-commit 1e9a4850afa0ceb63984fb1a9f3e86d0fc4fd18f upstream.
+commit fb402386af4cdce108ff991a796386de55439735 upstream.
 
-The really old controllers (rk2928, rk3066, rk3188) do not support UHS
-speeds at all, and thus never handled phase data.
+After commit 9cf6e24c9fbf17e52de9fff07f12be7565ea6d61 ("Input: atkbd -
+do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID"), HONOR
+BCC-N, aka HONOR MagicBook 14 2026's internal keyboard stops
+working. Adding the atkbd_deactivate_fixup quirk fixes it.
 
-For that reason it never had a parse_dt callback and no driver private
-data at all.
+DMI: HONOR BCC-N/BCC-N-PCB, BIOS 1.04 04/07/2026
 
-Commit ff6f0286c896 ("mmc: dw_mmc-rockchip: Add memory clock auto-gating
-support") makes the private data sort of mandatory, because the init
-function checks whether phases are configured internally or through the
-clock controller.
-
-This results in the old SoCs then experiencing NULL-pointer dereferences
-when they try to access that private-data struct.
-
-While we could have if (priv) conditionals in all places, it's way less
-cluttery to just give the old types their private-data struct.
-
-Fixes: ff6f0286c896 ("mmc: dw_mmc-rockchip: Add memory clock auto-gating support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Fixes: 9cf6e24c9fbf17e52de9fff07f12be7565ea6d61 ("Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID")
+Reported-by: Hongfei Ren <lcrhf@outlook.com>
+Link: https://github.com/colorcube/Linux-on-Honor-Magicbook-14-Pro/issues/1#issuecomment-4562679891
+Tested-by: Hongfei Ren <lcrhf@outlook.com>
+Cc: stable@kernel.org
+Signed-off-by: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
+Link: https://patch.msgid.link/20260605-honor-v1-1-78e05e491193@linux.dev
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/dw_mmc-rockchip.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/input/keyboard/atkbd.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/mmc/host/dw_mmc-rockchip.c
-+++ b/drivers/mmc/host/dw_mmc-rockchip.c
-@@ -433,6 +433,22 @@ static int dw_mci_common_parse_dt(struct
- 	return 0;
- }
- 
-+static int dw_mci_rk2928_parse_dt(struct dw_mci *host)
-+{
-+	struct dw_mci_rockchip_priv_data *priv;
-+	int err;
-+
-+	err = dw_mci_common_parse_dt(host);
-+	if (err)
-+		return err;
-+
-+	priv = host->priv;
-+
-+	priv->internal_phase = false;
-+
-+	return 0;
-+}
-+
- static int dw_mci_rk3288_parse_dt(struct dw_mci *host)
- {
- 	struct dw_mci_rockchip_priv_data *priv;
-@@ -506,6 +522,7 @@ static int dw_mci_rockchip_init(struct d
- 
- static const struct dw_mci_drv_data rk2928_drv_data = {
- 	.init			= dw_mci_rockchip_init,
-+	.parse_dt		= dw_mci_rk2928_parse_dt,
+--- a/drivers/input/keyboard/atkbd.c
++++ b/drivers/input/keyboard/atkbd.c
+@@ -1945,6 +1945,13 @@ static const struct dmi_system_id atkbd_
+ 		},
+ 		.callback = atkbd_deactivate_fixup,
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "HONOR"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "BCC-N"),
++		},
++		.callback = atkbd_deactivate_fixup,
++	},
+ 	{ }
  };
  
- static const struct dw_mci_drv_data rk3288_drv_data = {
 
 
