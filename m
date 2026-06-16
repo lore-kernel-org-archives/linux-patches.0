@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6217544BCBE;
-	Tue, 16 Jun 2026 17:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9655047A0A9;
+	Tue, 16 Jun 2026 17:26:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630762; cv=none; b=K01rF4aCZEM0iyIYrcHRzn1m8td27gYjVQ/7ZnX/VU1Gyk4SRGtyqMmlLbyypBhp8NJRotDlb14hB2JZOEpCOybOSpTNC2n+83YIBLdWqlg1K9/qVs8dEP8ChjlZIP4pyWRcL9eY5Lkrpq4PJOJKL1B7rXEpUG520okLBXWvEyk=
+	t=1781630767; cv=none; b=PcvQWRxEs1YFe812IhxiUE8vVNyFnIjzlgV87GnP2M8MuHuoybLwZhSIP4MCHKUv3+4a5Avys29rS7YRagPN0EiZv15ZVpec+w59FCsdeYeUkcE5Hpxs1uJAtNP7WIJEcuqm1s7PxX+kXwgOoLRk52NV1mz0FnHUvAN9MORuKCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630762; c=relaxed/simple;
-	bh=C0kEhHtjjSASA03K8ppbB4mcQS6BaRUQxLnmZLu/8m4=;
+	s=arc-20240116; t=1781630767; c=relaxed/simple;
+	bh=EfiI3CCEsmPBE7OqgKxFXhv1RylZZXkSezccGdOq0ps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=svEBrRCPSg5Ag3ahZf5TBtxjo5SZmKXtCvR0sb9FhZZ/VpWmBHffW5PGBUuUntRhfXclABWp1O76EcVoGZXOoO+4URIfJeoR6VITmVQpRyUb/goa4LVl8pxq5t+QvEXPFEhvnRUOFPAfn5N/AGxh1xf9atxdswY1EG1rft/ZlFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VqH5UPQX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nYGa23K7DvzNE+X/+P+XuxvlTRX+r8fMOAmpOGKk+z5xf0/HOjINWFmMtP6hKtUzZSG83wE1PMVndAOSuglxchoXnMhBUAGkVSRctRvYg8XD8md1NajJD5B2yPeJVx7G4YQhI3B83GlJqNxEAJ9xOifTQt3Hq8rqeQoFbhWrXqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crvx1ghZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VqH5UPQX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC481F000E9;
-	Tue, 16 Jun 2026 17:26:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crvx1ghZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2B41F000E9;
+	Tue, 16 Jun 2026 17:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630761;
-	bh=xXjhlIs8zxJr76IrwrGSVAUPqWNvCAKjbp8TWs9AfyU=;
+	s=korg; t=1781630766;
+	bh=0arqabB24sUwym8N2HsZb79al4T4h2zv/Tj4lZMp4Dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VqH5UPQXCydvhHXP6As8OWzrtAYQQI9fQR1SaktpGIwZNK9DJdeg7TsaBSYkuZqbJ
-	 C4CTf0/dhjig12WKmOi/G9eV/XojAiY6UYGgV96qnjCVh0KDpLcLWpWWuIcavv1sRx
-	 Ed+fMUNDlP/aVDRw6UUysOFH/chrO0BWKmqQkDl0=
+	b=crvx1ghZyE2G1fNtWnQL/lg5aGhWkpq3qYIKxT5nNjBGH0RT8y5GdiahWjeYzDUKF
+	 Dop6cSaT5dV4mtoUxtek2vFTWGkzrwiqS5bsNdMOsg8vCFLJsuJVDkHAkhnIlOjBiQ
+	 SXLDqOLJjl0bgVM4G+s4PQkLbzMybWCC8EnOIhuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Zhang <shuai.zhang@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 091/522] Bluetooth: btusb: Allow firmware re-download when version matches
-Date: Tue, 16 Jun 2026 20:23:58 +0530
-Message-ID: <20260616145130.136016991@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>
+Subject: [PATCH 6.1 092/522] hpfs: fix a crash if hpfs_map_dnode_bitmap fails
+Date: Tue, 16 Jun 2026 20:23:59 +0530
+Message-ID: <20260616145130.197128599@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -50,57 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 82855073c1081732656734b74d7d1d5e4cfd0da7 upstream.
+commit 974820a59efde7c1a7e1260bcfe9bb81f833cc9f upstream.
 
-The Bluetooth host decides whether to download firmware by reading the
-controller firmware download completion flag and firmware version
-information.
+If hpfs_map_dnode_bitmap fails, the code would call hpfs_brelse4 on
+uninitialized quad buffer head, causing a crash.
 
-If a USB error occurs during the firmware download process (for example
-due to a USB disconnect), the download is aborted immediately. An
-incomplete firmware transfer does not cause the controller to set the
-download completion flag, but the firmware version information may be
-updated at an early stage of the download process.
-
-In this case, after USB reconnection, the host attempts to re-download
-the firmware because the download completion flag is not set. However,
-since the controller reports the same firmware version as the target
-firmware, the download is skipped. This ultimately results in the
-firmware not being properly updated on the controller.
-
-This change removes the restriction that skips firmware download when
-the versions are equal. It covers scenarios where the USB connection
-can be disconnected at any time and ensures that firmware download can
-be retriggered after USB reconnection, allowing the Bluetooth firmware
-to be correctly and completely updated.
-
-Fixes: 3267c884cefa ("Bluetooth: btusb: Add support for QCA ROME chipset family")
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
 Cc: stable@vger.kernel.org
-Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/hpfs/alloc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3440,7 +3440,13 @@ static int btusb_setup_qca_load_rampatch
- 		    "firmware rome 0x%x build 0x%x",
- 		    rver_rom, rver_patch, ver_rom, ver_patch);
- 
--	if (rver_rom != ver_rom || rver_patch <= ver_patch) {
-+	/* Allow rampatch when the patch version equals the firmware version.
-+	 * A firmware download may be aborted by a transient USB error (e.g.
-+	 * disconnect) after the controller updates version info but before
-+	 * completion.
-+	 * Allowing equal versions enables re-flashing during recovery.
-+	 */
-+	if (rver_rom != ver_rom || rver_patch < ver_patch) {
- 		bt_dev_err(hdev, "rampatch file version did not match with firmware");
- 		err = -EINVAL;
- 		goto done;
+--- a/fs/hpfs/alloc.c
++++ b/fs/hpfs/alloc.c
+@@ -372,8 +372,8 @@ int hpfs_check_free_dnodes(struct super_
+ 				return 0;
+ 			}
+ 		}
++		hpfs_brelse4(&qbh);
+ 	}
+-	hpfs_brelse4(&qbh);
+ 	i = 0;
+ 	if (hpfs_sb(s)->sb_c_bitmap != -1) {
+ 		bmp = hpfs_map_bitmap(s, b, &qbh, "chkdn1");
 
 
