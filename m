@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706CA477986;
-	Tue, 16 Jun 2026 16:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ECCC44DB64;
+	Tue, 16 Jun 2026 16:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626856; cv=none; b=OhwvN+tlbwjfbYfo8ArumsiCZLbrPupXn1z2sQN7wNVBxI5qY+EkyVfTd5JCldYwHvd2v/o5+wH9KdKtA3dKyWJlBxnQIvddt5LoHMAMDLVgH3+t09DiiSIzm90yDS+Q/MZBpqN19v14GlJwb+XwAAo5cQ31HhGAkun/M22zH14=
+	t=1781626862; cv=none; b=FE/JUubN/0WoiIsM9GBEXFmiCPBDnwUb4D7rOAYnZxdmnjZ95mLTDmQXfdwxZX+Qz+J79JjN3DryR+1rUWFjVxEQ6YYOb/Y+ZeoJJ8u2KW8il7oElelQ7wye1lf2/3Vbi8Fdmr819bhcj8a8jay6kNltawq7I6Ts+xG5NRxq0wQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626856; c=relaxed/simple;
-	bh=xZjWvgMF7iFlYED2vmlABbOHdJaWX0faiHbVqSclukw=;
+	s=arc-20240116; t=1781626862; c=relaxed/simple;
+	bh=8fk+LB+uP8lLKZANkthWaomLLvoz0S2JtYnlSy1Nn1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fPS4RnW0vBAmhfThSCWkoce4MGV8Ko3LzU3YxlV7bTG1TPeFhuWciNPE9Bkbwo8cBGX8WXaGyg4/WU5RKpANhbHZKwfpGePcL8vGijTU6W3wk10C6e+LE4So8UkY4ucfINxvh58i42nvdEvARahJI1QxYx/tqDuNEHmrR+6R/lQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1eMaGtst; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j2GjMzzvz/5nrjGjgg1RrijS0mJAd8YJLSUDDsO1Mq5zDLOZXUUp4hDlb7mt/lq1CwATPgMjG0pqhL/k1ipJZTPUROkJ+xPCVvPifmKcd8JiHfeIvQB2wz8WddGCJg1TCk3OMpxrj2RKliJ+7HFbf3pEdjRm9gANYJHqrKZ8x7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6tIuO1l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1eMaGtst"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0001F00A3A;
-	Tue, 16 Jun 2026 16:20:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6tIuO1l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90381F00A3D;
+	Tue, 16 Jun 2026 16:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626855;
-	bh=4K6+LbJge0zWh33jP1wRPbqcQEekzq7c7k5hovjSLxo=;
+	s=korg; t=1781626860;
+	bh=a8t0UVJ+fy8D/r832Y30Y++wp351wwpixxlk5VPxgNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1eMaGtstyddCaWAqzNOiE2O8+uDkUKpwv/f4uBirBFoSPvCdVMK2LuDxwo9vzf2BR
-	 38f3ZgTXAHT9pye3LHNqMg2ZSBBNwwAJA4fHopUzoVoGjVRWKWjDLg+s8rc4DabHFs
-	 pszWVhJjj0nsGTRVuWODG4I7/P4hH11r3ykLNXuE=
+	b=R6tIuO1lTikTxJCSuhgfx7RRwBq0Eo2s4X6KIr7rVG1YF7a3o8gpjONd0K+fVil2w
+	 j+T4Rxfx55WnJd0I+V6aRYiTrRA5os1s17TgwL9VwzZq5yuB0FJ8I+d9MY78L2xKGp
+	 hQgEVEmBiHesnq5l6fw8WIbsEBKbdGh+X2X6nLDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 083/261] net: phy: clean the sfp upstream if phy probing fails
-Date: Tue, 16 Jun 2026 20:28:41 +0530
-Message-ID: <20260616145048.907719266@linuxfoundation.org>
+Subject: [PATCH 6.12 084/261] net: qrtr: fix refcount saturation and potential UAF in qrtr_port_remove
+Date: Tue, 16 Jun 2026 20:28:42 +0530
+Message-ID: <20260616145048.948358230@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,51 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-[ Upstream commit 48774e87bbaa0056819d4b52301e4692e50e3252 ]
+[ Upstream commit a2171131ecda1ed61a594a1eb715e75fdad0fef5 ]
 
-Sashiko reported that we don't call sfp_bus_del_upstream() in the probe
-failure path, so let's add it, otherwise the sfp-bus is left with a
-dangling 'upstream' field, that may be used later on during SFP events.
+In qrtr_port_remove(), the socket reference count is decremented via
+__sock_put() before the port is removed from the qrtr_ports XArray and
+before the RCU grace period elapses.
 
-This issue existed before the generic phylib sfp support, back when
-drivers were calling phy_sfp_probe themselves.
+This breaks the fundamental RCU update paradigm. It exposes a race
+window where a concurrent RCU reader (such as qrtr_reset_ports() or
+qrtr_port_lookup()) can obtain a pointer to the socket from the XArray,
+and attempt to call sock_hold() on a socket whose reference count has
+already dropped to zero.
 
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Fixes: 298e54fa810e ("net: phy: add core phylib sfp support")
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260604092819.723505-2-maxime.chevallier@bootlin.com
+This exact race condition was hit during syzkaller fuzzing, leading to
+the following refcount saturation warning and a potential Use-After-Free:
+
+  refcount_t: saturated; leaking memory.
+  WARNING: CPU: 3 PID: 1273 at lib/refcount.c:22 refcount_warn_saturate+0xae/0x1d0
+  Modules linked in: qrtr(+) bochs drm_shmem_helper ...
+  Call Trace:
+   <TASK>
+   qrtr_reset_ports net/qrtr/af_qrtr.c:768 [inline] [qrtr]
+   __qrtr_bind.isra.0+0x48b/0x570 net/qrtr/af_qrtr.c:805 [qrtr]
+   qrtr_bind+0x17d/0x210 net/qrtr/af_qrtr.c:901 [qrtr]
+   kernel_bind+0xe4/0x120 net/socket.c:3592
+   qrtr_ns_init+0x1a6/0x380 net/qrtr/ns.c:715 [qrtr]
+   qrtr_proto_init+0x3b/0xff0 net/qrtr/af_qrtr.c:169 [qrtr]
+   do_one_initcall+0xf5/0x5e0 init/main.c:1283
+   ...
+   </TASK>
+
+Fix this by deferring the reference count decrement until after the
+xa_erase() and the synchronize_rcu() complete.
+
+(Note: The v1 of this patch incorrectly replaced __sock_put() with
+sock_put(). As Simon Horman pointed out, the callers of qrtr_port_remove()
+still hold a reference to the socket, so freeing the socket memory here
+would lead to a subsequent UAF in the caller. Thus, the __sock_put() is
+kept, but only repositioned to close the RCU race.)
+
+Fixes: bdabad3e363d ("net: Add Qualcomm IPC router")
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260604064801.1180388-1-w15303746062@163.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy_device.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/qrtr/af_qrtr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index eb478e4961cb9b..f2d067b907bf99 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -1508,6 +1508,9 @@ int phy_sfp_probe(struct phy_device *phydev,
+diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
+index b703e4c6458532..2c009793f1931d 100644
+--- a/net/qrtr/af_qrtr.c
++++ b/net/qrtr/af_qrtr.c
+@@ -707,13 +707,13 @@ static void qrtr_port_remove(struct qrtr_sock *ipc)
+ 	if (port == QRTR_PORT_CTRL)
+ 		port = 0;
  
- 		ret = sfp_bus_add_upstream(bus, phydev, ops);
- 		sfp_bus_put(bus);
+-	__sock_put(&ipc->sk);
+-
+ 	xa_erase(&qrtr_ports, port);
+ 
+ 	/* Ensure that if qrtr_port_lookup() did enter the RCU read section we
+ 	 * wait for it to up increment the refcount */
+ 	synchronize_rcu();
 +
-+		if (ret)
-+			phydev->sfp_bus = NULL;
- 	}
- 	return ret;
++	__sock_put(&ipc->sk);
  }
-@@ -3672,6 +3675,9 @@ static int phy_probe(struct device *dev)
- 	return 0;
  
- out:
-+	sfp_bus_del_upstream(phydev->sfp_bus);
-+	phydev->sfp_bus = NULL;
-+
- 	if (!phydev->is_on_sfp_module)
- 		phy_led_triggers_unregister(phydev);
- 
+ /* Assign port number to socket.
 -- 
 2.53.0
 
