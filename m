@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F55A478E55;
-	Tue, 16 Jun 2026 17:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E9D257827;
+	Tue, 16 Jun 2026 17:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632546; cv=none; b=fujKS1/VUJbcefZaw3JBbmdVfKTTmNcIE723ND/zR52KHLu+GkSppPdrgONnxW7l1x3xMlkAleCGnnCeOfNKWzzA2ebAsoL9O0zMRVfmoELBNxu7c7yxV25UXfJm1Q9QItFpOfeRxd6AsctCYwSdblTSLFbLhFUdeIXKWfXXHc8=
+	t=1781632552; cv=none; b=eF0SOt5s970USkoR1uIe1bcVsgEptFLMEJo4JaN7+lPRf7UlpDsDftceaOt8HLHHyilBy0FQuml/mOKRz1jNU45SSFV/b2cdfLa7Ung/Ga9h50Mld109xZFI9Xl5IJx9x7q5tzIpbeX8LXnX9E580TWq2wbGh4hxSugWiaPLumw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632546; c=relaxed/simple;
-	bh=hlHa1+CE2Fn0Vd3FSWmni9/19d2EoS5PS/0VeAfAlwk=;
+	s=arc-20240116; t=1781632552; c=relaxed/simple;
+	bh=+AFzyfZVXTXui6/chBu/Wp59NSAKHyXiTfXlG7HSlRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LdkK7rcy8ZpuRlJe5Mmo0kG/4ZeKHfQqKS9eg9E8rTcaAz/RjnwV80hQjd0093jWkJfP0qTL3cSfrOfhGvNRfwkANJ/JEqI6wSOpNYKgACEcz7XpPpVlQeglv7zIPLpngV/MGHXj8I8B73rocG1GKDsLfm5A2QifBwiPFeEaCoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hquEjS+Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qbQ0cRZtiubH7cqxjWy5siXMMoFH4KotIbkgzDBv8fggmW+K4NfjYBCnM0ImcOZUSl2KaOnrmb93tdo3BKIjQQlVq14gcH2CpH1t+iKk5RBE2QfDMsZVxwl71selC3aXSWxO4rA7waKqV5nOBsIfhjwrmH4QCMzcaQ+eBraouHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFpXL9db; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hquEjS+Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24DA41F00A3A;
-	Tue, 16 Jun 2026 17:55:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFpXL9db"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A851F000E9;
+	Tue, 16 Jun 2026 17:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632545;
-	bh=tk28eEXyGKSmXtrqWRKZI7zDql6cKVdc0KGwihM9Z5Y=;
+	s=korg; t=1781632550;
+	bh=W5RPdIwidTNQzlihX+V0RFdEaS4Kn3OvMrJ31i22Vo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hquEjS+Zi57y3KifcUBmjUXugSr7WALgeAcJfOOLCkSuSJjz0vgmuTpcucFemo6wC
-	 3B1aDYHVPhqJly00UBVmT+FMeYQXOxnE6XnqgFO/3t0UyCg0mTUNr7GvaHBRVL2qSZ
-	 SQK+kSpuQx990/Ay55DYEmsCqGzLL86P0Xj3c2To=
+	b=VFpXL9dbEBECYqjkQekF19gqbmsKtOgAcIBJxQ24Gz9Fjtm5gPYFpoJHSxu3Eeyt9
+	 ktPdyUnAf2Uya0bn8IA5g9NH6cOnz+l+qX1wXkVeKyVZxVOSixPKfuRVinbjNeo6cV
+	 EDgypP5ZXOtNdr/aQ5hC9ZUyPFdtzpCNJxyGt/Wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guopeng Zhang <zhangguopeng@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
-	Chen Ridong <chenridong@huaweicloud.com>,
-	Waiman Long <longman@redhat.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Mat Martineau <martineau@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 431/522] cgroup/cpuset: Reset DL migration state on can_attach() failure
-Date: Tue, 16 Jun 2026 20:29:38 +0530
-Message-ID: <20260616145146.132165243@linuxfoundation.org>
+Subject: [PATCH 6.1 432/522] genetlink: Use internal flags for multicast groups
+Date: Tue, 16 Jun 2026 20:29:39 +0530
+Message-ID: <20260616145146.176350677@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,67 +53,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guopeng Zhang <zhangguopeng@kylinos.cn>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 4a39eda5fdd867fc39f3c039714dd432cee00268 ]
+[ Upstream commit cd4d7263d58ab98fd4dee876776e4da6c328faa3 ]
 
-cpuset_can_attach() accumulates temporary SCHED_DEADLINE migration
-state in the destination cpuset while walking the taskset.
+As explained in commit e03781879a0d ("drop_monitor: Require
+'CAP_SYS_ADMIN' when joining "events" group"), the "flags" field in the
+multicast group structure reuses uAPI flags despite the field not being
+exposed to user space. This makes it impossible to extend its use
+without adding new uAPI flags, which is inappropriate for internal
+kernel checks.
 
-If a later task_can_attach() or security_task_setscheduler() check
-fails, cgroup_migrate_execute() treats cpuset as the failing subsystem
-and does not call cpuset_cancel_attach() for it. The partially
-accumulated state is then left behind and can be consumed by a later
-attach, corrupting cpuset DL task accounting and pending DL bandwidth
-accounting.
+Solve this by adding internal flags (i.e., "GENL_MCAST_*") and convert
+the existing users to use them instead of the uAPI flags.
 
-Reset the pending DL migration state from the common error exit when
-ret is non-zero. Successful can_attach() keeps the state for
-cpuset_attach() or cpuset_cancel_attach().
+Tested using the reproducers in commit 44ec98ea5ea9 ("psample: Require
+'CAP_NET_ADMIN' when joining "packets" group") and commit e03781879a0d
+("drop_monitor: Require 'CAP_SYS_ADMIN' when joining "events" group").
 
-Fixes: 2ef269ef1ac0 ("cgroup/cpuset: Free DL BW in case can_attach() fails")
-Cc: stable@vger.kernel.org # v6.10+
-Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Chen Ridong <chenridong@huaweicloud.com>
-Reviewed-by: Waiman Long <longman@redhat.com>
-[ omitted upstream context line `cs->dl_bw_cpu = cpu;` ]
+No functional changes intended.
+
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: d1ebfce2c1d1 ("smb: client: require net admin for CIFS SWN netlink")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/net/genetlink.h |    9 ++++++---
+ net/core/drop_monitor.c |    2 +-
+ net/mptcp/pm_netlink.c  |    2 +-
+ net/netlink/genetlink.c |    4 ++--
+ net/psample/psample.c   |    2 +-
+ 5 files changed, 11 insertions(+), 8 deletions(-)
 
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -2579,16 +2579,13 @@ static int cpuset_can_attach(struct cgro
- 		int cpu = cpumask_any_and(cpu_active_mask, cs->effective_cpus);
+--- a/include/net/genetlink.h
++++ b/include/net/genetlink.h
+@@ -8,16 +8,19 @@
  
- 		if (unlikely(cpu >= nr_cpu_ids)) {
--			reset_migrate_dl_data(cs);
- 			ret = -EINVAL;
- 			goto out_unlock;
- 		}
+ #define GENLMSG_DEFAULT_SIZE (NLMSG_DEFAULT_SIZE - GENL_HDRLEN)
  
- 		ret = dl_bw_alloc(cpu, cs->sum_migrate_dl_bw);
--		if (ret) {
--			reset_migrate_dl_data(cs);
-+		if (ret)
- 			goto out_unlock;
--		}
- 	}
- 
- out_success:
-@@ -3401,7 +3398,10 @@ static int cpuset_can_fork(struct task_s
- 	 * changes which zero cpus/mems_allowed.
- 	 */
- 	cs->attach_in_progress++;
++/* Binding to multicast group requires %CAP_NET_ADMIN */
++#define GENL_MCAST_CAP_NET_ADMIN	BIT(0)
++/* Binding to multicast group requires %CAP_SYS_ADMIN */
++#define GENL_MCAST_CAP_SYS_ADMIN	BIT(1)
 +
- out_unlock:
-+	if (ret)
-+		reset_migrate_dl_data(cs);
- 	mutex_unlock(&cpuset_mutex);
- 	return ret;
+ /**
+  * struct genl_multicast_group - generic netlink multicast group
+  * @name: name of the multicast group, names are per-family
+- * @flags: GENL_* flags (%GENL_ADMIN_PERM or %GENL_UNS_ADMIN_PERM)
+- * @cap_sys_admin: whether %CAP_SYS_ADMIN is required for binding
++ * @flags: GENL_MCAST_* flags
+  */
+ struct genl_multicast_group {
+ 	char			name[GENL_NAMSIZ];
+ 	u8			flags;
+-	u8			cap_sys_admin:1;
+ };
+ 
+ struct genl_ops;
+--- a/net/core/drop_monitor.c
++++ b/net/core/drop_monitor.c
+@@ -181,7 +181,7 @@ out:
  }
+ 
+ static const struct genl_multicast_group dropmon_mcgrps[] = {
+-	{ .name = "events", .cap_sys_admin = 1 },
++	{ .name = "events", .flags = GENL_MCAST_CAP_SYS_ADMIN, },
+ };
+ 
+ static void send_dm_alert(struct work_struct *work)
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1313,7 +1313,7 @@ bool mptcp_pm_nl_is_backup(struct mptcp_
+ static const struct genl_multicast_group mptcp_pm_mcgrps[] = {
+ 	[MPTCP_PM_CMD_GRP_OFFSET]	= { .name = MPTCP_PM_CMD_GRP_NAME, },
+ 	[MPTCP_PM_EV_GRP_OFFSET]        = { .name = MPTCP_PM_EV_GRP_NAME,
+-					    .flags = GENL_UNS_ADMIN_PERM,
++					    .flags = GENL_MCAST_CAP_NET_ADMIN,
+ 					  },
+ };
+ 
+--- a/net/netlink/genetlink.c
++++ b/net/netlink/genetlink.c
+@@ -1431,10 +1431,10 @@ static int genl_bind(struct net *net, in
+ 			continue;
+ 
+ 		grp = &family->mcgrps[i];
+-		if ((grp->flags & GENL_UNS_ADMIN_PERM) &&
++		if ((grp->flags & GENL_MCAST_CAP_NET_ADMIN) &&
+ 		    !ns_capable(net->user_ns, CAP_NET_ADMIN))
+ 			ret = -EPERM;
+-		if (grp->cap_sys_admin &&
++		if ((grp->flags & GENL_MCAST_CAP_SYS_ADMIN) &&
+ 		    !ns_capable(net->user_ns, CAP_SYS_ADMIN))
+ 			ret = -EPERM;
+ 
+--- a/net/psample/psample.c
++++ b/net/psample/psample.c
+@@ -32,7 +32,7 @@ enum psample_nl_multicast_groups {
+ static const struct genl_multicast_group psample_nl_mcgrps[] = {
+ 	[PSAMPLE_NL_MCGRP_CONFIG] = { .name = PSAMPLE_NL_MCGRP_CONFIG_NAME },
+ 	[PSAMPLE_NL_MCGRP_SAMPLE] = { .name = PSAMPLE_NL_MCGRP_SAMPLE_NAME,
+-				      .flags = GENL_UNS_ADMIN_PERM },
++				      .flags = GENL_MCAST_CAP_NET_ADMIN, },
+ };
+ 
+ static struct genl_family psample_nl_family __ro_after_init;
 
 
