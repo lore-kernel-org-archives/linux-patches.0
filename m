@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2306B46AF2E;
-	Tue, 16 Jun 2026 15:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8AC472768;
+	Tue, 16 Jun 2026 15:45:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624716; cv=none; b=AaALl0qef7+L31vcFT28IFSDU/qJ8S3WawI8xycDXffK3O+RjbBL/7rq3AOWqrkc1rdvi6jVufdfKS3VQAYWdr9HcFFnboDiX1iV9Cw+wA1bOoM2iVpkFZnf+Q5Z9dzrn0IqvhyLUH5ILft+2q//6jg7kQnyN64qgwC871RT2zI=
+	t=1781624722; cv=none; b=PDp+fFHmgM+fUjlTaBWIxIxagWG8ccAZn+t2aJEzOGXWw4OYleGybOygE8FvrMH2qH+JgTpD7T75K2/PpQgfnt0PVcXOlK1SvZJrC+/N3u6fDO3vE9kmG5eLsTp0gpmuJHfowFaKUKGQbcd1zKGhH1wyoSv6yzvJFL3KrgE+yWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624716; c=relaxed/simple;
-	bh=Mp2SRNdKkCcrRGLai9VMm4J7szM8bTpw2qiQwxJJPAk=;
+	s=arc-20240116; t=1781624722; c=relaxed/simple;
+	bh=HeqP5mG5KTEz2oodvtAKc5YoP0AI/VlR/ViQx+NXtXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UGqS1VU9dOHpCY1XmvS6VWSs+BND8AiZXZT4R/fyoUjNbf3sBEVj646b4AMP2WC+gsmIxYqwij0kvKShj6tkXDF8RYKkNm8+nh+rT2CMy97tCwjpdafmM2AbQ4H+iGKr/x5E1OH6kPylXM2zA8NYoyNMCBoCk06wuFXEkqTAY20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mw/hnChw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Aod0AJxLvs+KHQ3sYVvmfiCZ1rTIHPLefcsk7CKwbFQz+G4nb+VKd9gyNy1u5eEyFsQa7vyVm3KeFgrLfoY2V/cM045JbmTHdLHWe3baXH+xLCkjfR2tjcX8odLiNPpsg7P+l3YA/4sjO5J16lgPUk4IITizPv/QfdYeApeznBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2k02Tt2d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mw/hnChw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3F401F000E9;
-	Tue, 16 Jun 2026 15:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2k02Tt2d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0771F000E9;
+	Tue, 16 Jun 2026 15:45:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624713;
-	bh=J6BjNCzjPadzQ2H0AO0d2DlD5wJ85vi8kOOnslJB8c0=;
+	s=korg; t=1781624719;
+	bh=zBtHpd1/7cr5Ovo2uUvPoXDxKs4ssM45CvdeOqWBXo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mw/hnChwb6Zs/u6/Aud7bx7uVbBxpoNPOGsgF8YNz1QLUapFDh0AMm+pLNsmzXOSc
-	 raDP2DWVd8/6QMP+DgikyQedX4ipKI2Ws8JaUUcmES9sGowwy+eiLH68F9qTOjV4+s
-	 NPqvguyveLs2Pt4RIMXJ5Xhy13YQvQJ/7n7cLtDc=
+	b=2k02Tt2dyi9xHHLJ3xvFEIk1mIPeWPeMxEVHd4Fky//d5ZX0MT+rvY8di1jt3Up9A
+	 +Kt/9d7diaXzlLVcN7yFNNjE55cNHfepEVoCdOR0sEFLOKk9rCGJmd5wRvN+PsPYcC
+	 /m4OCMvR4JKfQwmxrZNmskmVQZ6DACVFB+njzHQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Lin <leo@depthfirst.com>,
-	David Ahern <dahern@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 008/325] ipv6: mcast: Fix use-after-free when processing MLD queries
-Date: Tue, 16 Jun 2026 20:26:44 +0530
-Message-ID: <20260616145058.234730728@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 017/325] erofs: tidy up synchronous decompression
+Date: Tue, 16 Jun 2026 20:26:53 +0530
+Message-ID: <20260616145058.657893379@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -54,102 +51,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-commit 791c91dc7a9dfb2457d5e29b8216a6484b9c4b40 upstream.
+[ Upstream commit cc831ab33644088c1eef78936de24701014d520a ]
 
-When processing an MLD query, a pointer to the multicast group address
-is retrieved when initially parsing the packet. This pointer is later
-dereferenced without being reloaded despite the fact that the skb header
-might have been reallocated following the pskb_may_pull() calls, leading
-to a use-after-free [1].
+ - Get rid of `sbi->opt.max_sync_decompress_pages` since it's fixed as
+   3 all the time;
 
-Fix by copying the multicast group address when the packet is initially
-parsed.
+ - Add Z_EROFS_MAX_SYNC_DECOMPRESS_BYTES in bytes instead of in pages,
+   since for non-4K pages, 3-page limitation makes no sense;
 
-[1]
-BUG: KASAN: slab-use-after-free in __mld_query_work (net/ipv6/mcast.c:1512)
-Read of size 8 at addr ffff8881154b8e90 by task kworker/4:1/118
+ - Move `sync_decompress` to sbi to avoid unexpected remount impact;
 
-Workqueue: mld mld_query_work
-Call Trace:
-<TASK>
-dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-print_address_description.constprop.0 (mm/kasan/report.c:378)
-print_report (mm/kasan/report.c:482)
-kasan_report (mm/kasan/report.c:595)
-__mld_query_work (net/ipv6/mcast.c:1512)
-mld_query_work (net/ipv6/mcast.c:1563)
-process_one_work (kernel/workqueue.c:3314)
-worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
-kthread (kernel/kthread.c:436)
-ret_from_fork (arch/x86/kernel/process.c:158)
-ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-</TASK>
+ - Fold z_erofs_is_sync_decompress() into its caller;
 
-[...]
+ - Better description of sysfs entry `sync_decompress`.
 
-Freed by task 118:
-kasan_save_stack (mm/kasan/common.c:57)
-kasan_save_track (mm/kasan/common.c:78)
-kasan_save_free_info (mm/kasan/generic.c:584)
-__kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
-kfree (./include/linux/kasan.h:235 mm/slub.c:2689 mm/slub.c:6251 mm/slub.c:6566)
-pskb_expand_head (net/core/skbuff.c:2335)
-__pskb_pull_tail (net/core/skbuff.c:2878 (discriminator 4))
-__mld_query_work (net/ipv6/mcast.c:1495 (discriminator 1))
-mld_query_work (net/ipv6/mcast.c:1563)
-process_one_work (kernel/workqueue.c:3314)
-worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
-kthread (kernel/kthread.c:436)
-ret_from_fork (arch/x86/kernel/process.c:158)
-ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-
-Fixes: 97300b5fdfe2 ("[MCAST] IPv6: Check packet size when process Multicast")
-Reported-by: Leo Lin <leo@depthfirst.com>
-Reviewed-by: David Ahern <dahern@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260603101811.612594-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Stable-dep-of: 1aee05e814d2 ("erofs: fix use-after-free on sbi->sync_decompress")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/mcast.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/ABI/testing/sysfs-fs-erofs | 14 ++++++----
+ fs/erofs/internal.h                      |  5 +---
+ fs/erofs/super.c                         |  3 +-
+ fs/erofs/sysfs.c                         |  2 +-
+ fs/erofs/zdata.c                         | 35 +++++++++---------------
+ 5 files changed, 25 insertions(+), 34 deletions(-)
 
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -1424,9 +1424,9 @@ out:
- static void __mld_query_work(struct sk_buff *skb)
+diff --git a/Documentation/ABI/testing/sysfs-fs-erofs b/Documentation/ABI/testing/sysfs-fs-erofs
+index 76d9808ed58143..b9243c7f28d718 100644
+--- a/Documentation/ABI/testing/sysfs-fs-erofs
++++ b/Documentation/ABI/testing/sysfs-fs-erofs
+@@ -10,12 +10,16 @@ Description:	Shows all enabled kernel features.
+ What:		/sys/fs/erofs/<disk>/sync_decompress
+ Date:		November 2021
+ Contact:	"Huang Jianan" <huangjianan@oppo.com>
+-Description:	Control strategy of sync decompression:
++Description:	Control strategy of synchronous decompression. Synchronous
++		decompression tries to decompress in the reader thread for
++		synchronous reads and small asynchronous reads (<= 12 KiB):
+ 
+-		- 0 (default, auto): enable for readpage, and enable for
+-		  readahead on atomic contexts only.
+-		- 1 (force on): enable for readpage and readahead.
+-		- 2 (force off): disable for all situations.
++		- 0 (auto, default): apply to synchronous reads only, but will
++		                     switch to 1 (force on) if any decompression
++		                     request is detected in atomic contexts;
++		- 1 (force on): apply to synchronous reads and small
++		                asynchronous reads;
++		- 2 (force off): disable synchronous decompression completely.
+ 
+ What:		/sys/fs/erofs/<disk>/drop_caches
+ Date:		November 2024
+diff --git a/fs/erofs/internal.h b/fs/erofs/internal.h
+index f7f622836198da..87edbb4366d16c 100644
+--- a/fs/erofs/internal.h
++++ b/fs/erofs/internal.h
+@@ -59,10 +59,6 @@ enum {
+ struct erofs_mount_opts {
+ 	/* current strategy of how to use managed cache */
+ 	unsigned char cache_strategy;
+-	/* strategy of sync decompression (0 - auto, 1 - force on, 2 - force off) */
+-	unsigned int sync_decompress;
+-	/* threshold for decompression synchronously */
+-	unsigned int max_sync_decompress_pages;
+ 	unsigned int mount_opt;
+ };
+ 
+@@ -116,6 +112,7 @@ struct erofs_sb_info {
+ 	/* managed XArray arranged in physical block number */
+ 	struct xarray managed_pslots;
+ 
++	unsigned int sync_decompress;	/* strategy for sync decompression */
+ 	unsigned int shrinker_run_no;
+ 	u16 available_compr_algs;
+ 
+diff --git a/fs/erofs/super.c b/fs/erofs/super.c
+index f5f5d19459eccd..e6725e9847bedd 100644
+--- a/fs/erofs/super.c
++++ b/fs/erofs/super.c
+@@ -379,8 +379,7 @@ static void erofs_default_options(struct erofs_sb_info *sbi)
  {
- 	struct mld2_query *mlh2 = NULL;
--	const struct in6_addr *group;
- 	unsigned long max_delay;
- 	struct inet6_dev *idev;
-+	struct in6_addr group;
- 	struct ifmcaddr6 *ma;
- 	struct mld_msg *mld;
- 	int group_type;
-@@ -1458,8 +1458,8 @@ static void __mld_query_work(struct sk_b
- 		goto kfree_skb;
+ #ifdef CONFIG_EROFS_FS_ZIP
+ 	sbi->opt.cache_strategy = EROFS_ZIP_CACHE_READAROUND;
+-	sbi->opt.max_sync_decompress_pages = 3;
+-	sbi->opt.sync_decompress = EROFS_SYNC_DECOMPRESS_AUTO;
++	sbi->sync_decompress = EROFS_SYNC_DECOMPRESS_AUTO;
+ #endif
+ #ifdef CONFIG_EROFS_FS_XATTR
+ 	set_opt(&sbi->opt, XATTR_USER);
+diff --git a/fs/erofs/sysfs.c b/fs/erofs/sysfs.c
+index 1e0658a1d95b9a..86b22b9f0c1910 100644
+--- a/fs/erofs/sysfs.c
++++ b/fs/erofs/sysfs.c
+@@ -59,7 +59,7 @@ static struct erofs_attr erofs_attr_##_name = {			\
+ #define ATTR_LIST(name) (&erofs_attr_##name.attr)
  
- 	mld = (struct mld_msg *)icmp6_hdr(skb);
--	group = &mld->mld_mca;
--	group_type = ipv6_addr_type(group);
-+	group = mld->mld_mca;
-+	group_type = ipv6_addr_type(&group);
+ #ifdef CONFIG_EROFS_FS_ZIP
+-EROFS_ATTR_RW_UI(sync_decompress, erofs_mount_opts);
++EROFS_ATTR_RW_UI(sync_decompress, erofs_sb_info);
+ EROFS_ATTR_FUNC(drop_caches, 0200);
+ #endif
+ #ifdef CONFIG_EROFS_FS_ZIP_ACCEL
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index 33932d56d3a46e..e98d9cb4fe99a4 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -9,6 +9,7 @@
+ #include <linux/cpuhotplug.h>
+ #include <trace/events/erofs.h>
  
- 	if (group_type != IPV6_ADDR_ANY &&
- 	    !(group_type&IPV6_ADDR_MULTICAST))
-@@ -1509,7 +1509,7 @@ static void __mld_query_work(struct sk_b
- 		}
- 	} else {
- 		for_each_mc_mclock(idev, ma) {
--			if (!ipv6_addr_equal(group, &ma->mca_addr))
-+			if (!ipv6_addr_equal(&group, &ma->mca_addr))
- 				continue;
- 			if (ma->mca_flags & MAF_TIMER_RUNNING) {
- 				/* gsquery <- gsquery && mark */
++#define Z_EROFS_MAX_SYNC_DECOMPRESS_BYTES	12288
+ #define Z_EROFS_PCLUSTER_MAX_PAGES	(Z_EROFS_PCLUSTER_MAX_SIZE / PAGE_SIZE)
+ #define Z_EROFS_INLINE_BVECS		2
+ 
+@@ -1097,21 +1098,6 @@ static int z_erofs_scan_folio(struct z_erofs_frontend *f,
+ 	return err;
+ }
+ 
+-static bool z_erofs_is_sync_decompress(struct erofs_sb_info *sbi,
+-				       unsigned int readahead_pages)
+-{
+-	/* auto: enable for read_folio, disable for readahead */
+-	if ((sbi->opt.sync_decompress == EROFS_SYNC_DECOMPRESS_AUTO) &&
+-	    !readahead_pages)
+-		return true;
+-
+-	if ((sbi->opt.sync_decompress == EROFS_SYNC_DECOMPRESS_FORCE_ON) &&
+-	    (readahead_pages <= sbi->opt.max_sync_decompress_pages))
+-		return true;
+-
+-	return false;
+-}
+-
+ static bool z_erofs_page_is_invalidated(struct page *page)
+ {
+ 	return !page_folio(page)->mapping && !z_erofs_is_shortlived_page(page);
+@@ -1473,9 +1459,9 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
+ #else
+ 		queue_work(z_erofs_workqueue, &io->u.work);
+ #endif
+-		/* enable sync decompression for readahead */
+-		if (sbi->opt.sync_decompress == EROFS_SYNC_DECOMPRESS_AUTO)
+-			sbi->opt.sync_decompress = EROFS_SYNC_DECOMPRESS_FORCE_ON;
++		/* See `sync_decompress` in sysfs-fs-erofs for more details */
++		if (sbi->sync_decompress == EROFS_SYNC_DECOMPRESS_AUTO)
++			sbi->sync_decompress = EROFS_SYNC_DECOMPRESS_FORCE_ON;
+ 		return;
+ 	}
+ 	gfp_flag = memalloc_noio_save();
+@@ -1795,16 +1781,21 @@ static void z_erofs_submit_queue(struct z_erofs_frontend *f,
+ 	z_erofs_decompress_kickoff(q[JQ_SUBMIT], nr_bios);
+ }
+ 
+-static int z_erofs_runqueue(struct z_erofs_frontend *f, unsigned int rapages)
++static int z_erofs_runqueue(struct z_erofs_frontend *f, unsigned int rabytes)
+ {
+ 	struct z_erofs_decompressqueue io[NR_JOBQUEUES];
+ 	struct erofs_sb_info *sbi = EROFS_I_SB(f->inode);
+-	bool force_fg = z_erofs_is_sync_decompress(sbi, rapages);
++	int syncmode = sbi->sync_decompress;
++	bool force_fg;
+ 	int err;
+ 
++	force_fg = (syncmode == EROFS_SYNC_DECOMPRESS_AUTO && !rabytes) ||
++		(syncmode == EROFS_SYNC_DECOMPRESS_FORCE_ON &&
++			(rabytes <= Z_EROFS_MAX_SYNC_DECOMPRESS_BYTES));
++
+ 	if (f->head == Z_EROFS_PCLUSTER_TAIL)
+ 		return 0;
+-	z_erofs_submit_queue(f, io, &force_fg, !!rapages);
++	z_erofs_submit_queue(f, io, &force_fg, !!rabytes);
+ 
+ 	/* handle bypass queue (no i/o pclusters) immediately */
+ 	err = z_erofs_decompress_queue(&io[JQ_BYPASS], &f->pagepool);
+@@ -1925,7 +1916,7 @@ static void z_erofs_readahead(struct readahead_control *rac)
+ 	z_erofs_pcluster_readmore(&f, rac, false);
+ 	z_erofs_pcluster_end(&f);
+ 
+-	(void)z_erofs_runqueue(&f, nrpages);
++	(void)z_erofs_runqueue(&f, nrpages << PAGE_SHIFT);
+ 	erofs_put_metabuf(&f.map.buf);
+ 	erofs_release_pages(&f.pagepool);
+ }
+-- 
+2.53.0
+
 
 
