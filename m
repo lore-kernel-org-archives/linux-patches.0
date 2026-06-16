@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE3746AEE1;
-	Tue, 16 Jun 2026 18:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525C5472798;
+	Tue, 16 Jun 2026 18:52:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635960; cv=none; b=VkIdeAJCgsha85vCe0mFZLSZpzB5nOQA/OOn831mGyJZi6ISKjvhu4Fy3BqC5Xt2JNAKNQ2hpmHwIoLJXna1Zo74K1p+dpZ0MgJNMfIk4+VeXx96V81iSn3s7CNwvZa9pg7cN1+Q0gDWxCpVBERRv79IBsZLqyXwJXDeqhYJrfg=
+	t=1781635965; cv=none; b=KRoaF+bLcWpRerjFDzzZbMXkY3GOyV+uEGcQtxsh4kvcdrQqCcxLgW31LI/0kTcTwtpWTAxLm73cSLKKV0Pxsm+kz73w/iZcSkwYoxVem/IYtnYSfQ4i5Xea8poaZVJSReG/d0PbJcIrdY6v5lmR6O0eIC/PYvDuJHMTYZz6csg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635960; c=relaxed/simple;
-	bh=3hv2XPksymUnRZCokGumVkp6B/K8ga4eXjjWObxLip0=;
+	s=arc-20240116; t=1781635965; c=relaxed/simple;
+	bh=U5nI7wgMjFbA1HeiLnoErQIDii2FrVHf2pblT7W1Kts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q2tPPgd9v6S28v0OZo/i86MubFjn+MlmDAP7mjxvKHuwzQbeozWfC6MtPhH2d6OnsYfIdQlPT56cxjrM/MqB9Vheg4G2tlmwamLIHjbV9YtRG5vctYXVE5JruBz7Sjhi9J/gepGyd7XljS/Iap8fu+E02RDMpltCj8nJppby+Nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s9laFdW/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nv9y4qv5M1o4Ws13aprGNV7KNmQwwOT5nY4yjSY+NWZAUncXHupvd9SSUA+ZFcqmaXw2f6qNGf1ODltxvG733XHkQW1HDIJT3G1ZNIwPle4sM3LDBks6RybzWFABgBKagTOQobOab7f8Z4P3o+u2bGwpk9+WIR+Y11gIMovru7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/SpECBU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s9laFdW/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8BD1F000E9;
-	Tue, 16 Jun 2026 18:52:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/SpECBU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DA51F000E9;
+	Tue, 16 Jun 2026 18:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635959;
-	bh=vBcWKKZNwBfcGjgir53woF0eyU5h3Wxpyn35lX7MtoQ=;
+	s=korg; t=1781635964;
+	bh=hgWu3prUOnCEwRUcSxb0hVM6Dn7tbLz4OTSu6MQo/Vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s9laFdW/LtpDPDx57BMxFKKcPadNVTqm+pw24sk+/VVI+UTEcDovwtp8Tqf+KDZfx
-	 9gbL5lR/MYgl9NQns2bcr3zG+UPA2aaxbZkljWnPU03bxeFXOhDwGj8Mclm24FanDK
-	 lFlBiznf1OaXWhkSqxmxy8jaECB9IgoPMRra1elA=
+	b=0/SpECBU+FeXcj8qCYwWjg8jEnBq+cV1klQv1AfZmJbDHhPA2s27DKYnBnfLbZHEZ
+	 D9/0Ab2hrd+eeL62UEC66qVqRQqD2tDIQ/pwlu6BS7QjGfB4GBkc5/pkxoUo8D6cmy
+	 WgunK1dDtjAbvRbiN7o3p0gIF366PS/jbhsMAPDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuqi Xu <xuyq21@lenovo.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 148/342] net/802/mrp: fix vector attribute parsing in mrp_pdu_parse_vecattr
-Date: Tue, 16 Jun 2026 20:27:24 +0530
-Message-ID: <20260616145055.065952993@linuxfoundation.org>
+Subject: [PATCH 5.10 149/342] sctp: purge outqueue on stale COOKIE-ECHO handling
+Date: Tue, 16 Jun 2026 20:27:25 +0530
+Message-ID: <20260616145055.110131303@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -56,77 +58,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 7561c7fbc694308da73300f036719e63e42bf0b4 ]
+[ Upstream commit e374b22e9b07b72a25909621464ff74096151bfb ]
 
-In mrp_pdu_parse_vecattr(), vector attribute events are encoded three
-per byte and valen tracks the number of events left to process.
+sctp_stream_update() is only invoked when the association is moved into
+COOKIE_WAIT during association setup/reconfiguration. In this path, the
+outbound stream scheduler state (stream->out_curr) is expected to be
+clean, since no user data should have been transmitted yet unless the
+state machine has already partially progressed.
 
-The parser decrements valen after processing the first and second events
-from each event byte, but not after processing the third one. When valen
-is exactly a multiple of three, the loop continues after the last valid
-event and consumes the next byte as a new event byte, applying a
-spurious event to the MRP applicant state.
+However, a corner case exists in sctp_sf_do_5_2_6_stale(): when a
+Stale Cookie ERROR is received, the association is rolled back from
+COOKIE_ECHOED to COOKIE_WAIT. In this scenario, user data may already
+have been queued and even bundled with the COOKIE-ECHO chunk.
 
-Additionally, when valen is zero the parser unconditionally consumes
-attrlen bytes as FirstValue and advances the offset, even though per
-IEEE 802.1ak a VectorAttribute with only a LeaveAllEvent has valen of
-zero and no FirstValue or Vector fields. This corrupts the offset for
-subsequent PDU parsing.
+During the rollback, sctp_stream_update() frees the old stream table
+and installs a new one, but it does not invalidate stream->out_curr.
+As a result, out_curr may still point to a freed sctp_stream_out
+entry from the previous stream state.
 
-Also, when valen exceeds three the loop crosses byte boundaries but
-the attribute value is not incremented between the last event of one
-byte and the first event of the next. This causes the first event of
-the next byte to use the same attribute value as the third event
-rather than the next consecutive value.
+Later, SCTP scheduler dequeue paths (FCFS, RR, PRIO, etc.) rely on
+stream->out_curr->ext, which can lead to use-after-free once the old
+stream state has been released via sctp_stream_free().
 
-Decrement valen after processing the third event, skip FirstValue
-consumption when valen is zero, and increment the attribute value at
-the end of each loop iteration.
+This results in crashes such as (reported by Yuqi):
 
-Fixes: febf018d2234 ("net/802: Implement Multiple Registration Protocol (MRP)")
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Link: https://patch.msgid.link/20260603060016.21522-1-zhaoyz24@mails.tsinghua.edu.cn
+  BUG: KASAN: slab-use-after-free in sctp_sched_fcfs_dequeue+0x13a/0x140
+  Read of size 8 at addr ff1100004d4d3208 by task mini_poc/9312
+  CPU: 1 UID: 1001 PID: 9312 Comm: mini_poc Not tainted
+     7.1.0-rc1-00305-gbd3a4795d574 #5 PREEMPT(full)
+   sctp_sched_fcfs_dequeue+0x13a/0x140
+   sctp_outq_flush+0x1603/0x33e0
+   sctp_do_sm+0x31c9/0x5d30
+   sctp_assoc_bh_rcv+0x392/0x6f0
+   sctp_inq_push+0x1db/0x270
+   sctp_rcv+0x138d/0x3c10
+
+Fix this by fully purging the association outqueue when handling the
+Stale Cookie case. This ensures all pending transmit and retransmit
+state is dropped, and any scheduler cached pointers are invalidated,
+making it safe to rebuild stream state during COOKIE_WAIT restart.
+
+Updating only stream->out_curr would be insufficient, since queued
+and retransmittable data would still reference the old stream state and
+trigger later use-after-free in dequeue paths.
+
+Fixes: 5bbbbe32a431 ("sctp: introduce stream scheduler foundations")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Reported-by: Yuqi Xu <xuyq21@lenovo.com>
+Reported-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/94318159b9052907a6cbb7256aee8b5f8dfbfccb.1780510304.git.lucien.xin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/802/mrp.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/sctp/sm_statefuns.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/net/802/mrp.c b/net/802/mrp.c
-index c10a432a5b4351..017839c141841f 100644
---- a/net/802/mrp.c
-+++ b/net/802/mrp.c
-@@ -702,6 +702,12 @@ static int mrp_pdu_parse_vecattr(struct mrp_applicant *app,
- 	valen = be16_to_cpu(get_unaligned(&mrp_cb(skb)->vah->lenflags) &
- 			    MRP_VECATTR_HDR_LEN_MASK);
+diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
+index af75b940855681..7ac3ad83ddd5fe 100644
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -2523,11 +2523,7 @@ static enum sctp_disposition sctp_sf_do_5_2_6_stale(
+ 	 */
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_DEL_NON_PRIMARY, SCTP_NULL());
  
-+	/* If valen is 0, only a LeaveAllEvent is present; FirstValue and
-+	 * Vector fields are absent per IEEE 802.1ak.
-+	 */
-+	if (valen == 0)
-+		return 0;
-+
- 	/* The VectorAttribute structure in a PDU carries event information
- 	 * about one or more attributes having consecutive values. Only the
- 	 * value for the first attribute is contained in the structure. So
-@@ -752,6 +758,9 @@ static int mrp_pdu_parse_vecattr(struct mrp_applicant *app,
- 		vaevents %= __MRP_VECATTR_EVENT_MAX;
- 		vaevent = vaevents;
- 		mrp_pdu_parse_vecattr_event(app, skb, vaevent);
-+		valen--;
-+		mrp_attrvalue_inc(mrp_cb(skb)->attrvalue,
-+				  mrp_cb(skb)->mh->attrlen);
- 	}
- 	return 0;
- }
+-	/* If we've sent any data bundled with COOKIE-ECHO we will need to
+-	 * resend
+-	 */
+-	sctp_add_cmd_sf(commands, SCTP_CMD_T1_RETRAN,
+-			SCTP_TRANSPORT(asoc->peer.primary_path));
++	sctp_add_cmd_sf(commands, SCTP_CMD_PURGE_OUTQUEUE, SCTP_NULL());
+ 
+ 	/* Cast away the const modifier, as we want to just
+ 	 * rerun it through as a sideffect.
 -- 
 2.53.0
 
