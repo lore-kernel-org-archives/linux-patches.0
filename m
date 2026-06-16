@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5059F44DB85;
-	Tue, 16 Jun 2026 15:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E53466B59;
+	Tue, 16 Jun 2026 15:59:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625555; cv=none; b=VyaH/BVDvoOMB2Gvh14Z/QJzVWw+7Z0Q0o3C2063PhWqW/3klWG+yG19nVxUmbNAyzlPvBBsk2JGiQZEiQ0F/FaUZvzF6tP1TiYznLSpV20bNw8xu6jY0xEOclimYhxNbNNXzxbSXsQa/hjM8Yt+LlnBxWXy16Sv11TRJc9h3RY=
+	t=1781625561; cv=none; b=CLueyd9m35/eK2pJucqn4OjPhfc5s4jsVCvlB6qKyrxCLYF4JXWv7udRDzY5+lJq6dT1pNs79karX5llBfIcX8+3ivqyoyl949ffaJ4un7T1MgRUzuZY1OF4m2ULeKAYoZsqQtp1ibHpebE5JHg4sG5+mvbDYem8k2G8tRUWq18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625555; c=relaxed/simple;
-	bh=wHz3u9bUDE2Dc3NLv3AKiGrbjPOL+jsUo15LR3UwboM=;
+	s=arc-20240116; t=1781625561; c=relaxed/simple;
+	bh=3trlXIDLgG+7DXKnEdcl/5uX0iVSaoO7sqFsFDbocQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UOw3sP18WUY/8F5GFphn0OcHGqTXxJH6hx5m1q6WqLqMne7Kr7EHmcYMdPyBv+/4GLFlrSJCqBh3P5+BrLDV5EVevdFEHsvIuIn52fBq+qv3BofdrX2qT/V5IiOk2/JgHUlP0gyGBjE/Hagre8ZjTFQA7WomlQ0WZYC8cGug9k8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E646wBVe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qW/vGJJ/VQipPDSLMafEaRHeSDt8RF1UAERc/y7D/JhgXI3CooVLTDYpq4Czorh8DE65J5YTueGBErMFGisLddudgsdGlPiDK7f0bPQfUYD9y9rQU1ywn6A2B+EwIDzyFfVqpznAaLubA4MAvfZo+pc31XkVNGoQoFKL4VKRguo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EfOYHeoA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E646wBVe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AADD61F000E9;
-	Tue, 16 Jun 2026 15:59:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EfOYHeoA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929331F000E9;
+	Tue, 16 Jun 2026 15:59:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625554;
-	bh=EygnMJfMWT7TsL33+Qd4aEm4huAcGxPOGnxG2Y7+1/U=;
+	s=korg; t=1781625560;
+	bh=O9Iw9vkJsGiVIqOJzVk3aL5Z0mYf+wet8TMoM15wq7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E646wBVeMTt6vhjnAKtMKV2isMsgxLxubKeE/YdmyZC7EeMs0QkuVhdFJGI9j/RSU
-	 3UxsQ65lbdPlsP4jERlGdt+x1xydYizQTqXQjpvdoTxyCpl60Sg3XLs56RUq/QM4CE
-	 QZDX9vSg77GMmgrlgUz+ro6BeC+Dy5x347gIEWX4=
+	b=EfOYHeoA761jtGZvF+LrOg5JmaBK71mUZ5rNwYkKIwlXHMaE5MBE72ujHZ3RRbC1B
+	 EqAtjtadG9ToSzn/l6PFRtrqN54ftgEoIVziCr2gXUX5Nsi86lSzvwLB9ALWzmXyfM
+	 Do3qyCiEtzXOX7gEUX6SO2NYbjo0eLtzlyHQkV3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tom Lendacky <thomas.lendacky@amd.com>,
 	Michael Roth <michael.roth@amd.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.18 165/325] KVM: Dont WARN if memory is dirtied without a vCPU when the VM is dying
-Date: Tue, 16 Jun 2026 20:29:21 +0530
-Message-ID: <20260616145106.011231791@linuxfoundation.org>
+Subject: [PATCH 6.18 166/325] KVM: SEV: Decouple the need to sync the GHCB SA from the need to free the SA
+Date: Tue, 16 Jun 2026 20:29:22 +0530
+Message-ID: <20260616145106.065002312@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -53,61 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-commit 8618004d3e897c0f1b71d9a9ab860461289bb89a upstream.
+commit f041dc80de4abbdd0909d871bf64f3f87d2350ff upstream.
 
-When marking a page dirty, complain about not having a running/loaded vCPU
-if and only if the VM is still alive, i.e. its refcount is non-zero.  This
-will allow fixing a memory leak for x86 SEV-ES guests without hitting what
-is effectively a false positive on the WARN.
+Decouple synchronizing the GHCB SA from freeing/unpinning the SA, so that
+the free/unpin path can be reused when freeing a vCPU.
 
-For some SEV-ES VM-Exits, KVM keeps a writable mapping of a guest page
-across an exit to userspace, and typically unmaps the page on the next
-KVM_RUN.  But if userspace never calls KVM_RUN after such an exit, then KVM
-needs to unmap the page when the vCPU is destroyed, which in turn triggers
-the WARN about not having a running vCPU.
+Opportunistically add a WARN to harden KVM against stomping over (and thus
+leaking) an already-allocated scratch area.
 
-Alternatively, SEV-ES could temporarily load the vCPU to suppress the WARN,
-as is done in nested_vmx_free_vcpu() (but for completely unrelated reasons;
-suppressing WARN from nested_put_vmcs12_pages() is pure happenstance).  But
-loading a vCPU during destruction is gross (ideally nVMX code would be
-cleaned up), risks complicating the SEV-ES code (KVM would need to ensure
-the temporarily load()+put() only runs when the vCPU isn't already loaded),
-and is ultimately pointless.
-
-The motivation for the WARN is to guard against KVM dirtying guest memory
-without pushing the corresponding GFN to the active vCPU's dirty ring, e.g.
-to ensure userspace doesn't miss a dirty page.  But for the VM's refcount
-to reach zero, there can't be _any_ userspace mappings to the dirty ring,
-as mapping the dirty ring requires doing mmap() on the vCPU FD.  I.e. if
-userspace had a valid mapping for the dirty ring, then the vCPU file and
-thus the owning VM would still be alive.  And so since userspace can't
-possibly reach the dirty ring, whether or not KVM technically "misses" a
-push to the dirty ring is irrelevant.
-
-Reported-by: Michael Roth <michael.roth@amd.com>
 Cc: stable@vger.kernel.org
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
 Reviewed-by: Michael Roth <michael.roth@amd.com>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260501202250.2115252-15-seanjc@google.com>
+Message-ID: <20260501202250.2115252-17-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <20260529183549.1104619-15-pbonzini@redhat.com>
+Message-ID: <20260529183549.1104619-17-pbonzini@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/kvm_main.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kvm/svm/sev.c |   27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -3527,7 +3527,8 @@ void mark_page_dirty_in_slot(struct kvm
- 	if (WARN_ON_ONCE(vcpu && vcpu->kvm != kvm))
+--- a/arch/x86/kvm/svm/sev.c
++++ b/arch/x86/kvm/svm/sev.c
+@@ -3540,20 +3540,17 @@ void sev_es_unmap_ghcb(struct vcpu_svm *
+ 	if (!svm->sev_es.ghcb)
  		return;
  
--	WARN_ON_ONCE(!vcpu && !kvm_arch_allow_write_without_running_vcpu(kvm));
-+	WARN_ON_ONCE(!vcpu && refcount_read(&kvm->users_count) &&
-+		     !kvm_arch_allow_write_without_running_vcpu(kvm));
- #endif
+-	if (svm->sev_es.ghcb_sa_free) {
+-		/*
+-		 * The scratch area lives outside the GHCB, so there is a
+-		 * buffer that, depending on the operation performed, may
+-		 * need to be synced, then freed.
+-		 */
+-		if (svm->sev_es.ghcb_sa_sync) {
+-			kvm_write_guest(svm->vcpu.kvm,
+-					svm->sev_es.sw_scratch,
+-					svm->sev_es.ghcb_sa,
+-					svm->sev_es.ghcb_sa_len);
+-			svm->sev_es.ghcb_sa_sync = false;
+-		}
++	/*
++	 * If the scratch area lives outside the GHCB, there's a buffer that,
++	 * depending on the operation performed, may need to be synced.
++	 */
++	if (svm->sev_es.ghcb_sa_sync) {
++		kvm_write_guest(svm->vcpu.kvm, svm->sev_es.sw_scratch,
++				svm->sev_es.ghcb_sa, svm->sev_es.ghcb_sa_len);
++		svm->sev_es.ghcb_sa_sync = false;
++	}
  
- 	if (memslot && kvm_slot_dirty_track_enabled(memslot)) {
++	if (svm->sev_es.ghcb_sa_free) {
+ 		kvfree(svm->sev_es.ghcb_sa);
+ 		svm->sev_es.ghcb_sa = NULL;
+ 		svm->sev_es.ghcb_sa_free = false;
+@@ -3633,6 +3630,8 @@ static int setup_vmgexit_scratch(struct
+ 		goto e_scratch;
+ 	}
+ 
++	WARN_ON_ONCE(svm->sev_es.ghcb_sa_sync || svm->sev_es.ghcb_sa_free);
++
+ 	if ((scratch_gpa_beg & PAGE_MASK) == control->ghcb_gpa) {
+ 		/* Scratch area begins within GHCB */
+ 		ghcb_scratch_beg = control->ghcb_gpa +
+@@ -3654,6 +3653,8 @@ static int setup_vmgexit_scratch(struct
+ 		scratch_va = (void *)svm->sev_es.ghcb;
+ 		scratch_va += (scratch_gpa_beg - control->ghcb_gpa);
+ 
++		svm->sev_es.ghcb_sa_sync = false;
++		svm->sev_es.ghcb_sa_free = false;
+ 		svm->sev_es.ghcb_sa_len = ghcb_scratch_end - scratch_gpa_beg;
+ 	} else {
+ 		/* GHCB v2 requires the scratch area to be within the GHCB. */
 
 
