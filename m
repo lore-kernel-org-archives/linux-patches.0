@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB513D091A;
-	Tue, 16 Jun 2026 18:10:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93E73D47CE;
+	Tue, 16 Jun 2026 18:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633446; cv=none; b=uXy0mWZwB3XME2Z2zn4nEE5C2qWvzQZKHOTOMDCaWRP39Xza98qv2uqhN9IY+SZVQqiS1qf2CxvohmQcE7qrMA4JRh7nm4yzhL5enYbPK3e5MQWcSH3mQiGL95AJnExLuLV0U7inyQDdFZQMEWuurTcyU26HANva0ItF9qjsPNw=
+	t=1781633451; cv=none; b=Uw2Tgu0X5//O6RGXY+tx0CEgQypR7vd0wiyBlIDDFH1hdXUoLJF5OF9yw9B34cCe34kSCmzFzRDs+0wFjDXWwOZuBi0TPeZG5myb+7Gm9XmbQ+/3HX1UhnnG/7Ilo5KGEPRgr26DvWDT2vFlj44rLPLMc+F9YI653F3xd2COW4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633446; c=relaxed/simple;
-	bh=aGTjBl+AqMkGNPeaPbyfQnL4l4BVi/zhmLVqcoYctHY=;
+	s=arc-20240116; t=1781633451; c=relaxed/simple;
+	bh=SRUJH3d2igwyUsXMyBOHKzVvjR3oL4Bn4pB4oXnMTWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UgsG0MOrucYResaREz1EwxJeSIybD9z/V3MoyyZrUuMCj+aUHxSc1EIM5/hEFgbKKOqI/oGSm7QoS6BqTt2ZOEhiXiWLKph2rYZfiE3ZxiQl2XM5papxjLx22R9hqALc6R9rlEGgHIMKdQkGyRGgOVoVBhLo6ir21weMPlwesks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kit+4cKA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hoF2G/NOeBX24hte6UBDcls1zySs6cLrUszWR50uCgH4pVhOO7Dot+bVSGNyrcsYMSTLRuRuottnr2MHAqDtSXjBhiHAwU59FONso5WNs+sllJiRdlCbha59psj6wFfpIk8smQys4B6g06fFTMzBbSFmj8BFsjYs7vLfKyY4tMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQGYdWaA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kit+4cKA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC461F000E9;
-	Tue, 16 Jun 2026 18:10:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQGYdWaA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A638B1F00A3D;
+	Tue, 16 Jun 2026 18:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633445;
-	bh=dzMZc3BOW4XndSwEbPTGerkbcUVVUL5Bz90qKuDfgcY=;
+	s=korg; t=1781633450;
+	bh=32qzgMV7ImmH29JGKv4rgYaC9yCM/rjYEMpKdOL//cY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kit+4cKAFyRxiW+ZRUusrMVmKlXDMxd68J4JfgnEylkakCm4UE7c+mTpipjlDMV0H
-	 zSCfKt312LYp8xgyVuoWkmkY8lqDewRj62MVCfdiO7ptJCrVS1C74LSlZhDOgel3k8
-	 CX7H0ZB+jcJ6FjbzyXwcQB+fJrblmDNdPpJYlA3Q=
+	b=LQGYdWaASYs0b1lLkuRag2ChDwDLtwpPx+rAXhVq7s0TcZ/l+crbD9O1O8JbeAiyr
+	 kOFuhwBkxVrh61wabqvRMs318Y6vepdynLf0kb+2xWUQujJSSSXG/IXjiDx1mwt/7t
+	 W3X/JDv4CuAKSPqaSBmeiVY/p1QQjlvh/IRHPirQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 079/411] USB: serial: omninet: fix memory corruption with small endpoint
-Date: Tue, 16 Jun 2026 20:25:17 +0530
-Message-ID: <20260616145104.471014110@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Peter Chen <peter.chen@kernel.org>,
+	Yongchao Wu <yongchao.wu@autochips.com>
+Subject: [PATCH 5.15 080/411] usb: cdns3: gadget: fix request skipping after clearing halt
+Date: Tue, 16 Jun 2026 20:25:18 +0530
+Message-ID: <20260616145104.525852015@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -49,55 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Yongchao Wu <yongchao.wu@autochips.com>
 
-commit 60df93d30f9bdd27db17c4d80ed80ef718d7226b upstream.
+commit c8778ff817a7047d6848fefba99dcb27b1bf01fe upstream.
 
-Make sure that the bulk-out buffers are at least as large as the
-hardcoded transfer size to avoid user-controlled slab corruption should
-a malicious device report a smaller endpoint max packet size than
-expected.
+According to the cdns3 datasheet, the EPRST (Endpoint Reset) command
+causes the DMA engine to reposition its internal pointer to the next
+Transfer Descriptor (TD) if it was already processing one.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+This issue is consistently observed during the ADB identification
+process on macOS hosts, where the host issues a Clear_Halt. Although
+commit 4bf2dd65135a ("usb: cdns3: gadget: toggle cycle bit before reset
+endpoint") attempted to avoid DMA advance by toggling the cycle bit,
+trace logs show that on certain hosts like macOS, the DMA pointer
+(EP_TRADDR) still shifts after EPRST:
+
+  cdns3_ctrl_req: Clear Endpoint Feature(Halt ep1out)
+  cdns3_doorbell_epx: ep1out, ep_trbaddr f9c04030  <-- Should be f9c04000
+  cdns3_gadget_giveback: ep1out: req: ... length: 16384/16384
+
+As shown above, the DMA pointer jumped to the next TD, causing
+the controller to skip the initial TRBs of the request. This leads to
+data misalignment and ADB protocol hangs on macOS.
+
+Fix this by manually restoring the EP_TRADDR register to the starting
+physical address of the current request after the EPRST operation is
+complete.
+
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Cc: stable <stable@kernel.org>
+Cc: Peter Chen <peter.chen@kernel.org>
+Signed-off-by: Yongchao Wu <yongchao.wu@autochips.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260513160012.2547894-1-yongchao.wu@autochips.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/omninet.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/usb/cdns3/cdns3-gadget.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/omninet.c
-+++ b/drivers/usb/serial/omninet.c
-@@ -30,6 +30,10 @@
- /* This one seems to be a re-branded ZyXEL device */
- #define BT_IGNITIONPRO_ID	0x2000
+--- a/drivers/usb/cdns3/cdns3-gadget.c
++++ b/drivers/usb/cdns3/cdns3-gadget.c
+@@ -2812,9 +2812,19 @@ int __cdns3_gadget_ep_clear_halt(struct
+ 	priv_ep->flags &= ~(EP_STALLED | EP_STALL_PENDING);
  
-+#define OMNINET_HEADERLEN	4
-+#define OMNINET_BULKOUTSIZE	64
-+#define OMNINET_PAYLOADSIZE	(OMNINET_BULKOUTSIZE - OMNINET_HEADERLEN)
+ 	if (request) {
+-		if (trb)
++		if (trb) {
+ 			*trb = trb_tmp;
+ 
++			/*
++			 * Per datasheet, EPRST causes DMA to reposition to the next TD.
++			 * Manually reset EP_TRADDR to the current TRB to prevent
++			 * the hardware from skipping the interrupted request.
++			 */
++			writel(EP_TRADDR_TRADDR(priv_ep->trb_pool_dma +
++						priv_req->start_trb * TRB_SIZE),
++						&priv_dev->regs->ep_traddr);
++		}
 +
- /* function prototypes */
- static void omninet_process_read_urb(struct urb *urb);
- static int omninet_prepare_write_buffer(struct usb_serial_port *port,
-@@ -55,6 +59,7 @@ static struct usb_serial_driver zyxel_om
- 	.description =		"ZyXEL - omni.net usb",
- 	.id_table =		id_table,
- 	.num_bulk_out =		2,
-+	.bulk_out_size =	OMNINET_BULKOUTSIZE,
- 	.calc_num_ports =	omninet_calc_num_ports,
- 	.port_probe =		omninet_port_probe,
- 	.port_remove =		omninet_port_remove,
-@@ -131,10 +136,6 @@ static void omninet_port_remove(struct u
- 	kfree(od);
- }
+ 		cdns3_rearm_transfer(priv_ep, 1);
+ 	}
  
--#define OMNINET_HEADERLEN	4
--#define OMNINET_BULKOUTSIZE	64
--#define OMNINET_PAYLOADSIZE	(OMNINET_BULKOUTSIZE - OMNINET_HEADERLEN)
--
- static void omninet_process_read_urb(struct urb *urb)
- {
- 	struct usb_serial_port *port = urb->context;
 
 
