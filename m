@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD94538B135;
-	Tue, 16 Jun 2026 15:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FE943E9F5;
+	Tue, 16 Jun 2026 15:25:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623528; cv=none; b=eJlZd/HCViXkKs4X6mOLzCUqCNKZkG7RqfqcHFd+Y/IOc1x6bRaOXLIJd1LbyDp5nFWOZiWS65bbw9Zru7rGodIrTTQZw00cdilR3mutsLewf7B5QDClqRcJTbFdpx4SXdJzGfrTWuezBVXY7QXiIkDVJ3mlU34Lf1Jd+kiyT48=
+	t=1781623533; cv=none; b=oi2/pJ/wliiZHzfjRh66AkLBM6c2ndtNG9DzQaTIJRkiruU3BhP4sTzYCjb3mPyCOj7iCOSOBM0dOeW4swqluCJOFGwGNCR5jTKJC3AdBo4/Y8oaHTulI1dtlDmD6Js5FgJcSulWBlfhpHAzK/1gOK1xFMlFNRUPr4dSnMfFtrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623528; c=relaxed/simple;
-	bh=0VCwVf+gIrEQS7JNsjVD08+xNMcwuGW2A3D2CYO69tE=;
+	s=arc-20240116; t=1781623533; c=relaxed/simple;
+	bh=ELYaz4fr2uJ1QEfavz3w6FAKmMg6B2OHZwHIv9NiChs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GXmJbIzGdSsIdOEKGhumkgMSBpz+oq8duN6NVWXbRMU8eICm/LyXGfLql2J6jM6AvIi2nnaknzIdkZLryekEBsqaI9nw3536wiOEWbmN0OacfmM1GedI2cQUvanRfdfMMaMxFAOHoTmoOVnfFUZIz7LdCLsAs4vkDaw1yu2DlYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZoyfMOdq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tTKyEWs27E0RLhyweXFpmc1Og8WA8PLVGj8YCyRULArrA9LKb0Upw71kvuH46iHPA6/8t/XEDveD0pw6Dd91L0aAR/Mo7Q92MT8NclGC921Fft8Rgn3WgkldPyu74Vg/3AtOq3V0ETcXTKpirQMtpNy0zYKApgYgIVDIZh4Unv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XXliIbri; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZoyfMOdq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDAE41F000E9;
-	Tue, 16 Jun 2026 15:25:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XXliIbri"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AD061F000E9;
+	Tue, 16 Jun 2026 15:25:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623527;
-	bh=h225onpniLKqTfcmmfP9t+n07ezyEaYNlELKLPMzLB8=;
+	s=korg; t=1781623532;
+	bh=6kXWMbeacxCyOUzREh4+Y/w28GuAf8uHEw5FWHxoWq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZoyfMOdq3U6NcRF5tX0ZaqzuEGjsmOEO8GrZaRUnz3O7KMtIEgR0//R27yqPiZFnL
-	 c3zGJ9dbVa0jknGOVCNTe700XmmtFfKbcOEXmTHpxWZFed6f2DYq3hPfSUrdcXxAuw
-	 7PFUlmdCB7Yx79TmhgGb9vvvkliYyFuQA0uIb4YE=
+	b=XXliIbrina5UcNzubWy9fuZ4twusmuoGpAxDJV5FiySNHxkESbAk7M7Iwj1vCMtvc
+	 mINkT2y3MNRr3vjHV6bUyAbR3CLbin6ExvW+mIj9bzEllY2kDU8JWw1qIFBtEuvrHj
+	 cPIx8kcrpndcbP/gJVYPSbe8MRPIud8fghlUXUmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	Matthew Auld <matthew.auld@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
+	Sanjay Yadav <sanjay.kumar.yadav@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 165/378] drm/xe: fix refcount leak in xe_range_fence_insert()
-Date: Tue, 16 Jun 2026 20:26:36 +0530
-Message-ID: <20260616145118.980288960@linuxfoundation.org>
+Subject: [PATCH 7.0 166/378] drm/xe: fix job timeout recovery for unstarted jobs and kernel queues
+Date: Tue, 16 Jun 2026 20:26:37 +0530
+Message-ID: <20260616145119.033195126@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,50 +54,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Rodrigo Vivi <rodrigo.vivi@intel.com>
 
-[ Upstream commit ba36786b21d19082e696eda85bfcd49e7071944a ]
+[ Upstream commit 347ccc0453fca2c669e8dc8a72000e76ca4adf10 ]
 
-xe_range_fence_insert() acquires a reference on fence via
-dma_fence_get() and stores it in rfence->fence.  It then calls
-dma_fence_add_callback() and handles two cases: when the callback
-is successfully registered (err == 0) the fence is transferred to
-the tree for later cleanup; when the fence is already signaled
-(err == -ENOENT) it manually drops the extra reference with
-dma_fence_put(fence).
+A job that GuC never scheduled (never started) indicates a GuC
+scheduling failure; previously such jobs were silently errored out
+instead of triggering a GT reset to recover. Trigger a GT reset and
+resubmit them, but only when the queue was not already killed or banned:
+an unstarted job on an already banned queue is the ban working as
+intended and must neither clear the ban nor kick off a reset, otherwise
+a banned userspace queue could be resurrected and spam GT resets.
 
-However, dma_fence_add_callback() can fail with other errors
-(e.g. -EINVAL) and in that case the code falls through to the free:
-label without releasing the acquired reference, leaking it.
+Kernel queues are always recovered this way and wedge the device once
+recovery attempts are exhausted, since kernel work must not silently
+fail. A started job that times out on a userspace VM bind queue stays
+banned rather than being reset and retried.
 
-Fix the leak by adding an else branch that calls dma_fence_put()
-before jumping to free: for any error other than -ENOENT.
+The queue is banned early in the timeout handler to signal the G2H
+scheduling-done handler so it wakes the disable-scheduling waiter;
+without it the waiter sleeps the full 5s timeout. When a reset is
+warranted the ban is cleared before rearming so that
+guc_exec_queue_start() can resubmit jobs after the GT reset - a
+still-banned queue would block resubmission and cause an infinite TDR
+loop. The already-banned case is gated out before this point via
+skip_timeout_check, so it is unaffected.
 
-Fixes: 845f64bdbfc9 ("drm/xe: Introduce a range-fence utility")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+v2: (Himal) Do it for any queue type, not just kernel/migration
+v3: - (Sashiko and Sanjay): don't clear the ban / GT reset for already
+      killed/banned queues on unstarted-job timeout
+    - Update commit message
+    - (Matt) Add Fixes tag
+
+Fixes: fe05cee4d953 ("drm/xe: Don't short circuit TDR on jobs not started")
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Sanjay Yadav <sanjay.kumar.yadav@intel.com>
+Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Assisted-by: GitHub-Copilot:claude-sonnet-4.6
+Assisted-by: GitHub-Copilot:claude-opus-4.8
+Tested-by: Sanjay Yadav <sanjay.kumar.yadav@intel.com>
+Reviewed-by: Sanjay Yadav <sanjay.kumar.yadav@intel.com>
 Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260610172705.3450560-1-matthew.brost@intel.com
-(cherry picked from commit 98c4a4201290823c2c5c7ba21692bd9a64b61021)
+Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Link: https://patch.msgid.link/20260610152548.404575-3-rodrigo.vivi@intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit b1107d085e7e8ed15ba6f80c102528a9c8a6cb0e)
 Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_range_fence.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/xe/xe_guc_submit.c | 49 +++++++++++++++++++++---------
+ 1 file changed, 35 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_range_fence.c b/drivers/gpu/drm/xe/xe_range_fence.c
-index 372378e89e9892..3d8fa194a7b0eb 100644
---- a/drivers/gpu/drm/xe/xe_range_fence.c
-+++ b/drivers/gpu/drm/xe/xe_range_fence.c
-@@ -77,6 +77,8 @@ int xe_range_fence_insert(struct xe_range_fence_tree *tree,
- 	} else if (err == 0) {
- 		xe_range_fence_tree_insert(rfence, &tree->root);
- 		return 0;
-+	} else {
-+		dma_fence_put(fence);
+diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
+index e948f40fa17896..6365eca9816092 100644
+--- a/drivers/gpu/drm/xe/xe_guc_submit.c
++++ b/drivers/gpu/drm/xe/xe_guc_submit.c
+@@ -159,6 +159,11 @@ static void set_exec_queue_banned(struct xe_exec_queue *q)
+ 	atomic_or(EXEC_QUEUE_STATE_BANNED, &q->guc->state);
+ }
+ 
++static void clear_exec_queue_banned(struct xe_exec_queue *q)
++{
++	atomic_andnot(EXEC_QUEUE_STATE_BANNED, &q->guc->state);
++}
++
+ static bool exec_queue_suspended(struct xe_exec_queue *q)
+ {
+ 	return atomic_read(&q->guc->state) & EXEC_QUEUE_STATE_SUSPENDED;
+@@ -1326,7 +1331,8 @@ static bool check_timeout(struct xe_exec_queue *q, struct xe_sched_job *job)
+ 			   xe_sched_job_seqno(job), xe_sched_job_lrc_seqno(job),
+ 			   q->guc->id);
+ 
+-		return xe_sched_invalidate_job(job, 2);
++		/* GuC never scheduled this job - let the caller trigger a GT reset. */
++		return true;
  	}
  
- free:
+ 	ctx_timestamp = lower_32_bits(xe_lrc_timestamp(q->lrc[0]));
+@@ -1423,6 +1429,21 @@ static void disable_scheduling(struct xe_exec_queue *q, bool immediate)
+ 			       G2H_LEN_DW_SCHED_CONTEXT_MODE_SET, 1);
+ }
+ 
++/*
++ * Recover via GT reset for a kernel queue, or for a GuC scheduling failure (job
++ * never started) on a queue that was not already killed or banned. An already
++ * banned queue must stay banned, so its unstarted jobs do not clear the ban or
++ * trigger a reset.
++ */
++static bool timeout_needs_gt_reset(struct xe_exec_queue *q, struct xe_sched_job *job,
++				   bool skip_timeout_check)
++{
++	if (q->flags & EXEC_QUEUE_FLAG_KERNEL)
++		return true;
++
++	return !skip_timeout_check && !xe_sched_job_started(job);
++}
++
+ static enum drm_gpu_sched_stat
+ guc_exec_queue_timedout_job(struct drm_sched_job *drm_job)
+ {
+@@ -1573,19 +1594,19 @@ guc_exec_queue_timedout_job(struct drm_sched_job *drm_job)
+ 			       xe_sched_job_seqno(job), xe_sched_job_lrc_seqno(job),
+ 			       q->guc->id, q->flags);
+ 
+-	/*
+-	 * Kernel jobs should never fail, nor should VM jobs if they do
+-	 * somethings has gone wrong and the GT needs a reset
+-	 */
+-	xe_gt_WARN(q->gt, q->flags & EXEC_QUEUE_FLAG_KERNEL,
+-		   "Kernel-submitted job timed out\n");
+-	xe_gt_WARN(q->gt, q->flags & EXEC_QUEUE_FLAG_VM && !exec_queue_killed(q),
+-		   "VM job timed out on non-killed execqueue\n");
+-	if (!wedged && (q->flags & EXEC_QUEUE_FLAG_KERNEL ||
+-			(q->flags & EXEC_QUEUE_FLAG_VM && !exec_queue_killed(q)))) {
+-		if (!xe_sched_invalidate_job(job, 2)) {
+-			xe_gt_reset_async(q->gt);
+-			goto rearm;
++	if (!wedged) {
++		if (timeout_needs_gt_reset(q, job, skip_timeout_check)) {
++			if (!xe_sched_invalidate_job(job, 2)) {
++				clear_exec_queue_banned(q);
++				xe_gt_reset_async(q->gt);
++				goto rearm;
++			}
++			if (q->flags & EXEC_QUEUE_FLAG_KERNEL) {
++				xe_gt_WARN(q->gt, true, "Kernel-submitted job timed out\n");
++				xe_device_declare_wedged(gt_to_xe(q->gt));
++			}
++		} else if (q->flags & EXEC_QUEUE_FLAG_VM && !exec_queue_killed(q)) {
++			xe_gt_WARN(q->gt, true, "VM job timed out on non-killed execqueue\n");
+ 		}
+ 	}
+ 
 -- 
 2.53.0
 
