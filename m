@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FFE3C65F2;
-	Tue, 16 Jun 2026 17:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3E83C65F2;
+	Tue, 16 Jun 2026 17:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632098; cv=none; b=ICvV1t6UrfsNbnt/nOhmvSExIzzy4mQ6SR68Xbmiug3kWn/Ek2Cn1Xt0Gna5mv7zF9xiPP7fU2gdpRGpKiXgGNntRp8HzzJbLT4cUOMU4OheTN/odFkdYAuRAPUoTAZmB7sabmJCsi2QiKlTAILAJ3sC5De/jKdogAWpIHXXpw8=
+	t=1781632104; cv=none; b=KfsqEKCczm9Yck1/5JVZEP+8HLWfK04W2cd0OsoKgrQ3DG52alMVEs149sh8LLUuFjH8ja04n3Zu5S77b58MhKDQT4Ca1B2tw+1XqkTD1uqRWevPUuvnLGiONuSPPlbLcwTlDIkLxRUCUliVmBpcISpflkC+xyqbrhw2qYzrd+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632098; c=relaxed/simple;
-	bh=r4D4AEzsr/+d/DfWOKFjKwrsuWTF+mOTcOjtu+f7umM=;
+	s=arc-20240116; t=1781632104; c=relaxed/simple;
+	bh=KO2Q9sRIZvAoW0eaQBoMFBwCfN5zEVCRlhm5jfzoLMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cka3nFti49h+TmyQScz9S0mDoZNF82xpYpyLKWgI+OGa1wQpas4yZfaludd8/fA0q5e3rjKeDdr5L5QlaHF/tJksor97hjVS+vwoimnHEGANsBJRUTTDggOHPqu1Q741d8teijBiOxMuLby9Jed5cxG8R1iLnOmXCbSXjmhwKrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ardsMEql; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=utotbBKBAESFvNq50xODtt+A2t2z6ekF64n0Uz5Nq7F1AHLSicAmzNRjZud9z1KjIZXWFL8kNB3/h2/DTW1cVBx4QVtiJeqiyhnqUHRh+X41s6DpixTB9nYEsAaiyyYlnZhwCawLxfO7r+vmxVlh2OAV+bK2cxIKp4HXhsDovXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pTXGMIVu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ardsMEql"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E074D1F000E9;
-	Tue, 16 Jun 2026 17:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pTXGMIVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E081F000E9;
+	Tue, 16 Jun 2026 17:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632097;
-	bh=hQW3nuJdcQFa8hk8lFp2fwUfy6ZI9sfKGeskQ2fBxyA=;
+	s=korg; t=1781632102;
+	bh=Q4yqtHeBN3nyTrVVi0gmEzBpU8yr2WXO23lPkhTfo+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ardsMEqlrWqa5mahh6vhNoTGcAmVmA5R37ngNecPG8iiBTU5nmOGnnzHxvjnHF+qh
-	 Yx7KaUipEvhaZePvh6vyF7RDCyHARhuKsSbY91mKU5/D4OxVZlpw2HJIdY+U4J0xh4
-	 nXWnuerNq+448qEWUgE3rX+v33v0IEm2VsGGACtw=
+	b=pTXGMIVukDLDgeOx1yQZA2bSEiuG1UTzIskI8t2K2zqDU4jZjQAtSf55jR3957ml2
+	 CxzA6D7Zd+puZmDTGGnEpwiCI/hxBuZNbHGaPYKPF55+WGqmtbcryT9j9MQV6/+d9F
+	 08LmJMsETN3XpDg9imWe9LIoVG4GCcRsJzL/BNM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Joseph Salisbury <joseph.salisbury@oracle.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 347/522] media: rc: igorplugusb: heed coherency rules
-Date: Tue, 16 Jun 2026 20:28:14 +0530
-Message-ID: <20260616145142.037987911@linuxfoundation.org>
+Subject: [PATCH 6.1 348/522] sched: Use u64 for bandwidth ratio calculations
+Date: Tue, 16 Jun 2026 20:28:15 +0530
+Message-ID: <20260616145142.083256164@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,82 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Joseph Salisbury <joseph.salisbury@oracle.com>
 
-[ Upstream commit eac69475b01fe1e861dfe3960b57fa95671c132e ]
+[ Upstream commit c6e80201e057dfb7253385e60bf541121bf5dc33 ]
 
-In a control request, the USB request structure
-can be subject to DMA on some HCs. Hence it must obey
-the rules for DMA coherency. Allocate it separately.
+to_ratio() computes BW_SHIFT-scaled bandwidth ratios from u64 period and
+runtime values, but it returns unsigned long.  tg_rt_schedulable() also
+stores the current group limit and the accumulated child sum in unsigned
+long.
 
-Fixes: b1c97193c6437 ("[media] rc: port IgorPlug-USB to rc-core")
+On 32-bit builds, large bandwidth ratios can be truncated and the RT
+group sum can wrap when enough siblings are present.  That can let an
+overcommitted RT hierarchy pass the schedulability check, and it also
+narrows the helper result for other callers.
+
+Return u64 from to_ratio() and use u64 for the RT group totals so
+bandwidth ratios are preserved and compared at full width on both 32-bit
+and 64-bit builds.
+
+Fixes: b40b2e8eb521 ("sched: rt: multi level group constraints")
+Assisted-by: Codex:GPT-5
+Signed-off-by: Joseph Salisbury <joseph.salisbury@oracle.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ replaced kzalloc_obj(*ir->request, GFP_KERNEL) with kzalloc(sizeof(*ir->request), GFP_KERNEL) ]
+Link: https://patch.msgid.link/20260403210014.2713404-1-joseph.salisbury@oracle.com
+[ dropped `extern` keyword from `to_ratio()` declaration ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/igorplugusb.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ kernel/sched/core.c  |    2 +-
+ kernel/sched/rt.c    |    2 +-
+ kernel/sched/sched.h |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/media/rc/igorplugusb.c
-+++ b/drivers/media/rc/igorplugusb.c
-@@ -34,7 +34,7 @@ struct igorplugusb {
- 	struct device *dev;
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -4692,7 +4692,7 @@ void sched_post_fork(struct task_struct
+ 	uclamp_post_fork(p);
+ }
  
- 	struct urb *urb;
--	struct usb_ctrlrequest request;
-+	struct usb_ctrlrequest *request;
- 
- 	struct timer_list timer;
- 
-@@ -122,7 +122,7 @@ static void igorplugusb_cmd(struct igorp
+-unsigned long to_ratio(u64 period, u64 runtime)
++u64 to_ratio(u64 period, u64 runtime)
  {
- 	int ret;
+ 	if (runtime == RUNTIME_INF)
+ 		return BW_UNIT;
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -2768,7 +2768,7 @@ static int tg_rt_schedulable(struct task
+ {
+ 	struct rt_schedulable_data *d = data;
+ 	struct task_group *child;
+-	unsigned long total, sum = 0;
++	u64 total, sum = 0;
+ 	u64 period, runtime;
  
--	ir->request.bRequest = cmd;
-+	ir->request->bRequest = cmd;
- 	ir->urb->transfer_flags = 0;
- 	ret = usb_submit_urb(ir->urb, GFP_ATOMIC);
- 	if (ret && ret != -EPERM)
-@@ -164,13 +164,17 @@ static int igorplugusb_probe(struct usb_
- 	if (!ir)
- 		return -ENOMEM;
+ 	period = ktime_to_ns(tg->rt_bandwidth.rt_period);
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -2371,7 +2371,7 @@ extern void init_dl_inactive_task_timer(
+ #define RATIO_SHIFT		8
+ #define MAX_BW_BITS		(64 - BW_SHIFT)
+ #define MAX_BW			((1ULL << MAX_BW_BITS) - 1)
+-unsigned long to_ratio(u64 period, u64 runtime);
++u64 to_ratio(u64 period, u64 runtime);
  
-+	ir->request = kzalloc(sizeof(*ir->request), GFP_KERNEL);
-+	if (!ir->request)
-+		goto fail;
-+
- 	ir->dev = &intf->dev;
- 
- 	timer_setup(&ir->timer, igorplugusb_timer, 0);
- 
--	ir->request.bRequest = GET_INFRACODE;
--	ir->request.bRequestType = USB_TYPE_VENDOR | USB_DIR_IN;
--	ir->request.wLength = cpu_to_le16(MAX_PACKET);
-+	ir->request->bRequest = GET_INFRACODE;
-+	ir->request->bRequestType = USB_TYPE_VENDOR | USB_DIR_IN;
-+	ir->request->wLength = cpu_to_le16(MAX_PACKET);
- 
- 	ir->urb = usb_alloc_urb(0, GFP_KERNEL);
- 	if (!ir->urb)
-@@ -228,6 +232,7 @@ fail:
- 	usb_free_urb(ir->urb);
- 	rc_free_device(ir->rc);
- 	kfree(ir->buf_in);
-+	kfree(ir->request);
- 
- 	return ret;
- }
-@@ -243,6 +248,7 @@ static void igorplugusb_disconnect(struc
- 	usb_unpoison_urb(ir->urb);
- 	usb_free_urb(ir->urb);
- 	kfree(ir->buf_in);
-+	kfree(ir->request);
- }
- 
- static const struct usb_device_id igorplugusb_table[] = {
+ extern void init_entity_runnable_average(struct sched_entity *se);
+ extern void post_init_entity_util_avg(struct task_struct *p);
 
 
