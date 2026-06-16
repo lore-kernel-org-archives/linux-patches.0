@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D870F13777E;
-	Tue, 16 Jun 2026 18:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7860935AC3E;
+	Tue, 16 Jun 2026 18:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635284; cv=none; b=JX8qt/awAeUlbyXppJ93uBG4cBoZcpi5KHG0nYqaysL0o5uH6PCbY1iw6aQ8o354vOhJPe3FKu/vJfsClXcNutqdMQyR6E4L3FN0Qj/VU8nsJ1yxPLvmy0HFZ3d8vr83QIyfdORPbBayi1nraUO6m9vZBY+4wgUCA5TvsiibR94=
+	t=1781635290; cv=none; b=XWCQG6UYlfm5d2EP6B4CSwYwJFGwfczwnOrGCn5WVGpChOZSQlyCFidPEBUxQZj4+IhvBbtuG0vHYJ3ufRoolFEnbteaceVssVkrwl/wXWxfbTg9T11LARc26YnEqhbTdqg3VmLyDByOxtx71F7uxAHD1EtIyGuZnjX8W0Ni4QM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635284; c=relaxed/simple;
-	bh=biB9EASDtzQAhVcCWrn3HvfBrIFt/2cn95Rv8SyjB9k=;
+	s=arc-20240116; t=1781635290; c=relaxed/simple;
+	bh=tvmRI61bevp0Kwguz+7mL8KPX0VtZ+E1beUUdOShvj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mOSdXlnzNe5LITH+EfVblbGylDr3kOCX07YGYPWJkw6vGvYJDlxwU5ymqs7mQT5xU43PTRPRdfRjNAdoy+Sngky7xLwbWnUv21BdIDyAQVXx76oUuaj+RdkF/NUD24J0gc8ovLUNxsGNeJdq3PapM4ch1DkW6qOvrEZeqd/1ceY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6jfyNDc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nvYwGbeBZD75lPCmHWe0J9cJN9XZQUTHz7gA+CO8kFNf+qvT6HTXYraQp2RzUcbaZodHAiNTdD5MOvnZIS+xvqfSSc3lk2zzHpvEkD1UHxi9AM8nBrYbiPDfu61YvGTFN1F/JnYY7FfBSAcZgqf9O3hlOXWfTwAeEDVvyN1IfQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyL+JbQH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6jfyNDc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47271F000E9;
-	Tue, 16 Jun 2026 18:41:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyL+JbQH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04B181F000E9;
+	Tue, 16 Jun 2026 18:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635283;
-	bh=kfadv817FWJck+x/GnbhCHytaKIP74FoQ/SkMXiMMKo=;
+	s=korg; t=1781635289;
+	bh=NqxEM41YmoT8Ql/yP6YyaaFpN45xrGvWf7RNTbvk+MM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x6jfyNDc5kJauXGFFtEgSzTROdX/q0wxbmL5iqwU+yHsI9tONFcc8UFRWIaXmWJYV
-	 orDQ9Q5pm4MrcY+uywpRLsxX6Ds23W/JFB7gDmLagGLP3EIiwvgtxBVIHqBlrDIef6
-	 Kx9cHla6UkUeY7ewxFv69bIhKxAZUlwT3K5TwTro=
+	b=WyL+JbQHhyyLSYFy+e/9y/brju75if59EmsDsjVD9AUgJL+DNUTp/Fv87pYUlUcqw
+	 7l/xFvoywweQ4IGlwXg6lv7ksiwwT6eWsnYY5xiURr0Tiaq7sf1ujEK6gYpBFGh4Or
+	 N294yrAzsgrIhTnxZNDEH+DfxCjvwJ7vdZ2T0EY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+690d3e3ffa7335ac10eb@syzkaller.appspotmail.com,
-	Florian Westphal <fw@strlen.de>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 012/342] netfilter: xt_cpu: prefer raw_smp_processor_id
-Date: Tue, 16 Jun 2026 20:25:08 +0530
-Message-ID: <20260616145048.876404182@linuxfoundation.org>
+Subject: [PATCH 5.10 006/342] nfc: llcp: protect nfc_llcp_sock_unlink() calls
+Date: Tue, 16 Jun 2026 20:25:02 +0530
+Message-ID: <20260616145048.625628246@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -51,46 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 
-[ Upstream commit c376f07e16c02239ed44cabb97145d03f65b4d15 ]
+[ Upstream commit a06b8044169f6d5c3eb34772c13d2c0c1b205352 ]
 
-With PREEMPT_RCU we get splat:
+nfc_llcp_sock_link() is called in all paths (bind/connect) as a last
+action, still protected with lock_sock().  When cleaning up in
+llcp_sock_release(), call nfc_llcp_sock_unlink() in a mirrored way:
+earlier and still under the lock_sock().
 
-BUG: using smp_processor_id() in preemptible [..]
-caller is cpu_mt+0x53/0xd0 net/netfilter/xt_cpu.c:37
-CPU: 1 .. Comm: syz.3.1377 #0 PREEMPT(full)
-Call Trace:
- <TASK>
- dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
- check_preemption_disabled+0xd3/0xe0 lib/smp_processor_id.c:47
- cpu_mt+0x53/0xd0 net/netfilter/xt_cpu.c:37
- [..]
-
-Just use raw version instead.
-This is similar to 14d14a5d2957 ("netfilter: nft_meta: use raw_smp_processor_id()").
-
-Fixes: 0ca743a55991 ("netfilter: nf_tables: add compatibility layer for x_tables")
-Reported-by: syzbot+690d3e3ffa7335ac10eb@syzkaller.appspotmail.com
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: f4268b466190 ("nfc: llcp: Fix use-after-free in llcp_sock_release()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/nfc/llcp_sock.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/xt_cpu.c b/net/netfilter/xt_cpu.c
-index 3bdc302a0f9137..9cb259902a586b 100644
---- a/net/netfilter/xt_cpu.c
-+++ b/net/netfilter/xt_cpu.c
-@@ -34,7 +34,7 @@ static bool cpu_mt(const struct sk_buff *skb, struct xt_action_param *par)
- {
- 	const struct xt_cpu_info *info = par->matchinfo;
+diff --git a/net/nfc/llcp_sock.c b/net/nfc/llcp_sock.c
+index 6e1fba2084930e..dc96d751eb278f 100644
+--- a/net/nfc/llcp_sock.c
++++ b/net/nfc/llcp_sock.c
+@@ -626,6 +626,11 @@ static int llcp_sock_release(struct socket *sock)
+ 		}
+ 	}
  
--	return (info->cpu == smp_processor_id()) ^ info->invert;
-+	return (info->cpu == raw_smp_processor_id()) ^ info->invert;
- }
++	if (sock->type == SOCK_RAW)
++		nfc_llcp_sock_unlink(&local->raw_sockets, sk);
++	else
++		nfc_llcp_sock_unlink(&local->sockets, sk);
++
+ 	if (llcp_sock->reserved_ssap < LLCP_SAP_MAX)
+ 		nfc_llcp_put_ssap(llcp_sock->local, llcp_sock->ssap);
  
- static struct xt_match cpu_mt_reg __read_mostly = {
+@@ -638,11 +643,6 @@ static int llcp_sock_release(struct socket *sock)
+ 	if (sk->sk_state == LLCP_DISCONNECTING)
+ 		return err;
+ 
+-	if (sock->type == SOCK_RAW)
+-		nfc_llcp_sock_unlink(&local->raw_sockets, sk);
+-	else
+-		nfc_llcp_sock_unlink(&local->sockets, sk);
+-
+ out:
+ 	sock_orphan(sk);
+ 	sock_put(sk);
 -- 
 2.53.0
 
