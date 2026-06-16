@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A253A451D;
-	Tue, 16 Jun 2026 17:59:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2B0E47CC64;
+	Tue, 16 Jun 2026 17:59:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632754; cv=none; b=l5nik8b1GOltBCSS23YH3hNhpK2LF+NZe4Y62fmRqo8uWEFJtDf7Jy8HeMq1kHT+oJ0sCt7L1qMFINIQyxGtfowZFJnvLGnT2gSS4GsIFiXQ8F9+bT5e2W6j7X+mhrcy3cs3tNtJGOz2+w7WkmDH2DIuHwREs/7RPoXOy0LpX+E=
+	t=1781632760; cv=none; b=lG6Rs3c5lLm0pYkhOiaQtctwVGtyrl+ayPOP/itp/Wq/psYZvmb1iFChizH49t9HfWsQSv71P2VeVNTRSVHHtn5XrOMPiLK31oXKw9yLUSQ2j+bURIGNqMBz2xsjtJBdlYShHgVAgt5mZHqqyG4uW/QmvjLhF6+UkZ+XKjk9okA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632754; c=relaxed/simple;
-	bh=gtqh2VXTxcUwU8CBJGSKLs7BPVaaELKujyLCOj++B4M=;
+	s=arc-20240116; t=1781632760; c=relaxed/simple;
+	bh=LzZ83qNU3vuZC0/RFzYK0BrDHLP15cLn68JzPkYaMDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=icpR8+gEU192b+PsiK9el78vgPA3VoKJ9OikGH6ltCxnIiIkwL7hGisNFCz5BO7WXgWIK5uAHcwUTq4zZc2tg5NFMf8BcdYtsJjZ648obbwdxdoTHlz8uuY0DtzqVuVnw7gR9NPLbh71BaokdDvfXSghc7WkdM2/e5QfH9L6vr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hpg+uNwu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gfsBYeF1o1/+OFw0/ZrckxTJhvlWBU/0C2EUCvQWPNsbsd0KvsrcIGTzfdkPd8HRYEPdcOp0epkyW4v/YFAG3/ks7GcQLH7UwovV718TvsIskSj/oOlG2ZMhEEpVrwmGsVo9yKr5ag7d/GIEh4NmndanONuYLqRuFaINmqjjpnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iL3Dv+JQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hpg+uNwu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7475D1F000E9;
-	Tue, 16 Jun 2026 17:59:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iL3Dv+JQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF5651F00A3E;
+	Tue, 16 Jun 2026 17:59:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632753;
-	bh=u1z8ck2ZXf4hNTtjPxmHVb3/oLSD/IbaK+JRZ6zG2H0=;
+	s=korg; t=1781632758;
+	bh=o2k+jwtCGmLpaOX13HCoOyNTgzl3gi5/13knXGK2Kp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hpg+uNwunFz6RPpZrvV2G/cbSRwVugIrpsIN01UJQDk4UHtWlkYtS699TYml2WvSw
-	 g87jftg9HNmkp5KV+AVngjDXz3BZYig0k//h6NS7EWBiXnjG6r9cEZBhc/kjqO0jeE
-	 fFRYxa0fvYE6Kl1pJRUYTngOrbaASK1nd73lS4nw=
+	b=iL3Dv+JQkA87XI5NUZsRNe86ejD7PE79dL+wwzUNKGqrBgJlFPfgjDH5og5XsOUPX
+	 rCMUrkOTcTO5GZRAoDniNow2UBGDPdQ5taNVxOioYn+pLpqZFc7+Bg87PMsp0t+d1t
+	 4mnSZoAb01Wy4F0RA9g+Tv0AV3DN92wqkZzoo06I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Stitt <justinstitt@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	stable <stable@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 443/522] octeontx2-af: replace deprecated strncpy with strscpy
-Date: Tue, 16 Jun 2026 20:29:50 +0530
-Message-ID: <20260616145146.664195152@linuxfoundation.org>
+Subject: [PATCH 6.1 470/522] usb: musb: omap2430: Fix use-after-free in omap2430_probe()
+Date: Tue, 16 Jun 2026 20:30:17 +0530
+Message-ID: <20260616145147.844270971@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,65 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Stitt <justinstitt@google.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 473f8f2d1bfe1103f20140fdc80cad406b4d68c0 ]
+[ Upstream commit e194ce048f5a6c549b3a23a8c568c6470f40f772 ]
 
-`strncpy` is deprecated for use on NUL-terminated destination strings
-[1] and as such we should prefer more robust and less ambiguous string
-interfaces.
+In omap2430_probe(), of_node_put(np) is called prematurely before the
+last access to np, leading to a use-after-free if the node's reference
+count drops to zero. Move the of_node_put() calls after the last use of
+np in both the success and error paths.
 
-We can see that linfo->lmac_type is expected to be NUL-terminated based
-on the `... - 1`'s present in the current code. Presumably making room
-for a NUL-byte at the end of the buffer.
-
-Considering the above, a suitable replacement is `strscpy` [2] due to
-the fact that it guarantees NUL-termination on the destination buffer
-without unnecessarily NUL-padding.
-
-Let's also prefer the more idiomatic strscpy usage of (dest, src,
-sizeof(dest)) rather than (dest, src, SOME_LEN).
-
-Link: https://www.kernel.org/doc/html/latest/process/deprecated.html#strncpy-on-nul-terminated-strings [1]
-Link: https://manpages.debian.org/testing/linux-manual-4.8/strscpy.9.en.html [2]
-Link: https://github.com/KSPP/linux/issues/90
-Signed-off-by: Justin Stitt <justinstitt@google.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20231010-strncpy-drivers-net-ethernet-marvell-octeontx2-af-cgx-c-v1-1-a443e18f9de8@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: c0bf0a4f3f1f ("octeontx2-af: CGX: add bounds check to cgx_speed_mbps index")
+Fixes: ffbe2feac59b ("usb: musb: omap2430: Fix probe regression for missing resources")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20260409101104.480623-1-vulab@iscas.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/cgx.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/usb/musb/omap2430.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-@@ -1228,8 +1228,6 @@ static inline void link_status_user_form
- 					   struct cgx_link_user_info *linfo,
- 					   struct cgx *cgx, u8 lmac_id)
- {
--	const char *lmac_string;
--
- 	linfo->link_up = FIELD_GET(RESP_LINKSTAT_UP, lstat);
- 	linfo->full_duplex = FIELD_GET(RESP_LINKSTAT_FDUPLEX, lstat);
- 	linfo->speed = cgx_speed_mbps[FIELD_GET(RESP_LINKSTAT_SPEED, lstat)];
-@@ -1240,12 +1238,12 @@ static inline void link_status_user_form
- 	if (linfo->lmac_type_id >= LMAC_MODE_MAX) {
- 		dev_err(&cgx->pdev->dev, "Unknown lmac_type_id %d reported by firmware on cgx port%d:%d",
- 			linfo->lmac_type_id, cgx->cgx_id, lmac_id);
--		strncpy(linfo->lmac_type, "Unknown", LMACTYPE_STR_LEN - 1);
-+		strscpy(linfo->lmac_type, "Unknown", sizeof(linfo->lmac_type));
- 		return;
+--- a/drivers/usb/musb/omap2430.c
++++ b/drivers/usb/musb/omap2430.c
+@@ -340,7 +340,6 @@ static int omap2430_probe(struct platfor
+ 	} else {
+ 		device_set_of_node_from_dev(&musb->dev, &pdev->dev);
  	}
+-	of_node_put(np);
  
--	lmac_string = cgx_lmactype_string[linfo->lmac_type_id];
--	strncpy(linfo->lmac_type, lmac_string, LMACTYPE_STR_LEN - 1);
-+	strscpy(linfo->lmac_type, cgx_lmactype_string[linfo->lmac_type_id],
-+		sizeof(linfo->lmac_type));
- }
+ 	glue->dev			= &pdev->dev;
+ 	glue->musb			= musb;
+@@ -458,6 +457,7 @@ static int omap2430_probe(struct platfor
+ 		dev_err(&pdev->dev, "failed to register musb device\n");
+ 		goto err3;
+ 	}
++	of_node_put(np);
  
- /* Hardware event handlers */
+ 	return 0;
+ 
+@@ -467,6 +467,7 @@ err_put_control_otghs:
+ 	if (!IS_ERR(glue->control_otghs))
+ 		put_device(glue->control_otghs);
+ err2:
++	of_node_put(np);
+ 	platform_device_put(musb);
+ 
+ err0:
 
 
