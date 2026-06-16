@@ -1,39 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADFD4418E3;
-	Tue, 16 Jun 2026 17:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB0343D4E9;
+	Tue, 16 Jun 2026 17:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632220; cv=none; b=MPKn3m3YohWyX9qVFa2STepOOuyNpvhBSTbxFKl5OT5RakOSdbkckqqXQ2KNM7mvBgEVLzORs0BKkm+4rUNe3tBASSsXa1RQUfr9fKV5BU3JuVJGZfgIqWO9bb1BUtD85pWKI5U5VlAn6nGZO0MVgUd9HSg3DVwPwQK1YKcGQv8=
+	t=1781632225; cv=none; b=fgiVLoJGp7fKIk7OTqFYi/qza3pxweY2ggVH+OlmOZk0wKQIhvWFoZfCHQYN+FjKOPCK0iBw8dZ5Q0rKRjYO4LlmKyKMISn4ZkH1RvkxWVRJRa0tDsSWGDfk4C+RQiYUu3rXZ8o3lqffD6I0alyzQEOZtqjk+AwdJfgFqDJkZiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632220; c=relaxed/simple;
-	bh=4DraywOt/w1K7FNVm+oiRbqG/+KFADHJAhxS2lOVklY=;
+	s=arc-20240116; t=1781632225; c=relaxed/simple;
+	bh=lxrhS2ShOP2IQpMQnVqZhk8LAIUNFhgVMwBsk0cBj1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sxsAHtCo8sq3gdUkGUpFDSuQvAxqk626+jafvt5Mq5vidMNWPCl49KYWPrKw3e/0GjQP7BDgKWTMujW8bx0cRs0ZBrU/6mThCmkR8QiIAu6d7cF6TBiYzoIbCYvs5f01jqdVQqCkMxtZF6w71RTB9d3H9V+LUtgjszEOPUmRrOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8Sl9SVB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TPOyBkxHdkO8LHwfD026qLjhLku57W+qrYLWeWQZbXUpP5d7V7Y8R04PcbaghLWVK9kcJ4V0uPNfqW8fo0YxVGoZBxOyreiVeAvOvPyj04uYDQ5FTeNfAD6++M5VZ2+tsaUORMtMGPAO/RrYZkLYrcjBvOjccgOTGUo+h5tp6GY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSzwUd0R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8Sl9SVB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE831F000E9;
-	Tue, 16 Jun 2026 17:50:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSzwUd0R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF04E1F000E9;
+	Tue, 16 Jun 2026 17:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632219;
-	bh=jPKazmj04ao8fPW4dfxXMM0/LrkJ7fpiVyQk02fZ/VE=;
+	s=korg; t=1781632223;
+	bh=7wYX0L7dIsmSwgDKSfeVw2Kp2xUq1KfHYdmuWPCGln0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p8Sl9SVBfvsqqE3LjUVXGE+7xZExWStfdyNFzmuXCPIh3harBmeRVUdPVYZ185LpK
-	 MNYPS6ec58iXpGvd6FQCchsJMTLTqSDsNhMif51OG6e1+sAS4EFKA6FsuV1zjmPLoj
-	 DvruLFtyBdmIgs4d4slNWkVA3i0t88YY8z2naiKU=
+	b=GSzwUd0R+mRZI5eYFiorFy6yMhO4T7kg91aZP47HrHlAKFdU8PewdY8Wao93hxYAK
+	 ePu3koH/17rfL0zri7z5JnZCf+hpx0kVTk0IZmj55GvcRp3vm7sh+/Rh+6lG6vPRxd
+	 qxu+0zn6SvcZw0U47CXua4TGMnhYZnlHyj1mpoqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Furong Xu <0x1207@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alistair Popple <apopple@nvidia.com>,
+	Zenghui Yu <zenghui.yu@linux.dev>,
+	Balbir Singh <balbirs@nvidia.com>,
+	David Hildenbrand <david@kernel.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Leon Romanovsky <leon@kernel.org>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 368/522] net: stmmac: avoid shadowing global buf_sz
-Date: Tue, 16 Jun 2026 20:28:35 +0530
-Message-ID: <20260616145142.994967359@linuxfoundation.org>
+Subject: [PATCH 6.1 338/522] lib: test_hmm: evict device pages on file close to avoid use-after-free
+Date: Tue, 16 Jun 2026 20:28:05 +0530
+Message-ID: <20260616145141.629673656@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,48 +62,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+From: Alistair Popple <apopple@nvidia.com>
 
-[ Upstream commit 876cfb20e8892143c0c967b3657074f9131f9b5f ]
+[ Upstream commit 744dd97752ef1076a8d8672bb0d8aa2c7abc1144 ]
 
-stmmac_rx() declares a local variable named "buf_sz" but there is also
-a global variable for a module parameter which is called the same. To
-avoid confusion, rename the local variable.
+Patch series "Minor hmm_test fixes and cleanups".
 
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Furong Xu <0x1207@gmail.com>
-Link: https://patch.msgid.link/E1tpswi-005U6C-Py@rmk-PC.armlinux.org.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 0bb05e6adfa9 ("net: stmmac: Prevent NULL deref when RX memory exhausted")
+Two bugfixes a cleanup for the HMM kernel selftests.  These were mostly
+reported by Zenghui Yu with special thanks to Lorenzo for analysing and
+pointing out the problems.
+
+This patch (of 3):
+
+When dmirror_fops_release() is called it frees the dmirror struct but
+doesn't migrate device private pages back to system memory first.  This
+leaves those pages with a dangling zone_device_data pointer to the freed
+dmirror.
+
+If a subsequent fault occurs on those pages (eg.  during coredump) the
+dmirror_devmem_fault() callback dereferences the stale pointer causing a
+kernel panic.  This was reported [1] when running mm/ksft_hmm.sh on arm64,
+where a test failure triggered SIGABRT and the resulting coredump walked
+the VMAs faulting in the stale device private pages.
+
+Fix this by calling dmirror_device_evict_chunk() for each devmem chunk in
+dmirror_fops_release() to migrate all device private pages back to system
+memory before freeing the dmirror struct.  The function is moved earlier
+in the file to avoid a forward declaration.
+
+Link: https://lore.kernel.org/20260331063445.3551404-1-apopple@nvidia.com
+Link: https://lore.kernel.org/20260331063445.3551404-2-apopple@nvidia.com
+Fixes: b2ef9f5a5cb3 ("mm/hmm/test: add selftest driver for HMM")
+Signed-off-by: Alistair Popple <apopple@nvidia.com>
+Reported-by: Zenghui Yu <zenghui.yu@linux.dev>
+Closes: https://lore.kernel.org/linux-mm/8bd0396a-8997-4d2e-a13f-5aac033083d7@linux.dev/
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Tested-by: Zenghui Yu <zenghui.yu@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Zenghui Yu <zenghui.yu@linux.dev>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ kept the existing simpler `dmirror_device_evict_chunk()` body instead of the upstream compound-folio version ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ lib/test_hmm.c |   86 ++++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 49 insertions(+), 37 deletions(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -5235,10 +5235,10 @@ static int stmmac_rx(struct stmmac_priv
- 	struct stmmac_xdp_buff ctx;
- 	unsigned long flags;
- 	int xdp_status = 0;
--	int buf_sz;
-+	int bufsz;
+--- a/lib/test_hmm.c
++++ b/lib/test_hmm.c
+@@ -183,11 +183,60 @@ static int dmirror_fops_open(struct inod
+ 	return 0;
+ }
  
- 	dma_dir = page_pool_get_dma_dir(rx_q->page_pool);
--	buf_sz = DIV_ROUND_UP(priv->dma_conf.dma_buf_sz, PAGE_SIZE) * PAGE_SIZE;
-+	bufsz = DIV_ROUND_UP(priv->dma_conf.dma_buf_sz, PAGE_SIZE) * PAGE_SIZE;
- 	limit = min(priv->dma_conf.dma_rx_size - 1, (unsigned int)limit);
++static void dmirror_device_evict_chunk(struct dmirror_chunk *chunk)
++{
++	unsigned long start_pfn = chunk->pagemap.range.start >> PAGE_SHIFT;
++	unsigned long end_pfn = chunk->pagemap.range.end >> PAGE_SHIFT;
++	unsigned long npages = end_pfn - start_pfn + 1;
++	unsigned long i;
++	unsigned long *src_pfns;
++	unsigned long *dst_pfns;
++
++	src_pfns = kvcalloc(npages, sizeof(*src_pfns), GFP_KERNEL | __GFP_NOFAIL);
++	dst_pfns = kvcalloc(npages, sizeof(*dst_pfns), GFP_KERNEL | __GFP_NOFAIL);
++
++	migrate_device_range(src_pfns, start_pfn, npages);
++	for (i = 0; i < npages; i++) {
++		struct page *dpage, *spage;
++
++		spage = migrate_pfn_to_page(src_pfns[i]);
++		if (!spage || !(src_pfns[i] & MIGRATE_PFN_MIGRATE))
++			continue;
++
++		if (WARN_ON(!is_device_private_page(spage) &&
++			    !is_device_coherent_page(spage)))
++			continue;
++		spage = BACKING_PAGE(spage);
++		dpage = alloc_page(GFP_HIGHUSER_MOVABLE | __GFP_NOFAIL);
++		lock_page(dpage);
++		copy_highpage(dpage, spage);
++		dst_pfns[i] = migrate_pfn(page_to_pfn(dpage));
++		if (src_pfns[i] & MIGRATE_PFN_WRITE)
++			dst_pfns[i] |= MIGRATE_PFN_WRITE;
++	}
++	migrate_device_pages(src_pfns, dst_pfns, npages);
++	migrate_device_finalize(src_pfns, dst_pfns, npages);
++	kvfree(src_pfns);
++	kvfree(dst_pfns);
++}
++
+ static int dmirror_fops_release(struct inode *inode, struct file *filp)
+ {
+ 	struct dmirror *dmirror = filp->private_data;
++	struct dmirror_device *mdevice = dmirror->mdevice;
++	int i;
  
- 	if (netif_msg_rx_status(priv)) {
-@@ -5353,7 +5353,7 @@ read_again:
- 			dma_sync_single_for_cpu(priv->device, buf->addr,
- 						buf1_len, dma_dir);
+ 	mmu_interval_notifier_remove(&dmirror->notifier);
++
++	if (mdevice->devmem_chunks) {
++		for (i = 0; i < mdevice->devmem_count; i++) {
++			struct dmirror_chunk *devmem =
++				mdevice->devmem_chunks[i];
++
++			dmirror_device_evict_chunk(devmem);
++		}
++	}
++
+ 	xa_destroy(&dmirror->pt);
+ 	kfree(dmirror);
+ 	return 0;
+@@ -1223,43 +1272,6 @@ static int dmirror_snapshot(struct dmirr
+ 	return ret;
+ }
  
--			xdp_init_buff(&ctx.xdp, buf_sz, &rx_q->xdp_rxq);
-+			xdp_init_buff(&ctx.xdp, bufsz, &rx_q->xdp_rxq);
- 			xdp_prepare_buff(&ctx.xdp, page_address(buf->page),
- 					 buf->page_offset, buf1_len, false);
- 
+-static void dmirror_device_evict_chunk(struct dmirror_chunk *chunk)
+-{
+-	unsigned long start_pfn = chunk->pagemap.range.start >> PAGE_SHIFT;
+-	unsigned long end_pfn = chunk->pagemap.range.end >> PAGE_SHIFT;
+-	unsigned long npages = end_pfn - start_pfn + 1;
+-	unsigned long i;
+-	unsigned long *src_pfns;
+-	unsigned long *dst_pfns;
+-
+-	src_pfns = kvcalloc(npages, sizeof(*src_pfns), GFP_KERNEL | __GFP_NOFAIL);
+-	dst_pfns = kvcalloc(npages, sizeof(*dst_pfns), GFP_KERNEL | __GFP_NOFAIL);
+-
+-	migrate_device_range(src_pfns, start_pfn, npages);
+-	for (i = 0; i < npages; i++) {
+-		struct page *dpage, *spage;
+-
+-		spage = migrate_pfn_to_page(src_pfns[i]);
+-		if (!spage || !(src_pfns[i] & MIGRATE_PFN_MIGRATE))
+-			continue;
+-
+-		if (WARN_ON(!is_device_private_page(spage) &&
+-			    !is_device_coherent_page(spage)))
+-			continue;
+-		spage = BACKING_PAGE(spage);
+-		dpage = alloc_page(GFP_HIGHUSER_MOVABLE | __GFP_NOFAIL);
+-		lock_page(dpage);
+-		copy_highpage(dpage, spage);
+-		dst_pfns[i] = migrate_pfn(page_to_pfn(dpage));
+-		if (src_pfns[i] & MIGRATE_PFN_WRITE)
+-			dst_pfns[i] |= MIGRATE_PFN_WRITE;
+-	}
+-	migrate_device_pages(src_pfns, dst_pfns, npages);
+-	migrate_device_finalize(src_pfns, dst_pfns, npages);
+-	kvfree(src_pfns);
+-	kvfree(dst_pfns);
+-}
+-
+ /* Removes free pages from the free list so they can't be re-allocated */
+ static void dmirror_remove_free_pages(struct dmirror_chunk *devmem)
+ {
 
 
