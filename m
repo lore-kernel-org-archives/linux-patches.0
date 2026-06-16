@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB9E477995;
-	Tue, 16 Jun 2026 16:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CA6169AD2;
+	Tue, 16 Jun 2026 16:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629038; cv=none; b=cO23vFasZz9sDPdRrtvo9hMPsVBTxhwJf//Yx8AJmVtnftgBSWtelDIc0F1ceJ3jWUB4zGxy9ZrL7nrW9ygq9r1QinccuC05btkfoSCVWiomC05g3AHG719aOrYKCdcXQnOhUcnXucHRciHvZ++g0eS58r43BeA0/PyczB5/3Mk=
+	t=1781629043; cv=none; b=FDZcd11x3dba0/BnsKSDeqKn22c6p5FRDSq7L1nu9Lia7sDOweHnyOFfDB/Jsjrkr5diWVyRgw/AckH+rRnL8xsCVzWdr+z6CcN4emevG+mKxx/PY9qjZEb6wwU7487SFvU6l3lqZ/2UYttN2a1UqYksqiS+ynGLsUe4oKBjSpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629038; c=relaxed/simple;
-	bh=YTaP4mqH91QCcjEU9BwokxHhGbtP9lkvcb/GOOYS+tA=;
+	s=arc-20240116; t=1781629043; c=relaxed/simple;
+	bh=oOGaKVd23Z7NDJVFW5OmUTSmNQK7CIapb/EbN9mqGE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RHDDi5Q9yGBcRlGN94EGxEvTS6eb2YzAXkEerosGzqzfrYOA89k8TwMW5JIF8ASBwEGpTz1V9hnj26VtLgQhxZuAjO+ztvO/mG2e/fj/dsk7/JSmu4wK7TOtx1Y6aFbywVGe7zSBK+3WOReWz30vJSZ32E3s+Oq2qiBIlrNb7Co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HDI1PdZy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l8vl09bwYV8lTSM8iA3HxJD0pJbJFepC8zF/EhgXX/GPHgkTsMR/QGxY+0hanRn21F9rPRDCqF7qMUHUL8UTB+n0cFzc82X/etsncQCWT3u0V/fAKRsk9241NeJnR7jKDs39FShfhrlWgBPazlJvfuAwM9ShYyBYyO/bEmtHycU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/7/kjjn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HDI1PdZy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BA91F000E9;
-	Tue, 16 Jun 2026 16:57:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/7/kjjn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859DF1F000E9;
+	Tue, 16 Jun 2026 16:57:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629037;
-	bh=be+ygM9LC0oVpp5KIQvokNRp9W+Cv5KkV90I4tUAqWo=;
+	s=korg; t=1781629042;
+	bh=Vdm0LgSDcAMiqRcz8jmdF3/60w4QVDDNSIQkj2EbSlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HDI1PdZyh+n5KDuUf9uPUrkDLoaVgJutCsf0vp0DJm6yuZWNk1FKaBU7iG8XLmvSt
-	 gNjtRNYnNcC2Tz84t3k/A9p01nI6gyzRBnrWtugGuZ6G6FhhbKnJnUMAVdksk13tO/
-	 jgO26nSh4mCKCwBEW351agA4ppWh/zBUnVMz2D08=
+	b=P/7/kjjnscqRliShtmem6lV/Cxs1daGpsQFXRg76nU9neJKHM7n5tuQPxeZFdC/sr
+	 MQh+lXfL3ePtsixTxkU/EGQQCZ8zi3i1CcnGf6tl4ZHw/ShlSU2UM//+0teXJFdEc0
+	 Xry2Ads/sOfCTSvEZ12+OTJhp2Yecq6iGn9jn4Fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 209/452] Disable -Wattribute-alias for clang-23 and newer
-Date: Tue, 16 Jun 2026 20:27:16 +0530
-Message-ID: <20260616145128.773154882@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>
+Subject: [PATCH 6.6 183/452] serial: zs: Fix swapped RI/DSR modem line transition counting
+Date: Tue, 16 Jun 2026 20:26:50 +0530
+Message-ID: <20260616145127.458203960@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -50,123 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit 175db11786bde9061db526bf1ac5107d915f5163 upstream.
+commit d15cd40cb1858f75846eaafa9a6bca841b790a92 upstream.
 
-Clang recently added support for -Wattribute-alias [1], which results in
-the same warnings that necessitated commit bee20031772a ("disable
--Wattribute-alias warning for SYSCALL_DEFINEx()") for GCC.
+Fix a thinko in the status interrupt handler that has caused counters
+for the RI and DSR modem line transitions to be used for the other line
+each.
 
-  kernel/time/itimer.c:325:1: error: alias and aliasee have different types 'long (unsigned int)' and 'long (typeof (__builtin_choose_expr((__builtin_types_compatible_p(typeof ((unsigned int)0), typeof (0LL)) || __builtin_types_compatible_p(typeof ((unsigned int)0), typeof (0ULL))), 0LL, 0L)))' (aka 'long (long)') [-Werror,-Wattribute-alias]
-    325 | SYSCALL_DEFINE1(alarm, unsigned int, seconds)
-        | ^
-  include/linux/syscalls.h:225:36: note: expanded from macro 'SYSCALL_DEFINE1'
-    225 | #define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
-        |                                    ^
-  include/linux/syscalls.h:236:2: note: expanded from macro 'SYSCALL_DEFINEx'
-    236 |         __SYSCALL_DEFINEx(x, sname, __VA_ARGS__)
-        |         ^
-  include/linux/syscalls.h:251:18: note: expanded from macro '__SYSCALL_DEFINEx'
-    251 |                 __attribute__((alias(__stringify(__se_sys##name))));    \
-        |                                ^
-  kernel/time/itimer.c:325:1: note: aliasee is declared here
-  include/linux/syscalls.h:225:36: note: expanded from macro 'SYSCALL_DEFINE1'
-    225 | #define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
-        |                                    ^
-  include/linux/syscalls.h:236:2: note: expanded from macro 'SYSCALL_DEFINEx'
-    236 |         __SYSCALL_DEFINEx(x, sname, __VA_ARGS__)
-        |         ^
-  include/linux/syscalls.h:255:18: note: expanded from macro '__SYSCALL_DEFINEx'
-    255 |         asmlinkage long __se_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__))  \
-        |                         ^
-  <scratch space>:16:1: note: expanded from here
-     16 | __se_sys_alarm
-        | ^
-
-Disable the warnings in the same way for clang-23 and newer. Disable the
-warning about unknown warning options to avoid breaking the build for
-versions of clang-23 that do not have -Wattribute-alias, such as ones
-deployed by vendors like Android or CI systems or when bisecting LLVM
-between llvmorg-23-init and release/23.x.
-
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2163
-Link: https://github.com/llvm/llvm-project/commit/40da6920a0d71d49dfa2392b09153600b0759f5e [1]
-Link: https://patch.msgid.link/20260515-syscall-disable-attribute-alias-for-clang-v1-1-9a9d95d41df6@kernel.org
-[nathan: Drop arch/riscv hunk in older trees and address conflicts]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8b4a40809e53 ("zs: move to the serial subsystem")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Link: https://patch.msgid.link/alpine.DEB.2.21.2604101747110.29980@angie.orcam.me.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/compat.h         | 4 ++++
- include/linux/compiler-clang.h | 6 ++++++
- include/linux/compiler_types.h | 4 ++++
- include/linux/syscalls.h       | 4 ++++
- 4 files changed, 18 insertions(+)
+ drivers/tty/serial/zs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/compat.h b/include/linux/compat.h
-index 5981d3eadaee1e..7a55636cc98454 100644
---- a/include/linux/compat.h
-+++ b/include/linux/compat.h
-@@ -72,6 +72,10 @@
- 	__diag_push();								\
- 	__diag_ignore(GCC, 8, "-Wattribute-alias",				\
- 		      "Type aliasing is used to sanitize syscall arguments");\
-+	__diag_ignore(clang, 23, "-Wunknown-warning-option",			\
-+		      "Avoid breaking versions without -Wattribute-alias");	\
-+	__diag_ignore(clang, 23, "-Wattribute-alias",				\
-+		      "Type aliasing is used to sanitize syscall arguments");	\
- 	asmlinkage long compat_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
- 		__attribute__((alias(__stringify(__se_compat_sys##name))));	\
- 	ALLOW_ERROR_INJECTION(compat_sys##name, ERRNO);				\
-diff --git a/include/linux/compiler-clang.h b/include/linux/compiler-clang.h
-index f9de53fff3acc4..2fd5b596b36b5c 100644
---- a/include/linux/compiler-clang.h
-+++ b/include/linux/compiler-clang.h
-@@ -144,5 +144,11 @@
- #define __diag_clang_11(s)
- #endif
+--- a/drivers/tty/serial/zs.c
++++ b/drivers/tty/serial/zs.c
+@@ -679,9 +679,9 @@ static void zs_status_handle(struct zs_p
+ 			uart_handle_dcd_change(uport,
+ 					       zport->mctrl & TIOCM_CAR);
+ 		if (delta & TIOCM_RNG)
+-			uport->icount.dsr++;
+-		if (delta & TIOCM_DSR)
+ 			uport->icount.rng++;
++		if (delta & TIOCM_DSR)
++			uport->icount.dsr++;
  
-+#if CONFIG_CLANG_VERSION >= 230000
-+#define __diag_clang_23(s)	__diag(s)
-+#else
-+#define __diag_clang_23(s)
-+#endif
-+
- #define __diag_ignore_all(option, comment) \
- 	__diag_clang(11, ignore, option)
-diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
-index b63da6b03d3382..ed1c107124e4e1 100644
---- a/include/linux/compiler_types.h
-+++ b/include/linux/compiler_types.h
-@@ -486,6 +486,10 @@ struct ftrace_likely_data {
- #define __diag_GCC(version, severity, string)
- #endif
- 
-+#ifndef __diag_clang
-+#define __diag_clang(version, severity, string)
-+#endif
-+
- #define __diag_push()	__diag(push)
- #define __diag_pop()	__diag(pop)
- 
-diff --git a/include/linux/syscalls.h b/include/linux/syscalls.h
-index 36c592e43d6520..8109d9f0ede62d 100644
---- a/include/linux/syscalls.h
-+++ b/include/linux/syscalls.h
-@@ -242,6 +242,10 @@ static inline int is_syscall_trace_event(struct trace_event_call *tp_event)
- 	__diag_push();							\
- 	__diag_ignore(GCC, 8, "-Wattribute-alias",			\
- 		      "Type aliasing is used to sanitize syscall arguments");\
-+	__diag_ignore(clang, 23, "-Wunknown-warning-option",		\
-+		      "Avoid breaking versions without -Wattribute-alias");\
-+	__diag_ignore(clang, 23, "-Wattribute-alias",			\
-+		      "Type aliasing is used to sanitize syscall arguments");\
- 	asmlinkage long sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
- 		__attribute__((alias(__stringify(__se_sys##name))));	\
- 	ALLOW_ERROR_INJECTION(sys##name, ERRNO);			\
--- 
-2.53.0
-
+ 		if (delta)
+ 			wake_up_interruptible(&uport->state->port.delta_msr_wait);
 
 
