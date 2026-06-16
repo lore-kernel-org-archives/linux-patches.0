@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D1034889F;
-	Tue, 16 Jun 2026 15:36:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD77449EB8;
+	Tue, 16 Jun 2026 15:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624216; cv=none; b=IyHVdJr9YfaPlHdt0l1FEv2nhUGEWZGFfwGJUbK2wYWueBC565nhl+PV0QESFjUZDHdhWe8LbsfFJ7IR68PT21KMNHTnMovpo/IkihMgLSdofnyQ6a2jxd7CpXMeR4lrDPdTqVlivF7VV4CQyZ+Vlc7KgLVkumLeu0Amj3wZ4+g=
+	t=1781624221; cv=none; b=bmAB5cYRwBAxMj3FMieyURZW0pBGrliroCAz+up9W7dfX1/zjKDWLoT6gVpP0jyeqDsJsuO61Z7EgGMpAUWYco8Yy/eRFnQCSzTTjCEauomvn/r21ndelRCowYuM6LWgrx6GN8LliMTnn+/n1JXuZKLQk3U07lNMq3fAXc9FXo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624216; c=relaxed/simple;
-	bh=qDCslrJGTNisHFTqnlddg3fnePWkTCCgcExjmmldqGk=;
+	s=arc-20240116; t=1781624221; c=relaxed/simple;
+	bh=gMkWbDmpJtYk4chzy1ZD70kFBBjxOoboB+gAjf8VF9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L9+sExf0HnGvi4bb8lC0IChKEcMKD5VmuQOlWtt1DQamOY+K2BubTuVh2MAnvt4RDXU2qYdAOPgpwZV6TkgRxmenWGjcoO+7Kou/ZeOrdMhGJ98reVtiNbPX1kwIVvS+Mp/Pw6SQqYuI7Ljm8DpctapzHzVpm3txTnJCzUN0/0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=si5zjOaf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jZxXCKIHdaIzdvdwDoRdmNUa4jdY/uszG+TBITssgWg1QNaEU64B/GLKp+bYDztKCpX7qXn7YACkaV7du6T1A0oM3k0EqzmGk33yVm/e4/aZf7K5ANfgRcwXp9KYIGG/B+fz/FARGvr8bVpLpG0MJQbYFY71svqB17gX62+QIB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZzRgicUq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="si5zjOaf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 685111F00A3F;
-	Tue, 16 Jun 2026 15:36:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZzRgicUq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38B01F00A3D;
+	Tue, 16 Jun 2026 15:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624215;
-	bh=ONMFNck8dsl0frLDkVjB/HsuFzsMdLjHzXvdFnQugpI=;
+	s=korg; t=1781624220;
+	bh=Bvo5CCYzPKVZ0uBdr+VH1DdEgcbCCz2OOu/EiViYqBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=si5zjOafPKeCY7syuohshtqLClwomS3P1r4jZpbp+WBi0Vw+uXc/jnvQn8ngylxmq
-	 fy7zPDW2DhdN0MOa5GIJrmf5T4Goobyxl5eueGKxEdEjmieAx1zAMT6CP28lFx21PE
-	 DyCMywPX+kfW/IqQwEb8TvVN5HxDPV+ddpmeF/m8=
+	b=ZzRgicUqFZk7K9UgStYH2J7oP/QJBM70FIu2pWz79fOgBpdORi5rNFhVrH+VxX1TR
+	 f/1p/IljAGfNxskiNuKiwf7ihp/S7KSovX+/9PHR/oWLGUdve9upJ+iMqCHvBpcpO3
+	 3GWy5ZNcR9Mjl6cLVAeLq4ANpxyojOcBfogPL9/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Jelonek <jelonek.jonas@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 293/378] net: sfp: initialize i2c_block_size at adapter configure time
-Date: Tue, 16 Jun 2026 20:28:44 +0530
-Message-ID: <20260616145125.490752370@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: [PATCH 7.0 294/378] nvmem: core: fix use-after-free bugs in error paths
+Date: Tue, 16 Jun 2026 20:28:45 +0530
+Message-ID: <20260616145125.536458738@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -50,49 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Jelonek <jelonek.jonas@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 56d0885514491e5ed8f7593400879ab77c52504c upstream.
+commit 5b6b6fc491899d583eaa75344e094796ae9b530b upstream.
 
-sfp->i2c_block_size is only assigned in sfp_sm_mod_probe(), which runs
-from the state machine timer after SFP_F_PRESENT has been set. Between
-those two points, sfp_module_eeprom() (the ethtool -m callback) gates
-only on SFP_F_PRESENT and can be entered with i2c_block_size still at
-its kzalloc'd value of 0.
+Fix several instances of error paths in which we call
+__nvmem_device_put() - which may end up freeing the underlying memory
+and other resources - and then keep on using the nvmem structure. Always
+put the reference to the nvmem device as the last step before returning
+the error code.
 
-On a pure-I2C adapter, sfp_i2c_read() then issues an i2c_transfer()
-with msgs[1].len = 0 inside a loop that subtracts this_len from len
-each iteration; on adapters that succeed a zero-length read the loop
-never advances, spinning while holding rtnl_lock.
-
-This was previously addressed by initializing i2c_block_size in
-sfp_alloc() (commit 813c2dd78618), but the initialization was dropped
-when i2c_block_size was split from i2c_max_block_size.
-
-Initialize sfp->i2c_block_size from sfp->i2c_max_block_size in
-sfp_i2c_configure(), so the field is valid as soon as the adapter is
-known. sfp_sm_mod_probe() still reassigns it on each module insertion
-to recover from a per-module clamp to 1 (sfp_id_needs_byte_io).
-
-Fixes: 7662abf4db94 ("net: phy: sfp: Add support for SMBus module access")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jonas Jelonek <jelonek.jonas@gmail.com>
-Link: https://patch.msgid.link/20260528205242.971410-2-jelonek.jonas@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7ae6478b304b ("nvmem: core: rework nvmem cell instance creation")
+Fixes: e888d445ac33 ("nvmem: resolve cells from DT at registration time")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260530204340.116743-3-srini@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/sfp.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvmem/core.c |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -820,6 +820,7 @@ static int sfp_i2c_configure(struct sfp
- 		return -EINVAL;
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -1468,18 +1468,16 @@ struct nvmem_cell *of_nvmem_cell_get(str
+ 	cell_entry = nvmem_find_cell_entry_by_node(nvmem, cell_np);
+ 	of_node_put(cell_np);
+ 	if (!cell_entry) {
+-		__nvmem_device_put(nvmem);
+ 		nvmem_layout_module_put(nvmem);
+-		if (nvmem->layout)
+-			return ERR_PTR(-EPROBE_DEFER);
+-		else
+-			return ERR_PTR(-ENOENT);
++		ret = nvmem->layout ? -EPROBE_DEFER : -ENOENT;
++		__nvmem_device_put(nvmem);
++		return ERR_PTR(ret);
  	}
  
-+	sfp->i2c_block_size = sfp->i2c_max_block_size;
- 	return 0;
+ 	cell = nvmem_create_cell(cell_entry, id, cell_index);
+ 	if (IS_ERR(cell)) {
+-		__nvmem_device_put(nvmem);
+ 		nvmem_layout_module_put(nvmem);
++		__nvmem_device_put(nvmem);
+ 	}
+ 
+ 	return cell;
+@@ -1593,8 +1591,8 @@ void nvmem_cell_put(struct nvmem_cell *c
+ 		kfree_const(cell->id);
+ 
+ 	kfree(cell);
+-	__nvmem_device_put(nvmem);
+ 	nvmem_layout_module_put(nvmem);
++	__nvmem_device_put(nvmem);
  }
+ EXPORT_SYMBOL_GPL(nvmem_cell_put);
  
 
 
