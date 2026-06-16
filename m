@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0FC3A3E78;
-	Tue, 16 Jun 2026 17:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2723A3E78;
+	Tue, 16 Jun 2026 17:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631338; cv=none; b=MLyxYZlXmQbd3+DyQKdsh37QfPCKL5djacdeVLzJHqawbaQ7wRoxY1Xr+c4u0LfAHCFkk7l3vuH6BlRpHkpHi+o338i3kOqp+4XAn18bihPQISM1qcYcYJ48KtM3pdFlp+3laMYW7qrGES2ipZWaHJ2ws0YC7HzTqRRTnaQ+YH4=
+	t=1781631344; cv=none; b=Woc1QsPNQo7dzIycydXFsIIhy5Le/awBlap3ICIzpFL71uAfv69aK0ZpkNx7uuTyLW4/NXx813kIZbZFlqacJbkBRRRYppPjji/WnXy6OURs91NikfZDGoYrGZDab0q1QaIBwM/HBJgC8umyJV3fw0aHKOME+72WlVFzRS5fF3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631338; c=relaxed/simple;
-	bh=YYvtI3J8dMp3KHuEgURZ/DyMs3bcdNHm1l6csbZ6vQ0=;
+	s=arc-20240116; t=1781631344; c=relaxed/simple;
+	bh=RsdvbxMwFG24G01lltH/m9WqCEWG/xAbmXqg9g/YMMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z85LCiInE/2OGwAPtCJrdNxa+AU7t5XTIzKmbXQRDtoJ4ZDkVJ3k/msNGr7LssCSnkCfkEchA7IOxeinQzOcTwYBBn+y0J852deh/zkqaC9rjmnJo4P/4/XBvScVCBslI4ugS5T8eIuXFLqK0jCOhsqR2mQW1BH5u8T8gz48Dr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NgZZnVeV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XpW/wLWpYtP0aCdJO8wXmi5x9xYpD4U6Nk/ZVpr9Q4B8pc9uX8p8HVRx80JhBleBsTnKc7H9skHYl6K0MIg3aeOj+GZPSnIPcRu81r29f+Bn8/7i3K7jRnWHAhZ8l4lhmNzPpMZyySvKLqMeUONozXUU0hrtfbwawLYY5z52sSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJogcx6E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NgZZnVeV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A25C11F000E9;
-	Tue, 16 Jun 2026 17:35:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJogcx6E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C8E1F000E9;
+	Tue, 16 Jun 2026 17:35:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631337;
-	bh=pqtwEUWGZbAJwn1sWfU81ftmdF5M80TcH6zP2qbCfHs=;
+	s=korg; t=1781631342;
+	bh=NtsuB34w4+rUvQKglxJAfjwB4RcY2epBp7Gvm9IbO6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NgZZnVeVnKINSTx7iBwTgtjV3o0qu4Hoy3U/uewGVezdjXGZrKgKeIlmjiLThdHI9
-	 +sFDy7NnLZg3wXw27/H6s5DF4ijBAvdnEAKv833PB5y0zBTKFnOqAO5qh6c5NKavao
-	 +VTu9M9ZPGZgNW0Q0jGtnii3QY6UhEk3MWDax7JY=
+	b=YJogcx6EGz0i7diAMPHN5X6gdtxh4jGTEzqLyFU9FRk6krZB/51lF6s7yJfGh58It
+	 beETt/KWyJr5uOvpJ044i3rpG8u2ojkszvLm0BQUTqeh5IeBAOd40eXpPJzVMKzZk9
+	 WtGqYmELm4wSQKF8y7z55kaS99VUMSSkcZEjzBwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yiming Qian <yimingqian591@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 201/522] netfilter: conntrack_irc: fix possible out-of-bounds read
-Date: Tue, 16 Jun 2026 20:25:48 +0530
-Message-ID: <20260616145135.486114978@linuxfoundation.org>
+Subject: [PATCH 6.1 202/522] netfilter: bridge: make ebt_snat ARP rewrite writable
+Date: Tue, 16 Jun 2026 20:25:49 +0530
+Message-ID: <20260616145135.528386482@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,48 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Yiming Qian <yimingqian591@gmail.com>
 
-[ Upstream commit 66eba0ffce3b7e11449946b4cbbef8ea36112f56 ]
+[ Upstream commit 67ba971ae02514d85818fe0c32549ab4bfa3bf49 ]
 
-When parsing fails after we've matched the command string we
-should bail out instead of trying to match a different command.
+The ebtables SNAT target keeps the Ethernet source address rewrite
+behind skb_ensure_writable(skb, 0).  This is intentional: at the bridge
+ebtables hooks the Ethernet header is addressed through
+skb_mac_header()/eth_hdr(), while skb->data points at the Ethernet
+payload.  Asking skb_ensure_writable() for ETH_HLEN bytes would check
+the payload, not the Ethernet header, and would reintroduce the small
+packet regression fixed by commit 63137bc5882a.
 
-This helper should be deprecated, given prevalence of TLS I doubt it has
-any relevance in 2026.
+However, the optional ARP sender hardware address rewrite is different.
+It writes through skb_store_bits() at an offset relative to skb->data:
 
-Fixes: 869f37d8e48f ("[NETFILTER]: nf_conntrack/nf_nat: add IRC helper port")
-Closes: https://sashiko.dev/#/patchset/20260525182924.28456-1-fw%40strlen.de
+        skb_store_bits(skb, sizeof(struct arphdr), info->mac, ETH_ALEN)
+
+skb_header_pointer() only safely reads the ARP header; it does not make
+the later sender hardware address range writable.  If that range is
+still held in a nonlinear skb fragment backed by a splice-imported file
+page, skb_store_bits() maps the frag page and copies the new MAC address
+directly into it.
+
+Ensure the ARP SHA range is writable before reading the ARP header and
+before calling skb_store_bits().
+
+Fixes: 63137bc5882a ("netfilter: ebtables: Fixes dropping of small packets in bridge nat")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Yiming Qian <yimingqian591@gmail.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_irc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bridge/netfilter/ebt_snat.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/netfilter/nf_conntrack_irc.c b/net/netfilter/nf_conntrack_irc.c
-index 5703846bea3b69..0f50ea92ced9df 100644
---- a/net/netfilter/nf_conntrack_irc.c
-+++ b/net/netfilter/nf_conntrack_irc.c
-@@ -208,7 +208,7 @@ static int help(struct sk_buff *skb, unsigned int protoff,
- 			if (parse_dcc(data, data_limit, &dcc_ip,
- 				       &dcc_port, &addr_beg_p, &addr_end_p)) {
- 				pr_debug("unable to parse dcc command\n");
--				continue;
-+				goto out;
- 			}
+diff --git a/net/bridge/netfilter/ebt_snat.c b/net/bridge/netfilter/ebt_snat.c
+index 7dfbcdfc30e5d2..c9e229af0366b8 100644
+--- a/net/bridge/netfilter/ebt_snat.c
++++ b/net/bridge/netfilter/ebt_snat.c
+@@ -31,6 +31,9 @@ ebt_snat_tg(struct sk_buff *skb, const struct xt_action_param *par)
+ 		const struct arphdr *ap;
+ 		struct arphdr _ah;
  
- 			pr_debug("DCC bound ip/port: %pI4:%u\n",
-@@ -222,7 +222,7 @@ static int help(struct sk_buff *skb, unsigned int protoff,
- 				net_warn_ratelimited("Forged DCC command from %pI4: %pI4:%u\n",
- 						     &tuple->src.u3.ip,
- 						     &dcc_ip, dcc_port);
--				continue;
-+				goto out;
- 			}
- 
- 			exp = nf_ct_expect_alloc(ct);
++		if (skb_ensure_writable(skb, sizeof(_ah) + ETH_ALEN))
++			return EBT_DROP;
++
+ 		ap = skb_header_pointer(skb, 0, sizeof(_ah), &_ah);
+ 		if (ap == NULL)
+ 			return EBT_DROP;
 -- 
 2.53.0
 
