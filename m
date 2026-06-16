@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9396843E4BC;
-	Tue, 16 Jun 2026 15:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD45C26B0A9;
+	Tue, 16 Jun 2026 15:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623595; cv=none; b=PJU7rS6qyA1G7xjM6RD/1TN9Q7eBbSt0QR6lif8BEKOgonn6vuyGqbz0Osg3mHOVinLj/uxbSl8bHSU9lwfg+JDzEm+TJFiDBxWwlzzHzk9TKkhlqcmaIHuND0Y2I3nFSHQ0u7yKkX3nKnzmlA9c8E6XUCHb3hA0hre6wUV1dVQ=
+	t=1781623601; cv=none; b=ENfe5/fc4rORz2uN9hZG066a0TmlngKusAuphzP5GBMQaKdD3JJBBhxPBvrvNmkVy+ep/LtELrBT0mMUIDgxMPLcvK/Cy7T1VSWPrSjOm9sTTVnxO+DeVRuLdNHYUZkijHYNDRSErs/K6oZCvVMYPKWMHVc2i2Nu0gQQJ2h/rZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623595; c=relaxed/simple;
-	bh=rO1FNAXAZGi92ux8sxmNs3UzAfETHcP0Gut+vVNYKUo=;
+	s=arc-20240116; t=1781623601; c=relaxed/simple;
+	bh=+xWk6FTjgerstzGsB2IUWcmPMNgnWDbTCZm6IpyWDfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MPJclQEl6BD9Ty8Q9Go88C9GdVT5jwhK2tnXIvuQkf8dXdDxwj2XCUNwDzdgfrR1qCEWnGMXo9HDu+Sv0LkqkjCQhRdLfy5Ulc+j3HyuMEh1MpeRTnXpN7Wi+FUA0eBXquHgU4fVe0eivm+CazO8zxK+Xr5/DYh7DTUx2/XWP0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qyq9UPiF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rhtHRylU3STjG1/mkB/90mmIU8dNzbDlbPV3mmaG9vY5dOqMGwXmHV4H+AwwRlznQtVMxnR82nYWU/xxZHuY+qYiF0qd58KkCAYjP6k5dO7H57S5TN5C1co4fwZ9/AinwIvRlDCPXtpYdTALdUSqAhZtpQZBHSc4wgXwEepnrSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DaYr+QdC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qyq9UPiF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 571EB1F000E9;
-	Tue, 16 Jun 2026 15:26:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DaYr+QdC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3BF11F00A3A;
+	Tue, 16 Jun 2026 15:26:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623594;
-	bh=RhrTDbYrBWMvJv++pG5n+COh2CS9bNgz6ejpjQFkHas=;
+	s=korg; t=1781623599;
+	bh=aTS/yeVNLoKy9N6AgFtGyxA9r3bphkvyhSvqSpbExts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qyq9UPiFrY1m3PHBEx3vSY+wrQpLbyXk9hzEDYhvY78NkEea2bxjbQRQ2hEXAIpnG
-	 SZVNIdFwUeZe4CJ/KkSpPPm8bB7+xEf8/f0FlLoo1hvRC04NZZpgQhFYq1OXatAyLi
-	 Ltel4yYulo5SZ9OOHm8bNM2eOxwgxjZk+HKoi4e8=
+	b=DaYr+QdCHOUCEU3WySlFb3KjD1G4xZzjTIY6qmD3VO+kgC+BYUkR2fKyZwPe19VWy
+	 mALcnXRfE+ne3X+sMA+fJU1uHreLwSpmzP5ehKuSQnh5c6HWejLrJNmpElWoaTL3+C
+	 sQHyvika2oHC2KNSHPKF+4mGsCFP5oRVqElYPQ0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Zhou <eilaimemedsnaimel@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Til Kaiser <mail@tk154.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 145/378] netfilter: nft_exthdr: fix register tracking for F_PRESENT flag
-Date: Tue, 16 Jun 2026 20:26:16 +0530
-Message-ID: <20260616145117.898198779@linuxfoundation.org>
+Subject: [PATCH 7.0 146/378] net: mvpp2: sync RX data at the hardware packet offset
+Date: Tue, 16 Jun 2026 20:26:17 +0530
+Message-ID: <20260616145117.949508023@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,43 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Til Kaiser <mail@tk154.de>
 
-[ Upstream commit 772cecf198da732faebb5dcfc46d66a505be8495 ]
+[ Upstream commit 180235600934bef6add3be637c296d6cf3272e67 ]
 
-nft_exthdr_init() passes user-controlled priv->len to
-nft_parse_register_store(), which marks that many bytes in the
-register bitmap as initialized.  However, when NFT_EXTHDR_F_PRESENT
-is set, the eval paths write only 1 byte (nft_reg_store8) or
-4 bytes (*dest = 0 on TCP/DCCP error path).  When len > 4,
-registers beyond the first are never written, retaining
-uninitialized stack data from nft_regs.
+mvpp2 programs the RX queue packet offset, so hardware writes received
+data at dma_addr + MVPP2_SKB_HEADROOM. The current CPU sync starts at
+dma_addr and only covers rx_bytes + MVPP2_MH_SIZE bytes, which syncs the
+unused headroom and misses the same number of bytes at the packet tail.
 
-Bail out if userspace requests too much data when F_PRESENT is set.
+On non-coherent DMA systems this can leave the CPU reading stale cache
+contents for the end of the received frame.
 
-Reported-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
-Fixes: c078ca3b0c5b ("netfilter: nft_exthdr: Add support for existence check")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Use dma_sync_single_range_for_cpu() with MVPP2_SKB_HEADROOM as the range
+offset so the sync covers the Marvell header and packet data actually
+written by hardware.
+
+Fixes: e1921168bbd4 ("mvpp2: sync only the received frame")
+Signed-off-by: Til Kaiser <mail@tk154.de>
+Link: https://patch.msgid.link/20260607134943.21996-2-mail@tk154.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_exthdr.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nft_exthdr.c b/net/netfilter/nft_exthdr.c
-index 7eedf4e3ae9c75..9471328802d3b7 100644
---- a/net/netfilter/nft_exthdr.c
-+++ b/net/netfilter/nft_exthdr.c
-@@ -532,6 +532,9 @@ static int nft_exthdr_init(const struct nft_ctx *ctx,
- 			return err;
- 	}
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+index f442b874bb5933..92a701f4fe3f57 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+@@ -3946,9 +3946,10 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
+ 			dma_dir = DMA_FROM_DEVICE;
+ 		}
  
-+	if ((flags & NFT_EXTHDR_F_PRESENT) && len != 1)
-+		return -EINVAL;
-+
- 	priv->type   = nla_get_u8(tb[NFTA_EXTHDR_TYPE]);
- 	priv->offset = offset;
- 	priv->len    = len;
+-		dma_sync_single_for_cpu(dev->dev.parent, dma_addr,
+-					rx_bytes + MVPP2_MH_SIZE,
+-					dma_dir);
++		dma_sync_single_range_for_cpu(dev->dev.parent, dma_addr,
++					      MVPP2_SKB_HEADROOM,
++					      rx_bytes + MVPP2_MH_SIZE,
++					      dma_dir);
+ 
+ 		/* Buffer header not supported */
+ 		if (rx_status & MVPP2_RXD_BUF_HDR)
 -- 
 2.53.0
 
