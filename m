@@ -1,224 +1,61 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from bregans-1.gladserv.net (bregans-1.gladserv.net [185.128.211.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6939466B4B;
-	Tue, 16 Jun 2026 16:55:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420FB4502F;
+	Tue, 16 Jun 2026 16:55:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.211.58
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628955; cv=none; b=iDsxNqblnt1Nq3t8AlnZ8pY0N8kz28ngG7/eCb45AxAJS94iGhgsj6sbvrwPKs72z2hwi9el1mw3dhs3lojZzJPyub9WA1yiOBWl+NnftZfivCEQvHwTbvoF+Ac9lm4ROn+kMkB4pElCnTNJw9RD+VdoIX/MmPs6kRSOEgjfROU=
+	t=1781628959; cv=none; b=XGOsnzfPJ1mLN25OGirS3NX/8WFzt9mjfbotOPXewiXVNphnDYxBvq0OpJpdNIV26L+Qqcdlmibm4CfeZOj/H147RxdlkIcJi/RWva7ss79sR0y6hTrAjIbwXo/zRZkGxoBlDGy/BhLkfjERu/FDLfCSEezm91kmIP2Jv2FoM1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628955; c=relaxed/simple;
-	bh=u6rcEBdP5uiwK4xYO2eDGNpgI7XqYADMMQqSDjdk7HY=;
+	s=arc-20240116; t=1781628959; c=relaxed/simple;
+	bh=QKM1zheAVKbCNAXTe+GsGaotgBMey1uLgBGkLNlHvc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P+N00S09SqWR7aUjjpmr38seOOkl4nrvC+LpqM77DO/KEFb+BGK/td/wktARXVsUt2nyXFwcLr8xw4koAx0+24tB+xKof9LfuondXFswEezvssIwDBAOTGUjEjnUfKM7WnJc66LPc/OhngjzUkiO7V6WuR2BDvhdscSARTogZi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K1j7QTSz; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1j7QTSz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA59D1F000E9;
-	Tue, 16 Jun 2026 16:55:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628954;
-	bh=7VVmrtC1uZwFWm0E6jfYrzHNgAS3CSAuixMLl8TmnI0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K1j7QTSzNu4rLFqkz1hKEfXVA/1PD6KK1HL85I8cxFm1N5yNgUuWWIqjnAksxWk/M
-	 W11bacLxLN5IUFXh0XZfW1+s056btfJEx2XCoxFgrWShPKXvPi2FqKxA+qZtEer0HF
-	 Jm8AQwcqPZPza1ZEGk6r0zWbZC62wwiiGOPjl1y8=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	 MIME-Version; b=A6MJM8y4IaHCRCBADprVW88arQ72zTaYx/hpW2/Jp0ewx5i6HuJQk+2ps1orw+vQ3znXYVGJdtddCWxI9GGRD0PjbH29FI/HlkyvVeo/60Gef//GYOpz/2uzHy6FX/O7PSrqOaYJDfwSfTytGEuKFPnUkPzMiMqg1H8ygTWt9Q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.211.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+From: Brett A C Sheffield <bacs@librecast.net>
+To: gregkh@linuxfoundation.org
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Song Liu <song@kernel.org>,
-	Tingmao Wang <m@maowtm.org>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
-	Bin Lan <bin.lan.cn@windriver.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 194/452] landlock: Fix handling of disconnected directories
-Date: Tue, 16 Jun 2026 20:27:01 +0530
-Message-ID: <20260616145128.015202824@linuxfoundation.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
-References: <20260616145117.796205997@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	Brett A C Sheffield <bacs@librecast.net>
+Subject: Re: [PATCH 6.18 000/325] 6.18.36-rc1 review
+Date: Tue, 16 Jun 2026 16:55:48 +0000
+Message-ID: <20260616165552.26705-1-bacs@librecast.net>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
+References: <20260616145057.827196531@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+# Librecast Test Results
 
-------------------
+020/020 [ OK ] liblcrq
+010/010 [ OK ] libmld
+120/120 [ OK ] liblibrecast
 
-From: Mickaël Salaün <mic@digikod.net>
+CPU/kernel: Linux auntie 6.18.36-rc1-g1b6356bc9016 #1 SMP PREEMPT_DYNAMIC Tue Jun 16 16:02:41 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
 
-[ Upstream commit 49c9e09d961025b22e61ef9ad56aa1c21b6ce2f1 ]
-
-Disconnected files or directories can appear when they are visible and
-opened from a bind mount, but have been renamed or moved from the source
-of the bind mount in a way that makes them inaccessible from the mount
-point (i.e. out of scope).
-
-Previously, access rights tied to files or directories opened through a
-disconnected directory were collected by walking the related hierarchy
-down to the root of the filesystem, without taking into account the
-mount point because it couldn't be found. This could lead to
-inconsistent access results, potential access right widening, and
-hard-to-debug renames, especially since such paths cannot be printed.
-
-For a sandboxed task to create a disconnected directory, it needs to
-have write access (i.e. FS_MAKE_REG, FS_REMOVE_FILE, and FS_REFER) to
-the underlying source of the bind mount, and read access to the related
-mount point.   Because a sandboxed task cannot acquire more access
-rights than those defined by its Landlock domain, this could lead to
-inconsistent access rights due to missing permissions that should be
-inherited from the mount point hierarchy, while inheriting permissions
-from the filesystem hierarchy hidden by this mount point instead.
-
-Landlock now handles files and directories opened from disconnected
-directories by taking into account the filesystem hierarchy when the
-mount point is not found in the hierarchy walk, and also always taking
-into account the mount point from which these disconnected directories
-were opened.  This ensures that a rename is not allowed if it would
-widen access rights [1].
-
-The rationale is that, even if disconnected hierarchies might not be
-visible or accessible to a sandboxed task, relying on the collected
-access rights from them improves the guarantee that access rights will
-not be widened during a rename because of the access right comparison
-between the source and the destination (see LANDLOCK_ACCESS_FS_REFER).
-It may look like this would grant more access on disconnected files and
-directories, but the security policies are always enforced for all the
-evaluated hierarchies.  This new behavior should be less surprising to
-users and safer from an access control perspective.
-
-Remove a wrong WARN_ON_ONCE() canary in collect_domain_accesses() and
-fix the related comment.
-
-Because opened files have their access rights stored in the related file
-security properties, there is no impact for disconnected or unlinked
-files.
-
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Günther Noack <gnoack@google.com>
-Cc: Song Liu <song@kernel.org>
-Reported-by: Tingmao Wang <m@maowtm.org>
-Closes: https://lore.kernel.org/r/027d5190-b37a-40a8-84e9-4ccbc352bcdf@maowtm.org
-Closes: https://lore.kernel.org/r/09b24128f86973a6022e6aa8338945fcfb9a33e4.1749925391.git.m@maowtm.org
-Fixes: b91c3e4ea756 ("landlock: Add support for file reparenting with LANDLOCK_ACCESS_FS_REFER")
-Fixes: cb2c7d1a1776 ("landlock: Support filesystem access-control")
-Link: https://lore.kernel.org/r/b0f46246-f2c5-42ca-93ce-0d629702a987@maowtm.org [1]
-Reviewed-by: Tingmao Wang <m@maowtm.org>
-Link: https://lore.kernel.org/r/20251128172200.760753-2-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-[ Adjust context ]
-Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- security/landlock/errata/abi-1.h | 16 +++++++++++++
- security/landlock/fs.c           | 40 +++++++++++++++++++++++---------
- 2 files changed, 45 insertions(+), 11 deletions(-)
- create mode 100644 security/landlock/errata/abi-1.h
-
-diff --git a/security/landlock/errata/abi-1.h b/security/landlock/errata/abi-1.h
-new file mode 100644
-index 00000000000000..e8a2bff2e5b6a8
---- /dev/null
-+++ b/security/landlock/errata/abi-1.h
-@@ -0,0 +1,16 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+
-+/**
-+ * DOC: erratum_3
-+ *
-+ * Erratum 3: Disconnected directory handling
-+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+ *
-+ * This fix addresses an issue with disconnected directories that occur when a
-+ * directory is moved outside the scope of a bind mount.  The change ensures
-+ * that evaluated access rights include both those from the disconnected file
-+ * hierarchy down to its filesystem root and those from the related mount point
-+ * hierarchy.  This prevents access right widening through rename or link
-+ * actions.
-+ */
-+LANDLOCK_ERRATUM(3)
-diff --git a/security/landlock/fs.c b/security/landlock/fs.c
-index fe4622d88eb15e..7145162f1e5971 100644
---- a/security/landlock/fs.c
-+++ b/security/landlock/fs.c
-@@ -616,19 +616,31 @@ static bool is_access_to_paths_allowed(
- 				break;
- 			}
- 		}
-+
- 		if (unlikely(IS_ROOT(walker_path.dentry))) {
-+			if (likely(walker_path.mnt->mnt_flags & MNT_INTERNAL)) {
-+				/*
-+				 * Stops and allows access when reaching disconnected root
-+				 * directories that are part of internal filesystems (e.g. nsfs,
-+				 * which is reachable through /proc/<pid>/ns/<namespace>).
-+				 */
-+				allowed_parent1 = true;
-+				allowed_parent2 = true;
-+				break;
-+			}
-+
- 			/*
--			 * Stops at disconnected root directories.  Only allows
--			 * access to internal filesystems (e.g. nsfs, which is
--			 * reachable through /proc/<pid>/ns/<namespace>).
-+			 * We reached a disconnected root directory from a bind mount.
-+			 * Let's continue the walk with the mount point we missed.
- 			 */
--			allowed_parent1 = allowed_parent2 =
--				!!(walker_path.mnt->mnt_flags & MNT_INTERNAL);
--			break;
-+			dput(walker_path.dentry);
-+			walker_path.dentry = walker_path.mnt->mnt_root;
-+			dget(walker_path.dentry);
-+		} else {
-+			parent_dentry = dget_parent(walker_path.dentry);
-+			dput(walker_path.dentry);
-+			walker_path.dentry = parent_dentry;
- 		}
--		parent_dentry = dget_parent(walker_path.dentry);
--		dput(walker_path.dentry);
--		walker_path.dentry = parent_dentry;
- 	}
- 	path_put(&walker_path);
- 
-@@ -705,6 +717,9 @@ static inline access_mask_t maybe_remove(const struct dentry *const dentry)
-  * file.  While walking from @dir to @mnt_root, we record all the domain's
-  * allowed accesses in @layer_masks_dom.
-  *
-+ * Because of disconnected directories, this walk may not reach @mnt_dir.  In
-+ * this case, the walk will continue to @mnt_dir after this call.
-+ *
-  * This is similar to is_access_to_paths_allowed() but much simpler because it
-  * only handles walking on the same mount point and only checks one set of
-  * accesses.
-@@ -744,8 +759,11 @@ static bool collect_domain_accesses(
- 			break;
- 		}
- 
--		/* We should not reach a root other than @mnt_root. */
--		if (dir == mnt_root || WARN_ON_ONCE(IS_ROOT(dir)))
-+		/*
-+		 * Stops at the mount point or the filesystem root for a disconnected
-+		 * directory.
-+		 */
-+		if (dir == mnt_root || unlikely(IS_ROOT(dir)))
- 			break;
- 
- 		parent_dentry = dget_parent(dir);
--- 
-2.53.0
-
-
-
+Tested-by: Brett A C Sheffield <bacs@librecast.net>
