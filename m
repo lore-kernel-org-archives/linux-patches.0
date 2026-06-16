@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EB33A16AC;
-	Tue, 16 Jun 2026 16:08:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BE64657E7;
+	Tue, 16 Jun 2026 16:08:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626131; cv=none; b=BkuLdsPRCMyoUyo1dmJH5nziju6Oa4gcSciHauD2o68d0w5JQTyRArNFcUvosaTO2Si3Du7g1X7BNrOCX06J5qAdb5YBWL0wj+pHGqbvGsOoKKwXzWrXqv6gMn9/FCvySwwLnl8FJUC+ufbEiGOxXDwDLZj/9rFEDk+NcSFOy/0=
+	t=1781626136; cv=none; b=taJ80PuFTD0Yorf1Qurv8dulJdfGLiFmt0fn5UGUdPfyM77cOfpV79+HgNO2qvKXWFy38bbQqe9KRrjf32bRvqCSpDHRwEoyfcEvQua5k7UXgHuN4j4iKhbfBFmzZivFEYwXHXmG9RlSKib82W8etk6QlPxjFxZEawjIPvtumxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626131; c=relaxed/simple;
-	bh=4S6QPfxsabWBRmExlZKjxlJTMHF91jwU8MmXMYIxSKw=;
+	s=arc-20240116; t=1781626136; c=relaxed/simple;
+	bh=ydIjZr/TBCz1ZCDbrrjT4D7BuXM/ZkmgwTeRFfw85+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fHVaI/+IgwPBWry5locDfieS7PL2trGa1ZsKZuKqDmgKfJGjW4Yc91iFAXbXj3jmwamUioS8LccpKMfug8P5c9COA6LLHj5o1QDbetLL47KYiZFpPmjK7H3ejWaGlrbB6bltVwcZDXeuqZV4sR+e/SVL1v5UD4qiewg3xaqXDfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dLY00wyW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HTcoLMOdIOktmn8Obr39uKipsCKQIpq4PlUm/RO0VZ1VWZE2CD6gx7rlG1nNGiY5tPXf0y4gil0WgzC7i7HnvxlMpVvlnSm4Ea0CHPUe9WcKaGaPmmT07hR2IH2dmlghWefm9/tayGy2t6FkeIoH4yRWS3qtItkVzOO5df2u5ME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GR8+9G3u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dLY00wyW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7AF1F000E9;
-	Tue, 16 Jun 2026 16:08:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GR8+9G3u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75241F000E9;
+	Tue, 16 Jun 2026 16:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626129;
-	bh=UDFzujRvQqALFGstzATz6DN9/j7W9yyAGjTg8G2FV50=;
+	s=korg; t=1781626134;
+	bh=ynblNsS3RGz/XFfFeD+aPMYWeODwWWWhA2fkBcRPW7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dLY00wyWKC8mO2SzNfh0HLN0iqT1/P4w6JbwI8He6yvhV8lqjTFheyrA8Rn5JuYMG
-	 zMZEZ9xNiiHGRGxn3OIOlSvNggtLfMrE6yTESF3c5rLPlglWza6uykOOU6uf2FNwHT
-	 CeXBIzAGj7mZyvq+7XMuQZVJiPaK8KOi1aTv6d/s=
+	b=GR8+9G3u4QGCeYL9cYHEAowW9/6Wah0FzJPiH6P17C3iFporQT+vV6f4Vl9zudCB7
+	 UH7Q0lmyaJglpquh9y8WF7jveYiNsErvXGe7ZAofrpqMA/0JB/rNJfJs7+PvEBoqS0
+	 WFnwp1b4hkOfcFP1+O8LeIUQ3l4fXvhQykyBIoB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.18 269/325] thunderbolt: Reject zero-length property entries in validator
-Date: Tue, 16 Jun 2026 20:31:05 +0530
-Message-ID: <20260616145112.052494926@linuxfoundation.org>
+Subject: [PATCH 6.18 270/325] thunderbolt: Bound root directory content to block size
+Date: Tue, 16 Jun 2026 20:31:06 +0530
+Message-ID: <20260616145112.113445061@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,19 +52,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit cff8eb65d1eafe7793e54b4d0cf6bf831644630b upstream.
+commit 65423079c7420e3dbf9a7aa345c243a3f5752e5d upstream.
 
-tb_property_entry_valid() accepts entries with length == 0 for
-DIRECTORY, DATA, and TEXT types.  A zero-length TEXT entry passes
-validation but causes an underflow in the null-termination logic:
+__tb_property_parse_dir() does not check that content_offset +
+content_len fits within block_len for the root directory case.
+When rootdir->length equals or exceeds block_len - 2, the entry
+loop reads past the allocated property block.
 
-  property->value.text[property->length * 4 - 1] = '\0';
-
-When property->length is 0 this writes to offset -1 relative to
-the allocation.
-
-Reject zero-length entries early in the validator since they have no
-valid representation in the XDomain property protocol.
+Add a bounds check after computing content_offset and content_len
+to reject directories whose content extends past the block.
 
 Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
 Cc: stable@vger.kernel.org
@@ -73,19 +69,21 @@ Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/property.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/thunderbolt/property.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/drivers/thunderbolt/property.c
 +++ b/drivers/thunderbolt/property.c
-@@ -60,6 +60,8 @@ static bool tb_property_entry_valid(cons
- 	case TB_PROPERTY_TYPE_DIRECTORY:
- 	case TB_PROPERTY_TYPE_DATA:
- 	case TB_PROPERTY_TYPE_TEXT:
-+		if (!entry->length)
-+			return false;
- 		if (entry->length > block_len)
- 			return false;
- 		if (check_add_overflow(entry->value, entry->length, &end) ||
+@@ -187,6 +187,10 @@ static struct tb_property_dir *__tb_prop
+ 	if (is_root) {
+ 		content_offset = dir_offset + 2;
+ 		content_len = dir_len;
++		if (content_offset + content_len > block_len) {
++			tb_property_free_dir(dir);
++			return NULL;
++		}
+ 	} else {
+ 		if (dir_len < 4) {
+ 			tb_property_free_dir(dir);
 
 
