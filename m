@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F36305688;
-	Tue, 16 Jun 2026 17:26:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F41478E57;
+	Tue, 16 Jun 2026 17:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630814; cv=none; b=FY4WKvX+gOOSFX/4rREtYJx7OoNOFwDn/qN88UA3spHHaO53h71ixZEcyeeJty0Lygx2533AtfZb2OWtm21HyvsQ1xMNXGUjG7Wqdbr6GRZyLyExVcSVFZVl27Nkq2gcbaPG/CHzl+aN+bOUfYHuffTWlbtOrtbwKojrj9PdfJ8=
+	t=1781630819; cv=none; b=m8Q6lEytcDefMFBck6IKQiJHXNKDuh/SeZ30CBl14OffkCoOXSMOCePJDNSSwSTV4xBfqHzLJ43vt0PoP1oNvxBLa06V/OQSLoaSFX2ADfwd3ZIKStXazNtbO2UTNlAQOxUYwUFIY9pNbvDiHaEvOA7in1hJDAn8tyqsZPtSsMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630814; c=relaxed/simple;
-	bh=O4Q0tC+k0NPRvyLHiVBqFX3vXM7j/NaCwBVtjV40RIc=;
+	s=arc-20240116; t=1781630819; c=relaxed/simple;
+	bh=V0lh+WQqPO5enBAKC/rDPJosp/URTeAiRoVw34iyX9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oflz0jRUJSrnQzR3DdV9GGe++G7i26q+aPUgOtowl0MegpXc2QfSDxyKxOgPLysAYsTRp1EFyp9mLos20dBfSAC+dN0g0jOajvgx9orJupDyIXjCaliJnfVgLSwVFZwCsHciLdYDxXo0lqKgoLnFz6jQ+TlS8sjiuwHkevjdFRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmA/45hk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ruaOXBD2oMik6OWhIXvzMsVBP6vEn6NG2WSsX95A4QkrQ8S0fbnJLodvwYYbM6+mltE129mJU4gpHoJwXoaw/mOr0OtdNshv57a50ZazD9M0g9EoURTopL8jL8Fpsmo4/4K7kRSyZNcOk9TVa0Bf/Kz2c6Cbbb6qejDGhKL4OlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PvZjCwjv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmA/45hk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17FF71F00A3A;
-	Tue, 16 Jun 2026 17:26:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PvZjCwjv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8909C1F00A3A;
+	Tue, 16 Jun 2026 17:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630812;
-	bh=mpQPbsxXKFCAwgtWoAQPj/tLOn130n8XDreZGRF/Prc=;
+	s=korg; t=1781630818;
+	bh=B2Pcqzmm58eNzh/K0cQmSWkw3qiFiCP/x8r6WTQFMco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wmA/45hki1ltT4gCf+/vwyNPFybTgVWKcnrRaAbwh2VVMOH7+jaHrUkHnE4p7boZe
-	 BaHCKhVSUTgDlM21NX0Mhu/nZkqgX/r0a876U8ofOZMg+uPBOZh6qptrD/RiHuNgWA
-	 HHcto5KDn1MHSmYQLuKa4BebErLyky27VCOw+eFo=
+	b=PvZjCwjvAiDOblPhtj2HvjT5/J3V0RzMv9AdoLI+/LKzBL7MfLKb0eeKXBZ8rALbj
+	 xH0tLJT8KNfjFrHBwOJyuVz2KZ5TTNqYEaFIvjd8zuGmkrLldh8wesnMesREY/PloA
+	 iMbWhvcMPAPknPfFQE4omGpsL9SaVEpQlDhnVLaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Bingquan Chen <patzilla007@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/522] net/packet: convert po->running to an atomic flag
-Date: Tue, 16 Jun 2026 20:23:35 +0530
-Message-ID: <20260616145129.002692365@linuxfoundation.org>
+Subject: [PATCH 6.1 069/522] net/packet: fix TOCTOU race on mmapd vnet_hdr in tpacket_snd()
+Date: Tue, 16 Jun 2026 20:23:36 +0530
+Message-ID: <20260616145129.053927997@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,149 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Bingquan Chen <patzilla007@gmail.com>
 
-[ Upstream commit 61edf479818e63978cabd243b82ca80f8948a313 ]
+[ Upstream commit 2c054e17d9d41f1020376806c7f750834ced4dc5 ]
 
-Instead of consuming 32 bits for po->running, use
-one available bit in po->flags.
+In tpacket_snd(), when PACKET_VNET_HDR is enabled, vnet_hdr points
+directly into the mmap'd TX ring buffer shared with userspace. The
+kernel validates the header via __packet_snd_vnet_parse() but then
+re-reads all fields later in virtio_net_hdr_to_skb(). A concurrent
+userspace thread can modify the vnet_hdr fields between validation
+and use, bypassing all safety checks.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 2c054e17d9d4 ("net/packet: fix TOCTOU race on mmap'd vnet_hdr in tpacket_snd()")
+The non-TPACKET path (packet_snd()) already correctly copies vnet_hdr
+to a stack-local variable. All other vnet_hdr consumers in the kernel
+(tun.c, tap.c, virtio_net.c) also use stack copies. The TPACKET TX
+path is the only caller of virtio_net_hdr_to_skb() that reads directly
+from user-controlled shared memory.
+
+Fix this by copying vnet_hdr from the mmap'd ring buffer to a
+stack-local variable before validation and use, consistent with the
+approach used in packet_snd() and all other callers.
+
+Fixes: 1d036d25e560 ("packet: tpacket_snd gso and checksum offload")
+Signed-off-by: Bingquan Chen <patzilla007@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260418112006.78823-1-patzilla007@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 20 ++++++++++----------
- net/packet/diag.c      |  2 +-
- net/packet/internal.h  |  2 +-
- 3 files changed, 12 insertions(+), 12 deletions(-)
+ net/packet/af_packet.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
 diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 50d9618d85f3c7..36347814ec7ceb 100644
+index 36347814ec7ceb..f3850784d66404 100644
 --- a/net/packet/af_packet.c
 +++ b/net/packet/af_packet.c
-@@ -340,14 +340,14 @@ static void __register_prot_hook(struct sock *sk)
+@@ -2767,7 +2767,8 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
  {
- 	struct packet_sock *po = pkt_sk(sk);
- 
--	if (!po->running) {
-+	if (!packet_sock_flag(po, PACKET_SOCK_RUNNING)) {
- 		if (po->fanout)
- 			__fanout_link(sk, po);
- 		else
- 			dev_add_pack(&po->prot_hook);
- 
- 		sock_hold(sk);
--		po->running = 1;
-+		packet_sock_flag_set(po, PACKET_SOCK_RUNNING, 1);
- 	}
- }
- 
-@@ -369,7 +369,7 @@ static void __unregister_prot_hook(struct sock *sk, bool sync)
- 
- 	lockdep_assert_held_once(&po->bind_lock);
- 
--	po->running = 0;
-+	packet_sock_flag_set(po, PACKET_SOCK_RUNNING, 0);
- 
- 	if (po->fanout)
- 		__fanout_unlink(sk, po);
-@@ -389,7 +389,7 @@ static void unregister_prot_hook(struct sock *sk, bool sync)
- {
- 	struct packet_sock *po = pkt_sk(sk);
- 
--	if (po->running)
-+	if (packet_sock_flag(po, PACKET_SOCK_RUNNING))
- 		__unregister_prot_hook(sk, sync);
- }
- 
-@@ -1834,7 +1834,7 @@ static int fanout_add(struct sock *sk, struct fanout_args *args)
- 	err = -EINVAL;
- 
- 	spin_lock(&po->bind_lock);
--	if (po->running &&
-+	if (packet_sock_flag(po, PACKET_SOCK_RUNNING) &&
- 	    match->type == type &&
- 	    match->prot_hook.type == po->prot_hook.type &&
- 	    match->prot_hook.dev == po->prot_hook.dev) {
-@@ -3277,7 +3277,7 @@ static int packet_do_bind(struct sock *sk, const char *name, int ifindex,
- 
- 	if (need_rehook) {
- 		dev_hold(dev);
--		if (po->running) {
-+		if (packet_sock_flag(po, PACKET_SOCK_RUNNING)) {
- 			rcu_read_unlock();
- 			/* prevents packet_notifier() from calling
- 			 * register_prot_hook()
-@@ -3290,7 +3290,7 @@ static int packet_do_bind(struct sock *sk, const char *name, int ifindex,
- 								 dev->ifindex);
+ 	struct sk_buff *skb = NULL;
+ 	struct net_device *dev;
+-	struct virtio_net_hdr *vnet_hdr = NULL;
++	struct virtio_net_hdr vnet_hdr;
++	bool has_vnet_hdr = false;
+ 	struct sockcm_cookie sockc;
+ 	__be16 proto;
+ 	int err, reserve = 0;
+@@ -2868,16 +2869,20 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
+ 		hlen = LL_RESERVED_SPACE(dev);
+ 		tlen = dev->needed_tailroom;
+ 		if (packet_sock_flag(po, PACKET_SOCK_HAS_VNET_HDR)) {
+-			vnet_hdr = data;
+-			data += sizeof(*vnet_hdr);
+-			tp_len -= sizeof(*vnet_hdr);
+-			if (tp_len < 0 ||
+-			    __packet_snd_vnet_parse(vnet_hdr, tp_len)) {
++			data += sizeof(vnet_hdr);
++			tp_len -= sizeof(vnet_hdr);
++			if (tp_len < 0) {
++				tp_len = -EINVAL;
++				goto tpacket_error;
++			}
++			memcpy(&vnet_hdr, data - sizeof(vnet_hdr), sizeof(vnet_hdr));
++			if (__packet_snd_vnet_parse(&vnet_hdr, tp_len)) {
+ 				tp_len = -EINVAL;
+ 				goto tpacket_error;
+ 			}
+ 			copylen = __virtio16_to_cpu(vio_le(),
+-						    vnet_hdr->hdr_len);
++						    vnet_hdr.hdr_len);
++			has_vnet_hdr = true;
+ 		}
+ 		copylen = max_t(int, copylen, dev->hard_header_len);
+ 		skb = sock_alloc_send_skb(&po->sk,
+@@ -2914,12 +2919,12 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
+ 			}
  		}
  
--		BUG_ON(po->running);
-+		BUG_ON(packet_sock_flag(po, PACKET_SOCK_RUNNING));
- 		WRITE_ONCE(po->num, proto);
- 		po->prot_hook.type = proto;
+-		if (packet_sock_flag(po, PACKET_SOCK_HAS_VNET_HDR)) {
+-			if (virtio_net_hdr_to_skb(skb, vnet_hdr, vio_le())) {
++		if (has_vnet_hdr) {
++			if (virtio_net_hdr_to_skb(skb, &vnet_hdr, vio_le())) {
+ 				tp_len = -EINVAL;
+ 				goto tpacket_error;
+ 			}
+-			virtio_net_hdr_set_proto(skb, vnet_hdr);
++			virtio_net_hdr_set_proto(skb, &vnet_hdr);
+ 		}
  
-@@ -4230,7 +4230,7 @@ static int packet_notifier(struct notifier_block *this,
- 		case NETDEV_DOWN:
- 			if (dev->ifindex == po->ifindex) {
- 				spin_lock(&po->bind_lock);
--				if (po->running) {
-+				if (packet_sock_flag(po, PACKET_SOCK_RUNNING)) {
- 					__unregister_prot_hook(sk, false);
- 					sk->sk_err = ENETDOWN;
- 					if (!sock_flag(sk, SOCK_DEAD))
-@@ -4541,7 +4541,7 @@ static int packet_set_ring(struct sock *sk, union tpacket_req_u *req_u,
- 
- 	/* Detach socket from network */
- 	spin_lock(&po->bind_lock);
--	was_running = po->running;
-+	was_running = packet_sock_flag(po, PACKET_SOCK_RUNNING);
- 	num = po->num;
- 	WRITE_ONCE(po->num, 0);
- 	if (was_running)
-@@ -4752,7 +4752,7 @@ static int packet_seq_show(struct seq_file *seq, void *v)
- 			   s->sk_type,
- 			   ntohs(READ_ONCE(po->num)),
- 			   READ_ONCE(po->ifindex),
--			   po->running,
-+			   packet_sock_flag(po, PACKET_SOCK_RUNNING),
- 			   atomic_read(&s->sk_rmem_alloc),
- 			   from_kuid_munged(seq_user_ns(seq), sock_i_uid(s)),
- 			   sock_i_ino(s));
-diff --git a/net/packet/diag.c b/net/packet/diag.c
-index a3bd91dba43945..cd30cc619c6b45 100644
---- a/net/packet/diag.c
-+++ b/net/packet/diag.c
-@@ -21,7 +21,7 @@ static int pdiag_put_info(const struct packet_sock *po, struct sk_buff *nlskb)
- 	pinfo.pdi_tstamp = po->tp_tstamp;
- 
- 	pinfo.pdi_flags = 0;
--	if (po->running)
-+	if (packet_sock_flag(po, PACKET_SOCK_RUNNING))
- 		pinfo.pdi_flags |= PDI_RUNNING;
- 	if (packet_sock_flag(po, PACKET_SOCK_AUXDATA))
- 		pinfo.pdi_flags |= PDI_AUXDATA;
-diff --git a/net/packet/internal.h b/net/packet/internal.h
-index 0956e4a934492d..9e50bf06131f29 100644
---- a/net/packet/internal.h
-+++ b/net/packet/internal.h
-@@ -117,7 +117,6 @@ struct packet_sock {
- 	spinlock_t		bind_lock;
- 	struct mutex		pg_vec_lock;
- 	unsigned long		flags;
--	unsigned int		running;	/* bind_lock must be held */
- 	int			pressure;
- 	int			ifindex;	/* bound device		*/
- 	__be16			num;
-@@ -146,6 +145,7 @@ enum packet_sock_flags {
- 	PACKET_SOCK_TX_HAS_OFF,
- 	PACKET_SOCK_TP_LOSS,
- 	PACKET_SOCK_HAS_VNET_HDR,
-+	PACKET_SOCK_RUNNING,
- };
- 
- static inline void packet_sock_flag_set(struct packet_sock *po,
+ 		skb->destructor = tpacket_destruct_skb;
 -- 
 2.53.0
 
