@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BDD2EEE68;
-	Tue, 16 Jun 2026 15:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB872EEE68;
+	Tue, 16 Jun 2026 15:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624892; cv=none; b=oCVcYXqqMHqyHfFKIQtAVs8Ih81qvoOrXnDKMrSQHACTyulT0GiqFDI44vaCw5ucrUSLqutTZO3XS9/f6V1KufPgtjaS9pZek5+tq8LYC0ZYtvzbSRqHHCbUeivWfRZBKmzx9Ri1SlDNwTF2QFgxzIMPHUgbiLVFvsKywshpWS0=
+	t=1781624898; cv=none; b=jOJ9cirY4FEvUm1Of8AVK8v4mrcUlhcFntV3RUtzIC+Zd+iEdS7CRv1T7Q4rTPurI3vUP7F4atS/ps2OJ17tF5atlMgriAj0lvMVgb+6ZAHiEN0NVug9G5pg6JLa0ouJyRf3C9IC3BFtN6oJGCduG5R+V9dj95lzLxj2RLtWCLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624892; c=relaxed/simple;
-	bh=3RXR54x5P7dvzk5PmtAmU+LSkPAa0M3BYimzFvZFdgc=;
+	s=arc-20240116; t=1781624898; c=relaxed/simple;
+	bh=iiAU40WgVsdFcnxyTvOyu48QIhA+72nTYLeOp76ZpG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N+NDHyM66PvnMpjT9QSFrcvKMPtdHEi8AaP7EHpJMz/fB4mS9T/lljdedRhFTkDvZkUBVZGBDKV4MO0Rdqjfst6QxVzk2VYAoSmLJ9Zc5sLx+PArLftppBSeNUwZcek6riAz0bOg48KvM+NLFY5kqDHDg/0hAsAPnXaFcrGWXvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CnZVzfQU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XuxGYQc7ZXtRr5XiejsIJiONyELb6gkEl/+MtlrFfsd/Upha33qoGA1HG4vBYU6viuvlFNpzZLTZkb2GIWPTAZJFkwPS7H6uoVmIvG65YlZNFCbsmSW6v8xGP2ZsCIIFgPGWCQDBcjW6cvgYsH/TV9oNG2N5X4EF7DJoivOiPEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qc+yZ1aS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CnZVzfQU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 917A41F000E9;
-	Tue, 16 Jun 2026 15:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qc+yZ1aS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33BCA1F000E9;
+	Tue, 16 Jun 2026 15:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624890;
-	bh=WPUAHUfoFmAGbVZaYjlapZtpOJc0z0uQ7bXTEcQxUhc=;
+	s=korg; t=1781624897;
+	bh=vP9q87hUPamHXKSO9kT4VyiXR8XdPwsHXYE0ciEezyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CnZVzfQUoaNL8HRcN5PXhqZXGP/yPzwfG1u7fBwA13FLFxFAtZiaaEOBBzCTE/1FQ
-	 OvxIfB8wK+mK6741RnrnF1g/v4sJWnVtZURV9GM/11E/Irl08m2YVSvVKc28Nc+yFl
-	 +rXWDNS0SnRoLAGEuLtUgjJqiLuW0Ki8YrZVNUDA=
+	b=Qc+yZ1aSNI4n92XJgx2pwjcsYbul0IoMHXkwrT2Hl9URN2PCrxdkxe+nD57/kTqM8
+	 nZT3kCRcWSD5vwl5BSzB3Hji1CEOqxZDK+yhcWjOgu650qg9y8QMsywhwJhuqWryL9
+	 7vkrpOHfQC7nsy0lt+uyH9BlfuIZ7wlrvfPw3rS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Arnd Bergmann <arnd@arndb.de>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
+	Harshal Dev <harshal.dev@oss.qualcomm.com>,
 	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 014/325] soc: qcom: ice: Return -ENODEV if the ICE platform device is not found
-Date: Tue, 16 Jun 2026 20:26:50 +0530
-Message-ID: <20260616145058.516250656@linuxfoundation.org>
+Subject: [PATCH 6.18 015/325] tee: fix tee_ioctl_object_invoke_arg padding
+Date: Tue, 16 Jun 2026 20:26:51 +0530
+Message-ID: <20260616145058.563702357@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,41 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 5a4dc805a80e6fe303d6a4748cd451ea15987ffd ]
+[ Upstream commit c15d7a2a11ea055bcecc0b538ae8ba79475637f9 ]
 
-By the time the consumer driver calls devm_of_qcom_ice_get(), all the
-platform devices for ICE nodes would've been created by
-of_platform_default_populate().
+The tee_ioctl_object_invoke_arg structure has padding on some
+architectures but not on x86-32 and a few others:
 
-So for the absence of any platform device, -ENODEV should not returned, not
--EPROBE_DEFER.
+include/linux/tee.h:474:32: error: padding struct to align 'params' [-Werror=padded]
 
-Fixes: 2afbf43a4aec ("soc: qcom: Make the Qualcomm UFS/SDCC ICE a dedicated driver")
-Tested-by: Sumit Garg <sumit.garg@oss.qualcomm.com> # OP-TEE as TZ
-Acked-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260518-qcom-ice-fix-v7-2-2a595382185b@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+I expect that all current users of this are on architectures that do
+have implicit padding here (arm64, arm, x86, riscv), so make the padding
+explicit in order to avoid surprises if this later gets used elsewhere.
+
+Fixes: d5b8b0fa1775 ("tee: add TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Jens Wiklander <jens.wiklander@linaro.org>
+Tested-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
+Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/ice.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/uapi/linux/tee.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-index 05055e097ff8fb..ba53aea828ba76 100644
---- a/drivers/soc/qcom/ice.c
-+++ b/drivers/soc/qcom/ice.c
-@@ -622,7 +622,7 @@ static struct qcom_ice *of_qcom_ice_get(struct device *dev)
- 	pdev = of_find_device_by_node(node);
- 	if (!pdev) {
- 		dev_err(dev, "Cannot find device node %s\n", node->name);
--		return ERR_PTR(-EPROBE_DEFER);
-+		return ERR_PTR(-ENODEV);
- 	}
- 
- 	ice = platform_get_drvdata(pdev);
+diff --git a/include/uapi/linux/tee.h b/include/uapi/linux/tee.h
+index cab5cadca8ef99..5203977ed35d1d 100644
+--- a/include/uapi/linux/tee.h
++++ b/include/uapi/linux/tee.h
+@@ -470,6 +470,7 @@ struct tee_ioctl_object_invoke_arg {
+ 	__u32 op;
+ 	__u32 ret;
+ 	__u32 num_params;
++	__u32 :32;
+ 	/* num_params tells the actual number of element in params */
+ 	struct tee_ioctl_param params[];
+ };
 -- 
 2.53.0
 
