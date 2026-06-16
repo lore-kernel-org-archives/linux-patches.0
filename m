@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 281883A16AC;
-	Tue, 16 Jun 2026 16:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8710B3C6A2B;
+	Tue, 16 Jun 2026 16:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626345; cv=none; b=RiBftJIyYVNHx6k2vg7b4/hSiHiagtI/VxMcLPh4KoX4HCz2FU4aLLEPW8SNEFtwT1pQI8tEBkPDRbwXzvN+NB6OgLZrwoWN4l5jK8US7qBHjWLHORMvffNBC/0UIk1C385SknVKys2COwZreA8EZQqXJY8gZI9knfD57KaR7dU=
+	t=1781626355; cv=none; b=bS7q3ntwhyGyZ2HzQFUd+w8S04q1QeptxC2Uy5OPGpUffU7fhCsMZev9C7uaoGVQft9bgng69jNN2HEX300H4Ktv7jWF5MnppxfTVG4qb8a4fkzMZnBBz5/IZNeNPv+r84vmgpS6r9NyYXdDzRofEIHhBh/ZqYbp7YeU1tzyiwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626345; c=relaxed/simple;
-	bh=y3lYG6QuPjac/2r0bIgM6AK8PhVNJRl5wr6Wa326yiU=;
+	s=arc-20240116; t=1781626355; c=relaxed/simple;
+	bh=F/YBdCNWc6640uEoKejLR18slvXafOraWgMYITvY6t4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0fSyJHqTalUr5vcXDQd/TJ/0es+y8pelpcnh4ri41bGnTxsHZC4YqHpyCf0cGzOCy4j65TAx7oxUkRJslGLyqz9NBWBS151ibwKcyQmX9j51WSlyLmG/z1pof99F4UjCMvADSYQ1L9wGryvQ6Ru6D6+rpMGsocgrrhh6cZBY2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PWo+hODc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pYBFf6G0xijnzfKzexIwLRlUiihViNoEbxQcPO4BNGgnMaTG3D7xtCf5DZSAZVf2zUoDEcDHSxUMU1KjP4FFGMbu8bN0zrMSvkpmeO60wlP+AdtG9BEK3b205EPt0awMbQ+n8UN9tHwKe81wPJZt23p6U42iR8VzFfUrzhOL9uY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vaQUPdJN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PWo+hODc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24E831F000E9;
-	Tue, 16 Jun 2026 16:12:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vaQUPdJN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 956441F000E9;
+	Tue, 16 Jun 2026 16:12:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626343;
-	bh=JeQOFF3PaVD1aAwfp3GLZLmdibS93laU60a/K3ABp0k=;
+	s=korg; t=1781626354;
+	bh=LLbQXadQzmTjXu90ytQJynkUEdshscfNWlU0z/JCyjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PWo+hODc9/O6AZBDLL5kJxoDUG6E//ZakJ0yLPoLHMER29eEfo0DrKJedVzfuu6sF
-	 KtOYicleXEphFl7ikEqojjeBf2vPVfj4lvp/hjTYTZmp0kYHVFxRr1yL+PPoaHhVwh
-	 GGSl2TQIPnVvTDEthZF+H6jozmD1TUck2LKx5h8g=
+	b=vaQUPdJNOvqCN3UeeGBt8tHBnB7V4Hhtm9n+zXf0W9oUmrK/JwY1bf9qSqXT6Mf2z
+	 tZvFveT+dbUMRAnvvAZJvY83JTk4KF0EqRA+NM8ExGj8ZUjBY9sHtMx1/XQ0g0M5K8
+	 v2oaL+ud8uYkT6aHturykdXaPFuExgqAOvhQ3lYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.18 305/325] driver core: reject devices with unregistered buses
-Date: Tue, 16 Jun 2026 20:31:41 +0530
-Message-ID: <20260616145114.174073716@linuxfoundation.org>
+	Rio Liu <rio@r26.me>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 306/325] wifi: mac80211: skip ieee80211_verify_sta_ht_mcs_support check in non-strict mode
+Date: Tue, 16 Jun 2026 20:31:42 +0530
+Message-ID: <20260616145114.236874854@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -50,62 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Rio Liu <rio@r26.me>
 
-commit 36f35b8df6972167102a1c3d4361e0afb6a84534 upstream.
+commit 711a9c018ad252b2807f85d44e1267b595644f9b upstream.
 
-Trying to register a device on a bus which has not yet been registered
-used to trigger a NULL-pointer dereference, but since the const bus
-structure rework registration instead succeeds without the device being
-added to the bus.
+Some Xfinity XB8 firmware advertises >1 spatial stream MCS indexes in
+their basic HT-MCS set. On cards with lower spatial streams, the check
+would fail, and we'd be stuck with no HT when in fact work fine with its
+own supported rate. This change makes it so the check is only performed
+in strict mode.
 
-This specifically means that the device will never bind to a driver and
-that the bus sysfs attributes are not created (i.e. as if the device had
-no bus).
-
-Reject devices with unregistered buses to catch any callers that get
-the ordering wrong and to handle bus registration failures more
-gracefully.
-
-Fixes: 5221b82d46f2 ("driver core: bus: bus_add/probe/remove_device() cleanups")
-Cc: stable@vger.kernel.org	# 6.3
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260430091718.230228-1-johan@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: 574faa0e936d ("wifi: mac80211: add HT and VHT basic set verification")
+Signed-off-by: Rio Liu <rio@r26.me>
+Link: https://patch.msgid.link/99Mv9QEceyPrQhSP52MtAVmz0_kWJmzqotJjD9YW6LGLqk-AZloAueUyHCURilFkuqOh6Ecv8i2KKdSE1ujP3AnbU5QEouVisT1w_V3xdfc=@r26.me
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/bus.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/mac80211/mlme.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/base/bus.c
-+++ b/drivers/base/bus.c
-@@ -506,10 +506,10 @@ static const struct attribute_group driv
-  */
- int bus_add_device(struct device *dev)
- {
--	struct subsys_private *sp = bus_to_subsys(dev->bus);
-+	struct subsys_private *sp;
- 	int error;
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -364,6 +364,15 @@ ieee80211_verify_sta_ht_mcs_support(stru
+ 	ieee80211_apply_htcap_overrides(sdata, &sta_ht_cap);
  
--	if (!sp) {
-+	if (!dev->bus) {
- 		/*
- 		 * This is a normal operation for many devices that do not
- 		 * have a bus assigned to them, just say that all went
-@@ -518,6 +518,13 @@ int bus_add_device(struct device *dev)
- 		return 0;
- 	}
- 
-+	sp = bus_to_subsys(dev->bus);
-+	if (!sp) {
-+		pr_err("%s: cannot add device '%s' to unregistered bus '%s'\n",
-+		       __func__, dev_name(dev), dev->bus->name);
-+		return -EINVAL;
-+	}
-+
  	/*
- 	 * Reference in sp is now incremented and will be dropped when
- 	 * the device is removed from the bus
++	 * Some Xfinity XB8 firmware advertises >1 spatial stream MCS indexes in
++	 * their basic HT-MCS set. On cards with lower spatial streams, the check
++	 * would fail, and we'd be stuck with no HT when it in fact work fine with
++	 * its own supported rate. So check it only in strict mode.
++	 */
++	if (!ieee80211_hw_check(&sdata->local->hw, STRICT))
++		return true;
++
++	/*
+ 	 * P802.11REVme/D7.0 - 6.5.4.2.4
+ 	 * ...
+ 	 * If the MLME of an HT STA receives an MLME-JOIN.request primitive
 
 
