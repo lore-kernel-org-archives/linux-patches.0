@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FCD4611CF;
-	Tue, 16 Jun 2026 17:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03E3331A44;
+	Tue, 16 Jun 2026 17:37:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631451; cv=none; b=CWxvshebkaYmjPvKx9docYCwvfwcmhNz2EOurWo91QwvMA6eFpYdOrYXUTxV9XOT0m9N/REvg3lpcYW4UJbx7YIFfCDPRJzYqsTdbbZ+H1bT559ZxdrWv0xXKjHNsfI/wF2Z0cTtTD6/QS0OaScw/X37aITIaFtqX5XyNdCKMk0=
+	t=1781631456; cv=none; b=czTOXNWb+6v/9GM8JFhmQVJooAvn6mWVM9boHtdMzPYiihJ0oqkDohZbdHKzdfBvX/OoLWao2qCC477+Z0K+3YfyXh729KIWSbD6AzbDVgxuCcXzZZSEVBIFJHPoIzRT+j0w3XORns0MhvMvXFgZYTVvwUt3CwLTaDvccGj0j1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631451; c=relaxed/simple;
-	bh=FyGVlvrELIoMNlRliigGj7JwmE307f8s6GeGRr/aPFU=;
+	s=arc-20240116; t=1781631456; c=relaxed/simple;
+	bh=YU/FB4lL9eJofz9RHrCyr7p7lvdiS9Xbrj5FLzb6k1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uYvvXCyiYKj+YLdpxPMxLXITsR3jErVUr8QS2sPbhr3Csy13J1BrBcCp71NzHirVBBnBx5NCvp+G8n18CyOkUnZn2zDNJykgOs8PSz+2mNibTA0Q4yjkF3H5/jC/B7i90cG3/Jvv1jLFx16WPd88UtThPgZw00jiezocpCJQOeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8PA2AJg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PsrdoERsUgIO0i4zIktRSE/SxQi70rzA1nJ25jE9j5etBfKTlqvLXDcpFbJzpkmii55SfXF952b0f0wl5eblwvMKsYGDKGVVaKwDQKjddAEvfzQa2G2LA8apqgO1XRX3EgPlzYcBK+oQxry75CHP2hKxvrIW0H6OSj20YiR0hls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bayado9z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8PA2AJg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A881F000E9;
-	Tue, 16 Jun 2026 17:37:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bayado9z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8AAF1F000E9;
+	Tue, 16 Jun 2026 17:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631450;
-	bh=iwAslf2nevZbjVGVoTPlI7vhLuZ4sq4Xzd83iptqLzM=;
+	s=korg; t=1781631455;
+	bh=KOdk38Eh8YedefCdKSEoJk9jHtEPCX4vHwVbWrAz+nc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I8PA2AJgRugcgL1UCl6HafLOvrGN7YBKjcrr8g8WAgzx4la8Hb0oGevzRcajajY2R
-	 1+a42PpjMB+pCe8ss6nmxv4eBjHb0iDEr45J9R7OfOtGKTBaRy322LkjVUlgiNt23+
-	 SxCi4gLcyipFqsCp7LG2Na5Go7FG3ulKrUPhIc7s=
+	b=Bayado9z6Kq81AoWJqWFHvlcRfex+8tnrd4YxVWIWCoMWkjfuPgAnC6yHmwvVGajm
+	 FBlHwgrXErsDKju1nOyZBdE3Vwc9GMS6eeeLdsgGMwY8q1RTd3Xtd34xXbUvPmAcoO
+	 tjL/mw+2jYcBTcWaoGkHFaQozzl6okA/oAu0/Xy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f13c19f75e1097abd116@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 224/522] ieee802154: 6lowpan: only accept IPv6 packets in lowpan_xmit()
-Date: Tue, 16 Jun 2026 20:26:11 +0530
-Message-ID: <20260616145136.493403963@linuxfoundation.org>
+Subject: [PATCH 6.1 225/522] net/802/mrp: fix vector attribute parsing in mrp_pdu_parse_vecattr
+Date: Tue, 16 Jun 2026 20:26:12 +0530
+Message-ID: <20260616145136.538051258@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,54 +56,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit 3a5f3f7aff18bcc36a57839cf50cf0cc8de707f3 ]
+[ Upstream commit 7561c7fbc694308da73300f036719e63e42bf0b4 ]
 
-The aoe driver (or similar) generates a non-IPv6 packet
-(e.g., ETH_P_AOE) and queues it for transmission via dev_queue_xmit()
-on a 6LoWPAN interface (configured by the user or test case).
+In mrp_pdu_parse_vecattr(), vector attribute events are encoded three
+per byte and valen tracks the number of events left to process.
 
-Since the packet is not IPv6, the 6LoWPAN header_ops->create function
-(lowpan_header_create or header_create) returns early without initializing
-the lowpan_addr_info structure in the skb headroom.
+The parser decrements valen after processing the first and second events
+from each event byte, but not after processing the third one. When valen
+is exactly a multiple of three, the loop continues after the last valid
+event and consumes the next byte as a new event byte, applying a
+spurious event to the MRP applicant state.
 
-In the transmit function (lowpan_xmit), the driver calls lowpan_header
-(or setup_header) which unconditionally copies and uses the lowpan_addr_info
-from the headroom, which contains uninitialized data.
+Additionally, when valen is zero the parser unconditionally consumes
+attrlen bytes as FirstValue and advances the offset, even though per
+IEEE 802.1ak a VectorAttribute with only a LeaveAllEvent has valen of
+zero and no FirstValue or Vector fields. This corrupts the offset for
+subsequent PDU parsing.
 
-Fix this by dropping non IPv6 packets.
+Also, when valen exceeds three the loop crosses byte boundaries but
+the attribute value is not incremented between the last event of one
+byte and the first event of the next. This causes the first event of
+the next byte to use the same attribute value as the third event
+rather than the next consecutive value.
 
-A similar fix is needed in net/bluetooth/6lowpan.c bt_xmit().
+Decrement valen after processing the third event, skip FirstValue
+consumption when valen is zero, and increment the attribute value at
+the end of each loop iteration.
 
-Fixes: 4dc315e267fe ("ieee802154: 6lowpan: move transmit functionality")
-Reported-by: syzbot+f13c19f75e1097abd116@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a1fd763.278b5b03.2bcf39.0049.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://patch.msgid.link/20260603072955.4032221-1-edumazet@google.com
+Fixes: febf018d2234 ("net/802: Implement Multiple Registration Protocol (MRP)")
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Link: https://patch.msgid.link/20260603060016.21522-1-zhaoyz24@mails.tsinghua.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ieee802154/6lowpan/tx.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/802/mrp.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/ieee802154/6lowpan/tx.c b/net/ieee802154/6lowpan/tx.c
-index 0c07662b44c0ca..4df76ff50699ed 100644
---- a/net/ieee802154/6lowpan/tx.c
-+++ b/net/ieee802154/6lowpan/tx.c
-@@ -255,6 +255,11 @@ netdev_tx_t lowpan_xmit(struct sk_buff *skb, struct net_device *ldev)
+diff --git a/net/802/mrp.c b/net/802/mrp.c
+index 6c927d4b35f06e..dea0fd28cbed88 100644
+--- a/net/802/mrp.c
++++ b/net/802/mrp.c
+@@ -702,6 +702,12 @@ static int mrp_pdu_parse_vecattr(struct mrp_applicant *app,
+ 	valen = be16_to_cpu(get_unaligned(&mrp_cb(skb)->vah->lenflags) &
+ 			    MRP_VECATTR_HDR_LEN_MASK);
  
- 	pr_debug("package xmit\n");
- 
-+	if (skb->protocol != htons(ETH_P_IPV6)) {
-+		kfree_skb(skb);
-+		return NET_XMIT_DROP;
-+	}
++	/* If valen is 0, only a LeaveAllEvent is present; FirstValue and
++	 * Vector fields are absent per IEEE 802.1ak.
++	 */
++	if (valen == 0)
++		return 0;
 +
- 	WARN_ON_ONCE(skb->len > IPV6_MIN_MTU);
- 
- 	/* We must take a copy of the skb before we modify/replace the ipv6
+ 	/* The VectorAttribute structure in a PDU carries event information
+ 	 * about one or more attributes having consecutive values. Only the
+ 	 * value for the first attribute is contained in the structure. So
+@@ -752,6 +758,9 @@ static int mrp_pdu_parse_vecattr(struct mrp_applicant *app,
+ 		vaevents %= __MRP_VECATTR_EVENT_MAX;
+ 		vaevent = vaevents;
+ 		mrp_pdu_parse_vecattr_event(app, skb, vaevent);
++		valen--;
++		mrp_attrvalue_inc(mrp_cb(skb)->attrvalue,
++				  mrp_cb(skb)->mh->attrlen);
+ 	}
+ 	return 0;
+ }
 -- 
 2.53.0
 
