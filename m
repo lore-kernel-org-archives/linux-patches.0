@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943DA3375C5;
-	Tue, 16 Jun 2026 15:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB23C43DA53;
+	Tue, 16 Jun 2026 15:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622958; cv=none; b=aku5R2YUSk+0UQpClqF/RpvCwGdYxpuUWj580iGJ+iqtcAmbWeCyOZdur12zjjG5RRbwkyAoC3LYPjk6kB6zJTa8qzNvZ4vqcPg2id1IYBPpLYnWKDrEmyZJtSvMpNiJ0GzNVKX2SNUFePWNfGLCpZsw3pg1jY8GE/w5xGq9UXQ=
+	t=1781622963; cv=none; b=KPTf9DO6JixcFvMfaZwb8s0eeFRyuS1roFLF6yqimHJAoPp8Jq3xIDmMETBOdvYQMTcxrjkdZpZlTN0z3J4IXPTBAvLITb0vwniI4tZ6UZkEAdMw289/sq57rCjhDPgI4lfOLpSlaO6uGpcv86QrYKmWuwRACvoy8iPIGdR2uGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622958; c=relaxed/simple;
-	bh=ZrED/UQgng1NfPe1EisptLl6oayTsxpCb6b77PN1TZ0=;
+	s=arc-20240116; t=1781622963; c=relaxed/simple;
+	bh=vPUSj4SgdZs7no+zH3LE4HSmhnVM2wgPOklf0v7p3YI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tjjqXnrr15oN4UlZTvxcuffunbQOiDw912d2+IQdp62b1ayKC/1a5KwHz/ysUk8D6pqH+0KFdJoJhhaTAtexP3MJAm1DIPzQM8izV+dt3JTFwuwtLQrfftf0+B/SxAHDAVLWLSooP+gJiaQbAJQySFzxmzvas5BRmi3rRH3P5SA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B481z0xR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jzPtMnh3MKn15JIPDWnUHMUODVhRDU/PhmLfd4NO3xhzKxoEGCXL6EMFE/IVTz49pZcH0FDob4sJaBXMHNu+e82uicfThgyqiQtyN8CDL/UHFAX5l+G4WuKlmHzUyW3EPc3WISVOyIm1W474BvuFJefByrYi5PI2YYaBHSm4EAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FCCYspG4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B481z0xR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D86E1F00A3A;
-	Tue, 16 Jun 2026 15:15:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FCCYspG4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 938BF1F000E9;
+	Tue, 16 Jun 2026 15:16:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622957;
-	bh=qmlIwR7VIJi7uIihCaVfco7STA+ilIhtfUAVs81vY9g=;
+	s=korg; t=1781622962;
+	bh=hUk0gHHDuQpTeo15xsMihHzTaxalxPIQkfssC9NIG8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B481z0xROhGIRUQrIZ3iEWZk+nWR9YSiQuzY5cliFEt2m3P2eGUfp4zF4ElU9fssg
-	 KonOdAlIT6pWC+F6eNF+1j1L1Vx6wuCs2ej/O38FJvvXhcBihSeCq28ZIweSUg3c5d
-	 87wAqbXdO4vO06eRHiLMacC3Lx7o6IHIzW9pWpPQ=
+	b=FCCYspG49V0R/qZCYaZfjAFRaZfSKL6dGfQkZKXKXkxZ+tMMHNPRXSxkqVnjALFYR
+	 NyHOZ1Brs9PkNO+qcAUoiK5b9sfTCQ8tgFsAo+CzCgktHkKmdrhKSgY2fbLUN9CI5L
+	 DFUzAoLPiRf5aEoQhPCHWAGi2cFWBMa6U2BJY4Q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Antoine Tenart <atenart@kernel.org>,
+	Simon Horman <horms@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 061/378] net: ethernet: mtk_eth_soc: Fix use-after-free in metadata dst teardown
-Date: Tue, 16 Jun 2026 20:24:52 +0530
-Message-ID: <20260616145113.205096583@linuxfoundation.org>
+Subject: [PATCH 7.0 062/378] geneve: fix length used in GRO hint UDP checksum adjustment
+Date: Tue, 16 Jun 2026 20:24:53 +0530
+Message-ID: <20260616145113.277476872@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,45 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Antoine Tenart <atenart@kernel.org>
 
-[ Upstream commit 80df409e1a483676826a6c66e693dba6ac507751 ]
+[ Upstream commit 1231623fd3b5aa6b41cce799ffb0d82e10914be4 ]
 
-mtk_free_dev() calls metadata_dst_free() which frees the metadata_dst
-with kfree() immediately, bypassing the RCU grace period.
-In the RX path, skb_dst_set_noref() sets a non-refcounted pointer from
-the skb to the metadata_dst. This function requires RCU read-side
-protection and the dst must remain valid until all RCU readers complete.
-Since metadata_dst_free() calls kfree() directly, a use-after-free can
-occur if any skb still holds a noref pointer to the dst when the driver
-tears it down.
-Replace metadata_dst_free() with dst_release() which properly goes
-through the refcount path: when the refcount drops to zero, it schedules
-the actual free via call_rcu_hurry(), ensuring all RCU readers have
-completed before the memory is freed.
+In geneve_post_decap_hint the length used for adjusting the UDP checksum
+should be 'skb->len - gro_hint->nested_tp_offset' (UDP length) instead
+of 'skb->len - gro_hint->nested_nh_offset' (IP length).
 
-Fixes: 2d7605a72906 ("net: ethernet: mtk_eth_soc: enable hardware DSA untagging")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260602-airoha-mtk-metadata-uaf-fix-v1-2-3aaa99d83351@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fd0dd796576e ("geneve: use GRO hint option in the RX path")
+Cc: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260521131436.748832-1-jhs%40mojatatu.com
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260529144713.780938-1-atenart@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 2 +-
+ drivers/net/geneve.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 796f79088f3662..2eca2b2a964fef 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -4469,7 +4469,7 @@ static int mtk_free_dev(struct mtk_eth *eth)
- 	for (i = 0; i < ARRAY_SIZE(eth->dsa_meta); i++) {
- 		if (!eth->dsa_meta[i])
- 			break;
--		metadata_dst_free(eth->dsa_meta[i]);
-+		dst_release(&eth->dsa_meta[i]->dst);
- 	}
- 
- 	return 0;
+diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
+index 01cdd06102e0db..8ea9482d52e538 100644
+--- a/drivers/net/geneve.c
++++ b/drivers/net/geneve.c
+@@ -633,7 +633,7 @@ static int geneve_post_decap_hint(const struct sock *sk, struct sk_buff *skb,
+ 	uh = udp_hdr(skb);
+ 	uh->len = htons(skb->len - gro_hint->nested_tp_offset);
+ 	if (uh->check) {
+-		len = skb->len - gro_hint->nested_nh_offset;
++		len = skb->len - gro_hint->nested_tp_offset;
+ 		skb_shinfo(skb)->gso_type |= SKB_GSO_UDP_TUNNEL_CSUM;
+ 		if (gro_hint->nested_is_v6)
+ 			uh->check = ~udp_v6_check(len, &ipv6h->saddr,
 -- 
 2.53.0
 
