@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0854947A0DC;
-	Tue, 16 Jun 2026 17:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9430F47B408;
+	Tue, 16 Jun 2026 17:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629600; cv=none; b=POBtGv3Vt3H+GNWtQmiNoMlqsu9saeQ1H4qcqP3mn1SJJCHEC9clhc0AjcuAxG8aAdzv0ZLgNPkA/vdagWhfauftFg8FIEiwu6diZzJ4fhFERjkfyTesoBROwDl6moTKhOzXoeyFeyzCRZ4FEBXJX183YwzoQpbDDluYHWu8p0A=
+	t=1781629605; cv=none; b=GU9GsdlPhHJ9hSCCcxz8X5nH0I5XYV769YPpfdQm+zkJcTiispGWjS80WRD6UWWfNX2FNG9RFl/EItwHWWxVUpoanxQBDKFWJ+oKjnCZlBmUiHUkiunQA6FaL6B1F0ErN6/kvPNGOahCPqA9ve4+Mc/lFUjfDFqcUEmD+RG6YlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629600; c=relaxed/simple;
-	bh=5ZpyCQXfY+ABEXwgA3x5MypiWy0ptOEBRGRX/hBRBhE=;
+	s=arc-20240116; t=1781629605; c=relaxed/simple;
+	bh=kwOQqWxaraTnKWFtKrIPM/OdRCwjOGKpzMc3KKNbye8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VkQPMFpSYTodPb/Xzu8MdjLxJaQnGvb5ASImM8z93IsE7o6XXXlKBWjgg++RTi3h/dHG0xslrynJNNo0r5AIb/aLeIQ0T9uOb4sJTWEcaqUHsZG5f7T106aGZeMyPegkgpw9CiZseW6xLOQFEeoIlSI8G38grhtZhuCfK1lNeP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dwmJNi7l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Kg0SKrSybQgYbK1MG/RLi2eQXiW+atIjWTEficv6khPjYEDqhAVLbRwjWc0JCAlBBrzf5PyEluvGHf3y65512Wdt7kZAPX5FYNQbTWmh0Z3A+ywUbAA++8nhPpcTxCCIo144nRFS2Nb32hBoFO/eKkRgOuwS/PPoZmrWjmZy6n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1PA9ruia; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dwmJNi7l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6ACE1F000E9;
-	Tue, 16 Jun 2026 17:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1PA9ruia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A6F21F000E9;
+	Tue, 16 Jun 2026 17:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629598;
-	bh=MZksx/PYcYuXojbwPM/DxU4bBpCgQSNAySrv/xzllrI=;
+	s=korg; t=1781629604;
+	bh=NnCgMoEgblXOhM1Db8Uqau62TVUdWrTMp5zU00PXNYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dwmJNi7lRLogqbu3oJaFWgccukhHg7khfN5LJoBDB7lRQhG6DsA05+8Vmw7HdvSM5
-	 lA9Wx824OdB+iAMfp8j3CWk2UxPBQc5fVNNUv8AE8IgKFups5GFUKiuSo9JDjuOG+V
-	 ebErsPx0o+295KgtN6ksZg1d2onTuErCl49Wk0gY=
+	b=1PA9ruiatNlhImD4Zk5JeQZEqmHE3f9VfVqKYiEymIY6QjzRbSgNrCppjNo/Bqvr1
+	 WnhBADGmsvkcklTU3rMz0S59xjBoVjMcT54it/5WqgTy4jwl1wn1eRkIg2h6DpEt3+
+	 ldbbg76xFLJNcWMDZfLmeUQc33KXaFKM2H6dDxFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	Mat Martineau <martineau@kernel.org>,
+	Tao Cui <cuitao@kylinos.cn>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 317/452] mptcp: sockopt: check timestamping ret value
-Date: Tue, 16 Jun 2026 20:29:04 +0530
-Message-ID: <20260616145134.132557752@linuxfoundation.org>
+Subject: [PATCH 6.6 318/452] selftests: mptcp: add test for extra_subflows underflow on userspace PM
+Date: Tue, 16 Jun 2026 20:29:05 +0530
+Message-ID: <20260616145134.176839358@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,53 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Tao Cui <cuitao@kylinos.cn>
 
-commit 57132affbc89c02e1bf73fdf5724311bdc9a29da upstream.
+commit 06fd2bec7aebf393288e4b78924482fe170caabc upstream.
 
-sock_set_timestamping() can fail for different reasons. The returned
-value should then be checked.
+Add a test to verify that when userspace PM fails to create a subflow
+(e.g. using an unreachable address), the extra_subflows counter is not
+decremented below zero.
 
-If sock_set_timestamping() fails for at least one subflow, the first
-error is now reported to the userspace, similar to what is done with
-other socket options.
-
-Fixes: 9061f24bf82e ("mptcp: sockopt: propagate timestamp request to subflows")
+Fixes: 77e4b94a3de6 ("mptcp: update userspace pm infos")
 Cc: stable@vger.kernel.org
-Reported-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-Closes: https://lore.kernel.org/willemdebruijn.kernel.178a41a53d041@gmail.com
-Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260602-net-mptcp-misc-fixes-7-1-rc7-v2-7-856831229976@kernel.org
+Link: https://patch.msgid.link/20260602-net-mptcp-misc-fixes-7-1-rc7-v2-6-856831229976@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/sockopt.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -235,15 +235,19 @@ static int mptcp_setsockopt_sol_socket_t
- 
- 	mptcp_for_each_subflow(msk, subflow) {
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
-+		int err;
- 
- 		lock_sock(ssk);
--		sock_set_timestamping(ssk, optname, timestamping);
-+		err = sock_set_timestamping(ssk, optname, timestamping);
- 		release_sock(ssk);
-+
-+		if (err < 0 && ret == 0)
-+			ret = err;
- 	}
- 
- 	release_sock(sk);
- 
--	return 0;
-+	return ret;
- }
- 
- static int mptcp_setsockopt_sol_socket_linger(struct mptcp_sock *msk, sockptr_t optval,
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -3774,6 +3774,10 @@ userspace_tests()
+ 		chk_rm_nr 0 1
+ 		chk_mptcp_info subflows 0 subflows 0
+ 		chk_subflows_total 1 1
++		# check counters are not affected by errors at creation time
++		userspace_pm_add_sf $ns2 10.0.12.2 10 2>/dev/null
++		chk_mptcp_info subflows 0 subflows 0
++		chk_subflows_total 1 1
+ 		kill_events_pids
+ 		mptcp_lib_kill_group_wait $tests_pid
+ 	fi
 
 
