@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39391A682B;
-	Tue, 16 Jun 2026 15:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B2F44BCB0;
+	Tue, 16 Jun 2026 15:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623829; cv=none; b=KRHMBbdjuODx0SJ2Z5XUa+eSoxZ0GoHEIZVArT4o+27R+ykz7UJYeMPhIHrlgkOyHi5uvIrEyK0bYTze9aetZTG2hkr2bdr9HBvIRNebED5sHcdJSXP3m8lYhG/k7YmC2ZyhM4eKj8kCWdRsvrHJOxgTZZ7cbsTSgdW3DTm8yT4=
+	t=1781623834; cv=none; b=EhbICib0azmesOQszPqkqM+VllJf0a8RU5LyHy/Lu1Wa38qTUjPS1wiKrc2rFbStt/YJPCTvmlOrU7zRNcvdppXwbDbfTI3ocbbFzCSKVTdGMKSQQY6KTg91fZb1csEpR6RsEWAyVPxf3tuYlr6xz2F0RLxTqNg2HN4dMTuTWoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623829; c=relaxed/simple;
-	bh=4D4CNaxG7lffIp7CNxA/ZBLNKDW5r//pI83t2ouT4bQ=;
+	s=arc-20240116; t=1781623834; c=relaxed/simple;
+	bh=na1EtRAelYF5zPok185rr3X7oH5oQYOcv61OeLjxfpw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bjEaowX5uOy0S4eLzFk7WdVI0CxT1SV4EZEk4VrgDcDRO7vZW2wZM8vQTFOJeWpgJqGExh+TxwG41e8rtIt1UHTnwg+bF0zg5T/16tsA53f6EDNOywvCpeyCLcKcq7MFTSbGkv1BXKHMUjLmI5H2AGvWn7tX50w1I3sJYqdqL9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXBzhVVo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RiWPwiPMB+9lNQrTSwc7XpedI7Ja8K6R1VTm/K/wF4DAzXltImiRU2rce7ocyzhV0pVxUZ4WTjwoHaaVEPaylad6pyL7nErK+6flsWrGIlyKcBKddl5DhQlY+Z6F0uyol/dAKlm7bK94G2SjVO2MV8H04u1F86Zi26j2URRO7Wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Egrxg27w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXBzhVVo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 759031F000E9;
-	Tue, 16 Jun 2026 15:30:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Egrxg27w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA171F000E9;
+	Tue, 16 Jun 2026 15:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623828;
-	bh=yxjtx5WDZ9+Tb4gWr6WX7Y7l4558BcwN/MlUk7N06M8=;
+	s=korg; t=1781623833;
+	bh=26Jydm5A1JDH3kSsywdtHcT8vSflgc1g0YiHx/dn1gQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QXBzhVVonGgOKP8lmF2rf0QFc8oe//eya2AGQodPCB6CZGgDJBuHaByo89dRx4Bij
-	 pHpIlbtLbqDv9O/ZOrRZ+0lHJ2IFcQkptU64hxJ2ZjMk57sFYNASJ5QhSMDmFvk5Bs
-	 k6s2XUn1mNZ3wV2dr8SC9xk0m/TTI8LE94qtxrdM=
+	b=Egrxg27wVwA2gSXjq/3BPv1G6u2wJaCGx4OQndU3kcaShsYOSqqCjD4hVQyYsVcTp
+	 U3GGR9JfrEiqmEVXCLOERayO6r+HgJAoyrqW6wORixYFeG9mU2VelBcvGO7AyH4+PK
+	 up5LVNCuvgoRD0QBgdOgZOkM6A6+qEts+88lP3X0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Cunlong Li <shenxiaogll@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Minchan Kim <minchan@kernel.org>,
-	Yisheng Xie <xieyisheng1@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.0 224/378] zram: fix use-after-free in zram_bvec_write_partial()
-Date: Tue, 16 Jun 2026 20:27:35 +0530
-Message-ID: <20260616145122.088855063@linuxfoundation.org>
+	Sechang Lim <rhkrqnwk98@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 225/378] udp: clear skb->dev before running a sockmap verdict
+Date: Tue, 16 Jun 2026 20:27:36 +0530
+Message-ID: <20260616145122.136845799@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -55,47 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cunlong Li <shenxiaogll@gmail.com>
+From: Sechang Lim <rhkrqnwk98@gmail.com>
 
-commit 732fd9f0b9c1cdc6dfd77162ded60df005182cc0 upstream.
+commit 3c94f241f776562c489876ff506f366224565c21 upstream.
 
-zram_read_page() picks the sync or async backing device read path based on
-whether the parent bio is NULL.  zram_bvec_write_partial() passes its
-parent bio down, so for ZRAM_WB slots the read is dispatched
-asynchronously and zram_read_page() returns 0 while the bio is still in
-flight.  The caller then runs memcpy_from_bvec(), zram_write_page() and
-__free_page() on the buffer, leaving the async read to write into a freed
-page.
+On the UDP receive path skb->dev is repurposed as dev_scratch (the
+truesize/state cache set by udp_set_dev_scratch()), through the
+union { struct net_device *dev; unsigned long dev_scratch; } in sk_buff.
 
-zram_bvec_read_partial() was switched to NULL in commit 4e3c87b9421d
-("zram: fix synchronous reads") for the same reason; the write_partial
-counterpart was missed.
+When a UDP socket is in a sockmap, sk_data_ready is
+sk_psock_verdict_data_ready(), which calls udp_read_skb() -> recv_actor()
+(sk_psock_verdict_recv) to run the attached SK_SKB verdict program in softirq.
+If that program calls a socket-lookup helper (bpf_sk_lookup_tcp/udp,
+bpf_skc_lookup_tcp), bpf_skc_lookup() does:
 
-Link: https://lore.kernel.org/20260528-zram-v3-1-cab86eef8764@gmail.com
-Fixes: 8e654f8fbff5 ("zram: read page from backing device")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Signed-off-by: Cunlong Li <shenxiaogll@gmail.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Yisheng Xie <xieyisheng1@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+	if (skb->dev)
+		caller_net = dev_net(skb->dev);
+
+skb->dev still holds the dev_scratch value (a non-NULL integer), so dev_net()
+dereferences it as a struct net_device * and the kernel takes a general
+protection fault on a non-canonical address in softirq:
+
+  Oops: general protection fault, probably for non-canonical address 0x1010000800004a0
+  CPU: 1 UID: 0 PID: 1406 Comm: syz.2.19 Not tainted 7.1.0-rc6 #1 PREEMPT(full)
+  RIP: 0010:bpf_skc_lookup net/core/filter.c:7033 [inline]
+  RIP: 0010:bpf_sk_lookup+0x45/0x160 net/core/filter.c:7047
+  Call Trace:
+   <IRQ>
+   bpf_prog_4675cb904b7071f8+0x12e/0x14e
+   bpf_prog_run_pin_on_cpu+0xc6/0x1f0
+   sk_psock_verdict_recv+0x1ba/0x350
+   udp_read_skb+0x31a/0x370
+   sk_psock_verdict_data_ready+0x2e3/0x600
+   __udp_enqueue_schedule_skb+0x4c8/0x650
+   udpv6_queue_rcv_one_skb+0x3ec/0x740
+   udp6_unicast_rcv_skb+0x11d/0x140
+   ip6_protocol_deliver_rcu+0x61e/0x950
+   ip6_input_finish+0xa9/0x150
+   NF_HOOK+0x286/0x2f0
+   ip6_input+0x117/0x220
+   NF_HOOK+0x286/0x2f0
+   __netif_receive_skb+0x85/0x200
+   process_backlog+0x374/0x9a0
+   __napi_poll+0x4f/0x1c0
+   net_rx_action+0x3b0/0x770
+   handle_softirqs+0x15a/0x460
+   do_softirq+0x57/0x80
+   </IRQ>
+
+The rmem charge that dev_scratch accounted for is released by skb_recv_udp() on
+dequeue, just above, so the scratch is dead by the time recv_actor() runs. Clear
+skb->dev so bpf_skc_lookup() falls back to sock_net(skb->sk), which
+skb_set_owner_sk_safe() set just above.
+
+Fixes: 965b57b469a5 ("net: Introduce a new proto_ops ->read_skb()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sechang Lim <rhkrqnwk98@gmail.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260603162737.697215-1-rhkrqnwk98@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/zram/zram_drv.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/udp.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -2321,7 +2321,7 @@ static int zram_bvec_write_partial(struc
- 	if (!page)
- 		return -ENOMEM;
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -2061,6 +2061,14 @@ try_again:
+ 	}
  
--	ret = zram_read_page(zram, page, index, bio);
-+	ret = zram_read_page(zram, page, index, NULL);
- 	if (!ret) {
- 		memcpy_from_bvec(page_address(page) + offset, bvec);
- 		ret = zram_write_page(zram, page, index);
+ 	WARN_ON_ONCE(!skb_set_owner_sk_safe(skb, sk));
++
++	/*
++	 * skb->dev still aliases the UDP rx dev_scratch (its charge was freed
++	 * on dequeue above); a sockmap verdict program may deref it via
++	 * bpf_sk_lookup_*(), so clear it -> bpf_skc_lookup() uses skb->sk
++	 */
++	skb->dev = NULL;
++
+ 	return recv_actor(sk, skb);
+ }
+ EXPORT_IPV6_MOD(udp_read_skb);
 
 
