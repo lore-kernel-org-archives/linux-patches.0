@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824963D668F;
-	Tue, 16 Jun 2026 19:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2182349CF0;
+	Tue, 16 Jun 2026 19:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636530; cv=none; b=so1m/KgSke1+J62mLuYyklUqvHeJSkZGbUHb2BolJemILV9GttJYY5Y7E/7uuqeNs8gRrycK1k6HsytRnSGNN6LUmPQbrJmVBhdgubM0N6lFumJHfyC+bQhsAmYokhUhPMptFkoptD7LiXHJHZfH2IEJyS9TQJHV55G6HRcnQDM=
+	t=1781636534; cv=none; b=Q+RTARtsUSirMiEV2V0/UpnngZ9/zemI9guJXiHfMWc5Zdm+ObvPJqswdljbNkIrMc/AkB/c8vlxMofafTOhdOgrGYvH3ibQ4Kna4zCT9bSfML+KKhdUbdUmI9DszzCgpqsqyfu1g6CutRU7qLUnLT2dwOyMofGZykmJswPGqco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636530; c=relaxed/simple;
-	bh=h5q87jY3vhagRd0OIa5WOTAjoSvLJgqPI7lKE5shfZA=;
+	s=arc-20240116; t=1781636534; c=relaxed/simple;
+	bh=qGHCzmyMuTfZWX35oHh6h3j1YPUMVsH0NIVX7KhgvVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k6Jbguif/wKf3l5JJs11ZA4cRvBnpz0/wCUyAMWUKxi1JSzrNfxXOrmfTLFeOZeKb1q56/gpbptIZKAzmic0R+Fby66KEp0zJOUeKT0oIM4vdHp16S1MewvCHokCRaT7eiZ0khggVGigs6asEXQvraEPL85VcLrn8+4OgXWDA2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uNudtdWX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JtOFqKYEzKQXUCIPr/fFIE8e19MbwsHFxERRmpYp9BvJkDl9L0LKequJkRVeYS4YuFRJxLMaaCkEiBS2Y8cJ129TOQk6Ir253C60rgDlSPlnDPYQTCCP73NCi6PAEzS4u8BzjQO5yORDadzi5H5U4XoyF0Zj23IKOA/GMHrczLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUTxXo1d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNudtdWX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3820A1F000E9;
-	Tue, 16 Jun 2026 19:02:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUTxXo1d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61D01F000E9;
+	Tue, 16 Jun 2026 19:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636529;
-	bh=3mi4FLn4kTXOAMcMIjbu9FLd7JAlVcUB1+QnA10C75E=;
+	s=korg; t=1781636533;
+	bh=4PzeCREHDQkywYT0Kyz/pnKaNObBWzK2YKLqG2QdiQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uNudtdWX/V6xNiJVbynzlklWWSfxjxrkziJKM6hhZggkSvjkbgAknNNah6c58DNGV
-	 JDhe/hjZiBqwZTcPxbWBq1oJLvz8Vie7YYIXA77XSP5Hmvvemte6uJVtmMA6pJb9/D
-	 qsnjMsYItIKBT1QLME7n1V4aKHJ/cCKIEX9dBwu4=
+	b=KUTxXo1dNV2ovk9FjR+vyaZbuBujNQ6UZ6aA3eouCSADPzP9Pyw8etcUv4Lv+J3xJ
+	 cm6DEqEcEdR3EZfkT4XPh9Mr7VXRdObBMVTZv/WbegrkCT7P4NmncQu6ppiUqbc/Xp
+	 MEbtJ7DU/NqwF05rKsHW1FYRAgVIrySv+mQTxBx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8fa95c41eafbc9d2ff6f@syzkaller.appspotmail.com,
-	Takashi Iwai <tiwai@suse.com>,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 249/342] ALSA: aloop: Fix peer runtime UAF during format-change stop
-Date: Tue, 16 Jun 2026 20:29:05 +0530
-Message-ID: <20260616145059.831355928@linuxfoundation.org>
+Subject: [PATCH 5.10 258/342] spi: ti-qspi: fix controller deregistration
+Date: Tue, 16 Jun 2026 20:29:14 +0530
+Message-ID: <20260616145100.273115285@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -47,123 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit e5c33cdc6f402eab8abd36ecf436b22c9d3a8aff ]
+[ Upstream commit 0c18a1bacbb1d8b8aa34d3d004a2cb8226c8b1ea ]
 
-loopback_check_format() may stop the capture side when playback starts
-with parameters that no longer match a running capture stream. Commit
-826af7fa62e3 ("ALSA: aloop: Fix racy access at PCM trigger") moved
-the peer lookup under cable->lock, but the actual snd_pcm_stop() still
-runs after dropping that lock.
+Make sure to deregister the controller before disabling underlying
+resources like clocks during driver unbind.
 
-A concurrent close can clear the capture entry from cable->streams[] and
-detach or free its runtime while the playback trigger path still holds a
-stale peer substream pointer.
+Note that the controller is suspended before disabling and releasing
+resources since commit 3ac066e2227c ("spi: spi-ti-qspi: Suspend the
+queue before removing the device") which avoids issues like unclocked
+accesses but prevents SPI device drivers from doing I/O during
+deregistration.
 
-Keep a per-cable count of in-flight peer stops before dropping
-cable->lock, and make free_cable() wait for those stops before
-detaching the runtime. This preserves the existing behavior while
-making the peer runtime lifetime explicit.
-
-Reported-by: syzbot+8fa95c41eafbc9d2ff6f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8fa95c41eafbc9d2ff6f
-Fixes: 597603d615d2 ("ALSA: introduce the snd-aloop module for the PCM loopback")
-Cc: stable@vger.kernel.org
-Suggested-by: Takashi Iwai <tiwai@suse.com>
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260424-alsa-aloop-peer-stop-uaf-v2-1-94e68101db8a@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ collapsed inc/snd_pcm_stop/dec into the existing inline call site and used spin_lock_irq/unlock_irq instead of scoped_guard ]
+Fixes: 3b3a80019ff1 ("spi: ti-qspi: one only one interrupt handler")
+Cc: stable@vger.kernel.org	# 3.13
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-24-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ renamed spi_controller_*/host APIs to spi_master_*/master and kept remove() returning int ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/drivers/aloop.c |   40 +++++++++++++++++++++++++++-------------
- 1 file changed, 27 insertions(+), 13 deletions(-)
+ drivers/spi/spi-ti-qspi.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/sound/drivers/aloop.c
-+++ b/sound/drivers/aloop.c
-@@ -99,6 +99,9 @@ struct loopback_ops {
- struct loopback_cable {
- 	spinlock_t lock;
- 	struct loopback_pcm *streams[2];
-+	/* in-flight peer stops running outside cable->lock */
-+	atomic_t stop_count;
-+	wait_queue_head_t stop_wait;
- 	struct snd_pcm_hardware hw;
- 	/* flags */
- 	unsigned int valid;
-@@ -342,8 +345,12 @@ static int loopback_check_format(struct
- 	if (stream == SNDRV_PCM_STREAM_CAPTURE) {
- 		return -EIO;
- 	} else {
-+		/* close must not free the peer runtime below */
-+		atomic_inc(&cable->stop_count);
- 		snd_pcm_stop(cable->streams[SNDRV_PCM_STREAM_CAPTURE]->
- 					substream, SNDRV_PCM_STATE_DRAINING);
-+		if (atomic_dec_and_test(&cable->stop_count))
-+			wake_up(&cable->stop_wait);
- 	      __notify:
- 		runtime = cable->streams[SNDRV_PCM_STREAM_PLAYBACK]->
- 							substream->runtime;
-@@ -995,24 +1002,29 @@ static void free_cable(struct snd_pcm_su
- 	struct loopback *loopback = substream->private_data;
- 	int dev = get_cable_index(substream);
- 	struct loopback_cable *cable;
-+	struct loopback_pcm *dpcm;
-+	bool other_alive;
+--- a/drivers/spi/spi-ti-qspi.c
++++ b/drivers/spi/spi-ti-qspi.c
+@@ -895,7 +895,7 @@ no_dma:
+ 	qspi->mmap_enabled = false;
+ 	qspi->current_cs = -1;
  
- 	cable = loopback->cables[substream->number][dev];
- 	if (!cable)
- 		return;
--	if (cable->streams[!substream->stream]) {
--		/* other stream is still alive */
--		spin_lock_irq(&cable->lock);
--		cable->streams[substream->stream] = NULL;
--		spin_unlock_irq(&cable->lock);
--	} else {
--		struct loopback_pcm *dpcm = substream->runtime->private_data;
+-	ret = devm_spi_register_master(&pdev->dev, master);
++	ret = spi_register_master(master);
+ 	if (!ret)
+ 		return 0;
  
--		if (cable->ops && cable->ops->close_cable && dpcm)
--			cable->ops->close_cable(dpcm);
--		/* free the cable */
--		loopback->cables[substream->number][dev] = NULL;
--		kfree(cable);
--	}
-+	spin_lock_irq(&cable->lock);
-+	cable->streams[substream->stream] = NULL;
-+	other_alive = cable->streams[!substream->stream] != NULL;
-+	spin_unlock_irq(&cable->lock);
+@@ -910,17 +910,18 @@ free_master:
+ static int ti_qspi_remove(struct platform_device *pdev)
+ {
+ 	struct ti_qspi *qspi = platform_get_drvdata(pdev);
+-	int rc;
+ 
+-	rc = spi_master_suspend(qspi->master);
+-	if (rc)
+-		return rc;
++	spi_master_get(qspi->master);
 +
-+	/* Pair with the stop_count increment in loopback_check_format(). */
-+	wait_event(cable->stop_wait, !atomic_read(&cable->stop_count));
-+	if (other_alive)
-+		return;
++	spi_unregister_master(qspi->master);
+ 
+ 	pm_runtime_put_sync(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 
+ 	ti_qspi_dma_cleanup(qspi);
+ 
++	spi_master_put(qspi->master);
 +
-+	dpcm = substream->runtime->private_data;
-+	if (cable->ops && cable->ops->close_cable && dpcm)
-+		cable->ops->close_cable(dpcm);
-+	/* free the cable */
-+	loopback->cables[substream->number][dev] = NULL;
-+	kfree(cable);
+ 	return 0;
  }
  
- static int loopback_jiffies_timer_open(struct loopback_pcm *dpcm)
-@@ -1207,6 +1219,8 @@ static int loopback_open(struct snd_pcm_
- 			goto unlock;
- 		}
- 		spin_lock_init(&cable->lock);
-+		atomic_set(&cable->stop_count, 0);
-+		init_waitqueue_head(&cable->stop_wait);
- 		cable->hw = loopback_pcm_hardware;
- 		if (loopback->timer_source)
- 			cable->ops = &loopback_snd_timer_ops;
 
 
