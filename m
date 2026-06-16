@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607003DDDBD;
-	Tue, 16 Jun 2026 19:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4AAD3DD851;
+	Tue, 16 Jun 2026 19:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636852; cv=none; b=smEsg52L739JBrcv8GpSmZCyazM8gtiHHEkiWx9A+1lZfTvl/BfBA0VeY13Pe5fzK1FHGrsZHOtVZoxBGCGqJ9fPm+qPc7Z2lvRwzqX9hT6UpDU1Q+r91A3ygqy5A1wKAq78Gord66Zq8cehiEr/n+DDV/0aM77IYKNtbkNcdzg=
+	t=1781636857; cv=none; b=FmCWSDsH4uKiw4PTo51TyyOrmfRCqNfPsB6IT6s3LhCKRiXuc6KNie+19wAY7g7YMrv8sJx/urQj3cMnAr/c1Nqc4LwtR8HmP87oqrwPHN4wd5BihwHWxnmda+JUxnE76lnQDALpSdCU+tUSRksuHJ3s6P8wBrh4uis4yy2Y8wY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636852; c=relaxed/simple;
-	bh=HP6ENdZrPYXkWOrLwqnXbEg5a/pzqk2RZiR8q40PPvg=;
+	s=arc-20240116; t=1781636857; c=relaxed/simple;
+	bh=Zk/5KJJUKv2dU3PIebFYs8MeDwuKQucd8kuQ30+j79w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E4XFICwsxajb8G52NgGFmPRRXsE2le7J9mc5Gw0+OUdpEFkWMqXfB1pDtUGPl3vb3WwbeHkrG8wF9hXTXr9vJnpM93PCIMBpdtNgejsCL6hoz69sqny3Sus8U7kRgoSL4IXJO9YCE6NKY3LLtVnU6H2e3OPEvppjVvnEIgKS5UY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmQhzydI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TO3zqPf+LmvmwFemhYKWLrc5ZiJLJ5Q+c3P2heFHUsK2XIycqIiF8rsn4EevRek7R3EGyWc9DMJDzf61nigSZQmbXS6o0fZIZLs4IkKwLE75BeXT8KIvkE76oelm4l6BLAGYK6SryUr2QWJGac802AKg5JTCT4mQH9uAgnhUCys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GS8eOTD3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmQhzydI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52C581F000E9;
-	Tue, 16 Jun 2026 19:07:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GS8eOTD3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43881F000E9;
+	Tue, 16 Jun 2026 19:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636851;
-	bh=kNl0Z4/FN6M9iUHiK+/4vhUBplLmMShaFw/ZE83fEeI=;
+	s=korg; t=1781636856;
+	bh=NCdSs3CBZfXi6w0fO2BNzsc4ixtBAdZBegUFXWkEnNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tmQhzydIyPdLXDxadaqHj/v5LdqeS9J/A1oGlk5Tma8QWukwNL1gc74y8g7l0ct/Y
-	 EyjFGOtwsMvvtTY7AFfmgeTHoP09j2a0itzMqAn+cqdL2In9hMSOHSq8kEqppLAvgq
-	 RykNJegj3QYmIJeERwH97Q3XjhatCewIuBohrnbk=
+	b=GS8eOTD3m3PeakRl6RNZrud8IGkaeVqRzqmVLtH02BZKRTLDx8N3B1C04v9AJPDWl
+	 LYKFXG4KrsEEwG1pUR+T2SbfO0YiUpJct+u2FVD/ixGz55bIjIitE90eXGXJZeR7x9
+	 n6uA3ECfXNf5b0+7cSLcO+vG0FLF2RTsYbcAFPqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Siwei Zhang <oss@fourdim.xyz>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 316/342] RDMA/umem: Fix truncation for block sizes >= 4G
-Date: Tue, 16 Jun 2026 20:30:12 +0530
-Message-ID: <20260616145103.239896189@linuxfoundation.org>
+Subject: [PATCH 5.10 317/342] Bluetooth: L2CAP: use chan timer to close channels in cleanup_listen()
+Date: Tue, 16 Jun 2026 20:30:13 +0530
+Message-ID: <20260616145103.298531085@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -50,41 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Siwei Zhang <oss@fourdim.xyz>
 
-[ Upstream commit 15fe76e23615f502d051ef0768f86babaf08746c ]
+[ Upstream commit 8c8e620467a7b51562dbcefbd1f09f288d7d710d ]
 
-When the iommu is used the linearization of the mapping can give a single
-block that is very large split across multiple SG entries.
+l2cap_chan_close() removes the channel from conn->chan_l, which
+must be done under conn->lock.  cleanup_listen() runs under the
+parent sk_lock, so acquiring conn->lock would invert the
+established conn->lock -> chan->lock -> sk_lock order.
 
-When __rdma_block_iter_next() reassembles the split SG entries it is
-overflowing the 32 bit stack values and computed the wrong DMA addresses
-for blocks after the truncation.
+Instead of calling l2cap_chan_close() directly, schedule
+l2cap_chan_timeout with delay 0 to close the channel
+asynchronously.  The timeout handler already acquires conn->lock
+and chan->lock in the correct order.
 
-Use the right types to hold DMA addresses.
+The timer is only armed when chan->conn is still set: if it is
+already NULL, l2cap_conn_del() has already processed this channel
+(l2cap_chan_del + l2cap_sock_teardown_cb + l2cap_sock_close_cb),
+so there is nothing left to do.  If l2cap_conn_del() races in
+after the timer is armed, __clear_chan_timer() inside
+l2cap_chan_del() cancels it; if the timer has already fired, the
+handler returns harmlessly because chan->conn was cleared.
 
-Link: https://patch.msgid.link/r/1-v1-88303e9e509f+f7-ib_umem_types_jgg@nvidia.com
-Cc: stable@vger.kernel.org
-Fixes: a808273a495c ("RDMA/verbs: Add a DMA iterator to return aligned contiguous memory blocks")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 3df91ea20e74 ("Bluetooth: Revert to mutexes from RCU list")
+Cc: <stable@vger.kernel.org> # 0b58004: Bluetooth: fix UAF in l2cap_sock_cleanup_listen() vs l2cap_conn_del()
+Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/iter.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/l2cap_sock.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/drivers/infiniband/core/iter.c
-+++ b/drivers/infiniband/core/iter.c
-@@ -19,8 +19,8 @@ EXPORT_SYMBOL(__rdma_block_iter_start);
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1437,6 +1437,10 @@ static void l2cap_sock_cleanup_listen(st
+ 	 * pin it (hold_unless_zero() additionally skips a chan already past
+ 	 * its last reference).  We then drop the sk lock before taking
+ 	 * chan->lock, so sk and chan locks are never held together.
++	 *
++	 * Since we cannot call l2cap_chan_close() without conn->lock,
++	 * schedule l2cap_chan_timeout to close the channel; it already
++	 * acquires conn->lock -> chan->lock in the correct order.
+ 	 */
+ 	while ((sk = bt_accept_dequeue(parent, NULL))) {
+ 		struct l2cap_chan *chan;
+@@ -1454,14 +1458,12 @@ static void l2cap_sock_cleanup_listen(st
+ 		       state_to_string(chan->state));
  
- bool __rdma_block_iter_next(struct ib_block_iter *biter)
- {
--	unsigned int block_offset;
--	unsigned int delta;
-+	dma_addr_t block_offset;
-+	dma_addr_t delta;
+ 		l2cap_chan_lock(chan);
+-		__clear_chan_timer(chan);
+-		l2cap_chan_close(chan, ECONNRESET);
+-		/* l2cap_conn_del() may already have killed this socket
+-		 * (it sets SOCK_DEAD); skip the duplicate to avoid a
+-		 * double sock_put()/l2cap_chan_put().
++		/* Since we cannot call l2cap_chan_close() without
++		 * conn->lock, schedule its timer to trigger the close
++		 * and cleanup of this channel.
+ 		 */
+-		if (!sock_flag(sk, SOCK_DEAD))
+-			l2cap_sock_kill(sk);
++		if (chan->conn)
++			__set_chan_timer(chan, 0);
+ 		l2cap_chan_unlock(chan);
  
- 	if (!biter->__sg_nents || !biter->__sg)
- 		return false;
+ 		l2cap_chan_put(chan);
 
 
