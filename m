@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDEE478E50;
-	Tue, 16 Jun 2026 17:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3B247A0DA;
+	Tue, 16 Jun 2026 17:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630153; cv=none; b=RuLE/nf0BnH/mpeQo+F2iACQxaS1gS76O7JmsbgwipNF80Fggad8Om+hpbfRlqU4KLp6Yh2NH2zv728U3Xn/OPi8kIqc8n5xtWTmgUYM5twLuFIZYZVboslxgDMBy+gBVhC5jLZja7OrH/QhPkL3DiF6aLXxvwd/vJlhVdFZFkM=
+	t=1781630158; cv=none; b=hSWKX1FbEViAYXmAEylzhV6sVHcbL1Xtwy5sCiAb6puEIKzzBEjzprkLGqbidddvN+UafvyxxufyW3dze9uF1++7f9mlBm/WJM6ilSwI0tXautQM+9+EQ7lBHhRwEeT5zaO3Q6dIsMPPTgk7wShBnp2oBai06M0QCqoquBpgDqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630153; c=relaxed/simple;
-	bh=Po2zozad7cwN24tRtRyDhUgGC2JPkk0TIqdpAzY8HIE=;
+	s=arc-20240116; t=1781630158; c=relaxed/simple;
+	bh=8YiA6XqhMMHWYgjHtrR2ITWutstnMThAcYAqv0WOeNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BsP5U9ESDC0i6MvmDyIOrEl9cKMpbjeKjghMqasbzQxSCbDpFRcc9Of93ymAvitTmwhcXdZGx95GipbYcGNyCxKfx/ynqdxiAmtswdlQqbP/GSlHh8wo+sUbOHCWYpyn5JsImdHMeel85IXw9lG+ztgTHUJ6nbp0mz+CHY9CvLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJlKdmAS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W6qNvZ5jfqcVmzVEmIrD+5LFpbwW0XokFQ6ybFz1eityCKw5vEg3jYzkhKQYMsOLGHwExx9kzt2kbAGWBy6QG9VvBDeqV6DwbetVtXs2/IHHxX4Ubn+75jC2qJ7quznBlrvWW1NEhaomNBkj/YlYtKAYY3u9TaL1SFdsv6HyOnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h48lZla3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJlKdmAS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 550301F000E9;
-	Tue, 16 Jun 2026 17:15:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h48lZla3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32BE21F000E9;
+	Tue, 16 Jun 2026 17:15:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630151;
-	bh=Grct7FgOaxkFHG/TDRiSgJ+ZT1wJ6eHQPPdY857jULk=;
+	s=korg; t=1781630156;
+	bh=tp1E4TYAYWhGworzYyAQ7Bwo4yGzp1bPp79cNtKeznI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HJlKdmASAkPrjhSoAcsIIGFYPOxZcVvUCo42nuJLswB3QKJ/UhzUwZ2pwbhlDLuV8
-	 8CB2f/XZ1LFSNWUOtkMEpdt7nDnX4zLrjaRflwd9PLOo4y1MM3DDXvTSvV7c2bun+E
-	 TmAv9ZREHvt2Rg0H7IDKsS65gvXpSrJx3b21LEp4=
+	b=h48lZla38CCRNFukHUCWrbayukmfCQPe2IsDrFkQZOUsPj0yh9e3UCFlwRA7k9buq
+	 Aqsc7apZkuglOMSSRuU30h54T5F1sXoBzEHB5w9QLsNBr20xBt8jSH/AkSHlwEAFzL
+	 pV9GPvmtKQsDYZ/eWuGcAGLf70fYt0gMpWI397Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Kai Aizen <kai.aizen.dev@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 421/452] usb: gadget: uvc: hold opts->lock across XU walks in uvc_function_bind
-Date: Tue, 16 Jun 2026 20:30:48 +0530
-Message-ID: <20260616145138.861696930@linuxfoundation.org>
+	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>
+Subject: [PATCH 6.6 422/452] usb: typec: ucsi: Check if power role change actually happened before handling
+Date: Tue, 16 Jun 2026 20:30:49 +0530
+Message-ID: <20260616145138.906074707@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,130 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai Aizen <kai.aizen.dev@gmail.com>
+From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
 
-[ Upstream commit 68aa70648b625fa684bc0b71bbfd905f4943ca20 ]
+[ Upstream commit b80e7d34c7ea6a564525119d6138fbb577a23dba ]
 
-uvc_function_bind() walks &opts->extension_units twice without holding
-opts->lock:
+The CrOS EC may send a connector status change event with the power
+direction changed flag set even if the power direction hasn't actually
+changed after initiating a SET_PDR command internally [1]. In practice
+this happens on every system suspend due to other changes performed by
+the EC [2][3][4], causing suspend to fail.
 
-  - directly, for the iExtension string-descriptor fixup loop;
-  - indirectly, four times via uvc_copy_descriptors() (once per speed),
-    where the helper iterates uvc->desc.extension_units (which aliases
-    &opts->extension_units) to size and emit XU descriptors.
+Fix this by checking if the power role change actually happened before
+handling it.
 
-The configfs side (uvcg_extension_make / uvcg_extension_drop, in
-drivers/usb/gadget/function/uvc_configfs.c) takes opts->lock around its
-list_add_tail / list_del operations.  A privileged userspace process
-that holds the configfs subtree open and writes the gadget UDC name
-to bind the function while concurrently rmdir()'ing an extensions
-subdir can race uvcg_extension_drop() against the bind-time list walks
-and dereference a freed struct uvcg_extension.
+[1]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=1689;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
+[2]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=3923;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
+[3]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=5094;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
+[4]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=2229;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
 
-Hold opts->lock from the start of the XU string-descriptor fixup
-through the last uvc_copy_descriptors() call, releasing on the
-descriptor-error path via a new error_unlock label that drops the
-lock before falling through to the existing error label.  This
-matches the locking discipline of the configfs callbacks and removes
-the only remaining unsynchronised reader of the XU list during bind.
-
-Reachability: only privileged processes that can mount configfs and
-write to gadget UDC files can trigger the race, so this is a
-correctness fix rather than a security boundary.
-
-Fixes: 0525210c9840 ("usb: gadget: uvc: Allow definition of XUs in configfs")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Kai Aizen <kai.aizen.dev@gmail.com>
-Link: https://patch.msgid.link/20260430175643.67120-1-kai.aizen.dev@gmail.com
+Fixes: 7616f006db07 ("usb: typec: ucsi: Update power_supply on power role change")
+Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+Reported-and-tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260519-ucsi-fix-2-v1-1-6f1239535187@qtmlabs.xyz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_uvc.c |   26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/function/f_uvc.c
-+++ b/drivers/usb/gadget/function/f_uvc.c
-@@ -763,6 +763,16 @@ uvc_function_bind(struct usb_configurati
- 	uvc_ss_streaming_ep.bEndpointAddress = uvc->video.ep->address;
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -884,7 +884,7 @@ static void ucsi_handle_connector_change
+ 	struct ucsi_connector *con = container_of(work, struct ucsi_connector,
+ 						  work);
+ 	struct ucsi *ucsi = con->ucsi;
+-	enum typec_role role;
++	enum typec_role role, prev_role;
+ 	u64 command;
+ 	int ret;
  
- 	/*
-+	 * Hold opts->lock across both the XU string-descriptor fixup below and
-+	 * the descriptor-copy block further down.  Without this, configfs
-+	 * uvcg_extension_drop() (which takes opts->lock) can race with the
-+	 * list_for_each_entry() walks here and inside uvc_copy_descriptors(),
-+	 * leading to a UAF on a freed struct uvcg_extension.  See
-+	 * drivers/usb/gadget/function/uvc_configfs.c::uvcg_extension_drop().
-+	 */
-+	mutex_lock(&opts->lock);
+@@ -892,6 +892,8 @@ static void ucsi_handle_connector_change
+ 
+ 	command = UCSI_GET_CONNECTOR_STATUS | UCSI_CONNECTOR_NUMBER(con->num);
+ 
++	prev_role = !!(con->status.flags & UCSI_CONSTAT_PWR_DIR);
 +
-+	/*
- 	 * XUs can have an arbitrary string descriptor describing them. If they
- 	 * have one pick up the ID.
- 	 */
-@@ -779,7 +789,7 @@ uvc_function_bind(struct usb_configurati
- 				 ARRAY_SIZE(uvc_en_us_strings));
- 	if (IS_ERR(us)) {
- 		ret = PTR_ERR(us);
--		goto error;
-+		goto error_unlock;
- 	}
+ 	ret = ucsi_send_command_common(ucsi, command, &con->status,
+ 				       sizeof(con->status), true);
+ 	if (ret < 0) {
+@@ -908,7 +910,7 @@ static void ucsi_handle_connector_change
  
- 	uvc_iad.iFunction = opts->iad_index ? cdev->usb_strings[opts->iad_index].id :
-@@ -793,14 +803,14 @@ uvc_function_bind(struct usb_configurati
+ 	role = !!(con->status.flags & UCSI_CONSTAT_PWR_DIR);
  
- 	/* Allocate interface IDs. */
- 	if ((ret = usb_interface_id(c, f)) < 0)
--		goto error;
-+		goto error_unlock;
- 	uvc_iad.bFirstInterface = ret;
- 	uvc_control_intf.bInterfaceNumber = ret;
- 	uvc->control_intf = ret;
- 	opts->control_interface = ret;
+-	if (con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) {
++	if ((con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) && role != prev_role) {
+ 		typec_set_pwr_role(con->port, role);
+ 		ucsi_port_psy_changed(con);
  
- 	if ((ret = usb_interface_id(c, f)) < 0)
--		goto error;
-+		goto error_unlock;
- 	uvc_streaming_intf_alt0.bInterfaceNumber = ret;
- 	uvc_streaming_intf_alt1.bInterfaceNumber = ret;
- 	uvc->streaming_intf = ret;
-@@ -811,23 +821,25 @@ uvc_function_bind(struct usb_configurati
- 	if (IS_ERR(f->fs_descriptors)) {
- 		ret = PTR_ERR(f->fs_descriptors);
- 		f->fs_descriptors = NULL;
--		goto error;
-+		goto error_unlock;
- 	}
- 
- 	f->hs_descriptors = uvc_copy_descriptors(uvc, USB_SPEED_HIGH);
- 	if (IS_ERR(f->hs_descriptors)) {
- 		ret = PTR_ERR(f->hs_descriptors);
- 		f->hs_descriptors = NULL;
--		goto error;
-+		goto error_unlock;
- 	}
- 
- 	f->ss_descriptors = uvc_copy_descriptors(uvc, USB_SPEED_SUPER);
- 	if (IS_ERR(f->ss_descriptors)) {
- 		ret = PTR_ERR(f->ss_descriptors);
- 		f->ss_descriptors = NULL;
--		goto error;
-+		goto error_unlock;
- 	}
- 
-+	mutex_unlock(&opts->lock);
-+
- 	/* Preallocate control endpoint request. */
- 	uvc->control_req = usb_ep_alloc_request(cdev->gadget->ep0, GFP_KERNEL);
- 	uvc->control_buf = kmalloc(UVC_MAX_REQUEST_SIZE, GFP_KERNEL);
-@@ -859,6 +871,8 @@ uvc_function_bind(struct usb_configurati
- 
- 	return 0;
- 
-+error_unlock:
-+	mutex_unlock(&opts->lock);
- v4l2_error:
- 	v4l2_device_unregister(&uvc->v4l2_dev);
- error:
 
 
