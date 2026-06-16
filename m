@@ -1,39 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9736538F930;
-	Tue, 16 Jun 2026 17:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461FE38F930;
+	Tue, 16 Jun 2026 17:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629927; cv=none; b=KzyBuWg4ouz9LpMg+A+NtNUgyuv9YnynN0JZn7ihraELz4Ue2rGh0tyVk57MQB2wVDMl9IFL/Y1wbP3btfKiHeZxCDvrmBBS32Ke5m9m9Nh+D62aezDbPlv6h6F2OG2a1IfGJP4f7rrZ7WfmTFW0ZMrutpNTKHNyCTPlngljCCE=
+	t=1781629932; cv=none; b=gZzjIIvEyrukMiPhTwmadOhkO/1PKrlMroRfYYHiPu+Vx9n8uySC+QdhdHLmUAZENyai49eCY6f1dHZlrUfVx9DNZwxsQ6K6Yv1UIRdGYGTDYAugS/7bYOz3vf1GcWLWuokMpyPsi9jAPDlyhk5p1E2nXTWqhMtZp4ngj/LZBug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629927; c=relaxed/simple;
-	bh=CnjCC5kl1UkKWJ0bDLuZoOAUUTcbCfaRaikJ+KtE94A=;
+	s=arc-20240116; t=1781629932; c=relaxed/simple;
+	bh=HJVqyhphqPrkwchCpH3n6ibWaF/mY0EtNprzPGl2Yac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GWQjJVQNr08oZ4+UCwceaFkATAHhFJGViOHHkRNAnaKp4WtLd0Mus8KYpLD6xkFBom2J3udSAfCtoWXkMOIroLxpB2Q2Iwi7lCAppwfdQikvosDqgpE9GZloPuo4/9FLi7DYuDD8BoJakWWmFCCFr1q2lk7+AY1KwmzDX7Giekg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LyR3Cev9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DbN7oSwwDyzVkKsdUliTHHWdI0p7iqM7DwlK7sPAcpFEmdaVsPQb/PwzFW3IAGzC+/KCe52xYoIXFv3/M0DmwHKgxnilhzgTt8uOkgZMnlhCnJBUtKJX/p+eAKWKmdmWSS0PX3zTIErcIVV6a6I2h9UW26wEY5Ufk1co0RfVdGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hM0ourFD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LyR3Cev9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C0A1F000E9;
-	Tue, 16 Jun 2026 17:12:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hM0ourFD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 104BC1F000E9;
+	Tue, 16 Jun 2026 17:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629926;
-	bh=jT1pJMkcg7anMKR3emn0jEcoQKvA+dnRpb84nHvkQGc=;
+	s=korg; t=1781629931;
+	bh=a6psGwqIGUkPSV+IqGes3Tk7MYXvyi0926r8g+NqIkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LyR3Cev9C8fudWYSEKzxL3G4TAgikpIic0ut/wBLICWvLC+XRwEDgYMfGvXqld5Bn
-	 ejVEwef9nvC8ycb5gt1ss9SP6BSeRAxAAOocFgzsz8QLkv6f1SvzXtiijKl+qSnKBJ
-	 qG/eG5fgUMFW7xx0i8t6Ew1TVJXOgS5UT0O1jg0M=
+	b=hM0ourFDBF+6o9Ku/o/K0+X4GdOrjg+DYHKgik2QY0UE4Lz+e37NpwEuEqgezXrex
+	 O2joDhnQ+h6eTaS0T+xStpfhv27dskRd2Bn+59rOXfLGdJV818dC36r7fB+w2oCrTb
+	 yTyUYj4bhaXsbEsdk3dm4JIxKcwHpbK0SEDfVmWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.6 335/452] misc: fastrpc: fix DMA address corruption due to find_vma misuse
-Date: Tue, 16 Jun 2026 20:29:22 +0530
-Message-ID: <20260616145134.939639169@linuxfoundation.org>
+	Yin Tirui <yintirui@huawei.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"David Hildenbrand (arm)" <david@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	Dev Jain <dev.jain@arm.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Chen Jun <chenjun102@huawei.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Yang Shi <yang.shi@linux.alibaba.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 372/452] mm/huge_memory: update file PMD counter before folio_put()
+Date: Tue, 16 Jun 2026 20:29:59 +0530
+Message-ID: <20260616145136.558285254@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,40 +65,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Yin Tirui <yintirui@huawei.com>
 
-commit 464c6ad2aa16e1e1df9d559289199356493d1e00 upstream.
+[ Upstream commit 8d878059924f12c1bc24556a92ec56add74de3c8 ]
 
-fastrpc_get_args() uses find_vma() to look up the VMA for a user-provided
-pointer and compute a DMA address offset. When the address falls in a gap
-before the returned VMA, (ptr & PAGE_MASK) - vma->vm_start underflows,
-corrupting the DMA address sent to the DSP.
+__split_huge_pmd_locked() updates the file/shmem RSS counter after
+dropping the PMD mapping's folio reference.  If folio_put() drops the last
+reference, mm_counter_file() can later read freed folio state via
+folio_test_swapbacked().
 
-Replace find_vma() with vma_lookup(), which returns NULL when the address
-is not contained within any VMA.
+Move the counter update before folio_put().
 
-Cc: stable@vger.kernel.org
-Fixes: 80f3afd72bd4 ("misc: fastrpc: consider address offset before sending to DSP")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204528.116920-3-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/20260526101337.1984081-1-yintirui@huawei.com
+Fixes: fadae2953072 ("thp: use mm_file_counter to determine update which rss counter")
+Signed-off-by: Yin Tirui <yintirui@huawei.com>
+Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
+Acked-by: David Hildenbrand (arm) <david@kernel.org>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Chen Jun <chenjun102@huawei.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Yang Shi <yang.shi@linux.alibaba.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ changed folio API calls (folio_remove_rmap_pmd/mm_counter_file(folio)/folio_put) to page-based equivalents (page_remove_rmap/mm_counter_file(page)/put_page) ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/fastrpc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/huge_memory.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1057,7 +1057,7 @@ static int fastrpc_get_args(u32 kernel,
- 			pages[i].addr = ctx->maps[i]->phys;
- 
- 			mmap_read_lock(current->mm);
--			vma = find_vma(current->mm, ctx->args[i].ptr);
-+			vma = vma_lookup(current->mm, ctx->args[i].ptr);
- 			if (vma)
- 				pages[i].addr += (ctx->args[i].ptr & PAGE_MASK) -
- 						 vma->vm_start;
+diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+index 78f5df12b8eb37..4443cc44cbf9f1 100644
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -2095,7 +2095,9 @@ static void __split_huge_pmd_locked(struct vm_area_struct *vma, pmd_t *pmd,
+ 			if (!PageReferenced(page) && pmd_young(old_pmd))
+ 				SetPageReferenced(page);
+ 			page_remove_rmap(page, vma, true);
++			add_mm_counter(mm, mm_counter_file(page), -HPAGE_PMD_NR);
+ 			put_page(page);
++			return;
+ 		}
+ 		add_mm_counter(mm, mm_counter_file(page), -HPAGE_PMD_NR);
+ 		return;
+-- 
+2.53.0
+
 
 
