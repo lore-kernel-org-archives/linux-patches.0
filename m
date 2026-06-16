@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E3B43E490;
-	Tue, 16 Jun 2026 17:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54C433A9EB;
+	Tue, 16 Jun 2026 17:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629952; cv=none; b=GArD4FovLP2L3Sn6g2kohk+hPPkoMPPjyei6PpBdkBW8K5SfUluvxnC4wUk+TCaXHb60wY23HYkJiYLKa3zOt8r/N8Pxm65ayW6XX/Z6iHhdvLduwo3EP5sLKTtGFi9zkqYXUgTNIFxtxTGJ/pJR0C3AOQMPTa6iLVvy6K8MHvc=
+	t=1781629957; cv=none; b=rKrlVMRPVtxBxvU1o0/CepAJ7/XrFa8JP2iAkVze4JTPR275Ksztkwpuo89DX1nR/zEif+7XXzQBcSAwcnCydnbz9JVumnuvz4cz53OQ7OatSXdhYDiT0MleqDVZ5eILHK9AR3L/mlpr4/HbPf6xnaDFpvF2Kg1q0KlYVYSVm+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629952; c=relaxed/simple;
-	bh=dIlr+GdAKWB/khMSNEUjwmXfVopBJuHAIjeY+8qz5aA=;
+	s=arc-20240116; t=1781629957; c=relaxed/simple;
+	bh=Qw0WwwIvu7bEvm3+LKDU3DWIArWB7ncRtYWqOXo8JWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QaUdj8ex1igYDxauxp6z7cpVoahscKoboKqwfgWxVO+S0cwc355Dwylm6IENL9d3qzhunvdLoheh/9McW8fkq41Yi5iGU2JbIkeRl5w70xPzq9WLW7+wbJnUsonSBLgEExVG2fT6XQnKHinGDUdwAmzNe0Zy2gYe1QXqDXYhTnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnYrhEOR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=owK3VRl/UZsHWCw1QKf90ggOwylfXPFEO0Mmvlp3PeXGPU7J6r9nMq0zl+9vOGtbwDNxIhATO7IhvzFK3xggcTftIqE+fn8fP3TuUAca22L8k7LMulrKIt9mK2d1Tw2b8usaBNdZC9P97h+SEo459zHCllCyDH24SEtRtoq/a+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxuMHY2Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnYrhEOR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 551711F000E9;
-	Tue, 16 Jun 2026 17:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxuMHY2Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CBAB1F000E9;
+	Tue, 16 Jun 2026 17:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629951;
-	bh=WjTq52tIrOKgXkqIp5pofP/lduXIovK61OPR7ewMFGs=;
+	s=korg; t=1781629956;
+	bh=ETD45T3oczGSSAOGbjw/OZVjf8lSJiopvQgBa2GvDn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vnYrhEORU/YlMutQULYrHzaS2Obr+ObjnqKKU2gtvMvbJQD3Ds2cjrWoSQc/d73d1
-	 n0da6GVWTAgLKE+o6zdc6KJXPGhiPS6OSbaptVXgv2CMK4zwBDXU90c8m6VQ80prZr
-	 QEIXWRgGMjziqgjCahf4WiWozBqjAJij8aY5qOyY=
+	b=dxuMHY2QwbIZXTqjll9kqaK7ZAG96ESR0qn9BP8qmOKezr73k2NNN9BA334RpGW1U
+	 07t7lWwtYOFWs3QNlf2gY98NcfPL5vkghJW8lSRuPSV+pyTS8GJJnWpxYd8olEMEi6
+	 b4p8RCAG9fQczvElrplt41XuINfdCKsH87WeZvHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Paolo Abeni <pabeni@redhat.com>,
-	Geliang Tang <geliang@kernel.org>,
-	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 384/452] mptcp: cleanup fallback dummy mapping generation
-Date: Tue, 16 Jun 2026 20:30:11 +0530
-Message-ID: <20260616145137.097239506@linuxfoundation.org>
+Subject: [PATCH 6.6 385/452] mptcp: reset rcv wnd on disconnect
+Date: Tue, 16 Jun 2026 20:30:12 +0530
+Message-ID: <20260616145137.162796372@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -56,69 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 2834f8edd74d5dda368087a654c0e52b141e9893 ]
+[ Upstream commit 0981f90e1a05773a4c29c6e720f5ea1e3c8f1876 ]
 
-MPTCP currently access ack_seq outside the msk socket log scope to
-generate the dummy mapping for fallback socket. Soon we are going
-to introduce backlog usage and even for fallback socket the ack_seq
-value will be significantly off outside of the msk socket lock scope.
+If the MPTCP socket fallback to TCP before the MP handshake completion,
+the IASN remain 0, and the rcv_wnd_sent field is not explicitly
+initialized, just incremented over time with the data transfer.
 
-Avoid relying on ack_seq for dummy mapping generation, using instead
-the subflow sequence number. Note that in case of disconnect() and
-(re)connect() we must ensure that any previous state is re-set.
+At disconnect time such value is not cleared. If the next connection falls
+back to TCP before the MP handshake completion, the data transfer will
+keep incrementing the receive window end sequence starting from the last
+value used in the previous connection: the announced window will be
+unrelated from the actual receiver buffer size and likely too big.
 
+Address the issue zeroing the field at disconnect time.
+
+Fixes: b29fcfb54cd7 ("mptcp: full disconnect implementation")
+Cc: stable@vger.kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Tested-by: Geliang Tang <geliang@kernel.org>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251121-net-next-mptcp-memcg-backlog-imp-v1-6-1f34b6c1e0b1@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 0981f90e1a05 ("mptcp: reset rcv wnd on disconnect")
+Link: https://patch.msgid.link/20260515-net-mptcp-misc-fixes-7-1-rc4-v2-4-701e96419f2f@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    3 +++
- net/mptcp/subflow.c  |    8 +++++++-
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ net/mptcp/protocol.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/net/mptcp/protocol.c
 +++ b/net/mptcp/protocol.c
-@@ -3331,6 +3331,9 @@ static int mptcp_disconnect(struct sock
- 	msk->rcvspace_init = 0;
- 	msk->fastclosing = 0;
+@@ -3333,6 +3333,7 @@ static int mptcp_disconnect(struct sock
  
-+	/* for fallback's sake */
-+	WRITE_ONCE(msk->ack_seq, 0);
-+
+ 	/* for fallback's sake */
+ 	WRITE_ONCE(msk->ack_seq, 0);
++	atomic64_set(&msk->rcv_wnd_sent, 0);
+ 
  	WRITE_ONCE(sk->sk_shutdown, 0);
  	sk_error_report(sk);
- 	return 0;
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -471,6 +471,9 @@ static void subflow_set_remote_key(struc
- 	mptcp_crypto_key_sha(subflow->remote_key, NULL, &subflow->iasn);
- 	subflow->iasn++;
- 
-+	/* for fallback's sake */
-+	subflow->map_seq = subflow->iasn;
-+
- 	WRITE_ONCE(msk->remote_key, subflow->remote_key);
- 	WRITE_ONCE(msk->ack_seq, subflow->iasn);
- 	WRITE_ONCE(msk->can_ack, true);
-@@ -1382,9 +1385,12 @@ reset:
- 
- 	skb = skb_peek(&ssk->sk_receive_queue);
- 	subflow->map_valid = 1;
--	subflow->map_seq = READ_ONCE(msk->ack_seq);
- 	subflow->map_data_len = skb->len;
- 	subflow->map_subflow_seq = tcp_sk(ssk)->copied_seq - subflow->ssn_offset;
-+	subflow->map_seq = __mptcp_expand_seq(subflow->map_seq,
-+					      subflow->iasn +
-+					      TCP_SKB_CB(skb)->seq -
-+					      subflow->ssn_offset - 1);
- 	WRITE_ONCE(subflow->data_avail, true);
- 	return true;
- }
 
 
