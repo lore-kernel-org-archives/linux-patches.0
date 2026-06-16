@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9518F43D504;
-	Tue, 16 Jun 2026 15:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9395742B738;
+	Tue, 16 Jun 2026 15:13:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622813; cv=none; b=Yr0pgOCdYvyBoBB3teMUm7mgjSqriCuDFAQLhsHBtQgpPCx3cSPkgE9oYl+LpXV06rwzrZJkqqUJ1Ux7OmUPaGsfqDAw75v05nyAgwZi7fWfWL5KDhU+MjHTybq+2lxNrZQgff1FnhSkB+ddrzAkD0vh+jDIYjQLxmqY07zbbgA=
+	t=1781622817; cv=none; b=vBij59oIPC0GjnxeCMsos31FExEh9iJzMtguvwuimM1LCvcE3+mp/iDx/lluJGOufEtwjpq1PRhPKeN9iETyGuVf3Ngz8Q4krbgtFCvuSUFySyRI9kAtbsuox/sJ/meCki4QN1hLLh+QBSfaRN8LCTe1D6ngODzgCh2fhWlfJEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622813; c=relaxed/simple;
-	bh=zED4gQP4LQZabVXQSeBmFAwbTjZcjhfVF0tyWczA68Y=;
+	s=arc-20240116; t=1781622817; c=relaxed/simple;
+	bh=6UEBoWkJMzB7rfDFeoouqACJn2dTYUDZ507TnOly3hg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a1AOjPA6i454vKB8HITD7EDZs2+YQfjDDii0dZ0j1QmnNd2UV9jazLaLtHuzi1AleWFhxuBaz/2L0Eqt1MXylsrKK6zdKJIP7ZSUH2KzgEqnICxGDBrPWa3f0QxDmr7YyTgch0+wqk/xaG4sZlB/vb5zdPQvHvb2xRjuqlzljv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nk6VDIbQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GzHBSiTfW6TAViKjVESuFY4Kmz5ihGzWSAZUr2ZOl/Yyz0D6jA8Yzg//dXbRQLHPk0Du7LWIoK65aXx3oES9SO1sGNk5MzjVBOvVngkOOhW9fqRE5BNQGPHUc88dtNT5PB034hRX4IZNfk8fSt5sdvHK1UkeX9TdKuct7ZU0T/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tcJl8iun; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nk6VDIbQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B771F000E9;
-	Tue, 16 Jun 2026 15:13:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tcJl8iun"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42F4F1F000E9;
+	Tue, 16 Jun 2026 15:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622811;
-	bh=7SQghOQRWnLLwOKnTexFVqoiTZkUKJ4d7tGYe9AmifA=;
+	s=korg; t=1781622816;
+	bh=88NT1A7whBs6lb9xkTXUPBpicbFBFxocfxZimGG0x/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nk6VDIbQBYLysHSoS//MUFGRETDf9kabLQvM0E4wv+fRHjhPBQ2rn808I1HZrnNIw
-	 2UHDHUOwROSo28fNK9IlOkWZQcLQFnI73eQCI4wvB3EaMOM2ZJGyv/2ggakU9abxXd
-	 ieyNh20lb0kiHX0qgRghuNQRK1dalkDr57Xrhkz8=
+	b=tcJl8iunkpSxSwL5ybHTJKC3TEGBE28QMzhoKEQhljpu3QhxpwQyYLRI2mPcmIEfa
+	 IgHjEEYaWO5cjLXPizumanuYnfuVTRlh5H4HhtG/nGbsmnVj/4sA76AS2vtfAbdy5j
+	 yx4YgjI5Zwh3eedtykAwpT3eS4iGLvgPIhUWdszE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mihai Sain <mihai.sain@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 010/378] ARM: dts: microchip: sam9x7: fix GMAC clock configuration
-Date: Tue, 16 Jun 2026 20:24:01 +0530
-Message-ID: <20260616145110.331382326@linuxfoundation.org>
+Subject: [PATCH 7.0 011/378] soc: qcom: ice: Return -ENODEV if the ICE platform device is not found
+Date: Tue, 16 Jun 2026 20:24:02 +0530
+Message-ID: <20260616145110.384483209@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,54 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mihai Sain <mihai.sain@microchip.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 765aaba18413a66f6c8fe8416336ca9b3dd98a79 ]
+[ Upstream commit 5a4dc805a80e6fe303d6a4748cd451ea15987ffd ]
 
-The GMAC node incorrectly listed four clocks, including a separate tx_clk
-and a TSU GCK clock sourced from ID 67. According to the SAM9X7 clocking
-scheme, the GMAC uses only three clocks: HCLK, PCLK, and the TSU GCK
-derived from the GMAC peripheral clock (ID 24).
+By the time the consumer driver calls devm_of_qcom_ice_get(), all the
+platform devices for ICE nodes would've been created by
+of_platform_default_populate().
 
-Remove the unused tx_clk, update the clock-names accordingly, and correct
-the assigned clock to use GCK 24 instead of GCK 67. This aligns the device
-tree with the actual hardware clock topology and prevents misconfiguration
-of the GMAC clock tree.
+So for the absence of any platform device, -ENODEV should not returned, not
+-EPROBE_DEFER.
 
-[root@SAM9X75 ~]$ cat /sys/kernel/debug/clk/clk_summary | grep gmac
-
-gmac_gclk      1       1        1        266666666   0          0     50000      Y         f802c000.ethernet           tsu_clk
-                                                                                           f802c000.ethernet           tsu_clk
-gmac_clk       2       2        0        266666666   0          0     50000      Y         f802c000.ethernet           hclk
-                                                                                           f802c000.ethernet           pclk
-
-Fixes: 41af45af8bc3 ("ARM: dts: at91: sam9x7: add device tree for SoC")
-Signed-off-by: Mihai Sain <mihai.sain@microchip.com>
-Link: https://lore.kernel.org/r/20260309075329.1528-5-mihai.sain@microchip.com
-[claudiu.beznea: massaged the patch description]
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Fixes: 2afbf43a4aec ("soc: qcom: Make the Qualcomm UFS/SDCC ICE a dedicated driver")
+Tested-by: Sumit Garg <sumit.garg@oss.qualcomm.com> # OP-TEE as TZ
+Acked-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260518-qcom-ice-fix-v7-2-2a595382185b@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/microchip/sam9x7.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/soc/qcom/ice.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/microchip/sam9x7.dtsi b/arch/arm/boot/dts/microchip/sam9x7.dtsi
-index d242d7a934d0fa..c680a5033b6b4e 100644
---- a/arch/arm/boot/dts/microchip/sam9x7.dtsi
-+++ b/arch/arm/boot/dts/microchip/sam9x7.dtsi
-@@ -990,9 +990,9 @@ gmac: ethernet@f802c000 {
- 				     <62 IRQ_TYPE_LEVEL_HIGH 3>,	/* Queue 3 */
- 				     <63 IRQ_TYPE_LEVEL_HIGH 3>,	/* Queue 4 */
- 				     <64 IRQ_TYPE_LEVEL_HIGH 3>;	/* Queue 5 */
--			clocks = <&pmc PMC_TYPE_PERIPHERAL 24>, <&pmc PMC_TYPE_PERIPHERAL 24>, <&pmc PMC_TYPE_GCK 24>, <&pmc PMC_TYPE_GCK 67>;
--			clock-names = "hclk", "pclk", "tx_clk", "tsu_clk";
--			assigned-clocks = <&pmc PMC_TYPE_GCK 67>;
-+			clocks = <&pmc PMC_TYPE_PERIPHERAL 24>, <&pmc PMC_TYPE_PERIPHERAL 24>, <&pmc PMC_TYPE_GCK 24>;
-+			clock-names = "hclk", "pclk", "tsu_clk";
-+			assigned-clocks = <&pmc PMC_TYPE_GCK 24>;
- 			assigned-clock-rates = <266666666>;
- 			status = "disabled";
- 		};
+diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
+index bf4ab2d9e5c036..6520e146d2ce06 100644
+--- a/drivers/soc/qcom/ice.c
++++ b/drivers/soc/qcom/ice.c
+@@ -657,7 +657,7 @@ static struct qcom_ice *of_qcom_ice_get(struct device *dev)
+ 	pdev = of_find_device_by_node(node);
+ 	if (!pdev) {
+ 		dev_err(dev, "Cannot find device node %s\n", node->name);
+-		return ERR_PTR(-EPROBE_DEFER);
++		return ERR_PTR(-ENODEV);
+ 	}
+ 
+ 	ice = platform_get_drvdata(pdev);
 -- 
 2.53.0
 
