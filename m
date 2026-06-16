@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2530C364024;
-	Tue, 16 Jun 2026 15:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04097364024;
+	Tue, 16 Jun 2026 15:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624951; cv=none; b=JlH1W1+qHgZbyoj07XwaBHx84Ae5HIJudQNA8+qzYmDmdcAK3JiGj+OEIVLORxPl3vDS/OQA2ywDyA+exfaF6gqn/JOeTjewBkbxQVZvbOKkUiGzwTFxtpOCgsB9IpUi8HDwCXIGs2/ZSFd4k2VOZ/x6ZEwylIs8xZbD+sluQu0=
+	t=1781624959; cv=none; b=mALkBPDcMYKMkL9Jk3bpTO8+XZS6TqYtvzNkgdjxcL0BegzYOpIc2XHO0ELTIaqmD8XDLh9HJzrmSBLXSbwM6gEmNDYKkid1zX06d43GCa/X2BUA635jq3qdm5ZJcFzBBgIQj4uVcBds80ZjvmQ8R0zWKwaeZlZRM/0+6qRBYd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624951; c=relaxed/simple;
-	bh=HBM57hLqGOs2CBDnoD6yHUsbVMerqQ7KtLYoeGJpS6g=;
+	s=arc-20240116; t=1781624959; c=relaxed/simple;
+	bh=ttKy+xCBStkIWPr5F238oXonuklsXYFD4ComUS8DTkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cDcoKlpDclTWmMfohSaH3NmofBZJxpCMo3zxgSPfOxzhilUECCk26Na4bHTsOyXvaXtJE6H3YcUFi/Ebj2hbpTXNPAzbb3iR6phiwQgb7NTxRHznBhlEVVxzIPlSp+X5R29praEU0jor+bwQDaDEO/YBR2APtZtrWR87UDzY/pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iYLuE/SN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mFVBrFiS1sF3ZedIGU2iXkBNdOZYhkUFOxD52/nEdFzaE8F89GdDhG60U3vWS/9pA6rFU6ff/BrfUUKvfMC4ByKOs3Pnaqj9eXHRx+NUgJv3M0su2lUe2YEM+MlmSkfeZY+X5oBzmx/JrRnDoe7jPOGm4n9C2DyRnRc4LCBXvQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUDdn8WC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iYLuE/SN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E2C1F00A3A;
-	Tue, 16 Jun 2026 15:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUDdn8WC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 601CA1F000E9;
+	Tue, 16 Jun 2026 15:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624950;
-	bh=vP1Y/z4Thf3qVd4L8CeUvzjXS0hKsTCH2n09v+ixPRA=;
+	s=korg; t=1781624956;
+	bh=O2HoLgLBcW284sP9d8Tinbx8UDCVo2MjpMgw8TfXTB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iYLuE/SN3RxZk/PLsNmjU3y5wn6MjSvZGueaz/m5M+vMfYaEp/TM0xtzn3LuJMvkx
-	 ZcUzRtr6eEkcLM5GJc6G38x8fgTZfKR69ozJHDfmvSYzroVUlhKkrLUA1smmVwQWoG
-	 2SWWzw0j1YIlNRq6LZd4NzIVuXeV2UE96XoT4CKI=
+	b=VUDdn8WCjcmC0DeOp7eo/Kn5Okt7M9WqP/UwSja6EAbOTYGCNJkQew0VSXTQTSj5x
+	 Kxc2OzxzRjrERpz6BIM8hu6sRaeg62GVOQr5tGBu6B5PFoJKnVq5cO3Q6woDeOTyBQ
+	 IFl4C5rRPm7/1zvEW7pwDWGBgX03AjGKUr0NAieI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamir Shahar <tamirthesis@gmail.com>,
-	Amit Klein <aksecurity@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Florian Zeitz <florian.zeitz@schettke.com>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 056/325] ipv4: restrict IPOPT_SSRR and IPOPT_LSRR options
-Date: Tue, 16 Jun 2026 20:27:32 +0530
-Message-ID: <20260616145100.481176855@linuxfoundation.org>
+Subject: [PATCH 6.18 057/325] ptp: vclock: Switch from RCU to SRCU
+Date: Tue, 16 Jun 2026 20:27:33 +0530
+Message-ID: <20260616145100.533501242@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -55,52 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kurt Kanzenbach <kurt@linutronix.de>
 
-[ Upstream commit d3915a1f5a4bc0ac911032903c3c6ab8df9fcc7c ]
+[ Upstream commit 672bd0519e27c357c43b7f8c0d653fce3817d06e ]
 
-This patch restricts setting Loose Source and Record Route (LSRR)
-and Strict Source and Record Route (SSRR) IP options to users
-with CAP_NET_RAW capability.
+The usage of PTP vClocks leads immediately to the following issues with
+ptp4l with LOCKDEP and DEBUG_ATOMIC_SLEEP enabled: "BUG: sleeping function
+called from invalid context".
 
-This prevents unprivileged applications from forcing packets to route
-through attacker-controlled nodes to leak TCP ISN and possibly other
-protocol information.
+ptp_convert_timestamp() acquires a mutex_t within a RCU read section.  This
+is illegal, because acquiring a mutex_t can result in voluntary scheduling
+request which is not allowed within a RCU read section.
 
-While LSRR and SSRR are commonly filtered in many network environments,
-they may still be supported and forwarded along some network paths.
+Replace the RCU usage with SRCU where sleeping is allowed.
 
-RFC 7126 (Recommendations on Filtering of IPv4 Packets Containing
-IPv4 Options) recommend to drop these options in 4.3 and 4.4.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Tamir Shahar <tamirthesis@gmail.com>
-Reported-by: Amit Klein <aksecurity@gmail.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260602161547.2642155-1-edumazet@google.com
+Reported-by: Florian Zeitz <florian.zeitz@schettke.com>
+Closes: https://lore.kernel.org/all/00a8cce8-410e-4038-98af-49be6d93d7bd@schettke.com/
+Fixes: 67d93ffc0f3c ("ptp: vclock: use mutex to fix "sleep on atomic" bug")
+Signed-off-by: Kurt Kanzenbach <kurt@linutronix.de>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20260529-vclock_rcu-v2-1-02a5531fab92@linutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_options.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/ptp/ptp_vclock.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv4/ip_options.c b/net/ipv4/ip_options.c
-index be8815ce3ac242..09d745112c1526 100644
---- a/net/ipv4/ip_options.c
-+++ b/net/ipv4/ip_options.c
-@@ -530,6 +530,10 @@ int ip_options_get(struct net *net, struct ip_options_rcu **optp,
- 		kfree(opt);
- 		return -EINVAL;
+diff --git a/drivers/ptp/ptp_vclock.c b/drivers/ptp/ptp_vclock.c
+index 64c95045651787..295a64bdd846f2 100644
+--- a/drivers/ptp/ptp_vclock.c
++++ b/drivers/ptp/ptp_vclock.c
+@@ -19,6 +19,8 @@ static DEFINE_SPINLOCK(vclock_hash_lock);
+ 
+ static DEFINE_READ_MOSTLY_HASHTABLE(vclock_hash, 8);
+ 
++DEFINE_STATIC_SRCU(vclock_srcu);
++
+ static void ptp_vclock_hash_add(struct ptp_vclock *vclock)
+ {
+ 	spin_lock(&vclock_hash_lock);
+@@ -37,7 +39,7 @@ static void ptp_vclock_hash_del(struct ptp_vclock *vclock)
+ 
+ 	spin_unlock(&vclock_hash_lock);
+ 
+-	synchronize_rcu();
++	synchronize_srcu(&vclock_srcu);
+ }
+ 
+ static int ptp_vclock_adjfine(struct ptp_clock_info *ptp, long scaled_ppm)
+@@ -276,14 +278,16 @@ ktime_t ptp_convert_timestamp(const ktime_t *hwtstamp, int vclock_index)
+ {
+ 	unsigned int hash = vclock_index % HASH_SIZE(vclock_hash);
+ 	struct ptp_vclock *vclock;
+-	u64 ns;
+ 	u64 vclock_ns = 0;
++	int srcu_idx;
++	u64 ns;
+ 
+ 	ns = ktime_to_ns(*hwtstamp);
+ 
+-	rcu_read_lock();
++	srcu_idx = srcu_read_lock(&vclock_srcu);
+ 
+-	hlist_for_each_entry_rcu(vclock, &vclock_hash[hash], vclock_hash_node) {
++	hlist_for_each_entry_srcu(vclock, &vclock_hash[hash], vclock_hash_node,
++				  srcu_read_lock_held(&vclock_srcu)) {
+ 		if (vclock->clock->index != vclock_index)
+ 			continue;
+ 
+@@ -294,7 +298,7 @@ ktime_t ptp_convert_timestamp(const ktime_t *hwtstamp, int vclock_index)
+ 		break;
  	}
-+	if (opt->opt.srr && !ns_capable(net->user_ns, CAP_NET_RAW)) {
-+		kfree(opt);
-+		return -EPERM;
-+	}
- 	kfree(*optp);
- 	*optp = opt;
- 	return 0;
+ 
+-	rcu_read_unlock();
++	srcu_read_unlock(&vclock_srcu, srcu_idx);
+ 
+ 	return ns_to_ktime(vclock_ns);
+ }
 -- 
 2.53.0
 
