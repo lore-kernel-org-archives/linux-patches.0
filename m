@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F9032C302;
-	Tue, 16 Jun 2026 16:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B026732C302;
+	Tue, 16 Jun 2026 16:46:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628387; cv=none; b=M/AEHqvxGZ5rwInQR+OpQcNiGRUsvGaAd3vRQjG4oaoAyCD5meToWyL0K8qrlHFniUcxjFw9iJ9wZHsrDtWWn8RPTdtHMHTcoBdLFgxIzktguFmTyzf93AtW+mzzrsNGAtix6W1Enl/nBlp/nvSvyxzH8kjFXHgXWKCN5DgRWCk=
+	t=1781628392; cv=none; b=GCwjyHb7HDp35yIXFYtE+VmvD1poOwyd3WK5ODnkpi/ZWRUBVmbCbRKT9Gq3InuQ6UKqRDT/Wp66fxkYB1Auv0DYS50HFFCfZP0cIb4VJeIax2dSFJJ/8nurXcv/1Rd52GNPbyUXXhghMn1yclzJUjJYBe65DoMR8n3kUXFJRQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628387; c=relaxed/simple;
-	bh=6xzD+GvgCoynPWfAgN99skP5xyGg8KMTU+naLM/87FA=;
+	s=arc-20240116; t=1781628392; c=relaxed/simple;
+	bh=OqApRGEQcRTYy9vkYvldrvokMwGtBt3x8qpuhv8Dh/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g1gYX84+XnZfM34YVMvo9QKE7kUzzo1YVTbSUolPS9c9KXtXQiTS9NU87A5fROLsE5vbbOye0sKtsuLmr09Dktg9vO5l4wXWg8ImP0jsP3tDQm3hZuHIO2bjgEsbl40HJfpqJsh3NplkFp5XMKPsEYHoTbLbPOWKOEsWNm6Z/zE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FNkrT3gX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bYLRCd4uvGGkgEVgN1D4M7cSbydg1OLpHAZ2MMO659IK7CCRrWUsmP+hJhA7GHL3ZxOgJvZE0jE35lzvbCYJ3EHvIo19tKy3aw5713ji0xHmDWZovkIQ+t9cgDAW/sS8dnUWzYjwz8jmBEd0go8rqYhRhDYl/y3hf5KyAmihviE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFWVKCnA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FNkrT3gX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5CC1F000E9;
-	Tue, 16 Jun 2026 16:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFWVKCnA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CEA1F000E9;
+	Tue, 16 Jun 2026 16:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628386;
-	bh=bhl4eJY6cei9B+omydQdk3JIerNpWS02ntSvDJtQ62c=;
+	s=korg; t=1781628391;
+	bh=09/y65FGHyqtscc6E3KrnLGmJijU9UpcPCHrzBwi8EQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FNkrT3gXcvldaFR0tAnhKMYXHLufdqE8NBvWRYmbSWVXEYu1vaxjuLZjwia7fYo90
-	 4jdGePhqMQsFGnzN2BIGi9ZLcBSsgFJccp5TeWYv2+hfgvbezqmRxaWv/0aI+Rd376
-	 YXaD6jL3G8a5ceKs/7Rjt4TJTbKf29h0/UG/5h5o=
+	b=MFWVKCnAfVPFRDdDEJFSX/rx8HbGfCJF3OA4wWaDB/EPfT15JvybNb8+SRjqv6Cwo
+	 9Ckwaq1JMLJo6n/ljQKOXq8PK7HQlxwfdRuFn+wCAAe2POrIwKh+UspbrP77b2YDPY
+	 WJ0MDqILN7wZAZ//Ba1e3Pm/MibHpeiYvNwWYYwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.6 086/452] usb: typec: wcove: dont write past struct pd_message in wcove_read_rx_buffer()
-Date: Tue, 16 Jun 2026 20:25:13 +0530
-Message-ID: <20260616145122.373833600@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Amit Sunil Dhamne <amitsd@google.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.6 087/452] usb: typec: tcpm/tcpci_maxim: validate header NDO against RX_BYTE_CNT
+Date: Tue, 16 Jun 2026 20:25:14 +0530
+Message-ID: <20260616145122.421406406@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -44,6 +47,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -52,77 +56,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 4af7ad0e6d7aa4403dbb1dac7b9659b0421efcaa upstream.
+commit aa2f716327be1818e1cb156da8a2844804aaec2f upstream.
 
-wcove_read_rx_buffer() copies the PD RX FIFO into the caller's
-struct pd_message with
-
-	for (i = 0; i < USBC_RXINFO_RXBYTES(info); i++)
-		regmap_read(wcove->regmap, USBC_RX_DATA + i, msg + i);
-
-which has two problems:
-
-USBC_RXINFO_RXBYTES() is a 5-bit field (max 31) while struct pd_message
-is 30 bytes (__le16 header + __le32 payload[PD_MAX_PAYLOAD], packed).
-The byte count latched in RXINFO is the number of bytes the port partner
-put on the wire, so a malicious partner that transmits a 31-byte frame
-can drive the loop one byte past the destination if the WCOVE BMC
-receiver does not enforce the PD object-count limit in hardware. The
-existing FIXME flagged this as unverified.
-
-Independently, regmap_read() takes an unsigned int * and stores a full
-unsigned int at the destination. Passing the byte pointer msg + i means
-each iteration writes four bytes; the high three are zero (val_bits is
-8) and are normally overwritten by the next iteration, but the final
-iteration's high bytes are not. With RXBYTES == 30 the i == 29 iteration
-already writes three zero bytes past msg, which sits on the IRQ thread's
-stack in wcove_typec_irq().
-
-Clamp the loop to sizeof(struct pd_message) and read each register into
-a local before storing only its low byte, so the copy can never exceed
-the destination regardless of what RXINFO reports.
+A broken/malicious port can transmit a CRC-valid frame whose header
+advertises up to seven data objects but whose body carries fewer than
+that.  Check for this, and rightfully reject the message, instead of
+reading from uninitialized stack memory.
 
 Assisted-by: gkh_clanker_t1000
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc: "André Draszik" <andre.draszik@linaro.org>
+Cc: Badhri Jagan Sridharan <badhri@google.com>
+Cc: Amit Sunil Dhamne <amitsd@google.com>
 Cc: stable <stable@kernel.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/2026051347-clustered-deflected-9543@gregkh
+Link: https://patch.msgid.link/2026051350-sitter-canopener-9045@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/wcove.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/usb/typec/tcpm/tcpci_maxim_core.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/usb/typec/tcpm/wcove.c
-+++ b/drivers/usb/typec/tcpm/wcove.c
-@@ -444,9 +444,11 @@ static int wcove_start_toggling(struct t
- 	return regmap_write(wcove->regmap, USBC_CONTROL1, usbc_ctrl);
- }
- 
--static int wcove_read_rx_buffer(struct wcove_typec *wcove, void *msg)
-+static int wcove_read_rx_buffer(struct wcove_typec *wcove,
-+				struct pd_message *msg)
- {
--	unsigned int info;
-+	unsigned int info, val, len;
-+	u8 *buf = (u8 *)msg;
- 	int ret;
- 	int i;
- 
-@@ -454,12 +456,13 @@ static int wcove_read_rx_buffer(struct w
- 	if (ret)
- 		return ret;
- 
--	/* FIXME: Check that USBC_RXINFO_RXBYTES(info) matches the header */
-+	len = min(USBC_RXINFO_RXBYTES(info), sizeof(*msg));
- 
--	for (i = 0; i < USBC_RXINFO_RXBYTES(info); i++) {
--		ret = regmap_read(wcove->regmap, USBC_RX_DATA + i, msg + i);
-+	for (i = 0; i < len; i++) {
-+		ret = regmap_read(wcove->regmap, USBC_RX_DATA + i, &val);
- 		if (ret)
- 			return ret;
-+		buf[i] = val;
- 	}
- 
- 	return regmap_write(wcove->regmap, USBC_RXSTATUS,
+--- a/drivers/usb/typec/tcpm/tcpci_maxim_core.c
++++ b/drivers/usb/typec/tcpm/tcpci_maxim_core.c
+@@ -165,6 +165,15 @@ static void process_rx(struct max_tcpci_
+ 	rx_buf_ptr = rx_buf + TCPC_RECEIVE_BUFFER_RX_BYTE_BUF_OFFSET;
+ 	msg.header = cpu_to_le16(*(u16 *)rx_buf_ptr);
+ 	rx_buf_ptr = rx_buf_ptr + sizeof(msg.header);
++
++	if (count < TCPC_RECEIVE_BUFFER_RX_BYTE_BUF_OFFSET + sizeof(msg.header) +
++		    pd_header_cnt_le(msg.header) * sizeof(msg.payload[0])) {
++		max_tcpci_write16(chip, TCPC_ALERT, TCPC_ALERT_RX_STATUS);
++		dev_err(chip->dev, "Invalid TCPC_RX_BYTE_CNT %d for header cnt %d\n",
++			count, pd_header_cnt_le(msg.header));
++		return;
++	}
++
+ 	for (payload_index = 0; payload_index < pd_header_cnt_le(msg.header); payload_index++,
+ 	     rx_buf_ptr += sizeof(msg.payload[0]))
+ 		msg.payload[payload_index] = cpu_to_le32(*(u32 *)rx_buf_ptr);
 
 
