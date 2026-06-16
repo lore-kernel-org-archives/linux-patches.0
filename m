@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30383A8746;
-	Tue, 16 Jun 2026 15:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F92F43E4BF;
+	Tue, 16 Jun 2026 15:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623246; cv=none; b=ckKi4N0aeRcXSNeb+vx75El3INXubJLmXF6bJ+evX2K2yVQS7zBbQWcUOCSfDqSehR78d8FyVe3FcUvaEDxjzUxpVg2o2tNraFoa11NfOnuWGmNYFj6HzA5Yfy6e29bOCk3kKU1MxvgNuBnSlmcUKcYeLO5O3+2wqf9PQaxW9BA=
+	t=1781623251; cv=none; b=FNWi016oy5lZ4QosOyD1BAx92TxLZJq18+q3kpjfE2otAAlMlLbCXEdy/MyObFJ5tZCu9rjyV6GfqKEunSjiz76/t3tIgrDH6YZgbfHMiTB/7JXh/DbeYK3nPbIkbS/27FjZuEh86sZKu16KM1I7MZfb2yUr4r41yBPZf3016MA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623246; c=relaxed/simple;
-	bh=EUVe/fBn6EiF3ArHruSvQrtAKMgqSZMfK21tLhr5Ets=;
+	s=arc-20240116; t=1781623251; c=relaxed/simple;
+	bh=cVoFmg0rf1sTtbKGbu16cqJrqaSvm7+0lomyDBKG60w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZwOg1x23sfPAMyLgfu/JlXNSvXo6RJ6wW5CFTvEFTGDsAD/UHl5dK+/1I/TUKFltFGpOBQkmOTByKzpdPDd8PuwQ6pwiHj1OjA+lJwQdCToHAnGi0Vc0E/qXYIO5RLNf0Wpkq7165n/U0OqGdM7xMGpkV1WFw9WKe5pRnz/KCCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YgYooXxU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VhSAe3BlqCOPG55zDJhJfKazVSsFReUuh6jefuXMsgQX/enxQaWxJH6qC2YPSSQIujgp2v3TUZiyPY5fBXSf5/nc7KRN9jgzEkFQWG1X4jI6UfKN1HjTWZi1VjwbKsWd7yCSeGu8FQDCEBtigYcd0hCgYOB/dSHMORvguo3X8SE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=akDGhlMr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YgYooXxU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C10A1F000E9;
-	Tue, 16 Jun 2026 15:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="akDGhlMr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CC91F000E9;
+	Tue, 16 Jun 2026 15:20:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623244;
-	bh=TKA9wFvP97BExgBXc2Z5Y1vsRU2eq8apbbBrtWoDiv8=;
+	s=korg; t=1781623249;
+	bh=3Chf9eszS0MVXw/pJGg7nRAg7IHOmvljc3ajDOSWsAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YgYooXxUIZy+6etfBHCEluMZaaHGqUYgbGb98z2vPtsLvcH0lP04G3mgY9N7ZdQdc
-	 hkjci/9Wo0z1CJB0Fvl/JMukBBI0mLl5hoWoI/2SHc4IAwMm5YlaqYX/7ZdJlxjgYV
-	 rubEB/BN4jHNTqjpGRVxV0YBopL9j6PYb7OKOWaM=
+	b=akDGhlMrt35EZJ5dVO9R1/47D8n1uE2DB2cfTwzyf3pA/D8/9XeMzUmYjj9LrvfBo
+	 ca+H0wdpU2soOZqEZRtO2edBPmXcW/uABS7O0sG0J19FEd2bNpxHU7MRjnuHwJWB51
+	 ktJyJWRRoC4Vagvx00pRAsnCtktIYzJdhGb/PV4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
+	Chenguang Zhao <zhaochenguang@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 069/378] net/802/mrp: fix vector attribute parsing in mrp_pdu_parse_vecattr
-Date: Tue, 16 Jun 2026 20:25:00 +0530
-Message-ID: <20260616145113.743330143@linuxfoundation.org>
+Subject: [PATCH 7.0 106/378] netlabel: validate unlabeled address and mask attribute lengths
+Date: Tue, 16 Jun 2026 20:25:37 +0530
+Message-ID: <20260616145115.941937508@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -56,77 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Chenguang Zhao <zhaochenguang@kylinos.cn>
 
-[ Upstream commit 7561c7fbc694308da73300f036719e63e42bf0b4 ]
+[ Upstream commit 9772589b57e44aedc240211c5c3f7a684a034d3a ]
 
-In mrp_pdu_parse_vecattr(), vector attribute events are encoded three
-per byte and valen tracks the number of events left to process.
+netlbl_unlabel_addrinfo_get() used the address attribute length to
+determine whether the attribute data could be read as an IPv4 or IPv6
+address, but did not independently validate the corresponding mask
+attribute length.  A crafted Generic Netlink request could therefore
+provide a valid IPv4/IPv6 address attribute with a shorter mask
+attribute, which would later be read as a full struct in_addr or
+struct in6_addr.
 
-The parser decrements valen after processing the first and second events
-from each event byte, but not after processing the third one. When valen
-is exactly a multiple of three, the loop continues after the last valid
-event and consumes the next byte as a new event byte, applying a
-spurious event to the MRP applicant state.
+NLA_BINARY policy lengths are maximum lengths by default, so use
+NLA_POLICY_EXACT_LEN() for the unlabeled IPv4/IPv6 address and mask
+attributes.  This rejects short attributes during policy validation and
+also exposes the exact length requirements through policy introspection.
 
-Additionally, when valen is zero the parser unconditionally consumes
-attrlen bytes as FirstValue and advances the offset, even though per
-IEEE 802.1ak a VectorAttribute with only a LeaveAllEvent has valen of
-zero and no FirstValue or Vector fields. This corrupts the offset for
-subsequent PDU parsing.
-
-Also, when valen exceeds three the loop crosses byte boundaries but
-the attribute value is not incremented between the last event of one
-byte and the first event of the next. This causes the first event of
-the next byte to use the same attribute value as the third event
-rather than the next consecutive value.
-
-Decrement valen after processing the third event, skip FirstValue
-consumption when valen is zero, and increment the attribute value at
-the end of each loop iteration.
-
-Fixes: febf018d2234 ("net/802: Implement Multiple Registration Protocol (MRP)")
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Link: https://patch.msgid.link/20260603060016.21522-1-zhaoyz24@mails.tsinghua.edu.cn
+Fixes: 8cc44579d1bd ("NetLabel: Introduce static network labels for unlabeled connections")
+Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/802/mrp.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/netlabel/netlabel_unlabeled.c | 30 ++++++++++--------------------
+ 1 file changed, 10 insertions(+), 20 deletions(-)
 
-diff --git a/net/802/mrp.c b/net/802/mrp.c
-index ff0e80574e6b7b..160a3b14569cbd 100644
---- a/net/802/mrp.c
-+++ b/net/802/mrp.c
-@@ -703,6 +703,12 @@ static int mrp_pdu_parse_vecattr(struct mrp_applicant *app,
- 	valen = be16_to_cpu(get_unaligned(&mrp_cb(skb)->vah->lenflags) &
- 			    MRP_VECATTR_HDR_LEN_MASK);
- 
-+	/* If valen is 0, only a LeaveAllEvent is present; FirstValue and
-+	 * Vector fields are absent per IEEE 802.1ak.
-+	 */
-+	if (valen == 0)
-+		return 0;
-+
- 	/* The VectorAttribute structure in a PDU carries event information
- 	 * about one or more attributes having consecutive values. Only the
- 	 * value for the first attribute is contained in the structure. So
-@@ -753,6 +759,9 @@ static int mrp_pdu_parse_vecattr(struct mrp_applicant *app,
- 		vaevents %= __MRP_VECATTR_EVENT_MAX;
- 		vaevent = vaevents;
- 		mrp_pdu_parse_vecattr_event(app, skb, vaevent);
-+		valen--;
-+		mrp_attrvalue_inc(mrp_cb(skb)->attrvalue,
-+				  mrp_cb(skb)->mh->attrlen);
- 	}
- 	return 0;
- }
+diff --git a/net/netlabel/netlabel_unlabeled.c b/net/netlabel/netlabel_unlabeled.c
+index ca7a9e2a3de781..870e7699326a4a 100644
+--- a/net/netlabel/netlabel_unlabeled.c
++++ b/net/netlabel/netlabel_unlabeled.c
+@@ -114,14 +114,14 @@ static struct genl_family netlbl_unlabel_gnl_family;
+ /* NetLabel Netlink attribute policy */
+ static const struct nla_policy netlbl_unlabel_genl_policy[NLBL_UNLABEL_A_MAX + 1] = {
+ 	[NLBL_UNLABEL_A_ACPTFLG] = { .type = NLA_U8 },
+-	[NLBL_UNLABEL_A_IPV6ADDR] = { .type = NLA_BINARY,
+-				      .len = sizeof(struct in6_addr) },
+-	[NLBL_UNLABEL_A_IPV6MASK] = { .type = NLA_BINARY,
+-				      .len = sizeof(struct in6_addr) },
+-	[NLBL_UNLABEL_A_IPV4ADDR] = { .type = NLA_BINARY,
+-				      .len = sizeof(struct in_addr) },
+-	[NLBL_UNLABEL_A_IPV4MASK] = { .type = NLA_BINARY,
+-				      .len = sizeof(struct in_addr) },
++	[NLBL_UNLABEL_A_IPV6ADDR] =
++		NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)),
++	[NLBL_UNLABEL_A_IPV6MASK] =
++		NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)),
++	[NLBL_UNLABEL_A_IPV4ADDR] =
++		NLA_POLICY_EXACT_LEN(sizeof(struct in_addr)),
++	[NLBL_UNLABEL_A_IPV4MASK] =
++		NLA_POLICY_EXACT_LEN(sizeof(struct in_addr)),
+ 	[NLBL_UNLABEL_A_IFACE] = { .type = NLA_NUL_STRING,
+ 				   .len = IFNAMSIZ - 1 },
+ 	[NLBL_UNLABEL_A_SECCTX] = { .type = NLA_BINARY }
+@@ -757,24 +757,14 @@ static int netlbl_unlabel_addrinfo_get(struct genl_info *info,
+ 				       void **mask,
+ 				       u32 *len)
+ {
+-	u32 addr_len;
+-
+ 	if (info->attrs[NLBL_UNLABEL_A_IPV4ADDR] &&
+ 	    info->attrs[NLBL_UNLABEL_A_IPV4MASK]) {
+-		addr_len = nla_len(info->attrs[NLBL_UNLABEL_A_IPV4ADDR]);
+-		if (addr_len != sizeof(struct in_addr) &&
+-		    addr_len != nla_len(info->attrs[NLBL_UNLABEL_A_IPV4MASK]))
+-			return -EINVAL;
+-		*len = addr_len;
++		*len = sizeof(struct in_addr);
+ 		*addr = nla_data(info->attrs[NLBL_UNLABEL_A_IPV4ADDR]);
+ 		*mask = nla_data(info->attrs[NLBL_UNLABEL_A_IPV4MASK]);
+ 		return 0;
+ 	} else if (info->attrs[NLBL_UNLABEL_A_IPV6ADDR]) {
+-		addr_len = nla_len(info->attrs[NLBL_UNLABEL_A_IPV6ADDR]);
+-		if (addr_len != sizeof(struct in6_addr) &&
+-		    addr_len != nla_len(info->attrs[NLBL_UNLABEL_A_IPV6MASK]))
+-			return -EINVAL;
+-		*len = addr_len;
++		*len = sizeof(struct in6_addr);
+ 		*addr = nla_data(info->attrs[NLBL_UNLABEL_A_IPV6ADDR]);
+ 		*mask = nla_data(info->attrs[NLBL_UNLABEL_A_IPV6MASK]);
+ 		return 0;
 -- 
 2.53.0
 
