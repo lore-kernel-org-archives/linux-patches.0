@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5380846AF3C;
-	Tue, 16 Jun 2026 17:56:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192F43043C8;
+	Tue, 16 Jun 2026 17:56:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632583; cv=none; b=heHDfppN/U1hy8vwwoiekjC4F4O+GL5A9RP1zK2vaQhpp7gjjkhsFZ6yfN1fqxtPD97SuZsq/86arph2XNWODYibIn10CPRZZFT8TgmE3dgAv2nFR7ZrEA6thax5F/ZhtuES845QdtdhHL4wGX8fmKa96qIY7pjtO8UhJk2chjo=
+	t=1781632589; cv=none; b=KOsYQJqB2dJUKihJUfel3bXwEW4NsxxAfS3KNvWF8jkMhNO7Qlv/i08I+mf9A8VDYNRfL5BZOXnTWIY4v/ElYjezFBBegA1IJfZYwJDrDf3SiHtTxTzTn+VMJ5ZrGF0LU3+OitdGCpKdW7RH3CruSrl3MtfmXc99I4X1bZxeYoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632583; c=relaxed/simple;
-	bh=OTRSXEf+ssBG/jJzaK4LSRDccx1gfGKCMcdnLVwmQ+I=;
+	s=arc-20240116; t=1781632589; c=relaxed/simple;
+	bh=3/afSunTpEHLDU15gmxGSA4G4ROIPXrhNQqgLBvsaoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CWW0kNFH4OGWwiC/8Io2X35FIeukqJWb0wKV0k42+ZtNgdg5jMZmU5LByMvpNEmVSQsqVh1hqKrBxE92eXcD8BjGW/lgcfDDMSOe8bfZS1nZYYQVpE3lvKcn+1O8hLnmyT49978hmAA25QiEX6Ijepg1WRDae0qjhB8IRQjrGa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGG4JcTu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aUwXM/ChgXqr3Aelx8oa8LWg+nFLM+oM/qs00zSM0d6XHLqLz3Syc0dyqwKxL0cpXyEBKhU1Wi+W+5lvkBaM60gXc/LGV3eNBjqPTTcQLTupKc2FkAXOHg+nMKrm3kP5YjLFhpykEG9fjmOBu+duArfXyIUCtHH5tTXtZ9vOo7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1r2LN+F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGG4JcTu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65DE41F000E9;
-	Tue, 16 Jun 2026 17:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1r2LN+F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C6F1F000E9;
+	Tue, 16 Jun 2026 17:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632582;
-	bh=Q6NqKnr21LrfkzGEO+DHD2dIxNatdBBQ5Oz/Y+O5zyo=;
+	s=korg; t=1781632587;
+	bh=5SV2sqebCVJZSpWiLBlM32jWYg6/JDFMUG/uF8hEmWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pGG4JcTuaSlLN8aWl93L0kQkuDG9vW//K3KUohkoS9RFi7ZzxZKQSYZj/EL0QF4AH
-	 Lay2M7KXVCz0QNb3rLDUxARvN/rSxnJlZPJyma0fsRIE5ZltB590heWb1atQMLRrdx
-	 Z0Mybhrvm/a0QPQlGXED/wfhvBfbdjMJEWnhSPNs=
+	b=O1r2LN+FIVzLkzgHGOVZoZyPNnncqw3KJa0n2YXkkbT/FYCUdoE7VB0VTEMofFIDn
+	 bbZ6CLHVfoqeojONsRZmbtBDCsdIkJ9Xb6oHJKnhA9qh7et/toChUlH6MaqmeNx7u8
+	 xON3Uo0XNtzejQGLhPlig6OjFEnPC76rQ/Jotp1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Jiexun Wang <wangjiexun2025@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 437/522] Bluetooth: serialize accept_q access
-Date: Tue, 16 Jun 2026 20:29:44 +0530
-Message-ID: <20260616145146.397911867@linuxfoundation.org>
+Subject: [PATCH 6.1 438/522] net: hsr: defer node table free until after RCU readers
+Date: Tue, 16 Jun 2026 20:29:45 +0530
+Message-ID: <20260616145146.443216927@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -57,219 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiexun Wang <wangjiexun2025@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit e83f5e24da741fa9405aeeff00b08c5ee7c37b88 ]
+[ Upstream commit aaec7096f9961eb223b5b149abe9495525c205d9 ]
 
-bt_sock_poll() walks the accept queue without synchronization, while
-child teardown can unlink the same socket and drop its last reference.
-The unsynchronized accept queue walk has existed since the initial
-Bluetooth import.
+HSR node-list and node-status generic-netlink operations run under
+rcu_read_lock(). They walk hsr->node_db through hsr_get_next_node() and
+hsr_get_node_data(), but RTM_DELLINK teardown removes the same node table
+with plain list_del() and frees each node immediately.
 
-Protect accept_q with a dedicated lock for queue updates and polling.
-Also rework bt_accept_dequeue() to take temporary child references under
-the queue lock before dropping it and locking the child socket.
+That lets a generic-netlink reader hold a struct hsr_node pointer across
+hsr_dellink(). In a KASAN build, widening the reader window after
+hsr_get_next_node() obtains the node reproduces a slab-use-after-free
+when the reader copies node->macaddress_A; the freeing stack is
+hsr_del_nodes() from hsr_dellink().
 
-Fixes: 1da177e4c3f41524e886b7f1b8a0c1fc7321cac2 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reported-by: Jann Horn <jannh@google.com>
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
-Reviewed-by: Jann Horn <jannh@google.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Use list_del_rcu() and defer the free through the existing
+hsr_free_node_rcu() callback. This matches the lifetime rule used by the
+HSR prune paths, which already delete nodes with list_del_rcu() and
+call_rcu().
+
+Fixes: b9a1e627405d ("hsr: implement dellink to clean up resources")
+Cc: stable@vger.kernel.org # v5.3+
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260513233838.3064715-2-michael.bommarito@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ replaced `list_del`+`call_rcu(hsr_free_node_rcu)` with `list_del_rcu`+`kfree_rcu(node, rcu_head)` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/bluetooth.h |    1 
- net/bluetooth/af_bluetooth.c      |   87 ++++++++++++++++++++++++++++----------
- 2 files changed, 66 insertions(+), 22 deletions(-)
+ net/hsr/hsr_framereg.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/include/net/bluetooth/bluetooth.h
-+++ b/include/net/bluetooth/bluetooth.h
-@@ -361,6 +361,7 @@ void baswap(bdaddr_t *dst, const bdaddr_
- struct bt_sock {
- 	struct sock sk;
- 	struct list_head accept_q;
-+	spinlock_t accept_q_lock; /* protects accept_q */
- 	struct sock *parent;
- 	unsigned long flags;
- 	void (*skb_msg_name)(struct sk_buff *, void *, int *);
---- a/net/bluetooth/af_bluetooth.c
-+++ b/net/bluetooth/af_bluetooth.c
-@@ -151,6 +151,7 @@ struct sock *bt_sock_alloc(struct net *n
+--- a/net/hsr/hsr_framereg.c
++++ b/net/hsr/hsr_framereg.c
+@@ -121,8 +121,10 @@ void hsr_del_nodes(struct list_head *nod
+ 	struct hsr_node *node;
+ 	struct hsr_node *tmp;
  
- 	sock_init_data(sock, sk);
- 	INIT_LIST_HEAD(&bt_sk(sk)->accept_q);
-+	spin_lock_init(&bt_sk(sk)->accept_q_lock);
- 
- 	sock_reset_flag(sk, SOCK_ZAPPED);
- 
-@@ -211,6 +212,7 @@ void bt_accept_enqueue(struct sock *pare
- {
- 	const struct cred *old_cred;
- 	struct pid *old_pid;
-+	struct bt_sock *par = bt_sk(parent);
- 
- 	BT_DBG("parent %p, sk %p", parent, sk);
- 
-@@ -221,9 +223,13 @@ void bt_accept_enqueue(struct sock *pare
- 	else
- 		lock_sock_nested(sk, SINGLE_DEPTH_NESTING);
- 
--	list_add_tail(&bt_sk(sk)->accept_q, &bt_sk(parent)->accept_q);
- 	bt_sk(sk)->parent = parent;
- 
-+	spin_lock_bh(&par->accept_q_lock);
-+	list_add_tail(&bt_sk(sk)->accept_q, &par->accept_q);
-+	sk_acceptq_added(parent);
-+	spin_unlock_bh(&par->accept_q_lock);
-+
- 	/* Copy credentials from parent since for incoming connections the
- 	 * socket is allocated by the kernel.
- 	 */
-@@ -241,8 +247,6 @@ void bt_accept_enqueue(struct sock *pare
- 		bh_unlock_sock(sk);
- 	else
- 		release_sock(sk);
--
--	sk_acceptq_added(parent);
- }
- EXPORT_SYMBOL(bt_accept_enqueue);
- 
-@@ -251,45 +255,72 @@ EXPORT_SYMBOL(bt_accept_enqueue);
-  */
- void bt_accept_unlink(struct sock *sk)
- {
-+	struct sock *parent = bt_sk(sk)->parent;
-+
- 	BT_DBG("sk %p state %d", sk, sk->sk_state);
- 
-+	spin_lock_bh(&bt_sk(parent)->accept_q_lock);
- 	list_del_init(&bt_sk(sk)->accept_q);
--	sk_acceptq_removed(bt_sk(sk)->parent);
-+	sk_acceptq_removed(parent);
-+	spin_unlock_bh(&bt_sk(parent)->accept_q_lock);
- 	bt_sk(sk)->parent = NULL;
- 	sock_put(sk);
- }
- EXPORT_SYMBOL(bt_accept_unlink);
- 
-+static struct sock *bt_accept_get(struct sock *parent, struct sock *sk)
-+{
-+	struct bt_sock *bt = bt_sk(parent);
-+	struct sock *next = NULL;
-+
-+	/* accept_q is modified from child teardown paths too, so take a
-+	 * temporary reference before dropping the queue lock.
-+	 */
-+	spin_lock_bh(&bt->accept_q_lock);
-+
-+	if (sk) {
-+		if (bt_sk(sk)->parent != parent)
-+			goto out;
-+
-+		if (!list_is_last(&bt_sk(sk)->accept_q, &bt->accept_q)) {
-+			next = &list_next_entry(bt_sk(sk), accept_q)->sk;
-+			sock_hold(next);
-+		}
-+	} else if (!list_empty(&bt->accept_q)) {
-+		next = &list_first_entry(&bt->accept_q,
-+					 struct bt_sock, accept_q)->sk;
-+		sock_hold(next);
+-	list_for_each_entry_safe(node, tmp, node_db, mac_list)
+-		kfree(node);
++	list_for_each_entry_safe(node, tmp, node_db, mac_list) {
++		list_del_rcu(&node->mac_list);
++		kfree_rcu(node, rcu_head);
 +	}
-+
-+out:
-+	spin_unlock_bh(&bt->accept_q_lock);
-+	return next;
-+}
-+
- struct sock *bt_accept_dequeue(struct sock *parent, struct socket *newsock)
- {
--	struct bt_sock *s, *n;
--	struct sock *sk;
-+	struct sock *sk, *next;
- 
- 	BT_DBG("parent %p", parent);
- 
- restart:
--	list_for_each_entry_safe(s, n, &bt_sk(parent)->accept_q, accept_q) {
--		sk = (struct sock *)s;
--
-+	for (sk = bt_accept_get(parent, NULL); sk; sk = next) {
- 		/* Prevent early freeing of sk due to unlink and sock_kill */
--		sock_hold(sk);
- 		lock_sock(sk);
- 
- 		/* Check sk has not already been unlinked via
- 		 * bt_accept_unlink() due to serialisation caused by sk locking
- 		 */
--		if (!bt_sk(sk)->parent) {
-+		if (bt_sk(sk)->parent != parent) {
- 			BT_DBG("sk %p, already unlinked", sk);
- 			release_sock(sk);
- 			sock_put(sk);
- 
--			/* Restart the loop as sk is no longer in the list
--			 * and also avoid a potential infinite loop because
--			 * list_for_each_entry_safe() is not thread safe.
--			 */
- 			goto restart;
- 		}
- 
-+		next = bt_accept_get(parent, sk);
-+
- 		/* sk is safely in the parent list so reduce reference count */
- 		sock_put(sk);
- 
-@@ -317,6 +348,8 @@ restart:
- 			sock_hold(sk);
- 
- 			release_sock(sk);
-+			if (next)
-+				sock_put(next);
- 			return sk;
- 		}
- 
-@@ -519,18 +552,28 @@ EXPORT_SYMBOL(bt_sock_stream_recvmsg);
- 
- static inline __poll_t bt_accept_poll(struct sock *parent)
- {
--	struct bt_sock *s, *n;
-+	struct bt_sock *bt = bt_sk(parent);
-+	struct bt_sock *s;
- 	struct sock *sk;
-+	__poll_t mask = 0;
-+
-+	spin_lock_bh(&bt->accept_q_lock);
-+	list_for_each_entry(s, &bt->accept_q, accept_q) {
-+		int state;
- 
--	list_for_each_entry_safe(s, n, &bt_sk(parent)->accept_q, accept_q) {
- 		sk = (struct sock *)s;
--		if (sk->sk_state == BT_CONNECTED ||
--		    (test_bit(BT_SK_DEFER_SETUP, &bt_sk(parent)->flags) &&
--		     sk->sk_state == BT_CONNECT2))
--			return EPOLLIN | EPOLLRDNORM;
-+		state = READ_ONCE(sk->sk_state);
-+
-+		if (state == BT_CONNECTED ||
-+		    (test_bit(BT_SK_DEFER_SETUP, &bt->flags) &&
-+		     state == BT_CONNECT2)) {
-+			mask = EPOLLIN | EPOLLRDNORM;
-+			break;
-+		}
- 	}
-+	spin_unlock_bh(&bt->accept_q_lock);
- 
--	return 0;
-+	return mask;
  }
  
- __poll_t bt_sock_poll(struct file *file, struct socket *sock,
+ void prp_handle_san_frame(bool san, enum hsr_port_type port,
 
 
