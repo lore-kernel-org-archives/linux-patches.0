@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A103CFF4B;
-	Tue, 16 Jun 2026 17:45:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3A9246762;
+	Tue, 16 Jun 2026 17:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631916; cv=none; b=MShNhR3AFCfogmC2ta0f2ZRJfN3WgYi170kXARRLid8fmi8QxhuVegdYdKGcob05FNb3qnwrInUPhUY/QUoi2ieqAq/+/a6QFJWDbhJa+x3WjQLvXTRim1sbOwTVixAfI9CjTjrs/w9kyQcg6J2NU178e9yRofWv+sb7r3gurJQ=
+	t=1781631921; cv=none; b=SsMPZZ5+9bAoCV27BsLrfjJGSw9TFDYq4vO/Crk5dLn+b4cETcAZs02kqkBs4pTft5JrStCcbYDzRIgipOlDRJKJGEaNb9N0ccSq6NOB413NY3yN85aEaB7EXshjOLyRVm/Fsc1YnB+wvRxHLmHioe+C9oyfm9Z9SlKsghrF494=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631916; c=relaxed/simple;
-	bh=GWGCEBHUe3NcmDkQzGMBB41lBcYO6RHjdnuIYHc/nW4=;
+	s=arc-20240116; t=1781631921; c=relaxed/simple;
+	bh=c7q14U05UhJzAUxSQKcFZ6kD8zcpT+cEbyQ5Mefz4nQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQzqY2VfslZb1ImEJfeltZEJ6vXVmjJZWztzLGUW2iPVAUPGNTt3gtrB4wXfOgQ9Z2taLWuqVBsBWL0/0TvqZdPhU/aisj1Co/P2Bg0BA0berNHn0BYE659kBz4ANv0p2SuWgPdTrQxLHxoOfy6rmlZA+GZP82+LOqqNm0L9YLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7pJyP8v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=apv+nzaxZXwL/edp9LFMJGk/pZlXxm2xYWfJjL832EQ5yv5POhi9PET+7UxwC8OYdhjZF2dzSyyzfss0i+xDWaVelyXlJKseBYY12D1I9blxJXAk2j0TBC7iIbLGv5Zb2Cpuv2vUGhd0vOAqBXQ0DUITFcsu+Nk2KYT4bt7n640=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzboshqT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7pJyP8v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79EA41F000E9;
-	Tue, 16 Jun 2026 17:45:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzboshqT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6DB1F000E9;
+	Tue, 16 Jun 2026 17:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631915;
-	bh=UlUVFghqoMCmuc8eaIl+8m1NWLTSqccXfCB54yeVCiI=;
+	s=korg; t=1781631920;
+	bh=ub2YQNQsCGnHMoyDhjmlXUP46fIeLXfX9VPvwB5lBQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S7pJyP8viv7AuCMzpZWouOYIiqJa1C7xCCHtOr5bHpdjifZKssEp3hQVxaPYV+duD
-	 wLPHqCsO959jewe1k5Dl9uSfkPZTxmQy+kLmMULjJDzsTVtsWHC4SzNsTDrT0wAJQw
-	 tzV6+ue1SVioTYAi3RRnliOJQ5ZBLn3TVFUgxv4E=
+	b=vzboshqTqwOua2xaAQ8i4dvhZDY9uFZcgVsGeDYC03RpLQjgnm6ywmwtx0ehlxc2u
+	 kGtXt12vxi8oxDBPO8yPWa9F9nmmRkHNezkpj6D0WLGAziLorCbmzk92wvA7J6+lV/
+	 IbEszLa5AosJvyoiKXBokXcyYcXNltLEIuejamBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.1 312/522] mmc: sdhci: add signal voltage switch in sdhci_resume_host
-Date: Tue, 16 Jun 2026 20:27:39 +0530
-Message-ID: <20260616145140.471230474@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Zhao Zhang <zzhan461@ucr.edu>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 313/522] sctp: diag: reject stale associations in dump_one path
+Date: Tue, 16 Jun 2026 20:27:40 +0530
+Message-ID: <20260616145140.514045762@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,47 +58,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Zhao Zhang <zzhan461@ucr.edu>
 
-commit f595e8e77a51eee35e331f69321766593a845ef2 upstream.
+commit 5eba3e48d78edd7551b992cb7ba687019b3a78da upstream.
 
-I met one suspend/resume issue with sdr104 capable sdio wifi card (with
-"keep-power-in-suspend" set in DT property):
-After resuming from suspend to ram, the sdio wifi card stops working.
-Further debug shows that although ios shows the sdio card is at sdr104
-mode, the voltage is still at 3V3. This is due to missing the calling
-of ->start_signal_voltage_switch() in sdhci_resume_host().
+The SCTP exact sock_diag lookup can hold a transport reference, block on
+lock_sock(sk), and then resume after sctp_association_free() has marked
+the association dead and freed its bind address list.
 
-Fix this issue by adding ->start_signal_voltage_switch() in
-sdhci_resume_host(). This also matches what we do for
-sdhci_runtime_resume_host().
+When that happens, inet_assoc_attr_size() and
+inet_diag_msg_sctpasoc_fill() can still dereference association state
+that is no longer valid for reporting. In particular,
+inet_diag_msg_sctpasoc_fill() may read an empty bind-address list as a
+real sctp_sockaddr_entry and trigger an out-of-bounds read from
+unrelated association memory.
 
-Then the question is: why this issue hasn't reported and fixed for so
-long time. IMHO, several reasons: Some host controllers just kick off
-the runtime resume for system resume, so they benefit from the well
-supported runtime pm code; Some platforms just use the old sdio wifi
-card which doesn't need signal voltage switch at all, the default
-voltage is 3v3 after resuming.
+Reject the association after taking the socket lock if it has been
+reaped or detached from the endpoint, and report the lookup as stale.
+This keeps the exact dump-one path from formatting torn association
+state.
 
-Fixes: 6308d2905bd3 ("mmc: sdhci: add quirk for keeping card power during suspend")
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Fixes: 8f840e47f190 ("sctp: add the sctp_diag.c file")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Zhao Zhang <zzhan461@ucr.edu>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/fac6043fa20a2ff68e12958c431836f692c51268.1780113823.git.zzhan461@ucr.edu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/sctp/diag.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -3823,6 +3823,7 @@ int sdhci_resume_host(struct sdhci_host
- 		host->pwr = 0;
- 		host->clock = 0;
- 		host->reinit_uhs = true;
-+		mmc->ops->start_signal_voltage_switch(mmc, &mmc->ios);
- 		mmc->ops->set_ios(mmc, &mmc->ios);
- 	} else {
- 		sdhci_init(host, (mmc->pm_flags & MMC_PM_KEEP_POWER));
+--- a/net/sctp/diag.c
++++ b/net/sctp/diag.c
+@@ -266,15 +266,15 @@ static int sctp_sock_dump_one(struct sct
+ 
+ 	lock_sock(sk);
+ 
+-	rep = nlmsg_new(inet_assoc_attr_size(sk, assoc), GFP_KERNEL);
+-	if (!rep) {
+-		release_sock(sk);
+-		return -ENOMEM;
++	if (ep != assoc->ep || assoc->base.dead) {
++		err = -ESTALE;
++		goto out_unlock;
+ 	}
+ 
+-	if (ep != assoc->ep) {
+-		err = -EAGAIN;
+-		goto out;
++	rep = nlmsg_new(inet_assoc_attr_size(sk, assoc), GFP_KERNEL);
++	if (!rep) {
++		err = -ENOMEM;
++		goto out_unlock;
+ 	}
+ 
+ 	err = inet_sctp_diag_fill(sk, assoc, rep, req, sk_user_ns(NETLINK_CB(skb).sk),
+@@ -289,8 +289,9 @@ static int sctp_sock_dump_one(struct sct
+ 	return nlmsg_unicast(sock_net(skb->sk)->diag_nlsk, rep, NETLINK_CB(skb).portid);
+ 
+ out:
+-	release_sock(sk);
+ 	kfree_skb(rep);
++out_unlock:
++	release_sock(sk);
+ 	return err;
+ }
+ 
 
 
