@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FD632E728;
-	Tue, 16 Jun 2026 17:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10802478E41;
+	Tue, 16 Jun 2026 17:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631106; cv=none; b=nqK+OAc5G8aeUKBhD56if/+UNtl5uti4YZSW6C4kiYH+MTheBqWCH0DMJ+VIQLj0pRX2uo/By/v+jSJMc4qBnaB+2uIIvtMhmRVr6W03FpIZIhWPF69dgDqZ3frAzg1BZciTyU0IWI4DsrhSim0SHeHX6j6ibSYqIE4RR0+4Ado=
+	t=1781631111; cv=none; b=rTGHqQLLisOgxruT9z6s3J7N5tMSpIR3hMlSWjnvCJ0WhCDLXUqBnuydyOYFjGBDLWSqgPpPAt8nFo9yEXk2h0Y+k7flmxdCgjvmVeTrIdIiAnO4JQO0FCq+rdhuOPMOoI74NuOTNoTDm91r/bfDXs2sgHac8Bwn7dpMFK63AyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631106; c=relaxed/simple;
-	bh=Xxobx/Y6/s9TbTAwM5sOy4Psoh9SkINTdI196j1GmQ8=;
+	s=arc-20240116; t=1781631111; c=relaxed/simple;
+	bh=ubisNW+mGIjO1ECwq4cStsE+b5D/0iDX6jo+RwJ65eU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ft/a/kdZuUCt1W6igF5i+2pgKBPWYyjDIChtembs8wb7+IUwgkQgJupOzBNWe5gZfzt+VXpeoEjaeA/rSeSvw4a5nC1HmVTQDgRYc1Q66NFQYxaEGhUfjjJ2Wtka/e8ujSS+PcrUaDFdo2OJOVGTMkUe2gcKUaX5pjQ5lcUMubY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BD5e3kqw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rQ60PNLvQmYiHLUkfGvD7fw7b26mu08i2kZBcY6sVqizoNlr/I9rX/b7JnAd8ACjt8mMNPI88q13/vYM9lojwKCY7n7aHtNFpXNRP1ot0Syqw7qzMhLhWhpIo1JZjL8K4cPa3CR9vCjVLgVOBEtwdIhWglhhv5+nuDT+4Cch9kA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dq99FJFc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BD5e3kqw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E031F000E9;
-	Tue, 16 Jun 2026 17:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dq99FJFc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A641F000E9;
+	Tue, 16 Jun 2026 17:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631104;
-	bh=Ti3rvR7BmvDhAYLGSUl7hiJ7b31Z4oTtlFNo7ySoneA=;
+	s=korg; t=1781631109;
+	bh=Hmlo8Y05tMrt61lO7R7j7yY9iawLSm/MNF/K6SvGDho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BD5e3kqwER6JhB7OEZgsPIKeLd3SKhRWs5fatM6ueFrFnWmuBLMTe2N16Fba8/iAn
-	 gt2nPyKtQ9sf5dB+9L46Q1sGx/amTJqzreMQqRSaOQdFZM+kZpS9t30Qf2PabGL2JS
-	 JA/e0AVPZD5FQ2zC0gwGfFyfRgB7UMQRAUIxXOb0=
+	b=Dq99FJFcJnkQ6qhC42tceW3EN2w77mBycUcctKMXn9FpDlDWeykBxEmMOEZqa3BkU
+	 M0ewOJXqqi+pfWPX/j1whOI1NqdPdB3DmCzrzZhv3Fmledmk1HxRlQ4u6OZmJ1bWfd
+	 xrj2EpxjOS6EVwEaIs3VIu/kxNX2QcblkIiTjIOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.1 157/522] usb: gadget: net2280: Fix double free in probe error path
-Date: Tue, 16 Jun 2026 20:25:04 +0530
-Message-ID: <20260616145133.454499228@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Seungjin Bae <eeodqql09@gmail.com>
+Subject: [PATCH 6.1 158/522] usb: gadget: dummy_hcd: Reject hub port requests for non-existent ports
+Date: Tue, 16 Jun 2026 20:25:05 +0530
+Message-ID: <20260616145133.504037019@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,48 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Seungjin Bae <eeodqql09@gmail.com>
 
-commit c8547c74988e0b5f4cbb1b895e2a57aae084f070 upstream.
+commit 7d9633528dd40e33964d2dc74a5abbf5c4d116ce upstream.
 
-usb_initialize_gadget() installs gadget_release() as the release
-callback for the embedded gadget device.  The struct net2280 instance is
-therefore released through gadget_release() when the gadget device's last
-reference is dropped.
+The `dummy_hub_control()` function handles USB hub class requests
+to the virtual root hub. The `GetPortStatus` case returns -EPIPE for
+requests with `wIndex != 1`, since the virtual root hub has only a
+single port. However, the `ClearPortFeature` and `SetPortFeature`
+cases lack the same check.
 
-The probe error path calls net2280_remove(), which tears down the
-partially initialized device and drops the gadget reference with
-usb_put_gadget().  Calling kfree(dev) afterwards can free the same object
-again.
+Fix this by extending the `wIndex != 1` rejection to both cases,
+matching the existing behavior of `GetPortStatus`.
 
-Drop the explicit kfree() and let the gadget device release callback
-handle the final free.  This issue was found by a static analysis tool
-I am developing.
-
-Fixes: f770fbec4165 ("USB: UDC: net2280: Fix memory leaks")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
 Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260427153651.337846-1-lgs201920130244@gmail.com
+Link: https://patch.msgid.link/20260518234314.1889396-1-eeodqql09@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/net2280.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/usb/gadget/udc/dummy_hcd.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/gadget/udc/net2280.c
-+++ b/drivers/usb/gadget/udc/net2280.c
-@@ -3790,10 +3790,8 @@ static int net2280_probe(struct pci_dev
- 	return 0;
- 
- done:
--	if (dev) {
-+	if (dev)
- 		net2280_remove(pdev);
--		kfree(dev);
--	}
- 	return retval;
- }
- 
+--- a/drivers/usb/gadget/udc/dummy_hcd.c
++++ b/drivers/usb/gadget/udc/dummy_hcd.c
+@@ -2133,6 +2133,8 @@ static int dummy_hub_control(
+ 	case ClearHubFeature:
+ 		break;
+ 	case ClearPortFeature:
++		if (wIndex != 1)
++			goto error;
+ 		switch (wValue) {
+ 		case USB_PORT_FEAT_SUSPEND:
+ 			if (hcd->speed == HCD_USB3) {
+@@ -2247,6 +2249,8 @@ static int dummy_hub_control(
+ 		retval = -EPIPE;
+ 		break;
+ 	case SetPortFeature:
++		if (wIndex != 1)
++			goto error;
+ 		switch (wValue) {
+ 		case USB_PORT_FEAT_LINK_STATE:
+ 			if (hcd->speed != HCD_USB3) {
 
 
