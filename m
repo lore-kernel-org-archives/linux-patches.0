@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE27847277F;
-	Tue, 16 Jun 2026 16:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEAA44E037;
+	Tue, 16 Jun 2026 16:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627289; cv=none; b=tUKo4fx4E/qxhiuY3/o/jDqGtPoWcleXdaLo7+fFeWZlxen/lYNxlPNv4Ckqa06LuiieBghvMy/Er/AQgp1Hl2qlMd4fA2ss2WZbJIvznSdy+iBbYLx2Wc5teGALcRrdS9SIgwXKRHsfnczB3gdfTYIM4nQl3hGDOHF0Et0E0ac=
+	t=1781627300; cv=none; b=vEJNYV2IPh0CFXT7QGDmhdoObjRPdSXdVECzODkRRvFqdznnnC7npAbR0VnWM3/BOxGU0mYngxaPOX29/VDHouVnkumnxZ0lNOdzSiAcqHinUWREwm50TbcUi5tXCjd7fXWGluJ0oU8HrHZkap0T9M1A7Yco7iXtikLl8er41ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627289; c=relaxed/simple;
-	bh=Va1I41W4CtZDK8pd6bw8uefeHj6AIrj43wk1jOk9y7g=;
+	s=arc-20240116; t=1781627300; c=relaxed/simple;
+	bh=aklafguPbIqyh5qUMP04wbVxtJEM8tHN4DvRAr5O4uY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YddSeNSO2rKhxbh7Y+eIZ9HBXi7ukvmWv2KdGMOJh0Cbjv7D4W0rsg7Z2SrAL0EGb9m8hMgBiKBUj1eb0yXuXllRHk0IF7DhYy7wdhphZy9BNATBpE4UZJuoD6bcbu0TZzzO7gBX8/XdVgo/qrlFFZd4Syow+6S2zdYv2QeMaC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OsQ2TR+m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fKK8uARzW3dx4sfB7bRFcmxdI6AwFnwdbThduq+M6nSc1HUBbRMjH5opCkqivkkTVJnQDQlCp8thf0e11egBQ5zob1b1lS3ZdbFNgiMW0Q1QnEQ1NMf9nIu/zVUf5wT6gcr9d/WMSm150WloS3d1bR3JqZozkZ29GHT0BD6+NY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p6IpzbG+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OsQ2TR+m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB011F000E9;
-	Tue, 16 Jun 2026 16:28:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6IpzbG+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E767D1F000E9;
+	Tue, 16 Jun 2026 16:28:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627287;
-	bh=jsJXFlXIGHHQaabXqmfSxJex3TLAJ+Afx0ppmGyILLk=;
+	s=korg; t=1781627298;
+	bh=Qt+dbm62CwYGvwHV0SF47v/PMePhSfHvKb7/jsjmdgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OsQ2TR+mqAdPd/bncM0qvc4l3JPIOuq70DheDu8Lvw5QvTo6tixy7NfSPatg0kzzy
-	 cGl2b+dXFJqfPcAjOakMcS4gq3Z4fwOSJl75JPmDS6v7ttfswsE+TIKRVTvb6/ILhT
-	 RAfJ2+Gis4lBNLTnBgOEKaRI7QU/n8HvU4St7Rt4=
+	b=p6IpzbG+T8lUUFRHFY7pvreeW/qwhEP7S6kYbnmmOsQgKtISz1yFjhkCR5B8p45eL
+	 EXichnSHATUc/2e4e+eBRmyLVApEjPWjlg1aK8kdmmjTenc3tSQispombm66Iv1e4M
+	 LXFBDSnWLEVFVB7JDfhnmDDGrnOGvayHtyHPC9SI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 142/261] USB: serial: kl5kusb105: fix bulk-out buffer overflow
-Date: Tue, 16 Jun 2026 20:29:40 +0530
-Message-ID: <20260616145051.662977615@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Cunlong Li <shenxiaogll@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Minchan Kim <minchan@kernel.org>,
+	Yisheng Xie <xieyisheng1@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 151/261] zram: fix use-after-free in zram_bvec_write_partial()
+Date: Tue, 16 Jun 2026 20:29:49 +0530
+Message-ID: <20260616145052.077793534@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -50,61 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Cunlong Li <shenxiaogll@gmail.com>
 
-commit 96d47e40bf9db4a9efd5c8fb53287a508d165f14 upstream.
+commit 732fd9f0b9c1cdc6dfd77162ded60df005182cc0 upstream.
 
-klsi_105_prepare_write_buffer() is called by the generic write path
-with the bulk-out buffer and its size (bulk_out_size, 64 bytes). It
-stores a two-byte length header at the start of the buffer and copies
-the payload from the write fifo starting at buf + KLSI_HDR_LEN, but
-passes the full buffer size as the number of bytes to copy:
+zram_read_page() picks the sync or async backing device read path based on
+whether the parent bio is NULL.  zram_bvec_write_partial() passes its
+parent bio down, so for ZRAM_WB slots the read is dispatched
+asynchronously and zram_read_page() returns 0 while the bio is still in
+flight.  The caller then runs memcpy_from_bvec(), zram_write_page() and
+__free_page() on the buffer, leaving the async read to write into a freed
+page.
 
-  count = kfifo_out_locked(&port->write_fifo, buf + KLSI_HDR_LEN,
-                           size, &port->lock);
+zram_bvec_read_partial() was switched to NULL in commit 4e3c87b9421d
+("zram: fix synchronous reads") for the same reason; the write_partial
+counterpart was missed.
 
-When the fifo holds at least size bytes, size bytes are copied starting
-two bytes into the size-byte buffer, writing KLSI_HDR_LEN bytes past its
-end. Copy at most size - KLSI_HDR_LEN bytes instead, leaving room for
-the header as safe_serial already does.
-
-Writing bulk_out_size or more bytes to the tty triggers a slab
-out-of-bounds write, observed with KASAN by emulating the device with
-dummy_hcd and raw-gadget:
-
-  BUG: KASAN: slab-out-of-bounds in kfifo_copy_out+0x83/0xc0
-  Write of size 64 at addr ffff888112c62202 by task python3
-   kfifo_copy_out
-   klsi_105_prepare_write_buffer [kl5kusb105]
-   usb_serial_generic_write_start [usbserial]
-  Allocated by task 139:
-   usb_serial_probe [usbserial]
-  The buggy address is located 2 bytes inside of allocated 64-byte region
-
-The out-of-bounds write no longer occurs with this change applied.
-
-Fixes: 60b3013cdaf3 ("USB: kl5usb105: reimplement using generic framework")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/20260528-zram-v3-1-cab86eef8764@gmail.com
+Fixes: 8e654f8fbff5 ("zram: read page from backing device")
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Signed-off-by: Cunlong Li <shenxiaogll@gmail.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Yisheng Xie <xieyisheng1@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/kl5kusb105.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/block/zram/zram_drv.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/kl5kusb105.c
-+++ b/drivers/usb/serial/kl5kusb105.c
-@@ -330,8 +330,8 @@ static int klsi_105_prepare_write_buffer
- 	unsigned char *buf = dest;
- 	int count;
+--- a/drivers/block/zram/zram_drv.c
++++ b/drivers/block/zram/zram_drv.c
+@@ -1661,7 +1661,7 @@ static int zram_bvec_write_partial(struc
+ 	if (!page)
+ 		return -ENOMEM;
  
--	count = kfifo_out_locked(&port->write_fifo, buf + KLSI_HDR_LEN, size,
--								&port->lock);
-+	count = kfifo_out_locked(&port->write_fifo, buf + KLSI_HDR_LEN,
-+				 size - KLSI_HDR_LEN, &port->lock);
- 	put_unaligned_le16(count, buf);
- 
- 	return count + KLSI_HDR_LEN;
+-	ret = zram_read_page(zram, page, index, bio);
++	ret = zram_read_page(zram, page, index, NULL);
+ 	if (!ret) {
+ 		memcpy_from_bvec(page_address(page) + offset, bvec);
+ 		ret = zram_write_page(zram, page, index);
 
 
