@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA72F32C302;
-	Tue, 16 Jun 2026 16:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D929F1A6803;
+	Tue, 16 Jun 2026 16:46:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628360; cv=none; b=Gg+ZVvQ8YyBDa5W6tNqZlIrYwrAAoKbQ2392T7BYx+mc61UV7C/bEQvK65GVJW8He5lA3wpuYL4qzdu2rTUrD4yxTc3tXgwjHaiEt0iRgED6n5L+8DcLQeqfSrv6YEUFw4T+4LWVtAO/CeDkRBradT4+scuZ8f1LGH8wMf5cvc4=
+	t=1781628365; cv=none; b=pmY7t8L7uKSTZUpBnHpW4x0UKwLoDGYtXKsPsbauhI+Z8veVOONCSip9yiNu8AA/mOSVX3NG0dud6DCVnZ8P+iGXupdIqGwPv2ekba4ab/f3qVbLQozuoH57mB6S5nMz1gpNjuT1SwihIkckCUX92mnSWRAj7UmnsiyRoXj2gTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628360; c=relaxed/simple;
-	bh=cKYf2ocrecxspyjH9wMfbVxv0q/YZtxPDzJtC6MA3Is=;
+	s=arc-20240116; t=1781628365; c=relaxed/simple;
+	bh=S5ldm1KKFykFvzyaqPfqHbVK/2gPP+7BRm3hQOtbWKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QsK/Se9V6z/7xdCmPZpk7mRpGMxqhgSn6epW5jJk7XoTbBX8bRSLFoxpdcDKzcv7Ik82PtOuMgy6g7KlpqsIdSryOGp7g8Gew3SD1bXz+gf346zfsgX08+I78OEchoUxjeYS7nOqeGY+YsiXDvdqH8kV4rbe4Z2gNAgVhBmu1DU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qv43xW4K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oh10VQe+CBd2qVE8sjRY+7wlRFn2wuum7wuPXJo8HJDhdrTq4ErggqvoY4be58S5Y39LQcA/S5AexphLu0FOHpS4po68nbOzXDXHTi2BbcH+zwsMq2tR33ffmVzRiyWPYwaWjn76ZuMZPEJIYS8c/hLsuM9BVJUTdF3biRpEmwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QokM/Cia; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qv43xW4K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8041F000E9;
-	Tue, 16 Jun 2026 16:45:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QokM/Cia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE451F000E9;
+	Tue, 16 Jun 2026 16:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628359;
-	bh=UcgdNLlX6u6rJwKIUdTILMxPFBE0+iDk+DcFcFIHSuM=;
+	s=korg; t=1781628364;
+	bh=KSXGU8r4XnO9cIqAJPNgaFABMbxs6yP+ZpEAmYQP+HA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qv43xW4KuSdVx0HrY372bQHHZW+8LLODZIbHxfbxlc6WOhQWCLJvpA8QOWKSdIYu/
-	 4+btP/Py4u+GtT4I9hjWFJhIJZnnbaVxADR449rq3X6e+QrXGXPox4kUib0wwiaAec
-	 Uhsm0zI3jL79swc7dE5ow8aWfwh5OGI5DIDeshYg=
+	b=QokM/Ciat+GLNxeM3h9nzGGqISpf+DCar0qSNwzVy6FZaVq2lqNQCYtJQClQF/5yd
+	 37w17OBUhYbe9U20iNUfytE2ET2dMCj1gyWf7NPSHMapATBAv696KaoH760AbVKYIq
+	 zVP0FILw2zrJtzkjbx+T5uSLcNkWu26bzg35smcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/452] ipv6: fix possible infinite loop in fib6_select_path()
-Date: Tue, 16 Jun 2026 20:24:34 +0530
-Message-ID: <20260616145120.404984557@linuxfoundation.org>
+Subject: [PATCH 6.6 038/452] ethtool: eeprom: add more safeties to EEPROM Netlink fallback
+Date: Tue, 16 Jun 2026 20:24:25 +0530
+Message-ID: <20260616145119.941469082@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,47 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 9c7da87c2dc860bb17ca1ece942495d28b1ce3b9 ]
+[ Upstream commit 67cfdd9210b99f260b3e0afeb9525e0acc7be31e ]
 
-Found while auditing the same pattern Sashiko reported in
-rt6_fill_node() [1]. Apply the same fix as
-commit f8d8ce1b515a ("ipv6: fix possible infinite loop in fib6_info_uses_dev()").
+The Netlink fallback path for reading module EEPROM
+(fallback_set_params()) validates that offset < eeprom_len,
+but does not check that offset + length stays within eeprom_len.
+The ioctl equivalent (ethtool_get_any_eeprom() in ioctl.c) has
+always enforced both bounds:
 
-Writers holding tb6_lock can list_del_rcu(&first->fib6_siblings)
-without waiting for RCU readers; first->fib6_siblings.next then
-still points into the old ring and this softirq-side walker never
-reaches &first->fib6_siblings as its terminator. fib6_purge_rt()
-always WRITE_ONCE()s first->fib6_nsiblings to 0 before
-list_del_rcu(), so an inside-loop check is a reliable detach signal.
+  if (eeprom.offset + eeprom.len > total_len)
+      return -EINVAL;
 
-[1] https://sashiko.dev/#/patchset/20260526020227.4857-1-jiayuan.chen%40linux.dev
+This could lead to surprises in both drivers and device FW.
+Add the missing offset + length validation to fallback_set_params(),
+mirroring the ioctl.
 
-Fixes: d9ccb18f83ea ("ipv6: Fix soft lockups in fib6_select_path under high next hop churn")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260527053133.180695-2-jiayuan.chen@linux.dev
+Similarly - ethtool core in general, and ethtool_get_any_eeprom()
+in particular tries to zero-init all buffers passed to the drivers
+to avoid any extra work of zeroing things out. eeprom_fallback()
+uses a plain kmalloc(), change it to zalloc.
+
+Fixes: 96d971e307cc ("ethtool: Add fallback to get_module_eeprom from netlink command")
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260526153533.2779187-11-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ethtool/eeprom.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 69659f2a6aea96..6d80e17c04c0d8 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -484,6 +484,9 @@ void fib6_select_path(const struct net *net, struct fib6_result *res,
- 		const struct fib6_nh *nh = sibling->fib6_nh;
- 		int nh_upper_bound;
+diff --git a/net/ethtool/eeprom.c b/net/ethtool/eeprom.c
+index 15546f2a5e4583..4e864824b64d28 100644
+--- a/net/ethtool/eeprom.c
++++ b/net/ethtool/eeprom.c
+@@ -43,6 +43,9 @@ static int fallback_set_params(struct eeprom_req_info *request,
+ 	if (offset >= modinfo->eeprom_len)
+ 		return -EINVAL;
  
-+		if (!READ_ONCE(first->fib6_nsiblings))
-+			break;
++	if (length > modinfo->eeprom_len - offset)
++		return -EINVAL;
 +
- 		nh_upper_bound = atomic_read(&nh->fib_nh_upper_bound);
- 		if (hash > nh_upper_bound)
- 			continue;
+ 	eeprom->cmd = ETHTOOL_GMODULEEEPROM;
+ 	eeprom->len = length;
+ 	eeprom->offset = offset;
+@@ -68,7 +71,7 @@ static int eeprom_fallback(struct eeprom_req_info *request,
+ 	if (err < 0)
+ 		return err;
+ 
+-	data = kmalloc(eeprom.len, GFP_KERNEL);
++	data = kzalloc(eeprom.len, GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
+ 	err = ethtool_get_module_eeprom_call(dev, &eeprom, data);
 -- 
 2.53.0
 
