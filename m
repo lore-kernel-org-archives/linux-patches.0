@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2B8D34751B;
-	Tue, 16 Jun 2026 19:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33F43DBD76;
+	Tue, 16 Jun 2026 19:03:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636588; cv=none; b=YsyZehwzTSQoZuFQfh8Q3fV0kH632Aa8P4UX4eW08MJOnl3FXnQ1XH1LXfHTiba8Per0CR6EIWFSzwCiQ7EFpxYHseqeRHLnb5D7PmEsfHeSFXsoW9/+yWl5fEmetPaIfeenU4HiNsu8PTz2YQ8Sk9pPXY4OA8sIZMAXorPXbfY=
+	t=1781636593; cv=none; b=Ca6ojWbOMMdxWtppPZLfrLuOHb+h8mEWf/PTW3ozHZVJse7y3MQKV6qfvGzjZ2DoOIrsxRxHgzp85LmekHjeYTmaRjwLUMsJL2vQOgBwKiGD7+jzX648j/fBi6S3nNQ9sHe5zInBgKSKO/cxO2HD0hurjUr2cCI4e1ziLWV3MDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636588; c=relaxed/simple;
-	bh=NKGvEibXrvpgiTY6UEyeJlbGBASq/rejS32EYcvfso8=;
+	s=arc-20240116; t=1781636593; c=relaxed/simple;
+	bh=EOU6rd79RgJCcSFZHpZCOS9CW8mLkvQD0bPm4/+PhGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ja+8Z+oESPf9T16grns/0kyIqJcvNWeuIXCIQ0iIJUoSOPI6rspHwhVE+LbQGRQwZcpNa97EY1xQtE9BE5fmaG/fkbIEQx2tIOVBGylutx50/KEn1fwC7bvv/cqsyvobR8d+NcuknXoDFQBvqYT6xL/BwDYyZByadL9bu0GYI+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PmLAUOA1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C3D0oKOJWKd1+qfccqSujdo2tZrIIyyDFZmQVz5UlinOTjqteYve5vnZ10tz8FmwT98ylHWaAbOqAp6E4plX/tHdfu+H/p7wkf/QjV8U/YYf/F0tVeJ6d2H1n8dSZ3lj1HEdF5R3gjmIWk7S5H2wrQMa6xwJdOdCewMQRMD2DNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Df7QOMSu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PmLAUOA1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 809251F000E9;
-	Tue, 16 Jun 2026 19:03:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Df7QOMSu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D0821F00A3D;
+	Tue, 16 Jun 2026 19:03:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636587;
-	bh=RRXbgdVi30H9to6PwKZyoYOwakteV0vjJZuG7oOOpBM=;
+	s=korg; t=1781636592;
+	bh=hrPqweF8hnlnrRMnXFdR5IA1lC8sRBycEPXEojmJYJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PmLAUOA1klCSKeon3y24kaE+5eW+Dgfhr5029CraZxJkU6DYo5IHR6Fg6aB48W2C2
-	 BG+wLeGDmJsvHQSy3jcVw8ymyaQT6/cL8dfl//brvN7rTBHL+XLr/QsngvnuRwQyBb
-	 126K0bsccOEBhkUqwBijWICtC92aDdG6cyFqh2YI=
+	b=Df7QOMSurBjiQJ8G6//Lf41ae6lbPylRkeXkYo5N21aZlVyRrgTTLryBj2pYItVFD
+	 C6MGGLn1UxfVYSeZZWb9qwsbt1hvM/70tFCaCCuOAN1Dplw+ICJEf7sno7natMLrBW
+	 dtt/WOGGbgMNVavgt6OZ3LLrSvxLaZZAyiRQ+mxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	John Ogness <john.ogness@linutronix.de>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 250/342] printk: add print_hex_dump_devel()
-Date: Tue, 16 Jun 2026 20:29:06 +0530
-Message-ID: <20260616145059.880943585@linuxfoundation.org>
+Subject: [PATCH 5.10 268/342] tracing/probes: Limit size of event probe to 3K
+Date: Tue, 16 Jun 2026 20:29:24 +0530
+Message-ID: <20260616145100.791811796@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -52,46 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit d134feeb5df33fbf77f482f52a366a44642dba09 ]
+[ Upstream commit b2aa3b4d64e460ac606f386c24e7d8a873ce6f1a ]
 
-Add print_hex_dump_devel() as the hex dump equivalent of pr_devel(),
-which emits output only when DEBUG is enabled, but keeps call sites
-compiled otherwise.
+There currently isn't a max limit an event probe can be. One could make an
+event greater than PAGE_SIZE, which makes the event useless because if
+it's bigger than the max event that can be recorded into the ring buffer,
+then it will never be recorded.
 
-Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: John Ogness <john.ogness@linutronix.de>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: 177730a273b1 ("crypto: caam - guard HMAC key hex dumps in hash_digest_key")
+A event probe should never need to be greater than 3K, so make that the
+max size. As long as the max is less than the max that can be recorded
+onto the ring buffer, it should be fine.
+
+Cc: stable@vger.kernel.org
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 93ccae7a22274 ("tracing/kprobes: Support basic types on dynamic events")
+Link: https://patch.msgid.link/20260428122302.706610ba@gandalf.local.home
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/printk.h |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ kernel/trace/trace_probe.c |    5 +++++
+ kernel/trace/trace_probe.h |    4 +++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/include/linux/printk.h
-+++ b/include/linux/printk.h
-@@ -608,6 +608,19 @@ static inline void print_hex_dump_debug(
- }
- #endif
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -610,6 +610,11 @@ static int traceprobe_parse_probe_arg_bo
+ 	parg->offset = *size;
+ 	*size += parg->type->size * (parg->count ?: 1);
  
-+#if defined(DEBUG)
-+#define print_hex_dump_devel(prefix_str, prefix_type, rowsize,		\
-+			     groupsize, buf, len, ascii)		\
-+	print_hex_dump(KERN_DEBUG, prefix_str, prefix_type, rowsize,	\
-+		       groupsize, buf, len, ascii)
-+#else
-+static inline void print_hex_dump_devel(const char *prefix_str, int prefix_type,
-+					int rowsize, int groupsize,
-+					const void *buf, size_t len, bool ascii)
-+{
-+}
-+#endif
++	if (*size > MAX_PROBE_EVENT_SIZE) {
++		trace_probe_log_err(offset, EVENT_TOO_BIG);
++		return -E2BIG;
++	}
 +
- /**
-  * print_hex_dump_bytes - shorthand form of print_hex_dump_debug() with default
-  *                        params
+ 	if (parg->count) {
+ 		len = strlen(parg->type->fmttype) + 6;
+ 		parg->fmt = kmalloc(len, GFP_KERNEL);
+--- a/kernel/trace/trace_probe.h
++++ b/kernel/trace/trace_probe.h
+@@ -33,6 +33,7 @@
+ #define MAX_ARRAY_LEN		64
+ #define MAX_ARG_NAME_LEN	32
+ #define MAX_STRING_SIZE		PATH_MAX
++#define MAX_PROBE_EVENT_SIZE	3072
+ 
+ /* Reserved field names */
+ #define FIELD_STRING_IP		"__probe_ip"
+@@ -439,7 +440,8 @@ extern int traceprobe_define_arg_fields(
+ 	C(FAIL_REG_PROBE,	"Failed to register probe event"),\
+ 	C(DIFF_PROBE_TYPE,	"Probe type is different from existing probe"),\
+ 	C(DIFF_ARG_TYPE,	"Argument type or name is different from existing probe"),\
+-	C(SAME_PROBE,		"There is already the exact same probe event"),
++	C(SAME_PROBE,		"There is already the exact same probe event"),\
++	C(EVENT_TOO_BIG,	"Event too big (too many fields?)"),
+ 
+ #undef C
+ #define C(a, b)		TP_ERR_##a
 
 
