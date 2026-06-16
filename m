@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4D946AED1;
-	Tue, 16 Jun 2026 16:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5585B46AED1;
+	Tue, 16 Jun 2026 16:41:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628067; cv=none; b=S8/sLyCgNRUIBySoySACnCBxaxO/1yUcSv4juyItQVc6XUj+NZ+uEGQRq7yqohrIYfjgkn5+2GM46ogwElpDTXeOWoFMcM1eeost25FMlHKpem6SDG7nx8kuAQmaBiiWlZ6JI4/h5fFQow+RMmevO6nabANApOd3ww3qtoolnaU=
+	t=1781628072; cv=none; b=l5n+Uj3TJ7khvN/Ftk8O2btj64SOiipCnNxXMtSB3RmMFHIzZKkwvikh0UkUIP5/RZKj7Z+QDG5AInQ1Iu0QGkx7FEMddWTacgWRa39FDW6ftq1VIKZNgYDxmvKQQTvjAvDNYRPE/bXBfGooGlWhvDS7gjk7akdeU6VcSKnA7WE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628067; c=relaxed/simple;
-	bh=tDXT5XrWWjH+26fHYYwGx0Cv24lypdu6QjqFd4VT4lY=;
+	s=arc-20240116; t=1781628072; c=relaxed/simple;
+	bh=LK8A/y7VpoMIkbmRJJxp0INVknFwMvYaXzu4vgioIZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e0F+Itokv+voKYopn20ZsjSt5vFz9B/ctZe/h93nNKS7q606IXu+f5TBAjZV4/iQqXwqPtgAJx86TRccpebmPNYFVGoW3tmMc9g66gONvXm86JJLjetpLr2Pk7N9noTjyTRVJcVUbPfTZNrEeQZ/NiR0yALRIIf9Zk6x9wV4cM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E9BrCZk+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lV2rqPF/tJhQMN9nfKV1RNC9uNAmOjrA6QvwG7y3JvPk+d2Qlz8q0ZQs4/epY2s2y8/3imXNbT6nAaYl0VIjAmnsF3+9RcZmFcgijwghZXccnmFCCXCW5pY0WLu5OXmnb0VSyOPEEFIzd3nZiobjMc+UvlD7OYqOCm5ka3BfstU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPDxTDtF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E9BrCZk+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB7E1F000E9;
-	Tue, 16 Jun 2026 16:41:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPDxTDtF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 610B61F000E9;
+	Tue, 16 Jun 2026 16:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628066;
-	bh=ZoOyGimHNHl4w8aA9QscWXkZCkxtEfNBW+L4VCtwyek=;
+	s=korg; t=1781628071;
+	bh=ACNt1lXu1Js5/FUlxxtDHMeOJe82wYFIOyMVyGtZ7xU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E9BrCZk+cjZH4+mbgH4Kbt92gx7MFcm+0e+tmbBEpgFHLpauKk8/JeQFoY4XeYp7h
-	 oiSGKM/XA2Fb05nqu39DecUaIIVKQaNQbg+as6TYymWEoAFbLZHFNgSls9D7mRZRcw
-	 AgXUzNA1zHBXAjQs6eyjiuKvz9wx0oO+FyVUhSGg=
+	b=NPDxTDtFEeKEWxhUffJIJuCztG7GNIsxejslmqBnfNLNirDzJFSfcMTuy3aaUYY5m
+	 w31qNjhAbNRcsZ6x2WwHT/f9FW+e6Bclf1R9sfExmXlvr/6mP4Y3PgpQUaj/r6sX5l
+	 tOd4buU3PiUZVqQgckq7jqlQ9bvRIk+F7DNPVMu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Jeffery <djeffery@redhat.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Lee Jones <lee@kernel.org>,
+	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 025/452] scsi: core: Run queues for all non-SDEV_DEL devices from scsi_run_host_queues
-Date: Tue, 16 Jun 2026 20:24:12 +0530
-Message-ID: <20260616145119.171163150@linuxfoundation.org>
+Subject: [PATCH 6.6 008/452] nfc: llcp: Fix use-after-free in llcp_sock_release()
+Date: Tue, 16 Jun 2026 20:23:55 +0530
+Message-ID: <20260616145118.232016973@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,77 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Jeffery <djeffery@redhat.com>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 7205b58702273baf21d6ba7992e6ba15852325f7 ]
+[ Upstream commit f4268b466190dae95a7585f69b4f1f8ad097632c ]
 
-While a SCSI host is in a recovery state, scsi_mq_requeue_cmd() will not
-set the requeue list for a requeued command to be kicked in the future.
-The expectation is a call to scsi_run_host_queues() will kick all SCSI
-devices once the recovery state is cleared.
+llcp_sock_release() unconditionally unlinks the socket from the local
+sockets list.  However, if the socket is still in connecting state, it
+is on the connecting list.
 
-However, scsi_run_host_queues() uses shost_for_each_device() which uses
-scsi_device_get() and so will ignore devices in a partially removed
-state like SDEV_CANCEL. But these devices may also have requeued
-requests, leaving their requests stuck from not being kicked and causing
-the removal process of the device to hang.
+Fix this by checking the socket state and unlinking from the correct list.
 
-scsi_run_host_queues() needs to run against more devices than the macro
-shost_for_each_device() allows. Instead of using the too limiting
-scsi_device_get() state checks, only ignore devices in SDEV_DEL state or
-when unable to acquire a reference. Attempt to run the queues for all
-other devices when scsi_run_host_queues() is called.
-
-Fixes: 8b566edbdbfb ("scsi: core: Only kick the requeue list if necessary")
-Signed-off-by: David Jeffery <djeffery@redhat.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260515180941.9698-1-djeffery@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: b4011239a08e ("NFC: llcp: Fix non blocking sockets connections")
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://patch.msgid.link/20260429134115.3558604-1-lee@kernel.org
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_lib.c | 27 +++++++++++++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
+ net/nfc/llcp_sock.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index efd1f1d6e4e9b0..2268e540f28ae6 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -474,10 +474,33 @@ void scsi_requeue_run_queue(struct work_struct *work)
+diff --git a/net/nfc/llcp_sock.c b/net/nfc/llcp_sock.c
+index d5344563e525c9..cd1fdf0beefb6b 100644
+--- a/net/nfc/llcp_sock.c
++++ b/net/nfc/llcp_sock.c
+@@ -633,6 +633,8 @@ static int llcp_sock_release(struct socket *sock)
  
- void scsi_run_host_queues(struct Scsi_Host *shost)
- {
--	struct scsi_device *sdev;
-+	struct scsi_device *sdev, *prev = NULL;
-+	unsigned long flags;
+ 	if (sock->type == SOCK_RAW)
+ 		nfc_llcp_sock_unlink(&local->raw_sockets, sk);
++	else if (sk->sk_state == LLCP_CONNECTING)
++		nfc_llcp_sock_unlink(&local->connecting_sockets, sk);
+ 	else
+ 		nfc_llcp_sock_unlink(&local->sockets, sk);
  
--	shost_for_each_device(sdev, shost)
-+	spin_lock_irqsave(shost->host_lock, flags);
-+	__shost_for_each_device(sdev, shost) {
-+		/*
-+		 * Only skip devices so deep into removal they will never need
-+		 * another kick to their queues. Thus scsi_device_get() cannot
-+		 * be used as it would skip devices in SDEV_CANCEL state which
-+		 * may need a queue kick.
-+		 */
-+		if (sdev->sdev_state == SDEV_DEL ||
-+		    !get_device(&sdev->sdev_gendev))
-+			continue;
-+		spin_unlock_irqrestore(shost->host_lock, flags);
-+
-+		if (prev)
-+			put_device(&prev->sdev_gendev);
- 		scsi_run_queue(sdev->request_queue);
-+
-+		prev = sdev;
-+
-+		spin_lock_irqsave(shost->host_lock, flags);
-+	}
-+	spin_unlock_irqrestore(shost->host_lock, flags);
-+	if (prev)
-+		put_device(&prev->sdev_gendev);
- }
- 
- static void scsi_uninit_cmd(struct scsi_cmnd *cmd)
 -- 
 2.53.0
 
