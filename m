@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87E94779A7;
-	Tue, 16 Jun 2026 16:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4E746AF15;
+	Tue, 16 Jun 2026 16:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627501; cv=none; b=NWJt+zSw+TrPZnqfPi6bCwX6QeVrEWWOACbK2euWwkm6zN607Z87pHBM6wMQ/NvGZmjGYrDBf8TENiFRwaCGd6Bzn91yeRO61XcIiHuOAKLpqO8hjt37pigdsFDl2GfCeEN6Af7+GTkWzcFWDRbBTmsWeiR0htOdRxcjJnEnf/8=
+	t=1781627506; cv=none; b=LO+OnKlFQHc+tMFziM/Zvw29VP8mUPG/K1429kRcjh4sMz2hB7TPlq5sFXgxffDM2m8LRZLMc4f3cGgS09dWME3iI+yE29KYTdl/gnY7ulHDT8W2Rn8jbJIAV6TUFal4+cHnt6Gm0va6OhndojyF35p1K80WL+iHrkfmfriNiAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627501; c=relaxed/simple;
-	bh=Q0DEdVxb0JaLo3wp9ULhBSz6rp0TqyQ8YG6IysxflqI=;
+	s=arc-20240116; t=1781627506; c=relaxed/simple;
+	bh=i8cvVW8BlxvAzliU2kcZTBH+GI+KtTcW2m46ReNpgJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=atxA24LVVuwa2qjnthTLqJpXGPiMPD0ZzvX5YUt5Obw2n/98FlC6CHUKBcsp7MSibb0M0LsKgaYywJlYK+Wq3LDdrjnmfJTSrrXtSNoDLms8Br1GqtFJDCky1pixxytemzqE0YcPUyIpcHN5SqCRqsIqunUKrqB3J+/dx1HsJhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4q4QJYB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VIvyrhg+zq+9mdNHx7Ome3JU/K8ZI6Qt/vGnFMOtUtg/r6+GaXpCb/NhpXk9K6UiIVsOvf6nrQOaX7psdQPNwTLgYlN1+QlpP3d0/qD/gzvWuI95j7JfzQNSTjDj5KvFO5M8tD3Qjx/UD8IjsOZWT+0Y0knM9Btqrakl6ndswtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDxnIqxB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4q4QJYB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50D51F000E9;
-	Tue, 16 Jun 2026 16:31:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDxnIqxB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0643B1F000E9;
+	Tue, 16 Jun 2026 16:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627500;
-	bh=oQIZCNUDEegIuBzRy6zrew78bE0JGPaZEzIgwNM3IU4=;
+	s=korg; t=1781627505;
+	bh=zyPCbiA2eEzZLque7W+2llVs+kMl7hn3k4+GAKxWLBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M4q4QJYBbJT4f1XeAmzwjepKhJ06Z3ljHnSsFB75IIfW19if5KGRFuzFUwWbHHXoF
-	 2zOXLzXOwuMZncVZ3JkxmwDaXaUwYmGXrsWTPfHUx5MxLhf766XWpdPEf2nyf/PVXc
-	 cMAswo36arHLDezwsP1uUHhPsUSMM81Bk7xuGPPA=
+	b=zDxnIqxBqwdOljvvabnXgd0TZQlbBvJKBn2sq6x+hFNDV0pCUac1dXSsLY+58AK0e
+	 Pq2y8hL1OG8P/rRCyvxyGgJhZp4IEWcM5XXZlrINVg5P/vjnsPxMpRUMdHGWpnCctW
+	 5uYWNcXQN1bUILwCP137cys1W1XZamQHtV0nvmSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeyu WANG <zeyu.thomas.wang@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 175/261] Input: atkbd - add DMI quirk for Lenovo Yoga Air 14 (83QK)
-Date: Tue, 16 Jun 2026 20:30:13 +0530
-Message-ID: <20260616145053.191634539@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 184/261] net: mv643xx: fix OF node refcount
+Date: Tue, 16 Jun 2026 20:30:22 +0530
+Message-ID: <20260616145053.596107873@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -50,52 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zeyu WANG <zeyu.thomas.wang@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit ad0979fe053e9f2db82da82188256ef6eb41095a upstream.
+commit 4aacf509e537a711fa71bca9f234e5eb6968850e upstream.
 
-The Lenovo Yoga Air 14 (83QK) laptop keyboard becomes unresponsive
-after the standard atkbd init sequence. Controlled testing on the
-actual hardware shows the F5 (ATKBD_CMD_RESET_DIS / deactivate)
-command specifically corrupts the EC state, causing zero IRQ1
-interrupts after init.
+Platform devices created with platform_device_alloc() call
+platform_device_release() when the last reference to the device's
+kobject is dropped. This function calls of_node_put() unconditionally.
+This works fine for devices created with platform_device_register_full()
+but users of the split approach (platform_device_alloc() +
+platform_device_add()) must bump the reference of the of_node they
+assign manually. Add the missing call to of_node_get().
 
-Skipping only the deactivate command (while keeping F4 ENABLE)
-resolves the issue completely: both keystroke input and CapsLock
-LED toggle work correctly. The reverse test - skipping only F4
-while keeping F5 - makes the problem worse (zero keystroke
-interrupts), confirming F5 is the sole culprit.
-
-Add a DMI quirk entry for LENOVO/83QK using the existing
-atkbd_deactivate_fixup callback, consistent with the existing
-entries for LG Electronics and HONOR FMB-P that address the
-same EC F5 deactivate issue.
-
-Signed-off-by: Zeyu WANG <zeyu.thomas.wang@gmail.com>
-Link: https://patch.msgid.link/20260602170909.14725-1-zeyu.thomas.wang@gmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 76723bca2802 ("net: mv643xx_eth: add DT parsing support")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260602073414.22500-1-bartosz.golaszewski@oss.qualcomm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/atkbd.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/ethernet/marvell/mv643xx_eth.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -1937,6 +1937,14 @@ static const struct dmi_system_id atkbd_
- 		},
- 		.callback = atkbd_deactivate_fixup,
- 	},
-+	{
-+		/* Lenovo Yoga Air 14 (83QK) */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83QK"),
-+		},
-+		.callback = atkbd_deactivate_fixup,
-+	},
- 	{ }
- };
+--- a/drivers/net/ethernet/marvell/mv643xx_eth.c
++++ b/drivers/net/ethernet/marvell/mv643xx_eth.c
+@@ -2784,7 +2784,7 @@ static int mv643xx_eth_shared_of_add_por
+ 		goto put_err;
+ 	}
+ 	ppdev->dev.coherent_dma_mask = DMA_BIT_MASK(32);
+-	ppdev->dev.of_node = pnp;
++	ppdev->dev.of_node = of_node_get(pnp);
  
+ 	ret = platform_device_add_resources(ppdev, &res, 1);
+ 	if (ret)
 
 
