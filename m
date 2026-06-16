@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9505343E4BA;
-	Tue, 16 Jun 2026 16:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B00443E4BA;
+	Tue, 16 Jun 2026 16:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626952; cv=none; b=A8wH7K5R5UWaM9/2ddjCcLBKe26M2sXLpeL8TSbbsKbZaEYDK3Tp8+zNm2NAVA21EpbCO4QQIf8FdGNZT61/UZeIhWFr6xH8EiqPW3c9Yauqflav0mE8DWNW4HOQz2LQtvrE7k29VqkKvhTzD42kbx2w+f/uWkZnOPnzyL59R4E=
+	t=1781626958; cv=none; b=a3x7viO3iIBsG2JtxXfwQjCS9w52w7Cq5yBEIB70EZTQAy+h5K4n+f9ljHM93C6FJzgAtC8G/4rVWcNQo2jafd2cHC6WGd1X1oGAVc/iSYhSm6opFciaCtCYH50+hgKCqwf32bJJpdwAOguKbAZLkmqgOErLsam1IXS/mrMPwdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626952; c=relaxed/simple;
-	bh=6uUhRmkGEK3nRPB934ylBdSlZEY1n7YWOAbcDH55Eig=;
+	s=arc-20240116; t=1781626958; c=relaxed/simple;
+	bh=C9KmcNi2ZNeDCZRovNMGttKkf8XMP9KRgdBWnW5qWWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bLGbiYHcSg8eXco/sQxeYDmC5oy1BvVJlNtdHf/8adECFQdQQDtMeaPmC11pIxTrJO0E+RAAqkdQh01FVQa8qzaBZEBHRFs3XYMoVcCGSA1PXtz9L1tXheZMNzh9Ob71RkQ4OHNRMwFvZNnGbcpHSlHylJONLi4lppIt1GJ89DI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Onc0UIwc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yy76QaEy5ollYh2jQ3FVPdgqvhJUA4uZEHDWOyH5YUmybNwlIkqOmNRSg2R+BeW9RIEjuvNU7/6fTk5nVNHCBYbT7iuQKpMMUxHZNKQeRyNvoM7r6xd50knEGjJAEblnc/VypDc6ipGxy9bUiI4PwSQdES0lv5U3dUrLBpeADUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mhuPkI/B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Onc0UIwc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B3C01F000E9;
-	Tue, 16 Jun 2026 16:22:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mhuPkI/B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB871F000E9;
+	Tue, 16 Jun 2026 16:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626951;
-	bh=jIvsIjr2P8BKMCIK4zSIljlIlO4hWonp5+IEBZX+/kM=;
+	s=korg; t=1781626957;
+	bh=y2o3+W6NeIbGWC4Hbn/UBY28sYX8zJrUX0Ejol/5FjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Onc0UIwcMQ888JI/PcjES29mj1EdkMANM8wEH6AiA0TyjTPvYtMs8P1F3fbCWIA7k
-	 77dof/VcDiayeXBT316QvXbrQCQ6xpFtKngwzGXUe9SdNeWwCWhcKKXvY2jUeQ0P5b
-	 +ZpMNUD6vC0zwmkr1j3A+4RO+RSVRTpO8Q+o/e00=
+	b=mhuPkI/Bs3XB+2PIbILgyBdWys129iri32U+4fiGs5YAQfv5K47s1L5mbApaMpHqx
+	 9VFk/7ZqmO7EbayaEyPZewSTY03AlAdoILx+wMeQj9smlFLUw42WoJ7tVHRGnMPNVt
+	 JhhZspf+BeKc92V58wm7ttEqy44oXQklUFuoElN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dhruva Gole <d-gole@ti.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Robert Garcia <rob_garcia@163.com>,
+	Nam Cao <namcao@linutronix.de>,
+	Gabriele Monaco <gmonaco@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 067/261] spi: cadence-quadspi: fix unclocked access on unbind
-Date: Tue, 16 Jun 2026 20:28:25 +0530
-Message-ID: <20260616145048.237489809@linuxfoundation.org>
+Subject: [PATCH 6.12 068/261] tools/rv: Fix cleanup after failed trace setup
+Date: Tue, 16 Jun 2026 20:28:26 +0530
+Message-ID: <20260616145048.283339840@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -53,51 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Gabriele Monaco <gmonaco@redhat.com>
 
-[ Upstream commit 233db2cb14db8b1935dda52a6affd97276462b82 ]
+[ Upstream commit 33ec2269a4155cad7e9e42c92327dcaa9aee59a7 ]
 
-Make sure that the controller is runtime resumed before disabling it
-during driver unbind to avoid an unclocked register access.
+Currently if ikm_setup_trace_instance() fails, the tool returns without
+any cleanup, if rv was called with both -t and -r, this means the
+reactor is not going to be cleared.
 
-This issue was flagged by Sashiko when reviewing a controller
-deregistration fix.
+Jump to the cleanup label to restore the reactor if necessary.
 
-Fixes: 0578a6dbfe75 ("spi: spi-cadence-quadspi: add runtime pm support")
-Cc: stable@vger.kernel.org	# 6.7
-Cc: Dhruva Gole <d-gole@ti.com>
-Link: https://sashiko.dev/#/patchset/20260414134319.978196-1-johan%40kernel.org?part=2
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260421125354.1534871-4-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ Context adaptation performed. ]
-Signed-off-by: Robert Garcia <rob_garcia@163.com>
+Fixes: 6d60f89691fc9 ("tools/rv: Add in-kernel monitor interface")
+Reviewed-by: Nam Cao <namcao@linutronix.de>
+Link: https://lore.kernel.org/r/20260514152055.229162-5-gmonaco@redhat.com
+Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence-quadspi.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/verification/rv/src/in_kernel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
-index 72262b6fb62b43..da8401261bbc3e 100644
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -2013,13 +2013,14 @@ static void cqspi_remove(struct platform_device *pdev)
- 		cqspi_wait_idle(cqspi);
+diff --git a/tools/verification/rv/src/in_kernel.c b/tools/verification/rv/src/in_kernel.c
+index ced72950cb1eed..64ae847313f6dc 100644
+--- a/tools/verification/rv/src/in_kernel.c
++++ b/tools/verification/rv/src/in_kernel.c
+@@ -655,7 +655,7 @@ int ikm_run_monitor(char *monitor_name, int argc, char **argv)
+ 	if (config_trace) {
+ 		inst = ikm_setup_trace_instance(monitor_name);
+ 		if (!inst)
+-			return -1;
++			goto out_free_instance;
+ 	}
  
- 	spi_unregister_controller(cqspi->host);
--	cqspi_controller_enable(cqspi, 0);
- 
- 	if (cqspi->rx_chan)
- 		dma_release_channel(cqspi->rx_chan);
- 
--	if (pm_runtime_get_sync(&pdev->dev) >= 0)
-+	if (pm_runtime_get_sync(&pdev->dev) >= 0) {
-+		cqspi_controller_enable(cqspi, 0);
- 		clk_disable(cqspi->clk);
-+	}
- 
- 	if (cqspi->is_jh7110)
- 		cqspi_jh7110_disable_clk(pdev, cqspi);
+ 	retval = ikm_enable(monitor_name);
 -- 
 2.53.0
 
