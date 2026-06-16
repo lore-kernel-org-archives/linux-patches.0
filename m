@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714F7425CEE;
-	Tue, 16 Jun 2026 16:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8155425CEE;
+	Tue, 16 Jun 2026 16:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627238; cv=none; b=SU3M1+ACTv/d0zJyRyHjUeoXBsERoU8qs1tnM+J0Lhl8AU2rrf66YiEhxatbLxW5D60lEeFggKqMSSCwwPThDyu81/Y2iR1aYhE8YG0ItJLdofPH3cfvXNbHr+C9gnJ2AmdoYN8GmE5oz8jfc/wOR7/98CkNOfhq2BhWpFTqolo=
+	t=1781627243; cv=none; b=ZvbJkLEh/E8LGlvnI5cKwz0wdzeseyOBkjd338eeVhm5zZd1CF4Zl9Y5BjIWigcnUD+lelsy05h8Ql/Jd1aIhJxxOmi5ARR4/jBkxKRSdbLHmiRxhodfAdI78+vDutsQjo30ur1Ji5Uu/wrf06M/Xu/ib8u5svVroRYcfwsQAe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627238; c=relaxed/simple;
-	bh=YgeJAsFhasyOoU8Dxl/toJsMdC9qNghb21mIaKLtJxw=;
+	s=arc-20240116; t=1781627243; c=relaxed/simple;
+	bh=uup1f005sKnzrEg2OQSkV7/xa8rb53yVIMM9sL1xO54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CEvS03MwunsIFSbN6B83foU/DD4tItE05iIO0ZJl2sFTV8Q5O8wX3X2ShUIy9Y5YSuqHbESbvQQhGgc1TZ9XvkTPmRJoDlcQjSehhwOTw1Aqqu8HTehQ+JjPdUDqscDImjRBeGurB7SD6hlbmLM8wPGLCZz70dZROIL/wmem0Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WjCaPXK9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WmXum2dXk2nb3m7faC5GK7V1LkQY8m291aqCZglngpN0Zbe24dJUzl7c46AMX12pdwv7gwPFqqd0eS9N05DA9CXFeXcoutOdPa+Qr+x5yUNP0fSG3V3rfT1g8rbndMFjiazPC7d6F7NDxhaFHFqqxPXP+yjmFGRIG7CTlVLRiTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z0rnmxBQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjCaPXK9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6754C1F000E9;
-	Tue, 16 Jun 2026 16:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z0rnmxBQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5AA71F000E9;
+	Tue, 16 Jun 2026 16:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627237;
-	bh=1bkkJmEmEzIgLMD/e8KPdNDHm+SmWYC58if7cizpOxI=;
+	s=korg; t=1781627242;
+	bh=ZyFyTv5/PB2WNKT3R/vyqFdD6bYVP+PAleFhuBH4kXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WjCaPXK96u4ZDEi923N8AJSYpqSoMI5kcXdQPNIH495y6v3o4/4twCu/17hzsqVZq
-	 cVdI7DOJDf9vchrqIWXWS3+GoJyExKnkT20NAhMV0ASJ7dRZYkEWqua71R4Y6WUipL
-	 KyAhkrmxIg7+o79PTO8AaubWZkPLh5BYAMKFxREI=
+	b=Z0rnmxBQkCZ/SSzSbrhmMFhX37O0pQf10RQpXzIt6r5qdkX7yi0k9AclBUNYGL5KY
+	 t63L3aHIppb/KcIgGv7yQHq5UaqJSQhvs3/s5LoDl0r1Z90wpOQCgCt9j0zcECPrVK
+	 yYG52HUAByHe7T+aI75sarIeT724Pzopt+m66T6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Michael Roth <michael.roth@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.12 134/261] KVM: SEV: Decouple the need to sync the GHCB SA from the need to free the SA
-Date: Tue, 16 Jun 2026 20:29:32 +0530
-Message-ID: <20260616145051.292949092@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Simona Vetter <simona@ffwll.ch>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Subject: [PATCH 6.12 135/261] drm/i915/gem: Fix phys BO pread/pwrite with offset
+Date: Tue, 16 Jun 2026 20:29:33 +0530
+Message-ID: <20260616145051.339418895@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,79 +55,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 
-commit f041dc80de4abbdd0909d871bf64f3f87d2350ff upstream.
+commit d21ad938398bca695a511307de38a65889e3b354 upstream.
 
-Decouple synchronizing the GHCB SA from freeing/unpinning the SA, so that
-the free/unpin path can be reused when freeing a vCPU.
+sg_page() returns struct page pointer not (void *) so the scaling
+of pread/pwrite is wrong for phys BO and wrong parts of BO would be
+accessed if non-zero offset is used.
 
-Opportunistically add a WARN to harden KVM against stomping over (and thus
-leaking) an already-allocated scratch area.
+Last impacted platform with overlay or cursor planes using phys
+mapping was Gen3/945G/Lakeport.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Reviewed-by: Michael Roth <michael.roth@amd.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260501202250.2115252-17-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <20260529183549.1104619-17-pbonzini@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reported-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Fixes: c6790dc22312 ("drm/i915: Wean off drm_pci_alloc/drm_pci_free")
+Cc: <stable@vger.kernel.org> # v4.5+
+Cc: Tvrtko Ursulin <tursulin@ursulin.net>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Link: https://patch.msgid.link/20260610060314.26111-1-joonas.lahtinen@linux.intel.com
+(cherry picked from commit 3e49a2f85070b2fb672c1e0fdba281a4ea3aebe6)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/sev.c |   27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_phys.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -3451,20 +3451,17 @@ void sev_es_unmap_ghcb(struct vcpu_svm *
- 	if (!svm->sev_es.ghcb)
- 		return;
+--- a/drivers/gpu/drm/i915/gem/i915_gem_phys.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_phys.c
+@@ -18,6 +18,17 @@
+ #include "i915_gem_tiling.h"
+ #include "i915_scatterlist.h"
  
--	if (svm->sev_es.ghcb_sa_free) {
--		/*
--		 * The scratch area lives outside the GHCB, so there is a
--		 * buffer that, depending on the operation performed, may
--		 * need to be synced, then freed.
--		 */
--		if (svm->sev_es.ghcb_sa_sync) {
--			kvm_write_guest(svm->vcpu.kvm,
--					svm->sev_es.sw_scratch,
--					svm->sev_es.ghcb_sa,
--					svm->sev_es.ghcb_sa_len);
--			svm->sev_es.ghcb_sa_sync = false;
--		}
-+	/*
-+	 * If the scratch area lives outside the GHCB, there's a buffer that,
-+	 * depending on the operation performed, may need to be synced.
-+	 */
-+	if (svm->sev_es.ghcb_sa_sync) {
-+		kvm_write_guest(svm->vcpu.kvm, svm->sev_es.sw_scratch,
-+				svm->sev_es.ghcb_sa, svm->sev_es.ghcb_sa_len);
-+		svm->sev_es.ghcb_sa_sync = false;
-+	}
- 
-+	if (svm->sev_es.ghcb_sa_free) {
- 		kvfree(svm->sev_es.ghcb_sa);
- 		svm->sev_es.ghcb_sa = NULL;
- 		svm->sev_es.ghcb_sa_free = false;
-@@ -3525,6 +3522,8 @@ static int setup_vmgexit_scratch(struct
- 		goto e_scratch;
- 	}
- 
-+	WARN_ON_ONCE(svm->sev_es.ghcb_sa_sync || svm->sev_es.ghcb_sa_free);
++/* Abuse scatterlist to store pointer instead of struct page. */
++static inline void __set_phys_vaddr(struct scatterlist *sg, void *vaddr)
++{
++	sg_assign_page(sg, (struct page *)vaddr);
++}
 +
- 	if ((scratch_gpa_beg & PAGE_MASK) == control->ghcb_gpa) {
- 		/* Scratch area begins within GHCB */
- 		ghcb_scratch_beg = control->ghcb_gpa +
-@@ -3546,6 +3545,8 @@ static int setup_vmgexit_scratch(struct
- 		scratch_va = (void *)svm->sev_es.ghcb;
- 		scratch_va += (scratch_gpa_beg - control->ghcb_gpa);
++static inline void *__get_phys_vaddr(struct scatterlist *sg)
++{
++	return (void *)sg_page(sg);
++}
++
+ static int i915_gem_object_get_pages_phys(struct drm_i915_gem_object *obj)
+ {
+ 	struct address_space *mapping = obj->base.filp->f_mapping;
+@@ -58,7 +69,7 @@ static int i915_gem_object_get_pages_phy
+ 	sg->offset = 0;
+ 	sg->length = obj->base.size;
  
-+		svm->sev_es.ghcb_sa_sync = false;
-+		svm->sev_es.ghcb_sa_free = false;
- 		svm->sev_es.ghcb_sa_len = ghcb_scratch_end - scratch_gpa_beg;
- 	} else {
- 		/* GHCB v2 requires the scratch area to be within the GHCB. */
+-	sg_assign_page(sg, (struct page *)vaddr);
++	__set_phys_vaddr(sg, vaddr);
+ 	sg_dma_address(sg) = dma;
+ 	sg_dma_len(sg) = obj->base.size;
+ 
+@@ -99,7 +110,7 @@ i915_gem_object_put_pages_phys(struct dr
+ 			       struct sg_table *pages)
+ {
+ 	dma_addr_t dma = sg_dma_address(pages->sgl);
+-	void *vaddr = sg_page(pages->sgl);
++	void *vaddr = __get_phys_vaddr(pages->sgl);
+ 
+ 	__i915_gem_object_release_shmem(obj, pages, false);
+ 
+@@ -139,7 +150,7 @@ i915_gem_object_put_pages_phys(struct dr
+ int i915_gem_object_pwrite_phys(struct drm_i915_gem_object *obj,
+ 				const struct drm_i915_gem_pwrite *args)
+ {
+-	void *vaddr = sg_page(obj->mm.pages->sgl) + args->offset;
++	void *vaddr = __get_phys_vaddr(obj->mm.pages->sgl) + args->offset;
+ 	char __user *user_data = u64_to_user_ptr(args->data_ptr);
+ 	struct drm_i915_private *i915 = to_i915(obj->base.dev);
+ 	int err;
+@@ -170,7 +181,7 @@ int i915_gem_object_pwrite_phys(struct d
+ int i915_gem_object_pread_phys(struct drm_i915_gem_object *obj,
+ 			       const struct drm_i915_gem_pread *args)
+ {
+-	void *vaddr = sg_page(obj->mm.pages->sgl) + args->offset;
++	void *vaddr = __get_phys_vaddr(obj->mm.pages->sgl) + args->offset;
+ 	char __user *user_data = u64_to_user_ptr(args->data_ptr);
+ 	int err;
+ 
 
 
