@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7653642B738;
-	Tue, 16 Jun 2026 15:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD8A38C437;
+	Tue, 16 Jun 2026 15:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622833; cv=none; b=H7iZQalISMWMwHomYRTWK1rXe7YnCcH6SbtrTkOtN6xMAGswizA7uFtvnC6Jd1DRaj9HMEmJCZ/YyPd4V6GQ2rCjrktIiJbkjSHRZ47Ks/tKmhwr6sKRPDMCVo8gHPF8pzRa3YbMaj8d5L0YGtcX8nAw9nmymNXWP0I2ZIte9X0=
+	t=1781622838; cv=none; b=VqKDOi1fbogzpizLcctN1Fd24//fXWxMJ5zf46pnfGqyrxVbuZI7oPMVw60zm7KY+s7zzAyUTxUzSrzqLDRzAMRvLIyHA0blDbEF09zY8mOZhVdzdF8JIoWZObHPyGVxzTCuuRwtAbiPD0gzjOaZPH5g7pv0bzA7SacuwGJ/l0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622833; c=relaxed/simple;
-	bh=n08eyZPpxhUL4+eA1l7MU/0EIjasq/QfMkAhEyWXbPs=;
+	s=arc-20240116; t=1781622838; c=relaxed/simple;
+	bh=837pyMGqmzIAzhLaDLswmZFwLBZY40zCO0egB7sA6MA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CWxiPlfk2V76GyTvb6+A85UDjoMLUjxqC7tnO7KHdrEUxH/43gkhfOABKPYVBxC3ZDzMnsBTWvhJ+HRjh76qav0qQBD9g7ljUFWOsF5Yubv/bRMcxpbRMms1xMWMTxZTkQccb4ZzWZo9TVO0t1YTRT4n8eXUajiJPPk0UYI1tSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FwIqSU7r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u4lEzU1KndPn4LwGnZgKqWPf9H2CvC2KF4bZxi4y6rlfM3FU6SFNIwm5TZ/DydIp9emt9bUUf8AZHnCR3POzcvy4y69zbYQNBwpyIGy2vnK2SUHqQMpxwkPDfKNAjrNuIGR5G8dW+8941fnIzu1t+iJXCm+j75MSr2M9QQWgHFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YKbZZg2w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FwIqSU7r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7836F1F000E9;
-	Tue, 16 Jun 2026 15:13:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YKbZZg2w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28EB81F00A3A;
+	Tue, 16 Jun 2026 15:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622832;
-	bh=nnDIF1D6OhYW+8ttsrSvfQVkwyhJpXbGuHtCsKygaZc=;
+	s=korg; t=1781622837;
+	bh=8wJwcOMeXFRLq0fDCAC07UdBR42DdUg2k/ET6SxC9IM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FwIqSU7rRJHJBjpMOoi6YT03iiZA6lBWh5RiRgda1ErZuE7d0i8FM15OggvTDudg7
-	 aClu8VfE/c3Q6Po/lfu8aXL6LTztAuPSlPkP9pKQAv2+7fjIegf9uN6jOxkhXRTIS0
-	 C0Elk3V7ZU9bdD+aBcNXwE9FkDpSf2f8T/OvjxnI=
+	b=YKbZZg2w3z9TjzS+auPP+6XEBmmOQbZ/bKWX8Ht3WuEQBMj2q69LUvvUP9KdrsZ4U
+	 7bMpoP6f9NDPDSfQdd6Xsl1vJfxmctN/7G6Md8lg+jcpab4PjL0L9jQR4AcZDEeOP6
+	 mrSscY/1D+hfSS88thZnIPrwAkzdnTgH5drHAAaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Polensky <japo@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 014/378] s390/bug: Always emit format word in __BUG_ENTRY
-Date: Tue, 16 Jun 2026 20:24:05 +0530
-Message-ID: <20260616145110.553232031@linuxfoundation.org>
+Subject: [PATCH 7.0 015/378] ARM: dts: gemini: Fix partition offsets
+Date: Tue, 16 Jun 2026 20:24:06 +0530
+Message-ID: <20260616145110.606655860@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,69 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Polensky <japo@linux.ibm.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 3daad7f60aa92d0307fa2b2edd38c886a09902f2 ]
+[ Upstream commit 66ac2df408ede627aaae588d4ce7e611dd25b4f9 ]
 
-When CONFIG_DEBUG_BUGVERBOSE is disabled, the s390 __BUG_ENTRY() macro
-omits the format string pointer, so the generated __bug_table entry no
-longer matches struct bug_entry.
+These FIS partition offsets were never right: the comment clearly
+states the FIS index is at 0xfe0000 and 0x7f * 0x200000 is
+0xfe0000.
 
-With HAVE_ARCH_BUG_FORMAT enabled, the generic BUG infrastructure reads
-bug_entry::format via bug_get_format(). If the format word is missing,
-subsequent fields are read from the wrong offset, which may:
-- Misinterpret flags (BUG vs WARN classification errors)
-- Fault when dereferencing a misread format pointer
+Tested on the iTian SQ201.
 
-The root cause is that __BUG_ENTRY() delegates format word emission to
-__BUG_ENTRY_VERBOSE(), which is conditional on CONFIG_DEBUG_BUGVERBOSE.
-
-Fix this by moving the format field emission directly into __BUG_ENTRY()
-so it is always emitted unconditionally. Remove the format parameter from
-__BUG_ENTRY_VERBOSE() and keep only file/line emission conditional on
-CONFIG_DEBUG_BUGVERBOSE.
-
-Fixes: 2b71b8ab9718 ("s390/bug: Use BUG_FORMAT for DEBUG_BUGVERBOSE_DETAILED")
-Signed-off-by: Jan Polensky <japo@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Fixes: d88b11ef91b1 ("ARM: dts: Fix up SQ201 flash access")
+Fixes: b5a923f8c739 ("ARM: dts: gemini: Switch to redboot partition parsing")
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/bug.h | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm/boot/dts/gemini/gemini-sl93512r.dts | 2 +-
+ arch/arm/boot/dts/gemini/gemini-sq201.dts    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/include/asm/bug.h b/arch/s390/include/asm/bug.h
-index 59017fd3d9358d..50a270edb02035 100644
---- a/arch/s390/include/asm/bug.h
-+++ b/arch/s390/include/asm/bug.h
-@@ -12,12 +12,11 @@
- #if defined(CONFIG_BUG) && defined(CONFIG_CC_HAS_ASM_IMMEDIATE_STRINGS)
+diff --git a/arch/arm/boot/dts/gemini/gemini-sl93512r.dts b/arch/arm/boot/dts/gemini/gemini-sl93512r.dts
+index 4992ec276de92e..341dec9b636a8b 100644
+--- a/arch/arm/boot/dts/gemini/gemini-sl93512r.dts
++++ b/arch/arm/boot/dts/gemini/gemini-sl93512r.dts
+@@ -146,7 +146,7 @@ flash@30000000 {
+ 			partitions {
+ 				compatible = "redboot-fis";
+ 				/* Eraseblock at 0xfe0000 */
+-				fis-index-block = <0x1fc>;
++				fis-index-block = <0x7f>;
+ 			};
+ 		};
  
- #ifdef CONFIG_DEBUG_BUGVERBOSE
--#define __BUG_ENTRY_VERBOSE(format, file, line)				\
--	"	.long	" format " - .	# bug_entry::format\n"		\
-+#define __BUG_ENTRY_VERBOSE(file, line)					\
- 	"	.long	" file " - .	# bug_entry::file\n"		\
- 	"	.short	" line "	# bug_entry::line\n"
- #else
--#define __BUG_ENTRY_VERBOSE(format, file, line)
-+#define __BUG_ENTRY_VERBOSE(file, line)
- #endif
- 
- #ifdef CONFIG_DEBUG_BUGVERBOSE_DETAILED
-@@ -28,9 +27,10 @@
- 
- #define __BUG_ENTRY(format, file, line, flags, size)			\
- 		"	.section __bug_table,\"aw\"\n"			\
--		"1:	.long	0b - .	# bug_entry::bug_addr\n"	\
--		__BUG_ENTRY_VERBOSE(format, file, line)			\
--		"	.short	"flags"	# bug_entry::flags\n"		\
-+		"1:	.long	0b - .		# bug_entry::bug_addr\n"\
-+		"	.long	" format " - .	# bug_entry::format\n"	\
-+		__BUG_ENTRY_VERBOSE(file, line)				\
-+		"	.short	"flags"		# bug_entry::flags\n"	\
- 		"	.org	1b+"size"\n"				\
- 		"	.previous"
+diff --git a/arch/arm/boot/dts/gemini/gemini-sq201.dts b/arch/arm/boot/dts/gemini/gemini-sq201.dts
+index f8c6f6e5cdea6a..bfd1e8581ad67c 100644
+--- a/arch/arm/boot/dts/gemini/gemini-sq201.dts
++++ b/arch/arm/boot/dts/gemini/gemini-sq201.dts
+@@ -134,7 +134,7 @@ flash@30000000 {
+ 			partitions {
+ 				compatible = "redboot-fis";
+ 				/* Eraseblock at 0xfe0000 */
+-				fis-index-block = <0x1fc>;
++				fis-index-block = <0x7f>;
+ 			};
+ 		};
  
 -- 
 2.53.0
