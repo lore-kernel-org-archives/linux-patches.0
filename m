@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C9D45349C;
-	Tue, 16 Jun 2026 16:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42E042F745E;
+	Tue, 16 Jun 2026 16:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627594; cv=none; b=d+rrGeyxELol5a0yiLrMkB6tTU+QJAecYRp7gnrwK22igi6x4uuN/KmcQy5TmYLNROCuPJZUCel+iMwp75pwtBwOqcxrjKLanDY9iGGvC4ICHXds7wzrIB8NAQyudkCoaDlM3Z5zyAxa+jy2AfwzuM8xlNnHqT20K6c2XrP/M/A=
+	t=1781627600; cv=none; b=aKk75r+/yVJSEZaifnEPAPVQpic0S6T5lpid2XL96a0UH1iTr7Eiky7eqcYlxj6XwVmQRDsMOHzLGJNp55BzcFVP08rvtSr44l1PguCsZoa8QA6YtOHSlZMLuzFceACC+dyuDWmIWv+OiTNdk1lHc65pNbjZnVhCRCXurMtPpMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627594; c=relaxed/simple;
-	bh=CfbHP5k8bHH984DWFanfj6RYpiq7ILgkuZa8JK1anig=;
+	s=arc-20240116; t=1781627600; c=relaxed/simple;
+	bh=qyYOl3pw/uM7XyBgMy88PYe9tLrW8SLHrPdd7MKvIWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Um4ekyECRfWrxIeAWRCDMMfoGOTovwsQK+Xo93f2VlU7UzGpDD06AfxnZAppZclh0ktH0kjSsM3Wl0ISPP61Qj64m6I2OarsZJwOp5o0N1KCMJxzTRUWr7eMQRT7XUvu7If88oPs/sKyIx9KPLxZoO9dDSRG+/imvStMzWZlYuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4d/ORfI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ffgZGArIJxTTRBLo1paBuB1oXbpn3Yt8X5znC6Dw+JHk75V54XntiaS2Qny9BmlkrCvGiI+/QWCtHpEI/ESi3KTcSoZn8coTo6JDlQkmgAtSqBOkzbo8ff8NH47oTaStOWJaB3QbUBuEz6+BHA/EMvI6uAlZ7YbLTygYdgcn6M8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbVTelUy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4d/ORfI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 320701F000E9;
-	Tue, 16 Jun 2026 16:33:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbVTelUy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4436F1F000E9;
+	Tue, 16 Jun 2026 16:33:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627593;
-	bh=8b1y2lgXBnUfx/ot6p38qXTxGGo3IaUJZOEwLkjIwTM=;
+	s=korg; t=1781627599;
+	bh=4MqupAlk3jZD9FtGHXcPnzVnzCHC6tr3b6pOIWEMjLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E4d/ORfIFsb5fpinSMZuz6OFytVFb0qDC3NmuEtCvgZmNMFVUtgTFGrS3DLhEXGLE
-	 VhPZ6tG4vMkb9U4PTvkQFFnc5oOHZd46KjJeDEOdbVyBlu7rWM6KeJcW8AKzydnT9V
-	 Kb08B0UBBKCYfcih2qdMXr6Yfihl+Gjo6whXv/Fw=
+	b=VbVTelUypcSACXmfs/R2pvn0BlPr5ph0DK6L0ompfq3STp4YnBVopKW7BfzWDFwz+
+	 5IEWlLs03pCj5UdTm7NJyzRBXDuF2C4BbJiMO2LCvhIXBtRaMHxXvi3XaFzgI1k51r
+	 OZK6+tuNQnY8dCoUyZ+3nJ25Qtn6v8WSbyqRN4UA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.12 195/261] mmc: renesas_sdhi: Add OF entry for RZ/G2H SoC
-Date: Tue, 16 Jun 2026 20:30:33 +0530
-Message-ID: <20260616145054.095327886@linuxfoundation.org>
+Subject: [PATCH 6.12 196/261] mmc: sdhci: add signal voltage switch in sdhci_resume_host
+Date: Tue, 16 Jun 2026 20:30:34 +0530
+Message-ID: <20260616145054.142809269@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,40 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-commit f48ee49726ee4ab545fd2dc644f169c0809b19b3 upstream.
+commit f595e8e77a51eee35e331f69321766593a845ef2 upstream.
 
-The RZ/G2H (R8A774E1) SoC was previously handled via the generic
-"renesas,rcar-gen3-sdhi" fallback compatible string. However, because
-the SDHI IP on RZ/G2H is identical with the R-Car H3-N (R8A77951), it
-requires the specific quirks and configuration defined in
-`of_r8a7795_compatible` rather than the generic Gen3 data.
+I met one suspend/resume issue with sdr104 capable sdio wifi card (with
+"keep-power-in-suspend" set in DT property):
+After resuming from suspend to ram, the sdio wifi card stops working.
+Further debug shows that although ios shows the sdio card is at sdr104
+mode, the voltage is still at 3V3. This is due to missing the calling
+of ->start_signal_voltage_switch() in sdhci_resume_host().
 
-Add the explicit "renesas,sdhi-r8a774e1" match entry to map it correctly.
-Note that the DT binding file renesas,sdhi.yaml does not need an update
-as the entry for this SoC is already present.
+Fix this issue by adding ->start_signal_voltage_switch() in
+sdhci_resume_host(). This also matches what we do for
+sdhci_runtime_resume_host().
 
-Fixes: 31941342888d ("arm64: dts: renesas: r8a774e1: Add SDHI nodes")
+Then the question is: why this issue hasn't reported and fixed for so
+long time. IMHO, several reasons: Some host controllers just kick off
+the runtime resume for system resume, so they benefit from the well
+supported runtime pm code; Some platforms just use the old sdio wifi
+card which doesn't need signal voltage switch at all, the default
+voltage is 3v3 after resuming.
+
+Fixes: 6308d2905bd3 ("mmc: sdhci: add quirk for keeping card power during suspend")
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/renesas_sdhi_internal_dmac.c |    1 +
+ drivers/mmc/host/sdhci.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/mmc/host/renesas_sdhi_internal_dmac.c
-+++ b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
-@@ -278,6 +278,7 @@ static const struct renesas_sdhi_of_data
- static const struct of_device_id renesas_sdhi_internal_dmac_of_match[] = {
- 	{ .compatible = "renesas,sdhi-r7s9210", .data = &of_rza2_compatible, },
- 	{ .compatible = "renesas,sdhi-mmc-r8a77470", .data = &of_rcar_gen3_compatible, },
-+	{ .compatible = "renesas,sdhi-r8a774e1", .data = &of_r8a7795_compatible, },
- 	{ .compatible = "renesas,sdhi-r8a7795", .data = &of_r8a7795_compatible, },
- 	{ .compatible = "renesas,sdhi-r8a77961", .data = &of_r8a77961_compatible, },
- 	{ .compatible = "renesas,sdhi-r8a77965", .data = &of_r8a77965_compatible, },
+--- a/drivers/mmc/host/sdhci.c
++++ b/drivers/mmc/host/sdhci.c
+@@ -3782,6 +3782,7 @@ int sdhci_resume_host(struct sdhci_host
+ 		host->pwr = 0;
+ 		host->clock = 0;
+ 		host->reinit_uhs = true;
++		mmc->ops->start_signal_voltage_switch(mmc, &mmc->ios);
+ 		mmc->ops->set_ios(mmc, &mmc->ios);
+ 	} else {
+ 		sdhci_init(host, (mmc->pm_flags & MMC_PM_KEEP_POWER));
 
 
