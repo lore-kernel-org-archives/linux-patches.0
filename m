@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167B344DB64;
-	Tue, 16 Jun 2026 15:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C984657F4;
+	Tue, 16 Jun 2026 15:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624680; cv=none; b=sTkLquWLUccKeqjQOvStJsvEpbdXBBUdlbukjP4rkBOtHQv4QqXZbyCN0EhnlYw/ol//LvF7wWKDBZKXVBGeQXipDoI416I3hk5mgdxLmw72gqFI+lEuEsG0luRsb9S/wUL8n4rj1Z8VVNrVw5q1wXEg6PCl8RM0zMbS77Mr0rE=
+	t=1781624685; cv=none; b=VEfyj/AOUKxe6vyxjS0HDVWNmA7xVlCIaZQC4fcodz0jWLLhpcM2jor8EQJs0lcyMQxN2R7mRQOlUX/Hi4ECLR40rpezDgoxUfaAucOvDWnQEZTt7oweFWTwAIXNE8P6hu0GsG23ww/njV/uVvC/F8EJ+xCx1Nasz6wLUpXGnnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624680; c=relaxed/simple;
-	bh=Rj1rGyKaJaPulcT77Pc25CaFw/pT1ELkLv3xQtNYsfs=;
+	s=arc-20240116; t=1781624685; c=relaxed/simple;
+	bh=k3E3FkkIy60wygn2LzVKgk7E93QcnoLkXrTw36Lo4Fk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kl7KQaQxlGNdnWg8PFGAkpU+ASgc2237WP/QZObmw5axd+Xc+CyAczzgA3vGJwZtYyPDas8PYX1Rw8hOYvAVUJJdkbCH2tv61JkRf/7elsi/899dt6FQ2hlkwNbgD0M/nBzTfakYfKi71TyhFcDTdmFM2vp3OLiTLbFUvRX8ulo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0iKmFrnp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uwEt6STxyD5h07C8Aws7SivRnuNqoLifo7FfBfc1VXj1ZnoVQnd761gb08QIx7qJ4jxHkCo7SKR19N8EGbIEjbg4mWCTAttFyK6mGwM4fkJWIKPqd9/3FSfQLtHY4BTG1pmcEqQaBmteZYfNWLW4QuNISFe+o5T6SP0n6xGXews=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PrvXMEEQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0iKmFrnp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA041F00A3A;
-	Tue, 16 Jun 2026 15:44:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PrvXMEEQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 246A71F00A3A;
+	Tue, 16 Jun 2026 15:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624677;
-	bh=Y0uM1WZEKbQp6Hnu1avnx00eT0Zl+36JABH2TXRFq9k=;
+	s=korg; t=1781624683;
+	bh=8PI/7N2tVbU0q3blmZ6XNIj6qdm/RLfHaEHZCf+LyIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0iKmFrnpehcG4xaQfJxBTsaBMhuVIgTHb+vrB09988aTJnpD3RdAjqFI1PPXLnWKV
-	 eGTVL9znfzF1dBJ42Khf9TBQM9KiwP6L9hHMa5XUqlqTMynhqMUf3nHG5mvdccYkEM
-	 G9tV4X9dmWRR7iqHyLzqXelHW5EEFcKAqF0omPWY=
+	b=PrvXMEEQJLnFmG0eKYg6scS6W1N0XNhemEr8jNom/UPm//qIMNIthQwMlZwauS/hc
+	 pjDYRVjQpCbqt4AiU99pjWgWMwFqOMoY9kPgBbT8sp0QJirSCNKQbd5DqGfNaT8qq3
+	 cpmC8tVvut/PIr3m5Zw8/PzJo8E3eia+JoDhLpTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Waiman Long <longman@redhat.com>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 7.0 373/378] debugobjects: Dont call fill_pool() in early boot hardirq context
-Date: Tue, 16 Jun 2026 20:30:04 +0530
-Message-ID: <20260616145129.735460566@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 7.0 374/378] arm64: cputype: Add C1-Ultra definitions
+Date: Tue, 16 Jun 2026 20:30:05 +0530
+Message-ID: <20260616145129.777387752@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,102 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit 0d046ae106255cba5eb83b23f78ee93f3620247d upstream.
+commit 60349e64a6c65f9f0aa118af711b3c7e137f07ff upstream.
 
-When booting a debug PREEMPT_RT kernel on an ARM64 system, a "inconsistent
-{HARDIRQ-ON-W} -> {IN-HARDIRQ-W} usage" lockdep warning message was
-reported to the console.
+Add cputype definitions for C1-Ultra. These will be used for errata
+detection in subsequent patches.
 
-During early boot, interrupts are enabled before the scheduler is
-enabled. In this window (before SYSTEM_SCHEDULING is set) interrupts can
-fire and in the hard interrupt context handler attempt to fill the pool
+These values can be found in the C1-Ultra TRM:
 
-This can lead to a deadlock when the interrupt occurred when the interrupt
-hits a region which holds a lock that is required to be taken in the
-allocation path.
+  https://developer.arm.com/documentation/108014/0100/
 
-Add a new can_fill_pool() helper and reorder the exception rule and forbid
-this scenario by excluding allocations from hard interrupt context.
+... in section A.5.1 ("MIDR_EL1, Main ID Register").
 
-Fixes: 06e0ae988f6e ("debugobjects: Allow to refill the pool before SYSTEM_SCHEDULING")
-Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260605173038.495075-1-longman@redhat.com
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Will Deacon <will@kernel.org>
+[Mark: backport to v7.0.y]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/debugobjects.c |   46 +++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 37 insertions(+), 9 deletions(-)
+ arch/arm64/include/asm/cputype.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -720,6 +720,41 @@ static inline bool debug_objects_is_pi_b
- #endif
- }
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -97,6 +97,7 @@
+ #define ARM_CPU_PART_CORTEX_X925	0xD85
+ #define ARM_CPU_PART_CORTEX_A725	0xD87
+ #define ARM_CPU_PART_CORTEX_A720AE	0xD89
++#define ARM_CPU_PART_C1_ULTRA		0xD8C
+ #define ARM_CPU_PART_NEOVERSE_N3	0xD8E
  
-+static inline bool can_fill_pool(void)
-+{
-+	/*
-+	 * On !RT enabled kernels there are no restrictions and spinlock_t and
-+	 * raw_spinlock_t are the same types.
-+	 */
-+	if (!IS_ENABLED(CONFIG_PREEMPT_RT))
-+		return true;
-+
-+	/*
-+	 * On RT enabled kernels, the task must not be blocked on a lock as
-+	 * that could corrupt the PI state when blocking on a lock in the
-+	 * allocation path.
-+	 */
-+	if (debug_objects_is_pi_blocked_on())
-+		return false;
-+
-+	/*
-+	 * On RT enabled kernels the pool refill should happen in preemptible
-+	 * context.
-+	 */
-+	if (preemptible())
-+		return true;
-+
-+	/*
-+	 * Though during system boot before scheduling is set up, preemption is
-+	 * disabled and the pool can get exhausted. Before scheduling is active
-+	 * a task cannot be blocked on a sleeping lock, but it might hold a lock
-+	 * and if interrupted then hard interrupt context might run into a lock
-+	 * inversion. So exclude hard interrupt context from allocations before
-+	 * scheduling is active.
-+	 */
-+	return system_state < SYSTEM_SCHEDULING && !in_hardirq();
-+}
-+
- static void debug_objects_fill_pool(void)
- {
- 	if (!static_branch_likely(&obj_cache_enabled))
-@@ -734,18 +769,11 @@ static void debug_objects_fill_pool(void
- 	if (likely(!pool_should_refill(&pool_global)))
- 		return;
- 
--	/*
--	 * On RT enabled kernels the pool refill must happen in preemptible
--	 * context and not enqueued on an rt_mutex -- for !RT kernels we rely
--	 * on the fact that spinlock_t and raw_spinlock_t are basically the
--	 * same type and this lock-type inversion works just fine.
--	 */
--	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || system_state < SYSTEM_SCHEDULING ||
--	    (preemptible() && !debug_objects_is_pi_blocked_on())) {
-+	if (can_fill_pool()) {
- 		/*
- 		 * Annotate away the spinlock_t inside raw_spinlock_t warning
- 		 * by temporarily raising the wait-type to LD_WAIT_CONFIG, matching
--		 * the preemptible() condition above.
-+		 * the preemptible() condition in can_fill_pool().
- 		 */
- 		static DEFINE_WAIT_OVERRIDE_MAP(fill_pool_map, LD_WAIT_CONFIG);
- 		lock_map_acquire_try(&fill_pool_map);
+ #define APM_CPU_PART_XGENE		0x000
+@@ -188,6 +189,7 @@
+ #define MIDR_CORTEX_X925 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X925)
+ #define MIDR_CORTEX_A725 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A725)
+ #define MIDR_CORTEX_A720AE MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A720AE)
++#define MIDR_C1_ULTRA MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_C1_ULTRA)
+ #define MIDR_NEOVERSE_N3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N3)
+ #define MIDR_THUNDERX	MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX)
+ #define MIDR_THUNDERX_81XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_81XX)
 
 
