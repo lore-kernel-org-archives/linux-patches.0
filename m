@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC6F47CC7F;
-	Tue, 16 Jun 2026 17:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7236C43D4E9;
+	Tue, 16 Jun 2026 17:08:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629710; cv=none; b=IfTyDUP/75pBckV/eFRoNXUNJoWf2888eVRZb6Ml9bi7f5WUSRy41aI93JedLfa7eU0BwPFJu76nFo6Oelq7r54zAVNgUmbwbEOsQrzGEOO/X5/Usdlmq7cJ/0zjpWSl1PDXWZLvBXUeDu2o7JgvmocONj7lH5plFRVtIFQd34E=
+	t=1781629715; cv=none; b=dlSk9aMAszoDyrW+YCrWLRaDI902esNsmkDZJU3UOSVN0ccJcj+kWNvLo7jddzn8fJMfipaJgO48jbRvrHxp48N6ujll5V9qyBHPD7OVH+2x3uXzJINGYdxxcIfDCpOeiziZcleNTQLfpiMdm9ubXDtMrQ1JSwSofSiMaDryrfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629710; c=relaxed/simple;
-	bh=M1LbFfkyhU8Uo5GVV154Vas9WAXuFxQiLWQ11wKB7G4=;
+	s=arc-20240116; t=1781629715; c=relaxed/simple;
+	bh=iFNekqIdKl7+BVE12U3QrIPMk9oOxrtd7F+SyHZrXa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O2TaGOYosXxVSqbPLp8upE8ZMoPeEzDj3TKLbk8+v+YM2nnINjLIfn2Kv9YjIY5Ms6H6LSDt9/S3W/iMLaLFv2QZ5kPYh2I2pIpcnUxYB9a8dECZGXfCyjqOBnYAJO5AA+2w1EWVe+jmc57h1ZUmVB47kPuPN6gUNicwa17AeQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFNEtZvR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z+jAjaNuVKxN+U3v6/Ul0HlAL2mTs8RnRXrP0tCstr6iR9+SiGnBrBYBz99BYgNPvegWqgMJDx1qXIw7OlLOBgnWt9RqQuRpDwCUqLHpmjezGj3KvF+Np8UQgSy41/uDh59QctBAKD5TVBnYS4VudnGZ+6/IADSEXMCARNjgt60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lo04A/1K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFNEtZvR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36A01F000E9;
-	Tue, 16 Jun 2026 17:08:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lo04A/1K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229FF1F000E9;
+	Tue, 16 Jun 2026 17:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629708;
-	bh=nDphKQB/rc+HpjwkKFJ+ErbaMqIFH6nq9uZPOV0FTxQ=;
+	s=korg; t=1781629714;
+	bh=3zxaxSgLg08Mxnlmcv90fFDt6Xb8ojgdOkmVylwrKgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RFNEtZvRL8tKJbSFZ/G4nEfmMjpVXIvPEqGArbRytSYMtovfEV8BDpQGo0pQm8r+l
-	 cDDgnEHUAh4I/ElSBryRcS4SIo7SEZ9fxOzCVbMBueULUK4osQQrOyTBCJzTSklINC
-	 uvtO8NpQKTdYRpGT+WMTH2tfn6B+PcZZrdqymu8U=
+	b=lo04A/1Kzk9IShy7zCA6zWAJg3aEV+hX1mhtJdb7vACqNf3zCikBx9Uerp5iLF6/i
+	 IPuLQ/Rf7Sybe68GRgvOupowAFS5dPaCcnKAxYMA6g4SVgzLw0xSHOySodgZ+r6r93
+	 +7JMke7IQvEuSaFGVgNf3pxslk+IRxCEiZjud/Sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Fernand Sieber <sieberf@amazon.com>,
-	Leonard Foerster <foersleo@amazon.de>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 307/452] mm/damon/ops-common: call folio_test_lru() after folio_get()
-Date: Tue, 16 Jun 2026 20:28:54 +0530
-Message-ID: <20260616145133.633519397@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.6 308/452] RDMA/srp: bound SRP_RSP sense copy by the received length
+Date: Tue, 16 Jun 2026 20:28:55 +0530
+Message-ID: <20260616145133.689728636@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -53,57 +51,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit d6b8b02a27b3dd09ec12144322b3dac46d9bc9ef upstream.
+commit 13e91fd076306f5d0cdfa14f53d69e37274723c4 upstream.
 
-damon_get_folio() speculatively calls folio_test_lru() before
-folio_try_get().  The folio can get freed and reallocated to a tail page.
-In the case, VM_BUG_ON_PGFLAGS() in const_folio_flags() can be triggered.
-Remove the speculative call.
+srp_process_rsp() copies sense data from rsp->data + resp_data_len,
+where resp_data_len is the full 32-bit value supplied by the SRP target
+and is never checked against the number of bytes actually received
+(wc->byte_len). The copy length is bounded to SCSI_SENSE_BUFFERSIZE, so
+at most 96 bytes are copied, but the source offset is not bounded.
 
-Also mark folio_test_lru() check right after folio_try_get() success as no
-more unlikely.
+A malicious or compromised SRP target on the InfiniBand/RoCE fabric that
+the initiator has logged into can return an SRP_RSP with
+SRP_RSP_FLAG_SNSVALID set and a large resp_data_len. The receive buffer
+is allocated at the target-chosen max_ti_iu_len, so the source of the
+sense copy lands past the bytes actually received; with resp_data_len
+near 0xFFFFFFFF it is gigabytes past the buffer and the read faults.
 
-The race should be rare.  Also the problem can happen only if the kernel
-has enabled CONFIG_DEBUG_VM_PGFLAGS.  No real world report of this issue
-has been made so far.  This fix is based on only theoretical analysis.
-That said, a bug is a bug.  A similar issue was also fixed via commit
-3203b3ab0fcf ("mm/filemap: don't call folio_test_locked() without a
-reference in next_uptodate_folio()").  I don't expect this change will
-make a meaningful impact to DAMON performance in the real world, though I
-will be happy to be corrected from the real world reports.
+Copy the sense data only if it has not been truncated, that is, only if
+the response header, the response data, and the sense region fit within
+the bytes actually received; otherwise drop the sense and log. The
+in-tree iSER and NVMe-RDMA receive paths already bound their parse by
+wc->byte_len; this brings ib_srp into line with them.
 
-The issue was discovered [1] by Sashiko.
-
-
-Link: https://lore.kernel.org/20260525162256.8317-1-sj@kernel.org
-Link: https://lore.kernel.org/20260517234112.89245-1-sj@kernel.org [1]
-Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: Fernand Sieber <sieberf@amazon.com>
-Cc: Leonard Foerster <foersleo@amazon.de>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: <stable@vger.kernel.org> # 5.15.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: aef9ec39c47f ("IB: Add SCSI RDMA Protocol (SRP) initiator")
+Link: https://patch.msgid.link/r/20260602220457.2542840-1-michael.bommarito@gmail.com
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/ops-common.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/ulp/srp/ib_srp.c |   30 ++++++++++++++++++++++++------
+ 1 file changed, 24 insertions(+), 6 deletions(-)
 
---- a/mm/damon/ops-common.c
-+++ b/mm/damon/ops-common.c
-@@ -28,9 +28,9 @@ struct folio *damon_get_folio(unsigned l
- 		return NULL;
+--- a/drivers/infiniband/ulp/srp/ib_srp.c
++++ b/drivers/infiniband/ulp/srp/ib_srp.c
+@@ -1930,7 +1930,8 @@ static int srp_post_recv(struct srp_rdma
+ 	return ib_post_recv(ch->qp, &wr, NULL);
+ }
  
- 	folio = page_folio(page);
--	if (!folio_test_lru(folio) || !folio_try_get(folio))
-+	if (!folio_try_get(folio))
- 		return NULL;
--	if (unlikely(page_folio(page) != folio || !folio_test_lru(folio))) {
-+	if (unlikely(page_folio(page) != folio) || !folio_test_lru(folio)) {
- 		folio_put(folio);
- 		folio = NULL;
- 	}
+-static void srp_process_rsp(struct srp_rdma_ch *ch, struct srp_rsp *rsp)
++static void srp_process_rsp(struct srp_rdma_ch *ch, struct srp_rsp *rsp,
++			    u32 byte_len)
+ {
+ 	struct srp_target_port *target = ch->target;
+ 	struct srp_request *req;
+@@ -1971,10 +1972,27 @@ static void srp_process_rsp(struct srp_r
+ 		scmnd->result = rsp->status;
+ 
+ 		if (rsp->flags & SRP_RSP_FLAG_SNSVALID) {
+-			memcpy(scmnd->sense_buffer, rsp->data +
+-			       be32_to_cpu(rsp->resp_data_len),
+-			       min_t(int, be32_to_cpu(rsp->sense_data_len),
+-				     SCSI_SENSE_BUFFERSIZE));
++			u32 resp_len = be32_to_cpu(rsp->resp_data_len);
++			u32 sense_len = be32_to_cpu(rsp->sense_data_len);
++
++			/*
++			 * The sense data starts resp_data_len bytes past the
++			 * response data area; both lengths come from the
++			 * target-controlled response.  Copy the sense data
++			 * only if it has not been truncated, that is, only if
++			 * the full sense region fits within the bytes actually
++			 * received.  Otherwise the copy source would run past
++			 * the receive buffer (sized to the target-chosen
++			 * max_ti_iu_len), reading out of bounds.
++			 */
++			if (sizeof(*rsp) + (u64)resp_len + sense_len <= byte_len)
++				memcpy(scmnd->sense_buffer,
++				       rsp->data + resp_len,
++				       min(sense_len, SCSI_SENSE_BUFFERSIZE));
++			else
++				shost_printk(KERN_ERR, target->scsi_host,
++					     "dropping truncated sense data (resp_data_len %u sense_data_len %u, %u bytes received)\n",
++					     resp_len, sense_len, byte_len);
+ 		}
+ 
+ 		if (unlikely(rsp->flags & SRP_RSP_FLAG_DIUNDER))
+@@ -2084,7 +2102,7 @@ static void srp_recv_done(struct ib_cq *
+ 
+ 	switch (opcode) {
+ 	case SRP_RSP:
+-		srp_process_rsp(ch, iu->buf);
++		srp_process_rsp(ch, iu->buf, wc->byte_len);
+ 		break;
+ 
+ 	case SRP_CRED_REQ:
 
 
