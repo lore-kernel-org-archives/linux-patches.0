@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB21138C437;
-	Tue, 16 Jun 2026 15:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FA243E4BA;
+	Tue, 16 Jun 2026 15:13:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622792; cv=none; b=jbA0X043QufPlzS8AxRVHstcUQHVOfT/GAiLoFRRuZc8KSYHGKMx41Ovej8UMTO7spbShEde59J3tG5WZ2VWc6tSXFlqla38IDBdOi0JD/wFRA2LkXUDyT+QwqOPlxkjxWd1Ux1KUjfrM4qWgmktSnbr0ndapM06EG7IVvkXZis=
+	t=1781622797; cv=none; b=GENBZQH2IZuc3vAwnZmXe3SYF0PsNanj5qtaogdo5/dulO/XB2B5drxly3NbPk1UY5k7CabuvOZf48WR6olpnlOEJj9v18hp2EFqz/XKGY7hJgnNFisjFyfs0XK55watZiJ+fPqxtMam6tfL3dobs+LpAhOgJWaOzsxvJRGYkGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622792; c=relaxed/simple;
-	bh=XM+qkaP7069Yvk0TKpoA4ec2lahupL3SF6bsFI3zz8M=;
+	s=arc-20240116; t=1781622797; c=relaxed/simple;
+	bh=aSvY4EL0GO7moz/gMhmxQuHGgdiSNWriiXq0zbSO+DE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kadpWoAmlBiwR8FKrPy7kHxhJNWFceYDW1OFHjfedKKrUKVH517hMySaWaWlyf17PxX0o0x9C3C3yQqsMeY0GxXpmYDx08GbwBLtoYbsoaqGzYv7Dg5dsv4bmnvxZ7KyIikTtYxpU4sKteLP5MQy5pERLU7uxMD7+CfUkDtZL1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q6ofyMLz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IohZhG2SYeoAjK6Opb9dlVwEhBAL8eHFqAVfSiltRgsfgWD5KpYlGynCftEifzzkh9xL1PHsryuv//gj7DmCyJljbzn2iPg4eNkA7oLB2HoU9EpG+SdUGKzOWZ/hLKzgbfgoniSumWSHXr6W/M4yaMOeRojjO1rUs03+JMG+YEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwu5nYdn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q6ofyMLz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 811881F00A3E;
-	Tue, 16 Jun 2026 15:13:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwu5nYdn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D541F00A3A;
+	Tue, 16 Jun 2026 15:13:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622791;
-	bh=QPd3dHma+vF/LyLUq4rqc8bY4CrYj+yO2V0fwbcoz/4=;
+	s=korg; t=1781622796;
+	bh=hf+KA/4bQzq35xrguJE974rM8NJBoNq8hZAGpVL1lYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q6ofyMLzANFGghnzyI44N68QlWhXI+TmMOI4L92Wli9Rkymj6+vdtAZG08M5kNmek
-	 Sr57pAvg9hUsfIHntT9B/ozHHkmxt5B0uWTYUVD+iLTzWlYWaAtubATVQGACxL/Vhw
-	 5oalb22gHQGr7pnLMOzknKM2R6Z0YgOSkrmwc3NA=
+	b=wwu5nYdndW5gXBymx2vDGqBnFl8eYHeqaULodsqcckLxbCJm16fVw1VGrRToAN4AH
+	 Xk87/yOJoXfD6MCR12W7fqDZEc5DDHGI46exszJdRk9w0Lwd9IA2I2n/tXsnLlkX8F
+	 f7lgHWn6dk9EBV1Z2w3hZYpVOw5AXC+iOINJAyaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Bloch <mbloch@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yicong Hui <yiconghui@gmail.com>,
+	Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+	Liu Ying <victor.liu@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 029/378] devlink: Release nested relation on devlink free
-Date: Tue, 16 Jun 2026 20:24:20 +0530
-Message-ID: <20260616145111.391186855@linuxfoundation.org>
+Subject: [PATCH 7.0 030/378] drm/imx: Fix three kernel-doc warnings in dcss-scaler.c
+Date: Tue, 16 Jun 2026 20:24:21 +0530
+Message-ID: <20260616145111.446053255@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,47 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Bloch <mbloch@nvidia.com>
+From: Yicong Hui <yiconghui@gmail.com>
 
-[ Upstream commit 3522b21fd7e1863d0734537737bd59f1b90d0190 ]
+[ Upstream commit ae0383e5a9a4b12d68c76c4769857def4665deff ]
 
-devlink relation state is normally released from devl_unregister(), which
-calls devlink_rel_put(). This misses devlink instances that get a nested
-relation before registration and then fail probe before devl_register() is
-reached.
+Fix the following W=1 kerneldoc warnings by adding the missing parameter
+descriptions for @phase0_identity and @nn_interpolation in
+dcss_scaler_filter_design() and @phase0_identity in
+dcss_scaler_gaussian_filter()
 
-That flow can happen for SFs. The child devlink gets linked to its
-parent before registration, then a later probe error calls devlink_free()
-directly. Since the instance was never registered, devl_unregister() is not
-called and devlink->rel is leaked.
+Warning: drivers/gpu/drm/imx/dcss/dcss-scaler.c:173 function parameter 'phase0_identity' not described in 'dcss_scaler_gaussian_filter'
+Warning: drivers/gpu/drm/imx/dcss/dcss-scaler.c:270 function parameter 'phase0_identity' not described in 'dcss_scaler_filter_design'
+Warning: drivers/gpu/drm/imx/dcss/dcss-scaler.c:270 function parameter 'nn_interpolation' not described in 'dcss_scaler_filter_design'
 
-Release any pending relation from devlink_free() as well. The registered
-path is unchanged because devl_unregister() already clears devlink->rel
-before devlink_free() runs.
-
-Fixes: c137743bce02 ("devlink: introduce object and nested devlink relationship infra")
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://patch.msgid.link/20260528191411.3270532-1-mbloch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9021c317b770 ("drm/imx: Add initial support for DCSS on iMX8MQ")
+Signed-off-by: Yicong Hui <yiconghui@gmail.com>
+Reviewed-by: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
+Link: https://patch.msgid.link/20260406180013.2442096-1-yiconghui@gmail.com
+Signed-off-by: Liu Ying <victor.liu@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/devlink/core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/imx/dcss/dcss-scaler.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/devlink/core.c b/net/devlink/core.c
-index d8e509a669bf6c..998ba9eae9aed6 100644
---- a/net/devlink/core.c
-+++ b/net/devlink/core.c
-@@ -467,6 +467,8 @@ void devlink_free(struct devlink *devlink)
- {
- 	ASSERT_DEVLINK_NOT_REGISTERED(devlink);
- 
-+	devlink_rel_put(devlink);
-+
- 	WARN_ON(!list_empty(&devlink->trap_policer_list));
- 	WARN_ON(!list_empty(&devlink->trap_group_list));
- 	WARN_ON(!list_empty(&devlink->trap_list));
+diff --git a/drivers/gpu/drm/imx/dcss/dcss-scaler.c b/drivers/gpu/drm/imx/dcss/dcss-scaler.c
+index 32c3f46b21daea..5c7f8d952ec1a1 100644
+--- a/drivers/gpu/drm/imx/dcss/dcss-scaler.c
++++ b/drivers/gpu/drm/imx/dcss/dcss-scaler.c
+@@ -166,6 +166,7 @@ static int exp_approx_q(int x)
+  * dcss_scaler_gaussian_filter() - Generate gaussian prototype filter.
+  * @fc_q: fixed-point cutoff frequency normalized to range [0, 1]
+  * @use_5_taps: indicates whether to use 5 taps or 7 taps
++ * @phase0_identity: whether to override phase 0 coefficients with identity filter
+  * @coef: output filter coefficients
+  */
+ static void dcss_scaler_gaussian_filter(int fc_q, bool use_5_taps,
+@@ -262,7 +263,9 @@ static void dcss_scaler_nearest_neighbor_filter(bool use_5_taps,
+  * @src_length: length of input
+  * @dst_length: length of output
+  * @use_5_taps: 0 for 7 taps per phase, 1 for 5 taps
++ * @phase0_identity: whether to override phase 0 coefficients with identity filter
+  * @coef: output coefficients
++ * @nn_interpolation: whether to use nearest neighbor instead of gaussian filter
+  */
+ static void dcss_scaler_filter_design(int src_length, int dst_length,
+ 				      bool use_5_taps, bool phase0_identity,
 -- 
 2.53.0
 
