@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8F82F12AE;
-	Tue, 16 Jun 2026 18:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1FA2F12AE;
+	Tue, 16 Jun 2026 18:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633111; cv=none; b=LZbEogORJ4hu2JjpswcuKSBUBgGaBLCqatgGngWOpt1NswHPLZe5zOnv6eHPsBbGKsnPeLpZKvGtzGsKbbDmu5qs3npNC5OnQoQjQ59jlsT5NXC+diliCAf4QRXjzs9XgKzNPe37QhRNNPf4C+0R5X+I5DhIJ25p2Zxaer8XLA4=
+	t=1781633117; cv=none; b=ktYb799djsWXZD67VlW2imQL9pmcBmwOGyQ/StnXPf2xsoq+PncSb/4k/289aJ0o8QlFbuUYOdDEyxmZVRWwOsevICwnE4Y01kd/HXmfTsVVNoLwVaC+RQqXv5/aMrIMcQ/TAJBW6je7mKqFvlUK2HRUBr0TM1uxh0Z9u0QLdQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633111; c=relaxed/simple;
-	bh=hifhXj/Xhu5ZwYS7HCtMRx0PpCIlHpVQN4wwey/sB20=;
+	s=arc-20240116; t=1781633117; c=relaxed/simple;
+	bh=IF9ogmk1iJYoRuvKBkm2C/75EutGdJREe6hAEi1UtWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LAyEmdNjN36j/3podQZcmFhjaA6fWvOHoa7mebX/T1Revfi8oHE/o0T+OTe09HKvl+PZ2owQj0d98oikQs8VV8JDwLkp72ykVe4HUQGLuXE+SfpramonySo7BuRYOhQsFT6Uek5FY/YgjulHWUWElWaaQOn3qUvaSJOgBYysez4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XG/QrsdI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WCVXCZSEJ6qLY1YT8UGtdSCX3OQrSpe0HaEFbzq1T7GuqwChI2bPFIXKnyX+gqxHato9DoIxVqlbNvDCl+f+9OHBbdu6427eq5vdb9H+jSO9OfrUB3WyIEOgKelW0X1s9zHBoeaXb+xNnzHh2pvsxpray7QEJwDgkT42jldmALA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ttHM5t4c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XG/QrsdI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E6221F000E9;
-	Tue, 16 Jun 2026 18:05:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ttHM5t4c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 404B31F000E9;
+	Tue, 16 Jun 2026 18:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633110;
-	bh=t1vk2XuJy6m5Uxd2HPCqQAcqLLZr/z+vKcKyhjxh34g=;
+	s=korg; t=1781633116;
+	bh=OqG4DpgE/lTh3QY4/siDI60p2J41jjxSSgE9wHMYtDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XG/QrsdIRjKowoJ85QQ0G+0PwgGITxnt7hvsDEbsD4tnhxRwjepdeOL2rKC3OqlMI
-	 TspzlKKN+lO0l1naW6JuVGTDubJwDW/jk0rDdeQ4lit78c+sPloywH/BUnkX/+phC+
-	 QJe/yS8wMCteTxBcCmvswggTPwTCnjsmomaTx5sQ=
+	b=ttHM5t4c5X9ZvhfiEhCfmKgN+9RBSB0IDqClfG3Ylm9m7VrExwcgocYq/eOmPK0SJ
+	 CqrQpU12qEM5neoxNuOaS4ln/oEGjV4qLzLddpFJKzxRGOb4d2QO0qDfL2GMjjhed9
+	 2vm5oCAu3TJT5T7y9BGgE6kL6L4BtRmX/ZODWg98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Wenshan Lan <jetlan9@163.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Luxiao Xu <rakukuip@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 006/411] dmaengine: idxd: Fix not releasing workqueue on .release()
-Date: Tue, 16 Jun 2026 20:24:04 +0530
-Message-ID: <20260616145100.702231067@linuxfoundation.org>
+Subject: [PATCH 5.15 014/411] netfilter: ebtables: fix OOB read in compat_mtw_from_user
+Date: Tue, 16 Jun 2026 20:24:12 +0530
+Message-ID: <20260616145101.130621407@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -53,51 +57,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 3d33de353b1ff9023d5ec73b9becf80ea87af695 ]
+[ Upstream commit f438d1786d657d57790c5d138d6db3fc9fdac392 ]
 
-The workqueue associated with an DSA/IAA device is not released when
-the object is freed.
+Luxiao Xu says:
 
-Fixes: 47c16ac27d4c ("dmaengine: idxd: fix idxd conf_dev 'struct device' lifetime")
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Link: https://patch.msgid.link/20260121-idxd-fix-flr-on-kernel-queues-v3-v3-7-7ed70658a9d1@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-[ Remove destroy_workqueue(idxd->wq) from the function idxd_remove() to
-avoid the workqueue is released twice. ]
-Signed-off-by: Wenshan Lan <jetlan9@163.com>
+ The function compat_mtw_from_user() converts ebtables extensions from
+ 32-bit user structures to kernel native structures. However, it lacks
+ proper validation of the user-supplied match_size/target_size.
+
+ When certain extensions are processed, the kernel-side translation
+ logic may perform memory accesses based on the extension's expected
+ size. If the user provides a size smaller than what the extension
+ requires, it results in an out-of-bounds read as reported by KASAN.
+
+ This fix introduces a check to ensure match_size is at least as large
+ as the extension's required compatsize. This covers matches, watchers,
+ and targets, while maintaining compatibility with standard targets.
+
+AFAIU this is relevant for matches that need to go though
+match->compat_from_user() call.  Those that use plain memcpy with the
+user-provided size are ok because the caller checks that size vs the
+start of the next rule entry offset (which itself is checked vs. total
+size copied from userspace).
+
+The ->compat_from_user() callbacks assume they can read compatsize bytes,
+so they need this extra check.
+
+Based on an earlier patch from Luxiao Xu.
+
+Fixes: 81e675c227ec ("netfilter: ebtables: add CONFIG_COMPAT support")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/idxd/init.c  | 1 -
- drivers/dma/idxd/sysfs.c | 1 +
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ net/bridge/netfilter/ebtables.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/drivers/dma/idxd/init.c b/drivers/dma/idxd/init.c
-index f2d27c6ec1ce88..698387103da738 100644
---- a/drivers/dma/idxd/init.c
-+++ b/drivers/dma/idxd/init.c
-@@ -829,7 +829,6 @@ static void idxd_remove(struct pci_dev *pdev)
- 	pci_iounmap(pdev, idxd->reg_base);
- 	iommu_dev_disable_feature(&pdev->dev, IOMMU_DEV_FEAT_SVA);
- 	pci_disable_device(pdev);
--	destroy_workqueue(idxd->wq);
- 	perfmon_pmu_remove(idxd);
- 	put_device(idxd_confdev(idxd));
- }
-diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
-index 489a9d8850764b..ee208dfdd0cb51 100644
---- a/drivers/dma/idxd/sysfs.c
-+++ b/drivers/dma/idxd/sysfs.c
-@@ -1271,6 +1271,7 @@ static void idxd_conf_device_release(struct device *dev)
- {
- 	struct idxd_device *idxd = confdev_to_idxd(dev);
+diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
+index c74efcc2b4996d..2083facfc87d9b 100644
+--- a/net/bridge/netfilter/ebtables.c
++++ b/net/bridge/netfilter/ebtables.c
+@@ -1951,6 +1951,25 @@ enum compat_mwt {
+ 	EBT_COMPAT_TARGET,
+ };
  
-+	destroy_workqueue(idxd->wq);
- 	kfree(idxd->groups);
- 	kfree(idxd->wqs);
- 	kfree(idxd->engines);
++static bool match_size_ok(const struct xt_match *match, unsigned int match_size)
++{
++	u16 csize;
++
++	if (match->matchsize == -1) /* cannot validate ebt_among */
++		return true;
++
++	csize = match->compatsize ? : match->matchsize;
++
++	return match_size >= csize;
++}
++
++static bool tgt_size_ok(const struct xt_target *tgt, unsigned int tgt_size)
++{
++	u16 csize = tgt->compatsize ? : tgt->targetsize;
++
++	return tgt_size >= csize;
++}
++
+ static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
+ 				enum compat_mwt compat_mwt,
+ 				struct ebt_entries_buf_state *state,
+@@ -1976,6 +1995,11 @@ static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
+ 		if (IS_ERR(match))
+ 			return PTR_ERR(match);
+ 
++		if (!match_size_ok(match, match_size)) {
++			module_put(match->me);
++			return -EINVAL;
++		}
++
+ 		off = ebt_compat_match_offset(match, match_size);
+ 		if (dst) {
+ 			if (match->compat_from_user)
+@@ -1995,6 +2019,12 @@ static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
+ 					    mwt->u.revision);
+ 		if (IS_ERR(wt))
+ 			return PTR_ERR(wt);
++
++		if (!tgt_size_ok(wt, match_size)) {
++			module_put(wt->me);
++			return -EINVAL;
++		}
++
+ 		off = xt_compat_target_offset(wt);
+ 
+ 		if (dst) {
 -- 
 2.53.0
 
