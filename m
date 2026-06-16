@@ -1,47 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CBA44DB61;
-	Tue, 16 Jun 2026 15:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F231645348D;
+	Tue, 16 Jun 2026 15:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624429; cv=none; b=dBYmjnsfZe2njif9f4BK/mXLvrLGVzzyAysGaVuvDH7yCKJubXUaHG8sfM8M/SKnyxG9/lC/F/o6Nt5o4QkPBdD8bh/9kTawLypId6iuVl248FDrDLrp5E8cn6oSGUrVNOINJ/1pNqdOGXePKBHy84rcL/KzNOm+NyQSehthnm0=
+	t=1781624434; cv=none; b=tJ3n3yabmBHx+Rm8Xwa4/vA78D5hhnwsGcSxXotGqiTK8DHLoDa+N3xk69MKHs6tzthIRespYh5YbhRbyA0Hr4FdhiZGTWziG7Lh3VTfOC5Y/+dD1qfR2fHogfzm2s06VsDr6ufEyXKTc4UH6mFXzWGC7Jqp/8ClzmFFyHm5UY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624429; c=relaxed/simple;
-	bh=yLx7GEOXBxeUYawpMq8kenO0cWlxY/hJPNYeyA+1iVU=;
+	s=arc-20240116; t=1781624434; c=relaxed/simple;
+	bh=qJxadt+u5s7NAwo5YT9OGD2NyTKxpfQeaww8n3f2NKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ljcb1e7OKlPJJTeOw3ZVycHHPzANT4OxUpO9H0/A9bJVGEETGnzwiU1skOvZU/L9/4sGA1yZks/et3Q4WZ6IqLVSr6p40rLBfYZRaMf0ACwhrIc8wgGPrx5+CyDu5bLHbGrYmJUuodXWQH1KtVEok4ACArzD3zsTzEpxNo3KCSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qlXjgHTn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u1V+6QbbZCfYZfmlMp5G0Jc0sEIQ1EhQrotZC7aztRTIyT4IztZ4+R0a0ltMijIUh3C3TN5xEX1f/nWcLsS8Y8bQKx6AeCL6w4/rAsaHWgOj7SPHt+0GglH/3Smyuei+ACSoYEnthWhMgeYaDCZ+uA3ugOzV/wWlD2V03wm1kjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLAnov1u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qlXjgHTn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB56E1F000E9;
-	Tue, 16 Jun 2026 15:40:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLAnov1u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7371F000E9;
+	Tue, 16 Jun 2026 15:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624427;
-	bh=+TAc7tW/6OGtYH0czwy+FLs8VBExU63fxJhIk+JC8bU=;
+	s=korg; t=1781624432;
+	bh=fOaA6FVy9xyO8NE5jTubMtKjNV3Rxs9EX3dcSaPs9hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qlXjgHTnZ8MX0axDo25OMZgPt0G4Grv2oXB02yM+nYR6RRRbWehMv2S+hhbo8HxQ4
-	 CjCwRaldwNeepvv5N/iJAY0vJe2dD7ijhCqMQFxygyY5kevAXPnleuT7tMD31lOYhV
-	 G6rm6sP5L8rkPdEJlEd60xeJ0dWPV7PiIokUg/LQ=
+	b=xLAnov1urinxT+cQoLFXYeftqXOe2fonDi3cnA+3Yx70S/mJxgWQ2HpAD66Z+ZP7/
+	 FkxawIDJg9Z75SfLRyREU8ZpXebT+s7F8Mg8R0I2E2Q69g4+0yzTrMRjcTG+oefxaC
+	 53/GbUPkZtGIJWHK7YL21eqhfB0nYX6+5RmU9fts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"DARKNAVY (@DarkNavyOrg)" <vr@darknavy.com>,
-	Simona Vetter <simona.vetter@ffwll.ch>,
-	syzbot+d7c9eed171647e421013@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Dave Airlie <airlied@redhat.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Francis <David.Francis@amd.com>,
-	Puttimet Thammasaeng <pwn8official@gmail.com>,
-	Christian Koenig <Christian.Koenig@amd.com>,
-	Zhenghang Xiao <kipreyyy@gmail.com>
-Subject: [PATCH 7.0 333/378] drm/gem: Try to fix change_handle ioctl, attempt 4
-Date: Tue, 16 Jun 2026 20:29:24 +0530
-Message-ID: <20260616145127.755723966@linuxfoundation.org>
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"Oscar Salvador (SUSE)" <osalvador@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	Zi Yan <ziy@nvidia.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	SeongJae Park <sj@kernel.org>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.0 302/378] mm/huge_memory: use correct flags for device private PMD entry
+Date: Tue, 16 Jun 2026 20:28:53 +0530
+Message-ID: <20260616145126.008933592@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -60,228 +63,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simona Vetter <simona.vetter@ffwll.ch>
+From: Lorenzo Stoakes <ljs@kernel.org>
 
-commit 1a4f03d22fb655e5f192244fb2c87d8066fcfca2 upstream.
+commit 43e7f189769c512c843184a8a5892ac779a6bd90 upstream.
 
-[airlied: just added some comments on how to reenable]
-On-list because the cat is out of the bag and we're clearly not good
-enough to figure this out in private. The story thus far:
+Commit 65edfda6f3f2 ("mm/rmap: extend rmap and migration support
+device-private entries") updated set_pmd_migration_entry() to use
+pmdp_huge_get_and_clear() in the softleaf case, but made no further
+adjustments to the function itself.
 
-5e28b7b94408 ("drm: Set old handle to NULL before prime swap in
-change_handle") tried to fix a race condition between the gem_close and
-gem_change_handle ioctls, but got a few things wrong:
+Therefore this function continues to incorrectly use pmd_write(),
+pmd_soft_dirty() and pmd_uffd_wp() to determine whether the installed
+migration entry should be marked writable, softdirty or uffd-wp
+respectively.
 
-- There's a confusion with the local variable handle, which is actually
-  the new handle, and so the two-stage trick was actually applied to the
-  wrong idr slot. 7164d78559b0 ("drm/gem: fix race between
-  change_handle and handle_delete") tried to fix that by adding yet
-  another code block, but forgot to add the error handling. Which meant
-  we now have two paths, both kinda wrong.
+Whilst all are incorrect, the most problematic of these is pmd_write(), as
+this can lead to corrupted rmap state.
 
-- dc366607c41c ("drm: Replace old pointer to new idr") tried to apply
-  another fix, but inconsistently, again because of the handle confusion
-  - this would be the right fix (kinda, somewhat, it's a mess) if we'd
-  do the two-stage approach for the new handle. Except that wasn't the
-  intent of the original fix.
+On x86-64 _PAGE_SWP_SOFT_DIRTY is aliased to _PAGE_RW.  So calling
+pmd_write() on a softleaf will return the softdirty state encoded in the
+entry, assuming CONFIG_MEM_SOFT_DIRTY was enabled.
 
-We also didn't have an igt merged for the original ioctl, which is a big
-no-go. This was attempted to address off-list in the original bugfix,
-and amd QA people claimed the bug was fixed now. Very clearly that's not
-the case. Here's my attempt to sort this out:
+This was observed when running the hmm.hmm_device_private.anon_write_child
+selftest:
 
-- Rename the local variable to new_handle, the old aliasing with
-  args->handle is just too dangerously confusing.
+1. The test faults in a range then migrates it such that a device-private
+   THP range is established.
 
-- Merge the gem obj lookup with the two-stage idr_replace so that we
-  avoid getting ourselves confused there.
+2. The parent then migrates it to a device-private writable PMD entry whose
+   folio is entirely AnonExclusive with entire_mapcount=1, softdirty set
+   (accidentally correct write state).
 
-- This means we don't have a surplus temporary reference anymore, only
-  an inherited from the idr. A concurrent gem_close on the new_handle
-  could steal that. Fix that with the same two-stage approach
-  create_tail uses. This is a bit overkill as documented in the comment,
-  but I also don't trust my ability to understand this all correctly, so
-  go with the established pattern we have from other ioctls instead for
-  maximum paranoia.
+3. The parent forks and the PMD entries are set to device-private read only
+   entries, entire_mapcount=2, softdirty still set.
 
-- Adjust error paths. I've tried to make the error and success paths
-  common, because they are identical except for which handle is removed
-  and on which we call idr_replace to (re)install the object again. But
-  that made things messier to read, so I've left it at the more verbose
-  version, which unfortunately hides the symmetry in the entire code
-  flow a bit.
+4. [BUG] The child writes to the range then migrates to RAM - intending to
+   install non-writable migration entries - but replacing parent and child
+   PMD mappings with WRITABLE entries due to misinterpreting the softdirty
+   bit.
 
-- While at it, also replace the 7 space indent with 1 tab.
+5. In remove_migration_pmd(), if !softleaf_is_migration_read(entry) we
+   set the RMAP_EXCLUSIVE flag when calling folio_add_anon_rmap_pmd() for
+   both parent and child, which are therefore AnonExclusive.
 
-And finally, because I flat out don't trust my abilities here at all
-anymore:
+6. [SPLAT] Child sets migrated folio entire_mapcount=1, parent sets
+   entire_mapcount=2 and we end up with an AnonExclusive folio with
+   entire_mapcount=2! Assert fires in __folio_add_anon_rmap():
 
-- Disable the ioctl until we have the igt situation and everything else
-  sorted out on-list and with full consensus.
+		VM_WARN_ON_FOLIO(folio_test_large(folio) &&
+				 folio_entire_mapcount(folio) > 1 &&
+				 PageAnonExclusive(cur_page), folio)
 
-v2:
+This patch fixes the issue by correctly referencing the softleaf entry
+fields for writable, softdirty and uffd-wp in set_pmd_migration_entry().
 
-Sashiko noticed that I didn't handle the error path for idr_replace
-correctly, it must be checked with IS_ERR_OR_NULL like in
-gem_handle_delete. So yeah, definitely should just the existing paths
-1:1 because this is endless amounts of tricky.
+It also only updates A/D flags if the entry is present as these are
+otherwise not meaningful for a softleaf entry.
 
-Also add the Fixes: line for the original ioctl, I forgot that too.
+This patch also flips the if (!present) { ...  } else { ...  } logic in
+set_pmd_migration_entry() so it is easier to understand, and adds some
+comments to make things clearer.
 
-Reported-by: DARKNAVY (@DarkNavyOrg) <vr@darknavy.com>
-Signed-off-by: Simona Vetter <simona.vetter@ffwll.ch>
-Fixes: dc366607c41c ("drm: Replace old pointer to new idr")
-Cc: syzbot+d7c9eed171647e421013@syzkaller.appspotmail.com
-Cc: stable@vger.kernel.org
-Cc: Edward Adam Davis <eadavis@qq.com>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 5e28b7b94408 ("drm: Set old handle to NULL before prime swap in change_handle")
-Cc: David Francis <David.Francis@amd.com>
-Cc: Puttimet Thammasaeng <pwn8official@gmail.com>
-Cc: Christian Koenig <Christian.Koenig@amd.com>
-Fixes: 7164d78559b0 ("drm/gem: fix race between change_handle and handle_delete")
-Cc: Zhenghang Xiao <kipreyyy@gmail.com>
-Fixes: 5e28b7b94408 ("drm: Set old handle to NULL before prime swap in change_handle")
-Reviewed-by: David Francis <David.Francis@amd.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20260604194437.1725314-1-simona.vetter@ffwll.ch
+I was able to bisect this to commit 775465fd26a3 ("lib/test_hmm: add zone
+device private THP test infrastructure") which first exposes this bug as
+it was the commit that permitted test_hmm to generate the test.
+
+However commit 65edfda6f3f2 ("mm/rmap: extend rmap and migration support
+device-private entries") is the commit that actually enabled this
+behaviour.
+
+Link: https://lore.kernel.org/20260601083044.57132-1-ljs@kernel.org
+Fixes: 65edfda6f3f2 ("mm/rmap: extend rmap and migration support device-private entries")
+Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Oscar Salvador (SUSE) <osalvador@kernel.org>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: SeongJae Park <sj@kernel.org>
+Cc: Wei Yang <richard.weiyang@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_gem.c   |   73 ++++++++++++++++++++------------------------
- drivers/gpu/drm/drm_ioctl.c |    3 +
- 2 files changed, 36 insertions(+), 40 deletions(-)
+ mm/huge_memory.c |   45 +++++++++++++++++++++++++++++++++------------
+ 1 file changed, 33 insertions(+), 12 deletions(-)
 
---- a/drivers/gpu/drm/drm_gem.c
-+++ b/drivers/gpu/drm/drm_gem.c
-@@ -997,12 +997,25 @@ err:
- 	return ret;
- }
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -4873,7 +4873,7 @@ int set_pmd_migration_entry(struct page_
+ 	struct vm_area_struct *vma = pvmw->vma;
+ 	struct mm_struct *mm = vma->vm_mm;
+ 	unsigned long address = pvmw->address;
+-	bool anon_exclusive;
++	bool anon_exclusive, present, writable, softdirty, uffd_wp;
+ 	pmd_t pmdval;
+ 	swp_entry_t entry;
+ 	pmd_t pmdswp;
+@@ -4881,12 +4881,26 @@ int set_pmd_migration_entry(struct page_
+ 	if (!(pvmw->pmd && !pvmw->pte))
+ 		return 0;
  
-+/*
-+ * This ioctl is disabled for security reasons but also it failed
-+ * to follow process in terms of adding testing in igt and verifying
-+ * all the corner cases which made fixing security bugs in it even
-+ * harder than necessary.
-+ *
-+ * To re-enable this ioctl
-+ * 1. land working IGT tests in igt-gpu-tools that cover
-+ *    all corner cases and race conditions.
-+ * 2. handle idr_preload
-+ * 3. handle == 0
-+ * 4. handle == new_handle semantics definition.
-+ */
- int drm_gem_change_handle_ioctl(struct drm_device *dev, void *data,
- 				struct drm_file *file_priv)
- {
- 	struct drm_gem_change_handle *args = data;
--	struct drm_gem_object *obj, *idrobj;
--	int handle, ret;
-+	struct drm_gem_object *obj;
-+	int new_handle, ret;
+-	flush_cache_range(vma, address, address + HPAGE_PMD_SIZE);
+-	if (unlikely(!pmd_present(*pvmw->pmd)))
+-		pmdval = pmdp_huge_get_and_clear(vma->vm_mm, address, pvmw->pmd);
+-	else
++	present = pmd_present(*pvmw->pmd);
++	if (likely(present)) {
++		flush_cache_range(vma, address, address + HPAGE_PMD_SIZE);
++
+ 		pmdval = pmdp_invalidate(vma, address, pvmw->pmd);
  
- 	if (!drm_core_check_feature(dev, DRIVER_GEM))
- 		return -EOPNOTSUPP;
-@@ -1010,52 +1023,36 @@ int drm_gem_change_handle_ioctl(struct d
- 	/* idr_alloc() limitation. */
- 	if (args->new_handle > INT_MAX)
- 		return -EINVAL;
--	handle = args->new_handle;
-+	new_handle = args->new_handle;
- 
--	obj = drm_gem_object_lookup(file_priv, args->handle);
--	if (!obj)
--		return -ENOENT;
--
--	if (args->handle == handle) {
--		ret = 0;
--		goto out;
--	}
-+	if (args->handle == new_handle)
-+		return 0;
- 
- 	mutex_lock(&file_priv->prime.lock);
--
- 	spin_lock(&file_priv->table_lock);
--
--       /* When create_tail allocs an obj idr, it needs to first alloc as NULL,
--	* then later replace with the correct object. This is not necessary
--	* here, because the only operations that could race are drm_prime
--	* bookkeeping, and we hold the prime lock.
--	*/
--	ret = idr_alloc(&file_priv->object_idr, obj, handle, handle + 1,
-+	ret = idr_alloc(&file_priv->object_idr, NULL, new_handle, new_handle + 1,
- 			GFP_NOWAIT);
- 
--       if (ret < 0) {
--	       spin_unlock(&file_priv->table_lock);
--	       goto out_unlock;
--       }
--
--       idrobj = idr_replace(&file_priv->object_idr, NULL, handle);
--       if (idrobj != obj) {
--	       idr_replace(&file_priv->object_idr, idrobj, handle);
--	       idr_remove(&file_priv->object_idr, args->new_handle);
--	       spin_unlock(&file_priv->table_lock);
--	       ret = -ENOENT;
--	       goto out_unlock;
--       }
-+	if (ret < 0) {
-+		spin_unlock(&file_priv->table_lock);
-+		goto out_unlock;
++		writable = pmd_write(pmdval);
++		softdirty = pmd_soft_dirty(pmdval);
++		uffd_wp = pmd_uffd_wp(pmdval);
++	} else {
++		softleaf_t old_entry;
++
++		pmdval = pmdp_huge_get_and_clear(vma->vm_mm, address, pvmw->pmd);
++		old_entry = softleaf_from_pmd(pmdval);
++
++		writable = softleaf_is_device_private_write(old_entry);
++		softdirty = pmd_swp_soft_dirty(pmdval);
++		uffd_wp = pmd_swp_uffd_wp(pmdval);
 +	}
++
+ 	/* See folio_try_share_anon_rmap_pmd(): invalidate PMD first. */
+ 	anon_exclusive = folio_test_anon(folio) && PageAnonExclusive(page);
+ 	if (anon_exclusive && folio_try_share_anon_rmap_pmd(folio, page)) {
+@@ -4894,24 +4908,31 @@ int set_pmd_migration_entry(struct page_
+ 		return -EBUSY;
+ 	}
  
--	idr_replace(&file_priv->object_idr, NULL, args->handle);
-+	obj = idr_replace(&file_priv->object_idr, NULL, args->handle);
-+	if (IS_ERR_OR_NULL(obj)) {
-+		idr_remove(&file_priv->object_idr, new_handle);
-+		spin_unlock(&file_priv->table_lock);
-+		ret = -ENOENT;
-+		goto out_unlock;
+-	if (pmd_dirty(pmdval))
+-		folio_mark_dirty(folio);
+-	if (pmd_write(pmdval))
++	/* Determine type of migration entry. */
++	if (writable)
+ 		entry = make_writable_migration_entry(page_to_pfn(page));
+ 	else if (anon_exclusive)
+ 		entry = make_readable_exclusive_migration_entry(page_to_pfn(page));
+ 	else
+ 		entry = make_readable_migration_entry(page_to_pfn(page));
+-	if (pmd_young(pmdval))
++
++	/* Set A/D bits as necessary. */
++	if (present && pmd_young(pmdval))
+ 		entry = make_migration_entry_young(entry);
+-	if (pmd_dirty(pmdval))
++	if (present && pmd_dirty(pmdval)) {
++		folio_mark_dirty(folio);
+ 		entry = make_migration_entry_dirty(entry);
 +	}
- 	spin_unlock(&file_priv->table_lock);
- 
- 	if (obj->dma_buf) {
- 		ret = drm_prime_add_buf_handle(&file_priv->prime, obj->dma_buf,
--					       handle);
-+					       new_handle);
- 		if (ret < 0) {
- 			spin_lock(&file_priv->table_lock);
--			idr_remove(&file_priv->object_idr, handle);
-+			idr_remove(&file_priv->object_idr, new_handle);
- 			idr_replace(&file_priv->object_idr, obj, args->handle);
- 			spin_unlock(&file_priv->table_lock);
- 			goto out_unlock;
-@@ -1068,14 +1065,12 @@ int drm_gem_change_handle_ioctl(struct d
- 
- 	spin_lock(&file_priv->table_lock);
- 	idr_remove(&file_priv->object_idr, args->handle);
--	idrobj = idr_replace(&file_priv->object_idr, obj, handle);
-+	obj = idr_replace(&file_priv->object_idr, obj, new_handle);
- 	spin_unlock(&file_priv->table_lock);
--	WARN_ON(idrobj != NULL);
-+	WARN_ON(obj != NULL);
- 
- out_unlock:
- 	mutex_unlock(&file_priv->prime.lock);
--out:
--	drm_gem_object_put(obj);
- 
- 	return ret;
- }
---- a/drivers/gpu/drm/drm_ioctl.c
-+++ b/drivers/gpu/drm/drm_ioctl.c
-@@ -660,7 +660,8 @@ static const struct drm_ioctl_desc drm_i
- 	DRM_IOCTL_DEF(DRM_IOCTL_GEM_CLOSE, drm_gem_close_ioctl, DRM_RENDER_ALLOW),
- 	DRM_IOCTL_DEF(DRM_IOCTL_GEM_FLINK, drm_gem_flink_ioctl, DRM_AUTH),
- 	DRM_IOCTL_DEF(DRM_IOCTL_GEM_OPEN, drm_gem_open_ioctl, DRM_AUTH),
--	DRM_IOCTL_DEF(DRM_IOCTL_GEM_CHANGE_HANDLE, drm_gem_change_handle_ioctl, DRM_RENDER_ALLOW),
-+	/* see drm_gem.c:drm_gem_change_handle_ioctl for why this is invalid */
-+	DRM_IOCTL_DEF(DRM_IOCTL_GEM_CHANGE_HANDLE, drm_invalid_op, DRM_RENDER_ALLOW),
- 
- 	DRM_IOCTL_DEF(DRM_IOCTL_MODE_GETRESOURCES, drm_mode_getresources, 0),
- 
++
++	/* Set PMD. */
+ 	pmdswp = swp_entry_to_pmd(entry);
+-	if (pmd_soft_dirty(pmdval))
++	if (softdirty)
+ 		pmdswp = pmd_swp_mksoft_dirty(pmdswp);
+-	if (pmd_uffd_wp(pmdval))
++	if (uffd_wp)
+ 		pmdswp = pmd_swp_mkuffd_wp(pmdswp);
+ 	set_pmd_at(mm, address, pvmw->pmd, pmdswp);
++
++	/* Migration entry installed: cleanup rmap, folio. */
+ 	folio_remove_rmap_pmd(folio, page, vma);
+ 	folio_put(folio);
+ 	trace_set_migration_pmd(address, pmd_val(pmdswp));
 
 
