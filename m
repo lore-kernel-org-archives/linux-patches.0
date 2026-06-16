@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B100243CEC7;
-	Tue, 16 Jun 2026 18:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9ADC47A0CD;
+	Tue, 16 Jun 2026 18:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634581; cv=none; b=HR0h2LN+DP9J4TPqJTK1ryPEotfOH/CFlMqu+zS7/47t8wKlXCbWNnNv3Wl+eOinskJrM8EtCZNFsPiq+tjcFQx6CfaYzkxIM9kNnnUS0wd9KVJ85tfRpaSXu09hmEHxxnxMwwnWCxdSX61n4IT6PTPBdyzqNM6AYJb7KmlE0w8=
+	t=1781634586; cv=none; b=MlIdXEOHF3Uk8Tliy4Iynfh9zfh2A+090aNdHmCt2+fsXs3/tFgFaB0y/tqNXiqJZ0caKKoNwt41CZE4njXEQyhTOZ8PqsDbvkTE+xA+heECsNbAW2Z0qQt2OYOzwZeYifzvgNS34r3NiTYufHdVMTIgT9yRQm8JHC61pkges6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634581; c=relaxed/simple;
-	bh=VpToJGlv3d9oNVPyBPrxAIDR0PwXDfBQqTAkOa4sREI=;
+	s=arc-20240116; t=1781634586; c=relaxed/simple;
+	bh=nTlL5Gpw3zt4VuUO3JxkHzYxB5V1S4qe+I2AvRpTmo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sa8iOjGnh8+MAlbM2zIYgPQNYsK5Nxd+QbylhYX09oofpu7u3A9j4G8pODFWPWAb6RABIvAiikwWFcd10IbjzsUwttQv0W2lcvPcv7iN3lDtlqOUzIvApT8R4XXHGlHy2B5JgF3a2aMBvr80UYfAe3ZiUBD9bb/JxE8u0Rvihdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLNfsV8c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Avt2+jlJxnKoAsEz7/2saXFddUBrEkHiCIAASJgwiPe3NxsFdoBMY4/kc15/pz/g4U0F0/mAq8k/EjgzLl5ZhO28nT72zyThnvgOGnsTMnUTWJuTau9cSWpb3XwwHsX7wqwroa81C78JRdG6cIaR3n0dfgHAnQv7YoATOGI5Gzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UThe9pU3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLNfsV8c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A8D1F000E9;
-	Tue, 16 Jun 2026 18:29:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UThe9pU3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF5E61F00A3A;
+	Tue, 16 Jun 2026 18:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634580;
-	bh=Xi2sX6Zopo/KOYqDSFXk8X7MlBRvFGFB0Ma5zP7kpec=;
+	s=korg; t=1781634585;
+	bh=p/tGtc5w1wIkgFr/rxF/KDVf9PflvBZtdR1bih0BOEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uLNfsV8cOoDSKOoJwVM1UoR8ixPmpiswhmUF38BjAuH7FxgTPZBzFpp6PSmTzU5y+
-	 fZoZ3UsNBrGgVACBPirz2Nvfp31FEdrwnYRP3KZabsFHY6ta1yaqetkzlXoRUSxpYS
-	 lD0heyA8qJhIaAo88fhZemkN1ym8VhMLAo5NMh6s=
+	b=UThe9pU3707ZcNErrNe2+AdUEWEImO5P6AA47zZDaEhNv9yLeTAsbn2rBdutC4Z8b
+	 okM5vn5N89/o1bvOPb5kai0AKuxXea/vazIJuqbh2eVBITqxXbJci+JCKr0fwIK6jF
+	 ok2ZpZymDDCJsanty5s+NMWgkvceTRzcWQm4EqAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Jimmy Hon <honyuenkwun@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 291/411] crypto: nx - Migrate to scomp API
-Date: Tue, 16 Jun 2026 20:28:49 +0530
-Message-ID: <20260616145116.617085956@linuxfoundation.org>
+Subject: [PATCH 5.15 260/411] rtw88: 8821ce: Disable PCIe ASPM L1 for 8821CE using chip ID
+Date: Tue, 16 Jun 2026 20:28:18 +0530
+Message-ID: <20260616145114.838080524@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -51,276 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Jimmy Hon <honyuenkwun@gmail.com>
 
-[ Upstream commit 980b5705f4e73f567e405cd18337cc32fd51cf79 ]
+[ Upstream commit b9eb5f0742d107ca9c0f33da58f61ce83e3ce2fc ]
 
-The only remaining user of 842 compression has been migrated to the
-acomp compression API, and so the NX hardware driver has to follow suit,
-given that no users of the obsolete 'comp' API remain, and it is going
-to be removed.
+Make workaround work for other 8821CE devices with different PCI ID
 
-So migrate the NX driver code to scomp. These will be wrapped and
-exposed as acomp implementation via the crypto subsystem's
-acomp-to-scomp adaptation layer.
-
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: adb3faf2db1a ("crypto: nx - fix bounce buffer leaks in nx842_crypto_{alloc,free}_ctx")
+Signed-off-by: Jimmy Hon <honyuenkwun@gmail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20220407075123.420696-3-honyuenkwun@gmail.com
+Stable-dep-of: eb101d2abdcc ("wifi: rtw88: check for PCI upstream bridge existence")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/nx/nx-842.c            |   33 +++++++++++++++++++--------------
- drivers/crypto/nx/nx-842.h            |   14 ++++++++------
- drivers/crypto/nx/nx-common-powernv.c |   31 +++++++++++++++----------------
- drivers/crypto/nx/nx-common-pseries.c |   33 ++++++++++++++++-----------------
- 4 files changed, 58 insertions(+), 53 deletions(-)
+ drivers/net/wireless/realtek/rtw88/pci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/crypto/nx/nx-842.c
-+++ b/drivers/crypto/nx/nx-842.c
-@@ -101,9 +101,13 @@ static int update_param(struct nx842_cry
- 	return 0;
- }
- 
--int nx842_crypto_init(struct crypto_tfm *tfm, struct nx842_driver *driver)
-+void *nx842_crypto_alloc_ctx(struct nx842_driver *driver)
- {
--	struct nx842_crypto_ctx *ctx = crypto_tfm_ctx(tfm);
-+	struct nx842_crypto_ctx *ctx;
-+
-+	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
-+	if (!ctx)
-+		return ERR_PTR(-ENOMEM);
- 
- 	spin_lock_init(&ctx->lock);
- 	ctx->driver = driver;
-@@ -114,22 +118,23 @@ int nx842_crypto_init(struct crypto_tfm
- 		kfree(ctx->wmem);
- 		free_page((unsigned long)ctx->sbounce);
- 		free_page((unsigned long)ctx->dbounce);
--		return -ENOMEM;
-+		kfree(ctx);
-+		return ERR_PTR(-ENOMEM);
+--- a/drivers/net/wireless/realtek/rtw88/pci.c
++++ b/drivers/net/wireless/realtek/rtw88/pci.c
+@@ -1766,7 +1766,7 @@ int rtw_pci_probe(struct pci_dev *pdev,
  	}
  
--	return 0;
-+	return ctx;
- }
--EXPORT_SYMBOL_GPL(nx842_crypto_init);
-+EXPORT_SYMBOL_GPL(nx842_crypto_alloc_ctx);
+ 	/* Disable PCIe ASPM L1 while doing NAPI poll for 8821CE */
+-	if (pdev->device == 0xc821 && bridge->vendor == PCI_VENDOR_ID_INTEL)
++	if (rtwdev->chip->id == RTW_CHIP_TYPE_8821C && bridge->vendor == PCI_VENDOR_ID_INTEL)
+ 		rtwpci->rx_no_aspm = true;
  
--void nx842_crypto_exit(struct crypto_tfm *tfm)
-+void nx842_crypto_free_ctx(void *p)
- {
--	struct nx842_crypto_ctx *ctx = crypto_tfm_ctx(tfm);
-+	struct nx842_crypto_ctx *ctx = p;
- 
- 	kfree(ctx->wmem);
- 	free_page((unsigned long)ctx->sbounce);
- 	free_page((unsigned long)ctx->dbounce);
- }
--EXPORT_SYMBOL_GPL(nx842_crypto_exit);
-+EXPORT_SYMBOL_GPL(nx842_crypto_free_ctx);
- 
- static void check_constraints(struct nx842_constraints *c)
- {
-@@ -246,11 +251,11 @@ nospc:
- 	return update_param(p, slen, dskip + dlen);
- }
- 
--int nx842_crypto_compress(struct crypto_tfm *tfm,
-+int nx842_crypto_compress(struct crypto_scomp *tfm,
- 			  const u8 *src, unsigned int slen,
--			  u8 *dst, unsigned int *dlen)
-+			  u8 *dst, unsigned int *dlen, void *pctx)
- {
--	struct nx842_crypto_ctx *ctx = crypto_tfm_ctx(tfm);
-+	struct nx842_crypto_ctx *ctx = pctx;
- 	struct nx842_crypto_header *hdr =
- 				container_of(&ctx->header,
- 					     struct nx842_crypto_header, hdr);
-@@ -431,11 +436,11 @@ usesw:
- 	return update_param(p, slen + padding, dlen);
- }
- 
--int nx842_crypto_decompress(struct crypto_tfm *tfm,
-+int nx842_crypto_decompress(struct crypto_scomp *tfm,
- 			    const u8 *src, unsigned int slen,
--			    u8 *dst, unsigned int *dlen)
-+			    u8 *dst, unsigned int *dlen, void *pctx)
- {
--	struct nx842_crypto_ctx *ctx = crypto_tfm_ctx(tfm);
-+	struct nx842_crypto_ctx *ctx = pctx;
- 	struct nx842_crypto_header *hdr;
- 	struct nx842_crypto_param p;
- 	struct nx842_constraints c = *ctx->driver->constraints;
---- a/drivers/crypto/nx/nx-842.h
-+++ b/drivers/crypto/nx/nx-842.h
-@@ -101,6 +101,8 @@
- #define LEN_ON_SIZE(pa, size)	((size) - ((pa) & ((size) - 1)))
- #define LEN_ON_PAGE(pa)		LEN_ON_SIZE(pa, PAGE_SIZE)
- 
-+struct crypto_scomp;
-+
- static inline unsigned long nx842_get_pa(void *addr)
- {
- 	if (!is_vmalloc_addr(addr))
-@@ -179,13 +181,13 @@ struct nx842_crypto_ctx {
- 	struct nx842_driver *driver;
- };
- 
--int nx842_crypto_init(struct crypto_tfm *tfm, struct nx842_driver *driver);
--void nx842_crypto_exit(struct crypto_tfm *tfm);
--int nx842_crypto_compress(struct crypto_tfm *tfm,
-+void *nx842_crypto_alloc_ctx(struct nx842_driver *driver);
-+void nx842_crypto_free_ctx(void *ctx);
-+int nx842_crypto_compress(struct crypto_scomp *tfm,
- 			  const u8 *src, unsigned int slen,
--			  u8 *dst, unsigned int *dlen);
--int nx842_crypto_decompress(struct crypto_tfm *tfm,
-+			  u8 *dst, unsigned int *dlen, void *ctx);
-+int nx842_crypto_decompress(struct crypto_scomp *tfm,
- 			    const u8 *src, unsigned int slen,
--			    u8 *dst, unsigned int *dlen);
-+			    u8 *dst, unsigned int *dlen, void *ctx);
- 
- #endif /* __NX_842_H__ */
---- a/drivers/crypto/nx/nx-common-powernv.c
-+++ b/drivers/crypto/nx/nx-common-powernv.c
-@@ -9,6 +9,7 @@
- 
- #include "nx-842.h"
- 
-+#include <crypto/internal/scompress.h>
- #include <linux/timer.h>
- 
- #include <asm/prom.h>
-@@ -1034,23 +1035,21 @@ static struct nx842_driver nx842_powernv
- 	.decompress =	nx842_powernv_decompress,
- };
- 
--static int nx842_powernv_crypto_init(struct crypto_tfm *tfm)
-+static void *nx842_powernv_crypto_alloc_ctx(void)
- {
--	return nx842_crypto_init(tfm, &nx842_powernv_driver);
-+	return nx842_crypto_alloc_ctx(&nx842_powernv_driver);
- }
- 
--static struct crypto_alg nx842_powernv_alg = {
--	.cra_name		= "842",
--	.cra_driver_name	= "842-nx",
--	.cra_priority		= 300,
--	.cra_flags		= CRYPTO_ALG_TYPE_COMPRESS,
--	.cra_ctxsize		= sizeof(struct nx842_crypto_ctx),
--	.cra_module		= THIS_MODULE,
--	.cra_init		= nx842_powernv_crypto_init,
--	.cra_exit		= nx842_crypto_exit,
--	.cra_u			= { .compress = {
--	.coa_compress		= nx842_crypto_compress,
--	.coa_decompress		= nx842_crypto_decompress } }
-+static struct scomp_alg nx842_powernv_alg = {
-+	.base.cra_name		= "842",
-+	.base.cra_driver_name	= "842-nx",
-+	.base.cra_priority	= 300,
-+	.base.cra_module	= THIS_MODULE,
-+
-+	.alloc_ctx		= nx842_powernv_crypto_alloc_ctx,
-+	.free_ctx		= nx842_crypto_free_ctx,
-+	.compress		= nx842_crypto_compress,
-+	.decompress		= nx842_crypto_decompress,
- };
- 
- static __init int nx_compress_powernv_init(void)
-@@ -1110,7 +1109,7 @@ static __init int nx_compress_powernv_in
- 		nx842_powernv_exec = nx842_exec_vas;
- 	}
- 
--	ret = crypto_register_alg(&nx842_powernv_alg);
-+	ret = crypto_register_scomp(&nx842_powernv_alg);
- 	if (ret) {
- 		nx_delete_coprocs();
- 		return ret;
-@@ -1131,7 +1130,7 @@ static void __exit nx_compress_powernv_e
- 	if (!nx842_ct)
- 		vas_unregister_api_powernv();
- 
--	crypto_unregister_alg(&nx842_powernv_alg);
-+	crypto_unregister_scomp(&nx842_powernv_alg);
- 
- 	nx_delete_coprocs();
- }
---- a/drivers/crypto/nx/nx-common-pseries.c
-+++ b/drivers/crypto/nx/nx-common-pseries.c
-@@ -11,6 +11,7 @@
- #include <asm/vio.h>
- #include <asm/hvcall.h>
- #include <asm/vas.h>
-+#include <crypto/internal/scompress.h>
- 
- #include "nx-842.h"
- #include "nx_csbcpb.h" /* struct nx_csbcpb */
-@@ -1006,23 +1007,21 @@ static struct nx842_driver nx842_pseries
- 	.decompress =	nx842_pseries_decompress,
- };
- 
--static int nx842_pseries_crypto_init(struct crypto_tfm *tfm)
-+static void *nx842_pseries_crypto_alloc_ctx(void)
- {
--	return nx842_crypto_init(tfm, &nx842_pseries_driver);
-+	return nx842_crypto_alloc_ctx(&nx842_pseries_driver);
- }
- 
--static struct crypto_alg nx842_pseries_alg = {
--	.cra_name		= "842",
--	.cra_driver_name	= "842-nx",
--	.cra_priority		= 300,
--	.cra_flags		= CRYPTO_ALG_TYPE_COMPRESS,
--	.cra_ctxsize		= sizeof(struct nx842_crypto_ctx),
--	.cra_module		= THIS_MODULE,
--	.cra_init		= nx842_pseries_crypto_init,
--	.cra_exit		= nx842_crypto_exit,
--	.cra_u			= { .compress = {
--	.coa_compress		= nx842_crypto_compress,
--	.coa_decompress		= nx842_crypto_decompress } }
-+static struct scomp_alg nx842_pseries_alg = {
-+	.base.cra_name		= "842",
-+	.base.cra_driver_name	= "842-nx",
-+	.base.cra_priority	= 300,
-+	.base.cra_module	= THIS_MODULE,
-+
-+	.alloc_ctx		= nx842_pseries_crypto_alloc_ctx,
-+	.free_ctx		= nx842_crypto_free_ctx,
-+	.compress		= nx842_crypto_compress,
-+	.decompress		= nx842_crypto_decompress,
- };
- 
- static int nx842_probe(struct vio_dev *viodev,
-@@ -1070,7 +1069,7 @@ static int nx842_probe(struct vio_dev *v
- 	if (ret)
- 		goto error;
- 
--	ret = crypto_register_alg(&nx842_pseries_alg);
-+	ret = crypto_register_scomp(&nx842_pseries_alg);
- 	if (ret) {
- 		dev_err(&viodev->dev, "could not register comp alg: %d\n", ret);
- 		goto error;
-@@ -1118,7 +1117,7 @@ static void nx842_remove(struct vio_dev
- 	if (caps_feat)
- 		sysfs_remove_group(&viodev->dev.kobj, &nxcop_caps_attr_group);
- 
--	crypto_unregister_alg(&nx842_pseries_alg);
-+	crypto_unregister_scomp(&nx842_pseries_alg);
- 
- 	spin_lock_irqsave(&devdata_mutex, flags);
- 	old_devdata = rcu_dereference_check(devdata,
-@@ -1247,7 +1246,7 @@ static void __exit nx842_pseries_exit(vo
- 
- 	vas_unregister_api_pseries();
- 
--	crypto_unregister_alg(&nx842_pseries_alg);
-+	crypto_unregister_scomp(&nx842_pseries_alg);
- 
- 	spin_lock_irqsave(&devdata_mutex, flags);
- 	old_devdata = rcu_dereference_check(devdata,
+ 	rtw_pci_phy_cfg(rtwdev);
 
 
