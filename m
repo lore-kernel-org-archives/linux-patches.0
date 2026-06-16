@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7A833688F;
-	Tue, 16 Jun 2026 16:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8720B44BCB8;
+	Tue, 16 Jun 2026 16:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626297; cv=none; b=kpZUsMcUx2tOu0B2O7awZf2r5sq/m7NikJ672faiGJZ7QMmBizpoSY2Ym6d6nFVENy5NuPiLrxgidUQkjkoz2J7OTS8tYvce1qNLWwFwb6gwXasOuEaEz4mYNnOmO77+8MosDFnZBo4+07ytsmNCBAOPYgm0yFqgupMd1KeRiGc=
+	t=1781626309; cv=none; b=aSLThwO5LP9dM7tw/ewAw2UzcI5MJ9zpRZ5JhFoOgWXEqXmYFMEoHnK+9ycf/xKYDI7UNJXETC+Z8Wl2jqYhhf0GpH7TIyLqx1v4u3D5U2vDggGo0lJa7TPN3hpWm0jcBw24USLsrKyA1k/7aSGrDioIWNXmcuThYhw1yCJCJIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626297; c=relaxed/simple;
-	bh=MiKL/U7LHuc1wDulqXreuzc2c4Vv7KfScloidDszlrk=;
+	s=arc-20240116; t=1781626309; c=relaxed/simple;
+	bh=kWN1MhWVhJKeKbTpPx3pNs3wb+QOC1cDy8DLsZ6+jIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=joorcnVKp9y8LEAEFvRPrY1i1PD743I9hPeUQUsDaKsYliwEbxtsnoO939d5FdzSuvPNs6GodiBEGRi5mP47LIOvi/+1oxdZ1F4LDLlP+uSweFuiNIC1z6RrNacWk5H9hkeOsFbETYalw56UpxMgx4EAOkGlFvHg8LdpWNU+1N0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuZzsw98; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q+Q9T1O9p8ztfrZOzlyzGuvCTBMqfeY1nmuSdIowmMflndrfFCHNcOgJPn8K4OV51+TITehDlZs2rXqmyppmnetLjiw7MZK5ONtRpQy7bMUxTngvUTvgWBVzAXUYHuHIWui34nhym0h7yNNV+X0teY7m9rbuxzJjzRG8hXjYJ2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQpUT9oN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuZzsw98"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 110551F000E9;
-	Tue, 16 Jun 2026 16:11:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQpUT9oN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B761F000E9;
+	Tue, 16 Jun 2026 16:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626296;
-	bh=4w6WT6TTACHoeJtvIhMyqZxJn4YUS9G1cJJ2aroN6a4=;
+	s=korg; t=1781626308;
+	bh=+Bhn9Vqrp1cDd10VYeJxqH/g0UsI3e1AscW1bpwOe1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yuZzsw98tw66mV/dz4Qji9d4ifravMAwmDspa6XKQ/I/yMiH2+ntVGNdVnEWn/Uf4
-	 CLJTiSQTAryzgTD19lWhE3ijAEcvXX4V8VT+NXkQAeEsMe9u/rduoBl1o+qF9Sbo7s
-	 uEyooRZFO/A7rZ2KKvli2sdm7qOHrB4Tqm8C8lGA=
+	b=mQpUT9oNDRLTrXa88ITLol4cqxMZaayAP5toRdVRvyshSqzYmTMr3gEdbbzR7cfxe
+	 Lmn3/nroL0HR6T5AZtCQPHWNk4n1+IdnjjJ3VJ0ijllwqolfNS0gRCPxnvusbGfXpJ
+	 LUzSdAqW1TBKzvjJrQl1PMXWiJXNQ1AtxOihrMRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leorize <leorize+oss@disroot.org>,
-	Alex Hung <alex.hung@amd.com>,
+	Muhammad Bilal <meatuni001@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 300/325] drm/amd/display: add missing CSC entries for BT.2020 for DCE IPs
-Date: Tue, 16 Jun 2026 20:31:36 +0530
-Message-ID: <20260616145113.877235221@linuxfoundation.org>
+Subject: [PATCH 6.18 283/325] drm/amdkfd: fix NULL dereference in get_queue_ids()
+Date: Tue, 16 Jun 2026 20:31:19 +0530
+Message-ID: <20260616145112.839229553@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -51,69 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leorize <leorize+oss@disroot.org>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 6590fe323ce2807f5d9454e7fccf3fab875d4352 upstream.
+commit 2bd550b547deabef98bd3b017ff743b7c34d3a6d upstream.
 
-DCE-based hardware does not have the CSC matrices for BT.2020, which
-causes the driver to fallback to the GPU built-in matrices. This does
-not appear to cause any issues for RGB sinks, but causes major color
-artifacts for YCbCr ones (e.g. black becomes green).
+When usr_queue_id_array is NULL and num_queues is non-zero,
+get_queue_ids() returns NULL. The callers check only IS_ERR() on the
+return value; since IS_ERR(NULL) == false the check passes, and
+suspend_queues() calls q_array_invalidate() which immediately
+dereferences NULL while iterating num_queues times.
 
-This commit adds the missing CSC matrices (taken from DC common) to DCE
-CSC tables, resolving the issue.
+Userspace can trigger this via kfd_ioctl_set_debug_trap() by supplying
+num_queues > 0 with a zero queue_array_ptr, causing a kernel panic.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/3358
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5333
-Assisted-by: oh-my-pi:GPT-5.5
-Signed-off-by: Leorize <leorize+oss@disroot.org>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
+A NULL usr_queue_id_array with num_queues == 0 is a legitimate no-op
+(q_array_invalidate never executes, and resume_queues already guards
+all queue_ids dereferences behind a NULL check). Return ERR_PTR(-EINVAL)
+only when num_queues is non-zero and the pointer is absent; both callers
+already propagate IS_ERR() returns correctly to userspace.
+
+Fixes: a70a93fa568b ("drm/amdkfd: add debug suspend and resume process queues operation")
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 51e6668ab4baf55b082c376318d51ef965757196)
+(cherry picked from commit f165a82cdf503884bb1797771c61b2fcc72113d4)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce/dce_transform.c       |   10 +++++++++-
- drivers/gpu/drm/amd/display/dc/dce110/dce110_opp_csc_v.c |   10 +++++++++-
- 2 files changed, 18 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
-@@ -110,7 +110,15 @@ static const struct out_csc_color_matrix
- { COLOR_SPACE_YCBCR601_LIMITED, { 0xE00, 0xF447, 0xFDB9, 0x1000, 0x991,
- 	0x12C9, 0x3A6, 0x200, 0xFB47, 0xF6B9, 0xE00, 0x1000} },
- { COLOR_SPACE_YCBCR709_LIMITED, { 0xE00, 0xF349, 0xFEB7, 0x1000, 0x6CE, 0x16E3,
--	0x24F, 0x200, 0xFCCB, 0xF535, 0xE00, 0x1000} }
-+	0x24F, 0x200, 0xFCCB, 0xF535, 0xE00, 0x1000} },
-+{ COLOR_SPACE_2020_RGB_FULLRANGE,
-+	{ 0x2000, 0, 0, 0, 0, 0x2000, 0, 0, 0, 0, 0x2000, 0} },
-+{ COLOR_SPACE_2020_RGB_LIMITEDRANGE,
-+	{ 0x1B67, 0, 0, 0x201, 0, 0x1B67, 0, 0x201, 0, 0, 0x1B67, 0x201} },
-+{ COLOR_SPACE_2020_YCBCR_LIMITED, { 0x1000, 0xF149, 0xFEB7, 0x1004, 0x0868,
-+	0x15B2, 0x01E6, 0x201, 0xFB88, 0xF478, 0x1000, 0x1004} },
-+{ COLOR_SPACE_2020_YCBCR_FULL, { 0x1000, 0xF149, 0xFEB7, 0x1004, 0x0868, 0x15B2,
-+	0x01E6, 0x201, 0xFB88, 0xF478, 0x1000, 0x1004} }
- };
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -3293,7 +3293,7 @@ static void copy_context_work_handler(st
+ static uint32_t *get_queue_ids(uint32_t num_queues, uint32_t *usr_queue_id_array)
+ {
+ 	if (!usr_queue_id_array)
+-		return NULL;
++		return num_queues ? ERR_PTR(-EINVAL) : NULL;
  
- static bool setup_scaling_configuration(
---- a/drivers/gpu/drm/amd/display/dc/dce110/dce110_opp_csc_v.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce110/dce110_opp_csc_v.c
-@@ -88,7 +88,15 @@ static const struct out_csc_color_matrix
- { COLOR_SPACE_YCBCR601_LIMITED, { 0xE00, 0xF447, 0xFDB9, 0x1000, 0x991,
- 	0x12C9, 0x3A6, 0x200, 0xFB47, 0xF6B9, 0xE00, 0x1000} },
- { COLOR_SPACE_YCBCR709_LIMITED, { 0xE00, 0xF349, 0xFEB7, 0x1000, 0x6CE, 0x16E3,
--	0x24F, 0x200, 0xFCCB, 0xF535, 0xE00, 0x1000} }
-+	0x24F, 0x200, 0xFCCB, 0xF535, 0xE00, 0x1000} },
-+{ COLOR_SPACE_2020_RGB_FULLRANGE,
-+	{ 0x2000, 0, 0, 0, 0, 0x2000, 0, 0, 0, 0, 0x2000, 0} },
-+{ COLOR_SPACE_2020_RGB_LIMITEDRANGE,
-+	{ 0x1B67, 0, 0, 0x201, 0, 0x1B67, 0, 0x201, 0, 0, 0x1B67, 0x201} },
-+{ COLOR_SPACE_2020_YCBCR_LIMITED, { 0x1000, 0xF149, 0xFEB7, 0x1004, 0x0868,
-+	0x15B2, 0x01E6, 0x201, 0xFB88, 0xF478, 0x1000, 0x1004} },
-+{ COLOR_SPACE_2020_YCBCR_FULL, { 0x1000, 0xF149, 0xFEB7, 0x1004, 0x0868, 0x15B2,
-+	0x01E6, 0x201, 0xFB88, 0xF478, 0x1000, 0x1004} }
- };
- 
- enum csc_color_mode {
+ 	if (num_queues > KFD_MAX_NUM_OF_QUEUES_PER_PROCESS)
+ 		return ERR_PTR(-EINVAL);
 
 
