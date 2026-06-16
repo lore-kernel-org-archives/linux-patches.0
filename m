@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B19379EFC;
-	Tue, 16 Jun 2026 16:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F34379EFC;
+	Tue, 16 Jun 2026 16:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626495; cv=none; b=cdacV4l+pfrI+QEjnxHm1xRxGrtwsiH6Wxgi+SnlC7/qmHYiL+OhT8iWVQhXSB3fjdG21x9/o/+/6YEUrVgnoz11cbKiqRemL9L4nfiEFf6pBtHhXlaOKk57zlmEB6Ft9Yqo5AHM6okE7VVlWTJtEfpD5wTLi+cPGREfZEgOLmk=
+	t=1781626500; cv=none; b=DhY9N+gQI0uzd/63b2pfa4T7D/ZWYea9TzS9ieohfyWQfW6IEppso4jZZVZRB3swlGF4PE5HtWPGnN8kLvRtbFlVFwO93yWaQlrmvUItZFk+l38d0oeNU1cIukoPh5es2zJX+FuoY+eepQtpctEr/EEiiJXWcS5Lz3Fye/RAwT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626495; c=relaxed/simple;
-	bh=M5p68jTHfuQmztPgWNG8xu43ymUkYc7gRHrk0W5RqPE=;
+	s=arc-20240116; t=1781626500; c=relaxed/simple;
+	bh=9drs6bVkqTu/IT6NO0Wbej9kZendedeMOyVkC0bnHvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q1P4ukqtVeytl2CttiOvIFfx0P3pCBrNnG4Y3fAqGYJEYd/YV7cFI/nU4vlN3bI6LRK1cZveGGwjcVVjuGnev7nDkN6o6bPpprClC47xJ7kMV1bP+jqQdaE/+Itz2Wf1khzrg98KUhRANk2KqheYbvWqK1mGtqZMIOHwZMSJvqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lk8SaYyf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mtKY/v/oCEknRr1c8TI7CI3KRJNELVDnVAVMoPv6+M3JGKRZaoRdWT2ovdda4888S0o0uY2geTg5/iocPl0RVQ2lZax4rsXcsMxsQmL/LoFThB8/Cg6x8bt5CQkMLnxVO8uDGYuyYxCWNkkM/9KUV9QW5J9986lmH4/7dInEzGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GiN0/xoG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lk8SaYyf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395881F000E9;
-	Tue, 16 Jun 2026 16:14:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GiN0/xoG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146731F000E9;
+	Tue, 16 Jun 2026 16:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626494;
-	bh=zXhGIW3PqgIZqNo6C8CO5ObtzS/HJgWteijtUTt13Y0=;
+	s=korg; t=1781626498;
+	bh=QWeAO5ux2Op+8JsKsubuRrUQSw6uim9KDJqif7FICnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lk8SaYyfRrOxCbUsqL4E0X8YUj3JeQZ8eedQa5NIPCo0uYX2dyujCDB/3WiwvpAMX
-	 G6EJ9nvQP3K+HfFDFfEWFxco2JCwK4ptEaHhdyiQOXC+9lPpt2rP1P//os9W2Poaci
-	 hH7r6x2X+LnvxqQsZblGexUTLiKHUEUvjVKo/r/I=
+	b=GiN0/xoGjH6EF3a26vRqvy9PUVQHmV7XTi7b5/Jakc4JB3g0o8DNUOh3Ae7AYsZZp
+	 7G4jFnkWNChoH82MK1aUAC5qzKMgXnciWnRLRRObTugfM9kwY405dlRhyZC7Xuh8NR
+	 gRmDqWa2fQH250b58AaPXf8u1uF9zFeyyyE/dX/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Gyokhan Kochmarla <gyokhan@amazon.de>
-Subject: [PATCH 6.18 325/325] block: fix handling of dead zone write plugs
-Date: Tue, 16 Jun 2026 20:32:01 +0530
-Message-ID: <20260616145115.311447041@linuxfoundation.org>
+	Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>,
+	Nazar Kalashnikov <nazarkalashnikov0@gmail.com>
+Subject: [PATCH 6.18 317/325] ipvs: skip ipv6 extension headers for csum checks
+Date: Tue, 16 Jun 2026 20:31:53 +0530
+Message-ID: <20260616145114.865204432@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,102 +51,195 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Julian Anastasov <ja@ssi.bg>
 
-commit 836efd35c472d89c838d7b17ef339ddb3286ffc5 upstream.
+commit 05cfe9863ef049d98141dc2969eefde72fb07625 upstream.
 
-Shin'ichiro reported hard to reproduce unaligned write errors with zoned
-block devices. Under normal operation conditions (e.g. running XFS on an
-SMR disk), these errors are nearly impossible to trigger. But using a
-"slow" kernel with many debug options enables and some specific use
-cases (e.g. fio zbd test case 46), the errors can be reproduced fairly
-easily.
+Protocol checksum validation fails for IPv6 if there are extension
+headers before the protocol header. iph->len already contains its
+offset, so use it to fix the problem.
 
-The unaligned write errors come from mishandling a valid reference
-counting pattern of zone write plugs. Such pattern triggers for instance
-if a process A writes a zone (not necessarilly to the full state),
-another process B immediately resets the zone and immediately following
-the completion of the zone reset, starts issuing writes to the zone.
-With such pattern, in some cases, the zone write plugs worker thread of
-the device may still be holding a reference to the zone write plug of
-the zone taken when process A was writing to the zone. The following
-zone reset from process B marks the zone as dead but does not remove the
-zone write plug from the device hash table as a reference to the plug
-still exist. Once process B starts issuing new writes, the zone write
-plug is seen as dead and the writes from process B are immediately
-failed, despite this write pattern being perfectly legal.
-
-Fix this by allowing restoring a dead zone write plug to a live state if
-a write is issued to the zone when the zone is: marked as dead, empty
-and the write sector corresponds to the first sector of the zone (that
-is, the write is aligned to the zone write pointer). This is done with
-the new helper function disk_check_zone_wplug_dead(), which restores a
-dead zone write plug to a live state by clearing the BLK_ZONE_WPLUG_DEAD
-flag and restoring the initial reference to the zone write plug taken
-when the plug was added to the device hash table.
-
-Reported-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Fixes: b7d4ffb51037 ("block: fix zone write plug removal")
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Link: https://patch.msgid.link/20260513111129.108809-1-dlemoal@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ context conflict due to different line offsets in blk-zoned.c ]
-Signed-off-by: Gyokhan Kochmarla <gyokhan@amazon.de>
+Fixes: 2906f66a5682 ("ipvs: SCTP Trasport Loadbalancing Support")
+Fixes: 0bbdd42b7efa ("IPVS: Extend protocol DNAT/SNAT and state handlers")
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Nazar Kalashnikov <nazarkalashnikov0@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
 ---
- block/blk-zoned.c |   32 +++++++++++++++++++++++++++-----
- 1 file changed, 27 insertions(+), 5 deletions(-)
+ net/netfilter/ipvs/ip_vs_proto_sctp.c |   18 ++++++------------
+ net/netfilter/ipvs/ip_vs_proto_tcp.c  |   21 +++++++--------------
+ net/netfilter/ipvs/ip_vs_proto_udp.c  |   20 +++++++-------------
+ 3 files changed, 20 insertions(+), 39 deletions(-)
 
---- a/block/blk-zoned.c
-+++ b/block/blk-zoned.c
-@@ -505,6 +505,28 @@ static void disk_mark_zone_wplug_dead(st
- 	}
+--- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+@@ -10,7 +10,8 @@
+ #include <net/ip_vs.h>
+ 
+ static int
+-sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp);
++sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++		unsigned int sctphoff);
+ 
+ static int
+ sctp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
+@@ -108,7 +109,7 @@ sctp_snat_handler(struct sk_buff *skb, s
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!sctp_csum_check(cp->af, skb, pp))
++		if (!sctp_csum_check(cp->af, skb, pp, sctphoff))
+ 			return 0;
+ 
+ 		/* Call application helper if needed */
+@@ -156,7 +157,7 @@ sctp_dnat_handler(struct sk_buff *skb, s
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!sctp_csum_check(cp->af, skb, pp))
++		if (!sctp_csum_check(cp->af, skb, pp, sctphoff))
+ 			return 0;
+ 
+ 		/* Call application helper if needed */
+@@ -185,19 +186,12 @@ sctp_dnat_handler(struct sk_buff *skb, s
  }
  
-+static inline bool disk_check_zone_wplug_dead(struct blk_zone_wplug *zwplug)
-+{
-+	if (!(zwplug->flags & BLK_ZONE_WPLUG_DEAD))
-+		return false;
-+
-+	/*
-+	 * If a new write is received right after a zone reset completes and
-+	 * while the disk_zone_wplugs_worker() thread has not yet released the
-+	 * reference on the zone write plug after processing the last write to
-+	 * the zone, then the new write BIO will see the zone write plug marked
-+	 * as dead. This case is however a false positive and a perfectly valid
-+	 * pattern. In such case, restore the zone write plug to a live one.
-+	 */
-+	if (!zwplug->wp_offset && bio_list_empty(&zwplug->bio_list)) {
-+		zwplug->flags &= ~BLK_ZONE_WPLUG_DEAD;
-+		refcount_inc(&zwplug->ref);
-+		return false;
-+	}
-+
-+	return true;
-+}
-+
- static void blk_zone_wplug_bio_work(struct work_struct *work);
+ static int
+-sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
++sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++		unsigned int sctphoff)
+ {
+-	unsigned int sctphoff;
+ 	struct sctphdr *sh;
+ 	__le32 cmp, val;
  
- /*
-@@ -1027,12 +1049,12 @@ static bool blk_zone_wplug_handle_write(
- 	}
+-#ifdef CONFIG_IP_VS_IPV6
+-	if (af == AF_INET6)
+-		sctphoff = sizeof(struct ipv6hdr);
+-	else
+-#endif
+-		sctphoff = ip_hdrlen(skb);
+-
+ 	sh = (struct sctphdr *)(skb->data + sctphoff);
+ 	cmp = sh->checksum;
+ 	val = sctp_compute_cksum(skb, sctphoff);
+--- a/net/netfilter/ipvs/ip_vs_proto_tcp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_tcp.c
+@@ -29,7 +29,8 @@
+ #include <net/ip_vs.h>
  
- 	/*
--	 * If we got a zone write plug marked as dead, then the user is issuing
--	 * writes to a full zone, or without synchronizing with zone reset or
--	 * zone finish operations. In such case, fail the BIO to signal this
--	 * invalid usage.
-+	 * Check if we got a zone write plug marked as dead. If yes, then the
-+	 * user is likely issuing writes to a full zone, or without
-+	 * synchronizing with zone reset or zone finish operations. In such
-+	 * case, fail the BIO to signal this invalid usage.
- 	 */
--	if (zwplug->flags & BLK_ZONE_WPLUG_DEAD) {
-+	if (disk_check_zone_wplug_dead(zwplug)) {
- 		spin_unlock_irqrestore(&zwplug->lock, flags);
- 		disk_put_zone_wplug(zwplug);
- 		bio_io_error(bio);
+ static int
+-tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp);
++tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++	       unsigned int tcphoff);
+ 
+ static int
+ tcp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
+@@ -166,7 +167,7 @@ tcp_snat_handler(struct sk_buff *skb, st
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!tcp_csum_check(cp->af, skb, pp))
++		if (!tcp_csum_check(cp->af, skb, pp, tcphoff))
+ 			return 0;
+ 
+ 		/* Call application helper if needed */
+@@ -244,7 +245,7 @@ tcp_dnat_handler(struct sk_buff *skb, st
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!tcp_csum_check(cp->af, skb, pp))
++		if (!tcp_csum_check(cp->af, skb, pp, tcphoff))
+ 			return 0;
+ 
+ 		/*
+@@ -301,17 +302,9 @@ tcp_dnat_handler(struct sk_buff *skb, st
+ 
+ 
+ static int
+-tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
++tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++	       unsigned int tcphoff)
+ {
+-	unsigned int tcphoff;
+-
+-#ifdef CONFIG_IP_VS_IPV6
+-	if (af == AF_INET6)
+-		tcphoff = sizeof(struct ipv6hdr);
+-	else
+-#endif
+-		tcphoff = ip_hdrlen(skb);
+-
+ 	switch (skb->ip_summed) {
+ 	case CHECKSUM_NONE:
+ 		skb->csum = skb_checksum(skb, tcphoff, skb->len - tcphoff, 0);
+@@ -322,7 +315,7 @@ tcp_csum_check(int af, struct sk_buff *s
+ 			if (csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
+ 					    &ipv6_hdr(skb)->daddr,
+ 					    skb->len - tcphoff,
+-					    ipv6_hdr(skb)->nexthdr,
++					    IPPROTO_TCP,
+ 					    skb->csum)) {
+ 				IP_VS_DBG_RL_PKT(0, af, pp, skb, 0,
+ 						 "Failed checksum for");
+--- a/net/netfilter/ipvs/ip_vs_proto_udp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_udp.c
+@@ -25,7 +25,8 @@
+ #include <net/ip6_checksum.h>
+ 
+ static int
+-udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp);
++udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++	       unsigned int udphoff);
+ 
+ static int
+ udp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
+@@ -155,7 +156,7 @@ udp_snat_handler(struct sk_buff *skb, st
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!udp_csum_check(cp->af, skb, pp))
++		if (!udp_csum_check(cp->af, skb, pp, udphoff))
+ 			return 0;
+ 
+ 		/*
+@@ -238,7 +239,7 @@ udp_dnat_handler(struct sk_buff *skb, st
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!udp_csum_check(cp->af, skb, pp))
++		if (!udp_csum_check(cp->af, skb, pp, udphoff))
+ 			return 0;
+ 
+ 		/*
+@@ -297,17 +298,10 @@ udp_dnat_handler(struct sk_buff *skb, st
+ 
+ 
+ static int
+-udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
++udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++	       unsigned int udphoff)
+ {
+ 	struct udphdr _udph, *uh;
+-	unsigned int udphoff;
+-
+-#ifdef CONFIG_IP_VS_IPV6
+-	if (af == AF_INET6)
+-		udphoff = sizeof(struct ipv6hdr);
+-	else
+-#endif
+-		udphoff = ip_hdrlen(skb);
+ 
+ 	uh = skb_header_pointer(skb, udphoff, sizeof(_udph), &_udph);
+ 	if (uh == NULL)
+@@ -325,7 +319,7 @@ udp_csum_check(int af, struct sk_buff *s
+ 				if (csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
+ 						    &ipv6_hdr(skb)->daddr,
+ 						    skb->len - udphoff,
+-						    ipv6_hdr(skb)->nexthdr,
++						    IPPROTO_UDP,
+ 						    skb->csum)) {
+ 					IP_VS_DBG_RL_PKT(0, af, pp, skb, 0,
+ 							 "Failed checksum for");
 
 
