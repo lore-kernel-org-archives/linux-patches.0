@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4B94508E0;
-	Tue, 16 Jun 2026 15:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197744657CD;
+	Tue, 16 Jun 2026 15:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624592; cv=none; b=fDkJOiuHB6ceul9gSwOYmEwERpBIFh9v36nMEjkbX2qVBK9XIvXocA/cPwh8Rh8+OD4VVSGReYlZnCTWWwBVxnSrAKJoM0OfpZZDqYFhF5nHx9TBKb75IbRhMCenynzb78MB33UAthfNasuyQawNUD3vZW7PyPAhsfh1uAIaia0=
+	t=1781624597; cv=none; b=gtXMVI8JLOkGuspO7eKgN6P1ACzzj/llgKVBQYezEhR6VEip9DGtI6RkSbbEm+aexX9/pPkxZ3BfKWOsKUjdLujD01U550RtpuUk0L4JJDuY3xamW0FMQBt7EYV+rtAZl0cm7qEPnEMMyjl/L4wFDx/ZXYKscvi7JMoOZwqq8jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624592; c=relaxed/simple;
-	bh=oniYnt43lxxehPjeUoyL3b4WljbGzoi+LsHJDSLR0Dk=;
+	s=arc-20240116; t=1781624597; c=relaxed/simple;
+	bh=jyPG1sOb0OjFvDBIoG9JFQTGJTDGKdwgb6YaSKyOrFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NDKFRpzn9uXxKFz1brft06lie5u/8XkJaC2Tm503t07o+Rob0zlibEpS1U09H76mA3Y6DkdGK+KuLuDote3rqJvJEPCofY6ai5m9qZn+O0bgwAc9qpJocMl/KnYNMbk9oF0CWxcPobVmrl2AWjZ0+izvUyJ056GwWtMo12vDfmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bcUsYMub; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a+ukI3zfX6gm7k+WSbLTueKDrDS9pzBKVDtuass4xGI8PM3TNtO+8T5gZJ+G5kMhlu4etpZUpp6XyIPE+3TEuZcfWkkfde5JzCPTSNf/yh3o4v9JJVDSeem+yV7knFM0zyJDANzaV/8r3tYRNCEP3jvlz9camoqbXlJcQmOR1d0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsX1Bfga; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bcUsYMub"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 061901F000E9;
-	Tue, 16 Jun 2026 15:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsX1Bfga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9B31F000E9;
+	Tue, 16 Jun 2026 15:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624591;
-	bh=Tx/SbDx/bwbTL5ZzLjKJhmkZ+P6y6FFU4r5hsrOrdSM=;
+	s=korg; t=1781624595;
+	bh=/1bpUiurgqfmOKKo+4wLJsv0Kpc4kaat9FVchQv1gXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bcUsYMubuxf6jX5e2sT7OQ4L9bCA60aVd4tFc4lUG94b6+cKpwP2t6vYin1y7ertI
-	 pSNsE4T6DWLQB59019JwMQiwhJLXSPEz/H1u5GlTO4ZOEvGVqqAYcUF0NXOSeEVGWE
-	 D+tuhNXsyApyA3fJLeWMFvfd8eoMcjnvFwQj8LFM=
+	b=fsX1BfgaYas4Nd/evmY+lMI28Q2gDNPSyOXOUsG/oJ9QWSz4nxsXwDYcSoMSM4TLK
+	 t5Qw5uOrkFR2JPkKmZFHNsQSLJqPbsIEmrUbeqsiWhuXFRjS7vqW7ACTSzkW82Cp4Z
+	 hjnaZttjduErs7dMeITTf0oeML/9D3aOeKACuzU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Davide Ornaghi <d.ornaghi97@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 363/378] netfilter: nft_fib: fix stale stack leak via the OIFNAME register
-Date: Tue, 16 Jun 2026 20:29:54 +0530
-Message-ID: <20260616145129.248860384@linuxfoundation.org>
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>
+Subject: [PATCH 7.0 337/378] drm/xe/display: fix oops in suspend/shutdown without display
+Date: Tue, 16 Jun 2026 20:29:28 +0530
+Message-ID: <20260616145127.946309641@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,83 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davide Ornaghi <d.ornaghi97@gmail.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit ab185e0c4fb82dfba6fb86f8271e06f931d9c64c ]
+commit 68938cc08e23a94fd881e845837ff918de005ce7 upstream.
 
-For NFT_FIB_RESULT_OIFNAME the destination register is declared with
-len = IFNAMSIZ (four 32-bit registers), but on the lookup-fail,
-RTN_LOCAL and oif-mismatch paths nft_fib{4,6}_eval() only writes one
-register via "*dest = 0". The remaining three registers are left as
-whatever was on the stack in nft_do_chain()'s struct nft_regs, and a
-downstream expression that loads the register span can leak that
-uninitialised kernel stack to userspace.
+The xe driver keeps track of whether to probe display, and whether
+display hardware is there, using xe->info.probe_display. It gets set to
+false if there's no display after intel_display_device_probe(). However,
+the display may also be disabled via fuses, detected at a later time in
+intel_display_device_info_runtime_init().
 
-The NFTA_FIB_F_PRESENT existence check has the same shape: it is only
-meaningful for NFT_FIB_RESULT_OIF, yet it was accepted for any result type
-while the eval stores a single byte via nft_reg_store8(), leaving the rest
-of the declared span stale.
+In this case, the xe driver does for_each_intel_crtc() on uninitialized
+mode config in xe_display_flush_cleanup_work(), leading to a NULL
+pointer dereference, and generally calls display code with display info
+cleared.
 
-Fix both:
+Check for intel_display_device_present() after
+intel_display_device_info_runtime_init(), and reset
+xe->info.probe_display as necessary. Also do unset_display_features()
+for completeness, although display runtime init has already done
+that. This will need to be unified across all cases later.
 
- - replace the bare "*dest = 0" in the eval with nft_fib_store_result(),
-   which strscpy_pad()s the whole IFNAMSIZ for OIFNAME (and is already
-   used on the other early-return path), and
+Move intel_display_device_info_runtime_init() call slightly earlier,
+similar to i915, to avoid a bunch of unnecessary setup for no display
+cases.
 
- - restrict NFTA_FIB_F_PRESENT to NFT_FIB_RESULT_OIF and declare its
-   destination as a single u8, so the marked span matches the one byte
-   the eval writes.
+Note #1: The xe driver has no business doing low level display plumbing
+like for_each_intel_crtc() to begin with. It all needs to happen in
+display code.
 
-Fixes: f6d0cbcf09c5 ("netfilter: nf_tables: add fib expression")
-Suggested-by: Florian Westphal <fw@strlen.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Davide Ornaghi <d.ornaghi97@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-[ kept the tree's older `ip6_route_lookup()`/`rt6_info` IPv6 context and changed only `*dest = 0;` to `nft_fib_store_result(dest, priv, NULL);` ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Note #2: The actual bug is present already in commit 44e694958b95
+("drm/xe/display: Implement display support"), but the oops was likely
+introduced later at commit ddf6492e0e50 ("drm/xe/display: Make display
+suspend/resume work on discrete").
+
+Fixes: 44e694958b95 ("drm/xe/display: Implement display support")
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/7904
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/6150
+Cc: stable@vger.kernel.org # v6.8+
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patch.msgid.link/20260515160920.1082842-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 7c3eb9f47533220888a67266448185fd0775d4da)
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/netfilter/nft_fib_ipv4.c |    2 +-
- net/ipv6/netfilter/nft_fib_ipv6.c |    2 +-
- net/netfilter/nft_fib.c           |    6 ++++++
- 3 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/display/xe_display.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/net/ipv4/netfilter/nft_fib_ipv4.c
-+++ b/net/ipv4/netfilter/nft_fib_ipv4.c
-@@ -128,7 +128,7 @@ void nft_fib4_eval(const struct nft_expr
- 		fl4.saddr = get_saddr(iph->daddr);
- 	}
+--- a/drivers/gpu/drm/xe/display/xe_display.c
++++ b/drivers/gpu/drm/xe/display/xe_display.c
+@@ -119,6 +119,15 @@ int xe_display_init_early(struct xe_devi
  
--	*dest = 0;
-+	nft_fib_store_result(dest, priv, NULL);
+ 	intel_display_driver_early_probe(display);
  
- 	if (fib_lookup(nft_net(pkt), &fl4, &res, FIB_LOOKUP_IGNORE_LINKSTATE))
- 		return;
---- a/net/ipv6/netfilter/nft_fib_ipv6.c
-+++ b/net/ipv6/netfilter/nft_fib_ipv6.c
-@@ -192,7 +192,7 @@ void nft_fib6_eval(const struct nft_expr
- 
- 	lookup_flags = nft_fib6_flowi_init(&fl6, priv, pkt, oif, iph);
- 
--	*dest = 0;
-+	nft_fib_store_result(dest, priv, NULL);
- 	rt = (void *)ip6_route_lookup(nft_net(pkt), &fl6, pkt->skb,
- 				      lookup_flags);
- 	if (rt->dst.error)
---- a/net/netfilter/nft_fib.c
-+++ b/net/netfilter/nft_fib.c
-@@ -107,6 +107,12 @@ int nft_fib_init(const struct nft_ctx *c
- 		return -EINVAL;
- 	}
- 
-+	if (priv->flags & NFTA_FIB_F_PRESENT) {
-+		if (priv->result != NFT_FIB_RESULT_OIF)
-+			return -EINVAL;
-+		len = sizeof(u8);
++	intel_display_device_info_runtime_init(display);
++
++	/* Display may have been disabled at runtime init */
++	if (!intel_display_device_present(display)) {
++		xe->info.probe_display = false;
++		unset_display_features(xe);
++		return 0;
 +	}
 +
- 	err = nft_parse_register_store(ctx, tb[NFTA_FIB_DREG], &priv->dreg,
- 				       NULL, NFT_DATA_VALUE, len);
- 	if (err < 0)
+ 	/* Early display init.. */
+ 	intel_opregion_setup(display);
+ 
+@@ -132,8 +141,6 @@ int xe_display_init_early(struct xe_devi
+ 
+ 	intel_bw_init_hw(display);
+ 
+-	intel_display_device_info_runtime_init(display);
+-
+ 	err = intel_display_driver_probe_noirq(display);
+ 	if (err)
+ 		goto err_opregion;
 
 
