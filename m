@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE82E35CB87;
-	Tue, 16 Jun 2026 17:17:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE01935CB87;
+	Tue, 16 Jun 2026 17:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630259; cv=none; b=UM+/p+EjyUFqNZPB45ZHaNjtvYwgEuZN/ccDbEftTnnEfA6I7iDysQpGTQiphHx0ohIarBwJawvs8/G3xVOdKQiZ/bbRd8H2avPLULanv+H6P5VFrsVRavHzrP61qNQyxp4r7MEdIFYHl0uiGbzg8nVkUsJzWDXS9tscBTZdKdk=
+	t=1781630265; cv=none; b=F71ht3XfhgH4CJFoSSmbvjDYsnp4mual/3pyDJUkk5rWuThoBF2KGaXcH4/x6yPKKgr64DPjCvHEEW98CfIKsj0Jh1p5zHfbZRytlgciUTrJGSVEmfrnm5khWgSRqnaMxqWCnlWx9h/s7JUL/2GC79oXy8bQKdFmxO20pXBEH6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630259; c=relaxed/simple;
-	bh=weIYUj03SZvkOmqo6DIQc6b4TxIRj0jqJz2N3jbqxD0=;
+	s=arc-20240116; t=1781630265; c=relaxed/simple;
+	bh=S2K79KfmvdFMe10LXzIo66UDR5jXeiiu6jQqcxoUN70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i8NzjGVn//J54vQtokubrKZX201DWqf9SZOTtcej1CwzA5EsxlPRNGea5HqP/a4WIVm0VTqbplu518jwqlzd19cu5FgfT40kPbau8Bc9+VqKguFD1Vgd68oT/uis2f57nLTUL3PTREYJCCjLZcmOkzjPuAM3H+Dh102oizUSl00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1R1mO/r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VlmYqn8zudiSsrjrQ568nCdjN6Y1Fb1SZS2mI7rBKo2JdILhrsDzTfNCRiTOlTG5xf48n9Q4cWX0YcBv69b5bP4gxO0xQp8RqHK4hqYLQNWEd299BjdFEbA3K7ocQGYBcTjV5EECY5KBbwQHGMB3P23i7gH5m2fC8mr+Ic2l4Xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9nIb8Hb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1R1mO/r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 459E11F000E9;
-	Tue, 16 Jun 2026 17:17:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9nIb8Hb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E9D1F000E9;
+	Tue, 16 Jun 2026 17:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630258;
-	bh=4ulCFWfPGC9WDhHHUVlUU3t3y72HMgsFMLgEwJBIbt4=;
+	s=korg; t=1781630263;
+	bh=nOOCzleCtmjV4rjH2eB4v6IybxNxAqGEZQIseKGp49A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v1R1mO/rVbfbuH2S5GFuXwal36loIuz3+R9inRW96P9av/Xq6MOlOPca9kGPgju+S
-	 bHp9aSQtaGuE53UDn9nFeop6s/YjuhtUpU8/ichFSUHSQ6AJUkqw++ujpwRwwxHHcq
-	 4LNJT8AxvApAdlqSDrdf5Rl2H7KkFBMX8eUPtQZY=
+	b=L9nIb8HblLOBF0/ZGjqBRQVtTvgeDDDZKqlko7F/SGoUsumpH3TGaenObV4AZGxrd
+	 EJa3DyVXaAdRenRkd+yz/koeNdJ+mLJDoPBetZBt98e3rB392BSewQO3QXGMcDjjF1
+	 Jh1nrINTguYHiL3tlNTPnaVmQAYLm8Ta4tBVfETI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Erhardt <aer@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 440/452] ALSA: hda/hdmi: Add quirk for TUXEDO IBS14G6
-Date: Tue, 16 Jun 2026 20:31:07 +0530
-Message-ID: <20260616145139.697017131@linuxfoundation.org>
+	Shanker Donthineni <sdonthineni@nvidia.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>
+Subject: [PATCH 6.6 441/452] arm64: cputype: Add NVIDIA Olympus definitions
+Date: Tue, 16 Jun 2026 20:31:08 +0530
+Message-ID: <20260616145139.739269638@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,33 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Erhardt <aer@tuxedocomputers.com>
+From: Shanker Donthineni <sdonthineni@nvidia.com>
 
-commit d649c58bcad8fb9b749e3837136a201632fa109d upstream.
+commit e185c8a0d84236d14af61faff8147c953a878a77 upstream.
 
-Depending on the timing during boot, the BIOS might report wrong pin
-capabilities, which can lead to HDMI audio being disabled. Therefore,
-force HDMI audio connection on TUXEDO InfinityBook S 14 Gen6.
+Add cpu part and model macro definitions for NVIDIA Olympus core.
 
-Signed-off-by: Aaron Erhardt <aer@tuxedocomputers.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20260218213234.429686-1-wse@tuxedocomputers.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Signed-off-by: Shanker Donthineni <sdonthineni@nvidia.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+[Mark: backport to v6.6.y]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_hdmi.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/include/asm/cputype.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -1999,6 +1999,7 @@ static const struct snd_pci_quirk force_
- 	SND_PCI_QUIRK(0x1043, 0x86ae, "ASUS", 1),  /* Z170 PRO */
- 	SND_PCI_QUIRK(0x1043, 0x86c7, "ASUS", 1),  /* Z170M PLUS */
- 	SND_PCI_QUIRK(0x1462, 0xec94, "MS-7C94", 1),
-+	SND_PCI_QUIRK(0x1558, 0x14a1, "TUXEDO InfinityBook S 14 Gen6", 1),
- 	SND_PCI_QUIRK(0x8086, 0x2060, "Intel NUC5CPYB", 1),
- 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", 1),
- 	{}
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -129,6 +129,7 @@
+ 
+ #define NVIDIA_CPU_PART_DENVER		0x003
+ #define NVIDIA_CPU_PART_CARMEL		0x004
++#define NVIDIA_CPU_PART_OLYMPUS		0x010
+ 
+ #define FUJITSU_CPU_PART_A64FX		0x001
+ 
+@@ -209,6 +210,7 @@
+ #define MIDR_QCOM_KRYO_4XX_SILVER MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_4XX_SILVER)
+ #define MIDR_NVIDIA_DENVER MIDR_CPU_MODEL(ARM_CPU_IMP_NVIDIA, NVIDIA_CPU_PART_DENVER)
+ #define MIDR_NVIDIA_CARMEL MIDR_CPU_MODEL(ARM_CPU_IMP_NVIDIA, NVIDIA_CPU_PART_CARMEL)
++#define MIDR_NVIDIA_OLYMPUS MIDR_CPU_MODEL(ARM_CPU_IMP_NVIDIA, NVIDIA_CPU_PART_OLYMPUS)
+ #define MIDR_FUJITSU_A64FX MIDR_CPU_MODEL(ARM_CPU_IMP_FUJITSU, FUJITSU_CPU_PART_A64FX)
+ #define MIDR_HISI_TSV110 MIDR_CPU_MODEL(ARM_CPU_IMP_HISI, HISI_CPU_PART_TSV110)
+ #define MIDR_HISI_HIP09 MIDR_CPU_MODEL(ARM_CPU_IMP_HISI, HISI_CPU_PART_HIP09)
 
 
