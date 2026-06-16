@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742EE466B5E;
-	Tue, 16 Jun 2026 17:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED35E478E50;
+	Tue, 16 Jun 2026 17:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630700; cv=none; b=XbHsnLFQvGG2H/jzj6bfgiK+Bj+Z3SzHyqI455fK7S1LSIjbJmAKXdJ6ZGWeL5WJxddynZ+WyUqgCuzG6IIKxC3xqxMw3ij7UzPkQ3JW40P/6SxpVi82ouRj3Jswbi5nE9aZXW5xEAmx+VugHY2lpBSi7y0LbbYKkeDkpgSH7iA=
+	t=1781630706; cv=none; b=QWskL/rDpkuB6399C9XlzQN1zjypEEGMuhG3QOEhuZ/Gxh1vVq++uWQwmtVv/IWqiiLtr5DhEp4kUsUJ5KpqA2s2aJFSZ7w3v9XsUyz8Hkm4/96wNDZModpRva8lj8S76SZSi4uzs3Eq8TkEjqnHMqKvGWBSUkiQVUvmzV925Qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630700; c=relaxed/simple;
-	bh=11V1qkN9sMXXeeF50Iww6YpMg2EObnwl5QIkE0sphFc=;
+	s=arc-20240116; t=1781630706; c=relaxed/simple;
+	bh=IymF/z7anwXhW4OXggEIg1AiHeVlKwdnL+Yh2tcspOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BxYwWS062f24ALe3plpvIcGgYhFW8t31c6Ls+vjokG2WsE0NnmJsgCMeLbmj3p5V6ETjat8obVeR5u8TtzKST9A04pBj4gOvWBK/vPRFw1OSo+w+tvVYV+6d5nEZxseKTH4chPV0sBZnF9E6foF/MsBBSXKJj4r4IVsRAgVAfNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=poPosbMj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GLVurddRbNJzzHRc/nyE+YthAY+Xts4xE8o9Bjlji034Zix6UTYww1SFIv0oWWFsALBGVSGYVJSncAt+aRk6+r5J57QWqlYknxBq3EA1N+DpoHnIYXt36nJnJOjSPgehmEq53MY1pP8vKQEoUxRxj/NJQN3jJoa+cDz0nb+CPSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2vHOGckw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="poPosbMj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 585CD1F000E9;
-	Tue, 16 Jun 2026 17:24:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vHOGckw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D1B1F000E9;
+	Tue, 16 Jun 2026 17:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630699;
-	bh=uUiVzZ0SLKKeqEvTETC58/2wjIBwJzTOiV2gw4lC3+k=;
+	s=korg; t=1781630704;
+	bh=K9JbaHdd2ht+hzwUQMD69UAe/WLvJEOO0ly2Yg9wbQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=poPosbMjUT9No/iGRTRgG0u8T8dDyBND75GUR21NaFmTwgh5weWyo7qkYfZZbrwLj
-	 KpNWYnSrGx2M40d6si13urjhKauinZjoZNSKuaEYSilarBUBWprHpJS9NyeiRoiDyn
-	 ZiJPz1juRJ90agonyNUQu+Esezmo6xxigGYQjGIk=
+	b=2vHOGckwT14NIes/0oYRseKva8dYRewJhOFgnocpp8ZGmr7YGph0ZVaCntqaJxeCh
+	 ILD6oLHITSgVW3LAfS7uRUtOIUpTsCJcPdPKpF4+PWQerY9G2IuX3wXDWRpPn6U9M7
+	 4yiew44QU44VxoY7oggoFh+UYEtuSxVzUP0SJ0q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/522] hwmon: (pmbus/adm1266) serialize sequencer_state debugfs read with pmbus_lock
-Date: Tue, 16 Jun 2026 20:23:47 +0530
-Message-ID: <20260616145129.604266099@linuxfoundation.org>
+Subject: [PATCH 6.1 081/522] hwmon: (pmbus/adm1266) serialize NVMEM blackbox read with pmbus_lock
+Date: Tue, 16 Jun 2026 20:23:48 +0530
+Message-ID: <20260616145129.653311159@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,52 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
 
-[ Upstream commit 4e4af55aaca7f6d7673d5f9889ad0529db86a048 ]
+[ Upstream commit 9f1dd8f9491eb840cbea7ffdf4cad031e25f8ae0 ]
 
-adm1266_state_read() backs the sequencer_state debugfs entry and
-issues an i2c_smbus_read_word_data(client, ADM1266_READ_STATE)
-against the device without taking pmbus_lock.  pmbus_core holds
-pmbus_lock around its own multi-transaction sequences (notably the
-"set PAGE, then read paged register" pattern used by hwmon
-attributes), so an unlocked debugfs reader can land between a PAGE
-write and the subsequent paged read in another thread.  READ_STATE
-itself is not paged, so it cannot corrupt PAGE in flight, but the
-same defensive serialisation that applies to the GPIO accessors
-applies here: any direct device access from outside pmbus_core
-should be ordered with respect to pmbus_core's own.
+adm1266_nvmem_read() is the reg_read callback the NVMEM core invokes
+when userspace reads /sys/bus/nvmem/devices/.../nvmem on this chip.
+On the first byte of every read it does a memset of data->dev_mem,
+walks the device blackbox through adm1266_nvmem_read_blackbox()
+(which issues a chain of PMBus block transactions), and then memcpys
+the refreshed buffer out to userspace.  None of that runs under
+pmbus_lock today.
 
-Take pmbus_lock at the top of adm1266_state_read() via the
-scope-based guard().
+Two consequences:
 
-Fixes: ed1ff457e187 ("hwmon: (pmbus/adm1266) add debugfs for states")
+  - The PMBus traffic the refresh issues is not serialised against
+    pmbus_core's own multi-step PAGE+register sequences.  A paged
+    hwmon attribute read from another thread can land between a
+    PAGE write and the paged read in either direction and corrupt
+    one side's view of the device state machine.
+
+  - The NVMEM core does not serialise concurrent reg_read calls, so
+    two userspace readers racing at offset 0 can interleave the
+    memset of data->dev_mem with another reader's
+    adm1266_nvmem_read_blackbox() refill or memcpy out, returning
+    torn data to userspace.
+
+Take pmbus_lock at the top of adm1266_nvmem_read() via the
+scope-based guard().  Patch 5 of this series moves
+adm1266_config_nvmem() past pmbus_do_probe() so the lock is
+guaranteed to be live before the callback is reachable from
+userspace.
+
+Fixes: 15609d189302 ("hwmon: (pmbus/adm1266) read blackbox")
 Cc: stable@vger.kernel.org
 Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Link: https://lore.kernel.org/r/20260518-adm1266-gpio-fixes-v3-8-e425e4f88139@nexthop.ai
+Link: https://lore.kernel.org/r/20260518-adm1266-gpio-fixes-v3-7-e425e4f88139@nexthop.ai
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ open-coded `guard(pmbus_lock)(client)` as `pmbus_lock_interruptible()`/`pmbus_unlock()` ]
+[ adapted `guard(pmbus_lock)(data->client)` to manual `pmbus_lock_interruptible()`/`pmbus_unlock()` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  drivers/hwmon/pmbus/adm1266.c | 7 +++++++
  1 file changed, 7 insertions(+)
 
 diff --git a/drivers/hwmon/pmbus/adm1266.c b/drivers/hwmon/pmbus/adm1266.c
-index 51e76e4413519e..b212aafae1dc4b 100644
+index b212aafae1dc4b..0f1cc0dbfc157b 100644
 --- a/drivers/hwmon/pmbus/adm1266.c
 +++ b/drivers/hwmon/pmbus/adm1266.c
-@@ -356,7 +356,14 @@ static int adm1266_state_read(struct seq_file *s, void *pdata)
- 	struct i2c_client *client = to_i2c_client(dev);
- 	int ret;
+@@ -430,18 +430,25 @@ static int adm1266_nvmem_read(void *priv, unsigned int offset, void *val, size_t
+ 	if (offset + bytes > data->nvmem_config.size)
+ 		return -EINVAL;
  
-+	ret = pmbus_lock_interruptible(client);
++	ret = pmbus_lock_interruptible(data->client);
 +	if (ret)
 +		return ret;
 +
- 	ret = i2c_smbus_read_word_data(client, ADM1266_READ_STATE);
+ 	if (offset == 0) {
+ 		memset(data->dev_mem, 0, data->nvmem_config.size);
+ 
+ 		ret = adm1266_nvmem_read_blackbox(data, data->dev_mem);
+ 		if (ret) {
+ 			dev_err(&data->client->dev, "Could not read blackbox!");
++			pmbus_unlock(data->client);
+ 			return ret;
+ 		}
+ 	}
+ 
+ 	memcpy(val, data->dev_mem + offset, bytes);
+ 
++	pmbus_unlock(data->client);
 +
-+	pmbus_unlock(client);
-+
- 	if (ret < 0)
- 		return ret;
+ 	return 0;
+ }
  
 -- 
 2.53.0
