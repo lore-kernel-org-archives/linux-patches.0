@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816462F745E;
-	Tue, 16 Jun 2026 16:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A25D472798;
+	Tue, 16 Jun 2026 16:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627673; cv=none; b=sM3IM145l9u6i3WSk9jR7D2teJoI94fuXT6JgRoEnK+6L+ccAGlz/cMazLVQ8P/YR2zOcOQccqSX8aPzwe81KlkMdpROoKpRtLVDcUkp9F0B0g9jFOr1AWH5u9EiETCiKn+GSBRvP7EAPr6/QkVFlatgzIqlJQcv5SgOKtVm/YQ=
+	t=1781627679; cv=none; b=DBgbaA4DcAoTD+fvAmOdjlyQesypPLVol3Z0BpM9jIsBhjCxkUaV0jiLSB+BAVF8DxCGVXq7/TOThywdjvhTUh+hFeA7wHKoAh9V4/OgNY0MsHSmqVuSUpJfhwbCunUenHA0ZTITGfCLCNbyGn5YHsmk8Q/U61MMfP5I2U6t6SY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627673; c=relaxed/simple;
-	bh=sjkr17lOEohB/jjSabGmyuKEivuJravWNX1/ah6E8Bk=;
+	s=arc-20240116; t=1781627679; c=relaxed/simple;
+	bh=2QxKcDVnaacJnhWQ/aD2K4Cq3z/I9TxAwkCbDZcgcPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j9u7SpdlrfkeV7aFEKWPXsaKTASR9pPWyoYL1iemphIfzQdD0jjUBF2JXWqi89WAPFfgW6Pv20RS5Pi+eceMkNoC88XCrT/NzLF1XKDp2mSs3opZOjxePseaV64+r5QBIjQhMaQjz8Oo3+MX03U8R6VNO0NovR0o4F6zmui8k8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgSR5ux0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N9r6jc+O0cGs/VSp/L1HLpo12qjpER1BxcB1lU+hnoCER3lsbsNTcQCgVvUW4FbneJoh5uneUdM9B0/131zBGAu7owBkr3IHU5HMunJpRk+P6wQWMzmzlMOH5DP/I1r4lhZ5d5ZKHew9WeMZnxIrmwS7tZlOoYKOETcFaxtRe98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBM/TbAi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgSR5ux0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89EEB1F000E9;
-	Tue, 16 Jun 2026 16:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBM/TbAi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D981F00A3A;
+	Tue, 16 Jun 2026 16:34:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627672;
-	bh=P0eKm3ATBvp9+XWPoojDdhlkE6Og/Fa+BMWEQqk9S/Q=;
+	s=korg; t=1781627677;
+	bh=OfQCFYb0LvTUJ+NzKoXFPRq/F3xG9wL0/7NBMqj8KCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RgSR5ux0qa419iKl5c3YANrjbbYLCEeM+nqVbrjRQHAqmalvXcKFKA2JJ9KXHyZf2
-	 0vig5zsIFZ1WMp5xCWhnKTwAbUGfpeHu2Iw5Buz0j/mrsjXm8gSLkHZ9sIChwIy3Gd
-	 bqVkThe+zDIUtoY8tqt/ICeFSXpktahCjOTV6Nas=
+	b=DBM/TbAi2c/BHJKB4yvupFcKs/fB5A5pSICyEDlFtxSj5XcVg4NlgrhIkieWXXFIY
+	 c44G72FtfTBZLR+OjVUQqDhkNAW5STe6ksuREMHSLt0d3FGx49MQZBuM2RpmY3QZQ4
+	 4k2HIp0vtMWaCSsJy+taIdIR+R6VHEOAQAvbLeXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
 	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.12 207/261] slimbus: qcom-ngd-ctrl: fix OF node refcount
-Date: Tue, 16 Jun 2026 20:30:45 +0530
-Message-ID: <20260616145054.639603625@linuxfoundation.org>
+Subject: [PATCH 6.12 208/261] slimbus: qcom-ngd-ctrl: Fix up platform_driver registration
+Date: Tue, 16 Jun 2026 20:30:46 +0530
+Message-ID: <20260616145054.684430202@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -50,39 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-commit 120134fe75c6b0ae38f14eb8b548ad1e5761f912 upstream.
+commit 8663e8334d7b6007f5d8a4e5dd270246f35107a6 upstream.
 
-Platform devices created with platform_device_alloc() call
-platform_device_release() when the last reference to the device's
-kobject is dropped. This function calls of_node_put() unconditionally.
-This works fine for devices created with platform_device_register_full()
-but users of the split approach (platform_device_alloc() +
-platform_device_add()) must bump the reference of the of_node they
-assign manually. Add the missing call to of_node_get().
+Device drivers should not invoke platform_driver_register()/unregister()
+in their probe and remove paths. They should further not rely on
+platform_driver_unregister() as their only means of "deleting" their
+child devices.
 
-Cc: stable@vger.kernel.org
+Introduce a helper to unregister the child device and move the
+platform_driver_register()/unregister() to module_init()/exit().
+
 Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204421.116824-2-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260530204421.116824-3-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/slimbus/qcom-ngd-ctrl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/slimbus/qcom-ngd-ctrl.c |   36 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 3 deletions(-)
 
 --- a/drivers/slimbus/qcom-ngd-ctrl.c
 +++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1547,7 +1547,7 @@ static int of_qcom_slim_ngd_register(str
- 			of_node_put(node);
- 			return ret;
- 		}
--		ngd->pdev->dev.of_node = node;
-+		ngd->pdev->dev.of_node = of_node_get(node);
- 		ctrl->ngd = ngd;
+@@ -1566,6 +1566,13 @@ static int of_qcom_slim_ngd_register(str
+ 	return -ENODEV;
+ }
  
- 		ret = platform_device_add(ngd->pdev);
++static void qcom_slim_ngd_unregister(struct qcom_slim_ngd_ctrl *ctrl)
++{
++	struct qcom_slim_ngd *ngd = ctrl->ngd;
++
++	platform_device_del(ngd->pdev);
++}
++
+ static int qcom_slim_ngd_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -1668,7 +1675,6 @@ static int qcom_slim_ngd_ctrl_probe(stru
+ 		goto err_pdr_lookup;
+ 	}
+ 
+-	platform_driver_register(&qcom_slim_ngd_driver);
+ 	return of_qcom_slim_ngd_register(dev, ctrl);
+ 
+ err_pdr_alloc:
+@@ -1682,7 +1688,9 @@ err_pdr_lookup:
+ 
+ static void qcom_slim_ngd_ctrl_remove(struct platform_device *pdev)
+ {
+-	platform_driver_unregister(&qcom_slim_ngd_driver);
++	struct qcom_slim_ngd_ctrl *ctrl = platform_get_drvdata(pdev);
++
++	qcom_slim_ngd_unregister(ctrl);
+ }
+ 
+ static void qcom_slim_ngd_remove(struct platform_device *pdev)
+@@ -1758,6 +1766,28 @@ static struct platform_driver qcom_slim_
+ 	},
+ };
+ 
+-module_platform_driver(qcom_slim_ngd_ctrl_driver);
++static int qcom_slim_ngd_init(void)
++{
++	int ret;
++
++	ret = platform_driver_register(&qcom_slim_ngd_driver);
++	if (ret)
++		return ret;
++
++	ret = platform_driver_register(&qcom_slim_ngd_ctrl_driver);
++	if (ret)
++		platform_driver_unregister(&qcom_slim_ngd_driver);
++
++	return ret;
++}
++
++static void qcom_slim_ngd_exit(void)
++{
++	platform_driver_unregister(&qcom_slim_ngd_ctrl_driver);
++	platform_driver_unregister(&qcom_slim_ngd_driver);
++}
++
++module_init(qcom_slim_ngd_init);
++module_exit(qcom_slim_ngd_exit);
+ MODULE_LICENSE("GPL v2");
+ MODULE_DESCRIPTION("Qualcomm SLIMBus NGD controller");
 
 
