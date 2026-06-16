@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E4C3876CF;
-	Tue, 16 Jun 2026 17:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040AC47A0CD;
+	Tue, 16 Jun 2026 17:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631587; cv=none; b=jriOVLs59e/DQ9rnkUZeJ67ZspeaFB68tthRbQbDK7WyEAybtsaqzLxsbkGUd+unF6RI19T89C5ygSfOyZn6IR7vNqwQs+Wy73x8n+3W4WLsYnSuvA81CJasF3gZOBXmdMb3/ODWguFcSWzGXrQYOBO2WD86NNr9+6WhvOuAsag=
+	t=1781631592; cv=none; b=HN+fsMH+c2J7NHpzKeilFjQmR+UhtrCkL9eCClxlMj3OqYp4rQYnK6F6F1ZoYOQpam+3t7UUUimLbpU7ac3r9Mx8tQTbuWJO3W2iM7xwciZX434I7NETbSH0T1k/eM/qy4kRpgtPPU0lp1aEBVhuQUDaKPRIvTT0BzqOtQQyoYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631587; c=relaxed/simple;
-	bh=tcAPip4BJgueaRnjnfEuydKLfsKAlqAFhCw85hKHZJ4=;
+	s=arc-20240116; t=1781631592; c=relaxed/simple;
+	bh=jFbiGCLB0ua/nTPltSAAHbq+x862qNnbZotasOp7x6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eK5EZkysvkdBwszfLp59vnV7okJS22vXlEfRzwj0zpmWJljOvo6eYfAwxwzZvSmC5Lrdya6g4hOyQCw2iGfE8v/rm3qPuOUwOjYQZCSSKEOlflOgA+FEHZPArUSd3ab0erTxPGNho7uzL5R9dINGQeckC3GTX3siDDjhrvoFwzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZObEuxEe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cZ/m970x8xnQakjnndvjt6smb1nvYJc4NtACflx+7ll0GiG6xxNxCHCPI7Ko4/BHzpy4sq891A6TYaDSroGlUkRtkcu4SY7vV+X4ybHxzCSK9VsOLHp/g52qGtX++UCts+FobN1z5olMgcdfDfP9uCW5mxQ5udfR+w8yUZbrm5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFmuutDn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZObEuxEe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6DD1F000E9;
-	Tue, 16 Jun 2026 17:39:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFmuutDn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 085051F000E9;
+	Tue, 16 Jun 2026 17:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631586;
-	bh=nydz9g3glMB8zvHMftFKeeRahzKRvZkwXMrWiYdZWjs=;
+	s=korg; t=1781631590;
+	bh=JywA4c2ZQw4vIoB8l3YNKtwaOPW7OnJTblxp4A8lBgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZObEuxEeSpo0YVk/7L6n1pTU6gfHNu2+0RejkCBWydkpgTGMTRTC7DfpuF92zagWk
-	 kTVr3yQTuNCKD71Nn0kYQ6Z57LdrLHJCeTTD84Cgd2MlQ8dxsHcDhfIB6mX4mY2Obm
-	 fgooh2vInC+As2/VWptTZTIsGs7I8iBEwfRxe308=
+	b=SFmuutDnoxO5vNuzRQ+KMNkJntAEJ0dKWfhX8UZ7dmWBu6qz9dCqWvSselju91Q8r
+	 dXxI4PQdL5B+/mWkYiz7+8LmyK39iYulPXh/LKnvwWxUn9Lolca0nGECECbn1KB+TM
+	 88Hbd1Tg0VGxsUDIZ/fpYR14Djezla3p40Medwyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Oscar Maes <oscmaes92@gmail.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 216/522] Bluetooth: bnep: reject short frames before parsing
-Date: Tue, 16 Jun 2026 20:26:03 +0530
-Message-ID: <20260616145136.140484458@linuxfoundation.org>
+Subject: [PATCH 6.1 207/522] pcnet32: stop holding device spin lock during napi_complete_done
+Date: Tue, 16 Jun 2026 20:25:54 +0530
+Message-ID: <20260616145135.748228459@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,168 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Oscar Maes <oscmaes92@gmail.com>
 
-[ Upstream commit 6770d3a8acdf9151769180cc3710346c4cfbe6f0 ]
+[ Upstream commit 73bf3cca7de6a73f53b6a52dc3b1c82ae5667a4d ]
 
-A BNEP peer can send a short BNEP SDU. bnep_rx_frame() reads the
-packet type byte immediately and, for control packets, reads the control
-opcode and setup UUID-size byte before proving that those bytes are
-present. bnep_rx_control() also dereferences the control opcode without
-rejecting an empty control payload.
+napi_complete_done may call gro_flush_normal (though not currently, as GRO
+is unsupported at the moment), which may result in packet TX. This will
+eventually result in calling pcnet32_start_xmit - resulting in a deadlock
+while trying to re-acquire the already locked spin lock.
 
-Use skb_pull_data() for the fixed fields in bnep_rx_frame() so a NULL
-return gates each dereference. Split the control handler so the frame
-path can pass an opcode that has already been pulled, and keep the
-byte-buffer wrapper for extension control payloads.
+It is safe to split the spinlock block into two, because the hardware
+registers are still protected from concurrent access, and the two blocks
+perform unrelated operations that don't need to happen atomically.
 
-For BNEP_SETUP_CONN_REQ, name the UUID-size byte before pulling the
-setup payload. struct bnep_setup_conn_req carries destination and source
-service UUIDs after that byte, each uuid_size bytes, so the parser now
-documents that tuple explicitly instead of leaving the pull length as an
-opaque multiplication.
-
-Validation reproduced this kernel report:
-KASAN slab-out-of-bounds in bnep_rx_frame.isra.0+0x130c/0x1790
-The buggy address belongs to the object at ffff88800c0f7908 which belongs
-to the cache kmalloc-8 of size 8
-The buggy address is located 0 bytes to the right of allocated 1-byte
-region [ffff88800c0f7908, ffff88800c0f7909)
-Read of size 1
-Call trace:
-  dump_stack_lvl+0xb3/0x140 (?:?)
-  print_address_description+0x57/0x3a0 (?:?)
-  bnep_rx_frame+0x130c/0x1790 (net/bluetooth/bnep/core.c:306)
-  print_report+0xb9/0x2b0 (?:?)
-  __virt_addr_valid+0x1ba/0x3a0 (?:?)
-  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
-  kasan_addr_to_slab+0x21/0x60 (?:?)
-  kasan_report+0xe0/0x110 (?:?)
-  process_one_work+0xfce/0x17e0 (kernel/workqueue.c:3200)
-  worker_thread+0x65c/0xe40 (?:?)
-  __kthread_parkme+0x184/0x230 (?:?)
-  kthread+0x35e/0x470 (?:?)
-  _raw_spin_unlock_irq+0x28/0x50 (?:?)
-  ret_from_fork+0x586/0x870 (?:?)
-  __switch_to+0x74f/0xdc0 (?:?)
-  ret_from_fork_asm+0x1a/0x30 (?:?)
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 5b2ec6f2be51 ("pcnet32: use napi_complete_done()")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Oscar Maes <oscmaes92@gmail.com>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Link: https://patch.msgid.link/20260528140320.5556-1-oscmaes92@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/bnep/core.c | 57 ++++++++++++++++++++++++---------------
- 1 file changed, 36 insertions(+), 21 deletions(-)
+ drivers/net/ethernet/amd/pcnet32.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/bnep/core.c b/net/bluetooth/bnep/core.c
-index 9d804b08de88e0..45d0f84652fc60 100644
---- a/net/bluetooth/bnep/core.c
-+++ b/net/bluetooth/bnep/core.c
-@@ -206,14 +206,11 @@ static int bnep_ctrl_set_mcfilter(struct bnep_session *s, u8 *data, int len)
- 	return 0;
+diff --git a/drivers/net/ethernet/amd/pcnet32.c b/drivers/net/ethernet/amd/pcnet32.c
+index 72db9f9e7beeae..81cb83caf62a15 100644
+--- a/drivers/net/ethernet/amd/pcnet32.c
++++ b/drivers/net/ethernet/amd/pcnet32.c
+@@ -1403,8 +1403,10 @@ static int pcnet32_poll(struct napi_struct *napi, int budget)
+ 		pcnet32_restart(dev, CSR0_START);
+ 		netif_wake_queue(dev);
+ 	}
++	spin_unlock_irqrestore(&lp->lock, flags);
+ 
+ 	if (work_done < budget && napi_complete_done(napi, work_done)) {
++		spin_lock_irqsave(&lp->lock, flags);
+ 		/* clear interrupt masks */
+ 		val = lp->a->read_csr(ioaddr, CSR3);
+ 		val &= 0x00ff;
+@@ -1412,9 +1414,9 @@ static int pcnet32_poll(struct napi_struct *napi, int budget)
+ 
+ 		/* Set interrupt enable. */
+ 		lp->a->write_csr(ioaddr, CSR0, CSR0_INTEN);
++		spin_unlock_irqrestore(&lp->lock, flags);
+ 	}
+ 
+-	spin_unlock_irqrestore(&lp->lock, flags);
+ 	return work_done;
  }
  
--static int bnep_rx_control(struct bnep_session *s, void *data, int len)
-+static int bnep_rx_control_cmd(struct bnep_session *s, u8 cmd, void *data,
-+			       int len)
- {
--	u8  cmd = *(u8 *)data;
- 	int err = 0;
- 
--	data++;
--	len--;
--
- 	switch (cmd) {
- 	case BNEP_CMD_NOT_UNDERSTOOD:
- 	case BNEP_SETUP_CONN_RSP:
-@@ -254,6 +251,14 @@ static int bnep_rx_control(struct bnep_session *s, void *data, int len)
- 	return err;
- }
- 
-+static int bnep_rx_control(struct bnep_session *s, void *data, int len)
-+{
-+	if (len < 1)
-+		return -EILSEQ;
-+
-+	return bnep_rx_control_cmd(s, *(u8 *)data, data + 1, len - 1);
-+}
-+
- static int bnep_rx_extension(struct bnep_session *s, struct sk_buff *skb)
- {
- 	struct bnep_ext_hdr *h;
-@@ -299,19 +304,26 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
- {
- 	struct net_device *dev = s->dev;
- 	struct sk_buff *nskb;
-+	u8 *data;
- 	u8 type, ctrl_type;
- 
- 	dev->stats.rx_bytes += skb->len;
- 
--	type = *(u8 *) skb->data;
--	skb_pull(skb, 1);
--	ctrl_type = *(u8 *)skb->data;
-+	data = skb_pull_data(skb, sizeof(type));
-+	if (!data)
-+		goto badframe;
-+	type = *data;
- 
- 	if ((type & BNEP_TYPE_MASK) >= sizeof(__bnep_rx_hlen))
- 		goto badframe;
- 
- 	if ((type & BNEP_TYPE_MASK) == BNEP_CONTROL) {
--		if (bnep_rx_control(s, skb->data, skb->len) < 0) {
-+		data = skb_pull_data(skb, sizeof(ctrl_type));
-+		if (!data)
-+			goto badframe;
-+		ctrl_type = *data;
-+
-+		if (bnep_rx_control_cmd(s, ctrl_type, skb->data, skb->len) < 0) {
- 			dev->stats.tx_errors++;
- 			kfree_skb(skb);
- 			return 0;
-@@ -324,24 +336,27 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
- 
- 		/* Verify and pull ctrl message since it's already processed */
- 		switch (ctrl_type) {
--		case BNEP_SETUP_CONN_REQ:
--			/* Pull: ctrl type (1 b), len (1 b), data (len bytes) */
--			if (!skb_pull(skb, 2 + *(u8 *)(skb->data + 1) * 2))
-+		case BNEP_SETUP_CONN_REQ: {
-+			u8 uuid_size;
-+
-+			/* Pull uuid_size and the dst/src service UUIDs. */
-+			data = skb_pull_data(skb, sizeof(uuid_size));
-+			if (!data)
-+				goto badframe;
-+			uuid_size = *data;
-+			if (!skb_pull(skb, uuid_size + uuid_size))
- 				goto badframe;
- 			break;
-+		}
- 		case BNEP_FILTER_MULTI_ADDR_SET:
--		case BNEP_FILTER_NET_TYPE_SET: {
--			u8 *hdr;
--
--			/* Pull ctrl type (1 b) + len (2 b) */
--			hdr = skb_pull_data(skb, 3);
--			if (!hdr)
-+		case BNEP_FILTER_NET_TYPE_SET:
-+			/* Pull: len (2 b), data (len bytes) */
-+			data = skb_pull_data(skb, sizeof(u16));
-+			if (!data)
- 				goto badframe;
--			/* Pull data (len bytes); length is big-endian */
--			if (!skb_pull(skb, get_unaligned_be16(&hdr[1])))
-+			if (!skb_pull(skb, get_unaligned_be16(data)))
- 				goto badframe;
- 			break;
--		}
- 		default:
- 			kfree_skb(skb);
- 			return 0;
 -- 
 2.53.0
 
