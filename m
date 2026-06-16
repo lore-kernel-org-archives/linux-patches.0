@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659803DEAD8;
-	Tue, 16 Jun 2026 19:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C549F3DBD76;
+	Tue, 16 Jun 2026 19:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636641; cv=none; b=U8GpnU9RwARagdTqPOQ1gcdEl9LvG5fQtY/HL1HhuupqNw7P3MvhSquIwsFXvQNOdgrsngsY4twn4SXpdx83t0YnN8kycaGl3XmciZk/GBMcGJ0rIKsSNo/3Q7w7M0gMG0HVtAOaJ2TnvvoJjB4oHcXYv/MLIAAKJVpJ4kZGkb8=
+	t=1781636646; cv=none; b=MLg+jfq0b4VuHPxJWlEthln6T4NVEWoj6d1/snWPIDy3uDTbPaZuGRukVMx0MS45RY6U62Kxo6/7valyLJzGtgiWPUhFVsSUTI5pegWGeUTMYbcSP+XXrsWi/pbnE/FawFgdaPum1G+or1WmcqSfD4Y6TWH95nM8eTKqSwLQQ6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636641; c=relaxed/simple;
-	bh=ZqigasSOjEEe0hbCIm3CE02fiY9bL0cSMSyMD2lVFQ4=;
+	s=arc-20240116; t=1781636646; c=relaxed/simple;
+	bh=FVV1T/4LvuRMXQpMQ3YYvQutpN0d1MsTVqUVMPXQBr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y3Nfi1PN2Bo3Cef08xBblgAnl3vPytsYyY9jvrusicncR9HdoH9Qom55i0bbk/kWg6Fo/KxsTQN8nK6/+3nEAXwn6A2o3S1DwKxE7jG2jt6EfNOy4guiYzuz66XP/pjYsj9b8A9xwH9DSZ4eOaI4mIR+v3O8b5F2Zj7rbtvR+QU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzqaaU7Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YwpWRsWwzqh4XhQRByHYU6RlxfRj1VsZce28LYh/0Llqi4VMbpTu4X2gbd6NhAj/alRVUoHglMSoaboOKlXYIev1/FXHoixCNRoi/JEfXjG/hsl/rEj2x8OTFr4ADD5nD3Q/EMZEhahqJOZhIHTHyBlhd2YevEv2XghHiH8nito=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbTzr49H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzqaaU7Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 570B61F000E9;
-	Tue, 16 Jun 2026 19:03:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbTzr49H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82E951F000E9;
+	Tue, 16 Jun 2026 19:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636640;
-	bh=aajQ19UjW11YvDf8z1zgdTLrZ8ovXFHgpuzsYzgSlVU=;
+	s=korg; t=1781636645;
+	bh=DfWpE4gtgo6QUXowAEbqNR7B8FRac+lnp2+J3fVLdZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nzqaaU7Qkc5Osuz3rsXMS4sdNtKgebXSaaKwR9HksEHjyXVtz/dtLz9flkqelI8+Z
-	 oZEIZWPxuJfdw0WoB/QOlJd02a6V++bx4rSeI6r0yD69WBeczx3MwnY11+gV9b5JaK
-	 6sLa2uVTwsUVvZQvzLBsoB/DekWj4d1U0aTxW2ic=
+	b=ZbTzr49HXatiUK7sgib6+7k1aBJW9zunHcqD1kDjObOOBZl34RtL06xj49UZgGqKB
+	 JaOFaEXzPvd3lRIZ4UsUzJNCO2WS2eV3CN5XUZM0glM4I/TE3Blca0LdeJxWtYTTak
+	 ge9SjkMQ3dXakiYUHBVBuYsEP4OwSyZ+rZMSwiD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hauke Mehrtens <hauke@hauke-m.de>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 277/342] spi: lantiq-ssc: fix controller deregistration
-Date: Tue, 16 Jun 2026 20:29:33 +0530
-Message-ID: <20260616145101.285063242@linuxfoundation.org>
+Subject: [PATCH 5.10 251/342] crypto: caam - guard HMAC key hex dumps in hash_digest_key
+Date: Tue, 16 Jun 2026 20:29:07 +0530
+Message-ID: <20260616145059.928992499@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -52,56 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit b99206710d032c16b7f8b75e4bc18414d8e4b9f4 ]
+[ Upstream commit 177730a273b18e195263ed953853273e901b5064 ]
 
-Make sure to deregister the controller before releasing underlying
-resources like clocks during driver unbind.
+Use print_hex_dump_devel() for dumping sensitive HMAC key bytes in
+hash_digest_key() to avoid leaking secrets at runtime when
+CONFIG_DYNAMIC_DEBUG is enabled.
 
-Fixes: 17f84b793c01 ("spi: lantiq-ssc: add support for Lantiq SSC SPI controller")
-Cc: stable@vger.kernel.org	# 4.11
-Cc: Hauke Mehrtens <hauke@hauke-m.de>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260409120419.388546-17-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ adapted spi_controller/host naming to spi_master/master and preserved the int-returning remove() with trailing return 0 ]
+Fixes: 045e36780f11 ("crypto: caam - ahash hmac support")
+Fixes: 3f16f6c9d632 ("crypto: caam/qi2 - add support for ahash algorithms")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-lantiq-ssc.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/crypto/caam/caamalg_qi2.c |    4 ++--
+ drivers/crypto/caam/caamhash.c    |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/spi/spi-lantiq-ssc.c
-+++ b/drivers/spi/spi-lantiq-ssc.c
-@@ -1003,7 +1003,7 @@ static int lantiq_ssc_probe(struct platf
- 		"Lantiq SSC SPI controller (Rev %i, TXFS %u, RXFS %u, DMA %u)\n",
- 		revision, spi->tx_fifo_size, spi->rx_fifo_size, supports_dma);
+--- a/drivers/crypto/caam/caamalg_qi2.c
++++ b/drivers/crypto/caam/caamalg_qi2.c
+@@ -3261,7 +3261,7 @@ static int hash_digest_key(struct caam_h
+ 	dpaa2_fl_set_addr(out_fle, key_dma);
+ 	dpaa2_fl_set_len(out_fle, digestsize);
  
--	err = devm_spi_register_master(dev, master);
-+	err = spi_register_master(master);
- 	if (err) {
- 		dev_err(dev, "failed to register spi_master\n");
- 		goto err_wq_destroy;
-@@ -1027,6 +1027,10 @@ static int lantiq_ssc_remove(struct plat
- {
- 	struct lantiq_ssc_spi *spi = platform_get_drvdata(pdev);
+-	print_hex_dump_debug("key_in@" __stringify(__LINE__)": ",
++	print_hex_dump_devel("key_in@" __stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, key, *keylen, 1);
+ 	print_hex_dump_debug("shdesc@" __stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, desc, desc_bytes(desc),
+@@ -3281,7 +3281,7 @@ static int hash_digest_key(struct caam_h
+ 		/* in progress */
+ 		wait_for_completion(&result.completion);
+ 		ret = result.err;
+-		print_hex_dump_debug("digested key@" __stringify(__LINE__)": ",
++		print_hex_dump_devel("digested key@" __stringify(__LINE__)": ",
+ 				     DUMP_PREFIX_ADDRESS, 16, 4, key,
+ 				     digestsize, 1);
+ 	}
+--- a/drivers/crypto/caam/caamhash.c
++++ b/drivers/crypto/caam/caamhash.c
+@@ -390,7 +390,7 @@ static int hash_digest_key(struct caam_h
+ 	append_seq_store(desc, digestsize, LDST_CLASS_2_CCB |
+ 			 LDST_SRCDST_BYTE_CONTEXT);
  
-+	spi_master_get(spi->master);
-+
-+	spi_unregister_master(spi->master);
-+
- 	lantiq_ssc_writel(spi, 0, LTQ_SPI_IRNEN);
- 	lantiq_ssc_writel(spi, 0, LTQ_SPI_CLC);
- 	rx_fifo_flush(spi);
-@@ -1037,6 +1041,8 @@ static int lantiq_ssc_remove(struct plat
- 	clk_disable_unprepare(spi->spi_clk);
- 	clk_put(spi->fpi_clk);
+-	print_hex_dump_debug("key_in@"__stringify(__LINE__)": ",
++	print_hex_dump_devel("key_in@"__stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, key, *keylen, 1);
+ 	print_hex_dump_debug("jobdesc@"__stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, desc, desc_bytes(desc),
+@@ -405,7 +405,7 @@ static int hash_digest_key(struct caam_h
+ 		wait_for_completion(&result.completion);
+ 		ret = result.err;
  
-+	spi_master_put(spi->master);
-+
- 	return 0;
- }
- 
+-		print_hex_dump_debug("digested key@"__stringify(__LINE__)": ",
++		print_hex_dump_devel("digested key@"__stringify(__LINE__)": ",
+ 				     DUMP_PREFIX_ADDRESS, 16, 4, key,
+ 				     digestsize, 1);
+ 	}
 
 
