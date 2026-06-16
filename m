@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7DE46AF20;
-	Tue, 16 Jun 2026 16:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0979A43E4BA;
+	Tue, 16 Jun 2026 16:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626593; cv=none; b=i++J7WDWu8y8FyokSbuMxV479bVngdqpN2iPGFseaUE/dFZGBSmjACjBs0UNit6COBok6hOLQzpM2pDFaotQnbYE2oHCY2qDdlFYpB5B6JhXuoCq8YaPCufCV8zjS4GkTJrYQEyYGocE2Qpyc7hD8N0soibLReOVEiFrJldM3a0=
+	t=1781626599; cv=none; b=o4uXyAI2WFt+HO7qCEIYLWD/l87Vwc8WRY6DvKRwJvgUZyXxp5rRff0yDPad/Tjpcan/R791ehzZ9vo6XO4Z8XZ7iKrJKQfFG1UErFaj2Mzu99fD9Md1gRLAiYBYMhbrF6ZKjPgwf/GkZZewmYsihxoXziRyKw6ONzInUhEJYpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626593; c=relaxed/simple;
-	bh=0UE4D1omt/vvkZDzbjgCzfLNPVaLGpnqtdjTQSvw1F8=;
+	s=arc-20240116; t=1781626599; c=relaxed/simple;
+	bh=2aosFC7XSLMQ0UcxUJN0D/kogPPByXETx3o0JVXgNUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KY9lRr+ENCfl77XPOB4LnO3BX5+iWl7k/YwjXi90taYjNGMGpZSHOlAxYB+0LOSVoaFkbBGSRF08aPCrYt/NbuRS6iNpK5GFyuK0j/o81m1sx6kmy6oBX1SknID82xi3TXcIVw8tfs2aIHj7r3Sjh5bfcKpH4dW8pe7/R/B985I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ujBTEHl7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d+X8ufyG9eOtAaVC4e35S7o7ExUu9uNk5zqm6sqj+E8BK9mitfYHDgJUoWwKwMAQDloTmHwP7GPFq/u3/8LkB6mUoqiHTqrqcO5up0uEdVCGMw5Qyiqy4xE+I2CjiWdSqBdHh8zTe7AC2Bty1noTcBr+KS+CafH92yIL0N0rSdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LyLTW7+A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujBTEHl7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03B151F000E9;
-	Tue, 16 Jun 2026 16:16:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LyLTW7+A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3C91F000E9;
+	Tue, 16 Jun 2026 16:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626592;
-	bh=xehfJSBFPMZsFLhzUvbePGOZDrpnOh+To2ODgIfdcb4=;
+	s=korg; t=1781626597;
+	bh=0obZNi/eCYFSTRCz8irUGs00lURtUUPbCg/OIfvcJjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ujBTEHl7+5IN1+AdeZVe4w7ZAznS7LeUHlgqpuzHIk5RywTyI1LzDfTqIPdx65iL7
-	 g8meU6dsBWvTUlpZnGuPjWZgpzlG/zeZggyTWU72VJBegoWdfKnQNwkcUg1JRHJja8
-	 pjM03PUNojruwr2tYryaDG1VwA9hx34QRJh+Wy2w=
+	b=LyLTW7+AXZCTQ+lpYdwuM+odno2QW1Wmq3R6Ufs1d7TQN2jZhqEEdohbLa0Nt9Typ
+	 JhBWh4aq7T/lOYSfqbBVEpDutC9Ks/JocrZ1nR619GWG7sQyImyokY1zpxdHBPpPKU
+	 tadSL2HgBNRSrM2WpGuVP4sX16ZNue5z1XXNRtCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	syzbot+652670cf249077eb498b@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 024/261] dm cache policy smq: check allocation under invalidate lock
-Date: Tue, 16 Jun 2026 20:27:42 +0530
-Message-ID: <20260616145046.106543209@linuxfoundation.org>
+Subject: [PATCH 6.12 033/261] hsr: Remove WARN_ONCE() in hsr_addr_is_self().
+Date: Tue, 16 Jun 2026 20:27:51 +0530
+Message-ID: <20260616145046.576047433@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -51,69 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit d3f0a606b9f278ece8a0df626ded9c4044071235 ]
+[ Upstream commit afd0f17ca46258cec3a5cc48b8df9327fe772490 ]
 
-commit 2d1f7b65f5de ("dm cache policy smq: fix missing locks in
-invalidating cache blocks") added mq->lock around the destructive part of
-smq_invalidate_mapping(), but left the e->allocated check outside the
-critical section.
+syzbot reported the warning [0] in hsr_addr_is_self(),
+whose assumption is simply wrong.
 
-That leaves a check-then-act race. Two concurrent invalidators can both
-observe e->allocated as true before either of them takes mq->lock. The
-first invalidator that acquires the lock removes the entry from the
-queues and hash table and then calls free_entry(), which clears
-e->allocated and puts the entry back on the free list. The second
-invalidator can then acquire mq->lock and continue with the stale result
-of the unlocked check.
+hsr->self_node is cleared in hsr_del_self_node(), which
+is called from hsr_dellink().
 
-This can corrupt the SMQ queues or hash table by deleting an entry that
-is no longer on those structures. It can also hit the allocation check in
-free_entry() when the same entry is freed again.
+Since dev->rtnl_link_ops->dellink() is called before
+unregister_netdevice_many(), there is a window when
+user can find the device but without hsr->self_node.
 
-Move the allocation check under mq->lock so the predicate and the
-destructive operations are serialized by the same lock.
+Let's remove WARN_ONCE() in hsr_addr_is_self().
 
-Fixes: 2d1f7b65f5de ("dm cache policy smq: fix missing locks in invalidating cache blocks")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+[0]:
+HSR: No self node
+WARNING: net/hsr/hsr_framereg.c:39 at hsr_addr_is_self+0x211/0x3f0 net/hsr/hsr_framereg.c:39, CPU#0: syz.4.16848/17220
+Modules linked in:
+CPU: 0 UID: 0 PID: 17220 Comm: syz.4.16848 Tainted: G             L      syzkaller #0 PREEMPT_{RT,(full)}
+Tainted: [L]=SOFTLOCKUP
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/18/2026
+RIP: 0010:hsr_addr_is_self+0x211/0x3f0 net/hsr/hsr_framereg.c:39
+Code: 33 2f 41 0f b7 dd 89 ee 09 de 31 ff e8 c8 b4 c6 f6 09 dd 74 54 e8 0f b0 c6 f6 31 ed eb 53 e8 06 b0 c6 f6 48 8d 3d 2f 50 9c 04 <67> 48 0f b9 3a 31 ed eb 42 e8 c1 13 1f 00 89 c5 31 ff 89 c6 e8 96
+RSP: 0018:ffffc900041c70e0 EFLAGS: 00010283
+RAX: ffffffff8afdc6ca RBX: ffffffff8afdc4e6 RCX: 0000000000080000
+RDX: ffffc90010493000 RSI: 0000000000000948 RDI: ffffffff8f9a1700
+RBP: 0000000000000001 R08: 0000000000000000 R09: 0000000000000000
+R10: ffffc900041c71e8 R11: fffff52000838e3f R12: dffffc0000000000
+R13: ffff888041f9e3c0 R14: ffff888086ee3802 R15: 0000000000000000
+FS:  00007f6fe985d6c0(0000) GS:ffff888126176000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f80bd437dac CR3: 0000000025096000 CR4: 00000000003526f0
+DR0: ffffffffffffffff DR1: 00000000000001f8 DR2: 0000000000000002
+DR3: ffffffffefffff15 DR6: 00000000ffff0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ check_local_dest net/hsr/hsr_forward.c:592 [inline]
+ fill_frame_info net/hsr/hsr_forward.c:728 [inline]
+ hsr_forward_skb+0xa11/0x2a80 net/hsr/hsr_forward.c:739
+ hsr_dev_xmit+0x253/0x370 net/hsr/hsr_device.c:236
+ __netdev_start_xmit include/linux/netdevice.h:5368 [inline]
+ netdev_start_xmit include/linux/netdevice.h:5377 [inline]
+ xmit_one net/core/dev.c:3888 [inline]
+ dev_hard_start_xmit+0x2df/0x860 net/core/dev.c:3904
+ __dev_queue_xmit+0x1428/0x3900 net/core/dev.c:4870
+ neigh_output include/net/neighbour.h:556 [inline]
+ ip_finish_output2+0xcec/0x10b0 net/ipv4/ip_output.c:237
+ ip_send_skb net/ipv4/ip_output.c:1510 [inline]
+ ip_push_pending_frames+0x8b/0x110 net/ipv4/ip_output.c:1530
+ raw_sendmsg+0x1547/0x1a50 net/ipv4/raw.c:659
+ sock_sendmsg_nosec net/socket.c:787 [inline]
+ __sock_sendmsg net/socket.c:802 [inline]
+ ____sys_sendmsg+0x7da/0x9c0 net/socket.c:2698
+ ___sys_sendmsg+0x2a5/0x360 net/socket.c:2752
+ __sys_sendmsg net/socket.c:2784 [inline]
+ __do_sys_sendmsg net/socket.c:2789 [inline]
+ __se_sys_sendmsg net/socket.c:2787 [inline]
+ __x64_sys_sendmsg+0x1c3/0x2a0 net/socket.c:2787
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x15f/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f6feb62ce59
+Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f6fe985d028 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 00007f6feb8a6090 RCX: 00007f6feb62ce59
+RDX: 0000000000000000 RSI: 0000200000000000 RDI: 0000000000000004
+RBP: 00007f6feb6c2d6f R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f6feb8a6128 R14: 00007f6feb8a6090 R15: 00007ffcf01cc488
+ </TASK>
+
+Fixes: f266a683a480 ("net/hsr: Better frame dispatch")
+Reported-by: syzbot+652670cf249077eb498b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a1a861e.b111c304.35cd64.0016.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20260530064300.340793-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-cache-policy-smq.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/hsr/hsr_framereg.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/md/dm-cache-policy-smq.c b/drivers/md/dm-cache-policy-smq.c
-index d81a87142cacfa..5f48bcbdaf4351 100644
---- a/drivers/md/dm-cache-policy-smq.c
-+++ b/drivers/md/dm-cache-policy-smq.c
-@@ -1590,18 +1590,22 @@ static int smq_invalidate_mapping(struct dm_cache_policy *p, dm_cblock_t cblock)
- 	struct smq_policy *mq = to_smq_policy(p);
- 	struct entry *e = get_entry(&mq->cache_alloc, from_cblock(cblock));
- 	unsigned long flags;
--
--	if (!e->allocated)
--		return -ENODATA;
-+	int r = 0;
+diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
+index 47faa8b4aaa901..2ba586cb829ff3 100644
+--- a/net/hsr/hsr_framereg.c
++++ b/net/hsr/hsr_framereg.c
+@@ -52,10 +52,8 @@ bool hsr_addr_is_self(struct hsr_priv *hsr, unsigned char *addr)
  
- 	spin_lock_irqsave(&mq->lock, flags);
-+	if (!e->allocated) {
-+		r = -ENODATA;
-+		goto out;
-+	}
- 	// FIXME: what if this block has pending background work?
- 	del_queue(mq, e);
- 	h_remove(&mq->table, e);
- 	free_entry(&mq->cache_alloc, e);
-+
-+out:
- 	spin_unlock_irqrestore(&mq->lock, flags);
+ 	rcu_read_lock();
+ 	sn = rcu_dereference(hsr->self_node);
+-	if (!sn) {
+-		WARN_ONCE(1, "HSR: No self node\n");
++	if (!sn)
+ 		goto out;
+-	}
  
--	return 0;
-+	return r;
- }
- 
- static uint32_t smq_get_hint(struct dm_cache_policy *p, dm_cblock_t cblock)
+ 	if (ether_addr_equal(addr, sn->macaddress_A) ||
+ 	    ether_addr_equal(addr, sn->macaddress_B))
 -- 
 2.53.0
 
