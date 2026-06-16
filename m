@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974F4466B64;
-	Tue, 16 Jun 2026 18:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02EC3A5E91;
+	Tue, 16 Jun 2026 18:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634064; cv=none; b=DBxTQTaKrtlKorixAr9/EMkr925/Ul2Fn2mfWWCpKy/VUNRdEwrNYWv903f4QwHZqa2e2vYeJyPOCp5ROXd0wn7TO+/V+6ccq2o54JA+zhgDQv+/Mg2IQqC/lEKFC9G16fZSFbYsc5OVEPdoj1IpYgQaRUL9flb6wv/veXxM52I=
+	t=1781634069; cv=none; b=sSKgH8AXOm7295sUNjYOq1ZJjoOGaKZU73Xa2eFoTH8DihQQfliTKGsUec0PMT0YKtJNr8US9nu8Kk+qhFSlF1naxroikNzxYiGWLHSWUdYoi+YFjnQtzYRvRAp8HF7rguCPTNcpLxWBcS0hNvLGsaLLYSmyYOfbd+w3WnRFTzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634064; c=relaxed/simple;
-	bh=/IA3yFg+xFCPkxXGIBoxCFlHz39VCVealOsW9xCbyts=;
+	s=arc-20240116; t=1781634069; c=relaxed/simple;
+	bh=MK7zJjhYww4ndlD88pzGWG1XxQ2VTv8H5uML95bmmxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJ18sp1ZhAhGamnE1VtV8T9PwnsmaSs1OoZOMj3yRldjQMgl+/famJOFbHsmn2jD5AAirhXbt4I+hgVJwQB9yuGHwuXCg/l+JlbnMMiaZXYI+xDRPBeqQzhjtYBqUdpc4kz4vItcABM9LmI05Oyjj+lABo3MGZbiv4j2TJ7teIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0+BH7d2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BKpYUVWjtn+tTeiEcIfB7f0E7+pn3Z4xiWKGSs3XYBDe6EPScJTfkAR5G09Hd7JVO7qypnpPm1D9aoZqguyGQpNc2LifyyCDwvgCEx24U0vHokFyRnSQgYYsS3kw/iDPaUhvt0IRAHW7uf9xua13RlMk8MwY+/RGFuLUbs+0r6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GK6loS00; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0+BH7d2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3421F000E9;
-	Tue, 16 Jun 2026 18:21:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GK6loS00"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC111F000E9;
+	Tue, 16 Jun 2026 18:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634063;
-	bh=13QvInhMoHu7KEFATSOdEUOJpkI82ZY2IOfdB0jZp0Y=;
+	s=korg; t=1781634068;
+	bh=r6ycuLdZ9FIm6IOb+ZnXvE73SAjCID9DuFG1Zcp0sjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V0+BH7d29axzecc8deC7qoDlt0rSsyAGcTTrlrYdRNxeaPbGEv0jcmMko0uY5sWg2
-	 xHUWigPomrFvxkm25o/FrwMcz7FibyikUOCqqFqUGhpiFTdKN5t+145t4J0hWPrDIo
-	 KvWQxoTKDELzfDsrehs022H6RCmE/Pthuj2qthgs=
+	b=GK6loS00cHgy15zoT19TN9b9ddAYGyqm83Afr6IuxoyjxC9AqfvfcJS1oKeuBkuKO
+	 mlihvpFlX50B9mbVQ3wrBnmu066lT2ypjSB3hrpR28lPoMNcKoFXVJGdIYV1WdKJkp
+	 aXvJnhYzEWkmNBdvKsxweDcwhB/q8ryhdH7S5sDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 193/411] netfilter: nf_log: validate MAC header was set before dumping it
-Date: Tue, 16 Jun 2026 20:27:11 +0530
-Message-ID: <20260616145110.984893387@linuxfoundation.org>
+Subject: [PATCH 5.15 163/411] Bluetooth: MGMT: validate advertising TLV before type checks
+Date: Tue, 16 Jun 2026 20:26:41 +0530
+Message-ID: <20260616145109.170907671@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,68 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit a84b6fedbc97078788be78dbdd7517d143ad1a77 ]
+[ Upstream commit de23fb62259aa01d294f77238ae3b835eb674413 ]
 
-The fallback path of dump_mac_header() guards the MAC header access
-only with "skb->mac_header != skb->network_header", without checking
-skb_mac_header_was_set(). When the MAC header is unset, mac_header is
-0xffff, so the test passes and skb_mac_header(skb) returns
-skb->head + 0xffff, ~64 KiB past the buffer; the loop then reads
-dev->hard_header_len bytes out of bounds into the kernel log.
+tlv_data_is_valid() reads each advertising data field length from
+data[i], then inspects data[i + 1] for managed EIR types before
+checking that the current field still fits inside the supplied buffer.
 
-This is reachable via the netdev logger: nf_log_unknown_packet() calls
-dump_mac_header() unconditionally, and an skb sent through AF_PACKET
-with PACKET_QDISC_BYPASS reaches the egress hook with mac_header still
-unset (__dev_queue_xmit(), which would reset it, is bypassed).
+A malformed field whose length byte is the last byte of the buffer can
+therefore make the parser read one byte past the advertising data.
 
-Add the skb_mac_header_was_set() check the ARPHRD_ETHER path already
-uses, and replace the open-coded MAC header length test with
-skb_mac_header_len(). Only skbs with an unset MAC header are affected;
-valid ones are dumped as before.
+KASAN reported the following when a malformed MGMT_OP_ADD_ADVERTISING
+request reached that path:
 
- BUG: KASAN: slab-out-of-bounds in dump_mac_header (net/netfilter/nf_log_syslog.c:831)
- Read of size 1 at addr ffff88800ea49d3f by task exploit/148
- Call Trace:
-  kasan_report (mm/kasan/report.c:595)
-  dump_mac_header (net/netfilter/nf_log_syslog.c:831)
-  nf_log_netdev_packet (net/netfilter/nf_log_syslog.c:938 net/netfilter/nf_log_syslog.c:963)
-  nf_log_packet (net/netfilter/nf_log.c:260)
-  nft_log_eval (net/netfilter/nft_log.c:60)
-  nft_do_chain (net/netfilter/nf_tables_core.c:285)
-  nft_do_chain_netdev (net/netfilter/nft_chain_filter.c:307)
-  nf_hook_slow (net/netfilter/core.c:619)
-  nf_hook_direct_egress (net/packet/af_packet.c:257)
-  packet_xmit (net/packet/af_packet.c:280)
-  packet_sendmsg (net/packet/af_packet.c:3114)
-  __sys_sendto (net/socket.c:2265)
+  BUG: KASAN: vmalloc-out-of-bounds in tlv_data_is_valid()
+  Read of size 1
+  Call trace:
+    tlv_data_is_valid()
+    add_advertising()
+    hci_mgmt_cmd()
+    hci_sock_sendmsg()
 
-Fixes: 7eb9282cd0ef ("netfilter: ipt_LOG/ip6t_LOG: add option to print decoded MAC header")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Move the existing element-length check before any type-octet inspection
+so each non-empty element is proven to contain its type byte before the
+parser looks at data[i + 1].
+
+Fixes: 2bb36870e8cb ("Bluetooth: Unify advertising instance flags check")
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_log_syslog.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/mgmt.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/netfilter/nf_log_syslog.c b/net/netfilter/nf_log_syslog.c
-index 7000e069bc0760..2b0edb22ba511b 100644
---- a/net/netfilter/nf_log_syslog.c
-+++ b/net/netfilter/nf_log_syslog.c
-@@ -793,8 +793,8 @@ static void dump_ipv4_mac_header(struct nf_log_buf *m,
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 09232c424446bc..337c3cb8eec589 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -7635,6 +7635,12 @@ static bool tlv_data_is_valid(struct hci_dev *hdev, u32 adv_flags, u8 *data,
+ 		if (!cur_len)
+ 			continue;
  
- fallback:
- 	nf_log_buf_add(m, "MAC=");
--	if (dev->hard_header_len &&
--	    skb->mac_header != skb->network_header) {
-+	if (dev->hard_header_len && skb_mac_header_was_set(skb) &&
-+	    skb_mac_header_len(skb) != 0) {
- 		const unsigned char *p = skb_mac_header(skb);
- 		unsigned int i;
++		/* If the current field length would exceed the total data
++		 * length, then it's invalid.
++		 */
++		if (i + cur_len >= len)
++			return false;
++
+ 		if (data[i + 1] == EIR_FLAGS &&
+ 		    (!is_adv_data || flags_managed(adv_flags)))
+ 			return false;
+@@ -7651,12 +7657,6 @@ static bool tlv_data_is_valid(struct hci_dev *hdev, u32 adv_flags, u8 *data,
+ 		if (data[i + 1] == EIR_APPEARANCE &&
+ 		    appearance_managed(adv_flags))
+ 			return false;
+-
+-		/* If the current field length would exceed the total data
+-		 * length, then it's invalid.
+-		 */
+-		if (i + cur_len >= len)
+-			return false;
+ 	}
  
+ 	return true;
 -- 
 2.53.0
 
