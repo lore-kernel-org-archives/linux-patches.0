@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B821F1A682B;
-	Tue, 16 Jun 2026 15:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0817615B998;
+	Tue, 16 Jun 2026 15:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624924; cv=none; b=ZiMq88brlABQXOBbUOZGplbfLQzRBBl7M/4M8G97R5ES+BHo0F890vg5jY04c/Jb6SSYs1RimLpX6LtlRqUmSyz0VqGbeqz+i1NCmLo1WlpB1Ym9lsfMcTk0WmGiSFeLeFCuQwyNCW7HzvVFbGz0EAUNaB1DSuHzFkSUY3VNpSE=
+	t=1781624931; cv=none; b=A0wLnWeUqKyX+Ks0XpFYqsIzDT7NPoef78sr8p9UEBQpArfIlR1JGu2xbqNhoOUph25bls1S4Io4aPEVqOf+ivYdYagm8DP92BqOUfih87Mt/b/GlK8PRFHQBN+g2ZWK+k12ZQPRPHl080U+Rfo42l692N5N1V7oVVnsMVhTZKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624924; c=relaxed/simple;
-	bh=sKxeKpCY0BsFxvbd4lZx0r9PmHJxReZDEFCsnrD6r8g=;
+	s=arc-20240116; t=1781624931; c=relaxed/simple;
+	bh=M5xDI1Ls+twH9h88sRGPoaKYWH08II9Yahv28Dz/omI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XcfAmJ9PwWh0LXcrctySnRRY163xGh55dYdrmcYD7Xf33hhKJtsP2TsGay5NcOhKRoELMggtT0MU2G/02gX/7icushIrPPIqjaFEVvA3T0YnYVfpn57Np/AhBYzi08aAWrHWzSAsnWrbmHrIIy8ncpNgw07gSPNg0zq2swXRr/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H00w/70q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tbcaGCo+WFQRwxUu+fhXtT+XdYYhLPIK+0WqR0lc0ozckxveh0Bq5n4MjCTSlojEbCo285IlyXY68K5WVt6JISMQjzH3BjXZytqw53lWT++xcQEFvByMS5ylqqrp380huTlqwzf3ASQm9W/r4K8FW5yCawdSuL8Mp6UVy2vmvxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K/7cwS7A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H00w/70q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706DD1F000E9;
-	Tue, 16 Jun 2026 15:48:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K/7cwS7A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C971F000E9;
+	Tue, 16 Jun 2026 15:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624923;
-	bh=a1Qo5uh3W5a8j7WUybVJi723XhGQmq9/3IY8/0ZhlUU=;
+	s=korg; t=1781624929;
+	bh=SyA2XjyWfOB5E5BF8G6eWBjikyXZKfgtTKaXSLPL89Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H00w/70q08IQR9WeM7hvoILl/ik2zd6iVeJlhQWRdEGRMX4ZWVl6rTs+f7jXkFsG/
-	 nyeTJIZWmuVi4+jkDhqKHx+a0cOrLwJoaKxEcdohArNtj3bq5ACGQEX9FBi7WgTFD3
-	 BDAIpLrBsCWPVBKKfnMfSTpEn9Mu1xCpWaYjwFnw=
+	b=K/7cwS7AWrlEXqADbRV2KfAxr+mux1Uwk6C/fPGwa2Hiiu05FoUBEh3cpYthXRjcq
+	 5l1Ft5D5ispicKiTWF6JhxLLam9Gx9PZBUX+ZOKX9/yNIqk5vMEfw0nYrcaumzrJp8
+	 IBUDiTTe07nbzcPKUAjlX8OprXDwWzw/Gmou9i8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Jason Xing <kernelxing@tencent.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 052/325] xsk: cache csum_start/csum_offset to fix TOCTOU in xsk_skb_metadata()
-Date: Tue, 16 Jun 2026 20:27:28 +0530
-Message-ID: <20260616145100.297940577@linuxfoundation.org>
+Subject: [PATCH 6.18 053/325] octeontx2-pf: Fix NDC sync operation errors
+Date: Tue, 16 Jun 2026 20:27:29 +0530
+Message-ID: <20260616145100.342362285@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -53,71 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Geetha sowjanya <gakula@marvell.com>
 
-[ Upstream commit 22ba97ea9cc1f63a0d0244fae38057ed452b6ac7 ]
+[ Upstream commit a910fb8f7b9e4c566db363e6c2ec378dc7153995 ]
 
-The TX metadata area resides in the UMEM buffer which is memory-mapped
-and concurrently writable by userspace. In xsk_skb_metadata(),
-csum_start and csum_offset are read from shared memory for bounds
-validation, then read again for skb assignment. A malicious userspace
-application can race to overwrite these values between the two reads,
-bypassing the bounds check and causing out-of-bounds memory access
-during checksum computation in the transmit path.
+On system reboot "rvu_nicpf 0002:03:00.0: NDC sync operation failed"
+error messages are shown, even if the operations is successful.
+This is due to wrong if error check in ndc_syc() function.
 
-Fix this by reading csum_start and csum_offset into local variables
-once, then using the local copies for both validation and assignment.
-
-Note that other metadata fields (flags, launch_time) and the cached
-csum fields may be mutually inconsistent due to concurrent userspace
-writes, but this is benign: the only security-critical invariant is
-that each field's validated value is the same one used, which local
-caching guarantees.
-
-Closes: https://lore.kernel.org/all/20260503200927.73EA1C2BCB4@smtp.kernel.org/
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Fixes: 48eb03dd2630 ("xsk: Add TX timestamp and TX checksum offload support")
-Link: https://patch.msgid.link/20260530042630.80626-1-kerneljasonxing@gmail.com
+Fixes: 42c45ac1419c ("octeontx2-af: Sync NIX and NPA contexts from NDC to LLC/DRAM")
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/1780054677-17249-1-git-send-email-sbhatta@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xsk.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index 259ad9a3abcc42..9e0a486d54fb33 100644
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -685,6 +685,7 @@ static int xsk_skb_metadata(struct sk_buff *skb, void *buffer,
- 			    u32 hr)
- {
- 	struct xsk_tx_metadata *meta = NULL;
-+	u16 csum_start, csum_offset;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+index bbf25769f4994a..fa23d42d1318b4 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -3481,7 +3481,7 @@ static void otx2_ndc_sync(struct otx2_nic *pf)
+ 	req->nix_lf_rx_sync = 1;
+ 	req->npa_lf_sync = 1;
  
- 	if (unlikely(pool->tx_metadata_len == 0))
- 		return -EINVAL;
-@@ -694,13 +695,15 @@ static int xsk_skb_metadata(struct sk_buff *skb, void *buffer,
- 		return -EINVAL;
+-	if (!otx2_sync_mbox_msg(mbox))
++	if (otx2_sync_mbox_msg(mbox))
+ 		dev_err(pf->dev, "NDC sync operation failed\n");
  
- 	if (meta->flags & XDP_TXMD_FLAGS_CHECKSUM) {
--		if (unlikely(meta->request.csum_start +
--			     meta->request.csum_offset +
-+		csum_start = READ_ONCE(meta->request.csum_start);
-+		csum_offset = READ_ONCE(meta->request.csum_offset);
-+
-+		if (unlikely(csum_start + csum_offset +
- 			     sizeof(__sum16) > desc->len))
- 			return -EINVAL;
- 
--		skb->csum_start = hr + meta->request.csum_start;
--		skb->csum_offset = meta->request.csum_offset;
-+		skb->csum_start = hr + csum_start;
-+		skb->csum_offset = csum_offset;
- 		skb->ip_summed = CHECKSUM_PARTIAL;
- 
- 		if (unlikely(pool->tx_sw_csum)) {
+ 	mutex_unlock(&mbox->lock);
 -- 
 2.53.0
 
