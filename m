@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8703DBD76;
-	Tue, 16 Jun 2026 19:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E385A3DD851;
+	Tue, 16 Jun 2026 19:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636652; cv=none; b=TJ8yBD0igquWvf4vI9EMKmu6pdifTiwxB7OzppzDXNcyHCfKWY4o8VgvXKGKriorNU5S4GFpdR+BIFIN95sApsxxC3s73V0M74euyBo4nNL2L/enT6q2cInU0De/lYQIFkYMWUdjDtvvJcqL6xFiG0aKxscL1MG1rgapgkR+4oA=
+	t=1781636658; cv=none; b=Vsc39Q8bEx1mOfr/FYDluPprclujvA1E6r6X2prsNh/7P7Z21MGcWLrA46MPe4fMJkRMUwoUlSWFR40WCUequPwIHD8Eo3CB/rBeBQw0Pgtvd0AoWLZHXGDUkKF8Oveti1PKy+Hhqtehe7I1MukoWj4kfMluqnqf1Hiaxd4JjEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636652; c=relaxed/simple;
-	bh=eOEza1SIj7eR84yXW5a4cZnGlxxjHP1qCYGg+X1rQic=;
+	s=arc-20240116; t=1781636658; c=relaxed/simple;
+	bh=zDNymc1Rtb3LJIVZCTS0T255iqrcuhc/wxb+eOaCtds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gwtcNW5SfThHnc2rAwz5uLNKyaeXEnio6mM1OdE5c6hXcmROVXj6OHY/CW53XCGWNVW9czVz+lGhsloRk6W4uKEm3d0QQvLU/g12K1U7UmCiDwci1/NK+b4H00lefjZUmN706kDylcw/NFHyueQaQa0QrS5hf0AET89qRpwhvaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yb6Fdry7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t9sJ0sZ+DrogCRWSNR/EQO9P6itaZVtptoBjaUaY7u1TPcHwR2/QuBEWJkibTopuT39R/qmtmA4ag9iCRptKrrE3CGKcrwKgqYYZKaO6Ix7Rm/l83GlwxJxlwG1/5yrhCW8ms2UUrATWRXkQ+m2B2n16gQhA2paW9aNLY7zocF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zjwd5hOH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yb6Fdry7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155B91F000E9;
-	Tue, 16 Jun 2026 19:04:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zjwd5hOH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB84F1F00A3F;
+	Tue, 16 Jun 2026 19:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636651;
-	bh=PUyqak93Db+jrHsymmdAPQMVH0SYWspR8l86mSE+DiM=;
+	s=korg; t=1781636656;
+	bh=GdjK2Rs8PrrxZ5Jj9JLl0RuKgVu+K7yMAfBNu2tLYaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yb6Fdry7aUUkNYXUVdzt3PdzLKLTWpUmo5z3a4apqBSll7RjY0QxX1M/HmeyTeTzT
-	 Nyg+E7e/y6QNdWy1j8sY4U83nzSF7kv9wSpVhXQ2G4U1ZFTfgjoM+uZ8/+VBPGR879
-	 PoXgIjpJkEVlA8pMKUCy2eivYCUj4nGcaG91pI+4=
+	b=Zjwd5hOHJO3akKjNS8eIbbaDqo87jRW1fJwZUZkFyWtO5otT2v+Gnl54EGxrGAwJm
+	 ewg1TvBnAvNBc9ZcjtImB3IWp1IwMP00W3St2FCJlTmH4OaM4xmyWxLFSaBBcl1v/X
+	 EezRrI9iKvQXLcRwmdo0RJkpiJ2E6hnTyxlDajM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siwei Zhang <oss@fourdim.xyz>,
-	=?UTF-8?q?Safa=20Karaku=C5=9F?= <safa.karakus@secunnix.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Shuai Zhang <shuai.zhang@oss.qualcomm.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 278/342] Bluetooth: fix UAF in l2cap_sock_cleanup_listen() vs l2cap_conn_del()
-Date: Tue, 16 Jun 2026 20:29:34 +0530
-Message-ID: <20260616145101.347809765@linuxfoundation.org>
+Subject: [PATCH 5.10 279/342] Bluetooth: hci_qca: Convert timeout from jiffies to ms
+Date: Tue, 16 Jun 2026 20:29:35 +0530
+Message-ID: <20260616145101.400529524@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -46,214 +47,158 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Safa Karakuş <safa.karakus@secunnix.com>
+From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
 
-[ Upstream commit ab1513597c6cf17cd1ad2a21e3b045421b48e022 ]
+[ Upstream commit 375ba7484132662a4a8c7547d088fb6275c00282 ]
 
-bt_accept_dequeue() unlinks a not-yet-accepted child from the parent
-accept queue and release_sock()s it before returning, so the returned
-sk has no caller reference and is unlocked.
+Since the timer uses jiffies as its unit rather than ms, the timeout value
+must be converted from ms to jiffies when configuring the timer. Otherwise,
+the intended 8s timeout is incorrectly set to approximately 33s.
 
-l2cap_sock_cleanup_listen() walks these children on listening-socket
-close.  A concurrent HCI disconnect drives hci_rx_work ->
-l2cap_conn_del() which runs l2cap_chan_del() + l2cap_sock_kill() and
-frees the child sk and its l2cap_chan; cleanup_listen() then uses both:
+To improve readability, embed msecs_to_jiffies() directly in the macro
+definitions and drop the _MS suffix from macros that now yield jiffies
+values: MEMDUMP_TIMEOUT, FW_DOWNLOAD_TIMEOUT, IBS_DISABLE_SSR_TIMEOUT,
+CMD_TRANS_TIMEOUT, and IBS_BTSOC_TX_IDLE_TIMEOUT.
 
-  BUG: KASAN: slab-use-after-free in l2cap_sock_kill
-    l2cap_sock_kill / l2cap_sock_cleanup_listen / __x64_sys_close
-  Freed by: l2cap_conn_del -> l2cap_sock_close_cb -> l2cap_sock_kill
+IBS_WAKE_RETRANS_TIMEOUT_MS and IBS_HOST_TX_IDLE_TIMEOUT_MS are
+intentionally left unchanged. Their values are stored in the struct fields
+wake_retrans and tx_idle_delay, which hold ms values at runtime and can be
+modified via debugfs. The msecs_to_jiffies() conversion happens at each
+call site against the field value, so it cannot be embedded in the macro.
 
-This is distinct from the two fixes already in this area: commit
-e83f5e24da741 ("Bluetooth: serialize accept_q access") serialises the
-accept_q list/poll and takes temporary refs inside bt_accept_dequeue(),
-and CVE-2025-39860 serialises the userspace close()/accept() race by
-calling cleanup_listen() under lock_sock() in l2cap_sock_release().
-Neither covers l2cap_conn_del() running from hci_rx_work, so this UAF
-still reproduces on current bluetooth/master.
+Wake timer depends on commit c347ca17d62a
 
-Take the reference at the source: bt_accept_dequeue() does sock_hold()
-while sk is still locked, before release_sock(); callers sock_put().
-cleanup_listen() pins the chan with l2cap_chan_hold_unless_zero() under
-a brief child sk lock (serialising vs l2cap_sock_teardown_cb()), drops
-it before l2cap_chan_lock(), and skips a duplicate l2cap_sock_kill() on
-SOCK_DEAD.  conn->lock is not taken here: cleanup_listen() runs under
-the parent sk lock and that would invert
-conn->lock -> chan->lock -> sk_lock (lockdep).
-
-KASAN/SMP: an unprivileged listen/close vs HCI-disconnect race produced
-12 use-after-free reports per run before this change; 0, and no lockdep
-report, over 1600+ raced iterations after it on bluetooth/master.
-
-Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
 Cc: stable@vger.kernel.org
-Reported-by: Siwei Zhang <oss@fourdim.xyz>
-Reviewed-by: Siwei Zhang <oss@fourdim.xyz>
-Signed-off-by: Safa Karakuş <safa.karakus@secunnix.com>
+Fixes: d841502c79e3 ("Bluetooth: hci_qca: Collect controller memory dump during SSR")
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ adapted to `vmalloc`-based memdump path and older `qca_serdev_shutdown(struct device *dev)` signature ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/af_bluetooth.c |   10 ++++++++
- net/bluetooth/l2cap_sock.c   |   51 +++++++++++++++++++++++++++++++++++++------
- net/bluetooth/rfcomm/sock.c  |    9 ++++++-
- net/bluetooth/sco.c          |    9 ++++++-
- 4 files changed, 70 insertions(+), 9 deletions(-)
+ drivers/bluetooth/hci_qca.c |   33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
 
---- a/net/bluetooth/af_bluetooth.c
-+++ b/net/bluetooth/af_bluetooth.c
-@@ -237,6 +237,16 @@ restart:
- 			if (newsock)
- 				sock_graft(sk, newsock);
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -46,13 +46,12 @@
+ #define HCI_MAX_IBS_SIZE	10
  
-+			/* Hand the caller a reference taken while sk is
-+			 * still locked.  bt_accept_unlink() just dropped
-+			 * the accept-queue reference; without this hold a
-+			 * concurrent teardown (e.g. l2cap_conn_del() ->
-+			 * l2cap_sock_kill()) could free sk between
-+			 * release_sock() and the caller using it.  Every
-+			 * caller drops this with sock_put() when done.
-+			 */
-+			sock_hold(sk);
-+
- 			release_sock(sk);
- 			return sk;
- 		}
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -366,8 +366,13 @@ static int l2cap_sock_accept(struct sock
- 		}
+ #define IBS_WAKE_RETRANS_TIMEOUT_MS	100
+-#define IBS_BTSOC_TX_IDLE_TIMEOUT_MS	200
++#define IBS_BTSOC_TX_IDLE_TIMEOUT	msecs_to_jiffies(200)
+ #define IBS_HOST_TX_IDLE_TIMEOUT_MS	2000
+-#define CMD_TRANS_TIMEOUT_MS		100
+-#define MEMDUMP_TIMEOUT_MS		8000
+-#define IBS_DISABLE_SSR_TIMEOUT_MS \
+-	(MEMDUMP_TIMEOUT_MS + FW_DOWNLOAD_TIMEOUT_MS)
+-#define FW_DOWNLOAD_TIMEOUT_MS		3000
++#define CMD_TRANS_TIMEOUT		msecs_to_jiffies(100)
++#define MEMDUMP_TIMEOUT			msecs_to_jiffies(8000)
++#define FW_DOWNLOAD_TIMEOUT		msecs_to_jiffies(3000)
++#define IBS_DISABLE_SSR_TIMEOUT		(MEMDUMP_TIMEOUT + FW_DOWNLOAD_TIMEOUT)
  
- 		nsk = bt_accept_dequeue(sk, newsock);
--		if (nsk)
-+		if (nsk) {
-+			/* Drop the bridging ref from bt_accept_dequeue();
-+			 * the grafted socket keeps nsk alive from here.
-+			 */
-+			sock_put(nsk);
- 			break;
-+		}
+ /* susclk rate */
+ #define SUSCLK_RATE_32KHZ	32768
+@@ -1041,7 +1040,7 @@ static void qca_controller_memdump(struc
+ 				    dump_size);
+ 			queue_delayed_work(qca->workqueue,
+ 					   &qca->ctrl_memdump_timeout,
+-					   msecs_to_jiffies(MEMDUMP_TIMEOUT_MS)
++					   MEMDUMP_TIMEOUT
+ 					  );
  
- 		if (!timeo) {
- 			err = -EAGAIN;
-@@ -1432,22 +1437,54 @@ static void l2cap_sock_cleanup_listen(st
- 	BT_DBG("parent %p state %s", parent,
- 	       state_to_string(parent->sk_state));
+ 			skb_pull(skb, sizeof(dump_size));
+@@ -1309,7 +1308,7 @@ static int qca_set_baudrate(struct hci_d
  
--	/* Close not yet accepted channels */
-+	/* Close not yet accepted channels.
-+	 *
-+	 * bt_accept_dequeue() now returns sk with an extra reference held
-+	 * (taken while sk was still locked) so a concurrent l2cap_conn_del()
-+	 * -> l2cap_sock_kill() cannot free sk under us.
-+	 *
-+	 * cleanup_listen() runs under the parent sk lock, so unlike
-+	 * l2cap_sock_shutdown() we must NOT take conn->lock here: that would
-+	 * establish sk_lock -> conn->lock and invert the established
-+	 * conn->lock -> chan->lock -> sk_lock order (lockdep deadlock).
-+	 *
-+	 * Instead, briefly take the child sk lock to fetch and pin its chan.
-+	 * l2cap_conn_del() reaches the chan free only via
-+	 * l2cap_chan_del() -> l2cap_sock_teardown_cb(), which itself takes
-+	 * the child sk lock; holding it across l2cap_chan_hold_unless_zero()
-+	 * therefore guarantees the chan cannot be freed while we read and
-+	 * pin it (hold_unless_zero() additionally skips a chan already past
-+	 * its last reference).  We then drop the sk lock before taking
-+	 * chan->lock, so sk and chan locks are never held together.
-+	 */
- 	while ((sk = bt_accept_dequeue(parent, NULL))) {
--		struct l2cap_chan *chan = l2cap_pi(sk)->chan;
-+		struct l2cap_chan *chan;
-+
-+		lock_sock_nested(sk, L2CAP_NESTING_NORMAL);
-+		chan = l2cap_chan_hold_unless_zero(l2cap_pi(sk)->chan);
-+		release_sock(sk);
-+		if (!chan) {
-+			/* l2cap_conn_del() already tearing this child down */
-+			sock_put(sk);
-+			continue;
-+		}
+ 	if (hu->serdev)
+ 		serdev_device_wait_until_sent(hu->serdev,
+-		      msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS));
++		      CMD_TRANS_TIMEOUT);
  
- 		BT_DBG("child chan %p state %s", chan,
- 		       state_to_string(chan->state));
+ 	/* Give the controller time to process the request */
+ 	if (qca_is_wcn399x(qca_soc_type(hu)))
+@@ -1330,8 +1329,8 @@ static inline void host_set_baudrate(str
  
--		l2cap_chan_hold(chan);
- 		l2cap_chan_lock(chan);
--
- 		__clear_chan_timer(chan);
- 		l2cap_chan_close(chan, ECONNRESET);
--		l2cap_sock_kill(sk);
--
-+		/* l2cap_conn_del() may already have killed this socket
-+		 * (it sets SOCK_DEAD); skip the duplicate to avoid a
-+		 * double sock_put()/l2cap_chan_put().
-+		 */
-+		if (!sock_flag(sk, SOCK_DEAD))
-+			l2cap_sock_kill(sk);
- 		l2cap_chan_unlock(chan);
-+
- 		l2cap_chan_put(chan);
-+		sock_put(sk);
- 	}
+ static int qca_send_power_pulse(struct hci_uart *hu, bool on)
+ {
++	int timeout = CMD_TRANS_TIMEOUT;
+ 	int ret;
+-	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
+ 	u8 cmd = on ? QCA_WCN3990_POWERON_PULSE : QCA_WCN3990_POWEROFF_PULSE;
+ 
+ 	/* These power pulses are single byte command which are sent
+@@ -1490,7 +1489,7 @@ static void qca_wait_for_dump_collection
+ 	struct qca_data *qca = hu->priv;
+ 
+ 	wait_on_bit_timeout(&qca->flags, QCA_MEMDUMP_COLLECTION,
+-			    TASK_UNINTERRUPTIBLE, MEMDUMP_TIMEOUT_MS);
++			    TASK_UNINTERRUPTIBLE, MEMDUMP_TIMEOUT);
+ 
+ 	clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
  }
+@@ -2071,7 +2070,7 @@ static void qca_serdev_remove(struct ser
+ static void qca_serdev_shutdown(struct device *dev)
+ {
+ 	int ret;
+-	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
++	int timeout = CMD_TRANS_TIMEOUT;
+ 	struct serdev_device *serdev = to_serdev_device(dev);
+ 	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
+ 	struct hci_uart *hu = &qcadev->serdev_hu;
+@@ -2129,7 +2128,7 @@ static int __maybe_unused qca_suspend(st
+ 	bool tx_pending = false;
+ 	int ret = 0;
+ 	u8 cmd;
+-	u32 wait_timeout = 0;
++	unsigned long wait_timeout = 0;
  
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -190,6 +190,8 @@ static void rfcomm_sock_cleanup_listen(s
- 	while ((sk = bt_accept_dequeue(parent, NULL))) {
- 		rfcomm_sock_close(sk);
- 		rfcomm_sock_kill(sk);
-+		/* Drop the reference handed back by bt_accept_dequeue(). */
-+		sock_put(sk);
+ 	set_bit(QCA_SUSPENDING, &qca->flags);
+ 
+@@ -2150,15 +2149,15 @@ static int __maybe_unused qca_suspend(st
+ 	if (test_bit(QCA_IBS_DISABLED, &qca->flags) ||
+ 	    test_bit(QCA_SSR_TRIGGERED, &qca->flags)) {
+ 		wait_timeout = test_bit(QCA_SSR_TRIGGERED, &qca->flags) ?
+-					IBS_DISABLE_SSR_TIMEOUT_MS :
+-					FW_DOWNLOAD_TIMEOUT_MS;
++					IBS_DISABLE_SSR_TIMEOUT :
++					FW_DOWNLOAD_TIMEOUT;
+ 
+ 		/* QCA_IBS_DISABLED flag is set to true, During FW download
+ 		 * and during memory dump collection. It is reset to false,
+ 		 * After FW download complete.
+ 		 */
+ 		wait_on_bit_timeout(&qca->flags, QCA_IBS_DISABLED,
+-			    TASK_UNINTERRUPTIBLE, msecs_to_jiffies(wait_timeout));
++			    TASK_UNINTERRUPTIBLE, wait_timeout);
+ 
+ 		if (test_bit(QCA_IBS_DISABLED, &qca->flags)) {
+ 			bt_dev_err(hu->hdev, "SSR or FW download time out");
+@@ -2210,7 +2209,7 @@ static int __maybe_unused qca_suspend(st
+ 
+ 	if (tx_pending) {
+ 		serdev_device_wait_until_sent(hu->serdev,
+-					      msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS));
++					      CMD_TRANS_TIMEOUT);
+ 		serial_clock_vote(HCI_IBS_TX_VOTE_CLOCK_OFF, hu);
  	}
  
- 	parent->sk_state  = BT_CLOSED;
-@@ -508,8 +510,13 @@ static int rfcomm_sock_accept(struct soc
- 		}
- 
- 		nsk = bt_accept_dequeue(sk, newsock);
--		if (nsk)
-+		if (nsk) {
-+			/* Drop the bridging ref from bt_accept_dequeue();
-+			 * the grafted socket keeps nsk alive from here.
-+			 */
-+			sock_put(nsk);
- 			break;
-+		}
- 
- 		if (!timeo) {
- 			err = -EAGAIN;
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -384,6 +384,8 @@ static void sco_sock_cleanup_listen(stru
- 	while ((sk = bt_accept_dequeue(parent, NULL))) {
- 		sco_sock_close(sk);
- 		sco_sock_kill(sk);
-+		/* Drop the reference handed back by bt_accept_dequeue(). */
-+		sock_put(sk);
- 	}
- 
- 	parent->sk_state  = BT_CLOSED;
-@@ -677,8 +679,13 @@ static int sco_sock_accept(struct socket
- 		}
- 
- 		ch = bt_accept_dequeue(sk, newsock);
--		if (ch)
-+		if (ch) {
-+			/* Drop the bridging ref from bt_accept_dequeue();
-+			 * the grafted socket keeps ch alive from here.
-+			 */
-+			sock_put(ch);
- 			break;
-+		}
- 
- 		if (!timeo) {
- 			err = -EAGAIN;
+@@ -2219,7 +2218,7 @@ static int __maybe_unused qca_suspend(st
+ 	 */
+ 	ret = wait_event_interruptible_timeout(qca->suspend_wait_q,
+ 			qca->rx_ibs_state == HCI_IBS_RX_ASLEEP,
+-			msecs_to_jiffies(IBS_BTSOC_TX_IDLE_TIMEOUT_MS));
++			IBS_BTSOC_TX_IDLE_TIMEOUT);
+ 	if (ret == 0) {
+ 		ret = -ETIMEDOUT;
+ 		goto error;
 
 
