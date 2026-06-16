@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F116F169AD2;
-	Tue, 16 Jun 2026 17:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945C6169AD2;
+	Tue, 16 Jun 2026 17:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632062; cv=none; b=tlvAiauRx5oQ5GYaL5qhdrXwh5VylzNp2f9kQIkdCYZcEsGow9fYsp1RCP6SW/4ir0yzq5+cFqRWMiM0f7fKj02UMysM/4Bvw1ljhos6Q05cbsTBtIOOkZ/sjtD6jPB9hiUqDzb9CzmELjTFFg9/XhfHeVPFRJ7dK2EofMxpeZA=
+	t=1781632067; cv=none; b=iBDpWd/A60jHKD10L9fzykFUS6a9wc5OKwg5w+8gsHocKsyhxZokuHesBPl3C4HJGD/JvUbnY//2+Ulx67fWsPD6ihyIVVKhFXSR1egk3c0uBhvrYLnB8Nz5faA9GtRbQ1ZSJdN+XJIyT6X9uNBnmYp1fWpVihAsr26AXPAisDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632062; c=relaxed/simple;
-	bh=URF75w1GIqnEhrQsizzGXf/tL7mLcRdlfn1e2UtuhVw=;
+	s=arc-20240116; t=1781632067; c=relaxed/simple;
+	bh=iP2Ko4vld5puFssBKa06oHCPwfompNIb9NB9r5IIqxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BFTCMNZoAhyAHiy83KjQDqwxtFvVh1Uasu+P/xxC0A20n9mEvG7xscjP64WnAOkfia20H+ZfP5G4YY/xvo0QDFxt2A6SRTL8TOlKzAz14G48F2656ZPX/nt3CUm/hZlQfIOUqqFl+Hxn0pyY/E0nI13uMOOKDsub8Smzn1lTqi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZVBoG0Ox; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=imdP/SX3Y8P5no8CRDdgYg33DsyFcWV0fRRK4x7gsOcK0j17KpVsRvDd93QymBCuOWGeAmJZjnMykUo4A3xD4ubZhMZOWngAHGtKaLlUeeFBL1mnkRy1SzoY5QeVlPhiAmhd59vjTNYzZcTMkTmxIo2FWcF9smz1k/oTnuoI/YM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WX6E3Rsw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVBoG0Ox"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C47B1F000E9;
-	Tue, 16 Jun 2026 17:47:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WX6E3Rsw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37EC1F000E9;
+	Tue, 16 Jun 2026 17:47:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632061;
-	bh=1sc8pSEZESWAyMwhRqyWm7xr5Tnt3HljhLAgA1d+3rA=;
+	s=korg; t=1781632066;
+	bh=QK+PXgBpUH1bNts4mWIjrkn2aC3eEssP4IP5Ym3zO9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZVBoG0Oxm7zp3bZivnDRRpL6VPo0cnu9lCIPmB2WcA2CD2+cgX3PgBR0dnsFmcUgX
-	 WGZorbkd9WIlzOyQxS3QUlJK67JbWKdS8EkgSHJdqsqDZfsOj6fhUiIfc0/QjSv35w
-	 r9p/zPZrDD6DqXhrOZX1sloh9y7IuBtc0bdIgbWY=
+	b=WX6E3RswYlLkvbKReFCMZ21tt4olXmdsAuk9f7bhyp9ulp0jzz2iGkHuxGokeDzHM
+	 CxrfTVMgHa89aD5DIzAMxlbiwCOEiW1EAcBah2FVNhQBTuEoD+uLrrxpV5aK5IHDwp
+	 19lM3XxRgbZA0whVEM32pdXW3LmAsu8tkaVK0JcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuqi Xu <xuyq21@lenovo.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 306/522] net: mv643xx: fix OF node refcount
-Date: Tue, 16 Jun 2026 20:27:33 +0530
-Message-ID: <20260616145140.195852458@linuxfoundation.org>
+Subject: [PATCH 6.1 307/522] net: rds: clear i_sends on setup unwind
+Date: Tue, 16 Jun 2026 20:27:34 +0530
+Message-ID: <20260616145140.239177099@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -50,38 +56,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Yuqi Xu <xuyq21@lenovo.com>
 
-commit 4aacf509e537a711fa71bca9f234e5eb6968850e upstream.
+commit 20cf0fb715c41111469577e85e35d15f099473e0 upstream.
 
-Platform devices created with platform_device_alloc() call
-platform_device_release() when the last reference to the device's
-kobject is dropped. This function calls of_node_put() unconditionally.
-This works fine for devices created with platform_device_register_full()
-but users of the split approach (platform_device_alloc() +
-platform_device_add()) must bump the reference of the of_node they
-assign manually. Add the missing call to of_node_get().
+The RDS IB connection teardown path is written so it can run during
+partial startup and on repeated shutdown attempts. It uses NULL
+pointers to distinguish resources that are still owned from resources
+that have already been released.
 
-Cc: stable@vger.kernel.org
-Fixes: 76723bca2802 ("net: mv643xx_eth: add DT parsing support")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260602073414.22500-1-bartosz.golaszewski@oss.qualcomm.com
+When rds_ib_setup_qp() fails after allocating i_sends but before
+allocating i_recvs, the sends_out path frees i_sends without clearing
+the pointer. A later shutdown pass can still treat that stale pointer
+as a live send ring allocation.
+
+Clear i_sends after vfree() in the error unwind path so the existing
+shutdown logic continues to use the correct ownership state.
+
+Fixes: 3b12f73a5c29 ("rds: ib: add error handle")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yuqi Xu <xuyq21@lenovo.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/5a0f7624bb9845a7b67d26166a150b59e7f394ce.1779632468.git.xuyq21@lenovo.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/mv643xx_eth.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/rds/ib_cm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/ethernet/marvell/mv643xx_eth.c
-+++ b/drivers/net/ethernet/marvell/mv643xx_eth.c
-@@ -2781,7 +2781,7 @@ static int mv643xx_eth_shared_of_add_por
- 		goto put_err;
- 	}
- 	ppdev->dev.coherent_dma_mask = DMA_BIT_MASK(32);
--	ppdev->dev.of_node = pnp;
-+	ppdev->dev.of_node = of_node_get(pnp);
+--- a/net/rds/ib_cm.c
++++ b/net/rds/ib_cm.c
+@@ -656,6 +656,7 @@ static int rds_ib_setup_qp(struct rds_co
  
- 	ret = platform_device_add_resources(ppdev, &res, 1);
- 	if (ret)
+ sends_out:
+ 	vfree(ic->i_sends);
++	ic->i_sends = NULL;
+ 
+ ack_dma_out:
+ 	rds_dma_hdr_free(rds_ibdev->dev, ic->i_ack, ic->i_ack_dma,
 
 
