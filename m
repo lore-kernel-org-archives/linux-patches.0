@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3670933AD9B;
-	Tue, 16 Jun 2026 16:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C11332637;
+	Tue, 16 Jun 2026 16:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629180; cv=none; b=AGueuwfV5exGVnJmi/rK13p4IRne+6J5GKSg3xeumlEzNhhAEjQyBCQyYHmbgpYRNi+ngO2G3rCl7f70zbZK3Dyey3WWJcuFDbS9VmbDCx4MMTu1fJg2Gq6fgVqEFn+jzNK8//J8ox5ArrfiuuS4dekvfn9RfIfQR2oRG27NcJg=
+	t=1781629184; cv=none; b=qQXKiW1WzaGCtn9GKkyY7jPfbjx2LjmctmBf5B7wF7j/s5XNIF+nr1sWP+OHWW8o0r6qJctacxgwBnppr3HvBdC3W8aakij7jG/N95vIxuuR3TFZB4wVBOXjNFj2Jqd800e63aB2QDqrtp8vNSAca9Ohmjjmg1Sar4eJwVQMjJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629180; c=relaxed/simple;
-	bh=miUVu2qrVOwne7Xm/BaAH1XLmgEn8pVgc5TztglyGO8=;
+	s=arc-20240116; t=1781629184; c=relaxed/simple;
+	bh=wZva46B6aQy0zgmU8CTFkvsWKLeQLswFfY+OGTpzkTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IQdht9Kedxgfg5me2hwv2e6ZXbiwjf3v1yrRZrkmm4oVFv/WZFAC0LY4eI6R0EYO8e+39F1VKds0kMvK2wRqpGTNuvSLhP800si6be1PTzJK1XcaE3u6lnd9vLPBts2RugEydeeNQ57puVHpqiBCBSCEFt791xZaqJU6xnaNQPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dHHS+4T1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Imi6qNekbyYbjTKXIZg3foW/NvNxqFKTUWnA0EJObunYo9CVZldL+PSvVK8srJtSJUG1YhKxjP/D/BYCsUDrZtujEVV+mEkOTzyJAYHleXT0s5AJ7+5KiN6REKuqFJxwMqR/4zvMDuzTfMo1RBzq7R/oZgCyTo5a/9yCqCBBujQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IyqFw+eK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dHHS+4T1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E38361F00A3A;
-	Tue, 16 Jun 2026 16:59:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IyqFw+eK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38211F000E9;
+	Tue, 16 Jun 2026 16:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629178;
-	bh=/q6IJTGufDdHFB1oXC2xYiUxL6DkFvTp+IL2lZnECPI=;
+	s=korg; t=1781629183;
+	bh=6dhEglt2abbX+ia8EpqsMR322JLODtP3v13DB4f8VNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dHHS+4T1n+eEEfYciWKg99kgImnRgh5qvWdRmcH4F/NvxM0H7Gezk+wrgN5BbnKPD
-	 RYRRrQ3PkPZ/rauKXy6CZScDlBPiJ4+LkplrBcve74fxMrnCxvJsgvY4f4oParL0sS
-	 Pm/M+Ni5SvksHgCTCkSgintlm5cheJXk07XhJ7AE=
+	b=IyqFw+eKxqNcaaK1S0eJthJ9JP2QPyXAooJhGLircjCQru1PV/mohD47focc1LuzH
+	 IItkwCZsU28y3Ewla41MfekrucOx2M7/SMlZwuUKjEIstFvXfvlp85couFFbZG3/Oq
+	 3mvpYk5y4pZVobJgi5QBJDBTRkpDOXYyZDgHmTBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+535ecc844591e50588a5@syzkaller.appspotmail.com,
-	Bharath Reddy <kbreddy.rpbc@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 236/452] Bluetooth: fix memory leak in error path of hci_alloc_dev()
-Date: Tue, 16 Jun 2026 20:27:43 +0530
-Message-ID: <20260616145130.090307062@linuxfoundation.org>
+Subject: [PATCH 6.6 237/452] Bluetooth: MGMT: Fix backward compatibility with userspace
+Date: Tue, 16 Jun 2026 20:27:44 +0530
+Message-ID: <20260616145130.137028573@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,55 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bharath Reddy <kbreddy.rpbc@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 37b3009bf5976e8ab77c8b9a9bc3bbd7ff49e37f ]
+[ Upstream commit 149324fc762c2a7acef9c26790566f81f475e51f ]
 
-Early failures in Bluetooth HCI UART configuration leak SRCU percpu
-memory.
+bluetoothd has a bug with makes it send extra bytes as part of
+MGMT_OP_ADD_EXT_ADV_DATA which are now being checked to be the
+exact the expected length, relax this so only when the expected
+length is greater than the data length to cause an error since
+that would result in accessing invalid memory, otherwise just
+ignore the extra bytes.
 
-When device initialization fails before hci_register_dev() completes,
-the HCI_UNREGISTER flag is never set. As a result, when the device
-reference count reaches zero, bt_host_release() evaluates this flag as
-false and falls back to a direct kfree(hdev).
-
-Because hci_release_dev() is bypassed, the SRCU struct initialized
-early in hci_alloc_dev() is never cleaned up, resulting in a leak of
-percpu memory.
-
-Fix the leak by explicitly calling cleanup_srcu_struct() in the
-fallback (unregistered) branch of bt_host_release() before freeing
-the device.
-
-Reported-by: syzbot+535ecc844591e50588a5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=535ecc844591e50588a5
-Tested-by: syzbot+535ecc844591e50588a5@syzkaller.appspotmail.com
-Fixes: 1d6123102e9f ("Bluetooth: hci_core: Fix use-after-free in vhci_flush()")
-Signed-off-by: Bharath Reddy <kbreddy.rpbc@gmail.com>
+Link: https://lore.kernel.org/linux-bluetooth/20260602204749.210857-1-luiz.dentz@gmail.com/T/#u
+Fixes: d3f7d17960ed ("Bluetooth: MGMT: validate Add Extended Advertising Data length")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sysfs.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/bluetooth/mgmt.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_sysfs.c b/net/bluetooth/hci_sysfs.c
-index 4b54dbbf0729a3..60350c6723cb76 100644
---- a/net/bluetooth/hci_sysfs.c
-+++ b/net/bluetooth/hci_sysfs.c
-@@ -83,10 +83,12 @@ static void bt_host_release(struct device *dev)
- {
- 	struct hci_dev *hdev = to_hci_dev(dev);
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 7b86e287b12d64..88f44cb36e241e 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -9144,8 +9144,9 @@ static int add_ext_adv_data(struct sock *sk, struct hci_dev *hdev, void *data,
  
--	if (hci_dev_test_flag(hdev, HCI_UNREGISTER))
-+	if (hci_dev_test_flag(hdev, HCI_UNREGISTER)) {
- 		hci_release_dev(hdev);
--	else
-+	} else {
-+		cleanup_srcu_struct(&hdev->srcu);
- 		kfree(hdev);
-+	}
- 	module_put(THIS_MODULE);
- }
+ 	BT_DBG("%s", hdev->name);
+ 
+-	expected_len = struct_size(cp, data, cp->adv_data_len + cp->scan_rsp_len);
+-	if (expected_len != data_len)
++	expected_len = struct_size(cp, data, cp->adv_data_len +
++				   cp->scan_rsp_len);
++	if (expected_len > data_len)
+ 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_ADD_EXT_ADV_DATA,
+ 				       MGMT_STATUS_INVALID_PARAMS);
  
 -- 
 2.53.0
