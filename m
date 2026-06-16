@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2B93D8105;
-	Tue, 16 Jun 2026 18:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798A23BFE5A;
+	Tue, 16 Jun 2026 18:25:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634311; cv=none; b=SOagk8Uz0hTTW0nNjVctcQU3h9YNAcGaenyadIRmNh7VOF5XNphXsoce7GMhvC8XveGmHom/w56295B0rPGiNJxdUWDDSHJlPA59bw84RwHLiQRtE9tgw/jhOVcCLLLhJcmw5sFHXU3luYi5jalOtlqXSVtsYCoe6fLRzuK4hCo=
+	t=1781634316; cv=none; b=hmxdOmWG4kkXoM0d/cf1kYgv4d+Bk4DYsFpP88MdmViDo/Rljjg/s6UelxZBT6Y5hW2Os4qPc7dkj671M01rFFL2UEFlg+spdpDqCRanM8NPrMLYnjpzkYL8r30eRfHgwu0iHUiXuWQRE9W+USc5EY2y5po6v1+nF70xsDqeMGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634311; c=relaxed/simple;
-	bh=Qn4lSr8oz3wm4Ipz2zkOu2tz0/K3ISG4/IBBBdlhT+c=;
+	s=arc-20240116; t=1781634316; c=relaxed/simple;
+	bh=3yCDKjS612PEpuq8cB6ZoMj6OXbo3GTzsNPhlOwJjSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rOHCVtMjqokoGpiLgTu3e1wUllb7o7TSyAL0IY280FE8GY8Cbe4I31RH7H28YWxZooVvZIHapgIf0fm2yLzrte2RQQIRaH8exWPzQBCUmX90lhFl2zWVgQdkydF4LWAiYRz7/LYSXcTxqors+1gUbK4kIY6sfA14FDObpwenzwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BOJYg4XN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nIF/DMRa1lIP+tfSNGpCfb1g6wujTB6WjmsRl3CNRCstb+Jv06wr5UUrXjQLgSFwNjHSwrX3g3VbfbNp/F6CqN4uAxkkGfQqnwoyEvDBIl/ufmfZwNRTi2bkFTUbYcdenaq9+nqmK4Ajfy8/8EN1viXSxvPNc7PB2x0N5mGyhRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GvAzyqmC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BOJYg4XN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0AE41F000E9;
-	Tue, 16 Jun 2026 18:25:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GvAzyqmC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8690C1F000E9;
+	Tue, 16 Jun 2026 18:25:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634310;
-	bh=QIZ8Xy15S0QjI/o98viIQropbgaWyluXdOE3eeI3oq4=;
+	s=korg; t=1781634315;
+	bh=JkoOHwKg7k2koTIu1eYVie+pYg/c1zzuW4WYmiQaLi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BOJYg4XNMc4hHPw8HvqejbKLjVx3Q5p4mXyUUoxYs6bRSf5VvNCCPAELKt4gfWk1p
-	 vvvgrDbKOiMecOilXCsnHjT8kz+AwAr28tkkznjXrHvBao7e17jdhHU3g1RBYo19rO
-	 mkzLPd21Xydlfmqyf7qiKNjlkRNWe00rajqrAx6s=
+	b=GvAzyqmCcz4M9YCbNX/yXO0t9ftZoXwkVx8m3ikmo/9+4hLvu46XETt+qmLaHIIyC
+	 sdFPVl2bGFa2qstemIsQPQAR5AM+NVGEpmPcmRbXUg5tq4KQVA0TCLSETUIX+kS81H
+	 AEZ3ezuxLVgaH3K2UPk7maWSijFXb6ETp/3NYals=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 5.15 241/411] slimbus: qcom-ngd-ctrl: Avoid ABBA on tx_lock/ctrl->lock
-Date: Tue, 16 Jun 2026 20:27:59 +0530
-Message-ID: <20260616145113.716627727@linuxfoundation.org>
+	Alex Hung <alex.hung@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 242/411] drm/amd/display: Clamp HDMI HDCP2 rx_id_list read to buffer size
+Date: Tue, 16 Jun 2026 20:28:00 +0530
+Message-ID: <20260616145113.790033845@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,76 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-commit 55f2ea9ff83cc27a85526b14bc9b32f96a08d6ec upstream.
+commit f0f3981c43b32cadfe373d636d9e9ca522bb3702 upstream.
 
-During the SSR/PDR down notification the tx_lock is taken with the
-intent to provide synchronization with active DMA transfers.
+[Why & How]
+During HDCP 2.x repeater authentication over HDMI, the driver reads the
+sink's RxStatus register and extracts a 10-bit message size field (max
+value 1023). This value is used as the read length for the ReceiverID
+list without being clamped to the size of the destination buffer
+rx_id_list[177]. A malicious HDMI repeater could advertise a message
+size larger than the buffer, causing an out-of-bounds write during the
+I2C read.
 
-But during this period qcom_slim_ngd_down() is invoked, which ends up in
-slim_report_absent(), which takes the slim_controller lock. In multiple
-other codepaths these two locks are taken in the opposite order (i.e.
-slim_controller then tx_lock).
+Clamp the read length in mod_hdcp_read_rx_id_list() to the size of the
+rx_id_list buffer, matching the approach already used in the DP branch.
 
-The result is a lockdep splat, and a possible deadlock:
-
-  rprocctl/449 is trying to acquire lock:
-  ffff00009793e620 (&ctrl->lock){+.+.}-{4:4}, at: slim_report_absent (drivers/slimbus/core.c:322) slimbus
-
-  but task is already holding lock:
-  ffff00009793fb50 (&ctrl->tx_lock){+.+.}-{4:4}, at: qcom_slim_ngd_ssr_pdr_notify (drivers/slimbus/qcom-ngd-ctrl.c:1475) slim_qcom_ngd_ctrl
-
-  which lock already depends on the new lock.
-
-  Possible unsafe locking scenario:
-
-        CPU0                    CPU1
-        ----                    ----
-   lock(&ctrl->tx_lock);
-                                lock(&ctrl->lock);
-                                lock(&ctrl->tx_lock);
-   lock(&ctrl->lock);
-
-The assumption is that the comment refers to the desire to not call
-qcom_slim_ngd_exit_dma() while we have an ongoing DMA TX transaction.
-But any such transaction is initiated and completed within a single
-qcom_slim_ngd_xfer_msg().
-
-Prior to calling qcom_slim_ngd_exit_dma() the slim_controller is torn
-down, all child devices are notified that the slimbus is gone and the
-child devices are removed.
-
-Stop taking the tx_lock in qcom_slim_ngd_ssr_pdr_notify() to avoid the
-deadlock.
-
-Fixes: a899d324863a ("slimbus: qcom-ngd-ctrl: add Sub System Restart support")
+Fixes: eff682f83c9c ("drm/amd/display: Add DDC handles for HDCP2.2")
+Assisted-by: Copilot:claude-opus-4.6
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 229212219e4247d9486f8ba41ef087358490be09)
 Cc: stable@vger.kernel.org
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204421.116824-9-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/slimbus/qcom-ngd-ctrl.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1394,15 +1394,12 @@ static int qcom_slim_ngd_ssr_pdr_notify(
- 	switch (action) {
- 	case QCOM_SSR_BEFORE_SHUTDOWN:
- 	case SERVREG_SERVICE_STATE_DOWN:
--		/* Make sure the last dma xfer is finished */
--		mutex_lock(&ctrl->tx_lock);
- 		if (ctrl->state != QCOM_SLIM_NGD_CTRL_DOWN) {
- 			pm_runtime_get_noresume(ctrl->ctrl.dev);
- 			ctrl->state = QCOM_SLIM_NGD_CTRL_DOWN;
- 			qcom_slim_ngd_down(ctrl);
- 			qcom_slim_ngd_exit_dma(ctrl);
- 		}
--		mutex_unlock(&ctrl->tx_lock);
- 		break;
- 	case QCOM_SSR_AFTER_POWERUP:
- 	case SERVREG_SERVICE_STATE_UP:
+--- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c
++++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c
+@@ -533,7 +533,8 @@ enum mod_hdcp_status mod_hdcp_read_rx_id
+ 	} else {
+ 		status = read(hdcp, MOD_HDCP_MESSAGE_ID_READ_REPEATER_AUTH_SEND_RECEIVERID_LIST,
+ 				hdcp->auth.msg.hdcp2.rx_id_list,
+-				hdcp->auth.msg.hdcp2.rx_id_list_size);
++				MIN(hdcp->auth.msg.hdcp2.rx_id_list_size,
++				    sizeof(hdcp->auth.msg.hdcp2.rx_id_list)));
+ 	}
+ 	return status;
+ }
 
 
