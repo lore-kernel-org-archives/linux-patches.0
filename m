@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33FB35292A;
-	Tue, 16 Jun 2026 18:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8878E35292A;
+	Tue, 16 Jun 2026 18:19:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633942; cv=none; b=Civz2X2EISPNtR1DvLxTlvCU08U6IFlSdAp4mqWhhGUPOioqTj+k3fsEuYqXiplu5ARqT5UCjAobV8ceL+pjfU0IEEpLzl2dN0AlZB+JF5Ymi2UIcd4ppe+FP0DLuZWpwAHdcU47TC07STTxeh+mOSK4Ld0ow+gDQZYVanx9V+E=
+	t=1781633950; cv=none; b=P1zY//f44EHJWs73x2pVDaMh+Sqb4GUplQ3sk5ZSB69lMuZhUy98gECqFjVmW3ExOK0t2te5x/vvC1MVu3U2rcitEPX5oeWDV7L26gsIAjDUnn0pl9D5dIqgrJPAJ3gRDw1xf1T02fiKCL8f3ov35QCkcA6bfwlwiGBMrgRX+OE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633942; c=relaxed/simple;
-	bh=U/NvqKdouVJiSoMmPZTguDaiDU7+qz/CT65N2Hg59ZY=;
+	s=arc-20240116; t=1781633950; c=relaxed/simple;
+	bh=5ZrAqZUIJ+VOp0Thdj1Yo8hYZDGMuNyZ9z9FA9bAcqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rp9ToNoF/rCoZGDp9tI4wsyrCa0gSWhXRsoTldEJ31rinyVC5MEa+p/uzRat9YqgGHMYLT4jWtSNNHwpT95RGkIP7ILogaTJULQ7AguLxeBHv36/srIdk9E6uLDwIlKiyfT0SXN6y4iFJl/MSbyqciJINp+pK2B+v7Mt14q8EyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QT004Ven; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XvNaMXNmGldxY6cecBQNdawSOVQLwYOGcmA/kV0JdSyxPsTJjwerCW8x6Hzm75kpM7yZT1bsl2ia2+loTmxZOJpxm6QKAVii/IWA9CG1g67crC9PipPb+gON0HlCNT0UVPMruauSCVxtTSwMdOdd3Bxx6sJPKX2qJUk0yiH2MSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CnsK5mUm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QT004Ven"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3BA1F000E9;
-	Tue, 16 Jun 2026 18:19:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CnsK5mUm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000751F000E9;
+	Tue, 16 Jun 2026 18:19:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633941;
-	bh=mNa5nXWjGfyqdXXv8b+jGRJSEnpKAp+ZAQnSnv1IsuA=;
+	s=korg; t=1781633949;
+	bh=IVVfQgzIL86T6cLt5ZlbUx4avH8RIvTJeVaHKNZNWRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QT004Ven7wANU1e5zMLJ3ECj8DhII1VW3qZhgaQZdwj5jdfkB9kX+E4EtQxkUcr7D
-	 epxwRhNN5Xis6+X56OpHs76saWrrJFRki8AF3P4Ts66U8pWz6984dwgI47li2dLWOK
-	 U/0eEBb2sowbt/yKQsTWLTR8Mr85pmD9batw3Vpc=
+	b=CnsK5mUmnpRhDDaC9xGZjRZtD8uzQJPev0bmsVYcwcphUzti28boSwcasElfrowuP
+	 cbWFh7O2QkOJXA6UbRpLvse3keY7nqxQgPoJe0eSZH/cSzDhfZ6F7rSxYvmKo1Lcul
+	 pnnAKAWaGXm+MKmvkBY/CuNnXdRoH97Rqyb3MPWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	John Stultz <jstultz@google.com>,
+	syzbot+04c4e65cab786a2e5b7e@syzkaller.appspotmail.com,
+	Tejas Bharambe <tejas.bharambe@outlook.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org,
+	Alexey Panov <apanov@astralinux.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 173/411] time: Fix off-by-one in settimeofday() usec validation
-Date: Tue, 16 Jun 2026 20:26:51 +0530
-Message-ID: <20260616145109.850508500@linuxfoundation.org>
+Subject: [PATCH 5.15 174/411] ext4: validate p_idx bounds in ext4_ext_correct_indexes
+Date: Tue, 16 Jun 2026 20:26:52 +0530
+Message-ID: <20260616145109.910023187@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,42 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
+From: Tejas Bharambe <tejas.bharambe@outlook.com>
 
-[ Upstream commit ce4abda5e12622f33450159e76c8f56d28d7f03d ]
+commit 2acb5c12ebd860f30e4faf67e6cc8c44ddfe5fe8 upstream.
 
-The validation check uses '>' instead of '>=' when comparing tv_usec
-against USEC_PER_SEC, allowing the value 1000000 through. After
-conversion to nanoseconds (*= 1000), this produces tv_nsec ==
-NSEC_PER_SEC, violating the timespec invariant that tv_nsec must be
-less than NSEC_PER_SEC.
+ext4_ext_correct_indexes() walks up the extent tree correcting
+index entries when the first extent in a leaf is modified. Before
+accessing path[k].p_idx->ei_block, there is no validation that
+p_idx falls within the valid range of index entries for that
+level.
 
-Use '>=' to reject tv_usec values that are not in the valid range of
-0 to 999999.
+If the on-disk extent header contains a corrupted or crafted
+eh_entries value, p_idx can point past the end of the allocated
+buffer, causing a slab-out-of-bounds read.
 
-Fixes: 5e0fb1b57bea ("y2038: time: avoid timespec usage in settimeofday()")
-Signed-off-by: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Acked-by: John Stultz <jstultz@google.com>
-Link: https://patch.msgid.link/4rikk44zew3s6577dugmx4jyblz7o5c57niuap6ct3td5yfm6w@gh7pcumg7qor
+Fix this by validating path[k].p_idx against EXT_LAST_INDEX() at
+both access sites: before the while loop and inside it. Return
+-EFSCORRUPTED if the index pointer is out of range, consistent
+with how other bounds violations are handled in the ext4 extent
+tree code.
+
+Reported-by: syzbot+04c4e65cab786a2e5b7e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=04c4e65cab786a2e5b7e
+Signed-off-by: Tejas Bharambe <tejas.bharambe@outlook.com>
+Link: https://patch.msgid.link/JH0PR06MB66326016F9B6AD24097D232B897CA@JH0PR06MB6632.apcprd06.prod.outlook.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+[ Alexey: Adapt goto clean to break because the clean error path is not
+  present in linux-5.10.y and linux-5.15.y. ]
+Signed-off-by: Alexey Panov <apanov@astralinux.ru>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/time.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/extents.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/kernel/time/time.c b/kernel/time/time.c
-index df582f24f0d7b2..b7f6b9dbf940cd 100644
---- a/kernel/time/time.c
-+++ b/kernel/time/time.c
-@@ -207,7 +207,7 @@ SYSCALL_DEFINE2(settimeofday, struct __kernel_old_timeval __user *, tv,
- 		    get_user(new_ts.tv_nsec, &tv->tv_usec))
- 			return -EFAULT;
- 
--		if (new_ts.tv_nsec > USEC_PER_SEC || new_ts.tv_nsec < 0)
-+		if (new_ts.tv_nsec >= USEC_PER_SEC || new_ts.tv_nsec < 0)
- 			return -EINVAL;
- 
- 		new_ts.tv_nsec *= NSEC_PER_USEC;
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 80b7783c65b41e..e6dbb2dfb3318f 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -1736,6 +1736,13 @@ static int ext4_ext_correct_indexes(handle_t *handle, struct inode *inode,
+ 	err = ext4_ext_get_access(handle, inode, path + k);
+ 	if (err)
+ 		return err;
++	if (unlikely(path[k].p_idx > EXT_LAST_INDEX(path[k].p_hdr))) {
++		EXT4_ERROR_INODE(inode,
++				 "path[%d].p_idx %p > EXT_LAST_INDEX %p",
++				 k, path[k].p_idx,
++				 EXT_LAST_INDEX(path[k].p_hdr));
++		return -EFSCORRUPTED;
++	}
+ 	path[k].p_idx->ei_block = border;
+ 	err = ext4_ext_dirty(handle, inode, path + k);
+ 	if (err)
+@@ -1748,6 +1755,14 @@ static int ext4_ext_correct_indexes(handle_t *handle, struct inode *inode,
+ 		err = ext4_ext_get_access(handle, inode, path + k);
+ 		if (err)
+ 			break;
++		if (unlikely(path[k].p_idx > EXT_LAST_INDEX(path[k].p_hdr))) {
++			EXT4_ERROR_INODE(inode,
++					 "path[%d].p_idx %p > EXT_LAST_INDEX %p",
++					 k, path[k].p_idx,
++					 EXT_LAST_INDEX(path[k].p_hdr));
++			err = -EFSCORRUPTED;
++			break;
++		}
+ 		path[k].p_idx->ei_block = border;
+ 		err = ext4_ext_dirty(handle, inode, path + k);
+ 		if (err)
 -- 
 2.53.0
 
