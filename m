@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818413BFE5A;
-	Tue, 16 Jun 2026 18:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8B93D8105;
+	Tue, 16 Jun 2026 18:23:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634185; cv=none; b=btKKSqHcqWP6ZpItQ1XB0K//vpDzWwWCdi2eC/4BJPFpmvJWP1mtb3OVLxTLkDJQAgF8UJDJUE4VTIXDz9I5yCqzvjuU07mxfNBU8k8Z1oean1RZmw3LCKxd8RAF8EuCXCymdbnDt+pHyJFrO8aIK4iPwpYb3DIRiYYw/x4wgo8=
+	t=1781634191; cv=none; b=A9kY5I0tLsAAn3Z+TtlLF7IKucA9zrZ12EAszJF+x5U2UfZRLhViK2tyhM4Y/k3237+3bSrh3hT3mN9pbra6Cm2BIQD1YWFZXG4D6XFdxeeStsXY73uqj2Dp25Gjssk+3xMqU4D2w/xOYaiDXpNzijugdC3vxc6W+mnmKxPUkPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634185; c=relaxed/simple;
-	bh=vbNviFBeEMv7Ms8QUYvFkinwMzOFvY7BkmXhfoxn5Jg=;
+	s=arc-20240116; t=1781634191; c=relaxed/simple;
+	bh=Vmq4zf1SI4/HIwvnSUTypp7OY8lm2hT7Z7c1YvpMRas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FqR5nwQA+Oomxw6E0QQeN9QlAI2CVXwmFeVQM+YRQYAe+CYb09TA20Jq/JPJZNmOdaBOLnapWNiOhEaRx1YHn4EFkwq/GyEJUAZRswTStcD5mNbnAfhE7W+H8XPjk+aGtGaqugulF8hCTOBczHanPy5SVvaaN+Z9tmL3X57Xb3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVDNtwtz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RYcXScC2BRI/bmni5jAPbKXKdO8p5RSTB73Rnw8irIld7XO02GHY3QwoOQm7AYR3rlS5LMPf2kIcGREwQMf+A5NK4QMvtDp06ww3oBon+1wd8/BWVUfchCSbzFyl0hbZqTCmalwSQBPi2nQNnqGzaw3WiebgZ0FfL6qyz5KeODA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8gYO+RD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVDNtwtz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5111F000E9;
-	Tue, 16 Jun 2026 18:23:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8gYO+RD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A3E61F000E9;
+	Tue, 16 Jun 2026 18:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634184;
-	bh=g6GfiiBohW29lAynUwjkbOe+RC6L4R+UFkYrQ2gFjYU=;
+	s=korg; t=1781634190;
+	bh=JLbNuH9bvx9coV8ir4pcg4M8aAuqYOBNr7zHNsK4pY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hVDNtwtz5yVZ/LvTyF74KmsT7FI64A4JMZWlMN7KyabCQzPR1b/jgrFkytByd55yL
-	 5oTr2r0GBd2OSztnVGSbajtqLu7+ZqHWWtJkUyZ43aPL/qM59BjFGMJTR3PqNyyzsJ
-	 nwvD0UY3Hd33jP+aPQ5zs3yxvOOgtjbq43/jYFZU=
+	b=U8gYO+RDnGQ3HeSoNI9BeWYkZl6G/d5LRqt+qt2mgJSp3+7cvKTQ2cWvICY77vbbC
+	 5Oep0LpS6UTiIQAMVCQqLhf7KyEhVavrBliAz9ZxsH2GNFx6y+MfzmNu7MnpKJ9K8I
+	 HCcJTQIpLhv0+waCwezxAii4X/IuQdG3y0axH8jM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 5.15 218/411] IB/isert: Reject login PDUs shorter than ISER_HEADERS_LEN
-Date: Tue, 16 Jun 2026 20:27:36 +0530
-Message-ID: <20260616145112.370720287@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 5.15 219/411] pidfd: refuse access to tasks that have started exiting harder
+Date: Tue, 16 Jun 2026 20:27:37 +0530
+Message-ID: <20260616145112.425957126@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,58 +49,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 29e7b925ae6df64894e82ab6419994dc25580a8a upstream.
+commit 62c4d31d78294bd61cf3403626b789e854357177 upstream.
 
-In drivers/infiniband/ulp/isert/ib_isert.c, isert_login_recv_done()
-computes the login request payload length as wc->byte_len minus
-ISER_HEADERS_LEN with no lower bound, and login_req_len is a signed int.
-A remote iSER initiator can post a login Send work request carrying
-fewer than ISER_HEADERS_LEN (76) bytes, so the subtraction underflows
-and login_req_len becomes negative.
+The recent ptrace fix closed a hole where someone could rely on task->mm
+becoming NULL during do_exit() to bypass dumpability checks. This api
+here leans on on the very same check and so inherits the fix.
 
-isert_rx_login_req() then reads that negative length back into a signed
-int, takes size = min(rx_buflen, MAX_KEY_VALUE_PAIRS), and because the
-min() is signed it keeps the negative value; the value is then passed as
-the memcpy() length and sign-extended to a multi-gigabyte size_t. The
-copy into the 8192-byte login->req_buf runs far out of bounds and
-faults, crashing the target node. The login phase precedes iSCSI
-authentication, so no credentials are required to reach this path.
+But there is no good reason to let it succeed at all once the target has
+entered do_exit(). PF_EXITING is set by exit_signals() at the very top
+of do_exit(), before exit_mm() and exit_files() run. Once we observe it,
+the task is committed to dying and exit_files() will release the fdtable
+shortly.
 
-Reject any login PDU shorter than ISER_HEADERS_LEN before the
-subtraction, mirroring the existing early return on a failed work
-completion, so login_req_len can never go negative. The upper bound was
-already safe: a posted login buffer cannot deliver more than
-ISER_RX_PAYLOAD_SIZE, so the difference stays at or below
-MAX_KEY_VALUE_PAIRS and the existing min() clamps it; only the missing
-lower bound needs to be added.
-
-Fixes: b8d26b3be8b3 ("iser-target: Add iSCSI Extensions for RDMA (iSER) target driver")
-Link: https://patch.msgid.link/r/20260602194642.2273217-1-michael.bommarito@gmail.com
+Fixes: 8649c322f75c ("pid: Implement pidfd_getfd syscall")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://patch.msgid.link/20260518-obgleich-petersilie-2d77ccccf9b9@brauner
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/ulp/isert/ib_isert.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/pid.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/infiniband/ulp/isert/ib_isert.c
-+++ b/drivers/infiniband/ulp/isert/ib_isert.c
-@@ -1388,6 +1388,12 @@ isert_login_recv_done(struct ib_cq *cq,
- 	ib_dma_sync_single_for_cpu(ib_dev, isert_conn->login_desc->dma_addr,
- 			ISER_RX_SIZE, DMA_FROM_DEVICE);
+--- a/kernel/pid.c
++++ b/kernel/pid.c
+@@ -637,10 +637,12 @@ static struct file *__pidfd_fget(struct
+ 	if (ret)
+ 		return ERR_PTR(ret);
  
-+	if (unlikely(wc->byte_len < ISER_HEADERS_LEN)) {
-+		isert_dbg("login request length %u is too short\n",
-+			  wc->byte_len);
-+		return;
-+	}
-+
- 	isert_conn->login_req_len = wc->byte_len - ISER_HEADERS_LEN;
+-	if (ptrace_may_access(task, PTRACE_MODE_ATTACH_REALCREDS))
+-		file = fget_task(task, fd);
+-	else
++	if (!ptrace_may_access(task, PTRACE_MODE_ATTACH_REALCREDS))
+ 		file = ERR_PTR(-EPERM);
++	else if (task->flags & PF_EXITING)
++		file = ERR_PTR(-ESRCH);
++	else
++		file = fget_task(task, fd);
  
- 	if (isert_conn->conn) {
+ 	up_read(&task->signal->exec_update_lock);
+ 
 
 
