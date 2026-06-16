@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B5143E4BC;
-	Tue, 16 Jun 2026 15:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9281E8320;
+	Tue, 16 Jun 2026 15:21:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623286; cv=none; b=dUapWU78QOtdTk/F0P4p6uorR+d4YpQpDKcpih/zmfNUv6OMUFAlMC06rFrEt/b5Lyq8+u6cHbp9FCo+OUlTSiPXXFot9Rb896Mec9KU8lZ12HnEpmf84yAoveuDQzqNDpkVosz5VvZMCXrqUU57IeGvXxyWTTXKNGIutBy+YfQ=
+	t=1781623292; cv=none; b=Gn/DUwE2t8DiATIXtpoggLFuVyeVI3bDmVIw9QP+c3XrE4rVJA4ho4fT5HC0NKsMsKJBzlOZIhzD6OuGTjk6WUNQDkiQkddihbxQGa5m6kA8H0v6A2iPHdBMc6fea2v4Sk7bG/A9gnKr40Fnu3HLUZt5ESlwhzX6Lod+yZSZRdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623286; c=relaxed/simple;
-	bh=Eqtmrhdxr6N7HOHGEUurtZwqnvjVrxG41vTRA9rwlWA=;
+	s=arc-20240116; t=1781623292; c=relaxed/simple;
+	bh=BWt1arjQME8qintwwtlQA0GA+3iH3i3lD+Z8nJxwkC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QM40dPbvvgPTgFiYBHzbBh6hf991KJ5qg/HRaRgC5qfvP1CatYNw+qghacNUreLe2sLA4gwSb3iSN256MmEiinz6mqNkJXvItbgR0aqJdIVBHE+0XPePMMWzKYYbadLJJoyR25SPsLuFHvD41CSN1Cl4J4b6qILc/axqTWlHBVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZaG3jOp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=UPsTj1Y2wPEmFHx4KaCZ8olfS4rBdu0SIF+w/hXUsw43qG3VIUbrOt3l45ocCQpRop+Cr93BCXNOTegVpqhAURi1T5AybF7M4Xh2D3na5yxj6vurz4lhtqtrRduzOJPCVHMhrpF0Mbxa822qK3GEsFQs1ULViGsRch7LsSmTJjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tk75WOXK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZaG3jOp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF3B51F00ACA;
-	Tue, 16 Jun 2026 15:21:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tk75WOXK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB24D1F000E9;
+	Tue, 16 Jun 2026 15:21:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623285;
-	bh=orDWw4/U2QEEnbkKZdGC0y5kXcU8SvVkxyZZbGayNqA=;
+	s=korg; t=1781623290;
+	bh=0redTiFnu6SNQBimDc2l9nSrkeZrSye6LAfhE19sP/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RZaG3jOp8lWcsR7xRArQukrS4iG2r1VtgiTZF6NbyRQBhcSdipkEX+DFoqVxOxlq5
-	 WzQyS6Yvys3TYchKwI+4HFULBUaU10ImXXOj/CsLF5AYjArN8mQdDB6pOpg0l1Km9M
-	 HrQZP5TxdWQJP/nlLTIIf/Ev37OfdWTxUsfnGJX4=
+	b=Tk75WOXKO02jWEeYClHerqn5Y7CxmJm+pEwjMLDLBPwRHpX0zt14UZAFsHXLyHXKI
+	 xS9fd6NSbPfCNagmERwUyK3tfGT3k+pcxJq9XWpP97RPWWRSnCmwvh+Adb4K+r8mtm
+	 6MzZSdhWnaNDWDcCUCNG6vfQKHpp0gkilqrX93Xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Fushuai Wang <wangfushuai@baidu.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 120/378] net/mlx5e: xsk: Fix DMA and xdp_frame leak on XDP_TX xmit failure
-Date: Tue, 16 Jun 2026 20:25:51 +0530
-Message-ID: <20260616145116.673136096@linuxfoundation.org>
+Subject: [PATCH 7.0 121/378] net/mlx5: Use effective affinity mask for IRQ selection
+Date: Tue, 16 Jun 2026 20:25:52 +0530
+Message-ID: <20260616145116.722840109@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -46,73 +47,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Fushuai Wang <wangfushuai@baidu.com>
 
-[ Upstream commit b69004f5a6ad32da84d8aa5b23b9c0caafe6252e ]
+[ Upstream commit a7767290e77ca2e926b49f8bfa29daa12262c612 ]
 
-In the XSK branch of mlx5e_xmit_xdp_buff(), when sq->xmit_xdp_frame()
-returns false (e.g. XDPSQ is full), the function returns without
-unmapping the DMA address or freeing the xdp_frame allocated by
-xdp_convert_zc_to_xdp_frame(). The xdpi_fifo push only happens on
-success, so the completion path cannot recover these entries.
+When a sf is created after a CPU has been taken offline, the IRQ pool may
+contain IRQs with affinity masks that include the offline CPU. Since only
+online CPUs should be considered for IRQ placement, cpumask_subset() check
+would fail because the iter_mask contains offline CPUs that are not present
+in req_mask, causing sf creation to fail.
 
-With CONFIG_DMA_API_DEBUG=y, the leak surfaces on driver unbind:
+This is an example:
+  1. When mlx5 driver loads, it initializes the IRQ pools.
+     For sf_ctrl_pool with ≤64 sf:
+     - xa_num_irqs = {N, N} (There is only one slot)
+  2. When the first SF is created:
+     - The ctrl IRQ is allocated with mask=cpu_online_mask={0-191}
+  2. We take CPU 20 offline
+  3. Existing ctl irq still have mask={0-191}
+  4. Create a new SF:
+     - req_mask={0-19,21-191}
+     - iter_mask={0-191}
+     - {0-191} is NOT a subset of {0-19,21-191}
+     - least_loaded_irq=NULL
+  5. Try to allocate a new irq via irq_pool_request_irq()
+  6. xa_alloc() fails because the pool is full(There is only one slot)
+  7. sf creation fails with error
 
-  DMA-API: pci 0000:08:00.0: device driver has pending DMA
-  allocations while released from device [count=1116]
-  One of leaked entries details: [device address=0x000000010ffd7028]
-  [size=1534 bytes] [mapped with DMA_TO_DEVICE] [mapped as phy]
-  WARNING: kernel/dma/debug.c:881 at dma_debug_device_change+0x127/0x180
-  ...
-  DMA-API: Mapped at:
-   debug_dma_map_phys+0x4b/0xd0
-   dma_map_phys+0xfd/0x2d0
-   mlx5e_xdp_handle+0x5ae/0xac0 [mlx5_core]
-   mlx5e_xsk_skb_from_cqe_mpwrq_linear+0xc4/0x170 [mlx5_core]
-   mlx5e_handle_rx_cqe_mpwrq+0xc1/0x290 [mlx5_core]
+Use irq_get_effective_affinity_mask() instead, which returns the IRQ's
+actual effective affinity that already excludes offline CPUs.
 
-Add the missing unmap + xdp_return_frame, matching the cleanup already
-done in mlx5e_xdp_xmit(). has_frags is rejected earlier in this branch,
-so no per-frag unmap is needed.
-
-Fixes: 84a0a2310d6d ("net/mlx5e: XDP_TX from UMEM support")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260604135446.456119-1-tariqt@nvidia.com
+Fixes: 061f5b23588a ("net/mlx5: SF, Use all available cpu for setting cpu affinity")
+Suggested-by: Shay Drory <shayd@nvidia.com>
+Signed-off-by: Fushuai Wang <wangfushuai@baidu.com>
+Reviewed-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260605102112.91772-1-fushuai.wang@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/irq_affinity.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-index 80f9fc10877ad9..7b335da1d0cd22 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-@@ -102,9 +102,15 @@ mlx5e_xmit_xdp_buff(struct mlx5e_xdpsq *sq, struct mlx5e_rq *rq,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/irq_affinity.c b/drivers/net/ethernet/mellanox/mlx5/core/irq_affinity.c
+index 994fe83da4bed8..a0bb8ee44e3550 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/irq_affinity.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/irq_affinity.c
+@@ -105,9 +105,12 @@ irq_pool_find_least_loaded(struct mlx5_irq_pool *pool, const struct cpumask *req
  
- 		xdptxd->dma_addr = dma_addr;
+ 	lockdep_assert_held(&pool->lock);
+ 	xa_for_each_range(&pool->irqs, index, iter, start, end) {
+-		struct cpumask *iter_mask = mlx5_irq_get_affinity_mask(iter);
+ 		int iter_refcount = mlx5_irq_read_locked(iter);
++		const struct cpumask *iter_mask;
  
--		if (unlikely(!INDIRECT_CALL_2(sq->xmit_xdp_frame, mlx5e_xmit_xdp_frame_mpwqe,
--					      mlx5e_xmit_xdp_frame, sq, xdptxd, 0, NULL)))
-+		if (unlikely(!INDIRECT_CALL_2(sq->xmit_xdp_frame,
-+					      mlx5e_xmit_xdp_frame_mpwqe,
-+					      mlx5e_xmit_xdp_frame,
-+					      sq, xdptxd, 0, NULL))) {
-+			dma_unmap_single(sq->pdev, dma_addr, xdptxd->len,
-+					 DMA_TO_DEVICE);
-+			xdp_return_frame(xdpf);
- 			return false;
-+		}
- 
- 		/* xmit_mode == MLX5E_XDP_XMIT_MODE_FRAME */
- 		mlx5e_xdpi_fifo_push(&sq->db.xdpi_fifo,
++		iter_mask = irq_get_effective_affinity_mask(mlx5_irq_get_irq(iter));
++		if (!iter_mask)
++			continue;
+ 		if (!cpumask_subset(iter_mask, req_mask))
+ 			/* skip IRQs with a mask which is not subset of req_mask */
+ 			continue;
 -- 
 2.53.0
 
