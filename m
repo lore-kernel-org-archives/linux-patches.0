@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0B535AC1E;
-	Tue, 16 Jun 2026 16:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE81D46AF25;
+	Tue, 16 Jun 2026 16:15:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626546; cv=none; b=rSBXkQmp2qFoQq1NSEikwYAaNHlyJAP0JkTRvPFgVicCLFpmWjl4zIYJjorbq0wWmVEjaq9zeR486ZJu3e9WxTGrmu0LnEdP3ar0umq5vAQZQ+rTAQHJs+4alll4RRX8WfmekuRiStazYJc+iXX8bQXo8PN/FxALeYf2Cf+6yow=
+	t=1781626551; cv=none; b=sco5ZbAAsOkcdVRU1MpB/QSN/j3NI55v+MQWpTrh92VWm9XhF8Q8wWPi2C7Xr3JHliEsmWoYwaJPUYNecJE5Xw8bL/vo07/b6R5YrR/vzppaMxDuWNiGY1Q1j7RKoBxCGsc3wJ+mvHuDcoqE4FVUsGHd52MAKafq9amOvMCuh80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626546; c=relaxed/simple;
-	bh=NvzCbQtnjRkdmutYt7DnND8NUDB96hJrGTHIJ7olBdM=;
+	s=arc-20240116; t=1781626551; c=relaxed/simple;
+	bh=lzA9rKr0fPxpOK+JODuYzMIVhdUTvN2BhsRcWJTKBPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mb/ooSDAX/f7iOa70aeD138DCBZc9ygHouYrgGoRhe053aHGyHhVQnpR6a1QUlFOgfh3y8vGhLEJQpTBRfSk9NOjsBdhXRVjL4ichG9FgeGmIZuW88WEqgFwqayoOWRUav1z5r6vQk/WCdwgh4PcEPWC6AeLfDUco9BQZA5xKeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZJI7dDEU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JiLkBB9suSchZ8aH38FIZpUW2A7i+zDa9DcVWHLKTy4VIDxNRdesxiLuJovv/mdVITiqc1jne48HZJm2TqgYx2Ro5zxItUa/esEiualRL26wzpRH42bFf/oGUFGgVRuPkSzIV57EiNMYabsCWpug38kkE5hRAWlEQHJA5j3jK4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWE9RDHL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJI7dDEU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7311F000E9;
-	Tue, 16 Jun 2026 16:15:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWE9RDHL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE65A1F00A3A;
+	Tue, 16 Jun 2026 16:15:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626545;
-	bh=N5nOcN/UzK9gbMI06mC4Ql6XcEWU3oxyCwprsW+5DJ8=;
+	s=korg; t=1781626550;
+	bh=Pg9eiHU8NRr7Cfcw2qA0S1tid9Mb4+huWlX5aZ7BxcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZJI7dDEUDi89WLm/TxaiQ+RT+lqpbXQiGwi62Y46gFlSYxTxl5HHb4kVZjL65VCat
-	 dNyGLoi11LPbOCbbvMGh7BPf9iNP5kpP8cuwDlwzwlXnn4lGbtaWwOmQe/IH2V7tBH
-	 8fUkGhJX+hQPN52JGIwhL9LAMzac/ORwMEKd7AvQ=
+	b=LWE9RDHL1BO8LMdFroBqGB8StfM6zTVa5aWkiECaAIVK71TXkKvysgmCcaqMGRseR
+	 gejNf1JyNQ87Fr3IEJ43AXgXFriSASTA0Jd5VYBkffvxPbDbUTEhZ3jSMbkKeZIDfp
+	 jDsDx5YDCC47ng6cnRS7GnvM+P18ElQoIVfryaGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fd222bb38e916df26fa4@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 008/261] wifi: remove zero-length arrays
-Date: Tue, 16 Jun 2026 20:27:26 +0530
-Message-ID: <20260616145045.417959255@linuxfoundation.org>
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>
+Subject: [PATCH 6.12 009/261] i2c: dev: prevent integer overflow in I2C_TIMEOUT ioctl
+Date: Tue, 16 Jun 2026 20:27:27 +0530
+Message-ID: <20260616145045.459032771@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,92 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-commit a85b8544d46390469b6ca72d6bfd3ecb7be985ff upstream.
+commit 617eb7c0961a8dfcfc811844a6396e406b2923ea upstream.
 
-All of these are really meant to be variable-length, and
-in the case of s1g_beacon it's actually accessed. Make that
-one in particular, and a couple of others (that aren't used
-as arrays now), actually variable.
+While fuzzing with Syzkaller, a persistent `schedule_timeout: wrong
+timeout value` warning was observed, accompanied by SMBus controller
+state machine corruption.
 
-Reported-by: syzbot+fd222bb38e916df26fa4@syzkaller.appspotmail.com
-Fixes: 1e1f706fc2ce ("wifi: cfg80211/mac80211: correctly parse S1G beacon optional elements")
-Link: https://patch.msgid.link/20250614003037.a3e82e882251.I2e8b58e56ff2a9f8b06c66f036578b7c1d4e4685@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The I2C_TIMEOUT ioctl accepts a user-provided timeout in multiples of
+10 ms. The user argument is checked against INT_MAX, but it is
+subsequently multiplied by 10 before being passed to msecs_to_jiffies().
+
+A malicious user can pass a large value (e.g., 429496729) that passes
+the `arg > INT_MAX` check but overflows when multiplied by 10. This
+results in a truncated 32-bit unsigned value that bypasses the
+internal `(int)m < 0` check in `msecs_to_jiffies()`.
+
+The truncated value is then assigned to `client->adapter->timeout`
+(a signed 32-bit int), which is reinterpreted as a negative number.
+When passed to wait_for_completion_timeout(), this negative value
+undergoes sign extension to a 64-bit unsigned long, triggering the
+`schedule_timeout` warning and causing premature returns. This leaves
+the SMBus state machine in an unrecoverable state, constituting a
+local Denial of Service (DoS).
+
+Fix this by bounding the user argument to `INT_MAX / 10`.
+
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+[wsa: move the comment as well]
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/ieee80211.h | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/i2c/i2c-dev.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
-index abb069aa5fa54f..85bf3ac6db570b 100644
---- a/include/linux/ieee80211.h
-+++ b/include/linux/ieee80211.h
-@@ -1266,7 +1266,7 @@ struct ieee80211_ext {
- 			u8 sa[ETH_ALEN];
- 			__le32 timestamp;
- 			u8 change_seq;
--			u8 variable[0];
-+			u8 variable[];
- 		} __packed s1g_beacon;
- 	} u;
- } __packed __aligned(2);
-@@ -1522,7 +1522,7 @@ struct ieee80211_mgmt {
- 					u8 action_code;
- 					u8 dialog_token;
- 					__le16 capability;
--					u8 variable[0];
-+					u8 variable[];
- 				} __packed tdls_discover_resp;
- 				struct {
- 					u8 action_code;
-@@ -1690,35 +1690,35 @@ struct ieee80211_tdls_data {
- 		struct {
- 			u8 dialog_token;
- 			__le16 capability;
--			u8 variable[0];
-+			u8 variable[];
- 		} __packed setup_req;
- 		struct {
- 			__le16 status_code;
- 			u8 dialog_token;
- 			__le16 capability;
--			u8 variable[0];
-+			u8 variable[];
- 		} __packed setup_resp;
- 		struct {
- 			__le16 status_code;
- 			u8 dialog_token;
--			u8 variable[0];
-+			u8 variable[];
- 		} __packed setup_cfm;
- 		struct {
- 			__le16 reason_code;
--			u8 variable[0];
-+			u8 variable[];
- 		} __packed teardown;
- 		struct {
- 			u8 dialog_token;
--			u8 variable[0];
-+			u8 variable[];
- 		} __packed discover_req;
- 		struct {
- 			u8 target_channel;
- 			u8 oper_class;
--			u8 variable[0];
-+			u8 variable[];
- 		} __packed chan_switch_req;
- 		struct {
- 			__le16 status_code;
--			u8 variable[0];
-+			u8 variable[];
- 		} __packed chan_switch_resp;
- 	} u;
- } __packed;
--- 
-2.53.0
-
+--- a/drivers/i2c/i2c-dev.c
++++ b/drivers/i2c/i2c-dev.c
+@@ -487,12 +487,13 @@ static long i2cdev_ioctl(struct file *fi
+ 		client->adapter->retries = arg;
+ 		break;
+ 	case I2C_TIMEOUT:
+-		if (arg > INT_MAX)
++		/*
++		 * For historical reasons, user-space sets the timeout value in
++		 * units of 10 ms.
++		 */
++		if (arg > INT_MAX / 10)
+ 			return -EINVAL;
+ 
+-		/* For historical reasons, user-space sets the timeout
+-		 * value in units of 10 ms.
+-		 */
+ 		client->adapter->timeout = msecs_to_jiffies(arg * 10);
+ 		break;
+ 	default:
 
 
