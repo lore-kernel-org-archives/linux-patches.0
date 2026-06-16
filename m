@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A757242847F;
-	Tue, 16 Jun 2026 15:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2B815B998;
+	Tue, 16 Jun 2026 15:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625211; cv=none; b=IhklCFlrRmNpEtD9A4iKng5wjOy+OOSRIoFyid7Qs3VGVBaCiCZSdkrXiavDf0Pk6PxK9rAhTGPGOzQEeZVRkQbbBZSqmDdQiXw3Jn5tSp/wYJdNVsi5NX5sN1UHq+cLJ2kFDrAAmwdxTaBuE5vNRBsTu1UvR+Hz6nBejmXrUdQ=
+	t=1781625217; cv=none; b=WtDtVhi2x7llP5C+eO5UKtUEmXCVxeZ+qL3+4EhiWo0FYclXKf61Emh8EPKBK5mhQl6MsyzUcXRdHCZ0XLMwDsez+2AW0Yxm0WgjW2KOCsjn+nBp0t8y9Z8YGlcxuusLNyJyx4+HsjQ2Mmax5nDf3+BOP1jSFlOixR87ZjhMr0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625211; c=relaxed/simple;
-	bh=Uyw6/FMvz7HjiWtOEyHJPwnazw910UYZ1a58arOWJH0=;
+	s=arc-20240116; t=1781625217; c=relaxed/simple;
+	bh=H+Mrixw+d5PzUmeMN/IqfHJxsme+catl2CqbhY9Efg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JKJO3Span+RiUSULJ4n5BaREOcW2FH1nlmR3DnzCTtqZVQ4HzqZMh1pTD2FfItrO4Qlq6aquWrqEpoRv9Tg+qPNW2iYciW5N7h9iqqAuRa5VdRgseBUd5dXu0ijwXh0kmtbqWIANFV7Ff4j+sT7sx9GKo0qzYKgTNKJ0b3f/EZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eLbktw9P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mXors7FdFjChQkUhDHUv9m5+Y61TUgXIkciwqypJUdwts61yv6MtuNmeKA9wkKFqLc+tvhQMBnwQ1GL+dRZasmy/4gUChZU0qxY0Wh004wSs4y4KZO35Dq9EWwQupKMXTVL57RKzUFMRnmqkPH9US69ASpZ3WY3fSQQI+c1Y3do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWwcXk8J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eLbktw9P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB8291F000E9;
-	Tue, 16 Jun 2026 15:53:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWwcXk8J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3865D1F00A3A;
+	Tue, 16 Jun 2026 15:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625210;
-	bh=k45L2/2AMVuCCN2KN9FwakOPP783OrRV7APKZpmGB3g=;
+	s=korg; t=1781625216;
+	bh=DN0Y3dKH0IP8fjmDVuMoNbRCoIRwSt9NISbF2G+S6pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eLbktw9PBJw23XpVTafmBhSeNVYt3uebEQ/vNnlE/N+v35CDnrmtAGWoSaohb7jjP
-	 ClkyPPAM2JHB0tawU7QzWkhVmp+kLVoL6o+qNwlJsSOJfqC9XAGbSge2krkU8TSfHQ
-	 q3u4GHyUBwwfZ75juQDuvVfYMhWesTYyOW01OLYc=
+	b=UWwcXk8JYNMCspnli7v6N7fSPlUyz6Ytw0kfZwgg7NqM4MWbxLtEmXUYW2e/OQV3D
+	 s3J/zotkkcVMtjwasfYkAqXKXXaihmWBivbYAO8e1a1mIYdcY9dAoVnwp+riDpQ5sU
+	 BcBzXBnqsOYo39zMRr9fvR4Jv0lK31DcDDWB5gz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HanQuan <eilaimemedsnaimel@gmail.com>,
-	MingXuan <bwnie0730@outlook.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Yao Sang <sangyao@kylinos.cn>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 098/325] net: add pskb_may_pull() to skb_gro_receive_list()
-Date: Tue, 16 Jun 2026 20:28:14 +0530
-Message-ID: <20260616145102.567421545@linuxfoundation.org>
+Subject: [PATCH 6.18 099/325] net/mlx4: avoid GCC 10 __bad_copy_from() false positive
+Date: Tue, 16 Jun 2026 20:28:15 +0530
+Message-ID: <20260616145102.625766739@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -53,55 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HanQuan <eilaimemedsnaimel@gmail.com>
+From: Yao Sang <sangyao@kylinos.cn>
 
-[ Upstream commit f2bb3434544454099a5b6dec213567267b05d79d ]
+[ Upstream commit 2365343f4aad3e1b1e7a2e87e98cf66d5e590589 ]
 
-skb_gro_receive_list() calls skb_pull(skb, skb_gro_offset(skb)) without
-first ensuring the data is in the linear area via pskb_may_pull(). When
-the skb arrives via napi_gro_frags(), skb_headlen can be 0 (all data in
-page fragments) while skb_gro_offset is non-zero (after IP+TCP header
-parsing). The skb_pull() then decrements skb->len by skb_gro_offset
-but skb->data_len stays unchanged, hitting BUG_ON(skb->len < skb->data_len)
-in __skb_pull().
+mlx4_init_user_cqes() fills a scratch buffer with the CQE
+initialization pattern and then copies from that buffer to userspace.
 
-The UDP fraglist GRO path already contains this guard at
-udp_offload.c:749. Adding it to skb_gro_receive_list() itself provides
-centralized protection for all callers (TCP, UDP, and any future
-protocols), and ensures the precondition of skb_pull() is satisfied
-before it is called.
+In the single-copy path, the copy length is array_size(entries,
+cqe_size), but the scratch buffer is allocated with PAGE_SIZE. GCC 10
+does not carry the branch invariant strongly enough through the object
+size checks and falsely triggers __bad_copy_from().
 
-On pskb_may_pull() failure, set NAPI_GRO_CB(skb)->flush = 1 so the
-skb is not held as a new GRO head and is instead delivered through the
-normal receive path, matching the UDP handling.
+Size the scratch buffer to the actual copy length for the active path,
+keep array_size() for the single-copy case, and retain a WARN_ON_ONCE()
+guard for the PAGE_SIZE invariant before allocating the buffer.
 
-Fixes: 8d95dc474f85 ("net: add code for TCP fraglist GRO")
-Reported-by: HanQuan <eilaimemedsnaimel@gmail.com>
-Reported-by: MingXuan <bwnie0730@outlook.com>
-Signed-off-by: HanQuan <eilaimemedsnaimel@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
+Fixes: f69bf5dee7ef ("net/mlx4: Use array_size() helper in copy_to_user()")
+Signed-off-by: Yao Sang <sangyao@kylinos.cn>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/gro.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/mellanox/mlx4/cq.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/gro.c b/net/core/gro.c
-index b5f790a643d497..9ec8a46b30bb97 100644
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -234,6 +234,11 @@ int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb)
- 	if (unlikely(p->len + skb->len >= 65536))
- 		return -E2BIG;
- 
-+	if (!pskb_may_pull(skb, skb_gro_offset(skb))) {
-+		NAPI_GRO_CB(skb)->flush = 1;
-+		return -ENOMEM;
-+	}
+diff --git a/drivers/net/ethernet/mellanox/mlx4/cq.c b/drivers/net/ethernet/mellanox/mlx4/cq.c
+index e130e7259275a3..5c55971abbf072 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/cq.c
++++ b/drivers/net/ethernet/mellanox/mlx4/cq.c
+@@ -290,6 +290,7 @@ static void mlx4_cq_free_icm(struct mlx4_dev *dev, int cqn)
+ static int mlx4_init_user_cqes(void *buf, int entries, int cqe_size)
+ {
+ 	int entries_per_copy = PAGE_SIZE / cqe_size;
++	size_t copy_bytes;
+ 	void *init_ents;
+ 	int err = 0;
+ 	int i;
+@@ -314,8 +315,14 @@ static int mlx4_init_user_cqes(void *buf, int entries, int cqe_size)
+ 			buf += PAGE_SIZE;
+ 		}
+ 	} else {
++		copy_bytes = array_size(entries, cqe_size);
++		if (WARN_ON_ONCE(copy_bytes > PAGE_SIZE)) {
++			err = -EINVAL;
++			goto out;
++		}
 +
- 	if (NAPI_GRO_CB(p)->last == p)
- 		skb_shinfo(p)->frag_list = skb;
- 	else
+ 		err = copy_to_user((void __user *)buf, init_ents,
+-				   array_size(entries, cqe_size)) ?
++				   copy_bytes) ?
+ 			-EFAULT : 0;
+ 	}
+ 
 -- 
 2.53.0
 
