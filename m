@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510503D45CB;
-	Tue, 16 Jun 2026 18:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099AF3D45CB;
+	Tue, 16 Jun 2026 18:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634122; cv=none; b=aeolkAEQ0GJLPLlXQ/YDxwJvHwU1BYTdVcP3rS2UTqxrGz5erkeIIRBaR5tWxmMHLGGHLMsH6uqIfmZxhHrH0dYcroq7R1O74i97L6fxWj/uHv7jkIycp3/esIUsIys2Ua9eq/K/MaAcMtvg0zyvRiJiBOpLsgfVkJbcP33DXjg=
+	t=1781634128; cv=none; b=jX9fmIJMQ4Ppo0j1U9zOb0Zq6MD1QeZ8kCoNAJhZqVdIlU/ft9sVZmHtyydReluYOVEGE4RtlA+LaEGp5uO7OZmz3lAaEW6HsmgdN0MUKHlXswbrfb/Rc/sBfGZwymwcM2ZZLZDTzdHhzJffh42F2/OIzhejsHHrtT52yMJr9bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634122; c=relaxed/simple;
-	bh=PVpr63UxBemehGr+3PH63rtN+0+NWum5Ng2pfLIbYdA=;
+	s=arc-20240116; t=1781634128; c=relaxed/simple;
+	bh=snBSwDDT+SZQnME6+Lhg3dPrQiNb6ipVUCpvN6zhLkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NcZ2MfM3ikzUVoG9WHNENN8ATy6aNoMTPt7DNZXWZA5ZD1Pa5pNSw0rw/P7kFk+8h1LtB2FMQDdu0JevT7BIx8ySaEN9KpwNJwSOsBGRRrw6ZOaB96hp9pd0yfQPrpYgT9bwNFrlSGpzuRkJjx6+3xFH8eNHQQIIwuOEO/1E3Z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=co1XN1bV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aUf6Nwioyk2DfL+ifgwXMgZhdc4rME8y9UP01BiRLZx6kQfggVpdy0Azz7dpSgrQsVgn+0fNE+daiIYOlHxl5npcrwp4eP8vYtZzADN3eggenQfH1vMxXokh60GmHL2gdRn5bp+iy60VBGC22xZOP3AIcMaV7FczuldLD2t+nYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzBEQFiX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="co1XN1bV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162291F000E9;
-	Tue, 16 Jun 2026 18:21:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzBEQFiX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2FEF1F000E9;
+	Tue, 16 Jun 2026 18:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634121;
-	bh=R+6hKvyquz6DnMNrc9rAfwex4ZCHHuWB5nlaxo5sJU8=;
+	s=korg; t=1781634126;
+	bh=ZIB2KhVKilm79dO24XOSGGXgHR+hZJaYEvpBPVeneGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=co1XN1bVPv62GEpG3T49e4t/PIiEFqtC575eDVDWefyiNRcOXUgWjTqixtgZubnSb
-	 NrvxjqHbn3q0axG56MeUqkcbBi2f/3k/Nc7mhy47RW20hKvjVEs9awMILtApUxsUds
-	 iuf5iSaGvu/50IahoVdUdnMeXJy/a2VXRqyAQCZA=
+	b=BzBEQFiXBraeIFfNadPpgDAmWCGbwqb8kzlfJOgVlQWIsAo/WoBfEX9p2XcjqQkv8
+	 JOadooBfHjkr5Sw5oGGlu6Gac/DPDRtedRnBVkR2Sj4b7JOf6Zzhxp1H079IHczFDV
+	 nPofTrAPehuuXLn68T6sxEzv2THcuHhvxApFEDeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Korwel <adriank20047@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 206/411] USB: serial: io_ti: fix heap overflow in build_i2c_fw_hdr()
-Date: Tue, 16 Jun 2026 20:27:24 +0530
-Message-ID: <20260616145111.695542157@linuxfoundation.org>
+	Til Kaiser <mail@tk154.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 196/411] net: mvpp2: limit XDP frame size to the RX buffer
+Date: Tue, 16 Jun 2026 20:27:14 +0530
+Message-ID: <20260616145111.138506486@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,45 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Korwel <adriank20047@gmail.com>
+From: Til Kaiser <mail@tk154.de>
 
-commit 0fd2b00b2d3d05e3eaa13342b3dfb0fa85c226ae upstream.
+[ Upstream commit f3c6aa078927e6fe8121c9c591ddee8716c5305a ]
 
-build_i2c_fw_hdr() allocates a fixed-size buffer of
-(16*1024 - 512) + sizeof(struct ti_i2c_firmware_rec) bytes, then
-copies le16_to_cpu(img_header->Length) bytes into it without
-validating that Length fits within the available space after the
-firmware record header.
+mvpp2 has short and long BM pools, and short pool buffers can be smaller
+than PAGE_SIZE. The XDP path nevertheless initializes every xdp_buff with
+PAGE_SIZE as frame size.
 
-img_header->Length is a __le16 from the firmware file and can be
-up to 65535. check_fw_sanity() validates the total firmware size
-but not img_header->Length specifically.
+XDP helpers use frame_sz to validate tail growth and to derive the hard
+end of the data area. Advertising PAGE_SIZE for short buffers can let
+bpf_xdp_adjust_tail() grow a packet past the real allocation, corrupting
+memory or later tripping skb tailroom checks.
 
-Fix by rejecting images where img_header->Length exceeds the
-available destination space.
+Initialize the XDP buffer with bm_pool->frag_size so XDP tailroom matches
+the actual buffer backing the packet.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Korwel <adriank20047@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 07dd0a7aae7f ("mvpp2: add basic XDP support")
+Signed-off-by: Til Kaiser <mail@tk154.de>
+Link: https://patch.msgid.link/20260607134943.21996-3-mail@tk154.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/io_ti.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/io_ti.c
-+++ b/drivers/usb/serial/io_ti.c
-@@ -843,6 +843,11 @@ static int build_i2c_fw_hdr(u8 *header,
- 	/* Pointer to fw_down memory image */
- 	img_header = (struct ti_i2c_image_header *)&fw->data[4];
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+index ad6325c80f9868..d8a2268b88187a 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+@@ -3978,7 +3978,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
+ 			else
+ 				xdp_rxq = &rxq->xdp_rxq_long;
  
-+	if (le16_to_cpu(img_header->Length) >
-+			buffer_size - sizeof(struct ti_i2c_firmware_rec)) {
-+		kfree(buffer);
-+		return -EINVAL;
-+	}
- 	memcpy(buffer + sizeof(struct ti_i2c_firmware_rec),
- 		&fw->data[4 + sizeof(struct ti_i2c_image_header)],
- 		le16_to_cpu(img_header->Length));
+-			xdp_init_buff(&xdp, PAGE_SIZE, xdp_rxq);
++			xdp_init_buff(&xdp, bm_pool->frag_size, xdp_rxq);
+ 			xdp_prepare_buff(&xdp, data,
+ 					 MVPP2_MH_SIZE + MVPP2_SKB_HEADROOM,
+ 					 rx_bytes, false);
+-- 
+2.53.0
+
 
 
