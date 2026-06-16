@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193094508E4;
-	Tue, 16 Jun 2026 16:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F040646AF1B;
+	Tue, 16 Jun 2026 16:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628014; cv=none; b=uGvB5iUtGCawMNd/+NKdxUnWsB/56n4kdQJJDhPTSAf6MUEKvcUEnJbNCJdrOt+mwKHA4DTPHLud+snYPYf0GU6O3doM6HDbqp9r1gJQwq7VFfezJyazvKJF2Uqv+izYrysMjrGEAlOzVPyh9m291ym5tQ9ddx13cwyfQjhlJr8=
+	t=1781628019; cv=none; b=QTyaFxWCAYF8jgGqVOtVe/mDfiVlvH5RW0YTaEQeYRUpZG2gAXY72cJr3cUdZDF4/XLTiBNWK+uDs3zR0XmiqDzpr9CNifLgTjjr863UU/mi6oyMl8ED/wBXuheq815LDYp0eh4eVfuW9uU7FtgzxriPQfjXpeqTMto1PP0P43I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628014; c=relaxed/simple;
-	bh=jsS2zH24/dng9iE1ypfvX/hbW789SWeOpHnSIAkI/4M=;
+	s=arc-20240116; t=1781628019; c=relaxed/simple;
+	bh=cLt30yQVTHGOhU17o59b9iPbW2udyaK07bWKh0MgsB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bP+w0zj1x5qsxnZJ2rWbtcKJ7lf4vfwHaDxqTjP6FIqbbQ0crpRh5FcyQdDpTy3yXGx2/+vA0XatVJWA9YkqWG79ahNA6KhIlBdNH4vYenRea1lmlkfdGJR1+MJ+ZmiT6FvhbOJ6OYDfzYTHtyXSJPVECWLN6O6ew/HgagLaI+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3pUHIhZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KyYIIaW5LybvgafHlKD2zCdkOHdflE/bkaFa+rN7KH4f1tJVP5gFrGUHucK2jsIFo/15n1NuyseOluUrrQc6gbWWqMM6lO3DneD6Vh+MiMlP5OVV4cv1irSjb/qqHN/DGIbsi35882kvTHbI+MiiUKLotfWHCtHhAxwOpu/tack=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hp2EByXS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3pUHIhZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2601F000E9;
-	Tue, 16 Jun 2026 16:40:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hp2EByXS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81C31F000E9;
+	Tue, 16 Jun 2026 16:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628013;
-	bh=3uz1PY40X7x1qNOWFt+hLKnov2M7XrYhUu3G/w1VeXQ=;
+	s=korg; t=1781628017;
+	bh=5gpfeGvxITiER79TWysA8EU/19FmZB3j9EKtMpCkLUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K3pUHIhZaAHLIXP678tpLC3S4ZVud1uK73EN8/n/XuNhJ6UFXLO/K2fJYnPL7A0pO
-	 5UYS41e0sU/sl2vqKSTSMIVPiRBq3clTHjy2Iz48Sd6JjLlI7ZVazAecJt+5WpQAZe
-	 6Ad5QmjnWw5Arb7Hp6fZmQvpYyZgw8tv6+ej/qe0=
+	b=hp2EByXSpa/UgimvNcFB8J8nu7qp6azjQ1jz3+v2jtJwzqbj9QzcPQ77pf85SxHVk
+	 uH9R+j9iu2nVugZEO89IQ6Ry/BYzz3aTmrndTbtSdbx862IyQ2+7SN+5IdA38iokiZ
+	 TzOQ+0ibeSDydIna916i4HEccWJo11iIGA8rxFPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hao <haokexin@gmail.com>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Wenshan Lan <jetlan9@163.com>,
+	Jeremy Sowden <jeremy@azazel.net>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 007/452] net: cpsw_new: Fix potential unregister of netdev that has not been registered yet
-Date: Tue, 16 Jun 2026 20:23:54 +0530
-Message-ID: <20260616145118.180308795@linuxfoundation.org>
+Subject: [PATCH 6.6 016/452] netfilter: bitwise: add support for doing AND, OR and XOR directly
+Date: Tue, 16 Jun 2026 20:24:03 +0530
+Message-ID: <20260616145118.664567619@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -53,52 +51,298 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Hao <haokexin@gmail.com>
+From: Jeremy Sowden <jeremy@azazel.net>
 
-[ Upstream commit 9d724b34fbe13b71865ad0906a4be97571f19cf5 ]
+[ Upstream commit b0ccf4f53d968e794a4ea579d5135cc1aaf1a53f ]
 
-If an error occurs during register_netdev() for the first MAC in
-cpsw_register_ports(), even though cpsw->slaves[0].ndev is set to NULL,
-cpsw->slaves[1].ndev would remain unchanged. This could later cause
-cpsw_unregister_ports() to attempt unregistering the second MAC.
-To address this, add a check for ndev->reg_state before calling
-unregister_netdev(). With this change, setting cpsw->slaves[i].ndev
-to NULL becomes unnecessary and can be removed accordingly.
+Hitherto, these operations have been converted in user space to
+mask-and-xor operations on one register and two immediate values, and it
+is the latter which have been evaluated by the kernel.  We add support
+for evaluating these operations directly in kernel space on one register
+and either an immediate value or a second register.
 
-Fixes: ed3525eda4c4 ("net: ethernet: ti: introduce cpsw switchdev based driver part 1 - dual-emac")
-Signed-off-by: Kevin Hao <haokexin@gmail.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-Link: https://patch.msgid.link/20260205-cpsw-error-path-v1-2-6e58bae6b299@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Wenshan Lan <jetlan9@163.com>
+Pablo made a few changes to the original patch:
+
+- EINVAL if NFTA_BITWISE_SREG2 is used with fast version.
+- Allow _AND,_OR,_XOR with _DATA != sizeof(u32)
+- Dump _SREG2 or _DATA with _AND,_OR,_XOR
+
+Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 18014147d3ee ("netfilter: nf_tables: fix dst corruption in same register operation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/cpsw_new.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/uapi/linux/netfilter/nf_tables.h |   8 ++
+ net/netfilter/nft_bitwise.c              | 134 +++++++++++++++++++++--
+ 2 files changed, 131 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/cpsw_new.c b/drivers/net/ethernet/ti/cpsw_new.c
-index 1f98044b3666ff..64f527ba9a4746 100644
---- a/drivers/net/ethernet/ti/cpsw_new.c
-+++ b/drivers/net/ethernet/ti/cpsw_new.c
-@@ -1442,7 +1442,8 @@ static void cpsw_unregister_ports(struct cpsw_common *cpsw)
- 	int i = 0;
+diff --git a/include/uapi/linux/netfilter/nf_tables.h b/include/uapi/linux/netfilter/nf_tables.h
+index cbb1b58e181fca..f8867f198f3104 100644
+--- a/include/uapi/linux/netfilter/nf_tables.h
++++ b/include/uapi/linux/netfilter/nf_tables.h
+@@ -564,11 +564,17 @@ enum nft_immediate_attributes {
+  *                        and XOR boolean operations
+  * @NFT_BITWISE_LSHIFT: left-shift operation
+  * @NFT_BITWISE_RSHIFT: right-shift operation
++ * @NFT_BITWISE_AND: and operation
++ * @NFT_BITWISE_OR: or operation
++ * @NFT_BITWISE_XOR: xor operation
+  */
+ enum nft_bitwise_ops {
+ 	NFT_BITWISE_MASK_XOR,
+ 	NFT_BITWISE_LSHIFT,
+ 	NFT_BITWISE_RSHIFT,
++	NFT_BITWISE_AND,
++	NFT_BITWISE_OR,
++	NFT_BITWISE_XOR,
+ };
+ /*
+  * Old name for NFT_BITWISE_MASK_XOR.  Retained for backwards-compatibility.
+@@ -586,6 +592,7 @@ enum nft_bitwise_ops {
+  * @NFTA_BITWISE_OP: type of operation (NLA_U32: nft_bitwise_ops)
+  * @NFTA_BITWISE_DATA: argument for non-boolean operations
+  *                     (NLA_NESTED: nft_data_attributes)
++ * @NFTA_BITWISE_SREG2: second source register (NLA_U32: nft_registers)
+  *
+  * The bitwise expression supports boolean and shift operations.  It implements
+  * the boolean operations by performing the following operation:
+@@ -609,6 +616,7 @@ enum nft_bitwise_attributes {
+ 	NFTA_BITWISE_XOR,
+ 	NFTA_BITWISE_OP,
+ 	NFTA_BITWISE_DATA,
++	NFTA_BITWISE_SREG2,
+ 	__NFTA_BITWISE_MAX
+ };
+ #define NFTA_BITWISE_MAX	(__NFTA_BITWISE_MAX - 1)
+diff --git a/net/netfilter/nft_bitwise.c b/net/netfilter/nft_bitwise.c
+index 86abbe4c1308b3..af990c600745be 100644
+--- a/net/netfilter/nft_bitwise.c
++++ b/net/netfilter/nft_bitwise.c
+@@ -17,6 +17,7 @@
  
- 	for (i = 0; i < cpsw->data.slaves; i++) {
--		if (!cpsw->slaves[i].ndev)
-+		if (!cpsw->slaves[i].ndev ||
-+		    cpsw->slaves[i].ndev->reg_state != NETREG_REGISTERED)
- 			continue;
- 
- 		unregister_netdev(cpsw->slaves[i].ndev);
-@@ -1462,7 +1463,6 @@ static int cpsw_register_ports(struct cpsw_common *cpsw)
- 		if (ret) {
- 			dev_err(cpsw->dev,
- 				"cpsw: err registering net device%d\n", i);
--			cpsw->slaves[i].ndev = NULL;
- 			break;
- 		}
+ struct nft_bitwise {
+ 	u8			sreg;
++	u8			sreg2;
+ 	u8			dreg;
+ 	enum nft_bitwise_ops	op:8;
+ 	u8			len;
+@@ -60,28 +61,72 @@ static void nft_bitwise_eval_rshift(u32 *dst, const u32 *src,
  	}
+ }
+ 
++static void nft_bitwise_eval_and(u32 *dst, const u32 *src, const u32 *src2,
++				 const struct nft_bitwise *priv)
++{
++	unsigned int i, n;
++
++	for (i = 0, n = DIV_ROUND_UP(priv->len, sizeof(u32)); i < n; i++)
++		dst[i] = src[i] & src2[i];
++}
++
++static void nft_bitwise_eval_or(u32 *dst, const u32 *src, const u32 *src2,
++				const struct nft_bitwise *priv)
++{
++	unsigned int i, n;
++
++	for (i = 0, n = DIV_ROUND_UP(priv->len, sizeof(u32)); i < n; i++)
++		dst[i] = src[i] | src2[i];
++}
++
++static void nft_bitwise_eval_xor(u32 *dst, const u32 *src, const u32 *src2,
++				 const struct nft_bitwise *priv)
++{
++	unsigned int i, n;
++
++	for (i = 0, n = DIV_ROUND_UP(priv->len, sizeof(u32)); i < n; i++)
++		dst[i] = src[i] ^ src2[i];
++}
++
+ void nft_bitwise_eval(const struct nft_expr *expr,
+ 		      struct nft_regs *regs, const struct nft_pktinfo *pkt)
+ {
+ 	const struct nft_bitwise *priv = nft_expr_priv(expr);
+-	const u32 *src = &regs->data[priv->sreg];
++	const u32 *src = &regs->data[priv->sreg], *src2;
+ 	u32 *dst = &regs->data[priv->dreg];
+ 
+-	switch (priv->op) {
+-	case NFT_BITWISE_MASK_XOR:
++	if (priv->op == NFT_BITWISE_MASK_XOR) {
+ 		nft_bitwise_eval_mask_xor(dst, src, priv);
+-		break;
+-	case NFT_BITWISE_LSHIFT:
++		return;
++	}
++	if (priv->op == NFT_BITWISE_LSHIFT) {
+ 		nft_bitwise_eval_lshift(dst, src, priv);
+-		break;
+-	case NFT_BITWISE_RSHIFT:
++		return;
++	}
++	if (priv->op == NFT_BITWISE_RSHIFT) {
+ 		nft_bitwise_eval_rshift(dst, src, priv);
+-		break;
++		return;
++	}
++
++	src2 = priv->sreg2 ? &regs->data[priv->sreg2] : priv->data.data;
++
++	if (priv->op == NFT_BITWISE_AND) {
++		nft_bitwise_eval_and(dst, src, src2, priv);
++		return;
++	}
++	if (priv->op == NFT_BITWISE_OR) {
++		nft_bitwise_eval_or(dst, src, src2, priv);
++		return;
++	}
++	if (priv->op == NFT_BITWISE_XOR) {
++		nft_bitwise_eval_xor(dst, src, src2, priv);
++		return;
+ 	}
+ }
+ 
+ static const struct nla_policy nft_bitwise_policy[NFTA_BITWISE_MAX + 1] = {
+ 	[NFTA_BITWISE_SREG]	= { .type = NLA_U32 },
++	[NFTA_BITWISE_SREG2]	= { .type = NLA_U32 },
+ 	[NFTA_BITWISE_DREG]	= { .type = NLA_U32 },
+ 	[NFTA_BITWISE_LEN]	= { .type = NLA_U32 },
+ 	[NFTA_BITWISE_MASK]	= { .type = NLA_NESTED },
+@@ -105,7 +150,8 @@ static int nft_bitwise_init_mask_xor(struct nft_bitwise *priv,
+ 	};
+ 	int err;
+ 
+-	if (tb[NFTA_BITWISE_DATA])
++	if (tb[NFTA_BITWISE_DATA] ||
++	    tb[NFTA_BITWISE_SREG2])
+ 		return -EINVAL;
+ 
+ 	if (!tb[NFTA_BITWISE_MASK] ||
+@@ -139,7 +185,8 @@ static int nft_bitwise_init_shift(struct nft_bitwise *priv,
+ 	int err;
+ 
+ 	if (tb[NFTA_BITWISE_MASK] ||
+-	    tb[NFTA_BITWISE_XOR])
++	    tb[NFTA_BITWISE_XOR]  ||
++	    tb[NFTA_BITWISE_SREG2])
+ 		return -EINVAL;
+ 
+ 	if (!tb[NFTA_BITWISE_DATA])
+@@ -158,6 +205,41 @@ static int nft_bitwise_init_shift(struct nft_bitwise *priv,
+ 	return 0;
+ }
+ 
++static int nft_bitwise_init_bool(const struct nft_ctx *ctx,
++				 struct nft_bitwise *priv,
++				 const struct nlattr *const tb[])
++{
++	int err;
++
++	if (tb[NFTA_BITWISE_MASK] ||
++	    tb[NFTA_BITWISE_XOR])
++		return -EINVAL;
++
++	if ((!tb[NFTA_BITWISE_DATA] && !tb[NFTA_BITWISE_SREG2]) ||
++	    (tb[NFTA_BITWISE_DATA] && tb[NFTA_BITWISE_SREG2]))
++		return -EINVAL;
++
++	if (tb[NFTA_BITWISE_DATA]) {
++		struct nft_data_desc desc = {
++			.type	= NFT_DATA_VALUE,
++			.size	= sizeof(priv->data),
++			.len	= priv->len,
++		};
++
++		err = nft_data_init(NULL, &priv->data, &desc,
++				    tb[NFTA_BITWISE_DATA]);
++		if (err < 0)
++			return err;
++	} else {
++		err = nft_parse_register_load(ctx, tb[NFTA_BITWISE_SREG2],
++					      &priv->sreg2, priv->len);
++		if (err < 0)
++			return err;
++	}
++
++	return 0;
++}
++
+ static int nft_bitwise_init(const struct nft_ctx *ctx,
+ 			    const struct nft_expr *expr,
+ 			    const struct nlattr * const tb[])
+@@ -189,6 +271,9 @@ static int nft_bitwise_init(const struct nft_ctx *ctx,
+ 		case NFT_BITWISE_MASK_XOR:
+ 		case NFT_BITWISE_LSHIFT:
+ 		case NFT_BITWISE_RSHIFT:
++		case NFT_BITWISE_AND:
++		case NFT_BITWISE_OR:
++		case NFT_BITWISE_XOR:
+ 			break;
+ 		default:
+ 			return -EOPNOTSUPP;
+@@ -205,6 +290,11 @@ static int nft_bitwise_init(const struct nft_ctx *ctx,
+ 	case NFT_BITWISE_RSHIFT:
+ 		err = nft_bitwise_init_shift(priv, tb);
+ 		break;
++	case NFT_BITWISE_AND:
++	case NFT_BITWISE_OR:
++	case NFT_BITWISE_XOR:
++		err = nft_bitwise_init_bool(ctx, priv, tb);
++		break;
+ 	}
+ 
+ 	return err;
+@@ -233,6 +323,21 @@ static int nft_bitwise_dump_shift(struct sk_buff *skb,
+ 	return 0;
+ }
+ 
++static int nft_bitwise_dump_bool(struct sk_buff *skb,
++				 const struct nft_bitwise *priv)
++{
++	if (priv->sreg2) {
++		if (nft_dump_register(skb, NFTA_BITWISE_SREG2, priv->sreg2))
++			return -1;
++	} else {
++		if (nft_data_dump(skb, NFTA_BITWISE_DATA, &priv->data,
++				  NFT_DATA_VALUE, sizeof(u32)) < 0)
++			return -1;
++	}
++
++	return 0;
++}
++
+ static int nft_bitwise_dump(struct sk_buff *skb,
+ 			    const struct nft_expr *expr, bool reset)
+ {
+@@ -256,6 +361,11 @@ static int nft_bitwise_dump(struct sk_buff *skb,
+ 	case NFT_BITWISE_RSHIFT:
+ 		err = nft_bitwise_dump_shift(skb, priv);
+ 		break;
++	case NFT_BITWISE_AND:
++	case NFT_BITWISE_OR:
++	case NFT_BITWISE_XOR:
++		err = nft_bitwise_dump_bool(skb, priv);
++		break;
+ 	}
+ 
+ 	return err;
+@@ -300,6 +410,7 @@ static bool nft_bitwise_reduce(struct nft_regs_track *track,
+ 	    track->regs[priv->dreg].bitwise &&
+ 	    track->regs[priv->dreg].bitwise->ops == expr->ops &&
+ 	    priv->sreg == bitwise->sreg &&
++	    priv->sreg2 == bitwise->sreg2 &&
+ 	    priv->dreg == bitwise->dreg &&
+ 	    priv->op == bitwise->op &&
+ 	    priv->len == bitwise->len &&
+@@ -376,7 +487,8 @@ static int nft_bitwise_fast_init(const struct nft_ctx *ctx,
+ 	if (err < 0)
+ 		return err;
+ 
+-	if (tb[NFTA_BITWISE_DATA])
++	if (tb[NFTA_BITWISE_DATA] ||
++	    tb[NFTA_BITWISE_SREG2])
+ 		return -EINVAL;
+ 
+ 	if (!tb[NFTA_BITWISE_MASK] ||
 -- 
 2.53.0
 
