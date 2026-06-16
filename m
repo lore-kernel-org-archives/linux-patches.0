@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B460331EAB;
-	Tue, 16 Jun 2026 16:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBC444E045;
+	Tue, 16 Jun 2026 16:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627924; cv=none; b=XmIHZLgh8cf4e4MgS2Mw0kNhT3edWf5Qy5Me8BMaaCyFexaOW2okCAuSTPRp4hWEf2qNJds8huMHZ8RK6R4+Lc/hHfUQF/XcKbhisPtZNXA1jvrmskXD6+OtuPyatjmUwgMR41e2d5KUegK+lr5xkieyzuD3wOVoP7ys5S7NDzk=
+	t=1781627930; cv=none; b=GX2oICRrZZ4umnEmaIMI4e2lQkbscXNN4V4ribWV1axpSaJPkgOaGgb+LyMTqxGM6D6+c0F2DMrboW4PMZ4lM+m4bZ6evUSqJHFvD0efMq1w33TWnd5M5fhrEXi7xfACjeKcdwRzr3tVHNsncVB1X3vExR9zSmi6pvTTIHvpL10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627924; c=relaxed/simple;
-	bh=9pewqXgFQbtehZUJJCaKeomOvVkxVFiPAAhTAM7gqDM=;
+	s=arc-20240116; t=1781627930; c=relaxed/simple;
+	bh=GBOqC0P1QSxZLlkhMvSnhJg6pRjFAuvHG3wYOfcXpR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zz4vKHWaiRi+lK38URsPq4XXVqYnXZQZjNNY0rynRBZENwOlPxw+3a+u1N8vT8UAFsg1vvJesomxwQ14gMjgq5DQ8AW21DesApIVOWzQ0LZWEpfXD0NdTRVbfMeKcenjYIU5Ukbxr/Wx/MfBKAdoXQ9mxPpmch2xvVpLq+xmJOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+PjbWnW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jYBwMbowLLsi1B0DgPDI+l1Wo6PAjUZL+hSWdmk0xxsHK4jTE5c7GWmucyOP/QuFJNJv8z4ZekhxQNuFtD1pDxnf5mdGlgP1557IyMyRyuoACpQdQxkhJUlB6Q3UBtHB3QpS2E2pYBiYsiLyBOr47Zs7A47fPP9cOH/FwO3tpj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmapCQbz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+PjbWnW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898B41F000E9;
-	Tue, 16 Jun 2026 16:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmapCQbz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E481F000E9;
+	Tue, 16 Jun 2026 16:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627923;
-	bh=ZRAcxVwgFoQud+cqB70xIeJ54RGLZzJE2eXbvLxP38k=;
+	s=korg; t=1781627928;
+	bh=7909xD+mvDBuJx5SU7LVD7JkKyGfvE0vsDoBUgCay54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b+PjbWnWMrGfqMY0R2PXZNwK0aSodl5TM0X88nSyOqS00S5en+VzuqH1v26QUyl4I
-	 wPqdvOADxwG4HDhxz2T1l9ZZ3rpQbOrX8w49Khe8uKvSU7MyvfZHunAgTACKzNip0e
-	 KHyWyixQ8D/ND/AqM2fu9SO49DCTAtPaM1/TDgnc=
+	b=lmapCQbz5T8L3eW+L/dJ2MgzVUcGxeWKPI4Ay8IGURJSC3gwFNUL67B9YTzRAKHs6
+	 7WiXnk399WbzkVIXp+pU+70kw5BBLGmVVX8TZUVCQQGGPytypevYjN/3Hw3PhR7Cnc
+	 bxm4fMEIi1DdhaqepYtPMajNlPnzmSiA3DrfJn8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.12 210/261] slimbus: qcom-ngd-ctrl: Register callbacks after creating the ngd
-Date: Tue, 16 Jun 2026 20:30:48 +0530
-Message-ID: <20260616145054.776229997@linuxfoundation.org>
+	Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>,
+	Nazar Kalashnikov <nazarkalashnikov0@gmail.com>
+Subject: [PATCH 6.12 247/261] ipvs: skip ipv6 extension headers for csum checks
+Date: Tue, 16 Jun 2026 20:31:25 +0530
+Message-ID: <20260616145056.529073236@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -51,133 +51,195 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-commit 2a9d50e9ea406e0c8735938484adc20515ef1b47 upstream.
+commit 05cfe9863ef049d98141dc2969eefde72fb07625 upstream.
 
-When the remoteproc starts in parallel with the NGD driver being probed,
-or the remoteproc is already up when the PDR lookup is being registered,
-or in the theoretical event that we get an interrupt from the hardware,
-these callbacks will operate on uninitialized data. This result in
-issues to boot the affected boards.
+Protocol checksum validation fails for IPv6 if there are extension
+headers before the protocol header. iph->len already contains its
+offset, so use it to fix the problem.
 
-One such example can be seen in the following fault, where
-qcom_slim_ngd_ssr_pdr_notify() schedules work on the NULL ngd_up_work.
-
-[   21.858578] ------------[ cut here ]------------
-[   21.858745] WARNING: kernel/workqueue.c:2338 at __queue_work+0x5e0/0x790, CPU#2: kworker/2:2/116
-...
-[   21.859251] Call trace:
-[   21.859255]  __queue_work+0x5e0/0x790 (P)
-[   21.859265]  queue_work_on+0x6c/0xf0
-[   21.859273]  qcom_slim_ngd_ssr_pdr_notify+0x110/0x150 [slim_qcom_ngd_ctrl]
-[   21.859304]  qcom_slim_ngd_ssr_notify+0x24/0x40 [slim_qcom_ngd_ctrl]
-[   21.859318]  notifier_call_chain+0xa4/0x230
-[   21.859329]  srcu_notifier_call_chain+0x64/0xb8
-[   21.859338]  ssr_notify_start+0x40/0x78 [qcom_common]
-[   21.859355]  rproc_start+0x130/0x230
-[   21.859367]  rproc_boot+0x3d4/0x518
-...
-
-Move the enablement of interrupts, and the registration of SSR and PDR
-until after the NGD device has been registered.
-
-This could be further refined by moving initialization to the control
-driver probe and by removing the platform driver model from the picture.
-
-Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204421.116824-6-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2906f66a5682 ("ipvs: SCTP Trasport Loadbalancing Support")
+Fixes: 0bbdd42b7efa ("IPVS: Extend protocol DNAT/SNAT and state handlers")
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Nazar Kalashnikov <nazarkalashnikov0@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/slimbus/qcom-ngd-ctrl.c |   47 ++++++++++++++++++++++------------------
- 1 file changed, 27 insertions(+), 20 deletions(-)
+ net/netfilter/ipvs/ip_vs_proto_sctp.c |   18 ++++++------------
+ net/netfilter/ipvs/ip_vs_proto_tcp.c  |   21 +++++++--------------
+ net/netfilter/ipvs/ip_vs_proto_udp.c  |   20 +++++++-------------
+ 3 files changed, 20 insertions(+), 39 deletions(-)
 
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1615,6 +1615,7 @@ static int qcom_slim_ngd_ctrl_probe(stru
- {
- 	struct device *dev = &pdev->dev;
- 	struct qcom_slim_ngd_ctrl *ctrl;
-+	int irq;
- 	int ret;
- 	struct pdr_service *pds;
+--- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+@@ -10,7 +10,8 @@
+ #include <net/ip_vs.h>
  
-@@ -1628,20 +1629,16 @@ static int qcom_slim_ngd_ctrl_probe(stru
- 	if (IS_ERR(ctrl->base))
- 		return PTR_ERR(ctrl->base);
+ static int
+-sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp);
++sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++		unsigned int sctphoff);
  
--	ret = platform_get_irq(pdev, 0);
--	if (ret < 0)
--		return ret;
--
--	ret = devm_request_irq(dev, ret, qcom_slim_ngd_interrupt,
--			       IRQF_TRIGGER_HIGH, "slim-ngd", ctrl);
-+	irq = platform_get_irq(pdev, 0);
-+	if (irq < 0)
-+		return irq;
-+
-+	ret = devm_request_irq(dev, irq, qcom_slim_ngd_interrupt,
-+			       IRQF_TRIGGER_HIGH | IRQF_NO_AUTOEN,
-+			       "slim-ngd", ctrl);
- 	if (ret)
- 		return dev_err_probe(&pdev->dev, ret, "request IRQ failed\n");
+ static int
+ sctp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
+@@ -108,7 +109,7 @@ sctp_snat_handler(struct sk_buff *skb, s
+ 		int ret;
  
--	ctrl->nb.notifier_call = qcom_slim_ngd_ssr_notify;
--	ctrl->notifier = qcom_register_ssr_notifier("lpass", &ctrl->nb);
--	if (IS_ERR(ctrl->notifier))
--		return PTR_ERR(ctrl->notifier);
--
- 	ctrl->dev = dev;
- 	ctrl->framer.rootfreq = SLIM_ROOT_FREQ >> 3;
- 	ctrl->framer.superfreq =
-@@ -1663,24 +1660,34 @@ static int qcom_slim_ngd_ctrl_probe(stru
- 	init_completion(&ctrl->qmi_up);
+ 		/* Some checks before mangling */
+-		if (!sctp_csum_check(cp->af, skb, pp))
++		if (!sctp_csum_check(cp->af, skb, pp, sctphoff))
+ 			return 0;
  
- 	ctrl->pdr = pdr_handle_alloc(slim_pd_status, ctrl);
--	if (IS_ERR(ctrl->pdr)) {
--		ret = dev_err_probe(dev, PTR_ERR(ctrl->pdr),
--				    "Failed to init PDR handle\n");
--		goto err_unregister_ssr;
--	}
-+	if (IS_ERR(ctrl->pdr))
-+		return dev_err_probe(dev, PTR_ERR(ctrl->pdr), "Failed to init PDR handle\n");
-+
-+	ret = of_qcom_slim_ngd_register(dev, ctrl);
-+	if (ret)
-+		goto err_pdr_release;
+ 		/* Call application helper if needed */
+@@ -156,7 +157,7 @@ sctp_dnat_handler(struct sk_buff *skb, s
+ 		int ret;
  
- 	pds = pdr_add_lookup(ctrl->pdr, "avs/audio", "msm/adsp/audio_pd");
- 	if (IS_ERR(pds) && PTR_ERR(pds) != -EALREADY) {
- 		ret = dev_err_probe(dev, PTR_ERR(pds), "pdr add lookup failed\n");
--		goto err_pdr_release;
-+		goto err_unregister_ngd;
- 	}
+ 		/* Some checks before mangling */
+-		if (!sctp_csum_check(cp->af, skb, pp))
++		if (!sctp_csum_check(cp->af, skb, pp, sctphoff))
+ 			return 0;
  
--	return of_qcom_slim_ngd_register(dev, ctrl);
-+	ctrl->nb.notifier_call = qcom_slim_ngd_ssr_notify;
-+	ctrl->notifier = qcom_register_ssr_notifier("lpass", &ctrl->nb);
-+	if (IS_ERR(ctrl->notifier)) {
-+		ret = PTR_ERR(ctrl->notifier);
-+		goto err_unregister_ngd;
-+	}
-+
-+	enable_irq(irq);
-+
-+	return 0;
- 
-+err_unregister_ngd:
-+	qcom_slim_ngd_unregister(ctrl);
- err_pdr_release:
- 	pdr_handle_release(ctrl->pdr);
--err_unregister_ssr:
--	qcom_unregister_ssr_notifier(ctrl->notifier, &ctrl->nb);
- 
- 	return ret;
+ 		/* Call application helper if needed */
+@@ -185,19 +186,12 @@ sctp_dnat_handler(struct sk_buff *skb, s
  }
+ 
+ static int
+-sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
++sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++		unsigned int sctphoff)
+ {
+-	unsigned int sctphoff;
+ 	struct sctphdr *sh;
+ 	__le32 cmp, val;
+ 
+-#ifdef CONFIG_IP_VS_IPV6
+-	if (af == AF_INET6)
+-		sctphoff = sizeof(struct ipv6hdr);
+-	else
+-#endif
+-		sctphoff = ip_hdrlen(skb);
+-
+ 	sh = (struct sctphdr *)(skb->data + sctphoff);
+ 	cmp = sh->checksum;
+ 	val = sctp_compute_cksum(skb, sctphoff);
+--- a/net/netfilter/ipvs/ip_vs_proto_tcp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_tcp.c
+@@ -29,7 +29,8 @@
+ #include <net/ip_vs.h>
+ 
+ static int
+-tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp);
++tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++	       unsigned int tcphoff);
+ 
+ static int
+ tcp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
+@@ -166,7 +167,7 @@ tcp_snat_handler(struct sk_buff *skb, st
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!tcp_csum_check(cp->af, skb, pp))
++		if (!tcp_csum_check(cp->af, skb, pp, tcphoff))
+ 			return 0;
+ 
+ 		/* Call application helper if needed */
+@@ -244,7 +245,7 @@ tcp_dnat_handler(struct sk_buff *skb, st
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!tcp_csum_check(cp->af, skb, pp))
++		if (!tcp_csum_check(cp->af, skb, pp, tcphoff))
+ 			return 0;
+ 
+ 		/*
+@@ -301,17 +302,9 @@ tcp_dnat_handler(struct sk_buff *skb, st
+ 
+ 
+ static int
+-tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
++tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++	       unsigned int tcphoff)
+ {
+-	unsigned int tcphoff;
+-
+-#ifdef CONFIG_IP_VS_IPV6
+-	if (af == AF_INET6)
+-		tcphoff = sizeof(struct ipv6hdr);
+-	else
+-#endif
+-		tcphoff = ip_hdrlen(skb);
+-
+ 	switch (skb->ip_summed) {
+ 	case CHECKSUM_NONE:
+ 		skb->csum = skb_checksum(skb, tcphoff, skb->len - tcphoff, 0);
+@@ -322,7 +315,7 @@ tcp_csum_check(int af, struct sk_buff *s
+ 			if (csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
+ 					    &ipv6_hdr(skb)->daddr,
+ 					    skb->len - tcphoff,
+-					    ipv6_hdr(skb)->nexthdr,
++					    IPPROTO_TCP,
+ 					    skb->csum)) {
+ 				IP_VS_DBG_RL_PKT(0, af, pp, skb, 0,
+ 						 "Failed checksum for");
+--- a/net/netfilter/ipvs/ip_vs_proto_udp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_udp.c
+@@ -25,7 +25,8 @@
+ #include <net/ip6_checksum.h>
+ 
+ static int
+-udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp);
++udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++	       unsigned int udphoff);
+ 
+ static int
+ udp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
+@@ -155,7 +156,7 @@ udp_snat_handler(struct sk_buff *skb, st
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!udp_csum_check(cp->af, skb, pp))
++		if (!udp_csum_check(cp->af, skb, pp, udphoff))
+ 			return 0;
+ 
+ 		/*
+@@ -238,7 +239,7 @@ udp_dnat_handler(struct sk_buff *skb, st
+ 		int ret;
+ 
+ 		/* Some checks before mangling */
+-		if (!udp_csum_check(cp->af, skb, pp))
++		if (!udp_csum_check(cp->af, skb, pp, udphoff))
+ 			return 0;
+ 
+ 		/*
+@@ -297,17 +298,10 @@ udp_dnat_handler(struct sk_buff *skb, st
+ 
+ 
+ static int
+-udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
++udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
++	       unsigned int udphoff)
+ {
+ 	struct udphdr _udph, *uh;
+-	unsigned int udphoff;
+-
+-#ifdef CONFIG_IP_VS_IPV6
+-	if (af == AF_INET6)
+-		udphoff = sizeof(struct ipv6hdr);
+-	else
+-#endif
+-		udphoff = ip_hdrlen(skb);
+ 
+ 	uh = skb_header_pointer(skb, udphoff, sizeof(_udph), &_udph);
+ 	if (uh == NULL)
+@@ -325,7 +319,7 @@ udp_csum_check(int af, struct sk_buff *s
+ 				if (csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
+ 						    &ipv6_hdr(skb)->daddr,
+ 						    skb->len - udphoff,
+-						    ipv6_hdr(skb)->nexthdr,
++						    IPPROTO_UDP,
+ 						    skb->csum)) {
+ 					IP_VS_DBG_RL_PKT(0, af, pp, skb, 0,
+ 							 "Failed checksum for");
 
 
