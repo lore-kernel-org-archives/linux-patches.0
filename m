@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84749450902;
-	Tue, 16 Jun 2026 18:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9CD3D810C;
+	Tue, 16 Jun 2026 18:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636248; cv=none; b=AuUeZvS9zdb1fl6wtc8TO+xY6SZTJo92TB6unZ8/9/tRFhsFOqcEk1IdaT8FGMb94HAjctFjxGmr5UD79fhQ/JJORKXasgf1D7nKgH5DxKzfm4JcBqneROlD7BEKeC5u1xPebDpwoH7MlMIedSIf9fJEe6WhehIOoKLDTI54Zzg=
+	t=1781636253; cv=none; b=pT7YQYeyeXqGU7/AX4TbV4OLJqb5LzNbxrQS8vELBR1VnSQInR07sFxEsQcvauELJJ4nw49arNbiX2BDbTN6cf0zQ6FkM2P829fBRUHxDa5ZiPXzwms8G7M1ifIoJDuNPcYxQOVJi5SnU519SWcs2JaCNWVMAg2R+CSec7655GQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636248; c=relaxed/simple;
-	bh=UAob1sPmWODyn87pfzply0d3+aRZQV0LSde8wzkfPt0=;
+	s=arc-20240116; t=1781636253; c=relaxed/simple;
+	bh=VWOJVLvt/3xD1CwIMiKdO3RUtoiU6km89cVmShzA+ws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VJ1n+ybQLaAxr/yTNZKc5pCoUZ05LMeugUaln+7awBG5H4wOczIkHgplMKegnFR2FR3WiTFcgpA63kXN43wlgVCJq8ZoxhgaGzdKUBoqJEeAK6F1HTDaO1n5uHS9WUNkIMsW/gN9pfPUTeXQkXDZSSzE9spxriKkDVyRocfeerk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0iRoYSNM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LYhD2pTEUWC+cuZFXqj/0q134Fhvpv5xKy0x8hvHAMl0fsYga10M+omD7lsktOJ27scR3jM8M6pLXX5cQSjDIh/iGsmormTyeF2IDwaXbIUwiBvplgRTkqSmtwOPEb6dhwy1d7cy64v0LMsVgvmMhZd4wnqJLZoLOal+IIFmccE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k5pF87xd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0iRoYSNM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86DBA1F000E9;
-	Tue, 16 Jun 2026 18:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k5pF87xd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F281F000E9;
+	Tue, 16 Jun 2026 18:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636247;
-	bh=aotNV/im6NO7jQZHS8OXy8QPVMlFQ6R8gXymJk7xOX8=;
+	s=korg; t=1781636252;
+	bh=G0aNp/txeBm9vgzuI1d0fDWM9S1lnunkdh6wpAGmFjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0iRoYSNMaEoJznAk01DqaTtE72VzwobOdZcVvQXKffKBx0iuTRMxvJ9ul5Otuvmr+
-	 vKHMzJd/ysJ2XImefHEILilL1P6okMoCEtGpriG374WfTKZMlX5YuIxyS/rHQ6hdHI
-	 QgD087d3VKD0gKzdH3wOnGvJ4SVPdI1uCrV2D8LE=
+	b=k5pF87xdEtvve+K5rKFcHr/DpMERUIHTRqi/l4nOmwFdUw1YstIwF0Kv95AGxJloN
+	 yxJmDarCfrPf+/sieG/ojJ297M5jDYzubJywhL7xoW7YrqIMoUz0+FWFhCvNh7MAFV
+	 Fy10nH4njOtCvi0GiR8IboYBC0N/DDiZ8qHkBPpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 203/342] mmc: core: Fix host controller programming for fixed driver type
-Date: Tue, 16 Jun 2026 20:28:19 +0530
-Message-ID: <20260616145057.641715066@linuxfoundation.org>
+	Kyle Zeng <kylebot@openai.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 186/342] ALSA: timer: Fix UAF at snd_timer_user_params()
+Date: Tue, 16 Jun 2026 20:28:02 +0530
+Message-ID: <20260616145056.846164724@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -51,46 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamal Dasu <kamal.dasu@broadcom.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 5a52c5701a67d5176eb1afbf1bdaf7d6dfeec597 upstream.
+commit 053a401b592be424fea9d57c789f66cd5d8cec11 upstream.
 
-When using the fixed-emmc-driver-type device tree property, the MMC core
-correctly selects the driver strength for the card but fails to program
-the host controller accordingly. This causes a mismatch where the card
-uses the specified driver type while the host controller defaults to
-Type B (since ios->drv_type remains zero).
+At releasing a timer object, e.g. when a userspace timer
+(CONFIG_SND_UTIMER) gets closed and snd_timer_free() is called, it
+tries to detach the timer instances and release the resources.
+However, it's still possible that other in-flight tasks are holding
+the timer instance where the to-be-deleted timer object is associated,
+and this may lead to racy accesses.
 
-Split the driver type programming logic to handle both fixed and dynamic
-driver type selection paths. For fixed driver types, program the host
-controller with the selected drive_strength value. For dynamic selection,
-use the existing drv_type as before.
+Fortunately, most of ioctls dealing with the timer instance list
+already have the protection with register_mutex, and this also avoids
+such races.  But, SNDRV_TIMER_IOCTL_PARAMS isn't protected, hence the
+concurrent ioctl may lead to use-after-free.
 
-This ensures both the eMMC device and host controller use matching driver
-strengths, preventing potential signal integrity issues.
+This patch just adds the guard with register_mutex to protect
+snd_timer_user_params() for covering the code path as a quick
+workaround.  It's no hot-path but rather a rarely issued ioctl, so the
+performance penalty doesn't matter.
 
-Fixes: 6186d06c519e ("mmc: parse new binding for eMMC fixed driver type")
-Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Tested-by: Kyle Zeng <kylebot@openai.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260606161145.1933447-2-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/mmc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/core/timer.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mmc/core/mmc.c
-+++ b/drivers/mmc/core/mmc.c
-@@ -1336,7 +1336,9 @@ static void mmc_select_driver_type(struc
+--- a/sound/core/timer.c
++++ b/sound/core/timer.c
+@@ -1842,6 +1842,7 @@ static int snd_timer_user_params(struct
+ 	struct snd_timer *t;
+ 	int err;
  
- 	card->drive_strength = drive_strength;
- 
--	if (drv_type)
-+	if (fixed_drv_type >= 0 && drive_strength)
-+		mmc_set_driver_type(card->host, drive_strength);
-+	else if (drv_type)
- 		mmc_set_driver_type(card->host, drv_type);
- }
- 
++	guard(mutex)(&register_mutex);
+ 	tu = file->private_data;
+ 	if (!tu->timeri)
+ 		return -EBADFD;
 
 
