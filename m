@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591B132ED55;
-	Tue, 16 Jun 2026 16:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB75933A9EB;
+	Tue, 16 Jun 2026 16:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628297; cv=none; b=acGqMExKLyCPfZkEea4pO2OG5sxDcIuRGi/LvFzONhfbE9x9N/IxuU1NBffWUj1m2ZaDjthU7Hfj9hhKs0DawYjr3LpfL0PUXAMe8DxyAohYJVbNc8Wz1HZnwwX2hwCu+H1mTDZG+4VtkSx0eiDhlK93u+Okzo3dX82zY8sj3ug=
+	t=1781628302; cv=none; b=hjDiDJpu+EXeu8dau/8a6hGyvq8l/7+z5Vs5lWlFEWK9Nt2ohEHlctJT7twl1b1VZT2+vj+iqnS4AeEez4AHqQVu/C05QU5M4KDXViDNWTWcdCfp3SXgcVeE/lg/m9fJ95ZU/G0sjUQGJeI6VotvibAmX2ZR1KRAOgpFc2A20WQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628297; c=relaxed/simple;
-	bh=flH9Zfv08hBebaKTuC84Oh216AfWmxS8my3oKlkqclA=;
+	s=arc-20240116; t=1781628302; c=relaxed/simple;
+	bh=iW/GI3duvFR78LU2djya5qqAae/gzl1dFJhHqi1/l2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tPgUiwBHbVits2CZogADnFOYEYpPc4tWIfvJSiEd3dGOmaWvaOJiG7oEY0xbQTmCCfTvUJbP9AA2ecNuB22CTVRZJdPVXkYKe8b4WBel25gq5siFol7o4Y605gLilwkNmEM9sqb/oN3uCUzyHEuNGNnavRwB/wDlJTzXp0Jb9Qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVElt/Pn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IBxFJ4FZzWiMeHQMh3/5qFVlHNG514UKsYuJqhLnm/VatPMMy32nzh3fkw2vBqJw5S6LjSDI4/qD+C3uL03U0wUpchOhQG4DHQQ5DYmDmhIs1gq2ikfg1MIlJ7/ojQ41NrnMLZIJx+oZD04E99DMmGun5STxynL70/Sx6CEpYuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k8auqMsm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVElt/Pn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5BC1F000E9;
-	Tue, 16 Jun 2026 16:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k8auqMsm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7801F000E9;
+	Tue, 16 Jun 2026 16:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628295;
-	bh=7xFWD2Cmc6pfmkplvIvbT4loAVBxOvnTiVDxOu6y+h4=;
+	s=korg; t=1781628300;
+	bh=Bz+4eBy27iPGiSNhaQNxalsj29zF5VqgS29/csfdIWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TVElt/PnlNfEMoQnovo6fBOFpQFWz45/bwLKBgum38C9J0+YQmAdfjLGSjbhHytXR
-	 b0YirfzC9mZfWUxy48/RaDLZ35HEVB/keO1bgNmMXdnkBm1f0+UaDaBwWI276UMq5e
-	 Ey2pm+xsIIWwDH2b41COZ7iJ4VhfY7yQ/dldkAok=
+	b=k8auqMsm/89NZNx6DXGS2fdAn/FTxDVruhuRkKDI1mKbTVOfw73I0ILnEruSWlK5L
+	 Nyng50bjUJP8Wc4VphdT95hbQB36XXZXKt1r9XMFEinFH54oUZ2Nm4ob7XnRNXP8DU
+	 IfnTNPGT/Yl93KpAzaHKV81oLaIo0vQb470+I6vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhenghang Xiao <kipreyyy@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Rajani Kantha <681739313@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 041/452] Bluetooth: l2cap: clear chan->ident on ECRED reconfiguration success
-Date: Tue, 16 Jun 2026 20:24:28 +0530
-Message-ID: <20260616145120.097541083@linuxfoundation.org>
+Subject: [PATCH 6.6 068/452] inet: frags: flush pending skbs in fqdir_pre_exit()
+Date: Tue, 16 Jun 2026 20:24:55 +0530
+Message-ID: <20260616145121.505968271@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,60 +52,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenghang Xiao <kipreyyy@gmail.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 00e1950716c6ed67d74777b2db286b0fa23b4be9 ]
+[ Upstream commit 006a5035b495dec008805df249f92c22c89c3d2e ]
 
-l2cap_ecred_reconf_rsp() returns early on success without clearing
-chan->ident. Every other L2CAP response handler (l2cap_ecred_conn_rsp,
-l2cap_le_connect_rsp, l2cap_config_rsp) clears chan->ident after a
-successful transaction to prevent the channel from matching subsequent
-responses with the recycled ident value.
+We have been seeing occasional deadlocks on pernet_ops_rwsem since
+September in NIPA. The stuck task was usually modprobe (often loading
+a driver like ipvlan), trying to take the lock as a Writer.
+lockdep does not track readers for rwsems so the read wasn't obvious
+from the reports.
 
-A remote attacker that completed a reconfiguration as the peer can
-replay a failure response with the stale ident, causing the kernel to
-match and destroy the already-established channel via
-l2cap_chan_del(chan, ECONNRESET).
+On closer inspection the Reader holding the lock was conntrack looping
+forever in nf_conntrack_cleanup_net_list(). Based on past experience
+with occasional NIPA crashes I looked thru the tests which run before
+the crash and noticed that the crash follows ip_defrag.sh. An immediate
+red flag. Scouring thru (de)fragmentation queues reveals skbs sitting
+around, holding conntrack references.
 
-Clear chan->ident for all matching channels on success, and harden the
-failure path by using l2cap_chan_hold_unless_zero() consistent with
-other L2CAP handlers (l2cap_le_command_rej, __l2cap_get_chan_by_ident).
+The problem is that since conntrack depends on nf_defrag_ipv6,
+nf_defrag_ipv6 will load first. Since nf_defrag_ipv6 loads first its
+netns exit hooks run _after_ conntrack's netns exit hook.
 
-Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
-Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Flush all fragment queue SKBs during fqdir_pre_exit() to release
+conntrack references before conntrack cleanup runs. Also flush
+the queues in timer expiry handlers when they discover fqdir->dead
+is set, in case packet sneaks in while we're running the pre_exit
+flush.
+
+The commit under Fixes is not exactly the culprit, but I think
+previously the timer firing would eventually unblock the spinning
+conntrack.
+
+Fixes: d5dd88794a13 ("inet: fix various use-after-free in defrags units")
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20251207010942.1672972-4-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Rajani Kantha <681739313@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ include/net/inet_frag.h  | 13 +------------
+ include/net/ipv6_frag.h  |  9 ++++++---
+ net/ipv4/inet_fragment.c | 36 ++++++++++++++++++++++++++++++++++++
+ net/ipv4/ip_fragment.c   | 12 +++++++-----
+ 4 files changed, 50 insertions(+), 20 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index bbaf0070ca6176..0295a18a1cb3d7 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -5393,14 +5393,20 @@ static inline int l2cap_ecred_reconf_rsp(struct l2cap_conn *conn,
+diff --git a/include/net/inet_frag.h b/include/net/inet_frag.h
+index 94edc0e130d2c4..fcabb34fff35de 100644
+--- a/include/net/inet_frag.h
++++ b/include/net/inet_frag.h
+@@ -123,18 +123,7 @@ void inet_frags_fini(struct inet_frags *);
  
- 	BT_DBG("result 0x%4.4x", result);
+ int fqdir_init(struct fqdir **fqdirp, struct inet_frags *f, struct net *net);
  
--	if (!result)
-+	if (!result) {
-+		list_for_each_entry(chan, &conn->chan_l, list) {
-+			if (chan->ident == cmd->ident)
-+				chan->ident = 0;
-+		}
- 		return 0;
+-static inline void fqdir_pre_exit(struct fqdir *fqdir)
+-{
+-	/* Prevent creation of new frags.
+-	 * Pairs with READ_ONCE() in inet_frag_find().
+-	 */
+-	WRITE_ONCE(fqdir->high_thresh, 0);
+-
+-	/* Pairs with READ_ONCE() in inet_frag_kill(), ip_expire()
+-	 * and ip6frag_expire_frag_queue().
+-	 */
+-	WRITE_ONCE(fqdir->dead, true);
+-}
++void fqdir_pre_exit(struct fqdir *fqdir);
+ void fqdir_exit(struct fqdir *fqdir);
+ 
+ void inet_frag_kill(struct inet_frag_queue *q);
+diff --git a/include/net/ipv6_frag.h b/include/net/ipv6_frag.h
+index 7321ffe3a108c1..df61b98b521531 100644
+--- a/include/net/ipv6_frag.h
++++ b/include/net/ipv6_frag.h
+@@ -68,9 +68,6 @@ ip6frag_expire_frag_queue(struct net *net, struct frag_queue *fq)
+ 	struct sk_buff *head;
+ 
+ 	rcu_read_lock();
+-	/* Paired with the WRITE_ONCE() in fqdir_pre_exit(). */
+-	if (READ_ONCE(fq->q.fqdir->dead))
+-		goto out_rcu_unlock;
+ 	spin_lock(&fq->q.lock);
+ 
+ 	if (fq->q.flags & INET_FRAG_COMPLETE)
+@@ -79,6 +76,12 @@ ip6frag_expire_frag_queue(struct net *net, struct frag_queue *fq)
+ 	fq->q.flags |= INET_FRAG_DROP;
+ 	inet_frag_kill(&fq->q);
+ 
++	/* Paired with the WRITE_ONCE() in fqdir_pre_exit(). */
++	if (READ_ONCE(fq->q.fqdir->dead)) {
++		inet_frag_queue_flush(&fq->q, 0);
++		goto out;
 +	}
++
+ 	dev = dev_get_by_index_rcu(net, fq->iif);
+ 	if (!dev)
+ 		goto out;
+diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
+index 1e390d24f11440..8cf88882d65e3e 100644
+--- a/net/ipv4/inet_fragment.c
++++ b/net/ipv4/inet_fragment.c
+@@ -219,6 +219,41 @@ static int __init inet_frag_wq_init(void)
  
- 	list_for_each_entry_safe(chan, tmp, &conn->chan_l, list) {
- 		if (chan->ident != cmd->ident)
- 			continue;
+ pure_initcall(inet_frag_wq_init);
  
--		l2cap_chan_hold(chan);
-+		if (!l2cap_chan_hold_unless_zero(chan))
++void fqdir_pre_exit(struct fqdir *fqdir)
++{
++	struct inet_frag_queue *fq;
++	struct rhashtable_iter hti;
++
++	/* Prevent creation of new frags.
++	 * Pairs with READ_ONCE() in inet_frag_find().
++	 */
++	WRITE_ONCE(fqdir->high_thresh, 0);
++
++	/* Pairs with READ_ONCE() in inet_frag_kill(), ip_expire()
++	 * and ip6frag_expire_frag_queue().
++	 */
++	WRITE_ONCE(fqdir->dead, true);
++
++	rhashtable_walk_enter(&fqdir->rhashtable, &hti);
++	rhashtable_walk_start(&hti);
++
++	while ((fq = rhashtable_walk_next(&hti))) {
++		if (IS_ERR(fq)) {
++			if (PTR_ERR(fq) != -EAGAIN)
++				break;
 +			continue;
- 		l2cap_chan_lock(chan);
++		}
++		spin_lock_bh(&fq->lock);
++		if (!(fq->flags & INET_FRAG_COMPLETE))
++			inet_frag_queue_flush(fq, 0);
++		spin_unlock_bh(&fq->lock);
++	}
++
++	rhashtable_walk_stop(&hti);
++	rhashtable_walk_exit(&hti);
++}
++EXPORT_SYMBOL(fqdir_pre_exit);
++
+ void fqdir_exit(struct fqdir *fqdir)
+ {
+ 	INIT_WORK(&fqdir->destroy_work, fqdir_work_fn);
+@@ -291,6 +326,7 @@ void inet_frag_queue_flush(struct inet_frag_queue *q,
+ {
+ 	unsigned int sum;
  
- 		l2cap_chan_del(chan, ECONNRESET);
++	reason = reason ?: SKB_DROP_REASON_FRAG_REASM_TIMEOUT;
+ 	sum = inet_frag_rbtree_purge(&q->rb_fragments, reason);
+ 	sub_frag_mem_limit(q->fqdir, sum);
+ }
+diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
+index 7214d5bcc647e5..f5b5aa036cc668 100644
+--- a/net/ipv4/ip_fragment.c
++++ b/net/ipv4/ip_fragment.c
+@@ -148,11 +148,6 @@ static void ip_expire(struct timer_list *t)
+ 	net = qp->q.fqdir->net;
+ 
+ 	rcu_read_lock();
+-
+-	/* Paired with WRITE_ONCE() in fqdir_pre_exit(). */
+-	if (READ_ONCE(qp->q.fqdir->dead))
+-		goto out_rcu_unlock;
+-
+ 	spin_lock(&qp->q.lock);
+ 
+ 	if (qp->q.flags & INET_FRAG_COMPLETE)
+@@ -160,6 +155,13 @@ static void ip_expire(struct timer_list *t)
+ 
+ 	qp->q.flags |= INET_FRAG_DROP;
+ 	ipq_kill(qp);
++
++	/* Paired with WRITE_ONCE() in fqdir_pre_exit(). */
++	if (READ_ONCE(qp->q.fqdir->dead)) {
++		inet_frag_queue_flush(&qp->q, 0);
++		goto out;
++	}
++
+ 	__IP_INC_STATS(net, IPSTATS_MIB_REASMFAILS);
+ 	__IP_INC_STATS(net, IPSTATS_MIB_REASMTIMEOUT);
+ 
 -- 
 2.53.0
 
