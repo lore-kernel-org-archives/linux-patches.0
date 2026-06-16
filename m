@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B495234889F;
-	Tue, 16 Jun 2026 15:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC0B449EB8;
+	Tue, 16 Jun 2026 15:36:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624200; cv=none; b=VptQAv4NM7n9YZZHL928sT84pTaIWcR5JfmebjhwJQ1glqcZ5VK4hx21k/nUUMl3SOTlPY6o+AjZYNKFb+GFXTRJvSQUE2zxwgvjLGfK5n/jc5wNtjOVa1FgjQijxJ5KPV3c/VrclUwXJ1cSiRV8z8rT6du5++Gr5H/uvTuAd2A=
+	t=1781624206; cv=none; b=ubOKzhtxCaMq5VssaV2rJ9i+GoODPUqvtWrYDGZdaF1sFAt5PO4QIXC0J2wN8D5My9YwOJ6yt657hyEfEf+BCD0hm1betAIYmwMpgNwAK1sD3qpw/TR2I/RtEp/ff1vzMOtR6O1KywnrCFcdmavt8L//qLretfUuqNNhixDSnL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624200; c=relaxed/simple;
-	bh=bg/kP50O8qlPgX073V64zKcnuVhPp+I3n921gaw5R6c=;
+	s=arc-20240116; t=1781624206; c=relaxed/simple;
+	bh=0UFeQ0Dz4TkE/fEHqfhQIeIUnKSdi1oPVk67tqlXTeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i78wg80HzTa/2cfkphLs7HPpZEkY7oj1SZO9mN5yy85Wkd1DM8j1fClCmexxph1e/88f6+/nHDNEAlRs68IBkQDgv2W1WJ3oyNrk4y7VAa5LotZ9ax7252iCPUPREz3QjPwxTIScv8xmze3xdrkUZHfjW/tLPsES/aN5Efhxc+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNqPX9SR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LZNPwYO/GkEbiwK18AcuUAfxXCTW3Sp0BSopyDsFejkxIvVcwIfsyz2+f5w2HVt87gqxbR3nlTB/pL6sTdJvjtXk+X/6DKVQdIgHq1lsZwp0s6/b4jz+aMsgpLIhzMwlQlgSmPClw1UNF/jFtrhJebKcJYg2YT2hV6XZzxQpP74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvzmMs0i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNqPX9SR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 942941F000E9;
-	Tue, 16 Jun 2026 15:36:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvzmMs0i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A4D21F000E9;
+	Tue, 16 Jun 2026 15:36:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624199;
-	bh=rS6C3s9qn0l2L5+sebhVoPgLHMV11rlFxCzIbdfM7kA=;
+	s=korg; t=1781624205;
+	bh=XZ6NtAFYTEXBWI83Nx3peXYsnIBd7oBhi4hfz4enkOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fNqPX9SRHcV1PxAvBW7Nj8NRVUw9mUnXnRACT+YozT0W/HXRM6+B+Opjf9mOjLMJh
-	 RWtKfV8fpDlET2Cviv6dPf00f/3Fdxe8CRswPS5asWAGIOGlN7QSGBTlDFiBsX6awq
-	 eS/0SBIAKmSwlbKls5UIPFGZYZZKT2Tp86eVmVKI=
+	b=LvzmMs0ifaP8/zbos8oIYbf6gGhX2Ibjm8yZ9aDji1nbKJQ5mzfBzrPK8NBytJwEy
+	 kiS/axbcoUe8JsuZabsc39qR7t5xATi5Q0pjRQyDDdYSMmELmC5w5Gg5QufPmLLyyH
+	 ZmKRDbq3GXZ+Hxm3fqGSgdSrrCCplB5iB/A1B9iY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Santosh Kalluri <santosh.kalluri129@gmail.com>,
-	=?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <remi@remlab.net>,
-	Simon Horman <horms@kernel.org>,
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuqi Xu <xuyq21@lenovo.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 291/378] net: phonet: free phonet_device after RCU grace period
-Date: Tue, 16 Jun 2026 20:28:42 +0530
-Message-ID: <20260616145125.390928789@linuxfoundation.org>
+Subject: [PATCH 7.0 292/378] net: rds: clear i_sends on setup unwind
+Date: Tue, 16 Jun 2026 20:28:43 +0530
+Message-ID: <20260616145125.436402446@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -46,46 +50,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Santosh Kalluri <santosh.kalluri129@gmail.com>
+From: Yuqi Xu <xuyq21@lenovo.com>
 
-commit 71de0177b28da751f407581a4515cf4d762f6296 upstream.
+commit 20cf0fb715c41111469577e85e35d15f099473e0 upstream.
 
-phonet_device_destroy() removes a phonet_device from the per-net device
-list with list_del_rcu(), but frees it immediately. RCU readers walking
-the same list can still hold a pointer to the object after it has been
-removed, leading to a slab-use-after-free.
+The RDS IB connection teardown path is written so it can run during
+partial startup and on repeated shutdown attempts. It uses NULL
+pointers to distinguish resources that are still owned from resources
+that have already been released.
 
-Use kfree_rcu(), matching the lifetime rule already used by
-phonet_address_del() for the same object type.
+When rds_ib_setup_qp() fails after allocating i_sends but before
+allocating i_recvs, the sends_out path frees i_sends without clearing
+the pointer. A later shutdown pass can still treat that stale pointer
+as a live send ring allocation.
 
-Fixes: eeb74a9d45f7 ("Phonet: convert devices list to RCU")
-Cc: stable@vger.kernel.org
-Signed-off-by: Santosh Kalluri <santosh.kalluri129@gmail.com>
-Acked-by: Rémi Denis-Courmont <remi@remlab.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Clear i_sends after vfree() in the error unwind path so the existing
+shutdown logic continues to use the correct ownership state.
+
+Fixes: 3b12f73a5c29 ("rds: ib: add error handle")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yuqi Xu <xuyq21@lenovo.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/5a0f7624bb9845a7b67d26166a150b59e7f394ce.1779632468.git.xuyq21@lenovo.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/phonet/pn_dev.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/rds/ib_cm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/phonet/pn_dev.c
-+++ b/net/phonet/pn_dev.c
-@@ -108,7 +108,7 @@ static void phonet_device_destroy(struct
- 		for_each_set_bit(addr, pnd->addrs, 64)
- 			phonet_address_notify(net, RTM_DELADDR, ifindex, addr);
+--- a/net/rds/ib_cm.c
++++ b/net/rds/ib_cm.c
+@@ -656,6 +656,7 @@ static int rds_ib_setup_qp(struct rds_co
  
--		kfree(pnd);
-+		kfree_rcu(pnd, rcu);
- 	}
- }
+ sends_out:
+ 	vfree(ic->i_sends);
++	ic->i_sends = NULL;
  
+ ack_dma_out:
+ 	rds_dma_hdr_free(rds_ibdev->dev, ic->i_ack, ic->i_ack_dma,
 
 
