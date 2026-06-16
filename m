@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6727743E490;
-	Tue, 16 Jun 2026 17:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DEC449EA8;
+	Tue, 16 Jun 2026 17:09:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629788; cv=none; b=tW2nQ9eArB40zMNpoyRJ6EobSdU5npKw0suedCy0CY2QuKbssJbX54m3v0fZb0zk2HrHwJu/4tCZ3a5Rscaq2ih9q8yBmHKzeDA7H6Nj0IpyGvjXN6Sa45aT4RmF6kdLanudckdJ/S7VOXX3qNdOmDacciG3GOfF9qkW1SSrQR8=
+	t=1781629793; cv=none; b=AizuMuVMhBuOUJQj0XEElhW6Z6wKbdVt4P3qld3U1sXDYF0PUu0S/JQffV24/WaKzjGJpi5alB32NUl3q43E0akVYRy7AIb45iFKMSEmbIgpcZi4TQBBKKoVtxiHfB5dtgh0AWn1VAVVifyEayt7QyG5tuGi7LOiYurExfI42HM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629788; c=relaxed/simple;
-	bh=Vt8O7I3CsYb1+cuFq3ZYrsoR/n4eq6Eiq85Rxev+RKw=;
+	s=arc-20240116; t=1781629793; c=relaxed/simple;
+	bh=CbTdQqpZQ5EDnhxAB/L8GMTOCgpetWO25XMmbyJdd1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bKSRIjW/NwV+Vcg0BTAKELpXDUddQy08maXr5UDBZv8v+co3StYXuO8i+gK11AGXELHC9RXxIfqXOBzrCL4BEBy+0zKVd2ZAJTCWZNe7VC/KAZouFPvljnvliWUxXQ1zk3WVIn7OESrlU6UsREZJlGU6KJUTtXcfoRn+z/HvRnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cfRERAxC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hkgTqzmK59cvy5T+4oNlYXXus5rPGbJuWriayry3asdLEm0n9RkhyWWLGOvTMqhWfSbRxDhcIlQ7IGiOFvG0WAxl3RzE2fog0HmWsQ04A464kSjUt+UD4vqCnO0Rm3CB6ftDRrxYGH8bTS6uwEGgan21a5Otqp9Qw4lNoy9tQR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=akYuV5F2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cfRERAxC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632941F000E9;
-	Tue, 16 Jun 2026 17:09:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="akYuV5F2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7616B1F000E9;
+	Tue, 16 Jun 2026 17:09:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629787;
-	bh=RmNoxDVarlbGZTheBNY54YCgN5tQzwBJ4KF7/nmUZzk=;
+	s=korg; t=1781629792;
+	bh=UymSEn4PTHCEJIwsxUHj8xD5/LQMleziPtWsyPPQbNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cfRERAxCkPnT49Q0FTvfZdbFRXp4dtNAn4A+xtghse0YjIlF8bEHo9/ugkLusY7jy
-	 g9u+fWaAHlwfjYFrYdIRcMungqTL6HY7u9zmMKgpdEDcegtweRPJ9ZRydqWMQtD3JA
-	 U1H7WWiBE3TL9/gQNb8ircvZAG3kWaSrP6tr2pXw=
+	b=akYuV5F2ytpbMtcd61hYpzjOkV/tjXVN4c7Dh+h4M++cS5up7Gii+CHCj5WHnsgsq
+	 ZM33/iP7L4KoIwUlW3xSM9oRvW1HYLfjg/TS5iWAVcHV/TB0y0FmrZQj5HTljEz/VU
+	 dBp7NpnZdZZKK+agCMk/eWSDjXlrhC7OVqNzazao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Wyatt Feng <bronzed_45_vested@icloud.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 353/452] sctp: stream: fully roll back denied add-stream state
-Date: Tue, 16 Jun 2026 20:29:40 +0530
-Message-ID: <20260616145135.727106361@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.6 354/452] thunderbolt: Reject zero-length property entries in validator
+Date: Tue, 16 Jun 2026 20:29:41 +0530
+Message-ID: <20260616145135.770331268@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -58,61 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wyatt Feng <bronzed_45_vested@icloud.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit a5f8a90ac9f77c678a9781c0a464b635e0d63e49 upstream.
+commit cff8eb65d1eafe7793e54b4d0cf6bf831644630b upstream.
 
-When ADD_OUT_STREAMS is denied, SCTP only shrinks the queued chunks and
-then lowers outcnt. That leaves removed stream metadata behind, so a
-later re-add can reuse a stale ext and hit a null-pointer dereference in
-the scheduler get path.
+tb_property_entry_valid() accepts entries with length == 0 for
+DIRECTORY, DATA, and TEXT types.  A zero-length TEXT entry passes
+validation but causes an underflow in the null-termination logic:
 
-Fix the rollback by tearing down the removed stream state the same way
-other stream resizes do. Unschedule the current scheduler state, drop
-the removed stream ext state with sctp_stream_outq_migrate(), and then
-reschedule the remaining streams.
+  property->value.text[property->length * 4 - 1] = '\0';
 
-This keeps scheduler-private RR/FC/PRIO lists consistent while fully
-rolling back denied outgoing stream additions.
+When property->length is 0 this writes to offset -1 relative to
+the allocation.
 
-Fixes: 637784ade221 ("sctp: introduce priority based stream scheduler")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/d78954ecd94954653ee299400e98d74a03a6f7d3.1780603399.git.bronzed_45_vested@icloud.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reject zero-length entries early in the validator since they have no
+valid representation in the XDomain property protocol.
+
+Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/stream.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/thunderbolt/property.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/sctp/stream.c
-+++ b/net/sctp/stream.c
-@@ -1038,6 +1038,7 @@ struct sctp_chunk *sctp_process_strreset
- 			stsn, rtsn, GFP_ATOMIC);
- 	} else if (req->type == SCTP_PARAM_RESET_ADD_OUT_STREAMS) {
- 		struct sctp_strreset_addstrm *addstrm;
-+		const struct sctp_sched_ops *sched;
- 		__u16 number;
- 
- 		addstrm = (struct sctp_strreset_addstrm *)req;
-@@ -1048,7 +1049,10 @@ struct sctp_chunk *sctp_process_strreset
- 			for (i = number; i < stream->outcnt; i++)
- 				SCTP_SO(stream, i)->state = SCTP_STREAM_OPEN;
- 		} else {
--			sctp_stream_shrink_out(stream, number);
-+			sched = sctp_sched_ops_from_stream(stream);
-+			sched->unsched_all(stream);
-+			sctp_stream_outq_migrate(stream, NULL, number);
-+			sched->sched_all(stream);
- 			stream->outcnt = number;
- 		}
- 
+--- a/drivers/thunderbolt/property.c
++++ b/drivers/thunderbolt/property.c
+@@ -59,6 +59,8 @@ static bool tb_property_entry_valid(cons
+ 	case TB_PROPERTY_TYPE_DIRECTORY:
+ 	case TB_PROPERTY_TYPE_DATA:
+ 	case TB_PROPERTY_TYPE_TEXT:
++		if (!entry->length)
++			return false;
+ 		if (entry->length > block_len)
+ 			return false;
+ 		if (check_add_overflow(entry->value, entry->length, &end) ||
 
 
