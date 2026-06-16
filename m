@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49763246762;
-	Tue, 16 Jun 2026 17:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51973C276B;
+	Tue, 16 Jun 2026 17:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631936; cv=none; b=Me5Xe3OxRheOnapFwLuB+M491cpA4lgDqpalRrTnYfwic7IYorP4ngTsDFnzfqNMq6STzp19/ablLNlXPIckci1tVNCpvma/j2BwfShB9W/RSd1MwOo8tB+von7PEpVGtbe5uQoJzbGE7ywaU9jXzB4bTQi8slnexMTOz9chK7I=
+	t=1781631941; cv=none; b=NguKtEJLX37MiaAuEIyYU87yNAiyiaZdh3zBlwvvLGJwgx3piQR2iJxDVzxKvVnX0p9t7MaF8JF6WXCdHb5bRiR7x6Zk27L4pqUSa8xLjtR08Re0Y7QFFVcFNGi4k7C8TuvgXwKmp6qOQDCIXGzRwxydGHvLg4PEy309kal+A7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631936; c=relaxed/simple;
-	bh=/hjyd8mERC9MbjYz8kEXyD+FIt/lvHEyUMWPcFD2Ld8=;
+	s=arc-20240116; t=1781631941; c=relaxed/simple;
+	bh=wv3MsulsJIUJNzbbQ6CXKlp/RCF6KBJa2ErDBZR1HHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RGjPBvNxzamOEyjV3R162A8ci2+43zwoWwUkvlHKbuoqcGkTdrnf0UgaMIOjy2ViJSl/vdASA4pzg+aR8s2j7QURZ+4mC7CX6RVP4XFICGlbDFoxZQGR7tdIO+4VkNvsxUiON/JLg1wAxWGB9AdNXkayIkEb2lc2g3IELmuNA9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lwU9V8iB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GPNfxmzJUnIG0+rzgn8e9FX27E/Udwe9MHHw/kS203ZzGrBKrgzLEoVVh59+9YU4hvd0vm7INOZUHTMVoS1qM2ljVAUOUIrVuGYkP2YH+tDlpShNgLKiBzAtfiAiwc/kPvq6ZAsibX0ifnPYWY96kzRK8iRMAO2Osdmv4aIbngE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QE/6wOZ4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lwU9V8iB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0D81F000E9;
-	Tue, 16 Jun 2026 17:45:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QE/6wOZ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9579C1F000E9;
+	Tue, 16 Jun 2026 17:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631935;
-	bh=C1LTQ3zwHSJaV0jTb+nGUFYUfAGH3tWJq+r0z76G8Bo=;
+	s=korg; t=1781631940;
+	bh=h9xQR1C0DSGiafT7WvRqjs4vs3cCkQVI9FrPyzXMMqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lwU9V8iBVvnQ90OVPEJvKOkEmfSKky770gZ4Mb/ufnUItxEHw+PoMSzq6lC0GgN/p
-	 PMvDWt0lzxC9alDGUH1RE3GcMRIrUsxVF9dEDAMKLVQqnNYGlXTlvivPZm3SQK2Pc9
-	 F9d21yznmGHFHKb7n/Evvljw4g0T52o76WifO2kU=
+	b=QE/6wOZ4Gy4Wy6K2/x1dWYiQYW9i/IA/iUMunu5qYDAguxCyEeia/JYbOF2jC3BZk
+	 3FjUtKPU6Hyc4/hGvWgfQvVR6rTOQtu9zSCrrwVBgXuM3BcPU3T7t4izDd5WXUzuiE
+	 ns5FB0fHaNpLzNaAnYd1oHw6n3CYTjEvxLIOkg7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.1 316/522] thunderbolt: Bound root directory content to block size
-Date: Tue, 16 Jun 2026 20:27:43 +0530
-Message-ID: <20260616145140.643384477@linuxfoundation.org>
+Subject: [PATCH 6.1 317/522] thunderbolt: Clamp XDomain response data copy to allocation size
+Date: Tue, 16 Jun 2026 20:27:44 +0530
+Message-ID: <20260616145140.686934705@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,15 +52,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 65423079c7420e3dbf9a7aa345c243a3f5752e5d upstream.
+commit 322e93448d908434ae5545660fcbe8f5a7a8e141 upstream.
 
-__tb_property_parse_dir() does not check that content_offset +
-content_len fits within block_len for the root directory case.
-When rootdir->length equals or exceeds block_len - 2, the entry
-loop reads past the allocated property block.
+tb_xdp_properties_request() derives the per-packet copy length from
+the response header without checking that it fits in the previously
+allocated data buffer.  A malicious peer can set its length field
+larger than the declared data_length, causing memcpy to write past
+the kcalloc allocation.
 
-Add a bounds check after computing content_offset and content_len
-to reject directories whose content extends past the block.
+Clamp the per-packet copy length so that the cumulative offset
+never exceeds data_len.
 
 Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
 Cc: stable@vger.kernel.org
@@ -69,21 +70,19 @@ Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/property.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/thunderbolt/xdomain.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/thunderbolt/property.c
-+++ b/drivers/thunderbolt/property.c
-@@ -181,6 +181,10 @@ static struct tb_property_dir *__tb_prop
- 	if (is_root) {
- 		content_offset = dir_offset + 2;
- 		content_len = dir_len;
-+		if (content_offset + content_len > block_len) {
-+			tb_property_free_dir(dir);
-+			return NULL;
-+		}
- 	} else {
- 		if (dir_len < 4) {
- 			tb_property_free_dir(dir);
+--- a/drivers/thunderbolt/xdomain.c
++++ b/drivers/thunderbolt/xdomain.c
+@@ -393,6 +393,8 @@ static int tb_xdp_properties_request(str
+ 			}
+ 		}
+ 
++		if (req.offset + len > data_len)
++			len = data_len - req.offset;
+ 		memcpy(data + req.offset, res->data, len * 4);
+ 		req.offset += len;
+ 	} while (!data_len || req.offset < data_len);
 
 
