@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E06344CAF9;
-	Tue, 16 Jun 2026 15:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65EF44CADF;
+	Tue, 16 Jun 2026 15:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623980; cv=none; b=iLE7rWzb8F674yNqjMwsR48L225i+WQ0ksqHayz7OL7/kSR48KCiAxeNNbtHeMUe4yZclxuWvVXZENOPSHMoQSKX/WLVVtD6IWJSyv3ts8iwe7A2XkpzNAJJKBMcndYD3GXoGu//IRo7sxLL977vyIgcR1nzZ5xjw+tneDi05JU=
+	t=1781623985; cv=none; b=aXYU06mT9gtNpGNIvNeLI51iyUjkqS+Vl9vG8hpRLOYwee9fola+CEOwTEW+J+5BSFfyf9GOxCrk5F152eeOS3K5jgewCNb0Va0xEa7u9xQsfSjM6d+GaFR/KNig/7UnDxvzv29p3TXpedryxgQ8uj7YWDmulR2tufBh19yBufU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623980; c=relaxed/simple;
-	bh=yqGIdmaV3InF3wbCMy6yg8LXayiEaoexwYLmbLDJyc8=;
+	s=arc-20240116; t=1781623985; c=relaxed/simple;
+	bh=ppAYaJdwQjuit4RHwQN7XJ7ZosLA5psx0BPH05v2TPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H+RkqDIBAWAifHXKSS90k3QDRjAk2WMyyFqHID2FOd+5ctWm1jO0BOPWx+I3qB2IyaiXew4oO7soZW0GAXZWqq7yV0KC6bEAjBfCJGQxGiCFrzoM7PtrmPGZ9DXpfa/njNlCj0BR6kEFMMtW1cuTnl1RUoTAp2PxTr8/wxJTGvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muBWFHDf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eJr0A8PWAkbMlfc+oxNDOW5A0GYL76PncA3SpzX1rUzJAJZg9ReMDP6Q+qEZQSEPgZoiEB+7LZ5zhqxgNa2wI14j1LEKt6YuOYzZ6tPcwcGGZhkrzwmd1XVttr+6aLIcr9Z3MMEqUSXvlneXa3NVJ/LYKZ1TazJjuS7K6+jWBKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=woABfb9C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muBWFHDf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6D51F000E9;
-	Tue, 16 Jun 2026 15:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="woABfb9C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D4B1F000E9;
+	Tue, 16 Jun 2026 15:33:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623979;
-	bh=gfj2IjYPqunEVNp6k3VLj9KPXO9ZCyofky/jd/gWuvw=;
+	s=korg; t=1781623984;
+	bh=/yquh/ob8S5lVdlNdHe/uhESnZt0Zq7dOlfS6nkCgWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=muBWFHDfUzaKsbfe5dpKUY/jsZC+Tps7abcYnz4HLRB16sXUSmMjeM1aOX26NUTLG
-	 eikTgmGkjLWOqTaWRILUVpq+D2+5cgTVNB6cvkvPzoUBg9MZwPIUfTBkNxpABZkaa3
-	 1FbHhK8ZtHLEb5Modtmc2QfJgantbytBtsRhJyzc=
+	b=woABfb9CHRVsW4/u9ZA9XCuhbJfrVOzkVxgPojhXMKPAtnPd4bJ+UVpClOhg6k7V7
+	 NonVNvpIWdkTDAz6YeyV9OrSHbs2mNwAyLv/J8Cq6JQWIM7c9FLIEFuIioiDnup89A
+	 qf3fSQVueTpoZXxse+8D8vrsnzjc2ZV0aVMQTzI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Meyer <kyle.meyer@hpe.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 250/378] bnxt_en: Fix NULL pointer dereference
-Date: Tue, 16 Jun 2026 20:28:01 +0530
-Message-ID: <20260616145123.324141600@linuxfoundation.org>
+	Michael Kelley <mhklinux@outlook.com>,
+	Krister Johansen <kjlx@templeofstupid.com>,
+	Matthew Ruffell <matthew.ruffell@canonical.com>,
+	Dexuan Cui <decui@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 7.0 251/378] Drivers: hv: vmbus: Improve the logic of reserving fb_mmio on Gen2 VMs
+Date: Tue, 16 Jun 2026 20:28:02 +0530
+Message-ID: <20260616145123.367767815@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,45 +53,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Meyer <kyle.meyer@hpe.com>
+From: Dexuan Cui <decui@microsoft.com>
 
-commit d930276f2cddd0b7294cac7a8fe7b877f6d9e08d upstream.
+commit 016a25e4b0df4d77e7c258edee4aaf982e4ee809 upstream.
 
-PCIe errors detected by a Root Port or Downstream Port cause error
-recovery services to run on all subordinate devices regardless of
-administrative state.
+If vmbus_reserve_fb() in the kdump/kexec kernel fails to properly reserve
+the framebuffer MMIO range (which is below 4GB) due to a Gen2 VM's
+screen.lfb_base being zero [1], there is an MMIO conflict between the
+drivers hyperv-drm and pci-hyperv: when the driver pci-hyperv's
+hv_allocate_config_window() calls vmbus_allocate_mmio() to get an
+MMIO range, typically it gets a 32-bit MMIO range that overlaps with the
+framebuffer MMIO range, and later hv_pci_enter_d0() fails with an
+error message "PCI Pass-through VSP failed D0 Entry with status" since
+the host thinks that PCI devices must not use MMIO space that the
+host has assigned to the framebuffer.
 
-The .error_detected() callback, bnxt_io_error_detected(), disables
-and synchronizes IRQs via bnxt_disable_int_sync(), which calls
-bnxt_cp_num_to_irq_num() to map completion rings to IRQs using
-bp->bnapi.
+This is especially an issue if pci-hyperv is built-in and hyperv-drm is
+built as a module. Consequently, the kdump/kexec kernel fails to detect
+PCI devices via pci-hyperv, and may fail to mount the root file system,
+which may reside in a NVMe disk. The issue described here has existed
+for SR-IOV VF NICs since day one of the pci-hyperv driver, and has been
+worked around on x64 when possible. With the recent introduction of
+ARM64 VMs that boot from NVMe, there is no workaround, so we need a
+formal fix.
 
-Since bp->bnapi is allocated on NIC open and freed on NIC close, PCIe
-error recovery on a closed NIC can dereference a NULL pointer.
+On Gen2 VMs, if the screen.lfb_base is 0 in the kdump/kexec kernel [1],
+fall back to the low MMIO base, which should be equal to the framebuffer
+MMIO base [2] (the statement is true according to my testing on x64
+Windows Server 2016, and on x64 and ARM64 Windows Server 2025 and on
+Azure. I checked with the Hyper-V team and they said the statement should
+continue to be true for Gen2 VMs). In the first kernel, screen.lfb_base
+is not 0; if the user specifies a very high resolution, it's not enough
+to only reserve 8MB: let's always reserve half of the space below 4GB,
+but cap the reservation to 128MB, which is the required framebuffer size
+of the highest resolution 7680*4320 supported by Hyper-V.
 
-Check if bp->bnapi is NULL before disabling and synchronizing IRQs.
+While at it, fix the comparison "end > VTPM_BASE_ADDRESS" by changing
+the > to >=. Here the 'end' is an inclusive end (typically, it's
+0xFFFF_FFFF for the low MMIO range).
 
-Fixes: e5811b8c09df ("bnxt_en: Add IRQ remapping logic.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kyle Meyer <kyle.meyer@hpe.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://patch.msgid.link/aiNM1CY2-StPilxW@hpe.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Note: vmbus_reserve_fb() now also reserves an MMIO range at the beginning
+of the low MMIO range on CVMs, which have no framebuffers (the
+'screen.lfb_base' in vmbus_reserve_fb() is 0 for CVMs), just in case the
+host might treat the beginning of the low MMIO range specially [3]. BTW,
+the OpenHCL kernel is not affected by the change, because that kernel
+boots with DeviceTree rather than ACPI (so vmbus_reserve_fb() won't run
+there), and there is no framebuffer device for that kernel.
+
+Note: normally Gen1 VMs don't have the MMIO conflict issue because the
+framebuffer MMIO range (which is hardcoded to base=4GB-128MB and
+size=64MB for Gen1 VMs by the host) is always reported via the legacy PCI
+graphics device's BAR, so the kdump/kexec kernel can reserve the 64MB
+MMIO range; however, if the VM is configured to use a very high resolution
+and the required framebuffer size exceeds 64MB (AFAIK, in practice, this
+isn't a typical configuration by users), the hyperv-drm driver may need to
+allocate an MMIO range above 4GB and change the framebuffer MMIO location
+to the allocated MMIO range -- in this case, there can still be issues [4]
+which can't be easily fixed: any possible affected Gen1 users would have
+to use a resolution whose framebuffer size is <= 64MB, or switch to Gen2
+VMs.
+
+[1] https://lore.kernel.org/all/SA1PR21MB692176C1BC53BFC9EAE5CF8EBF51A@SA1PR21MB6921.namprd21.prod.outlook.com/
+[2] https://lore.kernel.org/all/SA1PR21MB69218F955B62DFF62E3E88D2BF222@SA1PR21MB6921.namprd21.prod.outlook.com/
+[3] https://lore.kernel.org/all/SN6PR02MB415726B17D5A6027CD1717E8D4342@SN6PR02MB4157.namprd02.prod.outlook.com/
+[4] https://lore.kernel.org/all/SA1PR21MB69213486F821CA5A2C793C81BF342@SA1PR21MB6921.namprd21.prod.outlook.com/
+
+Fixes: 4daace0d8ce8 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
+CC: stable@vger.kernel.org
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Krister Johansen <kjlx@templeofstupid.com>
+Tested-by: Matthew Ruffell <matthew.ruffell@canonical.com>
+Signed-off-by: Dexuan Cui <decui@microsoft.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hv/vmbus_drv.c |   29 ++++++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -5656,7 +5656,7 @@ static void bnxt_disable_int_sync(struct
+--- a/drivers/hv/vmbus_drv.c
++++ b/drivers/hv/vmbus_drv.c
+@@ -2332,8 +2332,8 @@ static acpi_status vmbus_walk_resources(
+ 		return AE_NO_MEMORY;
+ 
+ 	/* If this range overlaps the virtual TPM, truncate it. */
+-	if (end > VTPM_BASE_ADDRESS && start < VTPM_BASE_ADDRESS)
+-		end = VTPM_BASE_ADDRESS;
++	if (end >= VTPM_BASE_ADDRESS && start < VTPM_BASE_ADDRESS)
++		end = VTPM_BASE_ADDRESS - 1;
+ 
+ 	new_res->name = "hyperv mmio";
+ 	new_res->flags = IORESOURCE_MEM;
+@@ -2400,6 +2400,7 @@ static void vmbus_mmio_remove(void)
+ static void __maybe_unused vmbus_reserve_fb(void)
  {
- 	int i;
+ 	resource_size_t start = 0, size;
++	resource_size_t low_mmio_base;
+ 	struct pci_dev *pdev;
  
--	if (!bp->irq_tbl)
-+	if (!bp->irq_tbl || !bp->bnapi)
+ 	if (efi_enabled(EFI_BOOT)) {
+@@ -2407,6 +2408,24 @@ static void __maybe_unused vmbus_reserve
+ 		if (IS_ENABLED(CONFIG_SYSFB)) {
+ 			start = sysfb_primary_display.screen.lfb_base;
+ 			size = max_t(__u32, sysfb_primary_display.screen.lfb_size, 0x800000);
++
++			low_mmio_base = hyperv_mmio->start;
++			if (!low_mmio_base || upper_32_bits(low_mmio_base) ||
++			    (start && start < low_mmio_base)) {
++				pr_warn("Unexpected low mmio base %pa\n", &low_mmio_base);
++			} else {
++				/*
++				 * If the kdump/kexec or CVM kernel's lfb_base
++				 * is 0, fall back to the low mmio base.
++				 */
++				if (!start)
++					start = low_mmio_base;
++				/*
++				 * Reserve half of the space below 4GB for high
++				 * resolutions, but cap the reservation to 128MB.
++				 */
++				size = min((SZ_4G - start) / 2, SZ_128M);
++			}
+ 		}
+ 	} else {
+ 		/* Gen1 VM: get FB base from PCI */
+@@ -2427,8 +2446,10 @@ static void __maybe_unused vmbus_reserve
+ 		pci_dev_put(pdev);
+ 	}
+ 
+-	if (!start)
++	if (!start) {
++		pr_warn("Unexpected framebuffer mmio base of zero\n");
  		return;
++	}
  
- 	atomic_inc(&bp->intr_sem);
+ 	/*
+ 	 * Make a claim for the frame buffer in the resource tree under the
+@@ -2438,6 +2459,8 @@ static void __maybe_unused vmbus_reserve
+ 	 */
+ 	for (; !fb_mmio && (size >= 0x100000); size >>= 1)
+ 		fb_mmio = __request_region(hyperv_mmio, start, size, fb_mmio_name, 0);
++
++	pr_info("hv_mmio=%pR,%pR fb=%pR\n", hyperv_mmio, hyperv_mmio->sibling, fb_mmio);
+ }
+ 
+ /**
 
 
