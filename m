@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B496744BC94;
-	Tue, 16 Jun 2026 15:36:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE7244BC94;
+	Tue, 16 Jun 2026 15:36:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624173; cv=none; b=IqcnaFLhgRnYDEgFBfPsvQo/7t2pjrs1F1oH9aQYUJjORh1lvnwDzFwqPGoI1rgcOCW06Ff5VAVSmW+eC+F5xjXS1zv87rMVM7fypFKRwWQ9FeIalXDajaJpM6K5I2c2epz3GPY3iF4rHgZVuSbSg01Hsz30ib7yDdf7zAkyvQY=
+	t=1781624179; cv=none; b=b/m1xMX5bVnmQRZO8AMx3aarB4Z1W+SsrEmABDD1ShbcGgpdlRbaP4Fj89ObcRT5zRiq6RLa8IZ74kQGtXejqHyRBixJlA2vDvs4tFtOwBmOHQbuOXc9BdLv0xkxebwPcFPfhOh7M247U/P+1r6zZjDXV1xzaBJjC3BDp00Q77I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624173; c=relaxed/simple;
-	bh=xfr85P9SGLdynyOGdX5YIVqQtu2deB0KM/RhHS2nOa0=;
+	s=arc-20240116; t=1781624179; c=relaxed/simple;
+	bh=1HEA38jiHmVf61Y5ZYqTobdgadR1AvG0nv2W5OvmK1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iNnC5/6DYSFyF2vjVh8A0TSZeZSzqrAz03g9O4am7sFqXe0im86HfGZMznSEkZvpQFmdmp0up1oituwZiJ53uwyD8koQQQHAA7Ga40JHAoIyojtdITm0oZAYF3v1H1T3E2v6BranKBCv3aa/JgOa0nbfGpcaoZmZhGEFVz+XurQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKUXAU7f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bbst0M7CWFP/hkgSTQRVmP8QHUQ0WKmQhdh0NfSaKOZIK/NQKmvNa8ZKDE9LIWN2gxQnUrJLxILKu36/Vd7gAkQjLIqKjIzhCUACbnxWM88cZigeWRKXu62Vy2opIb9T/H6RwBjPiPIeGrX/mKiVBLgDMj+C4/5OzpHWTp4yV2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rq6xhg/i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKUXAU7f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DE51F000E9;
-	Tue, 16 Jun 2026 15:36:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rq6xhg/i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB091F00A3A;
+	Tue, 16 Jun 2026 15:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624172;
-	bh=W0gLRua9DQbishpJoHfqfMWrTgTpL1k3wZXV5DegsZk=;
+	s=korg; t=1781624178;
+	bh=wuA1DJnohwpvH7KvAEZm79A/U2htlyQwPtFkrSdsyhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SKUXAU7fJYeDvKJ/P5rtDEPsNozQMr5XYjWHWyuOCpQbocyT5YB8B0n+PnCzFNZzr
-	 uPPlVZScnyzAurVJp76fCWsKG6YMMxwIdLXSIpTT8p7sB7DDc3ytji2yPX2OD16X+O
-	 BVWr9ToMX+CHTenNpWRDSfulvSS9vYt+zDun/T5k=
+	b=rq6xhg/il4xf9kZEGm+gokO+bgj6R+e8kaEIEr1+rtfniLcwcPbzbgQIcnWTJZ0dL
+	 x25MwjCH1rwmhMuNydTbl+YpNNL4fJV2L2HgSPswap4j0coNiSauiudyCFtrgrmwzF
+	 qcJ2yPspuaFHnFAqhnvnE5MjNCaG8SRwlk1JpuCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH 7.0 286/378] firmware: samsung: acpm: Fix mailbox channel leak on probe error
-Date: Tue, 16 Jun 2026 20:28:37 +0530
-Message-ID: <20260616145125.143696949@linuxfoundation.org>
+	Nikolay Kuratov <kniv@yandex-team.ru>,
+	Md Haris Iqbal <haris.iqbal@linux.dev>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.0 287/378] net/mlx5: Reorder completion before putting command entry in cmd_work_handler
+Date: Tue, 16 Jun 2026 20:28:38 +0530
+Message-ID: <20260616145125.191787418@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -50,74 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: Nikolay Kuratov <kniv@yandex-team.ru>
 
-commit b66829b17f6385cc9ffbcbe2476d532d2e3121ad upstream.
+commit 02896a7fa4cd3ec61d60ba30136841e4f04bdeac upstream.
 
-Sashiko identified the leak at [1].
+Assuming callback != NULL && !page_queue, cmd_work_handler takes
+command entry with refcnt == 1 from mlx5_cmd_invoke.
+If either semaphore timeout or index allocation error happens,
+it does final cmd_ent_put(ent). To avoid access to freed memory,
+notify slotted completion before cmd_ent_put.
 
-The ACPM driver allocates hardware mailbox channels using
-`mbox_request_channel()` during `acpm_channels_init()`. However, the
-driver lacked a `.remove` callback and did not free these channels on
-subsequent error paths inside `acpm_probe()`.
-
-Additionally, if `acpm_achan_alloc_cmds()` failed during the channel
-initialization loop, the function returned immediately, bypassing the
-manual cleanup and permanently leaking any channels successfully
-requested in previous loop iterations.
-
-Fix this by modifying `acpm_free_mbox_chans()` to match the `devres`
-action signature and registering it via `devm_add_action_or_reset()`.
+This is theoretical issue found by Svace static analyser.
 
 Cc: stable@vger.kernel.org
-Fixes: a88927b534ba ("firmware: add Exynos ACPM protocol driver")
-Closes: https://sashiko.dev/#/patchset/20260420-acpm-tmu-v3-0-3dc8e93f0b26%40linaro.org [1]
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Link: https://patch.msgid.link/20260505-acpm-fixes-sashiko-reports-v5-2-43b5ee7f1674@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Fixes: 485d65e135712 ("net/mlx5: Add a timeout to acquire the command queue semaphore")
+Fixes: 0e2909c6bec90 ("net/mlx5: Fix variable not being completed when function returns")
+Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
+Reviewed-by: Md Haris Iqbal <haris.iqbal@linux.dev>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Acked-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260526162932.501584-1-kniv@yandex-team.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/samsung/exynos-acpm.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/cmd.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/firmware/samsung/exynos-acpm.c
-+++ b/drivers/firmware/samsung/exynos-acpm.c
-@@ -526,10 +526,11 @@ static int acpm_achan_alloc_cmds(struct
- 
- /**
-  * acpm_free_mbox_chans() - free mailbox channels.
-- * @acpm:	pointer to driver data.
-+ * @data:	pointer to driver data.
-  */
--static void acpm_free_mbox_chans(struct acpm_info *acpm)
-+static void acpm_free_mbox_chans(void *data)
- {
-+	struct acpm_info *acpm = data;
- 	int i;
- 
- 	for (i = 0; i < acpm->num_chans; i++)
-@@ -557,6 +558,10 @@ static int acpm_channels_init(struct acp
- 	if (!acpm->chans)
- 		return -ENOMEM;
- 
-+	ret = devm_add_action_or_reset(dev, acpm_free_mbox_chans, acpm);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to add mbox free action.\n");
-+
- 	chans_shmem = acpm->sram_base + readl(&shmem->chans);
- 
- 	for (i = 0; i < acpm->num_chans; i++) {
-@@ -578,10 +583,8 @@ static int acpm_channels_init(struct acp
- 		cl->dev = dev;
- 
- 		achan->chan = mbox_request_channel(cl, 0);
--		if (IS_ERR(achan->chan)) {
--			acpm_free_mbox_chans(acpm);
-+		if (IS_ERR(achan->chan))
- 			return PTR_ERR(achan->chan);
--		}
- 	}
- 
- 	return 0;
+--- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+@@ -1001,12 +1001,13 @@ static void cmd_work_handler(struct work
+ 				ent->callback(-EBUSY, ent->context);
+ 				mlx5_free_cmd_msg(dev, ent->out);
+ 				free_msg(dev, ent->in);
++				complete(&ent->slotted);
+ 				cmd_ent_put(ent);
+ 			} else {
+ 				ent->ret = -EBUSY;
+ 				complete(&ent->done);
++				complete(&ent->slotted);
+ 			}
+-			complete(&ent->slotted);
+ 			return;
+ 		}
+ 		alloc_ret = cmd_alloc_index(cmd, ent);
+@@ -1016,13 +1017,14 @@ static void cmd_work_handler(struct work
+ 				ent->callback(-EAGAIN, ent->context);
+ 				mlx5_free_cmd_msg(dev, ent->out);
+ 				free_msg(dev, ent->in);
++				complete(&ent->slotted);
+ 				cmd_ent_put(ent);
+ 			} else {
+ 				ent->ret = -EAGAIN;
+ 				complete(&ent->done);
++				complete(&ent->slotted);
+ 			}
+ 			up(&cmd->vars.sem);
+-			complete(&ent->slotted);
+ 			return;
+ 		}
+ 	} else {
 
 
