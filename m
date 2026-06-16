@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6490C477995;
-	Tue, 16 Jun 2026 16:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6A8169AD2;
+	Tue, 16 Jun 2026 16:55:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628919; cv=none; b=rd8FXuCqi3UevFNE+lrJCxklPc2wxYreJpEYjNNpvqEh/Kq+LvGisfjY5qOeZKtwtpLuwwPyYeNeGwljXYIEAfulYneIRWY+WmBglVFaxE6DId8voPIRMu75daWWQu8sOfCrxJGrwg54hQu12uQyMdY3cJOuDQKDHfSoPXEB1B0=
+	t=1781628924; cv=none; b=WC3msuQNWLPZYYwQvEd3ksGMoMHQNHiSP1nJUefvidFcgPwldG6w9kSn++nH+4Qd/JebeUI0R8W5sliVqTwIZg95xLMLQFBGYeViIt2F+bcJ9hKPXVXFYHNqaWMiTNiTlU3l0Jmqz3EkJaqQGvcL+vzOlcA1RhZJIK9u3TrDg/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628919; c=relaxed/simple;
-	bh=mwX7/RN26CQ/XqT914i1abrpTYpv1rI446np1K7wNHo=;
+	s=arc-20240116; t=1781628924; c=relaxed/simple;
+	bh=4tqMiqRu5kJIfNM6QK+s2jkF8z8lmj/UZjFDXLByw+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U9uJ6ZHH5Inmqtv3xhZGgY3ocTAw9l/Wh7CK0DHbtXl+LHBKSj3i3F8RehmYb7PYEh3gZE3EjtEb8sF93NdNex1tCxgaRLRKGKYikrxfCan9rWMyyxmf1kEJH/hsqPA6d1mqN0Lil5Wv8cXeLBtLW6PA9j7P2f8MPWVwBeAUqY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0sj9lR3m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KW7/G+zp8oHMP0KSI1HZdogUh9b//1FTEEe4iL6oVWwgKKD8qucd1kkmAKbGqT12eCUU3A61prHxSk7oQISBV4Ev72/B64/HBxhxZNeazkwZO0ZdFW3j6qmH1OYVuOkupkihMBNSMLV9HGI00rWVr2CVXnw1BAj3+b4s8y0/Y8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfjTw6U8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0sj9lR3m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33BAC1F000E9;
-	Tue, 16 Jun 2026 16:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfjTw6U8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A8C1F000E9;
+	Tue, 16 Jun 2026 16:55:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628918;
-	bh=kf5BQEVNk/PWAXBbTXEQ7Od+aCNce0R/ZIzg7QlJ63M=;
+	s=korg; t=1781628923;
+	bh=GNtCtP90g+5j46e+ZnNkcIzJWPP+zKQ6Yo8DSvLxqdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0sj9lR3m0i4Q8Wz9lb9ROJ6wzNDHlMG8uLlN8PWWAnCm1LnKFz2X0o3KXY05V8iiT
-	 fpfnuCwkPK+MH/F1UT7RgJ99eV/SPh6pprdXdgGtjQ1OjuAs/itGXP/9Zx7Wlu4B4W
-	 ttlovg+NnOfGoJpZuVREh0514UrLDU/yd9t+DL+E=
+	b=hfjTw6U80v4N+AlMip8QBi7ur8CLBZZcJgKWtf5JotLR818HxT9IvpUhfkSLQ6BDD
+	 zg1THxEdy4cpOvTWkwLT1h3kdhCunKBXD0vrleJZ5B0UKxt8b5ikcSSOtljLKnA+dG
+	 fHe3j7n54Oc1JFpWyUNvCGqQcAFB6qM24BXWUxfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Stephen J. Fuhry" <fuhrysteve@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.6 153/452] USB: quirks: add NO_LPM for Lenovo ThinkPad USB-C Dock Gen2 hub controllers
-Date: Tue, 16 Jun 2026 20:26:20 +0530
-Message-ID: <20260616145125.738207424@linuxfoundation.org>
+	Ali Ganiyev <ali.qaniyev@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 144/452] ksmbd: OOB read regression in smb_check_perm_dacl() ACE-walk loops
+Date: Tue, 16 Jun 2026 20:26:11 +0530
+Message-ID: <20260616145125.267591885@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -50,40 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen J. Fuhry <fuhrysteve@gmail.com>
+From: Ali Ganiyev <ali.qaniyev@gmail.com>
 
-commit 9ddb9c0deca48d2c2a22ebf4d2f35c925a520328 upstream.
+commit 0e60dafe97eca61721f3db456f97d97a80c6c8ae upstream.
 
-The Lenovo ThinkPad USB-C Dock Gen2 (17ef:a391, 17ef:a392) hub
-controllers exhibit link instability when USB Link Power Management
-is enabled, similar to the dock's Ethernet adapter (17ef:a387) which
-already carries USB_QUIRK_NO_LPM.
+Commit d07b26f39246 ("ksmbd: require minimum ACE size in
+smb_check_perm_dacl()") introduced a transposed bounds check:
 
-When the dock reconnects after a transient disconnect, the hub
-controllers enter LPM states between re-enumeration retries, causing
-repeated disconnect/reconnect cycles lasting up to two minutes.
-Disabling LPM for these devices restores stable enumeration.
+    if (offsetof(struct smb_ace, sid) + aces_size < CIFS_SID_BASE_SIZE)
 
-Signed-off-by: Stephen J. Fuhry <fuhrysteve@gmail.com>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260513171419.44849-1-fuhrysteve@gmail.com
+Since offsetof(..sid) is 8 and CIFS_SID_BASE_SIZE is 8, this evaluates
+to `aces_size < 0`. Because `aces_size` is always non-negative, this
+check becomes dead code and never breaks the loop.
+
+Worse, that commit removed the old 4-byte guard, meaning the loop now
+reads `ace->size` (offset 2) even when `aces_size` is 0-3 bytes. This
+re-opens a 2-byte heap out-of-bounds (OOB) read past the pntsd allocation
+during subsequent SMB2_CREATE operations.
+
+Fix this by properly transposing the comparison to require at least
+16 bytes (8-byte offset + 8-byte SID base), matching the correct form
+used in smb_inherit_dacl().
+
+Fixes: d07b26f39246 ("ksmbd: require minimum ACE size in smb_check_perm_dacl()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ali Ganiyev <ali.qaniyev@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/smb/server/smbacl.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -511,6 +511,10 @@ static const struct usb_device_id usb_qu
- 	/* Lenovo ThinkPad USB-C Dock Gen2 Ethernet (RTL8153 GigE) */
- 	{ USB_DEVICE(0x17ef, 0xa387), .driver_info = USB_QUIRK_NO_LPM },
- 
-+	/* Lenovo ThinkPad USB-C Dock Gen2 USB 3.1 and USB 2.0 hub controllers */
-+	{ USB_DEVICE(0x17ef, 0xa391), .driver_info = USB_QUIRK_NO_LPM },
-+	{ USB_DEVICE(0x17ef, 0xa392), .driver_info = USB_QUIRK_NO_LPM },
-+
- 	/* BUILDWIN Photo Frame */
- 	{ USB_DEVICE(0x1908, 0x1315), .driver_info =
- 			USB_QUIRK_HONOR_BNUMINTERFACES },
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1342,8 +1342,8 @@ int smb_check_perm_dacl(struct ksmbd_con
+ 		ace = (struct smb_ace *)((char *)pdacl + sizeof(struct smb_acl));
+ 		aces_size = acl_size - sizeof(struct smb_acl);
+ 		for (i = 0; i < le16_to_cpu(pdacl->num_aces); i++) {
+-			if (offsetof(struct smb_ace, sid) +
+-			    aces_size < CIFS_SID_BASE_SIZE)
++			if (aces_size < offsetof(struct smb_ace, sid) +
++			    CIFS_SID_BASE_SIZE)
+ 				break;
+ 			ace_size = le16_to_cpu(ace->size);
+ 			if (ace_size > aces_size ||
+@@ -1366,8 +1366,8 @@ int smb_check_perm_dacl(struct ksmbd_con
+ 	ace = (struct smb_ace *)((char *)pdacl + sizeof(struct smb_acl));
+ 	aces_size = acl_size - sizeof(struct smb_acl);
+ 	for (i = 0; i < le16_to_cpu(pdacl->num_aces); i++) {
+-		if (offsetof(struct smb_ace, sid) +
+-		    aces_size < CIFS_SID_BASE_SIZE)
++		if (aces_size < offsetof(struct smb_ace, sid) +
++		    CIFS_SID_BASE_SIZE)
+ 			break;
+ 		ace_size = le16_to_cpu(ace->size);
+ 		if (ace_size > aces_size ||
 
 
