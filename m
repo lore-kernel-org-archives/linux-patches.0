@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C11332637;
-	Tue, 16 Jun 2026 16:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB33169AD2;
+	Tue, 16 Jun 2026 16:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629184; cv=none; b=qQXKiW1WzaGCtn9GKkyY7jPfbjx2LjmctmBf5B7wF7j/s5XNIF+nr1sWP+OHWW8o0r6qJctacxgwBnppr3HvBdC3W8aakij7jG/N95vIxuuR3TFZB4wVBOXjNFj2Jqd800e63aB2QDqrtp8vNSAca9Ohmjjmg1Sar4eJwVQMjJg=
+	t=1781629190; cv=none; b=J+W26k3sGxw6EMpiIXTtn1dGK1xJ5Wz9X5oYKGK0M1lAAOvW40eR54WTyNxIZgBYZbWnLnUZ82C2f8oXCPj73hnr4KJCwSG5UvfYiY0Wumtjw4kG2aAcWiy3XuNFGiGj402xSdqaJs+G4ub3QlS/JGaZB7mzHvfCdZpf2y+GEEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629184; c=relaxed/simple;
-	bh=wZva46B6aQy0zgmU8CTFkvsWKLeQLswFfY+OGTpzkTQ=;
+	s=arc-20240116; t=1781629190; c=relaxed/simple;
+	bh=eIL2NKctwe/hFRlRyTfLYuhJk+IWROHfT/oqjjfjpvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Imi6qNekbyYbjTKXIZg3foW/NvNxqFKTUWnA0EJObunYo9CVZldL+PSvVK8srJtSJUG1YhKxjP/D/BYCsUDrZtujEVV+mEkOTzyJAYHleXT0s5AJ7+5KiN6REKuqFJxwMqR/4zvMDuzTfMo1RBzq7R/oZgCyTo5a/9yCqCBBujQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IyqFw+eK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cqlftSZJ9rX55QNewwdyC2THiQVQcNWlUk3LqkfWzFIFt9nc13CMhDY8iTuESaCuo4R0lO1YI5QnIcDcF+TicGEXqXefW8WtQQG5FPcjd6m52aq5BbnYGyBb8ybQ0/mxBrNdK7JIuLViubLijui5wrD1zczTwOfDppzg0l4vJpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZeD2EPME; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IyqFw+eK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38211F000E9;
-	Tue, 16 Jun 2026 16:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZeD2EPME"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495D11F000E9;
+	Tue, 16 Jun 2026 16:59:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629183;
-	bh=6dhEglt2abbX+ia8EpqsMR322JLODtP3v13DB4f8VNI=;
+	s=korg; t=1781629189;
+	bh=oc0w9kmtRgzaFFsJOcAAqHj3Wwmsa4wmTcsL+FyK8Uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IyqFw+eKxqNcaaK1S0eJthJ9JP2QPyXAooJhGLircjCQru1PV/mohD47focc1LuzH
-	 IItkwCZsU28y3Ewla41MfekrucOx2M7/SMlZwuUKjEIstFvXfvlp85couFFbZG3/Oq
-	 3mvpYk5y4pZVobJgi5QBJDBTRkpDOXYyZDgHmTBQ=
+	b=ZeD2EPME/l4h/xEAcTtmVGmPwBAqDZ/IESXV66WReSiNl7Uf/fwFgjbyp1iswh6Mf
+	 XvIOZgER7K0SOBVw5zmpb+vb5YYoRV9O60TRWEsZV22jx1SgQ4zpYauWfVP9BMccux
+	 /QBevp0N0d+jL49MA4SJsO+uFEIXyh9mNWjx5+pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Tamir Shahar <tamirthesis@gmail.com>,
+	Amit Klein <aksecurity@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 237/452] Bluetooth: MGMT: Fix backward compatibility with userspace
-Date: Tue, 16 Jun 2026 20:27:44 +0530
-Message-ID: <20260616145130.137028573@linuxfoundation.org>
+Subject: [PATCH 6.6 238/452] ipv4: restrict IPOPT_SSRR and IPOPT_LSRR options
+Date: Tue, 16 Jun 2026 20:27:45 +0530
+Message-ID: <20260616145130.200626390@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -50,41 +55,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 149324fc762c2a7acef9c26790566f81f475e51f ]
+[ Upstream commit d3915a1f5a4bc0ac911032903c3c6ab8df9fcc7c ]
 
-bluetoothd has a bug with makes it send extra bytes as part of
-MGMT_OP_ADD_EXT_ADV_DATA which are now being checked to be the
-exact the expected length, relax this so only when the expected
-length is greater than the data length to cause an error since
-that would result in accessing invalid memory, otherwise just
-ignore the extra bytes.
+This patch restricts setting Loose Source and Record Route (LSRR)
+and Strict Source and Record Route (SSRR) IP options to users
+with CAP_NET_RAW capability.
 
-Link: https://lore.kernel.org/linux-bluetooth/20260602204749.210857-1-luiz.dentz@gmail.com/T/#u
-Fixes: d3f7d17960ed ("Bluetooth: MGMT: validate Add Extended Advertising Data length")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+This prevents unprivileged applications from forcing packets to route
+through attacker-controlled nodes to leak TCP ISN and possibly other
+protocol information.
+
+While LSRR and SSRR are commonly filtered in many network environments,
+they may still be supported and forwarded along some network paths.
+
+RFC 7126 (Recommendations on Filtering of IPv4 Packets Containing
+IPv4 Options) recommend to drop these options in 4.3 and 4.4.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Tamir Shahar <tamirthesis@gmail.com>
+Reported-by: Amit Klein <aksecurity@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260602161547.2642155-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/ipv4/ip_options.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 7b86e287b12d64..88f44cb36e241e 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -9144,8 +9144,9 @@ static int add_ext_adv_data(struct sock *sk, struct hci_dev *hdev, void *data,
- 
- 	BT_DBG("%s", hdev->name);
- 
--	expected_len = struct_size(cp, data, cp->adv_data_len + cp->scan_rsp_len);
--	if (expected_len != data_len)
-+	expected_len = struct_size(cp, data, cp->adv_data_len +
-+				   cp->scan_rsp_len);
-+	if (expected_len > data_len)
- 		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_ADD_EXT_ADV_DATA,
- 				       MGMT_STATUS_INVALID_PARAMS);
- 
+diff --git a/net/ipv4/ip_options.c b/net/ipv4/ip_options.c
+index d898e1523a453e..7a60bbf4bee3aa 100644
+--- a/net/ipv4/ip_options.c
++++ b/net/ipv4/ip_options.c
+@@ -530,6 +530,10 @@ int ip_options_get(struct net *net, struct ip_options_rcu **optp,
+ 		kfree(opt);
+ 		return -EINVAL;
+ 	}
++	if (opt->opt.srr && !ns_capable(net->user_ns, CAP_NET_RAW)) {
++		kfree(opt);
++		return -EPERM;
++	}
+ 	kfree(*optp);
+ 	*optp = opt;
+ 	return 0;
 -- 
 2.53.0
 
