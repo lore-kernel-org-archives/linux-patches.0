@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9EC478E50;
-	Tue, 16 Jun 2026 17:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1648D449EA8;
+	Tue, 16 Jun 2026 17:26:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630777; cv=none; b=kEe/LBsAvbxm0fgATznujejan+ujUZTmN9crinb9Dk+bKsTgngY/C1yeTv1KMsqycaQZfcjy4cTHKUNBdIpEcdUMm3EdwXNdk5+iquXlUY3tEqKsaJN/t3yPS8vnqxQCTypfbC96Vi8F8dnNRRaJxTn+TcAf5QNO432ig62Nkr0=
+	t=1781630782; cv=none; b=Sk5VrQCNkJS/xfx9l6MIEZtCVRJkEmaf4jOtjYDkeP0YboMnMX0jXHaCBxrfR0OHh3kmoBGIqQfWq96uw0jW7LA+ZKLTmRyyI7UC8zU+w4ADZlywpgCTxeS7FKZq/+m12/RbDtmHIRNfYXL+v625RvNsSGbUqYYehcdOzKidcFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630777; c=relaxed/simple;
-	bh=+72kxMoxomPc3MNxknzL9fMQTKkdOMDJlksHRttEEAI=;
+	s=arc-20240116; t=1781630782; c=relaxed/simple;
+	bh=/SYzOVX1ZpL1uahSHBiZXX1bJD9+fVbXfqccCW4KpBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iM1ZoMSJw4SD+AEi16TT12lOmPbG3mpu9WPOul2hxpXZrcBShi8hKTSWfvxt3RdjK5ZplQDaCaHd1DXB8SSiW1LfHmWmOAGpn5xCm5V+cMnxsfQZYqGn4l3fNo+x02g1fAqlbGjG3R3Qm7zo+T9arDjc2K5uv4eAy9WuiYiSkAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQrpeV6r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dkZlhg4zSNm2H99AY71wAXYhWSKRv/ee7dQX7S3oxcrkGoXiNIyfj2p8H0m1ntqYep2ksYqirolNMBdhBl3QZzjLwrr9Fl/56hl3H6Jjf7LdpYFu19D0AcWY/TzO9Ib1fWGovtoOHyOKbDggRsWnQDZ4SQlFN2kD4yiXS7O8BTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sg/D1cag; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQrpeV6r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECD4E1F000E9;
-	Tue, 16 Jun 2026 17:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sg/D1cag"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D8C1F000E9;
+	Tue, 16 Jun 2026 17:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630775;
-	bh=hQhhQsWKl7zW4XEStj6tMvu96Fw8/Zz5/BB3AOlEq00=;
+	s=korg; t=1781630781;
+	bh=w2T0GHtgpOkaFo8hN4Y5bMIs8sP9QMk2jhxc/DKq1vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HQrpeV6rOK2d6fNs0y+5jRo/9U9tGozByK+9GG/PsZvAYBEq1GjFqNA5BpT8vYVfd
-	 OSq/n7LO4hBo5JF7yNfOZjZ+BYrtggRytwG/NhD1y5iofUXsekLzeg+8IRYHW7UwYS
-	 4annuOV2p/K9cfmyRnHxjUoBK7XqzpbxDWCIc0v0=
+	b=sg/D1cagkR1I02ostwjBGYZYWcTbk209CbguS7A1hhm1YO3dg6rdg+Kr8KpFcpJ72
+	 RXNGgwE5J1qH4zWegsm4yvmHlkPVuUU2o6RpWVNtbDvlAwcSW7ac3wMysLyMKy5+hm
+	 EOVzSWSCuHbr4vGve6trlP45SvlMEkwQYiQksWcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linpu Yu <linpu5433@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Kees Cook <kees@kernel.org>,
-	Stanislav Kinsbursky <skinsbursky@parallels.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 093/522] ipc: limit next_id allocation to the valid ID range
-Date: Tue, 16 Jun 2026 20:24:00 +0530
-Message-ID: <20260616145130.245143082@linuxfoundation.org>
+	Stepan Ionichev <sozdayvek@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 6.1 094/522] auxdisplay: line-display: fix OOB read on zero-length message_store()
+Date: Tue, 16 Jun 2026 20:24:01 +0530
+Message-ID: <20260616145130.294673748@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -58,81 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linpu Yu <linpu5433@gmail.com>
+From: Stepan Ionichev <sozdayvek@gmail.com>
 
-commit fa0b9b2b7ae3539908d69c2b9ac0d144d9bc5139 upstream.
+commit a7511dcd9dd4bc55d123f9b800c8a4ed2662e5c6 upstream.
 
-The checkpoint/restore sysctl path can request the next SysV IPC id
-through ids->next_id.  ipc_idr_alloc() currently forwards that request to
-idr_alloc() with an open-ended upper bound.
+linedisp_display() unconditionally reads msg[count - 1] before
+checking whether count is zero, so a write of zero bytes to the
+message sysfs attribute hits msg[-1]:
 
-If the valid tail of the SysV IPC id space is full, the allocation can
-spill beyond ipc_mni.  The returned SysV IPC id still uses the normal
-index encoding, so later lookup and removal can target the wrong slot.
-This leaves the real IDR entry behind and breaks the IDR state for the
-object.
+	write(fd, "", 0);
 
-The bug is in ipc_idr_alloc() in the checkpoint/restore path.
+	-> message_store(..., buf, count=0)
+	   -> linedisp_display(linedisp, buf, count=0)
+	      -> msg[count - 1] == '\n'  ; OOB read
 
-1. ids->next_id is passed to:
+The kernfs write buffer for that store is a 1-byte allocation
+(kernfs_fop_write_iter() does kmalloc(len + 1) with len == 0),
+so msg[-1] is a 1-byte read before the slab object. On a
+KASAN-enabled kernel this trips an out-of-bounds report and
+panics; on stock kernels it silently reads adjacent slab data
+and, if that byte happens to be '\n', the following count--
+wraps ssize_t 0 to -1 and is then passed to kmemdup_nul().
 
-       idr_alloc(&ids->ipcs_idr, new, ipcid_to_idx(next_id), 0, ...)
+linedisp_display() is reached from the message_store() sysfs
+callback (drivers/auxdisplay/line-display.c message attribute,
+mode 0644) and from the in-tree initial-message setup with
+count == -1, so the OOB path is only userspace-triggerable via
+zero-byte writes; vfs_write() does not short-circuit on
+count == 0 and kernfs_fop_write_iter() dispatches the store
+callback regardless.
 
-2. The zero upper bound makes the allocation effectively open-ended.
-   Once the valid SysV IPC tail is occupied, idr_alloc() can spill past
-   ipc_mni and allocate an entry beyond the valid IPC id range.
+Guard the trailing-newline trim with a count check. The
+existing if (!count) block then takes the clear-display path
+unchanged.
 
-3. The new object id is still encoded with the narrower SysV IPC index
-   width:
+Affects every auxdisplay driver that registers via
+linedisp_register() / linedisp_attach(): ht16k33, max6959,
+img-ascii-lcd, seg-led-gpio.
 
-       new->id = (new->seq << ipcmni_seq_shift()) + idx
-
-4. Later removal goes through ipc_rmid(), which uses:
-
-       ipcid_to_idx(ipcp->id)
-
-   That truncates the real IDR index. An object actually stored at a
-   high index can then be removed as if it lived at a low in-range
-   index.
-
-5. For shared memory, shm_destroy() frees the current object anyway, but
-   the real high IDR slot is left behind as a dangling pointer.
-
-6. A subsequent walk of /proc/sysvipc/shm reaches the stale IDR entry
-   and dereferences freed memory.
-
-Prevent this by bounding the requested allocation to ipc_mni so the
-checkpoint/restore path fails once the valid range is exhausted.
-
-Link: https://lore.kernel.org/cover.1778336914.git.linpu5433@gmail.com
-Link: https://lore.kernel.org/2eebe949bfa7d1f6e13b5be6a92c64c850ce9d45.1778336914.git.linpu5433@gmail.com
-Fixes: 03f595668017 ("ipc: add sysctl to specify desired next object id")
-Signed-off-by: Linpu Yu <linpu5433@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Stanislav Kinsbursky <skinsbursky@parallels.com>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 7e76aece6f03 ("auxdisplay: Extract character line display core support")
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- ipc/util.c |    2 +-
+ drivers/auxdisplay/line-display.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/ipc/util.c
-+++ b/ipc/util.c
-@@ -253,7 +253,7 @@ static inline int ipc_idr_alloc(struct i
- 	} else {
- 		new->seq = ipcid_to_seqx(next_id);
- 		idx = idr_alloc(&ids->ipcs_idr, new, ipcid_to_idx(next_id),
--				0, GFP_NOWAIT);
-+				ipc_mni, GFP_NOWAIT);
- 	}
- 	if (idx >= 0)
- 		new->id = (new->seq << ipcmni_seq_shift()) + idx;
+--- a/drivers/auxdisplay/line-display.c
++++ b/drivers/auxdisplay/line-display.c
+@@ -80,7 +80,7 @@ static int linedisp_display(struct lined
+ 		count = strlen(msg);
+ 
+ 	/* if the string ends with a newline, trim it */
+-	if (msg[count - 1] == '\n')
++	if (count && msg[count - 1] == '\n')
+ 		count--;
+ 
+ 	if (!count) {
 
 
