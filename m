@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0C346AEC5;
-	Tue, 16 Jun 2026 16:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C8744CF37;
+	Tue, 16 Jun 2026 16:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626583; cv=none; b=T/h7EnEZv5Kv6mkrdweYeztpI74M1o/iqU6ot5hMxkuO77LQSiLUpUbOmopqqWKA8v3v6P+KoxXJoqJVzM/TnVvDrUatd9WuZu70+PvNy3Cnvt7uKwQ01CelgL9w/WcuQWiYdNS/OtTnVW0HyyUF5g/KR+9Zerf9A9/wYEv8pD4=
+	t=1781626589; cv=none; b=D3zN4/kILrgSlwLapJIMg6DIPdHJkQqUwptqBnk0vwKNOLInBHk2UjhL/mUvXDjOwY17xc27qQNUojXc3KuPxC7EJ5w/X7lVw8si5MC5XXJ+omJGphTyDmRbt4zufKZLXQAQVxVrAwtWcvWbCFY+3U67qHUYIWgJbwIU9N5GZdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626583; c=relaxed/simple;
-	bh=MkogXLHjx4agOgTzuXsTl/cZ/2WinE7Jk8rZJcZujBQ=;
+	s=arc-20240116; t=1781626589; c=relaxed/simple;
+	bh=tcWfVe85J0hVSd5zdT7XiHkiWOM75gaobQx8IxPLPMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=blZynaAp3rhG4MkLRQfDhZfqIARB+e4f9o5+XUSsPdKqeXjcRv5h45qlo+gcDbaKSE4PD+v9kI9/nBoYZHxFkeZQl547+7iPk8Si7JSLfyLqn8nubkcDirTzBookpF2rtdH7Xj785Yavm67KbExyT6KBtr9ToqQJmdAtp3PclHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KdKQMiOu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X+j9P5f9KRZm551nVX+8HLPa9ZertxDboj43kd1Fgt/9KInh2V8FYjkSJ6Z8mFTV7Ww3y0rH/aJLnDGXSQ8D9f9K4kyakRQKQBPYkxzS9r/yXDdTfDSQam/qsAbXqxGukEXyJMNdnc3V2374DJ+WOtPyj3paX6qlmnZgKijqr0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q96KC2xI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdKQMiOu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B23C1F000E9;
-	Tue, 16 Jun 2026 16:16:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q96KC2xI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8481F000E9;
+	Tue, 16 Jun 2026 16:16:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626582;
-	bh=hjNaVkV5S0sHbObasAllgeH9G6t0XDjTSCCwvNad3b0=;
+	s=korg; t=1781626587;
+	bh=T7vsuJO6JPkkHAqvCCM2iDtqOgZKAGbJIV5z3s5IMIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KdKQMiOuJHTXqXTb7yqH+NVdm5CYMrO43QEEkfCzdbkEiesE0k120JsQrzopWdyju
-	 5jte7Lu2sXGiYs0FPgCiPdbC8CUmralytdeYwdifgcahdT3juxL6nx4ayok7OTJWCx
-	 WtB9Gmw52Sd7NrCZiJfwG+WAPe9ldwdSH61GXUp8=
+	b=Q96KC2xIAPeuAEiv4vHTJzbvBsEgpRKw8TP+TvGb0I+9ykQFcKw4mx1n0N24mnYeg
+	 el0JL8Yns4fHQcxLgg99p5Em8ibX2CQBCAp/HcL9yM7/ojQ/n2dAtNHqOdgeU2aSeO
+	 4PBdp/OgNPhfR3dHVXDk6nTwxPi8a/V5GH4CGzCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Xie Yuanbin <xieyuanbin1@huawei.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 015/261] erofs: tidy up synchronous decompression
-Date: Tue, 16 Jun 2026 20:27:33 +0530
-Message-ID: <20260616145045.723163477@linuxfoundation.org>
+Subject: [PATCH 6.12 006/261] ARM: fix branch predictor hardening
+Date: Tue, 16 Jun 2026 20:27:24 +0530
+Message-ID: <20260616145045.314806480@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -51,191 +52,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit cc831ab33644088c1eef78936de24701014d520a ]
+commit fd2dee1c6e2256f726ba33fd3083a7be0efc80d3 upstream.
 
- - Get rid of `sbi->opt.max_sync_decompress_pages` since it's fixed as
-   3 all the time;
+__do_user_fault() may be called with indeterminent interrupt enable
+state, which means we may be preemptive at this point. This causes
+problems when calling harden_branch_predictor(). For example, when
+called from a data abort, do_alignment_fault()->do_bad_area().
 
- - Add Z_EROFS_MAX_SYNC_DECOMPRESS_BYTES in bytes instead of in pages,
-   since for non-4K pages, 3-page limitation makes no sense;
+Move harden_branch_predictor() out of __do_user_fault() and into the
+calling contexts.
 
- - Move `sync_decompress` to sbi to avoid unexpected remount impact;
+Moving it into do_kernel_address_page_fault(), we can be sure that
+interrupts will be disabled here.
 
- - Fold z_erofs_is_sync_decompress() into its caller;
+Converting do_translation_fault() to use do_kernel_address_page_fault()
+rather than do_bad_area() means that we keep branch predictor handling
+for translation faults. Interrupts will also be disabled at this call
+site.
 
- - Better description of sysfs entry `sync_decompress`.
+do_sect_fault() needs special handling, so detect user mode accesses
+to kernel-addresses, and add an explicit call to branch predictor
+hardening.
 
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Stable-dep-of: 1aee05e814d2 ("erofs: fix use-after-free on sbi->sync_decompress")
+Finally, add branch predictor hardening to do_alignment() for the
+faulting case (user mode accessing kernel addresses) before interrupts
+are enabled.
+
+This should cover all cases where harden_branch_predictor() is called,
+ensuring that it is always has interrupts disabled, also ensuring that
+it is called early in each call path.
+
+Reviewed-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Tested-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-fs-erofs | 14 ++++++----
- fs/erofs/internal.h                      |  5 +---
- fs/erofs/super.c                         |  3 +-
- fs/erofs/sysfs.c                         |  2 +-
- fs/erofs/zdata.c                         | 35 +++++++++---------------
- 5 files changed, 25 insertions(+), 34 deletions(-)
+ arch/arm/mm/alignment.c |  6 +++++-
+ arch/arm/mm/fault.c     | 39 ++++++++++++++++++++++++++-------------
+ 2 files changed, 31 insertions(+), 14 deletions(-)
 
-diff --git a/Documentation/ABI/testing/sysfs-fs-erofs b/Documentation/ABI/testing/sysfs-fs-erofs
-index b134146d735bc5..d76de22b6ef31c 100644
---- a/Documentation/ABI/testing/sysfs-fs-erofs
-+++ b/Documentation/ABI/testing/sysfs-fs-erofs
-@@ -10,12 +10,16 @@ Description:	Shows all enabled kernel features.
- What:		/sys/fs/erofs/<disk>/sync_decompress
- Date:		November 2021
- Contact:	"Huang Jianan" <huangjianan@oppo.com>
--Description:	Control strategy of sync decompression:
-+Description:	Control strategy of synchronous decompression. Synchronous
-+		decompression tries to decompress in the reader thread for
-+		synchronous reads and small asynchronous reads (<= 12 KiB):
+diff --git a/arch/arm/mm/alignment.c b/arch/arm/mm/alignment.c
+index 3c6ddb1afdc463..812380f30ae36a 100644
+--- a/arch/arm/mm/alignment.c
++++ b/arch/arm/mm/alignment.c
+@@ -19,10 +19,11 @@
+ #include <linux/init.h>
+ #include <linux/sched/signal.h>
+ #include <linux/uaccess.h>
++#include <linux/unaligned.h>
  
--		- 0 (default, auto): enable for readpage, and enable for
--		  readahead on atomic contexts only.
--		- 1 (force on): enable for readpage and readahead.
--		- 2 (force off): disable for all situations.
-+		- 0 (auto, default): apply to synchronous reads only, but will
-+		                     switch to 1 (force on) if any decompression
-+		                     request is detected in atomic contexts;
-+		- 1 (force on): apply to synchronous reads and small
-+		                asynchronous reads;
-+		- 2 (force off): disable synchronous decompression completely.
+ #include <asm/cp15.h>
+ #include <asm/system_info.h>
+-#include <linux/unaligned.h>
++#include <asm/system_misc.h>
+ #include <asm/opcodes.h>
  
- What:		/sys/fs/erofs/<disk>/drop_caches
- Date:		November 2024
-diff --git a/fs/erofs/internal.h b/fs/erofs/internal.h
-index 24e01d9135c60d..89dfb3736daa41 100644
---- a/fs/erofs/internal.h
-+++ b/fs/erofs/internal.h
-@@ -66,10 +66,6 @@ enum {
- struct erofs_mount_opts {
- 	/* current strategy of how to use managed cache */
- 	unsigned char cache_strategy;
--	/* strategy of sync decompression (0 - auto, 1 - force on, 2 - force off) */
--	unsigned int sync_decompress;
--	/* threshold for decompression synchronously */
--	unsigned int max_sync_decompress_pages;
- 	unsigned int mount_opt;
- };
+ #include "fault.h"
+@@ -809,6 +810,9 @@ do_alignment(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+ 	int thumb2_32b = 0;
+ 	int fault;
  
-@@ -123,6 +119,7 @@ struct erofs_sb_info {
- 	/* managed XArray arranged in physical block number */
- 	struct xarray managed_pslots;
- 
-+	unsigned int sync_decompress;	/* strategy for sync decompression */
- 	unsigned int shrinker_run_no;
- 	u16 available_compr_algs;
- 
-diff --git a/fs/erofs/super.c b/fs/erofs/super.c
-index bc968cf812bac4..1640ebc26ac9c4 100644
---- a/fs/erofs/super.c
-+++ b/fs/erofs/super.c
-@@ -370,8 +370,7 @@ static void erofs_default_options(struct erofs_sb_info *sbi)
- {
- #ifdef CONFIG_EROFS_FS_ZIP
- 	sbi->opt.cache_strategy = EROFS_ZIP_CACHE_READAROUND;
--	sbi->opt.max_sync_decompress_pages = 3;
--	sbi->opt.sync_decompress = EROFS_SYNC_DECOMPRESS_AUTO;
-+	sbi->sync_decompress = EROFS_SYNC_DECOMPRESS_AUTO;
- #endif
- #ifdef CONFIG_EROFS_FS_XATTR
- 	set_opt(&sbi->opt, XATTR_USER);
-diff --git a/fs/erofs/sysfs.c b/fs/erofs/sysfs.c
-index 19d586273b7091..3fbce0864a66f0 100644
---- a/fs/erofs/sysfs.c
-+++ b/fs/erofs/sysfs.c
-@@ -57,7 +57,7 @@ static struct erofs_attr erofs_attr_##_name = {			\
- #define ATTR_LIST(name) (&erofs_attr_##name.attr)
- 
- #ifdef CONFIG_EROFS_FS_ZIP
--EROFS_ATTR_RW_UI(sync_decompress, erofs_mount_opts);
-+EROFS_ATTR_RW_UI(sync_decompress, erofs_sb_info);
- EROFS_ATTR_FUNC(drop_caches, 0200);
- #endif
- 
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index 8192eb9b23bc7b..da421fe310df11 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -9,6 +9,7 @@
- #include <linux/cpuhotplug.h>
- #include <trace/events/erofs.h>
- 
-+#define Z_EROFS_MAX_SYNC_DECOMPRESS_BYTES	12288
- #define Z_EROFS_PCLUSTER_MAX_PAGES	(Z_EROFS_PCLUSTER_MAX_SIZE / PAGE_SIZE)
- #define Z_EROFS_INLINE_BVECS		2
- 
-@@ -1077,21 +1078,6 @@ static int z_erofs_scan_folio(struct z_erofs_frontend *f,
- 	return err;
- }
- 
--static bool z_erofs_is_sync_decompress(struct erofs_sb_info *sbi,
--				       unsigned int readahead_pages)
--{
--	/* auto: enable for read_folio, disable for readahead */
--	if ((sbi->opt.sync_decompress == EROFS_SYNC_DECOMPRESS_AUTO) &&
--	    !readahead_pages)
--		return true;
--
--	if ((sbi->opt.sync_decompress == EROFS_SYNC_DECOMPRESS_FORCE_ON) &&
--	    (readahead_pages <= sbi->opt.max_sync_decompress_pages))
--		return true;
--
--	return false;
--}
--
- static bool z_erofs_page_is_invalidated(struct page *page)
- {
- 	return !page_folio(page)->mapping && !z_erofs_is_shortlived_page(page);
-@@ -1454,9 +1440,9 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
- #else
- 		queue_work(z_erofs_workqueue, &io->u.work);
- #endif
--		/* enable sync decompression for readahead */
--		if (sbi->opt.sync_decompress == EROFS_SYNC_DECOMPRESS_AUTO)
--			sbi->opt.sync_decompress = EROFS_SYNC_DECOMPRESS_FORCE_ON;
-+		/* See `sync_decompress` in sysfs-fs-erofs for more details */
-+		if (sbi->sync_decompress == EROFS_SYNC_DECOMPRESS_AUTO)
-+			sbi->sync_decompress = EROFS_SYNC_DECOMPRESS_FORCE_ON;
- 		return;
- 	}
- 	gfp_flag = memalloc_noio_save();
-@@ -1777,16 +1763,21 @@ static void z_erofs_submit_queue(struct z_erofs_frontend *f,
- 	z_erofs_decompress_kickoff(q[JQ_SUBMIT], nr_bios);
- }
- 
--static int z_erofs_runqueue(struct z_erofs_frontend *f, unsigned int rapages)
-+static int z_erofs_runqueue(struct z_erofs_frontend *f, unsigned int rabytes)
- {
- 	struct z_erofs_decompressqueue io[NR_JOBQUEUES];
- 	struct erofs_sb_info *sbi = EROFS_I_SB(f->inode);
--	bool force_fg = z_erofs_is_sync_decompress(sbi, rapages);
-+	int syncmode = sbi->sync_decompress;
-+	bool force_fg;
- 	int err;
- 
-+	force_fg = (syncmode == EROFS_SYNC_DECOMPRESS_AUTO && !rabytes) ||
-+		(syncmode == EROFS_SYNC_DECOMPRESS_FORCE_ON &&
-+			(rabytes <= Z_EROFS_MAX_SYNC_DECOMPRESS_BYTES));
++	if (addr >= TASK_SIZE && user_mode(regs))
++		harden_branch_predictor();
 +
- 	if (f->head == Z_EROFS_PCLUSTER_TAIL)
- 		return 0;
--	z_erofs_submit_queue(f, io, &force_fg, !!rapages);
-+	z_erofs_submit_queue(f, io, &force_fg, !!rabytes);
+ 	if (interrupts_enabled(regs))
+ 		local_irq_enable();
  
- 	/* handle bypass queue (no i/o pclusters) immediately */
- 	err = z_erofs_decompress_queue(&io[JQ_BYPASS], &f->pagepool);
-@@ -1907,7 +1898,7 @@ static void z_erofs_readahead(struct readahead_control *rac)
- 	z_erofs_pcluster_readmore(&f, rac, false);
- 	z_erofs_pcluster_end(&f);
+diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
+index 8768c70fd885bc..16b5a7d214808f 100644
+--- a/arch/arm/mm/fault.c
++++ b/arch/arm/mm/fault.c
+@@ -199,9 +199,6 @@ __do_user_fault(unsigned long addr, unsigned int fsr, unsigned int sig,
+ {
+ 	struct task_struct *tsk = current;
  
--	(void)z_erofs_runqueue(&f, nrpages);
-+	(void)z_erofs_runqueue(&f, nrpages << PAGE_SHIFT);
- 	erofs_put_metabuf(&f.map.buf);
- 	erofs_release_pages(&f.pagepool);
+-	if (addr > TASK_SIZE)
+-		harden_branch_predictor();
+-
+ #ifdef CONFIG_DEBUG_USER
+ 	if (((user_debug & UDBG_SEGV) && (sig == SIGSEGV)) ||
+ 	    ((user_debug & UDBG_BUS)  && (sig == SIGBUS))) {
+@@ -270,8 +267,10 @@ do_kernel_address_page_fault(struct mm_struct *mm, unsigned long addr,
+ 		/*
+ 		 * Fault from user mode for a kernel space address. User mode
+ 		 * should not be faulting in kernel space, which includes the
+-		 * vector/khelper page. Send a SIGSEGV.
++		 * vector/khelper page. Handle the branch predictor hardening
++		 * while interrupts are still disabled, then send a SIGSEGV.
+ 		 */
++		harden_branch_predictor();
+ 		__do_user_fault(addr, fsr, SIGSEGV, SEGV_MAPERR, regs);
+ 	} else {
+ 		/*
+@@ -486,16 +485,20 @@ do_page_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+  * We enter here because the first level page table doesn't contain
+  * a valid entry for the address.
+  *
+- * If the address is in kernel space (>= TASK_SIZE), then we are
+- * probably faulting in the vmalloc() area.
++ * If this is a user address (addr < TASK_SIZE), we handle this as a
++ * normal page fault. This leaves the remainder of the function to handle
++ * kernel address translation faults.
+  *
+- * If the init_task's first level page tables contains the relevant
+- * entry, we copy the it to this task.  If not, we send the process
+- * a signal, fixup the exception, or oops the kernel.
++ * Since user mode is not permitted to access kernel addresses, pass these
++ * directly to do_kernel_address_page_fault() to handle.
+  *
+- * NOTE! We MUST NOT take any locks for this case. We may be in an
+- * interrupt or a critical region, and should only copy the information
+- * from the master page table, nothing more.
++ * Otherwise, we're probably faulting in the vmalloc() area, so try to fix
++ * that up. Note that we must not take any locks or enable interrupts in
++ * this case.
++ *
++ * If vmalloc() fixup fails, that means the non-leaf page tables did not
++ * contain an entry for this address, so handle this via
++ * do_kernel_address_page_fault().
+  */
+ #ifdef CONFIG_MMU
+ static int __kprobes
+@@ -561,7 +564,8 @@ do_translation_fault(unsigned long addr, unsigned int fsr,
+ 	return 0;
+ 
+ bad_area:
+-	do_bad_area(addr, fsr, regs);
++	do_kernel_address_page_fault(current->mm, addr, fsr, regs);
++
+ 	return 0;
  }
+ #else					/* CONFIG_MMU */
+@@ -581,7 +585,16 @@ do_translation_fault(unsigned long addr, unsigned int fsr,
+ static int
+ do_sect_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+ {
++	/*
++	 * If this is a kernel address, but from user mode, then userspace
++	 * is trying bad stuff. Invoke the branch predictor handling.
++	 * Interrupts are disabled here.
++	 */
++	if (addr >= TASK_SIZE && user_mode(regs))
++		harden_branch_predictor();
++
+ 	do_bad_area(addr, fsr, regs);
++
+ 	return 0;
+ }
+ #endif /* CONFIG_ARM_LPAE */
 -- 
 2.53.0
 
