@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE5F318EDA;
-	Tue, 16 Jun 2026 19:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B933DD851;
+	Tue, 16 Jun 2026 19:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636899; cv=none; b=t3Ubd4fzEZAjfrDXwQNQRjwLdN5AdonvzS+bkLvJQvrLyrwSBsCofRk6zjGwWKr9cQeXrptzw3hDSHIC+V4dQ+QmXssupNqMAPCD58IdXWSIrNMJngM/HdfNdzV9eKBO25Dk+EIMkOJG1HLmD+mHgneuICkKKcR5NucT8efyIuY=
+	t=1781636904; cv=none; b=ILWoPXFg2TD8bEB1NW4bwKBtCn7lffshYGi9veSqC0r3CrgdQ5B6iVxj1Ya8yEPfkxbkS/uLEcnBCfIZTqImY+vB+yGC9TXkxQY8A3+8kIDfEdvf+CcWkRg8QhwpEX77zVKHW4AjxRsaJct2dO8iJOc90IYMsXDpCneS+9CvFVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636899; c=relaxed/simple;
-	bh=HUnxP8iUaktYB1wQU18cn0+E4URcBVEh/US5rSK9rM4=;
+	s=arc-20240116; t=1781636904; c=relaxed/simple;
+	bh=DhGBUJe5wD1AmL1hqAe3+A98cW0XGM3m9L4n6F6dHmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dFfQjlL2iduvvZJRvrkm/SKxXkbzUIG8Gt641rHrHxmbnJQ9K0bKEuqJ6e4UI3dG3ZNab+sk/EqRUiPNoYlNSnb/qaA7EASBT/znhKDdreNYzgCyPo2NOeWKUAhX8Ok/TCxe+76X+Of4VeFifyDYbuTmYIrAv4ujOqBX6XhJbs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kfgR/r9V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cPvDwklyfdApldPoMNo949o9kUhfCjtIgHVIX8XAA3SLZkGWKDnXTQzGLRsYW2r7xVadRBQkpmO3X42SI6NTeTwQWi+1fBBkiNWvbc+8JUenSI3W0hrdnhdatoK0wIzbuCr7NHJT2jRz59/gREthtzrtyAJB4wHQkqpbSDxwzH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ufr/SlU4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kfgR/r9V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A571F000E9;
-	Tue, 16 Jun 2026 19:08:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ufr/SlU4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321381F000E9;
+	Tue, 16 Jun 2026 19:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636898;
-	bh=NCAGIAnLauLQoYg8miGCUskyg1mo0582fgKwHbZVu64=;
+	s=korg; t=1781636903;
+	bh=M4i3Z6hid9SULvLBqJs91IyrThiJW4qAbeVmcQBbbkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kfgR/r9VZ9Yi4VnnKVhXEBN8zTaI4PTQImCtPgmdSZPuCVFAOaYKNpLcPMPDa5/0l
-	 TEvHJAH+OGO0OaqDjffdMordBpYrjg+rS3Dr9jM3ATZ6IF4vC5Agj8iS4Q0qgaABoS
-	 y2z1ksS6gbhukxABzgtef3lROMfI9E4H8zNeMo1c=
+	b=Ufr/SlU4gtPDgvl0GFq0QY2qDFg5Rds29hrKnzpxHb3njIQUCB8ZyX3epaI5QC5E0
+	 i2j4OAUPwl2OhidhmlcNj/QCfreZHL3+vV+sOg6ouxFbvMfVmxdPT+XBb4lHFI9EuH
+	 iEtT3u1DgxJtPesu6W89etnjiaID5Cc1iXKB5iDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Haoze Xie <royenheart@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	stable <stable@kernel.org>,
+	Peter Chen <peter.chen@kernel.org>,
+	Yongchao Wu <yongchao.wu@autochips.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 283/342] netfilter: nf_queue: hold bridge skb->dev while queued
-Date: Tue, 16 Jun 2026 20:29:39 +0530
-Message-ID: <20260616145101.591137757@linuxfoundation.org>
+Subject: [PATCH 5.10 320/342] usb: cdns3: gadget: fix request skipping after clearing halt
+Date: Tue, 16 Jun 2026 20:30:16 +0530
+Message-ID: <20260616145103.462766973@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -57,91 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoze Xie <royenheart@gmail.com>
+From: Yongchao Wu <yongchao.wu@autochips.com>
 
-[ Upstream commit e196115ec330a18de415bdb9f5071aa9f08e53ce ]
+[ Upstream commit c8778ff817a7047d6848fefba99dcb27b1bf01fe ]
 
-br_pass_frame_up() rewrites skb->dev from the ingress port to the bridge
-master before queueing bridge LOCAL_IN packets. NFQUEUE only holds
-references on state.in/out and bridge physdevs, so a queued bridge
-packet can retain a freed bridge master in skb->dev until reinjection.
+According to the cdns3 datasheet, the EPRST (Endpoint Reset) command
+causes the DMA engine to reposition its internal pointer to the next
+Transfer Descriptor (TD) if it was already processing one.
 
-When the verdict is reinjected later, br_netif_receive_skb() re-enters
-the receive path with skb->dev still pointing at the freed bridge master,
-triggering a use-after-free.
+This issue is consistently observed during the ADB identification
+process on macOS hosts, where the host issues a Clear_Halt. Although
+commit 4bf2dd65135a ("usb: cdns3: gadget: toggle cycle bit before reset
+endpoint") attempted to avoid DMA advance by toggling the cycle bit,
+trace logs show that on certain hosts like macOS, the DMA pointer
+(EP_TRADDR) still shifts after EPRST:
 
-Store skb->dev in the queue entry, hold a reference on it for the queue
-lifetime, and use the saved device when dropping queued packets during
-NETDEV_DOWN handling.
+  cdns3_ctrl_req: Clear Endpoint Feature(Halt ep1out)
+  cdns3_doorbell_epx: ep1out, ep_trbaddr f9c04030  <-- Should be f9c04000
+  cdns3_gadget_giveback: ep1out: req: ... length: 16384/16384
 
-Fixes: ac2863445686 ("netfilter: bridge: add nf_afinfo to enable queuing to userspace")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Haoze Xie <royenheart@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+As shown above, the DMA pointer jumped to the next TD, causing
+the controller to skip the initial TRBs of the request. This leads to
+data misalignment and ADB protocol hangs on macOS.
+
+Fix this by manually restoring the EP_TRADDR register to the starting
+physical address of the current request after the EPRST operation is
+complete.
+
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Cc: stable <stable@kernel.org>
+Cc: Peter Chen <peter.chen@kernel.org>
+Signed-off-by: Yongchao Wu <yongchao.wu@autochips.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20260513160012.2547894-1-yongchao.wu@autochips.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_queue.h |    1 +
- net/netfilter/nf_queue.c         |    4 +++-
- net/netfilter/nfnetlink_queue.c  |    2 ++
- 3 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/usb/cdns3/gadget.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/include/net/netfilter/nf_queue.h
-+++ b/include/net/netfilter/nf_queue.h
-@@ -12,6 +12,7 @@
- struct nf_queue_entry {
- 	struct list_head	list;
- 	struct sk_buff		*skb;
-+	struct net_device	*skb_dev;
- 	unsigned int		id;
- 	unsigned int		hook_index;	/* index in hook_entries->hook[] */
- #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
---- a/net/netfilter/nf_queue.c
-+++ b/net/netfilter/nf_queue.c
-@@ -60,6 +60,7 @@ static void nf_queue_entry_release_refs(
- 	struct nf_hook_state *state = &entry->state;
+--- a/drivers/usb/cdns3/gadget.c
++++ b/drivers/usb/cdns3/gadget.c
+@@ -2798,9 +2798,19 @@ int __cdns3_gadget_ep_clear_halt(struct
+ 	priv_ep->flags &= ~(EP_STALLED | EP_STALL_PENDING);
  
- 	/* Release those devices we held, or Alexey will kill me. */
-+	dev_put(entry->skb_dev);
- 	dev_put(state->in);
- 	dev_put(state->out);
- 	if (state->sk)
-@@ -103,6 +104,7 @@ bool nf_queue_entry_get_refs(struct nf_q
- 	if (state->sk && !refcount_inc_not_zero(&state->sk->sk_refcnt))
- 		return false;
+ 	if (request) {
+-		if (trb)
++		if (trb) {
+ 			*trb = trb_tmp;
  
-+	dev_hold(entry->skb_dev);
- 	dev_hold(state->in);
- 	dev_hold(state->out);
++			/*
++			 * Per datasheet, EPRST causes DMA to reposition to the next TD.
++			 * Manually reset EP_TRADDR to the current TRB to prevent
++			 * the hardware from skipping the interrupted request.
++			 */
++			writel(EP_TRADDR_TRADDR(priv_ep->trb_pool_dma +
++						priv_req->start_trb * TRB_SIZE),
++						&priv_dev->regs->ep_traddr);
++		}
++
+ 		cdns3_rearm_transfer(priv_ep, 1);
+ 	}
  
-@@ -204,11 +206,11 @@ static int __nf_queue(struct sk_buff *sk
- 
- 	*entry = (struct nf_queue_entry) {
- 		.skb	= skb,
-+		.skb_dev = skb->dev,
- 		.state	= *state,
- 		.hook_index = index,
- 		.size	= sizeof(*entry) + route_key_size,
- 	};
--
- 	__nf_queue_entry_init_physdevs(entry);
- 
- 	if (!nf_queue_entry_get_refs(entry)) {
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -911,6 +911,8 @@ dev_cmp(struct nf_queue_entry *entry, un
- 	if (physinif == ifindex || physoutif == ifindex)
- 		return 1;
- #endif
-+	if (entry->skb_dev && entry->skb_dev->ifindex == ifindex)
-+		return 1;
- 	if (entry->state.in)
- 		if (entry->state.in->ifindex == ifindex)
- 			return 1;
 
 
