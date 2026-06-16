@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECFA23CEBBD;
-	Tue, 16 Jun 2026 18:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CDA35292A;
+	Tue, 16 Jun 2026 18:20:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634013; cv=none; b=a6FbqnqvtDv9RuWizQxxCniw0INlztenPtlirR+f5FpnxDbHvJfYU3xxHsemhaV15AV9gOYDLXofDC5GWOSF5+B2i99ScEy7cA6pP5gQOjT4ssilQc0rQOO3gOMViNZWxOrsV0Tx4j+izOTe3aqOjKtKOtaiH6GXZxpsp3/3+jI=
+	t=1781634018; cv=none; b=Ghc56XeOXkL+3fRHVIN1Ii32t5yzQ8wlAio0Sjq9DeccOJhiBOHz1U791Rc129IBtzrOyi8iXblUumrnPxQiLZO0E4ik6/V/ZJBWIIiYveo0gGXd729QotfN/7LWAG+dMJ487HhJvPWg6WFvsnj2+g3xVC9E/aQ4yOYu9yjL6TQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634013; c=relaxed/simple;
-	bh=HB6tSEhyo+TSqad4x2ZFl5Wmqw5zyGw9oTP93ggtI1Q=;
+	s=arc-20240116; t=1781634018; c=relaxed/simple;
+	bh=H8ssRX0pJp6d7TLdF5Dn3k5OIZ8r5m6SpZs6E/ra3eI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fEkWIedZvnf545xwmt9xNzBPnwldtHG4HEeQB7CBZGqBxnpB9tBXv/OSvrNJ8sgppl02y8DZinpNiQx1krHlC6c20F+LSlBvGOqYaNDFd2miHmMvaygL0/4kR3FxpwuYQ8zujBGHCtz9t1dHFsVp4SU9XflshugG6huMajbax9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H7JhWAnO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KFONF/2n8YkmVDem5mrjz1Vmu2vKM8SQr/65BVraUuH+Y0fXYb/V2kVZwrEn77J07or6zcv1icvngyqGe5ffQdO0shHD3r4e5/q7KYD9wuxzlk6eVdyxKPbiMz8JqTTVJqZxWTi3cOtn9/Ci3cA3RhOjoohlVwLFzJltszNyqvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dS308HPB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H7JhWAnO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3871F000E9;
-	Tue, 16 Jun 2026 18:20:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dS308HPB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362271F000E9;
+	Tue, 16 Jun 2026 18:20:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634011;
-	bh=b3wVfaVsq6/iCYIz5R/CKbSz5oB3UbxBjZs8LsvgUdg=;
+	s=korg; t=1781634017;
+	bh=05m8WQq5tCOTbxC/HMf6umqKxZHNWAwIVxiVFJtEjMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H7JhWAnOL8HeToow2jNUJokovO7UFj6B+I135UMFJyA0AdTB3IstO0hCWwvxZ3/XY
-	 eFHeTXKiAbgt5Y0bRHXNOx2VEHaRBYfi76D/fYEyJHLmrUqhwv6Ggbig8N54GpS/t6
-	 KARaUTBvOMpc44J7312yea6Ea0HotKef4zUbGOXg=
+	b=dS308HPBxEzmsqrjtNML+JM2sIMhzvySM1jijwRKcFbBmBscKmGX7+A7O7zd4aXiF
+	 9GOQIx7UVp/riISSypxS7+ccRuGnxBqKp0XswOie959VLOrBPKLz2rKNWW1O76HW+s
+	 1nEBaua9tx6kQsrHqn2JqF0EmANoSvm8JHrekgQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	Simon Horman <horms@kernel.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	Eric Dumazet <edumazet@google.com>,
+	syzbot+6eb9ca986d80f6f88cf9@syzkaller.appspotmail.com,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 184/411] net: qrtr: fix refcount saturation and potential UAF in qrtr_port_remove
-Date: Tue, 16 Jun 2026 20:27:02 +0530
-Message-ID: <20260616145110.479511279@linuxfoundation.org>
+Subject: [PATCH 5.15 185/411] ipv6: sit: reload inner IPv6 header after GSO offloads
+Date: Tue, 16 Jun 2026 20:27:03 +0530
+Message-ID: <20260616145110.532954104@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,77 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit a2171131ecda1ed61a594a1eb715e75fdad0fef5 ]
+[ Upstream commit f0e42f0c4337b1f220de1ddd63f47197c7dee4de ]
 
-In qrtr_port_remove(), the socket reference count is decremented via
-__sock_put() before the port is removed from the qrtr_ports XArray and
-before the RCU grace period elapses.
+ipip6_tunnel_xmit() caches the inner IPv6 header pointer at function
+entry and continues using it after iptunnel_handle_offloads().
 
-This breaks the fundamental RCU update paradigm. It exposes a race
-window where a concurrent RCU reader (such as qrtr_reset_ports() or
-qrtr_port_lookup()) can obtain a pointer to the socket from the XArray,
-and attempt to call sock_hold() on a socket whose reference count has
-already dropped to zero.
+For GSO skbs, iptunnel_handle_offloads() calls skb_header_unclone().
+When the skb header is cloned, skb_header_unclone() can call
+pskb_expand_head(), which may move the skb head. The pskb_expand_head()
+contract requires pointers into the skb header to be reloaded after the
+call.
 
-This exact race condition was hit during syzkaller fuzzing, leading to
-the following refcount saturation warning and a potential Use-After-Free:
+If the later skb_realloc_headroom() branch is not taken, SIT uses the
+stale iph6 pointer to read the inner hop limit and DS field. That can
+read from a freed skb head after the old head's remaining clone is
+released.
 
-  refcount_t: saturated; leaking memory.
-  WARNING: CPU: 3 PID: 1273 at lib/refcount.c:22 refcount_warn_saturate+0xae/0x1d0
-  Modules linked in: qrtr(+) bochs drm_shmem_helper ...
-  Call Trace:
-   <TASK>
-   qrtr_reset_ports net/qrtr/af_qrtr.c:768 [inline] [qrtr]
-   __qrtr_bind.isra.0+0x48b/0x570 net/qrtr/af_qrtr.c:805 [qrtr]
-   qrtr_bind+0x17d/0x210 net/qrtr/af_qrtr.c:901 [qrtr]
-   kernel_bind+0xe4/0x120 net/socket.c:3592
-   qrtr_ns_init+0x1a6/0x380 net/qrtr/ns.c:715 [qrtr]
-   qrtr_proto_init+0x3b/0xff0 net/qrtr/af_qrtr.c:169 [qrtr]
-   do_one_initcall+0xf5/0x5e0 init/main.c:1283
-   ...
-   </TASK>
+Reload iph6 after the offload helper succeeds and before subsequent
+reads from the inner IPv6 header. Keep the existing reload after
+skb_realloc_headroom(), since that branch can also replace the skb.
 
-Fix this by deferring the reference count decrement until after the
-xa_erase() and the synchronize_rcu() complete.
-
-(Note: The v1 of this patch incorrectly replaced __sock_put() with
-sock_put(). As Simon Horman pointed out, the callers of qrtr_port_remove()
-still hold a reference to the socket, so freeing the socket memory here
-would lead to a subsequent UAF in the caller. Thus, the __sock_put() is
-kept, but only repositioned to close the RCU race.)
-
-Fixes: bdabad3e363d ("net: Add Qualcomm IPC router")
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260604064801.1180388-1-w15303746062@163.com
+Fixes: 14909664e4e1 ("sit: Setup and TX path for sit/UDP foo-over-udp encapsulation")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot+6eb9ca986d80f6f88cf9@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20260605073448.6524-1-kylebot@openai.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/af_qrtr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/sit.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index 431fd1f2b80c18..6f4b901afc330c 100644
---- a/net/qrtr/af_qrtr.c
-+++ b/net/qrtr/af_qrtr.c
-@@ -702,13 +702,13 @@ static void qrtr_port_remove(struct qrtr_sock *ipc)
- 	if (port == QRTR_PORT_CTRL)
- 		port = 0;
+diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
+index 3bc02ab9ceaca0..bc5db4a9dbfaf1 100644
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -971,6 +971,7 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
+ 		ip_rt_put(rt);
+ 		goto tx_error;
+ 	}
++	iph6 = ipv6_hdr(skb);
  
--	__sock_put(&ipc->sk);
--
- 	xa_erase(&qrtr_ports, port);
- 
- 	/* Ensure that if qrtr_port_lookup() did enter the RCU read section we
- 	 * wait for it to up increment the refcount */
- 	synchronize_rcu();
-+
-+	__sock_put(&ipc->sk);
- }
- 
- /* Assign port number to socket.
+ 	if (df) {
+ 		mtu = dst_mtu(&rt->dst) - t_hlen;
 -- 
 2.53.0
 
