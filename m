@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D21A2F12AE;
-	Tue, 16 Jun 2026 18:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AAE352007;
+	Tue, 16 Jun 2026 18:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632947; cv=none; b=sfM2PRs9JSjLiTo+Syh3IJU8XXlBQxvNEvZmnxb0iaIWylBuXQpmu0Bhc1+LlPeJYUiNMGHe1umhaguTCJUDnjlg/gitoh6WP1dNF/RW7Sk/25kg8rzvlYXnUzQYcobwwOERIqmGOMX5zstiqaDRF/t1nGA8zs+I8P99z1Mp7WM=
+	t=1781632953; cv=none; b=F0GmiGGxnCpItN7dxPlGs0rT/KGI6PnSBbKWpH5G+S6apwckzCB3SG7TJOn4vjjRnCh6+XroUJiuYgaLDrMRSyv5OpG7khla5xpFdthc+PDBbui8vo/OXAEy3uyja0dSgNNSlR3iYwU1jjvdr0RDdaKgsA6QFObF08y5Mz6O2m4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632947; c=relaxed/simple;
-	bh=M2WIdtZYrXNEQZZMohMFlgUx+h/jy7iqJAPMAEwUYX8=;
+	s=arc-20240116; t=1781632953; c=relaxed/simple;
+	bh=fVhKCgtkrbtUlGLhkCAvq1UXy6e35m9skgLvYyyn0Q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fKm5wAokJ2JA4SB3z95iIdtRLHCfVvHBSrPe1R7UHtBVaWqBFv2MfrTs/yLYiAr0BGtTbWBaF0Fq+zct5AyG0RDbX0NZpHjRzh4Ncj5QzMr1BcBMrIAxSea5946juLRfA08rrCy9p8TFylIxnZt2lIuGdGuA1Cre0TtnHJi34ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x52gDOxl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zh1rlUFN/EoPYeJjEWFWVbnCCWwZyDaBAuaeyqIQgv8tjPB+2TwcBQ0Yvgsu23rFRfcNciM3w0iCKNd/qK0aIIMbdHHcOnXMu0Xvqz8XfIwsWqRv3yTOUjrNSjKW0udAI5t60VjZ8bfNsHU3lE3leqI4966wfg3pTHInIYVenLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uM5cALDc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x52gDOxl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB0F1F00A3A;
-	Tue, 16 Jun 2026 18:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uM5cALDc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE2B1F000E9;
+	Tue, 16 Jun 2026 18:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632946;
-	bh=UsEzHgxrENHKrcvqGd79kP7OjXCF3w5XqPkRk+x47IQ=;
+	s=korg; t=1781632952;
+	bh=/dJi4s0oZdZaG5JvOtT9H+6tExV/GKrV4qVEgRECHWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x52gDOxlS0xMgQo+EyWbvcgzDCRe0mfO6AJSRgPx/FtqUj+TugXU4drbolmy2vbvx
-	 U09hHZxpXUtOUrWPb6M1ezzlRJTkVGenytUerytAVeglt9rJczqQr8BkiBcNe0VTQn
-	 HOGe/hN5W2mb4Ohnduni3iRc65PFWBkDGoxbV0f0=
+	b=uM5cALDcCBlwN4nrj0+4YMWfxl4w6eqeWTLZs9ZSF01U05U3Pl76rITTihQ3mdpvx
+	 n21h7suFiL+g8z2HOWvT7FOobIhpSOIhkR7wVsrA4Q5j8z1ls7QEiihkcEAYV4BfF8
+	 LmOrY8CPn1JmUKGD9+GhCDy3aPt7dhk4NH3nU5I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Ignat Korchagin <ignat@linux.win>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Yiming Qian <yimingqian591@gmail.com>
-Subject: [PATCH 6.1 506/522] lib/crypto: mpi: Fix integer underflow in mpi_read_raw_from_sgl()
-Date: Tue, 16 Jun 2026 20:30:53 +0530
-Message-ID: <20260616145149.425309274@linuxfoundation.org>
+	Corey Minyard <corey@minyard.net>
+Subject: [PATCH 6.1 507/522] ipmi:ssif: Remove unnecessary indention
+Date: Tue, 16 Jun 2026 20:30:54 +0530
+Message-ID: <20260616145149.470087171@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,70 +49,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Corey Minyard <corey@minyard.net>
 
-commit 8c2f1288250a90a4b5cabed5d888d7e3aeed4035 upstream.
+commit 91eb7ec7261254b6875909df767185838598e21e upstream.
 
-Yiming reports an integer underflow in mpi_read_raw_from_sgl() when
-subtracting "lzeros" from the unsigned "nbytes".
+A section was in {} that didn't need to be, move the variable
+definition to the top and set th eindentino properly.
 
-For this to happen, the scatterlist "sgl" needs to occupy more bytes
-than the "nbytes" parameter and the first "nbytes + 1" bytes of the
-scatterlist must be zero.  Under these conditions, the while loop
-iterating over the scatterlist will count more zeroes than "nbytes",
-subtract the number of zeroes from "nbytes" and cause the underflow.
-
-When commit 2d4d1eea540b ("lib/mpi: Add mpi sgl helpers") originally
-introduced the bug, it couldn't be triggered because all callers of
-mpi_read_raw_from_sgl() passed a scatterlist whose length was equal to
-"nbytes".
-
-However since commit 63ba4d67594a ("KEYS: asymmetric: Use new crypto
-interface without scatterlists"), the underflow can now actually be
-triggered.  When invoking a KEYCTL_PKEY_ENCRYPT system call with a
-larger "out_len" than "in_len" and filling the "in" buffer with zeroes,
-crypto_akcipher_sync_prep() will create an all-zero scatterlist used for
-both the "src" and "dst" member of struct akcipher_request and thereby
-fulfil the conditions to trigger the bug:
-
-  sys_keyctl()
-    keyctl_pkey_e_d_s()
-      asymmetric_key_eds_op()
-        software_key_eds_op()
-          crypto_akcipher_sync_encrypt()
-            crypto_akcipher_sync_prep()
-              crypto_akcipher_encrypt()
-                rsa_enc()
-                  mpi_read_raw_from_sgl()
-
-To the user this will be visible as a DoS as the kernel spins forever,
-causing soft lockup splats as a side effect.
-
-Fix it.
-
-Reported-by: Yiming Qian <yimingqian591@gmail.com> # off-list
-Fixes: 2d4d1eea540b ("lib/mpi: Add mpi sgl helpers")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org # v4.4+
-Reviewed-by: Ignat Korchagin <ignat@linux.win>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/59eca92ff4f87e2081777f1423a0efaaadcfdb39.1776003111.git.lukas@wunner.de
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/mpi/mpicoder.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/ipmi/ipmi_ssif.c |   28 ++++++++++++----------------
+ 1 file changed, 12 insertions(+), 16 deletions(-)
 
---- a/lib/mpi/mpicoder.c
-+++ b/lib/mpi/mpicoder.c
-@@ -453,7 +453,7 @@ MPI mpi_read_raw_from_sgl(struct scatter
- 	lzeros = 0;
- 	len = 0;
- 	while (nbytes > 0) {
--		while (len && !*buff) {
-+		while (len && !*buff && lzeros < nbytes) {
- 			lzeros++;
- 			len--;
- 			buff++;
+--- a/drivers/char/ipmi/ipmi_ssif.c
++++ b/drivers/char/ipmi/ipmi_ssif.c
+@@ -1670,6 +1670,7 @@ static int ssif_probe(struct i2c_client
+ 	int               len = 0;
+ 	int               i;
+ 	u8		  slave_addr = 0;
++	unsigned int      thread_num;
+ 	struct ssif_addr_info *addr_info = NULL;
+ 
+ 	mutex_lock(&ssif_infos_mutex);
+@@ -1878,22 +1879,17 @@ static int ssif_probe(struct i2c_client
+ 	ssif_info->handlers.request_events = request_events;
+ 	ssif_info->handlers.set_need_watch = ssif_set_need_watch;
+ 
+-	{
+-		unsigned int thread_num;
+-
+-		thread_num = ((i2c_adapter_id(ssif_info->client->adapter)
+-			       << 8) |
+-			      ssif_info->client->addr);
+-		init_completion(&ssif_info->wake_thread);
+-		ssif_info->thread = kthread_run(ipmi_ssif_thread, ssif_info,
+-					       "kssif%4.4x", thread_num);
+-		if (IS_ERR(ssif_info->thread)) {
+-			rv = PTR_ERR(ssif_info->thread);
+-			dev_notice(&ssif_info->client->dev,
+-				   "Could not start kernel thread: error %d\n",
+-				   rv);
+-			goto out;
+-		}
++	thread_num = ((i2c_adapter_id(ssif_info->client->adapter) << 8) |
++		      ssif_info->client->addr);
++	init_completion(&ssif_info->wake_thread);
++	ssif_info->thread = kthread_run(ipmi_ssif_thread, ssif_info,
++					"kssif%4.4x", thread_num);
++	if (IS_ERR(ssif_info->thread)) {
++		rv = PTR_ERR(ssif_info->thread);
++		dev_notice(&ssif_info->client->dev,
++			   "Could not start kernel thread: error %d\n",
++			   rv);
++		goto out;
+ 	}
+ 
+ 	dev_set_drvdata(&ssif_info->client->dev, ssif_info);
 
 
