@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D1646AF3C;
-	Tue, 16 Jun 2026 18:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF04A169AD2;
+	Tue, 16 Jun 2026 18:37:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635052; cv=none; b=iWODZXEmsCpTDmWI9bQQJqFjao72O8usU0kX0mXkXsmr8lM/q1qZJocI89UN5wNLrrLhDhbwk/eqOVZ1A5VPNukULVdTlw7qCAo002p3+U7tXHSuTpZk99+uA8Zkw566n4FFrcRNPdaQltdpOY3w1veDjHsDvT1OAkNZ0pgCMp8=
+	t=1781635056; cv=none; b=KeTGZOUIEuewG+Jpsy7iHDHwuYvQEQESou5+I6oh0lIQ/HzsT8P8/X5/5ltGhytviqVvpntnc7wfRCV8WjVZjFDXNz3axJ/7itVHmPRx2fABUjtG7+lCvZJb01end+niYENO8SzbLw6F3CF/ywo5a4GECmceO4skYJIC/N3mm88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635052; c=relaxed/simple;
-	bh=XZSU3OJRp0Gslcs4eAxt+AGs5SfC9O99XURPOxzpTfA=;
+	s=arc-20240116; t=1781635056; c=relaxed/simple;
+	bh=9jpEKmG8l54DfobIcVu5ji0z1UEM6jJL2Pj1tvjLJz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CIza1GxWRRXxqatIzSCAYf+V/bI0zI2eHtUsbr0TClvl49xG5JF97H1oXjm71rKoUtL/EPR2uKEHIaXZX7r1W8V4kq/GRxL/zOZVFPyJjQCVU6msugdN8z/BJsF6zM0o6FDamRucg96iVP5FDRk14ErnVsnFdojR/CFh2lJicxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKXNRXdR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IVCewvdvhn+mG5bZev0f07Pkm+1Ns7ajrYEexzQA7AwPJMhlSmVdUCieRIPBfjT2LytW3624u02EKTRE8wqXsildwmkllhRwCOs43kmUKhFMzKqvLkHiQXuAkwkIlTt0ExL1onsOifNVJ8o6de0RZuSftrXGSma4bh7y/rjHeU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=en4lua9y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKXNRXdR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1AF91F000E9;
-	Tue, 16 Jun 2026 18:37:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="en4lua9y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16C31F000E9;
+	Tue, 16 Jun 2026 18:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635050;
-	bh=BfjOCbkD9MAYYqbSppuJLOOvDhoh7NN8bWwO1Hf+awc=;
+	s=korg; t=1781635055;
+	bh=bMQLSLjW4mwfsOkk7TuGyMbngNDum6hdJlj1XRIDXfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tKXNRXdRUlGHdZX4C2ZQk4aNVWrmRMdWOQZvWuo1G/JukLh+w5yteg1yZhtssCRFg
-	 0H3OgXM9V81kDYqYihe2e2qK1vDDkGGkRu/HMKpT25ELdLtotFPm44eGaC8CQIy206
-	 kDgrOXLPJuaoplI23LT8M4vDeKZAqZvZYlCctHfo=
+	b=en4lua9yDUOzjzYAly0wVMtOxztQBza0HfBgaWz9AOWMr2xTQNQeUwbqOfoExyx4i
+	 bbfjZ2E9737eTGuBL92ksStUKun908CZGJeGEr5njM9q+m2mLD0BuYCXd8gqxj7x/t
+	 aDcOnCs6O9hIrm4Yu9tfK/wzaMn9Hpm/VTZcgK7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Tomasz Duszynski <tomasz.duszynski@octakon.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 382/411] serial: altera_jtaguart: handle uart_add_one_port() failures
-Date: Tue, 16 Jun 2026 20:30:20 +0530
-Message-ID: <20260616145121.575814858@linuxfoundation.org>
+Subject: [PATCH 5.15 365/411] iio: chemical: scd30: Use guard(mutex) to allow early returns
+Date: Tue, 16 Jun 2026 20:30:03 +0530
+Message-ID: <20260616145120.735496116@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,56 +52,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit ea66be25f0e934f49d24cd0c5845d13cdba3520b ]
+[ Upstream commit 5feb5532870fbced5d6f450b8061a33f461b88ca ]
 
-altera_jtaguart_probe() maps the register window before registering the
-UART port, but it ignores failures from uart_add_one_port(). If port
-registration fails, probe still returns success and the mapping remains
-live until a later remove path that is not part of probe failure cleanup.
+Auto cleanup based release of the lock allows for simpler code flow in a
+few functions with large multiplexing style switch statements and no
+common operations following the switch.
 
-Return the uart_add_one_port() error and unmap the register window on
-that failure path.
-
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
-
-Fixes: 5bcd601049c6 ("serial: Add driver for the Altera JTAG UART")
-Cc: stable <stable@kernel.org>
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260512065837.79528-1-mhun512@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: David Lechner <dlechner@baylibre.com>
+Cc: Tomasz Duszynski <tomasz.duszynski@octakon.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20250209180624.701140-3-jic23@kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 5aba4f94b225 ("iio: chemical: scd30: fix division by zero in write_raw")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/altera_jtaguart.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/iio/chemical/scd30_core.c |   63 ++++++++++++++++----------------------
+ 1 file changed, 28 insertions(+), 35 deletions(-)
 
---- a/drivers/tty/serial/altera_jtaguart.c
-+++ b/drivers/tty/serial/altera_jtaguart.c
-@@ -421,6 +421,7 @@ static int altera_jtaguart_probe(struct
- 	struct resource *res_mem;
- 	int i = pdev->id;
- 	int irq;
+--- a/drivers/iio/chemical/scd30_core.c
++++ b/drivers/iio/chemical/scd30_core.c
+@@ -5,6 +5,7 @@
+  * Copyright (c) 2020 Tomasz Duszynski <tomasz.duszynski@octakon.com>
+  */
+ #include <linux/bits.h>
++#include <linux/cleanup.h>
+ #include <linux/completion.h>
+ #include <linux/delay.h>
+ #include <linux/device.h>
+@@ -198,112 +199,104 @@ static int scd30_read_raw(struct iio_dev
+ 			  int *val, int *val2, long mask)
+ {
+ 	struct scd30_state *state = iio_priv(indio_dev);
+-	int ret = -EINVAL;
++	int ret;
+ 	u16 tmp;
+ 
+-	mutex_lock(&state->lock);
++	guard(mutex)(&state->lock);
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_RAW:
+ 	case IIO_CHAN_INFO_PROCESSED:
+ 		if (chan->output) {
+ 			*val = state->pressure_comp;
+-			ret = IIO_VAL_INT;
+-			break;
++			return IIO_VAL_INT;
+ 		}
+ 
+ 		ret = iio_device_claim_direct_mode(indio_dev);
+ 		if (ret)
+-			break;
++			return ret;
+ 
+ 		ret = scd30_read(state);
+ 		if (ret) {
+ 			iio_device_release_direct_mode(indio_dev);
+-			break;
++			return ret;
+ 		}
+ 
+ 		*val = state->meas[chan->address];
+ 		iio_device_release_direct_mode(indio_dev);
+-		ret = IIO_VAL_INT;
+-		break;
++		return IIO_VAL_INT;
+ 	case IIO_CHAN_INFO_SCALE:
+ 		*val = 0;
+ 		*val2 = 1;
+-		ret = IIO_VAL_INT_PLUS_MICRO;
+-		break;
++		return IIO_VAL_INT_PLUS_MICRO;
+ 	case IIO_CHAN_INFO_SAMP_FREQ:
+ 		ret = scd30_command_read(state, CMD_MEAS_INTERVAL, &tmp);
+ 		if (ret)
+-			break;
++			return ret;
+ 
+ 		*val = 0;
+ 		*val2 = 1000000000 / tmp;
+-		ret = IIO_VAL_INT_PLUS_NANO;
+-		break;
++		return IIO_VAL_INT_PLUS_NANO;
+ 	case IIO_CHAN_INFO_CALIBBIAS:
+ 		ret = scd30_command_read(state, CMD_TEMP_OFFSET, &tmp);
+ 		if (ret)
+-			break;
++			return ret;
+ 
+ 		*val = tmp;
+-		ret = IIO_VAL_INT;
+-		break;
++		return IIO_VAL_INT;
++	default:
++		return -EINVAL;
+ 	}
+-	mutex_unlock(&state->lock);
+-
+-	return ret;
+ }
+ 
+ static int scd30_write_raw(struct iio_dev *indio_dev, struct iio_chan_spec const *chan,
+ 			   int val, int val2, long mask)
+ {
+ 	struct scd30_state *state = iio_priv(indio_dev);
+-	int ret = -EINVAL;
 +	int ret;
  
- 	/* -1 emphasizes that the platform must have one port, no .N suffix */
- 	if (i == -1)
-@@ -460,7 +461,11 @@ static int altera_jtaguart_probe(struct
- 	port->flags = UPF_BOOT_AUTOCONF;
- 	port->dev = &pdev->dev;
+-	mutex_lock(&state->lock);
++	guard(mutex)(&state->lock);
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_SAMP_FREQ:
+ 		if (val)
+-			break;
++			return -EINVAL;
  
--	uart_add_one_port(&altera_jtaguart_driver, port);
-+	ret = uart_add_one_port(&altera_jtaguart_driver, port);
-+	if (ret) {
-+		iounmap(port->membase);
-+		return ret;
-+	}
+ 		val = 1000000000 / val2;
+ 		if (val < SCD30_MEAS_INTERVAL_MIN_S || val > SCD30_MEAS_INTERVAL_MAX_S)
+-			break;
++			return -EINVAL;
  
- 	return 0;
+ 		ret = scd30_command_write(state, CMD_MEAS_INTERVAL, val);
+ 		if (ret)
+-			break;
++			return ret;
+ 
+ 		state->meas_interval = val;
+-		break;
++		return 0;
+ 	case IIO_CHAN_INFO_RAW:
+ 		switch (chan->type) {
+ 		case IIO_PRESSURE:
+ 			if (val < SCD30_PRESSURE_COMP_MIN_MBAR ||
+ 			    val > SCD30_PRESSURE_COMP_MAX_MBAR)
+-				break;
++				return -EINVAL;
+ 
+ 			ret = scd30_command_write(state, CMD_START_MEAS, val);
+ 			if (ret)
+-				break;
++				return ret;
+ 
+ 			state->pressure_comp = val;
+-			break;
++			return 0;
+ 		default:
+-			break;
++			return -EINVAL;
+ 		}
+-		break;
+ 	case IIO_CHAN_INFO_CALIBBIAS:
+ 		if (val < 0 || val > SCD30_TEMP_OFFSET_MAX)
+-			break;
++			return -EINVAL;
+ 		/*
+ 		 * Manufacturer does not explicitly specify min/max sensible
+ 		 * values hence check is omitted for simplicity.
+ 		 */
+-		ret = scd30_command_write(state, CMD_TEMP_OFFSET / 10, val);
++		return scd30_command_write(state, CMD_TEMP_OFFSET / 10, val);
++	default:
++		return -EINVAL;
+ 	}
+-	mutex_unlock(&state->lock);
+-
+-	return ret;
  }
+ 
+ static int scd30_write_raw_get_fmt(struct iio_dev *indio_dev, struct iio_chan_spec const *chan,
 
 
