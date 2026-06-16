@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2671A47A0B0;
-	Tue, 16 Jun 2026 17:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D2047CC9C;
+	Tue, 16 Jun 2026 17:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632285; cv=none; b=DJzXdFoBhk5Nubmp54AOm2zB9nYx9YgMFcO/V81QdDirZ6WtWAToF4VqbVXJHwRNt5poLntDyZCPLNVwJEFGDx1H20Xl748emlSLloGhfNuQEbCFMNQ3DMfm3oJ5uE+ik2sp0mlJgzA5TOfw2izReIi2McfEn0/oTacJTxJ1FA0=
+	t=1781632293; cv=none; b=ZiNWvNOZ4qPi8N2ycqv6AsrfvRjE5p/eLON2X8/di21NkVQVAUB+jviVDYGubBsSYCsFFejxHkvkAtI89EZK4taS0Mt28xrJ57LtzA0fy9fFgSMF/08hE4ecx7ccxtEQfaRDVS6yUwEACWoC0y6Eg6QNeyxOzoZrpCCkG7dh4uQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632285; c=relaxed/simple;
-	bh=hd8ZcIGJbE1oySxHcqe1vAFi1k+gi+I7grFX7JFHZKw=;
+	s=arc-20240116; t=1781632293; c=relaxed/simple;
+	bh=z9UvWuksUOigBK0+GDlVacE2xv5w674FpRJCOIQWuvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VbosJz2xkr3xKPh2qgkrdN3BsfCixeKMq2/OHJyhSBcQgi2eG0tQyD3jOIxHCfndaGC9O/4JZBhNL6l/XUMXRY0A9biWa3SB+eBwtsPgA7rL2X2oac2JIXGweOutZC+kFuoPW1bmaC+5IqyWlHIHl/jHppX+s6HHdp3uCvLgag0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPQJSI9q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t1i9PsI1rZ301PnOdjdDce+Ko40T+/e2GPBDfhCB6mt8wc7S7knRj5NQkgnz5rlF7q2HDTedgOemW9/u+XPm4opxmjeV6iIHz+SoT/BgUDWTebXITypZ+7oG6vR1K7hxtytYHRGBJJOA1WlYQwzp7jBafrb5sk8YV8SOAlnErQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aLcWnrAx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPQJSI9q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16BA1F000E9;
-	Tue, 16 Jun 2026 17:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aLcWnrAx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB1921F000E9;
+	Tue, 16 Jun 2026 17:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632284;
-	bh=jrK4hWwowHvy01t1Q7zPiE0Ckb3rSrbwqsCBjfZJiB8=;
+	s=korg; t=1781632289;
+	bh=NNCQ2xAhP7e2kOvS64H1xR9dfVuVYoXAcppCEZFWkjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IPQJSI9quyBYf5uvWjihSySPtIRTB+jkuMJIPssWf29fBX5yo+QpTrthpJaItTeN4
-	 QkzAZ3vxIHpx8utqHP4zCpv9V6ScA3U/jGe7LzbnOWhj7zcUODA9AkYQrUg/Av//NQ
-	 Pv2uCmzliQtCdNo7zzl7drxU3qYdvxCOor124m1Y=
+	b=aLcWnrAxit+Gq0N0VCy5m1raOCjZMIMgVgZL7r406rswO7KaKnPMPJ0jCMzdBPSzQ
+	 r9PC3HyFlk17WB13sdZaUKNPu+7mI4epA5qFKPvWxGnxZTSbezQa+gV++qVtqqXmKr
+	 YKWAvYjimGnIJTs50Edg1F0/lZTGbUU58JSaBtVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Andre Przywara <andre.przywara@arm.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 382/522] spi: sun4i: Convert to platform remove callback returning void
-Date: Tue, 16 Jun 2026 20:28:49 +0530
-Message-ID: <20260616145143.647843214@linuxfoundation.org>
+Subject: [PATCH 6.1 383/522] spi: sun4i: switch to use modern name
+Date: Tue, 16 Jun 2026 20:28:50 +0530
+Message-ID: <20260616145143.698903125@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -46,62 +45,210 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit b7b949458ac391963e56ae354b73fee63016dcee ]
+[ Upstream commit 6d232cc8a7e59af0c083319827541966a68817a0 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is (mostly) ignored
-and this typically results in resource leaks. To improve here there is a
-quest to make the remove callback return void. In the first step of this
-quest all drivers are converted to .remove_new() which already returns
-void.
+Change legacy name master to modern name host or controller.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+No functional changed.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Andre Przywara <andre.przywara@arm.com>
-Link: https://lore.kernel.org/r/20230303172041.2103336-75-u.kleine-koenig@pengutronix.de
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://msgid.link/r/20231128093031.3707034-7-yangyingliang@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 42108a2f03e0 ("spi: sun4i: fix controller deregistration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-sun4i.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/spi/spi-sun4i.c |   72 ++++++++++++++++++++++++------------------------
+ 1 file changed, 36 insertions(+), 36 deletions(-)
 
 --- a/drivers/spi/spi-sun4i.c
 +++ b/drivers/spi/spi-sun4i.c
-@@ -519,11 +519,9 @@ err_free_master:
+@@ -75,7 +75,7 @@
+ #define SUN4I_FIFO_STA_TF_CNT_BITS		16
+ 
+ struct sun4i_spi {
+-	struct spi_master	*master;
++	struct spi_controller	*host;
+ 	void __iomem		*base_addr;
+ 	struct clk		*hclk;
+ 	struct clk		*mclk;
+@@ -161,7 +161,7 @@ static inline void sun4i_spi_fill_fifo(s
+ 
+ static void sun4i_spi_set_cs(struct spi_device *spi, bool enable)
+ {
+-	struct sun4i_spi *sspi = spi_master_get_devdata(spi->master);
++	struct sun4i_spi *sspi = spi_controller_get_devdata(spi->controller);
+ 	u32 reg;
+ 
+ 	reg = sun4i_spi_read(sspi, SUN4I_CTL_REG);
+@@ -201,11 +201,11 @@ static size_t sun4i_spi_max_transfer_siz
+ 	return SUN4I_MAX_XFER_SIZE - 1;
+ }
+ 
+-static int sun4i_spi_transfer_one(struct spi_master *master,
++static int sun4i_spi_transfer_one(struct spi_controller *host,
+ 				  struct spi_device *spi,
+ 				  struct spi_transfer *tfr)
+ {
+-	struct sun4i_spi *sspi = spi_master_get_devdata(master);
++	struct sun4i_spi *sspi = spi_controller_get_devdata(host);
+ 	unsigned int mclk_rate, div, timeout;
+ 	unsigned int start, end, tx_time;
+ 	unsigned int tx_len = 0;
+@@ -334,7 +334,7 @@ static int sun4i_spi_transfer_one(struct
+ 					      msecs_to_jiffies(tx_time));
+ 	end = jiffies;
+ 	if (!timeout) {
+-		dev_warn(&master->dev,
++		dev_warn(&host->dev,
+ 			 "%s: timeout transferring %u bytes@%iHz for %i(%i)ms",
+ 			 dev_name(&spi->dev), tfr->len, tfr->speed_hz,
+ 			 jiffies_to_msecs(end - start), tx_time);
+@@ -389,8 +389,8 @@ static irqreturn_t sun4i_spi_handler(int
+ 
+ static int sun4i_spi_runtime_resume(struct device *dev)
+ {
+-	struct spi_master *master = dev_get_drvdata(dev);
+-	struct sun4i_spi *sspi = spi_master_get_devdata(master);
++	struct spi_controller *host = dev_get_drvdata(dev);
++	struct sun4i_spi *sspi = spi_controller_get_devdata(host);
+ 	int ret;
+ 
+ 	ret = clk_prepare_enable(sspi->hclk);
+@@ -418,8 +418,8 @@ out:
+ 
+ static int sun4i_spi_runtime_suspend(struct device *dev)
+ {
+-	struct spi_master *master = dev_get_drvdata(dev);
+-	struct sun4i_spi *sspi = spi_master_get_devdata(master);
++	struct spi_controller *host = dev_get_drvdata(dev);
++	struct sun4i_spi *sspi = spi_controller_get_devdata(host);
+ 
+ 	clk_disable_unprepare(sspi->mclk);
+ 	clk_disable_unprepare(sspi->hclk);
+@@ -429,62 +429,62 @@ static int sun4i_spi_runtime_suspend(str
+ 
+ static int sun4i_spi_probe(struct platform_device *pdev)
+ {
+-	struct spi_master *master;
++	struct spi_controller *host;
+ 	struct sun4i_spi *sspi;
+ 	int ret = 0, irq;
+ 
+-	master = spi_alloc_master(&pdev->dev, sizeof(struct sun4i_spi));
+-	if (!master) {
+-		dev_err(&pdev->dev, "Unable to allocate SPI Master\n");
++	host = spi_alloc_host(&pdev->dev, sizeof(struct sun4i_spi));
++	if (!host) {
++		dev_err(&pdev->dev, "Unable to allocate SPI Host\n");
+ 		return -ENOMEM;
+ 	}
+ 
+-	platform_set_drvdata(pdev, master);
+-	sspi = spi_master_get_devdata(master);
++	platform_set_drvdata(pdev, host);
++	sspi = spi_controller_get_devdata(host);
+ 
+ 	sspi->base_addr = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(sspi->base_addr)) {
+ 		ret = PTR_ERR(sspi->base_addr);
+-		goto err_free_master;
++		goto err_free_host;
+ 	}
+ 
+ 	irq = platform_get_irq(pdev, 0);
+ 	if (irq < 0) {
+ 		ret = -ENXIO;
+-		goto err_free_master;
++		goto err_free_host;
+ 	}
+ 
+ 	ret = devm_request_irq(&pdev->dev, irq, sun4i_spi_handler,
+ 			       0, "sun4i-spi", sspi);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Cannot request IRQ\n");
+-		goto err_free_master;
++		goto err_free_host;
+ 	}
+ 
+-	sspi->master = master;
+-	master->max_speed_hz = 100 * 1000 * 1000;
+-	master->min_speed_hz = 3 * 1000;
+-	master->set_cs = sun4i_spi_set_cs;
+-	master->transfer_one = sun4i_spi_transfer_one;
+-	master->num_chipselect = 4;
+-	master->mode_bits = SPI_CPOL | SPI_CPHA | SPI_CS_HIGH | SPI_LSB_FIRST;
+-	master->bits_per_word_mask = SPI_BPW_MASK(8);
+-	master->dev.of_node = pdev->dev.of_node;
+-	master->auto_runtime_pm = true;
+-	master->max_transfer_size = sun4i_spi_max_transfer_size;
++	sspi->host = host;
++	host->max_speed_hz = 100 * 1000 * 1000;
++	host->min_speed_hz = 3 * 1000;
++	host->set_cs = sun4i_spi_set_cs;
++	host->transfer_one = sun4i_spi_transfer_one;
++	host->num_chipselect = 4;
++	host->mode_bits = SPI_CPOL | SPI_CPHA | SPI_CS_HIGH | SPI_LSB_FIRST;
++	host->bits_per_word_mask = SPI_BPW_MASK(8);
++	host->dev.of_node = pdev->dev.of_node;
++	host->auto_runtime_pm = true;
++	host->max_transfer_size = sun4i_spi_max_transfer_size;
+ 
+ 	sspi->hclk = devm_clk_get(&pdev->dev, "ahb");
+ 	if (IS_ERR(sspi->hclk)) {
+ 		dev_err(&pdev->dev, "Unable to acquire AHB clock\n");
+ 		ret = PTR_ERR(sspi->hclk);
+-		goto err_free_master;
++		goto err_free_host;
+ 	}
+ 
+ 	sspi->mclk = devm_clk_get(&pdev->dev, "mod");
+ 	if (IS_ERR(sspi->mclk)) {
+ 		dev_err(&pdev->dev, "Unable to acquire module clock\n");
+ 		ret = PTR_ERR(sspi->mclk);
+-		goto err_free_master;
++		goto err_free_host;
+ 	}
+ 
+ 	init_completion(&sspi->done);
+@@ -496,16 +496,16 @@ static int sun4i_spi_probe(struct platfo
+ 	ret = sun4i_spi_runtime_resume(&pdev->dev);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Couldn't resume the device\n");
+-		goto err_free_master;
++		goto err_free_host;
+ 	}
+ 
+ 	pm_runtime_set_active(&pdev->dev);
+ 	pm_runtime_enable(&pdev->dev);
+ 	pm_runtime_idle(&pdev->dev);
+ 
+-	ret = devm_spi_register_master(&pdev->dev, master);
++	ret = devm_spi_register_controller(&pdev->dev, host);
+ 	if (ret) {
+-		dev_err(&pdev->dev, "cannot register SPI master\n");
++		dev_err(&pdev->dev, "cannot register SPI host\n");
+ 		goto err_pm_disable;
+ 	}
+ 
+@@ -514,8 +514,8 @@ static int sun4i_spi_probe(struct platfo
+ err_pm_disable:
+ 	pm_runtime_disable(&pdev->dev);
+ 	sun4i_spi_runtime_suspend(&pdev->dev);
+-err_free_master:
+-	spi_master_put(master);
++err_free_host:
++	spi_controller_put(host);
  	return ret;
  }
  
--static int sun4i_spi_remove(struct platform_device *pdev)
-+static void sun4i_spi_remove(struct platform_device *pdev)
- {
- 	pm_runtime_force_suspend(&pdev->dev);
--
--	return 0;
- }
- 
- static const struct of_device_id sun4i_spi_match[] = {
-@@ -539,7 +537,7 @@ static const struct dev_pm_ops sun4i_spi
- 
- static struct platform_driver sun4i_spi_driver = {
- 	.probe	= sun4i_spi_probe,
--	.remove	= sun4i_spi_remove,
-+	.remove_new = sun4i_spi_remove,
- 	.driver	= {
- 		.name		= "sun4i-spi",
- 		.of_match_table	= sun4i_spi_match,
 
 
