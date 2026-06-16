@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47BC3BFE5A;
-	Tue, 16 Jun 2026 18:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51B23D8105;
+	Tue, 16 Jun 2026 18:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634164; cv=none; b=d+cLMYw9rqoPZ57hVoZGyiZRDP/1NXhgK6Ea3RP1peJMt0Z8mJ8jUi/s5r6Uk+gCrzmRjHS1TEtZKr7roGoUNzWeeEn71czh6YeU99oNBkQgKPZbrlZtfY1rQYYpMVuW7fyaeyPoRHzFPk/IvhUmxkOSCwQZe44l2bmPMTXxuWU=
+	t=1781634169; cv=none; b=l1K1ahZa/CDIYchcM+HoFTppWRyydlj5L8dT3R2dk3c41oAb5P0ObMcfSTrolayIsy85CIJeliX2T7Md7Q/Bez6Dv33cOaKhgEHIZ/eSPAvP1hfm+hvotJHR2g5ZX+TjEJkZheuNYPgaMFhQm1JPo7DYrwn+VrJV06ltSYF6+SE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634164; c=relaxed/simple;
-	bh=aIW0JRROU3nXYCox6nAkkkMoXCSGect6YKi376x4cRE=;
+	s=arc-20240116; t=1781634169; c=relaxed/simple;
+	bh=cM26CCxXnVy4Sk5Sf3VeW1xqZHg/Ff6nXUQKM4cd40w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RDJvJR+X9jtomRioNyHhj8580ZZx/x6TB7FMyDJYvcrZTYYsl7qnIPby2D5XuBctN8q2BeONvzeCVAkbDvrj7iNS6nzJN6hxRYp3iMHlWM0fsQE3SeSxsuzL2mWaBJAxMttGcgGMniCySG/Hj/On075qtaidbwlEQIMQAnQkPik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fBHGL8V2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ddT3P3h+GkF+AKmOCLQwCIO2zOQszVWy3bHC7SvQP6bBbiQit3N0W2+Y+bvLHgqgimQBYFQceK4Ud+v7AUYmvKmJspukLh4xUl1Qve0EF9e7UnW91+9Y+aIZgIyAF6sGmS2+z8p8+m0ZwhdBHETo2ScstqBQIBPr77R/cOiyB3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLND9tL0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBHGL8V2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7301F000E9;
-	Tue, 16 Jun 2026 18:22:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLND9tL0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63C91F000E9;
+	Tue, 16 Jun 2026 18:22:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634163;
-	bh=Ls/tx2A4uGWO0RiGpMIOIVUpuoLfb59Vw3x+2ejWsQw=;
+	s=korg; t=1781634168;
+	bh=Uxoux+Zfv8LquwHNouJyVce2dYV6u5TFPxU6Pdn58uU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fBHGL8V2Sb7J8UixyMR1iHkuaErDk0yOqqCrth+B7TcJP4zg/7KuVEp5YmecvfwzT
-	 LdCauJYjfPE4MeeTj5CFgbSFBoQ99/5LFqq3kKaAqOudRV+/WP5CLQFkoSYsu25G+y
-	 Xbk4E1ND0HMqoq6iUnybXONvCp46BF30ss9XmlFo=
+	b=vLND9tL034L71wKCookWzZyEKtbhGP8D3ZPOIZ0ZEIjirY+Tw8Df+A5utG1dra9lc
+	 s1E1r/cc16VmO5AzxeCr/mIZCYRemHSKat+rgpNDG5vhuFejTChTqoqM0oHYXsSRj4
+	 txUHroq5giea5G59ZyvMqI0msAlapKIl010Bie9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Simona Vetter <simona@ffwll.ch>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Subject: [PATCH 5.15 203/411] drm/i915/gem: Fix phys BO pread/pwrite with offset
-Date: Tue, 16 Jun 2026 20:27:21 +0530
-Message-ID: <20260616145111.520624115@linuxfoundation.org>
+	Jian Zhou <eilaimemedsnaimel@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 194/411] netfilter: nft_exthdr: fix register tracking for F_PRESENT flag
+Date: Tue, 16 Jun 2026 20:27:12 +0530
+Message-ID: <20260616145111.033535952@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -55,89 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit d21ad938398bca695a511307de38a65889e3b354 upstream.
+[ Upstream commit 772cecf198da732faebb5dcfc46d66a505be8495 ]
 
-sg_page() returns struct page pointer not (void *) so the scaling
-of pread/pwrite is wrong for phys BO and wrong parts of BO would be
-accessed if non-zero offset is used.
+nft_exthdr_init() passes user-controlled priv->len to
+nft_parse_register_store(), which marks that many bytes in the
+register bitmap as initialized.  However, when NFT_EXTHDR_F_PRESENT
+is set, the eval paths write only 1 byte (nft_reg_store8) or
+4 bytes (*dest = 0 on TCP/DCCP error path).  When len > 4,
+registers beyond the first are never written, retaining
+uninitialized stack data from nft_regs.
 
-Last impacted platform with overlay or cursor planes using phys
-mapping was Gen3/945G/Lakeport.
+Bail out if userspace requests too much data when F_PRESENT is set.
 
-Reported-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Fixes: c6790dc22312 ("drm/i915: Wean off drm_pci_alloc/drm_pci_free")
-Cc: <stable@vger.kernel.org> # v4.5+
-Cc: Tvrtko Ursulin <tursulin@ursulin.net>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Link: https://patch.msgid.link/20260610060314.26111-1-joonas.lahtinen@linux.intel.com
-(cherry picked from commit 3e49a2f85070b2fb672c1e0fdba281a4ea3aebe6)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
+Fixes: c078ca3b0c5b ("netfilter: nft_exthdr: Add support for existence check")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_phys.c |   19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ net/netfilter/nft_exthdr.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_phys.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_phys.c
-@@ -16,6 +16,17 @@
- #include "i915_gem_region.h"
- #include "i915_scatterlist.h"
+diff --git a/net/netfilter/nft_exthdr.c b/net/netfilter/nft_exthdr.c
+index 7c2931e024bb05..e8978a0aa7408f 100644
+--- a/net/netfilter/nft_exthdr.c
++++ b/net/netfilter/nft_exthdr.c
+@@ -454,6 +454,9 @@ static int nft_exthdr_init(const struct nft_ctx *ctx,
+ 			return err;
+ 	}
  
-+/* Abuse scatterlist to store pointer instead of struct page. */
-+static inline void __set_phys_vaddr(struct scatterlist *sg, void *vaddr)
-+{
-+	sg_assign_page(sg, (struct page *)vaddr);
-+}
++	if ((flags & NFT_EXTHDR_F_PRESENT) && len != 1)
++		return -EINVAL;
 +
-+static inline void *__get_phys_vaddr(struct scatterlist *sg)
-+{
-+	return (void *)sg_page(sg);
-+}
-+
- static int i915_gem_object_get_pages_phys(struct drm_i915_gem_object *obj)
- {
- 	struct address_space *mapping = obj->base.filp->f_mapping;
-@@ -51,7 +62,7 @@ static int i915_gem_object_get_pages_phy
- 	sg->offset = 0;
- 	sg->length = obj->base.size;
- 
--	sg_assign_page(sg, (struct page *)vaddr);
-+	__set_phys_vaddr(sg, vaddr);
- 	sg_dma_address(sg) = dma;
- 	sg_dma_len(sg) = obj->base.size;
- 
-@@ -95,7 +106,7 @@ i915_gem_object_put_pages_phys(struct dr
- 			       struct sg_table *pages)
- {
- 	dma_addr_t dma = sg_dma_address(pages->sgl);
--	void *vaddr = sg_page(pages->sgl);
-+	void *vaddr = __get_phys_vaddr(pages->sgl);
- 
- 	__i915_gem_object_release_shmem(obj, pages, false);
- 
-@@ -138,7 +149,7 @@ i915_gem_object_put_pages_phys(struct dr
- int i915_gem_object_pwrite_phys(struct drm_i915_gem_object *obj,
- 				const struct drm_i915_gem_pwrite *args)
- {
--	void *vaddr = sg_page(obj->mm.pages->sgl) + args->offset;
-+	void *vaddr = __get_phys_vaddr(obj->mm.pages->sgl) + args->offset;
- 	char __user *user_data = u64_to_user_ptr(args->data_ptr);
- 	int err;
- 
-@@ -168,7 +179,7 @@ int i915_gem_object_pwrite_phys(struct d
- int i915_gem_object_pread_phys(struct drm_i915_gem_object *obj,
- 			       const struct drm_i915_gem_pread *args)
- {
--	void *vaddr = sg_page(obj->mm.pages->sgl) + args->offset;
-+	void *vaddr = __get_phys_vaddr(obj->mm.pages->sgl) + args->offset;
- 	char __user *user_data = u64_to_user_ptr(args->data_ptr);
- 	int err;
- 
+ 	priv->type   = nla_get_u8(tb[NFTA_EXTHDR_TYPE]);
+ 	priv->offset = offset;
+ 	priv->len    = len;
+-- 
+2.53.0
+
 
 
