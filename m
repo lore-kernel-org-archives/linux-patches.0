@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE42613777E;
-	Tue, 16 Jun 2026 18:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B529D13777E;
+	Tue, 16 Jun 2026 18:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635342; cv=none; b=J5OXqT7tBvz8doeq0duoW6WEIvdIJmn95yLMhKlVDsBjLgHx8znThyoDOTG83irR+UP0CNqZbWBFmr24SDvgDbeXNetzTadd6ng4+OgaIEdLzjb0Z9pTMY2+8w6+/Vo8oQqBBZ2UidN8wyp3GyaRiC+RwUoBlDxmUks3+BCGUGY=
+	t=1781635346; cv=none; b=Fxag28yw6MlP0B9704a/uEA6YdxdocsgbbUhivm8O0qqhXGNVfoJSUpUFFDJZNvszghx2/fGmULheFUE4If2NHr1tKRVhnuZMfDnDQpdGW1xWznFM3n30m6gFKaRBs20+Lk02WGjvPiwgvQDDJdyqSAZK4Ukzj4mrl/OyGGiGoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635342; c=relaxed/simple;
-	bh=9SJiVoqQplwtuYln/FoI3g6yuWubXThiYj+YJd8uG+A=;
+	s=arc-20240116; t=1781635346; c=relaxed/simple;
+	bh=awaR0ov3phMbk4QzLaIMslgJLBiTwH27HIUu1W2GPaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gN8Q8AfM/BlNBHXrJi0b49QH6aKh0WdBdyZZ7Onif6uJ67Pci/WR307IS4QHugq2qIPxWfR3yY/XEaaYH4qLIykb1wPLbATwKor4NRRUBpVnzWqkHdku3+31MYkkD7LER+YNkvOEwwInXKcokJj6D0v4WQ5Bi/SfZDWe1+NvrIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2btmRTw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G7nyl+BU8/8+zLM2UH4Cv7CIU0wNOrnfSWwHwb0M9zLCLEgbRturlLRMZKS1tQiigA5bFsdYuAe4HdS+WLfRPVq/kPa7JQ8c20AwoDV9sB5JzKo3jyy1jRLHDUfXJvCFVaFV5oe1hFeo9BW6vwhrsPROa6qYVmd1f9m8USiD10g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qlF8aKrf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2btmRTw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18251F000E9;
-	Tue, 16 Jun 2026 18:42:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qlF8aKrf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2141F000E9;
+	Tue, 16 Jun 2026 18:42:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635340;
-	bh=WmnFcoPN/A6RDcRZA5CYzIdHME14+QjMUb8fu06gEzg=;
+	s=korg; t=1781635345;
+	bh=rwR/HZ0kSTuIa6QnoGWjf/TXo0mCvDfNrFX4MMAb+Lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p2btmRTwEP8Vuya+gqpfUcunBWDfgUZ4Jp73xNC42ZRjgvFGFe+shBEloEDGG4Rxb
-	 QUKVp2YvdKiCazIl2kYZCNjuEHXdyP550Vam1nCtye/ImVvtGZVFUcXr3Fq4Cck8rU
-	 6Md59+r73JueGvfNiNmcvXAl2ueorshhNGnTBEls=
+	b=qlF8aKrf/4y93Z5EsrqLgm8NiNEP0WErNTD+DIrPJfE7xSEo/EyDV2MbSifs5RxHC
+	 IY5IoA9TIvRdyQuFusVQ+Stq2WlXc67gi+7SB/4tEQbeDvAwyMm4Rmld6BAviBaohj
+	 Sf4K87AczC4gNHtaVzFfTOZ+8cslcEseP30zmBrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
+	Ido Schimmel <idosch@nvidia.com>,
+	syzbot+9fdcc9f05a98a540b816@syzkaller.appspotmail.com,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 031/342] batman-adv: tvlv: abort OGM send on tvlv append failure
-Date: Tue, 16 Jun 2026 20:25:27 +0530
-Message-ID: <20260616145049.705164541@linuxfoundation.org>
+Subject: [PATCH 5.10 032/342] batman-adv: bla: avoid NULL-ptr deref for claim via dropped interface
+Date: Tue, 16 Jun 2026 20:25:28 +0530
+Message-ID: <20260616145049.747364807@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -53,192 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 501368506563e151b322c8c3f228b796e615b90d upstream.
+commit f80d3d98d2ff78d9e2fe5d68b1f45948c4f7bd24 upstream.
 
-batadv_tvlv_container_ogm_append() could fail in two ways: a memory
-allocation failure when resizing the packet buffer, or the tvlv data
-exceeding U16_MAX bytes. In both cases the function previously returned the
-old (now stale) tvlv_value_len rather than signalling an error, causing the
-OGM/OGM2 send path to transmit a packet whose TVLV length field no longer
-matched the actual buffer contents. And because it also didn't fill in the
-new TVLV data, sending either uninitialized or corrupted data on the wire.
+Without rtnl_lock held, a hardif might be retrieved as primary interface of
+a meshif, but then (while operating on this interface) getting decoupled
+from the mesh interface. In this case, the meshif still exists but the
+pointer from the primary hardif to the meshif is set to NULL.
 
-All errors in batadv_tvlv_container_ogm_append() must be forwarded to the
-caller. And the caller must abort the send of the OGM2. For B.A.T.M.A.N.
-IV, it is currently not allowed to abort the send. The non-TVLV part of the
-OGM must be queued up instead.
+The mesh_iface must be checked first to be non-NULL before continuing to
+send an ARP request using meshif.
 
 Cc: stable@kernel.org
-Fixes: ef26157747d4 ("batman-adv: tvlv - basic infrastructure")
-[ Context ]
+Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
+Reported-by: Ido Schimmel <idosch@nvidia.com>
+Reported-by: syzbot+9fdcc9f05a98a540b816@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9fdcc9f05a98a540b816
+[ switch to old "mesh_iface" name "soft_iface" ]
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/bat_iv_ogm.c | 16 +++++++++++++---
- net/batman-adv/bat_v_ogm.c  | 26 ++++++++++++++------------
- net/batman-adv/tvlv.c       | 17 ++++++++++++-----
- net/batman-adv/tvlv.h       |  2 +-
- 4 files changed, 40 insertions(+), 21 deletions(-)
+ net/batman-adv/bridge_loop_avoidance.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/batman-adv/bat_iv_ogm.c b/net/batman-adv/bat_iv_ogm.c
-index f35665a4045123..9cd2fa751c21ef 100644
---- a/net/batman-adv/bat_iv_ogm.c
-+++ b/net/batman-adv/bat_iv_ogm.c
-@@ -784,6 +784,7 @@ static void batadv_iv_ogm_schedule_buff(struct batadv_hard_iface *hard_iface)
- 	u32 seqno;
- 	u16 tvlv_len = 0;
- 	unsigned long send_time;
-+	int ret;
+diff --git a/net/batman-adv/bridge_loop_avoidance.c b/net/batman-adv/bridge_loop_avoidance.c
+index d8305961b59bd1..d01c636024ce15 100644
+--- a/net/batman-adv/bridge_loop_avoidance.c
++++ b/net/batman-adv/bridge_loop_avoidance.c
+@@ -357,12 +357,14 @@ static void batadv_bla_send_claim(struct batadv_priv *bat_priv, u8 *mac,
+ 	       sizeof(local_claim_dest));
+ 	local_claim_dest.type = claimtype;
  
- 	lockdep_assert_held(&hard_iface->bat_iv.ogm_buff_mutex);
+-	soft_iface = primary_if->soft_iface;
++	soft_iface = READ_ONCE(primary_if->soft_iface);
++	if (!soft_iface)
++		goto out;
  
-@@ -807,9 +808,18 @@ static void batadv_iv_ogm_schedule_buff(struct batadv_hard_iface *hard_iface)
- 		 * appended as it may alter the tt tvlv container
- 		 */
- 		batadv_tt_local_commit_changes(bat_priv);
--		tvlv_len = batadv_tvlv_container_ogm_append(bat_priv, ogm_buff,
--							    ogm_buff_len,
--							    BATADV_OGM_HLEN);
-+		ret = batadv_tvlv_container_ogm_append(bat_priv, ogm_buff,
-+						       ogm_buff_len,
-+						       BATADV_OGM_HLEN);
-+		if (ret < 0) {
-+			/* OGMs must be queued even when the buffer allocation for
-+			 * TVLVs failed. just fall back to the non-TVLV version
-+			 */
-+			ret = 0;
-+			*ogm_buff_len = BATADV_OGM_HLEN;
-+		}
-+
-+		tvlv_len = ret;
- 	}
- 
- 	batadv_ogm_packet = (struct batadv_ogm_packet *)(*ogm_buff);
-diff --git a/net/batman-adv/bat_v_ogm.c b/net/batman-adv/bat_v_ogm.c
-index 5f75bcf64ae56c..939aa4b303ad98 100644
---- a/net/batman-adv/bat_v_ogm.c
-+++ b/net/batman-adv/bat_v_ogm.c
-@@ -272,9 +272,9 @@ static void batadv_v_ogm_send_softif(struct batadv_priv *bat_priv)
- 	struct batadv_hard_iface *hard_iface;
- 	struct batadv_ogm2_packet *ogm_packet;
- 	struct sk_buff *skb, *skb_tmp;
--	unsigned char *ogm_buff;
--	int ogm_buff_len;
--	u16 tvlv_len = 0;
-+	unsigned char **ogm_buff;
-+	int *ogm_buff_len;
-+	u16 tvlv_len;
- 	int ret;
- 
- 	lockdep_assert_held(&bat_priv->bat_v.ogm_buff_mutex);
-@@ -282,25 +282,27 @@ static void batadv_v_ogm_send_softif(struct batadv_priv *bat_priv)
- 	if (atomic_read(&bat_priv->mesh_state) == BATADV_MESH_DEACTIVATING)
- 		goto out;
- 
--	ogm_buff = bat_priv->bat_v.ogm_buff;
--	ogm_buff_len = bat_priv->bat_v.ogm_buff_len;
-+	ogm_buff = &bat_priv->bat_v.ogm_buff;
-+	ogm_buff_len = &bat_priv->bat_v.ogm_buff_len;
-+
- 	/* tt changes have to be committed before the tvlv data is
- 	 * appended as it may alter the tt tvlv container
- 	 */
- 	batadv_tt_local_commit_changes(bat_priv);
--	tvlv_len = batadv_tvlv_container_ogm_append(bat_priv, &ogm_buff,
--						    &ogm_buff_len,
--						    BATADV_OGM2_HLEN);
-+	ret = batadv_tvlv_container_ogm_append(bat_priv, ogm_buff,
-+					       ogm_buff_len,
-+					       BATADV_OGM2_HLEN);
-+	if (ret < 0)
-+		goto reschedule;
- 
--	bat_priv->bat_v.ogm_buff = ogm_buff;
--	bat_priv->bat_v.ogm_buff_len = ogm_buff_len;
-+	tvlv_len = ret;
- 
--	skb = netdev_alloc_skb_ip_align(NULL, ETH_HLEN + ogm_buff_len);
-+	skb = netdev_alloc_skb_ip_align(NULL, ETH_HLEN + *ogm_buff_len);
- 	if (!skb)
- 		goto reschedule;
- 
- 	skb_reserve(skb, ETH_HLEN);
--	skb_put_data(skb, ogm_buff, ogm_buff_len);
-+	skb_put_data(skb, *ogm_buff, *ogm_buff_len);
- 
- 	ogm_packet = (struct batadv_ogm2_packet *)skb->data;
- 	ogm_packet->seqno = htonl(atomic_read(&bat_priv->bat_v.ogm_seqno));
-diff --git a/net/batman-adv/tvlv.c b/net/batman-adv/tvlv.c
-index 99fc48efde5431..75f7ea827ed9dd 100644
---- a/net/batman-adv/tvlv.c
-+++ b/net/batman-adv/tvlv.c
-@@ -7,6 +7,7 @@
- #include "main.h"
- 
- #include <linux/byteorder/generic.h>
-+#include <linux/errno.h>
- #include <linux/etherdevice.h>
- #include <linux/gfp.h>
- #include <linux/if_ether.h>
-@@ -306,9 +307,10 @@ static bool batadv_tvlv_realloc_packet_buff(unsigned char **packet_buff,
-  * The ogm packet might be enlarged or shrunk depending on the current size
-  * and the size of the to-be-appended tvlv containers.
-  *
-- * Return: size of all appended tvlv containers in bytes.
-+ * Return: size of all appended tvlv containers in bytes (max U16_MAX), negative
-+ *  if operation failed
-  */
--u16 batadv_tvlv_container_ogm_append(struct batadv_priv *bat_priv,
-+int batadv_tvlv_container_ogm_append(struct batadv_priv *bat_priv,
- 				     unsigned char **packet_buff,
- 				     int *packet_buff_len, int packet_min_len)
- {
-@@ -316,6 +318,7 @@ u16 batadv_tvlv_container_ogm_append(struct batadv_priv *bat_priv,
- 	struct batadv_tvlv_hdr *tvlv_hdr;
- 	u16 tvlv_value_len;
- 	void *tvlv_value;
-+	int tvlv_len_ret;
- 	bool ret;
- 
- 	spin_lock_bh(&bat_priv->tvlv.container_list_lock);
-@@ -323,9 +326,12 @@ u16 batadv_tvlv_container_ogm_append(struct batadv_priv *bat_priv,
- 
- 	ret = batadv_tvlv_realloc_packet_buff(packet_buff, packet_buff_len,
- 					      packet_min_len, tvlv_value_len);
--
--	if (!ret)
-+	if (!ret) {
-+		tvlv_len_ret = -ENOMEM;
- 		goto end;
-+	}
-+
-+	tvlv_len_ret = tvlv_value_len;
- 
- 	if (!tvlv_value_len)
- 		goto end;
-@@ -344,7 +350,8 @@ u16 batadv_tvlv_container_ogm_append(struct batadv_priv *bat_priv,
- 
- end:
- 	spin_unlock_bh(&bat_priv->tvlv.container_list_lock);
--	return tvlv_value_len;
-+
-+	return tvlv_len_ret;
- }
- 
- /**
-diff --git a/net/batman-adv/tvlv.h b/net/batman-adv/tvlv.h
-index d509d00c7a23e6..4823f4963df5bd 100644
---- a/net/batman-adv/tvlv.h
-+++ b/net/batman-adv/tvlv.h
-@@ -15,7 +15,7 @@
- void batadv_tvlv_container_register(struct batadv_priv *bat_priv,
- 				    u8 type, u8 version,
- 				    void *tvlv_value, u16 tvlv_value_len);
--u16 batadv_tvlv_container_ogm_append(struct batadv_priv *bat_priv,
-+int batadv_tvlv_container_ogm_append(struct batadv_priv *bat_priv,
- 				     unsigned char **packet_buff,
- 				     int *packet_buff_len, int packet_min_len);
- void batadv_tvlv_ogm_receive(struct batadv_priv *bat_priv,
+ 	skb = arp_create(ARPOP_REPLY, ETH_P_ARP,
+ 			 /* IP DST: 0.0.0.0 */
+ 			 zeroip,
+-			 primary_if->soft_iface,
++			 soft_iface,
+ 			 /* IP SRC: 0.0.0.0 */
+ 			 zeroip,
+ 			 /* Ethernet DST: Broadcast */
 -- 
 2.53.0
 
