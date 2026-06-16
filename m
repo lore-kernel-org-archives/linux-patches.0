@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FE01A6803;
-	Tue, 16 Jun 2026 17:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3844647A0D7;
+	Tue, 16 Jun 2026 17:23:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630585; cv=none; b=jrm9Y9yXvIArDeqOpcHCJ7BEdo0zjqnvJgtDmEl2wNJr5Qm52wxTicMptigvyS1O8W3ntU1sK24ATXqm8HORXG83cnk6kJmh+RsWrkuhD3GUSvQ+UDSsriUTx75OoiOHyLynu7Yz9EeG9HhYmkTKmh1U1XnQj4yQmxpxHiD4XAo=
+	t=1781630592; cv=none; b=W1kgGu7nZTplqylanotpAKsKVoz/PBTlbl/k7Y8CPezAiqAYA5QU2FgFWswKUe1VC3+wmJCHRlKCIg9YSI8dIEQLGfk2y8sUepOpRVss/YJc1xCP+sIzxQknOv0tutm5FKRjN+0SjqyB98po5EkmVi1ws5YuKmw6pkoc8G69NFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630585; c=relaxed/simple;
-	bh=RQFaTx/AQhGdIiJgBNtxwrUDiidbGqMUWDCfejVeoxY=;
+	s=arc-20240116; t=1781630592; c=relaxed/simple;
+	bh=dz4W9qfm9Rxt2VYTzlTwaUJ/deEfk1Yc/w0tiHBIgCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KcMSM/FlCmOZWBKP8UJNkGjuBvHCoM49RdIl3aBPJRkGZsCFYzcmMZs/bFNK48XnF2GeYKXngHS6cBV5bqKi+tL0zJr69EQejkbkkXe5j4MaAlMlmbA4fvkJkRv1SkyJI9BLBS13zxCnIdNtHPEBHd7Hu0a+IFP05PyHiFIW6Fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsp3kd9Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qo9k7Z6JUxItD4ks6aLPlNNiO91bY4wdkdGxK+P5DBhNaND7p6EUTNwPlXnHE6Ey3AUOaw83fCmduRYGqLsDtfWFJ5bIqnQtY/GIcW6Z18JlUPJfDLci7u7jzcFygVv3AuZKRgerpX75CHi3jtqopylPgPiVsCk0HCXb2f58Sw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TA8/VGB9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsp3kd9Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B778A1F000E9;
-	Tue, 16 Jun 2026 17:23:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TA8/VGB9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3342A1F000E9;
+	Tue, 16 Jun 2026 17:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630584;
-	bh=1wYvXTXrJb15JdkWPG4FWbQhFpZ2HlE+oJTimrx+1ys=;
+	s=korg; t=1781630590;
+	bh=ZmZ2aUJSuJeUBfAhSpPSHAbmcutHrNmJiFzu2tmMgQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lsp3kd9Z4qSWUZ9RzalEBrqRPcCC+9aLrsomZ6km4yeEPwBYhcra9QeGZV6jw+q4H
-	 DDwkUIkhY4w6H/6utE8Fp4JCLLOoVVXGVH60esy4SueKm431nkfp6uvXC6yY/ky9ns
-	 9CxKDVF6lMk23UH1Z5KobdnbKXhFAxkuBexwJz28=
+	b=TA8/VGB9d6dnm62jT1zYiAaZ2+UfXeZQhxIuGRIHO5TswEnXse6A5rE7+L8K5v6/C
+	 X/xSCTtkpXHPlNQG25w6nLtNVZCCITqs0vI0X18Q0znLvKaSfwwRErFF5151YlBt71
+	 tLLr2NOG8aOimWxUDv4KTKxPd83jhI39lg00vLTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8ed98cbd0161632bce95@syzkaller.appspotmail.com,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/522] bonding: refuse to enslave CAN devices
-Date: Tue, 16 Jun 2026 20:22:57 +0530
-Message-ID: <20260616145127.060289281@linuxfoundation.org>
+Subject: [PATCH 6.1 057/522] Revert "selftests/bpf: Add tests for _opts variants of bpf_*_get_fd_by_id()"
+Date: Tue, 16 Jun 2026 20:23:24 +0530
+Message-ID: <20260616145128.451168149@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,72 +51,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-[ Upstream commit 8ba68464e4787b6a7ec938826e16124df20fd23d ]
+This reverts commit 45108a7b4866 ("selftests/bpf: Add tests for _opts
+variants of bpf_*_get_fd_by_id()"). As explained in the previous patch,
+it introduces a new selftest for a feature that doesn't exist in 6.1. It
+was backported as a stable-dep of a1914d146622 ("selftests/bpf:
+Workaround strict bpf_lsm return value check"), also reverted in the
+previous patch.
 
-syzbot reported a kernel paging request crash in
-can_rx_unregister() inside net/can/af_can.c. The crash occurs
-because a virtual CAN device (vxcan) is being enslaved to a
-bonding master.
-
-During the enslavement process, the bonding driver mutates
-and modifies the network device states to fit an Ethernet-like
-aggregation model. However, CAN devices operate on a completely
-different Layer 2 architecture, relying on the CAN mid-layer
-private data structure (can_ml_priv) instead of standard
-Ethernet structures. Since bonding does not initialize or
-maintain these CAN structures, subsequent operations on the
-half-enslaved interface (such as closing associated sockets
-via isotp_release) lead to a null-pointer dereference when
-accessing the CAN receiver lists.
-
-Bonding CAN interfaces is architecturally invalid as CAN lacks
-MAC addresses, ARP capabilities, and standard Ethernet
-link-layer mechanisms. While generic loopback devices are
-blocked globally in net/core/dev.c, virtual CAN devices
-bypass this check because they do not carry the IFF_LOOPBACK
-flag, despite acting as local software-loopbacks.
-
-Fix this by explicitly blocking network devices of type
-ARPHRD_CAN from being enslaved at the very beginning of
-bond_enslave(). This prevents illegal state mutations,
-eliminates the resulting KASAN crashes, and avoids potential
-memory leaks from incomplete socket cleanups.
-
-As the CAN support has been added a long time after bonding
-the Fixes-tag points to the introduction of ARPHRD_CAN that
-would have needed a specific handling in bonding_main.c.
-
-Fixes: cd05acfe65ed ("[CAN]: Allocate protocol numbers for PF_CAN")
-Reported-by: syzbot+8ed98cbd0161632bce95@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8ed98cbd0161632bce95
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20260526-bonding-candev-v1-1-ba1df400918a@hartkopp.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/testing/selftests/bpf/DENYLIST.s390x    |  1 -
+ .../bpf/prog_tests/libbpf_get_fd_by_id_opts.c | 87 -------------------
+ .../bpf/progs/test_libbpf_get_fd_by_id_opts.c | 36 --------
+ 3 files changed, 124 deletions(-)
+ delete mode 100644 tools/testing/selftests/bpf/prog_tests/libbpf_get_fd_by_id_opts.c
+ delete mode 100644 tools/testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index e9e2dec1dcb131..0e078252b52a98 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1848,6 +1848,12 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 	int link_reporting;
- 	int res = 0, i;
- 
-+	if (slave_dev->type == ARPHRD_CAN) {
-+		BOND_NL_ERR(bond_dev, extack,
-+			    "CAN devices cannot be enslaved");
-+		return -EPERM;
-+	}
-+
- 	if (slave_dev->flags & IFF_MASTER &&
- 	    !netif_is_bond_master(slave_dev)) {
- 		BOND_NL_ERR(bond_dev, extack,
+diff --git a/tools/testing/selftests/bpf/DENYLIST.s390x b/tools/testing/selftests/bpf/DENYLIST.s390x
+index beef1232a47aeb..0fb03b8047d535 100644
+--- a/tools/testing/selftests/bpf/DENYLIST.s390x
++++ b/tools/testing/selftests/bpf/DENYLIST.s390x
+@@ -76,4 +76,3 @@ lookup_key                               # JIT does not support calling kernel f
+ verify_pkcs7_sig                         # JIT does not support calling kernel function                                (kfunc)
+ kfunc_dynptr_param                       # JIT does not support calling kernel function                                (kfunc)
+ deny_namespace                           # failed to attach: ERROR: strerror_r(-524)=22                                (trampoline)
+-libbpf_get_fd_by_id_opts                 # failed to attach: ERROR: strerror_r(-524)=22                                (trampoline)
+diff --git a/tools/testing/selftests/bpf/prog_tests/libbpf_get_fd_by_id_opts.c b/tools/testing/selftests/bpf/prog_tests/libbpf_get_fd_by_id_opts.c
+deleted file mode 100644
+index 25e5dfa9c315ce..00000000000000
+--- a/tools/testing/selftests/bpf/prog_tests/libbpf_get_fd_by_id_opts.c
++++ /dev/null
+@@ -1,87 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0
+-
+-/*
+- * Copyright (C) 2022 Huawei Technologies Duesseldorf GmbH
+- *
+- * Author: Roberto Sassu <roberto.sassu@huawei.com>
+- */
+-
+-#include <test_progs.h>
+-
+-#include "test_libbpf_get_fd_by_id_opts.skel.h"
+-
+-void test_libbpf_get_fd_by_id_opts(void)
+-{
+-	struct test_libbpf_get_fd_by_id_opts *skel;
+-	struct bpf_map_info info_m = {};
+-	__u32 len = sizeof(info_m), value;
+-	int ret, zero = 0, fd = -1;
+-	LIBBPF_OPTS(bpf_get_fd_by_id_opts, fd_opts_rdonly,
+-		.open_flags = BPF_F_RDONLY,
+-	);
+-
+-	skel = test_libbpf_get_fd_by_id_opts__open_and_load();
+-	if (!ASSERT_OK_PTR(skel,
+-			   "test_libbpf_get_fd_by_id_opts__open_and_load"))
+-		return;
+-
+-	ret = test_libbpf_get_fd_by_id_opts__attach(skel);
+-	if (!ASSERT_OK(ret, "test_libbpf_get_fd_by_id_opts__attach"))
+-		goto close_prog;
+-
+-	ret = bpf_obj_get_info_by_fd(bpf_map__fd(skel->maps.data_input),
+-				     &info_m, &len);
+-	if (!ASSERT_OK(ret, "bpf_obj_get_info_by_fd"))
+-		goto close_prog;
+-
+-	fd = bpf_map_get_fd_by_id(info_m.id);
+-	if (!ASSERT_LT(fd, 0, "bpf_map_get_fd_by_id"))
+-		goto close_prog;
+-
+-	fd = bpf_map_get_fd_by_id_opts(info_m.id, NULL);
+-	if (!ASSERT_LT(fd, 0, "bpf_map_get_fd_by_id_opts"))
+-		goto close_prog;
+-
+-	fd = bpf_map_get_fd_by_id_opts(info_m.id, &fd_opts_rdonly);
+-	if (!ASSERT_GE(fd, 0, "bpf_map_get_fd_by_id_opts"))
+-		goto close_prog;
+-
+-	/* Map lookup should work with read-only fd. */
+-	ret = bpf_map_lookup_elem(fd, &zero, &value);
+-	if (!ASSERT_OK(ret, "bpf_map_lookup_elem"))
+-		goto close_prog;
+-
+-	if (!ASSERT_EQ(value, 0, "map value mismatch"))
+-		goto close_prog;
+-
+-	/* Map update should not work with read-only fd. */
+-	ret = bpf_map_update_elem(fd, &zero, &len, BPF_ANY);
+-	if (!ASSERT_LT(ret, 0, "bpf_map_update_elem"))
+-		goto close_prog;
+-
+-	/* Map update should work with read-write fd. */
+-	ret = bpf_map_update_elem(bpf_map__fd(skel->maps.data_input), &zero,
+-				  &len, BPF_ANY);
+-	if (!ASSERT_OK(ret, "bpf_map_update_elem"))
+-		goto close_prog;
+-
+-	/* Prog get fd with opts set should not work (no kernel support). */
+-	ret = bpf_prog_get_fd_by_id_opts(0, &fd_opts_rdonly);
+-	if (!ASSERT_EQ(ret, -EINVAL, "bpf_prog_get_fd_by_id_opts"))
+-		goto close_prog;
+-
+-	/* Link get fd with opts set should not work (no kernel support). */
+-	ret = bpf_link_get_fd_by_id_opts(0, &fd_opts_rdonly);
+-	if (!ASSERT_EQ(ret, -EINVAL, "bpf_link_get_fd_by_id_opts"))
+-		goto close_prog;
+-
+-	/* BTF get fd with opts set should not work (no kernel support). */
+-	ret = bpf_btf_get_fd_by_id_opts(0, &fd_opts_rdonly);
+-	ASSERT_EQ(ret, -EINVAL, "bpf_btf_get_fd_by_id_opts");
+-
+-close_prog:
+-	if (fd >= 0)
+-		close(fd);
+-
+-	test_libbpf_get_fd_by_id_opts__destroy(skel);
+-}
+diff --git a/tools/testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c b/tools/testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c
+deleted file mode 100644
+index f5ac5f3e89196f..00000000000000
+--- a/tools/testing/selftests/bpf/progs/test_libbpf_get_fd_by_id_opts.c
++++ /dev/null
+@@ -1,36 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0
+-
+-/*
+- * Copyright (C) 2022 Huawei Technologies Duesseldorf GmbH
+- *
+- * Author: Roberto Sassu <roberto.sassu@huawei.com>
+- */
+-
+-#include "vmlinux.h"
+-#include <errno.h>
+-#include <bpf/bpf_helpers.h>
+-#include <bpf/bpf_tracing.h>
+-
+-/* From include/linux/mm.h. */
+-#define FMODE_WRITE	0x2
+-
+-struct {
+-	__uint(type, BPF_MAP_TYPE_ARRAY);
+-	__uint(max_entries, 1);
+-	__type(key, __u32);
+-	__type(value, __u32);
+-} data_input SEC(".maps");
+-
+-char _license[] SEC("license") = "GPL";
+-
+-SEC("lsm/bpf_map")
+-int BPF_PROG(check_access, struct bpf_map *map, fmode_t fmode)
+-{
+-	if (map != (struct bpf_map *)&data_input)
+-		return 0;
+-
+-	if (fmode & FMODE_WRITE)
+-		return -EACCES;
+-
+-	return 0;
+-}
 -- 
 2.53.0
 
