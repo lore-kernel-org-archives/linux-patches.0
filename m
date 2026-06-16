@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2932E2DCF4C;
-	Tue, 16 Jun 2026 18:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B072DCF4C;
+	Tue, 16 Jun 2026 18:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634645; cv=none; b=GOX3C0b4pgbiOzAD63q5J+D2GcaWePN9B2MinZuUmV1mQA6Cs8fmDm8qZv+HEW5h7cIHqFvQhhOskRWvTpptQO1Cq9swWkV5SPkeSWanZy/X6sOotMbZHsKTxElSwDTKhQC7XO867ftksA/wVg9/7AeoN7x0iiYyr23/x+nzFOY=
+	t=1781634650; cv=none; b=I5TGvbjTWLTVz1ZwfbROjtDiAM1LgM0eHwcIKmpCoGS0p7Q8CyGR0PXsC1GokivlJueu601yItdevb8eczYI/sS4TFf8VHbaVvHPTjLcRAwwXwHMI3CITyjlr/QlQAu8jDzyhmnOi8CNx6RQ5GUQi5hEzTICiMTzZ+s/GeP8XnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634645; c=relaxed/simple;
-	bh=wK4LeFcnKyqu5jIPiZzPF/HTopmYpCX9hfXmKbtfSQo=;
+	s=arc-20240116; t=1781634650; c=relaxed/simple;
+	bh=mFSKyY5AJdfL0KEksE8p7o13pZr/8hln66TPdrJU3lA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G6yF4ZDQ76D10KiIOmG90QaEpQgJjNfuiTV3UxZiuyrXKxNCdYMhxoGxGOr5pIoco7aTndt0aJChN9uNANou9ZIIZMIvS5OT+vmrr/+XMHaeQK/73xuGOvdnrePw0dkkDk7NmEiIvoWCwpb4sisVlLgEFTSBFyIKVvPBAVIc/SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LFtW+mXq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uHgbWoDS2yEWrC4uoVarPdYpS8rA5ZZCwzctCwsP70A4lEOtnUZ1Gp1b0snCi8oKw5fPravb7NyYHpK7LSNO7T6mHDGsx8BPvSn07MaBWx4PjBA1PTlAflsPO5PWlWFp3pmenmfzYU7ai7EtgUBH0RWXCCRqw28ytIm2q1yKhNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KBp6MZy4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LFtW+mXq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F7F1F000E9;
-	Tue, 16 Jun 2026 18:30:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KBp6MZy4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF83B1F000E9;
+	Tue, 16 Jun 2026 18:30:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634644;
-	bh=d9K0YtrlUHaAfKD2rSwX0UF3diS9cDwGROzGw1kk2aw=;
+	s=korg; t=1781634648;
+	bh=54WJA0T9nn0ox+t9pjEIAPAutbcLIHbiINC4FEIZ5oI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LFtW+mXq+f7fQDXpP3Q1l+w79Tut2TOjpUMFx7KMU5/s8BxVg+qk+XFwxf4Im+QEi
-	 JHycCH9pQbc6fzwR1Cfyw9Ac1GBrg7GIGZnZW3UJyUt7rLoNTHgzcQawMWCq23Gl7I
-	 txD0g0OyI9khBUwEnKMS98NXAxzvQLkAdzMVcJwo=
+	b=KBp6MZy4hK4mmqr24d74Wy1tj25z/iak0Rk0Y1o0Fiq/RCjVqQib4HUMSJsGIrjMx
+	 qHf+aViMqusbp8auJ1tn7mNAr+w6zVUIP2sgVpbnZ0rtuI61XGOexqA+Qp0DeZ571z
+	 9u+8LpFlCZovfBMrRLNwwWIFJ2n1aTaN2NpeV/Ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	stable <stable@kernel.org>,
+	Pritam Manohar Sutar <pritam.sutar@samsung.com>,
+	Selvarasu Ganesan <selvarasu.g@samsung.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 305/411] wifi: brcmfmac: Fix potential use-after-free issue when stopping watchdog task
-Date: Tue, 16 Jun 2026 20:29:03 +0530
-Message-ID: <20260616145117.362364755@linuxfoundation.org>
+Subject: [PATCH 5.15 306/411] usb: dwc3: Move GUID programming after PHY initialization
+Date: Tue, 16 Jun 2026 20:29:04 +0530
+Message-ID: <20260616145117.421275105@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,52 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Selvarasu Ganesan <selvarasu.g@samsung.com>
 
-[ Upstream commit c623b63580880cc742255eaed3d79804c1b91143 ]
+[ Upstream commit aad35f9c926ec220b0742af1ada45666ae667956 ]
 
-Watchdog task might end between send_sig() and kthread_stop() calls, what
-results in the use-after-free issue. Fix this by increasing watchdog task
-reference count before calling send_sig() and dropping it by switching to
-kthread_stop_put().
+The Linux Version Code is currently written to the GUID register before
+PHY initialization. Certain PHY implementations (such as Synopsys eUSB
+PHY performing link_sw_reset) clear the GUID register to its default
+value during initialization, causing the kernel version information to
+be lost.
 
-Cc: stable@vger.kernel.org
-Fixes: 373c83a801f1 ("brcmfmac: stop watchdog before detach and free everything")
-Fixes: a9ffda88be74 ("brcm80211: fmac: abstract bus_stop interface function pointer")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260416093339.2066829-1-m.szyprowski@samsung.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ replaced kthread_stop_put() with open-coded kthread_stop() + put_task_struct() ]
+Move the GUID register programming to occur after PHY initialization
+completes to ensure the Linux version information persists.
+
+Fixes: fa0ea13e9f1c ("usb: dwc3: core: write LINUX_VERSION_CODE to our GUID register")
+Cc: stable <stable@kernel.org>
+Reported-by: Pritam Manohar Sutar <pritam.sutar@samsung.com>
+Signed-off-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20260417063314.2359-1-selvarasu.g@samsung.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ adapted dwc3_writel(dwc, ...) to dwc3_writel(dwc->regs, ...) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/dwc3/core.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -2474,8 +2474,10 @@ static void brcmf_sdio_bus_stop(struct d
- 	brcmf_dbg(TRACE, "Enter\n");
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -978,12 +978,6 @@ static int dwc3_core_init(struct dwc3 *d
  
- 	if (bus->watchdog_tsk) {
-+		get_task_struct(bus->watchdog_tsk);
- 		send_sig(SIGTERM, bus->watchdog_tsk, 1);
- 		kthread_stop(bus->watchdog_tsk);
-+		put_task_struct(bus->watchdog_tsk);
- 		bus->watchdog_tsk = NULL;
- 	}
+ 	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
  
-@@ -4549,8 +4551,10 @@ void brcmf_sdio_remove(struct brcmf_sdio
- 	if (bus) {
- 		/* Stop watchdog task */
- 		if (bus->watchdog_tsk) {
-+			get_task_struct(bus->watchdog_tsk);
- 			send_sig(SIGTERM, bus->watchdog_tsk, 1);
- 			kthread_stop(bus->watchdog_tsk);
-+			put_task_struct(bus->watchdog_tsk);
- 			bus->watchdog_tsk = NULL;
- 		}
+-	/*
+-	 * Write Linux Version Code to our GUID register so it's easy to figure
+-	 * out which kernel version a bug was found.
+-	 */
+-	dwc3_writel(dwc->regs, DWC3_GUID, LINUX_VERSION_CODE);
+-
+ 	ret = dwc3_phy_setup(dwc);
+ 	if (ret)
+ 		goto err0;
+@@ -1023,6 +1017,12 @@ static int dwc3_core_init(struct dwc3 *d
+ 	if (ret)
+ 		goto err1;
+ 
++	/*
++	 * Write Linux Version Code to our GUID register so it's easy to figure
++	 * out which kernel version a bug was found.
++	 */
++	dwc3_writel(dwc->regs, DWC3_GUID, LINUX_VERSION_CODE);
++
+ 	dwc3_core_setup_global_control(dwc);
+ 	dwc3_core_num_eps(dwc);
  
 
 
