@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86E93A16AC;
-	Tue, 16 Jun 2026 16:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913514534A3;
+	Tue, 16 Jun 2026 16:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626088; cv=none; b=EUSkMXMjxu5qoH78Y1OiUBvG9Rm4eIDjMK6ykgRPXOlE9NAF+b6mMFQJBkSw3dz4CJHCgRJpBRmwTETxoUsxAQVkZ4v4ELmNVWC4WEagFQkK2Hc4Kw+tV81QZL3HuC5U29qqMqvPrht9g4EHzCgMYUMmjwGw/eQxbrsvO+IvENw=
+	t=1781626094; cv=none; b=LshNz2cqX9GSnCx6GfTLOjB2S/pLA21jgyRIbVSFA2WZZ+AqIxmA8sedbj0fUQbFpKvB3pCDVspSGyHCQtOIGHuFNQQrm21CzhPfbCRJ/GVZUVapDgKQYNQAGfSBjPkdTeMqUtf8my7mEfXAi/m6/+Wtvmo1EWgS+KPLGvtpQto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626088; c=relaxed/simple;
-	bh=Dw4Tq46thps+FR4nXuVSSBSoqV0gDOrlfYp+2sUMezo=;
+	s=arc-20240116; t=1781626094; c=relaxed/simple;
+	bh=E9+KP37NnGUMPnf6Y00nxRf5guDEHbVqX3c3IEd5X6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dP1uwn8UGm5y6V7vdE7DzpKi+bTzxU7ffMIWjLI+ksi4bh12KxV2Cfnl/qc+rmSF/aaZLCMUTLaxNXTMuIRjgVExDVFhBUHl/3W5L2/TWSiHPA6jFbjtVJl+0BwmTrxFCMeMy089W930oi2vNtp5PPDwWfJuqbXrRHrmFPlrbog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wytCFO0D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AQJoV5sHmNlNM9iuJAuhh7Pr8sjzWQU0ZJY+ZtXlUM3CxZ7JdyvE3IrCT+1ryexG2bpFG3MAju4IyeBfB7/fCxF6ZdakQ2mtYYV0YnHOY3LCFJgKZs8mGnz8+4aMvRGSf/zNgu0bI0vWFyIjOBG2YPen1sozxkG8mpHOCuPF6wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MVJT0Mzd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wytCFO0D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB9F1F000E9;
-	Tue, 16 Jun 2026 16:08:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MVJT0Mzd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 902FA1F000E9;
+	Tue, 16 Jun 2026 16:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626087;
-	bh=jfESegxATxTJiwNyz+qt/9/sYBo6IQI1ghs4WD+GXsc=;
+	s=korg; t=1781626093;
+	bh=CanB+2k4BofoweGGGFsz679FvH+kNiql/sKNjUwnXlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wytCFO0DeuXhufVh2GyRREKdbJ0CWaSx5e1AJKViewdlctYfTk2oMaiLzgcsKeS7y
-	 r9dwVXUqXf02kfFmd+DZyxoOGbaBhFAFJ9NNQz2CtKYqH6aoeAnCx7n+1+wxpEyehy
-	 +IdKmrLh8p1E1cz6Syvvh1jUgMjjgn1YH3+qKY+Y=
+	b=MVJT0MzdI0QeAT7GM8lF5KdechM4ry/TD6qTmzAyNqLjrtQf1RQfAs6ojYEFnlxlG
+	 6m2EpgK8UnwS7b4/v0MJ0/dT7Shp0+wL6lF18T9g5xcAC9XjfsE/8uJQTOmfGlrttz
+	 VMo5IZBI4qEee/536EWlbzYsqaRo9miAELA6PqSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitor Soares <vitor.soares@toradex.com>,
-	Kendall Willis <k-willis@ti.com>,
-	Sebin Francis <sebin.francis@ti.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 263/325] pmdomain: ti_sci: add wakeup constraint to parent devices of wakeup source
-Date: Tue, 16 Jun 2026 20:30:59 +0530
-Message-ID: <20260616145111.712000533@linuxfoundation.org>
+	Justin Lai <justinlai0215@realtek.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 264/325] rtase: Avoid sleeping in get_stats64()
+Date: Tue, 16 Jun 2026 20:31:00 +0530
+Message-ID: <20260616145111.777072980@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,41 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kendall Willis <k-willis@ti.com>
+From: Justin Lai <justinlai0215@realtek.com>
 
-commit 4db207599acfc9d676340daa2dc6b52bfca17db4 upstream.
+commit 9fc237f8d49f06d05f0f8e80361047b718894e81 upstream.
 
-Set wakeup constraint for any device in a wakeup path. All parent devices
-of a wakeup device should not be turned off during suspend. This ensures
-the wakeup device is kept on while the system is suspended.
+The .ndo_get_stats64 callback must not sleep because it can be
+called when reading /proc/net/dev.
 
+rtase_get_stats64() calls rtase_dump_tally_counter(), which polls
+the tally counter dump bit with read_poll_timeout(). This may
+sleep while waiting for the hardware counter dump to complete.
+
+Use read_poll_timeout_atomic() instead to avoid sleeping in the
+get_stats64() path.
+
+Fixes: 079600489960 ("rtase: Implement net_device_ops")
 Cc: stable@vger.kernel.org
-Fixes: 9d8aa0dd3be4 ("pmdomain: ti_sci: add wakeup constraint management")
-Reported-by: Vitor Soares <vitor.soares@toradex.com>
-Closes: https://lore.kernel.org/linux-pm/c0fe43a2339c802e9ce5900092cd530a2ba17a6b.camel@gmail.com/
-Signed-off-by: Kendall Willis <k-willis@ti.com>
-Reviewed-by: Sebin Francis <sebin.francis@ti.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Justin Lai <justinlai0215@realtek.com>
+Link: https://patch.msgid.link/20260603061816.31356-1-justinlai0215@realtek.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/ti/ti_sci_pm_domains.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/realtek/rtase/rtase_main.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pmdomain/ti/ti_sci_pm_domains.c b/drivers/pmdomain/ti/ti_sci_pm_domains.c
-index 18d33bc35dee..949e4115f930 100644
---- a/drivers/pmdomain/ti/ti_sci_pm_domains.c
-+++ b/drivers/pmdomain/ti/ti_sci_pm_domains.c
-@@ -86,7 +86,7 @@ static inline void ti_sci_pd_set_wkup_constraint(struct device *dev)
- 	const struct ti_sci_handle *ti_sci = pd->parent->ti_sci;
- 	int ret;
+--- a/drivers/net/ethernet/realtek/rtase/rtase_main.c
++++ b/drivers/net/ethernet/realtek/rtase/rtase_main.c
+@@ -1563,8 +1563,9 @@ static void rtase_dump_tally_counter(con
+ 	rtase_w32(tp, RTASE_DTCCR0, cmd);
+ 	rtase_w32(tp, RTASE_DTCCR0, cmd | RTASE_COUNTER_DUMP);
  
--	if (device_may_wakeup(dev)) {
-+	if (device_may_wakeup(dev) || device_wakeup_path(dev)) {
- 		/*
- 		 * If device can wakeup using IO daisy chain wakeups,
- 		 * we do not want to set a constraint.
--- 
-2.54.0
-
+-	err = read_poll_timeout(rtase_r32, val, !(val & RTASE_COUNTER_DUMP),
+-				10, 250, false, tp, RTASE_DTCCR0);
++	err = read_poll_timeout_atomic(rtase_r32, val,
++				       !(val & RTASE_COUNTER_DUMP),
++				       10, 250, false, tp, RTASE_DTCCR0);
+ 
+ 	if (err == -ETIMEDOUT)
+ 		netdev_err(tp->dev, "error occurred in dump tally counter\n");
 
 
