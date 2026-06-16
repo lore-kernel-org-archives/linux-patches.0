@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96540169AD2;
-	Tue, 16 Jun 2026 18:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D564169AD2;
+	Tue, 16 Jun 2026 18:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635173; cv=none; b=Y16a3/Bzi5PU9yrzdsvxBpsunGiUJkFFAxRKJs2zEHee7305+Gh+ny7BWIhKeGykz7wU4ZCvEPIaImXAdqAWlIB6uAhim21hYTpWYr4e1Z3usGY9cgpeJRORMN+DeWslO1kp0C+dvt43yoAbrUjYiTD3wt2Llf3TM6xsrvHgW0A=
+	t=1781635178; cv=none; b=sIx3XYw6p3Xo24ucY7aWjIXUwE9RNn0RDdb9vHV1guaxBLAEWbBZ8nN56xKiOffUye4JIu2PniFu157+uE/6dG4blFgFUObpqxLLtF5AjtwCh6u+M3h3GVfFA6lKTKQNnCb7OFFRZ/iSUK0D6ACBpq4fx2TnvU1AvA2tIMuQAKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635173; c=relaxed/simple;
-	bh=VNyzP8ycTZDOub6ru8TVCXuwt+Yq2A4XNtVqOwCaw54=;
+	s=arc-20240116; t=1781635178; c=relaxed/simple;
+	bh=xxfnIc89EShQrWss/HgRQmXK9hL+x0KQ6tSij8m0Hso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=okEamKOHVy2tzjx3TRvzH70ZttbICciIOYSy1w8yFeiktuuQTg9QZDvK4SHSsPtRbwxXhshS7v6paJl0TezLOTIIRdQ8eJHaPnxwBq4llgsYW7NlEHZSr7UEyttLPrYmM66fWeK3yr/KfoKgtAj/XiDLAZSTF2i9zazYdE+Z5yY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XwiP/ScL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ojnQAELcI0ZwoqXiuqjzlxpCxIcHLvLJzqh8R+U7Lw+uabLFwB+3O3HHLSRwOHywuXYC34jm9vsyU4Kao56GLKYridGGw6UmFgpVBPJhon044/xh2lPkSt6FicoYE57yYsOK+ZsaBQS+JmRgAKvHBaJuHabSAeoyu2oza5Tmx9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xal2m3p2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwiP/ScL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C901F000E9;
-	Tue, 16 Jun 2026 18:39:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xal2m3p2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F941F000E9;
+	Tue, 16 Jun 2026 18:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635172;
-	bh=qHvtNmSKH80Qba/uhzjP6++hT8eG9cniCNO/QX+OM9Y=;
+	s=korg; t=1781635177;
+	bh=lzKpk5tH7shIQiXuPE4PdX9U4ArpSqCElF3cjSg7Dk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XwiP/ScLZpX54mxpQZA+pZ+sEVFqfElHWj4nGHsorjRiHnpQNRRjvpPm2dj2rqNoS
-	 3lDhHEL9op34IGcmdCNlEDBqgRmSqbn+ikdJbSUXfWzOqgXhnOPuGkKx7FU3FQk2Zx
-	 FciZlIAWUpGxEAVzK20HHFYR2P4z4cO+4/T9UpAI=
+	b=Xal2m3p22ElfrO4JI1N8HTPf8wOBChpm0f0LrJX7aMdUhw+dFtY7k8d1oAYsAFXLP
+	 EG77K4ro28XCbSK7dssl76PC8vpWJ7n+hHP8H542KO7GUqmXrn1blG3BIoioNpiAx2
+	 /5Wqj5AxigLZhkARhC7JTGwoIZ91g5oIQK8JpmwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Protsenko <semen.protsenko@linaro.org>,
+	stable <stable@kernel.org>,
+	John Ogness <john.ogness@linutronix.de>,
 	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 371/411] tty: serial: samsung: use u32 for register interactions
-Date: Tue, 16 Jun 2026 20:30:09 +0530
-Message-ID: <20260616145121.045435298@linuxfoundation.org>
+Subject: [PATCH 5.15 372/411] tty: serial: samsung: Remove redundant port lock acquisition in rx helpers
+Date: Tue, 16 Jun 2026 20:30:10 +0530
+Message-ID: <20260616145121.095483629@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -53,211 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-[ Upstream commit 032a725c16add79332d774348d7ad7d0d4b86479 ]
+[ Upstream commit a3bb136bff5e6a5e48cdd813246c9c4686feaaa9 ]
 
-All registers of the IP have 32 bits. Use u32 variables when reading
-or writing from/to the registers. The purpose of those variables becomes
-clearer.
+Sashiko identified a deadlock when the console flow is engaged [1].
 
-Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
+When console flow control is enabled (UPF_CONS_FLOW),
+s3c24xx_serial_stop_tx() calls s3c24xx_serial_rx_enable() and
+s3c24xx_serial_start_tx() calls s3c24xx_serial_rx_disable().
+
+The serial core framework invokes the .stop_tx() and .start_tx()
+callbacks with the port->lock spinlock already held. Furthermore, all
+internal driver paths that invoke stop_tx (such as the DMA TX
+completion handler s3c24xx_serial_tx_dma_complete() or the PIO TX IRQ
+handler s3c24xx_serial_tx_irq()) also acquire port->lock prior to
+calling it. (Note that s3c24xx_serial_start_tx() is only invoked by the
+serial core).
+
+However, s3c24xx_serial_rx_enable() and s3c24xx_serial_rx_disable()
+unconditionally attempt to acquire port->lock again using
+uart_port_lock_irqsave(). Since spinlocks are not recursive, this
+causes a deadlock on the same CPU when console flow control is engaged.
+
+Remove the redundant lock acquisition from both rx helper functions.
+
+Cc: stable <stable@kernel.org>
+Fixes: b497549a035c ("[ARM] S3C24XX: Split serial driver into core and per-cpu drivers")
+Reported-by: John Ogness <john.ogness@linutronix.de>
+Closes: https://sashiko.dev/#/patchset/20260506121606.5805-1-john.ogness%40linutronix.de [1]
 Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Link: https://lore.kernel.org/r/20240119104526.1221243-9-tudor.ambarus@linaro.org
+Link: https://patch.msgid.link/20260515-samsung-tty-flow-control-deadlock-v1-1-93255edbc9bc@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: a3bb136bff5e ("tty: serial: samsung: Remove redundant port lock acquisition in rx helpers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/samsung_tty.c |   44 ++++++++++++++++++---------------------
- 1 file changed, 21 insertions(+), 23 deletions(-)
+ drivers/tty/serial/samsung_tty.c |    8 --------
+ 1 file changed, 8 deletions(-)
 
 --- a/drivers/tty/serial/samsung_tty.c
 +++ b/drivers/tty/serial/samsung_tty.c
-@@ -243,8 +243,8 @@ static void s3c24xx_serial_rx_enable(str
+@@ -242,12 +242,9 @@ static int s3c24xx_serial_txempty_nofifo
+ static void s3c24xx_serial_rx_enable(struct uart_port *port)
  {
  	struct s3c24xx_uart_port *ourport = to_ourport(port);
- 	unsigned long flags;
--	unsigned int ucon, ufcon;
+-	unsigned long flags;
  	int count = 10000;
-+	u32 ucon, ufcon;
+ 	u32 ucon, ufcon;
  
- 	uart_port_lock_irqsave(port, &flags);
+-	uart_port_lock_irqsave(port, &flags);
+-
+ 	while (--count && !s3c24xx_serial_txempty_nofifo(port))
+ 		udelay(100);
  
-@@ -267,7 +267,7 @@ static void s3c24xx_serial_rx_disable(st
- {
- 	struct s3c24xx_uart_port *ourport = to_ourport(port);
- 	unsigned long flags;
--	unsigned int ucon;
-+	u32 ucon;
+@@ -260,23 +257,18 @@ static void s3c24xx_serial_rx_enable(str
+ 	wr_regl(port, S3C2410_UCON, ucon);
  
- 	uart_port_lock_irqsave(port, &flags);
- 
-@@ -664,7 +664,7 @@ static void s3c64xx_start_rx_dma(struct
- static void enable_rx_dma(struct s3c24xx_uart_port *ourport)
- {
- 	struct uart_port *port = &ourport->port;
--	unsigned int ucon;
-+	u32 ucon;
- 
- 	/* set Rx mode to DMA mode */
- 	ucon = rd_regl(port, S3C2410_UCON);
-@@ -687,7 +687,7 @@ static void enable_rx_dma(struct s3c24xx
- static void enable_rx_pio(struct s3c24xx_uart_port *ourport)
- {
- 	struct uart_port *port = &ourport->port;
--	unsigned int ucon;
-+	u32 ucon;
- 
- 	/* set Rx mode to DMA mode */
- 	ucon = rd_regl(port, S3C2410_UCON);
-@@ -712,13 +712,14 @@ static void s3c24xx_serial_rx_drain_fifo
- 
- static irqreturn_t s3c24xx_serial_rx_chars_dma(void *dev_id)
- {
--	unsigned int utrstat, received;
- 	struct s3c24xx_uart_port *ourport = dev_id;
- 	struct uart_port *port = &ourport->port;
- 	struct s3c24xx_uart_dma *dma = ourport->dma;
- 	struct tty_struct *tty = tty_port_tty_get(&ourport->port.state->port);
- 	struct tty_port *t = &port->state->port;
- 	struct dma_tx_state state;
-+	unsigned int received;
-+	u32 utrstat;
- 
- 	utrstat = rd_regl(port, S3C2410_UTRSTAT);
- 	rd_regl(port, S3C2410_UFSTAT);
-@@ -1000,7 +1001,7 @@ static unsigned int s3c24xx_serial_tx_em
- /* no modem control lines */
- static unsigned int s3c24xx_serial_get_mctrl(struct uart_port *port)
- {
--	unsigned int umstat = rd_reg(port, S3C2410_UMSTAT);
-+	u32 umstat = rd_reg(port, S3C2410_UMSTAT);
- 
- 	if (umstat & S3C2410_UMSTAT_CTS)
- 		return TIOCM_CAR | TIOCM_DSR | TIOCM_CTS;
-@@ -1023,7 +1024,7 @@ static void s3c24xx_serial_set_mctrl(str
- static void s3c24xx_serial_break_ctl(struct uart_port *port, int break_state)
- {
- 	unsigned long flags;
--	unsigned int ucon;
-+	u32 ucon;
- 
- 	uart_port_lock_irqsave(port, &flags);
- 
-@@ -1204,7 +1205,7 @@ static void apple_s5l_serial_shutdown(st
- {
- 	struct s3c24xx_uart_port *ourport = to_ourport(port);
- 
--	unsigned int ucon;
-+	u32 ucon;
- 
- 	ucon = rd_regl(port, S3C2410_UCON);
- 	ucon &= ~(APPLE_S5L_UCON_TXTHRESH_ENA_MSK |
-@@ -1272,7 +1273,7 @@ static int s3c64xx_serial_startup(struct
- {
- 	struct s3c24xx_uart_port *ourport = to_ourport(port);
- 	unsigned long flags;
--	unsigned int ufcon;
-+	u32 ufcon;
- 	int ret;
- 
- 	wr_regl(port, S3C64XX_UINTM, 0xf);
-@@ -1317,7 +1318,7 @@ static int apple_s5l_serial_startup(stru
- {
- 	struct s3c24xx_uart_port *ourport = to_ourport(port);
- 	unsigned long flags;
--	unsigned int ufcon;
-+	u32 ufcon;
- 	int ret;
- 
- 	wr_regl(port, S3C2410_UTRSTAT, APPLE_S5L_UTRSTAT_ALL_FLAGS);
-@@ -1559,9 +1560,8 @@ static void s3c24xx_serial_set_termios(s
- 	struct clk *clk = ERR_PTR(-EINVAL);
- 	unsigned long flags;
- 	unsigned int baud, quot, clk_sel = 0;
--	unsigned int ulcon;
--	unsigned int umcon;
- 	unsigned int udivslot = 0;
-+	u32 ulcon, umcon;
- 
- 	/*
- 	 * We don't support modem control lines.
-@@ -2147,7 +2147,7 @@ static int s3c24xx_serial_init_port(stru
- 		wr_regl(port, S3C64XX_UINTSP, 0xf);
- 		break;
- 	case TYPE_APPLE_S5L: {
--		unsigned int ucon;
-+		u32 ucon;
- 
- 		ucon = rd_regl(port, S3C2410_UCON);
- 		ucon &= ~(APPLE_S5L_UCON_TXTHRESH_ENA_MSK |
-@@ -2366,7 +2366,7 @@ static int s3c24xx_serial_resume_noirq(s
- 		/* restore IRQ mask */
- 		switch (ourport->info->type) {
- 		case TYPE_S3C6400: {
--			unsigned int uintm = 0xf;
-+			u32 uintm = 0xf;
- 
- 			if (ourport->tx_enabled)
- 				uintm &= ~S3C64XX_UINTM_TXD_MSK;
-@@ -2382,7 +2382,7 @@ static int s3c24xx_serial_resume_noirq(s
- 			break;
- 		}
- 		case TYPE_APPLE_S5L: {
--			unsigned int ucon;
-+			u32 ucon;
- 			int ret;
- 
- 			ret = clk_prepare_enable(ourport->clk);
-@@ -2445,7 +2445,7 @@ static const struct dev_pm_ops s3c24xx_s
- static struct uart_port *cons_uart;
- 
- static int
--s3c24xx_serial_console_txrdy(struct uart_port *port, unsigned int ufcon)
-+s3c24xx_serial_console_txrdy(struct uart_port *port, u32 ufcon)
- {
- 	struct s3c24xx_uart_info *info = s3c24xx_port_to_info(port);
- 	unsigned long ufstat, utrstat;
-@@ -2464,7 +2464,7 @@ s3c24xx_serial_console_txrdy(struct uart
+ 	ourport->rx_enabled = 1;
+-	uart_port_unlock_irqrestore(port, flags);
  }
  
- static bool
--s3c24xx_port_configured(unsigned int ucon)
-+s3c24xx_port_configured(u32 ucon)
+ static void s3c24xx_serial_rx_disable(struct uart_port *port)
  {
- 	/* consider the serial port configured if the tx/rx mode set */
- 	return (ucon & 0xf) != 0;
-@@ -2491,8 +2491,8 @@ static int s3c24xx_serial_get_poll_char(
- static void s3c24xx_serial_put_poll_char(struct uart_port *port,
- 		unsigned char c)
- {
--	unsigned int ufcon = rd_regl(port, S3C2410_UFCON);
--	unsigned int ucon = rd_regl(port, S3C2410_UCON);
-+	u32 ufcon = rd_regl(port, S3C2410_UFCON);
-+	u32 ucon = rd_regl(port, S3C2410_UCON);
+ 	struct s3c24xx_uart_port *ourport = to_ourport(port);
+-	unsigned long flags;
+ 	u32 ucon;
  
- 	/* not possible to xmit on unconfigured port */
- 	if (!s3c24xx_port_configured(ucon))
-@@ -2508,7 +2508,7 @@ static void s3c24xx_serial_put_poll_char
- static void
- s3c24xx_serial_console_putchar(struct uart_port *port, int ch)
- {
--	unsigned int ufcon = rd_regl(port, S3C2410_UFCON);
-+	u32 ufcon = rd_regl(port, S3C2410_UFCON);
+-	uart_port_lock_irqsave(port, &flags);
+-
+ 	ucon = rd_regl(port, S3C2410_UCON);
+ 	ucon &= ~S3C2410_UCON_RXIRQMODE;
+ 	wr_regl(port, S3C2410_UCON, ucon);
  
- 	while (!s3c24xx_serial_console_txrdy(port, ufcon))
- 		cpu_relax();
-@@ -2533,11 +2533,9 @@ s3c24xx_serial_get_options(struct uart_p
- 			   int *parity, int *bits)
- {
- 	struct clk *clk;
--	unsigned int ulcon;
--	unsigned int ucon;
--	unsigned int ubrdiv;
- 	unsigned long rate;
- 	unsigned int clk_sel;
-+	u32 ulcon, ucon, ubrdiv;
- 	char clk_name[MAX_CLK_NAME_LENGTH];
+ 	ourport->rx_enabled = 0;
+-	uart_port_unlock_irqrestore(port, flags);
+ }
  
- 	ulcon  = rd_regl(port, S3C2410_ULCON);
+ static void s3c24xx_serial_stop_tx(struct uart_port *port)
 
 
