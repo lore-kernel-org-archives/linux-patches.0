@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DC73CBE8B;
-	Tue, 16 Jun 2026 15:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC93F38837F;
+	Tue, 16 Jun 2026 15:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623845; cv=none; b=NSBYBOgSqz+v7BZx5ptSDCqgpxfD835/dOn5LsACGgvl3oNVEXrTww6qKbXqDyIxuXZNgVo/JdERcosEDINsUme9MS90JRP8aif7pl4K24qgP5sspOmNGD+JwaHhn8SUQbQ0VXJ0pzsyB6+4lnatASjc8BkLHHZMoJzuHBKAUk4=
+	t=1781623850; cv=none; b=VRZI1PscH3saUdjFKmHE/U4YQnGHq25YgxzRJHAL9Ygg+9u8nOIfFNtQCj867LBeMq9fw2siftzHiRPvb/gWLxlDHspiHaaibTn39XtsaTdhyp47iSeAH4H/w3uoMwJW76DTpvz5W9uZKMLp5Qk0rK9pgLHiPgx0OyvNgpoAk0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623845; c=relaxed/simple;
-	bh=+v8EG2eZymHfVcT0tyN37My22ARnv24Cf7ExSTOGyGY=;
+	s=arc-20240116; t=1781623850; c=relaxed/simple;
+	bh=zA9R1AgPUhfeQKBgnKjOxqnpyoQCghL3XG9b0j+1K/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DIydBkz8WeasLE8Y7T/nsOS5HcBFVlSr9/o4/R2pmWul24WDbgk7yn3H991K5IFTbOevyd6xyLakBgA3cWygNvwSsB2L5uJ0lwdLNWfE8V+0xtKa5yLJvfFa8qkM5fSScvpQXeDAuVdMvIu1ZwQxvpbz96tf1F5w5N3reoYv0kk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5LLYTWn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PytLMFUTL47FMMSH87fjQMXxx/fvM7mSfHIhH37SLhBFh5NIOlgp973oq/oOSHXxEOqtZNvOt2+wLlGQZhjr7Bi90fZxm06V0Z3whKFuxwjb6LbUMAmu2A8LzexIGkdW9fPgG6xq/6Uw/ab4LVcIwjVdA1aBNXlNvaJZH4QjgJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3OInZjI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5LLYTWn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 222451F000E9;
-	Tue, 16 Jun 2026 15:30:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3OInZjI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915111F000E9;
+	Tue, 16 Jun 2026 15:30:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623844;
-	bh=rotieZyJCHj8D/yA4ZPNaJaNn2kUMKAS1bvEOBbslNM=;
+	s=korg; t=1781623849;
+	bh=eeUCacx9DrE4X2fZJK1nZH9fck3KkZJttZLpPVIpwRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p5LLYTWnk9e9QkUpihlHJQXcvFUajOzE7BAVkDkMrcXrGwV3k8n+UgIfCAkxHYK4L
-	 w4+mePwLKndiw/pPbL0G5pMWfXAfmho04l4NM7J6QapYJMCYvAjqCizI+e2qctH1fj
-	 jxD9t5zQz7m0XGW8ZEjxyJw/jPHLtp6P4nYbAV7A=
+	b=b3OInZjIs1eJTmN9jx4QHKvxP7/5Q/bLBYwaWLuAVgrBhqsoNAePR66OhQnEmB8pd
+	 X0QjOX6h7XQE33dmcu6rxBo3/dTVjAtvXbftZ1tS6rFBPE8FWkDNO1ez/0+XV1CYLZ
+	 +UWTvVl30EOPhwOq/niJJJRU3VSUBG78EHPJ5qJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 7.0 212/378] ALSA: timer: Fix UAF at snd_timer_user_params()
-Date: Tue, 16 Jun 2026 20:27:23 +0530
-Message-ID: <20260616145121.511580647@linuxfoundation.org>
+	Tip ten Brink <tip@tenbrinkmeijs.com>,
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 7.0 213/378] io_uring/wait: fix min_timeout behavior
+Date: Tue, 16 Jun 2026 20:27:24 +0530
+Message-ID: <20260616145121.563729313@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -50,46 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Christian A. Ehrhardt <lk@c--e.de>
 
-commit 053a401b592be424fea9d57c789f66cd5d8cec11 upstream.
+commit 29fe1bd01b99714f3136f922230a643c2742cda9 upstream.
 
-At releasing a timer object, e.g. when a userspace timer
-(CONFIG_SND_UTIMER) gets closed and snd_timer_free() is called, it
-tries to detach the timer instances and release the resources.
-However, it's still possible that other in-flight tasks are holding
-the timer instance where the to-be-deleted timer object is associated,
-and this may lead to racy accesses.
+The wakeup condition if a min timeout is present and has expired is that
+at least _one_ CQE was posted. Thus set the cq_tail target to
+->cq_min_tail + 1. Without this commit a spurious wakeup can result in a
+premature wakeup because io_should_wake() will return true even if _no_
+CQE was posted at all.
 
-Fortunately, most of ioctls dealing with the timer instance list
-already have the protection with register_mutex, and this also avoids
-such races.  But, SNDRV_TIMER_IOCTL_PARAMS isn't protected, hence the
-concurrent ioctl may lead to use-after-free.
-
-This patch just adds the guard with register_mutex to protect
-snd_timer_user_params() for covering the code path as a quick
-workaround.  It's no hot-path but rather a rarely issued ioctl, so the
-performance penalty doesn't matter.
-
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Tested-by: Kyle Zeng <kylebot@openai.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260606161145.1933447-2-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: Tip ten Brink <tip@tenbrinkmeijs.com>
+Fixes: e15cb2200b93 ("io_uring: fix min_wait wakeups for SQPOLL")
+Cc: stable@vger.kernel.org
+Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
+Link: https://patch.msgid.link/20260606201120.1441447-1-lk@c--e.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/timer.c |    1 +
- 1 file changed, 1 insertion(+)
+ io_uring/wait.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/core/timer.c
-+++ b/sound/core/timer.c
-@@ -1791,6 +1791,7 @@ static int snd_timer_user_params(struct
- 	struct snd_timer *t;
- 	int err;
+--- a/io_uring/wait.c
++++ b/io_uring/wait.c
+@@ -102,7 +102,7 @@ static enum hrtimer_restart io_cqring_mi
+ 	}
  
-+	guard(mutex)(&register_mutex);
- 	tu = file->private_data;
- 	if (!tu->timeri)
- 		return -EBADFD;
+ 	/* any generated CQE posted past this time should wake us up */
+-	iowq->cq_tail = iowq->cq_min_tail;
++	iowq->cq_tail = iowq->cq_min_tail + 1;
+ 
+ 	hrtimer_update_function(&iowq->t, io_cqring_timer_wakeup);
+ 	hrtimer_set_expires(timer, iowq->timeout);
 
 
