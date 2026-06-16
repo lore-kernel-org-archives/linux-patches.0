@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CDBF3D45CB;
-	Tue, 16 Jun 2026 18:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226523D45D0;
+	Tue, 16 Jun 2026 18:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633290; cv=none; b=QunWlYfELVVDVa7Wa6+Dr1/QlcfL86q+mYuVhO7EgYg9/FHObveV3/fBY02OAnGcH36lSdHw2JcLWwsP56Il/55JoBHdHH/PmAnpK6wYIRrSPMal5ofTqkr/bsc2ALwPcZnnU+hWBzlq4ON7iG6qxRay9JwveqWumTFaDClPPsA=
+	t=1781633296; cv=none; b=EMTvnEUWteJJ1t2tPI7WJ+Zt19JtLhxRVx6EjMqYRuMlUgA+T/MUtp0yUASkfeJJS5QeVk5D26QfkaSb7XItrbBQkf7rjiSldkQaqkw8dug29jCoABkQRynKXpxsxTgaCL753+FQ/ZUquJ5QTlqLdO+X5p/+3PV20O/RaEImW9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633290; c=relaxed/simple;
-	bh=fl1/0fg7zxQyaUDinEd8eu5WyJ1uOB/9E734HOSayhk=;
+	s=arc-20240116; t=1781633296; c=relaxed/simple;
+	bh=hDH0mfDA1JcLkBjL5fCCAe0FQCt33o6bXN2O+8NX3xs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lrGqmJtuJ3U2hlNKhCZNKx2qvI+6v2s+5tpCLjPacnh4ztDKjoJjnh18LZuOcJAOqiehugVDqEr+LiJ6jE/hj5PRk8htyJmH/JkR2NvLo/Pm/bXft35WTxi30HSFlrtvEA59QMpdAZP3ZE2+DwBjQKD+418EeudVaZET/+sAjIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xWrvoVjJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RR1ZwxIzegI6dhMMYjpfcgaogyQ3n5O4IlPmaIq6g5Lt6mZ15WVMAjFWrW9zkxKW9dHJRSV3LKq8TR0qI4EdKc1aJvdqVY0v2sfQCDSXZt6wz7Xf2BFvJ7MRUibH5ow3uU9fsFp92LuGnlLte0pov8Ge3m7nSBJaasfSagqaHi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQyKtXW4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xWrvoVjJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74E351F000E9;
-	Tue, 16 Jun 2026 18:08:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQyKtXW4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21EED1F000E9;
+	Tue, 16 Jun 2026 18:08:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633289;
-	bh=jOOUKeFIcp7orxhlrA3zBjGz4Yx43Bd1aL2UE5ijGB0=;
+	s=korg; t=1781633295;
+	bh=DzsiD6DjgAHegXiZWIUWuX4sSVRhgRqb53Hz0sD1MQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xWrvoVjJMII1cBU2g9qeEvUzCnra0BmqbQMdGQhk5QvefLqh1qrfBQFO4gIh5TBNV
-	 yQ4fb70bDy9+dJ0JfVc0lCxsFGoN6vX5qVj21y6wblO3SVxbW+6wNfe7yW8zRLKhPw
-	 QMw9QY8Nx7qcOajL+pvLOPOXAz/Yq2UNZPe/dheM=
+	b=YQyKtXW48dVAB5McDW7VJJmk+PqEKQBcc+7sIJEr+F40LgvakgX/xpacgxbIOkAB+
+	 OLcI9B1EOD1gVDtZ4Y5e4ZsVPOLsDEfX9fAYGIZHagK5T3dcAUxZbXNCxvED5x7DqE
+	 7tXoVMUoxTGNRzily406qGeAu7Jb2v5+tp/whafU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matteo Perin <matteo.perin@canonical.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Halil Pasic <pasic@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 017/411] net: netlink: dont set nsid on local notifications
-Date: Tue, 16 Jun 2026 20:24:15 +0530
-Message-ID: <20260616145101.305036032@linuxfoundation.org>
+Subject: [PATCH 5.15 018/411] net/smc: Do not re-initialize smc hashtables
+Date: Tue, 16 Jun 2026 20:24:16 +0530
+Message-ID: <20260616145101.357038661@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -53,80 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Alexandra Winter <wintera@linux.ibm.com>
 
-[ Upstream commit 88b126b39f9757e9debc322d4679239e9af089c7 ]
+[ Upstream commit 9e4389b0038781f19f97895186ed941ff8ac1678 ]
 
-In most cases, notifications on sockets with NETLINK_LISTEN_ALL_NSID
-do not contain NSID in their ancillary data in case the event is local
-to the listener.
+INIT_HLIST_HEAD(&smc_v*_hashinfo.ht) are called after smc_nl_init(),
+proto_register() and sock_register(). This can lead to smc_v*_hashinfo.ht
+being reset even though hash entries already exist and are being used,
+possibly resulting in a corrupted list.
 
-However, when a self-referential NSID is allocated for a namespace,
-every local notification starts sending this ID to the user space.
+Remove unnecessary and dangerous re-initialisation of smc_v*_hashinfo.ht in
+smc_init(); it is implicitly initialised to zero anyhow. Add
+HLIST_HEAD_INIT to the definitions for clarity.
 
-This is problematic, because the listener cannot tell if those
-notifications are local or not anymore without making extra requests
-to figure out if the provided NSID is local or not.  The listener
-can also not figure out the local NSID beforehand as it can be
-allocated at any point in time by other processes, changing the
-structure of the future notifications for everyone.
-
-The value is practically not useful, since it's the namespace's own
-ID that the application has to obtain from other sources in order to
-figure out if it's the same or not.  So, for the application it's
-just an extra busy work with no benefits.  Moreover, applications
-that do not know about this quirk may be mishandling notifications
-with NSID set as notifications from remote namespaces.  This is the
-case for ovs-vswitchd and the iproute2's 'ip monitor' that stops
-printing 'current' and starts printing the nsid number mid-session.
-
-Lack of clear documentation for this behavior is also not helping.
-
-A search though open-source projects doesn't reveal any projects
-that use NETNSA_NSID_NOT_ASSIGNED and rely on metadata to contain
-self-referential NSIDs (expected, since the value is not useful).
-Quite the opposite, as already mentioned, there are few applications
-that rely on NSID to not be present in local events.
-
-Since the value is not useful and actively harmful in some cases,
-let's not report it for local events, making the notifications more
-consistent.
-
-Also adding some blank lines for readability.
-
-Fixes: 59324cf35aba ("netlink: allow to listen "all" netns")
-Reported-by: Matteo Perin <matteo.perin@canonical.com>
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Link: https://patch.msgid.link/20260520172317.175168-3-i.maximets@ovn.org
+Fixes: f16a7dd5cf27 ("smc: netlink interface for SMC sockets")
+Suggested-by: Halil Pasic <pasic@linux.ibm.com>
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Acked-by: Halil Pasic <pasic@linux.ibm.com>
+Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Link: https://patch.msgid.link/20260521145639.10317-1-wintera@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/smc/af_smc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 12e765fcbd747d..731c53178eb559 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -1482,10 +1482,14 @@ static void do_one_broadcast(struct sock *sk,
- 		p->skb2 = NULL;
- 		goto out;
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index 5425c46a2e7c71..6b60a5dd240dd1 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -123,10 +123,12 @@ static struct sock *smc_tcp_syn_recv_sock(const struct sock *sk,
+ 
+ static struct smc_hashinfo smc_v4_hashinfo = {
+ 	.lock = __RW_LOCK_UNLOCKED(smc_v4_hashinfo.lock),
++	.ht = HLIST_HEAD_INIT,
+ };
+ 
+ static struct smc_hashinfo smc_v6_hashinfo = {
+ 	.lock = __RW_LOCK_UNLOCKED(smc_v6_hashinfo.lock),
++	.ht = HLIST_HEAD_INIT,
+ };
+ 
+ int smc_hash_sk(struct sock *sk)
+@@ -2938,8 +2940,6 @@ static int __init smc_init(void)
+ 		pr_err("%s: sock_register fails with %d\n", __func__, rc);
+ 		goto out_proto6;
  	}
-+
- 	NETLINK_CB(p->skb2).nsid_is_set = false;
--	NETLINK_CB(p->skb2).nsid = peernet2id(sock_net(sk), p->net);
--	if (NETLINK_CB(p->skb2).nsid != NETNSA_NSID_NOT_ASSIGNED)
--		NETLINK_CB(p->skb2).nsid_is_set = true;
-+	if (!net_eq(sock_net(sk), p->net)) {
-+		NETLINK_CB(p->skb2).nsid = peernet2id(sock_net(sk), p->net);
-+		if (NETLINK_CB(p->skb2).nsid != NETNSA_NSID_NOT_ASSIGNED)
-+			NETLINK_CB(p->skb2).nsid_is_set = true;
-+	}
-+
- 	val = netlink_broadcast_deliver(sk, p->skb2);
- 	if (val < 0) {
- 		netlink_overrun(sk);
+-	INIT_HLIST_HEAD(&smc_v4_hashinfo.ht);
+-	INIT_HLIST_HEAD(&smc_v6_hashinfo.ht);
+ 
+ 	rc = smc_ib_register_client();
+ 	if (rc) {
 -- 
 2.53.0
 
