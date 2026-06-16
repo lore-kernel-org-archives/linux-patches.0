@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0BCA47D94E;
-	Tue, 16 Jun 2026 16:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C9C47DF95;
+	Tue, 16 Jun 2026 16:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628528; cv=none; b=n9Nx/mlnOcFIXL9Ji3rxw6Bz1M+SVu4Byf4d4iYLiB7f3hFUzvgK2xsYYXx9FEyUuXzSfH9t1/41nfF3wG33pzYd6JKVzzRHaxxJrBRz+ypG/bagZre1x8lkHgCEtAnZOICAAPWGQgnqS/PglP8kfBiEtWI0coxWB9IrG3TpEh0=
+	t=1781628532; cv=none; b=TlNaancbcyyhPQNz62COWFK6TOgqTesV/D2IZSs2fnJLM6SEe1LY5VNacfysgc4DoDolSj81SPRg+Rmy4NeF6gDislDe9avEZu/lcn+zujx9InIsCJ9Hwawi0DMfFejCJrijZ/zVw7lH1aSNuO9NAVYCg67nureCDzZRsUc9I7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628528; c=relaxed/simple;
-	bh=WvsaMewOPvqh6sgcKmFbVSqaLzKz07P1TX9S2kVewK4=;
+	s=arc-20240116; t=1781628532; c=relaxed/simple;
+	bh=dxrSY/GQOX/V+RYVhUjOFMaZtCSzzyrv/VQDfOJWD1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G+37xiugjkDLYop3C+HFTh8IkEg2ADlncB7tK1DguFdZxKmVPIlY0xILmX6VoXuylGTKaAKKnw8iS3XCUsRqvykKbtBRiqw1OytsDRb0tBeE1DXKzwSV6x51OaBaAnGP1EctB4UoWK692PiKo8eSp9UZMkxyltNDS7xE51qDJYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxNls97d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i1ZrgBKDZvPEIOnnEFUQUFdh2eydIq0399PYnIvAZSw9YyGUDDD3D9GNrCxnYwRN17gkGeSVFb1Fi/fQ9CXObAzlAAjZV3ZnP7praXKLZ/kbJUXlgfy2NpwmgAFZQWtAX9UTi7udkh+SEhM+6/5Y16Fxrt3B0rtOPv8SaMh6Iyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbO3mn53; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxNls97d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0341F1F000E9;
-	Tue, 16 Jun 2026 16:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbO3mn53"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A489E1F00A3E;
+	Tue, 16 Jun 2026 16:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628526;
-	bh=o8nLHBjlmMRUXzuAgVpJ/rkuaCV9JF7CF/LWGzMEDrs=;
+	s=korg; t=1781628531;
+	bh=wqUzMWIUsLjoynO1uc0qT2Qahi8NpN/PkFEppTp8DEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GxNls97dtHcI82q0dkLHo0NGNf0+ZXgSvQdkyEV3GI0Jcc62QothObztRqLa1jmbE
-	 y5F53FRCxkONPET3wim24aMMqlYTM/r5mNGK+nqWqvULeHL2RZ1ZynKsq6oThPxKMP
-	 p70NCZ1P6O3GsCzuvVa/kox0uShBe3VldKbNvtRU=
+	b=bbO3mn53eMmvubsv4mtm93fLXIkmHC39qwGlBElazfLJybE2Bx1QZA282fO5T5Phl
+	 X/Cdb8GDRKVaZODRXVu/YFOTrmbDQ7niFhA+o9H4TfbrUuVVDbN8voUHFpoBZNlmqX
+	 C6pIdO4FL/yVvYlxBs9xLvDqdwII7+GE4f4E2zRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdurrahman Hussain <abdurrahman@nexthop.ai>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Petlozu Pravareshwar <petlozup@nvidia.com>,
+	Prathamesh Shete <pshete@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Robert Garcia <rob_garcia@163.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 080/452] hwmon: (pmbus/adm1266) serialize NVMEM blackbox read with pmbus_lock
-Date: Tue, 16 Jun 2026 20:25:07 +0530
-Message-ID: <20260616145122.086283367@linuxfoundation.org>
+Subject: [PATCH 6.6 081/452] soc/tegra: pmc: Fix unsafe generic_handle_irq() call
+Date: Tue, 16 Jun 2026 20:25:08 +0530
+Message-ID: <20260616145122.136139354@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,79 +54,205 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdurrahman Hussain <abdurrahman@nexthop.ai>
+From: Prathamesh Shete <pshete@nvidia.com>
 
-[ Upstream commit 9f1dd8f9491eb840cbea7ffdf4cad031e25f8ae0 ]
+[ Upstream commit e6d96073af681780820c94079b978474a8a44413 ]
 
-adm1266_nvmem_read() is the reg_read callback the NVMEM core invokes
-when userspace reads /sys/bus/nvmem/devices/.../nvmem on this chip.
-On the first byte of every read it does a memset of data->dev_mem,
-walks the device blackbox through adm1266_nvmem_read_blackbox()
-(which issues a chain of PMBus block transactions), and then memcpys
-the refreshed buffer out to userspace.  None of that runs under
-pmbus_lock today.
+Currently, when resuming from system suspend on Tegra platforms,
+the following warning is observed:
 
-Two consequences:
+WARNING: CPU: 0 PID: 14459 at kernel/irq/irqdesc.c:666
+Call trace:
+ handle_irq_desc+0x20/0x58 (P)
+ tegra186_pmc_wake_syscore_resume+0xe4/0x15c
+ syscore_resume+0x3c/0xb8
+ suspend_devices_and_enter+0x510/0x540
+ pm_suspend+0x16c/0x1d8
 
-  - The PMBus traffic the refresh issues is not serialised against
-    pmbus_core's own multi-step PAGE+register sequences.  A paged
-    hwmon attribute read from another thread can land between a
-    PAGE write and the paged read in either direction and corrupt
-    one side's view of the device state machine.
+The warning occurs because generic_handle_irq() is being called from
+a non-interrupt context which is considered as unsafe.
 
-  - The NVMEM core does not serialise concurrent reg_read calls, so
-    two userspace readers racing at offset 0 can interleave the
-    memset of data->dev_mem with another reader's
-    adm1266_nvmem_read_blackbox() refill or memcpy out, returning
-    torn data to userspace.
+Fix this warning by deferring generic_handle_irq() call to an IRQ work
+which gets executed in hard IRQ context where generic_handle_irq()
+can be called safely.
 
-Take pmbus_lock at the top of adm1266_nvmem_read() via the
-scope-based guard().  Patch 5 of this series moves
-adm1266_config_nvmem() past pmbus_do_probe() so the lock is
-guaranteed to be live before the callback is reachable from
-userspace.
+When PREEMPT_RT kernels are used, regular IRQ work (initialized with
+init_irq_work) is deferred to run in per-CPU kthreads in preemptible
+context rather than hard IRQ context. Hence, use the IRQ_WORK_INIT_HARD
+variant so that with PREEMPT_RT kernels, the IRQ work is processed in
+hardirq context instead of being deferred to a thread which is required
+for calling generic_handle_irq().
 
-Fixes: 15609d189302 ("hwmon: (pmbus/adm1266) read blackbox")
-Cc: stable@vger.kernel.org
-Signed-off-by: Abdurrahman Hussain <abdurrahman@nexthop.ai>
-Link: https://lore.kernel.org/r/20260518-adm1266-gpio-fixes-v3-7-e425e4f88139@nexthop.ai
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ adapted `guard(pmbus_lock)(data->client)` to manual `pmbus_lock_interruptible()`/`pmbus_unlock()` ]
+On non-PREEMPT_RT kernels, both init_irq_work() and IRQ_WORK_INIT_HARD()
+execute in IRQ context, so this change has no functional impact for
+standard kernel configurations.
+
+Signed-off-by: Petlozu Pravareshwar <petlozup@nvidia.com>
+Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+[treding@nvidia.com: miscellaneous cleanups]
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Robert Garcia <rob_garcia@163.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/adm1266.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/soc/tegra/pmc.c | 104 ++++++++++++++++++++++++++++------------
+ 1 file changed, 74 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/adm1266.c b/drivers/hwmon/pmbus/adm1266.c
-index 518eaf07a123de..432846ef0cf45d 100644
---- a/drivers/hwmon/pmbus/adm1266.c
-+++ b/drivers/hwmon/pmbus/adm1266.c
-@@ -421,18 +421,25 @@ static int adm1266_nvmem_read(void *priv, unsigned int offset, void *val, size_t
- 	if (offset + bytes > data->nvmem_config.size)
- 		return -EINVAL;
- 
-+	ret = pmbus_lock_interruptible(data->client);
-+	if (ret)
-+		return ret;
+diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
+index 1306e3b8b5c04b..4cb47c29dc6b95 100644
+--- a/drivers/soc/tegra/pmc.c
++++ b/drivers/soc/tegra/pmc.c
+@@ -28,6 +28,7 @@
+ #include <linux/iopoll.h>
+ #include <linux/irqdomain.h>
+ #include <linux/irq.h>
++#include <linux/irq_work.h>
+ #include <linux/kernel.h>
+ #include <linux/of_address.h>
+ #include <linux/of_clk.h>
+@@ -467,6 +468,10 @@ struct tegra_pmc {
+ 	unsigned long *wake_sw_status_map;
+ 	unsigned long *wake_cntrl_level_map;
+ 	struct syscore_ops syscore;
 +
- 	if (offset == 0) {
- 		memset(data->dev_mem, 0, data->nvmem_config.size);
++	/* Pending wake IRQ processing */
++	struct irq_work wake_work;
++	u32 *wake_status;
+ };
  
- 		ret = adm1266_nvmem_read_blackbox(data, data->dev_mem);
- 		if (ret) {
- 			dev_err(&data->client->dev, "Could not read blackbox!");
-+			pmbus_unlock(data->client);
- 			return ret;
- 		}
- 	}
- 
- 	memcpy(val, data->dev_mem + offset, bytes);
- 
-+	pmbus_unlock(data->client);
-+
+ static struct tegra_pmc *pmc = &(struct tegra_pmc) {
+@@ -1940,6 +1945,50 @@ static int tegra_pmc_parse_dt(struct tegra_pmc *pmc, struct device_node *np)
  	return 0;
  }
  
++/* translate sc7 wake sources back into IRQs to catch edge triggered wakeups */
++static void tegra186_pmc_wake_handler(struct irq_work *work)
++{
++	struct tegra_pmc *pmc = container_of(work, struct tegra_pmc, wake_work);
++	unsigned int i, wake;
++
++	for (i = 0; i < pmc->soc->max_wake_vectors; i++) {
++		unsigned long status = pmc->wake_status[i];
++
++		for_each_set_bit(wake, &status, 32) {
++			irq_hw_number_t hwirq = wake + (i * 32);
++			struct irq_desc *desc;
++			unsigned int irq;
++
++			irq = irq_find_mapping(pmc->domain, hwirq);
++			if (!irq) {
++				dev_warn(pmc->dev,
++					 "No IRQ found for WAKE#%lu!\n",
++					 hwirq);
++				continue;
++			}
++
++			dev_dbg(pmc->dev,
++				"Resume caused by WAKE#%lu mapped to IRQ#%u\n",
++				hwirq, irq);
++
++			desc = irq_to_desc(irq);
++			if (!desc) {
++				dev_warn(pmc->dev,
++					 "No descriptor found for IRQ#%u\n",
++					 irq);
++				continue;
++			}
++
++			if (!desc->action || !desc->action->name)
++				continue;
++
++			generic_handle_irq(irq);
++		}
++
++		pmc->wake_status[i] = 0;
++	}
++}
++
+ static int tegra_pmc_init(struct tegra_pmc *pmc)
+ {
+ 	if (pmc->soc->max_wake_events > 0) {
+@@ -1958,6 +2007,18 @@ static int tegra_pmc_init(struct tegra_pmc *pmc)
+ 		pmc->wake_cntrl_level_map = bitmap_zalloc(pmc->soc->max_wake_events, GFP_KERNEL);
+ 		if (!pmc->wake_cntrl_level_map)
+ 			return -ENOMEM;
++
++		pmc->wake_status = kcalloc(pmc->soc->max_wake_vectors, sizeof(u32), GFP_KERNEL);
++		if (!pmc->wake_status)
++			return -ENOMEM;
++
++		/*
++		 * Initialize IRQ work for processing wake IRQs. Must use
++		 * HARD_IRQ variant to run in hard IRQ context on PREEMPT_RT
++		 * because we call generic_handle_irq() which requires hard
++		 * IRQ context.
++		 */
++		pmc->wake_work = IRQ_WORK_INIT_HARD(tegra186_pmc_wake_handler);
+ 	}
+ 
+ 	if (pmc->soc->init)
+@@ -3156,47 +3217,30 @@ static void wke_clear_wake_status(struct tegra_pmc *pmc)
+ 	}
+ }
+ 
+-/* translate sc7 wake sources back into IRQs to catch edge triggered wakeups */
+-static void tegra186_pmc_process_wake_events(struct tegra_pmc *pmc, unsigned int index,
+-					     unsigned long status)
+-{
+-	unsigned int wake;
+-
+-	dev_dbg(pmc->dev, "Wake[%d:%d]  status=%#lx\n", (index * 32) + 31, index * 32, status);
+-
+-	for_each_set_bit(wake, &status, 32) {
+-		irq_hw_number_t hwirq = wake + 32 * index;
+-		struct irq_desc *desc;
+-		unsigned int irq;
+-
+-		irq = irq_find_mapping(pmc->domain, hwirq);
+-
+-		desc = irq_to_desc(irq);
+-		if (!desc || !desc->action || !desc->action->name) {
+-			dev_dbg(pmc->dev, "Resume caused by WAKE%ld, IRQ %d\n", hwirq, irq);
+-			continue;
+-		}
+-
+-		dev_dbg(pmc->dev, "Resume caused by WAKE%ld, %s\n", hwirq, desc->action->name);
+-		generic_handle_irq(irq);
+-	}
+-}
+-
+ static void tegra186_pmc_wake_syscore_resume(void)
+ {
+-	u32 status, mask;
+ 	unsigned int i;
++	u32 mask;
+ 
+ 	for (i = 0; i < pmc->soc->max_wake_vectors; i++) {
+ 		mask = readl(pmc->wake + WAKE_AOWAKE_TIER2_ROUTING(i));
+-		status = readl(pmc->wake + WAKE_AOWAKE_STATUS_R(i)) & mask;
+-
+-		tegra186_pmc_process_wake_events(pmc, i, status);
++		pmc->wake_status[i] = readl(pmc->wake + WAKE_AOWAKE_STATUS_R(i)) & mask;
+ 	}
++
++	/* Schedule IRQ work to process wake IRQs (if any) */
++	irq_work_queue(&pmc->wake_work);
+ }
+ 
+ static int tegra186_pmc_wake_syscore_suspend(void)
+ {
++	unsigned int i;
++
++	/* Check if there are unhandled wake IRQs */
++	for (i = 0; i < pmc->soc->max_wake_vectors; i++)
++		if (pmc->wake_status[i])
++			dev_warn(pmc->dev,
++				 "Unhandled wake IRQs pending vector[%u]: 0x%x\n",
++				 i, pmc->wake_status[i]);
+ 	wke_read_sw_wake_status(pmc);
+ 
+ 	/* flip the wakeup trigger for dual-edge triggered pads
 -- 
 2.53.0
 
