@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADEE169AD2;
-	Tue, 16 Jun 2026 18:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E413DC86D;
+	Tue, 16 Jun 2026 18:34:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634865; cv=none; b=p6YAIOGM3S+TxlKvWQ7ZfLIQVc4Yqt2UzNMJKQ+ENMRqXMyTk1eHJcqQ+jSJMyd2AFxjyw/hzemBEIGxOTheZBh1WC1DiYM892gGONPdLjTxOWbgHMmmvz9hcE0uaiSG0WYPGVA2XbGdhuHa9Ffi6/+iQl3RHHp+1ECgf43QFeo=
+	t=1781634871; cv=none; b=SI0Ko5uWW+LYEe9aUMo4sXLv/jUtnXEswekh+dd+SgQlKBFdAfV7kP7g8+oP+BAIQT5fFtIEJVTT1n0h7GE8E8h039CeLUrZoplwki3hzwH7yPvqBaYiA/OUXO0/zIqoVnZRDKlfcqy0Nl+85lZaZoNEBXY0YZWutzRebq6dtDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634865; c=relaxed/simple;
-	bh=Ax3gXDMV/2xnn2OL4JBk4J3ear1EiMMUTHi0KH4skFc=;
+	s=arc-20240116; t=1781634871; c=relaxed/simple;
+	bh=LNVXMmlsApbNkT7bUzmj3aTaROa2GI59V/rPbVKjwaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qaii18cL8ZECBqbDaWv8+VrrxxMvRdPGh1C9AcqT0dl+TkAq2RXg9+fmRvyOlRARe8Liq7utzGJplOkB2gl8XRK+1zwFoj4BOEk5taEhkxDREvcERGE83bWUqC5ivwafeav8Ap3+3fMr2BLrj56LKNuz6rjIJgTPmPL48nfwR4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBjr0fJU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jvv17uPMso18L6o1VcGcCFSwI+6sgIR57QCNSY+oR2sI++m9mjzkIDIvR+KFTV/4edDKn+hbQJBI/lrbKLgba7eJxaj/CqM8rj3dpdBQ0Q7YIun2G1c2QbhtNrguk+7UfPnxG68+jTbaLEk7lyPnHSywfWu6fPgyabsvrFkgqRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=as+oM8Ed; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBjr0fJU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE3F1F000E9;
-	Tue, 16 Jun 2026 18:34:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="as+oM8Ed"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DE91F000E9;
+	Tue, 16 Jun 2026 18:34:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634864;
-	bh=5fGrF0W1W37/dlIUlOY97Mgy+Qf95UhDWGcEzkwv0YM=;
+	s=korg; t=1781634870;
+	bh=wTD39nqSk56LqTiTz3W/mts9kXhMXoMcKcTAloYUY34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hBjr0fJUutFuLR2owGp7A3j3KyMUFF5FOFA2w/Sn92goHZD0B2GxcP9RcT8JtBNuX
-	 ead1nIukW2wwigcwAQXY/4WmkS8NodPUYcK2MM3//gFtfRV6yf/SezsHXvhqMSSOcW
-	 lJcnR92bsw8OSP+S4LFMBuryJYlohT9h72BVKH7w=
+	b=as+oM8Edxj5nha6GpOzypvw04muM+tJHksyhK8Slz3fmJr4lVBU5jPKMSdKgi67dv
+	 jzDrK1RC9tC1n7hzoe0OoZqHwxhzlUS4gIGOHKIm+Et5du3o2asEB9sakKpiNTcBgt
+	 teE94Yvxfnse2G28EFduGdA6fs+R9C7fmQbBDwJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bharath SM <bharathsm@microsoft.com>,
-	Piyush Sachdeva <psachdeva@microsoft.com>,
-	Piyush Sachdeva <s.piyush1024@gmail.com>,
-	Steve French <stfrench@microsoft.com>,
+	Jann Horn <jannh@google.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Jiexun Wang <wangjiexun2025@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 329/411] smb: client: Use FullSessionKey for AES-256 encryption key derivation
-Date: Tue, 16 Jun 2026 20:29:27 +0530
-Message-ID: <20260616145118.639549984@linuxfoundation.org>
+Subject: [PATCH 5.15 347/411] Bluetooth: serialize accept_q access
+Date: Tue, 16 Jun 2026 20:29:45 +0530
+Message-ID: <20260616145119.736753329@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -53,155 +57,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Piyush Sachdeva <s.piyush1024@gmail.com>
+From: Jiexun Wang <wangjiexun2025@gmail.com>
 
-[ Upstream commit 5be7a0cef3229fb3b63a07c0d289daf752545424 ]
+[ Upstream commit e83f5e24da741fa9405aeeff00b08c5ee7c37b88 ]
 
-When Kerberos authentication is used with AES-256 encryption (AES-256-CCM
-or AES-256-GCM), the SMB3 encryption and decryption keys must be derived
-using the full session key (Session.FullSessionKey) rather than just the
-first 16 bytes (Session.SessionKey).
+bt_sock_poll() walks the accept queue without synchronization, while
+child teardown can unlink the same socket and drop its last reference.
+The unsynchronized accept queue walk has existed since the initial
+Bluetooth import.
 
-Per MS-SMB2 section 3.2.5.3.1, when Connection.Dialect is "3.1.1" and
-Connection.CipherId is AES-256-CCM or AES-256-GCM, Session.FullSessionKey
-must be set to the full cryptographic key from the GSS authentication
-context. The encryption and decryption key derivation (SMBC2SCipherKey,
-SMBS2CCipherKey) must use this FullSessionKey as the KDF input. The
-signing key derivation continues to use Session.SessionKey (first 16
-bytes) in all cases.
+Protect accept_q with a dedicated lock for queue updates and polling.
+Also rework bt_accept_dequeue() to take temporary child references under
+the queue lock before dropping it and locking the child socket.
 
-Previously, generate_key() hardcoded SMB2_NTLMV2_SESSKEY_SIZE (16) as the
-HMAC-SHA256 key input length for all derivations. When Kerberos with
-AES-256 provides a 32-byte session key, the KDF for encryption/decryption
-was using only the first 16 bytes, producing keys that did not match the
-server's, causing mount failures with sec=krb5 and require_gcm_256=1.
-
-Add a full_key_size parameter to generate_key() and pass the appropriate
-size from generate_smb3signingkey():
- - Signing: always SMB2_NTLMV2_SESSKEY_SIZE (16 bytes)
- - Encryption/Decryption: ses->auth_key.len when AES-256, otherwise 16
-
-Also fix cifs_dump_full_key() to report the actual session key length for
-AES-256 instead of hardcoded CIFS_SESS_KEY_SIZE, so that userspace tools
-like Wireshark receive the correct key for decryption.
-
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Bharath SM <bharathsm@microsoft.com>
-Signed-off-by: Piyush Sachdeva <psachdeva@microsoft.com>
-Signed-off-by: Piyush Sachdeva <s.piyush1024@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ adapted to legacy crypto_shash API and ses->binding boolean instead of upstream's hmac_sha256 helpers and chan_lock machinery ]
+Fixes: 1da177e4c3f41524e886b7f1b8a0c1fc7321cac2 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reported-by: Jann Horn <jannh@google.com>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
+Reviewed-by: Jann Horn <jannh@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/ioctl.c         |    2 +-
- fs/cifs/smb2transport.c |   36 ++++++++++++++++++++++++++----------
- 2 files changed, 27 insertions(+), 11 deletions(-)
+ include/net/bluetooth/bluetooth.h |    1 
+ net/bluetooth/af_bluetooth.c      |   87 ++++++++++++++++++++++++++++----------
+ 2 files changed, 66 insertions(+), 22 deletions(-)
 
---- a/fs/cifs/ioctl.c
-+++ b/fs/cifs/ioctl.c
-@@ -262,7 +262,7 @@ search_end:
- 		break;
- 	case SMB2_ENCRYPTION_AES256_CCM:
- 	case SMB2_ENCRYPTION_AES256_GCM:
--		out.session_key_length = CIFS_SESS_KEY_SIZE;
-+		out.session_key_length = ses->auth_key.len;
- 		out.server_in_key_length = out.server_out_key_length = SMB3_GCM256_CRYPTKEY_SIZE;
- 		break;
- 	default:
---- a/fs/cifs/smb2transport.c
-+++ b/fs/cifs/smb2transport.c
-@@ -291,7 +291,8 @@ out:
+--- a/include/net/bluetooth/bluetooth.h
++++ b/include/net/bluetooth/bluetooth.h
+@@ -291,6 +291,7 @@ void baswap(bdaddr_t *dst, const bdaddr_
+ struct bt_sock {
+ 	struct sock sk;
+ 	struct list_head accept_q;
++	spinlock_t accept_q_lock; /* protects accept_q */
+ 	struct sock *parent;
+ 	unsigned long flags;
+ 	void (*skb_msg_name)(struct sk_buff *, void *, int *);
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -149,6 +149,7 @@ struct sock *bt_sock_alloc(struct net *n
+ 
+ 	sock_init_data(sock, sk);
+ 	INIT_LIST_HEAD(&bt_sk(sk)->accept_q);
++	spin_lock_init(&bt_sk(sk)->accept_q_lock);
+ 
+ 	sock_reset_flag(sk, SOCK_ZAPPED);
+ 
+@@ -209,6 +210,7 @@ void bt_accept_enqueue(struct sock *pare
+ {
+ 	const struct cred *old_cred;
+ 	struct pid *old_pid;
++	struct bt_sock *par = bt_sk(parent);
+ 
+ 	BT_DBG("parent %p, sk %p", parent, sk);
+ 
+@@ -219,9 +221,13 @@ void bt_accept_enqueue(struct sock *pare
+ 	else
+ 		lock_sock_nested(sk, SINGLE_DEPTH_NESTING);
+ 
+-	list_add_tail(&bt_sk(sk)->accept_q, &bt_sk(parent)->accept_q);
+ 	bt_sk(sk)->parent = parent;
+ 
++	spin_lock_bh(&par->accept_q_lock);
++	list_add_tail(&bt_sk(sk)->accept_q, &par->accept_q);
++	sk_acceptq_added(parent);
++	spin_unlock_bh(&par->accept_q_lock);
++
+ 	/* Copy credentials from parent since for incoming connections the
+ 	 * socket is allocated by the kernel.
+ 	 */
+@@ -239,8 +245,6 @@ void bt_accept_enqueue(struct sock *pare
+ 		bh_unlock_sock(sk);
+ 	else
+ 		release_sock(sk);
+-
+-	sk_acceptq_added(parent);
+ }
+ EXPORT_SYMBOL(bt_accept_enqueue);
+ 
+@@ -249,45 +253,72 @@ EXPORT_SYMBOL(bt_accept_enqueue);
+  */
+ void bt_accept_unlink(struct sock *sk)
+ {
++	struct sock *parent = bt_sk(sk)->parent;
++
+ 	BT_DBG("sk %p state %d", sk, sk->sk_state);
+ 
++	spin_lock_bh(&bt_sk(parent)->accept_q_lock);
+ 	list_del_init(&bt_sk(sk)->accept_q);
+-	sk_acceptq_removed(bt_sk(sk)->parent);
++	sk_acceptq_removed(parent);
++	spin_unlock_bh(&bt_sk(parent)->accept_q_lock);
+ 	bt_sk(sk)->parent = NULL;
+ 	sock_put(sk);
+ }
+ EXPORT_SYMBOL(bt_accept_unlink);
+ 
++static struct sock *bt_accept_get(struct sock *parent, struct sock *sk)
++{
++	struct bt_sock *bt = bt_sk(parent);
++	struct sock *next = NULL;
++
++	/* accept_q is modified from child teardown paths too, so take a
++	 * temporary reference before dropping the queue lock.
++	 */
++	spin_lock_bh(&bt->accept_q_lock);
++
++	if (sk) {
++		if (bt_sk(sk)->parent != parent)
++			goto out;
++
++		if (!list_is_last(&bt_sk(sk)->accept_q, &bt->accept_q)) {
++			next = &list_next_entry(bt_sk(sk), accept_q)->sk;
++			sock_hold(next);
++		}
++	} else if (!list_empty(&bt->accept_q)) {
++		next = &list_first_entry(&bt->accept_q,
++					 struct bt_sock, accept_q)->sk;
++		sock_hold(next);
++	}
++
++out:
++	spin_unlock_bh(&bt->accept_q_lock);
++	return next;
++}
++
+ struct sock *bt_accept_dequeue(struct sock *parent, struct socket *newsock)
+ {
+-	struct bt_sock *s, *n;
+-	struct sock *sk;
++	struct sock *sk, *next;
+ 
+ 	BT_DBG("parent %p", parent);
+ 
+ restart:
+-	list_for_each_entry_safe(s, n, &bt_sk(parent)->accept_q, accept_q) {
+-		sk = (struct sock *)s;
+-
++	for (sk = bt_accept_get(parent, NULL); sk; sk = next) {
+ 		/* Prevent early freeing of sk due to unlink and sock_kill */
+-		sock_hold(sk);
+ 		lock_sock(sk);
+ 
+ 		/* Check sk has not already been unlinked via
+ 		 * bt_accept_unlink() due to serialisation caused by sk locking
+ 		 */
+-		if (!bt_sk(sk)->parent) {
++		if (bt_sk(sk)->parent != parent) {
+ 			BT_DBG("sk %p, already unlinked", sk);
+ 			release_sock(sk);
+ 			sock_put(sk);
+ 
+-			/* Restart the loop as sk is no longer in the list
+-			 * and also avoid a potential infinite loop because
+-			 * list_for_each_entry_safe() is not thread safe.
+-			 */
+ 			goto restart;
+ 		}
+ 
++		next = bt_accept_get(parent, sk);
++
+ 		/* sk is safely in the parent list so reduce reference count */
+ 		sock_put(sk);
+ 
+@@ -315,6 +346,8 @@ restart:
+ 			sock_hold(sk);
+ 
+ 			release_sock(sk);
++			if (next)
++				sock_put(next);
+ 			return sk;
+ 		}
+ 
+@@ -513,18 +546,28 @@ EXPORT_SYMBOL(bt_sock_stream_recvmsg);
+ 
+ static inline __poll_t bt_accept_poll(struct sock *parent)
+ {
+-	struct bt_sock *s, *n;
++	struct bt_sock *bt = bt_sk(parent);
++	struct bt_sock *s;
+ 	struct sock *sk;
++	__poll_t mask = 0;
++
++	spin_lock_bh(&bt->accept_q_lock);
++	list_for_each_entry(s, &bt->accept_q, accept_q) {
++		int state;
+ 
+-	list_for_each_entry_safe(s, n, &bt_sk(parent)->accept_q, accept_q) {
+ 		sk = (struct sock *)s;
+-		if (sk->sk_state == BT_CONNECTED ||
+-		    (test_bit(BT_SK_DEFER_SETUP, &bt_sk(parent)->flags) &&
+-		     sk->sk_state == BT_CONNECT2))
+-			return EPOLLIN | EPOLLRDNORM;
++		state = READ_ONCE(sk->sk_state);
++
++		if (state == BT_CONNECTED ||
++		    (test_bit(BT_SK_DEFER_SETUP, &bt->flags) &&
++		     state == BT_CONNECT2)) {
++			mask = EPOLLIN | EPOLLRDNORM;
++			break;
++		}
+ 	}
++	spin_unlock_bh(&bt->accept_q_lock);
+ 
+-	return 0;
++	return mask;
  }
  
- static int generate_key(struct cifs_ses *ses, struct kvec label,
--			struct kvec context, __u8 *key, unsigned int key_size)
-+			struct kvec context, __u8 *key, unsigned int key_size,
-+			unsigned int full_key_size)
- {
- 	unsigned char zero = 0x0;
- 	__u8 i[4] = {0, 0, 0, 1};
-@@ -312,7 +313,7 @@ static int generate_key(struct cifs_ses
- 	}
- 
- 	rc = crypto_shash_setkey(server->secmech.hmacsha256,
--		ses->auth_key.response, SMB2_NTLMV2_SESSKEY_SIZE);
-+		ses->auth_key.response, full_key_size);
- 	if (rc) {
- 		cifs_server_dbg(VFS, "%s: Could not set with session key\n", __func__);
- 		goto smb3signkey_ret;
-@@ -393,10 +394,9 @@ static int
- generate_smb3signingkey(struct cifs_ses *ses,
- 			const struct derivation_triplet *ptriplet)
- {
--	int rc;
--#ifdef CONFIG_CIFS_DEBUG_DUMP_KEYS
-+	unsigned int full_key_size = SMB2_NTLMV2_SESSKEY_SIZE;
- 	struct TCP_Server_Info *server = ses->server;
--#endif
-+	int rc;
- 
- 	/*
- 	 * All channels use the same encryption/decryption keys but
-@@ -412,30 +412,46 @@ generate_smb3signingkey(struct cifs_ses
- 		rc = generate_key(ses, ptriplet->signing.label,
- 				  ptriplet->signing.context,
- 				  cifs_ses_binding_channel(ses)->signkey,
--				  SMB3_SIGN_KEY_SIZE);
-+				  SMB3_SIGN_KEY_SIZE,
-+				  SMB2_NTLMV2_SESSKEY_SIZE);
- 		if (rc)
- 			return rc;
- 	} else {
- 		rc = generate_key(ses, ptriplet->signing.label,
- 				  ptriplet->signing.context,
- 				  ses->smb3signingkey,
--				  SMB3_SIGN_KEY_SIZE);
-+				  SMB3_SIGN_KEY_SIZE,
-+				  SMB2_NTLMV2_SESSKEY_SIZE);
- 		if (rc)
- 			return rc;
- 
-+		/*
-+		 * Per MS-SMB2 3.2.5.3.1, signing key always uses Session.SessionKey
-+		 * (first 16 bytes). Encryption/decryption keys use
-+		 * Session.FullSessionKey when dialect is 3.1.1 and cipher is
-+		 * AES-256-CCM or AES-256-GCM, otherwise Session.SessionKey.
-+		 */
-+
-+		if (server->dialect == SMB311_PROT_ID &&
-+		    (server->cipher_type == SMB2_ENCRYPTION_AES256_CCM ||
-+		     server->cipher_type == SMB2_ENCRYPTION_AES256_GCM))
-+			full_key_size = ses->auth_key.len;
-+
- 		memcpy(ses->chans[0].signkey, ses->smb3signingkey,
- 		       SMB3_SIGN_KEY_SIZE);
- 
- 		rc = generate_key(ses, ptriplet->encryption.label,
- 				  ptriplet->encryption.context,
- 				  ses->smb3encryptionkey,
--				  SMB3_ENC_DEC_KEY_SIZE);
-+				  SMB3_ENC_DEC_KEY_SIZE,
-+				  full_key_size);
- 		if (rc)
- 			return rc;
- 		rc = generate_key(ses, ptriplet->decryption.label,
- 				  ptriplet->decryption.context,
- 				  ses->smb3decryptionkey,
--				  SMB3_ENC_DEC_KEY_SIZE);
-+				  SMB3_ENC_DEC_KEY_SIZE,
-+				  full_key_size);
- 		if (rc)
- 			return rc;
- 	}
-@@ -450,7 +466,7 @@ generate_smb3signingkey(struct cifs_ses
- 			&ses->Suid);
- 	cifs_dbg(VFS, "Cipher type   %d\n", server->cipher_type);
- 	cifs_dbg(VFS, "Session Key   %*ph\n",
--		 SMB2_NTLMV2_SESSKEY_SIZE, ses->auth_key.response);
-+		 (int)ses->auth_key.len, ses->auth_key.response);
- 	cifs_dbg(VFS, "Signing Key   %*ph\n",
- 		 SMB3_SIGN_KEY_SIZE, ses->smb3signingkey);
- 	if ((server->cipher_type == SMB2_ENCRYPTION_AES256_CCM) ||
+ __poll_t bt_sock_poll(struct file *file, struct socket *sock,
 
 
