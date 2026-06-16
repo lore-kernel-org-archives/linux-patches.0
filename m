@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995A7331A44;
-	Tue, 16 Jun 2026 17:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6AFA466B5B;
+	Tue, 16 Jun 2026 17:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631900; cv=none; b=f4o13/DF6tdh4ScuWSVMY6t9vuZZBK31cQQeRzw1koaiGNw4qBF8tsdMlAXgMRnDFMHIBR3oJuYfjYhlZ9WtHMm54nkkxVh5BvGJj+4j/StcGeKBL6J8fcg3X7vC5Xr2Ox1SGBJo2qB2sMZl4oo7SFF5WuvTciN9gpfA4NyIAB0=
+	t=1781631905; cv=none; b=cyn6LwmSR741mk1L5GaFBk+BMogCqVRC7toEpme+SYCnozuORpOCccrG3vuZPHYKSoHGtMXYcAFFzXsdh4UEbu2/ZuDkxOGtVl1QJT8wSWLrPkeh5AdqLJADcUyrVgjRR3ZOQ9ioCdw1ZKUyaz68g8mSUpy8IKtAl+M+BgKt7qM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631900; c=relaxed/simple;
-	bh=9pnad41aAVBadcIK1bPpQm9mATOfPzL7UjDaMTFxa9g=;
+	s=arc-20240116; t=1781631905; c=relaxed/simple;
+	bh=wSszrKdZryiwIT7NQhJ3/NOjMA0Z28C3weooqg8qIxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QN+7R0iQbOPuJXUKOQHU9T5xTt/HwiN8ElFDH7rxbKXSTa2hNiIYcT0QMa7801Qt0L7dgaT9uR0djWy8xNdhGZ7x0ZSfVRyF7tiwfqac8UgK9jnPTQcAdfOPzlYAhE8MjkkJZDXghThebgAcIUT/hqk5WZp+plUKfbH1HJCx1Ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ltgjSykF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gkztd4mS6jWBVPwpk9dFGNg1A7thjjeGxyId2UdgUVX7FyhBA0Eo0UgAb07NgxectoVLYQEJfTEu4W1dcemKfk8ca1myJV+g7kLMeMOgFtSOcFXl/O3DWv4UM80F8tx4zgFyYklt0OCixm5kr0DinJ+ViY8NsWDzbcsJAKxwsoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEye7asD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ltgjSykF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A8E1F000E9;
-	Tue, 16 Jun 2026 17:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEye7asD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0CFD1F000E9;
+	Tue, 16 Jun 2026 17:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631899;
-	bh=L4oAPEGOFA1NnS8yvc6p5Yj+MrOB66owRILkOADukiw=;
+	s=korg; t=1781631904;
+	bh=qWBoClFF0JxwMchntC96/YS48UBR9Y/sVBF71+wkNhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ltgjSykFAlBLzENeAHPty93UA4VBj4hBZGrhGI80yOuFs1rFEWVDiG9/FdDfdPidC
-	 28fYHcdnNrIXNpw+HWQZ+9+DfjMjK+Md2foY1PYUtC8l3o+5JIhdzqwuZSX8KH1Go+
-	 vs858pvI46PLlbIWn9SeyoQdYzNL/fnz/na/VikY=
+	b=wEye7asDKdO995T394L9IkvPFJANNZaT7Gjzo1gqAOrUQbANT+e+G8RC1AgVxupuD
+	 hz01m5sT2hhXdUaQtsTPRIfwWG+P0lYY6qcZsOwp+dFUxuNl/xUbBJyu/LlLEzOkT/
+	 HBwCihn0EAOjoh7ZjEZYlksVpWllChjrc3GXoAhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 309/522] mmc: core: Fix host controller programming for fixed driver type
-Date: Tue, 16 Jun 2026 20:27:36 +0530
-Message-ID: <20260616145140.330695504@linuxfoundation.org>
+	Inochi Amaoto <inochiama@gmail.com>,
+	Gabriel Somlo <gsomlo@gmail.com>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.1 310/522] mmc: litex_mmc: Set mandatory idle clocks before CMD0
+Date: Tue, 16 Jun 2026 20:27:37 +0530
+Message-ID: <20260616145140.373368316@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,46 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamal Dasu <kamal.dasu@broadcom.com>
+From: Inochi Amaoto <inochiama@gmail.com>
 
-commit 5a52c5701a67d5176eb1afbf1bdaf7d6dfeec597 upstream.
+commit 99982b743e5ba72bd1f5de0e03e3b96ae70b1e51 upstream.
 
-When using the fixed-emmc-driver-type device tree property, the MMC core
-correctly selects the driver strength for the card but fails to program
-the host controller accordingly. This causes a mismatch where the card
-uses the specified driver type while the host controller defaults to
-Type B (since ios->drv_type remains zero).
+The litex_mmc driver assumes the card is already probed in the BIOS
+and skip the phy initialization. This will cause the command fail
+like the following when the old card is unplugged and then insert
+a new card:
 
-Split the driver type programming logic to handle both fixed and dynamic
-driver type selection paths. For fixed driver types, program the host
-controller with the selected drive_strength value. For dynamic selection,
-use the existing drv_type as before.
+[   62.923593] litex-mmc f0004000.mmc: Command (cmd 8) error, status -110
+[   62.949717] litex-mmc f0004000.mmc: Command (cmd 55) error, status -110
+[   62.976606] litex-mmc f0004000.mmc: Command (cmd 55) error, status -110
+[   63.002516] litex-mmc f0004000.mmc: Command (cmd 55) error, status -110
+[   63.028442] litex-mmc f0004000.mmc: Command (cmd 55) error, status -110
 
-This ensures both the eMMC device and host controller use matching driver
-strengths, preventing potential signal integrity issues.
+Add required clock settings and initialization for the CMD 0, so it can
+probe the new card.
 
-Fixes: 6186d06c519e ("mmc: parse new binding for eMMC fixed driver type")
-Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
+Fixes: 92e099104729 ("mmc: Add driver for LiteX's LiteSDCard interface")
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Reviewed-by: Gabriel Somlo <gsomlo@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/mmc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mmc/host/litex_mmc.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/mmc/core/mmc.c
-+++ b/drivers/mmc/core/mmc.c
-@@ -1354,7 +1354,9 @@ static void mmc_select_driver_type(struc
+--- a/drivers/mmc/host/litex_mmc.c
++++ b/drivers/mmc/host/litex_mmc.c
+@@ -69,6 +69,9 @@
+ #define SD_SLEEP_US       5
+ #define SD_TIMEOUT_US 20000
  
- 	card->drive_strength = drive_strength;
++#define SD_INIT_DELAY_US  1000
++#define SD_INIT_CLK_HZ    400000
++
+ #define SDIRQ_CARD_DETECT    1
+ #define SDIRQ_SD_TO_MEM_DONE 2
+ #define SDIRQ_MEM_TO_SD_DONE 4
+@@ -450,6 +453,17 @@ static void litex_mmc_set_ios(struct mmc
+ 	struct litex_mmc_host *host = mmc_priv(mmc);
  
--	if (drv_type)
-+	if (fixed_drv_type >= 0 && drive_strength)
-+		mmc_set_driver_type(card->host, drive_strength);
-+	else if (drv_type)
- 		mmc_set_driver_type(card->host, drv_type);
- }
- 
+ 	/*
++	 * The SD specification requires at least 74 idle clocks before CMD0.
++	 * These dummy cycles is generated by writing LITEX_PHY_INITIALIZE.
++	 */
++	if (ios->chip_select == MMC_CS_HIGH) {
++		litex_mmc_setclk(host, SD_INIT_CLK_HZ);
++		litex_write8(host->sdphy + LITEX_PHY_INITIALIZE, 1);
++		fsleep(SD_INIT_DELAY_US);
++		return;
++	}
++
++	/*
+ 	 * NOTE: Ignore any ios->bus_width updates; they occur right after
+ 	 * the mmc core sends its own acmd6 bus-width change notification,
+ 	 * which is redundant since we snoop on the command flow and inject
 
 
