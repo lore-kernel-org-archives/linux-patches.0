@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0B0478E26;
-	Tue, 16 Jun 2026 17:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C2B4657D0;
+	Tue, 16 Jun 2026 17:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630435; cv=none; b=SVk6qHpaKd+u7GU4KlTiOStOVbjtHlrFIwo7nffLDBSIIFwKZnXJCdMx7gme3KxmywA4qH6Yaou/4R3oSoxNhaJTOgHgkSL8f6huGvyw40ppYRl2KfmY2kZyJHFwIV/iaQOZIf+aNfxe/L+VciDfkqdvX5qHFDdRx8N/O0+vlu4=
+	t=1781630440; cv=none; b=gXGVTub1O0zQJILfWbEp0JEalxVsv3RoQR5/rPp6L70JAUrj0s9/JPcTySU3rw2oiP55Qskrfl2TFqlnCh4GBFmc0UKArqoZQlY95p7UX/CGvnlhiD+wZhDEYGMMpkfDXDxv9PQ8ipOYx8ovtJ9LOVjPQnyHiyk5aqef18TRnt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630435; c=relaxed/simple;
-	bh=hQjLe0i0JQB3MRcLOWIZoEFEhbE+EUql/Gy9ny0vlns=;
+	s=arc-20240116; t=1781630440; c=relaxed/simple;
+	bh=7mqGdgrfOUYtf3OLBTW+De414ab8aBUnSm5dQV+E6X4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bG3qEhhsOyJQeImTSEkRXWdWgY1DjjEBhLLsBGugMnE3d05viX1/YPfu8tq/XXj3ZOlC4HaDTAD6CJCEsShzVoMlOYApKdq576Wczu+frf2iTxcHPKElL0mIESi++ym0sK6NSfFhH/2syFlfIMs6zdWWRvDPH/kqd0Sfc4kdpuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjYL8Sz0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZPinZF7a9YDo2dw6f3xY3jlMGQSUyTjs+MlUhLdxPJoVEC7O8At/yiBNNowtW0anK5s4bzZBF0QpodRG1hV1HpiMLirGC3DsFzM0HKFMqnJOQ27z9RLE+6Pg7xc2MiKOe3tvqP85/FOChwYjIAUHH7pdAG1BU/i0OcZ3/yXdhPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eVu1PaK9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjYL8Sz0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B871F00A3A;
-	Tue, 16 Jun 2026 17:20:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eVu1PaK9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0741F00A3A;
+	Tue, 16 Jun 2026 17:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630433;
-	bh=nzI1z3UttMaP9ROnTiyBJVp468I+/G1Jozqr2QUBOgg=;
+	s=korg; t=1781630439;
+	bh=Trs2+D7LqNlukW9Wm8LkRjmZV9ciRiSGu2doI9ytjIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TjYL8Sz0+wOJc74FGZPdOSPCBKniF+7WgQYMbOikpJ9yQEOKDWgSj8HYL+KnxO16S
-	 EWBvFtebI79sli5zPaUmlCcwOgyeujrjfQWKEnKQGWnvY7y+XfgG9oieAjhjfQ7gCT
-	 LmmpmSiB14mQo3nLFHtYGY4GbdNkQqKOkVwhg2UM=
+	b=eVu1PaK9Deke2ISaLr2CHIs/Z3GZlw+6AlQSKSgfzibRJn6XCzu89OtkPyyFeJu45
+	 YpGj9tHYYG6WsfbHWxGZEXaTNKJc8EfcZicYtDAOTc3s2RI7hnZBML9Az6cA/feodZ
+	 r4SY0H6gPrW5+C1T3M1+EFhUbmm12573MtZjC2Bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carl Lee <carl.lee@amd.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	Luca Stefani <luca.stefani.ge1@gmail.com>,
-	David Heidelberg <david@ixit.cz>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 010/522] nfc: nxp-nci: i2c: use rising-edge IRQ on ACPI systems
-Date: Tue, 16 Jun 2026 20:22:37 +0530
-Message-ID: <20260616145125.891068961@linuxfoundation.org>
+Subject: [PATCH 6.1 011/522] tools/bootconfig: Cleanup bootconfig footer size calculations
+Date: Tue, 16 Jun 2026 20:22:38 +0530
+Message-ID: <20260616145125.946340231@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -54,81 +50,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carl Lee <carl.lee@amd.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit f23bf992d65a42007c517b060ca35cebdea3525a ]
+[ Upstream commit 26dda57695090e05c1a99c3e8f802f862d1ac474 ]
 
-Some ACPI-based platforms report incorrect IRQ trigger types (e.g.
-IRQF_TRIGGER_HIGH), which can lead to interrupt storms.
+There are many same pattern of 8 + BOOTCONFIG_MAGIC_LEN for calculating
+the size of bootconfig footer. Use BOOTCONFIG_FOOTER_SIZE macro to
+clean up those magic numbers.
 
-Use the historically working rising-edge trigger on ACPI systems to
-avoid this regression.
+Link: https://lore.kernel.org/all/175211425693.2591046.16029516706923643510.stgit@mhiramat.tok.corp.google.com/
 
-Device Tree-based systems continue to use the firmware-provided
-trigger type.
-
-Fixes: 57be33f85e36 ("nfc: nxp-nci: remove interrupt trigger type")
-Signed-off-by: Carl Lee <carl.lee@amd.com>
-Tested-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Tested-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Tested-by: Luca Stefani <luca.stefani.ge1@gmail.com>
-Link: https://patch.msgid.link/20260516-nfc-nxp-nci-i2c-restore-irq-trigger-fallback-v3-1-37ba4b6e9086@amd.com
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Stable-dep-of: f42d01aadced ("tools/bootconfig: Fix buf leaks in apply_xbc")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/nxp-nci/i2c.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ tools/bootconfig/main.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/nfc/nxp-nci/i2c.c b/drivers/nfc/nxp-nci/i2c.c
-index f256c85888229a..9b9ca3ced856b4 100644
---- a/drivers/nfc/nxp-nci/i2c.c
-+++ b/drivers/nfc/nxp-nci/i2c.c
-@@ -16,6 +16,7 @@
- #include <linux/delay.h>
- #include <linux/i2c.h>
- #include <linux/interrupt.h>
-+#include <linux/irq.h>
- #include <linux/module.h>
- #include <linux/nfc.h>
- #include <linux/gpio/consumer.h>
-@@ -268,6 +269,7 @@ static int nxp_nci_i2c_probe(struct i2c_client *client,
- {
- 	struct device *dev = &client->dev;
- 	struct nxp_nci_i2c_phy *phy;
-+	unsigned long irqflags;
- 	int r;
+diff --git a/tools/bootconfig/main.c b/tools/bootconfig/main.c
+index 32cf48f2da9a1d..d302235f6b9743 100644
+--- a/tools/bootconfig/main.c
++++ b/tools/bootconfig/main.c
+@@ -16,6 +16,10 @@
  
- 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_I2C)) {
-@@ -304,9 +306,26 @@ static int nxp_nci_i2c_probe(struct i2c_client *client,
- 	if (r < 0)
- 		return r;
+ #define pr_err(fmt, ...) fprintf(stderr, fmt, ##__VA_ARGS__)
  
-+	/*
-+	 * ACPI platforms may report incorrect IRQ trigger types
-+	 * (e.g. level-high), which can lead to interrupt storms.
-+	 *
-+	 * Use the historically stable rising-edge trigger for ACPI devices.
-+	 *
-+	 * On non-ACPI systems (e.g. Device Tree), prefer the firmware-
-+	 * provided trigger type, falling back to rising-edge if not set.
-+	 */
-+	if (ACPI_COMPANION(dev)) {
-+		irqflags = IRQF_TRIGGER_RISING;
-+	} else {
-+		irqflags = irq_get_trigger_type(client->irq);
-+		if (!irqflags)
-+			irqflags = IRQF_TRIGGER_RISING;
-+	}
++/* Bootconfig footer is [size][csum][BOOTCONFIG_MAGIC]. */
++#define BOOTCONFIG_FOOTER_SIZE	\
++	(sizeof(uint32_t) * 2 + BOOTCONFIG_MAGIC_LEN)
 +
- 	r = request_threaded_irq(client->irq, NULL,
- 				 nxp_nci_i2c_irq_thread_fn,
--				 IRQF_ONESHOT,
-+				 irqflags | IRQF_ONESHOT,
- 				 NXP_NCI_I2C_DRIVER_NAME, phy);
- 	if (r < 0)
- 		nfc_err(&client->dev, "Unable to register IRQ handler\n");
+ static int xbc_show_value(struct xbc_node *node, bool semicolon)
+ {
+ 	const char *val, *eol;
+@@ -188,7 +192,7 @@ static int load_xbc_from_initrd(int fd, char **buf)
+ 	if (ret < 0)
+ 		return -errno;
+ 
+-	if (stat.st_size < 8 + BOOTCONFIG_MAGIC_LEN)
++	if (stat.st_size < BOOTCONFIG_FOOTER_SIZE)
+ 		return 0;
+ 
+ 	if (lseek(fd, -BOOTCONFIG_MAGIC_LEN, SEEK_END) < 0)
+@@ -201,7 +205,7 @@ static int load_xbc_from_initrd(int fd, char **buf)
+ 	if (memcmp(magic, BOOTCONFIG_MAGIC, BOOTCONFIG_MAGIC_LEN) != 0)
+ 		return 0;
+ 
+-	if (lseek(fd, -(8 + BOOTCONFIG_MAGIC_LEN), SEEK_END) < 0)
++	if (lseek(fd, -BOOTCONFIG_FOOTER_SIZE, SEEK_END) < 0)
+ 		return pr_errno("Failed to lseek for size", -errno);
+ 
+ 	if (read(fd, &size, sizeof(uint32_t)) < 0)
+@@ -213,12 +217,12 @@ static int load_xbc_from_initrd(int fd, char **buf)
+ 	csum = le32toh(csum);
+ 
+ 	/* Wrong size error  */
+-	if (stat.st_size < size + 8 + BOOTCONFIG_MAGIC_LEN) {
++	if (stat.st_size < size + BOOTCONFIG_FOOTER_SIZE) {
+ 		pr_err("bootconfig size is too big\n");
+ 		return -E2BIG;
+ 	}
+ 
+-	if (lseek(fd, stat.st_size - (size + 8 + BOOTCONFIG_MAGIC_LEN),
++	if (lseek(fd, stat.st_size - (size + BOOTCONFIG_FOOTER_SIZE),
+ 		  SEEK_SET) < 0)
+ 		return pr_errno("Failed to lseek", -errno);
+ 
+@@ -349,7 +353,7 @@ static int delete_xbc(const char *path)
+ 		ret = fstat(fd, &stat);
+ 		if (!ret)
+ 			ret = ftruncate(fd, stat.st_size
+-					- size - 8 - BOOTCONFIG_MAGIC_LEN);
++					- size - BOOTCONFIG_FOOTER_SIZE);
+ 		if (ret)
+ 			ret = -errno;
+ 	} /* Ignore if there is no boot config in initrd */
+@@ -379,8 +383,7 @@ static int apply_xbc(const char *path, const char *xbc_path)
+ 	csum = xbc_calc_checksum(buf, size);
+ 
+ 	/* Backup the bootconfig data */
+-	data = calloc(size + BOOTCONFIG_ALIGN +
+-		      sizeof(uint32_t) + sizeof(uint32_t) + BOOTCONFIG_MAGIC_LEN, 1);
++	data = calloc(size + BOOTCONFIG_ALIGN + BOOTCONFIG_FOOTER_SIZE, 1);
+ 	if (!data)
+ 		return -ENOMEM;
+ 	memcpy(data, buf, size);
+@@ -428,7 +431,7 @@ static int apply_xbc(const char *path, const char *xbc_path)
+ 	}
+ 
+ 	/* To align up the total size to BOOTCONFIG_ALIGN, get padding size */
+-	total_size = stat.st_size + size + sizeof(uint32_t) * 2 + BOOTCONFIG_MAGIC_LEN;
++	total_size = stat.st_size + size + BOOTCONFIG_FOOTER_SIZE;
+ 	pad = ((total_size + BOOTCONFIG_ALIGN - 1) & (~BOOTCONFIG_ALIGN_MASK)) - total_size;
+ 	size += pad;
+ 
 -- 
 2.53.0
 
