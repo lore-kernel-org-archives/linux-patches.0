@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7660331EAB;
-	Tue, 16 Jun 2026 16:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42ED74502F;
+	Tue, 16 Jun 2026 16:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627913; cv=none; b=YSIJ60hb014/m1xKp2/NUTLC6RSMYr1ZdnkhKrBNxymiYcdxGSP3z2AxFBcRAtIRhVHLsKGSCexXKiseSsikFBRzeSUpLyMlRSEKrzmVylBhi+i1mlJjK+mqCarWj9VlRpts0+IQipY1wfspQUIR1tHHbJVDKlQwDYq0LqoulRs=
+	t=1781627919; cv=none; b=g46ClNuaAkL6o8t1gZGKzhfRtwjOcXxHEn2hevjWW8V7aYFrHFRCitnNnSnvzei9MqjPbzIW9bXe5Typn760def2otYzG9/n0MvCCYQbs7hN4arHG2+alX67i5dp5rKFHyUIlVSzLucCPd1aIdCG/H1ltE1dUZUulVx81uN12jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627913; c=relaxed/simple;
-	bh=5yhpUsaVMacZHeQ3wXkD7xaVadNj5ZppyAURhQnhKCA=;
+	s=arc-20240116; t=1781627919; c=relaxed/simple;
+	bh=u2xVoUKWWNSeyyiWq+URq9O3GeghNKz4dYl8gqpPG0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YLFWRnr2j4RViPIa+x4DGzHBglcSjqTRUnq5BXT2Qzc5HSrFTmRay4SzQSVKmSYK5P+eg1Tp09IWVcrY5hJ4I2Bb9z7C1FF+aSC+AKfvE7u4ZbZD/vK+6iKOFPQEAx1lm6n/XAEPDNhkyAql0gH6lezFJaJf023198CNPO6i8fA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DvyMqNYP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZVCVfKaGdsovOGHyUQ6FXvI4Y/i/XRRTmQPo7Z1Rv6hfzHuSzx78JDGSG9AselqjgkfIHc7cSegs4G093WF/57ZfEVXu/ZfXEv324yx9Q+F2BeCM6VAWNrIGo2DszBmhhCbDI3Y7taPCxwqBOtq2aAX1q2u2fEhbbLh4Jy12qZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcGyH5nP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DvyMqNYP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB3911F000E9;
-	Tue, 16 Jun 2026 16:38:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcGyH5nP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 463791F000E9;
+	Tue, 16 Jun 2026 16:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627912;
-	bh=+d8IOscpRYH3fh+sjaBv/TXFNTetS+OaSCcmOk+CC4c=;
+	s=korg; t=1781627918;
+	bh=TDMjqZdDJxhvEYXRn4cheK+X6rCR8dZlLV8Q6txY60U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DvyMqNYPbNASnBeND6Mz0IaCTFHQYB+eNUOwaogfKtUtaTn+RX0WrKoGQ9bX04AGX
-	 /iK4dA4CCEW7dd9/R/NJmOkWSKaBz2PCNvNh6s61eK8JbqV0i+zAq5+NhpYFbmszgN
-	 DvsR+TL5T5c7guOl6ySkm25Yxd7/LD52Uxpmb9QM=
+	b=rcGyH5nP1+bzVfYwnh5f/9n7qQmOCy5/QR1vGXBbWIBAaoUMtn1KL2ZP6j133kVt7
+	 qIerskNM8Iu6NuE3YiqykG98ktNVY9zs95xoYclDDGhScfw7RBGXmx7WoOqfyFxEjn
+	 dDsTou/CLvkcFTrEi43UnXIgEn6rYYD7u8bEYb4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.12 218/261] drm/v3d: Fix vaddr leak when indirect CSD has zeroed workgroups
-Date: Tue, 16 Jun 2026 20:30:56 +0530
-Message-ID: <20260616145055.132755338@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 219/261] drm/amdgpu: restart the CS if some parts of the VM are still invalidated
+Date: Tue, 16 Jun 2026 20:30:57 +0530
+Message-ID: <20260616145055.177583102@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,48 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Christian König <christian.koenig@amd.com>
 
-commit ae7676952790f421c40918e2586a2c9f12a682b6 upstream.
+commit 40396ffdf6120e2380706c59e1a84d7e765a37b6 upstream.
 
-v3d_rewrite_csd_job_wg_counts_from_indirect() maps both the indirect
-buffer and the workgroup buffer and is expected to release them before
-returning. When any of the workgroup counts read from the buffer is zero,
-the function bailed out early and skipped the cleanup, leaking the vaddr
-mappings of both BOs.
+Make sure that we only submit work with full up to date VM page tables.
 
-Jump to the cleanup path instead of returning directly, so the mappings
-are always dropped.
+Backport to 7.1 and older.
 
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Tested-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 59720bfd8c6dbebeb8d5a7ab64241b007efd9213)
 Cc: stable@vger.kernel.org
-Fixes: 18b8413b25b7 ("drm/v3d: Create a CPU job extension for a indirect CSD job")
-Suggested-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20260602-v3d-fix-indirect-csd-v4-1-654309e32bc0@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/v3d/v3d_sched.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -409,7 +409,7 @@ v3d_rewrite_csd_job_wg_counts_from_indir
- 	wg_counts = (uint32_t *)(bo->vaddr + indirect_csd->offset);
- 
- 	if (wg_counts[0] == 0 || wg_counts[1] == 0 || wg_counts[2] == 0)
--		return;
-+		goto unmap_bo;
- 
- 	args->cfg[0] = wg_counts[0] << V3D_CSD_CFG012_WG_COUNT_SHIFT;
- 	args->cfg[1] = wg_counts[1] << V3D_CSD_CFG012_WG_COUNT_SHIFT;
-@@ -434,6 +434,7 @@ v3d_rewrite_csd_job_wg_counts_from_indir
- 		}
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -1278,6 +1278,7 @@ static int amdgpu_cs_submit(struct amdgp
+ {
+ 	struct amdgpu_fpriv *fpriv = p->filp->driver_priv;
+ 	struct amdgpu_job *leader = p->gang_leader;
++	struct amdgpu_vm *vm = &fpriv->vm;
+ 	struct amdgpu_bo_list_entry *e;
+ 	struct drm_gem_object *gobj;
+ 	unsigned long index;
+@@ -1323,7 +1324,8 @@ static int amdgpu_cs_submit(struct amdgp
+ 							e->range);
+ 		e->range = NULL;
  	}
- 
-+unmap_bo:
- 	v3d_put_bo_vaddr(indirect);
- 	v3d_put_bo_vaddr(bo);
- }
+-	if (r) {
++
++	if (r || !list_empty(&vm->invalidated)) {
+ 		r = -EAGAIN;
+ 		mutex_unlock(&p->adev->notifier_lock);
+ 		return r;
 
 
