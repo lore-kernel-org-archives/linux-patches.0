@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3E83C65F2;
-	Tue, 16 Jun 2026 17:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398EB32A3C9;
+	Tue, 16 Jun 2026 17:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632104; cv=none; b=KfsqEKCczm9Yck1/5JVZEP+8HLWfK04W2cd0OsoKgrQ3DG52alMVEs149sh8LLUuFjH8ja04n3Zu5S77b58MhKDQT4Ca1B2tw+1XqkTD1uqRWevPUuvnLGiONuSPPlbLcwTlDIkLxRUCUliVmBpcISpflkC+xyqbrhw2qYzrd+c=
+	t=1781632109; cv=none; b=Y0na/aL8hMdUJeH/vR6CV26hacfWlBkqwZ3o0VQtNEWLpAB4JAChVVBD3aG1/ulzgKpFdlpubok0+hRbnJN6Xp9DXJOZsURB1qLo+W3kY8eYvk7xiSoNO0Sj13MMGK6rjp1ICLAY8tORnb2nBvvUWTHBJQ6KuDi+dHw01wJZpMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632104; c=relaxed/simple;
-	bh=KO2Q9sRIZvAoW0eaQBoMFBwCfN5zEVCRlhm5jfzoLMk=;
+	s=arc-20240116; t=1781632109; c=relaxed/simple;
+	bh=SlIkBw4dDh4Y0sFNR0vajk7DVxaZDT/KCmzEmZriVjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=utotbBKBAESFvNq50xODtt+A2t2z6ekF64n0Uz5Nq7F1AHLSicAmzNRjZud9z1KjIZXWFL8kNB3/h2/DTW1cVBx4QVtiJeqiyhnqUHRh+X41s6DpixTB9nYEsAaiyyYlnZhwCawLxfO7r+vmxVlh2OAV+bK2cxIKp4HXhsDovXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pTXGMIVu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MBRcwMciHOihl2DeFgK17UZKmOJ22635vzJnO3SIVTo8jy2lbAijQ25Ua47Okjc9J4M4FuFcTCmgQZWuWyYcZYKoh+F+hLAtMy1uOPWttRFY3kjcRidbvaB0bKUO8JwfM612mGCqzvheIjM5847W4iDt+CC+VVUJ6Cnoz8QVsNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mY6J/uvN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pTXGMIVu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E081F000E9;
-	Tue, 16 Jun 2026 17:48:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mY6J/uvN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF101F000E9;
+	Tue, 16 Jun 2026 17:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632102;
-	bh=Q4yqtHeBN3nyTrVVi0gmEzBpU8yr2WXO23lPkhTfo+8=;
+	s=korg; t=1781632107;
+	bh=A8zGXQWzxGJ0YyX4G2b9mS5tZH6RiDyX4ecEY6eg3Wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pTXGMIVukDLDgeOx1yQZA2bSEiuG1UTzIskI8t2K2zqDU4jZjQAtSf55jR3957ml2
-	 CxzA6D7Zd+puZmDTGGnEpwiCI/hxBuZNbHGaPYKPF55+WGqmtbcryT9j9MQV6/+d9F
-	 08LmJMsETN3XpDg9imWe9LIoVG4GCcRsJzL/BNM4=
+	b=mY6J/uvNIoxBH7rOIfgv2XmCr80ndIZ0wCIRr9IWGUeewND3gsIGBjBA3rfTLXWXk
+	 hjbNYKPJIFJ2mAx5/kY/9eYm55ccb3ld5xCwVnNEzlPioy/SKHFGlT470SDEzF+fPK
+	 TdkchQiEodUSVw83apREY+4qsrxpVaL584m2x7tU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Salisbury <joseph.salisbury@oracle.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 348/522] sched: Use u64 for bandwidth ratio calculations
-Date: Tue, 16 Jun 2026 20:28:15 +0530
-Message-ID: <20260616145142.083256164@linuxfoundation.org>
+Subject: [PATCH 6.1 349/522] net: qrtr: ns: Limit the maximum number of lookups
+Date: Tue, 16 Jun 2026 20:28:16 +0530
+Message-ID: <20260616145142.128957783@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,71 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Salisbury <joseph.salisbury@oracle.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit c6e80201e057dfb7253385e60bf541121bf5dc33 ]
+[ Upstream commit 5640227d9a21c6a8be249a10677b832e7f40dc55 ]
 
-to_ratio() computes BW_SHIFT-scaled bandwidth ratios from u64 period and
-runtime values, but it returns unsigned long.  tg_rt_schedulable() also
-stores the current group limit and the accumulated child sum in unsigned
-long.
+Current code does no bound checking on the number of lookups a client can
+perform. Though the code restricts the lookups to local clients, there is
+still a possibility of a malicious local client sending a flood of
+NEW_LOOKUP messages over the same socket.
 
-On 32-bit builds, large bandwidth ratios can be truncated and the RT
-group sum can wrap when enough siblings are present.  That can let an
-overcommitted RT hierarchy pass the schedulability check, and it also
-narrows the helper result for other callers.
+Fix this issue by limiting the maximum number of lookups to 64 globally.
+Since the nameserver allows only atmost one local observer, this global
+lookup count will ensure that the lookups stay within the limit.
 
-Return u64 from to_ratio() and use u64 for the RT group totals so
-bandwidth ratios are preserved and compared at full width on both 32-bit
-and 64-bit builds.
+Note that, limit of 64 is chosen based on the current platform
+requirements. If requirement changes in the future, this limit can be
+increased.
 
-Fixes: b40b2e8eb521 ("sched: rt: multi level group constraints")
-Assisted-by: Codex:GPT-5
-Signed-off-by: Joseph Salisbury <joseph.salisbury@oracle.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260403210014.2713404-1-joseph.salisbury@oracle.com
-[ dropped `extern` keyword from `to_ratio()` declaration ]
+Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260409-qrtr-fix-v3-2-00a8a5ff2b51@oss.qualcomm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted comment block to only mention QRTR_NS_MAX_LOOKUPS and kept kzalloc() instead of kzalloc_obj() due to missing prerequisite commits ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c  |    2 +-
- kernel/sched/rt.c    |    2 +-
- kernel/sched/sched.h |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ net/qrtr/ns.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -4692,7 +4692,7 @@ void sched_post_fork(struct task_struct
- 	uclamp_post_fork(p);
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -21,6 +21,7 @@ static struct {
+ 	struct socket *sock;
+ 	struct sockaddr_qrtr bcast_sq;
+ 	struct list_head lookups;
++	u32 lookup_count;
+ 	struct workqueue_struct *workqueue;
+ 	struct work_struct work;
+ 	void (*saved_data_ready)(struct sock *sk);
+@@ -69,6 +70,11 @@ struct qrtr_node {
+ 	struct radix_tree_root servers;
+ };
+ 
++/* Max lookup limit is chosen based on the current platform requirements. If the
++ * requirement changes in the future, this value can be increased.
++ */
++#define QRTR_NS_MAX_LOOKUPS 64
++
+ static struct qrtr_node *node_get(unsigned int node_id)
+ {
+ 	struct qrtr_node *node;
+@@ -457,6 +463,7 @@ static int ctrl_cmd_del_client(struct so
+ 
+ 		list_del(&lookup->li);
+ 		kfree(lookup);
++		qrtr_ns.lookup_count--;
+ 	}
+ 
+ 	/* Remove the server belonging to this port but don't broadcast
+@@ -590,6 +597,11 @@ static int ctrl_cmd_new_lookup(struct so
+ 	if (from->sq_node != qrtr_ns.local_node)
+ 		return -EINVAL;
+ 
++	if (qrtr_ns.lookup_count >= QRTR_NS_MAX_LOOKUPS) {
++		pr_err_ratelimited("QRTR client node exceeds max lookup limit!\n");
++		return -ENOSPC;
++	}
++
+ 	lookup = kzalloc(sizeof(*lookup), GFP_KERNEL);
+ 	if (!lookup)
+ 		return -ENOMEM;
+@@ -598,6 +610,7 @@ static int ctrl_cmd_new_lookup(struct so
+ 	lookup->service = service;
+ 	lookup->instance = instance;
+ 	list_add_tail(&lookup->li, &qrtr_ns.lookups);
++	qrtr_ns.lookup_count++;
+ 
+ 	memset(&filter, 0, sizeof(filter));
+ 	filter.service = service;
+@@ -664,6 +677,7 @@ static void ctrl_cmd_del_lookup(struct s
+ 
+ 		list_del(&lookup->li);
+ 		kfree(lookup);
++		qrtr_ns.lookup_count--;
+ 	}
  }
  
--unsigned long to_ratio(u64 period, u64 runtime)
-+u64 to_ratio(u64 period, u64 runtime)
- {
- 	if (runtime == RUNTIME_INF)
- 		return BW_UNIT;
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -2768,7 +2768,7 @@ static int tg_rt_schedulable(struct task
- {
- 	struct rt_schedulable_data *d = data;
- 	struct task_group *child;
--	unsigned long total, sum = 0;
-+	u64 total, sum = 0;
- 	u64 period, runtime;
- 
- 	period = ktime_to_ns(tg->rt_bandwidth.rt_period);
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -2371,7 +2371,7 @@ extern void init_dl_inactive_task_timer(
- #define RATIO_SHIFT		8
- #define MAX_BW_BITS		(64 - BW_SHIFT)
- #define MAX_BW			((1ULL << MAX_BW_BITS) - 1)
--unsigned long to_ratio(u64 period, u64 runtime);
-+u64 to_ratio(u64 period, u64 runtime);
- 
- extern void init_entity_runnable_average(struct sched_entity *se);
- extern void post_init_entity_util_avg(struct task_struct *p);
 
 
