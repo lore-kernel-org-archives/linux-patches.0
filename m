@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E6D43E484;
-	Tue, 16 Jun 2026 15:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60BD643E4A1;
+	Tue, 16 Jun 2026 15:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623104; cv=none; b=M1DFp7oTZbpBiIdyiZjViCb/gLjKoYyJkdhtDCZlDE+VSnwJ/tykNsBARH3pJCrE9XbcTk/E5oSwJsz+H7468xH2PYABLEnmJEuRXemx3BngSBhWelGvZvafesPjR/rCNwq1SOTIgTIp8okK6SA8IChG0sAwM9oUIARnwZIlbcI=
+	t=1781623110; cv=none; b=neZKd/RDiLovzcCL9bz/3eNqibDkpDPSrGFdnijqT/RaSrxdHFKIoAryiT4i9RwpPKjPfIV9BrO747VCS7t03M++iR2Ksr7FAv9z9uQf2R3DAWudPRBSJxEDNn5X+unyPdLSol9oDeYwe3eYsyKdj5ysY13jHHhSR7+LK8hTnYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623104; c=relaxed/simple;
-	bh=mDT0SIB8A1Ol2n1rnHzJeCu8vnm1f5e9WmvD3PLrL4s=;
+	s=arc-20240116; t=1781623110; c=relaxed/simple;
+	bh=yT4G5Ciwrov4YPAJjotMdzFOY/XpcsTp1v+4U0QaUMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IiTfBbG/XXkidF0p2+IqIfxoYaJDP0DwlyX5h4tukJHl5nPjzUS5pCW+OorYYaKivMYeDEyimOaELSbqO8F7EaMngh97n3wep62tIaJQhZ+4c2GtUu4EBSkssRlRx8OC384/2nNQfKO+CKs+PU4O49XeiBGxht5cS+2EXwhYKwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RNlglCIh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TqyT4MCUxTs/i2XtGjv1XayE5+1MfjFOFiyUY6RKP3WWLw6A/jE+UqUok/E3ilTPdU3CPO429KJsp7vwu7op15htzeJepLtKqSkmamN4z8TXYxWx2ncVAdqtV4TWlXGo0fXmiObcZR28cK2hDzEE8OJIlw+zb418tSMiZT6T0a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HdAbgaD7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNlglCIh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DD01F000E9;
-	Tue, 16 Jun 2026 15:18:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HdAbgaD7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A41E1F000E9;
+	Tue, 16 Jun 2026 15:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623103;
-	bh=pyj49m6iztPEy4UXR9vY8AS8QWZ/Hadi976r9vlC2WM=;
+	s=korg; t=1781623109;
+	bh=diQc9+U4wrcwZwo694zEt86ZxOHDIeQRXDwDTM0RDJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RNlglCIhP5A8tSe/2SF05Mow3N2kVljvWX1SByP6pc6GfkzxzbciTRhim9hlv4TOL
-	 3LFDRkqvxNgD1OexZz5EgHpeYQCzlkUB+2wLofSzwK4UrRcxXVyVAfUQxFFk1X8YPJ
-	 UhBeubFu/zdfHznPz1R/u4S//FOb7lezxHpZ9DI8=
+	b=HdAbgaD7cXnhAUVJzAZwowSQtarLFQeUkD/GXZN3VgFof5rPBNGYOEN11i9Yvv0B1
+	 tcT/htG/1rvc/9D1MmO4Osw70g72r4xs7b96zFtyn/7aFKxJWG1eVVnl86KkHmKJad
+	 9k6tXxF+Wt6o2fluPH5o1bjGi30jsupbQvSBuHrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuqi Xu <xuyq21@lenovo.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	John Kacur <jkacur@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 071/378] sctp: purge outqueue on stale COOKIE-ECHO handling
-Date: Tue, 16 Jun 2026 20:25:02 +0530
-Message-ID: <20260616145113.875101640@linuxfoundation.org>
+Subject: [PATCH 7.0 089/378] rtla: Fix parsing of multi-character short options
+Date: Tue, 16 Jun 2026 20:25:20 +0530
+Message-ID: <20260616145114.947575865@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -58,85 +51,260 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Tomas Glozar <tglozar@redhat.com>
 
-[ Upstream commit e374b22e9b07b72a25909621464ff74096151bfb ]
+[ Upstream commit e9e41d3035032ed6053d8bad7b7077e1cb3a6540 ]
 
-sctp_stream_update() is only invoked when the association is moved into
-COOKIE_WAIT during association setup/reconfiguration. In this path, the
-outbound stream scheduler state (stream->out_curr) is expected to be
-clean, since no user data should have been transmitted yet unless the
-state machine has already partially progressed.
+A bug was reported where the parsing of multi-character short options,
+be it a short option with an argument specified without space (e.g.
+"-p100") or multiple short options in one argument (e.g. -un), ignores
+options specific to individual tools.
 
-However, a corner case exists in sctp_sf_do_5_2_6_stale(): when a
-Stale Cookie ERROR is received, the association is rolled back from
-COOKIE_ECHOED to COOKIE_WAIT. In this scenario, user data may already
-have been queued and even bundled with the COOKIE-ECHO chunk.
+Furthermore, if the rest of the option is supposed to be an argument, it
+gets reinterpreted as a string of options. For example, -p100 gets
+interpreted as -100, which is due to hackish implementation read as
+--no-thread --no-irq --no-irq with timerlat hist, causing rtla to error
+out:
 
-During the rollback, sctp_stream_update() frees the old stream table
-and installs a new one, but it does not invalidate stream->out_curr.
-As a result, out_curr may still point to a freed sctp_stream_out
-entry from the previous stream state.
+$ rtla timerlat hist -p100
+no-irq and no-thread set, there is nothing to do here
 
-Later, SCTP scheduler dequeue paths (FCFS, RR, PRIO, etc.) rely on
-stream->out_curr->ext, which can lead to use-after-free once the old
-stream state has been released via sctp_stream_free().
+This behavior is caused by getopt_long() being called twice on each
+argument, once in common_parse_options(), once in [tool]_parse_args():
 
-This results in crashes such as (reported by Yuqi):
+- common_parse_options() calls getopt_long() with an array of options
+  common for all rtla tools, while suppressing errors (opterr = 0).
+- If the option fails to parse, common_parse_options() returns 0.
+- If 0 is returned from common_parse_options(), [tool]_parse_args()
+  calls getopt_long() again, with its own set of options.
 
-  BUG: KASAN: slab-use-after-free in sctp_sched_fcfs_dequeue+0x13a/0x140
-  Read of size 8 at addr ff1100004d4d3208 by task mini_poc/9312
-  CPU: 1 UID: 1001 PID: 9312 Comm: mini_poc Not tainted
-     7.1.0-rc1-00305-gbd3a4795d574 #5 PREEMPT(full)
-   sctp_sched_fcfs_dequeue+0x13a/0x140
-   sctp_outq_flush+0x1603/0x33e0
-   sctp_do_sm+0x31c9/0x5d30
-   sctp_assoc_bh_rcv+0x392/0x6f0
-   sctp_inq_push+0x1db/0x270
-   sctp_rcv+0x138d/0x3c10
+* [tool] means one of {osnoise,timerlat}_{top,hist}
 
-Fix this by fully purging the association outqueue when handling the
-Stale Cookie case. This ensures all pending transmit and retransmit
-state is dropped, and any scheduler cached pointers are invalidated,
-making it safe to rebuild stream state during COOKIE_WAIT restart.
+At least in glibc, getopt_long() increments its internal nextchar
+variable even if the option is not recognized. That means that in the
+case of "-p100", common_parse_options() sets nextchar pointing to '1',
+and timerlat_hist_parse_args() sees '1', not 'p'; the same then repeats
+for the first and second '0'.
 
-Updating only stream->out_curr would be insufficient, since queued
-and retransmittable data would still reference the old stream state and
-trigger later use-after-free in dequeue paths.
+As there is no way to restore the correct internal state of
+getopt_long() reliably, fix the issue by merging the common options back
+to the longopt array and option string of the [tool]_parse_args()
+functions using a macro; only the switch part is left in the original
+function, which is renamed to set_common_option().
 
-Fixes: 5bbbbe32a431 ("sctp: introduce stream scheduler foundations")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Reported-by: Yuqi Xu <xuyq21@lenovo.com>
-Reported-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/94318159b9052907a6cbb7256aee8b5f8dfbfccb.1780510304.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 850cd24cb6d6 ("tools/rtla: Add common_parse_options()")
+Reported-by: John Kacur <jkacur@redhat.com>
+Tested-by: John Kacur <jkacur@redhat.com>
+Link: https://lore.kernel.org/r/20260602125506.3325345-1-tglozar@redhat.com
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ tools/tracing/rtla/src/common.c        | 28 +++++---------------------
+ tools/tracing/rtla/src/common.h        | 12 ++++++++++-
+ tools/tracing/rtla/src/osnoise_hist.c  |  7 ++++---
+ tools/tracing/rtla/src/osnoise_top.c   |  7 ++++---
+ tools/tracing/rtla/src/timerlat_hist.c |  7 ++++---
+ tools/tracing/rtla/src/timerlat_top.c  |  7 ++++---
+ 6 files changed, 32 insertions(+), 36 deletions(-)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index 8e89a870780c49..9b23c11cbb9ea4 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -2598,11 +2598,7 @@ static enum sctp_disposition sctp_sf_do_5_2_6_stale(
- 	 */
- 	sctp_add_cmd_sf(commands, SCTP_CMD_DEL_NON_PRIMARY, SCTP_NULL());
+diff --git a/tools/tracing/rtla/src/common.c b/tools/tracing/rtla/src/common.c
+index 839c78c065e12f..01d5b8d5aeaf2e 100644
+--- a/tools/tracing/rtla/src/common.c
++++ b/tools/tracing/rtla/src/common.c
+@@ -82,37 +82,20 @@ int getopt_auto(int argc, char **argv, const struct option *long_opts)
+ }
  
--	/* If we've sent any data bundled with COOKIE-ECHO we will need to
--	 * resend
--	 */
--	sctp_add_cmd_sf(commands, SCTP_CMD_T1_RETRAN,
--			SCTP_TRANSPORT(asoc->peer.primary_path));
-+	sctp_add_cmd_sf(commands, SCTP_CMD_PURGE_OUTQUEUE, SCTP_NULL());
+ /*
+- * common_parse_options - parse common command line options
++ * set_common_option - set common options
+  *
++ * @c: option character
+  * @argc: argument count
+  * @argv: argument vector
+  * @common: common parameters structure
+  *
+  * Parse command line options that are common to all rtla tools.
+  *
+- * Returns: non zero if a common option was parsed, or 0
+- * if the option should be handled by tool-specific parsing.
++ * Returns: 1 if the option was set, 0 otherwise.
+  */
+-int common_parse_options(int argc, char **argv, struct common_params *common)
++int set_common_option(int c, int argc, char **argv, struct common_params *common)
+ {
+ 	struct trace_events *tevent;
+-	int saved_state = optind;
+-	int c;
+-
+-	static struct option long_options[] = {
+-		{"cpus",                required_argument,      0, 'c'},
+-		{"cgroup",              optional_argument,      0, 'C'},
+-		{"debug",               no_argument,            0, 'D'},
+-		{"duration",            required_argument,      0, 'd'},
+-		{"event",               required_argument,      0, 'e'},
+-		{"house-keeping",       required_argument,      0, 'H'},
+-		{"priority",            required_argument,      0, 'P'},
+-		{0, 0, 0, 0}
+-	};
+-
+-	opterr = 0;
+-	c = getopt_auto(argc, argv, long_options);
+-	opterr = 1;
  
- 	/* Cast away the const modifier, as we want to just
- 	 * rerun it through as a sideffect.
+ 	switch (c) {
+ 	case 'c':
+@@ -152,11 +135,10 @@ int common_parse_options(int argc, char **argv, struct common_params *common)
+ 		common->set_sched = 1;
+ 		break;
+ 	default:
+-		optind = saved_state;
+ 		return 0;
+ 	}
+ 
+-	return c;
++	return 1;
+ }
+ 
+ /*
+diff --git a/tools/tracing/rtla/src/common.h b/tools/tracing/rtla/src/common.h
+index d4b3715700be73..e00e3930ddb0b5 100644
+--- a/tools/tracing/rtla/src/common.h
++++ b/tools/tracing/rtla/src/common.h
+@@ -158,7 +158,17 @@ int osnoise_set_stop_total_us(struct osnoise_context *context,
+ 			      long long stop_total_us);
+ 
+ int getopt_auto(int argc, char **argv, const struct option *long_opts);
+-int common_parse_options(int argc, char **argv, struct common_params *common);
++
++#define COMMON_OPTIONS \
++	{"cpus",                required_argument,      0, 'c'},\
++	{"cgroup",              optional_argument,      0, 'C'},\
++	{"debug",               no_argument,            0, 'D'},\
++	{"duration",            required_argument,      0, 'd'},\
++	{"event",               required_argument,      0, 'e'},\
++	{"house-keeping",       required_argument,      0, 'H'},\
++	{"priority",            required_argument,      0, 'P'}
++int set_common_option(int c, int argc, char **argv, struct common_params *common);
++
+ int common_apply_config(struct osnoise_tool *tool, struct common_params *params);
+ int top_main_loop(struct osnoise_tool *tool);
+ int hist_main_loop(struct osnoise_tool *tool);
+diff --git a/tools/tracing/rtla/src/osnoise_hist.c b/tools/tracing/rtla/src/osnoise_hist.c
+index 5c863e7aad28b4..5dd1d4ba0b887d 100644
+--- a/tools/tracing/rtla/src/osnoise_hist.c
++++ b/tools/tracing/rtla/src/osnoise_hist.c
+@@ -480,6 +480,7 @@ static struct common_params
+ 
+ 	while (1) {
+ 		static struct option long_options[] = {
++			COMMON_OPTIONS,
+ 			{"auto",		required_argument,	0, 'a'},
+ 			{"bucket-size",		required_argument,	0, 'b'},
+ 			{"entries",		required_argument,	0, 'E'},
+@@ -503,15 +504,15 @@ static struct common_params
+ 			{0, 0, 0, 0}
+ 		};
+ 
+-		if (common_parse_options(argc, argv, &params->common))
+-			continue;
+-
+ 		c = getopt_auto(argc, argv, long_options);
+ 
+ 		/* detect the end of the options. */
+ 		if (c == -1)
+ 			break;
+ 
++		if (set_common_option(c, argc, argv, &params->common))
++			continue;
++
+ 		switch (c) {
+ 		case 'a':
+ 			/* set sample stop to auto_thresh */
+diff --git a/tools/tracing/rtla/src/osnoise_top.c b/tools/tracing/rtla/src/osnoise_top.c
+index b7aed40fd2164f..5c278c68b1a2c8 100644
+--- a/tools/tracing/rtla/src/osnoise_top.c
++++ b/tools/tracing/rtla/src/osnoise_top.c
+@@ -337,6 +337,7 @@ struct common_params *osnoise_top_parse_args(int argc, char **argv)
+ 
+ 	while (1) {
+ 		static struct option long_options[] = {
++			COMMON_OPTIONS,
+ 			{"auto",		required_argument,	0, 'a'},
+ 			{"help",		no_argument,		0, 'h'},
+ 			{"period",		required_argument,	0, 'p'},
+@@ -355,15 +356,15 @@ struct common_params *osnoise_top_parse_args(int argc, char **argv)
+ 			{0, 0, 0, 0}
+ 		};
+ 
+-		if (common_parse_options(argc, argv, &params->common))
+-			continue;
+-
+ 		c = getopt_auto(argc, argv, long_options);
+ 
+ 		/* Detect the end of the options. */
+ 		if (c == -1)
+ 			break;
+ 
++		if (set_common_option(c, argc, argv, &params->common))
++			continue;
++
+ 		switch (c) {
+ 		case 'a':
+ 			/* set sample stop to auto_thresh */
+diff --git a/tools/tracing/rtla/src/timerlat_hist.c b/tools/tracing/rtla/src/timerlat_hist.c
+index 096de8ba3efbb6..5089b72c7a9439 100644
+--- a/tools/tracing/rtla/src/timerlat_hist.c
++++ b/tools/tracing/rtla/src/timerlat_hist.c
+@@ -789,6 +789,7 @@ static struct common_params
+ 
+ 	while (1) {
+ 		static struct option long_options[] = {
++			COMMON_OPTIONS,
+ 			{"auto",		required_argument,	0, 'a'},
+ 			{"bucket-size",		required_argument,	0, 'b'},
+ 			{"entries",		required_argument,	0, 'E'},
+@@ -822,11 +823,11 @@ static struct common_params
+ 			{0, 0, 0, 0}
+ 		};
+ 
+-		if (common_parse_options(argc, argv, &params->common))
+-			continue;
+-
+ 		c = getopt_auto(argc, argv, long_options);
+ 
++		if (set_common_option(c, argc, argv, &params->common))
++			continue;
++
+ 		/* detect the end of the options. */
+ 		if (c == -1)
+ 			break;
+diff --git a/tools/tracing/rtla/src/timerlat_top.c b/tools/tracing/rtla/src/timerlat_top.c
+index 27c14aa71a8bc8..1311afc981e24c 100644
+--- a/tools/tracing/rtla/src/timerlat_top.c
++++ b/tools/tracing/rtla/src/timerlat_top.c
+@@ -558,6 +558,7 @@ static struct common_params
+ 
+ 	while (1) {
+ 		static struct option long_options[] = {
++			COMMON_OPTIONS,
+ 			{"auto",		required_argument,	0, 'a'},
+ 			{"help",		no_argument,		0, 'h'},
+ 			{"irq",			required_argument,	0, 'i'},
+@@ -585,11 +586,11 @@ static struct common_params
+ 			{0, 0, 0, 0}
+ 		};
+ 
+-		if (common_parse_options(argc, argv, &params->common))
+-			continue;
+-
+ 		c = getopt_auto(argc, argv, long_options);
+ 
++		if (set_common_option(c, argc, argv, &params->common))
++			continue;
++
+ 		/* detect the end of the options. */
+ 		if (c == -1)
+ 			break;
 -- 
 2.53.0
 
