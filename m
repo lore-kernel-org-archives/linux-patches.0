@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C044508F2;
-	Tue, 16 Jun 2026 16:13:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA395472798;
+	Tue, 16 Jun 2026 16:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626418; cv=none; b=WpjkNeX0yuxOn1YeKfgnZQZAOXFrmlDciZsfTu66SH8MvREDmqjY8+/No2oyAAyVfUKtcGVmUXUQBcvZl9IbsBNfm7G2zQRHsJuLH6NHyrvW0cN02SKLxkUCVsxMMh/OIFRMCoMHXk2G1T6h2OJalKAOaiByY5V/iEOvDF61bQs=
+	t=1781626423; cv=none; b=egNjn6Jf9nq5oWMD5L2bDfxagqJVJqEFOMDPsRcwIKLR08pEjrdwkloxzUdmTDkgFTTURNOPHzle00n9fH6T4wRxgc2pUJf1PqEj6TwpUMTEyvcOt7KkJ+1Np1+URRHqsxwPOk65ebg7VkzZS4vh0Zpo62eUIPd8npTYyA6C9dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626418; c=relaxed/simple;
-	bh=wcbAvgrL4aU4BWf0FuzGGZeU32xMg7kyzq09nBF7N1w=;
+	s=arc-20240116; t=1781626423; c=relaxed/simple;
+	bh=L1fNJR969h7nYxRl1EfQUVLxcd9QR/opJlrqso8lEKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgJJoJaHTftCStoMDgDLycqKfAYIscXnbMsV6YUWZobH0bI9nxBoW++L73qpHB7QMh7d33bOaThtHJy3aTQFeIKt39BY0167wz4gFKbrLFRFmIQxjga4+ifBo3Y/SMiuLd1N87gvrry3nyak1k9vOHgTVF1Br9ZEHRQ3qQ74LBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOfoJwwY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PmCJdYeBlU8fWnzkprHSHKz5mj2f9tz5ivypvZQCUwoW3yybM2ZUTA6TAOWvhpOIdTGuoNx9ArONeOEd6PPdI6eLhdReqlNAmrVN/6Amc2N7ORwqhOgvv1neQsmNORSgDT+TSDepR1nvb+VZSynq/pWgUV5t5j46kd/hNXASm5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGGfc8N/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOfoJwwY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF5C1F000E9;
-	Tue, 16 Jun 2026 16:13:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGGfc8N/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20381F000E9;
+	Tue, 16 Jun 2026 16:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626417;
-	bh=pGMiYriZyXnXDUcWoYWcP3+BafKDlkgegVvsm62AXpc=;
+	s=korg; t=1781626422;
+	bh=+vKTjGxG8AbOR4e7AlndOVU/tv72YcLVYERdH6iiEYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sOfoJwwYBdMmDvRQy+sqTW4vDYzolWoh3opNiB/fOXJhTlEQygE/rW0+Yy7iIMv/6
-	 jPbdUQ6oL005poaLbakRWZcoehIUQKEx11XdDnDnRrlWtnCkYvzqiEkPNJVnCMgnkD
-	 JAm84/Zwl5F8ZApgWTLmMQejtUT9UB/lJ90Il3dc=
+	b=NGGfc8N/RgrxYf5N8FhCoejkhMen+AY8q2Rv5og8BXUi8dJ/cBSYjWGbeQry4cVC8
+	 cQMQLF+/OlDJ2qmb6JR5L5S4IHyY2D8ABdMQHF1QV1rbYrwCPT9hH4IETCyenYFAom
+	 XkVQUslA+9bJ/3X30h2FNZ2QiHer1+xyd6Oqq4Oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 316/325] RDMA/umem: Fix truncation for block sizes >= 4G
-Date: Tue, 16 Jun 2026 20:31:52 +0530
-Message-ID: <20260616145114.817720673@linuxfoundation.org>
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>
+Subject: [PATCH 6.18 285/325] drm/xe/display: fix oops in suspend/shutdown without display
+Date: Tue, 16 Jun 2026 20:31:21 +0530
+Message-ID: <20260616145112.955135136@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -50,41 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 15fe76e23615f502d051ef0768f86babaf08746c ]
+commit 68938cc08e23a94fd881e845837ff918de005ce7 upstream.
 
-When the iommu is used the linearization of the mapping can give a single
-block that is very large split across multiple SG entries.
+The xe driver keeps track of whether to probe display, and whether
+display hardware is there, using xe->info.probe_display. It gets set to
+false if there's no display after intel_display_device_probe(). However,
+the display may also be disabled via fuses, detected at a later time in
+intel_display_device_info_runtime_init().
 
-When __rdma_block_iter_next() reassembles the split SG entries it is
-overflowing the 32 bit stack values and computed the wrong DMA addresses
-for blocks after the truncation.
+In this case, the xe driver does for_each_intel_crtc() on uninitialized
+mode config in xe_display_flush_cleanup_work(), leading to a NULL
+pointer dereference, and generally calls display code with display info
+cleared.
 
-Use the right types to hold DMA addresses.
+Check for intel_display_device_present() after
+intel_display_device_info_runtime_init(), and reset
+xe->info.probe_display as necessary. Also do unset_display_features()
+for completeness, although display runtime init has already done
+that. This will need to be unified across all cases later.
 
-Link: https://patch.msgid.link/r/1-v1-88303e9e509f+f7-ib_umem_types_jgg@nvidia.com
-Cc: stable@vger.kernel.org
-Fixes: a808273a495c ("RDMA/verbs: Add a DMA iterator to return aligned contiguous memory blocks")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Move intel_display_device_info_runtime_init() call slightly earlier,
+similar to i915, to avoid a bunch of unnecessary setup for no display
+cases.
+
+Note #1: The xe driver has no business doing low level display plumbing
+like for_each_intel_crtc() to begin with. It all needs to happen in
+display code.
+
+Note #2: The actual bug is present already in commit 44e694958b95
+("drm/xe/display: Implement display support"), but the oops was likely
+introduced later at commit ddf6492e0e50 ("drm/xe/display: Make display
+suspend/resume work on discrete").
+
+Fixes: 44e694958b95 ("drm/xe/display: Implement display support")
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/7904
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/6150
+Cc: stable@vger.kernel.org # v6.8+
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patch.msgid.link/20260515160920.1082842-1-jani.nikula@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 7c3eb9f47533220888a67266448185fd0775d4da)
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/iter.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/display/xe_display.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/infiniband/core/iter.c
-+++ b/drivers/infiniband/core/iter.c
-@@ -19,8 +19,8 @@ EXPORT_SYMBOL(__rdma_block_iter_start);
+--- a/drivers/gpu/drm/xe/display/xe_display.c
++++ b/drivers/gpu/drm/xe/display/xe_display.c
+@@ -109,6 +109,15 @@ int xe_display_init_early(struct xe_devi
  
- bool __rdma_block_iter_next(struct ib_block_iter *biter)
- {
--	unsigned int block_offset;
--	unsigned int delta;
-+	dma_addr_t block_offset;
-+	dma_addr_t delta;
+ 	intel_display_driver_early_probe(display);
  
- 	if (!biter->__sg_nents || !biter->__sg)
- 		return false;
++	intel_display_device_info_runtime_init(display);
++
++	/* Display may have been disabled at runtime init */
++	if (!intel_display_device_present(display)) {
++		xe->info.probe_display = false;
++		unset_display_features(xe);
++		return 0;
++	}
++
+ 	/* Early display init.. */
+ 	intel_opregion_setup(display);
+ 
+@@ -122,8 +131,6 @@ int xe_display_init_early(struct xe_devi
+ 
+ 	intel_bw_init_hw(display);
+ 
+-	intel_display_device_info_runtime_init(display);
+-
+ 	err = intel_display_driver_probe_noirq(display);
+ 	if (err)
+ 		goto err_opregion;
 
 
