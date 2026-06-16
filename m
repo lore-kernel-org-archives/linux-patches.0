@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290CC3DC4D9;
-	Tue, 16 Jun 2026 18:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9939F169AD2;
+	Tue, 16 Jun 2026 18:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635030; cv=none; b=hR7+Pyd17OSNRiDYUjWWL1s4oCyvPpoeTpSWahWh3c67xhQUAnbEQcscJJAuAcJpTYCW1bZfZP2axa5ZPtvcFRivnr2pV4L3zWdTimAv0/kUHeSH0b9GyGhXQL/f5BMLoaOaEJ5wln+6/mG5NK0cfquVmZhn3lznk/Yz9YLAGLk=
+	t=1781635035; cv=none; b=M8IVQrEF440+mCAhJYbNQhwvI7yfTnlGSxMAEkqDTXOhLJzpOegTC03248F34UMl0PP4egSI3J4vsdwGW23NK5f9d2h29PJQzhMlrEAfEqaUvYMdiwTEaiA1wrQrb4bDuTtwO8gOvCbWBW7Zzhld68xSzdoystHxFzqJtDR2Jqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635030; c=relaxed/simple;
-	bh=M7yH6lwml+A0PybFDAMLEjlnIf8sTXAkJDfm5v64OH4=;
+	s=arc-20240116; t=1781635035; c=relaxed/simple;
+	bh=9y0YRrQ17nHpQWlaEJBzX1GuWuPpuizERA0MTZYQw/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QgHNzOv7P0iR+SQlDXR9otJ2GZnGgWC0WhQe3aVYIsOoJtnGpICG+c3BmvEupNOe6oHbggCn9DmlgvCMCuqoMptthIgLNkp9xUoskXghdx+M42txkNRbs4M3wcXirmrUNLjFMy+bZbvky0yK/hZtaPQ52jJFgAf3xx7IU6ybjpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SU4n7Kn6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DrUKl29yGtNqVD5nAUO6A5JQMlVy1r9RpUcMeOsyUWyZgupmFzQoTwXml8R/1qJGUe8rzAdKwpDV8GYiNxnsBVxJayusQOpbRp7R64BCh9gBKimX8jnxrF3mcEMp6obZ/iHCbxSOOPLUQPHmmbtBD54zHZQQj/x7TVFM8Z5s6XY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ovxwj27o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SU4n7Kn6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B551F000E9;
-	Tue, 16 Jun 2026 18:37:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ovxwj27o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7856B1F000E9;
+	Tue, 16 Jun 2026 18:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635029;
-	bh=ez3927RCbjVAud8RXAEHJ92TwTWniRpZu24mdxgp0RE=;
+	s=korg; t=1781635034;
+	bh=/n4xd2TZY20MOdWFffiewBUlD/gNM2D5ma7iHOfAvGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SU4n7Kn6oH3SL2NxpqZBPU/vE80DenfxaF2V0mAUucIEQOLPFulm5Bheyb9S/HUTA
-	 IX5RXV+Co7+5sCCkfsRH8Oqv6NR4DvUueRDvx6tugV8RA60+1OSjNKCGwUp9YoW1M8
-	 R+D7fEwYTHakKRc6jQ9A60eKjav3mAb9OWtbXHsQ=
+	b=ovxwj27olRrjCvYnmWYd110QW2M36nIbZwmKCBLkJgIOHhx7gBpYA6N+fylWwZBuS
+	 fWe1B6kKNaym4R8SHObGdxuhtf6XkT7HcMh4+9NmEl0Atg50iiwNe636QkZEWh2LDj
+	 z7NsAcUhiyGqmQ3N7m+f3mOCxWSL5YCVLBVynhu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>
-Subject: [PATCH 5.15 378/411] usb: typec: ucsi: Check if power role change actually happened before handling
-Date: Tue, 16 Jun 2026 20:30:16 +0530
-Message-ID: <20260616145121.383888719@linuxfoundation.org>
+	Michael Kelley <mikelley@microsoft.com>,
+	Deepak Rawat <drawat.floss@gmail.com>,
+	"Andrea Parri (Microsoft)" <parri.andrea@gmail.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 379/411] drm/hyperv: Remove support for Hyper-V 2008 and 2008R2/Win7
+Date: Tue, 16 Jun 2026 20:30:17 +0530
+Message-ID: <20260616145121.434658929@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -53,66 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+From: Michael Kelley <mikelley@microsoft.com>
 
-[ Upstream commit b80e7d34c7ea6a564525119d6138fbb577a23dba ]
+[ Upstream commit ac6811a9b36f3ceb549d8b84bd8aeedf6026df02 ]
 
-The CrOS EC may send a connector status change event with the power
-direction changed flag set even if the power direction hasn't actually
-changed after initiating a SET_PDR command internally [1]. In practice
-this happens on every system suspend due to other changes performed by
-the EC [2][3][4], causing suspend to fail.
+The DRM Hyper-V driver has special case code for running on the first
+released versions of Hyper-V: 2008 and 2008 R2/Windows 7.  These versions
+are now out of support (except for extended security updates) and lack
+support for performance features that are needed for effective production
+usage of Linux guests.
 
-Fix this by checking if the power role change actually happened before
-handling it.
+The negotiation of the VMbus protocol versions required by these old
+Hyper-V versions has been removed from the VMbus driver.  So now remove
+the handling of these VMbus protocol versions from the DRM Hyper-V
+driver.
 
-[1]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=1689;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
-[2]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=3923;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
-[3]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=5094;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
-[4]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=2229;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
-
-Cc: stable <stable@kernel.org>
-Fixes: 7616f006db07 ("usb: typec: ucsi: Update power_supply on power role change")
-Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
-Reported-and-tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260519-ucsi-fix-2-v1-1-6f1239535187@qtmlabs.xyz
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Michael Kelley <mikelley@microsoft.com>
+Reviewed-by: Deepak Rawat <drawat.floss@gmail.com>
+Reviewed-by: Andrea Parri (Microsoft) <parri.andrea@gmail.com>
+Link: https://lore.kernel.org/r/1651509391-2058-5-git-send-email-mikelley@microsoft.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Stable-dep-of: 13d33b9ef670 ("drm/hyperv: validate resolution_count and fix WIN8 fallback")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/hyperv/hyperv_drm_proto.c |   23 +++++++----------------
+ 1 file changed, 7 insertions(+), 16 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -669,7 +669,7 @@ static void ucsi_handle_connector_change
- 	struct ucsi *ucsi = con->ucsi;
- 	struct ucsi_connector_status pre_ack_status;
- 	struct ucsi_connector_status post_ack_status;
--	enum typec_role role;
-+	enum typec_role role, prev_role;
- 	enum usb_role u_role = USB_ROLE_NONE;
- 	u16 inferred_changes;
- 	u16 changed_flags;
-@@ -706,6 +706,8 @@ static void ucsi_handle_connector_change
- 	 * short transitional changes.
- 	 */
- 
-+	prev_role = !!(con->status.flags & UCSI_CONSTAT_PWR_DIR);
+--- a/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
++++ b/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
+@@ -18,16 +18,16 @@
+ #define SYNTHVID_VERSION(major, minor) ((minor) << 16 | (major))
+ #define SYNTHVID_VER_GET_MAJOR(ver) (ver & 0x0000ffff)
+ #define SYNTHVID_VER_GET_MINOR(ver) ((ver & 0xffff0000) >> 16)
 +
- 	/* 1. First UCSI_GET_CONNECTOR_STATUS */
- 	command = UCSI_GET_CONNECTOR_STATUS | UCSI_CONNECTOR_NUMBER(con->num);
- 	ret = ucsi_send_command(ucsi, command, &pre_ack_status,
-@@ -783,7 +785,8 @@ static void ucsi_handle_connector_change
- 		ucsi_port_psy_changed(con);
++/* Support for VERSION_WIN7 is removed. #define is retained for reference. */
+ #define SYNTHVID_VERSION_WIN7 SYNTHVID_VERSION(3, 0)
+ #define SYNTHVID_VERSION_WIN8 SYNTHVID_VERSION(3, 2)
+ #define SYNTHVID_VERSION_WIN10 SYNTHVID_VERSION(3, 5)
+ 
+-#define SYNTHVID_DEPTH_WIN7 16
+ #define SYNTHVID_DEPTH_WIN8 32
+-#define SYNTHVID_FB_SIZE_WIN7 (4 * 1024 * 1024)
++#define SYNTHVID_WIDTH_WIN8 1600
++#define SYNTHVID_HEIGHT_WIN8 1200
+ #define SYNTHVID_FB_SIZE_WIN8 (8 * 1024 * 1024)
+-#define SYNTHVID_WIDTH_MAX_WIN7 1600
+-#define SYNTHVID_HEIGHT_MAX_WIN7 1200
+ 
+ enum pipe_msg_type {
+ 	PIPE_MSG_INVALID,
+@@ -570,12 +570,6 @@ int hyperv_connect_vsp(struct hv_device
+ 	case VERSION_WIN8:
+ 	case VERSION_WIN8_1:
+ 		ret = hyperv_negotiate_version(hdev, SYNTHVID_VERSION_WIN8);
+-		if (!ret)
+-			break;
+-		fallthrough;
+-	case VERSION_WS2008:
+-	case VERSION_WIN7:
+-		ret = hyperv_negotiate_version(hdev, SYNTHVID_VERSION_WIN7);
+ 		break;
+ 	default:
+ 		ret = hyperv_negotiate_version(hdev, SYNTHVID_VERSION_WIN10);
+@@ -587,18 +581,15 @@ int hyperv_connect_vsp(struct hv_device
+ 		goto error;
  	}
  
--	if (con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) {
-+	if ((con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) &&
-+	    role != prev_role) {
- 		typec_set_pwr_role(con->port, role);
+-	if (hv->synthvid_version == SYNTHVID_VERSION_WIN7)
+-		hv->screen_depth = SYNTHVID_DEPTH_WIN7;
+-	else
+-		hv->screen_depth = SYNTHVID_DEPTH_WIN8;
++	hv->screen_depth = SYNTHVID_DEPTH_WIN8;
  
- 		/* Complete pending power role swap */
+ 	if (hyperv_version_ge(hv->synthvid_version, SYNTHVID_VERSION_WIN10)) {
+ 		ret = hyperv_get_supported_resolution(hdev);
+ 		if (ret)
+ 			drm_err(dev, "Failed to get supported resolution from host, use default\n");
+ 	} else {
+-		hv->screen_width_max = SYNTHVID_WIDTH_MAX_WIN7;
+-		hv->screen_height_max = SYNTHVID_HEIGHT_MAX_WIN7;
++		hv->screen_width_max = SYNTHVID_WIDTH_WIN8;
++		hv->screen_height_max = SYNTHVID_HEIGHT_WIN8;
+ 	}
+ 
+ 	hv->mmio_megabytes = hdev->channel->offermsg.offer.mmio_megabytes;
 
 
