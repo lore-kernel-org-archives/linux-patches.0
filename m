@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E5C47D949;
-	Tue, 16 Jun 2026 18:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16D647D95B;
+	Tue, 16 Jun 2026 18:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635512; cv=none; b=N334lwoxjdN0h/KSTZBU/qBlcO32CrO0SuKDEpYa0im2/dvRjZ3ehOogn50ibxNBM6ulQCgIf1u2BT2mcYCCOKUf7G72oK1D5llUTTXQezZlL1VNDgSIwlfO1md8t332Ywx5ZN7Zq/ddkmGlKPoVERBHjh5pCQi/04+2TP1RgTQ=
+	t=1781635517; cv=none; b=fsDa9m5tp2KMZSN9/rjBz9v4k1HxYoFtEv7SzDkLEpNfxvDWu66X5VPWbda851x28EwOlZXwsKFZGoLe34Wj1mSJdRJajHXXvLzW7PwCjFg20DJq2vI91RIX6JN2L/0ZyYvfiJnz3p5IgPx5tT19Xp0vfn02zEl0F/BdCdMJRu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635512; c=relaxed/simple;
-	bh=7pK4hhn/6jz5QBsyIQJWr0/2oC0UCyzrjyklfuSrX2M=;
+	s=arc-20240116; t=1781635517; c=relaxed/simple;
+	bh=UCZEgxHtbxuzMpyycgcFoK6gduP98AFzcmjkpjkZAYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HP/4asANMAXq0q7Zs+BRNj15ZO3nwoowWiUjbND/Ds5bcpOZ3bfxEMaergGUAl2cd7T6F5Px6P+UhdBftWrmVpqCNg050Esa+Fucz7fwyqZO6CbUAuK8KsoxTG4dUyxRVj4twWtJ2fEJRG2khOLFFezTFiUY0qq/85HX74L4TRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CTRpTgM7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dFVBCblZiAbqKhNYxD7yPy1sExdCZcywDPr/Em/dge2VnPSVTp2Ike17n083m67uJDMa4X7FOxoaNpOtx3qQ7kBzC6cZSjtcQUIaAIx3ucWvt3HMRiT6u29WNBsEMMtFq9SSw1cXrKGBfRl2mc/0QXd92NyJbM93+6aRzRv+Mo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYhteKi2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTRpTgM7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4627E1F000E9;
-	Tue, 16 Jun 2026 18:45:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYhteKi2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F3C11F000E9;
+	Tue, 16 Jun 2026 18:45:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635509;
-	bh=DGMvcTteGW4Dr3naZIe1jkeADPDryd3nY1UYqu+lTSM=;
+	s=korg; t=1781635514;
+	bh=gXKMs45v7vfftdK7M0HZXYZRT+l+nBJCs+VKRlygx3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CTRpTgM7l8AYUXmkl0+EmJM7IxzTo0kCSjSQkL5yijnhMyhWkm4RK470ZRH+PX5bF
-	 xaEVWK7zqo1bKgsRerJfy/UsgyGscCei2Rl+Y5L+UMONguMyIc2YYgX88Y7BUjTuWY
-	 Fxuj2G2OeqEvHHj2yqF0j1OaDnUhp0fpzrTy+mMk=
+	b=cYhteKi2hz1c1yRxzWjT+AOUneXMnTT4Z9iHj+G8shM+BBj/Lkmv34HLHHbfpoAyL
+	 DjY1ik61B4K9UIYdm9RS0A1Xbli1J1BaxMDNtBqYaB8HugKiCUV4qbUlPZNwwV+cvB
+	 1BXSUL6Tz7nRCb0lqpwBEU0xCvm6pPmZeqm6f2xM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aldo Conte <aldocontelk@gmail.com>,
+	sashiko <sashiko-bot@kernel.org>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Maxwell Doose <m32285159@gmail.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 5.10 063/342] iio: light: cm3323: fix reg_conf not being initialized correctly
-Date: Tue, 16 Jun 2026 20:25:59 +0530
-Message-ID: <20260616145051.193548191@linuxfoundation.org>
+Subject: [PATCH 5.10 064/342] iio: buffer: hw-consumer: fix use-after-free in error path
+Date: Tue, 16 Jun 2026 20:26:00 +0530
+Message-ID: <20260616145051.236668615@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -44,72 +49,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aldo Conte <aldocontelk@gmail.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-commit 1f4f0bcc5255dec5c4c3a1551bf49d8c33b69b20 upstream.
+commit 6f5ed4f2c7c83f33344e0ba179f72a12e5dad4a4 upstream.
 
-The code stores the return value of i2c_smbus_write_word_data()
-in data->reg_conf; however, this value represents the result
-of the write operation and not the value actually written to
-the configuration register. This meant that the contents of
-data->reg_conf did not truly reflect the contents
-of the hardware register.
+In the err_put_buffers cleanup path of iio_hw_consumer_alloc(), the code
+was using list_for_each_entry() to iterate through buffers while calling
+iio_buffer_put() which can free the current buffer if refcount drops to 0.
+The list_for_each_entry() loop macro then evaluates buf->head.next to
+continue iteration, accessing the freed buffer.
 
-Instead, save the value of the register before the write
-and use this value in the I2C write.
+Fix this by using list_for_each_entry_safe().
 
-The bug was found by code inspection: i2c_smbus_write_word_data()
-returns 0 on success, not the value written to the register.
-
-Tested using i2c-stub on a Raspberry Pi 3B running a custom 6.19.10
-kernel. Before loading the driver, the configuration register 0x00
-CM3323_CMD_CONF was populated with 0x0030 using
-`i2cset -y 11 0x10 0x00 0x0030 w`, encoding an integration time of 320ms
-in bits[6:4].
-
-Due to incorrect initialization of data->reg_conf in
-cm3323_init(), the print of integration_time returns 0.040000
-instead of the expected 0.320000. This happens because the read of the
-integration_time depends on cm3323_get_it_bits() that is based on the
-value of data->reg_conf, which is erroneously set to 0.
-
-With this fix applied, data->reg_conf correctly saves 0x0030 after init
-and the successive integration_time reports 0.320000 as expected.
-
-Fixes: 8b0544263761 ("iio: light: Add support for Capella CM3323 color sensor")
-Cc: stable@vger.kernel.org
-Signed-off-by: Aldo Conte <aldocontelk@gmail.com>
+Fixes: 48b66f8f936f ("iio: Add hardware consumer buffer support")
+Reported-by: sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260427-iio_buf-v1-1-2bbdac844647%40gmail.com
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Reviewed-by: Maxwell Doose <m32285159@gmail.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/cm3323.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/iio/buffer/industrialio-hw-consumer.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/light/cm3323.c
-+++ b/drivers/iio/light/cm3323.c
-@@ -89,15 +89,14 @@ static int cm3323_init(struct iio_dev *i
+--- a/drivers/iio/buffer/industrialio-hw-consumer.c
++++ b/drivers/iio/buffer/industrialio-hw-consumer.c
+@@ -82,7 +82,7 @@ static struct hw_consumer_buffer *iio_hw
+  */
+ struct iio_hw_consumer *iio_hw_consumer_alloc(struct device *dev)
+ {
+-	struct hw_consumer_buffer *buf;
++	struct hw_consumer_buffer *buf, *tmp;
+ 	struct iio_hw_consumer *hwc;
+ 	struct iio_channel *chan;
+ 	int ret;
+@@ -113,7 +113,7 @@ struct iio_hw_consumer *iio_hw_consumer_
+ 	return hwc;
  
- 	/* enable sensor and set auto force mode */
- 	ret &= ~(CM3323_CONF_SD_BIT | CM3323_CONF_AF_BIT);
-+	data->reg_conf = ret;
- 
--	ret = i2c_smbus_write_word_data(data->client, CM3323_CMD_CONF, ret);
-+	ret = i2c_smbus_write_word_data(data->client, CM3323_CMD_CONF, data->reg_conf);
- 	if (ret < 0) {
- 		dev_err(&data->client->dev, "Error writing reg_conf\n");
- 		return ret;
- 	}
- 
--	data->reg_conf = ret;
--
- 	return 0;
- }
- 
+ err_put_buffers:
+-	list_for_each_entry(buf, &hwc->buffers, head)
++	list_for_each_entry_safe(buf, tmp, &hwc->buffers, head)
+ 		iio_buffer_put(&buf->buffer);
+ 	iio_channel_release_all(hwc->channels);
+ err_free_hwc:
 
 
