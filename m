@@ -1,86 +1,170 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-10698.protonmail.ch (mail-10698.protonmail.ch [79.135.106.98])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6139A3B6C09
-	for <patches@lists.linux.dev>; Mon, 15 Jun 2026 20:27:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D88813FEE
+	for <patches@lists.linux.dev>; Tue, 16 Jun 2026 00:12:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781555228; cv=none; b=N6S+ulNWUKm5KbXNq2OksWSeGaV4S6Sz7ZJo3DIYzAX0/evidH/bPS6l4RJmxg/sMo+JG3iB43RWp9q+r75EcrgFhUXxuCJsMNWE3E/5kfSy0zucqjTdl0Vu7KIBSEFPMdUZLfbTDefPF9OruHlTyHPgsYBp/NVEWfQLGiJ9DNo=
+	t=1781568762; cv=none; b=DVgl3jnHrqrz/IlLXiaZCXfl5xhLOlG4SQ2ix/hn1JfjxZLkYiStt3Iz9tSYnYt3/9C+hBRaobLa6N6RM0dddB9ioyNcBOd7qi2f508rWWf0oiJnbzuBHVqdCaGYoyaRnqRl1d21t2FMUDWzKUHpcgzp7cJX3xDfHrhJE/UWDeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781555228; c=relaxed/simple;
-	bh=L6uPFRUuvFSNX8q/A2FKlrgoQUCrS0/ehyc31oklwz8=;
-	h=Content-Type:From:To:Subject:Message-ID:Date:MIME-Version; b=bwzr/Tu21iU9N0VJ3QairxrpMc00vL2BtCfWzzT+YBSzMXjIbCJnKMtKx9/q2+BoUX4C6k3lRi1f/aOWFHdMeCsL8CODonJpXx7AYbWo960BE0G35gzJmeZrK609rrycmWlsmc2LxIoh87DSjM2UgdrdHBEJw5tcB167UbS+bxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ug+T7xzx; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1781568762; c=relaxed/simple;
+	bh=gHU0o8P6ChzWk1DbkK6CCpDdRsvZfq8ko5gZbqJ1SWk=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=UqJK0iyTNIvitkQeosPIDd1YXGCJy2a8mIG5/25pAvvPxrcxGBj9nqK3t5YqTPS6t1h0GuMmiYylgKrc2Tk/7J61ay/SF9tMJSGnguyBEjQw8Zvsl61/f7P+pLstjDPqq0u3obAbE+J8/uc4ybFyrvPT1ZvJEEJZwT3pDnSdyDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=m3Nq776i; arc=none smtp.client-ip=79.135.106.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ug+T7xzx"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-490b613a17bso34594325e9.3
-        for <patches@lists.linux.dev>; Mon, 15 Jun 2026 13:27:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781555226; x=1782160026; darn=lists.linux.dev;
-        h=mime-version:date:content-transfer-encoding:message-id:subject
-         :reply-to:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=L6uPFRUuvFSNX8q/A2FKlrgoQUCrS0/ehyc31oklwz8=;
-        b=Ug+T7xzxUDzaoz4O5AesJID54Nvgz+HCZyDC5CmlGhg1k5MqYxZamSa15/XaFIejFR
-         keFx4JQyArrVqEcZZCxdrjrkR4SDX74HLoGBDjNfMexUuZC6qp3I/5TBqukq6TJuUIjH
-         +sOLgQOUTG1vK1f42IXHZ9jTT2jrfSckL2Mmextaho3F+e8YL0gsXJCg9yr+4OipYCXT
-         +pW+AzCBAjP9bhzdwuJPl+cxGzwWxKjmDWBHhSog/EYiEEn7mJwyhfDKpBDaxoyppfG6
-         nHDRyhmYV5DfJ4WaDNXI/GKBOoVhUwmqXupiBOLTDqy2gzC7w3XN/cHxQH+Loy79LXR6
-         H3gA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781555226; x=1782160026;
-        h=mime-version:date:content-transfer-encoding:message-id:subject
-         :reply-to:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=L6uPFRUuvFSNX8q/A2FKlrgoQUCrS0/ehyc31oklwz8=;
-        b=L5Z+E2+fadfQgLwniRcdgDPuIvQsmOvFMwSbSdNJyroG/EC9gUyzTys2ZAVaiKGkp8
-         g3OcGYXvkdZduh7M/buaTWMrdRAfY6sYdniay4PovztNiILKfrmOoflfXDcVs7/uYMGd
-         5uVmLF1xGPT6LEzOwQ8l6veeEb7tl1WyPJyrpA70uBGAZKkxc/LVwkHknlenpI9eCtdK
-         cEjhq7Vp7YJrz5F1xHM6XMHrW6HKs93frjB1EXs1Pe0fsun0eM6lxvmRnTqDd8ULknDS
-         E3bKKp27iYN9X8IWkwoQ+0t7Y+kAwGcQK6427VD+9A9u6++NyMM19rysPpErFeu2+o58
-         NBVQ==
-X-Gm-Message-State: AOJu0YzP9AwJO+vg5ZYYSDEV1Jk01EkoWOE5n7vi4iJikRM8YIXWiWUz
-	UVsw3x9+WoJb2/2KiusqgbOZ2trKrQP5Jd7MtZ8ZWdfk+duENQ/FgxRLE17vMErXu+w=
-X-Gm-Gg: Acq92OF5PhcE9fbFiVNYDQLYl5h3XXJDPS4Vne31O8GBH2skaEx+EGBZDanpQvXhz2F
-	qiiGasVpdpzxZQ12nwRQXSkkvl8U6LC9/XM6YToP5wbogbjqfg4EegcAY1qIR1OTCK0mskNl0fj
-	4qOX3WJK9Sa9YHO4j1flJU51vJ3MVrYoG/QVDYgLLH18wDwi6s4NiKAwgab4t0S6TQo8Iy+kL+4
-	mEKsEz6TyFoAK2ZSlr7FMCSNazKdQyDdiq+PkUl15A3yGjrsUSTTLE3VFqGF8GDcS4pnAGyDBHc
-	bo/U2shY4VxLeU4eKfEL0AOu78DWTlvcMD5bacmNSc7cndoyw9/DA1lEtiAAoxChpIm/NcGrKtd
-	coH5e9axiL6o6VFa8WCqEzKmzcTZOm/+oen3bkuxjLzsdtPoUGbk8ry7PJ7nDcDG06BqtCZyHG/
-	7MHlnAf0v8y8jnMtrXLsg2Q0bBH80ToN38mg==
-X-Received: by 2002:a05:600c:a41:b0:490:44eb:c1ea with SMTP id 5b1f17b1804b1-4922ffaf7e7mr11028225e9.24.1781555225594;
-        Mon, 15 Jun 2026 13:27:05 -0700 (PDT)
-Received: from [127.0.0.1] ([154.81.235.5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4922fa51440sm18582815e9.9.2026.06.15.13.27.03
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jun 2026 13:27:04 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-From: Garrison Michael <dorawolfe803@gmail.com>
-To: patches@lists.linux.dev
-Reply-To: garrisonmichaelces@gmail.com
-Subject: Project Takeoffs
-Message-ID: <409a0746-3789-9321-3ecd-ee3c087de663@gmail.com>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 15 Jun 2026 20:27:03 +0000
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="m3Nq776i"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1781568749; x=1781827949;
+	bh=BdI7Z8rYqKCtK3JUz8tPFyG8Q3/wXtIHV1fyc1ijCZ4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=m3Nq776i8+bwaRb3psuy6/brbJqb6ijM8Bn1ltCxzty17DZu0ed08n8RgoHt6Bpb/
+	 Jq706iwdCzqsNAqD4X4JN+BQ46dirWMMWnJrg+/B/LqVxpBhcVxwC3JYSU276B3AKm
+	 2iN9/EStJkNGhlpKAjzndDpHyxFrElWQDAm31AAxIIuWwe4F5WDzJHHaSMhGQZn5cH
+	 HscXpvn1WgVdPiL8spFfLZM8YQjhznbT2Xzs1nNcNaDuq4kpfdqEu3OET+oVp9pJQO
+	 7hiyL88Ay5E4plxiqtOXej4/gWvHOE+Tar+VeT6bGQ6GvCyT6QS/7Ji2l9TSS4rPVq
+	 43VtmwC2IVN3g==
+Date: Tue, 16 Jun 2026 00:12:24 +0000
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: =?utf-8?B?7KCV7KeA7IiY?= <jschung2@proton.me>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, Gerlinde <lrGerlinde@mailfence.com>, zyc zyc <zyc199902@zohomail.cn>, Manas Ghandat <ghandatmanas@gmail.com>, Stephen Hemminger <stephen@networkplumber.org>, Jamal Hadi Salim <jhs@mojatatu.com>, Paolo Abeni <pabeni@redhat.com>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.12 073/307] net/sched: Revert "net/sched: Restrict conditions for adding duplicating netems to qdisc tree"
+Message-ID: <1vJDIl9l1-tRjd8Ud-slhuPjlivZ2VITgfJJiZ9QtYz9ljn1ItiHb1sZ_X2JgCO8qepuo1jb3N5HH6azmiky9NA66NeyBxzZzV7Bc03ulBI=@proton.me>
+In-Reply-To: <20260607095730.443050343@linuxfoundation.org>
+References: <20260607095727.647295505@linuxfoundation.org> <20260607095730.443050343@linuxfoundation.org>
+Feedback-ID: 167072316:user:proton
+X-Pm-Message-ID: 6f86f1f6be0a9a0aa17565ea756a4115eae5fb4d
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
 
-At City Estimating, We provide precise takeoffs and cost estimates for=
- all trades, including Plumbing, Electrical, HVAC, Concrete, Drywall, =
-Masonry, Steel, Earthwork, Roofing, Flooring, Painting, and Carpentry ETC.
 
-Our estimates help contractors bid accurately, reduce waste, and maximize =
-profitability. Want to see a sample of our work? Let=E2=80=99s connect!
 
-Regards,
-Garrison Michael
-Marketing Executive
-City Estimating, LLC
+
+=EC=95=88=EC=A0=84=ED=95=9C Proton Mail=EB=A1=9C =EC=A0=84=EC=86=A1=
+=EB=90=98=EC=97=88=EC=8A=B5=EB=8B=88=EB=8B=A4.
+
+=EC=97=90 2026=EB=85=84 6=EC=9B=94 7=EC=9D=BC =EC=9D=BC=EC=9A=94=EC=9D=
+=BC 10:20 Greg Kroah-Hartman <gregkh@linuxfoundation.org> =EB=8B=98=
+=EC=9D=B4 =EC=9E=91=EC=84=B1=ED=95=A8:
+
+> 6.12-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+>=20
+> ------------------
+>=20
+> From: Jamal Hadi Salim <jhs@mojatatu.com>
+>=20
+> [ Upstream commit eda0b7f203bb166c98d1418b204135bd566ac83b ]
+>=20
+> This reverts commit ec8e0e3d7adef940cdf9475e2352c0680189d14e.
+>=20
+> The original patch rejects any tree containing two netems when
+> either has duplication set, even when they sit on unrelated classes
+> of the same classful parent. That broke configurations that have
+> worked since netem was introduced.
+>=20
+> The re-entrancy problem the original commit was trying to solve is
+> handled by later patch using tc_depth flag.
+>=20
+> Doing this revert will (re)expose the original bug with multiple
+> netem duplication. When this patch is backported make sure
+> and get the full series.
+>=20
+> Fixes: ec8e0e3d7ade ("net/sched: Restrict conditions for adding duplicati=
+ng netems to qdisc tree")
+> Reported-by: Ji-Soo Chung <jschung2@proton.me>
+> Reported-by: Gerlinde <lrGerlinde@mailfence.com>
+> Closes: https://bugzilla.kernel.org/show_bug.cgi?id=3D220774
+> Reported-by: zyc zyc <zyc199902@zohomail.cn>
+> Closes: https://lore.kernel.org/all/19adda5a1e2.12410b78222774.9191120410=
+578703463@zohomail.cn/
+> Reported-by: Manas Ghandat <ghandatmanas@gmail.com>
+> Closes: https://lore.kernel.org/netdev/f69b2c8f-8325-4c2e-a011-6dbc089f30=
+e4@gmail.com/
+> Reviewed-by: Stephen Hemminger <stephen@networkplumber.org>
+> Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+> Link: https://patch.msgid.link/20260525122556.973584-3-jhs@mojatatu.com
+> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  net/sched/sch_netem.c | 40 ----------------------------------------
+>  1 file changed, 40 deletions(-)
+>=20
+> diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+> index 498c18d7d9c39b..1fdebf2ab7ee46 100644
+> --- a/net/sched/sch_netem.c
+> +++ b/net/sched/sch_netem.c
+> @@ -1005,41 +1005,6 @@ static int parse_attr(struct nlattr *tb[], int max=
+type, struct nlattr *nla,
+>  =09return 0;
+>  }
+>=20
+> -static const struct Qdisc_class_ops netem_class_ops;
+> -
+> -static int check_netem_in_tree(struct Qdisc *sch, bool duplicates,
+> -=09=09=09       struct netlink_ext_ack *extack)
+> -{
+> -=09struct Qdisc *root, *q;
+> -=09unsigned int i;
+> -
+> -=09root =3D qdisc_root_sleeping(sch);
+> -
+> -=09if (sch !=3D root && root->ops->cl_ops =3D=3D &netem_class_ops) {
+> -=09=09if (duplicates ||
+> -=09=09    ((struct netem_sched_data *)qdisc_priv(root))->duplicate)
+> -=09=09=09goto err;
+> -=09}
+> -
+> -=09if (!qdisc_dev(root))
+> -=09=09return 0;
+> -
+> -=09hash_for_each(qdisc_dev(root)->qdisc_hash, i, q, hash) {
+> -=09=09if (sch !=3D q && q->ops->cl_ops =3D=3D &netem_class_ops) {
+> -=09=09=09if (duplicates ||
+> -=09=09=09    ((struct netem_sched_data *)qdisc_priv(q))->duplicate)
+> -=09=09=09=09goto err;
+> -=09=09}
+> -=09}
+> -
+> -=09return 0;
+> -
+> -err:
+> -=09NL_SET_ERR_MSG(extack,
+> -=09=09       "netem: cannot mix duplicating netems with other netems in =
+tree");
+> -=09return -EINVAL;
+> -}
+> -
+>  /* Parse netlink message to set options */
+>  static int netem_change(struct Qdisc *sch, struct nlattr *opt,
+>  =09=09=09struct netlink_ext_ack *extack)
+> @@ -1116,11 +1081,6 @@ static int netem_change(struct Qdisc *sch, struct =
+nlattr *opt,
+>  =09q->gap =3D qopt->gap;
+>  =09q->counter =3D 0;
+>  =09q->loss =3D qopt->loss;
+> -
+> -=09ret =3D check_netem_in_tree(sch, qopt->duplicate, extack);
+> -=09if (ret)
+> -=09=09goto unlock;
+> -
+>  =09q->duplicate =3D qopt->duplicate;
+>=20
+>  =09/* for compatibility with earlier versions.
+> --
+> 2.53.0
+>=20
+>=20
+>=20
+> 
