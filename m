@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2123370EA;
-	Tue, 16 Jun 2026 15:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E89643D50E;
+	Tue, 16 Jun 2026 15:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622536; cv=none; b=Z/axCzKBm64+CH2B83BXlm4iiktEg5kOOG+3oJgynj/Dvx3EtLULtbJa+7GbHGLun7apuAjU551MlEJ4iZg/4WlTsXyGIW8w2ygDWqznEaIVaDeRgxck+DVjdtBVzoevLS0/pyHRgpZg7QYcUACbaEPpdQtAxdnp95bnpMr2tF4=
+	t=1781622542; cv=none; b=BsAKJ4nyY3beL4jsB33tDw0It/M+sBPIrfUHBQLwyHsGRrQazOD3I65jihmLu3L+61brurXCKj6gutZoRd7YbxXFqUm7BR+5SGeYWipkOZKq5pH32C4yQa5mYYlQb+ZJ8ZssSZHFyOP1K1kK7oAVg/Kaiy2jFmXf8B+CG94mOAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622536; c=relaxed/simple;
-	bh=sVqk+L6qSPX1OhjSiJOZrdIdKyo4U2AHaaKulaUDun0=;
+	s=arc-20240116; t=1781622542; c=relaxed/simple;
+	bh=mIh9vPagVUdGEqF6ocQ5kW6lsnFCAHv/UC2MWauUKlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dcDTK/ojK60aU1mxkeHX4/3bqIXY+U1Sa0jYO4roMhFDtnFi7Ex4rL2yDr4lu77Lq/HFy7WWp3WVJy3BCOIixPkdwX3TpC7pIFRH2cdz0RaNCvCGHRLHSuSsh95biUgNpLddxKzE7aJQS0eUn15X1EX1Aw0R4juH7sfiv/nErTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rAh/PTpE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tMm1G/Ztg9J7rJf8voXDSiTtS13TDG6/QfyIpFt0nhzSem6Kb4Wymf+l/zccjAUymTp58cU6S/iAuU3+82VFeE2Bh2gIlqp7CswNcsczwJtKBeIb+iwgzc2NL8Rdl0zlBIzYLcdbwTKu0t6pE4rtbfAerRbnzoB3JPyoMYcK6Eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zkSWAmWn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rAh/PTpE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132701F00A3A;
-	Tue, 16 Jun 2026 15:08:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zkSWAmWn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568961F00A3A;
+	Tue, 16 Jun 2026 15:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622535;
-	bh=tZnWcXpCbVVp5CeHEkHAORJuW3hwnlbRC4RiuzaZYsM=;
+	s=korg; t=1781622540;
+	bh=YA4Mtsjv4sc1BSfgdJzaCuDUOYH40SjA3JKQY9boMpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rAh/PTpEm5d6HoQCPYChzXUYCW72EljQCpT5LtJXLAIIRuh85ydfxZfILC5n4rtej
-	 nIrEVQ1WMpdknitQIWqWZPMS4VFZ5bbt+7ftmNt1xdOZ/ZUR4Vb9nkevO3RiXHtqtH
-	 7JOz/WgWgoE3Wgduz0/Sik7NPI4Nn37YmQRE+Tbw=
+	b=zkSWAmWnfDhTcSoM5iguPKHoLAkmAFe1qj/rXfu7G6uyPyVjupdKPu4iY4BsJrUBn
+	 oSqLQVJ6H6E8ONK9hLiFhJY7s2fX97uB1WXKFbAdcFSUg6gL9kdrdHRltLPX0M5vQ1
+	 BcTv//azwpiuD6kAcKAkFrm2IyYA6x/kvNk+poQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,12 +31,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 005/411] drm: Remove plane hsub/vsub alignment requirement for core helpers
-Date: Tue, 16 Jun 2026 20:24:03 +0530
-Message-ID: <20260616145100.648897473@linuxfoundation.org>
+Subject: [PATCH 6.1 005/522] drm: Remove plane hsub/vsub alignment requirement for core helpers
+Date: Tue, 16 Jun 2026 20:22:32 +0530
+Message-ID: <20260616145125.610761268@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
-References: <20260616145100.376842714@linuxfoundation.org>
+In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
+References: <20260616145125.307082728@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,7 +49,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -79,7 +79,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/include/drm/drm_fourcc.h b/include/drm/drm_fourcc.h
-index 22aa64d07c7905..78ef00b94a4635 100644
+index 532ae78ca747e6..ccf91daa430702 100644
 --- a/include/drm/drm_fourcc.h
 +++ b/include/drm/drm_fourcc.h
 @@ -22,6 +22,7 @@
@@ -90,7 +90,7 @@ index 22aa64d07c7905..78ef00b94a4635 100644
  #include <linux/types.h>
  #include <uapi/drm/drm_fourcc.h>
  
-@@ -276,7 +277,7 @@ int drm_format_info_plane_width(const struct drm_format_info *info, int width,
+@@ -279,7 +280,7 @@ int drm_format_info_plane_width(const struct drm_format_info *info, int width,
  	if (plane == 0)
  		return width;
  
@@ -99,7 +99,7 @@ index 22aa64d07c7905..78ef00b94a4635 100644
  }
  
  /**
-@@ -298,7 +299,7 @@ int drm_format_info_plane_height(const struct drm_format_info *info, int height,
+@@ -301,7 +302,7 @@ int drm_format_info_plane_height(const struct drm_format_info *info, int height,
  	if (plane == 0)
  		return height;
  
