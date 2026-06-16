@@ -1,37 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A9153AB267;
-	Tue, 16 Jun 2026 15:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5EB34889F;
+	Tue, 16 Jun 2026 15:38:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624280; cv=none; b=Oh85WOxe9rBvjeAU9rgl2widfEDMWzvHzsBJvCmswEOCYsEuNu+lZt1eBQLPgbYWAq/co99/5hbYUAP9OGvciFiuyMs/izAzmPnWnkvmLhJxZCmXl+HCjcYqkTCCB5vzOLVU1mWqYu/iVPZ0kF1xiwXxbQHLRhTiPApycFbapp0=
+	t=1781624285; cv=none; b=oYiSkLurFsal3NkADBFKZdnIcA/gvNt3gcr6/74CMVylmeJVmgv5heVsED0AhHPcdnfbqmXXj85FNUxj52qphR7tDo5sGvs79ITEXqHp0w8PogPR2zvjURIP7fQwyDj/NBs9DI5biJH+h4w1GB5Oy6TrOGggiargMe+DaSVQLS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624280; c=relaxed/simple;
-	bh=6khjy8biSSEKDje9UZ1h4ztOefqZreKmZzbkpSVux4g=;
+	s=arc-20240116; t=1781624285; c=relaxed/simple;
+	bh=aoIxpYdG7lR0IekTDC28oH/lWBnmIjMCboCyoQLTGi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RessxIGEZOZqDw7HEKy8XJjs/G8VkMNEKJL2qHHfEqkucobYOmVS3x0Ia89wYRbtvYHVfARuKVIAoxQviib7u3+3v2vDm6iAhpKtFcmOsuFma5OtjiYLEXT68ghwJbg7zrHzRuUfUHDxhqI+jRIIunlyuGwESfwxJUPer3X9EIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eT2KDIPQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VLdciScxtQBPY4InQA+0CLC/CTvMv8RwZACKPBelNx+G3yDgJvp2hm7YEJYVBIqvWs5lUitFCb4nM9NzR1x0EUUH3SBcZahUP3GVQUiUOmlXCkNdVq6zyhrJdZwjrdU9ueJ56TKAzd7QjgL9JiDP5YN8T681oAZCB/U3icCkdww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqdtpy9R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eT2KDIPQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D471F000E9;
-	Tue, 16 Jun 2026 15:37:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqdtpy9R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1AD1F000E9;
+	Tue, 16 Jun 2026 15:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624279;
-	bh=DVpsSqBhwprGGptwq3xu9/CtG23uTHeWoQYMVayvcME=;
+	s=korg; t=1781624284;
+	bh=sDLkczdVOHkVlUMKYxIz8u7Jl7SzKKt+qNhiJyXGkCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eT2KDIPQMvGmzLN81PJCLg05MLgViLaqPnCWQfIhfqw/+36H9dZqulaG2yzD/9u5f
-	 +Yvp96CKFd6yf3yUgZ5YSV530BdAgBb15pwZWDFAQpjyGONvtj5OQjfGLwniwGQjRW
-	 ntNeesP828MC/MhTbei02MSWc36eqPNLAiuedv18=
+	b=gqdtpy9R8btw929FmyiDB3DoQjX4vHyMVGF2PWflhw2f+timBVuHxtJumLx9Zokc0
+	 ydKSnC2a3EKuFWOnqzJZMT3gCJXgd1MZGjlZ33oZ6lx8UoogM1ET1gdIE+fQoeBsdT
+	 Yyl0t70pSxEgtR0tq6PVcoEmpD3vwXhFe2+CKS5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 7.0 263/378] accel/ethosu: reject DMA commands with uninitialized length
-Date: Tue, 16 Jun 2026 20:28:14 +0530
-Message-ID: <20260616145123.928018699@linuxfoundation.org>
+	Muchun Song <songmuchun@bytedance.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Oscar Salvador (SUSE)" <osalvador@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Dmitry Safonov <0x7f454c46@gmail.com>,
+	Frank van der Linden <fvdl@google.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Michal Nazarewicz <mina86@mina86.com>,
+	Stefan Strogin <stefan.strogin@gmail.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.0 299/378] mm/cma_debug: fix invalid accesses for inactive CMA areas
+Date: Tue, 16 Jun 2026 20:28:50 +0530
+Message-ID: <20260616145125.816159720@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -50,47 +62,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Muchun Song <songmuchun@bytedance.com>
 
-commit d9d021218162b6c4fe0bdf42b2b340f1aae23a12 upstream.
+commit c0ca59beb5252ea2bd4fdaef009d003dedc2030e upstream.
 
-cmd_state_init() initializes the command state with memset(0xff),
-leaving dma->len at U64_MAX to signal missing setup. The only setter
-is NPU_SET_DMA0_LEN; if userspace omits this command and issues
-NPU_OP_DMA_START, dma->len remains U64_MAX.
+cma_activate_area() can fail after allocating range bitmaps.  Its cleanup
+path frees those bitmaps, but only clears cma->count and
+cma->available_count.  It leaves cma->nranges and each range's count in
+place, so cma_debugfs_init() can still register debugfs files for an area
+that never activated successfully.
 
-In dma_length(), a positive stride added to U64_MAX wraps to a small
-value. With size0 == 1, check_mul_overflow() does not trigger and
-dma_length() returns 0 instead of U64_MAX. The caller's U64_MAX check
-then passes, region_size[] stays 0, and the bounds check in
-ethosu_job.c is bypassed, allowing hardware to execute DMA with stale
-physical addresses.
+That exposes two problems.  Reading the bitmap file can make debugfs walk
+a freed range bitmap and trigger an invalid memory access.  Reading
+maxchunk can also take cma->lock even though that lock is initialized only
+on the successful activation path.
 
-Fix by checking for U64_MAX at the start of dma_length() before any
-arithmetic, consistent with the sentinel value used throughout the
-driver to detect uninitialized fields.
+Fix this by creating debugfs entries only for CMA areas that reached
+CMA_ACTIVATED.
 
-Fixes: 5a5e9c0228e6 ("accel: Add Arm Ethos-U NPU driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260524130319.12747-1-meatuni001@gmail.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+c009da4258f9 introduced the invalid access to bitmap file.  2e32b947606d
+introduced the invalid access to cma->lock.  This change applies to both
+issues.  So I added two Fixes tags.
+
+Link: https://lore.kernel.org/20260520061025.3971821-1-songmuchun@bytedance.com
+Fixes: c009da4258f9 ("mm, cma: support multiple contiguous ranges, if requested")
+Fixes: 2e32b947606d ("mm: cma: add functions to get region pages counters")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Acked-by: Oscar Salvador (SUSE) <osalvador@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Dmitry Safonov <0x7f454c46@gmail.com>
+Cc: Frank van der Linden <fvdl@google.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Michal Nazarewicz <mina86@mina86.com>
+Cc: Stefan Strogin <stefan.strogin@gmail.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ethosu/ethosu_gem.c |    3 +++
- 1 file changed, 3 insertions(+)
+ mm/cma_debug.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/accel/ethosu/ethosu_gem.c
-+++ b/drivers/accel/ethosu/ethosu_gem.c
-@@ -164,6 +164,9 @@ static u64 dma_length(struct ethosu_vali
- 	s8 mode = dma_st->mode;
- 	u64 len = dma->len;
+--- a/mm/cma_debug.c
++++ b/mm/cma_debug.c
+@@ -205,7 +205,8 @@ static int __init cma_debugfs_init(void)
+ 	cma_debugfs_root = debugfs_create_dir("cma", NULL);
  
-+	if (len == U64_MAX)
-+		return U64_MAX;
-+
- 	if (mode >= 1) {
- 		if (dma->stride[0] < 0 && (u64)(-dma->stride[0]) > len)
- 			return U64_MAX;
+ 	for (i = 0; i < cma_area_count; i++)
+-		cma_debugfs_add_one(&cma_areas[i], cma_debugfs_root);
++		if (test_bit(CMA_ACTIVATED, &cma_areas[i].flags))
++			cma_debugfs_add_one(&cma_areas[i], cma_debugfs_root);
+ 
+ 	return 0;
+ }
 
 
