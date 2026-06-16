@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11AF1477980;
-	Tue, 16 Jun 2026 16:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1767013777E;
+	Tue, 16 Jun 2026 16:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627466; cv=none; b=pnv2fWUelfKq9R/dUbwe0OjHFWIVXQZRWNQf2S6AMr+YvB4aehJMsmo1cJ5NDk1nkguKH0niU1sl6YmHTQmHCyy87/jUCmFaaWKlqXqskC523r2OqaiHnW3NxI2Jf/EwkiXYG+MHxCvXbUssl3I/k7ZhWOkm2vG5JX3r7aY+kBs=
+	t=1781627471; cv=none; b=cfJo/Ymx0+lY0/YDUz5Ibnw1XwhwXWnLpO+qtuyEh2ir7hWgQ/K5k6Kgq/MZH/CvAzRc0bMSoleru0DRa86KWN/DnhUt94YrA7RZnnXasw0F1P9TBSlZl8t3AlsdIG3qKixDcrHLFzI3WTU35C3ra3W9GBD5YSXPD6B8bb5IyWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627466; c=relaxed/simple;
-	bh=t02FDf4cGRE0UpqCNAtIXu6zQ6k7kCh6H34l2P9JK/A=;
+	s=arc-20240116; t=1781627471; c=relaxed/simple;
+	bh=O9hxNoyBL02BkO+eNqfp56/J2KPnMZO8PPCJl4fflyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MMVGfJUMiJhLzIh/lI8BY+kUWYUwX7+am5W2g9P1N0JrBKmth+QkrFH9TtZtLwcYkTSzKZejVVfCCAfRON1xhFgZ4KLGeqxpgHXs3hMJWZq8qJ+ucSu86vZnZi8fIrdVuZaR9znaekyHc1jRHTmYTgmiyAM+Ixpz5As9mg0Fuig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0b2bd1RL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DZlzO36ixQQ7KcvaHV5c/iV9meKElRMHw6I9Nv6DYf8Xuli5wS69HyqspmOm5g1pbREZ1fSFGRHF1vJ7DgbETEFT7LWD0sc2+i2BFcyUJiDuIJLm7LQ+ZVa67tzXCjydtaFiHN08m8B4PGsxHAF7aj/hS7ZthHvUhYd2tELoAm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uh7j7snZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0b2bd1RL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDC581F000E9;
-	Tue, 16 Jun 2026 16:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uh7j7snZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DC81F000E9;
+	Tue, 16 Jun 2026 16:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627464;
-	bh=+Vo3kvA+LCyAp15OueHKYhO45qlsxrM3jnTaBQrLHO4=;
+	s=korg; t=1781627469;
+	bh=clVPpttSFDZtwDgTfdmmohNS/zVHuymzxMaTvCjgrZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0b2bd1RLt/jsDRct9FZrCOALC0vn918KtIdAhaoVi40eOEvycXBQrnllr271wloj9
-	 j2KmYWQ+UE/pIb6gGbgAYoJkEXsH8mc304u+qz4SRQPdmsKNYKEeKbYheYw8C8Bmf/
-	 OMAPbtzvfFVq6t6Ey1foqOSiVzcz+L/zM4UtmudI=
+	b=uh7j7snZPl/8LQOmwwTEaL+bDFAIfxRPi3h7/tKAjJTwYRKbjkIVbqZXDQeHKNI8X
+	 uAFzaIagfSLQglYtxU4swdpnh11ORn/1t41IbsXpfrsop2/5jp/cVvfyESUs/hc9lA
+	 pMWT08W1AW0WrVibdaVKq6/Mrn/YvL6SezYo0mDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@meta.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 145/261] io_uring/net: inherit IORING_CQE_F_BUF_MORE across bundle recv retries
-Date: Tue, 16 Jun 2026 20:29:43 +0530
-Message-ID: <20260616145051.799201493@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: [PATCH 6.12 146/261] drm/virtio: fix dma_fence refcount leak on error in virtio_gpu_dma_fence_wait()
+Date: Tue, 16 Jun 2026 20:29:44 +0530
+Message-ID: <20260616145051.846268508@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -44,66 +44,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Clément Léger <cleger@meta.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit ed46f39c47eb5530a9c161481a2080d3a869cfaf upstream.
+commit 3f26bb732cc136ab20176697c92f32c9c84cb125 upstream.
 
-When a bundle recv retries inside io_recv_finish(), the merge logic OR
-the saved cflags from the previous iteration with the cflags returned by
-the new iteration:
-  cflags = req->cqe.flags | (cflags & CQE_F_MASK);
+dma_fence_unwrap_for_each() internally calls dma_fence_unwrap_first()
+which does cursor->chain = dma_fence_get(head), taking an extra
+reference. On normal loop completion, dma_fence_unwrap_next()
+releases this via dma_fence_chain_walk() -> dma_fence_put().
 
-Bits listed in CQE_F_MASK are inherited from the new iteration, and all
-other bits (notably IORING_CQE_F_BUFFER and the buffer ID) come from the
-saved cflags. Before this change CQE_F_MASK covered only
-IORING_CQE_F_SOCK_NONEMPTY and IORING_CQE_F_MORE.
+When virtio_gpu_do_fence_wait() fails and the function returns early
+from inside the loop, the cursor->chain reference is never released.
+This is the only caller in the entire kernel that does an early return
+inside dma_fence_unwrap_for_each.
 
-When using provided buffer rings (IOU_PBUF_RING_INC) with incremental
-mode, and bundle recv, io_kbuf_inc_commit() can leave the head ring
-entry partially consumed, __io_put_kbufs() then sets
-IORING_CQE_F_BUF_MORE on the returned cflags so userspace knows the
-buffer ID will be reused for subsequent completions.
-
-Because IORING_CQE_F_BUF_MORE was not in CQE_F_MASK, the merge above
-silently dropped it whenever the final retry iteration partially
-consumed the buffer, and the subsequent req->cqe.flags = cflags &
-~CQE_F_MASK save would have left a stale IORING_CQE_F_BUF_MORE in the
-carried-over cflags had one been present. Userspace would then
-wrongfully advance it ring head past an entry the kernel still uses.
-
-Add IORING_CQE_F_BUF_MORE to CQE_F_MASK so it is both inherited from the
-new iteration into the user-visible CQE and stripped from the saved
-cflags between iterations.
+Add dma_fence_put(itr.chain) before the early return.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Clément Léger <cleger@meta.com>
-Assisted-by: Claude:claude-opus-4.6
-Fixes: ae98dbf43d75 ("io_uring/kbuf: add support for incremental buffer consumption")
-Link: https://patch.msgid.link/20260604160715.2482972-1-cleger@meta.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: eba57fb5498f ("drm/virtio: Wait for each dma-fence of in-fence array individually")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/20260607090303.92423-1-vulab@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/virtio/virtgpu_submit.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -846,7 +846,8 @@ int io_recvmsg_prep(struct io_kiocb *req
- }
+--- a/drivers/gpu/drm/virtio/virtgpu_submit.c
++++ b/drivers/gpu/drm/virtio/virtgpu_submit.c
+@@ -65,8 +65,10 @@ static int virtio_gpu_dma_fence_wait(str
  
- /* bits to clear in old and inherit in new cflags on bundle retry */
--#define CQE_F_MASK	(IORING_CQE_F_SOCK_NONEMPTY|IORING_CQE_F_MORE)
-+#define CQE_F_MASK	(IORING_CQE_F_SOCK_NONEMPTY|IORING_CQE_F_MORE|\
-+			 IORING_CQE_F_BUF_MORE)
+ 	dma_fence_unwrap_for_each(f, &itr, fence) {
+ 		err = virtio_gpu_do_fence_wait(submit, f);
+-		if (err)
++		if (err) {
++			dma_fence_put(itr.chain);
+ 			return err;
++		}
+ 	}
  
- /*
-  * Finishes io_recv and io_recvmsg.
+ 	return 0;
 
 
