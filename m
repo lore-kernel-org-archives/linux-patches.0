@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59922478E5B;
-	Tue, 16 Jun 2026 16:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEEB47884C;
+	Tue, 16 Jun 2026 16:51:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628694; cv=none; b=hWvqVUBkIV5pKJ5cBEUr5/J6m3mw/FcEFyKljJJb9Q8dL0MXfvzjt2PViT0uN9bMi1hFv0pwPqv2ta4EdqOibSsAlkEfWY2XWDYR5BKv/+JxeJdMgzH/RorG20FY/HEuyaaiYTfuz/ASHvu6F/kQPjGq0M4HHKlJ5tC333t2pQQ=
+	t=1781628698; cv=none; b=A14ic/O0Q1IJfl56LouYyn6hGzDPA1xAYB0RTNEbyuO1BdLSGfBLzIHz7N4LmtuFTeSrr4dD6ba5nKNMXYUsxkLSwYqaRNM6vdTrYhdWd5AH364boQUxyW3wcraQAM5dXlBTqM/lZhn4vC4DeiZh785CC74jZqDPIHDf4FRQ5vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628694; c=relaxed/simple;
-	bh=fZuSh8px1FkvdqMfdeOVVf5sOdpvEgIvHEuqWLzhoc8=;
+	s=arc-20240116; t=1781628698; c=relaxed/simple;
+	bh=lVzts68X5IynWhb8JCEisDGgbrS+mKHwo0/jDfa+Dwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=am1IUokUChthhbpcheUeX3EgVfw/1Ira3H6TuQLHKePGYd3b85YdEd+cQISlZLzukztIPJ6n4IT4Bwy7LryttEemn8daCrWpGkEnRhIHmhgvP9GDftht+j2nHzZY2VZf0gPXzElyRWR4AJpcalbYe4DJ0hdeOOV1hIQn6Csq+7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7a09ght; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nk+Cy7fqlmCCWqG6es/rCO7nwqZmDHwimXf77WjL6Oiu7Ydui/n7OBrjy62Wgoukq2VWzREdZj0lehqSotCB9v/5jwxqUo8dSsfc4mVOqD8FrbHnlE3gzRiaPiMOKIwiUwv1cYxVImAT4e+P2ud14cFa2namHVqDJrdrgWl7/EM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lQOvOVQ2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7a09ght"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BB1C1F000E9;
-	Tue, 16 Jun 2026 16:51:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lQOvOVQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C66A1F000E9;
+	Tue, 16 Jun 2026 16:51:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628693;
-	bh=fcSQvV0Wt+n2a+3d3Hha1Dpd6exgyjWkD7sbVEdooMs=;
+	s=korg; t=1781628697;
+	bh=Ji1eK8ee35O/5EIg+sdLrWWNvUCdzL0b3Efr4c3IVy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n7a09ghtuTw9vkvT89U4Hu8ah8HEE4ffc2/hSpRjKdwNjOv89wYzXTxV6KWvZAPuk
-	 DurkDLus/wwqs9G3HeMMh4Ctb3RCntorBxyGikZMOOMRrfCZ/RHVCvxAggZcT/juiX
-	 MpNYLsC5ZBnDvB77SimgJO+Fm9jZgaTjlaOzSyJc=
+	b=lQOvOVQ22zW5hJ+4Q4Hqb0VaeUDP9jAHX3wwXLoCyGY8Saf3vgwn72GaG3jnOj6Dj
+	 YCMGk+TxtlMIpunZRa78jI7G3uKsdRkA8JBr6THHvwo75/J+gVIfavuAo4te5KChd5
+	 oIVl6jU8Ez8UJJJkKSP2kmR9V2+95vflFp5CrcW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitriy Zharov <contact@zharov.dev>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 143/452] Input: xpad - add support for ASUS ROG RAIKIRI II
-Date: Tue, 16 Jun 2026 20:26:10 +0530
-Message-ID: <20260616145125.218594317@linuxfoundation.org>
+	David Carlier <devnexen@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 6.6 113/452] iio: gyro: itg3200: fix i2c read into the wrong stack location
+Date: Tue, 16 Jun 2026 20:25:40 +0530
+Message-ID: <20260616145123.665917091@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -50,43 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitriy Zharov <contact@zharov.dev>
+From: David Carlier <devnexen@gmail.com>
 
-commit c897cf120696b94f56ed0f3197ba9a77071a59ec upstream.
+commit 6bdc3023d62ed5c7d591f0eb27a5adb37fb892ae upstream.
 
-Add the VID/PIDs for the ASUS ROG RAIKIRI II controller to xpad_device
-and the VID to xpad_table. The controller has a physical PC/XBOX toggle
-which switches between XBOX360 and XBOXONE protocols.
+itg3200_read_all_channels() takes `__be16 *buf' as a parameter and
+fills the i2c_msg destination as `(char *)&buf'. Since `buf' is the
+parameter (a pointer), `&buf' is the address of the local pointer
+slot on the stack of itg3200_read_all_channels(), not the address
+of the caller's scan buffer. The (char *) cast hides the type
+mismatch.
 
-Signed-off-by: Dmitriy Zharov <contact@zharov.dev>
-Link: https://patch.msgid.link/20260430183522.122151-1-contact@zharov.dev
+i2c_transfer() therefore writes ITG3200_SCAN_ELEMENTS * sizeof(s16)
+= 8 bytes into the parameter's stack slot, which is discarded when
+the function returns. The caller's scan buffer in
+itg3200_trigger_handler() is never written to, so
+iio_push_to_buffers_with_timestamp() pushes uninitialised stack
+contents to userspace via /dev/iio:deviceX every scan -- both a
+functional bug (no actual gyroscope or temperature data is
+delivered through the triggered buffer) and an information leak.
+
+The non-buffered read_raw() path is unaffected: it goes through
+itg3200_read_reg_s16() which uses `&out' on a local s16 value,
+where that is correct.
+
+Drop the spurious `&' so the i2c read writes into the caller's
+buffer.
+
+Fixes: 9dbf091da080 ("iio: gyro: Add itg3200")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/iio/gyro/itg3200_buffer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -215,6 +215,10 @@ static const struct xpad_device {
- 	{ 0x07ff, 0xffff, "Mad Catz GamePad", 0, XTYPE_XBOX360 },
- 	{ 0x0b05, 0x1a38, "ASUS ROG RAIKIRI", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
- 	{ 0x0b05, 0x1abb, "ASUS ROG RAIKIRI PRO", 0, XTYPE_XBOXONE },
-+	{ 0x0b05, 0x1c91, "ASUS ROG RAIKIRI II", 0, XTYPE_XBOX360 },
-+	{ 0x0b05, 0x1c92, "ASUS ROG RAIKIRI II WIRELESS", 0, XTYPE_XBOX360 },
-+	{ 0x0b05, 0x1c96, "ASUS ROG RAIKIRI II XBOX", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
-+	{ 0x0b05, 0x1d04, "ASUS ROG RAIKIRI II XBOX WIRELESS", MAP_SHARE_BUTTON, XTYPE_XBOXONE },
- 	{ 0x0c12, 0x0005, "Intec wireless", 0, XTYPE_XBOX },
- 	{ 0x0c12, 0x8801, "Nyko Xbox Controller", 0, XTYPE_XBOX },
- 	{ 0x0c12, 0x8802, "Zeroplus Xbox Controller", 0, XTYPE_XBOX },
-@@ -527,6 +531,7 @@ static const struct usb_device_id xpad_t
- 	{ USB_DEVICE(0x0738, 0x4540) },		/* Mad Catz Beat Pad */
- 	XPAD_XBOXONE_VENDOR(0x0738),		/* Mad Catz FightStick TE 2 */
- 	XPAD_XBOX360_VENDOR(0x07ff),		/* Mad Catz Gamepad */
-+	XPAD_XBOX360_VENDOR(0x0b05),		/* ASUS controllers */
- 	XPAD_XBOXONE_VENDOR(0x0b05),		/* ASUS controllers */
- 	XPAD_XBOX360_VENDOR(0x0c12),		/* Zeroplus X-Box 360 controllers */
- 	XPAD_XBOX360_VENDOR(0x0db0),		/* Micro Star International X-Box 360 controllers */
+--- a/drivers/iio/gyro/itg3200_buffer.c
++++ b/drivers/iio/gyro/itg3200_buffer.c
+@@ -34,7 +34,7 @@ static int itg3200_read_all_channels(str
+ 			.addr = i2c->addr,
+ 			.flags = i2c->flags | I2C_M_RD,
+ 			.len = ITG3200_SCAN_ELEMENTS * sizeof(s16),
+-			.buf = (char *)&buf,
++			.buf = (char *)buf,
+ 		},
+ 	};
+ 
 
 
