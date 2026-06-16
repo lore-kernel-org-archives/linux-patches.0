@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B85D4779BB;
-	Tue, 16 Jun 2026 17:56:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D604779B3;
+	Tue, 16 Jun 2026 17:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632600; cv=none; b=Dv0QdjsxNQNiuEpt26xp+afzK9FFdaSfJmOc1Cy3BtTjRNevu5ad8mgUfVtOI7wqqYMfi697rmFb+YolfbTs5tKQv2odJ6VSrys9dfKDNOI4qrHLlZZtm8OvQw1p734mUCZH/+G7/y2+kUiaGpFzo6AP0w/DzTlopLfAdzYL9+s=
+	t=1781632605; cv=none; b=qbPiG2gAjZh7crZEtW9r7e3DLdSB5Nav+565xl0SPZkNGeAV/O0DGcFyvjK3D4qP3L01Yu3ak1Grsd3ghuAFVWb+Yuk0dFWcwo3QUUEFLLf5L/3QZRd6W0A+ugI0D930EZN3CjezhSJ89LSV8JhzlMjbtPhpeoIZ3kttZqr76rA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632600; c=relaxed/simple;
-	bh=kqB3xQ6tf1K1+2Pl9goqgZEs+yQbtHSjjel6mtj7fLM=;
+	s=arc-20240116; t=1781632605; c=relaxed/simple;
+	bh=WkeIBfwVHhPVO5oCLl8THtbR2oyaaEEQHfNNDkwVvmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ReHIz57jNvFaN7RYbi1MgVJyWDLLEjBKU9seUzNdXsRb+UYkfDj1g1txY/IWunWBkVqvYgKvAMFuNVlY2FbBHRx+vK3aUMAWqtSCF0Dg1BvXp6trZ3c8h/zLncnT6H2z+UOkGyWfCHPSca2D/GWVCdebaijikMFWVZJ+58brbxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3owaLIa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cqztv8SEhjCLO2CjiZnPhj3xx1AMTZoNJF/FhJw5yGeCWou9DOSdsFxqSZMq+ohsi92RCOmgsV1KTOo6M77Qh8nKcphsLL60qJVz6RrfstVSfHANHY9/IA9RipA8HOOZt1IOzR4SlLNLZLa1oATYs6OKqNzDSVMi0EBVnQhmy9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qeHpGuuM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3owaLIa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5871F000E9;
-	Tue, 16 Jun 2026 17:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qeHpGuuM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF581F000E9;
+	Tue, 16 Jun 2026 17:56:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632599;
-	bh=KBeKzmqeFOgaJfyN9gFqtP+00KYUKhRbPWPEF+oHf+s=;
+	s=korg; t=1781632604;
+	bh=lZ1ZQVOsQy9VwPBeZKHsyIfop2Rku47rjSvD7AMpTkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s3owaLIaKT68qXGDcdm/1Efl/VtFwtt8hvHy9TWJxqEJOeSISDDc/ZUmEIuh/AKAP
-	 28aFtO6TpXmlWjtgF7PJUr+LiT4L6e3MBgeLBTJftbKo+uFR+I3Dp6Szgj5OJi6bJY
-	 6KEhgNZJegq9WoFM50jLDhTJFFwTvpmLOK6Hpxqk=
+	b=qeHpGuuMGOcIjkI5Fe79KNQ+Fk13XXUPnfAg4RkKvCQ5uAFcvCQKKvjK0umpDnsJ8
+	 ICcqnzFsPVNDvzDLrt3u81MMi3AknXpQ8UaIWb0VFRAfi4w8HPmZqMzHBiFQ+vCeMm
+	 uISTIPaKlJXn+DMG5pkACRduHhbZH7TNmnBn28Gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naga Sureshkumar Relli <nagasuresh.relli@microchip.com>,
-	Johan Hovold <johan@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Mark Brown <broonie@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 409/522] spi: microchip-core-qspi: fix controller deregistration
-Date: Tue, 16 Jun 2026 20:29:16 +0530
-Message-ID: <20260616145145.194041334@linuxfoundation.org>
+Subject: [PATCH 6.1 410/522] fbcon: Avoid OOB font access if console rotation fails
+Date: Tue, 16 Jun 2026 20:29:17 +0530
+Message-ID: <20260616145145.238935587@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,61 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit e6464140d439f2d42f072eb422a5b1fec470c5a6 ]
+[ Upstream commit e4ef723d8975a2694cc90733a6b888a5e2841842 ]
 
-Make sure to deregister the controller before disabling underlying
-resources like interrupts during driver unbind.
+Clear the font buffer if the reallocation during console rotation fails
+in fbcon_rotate_font(). The putcs implementations for the rotated buffer
+will return early in this case. See [1] for an example.
 
-Fixes: 8596124c4c1b ("spi: microchip-core-qspi: Add support for microchip fpga qspi controllers")
-Cc: stable@vger.kernel.org	# 6.1
-Cc: Naga Sureshkumar Relli <nagasuresh.relli@microchip.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://patch.msgid.link/20260409120419.388546-19-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Currently, fbcon_rotate_font() keeps the old buffer, which is too small
+for the rotated font. Printing to the rotated console with a high-enough
+character code will overflow the font buffer.
+
+v2:
+- fix typos in commit message
+
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 6cc50e1c5b57 ("[PATCH] fbcon: Console Rotation - Add support to rotate font bitmap")
+Cc: stable@vger.kernel.org # v2.6.15+
+Link: https://elixir.bootlin.com/linux/v6.19/source/drivers/video/fbdev/core/fbcon_ccw.c#L144 # [1]
+Signed-off-by: Helge Deller <deller@gmx.de>
+[ renamed `par` to `ops` to match the 6.12 local pointer name ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-microchip-core-qspi.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/video/fbdev/core/fbcon_rotate.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-microchip-core-qspi.c
-+++ b/drivers/spi/spi-microchip-core-qspi.c
-@@ -512,7 +512,7 @@ static int mchp_coreqspi_probe(struct pl
- 				     "unable to allocate master for QSPI controller\n");
+--- a/drivers/video/fbdev/core/fbcon_rotate.c
++++ b/drivers/video/fbdev/core/fbcon_rotate.c
+@@ -46,6 +46,10 @@ static int fbcon_rotate_font(struct fb_i
+ 		info->fbops->fb_sync(info);
  
- 	qspi = spi_controller_get_devdata(ctlr);
--	platform_set_drvdata(pdev, qspi);
-+	platform_set_drvdata(pdev, ctlr);
- 
- 	qspi->regs = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(qspi->regs))
-@@ -545,7 +545,7 @@ static int mchp_coreqspi_probe(struct pl
- 			  SPI_TX_DUAL | SPI_TX_QUAD;
- 	ctlr->dev.of_node = np;
- 
--	ret = devm_spi_register_controller(&pdev->dev, ctlr);
-+	ret = spi_register_controller(ctlr);
- 	if (ret)
- 		return dev_err_probe(&pdev->dev, ret,
- 				     "spi_register_controller failed\n");
-@@ -555,9 +555,13 @@ static int mchp_coreqspi_probe(struct pl
- 
- static void mchp_coreqspi_remove(struct platform_device *pdev)
- {
--	struct mchp_coreqspi *qspi = platform_get_drvdata(pdev);
--	u32 control = readl_relaxed(qspi->regs + REG_CONTROL);
-+	struct spi_controller *ctlr = platform_get_drvdata(pdev);
-+	struct mchp_coreqspi *qspi = spi_controller_get_devdata(ctlr);
-+	u32 control;
- 
-+	spi_unregister_controller(ctlr);
+ 	if (ops->fd_size < d_cellsize * len) {
++		kfree(ops->fontbuffer);
++		ops->fontbuffer = NULL;
++		ops->fd_size = 0;
 +
-+	control = readl_relaxed(qspi->regs + REG_CONTROL);
- 	mchp_coreqspi_disable_ints(qspi);
- 	control &= ~CONTROL_ENABLE;
- 	writel_relaxed(control, qspi->regs + REG_CONTROL);
+ 		dst = kmalloc_array(len, d_cellsize, GFP_KERNEL);
+ 
+ 		if (dst == NULL) {
+@@ -54,7 +58,6 @@ static int fbcon_rotate_font(struct fb_i
+ 		}
+ 
+ 		ops->fd_size = d_cellsize * len;
+-		kfree(ops->fontbuffer);
+ 		ops->fontbuffer = dst;
+ 	}
+ 
 
 
