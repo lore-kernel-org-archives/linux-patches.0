@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0935544D6B2;
-	Tue, 16 Jun 2026 15:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAED444CAF9;
+	Tue, 16 Jun 2026 15:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625414; cv=none; b=QoeZ/5Tb1zln8T03E9FINon37ltn2KFtCfA91EBYCFGIWR1sxh6tHR7ptN3MTOEsCHSscENMJdoo4LRANusEFyElz68zga+agqD/mN5ZHTwqDNLqY76GaPORE35aU4cMwLXvSAwK/idh/5Giqp3H0qk7oSJaDExVNwvs8qwIGFk=
+	t=1781625418; cv=none; b=G6vbMw4vkqY9lxVQ4Gsi0wpeo6BoBsqaYJh+Q85/kyoiR8GKXRxM69Whu/bLhwWFc9ZI2tNHAlOg2+Nq8wKt9iPDJkpHr1UAPjtYDCTrkUWr5Uik926Az3gKcwiKjRuzZT++KddxriL87rvqJJRZUdY2ttOIUehptdi7P1JUDVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625414; c=relaxed/simple;
-	bh=AxG7eSlGqnXnbX9seGYurrK4oKrAJpSjYGaUclvLtG4=;
+	s=arc-20240116; t=1781625418; c=relaxed/simple;
+	bh=DHmQc/4N+J/DIi1L7TWftfS+vF+aaM71/wk+6R3kcqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b7+60N5J6lxx25o//Zj8rJT0fu7e9YNrG/6sZ4L3/rtDmOLJVK016+Zmr6EOS0vk471A53NQSX1PKRc0ZG8dJzHU4aiaFGgDlN5uyfYSlNAkaQEIogYo4qiEoYiRiLwsy/pYL24D8MHjXB7UUSC9qmQ2KAnlnLEybgabGmvRh6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pr7cfQeA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=na6YDkkkAmTOXu8ls6Q7AQ7s242kXbJXToZWIrkUz81YZ6+e6M+4zv5Qe1J/iPahHYdAT5I8lLL2tmBme57Q1q+lPFN1kkW9kq6fkOd7fVMev6vc0R6yh7+twFbHAcEGdManZ785+QMREX47ux47HYmRz9v8vTqJb8IQ/EQbfXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dOGQXcoS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pr7cfQeA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE3D1F000E9;
-	Tue, 16 Jun 2026 15:56:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dOGQXcoS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA7131F000E9;
+	Tue, 16 Jun 2026 15:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625412;
-	bh=kYF3UEmZvp5kwfiAfx6zspGMk89drcopvQ19A+GDTMQ=;
+	s=korg; t=1781625417;
+	bh=sspM5B1PRRiRJZsiVjVUfrC2O3sOY1Dkj39WPHvRCZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pr7cfQeASWpvwFn6HtmVUre4g49p89QUgGYRtahj2+6qk4uVhM3+BpnS4/bUxCPq1
-	 ZfWDMpsNRkUFht4lV4RTbc5l8XiEBqcv5iWZRQunqFy/J05Jf+Jv5T1X1mtqkcRNoY
-	 euJK7PusaP37xkZUfWYUWyfEzTJ2cvqXWzdS0pkg=
+	b=dOGQXcoS4y8t1M+GszjZiZv00QCUspwGi1fX35QyECJf6VHCZRzl0WZIC0p2F4Ilz
+	 hZ3Y/ZCGPFaJeGWtgjH52eUchfgumW2ykOgiXVrxtUgKFcwaMEToSXvPa3S4BoC2tX
+	 7DFMbjXAlySSOHPVqAIUy3mcJeJ0FwGuIPAQhWLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Zhou <eilaimemedsnaimel@gmail.com>,
-	David Ahern <dahern@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dongli Zhang <dongli.zhang@oracle.com>,
+	Chao Gao <chao.gao@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Gulshan Gabel <gulshan.gabel@nutanix.com>,
+	Jon Kohler <jon@nutanix.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 137/325] ipv6: Fix a potential NPD in cleanup_prefix_route()
-Date: Tue, 16 Jun 2026 20:28:53 +0530
-Message-ID: <20260616145104.556888083@linuxfoundation.org>
+Subject: [PATCH 6.18 138/325] KVM: VMX: Update SVI during runtime APICv activation
+Date: Tue, 16 Jun 2026 20:28:54 +0530
+Message-ID: <20260616145104.604535689@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -53,87 +54,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Dongli Zhang <dongli.zhang@oracle.com>
 
-[ Upstream commit b70c687b7cf267fb08586667a3946c8851cad672 ]
+commit b2849bec936be642b5420801f902337f2507648e upstream.
 
-addrconf_get_prefix_route() can return the fib6_null_entry sentinel
-entry which has a NULL fib6_table pointer. Therefore, before setting the
-route's expiration time, check that we are not working with this entry,
-as otherwise a NPD will be triggered [1].
+The APICv (apic->apicv_active) can be activated or deactivated at runtime,
+for instance, because of APICv inhibit reasons. Intel VMX employs different
+mechanisms to virtualize LAPIC based on whether APICv is active.
 
-Note that the other callers of addrconf_get_prefix_route() are not
-susceptible to this bug:
+When APICv is activated at runtime, GUEST_INTR_STATUS is used to configure
+and report the current pending IRR and ISR states. Unless a specific vector
+is explicitly included in EOI_EXIT_BITMAP, its EOI will not be trapped to
+KVM. Intel VMX automatically clears the corresponding ISR bit based on the
+GUEST_INTR_STATUS.SVI field.
 
-1. addrconf_prefix_rcv(): Requests a route with the 'RTF_ADDRCONF |
-   RTF_PREFIX_RT' flags which are not set on fib6_null_entry.
+When APICv is deactivated at runtime, the VM_ENTRY_INTR_INFO_FIELD is used
+to specify the next interrupt vector to invoke upon VM-entry. The
+VMX IDT_VECTORING_INFO_FIELD is used to report un-invoked vectors on
+VM-exit. EOIs are always trapped to KVM, so the software can manually clear
+pending ISR bits.
 
-2. modify_prefix_route(): Fixed by commit a747e02430df ("ipv6: avoid
-   possible NULL deref in modify_prefix_route()").
+There are scenarios where, with APICv activated at runtime, a guest-issued
+EOI may not be able to clear the pending ISR bit.
 
-3. __ipv6_ifa_notify(): Calls ip6_del_rt() which specifically checks for
-   fib6_null_entry and returns an error.
+Taking vector 236 as an example, here is one scenario.
 
-[1]
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006: 0000 [#1] SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
-[...]
-Call Trace:
-<TASK>
-__kasan_check_byte (mm/kasan/common.c:573)
-lock_acquire.part.0 (kernel/locking/lockdep.c:5842 (discriminator 1))
-_raw_spin_lock_bh (kernel/locking/spinlock.c:182 (discriminator 1))
-cleanup_prefix_route (net/ipv6/addrconf.c:1280)
-ipv6_del_addr (net/ipv6/addrconf.c:1342)
-inet6_addr_del.isra.0 (net/ipv6/addrconf.c:3119)
-inet6_rtm_deladdr (net/ipv6/addrconf.c:4812)
-rtnetlink_rcv_msg (net/core/rtnetlink.c:6997)
-netlink_rcv_skb (net/netlink/af_netlink.c:2555)
-netlink_unicast (net/netlink/af_netlink.c:1344)
-netlink_sendmsg (net/netlink/af_netlink.c:1899)
-__sock_sendmsg (net/socket.c:802 (discriminator 4))
-____sys_sendmsg (net/socket.c:2698)
-___sys_sendmsg (net/socket.c:2752)
-__sys_sendmsg (net/socket.c:2784)
-do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
-entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+1. Suppose APICv is inactive. Vector 236 is pending in the IRR.
+2. To handle KVM_REQ_EVENT, KVM moves vector 236 from the IRR to the ISR,
+and configures the VM_ENTRY_INTR_INFO_FIELD via vmx_inject_irq().
+3. After VM-entry, vector 236 is invoked through the guest IDT. At this
+point, the data in VM_ENTRY_INTR_INFO_FIELD is no longer valid. The guest
+interrupt handler for vector 236 is invoked.
+4. Suppose a VM exit occurs very early in the guest interrupt handler,
+before the EOI is issued.
+5. Nothing is reported through the IDT_VECTORING_INFO_FIELD because
+vector 236 has already been invoked in the guest.
+6. Now, suppose APICv is activated. Before the next VM-entry, KVM calls
+kvm_vcpu_update_apicv() to activate APICv.
+7. Unfortunately, GUEST_INTR_STATUS.SVI is not configured, although
+vector 236 is still pending in the ISR.
+8. After VM-entry, the guest finally issues the EOI for vector 236.
+However, because SVI is not configured, vector 236 is not cleared.
+9. ISR is stalled forever on vector 236.
 
-Fixes: 5eb902b8e719 ("net/ipv6: Remove expired routes with a separated list of routes.")
-Reported-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
-Reviewed-by: David Ahern <dahern@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260609145448.768318-1-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Here is another scenario.
+
+1. Suppose APICv is inactive. Vector 236 is pending in the IRR.
+2. To handle KVM_REQ_EVENT, KVM moves vector 236 from the IRR to the ISR,
+and configures the VM_ENTRY_INTR_INFO_FIELD via vmx_inject_irq().
+3. VM-exit occurs immediately after the next VM-entry. The vector 236 is
+not invoked through the guest IDT. Instead, it is saved to the
+IDT_VECTORING_INFO_FIELD during the VM-exit.
+4. KVM calls kvm_queue_interrupt() to re-queue the un-invoked vector 236
+into vcpu->arch.interrupt. A KVM_REQ_EVENT is requested.
+5. Now, suppose APICv is activated. Before the next VM-entry, KVM calls
+kvm_vcpu_update_apicv() to activate APICv.
+6. Although APICv is now active, KVM still uses the legacy
+VM_ENTRY_INTR_INFO_FIELD to re-inject vector 236. GUEST_INTR_STATUS.SVI is
+not configured.
+7. After the next VM-entry, vector 236 is invoked through the guest IDT.
+Finally, an EOI occurs. However, due to the lack of GUEST_INTR_STATUS.SVI
+configuration, vector 236 is not cleared from the ISR.
+8. ISR is stalled forever on vector 236.
+
+Using QEMU as an example, vector 236 is stuck in ISR forever.
+
+(qemu) info lapic 1
+dumping local APIC state for CPU 1
+
+LVT0	 0x00010700 active-hi edge  masked                      ExtINT (vec 0)
+LVT1	 0x00010400 active-hi edge  masked                      NMI
+LVTPC	 0x00000400 active-hi edge                              NMI
+LVTERR	 0x000000fe active-hi edge                              Fixed  (vec 254)
+LVTTHMR	 0x00010000 active-hi edge  masked                      Fixed  (vec 0)
+LVTT	 0x000400ec active-hi edge                 tsc-deadline Fixed  (vec 236)
+Timer	 DCR=0x0 (divide by 2) initial_count = 0 current_count = 0
+SPIV	 0x000001ff APIC enabled, focus=off, spurious vec 255
+ICR	 0x000000fd physical edge de-assert no-shorthand
+ICR2	 0x00000000 cpu 0 (X2APIC ID)
+ESR	 0x00000000
+ISR	 236
+IRR	 37(level) 236
+
+The issue isn't applicable to AMD SVM as KVM simply writes vmcb01 directly
+irrespective of whether L1 (vmcs01) or L2 (vmcb02) is active (unlike VMX,
+there is no need/cost to switch between VMCBs).  In addition,
+APICV_INHIBIT_REASON_IRQWIN ensures AMD SVM AVIC is not activated until
+the last interrupt is EOI'd.
+
+Fix the bug by configuring Intel VMX GUEST_INTR_STATUS.SVI if APICv is
+activated at runtime.
+
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+Reviewed-by: Chao Gao <chao.gao@intel.com>
+Link: https://patch.msgid.link/20251110063212.34902-1-dongli.zhang@oracle.com
+[sean: call out that SVM writes vmcb01 directly, tweak comment]
+Link: https://patch.msgid.link/20251205231913.441872-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+(cherry picked from commit b2849bec936be642b5420801f902337f2507648e)
+Cc: stable@vger.kernel.org # 6.6.x and above
+Cc: Gulshan Gabel <gulshan.gabel@nutanix.com>
+Signed-off-by: Jon Kohler <jon@nutanix.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/x86/kvm/vmx/vmx.c | 9 ---------
+ arch/x86/kvm/x86.c     | 7 +++++++
+ 2 files changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 2d4c3d9c1a2a51..b2e1328371d3f6 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -1265,6 +1265,7 @@ static void
- cleanup_prefix_route(struct inet6_ifaddr *ifp, unsigned long expires,
- 		     bool del_rt, bool del_peer)
- {
-+	struct net *net = dev_net(ifp->idev->dev);
- 	struct fib6_table *table;
- 	struct fib6_info *f6i;
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index c084f48e2b0b98..b7798ced7b505c 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -6886,15 +6886,6 @@ void vmx_hwapic_isr_update(struct kvm_vcpu *vcpu, int max_isr)
+ 	 * VM-Exit, otherwise L1 with run with a stale SVI.
+ 	 */
+ 	if (is_guest_mode(vcpu)) {
+-		/*
+-		 * KVM is supposed to forward intercepted L2 EOIs to L1 if VID
+-		 * is enabled in vmcs12; as above, the EOIs affect L2's vAPIC.
+-		 * Note, userspace can stuff state while L2 is active; assert
+-		 * that VID is disabled if and only if the vCPU is in KVM_RUN
+-		 * to avoid false positives if userspace is setting APIC state.
+-		 */
+-		WARN_ON_ONCE(vcpu->wants_to_run &&
+-			     nested_cpu_has_vid(get_vmcs12(vcpu)));
+ 		to_vmx(vcpu)->nested.update_vmcs01_hwapic_isr = true;
+ 		return;
+ 	}
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index ad2b7158b9c8ea..a21ebe04aa23a8 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -10950,9 +10950,16 @@ void __kvm_vcpu_update_apicv(struct kvm_vcpu *vcpu)
+ 	 * pending. At the same time, KVM_REQ_EVENT may not be set as APICv was
+ 	 * still active when the interrupt got accepted. Make sure
+ 	 * kvm_check_and_inject_events() is called to check for that.
++	 *
++	 * Update SVI when APICv gets enabled, otherwise SVI won't reflect the
++	 * highest bit in vISR and the next accelerated EOI in the guest won't
++	 * be virtualized correctly (the CPU uses SVI to determine which vISR
++	 * vector to clear).
+ 	 */
+ 	if (!apic->apicv_active)
+ 		kvm_make_request(KVM_REQ_EVENT, vcpu);
++	else
++		kvm_apic_update_hwapic_isr(vcpu);
  
-@@ -1273,9 +1274,10 @@ cleanup_prefix_route(struct inet6_ifaddr *ifp, unsigned long expires,
- 					ifp->idev->dev, 0, RTF_DEFAULT, true);
- 	if (f6i) {
- 		if (del_rt)
--			ip6_del_rt(dev_net(ifp->idev->dev), f6i, false);
-+			ip6_del_rt(net, f6i, false);
- 		else {
--			if (!(f6i->fib6_flags & RTF_EXPIRES)) {
-+			if (f6i != net->ipv6.fib6_null_entry &&
-+			    !(f6i->fib6_flags & RTF_EXPIRES)) {
- 				table = f6i->fib6_table;
- 				spin_lock_bh(&table->tb6_lock);
- 
+ out:
+ 	preempt_enable();
 -- 
 2.53.0
 
