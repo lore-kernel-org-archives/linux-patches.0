@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39D73CC324;
-	Tue, 16 Jun 2026 18:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899983CC324;
+	Tue, 16 Jun 2026 18:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633472; cv=none; b=Xt2VfXa/++QikfcuEE7ao8fc0Ery7H+sI5esrWko/XhOokYtKlxCUJBv/NyMzPItk2lrOmIhcxvsu/pj5IiezTsDxEHQwC0dFzGjZQHHXdDbu7Cy3wWOsf031hqKGvEm2Nic4xHLLjEVRBs9F6E7yijvCxAuWDLEPqSfiDrJ8x0=
+	t=1781633477; cv=none; b=NmUDW2nU3ZpudIVMPV89UieVtQ4U5NnQTjMWL1GYqMmKXBre8lw7ItUQBaVz13abFGI9wAZCMrtzBMmGXWYV8cBtmeWm1hzCEKYlgOx/aYbPk3zkKKa5fPlQHwbYHN01mZ1qQ0CxzTnC5thdUPpr0jKRdksqb63F3StAGxqpwo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633472; c=relaxed/simple;
-	bh=+IPgKYIzXMC90pUCKmexVs22XdBIgYti8979b6Y5uVA=;
+	s=arc-20240116; t=1781633477; c=relaxed/simple;
+	bh=A+mhurrPw6BEUUCNkpNpAnxJnt3g7MSrK6cuA78g6+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PGFQ+klDiYQ25VY558HbQtNQbBTYE3mC4DNptolvT0idzfLuL/LJy1RXqVmEDIzgAOB9Zxuo66v+diPDnt5/VCuYzNBvTmkWU59bjq4caWrImt+Gr4hPB5lSWiAnIuSR4oLCVAn8GkLnswYNBdE2l96ii90hCHq8K+p4vbX3HSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UgOSwBWr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CJYWJ/DidylWEDzYsO6JaqjdJDHW5eUlD+d7xEq146LWqILR1E785HtF5g6lycJDAMVDPgqyv8aGmXE6EoQK7IXgE8HKPm02CoBzu41KfGzvujWfeIzpFPKrI+meOwBngMA0mIp4wZrm4Z1AIHxCEbTIMSI7v4NxcRhRDBF6J+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H2aklR8i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UgOSwBWr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C492D1F000E9;
-	Tue, 16 Jun 2026 18:11:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2aklR8i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3031F000E9;
+	Tue, 16 Jun 2026 18:11:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633471;
-	bh=uCzuLjeV/qQvyr73pgFvY9c5MN6WiIYHxrTXpMcK8a4=;
+	s=korg; t=1781633476;
+	bh=HqhQSVKgwJgzj01FWkOEEyGyC4gb1aLbGT3MCs+72uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UgOSwBWrG4ceTfHGwF1Shlf5xz9jiiFd9LNsE4cNQ+WjCEuvokiGeeeCtUw4u+h3n
-	 NH01S8tlSUUMK6xi476hOMFF975b2uPma4iNHExKMEwH37B99vdtQMdqvlIdjCnnJk
-	 zRPy29Y5Z4sFalHtJNA7fk/m8sJmVQ5/RhjkQa2M=
+	b=H2aklR8iBdGzb0JNubFN0xrBdwe73+M9VwbHS6eznToLG/A86dH+3PwHXXSHknU/q
+	 spn261Ywto44CI9dtHO8CN+vwnPDzmj5QjbGwjI3tDOXZu2NdJ58i3DvjDgPE8jmFY
+	 E4I36Kp8VzAI0xjRWs+eQEx1c78wpvHWslKAqXKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuqi Xu <xuyq21@lenovo.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 084/411] bpf: sockmap: fix tail fragment offset in bpf_msg_push_data
-Date: Tue, 16 Jun 2026 20:25:22 +0530
-Message-ID: <20260616145104.722557043@linuxfoundation.org>
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 053/411] phy: mscc: Use PHY_ID_MATCH_EXACT for VSC8584, VSC8582, VSC8575, VSC856X
+Date: Tue, 16 Jun 2026 20:24:51 +0530
+Message-ID: <20260616145103.100017796@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -55,47 +52,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuqi Xu <xuyq21@lenovo.com>
+From: Horatiu Vultur <horatiu.vultur@microchip.com>
 
-commit f72eed9b84fb771019a955908132410a9ba9ea3f upstream.
+[ Upstream commit 1bc80d673087e5704adbb3ee8e4b785c14899cce ]
 
-When bpf_msg_push_data() inserts data in the middle of a scatterlist
-entry, it splits the original entry into a left fragment and a right
-fragment.
+As the PHYs VSC8584, VSC8582, VSC8575 and VSC856X exists only as rev B,
+we can use PHY_ID_MATCH_EXACT to match exactly on revision B of the PHY.
+Because of this change then there is not need the check if it is a
+different revision than rev B in the function vsc8584_probe() as we
+already know that this will never happen.
+These changes are a preparation for the next patch because in that patch
+we will make the PHYs VSC8574 and VSC8572 to use vsc8584_probe() and
+these PHYs have multiple revision.
 
-The right fragment offset is page-local, but the code advances it with
-`start`, which is the message-global insertion point. For inserts into a
-non-first SG entry, this over-advances the offset and leaves the split
-layout inconsistent.
-
-Advance the right fragment offset by the fragment-local delta,
-`start - offset`, which matches the length removed from the front of the
-original entry.
-
-Fixes: 6fff607e2f14 ("bpf: sk_msg program helper bpf_msg_push_data")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yuqi Xu <xuyq21@lenovo.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/8b129d10566aa3eb43f61a8f9757bcf51707d324.1779636774.git.xuyq21@lenovo.com
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Link: https://patch.msgid.link/20251023191350.190940-2-horatiu.vultur@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/mscc/mscc.h      |  8 ++++----
+ drivers/net/phy/mscc/mscc_main.c | 23 ++++-------------------
+ 2 files changed, 8 insertions(+), 23 deletions(-)
 
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2828,7 +2828,7 @@ BPF_CALL_4(bpf_msg_push_data, struct sk_
+diff --git a/drivers/net/phy/mscc/mscc.h b/drivers/net/phy/mscc/mscc.h
+index 4a9c12516f2057..17273895bbb361 100644
+--- a/drivers/net/phy/mscc/mscc.h
++++ b/drivers/net/phy/mscc/mscc.h
+@@ -285,12 +285,12 @@ enum rgmii_clock_delay {
+ #define PHY_ID_VSC8540			  0x00070760
+ #define PHY_ID_VSC8541			  0x00070770
+ #define PHY_ID_VSC8552			  0x000704e0
+-#define PHY_ID_VSC856X			  0x000707e0
++#define PHY_ID_VSC856X			  0x000707e1
+ #define PHY_ID_VSC8572			  0x000704d0
+ #define PHY_ID_VSC8574			  0x000704a0
+-#define PHY_ID_VSC8575			  0x000707d0
+-#define PHY_ID_VSC8582			  0x000707b0
+-#define PHY_ID_VSC8584			  0x000707c0
++#define PHY_ID_VSC8575			  0x000707d1
++#define PHY_ID_VSC8582			  0x000707b1
++#define PHY_ID_VSC8584			  0x000707c1
+ #define PHY_VENDOR_MSCC			0x00070400
  
- 		psge->length = start - offset;
- 		rsge.length -= psge->length;
--		rsge.offset += start;
-+		rsge.offset += start - offset;
+ #define MSCC_VDDMAC_1500		  1500
+diff --git a/drivers/net/phy/mscc/mscc_main.c b/drivers/net/phy/mscc/mscc_main.c
+index a33e877a4cd151..53f37ca2e0ff82 100644
+--- a/drivers/net/phy/mscc/mscc_main.c
++++ b/drivers/net/phy/mscc/mscc_main.c
+@@ -1713,12 +1713,6 @@ static int vsc8584_config_init(struct phy_device *phydev)
+ 	 * in this pre-init function.
+ 	 */
+ 	if (phy_package_init_once(phydev)) {
+-		/* The following switch statement assumes that the lowest
+-		 * nibble of the phy_id_mask is always 0. This works because
+-		 * the lowest nibble of the PHY_ID's below are also 0.
+-		 */
+-		WARN_ON(phydev->drv->phy_id_mask & 0xf);
+-
+ 		switch (phydev->phy_id & phydev->drv->phy_id_mask) {
+ 		case PHY_ID_VSC8504:
+ 		case PHY_ID_VSC8552:
+@@ -2257,11 +2251,6 @@ static int vsc8584_probe(struct phy_device *phydev)
+ 	   VSC8531_DUPLEX_COLLISION};
+ 	int ret;
  
- 		sk_msg_iter_var_next(i);
- 		sg_unmark_end(psge);
+-	if ((phydev->phy_id & MSCC_DEV_REV_MASK) != VSC8584_REVB) {
+-		dev_err(&phydev->mdio.dev, "Only VSC8584 revB is supported.\n");
+-		return -ENOTSUPP;
+-	}
+-
+ 	vsc8531 = devm_kzalloc(&phydev->mdio.dev, sizeof(*vsc8531), GFP_KERNEL);
+ 	if (!vsc8531)
+ 		return -ENOMEM;
+@@ -2524,9 +2513,8 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.get_stats      = &vsc85xx_get_stats,
+ },
+ {
+-	.phy_id		= PHY_ID_VSC856X,
++	PHY_ID_MATCH_EXACT(PHY_ID_VSC856X),
+ 	.name		= "Microsemi GE VSC856X SyncE",
+-	.phy_id_mask	= 0xfffffff0,
+ 	/* PHY_GBIT_FEATURES */
+ 	.soft_reset	= &genphy_soft_reset,
+ 	.config_init    = &vsc8584_config_init,
+@@ -2598,9 +2586,8 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.get_stats      = &vsc85xx_get_stats,
+ },
+ {
+-	.phy_id		= PHY_ID_VSC8575,
++	PHY_ID_MATCH_EXACT(PHY_ID_VSC8575),
+ 	.name		= "Microsemi GE VSC8575 SyncE",
+-	.phy_id_mask	= 0xfffffff0,
+ 	/* PHY_GBIT_FEATURES */
+ 	.soft_reset	= &genphy_soft_reset,
+ 	.config_init    = &vsc8584_config_init,
+@@ -2622,9 +2609,8 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.get_stats      = &vsc85xx_get_stats,
+ },
+ {
+-	.phy_id		= PHY_ID_VSC8582,
++	PHY_ID_MATCH_EXACT(PHY_ID_VSC8582),
+ 	.name		= "Microsemi GE VSC8582 SyncE",
+-	.phy_id_mask	= 0xfffffff0,
+ 	/* PHY_GBIT_FEATURES */
+ 	.soft_reset	= &genphy_soft_reset,
+ 	.config_init    = &vsc8584_config_init,
+@@ -2646,9 +2632,8 @@ static struct phy_driver vsc85xx_driver[] = {
+ 	.get_stats      = &vsc85xx_get_stats,
+ },
+ {
+-	.phy_id		= PHY_ID_VSC8584,
++	PHY_ID_MATCH_EXACT(PHY_ID_VSC8584),
+ 	.name		= "Microsemi GE VSC8584 SyncE",
+-	.phy_id_mask	= 0xfffffff0,
+ 	/* PHY_GBIT_FEATURES */
+ 	.soft_reset	= &genphy_soft_reset,
+ 	.config_init    = &vsc8584_config_init,
+-- 
+2.53.0
+
 
 
