@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C307F43E490;
-	Tue, 16 Jun 2026 17:07:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3A143E490;
+	Tue, 16 Jun 2026 17:07:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629653; cv=none; b=AKIknemI//NkTL8NgD2DHSUC051qFAbI2XeLDyQ2j5P9hlICAlVgqaQi7y9dMOL2vTj/K/tkejjto3dvLV7JZ2KJDB6lwgnq/v/YURkvulqVGCa+teHzmSUkqMItnF+NRvXwDQKq3QnSbMdfElqu0EKmDP2ki+83dsMTUzQA0j4=
+	t=1781629658; cv=none; b=kkHXsf2gHmqvvxu1k5XlJoEnhvEmhEevhxQPyqW1w7YdqTUbBZx4/aT/l5EJJcsvaXhc5OnTplVYGEzgFCvZpQ7XZXKcr62pALG7rse1UQOVANVTwF39LHBvSKuoB7+uahtZOpe1zCngkmj6DryDmtt67buFAHkd4Chnf3Kan5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629653; c=relaxed/simple;
-	bh=LlpwodpF0Uo3rNvMLoJyXNQUQnSCPom3Jj+rPBalqxo=;
+	s=arc-20240116; t=1781629658; c=relaxed/simple;
+	bh=6AdZ+1/f/vl9U5HeeSRgoqN4uQ9RqOvsu992NsJEkqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VDg2UyNUhi4XYFlmwcrk12r/yANvrrXgB1LWZ5ajv/Ig690E/yUIqpEKyA5vdc222Sdh/vmt3CsOh08u5QjzxKNo5AUBNBBYbo8JCWh/mEycRPKPi/B0AR3sqkxc4Seags7TW0P8emREKEKXOhJZ2Yg0yQYIUimvOTCdQMITtIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBtnyW0d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YJuPVInldn2wsTP98z8zvwBsH4T6jRcJF89PQInEanDx05YAH1IJrQ7HPFldFogHXpY3m5bIY5cGHhbwA3Zgt4RaF1ExjOV4fWgYvBSQ2Ul06NJnzHhDDWicZoktW66a5wVOjfo4v3EzbkmVk82zmlj0OmO8uTPIlUNHpkoQhn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6dUsuVc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBtnyW0d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84F8D1F000E9;
-	Tue, 16 Jun 2026 17:07:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6dUsuVc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7029B1F000E9;
+	Tue, 16 Jun 2026 17:07:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629652;
-	bh=a9sfZw4TwSdY5nlpG66i3VZmci3DNS5t3l10LPzaZak=;
+	s=korg; t=1781629657;
+	bh=Ok2igBy5IhTCxpmzDgsFXvjxRkg/R8jloUzMcLelNaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uBtnyW0dfBswHOUFuXb379VsdFWy65KyBFryk5ISVH7J+1RskVCU/BYwjZCZxTe53
-	 zyjbPI6yrNPZBGUK9YLdcNF+A9a1sHJB99D8q6PsbIPEXrT+cPVch0/FcYYbeMM3gy
-	 VzzjFpkaxshloYEeExqa6P3MS74i0b+yU9q25sHo=
+	b=g6dUsuVcV6syAc5ykuMGSD/isi6prHiRVhemmC7jKlDFcdCfxs91xrRPI0pAY2cY9
+	 loCa6b5rHmElQ58bLjsu0uHYuop9j+9c8JT5Lpsjk3EwivsGHF7fta84HMeBAklTf8
+	 BNatbfPRbl0ulwImFjLBwsEneqt5EUsMR4WRAcXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.6 326/452] fuse: reject fuse_notify() pagecache ops on directories
-Date: Tue, 16 Jun 2026 20:29:13 +0530
-Message-ID: <20260616145134.530683771@linuxfoundation.org>
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.6 327/452] i2c: qcom-cci: Fix NULL pointer dereference in cci_remove()
+Date: Tue, 16 Jun 2026 20:29:14 +0530
+Message-ID: <20260616145134.575373809@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,56 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-commit 9c954499d43aefac01c5dfb57a82b13d2dcf4b94 upstream.
+commit 729ac5a4b966aac42e08a94dea966f4429008548 upstream.
 
-The operations FUSE_NOTIFY_STORE and FUSE_NOTIFY_RETRIEVE allow the
-FUSE daemon to actively write/read pagecache contents.
+On all modern platforms Qualcomm CCI controller provides two I2C masters,
+and on particular boards only one I2C master may be initialized, and in
+such cases the device unbinding or driver removal causes a NULL pointer
+dereference, because cci_halt() is called for all two I2C masters, but
+a completion is initialized only for the single enabled master:
 
-For directories with FOPEN_CACHE_DIR, the pagecache is used as
-kernel-internal cache storage, and userspace is not supposed to have
-direct access to this cache - in particular, fuse_parse_cache() will hit
-WARN_ON() if the cache contains bogus data.
+    % rmmod i2c-qcom-cci
+    Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+    <snip>
+    Call trace:
+    __wait_for_common+0x194/0x1a8 (P)
+    wait_for_completion_timeout+0x20/0x2c
+    cci_remove+0xc4/0x138 [i2c_qcom_cci]
+    platform_remove+0x20/0x30
+    device_remove+0x4c/0x80
+    device_release_driver_internal+0x1c8/0x224
+    driver_detach+0x50/0x98
+    bus_remove_driver+0x6c/0xbc
+    driver_unregister+0x30/0x60
+    platform_driver_unregister+0x14/0x20
+    qcom_cci_driver_exit+0x18/0x1008 [i2c_qcom_cci]
+    ....
 
-Reject FUSE_NOTIFY_STORE and FUSE_NOTIFY_RETRIEVE on anything other than
-regular files with -EINVAL.
-
-Fixes: 5d7bc7e8680c ("fuse: allow using readdir cache")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://patch.msgid.link/20260519-fuse-dir-pagecache-v2-1-5428fa48e175@google.com
-Acked-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: <stable@vger.kernel.org> # v5.8+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260515234121.1607425-2-vladimir.zapolskiy@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dev.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-qcom-cci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/fuse/dev.c
-+++ b/fs/fuse/dev.c
-@@ -1597,6 +1597,10 @@ static int fuse_notify_store(struct fuse
- 	inode = fuse_ilookup(fc, nodeid,  NULL);
- 	if (!inode)
- 		goto out_up_killsb;
-+	if (!S_ISREG(inode->i_mode)) {
-+		err = -EINVAL;
-+		goto out_iput;
-+	}
- 
- 	mapping = inode->i_mapping;
- 	index = outarg.offset >> PAGE_SHIFT;
-@@ -1768,7 +1772,10 @@ static int fuse_notify_retrieve(struct f
- 
- 	inode = fuse_ilookup(fc, nodeid, &fm);
- 	if (inode) {
--		err = fuse_retrieve(fm, inode, &outarg);
-+		if (!S_ISREG(inode->i_mode))
-+			err = -EINVAL;
-+		else
-+			err = fuse_retrieve(fm, inode, &outarg);
- 		iput(inode);
+--- a/drivers/i2c/busses/i2c-qcom-cci.c
++++ b/drivers/i2c/busses/i2c-qcom-cci.c
+@@ -683,8 +683,8 @@ static void cci_remove(struct platform_d
+ 		if (cci->master[i].cci) {
+ 			i2c_del_adapter(&cci->master[i].adap);
+ 			of_node_put(cci->master[i].adap.dev.of_node);
++			cci_halt(cci, i);
+ 		}
+-		cci_halt(cci, i);
  	}
- 	up_read(&fc->killsb);
+ 
+ 	disable_irq(cci->irq);
 
 
