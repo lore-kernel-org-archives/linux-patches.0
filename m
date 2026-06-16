@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5958945BD6F;
-	Tue, 16 Jun 2026 16:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0B535AC1E;
+	Tue, 16 Jun 2026 16:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626541; cv=none; b=BLxYlJoMu1n3J/b289FPmN6unuKYYZKeUl/osYWAVo3eLPmHqOt8Vx/Y1oXer7t1FoyGkKjwcjBR72Dlqxq8xQGw8XgVxD9MKrhhXxoNnG7xrkeqOgWKmYrtiPusfrcsaxTVyHL4kMqQlJiwrTm0T7SbOH/GJtaORNIszZTSYGM=
+	t=1781626546; cv=none; b=rSBXkQmp2qFoQq1NSEikwYAaNHlyJAP0JkTRvPFgVicCLFpmWjl4zIYJjorbq0wWmVEjaq9zeR486ZJu3e9WxTGrmu0LnEdP3ar0umq5vAQZQ+rTAQHJs+4alll4RRX8WfmekuRiStazYJc+iXX8bQXo8PN/FxALeYf2Cf+6yow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626541; c=relaxed/simple;
-	bh=QK+6kyKfUzpKcju/aHVta5jAqFlT+ZEkNJwKxoQWVoU=;
+	s=arc-20240116; t=1781626546; c=relaxed/simple;
+	bh=NvzCbQtnjRkdmutYt7DnND8NUDB96hJrGTHIJ7olBdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lnCrCJazapuvRBzd1Qq1UrTlzte4B6VB04gGza89gwiArjdLag7MZoWV5sVufvCOzW9p5NQsqgehLxlc4GTmaxaViQnHjBYCCaStvLZ6gU0N9DoI0teWXGzoR0+H+vLv16LYZ/rRj0Lh2TyraRlqeidE3AwoHWfyBwHC3Q6k140=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLhnhOjY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mb/ooSDAX/f7iOa70aeD138DCBZc9ygHouYrgGoRhe053aHGyHhVQnpR6a1QUlFOgfh3y8vGhLEJQpTBRfSk9NOjsBdhXRVjL4ichG9FgeGmIZuW88WEqgFwqayoOWRUav1z5r6vQk/WCdwgh4PcEPWC6AeLfDUco9BQZA5xKeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZJI7dDEU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLhnhOjY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1C51F000E9;
-	Tue, 16 Jun 2026 16:15:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJI7dDEU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7311F000E9;
+	Tue, 16 Jun 2026 16:15:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626540;
-	bh=6INzTN9LghIvHGYQhvVVmUuGqaczf10NuclX7krU70U=;
+	s=korg; t=1781626545;
+	bh=N5nOcN/UzK9gbMI06mC4Ql6XcEWU3oxyCwprsW+5DJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vLhnhOjYO2I+sKIMkSpScB2U6ufAH+JZov/gTZP3pGnRmPESrW90i0gfuQG5G8cN5
-	 XU+9uFeuPFfGux/p/p0czwZqAPEIXYSrZD3fAS8zSOeoW0CxJhZuYxoWZo01tU5ncH
-	 EJ3kZn1qX1PcevC1qsG0wyGyg0dsS0kFWVGM1wKs=
+	b=ZJI7dDEUDi89WLm/TxaiQ+RT+lqpbXQiGwi62Y46gFlSYxTxl5HHb4kVZjL65VCat
+	 dNyGLoi11LPbOCbbvMGh7BPf9iNP5kpP8cuwDlwzwlXnn4lGbtaWwOmQe/IH2V7tBH
+	 8fUkGhJX+hQPN52JGIwhL9LAMzac/ORwMEKd7AvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	syzbot+fd222bb38e916df26fa4@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
+	Carlos Llamas <cmllamas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 022/261] netfilter: nft_ct: bail out on template ct in get eval
-Date: Tue, 16 Jun 2026 20:27:40 +0530
-Message-ID: <20260616145046.023354912@linuxfoundation.org>
+Subject: [PATCH 6.12 008/261] wifi: remove zero-length arrays
+Date: Tue, 16 Jun 2026 20:27:26 +0530
+Message-ID: <20260616145045.417959255@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,94 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 3027ecbdb5fdf9200251c21d4818e4c447ef78e1 ]
+commit a85b8544d46390469b6ca72d6bfd3ecb7be985ff upstream.
 
-I noticed this issue while looking at a historic syzbot report [1].
+All of these are really meant to be variable-length, and
+in the case of s1g_beacon it's actually accessed. Make that
+one in particular, and a couple of others (that aren't used
+as arrays now), actually variable.
 
-A rule like the one below is enough to trigger the bug:
-
-    table ip t {
-        chain pre {
-            type filter hook prerouting priority raw;
-            ct zone set 1
-            ct original saddr 1.2.3.4 accept
-        }
-    }
-
-The first expression attaches a per-cpu template ct via
-nft_ct_set_zone_eval() (nf_ct_tmpl_alloc -> kzalloc, tuple is all
-zero, nf_ct_l3num(ct) == 0). The next expression then calls
-nft_ct_get_eval() on the same skb, treats the template as a real ct
-and hits the 16-byte memcpy path. With dreg at NFT_REG32_15 this
-overflows past struct nft_regs on the kernel stack; with smaller
-dreg values it silently clobbers adjacent registers.
-
-Reject template ct at the eval entry and in nft_ct_get_fast_eval(),
-mirroring the check nft_ct_set_eval() already has. Additionally,
-bound the address copy in NFT_CT_SRC / NFT_CT_DST by priv->len
-instead of by nf_ct_l3num(ct): nf_ct_get_tuple() zeroes the tuple
-before pkt_to_tuple() fills in only the protocol-relevant leading
-bytes, so the trailing bytes of tuple->{src,dst}.u3.all are
-well-defined zero. priv->len is validated at rule load, so the
-copy size is now bounded by the destination register rather than
-by an untrusted field on the conntrack.
-
-[1]: https://syzkaller.appspot.com/bug?id=389cf09cb72926114fce90dc85a2c3231dcb647c
-
-Fixes: 45d9bcda21f4 ("netfilter: nf_tables: validate len in nft_validate_data_load()")
-Suggested-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-by: syzbot+fd222bb38e916df26fa4@syzkaller.appspotmail.com
+Fixes: 1e1f706fc2ce ("wifi: cfg80211/mac80211: correctly parse S1G beacon optional elements")
+Link: https://patch.msgid.link/20250614003037.a3e82e882251.I2e8b58e56ff2a9f8b06c66f036578b7c1d4e4685@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_ct.c      | 8 +++-----
- net/netfilter/nft_ct_fast.c | 2 +-
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ include/linux/ieee80211.h | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
-index 5310c3dca8327b..65fbbf4a219e9e 100644
---- a/net/netfilter/nft_ct.c
-+++ b/net/netfilter/nft_ct.c
-@@ -78,7 +78,7 @@ static void nft_ct_get_eval(const struct nft_expr *expr,
- 		break;
- 	}
- 
--	if (ct == NULL)
-+	if (!ct || nf_ct_is_template(ct))
- 		goto err;
- 
- 	switch (priv->key) {
-@@ -180,12 +180,10 @@ static void nft_ct_get_eval(const struct nft_expr *expr,
- 	tuple = &ct->tuplehash[priv->dir].tuple;
- 	switch (priv->key) {
- 	case NFT_CT_SRC:
--		memcpy(dest, tuple->src.u3.all,
--		       nf_ct_l3num(ct) == NFPROTO_IPV4 ? 4 : 16);
-+		memcpy(dest, tuple->src.u3.all, priv->len);
- 		return;
- 	case NFT_CT_DST:
--		memcpy(dest, tuple->dst.u3.all,
--		       nf_ct_l3num(ct) == NFPROTO_IPV4 ? 4 : 16);
-+		memcpy(dest, tuple->dst.u3.all, priv->len);
- 		return;
- 	case NFT_CT_PROTO_SRC:
- 		nft_reg_store16(dest, (__force u16)tuple->src.u.all);
-diff --git a/net/netfilter/nft_ct_fast.c b/net/netfilter/nft_ct_fast.c
-index e684c8a9184877..ecf7b3a404be26 100644
---- a/net/netfilter/nft_ct_fast.c
-+++ b/net/netfilter/nft_ct_fast.c
-@@ -30,7 +30,7 @@ void nft_ct_get_fast_eval(const struct nft_expr *expr,
- 		break;
- 	}
- 
--	if (!ct) {
-+	if (!ct || nf_ct_is_template(ct)) {
- 		regs->verdict.code = NFT_BREAK;
- 		return;
- 	}
+diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
+index abb069aa5fa54f..85bf3ac6db570b 100644
+--- a/include/linux/ieee80211.h
++++ b/include/linux/ieee80211.h
+@@ -1266,7 +1266,7 @@ struct ieee80211_ext {
+ 			u8 sa[ETH_ALEN];
+ 			__le32 timestamp;
+ 			u8 change_seq;
+-			u8 variable[0];
++			u8 variable[];
+ 		} __packed s1g_beacon;
+ 	} u;
+ } __packed __aligned(2);
+@@ -1522,7 +1522,7 @@ struct ieee80211_mgmt {
+ 					u8 action_code;
+ 					u8 dialog_token;
+ 					__le16 capability;
+-					u8 variable[0];
++					u8 variable[];
+ 				} __packed tdls_discover_resp;
+ 				struct {
+ 					u8 action_code;
+@@ -1690,35 +1690,35 @@ struct ieee80211_tdls_data {
+ 		struct {
+ 			u8 dialog_token;
+ 			__le16 capability;
+-			u8 variable[0];
++			u8 variable[];
+ 		} __packed setup_req;
+ 		struct {
+ 			__le16 status_code;
+ 			u8 dialog_token;
+ 			__le16 capability;
+-			u8 variable[0];
++			u8 variable[];
+ 		} __packed setup_resp;
+ 		struct {
+ 			__le16 status_code;
+ 			u8 dialog_token;
+-			u8 variable[0];
++			u8 variable[];
+ 		} __packed setup_cfm;
+ 		struct {
+ 			__le16 reason_code;
+-			u8 variable[0];
++			u8 variable[];
+ 		} __packed teardown;
+ 		struct {
+ 			u8 dialog_token;
+-			u8 variable[0];
++			u8 variable[];
+ 		} __packed discover_req;
+ 		struct {
+ 			u8 target_channel;
+ 			u8 oper_class;
+-			u8 variable[0];
++			u8 variable[];
+ 		} __packed chan_switch_req;
+ 		struct {
+ 			__le16 status_code;
+-			u8 variable[0];
++			u8 variable[];
+ 		} __packed chan_switch_resp;
+ 	} u;
+ } __packed;
 -- 
 2.53.0
 
