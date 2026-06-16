@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C563BFE5A;
-	Tue, 16 Jun 2026 18:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB8E3BFE5A;
+	Tue, 16 Jun 2026 18:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634343; cv=none; b=DPoru3a/9mBGzo7IqP+GMcSoBNe7yWVlcux8BPZlfkGgPfWNGB7QAWNppxcQjs9Tnh3xivj7Q2p4NJ2dnylBryrgjcKvXuzzR4wDUfF+Xn0wS59UA9DQx1tn/YAbDFEAgDUu1aHp1ouWFrwY4XhQjbPgE4/A7pkjHjUPDvYYxv8=
+	t=1781634349; cv=none; b=rnhHfGxv0v2DrJ2+NufpE/WjyA+zu/MhPaiKF/U4J662zPZpZRgoCeeXgU7NjmjKeLj9alAAZ4QtAF5ZXIbja8FpNfXcpEfc1vVdYQjJ0eYUDzIJdBFns8ghwDtHOLYffo0p6vHa4yhCCaSgHqmEbl2KZxcF2/ZHgofoH85q6ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634343; c=relaxed/simple;
-	bh=X31JIQNPvjiIUmrfQRm9kD/dKaVouJ8ql/tskBSm04w=;
+	s=arc-20240116; t=1781634349; c=relaxed/simple;
+	bh=6E9iCTEtH/9E2Gxyg2vNUm8QCZBU5rU9AHqCtONeknU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ltBvcpqsw6o1aBMR7Hp2x46njoj0PHEmImiYNRKfRXh7YQGgnzuEBxq9yp463qwVcaRphq1aHF8qMg3gbR6pmeLcDIKM30f4F5RxeZ/vjer1aIwGu5roURF2/MOjp+EI2CWcp24G2UP/4/bK7kutvCwKBjMeKRNu69IxAOu5/c8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cv9Mixip; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aBWSUZKnesUn03jr2ZdKoIsHQVxTxZj6QMQ+BMv0EFCM67neyjj1iOlr9FxzJFaVOncIq3rzSA6UTNew0klAIStoDzapSbQ1O3v0GLRu33oeZ0/cOZKCNXGGUAnDHKp4REYLqyALOj4DJo82SZrp9mVT8eWMWh0uu5ELhop76U4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15Mmnhv2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cv9Mixip"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C8E31F000E9;
-	Tue, 16 Jun 2026 18:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15Mmnhv2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E15F1F000E9;
+	Tue, 16 Jun 2026 18:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634342;
-	bh=JSnTTFQdW3oo123/Lg9Zx/Aam1kbF4VkF+Neld2/+hM=;
+	s=korg; t=1781634348;
+	bh=fhS7qOStPcb1WRPk58Hvny8de9AdAkN4dCtTKBvqoHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cv9Mixip7u1PukJ0YK+aPJV4DVwOh7YeNPdUvP4yyJXHDdGRHUhVOL3PTrhU1YHfS
-	 Z8Gx3JO1R8fjs03htvkcA6rFmHUk3jgAn53I4ep4LEbORzuj6D45hcbECIwP3rUJcp
-	 PVokZl27OTaFvq4j2cUlntjPXCxvlK6v71N9Aeks=
+	b=15Mmnhv2jRM7pKaHmictf6rfAkeIdEIrX/i1HGg5kKGPVque+Xos3EtiqU3A0f8jR
+	 DpxjTzhALWED85DHUuGYlahLcRD3YEpct61fzLxLpjOPvp8yQA4vHDChwegdz1xu0O
+	 jCug1X9ba/Sw9AnrTKA6lBttUcEhf8t5kTbsTBBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Fernand Sieber <sieberf@amazon.com>,
-	Leonard Foerster <foersleo@amazon.de>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 247/411] mm/damon/ops-common: call folio_test_lru() after folio_get()
-Date: Tue, 16 Jun 2026 20:28:05 +0530
-Message-ID: <20260616145114.080876466@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Longxuan Yu <ylong030@ucr.edu>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 248/411] io_uring/poll: fix signed comparison in io_poll_get_ownership()
+Date: Tue, 16 Jun 2026 20:28:06 +0530
+Message-ID: <20260616145114.133411006@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -54,62 +57,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Longxuan Yu <ylong030@ucr.edu>
 
-[ Upstream commit d6b8b02a27b3dd09ec12144322b3dac46d9bc9ef ]
+Commit 326941b22806cbf2df1fbfe902b7908b368cce42 usptream.
 
-damon_get_folio() speculatively calls folio_test_lru() before
-folio_try_get().  The folio can get freed and reallocated to a tail page.
-In the case, VM_BUG_ON_PGFLAGS() in const_folio_flags() can be triggered.
-Remove the speculative call.
+io_poll_get_ownership() uses a signed comparison to check whether
+poll_refs has reached the threshold for the slowpath:
 
-Also mark folio_test_lru() check right after folio_try_get() success as no
-more unlikely.
+    if (unlikely(atomic_read(&req->poll_refs) >= IO_POLL_REF_BIAS))
 
-The race should be rare.  Also the problem can happen only if the kernel
-has enabled CONFIG_DEBUG_VM_PGFLAGS.  No real world report of this issue
-has been made so far.  This fix is based on only theoretical analysis.
-That said, a bug is a bug.  A similar issue was also fixed via commit
-3203b3ab0fcf ("mm/filemap: don't call folio_test_locked() without a
-reference in next_uptodate_folio()").  I don't expect this change will
-make a meaningful impact to DAMON performance in the real world, though I
-will be happy to be corrected from the real world reports.
+atomic_read() returns int (signed). When IO_POLL_CANCEL_FLAG
+(BIT(31)) is set in poll_refs, the value becomes negative in
+signed arithmetic, so the >= 128 comparison always evaluates to
+false and the slowpath is never taken.
 
-The issue was discovered [1] by Sashiko.
+Fix this by casting the atomic_read() result to unsigned int
+before the comparison, so that the cancel flag is treated as a
+large positive value and correctly triggers the slowpath.
 
-Link: https://lore.kernel.org/20260525162256.8317-1-sj@kernel.org
-Link: https://lore.kernel.org/20260517234112.89245-1-sj@kernel.org [1]
-Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: Fernand Sieber <sieberf@amazon.com>
-Cc: Leonard Foerster <foersleo@amazon.de>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: <stable@vger.kernel.org> # 5.15.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a26a35e9019f ("io_uring: make poll refs more robust")
+Cc: stable@vger.kernel.org
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Longxuan Yu <ylong030@ucr.edu>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://patch.msgid.link/3a3508b08bcd7f1bc3beff848ae6e1d73d355043.1775965597.git.ylong030@ucr.edu
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/vaddr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
-index 6d8036671e60e5..dbb0f0fb2e598c 100644
---- a/mm/damon/vaddr.c
-+++ b/mm/damon/vaddr.c
-@@ -383,10 +383,10 @@ static struct page *damon_get_page(unsigned long pfn)
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -5525,7 +5525,7 @@ static bool io_poll_get_ownership_slowpa
+  */
+ static inline bool io_poll_get_ownership(struct io_kiocb *req)
  {
- 	struct page *page = pfn_to_online_page(pfn);
- 
--	if (!page || !PageLRU(page) || !get_page_unless_zero(page))
-+	if (!page || !get_page_unless_zero(page))
- 		return NULL;
- 
--	if (unlikely(!PageLRU(page))) {
-+	if (!PageLRU(page)) {
- 		put_page(page);
- 		page = NULL;
- 	}
--- 
-2.53.0
-
+-	if (unlikely(atomic_read(&req->poll_refs) >= IO_POLL_REF_BIAS))
++	if (unlikely((unsigned int)atomic_read(&req->poll_refs) >= IO_POLL_REF_BIAS))
+ 		return io_poll_get_ownership_slowpath(req);
+ 	return !(atomic_fetch_inc(&req->poll_refs) & IO_POLL_REF_MASK);
+ }
 
 
