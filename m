@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93D444DB64;
-	Tue, 16 Jun 2026 16:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A5346AEFE;
+	Tue, 16 Jun 2026 16:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626805; cv=none; b=AI3XrRXdvoNFZ+VwXtMocf+tRzRDFGw9+3dr/x4/cvx9HMfY6E+vRyi+Hbt1wkVWHZuQ5wZcjCxXJiIcf/gHhEez08tf+YyYDiXq8CMV0GnGAyHlwWmeCFTC069wjVva8y27R6GLBriC47nqbHTIMM+V1XEZ+Yu9TLmJd6qGtAI=
+	t=1781626810; cv=none; b=nMuPCGMQXAt4LGonIQfpFcG4lBeaJwCv9CpKXDVVDN9ta9RDo/IQfwXp9pdNoZ4D+4v1gXMAb3iGQ91GKkCut5Do7RTGtH4bxswYWn9zqbIR6bFLs0+3SqYAeN1erjvQ7M+Kul1NpxUIRgc9njTtVkygV4cid1b8CQj7D9FHeqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626805; c=relaxed/simple;
-	bh=+1AgAVoH1zsMQFw2fZRRFYlnG9wfsbrGO6GqzAqRM/E=;
+	s=arc-20240116; t=1781626810; c=relaxed/simple;
+	bh=5CWbNvFVw3Krn9KEo3HxZN9i43SuHwBAIMJW5C03b7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cVFCDosZO/gOdrlKAOYGQ2XgLpXzgWetvywokIj839lKyBRU5BKYwPxvtZGLB7Vaiiv6e1bE7hXHuROxfzaUmX7Nr2A16nOsp9YFjIU2vjErKJFKgt7Mr4dxlX9NDOmsW/4Xa5xd4jsUu1C4bmTpAGstInA8MA3eTsC4yxIeBWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTe0kllk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UIdE0YCKYscgFCJvNPzASoOVdnHdTUBRCD603i0uYkZc/VYe8UH3G2fdmOkgwV4rjDNIP4toHYVy7lR0MB2CA8+r9KGyLZhgytYJl55bxT0g1iAacauuJrnvBmelKykhYGFjjHhffHDBitYWEIavP20gI8bxQzxjRTPu5YMOwNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/X/7cS+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTe0kllk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E923B1F00A3A;
-	Tue, 16 Jun 2026 16:20:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/X/7cS+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5961F000E9;
+	Tue, 16 Jun 2026 16:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626803;
-	bh=Q+Ky/aV3F0O2kuWwLp+kkjFux8UItrAT5UKDU9nCYpM=;
+	s=korg; t=1781626809;
+	bh=QcerF1ggzynt8yqpJOOWm/q5wCLXZnm01KceZed11MA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bTe0kllkpuN9wjEMfE+zlVWKZ+f+AdfGXb52G5NCpLxoi+ZTirT6AilovtUJQomzM
-	 OUWPSrTQcPT/2u2NPI4HbJo42a/W0iz339XEyNXC0r18H5sNrmePjwvOZgPUTk3ROp
-	 CupMqQm/Y9BMDsWaDVRAahhSG6yvTnyY0kblwUIA=
+	b=Z/X/7cS+FKV7LBhuIGiJADHswyv0S4w5BRuk+m05FK7mv5CoYpkDT7GicE4/xDU7l
+	 QHfM11/F3vFWx3PLUPZIAY58zFlRaQh3qOQIbn/nA4cpiaCfv0EObIFFnHmaSj6TpI
+	 ScQVB9mPFgZ2djkpNGYiCyXzftjkathDtmN8Q5v8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanghyun Park <sanghyun.park.cnu@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Chenguang Zhao <zhaochenguang@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 074/261] xfrm: policy: fix use-after-free on inexact bin in xfrm_policy_bysel_ctx()
-Date: Tue, 16 Jun 2026 20:28:32 +0530
-Message-ID: <20260616145048.537913955@linuxfoundation.org>
+Subject: [PATCH 6.12 075/261] netlabel: validate unlabeled address and mask attribute lengths
+Date: Tue, 16 Jun 2026 20:28:33 +0530
+Message-ID: <20260616145048.580939396@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -51,77 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanghyun Park <sanghyun.park.cnu@gmail.com>
+From: Chenguang Zhao <zhaochenguang@kylinos.cn>
 
-[ Upstream commit 7f2d76c9c03257c0782afef9d95321fa04096f60 ]
+[ Upstream commit 9772589b57e44aedc240211c5c3f7a684a034d3a ]
 
-Fix the race by pruning the bin while still holding xfrm_policy_lock,
-before dropping it. Use __xfrm_policy_inexact_prune_bin() directly since
-the lock is already held. The wrapper xfrm_policy_inexact_prune_bin()
-becomes unused and is removed.
+netlbl_unlabel_addrinfo_get() used the address attribute length to
+determine whether the attribute data could be read as an IPv4 or IPv6
+address, but did not independently validate the corresponding mask
+attribute length.  A crafted Generic Netlink request could therefore
+provide a valid IPv4/IPv6 address attribute with a shorter mask
+attribute, which would later be read as a full struct in_addr or
+struct in6_addr.
 
-Race:
+NLA_BINARY policy lengths are maximum lengths by default, so use
+NLA_POLICY_EXACT_LEN() for the unlabeled IPv4/IPv6 address and mask
+attributes.  This rejects short attributes during policy validation and
+also exposes the exact length requirements through policy introspection.
 
-  CPU0 (XFRM_MSG_DELPOLICY)           CPU1 (XFRM_MSG_NEWSPDINFO)
-  ==========================          ==========================
-  xfrm_policy_bysel_ctx():
-    spin_lock_bh(xfrm_policy_lock)
-    bin = xfrm_policy_inexact_lookup()
-    __xfrm_policy_unlink(pol)
-    spin_unlock_bh(xfrm_policy_lock)
-    xfrm_policy_kill(ret)
-    // wide window, lock not held
-                                       xfrm_hash_rebuild():
-                                         spin_lock_bh(xfrm_policy_lock)
-                                         __xfrm_policy_inexact_flush():
-                                           kfree_rcu(bin)  // bin freed
-                                         spin_unlock_bh(xfrm_policy_lock)
-    xfrm_policy_inexact_prune_bin(bin)
-    // UAF: bin is freed
-
-Fixes: 6be3b0db6db8 ("xfrm: policy: add inexact policy search tree infrastructure")
-Signed-off-by: Sanghyun Park <sanghyun.park.cnu@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 8cc44579d1bd ("NetLabel: Introduce static network labels for unlabeled connections")
+Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_policy.c | 13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+ net/netlabel/netlabel_unlabeled.c | 30 ++++++++++--------------------
+ 1 file changed, 10 insertions(+), 20 deletions(-)
 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index dab782dcc829de..5a7ec72e17b0e5 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -1156,15 +1156,6 @@ static void __xfrm_policy_inexact_prune_bin(struct xfrm_pol_inexact_bin *b, bool
- 	}
- }
- 
--static void xfrm_policy_inexact_prune_bin(struct xfrm_pol_inexact_bin *b)
--{
--	struct net *net = read_pnet(&b->k.net);
--
--	spin_lock_bh(&net->xfrm.xfrm_policy_lock);
--	__xfrm_policy_inexact_prune_bin(b, false);
--	spin_unlock_bh(&net->xfrm.xfrm_policy_lock);
--}
--
- static void __xfrm_policy_inexact_flush(struct net *net)
+diff --git a/net/netlabel/netlabel_unlabeled.c b/net/netlabel/netlabel_unlabeled.c
+index 9996883bf2b78d..6007cb000da678 100644
+--- a/net/netlabel/netlabel_unlabeled.c
++++ b/net/netlabel/netlabel_unlabeled.c
+@@ -114,14 +114,14 @@ static struct genl_family netlbl_unlabel_gnl_family;
+ /* NetLabel Netlink attribute policy */
+ static const struct nla_policy netlbl_unlabel_genl_policy[NLBL_UNLABEL_A_MAX + 1] = {
+ 	[NLBL_UNLABEL_A_ACPTFLG] = { .type = NLA_U8 },
+-	[NLBL_UNLABEL_A_IPV6ADDR] = { .type = NLA_BINARY,
+-				      .len = sizeof(struct in6_addr) },
+-	[NLBL_UNLABEL_A_IPV6MASK] = { .type = NLA_BINARY,
+-				      .len = sizeof(struct in6_addr) },
+-	[NLBL_UNLABEL_A_IPV4ADDR] = { .type = NLA_BINARY,
+-				      .len = sizeof(struct in_addr) },
+-	[NLBL_UNLABEL_A_IPV4MASK] = { .type = NLA_BINARY,
+-				      .len = sizeof(struct in_addr) },
++	[NLBL_UNLABEL_A_IPV6ADDR] =
++		NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)),
++	[NLBL_UNLABEL_A_IPV6MASK] =
++		NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)),
++	[NLBL_UNLABEL_A_IPV4ADDR] =
++		NLA_POLICY_EXACT_LEN(sizeof(struct in_addr)),
++	[NLBL_UNLABEL_A_IPV4MASK] =
++		NLA_POLICY_EXACT_LEN(sizeof(struct in_addr)),
+ 	[NLBL_UNLABEL_A_IFACE] = { .type = NLA_NUL_STRING,
+ 				   .len = IFNAMSIZ - 1 },
+ 	[NLBL_UNLABEL_A_SECCTX] = { .type = NLA_BINARY }
+@@ -764,24 +764,14 @@ static int netlbl_unlabel_addrinfo_get(struct genl_info *info,
+ 				       void **mask,
+ 				       u32 *len)
  {
- 	struct xfrm_pol_inexact_bin *bin, *t;
-@@ -1707,12 +1698,12 @@ xfrm_policy_bysel_ctx(struct net *net, const struct xfrm_mark *mark, u32 if_id,
- 		}
- 		ret = pol;
- 	}
-+	if (bin && delete)
-+		__xfrm_policy_inexact_prune_bin(bin, false);
- 	spin_unlock_bh(&net->xfrm.xfrm_policy_lock);
- 
- 	if (ret && delete)
- 		xfrm_policy_kill(ret);
--	if (bin && delete)
--		xfrm_policy_inexact_prune_bin(bin);
- 	return ret;
- }
- EXPORT_SYMBOL(xfrm_policy_bysel_ctx);
+-	u32 addr_len;
+-
+ 	if (info->attrs[NLBL_UNLABEL_A_IPV4ADDR] &&
+ 	    info->attrs[NLBL_UNLABEL_A_IPV4MASK]) {
+-		addr_len = nla_len(info->attrs[NLBL_UNLABEL_A_IPV4ADDR]);
+-		if (addr_len != sizeof(struct in_addr) &&
+-		    addr_len != nla_len(info->attrs[NLBL_UNLABEL_A_IPV4MASK]))
+-			return -EINVAL;
+-		*len = addr_len;
++		*len = sizeof(struct in_addr);
+ 		*addr = nla_data(info->attrs[NLBL_UNLABEL_A_IPV4ADDR]);
+ 		*mask = nla_data(info->attrs[NLBL_UNLABEL_A_IPV4MASK]);
+ 		return 0;
+ 	} else if (info->attrs[NLBL_UNLABEL_A_IPV6ADDR]) {
+-		addr_len = nla_len(info->attrs[NLBL_UNLABEL_A_IPV6ADDR]);
+-		if (addr_len != sizeof(struct in6_addr) &&
+-		    addr_len != nla_len(info->attrs[NLBL_UNLABEL_A_IPV6MASK]))
+-			return -EINVAL;
+-		*len = addr_len;
++		*len = sizeof(struct in6_addr);
+ 		*addr = nla_data(info->attrs[NLBL_UNLABEL_A_IPV6ADDR]);
+ 		*mask = nla_data(info->attrs[NLBL_UNLABEL_A_IPV6MASK]);
+ 		return 0;
 -- 
 2.53.0
 
