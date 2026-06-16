@@ -1,103 +1,643 @@
-Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5560F331EA5;
-	Tue, 16 Jun 2026 21:51:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F411037EFEB
+	for <patches@lists.linux.dev>; Tue, 16 Jun 2026 22:16:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781646672; cv=none; b=G61gv+bDtsrFjiO/Qwj+xIEIr6I1J6DR2Lv49JZHqEXHWS8QIKAuez5CcIbqLARdY0kUfWgN7IKQxGTtYDHL69BDPIpRFNp/Zntp15NgOky5+qfM2o7Y1i1v3Zyo0iUu0ErpPoBLEpwKpeGHDJTlyZmjoNdI3eF0vhFZZ5XrXEc=
+	t=1781648178; cv=none; b=fniy3dbb2al1+Fytr15DRuYSLU/p9roXxQEywxVQufL6OQaxEPKgMPG9U89vkh+V2XM1eSavEU8o0x9W6ImLIFcW+aXrRdZfqT08+mnPdRtKaqLzEzieou0PhehpNesQ8e/o6/BOwogdzS9K5fc7aSQoYgTRXl6aCK7QEnUTYpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781646672; c=relaxed/simple;
-	bh=J6L2JqZOEO4VGS8RMRp8G7XSv26WMiGleJNndBZ67j8=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=ClddRDY6saYZzkghQ2tyH6cK/ArUdq68tkc1J0QIdAIRdFRGNlZ6SqjIuZbE9m4BFNHGwaH4oR1y4RsIsxDPIHd8r9mE4KmyLuKAC8KfNMzQWFaessvonfHLScmCm6WEjYpR+i8unqsuRHyMdBGGP/sdYf6H1xmz+z+Q6W/IQKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
-Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
-	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wZazo-002r0l-00;
-	Tue, 16 Jun 2026 21:06:56 +0000
-Received: from ben by deadeye with local (Exim 4.99.3)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1wZazm-00000006Vwl-2AId;
-	Tue, 16 Jun 2026 23:06:54 +0200
-Message-ID: <9125d5976feb09ef919f2a287b079843c7671325.camel@decadent.org.uk>
-Subject: Re: [PATCH 6.1 011/522] tools/bootconfig: Cleanup bootconfig footer
- size calculations
-From: Ben Hutchings <ben@decadent.org.uk>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, "Masami Hiramatsu (Google)"
- <mhiramat@kernel.org>,  Sasha Levin <sashal@kernel.org>
-Date: Tue, 16 Jun 2026 23:06:49 +0200
-In-Reply-To: <20260616145125.946340231@linuxfoundation.org>
-References: <20260616145125.307082728@linuxfoundation.org>
-	 <20260616145125.946340231@linuxfoundation.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-lCR5RCChjejQim0VI15B"
-User-Agent: Evolution 3.56.2-9 
+	s=arc-20240116; t=1781648178; c=relaxed/simple;
+	bh=NfXckL1U4YJQOdKKM4cGYQp4eGzEMydqJTYSXqPN/Wo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nqmZYQPPHsnApnv1TnmrJyqezkC/GYHl4gb6OuwhCnoc6jug2BbKAxUJUG0lNI9S4OROFzeUaW5WfMcy1H7jf+3m0cJ2hYi7dH4e4qJXQKjD4EINpu+CGdfMOhjGvbJ/ZmyiEOhJOkRhRNfJREiN9dXj27P+5RtPEFPUig+8W8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h5frewoJ; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h5frewoJ"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-490b613a17bso46425865e9.3
+        for <patches@lists.linux.dev>; Tue, 16 Jun 2026 15:16:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781648174; x=1782252974; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=XLLGveYsaolcQGrnCSD41w5ER7X9bxJyqQ0pbQ7cMiE=;
+        b=h5frewoJ47KX4Vy20eD2Pq4J6p+ZceOnNrMxPKsUK7X3iALfishUcMdkCYmNm9POlv
+         zkfuuPcKRx62Jybuy8A5jKQED8cMCfUjHZqcTBBhIChQILS49PKFvwp1qDvKVrnF2Vnt
+         O3dNSH+LUMHUOe7XsLHmBzuQA4IFi4NK9cUfjS0cPY0rIW6DwphSmvmFAaeQ/NzLJyAC
+         Fx1LZj8WQDkOBRa4jIZRltCC5nZAbSX0BXNSDpTPAjZSbLOtCHivgTf3vJLWjWZy9FJm
+         FDqgySENnNqMynGYczLRmNObv568CE5v/xsh9d2RHS6ARGeDKO2BLI6yoXz6nveBwAjA
+         Zb6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781648174; x=1782252974;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XLLGveYsaolcQGrnCSD41w5ER7X9bxJyqQ0pbQ7cMiE=;
+        b=Yhpc+dLuiRE5nG306si241q26Zh1n6INHdOyu8xjo/6rNpVQpHt26yna4Ka0QHw4Bb
+         cYdgQ9pDCNcHFukQwntktIyYXqrAUwzNtiipy7MQXRliYC+6x3skpL50kAb3CIqvgiE/
+         oMc+6F0GYPUW1xwCUn0irNrcfacBeCzMGE+VGmgGzk8eC4BTNhFWmS9rwJuhyhhL0YgE
+         mMKbEAyy2GMy9bzazdTdDTgXn/JeiycY8REEV+kYb2C3m6sXmf3+A99+i0lWy8C6ZUdj
+         YlRVjMycfokFZ71yERfWyeJ5uZvAivQBiFx7iueb2cM5tppRdXJvsjWG+XqNhWCKUp80
+         do5A==
+X-Forwarded-Encrypted: i=1; AFNElJ9V98LVw2qw9XwQGXU4wmv9gRmeeDHbQ5+VIbLDxFfSHJdHaTcNe01pWJgh0RG2gW1ISBj9LJVC@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw2vuRwOmCVpnEet0zKVan2JI83ALs2GbpAXKPB963jdYornoxj
+	xo7fpEj4i+iIyrv2HCdWR9eXVTO5e/cDdek/cAPnQddVDxq7sXaXPMMD
+X-Gm-Gg: Acq92OGsDR4ITfNkAAHCpWumNT58nPcLiRs1Qmx1L2wuPWRS5AinFe6dhGjx4EULdG2
+	6RqhqzpETgqD8/a93732Jj0mIsoBTH+VGMuGP+TmjGSCdpdYFnGUf9oOk3khlWiCyYGpvINl55m
+	7Nu0bF6NWHhfiNWJll0wJ//tIw5Rpt86yPgGcKCkKWHV+kexS5qgZ3697qcgU4mtWGgm+/o6tnF
+	bvfwEq6xzshHJ+5WVrKlsCVJfAjQS4p1LHE955lI0/MTGVFSeQfxid3o5JjZ3gYhQ5vsKF7FTIQ
+	7zbw/n4EdOtYgFH6yDf6YFW7fZLqAF9Q6mOh/EwQDultHibOE0ERDvaf8HZx+glN+YiJU4KwLs/
+	dhVatS855JTt0GUrNB5XPMxmX3VLBBmjNKzArmDs4RV1FtBIC3qIaaEelxBJfxO0DZDOaUmDoeF
+	FBRseop+MdqA7LTUhBe9fXXt9llXUhw13O0K66LyM7RWnnALjvV7vhT+gSi/p4avU5mcvk6IC2W
+	d78OEgNBBlsCtzHLN7B3X4Q4wVAjK91MDkRFZJbsw6lMFWU/SH1el2OCGScdcRzaG7lc8m8JrJV
+	q3rrigCxDIuPU36BCVMydODCXJJ7X3oodZbDg4Ak3M4=
+X-Received: by 2002:a05:600c:37c3:b0:490:e18f:d108 with SMTP id 5b1f17b1804b1-492333cf91cmr19844345e9.19.1781648174059;
+        Tue, 16 Jun 2026 15:16:14 -0700 (PDT)
+Received: from mail.gmail.com (2a01cb0889497e004325bddd753d2e35.ipv6.abo.wanadoo.fr. [2a01:cb08:8949:7e00:4325:bddd:753d:2e35])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49230a4ff67sm97975655e9.6.2026.06.16.15.16.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Jun 2026 15:16:13 -0700 (PDT)
+Date: Wed, 17 Jun 2026 00:16:11 +0200
+From: Paul Chaignon <paul.chaignon@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Hao Sun <sunhao.th@gmail.com>, Andrii Nakryiko <andrii@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Zhenzhong Wu <jt26wzz@gmail.com>, Sasha Levin <sashal@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Subject: Re: [PATCH 6.6 343/452] bpf: Track equal scalars history on
+ per-instruction level
+Message-ID: <ajHLK93Cbr5WdYqB@mail.gmail.com>
+References: <20260616145117.796205997@linuxfoundation.org>
+ <20260616145135.289901493@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260616145135.289901493@linuxfoundation.org>
 
+On Tue, Jun 16, 2026 at 08:29:30PM +0530, Greg Kroah-Hartman wrote:
+> 6.6-stable review patch.  If anyone has any objections, please let me know.
 
---=-lCR5RCChjejQim0VI15B
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+As discussed in [1] and its reply, this patch is currently breaking the
+BPF selftests on 6.6.y. I think it would be best to drop this series
+and wait for a v4 of the backport.
 
-On Tue, 2026-06-16 at 20:22 +0530, Greg Kroah-Hartman wrote:
-> 6.1-stable review patch.  If anyone has any objections, please let me kno=
-w.
->=20
+1: https://lore.kernel.org/stable/ajCB9jXBzPyaDNSQ@mail.gmail.com/
+
+> 
 > ------------------
->=20
-> From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
->=20
-> [ Upstream commit 26dda57695090e05c1a99c3e8f802f862d1ac474 ]
->=20
-> There are many same pattern of 8 + BOOTCONFIG_MAGIC_LEN for calculating
-> the size of bootconfig footer. Use BOOTCONFIG_FOOTER_SIZE macro to
-> clean up those magic numbers.
-[...]
-
-This causes a regression in some configurations, fixed by commit
-729dc340a4ed "bootconfig: Fix negative seeks on 32-bit with LFS
-enabled".
-
-Ben.
-
---=20
-Ben Hutchings
-For every complex problem
-there is a solution that is simple, neat, and wrong.
-
---=-lCR5RCChjejQim0VI15B
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmoxuukACgkQ57/I7JWG
-EQl4+A//TuIeXRd0kdF3l5DYV417IjO2eo3WiKdbBGVJnHV1Odw9fVb9ETGQ+fiD
-IB3j/0FAjx7ejLy8jpq/eikH05+5lzjZ4/zbPw7EiTh6JkeG5bAoyGqlitJ7vCdQ
-AitMdv0ihF5yD6HczapV3S3jsowMp/4TFKKeYw2IVZ1RL2yCGKffQPuuBXYBcleK
-Qk3veEdGvAD57bwluFE9jaJpI+Av5/bHlVZUfxDAxDfF4evEIjt1GOPp8Oln/LqN
-D7b/MWI6o7RLkZPidPTcFu/ananuQyYaRVmn1N1vuqLBhH03VSsqN4xhNIA1uhrt
-sDdg/RC8Is0QGFa1xOWTgJqB7LXgnrie6lDZJ5DQHkV4hcyZzAO6wb8BrHj7oxFR
-CwFr8lenCWI9j7gcx7aYIssDKb48ErxaUTCO3BC7gLRjcRJJW/H2jO1M06gGNTsR
-g+S0daMXwSrDr8cKnlXbdFAKTKX+bPFc4n1NIstbaAnpbR6vv1S4bMyEhtJ0FNoo
-o0hdhU9F/VLM+wE8EYf/FvjzBkikPCMtkwwUqRk/d4pPZY5ZhaP/UVpbdjE+S4/9
-Z071Ee4kYylCeqHf/91AxqEpHBavJBjB+bOYvDahhdWUQGo0bS0T3JZcbgVH4Z1I
-F02FSix7y5KpbutIvI/ywuPMA9pSsmQVRXbjuCYB/LTls/t1fTc=
-=NR/Z
------END PGP SIGNATURE-----
-
---=-lCR5RCChjejQim0VI15B--
+> 
+> From: Eduard Zingerman <eddyz87@gmail.com>
+> 
+> [ Upstream commit 4bf79f9be434e000c8e12fe83b2f4402480f1460 ]
+> 
+> Use bpf_verifier_state->jmp_history to track which registers were
+> updated by find_equal_scalars() (renamed to collect_linked_regs())
+> when conditional jump was verified. Use recorded information in
+> backtrack_insn() to propagate precision.
+> 
+> E.g. for the following program:
+> 
+>             while verifying instructions
+>   1: r1 = r0              |
+>   2: if r1 < 8  goto ...  | push r0,r1 as linked registers in jmp_history
+>   3: if r0 > 16 goto ...  | push r0,r1 as linked registers in jmp_history
+>   4: r2 = r10             |
+>   5: r2 += r0             v mark_chain_precision(r0)
+> 
+>             while doing mark_chain_precision(r0)
+>   5: r2 += r0             | mark r0 precise
+>   4: r2 = r10             |
+>   3: if r0 > 16 goto ...  | mark r0,r1 as precise
+>   2: if r1 < 8  goto ...  | mark r0,r1 as precise
+>   1: r1 = r0              v
+> 
+> Technically, do this as follows:
+> - Use 10 bits to identify each register that gains range because of
+>   sync_linked_regs():
+>   - 3 bits for frame number;
+>   - 6 bits for register or stack slot number;
+>   - 1 bit to indicate if register is spilled.
+> - Use u64 as a vector of 6 such records + 4 bits for vector length.
+> - Augment struct bpf_jmp_history_entry with a field 'linked_regs'
+>   representing such vector.
+> - When doing check_cond_jmp_op() remember up to 6 registers that
+>   gain range because of sync_linked_regs() in such a vector.
+> - Don't propagate range information and reset IDs for registers that
+>   don't fit in 6-value vector.
+> - Push a pair {instruction index, linked registers vector}
+>   to bpf_verifier_state->jmp_history.
+> - When doing backtrack_insn() check if any of recorded linked
+>   registers is currently marked precise, if so mark all linked
+>   registers as precise.
+> 
+> This also requires fixes for two test_verifier tests:
+> - precise: test 1
+> - precise: test 2
+> 
+> Both tests contain the following instruction sequence:
+> 
+> 19: (bf) r2 = r9                      ; R2=scalar(id=3) R9=scalar(id=3)
+> 20: (a5) if r2 < 0x8 goto pc+1        ; R2=scalar(id=3,umin=8)
+> 21: (95) exit
+> 22: (07) r2 += 1                      ; R2_w=scalar(id=3+1,...)
+> 23: (bf) r1 = r10                     ; R1_w=fp0 R10=fp0
+> 24: (07) r1 += -8                     ; R1_w=fp-8
+> 25: (b7) r3 = 0                       ; R3_w=0
+> 26: (85) call bpf_probe_read_kernel#113
+> 
+> The call to bpf_probe_read_kernel() at (26) forces r2 to be precise.
+> Previously, this forced all registers with same id to become precise
+> immediately when mark_chain_precision() is called.
+> After this change, the precision is propagated to registers sharing
+> same id only when 'if' instruction is backtracked.
+> Hence verification log for both tests is changed:
+> regs=r2,r9 -> regs=r2 for instructions 25..20.
+> 
+> Fixes: 904e6ddf4133 ("bpf: Use scalar ids in mark_chain_precision()")
+> Reported-by: Hao Sun <sunhao.th@gmail.com>
+> Suggested-by: Andrii Nakryiko <andrii@kernel.org>
+> Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+> Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+> Link: https://lore.kernel.org/bpf/20240718202357.1746514-2-eddyz87@gmail.com
+> Closes: https://lore.kernel.org/bpf/CAEf4BzZ0xidVCqB47XnkXcNhkPWF6_nTV7yt+_Lf0kcFEut2Mg@mail.gmail.com/
+> [ zhenzhong: backport to 6.6.y verifier layout and adapt
+>   sync_linked_regs() to the pre-BPF_ADD_CONST scalar-id code. ]
+> Signed-off-by: Zhenzhong Wu <jt26wzz@gmail.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  include/linux/bpf_verifier.h                  |   4 +
+>  kernel/bpf/verifier.c                         | 256 ++++++++++++++++--
+>  .../bpf/progs/verifier_subprog_precision.c    |   2 +-
+>  3 files changed, 239 insertions(+), 23 deletions(-)
+> 
+> diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
+> index dba211d3bb9a0d..9a3b93c24f19f5 100644
+> --- a/include/linux/bpf_verifier.h
+> +++ b/include/linux/bpf_verifier.h
+> @@ -345,6 +345,10 @@ struct bpf_jmp_history_entry {
+>  	u32 prev_idx : 22;
+>  	/* special flags, e.g., whether insn is doing register stack spill/load */
+>  	u32 flags : 10;
+> +	/* additional registers that need precision tracking when this
+> +	 * jump is backtracked, vector of six 10-bit records
+> +	 */
+> +	u64 linked_regs;
+>  };
+>  
+>  /* Maximum number of register states that can exist at once */
+> diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+> index 0d90236d0ad94f..3cc0fc90244f7b 100644
+> --- a/kernel/bpf/verifier.c
+> +++ b/kernel/bpf/verifier.c
+> @@ -3461,9 +3461,87 @@ static bool is_jmp_point(struct bpf_verifier_env *env, int insn_idx)
+>  	return env->insn_aux_data[insn_idx].jmp_point;
+>  }
+>  
+> +#define LR_FRAMENO_BITS	3
+> +#define LR_SPI_BITS	6
+> +#define LR_ENTRY_BITS	(LR_SPI_BITS + LR_FRAMENO_BITS + 1)
+> +#define LR_SIZE_BITS	4
+> +#define LR_FRAMENO_MASK	((1ull << LR_FRAMENO_BITS) - 1)
+> +#define LR_SPI_MASK	((1ull << LR_SPI_BITS)     - 1)
+> +#define LR_SIZE_MASK	((1ull << LR_SIZE_BITS)    - 1)
+> +#define LR_SPI_OFF	LR_FRAMENO_BITS
+> +#define LR_IS_REG_OFF	(LR_SPI_BITS + LR_FRAMENO_BITS)
+> +#define LINKED_REGS_MAX	6
+> +
+> +struct linked_reg {
+> +	u8 frameno;
+> +	union {
+> +		u8 spi;
+> +		u8 regno;
+> +	};
+> +	bool is_reg;
+> +};
+> +
+> +struct linked_regs {
+> +	int cnt;
+> +	struct linked_reg entries[LINKED_REGS_MAX];
+> +};
+> +
+> +static struct linked_reg *linked_regs_push(struct linked_regs *s)
+> +{
+> +	if (s->cnt < LINKED_REGS_MAX)
+> +		return &s->entries[s->cnt++];
+> +
+> +	return NULL;
+> +}
+> +
+> +/* Use u64 as a vector of 6 10-bit values, use first 4-bits to track
+> + * number of elements currently in stack.
+> + * Pack one history entry for linked registers as 10 bits in the following format:
+> + * - 3-bits frameno
+> + * - 6-bits spi_or_reg
+> + * - 1-bit  is_reg
+> + */
+> +static u64 linked_regs_pack(struct linked_regs *s)
+> +{
+> +	u64 val = 0;
+> +	int i;
+> +
+> +	for (i = 0; i < s->cnt; ++i) {
+> +		struct linked_reg *e = &s->entries[i];
+> +		u64 tmp = 0;
+> +
+> +		tmp |= e->frameno;
+> +		tmp |= e->spi << LR_SPI_OFF;
+> +		tmp |= (e->is_reg ? 1 : 0) << LR_IS_REG_OFF;
+> +
+> +		val <<= LR_ENTRY_BITS;
+> +		val |= tmp;
+> +	}
+> +	val <<= LR_SIZE_BITS;
+> +	val |= s->cnt;
+> +	return val;
+> +}
+> +
+> +static void linked_regs_unpack(u64 val, struct linked_regs *s)
+> +{
+> +	int i;
+> +
+> +	s->cnt = val & LR_SIZE_MASK;
+> +	val >>= LR_SIZE_BITS;
+> +
+> +	for (i = 0; i < s->cnt; ++i) {
+> +		struct linked_reg *e = &s->entries[i];
+> +
+> +		e->frameno =  val & LR_FRAMENO_MASK;
+> +		e->spi     = (val >> LR_SPI_OFF) & LR_SPI_MASK;
+> +		e->is_reg  = (val >> LR_IS_REG_OFF) & 0x1;
+> +		val >>= LR_ENTRY_BITS;
+> +	}
+> +}
+> +
+>  /* for any branch, call, exit record the history of jmps in the given state */
+>  static int push_jmp_history(struct bpf_verifier_env *env, struct bpf_verifier_state *cur,
+> -			    int insn_flags)
+> +			    int insn_flags, u64 linked_regs)
+>  {
+>  	u32 cnt = cur->jmp_history_cnt;
+>  	struct bpf_jmp_history_entry *p;
+> @@ -3479,6 +3557,10 @@ static int push_jmp_history(struct bpf_verifier_env *env, struct bpf_verifier_st
+>  			  "verifier insn history bug: insn_idx %d cur flags %x new flags %x\n",
+>  			  env->insn_idx, env->cur_hist_ent->flags, insn_flags);
+>  		env->cur_hist_ent->flags |= insn_flags;
+> +		WARN_ONCE(env->cur_hist_ent->linked_regs != 0,
+> +			  "verifier insn history bug: insn_idx %d linked_regs != 0: %#llx\n",
+> +			  env->insn_idx, env->cur_hist_ent->linked_regs);
+> +		env->cur_hist_ent->linked_regs = linked_regs;
+>  		return 0;
+>  	}
+>  
+> @@ -3493,6 +3575,7 @@ static int push_jmp_history(struct bpf_verifier_env *env, struct bpf_verifier_st
+>  	p->idx = env->insn_idx;
+>  	p->prev_idx = env->prev_insn_idx;
+>  	p->flags = insn_flags;
+> +	p->linked_regs = linked_regs;
+>  	cur->jmp_history_cnt = cnt;
+>  	env->cur_hist_ent = p;
+>  
+> @@ -3668,6 +3751,11 @@ static inline bool bt_is_reg_set(struct backtrack_state *bt, u32 reg)
+>  	return bt->reg_masks[bt->frame] & (1 << reg);
+>  }
+>  
+> +static inline bool bt_is_frame_reg_set(struct backtrack_state *bt, u32 frame, u32 reg)
+> +{
+> +	return bt->reg_masks[frame] & (1 << reg);
+> +}
+> +
+>  static inline bool bt_is_frame_slot_set(struct backtrack_state *bt, u32 frame, u32 slot)
+>  {
+>  	return bt->stack_masks[frame] & (1ull << slot);
+> @@ -3717,6 +3805,42 @@ static void fmt_stack_mask(char *buf, ssize_t buf_sz, u64 stack_mask)
+>  	}
+>  }
+>  
+> +/* If any register R in hist->linked_regs is marked as precise in bt,
+> + * do bt_set_frame_{reg,slot}(bt, R) for all registers in hist->linked_regs.
+> + */
+> +static void bt_sync_linked_regs(struct backtrack_state *bt, struct bpf_jmp_history_entry *hist)
+> +{
+> +	struct linked_regs linked_regs;
+> +	bool some_precise = false;
+> +	int i;
+> +
+> +	if (!hist || hist->linked_regs == 0)
+> +		return;
+> +
+> +	linked_regs_unpack(hist->linked_regs, &linked_regs);
+> +	for (i = 0; i < linked_regs.cnt; ++i) {
+> +		struct linked_reg *e = &linked_regs.entries[i];
+> +
+> +		if ((e->is_reg && bt_is_frame_reg_set(bt, e->frameno, e->regno)) ||
+> +		    (!e->is_reg && bt_is_frame_slot_set(bt, e->frameno, e->spi))) {
+> +			some_precise = true;
+> +			break;
+> +		}
+> +	}
+> +
+> +	if (!some_precise)
+> +		return;
+> +
+> +	for (i = 0; i < linked_regs.cnt; ++i) {
+> +		struct linked_reg *e = &linked_regs.entries[i];
+> +
+> +		if (e->is_reg)
+> +			bt_set_frame_reg(bt, e->frameno, e->regno);
+> +		else
+> +			bt_set_frame_slot(bt, e->frameno, e->spi);
+> +	}
+> +}
+> +
+>  static bool calls_callback(struct bpf_verifier_env *env, int insn_idx);
+>  
+>  /* For given verifier state backtrack_insn() is called from the last insn to
+> @@ -3756,6 +3880,12 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
+>  		print_bpf_insn(&cbs, insn, env->allow_ptr_leaks);
+>  	}
+>  
+> +	/* If there is a history record that some registers gained range at this insn,
+> +	 * propagate precision marks to those registers, so that bt_is_reg_set()
+> +	 * accounts for these registers.
+> +	 */
+> +	bt_sync_linked_regs(bt, hist);
+> +
+>  	if (class == BPF_ALU || class == BPF_ALU64) {
+>  		if (!bt_is_reg_set(bt, dreg))
+>  			return 0;
+> @@ -3985,7 +4115,8 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
+>  			 */
+>  			bt_set_reg(bt, dreg);
+>  			bt_set_reg(bt, sreg);
+> -			 /* else dreg <cond> K
+> +		} else if (BPF_SRC(insn->code) == BPF_K) {
+> +			 /* dreg <cond> K
+>  			  * Only dreg still needs precision before
+>  			  * this insn, so for the K-based conditional
+>  			  * there is nothing new to be marked.
+> @@ -4003,6 +4134,10 @@ static int backtrack_insn(struct bpf_verifier_env *env, int idx, int subseq_idx,
+>  			/* to be analyzed */
+>  			return -ENOTSUPP;
+>  	}
+> +	/* Propagate precision marks to linked registers, to account for
+> +	 * registers marked as precise in this function.
+> +	 */
+> +	bt_sync_linked_regs(bt, hist);
+>  	return 0;
+>  }
+>  
+> @@ -4354,7 +4489,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno)
+>  
+>  		/* If some register with scalar ID is marked as precise,
+>  		 * make sure that all registers sharing this ID are also precise.
+> -		 * This is needed to estimate effect of find_equal_scalars().
+> +		 * This is needed to estimate effect of sync_linked_regs().
+>  		 * Do this at the last instruction of each state,
+>  		 * bpf_reg_state::id fields are valid for these instructions.
+>  		 *
+> @@ -4368,7 +4503,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno)
+>  		 *     ...
+>  		 *   --- state #1 {r1.id = A, r2.id = A} ---
+>  		 *     ...
+> -		 *     if (r2 > 10) goto exit; // find_equal_scalars() assigns range to r1
+> +		 *     if (r2 > 10) goto exit; // sync_linked_regs() assigns range to r1
+>  		 *     ...
+>  		 *   --- state #2 {r1.id = A, r2.id = A} ---
+>  		 *     r3 = r10
+> @@ -4736,7 +4871,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
+>  	}
+>  
+>  	if (insn_flags)
+> -		return push_jmp_history(env, env->cur_state, insn_flags);
+> +		return push_jmp_history(env, env->cur_state, insn_flags, 0);
+>  	return 0;
+>  }
+>  
+> @@ -5032,7 +5167,7 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
+>  		insn_flags = 0; /* we are not restoring spilled register */
+>  	}
+>  	if (insn_flags)
+> -		return push_jmp_history(env, env->cur_state, insn_flags);
+> +		return push_jmp_history(env, env->cur_state, insn_flags, 0);
+>  	return 0;
+>  }
+>  
+> @@ -13540,7 +13675,7 @@ static int adjust_reg_min_max_vals(struct bpf_verifier_env *env,
+>  		ptr_reg = dst_reg;
+>  	else
+>  		/* Make sure ID is cleared otherwise dst_reg min/max could be
+> -		 * incorrectly propagated into other registers by find_equal_scalars()
+> +		 * incorrectly propagated into other registers by sync_linked_regs()
+>  		 */
+>  		dst_reg->id = 0;
+>  	if (BPF_SRC(insn->code) == BPF_X) {
+> @@ -13700,7 +13835,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
+>  					 */
+>  					if (need_id)
+>  						/* Assign src and dst registers the same ID
+> -						 * that will be used by find_equal_scalars()
+> +						 * that will be used by sync_linked_regs()
+>  						 * to propagate min/max range.
+>  						 */
+>  						src_reg->id = ++env->id_gen;
+> @@ -13746,7 +13881,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
+>  						copy_register_state(dst_reg, src_reg);
+>  						/* Make sure ID is cleared if src_reg is not in u32
+>  						 * range otherwise dst_reg min/max could be incorrectly
+> -						 * propagated into src_reg by find_equal_scalars()
+> +						 * propagated into src_reg by sync_linked_regs()
+>  						 */
+>  						if (!is_src_reg_u32)
+>  							dst_reg->id = 0;
+> @@ -14564,19 +14699,78 @@ static bool try_match_pkt_pointers(const struct bpf_insn *insn,
+>  	return true;
+>  }
+>  
+> -static void find_equal_scalars(struct bpf_verifier_state *vstate,
+> -			       struct bpf_reg_state *known_reg)
+> +static void __collect_linked_regs(struct linked_regs *reg_set, struct bpf_reg_state *reg,
+> +				  u32 id, u32 frameno, u32 spi_or_reg, bool is_reg)
+>  {
+> -	struct bpf_func_state *state;
+> +	struct linked_reg *e;
+> +
+> +	if (reg->type != SCALAR_VALUE || reg->id != id)
+> +		return;
+> +
+> +	e = linked_regs_push(reg_set);
+> +	if (e) {
+> +		e->frameno = frameno;
+> +		e->is_reg = is_reg;
+> +		e->regno = spi_or_reg;
+> +	} else {
+> +		reg->id = 0;
+> +	}
+> +}
+> +
+> +/* For all R being scalar registers or spilled scalar registers
+> + * in verifier state, save R in linked_regs if R->id == id.
+> + * If there are too many Rs sharing same id, reset id for leftover Rs.
+> + */
+> +static void collect_linked_regs(struct bpf_verifier_state *vstate, u32 id,
+> +				struct linked_regs *linked_regs)
+> +{
+> +	struct bpf_func_state *func;
+>  	struct bpf_reg_state *reg;
+> +	int i, j;
+>  
+> -	bpf_for_each_reg_in_vstate(vstate, state, reg, ({
+> -		if (reg->type == SCALAR_VALUE && reg->id == known_reg->id) {
+> +	for (i = vstate->curframe; i >= 0; i--) {
+> +		func = vstate->frame[i];
+> +		for (j = 0; j < BPF_REG_FP; j++) {
+> +			reg = &func->regs[j];
+> +			__collect_linked_regs(linked_regs, reg, id, i, j, true);
+> +		}
+> +		for (j = 0; j < func->allocated_stack / BPF_REG_SIZE; j++) {
+> +			if (!is_spilled_reg(&func->stack[j]))
+> +				continue;
+> +			reg = &func->stack[j].spilled_ptr;
+> +			__collect_linked_regs(linked_regs, reg, id, i, j, false);
+> +		}
+> +	}
+> +
+> +	if (linked_regs->cnt == 1)
+> +		linked_regs->cnt = 0;
+> +}
+> +
+> +/* For all R in linked_regs, copy known_reg range into R
+> + * if R->id == known_reg->id.
+> + */
+> +static void sync_linked_regs(struct bpf_verifier_state *vstate, struct bpf_reg_state *known_reg,
+> +			     struct linked_regs *linked_regs)
+> +{
+> +	struct bpf_reg_state *reg;
+> +	struct linked_reg *e;
+> +	int i;
+> +
+> +	for (i = 0; i < linked_regs->cnt; ++i) {
+> +		e = &linked_regs->entries[i];
+> +		reg = e->is_reg ? &vstate->frame[e->frameno]->regs[e->regno]
+> +				: &vstate->frame[e->frameno]->stack[e->spi].spilled_ptr;
+> +		if (reg->type != SCALAR_VALUE || reg == known_reg)
+> +			continue;
+> +		if (reg->id != known_reg->id)
+> +			continue;
+> +		{
+>  			s32 saved_subreg_def = reg->subreg_def;
+> +
+>  			copy_register_state(reg, known_reg);
+>  			reg->subreg_def = saved_subreg_def;
+>  		}
+> -	}));
+> +	}
+>  }
+>  
+>  static int check_cond_jmp_op(struct bpf_verifier_env *env,
+> @@ -14587,6 +14781,7 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+>  	struct bpf_reg_state *regs = this_branch->frame[this_branch->curframe]->regs;
+>  	struct bpf_reg_state *dst_reg, *other_branch_regs, *src_reg = NULL;
+>  	struct bpf_reg_state *eq_branch_regs;
+> +	struct linked_regs linked_regs = {};
+>  	u8 opcode = BPF_OP(insn->code);
+>  	bool is_jmp32;
+>  	int pred = -1;
+> @@ -14704,6 +14899,21 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+>  		return 0;
+>  	}
+>  
+> +	/* Push scalar registers sharing same ID to jump history,
+> +	 * do this before creating 'other_branch', so that both
+> +	 * 'this_branch' and 'other_branch' share this history
+> +	 * if parent state is created.
+> +	 */
+> +	if (BPF_SRC(insn->code) == BPF_X && src_reg->type == SCALAR_VALUE && src_reg->id)
+> +		collect_linked_regs(this_branch, src_reg->id, &linked_regs);
+> +	if (dst_reg->type == SCALAR_VALUE && dst_reg->id)
+> +		collect_linked_regs(this_branch, dst_reg->id, &linked_regs);
+> +	if (linked_regs.cnt > 0) {
+> +		err = push_jmp_history(env, this_branch, 0, linked_regs_pack(&linked_regs));
+> +		if (err)
+> +			return err;
+> +	}
+> +
+>  	other_branch = push_stack(env, *insn_idx + insn->off + 1, *insn_idx,
+>  				  false);
+>  	if (!other_branch)
+> @@ -14746,8 +14956,9 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+>  						    src_reg, dst_reg, opcode);
+>  			if (src_reg->id &&
+>  			    !WARN_ON_ONCE(src_reg->id != other_branch_regs[insn->src_reg].id)) {
+> -				find_equal_scalars(this_branch, src_reg);
+> -				find_equal_scalars(other_branch, &other_branch_regs[insn->src_reg]);
+> +				sync_linked_regs(this_branch, src_reg, &linked_regs);
+> +				sync_linked_regs(other_branch, &other_branch_regs[insn->src_reg],
+> +						 &linked_regs);
+>  			}
+>  
+>  		}
+> @@ -14759,8 +14970,9 @@ static int check_cond_jmp_op(struct bpf_verifier_env *env,
+>  
+>  	if (dst_reg->type == SCALAR_VALUE && dst_reg->id &&
+>  	    !WARN_ON_ONCE(dst_reg->id != other_branch_regs[insn->dst_reg].id)) {
+> -		find_equal_scalars(this_branch, dst_reg);
+> -		find_equal_scalars(other_branch, &other_branch_regs[insn->dst_reg]);
+> +		sync_linked_regs(this_branch, dst_reg, &linked_regs);
+> +		sync_linked_regs(other_branch, &other_branch_regs[insn->dst_reg],
+> +				 &linked_regs);
+>  	}
+>  
+>  	/* if one pointer register is compared to another pointer
+> @@ -16182,7 +16394,7 @@ static bool regsafe(struct bpf_verifier_env *env, struct bpf_reg_state *rold,
+>  		 *
+>  		 * First verification path is [1-6]:
+>  		 * - at (4) same bpf_reg_state::id (b) would be assigned to r6 and r7;
+> -		 * - at (5) r6 would be marked <= X, find_equal_scalars() would also mark
+> +		 * - at (5) r6 would be marked <= X, sync_linked_regs() would also mark
+>  		 *   r7 <= X, because r6 and r7 share same id.
+>  		 * Next verification path is [1-4, 6].
+>  		 *
+> @@ -16915,7 +17127,7 @@ static int is_state_visited(struct bpf_verifier_env *env, int insn_idx)
+>  			 * the current state.
+>  			 */
+>  			if (is_jmp_point(env, env->insn_idx))
+> -				err = err ? : push_jmp_history(env, cur, 0);
+> +				err = err ? : push_jmp_history(env, cur, 0, 0);
+>  			err = err ? : propagate_precision(env, &sl->state);
+>  			if (err)
+>  				return err;
+> @@ -17181,7 +17393,7 @@ static int do_check(struct bpf_verifier_env *env)
+>  		}
+>  
+>  		if (is_jmp_point(env, env->insn_idx)) {
+> -			err = push_jmp_history(env, state, 0);
+> +			err = push_jmp_history(env, state, 0, 0);
+>  			if (err)
+>  				return err;
+>  		}
+> diff --git a/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c b/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c
+> index 4b8b0f45d17d71..a188e26f04da70 100644
+> --- a/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c
+> +++ b/tools/testing/selftests/bpf/progs/verifier_subprog_precision.c
+> @@ -141,7 +141,7 @@ __msg("mark_precise: frame0: last_idx 14 first_idx 9")
+>  __msg("mark_precise: frame0: regs=r6 stack= before 13: (bf) r1 = r7")
+>  __msg("mark_precise: frame0: regs=r6 stack= before 12: (27) r6 *= 4")
+>  __msg("mark_precise: frame0: regs=r6 stack= before 11: (25) if r6 > 0x3 goto pc+4")
+> -__msg("mark_precise: frame0: regs=r6 stack= before 10: (bf) r6 = r0")
+> +__msg("mark_precise: frame0: regs=r0,r6 stack= before 10: (bf) r6 = r0")
+>  __msg("mark_precise: frame0: regs=r0 stack= before 9: (85) call bpf_loop")
+>  /* State entering callback body popped from states stack */
+>  __msg("from 9 to 17: frame1:")
+> -- 
+> 2.53.0
+> 
+> 
+> 
