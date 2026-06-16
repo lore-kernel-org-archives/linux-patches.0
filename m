@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF8C3DA7E1;
-	Tue, 16 Jun 2026 18:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0CB34FF79;
+	Tue, 16 Jun 2026 18:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634713; cv=none; b=j4xK+76rE+9yPHF2OupDU2Nw3iXwzckBIzvxAG5swYdkqp9JUPgo8xzXUVDid72mwR9z2d7IuXhc+NlWsmQ42/SLZGj9+L6XBAKv20ZoG667U38xQ5TFO5reCBJov2B9KjmrK7okA1eJJ6s/w2aZrOFlnDHyruRneQo/LbFXQ5w=
+	t=1781634718; cv=none; b=gJtjz9QDS4QRJytR4Sn9MnYvsUKBK6dATHLreufWEGdb1z1wkr9GJd/KzNvgrb6ASVGMVtW5sjlrsFHbS8KAH217mqq/z6xYJkZQg785G8Aodbl+kY2vgD2l0tLVRGulQOmPqkrFVfYWWBl9YjLg1dHvZ3VrJbaPe0tS84Ey/+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634713; c=relaxed/simple;
-	bh=CfA6Is2hUgrN1vJnBxk02A4VHYxoUtj17+eYCvHLWwU=;
+	s=arc-20240116; t=1781634718; c=relaxed/simple;
+	bh=Ro6Zpg34BHy6ciBE1BdP6wt+jiqG2pwcuQKOWeV/F/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C7hsckXxZjH3Ut/uUX7ibFK2yiZxOmya2SFJayAn+262EtSL7kkwbZMLHpnPpgXeSr2Z3JuiGw8UEi9nm8Dg8RWxASNJ4m/ZB2XXc7Hah1fjlmTFHZuBISEsjbyA3hXhsvIV9x/tLeZR6gBl9XCT2bwkyJdufKcB+ZuJdtlxCbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdV6rVvm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FgveXZ47Yh5w3unZBO0T1iZtGiNc53Zzdva8Hg4PbUfhtPJE7lv8kzh60CGUEd+U4foRQ1hs9vFYjanLZwg5RItGqWnoOvTQYkb2AdAndBx+QtHc/a1zFfK87a3mEsak46rglhi/wGjrzYAhLZ+iyh3PjzjyRKhBhyyQ492GjgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cR6F7emx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdV6rVvm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2E11F000E9;
-	Tue, 16 Jun 2026 18:31:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cR6F7emx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49781F000E9;
+	Tue, 16 Jun 2026 18:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634712;
-	bh=q+gIjWqy1QTJltl8X1RHx+3Fypg0DLyUUXOUmCFm8do=;
+	s=korg; t=1781634717;
+	bh=gYPQPRF/RcJNgJ8g9sdCzSpBdr6qeMCf/+Tuui6KhgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fdV6rVvmnYYmL4CdZxQRcBerF6KHEp79hakU7uOh4hc1XWXVxG1AZdVZ4jqMOEW1/
-	 mscohTW7VI5SR2hzsK53QAJX+bsaiQ4JXBZ/K1LTw3CWjvpZfObk/KivePgS0nrcxz
-	 QCRPlWNNpeHtnqF7iQL5bkCs8mPry5ZRa2dCb06g=
+	b=cR6F7emxkYmplhABHGYb5EzhoH+Y5ScSfBV21C1Und/CSD4QhyhpT2QRjnosUOG+h
+	 SK0Ojp1hZqRza7FzynspYiSRpzELDmivN/tiZFF2yW6uAypdQu6HC6yV8S0gfzDqyb
+	 4uUv5s/HEO8MKKJ8tpZ84jwxts8RicSNpdU4Fhds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 317/411] spi: tegra114: fix controller deregistration
-Date: Tue, 16 Jun 2026 20:29:15 +0530
-Message-ID: <20260616145118.002992405@linuxfoundation.org>
+Subject: [PATCH 5.15 318/411] spi: tegra20-sflash: fix controller deregistration
+Date: Tue, 16 Jun 2026 20:29:16 +0530
+Message-ID: <20260616145118.054914297@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -54,49 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 9c9c27ff2058142d8f800de3186d6864184958de ]
+[ Upstream commit ad7310e983327f939dd6c4e801eab13238992572 ]
 
 Make sure to deregister the controller before disabling underlying
 resources like clocks during driver unbind.
 
-Fixes: 5c8096439600 ("spi: tegra114: use devm_spi_register_master()")
+Fixes: f12f7318c44a ("spi: tegra20-sflash: use devm_spi_register_master()")
 Cc: stable@vger.kernel.org	# 3.13
 Cc: Jingoo Han <jg1.han@samsung.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-22-johan@kernel.org
+Link: https://patch.msgid.link/20260410081757.503099-23-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
-[ renamed spi_controller/host APIs to spi_master/master equivalents and placed spi_master_put() before the existing return 0 in remove ]
+[ renamed spi_controller/host APIs to spi_master/master equivalents and switched devm_spi_register_master to spi_register_master ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-tegra114.c |    8 +++++++-
+ drivers/spi/spi-tegra20-sflash.c |    8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-tegra114.c
-+++ b/drivers/spi/spi-tegra114.c
-@@ -1417,7 +1417,7 @@ static int tegra_spi_probe(struct platfo
- 	}
+--- a/drivers/spi/spi-tegra20-sflash.c
++++ b/drivers/spi/spi-tegra20-sflash.c
+@@ -507,7 +507,7 @@ static int tegra_sflash_probe(struct pla
+ 	pm_runtime_put(&pdev->dev);
  
  	master->dev.of_node = pdev->dev.of_node;
 -	ret = devm_spi_register_master(&pdev->dev, master);
 +	ret = spi_register_master(master);
  	if (ret < 0) {
  		dev_err(&pdev->dev, "can not register to master err %d\n", ret);
- 		goto exit_free_irq;
-@@ -1443,6 +1443,10 @@ static int tegra_spi_remove(struct platf
+ 		goto exit_pm_disable;
+@@ -530,12 +530,18 @@ static int tegra_sflash_remove(struct pl
  	struct spi_master *master = platform_get_drvdata(pdev);
- 	struct tegra_spi_data	*tspi = spi_master_get_devdata(master);
+ 	struct tegra_sflash_data	*tsd = spi_master_get_devdata(master);
  
 +	spi_master_get(master);
 +
 +	spi_unregister_master(master);
 +
- 	free_irq(tspi->irq, tspi);
+ 	free_irq(tsd->irq, tsd);
  
- 	if (tspi->tx_dma_chan)
-@@ -1455,6 +1459,8 @@ static int tegra_spi_remove(struct platf
+ 	pm_runtime_disable(&pdev->dev);
  	if (!pm_runtime_status_suspended(&pdev->dev))
- 		tegra_spi_runtime_suspend(&pdev->dev);
+ 		tegra_sflash_runtime_suspend(&pdev->dev);
  
 +	spi_master_put(master);
 +
