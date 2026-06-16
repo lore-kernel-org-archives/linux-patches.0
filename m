@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C8744CF37;
-	Tue, 16 Jun 2026 16:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7DE46AF20;
+	Tue, 16 Jun 2026 16:16:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626589; cv=none; b=D3zN4/kILrgSlwLapJIMg6DIPdHJkQqUwptqBnk0vwKNOLInBHk2UjhL/mUvXDjOwY17xc27qQNUojXc3KuPxC7EJ5w/X7lVw8si5MC5XXJ+omJGphTyDmRbt4zufKZLXQAQVxVrAwtWcvWbCFY+3U67qHUYIWgJbwIU9N5GZdI=
+	t=1781626593; cv=none; b=i++J7WDWu8y8FyokSbuMxV479bVngdqpN2iPGFseaUE/dFZGBSmjACjBs0UNit6COBok6hOLQzpM2pDFaotQnbYE2oHCY2qDdlFYpB5B6JhXuoCq8YaPCufCV8zjS4GkTJrYQEyYGocE2Qpyc7hD8N0soibLReOVEiFrJldM3a0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626589; c=relaxed/simple;
-	bh=tcWfVe85J0hVSd5zdT7XiHkiWOM75gaobQx8IxPLPMA=;
+	s=arc-20240116; t=1781626593; c=relaxed/simple;
+	bh=0UE4D1omt/vvkZDzbjgCzfLNPVaLGpnqtdjTQSvw1F8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X+j9P5f9KRZm551nVX+8HLPa9ZertxDboj43kd1Fgt/9KInh2V8FYjkSJ6Z8mFTV7Ww3y0rH/aJLnDGXSQ8D9f9K4kyakRQKQBPYkxzS9r/yXDdTfDSQam/qsAbXqxGukEXyJMNdnc3V2374DJ+WOtPyj3paX6qlmnZgKijqr0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q96KC2xI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KY9lRr+ENCfl77XPOB4LnO3BX5+iWl7k/YwjXi90taYjNGMGpZSHOlAxYB+0LOSVoaFkbBGSRF08aPCrYt/NbuRS6iNpK5GFyuK0j/o81m1sx6kmy6oBX1SknID82xi3TXcIVw8tfs2aIHj7r3Sjh5bfcKpH4dW8pe7/R/B985I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ujBTEHl7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q96KC2xI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8481F000E9;
-	Tue, 16 Jun 2026 16:16:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujBTEHl7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03B151F000E9;
+	Tue, 16 Jun 2026 16:16:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626587;
-	bh=T7vsuJO6JPkkHAqvCCM2iDtqOgZKAGbJIV5z3s5IMIg=;
+	s=korg; t=1781626592;
+	bh=xehfJSBFPMZsFLhzUvbePGOZDrpnOh+To2ODgIfdcb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q96KC2xIAPeuAEiv4vHTJzbvBsEgpRKw8TP+TvGb0I+9ykQFcKw4mx1n0N24mnYeg
-	 el0JL8Yns4fHQcxLgg99p5Em8ibX2CQBCAp/HcL9yM7/ojQ/n2dAtNHqOdgeU2aSeO
-	 4PBdp/OgNPhfR3dHVXDk6nTwxPi8a/V5GH4CGzCA=
+	b=ujBTEHl7+5IN1+AdeZVe4w7ZAznS7LeUHlgqpuzHIk5RywTyI1LzDfTqIPdx65iL7
+	 g8meU6dsBWvTUlpZnGuPjWZgpzlG/zeZggyTWU72VJBegoWdfKnQNwkcUg1JRHJja8
+	 pjM03PUNojruwr2tYryaDG1VwA9hx34QRJh+Wy2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Yuanbin <xieyuanbin1@huawei.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 006/261] ARM: fix branch predictor hardening
-Date: Tue, 16 Jun 2026 20:27:24 +0530
-Message-ID: <20260616145045.314806480@linuxfoundation.org>
+Subject: [PATCH 6.12 024/261] dm cache policy smq: check allocation under invalidate lock
+Date: Tue, 16 Jun 2026 20:27:42 +0530
+Message-ID: <20260616145046.106543209@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,157 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit fd2dee1c6e2256f726ba33fd3083a7be0efc80d3 upstream.
+[ Upstream commit d3f0a606b9f278ece8a0df626ded9c4044071235 ]
 
-__do_user_fault() may be called with indeterminent interrupt enable
-state, which means we may be preemptive at this point. This causes
-problems when calling harden_branch_predictor(). For example, when
-called from a data abort, do_alignment_fault()->do_bad_area().
+commit 2d1f7b65f5de ("dm cache policy smq: fix missing locks in
+invalidating cache blocks") added mq->lock around the destructive part of
+smq_invalidate_mapping(), but left the e->allocated check outside the
+critical section.
 
-Move harden_branch_predictor() out of __do_user_fault() and into the
-calling contexts.
+That leaves a check-then-act race. Two concurrent invalidators can both
+observe e->allocated as true before either of them takes mq->lock. The
+first invalidator that acquires the lock removes the entry from the
+queues and hash table and then calls free_entry(), which clears
+e->allocated and puts the entry back on the free list. The second
+invalidator can then acquire mq->lock and continue with the stale result
+of the unlocked check.
 
-Moving it into do_kernel_address_page_fault(), we can be sure that
-interrupts will be disabled here.
+This can corrupt the SMQ queues or hash table by deleting an entry that
+is no longer on those structures. It can also hit the allocation check in
+free_entry() when the same entry is freed again.
 
-Converting do_translation_fault() to use do_kernel_address_page_fault()
-rather than do_bad_area() means that we keep branch predictor handling
-for translation faults. Interrupts will also be disabled at this call
-site.
+Move the allocation check under mq->lock so the predicate and the
+destructive operations are serialized by the same lock.
 
-do_sect_fault() needs special handling, so detect user mode accesses
-to kernel-addresses, and add an explicit call to branch predictor
-hardening.
-
-Finally, add branch predictor hardening to do_alignment() for the
-faulting case (user mode accessing kernel addresses) before interrupts
-are enabled.
-
-This should cover all cases where harden_branch_predictor() is called,
-ensuring that it is always has interrupts disabled, also ensuring that
-it is called early in each call path.
-
-Reviewed-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Tested-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Fixes: 2d1f7b65f5de ("dm cache policy smq: fix missing locks in invalidating cache blocks")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/alignment.c |  6 +++++-
- arch/arm/mm/fault.c     | 39 ++++++++++++++++++++++++++-------------
- 2 files changed, 31 insertions(+), 14 deletions(-)
+ drivers/md/dm-cache-policy-smq.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/mm/alignment.c b/arch/arm/mm/alignment.c
-index 3c6ddb1afdc463..812380f30ae36a 100644
---- a/arch/arm/mm/alignment.c
-+++ b/arch/arm/mm/alignment.c
-@@ -19,10 +19,11 @@
- #include <linux/init.h>
- #include <linux/sched/signal.h>
- #include <linux/uaccess.h>
-+#include <linux/unaligned.h>
- 
- #include <asm/cp15.h>
- #include <asm/system_info.h>
--#include <linux/unaligned.h>
-+#include <asm/system_misc.h>
- #include <asm/opcodes.h>
- 
- #include "fault.h"
-@@ -809,6 +810,9 @@ do_alignment(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
- 	int thumb2_32b = 0;
- 	int fault;
- 
-+	if (addr >= TASK_SIZE && user_mode(regs))
-+		harden_branch_predictor();
-+
- 	if (interrupts_enabled(regs))
- 		local_irq_enable();
- 
-diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
-index 8768c70fd885bc..16b5a7d214808f 100644
---- a/arch/arm/mm/fault.c
-+++ b/arch/arm/mm/fault.c
-@@ -199,9 +199,6 @@ __do_user_fault(unsigned long addr, unsigned int fsr, unsigned int sig,
- {
- 	struct task_struct *tsk = current;
- 
--	if (addr > TASK_SIZE)
--		harden_branch_predictor();
+diff --git a/drivers/md/dm-cache-policy-smq.c b/drivers/md/dm-cache-policy-smq.c
+index d81a87142cacfa..5f48bcbdaf4351 100644
+--- a/drivers/md/dm-cache-policy-smq.c
++++ b/drivers/md/dm-cache-policy-smq.c
+@@ -1590,18 +1590,22 @@ static int smq_invalidate_mapping(struct dm_cache_policy *p, dm_cblock_t cblock)
+ 	struct smq_policy *mq = to_smq_policy(p);
+ 	struct entry *e = get_entry(&mq->cache_alloc, from_cblock(cblock));
+ 	unsigned long flags;
 -
- #ifdef CONFIG_DEBUG_USER
- 	if (((user_debug & UDBG_SEGV) && (sig == SIGSEGV)) ||
- 	    ((user_debug & UDBG_BUS)  && (sig == SIGBUS))) {
-@@ -270,8 +267,10 @@ do_kernel_address_page_fault(struct mm_struct *mm, unsigned long addr,
- 		/*
- 		 * Fault from user mode for a kernel space address. User mode
- 		 * should not be faulting in kernel space, which includes the
--		 * vector/khelper page. Send a SIGSEGV.
-+		 * vector/khelper page. Handle the branch predictor hardening
-+		 * while interrupts are still disabled, then send a SIGSEGV.
- 		 */
-+		harden_branch_predictor();
- 		__do_user_fault(addr, fsr, SIGSEGV, SEGV_MAPERR, regs);
- 	} else {
- 		/*
-@@ -486,16 +485,20 @@ do_page_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
-  * We enter here because the first level page table doesn't contain
-  * a valid entry for the address.
-  *
-- * If the address is in kernel space (>= TASK_SIZE), then we are
-- * probably faulting in the vmalloc() area.
-+ * If this is a user address (addr < TASK_SIZE), we handle this as a
-+ * normal page fault. This leaves the remainder of the function to handle
-+ * kernel address translation faults.
-  *
-- * If the init_task's first level page tables contains the relevant
-- * entry, we copy the it to this task.  If not, we send the process
-- * a signal, fixup the exception, or oops the kernel.
-+ * Since user mode is not permitted to access kernel addresses, pass these
-+ * directly to do_kernel_address_page_fault() to handle.
-  *
-- * NOTE! We MUST NOT take any locks for this case. We may be in an
-- * interrupt or a critical region, and should only copy the information
-- * from the master page table, nothing more.
-+ * Otherwise, we're probably faulting in the vmalloc() area, so try to fix
-+ * that up. Note that we must not take any locks or enable interrupts in
-+ * this case.
-+ *
-+ * If vmalloc() fixup fails, that means the non-leaf page tables did not
-+ * contain an entry for this address, so handle this via
-+ * do_kernel_address_page_fault().
-  */
- #ifdef CONFIG_MMU
- static int __kprobes
-@@ -561,7 +564,8 @@ do_translation_fault(unsigned long addr, unsigned int fsr,
- 	return 0;
+-	if (!e->allocated)
+-		return -ENODATA;
++	int r = 0;
  
- bad_area:
--	do_bad_area(addr, fsr, regs);
-+	do_kernel_address_page_fault(current->mm, addr, fsr, regs);
+ 	spin_lock_irqsave(&mq->lock, flags);
++	if (!e->allocated) {
++		r = -ENODATA;
++		goto out;
++	}
+ 	// FIXME: what if this block has pending background work?
+ 	del_queue(mq, e);
+ 	h_remove(&mq->table, e);
+ 	free_entry(&mq->cache_alloc, e);
 +
- 	return 0;
++out:
+ 	spin_unlock_irqrestore(&mq->lock, flags);
+ 
+-	return 0;
++	return r;
  }
- #else					/* CONFIG_MMU */
-@@ -581,7 +585,16 @@ do_translation_fault(unsigned long addr, unsigned int fsr,
- static int
- do_sect_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
- {
-+	/*
-+	 * If this is a kernel address, but from user mode, then userspace
-+	 * is trying bad stuff. Invoke the branch predictor handling.
-+	 * Interrupts are disabled here.
-+	 */
-+	if (addr >= TASK_SIZE && user_mode(regs))
-+		harden_branch_predictor();
-+
- 	do_bad_area(addr, fsr, regs);
-+
- 	return 0;
- }
- #endif /* CONFIG_ARM_LPAE */
+ 
+ static uint32_t smq_get_hint(struct dm_cache_policy *p, dm_cblock_t cblock)
 -- 
 2.53.0
 
