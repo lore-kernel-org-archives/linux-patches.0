@@ -1,38 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E5035DA6A;
-	Tue, 16 Jun 2026 16:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E5132B138;
+	Tue, 16 Jun 2026 16:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628479; cv=none; b=FvXF/VmnBFkRS9Cj7lu6f7JoofmsYlTjpqtXG41cnAkivPKID4O5AZpt/aO6RckAEzktq6ORLLUsBQz9h69DvUtKo4Om00PTgeCO6T5Jc0G26g3EJwYKKkBMHeoGbeh2hqGuV1cmwi4Kp28B5eBcAtsHeue1sro7TqowhcPGMIw=
+	t=1781628485; cv=none; b=erNT5CVo6Sa6XTpvkonlBIo9123P2vEXSdX0MoaTssZ/ujvBsrPACDcn/IpBrZGrmCmTzISTTXmwEBeMOhBG+sZEKNHeQhZ9rkV6TXeUoVrKGSzYOvtHIR/dD5hVA/s8EQj58Zzme2pQ++4tGrTSdO2bJcqSapik1pljJn6modg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628479; c=relaxed/simple;
-	bh=M7Ut87/cbnzQagUsHbaDd/JdATTClmtX07B8xHN3oZU=;
+	s=arc-20240116; t=1781628485; c=relaxed/simple;
+	bh=DjbJM50BFplQxj0walVx0WuXTTjNz4YpNbewKSYZGL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PuPQoduM+t7CuI9irti28VmDWP/AnuBfzYpYf2KlSDS7LktZ0MC55Xn2DgCGLSX0cnJLd6sC0OJwlbRZNWWS1uOpngZqfcQn0avfVd7ATHt4ANfRV+gDdCdgLrBuce0WZLAJ2V43ykl1Fm/KcK2hlx0LT2o4a3i+4QqoGsK/VFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AitZx0i3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZUVPc+wOH9CqoY3dGGKCDZPMvv4qM4tlwoaWjuC2GpUZkBPN9fsrMWFqZX1zV1wFDUPU4Pptnaoe++rVSUDmISRdL8RBM0cTOy0FezeI9mCBB2v/Dk9HNHNOWf5Tdyks7VmShPo0C9ehR8r/8ica0+J+OqltXEyJ3nngwOknu+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adUEKCjD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AitZx0i3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39461F000E9;
-	Tue, 16 Jun 2026 16:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adUEKCjD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4291F000E9;
+	Tue, 16 Jun 2026 16:48:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628478;
-	bh=iG3pY954g0GE8ZMSZUbEnx28JqXD8HDZzf+2Aqvg74E=;
+	s=korg; t=1781628484;
+	bh=TQFjMQSaD7y+9b5YxIDHsjv1N5pGDp18cwIvnMqzacQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AitZx0i3bYgNTRTds1tBWGoQDEsXVQ24tnzbaFolck0SZ0sDai87Vjzt9Bz3n2MGP
-	 phIR9dWHyoGO5EcrzZmNCEoE0KLtAN8BZ1hJeXrFcyErCywwGnccOP2WzwbNgnAJH3
-	 W5qmjVUTUsow4DH843KIenZ0QYXIkfMAAqFapi5c=
+	b=adUEKCjDGp5HnNvKW3lmiKjMkd4fY30WF1YODmubxpx2LdyIZ/yr2AlsnAQefu5Dc
+	 RDhPONRl4hhOrrRwze2VqWl3tYj1dzjwoPPNI4jEfwdr1vUOuub58/+NGOMIWbjVFM
+	 Lewznghnwr/T2CRH8as+OpJd9etS+clDc5F4fEj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ben Hutchings <benh@debian.org>,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Subject: [PATCH 6.6 103/452] parport: Fix race between port and client registration
-Date: Tue, 16 Jun 2026 20:25:30 +0530
-Message-ID: <20260616145123.203808569@linuxfoundation.org>
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
+	Alexander Graf <graf@amazon.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Baoquan He <bhe@redhat.com>,
+	Borislav Betkov <bp@alien8.de>,
+	guoweikang <guoweikang.kernel@gmail.com>,
+	Henry Willard <henry.willard@oracle.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Bohac <jbohac@suse.cz>,
+	Joel Granados <joel.granados@kernel.org>,
+	Jonathan McDowell <noodles@fb.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Paul Webb <paul.x.webb@oracle.com>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Thomas Gleinxer <tglx@linutronix.de>,
+	Yifei Liu <yifei.l.liu@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Wenshan Lan <jetlan9@163.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 077/452] of/kexec: refactor ima_get_kexec_buffer() to use ima_validate_range()
+Date: Tue, 16 Jun 2026 20:25:04 +0530
+Message-ID: <20260616145121.942187679@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,109 +70,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Hutchings <benh@debian.org>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-commit ef15ccbb3e8640a723c42ad90eaf81d66ae02017 upstream.
+[ Upstream commit 4d02233235ed0450de9c10fcdcf3484e3c9401ce ]
 
-The parport subsystem registers port devices before they are fully
-initialised, resulting in a race condition where client drivers such
-as lp can attach to ports that are not completely initialised or even
-being torn down.
+Refactor the OF/DT ima_get_kexec_buffer() to use a generic helper to
+validate the address range.  No functional change intended.
 
-When the port and client drivers are built as modules and loaded
-around the same time during boot, this occasionally results in a
-crash.  I was able to make this happen reliably in a VM with a
-PC-style parallel port by patching parport_pc to fail probing:
-
-> --- a/drivers/parport/parport_pc.c
-> +++ b/drivers/parport/parport_pc.c
-> @@ -2069,7 +2069,7 @@ static struct parport *__parport_pc_probe_port(unsigned long int base,
->  	if (!p)
->  		goto out3;
->
-> -	base_res = request_region(base, 3, p->name);
-> +	base_res = NULL;
->  	if (!base_res)
->  		goto out4;
->
-
-and then running:
-
-    while true; do
-        modprobe lp & modprobe parport_pc
-	wait
-	rmmod lp parport_pc
-    done
-
-for a few seconds.
-
-In the long term I think port registration should be changed to put
-the call to device_add() inside parport_announce_port(), but since the
-latter currently cannot fail this will require changing all port
-drivers.
-
-For now, add a flag to indicate whether a port has been "announced"
-and only try to attach client drivers to ports when the flag is set.
-
-Fixes: 6fa45a226897 ("parport: add device-model to parport subsystem")
-Closes: https://bugs.debian.org/1130365
-Closes: https://lore.kernel.org/all/6ba903ad-9897-42bb-8c2d-337385cc3746@molgen.mpg.de/
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ben Hutchings <benh@debian.org>
-Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Link: https://patch.msgid.link/afo6uBv68GDevbMD@decadent.org.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20251231061609.907170-3-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
+Cc: Alexander Graf <graf@amazon.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Borislav Betkov <bp@alien8.de>
+Cc: guoweikang <guoweikang.kernel@gmail.com>
+Cc: Henry Willard <henry.willard@oracle.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Bohac <jbohac@suse.cz>
+Cc: Joel Granados <joel.granados@kernel.org>
+Cc: Jonathan McDowell <noodles@fb.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Paul Webb <paul.x.webb@oracle.com>
+Cc: Sohil Mehta <sohil.mehta@intel.com>
+Cc: Sourabh Jain <sourabhjain@linux.ibm.com>
+Cc: Thomas Gleinxer <tglx@linutronix.de>
+Cc: Yifei Liu <yifei.l.liu@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Wenshan Lan <jetlan9@163.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/parport/share.c |   11 +++++++++--
- include/linux/parport.h |    1 +
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ drivers/of/kexec.c | 15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
 
---- a/drivers/parport/share.c
-+++ b/drivers/parport/share.c
-@@ -223,10 +223,14 @@ static void get_lowlevel_driver(void)
- static int port_check(struct device *dev, void *dev_drv)
+diff --git a/drivers/of/kexec.c b/drivers/of/kexec.c
+index 3b98a57f1f0743..23fde2d032e6d9 100644
+--- a/drivers/of/kexec.c
++++ b/drivers/of/kexec.c
+@@ -128,7 +128,6 @@ int __init ima_get_kexec_buffer(void **addr, size_t *size)
  {
- 	struct parport_driver *drv = dev_drv;
-+	struct parport *port;
+ 	int ret, len;
+ 	unsigned long tmp_addr;
+-	unsigned long start_pfn, end_pfn;
+ 	size_t tmp_size;
+ 	const void *prop;
  
- 	/* only send ports, do not send other devices connected to bus */
--	if (is_parport(dev))
--		drv->match_port(to_parport_dev(dev));
-+	if (is_parport(dev)) {
-+		port = to_parport_dev(dev);
-+		if (test_bit(PARPORT_ANNOUNCED, &port->devflags))
-+			drv->match_port(port);
-+	}
- 	return 0;
- }
+@@ -144,17 +143,9 @@ int __init ima_get_kexec_buffer(void **addr, size_t *size)
+ 	if (!tmp_size)
+ 		return -ENOENT;
  
-@@ -553,6 +557,7 @@ void parport_announce_port(struct parpor
- 		if (slave)
- 			attach_driver_chain(slave);
- 	}
-+	set_bit(PARPORT_ANNOUNCED, &port->devflags);
- 	mutex_unlock(&registration_lock);
- }
- EXPORT_SYMBOL(parport_announce_port);
-@@ -582,6 +587,8 @@ void parport_remove_port(struct parport
+-	/*
+-	 * Calculate the PFNs for the buffer and ensure
+-	 * they are with in addressable memory.
+-	 */
+-	start_pfn = PHYS_PFN(tmp_addr);
+-	end_pfn = PHYS_PFN(tmp_addr + tmp_size - 1);
+-	if (!page_is_ram(start_pfn) || !page_is_ram(end_pfn)) {
+-		pr_warn("IMA buffer at 0x%lx, size = 0x%zx beyond memory\n",
+-			tmp_addr, tmp_size);
+-		return -EINVAL;
+-	}
++	ret = ima_validate_range(tmp_addr, tmp_size);
++	if (ret)
++		return ret;
  
- 	mutex_lock(&registration_lock);
- 
-+	clear_bit(PARPORT_ANNOUNCED, &port->devflags);
-+
- 	/* Spread the word. */
- 	detach_driver_chain(port);
- 
---- a/include/linux/parport.h
-+++ b/include/linux/parport.h
-@@ -242,6 +242,7 @@ struct parport {
- 
- 	unsigned long devflags;
- #define PARPORT_DEVPROC_REGISTERED	0
-+#define PARPORT_ANNOUNCED		1
- 	struct pardevice *proc_device;	/* Currently register proc device */
- 
- 	struct list_head full_list;
+ 	*addr = __va(tmp_addr);
+ 	*size = tmp_size;
+-- 
+2.53.0
+
 
 
