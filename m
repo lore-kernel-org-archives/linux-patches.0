@@ -1,40 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040AC47A0CD;
-	Tue, 16 Jun 2026 17:39:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8C23876CF;
+	Tue, 16 Jun 2026 17:39:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631592; cv=none; b=HN+fsMH+c2J7NHpzKeilFjQmR+UhtrCkL9eCClxlMj3OqYp4rQYnK6F6F1ZoYOQpam+3t7UUUimLbpU7ac3r9Mx8tQTbuWJO3W2iM7xwciZX434I7NETbSH0T1k/eM/qy4kRpgtPPU0lp1aEBVhuQUDaKPRIvTT0BzqOtQQyoYM=
+	t=1781631597; cv=none; b=EG+ypw0vKGw5Kmlkccvk0L196AfQtme3+k3cppTIALD4ZZfVAYut50yvm3qmjAlzOlALrRryjHjEeSYEMMqIBcCdiz5LZ6z8fve/FkSVVsbTW+ORBMS5A5eHxFHfmehi5W/5+djIEVflKvU8MPWr+nrBntmcIT9ea4q6OlIk3pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631592; c=relaxed/simple;
-	bh=jFbiGCLB0ua/nTPltSAAHbq+x862qNnbZotasOp7x6s=;
+	s=arc-20240116; t=1781631597; c=relaxed/simple;
+	bh=M85bzhLnLmkIKRX/wR7n19Gqoh3FSCnFrP/tVIBEwWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cZ/m970x8xnQakjnndvjt6smb1nvYJc4NtACflx+7ll0GiG6xxNxCHCPI7Ko4/BHzpy4sq891A6TYaDSroGlUkRtkcu4SY7vV+X4ybHxzCSK9VsOLHp/g52qGtX++UCts+FobN1z5olMgcdfDfP9uCW5mxQ5udfR+w8yUZbrm5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFmuutDn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=APRXzsYOnN50llsFfbNnJsJ5fStQRs/XzwkwPBIOqlHqprFsmURnfrTCczBwvEi6xVcRJIbRHX5Gf906G3e064Si14aSPQgr6CBb/qsIKaEbofQMmatJxgx697tvna/bLzc4ScaPCI4kuvZKSpQTY/oHvMFsb7PTv7wZGLlv3Us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zp1jFsYk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFmuutDn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 085051F000E9;
-	Tue, 16 Jun 2026 17:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zp1jFsYk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7C21F000E9;
+	Tue, 16 Jun 2026 17:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631590;
-	bh=JywA4c2ZQw4vIoB8l3YNKtwaOPW7OnJTblxp4A8lBgQ=;
+	s=korg; t=1781631596;
+	bh=uVyo5MzyYcNcztjcwQW4Zhg8C6YvQP/GRxpYlrX7DZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SFmuutDnoxO5vNuzRQ+KMNkJntAEJ0dKWfhX8UZ7dmWBu6qz9dCqWvSselju91Q8r
-	 dXxI4PQdL5B+/mWkYiz7+8LmyK39iYulPXh/LKnvwWxUn9Lolca0nGECECbn1KB+TM
-	 88Hbd1Tg0VGxsUDIZ/fpYR14Djezla3p40Medwyo=
+	b=Zp1jFsYktzU/Pg0i8T3DYJCWR23iJpd6tt9QztNLIgK69LDE3zwKjEA9AN4dsARvw
+	 jiuZ0IOJDpV2cFYO+FW0pLkKVErBOJlBaI6UH+E+wUIT9RtFUyU0rIJgAncsIg5cUO
+	 9YVfGiOV8ItdPWaw7bVNafuFmzMrSo2aroQrPQ1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Oscar Maes <oscmaes92@gmail.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Tamir Shahar <tamirthesis@gmail.com>,
+	Amit Klein <aksecurity@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Song Liu <song@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Jiri Olsa <jolsa@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 207/522] pcnet32: stop holding device spin lock during napi_complete_done
-Date: Tue, 16 Jun 2026 20:25:54 +0530
-Message-ID: <20260616145135.748228459@linuxfoundation.org>
+Subject: [PATCH 6.1 243/522] tcp: restrict SO_ATTACH_FILTER to priv users
+Date: Tue, 16 Jun 2026 20:26:30 +0530
+Message-ID: <20260616145137.349922250@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,56 +65,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oscar Maes <oscmaes92@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 73bf3cca7de6a73f53b6a52dc3b1c82ae5667a4d ]
+[ Upstream commit 5d39580f68e6ddeedd15e587282207489dfb3da2 ]
 
-napi_complete_done may call gro_flush_normal (though not currently, as GRO
-is unsupported at the moment), which may result in packet TX. This will
-eventually result in calling pcnet32_start_xmit - resulting in a deadlock
-while trying to re-acquire the already locked spin lock.
+This patch restricts the use of SO_ATTACH_FILTER (cBPF) on TCP sockets
+to users with CAP_NET_ADMIN capability.
 
-It is safe to split the spinlock block into two, because the hardware
-registers are still protected from concurrent access, and the two blocks
-perform unrelated operations that don't need to happen atomically.
+This blocks potential side-channel attack where an unprivileged application
+attaches a filter to leak TCP sequence/acknowledgment numbers.
 
-Fixes: 5b2ec6f2be51 ("pcnet32: use napi_complete_done()")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Oscar Maes <oscmaes92@gmail.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Link: https://patch.msgid.link/20260528140320.5556-1-oscmaes92@gmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: Tamir Shahar <tamirthesis@gmail.com>
+Reported-by: Amit Klein <aksecurity@gmail.com>
+Cc: Willem de Bruijn <willemb@google.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Andrii Nakryiko <andrii@kernel.org>
+Cc: Martin KaFai Lau <martin.lau@linux.dev>
+Cc: Eduard Zingerman <eddyz87@gmail.com>
+Cc: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Cc: Song Liu <song@kernel.org>
+Cc: Yonghong Song <yonghong.song@linux.dev>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: John Fastabend <john.fastabend@gmail.com>
+Cc: Stanislav Fomichev <sdf@fomichev.me>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pcnet32.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/core/sock.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/amd/pcnet32.c b/drivers/net/ethernet/amd/pcnet32.c
-index 72db9f9e7beeae..81cb83caf62a15 100644
---- a/drivers/net/ethernet/amd/pcnet32.c
-+++ b/drivers/net/ethernet/amd/pcnet32.c
-@@ -1403,8 +1403,10 @@ static int pcnet32_poll(struct napi_struct *napi, int budget)
- 		pcnet32_restart(dev, CSR0_START);
- 		netif_wake_queue(dev);
- 	}
-+	spin_unlock_irqrestore(&lp->lock, flags);
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 62411c8870e855..5f79f0b78321c8 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -1294,6 +1294,11 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
+ 	case SO_ATTACH_FILTER: {
+ 		struct sock_fprog fprog;
  
- 	if (work_done < budget && napi_complete_done(napi, work_done)) {
-+		spin_lock_irqsave(&lp->lock, flags);
- 		/* clear interrupt masks */
- 		val = lp->a->read_csr(ioaddr, CSR3);
- 		val &= 0x00ff;
-@@ -1412,9 +1414,9 @@ static int pcnet32_poll(struct napi_struct *napi, int budget)
- 
- 		/* Set interrupt enable. */
- 		lp->a->write_csr(ioaddr, CSR0, CSR0_INTEN);
-+		spin_unlock_irqrestore(&lp->lock, flags);
- 	}
- 
--	spin_unlock_irqrestore(&lp->lock, flags);
- 	return work_done;
- }
- 
++		if (sk_is_tcp(sk) &&
++		    !sockopt_ns_capable(sock_net(sk)->user_ns, CAP_NET_ADMIN)) {
++			ret = -EPERM;
++			break;
++		}
+ 		ret = copy_bpf_fprog_from_user(&fprog, optval, optlen);
+ 		if (!ret)
+ 			ret = sk_attach_filter(&fprog, sk);
 -- 
 2.53.0
 
