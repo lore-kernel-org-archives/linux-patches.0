@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68F83A5E91;
-	Tue, 16 Jun 2026 18:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3153935292A;
+	Tue, 16 Jun 2026 18:20:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634043; cv=none; b=NrlDsamqFcKLBCQtTDicyizf8Uy2COlAa1HSPGXGyoRvzEMNTXT3Zs16mm2W97bHyAoOesYR/dgPtIqzmf1KPBa+SguVSrje8WInYCgRAty2knMg1d8s+FwSBX2lpjhLsv6yWb7izBuvQsV8eGOvI3c0UnCZSIyRKT6tPDp9ktQ=
+	t=1781634049; cv=none; b=vGOv7Exut+uaA1YF5OjnRES2i3gHAa392fHvkdWreS9Z2++GgiljrRfXNG1e18Sr5Vs+xyKZJAkN6xKoXbE0u7qdE+tystJOomaI3HMwGqwhXDcwQx91ffCRg8traaakLgeG7YAluPsbxflW4GJEFdFPP+qjJbQLtWaPV6v036k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634043; c=relaxed/simple;
-	bh=Gb5yb/2NV7zA2QcQ2uIPHfvr5F0c+tIDUrYb/Xr+uDM=;
+	s=arc-20240116; t=1781634049; c=relaxed/simple;
+	bh=7/XV1tIBY8w1MrUFj0BAZsXsXmDaHzlxPcv9+ljI7kk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=szN+wdMz7Elw4enqfXmIN5tKOwdUZhHSU5wgCCtftHGzGhcfOlRrI/Ymzr6S5v3gJG+osCsv83/CsltPDODxlCNQ0PvcduuGSdTINF8fifsFMIirZeQcD8hVzNLvhByR5Jvb+3mGn9xMH/P3JeBiOjqADQiLfVgiPlA0ixNyDbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=se93lB96; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cOqbw1F5FHGz/eFiX8SyCUD0xc4WxeNo2/Bv3oZxon5VCvYKj5tSqpLf+aPNvTcEJZkSwtoxkF2rifJxjZ3wA1pfNRqkIcQfg77ElLulV6YXeb/by+Uc7ONVaGJbq5tEZNro9Gc9kAGuunoFL/nxbBrnRmWL05bjTtxd8nEzhu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5+Mms66; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="se93lB96"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B751F000E9;
-	Tue, 16 Jun 2026 18:20:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5+Mms66"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32FD71F000E9;
+	Tue, 16 Jun 2026 18:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634042;
-	bh=V4/lvnAkPZDP+nr0r9sk9mIVOkYbszB0iOwKRfk3Xdw=;
+	s=korg; t=1781634048;
+	bh=kluWo6FEPJzpAtWxNyePsS5USJH9NFi3kYSPOR7qwAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=se93lB96IRrz0WUSpX1QIwiSJoA4pD9Vj/xgbgTFIWcky5bgZevcJ09fbQez4c2it
-	 BuYWL9s4KGXOGl5ZJt+yyf0G2H1a/g9yCtgLhUQWSWQTyf8EIdhOnpPVHzAq2ll0zb
-	 MOzvzKm3xI8o+cCIQ9mgD/cPRqGiTLDEJ8cesnIQ=
+	b=P5+Mms66E3y6nWrF0wc9cBtdVWB70OskpNMuksvEnY92rAIhlq2TN1GKebu+2gBam
+	 av4mDrGZox5vy4oEcYYvMhnaSVhwAQwPJw3iVP8KJ5VqCm5yVF+k3DGPbzxT/68k3m
+	 S4D4m3wPv+CLPxVrd1pTpw+mB/udQY0sLV7H5FBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Allison Henderson <achender@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 189/411] net/rds: fix NULL deref in rds_ib_send_cqe_handler() on masked atomic completion
-Date: Tue, 16 Jun 2026 20:27:07 +0530
-Message-ID: <20260616145110.750140088@linuxfoundation.org>
+Subject: [PATCH 5.15 190/411] ip6_vti: fix incorrect tunnel matching in vti6_tnl_lookup()
+Date: Tue, 16 Jun 2026 20:27:08 +0530
+Message-ID: <20260616145110.804165879@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -53,65 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 34080db3e70ddf94c38512ad2331e3c3afca6cc1 ]
+[ Upstream commit a5c0359f5cbc51a2e2b114d6041e0f3c73f903e9 ]
 
-rds_ib_xmit_atomic() always programs a masked atomic opcode
-(IB_WR_MASKED_ATOMIC_CMP_AND_SWP or IB_WR_MASKED_ATOMIC_FETCH_AND_ADD)
-for every RDS atomic cmsg.  But the completion-side switch in
-rds_ib_send_unmap_op() only handles the non-masked opcodes, so a masked
-atomic completion falls through to default and returns rm == NULL while
-send->s_op is left set.  rds_ib_send_cqe_handler() then dereferences the
-NULL rm via rm->m_final_op, oopsing in softirq context.  An unprivileged
-AF_RDS sendmsg() of an atomic cmsg over an active RDS/IB connection
-triggers it; on hardware that natively accepts masked atomics (mlx4,
-mlx5) no extra setup is needed.
+In vti6_tnl_lookup(), when an exact match for a tunnel fails,
+the code falls back to searching for wildcard tunnels:
 
-  RDS/IB: rds_ib_send_unmap_op: unexpected opcode 0xd in WR!
-  Oops: general protection fault [#1] SMP KASAN
-  KASAN: null-ptr-deref in range [0x0000000000000190-0x0000000000000197]
-  RIP: rds_ib_send_cqe_handler+0x25c/0xb10 (net/rds/ib_send.c:282)
-  Call Trace:
-   <IRQ>
-   rds_ib_send_cqe_handler (net/rds/ib_send.c:282)
-   poll_scq (net/rds/ib_cm.c:274)
-   rds_ib_tasklet_fn_send (net/rds/ib_cm.c:294)
-   tasklet_action_common (kernel/softirq.c:943)
-   handle_softirqs (kernel/softirq.c:573)
-   run_ksoftirqd (kernel/softirq.c:479)
-   </IRQ>
-  Kernel panic - not syncing: Fatal exception in interrupt
+- Tunnels matching the packet's local address, with any remote address
+  wildcard remote).
 
-Handle the masked atomic opcodes in the same case as the non-masked
-ones: they map to the same struct rds_message.atomic union member, so
-the existing container_of()/rds_ib_send_unmap_atomic() body is correct
-for them.
+- Tunnels matching the packet's remote address, with any local address
+  (wildcard local).
 
-Fixes: 20c72bd5f5f9 ("RDS: Implement masked atomic operations")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260606192447.1179255-2-bestswngs@gmail.com
+However, vti6 stores all these different types of tunnels in the same
+hash table (ip6n->tnls_r_l) prone to hash collisions.
+
+The bug is that the fallback search loops in vti6_tnl_lookup() were
+missing checks to ensure that the candidate tunnel actually has
+a wildcard address.
+
+Fixes: fbe68ee87522 ("vti6: Add a lookup method for tunnels with wildcard endpoints.")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Link: https://patch.msgid.link/20260608164613.933023-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/ib_send.c | 2 ++
+ net/ipv6/ip6_vti.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/net/rds/ib_send.c b/net/rds/ib_send.c
-index 4190b90ff3b18a..1909cd440a4b66 100644
---- a/net/rds/ib_send.c
-+++ b/net/rds/ib_send.c
-@@ -170,6 +170,8 @@ static struct rds_message *rds_ib_send_unmap_op(struct rds_ib_connection *ic,
- 		break;
- 	case IB_WR_ATOMIC_FETCH_AND_ADD:
- 	case IB_WR_ATOMIC_CMP_AND_SWP:
-+	case IB_WR_MASKED_ATOMIC_FETCH_AND_ADD:
-+	case IB_WR_MASKED_ATOMIC_CMP_AND_SWP:
- 		if (send->s_op) {
- 			rm = container_of(send->s_op, struct rds_message, atomic);
- 			rds_ib_send_unmap_atomic(ic, send->s_op, wc_status);
+diff --git a/net/ipv6/ip6_vti.c b/net/ipv6/ip6_vti.c
+index 4f5093b36b3e36..077aae4b1bb332 100644
+--- a/net/ipv6/ip6_vti.c
++++ b/net/ipv6/ip6_vti.c
+@@ -105,6 +105,7 @@ vti6_tnl_lookup(struct net *net, const struct in6_addr *remote,
+ 	hash = HASH(&any, local);
+ 	for_each_vti6_tunnel_rcu(ip6n->tnls_r_l[hash]) {
+ 		if (ipv6_addr_equal(local, &t->parms.laddr) &&
++		    ipv6_addr_any(&t->parms.raddr) &&
+ 		    (t->dev->flags & IFF_UP))
+ 			return t;
+ 	}
+@@ -112,6 +113,7 @@ vti6_tnl_lookup(struct net *net, const struct in6_addr *remote,
+ 	hash = HASH(remote, &any);
+ 	for_each_vti6_tunnel_rcu(ip6n->tnls_r_l[hash]) {
+ 		if (ipv6_addr_equal(remote, &t->parms.raddr) &&
++		    ipv6_addr_any(&t->parms.laddr) &&
+ 		    (t->dev->flags & IFF_UP))
+ 			return t;
+ 	}
 -- 
 2.53.0
 
