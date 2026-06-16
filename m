@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4D813777E;
-	Tue, 16 Jun 2026 18:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5180413777E;
+	Tue, 16 Jun 2026 18:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635373; cv=none; b=ngeUQ8D0PbuY3AdADCGJVqr8OcoEgFwU0WezL1CI37FMmAv1cUhi6nhFJVvYCqs0F8ucmodNGRj3iRk7q3B1wMAdEFkOjnzfPNNlag/1PzcvYgfG0gmfnktduJd+UXVakaMZfszJyulxV0ToDscv34j5H6HWrERTxUV4XeQH0So=
+	t=1781635378; cv=none; b=T7J9tW5d4TIDVgC1Ls1ywFE+dVww17ICG9EHjQwBPEfcWQaYRh8Rzm2UFyjBL1v39zBCF5gtaGTFohxt9QU0OZdAA1Wnm2iLmvhfbwZDHCkxZ2Xj74ewqQdkNlqyDgpPm7+mwQNN17buxVGGbIgQ2Nxx+qeAaT1atMlE5UGZQcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635373; c=relaxed/simple;
-	bh=q7pGBKRCbg5yk8YRyzD+/uvpYE30IUIp/Mhrte8uO7Q=;
+	s=arc-20240116; t=1781635378; c=relaxed/simple;
+	bh=LtD4QOhxZmSC/xYLVNqaPaDNJDDqoqOVAiQrdJLp/5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J5W2lzdU4HvcRVuoimp/lqC+BRLfG+0ggTzpwTo73ig9wy/6x6Zhd4FTfWZDjbw4+Tqdv8SOI8ls3g2h8w+Nl7NU5yBjloRL+d2BjSFYzqkLlS6pmebyngb4g7Mu2c029oS8wLmfsdnmqeWqBeFlp56k65lx0eli9Vu9yOqUfz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0qXUcHbw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O3/lpIdc/0yARERLGPhhQiJ3gLGdx+po1VeYyo3aiszKtotqTLrUK22+m1UGRqlGk3VlloqAHZD/ah2FXgOMQPrJQQAOlTLktdRrzDaD2+CMNnwQbxxsbZAozwr5RcBOJ1rM+RreZfcPFOqUDTcmE2OHWIh3aPpb2i2YUuSUzlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QU2ZG0J4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qXUcHbw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30CF1F000E9;
-	Tue, 16 Jun 2026 18:42:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QU2ZG0J4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C6E1F000E9;
+	Tue, 16 Jun 2026 18:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635372;
-	bh=ua4pnnsOAqyStsgwKmNxAPgAEdOGZymyOnI83HR8hyg=;
+	s=korg; t=1781635376;
+	bh=UZan8uSFREe3XjJDkCuhoh5iumsXhvp2KAezoyJJ2Ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0qXUcHbw0TAjAXTTTg+mDpOMwg5z6wBZAcYUMuQJT72JuXxfd4Nhi5+U17WjcSo4X
-	 nnLziZkZLKxOncpFLnnYkkkuCod2bPk5sF+shTeDeMyYa0MC3glbQ/n4fwjWUmzf23
-	 IhrViH6xYXWIgmsrWhQXgaRSJTQeGWNaIleVNQF4=
+	b=QU2ZG0J48ALkUUS3c62zTKxeEZenmdgIDVHJtjcpaSG2yMluHfjYbYPQPWNRdTfgP
+	 5+naU7YLv4vWwhmEVHyPCnyZRI5ocJw1EgVH0akWeESKnRYv1oLI6MzjN/KmJgo8a9
+	 SxjygINJ3cvVKzDnGKfq5rUJP4tYuh/vWHdhcFOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
+	Petr Machata <petrm@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Ben Hutchings <benh@debian.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 036/342] batman-adv: tp_meter: avoid role confusion in tp_list
-Date: Tue, 16 Jun 2026 20:25:32 +0530
-Message-ID: <20260616145049.935960564@linuxfoundation.org>
+Subject: [PATCH 5.10 037/342] selftests: forwarding: lib: Add helpers for checksum handling
+Date: Tue, 16 Jun 2026 20:25:33 +0530
+Message-ID: <20260616145049.982981275@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -51,194 +53,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Petr Machata <petrm@nvidia.com>
 
-commit ff24f2ecfd94c07a2b89bac497433e3b23271cac upstream.
+commit 952e0ee38c7215c45192d8c899acd1830873f28b upstream.
 
-Session lookups in tp_list matched only on destination address (and
-optionally session ID), leaving role validation to the caller. If two
-sessions with the same other_end coexisted (one as sender, one as receiver)
-a lookup could silently return the wrong one, causing the caller's role to
-bail out early, potentially skipping necessary cleanup.
+In order to generate IGMPv3 and MLDv2 packets on the fly, we will need
+helpers to calculate the packet checksum.
 
-Move the role check into the lookup functions themselves so the correct
-entry is always returned, or none at all. Since batadv_tp_start()
-legitimately needs to detect any active session to a destination regardless
-of role, introduce a dedicated helper for that case rather than bending the
-existing lookup semantics.
+The approach presented in this patch revolves around payload templates
+for mausezahn. These are mausezahn-like payload strings (01:23:45:...)
+with possibly one 2-byte sequence replaced with the word PAYLOAD. The
+main function is payload_template_calc_checksum(), which calculates
+RFC 1071 checksum of the message. There are further helpers to then
+convert the checksum to the payload format, and to expand it.
 
-Cc: stable@kernel.org
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+For IPv6, MLDv2 message checksum is computed using a pseudoheader that
+differs from the header used in the payload itself. The fact that the
+two messages are different means that the checksum needs to be
+returned as a separate quantity, instead of being expanded in-place in
+the payload itself. Furthermore, the pseudoheader includes a length of
+the message. Much like the checksum, this needs to be expanded in
+mausezahn format. And likewise for number of addresses for (S,G)
+entries. Thus we have several places where a computed quantity needs
+to be presented in the payload format. Add a helper u16_to_bytes(),
+which will be used in all these cases.
+
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 02cb2e6bacbb ("selftests: forwarding: vxlan_bridge_1d: fix test failure with br_netfilter enabled")
+[bwh: Backported to 5.10: adjust context]
+Signed-off-by: Ben Hutchings <benh@debian.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/tp_meter.c | 59 ++++++++++++++++++++++++---------------
- 1 file changed, 36 insertions(+), 23 deletions(-)
+ tools/testing/selftests/net/forwarding/lib.sh | 56 +++++++++++++++++++
+ 1 file changed, 56 insertions(+)
 
-diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
-index b93cb86129769c..ebefad5822eea0 100644
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -253,6 +253,7 @@ static void batadv_tp_batctl_error_notify(enum batadv_tp_meter_reason reason,
-  * batadv_tp_list_find() - find a tp_vars object in the global list
-  * @bat_priv: the bat priv with all the soft interface information
-  * @dst: the other endpoint MAC address to look for
-+ * @role: role of the session
-  *
-  * Look for a tp_vars object matching dst as end_point and return it after
-  * having increment the refcounter. Return NULL is not found
-@@ -260,7 +261,8 @@ static void batadv_tp_batctl_error_notify(enum batadv_tp_meter_reason reason,
-  * Return: matching tp_vars or NULL when no tp_vars with @dst was found
-  */
- static struct batadv_tp_vars *batadv_tp_list_find(struct batadv_priv *bat_priv,
--						  const u8 *dst)
-+						  const u8 *dst,
-+						  enum batadv_tp_meter_role role)
+diff --git a/tools/testing/selftests/net/forwarding/lib.sh b/tools/testing/selftests/net/forwarding/lib.sh
+index dfb41db7fbe481..2825c779ef30e0 100644
+--- a/tools/testing/selftests/net/forwarding/lib.sh
++++ b/tools/testing/selftests/net/forwarding/lib.sh
+@@ -1298,3 +1298,59 @@ tcpdump_show()
  {
- 	struct batadv_tp_vars *pos, *tp_vars = NULL;
- 
-@@ -269,6 +271,9 @@ static struct batadv_tp_vars *batadv_tp_list_find(struct batadv_priv *bat_priv,
- 		if (!batadv_compare_eth(pos->other_end, dst))
- 			continue;
- 
-+		if (pos->role != role)
-+			continue;
-+
- 		/* most of the time this function is invoked during the normal
- 		 * process..it makes sens to pay more when the session is
- 		 * finished and to speed the process up during the measurement
-@@ -284,12 +289,33 @@ static struct batadv_tp_vars *batadv_tp_list_find(struct batadv_priv *bat_priv,
- 	return tp_vars;
+ 	tcpdump -e -n -r $capfile 2>&1
  }
- 
-+/**
-+ * batadv_tp_list_active() - check if session from/to destination is ongoing
-+ * @bat_priv: the bat priv with all the mesh interface information
-+ * @dst: the other endpoint MAC address to look for
-+ *
-+ * Return: if matching session with @dst was found
-+ */
-+static bool batadv_tp_list_active(struct batadv_priv *bat_priv, const u8 *dst)
-+	__must_hold(&bat_priv->tp_list_lock)
++
++u16_to_bytes()
 +{
-+	struct batadv_tp_vars *tp_vars;
++	local u16=$1; shift
 +
-+	hlist_for_each_entry_rcu(tp_vars, &bat_priv->tp_list, list) {
-+		if (batadv_compare_eth(tp_vars->other_end, dst))
-+			return true;
-+	}
-+
-+	return false;
++	printf "%04x" $u16 | sed 's/^/000/;s/^.*\(..\)\(..\)$/\1:\2/'
 +}
 +
- /**
-  * batadv_tp_list_find_session() - find tp_vars session object in the global
-  *  list
-  * @bat_priv: the bat priv with all the soft interface information
-  * @dst: the other endpoint MAC address to look for
-  * @session: session identifier
-+ * @role: role of the session
-  *
-  * Look for a tp_vars object matching dst as end_point, session as tp meter
-  * session and return it after having increment the refcounter. Return NULL
-@@ -299,7 +325,7 @@ static struct batadv_tp_vars *batadv_tp_list_find(struct batadv_priv *bat_priv,
-  */
- static struct batadv_tp_vars *
- batadv_tp_list_find_session(struct batadv_priv *bat_priv, const u8 *dst,
--			    const u8 *session)
-+			    const u8 *session, enum batadv_tp_meter_role role)
- {
- 	struct batadv_tp_vars *pos, *tp_vars = NULL;
- 
-@@ -311,6 +337,9 @@ batadv_tp_list_find_session(struct batadv_priv *bat_priv, const u8 *dst,
- 		if (memcmp(pos->session, session, sizeof(pos->session)) != 0)
- 			continue;
- 
-+		if (pos->role != role)
-+			continue;
++# Given a mausezahn-formatted payload (colon-separated bytes given as %02x),
++# possibly with a keyword CHECKSUM stashed where a 16-bit checksum should be,
++# calculate checksum as per RFC 1071, assuming the CHECKSUM field (if any)
++# stands for 00:00.
++payload_template_calc_checksum()
++{
++	local payload=$1; shift
 +
- 		/* most of the time this function is invoked during the normal
- 		 * process..it makes sense to pay more when the session is
- 		 * finished and to speed the process up during the measurement
-@@ -654,13 +683,10 @@ static void batadv_tp_recv_ack(struct batadv_priv *bat_priv,
- 
- 	/* find the tp_vars */
- 	tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
--					      icmp->session);
-+					      icmp->session, BATADV_TP_SENDER);
- 	if (unlikely(!tp_vars))
- 		return;
- 
--	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
--		goto out;
--
- 	if (unlikely(batadv_tp_sender_stopped(tp_vars)))
- 		goto out;
- 
-@@ -972,10 +998,8 @@ void batadv_tp_start(struct batadv_priv *bat_priv, const u8 *dst,
- 		return;
- 	}
- 
--	tp_vars = batadv_tp_list_find(bat_priv, dst);
--	if (tp_vars) {
-+	if (batadv_tp_list_active(bat_priv, dst)) {
- 		spin_unlock_bh(&bat_priv->tp_list_lock);
--		batadv_tp_vars_put(tp_vars);
- 		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
- 			   "Meter: test to or from the same node already ongoing, aborting\n");
- 		batadv_tp_batctl_error_notify(BATADV_TP_REASON_ALREADY_ONGOING,
-@@ -1094,18 +1118,14 @@ void batadv_tp_stop(struct batadv_priv *bat_priv, const u8 *dst,
- 	if (!orig_node)
- 		return;
- 
--	tp_vars = batadv_tp_list_find(bat_priv, orig_node->orig);
-+	tp_vars = batadv_tp_list_find(bat_priv, orig_node->orig, BATADV_TP_SENDER);
- 	if (!tp_vars) {
- 		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
- 			   "Meter: trying to interrupt an already over connection\n");
- 		goto out_put_orig_node;
- 	}
- 
--	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
--		goto out_put_tp_vars;
--
- 	batadv_tp_sender_shutdown(tp_vars, return_value);
--out_put_tp_vars:
- 	batadv_tp_vars_put(tp_vars);
- out_put_orig_node:
- 	batadv_orig_node_put(orig_node);
-@@ -1367,7 +1387,7 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
- 		goto out_unlock;
- 
- 	tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
--					      icmp->session);
-+					      icmp->session, BATADV_TP_RECEIVER);
- 	if (tp_vars)
- 		goto out_unlock;
- 
-@@ -1435,7 +1455,7 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
- 		}
- 	} else {
- 		tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
--						      icmp->session);
-+						      icmp->session, BATADV_TP_RECEIVER);
- 		if (!tp_vars) {
- 			batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
- 				   "Unexpected packet from %pM!\n",
-@@ -1444,13 +1464,6 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
- 		}
- 	}
- 
--	if (unlikely(tp_vars->role != BATADV_TP_RECEIVER)) {
--		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
--			   "Meter: dropping packet: not expected (role=%u)\n",
--			   tp_vars->role);
--		goto out;
--	}
--
- 	tp_vars->last_recv_time = jiffies;
- 
- 	/* if the packet is a duplicate, it may be the case that an ACK has been
++	(
++	    # Set input radix.
++	    echo "16i"
++	    # Push zero for the initial checksum.
++	    echo 0
++
++	    # Pad the payload with a terminating 00: in case we get an odd
++	    # number of bytes.
++	    echo "${payload%:}:00:" |
++		sed 's/CHECKSUM/00:00/g' |
++		tr '[:lower:]' '[:upper:]' |
++		# Add the word to the checksum.
++		sed 's/\(..\):\(..\):/\1\2+\n/g' |
++		# Strip the extra odd byte we pushed if left unconverted.
++		sed 's/\(..\):$//'
++
++	    echo "10000 ~ +"	# Calculate and add carry.
++	    echo "FFFF r - p"	# Bit-flip and print.
++	) |
++	    dc |
++	    tr '[:upper:]' '[:lower:]'
++}
++
++payload_template_expand_checksum()
++{
++	local payload=$1; shift
++	local checksum=$1; shift
++
++	local ckbytes=$(u16_to_bytes $checksum)
++
++	echo "$payload" | sed "s/CHECKSUM/$ckbytes/g"
++}
++
++payload_template_nbytes()
++{
++	local payload=$1; shift
++
++	payload_template_expand_checksum "${payload%:}" 0 |
++		sed 's/:/\n/g' | wc -l
++}
 -- 
 2.53.0
 
