@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608163AA9F3;
-	Tue, 16 Jun 2026 15:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044FD3A9D94;
+	Tue, 16 Jun 2026 15:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622286; cv=none; b=J3ZZDPwYrcR+rVnoD7f+lcZGkSBLf7qpS4amIbguPPjKxvihwCenlTa+ry7+IgNxx05WfAC0gFljkiYGL/vGDLuaAYKZoLCXTQbdm4f99J1g4szjtHz/8MeZePxhUfWWn+X8Hj3CqZxBViDIzK35m8EUiDiucNJoedQ+Kb3pKHE=
+	t=1781622291; cv=none; b=VfgygvC4+sxaxwQXQ9LTmI6Md87H/HkbW2e+KB3IGkRwH0R2xlTVQOluWDRVjJW34c0x5uMgmPkUObJtJy9hb0+HO6qC3HWGsumoDGi6ZUEU4UTPB45+vIM5o5NEaJ8x0BBYPYsxrzL96Ge2y7meKY+uEzh2j8VrbAdfHhD0WlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622286; c=relaxed/simple;
-	bh=dEl2+JV/8Bnw8YeNTDxHr/yqr3WCyQNdCxFe8r3VDcc=;
+	s=arc-20240116; t=1781622291; c=relaxed/simple;
+	bh=O0Hp2o5apN0c7qqaU468VgCZHkGGjkQ+xiDP9n0Cybc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cgqWKiEvHcAIDyrM2ttOp66T0BWcYKruQg+NXX9Km4glXKGobEj7JcFbHX3dRfJwyfNl0CmOBZg4VMtac4mmD36EG0HMtH7Vhq+x/hJkjbmIO8T0k+geCkwxTiyrhDFpH4iGdc7vtvvSlwpadvYF8fczlrSUER+Y9mtIx/z57wA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/3hRQMA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FDXgRVPpX+4ohCbD2gQnl108ne6pI/RtmZB62EO2T4SdmehI41pFnZhQSqCoSYANjmpXjUVk6LWokZL9/N4/6cprS8Js+3anrPsjziI6ng3aAnSETcOKtxH7PC1x24MZU7H1YpDVhzlQOJ8t1aGm8UInsyB0eF1u/ssFqXU45XE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdgvHZm/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/3hRQMA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2493C1F000E9;
-	Tue, 16 Jun 2026 15:04:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdgvHZm/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2D61F000E9;
+	Tue, 16 Jun 2026 15:04:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622285;
-	bh=s0KPl2621vEWbju6TnHqL1DtUbcEViyHbkdhj4OAXW4=;
+	s=korg; t=1781622289;
+	bh=1Hk9aFlJqDUCGPn1D2+7RZkauU3n7iLICLHNE3sMSzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y/3hRQMAMsdy2TwGN8YPXiULKjFmirdNMOpPEX8BmgG1gTRgQCytFR3y5+vu5YQlv
-	 6ylEr38e9rp/hTjIIL401jh6msFGGtkQ5S+G6MuoVl9iwH7Om9weyC+oSzSGDMy2+U
-	 uHWJGT2f7aThUpYtFc1NqwehN3ihtI0j7+oAt8G0=
+	b=fdgvHZm/2rkRjZG+8/mNQ32upuDReLNDwr9isHTjXmZmiBS5n3UIfP3d5/TQo42Px
+	 5PNZongsRYZCQRAwicNkWX0jEhMQsVrXZBVX07Yds2Vy5Jufd9Trf4DDlaz1glPrEJ
+	 2H7UJ0jFm2ddWF5hdobZn467IaBavL1xiu/a1Kak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eulgyu Kim <eulgyukim@snu.ac.kr>,
-	Taeyang Lee <0wn@theori.io>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 001/325] bpf: Free reuseport cBPF prog after RCU grace period.
-Date: Tue, 16 Jun 2026 20:26:37 +0530
-Message-ID: <20260616145057.898856127@linuxfoundation.org>
+Subject: [PATCH 6.18 002/325] ARM: group is_permission_fault() with is_translation_fault()
+Date: Tue, 16 Jun 2026 20:26:38 +0530
+Message-ID: <20260616145057.943692202@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -53,137 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit 18fc650ccd7fe3376eca89203668cfb8268f60df ]
+commit dea20281ac88226615761c570c8ff7adc18e6ac2 upstream.
 
-Eulgyu Kim reported the splat below with a repro. [0]
+Group is_permission_fault() with is_translation_fault(), which is
+needed to use is_permission_fault() in __do_kernel_fault(). As
+this is static inline, there is no need for this to be under
+CONFIG_MMU.
 
-The repro sets up a UDP reuseport group with a cBPF prog and
-replaces it with a new one while another thread is sending
-a UDP packet to the group.
-
-The reuseport prog is freed by sk_reuseport_prog_free().
-bpf_prog_put() is called for "e"BPF prog to destruct through
-multiple stages while cBPF prog is freed immediately by
-bpf_release_orig_filter() and bpf_prog_free().
-
-If a reuseport prog is detached from the setsockopt() path
-(reuseport_attach_prog() or reuseport_detach_prog()),
-sk_reuseport_prog_free() is called without waiting for RCU
-readers to complete, resulting in various bugs.
-
-Let's defer freeing the reuseport cBPF prog after one RCU
-grace period.
-
-Note "e"BPF prog is safe as is unless the fast path starts
-to touch fields destroyed in bpf_prog_put_deferred() and
-__bpf_prog_put_noref().
-
-[0]:
-BUG: KASAN: vmalloc-out-of-bounds in reuseport_select_sock+0xedc/0x1220 net/core/sock_reuseport.c:596
-Read of size 4 at addr ffffc9000051e004 by task slowme/10208
-CPU: 6 UID: 1000 PID: 10208 Comm: slowme Not tainted 7.0.0-geb7ac95ff75e #32 PREEMPT(full)
-Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Call Trace:
- <IRQ>
- dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xca/0x240 mm/kasan/report.c:482
- kasan_report+0x118/0x150 mm/kasan/report.c:595
- reuseport_select_sock+0xedc/0x1220 net/core/sock_reuseport.c:596
- udp4_lib_lookup2+0x3bc/0x950 net/ipv4/udp.c:495
- __udp4_lib_lookup+0x768/0xe20 net/ipv4/udp.c:723
- __udp4_lib_lookup_skb+0x297/0x390 net/ipv4/udp.c:752
- __udp4_lib_rcv+0x1312/0x2620 net/ipv4/udp.c:2752
- ip_protocol_deliver_rcu+0x282/0x440 net/ipv4/ip_input.c:207
- ip_local_deliver_finish+0x3bb/0x6f0 net/ipv4/ip_input.c:241
- NF_HOOK+0x30c/0x3a0 include/linux/netfilter.h:318
- NF_HOOK+0x30c/0x3a0 include/linux/netfilter.h:318
- __netif_receive_skb_one_core net/core/dev.c:6181 [inline]
- __netif_receive_skb net/core/dev.c:6294 [inline]
- process_backlog+0xaa4/0x1960 net/core/dev.c:6645
- __napi_poll+0xae/0x340 net/core/dev.c:7709
- napi_poll net/core/dev.c:7772 [inline]
- net_rx_action+0x5d7/0xf50 net/core/dev.c:7929
- handle_softirqs+0x22b/0x870 kernel/softirq.c:622
- do_softirq+0x76/0xd0 kernel/softirq.c:523
- </IRQ>
- <TASK>
- __local_bh_enable_ip+0xf8/0x130 kernel/softirq.c:450
- local_bh_enable include/linux/bottom_half.h:33 [inline]
- rcu_read_unlock_bh include/linux/rcupdate.h:924 [inline]
- __dev_queue_xmit+0x1dd7/0x3710 net/core/dev.c:4890
- neigh_output include/net/neighbour.h:556 [inline]
- ip_finish_output2+0xca9/0x1070 net/ipv4/ip_output.c:237
- NF_HOOK_COND include/linux/netfilter.h:307 [inline]
- ip_output+0x29f/0x450 net/ipv4/ip_output.c:438
- ip_send_skb+0x45/0xc0 net/ipv4/ip_output.c:1508
- udp_send_skb+0xb04/0x1510 net/ipv4/udp.c:1195
- udp_sendmsg+0x1a71/0x2350 net/ipv4/udp.c:1485
- sock_sendmsg_nosec net/socket.c:727 [inline]
- __sock_sendmsg net/socket.c:742 [inline]
- __sys_sendto+0x554/0x680 net/socket.c:2206
- __do_sys_sendto net/socket.c:2213 [inline]
- __se_sys_sendto net/socket.c:2209 [inline]
- __x64_sys_sendto+0xde/0x100 net/socket.c:2209
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x160/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x415a2d
-Code: b3 66 2e 0f 1f 84 00 00 00 00 00 66 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f6bc31e41e8 EFLAGS: 00000212 ORIG_RAX: 000000000000002c
-RAX: ffffffffffffffda RBX: 00007f6bc31e4cdc RCX: 0000000000415a2d
-RDX: 0000000000000001 RSI: 00007f6bc31e421f RDI: 0000000000000003
-RBP: 00007f6bc31e4240 R08: 00007f6bc31e4220 R09: 0000000000000010
-R10: 0000000000000000 R11: 0000000000000212 R12: 00007f6bc31e46c0
-R13: ffffffffffffffb8 R14: 0000000000000000 R15: 00007ffc9b0d70b0
- </TASK>
-
-Fixes: 538950a1b752 ("soreuseport: setsockopt SO_ATTACH_REUSEPORT_[CE]BPF")
-Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
-Reported-by: Taeyang Lee <0wn@theori.io>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20260426012647.3233119-1-kuniyu@google.com
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ arch/arm/mm/fault.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index e6dd40e0276ed1..0b61945491054b 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -1660,15 +1660,24 @@ int sk_reuseport_attach_bpf(u32 ufd, struct sock *sk)
- 	return err;
+diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
+index 2bc828a1940c05..f87f353e5a8b0a 100644
+--- a/arch/arm/mm/fault.c
++++ b/arch/arm/mm/fault.c
+@@ -128,6 +128,19 @@ static inline bool is_translation_fault(unsigned int fsr)
+ 	return false;
  }
  
-+static void sk_reuseport_prog_free_rcu(struct rcu_head *rcu)
++static inline bool is_permission_fault(unsigned int fsr)
 +{
-+	struct bpf_prog_aux *aux = container_of(rcu, struct bpf_prog_aux, rcu);
-+	struct bpf_prog *prog = aux->prog;
-+
-+	bpf_release_orig_filter(prog);
-+	bpf_prog_free(prog);
++	int fs = fsr_fs(fsr);
++#ifdef CONFIG_ARM_LPAE
++	if ((fs & FS_MMU_NOLL_MASK) == FS_PERM_NOLL)
++		return true;
++#else
++	if (fs == FS_L1_PERM || fs == FS_L2_PERM)
++		return true;
++#endif
++	return false;
 +}
 +
- void sk_reuseport_prog_free(struct bpf_prog *prog)
- {
- 	if (!prog)
- 		return;
- 
--	if (prog->type == BPF_PROG_TYPE_SK_REUSEPORT)
--		bpf_prog_put(prog);
-+	if (bpf_prog_was_classic(prog))
-+		call_rcu(&prog->aux->rcu, sk_reuseport_prog_free_rcu);
- 	else
--		bpf_prog_destroy(prog);
-+		bpf_prog_put(prog);
+ static void die_kernel_fault(const char *msg, struct mm_struct *mm,
+ 			     unsigned long addr, unsigned int fsr,
+ 			     struct pt_regs *regs)
+@@ -225,19 +238,6 @@ void do_bad_area(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
  }
  
- static inline int __bpf_try_make_writable(struct sk_buff *skb,
+ #ifdef CONFIG_MMU
+-static inline bool is_permission_fault(unsigned int fsr)
+-{
+-	int fs = fsr_fs(fsr);
+-#ifdef CONFIG_ARM_LPAE
+-	if ((fs & FS_MMU_NOLL_MASK) == FS_PERM_NOLL)
+-		return true;
+-#else
+-	if (fs == FS_L1_PERM || fs == FS_L2_PERM)
+-		return true;
+-#endif
+-	return false;
+-}
+-
+ #ifdef CONFIG_CPU_TTBR0_PAN
+ static inline bool ttbr0_usermode_access_allowed(struct pt_regs *regs)
+ {
 -- 
 2.53.0
 
