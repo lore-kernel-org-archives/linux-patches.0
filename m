@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9F23A3E78;
-	Tue, 16 Jun 2026 17:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6378347B41F;
+	Tue, 16 Jun 2026 17:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630909; cv=none; b=ueDVdZMUZANpZd4oecs+31gMFbnvbcapkCamVJfSnHFvlgx32FCsoT0z1/jJoaYlwK3fB4biP+qqQIi+Wdj2KRTDjfAS8V3hQziM1zJqSLG75eN+DakIzXliW+ywQzfyXG4QCphQPJN5MF+KeCOprc84hcjA74Vqbo4U65lVuFo=
+	t=1781630914; cv=none; b=MsWViXsqjTd/b90we0qCsynrOz5fguTq91sc2/8hmwQu19E4RkAli7zl4V6y+9TZ6Aup7wVk7O3slXSOVa/MFD6KasWsrsve2ri9T8oBVjUDvwxfDaI9GWXHi/42XnVmoVl1K/tulOBCpFeIOvC4dGN23hK+QLCmYkcf6Z5LE4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630909; c=relaxed/simple;
-	bh=HXONo6ZmwbJpvpYDvaIDW40P0bQBXeWNVr13wK3dbn8=;
+	s=arc-20240116; t=1781630914; c=relaxed/simple;
+	bh=tyhvGeMP50irPBcdhaYbMT+NOo2zm49/B4Mj7I+tqKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=faU/2sNlRlhRBy1rMXR8EfDUywIgmcJ52JfuVbDuSpOeI3V5sjaWFsBUq6QQMKL08I906/P3+eZZWM8F7LeLquPyge5VnXlvoyFc0SnyPjw8XajagWL5wcAiwLmf/B66OBSiKRsDMWQteeia7uczSHLVISw/NUpzwMl8mYrrTN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JscCwdQ7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nEy0WSMJWbDZr4Dw9Zk81GbiG6aPCy1JXhy4R2XIznvy/4UtaeTEgXSX/xsvKHef3iYOYc5TaYT3c25N7769y5ExrHHAlMowPuNKDBzCNr8K/3vgGfmO0oApX8nl2b3f0g+ZR2e2YzCCSE8bYpOBYyHOocVRqHl104/qkSm+2Ww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWR/kDoH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JscCwdQ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F581F000E9;
-	Tue, 16 Jun 2026 17:28:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWR/kDoH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43B381F000E9;
+	Tue, 16 Jun 2026 17:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630906;
-	bh=A+IlkMsini4iPvBLiYjOMZLw+1tU33rvFE7YHulY9k0=;
+	s=korg; t=1781630912;
+	bh=b0aOOBx3JDEbBjllhgxkWv9+KhfD7SaEUEAx1TMdPYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JscCwdQ7Pk5QPZAOnmYADcN4iVhs2AFYG6VJ4ygx+pdcF3Zq8ProSSLJO2i2qlF64
-	 uupNrFt6pLP5l5x03CZx9lvE+QGn0eRexgFCqQAGKa7D57JjSpVD0TjcA3bGSav9Cm
-	 2YXigmA7uS9jzF4ODLCgZGWkpMqsaNmUL2Uvz4iI=
+	b=eWR/kDoHroA9ihdQA90L5/kKJNlZrqAyBKkqp57YplE5YUH4ya1J3BRyHVDrG6g/S
+	 eEzjs6U/1EaMMOmhWJrB+Nuij71+gNquFHFTB1AzXWer0haFEz8WpQOCGOlvFh8jDG
+	 1zhPKIAxZs1FWzKSGMiUTECrC5K23Uumz8ilN+JM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuqi Xu <xuyq21@lenovo.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 119/522] bpf: sockmap: fix tail fragment offset in bpf_msg_push_data
-Date: Tue, 16 Jun 2026 20:24:26 +0530
-Message-ID: <20260616145131.538857925@linuxfoundation.org>
+Subject: [PATCH 6.1 120/522] macsec: fix replay protection at XPN lower-PN wrap
+Date: Tue, 16 Jun 2026 20:24:27 +0530
+Message-ID: <20260616145131.590902109@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -55,47 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuqi Xu <xuyq21@lenovo.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit f72eed9b84fb771019a955908132410a9ba9ea3f upstream.
+commit e68842b3356471ba56c882209f324613dac47f64 upstream.
 
-When bpf_msg_push_data() inserts data in the middle of a scatterlist
-entry, it splits the original entry into a left fragment and a right
-fragment.
+In macsec_post_decrypt(), when pn is U32_MAX, pn + 1 overflows u32 to 0
+and the first branch never fires. If next_pn_halves.lower is also in the
+upper half, pn_same_half(pn, lower) is true and the XPN else-if does not
+fire either, leaving next_pn_halves unchanged. An attacker that captures
+the legitimate frame carrying pn == 0xFFFFFFFF on an XPN association
+can then replay it indefinitely, since lowest_pn never rises above
+the captured pn and macsec_decrypt() reconstructs the same IV.
 
-The right fragment offset is page-local, but the code advances it with
-`start`, which is the message-global insertion point. For inserts into a
-non-first SG entry, this over-advances the offset and leaves the split
-layout inconsistent.
+Extend the XPN else-if to also fire when pn + 1 wraps to 0, so receipt
+of pn == U32_MAX advances next_pn_halves to (upper + 1, 0).
 
-Advance the right fragment offset by the fragment-local delta,
-`start - offset`, which matches the length removed from the front of the
-original entry.
-
-Fixes: 6fff607e2f14 ("bpf: sk_msg program helper bpf_msg_push_data")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yuqi Xu <xuyq21@lenovo.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Link: https://patch.msgid.link/8b129d10566aa3eb43f61a8f9757bcf51707d324.1779636774.git.xuyq21@lenovo.com
+Fixes: a21ecf0e0338 ("macsec: Support XPN frame handling - IEEE 802.1AEbw")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB78813FD49E58F253B989F197AF012@SYBPR01MB7881.ausprd01.prod.outlook.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/filter.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/macsec.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2841,7 +2841,7 @@ BPF_CALL_4(bpf_msg_push_data, struct sk_
- 
- 		psge->length = start - offset;
- 		rsge.length -= psge->length;
--		rsge.offset += start;
-+		rsge.offset += start - offset;
- 
- 		sk_msg_iter_var_next(i);
- 		sg_unmark_end(psge);
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -806,7 +806,8 @@ static bool macsec_post_decrypt(struct s
+ 		if (pn + 1 > rx_sa->next_pn_halves.lower) {
+ 			rx_sa->next_pn_halves.lower = pn + 1;
+ 		} else if (secy->xpn &&
+-			   !pn_same_half(pn, rx_sa->next_pn_halves.lower)) {
++			   (pn + 1 == 0 ||
++			    !pn_same_half(pn, rx_sa->next_pn_halves.lower))) {
+ 			rx_sa->next_pn_halves.upper++;
+ 			rx_sa->next_pn_halves.lower = pn + 1;
+ 		}
 
 
