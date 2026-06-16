@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB2E47CC71;
-	Tue, 16 Jun 2026 18:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F1A34FF79;
+	Tue, 16 Jun 2026 18:33:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634794; cv=none; b=AmNCpzKPFiF06l5wKWSioOUaKvDiq2a27yJk3NkRkKXlTNWJSGAUsLEm2PyVCyvyYJLj/nzuUlNpW0x9P/0ioIFuQp92DmPLzmz+peRpT61ivKb8xMGCZ56JcSRI2aXPPbggmiNyZKvGwsdWXsxBTubaeLLyNKz0M4lLrgviLrE=
+	t=1781634799; cv=none; b=p9w35Q2AzhfMcAoyDVMV/O1XsNoUbgyVbgBNL/NBPVLEpaZDt4+hwhlckeDARclarSS4ZaTX6xB4cbwZnYcvOHcARnn90TdDMO2bf7WOSopvVDFIbCgigKn/COUXww4+f/g3Z88/Zn8ifIyuQonfGGk4PjGzfEyFm7Ilz0oTmL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634794; c=relaxed/simple;
-	bh=ODdNzHFr0rAtSt32WFn7qmwd27ScU6RYILIre1eDmtY=;
+	s=arc-20240116; t=1781634799; c=relaxed/simple;
+	bh=wz1np52QW1NSKTom4y2vBFXAfy0Tb4MnSkuU30btq4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cds6CjMpMBgxnfL+EJcft+LxQULDs6qpbGmcoKnCXKH7PETyguDgmOL4LyCqnsA2Fs9rhHPkQYGVI3tccZODfvtpwr2WE8wQh1bAYWBmQ+oYa/BzXm70wZ01wJ0hZHGIQpSPKObbZu5Xn4MMnNxxAyaYL8DANDI5xl9a93Mitak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxqjiGIR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lTRy8FOYdDtCpfdLzonAFHPN9JnrEa/6IQtXFYLHGBxZv3SHaLEO0ZRekVgjsTOpbOrk1xj8Pigi+n6LzXyJYi84yPArB12tYajyjdYLC9WjeLBLA8AGRT933pwKHAZADF94n4Ypa0B3IImi2RF2vH2eQYrCmpgrIKiUm4T/1qM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3Qhgnq2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxqjiGIR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78BB1F000E9;
-	Tue, 16 Jun 2026 18:33:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3Qhgnq2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 370AD1F000E9;
+	Tue, 16 Jun 2026 18:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634792;
-	bh=cL3IXt/CBAGrwj6A7uTK94U40+4XxDIAg9aGeP6PcY0=;
+	s=korg; t=1781634798;
+	bh=wmCwcb81R3qUjkB9CxwRvZp6PqKykiEZ3GLKk9dIjWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pxqjiGIRGXpbMI3P5sW+yQtZVpsVZYhTOHGB1HTAavDOToJw3aAHo/DpWYoqJEvLY
-	 R1vhntDxuofcTPUf3bqWd0+414W+4Qk3mGbeU+WCD/T9dEfEDg/VbkTAB5Zd/pzkPH
-	 sIzvwL1x8KMfLyNAvP7jiYpB75bFmi5qu0UO4cJU=
+	b=L3Qhgnq2NhWrCK4ELYtSJ9qxqFu5iKtPMiLXpkOznyR5SEegZI1EOTpdV4OwZ/BQL
+	 +ofz6bFQKbHzLU6Y065ayG87q4mfUxlzhn0Vi4pW9ZWfQHZSM5CiGK6DIOkGB4hKjc
+	 AYvVoEs71BG/eP8en+nnlIEG6ZqIkiSHVd2IlVSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
 	Thorsten Blum <thorsten.blum@linux.dev>,
-	John Ogness <john.ogness@linutronix.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 300/411] printk: add print_hex_dump_devel()
-Date: Tue, 16 Jun 2026 20:28:58 +0530
-Message-ID: <20260616145117.092738029@linuxfoundation.org>
+Subject: [PATCH 5.15 301/411] crypto: caam - guard HMAC key hex dumps in hash_digest_key
+Date: Tue, 16 Jun 2026 20:28:59 +0530
+Message-ID: <20260616145117.141774778@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -54,44 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit d134feeb5df33fbf77f482f52a366a44642dba09 ]
+[ Upstream commit 177730a273b18e195263ed953853273e901b5064 ]
 
-Add print_hex_dump_devel() as the hex dump equivalent of pr_devel(),
-which emits output only when DEBUG is enabled, but keeps call sites
-compiled otherwise.
+Use print_hex_dump_devel() for dumping sensitive HMAC key bytes in
+hash_digest_key() to avoid leaking secrets at runtime when
+CONFIG_DYNAMIC_DEBUG is enabled.
 
-Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 045e36780f11 ("crypto: caam - ahash hmac support")
+Fixes: 3f16f6c9d632 ("crypto: caam/qi2 - add support for ahash algorithms")
+Cc: stable@vger.kernel.org
 Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: John Ogness <john.ogness@linutronix.de>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: 177730a273b1 ("crypto: caam - guard HMAC key hex dumps in hash_digest_key")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/printk.h |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/crypto/caam/caamalg_qi2.c |    4 ++--
+ drivers/crypto/caam/caamhash.c    |    4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/include/linux/printk.h
-+++ b/include/linux/printk.h
-@@ -740,6 +740,19 @@ static inline void print_hex_dump_debug(
- }
- #endif
+--- a/drivers/crypto/caam/caamalg_qi2.c
++++ b/drivers/crypto/caam/caamalg_qi2.c
+@@ -3264,7 +3264,7 @@ static int hash_digest_key(struct caam_h
+ 	dpaa2_fl_set_addr(out_fle, key_dma);
+ 	dpaa2_fl_set_len(out_fle, digestsize);
  
-+#if defined(DEBUG)
-+#define print_hex_dump_devel(prefix_str, prefix_type, rowsize,		\
-+			     groupsize, buf, len, ascii)		\
-+	print_hex_dump(KERN_DEBUG, prefix_str, prefix_type, rowsize,	\
-+		       groupsize, buf, len, ascii)
-+#else
-+static inline void print_hex_dump_devel(const char *prefix_str, int prefix_type,
-+					int rowsize, int groupsize,
-+					const void *buf, size_t len, bool ascii)
-+{
-+}
-+#endif
-+
- /**
-  * print_hex_dump_bytes - shorthand form of print_hex_dump_debug() with default
-  *                        params
+-	print_hex_dump_debug("key_in@" __stringify(__LINE__)": ",
++	print_hex_dump_devel("key_in@" __stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, key, *keylen, 1);
+ 	print_hex_dump_debug("shdesc@" __stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, desc, desc_bytes(desc),
+@@ -3284,7 +3284,7 @@ static int hash_digest_key(struct caam_h
+ 		/* in progress */
+ 		wait_for_completion(&result.completion);
+ 		ret = result.err;
+-		print_hex_dump_debug("digested key@" __stringify(__LINE__)": ",
++		print_hex_dump_devel("digested key@" __stringify(__LINE__)": ",
+ 				     DUMP_PREFIX_ADDRESS, 16, 4, key,
+ 				     digestsize, 1);
+ 	}
+--- a/drivers/crypto/caam/caamhash.c
++++ b/drivers/crypto/caam/caamhash.c
+@@ -390,7 +390,7 @@ static int hash_digest_key(struct caam_h
+ 	append_seq_store(desc, digestsize, LDST_CLASS_2_CCB |
+ 			 LDST_SRCDST_BYTE_CONTEXT);
+ 
+-	print_hex_dump_debug("key_in@"__stringify(__LINE__)": ",
++	print_hex_dump_devel("key_in@"__stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, key, *keylen, 1);
+ 	print_hex_dump_debug("jobdesc@"__stringify(__LINE__)": ",
+ 			     DUMP_PREFIX_ADDRESS, 16, 4, desc, desc_bytes(desc),
+@@ -405,7 +405,7 @@ static int hash_digest_key(struct caam_h
+ 		wait_for_completion(&result.completion);
+ 		ret = result.err;
+ 
+-		print_hex_dump_debug("digested key@"__stringify(__LINE__)": ",
++		print_hex_dump_devel("digested key@"__stringify(__LINE__)": ",
+ 				     DUMP_PREFIX_ADDRESS, 16, 4, key,
+ 				     digestsize, 1);
+ 	}
 
 
