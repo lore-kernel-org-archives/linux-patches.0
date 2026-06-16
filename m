@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B50647A0B0;
-	Tue, 16 Jun 2026 17:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299D3466B5E;
+	Tue, 16 Jun 2026 17:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630649; cv=none; b=ooWZ57SQ+Vlzc1fcO8cu8UEnD3dpmtWG8722ZGCYzxxQPGl7NtGIFsgCPq9tJUkDksOzJcQj67xxuJYdmNNW98Bh1kmHgYeLrNI/mj6DIWHmWz8X2e/PoDQQrVjFtZpiBc4YHYrtR711wwie2SfTFwO/eis8pIAE55ap+6v6nbI=
+	t=1781630653; cv=none; b=Ao7KOaL7eT8qh7I+ljTgiK1DdwmLQr1Fg9Z4F+4KmgxA6I7v+I+vO6Ed0Mv5Dosz55CPd7jEyLnYzIW9915ju6beSBTyFdPuHBxHoDzGZHw1ToYJxcLSuVCeD/zAYkCUTACExig/sZwK2tizcbpvGnNpg0njWw1BSomgMKul+nE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630649; c=relaxed/simple;
-	bh=7OTR0OdBXgSofE4kGWYQRkl2eqyfarLrRjsi9nKsAB8=;
+	s=arc-20240116; t=1781630653; c=relaxed/simple;
+	bh=2oquiZCTRY+amMIBQQ2OJc95WrRDqflPsyxtHfJ09Ko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JZCSFstftjlTUQgx75TVp7JGNgMsTa3rzW2Ds3YVgnYYcrX6szX2HlOI4hsguCEHb9X03/zPbyrvWsSoZI/7YO9HGzDMcNDa+7VZTwm66IcN+yPFjSRpQBUJ7jSEs6pCiPDW3SND1ECkhH6qD1kIGg6+qYWgqD7MzIvcZgxl+HQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jPfIjZQi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DPOUFkVt/cFDpih8uY7Q5ZQM7ZMT5PS9R+NoCWaWd32UejbCX1metLWt53Pnm+peJtx+7JaBgPVCNbyGOwjwxjC8qgUesHhLDzW6hzY2geKCjozLYhK58i19ecVHODkuO21Js1SaaYVzB8SeqRcwgunJkU41EPobHLMkxE8uTao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2AIJqvzy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jPfIjZQi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604601F000E9;
-	Tue, 16 Jun 2026 17:24:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AIJqvzy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B7181F000E9;
+	Tue, 16 Jun 2026 17:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630647;
-	bh=gguzxFSlKRyEhPICF3unndZ8aP5S0Thb+219jDBdZrE=;
+	s=korg; t=1781630652;
+	bh=uSRwMbXfkehXd4I03cnDP+2mm+hjoOXajTrp9D4olmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jPfIjZQi0H2N2Jww0U0hDNqWYbIDRf/hyEpNDC4xVfFLJ2TkL0JIFH612B8PmuEbP
-	 V1w6ko9ca1UZKnLyixPMWxm1TgnpKahfHYADnkqXbUQB2iSjIdsW8Gamnn2Vs8NC3Y
-	 HpF2jOdr0ChEN1CUlWtQUIsUeuL8cAsbp2uzODh0=
+	b=2AIJqvzyZOpUVUzSEKNRgnjqOl/BSrdX/WELqMzamK06DUv2s1VI48DtyCnNc+qEo
+	 RaQHxESSjshddptSyZE6LdVuB8thaq19m2NY428qLZ913V8hQYR9OuUdur5yqfV0+D
+	 SgO/il2wqzcW5Rk9qGlkcY+F1WsApVFsFMNC1Zzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Scardovi <scardracs@disroot.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Damiano Melotti <melotti@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/522] gpio: rockchip: convert bank->clk to devm_clk_get_enabled()
-Date: Tue, 16 Jun 2026 20:23:03 +0530
-Message-ID: <20260616145127.369600380@linuxfoundation.org>
+Subject: [PATCH 6.1 027/522] tunnels: do not assume transport header in iptunnel_pmtud_check_icmp()
+Date: Tue, 16 Jun 2026 20:22:54 +0530
+Message-ID: <20260616145126.908189991@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,76 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Scardovi <scardracs@disroot.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3e46c18d5d87f063a93ae0fe7662fbf6660459d5 ]
+[ Upstream commit 509323077ef79a26ba0c60bb556e45c12c398b2d ]
 
-The bank->clk was previously obtained via of_clk_get() and manually
-prepared/enabled. However, it was missing a corresponding clk_put() in
-both the error paths and the remove function, leading to a reference leak.
+In some cases, iptunnel_pmtud_check_icmp() can be called while
+skb transport header is not set.
 
-Convert the allocation to devm_clk_get_enabled(), which also properly
-propagates failures from clk_prepare_enable() that were previously ignored.
+This triggers an out-of-bound access, because
+(typeof(skb->transport_header))~0U is 65535.
 
-The GPIO bank device uses the same OF node as the previous of_clk_get()
-call, so devm_clk_get_enabled(dev, NULL) correctly resolves the same
-clock provider entry.
+Access the icmp header based on IPv4 network header,
+after making sure icmp->type is present in skb linear part.
 
-Fix the reference leak and simplify the code by removing the manual
-clk_disable_unprepare() calls in the probe error paths and in the
-remove function.
+Note that iptunnel_pmtud_check_icmpv6()) is fine.
 
-Fixes: 936ee2675eee ("gpio/rockchip: add driver for rockchip gpio")
-Assisted-by: Antigravity:gemini-3.5-flash
-Signed-off-by: Marco Scardovi <scardracs@disroot.org>
-Link: https://patch.msgid.link/20260526171050.12785-2-scardracs@disroot.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
+Reported-by: Damiano Melotti <melotti@google.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260522115512.1519110-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-rockchip.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ net/ipv4/ip_tunnel_core.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpio-rockchip.c b/drivers/gpio/gpio-rockchip.c
-index bf301b2d18b8f1..147d2fda4fe120 100644
---- a/drivers/gpio/gpio-rockchip.c
-+++ b/drivers/gpio/gpio-rockchip.c
-@@ -647,11 +647,10 @@ static int rockchip_get_bank_data(struct rockchip_pin_bank *bank)
- 	if (!bank->irq)
- 		return -EINVAL;
- 
--	bank->clk = of_clk_get(bank->of_node, 0);
-+	bank->clk = devm_clk_get_enabled(bank->dev, NULL);
- 	if (IS_ERR(bank->clk))
- 		return PTR_ERR(bank->clk);
- 
--	clk_prepare_enable(bank->clk);
- 	id = readl(bank->reg_base + gpio_regs_v2.version_id);
- 
- 	/* If not gpio v2, that is default to v1. */
-@@ -661,7 +660,6 @@ static int rockchip_get_bank_data(struct rockchip_pin_bank *bank)
- 		bank->db_clk = of_clk_get(bank->of_node, 1);
- 		if (IS_ERR(bank->db_clk)) {
- 			dev_err(bank->dev, "cannot find debounce clk\n");
--			clk_disable_unprepare(bank->clk);
- 			return -EINVAL;
- 		}
- 	} else {
-@@ -735,7 +733,6 @@ static int rockchip_gpio_probe(struct platform_device *pdev)
- 
- 	ret = rockchip_gpiolib_register(bank);
- 	if (ret) {
--		clk_disable_unprepare(bank->clk);
- 		mutex_unlock(&bank->deferred_lock);
- 		return ret;
- 	}
-@@ -776,7 +773,6 @@ static int rockchip_gpio_remove(struct platform_device *pdev)
+diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
+index 5fb437f040ace7..9f6f1b435d8d72 100644
+--- a/net/ipv4/ip_tunnel_core.c
++++ b/net/ipv4/ip_tunnel_core.c
+@@ -262,7 +262,6 @@ static int iptunnel_pmtud_build_icmp(struct sk_buff *skb, int mtu)
+  */
+ static int iptunnel_pmtud_check_icmp(struct sk_buff *skb, int mtu)
  {
- 	struct rockchip_pin_bank *bank = platform_get_drvdata(pdev);
+-	const struct icmphdr *icmph = icmp_hdr(skb);
+ 	const struct iphdr *iph = ip_hdr(skb);
  
--	clk_disable_unprepare(bank->clk);
- 	gpiochip_remove(&bank->gpio_chip);
+ 	if (mtu < 576 || iph->frag_off != htons(IP_DF))
+@@ -273,9 +272,17 @@ static int iptunnel_pmtud_check_icmp(struct sk_buff *skb, int mtu)
+ 	    ipv4_is_lbcast(iph->saddr)  || ipv4_is_multicast(iph->saddr))
+ 		return 0;
  
- 	return 0;
+-	if (iph->protocol == IPPROTO_ICMP && icmp_is_err(icmph->type))
+-		return 0;
++	if (iph->protocol == IPPROTO_ICMP) {
++		const struct icmphdr *icmph;
+ 
++		if (!pskb_network_may_pull(skb, iph->ihl * 4 +
++						offsetofend(struct icmphdr, type)))
++			return 0;
++		iph = ip_hdr(skb);
++		icmph = (void *)iph + iph->ihl * 4;
++		if (icmp_is_err(icmph->type))
++			return 0;
++	}
+ 	return iptunnel_pmtud_build_icmp(skb, mtu);
+ }
+ 
 -- 
 2.53.0
 
