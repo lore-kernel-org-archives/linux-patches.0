@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27A84508F2;
-	Tue, 16 Jun 2026 16:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC8244E037;
+	Tue, 16 Jun 2026 16:29:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627344; cv=none; b=I0+syHff7t/44YBEhXZa3rqn9srbuIhGPArpA7aSHSmxU8o0Pw74oOlSwm2QaKeYzeXKxBWsNlXEUEXsVgpa48IfVgcluw+yVonNmD6LkH9m0gsOyT2MClFfzkKL8ca63MZf9DzO26abt2Qy3IEkYIa80uOhzCvLyg+vj/8JX+8=
+	t=1781627349; cv=none; b=HDHBZSWh9jtzdUnLmQoPgCSBSI+ifR/28ykVTCSCtxESq34U2HiSJbHKaes9nm8FQq2N5ct1CWAShRCTYyeXCVPvQpJ9sVWuJNqBhxT1PwVfObku+K4/dgf9vs215hIjMDPQi8YNmbcCq67E8szJWMuvlOLBXfBRG4XR7buwMD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627344; c=relaxed/simple;
-	bh=g4rSZEku/ZcX9sFLDA1gPas7T2DLxnvs+81+vJxctIE=;
+	s=arc-20240116; t=1781627349; c=relaxed/simple;
+	bh=qAWZDt6Q5Z4fHTeOFCf50GwOOpVfXV0LR2s2sJZngaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RkCq8LYOorK2Hf1jleiDsahaDeb+pZh8GJan+cX4PFl36oTeJk/XKOzGF4wr9VLmduu4NegD55FY1H6Bnw8QikYwF2VBWwaNHkyBueYo5bGorwFaIkI0ykFkucE3zEr5bSXr8Rp6Heru/skm4PQfeYkwP1NW1PNSPBzurp+Ti40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oWoT9qS3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C2Kgu5d2MBa59JoziKFmxhzV+2ka1SCG1n0MpKCRFqgDTblkAywJ5uOiI4/O48si3Le2AsUhbTnydynbWWwVOL2+lYkyi11znvahgG9H5WY/z5OMUEJp8sJe2oFia1QDLUJeUXBoPgi7Cs8TMqkngbv32jkr6m/2P8KBDORgjHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DngJBl9Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oWoT9qS3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B6D1F000E9;
-	Tue, 16 Jun 2026 16:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DngJBl9Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B198D1F000E9;
+	Tue, 16 Jun 2026 16:29:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627343;
-	bh=Z/sYUmt7XLV624FGYSzXYP/T2ft6O5wWz6vBPCLoiys=;
+	s=korg; t=1781627348;
+	bh=ZhTWTS4o3qa8eMuOk8gzdsbkhOG3JcX2v4R43saIWz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oWoT9qS3oDpFDlC9vtZq7etLhaboLqNKpFBTu2LGNE7XlPM2pkmdz1F59wRYGD8tg
-	 M+onAH/TI+DuG18izqo1yQNvAFw65QjMw24mC4CGXmx/UUZZW9SQ1PIFI5M7mqZhkk
-	 qY7LF7k6jauZM/JjGubme99KeNa0yRBoz+4Vt98g=
+	b=DngJBl9YYAJjXWHUas746pcGdOGB4W14q9ajjJi9wRZ5oxwM6gDgn6DoZpCbhMnFG
+	 SPXlKm2592PpEG+4a/oh5RwnP14/5tggCxgiOgpnSfZlSBNAStYzhDepSro9AHZD15
+	 AbjoAR39Np7BVobkW+rpD8G7m7WXayMsoQu+QlE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Cui <cuitao@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 160/261] selftests: mptcp: add test for extra_subflows underflow on userspace PM
-Date: Tue, 16 Jun 2026 20:29:58 +0530
-Message-ID: <20260616145052.487137180@linuxfoundation.org>
+	Kyle Zeng <kylebot@openai.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 143/261] ALSA: timer: Forcibly close timer instances at closing
+Date: Tue, 16 Jun 2026 20:29:41 +0530
+Message-ID: <20260616145051.707335208@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -51,38 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Cui <cuitao@kylinos.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 06fd2bec7aebf393288e4b78924482fe170caabc upstream.
+commit da3039e91d1f835874ed6e9a33ea19ee80c2cb92 upstream.
 
-Add a test to verify that when userspace PM fails to create a subflow
-(e.g. using an unreachable address), the extra_subflows counter is not
-decremented below zero.
+When snd_timer object is freed via snd_timer_free() and still pending
+snd_timer_instance objects are assigned to the timer object, it tries
+to unlink all instances and just set NULL to each ti->timer, then
+releases the resources immediately.  The problem is, however, when
+there are slave timer instances that are associated with a master
+instance linked to this timer: namely, those slave instances still
+point to the freed timer object although the master instance is
+unlinked, which may lead to user-after-free.  The bug can be easily
+triggered particularly when a new userspace-driven timers
+(CONFIG_SND_UTIMER) is involved, since it can create and delete the
+timer object via a simple file open/close, while the other
+applications may keep accessing to that timer.
 
-Fixes: 77e4b94a3de6 ("mptcp: update userspace pm infos")
+This patch is an attempt to paper over the problem above: now instead
+of just unlinking, call snd_timer_close[_locked]() forcibly for each
+pending timer instance, so that all assigned slave timer instances are
+properly detached, too.  Since snd_timer_close() might be called later
+by the driver that created that instance, the check of
+SNDRV_TIMER_IFLG_DEAD is added at the beginning, too.
+
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Tested-by: Kyle Zeng <kylebot@openai.com>
+Fixes: 37745918e0e7 ("ALSA: timer: Introduce virtual userspace-driven timers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260602-net-mptcp-misc-fixes-7-1-rc7-v2-6-856831229976@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260606161145.1933447-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    4 ++++
- 1 file changed, 4 insertions(+)
+ sound/core/timer.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3711,6 +3711,10 @@ userspace_tests()
- 		chk_rm_nr 0 1
- 		chk_mptcp_info subflows 0 subflows 0
- 		chk_subflows_total 1 1
-+		# check counters are not affected by errors at creation time
-+		userspace_pm_add_sf $ns2 10.0.12.2 10 2>/dev/null
-+		chk_mptcp_info subflows 0 subflows 0
-+		chk_subflows_total 1 1
- 		kill_events_pids
- 		mptcp_lib_kill_group_wait $tests_pid
- 	fi
+--- a/sound/core/timer.c
++++ b/sound/core/timer.c
+@@ -422,6 +422,8 @@ static void snd_timer_close_locked(struc
+ 
+ 	if (timer) {
+ 		guard(spinlock_irq)(&timer->lock);
++		if (timeri->flags & SNDRV_TIMER_IFLG_DEAD)
++			return; /* already closed */
+ 		timeri->flags |= SNDRV_TIMER_IFLG_DEAD;
+ 	}
+ 
+@@ -964,18 +966,18 @@ EXPORT_SYMBOL(snd_timer_new);
+ 
+ static int snd_timer_free(struct snd_timer *timer)
+ {
++	struct snd_timer_instance *ti, *n;
++
+ 	if (!timer)
+ 		return 0;
+ 
+ 	guard(mutex)(&register_mutex);
+ 	if (! list_empty(&timer->open_list_head)) {
+-		struct list_head *p, *n;
+-		struct snd_timer_instance *ti;
+-		pr_warn("ALSA: timer %p is busy?\n", timer);
+-		list_for_each_safe(p, n, &timer->open_list_head) {
+-			list_del_init(p);
+-			ti = list_entry(p, struct snd_timer_instance, open_list);
+-			ti->timer = NULL;
++		list_for_each_entry_safe(ti, n, &timer->open_list_head, open_list) {
++			struct device *card_dev_to_put = NULL;
++
++			snd_timer_close_locked(ti, &card_dev_to_put);
++			put_device(card_dev_to_put);
+ 		}
+ 	}
+ 	list_del(&timer->device_list);
 
 
