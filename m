@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782592C0261;
-	Tue, 16 Jun 2026 18:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA49169AD2;
+	Tue, 16 Jun 2026 18:36:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634967; cv=none; b=HlBm8MgXccMWRaTq+LNdslPo37fe4l+TgR1T5UBvCbbqhVLwCTYTWQrwI8BUn0inj7PsLBmOGru9Rdwi/KNwpUkuiGs6fbB6saHWKe4DxYcHB01NSHCUIBQq9TSLx4CF+JxwVDhTsfOtv8NDpfjUSDpBuFgeLMwJoRM9DSl8gvc=
+	t=1781634972; cv=none; b=KhvSvEB4QTjxmhs8/XgQj7M0Xcx7nUe8+l/VySnHb/6L6GeeeIyaRhFIKY/g9AMzKR7BZVd4ezYlI2gFE6FEi1xmHw3PyC6VFPCl83KyFuOKcZ4q8CfabyLMWkmOEU1p49kMw/k6x62Ts1gQSYc93KwvocB4/MhuVKWc9d6as+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634967; c=relaxed/simple;
-	bh=EFAs9H4yzlnxMj9/By1HTaUBLl4E1Qo+eQlDhdtKwPg=;
+	s=arc-20240116; t=1781634972; c=relaxed/simple;
+	bh=Hz0jz9+pWaVjvftxVsEm9TCadJGSz3a2XTgDn20559U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VbWvVwUU7d6PubK+K+sO3AlpEhhB6kn0tyXzCrCIWCNz1VH+Qsg/fU0jbo6UCW8Fpf6sX/c2xdt4CDcWMwcO/PEhhk9RNWhuAVaUVD3MSFbVALioEwkEJtaqSkFdZRjTCOnKH1OzMuj6Qt89TtVFakWNpcJvbKybXu8jzBBnilI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1irMErG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SW5wzY+TXqoLUuoiXDPE8rD3rcUifzbGRCraVShm6fFcHV1fCX+w86ZYjjoD/vtXq0xibAPzbJpbAyYXZZqW/3rDqA7W+4faq8+phKxzGrLqA0GYpfcDAJjmHGVQqC0qBorLJVh1sfJChj9t2HbGcdHC4XfEhpDmsgdz7CyfVmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crY2dYhv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1irMErG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B771F000E9;
-	Tue, 16 Jun 2026 18:36:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crY2dYhv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF5A81F000E9;
+	Tue, 16 Jun 2026 18:36:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634966;
-	bh=0Jy3kKh0jko5JMrbAJYAKi+jCwdNElGMcBCA5uaocZY=;
+	s=korg; t=1781634971;
+	bh=kny3GE5+OPQjtbNC+eHcAoowmmui0fo8ZfOP+BBk8is=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g1irMErGOdyHZpsg21Ez6l5cX1gHgOpTaeOO4fUQfSymqtI37T/25fFQNodiY7ZmS
-	 3fHE90nd2khTmrlwcaAIXzhosWitCcFC0j/U1DfrSVq2qClt4FqncwL2Gn/OxFbeqN
-	 qU5jGGWLvI6q/Pxla7xve8cDoj0X3wxaysoiWZo0=
+	b=crY2dYhvJ6HuMtGTg51cOozfYTr+hXHbLhv8UALKQNFpOPq6sTSNCV6uJD3DRGCjm
+	 E4YQNbMJNSBB1g9nTR3MuoS9v2Evj29C0lBMTvPCt16mYApip/L1tgDhM+YPXzX6xh
+	 o8axKi/fLQY1cKG6DnGN/36GLhFftlPp1t6VcV80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	stable@kernel.org,
+	Yongpeng Yang <yangyongpeng@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 332/411] mptcp: pm: ADD_ADDR rtx: resched blocked ADD_ADDR quicker
-Date: Tue, 16 Jun 2026 20:29:30 +0530
-Message-ID: <20260616145118.800259585@linuxfoundation.org>
+Subject: [PATCH 5.15 333/411] f2fs: fix incorrect file address mapping when inline inode is unwritten
+Date: Tue, 16 Jun 2026 20:29:31 +0530
+Message-ID: <20260616145118.862076450@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,50 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Yongpeng Yang <yangyongpeng@xiaomi.com>
 
-[ Upstream commit 3cf12492891c4b5ff54dda404a2de4ec54c9e1b5 ]
+[ Upstream commit 68a0178981a0f493295afa29f8880246e561494c ]
 
-When an ADD_ADDR needs to be retransmitted and another one has already
-been prepared -- e.g. multiple ADD_ADDRs have been sent in a row and
-need to be retransmitted later -- this additional retransmission will
-need to wait.
+When `fileinfo->fi_flags` does not have the `FIEMAP_FLAG_SYNC` bit set
+and inline data has not been persisted yet, the physical address of the
+extent is calculated incorrectly for unwritten inline inodes.
 
-In this case, the timer was reset to TCP_RTO_MAX / 8, which is ~15
-seconds. This delay is unnecessary long: it should just be rescheduled
-at the next opportunity, e.g. after the retransmission timeout.
+root@vm:/mnt/f2fs# dd if=/dev/zero of=data.3k bs=3k count=1
+root@vm:/mnt/f2fs# f2fs_io fiemap 0 100 data.3k
+Fiemap: offset = 0 len = 100
+	logical addr.    physical addr.   length           flags
+0	0000000000000000 00000ffffffff16c 0000000000000c00 00000301
 
-Without this modification, some issues can be seen from time to time in
-the selftests when multiple ADD_ADDRs are sent, and the host takes time
-to process them, e.g. the "signal addresses, ADD_ADDR timeout" MPTCP
-Join selftest, especially with a debug kernel config.
+This patch fixes the issue by checking if the inode's address is valid.
+If the inline inode is unwritten, set the physical address to 0 and
+mark the extent with `FIEMAP_EXTENT_UNKNOWN | FIEMAP_EXTENT_DELALLOC`
+flags.
 
-Note that on older kernels, 'timeout' is not available. It should be
-enough to replace it by one second (HZ).
-
-Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260505-net-mptcp-pm-fixes-7-1-rc3-v1-6-fca8091060a4@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ replaced `TCP_RTO_MAX / 8` with `HZ` ]
+Cc: stable@kernel.org
+Fixes: 67f8cf3cee6f ("f2fs: support fiemap for inline_data")
+Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ renamed `ifolio` to `ipage` in `inline_data_addr()` and `F2FS_INODE()` calls ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/inline.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -338,7 +338,7 @@ static void mptcp_pm_add_timer(struct ti
- 	}
- 
- 	if (mptcp_pm_should_add_signal_addr(msk)) {
--		sk_reset_timer(sk, timer, jiffies + TCP_RTO_MAX / 8);
-+		sk_reset_timer(sk, timer, jiffies + HZ);
+--- a/fs/f2fs/inline.c
++++ b/fs/f2fs/inline.c
+@@ -771,7 +771,7 @@ int f2fs_read_inline_dir(struct file *fi
+ int f2fs_inline_data_fiemap(struct inode *inode,
+ 		struct fiemap_extent_info *fieinfo, __u64 start, __u64 len)
+ {
+-	__u64 byteaddr, ilen;
++	__u64 byteaddr = 0, ilen;
+ 	__u32 flags = FIEMAP_EXTENT_DATA_INLINE | FIEMAP_EXTENT_NOT_ALIGNED |
+ 		FIEMAP_EXTENT_LAST;
+ 	struct node_info ni;
+@@ -804,9 +804,14 @@ int f2fs_inline_data_fiemap(struct inode
+ 	if (err)
  		goto out;
- 	}
  
+-	byteaddr = (__u64)ni.blk_addr << inode->i_sb->s_blocksize_bits;
+-	byteaddr += (char *)inline_data_addr(inode, ipage) -
+-					(char *)F2FS_INODE(ipage);
++	if (__is_valid_data_blkaddr(ni.blk_addr)) {
++		byteaddr = (__u64)ni.blk_addr << inode->i_sb->s_blocksize_bits;
++		byteaddr += (char *)inline_data_addr(inode, ipage) -
++						(char *)F2FS_INODE(ipage);
++	} else {
++		f2fs_bug_on(F2FS_I_SB(inode), ni.blk_addr != NEW_ADDR);
++		flags |= FIEMAP_EXTENT_DELALLOC | FIEMAP_EXTENT_UNKNOWN;
++	}
+ 	err = fiemap_fill_next_extent(fieinfo, start, byteaddr, ilen, flags);
+ 	trace_f2fs_fiemap(inode, start, byteaddr, ilen, flags, err);
+ out:
 
 
