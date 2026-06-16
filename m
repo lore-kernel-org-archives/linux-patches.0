@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3FC547CC91;
-	Tue, 16 Jun 2026 17:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5D9472760;
+	Tue, 16 Jun 2026 17:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632440; cv=none; b=ql0uA6b45US0uvkJ7LKF6W5YIMXmq5YX9oqu/1GO2JJxoWkhjNadg9OBPlA3s8nMufFsXmuB+Ii3ArSeod2kz82nl50EEARkyJd47okBFjUpzoDH9mljw3J7GOVAO+wjV8FSCc3sJp9JwYJmlVujMpBp5BRK6x55bm/VZSp0RdM=
+	t=1781632446; cv=none; b=CjIOei2gnOVhuUAB/iMHZrLx/XL/UUOSyAKqg/v/I2I0Icl3KSdZ0ouSfBIqBDfe9kMbncxix2l3G9iKFUaJ9aGB3zzbrTe65xPzsEU+ULI3FhoCXcZLsXEq0WDwJ7s20vDaNWvI7CBcFOG9xLDEXh4i4z498LwpsRnCNTXaKTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632440; c=relaxed/simple;
-	bh=EnQJAuLLRG+NolvPuCYz6psFYeq5N18aQkADh5ZQLGM=;
+	s=arc-20240116; t=1781632446; c=relaxed/simple;
+	bh=BRuGrKWKjeS3VMDbwBnEww8lHWqDFRlaDxr7OYtT8W4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gGGwF6ukF7xVC677r+bQMwPyzwcm6xj1/RoAC6SFpw2udYuxR2/hYa/4rc1vreMy16VsIFARkRqrZGiRV0kWCLUAyqz5yHHZrgQ77QYpEr21iYnMJ7/zu90RTn88vtdywfCbVwJOz3lo1p95TcaQ8sMYsNzaND6B7Q4+ip09WEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvR8fbKI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i7OVSk0MGu0pnqQQyY4BTDJaO9TxEWKYTLyoFx9w2ohLaTgW5dtPyHw7Qq9j18D5iUd16SAuiXsC1YH2OleBnQNjAOVbUwVssfqMBfpXtTaIuo5q5SUhZmb7SIiVaUgeBNl8lU265GBiwiA6hJA76JRPJB63AEpg0mAR02BDVdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUHqWGmx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvR8fbKI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F841F000E9;
-	Tue, 16 Jun 2026 17:53:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUHqWGmx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13FDB1F000E9;
+	Tue, 16 Jun 2026 17:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632439;
-	bh=VXW8arXBXhc81Yx3mV7B7AXO0W9DMohxY7g9MHUR54U=;
+	s=korg; t=1781632445;
+	bh=/AkrWlLUP7ZagowJJpV+m1K7heGwfMRd4GOv09Lj8xI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vvR8fbKIcY2utofQ5OIWp6Ly1fl1u/BDJ+pRvpa6j3hX/tKzd9ly+a4SlOjpH8ctM
-	 an8J7kAtDQC5mULTSEVH3xRcNsw2G60Lhc9YPncO04yd3pW/JU0/JlTnI7jXb/Pn0p
-	 6m2+ZoHZytmxkxtt4lAgRZLXXcg7qWFkLwObey4o=
+	b=OUHqWGmxusdMIi66qHBV6tvVD45tJaWW/6TO2qWnf1cMmhSE/y6vDYNiwq96OruoH
+	 n/YSCk4q99AFPuSBjLRrFPM3cXNSwoy+akPXGJcQB3nGF2KsFfkj6U/uGYjdJ4JxW8
+	 VHfXoylgJDT5aVSyydrFU9XUg9/mxaFvJAbUhag8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Kosiorek <mkosiorek121@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 378/522] xfrm: defensively unhash xfrm_state lists in __xfrm_state_delete
-Date: Tue, 16 Jun 2026 20:28:45 +0530
-Message-ID: <20260616145143.463857749@linuxfoundation.org>
+Subject: [PATCH 6.1 369/522] net: stmmac: rename STMMAC_GET_ENTRY() -> STMMAC_NEXT_ENTRY()
+Date: Tue, 16 Jun 2026 20:28:36 +0530
+Message-ID: <20260616145143.040487321@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,116 +51,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Kosiorek <mkosiorek121@gmail.com>
+From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit 14acf9652e5690de3c7486c6db5fb8dafd0a32a3 ]
+[ Upstream commit 6b4286e0550814cdc4b897f881ec1fa8b0313227 ]
 
-KASAN reproduces a slab-use-after-free in __xfrm_state_delete()'s
-hlist_del_rcu calls under syzkaller load on linux-6.12.y stable
-(reproduced on 6.12.47, also reachable via the same code path on
-torvalds/master and on the ipsec tree). Nine unique signatures cluster
-in the xfrm_state lifecycle, the load-bearing one being:
+STMMAC_GET_ENTRY() doesn't describe what this macro is doing - it is
+incrementing the provided index for the circular array of descriptors.
+Replace "GET" with "NEXT" as this better describes the action here.
 
-  BUG: KASAN: slab-use-after-free in __hlist_del include/linux/list.h:990 [inline]
-  BUG: KASAN: slab-use-after-free in hlist_del_rcu include/linux/rculist.h:516 [inline]
-  BUG: KASAN: slab-use-after-free in __xfrm_state_delete net/xfrm/xfrm_state.c
-  Write of size 8 at addr ffff8881198bcb70 by task kworker/u8:9/435
-
-  Workqueue: netns cleanup_net
-  Call Trace:
-   __hlist_del / hlist_del_rcu
-   __xfrm_state_delete
-   xfrm_state_delete
-   xfrm_state_flush
-   xfrm_state_fini
-   ops_exit_list
-   cleanup_net
-
-The other observed signatures hit the same slab object from
-__xfrm_state_lookup, xfrm_alloc_spi, __xfrm_state_insert and an OOB
-write variant of __xfrm_state_delete, all on the byseq/byspi
-hash chains.
-
-__xfrm_state_delete() guards its byseq and byspi unhashes with
-value-based predicates:
-
-	if (x->km.seq)
-		hlist_del_rcu(&x->byseq);
-	if (x->id.spi)
-		hlist_del_rcu(&x->byspi);
-
-while everywhere else in the file (e.g. state_cache, state_cache_input)
-the safer hlist_unhashed() check is used. xfrm_alloc_spi() sets
-x->id.spi = newspi inside xfrm_state_lock and then immediately inserts
-into byspi, but a path that observes x->id.spi != 0 outside of
-xfrm_state_lock can still skip-or-hit the byspi unhash inconsistently
-with whether x is actually on the list. The same holds for x->km.seq
-versus byseq, and the bydst/bysrc unhashes have no predicate at all,
-so a second __xfrm_state_delete() on the same object writes through
-LIST_POISON pprev.
-
-The defensive change here:
-
-  - Use hlist_del_init_rcu() instead of hlist_del_rcu() on bydst,
-    bysrc, byseq and byspi so a second deletion is a no-op rather
-    than a write through LIST_POISON pprev. The byseq/byspi nodes
-    are already initialised in xfrm_state_alloc().
-  - Test hlist_unhashed() rather than the value predicate for
-    byseq/byspi, so the unhash decision tracks list state rather than
-    mutable scalar fields.
-
-Empirical verification: applied this patch on top of v6.12.47, rebuilt,
-and re-ran the same syzkaller harness for 1h16m on a previously-crashy
-configuration that produced ~100 hits each of slab-use-after-free
-Read in xfrm_alloc_spi / Read in __xfrm_state_lookup / Write in
-__xfrm_state_delete. After the patch, 7.1M execs across 32 VMs at
-~1550 exec/sec produced zero xfrm_state UAF/OOB hits. /proc/slabinfo
-confirms the xfrm_state slab is actively allocated and freed during
-the run (~143 KiB resident), so the fuzzer is still exercising those
-code paths -- they just no longer crash.
-
-Reproduction:
-
-  - Linux 6.12.47 x86_64 + KASAN_GENERIC + KASAN_INLINE + KCOV
-  - syzkaller @ 746545b8b1e4c3a128db8652b340d3df90ce61db
-  - 32 QEMU/KVM VMs x 2 vCPU on AWS c5.metal bare metal
-  - 9 unique signatures collected in ~9h, all within xfrm_state
-    lifecycle
-
-Fixes: fe9f1d8779cb ("xfrm: add state hashtable keyed by seq")
-Fixes: 7b4dc3600e48 ("[XFRM]: Do not add a state whose SPI is zero to the SPI hash.")
-Reported-by: Michal Kosiorek <mkosiorek121@gmail.com>
-Tested-by: Michal Kosiorek <mkosiorek121@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Michal Kosiorek <mkosiorek121@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-[ dropped state_cache/state_cache_input unhash hunks and xfrm_nat_keepalive_state_updated() call ]
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/E1w2vba-0000000DbWo-1oL5@rmk-PC.armlinux.org.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 0bb05e6adfa9 ("net: stmmac: Prevent NULL deref when RX memory exhausted")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_state.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/chain_mode.c  |    2 -
+ drivers/net/ethernet/stmicro/stmmac/common.h      |    2 -
+ drivers/net/ethernet/stmicro/stmmac/ring_mode.c   |    2 -
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |   26 +++++++++++-----------
+ 4 files changed, 16 insertions(+), 16 deletions(-)
 
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -682,12 +682,12 @@ int __xfrm_state_delete(struct xfrm_stat
- 		x->km.state = XFRM_STATE_DEAD;
- 		spin_lock(&net->xfrm.xfrm_state_lock);
- 		list_del(&x->km.all);
--		hlist_del_rcu(&x->bydst);
--		hlist_del_rcu(&x->bysrc);
--		if (x->km.seq)
--			hlist_del_rcu(&x->byseq);
--		if (x->id.spi)
--			hlist_del_rcu(&x->byspi);
-+		hlist_del_init_rcu(&x->bydst);
-+		hlist_del_init_rcu(&x->bysrc);
-+		if (!hlist_unhashed(&x->byseq))
-+			hlist_del_init_rcu(&x->byseq);
-+		if (!hlist_unhashed(&x->byspi))
-+			hlist_del_init_rcu(&x->byspi);
- 		net->xfrm.state_num--;
- 		spin_unlock(&net->xfrm.xfrm_state_lock);
+--- a/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
++++ b/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
+@@ -47,7 +47,7 @@ static int jumbo_frm(struct stmmac_tx_qu
+ 
+ 	while (len != 0) {
+ 		tx_q->tx_skbuff[entry] = NULL;
+-		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
++		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
+ 		desc = tx_q->dma_tx + entry;
+ 
+ 		if (len > bmax) {
+--- a/drivers/net/ethernet/stmicro/stmmac/common.h
++++ b/drivers/net/ethernet/stmicro/stmmac/common.h
+@@ -53,7 +53,7 @@
+ #define DMA_MIN_RX_SIZE		64
+ #define DMA_MAX_RX_SIZE		1024
+ #define DMA_DEFAULT_RX_SIZE	512
+-#define STMMAC_GET_ENTRY(x, size)	((x + 1) & (size - 1))
++#define STMMAC_NEXT_ENTRY(x, size)	((x + 1) & (size - 1))
+ 
+ #undef FRAME_FILTER_DEBUG
+ /* #define FRAME_FILTER_DEBUG */
+--- a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
++++ b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
+@@ -51,7 +51,7 @@ static int jumbo_frm(struct stmmac_tx_qu
+ 		stmmac_prepare_tx_desc(priv, desc, 1, bmax, csum,
+ 				STMMAC_RING_MODE, 0, false, skb->len);
+ 		tx_q->tx_skbuff[entry] = NULL;
+-		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
++		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
+ 
+ 		if (priv->extend_desc)
+ 			desc = (struct dma_desc *)(tx_q->dma_etx + entry);
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -2503,7 +2503,7 @@ static bool stmmac_xdp_xmit_zc(struct st
+ 
+ 		stmmac_enable_dma_transmission(priv, priv->ioaddr);
+ 
+-		tx_q->cur_tx = STMMAC_GET_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
++		tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
+ 		entry = tx_q->cur_tx;
+ 	}
+ 	flags = u64_stats_update_begin_irqsave(&txq_stats->syncp);
+@@ -2660,7 +2660,7 @@ static int stmmac_tx_clean(struct stmmac
+ 
+ 		stmmac_release_tx_desc(priv, p, priv->mode);
+ 
+-		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
++		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
+ 	}
+ 	tx_q->dirty_tx = entry;
+ 
+@@ -3976,7 +3976,7 @@ static bool stmmac_vlan_insert(struct st
+ 		return false;
+ 
+ 	stmmac_set_tx_owner(priv, p);
+-	tx_q->cur_tx = STMMAC_GET_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
++	tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
+ 	return true;
+ }
+ 
+@@ -4004,7 +4004,7 @@ static void stmmac_tso_allocator(struct
+ 	while (tmp_len > 0) {
+ 		dma_addr_t curr_addr;
+ 
+-		tx_q->cur_tx = STMMAC_GET_ENTRY(tx_q->cur_tx,
++		tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx,
+ 						priv->dma_conf.dma_tx_size);
+ 		WARN_ON(tx_q->tx_skbuff[tx_q->cur_tx]);
+ 
+@@ -4137,7 +4137,7 @@ static netdev_tx_t stmmac_tso_xmit(struc
+ 
+ 		stmmac_set_mss(priv, mss_desc, mss);
+ 		tx_q->mss = mss;
+-		tx_q->cur_tx = STMMAC_GET_ENTRY(tx_q->cur_tx,
++		tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx,
+ 						priv->dma_conf.dma_tx_size);
+ 		WARN_ON(tx_q->tx_skbuff[tx_q->cur_tx]);
+ 	}
+@@ -4262,7 +4262,7 @@ static netdev_tx_t stmmac_tso_xmit(struc
+ 	 * ndo_start_xmit will fill this descriptor the next time it's
+ 	 * called and stmmac_tx_clean may clean up to this descriptor.
+ 	 */
+-	tx_q->cur_tx = STMMAC_GET_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
++	tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
+ 
+ 	if (unlikely(stmmac_tx_avail(priv, queue) <= (MAX_SKB_FRAGS + 1))) {
+ 		netif_dbg(priv, hw, priv->dev, "%s: stop transmitted packets\n",
+@@ -4420,7 +4420,7 @@ static netdev_tx_t stmmac_xmit(struct sk
+ 		int len = skb_frag_size(frag);
+ 		bool last_segment = (i == (nfrags - 1));
+ 
+-		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
++		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
+ 		WARN_ON(tx_q->tx_skbuff[entry]);
+ 
+ 		if (likely(priv->extend_desc))
+@@ -4490,7 +4490,7 @@ static netdev_tx_t stmmac_xmit(struct sk
+ 	 * ndo_start_xmit will fill this descriptor the next time it's
+ 	 * called and stmmac_tx_clean may clean up to this descriptor.
+ 	 */
+-	entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
++	entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
+ 	tx_q->cur_tx = entry;
+ 
+ 	if (netif_msg_pktdata(priv)) {
+@@ -4660,7 +4660,7 @@ static inline void stmmac_rx_refill(stru
+ 		dma_wmb();
+ 		stmmac_set_rx_owner(priv, p, use_rx_wd);
+ 
+-		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_rx_size);
++		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_rx_size);
+ 	}
+ 	rx_q->dirty_rx = entry;
+ 	rx_q->rx_tail_addr = rx_q->dma_rx_phy +
+@@ -4787,7 +4787,7 @@ static int stmmac_xdp_xmit_xdpf(struct s
+ 
+ 	stmmac_enable_dma_transmission(priv, priv->ioaddr);
+ 
+-	entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
++	entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
+ 	tx_q->cur_tx = entry;
+ 
+ 	return STMMAC_XDP_TX;
+@@ -5018,7 +5018,7 @@ static bool stmmac_rx_refill_zc(struct s
+ 		dma_wmb();
+ 		stmmac_set_rx_owner(priv, rx_desc, use_rx_wd);
+ 
+-		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_rx_size);
++		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_rx_size);
+ 	}
+ 
+ 	if (rx_desc) {
+@@ -5103,7 +5103,7 @@ read_again:
+ 			break;
+ 
+ 		/* Prefetch the next RX descriptor */
+-		rx_q->cur_rx = STMMAC_GET_ENTRY(rx_q->cur_rx,
++		rx_q->cur_rx = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
+ 						priv->dma_conf.dma_rx_size);
+ 		next_entry = rx_q->cur_rx;
+ 
+@@ -5295,7 +5295,7 @@ read_again:
+ 		if (unlikely(status & dma_own))
+ 			break;
+ 
+-		rx_q->cur_rx = STMMAC_GET_ENTRY(rx_q->cur_rx,
++		rx_q->cur_rx = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
+ 						priv->dma_conf.dma_rx_size);
+ 		next_entry = rx_q->cur_rx;
  
 
 
