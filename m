@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617942F12AE;
-	Tue, 16 Jun 2026 18:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73FBD3D7A14;
+	Tue, 16 Jun 2026 18:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633141; cv=none; b=Nmex354aKsmBn1SOf1O38KRYQxLnSzqMsO7g1T1h3/iZC7Gc+A6eCMkzRHl9bT9lxJl6u7iKyOsfDEHaajw3bXIbD+UsSgZMn03b4ZZp47AYTsmqqhl9LLcg9EGxJHf4cH2gUHVIMLz8spcJrJeeQcvdvUX7JeUrH+3ZvRnkPIk=
+	t=1781633148; cv=none; b=WHeJ3eVZTCij/Dx3JbX+UKanW8G90FlYsWsI+mCCXieApYFrjVZ863fgtSIdfBmnMLxr4Sw60/599m+twvP9IYTZWz/yGqfOWpKDSrlytIzd3f+L35JUn7cH1L0uIG8R57rrZ/rn4BvUXGVjUJrVvcikIRHOFVvluTlJCd/vVGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633141; c=relaxed/simple;
-	bh=p6RB0+od2P2M0CCJooP+35PYfgq/VV5TGSAGsxm/iew=;
+	s=arc-20240116; t=1781633148; c=relaxed/simple;
+	bh=yJ+P3tlWc1JgK8ISB4s+v2epoGiT0+k1QdyJVwDk8d0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HEEypo496Pt6Tqp3NExh1Pb+Bhx5v2tBrhkkC5BV1ufx/cI2fTMbDpsI78MpkNyMQwgj6HrbA3DJu3hGjKlx6lnw9ag8u0Dmqsce9qZ5acW2czdjr0msXFGu7qKB9MNW2sKAudjKDgrYX9mVKXwExPi1jjIZ7j9Co/C1oYnVjdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g7j9D+T+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PjkqykcfmM6zRL1jMBgVyxu80Yrii0dblMlZFhwtJwqom7U6fLOQJ9t6dbxkh3/4ZgqczC5llMveacQo9RtscZT6Q/lyKj+ooEuMDgLxZoAvK4j2ySyvKyekvdl4gYtoOSVk3qH7dDazdniRd8i8wPKb6dNrEB1FumfcgRpDgiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8i+IfBZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g7j9D+T+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7901F000E9;
-	Tue, 16 Jun 2026 18:05:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8i+IfBZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2922F1F000E9;
+	Tue, 16 Jun 2026 18:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633140;
-	bh=TYFs29qQZ2yXuAvK9qrgYyBiDvKVLRbWT7ugdwzLzM0=;
+	s=korg; t=1781633146;
+	bh=W6YEp683evY99MEFgY3zWjHNe3HgteabYmQ+6EHVwU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g7j9D+T+PwxhrU6MmvnBTSQ3kOEc72mThr+PvfHAe4JG3q+DiujttQA9iYYJ8kY9J
-	 CqnMXAFCy8ZiRRqvIebH3VLZAexd0YZLZNRflwXB1jT0QFATZHgf3T7bqMDViZteLf
-	 uMv52uXbuhrGwTNlWiDEwOGo0nnnb3LDi7IlAAqc=
+	b=n8i+IfBZg+nPgK6feNvBTDcTaqsN+FPxzhvRlr7VqVQtqVGmVuecFlGE/nXm0QU7J
+	 OnfJnm8OJYVHUqC93CzI6xNwf66Y9SyWuQkhdJJPBUfJQFK01NlPcd59zXfxzguiwO
+	 6E+rN9aAOTtS/XUp3rR2hcpyvByGtAfaMRxNiExo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Dongdong <zhaodongdong@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	syzbot+8ed98cbd0161632bce95@syzkaller.appspotmail.com,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 026/411] Bluetooth: 6lowpan: check skb_clone() return value in send_mcast_pkt()
-Date: Tue, 16 Jun 2026 20:24:24 +0530
-Message-ID: <20260616145101.747286933@linuxfoundation.org>
+Subject: [PATCH 5.15 027/411] bonding: refuse to enslave CAN devices
+Date: Tue, 16 Jun 2026 20:24:25 +0530
+Message-ID: <20260616145101.796400856@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -51,37 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Dongdong <zhaodongdong@kylinos.cn>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 3c40d381ce04f9575a5d8b542898183c3b4b38dc ]
+[ Upstream commit 8ba68464e4787b6a7ec938826e16124df20fd23d ]
 
-The skb_clone() function can return NULL if memory allocation fails.
-send_mcast_pkt() calls skb_clone() without checking the return value, which
-can lead to a NULL pointer dereference in send_pkt() when it dereferences
-skb->data.
-Add a NULL check after skb_clone() and skip the peer if the clone fails.
+syzbot reported a kernel paging request crash in
+can_rx_unregister() inside net/can/af_can.c. The crash occurs
+because a virtual CAN device (vxcan) is being enslaved to a
+bonding master.
 
-Fixes: 18722c247023 ("Bluetooth: Enable 6LoWPAN support for BT LE devices")
-Signed-off-by: Zhao Dongdong <zhaodongdong@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+During the enslavement process, the bonding driver mutates
+and modifies the network device states to fit an Ethernet-like
+aggregation model. However, CAN devices operate on a completely
+different Layer 2 architecture, relying on the CAN mid-layer
+private data structure (can_ml_priv) instead of standard
+Ethernet structures. Since bonding does not initialize or
+maintain these CAN structures, subsequent operations on the
+half-enslaved interface (such as closing associated sockets
+via isotp_release) lead to a null-pointer dereference when
+accessing the CAN receiver lists.
+
+Bonding CAN interfaces is architecturally invalid as CAN lacks
+MAC addresses, ARP capabilities, and standard Ethernet
+link-layer mechanisms. While generic loopback devices are
+blocked globally in net/core/dev.c, virtual CAN devices
+bypass this check because they do not carry the IFF_LOOPBACK
+flag, despite acting as local software-loopbacks.
+
+Fix this by explicitly blocking network devices of type
+ARPHRD_CAN from being enslaved at the very beginning of
+bond_enslave(). This prevents illegal state mutations,
+eliminates the resulting KASAN crashes, and avoids potential
+memory leaks from incomplete socket cleanups.
+
+As the CAN support has been added a long time after bonding
+the Fixes-tag points to the introduction of ARPHRD_CAN that
+would have needed a specific handling in bonding_main.c.
+
+Fixes: cd05acfe65ed ("[CAN]: Allocate protocol numbers for PF_CAN")
+Reported-by: syzbot+8ed98cbd0161632bce95@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=8ed98cbd0161632bce95
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Link: https://patch.msgid.link/20260526-bonding-candev-v1-1-ba1df400918a@hartkopp.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/6lowpan.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/bonding/bond_main.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index b70d3a38fdedc1..26bc594182ea08 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -485,6 +485,8 @@ static int send_mcast_pkt(struct sk_buff *skb, struct net_device *netdev)
- 			int ret;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 5321d9dca698a9..42ad34b308b924 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1776,6 +1776,12 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
+ 	int link_reporting;
+ 	int res = 0, i;
  
- 			local_skb = skb_clone(skb, GFP_ATOMIC);
-+			if (!local_skb)
-+				continue;
- 
- 			BT_DBG("xmit %s to %pMR type %u IP %pI6c chan %p",
- 			       netdev->name,
++	if (slave_dev->type == ARPHRD_CAN) {
++		BOND_NL_ERR(bond_dev, extack,
++			    "CAN devices cannot be enslaved");
++		return -EPERM;
++	}
++
+ 	if (slave_dev->flags & IFF_MASTER &&
+ 	    !netif_is_bond_master(slave_dev)) {
+ 		BOND_NL_ERR(bond_dev, extack,
 -- 
 2.53.0
 
