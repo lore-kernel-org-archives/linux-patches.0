@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC66243E486;
-	Tue, 16 Jun 2026 15:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7621A682B;
+	Tue, 16 Jun 2026 15:32:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623962; cv=none; b=DSm63eQXgkfreg63Vh4Ow5S8ipEjT9qq0NAFuNauu07hwknP5NglhijzVAmkLQdKkIm4qQ0uYHE7YakY5AWuWofQJl0e7xZaRSObRVjMUbVHcGTv2ttCLutTJnCxAzii2Rp9oYOEQ9eVYhTFkG7P5UdrLbIpKoOucvX0J53NdaQ=
+	t=1781623969; cv=none; b=oNVZ+cJnww8ERT4VuFBoh9vot+vnQklMKwyrzW5NtBowZJjdgA6/x04lTM1RmDm7P6GIfZq522CWgcsZyLB0mJb61i+/klFDjZAVA59NrorWlb9nuf5H0YoQSsvnWZIzsRanmy31kB0nfvSIiGCsDIEFt7jXM1vkywno9+sZw4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623962; c=relaxed/simple;
-	bh=l+JEmkKLOgobAGHt9bBKcXevT0vFBeYnfEhnIc+sBw4=;
+	s=arc-20240116; t=1781623969; c=relaxed/simple;
+	bh=lvsosTbp97r1j+CfVcKZM7t1o+q3yGEfDr7UlhQ0Py0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bAyIENUMF097SQCbx5SsQLjmvXqlrSBxWMYvdm0h9kb/xx9KkhbjA0L/WnzrgDyOTBLQt28i3IUmOyeB2Da9Jvta/K3tLS+8oDugq6oEQfjQJ7V79Ikha3T3Ak6aGmqwbxp8uPX4120eYMe9tVvPp56cu+JGJkaLZSuL0cKabGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPoKpVDe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M69VXTIVqVURNoKGIE6ygawWE5B63BS1xRbGnwLspLkkvBMNX6vSSo0SQmL71GU9e3jg2qgKXdvK+06297Io7UAaXL8TYSvQ824dwzVGKUfVDfhH1my0pWV4ZUVnWmy6eg2ynfu08nPWbo/I34a2Z45cAigpZtuhiwvGe6vIMkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Crj/hR4C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPoKpVDe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A921F00A3A;
-	Tue, 16 Jun 2026 15:32:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Crj/hR4C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 681631F00A3A;
+	Tue, 16 Jun 2026 15:32:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623961;
-	bh=95Lc47aJgsAOcH8/LlPeE7HToycFb9Tq/2QMOyCbEGc=;
+	s=korg; t=1781623968;
+	bh=PrpmMfZw4q0hjNEPAK7SQNoxDXzA6ZMPHrHqIMasvPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LPoKpVDeAZVtZC4rFUifuVtPwTl3A1rB1N4ZfN/4hd3y2hQA5UkqQlTqggHJVGsli
-	 Bcd+rQPhizFbqh8oMdE28DEi2hr0kkRLK3+PwQo3NUXXaQEVMe4JJbcbgXOQ8AaD/O
-	 P2a8reyryqM1cHv1WAbX4f/ZIyXRLjnukMVdO3FA=
+	b=Crj/hR4Co+4D4zbWjmrapbzaFm6JAZipn7o2/vQ/InxggHd3TLoJtMFLnFQKymPY/
+	 /cy13PTwLSJgjxTB2SKV1xeGY+BavZrqjqV4WLzLrnpn8rEsmOE3xoYSnHAIOD1Vsy
+	 KuTlizXnSLJCwvTubB7pCO2QxNvKeETU6tDiR3YE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luka Gejak <luka.gejak@linux.dev>,
-	Salman Alghamdi <me@cipherat.com>
-Subject: [PATCH 7.0 247/378] staging: rtl8723bs: fix buffer over-read in rtw_update_protection
-Date: Tue, 16 Jun 2026 20:27:58 +0530
-Message-ID: <20260616145123.192653869@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Salman Alghamdi <me@cipherat.com>,
+	Luka Gejak <luka.gejak@linux.dev>
+Subject: [PATCH 7.0 248/378] staging: rtl8723bs: rtw_mlme: add bounds checks before ie_length subtraction
+Date: Tue, 16 Jun 2026 20:27:59 +0530
+Message-ID: <20260616145123.237310662@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,52 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Salman Alghamdi <me@cipherat.com>
 
-commit 514ab98364595007d4557ecc85d7e5f012c504d3 upstream.
+commit 88e994c57a79f62d5338231d8d37ee8dd98baffe upstream.
 
-rtw_update_protection() is called with a pointer offset into the
-ies buffer but the full ie_length is passed, causing a potential
-buffer over-read.
+Add guards to ensure ie_length is large enough before subtracting
+fixed IE offsets to prevent unsigned integer underflow.
 
-Fixes: e945c43df60b ("Staging: rtl8723bs: Delete dead code from update_current_network()")
+Fixes: 2038fe84b8bd ("staging: rtl8723bs: fix spacing around operators")
 Fixes: d3fcee1b78a5 ("staging: rtl8723bs: fix camel case in struct wlan_bssid_ex")
-Reported-by: Luka Gejak <luka.gejak@linux.dev>
-Closes: https://lore.kernel.org/linux-staging/DI2H39EAAFBZ.3KI5NWN02AQ2S@linux.dev
-Cc: stable@vger.kernel.org
+Closes: https://lore.kernel.org/linux-staging/DI2H39EAAFBZ.3KI5NWN02AQ2S@linux.dev/
+Cc: stable <stable@kernel.org>
 Signed-off-by: Salman Alghamdi <me@cipherat.com>
 Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
-Link: https://patch.msgid.link/20260508222649.23989-1-me@cipherat.com
+Link: https://patch.msgid.link/20260513203455.31792-1-me@cipherat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_mlme.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
 --- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
 +++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
-@@ -471,8 +471,11 @@ static void update_current_network(struc
+@@ -612,6 +612,8 @@ int rtw_is_desired_network(struct adapte
+ 	privacy = pnetwork->network.privacy;
  
- 	if (check_fwstate(pmlmepriv, _FW_LINKED) && (is_same_network(&pmlmepriv->cur_network.network, pnetwork, 0))) {
- 		update_network(&pmlmepriv->cur_network.network, pnetwork, adapter, true);
-+		if (pmlmepriv->cur_network.network.ie_length < sizeof(struct ndis_802_11_fix_ie))
-+			return;
-+
- 		rtw_update_protection(adapter, (pmlmepriv->cur_network.network.ies) + sizeof(struct ndis_802_11_fix_ie),
--								pmlmepriv->cur_network.network.ie_length);
-+								pmlmepriv->cur_network.network.ie_length - sizeof(struct ndis_802_11_fix_ie));
+ 	if (check_fwstate(pmlmepriv, WIFI_UNDER_WPS)) {
++		if (pnetwork->network.ie_length < _FIXED_IE_LENGTH_)
++			return false;
+ 		if (rtw_get_wps_ie(pnetwork->network.ies + _FIXED_IE_LENGTH_, pnetwork->network.ie_length - _FIXED_IE_LENGTH_, NULL, &wps_ielen))
+ 			return true;
+ 		else
+@@ -625,11 +627,15 @@ int rtw_is_desired_network(struct adapte
+ 			bselected = false;
+ 
+ 		if (psecuritypriv->ndisauthtype == Ndis802_11AuthModeWPA2PSK) {
+-			p = rtw_get_ie(pnetwork->network.ies + _BEACON_IE_OFFSET_, WLAN_EID_RSN, &ie_len, (pnetwork->network.ie_length - _BEACON_IE_OFFSET_));
+-			if (p && ie_len > 0)
+-				bselected = true;
+-			else
++			if (pnetwork->network.ie_length < _BEACON_IE_OFFSET_) {
+ 				bselected = false;
++			} else {
++				p = rtw_get_ie(pnetwork->network.ies + _BEACON_IE_OFFSET_, WLAN_EID_RSN, &ie_len, (pnetwork->network.ie_length - _BEACON_IE_OFFSET_));
++				if (p && ie_len > 0)
++					bselected = true;
++				else
++					bselected = false;
++			}
+ 		}
  	}
- }
  
-@@ -1081,8 +1084,11 @@ static void rtw_joinbss_update_network(s
- 			break;
- 	}
- 
-+	if (cur_network->network.ie_length < sizeof(struct ndis_802_11_fix_ie))
-+		return;
-+
- 	rtw_update_protection(padapter, (cur_network->network.ies) + sizeof(struct ndis_802_11_fix_ie),
--									(cur_network->network.ie_length));
-+									(cur_network->network.ie_length - sizeof(struct ndis_802_11_fix_ie)));
- 
- 	rtw_update_ht_cap(padapter, cur_network->network.ies, cur_network->network.ie_length, (u8) cur_network->network.configuration.ds_config);
- }
 
 
