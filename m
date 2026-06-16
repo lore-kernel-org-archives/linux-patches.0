@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9A747D94E;
-	Tue, 16 Jun 2026 18:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8E83A5E89;
+	Tue, 16 Jun 2026 18:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635544; cv=none; b=dMUB82DEz8kYaKV/q2/sLWVIN0yPr2fB2QJuiMSGyHG2y2CAD6FvujwDYZ8azKfobfAo+Wi7dUie15DwzgrIXMrflurBSW3HSq34tPzqPlm90wqlWKBlagXJnXh+hQFABzxisr7Ava1qVGIFH25RQ6J4kXtc2RBvewwKZXaoq5M=
+	t=1781635548; cv=none; b=OJq1dn7uv7NdlGxaADj27SoZ6dxX2Rtc4NicSeeq5hM1IwTzKkcw7i7cxrE2U1Z3VO3GshUScqitkOgXY+ulEV71W2dm0z7JuWC8fFfJdXaT/NLhfOGE/r4UYFH/3jb+NWyj7MOJM20XOD2CSL7eDDDiG6PEjJHKPAQOM7c0Jjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635544; c=relaxed/simple;
-	bh=YdANP3iYPLk2i0id69ef8zB5JCe9AdgHnlwwP41sTVE=;
+	s=arc-20240116; t=1781635548; c=relaxed/simple;
+	bh=KCg1MyOFwuYz9zRQrieRBFN0rwqv3ICMRxIPiAOX/EE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rvr24tHp7lHCfp1Zy0HiWX5YI7sOqAKTJ35BFAecjwOCDmDyuoiI+vAHuUWWT+TVAVdK52ZQ3fyivXpBGiRAchnv3xpTAi5Y21NXI4gUPeLQ95DFUJBVkmvy+G7r4rvBR+WzI5iDd9RdfVECWetXdcWr+lULpGT/RYr4GivwGB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XEJ+GP9E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JwDtnlaQyGeYnu1Sm9AL1mx21Ur9MZpk4en1GoQ1vmAzMIivrpHhFM5/T5DTP0pyW+OqRrWjZ90/zC1VOfL8GqdqgHNSPrWCoNyLC2nmdOkajAF9Yd1PbUY/7qJV6jIHUDJuDwFHHZ6fDHlZdBqle1zsxzxq2/IOViDpADp1SLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwILjh9t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XEJ+GP9E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 313541F00A3D;
-	Tue, 16 Jun 2026 18:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwILjh9t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58901F00A3A;
+	Tue, 16 Jun 2026 18:45:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635541;
-	bh=a910AdEcpng2OgAkVCpkif15W4h28MdjV1QSWpAvCd0=;
+	s=korg; t=1781635546;
+	bh=Gq3/NTOyJAmuG8PhKCbAF7XV7OMOwlmHisD1+zUUGJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XEJ+GP9E6dUQa/GOQGWaOw42ecYXtGJBcA6Gk5dxWIC+z9XOvv5TId9cVeUmcPd7s
-	 ICYNRmQqdhLjwHT7glUUlhl5ZU6v3OENnKLk7eCl8plPgFLrpifvF+r9Wyws6c4BTT
-	 gj4uFXyIkOR1CdHCt6hjp+QWmCnxkgpMNyQtXJUM=
+	b=AwILjh9t2+W358+81hSTAcOVNeDEdGl1IOoWh8o29uS5nDbbGEOSwRJD7cRzh9yyQ
+	 SrSLUhcWQ4v08OSJOVh8BxF/Gvs0IvhSaHAC6A9XThLGdx1ijDRTY336SKK68b4sLD
+	 27INY3YFPhjTDDGgZWMMZDNUmQLEP3qZA5KSt7r0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuai Zhang <shuai.zhang@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 051/342] Bluetooth: btusb: Allow firmware re-download when version matches
-Date: Tue, 16 Jun 2026 20:25:47 +0530
-Message-ID: <20260616145050.628279770@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuqi Xu <xuyq21@lenovo.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 069/342] bpf: sockmap: fix tail fragment offset in bpf_msg_push_data
+Date: Tue, 16 Jun 2026 20:26:05 +0530
+Message-ID: <20260616145051.460345577@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -50,57 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+From: Yuqi Xu <xuyq21@lenovo.com>
 
-commit 82855073c1081732656734b74d7d1d5e4cfd0da7 upstream.
+commit f72eed9b84fb771019a955908132410a9ba9ea3f upstream.
 
-The Bluetooth host decides whether to download firmware by reading the
-controller firmware download completion flag and firmware version
-information.
+When bpf_msg_push_data() inserts data in the middle of a scatterlist
+entry, it splits the original entry into a left fragment and a right
+fragment.
 
-If a USB error occurs during the firmware download process (for example
-due to a USB disconnect), the download is aborted immediately. An
-incomplete firmware transfer does not cause the controller to set the
-download completion flag, but the firmware version information may be
-updated at an early stage of the download process.
+The right fragment offset is page-local, but the code advances it with
+`start`, which is the message-global insertion point. For inserts into a
+non-first SG entry, this over-advances the offset and leaves the split
+layout inconsistent.
 
-In this case, after USB reconnection, the host attempts to re-download
-the firmware because the download completion flag is not set. However,
-since the controller reports the same firmware version as the target
-firmware, the download is skipped. This ultimately results in the
-firmware not being properly updated on the controller.
+Advance the right fragment offset by the fragment-local delta,
+`start - offset`, which matches the length removed from the front of the
+original entry.
 
-This change removes the restriction that skips firmware download when
-the versions are equal. It covers scenarios where the USB connection
-can be disconnected at any time and ensures that firmware download can
-be retriggered after USB reconnection, allowing the Bluetooth firmware
-to be correctly and completely updated.
-
-Fixes: 3267c884cefa ("Bluetooth: btusb: Add support for QCA ROME chipset family")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 6fff607e2f14 ("bpf: sk_msg program helper bpf_msg_push_data")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yuqi Xu <xuyq21@lenovo.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Link: https://patch.msgid.link/8b129d10566aa3eb43f61a8f9757bcf51707d324.1779636774.git.xuyq21@lenovo.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/core/filter.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3744,7 +3744,13 @@ static int btusb_setup_qca_load_rampatch
- 		    "firmware rome 0x%x build 0x%x",
- 		    rver_rom, rver_patch, ver_rom, ver_patch);
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2845,7 +2845,7 @@ BPF_CALL_4(bpf_msg_push_data, struct sk_
  
--	if (rver_rom != ver_rom || rver_patch <= ver_patch) {
-+	/* Allow rampatch when the patch version equals the firmware version.
-+	 * A firmware download may be aborted by a transient USB error (e.g.
-+	 * disconnect) after the controller updates version info but before
-+	 * completion.
-+	 * Allowing equal versions enables re-flashing during recovery.
-+	 */
-+	if (rver_rom != ver_rom || rver_patch < ver_patch) {
- 		bt_dev_err(hdev, "rampatch file version did not match with firmware");
- 		err = -EINVAL;
- 		goto done;
+ 		psge->length = start - offset;
+ 		rsge.length -= psge->length;
+-		rsge.offset += start;
++		rsge.offset += start - offset;
+ 
+ 		sk_msg_iter_var_next(i);
+ 		sg_unmark_end(psge);
 
 
