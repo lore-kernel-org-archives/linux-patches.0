@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEAD4657CF;
-	Tue, 16 Jun 2026 17:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10064657CF;
+	Tue, 16 Jun 2026 17:00:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629247; cv=none; b=gudZbh+SUEUPhQacuRJhB0j8audl20NnNaB3S78+FYKLcSBXFLmS1zfogmWYbkN/rnoDa72r8YWhnfjWoLIKHVaJ39fTRkPGWBuGgxNseGznuEQTYXz5JqfcT3YA1yz5MWXya5yP80nZY7L8Xlx8py4rX1wxw4qHlG8gltzclek=
+	t=1781629252; cv=none; b=B5HkIyhsrNmEd4tk4O+vbsxj3EP3fravHPt1APZ6j15GxOvi3HAConiLRZ2kzuXXKCuJPjf6KZ/7v/HeVSK/n7b2tGC//q1XF7GmjbZe4g6ptkPwI53C4x/W+6g5boq5LIaksX7lTXnPWeX0yE5fOkkutotroAztEdvAgsj3nDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629247; c=relaxed/simple;
-	bh=j2Z0DkYZT0Leg1Z3q23Tyu4ZZmdSHo1adOjv6MEr1gc=;
+	s=arc-20240116; t=1781629252; c=relaxed/simple;
+	bh=sXvAZYDYe15xeScwtl7ohGskrlHbn5UI4Ud3kEBbV+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oVj/xKvp2i//8+TKSnJv1FEzwaqR3r68bf5uxD/zaYDYCNnUGGlgUU8UcaXaVlPG3Ts1TsSnWBX4Iv42Ye9WC2+mAAZEC1zAngtpoyvy1aqSPljoPosPGFnpoMIVX3B0MOUU/ZITu7Kvp+u2DONfMT7nWej9OiBBtS9k4EopOVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udVL88cQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UF5IkBj1yqWdJ47VUmtKiKd183gTeHVgD9jBuKv6OvqI53eTt2UxIgFKdTYwMBFRcV2/4x1pR54HAoVMYHqbBSEaDBsRYiDoQ//qe6hocVz21DxZYcX4fVNvZtdb/PVSkP4+ZoJV7NKnA67nKlqXcOfjqy58dzKCg7YJIHwC4MI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BeUt++kN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udVL88cQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04DC1F000E9;
-	Tue, 16 Jun 2026 17:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BeUt++kN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E711F000E9;
+	Tue, 16 Jun 2026 17:00:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629246;
-	bh=hCcTOj4810CM9bFsq3Wa9WSvOPkejx7xlJxPavdabZo=;
+	s=korg; t=1781629251;
+	bh=GnDSSocBEgRlSGzNPWQap3vkicdd0DopCJ5KqRANQPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=udVL88cQT1HXN7grTCPPTXDT8dtnZwmafhhMe8Vh6+cKm9BJwt+iw0Q7sVVXq69jH
-	 TS+5KT+inMxQnoo+dleHKM0f1SH3RHNp0qemg4nX/RRc+R8dHnxwTj/XQUGuyGBIFe
-	 w8941JZXpBvCCBCuyouPHuUMTRCIlD+66metoip8=
+	b=BeUt++kNUGgZdjUyHeV71SvAj4XS3zxBsQT4Qe1rdgYERnJfMb7IUN+sErPTqV51U
+	 kuIadEYMeLekewP0zdtMTjycsRBImfcDHL1FGT/7E/ME4Q3UB9sEKor7+Rwb8g4Ha5
+	 jihtyftDXRu1QOJqHuEzm4QPtB1prXsGwr9DeI74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b109633ea805cac54a61@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 248/452] signal: clear JOBCTL_PENDING_MASK for caller in zap_other_threads()
-Date: Tue, 16 Jun 2026 20:27:55 +0530
-Message-ID: <20260616145130.702910828@linuxfoundation.org>
+Subject: [PATCH 6.6 249/452] time: Fix off-by-one in settimeofday() usec validation
+Date: Tue, 16 Jun 2026 20:27:56 +0530
+Message-ID: <20260616145130.747238739@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,70 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
 
-[ Upstream commit 90918794a4e2c3b440f8fcf3847765a8b1d81b25 ]
+[ Upstream commit ce4abda5e12622f33450159e76c8f56d28d7f03d ]
 
-When a multi-threaded process receives a stop signal (e.g., SIGSTOP),
-do_signal_stop() sets JOBCTL_STOP_PENDING and JOBCTL_STOP_CONSUME on all
-threads and sets signal->group_stop_count to the number of threads. If
-one of the threads concurrently calls execve(), de_thread() invokes
-zap_other_threads() to kill all other threads. zap_other_threads()
-aborts the pending group stop by resetting signal->group_stop_count to 0
-and clears the JOBCTL_PENDING_MASK for all other threads. However, it
-fails to clear the job control flags for the calling thread.
+The validation check uses '>' instead of '>=' when comparing tv_usec
+against USEC_PER_SEC, allowing the value 1000000 through. After
+conversion to nanoseconds (*= 1000), this produces tv_nsec ==
+NSEC_PER_SEC, violating the timespec invariant that tv_nsec must be
+less than NSEC_PER_SEC.
 
-When execve() completes, the calling thread returns to user mode and
-checks for pending signals. Seeing the stale JOBCTL_STOP_PENDING flag,
-it calls do_signal_stop(), which invokes task_participate_group_stop().
-Since JOBCTL_STOP_CONSUME is still set, it attempts to decrement the
-already-zero signal->group_stop_count, triggering a warning:
+Use '>=' to reject tv_usec values that are not in the valid range of
+0 to 999999.
 
-sig->group_stop_count == 0
-WARNING: CPU: 1 PID: 6475 at kernel/signal.c:373
-task_participate_group_stop+0x215/0x2d0
-Call Trace:
- <TASK>
- do_signal_stop+0x3be/0x5c0 kernel/signal.c:2619
- get_signal+0xa8c/0x1330 kernel/signal.c:2884
- arch_do_signal_or_restart+0xbc/0x840 arch/x86/kernel/signal.c:337
- exit_to_user_mode_loop+0x8c/0x4d0 kernel/entry/common.c:98
- do_syscall_64+0x33e/0xf80 arch/x86/entry/syscall_64.c:100
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
-
-Fix this race condition by clearing the JOBCTL_PENDING_MASK for the
-calling thread in zap_other_threads(), ensuring it does not retain any
-stale job control state after the thread group is destroyed. This aligns
-with other functions that tear down a thread group and abort group
-stops, such as zap_process() and complete_signal(), which correctly
-clear these flags for all threads including the current one.
-
-Fixes: 39efa3ef3a37 ("signal: Use GROUP_STOP_PENDING to stop once for a single group stop")
-Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
-Reported-by: syzbot+b109633ea805cac54a61@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b109633ea805cac54a61
-Link: https://syzkaller.appspot.com/ai_job?id=d70208cc-862b-4fe3-bf02-3031e10cd0b3
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Link: https://patch.msgid.link/20260521142240.2973022-1-nogikh@google.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 5e0fb1b57bea ("y2038: time: avoid timespec usage in settimeofday()")
+Signed-off-by: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: John Stultz <jstultz@google.com>
+Link: https://patch.msgid.link/4rikk44zew3s6577dugmx4jyblz7o5c57niuap6ct3td5yfm6w@gh7pcumg7qor
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/signal.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/time/time.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/signal.c b/kernel/signal.c
-index 49c8c24b444d5e..3a484ea4bab658 100644
---- a/kernel/signal.c
-+++ b/kernel/signal.c
-@@ -1382,6 +1382,7 @@ int zap_other_threads(struct task_struct *p)
- 	int count = 0;
+diff --git a/kernel/time/time.c b/kernel/time/time.c
+index da7e8a02a0964f..a6261fadb92b15 100644
+--- a/kernel/time/time.c
++++ b/kernel/time/time.c
+@@ -207,7 +207,7 @@ SYSCALL_DEFINE2(settimeofday, struct __kernel_old_timeval __user *, tv,
+ 		    get_user(new_ts.tv_nsec, &tv->tv_usec))
+ 			return -EFAULT;
  
- 	p->signal->group_stop_count = 0;
-+	task_clear_jobctl_pending(p, JOBCTL_PENDING_MASK);
+-		if (new_ts.tv_nsec > USEC_PER_SEC || new_ts.tv_nsec < 0)
++		if (new_ts.tv_nsec >= USEC_PER_SEC || new_ts.tv_nsec < 0)
+ 			return -EINVAL;
  
- 	while_each_thread(p, t) {
- 		task_clear_jobctl_pending(t, JOBCTL_PENDING_MASK);
+ 		new_ts.tv_nsec *= NSEC_PER_USEC;
 -- 
 2.53.0
 
