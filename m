@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13194779B9;
-	Tue, 16 Jun 2026 17:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74ED847CC7F;
+	Tue, 16 Jun 2026 17:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631715; cv=none; b=mea9mmXhUwWUHbbGkzVEpv/o0kHx1QPYqrDmXSRVwYQRCpO9PVreCa3edNWiBIcPGOgKspqIpsE2/xkmoASahutLqBcbviKNhdZcWknKYIOyCZbzf/z2jrSqZrnZerhTcX2orKERDRd9kNN6DTwKLL4pRr+LILfLyfPUgu/3lt8=
+	t=1781631720; cv=none; b=Oji5tFlgPykVEKjSGwyaUzr87m64DH4O1x60mgFcLwtpjUX5s1S0ePlSfEk5Gn3wnSpg5hjqYksDbx9uwYt3e3BqKw2befsQs96mVL1o4r6VdQk132CtiTEnSxf6CKc9BlV8I9rjKY7odLAz4yNU57peZG8xnRk3D06VqcdwbKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631715; c=relaxed/simple;
-	bh=bM5FkfKyYMS8M4e8B4+KYpI95uOTPyyokrABRI8aNB8=;
+	s=arc-20240116; t=1781631720; c=relaxed/simple;
+	bh=tgTf8fUh5aRArfwmxehXKtxUnNkkNjAKGOnYZGwOcKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iVWTIyq7gWkPXILTQJC+ipO3nCG7InKq0U73c1iAIkO/NafivyzFZMb2s4YEnCM8tYAFxNjT/sBO0dlO3g7KSBQhBgSWA7OJ4qYfXqyAmGM2MvGpx0v8bkpvpjJTnHBUBw1nYJlGkPGMMeV+ubvAgvxkWsGHmI0F6ZDvqcDcZpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NC8lm6zQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YjSJRy8u0oNT1LCbZ66VdTDFSKtbLT106x/168AD+XRA6QgqI4roVBjS8e9PWONMRnYtwkjiyXgbNrUVBOGw+JXET0ZTx47PC4gJMeurYkqxMdi4yP+scymhxuMOYnv3A199VVcxRHmdKzeD+dGA6yKfZlaMX31afxfJzMcvNoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d19U7Y5s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NC8lm6zQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CBFD1F000E9;
-	Tue, 16 Jun 2026 17:41:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d19U7Y5s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D801F00A3A;
+	Tue, 16 Jun 2026 17:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631710;
-	bh=Ka4g3SPJ/5G1+p9xLGzfZlKeqFhrYikAL0mZNcbJuCc=;
+	s=korg; t=1781631715;
+	bh=o2cKLRB2fd361Cd+oOJaWsqIKkNIx1yhKvbow5zIG7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NC8lm6zQPz3S+M0j+aPcm4pOFBxI+Kdq6h7HZwTG9V3U5Bwyeouzy001LbtcLA2Hj
-	 D0Fz4rLBfPvwr8/+E99ODdpt4jcUP3VWKOBNUxK/Lba5kzucodXKAmZGkukmXX6GOP
-	 n95Tpc43kevMWYvFfFDYPkSKWDwDFY3hrQrQepj0=
+	b=d19U7Y5suSc6rYAmJcBCvYSbVYraGEEQwmF4mRrS+/VpQpUqjbiMqm4Qwr3eIZ7LY
+	 GJm3UOZeaKuN6PdD/WiDeQVgWr0re7sIgDrNLrORAqpL1VMbsV0fSFllO6zWKb0cJj
+	 FHswoWCbBcELCiRU2owU279VSA4h9SLIs1Iy1iI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 245/522] net: qrtr: fix refcount saturation and potential UAF in qrtr_port_remove
-Date: Tue, 16 Jun 2026 20:26:32 +0530
-Message-ID: <20260616145137.439573029@linuxfoundation.org>
+	Gil Portnoy <dddhkts1@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 272/522] ksmbd: fix use-after-free of a deferred file_lock on double SMB2_CANCEL
+Date: Tue, 16 Jun 2026 20:26:59 +0530
+Message-ID: <20260616145138.690642369@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,79 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: Gil Portnoy <dddhkts1@gmail.com>
 
-[ Upstream commit a2171131ecda1ed61a594a1eb715e75fdad0fef5 ]
+commit f580d27e8928828693df44ba2db0fffdbe11dfea upstream.
 
-In qrtr_port_remove(), the socket reference count is decremented via
-__sock_put() before the port is removed from the qrtr_ports XArray and
-before the RCU grace period elapses.
+A deferred byte-range lock (an SMB2_LOCK that blocks) registers an async work on
+conn->async_requests via setup_async_work(), with cancel_fn =
+smb2_remove_blocked_lock and cancel_argv[0] pointing at the struct file_lock.
 
-This breaks the fundamental RCU update paradigm. It exposes a race
-window where a concurrent RCU reader (such as qrtr_reset_ports() or
-qrtr_port_lookup()) can obtain a pointer to the socket from the XArray,
-and attempt to call sock_hold() on a socket whose reference count has
-already dropped to zero.
+When the request is cancelled, the worker frees the file_lock with
+locks_free_lock() and takes the cancelled early-exit, which "goto out"s and never
+reaches release_async_work() -- the only site that unlinks the work from
+conn->async_requests and clears cancel_fn/cancel_argv. The work therefore stays
+matchable on async_requests with a live cancel_fn pointing at the freed file_lock,
+until connection teardown finally runs release_async_work().
 
-This exact race condition was hit during syzkaller fuzzing, leading to
-the following refcount saturation warning and a potential Use-After-Free:
+smb2_cancel() fires cancel_fn unconditionally with no state guard, so a second
+SMB2_CANCEL for the same AsyncId, arriving in that window, re-runs
+smb2_remove_blocked_lock() on the freed file_lock -- a slab use-after-free:
 
-  refcount_t: saturated; leaking memory.
-  WARNING: CPU: 3 PID: 1273 at lib/refcount.c:22 refcount_warn_saturate+0xae/0x1d0
-  Modules linked in: qrtr(+) bochs drm_shmem_helper ...
-  Call Trace:
-   <TASK>
-   qrtr_reset_ports net/qrtr/af_qrtr.c:768 [inline] [qrtr]
-   __qrtr_bind.isra.0+0x48b/0x570 net/qrtr/af_qrtr.c:805 [qrtr]
-   qrtr_bind+0x17d/0x210 net/qrtr/af_qrtr.c:901 [qrtr]
-   kernel_bind+0xe4/0x120 net/socket.c:3592
-   qrtr_ns_init+0x1a6/0x380 net/qrtr/ns.c:715 [qrtr]
-   qrtr_proto_init+0x3b/0xff0 net/qrtr/af_qrtr.c:169 [qrtr]
-   do_one_initcall+0xf5/0x5e0 init/main.c:1283
-   ...
-   </TASK>
+  BUG: KASAN: slab-use-after-free in __locks_delete_block
+    __locks_delete_block
+    locks_delete_block
+    ksmbd_vfs_posix_lock_unblock
+    smb2_remove_blocked_lock
+    smb2_cancel                 <- 2nd SMB2_CANCEL fires cancel_fn
+    handle_ksmbd_work
+  Allocated by ...: locks_alloc_lock <- smb2_lock
+  Freed by ...:     locks_free_lock  <- smb2_lock (cancelled branch)
+  ... cache file_lock_cache of size 192
 
-Fix this by deferring the reference count decrement until after the
-xa_erase() and the synchronize_rcu() complete.
+Reproduced on mainline with KASAN by an authenticated SMB client.
 
-(Note: The v1 of this patch incorrectly replaced __sock_put() with
-sock_put(). As Simon Horman pointed out, the callers of qrtr_port_remove()
-still hold a reference to the socket, so freeing the socket memory here
-would lead to a subsequent UAF in the caller. Thus, the __sock_put() is
-kept, but only repositioned to close the RCU race.)
+Skip a work whose state is already KSMBD_WORK_CANCELLED so its cancel callback
+cannot be fired a second time.
 
-Fixes: bdabad3e363d ("net: Add Qualcomm IPC router")
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260604064801.1180388-1-w15303746062@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/qrtr/af_qrtr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index 3831eb25e240ae..8cedf26d78ee02 100644
---- a/net/qrtr/af_qrtr.c
-+++ b/net/qrtr/af_qrtr.c
-@@ -702,13 +702,13 @@ static void qrtr_port_remove(struct qrtr_sock *ipc)
- 	if (port == QRTR_PORT_CTRL)
- 		port = 0;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -6810,6 +6810,17 @@ int smb2_cancel(struct ksmbd_work *work)
+ 			    le64_to_cpu(hdr->Id.AsyncId))
+ 				continue;
  
--	__sock_put(&ipc->sk);
--
- 	xa_erase(&qrtr_ports, port);
- 
- 	/* Ensure that if qrtr_port_lookup() did enter the RCU read section we
- 	 * wait for it to up increment the refcount */
- 	synchronize_rcu();
++			/*
++			 * A cancelled deferred byte-range lock frees its
++			 * file_lock and takes the smb2_lock() early-exit that
++			 * skips release_async_work(), so the work stays on
++			 * conn->async_requests with a live cancel_fn pointing
++			 * at the freed file_lock.  Re-firing it on a second
++			 * SMB2_CANCEL is a use-after-free.
++			 */
++			if (iter->state == KSMBD_WORK_CANCELLED)
++				break;
 +
-+	__sock_put(&ipc->sk);
- }
- 
- /* Assign port number to socket.
--- 
-2.53.0
-
+ 			ksmbd_debug(SMB,
+ 				    "smb2 with AsyncId %llu cancelled command = 0x%x\n",
+ 				    le64_to_cpu(hdr->Id.AsyncId),
 
 
