@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B51343C05C;
-	Tue, 16 Jun 2026 15:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDB543E49F;
+	Tue, 16 Jun 2026 15:17:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623071; cv=none; b=exJXuuEC3YZ/0194vXurwfVDEK0MO/tcRc7G63pPZe+sIIe774njCIdhbPrhfAAT1egfCV86tn9PNQF9N3mcFctHKeopg2QkLWpCJgvu801U2jLslKZf4fMDfmPwWLHswPo3cssiq38Lv36+J1a/Lww40KfKKSMGiKdc9ER25Kk=
+	t=1781623077; cv=none; b=R2g9Vl6FfNXRwbP4howXZ0kycdRdaVdmS+t0JbrHtuVTs3snaoLFW8ZlbvWwXuT7rvGKoCGNPf7xSywUapkKo0BzHBUa+Lc1kr/f8EaBE5xWKrbY4z+OkeM+tCoyd1Lpg0JXY9n5Ob1sw7tBGqx8mDA3Lr+yW4M8ymdkj3aLJGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623071; c=relaxed/simple;
-	bh=2l/GB4iH4oxXhhKRExLwhcbBkbTPfCiCfpiBKb3XfQs=;
+	s=arc-20240116; t=1781623077; c=relaxed/simple;
+	bh=98McK5mjlIvvNwzCTyD+xxDxLUIEoq87poJ7peIwPNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RiSYWlzNmSmL6GmcV8/2Jv3CfHJ24d8FUE2pGnIlaB4kJUe+9R4f7flvxoBDadOgw/nAGoEPFoLX+X72i8nmkGWnzvH1mGWNww0Wf234T18yXghVZqOH/Fsic8cGApyiCJjiey8MeOunlqDr7qSZvZczYHNL3k9cSXruekQ4PT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBQoqc1Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sqADGQvAqhPYZSWiBMmU7mv+w9igupV1GMdPGsJ6U9RLAS744ywj6IDfqYpKM/VIu2tcCKhm9E/84OtPP+5GB0SrOTgnksIMcPE3nVajKfmnp1lRneTFD/uRYJ7JK5goWShq0rDQw6slI3h0pR03A/QzagAdOaIiJ8TOKul+Pvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SVT2MrUS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBQoqc1Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1D91F000E9;
-	Tue, 16 Jun 2026 15:17:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVT2MrUS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F9F1F000E9;
+	Tue, 16 Jun 2026 15:17:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623070;
-	bh=duAPOTeNGWfCX7q9icvsGZEHWBj+Z/V4H0nkWE8GeO8=;
+	s=korg; t=1781623076;
+	bh=cUbCiCoY+QS3muLuWlP8JD99FBfbRH9Ys1/g02sKm/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XBQoqc1YUlu9OMxYdYuLLzKAUaIBJMCtjVWfaVXphk2e3DtQqPeUwKcDPtCmk8MYp
-	 dRSr+jogTFTTPd0Y95oVPB4w82bDUxjuZddxQ4fk/UAwGcrafySjmAlYAFgpaYKmDu
-	 Cf/XmlZUY2Jm/1kGTpduNga8Vl8iyRj0hZ3PK0Pk=
+	b=SVT2MrUSdyl6UgfQ1X+ZXNtUwtAde81/HQWGZwp3Wf1L/7I1urAeBejzCuj0a4ZCj
+	 6JIXKo+64mayE9J3+DM0bXMrtdgm3R92VgHPWmAof4r9OwIU2TvARKuI2qtFA8sj0B
+	 8Odx+mKYTLe4idnZhETYvnrebHa9K6P1nJ4hJxdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+185a631927096f9da2fc@syzkaller.appspotmail.com,
-	Qing Wang <wangqing7171@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Mark Rutland <mark.rutland@arm.com>,
+	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 083/378] rseq: Fix using an uninitialized stack variable in rseq_exit_user_update()
-Date: Tue, 16 Jun 2026 20:25:14 +0530
-Message-ID: <20260616145114.595434042@linuxfoundation.org>
+Subject: [PATCH 7.0 084/378] time: Fix off-by-one in settimeofday() usec validation
+Date: Tue, 16 Jun 2026 20:25:15 +0530
+Message-ID: <20260616145114.660214412@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -53,61 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Wang <wangqing7171@gmail.com>
+From: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
 
-[ Upstream commit 6d99479799c69c3cb588fcda19c81d8f61d64ecd ]
+[ Upstream commit ce4abda5e12622f33450159e76c8f56d28d7f03d ]
 
-There is an bug in which an uninitialized stack variable is used in
-rseq_exit_user_update() as reported by syzbot:
+The validation check uses '>' instead of '>=' when comparing tv_usec
+against USEC_PER_SEC, allowing the value 1000000 through. After
+conversion to nanoseconds (*= 1000), this produces tv_nsec ==
+NSEC_PER_SEC, violating the timespec invariant that tv_nsec must be
+less than NSEC_PER_SEC.
 
-BUG: KMSAN: kernel-infoleak in rseq_set_ids_get_csaddr include/linux/rseq_entry.h:502 [inline]
+Use '>=' to reject tv_usec values that are not in the valid range of
+0 to 999999.
 
-The local variable:
-
-	struct rseq_ids ids = {
-		.cpu_id	 = task_cpu(t),
-		.mm_cid	 = task_mm_cid(t),
-		.node_id = cpu_to_node(ids.cpu_id),
-	};
-
-According to the C standard, the evaluation order of expressions in an
-initializer list is indeterminately sequenced. The compiler (Clang, in
-this KMSAN build) evaluates `cpu_to_node(ids.cpu_id)` *before*
-`ids.cpu_id` is initialized with `task_cpu(t)`.
-
-This is fixed by moving the assignment of ids.node_id outside the
-structure initialization.
-
-Fixes: 82f572449cfe ("rseq: Implement read only ABI enforcement for optimized RSEQ V2 mode")
-Closes: https://syzkaller.appspot.com/bug?extid=185a631927096f9da2fc
-Reported-by: syzbot+185a631927096f9da2fc@syzkaller.appspotmail.com
-Signed-off-by: Qing Wang <wangqing7171@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://patch.msgid.link/20260602030854.574038-1-wangqing7171@gmail.com
+Fixes: 5e0fb1b57bea ("y2038: time: avoid timespec usage in settimeofday()")
+Signed-off-by: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Acked-by: John Stultz <jstultz@google.com>
+Link: https://patch.msgid.link/4rikk44zew3s6577dugmx4jyblz7o5c57niuap6ct3td5yfm6w@gh7pcumg7qor
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rseq_entry.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/time/time.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/rseq_entry.h b/include/linux/rseq_entry.h
-index 413a3543fbe8ed..69bdb93951b904 100644
---- a/include/linux/rseq_entry.h
-+++ b/include/linux/rseq_entry.h
-@@ -625,10 +625,11 @@ static __always_inline bool rseq_exit_user_update(struct pt_regs *regs, struct t
- 		return true;
- 	}
+diff --git a/kernel/time/time.c b/kernel/time/time.c
+index 0d832317d5766a..771cef87ad3b0a 100644
+--- a/kernel/time/time.c
++++ b/kernel/time/time.c
+@@ -207,7 +207,7 @@ SYSCALL_DEFINE2(settimeofday, struct __kernel_old_timeval __user *, tv,
+ 		    get_user(new_ts.tv_nsec, &tv->tv_usec))
+ 			return -EFAULT;
  
-+	int cpu = task_cpu(t);
- 	struct rseq_ids ids = {
--		.cpu_id	 = task_cpu(t),
-+		.cpu_id	 = cpu,
- 		.mm_cid	 = task_mm_cid(t),
--		.node_id = cpu_to_node(ids.cpu_id),
-+		.node_id = cpu_to_node(cpu),
- 	};
+-		if (new_ts.tv_nsec > USEC_PER_SEC || new_ts.tv_nsec < 0)
++		if (new_ts.tv_nsec >= USEC_PER_SEC || new_ts.tv_nsec < 0)
+ 			return -EINVAL;
  
- 	return rseq_update_usr(t, regs, &ids);
+ 		new_ts.tv_nsec *= NSEC_PER_USEC;
 -- 
 2.53.0
 
