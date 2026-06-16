@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CFA35292A;
-	Tue, 16 Jun 2026 18:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F44736A36C;
+	Tue, 16 Jun 2026 18:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633756; cv=none; b=GgoKHl8K91Djs2+2pnrDu/7IClgfgnIaM2n8yrGkbso0o7fYgWsTJgYeiJ+PcL/qrTKHs1SFm6aDtxGO1XwCnk1OGkkhOaRH/e/+6qJUBBrE54QFtbujhFRUghxsowxPeRICIz3joTaI2qumpK/DVn66L1ANU4knK5bi5rpHWug=
+	t=1781633761; cv=none; b=ewBKJqJdgwbLvsYj8lIgDjR3IBskOmTRGVebHamEBGuOoPN4acc/cPBXKSb8BOOH65o596k/H9BSLuylbBW9PmcLDnYksivstdo3ZtB2098dv09tQbtpaOoP0cSsCQnDFW84MoFgy67+7Wew0XeLrMSCrcS8j7hJ6mKla2HZwNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633756; c=relaxed/simple;
-	bh=hsaZ06rm0CYz9fkg6Yt7ZD804U5a15s8kfFBBG4Cb2A=;
+	s=arc-20240116; t=1781633761; c=relaxed/simple;
+	bh=BpfMyVFQY09jln+nYmycJbPl/bXaHH/V2SWQ9Cd2wqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qX/rcoOCh63mxXGgTST4Dng0yHXRMkbIFzyAJoNdcXG/Zg2HZ0jofWfNu8q6BXo6FphRofzOE3zREoWkYtkoAzBdKI6C3L3lpKljErE6rrrzwaFkWF3juSAl+itmp1w6+Q+mnCGJaLyngX6guh3++5nzF4G1sSjDpUNFFmklU6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6uvgHGS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aQE61WuO1H5WGuU7tuvnheU14KyvGxdVGxOrmBWlwHtDMwH/C8ViTRgqpP/WjwztLm1dZCEfYhhzmX4LgeqRWzG1+3sSEw99MndmxztAxVCUeiVt9vMfzym5vc7/l2pHKobK4KGyMstJqXiRplqW9i4l2ZcmK+clnVUNfh8VrcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8ejGSpj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6uvgHGS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 642651F000E9;
-	Tue, 16 Jun 2026 18:15:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8ejGSpj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE771F000E9;
+	Tue, 16 Jun 2026 18:15:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633755;
-	bh=l2w7pSs3C1g09zXxecUFPUsfgHgdV08C2aW0cPLDsq4=;
+	s=korg; t=1781633760;
+	bh=Y+8TefiocJZ3a/qqxHB3lG70n0Zgkt3jjbE9KtvK+nQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V6uvgHGS0OqzNoGA2vdnfbR1Z6dCWdR91NAV2t0suNMi4Zt60P4ZtY1yyKyCeXu+S
-	 GPSUuYOUxLrWf9dxMkaWflx5kDedRM5D60GlgmyOFme8ph1SnqyfNW1mTVL6TU0MHm
-	 B7QJ7MeBltlxlw0pWrtJPVt+0gwZeKRJFRXbGKxE=
+	b=u8ejGSpjlfxO/w+LLd/ac8RrjsKDLTx3+BfIqDc2OZaecd93XVXAOiAkKFD93Aaky
+	 t+6lRJkHxZz9ia6Na/DCFwscYA+IDOpL0otPO6NirFm1O71hdv5sgZn+fYnX1iZuK4
+	 fJk1ycU74rygq/rEkvnMbgPKc6VU9/LVr2C7qmjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei-Cheng Chen <weichengc@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 140/411] xhci: tegra: Fix ghost USB device on dual-role port unplug
-Date: Tue, 16 Jun 2026 20:26:18 +0530
-Message-ID: <20260616145107.815140877@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Michael Bommarito <michael.bommarito@gmail.com>
+Subject: [PATCH 5.15 123/411] usb: gadget: f_fs: copy only received bytes on short ep0 read
+Date: Tue, 16 Jun 2026 20:26:01 +0530
+Message-ID: <20260616145106.863168280@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,188 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei-Cheng Chen <weichengc@nvidia.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 5a4c828b8b29b47534814ade26d9aee09d5101fc ]
+commit 4e036c10e7f4df5d951c69cc3697bc8e209c6d02 upstream.
 
-When a USB device is unplugged from the dual-role port, the device-mode
-path in tegra_xhci_id_work() explicitly clears both SS and HS port power
-via direct hub_control ClearPortFeature(POWER) calls. This preempts the
-xHCI controller's normal disconnect processing -- PORT_CSC is never
-generated, the USB core never sees the disconnect, and the device remains
-in its internal tree as a ghost visible in lsusb.
+ffs_ep0_read() allocates its control-OUT data buffer with
+kmalloc() (not kzalloc) at the Length value from the Setup
+packet, then copies that full len to userspace regardless of
+how many bytes were actually received:
 
-Add an otg_set_port_power flag to control whether the dual-role switch
-path performs explicit port power management. SoCs that need it
-(Tegra124 / Tegra210 / Tegra186) set the flag; later SoCs (Tegra194 and
-beyond) rely on the PHY mode change to handle disconnect naturally and
-skip all port power calls.
+    data = kmalloc(len, GFP_KERNEL);
+    ...
+    ret = __ffs_ep0_queue_wait(ffs, data, len);
+    if ((ret > 0) && (copy_to_user(buf, data, len)))
+            ret = -EFAULT;
 
-Within the port power path, otg_reset_sspi additionally gates the SSPI
-reset sequence on host-mode entry for SoCs that require it.
+__ffs_ep0_queue_wait() returns req->actual, which on a short
+control OUT transfer is strictly less than len.  The
+copy_to_user() call still copies len bytes, so on a short OUT
+the last (len - ret) bytes of the kmalloc() buffer --
+uninitialised slab residue -- are delivered to the FunctionFS
+daemon.
 
-Flags set per SoC:
-  Tegra124, Tegra186  -> otg_set_port_power
-  Tegra210            -> otg_set_port_power, otg_reset_sspi
-  Tegra194 and later  -> (none)
+Short ep0 OUT completions are specified USB control-transfer
+behavior and are produced by in-tree UDCs:
 
-[ Backport to 5.15.y: keep the host-mode snapshot in the existing
-  tegra->lock section, retain pm_runtime_mark_last_busy() in the host
-  port-power path, and omit the newer Tegra234 entry. ]
+  * dwc2 continues on req->actual < req->length for ep0 DATA OUT
+    (short-not-ok is the only ep0-OUT stall path).
+  * aspeed_udc ends ep0 OUT on rx_len < ep->ep.maxpacket.
+  * renesas_usbf logs "ep0 short packet" and completes the
+    request.
+  * dwc3 stalls on short IN but not on short OUT.
 
-Fixes: f836e7843036 ("usb: xhci-tegra: Add OTG support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Wei-Cheng Chen <weichengc@nvidia.com>
-Link: https://patch.msgid.link/20260505112630.217704-1-weichengc@nvidia.com
+A short ep0 OUT is therefore not evidence of a broken UDC; it is
+a normal condition f_fs has to cope with.  The sibling gadgetfs
+implementation in drivers/usb/gadget/legacy/inode.c already does
+this correctly via min(len, dev->req->actual) before
+copy_to_user().  This patch brings f_fs.c to the same safe
+pattern rather than trimming at a defensive layer.
+
+The bug is reached from the FunctionFS device node, which in
+real deployments is owned by the privileged gadget daemon
+(adbd, UMS, composite gadget services, etc.); it is not
+reachable from unprivileged userspace.  Linux host stacks
+normally reject short-wLength control OUTs before they reach
+the gadget, so reproducing this required a build that
+bypasses that host-side check.  With the bypass in place, a
+1-byte payload on a 64-byte Setup produces 63 bytes of
+non-canary slab residue in the daemon's read buffer.
+
+Fix by copying only ret (actually received) bytes to
+userspace.
+
+Fixes: ddf8abd25994 ("USB: f_fs: the FunctionFS driver")
+Cc: stable <stable@kernel.org>
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260419160359.1577270-1-michael.bommarito@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-tegra.c | 78 ++++++++++++++++++++---------------
- 1 file changed, 44 insertions(+), 34 deletions(-)
+ drivers/usb/gadget/function/f_fs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci-tegra.c b/drivers/usb/host/xhci-tegra.c
-index 14a772feab7946..0f936aeb88d064 100644
---- a/drivers/usb/host/xhci-tegra.c
-+++ b/drivers/usb/host/xhci-tegra.c
-@@ -210,6 +210,7 @@ struct tegra_xusb_soc {
- 	bool has_ipfs;
- 	bool lpm_support;
- 	bool otg_reset_sspi;
-+	bool otg_set_port_power;
- };
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -592,7 +592,7 @@ static ssize_t ffs_ep0_read(struct file
  
- struct tegra_xusb_context {
-@@ -1211,14 +1212,17 @@ static void tegra_xhci_id_work(struct work_struct *work)
- 	struct tegra_xusb_mbox_msg msg;
- 	struct phy *phy = tegra_xusb_get_phy(tegra, "usb2",
- 						    tegra->otg_usb2_port);
-+	bool host_mode;
- 	u32 status;
- 	int ret;
+ 		/* unlocks spinlock */
+ 		ret = __ffs_ep0_queue_wait(ffs, data, len);
+-		if ((ret > 0) && (copy_to_user(buf, data, len)))
++		if ((ret > 0) && (copy_to_user(buf, data, ret)))
+ 			ret = -EFAULT;
+ 		goto done_mutex;
  
--	dev_dbg(tegra->dev, "host mode %s\n", tegra->host_mode ? "on" : "off");
--
- 	mutex_lock(&tegra->lock);
- 
--	if (tegra->host_mode)
-+	host_mode = tegra->host_mode;
-+
-+	dev_dbg(tegra->dev, "host mode %s\n", host_mode ? "on" : "off");
-+
-+	if (host_mode)
- 		phy_set_mode_ext(phy, PHY_MODE_USB_OTG, USB_ROLE_HOST);
- 	else
- 		phy_set_mode_ext(phy, PHY_MODE_USB_OTG, USB_ROLE_NONE);
-@@ -1229,42 +1233,44 @@ static void tegra_xhci_id_work(struct work_struct *work)
- 								    tegra->otg_usb2_port);
- 
- 	pm_runtime_get_sync(tegra->dev);
--	if (tegra->host_mode) {
--		/* switch to host mode */
--		if (tegra->otg_usb3_port >= 0) {
--			if (tegra->soc->otg_reset_sspi) {
--				/* set PP=0 */
--				tegra_xhci_hc_driver.hub_control(
--					xhci->shared_hcd, GetPortStatus,
--					0, tegra->otg_usb3_port+1,
--					(char *) &status, sizeof(status));
--				if (status & USB_SS_PORT_STAT_POWER)
--					tegra_xhci_set_port_power(tegra, false,
--								  false);
--
--				/* reset OTG port SSPI */
--				msg.cmd = MBOX_CMD_RESET_SSPI;
--				msg.data = tegra->otg_usb3_port+1;
--
--				ret = tegra_xusb_mbox_send(tegra, &msg);
--				if (ret < 0) {
--					dev_info(tegra->dev,
--						"failed to RESET_SSPI %d\n",
--						ret);
-+	if (tegra->soc->otg_set_port_power) {
-+		if (host_mode) {
-+			/* switch to host mode */
-+			if (tegra->otg_usb3_port >= 0) {
-+				if (tegra->soc->otg_reset_sspi) {
-+					/* set PP=0 */
-+					tegra_xhci_hc_driver.hub_control(
-+						xhci->shared_hcd, GetPortStatus,
-+						0, tegra->otg_usb3_port+1,
-+						(char *) &status, sizeof(status));
-+					if (status & USB_SS_PORT_STAT_POWER)
-+						tegra_xhci_set_port_power(tegra, false,
-+									  false);
-+
-+					/* reset OTG port SSPI */
-+					msg.cmd = MBOX_CMD_RESET_SSPI;
-+					msg.data = tegra->otg_usb3_port+1;
-+
-+					ret = tegra_xusb_mbox_send(tegra, &msg);
-+					if (ret < 0) {
-+						dev_info(tegra->dev,
-+							"failed to RESET_SSPI %d\n",
-+							ret);
-+					}
- 				}
--			}
- 
--			tegra_xhci_set_port_power(tegra, false, true);
--		}
-+				tegra_xhci_set_port_power(tegra, false, true);
-+			}
- 
--		tegra_xhci_set_port_power(tegra, true, true);
--		pm_runtime_mark_last_busy(tegra->dev);
-+			tegra_xhci_set_port_power(tegra, true, true);
-+			pm_runtime_mark_last_busy(tegra->dev);
- 
--	} else {
--		if (tegra->otg_usb3_port >= 0)
--			tegra_xhci_set_port_power(tegra, false, false);
-+		} else {
-+			if (tegra->otg_usb3_port >= 0)
-+				tegra_xhci_set_port_power(tegra, false, false);
- 
--		tegra_xhci_set_port_power(tegra, true, false);
-+			tegra_xhci_set_port_power(tegra, true, false);
-+		}
- 	}
- 	pm_runtime_put_autosuspend(tegra->dev);
- }
-@@ -2289,6 +2295,7 @@ static const struct tegra_xusb_soc tegra124_soc = {
- 	.scale_ss_clock = true,
- 	.has_ipfs = true,
- 	.otg_reset_sspi = false,
-+	.otg_set_port_power = true,
- 	.mbox = {
- 		.cmd = 0xe4,
- 		.data_in = 0xe8,
-@@ -2325,6 +2332,7 @@ static const struct tegra_xusb_soc tegra210_soc = {
- 	.scale_ss_clock = false,
- 	.has_ipfs = true,
- 	.otg_reset_sspi = true,
-+	.otg_set_port_power = true,
- 	.mbox = {
- 		.cmd = 0xe4,
- 		.data_in = 0xe8,
-@@ -2366,6 +2374,7 @@ static const struct tegra_xusb_soc tegra186_soc = {
- 	.scale_ss_clock = false,
- 	.has_ipfs = false,
- 	.otg_reset_sspi = false,
-+	.otg_set_port_power = true,
- 	.mbox = {
- 		.cmd = 0xe4,
- 		.data_in = 0xe8,
-@@ -2397,6 +2406,7 @@ static const struct tegra_xusb_soc tegra194_soc = {
- 	.scale_ss_clock = false,
- 	.has_ipfs = false,
- 	.otg_reset_sspi = false,
-+	.otg_set_port_power = false,
- 	.mbox = {
- 		.cmd = 0x68,
- 		.data_in = 0x6c,
--- 
-2.53.0
-
 
 
