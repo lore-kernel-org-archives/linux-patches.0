@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE98736F8F1;
-	Tue, 16 Jun 2026 15:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F0C438FF3;
+	Tue, 16 Jun 2026 15:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622741; cv=none; b=oayVYumkmtUAnc3ELJHC9F/1dzBGia5RCgaPuvzL7pBbE4iirULAg32FOTnfpOQPKTzvFJ3vFRey7PyutbCEYIzXt7j7wTl6bx0u9phx10rEdFlSLhyvFt3xu1FzOqlPb77gbJMGXWRA4zrPiTWtv75TCrhuJJnBT9Gtt47Dobw=
+	t=1781622745; cv=none; b=YqqQHV85Za88TeLOQ3lAnJr1acQQ8E2SXMgNIk1NyYOjYdpDmERMKhyJW1iMzjlPBTYm81o8dpXNrnh+/AELoGfH03rrlFT83nKdkfZsnJrWKA/haIc5dC0vUkRMspb3yQAj0YhJFYn2PHZR2OtmMcv710yK5eGrkDtalq+cEBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622741; c=relaxed/simple;
-	bh=ZJjE39p/mOUVhnbf7Dd+abaOw46jwKGDcpWiaR0K/JQ=;
+	s=arc-20240116; t=1781622745; c=relaxed/simple;
+	bh=JZU3KArfXawFg4WnK2vbZ/CbCs8m17IoGGIDrL/KKHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H45KOnblfi5wc3UoSIBUA/gFJRZtRsYliuYrRugjjm31BgqB2lCV0Jrr1ApFlyU1ZxwBHehOTvBI6QnzTXr2hBcCcFfGUNdISYpqO1/7vnZXYY5Zw8rNwluBB5o3bK1dlzHitXU9ZkUaedAetgamAdznnfsqj8Fpv4kYDb8rtCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SI1oZK70; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mSXHhYueICAFfGDC9vagKjrBMZJc3NRfU2jqoudnAPCzhl71Ab/2TQ5VlrXJ2QuhGcExX5gFTkDhnHzB2Phnl707c75GVR84rolKBDJQq17laDSY1dzuyO5qDjd41i/0yNq9uIC+qlsVl+/e0WfMLir0sc59YRqPa5nHhRbhAp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZCluDjY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SI1oZK70"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEF6B1F000E9;
-	Tue, 16 Jun 2026 15:12:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZCluDjY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D8CE1F000E9;
+	Tue, 16 Jun 2026 15:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622739;
-	bh=u8FCGA6WZq0LU4m3P9NQIksrwPYwf06vERZsDLTakd8=;
+	s=korg; t=1781622744;
+	bh=wUJCzUifUNjWQpfO+zrd17H5Me+5zNBBNDhY2HkuiT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SI1oZK70fIVfzJbya7d+f0gx0AbUaM3raVKNPlkXi6W+wyqAOIkLeS3BYEufxk68x
-	 5IY0xcQuurcUecFFsc86kjH7x89MTwNyJ3Pe96Y5qp8yfboOdGjuxetJJg9yzBozRs
-	 fmk7xasIQ4Ay8O9xKgh+TpAmWAv4fXF9hEDhj9kw=
+	b=yZCluDjYRG2ecVc39mhZmAR/p6wMzmid4nsGvxrX679X4bH2ZQcIl5yW91hWbuMb1
+	 QCnKzyoU/yz59SibaGN74aooAjgLneecxX2n0NPRXZBQ7qL67LsBO1u5K4Oh6qj+Hf
+	 RBZ9R2LjDNw3S8nwOXOm8h5xaWTRHLdfKJkaKL7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 020/378] ipvs: clear the svc scheduler ptr early on edit
-Date: Tue, 16 Jun 2026 20:24:11 +0530
-Message-ID: <20260616145110.893399915@linuxfoundation.org>
+Subject: [PATCH 7.0 021/378] netfilter: synproxy: add mutex to guard hook reference counting
+Date: Tue, 16 Jun 2026 20:24:12 +0530
+Message-ID: <20260616145110.943374633@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,125 +52,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 193989cc6d80dd8e0460fb3992e69fa03bf0ff9b ]
+[ Upstream commit 2fcba19caaeb2a33017459d3430f057967bb91b6 ]
 
-ip_vs_edit_service() while unbinding the old scheduler clears
-the svc->scheduler ptr after the scheduler module initiates
-RCU callbacks. This can cause packets to use the old
-scheduler at the time when svc->sched_data is already freed
-after RCU grace period.
+As the synproxy infrastructure register netfilter hooks on-demand when a
+user adds the first iptables target or nftables expression, if done
+concurrently they can race each other.
 
-Fix it by clearing the ptr early in ip_vs_unbind_scheduler(),
-before the done_service method schedules any RCU callbacks.
+Introduce a mutex to serialize the refcount control blocks access from
+both frontends. While a per namespace mutex might be more efficient, it
+is not needed for target/expression like SYNPROXY.
 
-Also, if the new scheduler fails to initialize when replacing
-the old scheduler, try to restore the old scheduler while still
-returning the error code.
-
-Link: https://sashiko.dev/#/patchset/20260519015506.634185-1-rosenp%40gmail.com
-Fixes: 05f00505a89a ("ipvs: fix crash if scheduler is changed")
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Fixes: ad49d86e07a4 ("netfilter: nf_tables: Add synproxy support")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_vs.h              |  3 +--
- net/netfilter/ipvs/ip_vs_ctl.c   | 13 ++++++++-----
- net/netfilter/ipvs/ip_vs_sched.c | 14 +++++++-------
- 3 files changed, 16 insertions(+), 14 deletions(-)
+ net/netfilter/nf_synproxy_core.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
-index 29a36709e7f35c..2163f32ef6abc1 100644
---- a/include/net/ip_vs.h
-+++ b/include/net/ip_vs.h
-@@ -1519,8 +1519,7 @@ int register_ip_vs_scheduler(struct ip_vs_scheduler *scheduler);
- int unregister_ip_vs_scheduler(struct ip_vs_scheduler *scheduler);
- int ip_vs_bind_scheduler(struct ip_vs_service *svc,
- 			 struct ip_vs_scheduler *scheduler);
--void ip_vs_unbind_scheduler(struct ip_vs_service *svc,
--			    struct ip_vs_scheduler *sched);
-+void ip_vs_unbind_scheduler(struct ip_vs_service *svc);
- struct ip_vs_scheduler *ip_vs_scheduler_get(const char *sched_name);
- void ip_vs_scheduler_put(struct ip_vs_scheduler *scheduler);
- struct ip_vs_conn *
-diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
-index 2aaf50f52c8e8e..ff55ff6b8a4cba 100644
---- a/net/netfilter/ipvs/ip_vs_ctl.c
-+++ b/net/netfilter/ipvs/ip_vs_ctl.c
-@@ -1496,7 +1496,7 @@ ip_vs_add_service(struct netns_ipvs *ipvs, struct ip_vs_service_user_kern *u,
- 	if (ret_hooks >= 0)
- 		ip_vs_unregister_hooks(ipvs, u->af);
- 	if (svc != NULL) {
--		ip_vs_unbind_scheduler(svc, sched);
-+		ip_vs_unbind_scheduler(svc);
- 		ip_vs_service_free(svc);
- 	}
- 	ip_vs_scheduler_put(sched);
-@@ -1558,9 +1558,8 @@ ip_vs_edit_service(struct ip_vs_service *svc, struct ip_vs_service_user_kern *u)
- 	old_sched = rcu_dereference_protected(svc->scheduler, 1);
- 	if (sched != old_sched) {
- 		if (old_sched) {
--			ip_vs_unbind_scheduler(svc, old_sched);
--			RCU_INIT_POINTER(svc->scheduler, NULL);
--			/* Wait all svc->sched_data users */
-+			ip_vs_unbind_scheduler(svc);
-+			/* Wait all svc->scheduler/sched_data users */
- 			synchronize_rcu();
- 		}
- 		/* Bind the new scheduler */
-@@ -1568,6 +1567,10 @@ ip_vs_edit_service(struct ip_vs_service *svc, struct ip_vs_service_user_kern *u)
- 			ret = ip_vs_bind_scheduler(svc, sched);
- 			if (ret) {
- 				ip_vs_scheduler_put(sched);
-+				/* Try to restore the old_sched */
-+				if (old_sched &&
-+				    !ip_vs_bind_scheduler(svc, old_sched))
-+					old_sched = NULL;
- 				goto out;
- 			}
- 		}
-@@ -1624,7 +1627,7 @@ static void __ip_vs_del_service(struct ip_vs_service *svc, bool cleanup)
+diff --git a/net/netfilter/nf_synproxy_core.c b/net/netfilter/nf_synproxy_core.c
+index 036c8586f49b75..ed00114f65f392 100644
+--- a/net/netfilter/nf_synproxy_core.c
++++ b/net/netfilter/nf_synproxy_core.c
+@@ -22,6 +22,8 @@
+ #include <net/netfilter/nf_conntrack_zones.h>
+ #include <net/netfilter/nf_synproxy.h>
  
- 	/* Unbind scheduler */
- 	old_sched = rcu_dereference_protected(svc->scheduler, 1);
--	ip_vs_unbind_scheduler(svc, old_sched);
-+	ip_vs_unbind_scheduler(svc);
- 	ip_vs_scheduler_put(old_sched);
++static DEFINE_MUTEX(synproxy_mutex);
++
+ unsigned int synproxy_net_id;
+ EXPORT_SYMBOL_GPL(synproxy_net_id);
  
- 	/* Unbind persistence engine, keep svc->pe */
-diff --git a/net/netfilter/ipvs/ip_vs_sched.c b/net/netfilter/ipvs/ip_vs_sched.c
-index c6e421c4e29913..24adc38942a0d1 100644
---- a/net/netfilter/ipvs/ip_vs_sched.c
-+++ b/net/netfilter/ipvs/ip_vs_sched.c
-@@ -56,19 +56,19 @@ int ip_vs_bind_scheduler(struct ip_vs_service *svc,
- /*
-  *  Unbind a service with its scheduler
-  */
--void ip_vs_unbind_scheduler(struct ip_vs_service *svc,
--			    struct ip_vs_scheduler *sched)
-+void ip_vs_unbind_scheduler(struct ip_vs_service *svc)
+@@ -769,26 +771,31 @@ static const struct nf_hook_ops ipv4_synproxy_ops[] = {
+ 
+ int nf_synproxy_ipv4_init(struct synproxy_net *snet, struct net *net)
  {
--	struct ip_vs_scheduler *cur_sched;
-+	struct ip_vs_scheduler *sched;
+-	int err;
++	int err = 0;
  
--	cur_sched = rcu_dereference_protected(svc->scheduler, 1);
--	/* This check proves that old 'sched' was installed */
--	if (!cur_sched)
-+	sched = rcu_dereference_protected(svc->scheduler, 1);
-+	if (!sched)
- 		return;
++	mutex_lock(&synproxy_mutex);
+ 	if (snet->hook_ref4 == 0) {
+ 		err = nf_register_net_hooks(net, ipv4_synproxy_ops,
+ 					    ARRAY_SIZE(ipv4_synproxy_ops));
+ 		if (err)
+-			return err;
++			goto out;
+ 	}
  
-+	/* Reset the scheduler before initiating any RCU callbacks */
-+	rcu_assign_pointer(svc->scheduler, NULL);
-+	smp_wmb();	/* paired with smp_rmb() in ip_vs_schedule() */
- 	if (sched->done_service)
- 		sched->done_service(svc);
--	/* svc->scheduler can be set to NULL only by caller */
+ 	snet->hook_ref4++;
+-	return 0;
++out:
++	mutex_unlock(&synproxy_mutex);
++	return err;
  }
+ EXPORT_SYMBOL_GPL(nf_synproxy_ipv4_init);
  
+ void nf_synproxy_ipv4_fini(struct synproxy_net *snet, struct net *net)
+ {
++	mutex_lock(&synproxy_mutex);
+ 	snet->hook_ref4--;
+ 	if (snet->hook_ref4 == 0)
+ 		nf_unregister_net_hooks(net, ipv4_synproxy_ops,
+ 					ARRAY_SIZE(ipv4_synproxy_ops));
++	mutex_unlock(&synproxy_mutex);
+ }
+ EXPORT_SYMBOL_GPL(nf_synproxy_ipv4_fini);
  
+@@ -1193,27 +1200,32 @@ static const struct nf_hook_ops ipv6_synproxy_ops[] = {
+ int
+ nf_synproxy_ipv6_init(struct synproxy_net *snet, struct net *net)
+ {
+-	int err;
++	int err = 0;
+ 
++	mutex_lock(&synproxy_mutex);
+ 	if (snet->hook_ref6 == 0) {
+ 		err = nf_register_net_hooks(net, ipv6_synproxy_ops,
+ 					    ARRAY_SIZE(ipv6_synproxy_ops));
+ 		if (err)
+-			return err;
++			goto out;
+ 	}
+ 
+ 	snet->hook_ref6++;
+-	return 0;
++out:
++	mutex_unlock(&synproxy_mutex);
++	return err;
+ }
+ EXPORT_SYMBOL_GPL(nf_synproxy_ipv6_init);
+ 
+ void
+ nf_synproxy_ipv6_fini(struct synproxy_net *snet, struct net *net)
+ {
++	mutex_lock(&synproxy_mutex);
+ 	snet->hook_ref6--;
+ 	if (snet->hook_ref6 == 0)
+ 		nf_unregister_net_hooks(net, ipv6_synproxy_ops,
+ 					ARRAY_SIZE(ipv6_synproxy_ops));
++	mutex_unlock(&synproxy_mutex);
+ }
+ EXPORT_SYMBOL_GPL(nf_synproxy_ipv6_fini);
+ #endif /* CONFIG_IPV6 */
 -- 
 2.53.0
 
