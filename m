@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A3C4534B3;
-	Tue, 16 Jun 2026 16:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E4944DB64;
+	Tue, 16 Jun 2026 16:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625941; cv=none; b=YCmBjEj/Bu1yNlfSsN1WLcOjqTYF3IaOS91mfkTi3fqjXghzlhXdnrtIhywIz2vi3H4pAprZ+n4NZfEgzpiuVnrfCmPpiefCvTlO54gUGZNI61DMWSgQB0K28x1yb5dv9LjWXesW5pDCdSSJ0g+jSOxkPH6RQBeHNNcZllf4Eak=
+	t=1781625946; cv=none; b=Iava4e7WnZ4ae/0jgJQOx+0g3FKFHGN6jOGplEOuf+HUcuJxdgiE25TAAaep3ETUtBS66BgAPPyhTHorKoSV6+HuuQpg9Go17J8LVUVBOEP6BiDdTD951oVOja+qShCt0Lr4NwFnnRnk8j3hHf4drhx6DMT0ODSIaqdXcyJbBG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625941; c=relaxed/simple;
-	bh=D5pMtaTJ3RVodamPcDYLxkXDyAz5RMO9YEEdjatGTuE=;
+	s=arc-20240116; t=1781625946; c=relaxed/simple;
+	bh=jjO9CmCvtNU1MSA4DCeLq8b8Bw+xM2HazA2PFRxXLxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h4/Ex+QTQBrVFyRA0tXxRNsT76rQbjsmYIBh5Bqjw/mcEaKGz/DaITw1njWqfCLW57snavl2fTeHPpIRv455KwlPWYTJRsEOppq08ECuGbn+fi1b3rA711dud0KlOsvzVI82xdBj8SYnhrNKSshFLcjfPpBtWGL5qDKhnwl2ctw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6b1ZIna; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h+twrtZTMzXe7WMAQv35K0FfKh/DHUfwNZzEJn+f5STwYegPwVpIiVooJ/gKqJO0ywHgI9cD6w/K1wSxzNFULFOnjQTg65zLGFkJLtEw0q4ifaTNEbtF7St1fT/Pe1cDL+iiaqYv+l5ENKQBHBm874CZqByZvRXRoWvZBCpQxWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GIEcvc5T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6b1ZIna"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 713DD1F000E9;
-	Tue, 16 Jun 2026 16:05:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GIEcvc5T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C671F000E9;
+	Tue, 16 Jun 2026 16:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625940;
-	bh=odl4DoxuNFXX/cAH8BnWRYTdHdw4VNCQufxlPA2IEvo=;
+	s=korg; t=1781625945;
+	bh=5S7Q+4Da8HjvmwIr/P4dKtc5KkSpTiLuIn+PmB5utsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r6b1ZInaN+ZM39ieBZdueli9NGg2hFFZJkLO9tluMLuNYglVo+bDRnlsTvVL0QN1o
-	 6TFHDbaUs2al2z5kRJrWUAs9RPX9Ah+t6jA/IOz/GDW/7dylW+nIgLiNdq5Qe1kRdS
-	 lu4njW/SycyBCes3iW5itKdvioXNUR21wRPQtnk8=
+	b=GIEcvc5TNe0a/TAs/MPqdJbOZzRWrLEe1PYdxbJcMc7FQFdBjJhWnQc87VZtnPmlb
+	 qvaP9RgGNhMRroaPTeJ/Rtlj1CHGyokZOfsV4m2WAoLkalp4QROtdZLYgxIjlgBdtj
+	 7kATyB4Z6XtXKUlrD6l3t8akvBuMYfIeSxsMUexw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Kuratov <kniv@yandex-team.ru>,
-	Md Haris Iqbal <haris.iqbal@linux.dev>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 236/325] net/mlx5: Reorder completion before putting command entry in cmd_work_handler
-Date: Tue, 16 Jun 2026 20:30:32 +0530
-Message-ID: <20260616145110.187894537@linuxfoundation.org>
+	ZhaoJinming <zhaojinming@uniontech.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 237/325] net: airoha: Add NULL check for of_reserved_mem_lookup() in airoha_qdma_init_hfwd_queues()
+Date: Tue, 16 Jun 2026 20:30:33 +0530
+Message-ID: <20260616145110.247801033@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -53,64 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Kuratov <kniv@yandex-team.ru>
+From: ZhaoJinming <zhaojinming@uniontech.com>
 
-commit 02896a7fa4cd3ec61d60ba30136841e4f04bdeac upstream.
+commit f9f25118faa4dd2b6e3d14a03d123bbdbd59925d upstream.
 
-Assuming callback != NULL && !page_queue, cmd_work_handler takes
-command entry with refcnt == 1 from mlx5_cmd_invoke.
-If either semaphore timeout or index allocation error happens,
-it does final cmd_ent_put(ent). To avoid access to freed memory,
-notify slotted completion before cmd_ent_put.
+of_reserved_mem_lookup() may return NULL if the reserved memory region
+referenced by the "memory-region" phandle is not found in the reserved
+memory table (e.g. due to a misconfigured DTS or a removed
+memory-region node).  The current code dereferences the returned
+pointer without checking for NULL, leading to a kernel NULL pointer
+dereference at the following lines:
 
-This is theoretical issue found by Svace static analyser.
+    dma_addr = rmem->base;                          // line 1156
+    num_desc = div_u64(rmem->size, buf_size);       // line 1160
 
+Add a NULL check after of_reserved_mem_lookup() and return -ENODEV if
+the lookup fails, which is consistent with the existing error handling
+for of_parse_phandle() failure in the same code block.
+
+Fixes: 3a1ce9e3d01b ("net: airoha: Add the capability to allocate hwfd buffers via reserved-memory")
 Cc: stable@vger.kernel.org
-Fixes: 485d65e135712 ("net/mlx5: Add a timeout to acquire the command queue semaphore")
-Fixes: 0e2909c6bec90 ("net/mlx5: Fix variable not being completed when function returns")
-Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
-Reviewed-by: Md Haris Iqbal <haris.iqbal@linux.dev>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Acked-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260526162932.501584-1-kniv@yandex-team.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: ZhaoJinming <zhaojinming@uniontech.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/cmd.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/airoha/airoha_eth.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-@@ -1000,12 +1000,13 @@ static void cmd_work_handler(struct work
- 				ent->callback(-EBUSY, ent->context);
- 				mlx5_free_cmd_msg(dev, ent->out);
- 				free_msg(dev, ent->in);
-+				complete(&ent->slotted);
- 				cmd_ent_put(ent);
- 			} else {
- 				ent->ret = -EBUSY;
- 				complete(&ent->done);
-+				complete(&ent->slotted);
- 			}
--			complete(&ent->slotted);
- 			return;
- 		}
- 		alloc_ret = cmd_alloc_index(cmd, ent);
-@@ -1015,13 +1016,14 @@ static void cmd_work_handler(struct work
- 				ent->callback(-EAGAIN, ent->context);
- 				mlx5_free_cmd_msg(dev, ent->out);
- 				free_msg(dev, ent->in);
-+				complete(&ent->slotted);
- 				cmd_ent_put(ent);
- 			} else {
- 				ent->ret = -EAGAIN;
- 				complete(&ent->done);
-+				complete(&ent->slotted);
- 			}
- 			up(&cmd->vars.sem);
--			complete(&ent->slotted);
- 			return;
- 		}
- 	} else {
+--- a/drivers/net/ethernet/airoha/airoha_eth.c
++++ b/drivers/net/ethernet/airoha/airoha_eth.c
+@@ -1172,6 +1172,9 @@ static int airoha_qdma_init_hfwd_queues(
+ 
+ 		rmem = of_reserved_mem_lookup(np);
+ 		of_node_put(np);
++		if (!rmem)
++			return -ENODEV;
++
+ 		dma_addr = rmem->base;
+ 		/* Compute the number of hw descriptors according to the
+ 		 * reserved memory size and the payload buffer size
 
 
