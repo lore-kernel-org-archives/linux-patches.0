@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B19443E490;
-	Tue, 16 Jun 2026 16:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBDA44CAF5;
+	Tue, 16 Jun 2026 16:14:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626465; cv=none; b=X4gP3S1GlTy3LbVJ92YsErcKxIoZta/D3FWpIXbGa/xMdlhHqEUImxRsCRoTxxghAkw+9lLaWYypDIFbaLePyiPUs5jwlKKKKrDscju93mLuZSrHxql9DC4UQUfbZs2LfUL/jzr9FX7V4fym3T9eOWpOa51YiIB/5A3M1mcF57U=
+	t=1781626470; cv=none; b=rwgRfK5Tg7JpaPVMUBKtIEqsFlR06gQXg0G26Ny5n3xb/vg1jSKc5Xd7hQ/rBIcu/Aho4pnkXa1V59RpERc24L0a3XJZH78tV6wuHJd1kmhr5SgOij9m+Y6YWmarXpq5G7P/whNX913zUZ++4Jl0zKsT+2SGbJ77CjPA6TuSNzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626465; c=relaxed/simple;
-	bh=sKhhsoP3QJGYkL63w2aYH9qMf4UL8QkQE5KzjZw8BZk=;
+	s=arc-20240116; t=1781626470; c=relaxed/simple;
+	bh=BXTLQvJi7VA0l/D06PcZvf92zUYJhFYTV2CFd7kyx30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PlWByl9AmaK3NHESCyx1A008jCKZ2dV1koLe2EKoyp2RybdkfTfVJ+GC842SF7Vs6I7XhBOiqHh6eUajQ9EpO7ZJaZXwMaQj/OJD8jR1gh1+G3NXDRy6orOGsgj64YcWa0aYxhbeW75ZE9hFiwBoQdbbMdECQ9W06O8DJQXxiKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gRk1ndyU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sd4xXue8jr1e9qJc0g8taWJqJT6ug1PXLtWjmi2Q1N/ndfdaCv1jcBkpUf4jlQzRgBZlLGhzFY8l2LqaABIOzGKN4IT2p7jFoy7+brDriPfLU0YmTA6/4t+XyENv8e3oo3Ah4AG6SRWD03P+RuMu46A9btNdb2hTjQ71H05NNZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ekmYZcVb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gRk1ndyU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 138861F000E9;
-	Tue, 16 Jun 2026 16:14:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ekmYZcVb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9251F000E9;
+	Tue, 16 Jun 2026 16:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626464;
-	bh=H63kXZU27rJsjzfhXodFUZQsW7MnXHvKTF7U+le00UM=;
+	s=korg; t=1781626469;
+	bh=MXfNiBc0s6GrRJ+JcrY6J3L+sGnEIzpConwNyL9sZvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gRk1ndyU0yylYcMr0VHQMK8s186195wDkZlQutoW7jSADU4uuy7QqC5AX93ck17EV
-	 eqqu1CD/xfLm5Xh/r9LcRWtEnukADJBx2oGbWp/CMiy6MzgilNFZrMETM71pEPNu6v
-	 hb4dCrF/PfktMmGsFTBzgapPIWT1j/u5+eHY1tT8=
+	b=ekmYZcVbHOQ8G5jvlh8mnqkbSFAXNa9MdLCkZaPup3EooOscliY9s7B3pLZ06ei1i
+	 PeVmTWjk77dDhHxqqAPf0Yc5/jgViCzfl9eY/QTvP4hn8bLt0xrBETtzQPdAgUgbVP
+	 8rJEYVAhJtKQibA/hMFsPHUuDPuUYlcycHvZHquI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 319/325] vsock/virtio: fix skb overhead accounting to preserve full buf_alloc
-Date: Tue, 16 Jun 2026 20:31:55 +0530
-Message-ID: <20260616145114.978788840@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.18 320/325] arm64: cputype: Add C1-Ultra definitions
+Date: Tue, 16 Jun 2026 20:31:56 +0530
+Message-ID: <20260616145115.028687570@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -50,66 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit c6087c5aaad6d1b8be1a1a641e0a422218ade911 upstream.
+commit 60349e64a6c65f9f0aa118af711b3c7e137f07ff upstream.
 
-After commit 059b7dbd20a6 ("vsock/virtio: fix potential unbounded skb
-queue"), virtio_transport_inc_rx_pkt() subtracts per-skb overhead from
-buf_alloc when checking whether a new packet fits. This reduces the
-effective receive buffer below what the user configured via
-SO_VM_SOCKETS_BUFFER_SIZE, causing legitimate data packets to be
-silently dropped and applications that rely on the full buffer size
-to deadlock.
+Add cputype definitions for C1-Ultra. These will be used for errata
+detection in subsequent patches.
 
-Also, the reduced space is not communicated to the remote peer, so
-its credit calculation accounts more credit than the receiver will
-actually accept, causing data loss (there is no retransmission).
+These values can be found in the C1-Ultra TRM:
 
-With this approach we currently have failures in
-tools/testing/vsock/vsock_test.c. Test 18 sometimes fails, while
-test 22 always fails in this way:
-    18 - SOCK_STREAM MSG_ZEROCOPY...hash mismatch
+  https://developer.arm.com/documentation/108014/0100/
 
-    22 - SOCK_STREAM virtio credit update + SO_RCVLOWAT...send failed:
-    Resource temporarily unavailable
+... in section A.5.1 ("MIDR_EL1, Main ID Register").
 
-Fix by allowing at most `buf_alloc * 2` as the total budget for payload
-plus skb overhead in virtio_transport_inc_rx_pkt(), similar to how
-SO_RCVBUF is doubled to reserve space for sk_buff metadata.
-This preserves the full buf_alloc for payload under normal operation,
-while still bounding the skb queue growth.
-
-With this patch, all tests in tools/testing/vsock/vsock_test.c are
-now passing again.
-
-Fixes: 059b7dbd20a6 ("vsock/virtio: fix potential unbounded skb queue")
-Cc: stable@vger.kernel.org
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20260518090656.134588-3-sgarzare@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Will Deacon <will@kernel.org>
+[Mark: backport to v6.18.y]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport_common.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/cputype.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -427,7 +427,14 @@ static bool virtio_transport_inc_rx_pkt(
- {
- 	u64 skb_overhead = (skb_queue_len(&vvs->rx_queue) + 1) * SKB_TRUESIZE(0);
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -97,6 +97,7 @@
+ #define ARM_CPU_PART_CORTEX_X925	0xD85
+ #define ARM_CPU_PART_CORTEX_A725	0xD87
+ #define ARM_CPU_PART_CORTEX_A720AE	0xD89
++#define ARM_CPU_PART_C1_ULTRA		0xD8C
+ #define ARM_CPU_PART_NEOVERSE_N3	0xD8E
+ #define ARM_CPU_PART_C1_PRO		0xD8B
  
--	if (skb_overhead + vvs->buf_used + len > vvs->buf_alloc)
-+	/* Allow at most buf_alloc * 2 total budget (payload + overhead),
-+	 * similar to how SO_RCVBUF is doubled to reserve space for sk_buff
-+	 * metadata. Check payload against buf_alloc to be sure the other
-+	 * peer is respecting the credit, and sk_buff overhead to bound
-+	 * queue growth.
-+	 */
-+	if ((u64)vvs->buf_used + len > vvs->buf_alloc ||
-+	    skb_overhead > vvs->buf_alloc)
- 		return false;
- 
- 	vvs->rx_bytes += len;
+@@ -189,6 +190,7 @@
+ #define MIDR_CORTEX_X925 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X925)
+ #define MIDR_CORTEX_A725 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A725)
+ #define MIDR_CORTEX_A720AE MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A720AE)
++#define MIDR_C1_ULTRA MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_C1_ULTRA)
+ #define MIDR_NEOVERSE_N3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N3)
+ #define MIDR_C1_PRO MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_C1_PRO)
+ #define MIDR_THUNDERX	MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX)
 
 
