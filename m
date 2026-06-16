@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C383832E13B;
-	Tue, 16 Jun 2026 18:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF4032E13B;
+	Tue, 16 Jun 2026 18:36:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635014; cv=none; b=kUb6FW8ntr8yGFCRaIrNV4eM5ULC1idFzsiq/UB1KkZwe8Ve1F++F4YJI0M71D/qT5/fNF8g5Gq918F9ivhnux4DIFkNzlVu2CBXNsghjsmoyMCs0l4QjgpQKVY/fEJcq7IQ9LnzV+WkT8CFd44BY45wLYt4bfDMm9OQH8sSp/E=
+	t=1781635020; cv=none; b=E1rFLX4gAUj1qqVCrM4BG4sUiBb/Q6Jce+0CHBJ52ok34maZD657C3LJmFv1LpahK5waSqQQnLZMlS2jg5ARaZj40SXmU8ZCimPYZRvTypTxhOBn3X7Vbr8wOJQxZm6s1tyh5sSLY1b4wT8jS2AX/tpKrQjGM8YLjKb21l6FrdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635014; c=relaxed/simple;
-	bh=gk9KG3j+EJ7UJ/FAFxS3FWI0sdJd/fc7IsB9mMGNqso=;
+	s=arc-20240116; t=1781635020; c=relaxed/simple;
+	bh=dfaDYinkjuZdRg64TcQCdSQz9L94CmPt2Q+Ha+wQRRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k0cOpycVY5EVoGGttFtGDJfndGlRsTciR4TkofyUfBQUKXg2C6KMkmyfEtfzZHhZ98Omcj4uxCljV8bD2YlVU5oD1O2N7Uv/YYShmBQLmD17aSkbaaNaPr9BLIgg6dxRvSVz36vCA5ZZZYoHJpqTVYoq1MCoqzFtxdEFRFjXtOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vBlKRzay; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hxaPIc1a7GFYI5ZbD/FVu+IqfGYqJBn2EfHB7Thx0qyPE56rwF/Gfop+/ghnCK2MYxmFnfkJE0GpBUh3pofAwx5RjbNrKpOoJeWF+JmZwYu7WMEDvjFzrBXICH/c3yOWgUeJkB5PqpeZeU0QhuBIRBiN+c1onk6/XR5S7Zn04yU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aFT0e3Lo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vBlKRzay"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94A61F000E9;
-	Tue, 16 Jun 2026 18:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aFT0e3Lo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D4A1F000E9;
+	Tue, 16 Jun 2026 18:36:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635013;
-	bh=0d2bV4EYzrRocPAKA977piiYgDWd3np/H1m6pggth18=;
+	s=korg; t=1781635018;
+	bh=fV5BmZPkAS5khB/VMyLnoMRgUMwy3JAN2qFwfDqUwVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vBlKRzay7dY0OfEUM+60jNx3LclclcbmabfgLIqe1W4HQVaOpNflZ0J0JpXVkx0mO
-	 0Eqf7QkrnwpP5NmzLDVaIspPZ9O4zqYsKbeJM3VFu7iCdo0esAlU9/B8cPv4xvUabZ
-	 CwrrpAvrQUMRzItgz5JmpXKjHakATauIyi2vYxsk=
+	b=aFT0e3LoTQuYI691KJp0tE85H0vn6Xd2Q6YiK7TFQL1k534uS6RmcrdP8OGs/+fV+
+	 HejkNaaCZw3M4947uQFvwYIig2tOZDxtj2KL4MI8MyrkAPIYSM2NzoWaoT3wtXwVO8
+	 XEoJqy3F9ULAfjHMchJhuKHjmM2WVWa/n4cFpTTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 375/411] usb: gadget: f_hid: fix device reference leak in hidg_alloc()
-Date: Tue, 16 Jun 2026 20:30:13 +0530
-Message-ID: <20260616145121.239810841@linuxfoundation.org>
+Subject: [PATCH 5.15 376/411] thunderbolt: property: Cap recursion depth in __tb_property_parse_dir()
+Date: Tue, 16 Jun 2026 20:30:14 +0530
+Message-ID: <20260616145121.289822364@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,55 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 4f88d65def6f3c90121601b4f62a4c967f3063a6 ]
+[ Upstream commit 928abe19fbf0127003abcb1ea69cabc1c897d0ab ]
 
-hidg_alloc() initializes hidg->dev with device_initialize() before
-calling dev_set_name(). If dev_set_name() fails, the function currently
-jumps to err_unlock and returns without calling put_device().
+A DIRECTORY entry's value field is used as the dir_offset for a
+recursive call into __tb_property_parse_dir() with no depth counter.
+A crafted peer that chains DIRECTORY entries into a back-reference
+loop drives the parser until the kernel stack is exhausted and the
+guard page fires.  Any untrusted XDomain peer (cable, dock, in-line
+inspector, adjacent host) that reaches the PROPERTIES_REQUEST
+control-plane exchange can trigger this without authentication.
 
-This leaves the device reference unbalanced and prevents hidg_release()
-from being called. Calling put_device() here is also safe, since
-hidg_release() only frees resources owned by hidg.
+Thread a depth counter through tb_property_parse() and
+__tb_property_parse_dir(), and reject blocks that exceed
+TB_PROPERTY_MAX_DEPTH = 8.  That is comfortably larger than any
+observed legitimate XDomain layout.
 
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
+Operators who do not need XDomain host-to-host discovery can disable
+the path entirely with thunderbolt.xdomain=0 on the kernel command
+line.
 
-Route the dev_set_name() failure path through err_put_device so the
-device reference is dropped properly.
-
-Fixes: 89ff3dfac604 ("usb: gadget: f_hid: fix f_hidg lifetime vs cdev")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Johan Hovold johan@kernel.org
-Link: https://patch.msgid.link/20260413142119.2977716-1-lgs201920130244@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-6
+Assisted-by: Codex:gpt-5-4
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_hid.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/thunderbolt/property.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -1278,7 +1278,7 @@ static struct usb_function *hidg_alloc(s
- 	hidg->dev.devt = MKDEV(major, opts->minor);
- 	ret = dev_set_name(&hidg->dev, "hidg%d", opts->minor);
- 	if (ret)
--		goto err_unlock;
-+		goto err_put_device;
+--- a/drivers/thunderbolt/property.c
++++ b/drivers/thunderbolt/property.c
+@@ -35,10 +35,11 @@ struct tb_property_dir_entry {
+ };
  
- 	hidg->bInterfaceSubClass = opts->subclass;
- 	hidg->bInterfaceProtocol = opts->protocol;
-@@ -1313,7 +1313,6 @@ static struct usb_function *hidg_alloc(s
+ #define TB_PROPERTY_ROOTDIR_MAGIC	0x55584401
++#define TB_PROPERTY_MAX_DEPTH		8
  
- err_put_device:
- 	put_device(&hidg->dev);
--err_unlock:
- 	mutex_unlock(&opts->lock);
- 	return ERR_PTR(ret);
+ static struct tb_property_dir *__tb_property_parse_dir(const u32 *block,
+ 	size_t block_len, unsigned int dir_offset, size_t dir_len,
+-	bool is_root);
++	bool is_root, unsigned int depth);
+ 
+ static inline void parse_dwdata(void *dst, const void *src, size_t dwords)
+ {
+@@ -99,7 +100,8 @@ tb_property_alloc(const char *key, enum
  }
+ 
+ static struct tb_property *tb_property_parse(const u32 *block, size_t block_len,
+-					const struct tb_property_entry *entry)
++					const struct tb_property_entry *entry,
++					unsigned int depth)
+ {
+ 	char key[TB_PROPERTY_KEY_SIZE + 1];
+ 	struct tb_property *property;
+@@ -120,7 +122,7 @@ static struct tb_property *tb_property_p
+ 	switch (property->type) {
+ 	case TB_PROPERTY_TYPE_DIRECTORY:
+ 		dir = __tb_property_parse_dir(block, block_len, entry->value,
+-					      entry->length, false);
++					      entry->length, false, depth + 1);
+ 		if (!dir) {
+ 			kfree(property);
+ 			return NULL;
+@@ -165,13 +167,17 @@ static struct tb_property *tb_property_p
+ }
+ 
+ static struct tb_property_dir *__tb_property_parse_dir(const u32 *block,
+-	size_t block_len, unsigned int dir_offset, size_t dir_len, bool is_root)
++	size_t block_len, unsigned int dir_offset, size_t dir_len, bool is_root,
++	unsigned int depth)
+ {
+ 	const struct tb_property_entry *entries;
+ 	size_t i, content_len, nentries;
+ 	unsigned int content_offset;
+ 	struct tb_property_dir *dir;
+ 
++	if (depth > TB_PROPERTY_MAX_DEPTH)
++		return NULL;
++
+ 	dir = kzalloc(sizeof(*dir), GFP_KERNEL);
+ 	if (!dir)
+ 		return NULL;
+@@ -206,7 +212,7 @@ static struct tb_property_dir *__tb_prop
+ 	for (i = 0; i < nentries; i++) {
+ 		struct tb_property *property;
+ 
+-		property = tb_property_parse(block, block_len, &entries[i]);
++		property = tb_property_parse(block, block_len, &entries[i], depth);
+ 		if (!property) {
+ 			tb_property_free_dir(dir);
+ 			return NULL;
+@@ -243,7 +249,7 @@ struct tb_property_dir *tb_property_pars
+ 		return NULL;
+ 
+ 	return __tb_property_parse_dir(block, block_len, 0, rootdir->length,
+-				       true);
++				       true, 0);
+ }
+ 
+ /**
 
 
