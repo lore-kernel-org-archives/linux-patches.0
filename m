@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D612EEE68;
-	Tue, 16 Jun 2026 15:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF371A682B;
+	Tue, 16 Jun 2026 15:48:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624912; cv=none; b=mC68JN+zL8MNrQDSEsts5+01zrMYLGTISDJ3zQ5A66kKkrds7bjLiAD8SXATzMVmR2FuVSWrRFxy5CbpfRnkPvQLHH3/I5Hw6bM8g4nHurKe0enBHqrLBt7OW9WI7JL6FVRLKPQA62yaOZ+WcYUzgyM74Z97c6X8WXQweWRZzbI=
+	t=1781624918; cv=none; b=JGdXq9DNWVgeMOQopIPXy7sgGttFXRAnq6oG05wQf5xBrRNhKlsYzJBv12Fj9jXG//xS/tk8QkBiZjK8OQrhTfWoYnKQ+YAGJzAF9uc7yDPlZyhd2TpN21qQeKO49f2tA0HjAxj37O7CodLBuK+uhTGzuYs8cidYl5g1FqfBzss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624912; c=relaxed/simple;
-	bh=gLgXgLq6UtVLLEWFBcXym6NRDplnCAMhxNmLmvOupyI=;
+	s=arc-20240116; t=1781624918; c=relaxed/simple;
+	bh=b5pRp4JNxB44ZSif1Vy7ipw5c8T553NqpZ5j5RynqXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UgS6xLdCXAKZ+mShxa7q6donLeo1e7BonKP8+SHap+1p8kDpUprCoVQzHJnvvmbT+2oHgzDQfxnFDWPkY0gFQv6tTQrZr47iMfxDWmidnFMeJn7w/av3eft4Njp9TQD8YjCqUgNDjLTOe9NeKZolsBO+/DIoPAPRFRti8tkXWa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NgI6yFLZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BO9K8g/RJFcclWus1f/7ewTpyDAYQoz9rrS2cS2BFwuKk/87nGDpd88M7/7ahcQ976TOrf04vZLKSuTFPSKTXKwtlz+zF8OIVa9WDybSRqtkWVFbxbx0PMhfy7xvH1A9nblAaILyXGzjx17WB1TpYb2i4n1UvProwZUjJSxr5KE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyVAd8+7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NgI6yFLZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7B81F00A3A;
-	Tue, 16 Jun 2026 15:48:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyVAd8+7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180911F000E9;
+	Tue, 16 Jun 2026 15:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624910;
-	bh=Gt0jkjuIUrkVE8f+Fcl+CI2FdmCUnwh5lobH9LKIy8c=;
+	s=korg; t=1781624917;
+	bh=r/s3ujU0zloMeGYcCPnXCvwdKg3YAaMgJXuF58gRiJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NgI6yFLZjdivknFmGsGNz8bSCK0ovoCq5gyAm7akM40Uhvo7ayFnGvbQBwMRx0DV/
-	 6ak+9O73wWl9Dyq5TheyalkX23TvFQ0xMM6PO5TZbgoMzuV4+0Rd0o59rcCLdDqzxn
-	 PxJgU2JON6l0Y5lUkWUr5CUbaCQP/aL6gViY+PXA=
+	b=XyVAd8+7O+0aOcH5EAFGMYmBDMpHDO6ddOCBDEVm2GiKDLrw1a+R41YpP0/eSdEgf
+	 Z4vYSgtF510j/K2Kc4VCxMl3ZqftkS/A/OuLuxu1rwfYFLMUAgBXR79x166+9u9dGL
+	 Q1ExmCnc2swfOVg1yQG9AuyHqMk03Rp/ycjMh+ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 6.18 007/325] i2c: dev: prevent integer overflow in I2C_TIMEOUT ioctl
-Date: Tue, 16 Jun 2026 20:26:43 +0530
-Message-ID: <20260616145058.182148696@linuxfoundation.org>
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 043/325] Bluetooth: MGMT: validate advertising TLV before type checks
+Date: Tue, 16 Jun 2026 20:27:19 +0530
+Message-ID: <20260616145059.875636346@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -50,60 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-commit 617eb7c0961a8dfcfc811844a6396e406b2923ea upstream.
+[ Upstream commit de23fb62259aa01d294f77238ae3b835eb674413 ]
 
-While fuzzing with Syzkaller, a persistent `schedule_timeout: wrong
-timeout value` warning was observed, accompanied by SMBus controller
-state machine corruption.
+tlv_data_is_valid() reads each advertising data field length from
+data[i], then inspects data[i + 1] for managed EIR types before
+checking that the current field still fits inside the supplied buffer.
 
-The I2C_TIMEOUT ioctl accepts a user-provided timeout in multiples of
-10 ms. The user argument is checked against INT_MAX, but it is
-subsequently multiplied by 10 before being passed to msecs_to_jiffies().
+A malformed field whose length byte is the last byte of the buffer can
+therefore make the parser read one byte past the advertising data.
 
-A malicious user can pass a large value (e.g., 429496729) that passes
-the `arg > INT_MAX` check but overflows when multiplied by 10. This
-results in a truncated 32-bit unsigned value that bypasses the
-internal `(int)m < 0` check in `msecs_to_jiffies()`.
+KASAN reported the following when a malformed MGMT_OP_ADD_ADVERTISING
+request reached that path:
 
-The truncated value is then assigned to `client->adapter->timeout`
-(a signed 32-bit int), which is reinterpreted as a negative number.
-When passed to wait_for_completion_timeout(), this negative value
-undergoes sign extension to a 64-bit unsigned long, triggering the
-`schedule_timeout` warning and causing premature returns. This leaves
-the SMBus state machine in an unrecoverable state, constituting a
-local Denial of Service (DoS).
+  BUG: KASAN: vmalloc-out-of-bounds in tlv_data_is_valid()
+  Read of size 1
+  Call trace:
+    tlv_data_is_valid()
+    add_advertising()
+    hci_mgmt_cmd()
+    hci_sock_sendmsg()
 
-Fix this by bounding the user argument to `INT_MAX / 10`.
+Move the existing element-length check before any type-octet inspection
+so each non-empty element is proven to contain its type byte before the
+parser looks at data[i + 1].
 
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-[wsa: move the comment as well]
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2bb36870e8cb ("Bluetooth: Unify advertising instance flags check")
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-dev.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/bluetooth/mgmt.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/i2c/i2c-dev.c
-+++ b/drivers/i2c/i2c-dev.c
-@@ -487,12 +487,13 @@ static long i2cdev_ioctl(struct file *fi
- 		client->adapter->retries = arg;
- 		break;
- 	case I2C_TIMEOUT:
--		if (arg > INT_MAX)
-+		/*
-+		 * For historical reasons, user-space sets the timeout value in
-+		 * units of 10 ms.
-+		 */
-+		if (arg > INT_MAX / 10)
- 			return -EINVAL;
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 91d1c0d132f9e1..9bb82d1fdc3cad 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -8622,6 +8622,12 @@ static bool tlv_data_is_valid(struct hci_dev *hdev, u32 adv_flags, u8 *data,
+ 		if (!cur_len)
+ 			continue;
  
--		/* For historical reasons, user-space sets the timeout
--		 * value in units of 10 ms.
++		/* If the current field length would exceed the total data
++		 * length, then it's invalid.
++		 */
++		if (i + cur_len >= len)
++			return false;
++
+ 		if (data[i + 1] == EIR_FLAGS &&
+ 		    (!is_adv_data || flags_managed(adv_flags)))
+ 			return false;
+@@ -8638,12 +8644,6 @@ static bool tlv_data_is_valid(struct hci_dev *hdev, u32 adv_flags, u8 *data,
+ 		if (data[i + 1] == EIR_APPEARANCE &&
+ 		    appearance_managed(adv_flags))
+ 			return false;
+-
+-		/* If the current field length would exceed the total data
+-		 * length, then it's invalid.
 -		 */
- 		client->adapter->timeout = msecs_to_jiffies(arg * 10);
- 		break;
- 	default:
+-		if (i + cur_len >= len)
+-			return false;
+ 	}
+ 
+ 	return true;
+-- 
+2.53.0
+
 
 
