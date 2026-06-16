@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7345B3A8746;
-	Tue, 16 Jun 2026 16:07:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56993A9627;
+	Tue, 16 Jun 2026 16:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626031; cv=none; b=WDktOhpqNHMHbnkA0KtiSaPpnyNzz7Ran+BI4Eu69wyD7T7OyjAAzsiCzgZqvWFm2YPod4ay5lLLCKf2Fdp6gtflXF1KfDtE5xXXFON9J9NWcs0BAA1jQNNyeA4h5mNAoyATAifEvhdXboUfADJb0OPCKlttqW/4oppL0x6bwlM=
+	t=1781626038; cv=none; b=qKn0fo8H9NXkyGzkgWtLSu/aXMK9+EqysQJ3NpFMUlaC+tDWuzzOrgv2Hj80l6vivERLXBa9jeYePVFpspfahWf+FHWmmtdmPJs3hCdfw8jwOyC0jHKzF+4OZ0bfEMg+hqZrKYswqOgOjPGNHUV+8y220q4mPN24VfiEtB9jaRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626031; c=relaxed/simple;
-	bh=m2niFnxl6FuSUucQoPdInz6UfWhW687IA40aqmftt3I=;
+	s=arc-20240116; t=1781626038; c=relaxed/simple;
+	bh=ryZA9diOkM/puNDNSUPfNXYVLNru4jdksFErTZsYn1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fWMb5LjDPkpZTbg6AlhtHfTcQjIXyAp/bdYtLxbebMUZeO54xEUgqGElkl0DxCPVY+6m096eNTRN1Zqogoq3sZX0NlJxFSmB77pYDRN2IVG4wBhoTMGAqd8lRVrMr1932HpbW4rY5axomF9cmMpPonJCSkNOXpHADi6clC9VSQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsSae9oV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fl92glshTiiwfmfEMulwKRf3QSagXK2zwIHvlNfJSF6RJ4K5QeSZBQbWdc/O1FlV3POXtZ9s5B6t4rVO7DlXpM330rcreS3scNe2d043YG8XtZrLeNdG8nh9Ig0sZmhdzGrrqIjm3yX+u16N8BB417oFzP3VC+926RWm+A7GVpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziPr16Hw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsSae9oV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6321F000E9;
-	Tue, 16 Jun 2026 16:07:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziPr16Hw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 426C91F000E9;
+	Tue, 16 Jun 2026 16:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626030;
-	bh=AvLY8b+D+JpC8J827mgstjUswC5ffm+B0ncUoCG2/KA=;
+	s=korg; t=1781626036;
+	bh=oyhtdRwgw+5zVwxSqpVfnJQKhm5d4yLRpXkZCMwiRvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NsSae9oV6F4m2QZREdksr7AYCKCbq+UQ6QEjVE2j+yrb7jLqlDp+F6LKmMhAMzrMP
-	 5vtYyowPfAGyJLLFlOpcAAgzKzAHER3Le2FRR1FsiCmFNLpMZWf6Os05B1PBu/DV9J
-	 nQeCWkmja6qJBbUOJp/ZrB70Cf60bij8ctAZ8lUw=
+	b=ziPr16Hw7lFuFZNZP6gg8BjHJcClEE0qttdzMaFInI2kSt7AJp1PH4IZ/Va0CkrCT
+	 rZ68TRq7Vvb+VSF2796KWagtVZ07CqXgtza2MCQLfka1rNDDKKArV7wP1Ku8d3ciel
+	 0uELCv+aSnW5tPJWJjupBHo/GEvREIKe2hOw3fEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Linus Walleij <linusw@kernel.org>
-Subject: [PATCH 6.18 246/325] pinctrl: mcp23s08: Read spi-present-mask as u8 not u32
-Date: Tue, 16 Jun 2026 20:30:42 +0530
-Message-ID: <20260616145110.746911814@linuxfoundation.org>
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Chris Mason <clm@fb.com>,
+	Kairui Song <kasong@tencent.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Dave Chinner <david@fromorbit.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 255/325] mm/list_lru: drain before clearing xarray entry on reparent
+Date: Tue, 16 Jun 2026 20:30:51 +0530
+Message-ID: <20260616145111.269570350@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -50,42 +56,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-commit b0c13ec17438577f90b379d448dfed1233e2c0a4 upstream.
+commit 98733f3f0becb1ae0701d021c1748e974e5fa55c upstream.
 
-The binding (microchip,mcp23s08) specifies microchip,spi-present-mask
-as uint8, but driver would read u32, causing type mismatch. Use
-device_property_read_u8 to match binding spec, hardware (8 chips max),
-& prevent probe failure.
+memcg_reparent_list_lrus() clears the dying memcg's xarray entry with
+xas_store(&xas, NULL) before reparenting its per-node lists into the
+parent.  This opens a window where a concurrent list_lru_del() arriving
+for the dying memcg sees xa_load() == NULL, walks to the parent in
+lock_list_lru_of_memcg(), takes the parent's per-node lock, and calls
+list_del_init() on an item still physically linked on the dying memcg's
+list.
 
-Cc: stable@vger.kernel.org
-Fixes: 3ad8d3ec6d87 ("dt-bindings: pinctrl: convert pinctrl-mcp23s08.txt to yaml format")
-Signed-off-by: Judith Mendez <jm@ti.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+If another in-flight thread holds the dying memcg's per-node lock at the
+same moment (another list_lru_del, or a list_lru_walk_one running an
+isolate callback), both threads modify ->next/->prev pointers on the same
+physical list under different locks.  Adjacent items can corrupt each
+other's links.
+
+Fix it by reversing the order: reparent each per-node list and mark the
+child's list lru dead and then clear the xarray entry.  Any concurrent
+list_lru op that finds the still-set xarray entry either takes the dying
+memcg's per-node lock (synchronizing with the drain) or sees LONG_MIN and
+walks to the parent, where the items now live.
+
+Link: https://lore.kernel.org/20260601161501.1444829-1-shakeel.butt@linux.dev
+Fixes: fb56fdf8b9a2 ("mm/list_lru: split the lock to per-cgroup scope")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Reported-by: Chris Mason <clm@fb.com>
+Reviewed-by: Kairui Song <kasong@tencent.com>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-mcp23s08_spi.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ mm/list_lru.c |   21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
---- a/drivers/pinctrl/pinctrl-mcp23s08_spi.c
-+++ b/drivers/pinctrl/pinctrl-mcp23s08_spi.c
-@@ -143,13 +143,13 @@ static int mcp23s08_probe(struct spi_dev
- 	unsigned int addr;
- 	int chips;
- 	int ret;
--	u32 v;
-+	u8 v;
+--- a/mm/list_lru.c
++++ b/mm/list_lru.c
+@@ -472,26 +472,29 @@ void memcg_reparent_list_lrus(struct mem
+ 	mutex_lock(&list_lrus_mutex);
+ 	list_for_each_entry(lru, &memcg_list_lrus, list) {
+ 		struct list_lru_memcg *mlru;
+-		XA_STATE(xas, &lru->xa, memcg->kmemcg_id);
  
- 	info = spi_get_device_match_data(spi);
+ 		/*
+-		 * Lock the Xarray to ensure no on going list_lru_memcg
+-		 * allocation and further allocation will see css_is_dying().
++		 * css_is_dying() check in memcg_list_lru_alloc() avoids
++		 * allocating a new mlru since CSS_DYING is already set for this
++		 * memcg a rcu grace period ago.
+ 		 */
+-		xas_lock_irq(&xas);
+-		mlru = xas_store(&xas, NULL);
+-		xas_unlock_irq(&xas);
++		mlru = xa_load(&lru->xa, memcg->kmemcg_id);
+ 		if (!mlru)
+ 			continue;
  
--	ret = device_property_read_u32(dev, "microchip,spi-present-mask", &v);
-+	ret = device_property_read_u8(dev, "microchip,spi-present-mask", &v);
- 	if (ret) {
--		ret = device_property_read_u32(dev, "mcp,spi-present-mask", &v);
-+		ret = device_property_read_u8(dev, "mcp,spi-present-mask", &v);
- 		if (ret) {
- 			dev_err(dev, "missing spi-present-mask");
- 			return ret;
+ 		/*
+-		 * With Xarray value set to NULL, holding the lru lock below
+-		 * prevents list_lru_{add,del,isolate} from touching the lru,
+-		 * safe to reparent.
++		 * Reparent each per-node list and mark the child dead
++		 * (LONG_MIN) before clearing xarray entry otherwise a
++		 * concurrent list_lru_del() may corrupt the list if it arrives
++		 * after xarray clear but before reparenting as
++		 * lock_list_lru_of_memcg will acquire parent's lock while the
++		 * item is still on child's list.
+ 		 */
+ 		for_each_node(i)
+ 			memcg_reparent_list_lru_one(lru, i, &mlru->node[i], parent);
+ 
++		xa_erase_irq(&lru->xa, memcg->kmemcg_id);
++
+ 		/*
+ 		 * Here all list_lrus corresponding to the cgroup are guaranteed
+ 		 * to remain empty, we can safely free this lru, any further
 
 
