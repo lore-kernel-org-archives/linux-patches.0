@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0597C36A36C;
-	Tue, 16 Jun 2026 18:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DD33D091A;
+	Tue, 16 Jun 2026 18:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634034; cv=none; b=higbjd3bruHccBfq4IKHLjX7xVMTNJawlXmS+O+Q3oCq9juPt9oSD5fLZy3LUf4KBini2TICu53hImb83f0Pha6Z3umSJOwcmDpSZCxEDC7rLsfyeYFILPwGZhE0cHT5YCRL926QAk7LR7MFARRQppOpckpHPQHQRpZneblvveM=
+	t=1781634038; cv=none; b=jQAvgtYnjcUBdGWopxTkCPY/ragXtY5vMWfboPdVeJMxoLrpIVA0pyxtlpXcHCqQNp7ufvaGyGkPgL6Z/RyJbSMIdbUlUtvAqCphcNsq63Z1pO42LX8qgog9xTinKfzhZAxUQa+5MtZjcmDX/dw7yTyqjVSjeX6HBYu2Dg2DH4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634034; c=relaxed/simple;
-	bh=agwTz32qFb4co7yDp+OoVXwNqfRzkzIq4EsmkicwZQg=;
+	s=arc-20240116; t=1781634038; c=relaxed/simple;
+	bh=iGDtajNVL2YwHq5stSIp5x2I3L6Zn2/805p2SPFXEqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MLD2im+0aLD3aGDHnLRJAeOmTRMC9Hz6ENZuPUcmKHxMnOAbEqAlvIdHQOVwr4K25rBRjjIvEFVV/kFWR/+mx5sfXp452lZWAC+yrPTENyiGu+j+uKxdeaXW8RHNxWCkGDeYV2zv2IY2gZ5uMqRuX2nKtj9xD6ADfK04OSulKpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1s3jo7HY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gRpHYxBjixVRj3Wb2t8GoBk6gcznlwUIYgTaHfeMJt6REhfjctS4T+e6PeSd3/vBoEDgknRnDAm8KdmOc47NQqTgandn7ZoJJAr0riSwum3jbzCB17I/QFJ2KhvBr64pwmQxIB7aumIc/duDsLGjrkSyZYVNcJI8MhFBzTxU8Ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i21jD+lD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1s3jo7HY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA371F000E9;
-	Tue, 16 Jun 2026 18:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i21jD+lD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C1F1F000E9;
+	Tue, 16 Jun 2026 18:20:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634032;
-	bh=rdFodYKGAY9MzP9rh1GnhS8sFqNi8FpQudbpXRWpzp0=;
+	s=korg; t=1781634037;
+	bh=HB0aXEs+4ZLyKLRHd3P80SR6zKkmBQaGT5m2e6272eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1s3jo7HYeh44TnuxPmwvC0xqRAkPT0zVsETr+ajnm0FauDpgBPIYyA52E7ZOyvm7A
-	 LGzidnpklVjDDBM8YSRycBdXvrHArLTnQz+sgu/MGECa/J25HDBnMUJayAxdUvciDa
-	 bHQp+xwON7Sp3DUnREGLwklC34lQY5NNnwxzL1jU=
+	b=i21jD+lDkZc95fHiTq6pQZsSvsOIiojoSQDCVsbCiwzx3wPzPuGJ2DkwEmp/stnCC
+	 sXq59kQAwhN7Q1MQWTIE1s4RTeK8y1mRj9WmQs4TMG/ACN16wx8Lh+A53Bvqrf+n6b
+	 1ihpIMBWBoGvfvvHQ9KxUUX0B0mBlLdzJuGrgaqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 188/411] net: guard timestamp cmsgs to real error queue skbs
-Date: Tue, 16 Jun 2026 20:27:06 +0530
-Message-ID: <20260616145110.689573451@linuxfoundation.org>
+Subject: [PATCH 5.15 162/411] Bluetooth: RFCOMM: hold listener socket in rfcomm_connect_ind()
+Date: Tue, 16 Jun 2026 20:26:40 +0530
+Message-ID: <20260616145109.120228884@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -53,103 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit 1ee90b77b727df903033db873c75caac5c27ec98 ]
+[ Upstream commit 43c441edacf953b39517a44f5e5e10a93618b226 ]
 
-skb_is_err_queue() treats PACKET_OUTGOING as the sole marker for an skb
-from sk_error_queue. That assumption is not true for AF_PACKET sockets:
-outgoing packet taps are also delivered to packet sockets with
-skb->pkt_type == PACKET_OUTGOING, but their skb->cb is owned by AF_PACKET
-instead of struct sock_exterr_skb.
+rfcomm_get_sock_by_channel() scans rfcomm_sk_list under the list lock,
+but returns the selected listener after dropping that lock without
+taking a reference. rfcomm_connect_ind() then locks the listener,
+queues a child socket on it, and may notify it after unlocking it.
 
-If such an skb is received with timestamping enabled, the generic
-timestamp cmsg path can read AF_PACKET control-buffer state as
-sock_exterr_skb::opt_stats. With SO_RXQ_OVFL enabled, the packet drop
-counter overlaps opt_stats. An odd drop count makes the path emit
-SCM_TIMESTAMPING_OPT_STATS with skb->len and skb->data. For non-linear
-skbs this copies past the linear head and can trigger hardened usercopy or
-disclose adjacent heap contents.
+The buggy scenario involves two paths, with each column showing the
+order within that path:
 
-Keep skb_is_err_queue() local to net/socket.c, but make it verify that
-the PACKET_OUTGOING marker is paired with the sock_rmem_free destructor
-installed by sock_queue_err_skb(). AF_PACKET receive skbs use normal
-receive ownership and no longer pass as error-queue skbs, while legitimate
-sk_error_queue entries keep the PACKET_OUTGOING marker and sock_rmem_free
-ownership.
+rfcomm_connect_ind():            listener close:
+  1. Find parent in              1. close() enters
+     rfcomm_get_sock_by_channel()   rfcomm_sock_release().
+  2. Drop rfcomm_sk_list.lock    2. rfcomm_sock_shutdown()
+     without pinning parent.        closes the listener.
+  3. Call lock_sock(parent) and  3. rfcomm_sock_kill()
+     bt_accept_enqueue(parent,      unlinks and puts parent.
+     sk, true).
+  4. Read parent flags and may   4. parent can be freed.
+     call sk_state_change().
 
-Fixes: 8605330aac5a ("tcp: fix SCM_TIMESTAMPING_OPT_STATS for normal skbs")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260607021819.49698-1-kylebot@openai.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+If close wins the race, parent can be freed before
+rfcomm_connect_ind() reaches lock_sock(), bt_accept_enqueue(), or the
+deferred-setup callback.
+
+Take a reference on the listener before leaving rfcomm_sk_list.lock.
+After lock_sock() succeeds, recheck that it is still in BT_LISTEN
+before queueing a child, cache the deferred-setup bit while the parent
+is locked, and drop the reference after the last parent use.
+
+KASAN reported a slab-use-after-free in lock_sock_nested() from
+rfcomm_connect_ind(), with the freeing stack going through
+rfcomm_sock_kill() and rfcomm_sock_release().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h |  1 +
- net/core/skbuff.c  |  6 +++---
- net/socket.c       | 11 ++++++-----
- 3 files changed, 10 insertions(+), 8 deletions(-)
+ net/bluetooth/rfcomm/sock.c | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index ee9c398dd8f25e..962acf4a644da9 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1868,6 +1868,7 @@ struct sk_buff *sock_omalloc(struct sock *sk, unsigned long size,
- 			     gfp_t priority);
- void skb_orphan_partial(struct sk_buff *skb);
- void sock_rfree(struct sk_buff *skb);
-+void sock_rmem_free(struct sk_buff *skb);
- void sock_efree(struct sk_buff *skb);
- #ifdef CONFIG_INET
- void sock_edemux(struct sk_buff *skb);
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index a8d09eff26f11c..1d3784480834bb 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -4814,7 +4814,7 @@ int skb_cow_data(struct sk_buff *skb, int tailbits, struct sk_buff **trailer)
- }
- EXPORT_SYMBOL_GPL(skb_cow_data);
- 
--static void sock_rmem_free(struct sk_buff *skb)
-+void sock_rmem_free(struct sk_buff *skb)
- {
- 	struct sock *sk = skb->sk;
- 
-@@ -4823,8 +4823,8 @@ static void sock_rmem_free(struct sk_buff *skb)
- 
- static void skb_set_err_queue(struct sk_buff *skb)
- {
--	/* pkt_type of skbs received on local sockets is never PACKET_OUTGOING.
--	 * So, it is safe to (mis)use it to mark skbs on the error queue.
-+	/* The error-queue test in skb_is_err_queue() matches this marker
-+	 * with the sock_rmem_free destructor installed by sock_queue_err_skb().
- 	 */
- 	skb->pkt_type = PACKET_OUTGOING;
- 	BUILD_BUG_ON(PACKET_OUTGOING == 0);
-diff --git a/net/socket.c b/net/socket.c
-index f3d0a8d66cceee..cc7ba4702d1380 100644
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -795,12 +795,13 @@ EXPORT_SYMBOL(kernel_sendmsg_locked);
- 
- static bool skb_is_err_queue(const struct sk_buff *skb)
- {
--	/* pkt_type of skbs enqueued on the error queue are set to
--	 * PACKET_OUTGOING in skb_set_err_queue(). This is only safe to do
--	 * in recvmsg, since skbs received on a local socket will never
--	 * have a pkt_type of PACKET_OUTGOING.
-+	/* Error-queue skbs are marked as PACKET_OUTGOING in
-+	 * skb_set_err_queue() and use the destructor installed by
-+	 * sock_queue_err_skb(). PACKET_OUTGOING alone is not unique:
-+	 * AF_PACKET outgoing taps use the same pkt_type.
- 	 */
--	return skb->pkt_type == PACKET_OUTGOING;
-+	return skb->pkt_type == PACKET_OUTGOING &&
-+	       skb->destructor == sock_rmem_free;
+diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
+index d1f2c936a8a811..2f091f134a606c 100644
+--- a/net/bluetooth/rfcomm/sock.c
++++ b/net/bluetooth/rfcomm/sock.c
+@@ -122,7 +122,7 @@ static struct sock *__rfcomm_get_listen_sock_by_addr(u8 channel, bdaddr_t *src)
  }
  
- /* On transmit, software and hardware timestamps are returned independently.
+ /* Find socket with channel and source bdaddr.
+- * Returns closest match.
++ * Returns closest match with an extra reference held.
+  */
+ static struct sock *rfcomm_get_sock_by_channel(int state, u8 channel, bdaddr_t *src)
+ {
+@@ -136,15 +136,25 @@ static struct sock *rfcomm_get_sock_by_channel(int state, u8 channel, bdaddr_t *
+ 
+ 		if (rfcomm_pi(sk)->channel == channel) {
+ 			/* Exact match. */
+-			if (!bacmp(&rfcomm_pi(sk)->src, src))
++			if (!bacmp(&rfcomm_pi(sk)->src, src)) {
++				sock_hold(sk);
+ 				break;
++			}
+ 
+ 			/* Closest match */
+-			if (!bacmp(&rfcomm_pi(sk)->src, BDADDR_ANY))
++			if (!bacmp(&rfcomm_pi(sk)->src, BDADDR_ANY)) {
++				if (sk1)
++					sock_put(sk1);
++
+ 				sk1 = sk;
++				sock_hold(sk1);
++			}
+ 		}
+ 	}
+ 
++	if (sk && sk1)
++		sock_put(sk1);
++
+ 	read_unlock(&rfcomm_sk_list.lock);
+ 
+ 	return sk ? sk : sk1;
+@@ -941,6 +951,7 @@ int rfcomm_connect_ind(struct rfcomm_session *s, u8 channel, struct rfcomm_dlc *
+ {
+ 	struct sock *sk, *parent;
+ 	bdaddr_t src, dst;
++	bool defer_setup = false;
+ 	int result = 0;
+ 
+ 	BT_DBG("session %p channel %d", s, channel);
+@@ -954,6 +965,11 @@ int rfcomm_connect_ind(struct rfcomm_session *s, u8 channel, struct rfcomm_dlc *
+ 
+ 	lock_sock(parent);
+ 
++	if (parent->sk_state != BT_LISTEN)
++		goto done;
++
++	defer_setup = test_bit(BT_SK_DEFER_SETUP, &bt_sk(parent)->flags);
++
+ 	/* Check for backlog size */
+ 	if (sk_acceptq_is_full(parent)) {
+ 		BT_DBG("backlog full %d", parent->sk_ack_backlog);
+@@ -981,9 +997,11 @@ int rfcomm_connect_ind(struct rfcomm_session *s, u8 channel, struct rfcomm_dlc *
+ done:
+ 	release_sock(parent);
+ 
+-	if (test_bit(BT_SK_DEFER_SETUP, &bt_sk(parent)->flags))
++	if (defer_setup)
+ 		parent->sk_state_change(parent);
+ 
++	sock_put(parent);
++
+ 	return result;
+ }
+ 
 -- 
 2.53.0
 
