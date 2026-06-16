@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76DF4657F4;
-	Tue, 16 Jun 2026 15:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F894657CF;
+	Tue, 16 Jun 2026 15:57:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625458; cv=none; b=cV2AnbDVNi7ltvILbxWWI2Xdx5GCwSZ7pNR6V59wLMrHIEEl6Kbff/6SA83C56RYO3fMii1MSh9LvknT194hUfHOvh25EakHRMBr5m8BU/fEeDu1A6PGvFk0a6CCzQ4IfIhiw1qANo0R8AbYAm6IEdh3MnIMayq6IOYH6nQxyFc=
+	t=1781625463; cv=none; b=ukj+iZQ7nxYRi3sIPYs3PLwTf/Di6gb1Xbo3DWk6X+L3OD/CYIdZN2ut1QiagBtl0SSbnq6ZKAtGBQl7gYuX+ryyb9XOFrNTjjP6/tbHVTlMUo8a06S7u6SLhA/Gem/IooBtplEaZau82gpu5asoOWcz/YEyioPbqj7jMcWG8Zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625458; c=relaxed/simple;
-	bh=45JWa4cp3crATvYp9GpmC9nqhz6Qnpj02ptGw0eZGCc=;
+	s=arc-20240116; t=1781625463; c=relaxed/simple;
+	bh=Zp1Etvp3Jzn0crWdVoLBZg+ZC7eDMMQJC2OXeYS03PA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sy+cb1s45HEHrosPXq4g3omXLDqxy6qazm6L8PvJoNLGXyX19Jcp50Sz62qJvlIV1RopkkBJ8T6T3mLjZl3I+xAGZ4kGY3VJyA75SLz8hLIVnre71jLlUU8B1k2p8dXFNYtSiRziGtcfbbSBb5JHoOFFYIinBqj9fJ5VtXYNiBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mhc/SRQM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CyWwp+hOQ3mONVXTWCDmoq6gk2H802XAwhf9XziBgMFuLPHKnzxxlW6oFii0L/Dqzn3Q0QKEXIdDkKkujc0C9R5Ef1jBxDbEs02PZyHhBLOSVC7xvLuELac/ztkq6wsMgmNjDYXRUQQw9BDCdLc9abtt98rs5XeOT4iTOjXIETA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qf+b1sr/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mhc/SRQM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7911F00A3E;
-	Tue, 16 Jun 2026 15:57:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qf+b1sr/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77DBF1F00A3D;
+	Tue, 16 Jun 2026 15:57:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625457;
-	bh=i37fwSJQRvMXhwfAFVNpIx4fVBJRn3wlR3MW5MKE2tU=;
+	s=korg; t=1781625462;
+	bh=QJ7RSujnJkIqaUQG9kNZUOPtXmix6uMYGopnAqzsmZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mhc/SRQMfqhsWGn2hf+fUkUkqNwSAd4wMMmDkS6cByJYlfF7Pl8rJmZff3B2DOkOh
-	 CvvsJw29Kp5Aet96TN4c4hUK3q/cMCORiy9x5nUHZGNsfh8fuqkgeC9Q1Nh8F5KHnH
-	 NYCTt3g1SvKO69A7SkkTpUrk/xiWB+Dx30j/NM34=
+	b=qf+b1sr/hHaf3+kD9S4d/7HgCWTQFNlYcR7vfQKsyvwItvnmT7SDsHr/wGKK2841S
+	 dCwBGjmAkcopjeZktLPvq4xAgF6fIpBKHURl8XqkajXvwzKhBOiOWYzhn2rBYGo/rB
+	 zjxPByzaSwBnMPL2PSYzG5KvrUufTyUc9yiBbFQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Matthew Brost <matthew.brost@intel.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 145/325] drm/xe: fix refcount leak in xe_range_fence_insert()
-Date: Tue, 16 Jun 2026 20:29:01 +0530
-Message-ID: <20260616145104.951147060@linuxfoundation.org>
+Subject: [PATCH 6.18 146/325] accel/amdxdna: Fix mm_struct reference leak in aie2_populate_range()
+Date: Tue, 16 Jun 2026 20:29:02 +0530
+Message-ID: <20260616145105.001175206@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -51,50 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit ba36786b21d19082e696eda85bfcd49e7071944a ]
+[ Upstream commit 2f41af638c92bac6f1f9275ea2d1901baef578f3 ]
 
-xe_range_fence_insert() acquires a reference on fence via
-dma_fence_get() and stores it in rfence->fence.  It then calls
-dma_fence_add_callback() and handles two cases: when the callback
-is successfully registered (err == 0) the fence is transferred to
-the tree for later cleanup; when the fence is already signaled
-(err == -ENOENT) it manually drops the extra reference with
-dma_fence_put(fence).
+aie2_populate_range() jumps back to the again label without calling
+mmput(mm), leaking a reference to the mm_struct.
 
-However, dma_fence_add_callback() can fail with other errors
-(e.g. -EINVAL) and in that case the code falls through to the free:
-label without releasing the acquired reference, leaking it.
+Add the missing mmput() before jumping to again.
 
-Fix the leak by adding an else branch that calls dma_fence_put()
-before jumping to free: for any error other than -ENOENT.
-
-Fixes: 845f64bdbfc9 ("drm/xe: Introduce a range-fence utility")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260610172705.3450560-1-matthew.brost@intel.com
-(cherry picked from commit 98c4a4201290823c2c5c7ba21692bd9a64b61021)
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Fixes: e486147c912f ("accel/amdxdna: Add BO import and export")
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260610151127.2994185-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_range_fence.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/accel/amdxdna/aie2_ctx.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_range_fence.c b/drivers/gpu/drm/xe/xe_range_fence.c
-index 372378e89e9892..3d8fa194a7b0eb 100644
---- a/drivers/gpu/drm/xe/xe_range_fence.c
-+++ b/drivers/gpu/drm/xe/xe_range_fence.c
-@@ -77,6 +77,8 @@ int xe_range_fence_insert(struct xe_range_fence_tree *tree,
- 	} else if (err == 0) {
- 		xe_range_fence_tree_insert(rfence, &tree->root);
- 		return 0;
-+	} else {
-+		dma_fence_put(fence);
- 	}
+diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
+index 4610f491f0881c..80de2906a26fcb 100644
+--- a/drivers/accel/amdxdna/aie2_ctx.c
++++ b/drivers/accel/amdxdna/aie2_ctx.c
+@@ -828,6 +828,7 @@ static int aie2_populate_range(struct amdxdna_gem_obj *abo)
  
- free:
+ 		if (ret == -EBUSY) {
+ 			amdxdna_umap_put(mapp);
++			mmput(mm);
+ 			goto again;
+ 		}
+ 
+@@ -838,11 +839,13 @@ static int aie2_populate_range(struct amdxdna_gem_obj *abo)
+ 	if (mmu_interval_read_retry(&mapp->notifier, mapp->range.notifier_seq)) {
+ 		up_write(&xdna->notifier_lock);
+ 		amdxdna_umap_put(mapp);
++		mmput(mm);
+ 		goto again;
+ 	}
+ 	mapp->invalid = false;
+ 	up_write(&xdna->notifier_lock);
+ 	amdxdna_umap_put(mapp);
++	mmput(mm);
+ 	goto again;
+ 
+ put_mm:
 -- 
 2.53.0
 
