@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C213DD851;
-	Tue, 16 Jun 2026 19:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91393DD509;
+	Tue, 16 Jun 2026 19:06:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636779; cv=none; b=OCUXiQIbCfFdzlTyr0AliokqfU/5B5Zq8zVJwZhB7OxUpTTKvNWxjLRGI8377FiusJQsZbgTyQp52vjmXlWTIT9Sc3WPl05umUtxH4e86hAc/qlyIV6rBoQ5rZZ1USQYphxUfliUFcxxcb/YoxwUEfGTJLcuBTkp+dnhQaoh0Vg=
+	t=1781636784; cv=none; b=anGYcQOwC54KP+2Ph6eEgHatSnESIhvZBKP/D5gNOLWWMElcKXDTM7x237UeH0ASbi3WtonEnufZYMw7rHgtRF2Y1CgAmM4jZypSEFJbjxmUR506KJ8emKsqdq+swfE2Xu5ITONaL7s1Bo/oRl51ylZRJinGVOQdATj6HmwC82s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636779; c=relaxed/simple;
-	bh=DF45VYnJBUnYIAO/ftz5JXNas7wIgU6+yCQPUd1SUMY=;
+	s=arc-20240116; t=1781636784; c=relaxed/simple;
+	bh=AOUncLR/w6OfoVxNnbiv1p4IcFIRu1oTT5q72+lRHCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VvniqxJhx1AQTaCo1WZlYBvuERMJkDPRDLeCU9sUoOy3Q2tS0qAJOc7bXiKP3umvrvnjAMGALAIHqq9hsH2DWlhKbfUVWK/Ozj9llDyfuSi8cCy2ixaNf3wPu4Po+2ZrJU/PKSf+9zT6bn2q8XDHGqDo73eTA/Q/39rU9BFLwhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUmEyzJ8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K3JvlwABnPqExdlHgFNmPrAxMM+mTuX2dORiA+CbFv2SpTcU/OpEFB6EfRHDkWJkx9AKBAyrpUI2tL7SLvJ0vGOVPbfX/KnYz2FhOOI4h5ckITgFb5d+CFfn5Prs98EmejajulcIhvZYIrXnRogt9WSIpoj1Kq4PU2mErubeWWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxu/k6KU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUmEyzJ8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 300D41F000E9;
-	Tue, 16 Jun 2026 19:06:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxu/k6KU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F8B1F000E9;
+	Tue, 16 Jun 2026 19:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636778;
-	bh=MnnqQ3iuvXPmxnVokH+BIuN2YnazWzK4awqFHNsUkho=;
+	s=korg; t=1781636783;
+	bh=iSlrHEWf7l2WfHbOSUwrCqxiUyccM2SVzKQgsZ6y8Vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VUmEyzJ82PjthpnPgM9xBP0vDNiz5pvPgPykkHt039YXYnTnKyrPK336zkMRvDQzw
-	 JDbpoHQAP9hJB8iGVS5RinU2ppM2cyWIen6W0dz5RwYc6PxZJGG4RscmAJngoDo6f7
-	 kQZKSXnvCHZXTQSvQU6z5BvfNIP+Da9fjnCTjEmM=
+	b=yxu/k6KUN6d/yj97jXMR1LYSoqFuBLedMTHft7D7dMdslI0VkOyqkDemSOqXTyklV
+	 HW6b0u4NNQBjnHxo1yHaa/3ka/RJV3Y4OPMf/eOTa0h+yWSLMtEZrXCOUM51gDlv8d
+	 q1/hsFwNupaisQnGqQrWiNv6Liyac49ThfG6YUDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 303/342] thunderbolt: property: Cap recursion depth in __tb_property_parse_dir()
-Date: Tue, 16 Jun 2026 20:29:59 +0530
-Message-ID: <20260616145102.545549072@linuxfoundation.org>
+Subject: [PATCH 5.10 304/342] tty: serial: qcom-geni-serial: remove unused symbols
+Date: Tue, 16 Jun 2026 20:30:00 +0530
+Message-ID: <20260616145102.606804343@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -51,109 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 928abe19fbf0127003abcb1ea69cabc1c897d0ab ]
+[ Upstream commit 68c6bd92c86cbc4937834c79963b27c77ee3bf51 ]
 
-A DIRECTORY entry's value field is used as the dir_offset for a
-recursive call into __tb_property_parse_dir() with no depth counter.
-A crafted peer that chains DIRECTORY entries into a back-reference
-loop drives the parser until the kernel stack is exhausted and the
-guard page fires.  Any untrusted XDomain peer (cable, dock, in-line
-inspector, adjacent host) that reaches the PROPERTIES_REQUEST
-control-plane exchange can trigger this without authentication.
+Drop all unused symbols from the driver.
 
-Thread a depth counter through tb_property_parse() and
-__tb_property_parse_dir(), and reject blocks that exceed
-TB_PROPERTY_MAX_DEPTH = 8.  That is comfortably larger than any
-observed legitimate XDomain layout.
-
-Operators who do not need XDomain host-to-host discovery can disable
-the path entirely with thunderbolt.xdomain=0 on the kernel command
-line.
-
-Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20221229155030.418800-4-brgl@bgdev.pl
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: ca2584d841b6 ("serial: qcom-geni: fix UART_RX_PAR_EN bit position")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/property.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c |   15 ---------------
+ 1 file changed, 15 deletions(-)
 
---- a/drivers/thunderbolt/property.c
-+++ b/drivers/thunderbolt/property.c
-@@ -35,10 +35,11 @@ struct tb_property_dir_entry {
- };
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -38,20 +38,11 @@
+ #define UART_TX_PAR_EN		BIT(0)
+ #define UART_CTS_MASK		BIT(1)
  
- #define TB_PROPERTY_ROOTDIR_MAGIC	0x55584401
-+#define TB_PROPERTY_MAX_DEPTH		8
+-/* SE_UART_TX_WORD_LEN */
+-#define TX_WORD_LEN_MSK		GENMASK(9, 0)
+-
+ /* SE_UART_TX_STOP_BIT_LEN */
+-#define TX_STOP_BIT_LEN_MSK	GENMASK(23, 0)
+ #define TX_STOP_BIT_LEN_1	0
+-#define TX_STOP_BIT_LEN_1_5	1
+ #define TX_STOP_BIT_LEN_2	2
  
- static struct tb_property_dir *__tb_property_parse_dir(const u32 *block,
- 	size_t block_len, unsigned int dir_offset, size_t dir_len,
--	bool is_root);
-+	bool is_root, unsigned int depth);
+-/* SE_UART_TX_TRANS_LEN */
+-#define TX_TRANS_LEN_MSK	GENMASK(23, 0)
+-
+ /* SE_UART_RX_TRANS_CFG */
+-#define UART_RX_INS_STATUS_BIT	BIT(2)
+ #define UART_RX_PAR_EN		BIT(3)
  
- static inline void parse_dwdata(void *dst, const void *src, size_t dwords)
- {
-@@ -99,7 +100,8 @@ tb_property_alloc(const char *key, enum
- }
+ /* SE_UART_RX_WORD_LEN */
+@@ -62,12 +53,9 @@
  
- static struct tb_property *tb_property_parse(const u32 *block, size_t block_len,
--					const struct tb_property_entry *entry)
-+					const struct tb_property_entry *entry,
-+					unsigned int depth)
- {
- 	char key[TB_PROPERTY_KEY_SIZE + 1];
- 	struct tb_property *property;
-@@ -120,7 +122,7 @@ static struct tb_property *tb_property_p
- 	switch (property->type) {
- 	case TB_PROPERTY_TYPE_DIRECTORY:
- 		dir = __tb_property_parse_dir(block, block_len, entry->value,
--					      entry->length, false);
-+					      entry->length, false, depth + 1);
- 		if (!dir) {
- 			kfree(property);
- 			return NULL;
-@@ -165,13 +167,17 @@ static struct tb_property *tb_property_p
- }
+ /* SE_UART_TX_PARITY_CFG/RX_PARITY_CFG */
+ #define PAR_CALC_EN		BIT(0)
+-#define PAR_MODE_MSK		GENMASK(2, 1)
+-#define PAR_MODE_SHFT		1
+ #define PAR_EVEN		0x00
+ #define PAR_ODD			0x01
+ #define PAR_SPACE		0x10
+-#define PAR_MARK		0x11
  
- static struct tb_property_dir *__tb_property_parse_dir(const u32 *block,
--	size_t block_len, unsigned int dir_offset, size_t dir_len, bool is_root)
-+	size_t block_len, unsigned int dir_offset, size_t dir_len, bool is_root,
-+	unsigned int depth)
- {
- 	const struct tb_property_entry *entries;
- 	size_t i, content_len, nentries;
- 	unsigned int content_offset;
- 	struct tb_property_dir *dir;
+ /* SE_UART_MANUAL_RFR register fields */
+ #define UART_MANUAL_RFR_EN	BIT(31)
+@@ -76,11 +64,8 @@
  
-+	if (depth > TB_PROPERTY_MAX_DEPTH)
-+		return NULL;
-+
- 	dir = kzalloc(sizeof(*dir), GFP_KERNEL);
- 	if (!dir)
- 		return NULL;
-@@ -206,7 +212,7 @@ static struct tb_property_dir *__tb_prop
- 	for (i = 0; i < nentries; i++) {
- 		struct tb_property *property;
+ /* UART M_CMD OP codes */
+ #define UART_START_TX		0x1
+-#define UART_START_BREAK	0x4
+-#define UART_STOP_BREAK		0x5
+ /* UART S_CMD OP codes */
+ #define UART_START_READ		0x1
+-#define UART_PARAM		0x1
  
--		property = tb_property_parse(block, block_len, &entries[i]);
-+		property = tb_property_parse(block, block_len, &entries[i], depth);
- 		if (!property) {
- 			tb_property_free_dir(dir);
- 			return NULL;
-@@ -243,7 +249,7 @@ struct tb_property_dir *tb_property_pars
- 		return NULL;
- 
- 	return __tb_property_parse_dir(block, block_len, 0, rootdir->length,
--				       true);
-+				       true, 0);
- }
- 
- /**
+ #define UART_OVERSAMPLING	32
+ #define STALE_TIMEOUT		16
 
 
