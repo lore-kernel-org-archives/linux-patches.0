@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112054779B9;
-	Tue, 16 Jun 2026 17:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62ECE43D4E9;
+	Tue, 16 Jun 2026 17:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631403; cv=none; b=WUwcIHNnt4STAUTZ2hrM/Qyf+HV1RDMINH5kFpvD5mbiCBhSpNv4u7eqtEO4ItfjPlgG3pSqSucVobshD3EZSXiHqqwB3k+NrNHOE3PjR4R/2Uf6rW408uiFAWucjtIo+Qr/0MPVeL5DtI82Pp1QE9L84w8TuEajAQ7H5GdPuio=
+	t=1781631408; cv=none; b=Jk/ToHA5YO8akioLCEfYYirdP/hma4pb1sDqLroJprbYsft9Vh25vZIC4AqOpMjnhl8my8n2q1A08VWHS9bC+vvG7fs6zdxFBRoBmVGitU/Yy4jnA4iwPCORyk31auLIOqHFPXYpUJ2oNjW4JVZNiF7YBwnJVo4NVmL9dkYv2PQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631403; c=relaxed/simple;
-	bh=IVeAmcqRawQ9DXaXaj4e52oY7WWtitkhhFiLbmzWDcM=;
+	s=arc-20240116; t=1781631408; c=relaxed/simple;
+	bh=XktSxX0Cs0h0qigjb7tCv72GGNOjgMF6nXiVXY+lYC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/b6ICO5AhiLWvHl9U6BpwwwpI6mjcSrdIZvZpxM9aD1nI3Di7infGT465qok+QxqucpC2jzfg+o433/3tMZ1e/WZ9FT5dCLIT6rcZ7l/Fr9hg35qFTS10aRUsXH7OY00HjcyqzGAkJ1ofC0oOIpOq3PwWI76TzcWUAloIo8MN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OYnr4qAV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kT/u3qW6W04Ad6vXWF0fHtn69YzdTij0p5rkZBO9qbkkJH3/g2JCNTJB5DBWlUw2ZnJNqU6U56xsTr06I7m+iyRLXAVEGBUFnZSrG3rdY+8gO1pfbYliFIrBtnksz4kmT2QOzfeHA5FXcXuX+1UjpUWJUYDzFInxU9dq56Q4esA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0bG47g2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYnr4qAV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91AD1F00A3D;
-	Tue, 16 Jun 2026 17:36:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0bG47g2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191091F000E9;
+	Tue, 16 Jun 2026 17:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631401;
-	bh=0iRq64NM0EgjQGO9TSAD70jwYY9Ujf3nTC2DaVwbTYE=;
+	s=korg; t=1781631407;
+	bh=h5DemRsgbSmajC8yuXgycV2Xf/u54AOobFV1ZFcS9KQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OYnr4qAVW35YCZQk+HqJWHo9yoN/4M/Y+jMLkUs8CCG6DTaYkcg5gznOGJBNYL8Sz
-	 btuu/MxcyFJsQsvgC9TdnR3wDWk2oOk0c0YPcJ393s696F+qejnXumQLh7JaOX6vd5
-	 quD9Wux3Nw4VnV1XzRlHIhVB+n+Yd9LBiYxBvU+I=
+	b=d0bG47g2Yp28FWb/yO+TxEBcSSVRB9OQTEtDPihmaj6hq3hSylpa9CmMBUlUuynAp
+	 BuVQaIL92lnw2ZzJvbf3IEhbaWAdwh93pZ731eULNkPfz21ijryyuQscLTQZJEMzEo
+	 CvsmYaQTCS8YCaEmSCSb8logEzZeM9Tduf6Uuqis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 6.1 171/522] serial: sh-sci: fix memory region release in error path
-Date: Tue, 16 Jun 2026 20:25:18 +0530
-Message-ID: <20260616145134.152948473@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 208/522] net: Annotate sk->sk_write_space() for UDP SOCKMAP.
+Date: Tue, 16 Jun 2026 20:25:55 +0530
+Message-ID: <20260616145135.793184452@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,40 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit 92b1ea22454b08a39baef3a7290fb3ec50366616 upstream.
+[ Upstream commit b748765019fe9e9234660327090fc1a9665cdbdd ]
 
-The sci_request_port() function uses request_mem_region() to reserve
-I/O memory, but in the error path when sci_remap_port() fails, it
-incorrectly calls release_resource() instead of release_mem_region().
+UDP TX skb->destructor() is sock_wfree(), and UDP holds lock_sock()
+only for UDP_CORK / MSG_MORE sendmsg().
 
-This mismatch can cause resource accounting issues. Fix it by using
-the correct release function, consistent with sci_release_port().
+Otherwise, sk->sk_write_space() may be read locklessly while SOCKMAP
+rewrites sk->sk_write_space().
 
-Fixes: e2651647080930a1 ("serial: sh-sci: Handle port memory region reservations.")
-Cc: stable <stable@kernel.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202604032356.SzEjYkBC-lkp@intel.com/
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260421065737.724187-1-zenghongling@kylinos.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Let's use WRITE_ONCE() and READ_ONCE() for sk->sk_write_space().
+
+Note that the write side is annotated by commit 2ef2b20cf4e0
+("net: annotate data-races around sk->sk_{data_ready,write_space}").
+
+Fixes: 7b98cd42b049 ("bpf: sockmap: Add UDP support")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://patch.msgid.link/20260529193941.3897256-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sh-sci.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/sock.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -2757,7 +2757,7 @@ static int sci_request_port(struct uart_
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 6c178b47426669..62411c8870e855 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2433,8 +2433,12 @@ void sock_wfree(struct sk_buff *skb)
+ 	bool free;
  
- 	ret = sci_remap_port(port);
- 	if (unlikely(ret != 0)) {
--		release_resource(res);
-+		release_mem_region(port->mapbase, sport->reg_size);
- 		return ret;
+ 	if (!sock_flag(sk, SOCK_USE_WRITE_QUEUE)) {
++		void (*sk_write_space)(struct sock *sk);
++
++		sk_write_space = READ_ONCE(sk->sk_write_space);
++
+ 		if (sock_flag(sk, SOCK_RCU_FREE) &&
+-		    sk->sk_write_space == sock_def_write_space) {
++		    sk_write_space == sock_def_write_space) {
+ 			rcu_read_lock();
+ 			free = refcount_sub_and_test(len, &sk->sk_wmem_alloc);
+ 			sock_def_write_space_wfree(sk);
+@@ -2449,7 +2453,7 @@ void sock_wfree(struct sk_buff *skb)
+ 		 * after sk_write_space() call
+ 		 */
+ 		WARN_ON(refcount_sub_and_test(len - 1, &sk->sk_wmem_alloc));
+-		sk->sk_write_space(sk);
++		sk_write_space(sk);
+ 		len = 1;
  	}
- 
+ 	/*
+-- 
+2.53.0
+
 
 
