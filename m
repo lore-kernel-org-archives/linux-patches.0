@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E90643E4A1;
-	Tue, 16 Jun 2026 15:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D47283FE5;
+	Tue, 16 Jun 2026 15:19:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623182; cv=none; b=na11t9548bSE5W4WWVzKuJdttqSoRoBWh29WB2qyAvcvL+IPftTjmaeaFGfQILrPedJHI3H/LeYuQT01qQIm53MfXkfH2sKkG5a8mOUc6CKSfiDh8JUiRoYF7dCDjlFCQyHPi+Bv5uT+NP6t4mXV1jxo1CRoBEYxkkXM43Sjr2Y=
+	t=1781623188; cv=none; b=rHbbpwPrJ/Umomqki1bIXrpHalMyUS+0dDLv6cmx+HtitRY7pnHxH+x0y6PCBfeDM6rEho9OGAtSeTRZQ/IRDAFlPy2aV0V9kraDD1Mpz3bcKG/NQAPKTPTcUTCEF54rFKtaTor21qylHNFo14HYh6RmKqhK6P+CgiRsNKR+FR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623182; c=relaxed/simple;
-	bh=dxmJtXS49ycfyTxB74MzuNqPghRubHxtAIp/Gwtb6Vo=;
+	s=arc-20240116; t=1781623188; c=relaxed/simple;
+	bh=Eo9PhKhtM77ID7Rco3/jVjpelwgn12GKFWg4x1ls1YE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aQK+yz4piUh6yFCEX0qdZeIAWwJ2WB1YCkVhMJzJS08k6IeWBkhWFlr2GkbNkGCwjMWjgAin/WCQ0b4nxJLvOPJGlVLgXTIEqqoNWtZCGcvXKX6tMTinyPmxPER63VoJAYPkrbpLfsW9te6M5XkTeLI+BFbf5lIm7p97SSjQMfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bvWhs7TY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HBeZd6VfgYVvTo/M8GRdMsNVrC+XPyrR7upuh3q/HMtujGgk2lRhc7Zh5INx2OuHreTm/e63QYSTrtTttGSZ3oQU6Ph96HeaD7pCODIh7fri1Twg6V7kCpcGDMDoYqe2GGzBQuzQAkWd0x5ZR95RLh3RHA/5fLE7TO7yJfRWb30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMw2ZjDZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bvWhs7TY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E211F000E9;
-	Tue, 16 Jun 2026 15:19:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMw2ZjDZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5289E1F00A3A;
+	Tue, 16 Jun 2026 15:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623181;
-	bh=4r74YgxD7pXqm6fEfKXpbFGHROpJi74rfgEXivmzxjg=;
+	s=korg; t=1781623187;
+	bh=r/iblVyBchZj68QaO7pK4p7DG9vl4OODGElgGd9Vzsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bvWhs7TY8QySp+one7KkIC+6bN0ueYLGiNLDpSvJ3TCXlMncgL4b2YU3OnVojLylt
-	 X9YHKsZEVUopkc6b7vXRsCR2peNgiYqjoUXtd/21gRVhTTU6Nis6Fx7qPweUeXiaUe
-	 AVq2u2xkwaW49pcMvvnTyIqL6RuanqmK6YNM5ZWo=
+	b=hMw2ZjDZNKznL8OysAxnnS2xA/YiaaPaHEueUwRJRlg6eFt8jiBgxH9+kpKNHuulp
+	 vHeREfluS6dakbe1YK/I92XcNt74xPxR4yMofK+RWLxGCK5+itxBcwN08UDHVGQeQe
+	 hJ7cFAd3TEebEq+otM0tIGy+hCeaWC0zi7CtCvig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Sanghyun Park <sanghyun.park.cnu@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 100/378] dma-debug: fix physical address retrieval in debug_dma_sync_sg_for_device
-Date: Tue, 16 Jun 2026 20:25:31 +0530
-Message-ID: <20260616145115.616981334@linuxfoundation.org>
+Subject: [PATCH 7.0 101/378] xfrm: policy: fix use-after-free on inexact bin in xfrm_policy_bysel_ctx()
+Date: Tue, 16 Jun 2026 20:25:32 +0530
+Message-ID: <20260616145115.674246084@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,42 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Sanghyun Park <sanghyun.park.cnu@gmail.com>
 
-[ Upstream commit 9bfaa86b405381326c971984fd6da184c289713f ]
+[ Upstream commit 7f2d76c9c03257c0782afef9d95321fa04096f60 ]
 
-In debug_dma_sync_sg_for_device(), when iterating over a scatterlist,
-the debug entry population mistakenly uses the head of the scatterlist
-'sg' to fetch the physical address via sg_phys(), instead of using the
-current iterator variable 's'.
+Fix the race by pruning the bin while still holding xfrm_policy_lock,
+before dropping it. Use __xfrm_policy_inexact_prune_bin() directly since
+the lock is already held. The wrapper xfrm_policy_inexact_prune_bin()
+becomes unused and is removed.
 
-This causes dma-debug to track the physical address of the very first
-scatterlist entry for all subsequent entries in the list.
+Race:
 
-Fix this by passing the correct loop iterator 's' to sg_phys()
+  CPU0 (XFRM_MSG_DELPOLICY)           CPU1 (XFRM_MSG_NEWSPDINFO)
+  ==========================          ==========================
+  xfrm_policy_bysel_ctx():
+    spin_lock_bh(xfrm_policy_lock)
+    bin = xfrm_policy_inexact_lookup()
+    __xfrm_policy_unlink(pol)
+    spin_unlock_bh(xfrm_policy_lock)
+    xfrm_policy_kill(ret)
+    // wide window, lock not held
+                                       xfrm_hash_rebuild():
+                                         spin_lock_bh(xfrm_policy_lock)
+                                         __xfrm_policy_inexact_flush():
+                                           kfree_rcu(bin)  // bin freed
+                                         spin_unlock_bh(xfrm_policy_lock)
+    xfrm_policy_inexact_prune_bin(bin)
+    // UAF: bin is freed
 
-Fixes: 9d4f645a1fd49ee ("dma-debug: store a phys_addr_t in struct dma_debug_entry")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20260603123708.1665-1-lirongqing@baidu.com
+Fixes: 6be3b0db6db8 ("xfrm: policy: add inexact policy search tree infrastructure")
+Signed-off-by: Sanghyun Park <sanghyun.park.cnu@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/debug.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/xfrm/xfrm_policy.c | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
-diff --git a/kernel/dma/debug.c b/kernel/dma/debug.c
-index 3248f8b4d096de..2c0e2cd89b5ed7 100644
---- a/kernel/dma/debug.c
-+++ b/kernel/dma/debug.c
-@@ -1556,7 +1556,7 @@ void debug_dma_sync_sg_for_device(struct device *dev, struct scatterlist *sg,
- 		struct dma_debug_entry ref = {
- 			.type           = dma_debug_sg,
- 			.dev            = dev,
--			.paddr		= sg_phys(sg),
-+			.paddr		= sg_phys(s),
- 			.dev_addr       = sg_dma_address(s),
- 			.size           = sg_dma_len(s),
- 			.direction      = direction,
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index d904352fb24276..97b5ff9687a30c 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -1156,15 +1156,6 @@ static void __xfrm_policy_inexact_prune_bin(struct xfrm_pol_inexact_bin *b, bool
+ 	}
+ }
+ 
+-static void xfrm_policy_inexact_prune_bin(struct xfrm_pol_inexact_bin *b)
+-{
+-	struct net *net = read_pnet(&b->k.net);
+-
+-	spin_lock_bh(&net->xfrm.xfrm_policy_lock);
+-	__xfrm_policy_inexact_prune_bin(b, false);
+-	spin_unlock_bh(&net->xfrm.xfrm_policy_lock);
+-}
+-
+ static void __xfrm_policy_inexact_flush(struct net *net)
+ {
+ 	struct xfrm_pol_inexact_bin *bin, *t;
+@@ -1707,12 +1698,12 @@ xfrm_policy_bysel_ctx(struct net *net, const struct xfrm_mark *mark, u32 if_id,
+ 		}
+ 		ret = pol;
+ 	}
++	if (bin && delete)
++		__xfrm_policy_inexact_prune_bin(bin, false);
+ 	spin_unlock_bh(&net->xfrm.xfrm_policy_lock);
+ 
+ 	if (ret && delete)
+ 		xfrm_policy_kill(ret);
+-	if (bin && delete)
+-		xfrm_policy_inexact_prune_bin(bin);
+ 	return ret;
+ }
+ EXPORT_SYMBOL(xfrm_policy_bysel_ctx);
 -- 
 2.53.0
 
