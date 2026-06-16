@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF9E44103A;
-	Tue, 16 Jun 2026 16:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A984534B3;
+	Tue, 16 Jun 2026 16:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626099; cv=none; b=bYW3gfZoef/wpzOiSJLh4JhY2nSx/NFa9L+sVobtzYxDf/+f2Ki+y4+sWULNoyslZzMk/7GBh81EjvtbKHGZHfvgIJUpkgt/sl3XsAMaoekl19MVzLR5zredGs+YqZHw7U4e0EyYvfULVbBcFELiFIE9jt9EFDfrO6x9DredoM4=
+	t=1781626108; cv=none; b=Ww/uDGV8dOpBUkwLeC93X3TgYjGprHdUaG1Uz+W00MwsaQQbUAPmMCkfMf5CyDlXdvDYIwq+K6yth0GqV22NsYPnqWH+IzUE35bkgg6SUqPSpsGosgVA3UMVftAu6pbd0p3MIys2683jHaFlD8mwF/axs4aAakD2Q7vBJ8gWnh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626099; c=relaxed/simple;
-	bh=bm2Mf4VGezLvobzsjQ7Mx3HujWOgixk4qwGunxy1ebU=;
+	s=arc-20240116; t=1781626108; c=relaxed/simple;
+	bh=TdXKi0KuCHJZ7m5QsF6oMVWN6Yfb4waR9Dgq+WrzILM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=twRQYjDdG6FJFKDcX+ZhqxQ1Z8BAYfp9q8Pax9karjFgCw4QMF1mtw7NfBCAGg7KbdN+IWnq13P8cbZcLhVT2qBZsZpbuX9/kl4dhxMmujVY+wxd0jY9o8hJBLd7In96VZdyzAQoLgQ/vbbLAU5YkWjA/IK1qujiBZT7ymK7jNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ixRbeeL2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F6UY1GVnpDSc9OCiHqqh0FpNiE67ihf15XPx8ZVvHDzDsKUkkJRyHbTF6/gmJQI+6s3taEINVTtru5ivzCzh2M79HipDd2vUbxw4PeEY5HkWnv61oPL4QGRX3cAnRkKHTzoBKrBO373sthPyT46td9OAL/c+u67RwMk8MjJ1R4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uU5yi4Tt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ixRbeeL2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9B01F000E9;
-	Tue, 16 Jun 2026 16:08:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uU5yi4Tt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C7E1F000E9;
+	Tue, 16 Jun 2026 16:08:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626098;
-	bh=PjfNfbv99boB2usWxH5VqpyFXS5vB3uQqh6zZGFJ2T0=;
+	s=korg; t=1781626107;
+	bh=OyE/tWgnSG/pPp4Qw6h20LBFZvZr8rmLQuUecmECCU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ixRbeeL2Wtu+yEdPkcuoKP4M0wOIXojkRrcuaH9nmwpeFljCPLT4hj460NjPAhMTm
-	 UvrjBv0wxLLkkijPLSXPUotQlb8z3/RKIM3VoPfCYy9f2S6vUN+U8/t0XpAVleynsX
-	 dL4w0/HVYJ2Jcx2R/kIkdCM77vmEK/mo4yiQiDxU=
+	b=uU5yi4TtGdmPQFUZ8Sbwh2dJTHUlxOpZIB5lIw+xBp0ocCHCHXCcI5Y88SKbTTN1m
+	 b8vZQY50cNMy+mSXj3zf0VPjf3o/pIWm2LrTubgVdjoaKezlWmDtfyeWeDKdQ5rf5P
+	 5EuxWoIrZ0INM9U56PpPUvXnOlVBACu4i09waw8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Brasili <federico.brasili@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 247/325] io_uring/kbuf: dont truncate end buffer for bundles
-Date: Tue, 16 Jun 2026 20:30:43 +0530
-Message-ID: <20260616145110.802349307@linuxfoundation.org>
+	Justin Lai <justinlai0215@realtek.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 265/325] rtase: Reset TX subqueue when clearing TX ring
+Date: Tue, 16 Jun 2026 20:31:01 +0530
+Message-ID: <20260616145111.834049216@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -50,43 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Justin Lai <justinlai0215@realtek.com>
 
-Commit 70f4886bcbb929e88038c8807f1daf7fc587ae7c upstream.
+commit ab1ecaabe74b7d86c38ab2ab44bd56cdcc33645a upstream.
 
-If buffers have been peeked for a bundle receive, the kernel will
-truncate the end buffer, if the available length is shorter than the
-buffer itself. This is unnecessary, as applications iterating bundle
-receives must always use the minimum size of the buffer length and the
-remaining number of bytes in the bundle. The examples in liburing do
-that as well, eg examples/proxy.c.
+rtase_tx_clear() clears the TX ring and resets the ring indexes.
+However, the TX queue state and BQL accounting are not reset at
+the same time.
 
-If the kernel does truncate this buffer AND the current transfer fails,
-then the buffer will be left with a smaller size than what is otherwise
-available.
+This may leave __QUEUE_STATE_STACK_XOFF asserted after
+rtase_sw_reset(), preventing new TX packets from being scheduled.
 
-Just remove the buffer truncation, as it's not necessary in the first
-place.
+Reset the TX subqueue when clearing the TX ring so the TX queue
+state and BQL accounting are restored together.
 
-Link: https://lore.kernel.org/io-uring/CAAEr8jbY60noGj1fw_k91UJRBkyiRVoS6=nLhZ7Svwidjn4CAA@mail.gmail.com/
-Reported-by: Federico Brasili <federico.brasili@gmail.com>
+Fixes: 5a2a2f15244c ("rtase: Implement the rtase_down function")
 Cc: stable@vger.kernel.org
-Fixes: 35c8711c8fc4 ("io_uring/kbuf: add helpers for getting/peeking multiple buffers")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Justin Lai <justinlai0215@realtek.com>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Link: https://patch.msgid.link/20260602114659.12335-1-justinlai0215@realtek.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/kbuf.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/realtek/rtase/rtase_main.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -305,7 +305,6 @@ static int io_ring_buffers_peek(struct i
- 				arg->partial_map = 1;
- 				if (iov != arg->iovs)
- 					break;
--				buf->len = len;
- 			}
- 		}
+--- a/drivers/net/ethernet/realtek/rtase/rtase_main.c
++++ b/drivers/net/ethernet/realtek/rtase/rtase_main.c
+@@ -239,6 +239,8 @@ static void rtase_tx_clear(struct rtase_
+ 		rtase_tx_clear_range(ring, ring->dirty_idx, RTASE_NUM_DESC);
+ 		ring->cur_idx = 0;
+ 		ring->dirty_idx = 0;
++
++		netdev_tx_reset_subqueue(tp->dev, i);
+ 	}
+ }
  
 
 
