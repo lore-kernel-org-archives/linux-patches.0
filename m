@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402794657D0;
-	Tue, 16 Jun 2026 17:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38ED3AA1A8;
+	Tue, 16 Jun 2026 17:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630123; cv=none; b=HyIjQmfTsOvSXGjJ5TyNNbm6frEGTPfAJ2Qz42HQZkBVs5uDfhbhtrwv3kRbzQFuZaEipBJvztyI15tKZTyDGZRWFaZy6TuVpnAU/uL2Hsm69vBwnl6QRy4vKFiHE80mO0UA35MUw0bajfWJCIjL/lExXHEOvXSZ89wqnP6gGgw=
+	t=1781630128; cv=none; b=eM1KV+Zmrpe2vSeCEaay3OzmiK40o5eteEJCX3N/dpxG8ej0ShjPOt71kwqCgAjDlRzQts6UVtU+EfqLH+8hs4FrDM2nbYpRcSzYuZWDkp/yiW0Bv3wtD6VDxNCmMqi3JLmQp8mRPs72Eyed/BeeCxIxDG50q/bCEcxrmy9WjcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630123; c=relaxed/simple;
-	bh=nQYPG1AR/K9q8L9mpKtrvK6kelc7MH8/pOTpWqcWHXY=;
+	s=arc-20240116; t=1781630128; c=relaxed/simple;
+	bh=dxlrJIWOwK+L+ozDy2F3k+oHfVp172R5Ja9UIohmq0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QeyS+1BAB+0CrmBuPnSuL9j0C+cjoAgrwXTOstpDn1L4eQ3XxNuV948e9ueKiHmCmvwVYp4+b6tms8JttbD6aRTf75JWXRX0UkS+etYOEiyb5u0VTLdy4jMscQwyzv2MDVqaw+zKGr2y7BuJSracDHFhJoZDqQni09NJjABhInU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uc0NStA5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OS07cyuaxPut9kq9YEnibeMkwYibmL25dguxxHWMJHlQ07cGb/udcdbcWpFpHWuuXMjpfP7yvTiIwRM3SlnhnL8NhDwreB9DoF8/U57CY9TcgKwnJiGndJ87DLAp2EmpL37CqtJgw9KmetCuJP6S5TQQzq00QX8Hv3HCQc6o5XM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMrMU6SK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uc0NStA5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 131DB1F000E9;
-	Tue, 16 Jun 2026 17:15:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMrMU6SK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3EB1F000E9;
+	Tue, 16 Jun 2026 17:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630122;
-	bh=cR4Y1ApoLNq+Fha+3PqAm2v5niIq9fhkHviQjBTQg+A=;
+	s=korg; t=1781630126;
+	bh=OtbVPygGkrNP1s7VWgk8zqrLb8xojDL8hkaZ5DGdraQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uc0NStA5OyF/PqpbU6KjhvKq6U3qc5lfxyvtXaVejup44RQv1dY3MeW0dVt0Km53g
-	 U0ba+E8a0uuFH9vIUFw7T0cgJhL5as6AwCX2uoQ8JwU4L++onPk7jiFKzRUOLGxSeG
-	 /51D9zzMDKIl4twh7y6vlTLWbxUex3yaxKjZH96g=
+	b=XMrMU6SKYKYq4W76GLtURLtBgt0yzsmp/dQLVGri17+kBx3o96RQaFetgi23UylY5
+	 Qf2TRlNMKE2m63RlXUpwXNi4Djj8LRu6XPlL494qZ8O+kxGlWSY7PXQBnxE4PsnkDs
+	 bUykRvhPVd80y3rTNnHUcqaGRaX8CH4k5NAepGq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Shuai Zhang <shuai.zhang@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	John Ogness <john.ogness@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 407/452] Bluetooth: hci_qca: Convert timeout from jiffies to ms
-Date: Tue, 16 Jun 2026 20:30:34 +0530
-Message-ID: <20260616145138.187270362@linuxfoundation.org>
+Subject: [PATCH 6.6 416/452] serial: samsung_tty: Use port lock wrappers
+Date: Tue, 16 Jun 2026 20:30:43 +0530
+Message-ID: <20260616145138.631473187@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -53,151 +51,251 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 375ba7484132662a4a8c7547d088fb6275c00282 ]
+[ Upstream commit 97d7a9aeba1d424c2359f1686d02c75d798ad184 ]
 
-Since the timer uses jiffies as its unit rather than ms, the timeout value
-must be converted from ms to jiffies when configuring the timer. Otherwise,
-the intended 8s timeout is incorrectly set to approximately 33s.
+When a serial port is used for kernel console output, then all
+modifications to the UART registers which are done from other contexts,
+e.g. getty, termios, are interference points for the kernel console.
 
-To improve readability, embed msecs_to_jiffies() directly in the macro
-definitions and drop the _MS suffix from macros that now yield jiffies
-values: MEMDUMP_TIMEOUT, FW_DOWNLOAD_TIMEOUT, IBS_DISABLE_SSR_TIMEOUT,
-CMD_TRANS_TIMEOUT, and IBS_BTSOC_TX_IDLE_TIMEOUT.
+So far this has been ignored and the printk output is based on the
+principle of hope. The rework of the console infrastructure which aims to
+support threaded and atomic consoles, requires to mark sections which
+modify the UART registers as unsafe. This allows the atomic write function
+to make informed decisions and eventually to restore operational state. It
+also allows to prevent the regular UART code from modifying UART registers
+while printk output is in progress.
 
-IBS_WAKE_RETRANS_TIMEOUT_MS and IBS_HOST_TX_IDLE_TIMEOUT_MS are
-intentionally left unchanged. Their values are stored in the struct fields
-wake_retrans and tx_idle_delay, which hold ms values at runtime and can be
-modified via debugfs. The msecs_to_jiffies() conversion happens at each
-call site against the field value, so it cannot be embedded in the macro.
+All modifications of UART registers are guarded by the UART port lock,
+which provides an obvious synchronization point with the console
+infrastructure.
 
-Wake timer depends on commit c347ca17d62a
+To avoid adding this functionality to all UART drivers, wrap the
+spin_[un]lock*() invocations for uart_port::lock into helper functions
+which just contain the spin_[un]lock*() invocations for now. In a
+subsequent step these helpers will gain the console synchronization
+mechanisms.
 
-Cc: stable@vger.kernel.org
-Fixes: d841502c79e3 ("Bluetooth: hci_qca: Collect controller memory dump during SSR")
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Converted with coccinelle. No functional change.
+
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+Link: https://lore.kernel.org/r/20230914183831.587273-54-john.ogness@linutronix.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: a3bb136bff5e ("tty: serial: samsung: Remove redundant port lock acquisition in rx helpers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_qca.c |   33 ++++++++++++++++-----------------
- 1 file changed, 16 insertions(+), 17 deletions(-)
+ drivers/tty/serial/samsung_tty.c |   50 +++++++++++++++++++--------------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -46,13 +46,12 @@
- #define HCI_MAX_IBS_SIZE	10
+--- a/drivers/tty/serial/samsung_tty.c
++++ b/drivers/tty/serial/samsung_tty.c
+@@ -248,7 +248,7 @@ static void s3c24xx_serial_rx_enable(str
+ 	unsigned int ucon, ufcon;
+ 	int count = 10000;
  
- #define IBS_WAKE_RETRANS_TIMEOUT_MS	100
--#define IBS_BTSOC_TX_IDLE_TIMEOUT_MS	200
-+#define IBS_BTSOC_TX_IDLE_TIMEOUT	msecs_to_jiffies(200)
- #define IBS_HOST_TX_IDLE_TIMEOUT_MS	2000
--#define CMD_TRANS_TIMEOUT_MS		100
--#define MEMDUMP_TIMEOUT_MS		8000
--#define IBS_DISABLE_SSR_TIMEOUT_MS \
--	(MEMDUMP_TIMEOUT_MS + FW_DOWNLOAD_TIMEOUT_MS)
--#define FW_DOWNLOAD_TIMEOUT_MS		3000
-+#define CMD_TRANS_TIMEOUT		msecs_to_jiffies(100)
-+#define MEMDUMP_TIMEOUT			msecs_to_jiffies(8000)
-+#define FW_DOWNLOAD_TIMEOUT		msecs_to_jiffies(3000)
-+#define IBS_DISABLE_SSR_TIMEOUT		(MEMDUMP_TIMEOUT + FW_DOWNLOAD_TIMEOUT)
+-	spin_lock_irqsave(&port->lock, flags);
++	uart_port_lock_irqsave(port, &flags);
  
- /* susclk rate */
- #define SUSCLK_RATE_32KHZ	32768
-@@ -1077,7 +1076,7 @@ static void qca_controller_memdump(struc
+ 	while (--count && !s3c24xx_serial_txempty_nofifo(port))
+ 		udelay(100);
+@@ -262,7 +262,7 @@ static void s3c24xx_serial_rx_enable(str
+ 	wr_regl(port, S3C2410_UCON, ucon);
  
- 			queue_delayed_work(qca->workqueue,
- 					   &qca->ctrl_memdump_timeout,
--					   msecs_to_jiffies(MEMDUMP_TIMEOUT_MS));
-+					   MEMDUMP_TIMEOUT);
- 			skb_pull(skb, sizeof(qca_memdump->ram_dump_size));
- 			qca_memdump->current_seq_no = 0;
- 			qca_memdump->received_dump = 0;
-@@ -1349,7 +1348,7 @@ static int qca_set_baudrate(struct hci_d
- 
- 	if (hu->serdev)
- 		serdev_device_wait_until_sent(hu->serdev,
--		      msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS));
-+		      CMD_TRANS_TIMEOUT);
- 
- 	/* Give the controller time to process the request */
- 	switch (qca_soc_type(hu)) {
-@@ -1380,8 +1379,8 @@ static inline void host_set_baudrate(str
- 
- static int qca_send_power_pulse(struct hci_uart *hu, bool on)
- {
-+	int timeout = CMD_TRANS_TIMEOUT;
- 	int ret;
--	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
- 	u8 cmd = on ? QCA_WCN3990_POWERON_PULSE : QCA_WCN3990_POWEROFF_PULSE;
- 
- 	/* These power pulses are single byte command which are sent
-@@ -1583,7 +1582,7 @@ static void qca_wait_for_dump_collection
- 	struct qca_data *qca = hu->priv;
- 
- 	wait_on_bit_timeout(&qca->flags, QCA_MEMDUMP_COLLECTION,
--			    TASK_UNINTERRUPTIBLE, MEMDUMP_TIMEOUT_MS);
-+			    TASK_UNINTERRUPTIBLE, MEMDUMP_TIMEOUT);
- 
- 	clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
+ 	ourport->rx_enabled = 1;
+-	spin_unlock_irqrestore(&port->lock, flags);
++	uart_port_unlock_irqrestore(port, flags);
  }
-@@ -2428,7 +2427,7 @@ static void qca_serdev_remove(struct ser
- static void qca_serdev_shutdown(struct serdev_device *serdev)
- {
- 	int ret;
--	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
-+	int timeout = CMD_TRANS_TIMEOUT;
- 	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
- 	struct hci_uart *hu = &qcadev->serdev_hu;
- 	struct hci_dev *hdev = hu->hdev;
-@@ -2485,7 +2484,7 @@ static int __maybe_unused qca_suspend(st
- 	bool tx_pending = false;
- 	int ret = 0;
- 	u8 cmd;
--	u32 wait_timeout = 0;
-+	unsigned long wait_timeout = 0;
  
- 	set_bit(QCA_SUSPENDING, &qca->flags);
+ static void s3c24xx_serial_rx_disable(struct uart_port *port)
+@@ -271,14 +271,14 @@ static void s3c24xx_serial_rx_disable(st
+ 	unsigned long flags;
+ 	unsigned int ucon;
  
-@@ -2506,15 +2505,15 @@ static int __maybe_unused qca_suspend(st
- 	if (test_bit(QCA_IBS_DISABLED, &qca->flags) ||
- 	    test_bit(QCA_SSR_TRIGGERED, &qca->flags)) {
- 		wait_timeout = test_bit(QCA_SSR_TRIGGERED, &qca->flags) ?
--					IBS_DISABLE_SSR_TIMEOUT_MS :
--					FW_DOWNLOAD_TIMEOUT_MS;
-+					IBS_DISABLE_SSR_TIMEOUT :
-+					FW_DOWNLOAD_TIMEOUT;
+-	spin_lock_irqsave(&port->lock, flags);
++	uart_port_lock_irqsave(port, &flags);
  
- 		/* QCA_IBS_DISABLED flag is set to true, During FW download
- 		 * and during memory dump collection. It is reset to false,
- 		 * After FW download complete.
- 		 */
- 		wait_on_bit_timeout(&qca->flags, QCA_IBS_DISABLED,
--			    TASK_UNINTERRUPTIBLE, msecs_to_jiffies(wait_timeout));
-+			    TASK_UNINTERRUPTIBLE, wait_timeout);
+ 	ucon = rd_regl(port, S3C2410_UCON);
+ 	ucon &= ~S3C2410_UCON_RXIRQMODE;
+ 	wr_regl(port, S3C2410_UCON, ucon);
  
- 		if (test_bit(QCA_IBS_DISABLED, &qca->flags)) {
- 			bt_dev_err(hu->hdev, "SSR or FW download time out");
-@@ -2566,7 +2565,7 @@ static int __maybe_unused qca_suspend(st
+ 	ourport->rx_enabled = 0;
+-	spin_unlock_irqrestore(&port->lock, flags);
++	uart_port_unlock_irqrestore(port, flags);
+ }
  
- 	if (tx_pending) {
- 		serdev_device_wait_until_sent(hu->serdev,
--					      msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS));
-+					      CMD_TRANS_TIMEOUT);
- 		serial_clock_vote(HCI_IBS_TX_VOTE_CLOCK_OFF, hu);
+ static void s3c24xx_serial_stop_tx(struct uart_port *port)
+@@ -344,7 +344,7 @@ static void s3c24xx_serial_tx_dma_comple
+ 				dma->tx_transfer_addr, dma->tx_size,
+ 				DMA_TO_DEVICE);
+ 
+-	spin_lock_irqsave(&port->lock, flags);
++	uart_port_lock_irqsave(port, &flags);
+ 
+ 	uart_xmit_advance(port, count);
+ 	ourport->tx_in_progress = 0;
+@@ -353,7 +353,7 @@ static void s3c24xx_serial_tx_dma_comple
+ 		uart_write_wakeup(port);
+ 
+ 	s3c24xx_serial_start_next_tx(ourport);
+-	spin_unlock_irqrestore(&port->lock, flags);
++	uart_port_unlock_irqrestore(port, flags);
+ }
+ 
+ static void enable_tx_dma(struct s3c24xx_uart_port *ourport)
+@@ -619,7 +619,7 @@ static void s3c24xx_serial_rx_dma_comple
+ 	received  = dma->rx_bytes_requested - state.residue;
+ 	async_tx_ack(dma->rx_desc);
+ 
+-	spin_lock_irqsave(&port->lock, flags);
++	uart_port_lock_irqsave(port, &flags);
+ 
+ 	if (received)
+ 		s3c24xx_uart_copy_rx_to_tty(ourport, t, received);
+@@ -631,7 +631,7 @@ static void s3c24xx_serial_rx_dma_comple
+ 
+ 	s3c64xx_start_rx_dma(ourport);
+ 
+-	spin_unlock_irqrestore(&port->lock, flags);
++	uart_port_unlock_irqrestore(port, flags);
+ }
+ 
+ static void s3c64xx_start_rx_dma(struct s3c24xx_uart_port *ourport)
+@@ -722,7 +722,7 @@ static irqreturn_t s3c24xx_serial_rx_cha
+ 	utrstat = rd_regl(port, S3C2410_UTRSTAT);
+ 	rd_regl(port, S3C2410_UFSTAT);
+ 
+-	spin_lock(&port->lock);
++	uart_port_lock(port);
+ 
+ 	if (!(utrstat & S3C2410_UTRSTAT_TIMEOUT)) {
+ 		s3c64xx_start_rx_dma(ourport);
+@@ -751,7 +751,7 @@ static irqreturn_t s3c24xx_serial_rx_cha
+ 	wr_regl(port, S3C2410_UTRSTAT, S3C2410_UTRSTAT_TIMEOUT);
+ 
+ finish:
+-	spin_unlock(&port->lock);
++	uart_port_unlock(port);
+ 
+ 	return IRQ_HANDLED;
+ }
+@@ -849,9 +849,9 @@ static irqreturn_t s3c24xx_serial_rx_cha
+ 	struct s3c24xx_uart_port *ourport = dev_id;
+ 	struct uart_port *port = &ourport->port;
+ 
+-	spin_lock(&port->lock);
++	uart_port_lock(port);
+ 	s3c24xx_serial_rx_drain_fifo(ourport);
+-	spin_unlock(&port->lock);
++	uart_port_unlock(port);
+ 
+ 	return IRQ_HANDLED;
+ }
+@@ -932,11 +932,11 @@ static irqreturn_t s3c24xx_serial_tx_irq
+ 	struct s3c24xx_uart_port *ourport = id;
+ 	struct uart_port *port = &ourport->port;
+ 
+-	spin_lock(&port->lock);
++	uart_port_lock(port);
+ 
+ 	s3c24xx_serial_tx_chars(ourport);
+ 
+-	spin_unlock(&port->lock);
++	uart_port_unlock(port);
+ 	return IRQ_HANDLED;
+ }
+ 
+@@ -1032,7 +1032,7 @@ static void s3c24xx_serial_break_ctl(str
+ 	unsigned long flags;
+ 	unsigned int ucon;
+ 
+-	spin_lock_irqsave(&port->lock, flags);
++	uart_port_lock_irqsave(port, &flags);
+ 
+ 	ucon = rd_regl(port, S3C2410_UCON);
+ 
+@@ -1043,7 +1043,7 @@ static void s3c24xx_serial_break_ctl(str
+ 
+ 	wr_regl(port, S3C2410_UCON, ucon);
+ 
+-	spin_unlock_irqrestore(&port->lock, flags);
++	uart_port_unlock_irqrestore(port, flags);
+ }
+ 
+ static int s3c24xx_serial_request_dma(struct s3c24xx_uart_port *p)
+@@ -1302,7 +1302,7 @@ static int s3c64xx_serial_startup(struct
+ 	ourport->rx_enabled = 1;
+ 	ourport->tx_enabled = 0;
+ 
+-	spin_lock_irqsave(&port->lock, flags);
++	uart_port_lock_irqsave(port, &flags);
+ 
+ 	ufcon = rd_regl(port, S3C2410_UFCON);
+ 	ufcon |= S3C2410_UFCON_RESETRX | S5PV210_UFCON_RXTRIG8;
+@@ -1312,7 +1312,7 @@ static int s3c64xx_serial_startup(struct
+ 
+ 	enable_rx_pio(ourport);
+ 
+-	spin_unlock_irqrestore(&port->lock, flags);
++	uart_port_unlock_irqrestore(port, flags);
+ 
+ 	/* Enable Rx Interrupt */
+ 	s3c24xx_clear_bit(port, S3C64XX_UINTM_RXD, S3C64XX_UINTM);
+@@ -1340,7 +1340,7 @@ static int apple_s5l_serial_startup(stru
+ 	ourport->rx_enabled = 1;
+ 	ourport->tx_enabled = 0;
+ 
+-	spin_lock_irqsave(&port->lock, flags);
++	uart_port_lock_irqsave(port, &flags);
+ 
+ 	ufcon = rd_regl(port, S3C2410_UFCON);
+ 	ufcon |= S3C2410_UFCON_RESETRX | S5PV210_UFCON_RXTRIG8;
+@@ -1350,7 +1350,7 @@ static int apple_s5l_serial_startup(stru
+ 
+ 	enable_rx_pio(ourport);
+ 
+-	spin_unlock_irqrestore(&port->lock, flags);
++	uart_port_unlock_irqrestore(port, flags);
+ 
+ 	/* Enable Rx Interrupt */
+ 	s3c24xx_set_bit(port, APPLE_S5L_UCON_RXTHRESH_ENA, S3C2410_UCON);
+@@ -1625,7 +1625,7 @@ static void s3c24xx_serial_set_termios(s
+ 		ulcon |= S3C2410_LCON_PNONE;
  	}
  
-@@ -2575,7 +2574,7 @@ static int __maybe_unused qca_suspend(st
- 	 */
- 	ret = wait_event_interruptible_timeout(qca->suspend_wait_q,
- 			qca->rx_ibs_state == HCI_IBS_RX_ASLEEP,
--			msecs_to_jiffies(IBS_BTSOC_TX_IDLE_TIMEOUT_MS));
-+			IBS_BTSOC_TX_IDLE_TIMEOUT);
- 	if (ret == 0) {
- 		ret = -ETIMEDOUT;
- 		goto error;
+-	spin_lock_irqsave(&port->lock, flags);
++	uart_port_lock_irqsave(port, &flags);
+ 
+ 	dev_dbg(port->dev,
+ 		"setting ulcon to %08x, brddiv to %d, udivslot %08x\n",
+@@ -1683,7 +1683,7 @@ static void s3c24xx_serial_set_termios(s
+ 	if ((termios->c_cflag & CREAD) == 0)
+ 		port->ignore_status_mask |= RXSTAT_DUMMY_READ;
+ 
+-	spin_unlock_irqrestore(&port->lock, flags);
++	uart_port_unlock_irqrestore(port, flags);
+ }
+ 
+ static const char *s3c24xx_serial_type(struct uart_port *port)
+@@ -2375,14 +2375,14 @@ s3c24xx_serial_console_write(struct cons
+ 	if (cons_uart->sysrq)
+ 		locked = false;
+ 	else if (oops_in_progress)
+-		locked = spin_trylock_irqsave(&cons_uart->lock, flags);
++		locked = uart_port_trylock_irqsave(cons_uart, &flags);
+ 	else
+-		spin_lock_irqsave(&cons_uart->lock, flags);
++		uart_port_lock_irqsave(cons_uart, &flags);
+ 
+ 	uart_console_write(cons_uart, s, count, s3c24xx_serial_console_putchar);
+ 
+ 	if (locked)
+-		spin_unlock_irqrestore(&cons_uart->lock, flags);
++		uart_port_unlock_irqrestore(cons_uart, flags);
+ }
+ 
+ /* Shouldn't be __init, as it can be instantiated from other module */
 
 
