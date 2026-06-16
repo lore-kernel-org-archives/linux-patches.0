@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC533AB267;
-	Tue, 16 Jun 2026 15:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A4C45BD7A;
+	Tue, 16 Jun 2026 15:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624469; cv=none; b=PzzbPddnVSwgaMLXcHkTi+ER3/l0RUT7TpKTTcDk9RF1m1DYxeJFgUgoCMc7Qt6WgE+p9Uh1otl9kBs6gtKcAUqreMXBQsSGi3XBrw3gn2R9Ah0Qjk0MI2SEjH4+v5hGejMIpXpScAsy61XUNFrGw1PUcl+iPiFcz7R5mwzxYM0=
+	t=1781624475; cv=none; b=Xy8BL2MtC9fNRkWh2IISHbiLTag16zChcc90vI67T1AYVvPvf0NmzYXJUAHsCoq1bF7muyAuVZjJ+fOWUeLEz6CA/+2nlbMX1WqCjk5xbF1Rpg9f9hYaX50QZ+UMzIOg992jBn2qwxqFnnUi7Y9OM12kji8oNiquzLwc4bi76ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624469; c=relaxed/simple;
-	bh=PI9XTcWLGrj9xkOhBoVpuhKfduzuXX+yjh4nEEeeU1g=;
+	s=arc-20240116; t=1781624475; c=relaxed/simple;
+	bh=1dgz3Fz98OOUsPfhDciDVW41/tpNRX94224Kiftbcu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qBqGTU4IIYalfdlSMQ3V1squ7pUAam9Q33izeOyljP1Ee1MTb6TaF80QyYH1bie3vaGvawPAqIPYMYrafxlThnuy2Z+LB9C0GAfkhS6q+pyDAUbY76G4rkAxU7JFzJtaf/MF576DthRkb8Mdik0i98k+3BaELeU0P+2Supj2a2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NIwNtYiV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LZ8AXSOV5URzofG5Tp4kxiD1lqTaw0uJSWj53GEQTtgCA8b5HWjbVxZ5wSUJi2m/7zE9ngQpMz4+n4hWt5uNtcQt+2eU6jjp68E2p3EEwh7DUuEVLcDnF3sGxTYnE3zy2/5VPR2WDHJmGir0P2c8jtJ8ML4BIkme+t4bCWdVSLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0tCi5g3X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NIwNtYiV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA691F00A3D;
-	Tue, 16 Jun 2026 15:41:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0tCi5g3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13E61F000E9;
+	Tue, 16 Jun 2026 15:41:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624468;
-	bh=j7sqdaYY5Pb1uYIDhS1wmP95ws+yTzLvLX4+zSvdCxM=;
+	s=korg; t=1781624473;
+	bh=kNllvMs1944lbzJIZGH4Xoh1rakIVSMt0Z30gelStqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NIwNtYiVuAs3/GlcLHR5PeWrJQMnzAP3tW+qETmRVdmj7i8CkY6EK1gqSDpMScDxC
-	 yF5gRgC3JKLfcB63O2UxnoK+okAAOkWvNGK2uJKWgLNmb24gC9JbYiR1uOC/NSekpG
-	 bBKZ1o6l0R83oJpEY5SeErz5bxbq9jstWvs4WrIY=
+	b=0tCi5g3Xyu2ysZteQGzLtdcIVedOfaSl+JIhjgiFElOZAerQOW3NmR8y+r2Bprcqu
+	 Vg9VheSF29vbCKWw/JCkEtqAF8A6DiuNU1rwPlZtZzKGXGHxZkUzCg5pMkpLchj86T
+	 6qbanhq13T9UZ9TQTx8wjm/U0IbXF+wJzhyHTXMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.0 335/378] drm/amdkfd: fix NULL dereference in get_queue_ids()
-Date: Tue, 16 Jun 2026 20:29:26 +0530
-Message-ID: <20260616145127.853360537@linuxfoundation.org>
+Subject: [PATCH 7.0 344/378] drm/amdgpu: fix waiting for all submissions for userptrs
+Date: Tue, 16 Jun 2026 20:29:35 +0530
+Message-ID: <20260616145128.286671055@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -44,51 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Christian König <christian.koenig@amd.com>
 
-commit 2bd550b547deabef98bd3b017ff743b7c34d3a6d upstream.
+commit 58bafc666c484b21839a2d27e923ae1b2727a1df upstream.
 
-When usr_queue_id_array is NULL and num_queues is non-zero,
-get_queue_ids() returns NULL. The callers check only IS_ERR() on the
-return value; since IS_ERR(NULL) == false the check passes, and
-suspend_queues() calls q_array_invalidate() which immediately
-dereferences NULL while iterating num_queues times.
+Wait for all submissions when userptrs need to be invalidated by the MMU
+notifier, not just the one the userptr was involved into.
 
-Userspace can trigger this via kfd_ioctl_set_debug_trap() by supplying
-num_queues > 0 with a zero queue_array_ptr, causing a kernel panic.
-
-A NULL usr_queue_id_array with num_queues == 0 is a legitimate no-op
-(q_array_invalidate never executes, and resume_queues already guards
-all queue_ids dereferences behind a NULL check). Return ERR_PTR(-EINVAL)
-only when num_queues is non-zero and the pointer is absent; both callers
-already propagate IS_ERR() returns correctly to userspace.
-
-Fixes: a70a93fa568b ("drm/amdkfd: add debug suspend and resume process queues operation")
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Tested-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f165a82cdf503884bb1797771c61b2fcc72113d4)
+(cherry picked from commit 91250893cbaa25c86872deca95a540d08de1f91e)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-@@ -3297,7 +3297,7 @@ static void copy_context_work_handler(st
- static uint32_t *get_queue_ids(uint32_t num_queues, uint32_t *usr_queue_id_array)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c
+@@ -67,6 +67,7 @@ static bool amdgpu_hmm_invalidate_gfx(st
  {
- 	if (!usr_queue_id_array)
--		return NULL;
-+		return num_queues ? ERR_PTR(-EINVAL) : NULL;
+ 	struct amdgpu_bo *bo = container_of(mni, struct amdgpu_bo, notifier);
+ 	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
++	struct amdgpu_bo *vm_root = bo->vm_bo->vm->root.bo;
+ 	long r;
  
- 	if (num_queues > KFD_MAX_NUM_OF_QUEUES_PER_PROCESS)
- 		return ERR_PTR(-EINVAL);
+ 	if (!mmu_notifier_range_blockable(range))
+@@ -77,8 +78,9 @@ static bool amdgpu_hmm_invalidate_gfx(st
+ 	mmu_interval_set_seq(mni, cur_seq);
+ 
+ 	amdgpu_vm_bo_invalidate(bo, false);
+-	r = dma_resv_wait_timeout(bo->tbo.base.resv, DMA_RESV_USAGE_BOOKKEEP,
+-				  false, MAX_SCHEDULE_TIMEOUT);
++	r = dma_resv_wait_timeout(vm_root->tbo.base.resv,
++				  DMA_RESV_USAGE_BOOKKEEP, false,
++				  MAX_SCHEDULE_TIMEOUT);
+ 	mutex_unlock(&adev->notifier_lock);
+ 	if (r <= 0)
+ 		DRM_ERROR("(%ld) failed to wait for user bo\n", r);
 
 
