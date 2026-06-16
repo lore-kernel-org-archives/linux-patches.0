@@ -1,41 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77C544CF4E;
-	Tue, 16 Jun 2026 15:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52D8441035;
+	Tue, 16 Jun 2026 15:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623403; cv=none; b=hh3dsYNt6HvRTsniu5fWnSe8d3zAfDUhm9H8FUyoulyx0HTFAA19/jrp+8nf7WYJaRp0zeBDT649aUBeLvIxfaF0GSPOi8hQc3lSpWzPm3L6GQeo8e/TgnsYExYUaXl08k9yhqe2xTeSq6Tqdt6r7x5yCg60ZGiZL+isizY6HNk=
+	t=1781623409; cv=none; b=SexqcClb3m7BwgaTm/MoJFVafTvswFIZnP/T1dUcigQ7c+aeEJ9oZn6YoeGOZBIzDYWCkb1ft/Wfe49NaipMz1FPQpmKKOg8/klyJJKAChnZAfpyfdulVE8xM0z87WXSQnwR3oQoqw3zrJXtMLotX8OPxsPLd3viQQHMTBHAk+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623403; c=relaxed/simple;
-	bh=Lh9A2WXB47La7tdLzXw7GaIT8CPFq3L+2LbbHHi6OC8=;
+	s=arc-20240116; t=1781623409; c=relaxed/simple;
+	bh=vik4wTngmoNu58hA5PcEN65uK9s6NgLFmn9rM3dzohY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sv1h0hoIa8iTWZnl8+wPKlF8iTC52pQofEIzgFoXxErwZBWiKXtyir8YI3NmjoGZ8JtvKlWktxAsc8jSGWb3ne09olwBxRMI4vwAAC99N5azg8N9PYzsxgEJ+yxNI14mWAQXV7qF4X6SP3fBYlxVdz4g7WuJjwwh3SgvD54lgs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15bVgA8P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fqQp/0dInUksTmtMmtWptifBaUM+MqBOLhwxv98TDY2+1Oj1POKGPY/IHymU5M9xT5PAaY5ckEjIG6LeiO5E2I6K3H6qcIqdSZsgQL0Zi+pfMcHL0vgrldE+UYwn276gNNPsY4Jv+NXpW5B+p0jz+f7bhuul9qvloSoPwWsTGM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fasmTLF8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15bVgA8P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857B31F000E9;
-	Tue, 16 Jun 2026 15:23:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fasmTLF8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88AF71F000E9;
+	Tue, 16 Jun 2026 15:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623402;
-	bh=MBV0it6997MHVUpHzMW2IXLAR8mgcLHwZuE6RzDwovE=;
+	s=korg; t=1781623407;
+	bh=u4u/ypzpXdqyvYPM92CC7qzGk/0TK/4RPUhDmlTkn4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=15bVgA8PZOWF8mP0zEooJFZPV0BRoyoccgI77kFwFSH4secv/TW1qSqobDOpzWLbt
-	 MMbLU5MrNudfu4WELImfOxpW6QZ2or6U6294UBSC5JuT6UqmQj7BZ8zqs/TPag8Pjz
-	 GsRiZToug9ztmoZ093t+4gMEkTlXxA53au3bfUao=
+	b=fasmTLF8KfCYmCT/pXmo75LL/9JqWW/rwVaVWXIZ5+OvAJyNbJOCcjp5IcIYSflr4
+	 g8JxRI098Z6Ooi0Gu0xJvb7KTvBoVdp2SgmHF4ddxjddQ3GSR7u+2RGmcei+OJgaxa
+	 m/oix+Qb2Cnsv7cs6vvtVWOCqXq1/dsOJ+0FAZT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Felix Gu <ustc.gu@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Tamir Shahar <tamirthesis@gmail.com>,
+	Amit Klein <aksecurity@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Song Liu <song@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Jiri Olsa <jolsa@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 140/378] spi: rzv2h-rspi: Fix SPDR read access width for 16-bit RX
-Date: Tue, 16 Jun 2026 20:26:11 +0530
-Message-ID: <20260616145117.644200505@linuxfoundation.org>
+Subject: [PATCH 7.0 109/378] tcp: restrict SO_ATTACH_FILTER to priv users
+Date: Tue, 16 Jun 2026 20:25:40 +0530
+Message-ID: <20260616145116.105508507@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -54,45 +65,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 310628484ef06f95c5589374fade917a5689787b ]
+[ Upstream commit 5d39580f68e6ddeedd15e587282207489dfb3da2 ]
 
-The RZ/V2H hardware manual (section 7.5.2.2.1) specifies that read access
-size for the SPI Data Register (SPDR) are fixed at 32 bits. The
-RZV2H_RSPI_RX macro for the 16-bit data path used readw(), violating
-this requirement.
+This patch restricts the use of SO_ATTACH_FILTER (cBPF) on TCP sockets
+to users with CAP_NET_ADMIN capability.
 
-Switch to readl() for the 16-bit RX path to conform to the hardware
-specification.
+This blocks potential side-channel attack where an unprivileged application
+attaches a filter to leak TCP sequence/acknowledgment numbers.
 
-Fixes: 8b61c8919dff ("spi: Add driver for the RZ/V2H(P) RSPI IP")
-Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Link: https://patch.msgid.link/20260610-rzv2h-rspi-v2-1-40c80b4a2c90@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: Tamir Shahar <tamirthesis@gmail.com>
+Reported-by: Amit Klein <aksecurity@gmail.com>
+Cc: Willem de Bruijn <willemb@google.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Andrii Nakryiko <andrii@kernel.org>
+Cc: Martin KaFai Lau <martin.lau@linux.dev>
+Cc: Eduard Zingerman <eddyz87@gmail.com>
+Cc: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Cc: Song Liu <song@kernel.org>
+Cc: Yonghong Song <yonghong.song@linux.dev>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: John Fastabend <john.fastabend@gmail.com>
+Cc: Stanislav Fomichev <sdf@fomichev.me>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-rzv2h-rspi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/core/sock.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/spi/spi-rzv2h-rspi.c b/drivers/spi/spi-rzv2h-rspi.c
-index 53c44799fab71d..6fc81ccbcad5a2 100644
---- a/drivers/spi/spi-rzv2h-rspi.c
-+++ b/drivers/spi/spi-rzv2h-rspi.c
-@@ -133,8 +133,9 @@ static inline void rzv2h_rspi_rx_##type(struct rzv2h_rspi_priv *rspi,	\
- RZV2H_RSPI_TX(writel, u32)
- RZV2H_RSPI_TX(writew, u16)
- RZV2H_RSPI_TX(writeb, u8)
-+/* The read access size for RSPI_SPDR is fixed at 32 bits */
- RZV2H_RSPI_RX(readl, u32)
--RZV2H_RSPI_RX(readw, u16)
-+RZV2H_RSPI_RX(readl, u16)
- RZV2H_RSPI_RX(readl, u8)
+diff --git a/net/core/sock.c b/net/core/sock.c
+index b197a795306392..d317b4a8b85a25 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -1463,6 +1463,11 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
+ 	case SO_ATTACH_FILTER: {
+ 		struct sock_fprog fprog;
  
- static void rzv2h_rspi_reg_rmw(const struct rzv2h_rspi_priv *rspi,
++		if (sk_is_tcp(sk) &&
++		    !sockopt_ns_capable(sock_net(sk)->user_ns, CAP_NET_ADMIN)) {
++			ret = -EPERM;
++			break;
++		}
+ 		ret = copy_bpf_fprog_from_user(&fprog, optval, optlen);
+ 		if (!ret)
+ 			ret = sk_attach_filter(&fprog, sk);
 -- 
 2.53.0
 
