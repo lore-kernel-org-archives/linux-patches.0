@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991803A5E91;
-	Tue, 16 Jun 2026 17:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10D11A6803;
+	Tue, 16 Jun 2026 17:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630324; cv=none; b=MXg2h0J+gWwP1yhol6HxiH38XCh1V1HkVAt7ebrYZTr4Mj48w6y0uysDIGXdqA+EnyVVUKPzO835TPJnXMB6C5aSFZoUF/3S6o13bGE0zlzIdZu/Hla7T+/8eCto3+mTTVojBLFyi6NKyTIVzT4BsbnoLzSv/J73oWMsQIokc2M=
+	t=1781630329; cv=none; b=awhvF83XzotHAGPw200goA8SJ+wTbOjHFwIT6RV9HUDo2UGyJ6Jh3XSEGBwdzUfVXb4ubSUSnDERYrXlCtB3LF0GTWINwirLyAlrk+eMXMwWPgtQLRJcmzAzy/43/PzBw2oi6K8r4T1hDo64FbthaSnPvkDgdQPpGipXIHS6xaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630324; c=relaxed/simple;
-	bh=AFIeTVCL8XI/GhzSDRNPiKSHcF28UHMUkB7olckWxHo=;
+	s=arc-20240116; t=1781630329; c=relaxed/simple;
+	bh=66Ib6sjaCfImsZ/7fcTgTWU2mCrenDL6PnAiFqfeWs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BafMS9IicAfFnFz+iC7rfPRYVOYt3u41HE5BBxjqyneeV72EAgwkB3HeMc21wqqhaLxQibW1v6IvUtEIpNR1NFd32zyn3JOWCgYTlEWALVsjrvRGiIzskNk3/XBInMCHXY7Q6gv47oy/SCm9JYKDJ9LN+anhASgsXL4xWeHAbAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIi8bjx3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X0OyoRmD2xjnK2rdGQcXiks7gjNzK3mMVvlUvmz/VVOuOh5yIdfYownDqMNAupYtHtm//Wo0aV1xxrpRyT75dAuXJ4uQ7Rvk83Ewls35g3fNlWwYJbulAT0jTChrnsHbSG2UiJKg1zUVA3A8LRZ4nVFcPmCuTdmV7Xwzv31UphQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wtlo0JPc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIi8bjx3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D82A1F000E9;
-	Tue, 16 Jun 2026 17:18:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wtlo0JPc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACEB91F000E9;
+	Tue, 16 Jun 2026 17:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630323;
-	bh=rPIn8zLa+vpu3+oGfeLmfZGRbTSZkUcyGvIAnpSOfIg=;
+	s=korg; t=1781630328;
+	bh=BxVKlJTSpv6KKZZ0QbJ7FURzOkBsftdkQuSg4kOdeP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dIi8bjx3H20tLnVvqcP+jBkDiIndpTftKWRdLBXezBqsaiHZ8a0FC+Et4J6a3ETIU
-	 Bo843PEcTx6OzO2VHgvfIMEWDgTckaMSdC26ikn4h57TNxs/uoEdJ3a1+oA7Vt7wLa
-	 XIJpP+2rtKKok6kCfeXM0IIOuM/vxGxKs9NLCbKE=
+	b=Wtlo0JPcudJGDmAF+2ecqploasevOvb5cx8hGvRge27Uv56AANewdOpYvaRtsI5Nw
+	 fnlKucnYAiPWnvtOPkEgTE8nkbKHu8kSZN2GH1P7G7FNmYCiGhIxuvNMhhI60aS4jf
+	 cdEHfUcoxtziQfaEPDsPa81eb9r0fTD0jwMWdAmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shanker Donthineni <sdonthineni@nvidia.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
 	Will Deacon <will@kernel.org>,
 	Mark Rutland <mark.rutland@arm.com>
-Subject: [PATCH 6.6 445/452] arm64: errata: Mitigate TLBI errata on NVIDIA Olympus CPU
-Date: Tue, 16 Jun 2026 20:31:12 +0530
-Message-ID: <20260616145139.912775978@linuxfoundation.org>
+Subject: [PATCH 6.6 446/452] arm64: errata: Mitigate TLBI errata on Microsoft Azure Cobalt 100 CPU
+Date: Tue, 16 Jun 2026 20:31:13 +0530
+Message-ID: <20260616145139.957756904@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,72 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shanker Donthineni <sdonthineni@nvidia.com>
+From: Will Deacon <will@kernel.org>
 
-commit ec7216f92e4ebd485b1c6dc6aa3f6064b71a5768 upstream.
+commit 1940e70a8144bf75e6df26bf6f600862ea7f7ea1 upstream.
 
-NVIDIA Olympus cores are affected by the TLBI completion issue tracked as
-CVE-2025-10263. The existing ARM64_ERRATUM_4118414 handling already uses
-ARM64_WORKAROUND_REPEAT_TLBI to issue an additional broadcast TLBI;DSB
-sequence and ensure affected memory write effects are globally observed.
+Commit fb091ff39479 ("arm64: Subscribe Microsoft Azure Cobalt 100 to ARM
+Neoverse N2 errata") states that Microsoft Azure Cobalt 100 CPU "is a
+Microsoft implemented CPU based on r0p0 of the ARM Neoverse N2 CPU, and
+therefore suffers from all the same errata.".
 
-Add MIDR_NVIDIA_OLYMPUS to the repeat-TLBI match list so the same
-mitigation is enabled on affected Olympus systems. Also document the
-NVIDIA Olympus erratum in the arm64 silicon errata table and list it in
-the Kconfig help text.
+So enable the workaround for the latest broadcast TLB invalidation bug
+on these parts.
 
-Signed-off-by: Shanker Donthineni <sdonthineni@nvidia.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 [Mark: backport to v6.6.y]
-Signed-off-by: Shanker Donthineni <sdonthineni@nvidia.com>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  Documentation/arch/arm64/silicon-errata.rst |    2 ++
- arch/arm64/Kconfig                          |    3 ++-
+ arch/arm64/Kconfig                          |    1 +
  arch/arm64/kernel/cpu_errata.c              |    1 +
- 3 files changed, 5 insertions(+), 1 deletion(-)
+ 3 files changed, 4 insertions(+)
 
 --- a/Documentation/arch/arm64/silicon-errata.rst
 +++ b/Documentation/arch/arm64/silicon-errata.rst
-@@ -274,6 +274,8 @@ stable kernels.
+@@ -335,3 +335,5 @@ stable kernels.
  +----------------+-----------------+-----------------+-----------------------------+
- | NVIDIA         | Carmel Core     | N/A             | NVIDIA_CARMEL_CNP_ERRATUM   |
+ | Microsoft      | Azure Cobalt 100| #3324339        | ARM64_ERRATUM_3194386       |
  +----------------+-----------------+-----------------+-----------------------------+
-+| NVIDIA         | Olympus core    | T410-OLY-1029   | ARM64_ERRATUM_4118414       |
++| Microsoft      | Azure Cobalt 100| #4193789        | ARM64_ERRATUM_4118414       |
 ++----------------+-----------------+-----------------+-----------------------------+
- | NVIDIA         | T241 GICv3/4.x  | T241-FABRIC-4   | N/A                         |
- +----------------+-----------------+-----------------+-----------------------------+
- +----------------+-----------------+-----------------+-----------------------------+
 --- a/arch/arm64/Kconfig
 +++ b/arch/arm64/Kconfig
-@@ -1121,7 +1121,7 @@ config ARM64_ERRATUM_4193714
- 	  If unsure, say Y.
- 
- config ARM64_ERRATUM_4118414
--	bool "Cortex-*/Neoverse-*/C1-*: Completion of affected memory accesses might not be guaranteed by completion of a TLBI"
-+	bool "Various: Completion of affected memory accesses might not be guaranteed by completion of a TLBI"
- 	default y
- 	select ARM64_WORKAROUND_REPEAT_TLBI
- 	help
 @@ -1148,6 +1148,7 @@ config ARM64_ERRATUM_4118414
  	  * ARM Neoverse-V2 erratum 4193787
  	  * ARM Neoverse-V3 erratum 4193784
  	  * ARM Neoverse-V3AE erratum 4193784
-+	  * NVIDIA Olympus erratum T410-OLY-1029
++	  * Microsoft Azure Cobalt 100 4193789
+ 	  * NVIDIA Olympus erratum T410-OLY-1029
  
  	  On affected cores, some memory accesses might not be completed by
- 	  broadcast TLB invalidation.
 --- a/arch/arm64/kernel/cpu_errata.c
 +++ b/arch/arm64/kernel/cpu_errata.c
-@@ -265,6 +265,7 @@ static const struct arm64_cpu_capabiliti
- 			MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V2),
+@@ -266,6 +266,7 @@ static const struct arm64_cpu_capabiliti
  			MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V3),
  			MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V3AE),
-+			MIDR_ALL_VERSIONS(MIDR_NVIDIA_OLYMPUS),
+ 			MIDR_ALL_VERSIONS(MIDR_NVIDIA_OLYMPUS),
++			MIDR_ALL_VERSIONS(MIDR_MICROSOFT_AZURE_COBALT_100),
  			{}
  		})),
  	},
