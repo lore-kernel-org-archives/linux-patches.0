@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C538838F930;
-	Tue, 16 Jun 2026 17:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6217544BCBE;
+	Tue, 16 Jun 2026 17:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630756; cv=none; b=MqWVDAWdxkvyGPdVDR+5teGrElaqT2YkXcMvMVVIPdZzEqkkK+WT+3lAuJ+qf5w0u8iCdpoZ7WqlAYM+nklMeDD5e/HrJ9hGY9BF73HraSvEXXWas5rhqiN7O9vcwIMvUCoBiumIhaZOHxdFPSsNvY8rPMb94qyeiiqXfPYrdi4=
+	t=1781630762; cv=none; b=K01rF4aCZEM0iyIYrcHRzn1m8td27gYjVQ/7ZnX/VU1Gyk4SRGtyqMmlLbyypBhp8NJRotDlb14hB2JZOEpCOybOSpTNC2n+83YIBLdWqlg1K9/qVs8dEP8ChjlZIP4pyWRcL9eY5Lkrpq4PJOJKL1B7rXEpUG520okLBXWvEyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630756; c=relaxed/simple;
-	bh=AKmUy2yeCSlkyQZIAgYRkX+DOg4s3J+MmmiSZfpjCgU=;
+	s=arc-20240116; t=1781630762; c=relaxed/simple;
+	bh=C0kEhHtjjSASA03K8ppbB4mcQS6BaRUQxLnmZLu/8m4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eqP7EOWJYQyNIkBUh0h5DhrcQuLje9NjTqizMmK8eRPzBFgDYmtq4IVgHDs8KceA0nBX8RrMeRTJbI67X0pcMZkRosFN6ELDE0N1a3H0WXqvGAf8iUIG1enbXivwl/wfCTCiji9FWW96eVHT4mgBqZz/kfkdc1qTGfvah+9LeE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eASON7WB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=svEBrRCPSg5Ag3ahZf5TBtxjo5SZmKXtCvR0sb9FhZZ/VpWmBHffW5PGBUuUntRhfXclABWp1O76EcVoGZXOoO+4URIfJeoR6VITmVQpRyUb/goa4LVl8pxq5t+QvEXPFEhvnRUOFPAfn5N/AGxh1xf9atxdswY1EG1rft/ZlFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VqH5UPQX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eASON7WB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE5451F000E9;
-	Tue, 16 Jun 2026 17:25:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VqH5UPQX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC481F000E9;
+	Tue, 16 Jun 2026 17:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630755;
-	bh=31l7LMrid9ePS4d5SqUwFecBskp6ocTfyg/ZsNdQ7vg=;
+	s=korg; t=1781630761;
+	bh=xXjhlIs8zxJr76IrwrGSVAUPqWNvCAKjbp8TWs9AfyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eASON7WBf52o9yVR+76zpBiD4eYh4uPuEC58cXXB+dWMnY617NeJf9zYCxxTE40dp
-	 KRlRlSpt2c4NZv2xbPOOzTMQqsenWLnrO6jqv06xViii/oOa28Yw91jOYfK0yJ7U7o
-	 PKh7KfDWOCuxECx2WxoBwRlWvtvO/qlTKxe0Lh3g=
+	b=VqH5UPQXCydvhHXP6As8OWzrtAYQQI9fQR1SaktpGIwZNK9DJdeg7TsaBSYkuZqbJ
+	 C4CTf0/dhjig12WKmOi/G9eV/XojAiY6UYGgV96qnjCVh0KDpLcLWpWWuIcavv1sRx
+	 Ed+fMUNDlP/aVDRw6UUysOFH/chrO0BWKmqQkDl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	hlleng <a909204013@gmail.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.1 090/522] HID: quirks: Add ALWAYS_POLL quirk for SIGMACHIP USB mouse
-Date: Tue, 16 Jun 2026 20:23:57 +0530
-Message-ID: <20260616145130.087596452@linuxfoundation.org>
+	Shuai Zhang <shuai.zhang@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 091/522] Bluetooth: btusb: Allow firmware re-download when version matches
+Date: Tue, 16 Jun 2026 20:23:58 +0530
+Message-ID: <20260616145130.136016991@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -50,48 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: hlleng <a909204013@gmail.com>
+From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
 
-commit 07466fc91c55532edcfb5c6a7ccd2ea52728d6bd upstream.
+commit 82855073c1081732656734b74d7d1d5e4cfd0da7 upstream.
 
-The SIGMACHIP USB mouse with VID/PID 1c4f:0034 can disconnect and
-re-enumerate repeatedly after it has been enumerated if its interrupt
-endpoint is not continuously polled.
+The Bluetooth host decides whether to download firmware by reading the
+controller firmware download completion flag and firmware version
+information.
 
-This was observed with the device reporting itself as "SIGMACHIP Usb
-Mouse". Keeping the input event device open avoids the disconnects.
+If a USB error occurs during the firmware download process (for example
+due to a USB disconnect), the download is aborted immediately. An
+incomplete firmware transfer does not cause the controller to set the
+download completion flag, but the firmware version information may be
+updated at an early stage of the download process.
 
-Add HID_QUIRK_ALWAYS_POLL for this device so the HID core keeps polling
-it even when there is no userspace input consumer.
+In this case, after USB reconnection, the host attempts to re-download
+the firmware because the download completion flag is not set. However,
+since the controller reports the same firmware version as the target
+firmware, the download is skipped. This ultimately results in the
+firmware not being properly updated on the controller.
 
+This change removes the restriction that skips firmware download when
+the versions are equal. It covers scenarios where the USB connection
+can be disconnected at any time and ensures that firmware download can
+be retriggered after USB reconnection, allowing the Bluetooth firmware
+to be correctly and completely updated.
+
+Fixes: 3267c884cefa ("Bluetooth: btusb: Add support for QCA ROME chipset family")
 Cc: stable@vger.kernel.org
-Signed-off-by: hlleng <a909204013@gmail.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ids.h    |    1 +
- drivers/hid/hid-quirks.c |    1 +
- 2 files changed, 2 insertions(+)
+ drivers/bluetooth/btusb.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -1167,6 +1167,7 @@
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3440,7 +3440,13 @@ static int btusb_setup_qca_load_rampatch
+ 		    "firmware rome 0x%x build 0x%x",
+ 		    rver_rom, rver_patch, ver_rom, ver_patch);
  
- #define USB_VENDOR_ID_SIGMA_MICRO	0x1c4f
- #define USB_DEVICE_ID_SIGMA_MICRO_KEYBOARD	0x0002
-+#define USB_DEVICE_ID_SIGMA_MICRO_USB_MOUSE	0x0034
- #define USB_DEVICE_ID_SIGMA_MICRO_KEYBOARD2	0x0059
- 
- #define USB_VENDOR_ID_SIGMATEL		0x066F
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -175,6 +175,7 @@ static const struct hid_device_id hid_qu
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SEMICO, USB_DEVICE_ID_SEMICO_USB_KEYKOARD), HID_QUIRK_NO_INIT_REPORTS },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SENNHEISER, USB_DEVICE_ID_SENNHEISER_BTD500USB), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SIGMA_MICRO, USB_DEVICE_ID_SIGMA_MICRO_KEYBOARD), HID_QUIRK_NO_INIT_REPORTS },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_SIGMA_MICRO, USB_DEVICE_ID_SIGMA_MICRO_USB_MOUSE), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SIGMATEL, USB_DEVICE_ID_SIGMATEL_STMP3780), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SIS_TOUCH, USB_DEVICE_ID_SIS1030_TOUCH), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_SIS_TOUCH, USB_DEVICE_ID_SIS817_TOUCH), HID_QUIRK_NOGET },
+-	if (rver_rom != ver_rom || rver_patch <= ver_patch) {
++	/* Allow rampatch when the patch version equals the firmware version.
++	 * A firmware download may be aborted by a transient USB error (e.g.
++	 * disconnect) after the controller updates version info but before
++	 * completion.
++	 * Allowing equal versions enables re-flashing during recovery.
++	 */
++	if (rver_rom != ver_rom || rver_patch < ver_patch) {
+ 		bt_dev_err(hdev, "rampatch file version did not match with firmware");
+ 		err = -EINVAL;
+ 		goto done;
 
 
