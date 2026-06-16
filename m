@@ -1,42 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16D647D95B;
-	Tue, 16 Jun 2026 18:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF6E47A0B2;
+	Tue, 16 Jun 2026 18:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635517; cv=none; b=fsDa9m5tp2KMZSN9/rjBz9v4k1HxYoFtEv7SzDkLEpNfxvDWu66X5VPWbda851x28EwOlZXwsKFZGoLe34Wj1mSJdRJajHXXvLzW7PwCjFg20DJq2vI91RIX6JN2L/0ZyYvfiJnz3p5IgPx5tT19Xp0vfn02zEl0F/BdCdMJRu0=
+	t=1781635521; cv=none; b=l04hvcMm7CHwvz90omQFXnujFf/4+1eO1KrACKmOT+D/HOmncjIB7B7PBbKkBvYetg/uEHmlRiUzSRk3y22d5EvsOc4Y3KT1ReCn3yK0bWw/D66QoSZ4taWDze9hj4Ak5mF0xSb7yKkKzxxZLrcjTC+/7djZzRpbpp2fi0R6hn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635517; c=relaxed/simple;
-	bh=UCZEgxHtbxuzMpyycgcFoK6gduP98AFzcmjkpjkZAYw=;
+	s=arc-20240116; t=1781635521; c=relaxed/simple;
+	bh=n6IVmpO3C12nGPas1+5QHhzRD35mam9QRVWKRMKRP/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dFVBCblZiAbqKhNYxD7yPy1sExdCZcywDPr/Em/dge2VnPSVTp2Ike17n083m67uJDMa4X7FOxoaNpOtx3qQ7kBzC6cZSjtcQUIaAIx3ucWvt3HMRiT6u29WNBsEMMtFq9SSw1cXrKGBfRl2mc/0QXd92NyJbM93+6aRzRv+Mo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYhteKi2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sr/MNb+dxXE4BclndLCJrL4zBzRxfwwOVWKdhkF8qQiP2KnwtD1qs/aP2s+I2KO4N4evWjMx7EE+K16+lLFHHVCF33Mg5jh0CHfcmZJ4jZo+yh1IdtjR3G4QacGbSo/teXQr7B935jZSfU1uLxfbUjlCTkvZcYFhu0CLvTx1wGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMidImxY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYhteKi2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F3C11F000E9;
-	Tue, 16 Jun 2026 18:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMidImxY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C611F00A3F;
+	Tue, 16 Jun 2026 18:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635514;
-	bh=gXKMs45v7vfftdK7M0HZXYZRT+l+nBJCs+VKRlygx3w=;
+	s=korg; t=1781635520;
+	bh=6c6kSel2loR9PVLcXo06/P4JlHazOxYpMKndBwFqbcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cYhteKi2hz1c1yRxzWjT+AOUneXMnTT4Z9iHj+G8shM+BBj/Lkmv34HLHHbfpoAyL
-	 DjY1ik61B4K9UIYdm9RS0A1Xbli1J1BaxMDNtBqYaB8HugKiCUV4qbUlPZNwwV+cvB
-	 1BXSUL6Tz7nRCb0lqpwBEU0xCvm6pPmZeqm6f2xM=
+	b=bMidImxYDmJl+pIdR2r/VpdP0ww0Izx+fiolbj/otPmLgsCHLDzxFVbimLXrgmeVP
+	 6gAyFn+5xSq4cwuuDfIn1spMkOaEe7IXY/f+0VjkK6sxBoZkb8xlq4QS/Au4JXoZrK
+	 KQaLfgHfArr1YaDB3QioWFvJFBo8Rm/l9XH7seLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko <sashiko-bot@kernel.org>,
-	Felix Gu <ustc.gu@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Maxwell Doose <m32285159@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 5.10 064/342] iio: buffer: hw-consumer: fix use-after-free in error path
-Date: Tue, 16 Jun 2026 20:26:00 +0530
-Message-ID: <20260616145051.236668615@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 065/342] USB: serial: omninet: fix memory corruption with small endpoint
+Date: Tue, 16 Jun 2026 20:26:01 +0530
+Message-ID: <20260616145051.282625503@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -49,58 +43,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 6f5ed4f2c7c83f33344e0ba179f72a12e5dad4a4 upstream.
+commit 60df93d30f9bdd27db17c4d80ed80ef718d7226b upstream.
 
-In the err_put_buffers cleanup path of iio_hw_consumer_alloc(), the code
-was using list_for_each_entry() to iterate through buffers while calling
-iio_buffer_put() which can free the current buffer if refcount drops to 0.
-The list_for_each_entry() loop macro then evaluates buf->head.next to
-continue iteration, accessing the freed buffer.
+Make sure that the bulk-out buffers are at least as large as the
+hardcoded transfer size to avoid user-controlled slab corruption should
+a malicious device report a smaller endpoint max packet size than
+expected.
 
-Fix this by using list_for_each_entry_safe().
-
-Fixes: 48b66f8f936f ("iio: Add hardware consumer buffer support")
-Reported-by: sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260427-iio_buf-v1-1-2bbdac844647%40gmail.com
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Maxwell Doose <m32285159@gmail.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/buffer/industrialio-hw-consumer.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/serial/omninet.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/iio/buffer/industrialio-hw-consumer.c
-+++ b/drivers/iio/buffer/industrialio-hw-consumer.c
-@@ -82,7 +82,7 @@ static struct hw_consumer_buffer *iio_hw
-  */
- struct iio_hw_consumer *iio_hw_consumer_alloc(struct device *dev)
- {
--	struct hw_consumer_buffer *buf;
-+	struct hw_consumer_buffer *buf, *tmp;
- 	struct iio_hw_consumer *hwc;
- 	struct iio_channel *chan;
- 	int ret;
-@@ -113,7 +113,7 @@ struct iio_hw_consumer *iio_hw_consumer_
- 	return hwc;
+--- a/drivers/usb/serial/omninet.c
++++ b/drivers/usb/serial/omninet.c
+@@ -30,6 +30,10 @@
+ /* This one seems to be a re-branded ZyXEL device */
+ #define BT_IGNITIONPRO_ID	0x2000
  
- err_put_buffers:
--	list_for_each_entry(buf, &hwc->buffers, head)
-+	list_for_each_entry_safe(buf, tmp, &hwc->buffers, head)
- 		iio_buffer_put(&buf->buffer);
- 	iio_channel_release_all(hwc->channels);
- err_free_hwc:
++#define OMNINET_HEADERLEN	4
++#define OMNINET_BULKOUTSIZE	64
++#define OMNINET_PAYLOADSIZE	(OMNINET_BULKOUTSIZE - OMNINET_HEADERLEN)
++
+ /* function prototypes */
+ static void omninet_process_read_urb(struct urb *urb);
+ static int omninet_prepare_write_buffer(struct usb_serial_port *port,
+@@ -55,6 +59,7 @@ static struct usb_serial_driver zyxel_om
+ 	.description =		"ZyXEL - omni.net lcd plus usb",
+ 	.id_table =		id_table,
+ 	.num_bulk_out =		2,
++	.bulk_out_size =	OMNINET_BULKOUTSIZE,
+ 	.calc_num_ports =	omninet_calc_num_ports,
+ 	.port_probe =		omninet_port_probe,
+ 	.port_remove =		omninet_port_remove,
+@@ -133,10 +138,6 @@ static int omninet_port_remove(struct us
+ 	return 0;
+ }
+ 
+-#define OMNINET_HEADERLEN	4
+-#define OMNINET_BULKOUTSIZE	64
+-#define OMNINET_PAYLOADSIZE	(OMNINET_BULKOUTSIZE - OMNINET_HEADERLEN)
+-
+ static void omninet_process_read_urb(struct urb *urb)
+ {
+ 	struct usb_serial_port *port = urb->context;
 
 
