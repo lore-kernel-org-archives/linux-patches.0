@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4870C33A9EB;
-	Tue, 16 Jun 2026 17:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8675932B138;
+	Tue, 16 Jun 2026 17:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630042; cv=none; b=lCLcDMkUe73lWGtHv8pZtdwpVL+AeYZ1z0UNSFvJTYiVSzwRwFf/ScmIiqNa9WbzTR4V7jTSbCFySDV/yU9AnmecCnlX1fqwTH63TSO3pJxyPlnHO7SFOm0Ng4TW2MldAiz2gA2Nv+jTuyoVaL0pJGEdJUFe8MdzBO+S1raHOrU=
+	t=1781630048; cv=none; b=hxFlgnWXwiFID84/YjkuhNqgw8aWaiFtMXQQyBa8m8YGZORJ7kWp1c2L4gT8gjK7UMrpWnzhC9RVzT5xrd5upl0XC9W8FG21egdddkcwhcNCJlymOP+Qw2TsRiP/wc8aUR9XtLWxQAK1vIb/7T70njR1fFSplhtMwBfIcbzGfvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630042; c=relaxed/simple;
-	bh=b22KIQIsaoKtZ3qc3i4n4ZuRwi8HrRTtTka1LyilNEI=;
+	s=arc-20240116; t=1781630048; c=relaxed/simple;
+	bh=h1OX+LjyAMdZIN+if3Oz2BpBW5ajK4RlkShhVuKT15s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M2ZoeT97UTZ1ieP3lSlxsBx5j8COtzWvtIbtCBijUXcNroOrZLOEc9j7X/F0gQ6ssrIfiTWFsesfNHGqt79toUmhEC/DezdvZWHQa6hhc1WzgWdWR7gk3tiXUkr6HHNy2IzjJPFDFJ6cunXWEiAm8MaMbNgSArC7wlUS6kSyHAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HjYOM4Mp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sqYVvS8/6DrSeOcMQQiOBC/F8ApKCpXm1vq4Z7+NRLwLHeDG2I442n8p9ZQijhPULe7HQK2pPVse6+yCiqQLRKZrTXaYZrYrH2tiWcfyAvTyyRalNLT5Hg3v3OltZHXUThyR0SGvvZxZ/FbUSpy6oTiT4Zjd99dAWOQFUaqExJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VATQaD6G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HjYOM4Mp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D55E1F000E9;
-	Tue, 16 Jun 2026 17:13:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VATQaD6G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F611F000E9;
+	Tue, 16 Jun 2026 17:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630040;
-	bh=velStp7CdpBB1HFG9GtUP76PViV2qfQRCdqJ55nTfG8=;
+	s=korg; t=1781630047;
+	bh=fCHEZUD+LHFsM8lIeuau1cHdn0CB7MkZhnNT5IsHTXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HjYOM4Mp8733u7llUDm56J7hRlRAhvr2IAmRr+JnFTWuylpU5DnHY8EA4+llPANqt
-	 l841iPt/3xnXXJta5gPzE9lBBgUKQq0ltS3ADBFNFIh4Y7YZNP0Gws3FmtOU4Zpw3j
-	 OreUU3cD1DdOmu1OHoR0jWmT6tApvltdtzyvPtTA=
+	b=VATQaD6GwHbos7JROjTu+0fXqS69+sYzAAFApxRU5KpidXkSjiaEXyWvmA4qjh9Ba
+	 nPWDmOWR8MpdlCWjiTyhPm0ZsioM8u4mLtAGpLIlxifsCpX89poKBLz1CeQpfoUklz
+	 kGHx4CE0bQzF8i5Fzd0nk3GsMaPuAyFqZvk953QQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Geliang Tang <geliang@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 399/452] iio: adc: npcm: fix unbalanced clk_disable_unprepare()
-Date: Tue, 16 Jun 2026 20:30:26 +0530
-Message-ID: <20260616145137.820840551@linuxfoundation.org>
+Subject: [PATCH 6.6 400/452] mptcp: introduce the mptcp_init_skb helper
+Date: Tue, 16 Jun 2026 20:30:27 +0530
+Message-ID: <20260616145137.869246842@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -53,109 +53,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 0d42e2c0bd6ceb89e44c6e065f9bdf9b1df3ef0c ]
+[ Upstream commit 9a0afe0db46720ce1a009c7dac168aa0584bd732 ]
 
-The driver acquired the ADC clock with devm_clk_get() and read its
-rate, but never called clk_prepare_enable(). The probe error path and
-npcm_adc_remove() both called clk_disable_unprepare() unconditionally,
-causing the clk framework's enable/prepare counts to underflow on
-probe failure or module unbind.
+Factor out all the skb initialization step in a new helper and
+use it. Note that this change moves the MPTCP CB initialization
+earlier: we can do such step as soon as the skb leaves the
+subflow socket receive queues.
 
-The issue went unnoticed because NPCM BMC firmware leaves the ADC
-clock enabled at boot, so the driver happened to work in practice.
-
-Switch to devm_clk_get_enabled() so the clock is properly enabled
-during probe and automatically released by the device-managed
-cleanup, and drop the now-redundant clk_disable_unprepare() from
-both the probe error path and remove().
-
-While at it, drop the duplicate error message on devm_request_irq()
-failure since the IRQ core already logs it.
-
-Fixes: 9bf85fbc9d8f ("iio: adc: add NPCM ADC driver")
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Tested-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250927-net-next-mptcp-rcv-path-imp-v1-4-5da266aa9c1a@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 50c2d91c5dfa ("mptcp: do not drop partial packets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/npcm_adc.c |   25 ++++++++-----------------
- 1 file changed, 8 insertions(+), 17 deletions(-)
+ net/mptcp/protocol.c |   50 +++++++++++++++++++++++++++-----------------------
+ 1 file changed, 27 insertions(+), 23 deletions(-)
 
---- a/drivers/iio/adc/npcm_adc.c
-+++ b/drivers/iio/adc/npcm_adc.c
-@@ -231,7 +231,7 @@ static int npcm_adc_probe(struct platfor
- 	if (IS_ERR(info->reset))
- 		return PTR_ERR(info->reset);
- 
--	info->adc_clk = devm_clk_get(&pdev->dev, NULL);
-+	info->adc_clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(info->adc_clk)) {
- 		dev_warn(&pdev->dev, "ADC clock failed: can't read clk\n");
- 		return PTR_ERR(info->adc_clk);
-@@ -244,17 +244,13 @@ static int npcm_adc_probe(struct platfor
- 	info->adc_sample_hz = clk_get_rate(info->adc_clk) / ((div + 1) * 2);
- 
- 	irq = platform_get_irq(pdev, 0);
--	if (irq < 0) {
--		ret = irq;
--		goto err_disable_clk;
--	}
-+	if (irq < 0)
-+		return irq;
- 
- 	ret = devm_request_irq(&pdev->dev, irq, npcm_adc_isr, 0,
- 			       "NPCM_ADC", indio_dev);
--	if (ret < 0) {
--		dev_err(dev, "failed requesting interrupt\n");
--		goto err_disable_clk;
--	}
-+	if (ret < 0)
-+		return ret;
- 
- 	reg_con = ioread32(info->regs + NPCM_ADCCON);
- 	info->vref = devm_regulator_get_optional(&pdev->dev, "vref");
-@@ -262,7 +258,7 @@ static int npcm_adc_probe(struct platfor
- 		ret = regulator_enable(info->vref);
- 		if (ret) {
- 			dev_err(&pdev->dev, "Can't enable ADC reference voltage\n");
--			goto err_disable_clk;
-+			return ret;
- 		}
- 
- 		iowrite32(reg_con & ~NPCM_ADCCON_REFSEL,
-@@ -272,10 +268,8 @@ static int npcm_adc_probe(struct platfor
- 		 * Any error which is not ENODEV indicates the regulator
- 		 * has been specified and so is a failure case.
- 		 */
--		if (PTR_ERR(info->vref) != -ENODEV) {
--			ret = PTR_ERR(info->vref);
--			goto err_disable_clk;
--		}
-+		if (PTR_ERR(info->vref) != -ENODEV)
-+			return PTR_ERR(info->vref);
- 
- 		/* Use internal reference */
- 		iowrite32(reg_con | NPCM_ADCCON_REFSEL,
-@@ -314,8 +308,6 @@ err_iio_register:
- 	iowrite32(reg_con & ~NPCM_ADCCON_ADC_EN, info->regs + NPCM_ADCCON);
- 	if (!IS_ERR(info->vref))
- 		regulator_disable(info->vref);
--err_disable_clk:
--	clk_disable_unprepare(info->adc_clk);
- 
- 	return ret;
- }
-@@ -332,7 +324,6 @@ static void npcm_adc_remove(struct platf
- 	iowrite32(regtemp & ~NPCM_ADCCON_ADC_EN, info->regs + NPCM_ADCCON);
- 	if (!IS_ERR(info->vref))
- 		regulator_disable(info->vref);
--	clk_disable_unprepare(info->adc_clk);
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -323,7 +323,7 @@ end:
+ 	mptcp_set_owner_r(skb, sk);
  }
  
- static struct platform_driver npcm_adc_driver = {
+-static bool mptcp_rmem_schedule(struct sock *sk, struct sock *ssk, int size)
++static bool mptcp_rmem_schedule(struct sock *sk, int size)
+ {
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 	int amt, amount;
+@@ -341,27 +341,11 @@ static bool mptcp_rmem_schedule(struct s
+ 	return true;
+ }
+ 
+-static bool __mptcp_move_skb(struct mptcp_sock *msk, struct sock *ssk,
+-			     struct sk_buff *skb, unsigned int offset,
+-			     size_t copy_len)
++static void mptcp_init_skb(struct sock *ssk, struct sk_buff *skb, int offset,
++			   int copy_len)
+ {
+-	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
+-	struct sock *sk = (struct sock *)msk;
+-	struct sk_buff *tail;
+-	bool has_rxtstamp;
+-
+-	__skb_unlink(skb, &ssk->sk_receive_queue);
+-
+-	skb_ext_reset(skb);
+-	skb_orphan(skb);
+-
+-	/* try to fetch required memory from subflow */
+-	if (!mptcp_rmem_schedule(sk, ssk, skb->truesize)) {
+-		MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_RCVPRUNED);
+-		goto drop;
+-	}
+-
+-	has_rxtstamp = TCP_SKB_CB(skb)->has_rxtstamp;
++	const struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
++	bool has_rxtstamp = TCP_SKB_CB(skb)->has_rxtstamp;
+ 
+ 	/* the skb map_seq accounts for the skb offset:
+ 	 * mptcp_subflow_get_mapped_dsn() is based on the current tp->copied_seq
+@@ -373,6 +357,25 @@ static bool __mptcp_move_skb(struct mptc
+ 	MPTCP_SKB_CB(skb)->has_rxtstamp = has_rxtstamp;
+ 	MPTCP_SKB_CB(skb)->cant_coalesce = 0;
+ 
++	__skb_unlink(skb, &ssk->sk_receive_queue);
++
++	skb_ext_reset(skb);
++	skb_dst_drop(skb);
++}
++
++static bool __mptcp_move_skb(struct sock *sk, struct sk_buff *skb)
++{
++	u64 copy_len = MPTCP_SKB_CB(skb)->end_seq - MPTCP_SKB_CB(skb)->map_seq;
++	struct mptcp_sock *msk = mptcp_sk(sk);
++	struct sk_buff *tail;
++
++	/* try to fetch required memory from subflow */
++	if (!mptcp_rmem_schedule(sk, skb->truesize)) {
++		MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_RCVPRUNED);
++		mptcp_drop(sk, skb);
++		return false;
++	}
++
+ 	if (MPTCP_SKB_CB(skb)->map_seq == msk->ack_seq) {
+ 		/* in sequence */
+ 		msk->bytes_received += copy_len;
+@@ -393,7 +396,6 @@ static bool __mptcp_move_skb(struct mptc
+ 	 * will retransmit as needed, if needed.
+ 	 */
+ 	MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_DUPDATA);
+-drop:
+ 	mptcp_drop(sk, skb);
+ 	return false;
+ }
+@@ -720,7 +722,9 @@ static bool __mptcp_move_skbs_from_subfl
+ 			if (tp->urg_data)
+ 				done = true;
+ 
+-			if (__mptcp_move_skb(msk, ssk, skb, offset, len))
++			mptcp_init_skb(ssk, skb, offset, len);
++			skb_orphan(skb);
++			if (__mptcp_move_skb(sk, skb))
+ 				moved += len;
+ 			seq += len;
+ 
 
 
