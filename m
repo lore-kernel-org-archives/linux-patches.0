@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F9644A72C;
-	Tue, 16 Jun 2026 15:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C827C43E4BA;
+	Tue, 16 Jun 2026 15:26:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623558; cv=none; b=bsrcsoSIJyxKyq4nzjBA6z/YlyzMQBnM9ri40DD0MkbkIovLl8QQ8kYV1KqA7boEdoiAdvnoJ7pv4jjS62N9UA2UAdn+apUXzwSp/DI8SGdbfmP22ANQVQ1YJ5A2RKJ+suWhofU2bJt8RmsLC+i6YtvSP6o0b/w+tEkrOVIQ9OQ=
+	t=1781623564; cv=none; b=iZtAx9Y4Ioe/r7AWhxQwSCmPH+P7oagDyHMRdhfzEN/CGJqXckskVibmgSbgnwdv4W/tH1vqqDAQ3ITS6gLBnWKey2Qh3+kxvf1NiujY0Vs7WLoESwLJ+TTED6df9jS6Z23K2yuxzsjCZJHjoiJA+5wvQKBGUN17kCzGzfOo3Iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623558; c=relaxed/simple;
-	bh=mTGeKIxangur7t7OwYIPwe2HJs5uzi/vwTZdvXUuDWA=;
+	s=arc-20240116; t=1781623564; c=relaxed/simple;
+	bh=+TfS64cb1rl112/KTO+hFz2KY8pTOCB9C/m154WDdek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EdeEZZFK5Yx5RAMgb0+uK6mme8H1w+N8H5clUxxyDe5DkBjhPtLV0Ip6Jw6Nl4trf+IECkO6Fuw+uIoVEEbyH2KQ+d4pUA8vUtLuo5Ev9XWO0sOanjK/6Hw8Mg2XXdwR0xbQYqIROnlQpOtCZszkmo/hJYi2SKWdoJYRlmXnaOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ba6cwCgl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n69/8xiixaGVvhgUwfaHJjEtRm72brzDeLj83EiTpy8NvyELcM1jwYccP4O9qD7ZtsMcOx5mH5/hgM0IsVImWtBwHI+Sm/p6igJSxlQoTfr33sNXBwZndgTl9UWB6cqw2M8zSGP6QAB1fARtHLa5RYHQ2xCDB6TkaJ78EYFLNrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cPcUh65k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ba6cwCgl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75AC61F00A3D;
-	Tue, 16 Jun 2026 15:25:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cPcUh65k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB8C61F000E9;
+	Tue, 16 Jun 2026 15:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623557;
-	bh=r2F37/MvcvY1yeC8niW6AG9wX0gdH1Pcbg7llcmO+RE=;
+	s=korg; t=1781623562;
+	bh=BM7SG0YRUKpWIV/dGuoUcDCCwEROSB5lmxYUhY74Gs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ba6cwCglGWExCBM14TZVZ4a1xlsWnYJC2PIOIVqLZwDs7a8zR+hAfsXCQY5MvWWXK
-	 mAZSLSdEfrdECoglUUunHODvXXpNGWCkKMaWcMLKaAt1rwFl6csOQBNLSn5zrVeZWx
-	 GI4tE6838mLIME4e16SJ3rbmesuBgfneCBBL1gNk=
+	b=cPcUh65kBnP5mdSDvYyh5M4aBwrZZRLfv+K9BmuyPsZ2geRXgb7hB2u5XvRyjVhM0
+	 zk/IKiJF6wc1cgKo6mFV+8dKDucR3SOzVFptozlHk4f6ErPkQxVlFHE7xo2CmT7UqB
+	 cFrtI53pbUK/rjB6PLavEBRxwkPMe5RiSq36YAXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 144/378] netfilter: nf_log: validate MAC header was set before dumping it
-Date: Tue, 16 Jun 2026 20:26:15 +0530
-Message-ID: <20260616145117.845780594@linuxfoundation.org>
+	lvc-project@linuxtesting.org,
+	Georgiy Osokin <g.osokin@auroraos.dev>,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>
+Subject: [PATCH 7.0 171/378] tee: shm: fix shm leak in register_shm_helper()
+Date: Tue, 16 Jun 2026 20:26:42 +0530
+Message-ID: <20260616145119.332321551@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,70 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Georgiy Osokin <g.osokin@auroraos.dev>
 
-[ Upstream commit a84b6fedbc97078788be78dbdd7517d143ad1a77 ]
+commit 26682f5efc276e3ad96d102019472bfbf03833b2 upstream.
 
-The fallback path of dump_mac_header() guards the MAC header access
-only with "skb->mac_header != skb->network_header", without checking
-skb_mac_header_was_set(). When the MAC header is unset, mac_header is
-0xffff, so the test passes and skb_mac_header(skb) returns
-skb->head + 0xffff, ~64 KiB past the buffer; the loop then reads
-dev->hard_header_len bytes out of bounds into the kernel log.
+register_shm_helper() allocates shm before calling
+iov_iter_npages(). If iov_iter_npages() returns 0, the function
+jumps to err_ctx_put and leaks shm.
 
-This is reachable via the netdev logger: nf_log_unknown_packet() calls
-dump_mac_header() unconditionally, and an skb sent through AF_PACKET
-with PACKET_QDISC_BYPASS reaches the egress hook with mac_header still
-unset (__dev_queue_xmit(), which would reset it, is bypassed).
+This can be triggered by TEE_IOC_SHM_REGISTER with
+struct tee_ioctl_shm_register_data where length is 0.
 
-Add the skb_mac_header_was_set() check the ARPHRD_ETHER path already
-uses, and replace the open-coded MAC header length test with
-skb_mac_header_len(). Only skbs with an unset MAC header are affected;
-valid ones are dumped as before.
+Jump to err_free_shm instead.
 
- BUG: KASAN: slab-out-of-bounds in dump_mac_header (net/netfilter/nf_log_syslog.c:831)
- Read of size 1 at addr ffff88800ea49d3f by task exploit/148
- Call Trace:
-  kasan_report (mm/kasan/report.c:595)
-  dump_mac_header (net/netfilter/nf_log_syslog.c:831)
-  nf_log_netdev_packet (net/netfilter/nf_log_syslog.c:938 net/netfilter/nf_log_syslog.c:963)
-  nf_log_packet (net/netfilter/nf_log.c:260)
-  nft_log_eval (net/netfilter/nft_log.c:60)
-  nft_do_chain (net/netfilter/nf_tables_core.c:285)
-  nft_do_chain_netdev (net/netfilter/nft_chain_filter.c:307)
-  nf_hook_slow (net/netfilter/core.c:619)
-  nf_hook_direct_egress (net/packet/af_packet.c:257)
-  packet_xmit (net/packet/af_packet.c:280)
-  packet_sendmsg (net/packet/af_packet.c:3114)
-  __sys_sendto (net/socket.c:2265)
-
-Fixes: 7eb9282cd0ef ("netfilter: ipt_LOG/ip6t_LOG: add option to print decoded MAC header")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 7bdee4157591 ("tee: Use iov_iter to better support shared buffer registration")
+Cc: stable@vger.kernel.org
+Cc: lvc-project@linuxtesting.org
+Signed-off-by: Georgiy Osokin <g.osokin@auroraos.dev>
+Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_log_syslog.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tee/tee_shm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_log_syslog.c b/net/netfilter/nf_log_syslog.c
-index 41503847d9d7fb..c0462d403157a9 100644
---- a/net/netfilter/nf_log_syslog.c
-+++ b/net/netfilter/nf_log_syslog.c
-@@ -801,8 +801,8 @@ static void dump_mac_header(struct nf_log_buf *m,
+--- a/drivers/tee/tee_shm.c
++++ b/drivers/tee/tee_shm.c
+@@ -435,7 +435,7 @@ register_shm_helper(struct tee_context *
+ 	num_pages = iov_iter_npages(iter, INT_MAX);
+ 	if (!num_pages) {
+ 		ret = ERR_PTR(-ENOMEM);
+-		goto err_ctx_put;
++		goto err_free_shm;
+ 	}
  
- fallback:
- 	nf_log_buf_add(m, "MAC=");
--	if (dev->hard_header_len &&
--	    skb->mac_header != skb->network_header) {
-+	if (dev->hard_header_len && skb_mac_header_was_set(skb) &&
-+	    skb_mac_header_len(skb) != 0) {
- 		const unsigned char *p = skb_mac_header(skb);
- 		unsigned int i;
- 
--- 
-2.53.0
-
+ 	shm->pages = kzalloc_objs(*shm->pages, num_pages);
 
 
