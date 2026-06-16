@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC0B449EB8;
-	Tue, 16 Jun 2026 15:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B6B44BC94;
+	Tue, 16 Jun 2026 15:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624206; cv=none; b=ubOKzhtxCaMq5VssaV2rJ9i+GoODPUqvtWrYDGZdaF1sFAt5PO4QIXC0J2wN8D5My9YwOJ6yt657hyEfEf+BCD0hm1betAIYmwMpgNwAK1sD3qpw/TR2I/RtEp/ff1vzMOtR6O1KywnrCFcdmavt8L//qLretfUuqNNhixDSnL4=
+	t=1781624211; cv=none; b=V1PAnslMIY62okZqvmBWqRxCdp4HMISEZwFrYr9kuyXv5AEC6tfoLBB46NHO9r1Vx5bhwZuVXTxs7p8A3s0/Jn5vmhoIUlMNf5DtUx57qbk5ecKkm6HjxKMjcicQMPA8PjBusXqEoZkxJ+7kVYkGuPwh8Xi2uadUht1FivjxQHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624206; c=relaxed/simple;
-	bh=0UFeQ0Dz4TkE/fEHqfhQIeIUnKSdi1oPVk67tqlXTeg=;
+	s=arc-20240116; t=1781624211; c=relaxed/simple;
+	bh=Hmox0bTcRfxF3/xL8uhaiQZFXd8DvcNpLwqm3Eekqo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LZNPwYO/GkEbiwK18AcuUAfxXCTW3Sp0BSopyDsFejkxIvVcwIfsyz2+f5w2HVt87gqxbR3nlTB/pL6sTdJvjtXk+X/6DKVQdIgHq1lsZwp0s6/b4jz+aMsgpLIhzMwlQlgSmPClw1UNF/jFtrhJebKcJYg2YT2hV6XZzxQpP74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvzmMs0i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MCticswNr36OOvnjsG5p5FewiegIxBrswtuh6vHt8vFrsZNOC4hmEw2MIS7EIk0YPsNtLpK2+p8KdMMBZjU1NVd0R2O+06BVPS5M5CxsdES7pwvvsXw0VfwuXs8g2Rs/F2u5qBpN9JB+3NPF8uQtyhE3hHyPgHUQqMsnZOLe/Qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aSstg/+3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvzmMs0i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A4D21F000E9;
-	Tue, 16 Jun 2026 15:36:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aSstg/+3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A8731F000E9;
+	Tue, 16 Jun 2026 15:36:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624205;
-	bh=XZ6NtAFYTEXBWI83Nx3peXYsnIBd7oBhi4hfz4enkOo=;
+	s=korg; t=1781624210;
+	bh=iwd3etPTjAv2bNboqrcYZFJI/gwczBb+gGCoQ7+ok3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LvzmMs0ifaP8/zbos8oIYbf6gGhX2Ibjm8yZ9aDji1nbKJQ5mzfBzrPK8NBytJwEy
-	 kiS/axbcoUe8JsuZabsc39qR7t5xATi5Q0pjRQyDDdYSMmELmC5w5Gg5QufPmLLyyH
-	 ZmKRDbq3GXZ+Hxm3fqGSgdSrrCCplB5iB/A1B9iY=
+	b=aSstg/+33m0YR0tK5fHLJNNNvIQ+T84q+Px0jcGo/EYvusA9Su+Pvbhnv/z6sOlmY
+	 bgQyMkylrLCWflJHppGlqLFPM3vwn2Ndm/TXIeRqVweWzbB5szqUCqIGJSD8D85ON5
+	 b32XJhttmIach1e0pvjZxF1YlKv2zoEjXAGxxKuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuqi Xu <xuyq21@lenovo.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 292/378] net: rds: clear i_sends on setup unwind
-Date: Tue, 16 Jun 2026 20:28:43 +0530
-Message-ID: <20260616145125.436402446@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.0 266/378] fuse: reject fuse_notify() pagecache ops on directories
+Date: Tue, 16 Jun 2026 20:28:17 +0530
+Message-ID: <20260616145124.094074720@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -56,47 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuqi Xu <xuyq21@lenovo.com>
+From: Jann Horn <jannh@google.com>
 
-commit 20cf0fb715c41111469577e85e35d15f099473e0 upstream.
+commit 9c954499d43aefac01c5dfb57a82b13d2dcf4b94 upstream.
 
-The RDS IB connection teardown path is written so it can run during
-partial startup and on repeated shutdown attempts. It uses NULL
-pointers to distinguish resources that are still owned from resources
-that have already been released.
+The operations FUSE_NOTIFY_STORE and FUSE_NOTIFY_RETRIEVE allow the
+FUSE daemon to actively write/read pagecache contents.
 
-When rds_ib_setup_qp() fails after allocating i_sends but before
-allocating i_recvs, the sends_out path frees i_sends without clearing
-the pointer. A later shutdown pass can still treat that stale pointer
-as a live send ring allocation.
+For directories with FOPEN_CACHE_DIR, the pagecache is used as
+kernel-internal cache storage, and userspace is not supposed to have
+direct access to this cache - in particular, fuse_parse_cache() will hit
+WARN_ON() if the cache contains bogus data.
 
-Clear i_sends after vfree() in the error unwind path so the existing
-shutdown logic continues to use the correct ownership state.
+Reject FUSE_NOTIFY_STORE and FUSE_NOTIFY_RETRIEVE on anything other than
+regular files with -EINVAL.
 
-Fixes: 3b12f73a5c29 ("rds: ib: add error handle")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yuqi Xu <xuyq21@lenovo.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/5a0f7624bb9845a7b67d26166a150b59e7f394ce.1779632468.git.xuyq21@lenovo.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5d7bc7e8680c ("fuse: allow using readdir cache")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://patch.msgid.link/20260519-fuse-dir-pagecache-v2-1-5428fa48e175@google.com
+Acked-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rds/ib_cm.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/fuse/dev.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/net/rds/ib_cm.c
-+++ b/net/rds/ib_cm.c
-@@ -656,6 +656,7 @@ static int rds_ib_setup_qp(struct rds_co
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -1797,6 +1797,10 @@ static int fuse_notify_store(struct fuse
+ 	inode = fuse_ilookup(fc, nodeid,  NULL);
+ 	if (!inode)
+ 		goto out_up_killsb;
++	if (!S_ISREG(inode->i_mode)) {
++		err = -EINVAL;
++		goto out_iput;
++	}
  
- sends_out:
- 	vfree(ic->i_sends);
-+	ic->i_sends = NULL;
+ 	mapping = inode->i_mapping;
+ 	index = outarg.offset >> PAGE_SHIFT;
+@@ -1976,7 +1980,10 @@ static int fuse_notify_retrieve(struct f
  
- ack_dma_out:
- 	rds_dma_hdr_free(rds_ibdev->dev, ic->i_ack, ic->i_ack_dma,
+ 	inode = fuse_ilookup(fc, nodeid, &fm);
+ 	if (inode) {
+-		err = fuse_retrieve(fm, inode, &outarg);
++		if (!S_ISREG(inode->i_mode))
++			err = -EINVAL;
++		else
++			err = fuse_retrieve(fm, inode, &outarg);
+ 		iput(inode);
+ 	}
+ 	up_read(&fc->killsb);
 
 
