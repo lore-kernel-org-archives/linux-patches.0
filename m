@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E979D34FF79;
-	Tue, 16 Jun 2026 18:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF2F34FF79;
+	Tue, 16 Jun 2026 18:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635856; cv=none; b=BEjTB6QCpTKWbP8/hXsc0UeZu55yWSfL4MwoxtMnCxpLBnIUgF4fZ+6ZD/on4yzoySU/2Rou5KzWMZkuS07FVoyqOOwCOMLXHUzsAJx9m+bhy0U6CESM7OFqnABVX4tOXlosvkGTc/uGe3tpGd5KDWKaQgonzH7St+ZScdI76Ww=
+	t=1781635862; cv=none; b=qVPzJ8laMt/Pxr/dUJzJpODvGEfBGs649eWOS3INnDTuMcymFi5lS9koVcEVU0Xr2xATZ10+eQ0oGGeZaTbVsyoNMe3CfsZAZlc4GFmX187e9Sr5+hpMvSm/qh7Ta4igquBFoYM0lsIKrcCXyWhrJF+OnC2OB0QyNJXZgRyUW04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635856; c=relaxed/simple;
-	bh=2RaIrOQ2lTgsbQZXwJPqs+IufcoV7SwSpTcR6V/AF9Y=;
+	s=arc-20240116; t=1781635862; c=relaxed/simple;
+	bh=AQ2LbnxtIX9OTIh812yHGino+QWTVhB/09zGhF5r50s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sGl//2Kn/LaMHLGbhOLvuaKJgtztRobYjRkLwg3bub+iKpL7JXAlp2LJqOaAX8/ri7iR7JzOqaLKQMhiJSust/jx5IJEPRcBy9J8e1zOV4FvkR58NmHY/48VLY08yOSGxkwEqsl0cHI1W/7NP+dtFJ3w8iVqoKOnKGTG0EZVrZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nRVN3JZ6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UovmRPWsUo/2Vz5QDtvI9FQpk5L6XMZUDaGKKr/P0AgtS5brP2rK9u/5v/JGL5Y15s0AzJ0FbhLo6Vlbbt+mLxsZilIYbPwXu1SvbPt8i7Py3+9e589x9RLAcL07CVIf++v0bS0sO8fmcuDrRUga1janzBCxMfY5OGAU1KHCkDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j5irVjHk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nRVN3JZ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77CF1F000E9;
-	Tue, 16 Jun 2026 18:50:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j5irVjHk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F221F000E9;
+	Tue, 16 Jun 2026 18:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635855;
-	bh=siAkvKNCoaMiDPk5u+ZiLM0r/wzZkvbcwYfDYrPEK+k=;
+	s=korg; t=1781635861;
+	bh=Y+J3yYwS4fVksgcSx4qikq89K39OBpDyahqZALskE0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nRVN3JZ6DrnMRlFFn9rMHgMnzR4n6rF/nXXX+3kWp8+eUpP91UkLyCffi744eniKQ
-	 CEW6c90XrZjEBmT57DNFhSWZOHyf51XtkCVjyUsJuWp88JrsFviq7UIxWlO/cMYpjW
-	 jsCK8G60d/WbvWT957K4MCUKMrTiWtv9iPo544LU=
+	b=j5irVjHkiABfYGGHSVqMvbjENNWniSCWpgr+1zoLKe1g50tGe4vvRzjja8vYUT/1W
+	 oOSB3koEiOOhZwDfTH3oqy/i4DSPd5/CRibKEc8ozmb7cPG6rXtD/wuEtqlAa3vHiu
+	 cb02rMvAPvaNPF2LqIc4g8jskI5w+/L2HImI+VWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 5.10 094/342] usbip: vudc: Fix use after free bug in vudc_remove due to race condition
-Date: Tue, 16 Jun 2026 20:26:30 +0530
-Message-ID: <20260616145052.610413532@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 085/342] Input: atmel_mxt_ts - fix boundary check in mxt_prepare_cfg_mem
+Date: Tue, 16 Jun 2026 20:26:21 +0530
+Message-ID: <20260616145052.207170243@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -52,77 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit d96209626a29ea64666be98c30b30ac82e5f1be6 upstream.
+commit baa0210fb6a9dc3882509a9411b6d284d88fe30e upstream.
 
-This patch follows up Zheng Wang's 2023 report of a use-after-free in
-vudc_remove(). The original thread stalled on Shuah Khan's request for
-runtime testing of the unplug/unbind path. This patch supplies that
-testing and keeps Zheng's original fix shape.
+When a configuration file provides an object size that is larger than the
+driver's known mxt_obj_size(object), the driver intends to discard the
+extra bytes.
 
-In vudc_probe(), v_init_timer() binds udc->tr_timer.timer to v_timer().
-usbip_sockfd_store() starts the timer via v_start_timer()/v_kick_timer().
-vudc_remove() can then free the containing struct vudc while the timer is
-still pending or executing.
+The loop iterates using for (i = 0; i < size; i++). Inside the loop, the
+condition to skip processing extra bytes is:
 
-KASAN confirms the race on an unpatched x86_64 QEMU guest with
-CONFIG_KASAN=y, CONFIG_USBIP_VUDC=y, CONFIG_USB_ZERO=y, and a tight loop
-that repeatedly writes a socket fd to usbip_sockfd, closes the socket
-pair, and unbinds/rebinds usbip-vudc.0:
+    if (i > mxt_obj_size(object))
+        continue;
 
-  BUG: KASAN: slab-use-after-free in __run_timer_base.part.0+0x8ba/0x8e0
-  Write of size 8 at addr ffff888001b80740 by task trigger_and_unb/239
-  Allocated by task 239:
-    vudc_probe+0x4d/0xaa0
-  Freed by task 239:
-    kfree+0x18f/0x520
-    device_release_driver_internal+0x388/0x540
-    unbind_store+0xd9/0x100
+Since i is a 0-based index, the valid indices for the object are 0 through
+mxt_obj_size(object) - 1.
 
-This lands in the timer core rather than v_timer() itself because the
-embedded timer_list is being walked after its containing struct vudc has
-already been freed. The underlying lifetime bug is the same one Zheng
-reported.
+When i == mxt_obj_size(object), the condition evaluates to false, and the
+code processes the byte instead of discarding it.
 
-With v_stop_timer() called from vudc_remove() and the timer deleted
-synchronously, the same harness completed 5000 bind/unbind iterations
-with no KASAN report.
+This causes the code to calculate byte_offset = reg + i - cfg->start_ofs
+and writes the byte there, overwriting exactly one byte of the adjacent
+instance or object.
 
-Fixes: b6a0ca111867 ("usbip: vudc: Add UDC specific ops")
-Cc: stable <stable@kernel.org>
-Reported-by: Zheng Wang <zyytlz.wz@163.com>
-Closes: https://lore.kernel.org/linux-usb/20230317100954.2626573-1-zyytlz.wz@163.com/
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Link: https://patch.msgid.link/20260417163552.807548-1-michael.bommarito@gmail.com
+Update the boundary check to skip extra bytes correctly by using >=.
+
+Fixes: 50a77c658b80 ("Input: atmel_mxt_ts - download device config using firmware loader")
+Cc: stable@vger.kernel.org
+Assisted-by: Gemini:gemini-3.1-pro
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Link: https://patch.msgid.link/20260504185448.4055973-1-dmitry.torokhov@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/usbip/vudc_dev.c      |    1 +
- drivers/usb/usbip/vudc_transfer.c |    3 ++-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/input/touchscreen/atmel_mxt_ts.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/usbip/vudc_dev.c
-+++ b/drivers/usb/usbip/vudc_dev.c
-@@ -633,6 +633,7 @@ int vudc_remove(struct platform_device *
- {
- 	struct vudc *udc = platform_get_drvdata(pdev);
+--- a/drivers/input/touchscreen/atmel_mxt_ts.c
++++ b/drivers/input/touchscreen/atmel_mxt_ts.c
+@@ -1400,7 +1400,7 @@ static int mxt_prepare_cfg_mem(struct mx
+ 			}
+ 			cfg->raw_pos += offset;
  
-+	v_stop_timer(udc);
- 	usb_del_gadget_udc(&udc->gadget);
- 	cleanup_vudc_hw(udc);
- 	kfree(udc);
---- a/drivers/usb/usbip/vudc_transfer.c
-+++ b/drivers/usb/usbip/vudc_transfer.c
-@@ -490,7 +490,8 @@ void v_stop_timer(struct vudc *udc)
- {
- 	struct transfer_timer *t = &udc->tr_timer;
+-			if (i > mxt_obj_size(object))
++			if (i >= mxt_obj_size(object))
+ 				continue;
  
--	/* timer itself will take care of stopping */
-+	/* Delete the timer synchronously before teardown frees udc. */
- 	dev_dbg(&udc->pdev->dev, "timer stop");
-+	timer_delete_sync(&t->timer);
- 	t->state = VUDC_TR_STOPPED;
- }
+ 			byte_offset = reg + i - cfg->start_ofs;
 
 
