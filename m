@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3589044E021;
-	Tue, 16 Jun 2026 15:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C01744D035;
+	Tue, 16 Jun 2026 15:39:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624377; cv=none; b=pVXJprCnC33CmTeHnzvRHS8jVguQlVqH+JXX7BG/bbuOW54wqbRraxOIhUvTsJfE845ep+OhkPed/VeXLm90zPk+sANEzGwfhP3qvEHLoxkAZg5trlZTQYQaYIf2ychCqtRdB7Ex0xCH2Ng3KvfGkB2Jax0RAIW7qmmEQiyKrjc=
+	t=1781624382; cv=none; b=DEolfhcMRDiCqPf6u1Dae7UHjNVPvqjyeDXzr/UCrRju2RAEHnToWCcvQdcLRqlgGSTf8sZnf5sEo5kHnvz2T1myWJjiVMtKjtpm4w+Vwg1ZS5d7VadQzjToEs7GtaCIboYjMa1Nq9qOqzHCiQH3FXhmIfLJdUkN+8/b2ph/arE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624377; c=relaxed/simple;
-	bh=lYG1rJakGM/CvZ8bxq5+dW9QdDY+xvA6l25DYLPxYTY=;
+	s=arc-20240116; t=1781624382; c=relaxed/simple;
+	bh=taoqp8r03U1N5JwnDFKRBKNTQEr/biOmgwz7E+wI+Gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OSLtrGl4h7IxDQ+mdPRlXsKxFEQsWbrlmkYTX0VsBOHw7GfTC/RA4wPBEuFF+KDQuaJpa8oyMeTKa/V8RuDNAQQFg1CTC5YdQ+I6fe2QdGf29gNThYk235Cek9YVRn7ug8a3PRvewHvj9Zw2pd6Ddim3R54rBLuyGoQ11Uh37qM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uPVaPAg0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EjKOL9OqOI9pNBI6CqtTpGQpCFBQ65AZSPLNxffu+79+NOtYlBgX+0rULejXo/JR0v5Ex4ZDtQi4mYtOccO/W2gks+LsfdSPJ4iSs4xTfIwvGC7P577caltB6GNjMj88veQhdaM7hIbXxCEaPlYFQ7f31mYwDfahyDx616p+TCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzm+/Wgr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPVaPAg0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 439AC1F00A3D;
-	Tue, 16 Jun 2026 15:39:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzm+/Wgr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E0D1F000E9;
+	Tue, 16 Jun 2026 15:39:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624376;
-	bh=mqjfzTjR+v3CjsurCoG/TcStz1cCkpwqtspLAOc7LBE=;
+	s=korg; t=1781624381;
+	bh=wSvHEJfxjGNpAuaUrgLH0DnotJ9h91EkVGRcNs3lKiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uPVaPAg0oTOiH+UCwioTm82bVabbDBWagYRqg1QluIT6jhkWBTW9wtz5sxpmcbhaW
-	 toeaKdXUf4BkB2n8nJsPah5Qo5/79RHKy6FMa4rrvnF/JGSdZfhsV33kYcFeSgtpHO
-	 zBBKqM9mHvbNt8MnV/yiCd6+jpP+D0eN/3UZxcCg=
+	b=mzm+/Wgr2149aEeOh7QSpoZKQEko4x9+jZu+H8y8Iy4fyiOp9BUucJ099CWoWvEMl
+	 A2TtNFdWC7rYudjgHqMSOQtQiz0mDh00XkldAR1191nusb2Qzfy5pv/XsJesCg4SMv
+	 6xlcIgeckG7H3Riqxn4LDzleILsai3EiF5ysOe8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 7.0 324/378] thunderbolt: Limit XDomain response copy to actual frame size
-Date: Tue, 16 Jun 2026 20:29:15 +0530
-Message-ID: <20260616145127.284767671@linuxfoundation.org>
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: [PATCH 7.0 325/378] slimbus: qcom-ngd-ctrl: fix OF node refcount
+Date: Tue, 16 Jun 2026 20:29:16 +0530
+Message-ID: <20260616145127.336087601@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -50,40 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 4db2bd2ed4785dbadaeeab9f4e346b21ac5fb8eb upstream.
+commit 120134fe75c6b0ae38f14eb8b548ad1e5761f912 upstream.
 
-tb_xdomain_copy() copies req->response_size bytes from the received
-packet buffer regardless of the actual frame size.  When a short
-response arrives, this reads past the valid frame data in the DMA
-pool buffer into stale contents from previous transactions.
+Platform devices created with platform_device_alloc() call
+platform_device_release() when the last reference to the device's
+kobject is dropped. This function calls of_node_put() unconditionally.
+This works fine for devices created with platform_device_register_full()
+but users of the split approach (platform_device_alloc() +
+platform_device_add()) must bump the reference of the of_node they
+assign manually. Add the missing call to of_node_get().
 
-Use the minimum of frame size and expected response size for the
-copy length.
-
-Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260530204421.116824-2-srini@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/xdomain.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/slimbus/qcom-ngd-ctrl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -123,7 +123,9 @@ static bool tb_xdomain_match(const struc
- static bool tb_xdomain_copy(struct tb_cfg_request *req,
- 			    const struct ctl_pkg *pkg)
- {
--	memcpy(req->response, pkg->buffer, req->response_size);
-+	size_t len = min_t(size_t, pkg->frame.size, req->response_size);
-+
-+	memcpy(req->response, pkg->buffer, len);
- 	req->result.err = 0;
- 	return true;
- }
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1542,7 +1542,7 @@ static int of_qcom_slim_ngd_register(str
+ 			kfree(ngd);
+ 			return ret;
+ 		}
+-		ngd->pdev->dev.of_node = node;
++		ngd->pdev->dev.of_node = of_node_get(node);
+ 		ctrl->ngd = ngd;
+ 
+ 		ret = platform_device_add(ngd->pdev);
 
 
