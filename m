@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2A638C437;
-	Tue, 16 Jun 2026 18:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1875F47CC79;
+	Tue, 16 Jun 2026 18:40:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635221; cv=none; b=NKRzCG38motYbu4SlJqTC9fBI5mO7kbIXlDn/ONBGI1i4Hn/vFzyE9w2BwU2krZtKDM3n3DC26VZcC9WjqzKv5KQZ/BmR9iDG8LCZSBA7B6eT5ZF6+ZMuTSWKnbonm0rBpsv5I/zh6S9EOzbPieI5fg1vxBybTEaUQfkyzTw4yk=
+	t=1781635227; cv=none; b=uctIRG0iVpMG9FLs/8m5V7VhTNiIoaL37+3hvhz6y6DY4/ceCHl5rX9qQV7lDdwoX+STy8eMinx8lV3gYIER0HOMg7WB0Etn0VsuaWtmrSrVY0vg2eoOMo3g/y+VHcyqBjtysXsv6IvW6bYEXVyp+fyKNRslX+YdhJWVfxRjCIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635221; c=relaxed/simple;
-	bh=qzPluVIC3/h5uiDExHCy0PLoHW70Kw0G8FrDKuA7Mmk=;
+	s=arc-20240116; t=1781635227; c=relaxed/simple;
+	bh=vX3ywn3P6pxEWqO3btEUDDe3EZGtcnY9HCdFZp+jxMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k07prHfgmhNe4wVISpIaMMpZjlmYtCWLIKCO1mhw4Dww92ptrjk+g9KAOcTw54j76uUOUvB2O+VaBCh6q5RzjPHmm9wCyHI1PNr6zsgELZZgiidJT3vZ11fCWLGLL7PWUox48Yiq1DUEJLoXxF0K0nr85k4NTySE23dS4Y8t9Dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTVnlecg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qWunJnI7+dM7Zm0EaJ9nlftFb4oQ7rhBy1TMA2Vlev2GYQXAinGudiLHb+pBKquax0XpXw28On4UbETXvYCfCD0iT4gYzde8LqmSfPAA/ONV4vFHKnJKSkK5srrpCKQRzj6CA43DeaYCOQi858lfRmrGiIpmkkd4u+az+5B30EA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aE/MaEVa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTVnlecg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F3EF1F000E9;
-	Tue, 16 Jun 2026 18:40:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aE/MaEVa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5FB91F000E9;
+	Tue, 16 Jun 2026 18:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635220;
-	bh=tJjZMRnH5jkd1KvbimL8FR9I6DcEj7qC9NkBCPCXkcQ=;
+	s=korg; t=1781635226;
+	bh=DPXdcjhv6wq3eTRFaqGy0buXJ12KzJBbbe2HVozUykY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bTVnlecglqxTk4w9I0wbLQFGjxT9GSMDYOx97LOjPx9vhce9TPiloGWxOrympUd+B
-	 oa47hgUGzqaykNh99cGEl1SmEA5w2UajGyBzejgVJOxKyul6bFwsxO/Af3nB8g2jsP
-	 iaKWxUemZYem2XYyixsurSI7joh1aoGRgwyu48cs=
+	b=aE/MaEVaBKUwfLy+U+PIw7MPnSshQbe/0mebYYE/xpCEILlLklhpCGvAFqVTkKASY
+	 ZAjMP2qopK9tqxyh9EjvC2F1i9w0x1bvuWYO5ALtKjU6gqQCAItx5/1X8QE/H40elL
+	 8VN112VlvrLKIYdPED8/cEgB0LiuKPq/vn29sPag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Will Deacon <will@kernel.org>
-Subject: [PATCH 5.15 403/411] arm64: cputype: Add C1-Ultra definitions
-Date: Tue, 16 Jun 2026 20:30:41 +0530
-Message-ID: <20260616145122.592414663@linuxfoundation.org>
+Subject: [PATCH 5.15 404/411] arm64: cputype: Add C1-Premium definitions
+Date: Tue, 16 Jun 2026 20:30:42 +0530
+Message-ID: <20260616145122.638254008@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -53,14 +53,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Mark Rutland <mark.rutland@arm.com>
 
-commit 60349e64a6c65f9f0aa118af711b3c7e137f07ff upstream.
+commit d28413bfc5a255957241f1df5d7fd0c2cd74fe18 upstream.
 
-Add cputype definitions for C1-Ultra. These will be used for errata
+Add cputype definitions for C1-Premium. These will be used for errata
 detection in subsequent patches.
 
-These values can be found in the C1-Ultra TRM:
+These values can be found in the C1-Premium TRM:
 
-  https://developer.arm.com/documentation/108014/0100/
+  https://developer.arm.com/documentation/109416/0100/
 
 ... in section A.5.1 ("MIDR_EL1, Main ID Register").
 
@@ -77,21 +77,21 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/arch/arm64/include/asm/cputype.h
 +++ b/arch/arm64/include/asm/cputype.h
-@@ -97,6 +97,7 @@
- #define ARM_CPU_PART_NEOVERSE_V3	0xD84
- #define ARM_CPU_PART_CORTEX_X925	0xD85
+@@ -99,6 +99,7 @@
  #define ARM_CPU_PART_CORTEX_A725	0xD87
-+#define ARM_CPU_PART_C1_ULTRA		0xD8C
+ #define ARM_CPU_PART_C1_ULTRA		0xD8C
  #define ARM_CPU_PART_NEOVERSE_N3	0xD8E
++#define ARM_CPU_PART_C1_PREMIUM		0xD90
  
  #define APM_CPU_PART_POTENZA		0x000
-@@ -166,6 +167,7 @@
- #define MIDR_NEOVERSE_V3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3)
- #define MIDR_CORTEX_X925 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X925)
+ 
+@@ -169,6 +170,7 @@
  #define MIDR_CORTEX_A725 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A725)
-+#define MIDR_C1_ULTRA MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_C1_ULTRA)
+ #define MIDR_C1_ULTRA MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_C1_ULTRA)
  #define MIDR_NEOVERSE_N3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N3)
++#define MIDR_C1_PREMIUM MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_C1_PREMIUM)
  #define MIDR_THUNDERX	MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX)
  #define MIDR_THUNDERX_81XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_81XX)
+ #define MIDR_THUNDERX_83XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_83XX)
 
 
