@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39C52F12AE;
-	Tue, 16 Jun 2026 18:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3013F3CF97E;
+	Tue, 16 Jun 2026 18:05:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633152; cv=none; b=jwJlLH16FYS7KIINFQgwdlan/xSYDnUrXDe7Ze0jM4YxBynnUwS1pVNzxFYBIrOhbCMWPU1MmRG5ThybKPvKYnUc7l86PTRmoumcBOOjAOQHxjrImsbT8BXF6ChxGeTyOV/VfQK0g2lMHxdICMNcwiLtePl9auz5uB6sBykIqjA=
+	t=1781633158; cv=none; b=qGKc+vNTO13vpoyDSfre1t4T/6/p7TmMrhYh1CyzZtXOK5h6YzX0h1CkS5J71WvnMubY0Y5SzOYTX7EmMLnxOunb9K6ZlZ6//WkAwoWB4ioHVB87E/yhaVpcABjbrIypwNlkS4IBcaXCORax+kj6gGU8YkaBPyDguj0ZqWutjiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633152; c=relaxed/simple;
-	bh=/b6PconIU+qefdXDhUgR7R/Q77ogb0MFmxl05gkZ2WQ=;
+	s=arc-20240116; t=1781633158; c=relaxed/simple;
+	bh=AYfaWnXMhQ/0ibIJXRrnx95M7Aspya4yzsA6GYZYrRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AaDvwvbMJN6+eTXYeLleMZLb7XKNSmqBHJ7Se4X8mIQb7UktqfSyDPIVDLvdoEWfO/0/mtYDQUvHWwOtrgdKlTwfR7G1qeAJWbVTWLWX6SEk8d4+CyYWledSP23ad8K5SFQkOI1/6dBurRDYiwxae/oS56T1zr177oGULhABaSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I69L7EqK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WQ9YhQQLdFYSreDQUEGeRS2VCUjsLiaZQUea67nrszw8UbsddrIDyKVYcrH40Sg2fp0o1XUwIBbhUn4eNVryOGRf6MGN4+Jd2g6z/X0od4a5Id6WYJoAs1xN6E8i2nKSetFZRnOO2CYvDUv28hh5aZuhR24ag56IEcCHrSzgXLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2JHjt+Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I69L7EqK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F4C1F000E9;
-	Tue, 16 Jun 2026 18:05:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2JHjt+Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 308291F000E9;
+	Tue, 16 Jun 2026 18:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633151;
-	bh=5Epfd0AIGvHYJpActe6QZlsCHEJJ/VIXRgBQ8RAYmXI=;
+	s=korg; t=1781633157;
+	bh=wxpl7VJANQIBdWa/jfBRxcv0GFxUgyBK/2G4QIu1RvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I69L7EqKfQUAHWzrSuoxXSbx74NEZKsPPQEdtr9rpmRZ8D6NieT3nfCNOo63RATJk
-	 gmYof6Ii/ImeLxl0s6Gkj8jxedkNqocDIY7lqQSG8Ak1Fp8maGVJ5TsWl7ghMS+hlz
-	 LfIARxw+M9gxTlKit1o26LHZND9W/flzfMcXB5Xo=
+	b=a2JHjt+QfRh67WT0q8YVhL0kgzYOYOpUYkDUfJkzaUnPEL1L3pbUQqn6IColLh6iL
+	 KmmnaVk/xGpdkVtlFkJLZG8SoQQBAoVmzoZnY1Ld4zl4PMdZW3NPIeiTX8Lxoejsxv
+	 z4ZtFSrY+Fb0Tg2KqvXhRJVGPH2ZV0mTz/dl5A0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Rahul Chandelkar <rc@rexion.ai>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 028/411] ethtool: eeprom: add more safeties to EEPROM Netlink fallback
-Date: Tue, 16 Jun 2026 20:24:26 +0530
-Message-ID: <20260616145101.849581289@linuxfoundation.org>
+Subject: [PATCH 5.15 029/411] ipv6: rpl: fix hdrlen overflow in ipv6_rpl_srh_decompress()
+Date: Tue, 16 Jun 2026 20:24:27 +0530
+Message-ID: <20260616145101.897086418@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -51,60 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Rahul Chandelkar <rc@rexion.ai>
 
-[ Upstream commit 67cfdd9210b99f260b3e0afeb9525e0acc7be31e ]
+[ Upstream commit 9d5e7a46a9f6d8f503b41bfefef70659845f1679 ]
 
-The Netlink fallback path for reading module EEPROM
-(fallback_set_params()) validates that offset < eeprom_len,
-but does not check that offset + length stays within eeprom_len.
-The ioctl equivalent (ethtool_get_any_eeprom() in ioctl.c) has
-always enforced both bounds:
+ipv6_rpl_srh_decompress() computes:
 
-  if (eeprom.offset + eeprom.len > total_len)
-      return -EINVAL;
+    outhdr->hdrlen = (((n + 1) * sizeof(struct in6_addr)) >> 3);
 
-This could lead to surprises in both drivers and device FW.
-Add the missing offset + length validation to fallback_set_params(),
-mirroring the ioctl.
+hdrlen is __u8. For n >= 127 the result exceeds 255 and silently
+truncates. With n=127 (cmpri=15, cmpre=15, pad=0, hdrlen=16):
 
-Similarly - ethtool core in general, and ethtool_get_any_eeprom()
-in particular tries to zero-init all buffers passed to the drivers
-to avoid any extra work of zeroing things out. eeprom_fallback()
-uses a plain kmalloc(), change it to zalloc.
+    (128 * 16) >> 3 = 256, truncated to 0 as __u8
 
-Fixes: 96d971e307cc ("ethtool: Add fallback to get_module_eeprom from netlink command")
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260526153533.2779187-11-kuba@kernel.org
+The caller in ipv6_rpl_srh_rcv() then places the compressed header
+at buf + ((ohdr->hdrlen + 1) << 3). With hdrlen=0 this is buf + 8,
+but the decompressed region occupies buf[0..2055] (8-byte header
+plus 128 full addresses). The compressed header overlaps the
+decompressed data, and ipv6_rpl_srh_compress() writes into this
+overlap, corrupting the routing header of the forwarded packet.
+
+The existing guard at exthdrs.c:546 checks (n + 1) > 255, which
+prevents n+1 from overflowing unsigned char (the segments_left
+field), but does not prevent the computed hdrlen from overflowing
+__u8. n=127 passes because 128 <= 255, yet hdrlen=256 does not
+fit.
+
+Tighten the bound to (n + 1) > 127. This caps n at 126, giving
+hdrlen = (127 * 16) >> 3 = 254, which fits in __u8. The compressed
+header then lands at buf + ((254 + 1) << 3) = buf + 2040, exactly
+past the decompressed region (buf[0..2039]). No overlap. 127
+segments is well beyond any realistic RPL deployment.
+
+Fixes: 8610c7c6e3bd ("net: ipv6: add support for rpl sr exthdr")
+Signed-off-by: Rahul Chandelkar <rc@rexion.ai>
+Link: https://patch.msgid.link/20260525154031.2290876-1-rc@rexion.ai
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/eeprom.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/ipv6/exthdrs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ethtool/eeprom.c b/net/ethtool/eeprom.c
-index 49c0a2a77f02de..6ce40f95d8aba5 100644
---- a/net/ethtool/eeprom.c
-+++ b/net/ethtool/eeprom.c
-@@ -43,6 +43,9 @@ static int fallback_set_params(struct eeprom_req_info *request,
- 	if (offset >= modinfo->eeprom_len)
- 		return -EINVAL;
- 
-+	if (length > modinfo->eeprom_len - offset)
-+		return -EINVAL;
-+
- 	eeprom->cmd = ETHTOOL_GMODULEEEPROM;
- 	eeprom->len = length;
- 	eeprom->offset = offset;
-@@ -69,7 +72,7 @@ static int eeprom_fallback(struct eeprom_req_info *request,
- 	if (err < 0)
- 		return err;
- 
--	data = kmalloc(eeprom.len, GFP_KERNEL);
-+	data = kzalloc(eeprom.len, GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
- 	err = ethtool_get_module_eeprom_call(dev, &eeprom, data);
+diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
+index 343b957e6337ab..a25dfa59ca2196 100644
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -557,7 +557,7 @@ static int ipv6_rpl_srh_rcv(struct sk_buff *skb)
+ 	 * unsigned char which is segments_left field. Should not be
+ 	 * higher than that.
+ 	 */
+-	if (r || (n + 1) > 255) {
++	if (r || (n + 1) > 127) {
+ 		kfree_skb(skb);
+ 		return -1;
+ 	}
 -- 
 2.53.0
 
