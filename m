@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D47283FE5;
-	Tue, 16 Jun 2026 15:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEC82F8EBC;
+	Tue, 16 Jun 2026 15:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623188; cv=none; b=rHbbpwPrJ/Umomqki1bIXrpHalMyUS+0dDLv6cmx+HtitRY7pnHxH+x0y6PCBfeDM6rEho9OGAtSeTRZQ/IRDAFlPy2aV0V9kraDD1Mpz3bcKG/NQAPKTPTcUTCEF54rFKtaTor21qylHNFo14HYh6RmKqhK6P+CgiRsNKR+FR8=
+	t=1781623194; cv=none; b=tTDfoPVa4HGaBqdi2xVPIAMUAdonUFJJM/PHIqR1UFg5M9Ld6NUVKVa6b/YL4H0+mlPTSisUhjUlOyukuBRWOZUaedh05OW6qBwakbk4SGVGioljOVFNN9dlQEKQEy+b+PpNSMDtyqZ5LJNTwFyMmyNGz9DRWRZFgXGV6kPDJlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623188; c=relaxed/simple;
-	bh=Eo9PhKhtM77ID7Rco3/jVjpelwgn12GKFWg4x1ls1YE=;
+	s=arc-20240116; t=1781623194; c=relaxed/simple;
+	bh=NJIvOhvELW7KjCMoOUtDbanOwFBk3unDn8k0PFp+vjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HBeZd6VfgYVvTo/M8GRdMsNVrC+XPyrR7upuh3q/HMtujGgk2lRhc7Zh5INx2OuHreTm/e63QYSTrtTttGSZ3oQU6Ph96HeaD7pCODIh7fri1Twg6V7kCpcGDMDoYqe2GGzBQuzQAkWd0x5ZR95RLh3RHA/5fLE7TO7yJfRWb30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMw2ZjDZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VnfRU0YDkwfYmlMNpAVqYfS7WaFli8zWYkByirPj3v6G+KcN0EPwGm82XeI4A03dUN/NMFjXRLOoWOnJ826maURKOyNzJodYo2u39wuhVngs3HenyTxfeZi6F4XCHIXjjKbtlL01hhzFHSrArKH42r/n0+e8Oedz3rCjHiIZAj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wba7Q8xh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMw2ZjDZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5289E1F00A3A;
-	Tue, 16 Jun 2026 15:19:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wba7Q8xh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA5A1F000E9;
+	Tue, 16 Jun 2026 15:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623187;
-	bh=r/iblVyBchZj68QaO7pK4p7DG9vl4OODGElgGd9Vzsw=;
+	s=korg; t=1781623192;
+	bh=51A8FErQlr82zfbaiJbsud3xD2KSMqF+R3fBz5Udgz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hMw2ZjDZNKznL8OysAxnnS2xA/YiaaPaHEueUwRJRlg6eFt8jiBgxH9+kpKNHuulp
-	 vHeREfluS6dakbe1YK/I92XcNt74xPxR4yMofK+RWLxGCK5+itxBcwN08UDHVGQeQe
-	 hJ7cFAd3TEebEq+otM0tIGy+hCeaWC0zi7CtCvig=
+	b=wba7Q8xhaGa4POWUsW2DZoOnwtQR0xiUkmbO7/cVQngt0HjA0xJ53WICCBqeIKtFn
+	 DKn9LyNodRsBiDzS/xLtV7ZO69oUXdxCW0+O0OOg2L3dBX1vCuenjkiBHdEr+Oyx0t
+	 iNCZnt+QbvWr8d5WIX/ewqL3an1XfrWtdOeDCYOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanghyun Park <sanghyun.park.cnu@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 101/378] xfrm: policy: fix use-after-free on inexact bin in xfrm_policy_bysel_ctx()
-Date: Tue, 16 Jun 2026 20:25:32 +0530
-Message-ID: <20260616145115.674246084@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Petr Oros <poros@redhat.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 7.0 102/378] ice: fix missing priority callbacks for U.FL DPLL pins
+Date: Tue, 16 Jun 2026 20:25:33 +0530
+Message-ID: <20260616145115.729372503@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,77 +55,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanghyun Park <sanghyun.park.cnu@gmail.com>
+From: Petr Oros <poros@redhat.com>
 
-[ Upstream commit 7f2d76c9c03257c0782afef9d95321fa04096f60 ]
+[ Upstream commit f1fa677e428e8873486938086bd934dc18169b47 ]
 
-Fix the race by pruning the bin while still holding xfrm_policy_lock,
-before dropping it. Use __xfrm_policy_inexact_prune_bin() directly since
-the lock is already held. The wrapper xfrm_policy_inexact_prune_bin()
-becomes unused and is removed.
+The U.FL2 input pin advertises DPLL_PIN_CAPABILITIES_PRIORITY_CAN_CHANGE
+in its capability mask, but ice_dpll_pin_ufl_ops does not provide
+.prio_get and .prio_set callbacks. As a result the DPLL subsystem
+cannot report or accept priority for U.FL pins: pin-get omits the prio
+field on U.FL2 and pin-set with prio is rejected as invalid, even
+though the capability is present. This prevents user space from using
+priority to select or disable U.FL2 as a DPLL input source.
 
-Race:
+Reproducer with iproute2 (dpll command):
 
-  CPU0 (XFRM_MSG_DELPOLICY)           CPU1 (XFRM_MSG_NEWSPDINFO)
-  ==========================          ==========================
-  xfrm_policy_bysel_ctx():
-    spin_lock_bh(xfrm_policy_lock)
-    bin = xfrm_policy_inexact_lookup()
-    __xfrm_policy_unlink(pol)
-    spin_unlock_bh(xfrm_policy_lock)
-    xfrm_policy_kill(ret)
-    // wide window, lock not held
-                                       xfrm_hash_rebuild():
-                                         spin_lock_bh(xfrm_policy_lock)
-                                         __xfrm_policy_inexact_flush():
-                                           kfree_rcu(bin)  // bin freed
-                                         spin_unlock_bh(xfrm_policy_lock)
-    xfrm_policy_inexact_prune_bin(bin)
-    // UAF: bin is freed
+  # dpll pin show board-label U.FL2
+  pin id 16:
+    module-name ice
+    board-label U.FL2
+    type ext
+    capabilities priority-can-change|state-can-change
+    parent-device:
+      id 0 direction input state selectable phase-offset 0
+    /* note: no "prio" between "direction" and "state",
+       even though priority-can-change is advertised */
 
-Fixes: 6be3b0db6db8 ("xfrm: policy: add inexact policy search tree infrastructure")
-Signed-off-by: Sanghyun Park <sanghyun.park.cnu@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+  # dpll pin set id 16 parent-device 0 prio 5
+  RTNETLINK answers: Operation not supported
+
+After the fix the prio field is reported by pin show and pin set with
+prio is accepted on U.FL2.
+
+Add the missing .prio_get and .prio_set callbacks to
+ice_dpll_pin_ufl_ops, reusing ice_dpll_sw_input_prio_{get,set}. The
+same ops struct is shared by U.FL1 and U.FL2: U.FL2 (input) delegates
+to the backing hardware input pin, while U.FL1 (output) does not
+advertise DPLL_PIN_CAPABILITIES_PRIORITY_CAN_CHANGE so the dpll core
+capability gate never invokes prio_set for it, and prio_get reports
+the OUTPUT sentinel (ICE_DPLL_PIN_PRIO_OUTPUT) on the output side
+exactly like the SMA path does today.
+
+Fixes: 2dd5d03c77e2 ("ice: redesign dpll sma/u.fl pins control")
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Petr Oros <poros@redhat.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260602225513.393338-3-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_policy.c | 13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_dpll.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index d904352fb24276..97b5ff9687a30c 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -1156,15 +1156,6 @@ static void __xfrm_policy_inexact_prune_bin(struct xfrm_pol_inexact_bin *b, bool
- 	}
- }
- 
--static void xfrm_policy_inexact_prune_bin(struct xfrm_pol_inexact_bin *b)
--{
--	struct net *net = read_pnet(&b->k.net);
--
--	spin_lock_bh(&net->xfrm.xfrm_policy_lock);
--	__xfrm_policy_inexact_prune_bin(b, false);
--	spin_unlock_bh(&net->xfrm.xfrm_policy_lock);
--}
--
- static void __xfrm_policy_inexact_flush(struct net *net)
- {
- 	struct xfrm_pol_inexact_bin *bin, *t;
-@@ -1707,12 +1698,12 @@ xfrm_policy_bysel_ctx(struct net *net, const struct xfrm_mark *mark, u32 if_id,
- 		}
- 		ret = pol;
- 	}
-+	if (bin && delete)
-+		__xfrm_policy_inexact_prune_bin(bin, false);
- 	spin_unlock_bh(&net->xfrm.xfrm_policy_lock);
- 
- 	if (ret && delete)
- 		xfrm_policy_kill(ret);
--	if (bin && delete)
--		xfrm_policy_inexact_prune_bin(bin);
- 	return ret;
- }
- EXPORT_SYMBOL(xfrm_policy_bysel_ctx);
+diff --git a/drivers/net/ethernet/intel/ice/ice_dpll.c b/drivers/net/ethernet/intel/ice/ice_dpll.c
+index 892bc7c2e28b46..0704e92ab04305 100644
+--- a/drivers/net/ethernet/intel/ice/ice_dpll.c
++++ b/drivers/net/ethernet/intel/ice/ice_dpll.c
+@@ -2633,6 +2633,8 @@ static const struct dpll_pin_ops ice_dpll_pin_ufl_ops = {
+ 	.state_on_dpll_set = ice_dpll_ufl_pin_state_set,
+ 	.state_on_dpll_get = ice_dpll_sw_pin_state_get,
+ 	.direction_get = ice_dpll_pin_sw_direction_get,
++	.prio_get = ice_dpll_sw_input_prio_get,
++	.prio_set = ice_dpll_sw_input_prio_set,
+ 	.frequency_get = ice_dpll_sw_pin_frequency_get,
+ 	.frequency_set = ice_dpll_sw_pin_frequency_set,
+ 	.esync_set = ice_dpll_sw_esync_set,
 -- 
 2.53.0
 
