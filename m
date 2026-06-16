@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A8943D4E8;
-	Tue, 16 Jun 2026 17:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1954328610;
+	Tue, 16 Jun 2026 17:05:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629513; cv=none; b=VpT2e+fRc+jORpUK39X+OIadzKbzzUG8pk40cHr3fQ5BZb0LTrIKW2IYIMN/ycEoYpKwhTyazinyORMARbW5hVRhbwYKfL9PDSpLgdg3s1kyyfz8Uh7ZtjU7mSpzBlVTV4QynEjG3VnVc5yNuHiakagnEVPAl4sYi7v4dt/T0U4=
+	t=1781629518; cv=none; b=mYEWmvd+uBUaOPfR1squb2s0/Gvy30Wgctb7xotrufq3VVrOGYH9zSwbFcV4ZaygisPduCYcIi6G/LhhFMuE5I/JN7X3tH15Ho3lxYEFJ/A0bGY55nqGwVN8IEXCPtuRl2s1zHFZxOTuiNJOeZchqUXOth/ZpQtIygaFuf9v9Mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629513; c=relaxed/simple;
-	bh=m3ZlHccrlG+3p8NNVTmxyiY9WBq6UQutydFTbi7t7jI=;
+	s=arc-20240116; t=1781629518; c=relaxed/simple;
+	bh=C/ce/y3ePRfbqEUVOiWKqHMq1Ixjly/Q0+ODLYFxM8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hd9Zxn/1LrAOW2UtbXdIbXnLA4Xj++bwGGJN4kA2XX0OGHrjOfE0HcFDXoRv1vt0D5Qjqqu1gCQGWzXiWee/zGExiXKg3Kj/jtc7xgknlkqa+lK/XVoDKdwGUF6iOAZApnAj5JTm0znB8SOxGPj7eofIr82valOidO5CL4+kznw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FDX5CC0+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mO/jfnc+PQxDm4hHXE77lzUOMFndnEbFpJTZNFWd9ig3GElYpxS8+7De/fpaqbxS8haIkmnOnA2drk3PdKfRORgXpn0CvZ5pcZxvb/ADkJf1pvbPyw/XHxIMxaRq+pdGpc9gxBxIZS9aascjusAd4RVpr1VUdz8TMxzm6EV2iOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lff8iDdL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FDX5CC0+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E291F000E9;
-	Tue, 16 Jun 2026 17:05:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lff8iDdL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1811F000E9;
+	Tue, 16 Jun 2026 17:05:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629512;
-	bh=li2Q4FTphL8nCS1el0dhHPUaS0RdGcTQMBRpAjxdrWM=;
+	s=korg; t=1781629517;
+	bh=iJydEXHTU/xdU3/XmJsMeSkItJ3m22VCfItmTAU+rNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FDX5CC0+tQMzDBR9gXagXsFN1KSzBtGLWe1Shtkvw3PmH2Gy6PU9JBJ0NjM+gtfH3
-	 HIJZiP56rVKeaaTYMR0mdtBb/tNQYIueOjwWJCg9r5nA8t8Mkt2GeAIvWi2SQCKToC
-	 LkMM6qlG9vWtHnzZ+u3uOjarY/G5dyi4uhC5LRbE=
+	b=Lff8iDdLhoy15ivvsl6ovJyn6wMmxT/j9VAXEaZza26WN3hLJ0qIKzMP5oOWAbeZf
+	 j5+asdO8lUAS5g/jen1AsrdKyWRqb6eCuSHa8hNtUVKIpC/x6oeLe/S+FcpYbg8Bc7
+	 rRTmmACVgZBPwuEM9mVeZwimqZxl/0byyh9yvhlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Adrian Korwel <adriank20047@gmail.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 300/452] USB: serial: io_ti: fix heap overflow in get_manuf_info()
-Date: Tue, 16 Jun 2026 20:28:47 +0530
-Message-ID: <20260616145133.279759282@linuxfoundation.org>
+Subject: [PATCH 6.6 301/452] USB: serial: io_ti: fix heap overflow in build_i2c_fw_hdr()
+Date: Tue, 16 Jun 2026 20:28:48 +0530
+Message-ID: <20260616145133.326669574@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,49 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Korwel <adriank20047@gmail.com>
 
-commit 183c1076eca43bbb3e7bdf597456f91d81c73e74 upstream.
+commit 0fd2b00b2d3d05e3eaa13342b3dfb0fa85c226ae upstream.
 
-get_manuf_info() reads le16_to_cpu(rom_desc->Size) bytes from the
-device I2C EEPROM into a buffer allocated with kmalloc_obj(), which
-is sizeof(struct edge_ti_manuf_descriptor) = 10 bytes.
+build_i2c_fw_hdr() allocates a fixed-size buffer of
+(16*1024 - 512) + sizeof(struct ti_i2c_firmware_rec) bytes, then
+copies le16_to_cpu(img_header->Length) bytes into it without
+validating that Length fits within the available space after the
+firmware record header.
 
-The Size field comes from the device and is only validated (in
-check_i2c_image()) to make sure the descriptor fits within
-TI_MAX_I2C_SIZE (16384 bytes), not against the destination buffer size.
-A malicious USB device can therefore set Size to any value up to 16377,
-causing a heap overflow of up to 16367 bytes when plugged into a host
-running this driver.
+img_header->Length is a __le16 from the firmware file and can be
+up to 65535. check_fw_sanity() validates the total firmware size
+but not img_header->Length specifically.
 
-valid_csum() is called after read_rom() and also iterates
-buffer[0..Size-1], compounding the out-of-bounds access.
-
-Fix by rejecting descriptors with unexpected length before calling
-read_rom().
+Fix by rejecting images where img_header->Length exceeds the
+available destination space.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
 Signed-off-by: Adrian Korwel <adriank20047@gmail.com>
-[ johan: amend commit message; also check for short descriptors ]
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/io_ti.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/serial/io_ti.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
 --- a/drivers/usb/serial/io_ti.c
 +++ b/drivers/usb/serial/io_ti.c
-@@ -773,6 +773,12 @@ static int get_manuf_info(struct edgepor
- 	}
+@@ -844,6 +844,11 @@ static int build_i2c_fw_hdr(u8 *header,
+ 	/* Pointer to fw_down memory image */
+ 	img_header = (struct ti_i2c_image_header *)&fw->data[4];
  
- 	/* Read the descriptor data */
-+	if (le16_to_cpu(rom_desc->Size) != sizeof(struct edge_ti_manuf_descriptor)) {
-+		dev_err(dev, "unexpected Edge descriptor length: %u\n",
-+			le16_to_cpu(rom_desc->Size));
-+		status = -EINVAL;
-+		goto exit;
++	if (le16_to_cpu(img_header->Length) >
++			buffer_size - sizeof(struct ti_i2c_firmware_rec)) {
++		kfree(buffer);
++		return -EINVAL;
 +	}
- 	status = read_rom(serial, start_address+sizeof(struct ti_i2c_desc),
- 					le16_to_cpu(rom_desc->Size), buffer);
- 	if (status)
+ 	memcpy(buffer + sizeof(struct ti_i2c_firmware_rec),
+ 		&fw->data[4 + sizeof(struct ti_i2c_image_header)],
+ 		le16_to_cpu(img_header->Length));
 
 
