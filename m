@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562AA3D45CB;
-	Tue, 16 Jun 2026 18:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9333D47CE;
+	Tue, 16 Jun 2026 18:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633342; cv=none; b=ne70hjEras2aL7OtftTE7AragbuX3Ma62bZrGlmHIcaeQ+jJSyB+348EeTqBzbv3h5u1yD3h4oZJd4JUIfZmJULwq2FANXm0SDrguBpamJIZlUNZvpvIRMXzNYTMDIRUABW1Gnc2fp8VeSh79PTmSeMUYywj365eqHAljVSSsEE=
+	t=1781633347; cv=none; b=kaB1YCzM/QXcmq3svxcFGBLSCoVPrD6gTVdIxbYeCXCq5+362WNt6ztCJarsJ37PQlnDYBlvgmESo+A8cW3JsWmSJwqe8yufgWXDy6r3NmFRUipNyHEtDfgOW8KylKvLKaQTP/Uh2Ffwa3vF+qBQ9jzyS5nDP2tNzwXO2nzh/hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633342; c=relaxed/simple;
-	bh=lhjXpTqBoEBsiMcUZMKHPyNmywcvcOp28SVo1Eh6go4=;
+	s=arc-20240116; t=1781633347; c=relaxed/simple;
+	bh=ENivjcUkGRtCPldZ2bBF4tHDEVY7O2RffE3Ghfj62Xw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CpbLfr+cyarfKrOyDmsEnsVeOhJ+OgreIcU9z4wJcrIUKQh2S0zugzsDjup06ucoL0Mv1hELpjIov3D7fH0SPRM8E49WAvT9l9Iqg5PyE3wWj5jJj9NiDTcMEcPp4Hfu5xJEJPIwEMXv2Iki1M9B9Ibv+4INWbKRYXwuaDbqQVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZrBJKdNF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uKNYBiEufHFFJgXMFTmO4DzQfg1UH/9FjtmEXOZux5NzczrGB9pF2HVuH7r7sVzU0rKjDAcGDALsNibFybwr2+fnv1bSx+vpDNAbUjRv/+5Ppwo7Zz74M4LZzeASPSs7aBfmUVx1gu2n+cv2/Klln2ktliPuQwJiadXMbKTlC2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ufMS91tJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZrBJKdNF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559611F000E9;
-	Tue, 16 Jun 2026 18:09:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ufMS91tJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32DB1F000E9;
+	Tue, 16 Jun 2026 18:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633341;
-	bh=NP9sBirA3pcaZVyrc4nsQfUq5sq4oMw2bgnprf3+cuE=;
+	s=korg; t=1781633345;
+	bh=jT5bmEKJk32z/dMO4b5cq/TzoSfeRx49iNuD9CJSt9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZrBJKdNFUGE1DiVG70wcliIUnrB7KzBv26otNMfEdtaXOD6DB+KsHR3YSuRkcjMiB
-	 4HlVR5O3Tsw46svN12WC4+m6M0Gg0DW6W5kc+sXCkdIfrrJSMymfx20lxTN1/nayne
-	 qiPQeYYQpmT/OMaUQcnlEciPVMPeEu9N9+192qoE=
+	b=ufMS91tJAaIO6WSltL6pi1gOfiLY570R/bQmh/Ak/vcC+Jcs0CK/kJIq5NUkxioNS
+	 yMkNXktwQNeBou5z+BV5OTI81xvANL1Q7b8dZ3uehEizEJrm3wZkGTdGY8YnVoSFr+
+	 uDFrxaAWcpcNpFReNAP9tS8VThYhonxqSc7oaQvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 061/411] Input: ims-pcu - fix usb_free_coherent() size in ims_pcu_buffers_free()
-Date: Tue, 16 Jun 2026 20:24:59 +0530
-Message-ID: <20260616145103.525183425@linuxfoundation.org>
+	Shuai Zhang <shuai.zhang@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.15 062/411] Bluetooth: btusb: Allow firmware re-download when version matches
+Date: Tue, 16 Jun 2026 20:25:00 +0530
+Message-ID: <20260616145103.576670765@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,35 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
 
-commit dab48a7e74e6a394f3aa0461a2b1fb0c7b38fcb8 upstream.
+commit 82855073c1081732656734b74d7d1d5e4cfd0da7 upstream.
 
-The input buffer size is pcu->max_in_size, but pcu->max_out_size is
-passed to usb_free_coherent().
+The Bluetooth host decides whether to download firmware by reading the
+controller firmware download completion flag and firmware version
+information.
 
-Change size to match the allocation size.
+If a USB error occurs during the firmware download process (for example
+due to a USB disconnect), the download is aborted immediately. An
+incomplete firmware transfer does not cause the controller to set the
+download completion flag, but the firmware version information may be
+updated at an early stage of the download process.
 
-Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
+In this case, after USB reconnection, the host attempts to re-download
+the firmware because the download completion flag is not set. However,
+since the controller reports the same firmware version as the target
+firmware, the download is skipped. This ultimately results in the
+firmware not being properly updated on the controller.
+
+This change removes the restriction that skips firmware download when
+the versions are equal. It covers scenarios where the USB connection
+can be disconnected at any time and ensures that firmware download can
+be retriggered after USB reconnection, allowing the Bluetooth firmware
+to be correctly and completely updated.
+
+Fixes: 3267c884cefa ("Bluetooth: btusb: Add support for QCA ROME chipset family")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://patch.msgid.link/20260522085412.45430-2-fourier.thomas@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/ims-pcu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/input/misc/ims-pcu.c
-+++ b/drivers/input/misc/ims-pcu.c
-@@ -1598,7 +1598,7 @@ static void ims_pcu_buffers_free(struct
- 	usb_kill_urb(pcu->urb_in);
- 	usb_free_urb(pcu->urb_in);
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3448,7 +3448,13 @@ static int btusb_setup_qca_load_rampatch
+ 		    "firmware rome 0x%x build 0x%x",
+ 		    rver_rom, rver_patch, ver_rom, ver_patch);
  
--	usb_free_coherent(pcu->udev, pcu->max_out_size,
-+	usb_free_coherent(pcu->udev, pcu->max_in_size,
- 			  pcu->urb_in_buf, pcu->read_dma);
- 
- 	kfree(pcu->urb_out_buf);
+-	if (rver_rom != ver_rom || rver_patch <= ver_patch) {
++	/* Allow rampatch when the patch version equals the firmware version.
++	 * A firmware download may be aborted by a transient USB error (e.g.
++	 * disconnect) after the controller updates version info but before
++	 * completion.
++	 * Allowing equal versions enables re-flashing during recovery.
++	 */
++	if (rver_rom != ver_rom || rver_patch < ver_patch) {
+ 		bt_dev_err(hdev, "rampatch file version did not match with firmware");
+ 		err = -EINVAL;
+ 		goto done;
 
 
