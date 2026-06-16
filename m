@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF972F12AE;
-	Tue, 16 Jun 2026 18:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332C62F12AE;
+	Tue, 16 Jun 2026 18:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633270; cv=none; b=hyoa2GU92r9Zk4YQ0x9hYC3kWAboqdYWhYn6DiWiCU4lIj+Ch6STufIxC4fhUUxqW63sYFRRRnDt/fOuhOmO/FhA7J1U2XkzHQ03uA5UlPqAivhQlVonhsGPDaCPT9xKrjrMvwUM25+hlQp7JDhcpinvhWoTwHy4Zog9o6ENQ6A=
+	t=1781633275; cv=none; b=i8dQ4f/yB5h+B3EF4CzYpNHAZwtwh2KMq2SGUykRtQzLGIo8hWHKKzEjNc5xQEKQfgToM04xUeMftCDlAxbhJgXIVOkLfVYldbdzENmVd+sSaq2bvcYf0HbaeREe+EIxEGMCrF2NQrfFrjQuvdOYwa8yWrtItK31adNg8mbgj9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633270; c=relaxed/simple;
-	bh=Vzab/oHcckDVULrZkIDls+deQBuaFlBl61domnfZmb4=;
+	s=arc-20240116; t=1781633275; c=relaxed/simple;
+	bh=A6Fxox/NqZIVeSdCJ0b3gYg14DaAEA9yjHU4FktHg6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ELOK5Q5PytUfRrscgi/h+jGBOf6PfSMX5VPFF9Gfkzq5kbSivreAPkAU3Sppiclcq+BcuDnPZ+k02BDlUdCLi1CZyHPTB6WqBmI/LV4yrYbFivHgPiemIscvYwicChaS46iUNE2MrmQwBoxM6qtZU0vnxo8G0vt24D4x7yqwpH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i0+wcGUO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=En1/PgzR+14v8FG6tKPaAWPnHSE5a+VzJr64qHHqXoi9mfmZClRsVvXgnAKTDSunKk7Evo2ndMS00Roi37yAjBFC05nWd36WXkxkwGg1NMuu1eN0KSlUqY4wiwT2SoY91KU0oINgqw+uEW5DkMtkm/LZYBZc8cwnrX6MZypyv5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lApgwaGm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i0+wcGUO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9451D1F000E9;
-	Tue, 16 Jun 2026 18:07:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lApgwaGm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C33D41F000E9;
+	Tue, 16 Jun 2026 18:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633268;
-	bh=gLk9sHLt18IUVHAX2M/nNWGN7XrEcy0qwLgeTU+/2n8=;
+	s=korg; t=1781633273;
+	bh=jMQJRcDpOIvQBVhTRw7+m1fe5snHMffgtENfv/SIJio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i0+wcGUOMzAVfjyd8Z1fXW0qwYmMwHJrFyxdQ3bdZQBbfsY8B2IymUl4sNAZRPENt
-	 UopbkC0FKtPRjOmAnrJJA/OLGoW1twTyf5VbhHo5b9fwXuSiiWBaqaGWV1JKYoj8jM
-	 neMEIxUCnTbkCt34l/KvPTQeXXJa4DzQZSlNSN60=
+	b=lApgwaGmuao6ylXdq3xWxoZZgGS34hqEOe0uKwK77ezeGazM1qofJ7ZTdWPyu1bsq
+	 ylBMwiyywMcqrjU/R6v9ggQvG3Egjm2wBv+DX5hQIeEX+wxiOeEuVyVTSqMeRkWBPu
+	 +pLfewrecwTlTd79zUB5qnFhjOeGwYQG94mADjto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Robert Garcia <rob_garcia@163.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 045/411] wifi: brcmfmac: fix use-after-free when rescheduling brcmf_btcoex_info work
-Date: Tue, 16 Jun 2026 20:24:43 +0530
-Message-ID: <20260616145102.682627807@linuxfoundation.org>
+Subject: [PATCH 5.15 046/411] drm/i915/psr: Add defininitions for INTEL_WA_REGISTER_CAPS DPCD register
+Date: Tue, 16 Jun 2026 20:24:44 +0530
+Message-ID: <20260616145102.733760144@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -54,101 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-[ Upstream commit 9cb83d4be0b9b697eae93d321e0da999f9cdfcfc ]
+commit fbceb39b536e40c2f7cc47ab42037bb7c2b7ced9 upstream.
 
-The brcmf_btcoex_detach() only shuts down the btcoex timer, if the
-flag timer_on is false. However, the brcmf_btcoex_timerfunc(), which
-runs as timer handler, sets timer_on to false. This creates critical
-race conditions:
+EDP specification says:
 
-1.If brcmf_btcoex_detach() is called while brcmf_btcoex_timerfunc()
-is executing, it may observe timer_on as false and skip the call to
-timer_shutdown_sync().
+"If either VSC SDP is unable to be transmitted 100 ns before the SU region,
+the Source device may optionally transmit the VSC SDP during the prior
+video scan line’s HBlank period There is a Intel specific drm dp register
+currently containing bits related how TCON can support PSR2 with SDP on
+prior line."
 
-2.The brcmf_btcoex_timerfunc() may then reschedule the brcmf_btcoex_info
-worker after the cancel_work_sync() has been executed, resulting in
-use-after-free bugs.
+Unfortunately many panels are having problems in implementing this. So
+there is a custom Intel specific DPCD register (INTEL_WA_REGISTER_CAPS) to
+figure out if this is properly implemented on a panel or if panel doesn't
+require that 100 ns delay before the SU region. Here are the definitions in
+this custom DPCD address:
 
-The use-after-free bugs occur in two distinct scenarios, depending on
-the timing of when the brcmf_btcoex_info struct is freed relative to
-the execution of its worker thread.
+0 = Panel doesn't support SDP on prior line
+1 = Panel supports SDP on prior line
+2 = Panel doesn't have 100ns requirement
+3 = Reserved
 
-Scenario 1: Freed before the worker is scheduled
+Add definitions for this new register and it's values into new header
+intel_dpcd.h.
 
-The brcmf_btcoex_info is deallocated before the worker is scheduled.
-A race condition can occur when schedule_work(&bt_local->work) is
-called after the target memory has been freed. The sequence of events
-is detailed below:
+v2: add INTEL_DPCD_ prefix to definitions
 
-CPU0                           | CPU1
-brcmf_btcoex_detach            | brcmf_btcoex_timerfunc
-                               |   bt_local->timer_on = false;
-  if (cfg->btcoex->timer_on)   |
-    ...                        |
-  cancel_work_sync();          |
-  ...                          |
-  kfree(cfg->btcoex); // FREE  |
-                               |   schedule_work(&bt_local->work); // USE
-
-Scenario 2: Freed after the worker is scheduled
-
-The brcmf_btcoex_info is freed after the worker has been scheduled
-but before or during its execution. In this case, statements within
-the brcmf_btcoex_handler() — such as the container_of macro and
-subsequent dereferences of the brcmf_btcoex_info object will cause
-a use-after-free access. The following timeline illustrates this
-scenario:
-
-CPU0                            | CPU1
-brcmf_btcoex_detach             | brcmf_btcoex_timerfunc
-                                |   bt_local->timer_on = false;
-  if (cfg->btcoex->timer_on)    |
-    ...                         |
-  cancel_work_sync();           |
-  ...                           |   schedule_work(); // Reschedule
-                                |
-  kfree(cfg->btcoex); // FREE   |   brcmf_btcoex_handler() // Worker
-  /*                            |     btci = container_of(....); // USE
-   The kfree() above could      |     ...
-   also occur at any point      |     btci-> // USE
-   during the worker's execution|
-   */                           |
-
-To resolve the race conditions, drop the conditional check and call
-timer_shutdown_sync() directly. It can deactivate the timer reliably,
-regardless of its current state. Once stopped, the timer_on state is
-then set to false.
-
-Fixes: 61730d4dfffc ("brcmfmac: support critical protocol API for DHCP")
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://patch.msgid.link/20250822050839.4413-1-duoming@zju.edu.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Robert Garcia <rob_garcia@163.com>
+Bspec: 74741
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patch.msgid.link/20260515095756.2799483-2-jouni.hogander@intel.com
+(cherry picked from commit 1da1c9294825f08f622c473480d185680c2a3b75)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dpcd.h | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+ create mode 100644 drivers/gpu/drm/i915/display/intel_dpcd.h
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
-index f9f18ff451ea7c..f46e4090021777 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
-@@ -392,10 +392,8 @@ void brcmf_btcoex_detach(struct brcmf_cfg80211_info *cfg)
- 	if (!cfg->btcoex)
- 		return;
- 
--	if (cfg->btcoex->timer_on) {
--		cfg->btcoex->timer_on = false;
--		del_timer_sync(&cfg->btcoex->timer);
--	}
-+	del_timer_sync(&cfg->btcoex->timer);
-+	cfg->btcoex->timer_on = false;
- 
- 	cancel_work_sync(&cfg->btcoex->work);
- 
+diff --git a/drivers/gpu/drm/i915/display/intel_dpcd.h b/drivers/gpu/drm/i915/display/intel_dpcd.h
+new file mode 100644
+index 00000000000000..4aea5326f2ed48
+--- /dev/null
++++ b/drivers/gpu/drm/i915/display/intel_dpcd.h
+@@ -0,0 +1,15 @@
++/* SPDX-License-Identifier: MIT */
++/*
++ * Copyright © 2026 Intel Corporation
++ */
++
++#ifndef __INTEL_DPCD_H__
++#define __INTEL_DPCD_H__
++
++#define INTEL_DPCD_INTEL_WA_REGISTER_CAPS					0x3f0
++# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_EARLYSCANLINE_SDP_SUPPORT_MASK	REG_GENMASK(1, 0)
++# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_FALL_BACK_TO_PSR1			0
++# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITH_EARLY_SCANLINE		1
++# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITHOUT_EARLY_SCANLINE		2
++
++#endif /* __INTEL_DPCD_H__ */
 -- 
 2.53.0
 
