@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889293ACA5A;
-	Tue, 16 Jun 2026 18:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC90935292A;
+	Tue, 16 Jun 2026 18:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633793; cv=none; b=aBxdotgi33Zx7pJPpo7BD7OTF9lRmq6+RuEBu02z+yM0H2U/ILFNDNswcEYy0m9F13FDWPq0VCL25N338/32yXKeikGzTuS2V5FKTvxcPr4titjVNIVfV7hGWBkaz8++Z+DunYiqSVZ+gZw9tfp4HGlXBqOArta5bOh+slDBcMQ=
+	t=1781633799; cv=none; b=PxrkBzehudgC7iKi+tEKorO7WZxnQsRi6nLapsOPA92LDEWCU/pGs7wt1z+iusSNFndjgf56oh7pBB0HiDWyLM53ZFPtHZ0i6kbob0J/VYotQ0X1ZVaXgSuI/LS/s1BV8N/LWPfzbYSnDB/yDjOzDrAFmZO2fk8LAHuJpzWx1cA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633793; c=relaxed/simple;
-	bh=RQceal6+szawDQiZBAOrtgwIPanfln/7VW/2javHSck=;
+	s=arc-20240116; t=1781633799; c=relaxed/simple;
+	bh=2T2B/Uzei8OI3mMKWiZhBHMwuJtthWt+1nnGsFQSG68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XFeQOAPxT36uyb+sAYnBnXgjyZTORQKvGLksxHHrDl+ppjp/PO96K+Bje9qjij+xH75MphiPzKZpJlqEdJGlAUI5KXlEyFtMkp2x33wJeQfvUYKlSAV6y1/8SPr7ID0it5+AtheRZoegO4ENVnJTwbKGLCgVwNwyUSZ9AXxyz1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Il3LEGEw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jsT/PLmlQ+bki0fSDYGBOdJEpvEj44m2rM6yDmkYSC4YRNayqQD3B/oNtFjFhPoinNKW+CSQNFuw1Dg7zX71HCaSognTM6kl3WGg9jeNK8gK/YBlPwAcd0nu9tI5F5bF0w2KT/NJxwoJl3gLyF9lfP2zx+lQcCffgFQ5XY4XcnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjpAKxPV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Il3LEGEw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540DF1F000E9;
-	Tue, 16 Jun 2026 18:16:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjpAKxPV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724C81F000E9;
+	Tue, 16 Jun 2026 18:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633792;
-	bh=IfrxWxSPVGVnH1PEyFJtGSeSd/2nfEr9jEdRVUapwn0=;
+	s=korg; t=1781633797;
+	bh=8+WT+H+8tXbWCf96jeB1UujGO1MTkV74Zr03oqLgFKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Il3LEGEwxwv0lj2EawPWXswfUSQ9b0oRrFFHXfswmLOUdWBn5fxcbqrXp/1ozIq1R
-	 CK4CQ9/qXnuRQoEC0rr2gnhWtSaoSqP70u5hYNAHUmZfiKi8daXySkD42YAS03fjb0
-	 r+HDZWf9yYSVWW0JwzFkeQ0UPIOs3BMTyw40XD1Y=
+	b=xjpAKxPVfn7CRap1kNji5XBbh9/Ik+VpGGUAdjh+0U9uuH+FVVHbf6Pn0GEUiRtye
+	 r9cr9FQh8sALrgI0jZ9FBwnRWy9BTCvQcozCdIDvddIIg/dqiUFkGFXg/z4kKOUG+c
+	 HiO6MG6bHJJPn8NK0wrMeSAVV6pvrbuNkY3zVFKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 146/411] Disable -Wattribute-alias for clang-23 and newer
-Date: Tue, 16 Jun 2026 20:26:24 +0530
-Message-ID: <20260616145108.164250331@linuxfoundation.org>
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>
+Subject: [PATCH 5.15 147/411] i2c: dev: prevent integer overflow in I2C_TIMEOUT ioctl
+Date: Tue, 16 Jun 2026 20:26:25 +0530
+Message-ID: <20260616145108.222960027@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,121 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-commit 175db11786bde9061db526bf1ac5107d915f5163 upstream.
+commit 617eb7c0961a8dfcfc811844a6396e406b2923ea upstream.
 
-Clang recently added support for -Wattribute-alias [1], which results in
-the same warnings that necessitated commit bee20031772a ("disable
--Wattribute-alias warning for SYSCALL_DEFINEx()") for GCC.
+While fuzzing with Syzkaller, a persistent `schedule_timeout: wrong
+timeout value` warning was observed, accompanied by SMBus controller
+state machine corruption.
 
-  kernel/time/itimer.c:325:1: error: alias and aliasee have different types 'long (unsigned int)' and 'long (typeof (__builtin_choose_expr((__builtin_types_compatible_p(typeof ((unsigned int)0), typeof (0LL)) || __builtin_types_compatible_p(typeof ((unsigned int)0), typeof (0ULL))), 0LL, 0L)))' (aka 'long (long)') [-Werror,-Wattribute-alias]
-    325 | SYSCALL_DEFINE1(alarm, unsigned int, seconds)
-        | ^
-  include/linux/syscalls.h:225:36: note: expanded from macro 'SYSCALL_DEFINE1'
-    225 | #define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
-        |                                    ^
-  include/linux/syscalls.h:236:2: note: expanded from macro 'SYSCALL_DEFINEx'
-    236 |         __SYSCALL_DEFINEx(x, sname, __VA_ARGS__)
-        |         ^
-  include/linux/syscalls.h:251:18: note: expanded from macro '__SYSCALL_DEFINEx'
-    251 |                 __attribute__((alias(__stringify(__se_sys##name))));    \
-        |                                ^
-  kernel/time/itimer.c:325:1: note: aliasee is declared here
-  include/linux/syscalls.h:225:36: note: expanded from macro 'SYSCALL_DEFINE1'
-    225 | #define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
-        |                                    ^
-  include/linux/syscalls.h:236:2: note: expanded from macro 'SYSCALL_DEFINEx'
-    236 |         __SYSCALL_DEFINEx(x, sname, __VA_ARGS__)
-        |         ^
-  include/linux/syscalls.h:255:18: note: expanded from macro '__SYSCALL_DEFINEx'
-    255 |         asmlinkage long __se_sys##name(__MAP(x,__SC_LONG,__VA_ARGS__))  \
-        |                         ^
-  <scratch space>:16:1: note: expanded from here
-     16 | __se_sys_alarm
-        | ^
+The I2C_TIMEOUT ioctl accepts a user-provided timeout in multiples of
+10 ms. The user argument is checked against INT_MAX, but it is
+subsequently multiplied by 10 before being passed to msecs_to_jiffies().
 
-Disable the warnings in the same way for clang-23 and newer. Disable the
-warning about unknown warning options to avoid breaking the build for
-versions of clang-23 that do not have -Wattribute-alias, such as ones
-deployed by vendors like Android or CI systems or when bisecting LLVM
-between llvmorg-23-init and release/23.x.
+A malicious user can pass a large value (e.g., 429496729) that passes
+the `arg > INT_MAX` check but overflows when multiplied by 10. This
+results in a truncated 32-bit unsigned value that bypasses the
+internal `(int)m < 0` check in `msecs_to_jiffies()`.
 
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2163
-Link: https://github.com/llvm/llvm-project/commit/40da6920a0d71d49dfa2392b09153600b0759f5e [1]
-Link: https://patch.msgid.link/20260515-syscall-disable-attribute-alias-for-clang-v1-1-9a9d95d41df6@kernel.org
-[nathan: Drop arch/riscv hunk in older trees and address conflicts]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The truncated value is then assigned to `client->adapter->timeout`
+(a signed 32-bit int), which is reinterpreted as a negative number.
+When passed to wait_for_completion_timeout(), this negative value
+undergoes sign extension to a 64-bit unsigned long, triggering the
+`schedule_timeout` warning and causing premature returns. This leaves
+the SMBus state machine in an unrecoverable state, constituting a
+local Denial of Service (DoS).
+
+Fix this by bounding the user argument to `INT_MAX / 10`.
+
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+[wsa: move the comment as well]
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/compat.h         | 4 ++++
- include/linux/compiler-clang.h | 6 ++++++
- include/linux/compiler_types.h | 4 ++++
- include/linux/syscalls.h       | 4 ++++
- 4 files changed, 18 insertions(+)
+ drivers/i2c/i2c-dev.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/compat.h b/include/linux/compat.h
-index d91fb5225dbf48..c5441ac9050f4f 100644
---- a/include/linux/compat.h
-+++ b/include/linux/compat.h
-@@ -72,6 +72,10 @@
- 	__diag_push();								\
- 	__diag_ignore(GCC, 8, "-Wattribute-alias",				\
- 		      "Type aliasing is used to sanitize syscall arguments");\
-+	__diag_ignore(clang, 23, "-Wunknown-warning-option",			\
-+		      "Avoid breaking versions without -Wattribute-alias");	\
-+	__diag_ignore(clang, 23, "-Wattribute-alias",				\
-+		      "Type aliasing is used to sanitize syscall arguments");	\
- 	asmlinkage long compat_sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
- 		__attribute__((alias(__stringify(__se_compat_sys##name))));	\
- 	ALLOW_ERROR_INJECTION(compat_sys##name, ERRNO);				\
-diff --git a/include/linux/compiler-clang.h b/include/linux/compiler-clang.h
-index 7ae9fc072302d4..f0b218c914f1fb 100644
---- a/include/linux/compiler-clang.h
-+++ b/include/linux/compiler-clang.h
-@@ -141,3 +141,9 @@
- #else
- #define __diag_clang_11(s)
- #endif
-+
-+#if CONFIG_CLANG_VERSION >= 230000
-+#define __diag_clang_23(s)	__diag(s)
-+#else
-+#define __diag_clang_23(s)
-+#endif
-diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
-index ca9345e2934d38..2eda6f70169630 100644
---- a/include/linux/compiler_types.h
-+++ b/include/linux/compiler_types.h
-@@ -345,6 +345,10 @@ struct ftrace_likely_data {
- #define __diag_GCC(version, severity, string)
- #endif
+--- a/drivers/i2c/i2c-dev.c
++++ b/drivers/i2c/i2c-dev.c
+@@ -476,12 +476,13 @@ static long i2cdev_ioctl(struct file *fi
+ 		client->adapter->retries = arg;
+ 		break;
+ 	case I2C_TIMEOUT:
+-		if (arg > INT_MAX)
++		/*
++		 * For historical reasons, user-space sets the timeout value in
++		 * units of 10 ms.
++		 */
++		if (arg > INT_MAX / 10)
+ 			return -EINVAL;
  
-+#ifndef __diag_clang
-+#define __diag_clang(version, severity, string)
-+#endif
-+
- #define __diag_push()	__diag(push)
- #define __diag_pop()	__diag(pop)
- 
-diff --git a/include/linux/syscalls.h b/include/linux/syscalls.h
-index b8037a46ff41d7..ce63109333a585 100644
---- a/include/linux/syscalls.h
-+++ b/include/linux/syscalls.h
-@@ -239,6 +239,10 @@ static inline int is_syscall_trace_event(struct trace_event_call *tp_event)
- 	__diag_push();							\
- 	__diag_ignore(GCC, 8, "-Wattribute-alias",			\
- 		      "Type aliasing is used to sanitize syscall arguments");\
-+	__diag_ignore(clang, 23, "-Wunknown-warning-option",		\
-+		      "Avoid breaking versions without -Wattribute-alias");\
-+	__diag_ignore(clang, 23, "-Wattribute-alias",			\
-+		      "Type aliasing is used to sanitize syscall arguments");\
- 	asmlinkage long sys##name(__MAP(x,__SC_DECL,__VA_ARGS__))	\
- 		__attribute__((alias(__stringify(__se_sys##name))));	\
- 	ALLOW_ERROR_INJECTION(sys##name, ERRNO);			\
--- 
-2.53.0
-
+-		/* For historical reasons, user-space sets the timeout
+-		 * value in units of 10 ms.
+-		 */
+ 		client->adapter->timeout = msecs_to_jiffies(arg * 10);
+ 		break;
+ 	default:
 
 
