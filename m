@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29DCA3375C5;
-	Tue, 16 Jun 2026 15:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7543443DA53;
+	Tue, 16 Jun 2026 15:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622969; cv=none; b=RvZUeTCDtEKOq3PVtgYXfX556TBi6iPAA3+5m6L81DQyd9dQSWedoX98Bj2Vs/MoQPYcTZZD54bcTzTa2cGXcKSJWbwORigvqUdc2PIj0CBELIszbx132fvxJ7jc3ZM4uCHHYdrjd5o8m/iRxq49xAkJjYNxoQUc/7JJDcLa0pk=
+	t=1781622974; cv=none; b=Qway1e9cmdb6TUhH4D9sQzOit5/4NOIjWIfmJOTK1Wd5EDYqaXApqO7bGAR8Wv8LNVBvLakVg/fvSdnFWYCr0czoYOmdF3LOuQ3z8UpYx45h6VQMIWWC+8k2JZj94IbJ53Dm5dJDII4U2Bm7VpA/Lq18PGAYJwKoHxS5CCB0KK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622969; c=relaxed/simple;
-	bh=3VO2LZTG7Rb80m4AxJsgvkSD7tV2UEDJG7/z/QuHd94=;
+	s=arc-20240116; t=1781622974; c=relaxed/simple;
+	bh=CXx4HYNDcm2Z4PR7ASNqTrrSNvQu+brp5Iymfe2Y7WM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZbQ5eg5hAzOcJQVWQG5LkllQRdAISxn1DvuRVKgeqWQJOa0dSy07x54wLlTJ8C2VZ90Xe4/WVb8HVQGLmBhJdPMDt4QYzl+2mhAbFhezFm7RyjW9n0KfCsuxJcxByMKsMvm5a5e0ZR1wYpplganYXMZuJhvR45JQ2Af+g2wJ/JA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=two6wMnu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=soOxslmvgPgbRQNdjEdhhwtvnoWGjwQZ/Yi/bDq9pQKEqA5NyaBnfJIktg5tD9oBhC628JnACnst0nj4Odvw/vVKAAiZGpEcozc6B3+KsNdID2XYL6KbRjjrIbVnPoQfihBf8Vw1zQHqnaloA5jq7d194cCLW5C9oDU4bgbKH8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ky2nxAf2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="two6wMnu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A61E1F000E9;
-	Tue, 16 Jun 2026 15:16:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ky2nxAf2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5502B1F000E9;
+	Tue, 16 Jun 2026 15:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622968;
-	bh=RacStkIQapAk9GjQb/5mfmmUV2NYNoSj/7MnEh1TJSA=;
+	s=korg; t=1781622973;
+	bh=7ixSRUx96oJgQtFc615oipCRXQDMqG5FRtyMxnqEekY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=two6wMnuMTAg2bq3+bTN1Euu1mjU/WUi8DNIqHqvZnRcYpZifBRA4GXA4exIjWYsK
-	 MVp7mi+ter2j3KuSwr3czZ7FZqdRGtr7xOpLoMgW4Mu88Es+jnSJHb41WypMpytKAX
-	 /6ycSm3cC+LBeMhd+vQEH0nck8xzCXtL/cMNoaXU=
+	b=Ky2nxAf2heiLDbc2V7YwBxlcBrADh8yOVaSmtaYCMP1utU8+6dkqAUHU3XFpluEeW
+	 pcXVxkTFY//rJWKv+pcIVJJWGuZCDNoniHgbEuvlscKZY3pvBqNmwgwU1ALTSwBw8w
+	 N1Epemhmgbp1ouRwYzoOj9d8tNOYZRmt1HipbQfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Simon Horman <horms@kernel.org>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Keenan Dong <keenanat2000@gmail.com>,
+	Han Guidong <2045gemini@gmail.com>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Rajat Gupta <rajat.gupta@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 036/378] net: garp: fix unsigned integer underflow in garp_pdu_parse_attr
-Date: Tue, 16 Jun 2026 20:24:27 +0530
-Message-ID: <20260616145111.771912966@linuxfoundation.org>
+Subject: [PATCH 7.0 063/378] net/sched: fix pedit partial COW leading to page cache corruption
+Date: Tue, 16 Jun 2026 20:24:54 +0530
+Message-ID: <20260616145113.330215628@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,62 +53,230 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Rajat Gupta <rajat.gupta@oss.qualcomm.com>
 
-[ Upstream commit 16e408e607a94b646fb14a2a98422c6877ae4b3c ]
+[ Upstream commit 899ee91156e57784090c5565e4f31bd7dbffbc5a ]
 
-The receive-side GARP attribute parser computes dlen with reversed
-operands:
+tcf_pedit_act() computes the COW range for skb_ensure_writable()
+once before the key loop using tcfp_off_max_hint, but the hint does
+not account for the runtime header offset added by typed keys. This
+can leave part of the write region un-COW'd.
 
-        dlen = sizeof(*ga) - ga->len;
+Fix by moving skb_ensure_writable() inside the per-key loop where
+the actual write offset is known, and add overflow checking on the
+offset arithmetic. For negative offsets (e.g. Ethernet header edits
+at ingress), use skb_cow() to COW the headroom instead. Guard
+offset_valid() against INT_MIN, where negation is undefined.
 
-ga->len is the on-wire attribute length and includes the GARP attribute
-header. For normal attributes with data, ga->len is larger than
-sizeof(*ga), so the subtraction underflows in unsigned arithmetic.
-
-The resulting value is later passed to garp_attr_lookup(), whose length
-argument is u8. After truncation, the parsed data length usually no
-longer matches the length stored for locally registered attributes, so
-received Join/Leave events are ignored. This breaks the GARP receive path
-for common attributes, such as GVRP VLAN registration attributes.
-
-Compute the data length as the attribute length minus the header length.
-
-Fixes: eca9ebac651f ("net: Add GARP applicant-only participant")
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260527083200.42861-1-zhaoyz24@mails.tsinghua.edu.cn
+Fixes: 8b796475fd78 ("net/sched: act_pedit: really ensure the skb is writable")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Reported-by: Keenan Dong <keenanat2000@gmail.com>
+Reported-by: Han Guidong <2045gemini@gmail.com>
+Reported-by: Zhang Cen <rollkingzzc@gmail.com>
+Reviewed-by: Han Guidong <2045gemini@gmail.com>
+Tested-by: Han Guidong <2045gemini@gmail.com>
+Reviewed-by: Davide Caratti <dcaratti@redhat.com>
+Tested-by: Davide Caratti <dcaratti@redhat.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Tested-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Rajat Gupta <rajat.gupta@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260531123221.48732-1-jhs@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/802/garp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/tc_act/tc_pedit.h |  1 -
+ net/sched/act_pedit.c         | 77 +++++++++++++++++++----------------
+ 2 files changed, 41 insertions(+), 37 deletions(-)
 
-diff --git a/net/802/garp.c b/net/802/garp.c
-index 6f563b6797d99e..c7a39f298ad6ed 100644
---- a/net/802/garp.c
-+++ b/net/802/garp.c
-@@ -453,7 +453,7 @@ static int garp_pdu_parse_attr(struct garp_applicant *app, struct sk_buff *skb,
- 	if (!pskb_may_pull(skb, ga->len))
- 		return -1;
- 	skb_pull(skb, ga->len);
--	dlen = sizeof(*ga) - ga->len;
-+	dlen = ga->len - sizeof(*ga);
+diff --git a/include/net/tc_act/tc_pedit.h b/include/net/tc_act/tc_pedit.h
+index f58ee15cd858cf..cb7b82f2cbc7fd 100644
+--- a/include/net/tc_act/tc_pedit.h
++++ b/include/net/tc_act/tc_pedit.h
+@@ -15,7 +15,6 @@ struct tcf_pedit_parms {
+ 	struct tc_pedit_key	*tcfp_keys;
+ 	struct tcf_pedit_key_ex	*tcfp_keys_ex;
+ 	int action;
+-	u32 tcfp_off_max_hint;
+ 	unsigned char tcfp_nkeys;
+ 	unsigned char tcfp_flags;
+ 	struct rcu_head rcu;
+diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
+index bc20f08a278901..bd3b1da3cd63b5 100644
+--- a/net/sched/act_pedit.c
++++ b/net/sched/act_pedit.c
+@@ -16,6 +16,8 @@
+ #include <linux/ip.h>
+ #include <linux/ipv6.h>
+ #include <linux/slab.h>
++#include <linux/overflow.h>
++#include <linux/unaligned.h>
+ #include <net/ipv6.h>
+ #include <net/netlink.h>
+ #include <net/pkt_sched.h>
+@@ -242,7 +244,6 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
+ 		goto out_free_ex;
+ 	}
  
- 	if (attrtype > app->app->maxattr)
- 		return 0;
+-	nparms->tcfp_off_max_hint = 0;
+ 	nparms->tcfp_flags = parm->flags;
+ 	nparms->tcfp_nkeys = parm->nkeys;
+ 
+@@ -268,14 +269,6 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
+ 						   BITS_PER_TYPE(int) - 1,
+ 						   nparms->tcfp_keys[i].shift);
+ 
+-		/* The AT option can read a single byte, we can bound the actual
+-		 * value with uchar max.
+-		 */
+-		cur += (0xff & offmask) >> nparms->tcfp_keys[i].shift;
+-
+-		/* Each key touches 4 bytes starting from the computed offset */
+-		nparms->tcfp_off_max_hint =
+-			max(nparms->tcfp_off_max_hint, cur + 4);
+ 	}
+ 
+ 	p = to_pedit(*a);
+@@ -318,15 +311,12 @@ static void tcf_pedit_cleanup(struct tc_action *a)
+ 		call_rcu(&parms->rcu, tcf_pedit_cleanup_rcu);
+ }
+ 
+-static bool offset_valid(struct sk_buff *skb, int offset)
++static bool offset_valid(struct sk_buff *skb, int offset, int len)
+ {
+-	if (offset > 0 && offset > skb->len)
+-		return false;
+-
+-	if  (offset < 0 && -offset > skb_headroom(skb))
++	if (offset < -(int)skb_headroom(skb))
+ 		return false;
+ 
+-	return true;
++	return offset <= (int)skb->len - len;
+ }
+ 
+ static int pedit_l4_skb_offset(struct sk_buff *skb, int *hoffset, const int header_type)
+@@ -393,18 +383,10 @@ TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
+ 	struct tcf_pedit_key_ex *tkey_ex;
+ 	struct tcf_pedit_parms *parms;
+ 	struct tc_pedit_key *tkey;
+-	u32 max_offset;
+ 	int i;
+ 
+ 	parms = rcu_dereference_bh(p->parms);
+ 
+-	max_offset = (skb_transport_header_was_set(skb) ?
+-		      skb_transport_offset(skb) :
+-		      skb_network_offset(skb)) +
+-		     parms->tcfp_off_max_hint;
+-	if (skb_ensure_writable(skb, min(skb->len, max_offset)))
+-		goto done;
+-
+ 	tcf_lastuse_update(&p->tcf_tm);
+ 	tcf_action_update_bstats(&p->common, skb);
+ 
+@@ -412,10 +394,11 @@ TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
+ 	tkey_ex = parms->tcfp_keys_ex;
+ 
+ 	for (i = parms->tcfp_nkeys; i > 0; i--, tkey++) {
++		int write_offset, write_len;
+ 		int offset = tkey->off;
+ 		int hoffset = 0;
+-		u32 *ptr, hdata;
+-		u32 val;
++		u32 cur_val, val;
++		u32 *ptr;
+ 		int rc;
+ 
+ 		if (tkey_ex) {
+@@ -433,13 +416,15 @@ TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
+ 
+ 		if (tkey->offmask) {
+ 			u8 *d, _d;
++			int at_offset;
+ 
+-			if (!offset_valid(skb, hoffset + tkey->at)) {
++			if (check_add_overflow(hoffset, (int)tkey->at, &at_offset) ||
++			    !offset_valid(skb, at_offset, sizeof(_d))) {
+ 				pr_info_ratelimited("tc action pedit 'at' offset %d out of bounds\n",
+ 						    hoffset + tkey->at);
+ 				goto bad;
+ 			}
+-			d = skb_header_pointer(skb, hoffset + tkey->at,
++			d = skb_header_pointer(skb, at_offset,
+ 					       sizeof(_d), &_d);
+ 			if (!d)
+ 				goto bad;
+@@ -451,31 +436,51 @@ TC_INDIRECT_SCOPE int tcf_pedit_act(struct sk_buff *skb,
+ 			}
+ 		}
+ 
+-		if (!offset_valid(skb, hoffset + offset)) {
+-			pr_info_ratelimited("tc action pedit offset %d out of bounds\n", hoffset + offset);
++		if (check_add_overflow(hoffset, offset, &write_offset)) {
++			pr_info_ratelimited("tc action pedit offset overflow\n");
+ 			goto bad;
+ 		}
+ 
+-		ptr = skb_header_pointer(skb, hoffset + offset,
+-					 sizeof(hdata), &hdata);
+-		if (!ptr)
++		if (!offset_valid(skb, write_offset, sizeof(*ptr))) {
++			pr_info_ratelimited("tc action pedit offset %d out of bounds\n",
++					    write_offset);
+ 			goto bad;
++		}
++
++		if (write_offset < 0) {
++			if (skb_cow(skb, -write_offset))
++				goto bad;
++			if (write_offset + (int)sizeof(*ptr) > 0) {
++				if (skb_ensure_writable(skb,
++							min_t(int, skb->len,
++							      write_offset + (int)sizeof(*ptr))))
++					goto bad;
++			}
++		} else {
++			if (check_add_overflow(write_offset, (int)sizeof(*ptr),
++					       &write_len))
++				goto bad;
++			if (skb_ensure_writable(skb, min_t(int, skb->len,
++							   write_len)))
++				goto bad;
++		}
++
++		ptr = (u32 *)(skb->data + write_offset);
++		cur_val = get_unaligned(ptr);
+ 		/* just do it, baby */
+ 		switch (cmd) {
+ 		case TCA_PEDIT_KEY_EX_CMD_SET:
+ 			val = tkey->val;
+ 			break;
+ 		case TCA_PEDIT_KEY_EX_CMD_ADD:
+-			val = (*ptr + tkey->val) & ~tkey->mask;
++			val = (cur_val + tkey->val) & ~tkey->mask;
+ 			break;
+ 		default:
+ 			pr_info_ratelimited("tc action pedit bad command (%d)\n", cmd);
+ 			goto bad;
+ 		}
+ 
+-		*ptr = ((*ptr & tkey->mask) ^ val);
+-		if (ptr == &hdata)
+-			skb_store_bits(skb, hoffset + offset, ptr, 4);
++		put_unaligned((cur_val & tkey->mask) ^ val, ptr);
+ 	}
+ 
+ 	goto done;
 -- 
 2.53.0
 
