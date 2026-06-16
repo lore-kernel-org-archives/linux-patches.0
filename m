@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8233B26CE05;
-	Tue, 16 Jun 2026 17:36:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B2143D4E9;
+	Tue, 16 Jun 2026 17:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631382; cv=none; b=Q7nKe0nnFVF4cP4EhoMk5fBYS6faqF6tTmc1KkfjtSVhkAegEXLe3s0HwD84DILgPdIYcce0XgwV+9Y0z8pmhYxaJ/mWEBIZKzb6Y49ajb5rrRVf4YHyzvweC8jEQvGA9DUzuuspuJNWSFJ6vc7nc/h0CMlesv4wNTVMDpOD9GQ=
+	t=1781631387; cv=none; b=QA3M+glQMrqwJsR2zIIhdnhQuaWQinFpWLhgXazWdZLWT7RJG7TNUZ9QSX/fQZT7cWDaGvc5i8MeqpWjY6J3vTaRTQX1LnVRkHryZZ5uN6yez9qhckR5VRivWOU6mCZmuXKDufoJWFpy+jpGwCVWjlegNQwyyrIe4MskAckzmeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631382; c=relaxed/simple;
-	bh=6Y4Ren6Is4L6f5ChhYJgnaH87nHnClAcF1XbMlx8qh0=;
+	s=arc-20240116; t=1781631387; c=relaxed/simple;
+	bh=WYzCbLbrIYnNYjC72hiMl+sACLXl7bQU2TOrE2ltu1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ALeu8iGsYaFVPlLoJRdFYQk0I450phmbvqtjywRhia92YkY2sj2wCiEEhG1V6ae2lJaw6t3g76FiWKgtkArwuBQ8LKuL8ibdTxHMz+MQEd6FneAsUKE7m8SdqopuGdKZ1DRCRWgLAGI1ziDhuIPYBYXTnofS1kamcV0C/6Ci4ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sC+RguUn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OCvfFlpVlncCCmZp7x5DbK2P5gZMrYbRMT0A20IvFgb3tBkNYOoLIX0M8mCTVukEEsgkPOoA6qW5yhhbPetWp8hQG2QbIEsTrjhJN0xTW9FHPS3a7JN573OiX0Fo0aGuiqwe0xZgHiMMnKq47v3yj0xZC0CJE6RXARjeYxwmgXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RE8YuvDQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sC+RguUn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FBD1F000E9;
-	Tue, 16 Jun 2026 17:36:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RE8YuvDQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FFEF1F000E9;
+	Tue, 16 Jun 2026 17:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631381;
-	bh=p76aWtIM3bH0pltuvhoyacgv9UpFO+FcwrJxYiqG8sQ=;
+	s=korg; t=1781631386;
+	bh=Vvz4V5QSDIs0LwFgjU7ecVYvEGxk7LL17f1veKAxcQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sC+RguUn3FbFdi7wAPRhGcLqldDumzld32hoWvmFIJWcc2Q8/vXDjrmTgpOo7zxyT
-	 rTY+iC37zd3lav9lmOr2GDJ+8hQpvuwrHCXHEZY2Ckm3ffr2vg3ae/O2jK9jsusMY7
-	 G9AfeM7nl8fdCP8A5IJu0fyMYhoTT+SC0lLHyA4c=
+	b=RE8YuvDQsY/Y2hapMKonoEzUqu61PFygApO7hZRWylRt3QBCmb2Q3/lAwS9hvKMRu
+	 5GWRF2N6q6nfwJyoXtJbhYiraMzZIGCckklRSjdDABc1x39tbAVQJgl+QpORjinSR5
+	 HBHqreHs2f021AYZVR32Duma9t512yjx0ZXbR48o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Maciej W. Rozycki" <macro@orcam.me.uk>
-Subject: [PATCH 6.1 177/522] serial: zs: Fix bootconsole handover lockup
-Date: Tue, 16 Jun 2026 20:25:24 +0530
-Message-ID: <20260616145134.420384627@linuxfoundation.org>
+Subject: [PATCH 6.1 178/522] serial: zs: Switch to using channel reset
+Date: Tue, 16 Jun 2026 20:25:25 +0530
+Message-ID: <20260616145134.464412150@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,98 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit 6c05cf72e13314ce9b770b5951695dc5a2152920 upstream.
+commit 8572955630f30948837088aa98bcbe0532d1ceac upstream.
 
-Calling zs_reset() in the course of setting up the serial device causes
-line parameters to be reset and the transmitter disabled.  We've been
-lucky in that no message is usually produced to the kernel log between
-this call and the later call to uart_set_options() in the course of
-console setup done by zs_serial_console_init(), or the system would hang
-as the console output handler in the firmware tried to access a port the
-transmitter of which has been disabled and line parameters messed up.
+Switch the driver to using the channel reset rather than hardware reset,
+simplifying handling by removing an interference between channels that
+causes the other channel to become uninitialised afterwards.
 
-This will change with the next change to the driver, so fix zs_reset()
-such that line parameters are set for 9600n8 console operation as with
-the system firmware and the transmitter re-enabled after reset.  This
-also means zs_pm() serves no purpose anymore, so drop it.
+There is little difference between the two kinds of reset in terms of
+register settings that result, and we initialise the whole register set
+right away anyway.  However this prevents a hang from happening should
+the console output handler in the firmware try to access the other port
+whose transmitter has been disabled and line parameters messed up.
+
+For example this will happen if the keyboard port (port A) is chosen for
+the system console, unusually but not insanely for a headless system, as
+the port is wired to a standard DA-15 connector and an adapter can be
+easily made.  Or with the next change in place this would happen for the
+regular console port (port B), since the keyboard port (port A) will be
+initialised first.
+
+Just remove the unnecessary complication then, a channel reset is good
+enough.  We still need the initialisation marker, now per channel rather
+than per SCC, as for the console port zs_reset() will be called twice:
+once early on via zs_serial_console_init() for the console setup only,
+and then again via zs_config_port() as the port is associated with a TTY
+device.
 
 Fixes: 8b4a40809e53 ("zs: move to the serial subsystem")
 Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
 Cc: stable@vger.kernel.org # v2.6.23+
-Link: https://patch.msgid.link/alpine.DEB.2.21.2605062308040.46195@angie.orcam.me.uk
+Link: https://patch.msgid.link/alpine.DEB.2.21.2605062323430.46195@angie.orcam.me.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/zs.c |   29 ++++++++---------------------
- 1 file changed, 8 insertions(+), 21 deletions(-)
+ drivers/tty/serial/zs.c |    7 ++++---
+ drivers/tty/serial/zs.h |    2 +-
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
 --- a/drivers/tty/serial/zs.c
 +++ b/drivers/tty/serial/zs.c
-@@ -105,18 +105,24 @@ struct zs_parms {
+@@ -831,21 +831,22 @@ static void zs_shutdown(struct uart_port
  
- static struct zs_scc zs_sccs[ZS_NUM_SCCS];
- 
-+/*
-+ * Set parameters in WR5, WR12, WR13 such as not to interfere
-+ * with the initial PROM-based console.  Otherwise any output
-+ * produced before the console handover would cause the system
-+ * firmware to hang (TxENAB) or produce rubbish (Tx8, B9600).
-+ */
- static u8 zs_init_regs[ZS_NUM_REGS] __initdata = {
- 	0,				/* write 0 */
- 	PAR_SPEC,			/* write 1 */
- 	0,				/* write 2 */
- 	0,				/* write 3 */
- 	X16CLK | SB1,			/* write 4 */
--	0,				/* write 5 */
-+	Tx8 | TxENAB,			/* write 5 */
- 	0, 0, 0,			/* write 6, 7, 8 */
- 	MIE | DLC | NV,			/* write 9 */
- 	NRZ,				/* write 10 */
- 	TCBR | RCBR,			/* write 11 */
--	0, 0,				/* BRG time constant, write 12 + 13 */
-+	0x16, 0x00,			/* BRG time constant, write 12 + 13 */
- 	BRSRC | BRENABL,		/* write 14 */
- 	0,				/* write 15 */
- };
-@@ -955,23 +961,6 @@ static void zs_set_termios(struct uart_p
- 	spin_unlock_irqrestore(&scc->zlock, flags);
- }
- 
--/*
-- * Hack alert!
-- * Required solely so that the initial PROM-based console
-- * works undisturbed in parallel with this one.
-- */
--static void zs_pm(struct uart_port *uport, unsigned int state,
--		  unsigned int oldstate)
--{
--	struct zs_port *zport = to_zport(uport);
--
--	if (state < 3)
--		zport->regs[5] |= TxENAB;
--	else
--		zport->regs[5] &= ~TxENAB;
--	write_zsreg(zport, R5, zport->regs[5]);
--}
--
- 
- static const char *zs_type(struct uart_port *uport)
+ static void zs_reset(struct zs_port *zport)
  {
-@@ -1054,7 +1043,6 @@ static const struct uart_ops zs_ops = {
- 	.startup	= zs_startup,
- 	.shutdown	= zs_shutdown,
- 	.set_termios	= zs_set_termios,
--	.pm		= zs_pm,
- 	.type		= zs_type,
- 	.release_port	= zs_release_port,
- 	.request_port	= zs_request_port,
-@@ -1209,7 +1197,6 @@ static int __init zs_console_setup(struc
- 		return ret;
++	struct zs_port *zport_a = &zport->scc->zport[ZS_CHAN_A];
+ 	struct zs_scc *scc = zport->scc;
+ 	int irq;
+ 	unsigned long flags;
  
- 	zs_reset(zport);
--	zs_pm(uport, 0, -1);
+ 	spin_lock_irqsave(&scc->zlock, flags);
+ 	irq = !irqs_disabled_flags(flags);
+-	if (!scc->initialised) {
++	if (!zport->initialised) {
+ 		/* Reset the pointer first, just in case...  */
+ 		read_zsreg(zport, R0);
+ 		/* And let the current transmission finish.  */
+ 		zs_line_drain(zport, irq);
+-		write_zsreg(zport, R9, FHWRES);
++		write_zsreg(zport, R9, zport == zport_a ? CHRA : CHRB);
+ 		udelay(10);
+ 		write_zsreg(zport, R9, 0);
+-		scc->initialised = 1;
++		zport->initialised = 1;
+ 	}
+ 	load_zsregs(zport, zport->regs, irq);
+ 	spin_unlock_irqrestore(&scc->zlock, flags);
+--- a/drivers/tty/serial/zs.h
++++ b/drivers/tty/serial/zs.h
+@@ -22,6 +22,7 @@
+ struct zs_port {
+ 	struct zs_scc	*scc;			/* Containing SCC.  */
+ 	struct uart_port port;			/* Underlying UART.  */
++	int		initialised;		/* For the console port.  */
  
- 	if (options)
- 		uart_parse_options(options, &baud, &parity, &bits, &flow);
+ 	int		clk_mode;		/* May be 1, 16, 32, or 64.  */
+ 
+@@ -41,7 +42,6 @@ struct zs_scc {
+ 	struct zs_port	zport[2];
+ 	spinlock_t	zlock;
+ 	atomic_t	irq_guard;
+-	int		initialised;
+ };
+ 
+ #endif /* __KERNEL__ */
 
 
