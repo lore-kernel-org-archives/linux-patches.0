@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A924243E49F;
-	Tue, 16 Jun 2026 15:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C736A35201E;
+	Tue, 16 Jun 2026 15:17:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623055; cv=none; b=nq9qjdv6s/Vt4dtEHUo9c9nRC6d3BQZzg4Uc3RD5EFCryB6XnQiDkNUBG4QvMdqC7GYg7PnYpP6S6iVQTd5pWAYDyeMYkr4HYYa7ql06njeXct0f0cDHlp4x4gt35PVA8qyatX1DJvZzHceSIwDAA6CJs86FY6f9JGopXLDo1gA=
+	t=1781623061; cv=none; b=rh6g03nuRcOAfjT+1k/sykO07JLMTu0n4qgcLuQqPr99Jzv6NXqBzTuayU94isO44TJ2zIDuqK37anJ53VGtCbYtZk6Khi+KPhPaplMzEPph2mmuQxPCFEwxaV/DhVKTfS1NFajM463bn6UsidyWJH2dlmSEQzwTFukpuT0g/Ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623055; c=relaxed/simple;
-	bh=hegltPWP1Vm3eaO0dlUnmbHkqFNcb9GgZ1mkNFiHwxY=;
+	s=arc-20240116; t=1781623061; c=relaxed/simple;
+	bh=BgG1REilJP2lL+/41Rokd777JubccItw4yr4irKsWkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rUzXrtAtiqDAeamfEi+stgy5Q7S53T4CWJJuURJDSgfYs4XijoFixSgbeyxyYp9DMD/ioq9tlfiVjkwBhiv6tUEx+L+qmdlfOiW1hnuR9TwSWIh4DN6aOIga5mIwGQb5zLye9G5AGjxKn65t8TfyLn6GDmwY2xv7eZ+17QHAq1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tmrcfMJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MVhh7Acygjgloj74eO0BdNe73XF3+vpwwygfrg0lXCj1Tnm1w/nqf1/Sqt0Qf+xDDSRG87Eb7yd9rX9WFXooG3zXf+rkBjesbcZR1J8L8uNkIQmxupViWRzOHmlnauO9EXGp2yqWZtOb8EPoR83cGnoXY6J0ZszK8teyccOMQwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJEaoX6n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tmrcfMJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544151F000E9;
-	Tue, 16 Jun 2026 15:17:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJEaoX6n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775D41F000E9;
+	Tue, 16 Jun 2026 15:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623054;
-	bh=79MvhfUvtOrDi4Qv4SF0Ahc7DFwYbLRXpoRC/7dFWks=;
+	s=korg; t=1781623060;
+	bh=F1H7jxVqGtbYQMRG6Nh6FhB9ZKrrHCy7FOouLwNkNmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2tmrcfMJqyzSwuoRweexO3eSfZQCFgh5y/SUMe66mtNt+rIEEV5HAnX27FanAYBZH
-	 6Y4RhzRriEOuvyBtqEw28T6u5WMkwWvo9j7ot2yymC+q8xDLfWQr+c9fE+5c0n/cH7
-	 FXUJVEca61W5lqrippC61icKN0iAMJXQmtMZ3Hsk=
+	b=vJEaoX6nJHavHD1KZc9SNV5Czdl9MxGKKZ4fBb/qsC7nh3jDN1AvKyhuZ6tniZnt7
+	 b+E/T1MEAREWuSHFBnKGGDqkNkL6RAMlPzKYxZqUJbfE+NuzQmKpS2thwZvCS1zG3L
+	 0A8WHwfafqhFk9tOeiNthOxtXd5IwOFVIFnjs3cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dexuan Cui <decui@microsoft.com>,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	NeilBrown <neil@brown.name>,
+	Jeff Layton <jlayton@kernel.org>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Jori Koolstra <jkoolstra@xs4all.nl>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 080/378] hyperv: Clean up and fix the guest ID comment in hvgdk.h
-Date: Tue, 16 Jun 2026 20:25:11 +0530
-Message-ID: <20260616145114.409807726@linuxfoundation.org>
+Subject: [PATCH 7.0 081/378] VFS: fix possible failure to unlock in nfsd4_create_file()
+Date: Tue, 16 Jun 2026 20:25:12 +0530
+Message-ID: <20260616145114.474240217@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,54 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dexuan Cui <decui@microsoft.com>
+From: NeilBrown <neilb@ownmail.net>
 
-[ Upstream commit 83eb00f31eb1b10735d48e469df72cc2b0e06f6d ]
+[ Upstream commit e824bbd4d224cce4b5fb59cc9dcd3447fe0b7e44 ]
 
-Change the "64 bit" to "64-bit", and the "Os" to "OS".
+atomic_create() in fs/namei.c drops the reference to the dentry
+when it returns an error.
+This behaviour was imported into dentry_create() so that it
+will drop the reference if an error is returned from atomic_create(),
+though not if vfs_create() returns an error (in the case where
+->atomic_create is not supported).
 
-Remove the obsolete paragraph since the guideline has been
-published in the Hypervisor Top Level Functional Specification
-for many years.
+The caller - nfsd4_create_file() - is made aware of this by checking
+path->dentry, which will either be a counted reference to a dentry, or
+an error pointer.
 
-The "OS Type" is 0x1 for Linux, not 0x100.
+However the change to use start_creating()/end_creating() (which landed
+shortly before the dentry_create() change landed, though was likely
+developed around the same time) means that nfsd4_create_file() *needs* a
+valid dentry so that it can unlock the parent.
 
-No functional change.
+The net result is that if NFSD exports a filesystem which uses
+->atomic_create, and if a call to ->atomic_create returns an error, then
+nfsd4_create_file() will pass an error pointer to end_creating()
+and the parent will not be unlocked.
 
-Fixes: 83ba0c4f3f31 ("Drivers: hv: Cleanup the guest ID computation")
-Signed-off-by: Dexuan Cui <decui@microsoft.com>
-Reviewed-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Fix this by changing dentry_create() to make sure path->dentry is always
+a valid dentry, never an error-pointer.  The actual error is already
+returned a different way.
+
+Note that if ->atomic_create() returns a different dentry (which may not
+be possible in practice) we are guaranteed (because it is only ever
+provided by d_spliace_alias()) that it will have the same d_parent and
+so it will have the same effect when passed to end_creating().
+
+Fixes: 64a989dbd144 ("VFS/knfsd: Teach dentry_create() to use atomic_open()")
+Signed-off-by: NeilBrown <neil@brown.name>
+Link: https://patch.msgid.link/177969022571.3379282.16448744624428323496@noble.neil.brown.name
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Benjamin Coddington <bcodding@hammerspace.com>
+Reviewed-by: Jori Koolstra <jkoolstra@xs4all.nl>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/hyperv/hvgdk.h | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ fs/namei.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/include/hyperv/hvgdk.h b/include/hyperv/hvgdk.h
-index 384c3f3ff4a525..f538144280ca55 100644
---- a/include/hyperv/hvgdk.h
-+++ b/include/hyperv/hvgdk.h
-@@ -10,18 +10,12 @@
+diff --git a/fs/namei.c b/fs/namei.c
+index 9e5500dad14f59..d615cd62885198 100644
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -5002,6 +5002,7 @@ struct file *dentry_create(struct path *path, int flags, umode_t mode,
+ {
+ 	struct file *file __free(fput) = NULL;
+ 	struct dentry *dentry = path->dentry;
++	struct dentry *orig_dentry = dentry;
+ 	struct dentry *dir = dentry->d_parent;
+ 	struct inode *dir_inode = d_inode(dir);
+ 	struct mnt_idmap *idmap;
+@@ -5021,9 +5022,18 @@ struct file *dentry_create(struct path *path, int flags, umode_t mode,
+ 		if (create_error)
+ 			flags &= ~O_CREAT;
  
- /*
-  * The guest OS needs to register the guest ID with the hypervisor.
-- * The guest ID is a 64 bit entity and the structure of this ID is
-+ * The guest ID is a 64-bit entity and the structure of this ID is
-  * specified in the Hyper-V TLFS specification.
-  *
-- * While the current guideline does not specify how Linux guest ID(s)
-- * need to be generated, our plan is to publish the guidelines for
-- * Linux and other guest operating systems that currently are hosted
-- * on Hyper-V. The implementation here conforms to this yet
-- * unpublished guidelines.
-- *
-  * Bit(s)
-  * 63 - Indicates if the OS is Open Source or not; 1 is Open Source
-- * 62:56 - Os Type; Linux is 0x100
-+ * 62:56 - OS Type; Linux is 0x1
-  * 55:48 - Distro specific identification
-  * 47:16 - Linux kernel version number
-  * 15:0  - Distro specific identification
++		/* atomic_open will dput(dentry) on error */
++		dget(orig_dentry);
+ 		dentry = atomic_open(path, dentry, file, flags, mode);
+ 		error = PTR_ERR_OR_ZERO(dentry);
+ 
++		if (IS_ERR(dentry))
++			/* keep the original */
++			dentry = orig_dentry;
++		else
++			/* Drop the extra reference */
++			dput(orig_dentry);
++
+ 		if (unlikely(create_error) && error == -ENOENT)
+ 			error = create_error;
+ 
 -- 
 2.53.0
 
