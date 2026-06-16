@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13AC1E8320;
-	Tue, 16 Jun 2026 15:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6687C44BC8E;
+	Tue, 16 Jun 2026 15:23:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623376; cv=none; b=spl0UNf6PpIHZ67ZH+oxibFjPEz0XNepFEScexn6e2OcPdsRQI6Wed3yHaA6aFoT7mQhlz9OAffxi4MtA8O2lBJG2EgdFq/HynFJ2ehNEZl7ppz54orYnsDyjrjku3eVRf5nQ91q6ADcdWLizsCbBigU4p+nYoC7yMNndCsxgjI=
+	t=1781623382; cv=none; b=TqBFTWa/Kn+Sy8nFBVaAo7UqW9SDbdnATouW0+e5Mo3qB8aSJzbqsdjKGczY2GSfMxdBdGMjK6W+BL193yOElL6z5t657NfyMws7Tiv3+n9Kpfs/ltnXKVGqNbr08AvY87kF/vBeYD4ffOZZYK2zJ9qAceiWDz8GEH+KDIuBc28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623376; c=relaxed/simple;
-	bh=GZWJwvqWOmtadTZv9Evo72J2oCfE2+kzT4bJIH/Rc+U=;
+	s=arc-20240116; t=1781623382; c=relaxed/simple;
+	bh=SbUMs9vh7QufIdd0AqcLPz01ePEsKdXiylmONYC5NtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ty33xuncqqz3R6Ngf4eIWOxwIEg7U4sYCa+NS5i47wO+xvoY8RDJApvy3ROB0gUDbI7uaOYrjfh22RC7LLElF1DdYG6O2mwlfuebrRBJxmtcRihpZNcP5m6r9/nR/MW7NhRuPWBU4OzTZnup78IRK35r74qotpZn1TPuPM23rQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FLAZOqqp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c8Nz+wZMsZi8/rfG3Ibi2ooaDDAQHXNFOy0zW37/cDCvQukFtgDEkaTPgTvfTALPTIMWYAZ9XUKaGaobtCzO4CCoqQAtcCRxpcnDKJ9bzOMXF70kwf1A3HObutaesBN6UTP0x3Sw571l5ut+8OKcLTuGj/I28oOpvJCh6Mx5c8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udXfNRTl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLAZOqqp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A4C1F000E9;
-	Tue, 16 Jun 2026 15:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udXfNRTl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 270B81F000E9;
+	Tue, 16 Jun 2026 15:22:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623375;
-	bh=1GVhf7ubM3ePhibBrcJ1TbuhxLrLzVbEClpSTp2RLwo=;
+	s=korg; t=1781623381;
+	bh=+M4HbCwR83aHAsshQmaLzO2bbKPUwl7//5QHuUeTIHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FLAZOqqpeJvhIlKQgVA+kmRVcUXRCOOf3KoI91gXDIHhqEAw3kQ1jtmlMpvPKrkR9
-	 0xxdpYZ6EGSTkMhINCYmVteuhyNINV1daYjVm8MMKr2VBp6P7TlNsu1RXKS1W4ioFc
-	 NMYLYWucWpSEG4v4B0yvyl73wp+7ToR5VnSe7q1E=
+	b=udXfNRTlno6r0VyTPIiDbEgyLVJXb/CXPMO2YsItioiSNHEQPRGhDh85IQo68Mz70
+	 pf/9H5RybgkDKF7cV/XsPe1DCK78eobEod3rRkRsfyCj7MOQUTjsFa2fwdWVYh3om+
+	 UJ2k2vsw56fSxnnD4jZt+Z5g68QFYKx13LtUOZm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
 	Weiming Shi <bestswngs@gmail.com>,
-	Allison Henderson <achender@kernel.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 135/378] net/rds: fix NULL deref in rds_ib_send_cqe_handler() on masked atomic completion
-Date: Tue, 16 Jun 2026 20:26:06 +0530
-Message-ID: <20260616145117.408351326@linuxfoundation.org>
+Subject: [PATCH 7.0 136/378] tun: zero the whole vnet header in tun_put_user()
+Date: Tue, 16 Jun 2026 20:26:07 +0530
+Message-ID: <20260616145117.456063046@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -53,65 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 34080db3e70ddf94c38512ad2331e3c3afca6cc1 ]
+[ Upstream commit 7f2fcff15e99bb852f6967396ed12b38376e2c8d ]
 
-rds_ib_xmit_atomic() always programs a masked atomic opcode
-(IB_WR_MASKED_ATOMIC_CMP_AND_SWP or IB_WR_MASKED_ATOMIC_FETCH_AND_ADD)
-for every RDS atomic cmsg.  But the completion-side switch in
-rds_ib_send_unmap_op() only handles the non-masked opcodes, so a masked
-atomic completion falls through to default and returns rm == NULL while
-send->s_op is left set.  rds_ib_send_cqe_handler() then dereferences the
-NULL rm via rm->m_final_op, oopsing in softirq context.  An unprivileged
-AF_RDS sendmsg() of an atomic cmsg over an active RDS/IB connection
-triggers it; on hardware that natively accepts masked atomics (mlx4,
-mlx5) no extra setup is needed.
+tun_put_user() declares an on-stack struct virtio_net_hdr_v1_hash_tunnel
+without zeroing it. For a non-tunnel skb, virtio_net_hdr_tnl_from_skb()
+only initializes the first 10 bytes (sizeof(struct virtio_net_hdr)),
+leaving bytes 10..23 (num_buffers and the hash/tunnel fields) as stack
+garbage.
 
-  RDS/IB: rds_ib_send_unmap_op: unexpected opcode 0xd in WR!
-  Oops: general protection fault [#1] SMP KASAN
-  KASAN: null-ptr-deref in range [0x0000000000000190-0x0000000000000197]
-  RIP: rds_ib_send_cqe_handler+0x25c/0xb10 (net/rds/ib_send.c:282)
-  Call Trace:
-   <IRQ>
-   rds_ib_send_cqe_handler (net/rds/ib_send.c:282)
-   poll_scq (net/rds/ib_cm.c:274)
-   rds_ib_tasklet_fn_send (net/rds/ib_cm.c:294)
-   tasklet_action_common (kernel/softirq.c:943)
-   handle_softirqs (kernel/softirq.c:573)
-   run_ksoftirqd (kernel/softirq.c:479)
-   </IRQ>
-  Kernel panic - not syncing: Fatal exception in interrupt
+An unprivileged user can set the vnet header size to 24 with
+TUNSETVNETHDRSZ, so __tun_vnet_hdr_put() copies all 24 bytes of the
+partially-initialized struct to userspace, leaking 14 bytes of kernel
+stack on every read of a non-tunnel packet.
 
-Handle the masked atomic opcodes in the same case as the non-masked
-ones: they map to the same struct rds_message.atomic union member, so
-the existing container_of()/rds_ib_send_unmap_atomic() body is correct
-for them.
+Fix it the same way tun_get_user() already does by zeroing the whole
+header right after declaration.
 
-Fixes: 20c72bd5f5f9 ("RDS: Implement masked atomic operations")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260606192447.1179255-2-bestswngs@gmail.com
+Fixes: 288f30435132 ("tun: enable gso over UDP tunnel support.")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260607054428.3050243-1-xmei5@asu.edu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/ib_send.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/tun.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/rds/ib_send.c b/net/rds/ib_send.c
-index fcd04c29f543e6..d6be95542119f6 100644
---- a/net/rds/ib_send.c
-+++ b/net/rds/ib_send.c
-@@ -170,6 +170,8 @@ static struct rds_message *rds_ib_send_unmap_op(struct rds_ib_connection *ic,
- 		break;
- 	case IB_WR_ATOMIC_FETCH_AND_ADD:
- 	case IB_WR_ATOMIC_CMP_AND_SWP:
-+	case IB_WR_MASKED_ATOMIC_FETCH_AND_ADD:
-+	case IB_WR_MASKED_ATOMIC_CMP_AND_SWP:
- 		if (send->s_op) {
- 			rm = container_of(send->s_op, struct rds_message, atomic);
- 			rds_ib_send_unmap_atomic(ic, send->s_op, wc_status);
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index ca0ae5df73af78..a0bd803e5fb4d5 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -2068,6 +2068,7 @@ static ssize_t tun_put_user(struct tun_struct *tun,
+ 		struct virtio_net_hdr_v1_hash_tunnel hdr;
+ 		struct virtio_net_hdr *gso;
+ 
++		memset(&hdr, 0, sizeof(hdr));
+ 		ret = tun_vnet_hdr_tnl_from_skb(tun->flags, tun->dev, skb,
+ 						&hdr);
+ 		if (ret)
 -- 
 2.53.0
 
