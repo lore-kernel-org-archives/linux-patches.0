@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7BC36C0CE;
-	Tue, 16 Jun 2026 16:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B33A36C0CE;
+	Tue, 16 Jun 2026 16:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627809; cv=none; b=HsUfS66CAITsYUy1LYsYKvBLpkvX2lK3IaF97LafHbE8axtYuzUjvq1C6Be8cNyqmKi/IgmUzE6vdG0uA2FTgfVIAfuqXKF4n/alyKAIWpjQsCjKxbwFy94Ur0+RZzj62Qf/EYuEa2PppcvBdkkzS01P7yb2zRQraqQMOHnLOkE=
+	t=1781627814; cv=none; b=hb6ZFsoAXchrSTHJdrjyIKfc1lsNfv/ykDc2YrcFtstSFBxdkKECDDJbRqc/f/Eyf2QXqXMxFjwxQge6NCzIPfxrRLykLkALpDwzF87VEIpe/Eokwt0ZzhH2tqOjx8ipaPcaluNUsnB9IkerL7QYcvzz0+Py2VwLMRFfPMUms3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627809; c=relaxed/simple;
-	bh=ucyUCitAl/BhZgebN5lxozSaJ4j8qTZDWbKO6WHDxCE=;
+	s=arc-20240116; t=1781627814; c=relaxed/simple;
+	bh=zwHkvjYTrpOzMbwG/U1QEM7oewKg3eLDvKp4soToHpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nw74/ghm0UJ4SXz8Wkt006g/M7BqGIQMZLj5hhksQIAid0g+0giQd/xvM/g5lrJhZAlyeb/Et9mibx2Z1IoAUqlACZik32JJFT2SCIQP/zS7S59bFaLdXbm2QBoWd/UchhcVOePs9N4m/Z9a2UkyI3TTC4IaxMCVnROKBQruhcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ffzrX6Np; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bI+u2NHk/Z2RxqTGJoSvpywi9D/Yyz7tPGYruuKIrvJ/6Q6fge1Dapuy7Y2wVPICIZ2iA/NfLEvKJVRjc5mgAzNnnLiqDBDVG0wP8vi5TfB8ayAHsq16kQMfInTBDGwEAPbZm9d+dwHESvEJ8r79/Ik0umqRI/NRzGL0Pp4oONM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0t+Zk57q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ffzrX6Np"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1563F1F000E9;
-	Tue, 16 Jun 2026 16:36:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0t+Zk57q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBDF11F000E9;
+	Tue, 16 Jun 2026 16:36:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627808;
-	bh=AAlB2Gad3a0gHbtjFdybtRxZR7Gl9SEazWzI22jBwZo=;
+	s=korg; t=1781627813;
+	bh=wYi5ykexdFK/26zFQOwBe6/o7PNyJVaVrKTiwN5ut70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ffzrX6NpQ299BQWZ89SWSo/1XKc7DwgQqyJ9mlezyfNEixfhyG0pBZlkG6IzvPKTq
-	 x7su+4avXrBtY5X+1JzOteWpaX04zrOvw5ehWOeKoA9ZptpGbo4V/e0rzr/+7ncG0/
-	 4MO0HMBju0bhZVNnrXfDQhb/4zy/VFB7/Mg38vcI=
+	b=0t+Zk57qB4NHT8OYbJE3DzfpnDuAOld5GdKSsKuwlDMqUIvBoL12rXVdrq9IEDq1p
+	 Uo3Lp/YZI8L0jmXTd66rZYlj6SbHehdtnVsTx22ei93NcRVnVFv1fthg0y7/DkY5Ah
+	 5KXyiAn66iwen9+f5kUC2//fAsP1QkrhcduDf/ZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joonwon Kang <joonwonkang@google.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Jassi Brar <jassisinghbrar@gmail.com>
-Subject: [PATCH 6.12 231/261] mailbox: Fix NULL message support in mbox_send_message()
-Date: Tue, 16 Jun 2026 20:31:09 +0530
-Message-ID: <20260616145055.746623581@linuxfoundation.org>
+	Anton Leontev <leontyevantony@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 232/261] hv_netvsc: use kmap_local_page in netvsc_copy_to_send_buf
+Date: Tue, 16 Jun 2026 20:31:10 +0530
+Message-ID: <20260616145055.794956260@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -51,160 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jassi Brar <jassisinghbrar@gmail.com>
+From: Anton Leontev <leontyevantony@gmail.com>
 
-commit c58e9456e30c7098cbcd9f04571992be8a2e4e63 upstream.
+[ Upstream commit 004e9ecfe6c5384f9e0b2f6f6389d42ec22789af ]
 
-The active_req field serves double duty as both the "is a TX in
-flight" flag (NULL means idle) and the storage for the in-flight
-message pointer. When a client sends NULL via mbox_send_message(),
-active_req is set to NULL, which the framework misinterprets as
-"no active request". This breaks the TX state machine by:
+netvsc_copy_to_send_buf() copies page buffer entries into the VMBus
+send buffer using phys_to_virt() on the entry PFN. Entries for the
+RNDIS header and the skb linear data come from kmalloc'd memory and
+are always in the kernel direct map, but entries for skb fragments
+reference page cache or user pages, which on 32-bit x86 with
+CONFIG_HIGHMEM=y can live above the LOWMEM boundary. For such a page
+phys_to_virt() returns an address outside the direct map and the
+subsequent memcpy() faults on the transmit softirq path, which is
+fatal.
 
- - tx_tick() short-circuits on (!mssg), skipping the tx_done
-   callback and the tx_complete completion
- - txdone_hrtimer() skips the channel entirely since active_req
-   is NULL, so poll-based TX-done detection never fires.
+Map the pages with kmap_local_page() instead, handling two properties
+of the page buffer entries:
 
-Fix this by introducing a MBOX_NO_MSG sentinel value that means
-"no active request," freeing NULL to be valid message data. The
-sentinel is defined in the subsystem-internal mailbox.h so that
-controller drivers within drivers/mailbox/ can reference it, but
-it is not exposed to clients outside the subsystem.
+ - pb[i].pfn is a Hyper-V PFN at HV_HYP_PAGE_SIZE (4K) granularity,
+   not a native PFN. Reconstruct the physical address first and derive
+   the native page from it, so the mapping stays correct where
+   PAGE_SIZE > HV_HYP_PAGE_SIZE (e.g. arm64 with 64K pages).
 
-Fifteen in-tree callers send NULL (doorbell-style IPCs on Qualcomm,
-Tegra, TI, Xilinx, i.MX, SCMI, and PCC platforms). All were
-audited for regression:
+ - Since commit 41a6328b2c55 ("hv_netvsc: Preserve contiguous PFN
+   grouping in the page buffer array"), an entry describes a full
+   physically contiguous fragment and pb[i].len can exceed PAGE_SIZE,
+   while kmap_local_page() maps a single page. Copy page by page,
+   splitting at native page boundaries.
 
- - Most already work around the bug via knows_txdone=true with a
-   manual mbox_client_txdone() call, making the framework's
-   tracking irrelevant. These are unaffected.
+The copy path only handles packets smaller than the send section size
+(6144 bytes by default); larger packets take the cp_partial path where
+only the RNDIS header is copied. So entries here are bounded by the
+section size and a copy is split at most once on 4K-page systems. On
+!CONFIG_HIGHMEM configs kmap_local_page() folds to page_address() and
+no mapping work is added.
 
- - Poll-based callers (Xilinx zynqmp/r5) are strictly better off:
-   the poll timer now correctly detects NULL-active channels
-   instead of silently skipping them.
-
- - irq-qcom-mpm.c was a pre-existing bug -- the only Qualcomm
-   caller that omitted the knows_txdone + mbox_client_txdone()
-   pattern. Fixed in a companion commit ("irqchip/qcom-mpm: Fix
-   missing mailbox TX done acknowledgment").
-
- - No caller sets both a tx_done callback and sends NULL, nor
-   combines tx_block=true with NULL sends, so the newly reachable
-   callback/completion paths are never exercised.
-
-Also update tegra-hsp's flush callback, which directly inspects
-active_req to wait for the channel to drain: the old "!= NULL"
-check becomes "!= MBOX_NO_MSG", otherwise flush spins until
-timeout since the sentinel is non-NULL.
-
-The only tradeoff is that 'MBOX_NO_MSG' can not be used as a message
-by clients.
-
-Reported-by: Joonwon Kang <joonwonkang@google.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
-Signed-off-by: Joonwon Kang <joonwonkang@google.com>
+Fixes: c25aaf814a63 ("hyperv: Enable sendbuf mechanism on the send path")
+Cc: stable@vger.kernel.org
+Signed-off-by: Anton Leontev <leontyevantony@gmail.com>
+Link: https://patch.msgid.link/20260604165938.32033-1-leontyevantony@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ adapted `phys_to_page(paddr)` to `pfn_to_page(PHYS_PFN(paddr))` ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mailbox/mailbox.c          |   15 ++++++++-------
- drivers/mailbox/tegra-hsp.c        |    2 +-
- include/linux/mailbox_controller.h |    3 +++
- 3 files changed, 12 insertions(+), 8 deletions(-)
+ drivers/net/hyperv/netvsc.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/drivers/mailbox/mailbox.c
-+++ b/drivers/mailbox/mailbox.c
-@@ -59,7 +59,7 @@ static void msg_submit(struct mbox_chan
- 
- 	spin_lock_irqsave(&chan->lock, flags);
- 
--	if (!chan->msg_count || chan->active_req)
-+	if (!chan->msg_count || chan->active_req != MBOX_NO_MSG)
- 		goto exit;
- 
- 	count = chan->msg_count;
-@@ -97,13 +97,13 @@ static void tx_tick(struct mbox_chan *ch
- 
- 	spin_lock_irqsave(&chan->lock, flags);
- 	mssg = chan->active_req;
--	chan->active_req = NULL;
-+	chan->active_req = MBOX_NO_MSG;
- 	spin_unlock_irqrestore(&chan->lock, flags);
- 
- 	/* Submit next message */
- 	msg_submit(chan);
- 
--	if (!mssg)
-+	if (mssg == MBOX_NO_MSG)
- 		return;
- 
- 	/* Notify the client */
-@@ -125,7 +125,7 @@ static enum hrtimer_restart txdone_hrtim
- 	for (i = 0; i < mbox->num_chans; i++) {
- 		struct mbox_chan *chan = &mbox->chans[i];
- 
--		if (chan->active_req && chan->cl) {
-+		if (chan->active_req != MBOX_NO_MSG && chan->cl) {
- 			txdone = chan->mbox->ops->last_tx_done(chan);
- 			if (txdone)
- 				tx_tick(chan, 0);
-@@ -257,7 +257,7 @@ int mbox_send_message(struct mbox_chan *
- {
- 	int t;
- 
--	if (!chan || !chan->cl)
-+	if (!chan || !chan->cl || mssg == MBOX_NO_MSG)
- 		return -EINVAL;
- 
- 	t = add_to_rbuf(chan, mssg);
-@@ -331,7 +331,7 @@ static int __mbox_bind_client(struct mbo
- 	spin_lock_irqsave(&chan->lock, flags);
- 	chan->msg_free = 0;
- 	chan->msg_count = 0;
--	chan->active_req = NULL;
-+	chan->active_req = MBOX_NO_MSG;
- 	chan->cl = cl;
- 	init_completion(&chan->tx_complete);
- 
-@@ -492,7 +492,7 @@ void mbox_free_channel(struct mbox_chan
- 	/* The queued TX requests are simply aborted, no callbacks are made */
- 	spin_lock_irqsave(&chan->lock, flags);
- 	chan->cl = NULL;
--	chan->active_req = NULL;
-+	chan->active_req = MBOX_NO_MSG;
- 	if (chan->txdone_method == TXDONE_BY_ACK)
- 		chan->txdone_method = TXDONE_BY_POLL;
- 
-@@ -548,6 +548,7 @@ int mbox_controller_register(struct mbox
- 
- 		chan->cl = NULL;
- 		chan->mbox = mbox;
-+		chan->active_req = MBOX_NO_MSG;
- 		chan->txdone_method = txdone;
- 		spin_lock_init(&chan->lock);
+--- a/drivers/net/hyperv/netvsc.c
++++ b/drivers/net/hyperv/netvsc.c
+@@ -12,6 +12,7 @@
+ #include <linux/sched.h>
+ #include <linux/wait.h>
+ #include <linux/mm.h>
++#include <linux/highmem.h>
+ #include <linux/delay.h>
+ #include <linux/io.h>
+ #include <linux/slab.h>
+@@ -964,12 +965,22 @@ static void netvsc_copy_to_send_buf(stru
  	}
---- a/drivers/mailbox/tegra-hsp.c
-+++ b/drivers/mailbox/tegra-hsp.c
-@@ -497,7 +497,7 @@ static int tegra_hsp_mailbox_flush(struc
- 			mbox_chan_txdone(chan, 0);
  
- 			/* Wait until channel is empty */
--			if (chan->active_req != NULL)
-+			if (chan->active_req != MBOX_NO_MSG)
- 				continue;
+ 	for (i = 0; i < page_count; i++) {
+-		char *src = phys_to_virt(pb[i].pfn << HV_HYP_PAGE_SHIFT);
+-		u32 offset = pb[i].offset;
++		phys_addr_t paddr = (pb[i].pfn << HV_HYP_PAGE_SHIFT) +
++				    pb[i].offset;
+ 		u32 len = pb[i].len;
  
- 			return 0;
---- a/include/linux/mailbox_controller.h
-+++ b/include/linux/mailbox_controller.h
-@@ -11,6 +11,9 @@
- 
- struct mbox_chan;
- 
-+/* Sentinel value distinguishing "no active request" from "NULL message data" */
-+#define MBOX_NO_MSG	((void *)-1)
+-		memcpy(dest, (src + offset), len);
+-		dest += len;
++		while (len) {
++			struct page *page = pfn_to_page(PHYS_PFN(paddr));
++			u32 off = offset_in_page(paddr);
++			u32 chunk = min_t(u32, len, PAGE_SIZE - off);
++			char *src = kmap_local_page(page);
 +
- /**
-  * struct mbox_chan_ops - methods to control mailbox channels
-  * @send_data:	The API asks the MBOX controller driver, in atomic
++			memcpy(dest, src + off, chunk);
++			kunmap_local(src);
++			dest += chunk;
++			paddr += chunk;
++			len -= chunk;
++		}
+ 	}
+ 
+ 	if (padding)
 
 
