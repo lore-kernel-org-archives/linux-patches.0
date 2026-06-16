@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE0B357D14;
-	Tue, 16 Jun 2026 15:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD0E43D504;
+	Tue, 16 Jun 2026 15:33:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624010; cv=none; b=PMF1Qi0CVcl+ukUXmMZY7kILdHk3H75aj1/DPCwpZfaTBw9CaI5x8tSjohIHUVc4hpIyS0JSKdaZNgE8yz3xejSONlAlChaLqIAoNR6/jv7rP+i6IsvRZY9VeGZVCFoXZS0fpcYlO49v6kYoVO5y3C9ZikVpqoj9lZe+O0ZR3b0=
+	t=1781624016; cv=none; b=G1CyJx/U/2Rp/xIcmTTUI7ERNO7E7/RH6MFEQH/9vuGOAtPB2gB6rhCMc/dHlxSvPJRiY+jDKOyeU0Cl17/L4WmTBCs+Q7/8kGr90yWd+mLSFg/qdctavJn1VZih+SxcLod86dd/zIC5bNU8yCeHRiMie8eBjWnW98ypYZt2J+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624010; c=relaxed/simple;
-	bh=0Ka5c85E/v+cYfER3ln3ug3ecyBt4naL1RP5M2yBHqk=;
+	s=arc-20240116; t=1781624016; c=relaxed/simple;
+	bh=TvQ/QicmEAs+L0a+73HIAn5quPm55lXV/VI+KLacyjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ffpWMiL5VyTNsedldJSL3WS2sfshmiEo416rwFEtTWEhP1GI5aZGKDh/A0eVS5E1a3swsgwr+d/93d3RmyWMf/3jij8RvwWh+c/aUWFZSwDUR9VCAog3ImlbO2UaHStbWaOWLAMJ7LgyiPn2ORQ1Io2aIiBZT9p9Ky9Xbybf7ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvuw2nyV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oYtM9CSGok2+20Rxt+XU30rSu1TXgCdQI3RkpwdMQ4pEnFNFv0xCn8SMa+5mT8UxkGiBcfk/xgw2ZFb6C87y10MTo4AVpNIyVk0JM+TiT/Yf788t1XknxjNCKkexSc6POgEtGPd+T1EKJRUrBH7Gd+KYE1ut7reGZ+VbzHSgU+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBZIHqUQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvuw2nyV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C511F000E9;
-	Tue, 16 Jun 2026 15:33:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBZIHqUQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3274C1F000E9;
+	Tue, 16 Jun 2026 15:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624009;
-	bh=psJF92ZTkJKqlQaFWM9bmaLN0/jN5A4LhvufK6QDHOo=;
+	s=korg; t=1781624015;
+	bh=OAD5X9RJ1JUR9alzQhEtZVXc20L3edwaDqIeaewCNec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qvuw2nyV3oyUpyXyNcD+CrgkeEwFKF5KYvSgILrrQS25qo8z66g6CnzazyrPF964D
-	 vSHmpGyu1B/dEXbFDbRyq8/XiRnqWv1GSNupAuQCOgcYjvEExaeACKgielghXSxUJK
-	 BcKz5H9M5TbqFLfzYnnW+JE5CXH5yLAg4zUXD6/U=
+	b=iBZIHqUQkKKvqo5MMXIvB+0ZGMaBSnyz6n5nKEBu9cdhu875botOCEFHZ9lyCjF6R
+	 mZzd3kwwEkLoQ7hLDkcnAD+J/FwORLoCvUNQiY/WMVJbSAhhCURj5Adn7+xN1358df
+	 rRTSeQ92/8kEtJYAM2JUjg3qH/Yby8wg7F6djL4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alistair Popple <apopple@nvidia.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	David Hildenbrand <david@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.0 229/378] arm64: mm: call pagetable dtor when freeing hot-removed page tables
-Date: Tue, 16 Jun 2026 20:27:40 +0530
-Message-ID: <20260616145122.328768376@linuxfoundation.org>
+	syzbot+a16fb0cce329a320661c@syzkaller.appspotmail.com,
+	Nirmoy Das <nirmoyd@nvidia.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 7.0 256/378] ovl: keep err zero after successful ovl_cache_get()
+Date: Tue, 16 Jun 2026 20:28:07 +0530
+Message-ID: <20260616145123.606918881@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -53,65 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alistair Popple <apopple@nvidia.com>
+From: Nirmoy Das <nirmoyd@nvidia.com>
 
-commit c594b83457ccdee76d458416fb3bc9348a37592f upstream.
+commit 1711b6ed6953cee5940ca4c3a6e77f1b3798cee2 upstream.
 
-Since 5e8eb9aeeda3 ("arm64: mm: always call PTE/PMD ctor in
-__create_pgd_mapping()") page-table allocation on ARM64 always calls
-pagetable_{pte,pmd,pud,p4d}_ctor().  This sets the page_type to
-PGTY_table, increments NR_PAGETABLE and possible allocates a PTL.  However
-the matching pagetable_dtor() calls were never added.
+ovl_iterate_merged() stores PTR_ERR(cache) in err before checking
+IS_ERR(cache). On success err holds the truncated cache pointer and
+can be returned as a bogus non-zero error.
 
-With DEBUG_VM enabled on kernel versions prior to v6.17 without
-2dfcd1608f3a9 ("mm/page_alloc: let page freeing clear any set page type")
-this leads to the following warning when freeing these pages due to
-page->page_type sharing page->_mapcount:
+The syzbot reproducer reaches this through overlay-on-overlay readdir:
 
-  BUG: Bad page state in process ... pfn:284fbb
-  page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x284fbb
-  flags: 0x17fffc000000000(node=0|zone=2|lastcpupid=0x1ffff)
-  page_type: f2(table)
-  page dumped because: nonzero mapcount
-  Call trace:
-   bad_page+0x13c/0x160
-   __free_frozen_pages+0x6cc/0x860
-   ___free_pages+0xf4/0x180
-   free_pages+0x54/0x80
-   free_hotplug_page_range.part.0+0x58/0x90
-   free_empty_tables+0x438/0x500
-   __remove_pgd_mapping.constprop.0+0x60/0xa8
-   arch_remove_memory+0x48/0x80
-   try_remove_memory+0x158/0x1d8
-   offline_and_remove_memory+0x138/0x180
+  getdents64
+    iterate_dir(outer overlay file)
+      ovl_iterate_merged()
+        ovl_cache_get()
+          ovl_dir_read_merged()
+            ovl_dir_read()
+              iterate_dir(inner overlay file)
+                ovl_iterate_merged()
 
-It can also lead to leaking the ptl allocation if ALLOC_SPLIT_PTLOCKS is
-defined and incorrect NR_PAGETABLE stats.  Fix this by calling
-pagetable_dtor() in free_hotplug_pgtable_page() prior to freeing the page
-to undo the effects of calling pagetable_*_ctor().
+Only compute PTR_ERR(cache) on the error path.
 
-Link: https://lore.kernel.org/20260521032730.2104017-1-apopple@nvidia.com
-Fixes: 5e8eb9aeeda3 ("arm64: mm: always call PTE/PMD ctor in __create_pgd_mapping()")
-Signed-off-by: Alistair Popple <apopple@nvidia.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: d25e4b739f83 ("ovl: refactor ovl_iterate() and port to cred guard")
+Reported-by: syzbot+a16fb0cce329a320661c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a16fb0cce329a320661c
+Cc: stable@vger.kernel.org
+Signed-off-by: Nirmoy Das <nirmoyd@nvidia.com>
+Link: https://patch.msgid.link/20260514144258.3068715-1-nirmoyd@nvidia.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/mmu.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/overlayfs/readdir.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -1445,6 +1445,7 @@ static void free_hotplug_page_range(stru
+--- a/fs/overlayfs/readdir.c
++++ b/fs/overlayfs/readdir.c
+@@ -838,15 +838,14 @@ static int ovl_iterate_merged(struct fil
+ 	struct ovl_dir_file *od = file->private_data;
+ 	struct dentry *dentry = file->f_path.dentry;
+ 	struct ovl_cache_entry *p;
+-	int err = 0;
++	int err;
  
- static void free_hotplug_pgtable_page(struct page *page)
- {
-+	pagetable_dtor(page_ptdesc(page));
- 	free_hotplug_page_range(page, PAGE_SIZE, NULL);
+ 	if (!od->cache) {
+ 		struct ovl_dir_cache *cache;
+ 
+ 		cache = ovl_cache_get(dentry);
+-		err = PTR_ERR(cache);
+ 		if (IS_ERR(cache))
+-			return err;
++			return PTR_ERR(cache);
+ 
+ 		od->cache = cache;
+ 		ovl_seek_cursor(od, ctx->pos);
+@@ -869,7 +868,7 @@ static int ovl_iterate_merged(struct fil
+ 		od->cursor = p->l_node.next;
+ 		ctx->pos++;
+ 	}
+-	return err;
++	return 0;
  }
  
+ static bool ovl_need_adjust_d_ino(struct file *file)
 
 
