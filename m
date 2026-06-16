@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BED2466B5E;
-	Tue, 16 Jun 2026 17:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59ED4466B70;
+	Tue, 16 Jun 2026 17:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631870; cv=none; b=j58tjUZTVVmXdUtsASIrz8yaAFXLt3kWKEsDscxdfvT6UHKDGXnyieyJ2FnGcbEskisVtebTglmuBVliTbqujOmOqQNzGGhN+mAE3WRpdy5Q9oJ+TU4zfDoSfkwY392VmxmmrkgYxs5DJg3a9ZVQGYYwckc44t8JA0UVe4Y/81Y=
+	t=1781631875; cv=none; b=AJRrn3T5gObM+e03Q1p/EoFcNPD5pzvelZvlO2xQd+4qCJxgTEUBVAfIU/R5Qi+i0Xny5R+ybUj0k8412hVEjLFKxtHVXfyWq6Lnmq7EhaFtGLF+JQf51K1FF2egIGsCMpO4f8fNuaJVG5VT4jSGLVJmq/Y2jGyX77KZ3GrPtTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631870; c=relaxed/simple;
-	bh=/UTEh6CSCiEWndhjWmJ4fvoOIHPqbwiL8a91FTzRl78=;
+	s=arc-20240116; t=1781631875; c=relaxed/simple;
+	bh=0Ov/ZaitxeYxL/Ijaaa+rKbeOVxgPrY54CCO1vzPpLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Psy9IRz2TaKR3RQzk39+HK1uXj7MrF79BCZqIWmTP4h55Re46O3YmOn/TJJgQMZ9yLCopat8/O7573nplJVTVXJuIaokPHGTCeI1sHblJcW2E0Wd20WwxsLyAwDndRrKuwhzyd8q5UCEUDegb+eqa/LcM922B1JihU4GxJ+i04c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DokD1ATT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VmC04cL3GOvFRtMZ0tQUxMrYNeX3FOsErn6PoXnmxd6HKLnpOVnvQVOyr0jAyS3Phw7a12GJV27G7IR5fL9b389JtGnCz6Ng72J5VvPvvxrwQXup4ySEyGudpAGn2luYhO02/c7LNQDxf2ct/KmAKlRDMwnH08LakTiRqinwpQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zelujaXW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DokD1ATT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B3C1F000E9;
-	Tue, 16 Jun 2026 17:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zelujaXW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 607791F000E9;
+	Tue, 16 Jun 2026 17:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631869;
-	bh=TNHm2Yk2LXjPk095r0B3m3KVMYY2JS+i6Mhhk02L8ZA=;
+	s=korg; t=1781631874;
+	bh=ub9oCk+ueGXnsqcazqnjel3bRtnMb6TxaJ+6t9WbPSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DokD1ATT/SvyASIuC2QdIJIbzR5O54ayl+ruJIfxWw0MdpUCg7spsWWm5H09xMKpg
-	 Nd3YuXhht11nDvFTuCAOMtv3Tc0IB/0f/tNSdYchLoGUHdv5n/dMAHQ6fs3rbgd2W6
-	 tMx08ZAtnt8yC6wciXlPRVYXEXwu4OfU/3tXvCi8=
+	b=zelujaXWp0Uju/4u3xT0Al+Q4swj3jpLfoBNSDFeERlszLPsM//m1ip1uOZMixG1c
+	 gZZ4LF+W+Z5AI9bT1GNJ3QlQf3HeIW2M1xkYQs9jsoAIOhE5OYPTQ/c5RFdT+8I3lc
+	 hIWyaDgVskMGfAb+wfRwX6HCbE/NGgR78B4Y2AEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Karl Mehltretter <kmehltretter@gmail.com>,
 	Linus Walleij <linusw@kernel.org>,
 	Russell King <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 6.1 283/522] ARM: 9474/1: io: avoid KASAN instrumentation of raw halfword I/O
-Date: Tue, 16 Jun 2026 20:27:10 +0530
-Message-ID: <20260616145139.180191809@linuxfoundation.org>
+Subject: [PATCH 6.1 284/522] ARM: 9475/1: entry: use byte load for KASAN VMAP stack shadow
+Date: Tue, 16 Jun 2026 20:27:11 +0530
+Message-ID: <20260616145139.230402799@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,55 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Karl Mehltretter <kmehltretter@gmail.com>
 
-commit d59ed803715a71fb9582e139d648ece8d66dc743 upstream.
+commit 77a1f6883dc6e837bb2cb30b9b02e2f94338e2c6 upstream.
 
-For CPUs before ARMv6, __raw_readw() and __raw_writew() are implemented
-as C volatile halfword accesses so the compiler can generate an access
-sequence that is safe for those machines. With KASAN enabled, those C
-accesses are instrumented as normal memory accesses.
+Commit 44e9a3bb76e5 ("ARM: 9430/1: entry: Do a dummy read from
+VMAP shadow") added a dummy read from the KASAN VMAP stack shadow in
+__switch_to(). The read uses ldr, but the KASAN shadow address is
+byte-granular and is not guaranteed to be word aligned.
 
-That is not valid for MMIO. On ARM926/VersatilePB with KASAN enabled,
-PL011 probing traps in __asan_store2() while registering the UART, because
-the instrumented writew() tries to check KASAN shadow for an MMIO address.
+ARMv5 faults unaligned word loads. With CONFIG_KASAN_VMALLOC and
+CONFIG_VMAP_STACK enabled, ARM926/VersatilePB crashes in __switch_to()
+with an alignment exception before reaching init.
 
-Keep the existing volatile halfword access, but move the ARMv5 definitions
-into __no_kasan_or_inline functions so raw MMIO halfword accesses are not
-instrumented by KASAN. The ARMv6-and-newer inline assembly path is
-unchanged.
+Use ldrb for the dummy shadow access. The code only needs to fault in the
+shadow mapping if the stack shadow is missing, so a byte load is sufficient
+and matches the granularity of KASAN shadow memory.
 
-Fixes: 421015713b30 ("ARM: 9017/2: Enable KASan for ARM")
-Cc: stable@vger.kernel.org # v5.11+
+Fixes: 44e9a3bb76e5 ("ARM: 9430/1: entry: Do a dummy read from VMAP shadow")
+Cc: stable@vger.kernel.org # v6.13+
 Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Reviewed-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/include/asm/io.h |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ arch/arm/kernel/entry-armv.S |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm/include/asm/io.h
-+++ b/arch/arm/include/asm/io.h
-@@ -56,8 +56,19 @@ void __raw_readsl(const volatile void __
-  * the bus. Rather than special-case the machine, just let the compiler
-  * generate the access for CPUs prior to ARMv6.
-  */
--#define __raw_readw(a)         (__chk_io_ptr(a), *(volatile unsigned short __force *)(a))
--#define __raw_writew(v,a)      ((void)(__chk_io_ptr(a), *(volatile unsigned short __force *)(a) = (v)))
-+#define __raw_writew __raw_writew
-+static __no_kasan_or_inline void __raw_writew(u16 val, volatile void __iomem *addr)
-+{
-+	__chk_io_ptr(addr);
-+	*(volatile unsigned short __force *)addr = val;
-+}
-+
-+#define __raw_readw __raw_readw
-+static __no_kasan_or_inline u16 __raw_readw(const volatile void __iomem *addr)
-+{
-+	__chk_io_ptr(addr);
-+	return *(const volatile unsigned short __force *)addr;
-+}
- #else
- /*
-  * When running under a hypervisor, we want to avoid I/O accesses with
+--- a/arch/arm/kernel/entry-armv.S
++++ b/arch/arm/kernel/entry-armv.S
+@@ -793,7 +793,7 @@ ENTRY(__switch_to)
+ 	@ are using KASAN
+ 	mov_l	r2, KASAN_SHADOW_OFFSET
+ 	add	r2, r2, ip, lsr #KASAN_SHADOW_SCALE_SHIFT
+-	ldr	r2, [r2]
++	ldrb	r2, [r2]
+ #endif
+ #endif
+ 
 
 
