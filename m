@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F43731D367;
-	Tue, 16 Jun 2026 16:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CF5466B57;
+	Tue, 16 Jun 2026 16:24:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627074; cv=none; b=MgIa4Z/s+MB+c2AeA3dgrLKfx8cvw6KxJxU+1zVMTlnDUNNFXq080wrBcic2DsqDpJRfy/CxHS3+DlussvwtxmSa5bBSPY9EIZathEUoEYG0XLXMOmkNPPrs56HjFnAq4CVv0/plnhonsQEKRbXej6brd9p3a5ZYtDiO7/X1lQ0=
+	t=1781627079; cv=none; b=S9pq+YBl39IHzq8wdtOErABgH7yrswbcOMUTzcAV19ODuLPUVQ4O+d2R/jEU9Tev0W6dcDYIjtth14kwVWcT9MPNmdW87/jQ+InNl5qtiGXqkB/IbJ0vMf9g0uzdxHCaOMdQA0b/c3elF5V1bAG8OIS6xtwnzxNhhxbBNoGfEdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627074; c=relaxed/simple;
-	bh=OimzjarTHQfRTJiPKiVzCxodyoF7Pv+SYAz5cX1ZPes=;
+	s=arc-20240116; t=1781627079; c=relaxed/simple;
+	bh=n0k+IC02t5kcwUBCeUZy/avKOFheIHOK2H7OTq5Tc0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B9/huff/mZLagwmKzIL7mjKvjO5397aM5lVF8Utvl1t+rfgKkoR94P3NEi/9ruDqCBV6pbLJIqXo/8x+cQSiGZ6GZGep3HLoXq0pER9HTTBrvNnmDLVQOEzOBZVWDxEM80nAT8panoIjFbfgfQcPbLStsZpNKUIpnSHKVO37nGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZk9AI8X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PFEpifq6n8C/MpVLQWM84tLtmQqscZ23fOMcSP1Wpbx/YAiKvwcrtLzR86MHiXLvH/5FnfkXShP5cD/MR9PJyI4F55jFNMGKADEE68WjuT604rQcKvPdwg2ZNxvacEQLXgAAuqDuRHB5vwASbEsHNpbzFvIPE8C8ExZs7c1kd9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ck6IdqW6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZk9AI8X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDD21F000E9;
-	Tue, 16 Jun 2026 16:24:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ck6IdqW6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B811B1F000E9;
+	Tue, 16 Jun 2026 16:24:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627073;
-	bh=K7PuSwPkxyxg4N+IGMguTcXkFCJxjwjRlCbJCZVXWXc=;
+	s=korg; t=1781627078;
+	bh=pZ3vq+gnrOl6u2q5TsGsaOFiKHVor4YqH6FNJ2GoqAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TZk9AI8X+FBGDf4Wgvry5q642hwyJMQmo+x0rODVNcNiOaojiOpQnqDhX315Ydvn9
-	 Q4oTruSmc/wkywoxyBr0K7ndDcBR5hPpreqHruzNdsbp5PBIUa7iNIQ7EVDTVAraqn
-	 mNZDaTQ5SPqVexR/y4G4scgaJJuiWnvgGS6zNgr8=
+	b=ck6IdqW6iEA9J0Yo8/hzO9iIFH+sPEMOxn8C+UAo0UQQWyYZNOoCiTSYmdbVkvul9
+	 F0+PEwLfc9iyUd3nagQYo73GYNwjr358TfIr++ZEOlhyfl4Sib8638UcAP6OzF6EPR
+	 N2blEfUwM3jRq9R/O5rNPutycWr+IL/AcKBMsD40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Pengyu Luo <mitltlatltl@gmail.com>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20de=20Bretagne?= <jerome.debretagne@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 115/261] clk: samsung: gs101: Fix missing USI7_USI DIV clock in peric0_clk_regs
-Date: Tue, 16 Jun 2026 20:29:13 +0530
-Message-ID: <20260616145050.394131994@linuxfoundation.org>
+Subject: [PATCH 6.12 116/261] clk: qcom: dispcc-sc8280xp: Dont park mdp_clk_src at registration time
+Date: Tue, 16 Jun 2026 20:29:14 +0530
+Message-ID: <20260616145050.437534996@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -47,50 +46,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Pengyu Luo <mitltlatltl@gmail.com>
 
-[ Upstream commit 78ee734b36284d82454e87a92094fdb926985b47 ]
+[ Upstream commit 5285b046757844435d1db96c1b5c3a6621b2979a ]
 
-In the peric0_clk_regs array, the divider register offset for USI6 was
-accidentally listed twice, while the divider for USI7 was omitted.
+Parking disp{0,1}_cc_mdss_mdp_clk_src clk broke simplefb on HUAWEI
+Gaokun3, the image will stuck at grey for seconds until msm takes
+over framebuffer. Use clk_rcg2_shared_no_init_park_ops to skip it.
 
-Missing this DIV register causes the USI7 clock divider setting to be
-lost and reset to its hardware default value during a suspend/resume
-cycle.
-
-Replace the duplicated USI6 DIV entry with the correct USI7 DIV
-register.
-
-Fixes: 893f133a040b ("clk: samsung: gs101: add support for cmu_peric0")
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
-Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Link: https://patch.msgid.link/20260505171457.1960837-1-visitorckw@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+Tested-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
+Link: https://lore.kernel.org/r/20260303150152.90685-1-mitltlatltl@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/samsung/clk-gs101.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/dispcc-sc8280xp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/samsung/clk-gs101.c b/drivers/clk/samsung/clk-gs101.c
-index fa628fab28ac4e..7cc6a1173d44fb 100644
---- a/drivers/clk/samsung/clk-gs101.c
-+++ b/drivers/clk/samsung/clk-gs101.c
-@@ -3602,7 +3602,7 @@ static const unsigned long peric0_clk_regs[] __initconst = {
- 	CLK_CON_DIV_DIV_CLK_PERIC0_USI4_USI,
- 	CLK_CON_DIV_DIV_CLK_PERIC0_USI5_USI,
- 	CLK_CON_DIV_DIV_CLK_PERIC0_USI6_USI,
--	CLK_CON_DIV_DIV_CLK_PERIC0_USI6_USI,
-+	CLK_CON_DIV_DIV_CLK_PERIC0_USI7_USI,
- 	CLK_CON_DIV_DIV_CLK_PERIC0_USI8_USI,
- 	CLK_CON_BUF_CLKBUF_PERIC0_IP,
- 	CLK_CON_GAT_CLK_BLK_PERIC0_UID_PERIC0_CMU_PERIC0_IPCLKPORT_PCLK,
+diff --git a/drivers/clk/qcom/dispcc-sc8280xp.c b/drivers/clk/qcom/dispcc-sc8280xp.c
+index c23cbb983d29ea..43d26616bd27bd 100644
+--- a/drivers/clk/qcom/dispcc-sc8280xp.c
++++ b/drivers/clk/qcom/dispcc-sc8280xp.c
+@@ -978,7 +978,7 @@ static struct clk_rcg2 disp0_cc_mdss_mdp_clk_src = {
+ 		.name = "disp0_cc_mdss_mdp_clk_src",
+ 		.parent_data = disp0_cc_parent_data_5,
+ 		.num_parents = ARRAY_SIZE(disp0_cc_parent_data_5),
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+ 
+@@ -992,7 +992,7 @@ static struct clk_rcg2 disp1_cc_mdss_mdp_clk_src = {
+ 		.name = "disp1_cc_mdss_mdp_clk_src",
+ 		.parent_data = disp1_cc_parent_data_5,
+ 		.num_parents = ARRAY_SIZE(disp1_cc_parent_data_5),
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+ 
 -- 
 2.53.0
 
