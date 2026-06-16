@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE01935CB87;
-	Tue, 16 Jun 2026 17:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A7A3A5E91;
+	Tue, 16 Jun 2026 17:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630265; cv=none; b=F71ht3XfhgH4CJFoSSmbvjDYsnp4mual/3pyDJUkk5rWuThoBF2KGaXcH4/x6yPKKgr64DPjCvHEEW98CfIKsj0Jh1p5zHfbZRytlgciUTrJGSVEmfrnm5khWgSRqnaMxqWCnlWx9h/s7JUL/2GC79oXy8bQKdFmxO20pXBEH6A=
+	t=1781630270; cv=none; b=LKQaxyp8SfiPL8ekqUm1IB2Dcf1so3eBgQ3PMdJE+boQWCBrS4kna5s7KFpwLNHJwrTZcEQ4hypfQjft/oiUnYHRidT9ScF9kHmiFrUgU8Zq+T/X53vBNl/xE/ZXOHN/ioapxNproPocCgc9QRyARhXGUl7BD2S4Jghz77yS+8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630265; c=relaxed/simple;
-	bh=S2K79KfmvdFMe10LXzIo66UDR5jXeiiu6jQqcxoUN70=;
+	s=arc-20240116; t=1781630270; c=relaxed/simple;
+	bh=HvzUXSW+D6AR2TH1hjvDDLyuvO36v7nrDv9FAcBh2Go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VlmYqn8zudiSsrjrQ568nCdjN6Y1Fb1SZS2mI7rBKo2JdILhrsDzTfNCRiTOlTG5xf48n9Q4cWX0YcBv69b5bP4gxO0xQp8RqHK4hqYLQNWEd299BjdFEbA3K7ocQGYBcTjV5EECY5KBbwQHGMB3P23i7gH5m2fC8mr+Ic2l4Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9nIb8Hb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=upu70XWjDb40UQrF16f4j9RbBZnpCuiHpCvgXqmBX+wqd4BUiUuJaUdpLIWdaKd8g8RkyFSGl9pV0cIjF64EI53VvaDWIHKASjCoPhe32rRrIZaOWpb58duFIRwWcpt3AqhkTGLhJTPnk7Iua3gweU7Yo0BUG+Kihd0Fscz5tJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d9W0COPf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9nIb8Hb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E9D1F000E9;
-	Tue, 16 Jun 2026 17:17:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d9W0COPf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 091081F000E9;
+	Tue, 16 Jun 2026 17:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630263;
-	bh=nOOCzleCtmjV4rjH2eB4v6IybxNxAqGEZQIseKGp49A=;
+	s=korg; t=1781630268;
+	bh=CtSy1WeUY6r5F5DSWPZrHGPnSDA4qT7p61ZlRn80mqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L9nIb8HblLOBF0/ZGjqBRQVtTvgeDDDZKqlko7F/SGoUsumpH3TGaenObV4AZGxrd
-	 EJa3DyVXaAdRenRkd+yz/koeNdJ+mLJDoPBetZBt98e3rB392BSewQO3QXGMcDjjF1
-	 Jh1nrINTguYHiL3tlNTPnaVmQAYLm8Ta4tBVfETI=
+	b=d9W0COPfw0ZdNq25uUWVZ4lEL4dxh8xLL9YyUwq3s9f9ygI76qH09QMrwf2rIaTZm
+	 nfuBBkK0iKJDCW6PMGcx4XoLloLKde8JBzxNoqzDGWtno0zS9jtDZrfvquGTjgx1KH
+	 1lMsWw4e1PLwbtddaQsQ3/mInt1RUvYMZKv0NvXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shanker Donthineni <sdonthineni@nvidia.com>,
-	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>
-Subject: [PATCH 6.6 441/452] arm64: cputype: Add NVIDIA Olympus definitions
-Date: Tue, 16 Jun 2026 20:31:08 +0530
-Message-ID: <20260616145139.739269638@linuxfoundation.org>
+	David Lechner <dlechner@baylibre.com>,
+	Tomasz Duszynski <tomasz.duszynski@octakon.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 410/452] iio: chemical: scd30: Use guard(mutex) to allow early returns
+Date: Tue, 16 Jun 2026 20:30:37 +0530
+Message-ID: <20260616145138.329932977@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,38 +52,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shanker Donthineni <sdonthineni@nvidia.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-commit e185c8a0d84236d14af61faff8147c953a878a77 upstream.
+[ Upstream commit 5feb5532870fbced5d6f450b8061a33f461b88ca ]
 
-Add cpu part and model macro definitions for NVIDIA Olympus core.
+Auto cleanup based release of the lock allows for simpler code flow in a
+few functions with large multiplexing style switch statements and no
+common operations following the switch.
 
-Signed-off-by: Shanker Donthineni <sdonthineni@nvidia.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-[Mark: backport to v6.6.y]
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Suggested-by: David Lechner <dlechner@baylibre.com>
+Cc: Tomasz Duszynski <tomasz.duszynski@octakon.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20250209180624.701140-3-jic23@kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 5aba4f94b225 ("iio: chemical: scd30: fix division by zero in write_raw")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/cputype.h |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/chemical/scd30_core.c |   63 ++++++++++++++++----------------------
+ 1 file changed, 28 insertions(+), 35 deletions(-)
 
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -129,6 +129,7 @@
+--- a/drivers/iio/chemical/scd30_core.c
++++ b/drivers/iio/chemical/scd30_core.c
+@@ -5,6 +5,7 @@
+  * Copyright (c) 2020 Tomasz Duszynski <tomasz.duszynski@octakon.com>
+  */
+ #include <linux/bits.h>
++#include <linux/cleanup.h>
+ #include <linux/completion.h>
+ #include <linux/delay.h>
+ #include <linux/device.h>
+@@ -198,112 +199,104 @@ static int scd30_read_raw(struct iio_dev
+ 			  int *val, int *val2, long mask)
+ {
+ 	struct scd30_state *state = iio_priv(indio_dev);
+-	int ret = -EINVAL;
++	int ret;
+ 	u16 tmp;
  
- #define NVIDIA_CPU_PART_DENVER		0x003
- #define NVIDIA_CPU_PART_CARMEL		0x004
-+#define NVIDIA_CPU_PART_OLYMPUS		0x010
+-	mutex_lock(&state->lock);
++	guard(mutex)(&state->lock);
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_RAW:
+ 	case IIO_CHAN_INFO_PROCESSED:
+ 		if (chan->output) {
+ 			*val = state->pressure_comp;
+-			ret = IIO_VAL_INT;
+-			break;
++			return IIO_VAL_INT;
+ 		}
  
- #define FUJITSU_CPU_PART_A64FX		0x001
+ 		ret = iio_device_claim_direct_mode(indio_dev);
+ 		if (ret)
+-			break;
++			return ret;
  
-@@ -209,6 +210,7 @@
- #define MIDR_QCOM_KRYO_4XX_SILVER MIDR_CPU_MODEL(ARM_CPU_IMP_QCOM, QCOM_CPU_PART_KRYO_4XX_SILVER)
- #define MIDR_NVIDIA_DENVER MIDR_CPU_MODEL(ARM_CPU_IMP_NVIDIA, NVIDIA_CPU_PART_DENVER)
- #define MIDR_NVIDIA_CARMEL MIDR_CPU_MODEL(ARM_CPU_IMP_NVIDIA, NVIDIA_CPU_PART_CARMEL)
-+#define MIDR_NVIDIA_OLYMPUS MIDR_CPU_MODEL(ARM_CPU_IMP_NVIDIA, NVIDIA_CPU_PART_OLYMPUS)
- #define MIDR_FUJITSU_A64FX MIDR_CPU_MODEL(ARM_CPU_IMP_FUJITSU, FUJITSU_CPU_PART_A64FX)
- #define MIDR_HISI_TSV110 MIDR_CPU_MODEL(ARM_CPU_IMP_HISI, HISI_CPU_PART_TSV110)
- #define MIDR_HISI_HIP09 MIDR_CPU_MODEL(ARM_CPU_IMP_HISI, HISI_CPU_PART_HIP09)
+ 		ret = scd30_read(state);
+ 		if (ret) {
+ 			iio_device_release_direct_mode(indio_dev);
+-			break;
++			return ret;
+ 		}
+ 
+ 		*val = state->meas[chan->address];
+ 		iio_device_release_direct_mode(indio_dev);
+-		ret = IIO_VAL_INT;
+-		break;
++		return IIO_VAL_INT;
+ 	case IIO_CHAN_INFO_SCALE:
+ 		*val = 0;
+ 		*val2 = 1;
+-		ret = IIO_VAL_INT_PLUS_MICRO;
+-		break;
++		return IIO_VAL_INT_PLUS_MICRO;
+ 	case IIO_CHAN_INFO_SAMP_FREQ:
+ 		ret = scd30_command_read(state, CMD_MEAS_INTERVAL, &tmp);
+ 		if (ret)
+-			break;
++			return ret;
+ 
+ 		*val = 0;
+ 		*val2 = 1000000000 / tmp;
+-		ret = IIO_VAL_INT_PLUS_NANO;
+-		break;
++		return IIO_VAL_INT_PLUS_NANO;
+ 	case IIO_CHAN_INFO_CALIBBIAS:
+ 		ret = scd30_command_read(state, CMD_TEMP_OFFSET, &tmp);
+ 		if (ret)
+-			break;
++			return ret;
+ 
+ 		*val = tmp;
+-		ret = IIO_VAL_INT;
+-		break;
++		return IIO_VAL_INT;
++	default:
++		return -EINVAL;
+ 	}
+-	mutex_unlock(&state->lock);
+-
+-	return ret;
+ }
+ 
+ static int scd30_write_raw(struct iio_dev *indio_dev, struct iio_chan_spec const *chan,
+ 			   int val, int val2, long mask)
+ {
+ 	struct scd30_state *state = iio_priv(indio_dev);
+-	int ret = -EINVAL;
++	int ret;
+ 
+-	mutex_lock(&state->lock);
++	guard(mutex)(&state->lock);
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_SAMP_FREQ:
+ 		if (val)
+-			break;
++			return -EINVAL;
+ 
+ 		val = 1000000000 / val2;
+ 		if (val < SCD30_MEAS_INTERVAL_MIN_S || val > SCD30_MEAS_INTERVAL_MAX_S)
+-			break;
++			return -EINVAL;
+ 
+ 		ret = scd30_command_write(state, CMD_MEAS_INTERVAL, val);
+ 		if (ret)
+-			break;
++			return ret;
+ 
+ 		state->meas_interval = val;
+-		break;
++		return 0;
+ 	case IIO_CHAN_INFO_RAW:
+ 		switch (chan->type) {
+ 		case IIO_PRESSURE:
+ 			if (val < SCD30_PRESSURE_COMP_MIN_MBAR ||
+ 			    val > SCD30_PRESSURE_COMP_MAX_MBAR)
+-				break;
++				return -EINVAL;
+ 
+ 			ret = scd30_command_write(state, CMD_START_MEAS, val);
+ 			if (ret)
+-				break;
++				return ret;
+ 
+ 			state->pressure_comp = val;
+-			break;
++			return 0;
+ 		default:
+-			break;
++			return -EINVAL;
+ 		}
+-		break;
+ 	case IIO_CHAN_INFO_CALIBBIAS:
+ 		if (val < 0 || val > SCD30_TEMP_OFFSET_MAX)
+-			break;
++			return -EINVAL;
+ 		/*
+ 		 * Manufacturer does not explicitly specify min/max sensible
+ 		 * values hence check is omitted for simplicity.
+ 		 */
+-		ret = scd30_command_write(state, CMD_TEMP_OFFSET / 10, val);
++		return scd30_command_write(state, CMD_TEMP_OFFSET / 10, val);
++	default:
++		return -EINVAL;
+ 	}
+-	mutex_unlock(&state->lock);
+-
+-	return ret;
+ }
+ 
+ static int scd30_write_raw_get_fmt(struct iio_dev *indio_dev, struct iio_chan_spec const *chan,
 
 
