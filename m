@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F3036A36C;
-	Tue, 16 Jun 2026 18:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECFA23CEBBD;
+	Tue, 16 Jun 2026 18:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634007; cv=none; b=sVyVf3IHgpyP9Ef/DKuEZMVYY2EtaOB0+S5j0GYMn5TXfk/ySsxfhDPykzW5hVKgDKolqqckYKSXZyX5F1c/dci5i0jj/GT8axltEw2tJ+QPobkQZGg35Wsku8oc7C9Bptx4Z7NKgNJAWUNtXeffcQwsDjiXUMS/FXMSWL/QWL4=
+	t=1781634013; cv=none; b=a6FbqnqvtDv9RuWizQxxCniw0INlztenPtlirR+f5FpnxDbHvJfYU3xxHsemhaV15AV9gOYDLXofDC5GWOSF5+B2i99ScEy7cA6pP5gQOjT4ssilQc0rQOO3gOMViNZWxOrsV0Tx4j+izOTe3aqOjKtKOtaiH6GXZxpsp3/3+jI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634007; c=relaxed/simple;
-	bh=pf4HGBu33q9f8OpOUvNxR1SjOe465N1qAKnccfSVEcU=;
+	s=arc-20240116; t=1781634013; c=relaxed/simple;
+	bh=HB6tSEhyo+TSqad4x2ZFl5Wmqw5zyGw9oTP93ggtI1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gEyqQ5aPNG7m5wQfyDYYYIZae3IIPtSON2H6YhETEkH7836lnPynwdCDzk/F7scEwEp2ohkzkXs/2198oiQPxC2o2dPv09uFIA/GbUS1tVAFUt6MxLxWacLjHkQFSBkAHBLIP990zUR2cr2HKmVltdUK1J1gPrRyoYn/5vHrFeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWaFLAVu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fEkWIedZvnf545xwmt9xNzBPnwldtHG4HEeQB7CBZGqBxnpB9tBXv/OSvrNJ8sgppl02y8DZinpNiQx1krHlC6c20F+LSlBvGOqYaNDFd2miHmMvaygL0/4kR3FxpwuYQ8zujBGHCtz9t1dHFsVp4SU9XflshugG6huMajbax9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H7JhWAnO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWaFLAVu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1D51F000E9;
-	Tue, 16 Jun 2026 18:20:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H7JhWAnO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3871F000E9;
+	Tue, 16 Jun 2026 18:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634006;
-	bh=WEIbF7l/96KtsoT29SaMyAeJV8G3RF5AIZOiQqKYTyw=;
+	s=korg; t=1781634011;
+	bh=b3wVfaVsq6/iCYIz5R/CKbSz5oB3UbxBjZs8LsvgUdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZWaFLAVuLyIFzzMF58H56e8eRGHcwUKV1LDuVgUdDx72bSqPOiPMYqI9icoTin86Q
-	 YI6pAE3Go3oaL9URr14I2CVtgO/7XLFFraioSctYrUG9szfeYDuoW2vyBugBhMfbRe
-	 WvAU7ELQ6RLPkj4k22w/7v6XOPC73uxnJR9rf3io=
+	b=H7JhWAnOL8HeToow2jNUJokovO7UFj6B+I135UMFJyA0AdTB3IstO0hCWwvxZ3/XY
+	 eFHeTXKiAbgt5Y0bRHXNOx2VEHaRBYfi76D/fYEyJHLmrUqhwv6Ggbig8N54GpS/t6
+	 KARaUTBvOMpc44J7312yea6Ea0HotKef4zUbGOXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 183/411] netlabel: validate unlabeled address and mask attribute lengths
-Date: Tue, 16 Jun 2026 20:27:01 +0530
-Message-ID: <20260616145110.427537145@linuxfoundation.org>
+Subject: [PATCH 5.15 184/411] net: qrtr: fix refcount saturation and potential UAF in qrtr_port_remove
+Date: Tue, 16 Jun 2026 20:27:02 +0530
+Message-ID: <20260616145110.479511279@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -51,85 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-[ Upstream commit 9772589b57e44aedc240211c5c3f7a684a034d3a ]
+[ Upstream commit a2171131ecda1ed61a594a1eb715e75fdad0fef5 ]
 
-netlbl_unlabel_addrinfo_get() used the address attribute length to
-determine whether the attribute data could be read as an IPv4 or IPv6
-address, but did not independently validate the corresponding mask
-attribute length.  A crafted Generic Netlink request could therefore
-provide a valid IPv4/IPv6 address attribute with a shorter mask
-attribute, which would later be read as a full struct in_addr or
-struct in6_addr.
+In qrtr_port_remove(), the socket reference count is decremented via
+__sock_put() before the port is removed from the qrtr_ports XArray and
+before the RCU grace period elapses.
 
-NLA_BINARY policy lengths are maximum lengths by default, so use
-NLA_POLICY_EXACT_LEN() for the unlabeled IPv4/IPv6 address and mask
-attributes.  This rejects short attributes during policy validation and
-also exposes the exact length requirements through policy introspection.
+This breaks the fundamental RCU update paradigm. It exposes a race
+window where a concurrent RCU reader (such as qrtr_reset_ports() or
+qrtr_port_lookup()) can obtain a pointer to the socket from the XArray,
+and attempt to call sock_hold() on a socket whose reference count has
+already dropped to zero.
 
-Fixes: 8cc44579d1bd ("NetLabel: Introduce static network labels for unlabeled connections")
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
+This exact race condition was hit during syzkaller fuzzing, leading to
+the following refcount saturation warning and a potential Use-After-Free:
+
+  refcount_t: saturated; leaking memory.
+  WARNING: CPU: 3 PID: 1273 at lib/refcount.c:22 refcount_warn_saturate+0xae/0x1d0
+  Modules linked in: qrtr(+) bochs drm_shmem_helper ...
+  Call Trace:
+   <TASK>
+   qrtr_reset_ports net/qrtr/af_qrtr.c:768 [inline] [qrtr]
+   __qrtr_bind.isra.0+0x48b/0x570 net/qrtr/af_qrtr.c:805 [qrtr]
+   qrtr_bind+0x17d/0x210 net/qrtr/af_qrtr.c:901 [qrtr]
+   kernel_bind+0xe4/0x120 net/socket.c:3592
+   qrtr_ns_init+0x1a6/0x380 net/qrtr/ns.c:715 [qrtr]
+   qrtr_proto_init+0x3b/0xff0 net/qrtr/af_qrtr.c:169 [qrtr]
+   do_one_initcall+0xf5/0x5e0 init/main.c:1283
+   ...
+   </TASK>
+
+Fix this by deferring the reference count decrement until after the
+xa_erase() and the synchronize_rcu() complete.
+
+(Note: The v1 of this patch incorrectly replaced __sock_put() with
+sock_put(). As Simon Horman pointed out, the callers of qrtr_port_remove()
+still hold a reference to the socket, so freeing the socket memory here
+would lead to a subsequent UAF in the caller. Thus, the __sock_put() is
+kept, but only repositioned to close the RCU race.)
+
+Fixes: bdabad3e363d ("net: Add Qualcomm IPC router")
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260604064801.1180388-1-w15303746062@163.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlabel/netlabel_unlabeled.c | 30 ++++++++++--------------------
- 1 file changed, 10 insertions(+), 20 deletions(-)
+ net/qrtr/af_qrtr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netlabel/netlabel_unlabeled.c b/net/netlabel/netlabel_unlabeled.c
-index 566ba4397ee400..4c4b91ce446dfa 100644
---- a/net/netlabel/netlabel_unlabeled.c
-+++ b/net/netlabel/netlabel_unlabeled.c
-@@ -114,14 +114,14 @@ static struct genl_family netlbl_unlabel_gnl_family;
- /* NetLabel Netlink attribute policy */
- static const struct nla_policy netlbl_unlabel_genl_policy[NLBL_UNLABEL_A_MAX + 1] = {
- 	[NLBL_UNLABEL_A_ACPTFLG] = { .type = NLA_U8 },
--	[NLBL_UNLABEL_A_IPV6ADDR] = { .type = NLA_BINARY,
--				      .len = sizeof(struct in6_addr) },
--	[NLBL_UNLABEL_A_IPV6MASK] = { .type = NLA_BINARY,
--				      .len = sizeof(struct in6_addr) },
--	[NLBL_UNLABEL_A_IPV4ADDR] = { .type = NLA_BINARY,
--				      .len = sizeof(struct in_addr) },
--	[NLBL_UNLABEL_A_IPV4MASK] = { .type = NLA_BINARY,
--				      .len = sizeof(struct in_addr) },
-+	[NLBL_UNLABEL_A_IPV6ADDR] =
-+		NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)),
-+	[NLBL_UNLABEL_A_IPV6MASK] =
-+		NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)),
-+	[NLBL_UNLABEL_A_IPV4ADDR] =
-+		NLA_POLICY_EXACT_LEN(sizeof(struct in_addr)),
-+	[NLBL_UNLABEL_A_IPV4MASK] =
-+		NLA_POLICY_EXACT_LEN(sizeof(struct in_addr)),
- 	[NLBL_UNLABEL_A_IFACE] = { .type = NLA_NUL_STRING,
- 				   .len = IFNAMSIZ - 1 },
- 	[NLBL_UNLABEL_A_SECCTX] = { .type = NLA_BINARY }
-@@ -764,24 +764,14 @@ static int netlbl_unlabel_addrinfo_get(struct genl_info *info,
- 				       void **mask,
- 				       u32 *len)
- {
--	u32 addr_len;
+diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
+index 431fd1f2b80c18..6f4b901afc330c 100644
+--- a/net/qrtr/af_qrtr.c
++++ b/net/qrtr/af_qrtr.c
+@@ -702,13 +702,13 @@ static void qrtr_port_remove(struct qrtr_sock *ipc)
+ 	if (port == QRTR_PORT_CTRL)
+ 		port = 0;
+ 
+-	__sock_put(&ipc->sk);
 -
- 	if (info->attrs[NLBL_UNLABEL_A_IPV4ADDR] &&
- 	    info->attrs[NLBL_UNLABEL_A_IPV4MASK]) {
--		addr_len = nla_len(info->attrs[NLBL_UNLABEL_A_IPV4ADDR]);
--		if (addr_len != sizeof(struct in_addr) &&
--		    addr_len != nla_len(info->attrs[NLBL_UNLABEL_A_IPV4MASK]))
--			return -EINVAL;
--		*len = addr_len;
-+		*len = sizeof(struct in_addr);
- 		*addr = nla_data(info->attrs[NLBL_UNLABEL_A_IPV4ADDR]);
- 		*mask = nla_data(info->attrs[NLBL_UNLABEL_A_IPV4MASK]);
- 		return 0;
- 	} else if (info->attrs[NLBL_UNLABEL_A_IPV6ADDR]) {
--		addr_len = nla_len(info->attrs[NLBL_UNLABEL_A_IPV6ADDR]);
--		if (addr_len != sizeof(struct in6_addr) &&
--		    addr_len != nla_len(info->attrs[NLBL_UNLABEL_A_IPV6MASK]))
--			return -EINVAL;
--		*len = addr_len;
-+		*len = sizeof(struct in6_addr);
- 		*addr = nla_data(info->attrs[NLBL_UNLABEL_A_IPV6ADDR]);
- 		*mask = nla_data(info->attrs[NLBL_UNLABEL_A_IPV6MASK]);
- 		return 0;
+ 	xa_erase(&qrtr_ports, port);
+ 
+ 	/* Ensure that if qrtr_port_lookup() did enter the RCU read section we
+ 	 * wait for it to up increment the refcount */
+ 	synchronize_rcu();
++
++	__sock_put(&ipc->sk);
+ }
+ 
+ /* Assign port number to socket.
 -- 
 2.53.0
 
