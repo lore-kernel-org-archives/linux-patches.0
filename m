@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC1047CC79;
-	Tue, 16 Jun 2026 18:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6577346AF17;
+	Tue, 16 Jun 2026 18:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635485; cv=none; b=Wc7o/ggHf8Sq3u5UAGZXXHVj7Tin1c00nmwOXXWzMZ557kVTYO8RV/ZRwU7Fig8zdYWD9h5mMuv51ao/Vus8YB9S4wZUgl25XI3mmJnUPJ11urJp2zdD92kMUnt/z9M5RWiu3xzVnMrfZBc4m6SEJlqGZ0vyieSpIhunnLITpAo=
+	t=1781635490; cv=none; b=fwvNnk7zrudfsjTV08Krnahb3iWY13wBKnSPRgcY83agIc+fWFBvyFavbw8vTVVJVsFtFYvO89RrKdKJmXOvOa/l0hJXseHeg+7Gk6BMIX7Fh0mTWubUqJ9AuLYbfRIzS1nsKQLD49lwG3Mzr4DRsboMmn7RTcv4ekWj+bDBmjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635485; c=relaxed/simple;
-	bh=KoKyXsQTSdSZSnEqTPbx8kJZlKpwZHJ486CY/raV8nc=;
+	s=arc-20240116; t=1781635490; c=relaxed/simple;
+	bh=bIVn07w4yYn2uWIaiCs9TyV059TxsM2eu6Bz185zQQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fmngV36XZ4aM7AirW71cSCh+vT/UGnGxfraqYPlaOkN1NI8lDiK6V1MgBcv/Q1xsg3NK2UyO6hwTNrEpM7NQQf4aZEdZFffawYtzYBBIoeFtFNbCSuaxz6TxZPvU/+VKD/lIgKvmW4TL5r0IRuev6JyxuxKOAv/puuTDe5Gw9PA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VRQppZKl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=obQRYvqMF9xKLP2Jh5OWFguazoOjAlyvUhAgBoAzSsLqQifPbigYLBnEuSwsYJaTtpjxhN96+P0GY8cY1Fh6CMvzcnJabmVI06ZhJW7fjSousoWh4rOcUTDlEiTn4UuJthbzeEnd0mFLifCELDuAy7F0oOXi/isOj0zrOegklj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NW5Zbv03; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VRQppZKl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94451F000E9;
-	Tue, 16 Jun 2026 18:44:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NW5Zbv03"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A25B41F000E9;
+	Tue, 16 Jun 2026 18:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635482;
-	bh=GiigSJfONMfZeyf1rVT09/121Nh3WOiu3brGMDtnOpI=;
+	s=korg; t=1781635487;
+	bh=Gpw7o2hVUAQTFsQfEJPJahpDXeOk5JVbfDMWWGZRoZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VRQppZKltt8F03rT7W/+AQC6NKAQBDvhUY6He+ltAcIdgGx6kPfkTUijAyBCFp+Xu
-	 ixG1ww14J0/peoLppxi7li/turRSYMMc5PBg0JaZiAZtahYewfoAXMscooy4oziFDn
-	 J0/nKkLmk712Kau99tkpD0okb8O6YtW42cIKP21g=
+	b=NW5Zbv03fX2oAoN1skrS4H52J1QiMPSIdTHHnFsdPmq/KUU4jHEs7I79h02xwP/po
+	 0QWpI2SmjVuHZXfdSaOsx6xG8dXZufM8cUOFGMXjrwEJ3zDHwzoKvZEi7SJXngCY0D
+	 uaXGUIqQDqbCrybhlixZTqF+j3IEZBnGdORM9kWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 050/342] Input: ims-pcu - fix usb_free_coherent() size in ims_pcu_buffers_free()
-Date: Tue, 16 Jun 2026 20:25:46 +0530
-Message-ID: <20260616145050.586193485@linuxfoundation.org>
+	Salah Triki <salah.triki@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Maxwell Doose <m32285159@gmail.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>
+Subject: [PATCH 5.10 059/342] iio: adc: viperboard: Fix error handling in vprbrd_iio_read_raw
+Date: Tue, 16 Jun 2026 20:25:55 +0530
+Message-ID: <20260616145051.008789792@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -44,41 +48,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-commit dab48a7e74e6a394f3aa0461a2b1fb0c7b38fcb8 upstream.
+commit 422b5bbf333f75fb486855ad0eedc23cf21f3277 upstream.
 
-The input buffer size is pcu->max_in_size, but pcu->max_out_size is
-passed to usb_free_coherent().
+The driver proceeds to the reception phase even if the preceding
+transmission fails.
 
-Change size to match the allocation size.
+This uses a goto error label for an early bail out and ensures the mutex is
+properly unlocked in case of failure.
 
-Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://patch.msgid.link/20260522085412.45430-2-fourier.thomas@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: ffd8a6e7a778 ("iio: adc: Add viperboard adc driver")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Reviewed-by: Maxwell Doose <m32285159@gmail.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/ims-pcu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/adc/viperboard_adc.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/input/misc/ims-pcu.c
-+++ b/drivers/input/misc/ims-pcu.c
-@@ -1598,7 +1598,7 @@ static void ims_pcu_buffers_free(struct
- 	usb_kill_urb(pcu->urb_in);
- 	usb_free_urb(pcu->urb_in);
+--- a/drivers/iio/adc/viperboard_adc.c
++++ b/drivers/iio/adc/viperboard_adc.c
+@@ -70,8 +70,10 @@ static int vprbrd_iio_read_raw(struct ii
+ 			VPRBRD_USB_TYPE_OUT, 0x0000, 0x0000, admsg,
+ 			sizeof(struct vprbrd_adc_msg), VPRBRD_USB_TIMEOUT_MS);
+ 		if (ret != sizeof(struct vprbrd_adc_msg)) {
+-			dev_err(&iio_dev->dev, "usb send error on adc read\n");
++			mutex_unlock(&vb->lock);
+ 			error = -EREMOTEIO;
++			dev_err(&iio_dev->dev, "usb send error on adc read\n");
++			goto error;
+ 		}
  
--	usb_free_coherent(pcu->udev, pcu->max_out_size,
-+	usb_free_coherent(pcu->udev, pcu->max_in_size,
- 			  pcu->urb_in_buf, pcu->read_dma);
- 
- 	kfree(pcu->urb_out_buf);
+ 		ret = usb_control_msg(vb->usb_dev,
 
 
