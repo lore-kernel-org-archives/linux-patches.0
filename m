@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D01466B70;
-	Tue, 16 Jun 2026 17:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 545C23AE71F;
+	Tue, 16 Jun 2026 17:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629937; cv=none; b=YMzy6NLua7vCfDab/x+ZpGGpScvA/rCix2HFomAfBMBv8DbnIPY3Zvd4dvqYHfnpIWUrTwEoKHzrAnoDtpUuRz7ceXBLnkHFy+93MhO/uU9rEHvhp3bJunbKOL8X6aiG+PzwvYITEiEekFL8xEf6sbXQvY585PNJgFiKaUU94po=
+	t=1781629942; cv=none; b=KzJZ8FbTyC2JuTJcNTyDNl8WwLrU83KOqfdROaZWM+ORiQRYaWFNxrpwK5LWyyOWyCZwbq549vW0I/0DUTxnQM7T+4Q7Wpp0vqAjVrG01tOFLUnHyN4kIm5PGyA4VEq32taW9Ix/BKb6g4KjKlC8n+1djqMWg39lFL/KosZSyXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629937; c=relaxed/simple;
-	bh=YHj5fuO4HZa1h5rOAEXd2eVj/8ax9bk8CLvnHVA6bj8=;
+	s=arc-20240116; t=1781629942; c=relaxed/simple;
+	bh=NLLr70/uNjGphFmTiqABfGAimwCdVbFhiwGgdZqjoJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dr3KSLVMw0LQXno8E6udJ7I0W3L5sEoi6t8FO+JKRa/BRAmOfjMY4TdmXQpjFiDDO505olwHrolG0J/quvvXusrK2ypZCKFrB+F6XdMjCxKWa0+Dy0BmyBn1/fqtDLYzdXkQunBVFiRezax/gLRovlxYTE+tsHBpc0if9OUSo+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M01HQB25; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BxMFB+XZQ9IFXTDm5JY3HserwCaBB3YnPH1jlGlt+3w9vw6mXx9TeYhSnuhiZtk+EP4XzqnEkGwlj3KPiLRVTE0K/rm92VVxC+fCBhj4Hfyy91qW2RoaQM0pcMlkP2AUDVvKHwPMctzqZWxqBPOlbTsysekQVA9zijL6U0iMtvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e3LPEEiR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M01HQB25"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3311A1F000E9;
-	Tue, 16 Jun 2026 17:12:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3LPEEiR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 617F51F000E9;
+	Tue, 16 Jun 2026 17:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629936;
-	bh=xGiRQdtomFEXliubdTjQJAXxLJnrc0MpdlGJeIBoVhM=;
+	s=korg; t=1781629941;
+	bh=7WAo3vrAYY/yg2C8EK1XjQf6engIT5O3zu8sUcGs28k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M01HQB251d40ToM8EqmyUQ+fhlLBv7mlS9cjAHNFOfcB4Ewd9CsagJ8gKTqeQ/kqa
-	 bvyDMP+taWFHZCh58tFeHQHn0iRuo2kRPtIEgQwDt0m23pc5EnGQxR0zeCxXvSkH4o
-	 zl4SB9APtlz0LmwCRrqNYtgZ6IZwIXcrBuaN3sws=
+	b=e3LPEEiRU/fIsI4HCvfOyG3+x+gRML8xXgxCV7FwcPt8rRW7dS795aCcn08dkOt9p
+	 pbCsiomOphHkBMRJDZlGHpUI3xvwaN66SZ56FLtqffkmRFm+aB/Hd5zWzDpXQj4ji/
+	 BJrr07mmyF3pgTjJ5zgwxe9jyWuwxN8NYrDPiZrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Stitt <justinstitt@google.com>,
-	Kees Cook <keescook@chromium.org>,
+	Sunil Goutham <sgoutham@marvell.com>,
+	Linu Cherian <lcherian@marvell.com>,
+	Geetha sowjanya <gakula@marvell.com>,
+	hariprasad <hkelam@marvell.com>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	stable <stable@kernel.org>,
+	Sam Daly <sam@samdaly.ie>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 381/452] octeontx2-af: replace deprecated strncpy with strscpy
-Date: Tue, 16 Jun 2026 20:30:08 +0530
-Message-ID: <20260616145136.963360550@linuxfoundation.org>
+Subject: [PATCH 6.6 382/452] octeontx2-af: CGX: add bounds check to cgx_speed_mbps index
+Date: Tue, 16 Jun 2026 20:30:09 +0530
+Message-ID: <20260616145137.009392238@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -46,71 +52,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Justin Stitt <justinstitt@google.com>
+From: Sam Daly <sam@samdaly.ie>
 
-[ Upstream commit 473f8f2d1bfe1103f20140fdc80cad406b4d68c0 ]
+[ Upstream commit c0bf0a4f3f1f5f57aa83e1400ba4f56f0abfd542 ]
 
-`strncpy` is deprecated for use on NUL-terminated destination strings
-[1] and as such we should prefer more robust and less ambiguous string
-interfaces.
+cgx_speed_mbps has 13 elements but RESP_LINKSTAT_SPEED can yield values
+0-15. If it returns a value >= 13, this causes an out-of-bounds array
+access. Add a bounds check and default to speed 0 if the index is out of
+range.
 
-We can see that linfo->lmac_type is expected to be NUL-terminated based
-on the `... - 1`'s present in the current code. Presumably making room
-for a NUL-byte at the end of the buffer.
-
-Considering the above, a suitable replacement is `strscpy` [2] due to
-the fact that it guarantees NUL-termination on the destination buffer
-without unnecessarily NUL-padding.
-
-Let's also prefer the more idiomatic strscpy usage of (dest, src,
-sizeof(dest)) rather than (dest, src, SOME_LEN).
-
-Link: https://www.kernel.org/doc/html/latest/process/deprecated.html#strncpy-on-nul-terminated-strings [1]
-Link: https://manpages.debian.org/testing/linux-manual-4.8/strscpy.9.en.html [2]
-Link: https://github.com/KSPP/linux/issues/90
-Signed-off-by: Justin Stitt <justinstitt@google.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20231010-strncpy-drivers-net-ethernet-marvell-octeontx2-af-cgx-c-v1-1-a443e18f9de8@google.com
+Fixes: 61071a871ea6 ("octeontx2-af: Forward CGX link notifications to PFs")
+Cc: Sunil Goutham <sgoutham@marvell.com>
+Cc: Linu Cherian <lcherian@marvell.com>
+Cc: Geetha sowjanya <gakula@marvell.com>
+Cc: hariprasad <hkelam@marvell.com>
+Cc: Subbaraya Sundeep <sbhatta@marvell.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Sam Daly <sam@samdaly.ie>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026051352-refined-demise-e88d@gregkh
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: c0bf0a4f3f1f ("octeontx2-af: CGX: add bounds check to cgx_speed_mbps index")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/cgx.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/cgx.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 --- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
 +++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-@@ -1286,8 +1286,6 @@ static inline void link_status_user_form
+@@ -1286,13 +1286,18 @@ static inline void link_status_user_form
  					   struct cgx_link_user_info *linfo,
  					   struct cgx *cgx, u8 lmac_id)
  {
--	const char *lmac_string;
--
++	unsigned int speed;
++
  	linfo->link_up = FIELD_GET(RESP_LINKSTAT_UP, lstat);
  	linfo->full_duplex = FIELD_GET(RESP_LINKSTAT_FDUPLEX, lstat);
- 	linfo->speed = cgx_speed_mbps[FIELD_GET(RESP_LINKSTAT_SPEED, lstat)];
-@@ -1298,12 +1296,12 @@ static inline void link_status_user_form
+-	linfo->speed = cgx_speed_mbps[FIELD_GET(RESP_LINKSTAT_SPEED, lstat)];
+ 	linfo->an = FIELD_GET(RESP_LINKSTAT_AN, lstat);
+ 	linfo->fec = FIELD_GET(RESP_LINKSTAT_FEC, lstat);
+ 	linfo->lmac_type_id = FIELD_GET(RESP_LINKSTAT_LMAC_TYPE, lstat);
+ 
++	speed = FIELD_GET(RESP_LINKSTAT_SPEED, lstat);
++	linfo->speed = speed < ARRAY_SIZE(cgx_speed_mbps) ?
++		       cgx_speed_mbps[speed] : 0;
++
  	if (linfo->lmac_type_id >= LMAC_MODE_MAX) {
  		dev_err(&cgx->pdev->dev, "Unknown lmac_type_id %d reported by firmware on cgx port%d:%d",
  			linfo->lmac_type_id, cgx->cgx_id, lmac_id);
--		strncpy(linfo->lmac_type, "Unknown", LMACTYPE_STR_LEN - 1);
-+		strscpy(linfo->lmac_type, "Unknown", sizeof(linfo->lmac_type));
- 		return;
- 	}
- 
--	lmac_string = cgx_lmactype_string[linfo->lmac_type_id];
--	strncpy(linfo->lmac_type, lmac_string, LMACTYPE_STR_LEN - 1);
-+	strscpy(linfo->lmac_type, cgx_lmactype_string[linfo->lmac_type_id],
-+		sizeof(linfo->lmac_type));
- }
- 
- /* Hardware event handlers */
 
 
