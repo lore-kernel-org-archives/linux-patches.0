@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83DC357CEC;
-	Tue, 16 Jun 2026 17:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3DC47A0D4;
+	Tue, 16 Jun 2026 17:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630169; cv=none; b=sa3pLtBxPkXY9tKZijWt51jiyIGet3WJwK6g3emoEE+LK0SEewUCDtcElGEOndaeUDqRQt0Cfv62s3Ig/QmpTbKrqrD1J0/XK/nqkrd84NwgMv33/VKIb7Z6bwpRZEV+JB6eqb5MoS/tYRPdK+URVxJmO9RH4goDAe31X9vimjo=
+	t=1781630174; cv=none; b=rrKiVFFmRl3wDjfOQ00m5F5Ob+YKEKFt6ZwiT0pqdHaIac0cp32CTxWTsY9bj1i11UIkEe1ryA2kncHIHbSz3ggIqxoim+0JZ53p+GiM3L4wD8ldoCt06F8Q+b20vL0za2Ov4HGtFznJ19c7hg3d2y9kXyuF/AO4bjsFJ6Eh46c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630169; c=relaxed/simple;
-	bh=7v5T40q8eFdhzQIjvuZnjVbE1Px3VXEdna78aOL9nhc=;
+	s=arc-20240116; t=1781630174; c=relaxed/simple;
+	bh=FpM/Xe6SZgHYM1mPbTiPuwwxASoRF1rZUGtl1riNJ0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VHEoVakAPpGi0+Dff0qrP+Xuyc0Kj3Yl9+eSwR27SrbYk9kwxI1ZoS8a6eOmstOofOMwK9e4Yzd8bqIu4lA8vdRDyKIvAWrcri+KALa32YFDgtpgbVa1/kQRz3lZEqOfrW4MJwKR48UsTJ/sEVslU/zADumIQOcebwjH6Z2ekR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNMl8KcU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eAhawkTd4OfXe7TD1SzyFb2mfqtMTGtISVi2/rk4mz3d8NIUCf5nvMG1wX9T2ca3x9xOn3w57bAEysEf4BeybQVOkEIJUz0zgB3Z7CCwQlRYeXhu/EH9s1+Za0SFauISVM30u//KAvpUb2wJvB3ftDsrBJz5BYSWq1TAZ5JwOYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QwTHyMUt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNMl8KcU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6F31F000E9;
-	Tue, 16 Jun 2026 17:16:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwTHyMUt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC4C1F000E9;
+	Tue, 16 Jun 2026 17:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630167;
-	bh=RKRTEwPZst3v5WVW5cA4s1TjR8djCp4guPSmEF5flnY=;
+	s=korg; t=1781630172;
+	bh=XpxqKcom45IgpX80NN01Hl9niqt1xNZ44vaW/sz9ArE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XNMl8KcU/rBiLC7bO5A0f3oq30D8z7m6qb2SGlLPNc0z4K21MJQgMDd5NJ2qLo8rw
-	 eTjFxeDtE3icKFCi9HhnVgWUZnQfXw2lk0piQsuAKosp+BmXHJZYDaGQR5NkrtHICx
-	 W0yoq/4knE7TPovziAf8Q8QAidJffQ4wmrhnXhHA=
+	b=QwTHyMUt3mQqS4z8PhacFf0oCdfsuoaCSmmO8b1E6q7vDJ8DsLAGeREybgMFxfYdN
+	 7aqKRtpuuvZ6oCDn8+/MbTauHnk2JrZy3l4KUPpeeGkWlvYwxGwSzyvGLfY2rei4e8
+	 jFWgZ5JRaJmMCMggvIwJygLaWIQVMRfqRnqdU/mA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	stable <stable@kernel.org>,
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 424/452] scsi: target: iscsi: Fix CRC overread and double-free in iscsit_handle_text_cmd()
-Date: Tue, 16 Jun 2026 20:30:51 +0530
-Message-ID: <20260616145138.990393315@linuxfoundation.org>
+Subject: [PATCH 6.6 425/452] serial: qcom_geni: fix kfifo underflow when flush precedes DMA completion IRQ
+Date: Tue, 16 Jun 2026 20:30:52 +0530
+Message-ID: <20260616145139.032352558@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,121 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
 
-[ Upstream commit 778c2ab142c625a8a8afa570e0f9b7873f445d99 ]
+[ Upstream commit 452d6fa37ae9b021f4f6d397dbae077f7296f6f4 ]
 
-Two latent bugs in the Text-phase handler, both present since the
-original LIO integration in commit e48354ce078c ("iscsi-target: Add
-iSCSI fabric support for target v4.1"):
+When uart_flush_buffer() runs before the DMA completion IRQ is delivered,
+the following race can occur (all steps serialized by uart_port_lock):
 
-1) DataDigest CRC buffer overread (4 bytes past text_in).
+  1. DMA starts: tx_remaining = N, kfifo contains N bytes
+  2. DMA completes in hardware; IRQ is pending but not yet delivered
+  3. uart_flush_buffer() acquires the port lock and calls kfifo_reset(),
+     making kfifo_len() = 0 while tx_remaining remains N
+  4. uart_flush_buffer() releases the port lock
+  5. DMA IRQ fires; handle_tx_dma() acquires the port lock and calls
+     uart_xmit_advance(uport, tx_remaining) on an empty kfifo
 
-   text_in is kzalloc()'d at ALIGN(payload_length, 4).  rx_size is then
-   incremented by ISCSI_CRC_LEN to make room for the received DataDigest
-   in the iovec, but the same (now-bumped) rx_size is passed as the
-   buffer length to iscsit_crc_buf():
+uart_xmit_advance() increments kfifo->out by tx_remaining. Since
+kfifo_reset() already set both in and out to 0, out wraps past in,
+causing kfifo_len() to return UART_XMIT_SIZE - tx_remaining. The next
+start_tx_dma() call then submits a DMA transfer of stale buffer data.
 
-       if (conn->conn_ops->DataDigest) {
-               ...
-               rx_size += ISCSI_CRC_LEN;
-       }
-       ...
-       if (conn->conn_ops->DataDigest) {
-               data_crc = iscsit_crc_buf(text_in, rx_size, 0, NULL);
+Fix this by snapshotting kfifo_len() at the start of handle_tx_dma()
+and skipping uart_xmit_advance() when fifo_len < tx_remaining, which
+indicates the kfifo was reset by a preceding flush.
 
-   iscsit_crc_buf() walks rx_size bytes of text_in with crc32c(), so
-   when DataDigest is negotiated it reads 4 bytes past the end of the
-   text_in allocation.  KASAN reproduces this directly on the unpatched
-   mainline tree as slab-out-of-bounds in crc32c() called from the Text
-   PDU path.  The OOB bytes feed crc32c() and are then compared against
-   the initiator-supplied checksum, so the value does not flow back to
-   the attacker, but the kernel does read past the buffer on every Text
-   PDU with DataDigest=CRC32C.
-
-   Fix by passing the actual padded payload length
-   (ALIGN(payload_length, 4)) that was used for the kzalloc().
-
-2) Stale cmd->text_in_ptr re-free (double-free) on ERL>0 bad DataDigest
-   drop.
-
-   On DataDigest mismatch with ErrorRecoveryLevel > 0 the handler
-   silently drops the PDU and lets the initiator plug the CmdSN gap:
-
-               kfree(text_in);
-               return 0;
-
-   cmd->text_in_ptr still points at the freed buffer.  The next Text
-   Request on the same ITT re-enters iscsit_setup_text_cmd(), which
-   unconditionally does
-
-       kfree(cmd->text_in_ptr);
-       cmd->text_in_ptr = NULL;
-
-   freeing the same pointer a second time.  Session teardown via
-   iscsit_release_cmd() has the same shape and hits the same double-free
-   if the connection is dropped before a second Text Request arrives.
-
-   On an unmodified mainline tree the bug-1 CRC overread fires first on
-   the initial valid Text Request and perturbs the subsequent state, so
-   #4 was isolated by building a kernel with only the bug-1 hunk of this
-   patch applied plus temporary printk() observability around the three
-   relevant kfree() sites.  The observability prints are not part of
-   this patch.  On that build, a three-PDU Text Request sequence after
-   login produces two back-to-back splats:
-
-       BUG: KASAN: double-free in iscsit_setup_text_cmd+0x??
-       BUG: KASAN: double-free in iscsit_release_cmd+0x??
-
-   showing the same pointer freed in the ERL>0 drop path and again in
-   iscsit_setup_text_cmd() (next Text Request on the same ITT) and once
-   more in iscsit_release_cmd() (session teardown).  On distro kernels
-   with CONFIG_SLAB_FREELIST_HARDENED=y (default) the double-free
-   becomes a remote kernel BUG(); on non-hardened kernels it corrupts
-   the slab freelist.
-
-   Fix by clearing cmd->text_in_ptr after the kfree() in the ERL>0 drop
-   path.  With both hunks applied #4 is directly observable on the stock
-   tree without observability printks; fixing bug-1 alone would mask #4
-   less, not more, so the hunks are submitted together.
-
-Both fixes are one-liners.  The Text PDU state machine is unchanged and
-the wire protocol is unaffected.
-
-Fixes: e48354ce078c ("iscsi-target: Add iSCSI fabric support for target v4.1")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Tested-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 2aaa43c70778 ("tty: serial: qcom-geni-serial: add support for serial engine DMA")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260506-serial-dma-stale-tx-buf-v1-1-e3ccb360d719@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/iscsi/iscsi_target.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/target/iscsi/iscsi_target.c
-+++ b/drivers/target/iscsi/iscsi_target.c
-@@ -2335,8 +2335,9 @@ iscsit_handle_text_cmd(struct iscsit_con
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -962,8 +962,21 @@ static void qcom_geni_serial_handle_tx_d
+ {
+ 	struct qcom_geni_serial_port *port = to_dev_port(uport);
+ 	struct circ_buf *xmit = &uport->state->xmit;
++	unsigned int chars_pending = uart_circ_chars_pending(xmit);
++
++	/*
++	 * Only advance the buffer if it still contains the bytes that were
++	 * transferred. uart_flush_buffer() may have run before this IRQ
++	 * fired: it clears the circular buffer under the port lock, making
++	 * chars_pending = 0 while tx_remaining remains non-zero. Calling
++	 * uart_xmit_advance() in that case would advance xmit->tail past
++	 * xmit->head, making uart_circ_chars_pending() wrap to
++	 * UART_XMIT_SIZE - tx_remaining and triggering a spurious large DMA
++	 * transfer of stale data.
++	 */
++	if (chars_pending >= port->tx_remaining)
++		uart_xmit_advance(uport, port->tx_remaining);
  
- 		if (conn->conn_ops->DataDigest) {
- 			iscsit_do_crypto_hash_buf(conn->conn_rx_hash,
--						  text_in, rx_size, 0, NULL,
--						  &data_crc);
-+						  text_in,
-+						  ALIGN(payload_length, 4),
-+						  0, NULL, &data_crc);
- 
- 			if (checksum != data_crc) {
- 				pr_err("Text data CRC32C DataDigest"
-@@ -2356,6 +2357,7 @@ iscsit_handle_text_cmd(struct iscsit_con
- 					" Command CmdSN: 0x%08x due to"
- 					" DataCRC error.\n", hdr->cmdsn);
- 					kfree(text_in);
-+					cmd->text_in_ptr = NULL;
- 					return 0;
- 				}
- 			} else {
+-	uart_xmit_advance(uport, port->tx_remaining);
+ 	geni_se_tx_dma_unprep(&port->se, port->tx_dma_addr, port->tx_remaining);
+ 	port->tx_dma_addr = 0;
+ 	port->tx_remaining = 0;
 
 
