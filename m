@@ -1,36 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A403CC324;
-	Tue, 16 Jun 2026 18:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39D73CC324;
+	Tue, 16 Jun 2026 18:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633467; cv=none; b=kGZXmM5sFEV97b0V+Vtt7b8teSxeDZzkfuTcLPTLXGhfIRwwM5IvB3J+Rp53G03Twi3lU48fyGLF+ivV2c/w6Q7IGAcFRgydQq1MfNmkz9mghFI2bM0IcULvwBz4WrTyu1REj4LiKpdcPvA4xPzTVeFVX4u+oYYcJ8o646q5Fjc=
+	t=1781633472; cv=none; b=Xt2VfXa/++QikfcuEE7ao8fc0Ery7H+sI5esrWko/XhOokYtKlxCUJBv/NyMzPItk2lrOmIhcxvsu/pj5IiezTsDxEHQwC0dFzGjZQHHXdDbu7Cy3wWOsf031hqKGvEm2Nic4xHLLjEVRBs9F6E7yijvCxAuWDLEPqSfiDrJ8x0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633467; c=relaxed/simple;
-	bh=dhImHzkxptijonpEqi54G6HPeuDij8Wvz1mODJ24VKY=;
+	s=arc-20240116; t=1781633472; c=relaxed/simple;
+	bh=+IPgKYIzXMC90pUCKmexVs22XdBIgYti8979b6Y5uVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IyRTXaneQCdZ1JxleFK94kFxK6jrpN5v4SnRaoOTWQidqKhGF3YZ6rOy2ekKyZD1BQ0UV0Zb3JVSak3QuMHHlhcYQc/nbHvnu8CzPXzb59GsA8xcJ0OBZmSFXyzEJ4kFzi7nDQmex3cOS3XNGs/SIJ153U2juShq1kr8fnqfAns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=14XjhrlT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PGFQ+klDiYQ25VY558HbQtNQbBTYE3mC4DNptolvT0idzfLuL/LJy1RXqVmEDIzgAOB9Zxuo66v+diPDnt5/VCuYzNBvTmkWU59bjq4caWrImt+Gr4hPB5lSWiAnIuSR4oLCVAn8GkLnswYNBdE2l96ii90hCHq8K+p4vbX3HSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UgOSwBWr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="14XjhrlT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 283DA1F000E9;
-	Tue, 16 Jun 2026 18:11:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UgOSwBWr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C492D1F000E9;
+	Tue, 16 Jun 2026 18:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633466;
-	bh=xLJfiGSLuAsCTvWao2WZL5qVd56vNlRcxq2DCpluihc=;
+	s=korg; t=1781633471;
+	bh=uCzuLjeV/qQvyr73pgFvY9c5MN6WiIYHxrTXpMcK8a4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=14XjhrlTXoHtSOHRJinsHpNFVMFCpnD4tPkYlQqt6MNS+UNQ5501AyChLlCxz9Aid
-	 uTxBxqTBlHmeZ1LRwy/Elz5sVgqGZ7Ab/F7j1Zk11h61z2r1fZsPI7jmhChTjFunKu
-	 8tzvSNegUZLcRBwYd5eZp8IyGK5BGx6Ea2OCAw08=
+	b=UgOSwBWrG4ceTfHGwF1Shlf5xz9jiiFd9LNsE4cNQ+WjCEuvokiGeeeCtUw4u+h3n
+	 NH01S8tlSUUMK6xi476hOMFF975b2uPma4iNHExKMEwH37B99vdtQMdqvlIdjCnnJk
+	 zRPy29Y5Z4sFalHtJNA7fk/m8sJmVQ5/RhjkQa2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 083/411] Input: elan_i2c - validate firmware size before use
-Date: Tue, 16 Jun 2026 20:25:21 +0530
-Message-ID: <20260616145104.670268275@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuqi Xu <xuyq21@lenovo.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 084/411] bpf: sockmap: fix tail fragment offset in bpf_msg_push_data
+Date: Tue, 16 Jun 2026 20:25:22 +0530
+Message-ID: <20260616145104.722557043@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -49,36 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Yuqi Xu <xuyq21@lenovo.com>
 
-commit 76b0d0baa9ae9c60e726bbe1b6ff0bec2c993634 upstream.
+commit f72eed9b84fb771019a955908132410a9ba9ea3f upstream.
 
-Ensure that the firmware file is large enough to contain the expected
-number of pages and the signature (which resides at the end of the
-firmware blob) before accessing them to prevent potential out-of-bounds
-reads.
+When bpf_msg_push_data() inserts data in the middle of a scatterlist
+entry, it splits the original entry into a left fragment and a right
+fragment.
 
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/ae2dOgiFvXRm4BHo@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+The right fragment offset is page-local, but the code advances it with
+`start`, which is the message-global insertion point. For inserts into a
+non-first SG entry, this over-advances the offset and leaves the split
+layout inconsistent.
+
+Advance the right fragment offset by the fragment-local delta,
+`start - offset`, which matches the length removed from the front of the
+original entry.
+
+Fixes: 6fff607e2f14 ("bpf: sk_msg program helper bpf_msg_push_data")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yuqi Xu <xuyq21@lenovo.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Link: https://patch.msgid.link/8b129d10566aa3eb43f61a8f9757bcf51707d324.1779636774.git.xuyq21@lenovo.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/elan_i2c_core.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/core/filter.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/mouse/elan_i2c_core.c
-+++ b/drivers/input/mouse/elan_i2c_core.c
-@@ -646,6 +646,11 @@ static ssize_t elan_sysfs_update_fw(stru
- 		return error;
- 	}
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2828,7 +2828,7 @@ BPF_CALL_4(bpf_msg_push_data, struct sk_
  
-+	if (fw->size < data->fw_signature_address + sizeof(signature)) {
-+		dev_err(dev, "firmware file too small\n");
-+		return -EBADF;
-+	}
-+
- 	/* Firmware file must match signature data */
- 	fw_signature = &fw->data[data->fw_signature_address];
- 	if (memcmp(fw_signature, signature, sizeof(signature)) != 0) {
+ 		psge->length = start - offset;
+ 		rsge.length -= psge->length;
+-		rsge.offset += start;
++		rsge.offset += start - offset;
+ 
+ 		sk_msg_iter_var_next(i);
+ 		sg_unmark_end(psge);
 
 
