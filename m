@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62ECE43D4E9;
-	Tue, 16 Jun 2026 17:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6143546AF3C;
+	Tue, 16 Jun 2026 17:36:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631408; cv=none; b=Jk/ToHA5YO8akioLCEfYYirdP/hma4pb1sDqLroJprbYsft9Vh25vZIC4AqOpMjnhl8my8n2q1A08VWHS9bC+vvG7fs6zdxFBRoBmVGitU/Yy4jnA4iwPCORyk31auLIOqHFPXYpUJ2oNjW4JVZNiF7YBwnJVo4NVmL9dkYv2PQ=
+	t=1781631413; cv=none; b=MQjBHszVaeemQswuXO9QS+XYQYYYL2w3VCIOBZ8Ey9gatS9gsDPf1r2T94Ea36mZLvTHY+2VtNv9tdn+kQx16UFxsPqMK8GNVxkudlXmBaK1dgtgCcgsuhHpetL0NESYoM8EG/E+sbolDCMn19dqf5hvPgyLBJo5IK25STqHBz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631408; c=relaxed/simple;
-	bh=XktSxX0Cs0h0qigjb7tCv72GGNOjgMF6nXiVXY+lYC0=;
+	s=arc-20240116; t=1781631413; c=relaxed/simple;
+	bh=Etf3EkTx81CSUDVmbk7j7G7q9HhzE0J7yPNdRXePCfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kT/u3qW6W04Ad6vXWF0fHtn69YzdTij0p5rkZBO9qbkkJH3/g2JCNTJB5DBWlUw2ZnJNqU6U56xsTr06I7m+iyRLXAVEGBUFnZSrG3rdY+8gO1pfbYliFIrBtnksz4kmT2QOzfeHA5FXcXuX+1UjpUWJUYDzFInxU9dq56Q4esA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0bG47g2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O7FLqTFpmUk/XTdpq4DHpM1BiwSWkejjdSOhEP0Kb6czjqnsiCKRNvxXXRr+TfJKYtDmd4Z6XHLVHNN40XLTTxsD8+OZcVSo5K2TDgneCo/uzxpr8crW6T2fcBEsHfccm0MJ0VGIZxE5cuX1kIJpd2zprhdFFCYSF9hFC5XLv5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uH0G3DR1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0bG47g2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191091F000E9;
-	Tue, 16 Jun 2026 17:36:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uH0G3DR1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07AF41F000E9;
+	Tue, 16 Jun 2026 17:36:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631407;
-	bh=h5DemRsgbSmajC8yuXgycV2Xf/u54AOobFV1ZFcS9KQ=;
+	s=korg; t=1781631412;
+	bh=Kkf/R9p99l/vnPPx7je9mcgjklXpt84WEeCbjxb3rhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d0bG47g2Yp28FWb/yO+TxEBcSSVRB9OQTEtDPihmaj6hq3hSylpa9CmMBUlUuynAp
-	 BuVQaIL92lnw2ZzJvbf3IEhbaWAdwh93pZ731eULNkPfz21ijryyuQscLTQZJEMzEo
-	 CvsmYaQTCS8YCaEmSCSb8logEzZeM9Tduf6Uuqis=
+	b=uH0G3DR1N17+hpB6w63nfUnDXXup/qyrHmMIItA3osbM2S7xZ8RhmTNGe02sDjE3i
+	 lSBxGMGN/w5lmgi6AgBm8vA7LABW95J6kvV5d2dOmwMAtV9ygCbCHM5ASzcq058Or2
+	 N1gKuI61XSk6AwcFOsbL2APJltfuZxLqRhjQioZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+535ecc844591e50588a5@syzkaller.appspotmail.com,
+	Bharath Reddy <kbreddy.rpbc@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 208/522] net: Annotate sk->sk_write_space() for UDP SOCKMAP.
-Date: Tue, 16 Jun 2026 20:25:55 +0530
-Message-ID: <20260616145135.793184452@linuxfoundation.org>
+Subject: [PATCH 6.1 217/522] Bluetooth: fix memory leak in error path of hci_alloc_dev()
+Date: Tue, 16 Jun 2026 20:26:04 +0530
+Message-ID: <20260616145136.184551162@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,58 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Bharath Reddy <kbreddy.rpbc@gmail.com>
 
-[ Upstream commit b748765019fe9e9234660327090fc1a9665cdbdd ]
+[ Upstream commit 37b3009bf5976e8ab77c8b9a9bc3bbd7ff49e37f ]
 
-UDP TX skb->destructor() is sock_wfree(), and UDP holds lock_sock()
-only for UDP_CORK / MSG_MORE sendmsg().
+Early failures in Bluetooth HCI UART configuration leak SRCU percpu
+memory.
 
-Otherwise, sk->sk_write_space() may be read locklessly while SOCKMAP
-rewrites sk->sk_write_space().
+When device initialization fails before hci_register_dev() completes,
+the HCI_UNREGISTER flag is never set. As a result, when the device
+reference count reaches zero, bt_host_release() evaluates this flag as
+false and falls back to a direct kfree(hdev).
 
-Let's use WRITE_ONCE() and READ_ONCE() for sk->sk_write_space().
+Because hci_release_dev() is bypassed, the SRCU struct initialized
+early in hci_alloc_dev() is never cleaned up, resulting in a leak of
+percpu memory.
 
-Note that the write side is annotated by commit 2ef2b20cf4e0
-("net: annotate data-races around sk->sk_{data_ready,write_space}").
+Fix the leak by explicitly calling cleanup_srcu_struct() in the
+fallback (unregistered) branch of bt_host_release() before freeing
+the device.
 
-Fixes: 7b98cd42b049 ("bpf: sockmap: Add UDP support")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://patch.msgid.link/20260529193941.3897256-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+535ecc844591e50588a5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=535ecc844591e50588a5
+Tested-by: syzbot+535ecc844591e50588a5@syzkaller.appspotmail.com
+Fixes: 1d6123102e9f ("Bluetooth: hci_core: Fix use-after-free in vhci_flush()")
+Signed-off-by: Bharath Reddy <kbreddy.rpbc@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_sysfs.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 6c178b47426669..62411c8870e855 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -2433,8 +2433,12 @@ void sock_wfree(struct sk_buff *skb)
- 	bool free;
+diff --git a/net/bluetooth/hci_sysfs.c b/net/bluetooth/hci_sysfs.c
+index cc7d4a8ed8ce24..b1886e517a78bc 100644
+--- a/net/bluetooth/hci_sysfs.c
++++ b/net/bluetooth/hci_sysfs.c
+@@ -81,10 +81,12 @@ static void bt_host_release(struct device *dev)
+ {
+ 	struct hci_dev *hdev = to_hci_dev(dev);
  
- 	if (!sock_flag(sk, SOCK_USE_WRITE_QUEUE)) {
-+		void (*sk_write_space)(struct sock *sk);
-+
-+		sk_write_space = READ_ONCE(sk->sk_write_space);
-+
- 		if (sock_flag(sk, SOCK_RCU_FREE) &&
--		    sk->sk_write_space == sock_def_write_space) {
-+		    sk_write_space == sock_def_write_space) {
- 			rcu_read_lock();
- 			free = refcount_sub_and_test(len, &sk->sk_wmem_alloc);
- 			sock_def_write_space_wfree(sk);
-@@ -2449,7 +2453,7 @@ void sock_wfree(struct sk_buff *skb)
- 		 * after sk_write_space() call
- 		 */
- 		WARN_ON(refcount_sub_and_test(len - 1, &sk->sk_wmem_alloc));
--		sk->sk_write_space(sk);
-+		sk_write_space(sk);
- 		len = 1;
- 	}
- 	/*
+-	if (hci_dev_test_flag(hdev, HCI_UNREGISTER))
++	if (hci_dev_test_flag(hdev, HCI_UNREGISTER)) {
+ 		hci_release_dev(hdev);
+-	else
++	} else {
++		cleanup_srcu_struct(&hdev->srcu);
+ 		kfree(hdev);
++	}
+ 	module_put(THIS_MODULE);
+ }
+ 
 -- 
 2.53.0
 
