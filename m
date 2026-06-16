@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E7F43C05C;
-	Tue, 16 Jun 2026 15:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EC643DA2C;
+	Tue, 16 Jun 2026 15:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623088; cv=none; b=UtwG6o7W+b2KpCpbwX97Hcp482UNMnJKe2W2WDrecfCh7xSXl7vO8cP9pta7Q7KAC1QnC2srf7qy2KIWorw/i8u5EdZhkGUT6dUBnYiBI9chYGIQPThX/Q3F9SOpOyYftadH4pZFJF4g0dFQJuAnaFNwPfk2YSKT4QKbZQhMx2g=
+	t=1781623094; cv=none; b=bNS1zwPILWIXyG55ah78BFF7jXfyNjrc4cYTDIAJdCWUXWde8v+mZw0gK0zD/rrdpgaGEg0KXcygtRbbotjEdSI2Lbr6iOZ5FvXtsiPMwW8nUVhrL9I7id0oP3Q6BV3QkwDO71cAl1D8yq+TRNKUuK5IqM3xD9BPDAvnbAKylZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623088; c=relaxed/simple;
-	bh=fWKa77hZX/WF0ZTt2bFOCprS03PEve76MidEnmPw264=;
+	s=arc-20240116; t=1781623094; c=relaxed/simple;
+	bh=3r73Ck+nh2Jxo9qF+SUdq01/VOroRtE2ftZtzHfhKBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fqBbEl5ovRSUCi7xcOqRwxkucavd0EebPrz/hjfn89oelvvMIe95LTx3HQ9CPiTorklDBL1vAGTWQOO5VrhXSL5CUrsYbtzlDytvMr0BaII+6MJZRgZKlvGVJgpNIfiyilIxWwGQwBlmKeJ8RRGlFp4bAiLxBYyXYeDg3GEupm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1oEIZWh5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h3L9EStV75fti3enY7fb7yUijoIN1B7ao+hGuE5Zd2I4V8m8HgpnUhueq7RyWE61Pj1LfBcVGtpVdy1pMKHrL73luZ7CgbysesKDvmQ1IALnC6sJmW5/n3yXA26+qwjQTYIOhpVHyyBW45gFEkSb0DeYMAtCxfajZgSogs0jRq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SmRpmCBj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1oEIZWh5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49CCB1F00A3D;
-	Tue, 16 Jun 2026 15:18:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SmRpmCBj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 092DE1F00A3A;
+	Tue, 16 Jun 2026 15:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623087;
-	bh=N8/1QBy8Tldo+SBFtE9G0JaAqkhbB2wCgh28NHHYhG8=;
+	s=korg; t=1781623093;
+	bh=EAmEtb7vUW7XQe5j82os3ncEl09iCwjRkkwvGbgkL6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1oEIZWh507UldYHYEbYodraUmyl+raxr0PXUUhap9QFspVzS3hA290UpshNf6Dyb0
-	 lLiFdKk8zGfbEQzirI1eZhsfv/R+rZNcii6oFMR7RTBCRzrVX0cB4Q6VTVnfrNXc1e
-	 nck22O2SI7d1ao4CCIFvNYjMxJYBINgknYeJpEG0=
+	b=SmRpmCBjQ1kEFkXTkUjvpbRXGdMu206BDx2vzpN3YCNUWzgGXoTUKY4Cak5gwMWYS
+	 FzOjIeDJgrD5tJ1unyf2XvWRK4zrtONWgNFFvz/Rpnlgbx569tEEGNa9xx87K6Q26H
+	 Pvc9NT2znygCsKlCzcimIAWMZckOmrVaeIr9zwZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Babu Moger <babu.moger@amd.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 086/378] ALSA: seq: dummy: fix UMP event stack overread
-Date: Tue, 16 Jun 2026 20:25:17 +0530
-Message-ID: <20260616145114.774819900@linuxfoundation.org>
+Subject: [PATCH 7.0 087/378] x86/resctrl: Only check Intel systems for SNC
+Date: Tue, 16 Jun 2026 20:25:18 +0530
+Message-ID: <20260616145114.829858459@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,75 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Tony Luck <tony.luck@intel.com>
 
-[ Upstream commit 2b5ff4db5d7aa5b981d966df02e687f79ad7b311 ]
+[ Upstream commit 6f6947b2387e94e405f80d472f8a189bfbf2bd6c ]
 
-The dummy sequencer port forwards events by copying an incoming
-struct snd_seq_event into a stack temporary, rewriting source and
-destination, and dispatching the temporary to subscribers. That legacy
-event storage is smaller than struct snd_seq_ump_event.
+topology_num_nodes_per_package() reports values greater than one on certain
+AMD systems resulting in resctrl's Intel model specific SNC detection
+printing the confusing message:
 
-When a UMP event reaches the dummy client, the copy leaves the UMP flag
-set but only provides legacy-sized stack storage. The subscriber
-delivery path then uses snd_seq_event_packet_size() and copies a
-UMP-sized packet from that stack object, reading past the end of the
-temporary.
+   "CoD enabled system? Resctrl not supported"
 
-Use the existing union __snd_seq_event storage and copy the packet size
-reported for the incoming event before rewriting the common routing
-fields. This preserves the full UMP packet for UMP events while keeping
-legacy event handling unchanged.
+Add a check for Intel systems before looking at the topology.
 
-Fixes: 32cb23a0f911 ("ALSA: seq: dummy: Allow UMP conversion")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Link: https://patch.msgid.link/20260605080204.32045-1-kylebot@openai.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ reinette: Add Closes tag, fix tag typos, rework changelog ]
+
+Fixes: 59674fc9d0bf ("x86/resctrl: Fix SNC detection")
+Reported-by: Babu Moger <babu.moger@amd.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Babu Moger <babu.moger@amd.com>
+Link: https://patch.msgid.link/9849330f45ac86344cc5ac54df2d313906d70bc4.1780634584.git.reinette.chatre@intel.com
+Closes: https://lore.kernel.org/lkml/37ac0376-43a3-4283-a3d5-4d57b3bec578@amd.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_dummy.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ arch/x86/kernel/cpu/resctrl/monitor.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/seq/seq_dummy.c b/sound/core/seq/seq_dummy.c
-index af45f328ae9901..8abe80985daddb 100644
---- a/sound/core/seq/seq_dummy.c
-+++ b/sound/core/seq/seq_dummy.c
-@@ -9,6 +9,7 @@
- #include <linux/module.h>
- #include <sound/core.h>
- #include "seq_clientmgr.h"
-+#include "seq_memory.h"
- #include <sound/initval.h>
- #include <sound/asoundef.h>
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index 9bd87bae498342..59215fef3924c8 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -377,7 +377,12 @@ static const struct x86_cpu_id snc_cpu_ids[] __initconst = {
  
-@@ -81,19 +82,21 @@ dummy_input(struct snd_seq_event *ev, int direct, void *private_data,
- 	    int atomic, int hop)
+ static __init int snc_get_config(void)
  {
- 	struct snd_seq_dummy_port *p;
--	struct snd_seq_event tmpev;
-+	union __snd_seq_event tmpev;
-+	size_t size;
+-	int ret = topology_num_nodes_per_package();
++	int ret;
++
++	if (boot_cpu_data.x86_vendor != X86_VENDOR_INTEL)
++		return 1;
++
++	ret = topology_num_nodes_per_package();
  
- 	p = private_data;
- 	if (ev->source.client == SNDRV_SEQ_CLIENT_SYSTEM ||
- 	    ev->type == SNDRV_SEQ_EVENT_KERNEL_ERROR)
- 		return 0; /* ignore system messages */
--	tmpev = *ev;
-+	size = snd_seq_event_packet_size(ev);
-+	memcpy(&tmpev, ev, size);
- 	if (p->duplex)
--		tmpev.source.port = p->connect;
-+		tmpev.legacy.source.port = p->connect;
- 	else
--		tmpev.source.port = p->port;
--	tmpev.dest.client = SNDRV_SEQ_ADDRESS_SUBSCRIBERS;
--	return snd_seq_kernel_client_dispatch(p->client, &tmpev, atomic, hop);
-+		tmpev.legacy.source.port = p->port;
-+	tmpev.legacy.dest.client = SNDRV_SEQ_ADDRESS_SUBSCRIBERS;
-+	return snd_seq_kernel_client_dispatch(p->client, &tmpev.legacy, atomic, hop);
- }
- 
- /*
+ 	if (ret > 1 && !x86_match_cpu(snc_cpu_ids)) {
+ 		pr_warn("CoD enabled system? Resctrl not supported\n");
 -- 
 2.53.0
 
