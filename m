@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7926046AF25;
-	Tue, 16 Jun 2026 16:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0299146AF21;
+	Tue, 16 Jun 2026 16:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627196; cv=none; b=qPgjKuK8/b23RRA6+zosr7iRjy8NUId7SH69uKG9mOmyT3rLD5UwKRcPlJGmLdKsuzZqMHc0Fq7WRVIgEm5XTyjoKDGNdwOmnetZHo4GdBP6LLd8UUTHsDP0Spb3Q551+PnGYnpbpgF/Wef3JgdrUHCNiC4Pjpq8iPgOEyE0xO8=
+	t=1781627201; cv=none; b=NKfYu4PkQB1OzTNeePlwPABvCPwOzagzSNNK7t9y8WKaiOqDnCREMXOrlD0Kh1XWFI/Doga8eE0sbTuCBo3eBzhR6mjgsy81S4mVai4/cUQ1XCHESFwPLYggPNOdDH9mYXp7iZebTwJjShvW0OTZQixk9qvLd2FnVUHNS8584V8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627196; c=relaxed/simple;
-	bh=2TbKDShoi0FfIpk2B4O/BENplkKN/4mR5LTp2xMvYAI=;
+	s=arc-20240116; t=1781627201; c=relaxed/simple;
+	bh=KC+2qrBlWXIxN8dn3sLbXfAq8TdB+2wSbUkMrk0kLIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pypk3AF7uaJzVyIRkJcVrSey8TYJwWn1naFiJy3HBvdGQMsPvKyrUW93qcCg2ONyP0tQu0sGqstyPzfch17jmoxdIJ427ZzSNnqpT0vZEOuD4xyYv68L2Ob6vsc35QYRrcN4+r0SMNbMmebnWKIikAGNNgxbm6Hz+N0IjsFQe6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwyyEiz+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t/7JwraT1FMbaBhE2I84MuAE6PR8aU64x0zwW9z+2o4wXKi/7XHbnNlOyRockobAuTYOYHT0J5NeJqFXpSDy/z0Mj0Aljdr/7NfYRqrIZhKtn2HF9uZ4LZJcFC2LYeNsPibOFSx7dIPIAiQ1O3PRb1ohLT/u8V9YaVXdujQ1Oio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZxL8Ua+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwyyEiz+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61FE61F000E9;
-	Tue, 16 Jun 2026 16:26:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZxL8Ua+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFCB41F000E9;
+	Tue, 16 Jun 2026 16:26:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627195;
-	bh=LJ8MVi2uaL31KJf4vFLeYlKrCLWgTHruryooYwUtaPQ=;
+	s=korg; t=1781627200;
+	bh=5RdqX8TzV4fBndN7Ls5GfH35tCPVggvKc9/S2ztwkA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DwyyEiz+arTo3ml0yyi/KgjjUyLlErl5p8Wd5qtIf5+oRe3HBKwN/XDwOycmpQkA5
-	 FE58j+2zOx1NZGyL0EiODcOfQP1BbOFxAPeIzEXM2fYMeguDJ3RGLhO0T5oOzgb/Zo
-	 kuQVgqwt6Z20YenKmzB7LK2cZtrFVOq2UfsdJR6c=
+	b=CZxL8Ua+3cxM+QJ4CXWUQzm0vIRBPCuc6FjXkm3Wzx0Qhu/nenANA/fk3N3LpSZe4
+	 CS7NgRqH0MltxPAmBnAQKdRpzz6DMg2kr85SwTCeDujP9Slga6uLSrWz76Mw0jQG7M
+	 sdOKPJxJ06QAmI85YQvYgYPXdWG7DGnQtNeSHgBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Til Kaiser <mail@tk154.de>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 102/261] net: mvpp2: sync RX data at the hardware packet offset
-Date: Tue, 16 Jun 2026 20:29:00 +0530
-Message-ID: <20260616145049.773075826@linuxfoundation.org>
+Subject: [PATCH 6.12 103/261] net: mvpp2: limit XDP frame size to the RX buffer
+Date: Tue, 16 Jun 2026 20:29:01 +0530
+Message-ID: <20260616145049.819716600@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -53,47 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Til Kaiser <mail@tk154.de>
 
-[ Upstream commit 180235600934bef6add3be637c296d6cf3272e67 ]
+[ Upstream commit f3c6aa078927e6fe8121c9c591ddee8716c5305a ]
 
-mvpp2 programs the RX queue packet offset, so hardware writes received
-data at dma_addr + MVPP2_SKB_HEADROOM. The current CPU sync starts at
-dma_addr and only covers rx_bytes + MVPP2_MH_SIZE bytes, which syncs the
-unused headroom and misses the same number of bytes at the packet tail.
+mvpp2 has short and long BM pools, and short pool buffers can be smaller
+than PAGE_SIZE. The XDP path nevertheless initializes every xdp_buff with
+PAGE_SIZE as frame size.
 
-On non-coherent DMA systems this can leave the CPU reading stale cache
-contents for the end of the received frame.
+XDP helpers use frame_sz to validate tail growth and to derive the hard
+end of the data area. Advertising PAGE_SIZE for short buffers can let
+bpf_xdp_adjust_tail() grow a packet past the real allocation, corrupting
+memory or later tripping skb tailroom checks.
 
-Use dma_sync_single_range_for_cpu() with MVPP2_SKB_HEADROOM as the range
-offset so the sync covers the Marvell header and packet data actually
-written by hardware.
+Initialize the XDP buffer with bm_pool->frag_size so XDP tailroom matches
+the actual buffer backing the packet.
 
-Fixes: e1921168bbd4 ("mvpp2: sync only the received frame")
+Fixes: 07dd0a7aae7f ("mvpp2: add basic XDP support")
 Signed-off-by: Til Kaiser <mail@tk154.de>
-Link: https://patch.msgid.link/20260607134943.21996-2-mail@tk154.de
+Link: https://patch.msgid.link/20260607134943.21996-3-mail@tk154.de
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index 51e35c4d9ea972..4aaa661f78f288 100644
+index 4aaa661f78f288..d5d2cbe127b0e7 100644
 --- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
 +++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -3961,9 +3961,10 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 			dma_dir = DMA_FROM_DEVICE;
- 		}
+@@ -3994,7 +3994,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
+ 			else
+ 				xdp_rxq = &rxq->xdp_rxq_long;
  
--		dma_sync_single_for_cpu(dev->dev.parent, dma_addr,
--					rx_bytes + MVPP2_MH_SIZE,
--					dma_dir);
-+		dma_sync_single_range_for_cpu(dev->dev.parent, dma_addr,
-+					      MVPP2_SKB_HEADROOM,
-+					      rx_bytes + MVPP2_MH_SIZE,
-+					      dma_dir);
- 
- 		/* Buffer header not supported */
- 		if (rx_status & MVPP2_RXD_BUF_HDR)
+-			xdp_init_buff(&xdp, PAGE_SIZE, xdp_rxq);
++			xdp_init_buff(&xdp, bm_pool->frag_size, xdp_rxq);
+ 			xdp_prepare_buff(&xdp, data,
+ 					 MVPP2_MH_SIZE + MVPP2_SKB_HEADROOM,
+ 					 rx_bytes, false);
 -- 
 2.53.0
 
