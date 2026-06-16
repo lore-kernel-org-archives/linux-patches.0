@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF18543E4BC;
-	Tue, 16 Jun 2026 15:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886C934889F;
+	Tue, 16 Jun 2026 15:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623467; cv=none; b=Q/LyPnthkiqlmi96MY8wg4Uw4BcIRchMkCVeDFJarJnL53KCwlJlA37u8vezGVA+4IDNk7oyVzXN8VumttSH43+Gs5wpkgfXYs8L/WOIVxBYvWEHt9PxTsEE2lLMFrD9wlzVxoqBRIu8q9QKtoTuwav4aVDHuMDoLLq6X3ojYKc=
+	t=1781623472; cv=none; b=GM8DiJUdsSALiRSi1wsOTnvFK5xaxF9QSbnC6IF7ktZgDfDgn+O2NLcdVap97lNhqKGhYEsEJM99e0SkeMs60YIVc72NBkUGqOjrs37RUTh5DeKB6zbc/hHbaeXN1Ct6qpkM3IA1bX/9mluM/7eMXIBQj5xz4C3VerSHw2hbDqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623467; c=relaxed/simple;
-	bh=6TyEpjZmaSrxZTdh7VWaMgv5WVByhB4pcJFHYSBtz/0=;
+	s=arc-20240116; t=1781623472; c=relaxed/simple;
+	bh=ByHqWkuFRjSLjzMZofxIjRPekGdynBwGCcr3RbhWg4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pVINfI7AziMMk8Z9uPreBZb6syb0P0p/FsuJlbjNZnIRZsEOgQfHJIUIxEm3vlZxF+/HydGd70HE6rYL4F1L6RzyRvOcXAoipSeo+p3cjscl/Kvk9oGdOUj2By9yQz8uVN2w2flyfGvjFfPIWTH3P8pbMfj+fVp1IHgNxStkWdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZjnlArrQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZLtcaRgIRcRjfdNVNt+7YlioGS6d1iUVfVJ1x0/MpWVUWpusta3G3InZw10MpmTkw3n1tuoSmQ+KfbJe1Lfp8Qea3xZJ/oZROIhdOcQ3wrRGmE7J57RKadbgJGAdHZ85//bj1V4F84XLRDR4TfYHR8UGA9Qq/O4BmT+POepSsRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=en5opRh/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZjnlArrQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6B31F000E9;
-	Tue, 16 Jun 2026 15:24:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="en5opRh/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30FF41F000E9;
+	Tue, 16 Jun 2026 15:24:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623465;
-	bh=JWVerD3xiqs7o/I58kqHgD2Q0nxmYyVGVke2VdzpxV0=;
+	s=korg; t=1781623471;
+	bh=b1Mg1AbJqZEfjIrE3qloEK5J9eRDwr25EL+wqHG4Lnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZjnlArrQtciZB3d17A+HnbsVKcnydWk+3G62w6FstVG7oHCde/+lkWErTWTWGkxAf
-	 xMXHDRLO2WD/up+aOhKZIPNvLSonLnCJjIm59eNRRTMGHWJzyt/AR2+HyLQtS9JFNC
-	 JX2rd8uCLWjx4I81T74BsG39L9huaA/lH1cpaGpE=
+	b=en5opRh/cD+GubPtIenO94Qedfx/uQ0sCdBj/kpsu2LqGbfm8qPLRc45sUKrmlSz0
+	 3/ovJBN53XdQGS4iWOzo6g0SHjemt1aj71mlmyptrZXynhSdv3tJda/s1c3FwNv3kR
+	 FvhP0wt3UFQcrFDocEJASVjoTBTcGbVAegQiL1h0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kean Ren <rh_king@163.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 154/378] ASoC: SDCA: fix NULL pointer dereference in sdca_dev_unregister_functions
-Date: Tue, 16 Jun 2026 20:26:25 +0530
-Message-ID: <20260616145118.355105732@linuxfoundation.org>
+Subject: [PATCH 7.0 155/378] clk: qcom: x1e80100-dispcc: Stop disp_cc_mdss_mdp_clk_src from getting parked
+Date: Tue, 16 Jun 2026 20:26:26 +0530
+Message-ID: <20260616145118.409211072@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,115 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kean Ren <rh_king@163.com>
+From: Hans de Goede <johannes.goede@oss.qualcomm.com>
 
-[ Upstream commit e4c60a1d4b6ccc66aefb3789cd908d4f9482eefd ]
+[ Upstream commit bc27dbefae6ed11376d991a2921eff806ffef67c ]
 
-sdca_dev_unregister_functions() iterates over all SDCA function
-descriptors and calls sdca_dev_unregister() on each func_dev without
-checking for NULL. When a function registration has failed partway
-through, or the device cleanup races with probe deferral, func_dev
-entries may be NULL, leading to a kernel oops:
+Parking disp_cc_mdss_mdp_clk_src at 19.2MHz causing the EFI GOP framebuffer
+to stop functioning. The EFI GOP framebuffer should keep working until
+the msm display driver loads, to help with boot debugging and to ensure
+display output when the msm module is not in the initramfs.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000040
-  RIP: 0010:device_del+0x1e/0x3e0
-  Call Trace:
-   sdca_dev_unregister_functions+0x37/0x60 [snd_soc_sdca]
-   release_nodes+0x35/0xb0
-   devres_release_all+0x90/0x100
-   device_unbind_cleanup+0xe/0x80
-   device_release_driver_internal+0x1c1/0x200
-   bus_remove_device+0xc6/0x130
-   device_del+0x161/0x3e0
-   device_unregister+0x17/0x60
-   sdw_delete_slave+0xb6/0xd0 [soundwire_bus]
-   sdw_bus_master_delete+0x1e/0x50 [soundwire_bus]
-   ...
-   sof_probe_work+0x19/0x30 [snd_sof]
+Switch disp_cc_mdss_mdp_clk_src over to clk_rcg2_shared_no_init_park_ops
+to keep the EFI GOP working after binding the x1e80100-dispcc driver.
 
-This was observed on a Lenovo ThinkPad X1 Carbon G14 (Panther Lake)
-with the SOF audio driver probe failing due to missing Panther Lake
-firmware, causing the subsequent cleanup of SoundWire devices to
-trigger the crash.
-
-Fix this with three changes:
-
-1) Add a NULL guard in sdca_dev_unregister() so that callers do not
-   need to pre-validate the pointer (defense in depth).
-
-2) In sdca_dev_unregister_functions(), skip NULL func_dev entries
-   and clear func_dev to NULL after unregistration, making the
-   function idempotent and safe against double-invocation.
-
-3) In sdca_dev_register_functions(), roll back all previously
-   registered functions when a later one fails, so the function
-   array is never left in a partially-populated state.
-
-Fixes: 4496d1c65bad ("ASoC: SDCA: add function devices")
-Signed-off-by: Kean Ren <rh_king@163.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260611023757.1553960-1-rh_king@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
+Link: https://lore.kernel.org/r/20260425123351.6292-1-johannes.goede@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sdca/sdca_function_device.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/clk/qcom/dispcc-x1e80100.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/sdca/sdca_function_device.c b/sound/soc/sdca/sdca_function_device.c
-index feacfbc6a51880..b5ca98283a8895 100644
---- a/sound/soc/sdca/sdca_function_device.c
-+++ b/sound/soc/sdca/sdca_function_device.c
-@@ -82,6 +82,9 @@ static struct sdca_dev *sdca_dev_register(struct device *parent,
+diff --git a/drivers/clk/qcom/dispcc-x1e80100.c b/drivers/clk/qcom/dispcc-x1e80100.c
+index aa7fd43969f9c8..cd45bedf26494c 100644
+--- a/drivers/clk/qcom/dispcc-x1e80100.c
++++ b/drivers/clk/qcom/dispcc-x1e80100.c
+@@ -580,7 +580,7 @@ static struct clk_rcg2 disp_cc_mdss_mdp_clk_src = {
+ 		.parent_data = disp_cc_parent_data_6,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_6),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
  
- static void sdca_dev_unregister(struct sdca_dev *sdev)
- {
-+	if (!sdev)
-+		return;
-+
- 	auxiliary_device_delete(&sdev->auxdev);
- 	auxiliary_device_uninit(&sdev->auxdev);
- }
-@@ -90,14 +93,24 @@ int sdca_dev_register_functions(struct sdw_slave *slave)
- {
- 	struct sdca_device_data *sdca_data = &slave->sdca_data;
- 	int i;
-+	int ret;
- 
- 	for (i = 0; i < sdca_data->num_functions; i++) {
- 		struct sdca_dev *func_dev;
- 
- 		func_dev = sdca_dev_register(&slave->dev,
- 					     &sdca_data->function[i]);
--		if (IS_ERR(func_dev))
--			return PTR_ERR(func_dev);
-+		if (IS_ERR(func_dev)) {
-+			ret = PTR_ERR(func_dev);
-+			/*
-+			 * Unregister functions that were successfully
-+			 * registered before this failure. This also
-+			 * sets func_dev to NULL so the caller will not
-+			 * try to unregister them again.
-+			 */
-+			sdca_dev_unregister_functions(slave);
-+			return ret;
-+		}
- 
- 		sdca_data->function[i].func_dev = func_dev;
- 	}
-@@ -111,7 +124,12 @@ void sdca_dev_unregister_functions(struct sdw_slave *slave)
- 	struct sdca_device_data *sdca_data = &slave->sdca_data;
- 	int i;
- 
--	for (i = 0; i < sdca_data->num_functions; i++)
-+	for (i = 0; i < sdca_data->num_functions; i++) {
-+		if (!sdca_data->function[i].func_dev)
-+			continue;
-+
- 		sdca_dev_unregister(sdca_data->function[i].func_dev);
-+		sdca_data->function[i].func_dev = NULL;
-+	}
- }
- EXPORT_SYMBOL_NS(sdca_dev_unregister_functions, "SND_SOC_SDCA");
 -- 
 2.53.0
 
