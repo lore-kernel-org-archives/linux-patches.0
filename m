@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEEFA47799B;
-	Tue, 16 Jun 2026 17:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E5935675A;
+	Tue, 16 Jun 2026 17:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629263; cv=none; b=D7wjU33qQvHWV/6sp1JqS3nIftZ4UxyNHDVatT3Uz9Chzm2kYxuyf9rPahruDlqmR6dps8A5Fmta5UBRDz5AopBOLmriJ2C+b1oWuZEB4jy8ZNknNjaHD5hTphop2HXBOadWMV8MwFDxU0nIR88Vgfjnsi+jJ0iUs4C/sJeCZDY=
+	t=1781629268; cv=none; b=jC3jC8owILyLjbDVK464BnIJTCkx75ZOuTc6h7omZCxEl+essUIQaQXI4AGaYiqwHsdbrJbOq+iD2PfSn8riNYsQEc/R7O31q9LB2MIu2JdwCKwYZApCokAks2Z8gZALBLh+yq+9ud96Nr8QnjH56AEZncX3Dha8iKajJ6kbET4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629263; c=relaxed/simple;
-	bh=9B45uVSrcfM3A61UEFnylhr7t/6sqdKMsFqIJ+NzQRY=;
+	s=arc-20240116; t=1781629268; c=relaxed/simple;
+	bh=w95oI8QLm9CbjoutsY7Ouzo0gSSkKptsQm8rTudxmRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gsfgorz2Hm3qRwIdipflvj6z7GWprgwm70ShXCfxcZHQ6lITq5a0MQeziIIMcNBW1TYP5RfgevLAxzYR7KxYE2agRkUPVplSIBUsxorhwp3IVui3fE90XkUnQjQ3b6xeQ88c5QqJtM2PfFZ3lbXKUCnlv6rGmORFZ6dm73uSh8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JaBCOx/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lLyOjekg3TXQgaI1JZ+gIK3wMlNXyVdfaF+vq9lc2WaxYAbF4a3SgizkQjTtcdKqVdEw1tMU3CyonONCRDbljkLwATEPZjfl2odtHf8EXQnebr5pAEDPtPkvF6GJwHNg2JMCpB7WFqS84hSlgDD0HH9po9uP7bzQfQqtOCVtDs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xa6JJJoF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JaBCOx/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752FA1F000E9;
-	Tue, 16 Jun 2026 17:01:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xa6JJJoF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2051F000E9;
+	Tue, 16 Jun 2026 17:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629262;
-	bh=O14JXKx7E77N3FduSLBxrv9vknf95Wr1gm36A9gSV/w=;
+	s=korg; t=1781629267;
+	bh=d8p0TQt+arR/TadMh0GAYR+2jLK5gzT2UDs0jmbtwH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2JaBCOx/zrfKPbV9Hc+gUz6B2lT2JCbYIBZp7DTVq9nK1UX69+fAzH6u01UWYGngR
-	 IJeVM0r0eyosKI+SV6HeDfGNcOTiCXs1shPHzNXTre47TgM2t/BK3OznzXK4akfObt
-	 u0Q5l3TRU/65zxJAke7zBri3qZ9oEtymyp9Hr7YE=
+	b=xa6JJJoF3etjbc80PxScx+xQarZX5rT/htHDWvjqbAhvzqGUdXiZj+3wc7WGMFPdM
+	 oF9ZIajPiZOOyzymWsCxcCF3w69MFoIOkGm+9x6uuS5SYG61Ecst6nI4sn4BurVUVP
+	 iT5a1stLVWIuJr0bkEatEjfWys9H66lNirO5OnTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yiming Qian <yimingqian591@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 219/452] netfilter: nft_ct: bail out on template ct in get eval
-Date: Tue, 16 Jun 2026 20:27:26 +0530
-Message-ID: <20260616145129.281062381@linuxfoundation.org>
+Subject: [PATCH 6.6 220/452] netfilter: bridge: make ebt_snat ARP rewrite writable
+Date: Tue, 16 Jun 2026 20:27:27 +0530
+Message-ID: <20260616145129.329513791@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,94 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Yiming Qian <yimingqian591@gmail.com>
 
-[ Upstream commit 3027ecbdb5fdf9200251c21d4818e4c447ef78e1 ]
+[ Upstream commit 67ba971ae02514d85818fe0c32549ab4bfa3bf49 ]
 
-I noticed this issue while looking at a historic syzbot report [1].
+The ebtables SNAT target keeps the Ethernet source address rewrite
+behind skb_ensure_writable(skb, 0).  This is intentional: at the bridge
+ebtables hooks the Ethernet header is addressed through
+skb_mac_header()/eth_hdr(), while skb->data points at the Ethernet
+payload.  Asking skb_ensure_writable() for ETH_HLEN bytes would check
+the payload, not the Ethernet header, and would reintroduce the small
+packet regression fixed by commit 63137bc5882a.
 
-A rule like the one below is enough to trigger the bug:
+However, the optional ARP sender hardware address rewrite is different.
+It writes through skb_store_bits() at an offset relative to skb->data:
 
-    table ip t {
-        chain pre {
-            type filter hook prerouting priority raw;
-            ct zone set 1
-            ct original saddr 1.2.3.4 accept
-        }
-    }
+        skb_store_bits(skb, sizeof(struct arphdr), info->mac, ETH_ALEN)
 
-The first expression attaches a per-cpu template ct via
-nft_ct_set_zone_eval() (nf_ct_tmpl_alloc -> kzalloc, tuple is all
-zero, nf_ct_l3num(ct) == 0). The next expression then calls
-nft_ct_get_eval() on the same skb, treats the template as a real ct
-and hits the 16-byte memcpy path. With dreg at NFT_REG32_15 this
-overflows past struct nft_regs on the kernel stack; with smaller
-dreg values it silently clobbers adjacent registers.
+skb_header_pointer() only safely reads the ARP header; it does not make
+the later sender hardware address range writable.  If that range is
+still held in a nonlinear skb fragment backed by a splice-imported file
+page, skb_store_bits() maps the frag page and copies the new MAC address
+directly into it.
 
-Reject template ct at the eval entry and in nft_ct_get_fast_eval(),
-mirroring the check nft_ct_set_eval() already has. Additionally,
-bound the address copy in NFT_CT_SRC / NFT_CT_DST by priv->len
-instead of by nf_ct_l3num(ct): nf_ct_get_tuple() zeroes the tuple
-before pkt_to_tuple() fills in only the protocol-relevant leading
-bytes, so the trailing bytes of tuple->{src,dst}.u3.all are
-well-defined zero. priv->len is validated at rule load, so the
-copy size is now bounded by the destination register rather than
-by an untrusted field on the conntrack.
+Ensure the ARP SHA range is writable before reading the ARP header and
+before calling skb_store_bits().
 
-[1]: https://syzkaller.appspot.com/bug?id=389cf09cb72926114fce90dc85a2c3231dcb647c
-
-Fixes: 45d9bcda21f4 ("netfilter: nf_tables: validate len in nft_validate_data_load()")
-Suggested-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Fixes: 63137bc5882a ("netfilter: ebtables: Fixes dropping of small packets in bridge nat")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Yiming Qian <yimingqian591@gmail.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_ct.c      | 8 +++-----
- net/netfilter/nft_ct_fast.c | 2 +-
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ net/bridge/netfilter/ebt_snat.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
-index 83c963e668ffe0..e83aa87a348e7d 100644
---- a/net/netfilter/nft_ct.c
-+++ b/net/netfilter/nft_ct.c
-@@ -78,7 +78,7 @@ static void nft_ct_get_eval(const struct nft_expr *expr,
- 		break;
- 	}
+diff --git a/net/bridge/netfilter/ebt_snat.c b/net/bridge/netfilter/ebt_snat.c
+index 7dfbcdfc30e5d2..c9e229af0366b8 100644
+--- a/net/bridge/netfilter/ebt_snat.c
++++ b/net/bridge/netfilter/ebt_snat.c
+@@ -31,6 +31,9 @@ ebt_snat_tg(struct sk_buff *skb, const struct xt_action_param *par)
+ 		const struct arphdr *ap;
+ 		struct arphdr _ah;
  
--	if (ct == NULL)
-+	if (!ct || nf_ct_is_template(ct))
- 		goto err;
- 
- 	switch (priv->key) {
-@@ -180,12 +180,10 @@ static void nft_ct_get_eval(const struct nft_expr *expr,
- 	tuple = &ct->tuplehash[priv->dir].tuple;
- 	switch (priv->key) {
- 	case NFT_CT_SRC:
--		memcpy(dest, tuple->src.u3.all,
--		       nf_ct_l3num(ct) == NFPROTO_IPV4 ? 4 : 16);
-+		memcpy(dest, tuple->src.u3.all, priv->len);
- 		return;
- 	case NFT_CT_DST:
--		memcpy(dest, tuple->dst.u3.all,
--		       nf_ct_l3num(ct) == NFPROTO_IPV4 ? 4 : 16);
-+		memcpy(dest, tuple->dst.u3.all, priv->len);
- 		return;
- 	case NFT_CT_PROTO_SRC:
- 		nft_reg_store16(dest, (__force u16)tuple->src.u.all);
-diff --git a/net/netfilter/nft_ct_fast.c b/net/netfilter/nft_ct_fast.c
-index e684c8a9184877..ecf7b3a404be26 100644
---- a/net/netfilter/nft_ct_fast.c
-+++ b/net/netfilter/nft_ct_fast.c
-@@ -30,7 +30,7 @@ void nft_ct_get_fast_eval(const struct nft_expr *expr,
- 		break;
- 	}
- 
--	if (!ct) {
-+	if (!ct || nf_ct_is_template(ct)) {
- 		regs->verdict.code = NFT_BREAK;
- 		return;
- 	}
++		if (skb_ensure_writable(skb, sizeof(_ah) + ETH_ALEN))
++			return EBT_DROP;
++
+ 		ap = skb_header_pointer(skb, 0, sizeof(_ah), &_ah);
+ 		if (ap == NULL)
+ 			return EBT_DROP;
 -- 
 2.53.0
 
