@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A087C3DD851;
-	Tue, 16 Jun 2026 19:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BBC3DDDD5;
+	Tue, 16 Jun 2026 19:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636925; cv=none; b=Y8/2fikeuyC2bi0YinKQNHHH7vEGXQGDQP+byhmxn8s75s7UZ+eSdX6BzOEZDIeYjk9eILv+2iNAv5smWFH9a7X6Z8uzmL1IgYKfCF920fQMW/35TzqDvG2Cb5AMUEEaSLo0YCt15LVnAHKPJ3HMgf49C/A9/TS9c38ApM12fJM=
+	t=1781636931; cv=none; b=dDCIeCDc2/pJxnAwLuZBcY+/B+a6++ioHmisPXFtDpe8A6HDI9jxLlnM1dEOBS9HGPiSv49nMr4jLyoTghw5UMRq161WlXqOlHvK55Qjw5/tQyYSg3KBNEciUg29sqZ/AbHlzCpKl/7Zku1ztPJkCCiNH9W7MPsZg3kB6V66RYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636925; c=relaxed/simple;
-	bh=AJebVowShW+xem6PnrZmee6NIgwDmTUTvHf2BAUWQHA=;
+	s=arc-20240116; t=1781636931; c=relaxed/simple;
+	bh=lWGHJNCFcHUtimLclq5ie4IUeteOK+tqvf/0/cc9zp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OlnRtNVbyVI/VqD8/zj1CmU31g3CiR2s4X4QAEdEy2SHW/s14v5sUGp/WSXczRTV4MkDtmZSwR6kB1L5uVfAnpOoAqZtrMgPtB0DSTu9P97ZHOWbECSwQJiPNcLk7KPh8oyD27JV54QdEBDQ/nXCrlZ+qy8qO/wnFeFC7Pe+orU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5bU4fKV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rqXTCiviagPLLSvUm02hhS3WJUHMWed3r/2LaMzg007xA5q7IKl3fbsU18uDhfNcvLUap/nAdYhJZk2W6Bt5W9Cr9QMwTmCQvELSZ7Wj2Gq8mkXCYYE0YRzfgnQg0HNDTxLeY02OwD9VbK3zyoc0vSAWcR2GGkNF/1IWB3u/l6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+fBh3eR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5bU4fKV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FF91F00A3F;
-	Tue, 16 Jun 2026 19:08:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+fBh3eR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CFD31F000E9;
+	Tue, 16 Jun 2026 19:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636924;
-	bh=8OQX8acm0kScIt/ZivFEGgkc7YJx0DGUaQABLmMz5Eg=;
+	s=korg; t=1781636929;
+	bh=iw1Ddu5yYRbMX6sKIIi8SsyCWcI2BxVQokF49SOyTOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v5bU4fKVJjYjv141Ak1DQAHg6NgJhXyi/m5bCals/HYtmRDUEyoHsZWDLTdgAE6wA
-	 V+tN52ZcjPZjfWmMLywtTb1p8AjmKvTsyCq6BchAEm3f8TsjP8yaNwRdyUUVFNKnye
-	 +6GAdvSFai2MDnNwdlgIyh9pEhe4sQzVFPFIkcFo=
+	b=Q+fBh3eRS62ZGMtZzq15MYaevUrxO5zsGENNPkYis/cQpZWQOmZqGLlenevCuMX6A
+	 QhvYQcyn/KrmqWYBGRUpYjGQLkP3fhg5EtKwlm3Xy31jDFmGg/OMKBJvQhyfX/vm2T
+	 B3reFFx85wdjJpu5ShHJSkNf16NDR6mvsmVFxQuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Ignat Korchagin <ignat@linux.win>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Yiming Qian <yimingqian591@gmail.com>
-Subject: [PATCH 5.10 332/342] lib/crypto: mpi: Fix integer underflow in mpi_read_raw_from_sgl()
-Date: Tue, 16 Jun 2026 20:30:28 +0530
-Message-ID: <20260616145104.070101494@linuxfoundation.org>
+	Easwar Hariharan <eahariha@linux.microsoft.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 5.10 333/342] arm64: Subscribe Microsoft Azure Cobalt 100 to ARM Neoverse N2 errata
+Date: Tue, 16 Jun 2026 20:30:29 +0530
+Message-ID: <20260616145104.124777926@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -53,70 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Easwar Hariharan <eahariha@linux.microsoft.com>
 
-commit 8c2f1288250a90a4b5cabed5d888d7e3aeed4035 upstream.
+commit fb091ff394792c018527b3211bbdfae93ea4ac02 upstream.
 
-Yiming reports an integer underflow in mpi_read_raw_from_sgl() when
-subtracting "lzeros" from the unsigned "nbytes".
+Add the MIDR value of Microsoft Azure Cobalt 100, which is a Microsoft
+implemented CPU based on r0p0 of the ARM Neoverse N2 CPU, and therefore
+suffers from all the same errata.
 
-For this to happen, the scatterlist "sgl" needs to occupy more bytes
-than the "nbytes" parameter and the first "nbytes + 1" bytes of the
-scatterlist must be zero.  Under these conditions, the while loop
-iterating over the scatterlist will count more zeroes than "nbytes",
-subtract the number of zeroes from "nbytes" and cause the underflow.
-
-When commit 2d4d1eea540b ("lib/mpi: Add mpi sgl helpers") originally
-introduced the bug, it couldn't be triggered because all callers of
-mpi_read_raw_from_sgl() passed a scatterlist whose length was equal to
-"nbytes".
-
-However since commit 63ba4d67594a ("KEYS: asymmetric: Use new crypto
-interface without scatterlists"), the underflow can now actually be
-triggered.  When invoking a KEYCTL_PKEY_ENCRYPT system call with a
-larger "out_len" than "in_len" and filling the "in" buffer with zeroes,
-crypto_akcipher_sync_prep() will create an all-zero scatterlist used for
-both the "src" and "dst" member of struct akcipher_request and thereby
-fulfil the conditions to trigger the bug:
-
-  sys_keyctl()
-    keyctl_pkey_e_d_s()
-      asymmetric_key_eds_op()
-        software_key_eds_op()
-          crypto_akcipher_sync_encrypt()
-            crypto_akcipher_sync_prep()
-              crypto_akcipher_encrypt()
-                rsa_enc()
-                  mpi_read_raw_from_sgl()
-
-To the user this will be visible as a DoS as the kernel spins forever,
-causing soft lockup splats as a side effect.
-
-Fix it.
-
-Reported-by: Yiming Qian <yimingqian591@gmail.com> # off-list
-Fixes: 2d4d1eea540b ("lib/mpi: Add mpi sgl helpers")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org # v4.4+
-Reviewed-by: Ignat Korchagin <ignat@linux.win>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/59eca92ff4f87e2081777f1423a0efaaadcfdb39.1776003111.git.lukas@wunner.de
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+CC: stable@vger.kernel.org # 5.15+
+Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
+Link: https://lore.kernel.org/r/20240214175522.2457857-1-eahariha@linux.microsoft.com
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[Mark: backport to v5.10.y; only the MIDR is relevant to v5.10.y]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/mpi/mpicoder.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/cputype.h |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/lib/mpi/mpicoder.c
-+++ b/lib/mpi/mpicoder.c
-@@ -453,7 +453,7 @@ MPI mpi_read_raw_from_sgl(struct scatter
- 	lzeros = 0;
- 	len = 0;
- 	while (nbytes > 0) {
--		while (len && !*buff) {
-+		while (len && !*buff && lzeros < nbytes) {
- 			lzeros++;
- 			len--;
- 			buff++;
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -61,6 +61,7 @@
+ #define ARM_CPU_IMP_HISI		0x48
+ #define ARM_CPU_IMP_APPLE		0x61
+ #define ARM_CPU_IMP_AMPERE		0xC0
++#define ARM_CPU_IMP_MICROSOFT		0x6D
+ 
+ #define ARM_CPU_PART_AEM_V8		0xD0F
+ #define ARM_CPU_PART_FOUNDATION		0xD00
+@@ -130,6 +131,8 @@
+ 
+ #define AMPERE_CPU_PART_AMPERE1		0xAC3
+ 
++#define MICROSOFT_CPU_PART_AZURE_COBALT_100	0xD49 /* Based on r0p0 of ARM Neoverse N2 */
++
+ #define MIDR_CORTEX_A53 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A53)
+ #define MIDR_CORTEX_A57 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A57)
+ #define MIDR_CORTEX_A72 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A72)
+@@ -185,6 +188,7 @@
+ #define MIDR_APPLE_M1_ICESTORM MIDR_CPU_MODEL(ARM_CPU_IMP_APPLE, APPLE_CPU_PART_M1_ICESTORM)
+ #define MIDR_APPLE_M1_FIRESTORM MIDR_CPU_MODEL(ARM_CPU_IMP_APPLE, APPLE_CPU_PART_M1_FIRESTORM)
+ #define MIDR_AMPERE1 MIDR_CPU_MODEL(ARM_CPU_IMP_AMPERE, AMPERE_CPU_PART_AMPERE1)
++#define MIDR_MICROSOFT_AZURE_COBALT_100 MIDR_CPU_MODEL(ARM_CPU_IMP_MICROSOFT, MICROSOFT_CPU_PART_AZURE_COBALT_100)
+ 
+ /* Fujitsu Erratum 010001 affects A64FX 1.0 and 1.1, (v0r0 and v1r0) */
+ #define MIDR_FUJITSU_ERRATUM_010001		MIDR_FUJITSU_A64FX
 
 
