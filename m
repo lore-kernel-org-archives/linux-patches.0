@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D83744CAE6;
-	Tue, 16 Jun 2026 15:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B495234889F;
+	Tue, 16 Jun 2026 15:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624195; cv=none; b=r+b2F97b+uoKE5MchwHnxS0rwJFM9zZZpwtXUAIaJZU13Zzvk5DRMWq5x3KZbxYRghB+0Lag0b6Qky3giNkdz+4vbQ122UKGUTuF4lophyIAyCZf7dr4fAtIR+NoZAuldsxNbu/9mKLjDJADtwjzB0EMn/PzdD2sXMQi4e8S+io=
+	t=1781624200; cv=none; b=VptQAv4NM7n9YZZHL928sT84pTaIWcR5JfmebjhwJQ1glqcZ5VK4hx21k/nUUMl3SOTlPY6o+AjZYNKFb+GFXTRJvSQUE2zxwgvjLGfK5n/jc5wNtjOVa1FgjQijxJ5KPV3c/VrclUwXJ1cSiRV8z8rT6du5++Gr5H/uvTuAd2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624195; c=relaxed/simple;
-	bh=W9W5wV05l7M7oqCINxXMoTyW4jVKeI5ClHgv6eR6MgU=;
+	s=arc-20240116; t=1781624200; c=relaxed/simple;
+	bh=bg/kP50O8qlPgX073V64zKcnuVhPp+I3n921gaw5R6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aqsLlMk5v9raWu8mpjHwsGl4vnd2WEGFW67SJOtRNaYlau0J0qxDLDn39f+XubdlShg/Rq5+QTQEeOWri+KuIjOS+L5q4RGEt9M5fUrJ0J6rl7rRIsySZvnY6vNUb2yj2nBd2rB0+D/3MfsxTcRQi2LzA07Sn8h8vyZFqfVUw9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qHop+3Ag; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=i78wg80HzTa/2cfkphLs7HPpZEkY7oj1SZO9mN5yy85Wkd1DM8j1fClCmexxph1e/88f6+/nHDNEAlRs68IBkQDgv2W1WJ3oyNrk4y7VAa5LotZ9ax7252iCPUPREz3QjPwxTIScv8xmze3xdrkUZHfjW/tLPsES/aN5Efhxc+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNqPX9SR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qHop+3Ag"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2141E1F000E9;
-	Tue, 16 Jun 2026 15:36:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNqPX9SR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 942941F000E9;
+	Tue, 16 Jun 2026 15:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624194;
-	bh=wrr2Oz/1wKeAOukN6iWF3hRIWW4ilymOMltlbsZmk2Q=;
+	s=korg; t=1781624199;
+	bh=rS6C3s9qn0l2L5+sebhVoPgLHMV11rlFxCzIbdfM7kA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qHop+3AgO16iwJRoWVhA2SvgOiA8g+D7gYCvjfmMS5tq8ogu1of8QqnT85UlwD48B
-	 pdVKgZ+b/AkKi0ALcaDJ99X5PuIasC/bmGf3gW6Ap/JARvzhpinLVEKdNwsZZ6FBoh
-	 eaQ8YZ9ek6bB+ZxHLLPVTUBkTVqyJLuQX3eewoAU=
+	b=fNqPX9SRHcV1PxAvBW7Nj8NRVUw9mUnXnRACT+YozT0W/HXRM6+B+Opjf9mOjLMJh
+	 RWtKfV8fpDlET2Cviv6dPf00f/3Fdxe8CRswPS5asWAGIOGlN7QSGBTlDFiBsX6awq
+	 eS/0SBIAKmSwlbKls5UIPFGZYZZKT2Tp86eVmVKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Santosh Kalluri <santosh.kalluri129@gmail.com>,
+	=?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <remi@remlab.net>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 290/378] net: mv643xx: fix OF node refcount
-Date: Tue, 16 Jun 2026 20:28:41 +0530
-Message-ID: <20260616145125.339778643@linuxfoundation.org>
+Subject: [PATCH 7.0 291/378] net: phonet: free phonet_device after RCU grace period
+Date: Tue, 16 Jun 2026 20:28:42 +0530
+Message-ID: <20260616145125.390928789@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -44,44 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Santosh Kalluri <santosh.kalluri129@gmail.com>
 
-commit 4aacf509e537a711fa71bca9f234e5eb6968850e upstream.
+commit 71de0177b28da751f407581a4515cf4d762f6296 upstream.
 
-Platform devices created with platform_device_alloc() call
-platform_device_release() when the last reference to the device's
-kobject is dropped. This function calls of_node_put() unconditionally.
-This works fine for devices created with platform_device_register_full()
-but users of the split approach (platform_device_alloc() +
-platform_device_add()) must bump the reference of the of_node they
-assign manually. Add the missing call to of_node_get().
+phonet_device_destroy() removes a phonet_device from the per-net device
+list with list_del_rcu(), but frees it immediately. RCU readers walking
+the same list can still hold a pointer to the object after it has been
+removed, leading to a slab-use-after-free.
 
+Use kfree_rcu(), matching the lifetime rule already used by
+phonet_address_del() for the same object type.
+
+Fixes: eeb74a9d45f7 ("Phonet: convert devices list to RCU")
 Cc: stable@vger.kernel.org
-Fixes: 76723bca2802 ("net: mv643xx_eth: add DT parsing support")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260602073414.22500-1-bartosz.golaszewski@oss.qualcomm.com
+Signed-off-by: Santosh Kalluri <santosh.kalluri129@gmail.com>
+Acked-by: Rémi Denis-Courmont <remi@remlab.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/mv643xx_eth.c |    2 +-
+ net/phonet/pn_dev.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/marvell/mv643xx_eth.c
-+++ b/drivers/net/ethernet/marvell/mv643xx_eth.c
-@@ -2780,7 +2780,7 @@ static int mv643xx_eth_shared_of_add_por
- 		goto put_err;
- 	}
- 	ppdev->dev.coherent_dma_mask = DMA_BIT_MASK(32);
--	ppdev->dev.of_node = pnp;
-+	ppdev->dev.of_node = of_node_get(pnp);
+--- a/net/phonet/pn_dev.c
++++ b/net/phonet/pn_dev.c
+@@ -108,7 +108,7 @@ static void phonet_device_destroy(struct
+ 		for_each_set_bit(addr, pnd->addrs, 64)
+ 			phonet_address_notify(net, RTM_DELADDR, ifindex, addr);
  
- 	ret = platform_device_add_resources(ppdev, &res, 1);
- 	if (ret)
+-		kfree(pnd);
++		kfree_rcu(pnd, rcu);
+ 	}
+ }
+ 
 
 
