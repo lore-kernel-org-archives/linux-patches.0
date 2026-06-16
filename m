@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8332944BCB8;
-	Tue, 16 Jun 2026 16:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EA544BCB8;
+	Tue, 16 Jun 2026 16:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625926; cv=none; b=O7JltJnzYuJfav/EZb/1BL8SiQQxcU0JwcjeYPdTJt4xkUUGV7cB0E0Gy1MoL2ecYEkhdD36Fqszdm7YYn1QSLm7P5p/m8AnB/G/M5T6KfiTU86Z610GlX62w04ELVjbnV7OOir52wfkSBXlKqD5uXII553E2YsD9ksRD6DHSzQ=
+	t=1781625931; cv=none; b=gHqr3AzbRxt/0hxohnxE9OwHU3zg5mvsGqQpDsMbnSA4nkPdX3vpHTLm/kxdoLrVPOHy9KwbdUw/D3i9d6tgJ2RqwSllWmy0AI1s4tbXSKdGswNmXrkDXu2emPK9jyPErqpKVWebGA1jjg+3Q5f8vKkyq/9pqnKkODPj9ZwM1e4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625926; c=relaxed/simple;
-	bh=R2HIA9a2dB27zUcpqQpqvwdS6kHcDcKoaB013gUwF7Q=;
+	s=arc-20240116; t=1781625931; c=relaxed/simple;
+	bh=8LOqgTjnLFDPuzODS+M1rAniK1v+yhZswMX3pkU6eSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t92CL71nRnFiSgmmV4TSLmHOsSThXIb7AQzaQfdTozUMnTdj96C8+pG5QbybcQfBNRZXdDJjlpWqh3mzGaXNXljp3XQKg1hI5b0zLx+G3/7Tw1RgnWTqleQZn7EcH3gDkLZvi5HHkqOQ1Bx69fQTfSGRiTOP0UzsmIVAuQ4RAT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MzA35dlh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hGAOXl/sFYltbm6Ceq0Yvf7IkCJFtDe+fv1Sk8zsBSrcts/r3Bj5s8xDZMit2C938K1vdY45wpVgT9chkxST7YZneEJDgbbCsT8KCL/eYuYanLkcRwWOzjhaGT8G03ahFuYIAtw+dxM3ptQGCIRxQKw52oKPvBiYL5I+wPHbwQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kdqq0wCj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MzA35dlh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F0F51F000E9;
-	Tue, 16 Jun 2026 16:05:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kdqq0wCj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DAA1F000E9;
+	Tue, 16 Jun 2026 16:05:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625925;
-	bh=cvVek8RAajBF6mC6+H4yJmH7AB31YA8HjMf/2s6fSck=;
+	s=korg; t=1781625930;
+	bh=Q2NJ0L9OUdU67uzRbYmHrm+xgAER5ImXCnQpfXeH92E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MzA35dlhAntglJpghTd4VvEcvI48AOAUyAmFzZ9IDAx0epakuM23/Hu4qdqEjkBeB
-	 ws7WdVkM39KkHOlo9jXuzgbosDfcpAZGvkGs4VGuh00VHMNNKyP5IJwg6rpZbWHC6J
-	 F/q9QInrNCq7CCi9BXshl/Wu/Spg+ZYdjTuRE0V8=
+	b=Kdqq0wCjnGhnCW6mbZW+iGe5lyb1jyEegwTLrua9Eqw0BQhBDuedmjiA8VmKF9R9a
+	 acuY5+lw6Gwt3hX/b7WkW+5RmtUrP08TX1pyPZWKMV4OJ2YhEDWq2pcj6Suf5qf7ml
+	 JN7O79P7IK+BINextti6eUnNG3JXLD34qbZnlpjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.18 233/325] misc: fastrpc: fix DMA address corruption due to find_vma misuse
-Date: Tue, 16 Jun 2026 20:30:29 +0530
-Message-ID: <20260616145110.014945042@linuxfoundation.org>
+Subject: [PATCH 6.18 234/325] misc: fastrpc: Fix NULL pointer dereference in rpmsg callback
+Date: Tue, 16 Jun 2026 20:30:30 +0530
+Message-ID: <20260616145110.073388783@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,40 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-commit 464c6ad2aa16e1e1df9d559289199356493d1e00 upstream.
+commit 5401fb4fe10fac6134c308495df18ed74aebb9c4 upstream.
 
-fastrpc_get_args() uses find_vma() to look up the VMA for a user-provided
-pointer and compute a DMA address offset. When the address falls in a gap
-before the returned VMA, (ptr & PAGE_MASK) - vma->vm_start underflows,
-corrupting the DMA address sent to the DSP.
+A NULL pointer dereference was observed on Hawi at boot when the DSP
+sends a glink message before fastrpc_rpmsg_probe() has completed
+initialization:
 
-Replace find_vma() with vma_lookup(), which returns NULL when the address
-is not contained within any VMA.
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000178
+  pc : _raw_spin_lock_irqsave+0x34/0x8c
+  lr : fastrpc_rpmsg_callback+0x3c/0xcc [fastrpc]
+  ...
+  Call trace:
+   _raw_spin_lock_irqsave+0x34/0x8c (P)
+   fastrpc_rpmsg_callback+0x3c/0xcc [fastrpc]
+   qcom_glink_native_rx+0x538/0x6a4
+   qcom_glink_smem_intr+0x14/0x24 [qcom_glink_smem]
 
+The faulting address 0x178 corresponds to the lock variable inside
+struct fastrpc_channel_ctx, confirming that cctx is NULL when
+fastrpc_rpmsg_callback() attempts to take the spinlock.
+
+There are two issues here. First, dev_set_drvdata() is called before
+spin_lock_init() and idr_init(), leaving a window where the callback
+can retrieve a valid cctx pointer but operate on an uninitialized
+spinlock. Second, the rpmsg channel becomes live as soon as the driver
+is bound, so fastrpc_rpmsg_callback() can fire before dev_set_drvdata()
+is called at all, resulting in dev_get_drvdata() returning NULL.
+
+Fix both issues by moving all cctx initialization ahead of
+dev_set_drvdata() so the structure is fully initialized before it
+becomes visible to the callback, and add a NULL check in
+fastrpc_rpmsg_callback() as a guard against any remaining window.
+
+Fixes: f6f9279f2bf0 ("misc: fastrpc: Add Qualcomm fastrpc basic driver model")
 Cc: stable@vger.kernel.org
-Fixes: 80f3afd72bd4 ("misc: fastrpc: consider address offset before sending to DSP")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204528.116920-3-srini@kernel.org
+Link: https://patch.msgid.link/20260530204528.116920-4-srini@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/fastrpc.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -1058,7 +1058,7 @@ static int fastrpc_get_args(u32 kernel,
- 			pages[i].addr = ctx->maps[i]->phys;
+@@ -2404,7 +2404,6 @@ static int fastrpc_rpmsg_probe(struct rp
  
- 			mmap_read_lock(current->mm);
--			vma = find_vma(current->mm, ctx->args[i].ptr);
-+			vma = vma_lookup(current->mm, ctx->args[i].ptr);
- 			if (vma)
- 				pages[i].addr += (ctx->args[i].ptr & PAGE_MASK) -
- 						 vma->vm_start;
+ 	kref_init(&data->refcount);
+ 
+-	dev_set_drvdata(&rpdev->dev, data);
+ 	rdev->dma_mask = &data->dma_mask;
+ 	dma_set_mask_and_coherent(rdev, DMA_BIT_MASK(32));
+ 	INIT_LIST_HEAD(&data->users);
+@@ -2413,6 +2412,7 @@ static int fastrpc_rpmsg_probe(struct rp
+ 	idr_init(&data->ctx_idr);
+ 	data->domain_id = domain_id;
+ 	data->rpdev = rpdev;
++	dev_set_drvdata(&rpdev->dev, data);
+ 
+ 	err = of_platform_populate(rdev->of_node, NULL, NULL, rdev);
+ 	if (err)
+@@ -2486,6 +2486,9 @@ static int fastrpc_rpmsg_callback(struct
+ 	if (len < sizeof(*rsp))
+ 		return -EINVAL;
+ 
++	if (!cctx)
++		return -ENODEV;
++
+ 	ctxid = ((rsp->ctx & FASTRPC_CTXID_MASK) >> 4);
+ 
+ 	spin_lock_irqsave(&cctx->lock, flags);
 
 
