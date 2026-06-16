@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCE14502F;
-	Tue, 16 Jun 2026 17:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747F7332EC1;
+	Tue, 16 Jun 2026 17:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631278; cv=none; b=onH1yy/MCoOGgWN/7MFVa4OuUNB1tgO+S6HC5Opw/8QdSQRtW+vf8pXkYdJ6J12mAIrUVlX2s6UF2IM/SfxJqqhXmJ6zG8Zt5Hlg2vpUe12PpnZ6ewFWso/Xu8E6ehb2AuEN9A+FbsaGD2mmmxCtSDqFObq/cwUeKpS6U3eihDE=
+	t=1781631283; cv=none; b=fA1dZXLmuYyyVcO3u53ufOjJjigjmS99Iu33dKmLu0bGplHDnfK0s8Xe6hYriRvt5QfPwHSt87XxeH/2simg8oHkqIq7CO6ZiDXo6gtQILLcAodXWbFWelPtoT3IPdtw/C9bj4bR2cMlxKC4UOxnm009d16FbuvTAq7lNbrSfxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631278; c=relaxed/simple;
-	bh=s1+GeeiE1rj97AWzmcJy4t7JhD0NFbU1G05UAh6axL0=;
+	s=arc-20240116; t=1781631283; c=relaxed/simple;
+	bh=qPLVm2+bn5vypTT2/uaebf+8XT7Tv+66C00MFtbNCDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DVmMv4RN8pSZCcVqQD+u00pR2V8auCH37got000PoK15JJkLAuR96LoVgnu5r276/3VmDubweuMQJNVGevOew1iqpWJJWAXcW7J70f/2IN2EpKwSOg8D90qLj0LlVQ6YTzd7T3fdEaYtunRsXYBG8oqMuEhjLosrp3O26ZD0czQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mooiO0IE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pJUFsUIj4fnQNZQrMVGLNDRbjifmhF3zZmh244oowF4oc54ncrcuu///K0SgO9nledfzJmq9SyXTycID9FEAMIJKNJpLrgJqfSQIk85QGm75X3tevZfArO1wF18a5qb5mJRAf0uj6sy5zLBdtw+K0a3UR9KeluU8hBScPY9WMxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOa5On3e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mooiO0IE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B654B1F000E9;
-	Tue, 16 Jun 2026 17:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOa5On3e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C531F000E9;
+	Tue, 16 Jun 2026 17:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631277;
-	bh=Eqn6QUsTOZ33Z+F+cylwJ1IgAEMPIUN+2Iap2mI/bSA=;
+	s=korg; t=1781631282;
+	bh=vX/ROKDWntdVe55OYG2CzenX+JkJoNjxP/pHS3f+xAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mooiO0IErHn/45Fc1w2R6W3EVNgSC6LxRfsbb6YM2uZM2t2oQG35+eMJf/jn72Rqg
-	 /DtUPt2MP/wJNSFVzkjUlUbqmzhtol/6csx2ToSUq/n0/oXC4AMNeLnLXMEWLKfKjP
-	 D65hoNt4Q7OhUCAKZoDLH13PuxvdOwy2ZM9DyfiE=
+	b=nOa5On3efn0tVtKGm3aGjPluvVAgIsZkg9Pygwqyk6z3tD4upgTypuI2EFUvIAUJ9
+	 S+YVWNmAiKlBj7SL5SJi0sSNNQWjgbiGWhrBjP2k2Zk2tfi26CvmQVqtUrrqrLbly0
+	 4uUWeGUuED80JaC+z6ITMXyQqvOHJ2aexxFL/TvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 6.1 173/522] serial: fsl_lpuart: fix rx buffer and DMA map leaks in start_rx_dma
-Date: Tue, 16 Jun 2026 20:25:20 +0530
-Message-ID: <20260616145134.242796344@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 191/522] USB: serial: mct_u232: fix memory corruption with small endpoint
+Date: Tue, 16 Jun 2026 20:25:38 +0530
+Message-ID: <20260616145135.042825189@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,90 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shitalkumar Gandhi <shital.gandhi45@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 9a9254c4a2a3ca2b3da16d173f3b0dd01f397ff6 upstream.
+commit 915b36d701950503c4ea0f6e314b10868e59fce3 upstream.
 
-lpuart_start_rx_dma() allocates sport->rx_ring.buf with kzalloc() and
-then maps a scatterlist via dma_map_sg().  On three subsequent error
-paths the function returns directly without releasing those resources:
+The driver overrides the maximum transfer size for a specific device
+which only accepts 16 byte packets for its 32 byte bulk-out endpoint.
 
-  - when dma_map_sg() returns 0 (-EINVAL):
-      ring->buf is leaked.
-  - when dmaengine_slave_config() fails:
-      ring->buf and the DMA mapping are leaked.
-  - when dmaengine_prep_dma_cyclic() returns NULL:
-      ring->buf and the DMA mapping are leaked.
+Make sure to never increase the maximum transfer size to prevent slab
+corruption should a malicious device report a smaller endpoint max
+packet size than expected.
 
-The sole cleanup path, lpuart_dma_rx_free(), is only reached when
-lpuart_dma_rx_use is set, and the caller lpuart_rx_dma_startup() clears
-that flag on failure of lpuart_start_rx_dma().  So these resources are
-permanently leaked on every failure in this function.  Repeated port
-open/close or termios changes under error conditions will slowly consume
-memory and leave stale streaming DMA mappings behind.
-
-Fix it by introducing two error labels that unmap the scatterlist and
-free the ring buffer as appropriate.  While here, replace the misleading
--EFAULT (bad userspace pointer) returned when dmaengine_prep_dma_cyclic()
-fails with the more accurate -ENOMEM, matching how other dmaengine users
-in the tree treat this failure.
-
-No functional change on the success path.
-
-Fixes: 5887ad43ee02 ("tty: serial: fsl_lpuart: Use cyclic DMA for Rx")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Shitalkumar Gandhi <shitalkumar.gandhi@cambiumnetworks.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260420135903.2062024-1-shitalkumar.gandhi@cambiumnetworks.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/fsl_lpuart.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/usb/serial/mct_u232.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -1298,7 +1298,8 @@ static inline int lpuart_start_rx_dma(st
+diff --git a/drivers/usb/serial/mct_u232.c b/drivers/usb/serial/mct_u232.c
+index 389bbab8182a41..3c1351bb7ca3d8 100644
+--- a/drivers/usb/serial/mct_u232.c
++++ b/drivers/usb/serial/mct_u232.c
+@@ -379,6 +379,7 @@ static int mct_u232_port_probe(struct usb_serial_port *port)
+ {
+ 	struct usb_serial *serial = port->serial;
+ 	struct mct_u232_private *priv;
++	u16 pid;
  
- 	if (!nent) {
- 		dev_err(sport->port.dev, "DMA Rx mapping error\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto err_free_buf;
+ 	/* check first to simplify error handling */
+ 	if (!serial->port[1] || !serial->port[1]->interrupt_in_urb) {
+@@ -386,6 +387,16 @@ static int mct_u232_port_probe(struct usb_serial_port *port)
+ 		return -ENODEV;
  	}
  
- 	dma_rx_sconfig.src_addr = lpuart_dma_datareg_addr(sport);
-@@ -1310,7 +1311,7 @@ static inline int lpuart_start_rx_dma(st
- 	if (ret < 0) {
- 		dev_err(sport->port.dev,
- 				"DMA Rx slave config failed, err = %d\n", ret);
--		return ret;
-+		goto err_unmap_sg;
- 	}
- 
- 	sport->dma_rx_desc = dmaengine_prep_dma_cyclic(chan,
-@@ -1321,7 +1322,8 @@ static inline int lpuart_start_rx_dma(st
- 				 DMA_PREP_INTERRUPT);
- 	if (!sport->dma_rx_desc) {
- 		dev_err(sport->port.dev, "Cannot prepare cyclic DMA\n");
--		return -EFAULT;
-+		ret = -ENOMEM;
-+		goto err_unmap_sg;
- 	}
- 
- 	sport->dma_rx_desc->callback = lpuart_dma_rx_complete;
-@@ -1339,6 +1341,13 @@ static inline int lpuart_start_rx_dma(st
- 	}
- 
- 	return 0;
++	/*
++	 * Compensate for a hardware bug: although the Sitecom U232-P25
++	 * device reports a maximum output packet size of 32 bytes,
++	 * it seems to be able to accept only 16 bytes (and that's what
++	 * SniffUSB says too...)
++	 */
++	pid = le16_to_cpu(serial->dev->descriptor.idProduct);
++	if (pid == MCT_U232_SITECOM_PID)
++		port->bulk_out_size = min(16, port->bulk_out_size);
 +
-+err_unmap_sg:
-+	dma_unmap_sg(chan->device->dev, &sport->rx_sgl, 1, DMA_FROM_DEVICE);
-+err_free_buf:
-+	kfree(ring->buf);
-+	ring->buf = NULL;
-+	return ret;
- }
+ 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+ 		return -ENOMEM;
+@@ -411,7 +422,6 @@ static void mct_u232_port_remove(struct usb_serial_port *port)
  
- static void lpuart_dma_rx_free(struct uart_port *port)
+ static int  mct_u232_open(struct tty_struct *tty, struct usb_serial_port *port)
+ {
+-	struct usb_serial *serial = port->serial;
+ 	struct mct_u232_private *priv = usb_get_serial_port_data(port);
+ 	int retval = 0;
+ 	unsigned int control_state;
+@@ -419,15 +429,6 @@ static int  mct_u232_open(struct tty_struct *tty, struct usb_serial_port *port)
+ 	unsigned char last_lcr;
+ 	unsigned char last_msr;
+ 
+-	/* Compensate for a hardware bug: although the Sitecom U232-P25
+-	 * device reports a maximum output packet size of 32 bytes,
+-	 * it seems to be able to accept only 16 bytes (and that's what
+-	 * SniffUSB says too...)
+-	 */
+-	if (le16_to_cpu(serial->dev->descriptor.idProduct)
+-						== MCT_U232_SITECOM_PID)
+-		port->bulk_out_size = 16;
+-
+ 	/* Do a defined restart: the normal serial device seems to
+ 	 * always turn on DTR and RTS here, so do the same. I'm not
+ 	 * sure if this is really necessary. But it should not harm
+-- 
+2.53.0
+
 
 
