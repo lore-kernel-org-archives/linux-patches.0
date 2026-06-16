@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B9335292A;
-	Tue, 16 Jun 2026 18:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0597C36A36C;
+	Tue, 16 Jun 2026 18:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634028; cv=none; b=AX1sO0Y021gEO111+97TxvIQCw+CeswIERfRXQ2v94Cm15mgW7PMwRJG5uCbMhgyI5NBoSR/yeA6bJkx7q1xgM57nLT1q+0SpaYdHmMAt8J1sxpntx/OEEcguw1jqvpfVZTejOOV9s/1p0l1NmPAyTKv/fXqpMFJWJCFhkRWfsw=
+	t=1781634034; cv=none; b=higbjd3bruHccBfq4IKHLjX7xVMTNJawlXmS+O+Q3oCq9juPt9oSD5fLZy3LUf4KBini2TICu53hImb83f0Pha6Z3umSJOwcmDpSZCxEDC7rLsfyeYFILPwGZhE0cHT5YCRL926QAk7LR7MFARRQppOpckpHPQHQRpZneblvveM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634028; c=relaxed/simple;
-	bh=HQQiq4bwnsQdH4LgvmSJBlE2dmAhHHA08JeQjb+aIA0=;
+	s=arc-20240116; t=1781634034; c=relaxed/simple;
+	bh=agwTz32qFb4co7yDp+OoVXwNqfRzkzIq4EsmkicwZQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MrKmcAZgHsP974pEfnB3DLTLCOAiVvM32ny9eEq6L8t5oGriJOrO8QeRHY5BNJiejiZaNiL6mgb1PGAcLgP4Ih9lorGsLVStxHYP8wGwv0XlYzx4BPIaVeLGwM+35rqjWTXrMYDMQtwjTZuMbbcaVZvbDp8Mq5MsWxwHyh5GuFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0Ugk/RH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MLD2im+0aLD3aGDHnLRJAeOmTRMC9Hz6ENZuPUcmKHxMnOAbEqAlvIdHQOVwr4K25rBRjjIvEFVV/kFWR/+mx5sfXp452lZWAC+yrPTENyiGu+j+uKxdeaXW8RHNxWCkGDeYV2zv2IY2gZ5uMqRuX2nKtj9xD6ADfK04OSulKpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1s3jo7HY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0Ugk/RH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893D81F000E9;
-	Tue, 16 Jun 2026 18:20:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1s3jo7HY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA371F000E9;
+	Tue, 16 Jun 2026 18:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634027;
-	bh=FA8hjwr8nnsTBDZ7p55XYXVGqAFGnULOTy5QpPqbjkA=;
+	s=korg; t=1781634032;
+	bh=rdFodYKGAY9MzP9rh1GnhS8sFqNi8FpQudbpXRWpzp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V0Ugk/RHwTAP0lENwL3jGPnnclEgzXYLC8VYn0FRr4/HGuNBNLpNJgJTBRnfI2+MS
-	 5VLC23dH/bhD+cGcXWvmyW+JIk40iaXdtHO2eY7OIDnNQ/7cBEWsT0OL+aeLhwVYDU
-	 Cj594hW+NHaeHRqe4RgCQ6pfVLInX+schQWe15tk=
+	b=1s3jo7HYeh44TnuxPmwvC0xqRAkPT0zVsETr+ajnm0FauDpgBPIYyA52E7ZOyvm7A
+	 LGzidnpklVjDDBM8YSRycBdXvrHArLTnQz+sgu/MGECa/J25HDBnMUJayAxdUvciDa
+	 bHQp+xwON7Sp3DUnREGLwklC34lQY5NNnwxzL1jU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 187/411] sctp: fix uninit-value in __sctp_rcv_asconf_lookup()
-Date: Tue, 16 Jun 2026 20:27:05 +0530
-Message-ID: <20260616145110.633561305@linuxfoundation.org>
+Subject: [PATCH 5.15 188/411] net: guard timestamp cmsgs to real error queue skbs
+Date: Tue, 16 Jun 2026 20:27:06 +0530
+Message-ID: <20260616145110.689573451@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,58 +53,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit f8373d7090b745728de66308deeecc67e8d319ce ]
+[ Upstream commit 1ee90b77b727df903033db873c75caac5c27ec98 ]
 
-__sctp_rcv_asconf_lookup() in net/sctp/input.c only checks that the ASCONF
-chunk can hold the ADDIP header and a parameter header, then calls
-af->from_addr_param(), which reads the full address (16 bytes for IPv6)
-trusting the parameter's declared length.
+skb_is_err_queue() treats PACKET_OUTGOING as the sole marker for an skb
+from sk_error_queue. That assumption is not true for AF_PACKET sockets:
+outgoing packet taps are also delivered to packet sockets with
+skb->pkt_type == PACKET_OUTGOING, but their skb->cb is owned by AF_PACKET
+instead of struct sock_exterr_skb.
 
-An unauthenticated peer can send a truncated trailing ASCONF chunk that
-declares an IPv6 address parameter but stops after the 4-byte parameter
-header; reached from the no-association lookup path, from_addr_param() then
-reads uninitialized bytes past the parameter.
+If such an skb is received with timestamping enabled, the generic
+timestamp cmsg path can read AF_PACKET control-buffer state as
+sock_exterr_skb::opt_stats. With SO_RXQ_OVFL enabled, the packet drop
+counter overlaps opt_stats. An odd drop count makes the path emit
+SCM_TIMESTAMPING_OPT_STATS with skb->len and skb->data. For non-linear
+skbs this copies past the linear head and can trigger hardened usercopy or
+disclose adjacent heap contents.
 
-Impact: an unauthenticated SCTP peer makes the receive path read up to 16
-bytes of uninitialized memory past a truncated ASCONF address parameter.
+Keep skb_is_err_queue() local to net/socket.c, but make it verify that
+the PACKET_OUTGOING marker is paired with the sock_rmem_free destructor
+installed by sock_queue_err_skb(). AF_PACKET receive skbs use normal
+receive ownership and no longer pass as error-queue skbs, while legitimate
+sk_error_queue entries keep the PACKET_OUTGOING marker and sock_rmem_free
+ownership.
 
-The sibling __sctp_rcv_init_lookup() bounds parameters with
-sctp_walk_params(); this path open-codes the fetch and omits the bound.
-Verify the whole address parameter lies within the chunk before
-from_addr_param() reads it, the same class of fix as commit 51e5ad549c43
-("net: sctp: fix KMSAN uninit-value in sctp_inq_pop").
-
-Fixes: df2185771439 ("[SCTP]: Update association lookup to look at ASCONF chunks as well")
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260608122234.459098-1-michael.bommarito@gmail.com
+Fixes: 8605330aac5a ("tcp: fix SCM_TIMESTAMPING_OPT_STATS for normal skbs")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260607021819.49698-1-kylebot@openai.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/input.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/net/sock.h |  1 +
+ net/core/skbuff.c  |  6 +++---
+ net/socket.c       | 11 ++++++-----
+ 3 files changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/net/sctp/input.c b/net/sctp/input.c
-index 182898cb754a52..70530cbe57d0a7 100644
---- a/net/sctp/input.c
-+++ b/net/sctp/input.c
-@@ -1197,6 +1197,14 @@ static struct sctp_association *__sctp_rcv_asconf_lookup(
- 	/* Skip over the ADDIP header and find the Address parameter */
- 	param = (union sctp_addr_param *)(asconf + 1);
+diff --git a/include/net/sock.h b/include/net/sock.h
+index ee9c398dd8f25e..962acf4a644da9 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1868,6 +1868,7 @@ struct sk_buff *sock_omalloc(struct sock *sk, unsigned long size,
+ 			     gfp_t priority);
+ void skb_orphan_partial(struct sk_buff *skb);
+ void sock_rfree(struct sk_buff *skb);
++void sock_rmem_free(struct sk_buff *skb);
+ void sock_efree(struct sk_buff *skb);
+ #ifdef CONFIG_INET
+ void sock_edemux(struct sk_buff *skb);
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index a8d09eff26f11c..1d3784480834bb 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -4814,7 +4814,7 @@ int skb_cow_data(struct sk_buff *skb, int tailbits, struct sk_buff **trailer)
+ }
+ EXPORT_SYMBOL_GPL(skb_cow_data);
  
-+	/* The whole address parameter must lie within the chunk before
-+	 * af->from_addr_param() reads the variable-length address; otherwise a
-+	 * truncated trailing ASCONF chunk lets it read uninitialized bytes past
-+	 * the parameter.
-+	 */
-+	if (sizeof(*asconf) + ntohs(param->p.length) > ntohs(ch->length))
-+		return NULL;
-+
- 	af = sctp_get_af_specific(param_type2af(param->p.type));
- 	if (unlikely(!af))
- 		return NULL;
+-static void sock_rmem_free(struct sk_buff *skb)
++void sock_rmem_free(struct sk_buff *skb)
+ {
+ 	struct sock *sk = skb->sk;
+ 
+@@ -4823,8 +4823,8 @@ static void sock_rmem_free(struct sk_buff *skb)
+ 
+ static void skb_set_err_queue(struct sk_buff *skb)
+ {
+-	/* pkt_type of skbs received on local sockets is never PACKET_OUTGOING.
+-	 * So, it is safe to (mis)use it to mark skbs on the error queue.
++	/* The error-queue test in skb_is_err_queue() matches this marker
++	 * with the sock_rmem_free destructor installed by sock_queue_err_skb().
+ 	 */
+ 	skb->pkt_type = PACKET_OUTGOING;
+ 	BUILD_BUG_ON(PACKET_OUTGOING == 0);
+diff --git a/net/socket.c b/net/socket.c
+index f3d0a8d66cceee..cc7ba4702d1380 100644
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -795,12 +795,13 @@ EXPORT_SYMBOL(kernel_sendmsg_locked);
+ 
+ static bool skb_is_err_queue(const struct sk_buff *skb)
+ {
+-	/* pkt_type of skbs enqueued on the error queue are set to
+-	 * PACKET_OUTGOING in skb_set_err_queue(). This is only safe to do
+-	 * in recvmsg, since skbs received on a local socket will never
+-	 * have a pkt_type of PACKET_OUTGOING.
++	/* Error-queue skbs are marked as PACKET_OUTGOING in
++	 * skb_set_err_queue() and use the destructor installed by
++	 * sock_queue_err_skb(). PACKET_OUTGOING alone is not unique:
++	 * AF_PACKET outgoing taps use the same pkt_type.
+ 	 */
+-	return skb->pkt_type == PACKET_OUTGOING;
++	return skb->pkt_type == PACKET_OUTGOING &&
++	       skb->destructor == sock_rmem_free;
+ }
+ 
+ /* On transmit, software and hardware timestamps are returned independently.
 -- 
 2.53.0
 
