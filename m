@@ -1,119 +1,150 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E300E233935
-	for <patches@lists.linux.dev>; Tue, 16 Jun 2026 00:37:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AA734F24E
+	for <patches@lists.linux.dev>; Tue, 16 Jun 2026 01:15:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781570256; cv=none; b=FdURZ/o1SM7ogm52D2+ECV0sWSgepFhTxobRQeAQTB8UXlxIQY9QTJzb9xL7QylgJhUJIPYtLaVBrTivKRsnfVMuexTefMHykmx71FwRKL6YsKouiVOJZdFfXKmQhsTyC7X3tXYGG+KYkqZAUS99knjtZ6TbufdjaiuL/b86tg0=
+	t=1781572528; cv=none; b=I8jKm6WSoTjYSw1kvFLi64mbDZz15UWErT4XscDGzQnK5pJg886IwIqPGXdKxo8vuX8ExY2+BqK7qhGZzhBO2kXAeMvuuZuu6Q8e/KKYS1x9q+QkgEXCL3d0ntEpESs17wzpLgvF4zbQguYeUl8xD+JEcnlH+yQ/K0KRMzDTcpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781570256; c=relaxed/simple;
-	bh=p91yC0380ci6RVyhXJ1kuAXKj9VL+EWnmfNds5Mm5/U=;
+	s=arc-20240116; t=1781572528; c=relaxed/simple;
+	bh=qSWoZgNw3PpVwHOk9/H/f2RnG3uRakwqaf1M/1PGtU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cRgmpETIOqu2jQX6vKjF9Ttx/OEAXQcFTzTj/KtI+imZ1wA3Nano1TOfFJgT1P/AU7cDcLcHK+S+5xY1JB37GyprN+VN7+gD6vcXdQ4ueev1TLArNsxDCjUDKMPcV8Z/aEn0hPaGYlXUW3LO3t/kGTcuM5byQpVC5uzglsM5nW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yzf/5+y0; arc=none smtp.client-ip=209.85.128.48
+	 MIME-Version:Content-Type; b=jixU3q8eNIr0Vr0ltBhi4w+5oN0k1SH1b5xImfEGt92WJ0OVeqfxqF2xHCwbVQTurxdTnLZ0JjUHK7ACVQISoIdijDczE+RfPYtJl8YhlWerQIiUyZ3jGKL9HJ2+tDME6OTR5NKsAhxeYvzpdqQFcOIl116l5X1mmKiJLfLAOIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bljNPmjL; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yzf/5+y0"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-490b613a17bso35820565e9.3
-        for <patches@lists.linux.dev>; Mon, 15 Jun 2026 17:37:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bljNPmjL"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-490b3637b90so30177135e9.3
+        for <patches@lists.linux.dev>; Mon, 15 Jun 2026 18:15:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781570253; x=1782175053; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1781572524; x=1782177324; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iFPF4sC2peklNMGORgGTd/4IxXXegAkw7S2lBmPrG1Y=;
-        b=Yzf/5+y0SqkAnaGuBdCHIGOssJZM9iyCAp5rkuUkZEOlCFQzJx9OuowCUav6zhT7qD
-         kKZrBSgIC8AE26X/1QTj6xZFG7xKWE2KSKJcwdHwEY1QCDfYb+49K6D++FKM64acDQDM
-         sC36BvmMpv2MQaUv5AopXjv59fSl8Z+PII9SCO0gY+UuJk8mAOzUlSbtEigFxq+G1bit
-         ZrWZPGsHIvkWuTIlOhv5OtPQ4K9zvNoMDxhEZ4lCJ/aXoQ8xbz5nF2S5uUGJpRUThhq0
-         9WPu0CbKDJHwhDbpF+6BeMYY2kKP6QBZt7xhDVIVZrI5BJONe66qQlay4zbB0TzMnDKR
-         uD9A==
+        bh=53973eSawR2ZjjRuPt5kDFsVlZ1YHqdNePsF+6+pfeM=;
+        b=bljNPmjLs1lGBwjb3GD3PjkBsFiktN/LU741oyYo2k0jo31hktcnv2UhjWFBtHupwd
+         Rf4ofmQk7paZ7oiyhlrl2kepldm7c3O4B5D1+bsZRJg8vQ1i7ujUtmqHELf7kLKXZhyT
+         TNff8JE31GfMjCA1asvB0rpWb2WgwngX54bOKd8BwYl7zzOwINAUEJcHFmBEIm/RlYeU
+         mSen/dFh4coOoTsIahggC/GXAleUBIRTRnkOzFZkEFqq/gP9navWlEautzKWxKaOgThm
+         PaC9pJt24w7v3IZX7InB6KVEqa0ZPeY/EGitl2NLwQ0oVvD+Ok85OFJ+ux+Fr4J9Yp9s
+         YWOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781570253; x=1782175053;
+        d=1e100.net; s=20251104; t=1781572524; x=1782177324;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=iFPF4sC2peklNMGORgGTd/4IxXXegAkw7S2lBmPrG1Y=;
-        b=kKuT+xdwpQI11wOEO/5D9YDvkLKYyjHjY2MRIFs4PI6b3qoy2zP/S5wpH3SHqsZtMk
-         iFwpVuL6cX/tQdY0/d81MfwvpgluTQfJkaqoAIXrlO644zPHZgFwBxRgIpRVCgdbp4k9
-         H1Lla76N5gi/V6Z6wGGEPZieGkomfQhvpog2B0X41rSv7SusvYp3q8qXwPTOUzfqNK2n
-         Snhv7TEyYDXcp4z9Ii0UPQohQBCLL2OkDoZmdtqDQxNshv5CojfLS/+Yg8Cf2yU8sipO
-         Xs6SIadKA6QI6M4DG8WdDV4nV6uMd03z0DbGNp48PIAkwXdH1cWNt6XbN4KXnaxlUYol
-         guag==
-X-Forwarded-Encrypted: i=1; AFNElJ+PMuoFGZoNkUReqF8wSUOf87AVA13v05xK9UGwceXBR0Q3iziw6mSbuBHHbGyggQ72eqKscQ/c@lists.linux.dev
-X-Gm-Message-State: AOJu0YzS1m9g9IVmyFgXiKRQ+oZ1S0EOO5e3kLEVtimAsiChf6ouE+oY
-	SbJEUQ/c3Dk7Vx0/gjzVeEAtJUixxW0jeg+y1fZgd49pfBIUU+UA33/p
-X-Gm-Gg: Acq92OEwq7qpaZXfCvlRDk98PedDAM91iZHWO78WqpXs/8WCRwbgSYs1RjdQOmVsuzv
-	81uxt0Hu3YGBauGuZw+kZVAYf4raR+nF31GL9Ks0khXhsAUzQWH/Vn9BxBClx3jRsjrrYM/a2yo
-	xxrMHqfNf5CwVAItOq7zedCj8PbcrZYF1I4QuyaqXlY4K7DvbWUQB9uEX/pKSs4eEp60/ZgB1Aq
-	5Flc80WC+BBvcovLieFXaliErzgCKUBOSmKy0DApDOroUa+gMiHaZcQ2NQp2eZ2O0enMQIZFCRB
-	KaalMBP+t4FiZHoPl6Eyq3SJqN6t2pwW80WaM6M/bSFrYE33No2HEHnYKQNXl/Xs4OQ+8SuDJhn
-	qQTfvZMr7E46QwuBmLcbiCACCuVQXbXWG6woi7yEx2mqiH+KWbLxRRdT/VPFWJ3MUBWlzEPcG9P
-	aTWoJAFBcvtYwZDtp/L9M=
-X-Received: by 2002:a05:600c:698c:b0:490:b025:f324 with SMTP id 5b1f17b1804b1-4922ffbdad4mr19600415e9.32.1781570253120;
-        Mon, 15 Jun 2026 17:37:33 -0700 (PDT)
+        bh=53973eSawR2ZjjRuPt5kDFsVlZ1YHqdNePsF+6+pfeM=;
+        b=N1SXdaB7FLkoVKNxnsmnUY+6b6JC144rHAm7fIkQapgUDuW7MeOuJBiR1QRMiBdLsJ
+         B2LKsSrWLF7gWREMq+fx2klQkaXgE+IcweoOuxwNhk0firq+1VYvz6x0D2+pp2HPkF2e
+         IXJn7P6qDHEZ8GYLEE/fSXNZKCCenrn2kUshFju7uKCVRfc/MCFH2Y1MeLFF5yTrw3GY
+         TQxhL0MeeMFDmI8/wpevaNkk4eDpZepm10Lx+jm3c016AuYhAsgwxQuLo73vm15b8iLe
+         4ZAmCY1CCTnKNbEwgvLlB/pAG7QSdnNsa5lZEZsMMM4y1Wx0QkbONM4kuV2NKCHToOZC
+         ZvOQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8Oj4Wmhee+3dAHXmDw2G6IJNWSg76N8dsWidkkucsFIXVtC2kBxj3wC0myH4+8XgIXmEZVb+qh@lists.linux.dev
+X-Gm-Message-State: AOJu0YzX/Qjyf6xODVfBZkGYAHN41R4d9NA6jP1x9f1JknWFyy/tEKfi
+	I4wXXvZcq3fP5T39Tm8sgiqtAjBgJ7fUkK4lSBDlkX+ZhRTQpcIJfpos
+X-Gm-Gg: Acq92OHsVUWv4hIsKDLaSpN/YAwrdcXHM8LYHyKJXm2z6NSpHqk4HK8NDq9tpGHVBOB
+	W1XLudWc4PiwfWXwYrR7RlTq118b0RNqhLNPIvkJQF28CF7dfI2Lgu9eFnztLhV+FBvmBnvhsne
+	UW89p6DKpXF27TJRz/w1DG9odvPn7nnqTEj15fKm67zNwO8qX6oUoASw9cOaGao3/juppDMdfDG
+	FCRRyFxFnBZUlIc2ZLxPf5qf+AgRDP885R7N/4x2rsR6rpT3kUeEcItnYcSVOVEVNKrucwp84QE
+	RSx8BFCg5hIkpDZHXmBW6fLx3wCgaAuz7jkzmyg9xxfx0oaPq1Uyzo2tFgwRPr+8dih27DnNvzE
+	+PhiFiJtoSVYxqERnSb1K8lBaNzXQT0AS4dUu6jBHkX3om73SXQIatO+9OPDk/tXngwTUTi6yms
+	ZqVEiHLGlUuL9yCNFjiP8=
+X-Received: by 2002:a7b:cd0b:0:b0:490:b2c9:e284 with SMTP id 5b1f17b1804b1-49220143bc6mr120782165e9.30.1781572523711;
+        Mon, 15 Jun 2026 18:15:23 -0700 (PDT)
 Received: from localhost ([212.73.77.104])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-490ea4b39e9sm238270495e9.0.2026.06.15.17.37.30
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4922fa47da9sm43123095e9.5.2026.06.15.18.15.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jun 2026 17:37:32 -0700 (PDT)
+        Mon, 15 Jun 2026 18:15:21 -0700 (PDT)
 From: Askar Safin <safinaskar@gmail.com>
-To: agordeev@linux.ibm.com
+To: joannelkoong@gmail.com
 Cc: akpm@linux-foundation.org,
 	axboe@kernel.dk,
+	bernd@bsbernd.com,
 	brauner@kernel.org,
 	david@kernel.org,
 	dhowells@redhat.com,
+	fuse-devel@lists.linux.dev,
 	hch@infradead.org,
 	jack@suse.cz,
 	linux-api@vger.kernel.org,
 	linux-fsdevel@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-mm@kvack.org,
-	linux-next@vger.kernel.org,
-	linux-s390@vger.kernel.org,
 	miklos@szeredi.hu,
 	netdev@vger.kernel.org,
 	patches@lists.linux.dev,
 	pfalcato@suse.de,
+	rostedt@goodmis.org,
 	safinaskar@gmail.com,
 	torvalds@linux-foundation.org,
+	val@packett.cool,
 	viro@zeniv.linux.org.uk,
 	willy@infradead.org
-Subject: Re: [PATCH 2/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
-Date: Tue, 16 Jun 2026 03:36:59 +0300
-Message-ID: <20260616003659.4002764-1-safinaskar@gmail.com>
+Subject: Re: [PATCH 0/3] vmsplice: make vmsplice a trivial wrapper for preadv2/pwritev2
+Date: Tue, 16 Jun 2026 04:15:09 +0300
+Message-ID: <20260616011516.4039110-1-safinaskar@gmail.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260608171917.3195488Afc-agordeev@linux.ibm.com>
-References: <20260608171917.3195488Afc-agordeev@linux.ibm.com>
+In-Reply-To: <CAJnrk1Y9egYizkx1H9K0cqxSYuB+7vLvQbV7Tf4C5eHFqnnC-A@mail.gmail.com>
+References: <CAJnrk1Y9egYizkx1H9K0cqxSYuB+7vLvQbV7Tf4C5eHFqnnC-A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Alexander Gordeev <agordeev@linux.ibm.com>:
-> Hi All,
+Joanne Koong <joannelkoong@gmail.com>:
+> > speaking of fuse_dev_splice……_write actually, this series has broken
+> > xdg-document-portal!
+> >
+> > https://github.com/flatpak/xdg-desktop-portal/issues/2026
+> >
+> > Specifically what happens is that the EINVAL is returned due to oh.len
+> > != nbytes:
+> >
+> > fuse_dev_do_write: oh.len 16400 != nbytes 15526
+> >
+> > (where 16400 == 16384 (read len) + 16, 15526 == 15510 (file len) + 16)
+> >
+> > After reverting the series, there is no error because oh.len
+> > becomes 15526 too.
 > 
-> This patch as commit e2c0b2368081b ("vmsplice: make vmsplice a trivial
-> wrapper for preadv2/pwritev2") in linux-next on s390 causes the selftest
-> tools/testing/selftests/mm/cow.c to hang:
+> I think this is because of how libfuse handles eof / short reads. When
+> it detects a short read, it fixes up the header length after the
+> header was already vmspliced to the pipe because it assumes vmsplice
+> mapped the header's page into the pipe by reference. It assumes that
+> modifying the header length in place gets then reflected in what the
+> pipe later splices out.
 > 
-> # [RUN] vmsplice() + unmap in child ... with PTE-mapped THP (128 kB)
+> The logic for this happens in fuse_send_data_iov() [1]:
+> a) sets out->len = headerlen (16) + len (16384) = 16400 in the
+> stack-allocated fuse_out_header
+> b) vmsplices the header to the pipe
+> c) splices the backing file to the pipe. if this hits EOF, it'll get
+> back 15510 instead of 16384
+> d) detects the short read [2], fixes up the stack out->len = 16 + 15510 = 15526
+> e) splices the pipe to /dev/fuse
 > 
-> Recently there has been changes in THP area, so the problem is not
-> necessary linked to this patch per se.
+> After this patch, step b) is a straight copy which means step d)'s
+> fixup doesn't modify what's in the pipe. This could be fixed up in
+> libfuse to not depend on modify-after-vmsplice, but I don't think this
+> helps for applications using already-released libfuse versions. I
+> think this patch needs to be reverted.
 > 
-> Please, let me know if you need any additional information.
+> Thanks,
+> Joanne
 > 
-> Thanks!
+> [1] https://github.com/libfuse/libfuse/blob/master/lib/fuse_lowlevel.c#L846
+> [2] https://github.com/libfuse/libfuse/blob/master/lib/fuse_lowlevel.c#L956
 
-As well as I understand, this test uses vmsplice to pin pages.
-I. e. if my patch lands, then this test should be rewriten to use
-some other mechanism.
+Uh, this is very unfortunate. But I still want to remove vmsplice.
+Maybe we can somehow save my patchsets? For example, let's return EINVAL
+for this particular combination (writable pipe + SPLICE_F_NONBLOCK).
 
 -- 
 Askar Safin
