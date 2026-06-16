@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35AF93D8902;
-	Tue, 16 Jun 2026 18:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CDA3DA7E1;
+	Tue, 16 Jun 2026 18:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634757; cv=none; b=HAKp+ioC7lRMWX6blyawcg7RBc2XzRdFt7y4ESN11kRJtTIA1tsvVIpjscfyPDool8YHBAYLon4aP6JD2R3WZqs+/6caWVosv4q/DS9SVPBp12QaVHU4sS4H4ql1tqvwdCduXpZt5bjmv9iygIV/djg/srbyZmiSr1VsK6IVjhE=
+	t=1781634758; cv=none; b=DJjGqtnMtp0WRu9bM0mSwElqVzNX2pUrH8q5Ncrxgy78pndXTXFkUpPTJKtNiRJVVImkeU0r+nxAJi5M7Q67wbqUmGE2hOz3SYeJ0X4+PEqWxqMekrtO4ZujHHrHn1JKSNLjZt9PMvfyN4H2g+Wr2gEwhTQfcZthewiNziWkbfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634757; c=relaxed/simple;
-	bh=02KnEV0O/JiVz02hknLgHyfPWIeiJYFKjdieR7KnKGI=;
+	s=arc-20240116; t=1781634758; c=relaxed/simple;
+	bh=Uzrkh0ozEfXTQqUvOtIuNuhfcWHXtVOrxqD3AJp5mG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WekixfUh8fgM08SPIs7Q/orR/p+EcVXlGZxijaqH8GTto6UVlRq0S8za7aP+LC7ZQkMtlFlRniNJrcchehcrpAmTAYbkMdNOFlSxvXhBu32+hv6uCcP/ECkYZCJTqr/kOcwRnLC/ETyCifoy2KsiWlZz6toICfHHLeiT50Izn6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E+Gy3BYq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jEbFXJ8VHiXCv7+AzxJY0y0RYiyYFzX/rNWcYYJ9/sCjvGazxxOOMBFRMPTnPxQJaQewIe7OJgnv+Kg9N1PdkkPtNEQagsgGAcXGywWPGQyuFZoA73IPPCavCQsdL5ScD64DN2orMSES4KIJHQBUawQO8NuLdc1cn1dDtJyjEi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQiiajnM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E+Gy3BYq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5F61F000E9;
-	Tue, 16 Jun 2026 18:32:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQiiajnM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE3951F00A3A;
+	Tue, 16 Jun 2026 18:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634752;
-	bh=+Z0+Aov8CQg+8Fc0pkXxJ0k1/jq8Pn+uxIbBFx/fgFM=;
+	s=korg; t=1781634757;
+	bh=MGjZw+d/o+5ru1Pt77ERsKxPNWthmbaT4WRyZXpjqiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E+Gy3BYqtYGBP4P20ogulblqzMBQX3uXQVJyPUuXhQIYm55tHiJsYBTM+AcnscqtJ
-	 YolJTjFF2ph34KWRjs2E3r2X3GS4dZ+6QOSJTDOT0XAUUEKjUCGfH2DppBI+CEAVdf
-	 ddDJXtzD9AerLL9Qad7cJCpszUk1jMb9xusR/Jso=
+	b=fQiiajnMYwDu5iGqZHoSSeF7tl9bpaffgYVeh+jc4fqKFsQ8oqx+N4eEG6sEj2NaQ
+	 QvS+wmDaU0Mp+CusfOYdKq8MrpgkYv8eY83N5gGZkZWbUDF3S1ggi7VkyuHzOAzqHZ
+	 3g5ZbLueVwWKJtBcTuCs41mle8ksAZsD/+W8QD2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masayuki Ohtake <masa-korg@dsn.okisemi.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Yochai Eisenrich <echelonh@gmail.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 323/411] spi: topcliff-pch: fix controller deregistration
-Date: Tue, 16 Jun 2026 20:29:21 +0530
-Message-ID: <20260616145118.324999322@linuxfoundation.org>
+Subject: [PATCH 5.15 324/411] btrfs: fix btrfs_ioctl_space_info() slot_count TOCTOU which can lead to info-leak
+Date: Tue, 16 Jun 2026 20:29:22 +0530
+Message-ID: <20260616145118.376023614@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,45 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Yochai Eisenrich <yochaie@sweet.security>
 
-[ Upstream commit 5d6f477d6fc0767c57c5e1e6f55a1662820eef87 ]
+[ Upstream commit 973e57c726c1f8e77259d1c8e519519f1e9aea77 ]
 
-Make sure to deregister the controller before disabling and releasing
-underlying resources like interrupts and DMA during driver unbind.
+btrfs_ioctl_space_info() has a TOCTOU race between two passes over the
+block group RAID type lists. The first pass counts entries to determine
+the allocation size, then the second pass fills the buffer. The
+groups_sem rwlock is released between passes, allowing concurrent block
+group removal to reduce the entry count.
 
-Fixes: e8b17b5b3f30 ("spi/topcliff: Add topcliff platform controller hub (PCH) spi bus driver")
-Cc: stable@vger.kernel.org	# 2.6.37
-Cc: Masayuki Ohtake <masa-korg@dsn.okisemi.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260414134319.978196-8-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ renamed spi_controller_*(data->host) calls to spi_master_*(data->master) ]
+When the second pass fills fewer entries than the first pass counted,
+copy_to_user() copies the full alloc_size bytes including trailing
+uninitialized kmalloc bytes to userspace.
+
+Fix by copying only total_spaces entries (the actually-filled count from
+the second pass) instead of alloc_size bytes, and switch to kzalloc so
+any future copy size mismatch cannot leak heap data.
+
+Fixes: 7fde62bffb57 ("Btrfs: buffer results in the space_info ioctl")
+CC: stable@vger.kernel.org # 3.0
+Signed-off-by: Yochai Eisenrich <echelonh@gmail.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ adapted upstream's `return -EFAULT;` to stable's `ret = -EFAULT;` fall-through to existing `out:` cleanup label ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-topcliff-pch.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/btrfs/ioctl.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/spi/spi-topcliff-pch.c
-+++ b/drivers/spi/spi-topcliff-pch.c
-@@ -1450,11 +1450,16 @@ static void pch_spi_pd_remove(struct pla
- 		free_irq(board_dat->pdev->irq, data);
- 	}
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -3612,7 +3612,7 @@ static long btrfs_ioctl_space_info(struc
+ 		return -ENOMEM;
  
-+	spi_master_get(data->master);
-+
-+	spi_unregister_master(data->master);
-+
- 	if (use_dma)
- 		pch_free_dma_buf(board_dat, data);
+ 	space_args.total_spaces = 0;
+-	dest = kmalloc(alloc_size, GFP_KERNEL);
++	dest = kzalloc(alloc_size, GFP_KERNEL);
+ 	if (!dest)
+ 		return -ENOMEM;
+ 	dest_orig = dest;
+@@ -3668,7 +3668,8 @@ static long btrfs_ioctl_space_info(struc
+ 	user_dest = (struct btrfs_ioctl_space_info __user *)
+ 		(arg + sizeof(struct btrfs_ioctl_space_args));
  
- 	pci_iounmap(board_dat->pdev, data->io_remap_addr);
--	spi_unregister_master(data->master);
-+
-+	spi_master_put(data->master);
- }
- #ifdef CONFIG_PM
- static int pch_spi_pd_suspend(struct platform_device *pd_dev,
+-	if (copy_to_user(user_dest, dest_orig, alloc_size))
++	if (copy_to_user(user_dest, dest_orig,
++		 space_args.total_spaces * sizeof(*dest_orig)))
+ 		ret = -EFAULT;
+ 
+ 	kfree(dest_orig);
 
 
