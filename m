@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EFA93CFF55;
-	Tue, 16 Jun 2026 18:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA903CFF55;
+	Tue, 16 Jun 2026 18:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635679; cv=none; b=oKadRqwhOmXaZIw3aO1qCjB2cp4I0ML+I4p+y/js6psepIDMm9qogwJTN8JrP5EqVCrpX4/paUApQaKHEhNuhhp5JR/D8j13qIaC02zEFjvN/wH6dkCPphf7cU0U3s18esDJndlNzQy7jP5s6BGDMofLAPPVXGYgqW1q0iNG0h0=
+	t=1781635684; cv=none; b=gxwYbr5NxqcCfWxVwOmbEIw1zoJlOF9yKH1/fgkzT0ST+2u6550nxs7jmgfkr+Xs0vLJCVOeVVetvERZb6nWsbV3jv7lgHo7U6QWk4TPLQ7lUE/UmWeCxyJ+AhLVfbICh0HXrahFqpjzdeKuOt2/XEIJea73sET89u/hWhiRhMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635679; c=relaxed/simple;
-	bh=TZ9//Q4RA7aHcocuD7nUTGUdve0pls6Aw7z+Ao4mSbo=;
+	s=arc-20240116; t=1781635684; c=relaxed/simple;
+	bh=K7kGBaJK7uJA8leAHjOjz5q1UAabtey47IE5pMDnoa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JBEqBzoWixqtW69AAIsxNaoTxuu9oexG4TH4oerRSaL/T7aBGtjjUymW7mkJObT+NI4I+H7eE9d2nIFwD1dkj7+7+gACxUzb1/1GTGhYcJKWbqB2A34Iv4EK6+4K9yKs8QIFicK9T7ycDvmsaA60qLA4zdDlzHqDuQiTJmNNJD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AxQ+Wc1m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ElvoSS2Ctv/ohA/q7tX43166sAO2RAcrAZEssbAAkIRZ8j+AeRDBI2KWl1l6VVhJ0IE1Aqq/inMPTHSw8kYm6T6mtLTHbCj4Ud/6HZbootj2NOYO0D43vX8I9niD9yPG5S3A7Auna2d6/8dSa8u+vjSBjfYAPBaMoGTRwTwMBFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snRpgoIW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AxQ+Wc1m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50A51F000E9;
-	Tue, 16 Jun 2026 18:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snRpgoIW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554641F000E9;
+	Tue, 16 Jun 2026 18:48:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635678;
-	bh=mZfweAjXpoGiikCuFWJOWLfiqexZOGTMrTjalZbe/34=;
+	s=korg; t=1781635683;
+	bh=EOpsBVjeyI6cmx5YRuPwR7gQBnHpAC9nF7DmfMoNkFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AxQ+Wc1mGG/DR/KgKZwBP6mTXTrMY3NyYjZjab1PTQoJGQcE+KSFn9KxiUhEhRSR/
-	 lhNaXI8cNyirHI09eZgcxhEKzKtYMdfbRurVoCsC/Lvxp/lQjkgTDyuo79uc0cNhLJ
-	 TeZX1xG1mz/+BfHAvefR4hAvw5VfvSAnt0T16btc=
+	b=snRpgoIWcqbXcC1gXIiljCP0yilofwLP7MvSgVDwC4nAWw8ehgHOwpYx9mrUP8XEH
+	 IOmpmEUzKntPRv5OY/OIl2pSfe/+71NEGgldJpJ+ykXg9JRMA5na2TofgqAr1nBhp4
+	 8CyHhkNfBSo08sae4vpyaGp6Q6Cf7PtK3O1xZ44k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+abbfd103085885cf16a2@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
 	Michal Pecio <michal.pecio@gmail.com>,
 	Heitor Alves de Siqueira <halves@igalia.com>
-Subject: [PATCH 5.10 095/342] usb: usbtmc: check URB actual_length for interrupt-IN notifications
-Date: Tue, 16 Jun 2026 20:26:31 +0530
-Message-ID: <20260616145052.655583240@linuxfoundation.org>
+Subject: [PATCH 5.10 096/342] usb: usbtmc: reject interrupt endpoints with small wMaxPacketSize
+Date: Tue, 16 Jun 2026 20:26:32 +0530
+Message-ID: <20260616145052.702924522@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -54,47 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Heitor Alves de Siqueira <halves@igalia.com>
 
-commit 52f2ad3f7e5eb3b5908e1d685d4342519dc9cfcd upstream.
+commit 121d2f682ba912b1427cddca7cf84840f41cc620 upstream.
 
-USBTMC devices can use an optional interrupt endpoint for notification
-messages. These typically contain two-byte headers indicating the
-payload format, but the driver does not check if these headers are
-present before accessing the data buffers. In cases where the URB
-actual_length is not enough to fit these headers, the driver will either
-cause an out-of-bounds read, or consume stale leftover data from a
-previous notification.
+The USB488 subclass specification requires interrupt wMaxPacketSize to
+be 0x02, unless the device sends vendor-specific notifications.
+Endpoints that advertise less than 2 bytes for wMaxPacketSize are
+unlikely to work with the current driver, as URBs will not have enough
+space for interrupt headers. Considering that any notification URBs will
+be ignored by the driver, reject these endpoints early during probe.
 
-Fix by checking if actual_data contains enough bytes for the headers,
-otherwise resubmit URB to the interrupt endpoint.
-
-Fixes: dbf3e7f654c0 ("Implement an ioctl to support the USMTMC-USB488 READ_STATUS_BYTE operation.")
-Reported-by: syzbot+abbfd103085885cf16a2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=abbfd103085885cf16a2
+Fixes: 041370cce889 ("USB: usbtmc: refactor endpoint retrieval")
 Cc: stable <stable@kernel.org>
 Suggested-by: Michal Pecio <michal.pecio@gmail.com>
 Signed-off-by: Heitor Alves de Siqueira <halves@igalia.com>
-Link: https://patch.msgid.link/20260505-usbtmc-iin-size-v3-1-a36113f62db7@igalia.com
+Link: https://patch.msgid.link/20260505-usbtmc-iin-size-v3-2-a36113f62db7@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/usbtmc.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/usb/class/usbtmc.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/drivers/usb/class/usbtmc.c
 +++ b/drivers/usb/class/usbtmc.c
-@@ -2268,6 +2268,14 @@ static void usbtmc_interrupt(struct urb
- 
- 	switch (status) {
- 	case 0: /* SUCCESS */
-+		/* ensure at least two bytes of headers were transferred */
-+		if (urb->actual_length < 2) {
-+			dev_warn(dev,
-+				"actual length %d not sufficient for interrupt headers\n",
-+				urb->actual_length);
-+			goto exit;
+@@ -2402,6 +2402,12 @@ static int usbtmc_probe(struct usb_inter
+ 		data->iin_ep = int_in->bEndpointAddress;
+ 		data->iin_wMaxPacketSize = usb_endpoint_maxp(int_in);
+ 		data->iin_interval = int_in->bInterval;
++		/* wMaxPacketSize should be 0x02 or more as per USB488 Table 22 */
++		if (iface_desc->desc.bInterfaceProtocol == 1 &&
++		    data->iin_wMaxPacketSize < 2) {
++			retcode = -EINVAL;
++			goto err_put;
 +		}
-+
- 		/* check for valid STB notification */
- 		if (data->iin_buffer[0] > 0x81) {
- 			data->bNotify1 = data->iin_buffer[0];
+ 		dev_dbg(&intf->dev, "Found Int in endpoint at %u\n",
+ 				data->iin_ep);
+ 	}
 
 
