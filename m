@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC0847B403;
-	Tue, 16 Jun 2026 16:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1102D47AF75;
+	Tue, 16 Jun 2026 16:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628736; cv=none; b=iLLZJgEYchVc3X95P2k6IpFmc5XDoKUb39cergg3T6iw/TjgCFlSa3d+3QVHCsGpqIuxs5Xyyq7DBBuy9eS29GxLgHDbW3WD8J5VPfJTPXOAZQnewPqFVb40tNb3R8Ti1pUVsbdn+QlsAbUsuuOo+mRE1uc57FcVLImX4QrTof0=
+	t=1781628742; cv=none; b=BkO9yozzVsWQuSz+WLiRXTTDbrzNlnqWXfgcypdrxmYEcjCU0ng5mK7rdHc9SYgMY1ADoj6thGDJeYg1qA5KsOTSRuRYsrNxlVyiVxA5FJF6dwWSN1OUD8ZYW6yayuYfIhFUmOo35c8uDkRizq/WdPShPKzrM8EjPY8PqaTGkVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628736; c=relaxed/simple;
-	bh=D1nzB3X9np9ZE1H9Cx7awXSWeNVY8aki3LXRwarU4to=;
+	s=arc-20240116; t=1781628742; c=relaxed/simple;
+	bh=ftTDP1DAq1I5phXmT5l7dY+9g5jE1vwuALyYNn6trP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M/7plVeyW135SlTr5Gp1uAONHWbIy2fM4hOPTz3wKnDndUDFL+W827eKX41MV6SF554ECpfrTEzTqJug0hfb2nSVYZ2o2U8mgtQeZwB41kixP38GNCV46hsfpwEWi2J3qtFCLg6C9KOHBIkXPBznpq/H6Da3GsaHr8jO0/jpCDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7zni56M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UH3zJNfP2FYPYMiOK3PPZvI4IPFME8+KOb9MVxnaMLJlkSt/U9KjZL6EbaEzxrN3xkPwlZOugUX0++wh9djLnnEvc7NSzPyze9S+JvvfCpEH/+zSd7KWa+blBEaISaSelYDp0O64IP3oFs8lnCzoZ6cZaYFmLNDIdtXA7SMWFB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TC3tmqcQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7zni56M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573B21F000E9;
-	Tue, 16 Jun 2026 16:52:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TC3tmqcQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4921F000E9;
+	Tue, 16 Jun 2026 16:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628735;
-	bh=m6DspL2ITJACQaQbXfK3vN1MMwSZANRNZoFwU6o100c=;
+	s=korg; t=1781628740;
+	bh=g40HbRv04usoMAhJMcYIZumKRx7W52MkUYTquaLVdKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m7zni56M4Ki0b6t+BdbcrC+wjTSLGqn8CGlIKARespAHFSQqj6pE/k0Hr+XOpspT2
-	 nC7842ETGYbtZoVy2lJgEpbAfAybpo9fSQWSgPYkaztOPH8ta4aYyOeG66q2zSBKMP
-	 XvakUql6PE3BfViYbIUeKLahvk7iD9if0WCiK1hc=
+	b=TC3tmqcQCnoyFUutT68D8bWRyA5qcB7vBcyeFTYJxlPou0irIULb323aZOeuDwuzs
+	 KWYdj9ikly81/StKT8P0PM5zY5D8iSizCLqaKIFen7+lsXoUMFXw7a3Ata+pOzmS0m
+	 cUfk8rURGx6sd/W44pbQQdRmufvQWY1IMmZZUUS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 145/452] Input: atmel_mxt_ts - fix boundary check in mxt_prepare_cfg_mem
-Date: Tue, 16 Jun 2026 20:26:12 +0530
-Message-ID: <20260616145125.313732805@linuxfoundation.org>
+	Sam Burkels <sam@1a38.nl>,
+	Oliver Neukum <oneukum@suse.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.6 154/452] usb: storage: Add quirks for PNY Elite Portable SSD
+Date: Tue, 16 Jun 2026 20:26:21 +0530
+Message-ID: <20260616145125.801260270@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -50,53 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Sam Burkels <sam@1a38.nl>
 
-commit baa0210fb6a9dc3882509a9411b6d284d88fe30e upstream.
+commit b53ebb811e00be50a779ce4e7aee604178b4a825 upstream.
 
-When a configuration file provides an object size that is larger than the
-driver's known mxt_obj_size(object), the driver intends to discard the
-extra bytes.
+The PNY Elite Portable SSD (USB ID 154b:f009) is a sibling of the
+already-quirked PNY Pro Elite SSDs (154b:f00b and 154b:f00d). Like its
+siblings, it uses a Phison-based USB-SATA bridge that exhibits
+firmware bugs when bound to the uas driver.
 
-The loop iterates using for (i = 0; i < size; i++). Inside the loop, the
-condition to skip processing extra bytes is:
+Without quirks, the device fails to complete READ CAPACITY commands
+when accessed over UAS on a SuperSpeed (USB 3) port. The device
+enumerates and reports as a SCSI direct-access device, but reports
+zero logical blocks and never finishes spin-up:
 
-    if (i > mxt_obj_size(object))
-        continue;
+    usb 2-3: new SuperSpeed USB device number 8 using xhci_hcd
+    usb 2-3: New USB device found, idVendor=154b, idProduct=f009
+    usb 2-3: Product: PNY ELITE PSSD
+    usb 2-3: Manufacturer: PNY
+    scsi host0: uas
+    scsi 0:0:0:0: Direct-Access     PNY      PNY ELITE PSSD   0
+    sd 0:0:0:0: [sda] Spinning up disk...
+    [...10+ seconds of polling, no progress...]
+    sd 0:0:0:0: [sda] Read Capacity(16) failed: hostbyte=DID_ERROR
+    sd 0:0:0:0: [sda] Read Capacity(10) failed: hostbyte=DID_ERROR
+    sd 0:0:0:0: [sda] 0 512-byte logical blocks: (0 B/0 B)
 
-Since i is a 0-based index, the valid indices for the object are 0 through
-mxt_obj_size(object) - 1.
+Tested each individual quirk to find the minimum that fixes this:
+  - US_FL_NO_ATA_1X alone: device hangs on spin-up
+  - US_FL_NO_REPORT_OPCODES alone: works on USB 2.0, hangs on USB 3.0
+  - US_FL_NO_ATA_1X | US_FL_NO_REPORT_OPCODES: works on both
 
-When i == mxt_obj_size(object), the condition evaluates to false, and the
-code processes the byte instead of discarding it.
+With both quirks the device enumerates correctly while still using
+the uas driver, and delivers full UAS throughput (~281 MB/s
+sequential read on a USB 3.0 Gen 1 port).
 
-This causes the code to calculate byte_offset = reg + i - cfg->start_ofs
-and writes the byte there, overwriting exactly one byte of the adjacent
-instance or object.
+The existing PNY Pro Elite entries (f00b, f00d) only set NO_ATA_1X,
+but this device additionally chokes on REPORT OPCODES under
+SuperSpeed.
 
-Update the boundary check to skip extra bytes correctly by using >=.
-
-Fixes: 50a77c658b80 ("Input: atmel_mxt_ts - download device config using firmware loader")
-Cc: stable@vger.kernel.org
-Assisted-by: Gemini:gemini-3.1-pro
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://patch.msgid.link/20260504185448.4055973-1-dmitry.torokhov@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Sam Burkels <sam@1a38.nl>
+Acked-by: Oliver Neukum <oneukum@suse.com>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260501132346.86572-1-sam@1a38.nl
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/atmel_mxt_ts.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/storage/unusual_uas.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/input/touchscreen/atmel_mxt_ts.c
-+++ b/drivers/input/touchscreen/atmel_mxt_ts.c
-@@ -1476,7 +1476,7 @@ static int mxt_prepare_cfg_mem(struct mx
- 			}
- 			cfg->raw_pos += offset;
+--- a/drivers/usb/storage/unusual_uas.h
++++ b/drivers/usb/storage/unusual_uas.h
+@@ -132,6 +132,13 @@ UNUSUAL_DEV(0x152d, 0x0583, 0x0000, 0x99
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_NO_REPORT_OPCODES),
  
--			if (i > mxt_obj_size(object))
-+			if (i >= mxt_obj_size(object))
- 				continue;
- 
- 			byte_offset = reg + i - cfg->start_ofs;
++/* Reported-by: Sam Burkels <sam@1a38.nl> */
++UNUSUAL_DEV(0x154b, 0xf009, 0x0000, 0x9999,
++		"PNY",
++		"PNY ELITE PSSD",
++		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
++		US_FL_NO_ATA_1X | US_FL_NO_REPORT_OPCODES),
++
+ /* Reported-by: Thinh Nguyen <thinhn@synopsys.com> */
+ UNUSUAL_DEV(0x154b, 0xf00b, 0x0000, 0x9999,
+ 		"PNY",
 
 
