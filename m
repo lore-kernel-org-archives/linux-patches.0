@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4E23C1F5E;
-	Tue, 16 Jun 2026 15:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617DD36A033;
+	Tue, 16 Jun 2026 15:29:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623740; cv=none; b=lzojdoYwVFfs8fMf3QT4b4VwRlkcft0RSSEHeJ4ekd48Gxuhpz/glPDuL/0rb7W6aEUmYRe5kufCfcluJ2B+jbp2GdQHcfx2bFCb4v9ne90OSAca7RcHnQeshc5b0KZ0EFYq1/STBF3n3iBqhiBeQP/QX3ayY7X3Ld071k0Yp7g=
+	t=1781623746; cv=none; b=fs/Z6OQFnJ/mq9cenj9FDUCfYtBG1PmxE7X6mu9zeUU1nBxWzivLOs1WL2ZMXHbZE1TBudL9R04eDV5gEbWEho2iMzzAS1tVahX9XvqwiV5EH2SRx6oFULDp8FUeaCplE7trrAzQ7WzVEXwug2km3HtE4Mz7PhZsv+OrrnH3/gM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623740; c=relaxed/simple;
-	bh=wJ0bSyLm/XG2Xe+faHAU1IKxbyWZWjicCZmU5U9G39s=;
+	s=arc-20240116; t=1781623746; c=relaxed/simple;
+	bh=G1Gf2CTW7MxbZ/A6lUtfvM1hIzedWt3fFMaRaGqqLro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KmmtqPVfns875jBCiX5Nbt1/4dKhBswmgYTUjKnuavJUd6e50q+da/dWPUGcM+cyjV2aFQWo9bQ3KIh7XUXCCwSvlu0PU6WGydvXqwrZDHrRRW8YaZMKZ9bVTmNAl5zq5S3EPyfog3cB9h1+zspJvDCVqF9WO4XQTQBum3nrwr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cPT1GCjR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q2gCpKdMv9z+B3w5YBEim3DYCSISDrzfn3JBk0sFtbEPHlX7pG4tyrQcNLvBCM+Tp2pE/n2rz8ACd4W/WiAO10NgQI3WSqhSxZqU1ldaWYbsDpd1MNDRl3WzPkbxlShf4G68Ve3w9fkgsICBeZupEpuJW2Hw1n9chnpoOsXiXHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N7rSoqZD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cPT1GCjR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFAE1F000E9;
-	Tue, 16 Jun 2026 15:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N7rSoqZD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FC41F000E9;
+	Tue, 16 Jun 2026 15:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623738;
-	bh=U9STe6k1W322fmvQTTZxWpHvjTQCn8i09SlFLfY/qzg=;
+	s=korg; t=1781623744;
+	bh=YO0iPQXEEHAopm3vxWDOUrwtH0Vh9AFmsq4TRXG/HDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cPT1GCjRr2p8k8LBdC6OWJIgZrLFezXVXGEH6vs4nF23Rz8BnWNm4DkVrzuQzuubD
-	 lwncLGMCruGYTgKsFu7gffsse4a8scrfZj8PkfSioQpsYIaIM1NGGSNzAB6rwWY3TX
-	 ExFBc5fHVBk/UUZHkUKc3DAPU+Xzc1ej6zfUAQPI=
+	b=N7rSoqZDbhm3UupVrgsD+7VEf3YoRIxHQWLxdxHIdT8qnPhVjpjEF8Dwag4gMTDE0
+	 CfOQHtpoFtZJKrenPIor0e5Aw8oXmluz70DF7mCosgRvlv5basn7oa59GuEtHnVB/d
+	 769mpwYoW4R6C6dxUgEAwCZxQuafArz/vlmSdZNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>,
-	Karol Wachowski <karol.wachowski@linux.intel.com>
-Subject: [PATCH 7.0 177/378] accel/ivpu: Add bounds check for firmware runtime memory
-Date: Tue, 16 Jun 2026 20:26:48 +0530
-Message-ID: <20260616145119.695172835@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Simona Vetter <simona@ffwll.ch>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Subject: [PATCH 7.0 200/378] drm/i915/gem: Fix phys BO pread/pwrite with offset
+Date: Tue, 16 Jun 2026 20:27:11 +0530
+Message-ID: <20260616145120.918557860@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -50,54 +55,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
+From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 
-commit 1d0b597facdd3c0239c88e8797c1014e1ea0ef15 upstream.
+commit d21ad938398bca695a511307de38a65889e3b354 upstream.
 
-Validate that the firmware runtime memory specified in the image
-header is properly aligned and sized to hold the firmware image.
-This prevents errors during memory allocation and image transfer.
+sg_page() returns struct page pointer not (void *) so the scaling
+of pread/pwrite is wrong for phys BO and wrong parts of BO would be
+accessed if non-zero offset is used.
 
-Fixes: 2007e210b6a1 ("accel/ivpu: Split FW runtime and global memory buffers")
-Cc: stable@vger.kernel.org # v7.0+
-Signed-off-by: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
-Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Link: https://patch.msgid.link/20260529120853.135876-1-andrzej.kacprowski@linux.intel.com
+Last impacted platform with overlay or cursor planes using phys
+mapping was Gen3/945G/Lakeport.
+
+Reported-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Fixes: c6790dc22312 ("drm/i915: Wean off drm_pci_alloc/drm_pci_free")
+Cc: <stable@vger.kernel.org> # v4.5+
+Cc: Tvrtko Ursulin <tursulin@ursulin.net>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Link: https://patch.msgid.link/20260610060314.26111-1-joonas.lahtinen@linux.intel.com
+(cherry picked from commit 3e49a2f85070b2fb672c1e0fdba281a4ea3aebe6)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_fw.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/gpu/drm/i915/gem/i915_gem_phys.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/accel/ivpu/ivpu_fw.c b/drivers/accel/ivpu/ivpu_fw.c
-index 107f8ad31050..33c50779c06b 100644
---- a/drivers/accel/ivpu/ivpu_fw.c
-+++ b/drivers/accel/ivpu/ivpu_fw.c
-@@ -259,6 +259,22 @@ static int ivpu_fw_parse(struct ivpu_device *vdev)
- 		return -EINVAL;
- 	}
+--- a/drivers/gpu/drm/i915/gem/i915_gem_phys.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_phys.c
+@@ -18,6 +18,17 @@
+ #include "i915_gem_tiling.h"
+ #include "i915_scatterlist.h"
  
-+	if (!PAGE_ALIGNED(runtime_addr)) {
-+		ivpu_err(vdev, "Runtime address 0x%llx not page aligned\n", runtime_addr);
-+		return -EINVAL;
-+	}
++/* Abuse scatterlist to store pointer instead of struct page. */
++static inline void __set_phys_vaddr(struct scatterlist *sg, void *vaddr)
++{
++	sg_assign_page(sg, (struct page *)vaddr);
++}
 +
-+	if (!PAGE_ALIGNED(runtime_size)) {
-+		ivpu_err(vdev, "Runtime size %llu not page aligned\n", runtime_size);
-+		return -EINVAL;
-+	}
++static inline void *__get_phys_vaddr(struct scatterlist *sg)
++{
++	return (void *)sg_page(sg);
++}
 +
-+	if (runtime_size < image_size) {
-+		ivpu_err(vdev, "Runtime size too small: %llu, image size: %llu\n",
-+			 runtime_size, image_size);
-+		return -EINVAL;
-+	}
-+
- 	if (!ivpu_is_within_range(image_load_addr, image_size, &vdev->hw->ranges.runtime)) {
- 		ivpu_err(vdev, "Invalid firmware load address: 0x%llx and size %llu\n",
- 			 image_load_addr, image_size);
--- 
-2.54.0
-
+ static int i915_gem_object_get_pages_phys(struct drm_i915_gem_object *obj)
+ {
+ 	struct address_space *mapping = obj->base.filp->f_mapping;
+@@ -58,7 +69,7 @@ static int i915_gem_object_get_pages_phy
+ 	sg->offset = 0;
+ 	sg->length = obj->base.size;
+ 
+-	sg_assign_page(sg, (struct page *)vaddr);
++	__set_phys_vaddr(sg, vaddr);
+ 	sg_dma_address(sg) = dma;
+ 	sg_dma_len(sg) = obj->base.size;
+ 
+@@ -99,7 +110,7 @@ i915_gem_object_put_pages_phys(struct dr
+ 			       struct sg_table *pages)
+ {
+ 	dma_addr_t dma = sg_dma_address(pages->sgl);
+-	void *vaddr = sg_page(pages->sgl);
++	void *vaddr = __get_phys_vaddr(pages->sgl);
+ 
+ 	__i915_gem_object_release_shmem(obj, pages, false);
+ 
+@@ -139,7 +150,7 @@ i915_gem_object_put_pages_phys(struct dr
+ int i915_gem_object_pwrite_phys(struct drm_i915_gem_object *obj,
+ 				const struct drm_i915_gem_pwrite *args)
+ {
+-	void *vaddr = sg_page(obj->mm.pages->sgl) + args->offset;
++	void *vaddr = __get_phys_vaddr(obj->mm.pages->sgl) + args->offset;
+ 	char __user *user_data = u64_to_user_ptr(args->data_ptr);
+ 	struct drm_i915_private *i915 = to_i915(obj->base.dev);
+ 	int err;
+@@ -170,7 +181,7 @@ int i915_gem_object_pwrite_phys(struct d
+ int i915_gem_object_pread_phys(struct drm_i915_gem_object *obj,
+ 			       const struct drm_i915_gem_pread *args)
+ {
+-	void *vaddr = sg_page(obj->mm.pages->sgl) + args->offset;
++	void *vaddr = __get_phys_vaddr(obj->mm.pages->sgl) + args->offset;
+ 	char __user *user_data = u64_to_user_ptr(args->data_ptr);
+ 	int err;
+ 
 
 
