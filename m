@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9DF33A9EB;
-	Tue, 16 Jun 2026 17:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35303AE71F;
+	Tue, 16 Jun 2026 17:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629963; cv=none; b=gGvAHbfM6Cu5D2IlrVatRngm9ZgeHD43MkUBbYmH1YqhdZHaXeKmH8RoZaJZ0Zq0GJ1LokUmcUVu7Ju3IwyaIHE/66Oa+Ovw0+by+O50eEPaeMetib+5JshJFcWbYsfwjRExhbObIT9S9UY0edJqW698ynKigaSGU82xGn2QYt4=
+	t=1781629967; cv=none; b=G+jRP0JfgGnEhUbBATcFqz+WEuKLjfbqlJPtqgv07Q8RvM5mfV9XXNoyQWFdfAKPNGdIqX4wVZxEWnUZ9A5fzlwgwJSP0EwxVFRj1kNPd672+X4O3fTk2XOW9Nz8ybn+hJBGp/HchK/xwlIc6mkaAp9lAkMuH0BQZ24dUQSOlyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629963; c=relaxed/simple;
-	bh=G8i2tfp5g9mWiypI0AI5ZkBPhN8r1IKrsvVgfuK0RlY=;
+	s=arc-20240116; t=1781629967; c=relaxed/simple;
+	bh=lEw1fyQq9PlK1LyQF5MKWoa1B66ptdw8U6NUdy3CDBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UnPk77quAGwsXZuBWl/3a382jox69TZu/ToTrdnLlH/PZlgfyxd0rhIVs3bsTVGNxITzjpjxqTDyNbI5EkiUmRjkpL52oO0QVYIAzYNeMlEzwfEQnVkGMYLqhUIVWdiIt0I4nBzMjBJff8hfwbgUKze9XcNSuR6XzlzfiUuak+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eovv+g7D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Omc5JxXhaYB9upORcI+uC8no+BySoF6zJbh5Z6OUodveQuXRKyZlBoXN9c6swt+NnpjmlVN7JdJw8XnMZQwJp6KEzLLx13GvfJPy23uJWt89Rdx7FZmMkLXDC7ErfvEtntNNDhnKQEiupFm4KFg2qXkyAWLelsYhfYwP/rZhtAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A3spkxSR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eovv+g7D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F67D1F000E9;
-	Tue, 16 Jun 2026 17:12:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A3spkxSR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54821F000E9;
+	Tue, 16 Jun 2026 17:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629962;
-	bh=qD2aZlbiAjUSmZPrCjuZUhJhH46RzV1k21jwlTYXmA0=;
+	s=korg; t=1781629966;
+	bh=DZ6CqeiYEklsE9mDdeFQ/ajWV0IiizsZaOprWoz1T3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Eovv+g7Da1lTpDng+4Tvoj/z9za1Qd1rRrk+reBj5okhQ3Y4aIaOcOngGi0EfNQAA
-	 apI3TjUOGC4gmE/4u6hOQJkAYTP9ojM9y1vIwcXMnpALi/13o9wFsGgPRKUdPJInl3
-	 XvdyqlUtMP6Houw3FPve+eflXLs5SLOb59YliNM4=
+	b=A3spkxSRqGwiGGZZ+U7PDRe11HCsmh6p+fwDKt6guNIWipCEss+0pGkdxtUTvP2RY
+	 L7XkrV33dq5xPnRbMOvIJJscn3wpPEbktzfUA9SnYOnGSKBaqXVTrKJlFdAtlvxOxF
+	 xhbHtZDAUlFkf0ntCokFU4bhtBC0R6WnAevGv6dA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 386/452] selftests: mptcp: drop nanoseconds width specifier
-Date: Tue, 16 Jun 2026 20:30:13 +0530
-Message-ID: <20260616145137.213098785@linuxfoundation.org>
+Subject: [PATCH 6.6 387/452] ice: fix VF queue configuration with low MTU values
+Date: Tue, 16 Jun 2026 20:30:14 +0530
+Message-ID: <20260616145137.261544257@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,66 +56,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 
-[ Upstream commit 01ff78e4b3d98689184c52d97f9575dfbdc3b10f ]
+[ Upstream commit 3ba4dd024d26372733d1c02e13e076c6016e3320 ]
 
-Using the format specifier +%s%3N with GNU date is honoured, and only
-prints 3 digits of the nanoseconds portion of the seconds since epoch,
-which corresponds to the milliseconds.
+The ice driver's VF queue configuration validation rejects
+databuffer_size values below 1024 bytes, which prevents VFs from
+using MTU values below 871 bytes.
 
-The uutils implementation of date currently does not honour this, and
-always prints all 9 digits. This is a known issue [1], but can be worked
-around by adapting this test to use nanoseconds instead of microseconds,
-and then divide it by 1e6.
+The iavf driver calculates databuffer_size based on the MTU using:
+  databuffer_size = ALIGN(MTU + LIBETH_RX_LL_LEN, 128)
 
-This fix is similar to what has been done on systemd side [2], and it is
-needed to run the selftests on Ubuntu 26.04, containing uutils 0.8.0.
+where LIBETH_RX_LL_LEN = 26 (ETH_HLEN + 2*VLAN_HLEN + ETH_FCS_LEN).
 
-Note that the Fixes tag is there even if this patch doesn't fix an issue
-in the kernel selftests, but it is useful for those using uutils 0.8.0.
+For MTU values below 871:
+  MTU 870: 870 + 26 = 896, aligned to 128 = 896 (< 1024, rejected)
+  MTU 871: 871 + 26 = 897, aligned to 128 = 1024 (>= 1024, accepted)
 
-Fixes: 048d19d444be ("mptcp: add basic kselftest for mptcp")
-Cc: stable@vger.kernel.org
-Link: https://github.com/uutils/coreutils/issues/11658 [1]
-Link: https://github.com/systemd/systemd/pull/41627 [2]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260515-net-mptcp-misc-fixes-7-1-rc4-v2-6-701e96419f2f@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The 1024-byte minimum seems unnecessarily restrictive, because the hardware
+supports databuffer_size as low as 128 bytes (the alignment boundary),
+which should allow MTU values down to the standard minimum of 68 bytes.
+
+I haven't found the reason why the limit was configured in the commit
+9c7dd7566d18 ("ice: add validation in OP_CONFIG_VSI_QUEUES VF message"), so
+with no more information and since it is working, change the minimum
+databuffer_size validation from 1024 to 128 bytes to allow standard low
+MTU values while still preventing invalid configurations.
+
+Fixes: 9c7dd7566d18 ("ice: add validation in OP_CONFIG_VSI_QUEUES VF message")
+cc: stable@vger.kernel.org
+Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260515182419.1597859-3-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ applied the change to ice_virtchnl.c ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_connect.sh |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_virtchnl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_connect.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect.sh
-@@ -434,7 +434,7 @@ do_transfer()
- 	mptcp_lib_wait_local_port_listen "${listener_ns}" "${port}"
+--- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
++++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
+@@ -1681,7 +1681,7 @@ static int ice_vc_cfg_qs_msg(struct ice_
  
- 	local start
--	start=$(date +%s%3N)
-+	start=$(date +%s%N)
- 	timeout ${timeout_test} \
- 		ip netns exec ${connector_ns} \
- 			./mptcp_connect -t ${timeout_poll} -p $port -s ${cl_proto} \
-@@ -447,7 +447,7 @@ do_transfer()
- 	local rets=$?
- 
- 	local stop
--	stop=$(date +%s%3N)
-+	stop=$(date +%s%N)
- 
- 	if $capture; then
- 		sleep 1
-@@ -463,7 +463,7 @@ do_transfer()
- 	fi
- 
- 	local duration
--	duration=$((stop-start))
-+	duration=$(((stop-start) / 1000000))
- 	result_msg+=" # time=${duration}ms"
- 	printf "(duration %05sms) " "${duration}"
- 	if [ ${rets} -ne 0 ] || [ ${retc} -ne 0 ]; then
+ 			if (qpi->rxq.databuffer_size != 0 &&
+ 			    (qpi->rxq.databuffer_size > ((16 * 1024) - 128) ||
+-			     qpi->rxq.databuffer_size < 1024))
++			     qpi->rxq.databuffer_size < 128))
+ 				goto error_param;
+ 			vsi->rx_buf_len = qpi->rxq.databuffer_size;
+ 			ring->rx_buf_len = vsi->rx_buf_len;
 
 
