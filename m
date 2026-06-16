@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0DA47AF6E;
-	Tue, 16 Jun 2026 17:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B02E335081;
+	Tue, 16 Jun 2026 17:36:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631365; cv=none; b=awQabpTjM20CPdYD7WzWW7y7TfnKzo190Mfd1w/lWkYN0x8/46cujBaG6Xi/J87VeevjjM3QINh54BG0jeRZVW85VIihXq+EtnNtaW01F1h5ISMklzC/SdrjFrVSRKliLoliT+pq4GSlQzBkJZoKpPH0fjVb3EwqIhVbh3Bbdzc=
+	t=1781631371; cv=none; b=EgKUIr1Bw3WXo6HOL5XT3iCFWkifuK6BD8m9CdckeTYb/SpAP7EdPn6X/HddHEm8que2k0bXAaqPyhZBKw1NMuj1vMo2+OY1v1a2188tDo31QkHMMOh4FavdNnrEgFj80eSePIta3xj/2W40LKSc94BwwxAJ9WJqtXzvhfyMbu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631365; c=relaxed/simple;
-	bh=s5FJGiDkg3aTlAERKvgMlVL88uVSwL9v+HT9c1C3vZM=;
+	s=arc-20240116; t=1781631371; c=relaxed/simple;
+	bh=0Nf/V7DiuCHNdMBINvuB9wHaa4c7AV0KoXPSOXL4VHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qxi7Rr+CvyBmTQhNKOQg9BCuihfhczKy7Is7zSr4sD58riwvVk/G5zjKAJQT08Hdi++KMJqalXHEtdiETJLnGhiFMXorl6PoO7x1LnVrkU9olV8odsORxAS53SUcCZf2dClM0y239h1qCACYupUFMgwY1WDmdA4TNozHfCEi6WU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+X588hp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PBPAAK+ebXgsls3A7Xo2bagvBdxrI4ZLKi9BSirBcwwwq41M9hMMsmH1woytJ15oG330iNrGQCvyDjqws6RgFl9Z8iXNyVVk8y9wx4lcFbI4gIzebgl8YEnFYGtaKzi7g/rOf/9DWhw+o8SkHDONdZp49ihRUBZfcJt5HdIFp7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrDclyIh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+X588hp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A05121F000E9;
-	Tue, 16 Jun 2026 17:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrDclyIh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2F81F000E9;
+	Tue, 16 Jun 2026 17:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631364;
-	bh=IaAotjWlghCGX55hyvijRpOJ835+FevxK80LDA76DA4=;
+	s=korg; t=1781631370;
+	bh=kQxowTJVsmHuM7Ngj4kuLyUdWKHNjGczNmBnTG8x23Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p+X588hpN7ijcrXCB31RsK0Ru7uWMfHuyMliEINNDKWNfdlFqf4X56FokUAU6gnhE
-	 qE6BLBBjDzECzuIbdTLB3yQiGi66MoWnTmaoIxnZNhJJy2mx8yQ33rX1VOD0HWRIDh
-	 s7HfM8jS0Dew/q0Wei85FmG3Y4P3NBQX3HZN02uk=
+	b=yrDclyIhbH3DvnX0zMTy/JQ95in1YUN9+RFrckE9BUdKZiL2c1T82q5sowNAZYzgV
+	 xk3qAT8TxMeUyWglmPJMFt42IEUGhoAgfWv+17jRZ+tHrUYxU2R/cQPdyBMayHEjNN
+	 JFLbEx3wzENIJmIjnz/XmR0SXkz27VqCS6ISRSg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yicong Hui <yiconghui@gmail.com>,
-	Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-	Liu Ying <victor.liu@nxp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 206/522] drm/imx: Fix three kernel-doc warnings in dcss-scaler.c
-Date: Tue, 16 Jun 2026 20:25:53 +0530
-Message-ID: <20260616145135.703439876@linuxfoundation.org>
+	David Francis <David.Francis@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 175/522] drm/amdkfd: Check for pdd drm file first in CRIU restore path
+Date: Tue, 16 Jun 2026 20:25:22 +0530
+Message-ID: <20260616145134.331708622@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,53 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Hui <yiconghui@gmail.com>
+From: David Francis <David.Francis@amd.com>
 
-[ Upstream commit ae0383e5a9a4b12d68c76c4769857def4665deff ]
+commit 6842b6a4b72da9b2906ffc5ca9d846ace2c54c14 upstream.
 
-Fix the following W=1 kerneldoc warnings by adding the missing parameter
-descriptions for @phase0_identity and @nn_interpolation in
-dcss_scaler_filter_design() and @phase0_identity in
-dcss_scaler_gaussian_filter()
+CRIU restore ioctls are meant to be called by CRIU with no
+existing drm file. There's an error path
+for if the drm file unexpectedly exists. It was positioned so
+it was missing a fput(drm_file).
 
-Warning: drivers/gpu/drm/imx/dcss/dcss-scaler.c:173 function parameter 'phase0_identity' not described in 'dcss_scaler_gaussian_filter'
-Warning: drivers/gpu/drm/imx/dcss/dcss-scaler.c:270 function parameter 'phase0_identity' not described in 'dcss_scaler_filter_design'
-Warning: drivers/gpu/drm/imx/dcss/dcss-scaler.c:270 function parameter 'nn_interpolation' not described in 'dcss_scaler_filter_design'
+Do that check earlier, as soon as we have the pdd.
 
-Fixes: 9021c317b770 ("drm/imx: Add initial support for DCSS on iMX8MQ")
-Signed-off-by: Yicong Hui <yiconghui@gmail.com>
-Reviewed-by: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
-Link: https://patch.msgid.link/20260406180013.2442096-1-yiconghui@gmail.com
-Signed-off-by: Liu Ying <victor.liu@nxp.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: David Francis <David.Francis@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 2bab781dac78916c5cc8de76345a4102449267d7)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/imx/dcss/dcss-scaler.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/imx/dcss/dcss-scaler.c b/drivers/gpu/drm/imx/dcss/dcss-scaler.c
-index 47852b9dd5eaa2..d2a89a99bd71cf 100644
---- a/drivers/gpu/drm/imx/dcss/dcss-scaler.c
-+++ b/drivers/gpu/drm/imx/dcss/dcss-scaler.c
-@@ -166,6 +166,7 @@ static int exp_approx_q(int x)
-  * dcss_scaler_gaussian_filter() - Generate gaussian prototype filter.
-  * @fc_q: fixed-point cutoff frequency normalized to range [0, 1]
-  * @use_5_taps: indicates whether to use 5 taps or 7 taps
-+ * @phase0_identity: whether to override phase 0 coefficients with identity filter
-  * @coef: output filter coefficients
-  */
- static void dcss_scaler_gaussian_filter(int fc_q, bool use_5_taps,
-@@ -262,7 +263,9 @@ static void dcss_scaler_nearest_neighbor_filter(bool use_5_taps,
-  * @src_length: length of input
-  * @dst_length: length of output
-  * @use_5_taps: 0 for 7 taps per phase, 1 for 5 taps
-+ * @phase0_identity: whether to override phase 0 coefficients with identity filter
-  * @coef: output coefficients
-+ * @nn_interpolation: whether to use nearest neighbor instead of gaussian filter
-  */
- static void dcss_scaler_filter_design(int src_length, int dst_length,
- 				      bool use_5_taps, bool phase0_identity,
--- 
-2.53.0
-
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -2171,6 +2171,11 @@ static int criu_restore_devices(struct k
+ 			ret = -EINVAL;
+ 			goto exit;
+ 		}
++
++		if (pdd->drm_file) {
++			ret = -EINVAL;
++			goto exit;
++		}
+ 		pdd->user_gpu_id = device_buckets[i].user_gpu_id;
+ 
+ 		drm_file = fget(device_buckets[i].drm_fd);
+@@ -2180,11 +2185,6 @@ static int criu_restore_devices(struct k
+ 			ret = -EINVAL;
+ 			goto exit;
+ 		}
+-
+-		if (pdd->drm_file) {
+-			ret = -EINVAL;
+-			goto exit;
+-		}
+ 
+ 		/* create the vm using render nodes for kfd pdd */
+ 		if (kfd_process_device_init_vm(pdd, drm_file)) {
 
 
