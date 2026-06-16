@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F953CC303;
-	Tue, 16 Jun 2026 18:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460003CC303;
+	Tue, 16 Jun 2026 18:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636120; cv=none; b=C1uV0oSV1js+hzqDzYpJCQcD52Zo3tmBJstoRKMWux7OR3aIQmHD89nCzVSUQFybEVeXlJIfMEor43hEFWCnOZEgTCDJ06mf9Y1T2rEkAMNkvnZdbsoJaRss76rK2ylLQiRLndkHgZvtPNAYNPJvmZpctOSSWVlNsaZy8ZnwLPw=
+	t=1781636125; cv=none; b=KxMhN7tCI6ttq5fYhbqkEeW/f6YqckvF+WgHpTpTArgw392HdM0Gcnak1fn5fx+GqtxyuFr0BY6REhM6q2EIEFT8JovqLsj3VvYZatols1lvuVoODqCBTPY7tkAmn/t5zSVP9ktibycy0fLMG4Nb+6Rmj45CcAZoabTjglIl2Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636120; c=relaxed/simple;
-	bh=28mZAeEIFoNc824oACxXY8cFyO9AaMoNzmkyqoOoXT8=;
+	s=arc-20240116; t=1781636125; c=relaxed/simple;
+	bh=/EZaHKW9TbyuZrdgJ2DPwnkrGMFqD4N9ChouPMcVPAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aGqBuXdB9h/wSsAmmWCMKNyfxUdtoiibyaNrKDVkFoCGCcJKj7uTuAyb2PHY0mYnZEkKvZtpyKQ6ibZfkJeP4W0rLDH2sXM5/QSmJT9210g4WKh+kVKpxFpf+tCzPb5SSzA8jNxQLLcyk1h88LErgi7wMt/C5tyx9I8ix0KY+7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FN81bMpF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R35WyvW2Yz1elGxGoAv5+KmjDWuTwSY6D3jFBl6KyeLIYJHKzYZW8A7Kb+shKkbNktEKFM4lyGrBa/KISZ6I8yTghiHqDVV6GGZo7RmvZ1nKrVgukvOwMLgVNNP6d6sh1yBwLkALEjUUErqj9GFS1ZHC7GrXRvqFvGDs5hB++b4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=btNWyRTx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FN81bMpF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06D8A1F000E9;
-	Tue, 16 Jun 2026 18:55:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btNWyRTx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E7E1F000E9;
+	Tue, 16 Jun 2026 18:55:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636118;
-	bh=6r9xeRf1jCaeVRGC6xvYYUbEfmI75Eby893ijSfHvKs=;
+	s=korg; t=1781636124;
+	bh=ZmgTRncklbiQnG0hjlOyRFGlvrdQtkqYeTnOHTsIm+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FN81bMpFaMER5mXBeJa4Y07L1Yiw+krC6KwgHJtWZOP0GWQXzpeg8UZOTXMvvP2vv
-	 LeKLaCjQf/Y72bv+Ym/9Xu9zWpjjU3w2pflpFxxhxSI5bcaCmauYWi2HnNLdDWmDTB
-	 T1ukf1i34qcNyYxPf8/CYRBVXBKTYbXQycBQF6Lw=
+	b=btNWyRTxVCsxCw8jM9eXhIT0EfwuTKohqcPfdcVk3y1etLDwZoCEeIrIAtoccffXO
+	 bxjZsdYeH8eJVrYpQy9G02gGWtFJ3eX5s+68JYjnxNKMars9J8Zj899WBSEeOh8H2L
+	 TNftY1seQcRM/NPESQkau7EQpC3i/PiSMn/7RVb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.10 178/342] netfilter: nft_tunnel: fix use-after-free on object destroy
-Date: Tue, 16 Jun 2026 20:27:54 +0530
-Message-ID: <20260616145056.496154108@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.10 179/342] Bluetooth: L2CAP: reject BR/EDR signaling packets over MTUsig
+Date: Tue, 16 Jun 2026 20:27:55 +0530
+Message-ID: <20260616145056.540921320@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -52,43 +51,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit c32b26aaa2f9216520a38b3f4bfeec846eb3eb8a upstream.
+commit dd214733544427587a95f66dbf3adff072568990 upstream.
 
-nft_tunnel_obj_destroy() calls metadata_dst_free() which directly
-kfree()s the metadata_dst, ignoring the dst_entry refcount. Packets
-that took a reference via dst_hold() in nft_tunnel_obj_eval() and
-are still queued (e.g. in a netem qdisc) are left with a dangling
-pointer. When these packets are eventually dequeued, dst_release()
-operates on freed memory.
+net/bluetooth/l2cap_core.c:l2cap_sig_channel() accepts BR/EDR
+signaling packets up to the channel MTU and dispatches each command
+without enforcing the signaling MTU (MTUsig). A Bluetooth BR/EDR peer
+within radio range can send a fixed-channel CID 0x0001 packet that is
+larger than MTUsig and contains many L2CAP_ECHO_REQ commands before
+pairing. In a real-radio stock-kernel run, one 681-byte signaling
+packet containing 168 zero-length ECHO_REQ commands made the target
+transmit 168 ECHO_RSP frames over about 220 ms.
 
-Replace metadata_dst_free() with dst_release() so the metadata_dst
-is freed only after all references are dropped. The dst subsystem
-already handles metadata_dst cleanup in dst_destroy() when
-DST_METADATA is set.
+Impact: a Bluetooth BR/EDR peer within radio range, before pairing, can
+force 168 ECHO_RSP frames from one 681-byte fixed-channel signaling
+packet containing packed ECHO_REQ commands.
 
-Fixes: af308b94a2a4 ("netfilter: nf_tables: add tunnel support")
+Define Linux's BR/EDR signaling MTU as the spec minimum of 48 bytes and
+reject any larger signaling packet with one L2CAP_COMMAND_REJECT_RSP
+carrying L2CAP_REJ_MTU_EXCEEDED before any command is dispatched.
+
+The Bluetooth Core spec wording for MTUExceeded says the reject
+identifier shall match the first request command in the packet, and
+that packets containing only responses shall be silently discarded.
+Linux intentionally deviates from that prescription: silently
+discarding desynchronizes the peer because the remote stack never
+learns its responses were dropped, and locating the first request
+command requires walking command headers past MTUsig, i.e. processing
+bytes from a packet we have already decided is too large to process.
+We therefore always emit one reject and use the identifier from the
+first command header, a single fixed-offset byte read.
+
+The unrestricted BR/EDR signaling parser and ECHO_REQ response path both
+trace to the initial git import; no later introducing commit is
+available for a Fixes tag.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Link: https://lore.kernel.org/r/20260518002800.1361430-1-michael.bommarito@gmail.com
+Link: https://lore.kernel.org/r/20260520135034.1060859-1-michael.bommarito@gmail.com
+Link: https://lore.kernel.org/r/20260521000555.3712030-1-michael.bommarito@gmail.com
+Assisted-by: Claude:claude-opus-4-7
+Assisted-by: Codex:gpt-5-5-xhigh
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_tunnel.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/bluetooth/l2cap.h |    1 
+ net/bluetooth/l2cap_core.c    |   46 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+)
 
---- a/net/netfilter/nft_tunnel.c
-+++ b/net/netfilter/nft_tunnel.c
-@@ -669,7 +669,7 @@ static void nft_tunnel_obj_destroy(const
- {
- 	struct nft_tunnel_obj *priv = nft_obj_data(obj);
- 
--	metadata_dst_free(priv->md);
-+	dst_release(&priv->md->dst);
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -33,6 +33,7 @@
+ /* L2CAP defaults */
+ #define L2CAP_DEFAULT_MTU		672
+ #define L2CAP_DEFAULT_MIN_MTU		48
++#define L2CAP_SIG_MTU			48	/* BR/EDR signaling MTU */
+ #define L2CAP_DEFAULT_FLUSH_TO		0xFFFF
+ #define L2CAP_EFS_DEFAULT_FLUSH_TO	0xFFFFFFFF
+ #define L2CAP_DEFAULT_TX_WINDOW		63
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6618,6 +6618,15 @@ static inline void l2cap_sig_send_rej(st
+ 	l2cap_send_cmd(conn, ident, L2CAP_COMMAND_REJ, sizeof(rej), &rej);
  }
  
- static struct nft_object_type nft_tunnel_obj_type;
++static inline void l2cap_sig_send_mtu_rej(struct l2cap_conn *conn, u8 ident)
++{
++	struct l2cap_cmd_rej_mtu rej;
++
++	rej.reason = cpu_to_le16(L2CAP_REJ_MTU_EXCEEDED);
++	rej.max_mtu = cpu_to_le16(L2CAP_SIG_MTU);
++	l2cap_send_cmd(conn, ident, L2CAP_COMMAND_REJ, sizeof(rej), &rej);
++}
++
+ static inline void l2cap_sig_channel(struct l2cap_conn *conn,
+ 				     struct sk_buff *skb)
+ {
+@@ -6630,6 +6639,43 @@ static inline void l2cap_sig_channel(str
+ 	if (hcon->type != ACL_LINK)
+ 		goto drop;
+ 
++	/*
++	 * Bluetooth Core v5.4, Vol 3, Part A, Section 4: the BR/EDR
++	 * signaling channel has a fixed signaling MTU (MTUsig) whose
++	 * minimum and default is 48 octets.  Section 4.1 says that on
++	 * an MTUExceeded command reject the identifier "shall match
++	 * the first request command in the L2CAP packet" and that
++	 * packets containing only response commands "shall be
++	 * silently discarded".
++	 *
++	 * Linux intentionally deviates from that prescription:
++	 *
++	 *   1. Silently discarding desynchronizes the peer.  The
++	 *      remote stack never learns its responses were dropped,
++	 *      so any state machine waiting on a paired response
++	 *      stalls until its own timer fires.
++	 *
++	 *   2. Locating "the first request command" requires walking
++	 *      command headers past MTUsig, i.e. processing bytes
++	 *      from a packet we have already decided is too large to
++	 *      process.
++	 *
++	 * Reject every over-MTUsig signaling packet with one
++	 * L2CAP_REJ_MTU_EXCEEDED command reject.  The reject's
++	 * reason field is what tells the peer that the whole packet
++	 * was discarded; the identifier value is informational, so
++	 * we use the identifier from the first command header, a
++	 * single fixed-offset byte read.
++	 */
++	if (skb->len > L2CAP_SIG_MTU) {
++		u8 ident = skb->data[1];
++
++		BT_DBG("signaling packet exceeds MTU: %u > %u",
++		       skb->len, L2CAP_SIG_MTU);
++		l2cap_sig_send_mtu_rej(conn, ident);
++		goto drop;
++	}
++
+ 	while (skb->len >= L2CAP_CMD_HDR_SIZE) {
+ 		u16 len;
+ 
 
 
