@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B6344CF39;
-	Tue, 16 Jun 2026 15:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15CF42B74A;
+	Tue, 16 Jun 2026 15:37:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624245; cv=none; b=H8KQXrJ0pO2k9+GP4HO1y7QHBDvwF799agYpLgMBtRdNR/ozqCXzas+sSeZETq5N/dWYuemWf7NN9LzHP/6iS3MeGWPzgEzdkiEG6F3Bv6x9q6kpFcpLgNqbG6UNUZpaAM+RD661vm5wMsTT0csPKbnKzSAP2tM+intAW+dce3Q=
+	t=1781624252; cv=none; b=k4i/yBl07N8jEdYYaLNHAmqXFUWEgrsYzjsmJ2gEblvECMbksZyk1xMXsjwnkTPOyaCMk5kHCiHSLGVmlfVOVU25zlyhRuiP7s0cspQShCojMWlT9aY+bkI4B8BvjwYx3XCAUel9hRqqjCAQkEoEleTV+6njRXRAMPCQLz2UU18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624245; c=relaxed/simple;
-	bh=kkVfh2A4c4pdmV8WgtrEIo/HW1HPpzUmgyV5+BVzR68=;
+	s=arc-20240116; t=1781624252; c=relaxed/simple;
+	bh=PvVU5T+Rr0XIM3HtmScMCd6F8h0Cv1vbQBZsEbm68oA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RY4+rrt+3MLbK6PSIOq5HjOw3WQaK3Jo5kpb4A3kaLaMPRKc/Zm50LKpBy3AlMAzNzjtlRO+Y7oy760Pph7irBq1InKFv9nZ8hfeaXxkkgnAotAYKiyAMGkRxWVoCu+mqHR/9/Weqo/jOsQdvb41uQVmMbs4B2bY04Btr34fIJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KqxRHnTC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ISlDAdcWo7ii0HeN3qqtv/3nvLD28010tJOv9fSjwX1N54K213HuI1UAct7ThY4cNpr/xogQ1LaFGdIYfe+SEm7YHxF9r5O8wYU4iJcyHpzWs/0Kba9+mrpjbXXLkq4qcNXfLbu5rK2gjCgsf8K6L9ebO1E3jCfp3LDOyBeTk6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ci3CwE4C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KqxRHnTC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD1691F000E9;
-	Tue, 16 Jun 2026 15:37:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ci3CwE4C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61CB81F000E9;
+	Tue, 16 Jun 2026 15:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624244;
-	bh=s1iJLS0fn04HFCXhAMlhv+PDv070P+52DGV5XGPJifs=;
+	s=korg; t=1781624251;
+	bh=uBcjF0gRal8ffQdCPB7PPBOUOI+TRonS6Qj7fv9Ld2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KqxRHnTCcLTwQ3Ag81QNqpv2Cc5JhaakBLc3oAtFEnxyTFrmxSgz/v3ACVhZwCqXA
-	 Lo/5FeHsE5YcyO8qJ7v6G+Nf2UTKDgoRiJ5zyuMqkTq93+ksMVJtmaTMIC9FKa+A0d
-	 5Z+3Ksh9qGk3kpN7XQ8Km6RW33fvlmErhSMJKNh8=
+	b=ci3CwE4CL5OGq6UkuNLAdVqFHCU3OZtcG13cnxPs3SXxkJQtkycOM351d9fkV5XJE
+	 ln9IEaXOeAAQCnh9ylfF7W0hVFSSWKAItmpW/d8/zAEhFmwBYdx7WlLI+UoqQ5zfTu
+	 tDNe6c2+uT/aLppelonTSVvUHPf+W+VDzu/ycXc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jann Horn <jannh@google.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.0 267/378] fuse: limit FUSE_NOTIFY_RETRIEVE to uptodate folios
-Date: Tue, 16 Jun 2026 20:28:18 +0530
-Message-ID: <20260616145124.152289312@linuxfoundation.org>
+	Jian Zhou <eilaimemedsnaimel@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 7.0 268/378] futex/requeue: Prevent NULL pointer dereference in remove_waiter() on self-deadlock
+Date: Tue, 16 Jun 2026 20:28:19 +0530
+Message-ID: <20260616145124.214621466@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,43 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
 
-commit 4e3d1b2c48ca6c55f1e9ca7f8dccc76f120f276c upstream.
+commit 74e144274af39935b0f410c0ee4d2b91c3730414 upstream.
 
-FUSE_NOTIFY_RETRIEVE must be limited to uptodate folios; !uptodate folios
-can contain uninitialized data.
-Since FUSE_NOTIFY_RETRIEVE is intended to only return data that is already
-in the page cache and not wait for data from the FUSE daemon, treat
-!uptodate folios as if they weren't present.
+When FUTEX_CMP_REQUEUE_PI requeues a non-top waiter that already owns the
+target PI futex, task_blocks_on_rt_mutex() returns -EDEADLK before setting
+waiter->task.
 
-This only has security impact on systems that don't enable automatic
-zero-initialization of all page allocations via
-CONFIG_INIT_ON_ALLOC_DEFAULT_ON or init_on_alloc=1.
+The subsequent remove_waiter() in rt_mutex_start_proxy_lock() dereferences
+the NULL waiter->task, causing a kernel crash.
 
-Cc: stable@kernel.org
-Fixes: 2d45ba381a74 ("fuse: add retrieve request")
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://patch.msgid.link/20260519-fuse-retrieve-uptodate-v1-1-a7a1912a37f9@google.com
-Acked-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Add a self-deadlock check for non-top waiters before calling
+rt_mutex_start_proxy_lock(), analogous to the top-waiter check in
+futex_lock_pi_atomic().
+
+Fixes: 3bfdc63936dd4773109b7b8c280c0f3b5ae7d349 ("rtmutex: Use waiter::task instead of current in remove_waiter()")
+Signed-off-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fuse/dev.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/futex/requeue.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/fuse/dev.c
-+++ b/fs/fuse/dev.c
-@@ -1927,6 +1927,10 @@ static int fuse_retrieve(struct fuse_mou
- 		folio = filemap_get_folio(mapping, index);
- 		if (IS_ERR(folio))
- 			break;
-+		if (!folio_test_uptodate(folio)) {
-+			folio_put(folio);
-+			break;
-+		}
+--- a/kernel/futex/requeue.c
++++ b/kernel/futex/requeue.c
+@@ -643,6 +643,12 @@ retry_private:
+ 				continue;
+ 			}
  
- 		folio_offset = ((index - folio->index) << PAGE_SHIFT) + offset;
- 		nr_bytes = min(folio_size(folio) - folio_offset, num);
++			/* Self-deadlock: non-top waiter already owns the PI futex. */
++			if (rt_mutex_owner(&pi_state->pi_mutex) == this->task) {
++				ret = -EDEADLK;
++				break;
++			}
++
+ 			ret = rt_mutex_start_proxy_lock(&pi_state->pi_mutex,
+ 							this->rt_waiter,
+ 							this->task);
 
 
