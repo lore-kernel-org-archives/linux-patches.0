@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9541A6803;
-	Tue, 16 Jun 2026 16:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04477449EC3;
+	Tue, 16 Jun 2026 16:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628464; cv=none; b=u+kJKLYvX/ZKPbhshiWoYm1q29/Ixgc0a5yiEyQ4LDTGx4o6FnZGFGiOmyVyUMO4KBHRZkbkOkxAlk23pQKQpEUKlDLtuORiWpExNO6Lu1gqoYxcNqI0PixcF5/n96raGX9O2RPNbiCwG4CzSC5cN0DPhemPHXkixiZcSSZLV+8=
+	t=1781628470; cv=none; b=aP24BQso6hVkyRnsjh7JQvWNdJrdmm/Bdk4NAodZSUm1wMLT/TK42oBCr37dFe7zZSFuHNHU+r7++F+vZBYgP+zyf0fYpiuNaPg3oDQJdD8yUnTSDHREN2A6aFN17cmaeUnpOOYVMDoIqlHX9iqXo4efb3vND4fz13MpGuiqreQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628464; c=relaxed/simple;
-	bh=IJu6YiUf2Lm3+j2cEwM56BybHpjNcOJrCMPEFKBCRWE=;
+	s=arc-20240116; t=1781628470; c=relaxed/simple;
+	bh=Nn4+LfHQ6DaeYZlJCnd5zmnMT/DvhHxTAYBFqu52wpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=muiMNgAr5g94dSn2r5ewMAZZhhnHfmL73gs+CgNZP26qqekig55PpJfrLgh/pu81JrD4LcLCZSRpGieM0ZvDt5FTcXJBjLAHPyj32+V0AVH3yrgbHtkblMPmKyQJry9cgfmvJ5IKp6mj27tkzXRepPxTWSl/AGWknSfgQq6F/74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPbYHYLw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LQQC7Vi1LcRUqTIyOYyvOecvhG+3MY3rawIyoe67KC+DqDoqj3wP8ypZsaV4m/aWS2Iwk6rGHG85XGpKR/30QEoyW67nwyX/rLjgL3SqHy6CZ0lj1ihBTYuMIMUUb02VJuA1KigKeW2ferBbsFdx0dAP7AwB1ULuBfcfb1IJDR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FunFqjF8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPbYHYLw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B421F000E9;
-	Tue, 16 Jun 2026 16:47:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FunFqjF8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D521F000E9;
+	Tue, 16 Jun 2026 16:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628463;
-	bh=EAeK86Nf7WCaAJ9EoVcZgpwYqkQ40EVVjrCtQCzzqvI=;
+	s=korg; t=1781628468;
+	bh=Hn6puAYzvB4PACiNrYZSkpLQ78qFVI9rwiOV2mzNpXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UPbYHYLwrG6tui3pgDxVtLJsVysDNN7sKvSti7ElCy2EVUYLRfSLMufIWuXhAAZTn
-	 L4/MruBDz2BW5HMWtDizTC8KA8X5FdGyKln4X4AgWVEmrZCzSQFpOEyvS8r7PDk+4F
-	 qK72zz8N1aAOOwCKMvW6ScBlsdbrbQQ49SFbl5U8=
+	b=FunFqjF8ZkvKS/TyYt+PuB1AqHtDViIFsua3WCzfVLtdrwTBfCNcu7IWdn2fyupCF
+	 I0ia/Ir5yVjw/D4s0ThmverzowwlACGAz6eSaNdsbzHB/MRgwHNm/A9SKx40pwjH8r
+	 bmZH72JG8RqXeeHcZ+qMQEiPBRREshrEZ7kP7bws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Muhammad Bilal <meatuni001@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 100/452] Bluetooth: ISO: fix UAF in iso_recv_frame
-Date: Tue, 16 Jun 2026 20:25:27 +0530
-Message-ID: <20260616145123.043040790@linuxfoundation.org>
+Subject: [PATCH 6.6 101/452] Bluetooth: ISO: serialize iso_sock_clear_timer with socket lock
+Date: Tue, 16 Jun 2026 20:25:28 +0530
+Message-ID: <20260616145123.091353285@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,17 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 47f23a259517abbdb8032c057a1e8a6bf3734878 upstream.
+commit 4b5f8e608749b7e8fa386c6e4301cf9272595859 upstream.
 
-iso_recv_frame reads conn->sk under iso_conn_lock but releases the lock
-before using sk, with no reference held. A concurrent iso_sock_kill()
-can free sk in that window, causing use-after-free on sk->sk_state and
-sock_queue_rcv_skb().
+iso_sock_close() calls iso_sock_clear_timer() before acquiring
+lock_sock(sk).
 
-Fix by replacing the bare pointer read with iso_sock_hold(conn), which
-calls sock_hold() while the spinlock is held, atomically elevating the
-refcount before the lock drops. Add a drop_put label so sock_put() is
-called on all exit paths where the hold succeeded.
+iso_sock_clear_timer() reads iso_pi(sk)->conn twice without the
+socket lock held:
+
+    if (!iso_pi(sk)->conn)
+        return;
+    cancel_delayed_work(&iso_pi(sk)->conn->timeout_work);
+
+Concurrently, iso_conn_del() executes under lock_sock(sk) and calls
+iso_chan_del(), which sets iso_pi(sk)->conn to NULL and may result in
+the final reference to the connection being dropped:
+
+    CPU0                         CPU1
+    ----                         ----
+    iso_sock_clear_timer()
+      if (conn != NULL) ...      lock_sock(sk)
+                                   iso_chan_del()
+                                   iso_pi(sk)->conn = NULL
+      cancel_delayed_work(conn)  /* NULL deref or UAF */
+
+iso_pi(sk)->conn is not stable across the unlock window, causing a
+NULL pointer dereference or use-after-free.
+
+Serialize iso_sock_clear_timer() with the socket lock by moving it
+inside lock_sock()/release_sock(), matching the pattern used in
+iso_conn_del() and all other call sites.
 
 Fixes: ccf74f2390d60a2f9a75ef496d2564abb478f46a ("Bluetooth: Add BTPROTO_ISO socket type")
 Cc: stable@vger.kernel.org
@@ -70,37 +89,20 @@ Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/iso.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/bluetooth/iso.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/net/bluetooth/iso.c
 +++ b/net/bluetooth/iso.c
-@@ -526,7 +526,7 @@ static void iso_recv_frame(struct iso_co
- 	struct sock *sk;
- 
- 	iso_conn_lock(conn);
--	sk = conn->sk;
-+	sk = iso_sock_hold(conn);
- 	iso_conn_unlock(conn);
- 
- 	if (!sk)
-@@ -535,11 +535,15 @@ static void iso_recv_frame(struct iso_co
- 	BT_DBG("sk %p len %d", sk, skb->len);
- 
- 	if (sk->sk_state != BT_CONNECTED)
--		goto drop;
-+		goto drop_put;
- 
--	if (!sock_queue_rcv_skb(sk, skb))
-+	if (!sock_queue_rcv_skb(sk, skb)) {
-+		sock_put(sk);
- 		return;
-+	}
- 
-+drop_put:
-+	sock_put(sk);
- drop:
- 	kfree_skb(skb);
- }
+@@ -808,8 +808,8 @@ static void __iso_sock_close(struct sock
+ /* Must be called on unlocked socket. */
+ static void iso_sock_close(struct sock *sk)
+ {
+-	iso_sock_clear_timer(sk);
+ 	lock_sock(sk);
++	iso_sock_clear_timer(sk);
+ 	__iso_sock_close(sk);
+ 	release_sock(sk);
+ 	iso_sock_kill(sk);
 
 
