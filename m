@@ -1,47 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C00934889F;
-	Tue, 16 Jun 2026 15:38:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0E334889F;
+	Tue, 16 Jun 2026 15:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624336; cv=none; b=KoqD+Y+nk/8ya4+iwL5+EFCyiqPT3MKL7Jerf26nrCiFwlhlyj/TYiRR8S1Fl5NYVyQE9tkeFkVADacxWZVIdoXOMb+g69O/f/HxAB4JvNHIk/iNdz9igtitB0lKOF2MEFC4lf1Bg+aBWmwGgCKouWdTRxLt3M4ZzY60Sf3ohMc=
+	t=1781624341; cv=none; b=snrnAF/Kvz+SjLSFz0bZtyeNre2YF898Ids4P3O+PlwzzoPcH64WqwtSyeg5yIUNr3UaGUbeww9f+9liW4dSffksAmzt4KH++3L5TW7QLjychbzGFblDzwmPB5QkguWDzcYZdnEutmC1DZGNiDwSY7+0wx5yeYg9y8WF2Oj1S8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624336; c=relaxed/simple;
-	bh=Yd+8gkZvuBf6TELS3hA7y+TKR7gkefGaMvb0p0Jkgho=;
+	s=arc-20240116; t=1781624341; c=relaxed/simple;
+	bh=8GkATdAmypfIkNjfl8NGxSEakB0MrITPSRJ8pwN7YSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nlHmDeaH93AthLeU6+TJmhObCeLZ+D7EaHQnaLvlLpsWD7aMVdcMFXp4HkoYXW/pH8N74y4mtk3AJMeuPgsO0ssaRhIM91tNPZwtYlt/N2WCEGI0gPp1k+3fBl7eXDrr60q4fysxf9REtH5STa6Jsa6Od300bjRKSvWPCggPA9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKidPHRl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ETyqHk5SjyAqppUbLvuYLgowriTNFaBIr+di2CjwXtbyNQA4osb6XP95wbVO+Fwe1VelaYPWrZlKJZGSjKp6ImIZIwtUwMXit1rfjjhtl8SW0iT6Xi3hn5FfHQ9WOsEpRWO0GyfZSWLte0xrfkhfMo7fJxFTKNfHKlH/xV9Sz8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e0Pa4RLJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKidPHRl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 820ED1F000E9;
-	Tue, 16 Jun 2026 15:38:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e0Pa4RLJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5EC41F000E9;
+	Tue, 16 Jun 2026 15:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624335;
-	bh=QPwG/1zga6N4eayrk9XWciA/NcnISqRcg3qJiO78OwU=;
+	s=korg; t=1781624340;
+	bh=d74cP/SxRX1ZhoalYDSdC+JB6D1NBm+fqxkNalEVa/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AKidPHRlV36aAkEf0N1ArCRo+IZGDMLQ4OqHxOfV7/X8TU/zL0Gm9MbWEVF/4fgO/
-	 jVDLssoEbD9G2Igj6fEwq/gKH8YSZoIbF/va/FbvaoMT49/7VX3duv1lbtOaWYNd8B
-	 yikasAeeh1P7s/r2W1WRRn0OnvtkN7H7JEk6fO/I=
+	b=e0Pa4RLJQjWFdPiSqQugAB0DXjgX+AWdbbXYZtvXYAShjLiZ8BN1I7mkgMLwlca+Y
+	 51VNywBUu8xVXmmLLevqaOEqn135AW42BnQmpy2l2zsQGPM/Tv7uyGPsiVnGSRh7Ow
+	 zG4/VYc3PF/OJWWSRbw8BbpGlaSGhQbXxjE9wGOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jeffrey Altman <jaltman@auristor.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	netdev@vger.kernel.org,
-	stable@kernel.org
-Subject: [PATCH 7.0 317/378] rxrpc: Fix the ACK parser to extract the SACK table for parsing
-Date: Tue, 16 Jun 2026 20:29:08 +0530
-Message-ID: <20260616145126.942134948@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.0 300/378] mm/damon/lru_sort: handle ctx allocation failure
+Date: Tue, 16 Jun 2026 20:28:51 +0530
+Message-ID: <20260616145125.880338128@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -60,100 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit 333b6d5bb9f87827ac2639c737bf9613dbae7253 upstream.
+commit ab04340b5ae5d52c1d46b750538febcde9d889e7 upstream.
 
-Fix modification of the received skbuff in rxrpc_input_soft_acks() and a
-potential incorrect access of the buffer in a fragmented UDP packet (the
-packet would probably have to be deliberately pre-generated as fragmented)
-when AF_RXRPC tries to extract the contents of the SACK table by copying
-out the contents of the SACK table into a buffer before attempting to parse
+DAMON_LRU_SORT allocates the damon_ctx object for its kdamond in its init
+function.  damon_lru_sort_enabled_store() wrongly assumes the allocation
+will always succeed once tried.  If the damon_ctx allocation was failed,
+therefore, code execution reaches to damon_commit_ctx() while 'ctx' is
+NULL.  As a result, it dereferences the NULL 'ctx' pointer.  Avoid the
+NULL dereference by returning -ENOMEM if 'ctx' is NULL.
 
-AF_RXRPC assumes that it can just call skb_condense() and then validly
-access the SACK table from skb->data and that it will be a flat buffer -
-but skb_condense() can silently fail to do anything under some
-circumstances.
-
-Note that whilst rxrpc_input_soft_acks() should be able to parse extended
-ACKs, the rest of AF_RXRPC doesn't currently support that.
-
-Further, there's then no need to call skb_condense() in rxrpc_input_ack(),
-so don't.
-
-Fixes: d57a3a151660 ("rxrpc: Save last ACK's SACK table rather than marking txbufs")
-Reported-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://lore.kernel.org/r/20260513180907.2061972-1-michael.bommarito@gmail.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeffrey Altman <jaltman@auristor.com>
-cc: Eric Dumazet <edumazet@google.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: netdev@vger.kernel.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/105362.1780573560@warthog.procyon.org.uk
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/20260529000104.7006-3-sj@kernel.org
+Fixes: c4a8e662c839 ("mm/damon/lru_sort: use damon_initialized()")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.18.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/input.c |   26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ mm/damon/lru_sort.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/rxrpc/input.c
-+++ b/net/rxrpc/input.c
-@@ -963,23 +963,34 @@ static void rxrpc_input_soft_acks(struct
- 	struct rxrpc_skb_priv *sp = rxrpc_skb(skb);
- 	struct rxrpc_txqueue *tq = call->tx_queue;
- 	unsigned long extracted = ~0UL;
--	unsigned int nr = 0;
-+	unsigned int nr = 0, nsack;
- 	rxrpc_seq_t seq = call->acks_hard_ack + 1;
- 	rxrpc_seq_t lowest_nak = seq + sp->ack.nr_acks;
--	u8 *acks = skb->data + sizeof(struct rxrpc_wire_header) + sizeof(struct rxrpc_ackpacket);
-+	u8 sack[256] __aligned(sizeof(unsigned long));
-+	u8 *acks = sack;
+--- a/mm/damon/lru_sort.c
++++ b/mm/damon/lru_sort.c
+@@ -442,6 +442,10 @@ static int damon_lru_sort_enabled_store(
+ 	if (!damon_initialized())
+ 		return 0;
  
- 	_enter("%x,%x,%u", tq->qbase, seq, sp->ack.nr_acks);
- 
- 	while (after(seq, tq->qbase + RXRPC_NR_TXQUEUE - 1))
- 		tq = tq->next;
- 
-+	/* Extract an individual SACK table.  A normal SACK table is up to 255
-+	 * bytes with 1 ACK flag per byte, but an extended SACK table can be up
-+	 * to 256 bytes with up to 8 ACK/NACK flags per byte.  The ACK flags go
-+	 * across all bit 0's then all bit 1's, then all bit 2's, ...
-+	 */
-+	memset(sack, 0, sizeof(sack));
-+	nsack = umin(sp->ack.nr_acks, 256);
-+	if (skb_copy_bits(skb,
-+			  sizeof(struct rxrpc_wire_header) + sizeof(struct rxrpc_ackpacket),
-+			  sack, nsack) < 0)
-+		return;
++	/* damon_modules_new_paddr_ctx_target() in the init function failed. */
++	if (!ctx)
++		return -ENOMEM;
 +
- 	for (unsigned int i = 0; i < sp->ack.nr_acks; i++) {
- 		/* Decant ACKs until we hit a txqueue boundary. */
-+		if ((i & 255) == 0)
-+			acks = sack;
- 		shiftr_adv_rotr(acks, extracted);
--		if (i == 256) {
--			acks -= i;
--			i = 0;
--		}
- 		seq++;
- 		nr++;
- 		if ((seq & RXRPC_TXQ_MASK) != 0)
-@@ -1117,9 +1128,6 @@ static void rxrpc_input_ack(struct rxrpc
- 	    skb_copy_bits(skb, ioffset, &trailer, sizeof(trailer)) < 0)
- 		return rxrpc_proto_abort(call, 0, rxrpc_badmsg_short_ack_trailer);
+ 	return damon_lru_sort_turn(enabled);
+ }
  
--	if (nr_acks > 0)
--		skb_condense(skb);
--
- 	call->acks_latest_ts = ktime_get_real();
- 	call->acks_hard_ack = hard_ack;
- 	call->acks_prev_seq = prev_pkt;
 
 
