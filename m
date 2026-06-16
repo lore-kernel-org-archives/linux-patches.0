@@ -1,50 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F231645348D;
-	Tue, 16 Jun 2026 15:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D013644D681;
+	Tue, 16 Jun 2026 15:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624434; cv=none; b=tJ3n3yabmBHx+Rm8Xwa4/vA78D5hhnwsGcSxXotGqiTK8DHLoDa+N3xk69MKHs6tzthIRespYh5YbhRbyA0Hr4FdhiZGTWziG7Lh3VTfOC5Y/+dD1qfR2fHogfzm2s06VsDr6ufEyXKTc4UH6mFXzWGC7Jqp/8ClzmFFyHm5UY4=
+	t=1781624439; cv=none; b=mQcwtlYOOIt64tAMK/rc1RH3Ke6kmf1w46pkdTOjVVSmrJ7j7PhyBLRxVkV0cRmkPlZZ6vy7nGMTUIEw1fQbPUW7KGqrbdnOvIkcEgHHA60q1gMCu0Yd1CzIXHNSes9LihRpS5D0UvYA+akjorK6fvgBBFAnNPCYNetkPSlUNeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624434; c=relaxed/simple;
-	bh=qJxadt+u5s7NAwo5YT9OGD2NyTKxpfQeaww8n3f2NKg=;
+	s=arc-20240116; t=1781624439; c=relaxed/simple;
+	bh=+TeXKGA34u+Fgco+aArB1JFBlQPXRCR2FKGoL19X9g8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u1V+6QbbZCfYZfmlMp5G0Jc0sEIQ1EhQrotZC7aztRTIyT4IztZ4+R0a0ltMijIUh3C3TN5xEX1f/nWcLsS8Y8bQKx6AeCL6w4/rAsaHWgOj7SPHt+0GglH/3Smyuei+ACSoYEnthWhMgeYaDCZ+uA3ugOzV/wWlD2V03wm1kjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLAnov1u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U8ZCS7gim4hPqGPbPKWYQlTHSXHFRSvj+9yYxmKTXuKXYi/Y3nEPnJ3TH6T5SVExeoMHybFsKJQiKCZNJNuAj0Nlvj1dFlxXEw3bXlXOhVOyELwNm92+HmEtxjYHdZ16OgF24xCO1O9L233OraErn216bvNFMzdIaS5iLJWj8lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8R8KW8t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLAnov1u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7371F000E9;
-	Tue, 16 Jun 2026 15:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8R8KW8t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F40E1F000E9;
+	Tue, 16 Jun 2026 15:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624432;
-	bh=fOaA6FVy9xyO8NE5jTubMtKjNV3Rxs9EX3dcSaPs9hQ=;
+	s=korg; t=1781624437;
+	bh=yrZAr0r4ITMA1zTMxVJT7yXIcAyAKghqnNM8moiiHhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xLAnov1urinxT+cQoLFXYeftqXOe2fonDi3cnA+3Yx70S/mJxgWQ2HpAD66Z+ZP7/
-	 FkxawIDJg9Z75SfLRyREU8ZpXebT+s7F8Mg8R0I2E2Q69g4+0yzTrMRjcTG+oefxaC
-	 53/GbUPkZtGIJWHK7YL21eqhfB0nYX6+5RmU9fts=
+	b=j8R8KW8tXRym02huNEqMCLVIBdNphg3dKVt1AJdzQjDaVbxBD38XSpUpK3aezYaHa
+	 P8vWFznO5x4dEbWvWH1zhz/Xl2ojQFmUcCFd2X7UN7PzR++h2zyDgBaFrh2l6RIxJ5
+	 BJDONPjMoNL/dpl+8v7x9Bgrud8wLjQdPUqIKhrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lorenzo Stoakes <ljs@kernel.org>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Oscar Salvador (SUSE)" <osalvador@kernel.org>,
-	Barry Song <baohua@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	Zi Yan <ziy@nvidia.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Nico Pache <npache@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	SeongJae Park <sj@kernel.org>,
-	Wei Yang <richard.weiyang@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Jann Horn <jannh@google.com>,
+	Muchun Song <muchun.song@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.0 302/378] mm/huge_memory: use correct flags for device private PMD entry
-Date: Tue, 16 Jun 2026 20:28:53 +0530
-Message-ID: <20260616145126.008933592@linuxfoundation.org>
+Subject: [PATCH 7.0 303/378] mm/hugetlb: avoid false positive lockdep assertion
+Date: Tue, 16 Jun 2026 20:28:54 +0530
+Message-ID: <20260616145126.075943714@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -65,177 +56,247 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Stoakes <ljs@kernel.org>
 
-commit 43e7f189769c512c843184a8a5892ac779a6bd90 upstream.
+commit b4aea43cd37afad714b5684fe9fdfcb0e78dba26 upstream.
 
-Commit 65edfda6f3f2 ("mm/rmap: extend rmap and migration support
-device-private entries") updated set_pmd_migration_entry() to use
-pmdp_huge_get_and_clear() in the softleaf case, but made no further
-adjustments to the function itself.
+Commit 081056dc00a2 ("mm/hugetlb: unshare page tables during VMA split,
+not before") changed the locking model around hugetlbfs PMD unsharing on
+VMA split, but did not update the function which asserts the locks,
+hugetlb_vma_assert_locked().
 
-Therefore this function continues to incorrectly use pmd_write(),
-pmd_soft_dirty() and pmd_uffd_wp() to determine whether the installed
-migration entry should be marked writable, softdirty or uffd-wp
-respectively.
+This function asserts that either the hugetlb VMA lock is held (if a
+shared mapping) or that the reservation map lock is held (if private).
 
-Whilst all are incorrect, the most problematic of these is pmd_write(), as
-this can lead to corrupted rmap state.
+If you get an unfortunate race between something which results in one of
+these locks being released and a hugetlb VMA split and you have
+CONFIG_LOCKDEP enabled, you can therefore see a false positive assertion
+arise when there is in fact no issue.
 
-On x86-64 _PAGE_SWP_SOFT_DIRTY is aliased to _PAGE_RW.  So calling
-pmd_write() on a softleaf will return the softdirty state encoded in the
-entry, assuming CONFIG_MEM_SOFT_DIRTY was enabled.
+Since this change introduced a new take_locks parameter to
+hugetlb_unshare_pmds(), which, when set to false, indicates that locking
+is sufficient, simply pass this to the unsharing logic and predicate the
+lock assertions on this.
 
-This was observed when running the hmm.hmm_device_private.anon_write_child
-selftest:
+This is safe, as we already asserted the file rmap lock and the VMA write
+lock prior to this (implying exclusive mmap write lock), so we cannot be
+raced by either rmap or page fault page table walkers which the asserted
+locks are intended to protect against (we don't mind GUP-fast).
 
-1. The test faults in a range then migrates it such that a device-private
-   THP range is established.
+Separate out huge_pmd_unshare() into __huge_pmd_unshare() to add a
+check_locks parameter, and update hugetlb_unshare_pmds() to pass this
+parameter to it.
 
-2. The parent then migrates it to a device-private writable PMD entry whose
-   folio is entirely AnonExclusive with entire_mapcount=1, softdirty set
-   (accidentally correct write state).
+This leaves all other callers of huge_pmd_unshare() still correctly
+asserting the locks.
 
-3. The parent forks and the PMD entries are set to device-private read only
-   entries, entire_mapcount=2, softdirty still set.
+The below reproducer will trigger the assert in a kernel with
+CONFIG_LOCKDEP enabled by racing process teardown (which will release the
+hugetlb lock) against a hugetlb split.
 
-4. [BUG] The child writes to the range then migrates to RAM - intending to
-   install non-writable migration entries - but replacing parent and child
-   PMD mappings with WRITABLE entries due to misinterpreting the softdirty
-   bit.
+void execute_one(void)
+{
+	void *ptr;
+	pid_t pid;
 
-5. In remove_migration_pmd(), if !softleaf_is_migration_read(entry) we
-   set the RMAP_EXCLUSIVE flag when calling folio_add_anon_rmap_pmd() for
-   both parent and child, which are therefore AnonExclusive.
+	/*
+	 * Create a hugetlb mapping spanning a PUD entry.
+	 *
+	 * We force the hugetlb page allocation with populate and
+	 * noreserve.
+	 *
+	 * |---------------------|
+	 * |                     |
+	 * |---------------------|
+	 * 0                 PUD boundary
+	 */
+	ptr = mmap(0, PUD_SIZE, PROT_READ | PROT_WRITE,
+		   MAP_FIXED | MAP_SHARED | MAP_ANON |
+		   MAP_NORESERVE | MAP_HUGETLB | MAP_POPULATE,
+		   -1, 0);
+	if (ptr == MAP_FAILED) {
+		perror("mmap");
+		exit(EXIT_FAILURE);
+	}
 
-6. [SPLAT] Child sets migrated folio entire_mapcount=1, parent sets
-   entire_mapcount=2 and we end up with an AnonExclusive folio with
-   entire_mapcount=2! Assert fires in __folio_add_anon_rmap():
+	/*
+	 * Fork but with a bogus stack pointer so we try to execute code in
+	 * a non-VM_EXEC VMA, causing segfault + teardown via exit_mmap().
+	 *
+	 * The clone will cause PMD page table sharing between the
+	 * processes first via:
+	 * copy_process() -> ... -> huge_pte_alloc() -> huge_pmd_share()
+	 *
+	 * Then tear down and release the hugetlb 'VMA' lock via:
+	 * exit_mmap() -> ... -> vma_close() -> hugetlb_vma_lock_free()
+	 */
+	pid = syscall(__NR_clone, 0, 2 * PMD_SIZE, 0, 0, 0);
+	if (pid < 0) {
+		perror("clone");
+		exit(EXIT_FAILURE);
+	} if (pid == 0) {
+		/* Pop stack... */
+		return;
+	}
 
-		VM_WARN_ON_FOLIO(folio_test_large(folio) &&
-				 folio_entire_mapcount(folio) > 1 &&
-				 PageAnonExclusive(cur_page), folio)
+	/*
+	 * We are the parent process.
+	 *
+	 * Race the child process's teardown with a PMD unshare.
+	 *
+	 * We do this by triggering:
+	 *
+	 * __split_vma() -> hugetlb_split() -> hugetlb_unshare_pmds()
+	 *
+	 * Which, importantly, doesn't hold the hugetlb VMA lock (nor can
+	 * it), meaning we assert in hugetlb_vma_assert_locked().
+	 *
+	 *            .
+	 * |----------.----------|
+	 * |          .          |
+	 * |----------.----------|
+	 * 0          .     PUD boundary
+	 */
+	mmap(0, PUD_SIZE / 2, PROT_READ | PROT_WRITE,
+	     MAP_FIXED | MAP_ANON | MAP_PRIVATE, -1, 0);
+}
 
-This patch fixes the issue by correctly referencing the softleaf entry
-fields for writable, softdirty and uffd-wp in set_pmd_migration_entry().
+int main(void)
+{
+	int i;
 
-It also only updates A/D flags if the entry is present as these are
-otherwise not meaningful for a softleaf entry.
+	/* Kick off fork children. */
+	for (i = 0; i < NUM_FORKS; i++) {
+		pid_t pid = fork();
 
-This patch also flips the if (!present) { ...  } else { ...  } logic in
-set_pmd_migration_entry() so it is easier to understand, and adds some
-comments to make things clearer.
+		if (pid < 0) {
+			perror("fork");
+			exit(EXIT_FAILURE);
+		}
 
-I was able to bisect this to commit 775465fd26a3 ("lib/test_hmm: add zone
-device private THP test infrastructure") which first exposes this bug as
-it was the commit that permitted test_hmm to generate the test.
+		/* Fork children do their work and exit. */
+		if (!pid) {
+			int j;
 
-However commit 65edfda6f3f2 ("mm/rmap: extend rmap and migration support
-device-private entries") is the commit that actually enabled this
-behaviour.
+			for (j = 0; j < NUM_ITERS; j++)
+				execute_one();
+			return EXIT_SUCCESS;
+		}
+	}
 
-Link: https://lore.kernel.org/20260601083044.57132-1-ljs@kernel.org
-Fixes: 65edfda6f3f2 ("mm/rmap: extend rmap and migration support device-private entries")
+	/* If we succeeded, wait on children. */
+	for (i = 0; i < NUM_FORKS; i++)
+		wait(NULL);
+
+	return EXIT_SUCCESS;
+}
+
+[ljs@kernel.org: account for the !CONFIG_HUGETLB_PMD_PAGE_TABLE_SHARING case]
+  Link: https://lore.kernel.org/agWZsPGYid08uU6O@lucifer
+Link: https://lore.kernel.org/20260513085658.45264-1-ljs@kernel.org
+Fixes: 081056dc00a2 ("mm/hugetlb: unshare page tables during VMA split, not before")
 Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
 Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Reviewed-by: Balbir Singh <balbirs@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Oscar Salvador (SUSE) <osalvador@kernel.org>
-Reviewed-by: Barry Song <baohua@kernel.org>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: SeongJae Park <sj@kernel.org>
-Cc: Wei Yang <richard.weiyang@gmail.com>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Cc: Jann Horn <jannh@google.com>
+Cc: Muchun Song <muchun.song@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |   45 +++++++++++++++++++++++++++++++++------------
- 1 file changed, 33 insertions(+), 12 deletions(-)
+ mm/hugetlb.c |   56 +++++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 37 insertions(+), 19 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -4873,7 +4873,7 @@ int set_pmd_migration_entry(struct page_
- 	struct vm_area_struct *vma = pvmw->vma;
- 	struct mm_struct *mm = vma->vm_mm;
- 	unsigned long address = pvmw->address;
--	bool anon_exclusive;
-+	bool anon_exclusive, present, writable, softdirty, uffd_wp;
- 	pmd_t pmdval;
- 	swp_entry_t entry;
- 	pmd_t pmdswp;
-@@ -4881,12 +4881,26 @@ int set_pmd_migration_entry(struct page_
- 	if (!(pvmw->pmd && !pvmw->pte))
- 		return 0;
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -118,6 +118,9 @@ static int hugetlb_acct_memory(struct hs
+ static void hugetlb_vma_lock_free(struct vm_area_struct *vma);
+ static void hugetlb_vma_lock_alloc(struct vm_area_struct *vma);
+ static void __hugetlb_vma_unlock_write_free(struct vm_area_struct *vma);
++static int __huge_pmd_unshare(struct mmu_gather *tlb,
++		struct vm_area_struct *vma, unsigned long addr, pte_t *ptep,
++		bool check_locks);
+ static void hugetlb_unshare_pmds(struct vm_area_struct *vma,
+ 		unsigned long start, unsigned long end, bool take_locks);
+ static struct resv_map *vma_resv_map(struct vm_area_struct *vma);
+@@ -6910,6 +6913,31 @@ out:
+ 	return pte;
+ }
  
--	flush_cache_range(vma, address, address + HPAGE_PMD_SIZE);
--	if (unlikely(!pmd_present(*pvmw->pmd)))
--		pmdval = pmdp_huge_get_and_clear(vma->vm_mm, address, pvmw->pmd);
--	else
-+	present = pmd_present(*pvmw->pmd);
-+	if (likely(present)) {
-+		flush_cache_range(vma, address, address + HPAGE_PMD_SIZE);
++static int __huge_pmd_unshare(struct mmu_gather *tlb,
++		struct vm_area_struct *vma, unsigned long addr, pte_t *ptep,
++		bool check_locks)
++{
++	unsigned long sz = huge_page_size(hstate_vma(vma));
++	struct mm_struct *mm = vma->vm_mm;
++	pgd_t *pgd = pgd_offset(mm, addr);
++	p4d_t *p4d = p4d_offset(pgd, addr);
++	pud_t *pud = pud_offset(p4d, addr);
 +
- 		pmdval = pmdp_invalidate(vma, address, pvmw->pmd);
++	if (sz != PMD_SIZE)
++		return 0;
++	if (!ptdesc_pmd_is_shared(virt_to_ptdesc(ptep)))
++		return 0;
++	i_mmap_assert_write_locked(vma->vm_file->f_mapping);
++	if (check_locks)
++		hugetlb_vma_assert_locked(vma);
++	pud_clear(pud);
++
++	tlb_unshare_pmd_ptdesc(tlb, virt_to_ptdesc(ptep), addr);
++
++	mm_dec_nr_pmds(mm);
++	return 1;
++}
++
+ /**
+  * huge_pmd_unshare - Unmap a pmd table if it is shared by multiple users
+  * @tlb: the current mmu_gather.
+@@ -6929,24 +6957,7 @@ out:
+ int huge_pmd_unshare(struct mmu_gather *tlb, struct vm_area_struct *vma,
+ 		unsigned long addr, pte_t *ptep)
+ {
+-	unsigned long sz = huge_page_size(hstate_vma(vma));
+-	struct mm_struct *mm = vma->vm_mm;
+-	pgd_t *pgd = pgd_offset(mm, addr);
+-	p4d_t *p4d = p4d_offset(pgd, addr);
+-	pud_t *pud = pud_offset(p4d, addr);
+-
+-	if (sz != PMD_SIZE)
+-		return 0;
+-	if (!ptdesc_pmd_is_shared(virt_to_ptdesc(ptep)))
+-		return 0;
+-	i_mmap_assert_write_locked(vma->vm_file->f_mapping);
+-	hugetlb_vma_assert_locked(vma);
+-	pud_clear(pud);
+-
+-	tlb_unshare_pmd_ptdesc(tlb, virt_to_ptdesc(ptep), addr);
+-
+-	mm_dec_nr_pmds(mm);
+-	return 1;
++	return __huge_pmd_unshare(tlb, vma, addr, ptep, /*check_locks=*/true);
+ }
  
-+		writable = pmd_write(pmdval);
-+		softdirty = pmd_soft_dirty(pmdval);
-+		uffd_wp = pmd_uffd_wp(pmdval);
-+	} else {
-+		softleaf_t old_entry;
+ /*
+@@ -6980,6 +6991,13 @@ pte_t *huge_pmd_share(struct mm_struct *
+ 	return NULL;
+ }
+ 
++static int __huge_pmd_unshare(struct mmu_gather *tlb,
++		struct vm_area_struct *vma, unsigned long addr, pte_t *ptep,
++		bool check_locks)
++{
++	return 0;
++}
 +
-+		pmdval = pmdp_huge_get_and_clear(vma->vm_mm, address, pvmw->pmd);
-+		old_entry = softleaf_from_pmd(pmdval);
-+
-+		writable = softleaf_is_device_private_write(old_entry);
-+		softdirty = pmd_swp_soft_dirty(pmdval);
-+		uffd_wp = pmd_swp_uffd_wp(pmdval);
-+	}
-+
- 	/* See folio_try_share_anon_rmap_pmd(): invalidate PMD first. */
- 	anon_exclusive = folio_test_anon(folio) && PageAnonExclusive(page);
- 	if (anon_exclusive && folio_try_share_anon_rmap_pmd(folio, page)) {
-@@ -4894,24 +4908,31 @@ int set_pmd_migration_entry(struct page_
- 		return -EBUSY;
+ int huge_pmd_unshare(struct mmu_gather *tlb, struct vm_area_struct *vma,
+ 		unsigned long addr, pte_t *ptep)
+ {
+@@ -7277,7 +7295,7 @@ static void hugetlb_unshare_pmds(struct
+ 		if (!ptep)
+ 			continue;
+ 		ptl = huge_pte_lock(h, mm, ptep);
+-		huge_pmd_unshare(&tlb, vma, address, ptep);
++		__huge_pmd_unshare(&tlb, vma, address, ptep, take_locks);
+ 		spin_unlock(ptl);
  	}
- 
--	if (pmd_dirty(pmdval))
--		folio_mark_dirty(folio);
--	if (pmd_write(pmdval))
-+	/* Determine type of migration entry. */
-+	if (writable)
- 		entry = make_writable_migration_entry(page_to_pfn(page));
- 	else if (anon_exclusive)
- 		entry = make_readable_exclusive_migration_entry(page_to_pfn(page));
- 	else
- 		entry = make_readable_migration_entry(page_to_pfn(page));
--	if (pmd_young(pmdval))
-+
-+	/* Set A/D bits as necessary. */
-+	if (present && pmd_young(pmdval))
- 		entry = make_migration_entry_young(entry);
--	if (pmd_dirty(pmdval))
-+	if (present && pmd_dirty(pmdval)) {
-+		folio_mark_dirty(folio);
- 		entry = make_migration_entry_dirty(entry);
-+	}
-+
-+	/* Set PMD. */
- 	pmdswp = swp_entry_to_pmd(entry);
--	if (pmd_soft_dirty(pmdval))
-+	if (softdirty)
- 		pmdswp = pmd_swp_mksoft_dirty(pmdswp);
--	if (pmd_uffd_wp(pmdval))
-+	if (uffd_wp)
- 		pmdswp = pmd_swp_mkuffd_wp(pmdswp);
- 	set_pmd_at(mm, address, pvmw->pmd, pmdswp);
-+
-+	/* Migration entry installed: cleanup rmap, folio. */
- 	folio_remove_rmap_pmd(folio, page, vma);
- 	folio_put(folio);
- 	trace_set_migration_pmd(address, pmd_val(pmdswp));
+ 	huge_pmd_unshare_flush(&tlb, vma);
 
 
