@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B58C477994;
-	Tue, 16 Jun 2026 16:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA6E646AF3C;
+	Tue, 16 Jun 2026 16:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627625; cv=none; b=ruQRH8fTDe71QHPDmbyLzNMTtqvadVDOdf2zWjupT15A33rPaSSKnPVoXDkgM6vwo0Y25s++CnbFWx4E0pYYDrLnAB2+pjtcgPW4cDVM+mW7tQz3X7dO6IDui/N7wo0TwN78PiiuMDet/U+Xd8Lv6LtHgDYR/R4NjJfHBbf9VtE=
+	t=1781627631; cv=none; b=bSysqbHz4jDpZw7zJigo8l4DG84TYqrv8iFfavvVV1N/3DbdwoV0wHTv295hVlxfLSCA5ZFkCFEyaumIOrVa7uLnTpUuj+Tqdlhl2c7bH+Pa48nqGGbA5U3dIwC07vxJYE2UuaVjm4sRY+ckq7hUeldqu/vj0oAzlS2U/9vdOH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627625; c=relaxed/simple;
-	bh=vqu/JqR55US0KfIUNgloBTojPt59v9INnAe1pUtlL5k=;
+	s=arc-20240116; t=1781627631; c=relaxed/simple;
+	bh=ZeRjB0zekM58wxkgW9zZ0E1kGqnjVAg1P4gAzMpCGQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uIFO4slnPqcRbUmauPQXlfP+c0H778g5Ey/hGHizpDnIMb4jjDBXJtu2/8HSHLDti232+C0xuNm69dIKCoQ2cij98m6L1ELKUag/vlbXoae8Metopgrdp7fOiqIgEMxtWkpUOBHsMrw5odLH7/eSu72lyms04P8sOAbhglEnWUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RWORgFYZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a6H1V4Uj4IuEsZNpQ4RuOXU+Wmf+i2bvDW4Y8HNowH9L1DVEs1hLlnOQ91DV08ZGucezRq32CrAGklpsF3Mm3EQQZo5H0a1zGEK2/J9BabnOyprChRHrLC1dl5DB9gISfnOKbs/KDdi/w6iVPTh/diXtdIWViw0nAkjhqrnSJJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUpZpYLL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RWORgFYZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351E11F000E9;
-	Tue, 16 Jun 2026 16:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUpZpYLL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9E21F000E9;
+	Tue, 16 Jun 2026 16:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627624;
-	bh=WqRg7FkMGZa8PCXynu2yKRhni4r//pj/sApQt6HzQsk=;
+	s=korg; t=1781627630;
+	bh=VvEOr1Xr7dcGWe3XPe6A3RGeAKMyx6ar0Opp0DX3RE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RWORgFYZVbd0TMld+LOJR3GVPr1xyo62jh5YvaA74RapddaRBM3CHfz47YHvxrY8/
-	 pBoaVXhbIGhmDQKN6Jlw0V3hIOMc7pwv7QFophX1QE+d9DiVseAUZboOkOknkC4HK9
-	 1SxJuQ0Wg8WH267iSFCeL/aNQmcC+KEfoezkbESQ=
+	b=NUpZpYLLWf9Xi0KCC4cbU9Zhv1z0hRybLS3bvCr86jlwyTvu8+x1kLYXRjsWpvCow
+	 Zdt1VoTacifjj/jaJraNcrJ2MGygRkwcH4hHsrd/RKk2v5GsZYo4R/bWFOqNWQxhOg
+	 UoPjnLKoM0QamO57d85ZN/zwzW+c96lFI+7x6FTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,13 +33,13 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Juefei Pu <tomapufckgml@gmail.com>,
 	Zhengchuan Liang <zcliangcn@gmail.com>,
 	Xin Liu <bird@lzu.edu.cn>,
-	Zhao Zhang <zzhan461@ucr.edu>,
+	Wyatt Feng <bronzed_45_vested@icloud.com>,
 	Ren Wei <n05ec@lzu.edu.cn>,
 	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 200/261] sctp: diag: reject stale associations in dump_one path
-Date: Tue, 16 Jun 2026 20:30:38 +0530
-Message-ID: <20260616145054.321432879@linuxfoundation.org>
+Subject: [PATCH 6.12 201/261] sctp: stream: fully roll back denied add-stream state
+Date: Tue, 16 Jun 2026 20:30:39 +0530
+Message-ID: <20260616145054.369087609@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -58,78 +58,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Zhang <zzhan461@ucr.edu>
+From: Wyatt Feng <bronzed_45_vested@icloud.com>
 
-commit 5eba3e48d78edd7551b992cb7ba687019b3a78da upstream.
+commit a5f8a90ac9f77c678a9781c0a464b635e0d63e49 upstream.
 
-The SCTP exact sock_diag lookup can hold a transport reference, block on
-lock_sock(sk), and then resume after sctp_association_free() has marked
-the association dead and freed its bind address list.
+When ADD_OUT_STREAMS is denied, SCTP only shrinks the queued chunks and
+then lowers outcnt. That leaves removed stream metadata behind, so a
+later re-add can reuse a stale ext and hit a null-pointer dereference in
+the scheduler get path.
 
-When that happens, inet_assoc_attr_size() and
-inet_diag_msg_sctpasoc_fill() can still dereference association state
-that is no longer valid for reporting. In particular,
-inet_diag_msg_sctpasoc_fill() may read an empty bind-address list as a
-real sctp_sockaddr_entry and trigger an out-of-bounds read from
-unrelated association memory.
+Fix the rollback by tearing down the removed stream state the same way
+other stream resizes do. Unschedule the current scheduler state, drop
+the removed stream ext state with sctp_stream_outq_migrate(), and then
+reschedule the remaining streams.
 
-Reject the association after taking the socket lock if it has been
-reaped or detached from the endpoint, and report the lookup as stale.
-This keeps the exact dump-one path from formatting torn association
-state.
+This keeps scheduler-private RR/FC/PRIO lists consistent while fully
+rolling back denied outgoing stream additions.
 
-Fixes: 8f840e47f190 ("sctp: add the sctp_diag.c file")
+Fixes: 637784ade221 ("sctp: introduce priority based stream scheduler")
 Cc: stable@kernel.org
 Reported-by: Yuan Tan <yuantan098@gmail.com>
 Reported-by: Yifan Wu <yifanwucs@gmail.com>
 Reported-by: Juefei Pu <tomapufckgml@gmail.com>
 Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
 Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Zhao Zhang <zzhan461@ucr.edu>
+Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
 Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
 Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/fac6043fa20a2ff68e12958c431836f692c51268.1780113823.git.zzhan461@ucr.edu
+Link: https://patch.msgid.link/d78954ecd94954653ee299400e98d74a03a6f7d3.1780603399.git.bronzed_45_vested@icloud.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/diag.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ net/sctp/stream.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/sctp/diag.c
-+++ b/net/sctp/diag.c
-@@ -266,15 +266,15 @@ static int sctp_sock_dump_one(struct sct
+--- a/net/sctp/stream.c
++++ b/net/sctp/stream.c
+@@ -1038,6 +1038,7 @@ struct sctp_chunk *sctp_process_strreset
+ 			stsn, rtsn, GFP_ATOMIC);
+ 	} else if (req->type == SCTP_PARAM_RESET_ADD_OUT_STREAMS) {
+ 		struct sctp_strreset_addstrm *addstrm;
++		const struct sctp_sched_ops *sched;
+ 		__u16 number;
  
- 	lock_sock(sk);
- 
--	rep = nlmsg_new(inet_assoc_attr_size(sk, assoc), GFP_KERNEL);
--	if (!rep) {
--		release_sock(sk);
--		return -ENOMEM;
-+	if (ep != assoc->ep || assoc->base.dead) {
-+		err = -ESTALE;
-+		goto out_unlock;
- 	}
- 
--	if (ep != assoc->ep) {
--		err = -EAGAIN;
--		goto out;
-+	rep = nlmsg_new(inet_assoc_attr_size(sk, assoc), GFP_KERNEL);
-+	if (!rep) {
-+		err = -ENOMEM;
-+		goto out_unlock;
- 	}
- 
- 	err = inet_sctp_diag_fill(sk, assoc, rep, req, sk_user_ns(NETLINK_CB(skb).sk),
-@@ -289,8 +289,9 @@ static int sctp_sock_dump_one(struct sct
- 	return nlmsg_unicast(sock_net(skb->sk)->diag_nlsk, rep, NETLINK_CB(skb).portid);
- 
- out:
--	release_sock(sk);
- 	kfree_skb(rep);
-+out_unlock:
-+	release_sock(sk);
- 	return err;
- }
+ 		addstrm = (struct sctp_strreset_addstrm *)req;
+@@ -1048,7 +1049,10 @@ struct sctp_chunk *sctp_process_strreset
+ 			for (i = number; i < stream->outcnt; i++)
+ 				SCTP_SO(stream, i)->state = SCTP_STREAM_OPEN;
+ 		} else {
+-			sctp_stream_shrink_out(stream, number);
++			sched = sctp_sched_ops_from_stream(stream);
++			sched->unsched_all(stream);
++			sctp_stream_outq_migrate(stream, NULL, number);
++			sched->sched_all(stream);
+ 			stream->outcnt = number;
+ 		}
  
 
 
