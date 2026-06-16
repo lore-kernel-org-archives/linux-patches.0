@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF7E42B738;
-	Tue, 16 Jun 2026 15:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219E038C437;
+	Tue, 16 Jun 2026 15:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622890; cv=none; b=nePkVmmgFN98kH2/7y/O+wA0gtQc/S0DLltVjhObTncv9Hmqa4kYVFbeC4ujGfz7I2fCnWhaSK8KWd75PM3w2Zc7snxN5wGOaL6TH2/oK+phOivfJ6XmQnLnhGerQNQYVhY4WFF6Y44NQorpxoJKDKl7gA2EMWR/iyidDQBMG9s=
+	t=1781622896; cv=none; b=JHxd4CKkCXOCIK/XREvzFxl/0+cUQj+qh+b2sPN34Wo3HbbDwn3ijKP49YSircpp5mPoPLTIEuazokvyp17ACs/iKcFQIo/T/fdaFGw53sAp+58JGznQLLkZteBEnjnYh3sa2x6KJVemevjGsO8ToqWDgN++eYem95502De4kKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622890; c=relaxed/simple;
-	bh=3CtDenxy3CGipq+78qxWmWmVBZVJbtNqgn1TdlTegOE=;
+	s=arc-20240116; t=1781622896; c=relaxed/simple;
+	bh=mvObhHhTApx60iQzFm8x6Gtp3PBngqop46MSEZIGvd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HPUTeg1xAQcgfAFllTHgnrwGEs9oH+a7l22pBGk66R+aOq9tKQt0jiPbRfv3zYpNpSdDc2GOPufZOnVdkv20k1DJAZqRanB7esQFcedKGL6iVm5dOE684sMdmh5UxEUe7yJWCqO2MYvFo74kPPlrLSm986uGYDhhj/qVW6zNMqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OriQcAoR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AoaXtr9YLQWOYpGcMkD3cfTFlCdvpsg/4BHQRzs2cfmhiyhq/ASTwyrcCuqpTYcc716hTWyOIicq7fd1ylK78Le3U/pdiPQgGQgfEOI/2XcStk3t9qb7tTPiL8YQGutBQBKYxGWZrYRCCY/KpfeSq/qm9HYvZj8eClYFcYQ5qrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dm/9EwhB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OriQcAoR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA5A71F000E9;
-	Tue, 16 Jun 2026 15:14:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dm/9EwhB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C66481F000E9;
+	Tue, 16 Jun 2026 15:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622889;
-	bh=OZRV5LZH+TOM2XrPlgEMnJ66dPI3kIdWjr5yxoDknL8=;
+	s=korg; t=1781622894;
+	bh=nBWTW3uWE7ACEvSXYMBUHMPXc6Tcay/PK2JqMhz7dsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OriQcAoRykLMZO4ActsgyTxtMEcUALjKQ7a27AGsnZOJ0z3VFnc7yr6yk4zSjWciv
-	 pd50h5qSnfzmYyx1OwGPtEOugtrYD50DNbYPZNw2fil95R7n+mYLvBWjXtMIdc2XYm
-	 Pft49vmns8FQ0P671Xmc0ZDHiolVaw5HkCGSGUiU=
+	b=dm/9EwhBt28P8CgTRXL89TTM7EmElvOlTmxM5B4FVHA4f1nofil+EC9Ibt/T53oz+
+	 +k62bgHgyE2VdmbXaoYCHmMDee1XkNtXBrtrkxRq5yWdduZhaz587eUcPZhg4B/VyQ
+	 E8tMxOjX8clQ0g1xqDgXxxkh9L0+TxTyUAjrGOJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+535ecc844591e50588a5@syzkaller.appspotmail.com,
-	Bharath Reddy <kbreddy.rpbc@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 049/378] Bluetooth: fix memory leak in error path of hci_alloc_dev()
-Date: Tue, 16 Jun 2026 20:24:40 +0530
-Message-ID: <20260616145112.502266196@linuxfoundation.org>
+Subject: [PATCH 7.0 050/378] Bluetooth: ISO: Fix not releasing hdev reference on iso_conn_big_sync
+Date: Tue, 16 Jun 2026 20:24:41 +0530
+Message-ID: <20260616145112.563555899@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,56 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bharath Reddy <kbreddy.rpbc@gmail.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 37b3009bf5976e8ab77c8b9a9bc3bbd7ff49e37f ]
+[ Upstream commit 5cbf290b79351971f20c7a533247e8d58a3f970c ]
 
-Early failures in Bluetooth HCI UART configuration leak SRCU percpu
-memory.
+hci_get_route() returns a reference-counted hci_dev pointer via
+hci_dev_hold(). The function exits normally or with an error without ever
+releasing it.
 
-When device initialization fails before hci_register_dev() completes,
-the HCI_UNREGISTER flag is never set. As a result, when the device
-reference count reaches zero, bt_host_release() evaluates this flag as
-false and falls back to a direct kfree(hdev).
-
-Because hci_release_dev() is bypassed, the SRCU struct initialized
-early in hci_alloc_dev() is never cleaned up, resulting in a leak of
-percpu memory.
-
-Fix the leak by explicitly calling cleanup_srcu_struct() in the
-fallback (unregistered) branch of bt_host_release() before freeing
-the device.
-
-Reported-by: syzbot+535ecc844591e50588a5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=535ecc844591e50588a5
-Tested-by: syzbot+535ecc844591e50588a5@syzkaller.appspotmail.com
-Fixes: 1d6123102e9f ("Bluetooth: hci_core: Fix use-after-free in vhci_flush()")
-Signed-off-by: Bharath Reddy <kbreddy.rpbc@gmail.com>
+Fixes: 07a9342b94a9 ("Bluetooth: ISO: Send BIG Create Sync via hci_sync")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sysfs.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/bluetooth/iso.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/bluetooth/hci_sysfs.c b/net/bluetooth/hci_sysfs.c
-index 041ce9adc378ae..8957ce7c21b76c 100644
---- a/net/bluetooth/hci_sysfs.c
-+++ b/net/bluetooth/hci_sysfs.c
-@@ -83,10 +83,12 @@ static void bt_host_release(struct device *dev)
- {
- 	struct hci_dev *hdev = to_hci_dev(dev);
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index a6bd608cbda69d..2363b6135c6f1b 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1603,6 +1603,7 @@ static void iso_conn_big_sync(struct sock *sk)
  
--	if (hci_dev_test_flag(hdev, HCI_UNREGISTER))
-+	if (hci_dev_test_flag(hdev, HCI_UNREGISTER)) {
- 		hci_release_dev(hdev);
--	else
-+	} else {
-+		cleanup_srcu_struct(&hdev->srcu);
- 		kfree(hdev);
-+	}
- 	module_put(THIS_MODULE);
+ 	release_sock(sk);
+ 	hci_dev_unlock(hdev);
++	hci_dev_put(hdev);
  }
  
+ static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
 -- 
 2.53.0
 
