@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B461B43E4BC;
-	Tue, 16 Jun 2026 17:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A04C376A19;
+	Tue, 16 Jun 2026 17:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629558; cv=none; b=HfAh7E0hx8H1tK6IhWro47lHU8pjgsEOSzjJ4M+cp7601+tSLtTfjKMgBrJGzdwtop0TJA+YqAFEVq9CWKxhmvEje4f8nMhxal2fLnMDwE//etfekyujO6321EPqe6VsXd0YnHjN+DYYO+JiDem3WghyH5o73Uyk4pLL3zjeSMc=
+	t=1781629563; cv=none; b=jlb2P3ZLpM2o12o7+SPFeCK1iMiRv4NJWVEfUAJZ6b9h187MtgPSqTkMxXzy/S7ZSKinMCJ01Pm8bS324VwbdsysqMuLBGCOgJKq1+gnDQTQkN5n5/jQIce0xM407CWsrovCLBje6zw8u1ITrQNchZpdcUtYD2ovpnU1viaOHQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629558; c=relaxed/simple;
-	bh=tNx1pJmyQ/nL+VeM8xxzPlvttxxehSJc1hVUvIwZ7HQ=;
+	s=arc-20240116; t=1781629563; c=relaxed/simple;
+	bh=clKSvFisqjLm6P2ALulTn75OyUkBgA6FSSWWjZxQR4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b+BjFsY+o0nkOYadnTMLrQ2PF4lpjeXAuknlbOD0vd51htEnVMplp1cC/edeGqpFuQmFeKJWhj1+t7sAD/kmeiOxZLs1TTQGBSSi/1GCuiFB8tUdF2RwR3crSXTgzQe9TLtHIkiCQsvUGx2Fmtct5yQgUMbgFDCDzhNckCAHqJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbflZi4r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gZw39hf3VypRsmoywRRTeMM1pWY7IFzzNEy205bfJLSFMImXpK4pM1qEozjnLeCfxE9UO9TVUrIVjc5S1T2qgnIxJ/OmMLPRHeZMKxG9fbJrjT8BWNT3W69EsqKnqrhi1UQu2CSAnm89pGkmEFqWvSKhxjVgz01AV+3erAHC3Bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwhteU75; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbflZi4r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48471F000E9;
-	Tue, 16 Jun 2026 17:05:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwhteU75"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6222C1F000E9;
+	Tue, 16 Jun 2026 17:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629557;
-	bh=4eHwn+yXwOvYqpYqHktfBx+dJT9pq3h0h7ktWPsqXXc=;
+	s=korg; t=1781629562;
+	bh=aPwNYZTSXKeTQLz5G/yL59hnM4fRUj7JHzXTZ3KbQ8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cbflZi4r8T2nbIBhzaaxXHjiw8eUyDxJkorakZ7/VdL5VQPz8w1cGRH+XGBTWRs2g
-	 vyG+NaIjHD4DRu1cSB63RIUBBPxjGLjTp0F67yftv10eMCdvGx8o9/AH+6em/M8Iu9
-	 WL2DuQDJt7/IQtOG25L4Ba5zTkKv0H8SYWepf474=
+	b=pwhteU75qxkQDwD7DwJydJI0DHO/TqRhTNyb/sjznYdqRHDIkjURXPSrHT4IPSsnl
+	 wlwQeEp1QArb5E3SSFAdisoluTbJPQ6ReY24F0RxWDJw5BsZEuMae9OevmKDhQcqU8
+	 esjzHfUj5N4JdjI3FZy4sOOGc8AhvHoXbg/ov8rA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Roth <michael.roth@amd.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.6 296/452] KVM: Dont WARN if memory is dirtied without a vCPU when the VM is dying
-Date: Tue, 16 Jun 2026 20:28:43 +0530
-Message-ID: <20260616145133.079164654@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Mark Bundschuh <mkbund@amazon.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 287/452] netfilter: ctnetlink: ensure safe access to master conntrack
+Date: Tue, 16 Jun 2026 20:28:34 +0530
+Message-ID: <20260616145132.660167058@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,63 +52,221 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 8618004d3e897c0f1b71d9a9ab860461289bb89a upstream.
+[ Upstream commit bffcaad9afdfe45d7fc777397d3b83c1e3ebffe5 ]
 
-When marking a page dirty, complain about not having a running/loaded vCPU
-if and only if the VM is still alive, i.e. its refcount is non-zero.  This
-will allow fixing a memory leak for x86 SEV-ES guests without hitting what
-is effectively a false positive on the WARN.
+Holding reference on the expectation is not sufficient, the master
+conntrack object can just go away, making exp->master invalid.
 
-For some SEV-ES VM-Exits, KVM keeps a writable mapping of a guest page
-across an exit to userspace, and typically unmaps the page on the next
-KVM_RUN.  But if userspace never calls KVM_RUN after such an exit, then KVM
-needs to unmap the page when the vCPU is destroyed, which in turn triggers
-the WARN about not having a running vCPU.
+To access exp->master safely:
 
-Alternatively, SEV-ES could temporarily load the vCPU to suppress the WARN,
-as is done in nested_vmx_free_vcpu() (but for completely unrelated reasons;
-suppressing WARN from nested_put_vmcs12_pages() is pure happenstance).  But
-loading a vCPU during destruction is gross (ideally nVMX code would be
-cleaned up), risks complicating the SEV-ES code (KVM would need to ensure
-the temporarily load()+put() only runs when the vCPU isn't already loaded),
-and is ultimately pointless.
+- Grab the nf_conntrack_expect_lock, this gets serialized with
+  clean_from_lists() which also holds this lock when the master
+  conntrack goes away.
 
-The motivation for the WARN is to guard against KVM dirtying guest memory
-without pushing the corresponding GFN to the active vCPU's dirty ring, e.g.
-to ensure userspace doesn't miss a dirty page.  But for the VM's refcount
-to reach zero, there can't be _any_ userspace mappings to the dirty ring,
-as mapping the dirty ring requires doing mmap() on the vCPU FD.  I.e. if
-userspace had a valid mapping for the dirty ring, then the vCPU file and
-thus the owning VM would still be alive.  And so since userspace can't
-possibly reach the dirty ring, whether or not KVM technically "misses" a
-push to the dirty ring is irrelevant.
+- Hold reference on master conntrack via nf_conntrack_find_get().
+  Not so easy since the master tuple to look up for the master conntrack
+  is not available in the existing problematic paths.
 
-Reported-by: Michael Roth <michael.roth@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Michael Roth <michael.roth@amd.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260501202250.2115252-15-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <20260529183549.1104619-15-pbonzini@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch goes for extending the nf_conntrack_expect_lock section
+to address this issue for simplicity, in the cases that are described
+below this is just slightly extending the lock section.
+
+The add expectation command already holds a reference to the master
+conntrack from ctnetlink_create_expect().
+
+However, the delete expectation command needs to grab the spinlock
+before looking up for the expectation. Expand the existing spinlock
+section to address this to cover the expectation lookup. Note that,
+the nf_ct_expect_iterate_net() calls already grabs the spinlock while
+iterating over the expectation table, which is correct.
+
+The get expectation command needs to grab the spinlock to ensure master
+conntrack does not go away. This also expands the existing spinlock
+section to cover the expectation lookup too. I needed to move the
+netlink skb allocation out of the spinlock to keep it GFP_KERNEL.
+
+For the expectation events, the IPEXP_DESTROY event is already delivered
+under the spinlock, just move the delivery of IPEXP_NEW under the
+spinlock too because the master conntrack event cache is reached through
+exp->master.
+
+While at it, add lockdep notations to help identify what codepaths need
+to grab the spinlock.
+
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[ fix timer_delete -> del_timer in diff context lines since 8fa7292
+("treewide: Switch/rename to timer_delete[_sync]()") landed in 6.15 ]
+Signed-off-by: Mark Bundschuh <mkbund@amazon.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- virt/kvm/kvm_main.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/netfilter/nf_conntrack_core.h |  5 ++++
+ net/netfilter/nf_conntrack_ecache.c       |  2 ++
+ net/netfilter/nf_conntrack_expect.c       | 10 +++++++-
+ net/netfilter/nf_conntrack_netlink.c      | 28 +++++++++++++++--------
+ 4 files changed, 35 insertions(+), 10 deletions(-)
 
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -3357,7 +3357,8 @@ void mark_page_dirty_in_slot(struct kvm
- 	if (WARN_ON_ONCE(vcpu && vcpu->kvm != kvm))
- 		return;
+diff --git a/include/net/netfilter/nf_conntrack_core.h b/include/net/netfilter/nf_conntrack_core.h
+index 3384859a892101..8883575adcc1e7 100644
+--- a/include/net/netfilter/nf_conntrack_core.h
++++ b/include/net/netfilter/nf_conntrack_core.h
+@@ -83,6 +83,11 @@ void nf_conntrack_lock(spinlock_t *lock);
  
--	WARN_ON_ONCE(!vcpu && !kvm_arch_allow_write_without_running_vcpu(kvm));
-+	WARN_ON_ONCE(!vcpu && refcount_read(&kvm->users_count) &&
-+		     !kvm_arch_allow_write_without_running_vcpu(kvm));
- #endif
+ extern spinlock_t nf_conntrack_expect_lock;
  
- 	if (memslot && kvm_slot_dirty_track_enabled(memslot)) {
++static inline void lockdep_nfct_expect_lock_held(void)
++{
++	lockdep_assert_held(&nf_conntrack_expect_lock);
++}
++
+ /* ctnetlink code shared by both ctnetlink and nf_conntrack_bpf */
+ 
+ static inline void __nf_ct_set_timeout(struct nf_conn *ct, u64 timeout)
+diff --git a/net/netfilter/nf_conntrack_ecache.c b/net/netfilter/nf_conntrack_ecache.c
+index 69948e1d6974e3..6526bdcca580fd 100644
+--- a/net/netfilter/nf_conntrack_ecache.c
++++ b/net/netfilter/nf_conntrack_ecache.c
+@@ -237,6 +237,8 @@ void nf_ct_expect_event_report(enum ip_conntrack_expect_events event,
+ 	struct nf_ct_event_notifier *notify;
+ 	struct nf_conntrack_ecache *e;
+ 
++	lockdep_nfct_expect_lock_held();
++
+ 	rcu_read_lock();
+ 	notify = rcu_dereference(net->ct.nf_conntrack_event_cb);
+ 	if (!notify)
+diff --git a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
+index 70bcddfc17ccc2..379711ea5ab67e 100644
+--- a/net/netfilter/nf_conntrack_expect.c
++++ b/net/netfilter/nf_conntrack_expect.c
+@@ -51,6 +51,7 @@ void nf_ct_unlink_expect_report(struct nf_conntrack_expect *exp,
+ 	struct net *net = nf_ct_exp_net(exp);
+ 	struct nf_conntrack_net *cnet;
+ 
++	lockdep_nfct_expect_lock_held();
+ 	WARN_ON(!master_help);
+ 	WARN_ON(timer_pending(&exp->timeout));
+ 
+@@ -118,6 +119,8 @@ nf_ct_exp_equal(const struct nf_conntrack_tuple *tuple,
+ 
+ bool nf_ct_remove_expect(struct nf_conntrack_expect *exp)
+ {
++	lockdep_nfct_expect_lock_held();
++
+ 	if (del_timer(&exp->timeout)) {
+ 		nf_ct_unlink_expect(exp);
+ 		nf_ct_expect_put(exp);
+@@ -177,6 +180,8 @@ nf_ct_find_expectation(struct net *net,
+ 	struct nf_conntrack_expect *i, *exp = NULL;
+ 	unsigned int h;
+ 
++	lockdep_nfct_expect_lock_held();
++
+ 	if (!cnet->expect_count)
+ 		return NULL;
+ 
+@@ -459,6 +464,8 @@ static inline int __nf_ct_expect_check(struct nf_conntrack_expect *expect,
+ 	unsigned int h;
+ 	int ret = 0;
+ 
++	lockdep_nfct_expect_lock_held();
++
+ 	if (!master_help) {
+ 		ret = -ESHUTDOWN;
+ 		goto out;
+@@ -515,8 +522,9 @@ int nf_ct_expect_related_report(struct nf_conntrack_expect *expect,
+ 
+ 	nf_ct_expect_insert(expect);
+ 
+-	spin_unlock_bh(&nf_conntrack_expect_lock);
+ 	nf_ct_expect_event_report(IPEXP_NEW, expect, portid, report);
++	spin_unlock_bh(&nf_conntrack_expect_lock);
++
+ 	return 0;
+ out:
+ 	spin_unlock_bh(&nf_conntrack_expect_lock);
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index 255996f43d854c..eff5008f5e9d4e 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -3326,31 +3326,37 @@ static int ctnetlink_get_expect(struct sk_buff *skb,
+ 	if (err < 0)
+ 		return err;
+ 
++	skb2 = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_KERNEL);
++	if (!skb2)
++		return -ENOMEM;
++
++	spin_lock_bh(&nf_conntrack_expect_lock);
+ 	exp = nf_ct_expect_find_get(info->net, &zone, &tuple);
+-	if (!exp)
++	if (!exp) {
++		spin_unlock_bh(&nf_conntrack_expect_lock);
++		kfree_skb(skb2);
+ 		return -ENOENT;
++	}
+ 
+ 	if (cda[CTA_EXPECT_ID]) {
+ 		__be32 id = nla_get_be32(cda[CTA_EXPECT_ID]);
+ 
+ 		if (id != nf_expect_get_id(exp)) {
+ 			nf_ct_expect_put(exp);
++			spin_unlock_bh(&nf_conntrack_expect_lock);
++			kfree_skb(skb2);
+ 			return -ENOENT;
+ 		}
+ 	}
+ 
+-	skb2 = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_KERNEL);
+-	if (!skb2) {
+-		nf_ct_expect_put(exp);
+-		return -ENOMEM;
+-	}
+-
+ 	rcu_read_lock();
+ 	err = ctnetlink_exp_fill_info(skb2, NETLINK_CB(skb).portid,
+ 				      info->nlh->nlmsg_seq, IPCTNL_MSG_EXP_NEW,
+ 				      exp);
+ 	rcu_read_unlock();
+ 	nf_ct_expect_put(exp);
++	spin_unlock_bh(&nf_conntrack_expect_lock);
++
+ 	if (err <= 0) {
+ 		kfree_skb(skb2);
+ 		return -ENOMEM;
+@@ -3397,22 +3403,26 @@ static int ctnetlink_del_expect(struct sk_buff *skb,
+ 		if (err < 0)
+ 			return err;
+ 
++		spin_lock_bh(&nf_conntrack_expect_lock);
++
+ 		/* bump usage count to 2 */
+ 		exp = nf_ct_expect_find_get(info->net, &zone, &tuple);
+-		if (!exp)
++		if (!exp) {
++			spin_unlock_bh(&nf_conntrack_expect_lock);
+ 			return -ENOENT;
++		}
+ 
+ 		if (cda[CTA_EXPECT_ID]) {
+ 			__be32 id = nla_get_be32(cda[CTA_EXPECT_ID]);
+ 
+ 			if (id != nf_expect_get_id(exp)) {
+ 				nf_ct_expect_put(exp);
++				spin_unlock_bh(&nf_conntrack_expect_lock);
+ 				return -ENOENT;
+ 			}
+ 		}
+ 
+ 		/* after list removal, usage count == 1 */
+-		spin_lock_bh(&nf_conntrack_expect_lock);
+ 		if (del_timer(&exp->timeout)) {
+ 			nf_ct_unlink_expect_report(exp, NETLINK_CB(skb).portid,
+ 						   nlmsg_report(info->nlh));
+-- 
+2.53.0
+
 
 
