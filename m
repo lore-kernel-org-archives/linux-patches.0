@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9743D75AA;
-	Tue, 16 Jun 2026 18:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D24E3D45CB;
+	Tue, 16 Jun 2026 18:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633378; cv=none; b=jGhbLYfjsxK9Z6tUcamSkF7nnMqbdRThTEhJXRqS73OrR/SNj1mzsj146a7I2Z3vDYPIOGlwr8l3igLEpIAWHHGfdjJ6hBQNGcpucRKxCFGCfDXu4XrYGnr9lKilgHudtrMeOP1bvc/MP+h77oWGrC9e1XRLdrgoeGTIu36OlQo=
+	t=1781633383; cv=none; b=FfphK816QB2G5YX6S4lDYAuaF1q9cdbLxCVTiOrYR/sbiervy6Zm1lYXuwl3litW2/1CAtzyPvVv/PvULaNNsQ3o8/tuqIZ5NzfGu6HO4MRRMtsbO1QfEIp9OZ3ygLI/etWypRpGhpQZCyJ5EdBsM2xIlU/KXXhfYATP2wREVUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633378; c=relaxed/simple;
-	bh=N+AXtiSIt5+73KQp2fnvxGKXvqiuLUlSytbFMKUFsKM=;
+	s=arc-20240116; t=1781633383; c=relaxed/simple;
+	bh=vraXheyRBc0RLyGaWcmVuj61ZZ/lsfs6GpPtVgSTagM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Wiq4IjlKUx+xEJAWGtTXdB8UX/7dkWWbH5Z4zPd6Zs2eC8rtwpEl5lSpQdjX1MZfm6hojgj9aackf3aNVgHveZgIj3KezX16+KF+lkV8FgjNRUCMPyFoICARQ/nRAAQn65PaavZEwFvuI9dWgBZph3x2ZJoI4gPO6QLqPhAI4+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFNOwZ/c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y9zXynHVzZfg2H6mDuOEzD+aJlIo/ZmLfY3Db5+QwLaQHKk4d4kr2KRz87J/zsICy6EVYwP3yYsDTTX1V06y2vl86Yfn8LIcw81YguwJlTczWWBeYZUUefurDN+8o7UsypUmby3dBMlg18WVgfDxKMCullU7f8ka0im5TSna7ZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MKVKIOxJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFNOwZ/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C5B1F000E9;
-	Tue, 16 Jun 2026 18:09:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MKVKIOxJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711ED1F000E9;
+	Tue, 16 Jun 2026 18:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633377;
-	bh=yyLpLMBi3JbLUobClJ1JVJXeN3oZe4B5gLSSl3HhxOE=;
+	s=korg; t=1781633382;
+	bh=BqUae3BRQv06aVvfiMbXTKRQkN3e1vuOqFME785CAfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EFNOwZ/cGQR4A/460mciKs61vbsP/Pu2yTZvZoyZ6j6mAeaCX012oJe72CgBQXmMH
-	 iqC7qn6xHHYVs+Gy6vLkAyUawSrnuYt3pwL1cB9oONaBG1bL00oaPr/qFi686v9NNt
-	 OsQsNulA6WNcNrSio35SEeIPPBbBfe7fvpIh5twQ=
+	b=MKVKIOxJBTJhDnT5LMRwAo/OpLlWioiFQ5CwBcGZ249a7uGQqn28rSf5rzD1Zd5re
+	 ShyUms4ivOzlsMYDNZk98Z53Z4jPDgoqcvma6CyoO5tZ3Qe75I6h+KZ7eSCXuDo5oz
+	 XF1bDBcOtJotcZqUSQ+CDzxfX/kCPuW7hIblkZIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christofer Jonason <christofer.jonason@guidelinegeo.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Salih Erim <salih.erim@amd.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 068/411] iio: adc: xilinx-xadc: Fix sequencer mode in postdisable for dual mux
-Date: Tue, 16 Jun 2026 20:25:06 +0530
-Message-ID: <20260616145103.897168621@linuxfoundation.org>
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Zhu Yanjun <yanjun.Zhu@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
+	Ben Hutchings <benh@debian.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 051/411] RDMA/rxe: Fix double free in rxe_srq_from_init
+Date: Tue, 16 Jun 2026 20:24:49 +0530
+Message-ID: <20260616145102.995640913@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -47,79 +47,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christofer Jonason <christofer.jonason@guidelinegeo.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-commit 852534744c2d35626a604f128ff0b8ec12805591 upstream.
+commit 0beefd0e15d962f497aad750b2d5e9c3570b66d1 upstream.
 
-xadc_postdisable() unconditionally sets the sequencer to continuous
-mode. For dual external multiplexer configurations this is incorrect:
-simultaneous sampling mode is required so that ADC-A samples through
-the mux on VAUX[0-7] while ADC-B simultaneously samples through the
-mux on VAUX[8-15]. In continuous mode only ADC-A is active, so
-VAUX[8-15] channels return incorrect data.
+In rxe_srq_from_init(), the queue pointer 'q' is assigned to
+'srq->rq.queue' before copying the SRQ number to user space.
+If copy_to_user() fails, the function calls rxe_queue_cleanup()
+to free the queue, but leaves the now-invalid pointer in
+'srq->rq.queue'.
 
-Since postdisable is also called from xadc_probe() to set the initial
-idle state, the wrong sequencer mode is active from the moment the
-driver loads.
+The caller of rxe_srq_from_init() (rxe_create_srq) eventually
+calls rxe_srq_cleanup() upon receiving the error, which triggers
+a second rxe_queue_cleanup() on the same memory, leading to a
+double free.
 
-The preenable path already uses xadc_get_seq_mode() which returns
-SIMULTANEOUS for dual mux. Fix postdisable to do the same.
+The call trace looks like this:
+   kmem_cache_free+0x.../0x...
+   rxe_queue_cleanup+0x1a/0x30 [rdma_rxe]
+   rxe_srq_cleanup+0x42/0x60 [rdma_rxe]
+   rxe_elem_release+0x31/0x70 [rdma_rxe]
+   rxe_create_srq+0x12b/0x1a0 [rdma_rxe]
+   ib_create_srq_user+0x9a/0x150 [ib_core]
 
-Fixes: bdc8cda1d010 ("iio:adc: Add Xilinx XADC driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christofer Jonason <christofer.jonason@guidelinegeo.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Salih Erim <salih.erim@amd.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by moving 'srq->rq.queue = q' after copy_to_user.
+
+Fixes: aae0484e15f0 ("IB/rxe: avoid srq memory leak")
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Link: https://patch.msgid.link/20260112015412.29458-1-jiashengjiangcool@gmail.com
+Reviewed-by: Zhu Yanjun <yanjun.Zhu@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+[bwh: Backported to 5.15: There was no assignment to init->attr.max_wr
+ here; don't add it]
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/xilinx-xadc-core.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_srq.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/adc/xilinx-xadc-core.c
-+++ b/drivers/iio/adc/xilinx-xadc-core.c
-@@ -819,6 +819,7 @@ static int xadc_postdisable(struct iio_d
- {
- 	struct xadc *xadc = iio_priv(indio_dev);
- 	unsigned long scan_mask;
-+	int seq_mode;
- 	int ret;
- 	int i;
+diff --git a/drivers/infiniband/sw/rxe/rxe_srq.c b/drivers/infiniband/sw/rxe/rxe_srq.c
+index eb1c4c3b3a7865..595d4e7b91d0b8 100644
+--- a/drivers/infiniband/sw/rxe/rxe_srq.c
++++ b/drivers/infiniband/sw/rxe/rxe_srq.c
+@@ -100,8 +100,6 @@ int rxe_srq_from_init(struct rxe_dev *rxe, struct rxe_srq *srq,
+ 		return -ENOMEM;
+ 	}
  
-@@ -826,6 +827,12 @@ static int xadc_postdisable(struct iio_d
- 	for (i = 0; i < indio_dev->num_channels; i++)
- 		scan_mask |= BIT(indio_dev->channels[i].scan_index);
+-	srq->rq.queue = q;
+-
+ 	err = do_mmap_info(rxe, uresp ? &uresp->mi : NULL, udata, q->buf,
+ 			   q->buf_size, &q->ip);
+ 	if (err) {
+@@ -118,6 +116,8 @@ int rxe_srq_from_init(struct rxe_dev *rxe, struct rxe_srq *srq,
+ 		}
+ 	}
  
-+	/*
-+	 * Use the correct sequencer mode for the idle state: simultaneous
-+	 * mode for dual external mux configurations, continuous otherwise.
-+	 */
-+	seq_mode = xadc_get_seq_mode(xadc, scan_mask);
++	srq->rq.queue = q;
 +
- 	/* Enable all channels and calibration */
- 	ret = xadc_write_adc_reg(xadc, XADC_REG_SEQ(0), scan_mask & 0xffff);
- 	if (ret)
-@@ -836,11 +843,11 @@ static int xadc_postdisable(struct iio_d
- 		return ret;
- 
- 	ret = xadc_update_adc_reg(xadc, XADC_REG_CONF1, XADC_CONF1_SEQ_MASK,
--		XADC_CONF1_SEQ_CONTINUOUS);
-+				  seq_mode);
- 	if (ret)
- 		return ret;
- 
--	return xadc_power_adc_b(xadc, XADC_CONF1_SEQ_CONTINUOUS);
-+	return xadc_power_adc_b(xadc, seq_mode);
+ 	return 0;
  }
  
- static int xadc_preenable(struct iio_dev *indio_dev)
+-- 
+2.53.0
+
 
 
