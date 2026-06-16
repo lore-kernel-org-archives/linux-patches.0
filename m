@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948BC1A6803;
-	Tue, 16 Jun 2026 15:28:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4E23C1F5E;
+	Tue, 16 Jun 2026 15:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623735; cv=none; b=daKwCugcTg8mimsbl+38Q4wrxgszH0VFrjRuuCLci4nV+b+epO0klRIJ1SedLD3v2QnRapP+bBiIFp50yS7oG1SmAqtOVTq45cL2gAz8Y4iLyf2Id3m/TZVGXDS9ptDHnF/5+lnhCligPBdxVQ+noI2wau/zCGGcqWB/773VHFM=
+	t=1781623740; cv=none; b=lzojdoYwVFfs8fMf3QT4b4VwRlkcft0RSSEHeJ4ekd48Gxuhpz/glPDuL/0rb7W6aEUmYRe5kufCfcluJ2B+jbp2GdQHcfx2bFCb4v9ne90OSAca7RcHnQeshc5b0KZ0EFYq1/STBF3n3iBqhiBeQP/QX3ayY7X3Ld071k0Yp7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623735; c=relaxed/simple;
-	bh=dE81CNlwl+aIpShqf3U2O/NRdS4hmPCzPMF0DUypy6w=;
+	s=arc-20240116; t=1781623740; c=relaxed/simple;
+	bh=wJ0bSyLm/XG2Xe+faHAU1IKxbyWZWjicCZmU5U9G39s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b/OaAKoXF8mIuUz/hGyTb3aIaCDOhWzsBvqQndJgttEeePYuKhHevDXhRR7XlEB3UfqC3sy3wm1HMSOsT3SlwcFIV1h5r75/6XNa0t8F3gURAkphWD6dpt4dhJ4Ov6Nh8hSowQKti0qh2+tsUQuvmTEDFAhSZMpaXIqdfDQ4cUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npxzUAuT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KmmtqPVfns875jBCiX5Nbt1/4dKhBswmgYTUjKnuavJUd6e50q+da/dWPUGcM+cyjV2aFQWo9bQ3KIh7XUXCCwSvlu0PU6WGydvXqwrZDHrRRW8YaZMKZ9bVTmNAl5zq5S3EPyfog3cB9h1+zspJvDCVqF9WO4XQTQBum3nrwr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cPT1GCjR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npxzUAuT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0386F1F000E9;
-	Tue, 16 Jun 2026 15:28:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cPT1GCjR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFAE1F000E9;
+	Tue, 16 Jun 2026 15:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623733;
-	bh=Cnj8XdyETqbvYzRlpy9d1CRq6kXmQ9Qc95IkJUPzlPk=;
+	s=korg; t=1781623738;
+	bh=U9STe6k1W322fmvQTTZxWpHvjTQCn8i09SlFLfY/qzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=npxzUAuTAs8acGJxKjNUivlWMhEiJ0BCdbZcDS5pPki9Iz6RIgAl1lSGWrYGR1Hqv
-	 byfxYttoEboFekZ2ZMr9fswgvUIEngsf8gm8iXXADIHFpFQ72I/Pizj3TthpNLDiVU
-	 k0qhhtEVNEfVXYYtdpUEbMDnxSLfer8GEg2jL+9g=
+	b=cPT1GCjRr2p8k8LBdC6OWJIgZrLFezXVXGEH6vs4nF23Rz8BnWNm4DkVrzuQzuubD
+	 lwncLGMCruGYTgKsFu7gffsse4a8scrfZj8PkfSioQpsYIaIM1NGGSNzAB6rwWY3TX
+	 ExFBc5fHVBk/UUZHkUKc3DAPU+Xzc1ej6zfUAQPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Guopeng <zhangguopeng@kylinos.cn>,
-	Sun Shaojie <sunshaojie@kylinos.cn>,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 7.0 186/378] cgroup/cpuset: Use effective_xcpus in partcmd_update add/del mask calculation
-Date: Tue, 16 Jun 2026 20:26:57 +0530
-Message-ID: <20260616145120.169512940@linuxfoundation.org>
+	Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>,
+	Karol Wachowski <karol.wachowski@linux.intel.com>
+Subject: [PATCH 7.0 177/378] accel/ivpu: Add bounds check for firmware runtime memory
+Date: Tue, 16 Jun 2026 20:26:48 +0530
+Message-ID: <20260616145119.695172835@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,118 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sun Shaojie <sunshaojie@kylinos.cn>
+From: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
 
-commit 0a68853de27b522bca2b9934127277185374a24f upstream.
+commit 1d0b597facdd3c0239c88e8797c1014e1ea0ef15 upstream.
 
-When sibling CPU exclusion occurs, a partition's user_xcpus may contain
-CPUs that were never actually granted to it. These CPUs are present in
-user_xcpus(cs) but not in cs->effective_xcpus.
+Validate that the firmware runtime memory specified in the image
+header is properly aligned and sized to hold the firmware image.
+This prevents errors during memory allocation and image transfer.
 
-The partcmd_update path in update_parent_effective_cpumask() uses
-user_xcpus(cs) (via the local variable xcpus) to compute the addmask
-(CPUs to return to parent) and delmask (CPUs to request from parent).
-This is incorrect:
-
- 1) When newmask removes a CPU that was previously excluded by a
-    sibling, addmask incorrectly includes that CPU and tries to return
-    it to the parent even though the partition never actually owned it,
-    causing CPU overlap with sibling partitions and triggering warnings
-    in generate_sched_domains().
-
- 2) When newmask adds a previously excluded CPU that is now available,
-    delmask fails to request it from the parent because user_xcpus(cs)
-    already includes it.
-
-Fix this by using cs->effective_xcpus instead of user_xcpus(cs) in all
-partcmd_update paths that calculate addmask or delmask, including the
-PERR_NOCPUS error handling paths.
-
-Reproducers:
-
-  Example 1 - Removing a sibling-excluded CPU incorrectly returns it:
-
-    # cd /sys/fs/cgroup
-    # echo "0-1" > a1/cpuset.cpus
-    # echo "root" > a1/cpuset.cpus.partition
-    # echo "0-2" > b1/cpuset.cpus
-    # echo "root" > b1/cpuset.cpus.partition
-    # echo "2" > b1/cpuset.cpus
-    # cat cpuset.cpus.effective
-    # Actual: 0-1,3    Expected: 3
-
-  Example 2 - Expanding to a previously excluded CPU fails to request it:
-
-    # cd /sys/fs/cgroup
-    # echo "0-1" > a1/cpuset.cpus
-    # echo "root" > a1/cpuset.cpus.partition
-    # echo "0-2" > b1/cpuset.cpus
-    # echo "root" > b1/cpuset.cpus.partition
-    # echo "member" > a1/cpuset.cpus.partition
-    # echo "1-2" > b1/cpuset.cpus
-    # cat cpuset.cpus.effective
-    # Actual: 0-1,3    Expected: 0,3
-
-Fixes: 2a3602030d80 ("cgroup/cpuset: Don't invalidate sibling partitions on cpuset.cpus conflict")
+Fixes: 2007e210b6a1 ("accel/ivpu: Split FW runtime and global memory buffers")
 Cc: stable@vger.kernel.org # v7.0+
-Suggested-by: Zhang Guopeng <zhangguopeng@kylinos.cn>
-Signed-off-by: Sun Shaojie <sunshaojie@kylinos.cn>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
+Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+Link: https://patch.msgid.link/20260529120853.135876-1-andrzej.kacprowski@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cpuset.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/accel/ivpu/ivpu_fw.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 5c33ab20cc20..c9e14fda3d6f 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -1811,9 +1811,9 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
- 		 * Compute add/delete mask to/from effective_cpus
- 		 *
- 		 * For valid partition:
--		 *   addmask = exclusive_cpus & ~newmask
-+		 *   addmask = effective_xcpus & ~newmask
- 		 *			      & parent->effective_xcpus
--		 *   delmask = newmask & ~exclusive_cpus
-+		 *   delmask = newmask & ~effective_xcpus
- 		 *		       & parent->effective_xcpus
- 		 *
- 		 * For invalid partition:
-@@ -1825,11 +1825,11 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
- 			deleting = cpumask_and(tmp->delmask,
- 					newmask, parent->effective_xcpus);
- 		} else {
--			cpumask_andnot(tmp->addmask, xcpus, newmask);
-+			cpumask_andnot(tmp->addmask, cs->effective_xcpus, newmask);
- 			adding = cpumask_and(tmp->addmask, tmp->addmask,
- 					     parent->effective_xcpus);
+diff --git a/drivers/accel/ivpu/ivpu_fw.c b/drivers/accel/ivpu/ivpu_fw.c
+index 107f8ad31050..33c50779c06b 100644
+--- a/drivers/accel/ivpu/ivpu_fw.c
++++ b/drivers/accel/ivpu/ivpu_fw.c
+@@ -259,6 +259,22 @@ static int ivpu_fw_parse(struct ivpu_device *vdev)
+ 		return -EINVAL;
+ 	}
  
--			cpumask_andnot(tmp->delmask, newmask, xcpus);
-+			cpumask_andnot(tmp->delmask, newmask, cs->effective_xcpus);
- 			deleting = cpumask_and(tmp->delmask, tmp->delmask,
- 					       parent->effective_xcpus);
- 		}
-@@ -1868,7 +1868,7 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
- 			part_error = PERR_NOCPUS;
- 			deleting = false;
- 			adding = cpumask_and(tmp->addmask,
--					     xcpus, parent->effective_xcpus);
-+					     cs->effective_xcpus, parent->effective_xcpus);
- 		}
- 	} else {
- 		/*
-@@ -1890,7 +1890,8 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
- 			part_error = PERR_NOCPUS;
- 			if (is_partition_valid(cs))
- 				adding = cpumask_and(tmp->addmask,
--						xcpus, parent->effective_xcpus);
-+						     cs->effective_xcpus,
-+						     parent->effective_xcpus);
- 		} else if (is_partition_invalid(cs) && !cpumask_empty(xcpus) &&
- 			   cpumask_subset(xcpus, parent->effective_xcpus)) {
- 			struct cgroup_subsys_state *css;
++	if (!PAGE_ALIGNED(runtime_addr)) {
++		ivpu_err(vdev, "Runtime address 0x%llx not page aligned\n", runtime_addr);
++		return -EINVAL;
++	}
++
++	if (!PAGE_ALIGNED(runtime_size)) {
++		ivpu_err(vdev, "Runtime size %llu not page aligned\n", runtime_size);
++		return -EINVAL;
++	}
++
++	if (runtime_size < image_size) {
++		ivpu_err(vdev, "Runtime size too small: %llu, image size: %llu\n",
++			 runtime_size, image_size);
++		return -EINVAL;
++	}
++
+ 	if (!ivpu_is_within_range(image_load_addr, image_size, &vdev->hw->ranges.runtime)) {
+ 		ivpu_err(vdev, "Invalid firmware load address: 0x%llx and size %llu\n",
+ 			 image_load_addr, image_size);
 -- 
 2.54.0
 
