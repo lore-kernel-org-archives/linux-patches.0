@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565ED4657D0;
-	Tue, 16 Jun 2026 17:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C78F4657D0;
+	Tue, 16 Jun 2026 17:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630460; cv=none; b=k3EB/cApm0A5SS0eB3HqCb/f6W0WoapzKhFVrbtlavQqCHO6vtS+yT6uW5N/vLW90g0O0qYOkn2lHF4mVxQQyqnZR1+5gObtNcmgUOR3VOHRr/7MBZginXoMER1Bgaz2kNqLucnrQ5nvcR5sj5C4CfVdOx68bFXjCUI6C6C6bzo=
+	t=1781630465; cv=none; b=Pooz8gNtY0bi9mxu6ya0TfjImeM0mVC5/z3vsWyXsmekEH6CLnhw/spn/mvk8/dUoB9GPqydVAySvG01P2mdwAuiRj2dSVizaPiXC6j55bO6IH2UFgrGwnrFovU3obNdI4NiGbLi/ZxHqZMMUW/3ajTesFYpzkyW82260UuCA1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630460; c=relaxed/simple;
-	bh=14OsWFlhw5HQWnhvw3Poe2jKZhky0FZbkEAO82EoqJc=;
+	s=arc-20240116; t=1781630465; c=relaxed/simple;
+	bh=/eF0D76Kq3LdmO62QD4GB4JdBoQe/PHTrIR+OP1v5ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oMdDlpvsNYHpxFP2jK9EzohccKq9plqtdO4yNAl3QxKvZJZI0d/YcC0855u5FGzgvcXC7j8f2MLagPBX42fGhYIAcn4NTAry9iMbjCAIZDOU8DkgbdPaBd56ZfJxPzDhz4tp9ieZ+bzpx2Lzf1D6GOWVWlt0c8goHEUjMSaMvAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d3uN4X7O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mCliDJg0Wfciw0ftzf5gyOgu2c/D7NGEwWhTo8aFwMBe9Vp0TpitXYpw4tucHgk3ZwuG4UOP2nkA53xJUaXtkmKwL8G164RdG1nqF/xFOA3sKqndIg0z8Ya2lOXjx/bCsNXFRXKmWA90mBn/lqGrHcrIR+KqT3qjyKZUQaR5UG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=msk+ftab; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3uN4X7O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 447AD1F000E9;
-	Tue, 16 Jun 2026 17:20:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="msk+ftab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C0611F000E9;
+	Tue, 16 Jun 2026 17:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630459;
-	bh=iOD+b3GlIYQGjPRY9vSRuT+x5cD6OGG7XcN0OG76/Yg=;
+	s=korg; t=1781630464;
+	bh=+XpWFDL/UcWFkO9pN2Nahbhz3w5DvABuEBSe/NCNSwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d3uN4X7OeSVv3eaaYziJWERC5NSSiE5p8Q6vRMe7i1lGT9nel8fxduDf94fRXSf8o
-	 /B84ArUJJnKRzB1q4VpavmqktLniqEBO/d8+1yy3GhC7kovyterMrbmUbXHU024WUk
-	 zNAbI08LRKCGaC3w8uKfaRSU6gLMO7OcHObwhQO0=
+	b=msk+ftab5ZwumMNSFy621WsJf0p7NhJ0zsqKAb55QDDFTIvUmRb+J4+vt607UBgMO
+	 Fs5M7l686NPQYj/6et8cWRNFsS0BQwal/MWJ+ItBbd+fmz5yC6zAeThUOXWS5nJrMo
+	 dbeIJJtkBs/J81/jBuviFAysCJUM/o97jUXh5CCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Florian Westphal <fw@strlen.de>,
+	Kevin Hao <haokexin@gmail.com>,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Wenshan Lan <jetlan9@163.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/522] netfilter: ebtables: fix OOB read in compat_mtw_from_user
-Date: Tue, 16 Jun 2026 20:22:42 +0530
-Message-ID: <20260616145126.198995667@linuxfoundation.org>
+Subject: [PATCH 6.1 006/522] net: cpsw_new: Fix potential unregister of netdev that has not been registered yet
+Date: Tue, 16 Jun 2026 20:22:33 +0530
+Message-ID: <20260616145125.661056557@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -57,105 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Kevin Hao <haokexin@gmail.com>
 
-[ Upstream commit f438d1786d657d57790c5d138d6db3fc9fdac392 ]
+[ Upstream commit 9d724b34fbe13b71865ad0906a4be97571f19cf5 ]
 
-Luxiao Xu says:
+If an error occurs during register_netdev() for the first MAC in
+cpsw_register_ports(), even though cpsw->slaves[0].ndev is set to NULL,
+cpsw->slaves[1].ndev would remain unchanged. This could later cause
+cpsw_unregister_ports() to attempt unregistering the second MAC.
+To address this, add a check for ndev->reg_state before calling
+unregister_netdev(). With this change, setting cpsw->slaves[i].ndev
+to NULL becomes unnecessary and can be removed accordingly.
 
- The function compat_mtw_from_user() converts ebtables extensions from
- 32-bit user structures to kernel native structures. However, it lacks
- proper validation of the user-supplied match_size/target_size.
-
- When certain extensions are processed, the kernel-side translation
- logic may perform memory accesses based on the extension's expected
- size. If the user provides a size smaller than what the extension
- requires, it results in an out-of-bounds read as reported by KASAN.
-
- This fix introduces a check to ensure match_size is at least as large
- as the extension's required compatsize. This covers matches, watchers,
- and targets, while maintaining compatibility with standard targets.
-
-AFAIU this is relevant for matches that need to go though
-match->compat_from_user() call.  Those that use plain memcpy with the
-user-provided size are ok because the caller checks that size vs the
-start of the next rule entry offset (which itself is checked vs. total
-size copied from userspace).
-
-The ->compat_from_user() callbacks assume they can read compatsize bytes,
-so they need this extra check.
-
-Based on an earlier patch from Luxiao Xu.
-
-Fixes: 81e675c227ec ("netfilter: ebtables: add CONFIG_COMPAT support")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: ed3525eda4c4 ("net: ethernet: ti: introduce cpsw switchdev based driver part 1 - dual-emac")
+Signed-off-by: Kevin Hao <haokexin@gmail.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+Link: https://patch.msgid.link/20260205-cpsw-error-path-v1-2-6e58bae6b299@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Wenshan Lan <jetlan9@163.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/ebtables.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ drivers/net/ethernet/ti/cpsw_new.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
-index f99e348c8f37fa..bc69406d103df6 100644
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -1952,6 +1952,25 @@ enum compat_mwt {
- 	EBT_COMPAT_TARGET,
- };
+diff --git a/drivers/net/ethernet/ti/cpsw_new.c b/drivers/net/ethernet/ti/cpsw_new.c
+index c99dde9dbe7750..17c267f6d79aa9 100644
+--- a/drivers/net/ethernet/ti/cpsw_new.c
++++ b/drivers/net/ethernet/ti/cpsw_new.c
+@@ -1437,7 +1437,8 @@ static void cpsw_unregister_ports(struct cpsw_common *cpsw)
+ 	int i = 0;
  
-+static bool match_size_ok(const struct xt_match *match, unsigned int match_size)
-+{
-+	u16 csize;
-+
-+	if (match->matchsize == -1) /* cannot validate ebt_among */
-+		return true;
-+
-+	csize = match->compatsize ? : match->matchsize;
-+
-+	return match_size >= csize;
-+}
-+
-+static bool tgt_size_ok(const struct xt_target *tgt, unsigned int tgt_size)
-+{
-+	u16 csize = tgt->compatsize ? : tgt->targetsize;
-+
-+	return tgt_size >= csize;
-+}
-+
- static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
- 				enum compat_mwt compat_mwt,
- 				struct ebt_entries_buf_state *state,
-@@ -1977,6 +1996,11 @@ static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
- 		if (IS_ERR(match))
- 			return PTR_ERR(match);
+ 	for (i = 0; i < cpsw->data.slaves; i++) {
+-		if (!cpsw->slaves[i].ndev)
++		if (!cpsw->slaves[i].ndev ||
++		    cpsw->slaves[i].ndev->reg_state != NETREG_REGISTERED)
+ 			continue;
  
-+		if (!match_size_ok(match, match_size)) {
-+			module_put(match->me);
-+			return -EINVAL;
-+		}
-+
- 		off = ebt_compat_match_offset(match, match_size);
- 		if (dst) {
- 			if (match->compat_from_user)
-@@ -1996,6 +2020,12 @@ static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
- 					    mwt->u.revision);
- 		if (IS_ERR(wt))
- 			return PTR_ERR(wt);
-+
-+		if (!tgt_size_ok(wt, match_size)) {
-+			module_put(wt->me);
-+			return -EINVAL;
-+		}
-+
- 		off = xt_compat_target_offset(wt);
- 
- 		if (dst) {
+ 		unregister_netdev(cpsw->slaves[i].ndev);
+@@ -1457,7 +1458,6 @@ static int cpsw_register_ports(struct cpsw_common *cpsw)
+ 		if (ret) {
+ 			dev_err(cpsw->dev,
+ 				"cpsw: err registering net device%d\n", i);
+-			cpsw->slaves[i].ndev = NULL;
+ 			break;
+ 		}
+ 	}
 -- 
 2.53.0
 
