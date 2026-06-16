@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F0C438FF3;
-	Tue, 16 Jun 2026 15:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8619042EED7;
+	Tue, 16 Jun 2026 15:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622745; cv=none; b=YqqQHV85Za88TeLOQ3lAnJr1acQQ8E2SXMgNIk1NyYOjYdpDmERMKhyJW1iMzjlPBTYm81o8dpXNrnh+/AELoGfH03rrlFT83nKdkfZsnJrWKA/haIc5dC0vUkRMspb3yQAj0YhJFYn2PHZR2OtmMcv710yK5eGrkDtalq+cEBM=
+	t=1781622750; cv=none; b=ImCnoPrQ4wmipP4cIBD4Cs/eckfnNLPoKJpYIwmv5mR+SeNemb8tXZSTavEPDJoXH4C0Y4PwS2k1K8iBQgjWQl8M6hQz6ZEmpVtvvHE/VRWjitMi9Pz27fisoMdd3bjWcgxcfrqxXwPuGNBo+4ABJXyFapZSVAsLIY4MQGLjvsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622745; c=relaxed/simple;
-	bh=JZU3KArfXawFg4WnK2vbZ/CbCs8m17IoGGIDrL/KKHo=;
+	s=arc-20240116; t=1781622750; c=relaxed/simple;
+	bh=jmrA1oWT4QnYFlh7LRs6b9MQy4PDDvgFGNeil5rReEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mSXHhYueICAFfGDC9vagKjrBMZJc3NRfU2jqoudnAPCzhl71Ab/2TQ5VlrXJ2QuhGcExX5gFTkDhnHzB2Phnl707c75GVR84rolKBDJQq17laDSY1dzuyO5qDjd41i/0yNq9uIC+qlsVl+/e0WfMLir0sc59YRqPa5nHhRbhAp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZCluDjY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K7fjN103oK1fpRIcdqg+Ybl3QRMwtRq9YgRfWTOphGtdHpONYZYEXtmKH8ezfVE0ELf71nJCURlckvBIMB0066SuJQX+OOcvHzkt+cW5EPNFSExVDsmewx08XBZ7QcL2U55gY9weaUDcAEi6+IdeoOjqziPe6p5sW7jgGQm29iY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBC0vcoS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZCluDjY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D8CE1F000E9;
-	Tue, 16 Jun 2026 15:12:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBC0vcoS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863FF1F000E9;
+	Tue, 16 Jun 2026 15:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622744;
-	bh=wUJCzUifUNjWQpfO+zrd17H5Me+5zNBBNDhY2HkuiT8=;
+	s=korg; t=1781622749;
+	bh=5LtgJPTLNZlGMuFIDreLH5sYhG30GUdypSjtlRmeyJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yZCluDjYRG2ecVc39mhZmAR/p6wMzmid4nsGvxrX679X4bH2ZQcIl5yW91hWbuMb1
-	 QCnKzyoU/yz59SibaGN74aooAjgLneecxX2n0NPRXZBQ7qL67LsBO1u5K4Oh6qj+Hf
-	 RBZ9R2LjDNw3S8nwOXOm8h5xaWTRHLdfKJkaKL7c=
+	b=qBC0vcoSuua1+C/IgC9UlgcM70cy8PUZpqP6uvl/X0TzhroKICyL6vCoCey3+SabR
+	 Q+09CY9Rj3Pa+Gk3zVGZlVzFRYUbOK9Wu/OfwZcW8f/Lt810PYz+grAu7JHtJhLbUb
+	 vflthmxmNIuF8qp/vRWrIoJ3dpDK3yluB0UYQG2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Florian Westphal <fw@strlen.de>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 021/378] netfilter: synproxy: add mutex to guard hook reference counting
-Date: Tue, 16 Jun 2026 20:24:12 +0530
-Message-ID: <20260616145110.943374633@linuxfoundation.org>
+Subject: [PATCH 7.0 022/378] netfilter: conntrack_irc: fix possible out-of-bounds read
+Date: Tue, 16 Jun 2026 20:24:13 +0530
+Message-ID: <20260616145110.997551211@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,111 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 2fcba19caaeb2a33017459d3430f057967bb91b6 ]
+[ Upstream commit 66eba0ffce3b7e11449946b4cbbef8ea36112f56 ]
 
-As the synproxy infrastructure register netfilter hooks on-demand when a
-user adds the first iptables target or nftables expression, if done
-concurrently they can race each other.
+When parsing fails after we've matched the command string we
+should bail out instead of trying to match a different command.
 
-Introduce a mutex to serialize the refcount control blocks access from
-both frontends. While a per namespace mutex might be more efficient, it
-is not needed for target/expression like SYNPROXY.
+This helper should be deprecated, given prevalence of TLS I doubt it has
+any relevance in 2026.
 
-Fixes: ad49d86e07a4 ("netfilter: nf_tables: Add synproxy support")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Fixes: 869f37d8e48f ("[NETFILTER]: nf_conntrack/nf_nat: add IRC helper port")
+Closes: https://sashiko.dev/#/patchset/20260525182924.28456-1-fw%40strlen.de
 Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_synproxy_core.c | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ net/netfilter/nf_conntrack_irc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_synproxy_core.c b/net/netfilter/nf_synproxy_core.c
-index 036c8586f49b75..ed00114f65f392 100644
---- a/net/netfilter/nf_synproxy_core.c
-+++ b/net/netfilter/nf_synproxy_core.c
-@@ -22,6 +22,8 @@
- #include <net/netfilter/nf_conntrack_zones.h>
- #include <net/netfilter/nf_synproxy.h>
+diff --git a/net/netfilter/nf_conntrack_irc.c b/net/netfilter/nf_conntrack_irc.c
+index b8e6d724acd155..064df01953ebf7 100644
+--- a/net/netfilter/nf_conntrack_irc.c
++++ b/net/netfilter/nf_conntrack_irc.c
+@@ -209,7 +209,7 @@ static int help(struct sk_buff *skb, unsigned int protoff,
+ 			if (parse_dcc(data, data_limit, &dcc_ip,
+ 				       &dcc_port, &addr_beg_p, &addr_end_p)) {
+ 				pr_debug("unable to parse dcc command\n");
+-				continue;
++				goto out;
+ 			}
  
-+static DEFINE_MUTEX(synproxy_mutex);
-+
- unsigned int synproxy_net_id;
- EXPORT_SYMBOL_GPL(synproxy_net_id);
+ 			pr_debug("DCC bound ip/port: %pI4:%u\n",
+@@ -223,7 +223,7 @@ static int help(struct sk_buff *skb, unsigned int protoff,
+ 				net_warn_ratelimited("Forged DCC command from %pI4: %pI4:%u\n",
+ 						     &tuple->src.u3.ip,
+ 						     &dcc_ip, dcc_port);
+-				continue;
++				goto out;
+ 			}
  
-@@ -769,26 +771,31 @@ static const struct nf_hook_ops ipv4_synproxy_ops[] = {
- 
- int nf_synproxy_ipv4_init(struct synproxy_net *snet, struct net *net)
- {
--	int err;
-+	int err = 0;
- 
-+	mutex_lock(&synproxy_mutex);
- 	if (snet->hook_ref4 == 0) {
- 		err = nf_register_net_hooks(net, ipv4_synproxy_ops,
- 					    ARRAY_SIZE(ipv4_synproxy_ops));
- 		if (err)
--			return err;
-+			goto out;
- 	}
- 
- 	snet->hook_ref4++;
--	return 0;
-+out:
-+	mutex_unlock(&synproxy_mutex);
-+	return err;
- }
- EXPORT_SYMBOL_GPL(nf_synproxy_ipv4_init);
- 
- void nf_synproxy_ipv4_fini(struct synproxy_net *snet, struct net *net)
- {
-+	mutex_lock(&synproxy_mutex);
- 	snet->hook_ref4--;
- 	if (snet->hook_ref4 == 0)
- 		nf_unregister_net_hooks(net, ipv4_synproxy_ops,
- 					ARRAY_SIZE(ipv4_synproxy_ops));
-+	mutex_unlock(&synproxy_mutex);
- }
- EXPORT_SYMBOL_GPL(nf_synproxy_ipv4_fini);
- 
-@@ -1193,27 +1200,32 @@ static const struct nf_hook_ops ipv6_synproxy_ops[] = {
- int
- nf_synproxy_ipv6_init(struct synproxy_net *snet, struct net *net)
- {
--	int err;
-+	int err = 0;
- 
-+	mutex_lock(&synproxy_mutex);
- 	if (snet->hook_ref6 == 0) {
- 		err = nf_register_net_hooks(net, ipv6_synproxy_ops,
- 					    ARRAY_SIZE(ipv6_synproxy_ops));
- 		if (err)
--			return err;
-+			goto out;
- 	}
- 
- 	snet->hook_ref6++;
--	return 0;
-+out:
-+	mutex_unlock(&synproxy_mutex);
-+	return err;
- }
- EXPORT_SYMBOL_GPL(nf_synproxy_ipv6_init);
- 
- void
- nf_synproxy_ipv6_fini(struct synproxy_net *snet, struct net *net)
- {
-+	mutex_lock(&synproxy_mutex);
- 	snet->hook_ref6--;
- 	if (snet->hook_ref6 == 0)
- 		nf_unregister_net_hooks(net, ipv6_synproxy_ops,
- 					ARRAY_SIZE(ipv6_synproxy_ops));
-+	mutex_unlock(&synproxy_mutex);
- }
- EXPORT_SYMBOL_GPL(nf_synproxy_ipv6_fini);
- #endif /* CONFIG_IPV6 */
+ 			exp = nf_ct_expect_alloc(ct);
 -- 
 2.53.0
 
