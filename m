@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071E847A0BC;
-	Tue, 16 Jun 2026 15:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD81247AF63;
+	Tue, 16 Jun 2026 15:58:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625510; cv=none; b=fMeXabGoIJwRJPew6c6e/W+etUV26G1qVKsac2/1YbD5UQbBdKKrT/9A6996cQapYsGwn6wdkzZkXvlp0E7Ag5vlbztLXn6sZH35W6xiH6g68A1vWkHLz+h5mVDvlmhfSLzEFT8hihco2Zdl8/uD07v+WJ+RukD10iP0loT4bkk=
+	t=1781625515; cv=none; b=GnSdksRWgh4IQfU3LdbZ6uufHas394dbPn9zSWeekVrPD11Y6w5Shnml2Um1Bl/iLx2XBSEEfiPTrUcVR7p/l9WDVnk3ARfvAvNVp++lNxb+gAxtNy0uJLa1z68h9o9bvv9FN22MSc9jfdnVzN747cCvdvUkiVREwcVo14vGb0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625510; c=relaxed/simple;
-	bh=Ei9A7othE+TsRKMuh6FwLehDk4NugdBMTracOWiIB/E=;
+	s=arc-20240116; t=1781625515; c=relaxed/simple;
+	bh=nh4O6tUflC7U4iiGis4x16+wJ8GqhfUm5I+loPNW/RM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iO3j/Tl/Yi+BjFxffGHPH4q3hFrPqmtT9SJmeAGB8yC0+M5JiA1gnyNWSBgbHat5zquD6kzUTuH2f/as2MUGq3nYcqcaH53KlqYZO7zYH1lCTFtkFqRYzY7ugjibDsP+WhNUCVtG59wKzzFqoGQTtoC94sJUBHFUprPNCj7XW7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pQsTwUgw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=av9mZ7aq0LE2Du/zYUhljnSDHVC+C62zbnbY9QGgFE3VuCXh+GkL1dzd6dI1lp8HAHrJhw2HuBOCMlt5Ezt2sH8nfCHsYSDS4TMqsK59ZbfEl9RnSR9JV7R/uOspLJ5o0lLf1RNzUt9Y9WDhMPHAKi3Aht1eNgXJz5o3uttga0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZ2t8yGc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pQsTwUgw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B031F00A3A;
-	Tue, 16 Jun 2026 15:58:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZ2t8yGc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833471F00A3A;
+	Tue, 16 Jun 2026 15:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625508;
-	bh=VLRnb9cSn4bqPh4afu2vFZ7NgbW1wdG2XCWLt4yRpEE=;
+	s=korg; t=1781625514;
+	bh=Ba7XPydly1pKJLTnQfybEQqotlOeRX2BLpV76cDlxqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pQsTwUgwmc0BYhFAEDtZsjl9eVFU6V2qzo1ni+K3z+OGHGYaB89/Um49r6PU+ytUO
-	 xg5rCSpqyET+wUPQEmWFaqtutpNwfOwV+PlEBSU7mK5ERo5WwP0HysmkPJcucVX8n0
-	 gOkRTbU67nb3ByYjUmj0busGZyJm5JIJhY7dNbjw=
+	b=zZ2t8yGc5BUTfi7g/7z0LluD9DpkK+doG9/OQEht2dqpQku9f4ujkb1cOwkMr/lLo
+	 HpW2IMdT5slOHp84pVgMKlumNM9IbOJ3RraFezEMHiwx8gnyX35USLTxP24M9qTgQ+
+	 E/qM2EXFswsGMSqVOlK73vGzK4J3ZYGHLoxr28jU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Umang Jain <uajain@igalia.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 114/325] ASoC: SOF: amd: fix for ipc flags check
-Date: Tue, 16 Jun 2026 20:28:30 +0530
-Message-ID: <20260616145103.378936346@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuqi Xu <xuyq21@lenovo.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.18 150/325] Bluetooth: hci_sync: reject oversized Broadcast Announcement prepend
+Date: Tue, 16 Jun 2026 20:29:06 +0530
+Message-ID: <20260616145105.184027985@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,68 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+From: Yuqi Xu <xuyq21@lenovo.com>
 
-[ Upstream commit 6042c91df60e825625bc7d5c5c3b5a87b91d5805 ]
+commit 5c65b96b549ea2dcfde497436bf9e048deb87758 upstream.
 
-Firmware will set dsp_ack to 1 when firmware sends response for the IPC
-command issued by host. Similarly dsp_msg flag will be updated to 1.
+Existing advertising instances can already hold the maximum extended
+advertising payload. When hci_adv_bcast_annoucement() prepends the
+Broadcast Announcement service data to that payload, the combined data
+may no longer fit in the temporary buffer used to rebuild the
+advertising data.
 
-During ACP D0 entry, the value read from the sof_dsp_ack_write scratch
-flag can be uninitialized. A non-zero garbage value is treated as a
-pending DSP IPC ack before SOF_FW_BOOT_COMPLETE, causing a spurious
-"IPC reply before FW_BOOT_COMPLETE" log.
+Reject that case before copying the existing payload and report the
+failure through the device log. This keeps the existing advertising
+data intact and avoids overrunning the temporary buffer.
 
-Fix the condition checks for ipc flags.
-
-Fixes: 738a2b5e2cc9 ("ASoC: SOF: amd: Add IPC support for ACP IP block")
-Link: https://github.com/thesofproject/linux/pull/5642
-Signed-off-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Tested-by: Umang Jain <uajain@igalia.com>
-Link: https://patch.msgid.link/20260609160938.3717513-1-Vijendar.Mukunda@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 5725bc608252 ("Bluetooth: hci_sync: Fix broadcast/PA when using an existing instance")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Yuqi Xu <xuyq21@lenovo.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/amd/acp-ipc.c | 4 ++--
- sound/soc/sof/amd/acp.h     | 2 ++
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_sync.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/soc/sof/amd/acp-ipc.c b/sound/soc/sof/amd/acp-ipc.c
-index 22d4b807e1bb75..1c3f7601a8c4ce 100644
---- a/sound/soc/sof/amd/acp-ipc.c
-+++ b/sound/soc/sof/amd/acp-ipc.c
-@@ -181,14 +181,14 @@ irqreturn_t acp_sof_ipc_irq_thread(int irq, void *context)
- 	}
- 
- 	dsp_msg = snd_sof_dsp_read(sdev, ACP_DSP_BAR, ACP_SCRATCH_REG_0 + dsp_msg_write);
--	if (dsp_msg) {
-+	if (dsp_msg == ACP_DSP_MSG_SET) {
- 		snd_sof_ipc_msgs_rx(sdev);
- 		acp_dsp_ipc_host_done(sdev);
- 		ipc_irq = true;
- 	}
- 
- 	dsp_ack = snd_sof_dsp_read(sdev, ACP_DSP_BAR, ACP_SCRATCH_REG_0 + dsp_ack_write);
--	if (dsp_ack) {
-+	if (dsp_ack == ACP_DSP_ACK_SET) {
- 		if (likely(sdev->fw_state == SOF_FW_BOOT_COMPLETE)) {
- 			spin_lock_irq(&sdev->ipc_lock);
- 
-diff --git a/sound/soc/sof/amd/acp.h b/sound/soc/sof/amd/acp.h
-index 2b7ea8c6410602..7bcb76676a984a 100644
---- a/sound/soc/sof/amd/acp.h
-+++ b/sound/soc/sof/amd/acp.h
-@@ -116,6 +116,8 @@
- #define ACP_SRAM_PAGE_COUNT			128
- #define ACP6X_SDW_MAX_MANAGER_COUNT		2
- #define ACP70_SDW_MAX_MANAGER_COUNT		ACP6X_SDW_MAX_MANAGER_COUNT
-+#define ACP_DSP_MSG_SET				1
-+#define ACP_DSP_ACK_SET				1
- 
- enum clock_source {
- 	ACP_CLOCK_96M = 0,
--- 
-2.53.0
-
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -1725,6 +1725,11 @@ static int hci_adv_bcast_annoucement(str
+ 	/* Generate Broadcast ID */
+ 	get_random_bytes(bid, sizeof(bid));
+ 	len = eir_append_service_data(ad, 0, 0x1852, bid, sizeof(bid));
++	if (adv->adv_data_len > sizeof(ad) - len) {
++		bt_dev_err(hdev, "No room for Broadcast Announcement");
++		return -EINVAL;
++	}
++
+ 	memcpy(ad + len, adv->adv_data, adv->adv_data_len);
+ 	hci_set_adv_instance_data(hdev, adv->instance, len + adv->adv_data_len,
+ 				  ad, 0, NULL);
 
 
