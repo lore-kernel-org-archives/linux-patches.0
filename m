@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1CE38837F;
-	Tue, 16 Jun 2026 15:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE0B357D14;
+	Tue, 16 Jun 2026 15:33:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624005; cv=none; b=X6XZqP1YQarRakp9U9LRh8SjKPbYZc3koVUpWn2Byt5+d5XL5yi9i/s5zjEQFqSAJVQC6T0vwT+Jee1cIax0663rC3xttKPDKGMsi8f+raV9xbglyxG0W5Dg8tuhfdYBuQ8tJ+UrysTJ4joylBxMvDr359faeXeKmAsaXnM/05k=
+	t=1781624010; cv=none; b=PMF1Qi0CVcl+ukUXmMZY7kILdHk3H75aj1/DPCwpZfaTBw9CaI5x8tSjohIHUVc4hpIyS0JSKdaZNgE8yz3xejSONlAlChaLqIAoNR6/jv7rP+i6IsvRZY9VeGZVCFoXZS0fpcYlO49v6kYoVO5y3C9ZikVpqoj9lZe+O0ZR3b0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624005; c=relaxed/simple;
-	bh=FKboyD5QFHvbu2LiVKxBDPc97uE06rkS1rG+sSMLlLw=;
+	s=arc-20240116; t=1781624010; c=relaxed/simple;
+	bh=0Ka5c85E/v+cYfER3ln3ug3ecyBt4naL1RP5M2yBHqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pCrK2rh+GkKcyCO7zB7cibBio5QXimnBpTN4gTisygHGbIkfuBOHfinXmCv30YtvCZEBBuiPYJg6jHv+nJ2ZJw/0DBypPHEwe+OuFLyu9eK+dX2kw6dc5rquA8iUo2TgcmHeOwecgZmjiSsGPIokI+Uh52708CDi2ViNMpJRISk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qot+k8Q6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ffpWMiL5VyTNsedldJSL3WS2sfshmiEo416rwFEtTWEhP1GI5aZGKDh/A0eVS5E1a3swsgwr+d/93d3RmyWMf/3jij8RvwWh+c/aUWFZSwDUR9VCAog3ImlbO2UaHStbWaOWLAMJ7LgyiPn2ORQ1Io2aIiBZT9p9Ky9Xbybf7ks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvuw2nyV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qot+k8Q6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE6E1F000E9;
-	Tue, 16 Jun 2026 15:33:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvuw2nyV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C511F000E9;
+	Tue, 16 Jun 2026 15:33:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624004;
-	bh=rwbIcIDv/J9mPS3M3KdqRp/elXoaPHc9tjO+69JigM4=;
+	s=korg; t=1781624009;
+	bh=psJF92ZTkJKqlQaFWM9bmaLN0/jN5A4LhvufK6QDHOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qot+k8Q64cvDrKSuUCaYQsxCzxUjxsDdQ21wRWrEG2L9as7FabdsP7hwLpUxU+NmY
-	 uRsv3oeQ8IR7miq12XCCzo3yOZlIk+9M7y9dXkRXUzlTgyW8JLJvaHoBD3fVdHdH/Q
-	 lnlT8J2SeMVdM30mZJjiyGeQuWcQOXmwBcXAI83o=
+	b=qvuw2nyV3oyUpyXyNcD+CrgkeEwFKF5KYvSgILrrQS25qo8z66g6CnzazyrPF964D
+	 vSHmpGyu1B/dEXbFDbRyq8/XiRnqWv1GSNupAuQCOgcYjvEExaeACKgielghXSxUJK
+	 BcKz5H9M5TbqFLfzYnnW+JE5CXH5yLAg4zUXD6/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 255/378] inet: frags: fix use-after-free caused by the fqdir_pre_exit() flush
-Date: Tue, 16 Jun 2026 20:28:06 +0530
-Message-ID: <20260616145123.548286359@linuxfoundation.org>
+	Alistair Popple <apopple@nvidia.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	David Hildenbrand <david@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 7.0 229/378] arm64: mm: call pagetable dtor when freeing hot-removed page tables
+Date: Tue, 16 Jun 2026 20:27:40 +0530
+Message-ID: <20260616145122.328768376@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,70 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Alistair Popple <apopple@nvidia.com>
 
-commit 32594b09854970d7ba83eb2dc8c69a2edd158c8e upstream.
+commit c594b83457ccdee76d458416fb3bc9348a37592f upstream.
 
-On netns teardown, fqdir_pre_exit() walks the fqdir rhashtable and
-flushes every fragment queue that is not yet complete using
-inet_frag_queue_flush(). That helper frees all the skbs queued on the
-fragment queue but does not set INET_FRAG_COMPLETE, and leaves
-q->fragments_tail and q->last_run_head pointing at the freed skbs.
-The queue itself stays in the rhashtable.
+Since 5e8eb9aeeda3 ("arm64: mm: always call PTE/PMD ctor in
+__create_pgd_mapping()") page-table allocation on ARM64 always calls
+pagetable_{pte,pmd,pud,p4d}_ctor().  This sets the page_type to
+PGTY_table, increments NR_PAGETABLE and possible allocates a PTL.  However
+the matching pagetable_dtor() calls were never added.
 
-fqdir_pre_exit() first lowers high_thresh to 0 to stop new queue lookups,
-but it cannot stop a fragment that already obtained the queue through
-inet_frag_find() earlier and stalled just before taking the queue lock.
-Once that fragment resumes after the flush and takes the queue lock,
-it passes the INET_FRAG_COMPLETE check and then dereferences the freed
-fragments_tail. inet_frag_queue_insert() reads FRAG_CB() and ->len of
-that pointer and, on the append path, writes ->next_frag, causing a
-slab use-after-free. IPv6, nf_conntrack_reasm6 and 6lowpan reassembly
-share the same flush path and are affected as well.
+With DEBUG_VM enabled on kernel versions prior to v6.17 without
+2dfcd1608f3a9 ("mm/page_alloc: let page freeing clear any set page type")
+this leads to the following warning when freeing these pages due to
+page->page_type sharing page->_mapcount:
 
-Reset rb_fragments, fragments_tail and last_run_head in
-inet_frag_queue_flush() so a flushed queue no longer points at the
-freed skbs. A fragment that resumes after the flush and takes the
-queue lock then finds an empty queue and starts a new run instead of
-dereferencing the freed fragments_tail. ip_frag_reinit() already
-performed this reset after its own flush, so drop the now duplicate
-code there.
+  BUG: Bad page state in process ... pfn:284fbb
+  page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x284fbb
+  flags: 0x17fffc000000000(node=0|zone=2|lastcpupid=0x1ffff)
+  page_type: f2(table)
+  page dumped because: nonzero mapcount
+  Call trace:
+   bad_page+0x13c/0x160
+   __free_frozen_pages+0x6cc/0x860
+   ___free_pages+0xf4/0x180
+   free_pages+0x54/0x80
+   free_hotplug_page_range.part.0+0x58/0x90
+   free_empty_tables+0x438/0x500
+   __remove_pgd_mapping.constprop.0+0x60/0xa8
+   arch_remove_memory+0x48/0x80
+   try_remove_memory+0x158/0x1d8
+   offline_and_remove_memory+0x138/0x180
 
-Cc: stable@vger.kernel.org
-Fixes: 006a5035b495 ("inet: frags: flush pending skbs in fqdir_pre_exit()")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Link: https://patch.msgid.link/ah6ukYq5G98LshdA@v4bel
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+It can also lead to leaking the ptl allocation if ALLOC_SPLIT_PTLOCKS is
+defined and incorrect NR_PAGETABLE stats.  Fix this by calling
+pagetable_dtor() in free_hotplug_pgtable_page() prior to freeing the page
+to undo the effects of calling pagetable_*_ctor().
+
+Link: https://lore.kernel.org/20260521032730.2104017-1-apopple@nvidia.com
+Fixes: 5e8eb9aeeda3 ("arm64: mm: always call PTE/PMD ctor in __create_pgd_mapping()")
+Signed-off-by: Alistair Popple <apopple@nvidia.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_fragment.c |    3 +++
- net/ipv4/ip_fragment.c   |    3 ---
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/mm/mmu.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/ipv4/inet_fragment.c
-+++ b/net/ipv4/inet_fragment.c
-@@ -328,6 +328,9 @@ void inet_frag_queue_flush(struct inet_f
- 	reason = reason ?: SKB_DROP_REASON_FRAG_REASM_TIMEOUT;
- 	sum = inet_frag_rbtree_purge(&q->rb_fragments, reason);
- 	sub_frag_mem_limit(q->fqdir, sum);
-+	q->rb_fragments = RB_ROOT;
-+	q->fragments_tail = NULL;
-+	q->last_run_head = NULL;
- }
- EXPORT_SYMBOL(inet_frag_queue_flush);
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -1445,6 +1445,7 @@ static void free_hotplug_page_range(stru
  
---- a/net/ipv4/ip_fragment.c
-+++ b/net/ipv4/ip_fragment.c
-@@ -250,9 +250,6 @@ static int ip_frag_reinit(struct ipq *qp
- 	qp->q.flags = 0;
- 	qp->q.len = 0;
- 	qp->q.meat = 0;
--	qp->q.rb_fragments = RB_ROOT;
--	qp->q.fragments_tail = NULL;
--	qp->q.last_run_head = NULL;
- 	qp->iif = 0;
- 	qp->ecn = 0;
+ static void free_hotplug_pgtable_page(struct page *page)
+ {
++	pagetable_dtor(page_ptdesc(page));
+ 	free_hotplug_page_range(page, PAGE_SIZE, NULL);
+ }
  
 
 
