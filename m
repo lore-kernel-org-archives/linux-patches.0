@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73314502F;
-	Tue, 16 Jun 2026 16:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F42D33A9EB;
+	Tue, 16 Jun 2026 16:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628816; cv=none; b=eIbp3cnVN5mVcQSLfFHmg245DpmlLLnbsqfj/x22ybqSUJaSsofBZ33vvhvdDLzmCcReaa7kFNCpitDOQoH+whDLtV8/oz3yhCrCLJTuQOV4xc7tcOL7h06M5JmibvBxVf+c8Nx5+xbTtwze8n2YpVsbAY2RX0k9lc83Y9O4Rj8=
+	t=1781628822; cv=none; b=uNj88IJsxCXDz2/k7Rx1RKy+fYMIL2VsnJPI+dyP1cQzVbJPB2VfB5mh0SlSEE/398gtY3u4e0QBTS+fh7PDHvyVBGDVq6Exp/2x8/gyQ9/avVp4GhCIqr8l4qbiDJCvyuMbltb6+o3lOqVW5Oc5K8dmSuA8HkTtnLacKENnFGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628816; c=relaxed/simple;
-	bh=Ec75vY2hyKai6NLRowyIPTkTTY3WVV+qNaOVBbtAeXk=;
+	s=arc-20240116; t=1781628822; c=relaxed/simple;
+	bh=OSPa8G4WOV9oFaA7u02NYSWiW8fqSM62fmvUzI+pvCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oP8Ol4dNzQwFCwShJB56LVmnACh876+xxK9KeFPNYWR6EjqpA/X2HTBft/cLYz0K0OR7LyFC/UK/yJ/12gzaVkJD4zf99LZG+XSz0W0blJ+MvEITtgJ83GStkXnndR7V/AEj4tMKT5SK+qZMjDrznwaYkC1XuUhtneGCXgz29Rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfgY6fAb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jrOHBgUSb05l3UZx9OURBmySM/pQUDsBPTdbjeKN4/L8X9N2EfImiCcvblnWkRr2Ju/6bSezZ6kcgioDHo5W5UVTrea5ZvD7ND7qXR6bmInNdSR4HEzMSt9tAf+AgUSRCtV4uSjmBCPvJ9cTd1GDd5c0vEkVxAv064z6j8ABxDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CVXkafGz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfgY6fAb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C1F1F000E9;
-	Tue, 16 Jun 2026 16:53:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CVXkafGz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FCC01F000E9;
+	Tue, 16 Jun 2026 16:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628815;
-	bh=0/mDaEy1IYvFB+ZbyG0n2UgGocscKgX5Oxx48G1T7j8=;
+	s=korg; t=1781628821;
+	bh=AkMH5l43eoKSDZrQB0r+ldNqhMFNd3Q8VbR1nludKpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hfgY6fAbaHoa/liYWbFuDWJaCO+pE0Zyrgjpb63iwtLbZbbm0nXe+IXseLnW7a7YI
-	 nr+AFZtbk+os9rPq35xJ6DR0trPPhlAUOtbXpaY4yaGNxHIBmb5Xwwm0elYkluxfQv
-	 FNYuA6rnQU0sm+TS9geLSRu4MxnukZGlkV3nEVrU=
+	b=CVXkafGzxqmrpBBpYx2pg1/RqwYfZszOhdIVztihkjQRSukdXCJv0V+i6hwdfN9Bo
+	 MgOxxMg9VKaFkX4QUMQk9k2QzIyZKhDfT4PblUcBrml/MbJnOUg1rzUCJsEZLj8ed4
+	 Vobima5c7yuiWXTkJUyfb0V7qbUkNQyGfddt6AbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Jeremy Erazo <mendozayt13@gmail.com>
-Subject: [PATCH 6.6 167/452] usb: gadget: composite: fix integer underflow in WebUSB GET_URL handling
-Date: Tue, 16 Jun 2026 20:26:34 +0530
-Message-ID: <20260616145126.645030498@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Seungjin Bae <eeodqql09@gmail.com>
+Subject: [PATCH 6.6 168/452] usb: gadget: dummy_hcd: Reject hub port requests for non-existent ports
+Date: Tue, 16 Jun 2026 20:26:35 +0530
+Message-ID: <20260616145126.706442493@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -50,62 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Erazo <mendozayt13@gmail.com>
+From: Seungjin Bae <eeodqql09@gmail.com>
 
-commit 6c5dbc104dadd79fc2923497c20bae759a18758c upstream.
+commit 7d9633528dd40e33964d2dc74a5abbf5c4d116ce upstream.
 
-The WebUSB GET_URL handler in composite_setup() narrows
-landing_page_length to fit the host-supplied wLength using
+The `dummy_hub_control()` function handles USB hub class requests
+to the virtual root hub. The `GetPortStatus` case returns -EPIPE for
+requests with `wIndex != 1`, since the virtual root hub has only a
+single port. However, the `ClearPortFeature` and `SetPortFeature`
+cases lack the same check.
 
-	landing_page_length = w_length
-		- WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_offset;
+Fix this by extending the `wIndex != 1` rejection to both cases,
+matching the existing behavior of `GetPortStatus`.
 
-If wLength is smaller than WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH the
-unsigned subtraction wraps, and the subsequent
-
-	memcpy(url_descriptor->URL,
-	       cdev->landing_page + landing_page_offset,
-	       landing_page_length - landing_page_offset);
-
-ends up copying close to UINT_MAX bytes from cdev->landing_page into
-cdev->req->buf.  KASAN reports a slab-out-of-bounds in composite_setup
-on the kmalloc-2k gadget_info allocation, and FORTIFY_SOURCE traps the
-memcpy as a 4294967293-byte field-spanning write into
-url_descriptor->URL (size 252).
-
-A USB host can reach this from a single SETUP packet against any
-gadget that has webusb/use=1 and a landingPage configured.
-
-Handle the small-wLength case before the math: when the host requested
-fewer bytes than the URL descriptor header, only the header is
-meaningful and no URL bytes need to be copied.  Setting
-landing_page_length to landing_page_offset makes the existing memcpy a
-no-op and leaves the descriptor returned to the host unchanged for all
-larger wLength values.
-
-Fixes: 93c473948c58 ("usb: gadget: add WebUSB landing page support")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Jeremy Erazo <mendozayt13@gmail.com>
-Link: https://patch.msgid.link/20260512160530.352318-1-mendozayt13@gmail.com
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260518234314.1889396-1-eeodqql09@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/composite.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/udc/dummy_hcd.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/gadget/composite.c
-+++ b/drivers/usb/gadget/composite.c
-@@ -2196,7 +2196,10 @@ unknown:
- 				sizeof(url_descriptor->URL)
- 				- WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_offset);
- 
--			if (w_length < WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_length)
-+			if (w_length < WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH)
-+				landing_page_length = landing_page_offset;
-+			else if (w_length <
-+				 WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_length)
- 				landing_page_length = w_length
- 				- WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_offset;
- 
+--- a/drivers/usb/gadget/udc/dummy_hcd.c
++++ b/drivers/usb/gadget/udc/dummy_hcd.c
+@@ -2132,6 +2132,8 @@ static int dummy_hub_control(
+ 	case ClearHubFeature:
+ 		break;
+ 	case ClearPortFeature:
++		if (wIndex != 1)
++			goto error;
+ 		switch (wValue) {
+ 		case USB_PORT_FEAT_SUSPEND:
+ 			if (hcd->speed == HCD_USB3) {
+@@ -2246,6 +2248,8 @@ static int dummy_hub_control(
+ 		retval = -EPIPE;
+ 		break;
+ 	case SetPortFeature:
++		if (wIndex != 1)
++			goto error;
+ 		switch (wValue) {
+ 		case USB_PORT_FEAT_LINK_STATE:
+ 			if (hcd->speed != HCD_USB3) {
 
 
