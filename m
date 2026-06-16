@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C803D8100;
-	Tue, 16 Jun 2026 18:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785493CFF55;
+	Tue, 16 Jun 2026 18:49:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635774; cv=none; b=KwgM0b+YsRMM6h2d9rxqxmhJakFmsVn5/fOcNGyLmbiI0scI414W9X2EXQn1d/Mq5ABlewMaHNU4CxRjPCStAwJcWmZUzeU1RYId+wHbOl6y9wwKMiXYkuFOKonRUMMsOxEQf80Llhy8ALStMM1oCEDR4WXAANZJ4w07zpu5Plg=
+	t=1781635779; cv=none; b=FnGJJouw9TjI73WOdx2RJw/Lxs5Tzs7YTmT38qB420scQBMMzZzLkJW7pRqxekBuevXvtSrR3QOt2iHRujsxb95jiVzDmzw0fW1tcdMhsEO9d/s+n+ksOBn4IraHRTyApJQsXnVednr42ObC9IYWork0BcMzqEFSRUIDtIPXe1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635774; c=relaxed/simple;
-	bh=zYK/6AwKRa/8l5QFkclsi4gKXWW/Kym+87P7B0POFLE=;
+	s=arc-20240116; t=1781635779; c=relaxed/simple;
+	bh=N029LZCZCbl3XWSj8lZ+88Nxr1Jhl/jKXgbI/6Uh65s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/qTQXvCtBONf43+LetCDqr5UpYNQO0xAZN3NCpHwILeyZXoOHoQ5S3qDzXV9baE25fZJgfWTPxtyzXWkLjor0jM9SYZrMCJA/8YH10UQFZ0yL2oobJTIrFsaIzW/Ki+fReu15QbI99D1dkgSYpz1qyaCSRLvvsI2L/mkc5BQrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPgvfNfV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G0dBA31bO0gsxdrJin44jcAxHdJptUE4W8tCaZ5N/hrxKmwnDjEUG6coANwXyb8lIyzHpyk7q4Zzlr0neR/Pq6nGHSs248Lj2iykkCLxKXm2aK/FLU1M1nXOdvJcR+/CzV/tdYCW5OrIdRhbKB8oWnWIOqKa6J2SDtae67XTwCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bKJ3kqkc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPgvfNfV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4E9B1F000E9;
-	Tue, 16 Jun 2026 18:49:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bKJ3kqkc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E891F000E9;
+	Tue, 16 Jun 2026 18:49:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635773;
-	bh=T0fna+1ZBtM/xt0dcX8IPh5Qz1ANzpKo6DQlwUlEncs=;
+	s=korg; t=1781635778;
+	bh=hTLEOBfDJgTNbuKiQmiyaVNCDzh+HpHaqwC2khl9AUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CPgvfNfVODGG9lhZ8p0wrlSuqNomk5JY6ImWj7TXg8oYnoA8d8CVitTC1Y9V5mO1s
-	 MFY3DADWzHdpKB1XKM74+OMh4MK9NhsKx3/fCU045NYbPJEQmTBp12of4/STMvkck4
-	 /VQW5M1GXxDBk3hBdpbEZimlZRGLyGTbT3iYWq74=
+	b=bKJ3kqkcC2oomChokUusNSakM1EajpxYAr3bVfxV2ltOEqcfs3VbQbnKx3ZZA/+dw
+	 W+vKtaWvDzXsSrgrOzlf/CI/S3+vXqA8NoXibAzqU63Lt+X8BJXVDDU6ekMWgbnSmn
+	 4+BF86fTt36nX0Sw5iau4YhtCTOsNJwsvqUrP1fA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Maciej W. Rozycki" <macro@orcam.me.uk>
-Subject: [PATCH 5.10 112/342] serial: dz: Fix bootconsole message clobbering at chip reset
-Date: Tue, 16 Jun 2026 20:26:48 +0530
-Message-ID: <20260616145053.439074158@linuxfoundation.org>
+Subject: [PATCH 5.10 113/342] serial: zs: Fix bootconsole handover lockup
+Date: Tue, 16 Jun 2026 20:26:49 +0530
+Message-ID: <20260616145053.481412151@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -51,69 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit ca904f4b42355287bc5ce8b7550ebe909cda4c2c upstream.
+commit 6c05cf72e13314ce9b770b5951695dc5a2152920 upstream.
 
-In the DZ interface as implemented by the DC7085 gate array the serial
-transmitters are double buffered, meaning that at the time a transmitter
-is ready to accept the next character there is one in the transmit shift
-register still being sent to the line.  Issuing a master clear at this
-time causes this character to be lost, so wait an extra amount of time
-sufficient for the transmit shift register to drain at 9600bps, which is
-the baud rate setting used by the firmware console.
+Calling zs_reset() in the course of setting up the serial device causes
+line parameters to be reset and the transmitter disabled.  We've been
+lucky in that no message is usually produced to the kernel log between
+this call and the later call to uart_set_options() in the course of
+console setup done by zs_serial_console_init(), or the system would hang
+as the console output handler in the firmware tried to access a port the
+transmitter of which has been disabled and line parameters messed up.
 
-Mind the specified 1.4us TRDY recovery time in the course and continue
-using iob() as the completion barrier, since the platforms involved use
-a write buffer that can delay and combine writes, and reorder them with
-respect to reads regardless of the MMIO locations accessed and we still
-lack a platform-independent handler for that.
+This will change with the next change to the driver, so fix zs_reset()
+such that line parameters are set for 9600n8 console operation as with
+the system firmware and the transmitter re-enabled after reset.  This
+also means zs_pm() serves no purpose anymore, so drop it.
 
-When called from dz_serial_console_init() this is too early for fsleep()
-to work and even before lpj has been calculated and therefore the delay
-is actually not sufficient for the transmitter to drain and is merely a
-placeholder now.  This will be addressed in a follow-up change.
-
-Fixes: e6ee512f5a77 ("dz.c: Resource management")
+Fixes: 8b4a40809e53 ("zs: move to the serial subsystem")
 Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Cc: stable@vger.kernel.org # v2.6.25+
-Link: https://patch.msgid.link/alpine.DEB.2.21.2605062259080.46195@angie.orcam.me.uk
+Cc: stable@vger.kernel.org # v2.6.23+
+Link: https://patch.msgid.link/alpine.DEB.2.21.2605062308040.46195@angie.orcam.me.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/dz.c |   21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/tty/serial/zs.c |   29 ++++++++---------------------
+ 1 file changed, 8 insertions(+), 21 deletions(-)
 
---- a/drivers/tty/serial/dz.c
-+++ b/drivers/tty/serial/dz.c
-@@ -544,10 +544,31 @@ static int dz_encode_baud_rate(unsigned
- static void dz_reset(struct dz_port *dport)
+--- a/drivers/tty/serial/zs.c
++++ b/drivers/tty/serial/zs.c
+@@ -105,18 +105,24 @@ struct zs_parms {
+ 
+ static struct zs_scc zs_sccs[ZS_NUM_SCCS];
+ 
++/*
++ * Set parameters in WR5, WR12, WR13 such as not to interfere
++ * with the initial PROM-based console.  Otherwise any output
++ * produced before the console handover would cause the system
++ * firmware to hang (TxENAB) or produce rubbish (Tx8, B9600).
++ */
+ static u8 zs_init_regs[ZS_NUM_REGS] __initdata = {
+ 	0,				/* write 0 */
+ 	PAR_SPEC,			/* write 1 */
+ 	0,				/* write 2 */
+ 	0,				/* write 3 */
+ 	X16CLK | SB1,			/* write 4 */
+-	0,				/* write 5 */
++	Tx8 | TxENAB,			/* write 5 */
+ 	0, 0, 0,			/* write 6, 7, 8 */
+ 	MIE | DLC | NV,			/* write 9 */
+ 	NRZ,				/* write 10 */
+ 	TCBR | RCBR,			/* write 11 */
+-	0, 0,				/* BRG time constant, write 12 + 13 */
++	0x16, 0x00,			/* BRG time constant, write 12 + 13 */
+ 	BRSRC | BRENABL,		/* write 14 */
+ 	0,				/* write 15 */
+ };
+@@ -955,23 +961,6 @@ static void zs_set_termios(struct uart_p
+ 	spin_unlock_irqrestore(&scc->zlock, flags);
+ }
+ 
+-/*
+- * Hack alert!
+- * Required solely so that the initial PROM-based console
+- * works undisturbed in parallel with this one.
+- */
+-static void zs_pm(struct uart_port *uport, unsigned int state,
+-		  unsigned int oldstate)
+-{
+-	struct zs_port *zport = to_zport(uport);
+-
+-	if (state < 3)
+-		zport->regs[5] |= TxENAB;
+-	else
+-		zport->regs[5] &= ~TxENAB;
+-	write_zsreg(zport, R5, zport->regs[5]);
+-}
+-
+ 
+ static const char *zs_type(struct uart_port *uport)
  {
- 	struct dz_mux *mux = dport->mux;
-+	unsigned short tcr;
-+	int loops = 10000;
+@@ -1054,7 +1043,6 @@ static const struct uart_ops zs_ops = {
+ 	.startup	= zs_startup,
+ 	.shutdown	= zs_shutdown,
+ 	.set_termios	= zs_set_termios,
+-	.pm		= zs_pm,
+ 	.type		= zs_type,
+ 	.release_port	= zs_release_port,
+ 	.request_port	= zs_request_port,
+@@ -1209,7 +1197,6 @@ static int __init zs_console_setup(struc
+ 		return ret;
  
- 	if (mux->initialised)
- 		return;
+ 	zs_reset(zport);
+-	zs_pm(uport, 0, -1);
  
-+	tcr = dz_in(dport, DZ_TCR);
-+
-+	/* Do not disturb any ongoing transmissions.  */
-+	if (dz_in(dport, DZ_CSR) & DZ_MSE) {
-+		unsigned short csr, mask;
-+
-+		mask = tcr;
-+		while ((mask & DZ_LNENB) && loops--) {
-+			csr = dz_in(dport, DZ_CSR);
-+			if (!(csr & DZ_TRDY))
-+				continue;
-+			mask &= ~(1 << ((csr & DZ_TLINE) >> 8));
-+			dz_out(dport, DZ_TCR, mask);
-+			iob();
-+			udelay(2);		/* 1.4us TRDY recovery.  */
-+		}
-+		udelay(1200);			/* Transmitter drain.  */
-+	}
-+
- 	dz_out(dport, DZ_CSR, DZ_CLR);
- 	while (dz_in(dport, DZ_CSR) & DZ_CLR);
- 	iob();
+ 	if (options)
+ 		uart_parse_options(options, &baud, &parity, &bits, &flow);
 
 
