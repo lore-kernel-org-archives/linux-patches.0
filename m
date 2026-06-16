@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E232F12AE;
-	Tue, 16 Jun 2026 17:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513E52F12AE;
+	Tue, 16 Jun 2026 17:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632635; cv=none; b=BfObmON0AXw1cngfX3IP7xabiLwDldIfR/dtNj/SksHF8ui/2VAnvJx2CJTl464qzrUXdiXEOgoLEYfRHKnpt0K/A7J3FIHl9UDoMvxogjRy16L8DSutblMFOg3NiVPRP+zjryIxipw3AobsjhmgErunWZ7HW3gPh13mJ9MRo6s=
+	t=1781632641; cv=none; b=N7FnTYf5QbxMdFwrOcAFCUSEa2JgAdWV+mxTxZFuhxSN1eTPWApT7jnmwDJCTbf3b8JFOZ2h+alK9iYsnuyP29+1J3ob0etXjUB3fL0fjl/tS3Y/0kBHDg7AEa23M8PGmWNAe6hceRALcMiUv0yVe3Sja1pQrvZftqLjHTggX4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632635; c=relaxed/simple;
-	bh=dhGo38vFZiRxdlTNsOTiCoMw3GmXkL71SukxCYH8QgI=;
+	s=arc-20240116; t=1781632641; c=relaxed/simple;
+	bh=wmmGhXwh/KuaVk63AF3b9BHNtF3hHfZf+qN5/ny5diI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ywx1hg0poxO0OQiBZDUSye7c+f6DvjPDdyjLEVPOWmnvSZGPVWtXvJ6BIweJQQRVGBz9SCy28DKLvetdcR4r1EM/z4KM/nwP4nFKGyYIyIiOmpi7Adl1pUvatGI4MpbiOxFVY/ZU0Sh9DkfwrtJysdbKgFpS6EeSfpJPDB2IH3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d5r8LrcV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LKjCcsuF3WYfEgHukLxYt5BSRiMn/W4uhDrfn8cMR2PNVHPgaHjLpUPIyx3GxOMnEEMjgWihdyM2sHWqrk0vwK6KWnYMSaQkc/D0Izk9NdHtXVMFtpFYXpGn6YpL6gdsc8jLxrOwBvbgEhdcGAg0LDrygD64lSdD9xR79PrUiOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XWgIywsr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d5r8LrcV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C761F000E9;
-	Tue, 16 Jun 2026 17:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XWgIywsr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BCB21F000E9;
+	Tue, 16 Jun 2026 17:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632634;
-	bh=/5fBhQrtpg/oZQfDrrHs890O1c1bdYJxzYRmKnjiOnE=;
+	s=korg; t=1781632640;
+	bh=bKjLu9lKWHqBksY+1iThrmFkdvLfj9Nfnuitip1Zi3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d5r8LrcVVbim4ymrmCtqLM0t+WlLQvxLiudMI+fZ22CceSbhLPKl0bta/VJ+IPTdj
-	 bNU9KKuACzvAKfEaeL9PaVwUShHh9kZlfQfliuT4KuFz/Zj4MQH4WkoIxCIXxwNzb1
-	 DXXvpNVU4P4AuV78xazJn0XSChi7wRIqnu7kFWtQ=
+	b=XWgIywsrJpBAuW6eVf/VoNpoAqkfxM9Kw7Gub1YkpH3+Kne9mfNTP/jjwEIdblJxo
+	 07v7Jbyh4jUFHL0kvqy3baL0fAgbvYtv9X/WJTYbwtM/gktI9t1zW2disezSLBZQju
+	 BjaD7c3xwRnYdB/pn0BTZnCTeAVcgdGotORjNypg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiasong <lixiasong1@huawei.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 441/522] mptcp: pm: fix ADD_ADDR timer infinite retry on option space insufficient
-Date: Tue, 16 Jun 2026 20:29:48 +0530
-Message-ID: <20260616145146.576017814@linuxfoundation.org>
+Subject: [PATCH 6.1 450/522] platform/x86/intel/vsec: Fix enable_cnt imbalance on PCIe error recovery
+Date: Tue, 16 Jun 2026 20:29:57 +0530
+Message-ID: <20260616145146.970751711@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -46,147 +45,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Li Xiasong <lixiasong1@huawei.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 51e398a3b8961b26a8c0a4ba9a777c5339791707 ]
+[ Upstream commit 348ccc754d8939e21ca5956ff45720b81d6e407f ]
 
-When TCP option space is insufficient (e.g., when sending ADD_ADDR with an
-IPv6 address and port while tcp_timestamps is enabled), the original code
-jumped to out_unlock without clearing the addr_signal flag. This caused
-mptcp_pm_add_timer to keep rescheduling indefinitely, not sending ADD_ADDR,
-preventing subsequent addresses in the endpoint list from being announced.
+After a PCIe Uncorrectable Error has been reported by a device with
+Intel Vendor Specific Extended Capabilities and has been recovered
+through a Secondary Bus Reset, its driver calls intel_vsec_pci_probe()
+to rescan and reinitialize VSECs.
 
-Handle this case by clearing the ADD_ADDR signal and skipping the matching
-ADD_ADDR retransmission entry. The skip path cancels the matching timer
-(with id check) and advances PM state progression, preserving forward
-progress to subsequent PM work.
+intel_vsec_pci_probe() invokes pcim_enable_device() and thereby adds
+another devm action which calls pcim_disable_device() on driver unbind.
 
-This cancellation is inherently best-effort. A concurrent add_timer
-callback may already be running and may acquire pm.lock before the
-cancel path updates entry state. In that case, one final ADD_ADDR
-transmit attempt can still be executed.
+So once the driver unbinds, pcim_disable_device() will be called as many
+times as an Uncorrectable Error occurred, plus one.  This will lead to
+an enable_cnt imbalance on driver unbind.
 
-Once the cancel path sets entry->retrans_times to ADD_ADDR_RETRANS_MAX,
-the callback-side retrans_times check suppresses further ADD_ADDR
-retransmissions.
+Additionally, since commit dc957ab6aa05 ("platform/x86/intel/vsec: Add
+private data for per-device data"), a devm_kzalloc() allocation is
+leaked on every Uncorrectable Error.
 
-Note that when an ADD_ADDR is being prepared, a pure-ACK is queued. On
-the output side, it means that it is fine to skip non-pure-ACK packets,
-when drop_other_suboptions is set: a pure-ACK will be processed soon
-after.
+Avoid by splitting the VSEC rescan out of intel_vsec_pci_probe() into a
+separate helper and calling that on PCIe error recovery.
 
-Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
-Cc: stable@vger.kernel.org
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260515-net-mptcp-misc-fixes-7-1-rc4-v2-2-701e96419f2f@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 936874b77dd0 ("platform/x86/intel/vsec: Add PCI error recovery support to Intel PMT")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org  # v6.0+
+Link: https://patch.msgid.link/bd594d09fa866dc51dddc9a447c3b23f9b1402cc.1778736835.git.lukas@wunner.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm.c         |   34 +++++++++++++++++++++++++++-------
- net/mptcp/pm_netlink.c |   16 +++++++++++++---
- 2 files changed, 40 insertions(+), 10 deletions(-)
+ drivers/platform/x86/intel/vsec.c |   21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
---- a/net/mptcp/pm.c
-+++ b/net/mptcp/pm.c
-@@ -340,6 +340,7 @@ bool mptcp_pm_add_addr_signal(struct mpt
- 			      struct mptcp_addr_info *addr, bool *echo,
- 			      bool *drop_other_suboptions)
- {
-+	bool skip_add_addr = false;
- 	int ret = false;
- 	u8 add_addr;
- 	u8 family;
-@@ -361,24 +362,43 @@ bool mptcp_pm_add_addr_signal(struct mpt
- 	}
- 
- 	*echo = mptcp_pm_should_add_signal_echo(msk);
--	port = !!(*echo ? msk->pm.remote.port : msk->pm.local.port);
--
--	family = *echo ? msk->pm.remote.family : msk->pm.local.family;
--	if (remaining < mptcp_add_addr_len(family, *echo, port))
--		goto out_unlock;
--
- 	if (*echo) {
- 		*addr = msk->pm.remote;
- 		add_addr = msk->pm.addr_signal & ~BIT(MPTCP_ADD_ADDR_ECHO);
-+		port = !!msk->pm.remote.port;
-+		family = msk->pm.remote.family;
- 	} else {
- 		*addr = msk->pm.local;
- 		add_addr = msk->pm.addr_signal & ~BIT(MPTCP_ADD_ADDR_SIGNAL);
-+		port = !!msk->pm.local.port;
-+		family = msk->pm.local.family;
- 	}
--	WRITE_ONCE(msk->pm.addr_signal, add_addr);
-+
-+	if (remaining < mptcp_add_addr_len(family, *echo, port)) {
-+		if (!*drop_other_suboptions)
-+			goto out_unlock;
-+
-+		if (!*echo)
-+			skip_add_addr = true;
-+		goto drop_signal_mark;
-+	}
-+
- 	ret = true;
- 
-+drop_signal_mark:
-+	WRITE_ONCE(msk->pm.addr_signal, add_addr);
-+
- out_unlock:
- 	spin_unlock_bh(&msk->pm.lock);
-+
-+	/* On pure-ACK option-space exhaustion, stop retrying this ADD_ADDR:
-+	 * clear the signal bit, cancel the matching retransmission timer, and
-+	 * let the PM state machine progress.
-+	 */
-+	if (skip_add_addr) {
-+		mptcp_pm_del_add_timer(msk, addr, true);
-+		mptcp_pm_subflow_established(msk);
-+	}
- 	return ret;
+--- a/drivers/platform/x86/intel/vsec.c
++++ b/drivers/platform/x86/intel/vsec.c
+@@ -401,6 +401,17 @@ static bool intel_vsec_get_features(stru
+ 	return found;
  }
  
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -333,7 +333,13 @@ static void mptcp_pm_add_timer(struct ti
++static int intel_vsec_pci_init(struct pci_dev *pdev)
++{
++	struct vsec_priv *priv = pci_get_drvdata(pdev);
++	const struct intel_vsec_platform_info *info = priv->info;
++
++	if (!intel_vsec_get_features(pdev, info))
++		return -ENODEV;
++
++	return 0;
++}
++
+ static int intel_vsec_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ {
+ 	const struct intel_vsec_platform_info *info;
+@@ -423,10 +434,7 @@ static int intel_vsec_pci_probe(struct p
+ 	priv->info = info;
+ 	pci_set_drvdata(pdev, priv);
  
- 	spin_lock_bh(&msk->pm.lock);
+-	if (!intel_vsec_get_features(pdev, info))
+-		return -ENODEV;
+-
+-	return 0;
++	return intel_vsec_pci_init(pdev);
+ }
  
--	if (!mptcp_pm_should_add_signal_addr(msk)) {
-+	/* The cancel path (mptcp_pm_del_add_timer()) can race with this
-+	 * callback. Once cancel updates retrans_times to MAX, suppress further
-+	 * retransmissions here. If this callback acquires pm.lock first, one
-+	 * final transmit attempt is still possible.
-+	 */
-+	if (entry->retrans_times < ADD_ADDR_RETRANS_MAX &&
-+	    !mptcp_pm_should_add_signal_addr(msk)) {
- 		pr_debug("retransmit ADD_ADDR id=%d\n", entry->addr.id);
- 		mptcp_pm_announce_addr(msk, &entry->addr, false);
- 		mptcp_pm_add_addr_send_ack(msk);
-@@ -377,8 +383,12 @@ mptcp_pm_del_add_timer(struct mptcp_sock
- 	/* Note: entry might have been removed by another thread.
- 	 * We hold rcu_read_lock() to ensure it is not freed under us.
- 	 */
--	if (stop_timer)
--		sk_stop_timer_sync(sk, &entry->add_timer);
-+	if (stop_timer) {
-+		if (check_id)
-+			sk_stop_timer(sk, &entry->add_timer);
-+		else
-+			sk_stop_timer_sync(sk, &entry->add_timer);
-+	}
+ /* TGL info */
+@@ -489,7 +497,6 @@ static pci_ers_result_t intel_vsec_pci_s
+ {
+ 	struct intel_vsec_device *intel_vsec_dev;
+ 	pci_ers_result_t status = PCI_ERS_RESULT_DISCONNECT;
+-	const struct pci_device_id *pci_dev_id;
+ 	unsigned long index;
  
- 	rcu_read_unlock();
- 	return entry;
+ 	dev_info(&pdev->dev, "Resetting PCI slot\n");
+@@ -510,10 +517,8 @@ static pci_ers_result_t intel_vsec_pci_s
+ 		devm_release_action(&pdev->dev, intel_vsec_remove_aux,
+ 				    &intel_vsec_dev->auxdev);
+ 	}
+-	pci_disable_device(pdev);
+ 	pci_restore_state(pdev);
+-	pci_dev_id = pci_match_id(intel_vsec_pci_ids, pdev);
+-	intel_vsec_pci_probe(pdev, pci_dev_id);
++	intel_vsec_pci_init(pdev);
+ 
+ out:
+ 	return status;
 
 
