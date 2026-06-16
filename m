@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921641A682B;
-	Tue, 16 Jun 2026 15:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D91134889F;
+	Tue, 16 Jun 2026 15:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623630; cv=none; b=M9Nd0wGCkSbds69eu9C/qL6rACShh4Sm3mdxKgk1dYGHzwDQtQeeJrZcUP3pqacc6RySwddPOc4qilcyasendGqho1GcfM75OWjUEdlWFXrmTUZX+xlbHlH3xbX5ENUtkywUFfBXDDft+4D6SO0kzPFB49alvidM9gE2dvMbiZg=
+	t=1781623636; cv=none; b=SNubqVZDdhkKOi8BA3q2N7ZWYHE0j6FlmSzWUHkk6A0kdkzflWa+w6C82O70DpdA18KjDNyd9eFA5sT6w/RAmLARDNT6BtQYaiun8VvBwf4MrXf0ShPEoKK6ZQACNjLvPC0GxrFHQvPMHDXlFSwC3PTbN/rFYkEQPjKT987a5Rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623630; c=relaxed/simple;
-	bh=iAvno3QvKiFhxvZeGa1zFeD9w9T2G/zLSJbkpb7QvO0=;
+	s=arc-20240116; t=1781623636; c=relaxed/simple;
+	bh=4OyvMAmT35nZEvfXRhN5KzXQhsEHhw0SID5dqtvDjtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mJGmutZxgHSdHrQZv8LnXpA5OICcx+U7hnHbvEIlOlc8TfNbLSKyf36xmVtGg8Gj/Cvgbq66UCx39nn5/BhExjKMTY/m9AiCrpLXBXIV5MTvU519BacI+Q1/H2sfEk+HeF1/c6beyCDfwzhxhTcqx78scHcGlSmatUva5q8DXSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oq97h7DH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YkjNmSQOUtZuoMTzHaodWoX1vxpjUAHjJlbeHdl9IZ1jg9CPmDB09JkA1QCz+WLyJwdzZZVRynNK5iI/RfNuBGsSU24bvPpU8ILuF5DAC/nSqxq52ShtxIlWbUG3YKx4DF/Xki6W1DZANzfY616H/1fcionho3kJJO6mUGadPvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/5vBlzm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oq97h7DH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660EB1F000E9;
-	Tue, 16 Jun 2026 15:27:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/5vBlzm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42F81F000E9;
+	Tue, 16 Jun 2026 15:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623629;
-	bh=8YMGb7Mbmo6vTaGX0/GM7b8k1ngEIaISIV+tv3t5Lwo=;
+	s=korg; t=1781623634;
+	bh=a2gADEBeXQ43toRYapGuKX0NvyiAmL1O5DpghQhEew0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oq97h7DHnWHD+ZaZzts6c8omZte9G2HVOi+BAs47SlszgAhrYan19eFeqD2Rjb8Vn
-	 kKUYFIfnhzT++gfRJaw/achSeeUext1ty0nErepq8dNYg2RoHRq7YIFKLCh2Byf+C5
-	 s1BynaxqwPHbTmgbl9rnn3a6ht0zdRrMvmiXY0XA=
+	b=S/5vBlzmxfWppXTC+TFtqgjpCmcdxuTDhoE+9mcdQTF6Mjv9FMtjK2GM56VDBkSja
+	 XFyvslyt25DMNnlI9KL5OzxHhbuH3EojjsoQf58fRQbRtdFXMIJ31tga7M+gN5kZ8Y
+	 nqewDBi46KeeygR+PmvEQ7Z7svoEVwc8TiBZwI7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>,
-	Karol Wachowski <karol.wachowski@linux.intel.com>
-Subject: [PATCH 7.0 178/378] accel/ivpu: Add bounds checks for firmware log indices
-Date: Tue, 16 Jun 2026 20:26:49 +0530
-Message-ID: <20260616145119.752063585@linuxfoundation.org>
+	Thomas Hellstrom <thomas.hellstrom@linux.intel.com>,
+	Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 7.0 187/378] Revert "drm/xe: Skip exec queue schedule toggle if queue is idle during suspend"
+Date: Tue, 16 Jun 2026 20:26:58 +0530
+Message-ID: <20260616145120.228063538@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -50,42 +52,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
+From: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>
 
-commit dd1311bcf0e62f0c515115f46a3813370f4a4bb1 upstream.
+commit fa7c84726dc217ce0c183926ef9411636c7a2213 upstream.
 
-Add validation that read and write indices in the firmware log buffer
-are within valid bounds (< data_size) before using them. If
-out-of-bounds indices are encountered (from firmware), clamp them to
-safe values instead of proceeding with invalid offsets.
+This reverts commit 8533051ce92015e9cc6f75e0d52119b9d91610b6.
 
-This prevents potential out-of-bounds buffer access when firmware
-supplies invalid log indices.
+The idle-skip optimization bypasses GuC suspend, so the GPU may not
+perform the context switch that flushes TLB entries for invalidated
+userptr VMAs. In LR/preempt-fence VM mode, this can lead to missed TLB
+invalidation and page faults during userptr invalidation tests.
 
-Fixes: 1fc1251149a7 ("accel/ivpu: Refactor functions in ivpu_fw_log.c")
-Cc: stable@vger.kernel.org # v6.18+
-Signed-off-by: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
-Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Link: https://patch.msgid.link/20260529115842.135378-1-andrzej.kacprowski@linux.intel.com
+Restore unconditional schedule toggling on suspend so the context-switch
+TLB flush is always performed.
+
+This optimization will be reintroduced with a fix that does not skip
+suspend in LR/preempt-fence VM mode.
+
+Fixes: 8533051ce920 ("drm/xe: Skip exec queue schedule toggle if queue is idle during suspend")
+Cc: stable@vger.kernel.org # v7.0+
+Suggested-by: Thomas Hellstrom <thomas.hellstrom@linux.intel.com>
+Signed-off-by: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>
+Reviewed-by: Thomas Hellstrom <thomas.hellstrom@linux.intel.com>
+Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Link: https://patch.msgid.link/20260603065217.3131066-2-tilak.tirumalesh.tangudu@intel.com
+(cherry picked from commit 6a1e7934d9a6cf46aecae00a99c2603d1295e170)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_fw_log.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/xe/xe_exec_queue.h      |   17 ---------
+ drivers/gpu/drm/xe/xe_guc_submit.c      |   55 +-------------------------------
+ drivers/gpu/drm/xe/xe_hw_engine_group.c |   10 +----
+ 3 files changed, 5 insertions(+), 77 deletions(-)
 
---- a/drivers/accel/ivpu/ivpu_fw_log.c
-+++ b/drivers/accel/ivpu/ivpu_fw_log.c
-@@ -98,6 +98,11 @@ static void fw_log_print_buffer(struct v
- 	u32 log_start = only_new_msgs ? READ_ONCE(log->read_index) : 0;
- 	u32 log_end = READ_ONCE(log->write_index);
+--- a/drivers/gpu/drm/xe/xe_exec_queue.h
++++ b/drivers/gpu/drm/xe/xe_exec_queue.h
+@@ -161,21 +161,4 @@ int xe_exec_queue_contexts_hwsp_rebase(s
  
-+	if (log_start >= data_size)
-+		log_start = 0;
-+	if (log_end > data_size)
-+		log_end = data_size;
-+
- 	if (log->wrap_count == log->read_wrap_count) {
- 		if (log_end <= log_start) {
- 			drm_printf(p, "==== %s \"%s\" log empty ====\n", prefix, log->name);
+ struct xe_lrc *xe_exec_queue_lrc(struct xe_exec_queue *q);
+ 
+-/**
+- * xe_exec_queue_idle_skip_suspend() - Can exec queue skip suspend
+- * @q: The exec_queue
+- *
+- * If an exec queue is not parallel and is idle, the suspend steps can be
+- * skipped in the submission backend immediatley signaling the suspend fence.
+- * Parallel queues cannot skip this step due to limitations in the submission
+- * backend.
+- *
+- * Return: True if exec queue is idle and can skip suspend steps, False
+- * otherwise
+- */
+-static inline bool xe_exec_queue_idle_skip_suspend(struct xe_exec_queue *q)
+-{
+-	return !xe_exec_queue_is_parallel(q) && xe_exec_queue_is_idle(q);
+-}
+-
+ #endif
+--- a/drivers/gpu/drm/xe/xe_guc_submit.c
++++ b/drivers/gpu/drm/xe/xe_guc_submit.c
+@@ -72,7 +72,6 @@ exec_queue_to_guc(struct xe_exec_queue *
+ #define EXEC_QUEUE_STATE_WEDGED			(1 << 8)
+ #define EXEC_QUEUE_STATE_BANNED			(1 << 9)
+ #define EXEC_QUEUE_STATE_PENDING_RESUME		(1 << 10)
+-#define EXEC_QUEUE_STATE_IDLE_SKIP_SUSPEND	(1 << 11)
+ 
+ static bool exec_queue_registered(struct xe_exec_queue *q)
+ {
+@@ -224,21 +223,6 @@ static void clear_exec_queue_pending_res
+ 	atomic_and(~EXEC_QUEUE_STATE_PENDING_RESUME, &q->guc->state);
+ }
+ 
+-static bool exec_queue_idle_skip_suspend(struct xe_exec_queue *q)
+-{
+-	return atomic_read(&q->guc->state) & EXEC_QUEUE_STATE_IDLE_SKIP_SUSPEND;
+-}
+-
+-static void set_exec_queue_idle_skip_suspend(struct xe_exec_queue *q)
+-{
+-	atomic_or(EXEC_QUEUE_STATE_IDLE_SKIP_SUSPEND, &q->guc->state);
+-}
+-
+-static void clear_exec_queue_idle_skip_suspend(struct xe_exec_queue *q)
+-{
+-	atomic_and(~EXEC_QUEUE_STATE_IDLE_SKIP_SUSPEND, &q->guc->state);
+-}
+-
+ static bool exec_queue_killed_or_banned_or_wedged(struct xe_exec_queue *q)
+ {
+ 	return (atomic_read(&q->guc->state) &
+@@ -1110,7 +1094,7 @@ static void submit_exec_queue(struct xe_
+ 	if (!job->restore_replay || job->last_replay) {
+ 		if (xe_exec_queue_is_parallel(q))
+ 			wq_item_append(q);
+-		else if (!exec_queue_idle_skip_suspend(q))
++		else
+ 			xe_lrc_set_ring_tail(lrc, lrc->ring.tail);
+ 		job->last_replay = false;
+ 	}
+@@ -1781,10 +1765,9 @@ static void __guc_exec_queue_process_msg
+ {
+ 	struct xe_exec_queue *q = msg->private_data;
+ 	struct xe_guc *guc = exec_queue_to_guc(q);
+-	bool idle_skip_suspend = xe_exec_queue_idle_skip_suspend(q);
+ 
+-	if (!idle_skip_suspend && guc_exec_queue_allowed_to_change_state(q) &&
+-	    !exec_queue_suspended(q) && exec_queue_enabled(q)) {
++	if (guc_exec_queue_allowed_to_change_state(q) && !exec_queue_suspended(q) &&
++	    exec_queue_enabled(q)) {
+ 		wait_event(guc->ct.wq, vf_recovery(guc) ||
+ 			   ((q->guc->resume_time != RESUME_PENDING ||
+ 			   xe_guc_read_stopped(guc)) && !exec_queue_pending_disable(q)));
+@@ -1803,33 +1786,11 @@ static void __guc_exec_queue_process_msg
+ 			disable_scheduling(q, false);
+ 		}
+ 	} else if (q->guc->suspend_pending) {
+-		if (idle_skip_suspend)
+-			set_exec_queue_idle_skip_suspend(q);
+ 		set_exec_queue_suspended(q);
+ 		suspend_fence_signal(q);
+ 	}
+ }
+ 
+-static void sched_context(struct xe_exec_queue *q)
+-{
+-	struct xe_guc *guc = exec_queue_to_guc(q);
+-	struct xe_lrc *lrc = q->lrc[0];
+-	u32 action[] = {
+-		XE_GUC_ACTION_SCHED_CONTEXT,
+-		q->guc->id,
+-	};
+-
+-	xe_gt_assert(guc_to_gt(guc), !xe_exec_queue_is_parallel(q));
+-	xe_gt_assert(guc_to_gt(guc), !exec_queue_destroyed(q));
+-	xe_gt_assert(guc_to_gt(guc), exec_queue_registered(q));
+-	xe_gt_assert(guc_to_gt(guc), !exec_queue_pending_disable(q));
+-
+-	trace_xe_exec_queue_submit(q);
+-
+-	xe_lrc_set_ring_tail(lrc, lrc->ring.tail);
+-	xe_guc_ct_send(&guc->ct, action, ARRAY_SIZE(action), 0, 0);
+-}
+-
+ static void __guc_exec_queue_process_msg_resume(struct xe_sched_msg *msg)
+ {
+ 	struct xe_exec_queue *q = msg->private_data;
+@@ -1837,22 +1798,12 @@ static void __guc_exec_queue_process_msg
+ 	if (guc_exec_queue_allowed_to_change_state(q)) {
+ 		clear_exec_queue_suspended(q);
+ 		if (!exec_queue_enabled(q)) {
+-			if (exec_queue_idle_skip_suspend(q)) {
+-				struct xe_lrc *lrc = q->lrc[0];
+-
+-				clear_exec_queue_idle_skip_suspend(q);
+-				xe_lrc_set_ring_tail(lrc, lrc->ring.tail);
+-			}
+ 			q->guc->resume_time = RESUME_PENDING;
+ 			set_exec_queue_pending_resume(q);
+ 			enable_scheduling(q);
+-		} else if (exec_queue_idle_skip_suspend(q)) {
+-			clear_exec_queue_idle_skip_suspend(q);
+-			sched_context(q);
+ 		}
+ 	} else {
+ 		clear_exec_queue_suspended(q);
+-		clear_exec_queue_idle_skip_suspend(q);
+ 	}
+ }
+ 
+--- a/drivers/gpu/drm/xe/xe_hw_engine_group.c
++++ b/drivers/gpu/drm/xe/xe_hw_engine_group.c
+@@ -207,21 +207,15 @@ static int xe_hw_engine_group_suspend_fa
+ 	lockdep_assert_held_write(&group->mode_sem);
+ 
+ 	list_for_each_entry(q, &group->exec_queue_list, hw_engine_group_link) {
+-		bool idle_skip_suspend;
+ 
+ 		if (!xe_vm_in_fault_mode(q->vm))
+ 			continue;
+ 
+-		idle_skip_suspend = xe_exec_queue_idle_skip_suspend(q);
+-		if (!idle_skip_suspend && has_deps)
++		if (has_deps)
+ 			return -EAGAIN;
+ 
+ 		xe_gt_stats_incr(q->gt, XE_GT_STATS_ID_HW_ENGINE_GROUP_SUSPEND_LR_QUEUE_COUNT, 1);
+-		if (idle_skip_suspend)
+-			xe_gt_stats_incr(q->gt,
+-					 XE_GT_STATS_ID_HW_ENGINE_GROUP_SKIP_LR_QUEUE_COUNT, 1);
+-
+-		need_resume |= !idle_skip_suspend;
++		need_resume = true;
+ 		q->ops->suspend(q);
+ 		gt = q->gt;
+ 	}
 
 
