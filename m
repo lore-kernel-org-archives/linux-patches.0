@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FF644CF2C;
-	Tue, 16 Jun 2026 15:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B496744BC94;
+	Tue, 16 Jun 2026 15:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624167; cv=none; b=VFsvV9nYA9XR6jokoYHC3syF0JhK6ZS4mEIq5wpgzMTizbhk8jbIjeJuX0FnoyikSu/bU2m29YORXrXCuJXxeOmYzlCw3tpFHg5Jgvh+q6Yy6N0zfBUKHBgS4Mb8Bu4Jqx+Y+dotud8/EqnmSK3xieJ6rwP3WQRoffdPs9AUwyM=
+	t=1781624173; cv=none; b=IqcnaFLhgRnYDEgFBfPsvQo/7t2pjrs1F1oH9aQYUJjORh1lvnwDzFwqPGoI1rgcOCW06Ff5VAVSmW+eC+F5xjXS1zv87rMVM7fypFKRwWQ9FeIalXDajaJpM6K5I2c2epz3GPY3iF4rHgZVuSbSg01Hsz30ib7yDdf7zAkyvQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624167; c=relaxed/simple;
-	bh=xI9BLdQ6fsClbuPngs8BLtRStnCYp23NDigsCZDSoyo=;
+	s=arc-20240116; t=1781624173; c=relaxed/simple;
+	bh=xfr85P9SGLdynyOGdX5YIVqQtu2deB0KM/RhHS2nOa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GabXXfiy7TcKq2QyV1CBTwshvmZ7EQnyt818icY+ldexcVcDh3f9e1H+3ABsxYSIuxiHpGg041ZnsV2V3mNNZaGYwXPeF9oozYR1Q+in2NVyjWscBZ/D/pMlk/wqxpR5Hw1irpJPVfaXBmybRg4EjT3WGtwplt94zIKV5z8JYvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tddgi4/y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iNnC5/6DYSFyF2vjVh8A0TSZeZSzqrAz03g9O4am7sFqXe0im86HfGZMznSEkZvpQFmdmp0up1oituwZiJ53uwyD8koQQQHAA7Ga40JHAoIyojtdITm0oZAYF3v1H1T3E2v6BranKBCv3aa/JgOa0nbfGpcaoZmZhGEFVz+XurQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKUXAU7f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tddgi4/y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A301F00A3A;
-	Tue, 16 Jun 2026 15:36:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKUXAU7f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3DE51F000E9;
+	Tue, 16 Jun 2026 15:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624165;
-	bh=1IW5GmocuVl1xLArrQqktzZ81V5eUoW/OL7Ql3/aGso=;
+	s=korg; t=1781624172;
+	bh=W0gLRua9DQbishpJoHfqfMWrTgTpL1k3wZXV5DegsZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tddgi4/yx9c25jjPeQC5HTizXj3CMb389wbOT932CipcpJUkD4hApD6jJKnOQsEE0
-	 qWbg9W6/zal3+YDEjwCK4SnYLyT66lzx10U7jfZV2pWmqVtWHnm423XTbcxpFF49E+
-	 JTjwBAOKRoPG7hH8Lg3vIgdTsTOXcegLtE+6TNCA=
+	b=SKUXAU7fJYeDvKJ/P5rtDEPsNozQMr5XYjWHWyuOCpQbocyT5YB8B0n+PnCzFNZzr
+	 uPPlVZScnyzAurVJp76fCWsKG6YMMxwIdLXSIpTT8p7sB7DDc3ytji2yPX2OD16X+O
+	 BVWr9ToMX+CHTenNpWRDSfulvSS9vYt+zDun/T5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 7.0 285/378] misc: fastrpc: Fix NULL pointer dereference in rpmsg callback
-Date: Tue, 16 Jun 2026 20:28:36 +0530
-Message-ID: <20260616145125.098123559@linuxfoundation.org>
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH 7.0 286/378] firmware: samsung: acpm: Fix mailbox channel leak on probe error
+Date: Tue, 16 Jun 2026 20:28:37 +0530
+Message-ID: <20260616145125.143696949@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,79 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-commit 5401fb4fe10fac6134c308495df18ed74aebb9c4 upstream.
+commit b66829b17f6385cc9ffbcbe2476d532d2e3121ad upstream.
 
-A NULL pointer dereference was observed on Hawi at boot when the DSP
-sends a glink message before fastrpc_rpmsg_probe() has completed
-initialization:
+Sashiko identified the leak at [1].
 
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000178
-  pc : _raw_spin_lock_irqsave+0x34/0x8c
-  lr : fastrpc_rpmsg_callback+0x3c/0xcc [fastrpc]
-  ...
-  Call trace:
-   _raw_spin_lock_irqsave+0x34/0x8c (P)
-   fastrpc_rpmsg_callback+0x3c/0xcc [fastrpc]
-   qcom_glink_native_rx+0x538/0x6a4
-   qcom_glink_smem_intr+0x14/0x24 [qcom_glink_smem]
+The ACPM driver allocates hardware mailbox channels using
+`mbox_request_channel()` during `acpm_channels_init()`. However, the
+driver lacked a `.remove` callback and did not free these channels on
+subsequent error paths inside `acpm_probe()`.
 
-The faulting address 0x178 corresponds to the lock variable inside
-struct fastrpc_channel_ctx, confirming that cctx is NULL when
-fastrpc_rpmsg_callback() attempts to take the spinlock.
+Additionally, if `acpm_achan_alloc_cmds()` failed during the channel
+initialization loop, the function returned immediately, bypassing the
+manual cleanup and permanently leaking any channels successfully
+requested in previous loop iterations.
 
-There are two issues here. First, dev_set_drvdata() is called before
-spin_lock_init() and idr_init(), leaving a window where the callback
-can retrieve a valid cctx pointer but operate on an uninitialized
-spinlock. Second, the rpmsg channel becomes live as soon as the driver
-is bound, so fastrpc_rpmsg_callback() can fire before dev_set_drvdata()
-is called at all, resulting in dev_get_drvdata() returning NULL.
+Fix this by modifying `acpm_free_mbox_chans()` to match the `devres`
+action signature and registering it via `devm_add_action_or_reset()`.
 
-Fix both issues by moving all cctx initialization ahead of
-dev_set_drvdata() so the structure is fully initialized before it
-becomes visible to the callback, and add a NULL check in
-fastrpc_rpmsg_callback() as a guard against any remaining window.
-
-Fixes: f6f9279f2bf0 ("misc: fastrpc: Add Qualcomm fastrpc basic driver model")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204528.116920-4-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a88927b534ba ("firmware: add Exynos ACPM protocol driver")
+Closes: https://sashiko.dev/#/patchset/20260420-acpm-tmu-v3-0-3dc8e93f0b26%40linaro.org [1]
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://patch.msgid.link/20260505-acpm-fixes-sashiko-reports-v5-2-43b5ee7f1674@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/firmware/samsung/exynos-acpm.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -2457,7 +2457,6 @@ static int fastrpc_rpmsg_probe(struct rp
+--- a/drivers/firmware/samsung/exynos-acpm.c
++++ b/drivers/firmware/samsung/exynos-acpm.c
+@@ -526,10 +526,11 @@ static int acpm_achan_alloc_cmds(struct
  
- 	kref_init(&data->refcount);
+ /**
+  * acpm_free_mbox_chans() - free mailbox channels.
+- * @acpm:	pointer to driver data.
++ * @data:	pointer to driver data.
+  */
+-static void acpm_free_mbox_chans(struct acpm_info *acpm)
++static void acpm_free_mbox_chans(void *data)
+ {
++	struct acpm_info *acpm = data;
+ 	int i;
  
--	dev_set_drvdata(&rpdev->dev, data);
- 	rdev->dma_mask = &data->dma_mask;
- 	dma_set_mask_and_coherent(rdev, DMA_BIT_MASK(32));
- 	INIT_LIST_HEAD(&data->users);
-@@ -2466,6 +2465,7 @@ static int fastrpc_rpmsg_probe(struct rp
- 	idr_init(&data->ctx_idr);
- 	data->domain_id = domain_id;
- 	data->rpdev = rpdev;
-+	dev_set_drvdata(&rpdev->dev, data);
+ 	for (i = 0; i < acpm->num_chans; i++)
+@@ -557,6 +558,10 @@ static int acpm_channels_init(struct acp
+ 	if (!acpm->chans)
+ 		return -ENOMEM;
  
- 	err = of_platform_populate(rdev->of_node, NULL, NULL, rdev);
- 	if (err)
-@@ -2539,6 +2539,9 @@ static int fastrpc_rpmsg_callback(struct
- 	if (len < sizeof(*rsp))
- 		return -EINVAL;
- 
-+	if (!cctx)
-+		return -ENODEV;
++	ret = devm_add_action_or_reset(dev, acpm_free_mbox_chans, acpm);
++	if (ret)
++		return dev_err_probe(dev, ret, "Failed to add mbox free action.\n");
 +
- 	ctxid = ((rsp->ctx & FASTRPC_CTXID_MASK) >> 4);
+ 	chans_shmem = acpm->sram_base + readl(&shmem->chans);
  
- 	spin_lock_irqsave(&cctx->lock, flags);
+ 	for (i = 0; i < acpm->num_chans; i++) {
+@@ -578,10 +583,8 @@ static int acpm_channels_init(struct acp
+ 		cl->dev = dev;
+ 
+ 		achan->chan = mbox_request_channel(cl, 0);
+-		if (IS_ERR(achan->chan)) {
+-			acpm_free_mbox_chans(acpm);
++		if (IS_ERR(achan->chan))
+ 			return PTR_ERR(achan->chan);
+-		}
+ 	}
+ 
+ 	return 0;
 
 
