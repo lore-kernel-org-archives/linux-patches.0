@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77833AE71F;
-	Tue, 16 Jun 2026 16:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB9132B138;
+	Tue, 16 Jun 2026 16:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628449; cv=none; b=MilPEu83XALgrpcqoT5x7skAzizVbmkWaG1j2e0mLMjsoHHxYxPP0Mbp1Q47zkYpEhgbFTzZKWDIeAYTLb0gk4AwkuVOcigtehFS+guXE3gvvUxbSXYSu57pDsnpcg02Y78YAWAec8RwZYw6iFJPn7opl8Bu4QuG0qeDq0S6LB8=
+	t=1781628454; cv=none; b=EpS5V7dJ7NBnQGknsmE8/RVnWZ741Hm58qP/VUP99L2oukRV+z3iOzozkCIJFRjskvCBn3EPWFgwB7CpT2HvkeoOEoJdRZ8IwXiozGKfCpldsY75TBSegOCSYlhCXTNDLfVGIU/b45zUYR9FZIz79b4XLFwLcNYitHzyJahA+7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628449; c=relaxed/simple;
-	bh=8KICPCmDjZrhd49BPDCZ0IsAVULGMVao/c5lsZxNhyQ=;
+	s=arc-20240116; t=1781628454; c=relaxed/simple;
+	bh=Q/BzrTUV2clT6IuCpUpX9YwZLmR4GxzQeHUaJjK2kQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j7b7/pupiruBj8/d/kG9zuU1BlmVsur56EjgYhTPa8+n/iU3oz2OxmysrmvLs7DAzLFqD9t1UvX3UziPX1QIMlCksNgLNobGezBmdwrdw3XssvYl74irADcFB9V2Xt5UIw8rihX+TYkpkQuG+10PJytL5hOeCtI1z+pKaBsc/Y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uPqlEQfN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BJ2/PqQMq3H0kW5CD85sMSPpDMC1L+VeAJJG7vwZHOlshbnXTWmEeuRIhaDIjin7GxlM2kyqVTZXSYmWunQ5aJ8Va+pynvlPow4v9MJT0nXZVeGSQQLinSX09QVW05QwZfKPJB3sJQBJKHLIiwRJZXfIXE5avm7vGQAKKHdeB1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSwyeDU7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPqlEQfN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48B61F000E9;
-	Tue, 16 Jun 2026 16:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSwyeDU7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81EAF1F000E9;
+	Tue, 16 Jun 2026 16:47:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628448;
-	bh=K0UuM84t0h4CdmAggu3WuNGa2ZrElW401uITXPjOvTw=;
+	s=korg; t=1781628453;
+	bh=WzAOEW0sGFTMnOnqDRbciC3J9Wb0O2acefGmR9OeyHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uPqlEQfNYvs2cXRHWZNphD3Gi2D5dn4o5OHW1SlQ716jHD+88jxU8qkqj6W3MZgu8
-	 Hj4igxHisPuHhtzOHRIMgtI3EkP4LCmIGjXX/gMWUCbWHx2esgLSLd+F08hwxhfpf1
-	 ZFotP7CLZtccGreLI4SK+gji3N56mEHiHAUj20c8=
+	b=GSwyeDU7SDgBh8FMfpOxfS7regTGiMHCJJY6xstT5zk6+ll3OLZWhgZqXxMuBFVnB
+	 uxNN5Vhrm6ew81lt+P22FtbkiKR3fBLtwyUal6jTmvsxHs1rN8MupZsbaHQ2iJSRLF
+	 EVALbIdZwedLSaHgnicbyGMeiEQL1nfKYiwOUJWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Siwei Zhang <oss@fourdim.xyz>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 097/452] Bluetooth: L2CAP: use chan timer to close channels in cleanup_listen()
-Date: Tue, 16 Jun 2026 20:25:24 +0530
-Message-ID: <20260616145122.900642943@linuxfoundation.org>
+Subject: [PATCH 6.6 098/452] Bluetooth: L2CAP: fix chan ref leak in l2cap_chan_timeout() on !conn
+Date: Tue, 16 Jun 2026 20:25:25 +0530
+Message-ID: <20260616145122.947959292@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,67 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Siwei Zhang <oss@fourdim.xyz>
 
-commit 8c8e620467a7b51562dbcefbd1f09f288d7d710d upstream.
+commit 9dbd84990394c51f5cee1e8871bb5ff8af5ed939 upstream.
 
-l2cap_chan_close() removes the channel from conn->chan_l, which
-must be done under conn->lock.  cleanup_listen() runs under the
-parent sk_lock, so acquiring conn->lock would invert the
-established conn->lock -> chan->lock -> sk_lock order.
+__set_chan_timer() takes a l2cap_chan reference via l2cap_chan_hold()
+before scheduling the delayed work.  The normal path in
+l2cap_chan_timeout() drops this reference with l2cap_chan_put() at the
+end, but the early return when chan->conn is NULL skips the put,
+leaking the reference.
 
-Instead of calling l2cap_chan_close() directly, schedule
-l2cap_chan_timeout with delay 0 to close the channel
-asynchronously.  The timeout handler already acquires conn->lock
-and chan->lock in the correct order.
+Add the missing l2cap_chan_put() before the early return.
 
-The timer is only armed when chan->conn is still set: if it is
-already NULL, l2cap_conn_del() has already processed this channel
-(l2cap_chan_del + l2cap_sock_teardown_cb + l2cap_sock_close_cb),
-so there is nothing left to do.  If l2cap_conn_del() races in
-after the timer is armed, __clear_chan_timer() inside
-l2cap_chan_del() cancels it; if the timer has already fired, the
-handler returns harmlessly because chan->conn was cleared.
-
-Fixes: 3df91ea20e74 ("Bluetooth: Revert to mutexes from RCU list")
-Cc: <stable@vger.kernel.org> # 0b58004: Bluetooth: fix UAF in l2cap_sock_cleanup_listen() vs l2cap_conn_del()
+Fixes: adf0398cee86 ("Bluetooth: l2cap: fix null-ptr-deref in l2cap_chan_timeout")
+Cc: stable@vger.kernel.org
 Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_sock.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ net/bluetooth/l2cap_core.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1465,6 +1465,10 @@ static void l2cap_sock_cleanup_listen(st
- 	 * pin it (hold_unless_zero() additionally skips a chan already past
- 	 * its last reference).  We then drop the sk lock before taking
- 	 * chan->lock, so sk and chan locks are never held together.
-+	 *
-+	 * Since we cannot call l2cap_chan_close() without conn->lock,
-+	 * schedule l2cap_chan_timeout to close the channel; it already
-+	 * acquires conn->lock -> chan->lock in the correct order.
- 	 */
- 	while ((sk = bt_accept_dequeue(parent, NULL))) {
- 		struct l2cap_chan *chan;
-@@ -1482,14 +1486,12 @@ static void l2cap_sock_cleanup_listen(st
- 		       state_to_string(chan->state));
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -411,8 +411,10 @@ static void l2cap_chan_timeout(struct wo
  
- 		l2cap_chan_lock(chan);
--		__clear_chan_timer(chan);
--		l2cap_chan_close(chan, ECONNRESET);
--		/* l2cap_conn_del() may already have killed this socket
--		 * (it sets SOCK_DEAD); skip the duplicate to avoid a
--		 * double sock_put()/l2cap_chan_put().
-+		/* Since we cannot call l2cap_chan_close() without
-+		 * conn->lock, schedule its timer to trigger the close
-+		 * and cleanup of this channel.
- 		 */
--		if (!sock_flag(sk, SOCK_DEAD))
--			l2cap_sock_kill(sk);
-+		if (chan->conn)
-+			__set_chan_timer(chan, 0);
- 		l2cap_chan_unlock(chan);
+ 	BT_DBG("chan %p state %s", chan, state_to_string(chan->state));
  
- 		l2cap_chan_put(chan);
+-	if (!conn)
++	if (!conn) {
++		l2cap_chan_put(chan);
+ 		return;
++	}
+ 
+ 	mutex_lock(&conn->lock);
+ 	/* __set_chan_timer() calls l2cap_chan_hold(chan) while scheduling
 
 
