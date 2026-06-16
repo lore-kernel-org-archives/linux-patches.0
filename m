@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CCB2F12AE;
-	Tue, 16 Jun 2026 18:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A573CE4BA;
+	Tue, 16 Jun 2026 18:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632922; cv=none; b=UzKJQffExi8EdEuTxAVJAqLSSgBCuKeulptE+gWLBHJO3Aezw6mmabzHwO24pQg3eec4f1qt7UEZvo4Dp1feN/cZTcOo9T8OaNlX6q09crR6c2nff4YUpECmux+9i3U3FDAnL3yGeBpoTdQjNa9K2UN+EXx/46DoOnnjYxvScdg=
+	t=1781632926; cv=none; b=l2SfFRLYhsIZdw2Wi50oyvm+qNUyVvvNPETbDJg3WswZLC6EhYREKc0DKlPhspUe0pqW4uQ7YfLKMIwWqhK1yTNcwuVJVeK40Rr2rdnzYyri99Z39nrfAzD52U+YpyIVrPML1dzjCQX0aRiXzTwhsWQlBSsW3ranCsOL12p6nq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632922; c=relaxed/simple;
-	bh=+e2boGZ1fqnDzoRojDB1aeotpDcf6tHORqT1guzXXEw=;
+	s=arc-20240116; t=1781632926; c=relaxed/simple;
+	bh=HjEvR2yZkYHr2WtBsK8cn2uzmP9EkkBHisQkZyxpRjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U8U4nonX8ZmmdoydM0hmGPLU9QdMKzly43/athDL+20GSDuhqkMO7aXgOpsviKcN8dH2AMHLEI4ui/z50+DQEJwhpD/ePq4YP4G0GexOu3Aj/W9bOwofA5VTlZ3oqI2IAea0/QiY5cXAMsXSoMwwbNZUyY6pOMRWcGVDPiekg4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zEngv096; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qFwYv4DoY4pDw21w3joh7jt3wWPV5vs9Fiv4Vii25GjcvIZlPyUSHKsHaQap7YayAwqL7p0kmE1IJ6gMZv98MLSNZmIXc+H+jS1lDi1AGi2WBz8jo2hI54kwUjHiKcIge7mvJBeatXTbyzDs//IuJBkw8rp9oxsZ8K2pXXgCGdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwIvhgiT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zEngv096"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ADF31F000E9;
-	Tue, 16 Jun 2026 18:01:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwIvhgiT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491371F000E9;
+	Tue, 16 Jun 2026 18:02:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632920;
-	bh=SRoudnKKWTBz5NAA5h+2gfozovrElM8yR4zBGq27+YY=;
+	s=korg; t=1781632925;
+	bh=8XoN73znVi4HTSLBvG0+JC+iC7PRdxKRZ4XNdNzkhxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zEngv096Sm1zYqhNdTG4MB/L8DqCpM1a8kyvAZyEFoJ3A6q+q1w3nTboS2F+akZDg
-	 m63Y8INge2X5o8uMSKTmkNLvN2b3psbLvXUkNkdkS+pJZsHAJUE2E6SaiGRQi7gZ+9
-	 36EOI1276o1Pmn7H171U+5rfOExXha3OJy2g2sy8=
+	b=AwIvhgiT6hi1ngPCgpE50up3ZWK8m2FJi3RfgFSYb520fYixIrAsXBNe3AcBq556q
+	 TZIiJE/UYdZt+dbcsgIefzUTLT5EXNryINTLazypt1U4mtSrX6top3oNYsuMurM700
+	 33ZTOFlspx/66Fbsc3YIXfZXlpIm9MqfCr+yZMUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiao <252270051@hdu.edu.cn>,
-	Corey Minyard <corey@minyard.net>
-Subject: [PATCH 6.1 502/522] ipmi:ssif: Clean up kthread on errors
-Date: Tue, 16 Jun 2026 20:30:49 +0530
-Message-ID: <20260616145149.245848616@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 503/522] mm/damon/core: use time_in_range_open() for damos quota window start
+Date: Tue, 16 Jun 2026 20:30:50 +0530
+Message-ID: <20260616145149.291410133@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -50,56 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Corey Minyard <corey@minyard.net>
+From: SeongJae Park <sj@kernel.org>
 
-commit 75c486cb1bcaa1a3ec3a6438498176a3a4998ae4 upstream.
+commit 049a57421dd67a28c45ae7e92c36df758033e5fa upstream.
 
-If an error occurs after the ssif kthread is created, but before the
-main IPMI code starts the ssif interface, the ssif kthread will not
-be stopped.
+damos_adjust_quota() uses time_after_eq() to show if it is time to start a
+new quota charge window, comparing the current jiffies and the scheduled
+next charge window start time.  If it is, the next charge window start
+time is updated and the new charge window starts.
 
-So make sure the kthread is stopped on an error condition if it is
-running.
+The time check and next window start time update is skipped while the
+scheme is deactivated by the watermarks.  Let's suppose the deactivation
+is kept more than LONG_MAX jiffies (assuming CONFIG_HZ of 250, more than
+99 days in 32 bit systems and more than one billion years in 64 bit
+systems), resulting in having the jiffies larger than the next charge
+window start time + LONG_MAX.  Then, the time_after_eq() call can return
+false until another LONG_MAX jiffies are passed.
 
-Fixes: 259307074bfc ("ipmi: Add SMBus interface driver (SSIF)")
-Reported-by: Li Xiao <<252270051@hdu.edu.cn>
-Cc: stable@vger.kernel.org
-Reviewed-by: Li Xiao <252270051@hdu.edu.cn>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+This means the scheme can continue working after being reactivated by the
+watermarks.  But, soon, the quota will be exceeded and the scheme will
+again effectively stop working until the next charge window starts.
+Because the current charge window is extended to up to LONG_MAX jiffies,
+however, it will look like it stopped unexpectedly and indefinitely, from
+the user's perspective.
+
+Fix this by using !time_in_range_open() instead.
+
+The issue was discovered [1] by sashiko.
+
+Link: https://lore.kernel.org/20260329152306.45796-1-sj@kernel.org
+Link: https://lore.kernel.org/20260324040722.57944-1-sj@kernel.org [1]
+Fixes: ee801b7dd782 ("mm/damon/schemes: activate schemes based on a watermarks mechanism")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.16.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ mm/damon/core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -1287,8 +1287,10 @@ static void shutdown_ssif(void *send_inf
- 	ssif_info->stopping = true;
- 	del_timer_sync(&ssif_info->watch_timer);
- 	del_timer_sync(&ssif_info->retry_timer);
--	if (ssif_info->thread)
-+	if (ssif_info->thread) {
- 		kthread_stop(ssif_info->thread);
-+		ssif_info->thread = NULL;
-+	}
- }
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -826,7 +826,8 @@ static void kdamond_apply_schemes(struct
+ 			continue;
  
- static void ssif_remove(struct i2c_client *client)
-@@ -1916,6 +1918,15 @@ static int ssif_probe(struct i2c_client
- 
-  out:
- 	if (rv) {
-+		/*
-+		 * If ipmi_register_smi() starts the interface, it will
-+		 * call shutdown and that will free the thread and set
-+		 * it to NULL.  Otherwise it must be freed here.
-+		 */
-+		if (ssif_info->thread) {
-+			kthread_stop(ssif_info->thread);
-+			ssif_info->thread = NULL;
-+		}
- 		if (addr_info)
- 			addr_info->client = NULL;
- 
+ 		/* New charge window starts */
+-		if (time_after_eq(jiffies, quota->charged_from +
++		if (!time_in_range_open(jiffies, quota->charged_from,
++					quota->charged_from +
+ 					msecs_to_jiffies(
+ 						quota->reset_interval))) {
+ 			if (quota->esz && quota->charged_sz >= quota->esz)
 
 
