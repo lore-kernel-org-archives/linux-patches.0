@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA663043C8;
-	Tue, 16 Jun 2026 17:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484C63AA1BA;
+	Tue, 16 Jun 2026 17:57:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632621; cv=none; b=J8NVNJDw1DL40jG1QOuZ9OJ0rn/wVhLcJpJT01Mk/viK/QD8y/cWBJgW42MqOv9ytXOjgNbHYbtHaKYbRQI4L1VZ1AjIvX61WZV9XiIGcwCtv+UJAjm3oxkEwly6UGVqpzS6r0CZZs2RyngrDPoIcS2snpMc5KHtKwO0VlJiDq0=
+	t=1781632626; cv=none; b=acNJ8ZcI4eG9D2OC7zcZUVss/j2ADlaBJbGPr0s4AxDNksz4AlqtZHwsEu29ALnyc/06YWtiACrJNyaeT3Hp4+RUk5BQph6PtGS51kldbtjUBbP8T79E4mma6t5K+yYE9GmsvdlnGAz8bw5kFQI5WeAUIVJdL25LtRV27ovt6ZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632621; c=relaxed/simple;
-	bh=eIEQFJRaVY10reXlrd3MK/QGT8HU8EtlCGIF1tcKAJQ=;
+	s=arc-20240116; t=1781632626; c=relaxed/simple;
+	bh=P/ZjwVMLCMeoefWtAOD8x411rLJS91LYJyqhG/n15iU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oojvfwr1KdxMUY65owefBGSio+AKSEf8G9pGl6KR/SrPrwD/jtJo8jYiOxxC+bz/H0MTEh5NamULU8SS6LGK5SYFtsdXjv+v2iJaZ59fNBO5d6RQyz4iFHnA73tILvpqiuIGjoXQ0k/pzCKISOv44ejb2SB1BSb2Brph7F/G5UQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaFIv0sa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gakzAgNIjXxQCzgniS3jpEqy8TFk/7rtegMTkiE6OGc+KrzOaOB/3YsVCzoQoBjZxB6muP4w1XQF3/KQdlZcOz4/0Z82E6XrJl8FtIKksuWRR0K3neurkqzjx1YXm22st1eyN0TcNmXCQWc/h0/aoN7rx7MgS8pGvluVUgjMdI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jCkAFRaM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaFIv0sa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 306511F000E9;
-	Tue, 16 Jun 2026 17:56:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jCkAFRaM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30261F000E9;
+	Tue, 16 Jun 2026 17:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632620;
-	bh=DJ/x4HX7/Nbo3s/CPBAxw3S7ZeLFzM9ms2YgPEnS9BQ=;
+	s=korg; t=1781632624;
+	bh=YmessaQAvjp12kmWFc0Fek87G2LpFiyGQLWTl/lsstg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aaFIv0saDd/cp3hc1mObAhoP4mcsmcsTWLBbOZ36NlhkXsiNCd5XATVLPX+S6feGO
-	 ZEBC0Pw2ZTJHigKLkz8c8VUtYmb+NwcbqjSWuwCSzrPMGFbRqDqwPL9ldVo5wrSbYk
-	 4S0dTZP4CvOzuzkWVk6wxHCZZLXxzbM6Xg0EG9TQ=
+	b=jCkAFRaMYLpL5leMnfjohUqe/fvyhw3vBoDO5jRKEzKS7Y65cOTXvKdhKJSiK32Y4
+	 Is6AijjuxqiAZgf8S1TtmEuZdzxqBUVdaHz7227Itg18OevPGrhPsP3WGZyCj6Q4ur
+	 o7KJojtGRbGFoZp7nj8+gil/asb72/2QjdKsq7dY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 413/522] tracing/probes: Limit size of event probe to 3K
-Date: Tue, 16 Jun 2026 20:29:20 +0530
-Message-ID: <20260616145145.372143718@linuxfoundation.org>
+Subject: [PATCH 6.1 414/522] btrfs: remove fs_info argument from btrfs_sysfs_add_space_info_type()
+Date: Tue, 16 Jun 2026 20:29:21 +0530
+Message-ID: <20260616145145.409950967@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,67 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit b2aa3b4d64e460ac606f386c24e7d8a873ce6f1a ]
+[ Upstream commit 771af6ff72e0ed0eb8bf97e5ae4fa5094e0c5d1d ]
 
-There currently isn't a max limit an event probe can be. One could make an
-event greater than PAGE_SIZE, which makes the event useless because if
-it's bigger than the max event that can be recorded into the ring buffer,
-then it will never be recorded.
+We don't need it since we can grab fs_info from the given space_info.
+So remove the fs_info argument.
 
-A event probe should never need to be greater than 3K, so make that the
-max size. As long as the max is less than the max that can be recorded
-onto the ring buffer, it should be fine.
-
-Cc: stable@vger.kernel.org
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Fixes: 93ccae7a22274 ("tracing/kprobes: Support basic types on dynamic events")
-Link: https://patch.msgid.link/20260428122302.706610ba@gandalf.local.home
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-[ changed `ctx->offset` to `offset` and `goto fail` to `goto out` ]
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: a7449edf9614 ("btrfs: fix double free in create_space_info_sub_group() error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe.c |    6 ++++++
- kernel/trace/trace_probe.h |    4 +++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ fs/btrfs/space-info.c |    4 ++--
+ fs/btrfs/sysfs.c      |    5 ++---
+ fs/btrfs/sysfs.h      |    3 +--
+ 3 files changed, 5 insertions(+), 7 deletions(-)
 
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -651,6 +651,12 @@ static int traceprobe_parse_probe_arg_bo
- 	parg->offset = *size;
- 	*size += parg->type->size * (parg->count ?: 1);
+--- a/fs/btrfs/space-info.c
++++ b/fs/btrfs/space-info.c
+@@ -259,7 +259,7 @@ static int create_space_info_sub_group(s
+ 	sub_group->parent = parent;
+ 	sub_group->subgroup_id = id;
  
-+	if (*size > MAX_PROBE_EVENT_SIZE) {
-+		ret = -E2BIG;
-+		trace_probe_log_err(offset, EVENT_TOO_BIG);
-+		goto out;
-+	}
-+
- 	ret = -ENOMEM;
- 	if (parg->count) {
- 		len = strlen(parg->type->fmttype) + 6;
---- a/kernel/trace/trace_probe.h
-+++ b/kernel/trace/trace_probe.h
-@@ -33,6 +33,7 @@
- #define MAX_ARRAY_LEN		64
- #define MAX_ARG_NAME_LEN	32
- #define MAX_STRING_SIZE		PATH_MAX
-+#define MAX_PROBE_EVENT_SIZE	3072
+-	ret = btrfs_sysfs_add_space_info_type(fs_info, sub_group);
++	ret = btrfs_sysfs_add_space_info_type(sub_group);
+ 	if (ret) {
+ 		kfree(sub_group);
+ 		parent->sub_group[index] = NULL;
+@@ -288,7 +288,7 @@ static int create_space_info(struct btrf
+ 			goto out_free;
+ 	}
  
- /* Reserved field names */
- #define FIELD_STRING_IP		"__probe_ip"
-@@ -458,7 +459,8 @@ extern int traceprobe_define_arg_fields(
- 	C(NO_EVENT_INFO,	"This requires both group and event name to attach"),\
- 	C(BAD_ATTACH_EVENT,	"Attached event does not exist"),\
- 	C(BAD_ATTACH_ARG,	"Attached event does not have this field"),\
--	C(NO_EP_FILTER,		"No filter rule after 'if'"),
-+	C(NO_EP_FILTER,		"No filter rule after 'if'"),		\
-+	C(EVENT_TOO_BIG,	"Event too big (too many fields?)"),
+-	ret = btrfs_sysfs_add_space_info_type(info, space_info);
++	ret = btrfs_sysfs_add_space_info_type(space_info);
+ 	if (ret)
+ 		return ret;
  
- #undef C
- #define C(a, b)		TP_ERR_##a
+--- a/fs/btrfs/sysfs.c
++++ b/fs/btrfs/sysfs.c
+@@ -1618,13 +1618,12 @@ static const char *alloc_name(struct btr
+  * Create a sysfs entry for a space info type at path
+  * /sys/fs/btrfs/UUID/allocation/TYPE
+  */
+-int btrfs_sysfs_add_space_info_type(struct btrfs_fs_info *fs_info,
+-				    struct btrfs_space_info *space_info)
++int btrfs_sysfs_add_space_info_type(struct btrfs_space_info *space_info)
+ {
+ 	int ret;
+ 
+ 	ret = kobject_init_and_add(&space_info->kobj, &space_info_ktype,
+-				   fs_info->space_info_kobj, "%s",
++				   space_info->fs_info->space_info_kobj, "%s",
+ 				   alloc_name(space_info));
+ 	if (ret) {
+ 		kobject_put(&space_info->kobj);
+--- a/fs/btrfs/sysfs.h
++++ b/fs/btrfs/sysfs.h
+@@ -28,8 +28,7 @@ void __cold btrfs_exit_sysfs(void);
+ int btrfs_sysfs_add_mounted(struct btrfs_fs_info *fs_info);
+ void btrfs_sysfs_remove_mounted(struct btrfs_fs_info *fs_info);
+ void btrfs_sysfs_add_block_group_type(struct btrfs_block_group *cache);
+-int btrfs_sysfs_add_space_info_type(struct btrfs_fs_info *fs_info,
+-				    struct btrfs_space_info *space_info);
++int btrfs_sysfs_add_space_info_type(struct btrfs_space_info *space_info);
+ void btrfs_sysfs_remove_space_info(struct btrfs_space_info *space_info);
+ void btrfs_sysfs_update_devid(struct btrfs_device *device);
+ 
 
 
