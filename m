@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C07444D03B;
-	Tue, 16 Jun 2026 15:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A08D44DB64;
+	Tue, 16 Jun 2026 15:55:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625341; cv=none; b=EnYLY294TDg3xzIcF3DYacfxB8O/GBChQ6RUHkTkW7oHe5RaAxnh2bek1BfIJmTy+gQgUwSGeNvhvGsMq+5unl/AbWg9lSgSjdtVVoVoOQhnm31HKU6FBVFZp8H+GyBr8hlOJ6T9r2QI3UYSD77Ks2hDlaiKsLQy537wdAKHkQ8=
+	t=1781625346; cv=none; b=Y5UZM8hMhC7zO1AuhBHrXEPChtiDfingrfSzEdebLBXwJg6RWxBgk35JX4zNd8a9rKfo0u8FxRwEpwzL61Tl6ffw8ATw6UArThbhvG3FtscuzQLfYHTPkw5dpyV3K2g0ek9z+Mle6kqjxEz+9LNhLPYjU/SHmT8ngKM687trBKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625341; c=relaxed/simple;
-	bh=d5taYKki5HIG/hvDav6DmyUZ7FSctresIZVkQPpfbfE=;
+	s=arc-20240116; t=1781625346; c=relaxed/simple;
+	bh=O0OqYT0RBjoIG6gFFsRu6tgvw/Qj9phWRrW9WaZBAw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J/ooqr+VGwUUfiSKTXO2JlFQOSwD4EnKsC5BpY7QW/MKwEWV62mKDzcIa7ElTD4D+o9uzCcrCfzF+dkdQdIXIrWKB9qBgn3EWEgk+RlsBefemdyQAnDW81PPpUEcnd85jxtvLZiMpSO0FE5MGtp5M8u4LTYcLyK/a7NO35Yc/GY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pz5EKcbH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MexF1X5h8b7BKDTxoyW3wc5bfz7HRDvKlzWh4/shin0Hrt9FJJ+tgXidJKthVo+2hB1TTgQEVv55lsgx6N3WE2CBpcbq3E+WHiqtuEzA0gKG9618Lwapj/1Kkzu+HdFoL3Ati2xCGZhMPavj+/YRRwQIlrdR/p0J/dwc3xtN/7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RDltk+AM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pz5EKcbH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D384B1F00A3D;
-	Tue, 16 Jun 2026 15:55:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RDltk+AM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604D51F000E9;
+	Tue, 16 Jun 2026 15:55:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625339;
-	bh=vkEFDOrfauel3yyO1khiwhnDHuqr9xKKABwaLs0uhC4=;
+	s=korg; t=1781625345;
+	bh=q7+qyvejDPxf0yiOGSlQCf92d7TuBoNa6GYrYjoHd04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pz5EKcbH3Cbiz264AEJY6ej+UO3CbUhII1nSJ/+zCXbzTgmgeKV0gGJU9FGA+8U4V
-	 AGzIzHYnzZsMjQJPyX1xFXj8Y9jZeJ51WuGpVUlCzdwy+oKCymHaBk4SpS3jxzwRj1
-	 X9YGb+jLVdRYkgbbLXclagqnN1dAOgVdjnRVUBvw=
+	b=RDltk+AMu5P53eTGtx2YVAQEqCqUTOFpOc7O6TbRn+e4l2Uqpt73PuPwbonmc+Zsb
+	 QfKtrEI88NrukbhhmFoFA3XskIrKfPTWPQkokRCM71pIiilsi8JfKT6MZWGKOx6nRW
+	 B9zNhwRgRnc8dT7C3sM6VNL1/n4EPYlKRjys+hqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Zhou <eilaimemedsnaimel@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 124/325] netfilter: revalidate bridge ports
-Date: Tue, 16 Jun 2026 20:28:40 +0530
-Message-ID: <20260616145103.893440494@linuxfoundation.org>
+Subject: [PATCH 6.18 125/325] netfilter: nf_conntrack: destroy stale expectfn expectations on unregister
+Date: Tue, 16 Jun 2026 20:28:41 +0530
+Message-ID: <20260616145103.943742907@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,237 +52,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit ccb9fd4b87538ccf19ccff78ee26700526d94867 ]
+[ Upstream commit c3009418f9fa1dcb3eb86f4d8c92583537b5faa3 ]
 
-ebt_redirect_tg() dereferences br_port_get_rcu() return without a
-NULL check, causing a kernel panic when the bridge port has been
-removed between the original hook invocation and an NFQUEUE
-reinject.
+NAT helpers such as nf_nat_h323 store a raw pointer to module text in
+exp->expectfn (e.g. ip_nat_q931_expect). nf_ct_helper_expectfn_unregister()
+only unlinks the callback descriptor and never walks the expectation table,
+so an expectation pending at module removal survives with a dangling
+exp->expectfn into freed module text.
 
-A mere NULL check isn't sufficient, however.  As sashiko review
-points out userspace can not only remove the port from the bridge,
-it could also place the device in a different virtual device, e.g.
-macvlan.
+When the expected connection arrives, init_conntrack() invokes
+exp->expectfn(), now a stale pointer into the unloaded module. Reproduced
+on a KASAN build by loading the H.323 helpers, creating a Q.931
+expectation, unloading nf_nat_h323, then connecting to the expected port:
 
-If this happens, we must drop the packet, there is no way for us to
-reinject it into the bridge path.
+ Oops: int3: 0000 [#1] SMP KASAN NOPTI
+ RIP: 0010:0xffffffffa06102d1
+  init_conntrack.isra.0 (net/netfilter/nf_conntrack_core.c:1862)
+  nf_conntrack_in (net/netfilter/nf_conntrack_core.c:2049)
+  ipv4_conntrack_local (net/netfilter/nf_conntrack_proto.c:223)
+  nf_hook_slow (net/netfilter/core.c:619)
+  __ip_local_out (net/ipv4/ip_output.c:120)
+  __tcp_transmit_skb (net/ipv4/tcp_output.c:1715)
+  tcp_connect (net/ipv4/tcp_output.c:4374)
+  tcp_v4_connect (net/ipv4/tcp_ipv4.c:345)
+  __sys_connect (net/socket.c:2167)
+ Modules linked in: nf_conntrack_h323 [last unloaded: nf_nat_h323]
 
-Switch to _upper API, we don't need the bridge port structure.
-Also, this fix keeps another bug intact:
+Reaching the dangling state requires CAP_SYS_MODULE in the initial user
+namespace to remove a NAT helper that still has live expectations, so this
+is a robustness fix; leaving an expectation pointing at freed text is wrong
+regardless.
 
-Both nfnetlink_log and nfnetlink_queue use CONFIG_BRIDGE_NETFILTER
-too aggressive, which prevents certain logging features when queueing
-in bridge family: NETFILTER_FAMILY_BRIDGE can be enabled while the old
-CONFIG_BRIDGE_NETFILTER cruft is off.
+Add nf_ct_helper_expectfn_destroy(), which walks the expectation table and
+drops every expectation whose ->expectfn matches the descriptor being torn
+down. Call it from each NAT helper's exit path after the existing RCU grace
+period, so no expectation outlives the code it points at and no extra
+synchronize_rcu() is introduced. With the fix, the same reproducer runs to
+completion without the Oops.
 
-Fixes tag is a common ancestor, this was always broken.
-
-Fixes: f350a0a87374 ("bridge: use rx_handler_data pointer to store net_bridge_port pointer")
-Reported-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
-Assisted-by: Claude:claude-sonnet-4-6
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: f587de0e2feb ("[NETFILTER]: nf_conntrack/nf_nat: add H.323 helper port")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/ebt_dnat.c     |  4 +-
- net/bridge/netfilter/ebt_redirect.c | 16 +++++---
- net/netfilter/nfnetlink_log.c       | 23 +++++++++--
- net/netfilter/nfnetlink_queue.c     | 64 +++++++++++++++++++++++++----
- 4 files changed, 89 insertions(+), 18 deletions(-)
+ include/net/netfilter/nf_conntrack_helper.h |  1 +
+ net/ipv4/netfilter/nf_nat_h323.c            |  2 ++
+ net/netfilter/nf_conntrack_helper.c         | 19 +++++++++++++++++++
+ net/netfilter/nf_nat_core.c                 |  2 ++
+ net/netfilter/nf_nat_sip.c                  |  1 +
+ 5 files changed, 25 insertions(+)
 
-diff --git a/net/bridge/netfilter/ebt_dnat.c b/net/bridge/netfilter/ebt_dnat.c
-index 3fda71a8579d13..73f185cccd63df 100644
---- a/net/bridge/netfilter/ebt_dnat.c
-+++ b/net/bridge/netfilter/ebt_dnat.c
-@@ -39,7 +39,9 @@ ebt_dnat_tg(struct sk_buff *skb, const struct xt_action_param *par)
- 			dev = xt_in(par);
- 			break;
- 		case NF_BR_PRE_ROUTING:
--			dev = br_port_get_rcu(xt_in(par))->br->dev;
-+			dev = netdev_master_upper_dev_get_rcu(xt_in(par));
-+			if (!dev) /* bridge port removed? */
-+				return EBT_DROP;
- 			break;
- 		default:
- 			dev = NULL;
-diff --git a/net/bridge/netfilter/ebt_redirect.c b/net/bridge/netfilter/ebt_redirect.c
-index 307790562b4929..83486cd4d564b1 100644
---- a/net/bridge/netfilter/ebt_redirect.c
-+++ b/net/bridge/netfilter/ebt_redirect.c
-@@ -24,12 +24,18 @@ ebt_redirect_tg(struct sk_buff *skb, const struct xt_action_param *par)
- 	if (skb_ensure_writable(skb, 0))
- 		return EBT_DROP;
+diff --git a/include/net/netfilter/nf_conntrack_helper.h b/include/net/netfilter/nf_conntrack_helper.h
+index de2f956abf3480..24cf3d2d97450f 100644
+--- a/include/net/netfilter/nf_conntrack_helper.h
++++ b/include/net/netfilter/nf_conntrack_helper.h
+@@ -155,6 +155,7 @@ void nf_ct_helper_log(struct sk_buff *skb, const struct nf_conn *ct,
  
--	if (xt_hooknum(par) != NF_BR_BROUTING)
--		/* rcu_read_lock()ed by nf_hook_thresh */
--		ether_addr_copy(eth_hdr(skb)->h_dest,
--				br_port_get_rcu(xt_in(par))->br->dev->dev_addr);
--	else
-+	if (xt_hooknum(par) != NF_BR_BROUTING) {
-+		const struct net_device *dev;
-+
-+		dev = netdev_master_upper_dev_get_rcu(xt_in(par));
-+		if (!dev)
-+			return EBT_DROP;
-+
-+		ether_addr_copy(eth_hdr(skb)->h_dest, dev->dev_addr);
-+	} else {
- 		ether_addr_copy(eth_hdr(skb)->h_dest, xt_in(par)->dev_addr);
-+	}
-+
- 	skb->pkt_type = PACKET_HOST;
- 	return info->target;
- }
-diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
-index b1f3eda85989cd..25a30bf722c69a 100644
---- a/net/netfilter/nfnetlink_log.c
-+++ b/net/netfilter/nfnetlink_log.c
-@@ -450,6 +450,23 @@ static int nfulnl_put_bridge(struct nfulnl_instance *inst, const struct sk_buff
- 	return -1;
+ void nf_ct_helper_expectfn_register(struct nf_ct_helper_expectfn *n);
+ void nf_ct_helper_expectfn_unregister(struct nf_ct_helper_expectfn *n);
++void nf_ct_helper_expectfn_destroy(const struct nf_ct_helper_expectfn *n);
+ struct nf_ct_helper_expectfn *
+ nf_ct_helper_expectfn_find_by_name(const char *name);
+ struct nf_ct_helper_expectfn *
+diff --git a/net/ipv4/netfilter/nf_nat_h323.c b/net/ipv4/netfilter/nf_nat_h323.c
+index faee20af485613..10e1b0837731b7 100644
+--- a/net/ipv4/netfilter/nf_nat_h323.c
++++ b/net/ipv4/netfilter/nf_nat_h323.c
+@@ -555,6 +555,8 @@ static void __exit nf_nat_h323_fini(void)
+ 	nf_ct_helper_expectfn_unregister(&q931_nat);
+ 	nf_ct_helper_expectfn_unregister(&callforwarding_nat);
+ 	synchronize_rcu();
++	nf_ct_helper_expectfn_destroy(&q931_nat);
++	nf_ct_helper_expectfn_destroy(&callforwarding_nat);
  }
  
-+#if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
-+static int nflog_put_master_ifindex(struct sk_buff *nlskb, int attr,
-+				    const struct net_device *dev)
+ /****************************************************************************/
+diff --git a/net/netfilter/nf_conntrack_helper.c b/net/netfilter/nf_conntrack_helper.c
+index a715304a53d8c2..9150bcfd7ca83b 100644
+--- a/net/netfilter/nf_conntrack_helper.c
++++ b/net/netfilter/nf_conntrack_helper.c
+@@ -283,6 +283,25 @@ void nf_ct_helper_expectfn_unregister(struct nf_ct_helper_expectfn *n)
+ }
+ EXPORT_SYMBOL_GPL(nf_ct_helper_expectfn_unregister);
+ 
++static bool expect_iter_expectfn(struct nf_conntrack_expect *exp, void *data)
 +{
-+	const struct net_device *upper;
++	const struct nf_ct_helper_expectfn *n = data;
 +
-+	if (dev && !netif_is_bridge_port(dev))
-+		return 0;
-+
-+	upper = netdev_master_upper_dev_get_rcu((struct net_device *)dev);
-+	if (upper && nla_put_be32(nlskb, attr, htonl(upper->ifindex)))
-+		return -EMSGSIZE;
-+
-+	return 0;
-+}
-+#endif
-+
- /* This is an inline function, we don't really care about a long
-  * list of arguments */
- static inline int
-@@ -504,8 +521,7 @@ __build_packet_message(struct nfnl_log_net *log,
- 			/* rcu_read_lock()ed by nf_hook_thresh or
- 			 * nf_log_packet.
- 			 */
--			    nla_put_be32(inst->skb, NFULA_IFINDEX_INDEV,
--					 htonl(br_port_get_rcu(indev)->br->dev->ifindex)))
-+			    nflog_put_master_ifindex(inst->skb, NFULA_IFINDEX_INDEV, indev))
- 				goto nla_put_failure;
- 		} else {
- 			int physinif;
-@@ -541,8 +557,7 @@ __build_packet_message(struct nfnl_log_net *log,
- 			/* rcu_read_lock()ed by nf_hook_thresh or
- 			 * nf_log_packet.
- 			 */
--			    nla_put_be32(inst->skb, NFULA_IFINDEX_OUTDEV,
--					 htonl(br_port_get_rcu(outdev)->br->dev->ifindex)))
-+			    nflog_put_master_ifindex(inst->skb, NFULA_IFINDEX_OUTDEV, outdev))
- 				goto nla_put_failure;
- 		} else {
- 			struct net_device *physoutdev;
-diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
-index d42e8ac3062fb1..0a5aa6b90fc271 100644
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -426,10 +426,47 @@ static bool nf_ct_drop_unconfirmed(const struct nf_queue_entry *entry, bool *is_
- 	return false;
- }
- 
-+static bool nf_bridge_port_valid(const struct net_device *dev)
-+{
-+	if (!dev)
-+		return true;
-+
-+	return netif_is_bridge_port(dev);
++	/* Relies on registered expectfn descriptors having unique ->expectfn
++	 * pointers, which holds for the in-tree NAT helpers.
++	 */
++	return exp->expectfn == n->expectfn;
 +}
 +
-+/* queued skbs leave rcu protection.  We bump device refcount so that
-+ * the device cannot go away.  However, while packet was out the port
-+ * could have been removed from the bridge.
-+ *
-+ * Ensure in+outdev are still part of a bridge at reinject time.
-+ *
-+ * The device rx_handler_data could even be pointing at data that is
-+ * not a net_bridge_port structure.
++/* Destroy expectations still pointing at @n->expectfn; call after the
++ * caller's RCU grace period so none outlives the (often modular) callback.
 + */
-+static bool nf_bridge_ports_valid(const struct nf_queue_entry *entry)
++void nf_ct_helper_expectfn_destroy(const struct nf_ct_helper_expectfn *n)
 +{
-+#if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
-+	if (!nf_bridge_port_valid(entry->physin) ||
-+	    !nf_bridge_port_valid(entry->physout))
-+		return false;
-+#endif
-+	if (entry->state.pf != PF_BRIDGE)
-+		return true;
-+
-+	if (!nf_bridge_port_valid(entry->state.in) ||
-+	    !nf_bridge_port_valid(entry->state.out))
-+		return false;
-+
-+	return true;
++	nf_ct_expect_iterate_destroy(expect_iter_expectfn, (void *)n);
 +}
++EXPORT_SYMBOL_GPL(nf_ct_helper_expectfn_destroy);
 +
- static void nfqnl_reinject(struct nf_queue_entry *entry, unsigned int verdict)
- {
- 	const struct nf_ct_hook *ct_hook;
+ /* Caller should hold the rcu lock */
+ struct nf_ct_helper_expectfn *
+ nf_ct_helper_expectfn_find_by_name(const char *name)
+diff --git a/net/netfilter/nf_nat_core.c b/net/netfilter/nf_nat_core.c
+index 8e36b4e3e5c478..d3e158ecf729a3 100644
+--- a/net/netfilter/nf_nat_core.c
++++ b/net/netfilter/nf_nat_core.c
+@@ -1347,6 +1347,7 @@ static int __init nf_nat_init(void)
+ 		RCU_INIT_POINTER(nf_nat_hook, NULL);
+ 		nf_ct_helper_expectfn_unregister(&follow_master_nat);
+ 		synchronize_net();
++		nf_ct_helper_expectfn_destroy(&follow_master_nat);
+ 		unregister_pernet_subsys(&nat_net_ops);
+ 		kvfree(nf_nat_bysource);
+ 	}
+@@ -1364,6 +1365,7 @@ static void __exit nf_nat_cleanup(void)
+ 	RCU_INIT_POINTER(nf_nat_hook, NULL);
  
-+	if (!nf_bridge_ports_valid(entry))
-+		verdict = NF_DROP;
-+
- 	if (verdict == NF_ACCEPT ||
- 	    verdict == NF_REPEAT ||
- 	    verdict == NF_STOP) {
-@@ -622,6 +659,23 @@ static int nf_queue_checksum_help(struct sk_buff *entskb)
- 	return skb_checksum_help(entskb);
+ 	synchronize_net();
++	nf_ct_helper_expectfn_destroy(&follow_master_nat);
+ 	kvfree(nf_nat_bysource);
+ 	unregister_pernet_subsys(&nat_net_ops);
+ }
+diff --git a/net/netfilter/nf_nat_sip.c b/net/netfilter/nf_nat_sip.c
+index 9fbfc6bff0c221..00838c0cc5bb28 100644
+--- a/net/netfilter/nf_nat_sip.c
++++ b/net/netfilter/nf_nat_sip.c
+@@ -655,6 +655,7 @@ static void __exit nf_nat_sip_fini(void)
+ 	RCU_INIT_POINTER(nf_nat_sip_hooks, NULL);
+ 	nf_ct_helper_expectfn_unregister(&sip_nat);
+ 	synchronize_rcu();
++	nf_ct_helper_expectfn_destroy(&sip_nat);
  }
  
-+#if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
-+static int nfqnl_put_master_ifindex(struct sk_buff *nlskb, int attr,
-+				    const struct net_device *dev)
-+{
-+	const struct net_device *upper;
-+
-+	if (dev && !netif_is_bridge_port(dev))
-+		return 0;
-+
-+	upper = netdev_master_upper_dev_get_rcu((struct net_device *)dev);
-+	if (upper && nla_put_be32(nlskb, attr, htonl(upper->ifindex)))
-+		return -EMSGSIZE;
-+
-+	return 0;
-+}
-+#endif
-+
- static struct sk_buff *
- nfqnl_build_packet_message(struct net *net, struct nfqnl_instance *queue,
- 			   struct nf_queue_entry *entry,
-@@ -757,10 +811,7 @@ nfqnl_build_packet_message(struct net *net, struct nfqnl_instance *queue,
- 			 * netfilter_bridge) */
- 			if (nla_put_be32(skb, NFQA_IFINDEX_PHYSINDEV,
- 					 htonl(indev->ifindex)) ||
--			/* this is the bridge group "brX" */
--			/* rcu_read_lock()ed by __nf_queue */
--			    nla_put_be32(skb, NFQA_IFINDEX_INDEV,
--					 htonl(br_port_get_rcu(indev)->br->dev->ifindex)))
-+			    nfqnl_put_master_ifindex(skb, NFQA_IFINDEX_INDEV, indev))
- 				goto nla_put_failure;
- 		} else {
- 			int physinif;
-@@ -791,10 +842,7 @@ nfqnl_build_packet_message(struct net *net, struct nfqnl_instance *queue,
- 			 * netfilter_bridge) */
- 			if (nla_put_be32(skb, NFQA_IFINDEX_PHYSOUTDEV,
- 					 htonl(outdev->ifindex)) ||
--			/* this is the bridge group "brX" */
--			/* rcu_read_lock()ed by __nf_queue */
--			    nla_put_be32(skb, NFQA_IFINDEX_OUTDEV,
--					 htonl(br_port_get_rcu(outdev)->br->dev->ifindex)))
-+			    nfqnl_put_master_ifindex(skb, NFQA_IFINDEX_OUTDEV, outdev))
- 				goto nla_put_failure;
- 		} else {
- 			int physoutif;
+ static const struct nf_nat_sip_hooks sip_hooks = {
 -- 
 2.53.0
 
