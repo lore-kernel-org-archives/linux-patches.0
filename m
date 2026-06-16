@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE621E8320;
-	Tue, 16 Jun 2026 15:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41EDC34D90C;
+	Tue, 16 Jun 2026 15:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623482; cv=none; b=QVbtmaX/BTZuH0KeyVixL+FfVrwmG+peAxOOpDUjbIJxIOPB25GXPbhv0GBfmQ9ENs4VqB3TBLWHe+U5jhLvBCUuS50qHp8FYn2a28mnRCd9TXLRDM48kf8zuFHnEcOYQoaFak/KKX9XpLzcHTv74Bn8Yg4+/vAU9qpfd0YIR+g=
+	t=1781623487; cv=none; b=eafKSG+xsVPzlhglxTAz+g9BXdaUyvmuoRa+sY5l4GmmZXendYxaE4NMpkc3w9bfjysQ4NKqFZ95rg3rrzHFWjZRhEslbPHlB6ECtgKRj1dGNdokec+GF+smTYG5Ibut/XvkMdYIfd8CAd9OKVPe0Vm0T/xJ4B5wxvI2U39GhXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623482; c=relaxed/simple;
-	bh=4ZCcsEHYaVwc82it4mzWZWverxs48xnW+d75iOs523k=;
+	s=arc-20240116; t=1781623487; c=relaxed/simple;
+	bh=GTnd7TNoIsF9SU5uT/5W1803ARz6a2NDDfjGat7b7lY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IY2JVmb3iXRS5ekGhEf3Cd8kTUPXEII7KWXjqVexnnldKZtWcus4y+Z80aBK79yKoRQn2XiWIMg/7YJXQoeNYSg8FTHjqgozo/zvIoYUA6Rxwze7wSQhmwhLi5TZ10sBZHSq/mySaJEwGpOmpGX10JRDe9TDkNf+CoIO28ex730=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NozNnSDU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VR91icPhPJayvkH0KbTugLd3HuYsT6iDPcwQyVjDH9dnpzRhbTSkkoU4FGhe9u4AVeyNd1PG/dVaZFfxQsOOwNeZkP8gOC15/9Y38fdsX5VtKr+YYZKVLfA0mRlmx5jgW1wK9WwE8n46uZEEaCQVkdKIHi4Xt1Dmf0lTYV1jv9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2vXXOSNQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NozNnSDU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 431E91F00A3A;
-	Tue, 16 Jun 2026 15:24:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vXXOSNQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2307D1F000E9;
+	Tue, 16 Jun 2026 15:24:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623481;
-	bh=oBFoAVFYx5+iQxmBc3PUVY2+AjxVVqVRoA4vtUkJb48=;
+	s=korg; t=1781623486;
+	bh=IUS/pVNs6YJfr7VBwG8TP2r13uDKRIDT36zqCUBDkio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NozNnSDUIVfAfIoQzTlskVaDFiwi563/6EEGrRPWxY/ayJ25UaitzbBhEwqCq8kc0
-	 oF/3/VxlO0wpa6echTJMB5QB3WV0qpxGL6cqZt09DElyJaq2YsBrQO7sUkCjbLAc2y
-	 YRWYUn5bNmvKCzoW/Emr9JNl0KBvNPA/HsIiubFo=
+	b=2vXXOSNQ8WhPB4TKuq/RfdIMCeZPHaK85skQXgi4tXZN9hZxqhsDbNTJk0d2l1J6a
+	 GUkZ32XlRp65PLG3OSVB+4l1OG0mdWl8VR7rBskMURkqVYpIXviJ2pD9PLBRtEooOI
+	 KSvtpw88chHUXx+56+VlzkDxSoc6OkVmhFsWXsFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengyu Luo <mitltlatltl@gmail.com>,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20de=20Bretagne?= <jerome.debretagne@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 157/378] clk: qcom: dispcc-sc8280xp: Dont park mdp_clk_src at registration time
-Date: Tue, 16 Jun 2026 20:26:28 +0530
-Message-ID: <20260616145118.509427650@linuxfoundation.org>
+Subject: [PATCH 7.0 158/378] drm/i915/edp: Check supported link rates DPCD read
+Date: Tue, 16 Jun 2026 20:26:29 +0530
+Message-ID: <20260616145118.561493206@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -46,53 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengyu Luo <mitltlatltl@gmail.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit 5285b046757844435d1db96c1b5c3a6621b2979a ]
+[ Upstream commit 2673cefa99ca918e7ac5b0388ff578a83656c896 ]
 
-Parking disp{0,1}_cc_mdss_mdp_clk_src clk broke simplefb on HUAWEI
-Gaokun3, the image will stuck at grey for seconds until msm takes
-over framebuffer. Use clk_rcg2_shared_no_init_park_ops to skip it.
+intel_edp_set_sink_rates() reads DP_SUPPORTED_LINK_RATES into a local
+stack array and then parses the array unconditionally. If the read
+fails, the array contents are not valid and may result in bogus sink
+link rates being used.
 
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
-Tested-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
-Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
-Link: https://lore.kernel.org/r/20260303150152.90685-1-mitltlatltl@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Use drm_dp_dpcd_read_data() and clear the sink rate array on failure,
+so the existing parser falls back to the default sink rate handling.
+
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: 68f357cb7347 ("drm/i915/dp: generate and cache sink rate array for all DP, not just eDP 1.4")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patch.msgid.link/20260529145759.1640646-1-n.zhandarovich@fintech.ru
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit bd61c7756b34157e093028225a69383b4b1203cc)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-sc8280xp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/dispcc-sc8280xp.c b/drivers/clk/qcom/dispcc-sc8280xp.c
-index e91dfed0f37e9b..acc927c2142ab5 100644
---- a/drivers/clk/qcom/dispcc-sc8280xp.c
-+++ b/drivers/clk/qcom/dispcc-sc8280xp.c
-@@ -977,7 +977,7 @@ static struct clk_rcg2 disp0_cc_mdss_mdp_clk_src = {
- 		.name = "disp0_cc_mdss_mdp_clk_src",
- 		.parent_data = disp0_cc_parent_data_5,
- 		.num_parents = ARRAY_SIZE(disp0_cc_parent_data_5),
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_shared_no_init_park_ops,
- 	},
- };
+diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+index d52205d714eee6..afd4169ac0a6c0 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -4533,10 +4533,17 @@ intel_edp_set_sink_rates(struct intel_dp *intel_dp)
  
-@@ -991,7 +991,7 @@ static struct clk_rcg2 disp1_cc_mdss_mdp_clk_src = {
- 		.name = "disp1_cc_mdss_mdp_clk_src",
- 		.parent_data = disp1_cc_parent_data_5,
- 		.num_parents = ARRAY_SIZE(disp1_cc_parent_data_5),
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_shared_no_init_park_ops,
- 	},
- };
+ 	if (intel_dp->edp_dpcd[0] >= DP_EDP_14) {
+ 		__le16 sink_rates[DP_MAX_SUPPORTED_RATES];
++		int ret;
+ 		int i;
  
+-		drm_dp_dpcd_read(&intel_dp->aux, DP_SUPPORTED_LINK_RATES,
+-				 sink_rates, sizeof(sink_rates));
++		ret = drm_dp_dpcd_read_data(&intel_dp->aux,
++					    DP_SUPPORTED_LINK_RATES,
++					    sink_rates, sizeof(sink_rates));
++		if (ret < 0) {
++			drm_dbg_kms(display->drm,
++				    "Unable to read eDP supported link rates, using default rates\n");
++			memset(sink_rates, 0, sizeof(sink_rates));
++		}
+ 
+ 		for (i = 0; i < ARRAY_SIZE(sink_rates); i++) {
+ 			int rate;
 -- 
 2.53.0
 
