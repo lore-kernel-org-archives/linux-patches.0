@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5587C3C76AF;
-	Tue, 16 Jun 2026 17:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F922472771;
+	Tue, 16 Jun 2026 17:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632380; cv=none; b=KZqaZrg43GRPuMhpo+qguPw3y2nimaaeDSsw4hIcmwtlP0QjWEQcrWUQ7oeCupzv269RVkeIm0SnolBcmhEg6yzjrOydd1x2eloMZZh8C3VGZ0ONeutLVp5sNrBqppwTgzt1AEIiYAh86pdGTClZB411dexhv8dGF/QBYKre9LI=
+	t=1781632385; cv=none; b=rpojrThySgZuhGmqLDQYlr8DILrwEUfwV2d384LsFwsLQerwCkWgKNbHDOjF5Oq/OQW10X83HCLgnjwG+xxrUSqMt6pqh11Q6hoLrGK+IieghfT6VI/vf58hJh6H5uPnuK5KSd41xX0S5RY8PpTmIQFsYvhmiw8uCxvlyXOcAmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632380; c=relaxed/simple;
-	bh=nygm+PE+0lKYrsCXc32lrs90u6ZgPWxgp7dbGIUB66E=;
+	s=arc-20240116; t=1781632385; c=relaxed/simple;
+	bh=DGcKTBDXGDTbSa3t0vzwQFNOazXpHYFsUhgLCOO/ui4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kz/i4++QikHr6lhTex0ATcc/JIuwWkLmowEuTiTGaDwrhdKSxx32v4DNpZAoS4fe3ictxhZKKogpL1mVIQ82c0CiB4ruwodID3xGCQdfausJrQXmO0DkCVR0wrpUcbjb6yV+zJO5erD1nZERfSEtKdUDpMAYjgnaRnC2/T135zM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KU7kes/E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mwYAXTD5GHvf3jsBjFNYiLoz+NZPUXUWpQSs6Kr0fHYsXwFts807+LIPtz4EpzrBZA1zhE1uV9g3MIn6PI8SPbFTxyV00cUb3UD53zbU9SyOVKUpfYyxINgFKdkSiuo5mx5+TdUy7PMWs5BJG8yj3nt3jk71Pu6JJLv8c3Pu4QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwPUZ50t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KU7kes/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BD0A1F000E9;
-	Tue, 16 Jun 2026 17:52:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwPUZ50t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB361F000E9;
+	Tue, 16 Jun 2026 17:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632377;
-	bh=R+rU7486WVez4f2z15OCPAl6fJxmNgG6PZjz/4TaSK0=;
+	s=korg; t=1781632383;
+	bh=lDLa9YYWIQO/HQJnpKwjN/T1rT41q3hOdi+4Buzi2X0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KU7kes/EAIwU1xXSOjcAmLF1CMqenVd/mX180koEKhRYl3OFOjL3bIZnmFYOr6t0v
-	 cQKETYK1CZHIo4JcIiGIDN4JnPyrZJDuP6JZtqI5RlEzzKLxtbD5HO59OJ/N1OGNEq
-	 0pbqhgR8bcv+/lMV3sWAWDAe9Q4AapSzkiAa7Aqo=
+	b=xwPUZ50tozcaUIoa9WtieBDIFgI8j1oxCcw7O1ZGEUFF8hMBa1QrSQIGUQmDhh+FB
+	 JZv0wFLDsH4kxOHVzGU8GVaZAXjUZZV/Bjgy+Mm811nlDbBAA1IbnSaNFh69m9x817
+	 ajpoiAmtyoFC2mm0B342WYL7Qkui43kJV6iWntE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jingoo Han <jg1.han@samsung.com>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 372/522] wifi: mac80211: remove station if connection prep fails
-Date: Tue, 16 Jun 2026 20:28:39 +0530
-Message-ID: <20260616145143.177105383@linuxfoundation.org>
+Subject: [PATCH 6.1 399/522] spi: tegra114: fix controller deregistration
+Date: Tue, 16 Jun 2026 20:29:06 +0530
+Message-ID: <20260616145144.739112425@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,51 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 283fc9e44ff5b5ac967439b4951b80bd4299f4e4 ]
+[ Upstream commit 9c9c27ff2058142d8f800de3186d6864184958de ]
 
-If connection preparation fails for MLO connections, then the
-interface is completely reset to non-MLD. In this case, we must
-not keep the station since it's related to the link of the vif
-being removed. Delete an existing station. Any "new_sta" is
-already being removed, so that doesn't need changes.
+Make sure to deregister the controller before disabling underlying
+resources like clocks during driver unbind.
 
-This fixes a use-after-free/double-free in debugfs if that's
-enabled, because a vif going from MLD (and to MLD, but that's
-not relevant here) recreates its entire debugfs.
-
-Cc: stable@vger.kernel.org
-Fixes: 81151ce462e5 ("wifi: mac80211: support MLO authentication/association with one link")
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260505151533.c4e52deb06ad.Iafe56cec7de8512626169496b134bce3a6c17010@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ used sta_info_destroy_addr() instead of __sta_info_destroy() ]
+Fixes: 5c8096439600 ("spi: tegra114: use devm_spi_register_master()")
+Cc: stable@vger.kernel.org	# 3.13
+Cc: Jingoo Han <jg1.han@samsung.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-22-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ renamed spi_controller/host APIs to spi_master/master equivalents and placed spi_master_put() before the existing return 0 in remove ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mlme.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-tegra114.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -6586,7 +6586,7 @@ static int ieee80211_prep_connection(str
- 	struct ieee80211_bss *bss = (void *)cbss->priv;
- 	struct sta_info *new_sta = NULL;
- 	struct ieee80211_link_data *link;
--	bool have_sta = false;
-+	struct sta_info *have_sta = NULL;
- 	bool mlo;
- 	int err;
+--- a/drivers/spi/spi-tegra114.c
++++ b/drivers/spi/spi-tegra114.c
+@@ -1415,7 +1415,7 @@ static int tegra_spi_probe(struct platfo
+ 	}
  
-@@ -6751,6 +6751,8 @@ static int ieee80211_prep_connection(str
+ 	master->dev.of_node = pdev->dev.of_node;
+-	ret = devm_spi_register_master(&pdev->dev, master);
++	ret = spi_register_master(master);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "can not register to master err %d\n", ret);
+ 		goto exit_free_irq;
+@@ -1441,6 +1441,10 @@ static int tegra_spi_remove(struct platf
+ 	struct spi_master *master = platform_get_drvdata(pdev);
+ 	struct tegra_spi_data	*tspi = spi_master_get_devdata(master);
  
- out_err:
- 	ieee80211_link_release_channel(&sdata->deflink);
-+	if (mlo && have_sta)
-+		WARN_ON(sta_info_destroy_addr(sdata, ap_mld_addr));
- 	ieee80211_vif_set_links(sdata, 0);
- 	return err;
++	spi_master_get(master);
++
++	spi_unregister_master(master);
++
+ 	free_irq(tspi->irq, tspi);
+ 
+ 	if (tspi->tx_dma_chan)
+@@ -1453,6 +1457,8 @@ static int tegra_spi_remove(struct platf
+ 	if (!pm_runtime_status_suspended(&pdev->dev))
+ 		tegra_spi_runtime_suspend(&pdev->dev);
+ 
++	spi_master_put(master);
++
+ 	return 0;
  }
+ 
 
 
