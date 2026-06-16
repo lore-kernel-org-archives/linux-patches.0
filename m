@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B506D466B5F;
-	Tue, 16 Jun 2026 16:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26FC466B4C;
+	Tue, 16 Jun 2026 16:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626050; cv=none; b=ppnLOvRhrmZA9npMdI/C1gZRMFI3NZScQdRtSL1kNrs6HoHr6z2ocey6X6QzUL0Z655S5j5C6zKvuLJq32ZR/5BQPTpVAeFeNcdhzle3axZP2pRFk/N1eJRke94jv/018rCuN/tZatWceiu8qHC+N1IUG9JaRNn3cOYZGY2J6Uo=
+	t=1781626058; cv=none; b=h/8UkyBSaqMo8BunC1zgr+U/9Txb51Msy02Ti+QqHXgC0Ff8hKtiE4W2f3B+UFwI6gVsTbsCn6c/dVnsxoB3KvpPcYx1mj9+UgBP9vC1kACyfZMt33vZyA+Kt981UtHJbO0GCK9NRQrpJ/J5hCW7qB1IIwG3OxaSJHH8GyhZERM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626050; c=relaxed/simple;
-	bh=sTKmICOiGEyugOaqo84ByuQ+83UsLbDWR4qzmV/nHoE=;
+	s=arc-20240116; t=1781626058; c=relaxed/simple;
+	bh=G7+gKCh5R5XxY6Fy1REdwWSMimFwqI8QiwXUarmJb0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M5d9/VOMrluDNOX3kkJ/KoSV0Bl15UQgmBgPFF1k2bocCEBEJVk+MpOBq/35pGLHM4Ku/WDXjC1jcOc3lsoWYSCSgKtdygoRWZgOqA3X6EzxPo9+YV8FEbWjfh/5tSubrmAhOFUR97wiSQVhMDln7JoP60/Q0KmtR0lLKQ9FTvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoNKorSG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cefaJZJHLszvuNkpdjDKI/r7U+oJhSNCCSboWc3W1hONcAwkb03bDWO8EXpMD7tdZXKviV2sBia7Qqq2pL7UnF1y5zPMCWjooVxtUlT6LgfwkYzrITfk5DN4A1MkwtYk5OG/C5OyZWTXTQAPk7jjiq4Aa2UOctCV1SIJSEVd/Z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=McnMkGFw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoNKorSG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B24DD1F000E9;
-	Tue, 16 Jun 2026 16:07:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="McnMkGFw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F0B1F000E9;
+	Tue, 16 Jun 2026 16:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626049;
-	bh=YYwIKOgxn+XW06GYE3N1uJFCFydtQQIpQ0DP6ItmYKQ=;
+	s=korg; t=1781626056;
+	bh=NnsomVzyB0hJHK+r2IQnL1jNxVObh0Q7x8OXrjkf4nQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HoNKorSGqJ2Aq90JiZ1FiNAYlbcrbC3rvbBxzIGohuxFzGwuqM5/+QpEBGZimUX/C
-	 n59qi027yziHXh+hf+Y+ot2yOPY9TN+cBceZg87hSwjMx9lwUrK+/S/iLCMrD0LeWN
-	 m5LKKTopuPDWYpeNjl+aSybFoGolp9dwAI92i+T0=
+	b=McnMkGFwV74WQF47lac+dD66aS6IZmdjMEHTWoJ2mjQC+GbA1Vq3j/HcZ/eYZdrK0
+	 dsHZWYZDNTpixQf8B/zmedG/0sIButSmdDzxJZgknFu1PACbTbYt426IArwnjc+Whc
+	 67tDOQQmXmv865oLSU8hGwiHqewvcB6UDdgGPxQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Shawn Lin <shawn.lin@rock-chips.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.18 257/325] mmc: core: Fix host controller programming for fixed driver type
-Date: Tue, 16 Jun 2026 20:30:53 +0530
-Message-ID: <20260616145111.384928587@linuxfoundation.org>
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.18 258/325] mmc: dw_mmc-rockchip: Add missing private data for very old controllers
+Date: Tue, 16 Jun 2026 20:30:54 +0530
+Message-ID: <20260616145111.434612416@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -51,46 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamal Dasu <kamal.dasu@broadcom.com>
+From: Heiko Stuebner <heiko@sntech.de>
 
-commit 5a52c5701a67d5176eb1afbf1bdaf7d6dfeec597 upstream.
+commit 1e9a4850afa0ceb63984fb1a9f3e86d0fc4fd18f upstream.
 
-When using the fixed-emmc-driver-type device tree property, the MMC core
-correctly selects the driver strength for the card but fails to program
-the host controller accordingly. This causes a mismatch where the card
-uses the specified driver type while the host controller defaults to
-Type B (since ios->drv_type remains zero).
+The really old controllers (rk2928, rk3066, rk3188) do not support UHS
+speeds at all, and thus never handled phase data.
 
-Split the driver type programming logic to handle both fixed and dynamic
-driver type selection paths. For fixed driver types, program the host
-controller with the selected drive_strength value. For dynamic selection,
-use the existing drv_type as before.
+For that reason it never had a parse_dt callback and no driver private
+data at all.
 
-This ensures both the eMMC device and host controller use matching driver
-strengths, preventing potential signal integrity issues.
+Commit ff6f0286c896 ("mmc: dw_mmc-rockchip: Add memory clock auto-gating
+support") makes the private data sort of mandatory, because the init
+function checks whether phases are configured internally or through the
+clock controller.
 
-Fixes: 6186d06c519e ("mmc: parse new binding for eMMC fixed driver type")
-Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
+This results in the old SoCs then experiencing NULL-pointer dereferences
+when they try to access that private-data struct.
+
+While we could have if (priv) conditionals in all places, it's way less
+cluttery to just give the old types their private-data struct.
+
+Fixes: ff6f0286c896 ("mmc: dw_mmc-rockchip: Add memory clock auto-gating support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/mmc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mmc/host/dw_mmc-rockchip.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/mmc/core/mmc.c
-+++ b/drivers/mmc/core/mmc.c
-@@ -1371,7 +1371,9 @@ static void mmc_select_driver_type(struc
- 
- 	card->drive_strength = drive_strength;
- 
--	if (drv_type)
-+	if (fixed_drv_type >= 0 && drive_strength)
-+		mmc_set_driver_type(card->host, drive_strength);
-+	else if (drv_type)
- 		mmc_set_driver_type(card->host, drv_type);
+--- a/drivers/mmc/host/dw_mmc-rockchip.c
++++ b/drivers/mmc/host/dw_mmc-rockchip.c
+@@ -434,6 +434,22 @@ static int dw_mci_common_parse_dt(struct
+ 	return 0;
  }
  
++static int dw_mci_rk2928_parse_dt(struct dw_mci *host)
++{
++	struct dw_mci_rockchip_priv_data *priv;
++	int err;
++
++	err = dw_mci_common_parse_dt(host);
++	if (err)
++		return err;
++
++	priv = host->priv;
++
++	priv->internal_phase = false;
++
++	return 0;
++}
++
+ static int dw_mci_rk3288_parse_dt(struct dw_mci *host)
+ {
+ 	struct dw_mci_rockchip_priv_data *priv;
+@@ -507,6 +523,7 @@ static int dw_mci_rockchip_init(struct d
+ 
+ static const struct dw_mci_drv_data rk2928_drv_data = {
+ 	.init			= dw_mci_rockchip_init,
++	.parse_dt		= dw_mci_rk2928_parse_dt,
+ };
+ 
+ static const struct dw_mci_drv_data rk3288_drv_data = {
 
 
