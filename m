@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D5B47AF6E;
-	Tue, 16 Jun 2026 17:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090453AA1A8;
+	Tue, 16 Jun 2026 17:33:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631205; cv=none; b=jjNmT/ttzglrSxh3ZDwmekgPF/SJuguAeDq2uO6vuSe5KlRtgEIO6Db6ANioYB2XenT8jH67Tj22vFcXUgkGaQhx7YzebUMzVM3evvQldK3Y1BSYGGUUrASWC/mB81vm5h1FD2exnOt5DshRtB53giiZzuo+HXtZq44BO5x5L6M=
+	t=1781631210; cv=none; b=fnpT5IjHZdQqjyNtLCf0pIooJxEDYtQI/+8M1Em0Pa/s0F3Op99P9SAuiROWL5kC+zZo7oxORZYhWsT6zqT2a0IwbYK89DaF9NlMvx7RGEvC0Qlp1LFQmI2v+nObCQFEKU4T5mgWRyDkr/WOJd+5jKbE3uFSTHt449oPygM6MFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631205; c=relaxed/simple;
-	bh=17LP+rEnGRUeQS4UnKYBrhQ3UM/4URxDNQ3hKuBZhEw=;
+	s=arc-20240116; t=1781631210; c=relaxed/simple;
+	bh=trCLTPSN15QvXSXYfBfsmeAHZanNtC+86rBefy5ME90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p0qOUQ1eV8qlufROFW5bMS1D9uEaXQlZexurPTA86hyQdGJJeUG5WxKzBELdyKJt3u3GcJBg2dXor8xlVyP0dkOQfEf9IXAVuRGyiseTlj12WEDvllTWrv6s1KWiVpdLaZFMATHVQYlyp7dcprR+voeOeS4FanUV1qQ3XaAnx7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axbTQcIi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XqnK5XRwvy8CxHRoAQE0H/4dm00ipSdGxhPhKyh27MjhEx+XwP+YKH2tP9z8oqqpr1APiYXAJuuMNRYxVGpy8mh3HE6JbcyNPp3QIa3DKstQF29S+rFFwi0antqX49S3PIvT9lsRD84KhHOWS25eOMPBRX5LtR96t9g48tc6zwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U7CIU4bd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axbTQcIi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9DDB1F000E9;
-	Tue, 16 Jun 2026 17:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U7CIU4bd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D271F00A3A;
+	Tue, 16 Jun 2026 17:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631203;
-	bh=6uvY5Cp17q7eMXUnQg7fqtbxbH99PxhNX4uTJJNFYaU=;
+	s=korg; t=1781631208;
+	bh=VApkQKRUafh3HH9kw7Q4z7yTg29Gg5g2cr1bqU540Ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=axbTQcIijj7a8e1ou04v3druJVxy31dxdXA5m5dTIBYuRohhMsUuDQRIGQRU+jqEo
-	 /ARgs3cZYGAkXZZD+12JyAXQge/FOwwukflKd14LxqJWHIl5GTU+qIR9qNM4Hj1rCO
-	 4hfAdJ1xmeEeFzpv7eFd2n1uAsu7NQj0L+jR0sZs=
+	b=U7CIU4bdDT6/6YR9VAPfTGZhlkzi8I1fwsixCATcQssA1CsXfnQWttLhCiStBwXZ5
+	 RIZ06LlHotzXpUgpvsrg4Wm0dlaomuJxX+6T9QpFEIHCPqhrtc+5Z4du0zPTV7N3KV
+	 jgBXaGc2dGkAGyVQId3MzEIp1rD91rFZx0dDvaRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Peter Chen <peter.chen@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Xu Yang <xu.yang_2@nxp.com>
-Subject: [PATCH 6.1 143/522] usb: chipidea: core: convert ci_role_switch to local variable
-Date: Tue, 16 Jun 2026 20:24:50 +0530
-Message-ID: <20260616145132.782605175@linuxfoundation.org>
+	Michal Pecio <michal.pecio@gmail.com>,
+	Tao Xue <xuetao09@huawei.com>
+Subject: [PATCH 6.1 144/522] usb: core: Fix up Interrupt IN endpoints with bogus wBytesPerInterval
+Date: Tue, 16 Jun 2026 20:24:51 +0530
+Message-ID: <20260616145132.825523758@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,77 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-commit 8f6aa392653e52a45858cff5c063df550028836b upstream.
+commit 727d045d064b7c9a24db3bce9c0485a382cb768b upstream.
 
-When a system contains multiple USB controllers, the global ci_role_switch
-variable may be overwritten by subsequent driver initialization code.
+Tao Xue found that some common devices violate USB 3.x section 9.6.7
+by reporting wBytesPerInterval lower than the size of packets they
+actually send. I confirmed that AX88179 may set it to 0 and RTL8153
+CDC configuration sets it to 8 but sends both 8 and 16 byte packets:
 
-This can cause issues in the following cases:
- - The 2nd ci_hdrc_probe() sees ci_role_switch.fwnode as non-NULL even
-   though the "usb-role-switch" property is not present for the controller.
- - When the ci_hdrc device is unbound and bound again, ci_role_switch
-   fwnode will not be reassigned, and the old value will be used instead.
+S Ii:11:007:3 -115:128 16 <
+C Ii:11:007:3 0:128 8 = a1000000 01000000
+S Ii:11:007:3 -115:128 16 <
+C Ii:11:007:3 0:128 16 = a12a0000 01000800 00000000 00000000
 
-Convert ci_role_switch to a local variable to fix these issues.
+Most xHCI host controllers neglect interrupt bandwidth reservations
+and let such devices exceed theirs, some fail the URB with EOVERFLOW.
 
-Fixes: 05559f10ed79 ("usb: chipidea: add role switch class support")
-Cc: stable <stable@kernel.org>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://patch.msgid.link/20260427075755.3611217-1-xu.yang_2@nxp.com
+Assume that wBytesPerInterval lower than wMaxPacketSize is bogus and
+increase it to the worst case maximum on interrupt IN endpoints. This
+solves xHCI problems and appears to have no other effect. Interrupt
+transfers are not limited to one interval and drivers submit URBs of
+class defined size without looking at wBytesPerInterval. Any multi-
+interval transfer is considered terminated by a packet shorter than
+wMaxPacketSize regardless of wBytesPerInterval - see USB3 8.10.3.
+
+Stay in spec on OUT endpoints and isochronous. No buggy devices are
+known and we don't want to risk sending more data than the device
+is prepared to handle or confusing isoc drivers regarding altsetting
+capacities guaranteed by the device itself. And don't complain when
+wMaxPacketSize <= wBytesPerInterval < wMaxPacketSize * (bMaxBurst+1)
+because enabling this seems to be the exact goal of the spec.
+
+Reported-and-tested-by: Tao Xue <xuetao09@huawei.com>
+Closes: https://lore.kernel.org/linux-usb/20260402021400.28853-1-xuetao09@huawei.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Link: https://patch.msgid.link/20260518073207.5b7d26e7.michal.pecio@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/chipidea/core.c |   16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ drivers/usb/core/config.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/chipidea/core.c
-+++ b/drivers/usb/chipidea/core.c
-@@ -661,12 +661,6 @@ static int ci_usb_role_switch_set(struct
- 	return 0;
- }
- 
--static struct usb_role_switch_desc ci_role_switch = {
--	.set = ci_usb_role_switch_set,
--	.get = ci_usb_role_switch_get,
--	.allow_userspace_control = true,
--};
--
- static int ci_get_platdata(struct device *dev,
- 		struct ci_hdrc_platform_data *platdata)
- {
-@@ -793,9 +787,6 @@ static int ci_get_platdata(struct device
- 			cable->connected = false;
- 	}
- 
--	if (device_property_read_bool(dev, "usb-role-switch"))
--		ci_role_switch.fwnode = dev->fwnode;
--
- 	platdata->pctl = devm_pinctrl_get(dev);
- 	if (!IS_ERR(platdata->pctl)) {
- 		struct pinctrl_state *p;
-@@ -1016,6 +1007,7 @@ ATTRIBUTE_GROUPS(ci);
- 
- static int ci_hdrc_probe(struct platform_device *pdev)
- {
-+	struct usb_role_switch_desc ci_role_switch = {};
- 	struct device	*dev = &pdev->dev;
- 	struct ci_hdrc	*ci;
- 	struct resource	*res;
-@@ -1159,7 +1151,11 @@ static int ci_hdrc_probe(struct platform
- 		}
- 	}
- 
--	if (ci_role_switch.fwnode) {
-+	if (device_property_read_bool(dev, "usb-role-switch")) {
-+		ci_role_switch.set = ci_usb_role_switch_set;
-+		ci_role_switch.get = ci_usb_role_switch_get;
-+		ci_role_switch.allow_userspace_control = true;
-+		ci_role_switch.fwnode = dev_fwnode(dev);
- 		ci_role_switch.driver_data = ci;
- 		ci->role_switch = usb_role_switch_register(dev,
- 					&ci_role_switch);
+--- a/drivers/usb/core/config.c
++++ b/drivers/usb/core/config.c
+@@ -165,7 +165,14 @@ static void usb_parse_ss_endpoint_compan
+ 			(desc->bMaxBurst + 1);
+ 	else
+ 		max_tx = 999999;
+-	if (le16_to_cpu(desc->wBytesPerInterval) > max_tx) {
++	/*
++	 * wBytesPerInterval > max_tx is bogus, but USB3 spec doesn't forbid the opposite.
++	 * Experience shows that wBytesPerInterval < wMaxPacketSize on common interrupt IN
++	 * endpoints is usually bogus too, and recent HCs enforce interrupt BW limits.
++	 */
++	if (le16_to_cpu(desc->wBytesPerInterval) > max_tx ||
++	    (le16_to_cpu(desc->wBytesPerInterval) < usb_endpoint_maxp(&ep->desc) &&
++	     usb_endpoint_is_int_in(&ep->desc))) {
+ 		dev_notice(ddev, "%s endpoint with wBytesPerInterval of %d in "
+ 				"config %d interface %d altsetting %d ep %d: "
+ 				"setting to %d\n",
 
 
