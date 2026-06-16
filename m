@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF04A169AD2;
-	Tue, 16 Jun 2026 18:37:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3143DF007;
+	Tue, 16 Jun 2026 18:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635056; cv=none; b=KeTGZOUIEuewG+Jpsy7iHDHwuYvQEQESou5+I6oh0lIQ/HzsT8P8/X5/5ltGhytviqVvpntnc7wfRCV8WjVZjFDXNz3axJ/7itVHmPRx2fABUjtG7+lCvZJb01end+niYENO8SzbLw6F3CF/ywo5a4GECmceO4skYJIC/N3mm88=
+	t=1781635062; cv=none; b=MukJIZqnbDTm+KmcR8DTaqOBaN1K/6DF05U8ifc2wWQIsw1MOPRZHYWnzfJN4LMbzn1y6KAAR+ZYRzYCAJ9wGuZhw3tf2qGAupNNVwlkJBQExp43AHLkMzwXeoaimUF/p+jDo92k8ikwjqtLenbp7qorPB0zgGyWwWEzWrAxL2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635056; c=relaxed/simple;
-	bh=9jpEKmG8l54DfobIcVu5ji0z1UEM6jJL2Pj1tvjLJz0=;
+	s=arc-20240116; t=1781635062; c=relaxed/simple;
+	bh=gWKOkM7klhBiW3nJIHwSLuqJq6w2bPd3PnSb0Gwbrak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IVCewvdvhn+mG5bZev0f07Pkm+1Ns7ajrYEexzQA7AwPJMhlSmVdUCieRIPBfjT2LytW3624u02EKTRE8wqXsildwmkllhRwCOs43kmUKhFMzKqvLkHiQXuAkwkIlTt0ExL1onsOifNVJ8o6de0RZuSftrXGSma4bh7y/rjHeU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=en4lua9y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nbdUUIHEZRv2eB3QT89KTAfFaG+QIVtLWQ32vJZcLvYSohogbdHaZk4yzZRhdverZZIusr4wWqwiP8Vuueo+0ajTTc67nVaGvArrCJ4rCp7Gyeh/0MIM6lngVlLG0GU/9zRhWNuDTE/Mc120APNCG50P4mhVN6nV1jE+klQjnIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fbnu58JO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="en4lua9y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16C31F000E9;
-	Tue, 16 Jun 2026 18:37:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fbnu58JO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DBD71F000E9;
+	Tue, 16 Jun 2026 18:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635055;
-	bh=bMQLSLjW4mwfsOkk7TuGyMbngNDum6hdJlj1XRIDXfQ=;
+	s=korg; t=1781635061;
+	bh=m7lJe6K+BFVNi7iDfDIApk1d60csjTpmbv3fEL9Sjrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=en4lua9yDUOzjzYAly0wVMtOxztQBza0HfBgaWz9AOWMr2xTQNQeUwbqOfoExyx4i
-	 bbfjZ2E9737eTGuBL92ksStUKun908CZGJeGEr5njM9q+m2mLD0BuYCXd8gqxj7x/t
-	 aDcOnCs6O9hIrm4Yu9tfK/wzaMn9Hpm/VTZcgK7M=
+	b=Fbnu58JODUDtEbpZqpdygYHT/MTzPxQGpEGPnMGrY9BVxK1Ig5nWezwwVS3y2RexZ
+	 4S1VYI9VMTe2JnNc7oRQ2ZYSu0CD3hQkVlUpOFl5I2XE+/c2KeQRcDfU/Uh9Ag5zfc
+	 MS7K5dO9Cal9IrbJ7xgK+WmRdRH+88JbJPXB+in0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Tomasz Duszynski <tomasz.duszynski@octakon.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 365/411] iio: chemical: scd30: Use guard(mutex) to allow early returns
-Date: Tue, 16 Jun 2026 20:30:03 +0530
-Message-ID: <20260616145120.735496116@linuxfoundation.org>
+Subject: [PATCH 5.15 383/411] tty: serial: qcom-geni-serial: remove unused symbols
+Date: Tue, 16 Jun 2026 20:30:21 +0530
+Message-ID: <20260616145121.623115772@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,175 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 5feb5532870fbced5d6f450b8061a33f461b88ca ]
+[ Upstream commit 68c6bd92c86cbc4937834c79963b27c77ee3bf51 ]
 
-Auto cleanup based release of the lock allows for simpler code flow in a
-few functions with large multiplexing style switch statements and no
-common operations following the switch.
+Drop all unused symbols from the driver.
 
-Suggested-by: David Lechner <dlechner@baylibre.com>
-Cc: Tomasz Duszynski <tomasz.duszynski@octakon.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250209180624.701140-3-jic23@kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 5aba4f94b225 ("iio: chemical: scd30: fix division by zero in write_raw")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20221229155030.418800-4-brgl@bgdev.pl
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: ca2584d841b6 ("serial: qcom-geni: fix UART_RX_PAR_EN bit position")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/chemical/scd30_core.c |   63 ++++++++++++++++----------------------
- 1 file changed, 28 insertions(+), 35 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c |   15 ---------------
+ 1 file changed, 15 deletions(-)
 
---- a/drivers/iio/chemical/scd30_core.c
-+++ b/drivers/iio/chemical/scd30_core.c
-@@ -5,6 +5,7 @@
-  * Copyright (c) 2020 Tomasz Duszynski <tomasz.duszynski@octakon.com>
-  */
- #include <linux/bits.h>
-+#include <linux/cleanup.h>
- #include <linux/completion.h>
- #include <linux/delay.h>
- #include <linux/device.h>
-@@ -198,112 +199,104 @@ static int scd30_read_raw(struct iio_dev
- 			  int *val, int *val2, long mask)
- {
- 	struct scd30_state *state = iio_priv(indio_dev);
--	int ret = -EINVAL;
-+	int ret;
- 	u16 tmp;
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -38,20 +38,11 @@
+ #define UART_TX_PAR_EN		BIT(0)
+ #define UART_CTS_MASK		BIT(1)
  
--	mutex_lock(&state->lock);
-+	guard(mutex)(&state->lock);
- 	switch (mask) {
- 	case IIO_CHAN_INFO_RAW:
- 	case IIO_CHAN_INFO_PROCESSED:
- 		if (chan->output) {
- 			*val = state->pressure_comp;
--			ret = IIO_VAL_INT;
--			break;
-+			return IIO_VAL_INT;
- 		}
- 
- 		ret = iio_device_claim_direct_mode(indio_dev);
- 		if (ret)
--			break;
-+			return ret;
- 
- 		ret = scd30_read(state);
- 		if (ret) {
- 			iio_device_release_direct_mode(indio_dev);
--			break;
-+			return ret;
- 		}
- 
- 		*val = state->meas[chan->address];
- 		iio_device_release_direct_mode(indio_dev);
--		ret = IIO_VAL_INT;
--		break;
-+		return IIO_VAL_INT;
- 	case IIO_CHAN_INFO_SCALE:
- 		*val = 0;
- 		*val2 = 1;
--		ret = IIO_VAL_INT_PLUS_MICRO;
--		break;
-+		return IIO_VAL_INT_PLUS_MICRO;
- 	case IIO_CHAN_INFO_SAMP_FREQ:
- 		ret = scd30_command_read(state, CMD_MEAS_INTERVAL, &tmp);
- 		if (ret)
--			break;
-+			return ret;
- 
- 		*val = 0;
- 		*val2 = 1000000000 / tmp;
--		ret = IIO_VAL_INT_PLUS_NANO;
--		break;
-+		return IIO_VAL_INT_PLUS_NANO;
- 	case IIO_CHAN_INFO_CALIBBIAS:
- 		ret = scd30_command_read(state, CMD_TEMP_OFFSET, &tmp);
- 		if (ret)
--			break;
-+			return ret;
- 
- 		*val = tmp;
--		ret = IIO_VAL_INT;
--		break;
-+		return IIO_VAL_INT;
-+	default:
-+		return -EINVAL;
- 	}
--	mutex_unlock(&state->lock);
+-/* SE_UART_TX_WORD_LEN */
+-#define TX_WORD_LEN_MSK		GENMASK(9, 0)
 -
--	return ret;
- }
+ /* SE_UART_TX_STOP_BIT_LEN */
+-#define TX_STOP_BIT_LEN_MSK	GENMASK(23, 0)
+ #define TX_STOP_BIT_LEN_1	0
+-#define TX_STOP_BIT_LEN_1_5	1
+ #define TX_STOP_BIT_LEN_2	2
  
- static int scd30_write_raw(struct iio_dev *indio_dev, struct iio_chan_spec const *chan,
- 			   int val, int val2, long mask)
- {
- 	struct scd30_state *state = iio_priv(indio_dev);
--	int ret = -EINVAL;
-+	int ret;
- 
--	mutex_lock(&state->lock);
-+	guard(mutex)(&state->lock);
- 	switch (mask) {
- 	case IIO_CHAN_INFO_SAMP_FREQ:
- 		if (val)
--			break;
-+			return -EINVAL;
- 
- 		val = 1000000000 / val2;
- 		if (val < SCD30_MEAS_INTERVAL_MIN_S || val > SCD30_MEAS_INTERVAL_MAX_S)
--			break;
-+			return -EINVAL;
- 
- 		ret = scd30_command_write(state, CMD_MEAS_INTERVAL, val);
- 		if (ret)
--			break;
-+			return ret;
- 
- 		state->meas_interval = val;
--		break;
-+		return 0;
- 	case IIO_CHAN_INFO_RAW:
- 		switch (chan->type) {
- 		case IIO_PRESSURE:
- 			if (val < SCD30_PRESSURE_COMP_MIN_MBAR ||
- 			    val > SCD30_PRESSURE_COMP_MAX_MBAR)
--				break;
-+				return -EINVAL;
- 
- 			ret = scd30_command_write(state, CMD_START_MEAS, val);
- 			if (ret)
--				break;
-+				return ret;
- 
- 			state->pressure_comp = val;
--			break;
-+			return 0;
- 		default:
--			break;
-+			return -EINVAL;
- 		}
--		break;
- 	case IIO_CHAN_INFO_CALIBBIAS:
- 		if (val < 0 || val > SCD30_TEMP_OFFSET_MAX)
--			break;
-+			return -EINVAL;
- 		/*
- 		 * Manufacturer does not explicitly specify min/max sensible
- 		 * values hence check is omitted for simplicity.
- 		 */
--		ret = scd30_command_write(state, CMD_TEMP_OFFSET / 10, val);
-+		return scd30_command_write(state, CMD_TEMP_OFFSET / 10, val);
-+	default:
-+		return -EINVAL;
- 	}
--	mutex_unlock(&state->lock);
+-/* SE_UART_TX_TRANS_LEN */
+-#define TX_TRANS_LEN_MSK	GENMASK(23, 0)
 -
--	return ret;
- }
+ /* SE_UART_RX_TRANS_CFG */
+-#define UART_RX_INS_STATUS_BIT	BIT(2)
+ #define UART_RX_PAR_EN		BIT(3)
  
- static int scd30_write_raw_get_fmt(struct iio_dev *indio_dev, struct iio_chan_spec const *chan,
+ /* SE_UART_RX_WORD_LEN */
+@@ -62,12 +53,9 @@
+ 
+ /* SE_UART_TX_PARITY_CFG/RX_PARITY_CFG */
+ #define PAR_CALC_EN		BIT(0)
+-#define PAR_MODE_MSK		GENMASK(2, 1)
+-#define PAR_MODE_SHFT		1
+ #define PAR_EVEN		0x00
+ #define PAR_ODD			0x01
+ #define PAR_SPACE		0x10
+-#define PAR_MARK		0x11
+ 
+ /* SE_UART_MANUAL_RFR register fields */
+ #define UART_MANUAL_RFR_EN	BIT(31)
+@@ -76,11 +64,8 @@
+ 
+ /* UART M_CMD OP codes */
+ #define UART_START_TX		0x1
+-#define UART_START_BREAK	0x4
+-#define UART_STOP_BREAK		0x5
+ /* UART S_CMD OP codes */
+ #define UART_START_READ		0x1
+-#define UART_PARAM		0x1
+ 
+ #define UART_OVERSAMPLING	32
+ #define STALE_TIMEOUT		16
 
 
