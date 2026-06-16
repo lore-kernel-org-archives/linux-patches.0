@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C9C47DF95;
-	Tue, 16 Jun 2026 16:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8C347DF80;
+	Tue, 16 Jun 2026 16:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628532; cv=none; b=TlNaancbcyyhPQNz62COWFK6TOgqTesV/D2IZSs2fnJLM6SEe1LY5VNacfysgc4DoDolSj81SPRg+Rmy4NeF6gDislDe9avEZu/lcn+zujx9InIsCJ9Hwawi0DMfFejCJrijZ/zVw7lH1aSNuO9NAVYCg67nureCDzZRsUc9I7Y=
+	t=1781628538; cv=none; b=J8wBfjkWsARyg7MLuc1cB/Xb5F1Nub+g1FRopZP0REfHtpuTEZgArw1rRL7Nqk9f0G5I0acnVzDnFBd0uM9gYOzu8tG+mn9t5iVaUvPUX2429FmTVhKxxNkX73Bl954BvYke4HGYux1aEK5JcUq5TaioNWqTqNuX3ziHChaWMz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628532; c=relaxed/simple;
-	bh=dxrSY/GQOX/V+RYVhUjOFMaZtCSzzyrv/VQDfOJWD1g=;
+	s=arc-20240116; t=1781628538; c=relaxed/simple;
+	bh=ujH5TujBRQBmASGcHdVFIc9BmzmGEB6kAqpIfupNOZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i1ZrgBKDZvPEIOnnEFUQUFdh2eydIq0399PYnIvAZSw9YyGUDDD3D9GNrCxnYwRN17gkGeSVFb1Fi/fQ9CXObAzlAAjZV3ZnP7praXKLZ/kbJUXlgfy2NpwmgAFZQWtAX9UTi7udkh+SEhM+6/5Y16Fxrt3B0rtOPv8SaMh6Iyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbO3mn53; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VhEfhQ5PYckLttxtK1uR0LEYFCh6MLr0+YSdUhUZDgmku8N9nu0+UKaHzITliyKopH3N3+qPD/UMU8pjnDiynfNKOzJe0Xhp8Hf3AmrhqyoLLq8zPxp04Vt4vbNu70IdO6iBSrnUPACc44pM/vjREJ8b1p/bpXWHa50MLVdn9tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fumDGmGG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbO3mn53"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A489E1F00A3E;
-	Tue, 16 Jun 2026 16:48:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fumDGmGG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FE61F000E9;
+	Tue, 16 Jun 2026 16:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628531;
-	bh=wqUzMWIUsLjoynO1uc0qT2Qahi8NpN/PkFEppTp8DEE=;
+	s=korg; t=1781628537;
+	bh=55+s0PyAjM8urLjdWksJ1Rd+O29xFqRESpFJdRzMC1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bbO3mn53eMmvubsv4mtm93fLXIkmHC39qwGlBElazfLJybE2Bx1QZA282fO5T5Phl
-	 X/Cdb8GDRKVaZODRXVu/YFOTrmbDQ7niFhA+o9H4TfbrUuVVDbN8voUHFpoBZNlmqX
-	 C6pIdO4FL/yVvYlxBs9xLvDqdwII7+GE4f4E2zRA=
+	b=fumDGmGG4DysZHxpfekU5toCPeJiBfLkL36CICw3yKTUjakkM35hmkrrAkuckM9tD
+	 G6HMV6uRloY4j2dcWWSHypUAplQXiJAbOQT7ipAUu32DDP+38wUuMcU2M1j3XDi9FM
+	 bhgD8tbB6D/YmUpaZHuikO7ElQO71AD4EAGsOVLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petlozu Pravareshwar <petlozup@nvidia.com>,
-	Prathamesh Shete <pshete@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Robert Garcia <rob_garcia@163.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/452] soc/tegra: pmc: Fix unsafe generic_handle_irq() call
-Date: Tue, 16 Jun 2026 20:25:08 +0530
-Message-ID: <20260616145122.136139354@linuxfoundation.org>
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Jonathan Cameron <jic23@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.6 082/452] iio: imu: st_lsm6dsx: fix stack leak in tagged FIFO buffer
+Date: Tue, 16 Jun 2026 20:25:09 +0530
+Message-ID: <20260616145122.181755487@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -48,213 +48,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Prathamesh Shete <pshete@nvidia.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit e6d96073af681780820c94079b978474a8a44413 ]
+commit c9d8e9adaa63150ef7e833480b799d0bab83a276 upstream.
 
-Currently, when resuming from system suspend on Tegra platforms,
-the following warning is observed:
+The tagged FIFO path declares iio_buff on the stack with __aligned(8)
+but no initializer, but there is a hole in the structure, which will
+then leak to userspace as ST_LSM6DSX_SAMPLE_SIZE bytes (6) will be
+copied, but the space between that and the timestamp are not
+initialized.
 
-WARNING: CPU: 0 PID: 14459 at kernel/irq/irqdesc.c:666
-Call trace:
- handle_irq_desc+0x20/0x58 (P)
- tegra186_pmc_wake_syscore_resume+0xe4/0x15c
- syscore_resume+0x3c/0xb8
- suspend_devices_and_enter+0x510/0x540
- pm_suspend+0x16c/0x1d8
+Commit c14edb4d0bdc ("iio:imu:st_lsm6dsx Fix alignment and data leak
+issues") moved the untagged FIFO path to a kzalloc'd buffer in hw->scan,
+but for the tagged path it only added the alignment qualifier and not
+the initializer :(
 
-The warning occurs because generic_handle_irq() is being called from
-a non-interrupt context which is considered as unsafe.
+Fix this by just zero-initializing the structure on the stack.
 
-Fix this warning by deferring generic_handle_irq() call to an IRQ work
-which gets executed in hard IRQ context where generic_handle_irq()
-can be called safely.
-
-When PREEMPT_RT kernels are used, regular IRQ work (initialized with
-init_irq_work) is deferred to run in per-CPU kthreads in preemptible
-context rather than hard IRQ context. Hence, use the IRQ_WORK_INIT_HARD
-variant so that with PREEMPT_RT kernels, the IRQ work is processed in
-hardirq context instead of being deferred to a thread which is required
-for calling generic_handle_irq().
-
-On non-PREEMPT_RT kernels, both init_irq_work() and IRQ_WORK_INIT_HARD()
-execute in IRQ context, so this change has no functional impact for
-standard kernel configurations.
-
-Signed-off-by: Petlozu Pravareshwar <petlozup@nvidia.com>
-Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-[treding@nvidia.com: miscellaneous cleanups]
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Robert Garcia <rob_garcia@163.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Lorenzo Bianconi <lorenzo@kernel.org>
+Cc: Jonathan Cameron <jic23@kernel.org>
+Cc: David Lechner <dlechner@baylibre.com>
+Cc: "Nuno Sá" <nuno.sa@analog.com>
+Cc: Andy Shevchenko <andy@kernel.org>
+Fixes: c14edb4d0bdc ("iio:imu:st_lsm6dsx Fix alignment and data leak issues")
+Cc: stable <stable@kernel.org>
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/tegra/pmc.c | 104 ++++++++++++++++++++++++++++------------
- 1 file changed, 74 insertions(+), 30 deletions(-)
+ drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index 1306e3b8b5c04b..4cb47c29dc6b95 100644
---- a/drivers/soc/tegra/pmc.c
-+++ b/drivers/soc/tegra/pmc.c
-@@ -28,6 +28,7 @@
- #include <linux/iopoll.h>
- #include <linux/irqdomain.h>
- #include <linux/irq.h>
-+#include <linux/irq_work.h>
- #include <linux/kernel.h>
- #include <linux/of_address.h>
- #include <linux/of_clk.h>
-@@ -467,6 +468,10 @@ struct tegra_pmc {
- 	unsigned long *wake_sw_status_map;
- 	unsigned long *wake_cntrl_level_map;
- 	struct syscore_ops syscore;
-+
-+	/* Pending wake IRQ processing */
-+	struct irq_work wake_work;
-+	u32 *wake_status;
- };
- 
- static struct tegra_pmc *pmc = &(struct tegra_pmc) {
-@@ -1940,6 +1945,50 @@ static int tegra_pmc_parse_dt(struct tegra_pmc *pmc, struct device_node *np)
- 	return 0;
- }
- 
-+/* translate sc7 wake sources back into IRQs to catch edge triggered wakeups */
-+static void tegra186_pmc_wake_handler(struct irq_work *work)
-+{
-+	struct tegra_pmc *pmc = container_of(work, struct tegra_pmc, wake_work);
-+	unsigned int i, wake;
-+
-+	for (i = 0; i < pmc->soc->max_wake_vectors; i++) {
-+		unsigned long status = pmc->wake_status[i];
-+
-+		for_each_set_bit(wake, &status, 32) {
-+			irq_hw_number_t hwirq = wake + (i * 32);
-+			struct irq_desc *desc;
-+			unsigned int irq;
-+
-+			irq = irq_find_mapping(pmc->domain, hwirq);
-+			if (!irq) {
-+				dev_warn(pmc->dev,
-+					 "No IRQ found for WAKE#%lu!\n",
-+					 hwirq);
-+				continue;
-+			}
-+
-+			dev_dbg(pmc->dev,
-+				"Resume caused by WAKE#%lu mapped to IRQ#%u\n",
-+				hwirq, irq);
-+
-+			desc = irq_to_desc(irq);
-+			if (!desc) {
-+				dev_warn(pmc->dev,
-+					 "No descriptor found for IRQ#%u\n",
-+					 irq);
-+				continue;
-+			}
-+
-+			if (!desc->action || !desc->action->name)
-+				continue;
-+
-+			generic_handle_irq(irq);
-+		}
-+
-+		pmc->wake_status[i] = 0;
-+	}
-+}
-+
- static int tegra_pmc_init(struct tegra_pmc *pmc)
- {
- 	if (pmc->soc->max_wake_events > 0) {
-@@ -1958,6 +2007,18 @@ static int tegra_pmc_init(struct tegra_pmc *pmc)
- 		pmc->wake_cntrl_level_map = bitmap_zalloc(pmc->soc->max_wake_events, GFP_KERNEL);
- 		if (!pmc->wake_cntrl_level_map)
- 			return -ENOMEM;
-+
-+		pmc->wake_status = kcalloc(pmc->soc->max_wake_vectors, sizeof(u32), GFP_KERNEL);
-+		if (!pmc->wake_status)
-+			return -ENOMEM;
-+
-+		/*
-+		 * Initialize IRQ work for processing wake IRQs. Must use
-+		 * HARD_IRQ variant to run in hard IRQ context on PREEMPT_RT
-+		 * because we call generic_handle_irq() which requires hard
-+		 * IRQ context.
-+		 */
-+		pmc->wake_work = IRQ_WORK_INIT_HARD(tegra186_pmc_wake_handler);
- 	}
- 
- 	if (pmc->soc->init)
-@@ -3156,47 +3217,30 @@ static void wke_clear_wake_status(struct tegra_pmc *pmc)
- 	}
- }
- 
--/* translate sc7 wake sources back into IRQs to catch edge triggered wakeups */
--static void tegra186_pmc_process_wake_events(struct tegra_pmc *pmc, unsigned int index,
--					     unsigned long status)
--{
--	unsigned int wake;
--
--	dev_dbg(pmc->dev, "Wake[%d:%d]  status=%#lx\n", (index * 32) + 31, index * 32, status);
--
--	for_each_set_bit(wake, &status, 32) {
--		irq_hw_number_t hwirq = wake + 32 * index;
--		struct irq_desc *desc;
--		unsigned int irq;
--
--		irq = irq_find_mapping(pmc->domain, hwirq);
--
--		desc = irq_to_desc(irq);
--		if (!desc || !desc->action || !desc->action->name) {
--			dev_dbg(pmc->dev, "Resume caused by WAKE%ld, IRQ %d\n", hwirq, irq);
--			continue;
--		}
--
--		dev_dbg(pmc->dev, "Resume caused by WAKE%ld, %s\n", hwirq, desc->action->name);
--		generic_handle_irq(irq);
--	}
--}
--
- static void tegra186_pmc_wake_syscore_resume(void)
- {
--	u32 status, mask;
- 	unsigned int i;
-+	u32 mask;
- 
- 	for (i = 0; i < pmc->soc->max_wake_vectors; i++) {
- 		mask = readl(pmc->wake + WAKE_AOWAKE_TIER2_ROUTING(i));
--		status = readl(pmc->wake + WAKE_AOWAKE_STATUS_R(i)) & mask;
--
--		tegra186_pmc_process_wake_events(pmc, i, status);
-+		pmc->wake_status[i] = readl(pmc->wake + WAKE_AOWAKE_STATUS_R(i)) & mask;
- 	}
-+
-+	/* Schedule IRQ work to process wake IRQs (if any) */
-+	irq_work_queue(&pmc->wake_work);
- }
- 
- static int tegra186_pmc_wake_syscore_suspend(void)
- {
-+	unsigned int i;
-+
-+	/* Check if there are unhandled wake IRQs */
-+	for (i = 0; i < pmc->soc->max_wake_vectors; i++)
-+		if (pmc->wake_status[i])
-+			dev_warn(pmc->dev,
-+				 "Unhandled wake IRQs pending vector[%u]: 0x%x\n",
-+				 i, pmc->wake_status[i]);
- 	wke_read_sw_wake_status(pmc);
- 
- 	/* flip the wakeup trigger for dual-edge triggered pads
--- 
-2.53.0
-
+--- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
++++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_buffer.c
+@@ -586,7 +586,7 @@ int st_lsm6dsx_read_tagged_fifo(struct s
+ 	 * must be passed a buffer that is aligned to 8 bytes so
+ 	 * as to allow insertion of a naturally aligned timestamp.
+ 	 */
+-	u8 iio_buff[ST_LSM6DSX_IIO_BUFF_SIZE] __aligned(8);
++	u8 iio_buff[ST_LSM6DSX_IIO_BUFF_SIZE] __aligned(8) = { };
+ 	u8 tag;
+ 	bool reset_ts = false;
+ 	int i, err, read_len;
 
 
