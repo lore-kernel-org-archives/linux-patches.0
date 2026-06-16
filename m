@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7BA3D8105;
-	Tue, 16 Jun 2026 18:23:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BACA3BFE5A;
+	Tue, 16 Jun 2026 18:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634221; cv=none; b=c0WgEUAvY1qA6w7kt0OURSIfZTJ3eCKZfj1WHhQ7PXAOMHjlyaiTtidbr+F0jOoUSn8acQid+MEZ2SxG6xtUdEglczu4asXvEGztFFePOkEpkVYmjvp2u5ljy5KfHw74XgWog+RY12OYrekczpG+iVA/a3fixNOCpi4T1UgdkZI=
+	t=1781634227; cv=none; b=m01KFy2pYC7BtJk9HKJriGFntvo/GrZ7F3TR67/AJw9DOSAk71zQ1H16JDfK/tmvHBfx9p18yDY2xZxltcsnAqQYi1m7ZQzKdOlUWo7nhZYmWAl/1ehD0hWzm2NrGg79XQNxcQkZkRRDaTt8cMyeMZUWNKueqN5fPhOD4m20ZJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634221; c=relaxed/simple;
-	bh=ZWElGjKb7XTaarr5sGwXn3gWRt0j+42t70xVqGvTkek=;
+	s=arc-20240116; t=1781634227; c=relaxed/simple;
+	bh=MDaJZ31nGWpfY/9fp3wkjMepzwsv5GrjesI+zkNV/Jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IIh1qI/+vWUruhrDjuj1u+2mfDhWNUxPbSi0IFeckcEpcMqfxW++aChEZ0fUchfkL6akg3frMl2zeLIGC6l93a4+FDNpg+pLuu8+R8x4JQOUO1CZvg81vDyZjyx+50k4I/QXM+l3j5uY8NMJ84AkbOS5ktGh9S/lbf/b2gtY/So=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrvvdCyH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LdPl20X0zQUxMUA7AFPuYwZ56S7PxUzLuSbYiQjR8YC1eZYviBAVMdtDu3tSbVq+kJTWR0iH65inFfRonYmXhMXBf01NhPD80yVSjQkgKythVYmHwuix45dlBLJBPnyySw2/227THHt8MBpf8KSNeZIukmxSXXSfZVDo78fBfQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kg59vpyM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrvvdCyH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B9D1F000E9;
-	Tue, 16 Jun 2026 18:23:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kg59vpyM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61E1C1F000E9;
+	Tue, 16 Jun 2026 18:23:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634220;
-	bh=OL/7I2fQTwsFr0IZU22zyfpfFqvgSH5K/vrkY8zaF1o=;
+	s=korg; t=1781634226;
+	bh=96KDvSyliv6Ls/VVH6586ozgvkjayVFR933lA6K+cz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CrvvdCyHiZX0/pDWsOuoRKiDsslU0eUXLpifd490B5gYqWWfXhwZq78Yil3xOCjMU
-	 fVy0CbA7kN6heSFlUgx7lPuyqifYE5I/HF646uIgRUstpB0WQYx/nCiHhgVK9u0ukf
-	 O50f6Ih30qkxH+eQGA32+UyOYdfcpuDC0eu2M5nw=
+	b=kg59vpyMuncK6ClDRwpveUha/psQM3+2FIFIxrioLxuPAm2/KvxEw+GbxoCHegNvD
+	 L0WwWS3fegsO5zToVhZLdzr1MKO+r9Q6nJBd5aVvYasLc3btL82/k1iaB6EDq/+9ep
+	 HeGVSSUfVt1CJpiw7E6C6jc5CmCweAkWcjkrtbKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 214/411] mptcp: fix retransmission loop when csum is enabled
-Date: Tue, 16 Jun 2026 20:27:32 +0530
-Message-ID: <20260616145112.144612918@linuxfoundation.org>
+Subject: [PATCH 5.15 215/411] mptcp: sockopt: check timestamping ret value
+Date: Tue, 16 Jun 2026 20:27:33 +0530
+Message-ID: <20260616145112.209960819@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -51,42 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit d1918b36edcaed0ec4ef6888b2358c6b1ddcff47 upstream.
+commit 57132affbc89c02e1bf73fdf5724311bdc9a29da upstream.
 
-Sashiko noted that retransmission with csum enabled can actually
-transmit new data, but currently the relevant code does not update
-accordingly snd_nxt.
+sock_set_timestamping() can fail for different reasons. The returned
+value should then be checked.
 
-The may cause incoming ack drop and an endless retransmission loop.
+If sock_set_timestamping() fails for at least one subflow, the first
+error is now reported to the userspace, similar to what is done with
+other socket options.
 
-Address the issue incrementing snd_nxt as needed.
-
-Fixes: 4e14867d5e91 ("mptcp: tune re-injections for csum enabled mode")
+Fixes: 9061f24bf82e ("mptcp: sockopt: propagate timestamp request to subflows")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reported-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Closes: https://lore.kernel.org/willemdebruijn.kernel.178a41a53d041@gmail.com
+Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260602-net-mptcp-misc-fixes-7-1-rc7-v2-2-856831229976@kernel.org
+Link: https://patch.msgid.link/20260602-net-mptcp-misc-fixes-7-1-rc7-v2-7-856831229976@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/mptcp/sockopt.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2539,6 +2539,10 @@ static void __mptcp_retrans(struct sock
+--- a/net/mptcp/sockopt.c
++++ b/net/mptcp/sockopt.c
+@@ -231,15 +231,19 @@ static int mptcp_setsockopt_sol_socket_t
  
- 	release_sock(ssk);
+ 	mptcp_for_each_subflow(msk, subflow) {
+ 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
++		int err;
  
-+	/* With csum enabled retransmission can send new data. */
-+	if (after64(dfrag->already_sent + dfrag->data_seq, msk->snd_nxt))
-+		WRITE_ONCE(msk->snd_nxt, dfrag->already_sent + dfrag->data_seq);
+ 		lock_sock(ssk);
+-		sock_set_timestamping(ssk, optname, timestamping);
++		err = sock_set_timestamping(ssk, optname, timestamping);
+ 		release_sock(ssk);
 +
- reset_timer:
- 	if (!mptcp_rtx_timer_pending(sk))
- 		mptcp_reset_rtx_timer(sk);
++		if (err < 0 && ret == 0)
++			ret = err;
+ 	}
+ 
+ 	release_sock(sk);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int mptcp_setsockopt_sol_socket_linger(struct mptcp_sock *msk, sockptr_t optval,
 
 
