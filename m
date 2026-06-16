@@ -1,52 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635C3328610;
-	Tue, 16 Jun 2026 17:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67F8328610;
+	Tue, 16 Jun 2026 17:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629324; cv=none; b=DYEOQ14o3mFaKqwMN5Xg6TJuWDTcqQkLI0mGxb0VBGbq0wDDzeK+y1Kmdb41kCiiIua6AJeAFlSFql1HUJprJScLNcURA/y78lYdfA3edoQs7XQXRL/9XqRTI/eFyr13UD2uHSS7CK1fOgDA1l/LLryNNvR5xujGdCmcLjhDc9U=
+	t=1781629329; cv=none; b=poZ/j9I/1ffYvgd6oEBSpQDPHe5x02QWkZKe5ztyMEzk/aHu/WfMJGAXgzEfj1ZfWgjC10VMiLB7nQqbtSyTmzIdE5yuWqsQC/D0fZ429sJvphFkjOH10fF31fC5dySd0MOT1N7pplx15E/xduEGiuG42ENbF4DjvifoPDlSUyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629324; c=relaxed/simple;
-	bh=z6TQ9h5RftEMSZktN2CbhnaiRMwB1i8L8qbPhusWy+8=;
+	s=arc-20240116; t=1781629329; c=relaxed/simple;
+	bh=yiJFZleikrZYS8Udk9TNCJZL1CIJtnGrTIJz9eoEBU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gEsy8js9gQ10XLycjCdWunwbOR6nZLJqSMrmAC+j9o1yvS++hIomUofbIwrAeMHqRgrrNLGMC5nvmiy0t1b30j4seo5usux6SGlQASrnZ0UO9hwYykO1CXaBM9zSX1l/pgYf/uNXJ7mXPbNZQLNnD1lvLkVeZgI3NOa6PlIHRrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/6/oJzm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qg8bGjIBtNHvqLeS0SjhTLXUxiubh7ayJQIa0vNNWOKqjh/fUTEkAkgTi67mw+D63woxrVIjJu42Hannc8qUFSw3q+YPTHR8kW4mpk3MsVKeAo6PMDwup7AqB2Ln1+WrBkhYHVqtPrD11+D1q0ejQ/cB32JLYqyG9q5oBw1k1sM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKoodeEL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/6/oJzm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 332E81F000E9;
-	Tue, 16 Jun 2026 17:02:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKoodeEL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD5C61F000E9;
+	Tue, 16 Jun 2026 17:02:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629323;
-	bh=URG1ipTNvazTuZygNmk0QWcRBiB/f5qaWOo0QdZNVg8=;
+	s=korg; t=1781629328;
+	bh=E9YE749YHYQ8JTffSzX8e21Rm51zgNH3r0Y0crZuWvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d/6/oJzmD2Xutfe680g0nQE3LKS9g+bxmRPm2DOkg/K+L/iRmjoUM+w7P6eQfuS6E
-	 GXWMfcdxryVzvcV9vTYXGrfKtBf42rDbF0zCtweTonUZypQ15NnyP7wP4MXh+dBGL0
-	 Kbx5plZoQCEazyUFmilwtHTGMJ7hpq6Qrr5jV9iE=
+	b=WKoodeEL5fdOsGNC64HKi5e1+VlWVwTzhv2TvQZTSN8mrhn6kbivKYdGGg7vmPx34
+	 76/NL3cHYiOLPYgFiNgnySMR3T5DsXBzpUyKj4LJndM5lC7OqV36krzGuirrQb21we
+	 2SyIMLo/yg9tHUrZ6gT2eN2vmOtppakMVqQMFfOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Tamir Shahar <tamirthesis@gmail.com>,
-	Amit Klein <aksecurity@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Song Liu <song@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Jiri Olsa <jolsa@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
+	Yao Sang <sangyao@kylinos.cn>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 264/452] tcp: restrict SO_ATTACH_FILTER to priv users
-Date: Tue, 16 Jun 2026 20:28:11 +0530
-Message-ID: <20260616145131.477301079@linuxfoundation.org>
+Subject: [PATCH 6.6 265/452] net/mlx4: avoid GCC 10 __bad_copy_from() false positive
+Date: Tue, 16 Jun 2026 20:28:12 +0530
+Message-ID: <20260616145131.526272527@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -65,56 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Yao Sang <sangyao@kylinos.cn>
 
-[ Upstream commit 5d39580f68e6ddeedd15e587282207489dfb3da2 ]
+[ Upstream commit 2365343f4aad3e1b1e7a2e87e98cf66d5e590589 ]
 
-This patch restricts the use of SO_ATTACH_FILTER (cBPF) on TCP sockets
-to users with CAP_NET_ADMIN capability.
+mlx4_init_user_cqes() fills a scratch buffer with the CQE
+initialization pattern and then copies from that buffer to userspace.
 
-This blocks potential side-channel attack where an unprivileged application
-attaches a filter to leak TCP sequence/acknowledgment numbers.
+In the single-copy path, the copy length is array_size(entries,
+cqe_size), but the scratch buffer is allocated with PAGE_SIZE. GCC 10
+does not carry the branch invariant strongly enough through the object
+size checks and falsely triggers __bad_copy_from().
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: Tamir Shahar <tamirthesis@gmail.com>
-Reported-by: Amit Klein <aksecurity@gmail.com>
-Cc: Willem de Bruijn <willemb@google.com>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: Martin KaFai Lau <martin.lau@linux.dev>
-Cc: Eduard Zingerman <eddyz87@gmail.com>
-Cc: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: Song Liu <song@kernel.org>
-Cc: Yonghong Song <yonghong.song@linux.dev>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Cc: Stanislav Fomichev <sdf@fomichev.me>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
+Size the scratch buffer to the actual copy length for the active path,
+keep array_size() for the single-copy case, and retain a WARN_ON_ONCE()
+guard for the PAGE_SIZE invariant before allocating the buffer.
+
+Fixes: f69bf5dee7ef ("net/mlx4: Use array_size() helper in copy_to_user()")
+Signed-off-by: Yao Sang <sangyao@kylinos.cn>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/mellanox/mlx4/cq.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 267f771dda1cc2..87e6060c8bca7f 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -1311,6 +1311,11 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
- 	case SO_ATTACH_FILTER: {
- 		struct sock_fprog fprog;
- 
-+		if (sk_is_tcp(sk) &&
-+		    !sockopt_ns_capable(sock_net(sk)->user_ns, CAP_NET_ADMIN)) {
-+			ret = -EPERM;
-+			break;
+diff --git a/drivers/net/ethernet/mellanox/mlx4/cq.c b/drivers/net/ethernet/mellanox/mlx4/cq.c
+index 4d4f9cf9facb87..fb83d8af8dcb9c 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/cq.c
++++ b/drivers/net/ethernet/mellanox/mlx4/cq.c
+@@ -290,6 +290,7 @@ static void mlx4_cq_free_icm(struct mlx4_dev *dev, int cqn)
+ static int mlx4_init_user_cqes(void *buf, int entries, int cqe_size)
+ {
+ 	int entries_per_copy = PAGE_SIZE / cqe_size;
++	size_t copy_bytes;
+ 	void *init_ents;
+ 	int err = 0;
+ 	int i;
+@@ -314,8 +315,14 @@ static int mlx4_init_user_cqes(void *buf, int entries, int cqe_size)
+ 			buf += PAGE_SIZE;
+ 		}
+ 	} else {
++		copy_bytes = array_size(entries, cqe_size);
++		if (WARN_ON_ONCE(copy_bytes > PAGE_SIZE)) {
++			err = -EINVAL;
++			goto out;
 +		}
- 		ret = copy_bpf_fprog_from_user(&fprog, optval, optlen);
- 		if (!ret)
- 			ret = sk_attach_filter(&fprog, sk);
++
+ 		err = copy_to_user((void __user *)buf, init_ents,
+-				   array_size(entries, cqe_size)) ?
++				   copy_bytes) ?
+ 			-EFAULT : 0;
+ 	}
+ 
 -- 
 2.53.0
 
