@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C175747A0B2;
-	Tue, 16 Jun 2026 18:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2292646AEE1;
+	Tue, 16 Jun 2026 18:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635945; cv=none; b=FIanXJf360cOPpe8kq+UkHpD6wpqvIJSPAuUAdM52YsTonFcsaRWtPpaBirJ46RLtGPjItO1dihTjsu9QjQ7eb/FenOkC9A9HPQqaSQNBWorMwhIGKYJMCJKG3cgNlpl89JXA4HaqeTc8M/a9/tkZYyBd/KMYc0rAfwFd7IZtK4=
+	t=1781635951; cv=none; b=DW8bDwiH1P+HVaOwq0LgJjTnnmhw9wrhwW6gIlP11TKAhvUDm5BXhaiTdH6Q2j7vKsmfMMD/1aecpa5w0YtDxf0tsL66HOz0enkd2ztq/ZNwP1pKllDU7HFevHmtAfyog42Ol6BCZ1ZCmnYBgya82SkrKeoqr5ezF9Vf1hN2Cdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635945; c=relaxed/simple;
-	bh=XDlo/9R6mACppYH8f83+k5Nitpe0U+p/YR5W82FtLWY=;
+	s=arc-20240116; t=1781635951; c=relaxed/simple;
+	bh=j5gDrlTAkTss6KbLnyMdoa+7CFQFE41x21lprpBTEQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nvlRU+aBTRZDGxd+iAYppR5agEq3TszEZzt9H9jf79C+z5rS8+X+sx7qQOc/8L9W2fi7WajGgX7Z7wvDny+Tx697u13Ymsd5bhH4JM8uqAG7QRvSy+Dnnb+4jrjnxvBa3Hge3n74AZpeTQWepFtAaFhbkPCVrSBZfJuzv82aEQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrTVUOiQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pnXRLPCcLgfv40BmXDiPf9J+HJL9kMbFh2/XVRDDL1WRFK9qNykLJhLqOrGdRFaXwx2F0F1lW4vcxB+mFnKFIyumscjPFPdnYRb6ITFlzadm5WxU0AnluiHWaVYHYzpytVHrzpMEZrCGY6AJ85blRZ1UkA0hPHQTmvStRHBFcNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPv7wyeS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrTVUOiQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9875F1F000E9;
-	Tue, 16 Jun 2026 18:52:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPv7wyeS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F591F000E9;
+	Tue, 16 Jun 2026 18:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635944;
-	bh=7uIQsKcMOJbzgxcQNV8fE37XjfChf51Wa2Pn/RWd0xY=;
+	s=korg; t=1781635950;
+	bh=vWDEdS/FAFx5NIckqGyP6OeNkcPng5kstZ+PuDsi1ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DrTVUOiQU3SFt6mWKk6GTCzbP+v2YQT8gbxP2x02rgf42rQ0PHiEIaZZR5GMSUBc1
-	 T0dIYQd25yrVymK6dycKy72xgo4F8cq8uN8Sklk6+0grnrvkglr4oMjmSiYQwVN/FH
-	 +aBIFQa/h4ZXFibd5iPCu/K8xezuVDz7M3JhscT4=
+	b=YPv7wyeSSOO/FbUKqdWpgjwap9QAW2eCwDzwTPueEdyO7Y8kjUSExZw2reSI5izpw
+	 LjUIocJnOzvYlZ3IJ+Od54epPp1gdm8773KzDg4EQSQXlSxAI0eHcVN3h4G5X/WziB
+	 f5X6z3Vizu8h+YbYz4EJO/PLQpmowoHza92oQUgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Zhang Cen <rollkingzzc@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Tamir Shahar <tamirthesis@gmail.com>,
+	Amit Klein <aksecurity@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 145/342] Bluetooth: MGMT: validate advertising TLV before type checks
-Date: Tue, 16 Jun 2026 20:27:21 +0530
-Message-ID: <20260616145054.932657001@linuxfoundation.org>
+Subject: [PATCH 5.10 146/342] ipv4: restrict IPOPT_SSRR and IPOPT_LSRR options
+Date: Tue, 16 Jun 2026 20:27:22 +0530
+Message-ID: <20260616145054.978022614@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -52,71 +55,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit de23fb62259aa01d294f77238ae3b835eb674413 ]
+[ Upstream commit d3915a1f5a4bc0ac911032903c3c6ab8df9fcc7c ]
 
-tlv_data_is_valid() reads each advertising data field length from
-data[i], then inspects data[i + 1] for managed EIR types before
-checking that the current field still fits inside the supplied buffer.
+This patch restricts setting Loose Source and Record Route (LSRR)
+and Strict Source and Record Route (SSRR) IP options to users
+with CAP_NET_RAW capability.
 
-A malformed field whose length byte is the last byte of the buffer can
-therefore make the parser read one byte past the advertising data.
+This prevents unprivileged applications from forcing packets to route
+through attacker-controlled nodes to leak TCP ISN and possibly other
+protocol information.
 
-KASAN reported the following when a malformed MGMT_OP_ADD_ADVERTISING
-request reached that path:
+While LSRR and SSRR are commonly filtered in many network environments,
+they may still be supported and forwarded along some network paths.
 
-  BUG: KASAN: vmalloc-out-of-bounds in tlv_data_is_valid()
-  Read of size 1
-  Call trace:
-    tlv_data_is_valid()
-    add_advertising()
-    hci_mgmt_cmd()
-    hci_sock_sendmsg()
+RFC 7126 (Recommendations on Filtering of IPv4 Packets Containing
+IPv4 Options) recommend to drop these options in 4.3 and 4.4.
 
-Move the existing element-length check before any type-octet inspection
-so each non-empty element is proven to contain its type byte before the
-parser looks at data[i + 1].
-
-Fixes: 2bb36870e8cb ("Bluetooth: Unify advertising instance flags check")
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Tamir Shahar <tamirthesis@gmail.com>
+Reported-by: Amit Klein <aksecurity@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260602161547.2642155-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/ipv4/ip_options.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index b768abbf2b121a..3647e51d31062b 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -7364,6 +7364,12 @@ static bool tlv_data_is_valid(struct hci_dev *hdev, u32 adv_flags, u8 *data,
- 		if (!cur_len)
- 			continue;
- 
-+		/* If the current field length would exceed the total data
-+		 * length, then it's invalid.
-+		 */
-+		if (i + cur_len >= len)
-+			return false;
-+
- 		if (data[i + 1] == EIR_FLAGS &&
- 		    (!is_adv_data || flags_managed(adv_flags)))
- 			return false;
-@@ -7380,12 +7386,6 @@ static bool tlv_data_is_valid(struct hci_dev *hdev, u32 adv_flags, u8 *data,
- 		if (data[i + 1] == EIR_APPEARANCE &&
- 		    appearance_managed(adv_flags))
- 			return false;
--
--		/* If the current field length would exceed the total data
--		 * length, then it's invalid.
--		 */
--		if (i + cur_len >= len)
--			return false;
+diff --git a/net/ipv4/ip_options.c b/net/ipv4/ip_options.c
+index da1b5038bdfd04..4afdaaab616239 100644
+--- a/net/ipv4/ip_options.c
++++ b/net/ipv4/ip_options.c
+@@ -543,6 +543,10 @@ int ip_options_get(struct net *net, struct ip_options_rcu **optp,
+ 		kfree(opt);
+ 		return -EINVAL;
  	}
- 
- 	return true;
++	if (opt->opt.srr && !ns_capable(net->user_ns, CAP_NET_RAW)) {
++		kfree(opt);
++		return -EPERM;
++	}
+ 	kfree(*optp);
+ 	*optp = opt;
+ 	return 0;
 -- 
 2.53.0
 
