@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F46E449EB0;
-	Tue, 16 Jun 2026 15:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41CA144CAE6;
+	Tue, 16 Jun 2026 15:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625055; cv=none; b=kBbJla29x7rup+seYDuTsVDROazRTVjHx5KlDo7B1uGpAgrphiZbMUSZXxYwfuN4bh3mC1fpQIbk3I4ls766iZtDZOmEhvq8GlITVy3rwe3k4NC/Wfh4uOSlaeK51haLl1E/+iomOGlFhGv5xO5wQojE7avnWgz8MTG/ycuUuN4=
+	t=1781625062; cv=none; b=jM1teMQo1YxdE2CExzavNsB7ZHdCiMJ43tz7NRqwbZD6tpu59/M1mN8ausMdXaJs+sDofMkEhBSNF/tovXbK5MXoev1ObyQ0Met0JwZ+B2gMD6gTGErguircR6Ho7Zn9Nwr2WBrpsUtOZw8J6RPK2GETCX8YM//QpXUdoFtcGus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625055; c=relaxed/simple;
-	bh=pxmqYORY+I8GmPAeKK9V3UgyznlTk11ltAC4RKW55Vw=;
+	s=arc-20240116; t=1781625062; c=relaxed/simple;
+	bh=RI3OdWmTjCmq7rG9w5Dh11iI2eSTmkCxgTj5gVlXVC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wydoip6oS9/yoQIi+G0h+bjspma4I+PPD4N0nFd/7atifqn8NZldTmQc2O6Zf0/2IN0d00Bped3YofGKrd4cfKZnCyjlzYlWXotv/1i9wjvG2tseK1uFGL4ONd6sy21IFvCSdW7kHl95kStxqeD/SZodkmuBUJZIuuMsdVoglJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDRGtg3d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=AkKnwPQ8q1+dJU6ww3xXzpe9VOI269ANtqUH3QSWbr+uLk/0o8b6+f2pJWyjtkvCZc9k30bWmHd2WNhfsz6ga3HnX3cv5MCxbhzt7OJmdZSLDKY/szADaOD8gBE0WiN21FfCfxHeU2F8HM5yDXaUsXtT38mbGNPKdKA2oeuNFoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AfedKV5s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDRGtg3d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11DD11F000E9;
-	Tue, 16 Jun 2026 15:50:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AfedKV5s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8A71F000E9;
+	Tue, 16 Jun 2026 15:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625054;
-	bh=Oic3JAdvC9m4muvosgt3gCyCTkCdz3FYRVFLPGgrdzg=;
+	s=korg; t=1781625061;
+	bh=WJ5Rnw95TeEdJXUi3nHwtiMFcpf6mRQnCBuV5Wsmues=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CDRGtg3dluVO14lNjhL9Qu2Y6Vhd1E3fblF+5QvZbCGPX9J3v8yHwsAyCWk32WuGG
-	 F6Jnul1nczQ8llqWSRLFxUb4Jr4U3tPtm8AC+P3WN8A+MDZGiv2BnlEw6B1KIF2E8b
-	 OWfzyVl+6ehHzcRNZdCKx+G53+vo6Ikfqgt/yB1Y=
+	b=AfedKV5snvwEkolU/ium05URPugdqEqEYIJ8ThWTIRdyjdYru/6XplYlNDqVZl56u
+	 Aw18qRxTO1rJzEgFxY4yhh3qmuEm7gYqfvRlgYAO9iHZvDPy2X3fYzsnB17ANuiM5j
+	 zBC0tPGhbTed3m63FkNR2Zi8eqUPNC4ryNjfmi/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 070/325] drm/hyperv: During panic do VMBus unload after frame buffer is flushed
-Date: Tue, 16 Jun 2026 20:27:46 +0530
-Message-ID: <20260616145101.197973473@linuxfoundation.org>
+Subject: [PATCH 6.18 071/325] selftests: harness: fix pidfd leak in __wait_for_test
+Date: Tue, 16 Jun 2026 20:27:47 +0530
+Message-ID: <20260616145101.254327562@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -46,101 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Kelley <mhklinux@outlook.com>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 8b35874f56ded0cc1a90a25b87411249a86246cd ]
+[ Upstream commit 0eb307d61317b42b120ab02099b597226318358a ]
 
-In a VM, Linux panic information (reason for the panic, stack trace,
-etc.) may be written to a serial console and/or a virtual frame buffer
-for a graphics console. The latter may need to be flushed back to the
-host hypervisor for display.
+Fix the pidfd leak in kselftest_harness.h's __wait_for_test() where
+childfd = syscall(__NR_pidfd_open, t->pid, 0) is never closed.
 
-The current Hyper-V DRM driver for the frame buffer does the flushing
-*after* the VMBus connection has been unloaded, such that panic messages
-are not displayed on the graphics console. A user with a Hyper-V graphics
-console is left with just a hung empty screen after a panic. The enhanced
-control that DRM provides over the panic display in the graphics console
-is similarly non-functional.
-
-Commit 3671f3777758 ("drm/hyperv: Add support for drm_panic") added
-the Hyper-V DRM driver support to flush the virtual frame buffer. It
-provided necessary functionality but did not handle the sequencing
-problem with VMBus unload.
-
-Fix the full problem by using VMBus functions to suppress the VMBus
-unload that is normally done by the VMBus driver in the panic path. Then
-after the frame buffer has been flushed, do the VMBus unload so that a
-kdump kernel can start cleanly. As expected, CONFIG_DRM_PANIC must be
-selected for these changes to have effect. As a side benefit, the
-enhanced features of the DRM panic path are also functional.
-
-Fixes: 3671f3777758 ("drm/hyperv: Add support for drm_panic")
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Fixes: 73a3cde97677 ("selftests: harness: Implement test timeouts through pidfd")
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Link: https://patch.msgid.link/a82e275ccfb2609a1984d90ab559fa3af78f1e81.1776678050.git.tanggeliang@kylinos.cn
+Reviewed-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/hyperv/hyperv_drm_drv.c     |  5 +++++
- drivers/gpu/drm/hyperv/hyperv_drm_modeset.c | 15 ++++++++-------
- 2 files changed, 13 insertions(+), 7 deletions(-)
+ tools/testing/selftests/kselftest_harness.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
-index 0d49f168a919d5..dad8fd5cb1d3b6 100644
---- a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
-+++ b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
-@@ -149,6 +149,10 @@ static int hyperv_vmbus_probe(struct hv_device *hdev,
- 		goto err_free_mmio;
- 	}
- 
-+	/* If DRM panic path is stubbed out VMBus code must do the unload */
-+	if (IS_ENABLED(CONFIG_DRM_PANIC))
-+		vmbus_set_skip_unload(true);
-+
- 	drm_client_setup(dev, NULL);
- 
- 	return 0;
-@@ -168,6 +172,7 @@ static void hyperv_vmbus_remove(struct hv_device *hdev)
- 	struct drm_device *dev = hv_get_drvdata(hdev);
- 	struct hyperv_drm_device *hv = to_hv(dev);
- 
-+	vmbus_set_skip_unload(false);
- 	drm_dev_unplug(dev);
- 	drm_atomic_helper_shutdown(dev);
- 	vmbus_close(hdev->channel);
-diff --git a/drivers/gpu/drm/hyperv/hyperv_drm_modeset.c b/drivers/gpu/drm/hyperv/hyperv_drm_modeset.c
-index 945b9482bcb3a9..86696a9a32c559 100644
---- a/drivers/gpu/drm/hyperv/hyperv_drm_modeset.c
-+++ b/drivers/gpu/drm/hyperv/hyperv_drm_modeset.c
-@@ -204,15 +204,16 @@ static void hyperv_plane_panic_flush(struct drm_plane *plane)
- 	struct hyperv_drm_device *hv = to_hv(plane->dev);
- 	struct drm_rect rect;
- 
--	if (!plane->state || !plane->state->fb)
--		return;
-+	if (plane->state && plane->state->fb) {
-+		rect.x1 = 0;
-+		rect.y1 = 0;
-+		rect.x2 = plane->state->fb->width;
-+		rect.y2 = plane->state->fb->height;
- 
--	rect.x1 = 0;
--	rect.y1 = 0;
--	rect.x2 = plane->state->fb->width;
--	rect.y2 = plane->state->fb->height;
-+		hyperv_update_dirt(hv->hdev, &rect);
-+	}
- 
--	hyperv_update_dirt(hv->hdev, &rect);
-+	vmbus_initiate_unload(true);
- }
- 
- static const struct drm_plane_helper_funcs hyperv_plane_helper_funcs = {
+diff --git a/tools/testing/selftests/kselftest_harness.h b/tools/testing/selftests/kselftest_harness.h
+index fe162cbfc09121..6928915a643b1e 100644
+--- a/tools/testing/selftests/kselftest_harness.h
++++ b/tools/testing/selftests/kselftest_harness.h
+@@ -996,6 +996,7 @@ static void __wait_for_test(struct __test_metadata *t)
+ 	poll_child.fd = childfd;
+ 	poll_child.events = POLLIN;
+ 	ret = poll(&poll_child, 1, t->timeout * 1000);
++	close(childfd);
+ 	if (ret == -1) {
+ 		t->exit_code = KSFT_FAIL;
+ 		fprintf(TH_LOG_STREAM,
 -- 
 2.53.0
 
