@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D7544CAE6;
-	Tue, 16 Jun 2026 15:42:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D8C44CF4E;
+	Tue, 16 Jun 2026 15:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624566; cv=none; b=B4+xXPwRMxTvLnLYiT4a6+C5USeABvosOImcyxDeLY3747PLC5zsFUR6PlztZxoYlbmcQW/D9xja+wRf3tRsv2UnyyzuOovTcJTQYm4XB2NOIN9m17NkFLRmXIW1h9pbOfBV3ughgJRnSHOsp96Z5OZh9YDv/HtlmbvzHcBVuww=
+	t=1781624573; cv=none; b=Je1E1FTqFXB3i7OFRnfr3dc88qI3iUl8TpxQ3j36SMD1MUdek+fp6nLpBdoAky2XET5A1vsJEe6XMzr9GujH7hGM+IzXVEB16sPnnMu2fYG9DaDTj3MEi1HmPVM5Jd/So8wlYHDHGu19jnn8tezIlQMcnj0bpLx44tT5v6UxL4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624566; c=relaxed/simple;
-	bh=ClQVqsAG81BCO0PKM4YDAUoXUzgp24sRADkCVMtNGH8=;
+	s=arc-20240116; t=1781624573; c=relaxed/simple;
+	bh=K/iPwQavtybZJUHEGPhRQXS+8Gd+TVEYYXBTSkcEvyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PoJfSPUNmWPynPAmiEh1uXv+Gpwgo+TyKCv53LM+rTDEy/rEigKXRaT/6ZKbMOZt/nHhM8e9TT7d1KG0chqyZa83qZeuuj5+S691DgZP6qmT7IgQIT4gx5NIJe267g0iKFdKIMBO+WP44HRAM0nEGzBvvJc0jefftNCN+jPTDII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sP+hsZ48; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pm+9MpNAWLa/BFzhUspIvDmfsHKO6i3/wYqoWwNsayu+XhLKXODI9tP4gT4WBfjy07SLtKTMRDrtXWNjpFyFqeChh6TbiV0Zp9fb4/qt+q15EmgKw32R7L/8ro93vmuA9bk9TtcRlBsneqi3TlLwgOHIeq5rLUMQDkD5iOUJ+aM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CKpxh5v9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sP+hsZ48"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15E91F000E9;
-	Tue, 16 Jun 2026 15:42:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CKpxh5v9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84EB1F000E9;
+	Tue, 16 Jun 2026 15:42:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624565;
-	bh=0S2LuaTtGIUHArMTdc1clrys25xiJOlxFMVcWnMPnc4=;
+	s=korg; t=1781624572;
+	bh=t1jOzOyWk/KMNP7tjR3e2aUUIII4F/K65YpqZQwUTdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sP+hsZ48QlrFyAfwz6Q/Olk7oBCX1igySZH0jcrJNMMLfokRjj/mf++cgQhu/1Gwy
-	 dTr/zoqAY9UUxy1DdBznrYTFoRF03QxsHEU2njtwDhRp6oRgNDexLOQ5HIKI9COs22
-	 vNLmkiflAYz3JXzPdNrlrebb/m9Jic/yr2ThcL9s=
+	b=CKpxh5v97txttGaQwy/g8Gl7kizXuXStoplEyOxulFwGhOYFES5L2khZTymPmhyNB
+	 Ic4OQ+evkJezGSvGhKC18V6Z76FZfkr4SDzAsBn9/WTkdExJxZYdYQnKrSht6pQEdP
+	 +GrdRNTtGUWVuSqkRK5JaW3aN/WJrEW3rvZbY71E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.0 359/378] fs/fcntl: fix SOFTIRQ-unsafe lock order in fasync signaling
-Date: Tue, 16 Jun 2026 20:29:50 +0530
-Message-ID: <20260616145129.041037462@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 7.0 360/378] driver core: faux: fix root device registration
+Date: Tue, 16 Jun 2026 20:29:51 +0530
+Message-ID: <20260616145129.094215520@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,91 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: Johan Hovold <johan@kernel.org>
 
-commit 00633c4683828acd5256fa8d5163f440d74bbe71 upstream.
+commit 580a795105dae2ef1622df72a27a8fb0605e2f6b upstream.
 
-A SOFTIRQ-safe to SOFTIRQ-unsafe lock order deadlock can occur in
-send_sigio() and send_sigurg() when a process group receives a signal.
+A recent change made the faux bus root device be allocated dynamically
+but failed to provide a release function to free the memory when the
+last reference is dropped (on theoretical failure to register the device
+or bus).
 
-When FASYNC is configured for a process group (PIDTYPE_PGID), both
-functions use read_lock(&tasklist_lock) to traverse the task list.
-However, they are frequently called from softirq context:
-- send_sigio() via input_inject_event -> kill_fasync
-- send_sigurg() via tcp_check_urg -> sk_send_sigurg (NET_RX_SOFTIRQ)
+Fix this by using root_device_register() instead of open coding.
 
-The deadlock is caused by the rwlock writer fairness mechanism:
-1. CPU 0 (process context) holds read_lock(&tasklist_lock) in do_wait().
-2. CPU 1 (process context) attempts write_lock(&tasklist_lock) in
-   fork() or exit() and spins, which blocks all new readers.
-3. CPU 0 is interrupted by a softirq (e.g., TCP URG packet reception).
-4. The softirq calls send_sigurg() and attempts to acquire
-   read_lock(&tasklist_lock), deadlocking because CPU 1 is waiting.
+Also add the missing sanity check when registering faux devices to avoid
+use-after-free if the bus failed to register (which would previously
+have triggered a bunch of use-after-free warnings).
 
-Since PID hashing and do_each_pid_task() traversals are already
-RCU-protected, the read_lock on tasklist_lock is no longer strictly
-required for safe traversal. Fix this by replacing tasklist_lock with
-rcu_read_lock(), aligning the process group signaling path with the
-single-PID path. This also mitigates a potential remote denial of
-service vector via TCP URG packets.
-
-Lockdep splat:
-=====================================================
-WARNING: SOFTIRQ-safe -> SOFTIRQ-unsafe lock order detected
-[...]
-Chain exists of:
-  &dev->event_lock --> &f_owner->lock --> tasklist_lock
-
-Possible interrupt unsafe locking scenario:
-       CPU0                    CPU1
-       ----                    ----
-  lock(tasklist_lock);
-                           local_irq_disable();
-                           lock(&dev->event_lock);
-                           lock(&f_owner->lock);
-  <Interrupt>
-    lock(&dev->event_lock);
-
-*** DEADLOCK ***
-
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20260523135210.590928-1-w15303746062@163.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 61b76d07d2b4 ("driver core: faux: stop using static struct device")
+Cc: stable@vger.kernel.org	# 7.0
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260424153127.2647405-2-johan@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fcntl.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/base/faux.c |   22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
---- a/fs/fcntl.c
-+++ b/fs/fcntl.c
-@@ -929,11 +929,11 @@ void send_sigio(struct fown_struct *fown
- 			send_sigio_to_task(p, fown, fd, band, type);
- 		rcu_read_unlock();
- 	} else {
--		read_lock(&tasklist_lock);
-+		rcu_read_lock();
- 		do_each_pid_task(pid, type, p) {
- 			send_sigio_to_task(p, fown, fd, band, type);
- 		} while_each_pid_task(pid, type, p);
--		read_unlock(&tasklist_lock);
-+		rcu_read_unlock();
- 	}
-  out_unlock_fown:
- 	read_unlock_irqrestore(&fown->lock, flags);
-@@ -975,11 +975,11 @@ int send_sigurg(struct file *file)
- 			send_sigurg_to_task(p, fown, type);
- 		rcu_read_unlock();
- 	} else {
--		read_lock(&tasklist_lock);
-+		rcu_read_lock();
- 		do_each_pid_task(pid, type, p) {
- 			send_sigurg_to_task(p, fown, type);
- 		} while_each_pid_task(pid, type, p);
--		read_unlock(&tasklist_lock);
-+		rcu_read_unlock();
- 	}
-  out_unlock_fown:
- 	read_unlock_irqrestore(&fown->lock, flags);
+--- a/drivers/base/faux.c
++++ b/drivers/base/faux.c
+@@ -133,6 +133,9 @@ struct faux_device *faux_device_create_w
+ 	struct device *dev;
+ 	int ret;
+ 
++	if (!faux_bus_root)
++		return NULL;
++
+ 	faux_obj = kzalloc_obj(*faux_obj);
+ 	if (!faux_obj)
+ 		return NULL;
+@@ -232,19 +235,12 @@ EXPORT_SYMBOL_GPL(faux_device_destroy);
+ 
+ int __init faux_bus_init(void)
+ {
++	struct device *root;
+ 	int ret;
+ 
+-	faux_bus_root = kzalloc_obj(*faux_bus_root);
+-	if (!faux_bus_root)
+-		return -ENOMEM;
+-
+-	dev_set_name(faux_bus_root, "faux");
+-
+-	ret = device_register(faux_bus_root);
+-	if (ret) {
+-		put_device(faux_bus_root);
+-		return ret;
+-	}
++	root = root_device_register("faux");
++	if (IS_ERR(root))
++		return PTR_ERR(root);
+ 
+ 	ret = bus_register(&faux_bus_type);
+ 	if (ret)
+@@ -254,12 +250,14 @@ int __init faux_bus_init(void)
+ 	if (ret)
+ 		goto error_driver;
+ 
++	faux_bus_root = root;
++
+ 	return ret;
+ 
+ error_driver:
+ 	bus_unregister(&faux_bus_type);
+ 
+ error_bus:
+-	device_unregister(faux_bus_root);
++	root_device_unregister(root);
+ 	return ret;
+ }
 
 
