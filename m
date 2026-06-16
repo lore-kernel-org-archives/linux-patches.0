@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBBE3AA4E1;
-	Tue, 16 Jun 2026 15:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F4444103A;
+	Tue, 16 Jun 2026 15:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623751; cv=none; b=t4mWCePayRmoUZWQct0WAqyTnI7B7f3sRbxm0YCo9k5qXAlj2PRKf8R4BS7SdFwMt+C4ph8atBttUNanyDS3sWDTx3UNrlr1JUcwGpQqA85d1WbtItKBnKMvDhMWj3eVZXxAgI9ovN4wdCTmf693dfhELDpiSCqB4/IJ7XWtySE=
+	t=1781623758; cv=none; b=PhmBBhN/+sXCReoWVxnOZ/+XDTNLbs+KQz72RF3kHhu9y/WJosMKs6ypEiU29Fv0MUaW3cN/SUf3ZbmMDdHwWeO41+JW8/sSp/F0SEH48/x7A0Xregw2EMbq2esjLiO4flUJQmUq9821q65Ia+uhnvOanoZNXKHVSmbUSUMzTdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623751; c=relaxed/simple;
-	bh=+SvABPlDMjgTZpxtBqqY04tZYVH+5Sj9LartFr6Pw94=;
+	s=arc-20240116; t=1781623758; c=relaxed/simple;
+	bh=GUpfUvO5LsQfv9EG0sIzDLdejwm+aXQ13+S6lOr6eDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dOTdf/o4v7ooYhpkriWjFZR1nFYGuHPCGUwTzsdcGvKyvI6dxviUYykYlRED/Qeyo5LPABFJBml5FszxuYqxqOPfqKOkcj9CRlvy44zKNoK4wISm7t8wCnM2paE3bXx0astusg7zziMV7pucTvUA7K1IYYES4u9SeadEyDJ3jMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAYQimlH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MNpgslzZ1ke7doXeP/vLi+lWGi5DggyxAdUJZ/jKMpeN8/qk/dv5GbHgnAyeA0QJ7GsVPxJAUiLQKLOwID/8c8iEGVmzEIt1CAxddW1mq7IU2w3a/uHIm8Bo6jLdZy6olbh/1JuB/aEoQ37Nd6sBAvMRouwlUAfiHJMtDxzpAsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JU9hSklI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAYQimlH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C61C1F000E9;
-	Tue, 16 Jun 2026 15:29:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JU9hSklI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A501F000E9;
+	Tue, 16 Jun 2026 15:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623749;
-	bh=cT8+FMODqvfyGODMQ79UIZ/IhAlPG6yYZV/AFi4ZXjw=;
+	s=korg; t=1781623754;
+	bh=MTdeduRDRurRS3WbxtbTRauqygahWluP9taFt8zOnVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bAYQimlHjaHKawL/AVc+yO0RRPSQT5sFTXc1jH0UJ47mqMWufTyFgkf6B+G6KXv07
-	 7kLGnSMIYDdK1AmWTjQ8/mrH57GvOSDJkwDwwcz+tDaVUb2CLJ29yjTRGuyrz+ZQ8B
-	 ibaWnwjohMJ08bGLPKjOChdClua2WmvGruQ30EHI=
+	b=JU9hSklIJleEcjb6nj0+eRMyPtCqLMCEBZka2+LKuo0exLtEJzQR3pqA3QsKLsNsb
+	 APeYal/GrhlVEwbgdneui4pSZ5A8tszcrD8d6R2X1gWMuE7KT1/chTy/vX9AdpGcPy
+	 dFnWwsSGFAvY825TMMNQZnzkdTEPgL8g2Y0cwr7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Leontev <leontyevantony@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.0 201/378] hv_netvsc: use kmap_local_page in netvsc_copy_to_send_buf
-Date: Tue, 16 Jun 2026 20:27:12 +0530
-Message-ID: <20260616145120.970552178@linuxfoundation.org>
+	Judith Mendez <jm@ti.com>,
+	Linus Walleij <linusw@kernel.org>
+Subject: [PATCH 7.0 202/378] pinctrl: mcp23s08: Initialize mcp->dev and mcp->addr before regmap init
+Date: Tue, 16 Jun 2026 20:27:13 +0530
+Message-ID: <20260616145121.020553016@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -50,87 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Leontev <leontyevantony@gmail.com>
+From: Judith Mendez <jm@ti.com>
 
-commit 004e9ecfe6c5384f9e0b2f6f6389d42ec22789af upstream.
+commit 8473c3a197b57ff01396f7a2ec6ddf65383820d4 upstream.
 
-netvsc_copy_to_send_buf() copies page buffer entries into the VMBus
-send buffer using phys_to_virt() on the entry PFN. Entries for the
-RNDIS header and the skb linear data come from kmalloc'd memory and
-are always in the kernel direct map, but entries for skb fragments
-reference page cache or user pages, which on 32-bit x86 with
-CONFIG_HIGHMEM=y can live above the LOWMEM boundary. For such a page
-phys_to_virt() returns an address outside the direct map and the
-subsequent memcpy() faults on the transmit softirq path, which is
-fatal.
+Regmap initialization triggers regcache_maple_populate() which attempts
+SPI read to populate cache. SPI read requires mcp->dev and mcp->addr to
+be set, without them, NULL pointer dereference occurs during probe.
 
-Map the pages with kmap_local_page() instead, handling two properties
-of the page buffer entries:
+Move initialization before mcp23s08_spi_regmap_init() call.
 
- - pb[i].pfn is a Hyper-V PFN at HV_HYP_PAGE_SIZE (4K) granularity,
-   not a native PFN. Reconstruct the physical address first and derive
-   the native page from it, so the mapping stays correct where
-   PAGE_SIZE > HV_HYP_PAGE_SIZE (e.g. arm64 with 64K pages).
-
- - Since commit 41a6328b2c55 ("hv_netvsc: Preserve contiguous PFN
-   grouping in the page buffer array"), an entry describes a full
-   physically contiguous fragment and pb[i].len can exceed PAGE_SIZE,
-   while kmap_local_page() maps a single page. Copy page by page,
-   splitting at native page boundaries.
-
-The copy path only handles packets smaller than the send section size
-(6144 bytes by default); larger packets take the cp_partial path where
-only the RNDIS header is copied. So entries here are bounded by the
-section size and a copy is split at most once on 4K-page systems. On
-!CONFIG_HIGHMEM configs kmap_local_page() folds to page_address() and
-no mapping work is added.
-
-Fixes: c25aaf814a63 ("hyperv: Enable sendbuf mechanism on the send path")
 Cc: stable@vger.kernel.org
-Signed-off-by: Anton Leontev <leontyevantony@gmail.com>
-Link: https://patch.msgid.link/20260604165938.32033-1-leontyevantony@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f9f4fda15e72 ("pinctrl: mcp23s08: init reg_defaults from HW at probe and switch cache type")
+Signed-off-by: Judith Mendez <jm@ti.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/hyperv/netvsc.c |   19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/pinctrl/pinctrl-mcp23s08_spi.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/net/hyperv/netvsc.c
-+++ b/drivers/net/hyperv/netvsc.c
-@@ -12,6 +12,7 @@
- #include <linux/sched.h>
- #include <linux/wait.h>
- #include <linux/mm.h>
-+#include <linux/highmem.h>
- #include <linux/delay.h>
- #include <linux/io.h>
- #include <linux/slab.h>
-@@ -965,12 +966,22 @@ static void netvsc_copy_to_send_buf(stru
- 	}
+--- a/drivers/pinctrl/pinctrl-mcp23s08_spi.c
++++ b/drivers/pinctrl/pinctrl-mcp23s08_spi.c
+@@ -10,6 +10,7 @@
+ #include "pinctrl-mcp23s08.h"
  
- 	for (i = 0; i < page_count; i++) {
--		char *src = phys_to_virt(pb[i].pfn << HV_HYP_PAGE_SHIFT);
--		u32 offset = pb[i].offset;
-+		phys_addr_t paddr = (pb[i].pfn << HV_HYP_PAGE_SHIFT) +
-+				    pb[i].offset;
- 		u32 len = pb[i].len;
+ #define MCP_MAX_DEV_PER_CS	8
++#define MCP23S08_SPI_BASE	0x40
  
--		memcpy(dest, (src + offset), len);
--		dest += len;
-+		while (len) {
-+			struct page *page = phys_to_page(paddr);
-+			u32 off = offset_in_page(paddr);
-+			u32 chunk = min_t(u32, len, PAGE_SIZE - off);
-+			char *src = kmap_local_page(page);
-+
-+			memcpy(dest, src + off, chunk);
-+			kunmap_local(src);
-+			dest += chunk;
-+			paddr += chunk;
-+			len -= chunk;
-+		}
- 	}
+ /*
+  * A given spi_device can represent up to eight mcp23sxx chips
+@@ -173,6 +174,8 @@ static int mcp23s08_probe(struct spi_dev
+ 	for_each_set_bit(addr, &spi_present_mask, MCP_MAX_DEV_PER_CS) {
+ 		data->mcp[addr] = &data->chip[--chips];
+ 		data->mcp[addr]->irq = spi->irq;
++		data->mcp[addr]->dev = dev;
++		data->mcp[addr]->addr = MCP23S08_SPI_BASE | (addr << 1);
  
- 	if (padding)
+ 		ret = mcp23s08_spi_regmap_init(data->mcp[addr], dev, addr, info);
+ 		if (ret)
+@@ -184,7 +187,7 @@ static int mcp23s08_probe(struct spi_dev
+ 		if (!data->mcp[addr]->pinctrl_desc.name)
+ 			return -ENOMEM;
+ 
+-		ret = mcp23s08_probe_one(data->mcp[addr], dev, 0x40 | (addr << 1),
++		ret = mcp23s08_probe_one(data->mcp[addr], dev, MCP23S08_SPI_BASE | (addr << 1),
+ 					 info->type, -1);
+ 		if (ret < 0)
+ 			return ret;
 
 
