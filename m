@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D7B466B5E;
-	Tue, 16 Jun 2026 17:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9421477E36;
+	Tue, 16 Jun 2026 17:23:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630606; cv=none; b=CUSqt8VynBGT8+LxU409/mygvRFcKHaRrYiHC/b3eirXisnbBF8eA745VnxVvpHkCIqB+NIUwqiVCx4GRHrmGbC9HPXS1a/a7ksgmv5rIz6JEKJm99g23o5cyGdz4Hqae5XRiMdNg0pMN+dRnenVj/WhU8XGSSVxZBpA4z/ISEQ=
+	t=1781630610; cv=none; b=mVTfuT3ifOevKRBNBg2/KkYxgI3EN8lGTsq3ab04Bug5/YvyRShU4EmFhqnzq4adXLLP2p61I41x4fTWbw4ozQMD4FDstxsiRrYqspwTP4BZEaER1KURlCqsbCBz8eProzIiAmoOQG3vmMVRmS/e76B89kdLIYD6pNJOlodfymI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630606; c=relaxed/simple;
-	bh=om5LhKJb8zlGSHfMCh+BFSMlmpjzv0KrNeNsYbls8So=;
+	s=arc-20240116; t=1781630610; c=relaxed/simple;
+	bh=fDbT9fhoekx/XHbsN/1Ak6Ql8ACzrtTHQvUbrW++2KU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+MKKc1oCu3JGE7KPyyY6eZbiAurGHxbggl2NBzLnh/FXn+og4JwCc9Hism10B69C9cPSMADDFZEQFMgCU9hU2qhmxrWnBzkdgNO7opnIVp6mTKA+u54OtptAtuj/9Ecu2DGZl3thFVq8oB7g1xGjGUWjiR5sEeBDyv8haAEPB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EPi0+k9d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jHyQMjBOh4WclrGjvm35HSUhwPyX02aXPyvXvlE2/WpvH1GofkHgs/KRO0rZS4xfkBWJ4Z0e30BQbCrkqNrNDNkfkoMfUEd8tHHWQwCLauvLvjdkPaLsftm/q2d1ZeP66Dkt8bHZ2czEQH98xmOn+JsCX7qf9iX8gLCcTGoO54k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1HauCdsr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EPi0+k9d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26C4A1F000E9;
-	Tue, 16 Jun 2026 17:23:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1HauCdsr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82321F000E9;
+	Tue, 16 Jun 2026 17:23:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630605;
-	bh=pfCFUYea2dGGzkHE/jOiKTh62vG8DKV3Nm3Q9GU5pVI=;
+	s=korg; t=1781630609;
+	bh=zlO0A9CyFOWpbyAEq1GoNrhfk7s2kkLV7lxIeCWbP0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EPi0+k9dIAYM98XHxqoRTPaZm7/VZNoa7Oj0wD7oE7GZYn2Ih8pW6BrcHwoYUP8iI
-	 nSbo1lmUgcYsi5sGMSfmkCfg4YKanqYmPGzW2Xd43eo6l7QpyGd4Gf0TmJ523pQeZ5
-	 0uAREsLpxwkhGaNWUQMAJc8v6Qak1phabkMxihGY=
+	b=1HauCdsrEgH5bmHCzNeYYrxSDP09AEQX2XnTdY8qb8TlZqf57phpTRgZ8bZJV2IvZ
+	 RT2QLi5djy/bnJS3krnFmLS7VQ4/xWIOUstwhKfwrxGUJEzqBTDQqunCkjt5RWIwIH
+	 Q2E9HAuPkRnxa9JpN5dUS1mHK+YzHAiooc0K68n0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Stanislav Fomichev <sdf@google.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Paul Chaignon <paul.chaignon@gmail.com>,
 	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 060/522] selftests/bpf: Update bpf_clone_redirect expected return code
-Date: Tue, 16 Jun 2026 20:23:27 +0530
-Message-ID: <20260616145128.599516752@linuxfoundation.org>
+Subject: [PATCH 6.1 061/522] selftests/bpf: enhance align selftests expected log matching
+Date: Tue, 16 Jun 2026 20:23:28 +0530
+Message-ID: <20260616145128.646492345@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,88 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislav Fomichev <sdf@google.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit b772b70b69046c5b76e3f2eda680f692dee5e6d5 ]
+[ Upstream commit 6f876e75d316a75957f3d43c3a8c2a6fe9bc18b2 ]
 
-Commit 151e887d8ff9 ("veth: Fixing transmit return status for dropped
-packets") started propagating proper NET_XMIT_DROP error to the caller
-which means it's now possible to get positive error code when calling
-bpf_clone_redirect() in this particular test. Update the test to reflect
-that.
+Allow to search for expected register state in all the verifier log
+output that's related to specified instruction number.
 
-Reported-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230911194731.286342-2-sdf@google.com
-[ Note: Commit 151e887d8ff9 was backported to 6.1 so this fix should be
-  as well. ]
+See added comment for an example of possible situation that is happening
+due to a simple enhancement done in the next patch, which fixes handling
+of env->test_state_freq flag in state checkpointing logic.
+
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20230302235015.2044271-4-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+[ Note: Backport needed to fix the align selftest where some of the
+  expected log messages can't be found. This is happening because
+  commit 1a8a315f008a ("bpf: Ensure proper register state printing for
+  cond jumps") was also backported to 6.1. ]
 Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
 Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/empty_skb.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/align.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/empty_skb.c b/tools/testing/selftests/bpf/prog_tests/empty_skb.c
-index 0613f3bb8b5e4e..329e34e5226e3a 100644
---- a/tools/testing/selftests/bpf/prog_tests/empty_skb.c
-+++ b/tools/testing/selftests/bpf/prog_tests/empty_skb.c
-@@ -29,6 +29,7 @@ void serial_test_empty_skb(void)
- 		int *ifindex;
- 		int err;
- 		int ret;
-+		int lwt_egress_ret; /* expected retval at lwt/egress */
- 		bool success_on_tc;
- 	} tests[] = {
- 		/* Empty packets are always rejected. */
-@@ -62,6 +63,7 @@ void serial_test_empty_skb(void)
- 			.data_size_in = sizeof(eth_hlen),
- 			.ifindex = &veth_ifindex,
- 			.ret = -ERANGE,
-+			.lwt_egress_ret = -ERANGE,
- 			.success_on_tc = true,
- 		},
- 		{
-@@ -75,6 +77,7 @@ void serial_test_empty_skb(void)
- 			.data_size_in = sizeof(eth_hlen),
- 			.ifindex = &ipip_ifindex,
- 			.ret = -ERANGE,
-+			.lwt_egress_ret = -ERANGE,
- 		},
- 
- 		/* ETH_HLEN+1-sized packet should be redirected. */
-@@ -84,6 +87,7 @@ void serial_test_empty_skb(void)
- 			.data_in = eth_hlen_pp,
- 			.data_size_in = sizeof(eth_hlen_pp),
- 			.ifindex = &veth_ifindex,
-+			.lwt_egress_ret = 1, /* veth_xmit NET_XMIT_DROP */
- 		},
- 		{
- 			.msg = "ipip ETH_HLEN+1 packet ingress",
-@@ -113,8 +117,12 @@ void serial_test_empty_skb(void)
- 
- 	for (i = 0; i < ARRAY_SIZE(tests); i++) {
- 		bpf_object__for_each_program(prog, bpf_obj->obj) {
--			char buf[128];
-+			bool at_egress = strstr(bpf_program__name(prog), "egress") != NULL;
- 			bool at_tc = !strncmp(bpf_program__section_name(prog), "tc", 2);
-+			int expected_ret;
-+			char buf[128];
-+
-+			expected_ret = at_egress && !at_tc ? tests[i].lwt_egress_ret : tests[i].ret;
- 
- 			tattr.data_in = tests[i].data_in;
- 			tattr.data_size_in = tests[i].data_size_in;
-@@ -133,7 +141,7 @@ void serial_test_empty_skb(void)
- 			if (at_tc && tests[i].success_on_tc)
- 				ASSERT_GE(bpf_obj->bss->ret, 0, buf);
- 			else
--				ASSERT_EQ(bpf_obj->bss->ret, tests[i].ret, buf);
-+				ASSERT_EQ(bpf_obj->bss->ret, expected_ret, buf);
- 		}
- 	}
- 
+diff --git a/tools/testing/selftests/bpf/prog_tests/align.c b/tools/testing/selftests/bpf/prog_tests/align.c
+index 8baebb41541dc7..b9277059256300 100644
+--- a/tools/testing/selftests/bpf/prog_tests/align.c
++++ b/tools/testing/selftests/bpf/prog_tests/align.c
+@@ -660,16 +660,22 @@ static int do_test_single(struct bpf_align_test *test)
+ 			 * func#0 @0
+ 			 * 0: R1=ctx(off=0,imm=0) R10=fp0
+ 			 * 0: (b7) r3 = 2                 ; R3_w=2
++			 *
++			 * Sometimes it's actually two lines below, e.g. when
++			 * searching for "6: R3_w=scalar(umax=255,var_off=(0x0; 0xff))":
++			 *   from 4 to 6: R0_w=pkt(off=8,r=8,imm=0) R1=ctx(off=0,imm=0) R2_w=pkt(off=0,r=8,imm=0) R3_w=pkt_end(off=0,imm=0) R10=fp0
++			 *   6: R0_w=pkt(off=8,r=8,imm=0) R1=ctx(off=0,imm=0) R2_w=pkt(off=0,r=8,imm=0) R3_w=pkt_end(off=0,imm=0) R10=fp0
++			 *   6: (71) r3 = *(u8 *)(r2 +0)           ; R2_w=pkt(off=0,r=8,imm=0) R3_w=scalar(umax=255,var_off=(0x0; 0xff))
+ 			 */
+-			if (!strstr(line_ptr, m.match)) {
++			while (!strstr(line_ptr, m.match)) {
+ 				cur_line = -1;
+ 				line_ptr = strtok(NULL, "\n");
+-				sscanf(line_ptr, "%u: ", &cur_line);
++				sscanf(line_ptr ?: "", "%u: ", &cur_line);
++				if (!line_ptr || cur_line != m.line)
++					break;
+ 			}
+-			if (cur_line != m.line || !line_ptr ||
+-			    !strstr(line_ptr, m.match)) {
+-				printf("Failed to find match %u: %s\n",
+-				       m.line, m.match);
++			if (cur_line != m.line || !line_ptr || !strstr(line_ptr, m.match)) {
++				printf("Failed to find match %u: %s\n", m.line, m.match);
+ 				ret = 1;
+ 				printf("%s", bpf_vlog);
+ 				break;
 -- 
 2.53.0
 
