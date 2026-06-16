@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D861138F930;
-	Tue, 16 Jun 2026 17:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8317F43E490;
+	Tue, 16 Jun 2026 17:10:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629852; cv=none; b=SuuUriA42a4oQqZ7mlIPkhdmtGDnFYbiNU3ivuZ9IU3DucEgqhjKtVjoOqpaFyAK/UyWKLV4bBjRD3RCNeh5P/EdavtJwmafL2JkEyf5SP97sIZKCzotn3kFQonWH1D17NfpycUbuqFanagFfQHmPrGIqt7ejkhQSNBK/nq1TkM=
+	t=1781629858; cv=none; b=In4I2roQmGpUrxcdLDjp1RNm4ws85slJ+TM3AA61HhdParUchkfzAwQbYPmUd9/dQD4/58TiGNp5d8kOL5w8yF+27nAY/dq2jSovfDAC7ZswjPkVSnJ76g3qw2SP+lP/pGYzcxDWcQ+16OB1QqSIqW1FmxX04GM/Ig1K5ZPDMds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629852; c=relaxed/simple;
-	bh=pxDFPK/LuuCWLJUCKhROX9QupZho5jbq4MY/BHwJWzQ=;
+	s=arc-20240116; t=1781629858; c=relaxed/simple;
+	bh=/j4TshATX2sy/4sBNqxXpFjbFXvEAnSIzfK9zdyR7+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CeHYVshfAnnRvLTaYrwpLFxpt7R4nB2vgJeAn8ZcNn1RJ66A7aSKqh/+NsQiW3L1AgUZOaSUcyQB4GZdvnaRTmyAnkY0stf9kFgaswqSWKX2xgE/k1qd3rV4zYJOPl84TLszqomOAou6WNrXThIMIeoDOWkong0/m1wypZkSPsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VnDnVEjR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c5J4inhietF7KzHUBQaRI2jlCU07de7ivIZ10SxU8iVsqVIdYO8/YpVWIRob+oF/KYQ5Df6HPtV4W13P8oPJISTsn1YNYq3A+qsBuLKhAaLqJuR5auJJ/nB+l8cjeNrAo/3In3UVUF0xRmzGT3dM8ToPsD2upO3CY+oUdhrfPL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSxAsKlL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VnDnVEjR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D9D1F000E9;
-	Tue, 16 Jun 2026 17:10:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSxAsKlL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3131F000E9;
+	Tue, 16 Jun 2026 17:10:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629851;
-	bh=IoVgoiKC4sRfHqoT0OAK7Gu6fSthWU4xs5MCOGQNne0=;
+	s=korg; t=1781629857;
+	bh=Rv8Gc3sq9tB3f+6nWv8EzXKyJvDaMnf8JZg54he3zKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VnDnVEjRXOWwwk3wdO4FRhrP+fFez3d//OxzXnK8LZVwK6sNbUGrHcrNfZAFC+UKK
-	 /OIzGVd9kp+1eKzwxQrC2e+w4TsGRV3yXxvHnhqHiFiAI1Xa5lHecsQBUtQFzqHfCm
-	 cgT29yHiQGaE4tfFdIzLYHLyQ9oHS34liBXiWHXc=
+	b=sSxAsKlLqc7XVc97KKXSASHfAa4y0z2/l92qUP+sUypRrgOWN6J2XplwjRV5yJwNn
+	 zT7caQhPbxvKBrzuvAE/Dd784aKmmsMt3AB5BgFWDDBCz0KgZQ784qzA+EUIkx/mJ/
+	 AgnY1BEAbl9ihlWPnnvjnhchtODsKYSvNzLRWFJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 364/452] drm/amd/display: Clamp HDMI HDCP2 rx_id_list read to buffer size
-Date: Tue, 16 Jun 2026 20:29:51 +0530
-Message-ID: <20260616145136.206279971@linuxfoundation.org>
+	ZhaoJinming <zhaojinming@uniontech.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 338/452] net: bonding: fix NULL pointer dereference in bond_do_ioctl()
+Date: Tue, 16 Jun 2026 20:29:25 +0530
+Message-ID: <20260616145135.073151250@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -53,47 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: ZhaoJinming <zhaojinming@uniontech.com>
 
-commit f0f3981c43b32cadfe373d636d9e9ca522bb3702 upstream.
+commit a764b0e8317a863006e05732e1aefe821b9d8c2d upstream.
 
-[Why & How]
-During HDCP 2.x repeater authentication over HDMI, the driver reads the
-sink's RxStatus register and extracts a 10-bit message size field (max
-value 1023). This value is used as the read length for the ReceiverID
-list without being clamped to the size of the destination buffer
-rx_id_list[177]. A malicious HDMI repeater could advertise a message
-size larger than the buffer, causing an out-of-bounds write during the
-I2C read.
+In bond_do_ioctl(), slave_dev is obtained via __dev_get_by_name() which
+can return NULL if the requested interface name does not exist. However,
+the subsequent slave_dbg() call is placed before the NULL check:
 
-Clamp the read length in mod_hdcp_read_rx_id_list() to the size of the
-rx_id_list buffer, matching the approach already used in the DP branch.
+    slave_dev = __dev_get_by_name(net, ifr->ifr_slave);
+    slave_dbg(bond_dev, slave_dev, "slave_dev=%p:\n", slave_dev); //here
+    if (!slave_dev)
+        return -ENODEV;
 
-Fixes: eff682f83c9c ("drm/amd/display: Add DDC handles for HDCP2.2")
-Assisted-by: Copilot:claude-opus-4.6
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 229212219e4247d9486f8ba41ef087358490be09)
-Cc: stable@vger.kernel.org
+The slave_dbg() macro expands to netdev_dbg(bond_dev, "(slave %s): " fmt,
+(slave_dev)->name, ...) which unconditionally dereferences slave_dev->name
+before the NULL check is performed. This results in a NULL pointer
+dereference kernel oops when a user calls bonding ioctl (e.g.
+SIOCBONDENSLAVE, SIOCBONDRELEASE, etc.) with a non-existent slave
+interface name.
+
+This is reachable from userspace via the bonding ioctl interface with
+CAP_NET_ADMIN capability, making it a potential local denial-of-service
+vector.
+
+Fix by moving the slave_dbg() call after the NULL check.
+
+Fixes: e2a7420df2e0 ("bonding/main: convert to using slave printk macros")
+Cc: stable@vger.kernel.org # v5.2+
+Signed-off-by: ZhaoJinming <zhaojinming@uniontech.com>
+Link: https://patch.msgid.link/20260601085649.4029067-1-zhaojinming@uniontech.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/bonding/bond_main.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c
-+++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c
-@@ -533,7 +533,8 @@ enum mod_hdcp_status mod_hdcp_read_rx_id
- 	} else {
- 		status = read(hdcp, MOD_HDCP_MESSAGE_ID_READ_REPEATER_AUTH_SEND_RECEIVERID_LIST,
- 				hdcp->auth.msg.hdcp2.rx_id_list,
--				hdcp->auth.msg.hdcp2.rx_id_list_size);
-+				MIN(hdcp->auth.msg.hdcp2.rx_id_list_size,
-+				    sizeof(hdcp->auth.msg.hdcp2.rx_id_list)));
- 	}
- 	return status;
- }
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -4640,11 +4640,11 @@ static int bond_do_ioctl(struct net_devi
+ 
+ 	slave_dev = __dev_get_by_name(net, ifr->ifr_slave);
+ 
+-	slave_dbg(bond_dev, slave_dev, "slave_dev=%p:\n", slave_dev);
+-
+ 	if (!slave_dev)
+ 		return -ENODEV;
+ 
++	slave_dbg(bond_dev, slave_dev, "slave_dev=%p:\n", slave_dev);
++
+ 	switch (cmd) {
+ 	case SIOCBONDENSLAVE:
+ 		res = bond_enslave(bond_dev, slave_dev, NULL);
 
 
