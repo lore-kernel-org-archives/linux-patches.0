@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7350D4657F8;
-	Tue, 16 Jun 2026 17:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD664657F8;
+	Tue, 16 Jun 2026 17:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630970; cv=none; b=pcB8/uL5Zjyn6nO7iqPZJj5TSin2sU38n/GQ9MZLpuvlPUQzRyonxX3OqY01yUmNrunlA9QAAJNSDkEjq0yOJNs1JKjNY5IJaXIzNJK7vYOCb9x6M6K1BkFuEcMaSOt+6xCZ1BgNx8VrEN1byfdrE4PJ+mQIOQEye+Ef2rX7Um8=
+	t=1781630975; cv=none; b=NSmkLPVjbKXpLUyD63wlp0Mn8eSTL84Ea6yo9iTwCiD2y0fXQHZwNVKs5TCRCq0dG+91jRGjnVIDz8SLwi8hkzsX5osVS4bABJR9u+MmA/kUG455b4HH+Xy63Pymz0LiTwKgOK2olnh0v/e2b2aehmlaxzCCQZB1RUFQLiEKM1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630970; c=relaxed/simple;
-	bh=uyNrQXdN6B00EApAajn8e0dnERtlOHEzWo2L6072tNo=;
+	s=arc-20240116; t=1781630975; c=relaxed/simple;
+	bh=zeXoEKAA9I4bO1GXv3Xhp6sbO4iRPvGBr6qkH5bGsCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eD9yVk7tGSCEzMAUS62uCfxlkBlRMsLIfKn/HCAXEmj70sFNf492LomzYyhPTBW9XQxnYGBeSofnxqGgLJxPUxiRU8WKdmsFgYzFnsAwx8RYR1mBmOBISDXfsR/pdPWUyTNlGInf629wx/fB+2fFIAi1lNfADK26MSuHneORAAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBMFiD8B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hOeI3Tk+6y4hWz9L9AprHLctyhhwjecwhyInzQFLMyBBDcqyjCk18ZqVTNSPoJ0Dx7g8DLYehAMhaWXE8vHZDDAmmwu42i0XZm3UCIQTi05vKFhYe72a5nBxtrREsMNvQD1usQ4php04LTFpu/99GE87DFX1TPuSiOoYbIeMC/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FICIW+4v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBMFiD8B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749621F000E9;
-	Tue, 16 Jun 2026 17:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FICIW+4v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 239B31F000E9;
+	Tue, 16 Jun 2026 17:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630969;
-	bh=FUeP3s13XplMMpr0evy1HqdZX7352MVaOvwVoWW3Lx4=;
+	s=korg; t=1781630974;
+	bh=+dqpIIkoJvQDiRQvi83PbGRgpCEiXshocWaFI06ClwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eBMFiD8BTrb2k55bta8Yx1ecVHuNmX9Xl6IgFyhWezhWFGRx5CCk2rT1h6NGW+6c5
-	 7QRNN9i0+h+A12gHjufloHSXHGDa8fgVc3GW0atRDdXEa8yOd7iNsJVqKfOpYucdeJ
-	 gEl5vYdfFkS0ZUFpP8s9fEWlsZVd16E/KpI+/3v4=
+	b=FICIW+4va2iIrf7GBiqeA3LHx2P2ASJNJlHFmrciWB2CKtKmKsnx50qWZYN+FSiVf
+	 LuqnZvtOdeVTKmUgJEeMRSEdQRGG+SuuUj2ofb7gEpMBO3Qz7UBThm0a2+6zq4dEKz
+	 zbSszHs0s63s5ALMjbQjvLVyXu8qTacvZiao1E2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Ashutosh Desai <ashutoshdesai993@gmail.com>,
-	David Heidelberg <david@ixit.cz>
-Subject: [PATCH 6.1 130/522] nfc: hci: fix out-of-bounds read in HCP header parsing
-Date: Tue, 16 Jun 2026 20:24:37 +0530
-Message-ID: <20260616145132.184495988@linuxfoundation.org>
+	Maoyi Xie <maoyi.xie@ntu.edu.sg>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 6.1 131/522] xfrm: route MIGRATE notifications to callers netns
+Date: Tue, 16 Jun 2026 20:24:38 +0530
+Message-ID: <20260616145132.231717353@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,89 +50,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashutosh Desai <ashutoshdesai993@gmail.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit f040e590c035bfd9553fe79ee9585caf1b14d67b upstream.
+commit 7e2a4f7ca0952820731ef7bdadfc9a9e9d3571b4 upstream.
 
-Both nfc_hci_recv_from_llc() and nci_hci_data_received_cb() read
-packet->header from skb->data at function entry without first checking
-that the buffer holds at least one byte. A malicious NFC peer can send
-a 0-byte HCP frame that passes through the SHDLC layer and reaches
-these functions, causing an out-of-bounds heap read of packet->header.
-The same 0-byte frame, if queued as a non-final fragment, also causes
-the reassembly loop to underflow msg_len to UINT_MAX, triggering
-skb_over_panic() when the reassembled skb is written.
+xfrm_send_migrate() in net/xfrm/xfrm_user.c and pfkey_send_migrate()
+in net/key/af_key.c both hardcode &init_net for the multicast that
+announces a successful XFRM_MSG_MIGRATE / SADB_X_MIGRATE.
 
-Fix this by adding a pskb_may_pull() check at the entry of each
-function before packet->header is first accessed. The existing
-pskb_may_pull() checks before the reassembled hcp_skb is cast to
-struct hcp_packet remain in place to guard the 2-byte HCP message
-header.
+XFRM_MSG_MIGRATE arrives on a per-netns NETLINK_XFRM socket, and the
+rest of the xfrm/af_key netlink path was made netns-aware in 2008.
+The other 14 multicast paths in xfrm_user.c route their event using
+xs_net(x), xp_net(xp) or sock_net(skb->sk); only the migrate path
+was missed.
 
-Fixes: 8b8d2e08bf0d ("NFC: HCI support")
-Fixes: 11f54f228643 ("NFC: nci: Add HCI over NCI protocol support")
-Cc: stable@vger.kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
-Link: https://patch.msgid.link/20260505170712.96560-1-ashutoshdesai993@gmail.com
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Two consequences of the init_net hardcoding:
+
+  1. The notification (selector, old/new endpoint addresses, and the
+     km_address) is delivered to listeners on init_net's
+     XFRMNLGRP_MIGRATE / pfkey BROADCAST_ALL groups rather than on
+     the issuing netns. An IKE daemon running in init_net therefore
+     receives migration notifications originating from any other
+     netns on the host.
+
+  2. An IKE daemon running inside a non-init netns and subscribed
+     to its own XFRMNLGRP_MIGRATE / pfkey groups never receives the
+     notification of its own migration. IKEv2 MOBIKE / address-update
+     handling inside a netns is silently broken.
+
+Thread struct net through km_migrate() and the xfrm_mgr.migrate
+function pointer, drop the &init_net override in xfrm_send_migrate()
+and pfkey_send_migrate(), and pass the caller's net (already in
+scope in xfrm_migrate() via sock_net(skb->sk)) all the way down.
+struct xfrm_mgr is in-tree only and not exported as a stable API,
+so the function-pointer signature change is internal.
+
+pfkey_broadcast() is already netns-aware via net_generic(net,
+pfkey_net_id) since the pernet conversion. The five other
+pfkey_broadcast() callers in af_key.c already pass xs_net(x),
+sock_net(sk) or a per-netns net, so this only removes the
+&init_net outlier.
+
+Fixes: 5c79de6e79cd ("[XFRM]: User interface for handling XFRM_MSG_MIGRATE")
+Cc: stable@vger.kernel.org # v5.15+
+Signed-off-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/nfc/hci/core.c |   10 ++++++++++
- net/nfc/nci/hci.c  |   10 ++++++++++
- 2 files changed, 20 insertions(+)
+ include/net/xfrm.h     |    3 ++-
+ net/key/af_key.c       |    6 +++---
+ net/xfrm/xfrm_policy.c |    2 +-
+ net/xfrm/xfrm_state.c  |    4 ++--
+ net/xfrm/xfrm_user.c   |    5 ++---
+ 5 files changed, 10 insertions(+), 10 deletions(-)
 
---- a/net/nfc/hci/core.c
-+++ b/net/nfc/hci/core.c
-@@ -861,6 +861,11 @@ static void nfc_hci_recv_from_llc(struct
- 	struct sk_buff *frag_skb;
- 	int msg_len;
- 
-+	if (!pskb_may_pull(skb, NFC_HCI_HCP_PACKET_HEADER_LEN)) {
-+		kfree_skb(skb);
-+		return;
-+	}
-+
- 	packet = (struct hcp_packet *)skb->data;
- 	if ((packet->header & ~NFC_HCI_FRAGMENT) == 0) {
- 		skb_queue_tail(&hdev->rx_hcp_frags, skb);
-@@ -904,6 +909,11 @@ static void nfc_hci_recv_from_llc(struct
- 	 * unblock waiting cmd context. Otherwise, enqueue to dispatch
- 	 * in separate context where handler can also execute command.
- 	 */
-+	if (!pskb_may_pull(hcp_skb, NFC_HCI_HCP_HEADER_LEN)) {
-+		kfree_skb(hcp_skb);
-+		return;
-+	}
-+
- 	packet = (struct hcp_packet *)hcp_skb->data;
- 	type = HCP_MSG_GET_TYPE(packet->message.header);
- 	if (type == NFC_HCI_HCP_RESPONSE) {
---- a/net/nfc/nci/hci.c
-+++ b/net/nfc/nci/hci.c
-@@ -437,6 +437,11 @@ void nci_hci_data_received_cb(void *cont
- 		return;
+--- a/include/net/xfrm.h
++++ b/include/net/xfrm.h
+@@ -590,6 +590,7 @@ struct xfrm_mgr {
+ 					   const struct xfrm_migrate *m,
+ 					   int num_bundles,
+ 					   const struct xfrm_kmaddress *k,
++					   struct net *net,
+ 					   const struct xfrm_encap_tmpl *encap);
+ 	bool			(*is_alive)(const struct km_event *c);
+ };
+@@ -1692,7 +1693,7 @@ int xfrm_sk_policy_insert(struct sock *s
+ #ifdef CONFIG_XFRM_MIGRATE
+ int km_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
+ 	       const struct xfrm_migrate *m, int num_bundles,
+-	       const struct xfrm_kmaddress *k,
++	       const struct xfrm_kmaddress *k, struct net *net,
+ 	       const struct xfrm_encap_tmpl *encap);
+ struct xfrm_state *xfrm_migrate_state_find(struct xfrm_migrate *m, struct net *net,
+ 						u32 if_id);
+--- a/net/key/af_key.c
++++ b/net/key/af_key.c
+@@ -3548,7 +3548,7 @@ static int set_ipsecrequest(struct sk_bu
+ #ifdef CONFIG_NET_KEY_MIGRATE
+ static int pfkey_send_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
+ 			      const struct xfrm_migrate *m, int num_bundles,
+-			      const struct xfrm_kmaddress *k,
++			      const struct xfrm_kmaddress *k, struct net *net,
+ 			      const struct xfrm_encap_tmpl *encap)
+ {
+ 	int i;
+@@ -3653,7 +3653,7 @@ static int pfkey_send_migrate(const stru
  	}
  
-+	if (!pskb_may_pull(skb, NCI_HCI_HCP_PACKET_HEADER_LEN)) {
-+		kfree_skb(skb);
-+		return;
-+	}
-+
- 	packet = (struct nci_hcp_packet *)skb->data;
- 	if ((packet->header & ~NCI_HCI_FRAGMENT) == 0) {
- 		skb_queue_tail(&ndev->hci_dev->rx_hcp_frags, skb);
-@@ -480,6 +485,11 @@ void nci_hci_data_received_cb(void *cont
- 	 * unblock waiting cmd context. Otherwise, enqueue to dispatch
- 	 * in separate context where handler can also execute command.
- 	 */
-+	if (!pskb_may_pull(hcp_skb, NCI_HCI_HCP_HEADER_LEN)) {
-+		kfree_skb(hcp_skb);
-+		return;
-+	}
-+
- 	packet = (struct nci_hcp_packet *)hcp_skb->data;
- 	type = NCI_HCP_MSG_GET_TYPE(packet->message.header);
- 	if (type == NCI_HCI_HCP_RESPONSE) {
+ 	/* broadcast migrate message to sockets */
+-	pfkey_broadcast(skb, GFP_ATOMIC, BROADCAST_ALL, NULL, &init_net);
++	pfkey_broadcast(skb, GFP_ATOMIC, BROADCAST_ALL, NULL, net);
+ 
+ 	return 0;
+ 
+@@ -3664,7 +3664,7 @@ err:
+ #else
+ static int pfkey_send_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
+ 			      const struct xfrm_migrate *m, int num_bundles,
+-			      const struct xfrm_kmaddress *k,
++			      const struct xfrm_kmaddress *k, struct net *net,
+ 			      const struct xfrm_encap_tmpl *encap)
+ {
+ 	return -ENOPROTOOPT;
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -4492,7 +4492,7 @@ int xfrm_migrate(const struct xfrm_selec
+ 	}
+ 
+ 	/* Stage 5 - announce */
+-	km_migrate(sel, dir, type, m, num_migrate, k, encap);
++	km_migrate(sel, dir, type, m, num_migrate, k, net, encap);
+ 
+ 	xfrm_pol_put(pol);
+ 
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -2300,7 +2300,7 @@ EXPORT_SYMBOL(km_policy_expired);
+ #ifdef CONFIG_XFRM_MIGRATE
+ int km_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
+ 	       const struct xfrm_migrate *m, int num_migrate,
+-	       const struct xfrm_kmaddress *k,
++	       const struct xfrm_kmaddress *k, struct net *net,
+ 	       const struct xfrm_encap_tmpl *encap)
+ {
+ 	int err = -EINVAL;
+@@ -2311,7 +2311,7 @@ int km_migrate(const struct xfrm_selecto
+ 	list_for_each_entry_rcu(km, &xfrm_km_list, list) {
+ 		if (km->migrate) {
+ 			ret = km->migrate(sel, dir, type, m, num_migrate, k,
+-					  encap);
++					  net, encap);
+ 			if (!ret)
+ 				err = ret;
+ 		}
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -2908,10 +2908,9 @@ out_cancel:
+ 
+ static int xfrm_send_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
+ 			     const struct xfrm_migrate *m, int num_migrate,
+-			     const struct xfrm_kmaddress *k,
++			     const struct xfrm_kmaddress *k, struct net *net,
+ 			     const struct xfrm_encap_tmpl *encap)
+ {
+-	struct net *net = &init_net;
+ 	struct sk_buff *skb;
+ 	int err;
+ 
+@@ -2929,7 +2928,7 @@ static int xfrm_send_migrate(const struc
+ #else
+ static int xfrm_send_migrate(const struct xfrm_selector *sel, u8 dir, u8 type,
+ 			     const struct xfrm_migrate *m, int num_migrate,
+-			     const struct xfrm_kmaddress *k,
++			     const struct xfrm_kmaddress *k, struct net *net,
+ 			     const struct xfrm_encap_tmpl *encap)
+ {
+ 	return -ENOPROTOOPT;
 
 
