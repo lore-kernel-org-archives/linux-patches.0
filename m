@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B095D44BC94;
-	Tue, 16 Jun 2026 15:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BAE43DA2C;
+	Tue, 16 Jun 2026 15:35:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624137; cv=none; b=kWZxeOfhbZbvZhDSCpIh5RBkWfCgOPpvm4/lJzfs2cMAfgCBjnFRQGv0expwsY0uflbwANfZmx/JnP1Ao7K5U0nbhA92AOvhRMPIo3xcu3a3VHvJerZDBo0+n82lRikxbBw7WYq4Udj9iK90rRqBg74GBcV5I5JmKsVz/pIrNa0=
+	t=1781624143; cv=none; b=RKjvhPQz9Y5DYNOGPUpiHykUZFNcXP317rZsftwnM5OFTiR/ByQO9ewPpJYGRIQLYM4EEEAxZX5fln8IbDcZchbcS3qII8yEJaetjio9jAqW6X4yxToSfvV1aeO/n6YWAsCEL37/pASA3w5kA4117mbmwMKOLymHGNHg0/Ni/7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624137; c=relaxed/simple;
-	bh=rfwsQpjYVFX1KQacJTzVjWQWAEihAWci1JMlRo2Bfhs=;
+	s=arc-20240116; t=1781624143; c=relaxed/simple;
+	bh=8P7IdZQhk8xq/rryjv89XZGqMAXjZ7MCz2iuWk3fZS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RIg/GcRsthFGdVB+nc+COgFJP5/y5yFhnj3kY84q5U90fCXHQQuRhcVpInu+/cqRmrWard3Uh01c7r9yXV8OOeZBXJyXoY1c5sTRUH6nbjotCYRk2IHh3356aDpLXxERQW6qUdzCTZ9l/X4ugo1gMaO84t8r10IDNR0tohWxwhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJgzkTEB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Ag4swJHw7WvGcW0QdTlkw+EA5dNNc8MKsil9QfN6uyt0azW+9eI8cXln6A79mbDbdfiujdREjFeuFn5ZYgmuPqENhv19x8ftZidS7kCkOrgWJ4W/KOozOL+uPvyT62dnyUndk7hRm3hR5+YKBrV9TDD5Q0bf7iM0lWmVxDPLnsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o7Zyfo+Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJgzkTEB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26EF71F000E9;
-	Tue, 16 Jun 2026 15:35:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o7Zyfo+Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281271F00A3F;
+	Tue, 16 Jun 2026 15:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624136;
-	bh=v14IlF8yd/kxWzSGeplMgh5nH5lbHvJBLrYiIWVIpGw=;
+	s=korg; t=1781624142;
+	bh=Y6z81KPimm1TgXGDcM6EsYfO09+Lu6fCKCl0LC3CMAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JJgzkTEBbtxnHCxSysR0MFU9ukvaVquQ9FStbts/Vg3vZAVpg3DTrI4xZT3DPebXs
-	 dN/dOY3X45SntzihSyLMpWQziKfrSZRd1ipBeQnJFut6cDf4crGAW5szoRnFj9tMcf
-	 ozj2xfJwYWDWMlYYMKkA8jaln/n0xUTgwDp/7IhM=
+	b=o7Zyfo+Q/rdYreAhOmmnen/bMK8Ib/OcJUp8gmWSP1ZF86T2AJOY2XT5M3H06jWg3
+	 Pd3dvOWwJQVOoW4QTzh2qEYFXtxMh+fEJzdJk4ZbWgib6jgmDBy9drJzGC8c7OsaTz
+	 QvZIJ07nrWIFdyXgeuNVHazXtWhZdQ7Ad3iJ98lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Alexander Dahl <ada@thorsis.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH 7.0 281/378] memory: atmel-ebi: Allow deferred probing
-Date: Tue, 16 Jun 2026 20:28:32 +0530
-Message-ID: <20260616145124.901118143@linuxfoundation.org>
+	stable@kernel.org,
+	Anandu Krishnan E <anandu.e@oss.qualcomm.com>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: [PATCH 7.0 282/378] misc: fastrpc: fix use-after-free of fastrpc_user in workqueue context
+Date: Tue, 16 Jun 2026 20:28:33 +0530
+Message-ID: <20260616145124.948021311@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -45,55 +45,211 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Dahl <ada@thorsis.com>
+From: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
 
-commit 754d60ad1c91895be0bc7d771fbf9fb3c9448640 upstream.
+commit e85eb5feca8e254905ffa6c57a3c99c89a674a0f upstream.
 
-After removing of_platform_default_populate() calls the atmel-ebi driver
-was affected by deferred probing.  platform_driver_probe() is
-incompatible with deferred probing.  This led to atmel-ebi driver
-eventually not being probed on at91 sam9x60-curiosity and other sam9x60
-based boards.  Subsequently the nand-controller driver (nand-controller
-being a child node of ebi) on that platform was not probed and thus raw
-NAND flash was inaccessible, preventing devices to boot with rootfs on
-raw NAND flash (e.g. with UBI/UBIFS).
+There is a race between fastrpc_device_release() and the workqueue
+that processes DSP responses. When the user closes the file descriptor,
+fastrpc_device_release() frees the fastrpc_user structure. Concurrently,
+an in-flight DSP invocation can complete and fastrpc_rpmsg_callback()
+schedules context cleanup via schedule_work(&ctx->put_work). If the
+workqueue runs fastrpc_context_free() in parallel with or after
+fastrpc_device_release() has freed the user structure, it dereferences
+the freed fastrpc_user. Depending on the state of the context at the
+time of the race, any one of the following accesses can be hit:
 
-Fixes: 0b0f7e6539a7 ("ARM: at91: remove unnecessary of_platform_default_populate calls")
-Cc: stable@vger.kernel.org
-Suggested-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Alexander Dahl <ada@thorsis.com>
-Link: https://patch.msgid.link/20260429125930.844790-1-ada@thorsis.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+ 1. fastrpc_buf_free() calls fastrpc_ipa_to_dma_addr(buf->fl->cctx, ...)
+    to strip the SID bits from the stored IOVA before passing the
+    physical address to dma_free_coherent().
+
+ 2. fastrpc_free_map() reads map->fl->cctx->vmperms[0].vmid to
+    reconstruct the source permission bitmask needed for the
+    qcom_scm_assign_mem() call that returns memory from the DSP VM
+    back to HLOS.
+
+ 3. fastrpc_free_map() acquires map->fl->lock to safely remove the
+    map node from the fl->maps list.
+
+The resulting use-after-free manifests as:
+
+  pc : fastrpc_buf_free+0x38/0x80 [fastrpc]
+  lr : fastrpc_context_free+0xa8/0x1b0 [fastrpc]
+  fastrpc_context_free+0xa8/0x1b0 [fastrpc]
+  fastrpc_context_put_wq+0x78/0xa0 [fastrpc]
+  process_one_work+0x180/0x450
+  worker_thread+0x26c/0x388
+
+Add kref-based reference counting to fastrpc_user. Have each invoke
+context take a reference on the user at allocation time and release it
+when the context is freed. Release the initial reference in
+fastrpc_device_release() at file close. Move the teardown of the user
+structure — freeing pending contexts, maps, mmaps, and the channel
+context reference — into the kref release callback fastrpc_user_free(),
+so that it runs only when the last reference is dropped, regardless of
+whether that happens at device close or after the final in-flight
+context completes.
+
+Fixes: 6cffd79504ce ("misc: fastrpc: Add support for dmabuf exporter")
+Cc: stable@kernel.org
+Signed-off-by: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260530204528.116920-2-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/memory/atmel-ebi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/misc/fastrpc.c |   75 +++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 52 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/memory/atmel-ebi.c b/drivers/memory/atmel-ebi.c
-index 8db970da9af9..1e8e8aba2542 100644
---- a/drivers/memory/atmel-ebi.c
-+++ b/drivers/memory/atmel-ebi.c
-@@ -628,10 +628,11 @@ static __maybe_unused int atmel_ebi_resume(struct device *dev)
- static SIMPLE_DEV_PM_OPS(atmel_ebi_pm_ops, NULL, atmel_ebi_resume);
- 
- static struct platform_driver atmel_ebi_driver = {
-+	.probe = atmel_ebi_probe,
- 	.driver = {
- 		.name = "atmel-ebi",
- 		.of_match_table	= atmel_ebi_id_table,
- 		.pm = &atmel_ebi_pm_ops,
- 	},
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -310,6 +310,8 @@ struct fastrpc_user {
+ 	spinlock_t lock;
+ 	/* lock for allocations */
+ 	struct mutex mutex;
++	/* Reference count */
++	struct kref refcount;
  };
--builtin_platform_driver_probe(atmel_ebi_driver, atmel_ebi_probe);
-+builtin_platform_driver(atmel_ebi_driver);
--- 
-2.54.0
-
+ 
+ /* Extract SMMU PA from consolidated IOVA */
+@@ -497,15 +499,57 @@ static void fastrpc_channel_ctx_put(stru
+ 	kref_put(&cctx->refcount, fastrpc_channel_ctx_free);
+ }
+ 
++static void fastrpc_context_put(struct fastrpc_invoke_ctx *ctx);
++
++static void fastrpc_user_free(struct kref *ref)
++{
++	struct fastrpc_user *fl = container_of(ref, struct fastrpc_user, refcount);
++	struct fastrpc_invoke_ctx *ctx, *n;
++	struct fastrpc_map *map, *m;
++	struct fastrpc_buf *buf, *b;
++
++	if (fl->init_mem)
++		fastrpc_buf_free(fl->init_mem);
++
++	list_for_each_entry_safe(ctx, n, &fl->pending, node) {
++		list_del(&ctx->node);
++		fastrpc_context_put(ctx);
++	}
++
++	list_for_each_entry_safe(map, m, &fl->maps, node)
++		fastrpc_map_put(map);
++
++	list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
++		list_del(&buf->node);
++		fastrpc_buf_free(buf);
++	}
++
++	fastrpc_channel_ctx_put(fl->cctx);
++	mutex_destroy(&fl->mutex);
++	kfree(fl);
++}
++
++static void fastrpc_user_get(struct fastrpc_user *fl)
++{
++	kref_get(&fl->refcount);
++}
++
++static void fastrpc_user_put(struct fastrpc_user *fl)
++{
++	kref_put(&fl->refcount, fastrpc_user_free);
++}
++
+ static void fastrpc_context_free(struct kref *ref)
+ {
+ 	struct fastrpc_invoke_ctx *ctx;
+ 	struct fastrpc_channel_ctx *cctx;
++	struct fastrpc_user *fl;
+ 	unsigned long flags;
+ 	int i;
+ 
+ 	ctx = container_of(ref, struct fastrpc_invoke_ctx, refcount);
+ 	cctx = ctx->cctx;
++	fl = ctx->fl;
+ 
+ 	for (i = 0; i < ctx->nbufs; i++)
+ 		fastrpc_map_put(ctx->maps[i]);
+@@ -521,6 +565,8 @@ static void fastrpc_context_free(struct
+ 	kfree(ctx->olaps);
+ 	kfree(ctx);
+ 
++	/* Release the reference taken in fastrpc_context_alloc() */
++	fastrpc_user_put(fl);
+ 	fastrpc_channel_ctx_put(cctx);
+ }
+ 
+@@ -628,6 +674,8 @@ static struct fastrpc_invoke_ctx *fastrp
+ 
+ 	/* Released in fastrpc_context_put() */
+ 	fastrpc_channel_ctx_get(cctx);
++	/* Take a reference to user, released in fastrpc_context_free() */
++	fastrpc_user_get(user);
+ 
+ 	ctx->sc = sc;
+ 	ctx->retval = -1;
+@@ -658,6 +706,7 @@ err_idr:
+ 	spin_lock(&user->lock);
+ 	list_del(&ctx->node);
+ 	spin_unlock(&user->lock);
++	fastrpc_user_put(user);
+ 	fastrpc_channel_ctx_put(cctx);
+ 	kfree(ctx->maps);
+ 	kfree(ctx->olaps);
+@@ -1579,9 +1628,6 @@ static int fastrpc_device_release(struct
+ {
+ 	struct fastrpc_user *fl = (struct fastrpc_user *)file->private_data;
+ 	struct fastrpc_channel_ctx *cctx = fl->cctx;
+-	struct fastrpc_invoke_ctx *ctx, *n;
+-	struct fastrpc_map *map, *m;
+-	struct fastrpc_buf *buf, *b;
+ 	unsigned long flags;
+ 
+ 	fastrpc_release_current_dsp_process(fl);
+@@ -1590,28 +1636,10 @@ static int fastrpc_device_release(struct
+ 	list_del(&fl->user);
+ 	spin_unlock_irqrestore(&cctx->lock, flags);
+ 
+-	if (fl->init_mem)
+-		fastrpc_buf_free(fl->init_mem);
+-
+-	list_for_each_entry_safe(ctx, n, &fl->pending, node) {
+-		list_del(&ctx->node);
+-		fastrpc_context_put(ctx);
+-	}
+-
+-	list_for_each_entry_safe(map, m, &fl->maps, node)
+-		fastrpc_map_put(map);
+-
+-	list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
+-		list_del(&buf->node);
+-		fastrpc_buf_free(buf);
+-	}
+-
+ 	fastrpc_session_free(cctx, fl->sctx);
+-	fastrpc_channel_ctx_put(cctx);
+-
+-	mutex_destroy(&fl->mutex);
+-	kfree(fl);
+ 	file->private_data = NULL;
++	/* Release the reference taken in fastrpc_device_open */
++	fastrpc_user_put(fl);
+ 
+ 	return 0;
+ }
+@@ -1655,6 +1683,7 @@ static int fastrpc_device_open(struct in
+ 	spin_lock_irqsave(&cctx->lock, flags);
+ 	list_add_tail(&fl->user, &cctx->users);
+ 	spin_unlock_irqrestore(&cctx->lock, flags);
++	kref_init(&fl->refcount);
+ 
+ 	return 0;
+ }
 
 
