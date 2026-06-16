@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21404657F8;
-	Tue, 16 Jun 2026 16:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7BB326924;
+	Tue, 16 Jun 2026 16:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628987; cv=none; b=eWzjd13Yhaku+Wn8a9GMuT01TamdZE47FcpIlWeXkXA5BL5Z3e5VUnhVuWtkf/wbKB4/JjZp0D5Nh/i2LtTfolIpbDOlKtxF2UWvKb/ePe/P+HHpWRY9j2LaCG0vnIfG57FTIdFlX66jcF8obkbr/MYFq1Ut31c+8UL/KSCmYp4=
+	t=1781628992; cv=none; b=SsVX8Dz7TlpKRyZgFOw+4lGvCd9I2gm1SgbuVlGkk7guBSAB/8NwZEJctPjyAyFJBUKh5fr2JNlvgILY3R4zIwNLOY5oBf7YF2rkkhgyalM+R9JVX9so/AQNLdhCyIaXbUOosLnPcsgEFkFu7sXHEg8Z7LJldXVHrOKpHY+JkbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628987; c=relaxed/simple;
-	bh=qNT0VzR4qHCvNFLzdyEKYmnlUur4pK7iCrzD3hwQXn0=;
+	s=arc-20240116; t=1781628992; c=relaxed/simple;
+	bh=X2c5gx8DYQdsJiQl5s2bqYIYHeiJyIo3dwAWVZlkJ14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TYelFz3VgG3pLOi1lWKfW+Q/jS5eWOd3QFmWpDB9S8fztv6btK0cv6gRahdzKrrrunRcEc+WgTiEc7xAfsbMpV1Xr8jy1eszc+fiaGfzf+fo6TXofy1/DLQeGN59Mufae5286Ovzfa/YHfcNfd30lPYOguN2gd9cuO68O5WBbAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GV5WtL/4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xvq9wgQ6kTj9gUhX1dlqX7ovoGHtgFBiAgzL8WZWqz25DF316/7WzK0XIwbJVi7C0y2LeMsw6zfQ/QPzrktvKfW9pX68pwS2Xb2MVXjPCyRggkdNTN785BHjvWefJXD3Bg0DdCjtXvPj8BccPYS8DTgI/Ybe+U3fxmi2pR571ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4tZbPr6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GV5WtL/4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB901F00A3A;
-	Tue, 16 Jun 2026 16:56:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4tZbPr6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8E51F00A3A;
+	Tue, 16 Jun 2026 16:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628985;
-	bh=eqv8prrRoX/HeNVOh3OqpJk/Xwiqbv3j0ivp/i3Qs6w=;
+	s=korg; t=1781628990;
+	bh=0I69kVOs/kEiFdtut1DUhFEYOIx1tpFrDLXFj1VWRsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GV5WtL/4PCiVuaBMADwvkqZZ1HUXC4PTxXOvb0sTx6lPwTTI8W/HseDjwP8OVJta1
-	 Ehr928gOTQoRIYXnZ+JTNb+gr+zrumQu0C9ocZhSgC2VLa1GkK7i5ZtTH/M15egC9Y
-	 MluxWR3OJL68t4spStxmfWfqoorlP1uV1GYqKjvQ=
+	b=V4tZbPr60mKle7HXT5XMghLAbq8yHfhFej5jnnB3HVhALanCl6zUOusDNBGi3usdP
+	 NGmQq/7lPiaT08Xni34o9j5Ft8k/dc/xf2DeydCVXwhc/FgJn7BS3z5BkUgH8d/P8m
+	 6mq4mieDhfYOTSAzPCxsgngei4z2toBsmkCK0BAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 6.6 182/452] serial: sh-sci: fix memory region release in error path
-Date: Tue, 16 Jun 2026 20:26:49 +0530
-Message-ID: <20260616145127.411456328@linuxfoundation.org>
+	Vicki Pfau <vi@endrift.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.6 200/452] HID: core: Add printk_ratelimited variants to hid_warn() etc
+Date: Tue, 16 Jun 2026 20:27:07 +0530
+Message-ID: <20260616145128.332996007@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -53,40 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongling Zeng <zenghongling@kylinos.cn>
+From: Vicki Pfau <vi@endrift.com>
 
-commit 92b1ea22454b08a39baef3a7290fb3ec50366616 upstream.
+commit 1d64624243af8329b4b219d8c39e28ea448f9929 upstream.
 
-The sci_request_port() function uses request_mem_region() to reserve
-I/O memory, but in the error path when sci_remap_port() fails, it
-incorrectly calls release_resource() instead of release_mem_region().
+hid_warn_ratelimited() is needed. Add the others as part of the block.
 
-This mismatch can cause resource accounting issues. Fix it by using
-the correct release function, consistent with sci_release_port().
-
-Fixes: e2651647080930a1 ("serial: sh-sci: Handle port memory region reservations.")
-Cc: stable <stable@kernel.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202604032356.SzEjYkBC-lkp@intel.com/
-Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260421065737.724187-1-zenghongling@kylinos.cn
+Signed-off-by: Vicki Pfau <vi@endrift.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sh-sci.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/hid.h |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -2818,7 +2818,7 @@ static int sci_request_port(struct uart_
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -1252,4 +1252,15 @@ int hid_pidff_init_with_quirks(struct hi
+ #define hid_dbg_once(hid, fmt, ...)			\
+ 	dev_dbg_once(&(hid)->dev, fmt, ##__VA_ARGS__)
  
- 	ret = sci_remap_port(port);
- 	if (unlikely(ret != 0)) {
--		release_resource(res);
-+		release_mem_region(port->mapbase, sport->reg_size);
- 		return ret;
- 	}
- 
++#define hid_err_ratelimited(hid, fmt, ...)			\
++	dev_err_ratelimited(&(hid)->dev, fmt, ##__VA_ARGS__)
++#define hid_notice_ratelimited(hid, fmt, ...)			\
++	dev_notice_ratelimited(&(hid)->dev, fmt, ##__VA_ARGS__)
++#define hid_warn_ratelimited(hid, fmt, ...)			\
++	dev_warn_ratelimited(&(hid)->dev, fmt, ##__VA_ARGS__)
++#define hid_info_ratelimited(hid, fmt, ...)			\
++	dev_info_ratelimited(&(hid)->dev, fmt, ##__VA_ARGS__)
++#define hid_dbg_ratelimited(hid, fmt, ...)			\
++	dev_dbg_ratelimited(&(hid)->dev, fmt, ##__VA_ARGS__)
++
+ #endif
 
 
