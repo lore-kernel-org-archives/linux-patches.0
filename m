@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A5F44BCB8;
-	Tue, 16 Jun 2026 16:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680B53C0633;
+	Tue, 16 Jun 2026 16:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626372; cv=none; b=TW4ACjdx/QuKJQYdKNLWUqWhLUaSzs4XV5pQpg7cfB2qsSR7pft8QxflTyk+OhISxqeMD4LXRPxLLMp3VkV7Zwq6Oi94UxMqBC+VSSQYNEuj0d6lbMLhHrQ6NsotgQrWuU/RyrhoeUc2Yr30nJSl6DtMuel5S2gmRgUYYHUyEek=
+	t=1781626378; cv=none; b=ML/j+Miv+zESbXNkjfRICpv3M0JoWNz4ii/G+c1b5X/eLRyWUQwdO7qSDa3d172l46WR9GgUcIxC6L1GfM/Wwj1xJ15i4DpQMlGjCpTBB0+ZsZ+nF2pAJGog3PwP8Ij3gmYSIaQC5bLbvCZo4lqcqs7AmeKVvNjiOkBeFb+ZgKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626372; c=relaxed/simple;
-	bh=334CMkdeOz5Wv6CngRxIOn5va7hFczmOJEa9RMvCh/4=;
+	s=arc-20240116; t=1781626378; c=relaxed/simple;
+	bh=nFf4GoCt34M2eLNaZu3FVoXBLeMsrmhKEpNDH/sQ78E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jVawS0sF9JgZEuZJr2S/jd2jW6KuFjd0uoaBNakRRb4E9tbauxGo7UxlXtNudF2Pb9eWO6qpqfoceedj0ZMaTf5CNBab6PvcTwItaJvPUrVAo0tW8dzZFtgvB15WHDPGmm+RKsgu1MhPODqpO73epLddIbN0ffy2Zxo3QdWjSBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OuXaGOKl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LffoJ1CY/iy3hAtN1GviAZiTbZOdpKlrMI6DwYQvehsrRZnHJneYHZd/yhXDfk822khrnMnzNP6wjhT6dVUXSiMiiW5GxrU9CMOWRgoQAXoF33GIeKBGhLA1osTcrmtpYA1HdKUWf7rSux4m6PGPJzn3AswRIuiEI22ICz8cK8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sEHUCddg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OuXaGOKl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3758D1F000E9;
-	Tue, 16 Jun 2026 16:12:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sEHUCddg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F051F000E9;
+	Tue, 16 Jun 2026 16:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626371;
-	bh=ybCEnGGIfpG5BApttri1QzaHY3Ypl1NbAoVX4H8HFnc=;
+	s=korg; t=1781626377;
+	bh=EdT1197uMeX8jX9YYOte/S/ebvPVMFTD8MuMNTTi/XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OuXaGOKlBlxIC5WolSfw6HBuX5P6xYWDGTHGpKA/Cdj2Tdsfg67+qOIFDUEgZWbFv
-	 /xX1kb8fxwB16jWHUmXvjhyo2tDmWFf9UNcMWB6he1tDs3OkBuMcCAU2xNvDH0j68Y
-	 z2zU+q473i12mlDannVV3vJIxhEDmBuF9p0XmcfI=
+	b=sEHUCddgd0jf7tmZkXOwMflTaZoCrwR5tEryRwg5VmB+7wTjJ7oPMX2mHn6iAp404
+	 yOpqRmT2BIYjOejmwzasNfjUqnZi6hyZveZeCXpl8sZVcYx9tY+RKVBSOqgB8B3knJ
+	 E/H6PcVMAHOx/TMoledBnJreTLSOFrHBQ5x0Zh/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Fleming <mfleming@cloudflare.com>,
-	Tejun Heo <tj@kernel.org>,
-	Andrea Righi <arighi@nvidia.com>,
+	Jacob Moroni <jmoroni@google.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 308/325] sched_ext: Dont warn on NULL cgrp_moving_from in scx_cgroup_move_task()
-Date: Tue, 16 Jun 2026 20:31:44 +0530
-Message-ID: <20260616145114.353125941@linuxfoundation.org>
+Subject: [PATCH 6.18 309/325] RDMA/umem: Add ib_umem_dmabuf_get_pinned_and_lock helper
+Date: Tue, 16 Jun 2026 20:31:45 +0530
+Message-ID: <20260616145114.416197784@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,79 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Jacob Moroni <jmoroni@google.com>
 
-commit 02e545c4297a26dbbc41df81b831e7f605bcd306 upstream.
+[ Upstream commit 553dfa8cbd0c6d36adae042d9738ddf8f8765ac7 ]
 
-A WARN fires when systemd's user manager writes "+cpu +memory +pids" to
-its own subtree_control while a sched_ext scheduler is loaded:
+Move the inner logic of ib_umem_dmabuf_get_pinned_with_dma_device()
+to a new static function that returns with the lock held upon success.
 
-  WARNING: at kernel/sched/ext.c:3227 scx_cgroup_move_task+0xa8/0xb0
-   scx_cgroup_move_task+0xa8/0xb0
-   sched_move_task+0x134/0x290
-   cpu_cgroup_attach+0x39/0x70
-   cgroup_migrate_execute+0x37d/0x450
-   cgroup_update_dfl_csses+0x1e3/0x270
-   cgroup_subtree_control_write+0x3e7/0x440
+The intent is to allow reuse for the future get_pinned_revocable_and_lock
+function.
 
-scx_cgroup_can_attach() arms cgrp_moving_from only when a task's cpu
-cgroup changes. It can still be NULL when scx_cgroup_move_task() runs,
-through this sequence:
-
-  Step                               Result
-  ---------------------------------  ----------------------------------
-  1. cpu enabled on cgroup G         cpu css = A
-  2. cpu toggled off then on for G   A killed, B created (same cgroup)
-  3. an exiting task keeps A alive   migration skips it, A now stale
-  4. +memory migrates G              stale A vs current B pulls cpu in
-  5. cpu attach runs for all tasks   hits a live, cpu-unchanged task
-  6. scx_cgroup_move_task() on it    cgrp_moving_from NULL -> WARN
-
-The mismatch is that scx_cgroup_can_attach() keys on cgroup identity
-while migration drives the move on css identity, so a NULL cgrp_moving_from
-here is a legitimate css-only migration, not a missing prep.
-
-The call is already gated on cgrp_moving_from, so just drop the warning.
-ops.cgroup_prep_move() and ops.cgroup_move() stay paired.
-
-Fixes: 819513666966 ("sched_ext: Add cgroup support")
-Cc: stable@vger.kernel.org # v6.12+
-Reported-by: Matt Fleming <mfleming@cloudflare.com>
-Closes: https://lore.kernel.org/all/20260601124156.2205704-1-mfleming@cloudflare.com/
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-[ mfleming: keep the 6.18.y SCX_KF_REST argument in the
-  SCX_CALL_OP_TASK() call. ]
-Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Link: https://patch.msgid.link/20260305170826.3803155-2-jmoroni@google.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: badad6fad60d ("RDMA: During rereg_mr ensure that REREG_ACCESS is compatible")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/infiniband/core/umem_dmabuf.c |   35 +++++++++++++++++++++++++---------
+ 1 file changed, 26 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 7b750bf42698cc..d8280f87443310 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -3221,11 +3221,13 @@ void scx_cgroup_move_task(struct task_struct *p)
- 		return;
+--- a/drivers/infiniband/core/umem_dmabuf.c
++++ b/drivers/infiniband/core/umem_dmabuf.c
+@@ -198,18 +198,19 @@ static struct dma_buf_attach_ops ib_umem
+ 	.move_notify = ib_umem_dmabuf_unsupported_move_notify,
+ };
  
- 	/*
--	 * @p must have ops.cgroup_prep_move() called on it and thus
--	 * cgrp_moving_from set.
-+	 * scx_cgroup_can_attach() sets cgrp_moving_from only when the task's
-+	 * cgroup changes. Migration keys off css rather than cgroup identity,
-+	 * so it can hand an unchanged-cgroup task here with cgrp_moving_from
-+	 * NULL. Nothing to report to the BPF scheduler then, so skip it and
-+	 * keep prep_move and move paired.
- 	 */
--	if (SCX_HAS_OP(sch, cgroup_move) &&
--	    !WARN_ON_ONCE(!p->scx.cgrp_moving_from))
-+	if (SCX_HAS_OP(sch, cgroup_move) && p->scx.cgrp_moving_from)
- 		SCX_CALL_OP_TASK(sch, SCX_KF_REST, cgroup_move, task_rq(p),
- 				 p, p->scx.cgrp_moving_from,
- 				 tg_cgrp(task_group(p)));
--- 
-2.53.0
-
+-struct ib_umem_dmabuf *
+-ib_umem_dmabuf_get_pinned_with_dma_device(struct ib_device *device,
+-					  struct device *dma_device,
+-					  unsigned long offset, size_t size,
+-					  int fd, int access)
++static struct ib_umem_dmabuf *
++ib_umem_dmabuf_get_pinned_and_lock(struct ib_device *device,
++				   struct device *dma_device,
++				   unsigned long offset,
++				   size_t size, int fd, int access,
++				   const struct dma_buf_attach_ops *ops)
+ {
+ 	struct ib_umem_dmabuf *umem_dmabuf;
+ 	int err;
+ 
+-	umem_dmabuf = ib_umem_dmabuf_get_with_dma_device(device, dma_device, offset,
+-							 size, fd, access,
+-							 &ib_umem_dmabuf_attach_pinned_ops);
++	umem_dmabuf =
++		ib_umem_dmabuf_get_with_dma_device(device, dma_device, offset,
++						   size, fd, access, ops);
+ 	if (IS_ERR(umem_dmabuf))
+ 		return umem_dmabuf;
+ 
+@@ -222,7 +223,6 @@ ib_umem_dmabuf_get_pinned_with_dma_devic
+ 	err = ib_umem_dmabuf_map_pages(umem_dmabuf);
+ 	if (err)
+ 		goto err_release;
+-	dma_resv_unlock(umem_dmabuf->attach->dmabuf->resv);
+ 
+ 	return umem_dmabuf;
+ 
+@@ -231,6 +231,23 @@ err_release:
+ 	ib_umem_release(&umem_dmabuf->umem);
+ 	return ERR_PTR(err);
+ }
++
++struct ib_umem_dmabuf *
++ib_umem_dmabuf_get_pinned_with_dma_device(struct ib_device *device,
++					  struct device *dma_device,
++					  unsigned long offset, size_t size,
++					  int fd, int access)
++{
++	struct ib_umem_dmabuf *umem_dmabuf =
++		ib_umem_dmabuf_get_pinned_and_lock(device, dma_device, offset,
++						   size, fd, access,
++						   &ib_umem_dmabuf_attach_pinned_ops);
++	if (IS_ERR(umem_dmabuf))
++		return umem_dmabuf;
++
++	dma_resv_unlock(umem_dmabuf->attach->dmabuf->resv);
++	return umem_dmabuf;
++}
+ EXPORT_SYMBOL(ib_umem_dmabuf_get_pinned_with_dma_device);
+ 
+ struct ib_umem_dmabuf *ib_umem_dmabuf_get_pinned(struct ib_device *device,
 
 
