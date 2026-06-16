@@ -1,52 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52D8441035;
-	Tue, 16 Jun 2026 15:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7E644BC93;
+	Tue, 16 Jun 2026 15:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623409; cv=none; b=SexqcClb3m7BwgaTm/MoJFVafTvswFIZnP/T1dUcigQ7c+aeEJ9oZn6YoeGOZBIzDYWCkb1ft/Wfe49NaipMz1FPQpmKKOg8/klyJJKAChnZAfpyfdulVE8xM0z87WXSQnwR3oQoqw3zrJXtMLotX8OPxsPLd3viQQHMTBHAk+8=
+	t=1781623413; cv=none; b=ZBCyHRDaFwupbBovuzRQwlQIDa98CGu3CiTABw5ByaUHhGxJZFLtcEudAqD+R7igJukvRfTJKK4Giae6T4CMvmJxpHPYQeGQ8X6GqyQRD1amX/8omRAaQlbEYo1vIjuQjtc/NhwOM6tSp25PG1EFZXz8yeA+T57yjgpOhQa5d04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623409; c=relaxed/simple;
-	bh=vik4wTngmoNu58hA5PcEN65uK9s6NgLFmn9rM3dzohY=;
+	s=arc-20240116; t=1781623413; c=relaxed/simple;
+	bh=w9Ri3Fvr1SpHeSfX5m1j/EUGxq6cKi1cmnUeLrPX+nM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fqQp/0dInUksTmtMmtWptifBaUM+MqBOLhwxv98TDY2+1Oj1POKGPY/IHymU5M9xT5PAaY5ckEjIG6LeiO5E2I6K3H6qcIqdSZsgQL0Zi+pfMcHL0vgrldE+UYwn276gNNPsY4Jv+NXpW5B+p0jz+f7bhuul9qvloSoPwWsTGM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fasmTLF8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FX6KNOgjoeV+zGfj7hu7mlgir8x+fVN/js7e6WQflHipdynlc85pJwaPsvGq2Epeph/9ikPpPAYPlvncmx/QDkauWJmenNSUgP98cAu3+b4t3oTPQ8k9YgduqAWEUcCwmMNtfUeG9K6sJuIYbuCli/zCCJtS1NzMH50X2WHEGa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdsAPxnh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fasmTLF8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88AF71F000E9;
-	Tue, 16 Jun 2026 15:23:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdsAPxnh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A671F000E9;
+	Tue, 16 Jun 2026 15:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623407;
-	bh=u4u/ypzpXdqyvYPM92CC7qzGk/0TK/4RPUhDmlTkn4s=;
+	s=korg; t=1781623412;
+	bh=rn4+izzixdQOXvEdP/ie2RGNG8PzSV8Bf28m/mAtMCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fasmTLF8KfCYmCT/pXmo75LL/9JqWW/rwVaVWXIZ5+OvAJyNbJOCcjp5IcIYSflr4
-	 g8JxRI098Z6Ooi0Gu0xJvb7KTvBoVdp2SgmHF4ddxjddQ3GSR7u+2RGmcei+OJgaxa
-	 m/oix+Qb2Cnsv7cs6vvtVWOCqXq1/dsOJ+0FAZT4=
+	b=fdsAPxnhfOtfUkPYVSGrWD8xz5X1dPCUTWqU+jz3UVMQgWBGaVoMpPWvAMUMu15eu
+	 OF/8wmNFIXW3pSXvYzcy7JPvvLa3+XR19Ell6Vq5veEvUTfVnPZ/Nf0sKXpo1YkvCi
+	 t2d5WOrQUekWThrkflGiqF19oXLGnQJNpFgS0eEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	HanQuan <eilaimemedsnaimel@gmail.com>,
+	MingXuan <bwnie0730@outlook.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Tamir Shahar <tamirthesis@gmail.com>,
-	Amit Klein <aksecurity@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Song Liu <song@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Jiri Olsa <jolsa@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 109/378] tcp: restrict SO_ATTACH_FILTER to priv users
-Date: Tue, 16 Jun 2026 20:25:40 +0530
-Message-ID: <20260616145116.105508507@linuxfoundation.org>
+Subject: [PATCH 7.0 110/378] net: add pskb_may_pull() to skb_gro_receive_list()
+Date: Tue, 16 Jun 2026 20:25:41 +0530
+Message-ID: <20260616145116.163339600@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -65,56 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: HanQuan <eilaimemedsnaimel@gmail.com>
 
-[ Upstream commit 5d39580f68e6ddeedd15e587282207489dfb3da2 ]
+[ Upstream commit f2bb3434544454099a5b6dec213567267b05d79d ]
 
-This patch restricts the use of SO_ATTACH_FILTER (cBPF) on TCP sockets
-to users with CAP_NET_ADMIN capability.
+skb_gro_receive_list() calls skb_pull(skb, skb_gro_offset(skb)) without
+first ensuring the data is in the linear area via pskb_may_pull(). When
+the skb arrives via napi_gro_frags(), skb_headlen can be 0 (all data in
+page fragments) while skb_gro_offset is non-zero (after IP+TCP header
+parsing). The skb_pull() then decrements skb->len by skb_gro_offset
+but skb->data_len stays unchanged, hitting BUG_ON(skb->len < skb->data_len)
+in __skb_pull().
 
-This blocks potential side-channel attack where an unprivileged application
-attaches a filter to leak TCP sequence/acknowledgment numbers.
+The UDP fraglist GRO path already contains this guard at
+udp_offload.c:749. Adding it to skb_gro_receive_list() itself provides
+centralized protection for all callers (TCP, UDP, and any future
+protocols), and ensures the precondition of skb_pull() is satisfied
+before it is called.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: Tamir Shahar <tamirthesis@gmail.com>
-Reported-by: Amit Klein <aksecurity@gmail.com>
-Cc: Willem de Bruijn <willemb@google.com>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: Martin KaFai Lau <martin.lau@linux.dev>
-Cc: Eduard Zingerman <eddyz87@gmail.com>
-Cc: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: Song Liu <song@kernel.org>
-Cc: Yonghong Song <yonghong.song@linux.dev>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Cc: Stanislav Fomichev <sdf@fomichev.me>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
+On pskb_may_pull() failure, set NAPI_GRO_CB(skb)->flush = 1 so the
+skb is not held as a new GRO head and is instead delivered through the
+normal receive path, matching the UDP handling.
+
+Fixes: 8d95dc474f85 ("net: add code for TCP fraglist GRO")
+Reported-by: HanQuan <eilaimemedsnaimel@gmail.com>
+Reported-by: MingXuan <bwnie0730@outlook.com>
+Signed-off-by: HanQuan <eilaimemedsnaimel@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 5 +++++
+ net/core/gro.c | 5 +++++
  1 file changed, 5 insertions(+)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index b197a795306392..d317b4a8b85a25 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -1463,6 +1463,11 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
- 	case SO_ATTACH_FILTER: {
- 		struct sock_fprog fprog;
+diff --git a/net/core/gro.c b/net/core/gro.c
+index a847539834679c..35f2f708f01052 100644
+--- a/net/core/gro.c
++++ b/net/core/gro.c
+@@ -232,6 +232,11 @@ int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb)
+ 	if (unlikely(p->len + skb->len >= 65536))
+ 		return -E2BIG;
  
-+		if (sk_is_tcp(sk) &&
-+		    !sockopt_ns_capable(sock_net(sk)->user_ns, CAP_NET_ADMIN)) {
-+			ret = -EPERM;
-+			break;
-+		}
- 		ret = copy_bpf_fprog_from_user(&fprog, optval, optlen);
- 		if (!ret)
- 			ret = sk_attach_filter(&fprog, sk);
++	if (!pskb_may_pull(skb, skb_gro_offset(skb))) {
++		NAPI_GRO_CB(skb)->flush = 1;
++		return -ENOMEM;
++	}
++
+ 	if (NAPI_GRO_CB(p)->last == p)
+ 		skb_shinfo(p)->frag_list = skb;
+ 	else
 -- 
 2.53.0
 
