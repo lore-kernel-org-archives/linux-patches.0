@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A14A3A3E78;
-	Tue, 16 Jun 2026 17:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D41305688;
+	Tue, 16 Jun 2026 17:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630793; cv=none; b=OZVEe/FwK2MN/y4TRS7cJXdg3XFDntV+Uma1YHepy+CjId6xxX1c/OoaDxnn7O2CPnF6RAfCIrH6+qDD/IylrUooMO7/S7vglu+mmicnuwQJUfAdluKXvx8qmyRzh3i6ASd5xkVnax6ME8AZuEjvustVEbQqkzWxD6CmtukwQ48=
+	t=1781630798; cv=none; b=j31jUxD6v1o27lBiZoXgJ2B7DE5lOQWkbL/08Gumxluzg/ebztohx+ddAh/05EfDHVKKvot83VxU5LCCKfNRfeokuTEMuYR7akrhgbt8J50Z7KmwlFUcEzCpPYN6p4AqIf6B2JO03IL/Mg2aTV3fZ+60KxqMoVxZO3CJhMdfXiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630793; c=relaxed/simple;
-	bh=2//BMCVdIMp9nzln9chggylI/P3IA71gdcf2GZ0p5L4=;
+	s=arc-20240116; t=1781630798; c=relaxed/simple;
+	bh=ZCnryxmQIOfsoxKVec/dZgA0+y9kHWgYNf8HPPHaxpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4qkoSYs3Y5pDvhXxkedb4S0IGOZSrtknfwzbBcL+xX64y055zVekVV3mRHPOG6kMnFkjln1YnlZMGpE2c13F06miu3cXPOGrOxortY/minoMThnZaBZvjnPU35u01R8ZMv4aQ7BIleJKhfv5v9m3G8jvTD/B4wuttBweqrPcp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmco+/FU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nfXxVz9PTmCCO2Xr/jNmhX2+j7syRWGKeOMBjr/5zDChWIWArNfJtOycPB8AOMbNEF8fvQwwwLZPuepGzfrOH7HBR5xgECTMNy7GJXzZwj5SklfWmGAngYa159oArdLccdRLyzXsLTgXM4g0R7xcPykLpRA84b4br5l0tZ42z1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bvlf0ORz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmco+/FU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A39C1F000E9;
-	Tue, 16 Jun 2026 17:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bvlf0ORz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EEE61F000E9;
+	Tue, 16 Jun 2026 17:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630792;
-	bh=oHRdDkTe0b2n8ZAKRRflrTmyDeLkjYqe146BK07FZKo=;
+	s=korg; t=1781630797;
+	bh=bCLIZbkSY5jai6IgN80wz8jMhFmXKgib69V36kDI7Hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dmco+/FUdOsAB4R2dQ+6XR9VqbktY6oLdMx8Kef+7KrMuYdLMXlyj2pnxPnpw3Tsf
-	 mDumD1iONe5uS6npULofmByhadaiSeF1VBT47SzEcwhjuzh+iv5PnTW6xV+gFQ4+oi
-	 R54OkuZLFkm7cfiZhUImR3hSs1a04xtpu19RFdlU=
+	b=bvlf0ORzRGEaSXPsnBnR8JZAn5n9GSHHZwteGDlnzAaBJB6NJnBexblr3vR/tT0Ag
+	 PhUIILqDYziKpeJo1VMgpbTFXy1NHWS4ATfhxyMzE/fdObU3EucLmF9HAZHhJHSqiO
+	 RYdfx5FyuhzXhBxwij68vZ9D3a96aLd1pfEJWSQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siwei Zhang <oss@fourdim.xyz>,
+	Muhammad Bilal <meatuni001@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 096/522] Bluetooth: L2CAP: fix chan ref leak in l2cap_chan_timeout() on !conn
-Date: Tue, 16 Jun 2026 20:24:03 +0530
-Message-ID: <20260616145130.389085608@linuxfoundation.org>
+Subject: [PATCH 6.1 097/522] Bluetooth: HIDP: fix missing length checks in hidp_input_report()
+Date: Tue, 16 Jun 2026 20:24:04 +0530
+Message-ID: <20260616145130.437224757@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -50,40 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siwei Zhang <oss@fourdim.xyz>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-commit 9dbd84990394c51f5cee1e8871bb5ff8af5ed939 upstream.
+commit 2a3ac9ee11dbb9845f3947cef4a79dba658cf6f6 upstream.
 
-__set_chan_timer() takes a l2cap_chan reference via l2cap_chan_hold()
-before scheduling the delayed work.  The normal path in
-l2cap_chan_timeout() drops this reference with l2cap_chan_put() at the
-end, but the early return when chan->conn is NULL skips the put,
-leaking the reference.
+hidp_input_report() reads keyboard and mouse payload data from an skb
+without first verifying that skb->len contains enough data.
 
-Add the missing l2cap_chan_put() before the early return.
+hidp_recv_intr_frame() pulls the 1-byte HIDP header before dispatching
+to hidp_input_report(). If a paired device sends a truncated packet,
+the handler reads beyond the valid skb data, resulting in an
+out-of-bounds read of skb data. The OOB bytes may be interpreted as
+phantom key presses or spurious mouse movement.
 
-Fixes: adf0398cee86 ("Bluetooth: l2cap: fix null-ptr-deref in l2cap_chan_timeout")
+Replace the open-coded length tracking and pointer arithmetic with
+skb_pull_data() calls. skb_pull_data() returns NULL if the requested
+bytes are not present, eliminating the need for a manual size variable
+and the separate skb->len guard.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/bluetooth/hidp/core.c |   23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -435,8 +435,10 @@ static void l2cap_chan_timeout(struct wo
+--- a/net/bluetooth/hidp/core.c
++++ b/net/bluetooth/hidp/core.c
+@@ -179,12 +179,21 @@ static void hidp_input_report(struct hid
+ {
+ 	struct input_dev *dev = session->input;
+ 	unsigned char *keys = session->keys;
+-	unsigned char *udata = skb->data + 1;
+-	signed char *sdata = skb->data + 1;
+-	int i, size = skb->len - 1;
++	unsigned char *udata;
++	signed char *sdata;
++	u8 *hdr;
++	int i;
++
++	hdr = skb_pull_data(skb, 1);
++	if (!hdr)
++		return;
  
- 	BT_DBG("chan %p state %s", chan, state_to_string(chan->state));
+-	switch (skb->data[0]) {
++	switch (*hdr) {
+ 	case 0x01:	/* Keyboard report */
++		udata = skb_pull_data(skb, 8);
++		if (!udata)
++			break;
++
+ 		for (i = 0; i < 8; i++)
+ 			input_report_key(dev, hidp_keycode[i + 224], (udata[0] >> i) & 1);
  
--	if (!conn)
-+	if (!conn) {
-+		l2cap_chan_put(chan);
- 		return;
-+	}
+@@ -213,6 +222,10 @@ static void hidp_input_report(struct hid
+ 		break;
  
- 	mutex_lock(&conn->chan_lock);
- 	/* __set_chan_timer() calls l2cap_chan_hold(chan) while scheduling
+ 	case 0x02:	/* Mouse report */
++		sdata = skb_pull_data(skb, 3);
++		if (!sdata)
++			break;
++
+ 		input_report_key(dev, BTN_LEFT,   sdata[0] & 0x01);
+ 		input_report_key(dev, BTN_RIGHT,  sdata[0] & 0x02);
+ 		input_report_key(dev, BTN_MIDDLE, sdata[0] & 0x04);
+@@ -222,7 +235,7 @@ static void hidp_input_report(struct hid
+ 		input_report_rel(dev, REL_X, sdata[1]);
+ 		input_report_rel(dev, REL_Y, sdata[2]);
+ 
+-		if (size > 3)
++		if (skb->len > 0)
+ 			input_report_rel(dev, REL_WHEEL, sdata[3]);
+ 		break;
+ 	}
 
 
