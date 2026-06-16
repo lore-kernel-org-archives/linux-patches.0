@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7419F43E4B4;
-	Tue, 16 Jun 2026 15:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4D62E612E;
+	Tue, 16 Jun 2026 15:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623222; cv=none; b=qd5LLV4oKC8qZSo4PJZSqtQsNND+RGgRuBPBk+VlNN/LZnRSFgHoozgCNUseg4iPU5d8rYTXjmu+nVtUXvxMK3ao54aYYD0PF4IoCE4oKTSmpcnFKEiA2P9W/QnQtnqnSJCRePzUGf2r4zakm6i+m3dHIZ1P4nDF+YqswkPkcPw=
+	t=1781623228; cv=none; b=mQLXXSUg3uvRXqDuCrEmbEnUEimJPUA+tz56nEAe9qYezN0X0gyGxd7L6GdRxNdFZA22W1LKKSwgh1AjjSqfR1rLX2wJ0+yS3hyTCNAFM0P3vQMbQpu/bxBCLwstGB3HVt8BjyyEcj5VKxqeukB67haU1EZCvLm0yoNytmkVxxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623222; c=relaxed/simple;
-	bh=slmnKi+QoFcCTLzPZvRmtP6ozWjQk9HeEtNEIS/pOXw=;
+	s=arc-20240116; t=1781623228; c=relaxed/simple;
+	bh=bPF8PP4nUW4YY5xqKQJvi+qNiab/PY2IxJsiLmsFYbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JYp1hDAUY9m1DnIaVpRWQ0d45OgcRjv5NWxrUW4L2oF/GQHMgj/3fa58fY23f80VtaUZjkntliQ/QFCsDj1ok9UW3ctbgr17G5L4eFQN4Jp3dIAHskC1nvi4pmmYNLHofaOrjBPdK4erwEai9TwC2pQLuvgZIhSymBa/9Z/xVx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YtTWLHNh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nZjYSd8CbUF6rsy5e22E3ZJQ841MA5J9tZkDxvQlChddgeFNcrVy6VbhnxZ2765KXe++pzX2m2qmsNRjuPQBQkgrUGCMFQANpFGMfl6Dw/xGg6Kj+h96sby0b3Set3q59SkVcHAjMC+1CHGPNgvIPF97ptWKMIW/ImbI9XR1IFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MkdQNmw9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YtTWLHNh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A471F000E9;
-	Tue, 16 Jun 2026 15:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MkdQNmw9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9A51F000E9;
+	Tue, 16 Jun 2026 15:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623221;
-	bh=NFllaglBHsE1A1hpHaIz1/03noaURSHfKxhIbzbVvrw=;
+	s=korg; t=1781623226;
+	bh=m7L5COqtBekIbpGe1j5xqQUO/eLG6vcGeDswLeQtD+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YtTWLHNhzvtfBpyx9TOJOznxpc7aECxbwmZ209iGSRPxUeRtT9u+qifgns90AVk/N
-	 FYbvG2lhlBxnE8jXotUNdX1lCXEsIAwlnk9vxh4ZbsFzwKh9e/PmjXt1LnG4V2X2Kj
-	 OKkMDdVXeAmRkzPY4wcxJI0oaAG2URh83/d0i9ns=
+	b=MkdQNmw9r6+yzTZi+4NSmCJXd7x1LXiDVlPpL2KAyQePqHj0/2TgtZQow+gXGPNKh
+	 0vt0SYzGZULLVFLPBM8H10fjwO4LVMSuaPFAP+Qzo+6+Gc6z3jOssyp3CtC95ykTna
+	 cqTf1mpghGacASgxSRppmJaWuBeB4BmcGKwlL6qM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Kelley <mhklinux@outlook.com>,
-	Long Li <longli@microsoft.com>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
 	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 075/378] Drivers: hv: vmbus: Provide option to skip VMBus unload on panic
-Date: Tue, 16 Jun 2026 20:25:06 +0530
-Message-ID: <20260616145114.103834132@linuxfoundation.org>
+Subject: [PATCH 7.0 076/378] drm/hyperv: During panic do VMBus unload after frame buffer is flushed
+Date: Tue, 16 Jun 2026 20:25:07 +0530
+Message-ID: <20260616145114.164673848@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -54,125 +54,93 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Kelley <mhklinux@outlook.com>
 
-[ Upstream commit c5c3ef8d49e15d2fc1cec4ad7c91d81b99977440 ]
+[ Upstream commit 8b35874f56ded0cc1a90a25b87411249a86246cd ]
 
-Currently, VMBus code initiates a VMBus unload in the panic path so
-that if a kdump kernel is loaded, it can start fresh in setting up its
-own VMBus connection. However, a driver for the VMBus virtual frame
-buffer may need to flush dirty portions of the frame buffer back to
-the Hyper-V host so that panic information is visible in the graphics
-console. To support such flushing, provide exported functions for the
-frame buffer driver to specify that the VMBus unload should not be
-done by the VMBus driver, and to initiate the VMBus unload itself.
-Together these allow a frame buffer driver to delay the VMBus unload
-until after it has completed the flush.
+In a VM, Linux panic information (reason for the panic, stack trace,
+etc.) may be written to a serial console and/or a virtual frame buffer
+for a graphics console. The latter may need to be flushed back to the
+host hypervisor for display.
 
-Ideally, the VMBus driver could use its own panic-path callback to do
-the unload after all frame buffer drivers have finished. But DRM frame
-buffer drivers use the kmsg dump callback, and there are no callbacks
-after that in the panic path. Hence this somewhat messy approach to
-properly sequencing the frame buffer flush and the VMBus unload.
+The current Hyper-V DRM driver for the frame buffer does the flushing
+*after* the VMBus connection has been unloaded, such that panic messages
+are not displayed on the graphics console. A user with a Hyper-V graphics
+console is left with just a hung empty screen after a panic. The enhanced
+control that DRM provides over the panic display in the graphics console
+is similarly non-functional.
+
+Commit 3671f3777758 ("drm/hyperv: Add support for drm_panic") added
+the Hyper-V DRM driver support to flush the virtual frame buffer. It
+provided necessary functionality but did not handle the sequencing
+problem with VMBus unload.
+
+Fix the full problem by using VMBus functions to suppress the VMBus
+unload that is normally done by the VMBus driver in the panic path. Then
+after the frame buffer has been flushed, do the VMBus unload so that a
+kdump kernel can start cleanly. As expected, CONFIG_DRM_PANIC must be
+selected for these changes to have effect. As a side benefit, the
+enhanced features of the DRM panic path are also functional.
 
 Fixes: 3671f3777758 ("drm/hyperv: Add support for drm_panic")
 Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Long Li <longli@microsoft.com>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/channel_mgmt.c |  1 +
- drivers/hv/hyperv_vmbus.h |  1 -
- drivers/hv/vmbus_drv.c    | 25 ++++++++++++++++++-------
- include/linux/hyperv.h    |  3 +++
- 4 files changed, 22 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/hyperv/hyperv_drm_drv.c     |  5 +++++
+ drivers/gpu/drm/hyperv/hyperv_drm_modeset.c | 15 ++++++++-------
+ 2 files changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hv/channel_mgmt.c b/drivers/hv/channel_mgmt.c
-index 7c77ada12b2e94..327d05ccf41683 100644
---- a/drivers/hv/channel_mgmt.c
-+++ b/drivers/hv/channel_mgmt.c
-@@ -944,6 +944,7 @@ void vmbus_initiate_unload(bool crash)
- 	else
- 		vmbus_wait_for_unload();
+diff --git a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
+index 06b5d96e6eaf6b..b6bf6412ae34ac 100644
+--- a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
++++ b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
+@@ -150,6 +150,10 @@ static int hyperv_vmbus_probe(struct hv_device *hdev,
+ 		goto err_free_mmio;
+ 	}
+ 
++	/* If DRM panic path is stubbed out VMBus code must do the unload */
++	if (IS_ENABLED(CONFIG_DRM_PANIC))
++		vmbus_set_skip_unload(true);
++
+ 	drm_client_setup(dev, NULL);
+ 
+ 	return 0;
+@@ -169,6 +173,7 @@ static void hyperv_vmbus_remove(struct hv_device *hdev)
+ 	struct drm_device *dev = hv_get_drvdata(hdev);
+ 	struct hyperv_drm_device *hv = to_hv(dev);
+ 
++	vmbus_set_skip_unload(false);
+ 	drm_dev_unplug(dev);
+ 	drm_atomic_helper_shutdown(dev);
+ 	vmbus_close(hdev->channel);
+diff --git a/drivers/gpu/drm/hyperv/hyperv_drm_modeset.c b/drivers/gpu/drm/hyperv/hyperv_drm_modeset.c
+index 7978f8c8108c23..d48ca6c23b7c5e 100644
+--- a/drivers/gpu/drm/hyperv/hyperv_drm_modeset.c
++++ b/drivers/gpu/drm/hyperv/hyperv_drm_modeset.c
+@@ -212,15 +212,16 @@ static void hyperv_plane_panic_flush(struct drm_plane *plane)
+ 	struct hyperv_drm_device *hv = to_hv(plane->dev);
+ 	struct drm_rect rect;
+ 
+-	if (!plane->state || !plane->state->fb)
+-		return;
++	if (plane->state && plane->state->fb) {
++		rect.x1 = 0;
++		rect.y1 = 0;
++		rect.x2 = plane->state->fb->width;
++		rect.y2 = plane->state->fb->height;
+ 
+-	rect.x1 = 0;
+-	rect.y1 = 0;
+-	rect.x2 = plane->state->fb->width;
+-	rect.y2 = plane->state->fb->height;
++		hyperv_update_dirt(hv->hdev, &rect);
++	}
+ 
+-	hyperv_update_dirt(hv->hdev, &rect);
++	vmbus_initiate_unload(true);
  }
-+EXPORT_SYMBOL_GPL(vmbus_initiate_unload);
  
- static void vmbus_setup_channel_state(struct vmbus_channel *channel,
- 				      struct vmbus_channel_offer_channel *offer)
-diff --git a/drivers/hv/hyperv_vmbus.h b/drivers/hv/hyperv_vmbus.h
-index 7bd8f8486e858c..592a16303b3bed 100644
---- a/drivers/hv/hyperv_vmbus.h
-+++ b/drivers/hv/hyperv_vmbus.h
-@@ -440,7 +440,6 @@ void hv_vss_deinit(void);
- int hv_vss_pre_suspend(void);
- int hv_vss_pre_resume(void);
- void hv_vss_onchannelcallback(void *context);
--void vmbus_initiate_unload(bool crash);
- 
- static inline void hv_poll_channel(struct vmbus_channel *channel,
- 				   void (*cb)(void *))
-diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-index 3d2827477f0a54..59fc09d73a05d0 100644
---- a/drivers/hv/vmbus_drv.c
-+++ b/drivers/hv/vmbus_drv.c
-@@ -70,19 +70,29 @@ bool vmbus_is_confidential(void)
- }
- EXPORT_SYMBOL_GPL(vmbus_is_confidential);
- 
-+static bool skip_vmbus_unload;
-+
-+/*
-+ * Allow a VMBus framebuffer driver to specify that in the case of a panic,
-+ * it will do the VMbus unload operation once it has flushed any dirty
-+ * portions of the framebuffer to the Hyper-V host.
-+ */
-+void vmbus_set_skip_unload(bool skip)
-+{
-+	skip_vmbus_unload = skip;
-+}
-+EXPORT_SYMBOL_GPL(vmbus_set_skip_unload);
-+
- /*
-  * The panic notifier below is responsible solely for unloading the
-  * vmbus connection, which is necessary in a panic event.
-- *
-- * Notice an intrincate relation of this notifier with Hyper-V
-- * framebuffer panic notifier exists - we need vmbus connection alive
-- * there in order to succeed, so we need to order both with each other
-- * [see hvfb_on_panic()] - this is done using notifiers' priorities.
-  */
- static int hv_panic_vmbus_unload(struct notifier_block *nb, unsigned long val,
- 			      void *args)
- {
--	vmbus_initiate_unload(true);
-+	if (!skip_vmbus_unload)
-+		vmbus_initiate_unload(true);
-+
- 	return NOTIFY_DONE;
- }
- static struct notifier_block hyperv_panic_vmbus_unload_block = {
-@@ -2903,7 +2913,8 @@ static void hv_crash_handler(struct pt_regs *regs)
- {
- 	int cpu;
- 
--	vmbus_initiate_unload(true);
-+	if (!skip_vmbus_unload)
-+		vmbus_initiate_unload(true);
- 	/*
- 	 * In crash handler we can't schedule synic cleanup for all CPUs,
- 	 * doing the cleanup for current CPU only. This should be sufficient
-diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
-index dfc516c1c7193f..b0502a336eb3a5 100644
---- a/include/linux/hyperv.h
-+++ b/include/linux/hyperv.h
-@@ -1334,6 +1334,9 @@ int vmbus_allocate_mmio(struct resource **new, struct hv_device *device_obj,
- 			bool fb_overlap_ok);
- void vmbus_free_mmio(resource_size_t start, resource_size_t size);
- 
-+void vmbus_initiate_unload(bool crash);
-+void vmbus_set_skip_unload(bool skip);
-+
- /*
-  * GUID definitions of various offer types - services offered to the guest.
-  */
+ static const struct drm_plane_helper_funcs hyperv_plane_helper_funcs = {
 -- 
 2.53.0
 
