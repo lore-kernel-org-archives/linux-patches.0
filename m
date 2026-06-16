@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B664169AD2;
-	Tue, 16 Jun 2026 18:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADFCE3D669D;
+	Tue, 16 Jun 2026 18:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635127; cv=none; b=OM0cXwkdOXXAHxaEptbwXAlnPTgYO9eO7BNlJgJR9uxR225G99B59DJKa8IhI4giXVDfKQ2H2JLWnCLL8aU722AEL+u1qwXY0Ct28G6MG9RukJwnnS6tg7eb2mWs+Ao0OUTY/KVxRzPudO6MlzNMFK4Zxf/BAUi3uUzW+Q6rlVU=
+	t=1781635132; cv=none; b=WxAApNlnQSafI0mPz2pfrI+grx6DwiBSD1dbfCJicax5iB7oEOhvpZJJcJk95zwAZ1xRv9zxKI1Urtk5fT3ANo80HxemGp8YnqUYXLswEYnHiX/UtpunH0R+Pu4OCGj+caX5GGO+AXcaxnR2oFpB3HJfM6DmhE/6OyRNCem9MNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635127; c=relaxed/simple;
-	bh=pq3BzsMoE3FehVi9/qkvJdOnUAij9rRyZjHDaNcYDXs=;
+	s=arc-20240116; t=1781635132; c=relaxed/simple;
+	bh=+M17a7hWJJdNXmeqj6psGU5B780j211whhSxjO0WpZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K5lddxqxg19VA2mAoa7Nvts/RWhSNB2dQjjUUaGbk351PGXoPCgrNNYavejVJv4bwdw2XipYO/G3o+dlawtnHJbPE3Twt+BSUsElVbr8soJnXdPj7vvGyZRsu7VocXfwvvFTJtFY+AIWgE09AVumpPUU5W31dFQCZUuCD3mlhyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ArDIotzx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PC6z9qtgaw0j9e90EPH5XXl6lyOoVMD2xiFLJkS7NIXpui74GfLK43m9KNLf21qLXxeLrGgug4a0ebOjyHQLtHBw00YT9OArNUlIsABMSi88RG9L0KePGYLVCoOcUQAXXsL5go4ffMqczWke4p3rJHfXIlQ2fLZQvujBchbOxWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fwpI4c6g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ArDIotzx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C521F000E9;
-	Tue, 16 Jun 2026 18:38:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwpI4c6g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B211D1F000E9;
+	Tue, 16 Jun 2026 18:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635126;
-	bh=cEsmPmNtyCOz40yosx4PPOB0ZfFkqINwEogbdcUIJD0=;
+	s=korg; t=1781635131;
+	bh=rWj140825eOyL3JdcqyNw+QGHZ/jIJYGRp1D0GrNvP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ArDIotzxWhISKrnxEYpgAvpX3SGwZzjI0zCHqaIc+B7a/qVTRQVWHYYnsEFwNit1Z
-	 vkWeDszmg4eWmjKxjC/mkgerIvjzDwvBvxd6b2+yUv37qP9MPkz98+gjvcXOkPERhe
-	 nsDa/9+57Du+dxOTaCsbrgxjCQpzYZeIklk9QL/g=
+	b=fwpI4c6g8lTQU/Gy6rPKKmfkDR4FRcPJJJDtmQ0f9qkrlV9816hN37vzoRCT+LiXX
+	 /yGqfAWrJrepxeESAO9B9LBP7gIFM1y2L4N/4nQ+W4pIVdUM4C++ox/3z0b72FV39Y
+	 ykFNhl2sKoaFIkbRytzXAXqULiIL/mFqnguwcXt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Breno Leitao <leitao@debian.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Robert Garcia <rob_garcia@163.com>
-Subject: [PATCH 5.15 394/411] blk-cgroup: Fix NULL deref caused by blkg_policy_data being installed before init
-Date: Tue, 16 Jun 2026 20:30:32 +0530
-Message-ID: <20260616145122.161051319@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Luxing Yin <tr0jan@lzu.edu.cn>,
+	Jiexun Wang <wangjiexun2025@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Sven Eckelmann <sven@narfation.org>
+Subject: [PATCH 5.15 395/411] batman-adv: stop tp_meter sessions during mesh teardown
+Date: Tue, 16 Jun 2026 20:30:33 +0530
+Message-ID: <20260616145122.208581383@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,166 +57,235 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Jiexun Wang <wangjiexun2025@gmail.com>
 
-commit ec14a87ee1999b19d8b7ed0fa95fea80644624ae upstream.
+commit 3d3cf6a7314aca4df0a6dde28ce784a2a30d0166 upstream.
 
-blk-iocost sometimes causes the following crash:
+TP meter sessions remain linked on bat_priv->tp_list after the netlink
+request has already finished. When the mesh interface is removed,
+batadv_mesh_free() currently tears down the mesh without first draining
+these sessions.
 
-  BUG: kernel NULL pointer dereference, address: 00000000000000e0
-  ...
-  RIP: 0010:_raw_spin_lock+0x17/0x30
-  Code: be 01 02 00 00 e8 79 38 39 ff 31 d2 89 d0 5d c3 0f 1f 00 0f 1f 44 00 00 55 48 89 e5 65 ff 05 48 d0 34 7e b9 01 00 00 00 31 c0 <f0> 0f b1 0f 75 02 5d c3 89 c6 e8 ea 04 00 00 5d c3 0f 1f 84 00 00
-  RSP: 0018:ffffc900023b3d40 EFLAGS: 00010046
-  RAX: 0000000000000000 RBX: 00000000000000e0 RCX: 0000000000000001
-  RDX: ffffc900023b3d20 RSI: ffffc900023b3cf0 RDI: 00000000000000e0
-  RBP: ffffc900023b3d40 R08: ffffc900023b3c10 R09: 0000000000000003
-  R10: 0000000000000064 R11: 000000000000000a R12: ffff888102337000
-  R13: fffffffffffffff2 R14: ffff88810af408c8 R15: ffff8881070c3600
-  FS:  00007faaaf364fc0(0000) GS:ffff88842fdc0000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 00000000000000e0 CR3: 00000001097b1000 CR4: 0000000000350ea0
-  Call Trace:
-   <TASK>
-   ioc_weight_write+0x13d/0x410
-   cgroup_file_write+0x7a/0x130
-   kernfs_fop_write_iter+0xf5/0x170
-   vfs_write+0x298/0x370
-   ksys_write+0x5f/0xb0
-   __x64_sys_write+0x1b/0x20
-   do_syscall_64+0x3d/0x80
-   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+A running sender thread or a late incoming tp_meter packet can then keep
+processing against a mesh instance which is already shutting down.
+Synchronize tp_meter with the mesh lifetime by stopping all active
+sessions from batadv_mesh_free() and waiting for sender threads to exit
+before teardown continues.
 
-This happens because iocg->ioc is NULL. The field is initialized by
-ioc_pd_init() and never cleared. The NULL deref is caused by
-blkcg_activate_policy() installing blkg_policy_data before initializing it.
-
-blkcg_activate_policy() was doing the following:
-
-1. Allocate pd's for all existing blkg's and install them in blkg->pd[].
-2. Initialize all pd's.
-3. Online all pd's.
-
-blkcg_activate_policy() only grabs the queue_lock and may release and
-re-acquire the lock as allocation may need to sleep. ioc_weight_write()
-grabs blkcg->lock and iterates all its blkg's. The two can race and if
-ioc_weight_write() runs during #1 or between #1 and #2, it can encounter a
-pd which is not initialized yet, leading to crash.
-
-The crash can be reproduced with the following script:
-
-  #!/bin/bash
-
-  echo +io > /sys/fs/cgroup/cgroup.subtree_control
-  systemd-run --unit touch-sda --scope dd if=/dev/sda of=/dev/null bs=1M count=1 iflag=direct
-  echo 100 > /sys/fs/cgroup/system.slice/io.weight
-  bash -c "echo '8:0 enable=1' > /sys/fs/cgroup/io.cost.qos" &
-  sleep .2
-  echo 100 > /sys/fs/cgroup/system.slice/io.weight
-
-with the following patch applied:
-
-> diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-> index fc49be622e05..38d671d5e10c 100644
-> --- a/block/blk-cgroup.c
-> +++ b/block/blk-cgroup.c
-> @@ -1553,6 +1553,12 @@ int blkcg_activate_policy(struct gendisk *disk, const struct blkcg_policy *pol)
-> 		pd->online = false;
-> 	}
->
-> +       if (system_state == SYSTEM_RUNNING) {
-> +               spin_unlock_irq(&q->queue_lock);
-> +               ssleep(1);
-> +               spin_lock_irq(&q->queue_lock);
-> +       }
-> +
-> 	/* all allocated, init in the same order */
-> 	if (pol->pd_init_fn)
-> 		list_for_each_entry_reverse(blkg, &q->blkg_list, q_node)
-
-I don't see a reason why all pd's should be allocated, initialized and
-onlined together. The only ordering requirement is that parent blkgs to be
-initialized and onlined before children, which is guaranteed from the
-walking order. Let's fix the bug by allocating, initializing and onlining pd
-for each blkg and holding blkcg->lock over initialization and onlining. This
-ensures that an installed blkg is always fully initialized and onlined
-removing the the race window.
-
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reported-by: Breno Leitao <leitao@debian.org>
-Fixes: 9d179b865449 ("blkcg: Fix multiple bugs in blkcg_activate_policy()")
-Link: https://lore.kernel.org/r/ZN0p5_W-Q9mAHBVY@slm.duckdns.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Robert Garcia <rob_garcia@163.com>
+Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Co-developed-by: Luxing Yin <tr0jan@lzu.edu.cn>
+Signed-off-by: Luxing Yin <tr0jan@lzu.edu.cn>
+Signed-off-by: Jiexun Wang <wangjiexun2025@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+[ Context ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-cgroup.c |   32 ++++++++++++++++++--------------
- 1 file changed, 18 insertions(+), 14 deletions(-)
+ net/batman-adv/main.c     |    1 
+ net/batman-adv/tp_meter.c |   94 +++++++++++++++++++++++++++++++++++++---------
+ net/batman-adv/tp_meter.h |    1 
+ net/batman-adv/types.h    |    4 +
+ 4 files changed, 82 insertions(+), 18 deletions(-)
 
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -1337,7 +1337,7 @@ int blkcg_activate_policy(struct request
- retry:
- 	spin_lock_irq(&q->queue_lock);
+--- a/net/batman-adv/main.c
++++ b/net/batman-adv/main.c
+@@ -262,6 +262,7 @@ void batadv_mesh_free(struct net_device
+ 	atomic_set(&bat_priv->mesh_state, BATADV_MESH_DEACTIVATING);
  
--	/* blkg_list is pushed at the head, reverse walk to allocate parents first */
-+	/* blkg_list is pushed at the head, reverse walk to initialize parents first */
- 	list_for_each_entry_reverse(blkg, &q->blkg_list, q_node) {
- 		struct blkg_policy_data *pd;
+ 	batadv_purge_outstanding_packets(bat_priv, NULL);
++	batadv_tp_stop_all(bat_priv);
  
-@@ -1375,21 +1375,20 @@ retry:
- 				goto enomem;
- 		}
+ 	batadv_gw_node_free(bat_priv);
  
--		blkg->pd[pol->plid] = pd;
-+		spin_lock(&blkg->blkcg->lock);
+--- a/net/batman-adv/tp_meter.c
++++ b/net/batman-adv/tp_meter.c
+@@ -12,6 +12,7 @@
+ #include <linux/byteorder/generic.h>
+ #include <linux/cache.h>
+ #include <linux/compiler.h>
++#include <linux/completion.h>
+ #include <linux/err.h>
+ #include <linux/etherdevice.h>
+ #include <linux/gfp.h>
+@@ -365,23 +366,38 @@ static void batadv_tp_vars_put(struct ba
+ }
+ 
+ /**
+- * batadv_tp_sender_cleanup() - cleanup sender data and drop and timer
+- * @bat_priv: the bat priv with all the soft interface information
+- * @tp_vars: the private data of the current TP meter session to cleanup
++ * batadv_tp_list_detach() - remove tp session from mesh session list once
++ * @tp_vars: the private data of the current TP meter session
+  */
+-static void batadv_tp_sender_cleanup(struct batadv_priv *bat_priv,
+-				     struct batadv_tp_vars *tp_vars)
++static void batadv_tp_list_detach(struct batadv_tp_vars *tp_vars)
+ {
+-	cancel_delayed_work(&tp_vars->finish_work);
++	bool detached = false;
+ 
+ 	spin_lock_bh(&tp_vars->bat_priv->tp_list_lock);
+-	hlist_del_rcu(&tp_vars->list);
++	if (!hlist_unhashed(&tp_vars->list)) {
++		hlist_del_init_rcu(&tp_vars->list);
++		detached = true;
++	}
+ 	spin_unlock_bh(&tp_vars->bat_priv->tp_list_lock);
+ 
++	if (!detached)
++		return;
 +
- 		pd->blkg = blkg;
- 		pd->plid = pol->plid;
--		pd->online = false;
--	}
-+		blkg->pd[pol->plid] = pd;
- 
--	/* all allocated, init in the same order */
--	if (pol->pd_init_fn)
--		list_for_each_entry_reverse(blkg, &q->blkg_list, q_node)
--			pol->pd_init_fn(blkg->pd[pol->plid]);
-+		if (pol->pd_init_fn)
-+			pol->pd_init_fn(pd);
- 
--	list_for_each_entry_reverse(blkg, &q->blkg_list, q_node) {
- 		if (pol->pd_online_fn)
--			pol->pd_online_fn(blkg->pd[pol->plid]);
--		blkg->pd[pol->plid]->online = true;
-+			pol->pd_online_fn(pd);
-+		pd->online = true;
++	atomic_dec(&tp_vars->bat_priv->tp_num);
 +
-+		spin_unlock(&blkg->blkcg->lock);
+ 	/* drop list reference */
+ 	batadv_tp_vars_put(tp_vars);
++}
+ 
+-	atomic_dec(&tp_vars->bat_priv->tp_num);
++/**
++ * batadv_tp_sender_cleanup() - cleanup sender data and drop and timer
++ * @tp_vars: the private data of the current TP meter session to cleanup
++ */
++static void batadv_tp_sender_cleanup(struct batadv_tp_vars *tp_vars)
++{
++	cancel_delayed_work_sync(&tp_vars->finish_work);
++
++	batadv_tp_list_detach(tp_vars);
+ 
+ 	/* kill the timer and remove its reference */
+ 	timer_shutdown_sync(&tp_vars->timer);
+@@ -883,7 +899,8 @@ out:
+ 	batadv_orig_node_put(orig_node);
+ 
+ 	batadv_tp_sender_end(bat_priv, tp_vars);
+-	batadv_tp_sender_cleanup(bat_priv, tp_vars);
++	batadv_tp_sender_cleanup(tp_vars);
++	complete(&tp_vars->finished);
+ 
+ 	batadv_tp_vars_put(tp_vars);
+ 
+@@ -915,7 +932,8 @@ static void batadv_tp_start_kthread(stru
+ 		batadv_tp_vars_put(tp_vars);
+ 
+ 		/* cleanup of failed tp meter variables */
+-		batadv_tp_sender_cleanup(bat_priv, tp_vars);
++		batadv_tp_sender_cleanup(tp_vars);
++		complete(&tp_vars->finished);
+ 		return;
  	}
  
- 	__set_bit(pol->plid, q->blkcg_pols);
-@@ -1406,14 +1405,19 @@ out:
- 	return ret;
+@@ -1021,6 +1039,7 @@ void batadv_tp_start(struct batadv_priv
+ 	tp_vars->start_time = jiffies;
  
- enomem:
--	/* alloc failed, nothing's initialized yet, free everything */
-+	/* alloc failed, take down everything */
- 	spin_lock_irq(&q->queue_lock);
- 	list_for_each_entry(blkg, &q->blkg_list, q_node) {
- 		struct blkcg *blkcg = blkg->blkcg;
-+		struct blkg_policy_data *pd;
+ 	init_waitqueue_head(&tp_vars->more_bytes);
++	init_completion(&tp_vars->finished);
  
- 		spin_lock(&blkcg->lock);
--		if (blkg->pd[pol->plid]) {
--			pol->pd_free_fn(blkg->pd[pol->plid]);
-+		pd = blkg->pd[pol->plid];
-+		if (pd) {
-+			if (pd->online && pol->pd_offline_fn)
-+				pol->pd_offline_fn(pd);
-+			pd->online = false;
-+			pol->pd_free_fn(pd);
- 			blkg->pd[pol->plid] = NULL;
- 		}
- 		spin_unlock(&blkcg->lock);
+ 	spin_lock_init(&tp_vars->unacked_lock);
+ 	INIT_LIST_HEAD(&tp_vars->unacked_list);
+@@ -1127,14 +1146,7 @@ static void batadv_tp_receiver_shutdown(
+ 		   "Shutting down for inactivity (more than %dms) from %pM\n",
+ 		   BATADV_TP_RECV_TIMEOUT, tp_vars->other_end);
+ 
+-	spin_lock_bh(&tp_vars->bat_priv->tp_list_lock);
+-	hlist_del_rcu(&tp_vars->list);
+-	spin_unlock_bh(&tp_vars->bat_priv->tp_list_lock);
+-
+-	/* drop list reference */
+-	batadv_tp_vars_put(tp_vars);
+-
+-	atomic_dec(&bat_priv->tp_num);
++	batadv_tp_list_detach(tp_vars);
+ 
+ 	spin_lock_bh(&tp_vars->unacked_lock);
+ 	list_for_each_entry_safe(un, safe, &tp_vars->unacked_list, list) {
+@@ -1498,6 +1510,52 @@ out:
+ }
+ 
+ /**
++ * batadv_tp_stop_all() - stop all currently running tp meter sessions
++ * @bat_priv: the bat priv with all the mesh interface information
++ */
++void batadv_tp_stop_all(struct batadv_priv *bat_priv)
++{
++	struct batadv_tp_vars *tp_vars[BATADV_TP_MAX_NUM];
++	struct batadv_tp_vars *tp_var;
++	size_t count = 0;
++	size_t i;
++
++	spin_lock_bh(&bat_priv->tp_list_lock);
++	hlist_for_each_entry(tp_var, &bat_priv->tp_list, list) {
++		if (WARN_ON_ONCE(count >= BATADV_TP_MAX_NUM))
++			break;
++
++		if (!kref_get_unless_zero(&tp_var->refcount))
++			continue;
++
++		tp_vars[count++] = tp_var;
++	}
++	spin_unlock_bh(&bat_priv->tp_list_lock);
++
++	for (i = 0; i < count; i++) {
++		tp_var = tp_vars[i];
++
++		switch (tp_var->role) {
++		case BATADV_TP_SENDER:
++			batadv_tp_sender_shutdown(tp_var,
++						  BATADV_TP_REASON_CANCEL);
++			wake_up(&tp_var->more_bytes);
++			wait_for_completion(&tp_var->finished);
++			break;
++		case BATADV_TP_RECEIVER:
++			batadv_tp_list_detach(tp_var);
++			if (timer_shutdown_sync(&tp_var->timer))
++				batadv_tp_vars_put(tp_var);
++			break;
++		}
++
++		batadv_tp_vars_put(tp_var);
++	}
++
++	synchronize_net();
++}
++
++/**
+  * batadv_tp_meter_init() - initialize global tp_meter structures
+  */
+ void __init batadv_tp_meter_init(void)
+--- a/net/batman-adv/tp_meter.h
++++ b/net/batman-adv/tp_meter.h
+@@ -17,6 +17,7 @@ void batadv_tp_start(struct batadv_priv
+ 		     u32 test_length, u32 *cookie);
+ void batadv_tp_stop(struct batadv_priv *bat_priv, const u8 *dst,
+ 		    u8 return_value);
++void batadv_tp_stop_all(struct batadv_priv *bat_priv);
+ void batadv_tp_meter_recv(struct batadv_priv *bat_priv, struct sk_buff *skb);
+ 
+ #endif /* _NET_BATMAN_ADV_TP_METER_H_ */
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -14,6 +14,7 @@
+ #include <linux/average.h>
+ #include <linux/bitops.h>
+ #include <linux/compiler.h>
++#include <linux/completion.h>
+ #include <linux/if.h>
+ #include <linux/if_ether.h>
+ #include <linux/kref.h>
+@@ -1405,6 +1406,9 @@ struct batadv_tp_vars {
+ 	/** @finish_work: work item for the finishing procedure */
+ 	struct delayed_work finish_work;
+ 
++	/** @finished: completion signaled when a sender thread exits */
++	struct completion finished;
++
+ 	/** @test_length: test length in milliseconds */
+ 	u32 test_length;
+ 
 
 
