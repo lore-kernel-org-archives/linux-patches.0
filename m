@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D6D332EC1;
-	Tue, 16 Jun 2026 17:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FA147AF75;
+	Tue, 16 Jun 2026 17:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631183; cv=none; b=cMxLLzWm8VCUbqfmrnieAhy2AGVtzxjNwJaJ9Ht6obVQe9ZZH8N9hVHFAFEjScaON6JVLJVDs677+NpBOur3jycK+vZHQJHdmZLfycaZe1/KreTeAY3nM8rexZddchO+QOYUmNfDsj2xIxlKYqexEKC2pIux3B+7wkGVSl6IPzA=
+	t=1781631189; cv=none; b=EG3zPmIACIC4sKEXW/FS5HAjbhfa393bMgc9mtX2+rIHbMxKNKV8SBPSRq7H7mfQTyBwn9iMQj8gNodam9uZanZ9XE6woIvwxAluMRpW4lirKlHIqLF2Yj9GyQBYCKP1nda5JmQLXmYIlF5Zkm4zHsV/D5Zv+uiufobAnCL2P7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631183; c=relaxed/simple;
-	bh=5BPSnhAOrQvPucqIuhpcnYss0+3G69/eEmkdQBaBcSA=;
+	s=arc-20240116; t=1781631189; c=relaxed/simple;
+	bh=GTPo8wT532wlCMQK29wFl1HlQE7Cto43T8PI4RbtWDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pc6sRLOju6SUdwWisWHdWJvRyL/D6gi/SYb7qCKSqCGEtq/sb8SHeIg1RpQ6/sRWY4lyqwlBvs/KSe6F9hD11KfgkSnUWFqy6RC0uKyIYAqu45WZ9FdFxgGGAbEkeCvZADkJEBCRCT2kR0WYnLJpCUT+UkpT9qEjgHUxT/bqo/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdaByOKY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CVxg9Tv+FAMXfZjznB1/FbsYti9u5qZwZbITd81SMHT+AwGijnfFiXH0hJP6voo6NAazbMH2NsMbbArVS2Sleq1kiP7pdkSx41kxw2Bnpsv1tnvIRbPhPzOREu2PGlHMbq3cWBEvB1mhXeQYvoAX61wyUcu+ToRbG9DQqeWR97Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnJwqItN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdaByOKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAAF61F000E9;
-	Tue, 16 Jun 2026 17:33:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnJwqItN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 309451F000E9;
+	Tue, 16 Jun 2026 17:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631182;
-	bh=7mXIj/qs0qNdMD1Y1WOL8dsUlRQsiXqloKUEACWdcAg=;
+	s=korg; t=1781631188;
+	bh=UcImETCVU5TCTuhOZOhccrNb9WuDstET+inY36bO7T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VdaByOKYSpcJp1BnDT7ot0/4uEJXaMj97yyyjC3HgFPji2bcuYRfxL+/AohAKMruU
-	 XN9MTfExEUSUg/P3wR/S2LzzIU3B2ETqi6cFhmyAaBHPPIrch1nqwxpNKXSSOBHc0W
-	 eLjLsrsIPlRx/vBSmF5eJJBlFnyyZKBVEE34nzkk=
+	b=pnJwqItNY1bm5xNEJzVyLwIiG49OOVZ9V4VOggRNwToMTJObIKxY3ETxeFXzR1U7u
+	 DTGStm5/Zz2TLVZ1qq+nfx9iKpoWygSaVUKbOOE5k/eorme+Rzn10hGmjKs/2INkwL
+	 h+WaZ3K9rP4D1QwmZ7XVaj4aRwwKc6HEpU+l2YDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
 	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.1 139/522] comedi: comedi_test: fix check for valid scan_begin_src in waveform_ai_cmdtest()
-Date: Tue, 16 Jun 2026 20:24:46 +0530
-Message-ID: <20260616145132.599879437@linuxfoundation.org>
+Subject: [PATCH 6.1 140/522] comedi: comedi_test: Fix limiting of convert_arg in waveform_ai_cmdtest()
+Date: Tue, 16 Jun 2026 20:24:47 +0530
+Message-ID: <20260616145132.642048833@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,35 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Abbott <abbotti@mev.co.uk>
 
-commit 542f5248cb481073203e0dadab5bcbd28aeae308 upstream.
+commit 8a3bee801d420be8a7a0bae4a26547b353b8fe22 upstream.
 
-Commit 783ddaebd397 ("staging: comedi: comedi_test: support
-scan_begin_src == TRIG_FOLLOW") neglected to add a test that
-`scan_begin_src` has only one bit set.  The allowed values are
-`TRIG_FOLLOW` and `TRIG_TIMER`, but the code incorrectly also allows
-`TRIG_FOLLOW | TRIG_TIMER`.  Add a call to
-`comedi_check_trigger_is_unique()` to check that only one trigger source
-bit is set.
+The function checks and possibly modifies the description of an
+asynchronous command to be run on the analog input subdevice of a comedi
+device attached to the "comedi_test" driver, returning 0 if no
+modifications were required, or a positive value that indicates which
+step of the checking process it failed on.  Step 4 fixes up various
+argument values for various trigger sources.
+
+There are two bugs in the fixing up of the `convert_arg` value to keep
+the `scan_begin_arg` value within the range of `unsigned int` when
+`scan_begin_src` and `convert_src` both have the value `TRIG_TIMER`,
+which indicates that the corresponding `_arg` values hold a time period
+in nanoseconds.  The code also uses `scan_end_arg` which hold the number
+of "conversions" within each "scan".  The goal is to end up with the
+scan period being less than or equal to the convert period multiplied by
+the number of conversions per scan.  It intends to do that by clamping
+the `convert_arg` value to a maximum value of `UINT_MAX / scan_end_arg`
+rounded down to a multiple of 1000 (`NSEC_PER_USEC`).
+
+(The rounding from nanoseconds to microseconds is because the driver is
+modelling a device that uses a 1 MHz clock for timing.  This is partly
+because that is a more typical timing base for real hardware devices
+driven by comedi, and partly because the driver used to use `struct
+timeval` internally.)
+
+The first bug is that the code checks if `scan_begin_arg == TRIG_TIMER`
+when it should be checking if `scan_begin_src == TRIG_TIMER`.  The
+bugged check will always fail because if `scan_begin_src == TRIG_TIMER`,
+then `scan_begin_arg` will be at least 1000 (`NSEC_PER_USEC`), otherwise
+`scan_begin_src == TRIG_FOLLOW` and `scan_begin_arg` will be 0.  (N.B
+`TRIG_TIMER` is defined as `0x10`.)  The second bug is that is rounding
+the maximum value down to a multiple of 1000000000 (`NSEC_PER_SEC`)
+instead of 1000 (`NSEC_PER_USEC`), however this bug is not reached due
+to the first bug.  This patch fixes both bugs.
 
 Fixes: 783ddaebd397 ("staging: comedi: comedi_test: support scan_begin_src == TRIG_FOLLOW")
+Fixes: 5afdcad2f818 ("staging: comedi: comedi_test: limit maximum convert_arg")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260422162138.36003-1-abbotti@mev.co.uk
+Link: https://patch.msgid.link/20260422144637.27692-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/comedi_test.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/comedi/drivers/comedi_test.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/drivers/comedi/drivers/comedi_test.c
 +++ b/drivers/comedi/drivers/comedi_test.c
-@@ -271,6 +271,7 @@ static int waveform_ai_cmdtest(struct co
- 	/* Step 2a : make sure trigger sources are unique */
- 
- 	err |= comedi_check_trigger_is_unique(cmd->convert_src);
-+	err |= comedi_check_trigger_is_unique(cmd->scan_begin_src);
- 	err |= comedi_check_trigger_is_unique(cmd->stop_src);
- 
- 	/* Step 2b : and mutually compatible */
+@@ -322,10 +322,10 @@ static int waveform_ai_cmdtest(struct co
+ 		arg = min(arg,
+ 			  rounddown(UINT_MAX, (unsigned int)NSEC_PER_USEC));
+ 		arg = NSEC_PER_USEC * DIV_ROUND_CLOSEST(arg, NSEC_PER_USEC);
+-		if (cmd->scan_begin_arg == TRIG_TIMER) {
++		if (cmd->scan_begin_src == TRIG_TIMER) {
+ 			/* limit convert_arg to keep scan_begin_arg in range */
+ 			limit = UINT_MAX / cmd->scan_end_arg;
+-			limit = rounddown(limit, (unsigned int)NSEC_PER_SEC);
++			limit = rounddown(limit, (unsigned int)NSEC_PER_USEC);
+ 			arg = min(arg, limit);
+ 		}
+ 		err |= comedi_check_trigger_arg_is(&cmd->convert_arg, arg);
 
 
