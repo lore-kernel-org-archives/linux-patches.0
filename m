@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECD9305688;
-	Tue, 16 Jun 2026 17:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A004502F;
+	Tue, 16 Jun 2026 17:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630746; cv=none; b=CKg71MnctBQZIIjAf50wKNMYVlS0FYVsWCKLoVUSeK3XA8Yeb52QsvnLw8RsBWMW2ki/Ort8Q1KtROcK1ZpWeXyozphfcjUx99G3ug5lhJxKPZrfvRyZj6TWOoKBHjR6wXFo8PYRcSvwS5+qQg1nLaBjfcvczuC3JBWnyGTIcXU=
+	t=1781630750; cv=none; b=EeWS2fhSWWXfztPe3AAkVo2hT3sdj4H1+3sMc+H8JNyLkBViPumInxiSHBB6D7CO1C7bCcusC2OAh1WShYf7qAj5In9iMnOmNcQF7gJKeTJEMumrVhktoxECah/SA7gAXy3q+oAwwwJroa0IyXQOIyLzn4wpVgcQDNGfWVT78fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630746; c=relaxed/simple;
-	bh=0osi0+eYrS4RIeK9ESdI5vUtaO0w0+ZvnVF/5Lv53eA=;
+	s=arc-20240116; t=1781630750; c=relaxed/simple;
+	bh=Dp7JtqENOIb/rKDj7tCZOiQKC415Ng9u5Cy1Wl9Et/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UxQHL2K/BBN0cx97WxkQv+6CDM4Ex12TlXMbD7iGpfcFFAFzPtLboJkfVr7N6yRR4k6iJhQazxSGnuXkgXJOnGWJkafTFCM+5TGvBDmIses5+jHW3WswMGKXOKrTZ2PmwVzxGz5glrQTQvmRH2Ip18YNa5A2aFUMxpBNRGSnNx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdXd3rhR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qzHSoG5AjUlc3nIp5H+Tb21HEoKdXFW7h0rC/2btOtCfxYikLGwmUIRQaCvLELEJ3QmWhxzdoeHeB3DZwFzEcyfglBkPH2rE7Rt4fPJLmHZ6xNs51HR4NH+g8l9wkRaTY+lgb81q4WXhwEQiEgVmDXox232IgPwy8En0XZ0kOLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h8v3rJD2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdXd3rhR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1247D1F000E9;
-	Tue, 16 Jun 2026 17:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h8v3rJD2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E370F1F000E9;
+	Tue, 16 Jun 2026 17:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630745;
-	bh=B33GC15nfcJ5Zyyu1kY92TbllsS8U3x/BBHm2gzpGxE=;
+	s=korg; t=1781630749;
+	bh=+wWlJbW/ymf7to7MXFBbvUlVyryqHro/xEUreDVOCIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hdXd3rhRidrbl4e/09y1utuO7zbCFWzBpMB/HJPeaddey5/PIdSsY9wm2ajq0+gUl
-	 PG0GzRJhSTqE6k/ERnwBgg5sAylg560Cm82MrQE4m+kDtZJBftUa/tNSjrweufr7T+
-	 /MDNd573mL8Yac9JiGMTxRkNonuRQo8m8punwGtY=
+	b=h8v3rJD28K4bzaTGkystk/cucfYlL4peqnfb9WxnFfnhPmtSI1X8v+bjEZKU1LW1m
+	 TPRckbWcrPI/CV6VXNNy9OtA9c2ZV1bLuHB9Q3IuhQMiiCf1KFl8W7u9ypBFouIAtr
+	 q6BXEAlRYu0NGNAxUCZ00z68lupPZ21dLz10aL2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 088/522] USB: serial: safe_serial: fix memory corruption with small endpoint
-Date: Tue, 16 Jun 2026 20:23:55 +0530
-Message-ID: <20260616145129.990551157@linuxfoundation.org>
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.1 089/522] Input: ims-pcu - fix usb_free_coherent() size in ims_pcu_buffers_free()
+Date: Tue, 16 Jun 2026 20:23:56 +0530
+Message-ID: <20260616145130.039628274@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -49,49 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit 438061ed1ad85e6743e2dce826671772d81089ec upstream.
+commit dab48a7e74e6a394f3aa0461a2b1fb0c7b38fcb8 upstream.
 
-Make sure that the bulk-out buffer size is at least eight bytes to avoid
-user-controlled slab corruption in "safe" mode should a malicious device
-report a smaller size.
+The input buffer size is pcu->max_in_size, but pcu->max_out_size is
+passed to usb_free_coherent().
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Change size to match the allocation size.
+
+Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://patch.msgid.link/20260522085412.45430-2-fourier.thomas@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/safe_serial.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/input/misc/ims-pcu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/safe_serial.c
-+++ b/drivers/usb/serial/safe_serial.c
-@@ -259,6 +259,7 @@ static int safe_prepare_write_buffer(str
- static int safe_startup(struct usb_serial *serial)
- {
- 	struct usb_interface_descriptor	*desc;
-+	int bulk_out_size;
+--- a/drivers/input/misc/ims-pcu.c
++++ b/drivers/input/misc/ims-pcu.c
+@@ -1598,7 +1598,7 @@ static void ims_pcu_buffers_free(struct
+ 	usb_kill_urb(pcu->urb_in);
+ 	usb_free_urb(pcu->urb_in);
  
- 	if (serial->dev->descriptor.bDeviceClass != CDC_DEVICE_CLASS)
- 		return -ENODEV;
-@@ -279,6 +280,16 @@ static int safe_startup(struct usb_seria
- 	default:
- 		return -EINVAL;
- 	}
-+
-+	/*
-+	 * The bulk-out buffer needs to be large enough for the two-byte
-+	 * trailer in safe mode, but assume anything smaller than eight bytes
-+	 * is broken.
-+	 */
-+	bulk_out_size = serial->port[0]->bulk_out_size;
-+	if (bulk_out_size > 0 && bulk_out_size < 8)
-+		return -EINVAL;
-+
- 	return 0;
- }
+-	usb_free_coherent(pcu->udev, pcu->max_out_size,
++	usb_free_coherent(pcu->udev, pcu->max_in_size,
+ 			  pcu->urb_in_buf, pcu->read_dma);
  
+ 	kfree(pcu->urb_out_buf);
 
 
