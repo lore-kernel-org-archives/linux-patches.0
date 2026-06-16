@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7044418D7;
-	Tue, 16 Jun 2026 15:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AD53A8746;
+	Tue, 16 Jun 2026 15:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623302; cv=none; b=gbw7wD3VXVqMQublUkhHUHw0csDZLPii02lVjS0GVGeK9KzQLCcDBPeHSEKrTwaX0oUhE5LlYMuZYfo+PdPtAb+2Z7tJI5+Q76u0ehOJYHIkrmPkXrdsjI/vHwkV3ONJfNoBWviVqxx0hdSxKr2hBPkUNsZYHikgX9RShF83CXc=
+	t=1781623308; cv=none; b=L0cZQ1ambBEmhQFrwKLEyu88ZhKgWpF2M5nQa6hw41PoiIGXj64RvSqLvYWuDIbjxXP4jk365oLYZSV91uWXuwDNLd7yDOW0JVp5Ee0c3MbsvTINk8Y67khPs0KtbPYrujGgJ8SR1FoJqOO9KAsWQVGcgnxP8roRUTY1V8so9yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623302; c=relaxed/simple;
-	bh=hf/MacHu356K8TPA8DtgpxIjxbvZhddtMykq8WizSTg=;
+	s=arc-20240116; t=1781623308; c=relaxed/simple;
+	bh=LB4K+/qdllVuuCKvts5TxNR42X9WFDvLU5LVHpqNawA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e6oB0rsbZJ/ITW4eBpuYAxEx7reK4UI+uiWcAsdwO2bOqWZjz31ZmKwjlWg89VdREh7nD2ikwsRK8/VUdw7IJvntsYEfE57SyeRtI5eZdLjfgVstOpVfdtp8rx+1/8Gg3Dw56VCZsa1Cn25xK0UbzBZh6gJD83TX43eaQpGN3TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eaxtXC09; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RFZQLMFSdi5vf3BPij2EqJZq+YDLVAYFW6xVhQoJGVztIJrL4KNAOvbu9VhF7mvIlnoO0l1UwJYPXMg1BHuTaAsXzv1V3ZAZ/ZuO2CJgX2sXCDBCrs7L4VKe8cQq8m8lBh9SIGGLEsaEmPxL7KXytNEz6ogE7yXCqN1mXm/3/rY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZMiQuS1v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eaxtXC09"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D79E1F00A3A;
-	Tue, 16 Jun 2026 15:21:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZMiQuS1v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47301F000E9;
+	Tue, 16 Jun 2026 15:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623301;
-	bh=2Pe7o7w69c9rgl5uWxD6HzpTgvnSCxkR8F+YHxKpA0c=;
+	s=korg; t=1781623306;
+	bh=HSXBjsKssPV7utGPXmcJ5L9B7mFgUk9XEILcDVoKehs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eaxtXC09r60BcxxxExM/UPxPVNbTl+FS22NoKPFB0Diz/2yfwCq9s1+z6gTUdS/DH
-	 5OtBJUfhxqIyoogYuRakXpLf5csn/wk/Rm1L5f+J28Oh/jjhURTazGY6/n5uJNQ/35
-	 cQulbDFL+Ve8gpWYvbpRJXwIi2rtZfIqOVPhBifo=
+	b=ZMiQuS1v382BeMTGuR7B+sU2reriGdWaYgbe6am3+VFkWeXv7XVWdfPMNsm7ut2tq
+	 WMB+NLu3uHRvRSXlu7J6g+lB7nHLT7Y6I8RoxiTr16FzugPRERDgtiQxImx4CthBVi
+	 0XuafTSEHxMwiRo46MAQAr84pzjZ7OHwOF/pczXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Moreno <amorenoz@redhat.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chih Kai Hsu <hsu.chih.kai@realtek.com>,
+	Hayes Wang <hayeswang@realtek.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 123/378] net: openvswitch: fix possible kfree_skb of ERR_PTR
-Date: Tue, 16 Jun 2026 20:25:54 +0530
-Message-ID: <20260616145116.820999093@linuxfoundation.org>
+Subject: [PATCH 7.0 124/378] r8152: handle the return value of usb_reset_device()
+Date: Tue, 16 Jun 2026 20:25:55 +0530
+Message-ID: <20260616145116.873236807@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -53,46 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Moreno <amorenoz@redhat.com>
+From: Chih Kai Hsu <hsu.chih.kai@realtek.com>
 
-[ Upstream commit ee30dd2909d8b98619f4341c70ec8dc8e155ab02 ]
+[ Upstream commit 19440600e729d4f74a42591a872099cf25c7d28a ]
 
-After the patch in the "Fixes" tag, the allocation of the "reply" skb
-can happen either before or after locking the ovs_mutex.
+If usb_reset_device() returns a negative error code, stop the
+process of probing.
 
-However, error cleanups still follow the classical reversed order,
-assuming "reply" is allocated before locking: it is freed after unlocking.
-
-If "reply" allocation happens after locking the mutex and it fails,
-"reply" is left with an ERR_PTR, and execution jumps to the correspondent
-cleanup stage which will try to free an invalid pointer.
-
-Fix this by setting the pointer to NULL after having saved its error
-value.
-
-Fixes: 893f139b9a6c ("openvswitch: Minimize ovs_flow_cmd_new|set critical sections.")
-Signed-off-by: Adrian Moreno <amorenoz@redhat.com>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Acked-by: Eelco Chaudron <echaudro@redhat.com>
-Link: https://patch.msgid.link/20260604121946.942164-1-amorenoz@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 10c3271712f5 ("r8152: disable the ECM mode")
+Signed-off-by: Chih Kai Hsu <hsu.chih.kai@realtek.com>
+Reviewed-by: Hayes Wang <hayeswang@realtek.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260604092247.27158-450-nic_swsd@realtek.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/datapath.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/usb/r8152.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
-index bbbde50fc6498f..f0164817d9b723 100644
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -1316,6 +1316,7 @@ static int ovs_flow_cmd_set(struct sk_buff *skb, struct genl_info *info)
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index f69e7e1ab7788d..240265746990ec 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -9775,7 +9775,12 @@ static int rtl8152_probe_once(struct usb_interface *intf,
+ 	struct net_device *netdev;
+ 	int ret;
  
- 		if (IS_ERR(reply)) {
- 			error = PTR_ERR(reply);
-+			reply = NULL;
- 			goto err_unlock_ovs;
- 		}
- 	}
+-	usb_reset_device(udev);
++	ret = usb_reset_device(udev);
++	if (ret < 0) {
++		dev_err(&intf->dev, "USB reset failed, errno=%d\n", ret);
++		return ret;
++	}
++
+ 	netdev = alloc_etherdev(sizeof(struct r8152));
+ 	if (!netdev) {
+ 		dev_err(&intf->dev, "Out of memory\n");
 -- 
 2.53.0
 
