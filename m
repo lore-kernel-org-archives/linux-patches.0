@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8779839150B;
-	Tue, 16 Jun 2026 16:26:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CE839150B;
+	Tue, 16 Jun 2026 16:26:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627212; cv=none; b=b7KbOyug0k9nrFX09EdEUtGLT6E6f7mg/kF0vhmYK5jeq6FTjHT1Sd7+Ye9GH97X4ZoUkc7dVym533fhhgTSOs42Z4Di2G+bNZmdFaVNoAoVLyq26CR9PDuqZYN9EBnAdZdpL3CdeZCm8tquzth6OxWUL1M5wCt7Hfj/ZIhPILU=
+	t=1781627218; cv=none; b=fs+ToTL6ZTh5YuBKsjspoy4ClOmHx2GaGFPNbZG8gnORRkaD5OjLUTpss6FfIdVcY3T1k61fPJxnAZ9i7qod/0SvXcgjKBE1AWOIqmXQ8abLqxKdFTGjZKM7sygz6UKWr44T07bAsrk6lvO/b6s8cYhfBzaeSDZSk2EwbbsCzRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627212; c=relaxed/simple;
-	bh=waBZY6lp3T8FbreNmBAU3qWQkoz59JDpQbYeFdKL5jI=;
+	s=arc-20240116; t=1781627218; c=relaxed/simple;
+	bh=oS1grt9c3Yfref0Ft9kjZ9gAvhDZWfvmObwLDdwkin8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l4oA9vF5QKuO/c9ctoAAV5FOjiqPA8z5ly6hwhlQt8CKp2S4a81S9cgNY+4QvRjDQ4pfd/+n9yikfKUAocvaWYP3huAOaE6550Y6LxxD4qIuhXBwEqipbRKPcoK1nkIZog3J9DEBwvst+UtQ7MaB44u/sdqSh/Jfj6AZ23U7oEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLScc8T6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VMEgQDTzEY1b1T1FL7oY7wOJL6NIO2jVYnLWtBj62BUd0KswRiyyr3fCd4IvWtCG6zCLO98FqAaBRlJxQarD9McP5oAWREScgYpRL1GGU516G4PnKWDBUDrlPB4xfeQBLEwybOvhUIGFdQpPoaIC96dReBT5k8SmR+jM/ErYqeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zoJ4Mmub; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLScc8T6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBCC1F000E9;
-	Tue, 16 Jun 2026 16:26:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zoJ4Mmub"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D63B1F000E9;
+	Tue, 16 Jun 2026 16:26:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627211;
-	bh=l+ScNmI6ACnH5wNoPfK3KFuL6GSRxHjoODeSj0XF3Hw=;
+	s=korg; t=1781627217;
+	bh=JQbo0o1jaoME4hKMgPceY6dT2DImSYClDaAqo1xw1kI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BLScc8T6gLQAlVfbGshleuIrTks7kWM4JuAycKa3rUi6mIXBABpbV6poEx1uD5l3E
-	 J4iKWb1EMSyY6YqVpYP0vdlyyWtQ/qDuhn4giCu0aRfiycniPwFH9gN7fwM09Sdrt5
-	 kl1ilXdfdljeBM81Gx9wYZsOcCoYKZaVww3TNOVU=
+	b=zoJ4MmubxvRYwptoMbq5AFVj8hPBzdsd/6/KWhpc3w+p8GMAdFsw+3DoooyMAX8lz
+	 G5TT5hJJwhbRuAohQXlrEs6WwVgcEWZPo5ikyuC2KlUhRvftZ3KoZH8fNlHsIgLV3s
+	 nClGZ9fl93soBr50pFNbyOYEpwDhvORaMGeg8vtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 095/261] ip6_vti: fix incorrect tunnel matching in vti6_tnl_lookup()
-Date: Tue, 16 Jun 2026 20:28:53 +0530
-Message-ID: <20260616145049.442365987@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.12 131/261] rust: kasan/kbuild: fix rustc-option when cross-compiling
+Date: Tue, 16 Jun 2026 20:29:29 +0530
+Message-ID: <20260616145051.158922910@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -53,59 +50,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-[ Upstream commit a5c0359f5cbc51a2e2b114d6041e0f3c73f903e9 ]
+commit 4a44b17406cb5a93f90af3df9392b3a45eb336fb upstream.
 
-In vti6_tnl_lookup(), when an exact match for a tunnel fails,
-the code falls back to searching for wildcard tunnels:
+The Makefile version of rustc-option currently checks whether the option
+exists for the host target instead of the target actually being compiled
+for. It was done this way in commit 46e24a545cdb ("rust: kasan/kbuild:
+fix missing flags on first build") to avoid a circular dependency on
+target.json. However, because of this, rustc-option currently does not
+function when cross-compiling from x86_64 to aarch64 if
+CONFIG_SHADOW_CALL_STACK is enabled. This is because KBUILD_RUSTFLAGS
+contains -Zfixed-x18 under this configuration. Since that flag does not
+exist on the host target, rustc-option runs into a compilation failure
+every time, leading to all flags being rejected as unsupported.
 
-- Tunnels matching the packet's local address, with any remote address
-  wildcard remote).
+To fix this, update rustc-option to pass a --target parameter so that
+the host target is not used. For targets using target.json, use a
+built-in target that is as close as possible to the target created with
+target.json to avoid the circular dependency on target.json.
 
-- Tunnels matching the packet's remote address, with any local address
-  (wildcard local).
+One scenario where this causes a boot failure:
+* Cross-compiled from x86_64 to aarch64.
+* With CONFIG_SHADOW_CALL_STACK=y
+* With CONFIG_KASAN_SW_TAGS=y
+* With CONFIG_KASAN_INLINE=n
+Then the resulting kernel image will fail to boot when it first calls
+into Rust code with a crash along the lines of "Unable to handle kernel
+paging request at virtual address 0ffffffc08541796". This is because the
+call threshold is not specified, so rustc will inline kasan operations,
+but the kasan shadow offset is not specified, which leads to the inlined
+kasan instructions being incorrect.
 
-However, vti6 stores all these different types of tunnels in the same
-hash table (ip6n->tnls_r_l) prone to hash collisions.
+Note that the -Zsanitizer=kernel-hwaddress parameter itself does not
+lead to a rustc-option failure despite being aarch64-specific because
+RUSTFLAGS_KASAN has not yet been added to KBUILD_RUSTFLAGS when
+rustc-option is evaluated by the kasan Makefile.
 
-The bug is that the fallback search loops in vti6_tnl_lookup() were
-missing checks to ensure that the candidate tunnel actually has
-a wildcard address.
+Cc: stable@vger.kernel.org
+Fixes: 46e24a545cdb ("rust: kasan/kbuild: fix missing flags on first build")
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20260507-rustc-option-cross-v2-1-2f650a49c2b5@google.com
+[ Edited slightly:
+    - Reset variable to avoid using the environment.
+    - Use a simply expanded variable flavor for simplicity.
+    - Export variable so that behavior in sub-`make`s is consistent.
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-Fixes: fbe68ee87522 ("vti6: Add a lookup method for tunnels with wildcard endpoints.")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Link: https://patch.msgid.link/20260608164613.933023-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  This matches other variables. - Miguel ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- net/ipv6/ip6_vti.c | 2 ++
- 1 file changed, 2 insertions(+)
+ Makefile                  |    3 ++-
+ arch/x86/Makefile         |    4 ++++
+ arch/x86/Makefile.um      |    8 ++++++++
+ scripts/Makefile.compiler |    2 +-
+ 4 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/ip6_vti.c b/net/ipv6/ip6_vti.c
-index 2ac88593a95427..6fe696939d041e 100644
---- a/net/ipv6/ip6_vti.c
-+++ b/net/ipv6/ip6_vti.c
-@@ -105,6 +105,7 @@ vti6_tnl_lookup(struct net *net, const struct in6_addr *remote,
- 	hash = HASH(&any, local);
- 	for_each_vti6_tunnel_rcu(ip6n->tnls_r_l[hash]) {
- 		if (ipv6_addr_equal(local, &t->parms.laddr) &&
-+		    ipv6_addr_any(&t->parms.raddr) &&
- 		    (t->dev->flags & IFF_UP))
- 			return t;
- 	}
-@@ -112,6 +113,7 @@ vti6_tnl_lookup(struct net *net, const struct in6_addr *remote,
- 	hash = HASH(remote, &any);
- 	for_each_vti6_tunnel_rcu(ip6n->tnls_r_l[hash]) {
- 		if (ipv6_addr_equal(remote, &t->parms.raddr) &&
-+		    ipv6_addr_any(&t->parms.laddr) &&
- 		    (t->dev->flags & IFF_UP))
- 			return t;
- 	}
--- 
-2.53.0
-
+--- a/Makefile
++++ b/Makefile
+@@ -568,6 +568,7 @@ KBUILD_RUSTFLAGS := $(rust_common_flags)
+ 		    -Crelocation-model=static \
+ 		    -Zfunction-sections=n \
+ 		    -Wclippy::float_arithmetic
++KBUILD_RUSTFLAGS_OPTION_CHKS :=
+ 
+ KBUILD_AFLAGS_KERNEL :=
+ KBUILD_CFLAGS_KERNEL :=
+@@ -604,7 +605,7 @@ export KBUILD_USERCFLAGS KBUILD_USERLDFL
+ 
+ export KBUILD_CPPFLAGS NOSTDINC_FLAGS LINUXINCLUDE OBJCOPYFLAGS KBUILD_LDFLAGS
+ export KBUILD_CFLAGS CFLAGS_KERNEL CFLAGS_MODULE
+-export KBUILD_RUSTFLAGS RUSTFLAGS_KERNEL RUSTFLAGS_MODULE
++export KBUILD_RUSTFLAGS RUSTFLAGS_KERNEL RUSTFLAGS_MODULE KBUILD_RUSTFLAGS_OPTION_CHKS
+ export KBUILD_AFLAGS AFLAGS_KERNEL AFLAGS_MODULE
+ export KBUILD_AFLAGS_MODULE KBUILD_CFLAGS_MODULE KBUILD_RUSTFLAGS_MODULE KBUILD_LDFLAGS_MODULE
+ export KBUILD_AFLAGS_KERNEL KBUILD_CFLAGS_KERNEL KBUILD_RUSTFLAGS_KERNEL
+--- a/arch/x86/Makefile
++++ b/arch/x86/Makefile
+@@ -78,6 +78,10 @@ KBUILD_CFLAGS += -mno-sse -mno-mmx -mno-
+ KBUILD_RUSTFLAGS += --target=$(objtree)/scripts/target.json
+ KBUILD_RUSTFLAGS += -Ctarget-feature=-sse,-sse2,-sse3,-ssse3,-sse4.1,-sse4.2,-avx,-avx2
+ 
++# The target.json file is not available when invoking rustc-option, so use the
++# built-in target when checking whether flags are supported instead.
++KBUILD_RUSTFLAGS_OPTION_CHKS += --target=x86_64-unknown-none
++
+ #
+ # CFLAGS for compiling floating point code inside the kernel.
+ #
+--- a/arch/x86/Makefile.um
++++ b/arch/x86/Makefile.um
+@@ -14,6 +14,14 @@ endif
+ 
+ KBUILD_RUSTFLAGS += --target=$(objtree)/scripts/target.json
+ 
++# The target.json file is not available when invoking rustc-option, so use the
++# built-in target when checking whether flags are supported instead.
++ifeq ($(CONFIG_X86_32),y)
++KBUILD_RUSTFLAGS_OPTION_CHKS += --target=i686-unknown-linux-gnu
++else
++KBUILD_RUSTFLAGS_OPTION_CHKS += --target=x86_64-unknown-linux-gnu
++endif
++
+ ifeq ($(CONFIG_X86_32),y)
+ START := 0x8048000
+ 
+--- a/scripts/Makefile.compiler
++++ b/scripts/Makefile.compiler
+@@ -80,7 +80,7 @@ ld-option = $(call try-run, $(LD) $(KBUI
+ # TODO: remove RUSTC_BOOTSTRAP=1 when we raise the minimum GNU Make version to 4.4
+ __rustc-option = $(call try-run,\
+ 	echo '$(pound)![allow(missing_docs)]$(pound)![feature(no_core)]$(pound)![no_core]' | RUSTC_BOOTSTRAP=1\
+-	$(1) --sysroot=/dev/null $(filter-out --sysroot=/dev/null --target=%,$(2)) $(3)\
++	$(1) --sysroot=/dev/null $(KBUILD_RUSTFLAGS_OPTION_CHKS) $(filter-out --sysroot=/dev/null --target=%target.json,$(2)) $(3)\
+ 	--crate-type=rlib --out-dir=$(TMPOUT) --emit=obj=- - >/dev/null,$(3),$(4))
+ 
+ # rustc-option
 
 
