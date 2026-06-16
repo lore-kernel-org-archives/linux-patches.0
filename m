@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7242146AF21;
-	Tue, 16 Jun 2026 16:27:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A3144DB64;
+	Tue, 16 Jun 2026 16:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627252; cv=none; b=hfhf0BGnQiSJmfSXb3LLBSX7GJahMjJexCFN/0j8znfSDZw1hoeO6iePez08RxtXYUzWcND4VoIAi4xIGukLcsLjtBPS3qsfUek1aTtf3N0/3skH8EhmwS5eMA1iYywJB2k1+MFbp+5Mhikrcj8FxNSzSfHZ5VTUfhrvXuCM0ww=
+	t=1781627260; cv=none; b=po2brodAcKfh6loUB9TUBzFrkf7yuVraBX+dn2y5Oep83YFwRou4Ola4Is5pdMbRsZV03j+jMxa+UjFJvJnSOJCP2JYE48utkM8ZqDgEVvpEWTcl0qaeeCg8bLYtw2NvYZ1pmLnfrGa3xLy+eYRH2UHywMp5Wa0U/+A6Drw8mis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627252; c=relaxed/simple;
-	bh=afdMyJ2DnpReYAfMAekQBQ5ixNZ/UC78Hcm7vfd3PGk=;
+	s=arc-20240116; t=1781627260; c=relaxed/simple;
+	bh=IPWQe/Chst4X6nTG3E+TgL0UcAQgDR83nrXHDtyIQ00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T7wS2PjKDZIGlNkqZpFGedNh1YhxMndinA201HT9Q+6YBZxqNklR8d33waR0c4MsQDutMivb3yjtk7SVzVRtCjaOgYh0z9TnCMyXzjqw/s0rX8oucnwz5Owya7om+vL1kVvmpNbfHd70pL+U2+BNhdieL/pK2dlJBe7monlLg+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vl/7cl5t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WD6cYpuDwQH+KMPwbRWABU76VWdPzQHvpqy6wUHvMYmJcSusi5zrZJ6lF1hkvl5zQ1ptsStZ0RXd4hUJ714KgocBXPk5zJV34lS0qqOytCiJEOL9b/w2QiPYzTXoLPW3ABH0GePFSlHXZdbII5fmvwmO/9VRUF6gJAXxV1pF9Yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUUZvVxE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vl/7cl5t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B3B1F000E9;
-	Tue, 16 Jun 2026 16:27:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUUZvVxE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D99B1F000E9;
+	Tue, 16 Jun 2026 16:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627251;
-	bh=7KPEWd/AsL6yo8MX+ds3jkyPcIkyRjfz/j0awT5rbSA=;
+	s=korg; t=1781627258;
+	bh=Z2xPkz0bIFU7B4yPXScYvEFw7Q6zzRyAHmB0+daviNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vl/7cl5tRkCR4SULGKCqSHNUjOkxhDKo8d47aIcfO9qmisj4mkjLpmgkGvkw9zI4Q
-	 B2ZnFxeV6KLlH+VJV9f+SeIUMJFXXZgdnNyntvPqDinXYvUzW8237KBkIFUst3wlPh
-	 Zl2nheRm2Zd/dXiAXer3Oya83q47TgqjEnIBdZoA=
+	b=hUUZvVxEUYBVi7oXemep07e1F/EfnsOSVMwLnpy9o2NA7Ci4Rye+UpL2SpPvhUfu8
+	 6QeGKoNAKQ8LVrVXgsZBWclO6tWs1G+j7tOvf9tGX9Wpg9M1R6YzE6KdmxRl7JynIz
+	 o3w8lWC7NaRqQ6YvUyMMbaVRWeUA9y5430xEOITg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Judith Mendez <jm@ti.com>,
-	Linus Walleij <linusw@kernel.org>
-Subject: [PATCH 6.12 136/261] pinctrl: mcp23s08: Initialize mcp->dev and mcp->addr before regmap init
-Date: Tue, 16 Jun 2026 20:29:34 +0530
-Message-ID: <20260616145051.386200958@linuxfoundation.org>
+	Gil Portnoy <dddhkts1@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 137/261] ksmbd: fix use-after-free of a deferred file_lock on double SMB2_CANCEL
+Date: Tue, 16 Jun 2026 20:29:35 +0530
+Message-ID: <20260616145051.434086024@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -50,57 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Judith Mendez <jm@ti.com>
+From: Gil Portnoy <dddhkts1@gmail.com>
 
-commit 8473c3a197b57ff01396f7a2ec6ddf65383820d4 upstream.
+commit f580d27e8928828693df44ba2db0fffdbe11dfea upstream.
 
-Regmap initialization triggers regcache_maple_populate() which attempts
-SPI read to populate cache. SPI read requires mcp->dev and mcp->addr to
-be set, without them, NULL pointer dereference occurs during probe.
+A deferred byte-range lock (an SMB2_LOCK that blocks) registers an async work on
+conn->async_requests via setup_async_work(), with cancel_fn =
+smb2_remove_blocked_lock and cancel_argv[0] pointing at the struct file_lock.
 
-Move initialization before mcp23s08_spi_regmap_init() call.
+When the request is cancelled, the worker frees the file_lock with
+locks_free_lock() and takes the cancelled early-exit, which "goto out"s and never
+reaches release_async_work() -- the only site that unlinks the work from
+conn->async_requests and clears cancel_fn/cancel_argv. The work therefore stays
+matchable on async_requests with a live cancel_fn pointing at the freed file_lock,
+until connection teardown finally runs release_async_work().
+
+smb2_cancel() fires cancel_fn unconditionally with no state guard, so a second
+SMB2_CANCEL for the same AsyncId, arriving in that window, re-runs
+smb2_remove_blocked_lock() on the freed file_lock -- a slab use-after-free:
+
+  BUG: KASAN: slab-use-after-free in __locks_delete_block
+    __locks_delete_block
+    locks_delete_block
+    ksmbd_vfs_posix_lock_unblock
+    smb2_remove_blocked_lock
+    smb2_cancel                 <- 2nd SMB2_CANCEL fires cancel_fn
+    handle_ksmbd_work
+  Allocated by ...: locks_alloc_lock <- smb2_lock
+  Freed by ...:     locks_free_lock  <- smb2_lock (cancelled branch)
+  ... cache file_lock_cache of size 192
+
+Reproduced on mainline with KASAN by an authenticated SMB client.
+
+Skip a work whose state is already KSMBD_WORK_CANCELLED so its cancel callback
+cannot be fired a second time.
 
 Cc: stable@vger.kernel.org
-Fixes: f9f4fda15e72 ("pinctrl: mcp23s08: init reg_defaults from HW at probe and switch cache type")
-Signed-off-by: Judith Mendez <jm@ti.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-mcp23s08_spi.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/pinctrl/pinctrl-mcp23s08_spi.c b/drivers/pinctrl/pinctrl-mcp23s08_spi.c
-index 54f61c8cb1c0..5ed368772adb 100644
---- a/drivers/pinctrl/pinctrl-mcp23s08_spi.c
-+++ b/drivers/pinctrl/pinctrl-mcp23s08_spi.c
-@@ -10,6 +10,7 @@
- #include "pinctrl-mcp23s08.h"
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -7270,6 +7270,17 @@ int smb2_cancel(struct ksmbd_work *work)
+ 			    le64_to_cpu(hdr->Id.AsyncId))
+ 				continue;
  
- #define MCP_MAX_DEV_PER_CS	8
-+#define MCP23S08_SPI_BASE	0x40
- 
- /*
-  * A given spi_device can represent up to eight mcp23sxx chips
-@@ -173,6 +174,8 @@ static int mcp23s08_probe(struct spi_device *spi)
- 	for_each_set_bit(addr, &spi_present_mask, MCP_MAX_DEV_PER_CS) {
- 		data->mcp[addr] = &data->chip[--chips];
- 		data->mcp[addr]->irq = spi->irq;
-+		data->mcp[addr]->dev = dev;
-+		data->mcp[addr]->addr = MCP23S08_SPI_BASE | (addr << 1);
- 
- 		ret = mcp23s08_spi_regmap_init(data->mcp[addr], dev, addr, info);
- 		if (ret)
-@@ -184,7 +187,7 @@ static int mcp23s08_probe(struct spi_device *spi)
- 		if (!data->mcp[addr]->pinctrl_desc.name)
- 			return -ENOMEM;
- 
--		ret = mcp23s08_probe_one(data->mcp[addr], dev, 0x40 | (addr << 1),
-+		ret = mcp23s08_probe_one(data->mcp[addr], dev, MCP23S08_SPI_BASE | (addr << 1),
- 					 info->type, -1);
- 		if (ret < 0)
- 			return ret;
--- 
-2.54.0
-
++			/*
++			 * A cancelled deferred byte-range lock frees its
++			 * file_lock and takes the smb2_lock() early-exit that
++			 * skips release_async_work(), so the work stays on
++			 * conn->async_requests with a live cancel_fn pointing
++			 * at the freed file_lock.  Re-firing it on a second
++			 * SMB2_CANCEL is a use-after-free.
++			 */
++			if (iter->state == KSMBD_WORK_CANCELLED)
++				break;
++
+ 			ksmbd_debug(SMB,
+ 				    "smb2 with AsyncId %llu cancelled command = 0x%x\n",
+ 				    le64_to_cpu(hdr->Id.AsyncId),
 
 
