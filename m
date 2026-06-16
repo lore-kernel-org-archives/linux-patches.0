@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF39332EC1;
-	Tue, 16 Jun 2026 17:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B81D332EC1;
+	Tue, 16 Jun 2026 17:35:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631319; cv=none; b=GqIGl4vVZUFzQYslpQaQecwYuxHN8m+9cJb0Q5vIKkbtQd6eUoqjWTyBHChwd6x5aehqsDcHd4cVe/tO+lqhydWuzsz1kpi+AiLV7ambB6ntBPerZ4JPilkMHJMyUsz3uDkRYfTGooYL5kVID6NvV/ft+5KamHZKNBDlaSrOAVI=
+	t=1781631324; cv=none; b=ocInUaTpqSlgxI/0dL1vM1JCe+lf63SEApc3d5vj9bLWmZKye7wfIZ8P/YkKvuOT2k02AXZo14/E7zBPPIUEzy/u+UTzL3scmueLaQzkqEtlEg2upasd/Ecla19HhSjZ7Vca8iAB0E0BLm+Uj1rPh87ZZerP9vfnHFmMPaXJq/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631319; c=relaxed/simple;
-	bh=f7jKSeSRQjPsFej3vptQOBynOUaN993iOpEq8mbEa34=;
+	s=arc-20240116; t=1781631324; c=relaxed/simple;
+	bh=B7ZxjnYWO5VbFM6WSirIguxra/BXjarPyKW7dYPV/uY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HJnkx1e+my+2N/ciUFebhPnAGEWbr2/D1/wvX2h/cEaXdwMoWbjoZpPYlaeSCjMnu/phO7RqUtCoWuM6L0pXLpEnpr/oeq+Ckw555cHDDZsRDyOnKKwU0eyAv9lYyhg5WJHc+kMsIQWTAiYp7Ykm4YJgbwHLnkwsmKpfS2Eiqz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4PPYSq9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q4wWjjk8IIK6XgifTO7cVtnmieZAcotTpADSURKhA1YgBeYtuLFjirrYmyeemUrNIIJXfSEpECRzcz4CpYMYkCZIL7n9jZgD2orzEbti9QQMj772AmXbc2UpOTx7jii98ni3KLU0HyePgrwMGJq+CSWvBr3++kSPpGKCX/fYwPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXq52kl9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4PPYSq9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F741F000E9;
-	Tue, 16 Jun 2026 17:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXq52kl9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDBF1F000E9;
+	Tue, 16 Jun 2026 17:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631318;
-	bh=Fv2qNwuWIlvxEBN1z5VMZjruRjda+TuGWk1rNIuo6l4=;
+	s=korg; t=1781631323;
+	bh=cIiohKKJ0CuSh5+gAr4BYJ1TElu5s/1LI4Q+HTie4ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l4PPYSq9LxPst9iY220MrG3ErQpxBazDQoNtT83KNbpC64MlQKi3WGfGPcuHeDGJ7
-	 xbtcn0BUknjqvE/2OYxTjxh9nvpfHP0GrstfP75Jbz0oAwrT53CivG8krEGz9/CBam
-	 mj0d/PCV+bzDLqRjDAlSnWACxMun7maAL3xWPAjw=
+	b=gXq52kl9hdqy6sHK2KU+Kt5uDsGE4d2n2AW8FLiJnJnLaXbQc2Seuc5/JDYkGQPQ9
+	 51GxExQe10DqnNx63bvW4qRmL2sqScJPZKNUpBfyBvH8iSS3sHJvm2AiOifQB7wZPO
+	 APX74RmSiO/X997STZ/wx3mSUYRydJXko0bmhutE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Julian Anastasov <ja@ssi.bg>,
 	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 198/522] netfilter: xt_NFQUEUE: prefer raw_smp_processor_id
-Date: Tue, 16 Jun 2026 20:25:45 +0530
-Message-ID: <20260616145135.353970669@linuxfoundation.org>
+Subject: [PATCH 6.1 199/522] ipvs: clear the svc scheduler ptr early on edit
+Date: Tue, 16 Jun 2026 20:25:46 +0530
+Message-ID: <20260616145135.397113653@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,39 +52,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit c6c5327dd18bec1e1bbf139b2cf5ae53608a9d30 ]
+[ Upstream commit 193989cc6d80dd8e0460fb3992e69fa03bf0ff9b ]
 
-With PREEMPT_RCU this triggers a splat because smp_processor_id() can be
-preempted while inside a RCU critical section. If xt_NFQUEUE target is
-invoked via nft_compat_eval() path, we are inside a RCU critical
-section.
+ip_vs_edit_service() while unbinding the old scheduler clears
+the svc->scheduler ptr after the scheduler module initiates
+RCU callbacks. This can cause packets to use the old
+scheduler at the time when svc->sched_data is already freed
+after RCU grace period.
 
-Just use the raw version instead.
+Fix it by clearing the ptr early in ip_vs_unbind_scheduler(),
+before the done_service method schedules any RCU callbacks.
 
-Fixes: 0ca743a55991 ("netfilter: nf_tables: add compatibility layer for x_tables")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Also, if the new scheduler fails to initialize when replacing
+the old scheduler, try to restore the old scheduler while still
+returning the error code.
+
+Link: https://sashiko.dev/#/patchset/20260519015506.634185-1-rosenp%40gmail.com
+Fixes: 05f00505a89a ("ipvs: fix crash if scheduler is changed")
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_NFQUEUE.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/ip_vs.h              |  3 +--
+ net/netfilter/ipvs/ip_vs_ctl.c   | 13 ++++++++-----
+ net/netfilter/ipvs/ip_vs_sched.c | 14 +++++++-------
+ 3 files changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/net/netfilter/xt_NFQUEUE.c b/net/netfilter/xt_NFQUEUE.c
-index 466da23e36ff47..b32d153e3a1862 100644
---- a/net/netfilter/xt_NFQUEUE.c
-+++ b/net/netfilter/xt_NFQUEUE.c
-@@ -91,7 +91,7 @@ nfqueue_tg_v3(struct sk_buff *skb, const struct xt_action_param *par)
+diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
+index abc46f05762e6b..0b175ecd9562bd 100644
+--- a/include/net/ip_vs.h
++++ b/include/net/ip_vs.h
+@@ -1407,8 +1407,7 @@ int register_ip_vs_scheduler(struct ip_vs_scheduler *scheduler);
+ int unregister_ip_vs_scheduler(struct ip_vs_scheduler *scheduler);
+ int ip_vs_bind_scheduler(struct ip_vs_service *svc,
+ 			 struct ip_vs_scheduler *scheduler);
+-void ip_vs_unbind_scheduler(struct ip_vs_service *svc,
+-			    struct ip_vs_scheduler *sched);
++void ip_vs_unbind_scheduler(struct ip_vs_service *svc);
+ struct ip_vs_scheduler *ip_vs_scheduler_get(const char *sched_name);
+ void ip_vs_scheduler_put(struct ip_vs_scheduler *scheduler);
+ struct ip_vs_conn *
+diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
+index 6cc50f05c46c15..15a083dd459737 100644
+--- a/net/netfilter/ipvs/ip_vs_ctl.c
++++ b/net/netfilter/ipvs/ip_vs_ctl.c
+@@ -1415,7 +1415,7 @@ ip_vs_add_service(struct netns_ipvs *ipvs, struct ip_vs_service_user_kern *u,
+ 	if (ret_hooks >= 0)
+ 		ip_vs_unregister_hooks(ipvs, u->af);
+ 	if (svc != NULL) {
+-		ip_vs_unbind_scheduler(svc, sched);
++		ip_vs_unbind_scheduler(svc);
+ 		ip_vs_service_free(svc);
+ 	}
+ 	ip_vs_scheduler_put(sched);
+@@ -1477,9 +1477,8 @@ ip_vs_edit_service(struct ip_vs_service *svc, struct ip_vs_service_user_kern *u)
+ 	old_sched = rcu_dereference_protected(svc->scheduler, 1);
+ 	if (sched != old_sched) {
+ 		if (old_sched) {
+-			ip_vs_unbind_scheduler(svc, old_sched);
+-			RCU_INIT_POINTER(svc->scheduler, NULL);
+-			/* Wait all svc->sched_data users */
++			ip_vs_unbind_scheduler(svc);
++			/* Wait all svc->scheduler/sched_data users */
+ 			synchronize_rcu();
+ 		}
+ 		/* Bind the new scheduler */
+@@ -1487,6 +1486,10 @@ ip_vs_edit_service(struct ip_vs_service *svc, struct ip_vs_service_user_kern *u)
+ 			ret = ip_vs_bind_scheduler(svc, sched);
+ 			if (ret) {
+ 				ip_vs_scheduler_put(sched);
++				/* Try to restore the old_sched */
++				if (old_sched &&
++				    !ip_vs_bind_scheduler(svc, old_sched))
++					old_sched = NULL;
+ 				goto out;
+ 			}
+ 		}
+@@ -1543,7 +1546,7 @@ static void __ip_vs_del_service(struct ip_vs_service *svc, bool cleanup)
  
- 	if (info->queues_total > 1) {
- 		if (info->flags & NFQ_FLAG_CPU_FANOUT) {
--			int cpu = smp_processor_id();
-+			int cpu = raw_smp_processor_id();
+ 	/* Unbind scheduler */
+ 	old_sched = rcu_dereference_protected(svc->scheduler, 1);
+-	ip_vs_unbind_scheduler(svc, old_sched);
++	ip_vs_unbind_scheduler(svc);
+ 	ip_vs_scheduler_put(old_sched);
  
- 			queue = info->queuenum + cpu % info->queues_total;
- 		} else {
+ 	/* Unbind persistence engine, keep svc->pe */
+diff --git a/net/netfilter/ipvs/ip_vs_sched.c b/net/netfilter/ipvs/ip_vs_sched.c
+index d4903723be7e90..49b2e5d2b2c837 100644
+--- a/net/netfilter/ipvs/ip_vs_sched.c
++++ b/net/netfilter/ipvs/ip_vs_sched.c
+@@ -57,19 +57,19 @@ int ip_vs_bind_scheduler(struct ip_vs_service *svc,
+ /*
+  *  Unbind a service with its scheduler
+  */
+-void ip_vs_unbind_scheduler(struct ip_vs_service *svc,
+-			    struct ip_vs_scheduler *sched)
++void ip_vs_unbind_scheduler(struct ip_vs_service *svc)
+ {
+-	struct ip_vs_scheduler *cur_sched;
++	struct ip_vs_scheduler *sched;
+ 
+-	cur_sched = rcu_dereference_protected(svc->scheduler, 1);
+-	/* This check proves that old 'sched' was installed */
+-	if (!cur_sched)
++	sched = rcu_dereference_protected(svc->scheduler, 1);
++	if (!sched)
+ 		return;
+ 
++	/* Reset the scheduler before initiating any RCU callbacks */
++	rcu_assign_pointer(svc->scheduler, NULL);
++	smp_wmb();	/* paired with smp_rmb() in ip_vs_schedule() */
+ 	if (sched->done_service)
+ 		sched->done_service(svc);
+-	/* svc->scheduler can be set to NULL only by caller */
+ }
+ 
+ 
 -- 
 2.53.0
 
