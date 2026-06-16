@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B827A3C09E1;
-	Tue, 16 Jun 2026 18:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DAC63CE4BA;
+	Tue, 16 Jun 2026 18:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633014; cv=none; b=fTNsG0lLBy8SoK5p3XWwUGfGMYNol1HvAtZCPLnt1nd4oRGyYadOCWCWM7l9BethQb/T/mx8Eg0wgQsJpPNLQ9li6K2PyiED/AUi98C8GglqBGOyXr+Gfs35obg3Gj/cKVhMyJnyezg49a/AOduBWgfjxgUcSP+EvJ9M2ZWU1H8=
+	t=1781633019; cv=none; b=RBo8KrvMwQVc9+Jg37HohdYdFu/BJVe7Z63DqzIxVgyYR55Xl2ocECpF/XMSZR2Mt+e/UPnxJ5x+o4RdXAK6ZOQtwYiHmE/CpM3E9Rz4gPlIejqnk/sMOhZ1CAzG7T9RVs3thY8RYFRUiKXRR38INei7TtNG4BdpVUMaEbpFsKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633014; c=relaxed/simple;
-	bh=LT7cBtNoCJTHsZ5AjA3AKuHy5uCufNXl/biROmaDnhs=;
+	s=arc-20240116; t=1781633019; c=relaxed/simple;
+	bh=QnOjdhaYH9AinWLDnVXJ1vkN8W2jv5jqVLPLV3h8KXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oSqAT81JvMlsdZSYQtiNy0/z4vVRgdrgPuuy9dccp0WOhHTA/A7FXkquEtLaJS8Z4caD6RPYo19/0NVFK87hGxdbvmQufyBGnM5rWdnbXTGrHNc38Wp9fveF7Q0naS8/VEW8+3NnmK0jdDRVDqR21Dp277Z8X2byT4SPxgjKTZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGdPRqK2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eo9D5pIIkikAq8pEiEaB2PZXut2bTPuv3gjm7vIPHZ2mwRkz3JlaTRunEqygf53+4YDuvtngdFMpMIiEZVwpqNbMDhZUwE/HJac9tEjTYpQbMB0ROzKBsIBXAqP7XrkpNzRX44f6EzOL7GKisMMcR6CyZokA4esfsU1cMSi5MY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7jw4Jgf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGdPRqK2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C066E1F000E9;
-	Tue, 16 Jun 2026 18:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7jw4Jgf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9771F000E9;
+	Tue, 16 Jun 2026 18:03:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633013;
-	bh=UEeopNKKF4RX2tLGKDtBQeODKbeyeQoVx+aWH94qGUc=;
+	s=korg; t=1781633018;
+	bh=LOLnL+PxyjH5gq0zC9QilhxKAqc0KtAC+ZopHc8lyCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gGdPRqK2Om1YPVwYiaI2mw25NEuAk1Glv/cmezhH0YgqOiak3Nw12rqRlKW26equt
-	 fvRDwUptS+y1O8nnFmcWe5y+TobH8amYrE+R3YplRdRkvdzysDATM3416xXA3EqTm4
-	 yPwwqpXt8Kc5dbPlJoRr68TJaXy2e9kxiwjsqORE=
+	b=X7jw4JgfMo+wlHzwPN5uMgCJmttUgtg+DhMZpx73H8XT7VpJzTRQ8qbMfa1CoraGp
+	 SyGAtv9baaR23TUn5ekpwJqJJ2Oug3X97uPF4foTUz4kbbT0AX0l5ipOegnWjnPIxh
+	 NNr8kAnAitfebXGkuPxnS196zBCHXLB4/skj245c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Desai <ashutoshdesai993@gmail.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.1 512/522] drm/v3d: Reject empty multisync extension to prevent infinite loop
-Date: Tue, 16 Jun 2026 20:30:59 +0530
-Message-ID: <20260616145149.691657860@linuxfoundation.org>
+	Ben Hutchings <benh@debian.org>
+Subject: [PATCH 6.1 521/522] apparmor: validate default DFA states are in bounds
+Date: Tue, 16 Jun 2026 20:31:08 +0530
+Message-ID: <20260616145150.082886843@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -44,60 +43,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ashutosh Desai <ashutoshdesai993@gmail.com>
+From: Ben Hutchings <benh@debian.org>
 
-commit fb44d589bf3148e13452185a6e772a7efbf2d684 upstream.
+Some backports of commit 9063d7e2615f ("apparmor: validate DFA start
+states are in bounds in unpack_pdb") limited the bounds checks on DFA
+start states to the case where the start state was explicit in the
+policy.  However, the default DFA start state (DFA_START = 1) could
+also be out-of-bounds.
 
-v3d_get_extensions() walks a userspace-provided singly-linked list of
-ioctl extensions without any bound on the chain length. A local user
-can craft a self-referential extension (ext->next == &ext) with zero
-in_sync_count and out_sync_count, which bypasses the existing duplicate-
-extension guard:
+Move these checks out of the else-branches so that they are applied
+regardless of how the start state was initialised.
 
-    if (se->in_sync_count || se->out_sync_count)
-            return -EINVAL;
-
-The guard never fires because v3d_get_multisync_post_deps() returns
-immediately when count is zero, leaving both fields at zero on every
-iteration. The result is an infinite loop in kernel context, blocking
-the calling thread and pegging a CPU core indefinitely.
-
-Fix this by rejecting a multisync extension where both in_sync_count
-and out_sync_count are zero in v3d_get_multisync_submit_deps(). An
-empty multisync carries no synchronization information and serves no
-useful purpose, so returning -EINVAL for such an extension is the
-correct defense against this attack vector.
-
-Fixes: e4165ae8304e ("drm/v3d: add multiple syncobjs support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
-Link: https://patch.msgid.link/20260415050000.3816128-1-ashutoshdesai993@gmail.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Fixes: 5443c027ec16 ("apparmor: validate DFA start states are in bounds in unpack_pdb")
+Signed-off-by: Ben Hutchings <benh@debian.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/v3d/v3d_gem.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ security/apparmor/policy_unpack.c |   27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
---- a/drivers/gpu/drm/v3d/v3d_gem.c
-+++ b/drivers/gpu/drm/v3d/v3d_gem.c
-@@ -649,6 +649,11 @@ v3d_get_multisync_submit_deps(struct drm
- 	if (multisync.pad)
- 		return -EINVAL;
+--- a/security/apparmor/policy_unpack.c
++++ b/security/apparmor/policy_unpack.c
+@@ -829,6 +829,8 @@ static struct aa_profile *unpack_profile
+ 	}
  
-+	if (!multisync.in_sync_count && !multisync.out_sync_count) {
-+		DRM_DEBUG("Empty multisync extension\n");
-+		return -EINVAL;
-+	}
+ 	if (aa_unpack_nameX(e, AA_STRUCT, "policydb")) {
++		size_t state_count;
 +
- 	ret = v3d_get_multisync_post_deps(file_priv, data, multisync.out_sync_count,
- 					  multisync.out_syncs);
- 	if (ret)
+ 		/* generic policy dfa - optional and may be NULL */
+ 		info = "failed to unpack policydb";
+ 		profile->policy.dfa = unpack_dfa(e);
+@@ -843,13 +845,12 @@ static struct aa_profile *unpack_profile
+ 		if (!aa_unpack_u32(e, &profile->policy.start[0], "start")) {
+ 			/* default start state */
+ 			profile->policy.start[0] = DFA_START;
+-		} else {
+-			size_t state_count = profile->policy.dfa->tables[YYTD_ID_BASE]->td_lolen;
++		}
+ 
+-			if (profile->policy.start[0] >= state_count) {
+-				info = "invalid dfa start state";
+-				goto fail;
+-			}
++		state_count = profile->policy.dfa->tables[YYTD_ID_BASE]->td_lolen;
++		if (profile->policy.start[0] >= state_count) {
++			info = "invalid dfa start state";
++			goto fail;
+ 		}
+ 
+ 		/* setup class index */
+@@ -872,16 +873,18 @@ static struct aa_profile *unpack_profile
+ 		info = "failed to unpack profile file rules";
+ 		goto fail;
+ 	} else if (profile->file.dfa) {
++		size_t state_count;
++
+ 		if (!aa_unpack_u32(e, &profile->file.start, "dfa_start")) {
+ 			/* default start state */
+ 			profile->file.start = DFA_START;
+-		} else {
+-			size_t state_count = profile->file.dfa->tables[YYTD_ID_BASE]->td_lolen;
++		}
++
++		state_count = profile->file.dfa->tables[YYTD_ID_BASE]->td_lolen;
+ 
+-			if (profile->file.start >= state_count) {
+-				info = "invalid dfa start state";
+-				goto fail;
+-			}
++		if (profile->file.start >= state_count) {
++			info = "invalid dfa start state";
++			goto fail;
+ 		}
+ 	} else if (profile->policy.dfa &&
+ 		   profile->policy.start[AA_CLASS_FILE]) {
 
 
