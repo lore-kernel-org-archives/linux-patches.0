@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D11813777E;
-	Tue, 16 Jun 2026 16:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC06B2F745E;
+	Tue, 16 Jun 2026 16:43:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628228; cv=none; b=ofo4VA/7CRDt0QgJVE2q4GBRajespC7R4NJtTnWUJMH4f673ADYBeSQ3Uty73KAQMKQxsxBIfdTbrvw1wkdYL7QAYWpJdF6hHBg6+M0eQvO86P00VAKi2p+z8UgC0PIf74e7q5iddjGgaufsiq61khYbqXKsIyEu2Q1SWEGWKuo=
+	t=1781628234; cv=none; b=augfl9uhR9WZd3hlajrogC9u0YBRmvosl4eP5rWPTF+IoAZhGfNwiM/H4lC64BzBv16df0FiXYB1tfW2b5Tng3ku+i9GX1HjOl64MKLljHdlwslOpSkFalm+ANAIpbsb061pjUkG9q4n6+khypI+b9/9HReZfIPICV6BICLbObg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628228; c=relaxed/simple;
-	bh=d2bzyVSG2B4I5kmN7jtc4X+STVGEJ4w5v7UhSA/emGw=;
+	s=arc-20240116; t=1781628234; c=relaxed/simple;
+	bh=XJ0hpgmzuFcEgzvBlPJJq4QCmhLZaxVnRcKFoXxLhBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qPOqS9+q3WaeyYMMeSsxCNvSboRekbPl/UYn29kfCJWcJVaBNBGdYwJ0qxr6rl/G01PUGkBNIAPyvM/gqRMyiJ45UHXOyFGRulvXUWPimARUdbjyGFxY+dvsQBDG9Sg9qcyrlNUrVbeWHjDvUwx+isiwHgy0dmGK86WC7/4+7Zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9lVrzp7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eTud38GxbrDCxhIjp65Mg44c2C3cTu9VyjuT3MoERxGUV2EAOBLZfDrOBvt14frc3dBwdNjsIImFvtob7pBiJiBLGrR8+qwCjtVyUr5Y2rdLgKWw8f3pMlAxjOaoMomA0QMYnvqgogt6TwpmjfsIrs5IWs/WuO6CRLXH2wAiusw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uRhQkOe9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9lVrzp7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9424A1F000E9;
-	Tue, 16 Jun 2026 16:43:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRhQkOe9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A4C1F000E9;
+	Tue, 16 Jun 2026 16:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628227;
-	bh=6NKboUbeYnqlzDbJnDaW4LBDPtav4v0OkhxKrJ4Ep8k=;
+	s=korg; t=1781628232;
+	bh=LOukqh+vIgoSY1EK72QyrVTF9Dpp53m9ztXkASQHffg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H9lVrzp7+FUmdeYUL9z4lR0wCO/3/tJcNnD+pMm8QTTnFpfoF470gYxFiUqcvRSoZ
-	 MXDFqhcNtv8Mcy0mfpVVjc6CVOLaueFmF3NuDDimrfw0FM3Bh2oFPmTv723OebAWz2
-	 WZCkYwYpvvO4yNVG1uz/CAR4kJ1AxAZAGV98QcL4=
+	b=uRhQkOe9eqpXSD35T22C6FRE0jDQmcgTHcAuJ35UGuZyxH6vsO/mQyZLM1uvQyzev
+	 GVrCgLQiQUSkwogTPlzJhH5EP+GzNhAoueuwN6VMYEfJ4SVOtLVBYxfGZSHmpr6wQR
+	 hVukGCBXBCkvhoykiOcE7oCPs4kPJH4SNHt0cFOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Sven Eckelmann <sven@narfation.org>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Xiao Liu <lx24@stu.ynu.edu.cn>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Miles Wang <13621186580@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/452] batman-adv: tp_meter: avoid role confusion in tp_list
-Date: Tue, 16 Jun 2026 20:24:43 +0530
-Message-ID: <20260616145120.912078755@linuxfoundation.org>
+Subject: [PATCH 6.6 057/452] net: af_key: zero aligned sockaddr tail in PF_KEY exports
+Date: Tue, 16 Jun 2026 20:24:44 +0530
+Message-ID: <20260616145120.964513561@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,194 +57,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Zhengchuan Liang <zcliangcn@gmail.com>
 
-commit ff24f2ecfd94c07a2b89bac497433e3b23271cac upstream.
+[ Upstream commit 426c355742f02cf743b347d9d7dbdc1bfbfa31ef ]
 
-Session lookups in tp_list matched only on destination address (and
-optionally session ID), leaving role validation to the caller. If two
-sessions with the same other_end coexisted (one as sender, one as receiver)
-a lookup could silently return the wrong one, causing the caller's role to
-bail out early, potentially skipping necessary cleanup.
+PF_KEY export paths use `pfkey_sockaddr_size()` when reserving sockaddr
+payload space, so IPv6 addresses occupy 32 bytes on the wire. However,
+`pfkey_sockaddr_fill()` initializes only the first 28 bytes of
+`struct sockaddr_in6`, leaving the final 4 aligned bytes uninitialized.
 
-Move the role check into the lookup functions themselves so the correct
-entry is always returned, or none at all. Since batadv_tp_start()
-legitimately needs to detect any active session to a destination regardless
-of role, introduce a dedicated helper for that case rather than bending the
-existing lookup semantics.
+Not every PF_KEY message is affected. The state and policy dump builders
+already zero the whole message buffer before filling the sockaddr
+payloads. Keep the fix to the export paths that still append aligned
+sockaddr payloads with plain `skb_put()`:
 
-Cc: stable@kernel.org
-Fixes: 33a3bb4a3345 ("batman-adv: throughput meter implementation")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+  - `SADB_ACQUIRE`
+  - `SADB_X_NAT_T_NEW_MAPPING`
+  - `SADB_X_MIGRATE`
+
+Fix those paths by clearing only the aligned sockaddr tail after
+`pfkey_sockaddr_fill()`.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 08de61beab8a ("[PFKEYV2]: Extension for dynamic update of endpoint address(es)")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Xiao Liu <lx24@stu.ynu.edu.cn>
+Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Miles Wang <13621186580@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/tp_meter.c | 59 ++++++++++++++++++++++++---------------
- 1 file changed, 36 insertions(+), 23 deletions(-)
+ net/key/af_key.c | 52 +++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 34 insertions(+), 18 deletions(-)
 
-diff --git a/net/batman-adv/tp_meter.c b/net/batman-adv/tp_meter.c
-index 04a83d6be45bc0..bc3dc377f0bfd0 100644
---- a/net/batman-adv/tp_meter.c
-+++ b/net/batman-adv/tp_meter.c
-@@ -255,6 +255,7 @@ static void batadv_tp_batctl_error_notify(enum batadv_tp_meter_reason reason,
-  * batadv_tp_list_find() - find a tp_vars object in the global list
-  * @bat_priv: the bat priv with all the soft interface information
-  * @dst: the other endpoint MAC address to look for
-+ * @role: role of the session
-  *
-  * Look for a tp_vars object matching dst as end_point and return it after
-  * having increment the refcounter. Return NULL is not found
-@@ -262,7 +263,8 @@ static void batadv_tp_batctl_error_notify(enum batadv_tp_meter_reason reason,
-  * Return: matching tp_vars or NULL when no tp_vars with @dst was found
-  */
- static struct batadv_tp_vars *batadv_tp_list_find(struct batadv_priv *bat_priv,
--						  const u8 *dst)
-+						  const u8 *dst,
-+						  enum batadv_tp_meter_role role)
- {
- 	struct batadv_tp_vars *pos, *tp_vars = NULL;
- 
-@@ -271,6 +273,9 @@ static struct batadv_tp_vars *batadv_tp_list_find(struct batadv_priv *bat_priv,
- 		if (!batadv_compare_eth(pos->other_end, dst))
- 			continue;
- 
-+		if (pos->role != role)
-+			continue;
-+
- 		/* most of the time this function is invoked during the normal
- 		 * process..it makes sens to pay more when the session is
- 		 * finished and to speed the process up during the measurement
-@@ -286,12 +291,33 @@ static struct batadv_tp_vars *batadv_tp_list_find(struct batadv_priv *bat_priv,
- 	return tp_vars;
+diff --git a/net/key/af_key.c b/net/key/af_key.c
+index 4849407da86d6e..486c9a2e1f52f3 100644
+--- a/net/key/af_key.c
++++ b/net/key/af_key.c
+@@ -757,6 +757,22 @@ static unsigned int pfkey_sockaddr_fill(const xfrm_address_t *xaddr, __be16 port
+ 	return 0;
  }
  
-+/**
-+ * batadv_tp_list_active() - check if session from/to destination is ongoing
-+ * @bat_priv: the bat priv with all the mesh interface information
-+ * @dst: the other endpoint MAC address to look for
-+ *
-+ * Return: if matching session with @dst was found
-+ */
-+static bool batadv_tp_list_active(struct batadv_priv *bat_priv, const u8 *dst)
-+	__must_hold(&bat_priv->tp_list_lock)
++static unsigned int pfkey_sockaddr_fill_zero_tail(const xfrm_address_t *xaddr,
++						  __be16 port,
++						  struct sockaddr *sa,
++						  unsigned short family)
 +{
-+	struct batadv_tp_vars *tp_vars;
++	unsigned int prefixlen;
++	int sockaddr_len = pfkey_sockaddr_len(family);
++	int sockaddr_size = pfkey_sockaddr_size(family);
 +
-+	hlist_for_each_entry_rcu(tp_vars, &bat_priv->tp_list, list) {
-+		if (batadv_compare_eth(tp_vars->other_end, dst))
-+			return true;
-+	}
++	prefixlen = pfkey_sockaddr_fill(xaddr, port, sa, family);
++	if (sockaddr_size > sockaddr_len)
++		memset((u8 *)sa + sockaddr_len, 0, sockaddr_size - sockaddr_len);
 +
-+	return false;
++	return prefixlen;
 +}
 +
- /**
-  * batadv_tp_list_find_session() - find tp_vars session object in the global
-  *  list
-  * @bat_priv: the bat priv with all the soft interface information
-  * @dst: the other endpoint MAC address to look for
-  * @session: session identifier
-+ * @role: role of the session
-  *
-  * Look for a tp_vars object matching dst as end_point, session as tp meter
-  * session and return it after having increment the refcounter. Return NULL
-@@ -301,7 +327,7 @@ static struct batadv_tp_vars *batadv_tp_list_find(struct batadv_priv *bat_priv,
-  */
- static struct batadv_tp_vars *
- batadv_tp_list_find_session(struct batadv_priv *bat_priv, const u8 *dst,
--			    const u8 *session)
-+			    const u8 *session, enum batadv_tp_meter_role role)
+ static struct sk_buff *__pfkey_xfrm_state2msg(const struct xfrm_state *x,
+ 					      int add_keys, int hsc)
  {
- 	struct batadv_tp_vars *pos, *tp_vars = NULL;
+@@ -3205,9 +3221,9 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
+ 	addr->sadb_address_proto = 0;
+ 	addr->sadb_address_reserved = 0;
+ 	addr->sadb_address_prefixlen =
+-		pfkey_sockaddr_fill(&x->props.saddr, 0,
+-				    (struct sockaddr *) (addr + 1),
+-				    x->props.family);
++		pfkey_sockaddr_fill_zero_tail(&x->props.saddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      x->props.family);
+ 	if (!addr->sadb_address_prefixlen)
+ 		BUG();
  
-@@ -313,6 +339,9 @@ batadv_tp_list_find_session(struct batadv_priv *bat_priv, const u8 *dst,
- 		if (memcmp(pos->session, session, sizeof(pos->session)) != 0)
- 			continue;
+@@ -3220,9 +3236,9 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
+ 	addr->sadb_address_proto = 0;
+ 	addr->sadb_address_reserved = 0;
+ 	addr->sadb_address_prefixlen =
+-		pfkey_sockaddr_fill(&x->id.daddr, 0,
+-				    (struct sockaddr *) (addr + 1),
+-				    x->props.family);
++		pfkey_sockaddr_fill_zero_tail(&x->id.daddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      x->props.family);
+ 	if (!addr->sadb_address_prefixlen)
+ 		BUG();
  
-+		if (pos->role != role)
-+			continue;
-+
- 		/* most of the time this function is invoked during the normal
- 		 * process..it makes sense to pay more when the session is
- 		 * finished and to speed the process up during the measurement
-@@ -671,13 +700,10 @@ static void batadv_tp_recv_ack(struct batadv_priv *bat_priv,
+@@ -3420,9 +3436,9 @@ static int pfkey_send_new_mapping(struct xfrm_state *x, xfrm_address_t *ipaddr,
+ 	addr->sadb_address_proto = 0;
+ 	addr->sadb_address_reserved = 0;
+ 	addr->sadb_address_prefixlen =
+-		pfkey_sockaddr_fill(&x->props.saddr, 0,
+-				    (struct sockaddr *) (addr + 1),
+-				    x->props.family);
++		pfkey_sockaddr_fill_zero_tail(&x->props.saddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      x->props.family);
+ 	if (!addr->sadb_address_prefixlen)
+ 		BUG();
  
- 	/* find the tp_vars */
- 	tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
--					      icmp->session);
-+					      icmp->session, BATADV_TP_SENDER);
- 	if (unlikely(!tp_vars))
- 		return;
+@@ -3442,9 +3458,9 @@ static int pfkey_send_new_mapping(struct xfrm_state *x, xfrm_address_t *ipaddr,
+ 	addr->sadb_address_proto = 0;
+ 	addr->sadb_address_reserved = 0;
+ 	addr->sadb_address_prefixlen =
+-		pfkey_sockaddr_fill(ipaddr, 0,
+-				    (struct sockaddr *) (addr + 1),
+-				    x->props.family);
++		pfkey_sockaddr_fill_zero_tail(ipaddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      x->props.family);
+ 	if (!addr->sadb_address_prefixlen)
+ 		BUG();
  
--	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
--		goto out;
--
- 	if (unlikely(batadv_tp_sender_stopped(tp_vars)))
- 		goto out;
- 
-@@ -986,10 +1012,8 @@ void batadv_tp_start(struct batadv_priv *bat_priv, const u8 *dst,
- 		return;
- 	}
- 
--	tp_vars = batadv_tp_list_find(bat_priv, dst);
--	if (tp_vars) {
-+	if (batadv_tp_list_active(bat_priv, dst)) {
- 		spin_unlock_bh(&bat_priv->tp_list_lock);
--		batadv_tp_vars_put(tp_vars);
- 		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
- 			   "Meter: test to or from the same node already ongoing, aborting\n");
- 		batadv_tp_batctl_error_notify(BATADV_TP_REASON_ALREADY_ONGOING,
-@@ -1110,18 +1134,14 @@ void batadv_tp_stop(struct batadv_priv *bat_priv, const u8 *dst,
- 	if (!orig_node)
- 		return;
- 
--	tp_vars = batadv_tp_list_find(bat_priv, orig_node->orig);
-+	tp_vars = batadv_tp_list_find(bat_priv, orig_node->orig, BATADV_TP_SENDER);
- 	if (!tp_vars) {
- 		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
- 			   "Meter: trying to interrupt an already over connection\n");
- 		goto out_put_orig_node;
- 	}
- 
--	if (unlikely(tp_vars->role != BATADV_TP_SENDER))
--		goto out_put_tp_vars;
--
- 	batadv_tp_sender_shutdown(tp_vars, return_value);
--out_put_tp_vars:
- 	batadv_tp_vars_put(tp_vars);
- out_put_orig_node:
- 	batadv_orig_node_put(orig_node);
-@@ -1377,7 +1397,7 @@ batadv_tp_init_recv(struct batadv_priv *bat_priv,
- 		goto out_unlock;
- 
- 	tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
--					      icmp->session);
-+					      icmp->session, BATADV_TP_RECEIVER);
- 	if (tp_vars)
- 		goto out_unlock;
- 
-@@ -1448,7 +1468,7 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
- 		}
- 	} else {
- 		tp_vars = batadv_tp_list_find_session(bat_priv, icmp->orig,
--						      icmp->session);
-+						      icmp->session, BATADV_TP_RECEIVER);
- 		if (!tp_vars) {
- 			batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
- 				   "Unexpected packet from %pM!\n",
-@@ -1457,13 +1477,6 @@ static void batadv_tp_recv_msg(struct batadv_priv *bat_priv,
- 		}
- 	}
- 
--	if (unlikely(tp_vars->role != BATADV_TP_RECEIVER)) {
--		batadv_dbg(BATADV_DBG_TP_METER, bat_priv,
--			   "Meter: dropping packet: not expected (role=%u)\n",
--			   tp_vars->role);
--		goto out;
--	}
--
- 	tp_vars->last_recv_time = jiffies;
- 
- 	/* if the packet is a duplicate, it may be the case that an ACK has been
+@@ -3473,15 +3489,15 @@ static int set_sadb_address(struct sk_buff *skb, int sasize, int type,
+ 	switch (type) {
+ 	case SADB_EXT_ADDRESS_SRC:
+ 		addr->sadb_address_prefixlen = sel->prefixlen_s;
+-		pfkey_sockaddr_fill(&sel->saddr, 0,
+-				    (struct sockaddr *)(addr + 1),
+-				    sel->family);
++		pfkey_sockaddr_fill_zero_tail(&sel->saddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      sel->family);
+ 		break;
+ 	case SADB_EXT_ADDRESS_DST:
+ 		addr->sadb_address_prefixlen = sel->prefixlen_d;
+-		pfkey_sockaddr_fill(&sel->daddr, 0,
+-				    (struct sockaddr *)(addr + 1),
+-				    sel->family);
++		pfkey_sockaddr_fill_zero_tail(&sel->daddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      sel->family);
+ 		break;
+ 	default:
+ 		return -EINVAL;
 -- 
 2.53.0
 
