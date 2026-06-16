@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD47E44B69C;
-	Tue, 16 Jun 2026 15:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF15844B69C;
+	Tue, 16 Jun 2026 15:51:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625106; cv=none; b=EAT8Iao1rTTgSHDM9HMe7xNe0d1CAwdGpxJxA4OF2YPaaUGEUxsVzP0U6p32EbkIxV707kUA8DVCLZnnQBcr59eZ+q1BS9/JYAuNQTeYr2nM/+lrPXCSvRXIT/1Y2kPuGweOs3Rvd35BfLKDngTnoU7EMu8wIeeDQIxM0r24ndY=
+	t=1781625111; cv=none; b=J2KsGPTjDM08+9BLqe1+gu6KqCIu/EgjSlqsEy+ZRJLL6TBBlAc4EvAmY58yXoFO+QTWqo9gyzRPrdUEjRfodrd136jk/LseagKAawjoRtO8vKWdWr9XmRe7gq2wlwht4MmqF6SNXfpE36zdN3YcXf1bnBkObeQbsasy7Nt/eQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625106; c=relaxed/simple;
-	bh=PjsUU9yFt/v44RaoIKrUBqLH5053gSyYrfUuB4M+p78=;
+	s=arc-20240116; t=1781625111; c=relaxed/simple;
+	bh=Kykf0PqZHFN+nD/PNCaEtQkN1UrFXFd/vHv+6mSEVJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jCT8BYM5a8sISWRf9RfAIrSJMQtAcGXnfpSWERka7g2JeqPYRn/NIoU11ijckiE6ZbGj/L94GDTq+qECTSnnWUPUnN4cCiq89nvvIiB0RHyV0LRx1AK7reRG1C8mp/oze5nCNTrtcD/EWnUu0vyBUSoXS0mkmsUqzdenNakmFnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xA3u+P8w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lFe1m0kLb8EVXEmTecJamTv9J8yrrjcePOqWdvi8q/bZw8KOAhkBxAWYnZHjUV08n/GOMSj1PAEc5FGmZ8kQNPN7bOmCktfYE+oxz008HWRYRnf9mklOJ3vTRKFknTh3c8fvyjf7wCvBzNTG2oUyHApWCQGleIjeZM75jH5to8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ym/VfUI6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xA3u+P8w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9599E1F000E9;
-	Tue, 16 Jun 2026 15:51:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ym/VfUI6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA331F000E9;
+	Tue, 16 Jun 2026 15:51:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625105;
-	bh=SgHZ0HLzkMkFWb0YaAFU0f74KPSHFAt66Bh1B64SVVw=;
+	s=korg; t=1781625110;
+	bh=I9XvzXQyq3UH3XuA+l8s0Ai5lN1NP7Atq6zTzzqeonQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xA3u+P8wzjEuhnYRbaPjHnZFT27/cvSGJO+JuQFPRcynSGlqaSD7EMd/5WoaP/T8t
-	 jRGaGelOIGVp0qg9jS+cbxs//OdhjRklWIWtP89AIvB6LQp5CFTfDNWfMR40reoYHu
-	 z0nHAfkfYc1Pmdpens7n+euz/u1LEuudOcZQjLyA=
+	b=Ym/VfUI6tjp3rqMwDFFBUpZ708bjhjODH+njLUZJngWMvqSfRmgVOe+BvhJe/CBJq
+	 4S14YiLhJgODST4t54a/rawNS+or1Oj6+g1sn7GzFVOZkOizFoPMC6l0x1+VbrJN4a
+	 VAmuvDhyO4dv6fgbIJ1sfPBtAPJ91cQo+7p36aSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dhruva Gole <d-gole@ti.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Robert Garcia <rob_garcia@163.com>,
+	Zhang Cen <rollkingzzc@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 077/325] spi: cadence-quadspi: fix unclocked access on unbind
-Date: Tue, 16 Jun 2026 20:27:53 +0530
-Message-ID: <20260616145101.567574567@linuxfoundation.org>
+Subject: [PATCH 6.18 046/325] Bluetooth: bnep: reject short frames before parsing
+Date: Tue, 16 Jun 2026 20:27:22 +0530
+Message-ID: <20260616145100.025391902@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -53,54 +51,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit 233db2cb14db8b1935dda52a6affd97276462b82 ]
+[ Upstream commit 6770d3a8acdf9151769180cc3710346c4cfbe6f0 ]
 
-Make sure that the controller is runtime resumed before disabling it
-during driver unbind to avoid an unclocked register access.
+A BNEP peer can send a short BNEP SDU. bnep_rx_frame() reads the
+packet type byte immediately and, for control packets, reads the control
+opcode and setup UUID-size byte before proving that those bytes are
+present. bnep_rx_control() also dereferences the control opcode without
+rejecting an empty control payload.
 
-This issue was flagged by Sashiko when reviewing a controller
-deregistration fix.
+Use skb_pull_data() for the fixed fields in bnep_rx_frame() so a NULL
+return gates each dereference. Split the control handler so the frame
+path can pass an opcode that has already been pulled, and keep the
+byte-buffer wrapper for extension control payloads.
 
-Fixes: 0578a6dbfe75 ("spi: spi-cadence-quadspi: add runtime pm support")
-Cc: stable@vger.kernel.org	# 6.7
-Cc: Dhruva Gole <d-gole@ti.com>
-Link: https://sashiko.dev/#/patchset/20260414134319.978196-1-johan%40kernel.org?part=2
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260421125354.1534871-4-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ Context adaptation performed. ]
-Signed-off-by: Robert Garcia <rob_garcia@163.com>
+For BNEP_SETUP_CONN_REQ, name the UUID-size byte before pulling the
+setup payload. struct bnep_setup_conn_req carries destination and source
+service UUIDs after that byte, each uuid_size bytes, so the parser now
+documents that tuple explicitly instead of leaving the pull length as an
+opaque multiplication.
+
+Validation reproduced this kernel report:
+KASAN slab-out-of-bounds in bnep_rx_frame.isra.0+0x130c/0x1790
+The buggy address belongs to the object at ffff88800c0f7908 which belongs
+to the cache kmalloc-8 of size 8
+The buggy address is located 0 bytes to the right of allocated 1-byte
+region [ffff88800c0f7908, ffff88800c0f7909)
+Read of size 1
+Call trace:
+  dump_stack_lvl+0xb3/0x140 (?:?)
+  print_address_description+0x57/0x3a0 (?:?)
+  bnep_rx_frame+0x130c/0x1790 (net/bluetooth/bnep/core.c:306)
+  print_report+0xb9/0x2b0 (?:?)
+  __virt_addr_valid+0x1ba/0x3a0 (?:?)
+  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
+  kasan_addr_to_slab+0x21/0x60 (?:?)
+  kasan_report+0xe0/0x110 (?:?)
+  process_one_work+0xfce/0x17e0 (kernel/workqueue.c:3200)
+  worker_thread+0x65c/0xe40 (?:?)
+  __kthread_parkme+0x184/0x230 (?:?)
+  kthread+0x35e/0x470 (?:?)
+  _raw_spin_unlock_irq+0x28/0x50 (?:?)
+  ret_from_fork+0x586/0x870 (?:?)
+  __switch_to+0x74f/0xdc0 (?:?)
+  ret_from_fork_asm+0x1a/0x30 (?:?)
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence-quadspi.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/bluetooth/bnep/core.c | 57 ++++++++++++++++++++++++---------------
+ 1 file changed, 36 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
-index d61bc678b6f83b..0a32e28eefd515 100644
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -2055,7 +2055,6 @@ static void cqspi_remove(struct platform_device *pdev)
- 		cqspi_wait_idle(cqspi);
+diff --git a/net/bluetooth/bnep/core.c b/net/bluetooth/bnep/core.c
+index 0de5df690bd0b2..5c5f53ff30e8e5 100644
+--- a/net/bluetooth/bnep/core.c
++++ b/net/bluetooth/bnep/core.c
+@@ -206,14 +206,11 @@ static int bnep_ctrl_set_mcfilter(struct bnep_session *s, u8 *data, int len)
+ 	return 0;
+ }
  
- 	spi_unregister_controller(cqspi->host);
--	cqspi_controller_enable(cqspi, 0);
+-static int bnep_rx_control(struct bnep_session *s, void *data, int len)
++static int bnep_rx_control_cmd(struct bnep_session *s, u8 cmd, void *data,
++			       int len)
+ {
+-	u8  cmd = *(u8 *)data;
+ 	int err = 0;
  
- 	if (cqspi->rx_chan)
- 		dma_release_channel(cqspi->rx_chan);
-@@ -2063,8 +2062,10 @@ static void cqspi_remove(struct platform_device *pdev)
- 	if (!(ddata && (ddata->quirks & CQSPI_DISABLE_RUNTIME_PM)))
- 		ret = pm_runtime_get_sync(&pdev->dev);
+-	data++;
+-	len--;
+-
+ 	switch (cmd) {
+ 	case BNEP_CMD_NOT_UNDERSTOOD:
+ 	case BNEP_SETUP_CONN_RSP:
+@@ -254,6 +251,14 @@ static int bnep_rx_control(struct bnep_session *s, void *data, int len)
+ 	return err;
+ }
  
--	if (ret >= 0)
-+	if (ret >= 0) {
-+		cqspi_controller_enable(cqspi, 0);
- 		clk_disable(cqspi->clk);
-+	}
++static int bnep_rx_control(struct bnep_session *s, void *data, int len)
++{
++	if (len < 1)
++		return -EILSEQ;
++
++	return bnep_rx_control_cmd(s, *(u8 *)data, data + 1, len - 1);
++}
++
+ static int bnep_rx_extension(struct bnep_session *s, struct sk_buff *skb)
+ {
+ 	struct bnep_ext_hdr *h;
+@@ -299,19 +304,26 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
+ {
+ 	struct net_device *dev = s->dev;
+ 	struct sk_buff *nskb;
++	u8 *data;
+ 	u8 type, ctrl_type;
  
- 	if (cqspi->is_jh7110)
- 		cqspi_jh7110_disable_clk(pdev, cqspi);
+ 	dev->stats.rx_bytes += skb->len;
+ 
+-	type = *(u8 *) skb->data;
+-	skb_pull(skb, 1);
+-	ctrl_type = *(u8 *)skb->data;
++	data = skb_pull_data(skb, sizeof(type));
++	if (!data)
++		goto badframe;
++	type = *data;
+ 
+ 	if ((type & BNEP_TYPE_MASK) >= sizeof(__bnep_rx_hlen))
+ 		goto badframe;
+ 
+ 	if ((type & BNEP_TYPE_MASK) == BNEP_CONTROL) {
+-		if (bnep_rx_control(s, skb->data, skb->len) < 0) {
++		data = skb_pull_data(skb, sizeof(ctrl_type));
++		if (!data)
++			goto badframe;
++		ctrl_type = *data;
++
++		if (bnep_rx_control_cmd(s, ctrl_type, skb->data, skb->len) < 0) {
+ 			dev->stats.tx_errors++;
+ 			kfree_skb(skb);
+ 			return 0;
+@@ -324,24 +336,27 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
+ 
+ 		/* Verify and pull ctrl message since it's already processed */
+ 		switch (ctrl_type) {
+-		case BNEP_SETUP_CONN_REQ:
+-			/* Pull: ctrl type (1 b), len (1 b), data (len bytes) */
+-			if (!skb_pull(skb, 2 + *(u8 *)(skb->data + 1) * 2))
++		case BNEP_SETUP_CONN_REQ: {
++			u8 uuid_size;
++
++			/* Pull uuid_size and the dst/src service UUIDs. */
++			data = skb_pull_data(skb, sizeof(uuid_size));
++			if (!data)
++				goto badframe;
++			uuid_size = *data;
++			if (!skb_pull(skb, uuid_size + uuid_size))
+ 				goto badframe;
+ 			break;
++		}
+ 		case BNEP_FILTER_MULTI_ADDR_SET:
+-		case BNEP_FILTER_NET_TYPE_SET: {
+-			u8 *hdr;
+-
+-			/* Pull ctrl type (1 b) + len (2 b) */
+-			hdr = skb_pull_data(skb, 3);
+-			if (!hdr)
++		case BNEP_FILTER_NET_TYPE_SET:
++			/* Pull: len (2 b), data (len bytes) */
++			data = skb_pull_data(skb, sizeof(u16));
++			if (!data)
+ 				goto badframe;
+-			/* Pull data (len bytes); length is big-endian */
+-			if (!skb_pull(skb, get_unaligned_be16(&hdr[1])))
++			if (!skb_pull(skb, get_unaligned_be16(data)))
+ 				goto badframe;
+ 			break;
+-		}
+ 		default:
+ 			kfree_skb(skb);
+ 			return 0;
 -- 
 2.53.0
 
