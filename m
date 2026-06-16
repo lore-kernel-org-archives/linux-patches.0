@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1648D449EA8;
-	Tue, 16 Jun 2026 17:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27D344BCBE;
+	Tue, 16 Jun 2026 17:26:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630782; cv=none; b=Sk5VrQCNkJS/xfx9l6MIEZtCVRJkEmaf4jOtjYDkeP0YboMnMX0jXHaCBxrfR0OHh3kmoBGIqQfWq96uw0jW7LA+ZKLTmRyyI7UC8zU+w4ADZlywpgCTxeS7FKZq/+m12/RbDtmHIRNfYXL+v625RvNsSGbUqYYehcdOzKidcFI=
+	t=1781630787; cv=none; b=Tfd1xgoG59ZFd+fwN92XeJltUnPPlvJB2Dss3JX0Z2kjDAVPKOyORhUBpx/fOLQ1MOzuWbxs8t4V5AqS8zaqWgEJzZajUY7eGZ7WJ4sonexYa28zNlzwzstZRc1Gvq5kIkb6ewQJljVRQJ5PHDiwjYgDYjgPOzS+OrlLtF4p7ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630782; c=relaxed/simple;
-	bh=/SYzOVX1ZpL1uahSHBiZXX1bJD9+fVbXfqccCW4KpBQ=;
+	s=arc-20240116; t=1781630787; c=relaxed/simple;
+	bh=GO4br3gBOIuo8DkKXiVoitKg4ubjTEHTHCk/LP0jXbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dkZlhg4zSNm2H99AY71wAXYhWSKRv/ee7dQX7S3oxcrkGoXiNIyfj2p8H0m1ntqYep2ksYqirolNMBdhBl3QZzjLwrr9Fl/56hl3H6Jjf7LdpYFu19D0AcWY/TzO9Ib1fWGovtoOHyOKbDggRsWnQDZ4SQlFN2kD4yiXS7O8BTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sg/D1cag; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XravMNXkXf7kniGveWhUmbHPdIP6nRz16Vd/fQPicxQDZ1MEODw6O026eUbwb6BwmNANNPtkIZAdiBFQT9PgymEOVBhp86YvazXNTRjl+4NGYxwXJFdxi62q/BdNo5/1pA/2zYqofBRlayTuiR3g8z+h8irU5hfnJjsn61MkLC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lV1DP5Xj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sg/D1cag"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D8C1F000E9;
-	Tue, 16 Jun 2026 17:26:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lV1DP5Xj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A40691F000E9;
+	Tue, 16 Jun 2026 17:26:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630781;
-	bh=w2T0GHtgpOkaFo8hN4Y5bMIs8sP9QMk2jhxc/DKq1vg=;
+	s=korg; t=1781630786;
+	bh=rKbAE/LGQ6QwwXsUwPCC8FJX+ur85EynxzZgQm+jPSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sg/D1cagkR1I02ostwjBGYZYWcTbk209CbguS7A1hhm1YO3dg6rdg+Kr8KpFcpJ72
-	 RXNGgwE5J1qH4zWegsm4yvmHlkPVuUU2o6RpWVNtbDvlAwcSW7ac3wMysLyMKy5+hm
-	 EOVzSWSCuHbr4vGve6trlP45SvlMEkwQYiQksWcI=
+	b=lV1DP5XjUErUISjhnGtXoSlPWFf2QVcrlfN7BHvexSy8qFwrdyPdqNrEAy5GNj5VZ
+	 sQGRhJkmVG3DaK3MMZ/jz6lFW1yQwry5DwD/sF6aKcWIUciRjlDcdrcIrD2mjgRcct
+	 ywPknGdIB21KXJuBeKlMUSdMdkLXI6gu5vi2gAN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.1 094/522] auxdisplay: line-display: fix OOB read on zero-length message_store()
-Date: Tue, 16 Jun 2026 20:24:01 +0530
-Message-ID: <20260616145130.294673748@linuxfoundation.org>
+	Siwei Zhang <oss@fourdim.xyz>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 095/522] Bluetooth: L2CAP: use chan timer to close channels in cleanup_listen()
+Date: Tue, 16 Jun 2026 20:24:02 +0530
+Message-ID: <20260616145130.342431773@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -50,62 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: Siwei Zhang <oss@fourdim.xyz>
 
-commit a7511dcd9dd4bc55d123f9b800c8a4ed2662e5c6 upstream.
+commit 8c8e620467a7b51562dbcefbd1f09f288d7d710d upstream.
 
-linedisp_display() unconditionally reads msg[count - 1] before
-checking whether count is zero, so a write of zero bytes to the
-message sysfs attribute hits msg[-1]:
+l2cap_chan_close() removes the channel from conn->chan_l, which
+must be done under conn->lock.  cleanup_listen() runs under the
+parent sk_lock, so acquiring conn->lock would invert the
+established conn->lock -> chan->lock -> sk_lock order.
 
-	write(fd, "", 0);
+Instead of calling l2cap_chan_close() directly, schedule
+l2cap_chan_timeout with delay 0 to close the channel
+asynchronously.  The timeout handler already acquires conn->lock
+and chan->lock in the correct order.
 
-	-> message_store(..., buf, count=0)
-	   -> linedisp_display(linedisp, buf, count=0)
-	      -> msg[count - 1] == '\n'  ; OOB read
+The timer is only armed when chan->conn is still set: if it is
+already NULL, l2cap_conn_del() has already processed this channel
+(l2cap_chan_del + l2cap_sock_teardown_cb + l2cap_sock_close_cb),
+so there is nothing left to do.  If l2cap_conn_del() races in
+after the timer is armed, __clear_chan_timer() inside
+l2cap_chan_del() cancels it; if the timer has already fired, the
+handler returns harmlessly because chan->conn was cleared.
 
-The kernfs write buffer for that store is a 1-byte allocation
-(kernfs_fop_write_iter() does kmalloc(len + 1) with len == 0),
-so msg[-1] is a 1-byte read before the slab object. On a
-KASAN-enabled kernel this trips an out-of-bounds report and
-panics; on stock kernels it silently reads adjacent slab data
-and, if that byte happens to be '\n', the following count--
-wraps ssize_t 0 to -1 and is then passed to kmemdup_nul().
-
-linedisp_display() is reached from the message_store() sysfs
-callback (drivers/auxdisplay/line-display.c message attribute,
-mode 0644) and from the in-tree initial-message setup with
-count == -1, so the OOB path is only userspace-triggerable via
-zero-byte writes; vfs_write() does not short-circuit on
-count == 0 and kernfs_fop_write_iter() dispatches the store
-callback regardless.
-
-Guard the trailing-newline trim with a count check. The
-existing if (!count) block then takes the clear-display path
-unchanged.
-
-Affects every auxdisplay driver that registers via
-linedisp_register() / linedisp_attach(): ht16k33, max6959,
-img-ascii-lcd, seg-led-gpio.
-
-Fixes: 7e76aece6f03 ("auxdisplay: Extract character line display core support")
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Fixes: 3df91ea20e74 ("Bluetooth: Revert to mutexes from RCU list")
+Cc: <stable@vger.kernel.org> # 0b58004: Bluetooth: fix UAF in l2cap_sock_cleanup_listen() vs l2cap_conn_del()
+Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/auxdisplay/line-display.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/l2cap_sock.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/drivers/auxdisplay/line-display.c
-+++ b/drivers/auxdisplay/line-display.c
-@@ -80,7 +80,7 @@ static int linedisp_display(struct lined
- 		count = strlen(msg);
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1501,6 +1501,10 @@ static void l2cap_sock_cleanup_listen(st
+ 	 * pin it (hold_unless_zero() additionally skips a chan already past
+ 	 * its last reference).  We then drop the sk lock before taking
+ 	 * chan->lock, so sk and chan locks are never held together.
++	 *
++	 * Since we cannot call l2cap_chan_close() without conn->lock,
++	 * schedule l2cap_chan_timeout to close the channel; it already
++	 * acquires conn->lock -> chan->lock in the correct order.
+ 	 */
+ 	while ((sk = bt_accept_dequeue(parent, NULL))) {
+ 		struct l2cap_chan *chan;
+@@ -1518,14 +1522,12 @@ static void l2cap_sock_cleanup_listen(st
+ 		       state_to_string(chan->state));
  
- 	/* if the string ends with a newline, trim it */
--	if (msg[count - 1] == '\n')
-+	if (count && msg[count - 1] == '\n')
- 		count--;
+ 		l2cap_chan_lock(chan);
+-		__clear_chan_timer(chan);
+-		l2cap_chan_close(chan, ECONNRESET);
+-		/* l2cap_conn_del() may already have killed this socket
+-		 * (it sets SOCK_DEAD); skip the duplicate to avoid a
+-		 * double sock_put()/l2cap_chan_put().
++		/* Since we cannot call l2cap_chan_close() without
++		 * conn->lock, schedule its timer to trigger the close
++		 * and cleanup of this channel.
+ 		 */
+-		if (!sock_flag(sk, SOCK_DEAD))
+-			l2cap_sock_kill(sk);
++		if (chan->conn)
++			__set_chan_timer(chan, 0);
+ 		l2cap_chan_unlock(chan);
  
- 	if (!count) {
+ 		l2cap_chan_put(chan);
 
 
