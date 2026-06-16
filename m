@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71DA4779A8;
-	Tue, 16 Jun 2026 16:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A48147798F;
+	Tue, 16 Jun 2026 16:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627718; cv=none; b=ORnfQPzA7uk+ESHp8WVCtSmZD9SyGTMxM6oiuBhShxPFT+scSNaiZIXBlbv+zcVv64m/Oa30xK98V/LaiTxhbbOwXnROhfMpy0Gtw1xs7jsxg1Y20V4Ifog4qE6MQQMwjTUXiaMAfX5VjOVvP8ZR2+luOXTvZfPe4Clm/vX3p1U=
+	t=1781627726; cv=none; b=itK+eYJWIqsYSJxVJtvSj8Ws+69Larz9KO9DDoo3JygeCojIRYTtI1vo8kGkq4JBJ2ZBwbEFcQynyLt5HS9GV2AUbYqCvemiim3zoasdPgjw3JlDTNKFJGQoPaozhFsWkxPE9OZuy9wRv5uqfW88d7L1vOWKGZ5mwjQetgD0iak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627718; c=relaxed/simple;
-	bh=qQ2x6Yhp05/Aw5hxOTDxTuvi1OFcIfxvyuahOc/yI88=;
+	s=arc-20240116; t=1781627726; c=relaxed/simple;
+	bh=93gfqrv6zGnb5eRizuUnSVJoTYejEGWYUJEMdL2N/+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=azQJSi1kWTyP/hXB1N+P6VYySzB+xbtEqf4kpzfDBm7oy1DLDGEnl9HdxMeiJTo7rQwbnXf/K98JKs2UNn7hSf/3snd958wcQRCFj1hCaO7/Q9LeeBWva9KOLbN2VU8EhoAbkCfIxW5+/8pvzYiOtIkPv3Dn3q8ABWQxyCkIrLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fIOUENLR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tq9PmJF5iBwQz4UWfMx7M1fW/w8lsDen8l1ibGbipBpAfVoRa1+FcQ4WXdiMvVKtc3cVWtdvNGwrX2mcJPiUsit3valCMkU7HzByIaIOHNiWnsZ8dkogRMMO9ozPder0ExB1BPEAiAqYLOO4nsJ2zmgasWObr6l7sc53J4hB7Ac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtBzdKeB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fIOUENLR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3BC1F000E9;
-	Tue, 16 Jun 2026 16:35:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtBzdKeB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 501ED1F000E9;
+	Tue, 16 Jun 2026 16:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627717;
-	bh=88CRewZCd6daaZvgxEc5dms2turIC7ImojHTSZCE/dQ=;
+	s=korg; t=1781627725;
+	bh=7/eMxMzP71CW0NQJltLSK9GEW0/KFTmmeiBbWAHx+h4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fIOUENLR1IKLB9EWSFuy7JpCvi8NLWkdoJBOKAvw/uRVXX5Rqq96xxqI+myiQ7L5g
-	 hMbGPO2emAG9wBHmXSKNxVYwjSzS2WdyAxnksF2lfoWdKJ7M2RWbFafWNDQA58hkHp
-	 xo60qaH+QWhBu338+1n3PVS6M25PWNen+Ej25iAw=
+	b=QtBzdKeBNygtY5GEDIgEymECkyMCaVcp9aYoloQLGKvxsELgfMiOOU1bPCxZY+RIi
+	 yxGOUvXe89o/NLv2PrUcQOOZm+PQxVHzyMTNrPywJYw0rruVFIwNuTfVT20oZ3DK0t
+	 s8Agtu5pGUDZfFGr3hdi3n61+dvan/PRAWX3K2Gk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.12 181/261] misc: fastrpc: Fix NULL pointer dereference in rpmsg callback
-Date: Tue, 16 Jun 2026 20:30:19 +0530
-Message-ID: <20260616145053.462998288@linuxfoundation.org>
+	Nikolay Kuratov <kniv@yandex-team.ru>,
+	Md Haris Iqbal <haris.iqbal@linux.dev>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 182/261] net/mlx5: Reorder completion before putting command entry in cmd_work_handler
+Date: Tue, 16 Jun 2026 20:30:20 +0530
+Message-ID: <20260616145053.503875900@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -51,79 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Nikolay Kuratov <kniv@yandex-team.ru>
 
-commit 5401fb4fe10fac6134c308495df18ed74aebb9c4 upstream.
+commit 02896a7fa4cd3ec61d60ba30136841e4f04bdeac upstream.
 
-A NULL pointer dereference was observed on Hawi at boot when the DSP
-sends a glink message before fastrpc_rpmsg_probe() has completed
-initialization:
+Assuming callback != NULL && !page_queue, cmd_work_handler takes
+command entry with refcnt == 1 from mlx5_cmd_invoke.
+If either semaphore timeout or index allocation error happens,
+it does final cmd_ent_put(ent). To avoid access to freed memory,
+notify slotted completion before cmd_ent_put.
 
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000178
-  pc : _raw_spin_lock_irqsave+0x34/0x8c
-  lr : fastrpc_rpmsg_callback+0x3c/0xcc [fastrpc]
-  ...
-  Call trace:
-   _raw_spin_lock_irqsave+0x34/0x8c (P)
-   fastrpc_rpmsg_callback+0x3c/0xcc [fastrpc]
-   qcom_glink_native_rx+0x538/0x6a4
-   qcom_glink_smem_intr+0x14/0x24 [qcom_glink_smem]
+This is theoretical issue found by Svace static analyser.
 
-The faulting address 0x178 corresponds to the lock variable inside
-struct fastrpc_channel_ctx, confirming that cctx is NULL when
-fastrpc_rpmsg_callback() attempts to take the spinlock.
-
-There are two issues here. First, dev_set_drvdata() is called before
-spin_lock_init() and idr_init(), leaving a window where the callback
-can retrieve a valid cctx pointer but operate on an uninitialized
-spinlock. Second, the rpmsg channel becomes live as soon as the driver
-is bound, so fastrpc_rpmsg_callback() can fire before dev_set_drvdata()
-is called at all, resulting in dev_get_drvdata() returning NULL.
-
-Fix both issues by moving all cctx initialization ahead of
-dev_set_drvdata() so the structure is fully initialized before it
-becomes visible to the callback, and add a NULL check in
-fastrpc_rpmsg_callback() as a guard against any remaining window.
-
-Fixes: f6f9279f2bf0 ("misc: fastrpc: Add Qualcomm fastrpc basic driver model")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204528.116920-4-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 485d65e135712 ("net/mlx5: Add a timeout to acquire the command queue semaphore")
+Fixes: 0e2909c6bec90 ("net/mlx5: Fix variable not being completed when function returns")
+Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
+Reviewed-by: Md Haris Iqbal <haris.iqbal@linux.dev>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Acked-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260526162932.501584-1-kniv@yandex-team.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/cmd.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -2411,7 +2411,6 @@ static int fastrpc_rpmsg_probe(struct rp
- 
- 	kref_init(&data->refcount);
- 
--	dev_set_drvdata(&rpdev->dev, data);
- 	rdev->dma_mask = &data->dma_mask;
- 	dma_set_mask_and_coherent(rdev, DMA_BIT_MASK(32));
- 	INIT_LIST_HEAD(&data->users);
-@@ -2420,6 +2419,7 @@ static int fastrpc_rpmsg_probe(struct rp
- 	idr_init(&data->ctx_idr);
- 	data->domain_id = domain_id;
- 	data->rpdev = rpdev;
-+	dev_set_drvdata(&rpdev->dev, data);
- 
- 	err = of_platform_populate(rdev->of_node, NULL, NULL, rdev);
- 	if (err)
-@@ -2493,6 +2493,9 @@ static int fastrpc_rpmsg_callback(struct
- 	if (len < sizeof(*rsp))
- 		return -EINVAL;
- 
-+	if (!cctx)
-+		return -ENODEV;
-+
- 	ctxid = ((rsp->ctx & FASTRPC_CTXID_MASK) >> 4);
- 
- 	spin_lock_irqsave(&cctx->lock, flags);
+--- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+@@ -996,12 +996,13 @@ static void cmd_work_handler(struct work
+ 				ent->callback(-EBUSY, ent->context);
+ 				mlx5_free_cmd_msg(dev, ent->out);
+ 				free_msg(dev, ent->in);
++				complete(&ent->slotted);
+ 				cmd_ent_put(ent);
+ 			} else {
+ 				ent->ret = -EBUSY;
+ 				complete(&ent->done);
++				complete(&ent->slotted);
+ 			}
+-			complete(&ent->slotted);
+ 			return;
+ 		}
+ 		alloc_ret = cmd_alloc_index(cmd, ent);
+@@ -1011,13 +1012,14 @@ static void cmd_work_handler(struct work
+ 				ent->callback(-EAGAIN, ent->context);
+ 				mlx5_free_cmd_msg(dev, ent->out);
+ 				free_msg(dev, ent->in);
++				complete(&ent->slotted);
+ 				cmd_ent_put(ent);
+ 			} else {
+ 				ent->ret = -EAGAIN;
+ 				complete(&ent->done);
++				complete(&ent->slotted);
+ 			}
+ 			up(&cmd->vars.sem);
+-			complete(&ent->slotted);
+ 			return;
+ 		}
+ 	} else {
 
 
