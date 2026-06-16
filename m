@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512E4322C88;
-	Tue, 16 Jun 2026 16:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9876B3C0628;
+	Tue, 16 Jun 2026 16:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625724; cv=none; b=cSfzCzApcyTrcddFhkGrQAxmhKQzTuvYKly/+9PR0Jai7c2l5XDIwzg1VOs+agoRC2yzapjh09utgPmekfBfV+zh8undT0lP9bvN3+PrZ0v9b8k+0NNQiDy6UC4LuorZ0RQlpXBR20wHQ3OeOKgZqdU9zq9MJaDzIken/ayeJDE=
+	t=1781625729; cv=none; b=d7Xnl1rAe/41fv2qBEhvNGoWGpFWyBTfxGQhE8fZfBjUJfKQx0F3N1A569v3ksqkWFc6+yhvQiB1k+X4rDvEBCp+4xNOIU6nFuVjPrfhX4qhORBE3YIskm2ZBOjjyJBk6uRdDLJTt4XQ56MZW9b9EvRzY7ApTNm90c0rkS/SSPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625724; c=relaxed/simple;
-	bh=sni57CpH2TzqRCpigMlAOJwYGfM2Gm8EUZTNWVV9muw=;
+	s=arc-20240116; t=1781625729; c=relaxed/simple;
+	bh=O47YBfVpfVABdcQ2tMgHOS87bND5X9NSdjvjXQqeyBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ObbeRaeXtdO3WcYjSFNOrg0yoR74rpb4mxyTIYPrc9a9a7+thj5dVr9h8j9njAskmA2SskAR7Ly87Nbt+CwhYuPeQqIzP1A4dIM1QWr660pHvi4XYMbqStGDDEFfdQvua9Rw6LIi01A2X/JtgtBod7xalbrS0rr2hIOh/nXp5To=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVDEBqxr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hNtwWelY8Eartrvy4BrQR/QcRNsnXjuK70OT6pEMC5hypuvPTg+XSkNOxOgGDLrobHqSRXDFhNo0bvsdS68inSuqyV7UtzsvXVd7VvyniWh8MPra/d0qmcYUx5P6d/vF20CMBJaFavDi5XTk1hkmG1jLrQbw/F0VSysH3sDR520=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmO16ycR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVDEBqxr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FFA81F000E9;
-	Tue, 16 Jun 2026 16:02:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmO16ycR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC4F1F000E9;
+	Tue, 16 Jun 2026 16:02:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625723;
-	bh=MbNWVKujtUYbz09pk6oX5Ru1cCc5HYjuCVT/oNx9lsA=;
+	s=korg; t=1781625728;
+	bh=icHfVv4O+RmzHTAIXtQLrOot36mfsytmqDmduGKwZAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vVDEBqxrAtVh+qhevruKFQSWf41zYRBGaa2lSa3T4pFq5RdLOTHZK4Z2CAG8fu7R/
-	 djME3+N39vWwxKR8nyZtCOthN/UYXgT/dTU810MQQpIxYhygvbgPz9WBByGYgV5/gn
-	 8RgLnaRwAgVk7P0uer0A8GcKMNhLWYH3HscAZAUI=
+	b=dmO16ycR5eDznv2sE//3TVM7UCpnYsVgJ5Ia0+ODwkctaXbd5brGIRCvVNCiYQhJf
+	 Z4vNQwj9UpB+z4Y8PG6KbfmvOR7ZGs/n+jolAg70RURr52sKVZHKyh3MW08+yX0PIX
+	 lJCd+fBF2wTSmTav2Bm4z3HoGbCru2dTKyUxRVdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 178/325] ALSA: timer: Forcibly close timer instances at closing
-Date: Tue, 16 Jun 2026 20:29:34 +0530
-Message-ID: <20260616145106.741145719@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 196/325] mptcp: close TOCTOU race while computing rcv_wnd
+Date: Tue, 16 Jun 2026 20:29:52 +0530
+Message-ID: <20260616145107.739244988@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -50,77 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit da3039e91d1f835874ed6e9a33ea19ee80c2cb92 upstream.
+commit 8ab24fdebc369c0dfb90f82c1650b1e66662bb45 upstream.
 
-When snd_timer object is freed via snd_timer_free() and still pending
-snd_timer_instance objects are assigned to the timer object, it tries
-to unlink all instances and just set NULL to each ti->timer, then
-releases the resources immediately.  The problem is, however, when
-there are slave timer instances that are associated with a master
-instance linked to this timer: namely, those slave instances still
-point to the freed timer object although the master instance is
-unlinked, which may lead to user-after-free.  The bug can be easily
-triggered particularly when a new userspace-driven timers
-(CONFIG_SND_UTIMER) is involved, since it can create and delete the
-timer object via a simple file open/close, while the other
-applications may keep accessing to that timer.
+The MPTCP output path access locklessly the MPTCP-level ack_seq
+in multiple times, using possibly different values for the data_ack
+in the DSS option and to compute the announced rcv wnd for the same
+packet.
 
-This patch is an attempt to paper over the problem above: now instead
-of just unlinking, call snd_timer_close[_locked]() forcibly for each
-pending timer instance, so that all assigned slave timer instances are
-properly detached, too.  Since snd_timer_close() might be called later
-by the driver that created that instance, the check of
-SNDRV_TIMER_IFLG_DEAD is added at the beginning, too.
+Refactor the cote to avoid inconsistencies which may confuse the
+peer. Also ensure that the MPTCP level rcv wnd is updated only when
+the egress packet actually contains a DSS ack.
 
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Tested-by: Kyle Zeng <kylebot@openai.com>
-Fixes: 37745918e0e7 ("ALSA: timer: Introduce virtual userspace-driven timers")
+Fixes: fa3fe2b15031 ("mptcp: track window announced to peer")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260606161145.1933447-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260602-net-mptcp-misc-fixes-7-1-rc7-v2-3-856831229976@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/timer.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ net/mptcp/options.c |   36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
---- a/sound/core/timer.c
-+++ b/sound/core/timer.c
-@@ -422,6 +422,8 @@ static void snd_timer_close_locked(struc
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -570,7 +570,6 @@ static bool mptcp_established_options_ds
+ 	struct mptcp_ext *mpext;
+ 	unsigned int ack_size;
+ 	bool ret = false;
+-	u64 ack_seq;
  
- 	if (timer) {
- 		guard(spinlock_irq)(&timer->lock);
-+		if (timeri->flags & SNDRV_TIMER_IFLG_DEAD)
-+			return; /* already closed */
- 		timeri->flags |= SNDRV_TIMER_IFLG_DEAD;
+ 	opts->csum_reqd = READ_ONCE(msk->csum_enabled);
+ 	mpext = skb ? mptcp_get_ext(skb) : NULL;
+@@ -601,14 +600,11 @@ static bool mptcp_established_options_ds
+ 		return ret;
  	}
  
-@@ -964,18 +966,18 @@ EXPORT_SYMBOL(snd_timer_new);
+-	ack_seq = READ_ONCE(msk->ack_seq);
+ 	if (READ_ONCE(msk->use_64bit_ack)) {
+ 		ack_size = TCPOLEN_MPTCP_DSS_ACK64;
+-		opts->ext_copy.data_ack = ack_seq;
+ 		opts->ext_copy.ack64 = 1;
+ 	} else {
+ 		ack_size = TCPOLEN_MPTCP_DSS_ACK32;
+-		opts->ext_copy.data_ack32 = (uint32_t)ack_seq;
+ 		opts->ext_copy.ack64 = 0;
+ 	}
+ 	opts->ext_copy.use_ack = 1;
+@@ -1296,19 +1292,14 @@ bool mptcp_incoming_options(struct sock
+ 	return true;
+ }
  
- static int snd_timer_free(struct snd_timer *timer)
+-static void mptcp_set_rwin(struct tcp_sock *tp, struct tcphdr *th)
++static u64 mptcp_set_rwin(struct mptcp_sock *msk, struct tcp_sock *tp,
++			  struct tcphdr *th, u64 ack_seq)
  {
-+	struct snd_timer_instance *ti, *n;
-+
- 	if (!timer)
- 		return 0;
+ 	const struct sock *ssk = (const struct sock *)tp;
+-	struct mptcp_subflow_context *subflow;
+-	u64 ack_seq, rcv_wnd_old, rcv_wnd_new;
+-	struct mptcp_sock *msk;
++	u64 rcv_wnd_old, rcv_wnd_new;
+ 	u32 new_win;
+ 	u64 win;
  
- 	guard(mutex)(&register_mutex);
- 	if (! list_empty(&timer->open_list_head)) {
--		struct list_head *p, *n;
--		struct snd_timer_instance *ti;
--		pr_warn("ALSA: timer %p is busy?\n", timer);
--		list_for_each_safe(p, n, &timer->open_list_head) {
--			list_del_init(p);
--			ti = list_entry(p, struct snd_timer_instance, open_list);
--			ti->timer = NULL;
-+		list_for_each_entry_safe(ti, n, &timer->open_list_head, open_list) {
-+			struct device *card_dev_to_put = NULL;
+-	subflow = mptcp_subflow_ctx(ssk);
+-	msk = mptcp_sk(subflow->conn);
+-
+-	ack_seq = READ_ONCE(msk->ack_seq);
+ 	rcv_wnd_new = ack_seq + tp->rcv_wnd;
+ 
+ 	rcv_wnd_old = atomic64_read(&msk->rcv_wnd_sent);
+@@ -1360,7 +1351,7 @@ raise_win:
+ 
+ update_wspace:
+ 	WRITE_ONCE(msk->old_wspace, tp->rcv_wnd);
+-	subflow->rcv_wnd_sent = rcv_wnd_new;
++	return rcv_wnd_new;
+ }
+ 
+ static void mptcp_track_rwin(struct tcp_sock *tp)
+@@ -1472,13 +1463,25 @@ void mptcp_write_options(struct tcphdr *
+ 		*ptr++ = mptcp_option(MPTCPOPT_DSS, len, 0, flags);
+ 
+ 		if (mpext->use_ack) {
++			struct mptcp_sock *msk;
++			u64 ack_seq;
 +
-+			snd_timer_close_locked(ti, &card_dev_to_put);
-+			put_device(card_dev_to_put);
++			/* DSS option is set only by mptcp_established_options,
++			 * the caller is __tcp_transmit_skb() and ssk is always
++			 * not NULL.
++			 */
++			subflow = mptcp_subflow_ctx(ssk);
++			msk = mptcp_sk(subflow->conn);
++			ack_seq = READ_ONCE(msk->ack_seq);
+ 			if (mpext->ack64) {
+-				put_unaligned_be64(mpext->data_ack, ptr);
++				put_unaligned_be64(ack_seq, ptr);
+ 				ptr += 2;
+ 			} else {
+-				put_unaligned_be32(mpext->data_ack32, ptr);
++				put_unaligned_be32(ack_seq, ptr);
+ 				ptr += 1;
+ 			}
++			subflow->rcv_wnd_sent = mptcp_set_rwin(msk, tp, th,
++							       ack_seq);
+ 		}
+ 
+ 		if (mpext->use_map) {
+@@ -1706,9 +1709,6 @@ mp_capable_done:
+ 			i += 4;
  		}
  	}
- 	list_del(&timer->device_list);
+-
+-	if (tp)
+-		mptcp_set_rwin(tp, th);
+ }
+ 
+ __be32 mptcp_get_reset_option(const struct sk_buff *skb)
 
 
