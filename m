@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C1843E4BA;
-	Tue, 16 Jun 2026 15:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E20C44104F;
+	Tue, 16 Jun 2026 15:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623425; cv=none; b=Y9/+xKP5swfbAuYE6svQKqNZ+pfFP8/ysVcFI8ov6vTrOE0VewiiphrDri/Yh8cPoNDV1fbyq759R8B9SQcKxZmJ1hJy5OjWc/jYzg1XiHtE/EHywrI3ADxQIxMSvcwWEdygGbk/f/gtY6lFLygnyWji+21wrmfhW2xl7tPcVHk=
+	t=1781623430; cv=none; b=L3+ubdnSE2uoyLxVGezfpHj1m1wywONDwy2wh+sikfMM8SyTf4wcTtuO23/eYgYJwdRh44KjogmM0myuCypooYP+RP6ZXo2iHRVNBTraxGnr0C5jI28jdnf/1RbNDw2EVESNFKT9NYhS1xSfrH3As2A7vLNAtdBTxe177J9OIdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623425; c=relaxed/simple;
-	bh=WFppll+nsE6hAAl5IQ2QHKk0l8cP1Yxun2OZ2w4UA08=;
+	s=arc-20240116; t=1781623430; c=relaxed/simple;
+	bh=buUFoTQ45nZ3db2dhSJNwrh0AXWQP2dfObJEKqi0v30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oHRAFExENBaSb23F1O342WWsumaK0UaUbQPJT1wmBAqRdMj+MW3uzd9+rDYRA5IDW3f1aWJRj4Zf1npQlOOxYYAa2ifqEyokytltdNW+3Oq/iWodKBxZJLc5qBEawoUprqzFy8pAO2915GdXC51JEIodQQooeHTzUDB0nW+fszY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysN6yvYI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J/LSCEdH91xV+MRHFbu05PEEFcEMiIaT56W9jTySr9H6mQCa+VbMwrwWMYUKhJxIHu1itHMDcwiz1jYHX+HWm9A/CW03J1hmxZ0MQG+60l7XtiWXDUPDqzQ4rX+YIfM4Oy4/DEMObAHycPV8bz+KQt3mRlNTLPsEGOYqr9M5U8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6Hrm0no; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysN6yvYI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF641F000E9;
-	Tue, 16 Jun 2026 15:23:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6Hrm0no"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FEC1F000E9;
+	Tue, 16 Jun 2026 15:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623423;
-	bh=ZZMTRhx6oN1xWT1VvFPWvsc4kEkq9O0qqRH7Z0Q82z4=;
+	s=korg; t=1781623429;
+	bh=iy3SV1I1DfNK0H+kyFxrJ6YAKCdx0aDZHZeCONxHtTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ysN6yvYI+dvFQZi4eHc3rJSc6G7ITDISZVz48REPEtav2D/r3GaM6EZmIkITtUzje
-	 AOX6soa8b0GbDrByliOZcG4kWtsGJ5Y7rGc//b+WlYx9emJrZh7Ye6YIG+djGg21Ax
-	 iBETUXjHfTLTvmN9Ipjab9I0JV1SjxHk5z96wveM=
+	b=F6Hrm0no+cCKcYfWCb1cwvUIEgShc8D7isZ4X4c2LMhPxJPQ2UIxWffk0xbf6toSf
+	 WUcmL3aouz5pDZf5Hp4bbrzc8nm7JK222CTHsS9fb/xoh/q5fOTISlRki4xCN+CNBF
+	 VajSMGcigHf2foKGJAzjMEPaOmuUnGyC2Cdqb94k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Bobby Eshleman <bobbyeshleman@meta.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 112/378] net: ibm: emac: Fix use-after-free during device removal
-Date: Tue, 16 Jun 2026 20:25:43 +0530
-Message-ID: <20260616145116.265907035@linuxfoundation.org>
+Subject: [PATCH 7.0 113/378] netdev: fix double-free in netdev_nl_bind_rx_doit()
+Date: Tue, 16 Jun 2026 20:25:44 +0530
+Message-ID: <20260616145116.316180952@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,71 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit a0130d682222ae21afc395aead7cd2d87e1a8358 ]
+[ Upstream commit c849de7d8757a7af801fc4a4058f71d481d367f2 ]
 
-The driver was using devm_register_netdev() which causes unregister_netdev()
-to be deferred until the devres cleanup phase, which runs after emac_remove()
-returns. This creates a use-after-free window where:
+Sashiko flags that genlmsg_reply() always consumes the skb.
+The error path calls nlmsg_free(rsp) so we can't jump directly
+to it. Let's not unbind, just propagate the error to the user.
+This is the typical way of handling genlmsg_reply() failures.
+They shouldn't happen unless user does something silly like
+calling the kernel with an already-full rcvbuf.
 
-1. emac_remove() is called, which tears down hardware (cancels work, detaches
-   modules, unregisters from MAL)
-2. emac_remove() returns
-3. devres cleanup runs and finally calls unregister_netdev()
-
-During step 3, the network stack might still process packets, triggering
-emac_irq(), emac_poll(), or other handlers that access now-freed hardware
-resources (dev->emacp, dev->mal, etc.).
-
-Fix this by replacing devm_register_netdev() with manual register_netdev()
-and calling unregister_netdev() at the beginning of emac_remove(), before
-any hardware teardown. This ensures the network device is fully stopped and
-unregistered before hardware resources are released.
-
-The change is safe because:
-- dev->ndev is assigned very early in probe (before any error paths that
-  could bypass emac_remove)
-- platform_set_drvdata() is only called after successful registration, so
-  emac_remove() only runs for fully registered devices
-- unregister_netdev() is idempotent and safe to call on any registered device
-
-Fixes: a4dd8535a527 ("net: ibm: emac: use devm for register_netdev")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 170aafe35cb9 ("netdev: support binding dma-buf to netdevice")
+Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/emac/core.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/core/netdev-genl.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/ibm/emac/core.c b/drivers/net/ethernet/ibm/emac/core.c
-index 417dfa18daae3a..4e503b3d0d2d34 100644
---- a/drivers/net/ethernet/ibm/emac/core.c
-+++ b/drivers/net/ethernet/ibm/emac/core.c
-@@ -3144,7 +3144,7 @@ static int emac_probe(struct platform_device *ofdev)
+diff --git a/net/core/netdev-genl.c b/net/core/netdev-genl.c
+index 470fabbeacd9bd..93ea09bd1e7bab 100644
+--- a/net/core/netdev-genl.c
++++ b/net/core/netdev-genl.c
+@@ -1019,8 +1019,6 @@ int netdev_nl_bind_rx_doit(struct sk_buff *skb, struct genl_info *info)
+ 	genlmsg_end(rsp, hdr);
  
- 	netif_carrier_off(ndev);
+ 	err = genlmsg_reply(rsp, info);
+-	if (err)
+-		goto err_unbind;
  
--	err = devm_register_netdev(&ofdev->dev, ndev);
-+	err = register_netdev(ndev);
- 	if (err) {
- 		printk(KERN_ERR "%pOF: failed to register net device (%d)!\n",
- 		       np, err);
-@@ -3197,6 +3197,13 @@ static void emac_remove(struct platform_device *ofdev)
+ 	bitmap_free(rxq_bitmap);
  
- 	DBG(dev, "remove" NL);
+@@ -1028,7 +1026,7 @@ int netdev_nl_bind_rx_doit(struct sk_buff *skb, struct genl_info *info)
  
-+	/* Unregister network device before tearing down hardware
-+	 * to prevent use-after-free during deferred cleanup. This ensures
-+	 * the network stack stops all operations before hardware resources
-+	 * are released.
-+	 */
-+	unregister_netdev(dev->ndev);
-+
- 	cancel_work_sync(&dev->reset_work);
+ 	mutex_unlock(&priv->lock);
  
- 	if (emac_has_feature(dev, EMAC_FTR_HAS_TAH))
+-	return 0;
++	return err < 0 ? err : 0;
+ 
+ err_unbind:
+ 	net_devmem_unbind_dmabuf(binding);
 -- 
 2.53.0
 
