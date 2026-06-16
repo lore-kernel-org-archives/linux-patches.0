@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E5D44E038;
-	Tue, 16 Jun 2026 16:05:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA7E1E8320;
+	Tue, 16 Jun 2026 16:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625952; cv=none; b=VgbT5+ynxNUPJ44HdkgfUN1582+yMRCnTM06IQVgLXEhJaoyMJsgF072FiSXkGynrbeiVa0LhyPixp2JWECs+SXKo2LdK5i0RN09UVm7vEitzNeKwTdsvstxY8Vi59FSn3WnjpMxNVxL4GIeK9m8E7AIirxQtCJSnKtC63NoLoY=
+	t=1781625958; cv=none; b=dzwxbRo5GIN0sJHrMk6r7LpGDZIMmJrcFVRzwM03MBnZLuzOfvtVYwjFqSoIq2IkwN+mDI3Y3mjjDp6FK5E4f2f/qyZA1ABkOfX9TzAh9Lm++2JwFmZYzT55ZEhWLBHZW31uBjUM7OEG4rnJ/Sicu8gmuiPfO9sB33Iq2FYJgds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625952; c=relaxed/simple;
-	bh=yfDZYHq9/smu2GRIftMVlUJxAL/jesS72o/aNFBEQWo=;
+	s=arc-20240116; t=1781625958; c=relaxed/simple;
+	bh=NAgBoC2+NONNKzDrJ8d2okSP8FwTMiCrarwaXEFO0MY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sVYI9evyUZqDmKp4A3+gmhPD69pzIi/TO3GzJ2oiYUL6bpW6ZtNxJYckK4lBfbyxBxSbMS9lVRIuMmoXrJWPghvOjF1weJ0P7Bg7z8qJUEFWZJEha1MkKfln6tK9h/b5P7Tzuy/sa1F1QFelQjncKd5W2VrLSOzxXLqFShLS/UU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=06rv41UI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i2MSd26NxdOo5lj1BtLFR1JuWtIn7AUW9gUgO1wRHIOIaIMSqVmgFIMyeMaA2ADE+HpUj2oNF8jeYPI9TUwvSgMum1pNSIKv8aP4Xx3ERL5H1W/MB3qkOSQKn0Z6e1d3V53wdjo+0k9wke19WsiFMgesD6CwV1MK178+gqWVuqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QlfSWQW1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="06rv41UI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74BA71F000E9;
-	Tue, 16 Jun 2026 16:05:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QlfSWQW1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19FE1F000E9;
+	Tue, 16 Jun 2026 16:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625951;
-	bh=8S19dyKtgkjJGsoCrx7cg76cPCWM8JT0S7ZQxmJkFCM=;
+	s=korg; t=1781625956;
+	bh=7tzfRFTG5K+BPpHpbYf++BqS7iL9kYuX2O9hld0e0I8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=06rv41UI4iAEjNL43fPtrIzkX4yQhL3T5hxzh9NAfQJyQT5Wn/GX/GVimAQGS3nyw
-	 CJ3S9X8eQF4dWKUwsd4awzA8vIwB0zNpEdgPIBHmbptBeQoVberK5z/gR2V/mUw5fq
-	 gHh77e5GhkpavOHz/L19KgfB/Ao6lySAVHfFuE+4=
+	b=QlfSWQW1e4rCikpWLx7DbFTM/Yoi0ADW/TEV+v3fEThTZlUFK8iglnWiJSdYZHKzu
+	 JYqGmxlxxQpChyJ7Lh2CDTXprt41CUAJ9nbePwxIwLnjT56Nd8nKmPrG/kEG07tqOw
+	 uLeNteDrPqAUYrcwc41MIPgB3fgPjo7l3W3dOgkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhaoJinming <zhaojinming@uniontech.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 238/325] net: bonding: fix NULL pointer dereference in bond_do_ioctl()
-Date: Tue, 16 Jun 2026 20:30:34 +0530
-Message-ID: <20260616145110.301336469@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.18 212/325] fhandle: fix UAF due to unlocked ->mnt_ns read in may_decode_fh()
+Date: Tue, 16 Jun 2026 20:30:08 +0530
+Message-ID: <20260616145108.668364401@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -50,57 +50,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhaoJinming <zhaojinming@uniontech.com>
+From: Jann Horn <jannh@google.com>
 
-commit a764b0e8317a863006e05732e1aefe821b9d8c2d upstream.
+commit 40ab6644b99685755f740b872c00ef40d9aa870e upstream.
 
-In bond_do_ioctl(), slave_dev is obtained via __dev_get_by_name() which
-can return NULL if the requested interface name does not exist. However,
-the subsequent slave_dbg() call is placed before the NULL check:
+may_decode_fh() accesses mount::mnt_ns without holding any locks; that
+means the mount can concurrently be unmounted, and the mnt_namespace can
+concurrently be freed after an RCU grace period.
 
-    slave_dev = __dev_get_by_name(net, ifr->ifr_slave);
-    slave_dbg(bond_dev, slave_dev, "slave_dev=%p:\n", slave_dev); //here
-    if (!slave_dev)
-        return -ENODEV;
+This race can happens as follows, assuming that the mount point was
+created by open_tree(..., OPEN_TREE_CLONE):
 
-The slave_dbg() macro expands to netdev_dbg(bond_dev, "(slave %s): " fmt,
-(slave_dev)->name, ...) which unconditionally dereferences slave_dev->name
-before the NULL check is performed. This results in a NULL pointer
-dereference kernel oops when a user calls bonding ioctl (e.g.
-SIOCBONDENSLAVE, SIOCBONDRELEASE, etc.) with a non-existent slave
-interface name.
+thread 1            thread 2            RCU
+                    __do_sys_open_by_handle_at
+                      do_handle_open
+                        handle_to_path
+                          may_decode_fh
+                            is_mounted
+                              [mount::mnt_ns access]
+                            [mount::mnt_ns access]
+__do_sys_close
+  fput_close_sync
+    __fput
+      dissolve_on_fput
+        umount_tree
+        class_namespace_excl_destructor
+          namespace_unlock
+            free_mnt_ns
+              mnt_ns_tree_remove
+                call_rcu(mnt_ns_release_rcu)
+                                        mnt_ns_release_rcu
+                                          mnt_ns_release
+                                            kfree
+                            [mnt_namespace::user_ns access] **UAF**
 
-This is reachable from userspace via the bonding ioctl interface with
-CAP_NET_ADMIN capability, making it a potential local denial-of-service
-vector.
+Fix it by taking rcu_read_lock() around the mount::mnt_ns access, like
+in __prepend_path().
+Additionally, document the semantics of mount::mnt_ns, and use WRITE_ONCE()
+for writers that can race with lockless readers.
 
-Fix by moving the slave_dbg() call after the NULL check.
+This bug is unreachable unless one of the following is set:
 
-Fixes: e2a7420df2e0 ("bonding/main: convert to using slave printk macros")
-Cc: stable@vger.kernel.org # v5.2+
-Signed-off-by: ZhaoJinming <zhaojinming@uniontech.com>
-Link: https://patch.msgid.link/20260601085649.4029067-1-zhaojinming@uniontech.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+ - CONFIG_PREEMPTION
+ - CONFIG_RCU_STRICT_GRACE_PERIOD
+
+because it requires an RCU grace period to happen during a syscall without
+an explicit preemption.
+
+This doesn't seem to have interesting security impact; worst-case, it could
+leak the result of an integer comparison to userspace (from the level
+check in cap_capable()), cause an endless loop, or crash the kernel by
+dereferencing an invalid address.
+
+Fixes: 620c266f3949 ("fhandle: relax open_by_handle_at() permission checks")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://patch.msgid.link/20260603-vfs-fhandle-uaf-fix-v2-1-d05db76a5084@google.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/bonding/bond_main.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/fhandle.c   |   16 ++++++++++++++--
+ fs/mount.h     |   10 +++++++++-
+ fs/namespace.c |    6 +++---
+ 3 files changed, 26 insertions(+), 6 deletions(-)
 
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -4595,11 +4595,11 @@ static int bond_do_ioctl(struct net_devi
+--- a/fs/fhandle.c
++++ b/fs/fhandle.c
+@@ -287,6 +287,19 @@ static int do_handle_to_path(struct file
+ 	return 0;
+ }
  
- 	slave_dev = __dev_get_by_name(net, ifr->ifr_slave);
- 
--	slave_dbg(bond_dev, slave_dev, "slave_dev=%p:\n", slave_dev);
--
- 	if (!slave_dev)
- 		return -ENODEV;
- 
-+	slave_dbg(bond_dev, slave_dev, "slave_dev=%p:\n", slave_dev);
++static bool capable_wrt_mount(struct mount *mount)
++{
++	struct mnt_namespace *mnt_ns;
 +
- 	switch (cmd) {
- 	case SIOCBONDENSLAVE:
- 		res = bond_enslave(bond_dev, slave_dev, NULL);
++	/*
++	 * For ->mnt_ns access.
++	 * The following READ_ONCE() is semantically rcu_dereference().
++	 */
++	guard(rcu)();
++	mnt_ns = READ_ONCE(mount->mnt_ns);
++	return ns_capable(mnt_ns->user_ns, CAP_SYS_ADMIN);
++}
++
+ static inline int may_decode_fh(struct handle_to_path_ctx *ctx,
+ 				unsigned int o_flags)
+ {
+@@ -322,8 +335,7 @@ static inline int may_decode_fh(struct h
+ 	if (ns_capable(root->mnt->mnt_sb->s_user_ns, CAP_SYS_ADMIN))
+ 		ctx->flags = HANDLE_CHECK_PERMS;
+ 	else if (is_mounted(root->mnt) &&
+-		 ns_capable(real_mount(root->mnt)->mnt_ns->user_ns,
+-			    CAP_SYS_ADMIN) &&
++		 capable_wrt_mount(real_mount(root->mnt)) &&
+ 		 !has_locked_children(real_mount(root->mnt), root->dentry))
+ 		ctx->flags = HANDLE_CHECK_PERMS | HANDLE_CHECK_SUBTREE;
+ 	else
+--- a/fs/mount.h
++++ b/fs/mount.h
+@@ -69,7 +69,15 @@ struct mount {
+ 	struct hlist_head mnt_slave_list;/* list of slave mounts */
+ 	struct hlist_node mnt_slave;	/* slave list entry */
+ 	struct mount *mnt_master;	/* slave is on master->mnt_slave_list */
+-	struct mnt_namespace *mnt_ns;	/* containing namespace */
++	/*
++	 * Containing namespace (active or deactivating, non-refcounted).
++	 * Normally protected by namespace_sem.
++	 * Can also be accessed locklessly under RCU. RCU readers can't rely on
++	 * the namespace still being active, but implicitly hold a passive
++	 * reference (because an RCU delay happens between a namespace being
++	 * deactivated and the corresponding passive refcount drop).
++	 */
++	struct mnt_namespace *mnt_ns;
+ 	struct mountpoint *mnt_mp;	/* where is it mounted */
+ 	union {
+ 		struct hlist_node mnt_mp_list;	/* list mounts with the same mountpoint */
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -1085,7 +1085,7 @@ static void mnt_add_to_ns(struct mnt_nam
+ 	bool mnt_first_node = true, mnt_last_node = true;
+ 
+ 	WARN_ON(mnt_ns_attached(mnt));
+-	mnt->mnt_ns = ns;
++	WRITE_ONCE(mnt->mnt_ns, ns);
+ 	while (*link) {
+ 		parent = *link;
+ 		if (mnt->mnt_id_unique < node_to_mount(parent)->mnt_id_unique) {
+@@ -1434,7 +1434,7 @@ EXPORT_SYMBOL(mntget);
+ void mnt_make_shortterm(struct vfsmount *mnt)
+ {
+ 	if (mnt)
+-		real_mount(mnt)->mnt_ns = NULL;
++		WRITE_ONCE(real_mount(mnt)->mnt_ns, NULL);
+ }
+ 
+ /**
+@@ -1806,7 +1806,7 @@ static void umount_tree(struct mount *mn
+ 			ns->nr_mounts--;
+ 			__touch_mnt_namespace(ns);
+ 		}
+-		p->mnt_ns = NULL;
++		WRITE_ONCE(p->mnt_ns, NULL);
+ 		if (how & UMOUNT_SYNC)
+ 			p->mnt.mnt_flags |= MNT_SYNC_UMOUNT;
+ 
 
 
