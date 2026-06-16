@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787C833A9EB;
-	Tue, 16 Jun 2026 16:55:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D85169AD2;
+	Tue, 16 Jun 2026 16:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628929; cv=none; b=LI4hPAO13GSSb/N3HJgapCZv2tBXkLVF+TzBkQMZxBqDfai3VOc70qtbTDRKiuz3lVYeA3FDLB1IcVwfdqR7kDl0R2Z5OSDXaj4sn2uSPC7Wj7oii7yvUekRIXvkDnF7arPl4H/ZSDDZqXebHuaRxUGfEC9AL0ElzfgdmRCZidY=
+	t=1781628934; cv=none; b=myUvJo16wGNnAbOilJVHBM/6r5t0ZO0xeyON7bSlmrQxFzaSV1OWnfgouUhBFimQ855wJjJ1xnTbgbL8cfLYTo5HVerosKBreBoXQ5weRZdYNzEmSjgxmqicLQH2uEQnOr/5OhOfnY1Qv/ra4s0mVTYeQyVNGFgIH8OcOeyd29o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628929; c=relaxed/simple;
-	bh=akuoQxAOaJzmBHENIr75QEzP0eFM2oX7W2TuVpCKO44=;
+	s=arc-20240116; t=1781628934; c=relaxed/simple;
+	bh=f0eBdeCD8HlxBgDCqojFOc1OBcEb5TrlAMFR7I/3QCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZngyNK26iFZ9w+WyYe2pdHiwQ5Q7cL8RMedVqSqFZH6i/TJmzDZPCJAvf1hsZRyJxaK9Q973cnMVSxJ0i6dW5iuiBHNlz5UZFn8ySQnfipRMSO1YawcFxMMCwNAnXbY9uN3YtS/0KFPLCxHLTbNZWGKi0/KlQvJXZX9X/+ktpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+0iK5kH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q09zJ7I+4okho20We6z/nz5OM1w3h1KBL7JJdXcPDRJzBI+IcVhE/MBZi5k/v2eIatoed+ath+q51zKuyyauJaM/kdHNmEvuZbE7GWeCOFtoW0CNMUHaxHv/2FYnOySzRQAz/zfJxag0P/XpriA2Y0k7w8JXQKYUfeQsqQfnTJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oP9llEhI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+0iK5kH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E46D1F000E9;
-	Tue, 16 Jun 2026 16:55:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oP9llEhI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E241F000E9;
+	Tue, 16 Jun 2026 16:55:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628928;
-	bh=+FajqBbg2jdvwdgWrTQUGG2jCOlvcjgZQGs/ZNa9OTw=;
+	s=korg; t=1781628933;
+	bh=H3987/hhCYqTif3i6ClDkrkKPePcttRL0i65CtYBTQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d+0iK5kHpnmECsQNgPUPNPCV6zz+twy8Eqe/YuOwjJ7GBhIg3EXJWnGg/cS8Pk7rK
-	 w1As0o1DaHRUx1SKPPHAjmr7RAd1F2ZRClYR+uOAZ04ph0znZFcDnlExn6UDNOxpm+
-	 E2Ft/Tej0CDg0sSaqmwHeyawgTlx/lhJPsZf75lM=
+	b=oP9llEhIXDRfsduJogS4E0/+xwVNlmwkl5i0ZhuNsGg3eoyK8QRcO/NEzTY+feyZc
+	 /1qUL2RgKnk2HfigDXZGybAyaX2mCk4wlI2u6uBqCWDQ8bSudDVwu1Ztyw6yzitdxe
+	 nOPhjiQeCvj0X/ITzZ29vt2erQ7B+wpamUgYrb/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Prasanna S <prasanna.s@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH 6.6 181/452] serial: qcom-geni: fix UART_RX_PAR_EN bit position
-Date: Tue, 16 Jun 2026 20:26:48 +0530
-Message-ID: <20260616145127.361676328@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>
+Subject: [PATCH 6.6 190/452] serial: zs: Switch to using channel reset
+Date: Tue, 16 Jun 2026 20:26:57 +0530
+Message-ID: <20260616145127.817911269@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,37 +49,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prasanna S <prasanna.s@oss.qualcomm.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit ca2584d841b69391ffc4144840563d2e1a0018df upstream.
+commit 8572955630f30948837088aa98bcbe0532d1ceac upstream.
 
-UART_RX_PAR_EN is incorrectly defined as bit 3, which triggers false
-framing errors (S_GP_IRQ_1_EN) and causes received data to be dropped
-when parity is enabled and the parity bit is 0.
+Switch the driver to using the channel reset rather than hardware reset,
+simplifying handling by removing an interference between channels that
+causes the other channel to become uninitialised afterwards.
 
-Define UART_RX_PAR_EN as bit 4 of the SE_UART_RX_TRANS_CFG register, as
-specified in the reference manual.
+There is little difference between the two kinds of reset in terms of
+register settings that result, and we initialise the whole register set
+right away anyway.  However this prevents a hang from happening should
+the console output handler in the firmware try to access the other port
+whose transmitter has been disabled and line parameters messed up.
 
-Fixes: c4f528795d1a ("tty: serial: msm_geni_serial: Add serial driver support for GENI based QUP")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Prasanna S <prasanna.s@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260428-serial-bit-correct-v1-1-9131ad5b97d8@oss.qualcomm.com
+For example this will happen if the keyboard port (port A) is chosen for
+the system console, unusually but not insanely for a headless system, as
+the port is wired to a standard DA-15 connector and an adapter can be
+easily made.  Or with the next change in place this would happen for the
+regular console port (port B), since the keyboard port (port A) will be
+initialised first.
+
+Just remove the unnecessary complication then, a channel reset is good
+enough.  We still need the initialisation marker, now per channel rather
+than per SCC, as for the console port zs_reset() will be called twice:
+once early on via zs_serial_console_init() for the console setup only,
+and then again via zs_config_port() as the port is associated with a TTY
+device.
+
+Fixes: 8b4a40809e53 ("zs: move to the serial subsystem")
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Cc: stable@vger.kernel.org # v2.6.23+
+Link: https://patch.msgid.link/alpine.DEB.2.21.2605062323430.46195@angie.orcam.me.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/zs.c |    7 ++++---
+ drivers/tty/serial/zs.h |    2 +-
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -46,7 +46,7 @@
- #define TX_STOP_BIT_LEN_2		2
+--- a/drivers/tty/serial/zs.c
++++ b/drivers/tty/serial/zs.c
+@@ -831,21 +831,22 @@ static void zs_shutdown(struct uart_port
  
- /* SE_UART_RX_TRANS_CFG */
--#define UART_RX_PAR_EN			BIT(3)
-+#define UART_RX_PAR_EN			BIT(4)
+ static void zs_reset(struct zs_port *zport)
+ {
++	struct zs_port *zport_a = &zport->scc->zport[ZS_CHAN_A];
+ 	struct zs_scc *scc = zport->scc;
+ 	int irq;
+ 	unsigned long flags;
  
- /* SE_UART_RX_WORD_LEN */
- #define RX_WORD_LEN_MASK		GENMASK(9, 0)
+ 	spin_lock_irqsave(&scc->zlock, flags);
+ 	irq = !irqs_disabled_flags(flags);
+-	if (!scc->initialised) {
++	if (!zport->initialised) {
+ 		/* Reset the pointer first, just in case...  */
+ 		read_zsreg(zport, R0);
+ 		/* And let the current transmission finish.  */
+ 		zs_line_drain(zport, irq);
+-		write_zsreg(zport, R9, FHWRES);
++		write_zsreg(zport, R9, zport == zport_a ? CHRA : CHRB);
+ 		udelay(10);
+ 		write_zsreg(zport, R9, 0);
+-		scc->initialised = 1;
++		zport->initialised = 1;
+ 	}
+ 	load_zsregs(zport, zport->regs, irq);
+ 	spin_unlock_irqrestore(&scc->zlock, flags);
+--- a/drivers/tty/serial/zs.h
++++ b/drivers/tty/serial/zs.h
+@@ -22,6 +22,7 @@
+ struct zs_port {
+ 	struct zs_scc	*scc;			/* Containing SCC.  */
+ 	struct uart_port port;			/* Underlying UART.  */
++	int		initialised;		/* For the console port.  */
+ 
+ 	int		clk_mode;		/* May be 1, 16, 32, or 64.  */
+ 
+@@ -41,7 +42,6 @@ struct zs_scc {
+ 	struct zs_port	zport[2];
+ 	spinlock_t	zlock;
+ 	atomic_t	irq_guard;
+-	int		initialised;
+ };
+ 
+ #endif /* __KERNEL__ */
 
 
