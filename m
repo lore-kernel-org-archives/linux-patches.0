@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD9D33A9EB;
-	Tue, 16 Jun 2026 17:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672E735AC3E;
+	Tue, 16 Jun 2026 17:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629972; cv=none; b=BfHVrZ+DFv3HPGETz3ZfWiywqCBq6euvBGmxYC7CBKnAN/EXzdRtw+L5SEo2Vxe7yQxB2K83/b6+/ET6zjsWYLBtksTq22HXqUVvICmNmNyGDwbijjBah/HLt7d/SEzGl24CrZ7chjlXYjJXsVu5ts9oZ6xbSd7Lz0vO8fhFXeU=
+	t=1781629978; cv=none; b=GOXhzA9+YW7GdIGfu7dgBq4I5mRTR4bRdRHWIXlNUwb7tQ4/H6jVaRwiwx8DF4fZVbvLpHEEnqzl5Dc/kTpPoAakw0oWs6A6VcYvpI2pzuXQjzslgaMy8WVE/3n7vLVJW8BvX/tsCkduqH3ad2us+SjIMDa+rko30+00ynxrTxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629972; c=relaxed/simple;
-	bh=6o3dIZ4f88Znj27P7X5jw5DXjZiON7WkUdbMMo2EKw0=;
+	s=arc-20240116; t=1781629978; c=relaxed/simple;
+	bh=nd6NhjHxTygiQqfPa/p3oysHDN/bKUhBL6n8yz8RSxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ENcvhLRb70uVwd8zKn2UWRrzcqhnBvxfFPrGo8+kElXSSSrCKt/mJQHCi48Xjtl3FXXBoOdOIbv8Zv2/Nf1DX5tgccdUqHpurqB9WMhDidHvs6rX15LzLwbDP8//fuUwMtBSB+G8W4BsOgKq7AJ9Rult/f/X/3l4TpiwKQgO2IY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kYj9k5kW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N/fAFSpYWYIfa9/LGUzGmTA4bWhL1SdOMURnUSUJDlT3CqqEi6OqAJpJgxioUsaHNejLSKqI6J2tKOCFZG3VbpvGjRYoll3pZOxjiFSzom/dGL0fUm1ockRBuHqRJL2sT04zyAQqUtGK5U+jTYMKJTuTxZvncVbotaEym+r2pGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=123hVkAQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kYj9k5kW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941E91F000E9;
-	Tue, 16 Jun 2026 17:12:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="123hVkAQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F341F000E9;
+	Tue, 16 Jun 2026 17:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629971;
-	bh=lYuYbXmt0iwL6OD15H75T4UvS6rR0P07S0iOOY2TZUQ=;
+	s=korg; t=1781629977;
+	bh=JzHImR/ZWDNzRXOwz4jMjNkosa5erBj+Ry9FtDinCMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kYj9k5kWnhg2wiLe+oN3aapDnIt0oKQvRpjO9M0NfKHwWImVsEgk6mvgxcUAmI+Jh
-	 s8BIvyNqcif+bsP6tnd7JDKCgeBswlPFs2Ygp9Ul64aL51YkQGIwjQ0vkeBaS6qlop
-	 WHttLcvfdjkx6FPqbfqnbfsbQjpgIdRGCmusrJt0=
+	b=123hVkAQboA9cv5H6Co+RpqKZRDQUmeJWi6TAXcMhqhZxnJfSk6E//LmO/C8XG74D
+	 hhXmGIVJMUEbo+hu6zqE4UuOvoXDex+IL2MZytny2FkwKrAkscj+fX+uT96jumYLwN
+	 yj7T10vFfjCq17yaTu/4z0j6De7j5tQ4A40/e70Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiasong <lixiasong1@huawei.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 388/452] mptcp: pm: fix ADD_ADDR timer infinite retry on option space insufficient
-Date: Tue, 16 Jun 2026 20:30:15 +0530
-Message-ID: <20260616145137.309120625@linuxfoundation.org>
+Subject: [PATCH 6.6 389/452] ipv6/addrconf: annotate data-races around devconf fields (II)
+Date: Tue, 16 Jun 2026 20:30:16 +0530
+Message-ID: <20260616145137.361012835@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,147 +52,413 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Xiasong <lixiasong1@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 51e398a3b8961b26a8c0a4ba9a777c5339791707 ]
+[ Upstream commit 2f0ff05a44302c91af54a5f9efe1b65b7681540e ]
 
-When TCP option space is insufficient (e.g., when sending ADD_ADDR with an
-IPv6 address and port while tcp_timestamps is enabled), the original code
-jumped to out_unlock without clearing the addr_signal flag. This caused
-mptcp_pm_add_timer to keep rescheduling indefinitely, not sending ADD_ADDR,
-preventing subsequent addresses in the endpoint list from being announced.
+Final (?) round of this series.
 
-Handle this case by clearing the ADD_ADDR signal and skipping the matching
-ADD_ADDR retransmission entry. The skip path cancels the matching timer
-(with id check) and advances PM state progression, preserving forward
-progress to subsequent PM work.
+Annotate lockless reads on following devconf fields,
+because they be changed concurrently from /proc/net/ipv6/conf.
 
-This cancellation is inherently best-effort. A concurrent add_timer
-callback may already be running and may acquire pm.lock before the
-cancel path updates entry state. In that case, one final ADD_ADDR
-transmit attempt can still be executed.
+- accept_dad
+- optimistic_dad
+- use_optimistic
+- use_oif_addrs_only
+- ra_honor_pio_life
+- keep_addr_on_down
+- ndisc_notify
+- ndisc_evict_nocarrier
+- suppress_frag_ndisc
+- addr_gen_mode
+- seg6_enabled
+- ioam6_enabled
+- ioam6_id
+- ioam6_id_wide
+- drop_unicast_in_l2_multicast
+- mldv[12]_unsolicited_report_interval
+- force_mld_version
+- force_tllao
+- accept_untracked_na
+- drop_unsolicited_na
+- accept_source_route
 
-Once the cancel path sets entry->retrans_times to ADD_ADDR_RETRANS_MAX,
-the callback-side retrans_times check suppresses further ADD_ADDR
-retransmissions.
-
-Note that when an ADD_ADDR is being prepared, a pure-ACK is queued. On
-the output side, it means that it is fine to skip non-pure-ACK packets,
-when drop_other_suboptions is set: a pure-ACK will be processed soon
-after.
-
-Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
-Cc: stable@vger.kernel.org
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260515-net-mptcp-misc-fixes-7-1-rc4-v2-2-701e96419f2f@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: d4ea0dfd7501 ("ipv6: ioam: add NULL check for idev in ipv6_hop_ioam()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm.c         |   40 +++++++++++++++++++++++++++++++++-------
- net/mptcp/pm_netlink.c |   16 +++++++++++++---
- 2 files changed, 46 insertions(+), 10 deletions(-)
+ net/ipv6/addrconf.c  |   47 +++++++++++++++++++++++++----------------------
+ net/ipv6/exthdrs.c   |   16 +++++++++-------
+ net/ipv6/ioam6.c     |    8 ++++----
+ net/ipv6/ip6_input.c |    2 +-
+ net/ipv6/mcast.c     |   14 +++++++-------
+ net/ipv6/ndisc.c     |   18 +++++++++---------
+ net/ipv6/seg6_hmac.c |    8 +++++---
+ 7 files changed, 60 insertions(+), 53 deletions(-)
 
---- a/net/mptcp/pm.c
-+++ b/net/mptcp/pm.c
-@@ -335,6 +335,7 @@ bool mptcp_pm_add_addr_signal(struct mpt
- 			      struct mptcp_addr_info *addr, bool *echo,
- 			      bool *drop_other_suboptions)
- {
-+	bool skip_add_addr = false;
- 	int ret = false;
- 	u8 add_addr;
- 	u8 family;
-@@ -356,24 +357,49 @@ bool mptcp_pm_add_addr_signal(struct mpt
- 	}
- 
- 	*echo = mptcp_pm_should_add_signal_echo(msk);
--	port = !!(*echo ? msk->pm.remote.port : msk->pm.local.port);
--
--	family = *echo ? msk->pm.remote.family : msk->pm.local.family;
--	if (remaining < mptcp_add_addr_len(family, *echo, port))
--		goto out_unlock;
--
- 	if (*echo) {
- 		*addr = msk->pm.remote;
- 		add_addr = msk->pm.addr_signal & ~BIT(MPTCP_ADD_ADDR_ECHO);
-+		port = !!msk->pm.remote.port;
-+		family = msk->pm.remote.family;
- 	} else {
- 		*addr = msk->pm.local;
- 		add_addr = msk->pm.addr_signal & ~BIT(MPTCP_ADD_ADDR_SIGNAL);
-+		port = !!msk->pm.local.port;
-+		family = msk->pm.local.family;
- 	}
--	WRITE_ONCE(msk->pm.addr_signal, add_addr);
-+
-+	if (remaining < mptcp_add_addr_len(family, *echo, port)) {
-+		struct net *net = sock_net((struct sock *)msk);
-+
-+		if (!*drop_other_suboptions)
-+			goto out_unlock;
-+
-+		if (*echo) {
-+			MPTCP_INC_STATS(net, MPTCP_MIB_ECHOADDTXDROP);
-+		} else {
-+			skip_add_addr = true;
-+			MPTCP_INC_STATS(net, MPTCP_MIB_ADDADDRTXDROP);
-+		}
-+		goto drop_signal_mark;
-+	}
-+
- 	ret = true;
- 
-+drop_signal_mark:
-+	WRITE_ONCE(msk->pm.addr_signal, add_addr);
-+
- out_unlock:
- 	spin_unlock_bh(&msk->pm.lock);
-+
-+	/* On pure-ACK option-space exhaustion, stop retrying this ADD_ADDR:
-+	 * clear the signal bit, cancel the matching retransmission timer, and
-+	 * let the PM state machine progress.
-+	 */
-+	if (skip_add_addr) {
-+		mptcp_pm_del_add_timer(msk, addr, true);
-+		mptcp_pm_subflow_established(msk);
-+	}
- 	return ret;
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -1520,15 +1520,17 @@ static inline int ipv6_saddr_preferred(i
+ 	return 0;
  }
  
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -321,7 +321,13 @@ static void mptcp_pm_add_timer(struct ti
+-static bool ipv6_use_optimistic_addr(struct net *net,
+-				     struct inet6_dev *idev)
++static bool ipv6_use_optimistic_addr(const struct net *net,
++				     const struct inet6_dev *idev)
+ {
+ #ifdef CONFIG_IPV6_OPTIMISTIC_DAD
+ 	if (!idev)
+ 		return false;
+-	if (!net->ipv6.devconf_all->optimistic_dad && !idev->cnf.optimistic_dad)
++	if (!READ_ONCE(net->ipv6.devconf_all->optimistic_dad) &&
++	    !READ_ONCE(idev->cnf.optimistic_dad))
+ 		return false;
+-	if (!net->ipv6.devconf_all->use_optimistic && !idev->cnf.use_optimistic)
++	if (!READ_ONCE(net->ipv6.devconf_all->use_optimistic) &&
++	    !READ_ONCE(idev->cnf.use_optimistic))
+ 		return false;
  
- 	spin_lock_bh(&msk->pm.lock);
+ 	return true;
+@@ -1537,13 +1539,14 @@ static bool ipv6_use_optimistic_addr(str
+ #endif
+ }
  
--	if (!mptcp_pm_should_add_signal_addr(msk)) {
-+	/* The cancel path (mptcp_pm_del_add_timer()) can race with this
-+	 * callback. Once cancel updates retrans_times to MAX, suppress further
-+	 * retransmissions here. If this callback acquires pm.lock first, one
-+	 * final transmit attempt is still possible.
-+	 */
-+	if (entry->retrans_times < ADD_ADDR_RETRANS_MAX &&
-+	    !mptcp_pm_should_add_signal_addr(msk)) {
- 		pr_debug("retransmit ADD_ADDR id=%d\n", entry->addr.id);
- 		mptcp_pm_announce_addr(msk, &entry->addr, false);
- 		mptcp_pm_add_addr_send_ack(msk);
-@@ -369,8 +375,12 @@ mptcp_pm_del_add_timer(struct mptcp_sock
- 	/* Note: entry might have been removed by another thread.
- 	 * We hold rcu_read_lock() to ensure it is not freed under us.
+-static bool ipv6_allow_optimistic_dad(struct net *net,
+-				      struct inet6_dev *idev)
++static bool ipv6_allow_optimistic_dad(const struct net *net,
++				      const struct inet6_dev *idev)
+ {
+ #ifdef CONFIG_IPV6_OPTIMISTIC_DAD
+ 	if (!idev)
+ 		return false;
+-	if (!net->ipv6.devconf_all->optimistic_dad && !idev->cnf.optimistic_dad)
++	if (!READ_ONCE(net->ipv6.devconf_all->optimistic_dad) &&
++	    !READ_ONCE(idev->cnf.optimistic_dad))
+ 		return false;
+ 
+ 	return true;
+@@ -1825,7 +1828,7 @@ int ipv6_dev_get_saddr(struct net *net,
+ 		idev = __in6_dev_get(dst_dev);
+ 		if ((dst_type & IPV6_ADDR_MULTICAST) ||
+ 		    dst.scope <= IPV6_ADDR_SCOPE_LINKLOCAL ||
+-		    (idev && idev->cnf.use_oif_addrs_only)) {
++		    (idev && READ_ONCE(idev->cnf.use_oif_addrs_only))) {
+ 			use_oif_addr = true;
+ 		}
+ 	}
+@@ -2664,8 +2667,8 @@ int addrconf_prefix_rcv_add_addr(struct
+ 		};
+ 
+ #ifdef CONFIG_IPV6_OPTIMISTIC_DAD
+-		if ((net->ipv6.devconf_all->optimistic_dad ||
+-		     in6_dev->cnf.optimistic_dad) &&
++		if ((READ_ONCE(net->ipv6.devconf_all->optimistic_dad) ||
++		     READ_ONCE(in6_dev->cnf.optimistic_dad)) &&
+ 		    !net->ipv6.devconf_all->forwarding && sllao)
+ 			cfg.ifa_flags |= IFA_F_OPTIMISTIC;
+ #endif
+@@ -3295,8 +3298,8 @@ void addrconf_add_linklocal(struct inet6
+ 	struct inet6_ifaddr *ifp;
+ 
+ #ifdef CONFIG_IPV6_OPTIMISTIC_DAD
+-	if ((dev_net(idev->dev)->ipv6.devconf_all->optimistic_dad ||
+-	     idev->cnf.optimistic_dad) &&
++	if ((READ_ONCE(dev_net(idev->dev)->ipv6.devconf_all->optimistic_dad) ||
++	     READ_ONCE(idev->cnf.optimistic_dad)) &&
+ 	    !dev_net(idev->dev)->ipv6.devconf_all->forwarding)
+ 		cfg.ifa_flags |= IFA_F_OPTIMISTIC;
+ #endif
+@@ -3868,10 +3871,10 @@ static int addrconf_ifdown(struct net_de
  	 */
--	if (stop_timer)
--		sk_stop_timer_sync(sk, &entry->add_timer);
-+	if (stop_timer) {
-+		if (check_id)
-+			sk_stop_timer(sk, &entry->add_timer);
-+		else
-+			sk_stop_timer_sync(sk, &entry->add_timer);
-+	}
+ 	if (!unregister && !idev->cnf.disable_ipv6) {
+ 		/* aggregate the system setting and interface setting */
+-		int _keep_addr = net->ipv6.devconf_all->keep_addr_on_down;
++		int _keep_addr = READ_ONCE(net->ipv6.devconf_all->keep_addr_on_down);
  
+ 		if (!_keep_addr)
+-			_keep_addr = idev->cnf.keep_addr_on_down;
++			_keep_addr = READ_ONCE(idev->cnf.keep_addr_on_down);
+ 
+ 		keep_addr = (_keep_addr > 0);
+ 	}
+@@ -4092,8 +4095,8 @@ static void addrconf_dad_begin(struct in
+ 
+ 	net = dev_net(dev);
+ 	if (dev->flags&(IFF_NOARP|IFF_LOOPBACK) ||
+-	    (net->ipv6.devconf_all->accept_dad < 1 &&
+-	     idev->cnf.accept_dad < 1) ||
++	    (READ_ONCE(net->ipv6.devconf_all->accept_dad) < 1 &&
++	     READ_ONCE(idev->cnf.accept_dad) < 1) ||
+ 	    !(ifp->flags&IFA_F_TENTATIVE) ||
+ 	    ifp->flags & IFA_F_NODAD) {
+ 		bool send_na = false;
+@@ -4185,8 +4188,8 @@ static void addrconf_dad_work(struct wor
+ 		action = DAD_ABORT;
+ 		ifp->state = INET6_IFADDR_STATE_POSTDAD;
+ 
+-		if ((dev_net(idev->dev)->ipv6.devconf_all->accept_dad > 1 ||
+-		     idev->cnf.accept_dad > 1) &&
++		if ((READ_ONCE(dev_net(idev->dev)->ipv6.devconf_all->accept_dad) > 1 ||
++		     READ_ONCE(idev->cnf.accept_dad) > 1) &&
+ 		    !idev->cnf.disable_ipv6 &&
+ 		    !(ifp->flags & IFA_F_STABLE_PRIVACY)) {
+ 			struct in6_addr addr;
+@@ -4325,8 +4328,8 @@ static void addrconf_dad_completed(struc
+ 
+ 	/* send unsolicited NA if enabled */
+ 	if (send_na &&
+-	    (ifp->idev->cnf.ndisc_notify ||
+-	     dev_net(dev)->ipv6.devconf_all->ndisc_notify)) {
++	    (READ_ONCE(ifp->idev->cnf.ndisc_notify) ||
++	     READ_ONCE(dev_net(dev)->ipv6.devconf_all->ndisc_notify))) {
+ 		ndisc_send_na(dev, &in6addr_linklocal_allnodes, &ifp->addr,
+ 			      /*router=*/ !!ifp->idev->cnf.forwarding,
+ 			      /*solicited=*/ false, /*override=*/ true,
+@@ -6522,7 +6525,7 @@ static int addrconf_sysctl_addr_gen_mode
+ 		} else if (&net->ipv6.devconf_all->addr_gen_mode == ctl->data) {
+ 			struct net_device *dev;
+ 
+-			net->ipv6.devconf_dflt->addr_gen_mode = new_val;
++			WRITE_ONCE(net->ipv6.devconf_dflt->addr_gen_mode, new_val);
+ 			for_each_netdev(net, dev) {
+ 				idev = __in6_dev_get(dev);
+ 				if (idev &&
+@@ -6533,7 +6536,7 @@ static int addrconf_sysctl_addr_gen_mode
+ 			}
+ 		}
+ 
+-		*((u32 *)ctl->data) = new_val;
++		WRITE_ONCE(*((u32 *)ctl->data), new_val);
+ 	}
+ 
+ out:
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -387,9 +387,8 @@ static int ipv6_srh_rcv(struct sk_buff *
+ 		return -1;
+ 	}
+ 
+-	accept_seg6 = net->ipv6.devconf_all->seg6_enabled;
+-	if (accept_seg6 > idev->cnf.seg6_enabled)
+-		accept_seg6 = idev->cnf.seg6_enabled;
++	accept_seg6 = min(READ_ONCE(net->ipv6.devconf_all->seg6_enabled),
++			  READ_ONCE(idev->cnf.seg6_enabled));
+ 
+ 	if (!accept_seg6) {
+ 		kfree_skb(skb);
+@@ -666,10 +665,13 @@ static int ipv6_rthdr_rcv(struct sk_buff
+ 	struct ipv6_rt_hdr *hdr;
+ 	struct rt0_hdr *rthdr;
+ 	struct net *net = dev_net(skb->dev);
+-	int accept_source_route = net->ipv6.devconf_all->accept_source_route;
++	int accept_source_route;
+ 
+-	if (idev && accept_source_route > idev->cnf.accept_source_route)
+-		accept_source_route = idev->cnf.accept_source_route;
++	accept_source_route = READ_ONCE(net->ipv6.devconf_all->accept_source_route);
++
++	if (idev)
++		accept_source_route = min(accept_source_route,
++					  READ_ONCE(idev->cnf.accept_source_route));
+ 
+ 	if (!pskb_may_pull(skb, skb_transport_offset(skb) + 8) ||
+ 	    !pskb_may_pull(skb, (skb_transport_offset(skb) +
+@@ -930,7 +932,7 @@ static bool ipv6_hop_ioam(struct sk_buff
+ 		goto drop;
+ 
+ 	/* Ignore if IOAM is not enabled on ingress */
+-	if (!__in6_dev_get(skb->dev)->cnf.ioam6_enabled)
++	if (!READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_enabled))
+ 		goto ignore;
+ 
+ 	/* Truncated Option header */
+--- a/net/ipv6/ioam6.c
++++ b/net/ipv6/ioam6.c
+@@ -677,7 +677,7 @@ static void __ioam6_fill_trace_data(stru
+ 		if (!skb->dev)
+ 			raw16 = IOAM6_U16_UNAVAILABLE;
+ 		else
+-			raw16 = (__force u16)__in6_dev_get(skb->dev)->cnf.ioam6_id;
++			raw16 = (__force u16)READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_id);
+ 
+ 		*(__be16 *)data = cpu_to_be16(raw16);
+ 		data += sizeof(__be16);
+@@ -685,7 +685,7 @@ static void __ioam6_fill_trace_data(stru
+ 		if (skb_dst(skb)->dev->flags & IFF_LOOPBACK)
+ 			raw16 = IOAM6_U16_UNAVAILABLE;
+ 		else
+-			raw16 = (__force u16)__in6_dev_get(skb_dst(skb)->dev)->cnf.ioam6_id;
++			raw16 = (__force u16)READ_ONCE(__in6_dev_get(skb_dst(skb)->dev)->cnf.ioam6_id);
+ 
+ 		*(__be16 *)data = cpu_to_be16(raw16);
+ 		data += sizeof(__be16);
+@@ -772,7 +772,7 @@ static void __ioam6_fill_trace_data(stru
+ 		if (!skb->dev)
+ 			raw32 = IOAM6_U32_UNAVAILABLE;
+ 		else
+-			raw32 = __in6_dev_get(skb->dev)->cnf.ioam6_id_wide;
++			raw32 = READ_ONCE(__in6_dev_get(skb->dev)->cnf.ioam6_id_wide);
+ 
+ 		*(__be32 *)data = cpu_to_be32(raw32);
+ 		data += sizeof(__be32);
+@@ -780,7 +780,7 @@ static void __ioam6_fill_trace_data(stru
+ 		if (skb_dst(skb)->dev->flags & IFF_LOOPBACK)
+ 			raw32 = IOAM6_U32_UNAVAILABLE;
+ 		else
+-			raw32 = __in6_dev_get(skb_dst(skb)->dev)->cnf.ioam6_id_wide;
++			raw32 = READ_ONCE(__in6_dev_get(skb_dst(skb)->dev)->cnf.ioam6_id_wide);
+ 
+ 		*(__be32 *)data = cpu_to_be32(raw32);
+ 		data += sizeof(__be32);
+--- a/net/ipv6/ip6_input.c
++++ b/net/ipv6/ip6_input.c
+@@ -236,7 +236,7 @@ static struct sk_buff *ip6_rcv_core(stru
+ 	if (!ipv6_addr_is_multicast(&hdr->daddr) &&
+ 	    (skb->pkt_type == PACKET_BROADCAST ||
+ 	     skb->pkt_type == PACKET_MULTICAST) &&
+-	    idev->cnf.drop_unicast_in_l2_multicast) {
++	    READ_ONCE(idev->cnf.drop_unicast_in_l2_multicast)) {
+ 		SKB_DR_SET(reason, UNICAST_IN_L2_MULTICAST);
+ 		goto err;
+ 	}
+--- a/net/ipv6/mcast.c
++++ b/net/ipv6/mcast.c
+@@ -159,9 +159,9 @@ static int unsolicited_report_interval(s
+ 	int iv;
+ 
+ 	if (mld_in_v1_mode(idev))
+-		iv = idev->cnf.mldv1_unsolicited_report_interval;
++		iv = READ_ONCE(idev->cnf.mldv1_unsolicited_report_interval);
+ 	else
+-		iv = idev->cnf.mldv2_unsolicited_report_interval;
++		iv = READ_ONCE(idev->cnf.mldv2_unsolicited_report_interval);
+ 
+ 	return iv > 0 ? iv : 1;
+ }
+@@ -1201,15 +1201,15 @@ static bool mld_marksources(struct ifmca
+ 
+ static int mld_force_mld_version(const struct inet6_dev *idev)
+ {
++	const struct net *net = dev_net(idev->dev);
++	int all_force;
++
++	all_force = READ_ONCE(net->ipv6.devconf_all->force_mld_version);
+ 	/* Normally, both are 0 here. If enforcement to a particular is
+ 	 * being used, individual device enforcement will have a lower
+ 	 * precedence over 'all' device (.../conf/all/force_mld_version).
+ 	 */
+-
+-	if (dev_net(idev->dev)->ipv6.devconf_all->force_mld_version != 0)
+-		return dev_net(idev->dev)->ipv6.devconf_all->force_mld_version;
+-	else
+-		return idev->cnf.force_mld_version;
++	return all_force ?: READ_ONCE(idev->cnf.force_mld_version);
+ }
+ 
+ static bool mld_in_v2_mode_only(const struct inet6_dev *idev)
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -451,7 +451,7 @@ static void ip6_nd_hdr(struct sk_buff *s
+ 
+ 	rcu_read_lock();
+ 	idev = __in6_dev_get(skb->dev);
+-	tclass = idev ? idev->cnf.ndisc_tclass : 0;
++	tclass = idev ? READ_ONCE(idev->cnf.ndisc_tclass) : 0;
  	rcu_read_unlock();
- 	return entry;
+ 
+ 	skb_push(skb, sizeof(*hdr));
+@@ -539,7 +539,7 @@ void ndisc_send_na(struct net_device *de
+ 		src_addr = solicited_addr;
+ 		if (ifp->flags & IFA_F_OPTIMISTIC)
+ 			override = false;
+-		inc_opt |= ifp->idev->cnf.force_tllao;
++		inc_opt |= READ_ONCE(ifp->idev->cnf.force_tllao);
+ 		in6_ifa_put(ifp);
+ 	} else {
+ 		if (ipv6_dev_get_saddr(dev_net(dev), dev, daddr,
+@@ -977,7 +977,7 @@ static int accept_untracked_na(struct ne
+ {
+ 	struct inet6_dev *idev = __in6_dev_get(dev);
+ 
+-	switch (idev->cnf.accept_untracked_na) {
++	switch (READ_ONCE(idev->cnf.accept_untracked_na)) {
+ 	case 0: /* Don't accept untracked na (absent in neighbor cache) */
+ 		return 0;
+ 	case 1: /* Create new entries from na if currently untracked */
+@@ -1028,7 +1028,7 @@ static enum skb_drop_reason ndisc_recv_n
+ 	 * drop_unsolicited_na takes precedence over accept_untracked_na
+ 	 */
+ 	if (!msg->icmph.icmp6_solicited && idev &&
+-	    idev->cnf.drop_unsolicited_na)
++	    READ_ONCE(idev->cnf.drop_unsolicited_na))
+ 		return reason;
+ 
+ 	if (!ndisc_parse_options(dev, msg->opt, ndoptlen, &ndopts))
+@@ -1821,7 +1821,7 @@ static bool ndisc_suppress_frag_ndisc(st
+ 	if (!idev)
+ 		return true;
+ 	if (IP6CB(skb)->flags & IP6SKB_FRAGMENTED &&
+-	    idev->cnf.suppress_frag_ndisc) {
++	    READ_ONCE(idev->cnf.suppress_frag_ndisc)) {
+ 		net_warn_ratelimited("Received fragmented ndisc packet. Carefully consider disabling suppress_frag_ndisc.\n");
+ 		return true;
+ 	}
+@@ -1898,8 +1898,8 @@ static int ndisc_netdev_event(struct not
+ 		idev = in6_dev_get(dev);
+ 		if (!idev)
+ 			break;
+-		if (idev->cnf.ndisc_notify ||
+-		    net->ipv6.devconf_all->ndisc_notify)
++		if (READ_ONCE(idev->cnf.ndisc_notify) ||
++		    READ_ONCE(net->ipv6.devconf_all->ndisc_notify))
+ 			ndisc_send_unsol_na(dev);
+ 		in6_dev_put(idev);
+ 		break;
+@@ -1908,8 +1908,8 @@ static int ndisc_netdev_event(struct not
+ 		if (!idev)
+ 			evict_nocarrier = true;
+ 		else {
+-			evict_nocarrier = idev->cnf.ndisc_evict_nocarrier &&
+-					  net->ipv6.devconf_all->ndisc_evict_nocarrier;
++			evict_nocarrier = READ_ONCE(idev->cnf.ndisc_evict_nocarrier) &&
++					  READ_ONCE(net->ipv6.devconf_all->ndisc_evict_nocarrier);
+ 			in6_dev_put(idev);
+ 		}
+ 
+--- a/net/ipv6/seg6_hmac.c
++++ b/net/ipv6/seg6_hmac.c
+@@ -242,6 +242,7 @@ bool seg6_hmac_validate_skb(struct sk_bu
+ 	struct sr6_tlv_hmac *tlv;
+ 	struct ipv6_sr_hdr *srh;
+ 	struct inet6_dev *idev;
++	int require_hmac;
+ 
+ 	idev = __in6_dev_get(skb->dev);
+ 	if (!idev)
+@@ -251,16 +252,17 @@ bool seg6_hmac_validate_skb(struct sk_bu
+ 
+ 	tlv = seg6_get_tlv_hmac(srh);
+ 
++	require_hmac = READ_ONCE(idev->cnf.seg6_require_hmac);
+ 	/* mandatory check but no tlv */
+-	if (idev->cnf.seg6_require_hmac > 0 && !tlv)
++	if (require_hmac > 0 && !tlv)
+ 		return false;
+ 
+ 	/* no check */
+-	if (idev->cnf.seg6_require_hmac < 0)
++	if (require_hmac < 0)
+ 		return true;
+ 
+ 	/* check only if present */
+-	if (idev->cnf.seg6_require_hmac == 0 && !tlv)
++	if (require_hmac == 0 && !tlv)
+ 		return true;
+ 
+ 	/* now, seg6_require_hmac >= 0 && tlv */
 
 
