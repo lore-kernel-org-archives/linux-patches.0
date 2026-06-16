@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464FF47CC7E;
-	Tue, 16 Jun 2026 18:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81393CEBBD;
+	Tue, 16 Jun 2026 18:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636326; cv=none; b=lZHJlQCDa+PXI18kcXpElpL1Mevk4r4xPDj3R7ZCE+GUoV/gVk/BsLE9HncNJuUaAxrWmjMXklZCzPyiRGltD7MX4VC/vr65V1uEYYbPfSj9VG8wzlmT8pMyLhX0oHwjXrwHnc2m1Yy1MnUNmc9DbGugOtPlKeLm+BBJgAsbs7A=
+	t=1781636330; cv=none; b=owMx9fZlS7g22eVIrNj1bU2AarX1fsuwaGYzY8melIdh/kpKeOWTNNH6J83WfRgbV3/zEB8yi/3YGTOBvIR0BVOeVg+ccEPMwCquTJJpwT5mlqGbvGyvFZ2BYSTIWHJKhhFQBIlzM8Hi+9Wc5KEptNe3NDNCMsR5fWiK/Qo1Z0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636326; c=relaxed/simple;
-	bh=SUOPQJBXUqQQg+E4L3Qg1eZ6frOIzNoSmZSPY7F3Nm0=;
+	s=arc-20240116; t=1781636330; c=relaxed/simple;
+	bh=cklGEa3jkC1lM5JfUdwO0HjI1joTgZeokO7ip+CcmZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cOm4I8GdgYTe2hJOH5QaMMmKKFJp+Z5WS2MvHclYnJIaRFYsAZBptdFSJ3ouzSAMrKq54QmoxojXxEVPFHsCYMau0ejJFbW5W5eu6j0oR6WnlD6Pa4FDjix2xE70yjffe75OfN/+Ss9rYuI6QeKdpcsdlTVCTsIedp5cK8GY0R4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztRm0uu/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hLvd6NrghK/QyMQkn8i6pSavDJBu4naES2DONKA0WPobDa+DSWmQ3F9O71FYBXO56ZTAuNuw4E8ee7T02490P4hE8lOUdu6NDTMdJevNkzsDpNTBdQVwFmRcxb/9Cp2KTwGEq/UISF3BWWsPnH4w7IyQuZi5V4skr9uK2Eah2zA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYv9Y96M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztRm0uu/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0960A1F000E9;
-	Tue, 16 Jun 2026 18:58:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYv9Y96M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1D21F000E9;
+	Tue, 16 Jun 2026 18:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636324;
-	bh=ytp8n3kisDVNucRaYTGzpqraKRaTTfInIDvp4hmfNQ0=;
+	s=korg; t=1781636329;
+	bh=SEEnjFf7a3rA5Xfim7wf6WpHrlV8XFMniJi8KcO+Nos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ztRm0uu/rCCwVX/0KvbSgSrutR/jlupUC5ZMPz9tjgR1tYw25QvENRw3TJAAula+e
-	 gZbyorE1UJJYAKrWdtblNI2J+JK94MWSjeAsOpe/uyANHwPiW6b5JcXvmf7/6F1Wvy
-	 vqzEklFVSS4K1N3MGSLWQE8vx3JodAIm2TTO0EqQ=
+	b=AYv9Y96MgXlOCnfnJXSAXjrvNKZTLwZLhJsPsEnfGvnHZu6tGYcWCSv/hNu77M1HE
+	 LsJauccS3NrCO5iy1jSuZ4wcpzQnFlPYImc7U96kOF6ILb9bzxCAfCG5r7EvKjgdvC
+	 hjHnIRWhIkhUrZs3X68xaK+BJMmzJZ1WYuWymp6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jann Horn <jannh@google.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 5.10 192/342] pidfd: refuse access to tasks that have started exiting harder
-Date: Tue, 16 Jun 2026 20:28:08 +0530
-Message-ID: <20260616145057.121158054@linuxfoundation.org>
+Subject: [PATCH 5.10 193/342] fuse: reject fuse_notify() pagecache ops on directories
+Date: Tue, 16 Jun 2026 20:28:09 +0530
+Message-ID: <20260616145057.169205780@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -49,46 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Jann Horn <jannh@google.com>
 
-commit 62c4d31d78294bd61cf3403626b789e854357177 upstream.
+commit 9c954499d43aefac01c5dfb57a82b13d2dcf4b94 upstream.
 
-The recent ptrace fix closed a hole where someone could rely on task->mm
-becoming NULL during do_exit() to bypass dumpability checks. This api
-here leans on on the very same check and so inherits the fix.
+The operations FUSE_NOTIFY_STORE and FUSE_NOTIFY_RETRIEVE allow the
+FUSE daemon to actively write/read pagecache contents.
 
-But there is no good reason to let it succeed at all once the target has
-entered do_exit(). PF_EXITING is set by exit_signals() at the very top
-of do_exit(), before exit_mm() and exit_files() run. Once we observe it,
-the task is committed to dying and exit_files() will release the fdtable
-shortly.
+For directories with FOPEN_CACHE_DIR, the pagecache is used as
+kernel-internal cache storage, and userspace is not supposed to have
+direct access to this cache - in particular, fuse_parse_cache() will hit
+WARN_ON() if the cache contains bogus data.
 
-Fixes: 8649c322f75c ("pid: Implement pidfd_getfd syscall")
+Reject FUSE_NOTIFY_STORE and FUSE_NOTIFY_RETRIEVE on anything other than
+regular files with -EINVAL.
+
+Fixes: 5d7bc7e8680c ("fuse: allow using readdir cache")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260518-obgleich-petersilie-2d77ccccf9b9@brauner
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://patch.msgid.link/20260519-fuse-dir-pagecache-v2-1-5428fa48e175@google.com
+Acked-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/pid.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/fuse/dev.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/kernel/pid.c
-+++ b/kernel/pid.c
-@@ -637,10 +637,12 @@ static struct file *__pidfd_fget(struct
- 	if (ret)
- 		return ERR_PTR(ret);
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -1603,6 +1603,10 @@ static int fuse_notify_store(struct fuse
+ 	inode = fuse_ilookup(fc, nodeid,  NULL);
+ 	if (!inode)
+ 		goto out_up_killsb;
++	if (!S_ISREG(inode->i_mode)) {
++		err = -EINVAL;
++		goto out_iput;
++	}
  
--	if (ptrace_may_access(task, PTRACE_MODE_ATTACH_REALCREDS))
--		file = fget_task(task, fd);
--	else
-+	if (!ptrace_may_access(task, PTRACE_MODE_ATTACH_REALCREDS))
- 		file = ERR_PTR(-EPERM);
-+	else if (task->flags & PF_EXITING)
-+		file = ERR_PTR(-ESRCH);
-+	else
-+		file = fget_task(task, fd);
+ 	mapping = inode->i_mapping;
+ 	index = outarg.offset >> PAGE_SHIFT;
+@@ -1774,7 +1778,10 @@ static int fuse_notify_retrieve(struct f
  
- 	up_read(&task->signal->exec_update_lock);
- 
+ 	inode = fuse_ilookup(fc, nodeid, &fm);
+ 	if (inode) {
+-		err = fuse_retrieve(fm, inode, &outarg);
++		if (!S_ISREG(inode->i_mode))
++			err = -EINVAL;
++		else
++			err = fuse_retrieve(fm, inode, &outarg);
+ 		iput(inode);
+ 	}
+ 	up_read(&fc->killsb);
 
 
