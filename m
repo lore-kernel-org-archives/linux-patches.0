@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E08169AD2;
-	Tue, 16 Jun 2026 18:34:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADEE169AD2;
+	Tue, 16 Jun 2026 18:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634860; cv=none; b=c6su5tomi8Csd0wSS4xGgA6Gbx/yWa7NHmYKJ5CnMQq9o5qW4pQRLzFP7bfL0rZ+UZuRRZHF/AWmsoPXwr3WqxGqXlDxcSHdeHZwkJBYFUqlElcXFLfXIOMoHyFgUAzkZF+rfoOie4Mg0Uobdh2lRDhYw7B0gqTE7XL3cNLClUw=
+	t=1781634865; cv=none; b=p6YAIOGM3S+TxlKvWQ7ZfLIQVc4Yqt2UzNMJKQ+ENMRqXMyTk1eHJcqQ+jSJMyd2AFxjyw/hzemBEIGxOTheZBh1WC1DiYM892gGONPdLjTxOWbgHMmmvz9hcE0uaiSG0WYPGVA2XbGdhuHa9Ffi6/+iQl3RHHp+1ECgf43QFeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634860; c=relaxed/simple;
-	bh=5ydMRlku/AGVC9YpzrJfiEvC2SZFf7PaQU1ElkVEW2M=;
+	s=arc-20240116; t=1781634865; c=relaxed/simple;
+	bh=Ax3gXDMV/2xnn2OL4JBk4J3ear1EiMMUTHi0KH4skFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C7gKlEVo5sdVzS7CxF3C417TYF6ikMtlhRaEV3S3YY6fSzjd/PSJVAGSOkQM3Ht/Zy5u0XW1CPg/SsjOymfK03YDBweH5QTVTYY3MmA0K7jrHbe59bPEFBlxFIoknxb1WPGKCS5I7q7Lg4Y1vJUpI2bmuiTi39MUAjl0whwIjPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aC593uMw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qaii18cL8ZECBqbDaWv8+VrrxxMvRdPGh1C9AcqT0dl+TkAq2RXg9+fmRvyOlRARe8Liq7utzGJplOkB2gl8XRK+1zwFoj4BOEk5taEhkxDREvcERGE83bWUqC5ivwafeav8Ap3+3fMr2BLrj56LKNuz6rjIJgTPmPL48nfwR4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBjr0fJU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aC593uMw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F0C1F000E9;
-	Tue, 16 Jun 2026 18:34:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBjr0fJU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE3F1F000E9;
+	Tue, 16 Jun 2026 18:34:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634859;
-	bh=4wcqvZYFkFDkz5WjUVcLSXqFnWwWKFES5k2BTrCtkj0=;
+	s=korg; t=1781634864;
+	bh=5fGrF0W1W37/dlIUlOY97Mgy+Qf95UhDWGcEzkwv0YM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aC593uMwZlLOzfLYk076goa6t9oBxRucyxh9R++xHgn3lp3yRGh6HnIdP7lQ/buv5
-	 7hmhUVDGXmg5Om+T4mocKLAL+BVFgA9i/4vXMCP/eOaxizRNP1G4d3tiLOWynfX3Vt
-	 99Lfnpg8Fl8MkLoGfv+Dljje+NM64fqurc7iDwBg=
+	b=hBjr0fJUutFuLR2owGp7A3j3KyMUFF5FOFA2w/Sn92goHZD0B2GxcP9RcT8JtBNuX
+	 ead1nIukW2wwigcwAQXY/4WmkS8NodPUYcK2MM3//gFtfRV6yf/SezsHXvhqMSSOcW
+	 lJcnR92bsw8OSP+S4LFMBuryJYlohT9h72BVKH7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Bharath SM <bharathsm@microsoft.com>,
+	Piyush Sachdeva <psachdeva@microsoft.com>,
+	Piyush Sachdeva <s.piyush1024@gmail.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 346/411] Bluetooth: Init sk_peer_* on bt_sock_alloc
-Date: Tue, 16 Jun 2026 20:29:44 +0530
-Message-ID: <20260616145119.676584439@linuxfoundation.org>
+Subject: [PATCH 5.15 329/411] smb: client: Use FullSessionKey for AES-256 encryption key derivation
+Date: Tue, 16 Jun 2026 20:29:27 +0530
+Message-ID: <20260616145118.639549984@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,136 +53,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Piyush Sachdeva <s.piyush1024@gmail.com>
 
-[ Upstream commit 464c702fb9374ff8f3f816f24fb7ac719dd20e1e ]
+[ Upstream commit 5be7a0cef3229fb3b63a07c0d289daf752545424 ]
 
-This makes sure peer information is always available via sock when using
-bt_sock_alloc.
+When Kerberos authentication is used with AES-256 encryption (AES-256-CCM
+or AES-256-GCM), the SMB3 encryption and decryption keys must be derived
+using the full session key (Session.FullSessionKey) rather than just the
+first 16 bytes (Session.SessionKey).
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: e83f5e24da74 ("Bluetooth: serialize accept_q access")
+Per MS-SMB2 section 3.2.5.3.1, when Connection.Dialect is "3.1.1" and
+Connection.CipherId is AES-256-CCM or AES-256-GCM, Session.FullSessionKey
+must be set to the full cryptographic key from the GSS authentication
+context. The encryption and decryption key derivation (SMBC2SCipherKey,
+SMBS2CCipherKey) must use this FullSessionKey as the KDF input. The
+signing key derivation continues to use Session.SessionKey (first 16
+bytes) in all cases.
+
+Previously, generate_key() hardcoded SMB2_NTLMV2_SESSKEY_SIZE (16) as the
+HMAC-SHA256 key input length for all derivations. When Kerberos with
+AES-256 provides a 32-byte session key, the KDF for encryption/decryption
+was using only the first 16 bytes, producing keys that did not match the
+server's, causing mount failures with sec=krb5 and require_gcm_256=1.
+
+Add a full_key_size parameter to generate_key() and pass the appropriate
+size from generate_smb3signingkey():
+ - Signing: always SMB2_NTLMV2_SESSKEY_SIZE (16 bytes)
+ - Encryption/Decryption: ses->auth_key.len when AES-256, otherwise 16
+
+Also fix cifs_dump_full_key() to report the actual session key length for
+AES-256 instead of hardcoded CIFS_SESS_KEY_SIZE, so that userspace tools
+like Wireshark receive the correct key for decryption.
+
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Bharath SM <bharathsm@microsoft.com>
+Signed-off-by: Piyush Sachdeva <psachdeva@microsoft.com>
+Signed-off-by: Piyush Sachdeva <s.piyush1024@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ adapted to legacy crypto_shash API and ses->binding boolean instead of upstream's hmac_sha256 helpers and chan_lock machinery ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/af_bluetooth.c |   24 ++++++++++++++++++++++++
- net/bluetooth/hidp/sock.c    |   10 +---------
- net/bluetooth/l2cap_sock.c   |   19 -------------------
- 3 files changed, 25 insertions(+), 28 deletions(-)
+ fs/cifs/ioctl.c         |    2 +-
+ fs/cifs/smb2transport.c |   36 ++++++++++++++++++++++++++----------
+ 2 files changed, 27 insertions(+), 11 deletions(-)
 
---- a/net/bluetooth/af_bluetooth.c
-+++ b/net/bluetooth/af_bluetooth.c
-@@ -155,6 +155,14 @@ struct sock *bt_sock_alloc(struct net *n
- 	sk->sk_protocol = proto;
- 	sk->sk_state    = BT_OPEN;
- 
-+	/* Init peer information so it can be properly monitored */
-+	if (!kern) {
-+		spin_lock(&sk->sk_peer_lock);
-+		sk->sk_peer_pid  = get_pid(task_tgid(current));
-+		sk->sk_peer_cred = get_current_cred();
-+		spin_unlock(&sk->sk_peer_lock);
-+	}
-+
- 	return sk;
- }
- EXPORT_SYMBOL(bt_sock_alloc);
-@@ -199,6 +207,9 @@ EXPORT_SYMBOL(bt_sock_linked);
- 
- void bt_accept_enqueue(struct sock *parent, struct sock *sk, bool bh)
- {
-+	const struct cred *old_cred;
-+	struct pid *old_pid;
-+
- 	BT_DBG("parent %p, sk %p", parent, sk);
- 
- 	sock_hold(sk);
-@@ -211,6 +222,19 @@ void bt_accept_enqueue(struct sock *pare
- 	list_add_tail(&bt_sk(sk)->accept_q, &bt_sk(parent)->accept_q);
- 	bt_sk(sk)->parent = parent;
- 
-+	/* Copy credentials from parent since for incoming connections the
-+	 * socket is allocated by the kernel.
-+	 */
-+	spin_lock(&sk->sk_peer_lock);
-+	old_pid = sk->sk_peer_pid;
-+	old_cred = sk->sk_peer_cred;
-+	sk->sk_peer_pid = get_pid(parent->sk_peer_pid);
-+	sk->sk_peer_cred = get_cred(parent->sk_peer_cred);
-+	spin_unlock(&sk->sk_peer_lock);
-+
-+	put_pid(old_pid);
-+	put_cred(old_cred);
-+
- 	if (bh)
- 		bh_unlock_sock(sk);
- 	else
---- a/net/bluetooth/hidp/sock.c
-+++ b/net/bluetooth/hidp/sock.c
-@@ -255,21 +255,13 @@ static int hidp_sock_create(struct net *
- 	if (sock->type != SOCK_RAW)
- 		return -ESOCKTNOSUPPORT;
- 
--	sk = sk_alloc(net, PF_BLUETOOTH, GFP_ATOMIC, &hidp_proto, kern);
-+	sk = bt_sock_alloc(net, sock, &hidp_proto, protocol, GFP_ATOMIC, kern);
- 	if (!sk)
- 		return -ENOMEM;
- 
--	sock_init_data(sock, sk);
--
- 	sock->ops = &hidp_sock_ops;
--
- 	sock->state = SS_UNCONNECTED;
- 
--	sock_reset_flag(sk, SOCK_ZAPPED);
--
--	sk->sk_protocol = protocol;
--	sk->sk_state	= BT_OPEN;
--
- 	bt_sock_link(&hidp_sk_list, sk);
- 
- 	return 0;
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -177,21 +177,6 @@ done:
- 	return err;
+--- a/fs/cifs/ioctl.c
++++ b/fs/cifs/ioctl.c
+@@ -262,7 +262,7 @@ search_end:
+ 		break;
+ 	case SMB2_ENCRYPTION_AES256_CCM:
+ 	case SMB2_ENCRYPTION_AES256_GCM:
+-		out.session_key_length = CIFS_SESS_KEY_SIZE;
++		out.session_key_length = ses->auth_key.len;
+ 		out.server_in_key_length = out.server_out_key_length = SMB3_GCM256_CRYPTKEY_SIZE;
+ 		break;
+ 	default:
+--- a/fs/cifs/smb2transport.c
++++ b/fs/cifs/smb2transport.c
+@@ -291,7 +291,8 @@ out:
  }
  
--static void l2cap_sock_init_pid(struct sock *sk)
--{
--	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
--
--	/* Only L2CAP_MODE_EXT_FLOWCTL ever need to access the PID in order to
--	 * group the channels being requested.
--	 */
--	if (chan->mode != L2CAP_MODE_EXT_FLOWCTL)
--		return;
--
--	spin_lock(&sk->sk_peer_lock);
--	sk->sk_peer_pid = get_pid(task_tgid(current));
--	spin_unlock(&sk->sk_peer_lock);
--}
--
- static int l2cap_sock_connect(struct socket *sock, struct sockaddr *addr,
- 			      int alen, int flags)
+ static int generate_key(struct cifs_ses *ses, struct kvec label,
+-			struct kvec context, __u8 *key, unsigned int key_size)
++			struct kvec context, __u8 *key, unsigned int key_size,
++			unsigned int full_key_size)
  {
-@@ -267,8 +252,6 @@ static int l2cap_sock_connect(struct soc
- 	    chan->mode != L2CAP_MODE_EXT_FLOWCTL)
- 		chan->mode = L2CAP_MODE_LE_FLOWCTL;
- 
--	l2cap_sock_init_pid(sk);
--
- 	err = l2cap_chan_connect(chan, la.l2_psm, __le16_to_cpu(la.l2_cid),
- 				 &la.l2_bdaddr, la.l2_bdaddr_type);
- 	if (err)
-@@ -324,8 +307,6 @@ static int l2cap_sock_listen(struct sock
- 		goto done;
+ 	unsigned char zero = 0x0;
+ 	__u8 i[4] = {0, 0, 0, 1};
+@@ -312,7 +313,7 @@ static int generate_key(struct cifs_ses
  	}
  
--	l2cap_sock_init_pid(sk);
--
- 	sk->sk_max_ack_backlog = backlog;
- 	sk->sk_ack_backlog = 0;
+ 	rc = crypto_shash_setkey(server->secmech.hmacsha256,
+-		ses->auth_key.response, SMB2_NTLMV2_SESSKEY_SIZE);
++		ses->auth_key.response, full_key_size);
+ 	if (rc) {
+ 		cifs_server_dbg(VFS, "%s: Could not set with session key\n", __func__);
+ 		goto smb3signkey_ret;
+@@ -393,10 +394,9 @@ static int
+ generate_smb3signingkey(struct cifs_ses *ses,
+ 			const struct derivation_triplet *ptriplet)
+ {
+-	int rc;
+-#ifdef CONFIG_CIFS_DEBUG_DUMP_KEYS
++	unsigned int full_key_size = SMB2_NTLMV2_SESSKEY_SIZE;
+ 	struct TCP_Server_Info *server = ses->server;
+-#endif
++	int rc;
  
+ 	/*
+ 	 * All channels use the same encryption/decryption keys but
+@@ -412,30 +412,46 @@ generate_smb3signingkey(struct cifs_ses
+ 		rc = generate_key(ses, ptriplet->signing.label,
+ 				  ptriplet->signing.context,
+ 				  cifs_ses_binding_channel(ses)->signkey,
+-				  SMB3_SIGN_KEY_SIZE);
++				  SMB3_SIGN_KEY_SIZE,
++				  SMB2_NTLMV2_SESSKEY_SIZE);
+ 		if (rc)
+ 			return rc;
+ 	} else {
+ 		rc = generate_key(ses, ptriplet->signing.label,
+ 				  ptriplet->signing.context,
+ 				  ses->smb3signingkey,
+-				  SMB3_SIGN_KEY_SIZE);
++				  SMB3_SIGN_KEY_SIZE,
++				  SMB2_NTLMV2_SESSKEY_SIZE);
+ 		if (rc)
+ 			return rc;
+ 
++		/*
++		 * Per MS-SMB2 3.2.5.3.1, signing key always uses Session.SessionKey
++		 * (first 16 bytes). Encryption/decryption keys use
++		 * Session.FullSessionKey when dialect is 3.1.1 and cipher is
++		 * AES-256-CCM or AES-256-GCM, otherwise Session.SessionKey.
++		 */
++
++		if (server->dialect == SMB311_PROT_ID &&
++		    (server->cipher_type == SMB2_ENCRYPTION_AES256_CCM ||
++		     server->cipher_type == SMB2_ENCRYPTION_AES256_GCM))
++			full_key_size = ses->auth_key.len;
++
+ 		memcpy(ses->chans[0].signkey, ses->smb3signingkey,
+ 		       SMB3_SIGN_KEY_SIZE);
+ 
+ 		rc = generate_key(ses, ptriplet->encryption.label,
+ 				  ptriplet->encryption.context,
+ 				  ses->smb3encryptionkey,
+-				  SMB3_ENC_DEC_KEY_SIZE);
++				  SMB3_ENC_DEC_KEY_SIZE,
++				  full_key_size);
+ 		if (rc)
+ 			return rc;
+ 		rc = generate_key(ses, ptriplet->decryption.label,
+ 				  ptriplet->decryption.context,
+ 				  ses->smb3decryptionkey,
+-				  SMB3_ENC_DEC_KEY_SIZE);
++				  SMB3_ENC_DEC_KEY_SIZE,
++				  full_key_size);
+ 		if (rc)
+ 			return rc;
+ 	}
+@@ -450,7 +466,7 @@ generate_smb3signingkey(struct cifs_ses
+ 			&ses->Suid);
+ 	cifs_dbg(VFS, "Cipher type   %d\n", server->cipher_type);
+ 	cifs_dbg(VFS, "Session Key   %*ph\n",
+-		 SMB2_NTLMV2_SESSKEY_SIZE, ses->auth_key.response);
++		 (int)ses->auth_key.len, ses->auth_key.response);
+ 	cifs_dbg(VFS, "Signing Key   %*ph\n",
+ 		 SMB3_SIGN_KEY_SIZE, ses->smb3signingkey);
+ 	if ((server->cipher_type == SMB2_ENCRYPTION_AES256_CCM) ||
 
 
