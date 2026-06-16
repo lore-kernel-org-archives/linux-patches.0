@@ -1,40 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51714451052;
-	Tue, 16 Jun 2026 16:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFDB44534B9;
+	Tue, 16 Jun 2026 16:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625815; cv=none; b=N028G9ZMJSQTKDG7yHaT+804AGF4+kLI5gCbqquQrjz/U7/Ml0zncXgjGJdIz0aAAmWq5JRbsR0V3WP8q7BsYutpSzHps/AI0fEswe8axBKZMhP9x+cKbn/9cIvlMMvhh3KKMkL3U5U6ctd2PW9Kxokn6r5NSzmYFQpcM/LdVRQ=
+	t=1781625820; cv=none; b=MoBRbw1Fs9Uu5N4G11l3ibQzjAqC+dHqDBetQUKNIRvMf3NGBlL1YKbb2e0epbWdcRkWX49Zj6WHHVIFVdm/4DRpWP72BQZPD1NEXwrg/BlQhG8yf04T83dTKovhizwZ2ovTmXLT92BOpHNP4RJLkjEBMf3bOwaJUxbgBZ7CQOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625815; c=relaxed/simple;
-	bh=EbT7g4OLMbFiPJ3ptyJJ3okUxociPFgqeZfk+gNl9CE=;
+	s=arc-20240116; t=1781625820; c=relaxed/simple;
+	bh=wQoJgJidDrdmWGq7b5EWGoXfb7daU1bSBW7vCojn2c0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJ5vYAN565M0CJqsUGLFP3Kybcf8LuM/HBqyxRCc8rcGJHE6O3kHQljzx6y8QnEIhvJ6MXv2Qs8xaIFFaJqnm+MaMdTF4mE/G3IpcpDbHaiUflpcnJoOYwl8rVu4IpVWXC+do2504dOb0/C82YsWYcR9xxjI1oLXVHmgiKoXKZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCmeEn/3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jeynVXPsgSAdjF5cjTkM0SrEbEda1uf4ANageJjkefusRLmMzXAECcVKVRhSHDNYS+82jbVQBUOwbZx1HnV+Lz6Cz/djjwuzYhBO5FnOJYxeHOeKnnGBeTIS5vxN744tJhuNILwXIRnPdeWHqjRUM+WMKYnnqlkPfIhOIp/fAfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c2erPEei; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCmeEn/3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0951F000E9;
-	Tue, 16 Jun 2026 16:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c2erPEei"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFEEE1F000E9;
+	Tue, 16 Jun 2026 16:03:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625814;
-	bh=Dcwl5Ec2WDq8dQgsHiT2CFc+wAcKH8BSy1/HXNRgx6Q=;
+	s=korg; t=1781625818;
+	bh=c0qqRZBuMdtqEjTj4xhi0KCCRWjAfvkLlw47xnqO7MI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HCmeEn/3oVkgN4rjdLCFED+AVFfWTOVbPWziOhGv6ZEs/4+2RcxEPFSWrLuMDPdrp
-	 dZHi4FkKDOIn7UkGSCeONoZmNrIBVl61q80c4QrimSF4hwJIarL4+aG64aQv6zlXFO
-	 gAccNkmGWFkBuv9Ipo5YVx08o8QKYm6rj/8WcjMs=
+	b=c2erPEeiOCGKu8MtPcC7qH9F96sk5vM0Gx2voMVbl4tJdcU8t9zJY3ub2G0W9DEaV
+	 eqDdCFjVw3/oJOClyQDCfSBkPE+nkR4Rab5UY7wHY/njMO5BAJ0sHG84VBUX9Aw5Vy
+	 fRJW2rdSyW7Kd37Ue+ea5fcvMgOiHYN65G0GqkZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 182/325] drm/amd/display: Reject gpio_bitshift >= 32 in bios_parser_get_gpio_pin_info()
-Date: Tue, 16 Jun 2026 20:29:38 +0530
-Message-ID: <20260616145106.949701205@linuxfoundation.org>
+	Yin Tirui <yintirui@huawei.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"David Hildenbrand (arm)" <david@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	Dev Jain <dev.jain@arm.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Chen Jun <chenjun102@huawei.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Yang Shi <yang.shi@linux.alibaba.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 183/325] mm/huge_memory: update file PMD counter before folio_put()
+Date: Tue, 16 Jun 2026 20:29:39 +0530
+Message-ID: <20260616145107.007661714@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -53,48 +64,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: Yin Tirui <yintirui@huawei.com>
 
-commit 49c3da65961fe9857c831d47fa1989084e87514a upstream.
+commit 8d878059924f12c1bc24556a92ec56add74de3c8 upstream.
 
-[Why & How]
-gpio_bitshift is a uint8_t read directly from the VBIOS GPIO pin table.
-If the value is >= 32, the expression "1 << gpio_bitshift" triggers
-undefined behaviour in C (shift count exceeds type width). On x86 the
-shift is silently masked to 5 bits, producing an incorrect GPIO mask
-that may cause wrong MMIO register bits to be toggled.
+__split_huge_pmd_locked() updates the file/shmem RSS counter after
+dropping the PMD mapping's folio reference.  If folio_put() drops the last
+reference, mm_counter_file() can later read freed folio state via
+folio_test_swapbacked().
 
-Validate gpio_bitshift before use and return BP_RESULT_BADBIOSTABLE for
-out-of-range values.
+Move the counter update before folio_put().
 
-Fixes: ae79c310b1a6 ("drm/amd/display: Add DCE12 bios parser support")
-Assisted-by: Copilot:claude-opus-4.6
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit eadf438ab8d370b9d19acee9359918c85afeb80d)
-Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/20260526101337.1984081-1-yintirui@huawei.com
+Fixes: fadae2953072 ("thp: use mm_file_counter to determine update which rss counter")
+Signed-off-by: Yin Tirui <yintirui@huawei.com>
+Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
+Acked-by: David Hildenbrand (arm) <david@kernel.org>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Chen Jun <chenjun102@huawei.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Yang Shi <yang.shi@linux.alibaba.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ mm/huge_memory.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-@@ -700,8 +700,10 @@ static enum bp_result bios_parser_get_gp
- 		info->offset_en = info->offset + 1;
- 		info->offset_mask = info->offset - 1;
- 
--		info->mask = (uint32_t) (1 <<
--			header->gpio_pin[i].gpio_bitshift);
-+		if (header->gpio_pin[i].gpio_bitshift >= 32)
-+			return BP_RESULT_BADBIOSTABLE;
-+
-+		info->mask = 1u << header->gpio_pin[i].gpio_bitshift;
- 		info->mask_y = info->mask + 2;
- 		info->mask_en = info->mask + 1;
- 		info->mask_mask = info->mask - 1;
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -2877,7 +2877,9 @@ static void __split_huge_pmd_locked(stru
+ 			if (!folio_test_referenced(folio) && pmd_young(old_pmd))
+ 				folio_set_referenced(folio);
+ 			folio_remove_rmap_pmd(folio, page, vma);
++			add_mm_counter(mm, mm_counter_file(folio), -HPAGE_PMD_NR);
+ 			folio_put(folio);
++			return;
+ 		}
+ 		add_mm_counter(mm, mm_counter_file(folio), -HPAGE_PMD_NR);
+ 		return;
 
 
