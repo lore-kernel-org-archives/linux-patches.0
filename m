@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6656477E36;
-	Tue, 16 Jun 2026 17:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809DC4657D0;
+	Tue, 16 Jun 2026 17:18:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630308; cv=none; b=Xweyu5+rlLbNs4h6UIUrT+22EotAW3HVeMuJEI1mElME4Yc2taswsPMCBpDpTmWynGwr85DjmljCbLMeWz7OPBAwtKNEp2DoKK6ks0VxDBnl7wQQd1TiSM+5sWsUk5tZbO05FCREBjoeE3e8It5IUyrgNqnRnu2hRtjQBJ2LP1I=
+	t=1781630314; cv=none; b=fgiZw6c9as68G0PxmhRxr1GjvoQNqxn66qLPbFwviYJIqVq5G1ifKt9OBn/LccRUMP8eoLwaccVU/PTU620U0vaz7ysi/kJqFflc8iAfKVYotwvMXbPGqTPOzB1+JSXHv6vrSH4YM/pxL6GVXXEMKnHrKW1MZUZebjVCRJ34rnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630308; c=relaxed/simple;
-	bh=iE1bkPXhO1KJXyVmIIQ8YlkVFy75oQMbv7IgScWztOw=;
+	s=arc-20240116; t=1781630314; c=relaxed/simple;
+	bh=ixLNc2U9WfxLqZX7YJnKze21Ly+o77Zz/MuHHIUDAqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NIFPrzacdst+AfyZNiVTKBOfCEKhp6VGEmTbeLacWhbbseGIs7qnhirVq57czH5eSc283nxs+m9ueXbRe+G6cRxy3rqpHj2NwxEGzKrjSSZIqG6H44+Z2/eCqlnESvwN+tS5drMLvGu5HkldgEqMkM00hSgJByoYtJ6r8KrcAJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbsH6Ex1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tahB9u3R9AhJ+OEzHwKsNFaslYhF8lNeqfbZ7hjop5/LpsBZaH+zczQe+pmex3dsJMB5z4xvaVRVK3yt6g9PKxcOEoYK0g1rrydcSrbrnGLKfW/Rqzks20Ie36D64Vm2/O/sA+X1E1RCv08+vKGQIhHJQmKMURISr2+EcfEnu9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHODQUM6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbsH6Ex1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E61F51F000E9;
-	Tue, 16 Jun 2026 17:18:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHODQUM6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD151F000E9;
+	Tue, 16 Jun 2026 17:18:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630307;
-	bh=NPuYhoQf6qOV4D+jVV4Rzk+1y5K9ni9P7fCfQCMOcn8=;
+	s=korg; t=1781630313;
+	bh=o1zoFjfXu+lJDPJLq//GyY3enKm+xU2QL9gj3HoZ5xQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TbsH6Ex1K8+b5aU+HDR/37OAOI3Nts+F8K5iYA4xnss5RBAs5Wmv7t2Nau2Toe8eC
-	 91Dn6QSPgseHERZuIn5ZFt9jXCygFGfVTDvAFlY+gr1ElWIBzi/odZPdvDjlVIy2aa
-	 83WBiI12nINj12s6LzM1ObEGU1XvkhnksW2Gv1qo=
+	b=PHODQUM65ZZIc4zG+YHQWEQPqXLrZm87WUUZ5h9UolvU/jjIaz4CXbkdNqi6t560v
+	 NDEj1ITJRphj2gDBK40/hqLU3LHNPt8/+rflogs05Tp7oJ09jUDfk4e4CgtpowFAf8
+	 tJAQiE0Vx1TnvXnZU//GGoqlJEnJeOdwOJR2wJ18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.6 443/452] arm64: cputype: Add C1-Premium definitions
-Date: Tue, 16 Jun 2026 20:31:10 +0530
-Message-ID: <20260616145139.823575186@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Nikolay Borisov <nik.borisov@suse.com>
+Subject: [PATCH 6.6 452/452] x86/CPU/AMD: Rename init_amd_zn() to init_amd_zen_common()
+Date: Tue, 16 Jun 2026 20:31:19 +0530
+Message-ID: <20260616145140.220414169@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,47 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit d28413bfc5a255957241f1df5d7fd0c2cd74fe18 upstream.
+commit 7c81ad8e8bc28a1847e87c5afe1bae6bffb2f73e upstream.
 
-Add cputype definitions for C1-Premium. These will be used for errata
-detection in subsequent patches.
+Call it from all Zen init functions.
 
-These values can be found in the C1-Premium TRM:
-
-  https://developer.arm.com/documentation/109416/0100/
-
-... in section A.5.1 ("MIDR_EL1, Main ID Register").
-
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Signed-off-by: Will Deacon <will@kernel.org>
-[Mark: backport to v6.6.y]
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
+Link: http://lore.kernel.org/r/20231120104152.13740-7-bp@alien8.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/cputype.h |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kernel/cpu/amd.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -99,6 +99,7 @@
- #define ARM_CPU_PART_CORTEX_A725	0xD87
- #define ARM_CPU_PART_C1_ULTRA		0xD8C
- #define ARM_CPU_PART_NEOVERSE_N3	0xD8E
-+#define ARM_CPU_PART_C1_PREMIUM		0xD90
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1070,7 +1070,7 @@ void init_spectral_chicken(struct cpuinf
+ #endif
+ }
  
- #define APM_CPU_PART_XGENE		0x000
- #define APM_CPU_VAR_POTENZA		0x00
-@@ -189,6 +190,7 @@
- #define MIDR_CORTEX_A725 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A725)
- #define MIDR_C1_ULTRA MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_C1_ULTRA)
- #define MIDR_NEOVERSE_N3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N3)
-+#define MIDR_C1_PREMIUM MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_C1_PREMIUM)
- #define MIDR_THUNDERX	MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX)
- #define MIDR_THUNDERX_81XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_81XX)
- #define MIDR_THUNDERX_83XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_83XX)
+-static void init_amd_zn(struct cpuinfo_x86 *c)
++static void init_amd_zen_common(void)
+ {
+ 	setup_force_cpu_cap(X86_FEATURE_ZEN);
+ #ifdef CONFIG_NUMA
+@@ -1080,6 +1080,7 @@ static void init_amd_zn(struct cpuinfo_x
+ 
+ static void init_amd_zen1(struct cpuinfo_x86 *c)
+ {
++	init_amd_zen_common();
+ 	fix_erratum_1386(c);
+ 
+ 	/* Fix up CPUID bits, but only if not virtualised. */
+@@ -1143,10 +1144,12 @@ static void zen2_zenbleed_check(struct c
+ 	} else {
+ 		msr_clear_bit(MSR_AMD64_DE_CFG, MSR_AMD64_DE_CFG_ZEN2_FP_BACKUP_FIX_BIT);
+ 	}
++
+ }
+ 
+ static void init_amd_zen2(struct cpuinfo_x86 *c)
+ {
++	init_amd_zen_common();
+ 	init_spectral_chicken(c);
+ 	fix_erratum_1386(c);
+ 	zen2_zenbleed_check(c);
+@@ -1164,6 +1167,8 @@ static void init_amd_zen2(struct cpuinfo
+ 
+ static void init_amd_zen3(struct cpuinfo_x86 *c)
+ {
++	init_amd_zen_common();
++
+ 	if (!cpu_has(c, X86_FEATURE_HYPERVISOR)) {
+ 		/*
+ 		 * Zen3 (Fam19 model < 0x10) parts are not susceptible to
+@@ -1177,6 +1182,7 @@ static void init_amd_zen3(struct cpuinfo
+ 
+ static void init_amd_zen4(struct cpuinfo_x86 *c)
+ {
++	init_amd_zen_common();
+ }
+ 
+ static void init_amd(struct cpuinfo_x86 *c)
+@@ -1212,9 +1218,6 @@ static void init_amd(struct cpuinfo_x86
+ 	case 0x12: init_amd_ln(c); break;
+ 	case 0x15: init_amd_bd(c); break;
+ 	case 0x16: init_amd_jg(c); break;
+-	case 0x17:
+-		   fallthrough;
+-	case 0x19: init_amd_zn(c); break;
+ 	}
+ 
+ 	if (boot_cpu_has(X86_FEATURE_ZEN1))
 
 
