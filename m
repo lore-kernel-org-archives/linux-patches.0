@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5264B328610;
-	Tue, 16 Jun 2026 16:42:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649312F745E;
+	Tue, 16 Jun 2026 16:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628166; cv=none; b=R1jOY+tckoE6cGGFoW3q6iM5+ANXmNryxLk5rE4eFOkZAMdGxXioRiCda5cDa8UP9Ly86LmznuFHyvWuEXHsQquEeii8pb9t00qLPxyzYi4I7NuzMql+fosfErJz2g+u+MVbExESWS8RDmwEInbNAq5Njh2qAxhwWPQ6zkqzVew=
+	t=1781628171; cv=none; b=SiMTuCyKgj+Bh7nqf8uzBsSxuVmIxPGLPSJ7T2BapMh6Sf0zwtppckUvney8GPQqWd/ohbtx1EFrVgo2BFetqoqvMo5SMrjAWWeyZuG89Uco78OfNUD01M3pyiyrwEceM7+C/3cUFxpFh5w7G2Gdu8SlLhl45YhxcWUFKsLKW0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628166; c=relaxed/simple;
-	bh=q3VXbqYUTV4wqTcmC1q+VcubCCRMRAOfG1Vf+qW6tRE=;
+	s=arc-20240116; t=1781628171; c=relaxed/simple;
+	bh=MZMiEun642ogEPxuRb7VPxkIbn3mP8T9SQNU4nMA/T4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bqoqn4i1hmH3+QHHZYJp9yUic35xpUzuyKWHV8sl7OcHSUlAiZ25MIGWqd5JT+ToOLXPWi+YG6Jrj/9ObHQKN02xzrmUGaE+MvvqMhqhzQE5q1n0cWXa9Po0sqSzenE+jqkTUUXjHZ/NA/EQ3+wGvZyVwCrOL4uOBNRhFJ9p7xE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cviYj3zZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HQZtQ/Wb1NmJXlDKGlxpKoBJK1Oi0mwo6uUbaUZgeLlFQfsKDpN9AHOy7Yup50pjeWSw1skVQ7SH3+hJ5lRcLjs17bzrkYQgA7HCcCK5KJKmctZHJd/ifNHRq4ho23tHcmq8cd5NnhINWi6CW13Q0AhJ1Q3QpoJeLe42YKKvttQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJh6fuIz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cviYj3zZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5464C1F00A3A;
-	Tue, 16 Jun 2026 16:42:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJh6fuIz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75D861F000E9;
+	Tue, 16 Jun 2026 16:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628165;
-	bh=neEJK5SDAORcQ2JA6KX9XHpmxQh4xYbCtjX7lrPpa3c=;
+	s=korg; t=1781628170;
+	bh=DsJx5NNMQKJ/hw4rfEA3jTtcZmUyI5GLtZ1v/TRkLmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cviYj3zZtn8ACuTkisjo++cZ+OvyK//22yaNyqoDv06Uc/a6bjrQiCs6atcnKet5P
-	 zCJ+eJvbEqMafJ38LEIhqX6rHSC2O09wssN0395FVUIZIP0yTnb4PHT8YgbIXpjWjP
-	 9N9iGHH+HJfAYKOUiiM1alVCdIt9HU2iRyvsuDT8=
+	b=eJh6fuIzWiKS8/ovWlSPMMwU0kpG5nKFclHwlPhAD2tmDRCP6NGYMcbNuJaOh8kH3
+	 fJrpggtY6qbdwI2wdWMRF7G5EMTJdRuEGt83gdJiYaOqPwQk+rf9WicO3B1Q7HCfr3
+	 HYgMPnQ9KRR+JPyj0L8Ifs0VA+C+fqRWTeBnwBes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Luxiao Xu <rakukuip@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Florian Westphal <fw@strlen.de>,
+	Jeremy Sowden <jeremy@azazel.net>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 014/452] netfilter: ebtables: fix OOB read in compat_mtw_from_user
-Date: Tue, 16 Jun 2026 20:24:01 +0530
-Message-ID: <20260616145118.555665929@linuxfoundation.org>
+Subject: [PATCH 6.6 015/452] netfilter: bitwise: rename some boolean operation functions
+Date: Tue, 16 Jun 2026 20:24:02 +0530
+Message-ID: <20260616145118.611761187@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -57,105 +51,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Jeremy Sowden <jeremy@azazel.net>
 
-[ Upstream commit f438d1786d657d57790c5d138d6db3fc9fdac392 ]
+[ Upstream commit a12143e6084c502fc3cfaa8b717bffc8c14cf806 ]
 
-Luxiao Xu says:
+In the next patch we add support for doing AND, OR and XOR operations
+directly in the kernel, so rename some functions and an enum constant
+related to mask-and-xor boolean operations.
 
- The function compat_mtw_from_user() converts ebtables extensions from
- 32-bit user structures to kernel native structures. However, it lacks
- proper validation of the user-supplied match_size/target_size.
-
- When certain extensions are processed, the kernel-side translation
- logic may perform memory accesses based on the extension's expected
- size. If the user provides a size smaller than what the extension
- requires, it results in an out-of-bounds read as reported by KASAN.
-
- This fix introduces a check to ensure match_size is at least as large
- as the extension's required compatsize. This covers matches, watchers,
- and targets, while maintaining compatibility with standard targets.
-
-AFAIU this is relevant for matches that need to go though
-match->compat_from_user() call.  Those that use plain memcpy with the
-user-provided size are ok because the caller checks that size vs the
-start of the next rule entry offset (which itself is checked vs. total
-size copied from userspace).
-
-The ->compat_from_user() callbacks assume they can read compatsize bytes,
-so they need this extra check.
-
-Based on an earlier patch from Luxiao Xu.
-
-Fixes: 81e675c227ec ("netfilter: ebtables: add CONFIG_COMPAT support")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Luxiao Xu <rakukuip@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Jeremy Sowden <jeremy@azazel.net>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 18014147d3ee ("netfilter: nf_tables: fix dst corruption in same register operation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/ebtables.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ include/uapi/linux/netfilter/nf_tables.h | 10 ++++---
+ net/netfilter/nft_bitwise.c              | 34 ++++++++++++------------
+ 2 files changed, 24 insertions(+), 20 deletions(-)
 
-diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
-index f99e348c8f37fa..bc69406d103df6 100644
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -1952,6 +1952,25 @@ enum compat_mwt {
- 	EBT_COMPAT_TARGET,
+diff --git a/include/uapi/linux/netfilter/nf_tables.h b/include/uapi/linux/netfilter/nf_tables.h
+index 9c29015d09c10f..cbb1b58e181fca 100644
+--- a/include/uapi/linux/netfilter/nf_tables.h
++++ b/include/uapi/linux/netfilter/nf_tables.h
+@@ -560,16 +560,20 @@ enum nft_immediate_attributes {
+ /**
+  * enum nft_bitwise_ops - nf_tables bitwise operations
+  *
+- * @NFT_BITWISE_BOOL: mask-and-xor operation used to implement NOT, AND, OR and
+- *                    XOR boolean operations
++ * @NFT_BITWISE_MASK_XOR: mask-and-xor operation used to implement NOT, AND, OR
++ *                        and XOR boolean operations
+  * @NFT_BITWISE_LSHIFT: left-shift operation
+  * @NFT_BITWISE_RSHIFT: right-shift operation
+  */
+ enum nft_bitwise_ops {
+-	NFT_BITWISE_BOOL,
++	NFT_BITWISE_MASK_XOR,
+ 	NFT_BITWISE_LSHIFT,
+ 	NFT_BITWISE_RSHIFT,
+ };
++/*
++ * Old name for NFT_BITWISE_MASK_XOR.  Retained for backwards-compatibility.
++ */
++#define NFT_BITWISE_BOOL NFT_BITWISE_MASK_XOR
+ 
+ /**
+  * enum nft_bitwise_attributes - nf_tables bitwise expression netlink attributes
+diff --git a/net/netfilter/nft_bitwise.c b/net/netfilter/nft_bitwise.c
+index 2cfb0104680c62..86abbe4c1308b3 100644
+--- a/net/netfilter/nft_bitwise.c
++++ b/net/netfilter/nft_bitwise.c
+@@ -25,8 +25,8 @@ struct nft_bitwise {
+ 	struct nft_data		data;
  };
  
-+static bool match_size_ok(const struct xt_match *match, unsigned int match_size)
-+{
-+	u16 csize;
-+
-+	if (match->matchsize == -1) /* cannot validate ebt_among */
-+		return true;
-+
-+	csize = match->compatsize ? : match->matchsize;
-+
-+	return match_size >= csize;
-+}
-+
-+static bool tgt_size_ok(const struct xt_target *tgt, unsigned int tgt_size)
-+{
-+	u16 csize = tgt->compatsize ? : tgt->targetsize;
-+
-+	return tgt_size >= csize;
-+}
-+
- static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
- 				enum compat_mwt compat_mwt,
- 				struct ebt_entries_buf_state *state,
-@@ -1977,6 +1996,11 @@ static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
- 		if (IS_ERR(match))
- 			return PTR_ERR(match);
+-static void nft_bitwise_eval_bool(u32 *dst, const u32 *src,
+-				  const struct nft_bitwise *priv)
++static void nft_bitwise_eval_mask_xor(u32 *dst, const u32 *src,
++				      const struct nft_bitwise *priv)
+ {
+ 	unsigned int i;
  
-+		if (!match_size_ok(match, match_size)) {
-+			module_put(match->me);
-+			return -EINVAL;
-+		}
-+
- 		off = ebt_compat_match_offset(match, match_size);
- 		if (dst) {
- 			if (match->compat_from_user)
-@@ -1996,6 +2020,12 @@ static int compat_mtw_from_user(const struct compat_ebt_entry_mwt *mwt,
- 					    mwt->u.revision);
- 		if (IS_ERR(wt))
- 			return PTR_ERR(wt);
-+
-+		if (!tgt_size_ok(wt, match_size)) {
-+			module_put(wt->me);
-+			return -EINVAL;
-+		}
-+
- 		off = xt_compat_target_offset(wt);
+@@ -68,8 +68,8 @@ void nft_bitwise_eval(const struct nft_expr *expr,
+ 	u32 *dst = &regs->data[priv->dreg];
  
- 		if (dst) {
+ 	switch (priv->op) {
+-	case NFT_BITWISE_BOOL:
+-		nft_bitwise_eval_bool(dst, src, priv);
++	case NFT_BITWISE_MASK_XOR:
++		nft_bitwise_eval_mask_xor(dst, src, priv);
+ 		break;
+ 	case NFT_BITWISE_LSHIFT:
+ 		nft_bitwise_eval_lshift(dst, src, priv);
+@@ -90,8 +90,8 @@ static const struct nla_policy nft_bitwise_policy[NFTA_BITWISE_MAX + 1] = {
+ 	[NFTA_BITWISE_DATA]	= { .type = NLA_NESTED },
+ };
+ 
+-static int nft_bitwise_init_bool(struct nft_bitwise *priv,
+-				 const struct nlattr *const tb[])
++static int nft_bitwise_init_mask_xor(struct nft_bitwise *priv,
++				     const struct nlattr *const tb[])
+ {
+ 	struct nft_data_desc mask = {
+ 		.type	= NFT_DATA_VALUE,
+@@ -186,7 +186,7 @@ static int nft_bitwise_init(const struct nft_ctx *ctx,
+ 	if (tb[NFTA_BITWISE_OP]) {
+ 		priv->op = ntohl(nla_get_be32(tb[NFTA_BITWISE_OP]));
+ 		switch (priv->op) {
+-		case NFT_BITWISE_BOOL:
++		case NFT_BITWISE_MASK_XOR:
+ 		case NFT_BITWISE_LSHIFT:
+ 		case NFT_BITWISE_RSHIFT:
+ 			break;
+@@ -194,12 +194,12 @@ static int nft_bitwise_init(const struct nft_ctx *ctx,
+ 			return -EOPNOTSUPP;
+ 		}
+ 	} else {
+-		priv->op = NFT_BITWISE_BOOL;
++		priv->op = NFT_BITWISE_MASK_XOR;
+ 	}
+ 
+ 	switch(priv->op) {
+-	case NFT_BITWISE_BOOL:
+-		err = nft_bitwise_init_bool(priv, tb);
++	case NFT_BITWISE_MASK_XOR:
++		err = nft_bitwise_init_mask_xor(priv, tb);
+ 		break;
+ 	case NFT_BITWISE_LSHIFT:
+ 	case NFT_BITWISE_RSHIFT:
+@@ -210,8 +210,8 @@ static int nft_bitwise_init(const struct nft_ctx *ctx,
+ 	return err;
+ }
+ 
+-static int nft_bitwise_dump_bool(struct sk_buff *skb,
+-				 const struct nft_bitwise *priv)
++static int nft_bitwise_dump_mask_xor(struct sk_buff *skb,
++				     const struct nft_bitwise *priv)
+ {
+ 	if (nft_data_dump(skb, NFTA_BITWISE_MASK, &priv->mask,
+ 			  NFT_DATA_VALUE, priv->len) < 0)
+@@ -249,8 +249,8 @@ static int nft_bitwise_dump(struct sk_buff *skb,
+ 		return -1;
+ 
+ 	switch (priv->op) {
+-	case NFT_BITWISE_BOOL:
+-		err = nft_bitwise_dump_bool(skb, priv);
++	case NFT_BITWISE_MASK_XOR:
++		err = nft_bitwise_dump_mask_xor(skb, priv);
+ 		break;
+ 	case NFT_BITWISE_LSHIFT:
+ 	case NFT_BITWISE_RSHIFT:
+@@ -270,7 +270,7 @@ static int nft_bitwise_offload(struct nft_offload_ctx *ctx,
+ 	const struct nft_bitwise *priv = nft_expr_priv(expr);
+ 	struct nft_offload_reg *reg = &ctx->regs[priv->dreg];
+ 
+-	if (priv->op != NFT_BITWISE_BOOL)
++	if (priv->op != NFT_BITWISE_MASK_XOR)
+ 		return -EOPNOTSUPP;
+ 
+ 	if (memcmp(&priv->xor, &zero, sizeof(priv->xor)) ||
+@@ -407,7 +407,7 @@ nft_bitwise_fast_dump(struct sk_buff *skb,
+ 		return -1;
+ 	if (nla_put_be32(skb, NFTA_BITWISE_LEN, htonl(sizeof(u32))))
+ 		return -1;
+-	if (nla_put_be32(skb, NFTA_BITWISE_OP, htonl(NFT_BITWISE_BOOL)))
++	if (nla_put_be32(skb, NFTA_BITWISE_OP, htonl(NFT_BITWISE_MASK_XOR)))
+ 		return -1;
+ 
+ 	data.data[0] = priv->mask;
+@@ -502,7 +502,7 @@ nft_bitwise_select_ops(const struct nft_ctx *ctx,
+ 		return &nft_bitwise_ops;
+ 
+ 	if (tb[NFTA_BITWISE_OP] &&
+-	    ntohl(nla_get_be32(tb[NFTA_BITWISE_OP])) != NFT_BITWISE_BOOL)
++	    ntohl(nla_get_be32(tb[NFTA_BITWISE_OP])) != NFT_BITWISE_MASK_XOR)
+ 		return &nft_bitwise_ops;
+ 
+ 	return &nft_bitwise_fast_ops;
 -- 
 2.53.0
 
