@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A19345BD4C;
-	Tue, 16 Jun 2026 15:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2306B46AF2E;
+	Tue, 16 Jun 2026 15:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624711; cv=none; b=e/mWWSkqGierv+dp9SPJQaSq3THo3jxOzp+Iu34Y1oGZeMqrruLBF7xM/FGpQRH9EL5Xc8YiBan0EDJW7JofQ74tZbjx/cB4PtkjjzaMNCCTgFuw6toHZg4ynM4UYAQPf+voImTQrf4jETmRUj84QnKV42gckdRoG9nGbmgT3bA=
+	t=1781624716; cv=none; b=AaALl0qef7+L31vcFT28IFSDU/qJ8S3WawI8xycDXffK3O+RjbBL/7rq3AOWqrkc1rdvi6jVufdfKS3VQAYWdr9HcFFnboDiX1iV9Cw+wA1bOoM2iVpkFZnf+Q5Z9dzrn0IqvhyLUH5ILft+2q//6jg7kQnyN64qgwC871RT2zI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624711; c=relaxed/simple;
-	bh=8Y/L+bcTV1gyF5H7S3T5U3CoubCJkABy2BnrLFGH/Vs=;
+	s=arc-20240116; t=1781624716; c=relaxed/simple;
+	bh=Mp2SRNdKkCcrRGLai9VMm4J7szM8bTpw2qiQwxJJPAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TSTRqh95dVq/hbfsGV6i5pYgaFu7RxfOkbLpGSDBYXexUI40O7WnfIAlLmZd7qEVNOhlcR9HiqRCtS+eJFct4HkIyEaCtQxDhuD4HDADzAA6rIbMnMPWRrG/rUWsobXykm6kuHXyOw4MyI14GxkiOYgIJNFQNcv8ec+l+7KChM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CAzY0OAu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UGqS1VU9dOHpCY1XmvS6VWSs+BND8AiZXZT4R/fyoUjNbf3sBEVj646b4AMP2WC+gsmIxYqwij0kvKShj6tkXDF8RYKkNm8+nh+rT2CMy97tCwjpdafmM2AbQ4H+iGKr/x5E1OH6kPylXM2zA8NYoyNMCBoCk06wuFXEkqTAY20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mw/hnChw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAzY0OAu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 843A91F000E9;
-	Tue, 16 Jun 2026 15:45:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mw/hnChw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3F401F000E9;
+	Tue, 16 Jun 2026 15:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624708;
-	bh=B7OzYQxyKiuFiTRmLcSI4T0YkKC3Sy91ozU1VNZ6QIU=;
+	s=korg; t=1781624713;
+	bh=J6BjNCzjPadzQ2H0AO0d2DlD5wJ85vi8kOOnslJB8c0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CAzY0OAunYIuj7fkhWeeU8JTV/OtxUMWl9iYcImEedir75IEjnVrNXELXWaJpOBd1
-	 RoP2LCGNMgddlJ4G7kac1fZ11/XYmymU3gCEEgDojyHUD1fR17EUSzAqQ4vIyOE/zq
-	 6CI4gyoglfzzhxhx+R5U2suQ4iBOsfktRTb2nymo=
+	b=mw/hnChwb6Zs/u6/Aud7bx7uVbBxpoNPOGsgF8YNz1QLUapFDh0AMm+pLNsmzXOSc
+	 raDP2DWVd8/6QMP+DgikyQedX4ipKI2Ws8JaUUcmES9sGowwy+eiLH68F9qTOjV4+s
+	 NPqvguyveLs2Pt4RIMXJ5Xhy13YQvQJ/7n7cLtDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Leo Lin <leo@depthfirst.com>,
+	David Ahern <dahern@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	virtualization@lists.linux.dev,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 370/378] vsock/virtio: fix potential unbounded skb queue
-Date: Tue, 16 Jun 2026 20:30:01 +0530
-Message-ID: <20260616145129.590520706@linuxfoundation.org>
+Subject: [PATCH 6.18 008/325] ipv6: mcast: Fix use-after-free when processing MLD queries
+Date: Tue, 16 Jun 2026 20:26:44 +0530
+Message-ID: <20260616145058.234730728@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
-References: <20260616145109.744539446@linuxfoundation.org>
+In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
+References: <20260616145057.827196531@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,59 +48,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 059b7dbd20a6f0c539a45ddff1573cb8946685b5 upstream.
+commit 791c91dc7a9dfb2457d5e29b8216a6484b9c4b40 upstream.
 
-virtio_transport_inc_rx_pkt() checks vvs->rx_bytes + len > vvs->buf_alloc.
+When processing an MLD query, a pointer to the multicast group address
+is retrieved when initially parsing the packet. This pointer is later
+dereferenced without being reloaded despite the fact that the skb header
+might have been reallocated following the pskb_may_pull() calls, leading
+to a use-after-free [1].
 
-virtio_transport_recv_enqueue() skips coalescing for packets
-with VIRTIO_VSOCK_SEQ_EOM.
+Fix by copying the multicast group address when the packet is initially
+parsed.
 
-If fed with packets with len == 0 and VIRTIO_VSOCK_SEQ_EOM,
-a very large number of packets can be queued
-because vvs->rx_bytes stays at 0.
+[1]
+BUG: KASAN: slab-use-after-free in __mld_query_work (net/ipv6/mcast.c:1512)
+Read of size 8 at addr ffff8881154b8e90 by task kworker/4:1/118
 
-Fix this by estimating the skb metadata size:
+Workqueue: mld mld_query_work
+Call Trace:
+<TASK>
+dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+print_address_description.constprop.0 (mm/kasan/report.c:378)
+print_report (mm/kasan/report.c:482)
+kasan_report (mm/kasan/report.c:595)
+__mld_query_work (net/ipv6/mcast.c:1512)
+mld_query_work (net/ipv6/mcast.c:1563)
+process_one_work (kernel/workqueue.c:3314)
+worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
+kthread (kernel/kthread.c:436)
+ret_from_fork (arch/x86/kernel/process.c:158)
+ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+</TASK>
 
-	(Number of skbs in the queue) * SKB_TRUESIZE(0)
+[...]
 
-Fixes: 077706165717 ("virtio/vsock: don't use skbuff state to account credit")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>
-Cc: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Cc: "Eugenio Pérez" <eperezma@redhat.com>
-Cc: virtualization@lists.linux.dev
-Link: https://patch.msgid.link/20260430122653.554058-1-edumazet@google.com
+Freed by task 118:
+kasan_save_stack (mm/kasan/common.c:57)
+kasan_save_track (mm/kasan/common.c:78)
+kasan_save_free_info (mm/kasan/generic.c:584)
+__kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
+kfree (./include/linux/kasan.h:235 mm/slub.c:2689 mm/slub.c:6251 mm/slub.c:6566)
+pskb_expand_head (net/core/skbuff.c:2335)
+__pskb_pull_tail (net/core/skbuff.c:2878 (discriminator 4))
+__mld_query_work (net/ipv6/mcast.c:1495 (discriminator 1))
+mld_query_work (net/ipv6/mcast.c:1563)
+process_one_work (kernel/workqueue.c:3314)
+worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
+kthread (kernel/kthread.c:436)
+ret_from_fork (arch/x86/kernel/process.c:158)
+ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+
+Fixes: 97300b5fdfe2 ("[MCAST] IPv6: Check packet size when process Multicast")
+Reported-by: Leo Lin <leo@depthfirst.com>
+Reviewed-by: David Ahern <dahern@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260603101811.612594-1-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport_common.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ipv6/mcast.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -425,7 +425,9 @@ static int virtio_transport_send_pkt_inf
- static bool virtio_transport_inc_rx_pkt(struct virtio_vsock_sock *vvs,
- 					u32 len)
+--- a/net/ipv6/mcast.c
++++ b/net/ipv6/mcast.c
+@@ -1424,9 +1424,9 @@ out:
+ static void __mld_query_work(struct sk_buff *skb)
  {
--	if (vvs->buf_used + len > vvs->buf_alloc)
-+	u64 skb_overhead = (skb_queue_len(&vvs->rx_queue) + 1) * SKB_TRUESIZE(0);
-+
-+	if (skb_overhead + vvs->buf_used + len > vvs->buf_alloc)
- 		return false;
+ 	struct mld2_query *mlh2 = NULL;
+-	const struct in6_addr *group;
+ 	unsigned long max_delay;
+ 	struct inet6_dev *idev;
++	struct in6_addr group;
+ 	struct ifmcaddr6 *ma;
+ 	struct mld_msg *mld;
+ 	int group_type;
+@@ -1458,8 +1458,8 @@ static void __mld_query_work(struct sk_b
+ 		goto kfree_skb;
  
- 	vvs->rx_bytes += len;
+ 	mld = (struct mld_msg *)icmp6_hdr(skb);
+-	group = &mld->mld_mca;
+-	group_type = ipv6_addr_type(group);
++	group = mld->mld_mca;
++	group_type = ipv6_addr_type(&group);
+ 
+ 	if (group_type != IPV6_ADDR_ANY &&
+ 	    !(group_type&IPV6_ADDR_MULTICAST))
+@@ -1509,7 +1509,7 @@ static void __mld_query_work(struct sk_b
+ 		}
+ 	} else {
+ 		for_each_mc_mclock(idev, ma) {
+-			if (!ipv6_addr_equal(group, &ma->mca_addr))
++			if (!ipv6_addr_equal(&group, &ma->mca_addr))
+ 				continue;
+ 			if (ma->mca_flags & MAF_TIMER_RUNNING) {
+ 				/* gsquery <- gsquery && mark */
 
 
