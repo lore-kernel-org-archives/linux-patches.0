@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B89B3DC4D9;
-	Tue, 16 Jun 2026 18:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423203DC4D9;
+	Tue, 16 Jun 2026 18:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635142; cv=none; b=V4zapP0G2/fjw6q8lIdsi8U8sNWbDaC3Q1o9P1hybuo5bPLp3yoXg20d0oHBDpf/rnzvCcQCgW4pb9EGVAVAzd06xs7jJVBv4HEqe2xHyFN+ml2pj/6WbMMQHOtEGTplZedjreQRIAPKmnEq1ucmBhFjb9V2s2bTU0UxP5Nu9Yo=
+	t=1781635147; cv=none; b=fmcYrfbr+C2OZJ70/umPxhQjdG1FYGrbMS4YTBvGTRR4PO1c61I5BY0N0ASlm+uBHsH2HKiB+EM7RxBrFOLSPlh5u3TXlYKiRNOdfsLxJ77MD+vJOw+PVZ+7xy7F29cJFj0BSnH1LIfVM+znQQN3VV7+pbPEN+vBakD0hN9pVs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635142; c=relaxed/simple;
-	bh=AQ9Xdij0cJ5Ui5B9nwJ2o2z1sanK93xfz51B0FqSA54=;
+	s=arc-20240116; t=1781635147; c=relaxed/simple;
+	bh=yMmM9YTH1MdsbCJ9HS5uEDA8qxWvlNnFvFaXFZemKLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cIqjmO8dWZGVGVYfHhhPNil77YzHxl56aM2K+5s+W3EiKEjzGU5nu71D35md+OUvrDTiot04CzFel2WCOhDC3jcE2gA42LTsuKY7jTLDV6Av2CE7rodTZv7MkHSi5Gp56fM6FJAabdrpkIOZxYw1euBdRGSEvBS6YrT7VCM57iY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9OmfknY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m3ZyDEUOhw2AvSTl5LjBOZ0d/63I5F5ERIPrIRVduY0nUS2dVFSOCB5fTbHdbwvWqaTJ+iW4ZkFxVD+CSPewa/UCwv6V01P4KWZfWk7NY1DXFOrNl5Fcf9NclxAKmhbmYLjN2Hnan5WPRauZtvektCCdDqVfJCvmIB8l/emcyuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewNU/FLb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9OmfknY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33CA51F000E9;
-	Tue, 16 Jun 2026 18:38:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewNU/FLb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A851F000E9;
+	Tue, 16 Jun 2026 18:39:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635141;
-	bh=vzQdmuS19j5P1t3wEcyea2OlFLE21X9Cbo63jXrnZQc=;
+	s=korg; t=1781635146;
+	bh=g6Z/UdE6MNukNRuFAVCv2pv1Dozo16e944k78xhW8Yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t9OmfknYJ4gQ/YQqqnsTCA9GVPi2h5T82fIIzM091otnQ1ULnxJdUb1waYkYudqN2
-	 5b5lOz27Kezg7qHRIfY7Kz7AQ/xu5z/1v2OZFxBhPlA0vODyZPpqc0QBPJkkODealm
-	 gpaEGaMQlIafRXk9X8hFpY/X+7vldgC3VuRX5DhE=
+	b=ewNU/FLbc/sfWthad/LdxxMuEBBZqH2PmVfRppDTGYKnEwuInWTtEB5q2PRN2S8BI
+	 a60ayIttkoPVA3unSDrCqVkPVq4s8lokZwUUn6r8eEJWfmP2iZjsbVc735yQkbviAt
+	 ts5fgz383qcvc3zWnGrUpQ/isXPWwVeHsoCRJE1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Justin Iurman <justin.iurman@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Li hongliang <1468888505@139.com>
-Subject: [PATCH 5.15 397/411] net/ipv6: ioam6: prevent schema length wraparound in trace fill
-Date: Tue, 16 Jun 2026 20:30:35 +0530
-Message-ID: <20260616145122.298220289@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.15 398/411] ksmbd: Compare MACs in constant time
+Date: Tue, 16 Jun 2026 20:30:36 +0530
+Message-ID: <20260616145122.350625413@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,50 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 5e67ba9bb531e1ec6599a82a065dea9040b9ce50 ]
+commit c5794709bc9105935dbedef8b9cf9c06f2b559fa upstream.
 
-ioam6_fill_trace_data() stores the schema contribution to the trace
-length in a u8. With bit 22 enabled and the largest schema payload,
-sclen becomes 1 + 1020 / 4, wraps from 256 to 0, and bypasses the
-remaining-space check. __ioam6_fill_trace_data() then positions the
-write cursor without reserving the schema area but still copies the
-4-byte schema header and the full schema payload, overrunning the trace
-buffer.
+To prevent timing attacks, MAC comparisons need to be constant-time.
+Replace the memcmp() with the correct function, crypto_memneq().
 
-Keep sclen in an unsigned int so the remaining-space check and the write
-cursor calculation both see the full schema length.
-
-Fixes: 8c6f6fa67726 ("ipv6: ioam: IOAM Generic Netlink API")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Reviewed-by: Justin Iurman <justin.iurman@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Li hongliang <1468888505@139.com>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Cc: stable@vger.kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ioam6.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ksmbd/auth.c    |    4 +++-
+ fs/ksmbd/smb2pdu.c |    5 +++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
---- a/net/ipv6/ioam6.c
-+++ b/net/ipv6/ioam6.c
-@@ -645,7 +645,7 @@ static void __ioam6_fill_trace_data(stru
- 				    struct ioam6_namespace *ns,
- 				    struct ioam6_trace_hdr *trace,
- 				    struct ioam6_schema *sc,
--				    u8 sclen)
-+				    unsigned int sclen)
- {
- 	struct __kernel_sock_timeval ts;
- 	u64 raw64;
-@@ -863,7 +863,7 @@ void ioam6_fill_trace_data(struct sk_buf
- 			   struct ioam6_trace_hdr *trace)
- {
- 	struct ioam6_schema *sc;
--	u8 sclen = 0;
-+	unsigned int sclen = 0;
+--- a/fs/ksmbd/auth.c
++++ b/fs/ksmbd/auth.c
+@@ -13,6 +13,7 @@
+ #include <linux/xattr.h>
+ #include <crypto/hash.h>
+ #include <crypto/aead.h>
++#include <crypto/algapi.h>
+ #include <linux/random.h>
+ #include <linux/scatterlist.h>
  
- 	/* Skip if Overflow flag is set
- 	 */
+@@ -281,7 +282,8 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn
+ 		goto out;
+ 	}
+ 
+-	if (memcmp(ntlmv2->ntlmv2_hash, ntlmv2_rsp, CIFS_HMAC_MD5_HASH_SIZE) != 0)
++	if (crypto_memneq(ntlmv2->ntlmv2_hash, ntlmv2_rsp,
++			  CIFS_HMAC_MD5_HASH_SIZE))
+ 		rc = -EINVAL;
+ out:
+ 	if (ctx)
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -4,6 +4,7 @@
+  *   Copyright (C) 2018 Samsung Electronics Co., Ltd.
+  */
+ 
++#include <crypto/algapi.h>
+ #include <linux/inetdevice.h>
+ #include <net/addrconf.h>
+ #include <linux/syscalls.h>
+@@ -8440,7 +8441,7 @@ int smb2_check_sign_req(struct ksmbd_wor
+ 				signature))
+ 		return 0;
+ 
+-	if (memcmp(signature, signature_req, SMB2_SIGNATURE_SIZE)) {
++	if (crypto_memneq(signature, signature_req, SMB2_SIGNATURE_SIZE)) {
+ 		pr_err("bad smb2 signature\n");
+ 		return 0;
+ 	}
+@@ -8528,7 +8529,7 @@ int smb3_check_sign_req(struct ksmbd_wor
+ 	if (ksmbd_sign_smb3_pdu(conn, signing_key, iov, 1, signature))
+ 		return 0;
+ 
+-	if (memcmp(signature, signature_req, SMB2_SIGNATURE_SIZE)) {
++	if (crypto_memneq(signature, signature_req, SMB2_SIGNATURE_SIZE)) {
+ 		pr_err("bad smb2 signature\n");
+ 		return 0;
+ 	}
 
 
