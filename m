@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D86B3ACA68;
-	Tue, 16 Jun 2026 19:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591703DC87A;
+	Tue, 16 Jun 2026 19:00:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636404; cv=none; b=EbNoB0A3JINPryytPhoIk4+2x5Qg81MvwSeLbjlDFuKMIMyx9mr575FcRi8erxFitcxFE+WIN4M+yoic9kkhfXBktNQSct6hPymZqVVZR8siJ49P53Wbjn3NtnexBIIcxJRdvQT0isE429N2dz/Dnt7BD2EgQfPWO0Rj8/Uv+ac=
+	t=1781636409; cv=none; b=LfWhd1phy1ukHL3/qPbmjZo1yd4r0lptmuTTtG4o5NCp1jCQHDxbczzW6Ici9jHr1DBooHxcPbYKI5ipCFALhDJpxLVUG8vjt+VGf7elUKSakJvJufvSMh39d5kscMs9DY2N8rqq9EvjRy42PyKMavsENC5tak5q81Twm6Cn/5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636404; c=relaxed/simple;
-	bh=ZwpNfZf5qHG8uDqCOVe3MjmfEPwKGYenPtBRGwSKFw8=;
+	s=arc-20240116; t=1781636409; c=relaxed/simple;
+	bh=Og1W0G8K2lDbCVrxhLEEszlsCDMSbDQDq34mogvlt+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YvKeIN2dvD93qOKEeeZRwQdQ85NKFfcQ4VYI2tKjIgGAamdw7G2ct/x+cAVfUjTrjwqRant2OMCW25ZZ69/x18NGjPHzMRP4Bkx01DKhkEAqKECVss3iFkN2g4Ww1YWTtro0VN4Ifcx/sKHecvxVTVWQ+hU9FmomYPGTkBQ2uwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBvy8lcs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BPbjDTTwIyEhpOv+kGm81ttczDpy3IQMUVazNObCVl8FZzwRcs9W7SCrTiXR0v3DzCDhg6p4H4Qxum9/FAj3Nn+kvw9TQfv4y6yB/zvFA0KiU03ZjP+tktQEJmQ6VARP/PYmk4F7pmKoctFED2S3r/KLrnushooAJw6mMssvYhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znO7Vv1B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBvy8lcs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195A61F000E9;
-	Tue, 16 Jun 2026 19:00:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znO7Vv1B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF551F000E9;
+	Tue, 16 Jun 2026 19:00:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636403;
-	bh=Hghlkp8QU9jmfAPmUpPzHZJ0GHKBT1Hw1TJctqATKRk=;
+	s=korg; t=1781636408;
+	bh=k35Bh/G1YCGQ1+2cLksSA7HMNlTf9KtSLsifryMzU8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LBvy8lcsHo5cFHkii+KtWkH97ASgyjSuJy2sBfMuqrVXd+rmkZhgpgi8cfMG1JCBD
-	 CAw8/WHPA70PoyixppPjScCMCh49BUdvS4JGgtMfw4u3WeiGOq/EyYzvTf8qaX2agg
-	 fo37LwTsrDkybue+417AhqQRC1WgsNvYcgJMMlm4=
+	b=znO7Vv1BV/KEDSKEYIUPz2EUr9m3Jbx24t3M3ECWfEgzWCL/HuWVtCV0hptUdkjNS
+	 RsVeSd+CgaAX5+nBUDdhWnNFae1T+LLYHGpNP3KzvvDHr3RwYGIlAkIcT6KxUPOUgi
+	 Iu02ef48Ad7B3q/HC/WIZK2RM6ZnLywLavHbZeDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Salisbury <joseph.salisbury@oracle.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Jake Lamberson <lamberson.jake@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 232/342] sched: Use u64 for bandwidth ratio calculations
-Date: Tue, 16 Jun 2026 20:28:48 +0530
-Message-ID: <20260616145059.010270287@linuxfoundation.org>
+Subject: [PATCH 5.10 233/342] ALSA: core: Fix potential data race at fasync handling
+Date: Tue, 16 Jun 2026 20:28:49 +0530
+Message-ID: <20260616145059.055164540@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -51,71 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Salisbury <joseph.salisbury@oracle.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit c6e80201e057dfb7253385e60bf541121bf5dc33 ]
+[ Upstream commit 8146cd333d235ed32d48bb803fdf743472d7c783 ]
 
-to_ratio() computes BW_SHIFT-scaled bandwidth ratios from u64 period and
-runtime values, but it returns unsigned long.  tg_rt_schedulable() also
-stores the current group limit and the accumulated child sum in unsigned
-long.
+In snd_fasync_work_fn(), which is the offload work for traversing and
+processing the pending fasync list, the call of kill_fasync() is done
+outside the snd_fasync_lock for avoiding deadlocks.  The problem is
+that its the references of fasync->on, fasync->signal and fasync->poll
+are done there also outside the lock.  Since these may be modified by
+snd_kill_fasync() call concurrently from other process, inconsistent
+values might be passed to kill_fasync().  Although there shouldn't be
+critical UAF, it's still better to be addressed.
 
-On 32-bit builds, large bandwidth ratios can be truncated and the RT
-group sum can wrap when enough siblings are present.  That can let an
-overcommitted RT hierarchy pass the schedulability check, and it also
-narrows the helper result for other callers.
+This patch moves the kill_fasync() argument evaluations inside the
+snd_fasync_lock for avoiding the data races above.  The handling in
+fasync->on flag is optimized in the loop to skip directly.
 
-Return u64 from to_ratio() and use u64 for the RT group totals so
-bandwidth ratios are preserved and compared at full width on both 32-bit
-and 64-bit builds.
+Also, for more clarity, snd_fasync_free() takes the lock and unlink
+the pending entry more directly instead of clearing fasync->on flag.
 
-Fixes: b40b2e8eb521 ("sched: rt: multi level group constraints")
-Assisted-by: Codex:GPT-5
-Signed-off-by: Joseph Salisbury <joseph.salisbury@oracle.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260403210014.2713404-1-joseph.salisbury@oracle.com
-[ dropped `extern` keyword from `to_ratio()` declaration ]
+Reported-by: Jake Lamberson <lamberson.jake@gmail.com>
+Fixes: ef34a0ae7a26 ("ALSA: core: Add async signal helpers")
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260420061721.3253644-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ replaced scoped_guard(spinlock_irq, &snd_fasync_lock) with explicit spin_lock_irq()/spin_unlock_irq() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c  |    2 +-
- kernel/sched/rt.c    |    2 +-
- kernel/sched/sched.h |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ sound/core/misc.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -3328,7 +3328,7 @@ void sched_post_fork(struct task_struct
- 	uclamp_post_fork(p);
+--- a/sound/core/misc.c
++++ b/sound/core/misc.c
+@@ -171,14 +171,18 @@ static LIST_HEAD(snd_fasync_list);
+ static void snd_fasync_work_fn(struct work_struct *work)
+ {
+ 	struct snd_fasync *fasync;
++	int signal, poll;
+ 
+ 	spin_lock_irq(&snd_fasync_lock);
+ 	while (!list_empty(&snd_fasync_list)) {
+ 		fasync = list_first_entry(&snd_fasync_list, struct snd_fasync, list);
+ 		list_del_init(&fasync->list);
++		if (!fasync->on)
++			continue;
++		signal = fasync->signal;
++		poll = fasync->poll;
+ 		spin_unlock_irq(&snd_fasync_lock);
+-		if (fasync->on)
+-			kill_fasync(&fasync->fasync, fasync->signal, fasync->poll);
++		kill_fasync(&fasync->fasync, signal, poll);
+ 		spin_lock_irq(&snd_fasync_lock);
+ 	}
+ 	spin_unlock_irq(&snd_fasync_lock);
+@@ -234,7 +238,11 @@ void snd_fasync_free(struct snd_fasync *
+ {
+ 	if (!fasync)
+ 		return;
+-	fasync->on = 0;
++
++	spin_lock_irq(&snd_fasync_lock);
++	list_del_init(&fasync->list);
++	spin_unlock_irq(&snd_fasync_lock);
++
+ 	flush_work(&snd_fasync_work);
+ 	kfree(fasync);
  }
- 
--unsigned long to_ratio(u64 period, u64 runtime)
-+u64 to_ratio(u64 period, u64 runtime)
- {
- 	if (runtime == RUNTIME_INF)
- 		return BW_UNIT;
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -2527,7 +2527,7 @@ static int tg_rt_schedulable(struct task
- {
- 	struct rt_schedulable_data *d = data;
- 	struct task_group *child;
--	unsigned long total, sum = 0;
-+	u64 total, sum = 0;
- 	u64 period, runtime;
- 
- 	period = ktime_to_ns(tg->rt_bandwidth.rt_period);
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -1956,7 +1956,7 @@ extern void init_dl_inactive_task_timer(
- #define RATIO_SHIFT		8
- #define MAX_BW_BITS		(64 - BW_SHIFT)
- #define MAX_BW			((1ULL << MAX_BW_BITS) - 1)
--unsigned long to_ratio(u64 period, u64 runtime);
-+u64 to_ratio(u64 period, u64 runtime);
- 
- extern void init_entity_runnable_average(struct sched_entity *se);
- extern void post_init_entity_util_avg(struct task_struct *p);
 
 
