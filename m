@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB26466B4B;
-	Tue, 16 Jun 2026 16:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55854657F8;
+	Tue, 16 Jun 2026 16:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629012; cv=none; b=ZT7prZl1uEhyIC1HLPqhOFxBMhd0C6sZqCMpUKXPRfYCOXtm6RtjvCPf4UuzAMpTC73eZHm6dHakbGCWqOPUmcGIobGuLYMFx1pMjcGU5unaNwfUKl72eaAEqOBtOjDm3Fzb5k+t8Gbx8NHtoq5fJVATPCYOnSmMvQNBIXGYeeQ=
+	t=1781629017; cv=none; b=GwGzhXacEwOQob+lPhd4mzi6NnGFS+ak9uJRwP0ED9oKY6rWoUu1/QERRe9Yzec8sxPA/QJ0GVdpR1s45dYb227LEgYiZGWOU5eYZ4DYqn1k4BouvFufwo4qwGqbaokmT7UvnP57mDBFcQKOajTdJCPDHl5yf56gmIFJ0NZXWDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629012; c=relaxed/simple;
-	bh=MhRhldWwTXuG4DjJ1l8QIxFfMzUUZ09tWAvPOHZ43o4=;
+	s=arc-20240116; t=1781629017; c=relaxed/simple;
+	bh=u9zICj3MmrHbSDJPyPIFYZ8eVTc5u9byZAobT+ztaWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hRfNizzJ80O1lNyEqVt8nqBFGefBLtflHOx1dvoMyxFG94LNsnOJnb/joxS/DPim7Ths/wzeGWQhw/zytjXaUn/DJFWYIvXBQwRWsCX590fIYWoYmQQW7rG2q1aee+xyNdurShQzjG4RwSeOFapIXgs6QorQCoTFevAdrEv5mFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=faJy/URp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DzG8xBFqBBjwbweMxQm53XG0UX9G7VR9OqhdIoH2MRYDziIxGhiFStb7P1QJOkILj/vGG8SzD0ZyJTiDfLs73fJNpSNtb8ChB3GduexzKavGtmTE+doMuVRypqpr+C04kT4pJgXEh3+RMxrYDZpE9hwXtM9D0Q3/MYDWMld9lbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BRH+n8TV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="faJy/URp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54AFD1F000E9;
-	Tue, 16 Jun 2026 16:56:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BRH+n8TV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C29C1F000E9;
+	Tue, 16 Jun 2026 16:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629011;
-	bh=dh7KhYpKa0lvG5oznL1IU68d5px0/olj3SIHme+ZgiM=;
+	s=korg; t=1781629016;
+	bh=eoQJ/THWWjx5d9pnvoW9L/DzKmflTfG3yjC7ejpi04k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=faJy/URpCd3kTq3e0KDq+GcNlK3vlWao3R0uwT7PD1Qmu9387LGl2Z38YwISSE4pU
-	 qgO4a44MMMVT+yPgvzPPys5JpJTJhbFTLN4r13A/bAdk8VXYgkt0seqkhoKJGgdQjz
-	 QPGtScbSg2TBhuM/3u167dOdxx6jjtnFiyGJEnEg=
+	b=BRH+n8TV2V4R430D/D21qk/fnvaExErExgDiPuy3Uqqk7BjIiDFCYHsltLE91H9nV
+	 9zH1zfvDnX883Ek7whzEtqcVxNgnz9kAbfpOvfqDhPXTtvA2BZ4OXbH799Trx3AXxQ
+	 zqynrA1Lxn8PoSuBmu23qAcQHzVvKQb2H5kYjDOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eulgyu Kim <eulgyukim@snu.ac.kr>,
-	Taeyang Lee <0wn@theori.io>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Johan Hovold <johan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 204/452] bpf: Free reuseport cBPF prog after RCU grace period.
-Date: Tue, 16 Jun 2026 20:27:11 +0530
-Message-ID: <20260616145128.532549372@linuxfoundation.org>
+Subject: [PATCH 6.6 205/452] USB: serial: mct_u232: fix memory corruption with small endpoint
+Date: Tue, 16 Jun 2026 20:27:12 +0530
+Message-ID: <20260616145128.580278902@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -53,137 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 18fc650ccd7fe3376eca89203668cfb8268f60df ]
+commit 915b36d701950503c4ea0f6e314b10868e59fce3 upstream.
 
-Eulgyu Kim reported the splat below with a repro. [0]
+The driver overrides the maximum transfer size for a specific device
+which only accepts 16 byte packets for its 32 byte bulk-out endpoint.
 
-The repro sets up a UDP reuseport group with a cBPF prog and
-replaces it with a new one while another thread is sending
-a UDP packet to the group.
+Make sure to never increase the maximum transfer size to prevent slab
+corruption should a malicious device report a smaller endpoint max
+packet size than expected.
 
-The reuseport prog is freed by sk_reuseport_prog_free().
-bpf_prog_put() is called for "e"BPF prog to destruct through
-multiple stages while cBPF prog is freed immediately by
-bpf_release_orig_filter() and bpf_prog_free().
-
-If a reuseport prog is detached from the setsockopt() path
-(reuseport_attach_prog() or reuseport_detach_prog()),
-sk_reuseport_prog_free() is called without waiting for RCU
-readers to complete, resulting in various bugs.
-
-Let's defer freeing the reuseport cBPF prog after one RCU
-grace period.
-
-Note "e"BPF prog is safe as is unless the fast path starts
-to touch fields destroyed in bpf_prog_put_deferred() and
-__bpf_prog_put_noref().
-
-[0]:
-BUG: KASAN: vmalloc-out-of-bounds in reuseport_select_sock+0xedc/0x1220 net/core/sock_reuseport.c:596
-Read of size 4 at addr ffffc9000051e004 by task slowme/10208
-CPU: 6 UID: 1000 PID: 10208 Comm: slowme Not tainted 7.0.0-geb7ac95ff75e #32 PREEMPT(full)
-Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Call Trace:
- <IRQ>
- dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xca/0x240 mm/kasan/report.c:482
- kasan_report+0x118/0x150 mm/kasan/report.c:595
- reuseport_select_sock+0xedc/0x1220 net/core/sock_reuseport.c:596
- udp4_lib_lookup2+0x3bc/0x950 net/ipv4/udp.c:495
- __udp4_lib_lookup+0x768/0xe20 net/ipv4/udp.c:723
- __udp4_lib_lookup_skb+0x297/0x390 net/ipv4/udp.c:752
- __udp4_lib_rcv+0x1312/0x2620 net/ipv4/udp.c:2752
- ip_protocol_deliver_rcu+0x282/0x440 net/ipv4/ip_input.c:207
- ip_local_deliver_finish+0x3bb/0x6f0 net/ipv4/ip_input.c:241
- NF_HOOK+0x30c/0x3a0 include/linux/netfilter.h:318
- NF_HOOK+0x30c/0x3a0 include/linux/netfilter.h:318
- __netif_receive_skb_one_core net/core/dev.c:6181 [inline]
- __netif_receive_skb net/core/dev.c:6294 [inline]
- process_backlog+0xaa4/0x1960 net/core/dev.c:6645
- __napi_poll+0xae/0x340 net/core/dev.c:7709
- napi_poll net/core/dev.c:7772 [inline]
- net_rx_action+0x5d7/0xf50 net/core/dev.c:7929
- handle_softirqs+0x22b/0x870 kernel/softirq.c:622
- do_softirq+0x76/0xd0 kernel/softirq.c:523
- </IRQ>
- <TASK>
- __local_bh_enable_ip+0xf8/0x130 kernel/softirq.c:450
- local_bh_enable include/linux/bottom_half.h:33 [inline]
- rcu_read_unlock_bh include/linux/rcupdate.h:924 [inline]
- __dev_queue_xmit+0x1dd7/0x3710 net/core/dev.c:4890
- neigh_output include/net/neighbour.h:556 [inline]
- ip_finish_output2+0xca9/0x1070 net/ipv4/ip_output.c:237
- NF_HOOK_COND include/linux/netfilter.h:307 [inline]
- ip_output+0x29f/0x450 net/ipv4/ip_output.c:438
- ip_send_skb+0x45/0xc0 net/ipv4/ip_output.c:1508
- udp_send_skb+0xb04/0x1510 net/ipv4/udp.c:1195
- udp_sendmsg+0x1a71/0x2350 net/ipv4/udp.c:1485
- sock_sendmsg_nosec net/socket.c:727 [inline]
- __sock_sendmsg net/socket.c:742 [inline]
- __sys_sendto+0x554/0x680 net/socket.c:2206
- __do_sys_sendto net/socket.c:2213 [inline]
- __se_sys_sendto net/socket.c:2209 [inline]
- __x64_sys_sendto+0xde/0x100 net/socket.c:2209
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x160/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x415a2d
-Code: b3 66 2e 0f 1f 84 00 00 00 00 00 66 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f6bc31e41e8 EFLAGS: 00000212 ORIG_RAX: 000000000000002c
-RAX: ffffffffffffffda RBX: 00007f6bc31e4cdc RCX: 0000000000415a2d
-RDX: 0000000000000001 RSI: 00007f6bc31e421f RDI: 0000000000000003
-RBP: 00007f6bc31e4240 R08: 00007f6bc31e4220 R09: 0000000000000010
-R10: 0000000000000000 R11: 0000000000000212 R12: 00007f6bc31e46c0
-R13: ffffffffffffffb8 R14: 0000000000000000 R15: 00007ffc9b0d70b0
- </TASK>
-
-Fixes: 538950a1b752 ("soreuseport: setsockopt SO_ATTACH_REUSEPORT_[CE]BPF")
-Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
-Reported-by: Taeyang Lee <0wn@theori.io>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20260426012647.3233119-1-kuniyu@google.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/usb/serial/mct_u232.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index c33d896c7a6eef..2922f88311ca66 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -1642,15 +1642,24 @@ int sk_reuseport_attach_bpf(u32 ufd, struct sock *sk)
- 	return err;
- }
- 
-+static void sk_reuseport_prog_free_rcu(struct rcu_head *rcu)
-+{
-+	struct bpf_prog_aux *aux = container_of(rcu, struct bpf_prog_aux, rcu);
-+	struct bpf_prog *prog = aux->prog;
-+
-+	bpf_release_orig_filter(prog);
-+	bpf_prog_free(prog);
-+}
-+
- void sk_reuseport_prog_free(struct bpf_prog *prog)
+diff --git a/drivers/usb/serial/mct_u232.c b/drivers/usb/serial/mct_u232.c
+index 6c2c4a597fb146..be63f5f3740477 100644
+--- a/drivers/usb/serial/mct_u232.c
++++ b/drivers/usb/serial/mct_u232.c
+@@ -379,6 +379,7 @@ static int mct_u232_port_probe(struct usb_serial_port *port)
  {
- 	if (!prog)
- 		return;
+ 	struct usb_serial *serial = port->serial;
+ 	struct mct_u232_private *priv;
++	u16 pid;
  
--	if (prog->type == BPF_PROG_TYPE_SK_REUSEPORT)
--		bpf_prog_put(prog);
-+	if (bpf_prog_was_classic(prog))
-+		call_rcu(&prog->aux->rcu, sk_reuseport_prog_free_rcu);
- 	else
--		bpf_prog_destroy(prog);
-+		bpf_prog_put(prog);
- }
+ 	/* check first to simplify error handling */
+ 	if (!serial->port[1] || !serial->port[1]->interrupt_in_urb) {
+@@ -386,6 +387,16 @@ static int mct_u232_port_probe(struct usb_serial_port *port)
+ 		return -ENODEV;
+ 	}
  
- struct bpf_scratchpad {
++	/*
++	 * Compensate for a hardware bug: although the Sitecom U232-P25
++	 * device reports a maximum output packet size of 32 bytes,
++	 * it seems to be able to accept only 16 bytes (and that's what
++	 * SniffUSB says too...)
++	 */
++	pid = le16_to_cpu(serial->dev->descriptor.idProduct);
++	if (pid == MCT_U232_SITECOM_PID)
++		port->bulk_out_size = min(16, port->bulk_out_size);
++
+ 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+ 		return -ENOMEM;
+@@ -411,7 +422,6 @@ static void mct_u232_port_remove(struct usb_serial_port *port)
+ 
+ static int  mct_u232_open(struct tty_struct *tty, struct usb_serial_port *port)
+ {
+-	struct usb_serial *serial = port->serial;
+ 	struct mct_u232_private *priv = usb_get_serial_port_data(port);
+ 	int retval = 0;
+ 	unsigned int control_state;
+@@ -419,15 +429,6 @@ static int  mct_u232_open(struct tty_struct *tty, struct usb_serial_port *port)
+ 	unsigned char last_lcr;
+ 	unsigned char last_msr;
+ 
+-	/* Compensate for a hardware bug: although the Sitecom U232-P25
+-	 * device reports a maximum output packet size of 32 bytes,
+-	 * it seems to be able to accept only 16 bytes (and that's what
+-	 * SniffUSB says too...)
+-	 */
+-	if (le16_to_cpu(serial->dev->descriptor.idProduct)
+-						== MCT_U232_SITECOM_PID)
+-		port->bulk_out_size = 16;
+-
+ 	/* Do a defined restart: the normal serial device seems to
+ 	 * always turn on DTR and RTS here, so do the same. I'm not
+ 	 * sure if this is really necessary. But it should not harm
 -- 
 2.53.0
 
