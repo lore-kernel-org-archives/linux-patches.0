@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D21643E4BE;
-	Tue, 16 Jun 2026 16:25:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6F23A8746;
+	Tue, 16 Jun 2026 16:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627147; cv=none; b=YmHGZm0AeLwUOQee3EMw64UKGr7vSE4/QaZUgCiracJvLpdVChdvbuZGschtyu4prSgWJLK+2qU8XqGggzqk2VvaT4ErhA6VPC953kboc+FxTt2uFC8oDm2cMdqie7Q1bAmVdM4ZdE44XYtQDQhQ5nCOmWv10FwMuwSAZ/0jdM8=
+	t=1781627156; cv=none; b=aALNv8fxjtKcRerEUzrUhkNbqyfpM6XrBpDYPTTJFNOaEBvBTR/rLu8eeaIaYIj4WQ4Mhpivy5yy24fCkPIRjrx6E8Brxt1Gt3WUB/VsHc7lxsnmuRqIMUYylI0Vl/+GwWcoWMPlofJkRSmyZVhrc4ISPsXLYF0qG9GlXcse2ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627147; c=relaxed/simple;
-	bh=gFmHiJtEsRiLGbztsvstXebFO3/vPqbFBwIzjg5EpiA=;
+	s=arc-20240116; t=1781627156; c=relaxed/simple;
+	bh=OIzVVvn2hpuvmws6nRCQdr+SgbqNzZyB1Eb7OKIjudM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=px+3a18lwGZwr3tQhxO4pJZxHcoSTk9RyAnizzUz9har2HPrKO5Gk4UbZceowdUCnERc6G3rFyNUQgXTrO24dVNibAw2Jxt3B+bGuDLj+Ce4U6NiAI+L/xbhJ1OtmBxXHrLorajvpJlPDV50NXnJmUWlE0rWbLO5NvinddpIFyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InX3F6VH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RB/s26W2OUqOqIGTwoYxjBcsmu7UfcKeS5T/bl1QZIWArFEcvLW6DhhtlRZpmeMgVeutpjbrGNuIYl9OQIxDHuysTqpKBbfD1Jx4rN4d6M4JdDrra9r6raIOJYYrR23iXMv7bN9s7BxSxZ03hWShzIpQ/6WMvtjN/REnXNunOXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgK8s6Bk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InX3F6VH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9732C1F000E9;
-	Tue, 16 Jun 2026 16:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgK8s6Bk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C041F000E9;
+	Tue, 16 Jun 2026 16:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627146;
-	bh=3bFrGQilEl2VDrKh1tHay4mSY4+6TuIwhdhMR8FCZHw=;
+	s=korg; t=1781627155;
+	bh=QNpDJjmVWtuCqL+SnALRdOAJlCwzuwtk9ezxJyiDyXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=InX3F6VHajr8uKgQqEclXLIklgsbAi5AT5u3EpmWm/4CChJ194VQJ/sAgZ+JrCMM3
-	 AxjwlM4iY5YkoxGcAsJehKpNFmWraJ2CR38ttlEQ2xUMUdzKLb+h7ry8PNmbqmsFk3
-	 EVoL+f3cT3+35nqww5sihO3jZavG6KQ/18J+W6yo=
+	b=tgK8s6BkmBae73IFyy89pMoTkmXBOPYwq02wihdqVC5rwL+hNPdmUNJ+KajwJWdwg
+	 gIjphlHso4z6SJapb5oCmMC09RjA2ZzXPkDz96rsU6eYbP+A+Bpq8i0TPOv7lKwhQH
+	 eaAK0M0inna5C3cmHFuigsSpsaJBWUz/Wqfa5WPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>,
 	Karol Wachowski <karol.wachowski@linux.intel.com>
-Subject: [PATCH 6.12 126/261] accel/ivpu: Add buffer overflow check in MS get_info_ioctl
-Date: Tue, 16 Jun 2026 20:29:24 +0530
-Message-ID: <20260616145050.923307629@linuxfoundation.org>
+Subject: [PATCH 6.12 127/261] accel/ivpu: Fix signed integer truncation in IPC receive
+Date: Tue, 16 Jun 2026 20:29:25 +0530
+Message-ID: <20260616145050.971215254@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,40 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
 
-commit fb176425837693f50c5c9fc8db6fbb04af22bd0a upstream.
+commit d9faef564438d1e4579c692c046603e7ada7bdf4 upstream.
 
-Add validation that the info size returned from the metric stream info
-query is not exceeded when checked against the allocated buffer size.
-If the firmware returns a size larger than the buffer, reject the
-operation with -EOVERFLOW instead of proceeding with an incorrect
-buffer copy.
+Fix potential buffer overflow where firmware-supplied data_size is cast
+to signed int before being used in min_t(). Large unsigned values
+(>= 0x80000000) become negative, causing unsigned wraparound and
+oversized memcpy operations that can overflow the stack buffer.
 
-Fixes: cdfad4db7756 ("accel/ivpu: Add NPU profiling support")
-Cc: stable@vger.kernel.org # v6.18+
+Change min_t(int, ...) to min() as both values are unsigned and can be
+handled by min() without explicit cast.
+
+Fixes: 3b434a3445ff ("accel/ivpu: Use threaded IRQ to handle JOB done messages")
+Cc: stable@vger.kernel.org # v6.12+
 Signed-off-by: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
 Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
 Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Link: https://patch.msgid.link/20260529120841.135852-1-andrzej.kacprowski@linux.intel.com
+Link: https://patch.msgid.link/20260601161643.229342-1-andrzej.kacprowski@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_ms.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/accel/ivpu/ivpu_ipc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/accel/ivpu/ivpu_ms.c
-+++ b/drivers/accel/ivpu/ivpu_ms.c
-@@ -282,6 +282,13 @@ int ivpu_ms_get_info_ioctl(struct drm_de
- 	if (ret)
- 		goto unlock;
+--- a/drivers/accel/ivpu/ivpu_ipc.c
++++ b/drivers/accel/ivpu/ivpu_ipc.c
+@@ -275,7 +275,7 @@ int ivpu_ipc_receive(struct ivpu_device
+ 	if (ipc_buf)
+ 		memcpy(ipc_buf, rx_msg->ipc_hdr, sizeof(*ipc_buf));
+ 	if (rx_msg->jsm_msg) {
+-		u32 size = min_t(int, rx_msg->ipc_hdr->data_size, sizeof(*jsm_msg));
++		u32 size = min(rx_msg->ipc_hdr->data_size, sizeof(*jsm_msg));
  
-+	if (info_size > ivpu_bo_size(bo)) {
-+		ivpu_warn_ratelimited(vdev, "MS info overflow: %#llx > %#zx\n",
-+				      info_size, ivpu_bo_size(bo));
-+		ret = -EOVERFLOW;
-+		goto unlock;
-+	}
-+
- 	if (args->buffer_size < info_size) {
- 		ret = -ENOSPC;
- 		goto unlock;
+ 		if (rx_msg->jsm_msg->result != VPU_JSM_STATUS_SUCCESS) {
+ 			ivpu_dbg(vdev, IPC, "IPC resp result error: %d\n", rx_msg->jsm_msg->result);
 
 
