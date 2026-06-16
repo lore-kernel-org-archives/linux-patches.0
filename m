@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61D943D4F7;
-	Tue, 16 Jun 2026 15:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AD53C414F;
+	Tue, 16 Jun 2026 15:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624992; cv=none; b=KXn4Z7h9CmG8WPrDhqXPGvdbT0Wjicw7moBRI5Y4jJG7aw9Uxu30MMzcvLtxMAyI7bhrCM3CbnNuB6RdGzELSTgL7c3w7FQHz0NW8AXnVxbT4S/ooq390ZXh9BtA8zwSL2gsRzROd03aOcodgudlmxiSeyAsrv95DBFtl4GrmmY=
+	t=1781625000; cv=none; b=CXLqgxO7J9weBOw9b584YHxIrfvAWKqNPxhde/xqJiEcB+V/QhRQT6q1ENoausr0qKoXDkc1GQdKTm3FOYOQ2FMnnLV4XoFlHim84PSb3mvFAOJs4JkiIYjiczuaP+3cgbWNLvKVuJSdGAtNplnK9B6w7aPqPJo5rqrCimXP4Yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624992; c=relaxed/simple;
-	bh=8EAqffMXGhR9s59AAoWokkZDOD7U7WVms4hYr+Cxze4=;
+	s=arc-20240116; t=1781625000; c=relaxed/simple;
+	bh=VqylpI+aA5qkAeirzFHcutoXXcHXFrAewceTHQBqRO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e9pr0aFo/+Zjeuab07W7TdFD+4vAT/1eMfud9SzeJIFsLJs4yJxlNaTyDjgFWMKP4iFu6X9C18Tvt2lIgbtaBsiYp+IizUuscH1kX/8oIbMOcYHNqysuH2+kkF0y098+0vwNbE7ag8JZLvzb7vjCzDGXodTk8gV5Iq6+JhWZG1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLX07pPa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uGzMcpM+4WN7GVYWFI2UKF+JQiRHARZS27QguGpcsgV6ojSo0kV3rrGR6ktWV4rNMs2b78jIEWB8b7q7UB74G5aISDyWzm6OX/h2Ga4nxBj4the2Ovo/EYXtUQPrI5KdTPt+TQx9RAvqpm4dAnroAQPDquewQStV6aqoJNI9thY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0y3SBbOK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLX07pPa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B1AD1F000E9;
-	Tue, 16 Jun 2026 15:49:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0y3SBbOK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2051F000E9;
+	Tue, 16 Jun 2026 15:49:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624991;
-	bh=mNBQXV8GXmipezam6symskhmEe9NCuepThEpY3VZsTc=;
+	s=korg; t=1781624998;
+	bh=WSULmL6Rr+6G02dN8k1l+h05xT7M1XIOL5QLeRtcHRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YLX07pPaXgX/WXwjW4mmoHehSbINFhF6bmVYbJ0JDQCAj0PV9sfiROQSpgtGpzpjD
-	 6TgIPdKJnY1bFZ+H8hCEurMM20CFJ3KJq+0da19NjgKPiAXKZ7b/4ruEA7w8WtUEWM
-	 qP1vzBzsOZux0/sCN0O4CzNWEMfkjEqZOMdM1PEg=
+	b=0y3SBbOK72fcQM9is2Bdn7QSvi/Mz+H2KjhPE7bzYwuaqio13Qg06XHeJjPfgEq8x
+	 GXJobxpy4jCsbZmDGAFXGmoOeaXqLEwCR0LCgfUm7OBsS1J2gkj1XNCzgSlQMUmeC4
+	 zcPp1r7SBXCWDuwlewjYegLHDqwY1bgsHJ5ilAWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	SeungJu Cheon <suunj1331@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Naveen Mamindlapalli <naveenm@marvell.com>,
+	Nithin Dabilpuram <ndabilpuram@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 044/325] Bluetooth: RFCOMM: validate skb length in MCC handlers
-Date: Tue, 16 Jun 2026 20:27:20 +0530
-Message-ID: <20260616145059.928167324@linuxfoundation.org>
+Subject: [PATCH 6.18 062/325] octeontx2-af: npc: Fix CPT channel mask in npc_install_flow
+Date: Tue, 16 Jun 2026 20:27:38 +0530
+Message-ID: <20260616145100.783047134@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,165 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeungJu Cheon <suunj1331@gmail.com>
+From: Nithin Dabilpuram <ndabilpuram@marvell.com>
 
-[ Upstream commit 23882b828c3c8c51d0c946446a396b10abb3b16b ]
+[ Upstream commit 1d31eb27e570daa04f5373345f9ac98c95863be9 ]
 
-The RFCOMM MCC handlers cast skb->data to protocol-specific structs
-without validating skb->len first. A malicious remote device can send
-truncated MCC frames and trigger out-of-bounds reads in these handlers.
+Use the CPT-aware NIX channel mask in the npc_install_flow path so that
+when the host PF installs steering rules in kernel for a VF used from
+userspace (e.g. DPDK), MCAM entries see the same channel mask semantics as
+other RX paths.
 
-Fix this by using skb_pull_data() to validate and access the required
-data before dereferencing it.
-
-rfcomm_recv_rpn() requires special handling since ETSI TS 07.10 allows
-1-byte RPN requests. Handle this by validating only the DLCI byte first,
-and validating the full struct only when len > 1.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Suggested-by: Muhammad Bilal <meatuni001@gmail.com>
-Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 56bcef528bd8 ("octeontx2-af: Use npc_install_flow API for promisc and broadcast entries")
+Cc: Naveen Mamindlapalli <naveenm@marvell.com>
+Signed-off-by: Nithin Dabilpuram <ndabilpuram@marvell.com>
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Link: https://patch.msgid.link/20260602045853.1558530-1-rkannoth@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/core.c | 67 +++++++++++++++++++++++++++----------
- 1 file changed, 49 insertions(+), 18 deletions(-)
+ .../net/ethernet/marvell/octeontx2/af/rvu.h   |  1 +
+ .../ethernet/marvell/octeontx2/af/rvu_npc.c   | 32 +++++++++----------
+ .../marvell/octeontx2/af/rvu_npc_fs.c         |  2 +-
+ 3 files changed, 18 insertions(+), 17 deletions(-)
 
-diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
-index 96250807b32b44..dfade1933fa730 100644
---- a/net/bluetooth/rfcomm/core.c
-+++ b/net/bluetooth/rfcomm/core.c
-@@ -1431,10 +1431,15 @@ static int rfcomm_apply_pn(struct rfcomm_dlc *d, int cr, struct rfcomm_pn *pn)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+index b5828334192324..914ba2b691ec80 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+@@ -1124,6 +1124,7 @@ int rvu_cpt_lf_teardown(struct rvu *rvu, u16 pcifunc, int blkaddr, int lf,
+ 			int slot);
+ int rvu_cpt_ctx_flush(struct rvu *rvu, u16 pcifunc);
+ int rvu_cpt_init(struct rvu *rvu);
++u32 rvu_get_cpt_chan_mask(struct rvu *rvu);
  
- static int rfcomm_recv_pn(struct rfcomm_session *s, int cr, struct sk_buff *skb)
+ #define NDC_AF_BANK_MASK       GENMASK_ULL(7, 0)
+ #define NDC_AF_BANK_LINE_MASK  GENMASK_ULL(31, 16)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+index a0d2ed56186d8d..65aa6aeab8e782 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+@@ -599,6 +599,19 @@ void npc_set_mcam_action(struct rvu *rvu, struct npc_mcam *mcam,
+ 			   NPC_AF_MCAMEX_BANKX_ACTION(index, bank), cfg);
+ }
+ 
++u32 rvu_get_cpt_chan_mask(struct rvu *rvu)
++{
++	/* For cn10k the upper two bits of the channel number are
++	 * cpt channel number. with masking out these bits in the
++	 * mcam entry, same entry used for NIX will allow packets
++	 * received from cpt for parsing.
++	 */
++	if (!is_rvu_otx2(rvu))
++		return NIX_CHAN_CPT_X2P_MASK;
++	else
++		return 0xFFFu;
++}
++
+ void rvu_npc_install_ucast_entry(struct rvu *rvu, u16 pcifunc,
+ 				 int nixlf, u64 chan, u8 *mac_addr)
  {
--	struct rfcomm_pn *pn = (void *) skb->data;
-+	struct rfcomm_pn *pn;
- 	struct rfcomm_dlc *d;
--	u8 dlci = pn->dlci;
-+	u8 dlci;
-+
-+	pn = skb_pull_data(skb, sizeof(*pn));
-+	if (!pn)
-+		return -EILSEQ;
+@@ -642,7 +655,7 @@ void rvu_npc_install_ucast_entry(struct rvu *rvu, u16 pcifunc,
+ 	eth_broadcast_addr((u8 *)&req.mask.dmac);
+ 	req.features = BIT_ULL(NPC_DMAC);
+ 	req.channel = chan;
+-	req.chan_mask = 0xFFFU;
++	req.chan_mask = rvu_get_cpt_chan_mask(rvu);
+ 	req.intf = pfvf->nix_rx_intf;
+ 	req.op = action.op;
+ 	req.hdr.pcifunc = 0; /* AF is requester */
+@@ -712,11 +725,7 @@ void rvu_npc_install_promisc_entry(struct rvu *rvu, u16 pcifunc,
+ 	 * mcam entry, same entry used for NIX will allow packets
+ 	 * received from cpt for parsing.
+ 	 */
+-	if (!is_rvu_otx2(rvu)) {
+-		req.chan_mask = NIX_CHAN_CPT_X2P_MASK;
+-	} else {
+-		req.chan_mask = 0xFFFU;
+-	}
++	req.chan_mask = rvu_get_cpt_chan_mask(rvu);
  
-+	dlci = pn->dlci;
- 	BT_DBG("session %p state %ld dlci %d", s, s->state, dlci);
+ 	if (chan_cnt > 1) {
+ 		if (!is_power_of_2(chan_cnt)) {
+@@ -887,16 +896,7 @@ void rvu_npc_install_allmulti_entry(struct rvu *rvu, u16 pcifunc, int nixlf,
+ 	ether_addr_copy(req.mask.dmac, mac_addr);
+ 	req.features = BIT_ULL(NPC_DMAC);
  
- 	if (!dlci)
-@@ -1483,8 +1488,8 @@ static int rfcomm_recv_pn(struct rfcomm_session *s, int cr, struct sk_buff *skb)
- 
- static int rfcomm_recv_rpn(struct rfcomm_session *s, int cr, int len, struct sk_buff *skb)
- {
--	struct rfcomm_rpn *rpn = (void *) skb->data;
--	u8 dlci = __get_dlci(rpn->dlci);
-+	struct rfcomm_rpn *rpn;
-+	u8 dlci;
- 
- 	u8 bit_rate  = 0;
- 	u8 data_bits = 0;
-@@ -1495,15 +1500,16 @@ static int rfcomm_recv_rpn(struct rfcomm_session *s, int cr, int len, struct sk_
- 	u8 xoff_char = 0;
- 	u16 rpn_mask = RFCOMM_RPN_PM_ALL;
- 
--	BT_DBG("dlci %d cr %d len 0x%x bitr 0x%x line 0x%x flow 0x%x xonc 0x%x xoffc 0x%x pm 0x%x",
--		dlci, cr, len, rpn->bit_rate, rpn->line_settings, rpn->flow_ctrl,
--		rpn->xon_char, rpn->xoff_char, rpn->param_mask);
-+	if (len == 1) {
-+		rpn = skb_pull_data(skb, 1);
-+		if (!rpn)
-+			return -EILSEQ;
- 
--	if (!cr)
--		return 0;
-+		dlci = __get_dlci(rpn->dlci);
-+
-+		if (!cr)
-+			return 0;
- 
--	if (len == 1) {
--		/* This is a request, return default (according to ETSI TS 07.10) settings */
- 		bit_rate  = RFCOMM_RPN_BR_9600;
- 		data_bits = RFCOMM_RPN_DATA_8;
- 		stop_bits = RFCOMM_RPN_STOP_1;
-@@ -1514,6 +1520,19 @@ static int rfcomm_recv_rpn(struct rfcomm_session *s, int cr, int len, struct sk_
- 		goto rpn_out;
- 	}
- 
-+	rpn = skb_pull_data(skb, sizeof(*rpn));
-+	if (!rpn)
-+		return -EILSEQ;
-+
-+	dlci = __get_dlci(rpn->dlci);
-+
-+	BT_DBG("dlci %d cr %d len 0x%x bitr 0x%x line 0x%x flow 0x%x xonc 0x%x xoffc 0x%x pm 0x%x",
-+	       dlci, cr, len, rpn->bit_rate, rpn->line_settings, rpn->flow_ctrl,
-+	       rpn->xon_char, rpn->xoff_char, rpn->param_mask);
-+
-+	if (!cr)
-+		return 0;
-+
- 	/* Check for sane values, ignore/accept bit_rate, 8 bits, 1 stop bit,
- 	 * no parity, no flow control lines, normal XON/XOFF chars */
- 
-@@ -1589,9 +1608,14 @@ static int rfcomm_recv_rpn(struct rfcomm_session *s, int cr, int len, struct sk_
- 
- static int rfcomm_recv_rls(struct rfcomm_session *s, int cr, struct sk_buff *skb)
- {
--	struct rfcomm_rls *rls = (void *) skb->data;
--	u8 dlci = __get_dlci(rls->dlci);
-+	struct rfcomm_rls *rls;
-+	u8 dlci;
- 
-+	rls = skb_pull_data(skb, sizeof(*rls));
-+	if (!rls)
-+		return -EILSEQ;
-+
-+	dlci = __get_dlci(rls->dlci);
- 	BT_DBG("dlci %d cr %d status 0x%x", dlci, cr, rls->status);
- 
- 	if (!cr)
-@@ -1608,10 +1632,15 @@ static int rfcomm_recv_rls(struct rfcomm_session *s, int cr, struct sk_buff *skb
- 
- static int rfcomm_recv_msc(struct rfcomm_session *s, int cr, struct sk_buff *skb)
- {
--	struct rfcomm_msc *msc = (void *) skb->data;
-+	struct rfcomm_msc *msc;
- 	struct rfcomm_dlc *d;
--	u8 dlci = __get_dlci(msc->dlci);
-+	u8 dlci;
-+
-+	msc = skb_pull_data(skb, sizeof(*msc));
-+	if (!msc)
-+		return -EILSEQ;
- 
-+	dlci = __get_dlci(msc->dlci);
- 	BT_DBG("dlci %d cr %d v24 0x%x", dlci, cr, msc->v24_sig);
- 
- 	d = rfcomm_dlc_get(s, dlci);
-@@ -1644,17 +1673,19 @@ static int rfcomm_recv_msc(struct rfcomm_session *s, int cr, struct sk_buff *skb
- 
- static int rfcomm_recv_mcc(struct rfcomm_session *s, struct sk_buff *skb)
- {
--	struct rfcomm_mcc *mcc = (void *) skb->data;
-+	struct rfcomm_mcc *mcc;
- 	u8 type, cr, len;
- 
-+	mcc = skb_pull_data(skb, sizeof(*mcc));
-+	if (!mcc)
-+		return -EILSEQ;
-+
- 	cr   = __test_cr(mcc->type);
- 	type = __get_mcc_type(mcc->type);
- 	len  = __get_mcc_len(mcc->len);
- 
- 	BT_DBG("%p type 0x%x cr %d", s, type, cr);
- 
--	skb_pull(skb, 2);
+-	/* For cn10k the upper two bits of the channel number are
+-	 * cpt channel number. with masking out these bits in the
+-	 * mcam entry, same entry used for NIX will allow packets
+-	 * received from cpt for parsing.
+-	 */
+-	if (!is_rvu_otx2(rvu))
+-		req.chan_mask = NIX_CHAN_CPT_X2P_MASK;
+-	else
+-		req.chan_mask = 0xFFFU;
 -
- 	switch (type) {
- 	case RFCOMM_PN:
- 		rfcomm_recv_pn(s, cr, skb);
++	req.chan_mask = rvu_get_cpt_chan_mask(rvu);
+ 	req.channel = chan;
+ 	req.intf = pfvf->nix_rx_intf;
+ 	req.entry = index;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
+index b56395ac5a7439..e0262fcedd8984 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
+@@ -1470,7 +1470,7 @@ int rvu_mbox_handler_npc_install_flow(struct rvu *rvu,
+ 
+ 	/* ignore chan_mask in case pf func is not AF, revisit later */
+ 	if (!is_pffunc_af(req->hdr.pcifunc))
+-		req->chan_mask = 0xFFF;
++		req->chan_mask = rvu_get_cpt_chan_mask(rvu);
+ 
+ 	err = npc_check_unsupported_flows(rvu, req->features, req->intf);
+ 	if (err)
 -- 
 2.53.0
 
