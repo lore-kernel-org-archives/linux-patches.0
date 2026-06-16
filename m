@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5D9472760;
-	Tue, 16 Jun 2026 17:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C783C276B;
+	Tue, 16 Jun 2026 17:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632446; cv=none; b=CjIOei2gnOVhuUAB/iMHZrLx/XL/UUOSyAKqg/v/I2I0Icl3KSdZ0ouSfBIqBDfe9kMbncxix2l3G9iKFUaJ9aGB3zzbrTe65xPzsEU+ULI3FhoCXcZLsXEq0WDwJ7s20vDaNWvI7CBcFOG9xLDEXh4i4z498LwpsRnCNTXaKTg=
+	t=1781632451; cv=none; b=E6gcyzCiWsIH9Dg/ftxD+H8ZAyhhjEnWju8Ri7DvcxKQQz0TWiNjXBAmxofWFHJ1oP0/54BYuPmuB6tSP7ohNRTSVxvmfv7CvPaxedHQOEuTQ/EhAAzaZ/WYnSRVcjHyePFTqK3Cdxsr1rvfwZfNFzHkS2am7yARrafh95Jw5bI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632446; c=relaxed/simple;
-	bh=BRuGrKWKjeS3VMDbwBnEww8lHWqDFRlaDxr7OYtT8W4=;
+	s=arc-20240116; t=1781632451; c=relaxed/simple;
+	bh=C5/jKjHwJLO8/qloBZ6SGuv7uWrM/cOVNcFFZZKstjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i7OVSk0MGu0pnqQQyY4BTDJaO9TxEWKYTLyoFx9w2ohLaTgW5dtPyHw7Qq9j18D5iUd16SAuiXsC1YH2OleBnQNjAOVbUwVssfqMBfpXtTaIuo5q5SUhZmb7SIiVaUgeBNl8lU265GBiwiA6hJA76JRPJB63AEpg0mAR02BDVdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUHqWGmx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ozuMGex/6ooLts9nfo7JXQHQuw67I7s1DYfWSYrjn8h0PvFU+d8wM5x8WlzLdDr7QExwdFsuIEw+wxJjUwXnLatMTAC/v4iUXn2MJ64gXF7jJpiq8EBB35joxFnwT7uBzMUcV1fpNzvjpDobJ1u+XkeAPfGA/TPsnX+AmwlHjEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aFCNUdkm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUHqWGmx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13FDB1F000E9;
-	Tue, 16 Jun 2026 17:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aFCNUdkm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F2D1F000E9;
+	Tue, 16 Jun 2026 17:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632445;
-	bh=/AkrWlLUP7ZagowJJpV+m1K7heGwfMRd4GOv09Lj8xI=;
+	s=korg; t=1781632450;
+	bh=F/xn5xfHK+yPF/h8VWEelRk6GXD0tFCwgXhEsza7BCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OUHqWGmxusdMIi66qHBV6tvVD45tJaWW/6TO2qWnf1cMmhSE/y6vDYNiwq96OruoH
-	 n/YSCk4q99AFPuSBjLRrFPM3cXNSwoy+akPXGJcQB3nGF2KsFfkj6U/uGYjdJ4JxW8
-	 VHfXoylgJDT5aVSyydrFU9XUg9/mxaFvJAbUhag8=
+	b=aFCNUdkmkGurDzilhezGoc5+o9mXpBT3ryjyNHC/GvlELsiAJlJsxbdk6JdRWSRjM
+	 MLYkgVXOYzFNll0OZe8SYD1l71JtjA5utdpiUg5bI5MSfCTNqQvsP8tMe2WXywkKST
+	 DeVPpcpdrJ//xgzkS+EA9/Qog5I75yXDwWVUefCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Pavitra Jha <jhapavitra98@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 369/522] net: stmmac: rename STMMAC_GET_ENTRY() -> STMMAC_NEXT_ENTRY()
-Date: Tue, 16 Jun 2026 20:28:36 +0530
-Message-ID: <20260616145143.040487321@linuxfoundation.org>
+Subject: [PATCH 6.1 406/522] net: wwan: t7xx: validate port_count against message length in t7xx_port_enum_msg_handler
+Date: Tue, 16 Jun 2026 20:29:13 +0530
+Message-ID: <20260616145145.058362428@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,178 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+From: Pavitra Jha <jhapavitra98@gmail.com>
 
-[ Upstream commit 6b4286e0550814cdc4b897f881ec1fa8b0313227 ]
+[ Upstream commit 0e7c074cfcd9bd93765505f9eb8b42f03ed2a744 ]
 
-STMMAC_GET_ENTRY() doesn't describe what this macro is doing - it is
-incrementing the provided index for the circular array of descriptors.
-Replace "GET" with "NEXT" as this better describes the action here.
+t7xx_port_enum_msg_handler() uses the modem-supplied port_count field as
+a loop bound over port_msg->data[] without checking that the message buffer
+contains sufficient data. A modem sending port_count=65535 in a 12-byte
+buffer triggers a slab-out-of-bounds read of up to 262140 bytes.
 
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/E1w2vba-0000000DbWo-1oL5@rmk-PC.armlinux.org.uk
+Add a sizeof(*port_msg) check before accessing the port message header
+fields to guard against undersized messages.
+
+Add a struct_size() check after extracting port_count and before the loop.
+
+In t7xx_parse_host_rt_data(), guard the rt_feature header read with a
+remaining-buffer check before accessing data_len, validate feat_data_len
+against the actual remaining buffer to prevent OOB reads and signed
+integer overflow on offset.
+
+Pass msg_len from both call sites: skb->len at the DPMAIF path after
+skb_pull(), and the validated feat_data_len at the handshake path.
+
+Fixes: da45d2566a1d ("net: wwan: t7xx: Add control port")
+Cc: stable@vger.kernel.org
+Signed-off-by: Pavitra Jha <jhapavitra98@gmail.com>
+Link: https://patch.msgid.link/20260501110713.145563-1-jhapavitra98@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 0bb05e6adfa9 ("net: stmmac: Prevent NULL deref when RX memory exhausted")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/chain_mode.c  |    2 -
- drivers/net/ethernet/stmicro/stmmac/common.h      |    2 -
- drivers/net/ethernet/stmicro/stmmac/ring_mode.c   |    2 -
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |   26 +++++++++++-----------
- 4 files changed, 16 insertions(+), 16 deletions(-)
+ drivers/net/wwan/t7xx/t7xx_modem_ops.c     |   17 +++++++++++++++--
+ drivers/net/wwan/t7xx/t7xx_port_ctrl_msg.c |   18 ++++++++++++++++--
+ drivers/net/wwan/t7xx/t7xx_port_proxy.h    |    2 +-
+ 3 files changed, 32 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/chain_mode.c
-@@ -47,7 +47,7 @@ static int jumbo_frm(struct stmmac_tx_qu
+--- a/drivers/net/wwan/t7xx/t7xx_modem_ops.c
++++ b/drivers/net/wwan/t7xx/t7xx_modem_ops.c
+@@ -415,8 +415,20 @@ static int t7xx_parse_host_rt_data(struc
  
- 	while (len != 0) {
- 		tx_q->tx_skbuff[entry] = NULL;
--		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
-+		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
- 		desc = tx_q->dma_tx + entry;
+ 	offset = sizeof(struct feature_query);
+ 	for (i = 0; i < FEATURE_COUNT && offset < data_length; i++) {
++		size_t remaining = data_length - offset;
++		size_t feat_data_len, feat_total;
++
++		if (remaining < sizeof(*rt_feature))
++			break;
++
+ 		rt_feature = data + offset;
+-		offset += sizeof(*rt_feature) + le32_to_cpu(rt_feature->data_len);
++		feat_data_len = le32_to_cpu(rt_feature->data_len);
++
++		if (feat_data_len > remaining - sizeof(*rt_feature))
++			break;
++
++		feat_total = sizeof(*rt_feature) + feat_data_len;
++		offset += feat_total;
  
- 		if (len > bmax) {
---- a/drivers/net/ethernet/stmicro/stmmac/common.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/common.h
-@@ -53,7 +53,7 @@
- #define DMA_MIN_RX_SIZE		64
- #define DMA_MAX_RX_SIZE		1024
- #define DMA_DEFAULT_RX_SIZE	512
--#define STMMAC_GET_ENTRY(x, size)	((x + 1) & (size - 1))
-+#define STMMAC_NEXT_ENTRY(x, size)	((x + 1) & (size - 1))
+ 		ft_spt_cfg = FIELD_GET(FEATURE_MSK, core->feature_set[i]);
+ 		if (ft_spt_cfg != MTK_FEATURE_MUST_BE_SUPPORTED)
+@@ -427,7 +439,8 @@ static int t7xx_parse_host_rt_data(struc
+ 			return -EINVAL;
  
- #undef FRAME_FILTER_DEBUG
- /* #define FRAME_FILTER_DEBUG */
---- a/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/ring_mode.c
-@@ -51,7 +51,7 @@ static int jumbo_frm(struct stmmac_tx_qu
- 		stmmac_prepare_tx_desc(priv, desc, 1, bmax, csum,
- 				STMMAC_RING_MODE, 0, false, skb->len);
- 		tx_q->tx_skbuff[entry] = NULL;
--		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
-+		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
- 
- 		if (priv->extend_desc)
- 			desc = (struct dma_desc *)(tx_q->dma_etx + entry);
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -2503,7 +2503,7 @@ static bool stmmac_xdp_xmit_zc(struct st
- 
- 		stmmac_enable_dma_transmission(priv, priv->ioaddr);
- 
--		tx_q->cur_tx = STMMAC_GET_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
-+		tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
- 		entry = tx_q->cur_tx;
- 	}
- 	flags = u64_stats_update_begin_irqsave(&txq_stats->syncp);
-@@ -2660,7 +2660,7 @@ static int stmmac_tx_clean(struct stmmac
- 
- 		stmmac_release_tx_desc(priv, p, priv->mode);
- 
--		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
-+		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
- 	}
- 	tx_q->dirty_tx = entry;
- 
-@@ -3976,7 +3976,7 @@ static bool stmmac_vlan_insert(struct st
- 		return false;
- 
- 	stmmac_set_tx_owner(priv, p);
--	tx_q->cur_tx = STMMAC_GET_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
-+	tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
- 	return true;
- }
- 
-@@ -4004,7 +4004,7 @@ static void stmmac_tso_allocator(struct
- 	while (tmp_len > 0) {
- 		dma_addr_t curr_addr;
- 
--		tx_q->cur_tx = STMMAC_GET_ENTRY(tx_q->cur_tx,
-+		tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx,
- 						priv->dma_conf.dma_tx_size);
- 		WARN_ON(tx_q->tx_skbuff[tx_q->cur_tx]);
- 
-@@ -4137,7 +4137,7 @@ static netdev_tx_t stmmac_tso_xmit(struc
- 
- 		stmmac_set_mss(priv, mss_desc, mss);
- 		tx_q->mss = mss;
--		tx_q->cur_tx = STMMAC_GET_ENTRY(tx_q->cur_tx,
-+		tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx,
- 						priv->dma_conf.dma_tx_size);
- 		WARN_ON(tx_q->tx_skbuff[tx_q->cur_tx]);
- 	}
-@@ -4262,7 +4262,7 @@ static netdev_tx_t stmmac_tso_xmit(struc
- 	 * ndo_start_xmit will fill this descriptor the next time it's
- 	 * called and stmmac_tx_clean may clean up to this descriptor.
- 	 */
--	tx_q->cur_tx = STMMAC_GET_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
-+	tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx, priv->dma_conf.dma_tx_size);
- 
- 	if (unlikely(stmmac_tx_avail(priv, queue) <= (MAX_SKB_FRAGS + 1))) {
- 		netif_dbg(priv, hw, priv->dev, "%s: stop transmitted packets\n",
-@@ -4420,7 +4420,7 @@ static netdev_tx_t stmmac_xmit(struct sk
- 		int len = skb_frag_size(frag);
- 		bool last_segment = (i == (nfrags - 1));
- 
--		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
-+		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
- 		WARN_ON(tx_q->tx_skbuff[entry]);
- 
- 		if (likely(priv->extend_desc))
-@@ -4490,7 +4490,7 @@ static netdev_tx_t stmmac_xmit(struct sk
- 	 * ndo_start_xmit will fill this descriptor the next time it's
- 	 * called and stmmac_tx_clean may clean up to this descriptor.
- 	 */
--	entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
-+	entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
- 	tx_q->cur_tx = entry;
- 
- 	if (netif_msg_pktdata(priv)) {
-@@ -4660,7 +4660,7 @@ static inline void stmmac_rx_refill(stru
- 		dma_wmb();
- 		stmmac_set_rx_owner(priv, p, use_rx_wd);
- 
--		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_rx_size);
-+		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_rx_size);
- 	}
- 	rx_q->dirty_rx = entry;
- 	rx_q->rx_tail_addr = rx_q->dma_rx_phy +
-@@ -4787,7 +4787,7 @@ static int stmmac_xdp_xmit_xdpf(struct s
- 
- 	stmmac_enable_dma_transmission(priv, priv->ioaddr);
- 
--	entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_tx_size);
-+	entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_tx_size);
- 	tx_q->cur_tx = entry;
- 
- 	return STMMAC_XDP_TX;
-@@ -5018,7 +5018,7 @@ static bool stmmac_rx_refill_zc(struct s
- 		dma_wmb();
- 		stmmac_set_rx_owner(priv, rx_desc, use_rx_wd);
- 
--		entry = STMMAC_GET_ENTRY(entry, priv->dma_conf.dma_rx_size);
-+		entry = STMMAC_NEXT_ENTRY(entry, priv->dma_conf.dma_rx_size);
+ 		if (i == RT_ID_MD_PORT_ENUM)
+-			t7xx_port_enum_msg_handler(ctl->md, rt_feature->data);
++			t7xx_port_enum_msg_handler(ctl->md, rt_feature->data,
++						   feat_data_len);
  	}
  
- 	if (rx_desc) {
-@@ -5103,7 +5103,7 @@ read_again:
- 			break;
+ 	return 0;
+--- a/drivers/net/wwan/t7xx/t7xx_port_ctrl_msg.c
++++ b/drivers/net/wwan/t7xx/t7xx_port_ctrl_msg.c
+@@ -117,6 +117,7 @@ static int fsm_ee_message_handler(struct
+  * t7xx_port_enum_msg_handler() - Parse the port enumeration message to create/remove nodes.
+  * @md: Modem context.
+  * @msg: Message.
++ * @msg_len:	Length of @msg in bytes.
+  *
+  * Used to control create/remove device node.
+  *
+@@ -124,12 +125,18 @@ static int fsm_ee_message_handler(struct
+  * * 0		- Success.
+  * * -EFAULT	- Message check failure.
+  */
+-int t7xx_port_enum_msg_handler(struct t7xx_modem *md, void *msg)
++int t7xx_port_enum_msg_handler(struct t7xx_modem *md, void *msg, size_t msg_len)
+ {
+ 	struct device *dev = &md->t7xx_dev->pdev->dev;
+ 	unsigned int version, port_count, i;
+ 	struct port_msg *port_msg = msg;
  
- 		/* Prefetch the next RX descriptor */
--		rx_q->cur_rx = STMMAC_GET_ENTRY(rx_q->cur_rx,
-+		rx_q->cur_rx = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
- 						priv->dma_conf.dma_rx_size);
- 		next_entry = rx_q->cur_rx;
++	if (msg_len < sizeof(*port_msg)) {
++		dev_err(dev, "Port enum msg too short for header: need %zu, have %zu\n",
++			sizeof(*port_msg), msg_len);
++		return -EINVAL;
++	}
++
+ 	version = FIELD_GET(PORT_MSG_VERSION, le32_to_cpu(port_msg->info));
+ 	if (version != PORT_ENUM_VER ||
+ 	    le32_to_cpu(port_msg->head_pattern) != PORT_ENUM_HEAD_PATTERN ||
+@@ -141,6 +148,13 @@ int t7xx_port_enum_msg_handler(struct t7
+ 	}
  
-@@ -5295,7 +5295,7 @@ read_again:
- 		if (unlikely(status & dma_own))
- 			break;
+ 	port_count = FIELD_GET(PORT_MSG_PRT_CNT, le32_to_cpu(port_msg->info));
++
++	if (msg_len < struct_size(port_msg, data, port_count)) {
++		dev_err(dev, "Port enum msg too short: need %zu, have %zu\n",
++			struct_size(port_msg, data, port_count), msg_len);
++		return -EINVAL;
++	}
++
+ 	for (i = 0; i < port_count; i++) {
+ 		u32 port_info = le32_to_cpu(port_msg->data[i]);
+ 		unsigned int ch_id;
+@@ -187,7 +201,7 @@ static int control_msg_handler(struct t7
  
--		rx_q->cur_rx = STMMAC_GET_ENTRY(rx_q->cur_rx,
-+		rx_q->cur_rx = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
- 						priv->dma_conf.dma_rx_size);
- 		next_entry = rx_q->cur_rx;
+ 	case CTL_ID_PORT_ENUM:
+ 		skb_pull(skb, sizeof(*ctrl_msg_h));
+-		ret = t7xx_port_enum_msg_handler(ctl->md, (struct port_msg *)skb->data);
++		ret = t7xx_port_enum_msg_handler(ctl->md, (struct port_msg *)skb->data, skb->len);
+ 		if (!ret)
+ 			ret = port_ctl_send_msg_to_md(port, CTL_ID_PORT_ENUM, 0);
+ 		else
+--- a/drivers/net/wwan/t7xx/t7xx_port_proxy.h
++++ b/drivers/net/wwan/t7xx/t7xx_port_proxy.h
+@@ -91,7 +91,7 @@ void t7xx_port_proxy_reset(struct port_p
+ void t7xx_port_proxy_uninit(struct port_proxy *port_prox);
+ int t7xx_port_proxy_init(struct t7xx_modem *md);
+ void t7xx_port_proxy_md_status_notify(struct port_proxy *port_prox, unsigned int state);
+-int t7xx_port_enum_msg_handler(struct t7xx_modem *md, void *msg);
++int t7xx_port_enum_msg_handler(struct t7xx_modem *md, void *msg, size_t msg_len);
+ int t7xx_port_proxy_chl_enable_disable(struct port_proxy *port_prox, unsigned int ch_id,
+ 				       bool en_flag);
  
 
 
