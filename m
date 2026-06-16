@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A922EEE68;
-	Tue, 16 Jun 2026 15:29:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4B4449ED2;
+	Tue, 16 Jun 2026 15:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623763; cv=none; b=lDioGMibSfox2YO9Mnvxl+VNk92xekVtgtRZkJVdNIUYW8i7o1G9/5uRLwocah78zpx95mbpoEPEm82d9MdD2YC5vf/PiHx3vuXs2pM8NbI2hFpieph7bMgWUWv7oaoy/gjkgwia/syOVc0S/wo3T7MOlUJOB2anZFomhntra/0=
+	t=1781623769; cv=none; b=ATlkQ89vkCp9fI+1d0qVio+jXUvO81YZvTSve9S7Y5K7WdXDOFNPF1LqcTPNWq4ZbafL8RXTQ/ATl60TzA4uZmJigQbfQHUJXXZ7ZGv1oO8K4+UcS1jaGAnFYnENn+N8+xh4BBpUUN7nk/wKLfMgz/9/cnPiO4ETpXQNcNgUKZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623763; c=relaxed/simple;
-	bh=ssMctC7F0gV4mtNyWfxfJfTHefAwz5eT9vdOA3d7uGQ=;
+	s=arc-20240116; t=1781623769; c=relaxed/simple;
+	bh=hNtdIpHh+0qMjKw5A00qstIgPUrN7iTd8dviREC5ZUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dg+vbNhKIelKvpXqHXwBmu6GkB7EZuLveSSl8b0egcXS/18+YWe9Q4HnCI7ynuwj+zNqrbGmZEAjoRGxYpYbr8T7bKRAbkwiPgjjPRocSzR1NkbVB/An2mj+9N0ZcF8Ss3KV32seNv5pgkBnAoQiOCdikOc6AXYHRPB2jc/kZd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ipw908wI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CvnQTrO69OiLbT4nz/mOHzqbSgvrTBh/PvwFFVe+fJ99h19Ik7DFCe5+rHdMiaR44J4FGm1MXCRqynfZWe4o7RLuLK/9+/iNZo70JjaAan+FGH8jUsupZ9WCzBxVMm0V1RGkQPcplaq1VzIPf74ADSGv4dcDbvoHeRjdhVlKCqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J1gpxKTk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ipw908wI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F231F000E9;
-	Tue, 16 Jun 2026 15:29:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J1gpxKTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E93A1F000E9;
+	Tue, 16 Jun 2026 15:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623759;
-	bh=ZDNAxjpWKoHf5NYE1m6Bos0W++udqSrs6lnFLRverkM=;
+	s=korg; t=1781623765;
+	bh=oUO/hmW6+8OhY/BaMurRlrHk1cOWfaiW1s17xym4CKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ipw908wIZcxW1V2T+ZXvP0rzFfO1oMcOW4Okg4474BBNQx6fQRRKBgf3XwaAgfUrt
-	 pjCnJGcEmpAXxR/ZWYOt6G1qQYfBbkKDwddfq7zuIm1eKUrL5IiR+VPtMcPuxOgzDX
-	 wGU7YNppDeJV+BykiYxUfWKb+9MqjUjKYGea7nM8=
+	b=J1gpxKTkEDSZxXuBcfKuN1aI74hoYFyMaTJiofX3P2rIE8Ye6Sk4cm98+4zf450rO
+	 wmN7pKPk9qYTMSziU459UgKRw6knAH6MSUZTr3oRCLwo7GwvMCwZBOt2mcvTK1iC0q
+	 Nlyc1zmE4b5j5yiU8pHJrMfMkfUzjh9fcqpJ1Uvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gil Portnoy <dddhkts1@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 7.0 203/378] ksmbd: fix use-after-free of a deferred file_lock on double SMB2_CANCEL
-Date: Tue, 16 Jun 2026 20:27:14 +0530
-Message-ID: <20260616145121.071650921@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Wyatt Feng <bronzed_45_vested@icloud.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 7.0 204/378] xfrm: espintcp: do not reuse an in-progress partial send
+Date: Tue, 16 Jun 2026 20:27:15 +0530
+Message-ID: <20260616145121.122038819@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,69 +57,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gil Portnoy <dddhkts1@gmail.com>
+From: Wyatt Feng <bronzed_45_vested@icloud.com>
 
-commit f580d27e8928828693df44ba2db0fffdbe11dfea upstream.
+commit c381039ade2e161ab08c0eda73c4f8b9a7115928 upstream.
 
-A deferred byte-range lock (an SMB2_LOCK that blocks) registers an async work on
-conn->async_requests via setup_async_work(), with cancel_fn =
-smb2_remove_blocked_lock and cancel_argv[0] pointing at the struct file_lock.
+espintcp keeps a single in-flight transmit in ctx->partial.
+Before building a new sk_msg, espintcp_sendmsg() first tries to flush
+that state through espintcp_push_msgs().
 
-When the request is cancelled, the worker frees the file_lock with
-locks_free_lock() and takes the cancelled early-exit, which "goto out"s and never
-reaches release_async_work() -- the only site that unlinks the work from
-conn->async_requests and clears cancel_fn/cancel_argv. The work therefore stays
-matchable on async_requests with a live cancel_fn pointing at the freed file_lock,
-until connection teardown finally runs release_async_work().
+For blocking callers, espintcp_push_msgs() may return success even when
+the previous partial send is still pending. espintcp_sendmsg() would
+then reinitialize emsg->skmsg and reuse ctx->partial while the old
+transfer still owns that state.
 
-smb2_cancel() fires cancel_fn unconditionally with no state guard, so a second
-SMB2_CANCEL for the same AsyncId, arriving in that window, re-runs
-smb2_remove_blocked_lock() on the freed file_lock -- a slab use-after-free:
+Do not rebuild the send message when ctx->partial is still in progress.
+If espintcp_push_msgs() returns with emsg->len still set, fail the new
+send instead of overwriting the live partial state.
 
-  BUG: KASAN: slab-use-after-free in __locks_delete_block
-    __locks_delete_block
-    locks_delete_block
-    ksmbd_vfs_posix_lock_unblock
-    smb2_remove_blocked_lock
-    smb2_cancel                 <- 2nd SMB2_CANCEL fires cancel_fn
-    handle_ksmbd_work
-  Allocated by ...: locks_alloc_lock <- smb2_lock
-  Freed by ...:     locks_free_lock  <- smb2_lock (cancelled branch)
-  ... cache file_lock_cache of size 192
+This is a memory-safety fix: reusing the live partial-send state can
+leave a stale offset attached to a new sk_msg and lead to an out-of-
+bounds read in the send path.
 
-Reproduced on mainline with KASAN by an authenticated SMB client.
+tcp_sendmsg_locked() already handles waiting for send buffer memory, so
+the fix here is just to preserve espintcp's one-message-at-a-time
+transmit state.
 
-Skip a work whose state is already KSMBD_WORK_CANCELLED so its cancel callback
-cannot be fired a second time.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Wyatt Feng <bronzed_45_vested@icloud.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/xfrm/espintcp.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -7327,6 +7327,17 @@ int smb2_cancel(struct ksmbd_work *work)
- 			    le64_to_cpu(hdr->Id.AsyncId))
- 				continue;
+--- a/net/xfrm/espintcp.c
++++ b/net/xfrm/espintcp.c
+@@ -349,6 +349,10 @@ static int espintcp_sendmsg(struct sock
+ 			err = -ENOBUFS;
+ 		goto unlock;
+ 	}
++	if (emsg->len) {
++		err = -ENOBUFS;
++		goto unlock;
++	}
  
-+			/*
-+			 * A cancelled deferred byte-range lock frees its
-+			 * file_lock and takes the smb2_lock() early-exit that
-+			 * skips release_async_work(), so the work stays on
-+			 * conn->async_requests with a live cancel_fn pointing
-+			 * at the freed file_lock.  Re-firing it on a second
-+			 * SMB2_CANCEL is a use-after-free.
-+			 */
-+			if (iter->state == KSMBD_WORK_CANCELLED)
-+				break;
-+
- 			ksmbd_debug(SMB,
- 				    "smb2 with AsyncId %llu cancelled command = 0x%x\n",
- 				    le64_to_cpu(hdr->Id.AsyncId),
+ 	sk_msg_init(&emsg->skmsg);
+ 	while (1) {
 
 
