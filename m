@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B50357D14;
-	Tue, 16 Jun 2026 15:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12DEF43E4A1;
+	Tue, 16 Jun 2026 15:34:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624046; cv=none; b=T2iia+H313CYIV09GoTVeWLArK5zAVmQYpnzgy91oeQDXRGdahAQ6KhZkf+tkf1UofhXLqRUqSIAoaPCkzZxR0UipRSdyJk11lzc0+S2NufFB2V+DW+QqifTMIkXREn1kdNtX5FrpLgzgk48GhPZM763i/QIvisIGg/gMB+9ryY=
+	t=1781624052; cv=none; b=VJ7exsf2U1gXvD8wvkGwCuucv+VvFuupeHt908bFUdZiLoUVHe1MmaEAfCN1rBPfKTQR41ZIzdo/O8NXMeQmHbgUXVGjxiJ7vBwqqMSjJjkANDGr6HhF92uR4uHDmT8l0cMO+iydlhMLXySRD09QIlYzQXSkA7Rr3WhfXqVnedA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624046; c=relaxed/simple;
-	bh=TL8Mc6lBoAY9ZOZADBWPl+8Y0AJ3ly2OU1NSgptwews=;
+	s=arc-20240116; t=1781624052; c=relaxed/simple;
+	bh=5PYkhAdpBr1DdfVvsfCB3CUcVR+kQMTNforUfPyey6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hjh/tbOFtUBRs6SUejimCVkOy4Gz6ll4sOEwHmk4f049ETSgR3pegVq9oy1i8jFnkY53RlHSJasm7UvMQOOuQd1ShHECdWFpu44bTWWzfZ2tTmMszAZwzBHdfd4PIlSFHZed7qJhSEiPYLq5HudFrnjVCNmhzexGezugf0Q5a8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NT6D/9Vx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cq7Q0tNOJEKEKURJNkZZ5cSM/wjCsAOboQQZBYsbwLpmiE1skKEhEB0yVeOrAW5rUtYytZ3CRY4UnDBwPO2E9zWtyStk4BVzs7w33bBI1R1tNpELi3IfVADtZLAs2jRhR/NTLCl1KLILu6B/5xTLvbCAWr4rNaYjI8Sme+MLAkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+WgbXKi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NT6D/9Vx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884F31F000E9;
-	Tue, 16 Jun 2026 15:34:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+WgbXKi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 112011F00A3A;
+	Tue, 16 Jun 2026 15:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624045;
-	bh=asbK8KrDReSafn65c3e9QEjvUnAg1bCbXjJTyJX2nc4=;
+	s=korg; t=1781624051;
+	bh=CwmdDriVwNhOX98OBKsE7dak5OO3giV50RYvf+q8XJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NT6D/9Vxz11KCQpKcXysauI9lnTFw0Z1M3zFnD8rcfqA9z3bXFw0xGBnT9MuZ43bd
-	 OY/WKpmz8m8ZHwSymRxUUATVLQEKC4wu8XtT4zEu7LYKHF+xIKAZbxqJUx6LqP/5eR
-	 L4sYhjdLxBllBRUJuZhpO9Gg175iWvgmhUSV25gg=
+	b=P+WgbXKixhyDue0zdmr7rZGjVk/Se6+1mFKAC0gNo6l7U87C/clLVKVT6+uxs/zAm
+	 uIvBGhtJ2L2N7jLCzzrVnpx5gVQ6EuB6plJL/4k9xulxiCPd0OrHRrLIwc/NWxeoIb
+	 9cJAUrLWnFOXUMRj/JcvHTUaFkXW7FLLQRjUd2ME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 7.0 262/378] accel/ethosu: fix arithmetic issues in dma_length()
-Date: Tue, 16 Jun 2026 20:28:13 +0530
-Message-ID: <20260616145123.879389195@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 230/378] mptcp: fix missing wakeups in edge scenarios
+Date: Tue, 16 Jun 2026 20:27:41 +0530
+Message-ID: <20260616145122.372455143@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -50,91 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit ee6d9b6e51626f259c6f0e38d94f91be4fd14754 upstream.
+commit 9d8d28738f24b75616d6ca7a27cb4aed88520343 upstream.
 
-dma_length() derives DMA region usage from command stream values and
-updates region_size[]:
+The mptcp_recvmsg() can fill MPTCP socket receive queue via
+mptcp_move_skbs(), but currently does not try to wakeup any listener,
+because the same process is going to check the receive queue soon.
 
-    len = ((len + stride[0]) * size0 + stride[1]) * size1
-    region_size[region] = max(..., len + dma->offset)
+When multiple threads are reading from the same fd, the above can
+cause stall. Add the missing wakeup.
 
-Several arithmetic issues can corrupt the derived region size:
-
-- signed stride values may underflow when added to len
-- intermediate multiplications may overflow
-- len + dma->offset may overflow during region_size updates
-- dma_length() error returns were not validated by the caller
-
-region_size[] is later used by ethosu_job.c to validate command stream
-accesses against GEM buffer sizes. Arithmetic wraparound can therefore
-under-report region usage and bypass the bounds validation.
-
-Fix by validating signed additions, using overflow helpers for
-multiplications and offset updates, and propagating dma_length()
-failures to the caller.
-
-Fixes: 5a5e9c0228e6 ("accel: Add Arm Ethos-U NPU driver")
+Fixes: 6771bfd9ee24 ("mptcp: update mptcp ack sequence from work queue")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260524103710.47397-1-meatuni001@gmail.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260602-net-mptcp-misc-fixes-7-1-rc7-v2-1-856831229976@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ethosu/ethosu_gem.c |   23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ net/mptcp/protocol.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/accel/ethosu/ethosu_gem.c
-+++ b/drivers/accel/ethosu/ethosu_gem.c
-@@ -2,6 +2,7 @@
- /* Copyright 2025 Arm, Ltd. */
- 
- #include <linux/err.h>
-+#include <linux/overflow.h>
- #include <linux/slab.h>
- 
- #include <drm/ethosu_accel.h>
-@@ -164,16 +165,26 @@ static u64 dma_length(struct ethosu_vali
- 	u64 len = dma->len;
- 
- 	if (mode >= 1) {
-+		if (dma->stride[0] < 0 && (u64)(-dma->stride[0]) > len)
-+			return U64_MAX;
- 		len += dma->stride[0];
--		len *= dma_st->size0;
-+		if (check_mul_overflow(len, (u64)dma_st->size0, &len))
-+			return U64_MAX;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2256,6 +2256,10 @@ static bool mptcp_move_skbs(struct sock
+ 		mptcp_backlog_spooled(sk, moved, &skbs);
  	}
- 	if (mode == 2) {
-+		if (dma->stride[1] < 0 && (u64)(-dma->stride[1]) > len)
-+			return U64_MAX;
- 		len += dma->stride[1];
--		len *= dma_st->size1;
-+		if (check_mul_overflow(len, (u64)dma_st->size1, &len))
-+			return U64_MAX;
-+	}
-+	if (dma->region >= 0) {
-+		u64 end;
+ 	mptcp_data_unlock(sk);
 +
-+		if (check_add_overflow(len, dma->offset, &end))
-+			return U64_MAX;
-+		info->region_size[dma->region] = max(info->region_size[dma->region], end);
- 	}
--	if (dma->region >= 0)
--		info->region_size[dma->region] = max(info->region_size[dma->region],
--						     len + dma->offset);
- 
- 	return len;
++	if (enqueued && mptcp_epollin_ready(sk))
++		sk->sk_data_ready(sk);
++
+ 	return enqueued;
  }
-@@ -397,6 +408,8 @@ static int ethosu_gem_cmdstream_copy_and
- 		case NPU_OP_DMA_START:
- 			srclen = dma_length(info, &st.dma, &st.dma.src);
- 			dstlen = dma_length(info, &st.dma, &st.dma.dst);
-+			if (srclen == U64_MAX || dstlen == U64_MAX)
-+				return -EINVAL;
  
- 			if (st.dma.dst.region >= 0)
- 				info->output_region[st.dma.dst.region] = true;
 
 
