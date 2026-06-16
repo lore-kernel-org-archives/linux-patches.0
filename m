@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D961435AC3E;
-	Tue, 16 Jun 2026 16:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9484A43E4BF;
+	Tue, 16 Jun 2026 16:45:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628328; cv=none; b=L3zyKhLe21ClYuJE5Bz5wLzT7d39coBbq8uz8O6FYnaRdV8wBpGZ7qsAMX/bmUjV9CfQBfZ5BRARWU9D4OOdo2W74pRHaZL2qqdh/KayVxC2kkHedM+I1j+feMK0PI1C+gEnwYkM9cMVt++3mtGJ8Rran9oPZgWL+9ElVEE48MU=
+	t=1781628334; cv=none; b=KCQwuXAeoY28DGgquwUKPJZTnR0pUu/duaKnvNjsHB3YxFcrDCJgIkwICCQpUChaDeAhORNJRIEP6xuPHCfBT7PbG4ERCL1hPaTn5dU5xFaFjumyaWm5QuhO0+9VtN9ysEITEDTbusgmVyXuewqGQGpAUn1Pf7EIQ0iOkrFxY5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628328; c=relaxed/simple;
-	bh=7PlTOqt8VwFUJkYPZkQNfjdmds5ccbD/ZLOGhNrQ4Ek=;
+	s=arc-20240116; t=1781628334; c=relaxed/simple;
+	bh=GN/tVyugAyXoKb0w4pJiNNyzoFzQHLd3AdfBb8w0A+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rCRHBd91suPLtBLcZEPYzL8XHvsq89UO7UxZjxkuM7+LX0OhZ9ncNVYeIxcFEtsRnHc/CyoAuDCCfU6mr3nRGUMMeDjaaa7NLRn0Es1qHdDVsqQ1n3I2/KXMks7UM7OI+kia+Gw7hxZWEFRJeCDYFMGg4/vAh3d51IfyVb7GeKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0/+tloU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n7eJVV9pml9jUlUC9s3EosvZbBV7QSBscyR/1gWtc1lN1ptysSUM3F6S2sgo3b/rQ71/K9rvFywhIWluidqmGBemG4xzg1PDTWr1x8/EvJp5q5FcrUK+3qq2IBABt0c9TuIbE+MgH6GIk8n2pdcX5XdtMr2XuAmm7dL0r0wPOaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ur8oC2rm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0/+tloU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E876F1F00A3A;
-	Tue, 16 Jun 2026 16:45:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ur8oC2rm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A2B91F000E9;
+	Tue, 16 Jun 2026 16:45:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628327;
-	bh=Pqc1d9S6zcO0A0a1+zDWS0QNBkJ4cdgVevZl6xXt17Y=;
+	s=korg; t=1781628333;
+	bh=fLbI/S3k4q1Yyyj3VF2j/CGfqf4xehWVUKp38ISq3uQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S0/+tloUSnmvg3fPCJfNr7NueM5n9PWBpSXMjiv811kksytb3YAj18Zho1pxeSd9Q
-	 UmD3ZsKt2hIYB1+v2wYvk9Uz6kL8PTkoqrJGRWrwcl1ynyyBMZ14TKOES+pWuyZQFm
-	 Ra2rmxleSpbnLezZ5dMz1D5X/F1x0Db4i/dzxOnQ=
+	b=Ur8oC2rm/TR5vLfJx60CoqFyuKj2lmtmWLTUe0ABhuKP/MgNgNWBL48HGv6tnnHS1
+	 p8+v9Dg8Ki1ogmbV+yuO48fI5BGi6mawyM05s1v3c/Z8wRFkKjfM8X+ns/hQYte0+4
+	 RBERUs958aDn9APZlzgK2sdhXUcOZTLK8O4/4UBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Jinjiang Tu <tujinjiang@huawei.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Xiangyu Chen <xiangyu.chen@windriver.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 073/452] arm64: io: Rename ioremap_prot() to __ioremap_prot()
-Date: Tue, 16 Jun 2026 20:25:00 +0530
-Message-ID: <20260616145121.750265102@linuxfoundation.org>
+Subject: [PATCH 6.6 042/452] Bluetooth: L2CAP: Fix possible crash on l2cap_ecred_conn_rsp
+Date: Tue, 16 Jun 2026 20:24:29 +0530
+Message-ID: <20260616145120.145771654@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -54,102 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit f6bf47ab32e0863df50f5501d207dcdddb7fc507 upstream.
+[ Upstream commit 41c2713b204e6cb6a94587bc6bf6935107df5479 ]
 
-Rename our ioremap_prot() implementation to __ioremap_prot() and convert
-all arch-internal callers over to the new function.
+If dcid is received for an already-assigned destination CID the spec
+requires that both channels to be discarded, but calling l2cap_chan_del
+may invalidate the tmp cursor created by list_for_each_entry_safe and
+in fact it is the wrong procedure as the chan->dcid may be assigned
+previously it really needs to be disconnected.
 
-ioremap_prot() remains as a #define to __ioremap_prot() for
-generic_access_phys() and will be subsequently extended to handle user
-permissions in 'prot'.
+Calling l2cap_chan_clone directly may still lead to l2cap_chan_del so
+instead schedule l2cap_chan_timeout with delay 0 to close the channel
+asynchronously.
 
-Cc: Zeng Heng <zengheng4@huawei.com>
-Cc: Jinjiang Tu <tujinjiang@huawei.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
+Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/io.h | 8 +++++---
- arch/arm64/kernel/acpi.c    | 2 +-
- arch/arm64/mm/ioremap.c     | 8 ++++----
- 3 files changed, 10 insertions(+), 8 deletions(-)
+ net/bluetooth/l2cap_core.c | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/include/asm/io.h b/arch/arm64/include/asm/io.h
-index 3b694511b98f83..46d9f3f8290828 100644
---- a/arch/arm64/include/asm/io.h
-+++ b/arch/arm64/include/asm/io.h
-@@ -139,14 +139,16 @@ extern void __memset_io(volatile void __iomem *, int, size_t);
-  * I/O memory mapping functions.
-  */
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 0295a18a1cb3d7..1f5d5343d380e4 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -5195,6 +5195,7 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 	cmd_len -= sizeof(*rsp);
  
-+void __iomem *__ioremap_prot(phys_addr_t phys, size_t size, pgprot_t prot);
+ 	list_for_each_entry_safe(chan, tmp, &conn->chan_l, list) {
++		struct l2cap_chan *orig;
+ 		u16 dcid;
+ 
+ 		if (chan->ident != cmd->ident ||
+@@ -5216,8 +5217,10 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 
+ 		BT_DBG("dcid[%d] 0x%4.4x", i, dcid);
+ 
++		orig = __l2cap_get_chan_by_dcid(conn, dcid);
 +
- #define ioremap_prot ioremap_prot
- 
- #define _PAGE_IOREMAP PROT_DEVICE_nGnRE
- 
- #define ioremap_wc(addr, size)	\
--	ioremap_prot((addr), (size), PROT_NORMAL_NC)
-+	__ioremap_prot((addr), (size), __pgprot(PROT_NORMAL_NC))
- #define ioremap_np(addr, size)	\
--	ioremap_prot((addr), (size), PROT_DEVICE_nGnRnE)
-+	__ioremap_prot((addr), (size), __pgprot(PROT_DEVICE_nGnRnE))
- 
- /*
-  * io{read,write}{16,32,64}be() macros
-@@ -167,7 +169,7 @@ static inline void __iomem *ioremap_cache(phys_addr_t addr, size_t size)
- 	if (pfn_is_map_memory(__phys_to_pfn(addr)))
- 		return (void __iomem *)__phys_to_virt(addr);
- 
--	return ioremap_prot(addr, size, PROT_NORMAL);
-+	return __ioremap_prot(addr, size, __pgprot(PROT_NORMAL));
- }
- 
- /*
-diff --git a/arch/arm64/kernel/acpi.c b/arch/arm64/kernel/acpi.c
-index dba8fcec7f33d6..0b06e6c2ebc4de 100644
---- a/arch/arm64/kernel/acpi.c
-+++ b/arch/arm64/kernel/acpi.c
-@@ -352,7 +352,7 @@ void __iomem *acpi_os_ioremap(acpi_physical_address phys, acpi_size size)
- 				prot = __acpi_get_writethrough_mem_attribute();
+ 		/* Check if dcid is already in use */
+-		if (dcid && __l2cap_get_chan_by_dcid(conn, dcid)) {
++		if (dcid && orig) {
+ 			/* If a device receives a
+ 			 * L2CAP_CREDIT_BASED_CONNECTION_RSP packet with an
+ 			 * already-assigned Destination CID, then both the
+@@ -5226,10 +5229,24 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
+ 			 */
+ 			l2cap_chan_del(chan, ECONNREFUSED);
+ 			l2cap_chan_unlock(chan);
+-			chan = __l2cap_get_chan_by_dcid(conn, dcid);
+-			l2cap_chan_lock(chan);
+-			l2cap_chan_del(chan, ECONNRESET);
+-			l2cap_chan_unlock(chan);
++
++			/* Check that the dcid channel mode is
++			 * L2CAP_MODE_EXT_FLOWCTL since this procedure is only
++			 * valid for that mode and shouldn't disconnect a dcid
++			 * in other modes.
++			 */
++			if (orig->mode == L2CAP_MODE_EXT_FLOWCTL) {
++				l2cap_chan_lock(orig);
++				/* Disconnect the original channel as it may be
++				 * considered connected since dcid has already
++				 * been assigned; don't call l2cap_chan_close
++				 * directly since that could lead to
++				 * l2cap_chan_del and then removing the channel
++				 * from the list while we're iterating over it.
++				 */
++				__set_chan_timer(orig, 0);
++				l2cap_chan_unlock(orig);
++			}
+ 			continue;
  		}
- 	}
--	return ioremap_prot(phys, size, pgprot_val(prot));
-+	return __ioremap_prot(phys, size, prot);
- }
  
- /*
-diff --git a/arch/arm64/mm/ioremap.c b/arch/arm64/mm/ioremap.c
-index 269f2f63ab7dc4..49fd31e33c3146 100644
---- a/arch/arm64/mm/ioremap.c
-+++ b/arch/arm64/mm/ioremap.c
-@@ -3,8 +3,8 @@
- #include <linux/mm.h>
- #include <linux/io.h>
- 
--void __iomem *ioremap_prot(phys_addr_t phys_addr, size_t size,
--			   unsigned long prot)
-+void __iomem *__ioremap_prot(phys_addr_t phys_addr, size_t size,
-+			     pgprot_t pgprot)
- {
- 	unsigned long last_addr = phys_addr + size - 1;
- 
-@@ -16,9 +16,9 @@ void __iomem *ioremap_prot(phys_addr_t phys_addr, size_t size,
- 	if (WARN_ON(pfn_is_map_memory(__phys_to_pfn(phys_addr))))
- 		return NULL;
- 
--	return generic_ioremap_prot(phys_addr, size, __pgprot(prot));
-+	return generic_ioremap_prot(phys_addr, size, pgprot);
- }
--EXPORT_SYMBOL(ioremap_prot);
-+EXPORT_SYMBOL(__ioremap_prot);
- 
- /*
-  * Must be called after early_fixmap_init
 -- 
 2.53.0
 
