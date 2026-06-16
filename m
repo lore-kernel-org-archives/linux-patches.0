@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4C147A0B0;
-	Tue, 16 Jun 2026 17:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798C9477E51;
+	Tue, 16 Jun 2026 17:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632770; cv=none; b=DT32N5VXLTBdjRShunPTs2PuxU2Z3uyZ5x07yc6RncRQG9ocTyjR4F+VINs1QqxU3y/C2URcomu0FTucjJLI/H8cF/YdVtUwi6P8xK63HaxoVkHoBSjXLwStOzB+Q9HbWPEmbWLPLPwBao+RuRUwLKwEvOx0mu4RZmlrzzS4low=
+	t=1781632776; cv=none; b=ENXJoidanKslqNZi5vJoBLTjK78cUef3Dmby45BnXRRHXXZ74wovtxeKFYUsAPbnlbskwLRWZC8jeM50+dLabuQi9OZui9bZR5qgNQvP3AYjQ1N2WThvVBLBtKZAOzYzNh8DPmwirpdJSTRfarKaVSmsJ2sOcrXDIJrY811mmRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632770; c=relaxed/simple;
-	bh=pPzWN6h0r4yndroGzhEPqP/FFJP+TGKn7rPPmETcWBk=;
+	s=arc-20240116; t=1781632776; c=relaxed/simple;
+	bh=1DajXRydcxZbqRUnaT/jvuP/KH9vQnwUXXlwh+LJhRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XoJZMepZ7KlfDc/g3n+eoCWkssQSUNqse5D7h4Z1xMhKzOVUEVzd+o3Pun/qH6xm6PSwU1XFzK+/RyOdXZljf4HiusFyRTfCSvfqUKBEPYfxrWqpMuMeaZ///MzCSuoxoRhePJ/DvREwVrM4D3Fb99IMZExpRvb6T/h6Aah4LW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OTsOB0yp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dcWyR/d1Qim63O12mlqWeHy3gzaCS9QqIpYnVK2LLO6mOdQb9lN43grieHNFRh/eQp3Lo7N1ECFsDSA/xwohxP+2jMUQMfA06sb9qKgDCjkuUPxOLGOSX2K5r0pwSDqm0UDAXT6hfySCAqIlG3YVDA/YArPwah51/q6tGxapwkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXBnF9zL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OTsOB0yp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9BFE1F000E9;
-	Tue, 16 Jun 2026 17:59:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXBnF9zL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0AD1F000E9;
+	Tue, 16 Jun 2026 17:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632769;
-	bh=UTPT5jYvsau9bM3u6bWtSGB5mcLhnwFSTr9fIzNE5dA=;
+	s=korg; t=1781632775;
+	bh=wNHXlzScy5X2RjDaLr7x5fl55UcNJLw7fnRMoXbpg0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OTsOB0yphZiGaBgRUISklpxVHBt4h0wq0JZaQUMUUgj5XILRkTjD8+qzkYOb1nziO
-	 IOZcqZEftB8ytMouDPEy6Hqjf8uKvBaSUkrH5TZBAua5g4gQ5gMIsMvNTpRJuNVUsG
-	 g4/gGFvuDC9AKo2aGo73Shd8Lj+53dGgVoixCM0o=
+	b=lXBnF9zL/vnTqKbzAJUgnf+LVzuR4wTRPzBZ6k6bwJ55eEyoh+LW3oFA97Xgz5h9V
+	 z6p7R9xgTzJlKAR3gmtCzqSIsNWD9wUFM7vF33lOKcb7ztAwtAIq4SlnehniY1/6+V
+	 FEWjdZgZAMWlP8TLv8nkZez16tzVgcauR/+9O24E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 472/522] usb: gadget: f_hid: fix device reference leak in hidg_alloc()
-Date: Tue, 16 Jun 2026 20:30:19 +0530
-Message-ID: <20260616145147.930358659@linuxfoundation.org>
+	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>
+Subject: [PATCH 6.1 473/522] usb: typec: ucsi: Check if power role change actually happened before handling
+Date: Tue, 16 Jun 2026 20:30:20 +0530
+Message-ID: <20260616145147.974779178@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,55 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
 
-[ Upstream commit 4f88d65def6f3c90121601b4f62a4c967f3063a6 ]
+[ Upstream commit b80e7d34c7ea6a564525119d6138fbb577a23dba ]
 
-hidg_alloc() initializes hidg->dev with device_initialize() before
-calling dev_set_name(). If dev_set_name() fails, the function currently
-jumps to err_unlock and returns without calling put_device().
+The CrOS EC may send a connector status change event with the power
+direction changed flag set even if the power direction hasn't actually
+changed after initiating a SET_PDR command internally [1]. In practice
+this happens on every system suspend due to other changes performed by
+the EC [2][3][4], causing suspend to fail.
 
-This leaves the device reference unbalanced and prevents hidg_release()
-from being called. Calling put_device() here is also safe, since
-hidg_release() only frees resources owned by hidg.
+Fix this by checking if the power role change actually happened before
+handling it.
 
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
+[1]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=1689;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
+[2]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=3923;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
+[3]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=5094;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
+[4]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=2229;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
 
-Route the dev_set_name() failure path through err_put_device so the
-device reference is dropped properly.
-
-Fixes: 89ff3dfac604 ("usb: gadget: f_hid: fix f_hidg lifetime vs cdev")
 Cc: stable <stable@kernel.org>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Johan Hovold johan@kernel.org
-Link: https://patch.msgid.link/20260413142119.2977716-1-lgs201920130244@gmail.com
+Fixes: 7616f006db07 ("usb: typec: ucsi: Update power_supply on power role change")
+Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+Reported-and-tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260519-ucsi-fix-2-v1-1-6f1239535187@qtmlabs.xyz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_hid.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -1278,7 +1278,7 @@ static struct usb_function *hidg_alloc(s
- 	hidg->dev.devt = MKDEV(major, opts->minor);
- 	ret = dev_set_name(&hidg->dev, "hidg%d", opts->minor);
- 	if (ret)
--		goto err_unlock;
-+		goto err_put_device;
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -783,7 +783,7 @@ static void ucsi_handle_connector_change
+ 	struct ucsi_connector *con = container_of(work, struct ucsi_connector,
+ 						  work);
+ 	struct ucsi *ucsi = con->ucsi;
+-	enum typec_role role;
++	enum typec_role role, prev_role;
+ 	u64 command;
+ 	int ret;
  
- 	hidg->bInterfaceSubClass = opts->subclass;
- 	hidg->bInterfaceProtocol = opts->protocol;
-@@ -1313,7 +1313,6 @@ static struct usb_function *hidg_alloc(s
+@@ -791,6 +791,8 @@ static void ucsi_handle_connector_change
  
- err_put_device:
- 	put_device(&hidg->dev);
--err_unlock:
- 	mutex_unlock(&opts->lock);
- 	return ERR_PTR(ret);
- }
+ 	command = UCSI_GET_CONNECTOR_STATUS | UCSI_CONNECTOR_NUMBER(con->num);
+ 
++	prev_role = !!(con->status.flags & UCSI_CONSTAT_PWR_DIR);
++
+ 	ret = ucsi_send_command_common(ucsi, command, &con->status,
+ 				       sizeof(con->status), true);
+ 	if (ret < 0) {
+@@ -804,7 +806,7 @@ static void ucsi_handle_connector_change
+ 
+ 	role = !!(con->status.flags & UCSI_CONSTAT_PWR_DIR);
+ 
+-	if (con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) {
++	if ((con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) && role != prev_role) {
+ 		typec_set_pwr_role(con->port, role);
+ 		ucsi_port_psy_changed(con);
+ 
 
 
