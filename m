@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9036318EDA;
-	Tue, 16 Jun 2026 19:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4E23191BA;
+	Tue, 16 Jun 2026 19:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636478; cv=none; b=gklAXq9O3UbTiPSIBkFtaB0x5zgWTuYUxCFg8Ri4vMPBCvo6nuMLl6qenaQa05UZ4dQmflDI+usPkng9b5oSu9kH9ON3mq2CgwQEf2++Mz55JWaY1f/rQI/aTV1H7zqvAYDha6LWNatYNFeBQdKt1NxW14pcSLakzZZy8wqBif0=
+	t=1781636484; cv=none; b=pMPx/w9hbuEahN0VR4sBmP1Jro7yCZHFUrBbiCE9E9Aj6MB2G1q6tXyeo6QCFBm3n8xHpMdseoRf+R/mdaaK3gddl6jftiTIyuGvHj4vboBSkfA9wjZZO1/WjwaTVIFtLcgBv5yyAUimu3yI0fFZ1P4ioq7IgM2a6Zt5U1FFuyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636478; c=relaxed/simple;
-	bh=ZbM8IRYmj3W8slQa5moJ4DEZ98rqofYXTjMwATCPGWg=;
+	s=arc-20240116; t=1781636484; c=relaxed/simple;
+	bh=6+X4UanlLPV7ZIvgTqyytZHqzX1t7Eqz+WfqMGQOtt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=edNxJ5qqvl5TbH1es9L54Vxw0EJgcUhLlJdLaAbr0Z1lf3ATOR7XvBeArk0lAtXaBHRCMJYYN8B27zjvdCklH3B5KAVnCcmPqq2wR4ZMc26hHTMYt47fx+2LDgj953vWZAMo2uwL4ARIPVxjioHuODv3HYowYw8Cpn6rIVtqyG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YYutFqdy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P2reNMgx7Y7TNbfH83Nmkk7tif6G2YJT3Y4pxcrjlLg0bf8qKTVSHIP8RU4dVIQyl2/UpZS4qo4X25ji0pRs+eLh3gFmfK7//sHK+CCJxqnspDSMRYUZ5n7yUOkroi4pFNYVDVXEkdgipmfP0XwFRasPMXBQtz2MuFC2NXZE3v4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t35JHd46; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YYutFqdy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAF11F000E9;
-	Tue, 16 Jun 2026 19:01:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t35JHd46"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A77B1F000E9;
+	Tue, 16 Jun 2026 19:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636477;
-	bh=KnCfvisW5rMsnvMYcV3g0uTTB18WDkNPgUPAWyNueNM=;
+	s=korg; t=1781636483;
+	bh=AOPbcYEUaqGo2qLiqldeQp8s11Km9L/cm6P/6Af/+0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YYutFqdySQnBHFhijIW6GEYPM9qfwoJvqA0nu+89buW2VqarCLOzobp3+eiV7/2KM
-	 E3c9kHvqK/+aAhqdBvQHCkKckH/+rljBYEhXWgogDBrsXhf1lZxM3vWVAPhd5e0EP7
-	 XegsRdEM7HyN2sqVFXbHxaeDuPapSZRkBx6s49zI=
+	b=t35JHd46/wkD44aXe9Qi4/y3EJC9PmEFR07TFRGv0eqefX6+BT0ZJWnK8vsjpHlG0
+	 C1F/e5X0PidoRM3PGkMhCzLRzJ4JAC8qzKvVVvNstK2cjfJAQQv87nxWJRgB7gQ6b5
+	 jJpaEGutFQ5gxjknzkmH1A0Qbw5ET+c2PQkzKTY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>,
-	Johan Hovold <johan@kernel.org>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	"John Warthog9 Hawley (VMware)" <warthog9@eaglescrag.net>,
+	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 245/342] can: ucan: fix devres lifetime
-Date: Tue, 16 Jun 2026 20:29:01 +0530
-Message-ID: <20260616145059.630624759@linuxfoundation.org>
+Subject: [PATCH 5.10 246/342] ktest: Fixing indentation to match expected pattern
+Date: Tue, 16 Jun 2026 20:29:02 +0530
+Message-ID: <20260616145059.683381325@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -52,41 +51,369 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: "John 'Warthog9' Hawley (VMware)" <warthog9@eaglescrag.net>
 
-[ Upstream commit fed4626501c871890da287bec62a96e52da1af89 ]
+[ Upstream commit 12d4cddda2043466a5af8fc0c49e49f24f1d4c59 ]
 
-USB drivers bind to USB interfaces and any device managed resources
-should have their lifetime tied to the interface rather than parent USB
-device. This avoids issues like memory leaks when drivers are unbound
-without their devices being physically disconnected (e.g. on probe
-deferral or configuration changes).
+This is a followup to "ktest: Adding editor hints to improve
+consistency" to actually adjust the existing indentation to match
+the, now, expected pattern (first column 4 spaces, 2nd tab, 3rd
+tab + 4 spaces, etc).  This should, at least help, keep things
+consistent going forward now.
 
-Fix the control message buffer lifetime so that it is released on driver
-unbind.
-
-Fixes: 9f2d3eae88d2 ("can: ucan: add driver for Theobroma Systems UCAN devices")
-Cc: stable@vger.kernel.org	# 4.19
-Cc: Jakob Unterwurzacher <jakob.unterwurzacher@theobroma-systems.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260327104520.1310158-1-johan@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: John 'Warthog9' Hawley (VMware) <warthog9@eaglescrag.net>
+Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Stable-dep-of: 768059ede35f ("ktest: Fix the month in the name of the failure directory")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/ucan.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/ktest/ktest.pl |  188 +++++++++++++++++++++----------------------
+ 1 file changed, 93 insertions(+), 95 deletions(-)
 
---- a/drivers/net/can/usb/ucan.c
-+++ b/drivers/net/can/usb/ucan.c
-@@ -1394,7 +1394,7 @@ static int ucan_probe(struct usb_interfa
- 	 */
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -763,7 +763,7 @@ sub process_variables {
+     # remove the space added in the beginning
+     $retval =~ s/ //;
  
- 	/* Prepare Memory for control transfers */
--	ctl_msg_buffer = devm_kzalloc(&udev->dev,
-+	ctl_msg_buffer = devm_kzalloc(&intf->dev,
- 				      sizeof(union ucan_ctl_payload),
- 				      GFP_KERNEL);
- 	if (!ctl_msg_buffer) {
+-    return "$retval"
++    return "$retval";
+ }
+ 
+ sub set_value {
+@@ -1099,7 +1099,7 @@ sub __read_config {
+ 		    }
+ 		}
+ 	    }
+-		
++
+ 	    if ( ! -r $file ) {
+ 		die "$name: $.: Can't read file $file\n$_";
+ 	    }
+@@ -1190,13 +1190,13 @@ sub __read_config {
+ }
+ 
+ sub get_test_case {
+-	print "What test case would you like to run?\n";
+-	print " (build, install or boot)\n";
+-	print " Other tests are available but require editing ktest.conf\n";
+-	print " (see tools/testing/ktest/sample.conf)\n";
+-	my $ans = <STDIN>;
+-	chomp $ans;
+-	$default{"TEST_TYPE"} = $ans;
++    print "What test case would you like to run?\n";
++    print " (build, install or boot)\n";
++    print " Other tests are available but require editing ktest.conf\n";
++    print " (see tools/testing/ktest/sample.conf)\n";
++    my $ans = <STDIN>;
++    chomp $ans;
++    $default{"TEST_TYPE"} = $ans;
+ }
+ 
+ sub read_config {
+@@ -1545,13 +1545,13 @@ sub dodie {
+ 	    close O;
+ 	    close L;
+ 	}
+-        send_email("KTEST: critical failure for test $i [$name]",
+-                "Your test started at $script_start_time has failed with:\n@_\n", $log_file);
++	send_email("KTEST: critical failure for test $i [$name]",
++	        "Your test started at $script_start_time has failed with:\n@_\n", $log_file);
+     }
+ 
+     if ($monitor_cnt) {
+-	    # restore terminal settings
+-	    system("stty $stty_orig");
++	# restore terminal settings
++	system("stty $stty_orig");
+     }
+ 
+     if (defined($post_test)) {
+@@ -1736,81 +1736,81 @@ sub wait_for_monitor {
+ }
+ 
+ sub save_logs {
+-	my ($result, $basedir) = @_;
+-	my @t = localtime;
+-	my $date = sprintf "%04d%02d%02d%02d%02d%02d",
+-		1900+$t[5],$t[4],$t[3],$t[2],$t[1],$t[0];
++    my ($result, $basedir) = @_;
++    my @t = localtime;
++    my $date = sprintf "%04d%02d%02d%02d%02d%02d",
++	1900+$t[5],$t[4],$t[3],$t[2],$t[1],$t[0];
+ 
+-	my $type = $build_type;
+-	if ($type =~ /useconfig/) {
+-	    $type = "useconfig";
+-	}
++    my $type = $build_type;
++    if ($type =~ /useconfig/) {
++	$type = "useconfig";
++    }
+ 
+-	my $dir = "$machine-$test_type-$type-$result-$date";
++    my $dir = "$machine-$test_type-$type-$result-$date";
+ 
+-	$dir = "$basedir/$dir";
++    $dir = "$basedir/$dir";
+ 
+-	if (!-d $dir) {
+-	    mkpath($dir) or
+-		dodie "can't create $dir";
+-	}
++    if (!-d $dir) {
++	mkpath($dir) or
++	    dodie "can't create $dir";
++    }
+ 
+-	my %files = (
+-		"config" => $output_config,
+-		"buildlog" => $buildlog,
+-		"dmesg" => $dmesg,
+-		"testlog" => $testlog,
+-	);
++    my %files = (
++	"config" => $output_config,
++	"buildlog" => $buildlog,
++	"dmesg" => $dmesg,
++	"testlog" => $testlog,
++    );
+ 
+-	while (my ($name, $source) = each(%files)) {
+-		if (-f "$source") {
+-			cp "$source", "$dir/$name" or
+-				dodie "failed to copy $source";
+-		}
++    while (my ($name, $source) = each(%files)) {
++	if (-f "$source") {
++	    cp "$source", "$dir/$name" or
++		dodie "failed to copy $source";
+ 	}
++    }
+ 
+-	doprint "*** Saved info to $dir ***\n";
++    doprint "*** Saved info to $dir ***\n";
+ }
+ 
+ sub fail {
+ 
+-	if ($die_on_failure) {
+-		dodie @_;
+-	}
++    if ($die_on_failure) {
++	dodie @_;
++    }
+ 
+-	doprint "FAILED\n";
++    doprint "FAILED\n";
+ 
+-	my $i = $iteration;
++    my $i = $iteration;
+ 
+-	# no need to reboot for just building.
+-	if (!do_not_reboot) {
+-	    doprint "REBOOTING\n";
+-	    reboot_to_good $sleep_time;
+-	}
++    # no need to reboot for just building.
++    if (!do_not_reboot) {
++	doprint "REBOOTING\n";
++	reboot_to_good $sleep_time;
++    }
+ 
+-	my $name = "";
++    my $name = "";
+ 
+-	if (defined($test_name)) {
+-	    $name = " ($test_name)";
+-	}
++    if (defined($test_name)) {
++	$name = " ($test_name)";
++    }
+ 
+-	print_times;
++    print_times;
+ 
+-	doprint "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n";
+-	doprint "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n";
+-	doprint "KTEST RESULT: TEST $i$name Failed: ", @_, "\n";
+-	doprint "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n";
+-	doprint "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n";
+-
+-	if (defined($store_failures)) {
+-	    save_logs "fail", $store_failures;
+-        }
++    doprint "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n";
++    doprint "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n";
++    doprint "KTEST RESULT: TEST $i$name Failed: ", @_, "\n";
++    doprint "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n";
++    doprint "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n";
+ 
+-	if (defined($post_test)) {
+-		run_command $post_test;
+-	}
++    if (defined($store_failures)) {
++	save_logs "fail", $store_failures;
++    }
+ 
+-	return 1;
++    if (defined($post_test)) {
++	run_command $post_test;
++    }
++
++    return 1;
+ }
+ 
+ sub run_command {
+@@ -2011,9 +2011,9 @@ sub get_grub_index {
+ 	$skip = '^\s*menuentry\s';
+ 	$submenu = '^\s*submenu\s';
+     } elsif ($reboot_type eq "grub2bls") {
+-        $command = $grub_bls_get;
+-        $target = '^title=.*' . $grub_menu_qt;
+-        $skip = '^title=';
++	$command = $grub_bls_get;
++	$target = '^title=.*' . $grub_menu_qt;
++	$skip = '^title=';
+     } else {
+ 	return;
+     }
+@@ -2446,7 +2446,7 @@ sub check_buildlog {
+ 	while (<IN>) {
+ 	    if (/$check_build_re/) {
+ 		my $warning = process_warning_line $_;
+-		
++
+ 		$warnings_list{$warning} = 1;
+ 	    }
+ 	}
+@@ -2708,7 +2708,7 @@ sub success {
+     doprint     "*******************************************\n";
+ 
+     if (defined($store_successes)) {
+-        save_logs "success", $store_successes;
++	save_logs "success", $store_successes;
+     }
+ 
+     if ($i != $opt{"NUM_TESTS"} && !do_not_reboot) {
+@@ -3293,13 +3293,13 @@ sub run_config_bisect {
+ 
+     $ret = run_config_bisect_test $config_bisect_type;
+     if ($ret) {
+-        doprint "NEW GOOD CONFIG ($pass)\n";
++	doprint "NEW GOOD CONFIG ($pass)\n";
+ 	system("cp $output_config $tmpdir/good_config.tmp.$pass");
+ 	$pass++;
+ 	# Return 3 for good config
+ 	return 3;
+     } else {
+-        doprint "NEW BAD CONFIG ($pass)\n";
++	doprint "NEW BAD CONFIG ($pass)\n";
+ 	system("cp $output_config $tmpdir/bad_config.tmp.$pass");
+ 	$pass++;
+ 	# Return 4 for bad config
+@@ -3418,7 +3418,7 @@ sub config_bisect {
+     } while ($ret == 3 || $ret == 4);
+ 
+     if ($ret == 2) {
+-        config_bisect_end "$good_config.tmp", "$bad_config.tmp";
++	config_bisect_end "$good_config.tmp", "$bad_config.tmp";
+     }
+ 
+     return $ret if ($ret < 0);
+@@ -3598,7 +3598,6 @@ sub read_kconfig {
+     my $cont = 0;
+     my $line;
+ 
+-
+     if (! -f $kconfig) {
+ 	doprint "file $kconfig does not exist, skipping\n";
+ 	return;
+@@ -3707,7 +3706,7 @@ sub read_depends {
+ 
+     if (! -f $kconfig && $arch =~ /\d$/) {
+ 	my $orig = $arch;
+- 	# some subarchs have numbers, truncate them
++	# some subarchs have numbers, truncate them
+ 	$arch =~ s/\d*$//;
+ 	$kconfig = "$builddir/arch/$arch/Kconfig";
+ 	if (! -f $kconfig) {
+@@ -3903,7 +3902,7 @@ sub make_min_config {
+     foreach my $config (@config_keys) {
+ 	my $kconfig = chomp_config $config;
+ 	if (!defined $depcount{$kconfig}) {
+-		$depcount{$kconfig} = 0;
++	    $depcount{$kconfig} = 0;
+ 	}
+     }
+ 
+@@ -4005,13 +4004,13 @@ sub make_min_config {
+ 	my $failed = 0;
+ 	build "oldconfig" or $failed = 1;
+ 	if (!$failed) {
+-		start_monitor_and_install or $failed = 1;
++	    start_monitor_and_install or $failed = 1;
+ 
+-		if ($type eq "test" && !$failed) {
+-		    do_run_test or $failed = 1;
+-		}
++	    if ($type eq "test" && !$failed) {
++		do_run_test or $failed = 1;
++	    }
+ 
+-		end_monitor;
++	    end_monitor;
+ 	}
+ 
+ 	$in_bisect = 0;
+@@ -4330,8 +4329,8 @@ sub cancel_test {
+     }
+     if ($email_when_canceled) {
+ 	my $name = get_test_name;
+-        send_email("KTEST: Your [$name] test was cancelled",
+-                "Your test started at $script_start_time was cancelled: sig int");
++	send_email("KTEST: Your [$name] test was cancelled",
++	        "Your test started at $script_start_time was cancelled: sig int");
+     }
+     run_post_ktest;
+     die "\nCaught Sig Int, test interrupted: $!\n"
+@@ -4380,15 +4379,15 @@ for (my $i = 1; $i <= $opt{"NUM_TESTS"};
+ 
+     # The first test may override the PRE_KTEST option
+     if ($i == 1) {
+-        if (defined($pre_ktest)) {
+-            doprint "\n";
+-            run_command $pre_ktest;
+-        }
+-        if ($email_when_started) {
++	if (defined($pre_ktest)) {
++	    doprint "\n";
++	    run_command $pre_ktest;
++	}
++	if ($email_when_started) {
+ 	    my $name = get_test_name;
+-            send_email("KTEST: Your [$name] test was started",
+-                "Your test was started on $script_start_time");
+-        }
++	    send_email("KTEST: Your [$name] test was started",
++	        "Your test was started on $script_start_time");
++	}
+     }
+ 
+     # Any test can override the POST_KTEST option
+@@ -4556,12 +4555,11 @@ if ($opt{"POWEROFF_ON_SUCCESS"}) {
+     run_command $switch_to_good;
+ }
+ 
+-
+ doprint "\n    $successes of $opt{NUM_TESTS} tests were successful\n\n";
+ 
+ if ($email_when_finished) {
+     send_email("KTEST: Your test has finished!",
+-            "$successes of $opt{NUM_TESTS} tests started at $script_start_time were successful!");
++	    "$successes of $opt{NUM_TESTS} tests started at $script_start_time were successful!");
+ }
+ 
+ if (defined($opt{"LOG_FILE"})) {
 
 
