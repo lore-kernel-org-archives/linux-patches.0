@@ -1,50 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7303F4418DF;
-	Tue, 16 Jun 2026 15:30:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69CBD3A257E;
+	Tue, 16 Jun 2026 15:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623807; cv=none; b=oa3ui0GQ8LOuvtwwGijnaflhiJOOMcypaq+SfkA7uChKswy3LJzqkh5uq8+BkrLUsC/S0XknP4zNFgQvQ5wKmbVIoVctYVukQbzZPnKHjn3WBMR/8a3oXyL2HsizEzTouDyg4J4/VMfMdYL0prQsEV45q1sBOJvLW9iTTCXUFCs=
+	t=1781623813; cv=none; b=Se0KwwKvh9i+6fo1sLl2LusKNWQqOPIn07sCaHleIovAzEnoxio/dvO2EECo1S++o1EKe+7MgzEsuUv4fppUP//XmtcoN3tqWxVaE3TX12cKSxWU7imhP96AY+obXBo9HMkdTxCoWrLwDONlRdxmbUzADqX7fuw7NX7IFvRmlX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623807; c=relaxed/simple;
-	bh=0YvvWJioPThYDR26nfATSWGQuh2uezj5K21BVMRtGco=;
+	s=arc-20240116; t=1781623813; c=relaxed/simple;
+	bh=XX+0FLbl/WaDT132FNtQreHCpJHseZPnN+OZKpdWOlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qaurbhcS5oVPcKgjrcP0hyeb/dcXr76eDi0xD4Wad+fE+wopkBOxKtqh+SF/SAaeo72noZvCPod6jEy6UMRJ1XtMuKnOSyM8zDDkKuR8rLXyIIHPod+lGD3MEYuG1YM7+wqQmDJ3CBqWnVPnkjTtvQmeZFF+wcfI/1Y+mTOW/zU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pmrijibm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RrgxpHiCAkEyR3+A14vymeVvVd5WMTETMdIbmYqo54i88bDYDQ001n6Id8ZQ+0vvkG+ODD2IwUS8Ti1Paiin/stw75llZsm/NuYGo+arefaPMKiwy+kfdtgptd53l28A/kAOkTFe4R2qKBV8sD/K/M19K//IhtX5aPNlRnl3cBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FWMC1zHD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pmrijibm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321121F000E9;
-	Tue, 16 Jun 2026 15:30:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FWMC1zHD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C131F000E9;
+	Tue, 16 Jun 2026 15:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623806;
-	bh=67kEeF5ZlTK4OhxQDLKB1chRFXRLRLFv5nwPN4s9Xq8=;
+	s=korg; t=1781623812;
+	bh=xJITHwvOx0HgOLEkzPQIgGgeCTpAgm3Xbwa3g+zexPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pmrijibmLgUV8Lhjxr+MiR9cBhoctVi3s/5TmMrpL6vht4MU52XjeySybucaDOzVy
-	 H9OIcY3FWr6w2hSK1+dyH8HRGVELXomrhPxlkASqb/xqiLjM28XSYoUlkNLCR316G1
-	 OkUY+neWBtrL8DG5GsvCWKNgkToa8FrqWSucGxIU=
+	b=FWMC1zHDjCJ9pZwH4wBnnz+zbmz3kj33k3j2eByImhsh1tNBJkArPYX+vzn8B1XOM
+	 H/UqmdunvrnLcjg/0H2ExjZDkcTmZqoa/aCUsSJgtOAQBUZmo5wHilZRhrwotVs7EY
+	 QmWA2FzNP+wAIgJpkz+SbP+rKqNuehcactrwZRnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yin Tirui <yintirui@huawei.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	"David Hildenbrand (arm)" <david@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	Dev Jain <dev.jain@arm.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Chen Jun <chenjun102@huawei.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Nico Pache <npache@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.0 220/378] mm/huge_memory: update file PUD counter before folio_put()
-Date: Tue, 16 Jun 2026 20:27:31 +0530
-Message-ID: <20260616145121.893890619@linuxfoundation.org>
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 7.0 221/378] RDMA/core: Validate the passed in fops for ib_get_ucaps()
+Date: Tue, 16 Jun 2026 20:27:32 +0530
+Message-ID: <20260616145121.945134562@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -63,52 +49,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yin Tirui <yintirui@huawei.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit 40990c87a26e371594475acdc560c93cfae308a1 upstream.
+commit 4a1b1ac2744694a2ecd66a84bdb1445f4ef24bee upstream.
 
-__split_huge_pud_locked() updates the file/shmem RSS counter after
-dropping the PUD mapping's folio reference.  If folio_put() drops the last
-reference, mm_counter_file() can later read freed folio state via
-folio_test_swapbacked().
+Sashiko pointed out it is not safe to rely only on the devt because
+char/block alias so if the user finds a block device with the same dev_t
+it can masquerade as a ucap cdev fd.
 
-Move the counter update before folio_put().
+Test the f_ops to only accept authentic cdevs.
 
-Link: https://lore.kernel.org/20260526101355.1984244-1-yintirui@huawei.com
-Fixes: dbe54153296d ("mm/huge_memory: add vmf_insert_folio_pud()")
-Signed-off-by: Yin Tirui <yintirui@huawei.com>
-Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
-Acked-by: David Hildenbrand (arm) <david@kernel.org>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Chen Jun <chenjun102@huawei.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://patch.msgid.link/r/0-v1-fd9482545e37+1e25-ib_ucaps_fd_ops_jgg@nvidia.com
+Cc: stable@vger.kernel.org
+Fixes: 61e51682816d ("RDMA/uverbs: Introduce UCAP (User CAPabilities) API")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/core/ucaps.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -2913,9 +2913,9 @@ static void __split_huge_pud_locked(stru
- 	if (!folio_test_referenced(folio) && pud_young(old_pud))
- 		folio_set_referenced(folio);
- 	folio_remove_rmap_pud(folio, page, vma);
--	folio_put(folio);
- 	add_mm_counter(vma->vm_mm, mm_counter_file(folio),
- 		-HPAGE_PUD_NR);
-+	folio_put(folio);
+--- a/drivers/infiniband/core/ucaps.c
++++ b/drivers/infiniband/core/ucaps.c
+@@ -82,14 +82,12 @@ static int get_ucap_from_devt(dev_t devt
+ 
+ static int get_devt_from_fd(unsigned int fd, dev_t *ret_dev)
+ {
+-	struct file *file;
++	CLASS(fd, f)(fd);
+ 
+-	file = fget(fd);
+-	if (!file)
++	if (fd_empty(f) || fd_file(f)->f_op != &ucaps_cdev_fops)
+ 		return -EBADF;
+ 
+-	*ret_dev = file_inode(file)->i_rdev;
+-	fput(file);
++	*ret_dev = file_inode(fd_file(f))->i_rdev;
+ 	return 0;
  }
  
- void __split_huge_pud(struct vm_area_struct *vma, pud_t *pud,
 
 
