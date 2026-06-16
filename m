@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173D94611FC;
-	Tue, 16 Jun 2026 16:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56CDD4534B4;
+	Tue, 16 Jun 2026 16:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625625; cv=none; b=JTLJxQLDba3cIW1k7fnyOPlXeksmr4+ejY8hWOxMe1cyMreHyTbvEquQ85e8iqr6nZzs27E4rTHSUFp5QQZoKZqf8kgCPGv9QDiiBZD3jfxy2aKYFmysuERwGYmZcEW/etu0a2zFeZDul+EC2x4u93tsCgebvrhHzdYeZKXtvKA=
+	t=1781625630; cv=none; b=lYU36sxd+QPqRCASPIPg24IZUj729LBq5Iu7TY3szWNApTHv88SKaBRc6OqXx46APPHDvzAucb7aye3m6XPzdogX2saOHCipZNBn0ZOUZ+i8WnbJPySL5dqEeqGs/t/PkuvyGmxzXjcUMAtePywI/+slvQE1Mq6GjgQPbh/gv/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625625; c=relaxed/simple;
-	bh=bj/t4JqRjS+Yp7nwlSpRoO9f8FTDL2UkZm7xH9lwBVU=;
+	s=arc-20240116; t=1781625630; c=relaxed/simple;
+	bh=AbfSACgVlAvItdRWyYhPlnkcqGelrFOBd6vRC0jVDT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Heahd9jLOvQSICn8UVvDfqCW9VMZBZoKwwhgVWN56bxjyfps0CA5qYg2UGf2AVKKvO0g8cPomRQLFECQfB8XI+qW9YvW0Hjrs1z96HjHmHNQ42aCfl8n8i9yUp+NWUNg6QwQxRS7Uc+rBtNZXZj+ZxgTQ8rymWuAvXXjl5dPMZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JLOQ8Lml; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cQZbE/nUQ5ueRsJeTJQAEMmc+MkIvbvid56ZupcLxvh1FXcfr5OP4pdomFIUamK58L9Eb7nJP1SqJ1+pRt0lCZaOBRBrsES5dutk4X8JCbThW6KI5n18u4xWjVNYQ/uUzyM9UayIT/gRXR2cc3WRm/U0yPa+XElKkbEtRwCrJ0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qi5pAC44; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLOQ8Lml"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 189621F000E9;
-	Tue, 16 Jun 2026 16:00:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qi5pAC44"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 633371F000E9;
+	Tue, 16 Jun 2026 16:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625624;
-	bh=yr3GLNB9UV0FdrqKq3RnVByh5LkFQBScM4MMAgTZB3Q=;
+	s=korg; t=1781625629;
+	bh=OPas+cDFqBZR6D037aHvtGc/dkJeM3Ji4B18mqWxYwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JLOQ8Lml6NDCXksJ11fLj7Tx/IIcrfT8/WFD4B4NJ0PJOz9mdL8fsoEo8gZWsqQuR
-	 l6M72XiHBdPhhwDn4rhbJMJkwZbM+hrRqpqJvUohi/UCheZJkGZ+VydI8qGOQAWVg7
-	 8f++iF9gNhe3Ng3zPaqQoW+V6mIMxqbQ+rawXPLE=
+	b=qi5pAC44jWasGLfqzz5T2uIOCxPSjrup26lkpPbvTe9Ls+N/MeabxkwnYhjWk86i9
+	 QsPFh/Qs1T0uhDLWjRy9ouBCFreN3FN6KRQQC1LcIiZ9Y/xprQ3M2r9Ino1XtH0YKO
+	 +ub5vfFTmYiL6ZqVjQKKop7SqH22vgxw8caw6Va8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Leontev <leontyevantony@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 169/325] hv_netvsc: use kmap_local_page in netvsc_copy_to_send_buf
-Date: Tue, 16 Jun 2026 20:29:25 +0530
-Message-ID: <20260616145106.250221383@linuxfoundation.org>
+	Gil Portnoy <dddhkts1@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.18 170/325] ksmbd: fix use-after-free of a deferred file_lock on double SMB2_CANCEL
+Date: Tue, 16 Jun 2026 20:29:26 +0530
+Message-ID: <20260616145106.300754133@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -50,87 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Leontev <leontyevantony@gmail.com>
+From: Gil Portnoy <dddhkts1@gmail.com>
 
-commit 004e9ecfe6c5384f9e0b2f6f6389d42ec22789af upstream.
+commit f580d27e8928828693df44ba2db0fffdbe11dfea upstream.
 
-netvsc_copy_to_send_buf() copies page buffer entries into the VMBus
-send buffer using phys_to_virt() on the entry PFN. Entries for the
-RNDIS header and the skb linear data come from kmalloc'd memory and
-are always in the kernel direct map, but entries for skb fragments
-reference page cache or user pages, which on 32-bit x86 with
-CONFIG_HIGHMEM=y can live above the LOWMEM boundary. For such a page
-phys_to_virt() returns an address outside the direct map and the
-subsequent memcpy() faults on the transmit softirq path, which is
-fatal.
+A deferred byte-range lock (an SMB2_LOCK that blocks) registers an async work on
+conn->async_requests via setup_async_work(), with cancel_fn =
+smb2_remove_blocked_lock and cancel_argv[0] pointing at the struct file_lock.
 
-Map the pages with kmap_local_page() instead, handling two properties
-of the page buffer entries:
+When the request is cancelled, the worker frees the file_lock with
+locks_free_lock() and takes the cancelled early-exit, which "goto out"s and never
+reaches release_async_work() -- the only site that unlinks the work from
+conn->async_requests and clears cancel_fn/cancel_argv. The work therefore stays
+matchable on async_requests with a live cancel_fn pointing at the freed file_lock,
+until connection teardown finally runs release_async_work().
 
- - pb[i].pfn is a Hyper-V PFN at HV_HYP_PAGE_SIZE (4K) granularity,
-   not a native PFN. Reconstruct the physical address first and derive
-   the native page from it, so the mapping stays correct where
-   PAGE_SIZE > HV_HYP_PAGE_SIZE (e.g. arm64 with 64K pages).
+smb2_cancel() fires cancel_fn unconditionally with no state guard, so a second
+SMB2_CANCEL for the same AsyncId, arriving in that window, re-runs
+smb2_remove_blocked_lock() on the freed file_lock -- a slab use-after-free:
 
- - Since commit 41a6328b2c55 ("hv_netvsc: Preserve contiguous PFN
-   grouping in the page buffer array"), an entry describes a full
-   physically contiguous fragment and pb[i].len can exceed PAGE_SIZE,
-   while kmap_local_page() maps a single page. Copy page by page,
-   splitting at native page boundaries.
+  BUG: KASAN: slab-use-after-free in __locks_delete_block
+    __locks_delete_block
+    locks_delete_block
+    ksmbd_vfs_posix_lock_unblock
+    smb2_remove_blocked_lock
+    smb2_cancel                 <- 2nd SMB2_CANCEL fires cancel_fn
+    handle_ksmbd_work
+  Allocated by ...: locks_alloc_lock <- smb2_lock
+  Freed by ...:     locks_free_lock  <- smb2_lock (cancelled branch)
+  ... cache file_lock_cache of size 192
 
-The copy path only handles packets smaller than the send section size
-(6144 bytes by default); larger packets take the cp_partial path where
-only the RNDIS header is copied. So entries here are bounded by the
-section size and a copy is split at most once on 4K-page systems. On
-!CONFIG_HIGHMEM configs kmap_local_page() folds to page_address() and
-no mapping work is added.
+Reproduced on mainline with KASAN by an authenticated SMB client.
 
-Fixes: c25aaf814a63 ("hyperv: Enable sendbuf mechanism on the send path")
+Skip a work whose state is already KSMBD_WORK_CANCELLED so its cancel callback
+cannot be fired a second time.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Anton Leontev <leontyevantony@gmail.com>
-Link: https://patch.msgid.link/20260604165938.32033-1-leontyevantony@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/hyperv/netvsc.c |   19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ fs/smb/server/smb2pdu.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/net/hyperv/netvsc.c
-+++ b/drivers/net/hyperv/netvsc.c
-@@ -12,6 +12,7 @@
- #include <linux/sched.h>
- #include <linux/wait.h>
- #include <linux/mm.h>
-+#include <linux/highmem.h>
- #include <linux/delay.h>
- #include <linux/io.h>
- #include <linux/slab.h>
-@@ -965,12 +966,22 @@ static void netvsc_copy_to_send_buf(stru
- 	}
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -7328,6 +7328,17 @@ int smb2_cancel(struct ksmbd_work *work)
+ 			    le64_to_cpu(hdr->Id.AsyncId))
+ 				continue;
  
- 	for (i = 0; i < page_count; i++) {
--		char *src = phys_to_virt(pb[i].pfn << HV_HYP_PAGE_SHIFT);
--		u32 offset = pb[i].offset;
-+		phys_addr_t paddr = (pb[i].pfn << HV_HYP_PAGE_SHIFT) +
-+				    pb[i].offset;
- 		u32 len = pb[i].len;
- 
--		memcpy(dest, (src + offset), len);
--		dest += len;
-+		while (len) {
-+			struct page *page = phys_to_page(paddr);
-+			u32 off = offset_in_page(paddr);
-+			u32 chunk = min_t(u32, len, PAGE_SIZE - off);
-+			char *src = kmap_local_page(page);
++			/*
++			 * A cancelled deferred byte-range lock frees its
++			 * file_lock and takes the smb2_lock() early-exit that
++			 * skips release_async_work(), so the work stays on
++			 * conn->async_requests with a live cancel_fn pointing
++			 * at the freed file_lock.  Re-firing it on a second
++			 * SMB2_CANCEL is a use-after-free.
++			 */
++			if (iter->state == KSMBD_WORK_CANCELLED)
++				break;
 +
-+			memcpy(dest, src + off, chunk);
-+			kunmap_local(src);
-+			dest += chunk;
-+			paddr += chunk;
-+			len -= chunk;
-+		}
- 	}
- 
- 	if (padding)
+ 			ksmbd_debug(SMB,
+ 				    "smb2 with AsyncId %llu cancelled command = 0x%x\n",
+ 				    le64_to_cpu(hdr->Id.AsyncId),
 
 
