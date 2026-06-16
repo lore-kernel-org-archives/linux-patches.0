@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A39A30C360;
-	Tue, 16 Jun 2026 15:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8ABD2EEE68;
+	Tue, 16 Jun 2026 15:28:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623686; cv=none; b=jIMCC2KjvOAh0YaKYoXxrelLXV+FJcacyKoUFGym6/NjihYDHZpikFC5J1j3yrXss5uxodT4jt+DIw1oGfddAH6rD7D6DzDuEDErM2bU2tS1IYYN+pp2+ZVJkOIYp9gTU2LxsazidQS29vzSNvlFQECOiy+jp8MalBV06k8T5cs=
+	t=1781623691; cv=none; b=B3WVmznBGybhZeMoCszO6WocROplaBPv7yDrDW2xsvBLUjJp6BR2nVJ6g010KOEXSnZI96tVU3BWQiAJny6ycp4/J3Ja2Qrs3qXr43UAGUou1sLpM5thoGvqOlHQQjSuKIHrCeXjCMjNXlqSEvi9C5TLbtvdCPT0totoOM+LAF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623686; c=relaxed/simple;
-	bh=71sgXWGe2vK0+5IggJ/fBbZan+tWQnmJDMl3ZHSHXoc=;
+	s=arc-20240116; t=1781623691; c=relaxed/simple;
+	bh=CXJc3viG5oBeKeU9DHWKuN34C2Y7XHlyjY0BqOTvpfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WeY9I0AbwoxQvEc0gX0gqZpKMklXW+YGalSvtIasCNdzjv8FWKrBCyEEs/YPR1FfUVcTb0HUQy1s3HxfU7to+7IEE9zIsAGSQT6n0+yei+fCL5idz3ucUg4QtakXs2D/YtGStH0PcKfYLtrtp1oTXpF0ErjQN+twiUztnRam6nQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCjz2soZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NkeFMp13uBnRnFSOG0GmAzzCBVi8Lp2cDQfbtjwuUwAyCI+IHGBGiY48uFRqaBjdzGVrkfdROrmrU4/rwQmSErfoxSg7MnKUo0p7wGGNDJsvedOLxTPHdB0vdoGa87k3bos13i23HJncU1p8uXtvfDMqc7lHjJc6eNNVQeG7Xco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=giRI+PmJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCjz2soZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E081F000E9;
-	Tue, 16 Jun 2026 15:28:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="giRI+PmJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5FD1F000E9;
+	Tue, 16 Jun 2026 15:28:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623685;
-	bh=DM2g3FEVlQ/jgjZhrkB+8uXzxmE4xJALpp8wqM6Rz9w=;
+	s=korg; t=1781623690;
+	bh=+zjdSA7u0llSVey7K3Ft5a4mNSOScWiW6EioL2xU68w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tCjz2soZ9Q/bWdCEL4WDJ+6nlZ5hvWnuUOxxNEP3gFDSthLP68xv9RaKUycbFq9tR
-	 4db8+Jdoitv6kLAr/r3lRsJ22B/mzJwXyr3IRKwQmU7mlYvNHu4TSGQFZ13C3CFQ1q
-	 okRf4Fu9uhsvkIUJlzdEp142rlxQfOMUr21tmF8o=
+	b=giRI+PmJ/xjGSM0gEbAmbYGeyjtIAUXD8FOoiCJfSjOTGfvWgsiWhI6x0ufhBEb+z
+	 sV5YJqmG9RJrjg7egxMblZcUyIlyAeqFodd0HTa0WxWfeyl4jRvdsPJ9IvuGYaJIS8
+	 QgWXocWtvrxSUNc7BrqLiUrS/fiTrtJTcVwIeRFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Amirul Asyraf Mohamad Jamian <muhammad.amirul.asyraf.mohamad.jamian@altera.com>,
-	Dinh Nguyen <dinguyen@kernel.org>
-Subject: [PATCH 7.0 179/378] firmware: stratix10-svc: Dont fail probe when async ops unsupported
-Date: Tue, 16 Jun 2026 20:26:50 +0530
-Message-ID: <20260616145119.800861687@linuxfoundation.org>
+	Wei-Lin Chang <weilin.chang@arm.com>,
+	Oliver Upton <oupton@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 7.0 197/378] KVM: arm64: nv: Fix handling of XN[0] when !FEAT_XNX
+Date: Tue, 16 Jun 2026 20:27:08 +0530
+Message-ID: <20260616145120.760378399@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -50,57 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Amirul Asyraf Mohamad Jamian <muhammad.amirul.asyraf.mohamad.jamian@altera.com>
+From: Oliver Upton <oupton@kernel.org>
 
-commit 371aa062219a0af108fb8992f0759d1bac1e8c91 upstream.
+commit 49b32ddb87a3a109afecea89e55d70f73956b8bc upstream.
 
-When the ATF version is too old to support SIP SVC v3 asynchronous
-operations (e.g. ATF 2.5), stratix10_svc_async_init() returns
--EOPNOTSUPP. The probe function currently treats any non-zero return
-as fatal and aborts, logging:
+XN has already been extracted from its bitfield position so using
+FIELD_PREP() on the mask that clears XN[0] is completely broken, having
+the effect of unconditionally granting execute permissions...
 
-  stratix10-svc firmware:svc: Intel Service Layer Driver: ATF version \
-    is not compatible for async operation
-  stratix10-svc firmware:svc: probe with driver stratix10-svc failed \
-    with error -95
+Fix the obvious mistake by manipulating the right bit.
 
-This prevents the SVC driver from loading entirely, causing all
-dependent client drivers (hwmon, RSU, FCS) to also fail to probe even
-though they can operate correctly via the synchronous V1 SMC path.
-
-Fix this by treating -EOPNOTSUPP from stratix10_svc_async_init() as a
-non-fatal degraded condition. The driver loads in sync-only mode and
-logs:
-
-  stratix10-svc firmware:svc: Intel Service Layer Driver Initialized \
-    (sync-only mode)
-
-Fixes: bcb9f4f07061 ("firmware: stratix10-svc: Add support for async communication")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Amirul Asyraf Mohamad Jamian <muhammad.amirul.asyraf.mohamad.jamian@altera.com>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Fixes: d93febe2ed2e ("KVM: arm64: nv: Forward FEAT_XNX permissions to the shadow stage-2")
+Reviewed-by: Wei-Lin Chang <weilin.chang@arm.com>
+Signed-off-by: Oliver Upton <oupton@kernel.org>
+Link: https://patch.msgid.link/20260602165901.52800-2-oupton@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/stratix10-svc.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/kvm_nested.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/firmware/stratix10-svc.c
-+++ b/drivers/firmware/stratix10-svc.c
-@@ -1952,10 +1952,14 @@ static int stratix10_svc_drv_probe(struc
- 	init_completion(&controller->complete_status);
+--- a/arch/arm64/include/asm/kvm_nested.h
++++ b/arch/arm64/include/asm/kvm_nested.h
+@@ -131,7 +131,7 @@ static inline bool kvm_s2_trans_exec_el0
+ 	u8 xn = FIELD_GET(KVM_PTE_LEAF_ATTR_HI_S2_XN, trans->desc);
  
- 	ret = stratix10_svc_async_init(controller);
--	if (ret) {
-+	if (ret == -EOPNOTSUPP) {
-+		dev_info(dev, "Intel Service Layer Driver Initialized (sync-only mode)\n");
-+	} else if (ret) {
- 		dev_dbg(dev, "Intel Service Layer Driver: Error on stratix10_svc_async_init %d\n",
- 			ret);
- 		goto err_destroy_pool;
-+	} else {
-+		dev_info(dev, "Intel Service Layer Driver Initialized\n");
- 	}
+ 	if (!kvm_has_xnx(kvm))
+-		xn &= FIELD_PREP(KVM_PTE_LEAF_ATTR_HI_S2_XN, 0b10);
++		xn &= 0b10;
  
- 	fifo_size = sizeof(struct stratix10_svc_data) * SVC_NUM_DATA_IN_FIFO;
+ 	switch (xn) {
+ 	case 0b00:
+@@ -147,7 +147,7 @@ static inline bool kvm_s2_trans_exec_el1
+ 	u8 xn = FIELD_GET(KVM_PTE_LEAF_ATTR_HI_S2_XN, trans->desc);
+ 
+ 	if (!kvm_has_xnx(kvm))
+-		xn &= FIELD_PREP(KVM_PTE_LEAF_ATTR_HI_S2_XN, 0b10);
++		xn &= 0b10;
+ 
+ 	switch (xn) {
+ 	case 0b00:
 
 
