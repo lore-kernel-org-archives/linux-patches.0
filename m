@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C183A3E78;
-	Tue, 16 Jun 2026 17:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3843A3E78;
+	Tue, 16 Jun 2026 17:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631173; cv=none; b=iJEgHC28p7EUYMwiR2lRqWjud0v7H1uu5RzMQI3qsFxS8VI0V6U0fixz7O0AZYdVa5CDAq1im0ITiROqCfRzAAb+kFh0ANVWU7crVoP7IhYnGzNZa3aqSH+smr+agyMpUNCidfihsW4B72jtJJGfA3Wx1sSn1F9asnsvdh1Q4MY=
+	t=1781631178; cv=none; b=tDHWo/nj+K8V/6yzw4Zi4qXyTUpTaaYcmw6z//lsPkT8bTXo/WQPcQaYU4EAQdoRKBPpNCTZuMoz9HROD5qbPuPl4EdU7QTjT4Nk2bsmKuY2zzwnLOthOtocG51GpeTKy+aFqhx8H0mnKSzJ+06udvrcRtmyv1Jvxr+sKLSyhlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631173; c=relaxed/simple;
-	bh=DjXnOeAX3dLIRa91tABMXRVr9JHnjGupM3IC7NObp5s=;
+	s=arc-20240116; t=1781631178; c=relaxed/simple;
+	bh=vA4W3axpsa6D3RBCTY3plh6uepX8HdHRNmqp+AryzxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EkkCM4k1Z8dKgLMJn5zCiv4KxpjJkC0UZm44S2MlGg8ZuMzmvCf1PmbI2LTAKT0MUeFkUZ+jktnfy9WcUA8JGtPvOGyp4ZeT1cdUqUGCdSc4xf0A3PSP3E0AOE8HuR9GWdS2sKayx2LWGrILPhZYqXvornvbxOXlQD+sJi6VNFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dT1cgboO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z+TIkAW0uY+ptAg4YzYwaG8BAl0xSUDYQopuYnsn8CPxx/vV986aKz2T+J6J0egqhewtUWxRT7a+dcHGupsAvF3a0cViW+VfNN/LyWdpP0j6VU4486Z1dYNDI6sKFNmPzZcAW3prQDQ4Hzy7wP8i0SX9gjgcuZDud3lphLtRb5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qv0k1Hbp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dT1cgboO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3CBD1F000E9;
-	Tue, 16 Jun 2026 17:32:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qv0k1Hbp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6871C1F000E9;
+	Tue, 16 Jun 2026 17:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631172;
-	bh=62YbDRZYQ2wpq3U2Y/mEaHQDA8X9ekHmVSaKSmOa1Pw=;
+	s=korg; t=1781631177;
+	bh=yvNq9VkjZDM31M9njzKgbGVKekOQM12bdQwnBzOOwg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dT1cgboO+GupZqeZoxlQCE651dI+Yc3eSgo0HF5dMxF+kZVoRvFuTSf+9Cr3RRzyX
-	 w4p+Q70W9YurgcgeC/23QsFqG75i9zLo0aJ0Q657T/bcUa6ra1gXxoad6vgrRzvNZS
-	 OJ8IXPMs0F3CBD5D3TtURwhsbNenhJKZAMIsL204=
+	b=Qv0k1HbpnLxHDoIOqEktagpAm6nwpsiz2qWjrAyUS76M7X5ECdoiv6JKLuLjqJGry
+	 Niv/GhJbycYwALgonwgzI4T4FH0K82Am7lRyGL5gM5ATVYdC6nC3akP8ncaYJ1Dg6t
+	 yvaYlRID32Y8hqGXHNk242TXoQhwHZavQoIUlzrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>
-Subject: [PATCH 6.1 169/522] drm/amd/pm/si: Disregard vblank time when no displays are connected
-Date: Tue, 16 Jun 2026 20:25:16 +0530
-Message-ID: <20260616145134.063376055@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>
+Subject: [PATCH 6.1 170/522] serial: altera_jtaguart: handle uart_add_one_port() failures
+Date: Tue, 16 Jun 2026 20:25:17 +0530
+Message-ID: <20260616145134.107391705@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -45,50 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit dd4f3ee535b3b0ac027f75dbf9dc5fc88733c765 upstream.
+commit ea66be25f0e934f49d24cd0c5845d13cdba3520b upstream.
 
-When no displays are connected, there is no vblank
-happening so the power management code shouldn't
-worry about it.
+altera_jtaguart_probe() maps the register window before registering the
+UART port, but it ignores failures from uart_add_one_port(). If port
+registration fails, probe still returns success and the mapping remains
+live until a later remove path that is not part of probe failure cleanup.
 
-This fixes a regression that caused the memory clock
-to be stuck at maximum when there were no displays
-connected to a SI GPU.
+Return the uart_add_one_port() error and unmap the register window on
+that failure path.
 
-Fixes: 9003a0746864 ("drm/amd/pm: Treat zero vblank time as too short in si_dpm (v3)")
-Fixes: 9d73b107a61b ("drm/amd/pm: Use pm_display_cfg in legacy DPM (v2)")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Tested-by: Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6d87e0199f7b83735b56e422d59f170a201897a8)
-Cc: stable@vger.kernel.org
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
+
+Fixes: 5bcd601049c6 ("serial: Add driver for the Altera JTAG UART")
+Cc: stable <stable@kernel.org>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260512065837.79528-1-mhun512@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/tty/serial/altera_jtaguart.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-@@ -3062,6 +3062,10 @@ static bool si_dpm_vblank_too_short(void
- 	/* we never hit the non-gddr5 limit so disable it */
- 	u32 switch_limit = adev->gmc.vram_type == AMDGPU_VRAM_TYPE_GDDR5 ? 450 : 0;
+--- a/drivers/tty/serial/altera_jtaguart.c
++++ b/drivers/tty/serial/altera_jtaguart.c
+@@ -425,6 +425,7 @@ static int altera_jtaguart_probe(struct
+ 	struct resource *res_mem;
+ 	int i = pdev->id;
+ 	int irq;
++	int ret;
  
-+	/* Disregard vblank time when there are no displays connected */
-+	if (!adev->pm.pm_display_cfg.num_display)
-+		return false;
-+
- 	/* Consider zero vblank time too short and disable MCLK switching.
- 	 * Note that the vblank time is set to maximum when no displays are attached,
- 	 * so we'll still enable MCLK switching in that case.
+ 	/* -1 emphasizes that the platform must have one port, no .N suffix */
+ 	if (i == -1)
+@@ -464,7 +465,11 @@ static int altera_jtaguart_probe(struct
+ 	port->flags = UPF_BOOT_AUTOCONF;
+ 	port->dev = &pdev->dev;
+ 
+-	uart_add_one_port(&altera_jtaguart_driver, port);
++	ret = uart_add_one_port(&altera_jtaguart_driver, port);
++	if (ret) {
++		iounmap(port->membase);
++		return ret;
++	}
+ 
+ 	return 0;
+ }
 
 
