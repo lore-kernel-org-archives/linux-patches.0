@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64BB3CFF55;
-	Tue, 16 Jun 2026 18:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5712F47AF43;
+	Tue, 16 Jun 2026 18:47:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635632; cv=none; b=a6n2kcXqQcd7lgDZKfE1aa3pdkSANECtcsH+xW6jYtGVcS8+iT0qqwUo2OyRwXrz6LbUdXU3hKpjIcyNX+ezHbRgF89In0bFsVavwIsRv3t04Uw9seCaTK8vVdYYefWOHtcDGfSgdYDoTOgSFHm3K+SqsYDGyuVVFLKV4C9Feyg=
+	t=1781635637; cv=none; b=sLP1kxFwrrT3xSWmB6PwZKds4d5jrG5Ryvg3XOxFULF8IYHrOE4SLAx/fed1x+C/0fDyP+icTl2K65cH/jNCJb+CyZQsz1YusREbs2+ZF8KFzluGdlvFsOT54aCznC/gIAG/5bUzQk55vfhQYTOQhnXKBf04R30LXw1GrVhN7n0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635632; c=relaxed/simple;
-	bh=MntT3d87tJ9ak+PAtBHvlmL1+R2zU0KYxbKsgQKxSVQ=;
+	s=arc-20240116; t=1781635637; c=relaxed/simple;
+	bh=YHTy3ccOCaRdDJyR5RtJn1JaOI2R0qWIWPGZaa2bYpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d8zy37i0cEkFsm5JwPKyEZnA6gVcpnoTmR0923oRMcPG1nQ8TwzM4EfYC5s+a11Dmqp7Qpa4YO7dpqCY7adSJTNGCVxjk7edkvNlZqcipIRg+gtziqjJ8yMSqCzW3Xm5wfFudnCDK5rlWTCYFLjAzlwglcOS/cFg/0MupHWqjvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vrMuzgYN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xy/0x/IYixDLQDfR6Y8lzkLQzAx8aEhsbALrKj9vwT1ArC7XCYNiY2V1cHhYevyOp7nZcJKhxAYFFJMl6t+Wj374isZUrqIjZMmHUHv86XIJ2frmsdlZ2jZ4spiff0TQe0MoKKxHRVPf9N+2410Scn+cS618jurIRKDzxSrp7Y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I4A043fy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vrMuzgYN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565A71F000E9;
-	Tue, 16 Jun 2026 18:47:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4A043fy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D911F000E9;
+	Tue, 16 Jun 2026 18:47:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635631;
-	bh=EjoCxkcHAaD34CzWl5W+yjFLt2mkPAgEPDo35mpSKHA=;
+	s=korg; t=1781635636;
+	bh=xH30bwlerKYG58ZvBd97YtlqoqzEfPgxV2NrHBNpCGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vrMuzgYNuOa7AiQR+YnWw1Hk+ikzbsXtPRz8SwrxPfxTfqToZEJK44y9BD8+UfKEr
-	 rpvZZas2AEKwzoSuTg4nD23bNxrD87GVEwGlpCGfVvzBs7KMfdf+HOwzEPDrSUUR06
-	 4OS/05SOaoX/vh2DgINz+DttCj0euv3T7GSNvHNY=
+	b=I4A043fyyMqVdvH8AqNt4vDX+QinUgfmfCUqNkh85JPB7A/6hVIcz5yWh4x4GkE67
+	 SES7srs4lV0CetyOCEUaM65MAZjPJiIugmVDYVm+HuMa7ewDxRYDYzFNNnM3lNeY6S
+	 jZ0x+zs2Ouumh8nn46ga7aSC4tJuCPhHOK9vfoL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <malin89@huawei.com>,
-	Chenyuan Mi <michenyuan@huawei.com>,
-	Jingguo Tan <tanjingguo@huawei.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 5.10 084/342] xfrm: esp: restore combined single-frag length gate
-Date: Tue, 16 Jun 2026 20:26:20 +0530
-Message-ID: <20260616145052.159111831@linuxfoundation.org>
+	Linpu Yu <linpu5433@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Kees Cook <kees@kernel.org>,
+	Stanislav Kinsbursky <skinsbursky@parallels.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 053/342] ipc: limit next_id allocation to the valid ID range
+Date: Tue, 16 Jun 2026 20:25:49 +0530
+Message-ID: <20260616145050.729870056@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -53,60 +58,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jingguo Tan <tanjingguo@huawei.com>
+From: Linpu Yu <linpu5433@gmail.com>
 
-commit dfa0d7b0ff1eb6b2c416b8fdb9b4f2cefba57a40 upstream.
+commit fa0b9b2b7ae3539908d69c2b9ac0d144d9bc5139 upstream.
 
-The ESP out-of-place fast path appends the trailer in esp_output_head()
-before esp_output_tail() allocates the destination page frag. The
-head-side gate currently checks skb->data_len and tailen separately, but
-the tail code allocates a single destination frag from the combined
-post-trailer skb->data_len.
+The checkpoint/restore sysctl path can request the next SysV IPC id
+through ids->next_id.  ipc_idr_alloc() currently forwards that request to
+idr_alloc() with an open-ended upper bound.
 
-Reject the page-frag fast path when the combined aligned length exceeds a
-page. Otherwise skb_page_frag_refill() may fall back to a single page while
-the destination sg still spans the combined skb->data_len.
+If the valid tail of the SysV IPC id space is full, the allocation can
+spill beyond ipc_mni.  The returned SysV IPC id still uses the normal
+index encoding, so later lookup and removal can target the wrong slot.
+This leaves the real IDR entry behind and breaks the IDR state for the
+object.
 
-Restore this combined-length page gate for both IPv4 and IPv6.
+The bug is in ipc_idr_alloc() in the checkpoint/restore path.
 
-Fixes: 5bd8baab087d ("esp: limit skb_page_frag_refill use to a single page")
-Cc: stable@vger.kernel.org
-Signed-off-by: Lin Ma <malin89@huawei.com>
-Signed-off-by: Chenyuan Mi <michenyuan@huawei.com>
-Signed-off-by: Jingguo Tan <tanjingguo@huawei.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+1. ids->next_id is passed to:
+
+       idr_alloc(&ids->ipcs_idr, new, ipcid_to_idx(next_id), 0, ...)
+
+2. The zero upper bound makes the allocation effectively open-ended.
+   Once the valid SysV IPC tail is occupied, idr_alloc() can spill past
+   ipc_mni and allocate an entry beyond the valid IPC id range.
+
+3. The new object id is still encoded with the narrower SysV IPC index
+   width:
+
+       new->id = (new->seq << ipcmni_seq_shift()) + idx
+
+4. Later removal goes through ipc_rmid(), which uses:
+
+       ipcid_to_idx(ipcp->id)
+
+   That truncates the real IDR index. An object actually stored at a
+   high index can then be removed as if it lived at a low in-range
+   index.
+
+5. For shared memory, shm_destroy() frees the current object anyway, but
+   the real high IDR slot is left behind as a dangling pointer.
+
+6. A subsequent walk of /proc/sysvipc/shm reaches the stale IDR entry
+   and dereferences freed memory.
+
+Prevent this by bounding the requested allocation to ipc_mni so the
+checkpoint/restore path fails once the valid range is exhausted.
+
+Link: https://lore.kernel.org/cover.1778336914.git.linpu5433@gmail.com
+Link: https://lore.kernel.org/2eebe949bfa7d1f6e13b5be6a92c64c850ce9d45.1778336914.git.linpu5433@gmail.com
+Fixes: 03f595668017 ("ipc: add sysctl to specify desired next object id")
+Signed-off-by: Linpu Yu <linpu5433@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Stanislav Kinsbursky <skinsbursky@parallels.com>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/esp4.c |    4 ++--
- net/ipv6/esp6.c |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ ipc/util.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv4/esp4.c
-+++ b/net/ipv4/esp4.c
-@@ -459,8 +459,8 @@ int esp_output_head(struct xfrm_state *x
- 			return err;
+--- a/ipc/util.c
++++ b/ipc/util.c
+@@ -252,7 +252,7 @@ static inline int ipc_idr_alloc(struct i
+ 	} else {
+ 		new->seq = ipcid_to_seqx(next_id);
+ 		idx = idr_alloc(&ids->ipcs_idr, new, ipcid_to_idx(next_id),
+-				0, GFP_NOWAIT);
++				ipc_mni, GFP_NOWAIT);
  	}
- 
--	if (ALIGN(tailen, L1_CACHE_BYTES) > PAGE_SIZE ||
--	    ALIGN(skb->data_len, L1_CACHE_BYTES) > PAGE_SIZE)
-+	if (ALIGN(skb->data_len + tailen, L1_CACHE_BYTES) >
-+	    PAGE_SIZE)
- 		goto cow;
- 
- 	if (!skb_cloned(skb)) {
---- a/net/ipv6/esp6.c
-+++ b/net/ipv6/esp6.c
-@@ -493,8 +493,8 @@ int esp6_output_head(struct xfrm_state *
- 			return err;
- 	}
- 
--	if (ALIGN(tailen, L1_CACHE_BYTES) > PAGE_SIZE ||
--	    ALIGN(skb->data_len, L1_CACHE_BYTES) > PAGE_SIZE)
-+	if (ALIGN(skb->data_len + tailen, L1_CACHE_BYTES) >
-+	    PAGE_SIZE)
- 		goto cow;
- 
- 	if (!skb_cloned(skb)) {
+ 	if (idx >= 0)
+ 		new->id = (new->seq << ipcmni_seq_shift()) + idx;
 
 
