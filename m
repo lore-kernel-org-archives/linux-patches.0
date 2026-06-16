@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2933D7D9D;
-	Tue, 16 Jun 2026 19:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018783D668F;
+	Tue, 16 Jun 2026 19:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636441; cv=none; b=TQPfuncy7p6NFYoRHXxNNkGIq7suzXRg6OWDuiamWOqx9jWq4aeohtnfLbiir6QfPSQkBOHbSZFqttr8Wg6quwWscfHtIkzHH7ElWl2DD5EcczqGm3hm/ovKNW8g4221fa4vNH7FdWZpE1Jz2qoXSI3F2cnJ8PXGjgxVDTd8Q28=
+	t=1781636447; cv=none; b=dZVBEHYYIu2M7hwG/iM8RzHi8tQ1n2nLegnkrqqBc9fDcL4WBRr0EiQbkpWumcCu+QXLQWhG4xrdbPssp04Dhhurk4PYlqq65x66IlRTnYHBtBGwIaoedc2nVhExosUA5v2BPMnrT6j8sbHJl6jJ3TkxDun9jCVk6TlOy89t4Ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636441; c=relaxed/simple;
-	bh=T0msyVZL0xPc0gXDKA+c/TB5USKywn2Zo+ECKOY3KS8=;
+	s=arc-20240116; t=1781636447; c=relaxed/simple;
+	bh=2352pqhxa5X3qEbWtsMNp9B3SZyOI/Op3YCm8oSvfis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PDZhG4nKmb0yHR9wQviKXJFqh668ABDbI1o2fiq882Lc+9Q5lX/Qc2QFCL8cpeNgQKzYI+7Ybv5UboRpWqh3NtxN9fpFQ7xteNZiK+oBvQglq3ltXloNb+Vrz5AYmN0UmgczyUPaxppEC1d5ADbo/523DESU1g9zZ3uUJuyEP78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kdC+imUk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cOOmLhHwKpOMcNSIpNhQcG3FDr/MggQ48aKFwMV94LUXNrNb/3jDzTU2LsUs7QmJKQ/V9YZFvut5t26UF+YV28EH5oPvZAYLG7SufoettQbFh56JXIe0+CY2ZLfI+93XkpZ6BvqNXTdSHwU5/06CobX22m7z2Hlr00AFrId9vSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mafPeLIV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdC+imUk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583211F00A3A;
-	Tue, 16 Jun 2026 19:00:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mafPeLIV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E551F000E9;
+	Tue, 16 Jun 2026 19:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636440;
-	bh=pyXRqcAd4NfvyoEk/WTLptovRCH/McFifBb27bhj53Y=;
+	s=korg; t=1781636445;
+	bh=IZ/Flk8vesj+PYym3q3j1feBthE1sgM2Li5hDFgsP8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kdC+imUkSr93Q7g0/muaORumLudGW8gjJ+hOn4alwn9HYk6D/ML++6wao+QsD04oB
-	 UweMkq9/1J5ZVtA5vdpEdHZVc+8COXU3OCNX3NwXIDFABPqUj4otldDGJRSyfeS7qr
-	 hiBhweNSvAwSzElCyeV/zIYIWHUEQVvMzZoAx2qY=
+	b=mafPeLIVrefTSXA3gNnvebA5ndI5wndLhznUdOKX4sWBuxDEEKj4LNdqfYUysPHtw
+	 acKa15nW4YsJ4IOQkofVajoYw897+sNNY8/V9w4offZRddVG5LneY+PP+W+mFA45If
+	 pKdLL/pRh3R9Jnw0wd/RmRet2AOBbBXOqzEL7Mus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanjaikumar V S <sanjaikumar.vs@dicortech.com>,
-	Hendrik Donner <hd@os-cillation.de>,
-	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
+	Seohyeon Maeng <bioloidgp@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 239/342] mtd: spi-nor: sst: Fix write enable before AAI sequence
-Date: Tue, 16 Jun 2026 20:28:55 +0530
-Message-ID: <20260616145059.340436342@linuxfoundation.org>
+Subject: [PATCH 5.10 240/342] udf: fix partition descriptor append bookkeeping
+Date: Tue, 16 Jun 2026 20:28:56 +0530
+Message-ID: <20260616145059.388135002@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -52,63 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanjaikumar V S <sanjaikumar.vs@dicortech.com>
+From: Seohyeon Maeng <bioloidgp@gmail.com>
 
-[ Upstream commit a0f64241d3566a49c0a9b33ba7ae458ae22003a9 ]
+[ Upstream commit 08841b06fa64d8edbd1a21ca6e613420c90cc4b8 ]
 
-When writing to SST flash starting at an odd address, a single byte is
-first programmed using the byte program (BP) command. After this
-operation completes, the flash hardware automatically clears the Write
-Enable Latch (WEL) bit.
+Mounting a crafted UDF image with repeated partition descriptors can
+trigger a heap out-of-bounds write in part_descs_loc[].
 
-If an AAI (Auto Address Increment) word program sequence follows, it
-requires WEL to be set. Without re-enabling writes, the AAI sequence
-fails.
+handle_partition_descriptor() deduplicates entries by partition number,
+but appended slots never record partnum. As a result duplicate
+Partition Descriptors are appended repeatedly and num_part_descs keeps
+growing.
 
-Add spi_nor_write_enable() after the odd-address byte program when more
-data needs to be written. Use a local boolean for clarity.
+Once the table is full, the growth path still sizes the allocation from
+partnum even though inserts are indexed by num_part_descs. If partnum is
+already aligned to PART_DESC_ALLOC_STEP, ALIGN(partnum, step) can keep
+the old capacity and the next append writes past the end of the table.
 
-Fixes: b199489d37b2 ("mtd: spi-nor: add the framework for SPI NOR")
+Store partnum in the appended slot and size growth from the next append
+count so deduplication and capacity tracking follow the same model.
+
+Fixes: ee4af50ca94f ("udf: Fix mounting of Win7 created UDF filesystems")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sanjaikumar V S <sanjaikumar.vs@dicortech.com>
-Tested-by: Hendrik Donner <hd@os-cillation.de>
-Reviewed-by: Hendrik Donner <hd@os-cillation.de>
-Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
-[ kept inline `nor->program_opcode = SPINOR_OP_BP;` ]
+Signed-off-by: Seohyeon Maeng <bioloidgp@gmail.com>
+Link: https://patch.msgid.link/20260310081652.21220-1-bioloidgp@gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
+[ replaced kzalloc_objs() helper with equivalent kcalloc() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/sst.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ fs/udf/super.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/spi-nor/sst.c
-+++ b/drivers/mtd/spi-nor/sst.c
-@@ -63,6 +63,8 @@ static int sst_write(struct mtd_info *mt
+--- a/fs/udf/super.c
++++ b/fs/udf/super.c
+@@ -1657,8 +1657,9 @@ static struct udf_vds_record *handle_par
+ 			return &(data->part_descs_loc[i].rec);
+ 	if (data->num_part_descs >= data->size_part_descs) {
+ 		struct part_desc_seq_scan_data *new_loc;
+-		unsigned int new_size = ALIGN(partnum, PART_DESC_ALLOC_STEP);
++		unsigned int new_size;
  
- 	/* Start write from odd address. */
- 	if (to % 2) {
-+		bool needs_write_enable = (len > 1);
-+
- 		nor->program_opcode = SPINOR_OP_BP;
- 
- 		/* write one byte. */
-@@ -76,6 +78,17 @@ static int sst_write(struct mtd_info *mt
- 
- 		to++;
- 		actual++;
-+
-+		/*
-+		 * Byte program clears the write enable latch. If more
-+		 * data needs to be written using the AAI sequence,
-+		 * re-enable writes.
-+		 */
-+		if (needs_write_enable) {
-+			ret = spi_nor_write_enable(nor);
-+			if (ret)
-+				goto out;
-+		}
++		new_size = data->num_part_descs + PART_DESC_ALLOC_STEP;
+ 		new_loc = kcalloc(new_size, sizeof(*new_loc), GFP_KERNEL);
+ 		if (!new_loc)
+ 			return ERR_PTR(-ENOMEM);
+@@ -1668,6 +1669,7 @@ static struct udf_vds_record *handle_par
+ 		data->part_descs_loc = new_loc;
+ 		data->size_part_descs = new_size;
  	}
++	data->part_descs_loc[data->num_part_descs].partnum = partnum;
+ 	return &(data->part_descs_loc[data->num_part_descs++].rec);
+ }
  
- 	/* Write out most of the data here. */
 
 
