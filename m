@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C44E477E51;
-	Tue, 16 Jun 2026 17:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A253A451D;
+	Tue, 16 Jun 2026 17:59:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632749; cv=none; b=elBkLKU8rlEoyTATdfR2cNLqaOgAG2QY7cISW9ZNzjSzV3v99IqaxnWn3pwx3abOaRoysRbB+DyInaPxcIVu1p/JKd1PO08eFidAGoHoezG9oXV7gD9BnWCZ4Y8evFX15O3T3BggV4tvYLwHjSFUVtSeTYQjXGAqevsQRz86+Ag=
+	t=1781632754; cv=none; b=l5nik8b1GOltBCSS23YH3hNhpK2LF+NZe4Y62fmRqo8uWEFJtDf7Jy8HeMq1kHT+oJ0sCt7L1qMFINIQyxGtfowZFJnvLGnT2gSS4GsIFiXQ8F9+bT5e2W6j7X+mhrcy3cs3tNtJGOz2+w7WkmDH2DIuHwREs/7RPoXOy0LpX+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632749; c=relaxed/simple;
-	bh=LxTRTd6IwwaEwWj5DcLqxsukAKBzb4xS4pi5Wnwkimo=;
+	s=arc-20240116; t=1781632754; c=relaxed/simple;
+	bh=gtqh2VXTxcUwU8CBJGSKLs7BPVaaELKujyLCOj++B4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SSykbFR0k/MdJqjmBlvYPgiyfbDbztQZISDmEUQ0WPZrYQcGIvMpN7Bqy0wL/y0kXkWU80JuaQQ/bY19j0E59URQJHJf7ykmW3lzmVGhLZjR5InrvXmA1t3EYBSTZiDCwpoonqAFYkdTUymd/SwOhWeO/yP+gZQhlZWoJi6oGMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icVT5fay; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=icpR8+gEU192b+PsiK9el78vgPA3VoKJ9OikGH6ltCxnIiIkwL7hGisNFCz5BO7WXgWIK5uAHcwUTq4zZc2tg5NFMf8BcdYtsJjZ648obbwdxdoTHlz8uuY0DtzqVuVnw7gR9NPLbh71BaokdDvfXSghc7WkdM2/e5QfH9L6vr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hpg+uNwu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icVT5fay"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 302451F00ACA;
-	Tue, 16 Jun 2026 17:59:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hpg+uNwu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7475D1F000E9;
+	Tue, 16 Jun 2026 17:59:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632748;
-	bh=2Gu0Lg+RZ/cgGdo4nPUC5nlR8lfLVts/Mwt0zVeME/I=;
+	s=korg; t=1781632753;
+	bh=u1z8ck2ZXf4hNTtjPxmHVb3/oLSD/IbaK+JRZ6zG2H0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=icVT5fayDYby3KgTOQ/GAS3l4S1J7qubkq2j649R5VhNzQG8apuPgY2USZjP8HrVJ
-	 NPTlsPo4HJ7TwrziiTZwv4uRep+1N2uDrDkdcbJhYoclmswPjnfpjmiSeLxjFBtBTs
-	 FIxPZpieBYoU6kDISaY/5EKp6AzGsJn8f58TNViU=
+	b=Hpg+uNwunFz6RPpZrvV2G/cbSRwVugIrpsIN01UJQDk4UHtWlkYtS699TYml2WvSw
+	 g87jftg9HNmkp5KV+AVngjDXz3BZYig0k//h6NS7EWBiXnjG6r9cEZBhc/kjqO0jeE
+	 fFRYxa0fvYE6Kl1pJRUYTngOrbaASK1nd73lS4nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 469/522] usb: dwc3: xilinx: fix error handling in zynqmp init error paths
-Date: Tue, 16 Jun 2026 20:30:16 +0530
-Message-ID: <20260616145147.800623385@linuxfoundation.org>
+Subject: [PATCH 6.1 443/522] octeontx2-af: replace deprecated strncpy with strscpy
+Date: Tue, 16 Jun 2026 20:29:50 +0530
+Message-ID: <20260616145146.664195152@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,92 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Justin Stitt <justinstitt@google.com>
 
-[ Upstream commit c1a0ecbf32c4b397353204e2ec94c5bb9f3300ed ]
+[ Upstream commit 473f8f2d1bfe1103f20140fdc80cad406b4d68c0 ]
 
-Fix error handling and resource cleanup i.e remove invalid
-phy_exit() after failed phy_init(), route failures through
-proper cleanup paths and return 0 explicitly on success.
+`strncpy` is deprecated for use on NUL-terminated destination strings
+[1] and as such we should prefer more robust and less ambiguous string
+interfaces.
 
-Fixes: 84770f028fab ("usb: dwc3: Add driver for Xilinx platforms")
-Cc: stable@vger.kernel.org
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://patch.msgid.link/20260519115529.2980421-1-radhey.shyam.pandey@amd.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+We can see that linfo->lmac_type is expected to be NUL-terminated based
+on the `... - 1`'s present in the current code. Presumably making room
+for a NUL-byte at the end of the buffer.
+
+Considering the above, a suitable replacement is `strscpy` [2] due to
+the fact that it guarantees NUL-termination on the destination buffer
+without unnecessarily NUL-padding.
+
+Let's also prefer the more idiomatic strscpy usage of (dest, src,
+sizeof(dest)) rather than (dest, src, SOME_LEN).
+
+Link: https://www.kernel.org/doc/html/latest/process/deprecated.html#strncpy-on-nul-terminated-strings [1]
+Link: https://manpages.debian.org/testing/linux-manual-4.8/strscpy.9.en.html [2]
+Link: https://github.com/KSPP/linux/issues/90
+Signed-off-by: Justin Stitt <justinstitt@google.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20231010-strncpy-drivers-net-ethernet-marvell-octeontx2-af-cgx-c-v1-1-a443e18f9de8@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: c0bf0a4f3f1f ("octeontx2-af: CGX: add bounds check to cgx_speed_mbps index")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-xilinx.c |   26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/cgx.c |    8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/dwc3/dwc3-xilinx.c
-+++ b/drivers/usb/dwc3/dwc3-xilinx.c
-@@ -171,15 +171,13 @@ static int dwc3_xlnx_init_zynqmp(struct
+--- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+@@ -1228,8 +1228,6 @@ static inline void link_status_user_form
+ 					   struct cgx_link_user_info *linfo,
+ 					   struct cgx *cgx, u8 lmac_id)
+ {
+-	const char *lmac_string;
+-
+ 	linfo->link_up = FIELD_GET(RESP_LINKSTAT_UP, lstat);
+ 	linfo->full_duplex = FIELD_GET(RESP_LINKSTAT_FDUPLEX, lstat);
+ 	linfo->speed = cgx_speed_mbps[FIELD_GET(RESP_LINKSTAT_SPEED, lstat)];
+@@ -1240,12 +1238,12 @@ static inline void link_status_user_form
+ 	if (linfo->lmac_type_id >= LMAC_MODE_MAX) {
+ 		dev_err(&cgx->pdev->dev, "Unknown lmac_type_id %d reported by firmware on cgx port%d:%d",
+ 			linfo->lmac_type_id, cgx->cgx_id, lmac_id);
+-		strncpy(linfo->lmac_type, "Unknown", LMACTYPE_STR_LEN - 1);
++		strscpy(linfo->lmac_type, "Unknown", sizeof(linfo->lmac_type));
+ 		return;
  	}
  
- 	ret = phy_init(priv_data->usb3_phy);
--	if (ret < 0) {
--		phy_exit(priv_data->usb3_phy);
-+	if (ret < 0)
- 		goto err;
--	}
- 
- 	ret = reset_control_deassert(apbrst);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to release APB reset\n");
--		goto err;
-+		goto err_phy_exit;
- 	}
- 
- 	/* Set PIPE Power Present signal in FPD Power Present Register*/
-@@ -191,27 +189,25 @@ static int dwc3_xlnx_init_zynqmp(struct
- 	ret = reset_control_deassert(crst);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to release core reset\n");
--		goto err;
-+		goto err_phy_exit;
- 	}
- 
- 	ret = reset_control_deassert(hibrst);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to release hibernation reset\n");
--		goto err;
-+		goto err_phy_exit;
- 	}
- 
- 	ret = phy_power_on(priv_data->usb3_phy);
--	if (ret < 0) {
--		phy_exit(priv_data->usb3_phy);
--		goto err;
--	}
-+	if (ret < 0)
-+		goto err_phy_exit;
- 
- skip_usb3_phy:
- 	/* ulpi reset via gpio-modepin or gpio-framework driver */
- 	reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
- 	if (IS_ERR(reset_gpio)) {
--		return dev_err_probe(dev, PTR_ERR(reset_gpio),
--				     "Failed to request reset GPIO\n");
-+		ret = PTR_ERR(reset_gpio);
-+		goto err_phy_power_off;
- 	}
- 
- 	if (reset_gpio) {
-@@ -231,6 +227,12 @@ skip_usb3_phy:
- 		writel(reg, priv_data->regs + XLNX_USB_TRAFFIC_ROUTE_CONFIG);
- 	}
- 
-+	return 0;
-+
-+err_phy_power_off:
-+	phy_power_off(priv_data->usb3_phy);
-+err_phy_exit:
-+	phy_exit(priv_data->usb3_phy);
- err:
- 	return ret;
+-	lmac_string = cgx_lmactype_string[linfo->lmac_type_id];
+-	strncpy(linfo->lmac_type, lmac_string, LMACTYPE_STR_LEN - 1);
++	strscpy(linfo->lmac_type, cgx_lmactype_string[linfo->lmac_type_id],
++		sizeof(linfo->lmac_type));
  }
+ 
+ /* Hardware event handlers */
 
 
