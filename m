@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11654502F;
-	Tue, 16 Jun 2026 17:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF2E4502F;
+	Tue, 16 Jun 2026 17:21:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630511; cv=none; b=PTbT+Cof0l3Dik3dRHhG87CDIUn1haE758HRo455XxBtyHpOWYSSKOUN6vQYlI5HbFtgD/PHs085zK/SJLL91kNQ/vPgkSxRPBHJn6QR+T3GLLlvcXZA1g1qn7yfUXeF2RPqOpUouaz7DJsUdODbS32HGEtOH8sCgL7nEWtkIUc=
+	t=1781630517; cv=none; b=X73lI9QP9O3f6xH7w9SJGmDG/DEs7IM4/GY4m1IDASt5JlaJ/qnn5RjuL6r+YpLOgWWbkTfj6URdjKBZJkY3GeR/gTLnzfw3hpOpThaParlnzvf4EPRKylfHxBbZJql/vVLuadHwtElSRP4p0vVtcXOyB2m0VaY2A2ecbdheSlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630511; c=relaxed/simple;
-	bh=K4WdqEVXbPhyQ51G2w50qtKU6kcNV+SPs9n3efieP7M=;
+	s=arc-20240116; t=1781630517; c=relaxed/simple;
+	bh=0stcyc9xF03CVhTQy6fb/1YfZGwo6M3OYZgY4Zd7Pvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BRx1ulHykOccWjIls7FS2b2m25VyW0I5xrNXXARk8VcN/dgfCuiWoR3W+PPv0ZaBBpKLaqlcB3MkHahOR2bCaagYT00pHPrZeejb5kbo7V4hevOOW21X+V5HGQtF4QP13pkLFafMykJ48p5J962KWUBdsDVc9dU2li0HS9KMae4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u6izQ5K5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W3ktL/XXOHNSca6Ir7hw30xG4aAkf+Q7C0XPeK8A+ImygTF3i+9+XKw2HUNMcWM1EPAPzfTWAj5aItcUxah6DjpwidCKsZvd50qWUaPSzTLYJkQwKhxLiirAaLMxmWF+7tax1RxmyyJiujkjgnN5HlrfxvwH0xZMRp51PHNK/1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CIAcCvqT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u6izQ5K5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC591F000E9;
-	Tue, 16 Jun 2026 17:21:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIAcCvqT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 111531F000E9;
+	Tue, 16 Jun 2026 17:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630510;
-	bh=PDaTYs7nMC1BNgwVWnqkYj85FFhXEuje+Dkz8T8Qc+o=;
+	s=korg; t=1781630516;
+	bh=XiQFXMw/+bn4SRgoW7Ob1MVzMOWFF7RjNRKgYOIShEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u6izQ5K5Sg06gCvApIsbxiMvErCRdXOdmtN1KSHlRGTERXIsy/Qctilr4KXZOSSkD
-	 dvv3jP/CkpwaVbq1rHNwtGuVH+1aXSe/CFaTJRgzsai77mMlzBnxta3UivXZ6cu/19
-	 5MDLQFsGA4WDsUlUxN7m5OdP057U9km0ucpfksv0=
+	b=CIAcCvqTNqmaBbGxbjSfhVFpCPH9mORPwbH6448UyQWx+6fvwi1JXGlKSatbXmTBG
+	 nyCNrzCGXMymdeuPWiEBMIb4/9WGrXDn2Wb5tNruOR6VglaJ4fkfX5AwmuTIUIh1W9
+	 AkyUys2bTEdqxl2/ifc+/31X4knL22ZvtMG8d8Ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
+	Ido Schimmel <idosch@nvidia.com>,
+	syzbot+9fdcc9f05a98a540b816@syzkaller.appspotmail.com,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/522] batman-adv: tt: reject oversized local TVLV buffers
-Date: Tue, 16 Jun 2026 20:23:11 +0530
-Message-ID: <20260616145127.822030019@linuxfoundation.org>
+Subject: [PATCH 6.1 045/522] batman-adv: bla: avoid NULL-ptr deref for claim via dropped interface
+Date: Tue, 16 Jun 2026 20:23:12 +0530
+Message-ID: <20260616145127.870158482@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,58 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 1e9fab756f8395096d5bba7be0c373c4c8f5d165 upstream.
+commit f80d3d98d2ff78d9e2fe5d68b1f45948c4f7bd24 upstream.
 
-The commit 3a359bf5c61d ("batman-adv: reject oversized global TT response
-buffers") added a check to ensure that a global return buffer size can be
-stored in an u16. The same buffer handling also exists for the local data
-buffer but was not touched.
+Without rtnl_lock held, a hardif might be retrieved as primary interface of
+a meshif, but then (while operating on this interface) getting decoupled
+from the mesh interface. In this case, the meshif still exists but the
+pointer from the primary hardif to the meshif is set to NULL.
 
-A similar check should be also be in place for the local TVLV buffer. It
-doesn't have the similar attack surface because it is only generated from
-locally discovered MAC addresses but the dynamic nature could still cause
-temporarily to large buffers.
+The mesh_iface must be checked first to be non-NULL before continuing to
+send an ARP request using meshif.
 
 Cc: stable@kernel.org
-Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
-[ Context ]
+Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
+Reported-by: Ido Schimmel <idosch@nvidia.com>
+Reported-by: syzbot+9fdcc9f05a98a540b816@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9fdcc9f05a98a540b816
+[ switch to old "mesh_iface" name "soft_iface" ]
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/translation-table.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/batman-adv/bridge_loop_avoidance.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
-index f1e93a60482038..6c40d690ac6c3a 100644
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -924,12 +924,12 @@ batadv_tt_prepare_tvlv_local_data(struct batadv_priv *bat_priv,
- {
- 	struct batadv_tvlv_tt_vlan_data *tt_vlan;
- 	struct batadv_softif_vlan *vlan;
-+	size_t change_offset;
- 	u16 num_vlan = 0;
- 	u16 vlan_entries = 0;
- 	u16 total_entries = 0;
- 	u16 tvlv_len;
- 	u8 *tt_change_ptr;
--	int change_offset;
+diff --git a/net/batman-adv/bridge_loop_avoidance.c b/net/batman-adv/bridge_loop_avoidance.c
+index f614709e6cda74..76d8c91c156a3b 100644
+--- a/net/batman-adv/bridge_loop_avoidance.c
++++ b/net/batman-adv/bridge_loop_avoidance.c
+@@ -356,12 +356,14 @@ static void batadv_bla_send_claim(struct batadv_priv *bat_priv, const u8 *mac,
+ 	       sizeof(local_claim_dest));
+ 	local_claim_dest.type = claimtype;
  
- 	spin_lock_bh(&bat_priv->softif_vlan_list_lock);
- 	hlist_for_each_entry(vlan, &bat_priv->softif_vlan_list, list) {
-@@ -948,8 +948,10 @@ batadv_tt_prepare_tvlv_local_data(struct batadv_priv *bat_priv,
- 	if (*tt_len < 0)
- 		*tt_len = batadv_tt_len(total_entries);
- 
--	tvlv_len = *tt_len;
--	tvlv_len += change_offset;
-+	if (check_add_overflow(*tt_len, change_offset, &tvlv_len)) {
-+		tvlv_len = 0;
+-	soft_iface = primary_if->soft_iface;
++	soft_iface = READ_ONCE(primary_if->soft_iface);
++	if (!soft_iface)
 +		goto out;
-+	}
  
- 	*tt_data = kmalloc(tvlv_len, GFP_ATOMIC);
- 	if (!*tt_data) {
+ 	skb = arp_create(ARPOP_REPLY, ETH_P_ARP,
+ 			 /* IP DST: 0.0.0.0 */
+ 			 zeroip,
+-			 primary_if->soft_iface,
++			 soft_iface,
+ 			 /* IP SRC: 0.0.0.0 */
+ 			 zeroip,
+ 			 /* Ethernet DST: Broadcast */
 -- 
 2.53.0
 
