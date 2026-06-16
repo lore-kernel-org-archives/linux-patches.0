@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C993CC303;
-	Tue, 16 Jun 2026 18:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21103EB0F5;
+	Tue, 16 Jun 2026 18:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636188; cv=none; b=ialn5FZBR1FayoseM2WSlSUuV09bmX8srtEsJsuItmX218MYewTIh/K78nO09DQXB6zaVWH/oRLmhtAfAqH2CVNtKkF+eSDfuuDrXvZ/ufQ8zfZHGjSzwFxCKe2Cn/q3rZ5fObIoJb19tVCnI/jx91ib8W805IXPFceY3JXkRDY=
+	t=1781636194; cv=none; b=iJo1aRy4fooQkYPO7U/Z1tevKy+AL5MIc0jH9zAV82OrfT0ovVjzNhJTQb3QlNaYPHvhLWSYRtq73+WEFWImCxL5ZiIluW4OfhFfjaGuy68TowkxOMI4wCEdEwk3P/Jp+gzpg8PQ2Wi6AYQItX3aQ0fLJp1VNjg6At3R1MveJSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636188; c=relaxed/simple;
-	bh=EjOehb+S9t9/iv9djwFa9q9jdpkceqmPKRwmWjeKXGk=;
+	s=arc-20240116; t=1781636194; c=relaxed/simple;
+	bh=BDfmUsPCdtswEd0D7XCrnBuFBMIa6a+jJjJHbuK2IsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hccx87VSGftDPRQ/iG0itX3qFpJmYYjnR7f7JyeCsDh9i1fxLy2h4gnrC3HtTvxbnpqL030cfJeonb2FGUhxTG8qtpOF1QyidekjohDKdtkh1kFbnp/eRGOimaFgquvXt2ivWED8FUwbK5sv+ryRJMH6MFknabfHCBxrzJWXLYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2D8apAK6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WWdIKvFR8f/RC/sJTlehhUD6YqQW+1f3QteB+RMKsTT0hs0/hB8w38MDVU/KC39Ku2922ZaorY+p9IDnzvTDNSXgoFYZo0wccNLGf6oJgYOp/9FM5Pz4OtbqL+e/Tf0MN9u1U+zv2paVEbaLhoIDFLoWbl/nb2TxXpHQD1tPmo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7ejm/3J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2D8apAK6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 845F01F00A3A;
-	Tue, 16 Jun 2026 18:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7ejm/3J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD551F000E9;
+	Tue, 16 Jun 2026 18:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636187;
-	bh=zGzzLjN8wwUXt0158I3e7kU54WBYR/8YKGdgfo6jU8A=;
+	s=korg; t=1781636193;
+	bh=i3DfIsciVvdSTUr4TxFnlMlQ27g8cQBhDNpFwhM3dVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2D8apAK6nTR8GBXGjQMnjZINjqjlmzXYsOabKI6ba8aBAB4bsss3UnEHE0+W5NxjC
-	 470uB0nh4beeoyTHtT3zxjvqmpew7J881Ab9nf6spfVxBWraxY0DWpZ4ERUmmB+rM0
-	 RE0USNp2LP30X7KEXIfzN5BiYpLiLuRZvHYg5vsA=
+	b=c7ejm/3J6lucJY/EJV38fP//z76z4pFQSMTE2OK6bT7kFiBBBGpIO1rWkEVWRhtjz
+	 bz1L25LoK5pol6irvNZ7fNVRSulBLVooV5OXuxpIKo6LrjnZsDv12ydD6psYmTA2Hn
+	 Pv2adtkZ1e35uNbJ5n7bNLninzZo2K9G6MdMmz6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Alexey Panov <apanov@astralinux.ru>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 158/342] spi: meson-spicc: Fix double-put in remove path
-Date: Tue, 16 Jun 2026 20:27:34 +0530
-Message-ID: <20260616145055.530154728@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 185/342] USB: serial: kl5kusb105: fix bulk-out buffer overflow
+Date: Tue, 16 Jun 2026 20:28:01 +0530
+Message-ID: <20260616145056.804714833@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -53,45 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit 63542bb402b7013171c9f621c28b609eda4dbf1f upstream.
+commit 96d47e40bf9db4a9efd5c8fb53287a508d165f14 upstream.
 
-meson_spicc_probe() registers the controller with
-devm_spi_register_controller(), so teardown already drops the
-controller reference via devm cleanup.
+klsi_105_prepare_write_buffer() is called by the generic write path
+with the bulk-out buffer and its size (bulk_out_size, 64 bytes). It
+stores a two-byte length header at the start of the buffer and copies
+the payload from the write fifo starting at buf + KLSI_HDR_LEN, but
+passes the full buffer size as the number of bytes to copy:
 
-Calling spi_controller_put() again in meson_spicc_remove()
-causes a double-put.
+  count = kfifo_out_locked(&port->write_fifo, buf + KLSI_HDR_LEN,
+                           size, &port->lock);
 
-Fixes: 8311ee2164c5 ("spi: meson-spicc: fix memory leak in meson_spicc_remove")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260322-rockchip-v1-1-fac3f0c6dad8@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ Alexey: Remove the equivalent legacy spi_master_put() call used in
-  linux-5.10.y. ]
-Signed-off-by: Alexey Panov <apanov@astralinux.ru>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When the fifo holds at least size bytes, size bytes are copied starting
+two bytes into the size-byte buffer, writing KLSI_HDR_LEN bytes past its
+end. Copy at most size - KLSI_HDR_LEN bytes instead, leaving room for
+the header as safe_serial already does.
+
+Writing bulk_out_size or more bytes to the tty triggers a slab
+out-of-bounds write, observed with KASAN by emulating the device with
+dummy_hcd and raw-gadget:
+
+  BUG: KASAN: slab-out-of-bounds in kfifo_copy_out+0x83/0xc0
+  Write of size 64 at addr ffff888112c62202 by task python3
+   kfifo_copy_out
+   klsi_105_prepare_write_buffer [kl5kusb105]
+   usb_serial_generic_write_start [usbserial]
+  Allocated by task 139:
+   usb_serial_probe [usbserial]
+  The buggy address is located 2 bytes inside of allocated 64-byte region
+
+The out-of-bounds write no longer occurs with this change applied.
+
+Fixes: 60b3013cdaf3 ("USB: kl5usb105: reimplement using generic framework")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-meson-spicc.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/usb/serial/kl5kusb105.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-meson-spicc.c b/drivers/spi/spi-meson-spicc.c
-index 6974a1c947aad6..ae818e7df79198 100644
---- a/drivers/spi/spi-meson-spicc.c
-+++ b/drivers/spi/spi-meson-spicc.c
-@@ -863,8 +863,6 @@ static int meson_spicc_remove(struct platform_device *pdev)
- 	clk_disable_unprepare(spicc->core);
- 	clk_disable_unprepare(spicc->pclk);
+--- a/drivers/usb/serial/kl5kusb105.c
++++ b/drivers/usb/serial/kl5kusb105.c
+@@ -359,8 +359,8 @@ static int klsi_105_prepare_write_buffer
+ 	unsigned char *buf = dest;
+ 	int count;
  
--	spi_master_put(spicc->master);
--
- 	return 0;
- }
+-	count = kfifo_out_locked(&port->write_fifo, buf + KLSI_HDR_LEN, size,
+-								&port->lock);
++	count = kfifo_out_locked(&port->write_fifo, buf + KLSI_HDR_LEN,
++				 size - KLSI_HDR_LEN, &port->lock);
+ 	put_unaligned_le16(count, buf);
  
--- 
-2.53.0
-
+ 	return count + KLSI_HDR_LEN;
 
 
