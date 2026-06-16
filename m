@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C6A4534B3;
-	Tue, 16 Jun 2026 16:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07653A8746;
+	Tue, 16 Jun 2026 16:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625994; cv=none; b=TVpD7+q9eQ6GoR4+9O96ZRh/TsOjLP7E2/hrCIcYr+V/FD9CY9dMXWf7lrnF9KFTnMRuM5Tm4gn2AUbIBX5k36kUOncOfkEB4LP2SkM85vXVGbMuNqFnO49q/C/IUFsTR8ZYYJYXK9ng1+I2nIqrbhE2XxdcVKrG0UQOrgcLUBo=
+	t=1781625999; cv=none; b=S9bRjilxxdTT652RtgXoKfeoAXcJzDo+0vldoim5HiLfyr6ZRNrjOGp5AOb3+klcr6hWwZZYX2hevnbJ3u5EX2BvYv6ZHrYuiqf1AXcjNfaBX5nXYBXFWo9E/0hhX57zI3zr1cVFkmKcBmhsvRv03s41XMLZigeDoMo/sCKufIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625994; c=relaxed/simple;
-	bh=bmofMgK/jIUC9n6iob/nwHbUfLDS/2CtsA8M+FtwSfI=;
+	s=arc-20240116; t=1781625999; c=relaxed/simple;
+	bh=nxjOoIXGOOalfvK6M+mdGabgxa7pgHzn16iguoiOXac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qh3GNn/f9/xBjLyp67WKYkG1b50ajCg2wbTDHF0Y8kukjUkvbyvLVPHV24syXbZNqy2U52VcB+9lvJJTpXEPvs2XWQM/N7XK9ZWWK4Th5mmEYUrPn8OgKQMBnC8WSqNHy+wxnBO4JmJ+5QwPy/YWif+bkG7KJb7DoYyoCXt/y90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKja7VZZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TgE2UUwxxDV1zSPUFCwkZ6HEJBvmEUjPNy2nEm2l9yLzC1rujqVQwzLJ/xbWwCIO/2ZjoKT2sEQqOraZrIAxUTf1sWW66epfggseCh1DWhbQjESInYZPWUBqKcJn99nJXFzJGztDUui+hiE9181edgRSpSoLGklVpCOu87vMRdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E1SaX1PJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKja7VZZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CAF1F000E9;
-	Tue, 16 Jun 2026 16:06:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1SaX1PJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB3301F000E9;
+	Tue, 16 Jun 2026 16:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625993;
-	bh=IDu8K5vgBUQ37nrgeJO6bLEzrdW8rhRqQP6sBvZZ9kk=;
+	s=korg; t=1781625998;
+	bh=fjjmtFVtx/p8yCzlbR2WD5APdDkKKlZZrp9AG51efhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tKja7VZZek5R2gjlzN6sHoHAeAOR9AClqCcAyD3AsvPd/IElnWpFsn5jOUuE69xJv
-	 PEv1F/6YnR6iHnQSay/5GOVhjGuAJOglOpuY+3EwQ9qU55Au41qtJ2EVK4+wt1y3sY
-	 3669h5qm8SUjaGq6nj9oU2gIVxF/geqUJzY+NryQ=
+	b=E1SaX1PJSE0fPTjNmz55WU/JOc8tkWq946RFPGCJtCsi+HDkU2tZF5xB8YscTEcZ3
+	 xS7k/j54k7Y1/tEzqlb8w1jkdrjI6BpBjaOg9o/48jjmFNt5yz5ZaKTIxSvwfQ7Efv
+	 epC6sevBM4gQfcoZGztsRlGG7PNPKWjmgkap4wE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.18 213/325] IB/isert: Reject login PDUs shorter than ISER_HEADERS_LEN
-Date: Tue, 16 Jun 2026 20:30:09 +0530
-Message-ID: <20260616145108.726212116@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 214/325] inet: frags: fix use-after-free caused by the fqdir_pre_exit() flush
+Date: Tue, 16 Jun 2026 20:30:10 +0530
+Message-ID: <20260616145108.790962804@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -50,58 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 29e7b925ae6df64894e82ab6419994dc25580a8a upstream.
+commit 32594b09854970d7ba83eb2dc8c69a2edd158c8e upstream.
 
-In drivers/infiniband/ulp/isert/ib_isert.c, isert_login_recv_done()
-computes the login request payload length as wc->byte_len minus
-ISER_HEADERS_LEN with no lower bound, and login_req_len is a signed int.
-A remote iSER initiator can post a login Send work request carrying
-fewer than ISER_HEADERS_LEN (76) bytes, so the subtraction underflows
-and login_req_len becomes negative.
+On netns teardown, fqdir_pre_exit() walks the fqdir rhashtable and
+flushes every fragment queue that is not yet complete using
+inet_frag_queue_flush(). That helper frees all the skbs queued on the
+fragment queue but does not set INET_FRAG_COMPLETE, and leaves
+q->fragments_tail and q->last_run_head pointing at the freed skbs.
+The queue itself stays in the rhashtable.
 
-isert_rx_login_req() then reads that negative length back into a signed
-int, takes size = min(rx_buflen, MAX_KEY_VALUE_PAIRS), and because the
-min() is signed it keeps the negative value; the value is then passed as
-the memcpy() length and sign-extended to a multi-gigabyte size_t. The
-copy into the 8192-byte login->req_buf runs far out of bounds and
-faults, crashing the target node. The login phase precedes iSCSI
-authentication, so no credentials are required to reach this path.
+fqdir_pre_exit() first lowers high_thresh to 0 to stop new queue lookups,
+but it cannot stop a fragment that already obtained the queue through
+inet_frag_find() earlier and stalled just before taking the queue lock.
+Once that fragment resumes after the flush and takes the queue lock,
+it passes the INET_FRAG_COMPLETE check and then dereferences the freed
+fragments_tail. inet_frag_queue_insert() reads FRAG_CB() and ->len of
+that pointer and, on the append path, writes ->next_frag, causing a
+slab use-after-free. IPv6, nf_conntrack_reasm6 and 6lowpan reassembly
+share the same flush path and are affected as well.
 
-Reject any login PDU shorter than ISER_HEADERS_LEN before the
-subtraction, mirroring the existing early return on a failed work
-completion, so login_req_len can never go negative. The upper bound was
-already safe: a posted login buffer cannot deliver more than
-ISER_RX_PAYLOAD_SIZE, so the difference stays at or below
-MAX_KEY_VALUE_PAIRS and the existing min() clamps it; only the missing
-lower bound needs to be added.
+Reset rb_fragments, fragments_tail and last_run_head in
+inet_frag_queue_flush() so a flushed queue no longer points at the
+freed skbs. A fragment that resumes after the flush and takes the
+queue lock then finds an empty queue and starts a new run instead of
+dereferencing the freed fragments_tail. ip_frag_reinit() already
+performed this reset after its own flush, so drop the now duplicate
+code there.
 
-Fixes: b8d26b3be8b3 ("iser-target: Add iSCSI Extensions for RDMA (iSER) target driver")
-Link: https://patch.msgid.link/r/20260602194642.2273217-1-michael.bommarito@gmail.com
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 006a5035b495 ("inet: frags: flush pending skbs in fqdir_pre_exit()")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Link: https://patch.msgid.link/ah6ukYq5G98LshdA@v4bel
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/ulp/isert/ib_isert.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/ipv4/inet_fragment.c |    3 +++
+ net/ipv4/ip_fragment.c   |    3 ---
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/infiniband/ulp/isert/ib_isert.c
-+++ b/drivers/infiniband/ulp/isert/ib_isert.c
-@@ -1385,6 +1385,12 @@ isert_login_recv_done(struct ib_cq *cq,
- 	ib_dma_sync_single_for_cpu(ib_dev, isert_conn->login_desc->dma_addr,
- 			ISER_RX_SIZE, DMA_FROM_DEVICE);
+--- a/net/ipv4/inet_fragment.c
++++ b/net/ipv4/inet_fragment.c
+@@ -328,6 +328,9 @@ void inet_frag_queue_flush(struct inet_f
+ 	reason = reason ?: SKB_DROP_REASON_FRAG_REASM_TIMEOUT;
+ 	sum = inet_frag_rbtree_purge(&q->rb_fragments, reason);
+ 	sub_frag_mem_limit(q->fqdir, sum);
++	q->rb_fragments = RB_ROOT;
++	q->fragments_tail = NULL;
++	q->last_run_head = NULL;
+ }
+ EXPORT_SYMBOL(inet_frag_queue_flush);
  
-+	if (unlikely(wc->byte_len < ISER_HEADERS_LEN)) {
-+		isert_dbg("login request length %u is too short\n",
-+			  wc->byte_len);
-+		return;
-+	}
-+
- 	isert_conn->login_req_len = wc->byte_len - ISER_HEADERS_LEN;
+--- a/net/ipv4/ip_fragment.c
++++ b/net/ipv4/ip_fragment.c
+@@ -250,9 +250,6 @@ static int ip_frag_reinit(struct ipq *qp
+ 	qp->q.flags = 0;
+ 	qp->q.len = 0;
+ 	qp->q.meat = 0;
+-	qp->q.rb_fragments = RB_ROOT;
+-	qp->q.fragments_tail = NULL;
+-	qp->q.last_run_head = NULL;
+ 	qp->iif = 0;
+ 	qp->ecn = 0;
  
- 	if (isert_conn->conn) {
 
 
