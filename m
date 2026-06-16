@@ -1,52 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC6F43DA35;
-	Tue, 16 Jun 2026 17:45:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5283E2F12AE;
+	Tue, 16 Jun 2026 17:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631947; cv=none; b=TjoVsBuegyKEHa5smzZRens7zcgqXg4CSTwlCXVGjXt+xmGlGJg+R2jrOoIFyKgRiH2zKfKw1AYtxauwIS3WlZzwd3zdOXELQAns16ZYM1U//QfTFORD6JQvpmYrKeL51+McLGCLY46deFEBX/hxRq55C5S+LI+fGIQ8z0ny3cM=
+	t=1781631952; cv=none; b=UNOQPth2L+kAeKrFht4f4Iz4hnDgOS6FXFgxDTheX1LEIFH5zlItknSIPyrmd+zOkU7UAmlrVgxv+YFe45mP64R3LxBONK7E4kdHIfrxTwARW7t41Dy35hUweIFV+NHBflG9Rm5heaZqXSm2w7BuhbMptUVOmR0gzrLYY+T7L0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631947; c=relaxed/simple;
-	bh=1xKEAlmjUgMY2X8/OJUsqFFzms5iPnh2AN8gYccPiqw=;
+	s=arc-20240116; t=1781631952; c=relaxed/simple;
+	bh=k1DyQI1kwHdf48gyO7nHFeXRldKbuedt5bIR4f8HFI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=grTUAt5OeXtnuX4E98fyxP5oLVm3BGwHr46XWIrKjc2Kj3I1U98+Vv2mXfmudb/jvDxNkdZG6p/FMeZ7hvkU81vSmQWw9ApFGAkOQ6OVkefNK6yRvuSS6dfuBd/LbjfCzSphD6MP8lkxNFjEx5qsS70ChcGVcmBeEXSrM9KVja8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PeXphY+D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hLoPg8B1/rTSYRrLFg/NP+1qAv9dui+Z3udRRTwraOpcJGYgch34QekJNgpgoUtxqFMuiDXKjr+/1577EQYwGR6TBb3EzHwvMnTYRjUR/TBwisSmKql8a4Cw7UMry8wD6uZ+hWT7Qr876Nf5oYO/wg9Wzhv6q3aU98C7is3T/Ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osmC2wdP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PeXphY+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C8F1F000E9;
-	Tue, 16 Jun 2026 17:45:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osmC2wdP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F71C1F000E9;
+	Tue, 16 Jun 2026 17:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631945;
-	bh=XSm2g0gamfDDxhlAf9Ht0cp9OHoO6zWkzGLoaTl++tM=;
+	s=korg; t=1781631951;
+	bh=mYP68NT1eZl3uy0crsopTcDSBR3Qy+DkimxzsJtURHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PeXphY+DS4OYifVT8HT3I+EnAGyU93yZ/Unc+w0iTCo6yHUCRJi/pA04+rYygDuDu
-	 ZgZ27VWqHfAEskfMXyoR5ACzuAAqsrby8kxsG1Phs52W7rTQPqOlulJGTpqVItE1ms
-	 u28Wox0IFFVcxq7yUha9QGigI0sLOV9Cf8JeD/+s=
+	b=osmC2wdPBJ/Xz5m/s+I5KbRGh68wWt/qDxSr717x9LssHH9Lgc/RnFXT8b6uhU9ba
+	 bToFhJ0HH2FGmXAdwY10y8zViy1xcyCanxU9VqZBIRNJyfCTRE3qr7N5jpSGaSyqvR
+	 GZ+xtj4qb5o7mPxSIjcF+yJUsHBtVTu2gTfr9irw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yilin Zhu <zylzyl2333@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Christian Brauner <brauner@kernel.org>,
-	Jeongjun Park <aha310510@gmail.com>,
-	Kees Cook <kees@kernel.org>,
-	Liam Howlett <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Serge Hallyn <sergeh@kernel.org>,
-	Vasiliy Kulikov <segoon@openwall.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Serge Hallyn <serge@hallyn.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 300/522] ipc/shm: serialize orphan cleanup with shm_nattch updates
-Date: Tue, 16 Jun 2026 20:27:27 +0530
-Message-ID: <20260616145139.939529448@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.1 318/522] thunderbolt: Validate XDomain request packet size before type cast
+Date: Tue, 16 Jun 2026 20:27:45 +0530
+Message-ID: <20260616145140.730322272@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -65,68 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yilin Zhu <zylzyl2333@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 2e5c6f4fd4001562781e99bbfc7f1f0127187542 upstream.
+commit a504b9f2797b739e0304d537e8aa4ce883ecce39 upstream.
 
-shm_destroy_orphaned() walks the shm idr under shm_ids(ns).rwsem, but that
-does not serialize all fields tested by shm_may_destroy().  In particular,
-shm_nattch is updated while holding shm_perm.lock, and attach paths can do
-that without holding the rwsem.
+tb_xdp_handle_request() casts the received packet buffer to
+protocol-specific structs without verifying that the allocation
+is large enough for the target type.  A peer can send a minimal
+XDomain packet that passes the generic header length check but is
+shorter than the struct accessed after the cast, causing out-of-
+bounds reads from the kmemdup allocation.
 
-Do not decide that an orphaned segment is unused before taking the object
-lock.  Move the shm_may_destroy() check under shm_perm.lock, matching the
-other destroy paths, and unlock the segment when it no longer qualifies
-for removal.
+Plumb the packet length through xdomain_request_work and validate
+it against the expected struct size before each cast.
 
-Link: https://lore.kernel.org/9d97cc1031de2d0bace0edf3a668818aa2f4eca6.1777410234.git.zylzyl2333@gmail.com
-Fixes: 4c677e2eefdb ("shm: optimize locking and ipc_namespace getting")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yilin Zhu <zylzyl2333@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jeongjun Park <aha310510@gmail.com>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Liam Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Serge Hallyn <sergeh@kernel.org>
-Cc: Vasiliy Kulikov <segoon@openwall.com>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Serge Hallyn <serge@hallyn.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 8e1de7042596 ("thunderbolt: Add support for XDomain lane bonding")
+Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- ipc/shm.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/thunderbolt/xdomain.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/ipc/shm.c
-+++ b/ipc/shm.c
-@@ -415,15 +415,17 @@ static int shm_try_destroy_orphaned(int
- 	 * We want to destroy segments without users and with already
- 	 * exit'ed originating process.
- 	 *
--	 * As shp->* are changed under rwsem, it's safe to skip shp locking.
-+	 * shm_nattch can be changed under shm_perm.lock without holding the
-+	 * rwsem, so take the object lock before checking shm_may_destroy().
- 	 */
- 	if (!list_empty(&shp->shm_clist))
- 		return 0;
+--- a/drivers/thunderbolt/xdomain.c
++++ b/drivers/thunderbolt/xdomain.c
+@@ -54,6 +54,7 @@ static const char * const state_names[]
+ struct xdomain_request_work {
+ 	struct work_struct work;
+ 	struct tb_xdp_header *pkg;
++	size_t pkg_len;
+ 	struct tb *tb;
+ };
  
--	if (shm_may_destroy(shp)) {
--		shm_lock_by_ptr(shp);
-+	shm_lock_by_ptr(shp);
-+	if (shm_may_destroy(shp))
- 		shm_destroy(ns, shp);
--	}
-+	else
-+		shm_unlock(shp);
- 	return 0;
- }
+@@ -732,6 +733,7 @@ static void tb_xdp_handle_request(struct
+ 	struct xdomain_request_work *xw = container_of(work, typeof(*xw), work);
+ 	const struct tb_xdp_header *pkg = xw->pkg;
+ 	const struct tb_xdomain_header *xhdr = &pkg->xd_hdr;
++	size_t pkg_len = xw->pkg_len;
+ 	struct tb *tb = xw->tb;
+ 	struct tb_ctl *ctl = tb->ctl;
+ 	struct tb_xdomain *xd;
+@@ -763,7 +765,7 @@ static void tb_xdp_handle_request(struct
+ 	switch (pkg->type) {
+ 	case PROPERTIES_REQUEST:
+ 		tb_dbg(tb, "%llx: received XDomain properties request\n", route);
+-		if (xd) {
++		if (xd && pkg_len >= sizeof(struct tb_xdp_properties)) {
+ 			ret = tb_xdp_properties_response(tb, ctl, xd, sequence,
+ 				(const struct tb_xdp_properties *)pkg);
+ 		}
+@@ -817,7 +819,8 @@ static void tb_xdp_handle_request(struct
+ 		tb_dbg(tb, "%llx: received XDomain link state change request\n",
+ 		       route);
  
+-		if (xd && xd->state == XDOMAIN_STATE_BONDING_UUID_HIGH) {
++		if (xd && xd->state == XDOMAIN_STATE_BONDING_UUID_HIGH &&
++		    pkg_len >= sizeof(struct tb_xdp_link_state_change)) {
+ 			const struct tb_xdp_link_state_change *lsc =
+ 				(const struct tb_xdp_link_state_change *)pkg;
+ 
+@@ -869,6 +872,7 @@ tb_xdp_schedule_request(struct tb *tb, c
+ 		kfree(xw);
+ 		return false;
+ 	}
++	xw->pkg_len = size;
+ 	xw->tb = tb_domain_get(tb);
+ 
+ 	schedule_work(&xw->work);
 
 
