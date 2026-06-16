@@ -1,37 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0823F169AD2;
-	Tue, 16 Jun 2026 18:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7EB3DC4D9;
+	Tue, 16 Jun 2026 18:38:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635105; cv=none; b=YP7bphREpons3uQtD0XZIOJEJUG7j3JIQKRLmgak6sfXWy0GyP8E47zbuQB8Ec6n0u+UreXEnHPM3FPRjfFrZzD2TcJuKiyQMCGwUkzXiZ2LMHwz89Y4ypoo0dcp7R5pjo5Nck/EF1QxcwgpmmSFFpVVcdJ7szsdnKhND7lto18=
+	t=1781635111; cv=none; b=b21zEXTSlmlxnpyPPV+Zyyk9KQS33mycJQClkAFPlPZLh50qi+mBHv8UShct0ImOzHF/41ag+GFs66Q9VxAIvQnORQeR21K4nKQHD56gbiEIib1fVR48L9NE0zadm3HjQc7zi8lOmz79MSOy+WNOHNrAYkh1I0p3HxSgLTtkX6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635105; c=relaxed/simple;
-	bh=w92bNZWeM0ut3gghqjW7bImH+i9H8ZG5RAPXdRJftRw=;
+	s=arc-20240116; t=1781635111; c=relaxed/simple;
+	bh=NBNhSuJ6oKPUQ7fm9ISoNpp78M5G7N4mf1OZ/i20Mt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SZrhKzvRWTG0HL01/ywq2exqMYQy+VJPhVshSZzO4Xp/GMh6i9HLDh3xs30Gy6P8sqn+6xtMhNv762uhGKOvZq9vuVdZR+RZGKeXp4BF5a29b3y9iItRU0fpr03klwwiuMY9WRdE2rVj5bRzyXGcLmiMTDEdYdxWPkTi8YMy4Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sb2bh2+g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gFSinRtYXDOVWUtXmZB9Jl8xbH516eYqfvvcDtWfnd5FW/lv7rjkkGxBnSsmkTpiqU6JQbFCxP2PS2TGlrOqpUGrTvtqjFyCa+fsZCRth0J285dr9IBV4b2LTKe+exKVSqfnBV1OjkdGpMFtzyJWhqr9z5cSUue6hTpQlxbTY9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JM+aKmO0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sb2bh2+g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46D11F000E9;
-	Tue, 16 Jun 2026 18:38:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JM+aKmO0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22AEA1F000E9;
+	Tue, 16 Jun 2026 18:38:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635104;
-	bh=ZI3Q4FGEsIRH91Ee122uGTVdIzzUqBTXdiueANJlCgE=;
+	s=korg; t=1781635110;
+	bh=ANZisJGzyxShD/+bsxZ9eeaHR0oJfCo9/Y3TJU4lPI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sb2bh2+g6Crh/DicM834dRIYdphq+X9Sv1XWyG8WfgF4m5lilS+jU0QBvK/HQ8ULW
-	 EuP1P5a4b40GpfuAVsFZAfMHkqvERVvWZJJCHZJ7OPhmTUZZbPhf6YCFbVWGaAQ9+N
-	 896PLnKbsbexV7e5nG33wmzuDGVIKkJ7bijb+E0I=
+	b=JM+aKmO0p2YPX5l9ae9p5P24Q7UQBPQxcHILOC22yH+t2AmXsxeG/JBORlUFOAg4M
+	 SykQvQGZ7AKr5S1atkImRvjfgQQ9gyI0P5hetczSUOEORSi71fUXw9B86kqayodhOz
+	 np0Z534W0/T36WlWbB8DduoBq5qGKFbMrnb3aAg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Yin Tirui <yintirui@huawei.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"David Hildenbrand (arm)" <david@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	Dev Jain <dev.jain@arm.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	Chen Jun <chenjun102@huawei.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Yang Shi <yang.shi@linux.alibaba.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 391/411] RDMA/umem: Fix truncation for block sizes >= 4G
-Date: Tue, 16 Jun 2026 20:30:29 +0530
-Message-ID: <20260616145122.015546304@linuxfoundation.org>
+Subject: [PATCH 5.15 392/411] mm/huge_memory: update file PMD counter before folio_put()
+Date: Tue, 16 Jun 2026 20:30:30 +0530
+Message-ID: <20260616145122.064997421@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,41 +65,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Yin Tirui <yintirui@huawei.com>
 
-[ Upstream commit 15fe76e23615f502d051ef0768f86babaf08746c ]
+[ Upstream commit 8d878059924f12c1bc24556a92ec56add74de3c8 ]
 
-When the iommu is used the linearization of the mapping can give a single
-block that is very large split across multiple SG entries.
+__split_huge_pmd_locked() updates the file/shmem RSS counter after
+dropping the PMD mapping's folio reference.  If folio_put() drops the last
+reference, mm_counter_file() can later read freed folio state via
+folio_test_swapbacked().
 
-When __rdma_block_iter_next() reassembles the split SG entries it is
-overflowing the 32 bit stack values and computed the wrong DMA addresses
-for blocks after the truncation.
+Move the counter update before folio_put().
 
-Use the right types to hold DMA addresses.
-
-Link: https://patch.msgid.link/r/1-v1-88303e9e509f+f7-ib_umem_types_jgg@nvidia.com
-Cc: stable@vger.kernel.org
-Fixes: a808273a495c ("RDMA/verbs: Add a DMA iterator to return aligned contiguous memory blocks")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/20260526101337.1984081-1-yintirui@huawei.com
+Fixes: fadae2953072 ("thp: use mm_file_counter to determine update which rss counter")
+Signed-off-by: Yin Tirui <yintirui@huawei.com>
+Reviewed-by: Lorenzo Stoakes <ljs@kernel.org>
+Acked-by: David Hildenbrand (arm) <david@kernel.org>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Chen Jun <chenjun102@huawei.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Yang Shi <yang.shi@linux.alibaba.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/iter.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/huge_memory.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/infiniband/core/iter.c
-+++ b/drivers/infiniband/core/iter.c
-@@ -19,8 +19,8 @@ EXPORT_SYMBOL(__rdma_block_iter_start);
- 
- bool __rdma_block_iter_next(struct ib_block_iter *biter)
- {
--	unsigned int block_offset;
--	unsigned int delta;
-+	dma_addr_t block_offset;
-+	dma_addr_t delta;
- 
- 	if (!biter->__sg_nents || !biter->__sg)
- 		return false;
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -1994,7 +1994,9 @@ static void __split_huge_pmd_locked(stru
+ 			if (!PageReferenced(page) && pmd_young(old_pmd))
+ 				SetPageReferenced(page);
+ 			page_remove_rmap(page, true);
++			add_mm_counter(mm, mm_counter_file(page), -HPAGE_PMD_NR);
+ 			put_page(page);
++			return;
+ 		}
+ 		add_mm_counter(mm, mm_counter_file(page), -HPAGE_PMD_NR);
+ 		return;
 
 
