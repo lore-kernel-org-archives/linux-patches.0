@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892EA36E46C;
-	Tue, 16 Jun 2026 15:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BDD944CAF9;
+	Tue, 16 Jun 2026 15:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625443; cv=none; b=gn4FlBrmQ/zzxYiymPpjQKqddizTAD7dYWAmGDodMf9+UGRj+C4/hXyWoYzqhxZmm1IQe1Rz1eBkmWpycUmpp9V56pobmvRRtiiMD2VfykR70eYwimOFODCrKD8hbo2AFGP/Hs2btbyHG5X+3r3jH+YK0f1R1+ppmu1A4L8ubB8=
+	t=1781625448; cv=none; b=EaUqxnVqn4giV6kXg4i/AKDfwFxYQb5r0Q4RGqx/hVZvGQILOCP+kVD3pZrEovVrcRYEuZm2Hgzuo1UAwRhQpF/Yr2hgzQUSMTDZGwCIa2ntwHh/7j7SoMkeWtDvJwb1+1aNXMoqOkBIDpHKgHddWbRUmqqXz6v0u9tOY2PMkgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625443; c=relaxed/simple;
-	bh=rOVo6jBtbzlv3bjHuHo7xUln89A2xBBBw3E8BWkdnqA=;
+	s=arc-20240116; t=1781625448; c=relaxed/simple;
+	bh=cDAsqdnGWLJlDwkZZ3kO65rrWMCbxg4Nrl6MgCWAi+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xr8nLxVYPc3W9kSKsV34TKEai41LALC0T7lFtXHYpDdJUHbI3FIA1CQFPxxv8xEsEWY0iNff5vvcr4jK4jP0ig0UuheDIS23b3JcCboKVu5pFCqHnfsgFV7C5kZtscWJxN+Wdy/tcKWZLvWYudMzRkMxfM6hoknPG5dmkVK2Ly8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7XaFAjj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ILpGk65nN6maydgDCdajpDN8pJaXd0OogIL5oK4jA82PxQGYZSfqLBGKw9I+f34MdlsR5NNcDo5rJZHpe67jojslzNoVqfWNdIorfO4nCNGy9lOjkzLSRLHYwDCRMFcx9zA/XGDEIwlfKcfVLwF1iLcJHPC8pW+pEMoWLxwRIrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4SxGibz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7XaFAjj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993B11F000E9;
-	Tue, 16 Jun 2026 15:57:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4SxGibz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F7B1F000E9;
+	Tue, 16 Jun 2026 15:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625442;
-	bh=ZRZviinv0nxADfsmEqHfeDQ4qiDdQJM8lo2U8M7gs78=;
+	s=korg; t=1781625447;
+	bh=wvjAMp2ypAyyf6SmFGWgit33gkwpkvafhnquUjtEGwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c7XaFAjjzPe5IBrTadZiyTJpQnc2EMwKwntkVViU1Z7Jo+rWSuwic8nEF/Xe1WZCu
-	 d0/N6rK5quyOMKCpgD9KSA9j7Z2X1h5JhPflEKbbP6j/RaW/wcPNXZR8Q/YfPBwHPj
-	 DcP0YQuAQltuE1isoFJ726ZSpV29Zcql2+pOIeoU=
+	b=q4SxGibz3mjmVeHWbuMaFWXja89lHPzEFlbjsZLHvp8+HVfWYwUf2tqwPimT407qS
+	 HyIAo547UHWwNt8X+pByc2FRfFJk7TK39dIg1kg/zIwlhXwUkidHiqGryUbFoMW0Su
+	 EIcDfI0ithoQmULuuISJ49+qKncB2VWIfAqyfjJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Ryosuke Yasuoka <ryasuoka@redhat.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 143/325] drm/virtio: Fix driver removal with disabled KMS
-Date: Tue, 16 Jun 2026 20:28:59 +0530
-Message-ID: <20260616145104.856570165@linuxfoundation.org>
+Subject: [PATCH 6.18 117/325] sctp: validate embedded INIT chunk and address list lengths in cookie
+Date: Tue, 16 Jun 2026 20:28:33 +0530
+Message-ID: <20260616145103.540763198@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -51,41 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit f329e8325e054bd6d84d10904f8dd51137281b92 ]
+[ Upstream commit 6f4c80a2a7e6d06753b89a578b710a2499a5e62b ]
 
-DRM atomic and modesetting aren't initialized if virtio-gpu driver built
-with disabled KMS, leading to access of uninitialized data on driver
-removal/unbinding and crashing kernel. Fix it by skipping shutting down
-atomic core with unavailable KMS.
+sctp_unpack_cookie() only checked that the embedded INIT chunk length
+did not exceed the remaining cookie payload, but did not ensure that the
+INIT chunk is large enough to contain a complete INIT header.
 
-Fixes: 72122c69d717 ("drm/virtio: Add option to disable KMS support")
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Tested-by: Ryosuke Yasuoka <ryasuoka@redhat.com>
-Reviewed-by: Ryosuke Yasuoka <ryasuoka@redhat.com>
-Link: https://patch.msgid.link/20260604122743.13383-1-dmitry.osipenko@collabora.com
+A malformed COOKIE_ECHO can therefore carry a truncated INIT chunk whose
+length field is smaller than sizeof(struct sctp_init_chunk).  Later,
+sctp_process_init() accesses INIT parameters unconditionally, which may
+lead to out-of-bounds reads.
+
+In addition, raw_addr_list_len is not fully validated against the
+remaining cookie payload. When cookie authentication is disabled, an
+attacker can supply an oversized raw_addr_list_len and cause
+sctp_raw_to_bind_addrs() to read beyond the end of the cookie. The
+address parser also lacks sufficient bounds checks for parameter headers
+and lengths, allowing malformed address parameters to trigger
+out-of-bounds reads.
+
+Fix this by:
+
+- requiring the embedded INIT chunk length to be at least sizeof(struct
+  sctp_init_chunk);
+- validating that the INIT chunk and raw address list together fit
+  within the cookie payload;
+- verifying sufficient data exists for each address parameter header and
+  payload before parsing it.
+
+Note that sctp_verify_init() must be called after sctp_unpack_cookie()
+and before sctp_process_init() when cookie authentication is disabled.
+This will be addressed in a separate patch.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/75af23a89adf881a0895d511775e4770da367cbf.1780873427.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_drv.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/sctp/bind_addr.c     | 11 ++++++++++-
+ net/sctp/sm_make_chunk.c |  9 +++++++--
+ 2 files changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.c b/drivers/gpu/drm/virtio/virtgpu_drv.c
-index 71c6ccad4b99b4..d9556e1b67b10b 100644
---- a/drivers/gpu/drm/virtio/virtgpu_drv.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_drv.c
-@@ -123,7 +123,10 @@ static void virtio_gpu_remove(struct virtio_device *vdev)
- 	struct drm_device *dev = vdev->priv;
+diff --git a/net/sctp/bind_addr.c b/net/sctp/bind_addr.c
+index 6b95d3ba8fe1ce..0947b276d1e085 100644
+--- a/net/sctp/bind_addr.c
++++ b/net/sctp/bind_addr.c
+@@ -275,6 +275,16 @@ int sctp_raw_to_bind_addrs(struct sctp_bind_addr *bp, __u8 *raw_addr_list,
+ 		param = (struct sctp_paramhdr *)raw_addr_list;
+ 		rawaddr = (union sctp_addr_param *)raw_addr_list;
  
- 	drm_dev_unplug(dev);
--	drm_atomic_helper_shutdown(dev);
++		if (addrs_len < sizeof(*param)) {
++			retval = -EINVAL;
++			goto out_err;
++		}
++		len = ntohs(param->length);
++		if (addrs_len < len) {
++			retval = -EINVAL;
++			goto out_err;
++		}
 +
-+	if (drm_core_check_feature(dev, DRIVER_ATOMIC))
-+		drm_atomic_helper_shutdown(dev);
-+
- 	virtio_gpu_deinit(dev);
- 	drm_dev_put(dev);
- }
+ 		af = sctp_get_af_specific(param_type2af(param->type));
+ 		if (unlikely(!af) ||
+ 		    !af->from_addr_param(&addr, rawaddr, htons(port), 0)) {
+@@ -291,7 +301,6 @@ int sctp_raw_to_bind_addrs(struct sctp_bind_addr *bp, __u8 *raw_addr_list,
+ 			goto out_err;
+ 
+ next:
+-		len = ntohs(param->length);
+ 		addrs_len -= len;
+ 		raw_addr_list += len;
+ 	}
+diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
+index 9014b095f52ddb..51affa4fd396b7 100644
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -1731,8 +1731,8 @@ struct sctp_association *sctp_unpack_cookie(
+ 	struct sk_buff *skb = chunk->skb;
+ 	struct sctp_cookie *bear_cookie;
+ 	struct sctp_chunkhdr *ch;
++	unsigned int len, chlen;
+ 	enum sctp_scope scope;
+-	unsigned int len;
+ 	ktime_t kt;
+ 
+ 	/* Header size is static data prior to the actual cookie, including
+@@ -1761,7 +1761,12 @@ struct sctp_association *sctp_unpack_cookie(
+ 	bear_cookie = &cookie->c;
+ 
+ 	ch = (struct sctp_chunkhdr *)(bear_cookie + 1);
+-	if (ntohs(ch->length) > len - fixed_size)
++	chlen = ntohs(ch->length);
++	if (chlen < sizeof(struct sctp_init_chunk))
++		goto malformed;
++	if (chlen > len - fixed_size)
++		goto malformed;
++	if (bear_cookie->raw_addr_list_len > len - fixed_size - chlen)
+ 		goto malformed;
+ 
+ 	/* Verify the cookie's MAC, if cookie authentication is enabled. */
 -- 
 2.53.0
 
