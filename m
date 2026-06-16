@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830523370EA;
-	Tue, 16 Jun 2026 15:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1D53370EA;
+	Tue, 16 Jun 2026 15:07:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622462; cv=none; b=S7lnEAW8eI6t8PFcfORRNQ/eDUfOeHZrlV8qWUXu3FXG/416xZhZnMGqt5FYbcSj1L2uFLsjaZBw6qaoRZr9L14CfoSk/Z+Ls1vo7drOaINK2xXc72s2Ptwtxx2F5UGnv3ZXWZknETyLd/Mk/8NC3ztL5W39QLnCVCyg2aLMM1w=
+	t=1781622467; cv=none; b=HXRVlAbGrbABn7OrQdT3xArPFp6PpCuvgJbu/IeoyeBMGrHWi77600kBoKA0XakKxPEGgAin/CjCmqmsReJi6dEc/hWhloMja9R6DgXLO34goBqbAht4rhorZPU2UvVgd/4xYiFz2FXSCSalnGhfKSQm4LxQ1YetryONvXhb9Us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622462; c=relaxed/simple;
-	bh=lrZ+Kn/+VhRkid+I9QanFBIAdJ5aFyz+RVgQqokZXxg=;
+	s=arc-20240116; t=1781622467; c=relaxed/simple;
+	bh=p5RcP/6FM5TiVKBU2ZlhHQlg2JQU08xxcI5+Vz+6KoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nvrKrtQWgufVL05LtN9OFIXgOhTx0AFWXljDtmA/DKPrCW4iOB76Q1wYSr0SWhCtVqldp+0maJ0u3lSSpUShP29VqI444UUO+ZqF/Ow9e07vt5hQSmWb1Bv4B1cYtdFhaTkD5hQtDlLQ7J94LADuQGVIcxJNzh6qUCtWMrHSqOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqoBVob/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=poX/ioQdOQY+GATAZqK7R0CherS/A0yV6Rl6rdO740ovc4AslF8kbv63uoEcnjr8muLYuVrpEotPRnQ5sDAooMtUbBEA/WXUhQCsE8+lyV7nGngvOHbHhuibHjiSiAFQa6VHra6PO33UbuiDv+CrDAD2r3gxe6oV7gBi4iR54wE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFYxjE2m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqoBVob/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 926391F000E9;
-	Tue, 16 Jun 2026 15:07:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFYxjE2m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5FB1F000E9;
+	Tue, 16 Jun 2026 15:07:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622461;
-	bh=W40Lt21LYl3DZYtIrY76gmCLFvFqTYEh2hPV4mRHjkY=;
+	s=korg; t=1781622466;
+	bh=1S53ksa2rhLU/XaZH8vIK6lblCGY05wJZMMpebgIRHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DqoBVob/aa+JE/wuzc1jr9K8SkXXYLZZv1lD0njgZiaGzBPREX0auOZe9UA4pOQYU
-	 b0naA/nnmLJoNtfIMhhgJ3Fs+kKNs/IFNemQ01oDyAi4Mf5w+aDXO3C0Nm7uBgpykc
-	 hVnyV5TGixxxoRyovd+AI0r40hcQkZ002aGouGIk=
+	b=VFYxjE2mGXYRqOBFMRmSAe9RAwrxaYZwA9auk1KvUwyb7k4FLHBfJkgUj0D0qERH3
+	 SH8gVh40VmkSE0t25TLcTZwSOQG2gkyqGqZ4zXiyGZdQ3xIn4aC7qKBLx72HZkoYmF
+	 BWQYtcN3eb5ZWSbv8WytzB8n7OSX6jik09UvpUbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.0 004/378] Bluetooth: ISO: Fix a use-after-free of the hci_conn pointer
-Date: Tue, 16 Jun 2026 20:23:55 +0530
-Message-ID: <20260616145109.990458131@linuxfoundation.org>
+	Xie Yuanbin <xieyuanbin1@huawei.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 005/325] ARM: fix branch predictor hardening
+Date: Tue, 16 Jun 2026 20:26:41 +0530
+Message-ID: <20260616145058.095123041@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
-References: <20260616145109.744539446@linuxfoundation.org>
+In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
+References: <20260616145057.827196531@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,47 +48,163 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.0-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-commit f50331f2a1441ec49988832c3a95f2edacc47322 upstream.
+commit fd2dee1c6e2256f726ba33fd3083a7be0efc80d3 upstream.
 
-In iso_sock_rebind_bc(), the bis pointer is cached, then the socket lock is
-dropped:
-	bis = iso_pi(sk)->conn->hcon;
-	/* Release the socket before lookups since that requires hci_dev_lock
-	 * which shall not be acquired while holding sock_lock for proper
-	 * ordering.
-	 */
-	release_sock(sk);
-	hci_dev_lock(bis->hdev);
+__do_user_fault() may be called with indeterminent interrupt enable
+state, which means we may be preemptive at this point. This causes
+problems when calling harden_branch_predictor(). For example, when
+called from a data abort, do_alignment_fault()->do_bad_area().
 
-During the unlocked window, could a concurrent close() destroy the connection
-and free the bis structure, causing hci_dev_lock(bis->hdev) to access memory
-after it is freed, fix this by using the hdev reference which was safely
-acquired via iso_conn_get_hdev().
+Move harden_branch_predictor() out of __do_user_fault() and into the
+calling contexts.
 
-Fixes: d3413703d5f8 ("Bluetooth: ISO: Add support to bind to trigger PAST")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Moving it into do_kernel_address_page_fault(), we can be sure that
+interrupts will be disabled here.
+
+Converting do_translation_fault() to use do_kernel_address_page_fault()
+rather than do_bad_area() means that we keep branch predictor handling
+for translation faults. Interrupts will also be disabled at this call
+site.
+
+do_sect_fault() needs special handling, so detect user mode accesses
+to kernel-addresses, and add an explicit call to branch predictor
+hardening.
+
+Finally, add branch predictor hardening to do_alignment() for the
+faulting case (user mode accessing kernel addresses) before interrupts
+are enabled.
+
+This should cover all cases where harden_branch_predictor() is called,
+ensuring that it is always has interrupts disabled, also ensuring that
+it is called early in each call path.
+
+Reviewed-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Tested-by: Xie Yuanbin <xieyuanbin1@huawei.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/mm/alignment.c |  6 +++++-
+ arch/arm/mm/fault.c     | 39 ++++++++++++++++++++++++++-------------
+ 2 files changed, 31 insertions(+), 14 deletions(-)
 
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1090,7 +1090,7 @@ static int iso_sock_rebind_bc(struct soc
- 	 * ordering.
- 	 */
- 	release_sock(sk);
--	hci_dev_lock(bis->hdev);
-+	hci_dev_lock(hdev);
- 	lock_sock(sk);
+diff --git a/arch/arm/mm/alignment.c b/arch/arm/mm/alignment.c
+index 3c6ddb1afdc463..812380f30ae36a 100644
+--- a/arch/arm/mm/alignment.c
++++ b/arch/arm/mm/alignment.c
+@@ -19,10 +19,11 @@
+ #include <linux/init.h>
+ #include <linux/sched/signal.h>
+ #include <linux/uaccess.h>
++#include <linux/unaligned.h>
  
- 	if (!iso_pi(sk)->conn || iso_pi(sk)->conn->hcon != bis) {
+ #include <asm/cp15.h>
+ #include <asm/system_info.h>
+-#include <linux/unaligned.h>
++#include <asm/system_misc.h>
+ #include <asm/opcodes.h>
+ 
+ #include "fault.h"
+@@ -809,6 +810,9 @@ do_alignment(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+ 	int thumb2_32b = 0;
+ 	int fault;
+ 
++	if (addr >= TASK_SIZE && user_mode(regs))
++		harden_branch_predictor();
++
+ 	if (interrupts_enabled(regs))
+ 		local_irq_enable();
+ 
+diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
+index 0e5b4bc7b21760..ed4330cc3f4e6f 100644
+--- a/arch/arm/mm/fault.c
++++ b/arch/arm/mm/fault.c
+@@ -198,9 +198,6 @@ __do_user_fault(unsigned long addr, unsigned int fsr, unsigned int sig,
+ {
+ 	struct task_struct *tsk = current;
+ 
+-	if (addr > TASK_SIZE)
+-		harden_branch_predictor();
+-
+ #ifdef CONFIG_DEBUG_USER
+ 	if (((user_debug & UDBG_SEGV) && (sig == SIGSEGV)) ||
+ 	    ((user_debug & UDBG_BUS)  && (sig == SIGBUS))) {
+@@ -269,8 +266,10 @@ do_kernel_address_page_fault(struct mm_struct *mm, unsigned long addr,
+ 		/*
+ 		 * Fault from user mode for a kernel space address. User mode
+ 		 * should not be faulting in kernel space, which includes the
+-		 * vector/khelper page. Send a SIGSEGV.
++		 * vector/khelper page. Handle the branch predictor hardening
++		 * while interrupts are still disabled, then send a SIGSEGV.
+ 		 */
++		harden_branch_predictor();
+ 		__do_user_fault(addr, fsr, SIGSEGV, SEGV_MAPERR, regs);
+ 	} else {
+ 		/*
+@@ -485,16 +484,20 @@ do_page_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+  * We enter here because the first level page table doesn't contain
+  * a valid entry for the address.
+  *
+- * If the address is in kernel space (>= TASK_SIZE), then we are
+- * probably faulting in the vmalloc() area.
++ * If this is a user address (addr < TASK_SIZE), we handle this as a
++ * normal page fault. This leaves the remainder of the function to handle
++ * kernel address translation faults.
+  *
+- * If the init_task's first level page tables contains the relevant
+- * entry, we copy the it to this task.  If not, we send the process
+- * a signal, fixup the exception, or oops the kernel.
++ * Since user mode is not permitted to access kernel addresses, pass these
++ * directly to do_kernel_address_page_fault() to handle.
+  *
+- * NOTE! We MUST NOT take any locks for this case. We may be in an
+- * interrupt or a critical region, and should only copy the information
+- * from the master page table, nothing more.
++ * Otherwise, we're probably faulting in the vmalloc() area, so try to fix
++ * that up. Note that we must not take any locks or enable interrupts in
++ * this case.
++ *
++ * If vmalloc() fixup fails, that means the non-leaf page tables did not
++ * contain an entry for this address, so handle this via
++ * do_kernel_address_page_fault().
+  */
+ #ifdef CONFIG_MMU
+ static int __kprobes
+@@ -560,7 +563,8 @@ do_translation_fault(unsigned long addr, unsigned int fsr,
+ 	return 0;
+ 
+ bad_area:
+-	do_bad_area(addr, fsr, regs);
++	do_kernel_address_page_fault(current->mm, addr, fsr, regs);
++
+ 	return 0;
+ }
+ #else					/* CONFIG_MMU */
+@@ -580,7 +584,16 @@ do_translation_fault(unsigned long addr, unsigned int fsr,
+ static int
+ do_sect_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+ {
++	/*
++	 * If this is a kernel address, but from user mode, then userspace
++	 * is trying bad stuff. Invoke the branch predictor handling.
++	 * Interrupts are disabled here.
++	 */
++	if (addr >= TASK_SIZE && user_mode(regs))
++		harden_branch_predictor();
++
+ 	do_bad_area(addr, fsr, regs);
++
+ 	return 0;
+ }
+ #endif /* CONFIG_ARM_LPAE */
+-- 
+2.53.0
+
 
 
