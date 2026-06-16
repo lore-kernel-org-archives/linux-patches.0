@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F214657EA;
-	Tue, 16 Jun 2026 15:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC3B44DB64;
+	Tue, 16 Jun 2026 15:47:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624872; cv=none; b=usdeK5KH3nThlsiPEVcVGjY3c+XFfDLulK7gqdLV3+eL9XQYTx7+N68ljn3iCKQEoi3IfwN/Z+uUFamI3nSqAOv6LulDuSDBmeKuuYvyo7FEkgkziLBqoODmfjGqTmgXdv6EfLyZD0Jk34aC2C2p1Tg+vyAnluAv6XPtaZEipHs=
+	t=1781624879; cv=none; b=ierzOaMU7OWogUFZWEkag833lRIJEoleESoSsMq6iqVNIffi7H/FPkX6IJN9eHkLz3q05P4DBLKb5RV9Q1Qec6zNRcEEueWP+2ok9U4GDHyMfzwvefGCYoCTXGy9Lh9KwRLlN0sBMDt3Gjy8aX22TzBzMPBtQMDeqolmeOLU4l8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624872; c=relaxed/simple;
-	bh=C6uxKVpVdVrswm93BkD3oVLMTne4NTGQR1KG6ykjh2E=;
+	s=arc-20240116; t=1781624879; c=relaxed/simple;
+	bh=By+FI7/P/vn8iceewji+4C8ILuabNMKrm9S37tzjBBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TZeyO4kBuzDzkVGXh53HHDOQphzchgiwFIrO6QIXqg8pFAs59iSplm1kR6HWxS89KrjDhmO6g2sCYqRX4xDVBMO+ZFflXt6daaZuDIRsydf4Oxktdewe8mQm5aJBZM6YbiQkSU81ij2NzFVSsQBtR+x0qQ2Ic+iw9d2jlY1r+6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwUSvQVc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WLNmjX9R+DNYKz6D3oKx/kglSP88+5L3MYYA8/KmaR7vsEsSFY/HAXu8GhJGrN7o5rj2FLq+O7FdAA0f6bv/rgK/uGao4ieOwsDvLSkEH1zX8ruxiUlQhg8AbpxpwHgGYmsNfOMbs1iZZ0uR7/fye4eVKqg4CquIU9WAaORSJ8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lq1rPscE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwUSvQVc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D6E1F000E9;
-	Tue, 16 Jun 2026 15:47:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lq1rPscE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A54E1F00A3E;
+	Tue, 16 Jun 2026 15:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624871;
-	bh=H0DW4Fq7ZvKhfgU5UH7wgFF7SB9YIRu32VhknRIK0bo=;
+	s=korg; t=1781624877;
+	bh=a+65x2Z1OKR6jb1H7rEHoiHFvCtf6APYwE9QC6FvRJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PwUSvQVc3akgUty4lxUQjJN3EcAogulU4KfU0/ic2Nvc+aKqjgfcjOb1FZ+21PfJn
-	 emmKQbGuu07m3xDkuo6GjygePiQmXWVeWNqwHkjTzlDjSKDicLtGplY2moyQIlGXXf
-	 I9Y1l7alUrxQ09uK4fmA8KKtUNdDBqVHhm07dLF8=
+	b=lq1rPscEYrCr0tjYWkt5GLBsqxVKnGzrTKWhXtoeN1osxRx4jY8gmATbeYK2QPC4i
+	 18m/dl6UZcX2YoM/wk/HPnD3xz03b3qaB8+V79/kfBX16Mo4fxz9hOBZ1NpHj5N1bU
+	 n/38irBqDxMmiav4/Dtvt0VcDZAQXs9SVlKOMViU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Harshal Dev <harshal.dev@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Val Packett <val@packett.cool>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 011/325] soc: qcom: ice: Allow explicit votes on iface clock for ICE
-Date: Tue, 16 Jun 2026 20:26:47 +0530
-Message-ID: <20260616145058.375674130@linuxfoundation.org>
+Subject: [PATCH 6.18 012/325] arm64: dts: qcom: x1-dell-thena: remove i2c20 (battery SMBus) and reserve its pins
+Date: Tue, 16 Jun 2026 20:26:48 +0530
+Message-ID: <20260616145058.422122562@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -54,85 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshal Dev <harshal.dev@oss.qualcomm.com>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit 0d5dc5818191b55e4364d04b1b898a14a2ccac38 ]
+[ Upstream commit 4b15b03166cc5d28e9912287b1f9b6607c8710ec ]
 
-Since Qualcomm inline-crypto engine (ICE) is now a dedicated driver
-de-coupled from the QCOM UFS driver, it explicitly votes for its required
-clocks during probe. For scenarios where the 'clk_ignore_unused' flag is
-not passed on the kernel command line, to avoid potential unclocked ICE
-hardware register access during probe the ICE driver should additionally
-vote on the 'iface' clock.
-Also update the suspend and resume callbacks to handle un-voting and voting
-on the 'iface' clock.
+i2c20 is used by the battmgr service on the ADSP to communicate with the
+SBS interface of the battery. Initializing it from Linux would break the
+battmgr functionality when booted in EL2. Mark those pins as reserved.
 
-Fixes: 2afbf43a4aec6 ("soc: qcom: Make the Qualcomm UFS/SDCC ICE a dedicated driver")
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+Fixes: e7733b42111c ("arm64: dts: qcom: Add support for Dell Inspiron 7441 / Latitude 7455")
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260416-qcom_ice_power_and_clk_vote-v5-2-5ccf5d7e2846@oss.qualcomm.com
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Signed-off-by: Val Packett <val@packett.cool>
+Link: https://lore.kernel.org/r/20260312005731.12488-2-val@packett.cool
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/ice.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-index c467b55b41744e..05055e097ff8fb 100644
---- a/drivers/soc/qcom/ice.c
-+++ b/drivers/soc/qcom/ice.c
-@@ -95,6 +95,7 @@ struct qcom_ice {
- 	void __iomem *base;
- 
- 	struct clk *core_clk;
-+	struct clk *iface_clk;
- 	bool use_hwkm;
- 	bool hwkm_init_complete;
+diff --git a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+index 847b678f040c00..5b5a10a31a253a 100644
+--- a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+@@ -982,12 +982,6 @@ &i2c8 {
+ 	status = "okay";
  };
-@@ -278,8 +279,13 @@ int qcom_ice_resume(struct qcom_ice *ice)
  
- 	err = clk_prepare_enable(ice->core_clk);
- 	if (err) {
--		dev_err(dev, "failed to enable core clock (%d)\n",
--			err);
-+		dev_err(dev, "Failed to enable core clock: %d\n", err);
-+		return err;
-+	}
-+
-+	err = clk_prepare_enable(ice->iface_clk);
-+	if (err) {
-+		dev_err(dev, "Failed to enable iface clock: %d\n", err);
- 		return err;
- 	}
- 	qcom_ice_hwkm_init(ice);
-@@ -289,6 +295,7 @@ EXPORT_SYMBOL_GPL(qcom_ice_resume);
+-&i2c20 {
+-	clock-frequency = <400000>;
+-
+-	status = "okay";
+-};
+-
+ &lpass_tlmm {
+ 	spkr_01_sd_n_active: spkr-01-sd-n-active-state {
+ 		pins = "gpio12";
+@@ -1306,6 +1300,7 @@ right_tweeter: speaker@0,1 {
+ &tlmm {
+ 	gpio-reserved-ranges = <44 4>,  /* SPI11 (TPM) */
+ 			       <76 4>,  /* SPI19 (TZ Protected) */
++			       <80 2>,  /* I2C20 (Battery SMBus) */
+ 			       <238 1>; /* UFS Reset */
  
- int qcom_ice_suspend(struct qcom_ice *ice)
- {
-+	clk_disable_unprepare(ice->iface_clk);
- 	clk_disable_unprepare(ice->core_clk);
- 	ice->hwkm_init_complete = false;
- 
-@@ -544,11 +551,17 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
- 	engine->core_clk = devm_clk_get_optional_enabled(dev, "ice_core_clk");
- 	if (!engine->core_clk)
- 		engine->core_clk = devm_clk_get_optional_enabled(dev, "ice");
-+	if (!engine->core_clk)
-+		engine->core_clk = devm_clk_get_optional_enabled(dev, "core");
- 	if (!engine->core_clk)
- 		engine->core_clk = devm_clk_get_enabled(dev, NULL);
- 	if (IS_ERR(engine->core_clk))
- 		return ERR_CAST(engine->core_clk);
- 
-+	engine->iface_clk = devm_clk_get_optional_enabled(dev, "iface");
-+	if (IS_ERR(engine->iface_clk))
-+		return ERR_CAST(engine->iface_clk);
-+
- 	if (!qcom_ice_check_supported(engine))
- 		return ERR_PTR(-EOPNOTSUPP);
- 
+ 	cam_rgb_default: cam-rgb-default-state {
 -- 
 2.53.0
 
