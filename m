@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0B644CF52;
-	Tue, 16 Jun 2026 15:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6016744D01E;
+	Tue, 16 Jun 2026 15:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624444; cv=none; b=K6Z9xEBX9Hl8hoq3dnvZOFUF0t+BS3Tm55ysI5uaUCFKFde+psIk2ChSS5j8MlRXUSwhyQv8ip3pRElKunUcQJ9nFNDBBgG+7DgqeEzmk565YfqyPEnfY3pgUqL3XBT1b+7ZfjbsAlfB0kvnj/G2ua3NPLfyXXEMUIDV7M8cfro=
+	t=1781624449; cv=none; b=Us4T48n4MM+ln70blUZpLpUeb1eSX6mBE38j6AP29gq+qG5T8HQ4R8a6655Uac/NZYrU1GK6h2xey8xaXrLpfKkaf60gUlMesHkInNp7V4dEi0VAvR3IyZDWH2LUgdCRg/RliYZCF3nCm015uG+vSC2FDcmM/11iY+J6eg94mvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624444; c=relaxed/simple;
-	bh=De92+8TcrcaEkvxv2GyesLIvnx3BP1sM5QZw910CiTc=;
+	s=arc-20240116; t=1781624449; c=relaxed/simple;
+	bh=VMZDBK5lYTxe3yrY0NocEQ4e8cTZXMHCmd8UrEoD6uc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LhcpYDrvpVNPD2ymY3QmliPusKbfmeVzW48rQTgeky+JcIBZgYwDJHmmFobD2DZpecKsBlOg4r++V+B0bUEUD47q3T6D4g4DClc0Nzh3oEe3VSSisxntVRSzJc8FlMuVWWNUMAEu2rW2j26kNWhxGJLuEXAsmjxtOkGX42tfxi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDC14v5b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A5NKQiP+Nigkt0dac0VQWcyTmM8dx0kr/fbXW5axz32FP6R+KWrL6KJqnQjquzTTnNzWjuPyXkl3aFpzHBpjkNXOkrivDzWD056dVQA0EIDn+3G7ZRHPG0fsz1FTJ/m4vG+dCSiqmfRn94lOT2WV9bvG+jTCOTcqMRqvTguu9aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SHVmoUSz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDC14v5b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185B41F000E9;
-	Tue, 16 Jun 2026 15:40:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SHVmoUSz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697BE1F000E9;
+	Tue, 16 Jun 2026 15:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624443;
-	bh=rqa8hurC/LdTTkg7yeoHqh7QdAVjm+YLm2yfF8ZMR74=;
+	s=korg; t=1781624448;
+	bh=NNZ1GDsRRyVxnze96yu2F76elkxTK9DJB7XreqDRXl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pDC14v5bRxJmfzrCL0yYsxiffFSUCkWdboZg/JBwIHU+b4f9pc8VROhwVqUQ9tDt8
-	 Xe7J91YOcrSe8xXiGf/3bGVTi0tI985NlqUGyVCD50FijwZNt9BIpUhLgDw106uVsD
-	 KHtxL814WVOs8wQA62eja1CFCYfu3llZckKpFdp0=
+	b=SHVmoUSzTn2vCMptk2Ad6F7tDVifJugdUIPVifLhYfRh/EdxwoMB2lKTGjMo8+AYS
+	 R8cg0fiTf5Ovm4GfFDbPf4A8f9p4WFTGpx6D6u1qEapTLedbfqw8ujo6E6jotSitPD
+	 EvswN4K0+mFoF8LzJ2z0D54GaAnQGXQQchshk4Ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Chris Mason <clm@fb.com>,
+	Kairui Song <kasong@tencent.com>,
 	Muchun Song <muchun.song@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Mina Almasry <almasrymina@google.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	yuehaibing <yuehaibing@huawei.com>,
+	Dave Chinner <david@fromorbit.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 7.0 304/378] mm/hugetlb: restore reservation on error in hugetlb folio copy paths
-Date: Tue, 16 Jun 2026 20:28:55 +0530
-Message-ID: <20260616145126.156282487@linuxfoundation.org>
+Subject: [PATCH 7.0 305/378] mm/list_lru: drain before clearing xarray entry on reparent
+Date: Tue, 16 Jun 2026 20:28:56 +0530
+Message-ID: <20260616145126.213771637@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -55,68 +56,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-commit 40c81856e622a9dc59294a90d169ac07ea25b0b0 upstream.
+commit 98733f3f0becb1ae0701d021c1748e974e5fa55c upstream.
 
-Two sites in mm/hugetlb.c allocate a hugetlb folio via
-alloc_hugetlb_folio() (consuming a VMA reservation) and then call
-copy_user_large_folio(), which became int-returning in commit 1cb9dc4b475c
-("mm: hwpoison: support recovery from HugePage copy-on-write faults") and
-can now fail (e.g.  -EHWPOISON on a hwpoisoned source page).  On the
-failure path, folio_put() restores the global hugetlb pool count through
-free_huge_folio(), but the per-VMA reservation map entry is left marked
-consumed:
+memcg_reparent_list_lrus() clears the dying memcg's xarray entry with
+xas_store(&xas, NULL) before reparenting its per-node lists into the
+parent.  This opens a window where a concurrent list_lru_del() arriving
+for the dying memcg sees xa_load() == NULL, walks to the parent in
+lock_list_lru_of_memcg(), takes the parent's per-node lock, and calls
+list_del_init() on an item still physically linked on the dying memcg's
+list.
 
-  - hugetlb_mfill_atomic_pte() resubmission path (UFFDIO_COPY)
-  - copy_hugetlb_page_range() fork-time CoW path when
-    hugetlb_try_dup_anon_rmap() fails (rare: pinned hugetlb anon
-    folio under fork)
+If another in-flight thread holds the dying memcg's per-node lock at the
+same moment (another list_lru_del, or a list_lru_walk_one running an
+isolate callback), both threads modify ->next/->prev pointers on the same
+physical list under different locks.  Adjacent items can corrupt each
+other's links.
 
-User-visible effect: on UFFDIO_COPY into a private hugetlb VMA where the
-resubmission copy fails, the reservation for that address is leaked from
-the VMA's reserve map.  A subsequent fault at the same address takes the
-no-reservation path, and under hugetlb pool pressure the task is SIGBUSed
-at an address it had previously reserved.  The fork-time CoW path leaks
-the same way in the child VMA's reserve map, though it requires the much
-rarer combination of pinned hugetlb anon page + hwpoisoned source.
+Fix it by reversing the order: reparent each per-node list and mark the
+child's list lru dead and then clear the xarray entry.  Any concurrent
+list_lru op that finds the still-set xarray entry either takes the dying
+memcg's per-node lock (synchronizing with the drain) or sees LONG_MIN and
+walks to the parent, where the items now live.
 
-Add the missing restore_reserve_on_error() call before folio_put() on both
-error paths.
-
-Link: https://lore.kernel.org/20260520044912.6751-1-devnexen@gmail.com
-Fixes: 1cb9dc4b475c ("mm: hwpoison: support recovery from HugePage copy-on-write faults")
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Mina Almasry <almasrymina@google.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: yuehaibing <yuehaibing@huawei.com>
+Link: https://lore.kernel.org/20260601161501.1444829-1-shakeel.butt@linux.dev
+Fixes: fb56fdf8b9a2 ("mm/list_lru: split the lock to per-cgroup scope")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Reported-by: Chris Mason <clm@fb.com>
+Reviewed-by: Kairui Song <kasong@tencent.com>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/list_lru.c |   21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -4996,6 +4996,7 @@ again:
- 							    addr, dst_vma);
- 				folio_put(pte_folio);
- 				if (ret) {
-+					restore_reserve_on_error(h, dst_vma, addr, new_folio);
- 					folio_put(new_folio);
- 					break;
- 				}
-@@ -6292,6 +6293,7 @@ int hugetlb_mfill_atomic_pte(pte_t *dst_
- 		folio_put(*foliop);
- 		*foliop = NULL;
- 		if (ret) {
-+			restore_reserve_on_error(h, dst_vma, dst_addr, folio);
- 			folio_put(folio);
- 			goto out;
- 		}
+--- a/mm/list_lru.c
++++ b/mm/list_lru.c
+@@ -472,26 +472,29 @@ void memcg_reparent_list_lrus(struct mem
+ 	mutex_lock(&list_lrus_mutex);
+ 	list_for_each_entry(lru, &memcg_list_lrus, list) {
+ 		struct list_lru_memcg *mlru;
+-		XA_STATE(xas, &lru->xa, memcg->kmemcg_id);
+ 
+ 		/*
+-		 * Lock the Xarray to ensure no on going list_lru_memcg
+-		 * allocation and further allocation will see css_is_dying().
++		 * css_is_dying() check in memcg_list_lru_alloc() avoids
++		 * allocating a new mlru since CSS_DYING is already set for this
++		 * memcg a rcu grace period ago.
+ 		 */
+-		xas_lock_irq(&xas);
+-		mlru = xas_store(&xas, NULL);
+-		xas_unlock_irq(&xas);
++		mlru = xa_load(&lru->xa, memcg->kmemcg_id);
+ 		if (!mlru)
+ 			continue;
+ 
+ 		/*
+-		 * With Xarray value set to NULL, holding the lru lock below
+-		 * prevents list_lru_{add,del,isolate} from touching the lru,
+-		 * safe to reparent.
++		 * Reparent each per-node list and mark the child dead
++		 * (LONG_MIN) before clearing xarray entry otherwise a
++		 * concurrent list_lru_del() may corrupt the list if it arrives
++		 * after xarray clear but before reparenting as
++		 * lock_list_lru_of_memcg will acquire parent's lock while the
++		 * item is still on child's list.
+ 		 */
+ 		for_each_node(i)
+ 			memcg_reparent_list_lru_one(lru, i, &mlru->node[i], parent);
+ 
++		xa_erase_irq(&lru->xa, memcg->kmemcg_id);
++
+ 		/*
+ 		 * Here all list_lrus corresponding to the cgroup are guaranteed
+ 		 * to remain empty, we can safely free this lru, any further
 
 
