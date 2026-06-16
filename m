@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617DD36A033;
-	Tue, 16 Jun 2026 15:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBBE3AA4E1;
+	Tue, 16 Jun 2026 15:29:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623746; cv=none; b=fs/Z6OQFnJ/mq9cenj9FDUCfYtBG1PmxE7X6mu9zeUU1nBxWzivLOs1WL2ZMXHbZE1TBudL9R04eDV5gEbWEho2iMzzAS1tVahX9XvqwiV5EH2SRx6oFULDp8FUeaCplE7trrAzQ7WzVEXwug2km3HtE4Mz7PhZsv+OrrnH3/gM=
+	t=1781623751; cv=none; b=t4mWCePayRmoUZWQct0WAqyTnI7B7f3sRbxm0YCo9k5qXAlj2PRKf8R4BS7SdFwMt+C4ph8atBttUNanyDS3sWDTx3UNrlr1JUcwGpQqA85d1WbtItKBnKMvDhMWj3eVZXxAgI9ovN4wdCTmf693dfhELDpiSCqB4/IJ7XWtySE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623746; c=relaxed/simple;
-	bh=G1Gf2CTW7MxbZ/A6lUtfvM1hIzedWt3fFMaRaGqqLro=;
+	s=arc-20240116; t=1781623751; c=relaxed/simple;
+	bh=+SvABPlDMjgTZpxtBqqY04tZYVH+5Sj9LartFr6Pw94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q2gCpKdMv9z+B3w5YBEim3DYCSISDrzfn3JBk0sFtbEPHlX7pG4tyrQcNLvBCM+Tp2pE/n2rz8ACd4W/WiAO10NgQI3WSqhSxZqU1ldaWYbsDpd1MNDRl3WzPkbxlShf4G68Ve3w9fkgsICBeZupEpuJW2Hw1n9chnpoOsXiXHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N7rSoqZD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dOTdf/o4v7ooYhpkriWjFZR1nFYGuHPCGUwTzsdcGvKyvI6dxviUYykYlRED/Qeyo5LPABFJBml5FszxuYqxqOPfqKOkcj9CRlvy44zKNoK4wISm7t8wCnM2paE3bXx0astusg7zziMV7pucTvUA7K1IYYES4u9SeadEyDJ3jMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAYQimlH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N7rSoqZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FC41F000E9;
-	Tue, 16 Jun 2026 15:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAYQimlH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C61C1F000E9;
+	Tue, 16 Jun 2026 15:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623744;
-	bh=YO0iPQXEEHAopm3vxWDOUrwtH0Vh9AFmsq4TRXG/HDQ=;
+	s=korg; t=1781623749;
+	bh=cT8+FMODqvfyGODMQ79UIZ/IhAlPG6yYZV/AFi4ZXjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N7rSoqZDbhm3UupVrgsD+7VEf3YoRIxHQWLxdxHIdT8qnPhVjpjEF8Dwag4gMTDE0
-	 CfOQHtpoFtZJKrenPIor0e5Aw8oXmluz70DF7mCosgRvlv5basn7oa59GuEtHnVB/d
-	 769mpwYoW4R6C6dxUgEAwCZxQuafArz/vlmSdZNE=
+	b=bAYQimlHjaHKawL/AVc+yO0RRPSQT5sFTXc1jH0UJ47mqMWufTyFgkf6B+G6KXv07
+	 7kLGnSMIYDdK1AmWTjQ8/mrH57GvOSDJkwDwwcz+tDaVUb2CLJ29yjTRGuyrz+ZQ8B
+	 ibaWnwjohMJ08bGLPKjOChdClua2WmvGruQ30EHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Simona Vetter <simona@ffwll.ch>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Subject: [PATCH 7.0 200/378] drm/i915/gem: Fix phys BO pread/pwrite with offset
-Date: Tue, 16 Jun 2026 20:27:11 +0530
-Message-ID: <20260616145120.918557860@linuxfoundation.org>
+	Anton Leontev <leontyevantony@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 7.0 201/378] hv_netvsc: use kmap_local_page in netvsc_copy_to_send_buf
+Date: Tue, 16 Jun 2026 20:27:12 +0530
+Message-ID: <20260616145120.970552178@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -55,89 +50,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+From: Anton Leontev <leontyevantony@gmail.com>
 
-commit d21ad938398bca695a511307de38a65889e3b354 upstream.
+commit 004e9ecfe6c5384f9e0b2f6f6389d42ec22789af upstream.
 
-sg_page() returns struct page pointer not (void *) so the scaling
-of pread/pwrite is wrong for phys BO and wrong parts of BO would be
-accessed if non-zero offset is used.
+netvsc_copy_to_send_buf() copies page buffer entries into the VMBus
+send buffer using phys_to_virt() on the entry PFN. Entries for the
+RNDIS header and the skb linear data come from kmalloc'd memory and
+are always in the kernel direct map, but entries for skb fragments
+reference page cache or user pages, which on 32-bit x86 with
+CONFIG_HIGHMEM=y can live above the LOWMEM boundary. For such a page
+phys_to_virt() returns an address outside the direct map and the
+subsequent memcpy() faults on the transmit softirq path, which is
+fatal.
 
-Last impacted platform with overlay or cursor planes using phys
-mapping was Gen3/945G/Lakeport.
+Map the pages with kmap_local_page() instead, handling two properties
+of the page buffer entries:
 
-Reported-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Fixes: c6790dc22312 ("drm/i915: Wean off drm_pci_alloc/drm_pci_free")
-Cc: <stable@vger.kernel.org> # v4.5+
-Cc: Tvrtko Ursulin <tursulin@ursulin.net>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Link: https://patch.msgid.link/20260610060314.26111-1-joonas.lahtinen@linux.intel.com
-(cherry picked from commit 3e49a2f85070b2fb672c1e0fdba281a4ea3aebe6)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+ - pb[i].pfn is a Hyper-V PFN at HV_HYP_PAGE_SIZE (4K) granularity,
+   not a native PFN. Reconstruct the physical address first and derive
+   the native page from it, so the mapping stays correct where
+   PAGE_SIZE > HV_HYP_PAGE_SIZE (e.g. arm64 with 64K pages).
+
+ - Since commit 41a6328b2c55 ("hv_netvsc: Preserve contiguous PFN
+   grouping in the page buffer array"), an entry describes a full
+   physically contiguous fragment and pb[i].len can exceed PAGE_SIZE,
+   while kmap_local_page() maps a single page. Copy page by page,
+   splitting at native page boundaries.
+
+The copy path only handles packets smaller than the send section size
+(6144 bytes by default); larger packets take the cp_partial path where
+only the RNDIS header is copied. So entries here are bounded by the
+section size and a copy is split at most once on 4K-page systems. On
+!CONFIG_HIGHMEM configs kmap_local_page() folds to page_address() and
+no mapping work is added.
+
+Fixes: c25aaf814a63 ("hyperv: Enable sendbuf mechanism on the send path")
+Cc: stable@vger.kernel.org
+Signed-off-by: Anton Leontev <leontyevantony@gmail.com>
+Link: https://patch.msgid.link/20260604165938.32033-1-leontyevantony@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_phys.c |   19 +++++++++++++++----
+ drivers/net/hyperv/netvsc.c |   19 +++++++++++++++----
  1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_phys.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_phys.c
-@@ -18,6 +18,17 @@
- #include "i915_gem_tiling.h"
- #include "i915_scatterlist.h"
+--- a/drivers/net/hyperv/netvsc.c
++++ b/drivers/net/hyperv/netvsc.c
+@@ -12,6 +12,7 @@
+ #include <linux/sched.h>
+ #include <linux/wait.h>
+ #include <linux/mm.h>
++#include <linux/highmem.h>
+ #include <linux/delay.h>
+ #include <linux/io.h>
+ #include <linux/slab.h>
+@@ -965,12 +966,22 @@ static void netvsc_copy_to_send_buf(stru
+ 	}
  
-+/* Abuse scatterlist to store pointer instead of struct page. */
-+static inline void __set_phys_vaddr(struct scatterlist *sg, void *vaddr)
-+{
-+	sg_assign_page(sg, (struct page *)vaddr);
-+}
+ 	for (i = 0; i < page_count; i++) {
+-		char *src = phys_to_virt(pb[i].pfn << HV_HYP_PAGE_SHIFT);
+-		u32 offset = pb[i].offset;
++		phys_addr_t paddr = (pb[i].pfn << HV_HYP_PAGE_SHIFT) +
++				    pb[i].offset;
+ 		u32 len = pb[i].len;
+ 
+-		memcpy(dest, (src + offset), len);
+-		dest += len;
++		while (len) {
++			struct page *page = phys_to_page(paddr);
++			u32 off = offset_in_page(paddr);
++			u32 chunk = min_t(u32, len, PAGE_SIZE - off);
++			char *src = kmap_local_page(page);
 +
-+static inline void *__get_phys_vaddr(struct scatterlist *sg)
-+{
-+	return (void *)sg_page(sg);
-+}
-+
- static int i915_gem_object_get_pages_phys(struct drm_i915_gem_object *obj)
- {
- 	struct address_space *mapping = obj->base.filp->f_mapping;
-@@ -58,7 +69,7 @@ static int i915_gem_object_get_pages_phy
- 	sg->offset = 0;
- 	sg->length = obj->base.size;
++			memcpy(dest, src + off, chunk);
++			kunmap_local(src);
++			dest += chunk;
++			paddr += chunk;
++			len -= chunk;
++		}
+ 	}
  
--	sg_assign_page(sg, (struct page *)vaddr);
-+	__set_phys_vaddr(sg, vaddr);
- 	sg_dma_address(sg) = dma;
- 	sg_dma_len(sg) = obj->base.size;
- 
-@@ -99,7 +110,7 @@ i915_gem_object_put_pages_phys(struct dr
- 			       struct sg_table *pages)
- {
- 	dma_addr_t dma = sg_dma_address(pages->sgl);
--	void *vaddr = sg_page(pages->sgl);
-+	void *vaddr = __get_phys_vaddr(pages->sgl);
- 
- 	__i915_gem_object_release_shmem(obj, pages, false);
- 
-@@ -139,7 +150,7 @@ i915_gem_object_put_pages_phys(struct dr
- int i915_gem_object_pwrite_phys(struct drm_i915_gem_object *obj,
- 				const struct drm_i915_gem_pwrite *args)
- {
--	void *vaddr = sg_page(obj->mm.pages->sgl) + args->offset;
-+	void *vaddr = __get_phys_vaddr(obj->mm.pages->sgl) + args->offset;
- 	char __user *user_data = u64_to_user_ptr(args->data_ptr);
- 	struct drm_i915_private *i915 = to_i915(obj->base.dev);
- 	int err;
-@@ -170,7 +181,7 @@ int i915_gem_object_pwrite_phys(struct d
- int i915_gem_object_pread_phys(struct drm_i915_gem_object *obj,
- 			       const struct drm_i915_gem_pread *args)
- {
--	void *vaddr = sg_page(obj->mm.pages->sgl) + args->offset;
-+	void *vaddr = __get_phys_vaddr(obj->mm.pages->sgl) + args->offset;
- 	char __user *user_data = u64_to_user_ptr(args->data_ptr);
- 	int err;
- 
+ 	if (padding)
 
 
