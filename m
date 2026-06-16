@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBAB44E045;
-	Tue, 16 Jun 2026 16:10:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54ECA33688F;
+	Tue, 16 Jun 2026 16:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626226; cv=none; b=Bj6dctw9jqx8Dpirn0m/IQy/o0mM+JUkOdd16v8PzkSa/nTLYTQ+8lRwModqJXJjKRt3LFEDwsEVK4oBR4YE7LFViOmeezsq2RM8BsClOOc5eG/NmrPXpyMG93hC9jNrNq6C5dxCc//lVRMAxhHJnL2Mbq0u1VEJo0Y3oM44n/4=
+	t=1781626231; cv=none; b=tZ+u8Tt7u7jZCj4LdrYVDCOvHtAVlUaMG+H03mAF4Qs2W1yyw0FLblHdZAT4MJmXyrg+g8KQxB8ecXv3suUvQ3A6p4J9RqR+jWCx4AMmy/OIIygIqKLEmz5JlUUpJPP6tWjqOR+hANKy4TFrhvF3Xi7HCRx524hYi/sHWzZC1rE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626226; c=relaxed/simple;
-	bh=+22ka7+TPN49jP4XD7yCcTIFJzL7YXStf9RcM1A6YF8=;
+	s=arc-20240116; t=1781626231; c=relaxed/simple;
+	bh=WBBUOAtnVe/F6A2e2LRQVnR7OWpEOphKOdbPuHQYboY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I2yVr6s4w8KmrUwLAOZ+HdWnFKVCkX3VR3UJaklkWyP5FXaxstrYpmN5xIdUbQI8EM/vUm/0nd8bE8kmOjmdzuimAn3zOqJ28KGiaAhqKPs5ZrfymuLo3PAxiePIJy2vvvCqt3ZDkQe6xDRvWvng821v5HxTwF0gEH930ija+oQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6YfGf2t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YuLgtYHQec9zMmmW3nTJVdYCIddMn94z5lg50eTwsZ3LVl+aU/D5bR2CKbej2hJxdjJ0RBKWtpBeIjG1Yh72kYpDjmwJtJFuryGIGYRQHzsEPNsf0YG8GP75KW8UN/k1VKFJLTSC7EOUizoOwFeKHDxxmx9PqlpMntY+gthbKOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=luGJwVrM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6YfGf2t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C5A1F000E9;
-	Tue, 16 Jun 2026 16:10:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="luGJwVrM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4132A1F000E9;
+	Tue, 16 Jun 2026 16:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626224;
-	bh=Ml1fut3ArSi1XG6ncicnBMfVTlwBYq5N9LRQ+17643M=;
+	s=korg; t=1781626230;
+	bh=W9ql1PgQ96gYG/QtqeVfJT1k4jWf+Ollopx6+IqCPXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y6YfGf2tm/UT3BX/u80zdChAujRx3UcZsIsSTK8V4JOscBKZNwzCZvt4VEuSDr5bq
-	 VfiIBdbQlNSNfsq4BHdrfqNchSIalowPtblMul2aoKTh5b7g0WQy6hnomwsgc/NIEW
-	 9c29jGEqtuIjV7cHx508EXtiJbRx4JgU5Qw+F2gk=
+	b=luGJwVrMRP9WPIsVhHPQXZ3NY6a7gPaRtitR1I34xhrb/qZuSyOYrbfesA3V8PCyS
+	 0AhIiBhfXa/arlRGwnVUAXuojqxcKRliTWvf0CARG9c5u/Z0Cs69J9k0bp/XPiuAsj
+	 vTP06q4Sg/H52YufU/3VqHW/zA7ouB/cgTrobClI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	David Hildenbrand <david@kernel.org>,
-	Mina Almasry <almasrymina@google.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	yuehaibing <yuehaibing@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 254/325] mm/hugetlb: restore reservation on error in hugetlb folio copy paths
-Date: Tue, 16 Jun 2026 20:30:50 +0530
-Message-ID: <20260616145111.210711054@linuxfoundation.org>
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 245/325] octeontx2-af: fix memory leak in rvu_setup_hw_resources()
+Date: Tue, 16 Jun 2026 20:30:41 +0530
+Message-ID: <20260616145110.687848302@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -55,68 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit 40c81856e622a9dc59294a90d169ac07ea25b0b0 upstream.
+commit 09a5bf856aa759513afc4afd233d15bcc711b84e upstream.
 
-Two sites in mm/hugetlb.c allocate a hugetlb folio via
-alloc_hugetlb_folio() (consuming a VMA reservation) and then call
-copy_user_large_folio(), which became int-returning in commit 1cb9dc4b475c
-("mm: hwpoison: support recovery from HugePage copy-on-write faults") and
-can now fail (e.g.  -EHWPOISON on a hwpoisoned source page).  On the
-failure path, folio_put() restores the global hugetlb pool count through
-free_huge_folio(), but the per-VMA reservation map entry is left marked
-consumed:
+If rvu_npc_exact_init() fails in rvu_setup_hw_resources(), the function
+returns directly instead of jumping to the error handling path. This
+causes a resource leak for the previously initialized CGX, NPC, fwdata,
+and MSI-X states.
 
-  - hugetlb_mfill_atomic_pte() resubmission path (UFFDIO_COPY)
-  - copy_hugetlb_page_range() fork-time CoW path when
-    hugetlb_try_dup_anon_rmap() fails (rare: pinned hugetlb anon
-    folio under fork)
+Fix this by replacing the direct return with goto cgx_err to ensure
+proper cleanup.
 
-User-visible effect: on UFFDIO_COPY into a private hugetlb VMA where the
-resubmission copy fails, the reservation for that address is leaked from
-the VMA's reserve map.  A subsequent fault at the same address takes the
-no-reservation path, and under hugetlb pool pressure the task is SIGBUSed
-at an address it had previously reserved.  The fork-time CoW path leaks
-the same way in the child VMA's reserve map, though it requires the much
-rarer combination of pinned hugetlb anon page + hwpoisoned source.
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still present in
+v7.1-rc6.
 
-Add the missing restore_reserve_on_error() call before folio_put() on both
-error paths.
+An x86_64 allyesconfig build showed no new warnings. As we do not have
+access to Marvell OcteonTX2 RVU AF hardware to test with, no runtime
+testing was able to be performed.
 
-Link: https://lore.kernel.org/20260520044912.6751-1-devnexen@gmail.com
-Fixes: 1cb9dc4b475c ("mm: hwpoison: support recovery from HugePage copy-on-write faults")
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Mina Almasry <almasrymina@google.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: yuehaibing <yuehaibing@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 3571fe07a090 ("octeontx2-af: Drop rules for NPC MCAM")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Link: https://patch.msgid.link/20260604143756.1524482-1-dawei.feng@seu.edu.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -5696,6 +5696,7 @@ again:
- 							    addr, dst_vma);
- 				folio_put(pte_folio);
- 				if (ret) {
-+					restore_reserve_on_error(h, dst_vma, addr, new_folio);
- 					folio_put(new_folio);
- 					break;
- 				}
-@@ -6987,6 +6988,7 @@ int hugetlb_mfill_atomic_pte(pte_t *dst_
- 		folio_put(*foliop);
- 		*foliop = NULL;
- 		if (ret) {
-+			restore_reserve_on_error(h, dst_vma, dst_addr, folio);
- 			folio_put(folio);
- 			goto out;
- 		}
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+@@ -1135,7 +1135,7 @@ cpt:
+ 	err = rvu_npc_exact_init(rvu);
+ 	if (err) {
+ 		dev_err(rvu->dev, "failed to initialize exact match table\n");
+-		return err;
++		goto cgx_err;
+ 	}
+ 
+ 	/* Assign MACs for CGX mapped functions */
 
 
