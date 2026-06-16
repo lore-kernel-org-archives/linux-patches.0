@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0EC4508E4;
-	Tue, 16 Jun 2026 16:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30381E8320;
+	Tue, 16 Jun 2026 16:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626903; cv=none; b=WkysIyz87yDqaIl0pBgX26FrwugNQ8/S2p1cp7eUuBgSgsfJ1AYHi7DE3zkUtpY5YH7nHXXRHqLwZDpmUsMdp9OhAV5kL79izrcRQLraLitAwUX3tB5ks6r8oN4lI6G7omvjivY2etj3boi/GhoOIFn/dfYzOUPKAo7nRD3DblI=
+	t=1781626908; cv=none; b=LRfNbZC6u/SzkWAIt2gSYor+pjTViYXB+reYwy0OwrWfKGGQzxoyuaPzjvctADXQ5Jeqo+LNNVA4byu2hunvFL+O1GeRVIJaa0UkgqcTzliwjMjUFVOtpdfF5FMliyQHrEUlB9pDmIDTtWdGk7hg0mhzGWiVGteYzAOTDigAlnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626903; c=relaxed/simple;
-	bh=dT63aIfT90nJ3bpGj5KVLL1MP4GqiyMyfOxZ2AqnK6Q=;
+	s=arc-20240116; t=1781626908; c=relaxed/simple;
+	bh=gH3MQEgJz7Qipey4HORe7iCdEiWpMQPoayhHTHxaB5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MT5NW19aFrwvDrWLUBptevhgZeYAnWN2zZ0x+HVGnW2o2hiwS2OvDroaj4sGyVsMO5UUrZOSyXYd8MGDxLKYIcotO0z69PmZWjfSPZbfVuDLVzAzSE/mVPOp7mU/rkmtLKQlGorEoLAoGksuqknet+z8JPLsJjufb2rOrLHVBtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IxK1wh55; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zma2grP1olGsxYobXLnKerYCM4Izcn5epnvk80m7jdsxcStXSKWM2K9NDsOaJZkXeiWqGLKCC3VFk4D3N97IRmqsxUr/j8rqo0UifCz6S1AbDH1quE6HZmQ3//eZ6pmjJiowHA/NbJ5sfDz7wtPMfg+aD0VIm3keGLm6RQeTUhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kURWEvmV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IxK1wh55"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED4941F000E9;
-	Tue, 16 Jun 2026 16:21:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kURWEvmV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49FB1F000E9;
+	Tue, 16 Jun 2026 16:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626902;
-	bh=XJMqU8LHyU8DCw9SN5/HzlLfaez06qCMEkmAw6bKYmA=;
+	s=korg; t=1781626907;
+	bh=1H4PDtGrEwSA9iYeV7+tpN3JzTu/cqPvJ5CkFgD6LXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IxK1wh55REzlgD04WhoJ+ad4ZXgn8MhxXR7jLunfxBKcuOL+tWnY0/FP8qjdmQBZ7
-	 Tk63fdlwSdmrAWCxuKx+7G7bct0xS5JPJiZePRoKIpQiyIUgWyQUcMJqx9uOhrsVyW
-	 o6F/z1dgawj4qsOgmV1V0O7ZQpxJTMBPU0xYXxaM=
+	b=kURWEvmV4wxHstyxDOyRL36C6HX5UhoZy7fvm3na3UdqZuSblhI8pWX4KvYvz8vEL
+	 rwDIPziLTE81jYfAWcCZTtaQIXJrPxOPnYg4JeM9hFcGIEX6P7nzPYHAr25eRQCXrP
+	 Y0TaQM9POtlB8U6cNTBGvJlaukMCTMZwHPUFxJKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 091/261] gpio: zynq: fix runtime PM leak on remove
-Date: Tue, 16 Jun 2026 20:28:49 +0530
-Message-ID: <20260616145049.252311036@linuxfoundation.org>
+Subject: [PATCH 6.12 092/261] sctp: fix uninit-value in __sctp_rcv_asconf_lookup()
+Date: Tue, 16 Jun 2026 20:28:50 +0530
+Message-ID: <20260616145049.301059271@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -51,37 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 6edb934de9bda3b7abcec856eaee6fc8b4278dd1 ]
+[ Upstream commit f8373d7090b745728de66308deeecc67e8d319ce ]
 
-pm_runtime_get_sync() increments the runtime PM usage counter even when it
-returns an error. zynq_gpio_remove() uses it to keep the controller active
-while removing the GPIO chip, but never drops the usage counter again.
+__sctp_rcv_asconf_lookup() in net/sctp/input.c only checks that the ASCONF
+chunk can hold the ADDIP header and a parameter header, then calls
+af->from_addr_param(), which reads the full address (16 bytes for IPv6)
+trusting the parameter's declared length.
 
-Balance the get with pm_runtime_put_noidle() after disabling runtime PM.
+An unauthenticated peer can send a truncated trailing ASCONF chunk that
+declares an IPv6 address parameter but stops after the 4-byte parameter
+header; reached from the no-association lookup path, from_addr_param() then
+reads uninitialized bytes past the parameter.
 
-Fixes: 3242ba117e9b ("gpio: Add driver for Zynq GPIO controller")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Link: https://patch.msgid.link/20260609073313.5-1-ruoyuw560@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Impact: an unauthenticated SCTP peer makes the receive path read up to 16
+bytes of uninitialized memory past a truncated ASCONF address parameter.
+
+The sibling __sctp_rcv_init_lookup() bounds parameters with
+sctp_walk_params(); this path open-codes the fetch and omits the bound.
+Verify the whole address parameter lies within the chunk before
+from_addr_param() reads it, the same class of fix as commit 51e5ad549c43
+("net: sctp: fix KMSAN uninit-value in sctp_inq_pop").
+
+Fixes: df2185771439 ("[SCTP]: Update association lookup to look at ASCONF chunks as well")
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260608122234.459098-1-michael.bommarito@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-zynq.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/sctp/input.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpio/gpio-zynq.c b/drivers/gpio/gpio-zynq.c
-index cc53e6940ad7e6..50fa4938161dde 100644
---- a/drivers/gpio/gpio-zynq.c
-+++ b/drivers/gpio/gpio-zynq.c
-@@ -1015,6 +1015,7 @@ static void zynq_gpio_remove(struct platform_device *pdev)
- 	gpiochip_remove(&gpio->chip);
- 	device_set_wakeup_capable(&pdev->dev, 0);
- 	pm_runtime_disable(&pdev->dev);
-+	pm_runtime_put_noidle(&pdev->dev);
- }
+diff --git a/net/sctp/input.c b/net/sctp/input.c
+index 032a10d82302c3..df5b2187b8fada 100644
+--- a/net/sctp/input.c
++++ b/net/sctp/input.c
+@@ -1204,6 +1204,14 @@ static struct sctp_association *__sctp_rcv_asconf_lookup(
+ 	/* Skip over the ADDIP header and find the Address parameter */
+ 	param = (union sctp_addr_param *)(asconf + 1);
  
- static struct platform_driver zynq_gpio_driver = {
++	/* The whole address parameter must lie within the chunk before
++	 * af->from_addr_param() reads the variable-length address; otherwise a
++	 * truncated trailing ASCONF chunk lets it read uninitialized bytes past
++	 * the parameter.
++	 */
++	if (sizeof(*asconf) + ntohs(param->p.length) > ntohs(ch->length))
++		return NULL;
++
+ 	af = sctp_get_af_specific(param_type2af(param->p.type));
+ 	if (unlikely(!af))
+ 		return NULL;
 -- 
 2.53.0
 
