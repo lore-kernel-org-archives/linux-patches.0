@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC7147AF4D;
-	Tue, 16 Jun 2026 17:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F45721C16A;
+	Tue, 16 Jun 2026 17:27:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630825; cv=none; b=hXL6KfUIgRL6o7CHD3t26z1FUSJ+1IbXvGM+zEP3ZNmB3ruKwwgibyJwIbUwI7zDpqv2lSLCCteM8HiKCSezedhOe1MlBORCufcffczevLiU+A1FZDCKjMIqv8cJ3kfUeYSyPNkar4ptioQsfQPElxQfALy45GomT1oTveGSq0I=
+	t=1781630832; cv=none; b=PP4VbRILjUDicouRlaBeIiy7Tt2r9FBMNtXfp6ocU50wYQlk8j0FNUKg3T4wgw3C/LbIcmnENKlpDD0qmT93vXAisRk+6Rj/dttLLGUo+Rp2O9iDE+22k9RPCnWiolD3nSKLYGcVbi8ghRGQQJ66BlGXXmKveiKZlknOI0yZ7HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630825; c=relaxed/simple;
-	bh=GlPoG09RXM1p4t6/6QPNpCZdtCTE5S4yh+5shb19n/A=;
+	s=arc-20240116; t=1781630832; c=relaxed/simple;
+	bh=9LWZpixmByk9CTYaaqtBJABhTvNS+eBpqNliabfrydQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SJybNaeXVZO7Zz80LXiA6RIPsHozee9hQX2ZuuoSMSG9CoCCnuB/F3i2NvFcovxxu1EU8PZO/WlUv2aIurvrxVgXRyKAUwKEaUo31OJ2YgqnsKp+lfvCM9gKSQyFlWfv0QMc0SpDG3MyJQ0gz81NLdbl8KM8NoNlIeRiKh1O8PA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnuN/PbW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PP+6f+w/QR4bFSuUWKKy6wdR1OnxHCIDygAlNSnuolUfjVqT2LWK6liM2CtihwVENh2DZxLS/qvQeEcS4PALq7CEmC5yvkha5lnpyMiN1IKFe2Pub3+dtxAC1uqce3jsS3oIXcS9JOzpx94tV84rQjBzyJO4gDyuv6yoT8OjYYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=clRuJi57; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnuN/PbW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDB5D1F000E9;
-	Tue, 16 Jun 2026 17:27:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="clRuJi57"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2899F1F000E9;
+	Tue, 16 Jun 2026 17:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630823;
-	bh=e/+khx6Bl+KnTwBLvkwkm0X2sAihxhB3LCrPJ1g6nsA=;
+	s=korg; t=1781630829;
+	bh=R7yZvyKccgGroFVo2+Kzo3hLodanFb9yw/2D428p8lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PnuN/PbWBm6GYLdJrGT0dxVtUoO/Nb+Lw6Kkis5CHhhMCcd4IQ6WYxd+I5/SZK3I7
-	 dwNKC9WQ8IlE9Q0cr/Au19s4Bv1RypGucIVKOf9MlniT3JroEBWopGgiz0R+wrzAeE
-	 K7RSo+y6d6V4vB1iK/Kj5814xnhrEmQQj4qbEvRg=
+	b=clRuJi570/KUcqKSX6WXnuvswKqCb2j1ZlqzvSrZchkS3ISj/8onlarySZ4aZk1/Z
+	 Byv0ydFOZuNOp5brOZDm8oFTsgOtPC1YaQyl3IoUC4q9MUHkmqUZbga9e/7GXyFsA/
+	 GvLB5uzLmyPvc5JL0+/wVvTYRjsaVPrqv2kn35KQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
 	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Arun R Murthy <arun.r.murthy@intel.com>,
+	Ben Kao <ben.kao@intel.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 070/522] drm/i915/psr: Add defininitions for INTEL_WA_REGISTER_CAPS DPCD register
-Date: Tue, 16 Jun 2026 20:23:37 +0530
-Message-ID: <20260616145129.102260676@linuxfoundation.org>
+Subject: [PATCH 6.1 071/522] drm/dp: Add eDP 1.5 bit definition
+Date: Tue, 16 Jun 2026 20:23:38 +0530
+Message-ID: <20260616145129.150834378@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,67 +55,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Suraj Kandpal <suraj.kandpal@intel.com>
 
-commit fbceb39b536e40c2f7cc47ab42037bb7c2b7ced9 upstream.
+commit 5dfc37a6b77bf6beedbd30d70184b54e1a08ccac upstream.
 
-EDP specification says:
+Add the eDP revision bit value for 1.5.
 
-"If either VSC SDP is unable to be transmitted 100 ns before the SU region,
-the Source device may optionally transmit the VSC SDP during the prior
-video scan line’s HBlank period There is a Intel specific drm dp register
-currently containing bits related how TCON can support PSR2 with SDP on
-prior line."
-
-Unfortunately many panels are having problems in implementing this. So
-there is a custom Intel specific DPCD register (INTEL_WA_REGISTER_CAPS) to
-figure out if this is properly implemented on a panel or if panel doesn't
-require that 100 ns delay before the SU region. Here are the definitions in
-this custom DPCD address:
-
-0 = Panel doesn't support SDP on prior line
-1 = Panel supports SDP on prior line
-2 = Panel doesn't have 100ns requirement
-3 = Reserved
-
-Add definitions for this new register and it's values into new header
-intel_dpcd.h.
-
-v2: add INTEL_DPCD_ prefix to definitions
-
-Bspec: 74741
+Spec: eDPv1.5 Table 16-5
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Reviewed-by: Arun R Murthy <arun.r.murthy@intel.com>
+Tested-by: Ben Kao <ben.kao@intel.com>
+Acked-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250206063253.2827017-2-suraj.kandpal@intel.com
 Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260515095756.2799483-2-jouni.hogander@intel.com
-(cherry picked from commit 1da1c9294825f08f622c473480d185680c2a3b75)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dpcd.h | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
- create mode 100644 drivers/gpu/drm/i915/display/intel_dpcd.h
+ include/drm/display/drm_dp.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dpcd.h b/drivers/gpu/drm/i915/display/intel_dpcd.h
-new file mode 100644
-index 00000000000000..4aea5326f2ed48
---- /dev/null
-+++ b/drivers/gpu/drm/i915/display/intel_dpcd.h
-@@ -0,0 +1,15 @@
-+/* SPDX-License-Identifier: MIT */
-+/*
-+ * Copyright © 2026 Intel Corporation
-+ */
-+
-+#ifndef __INTEL_DPCD_H__
-+#define __INTEL_DPCD_H__
-+
-+#define INTEL_DPCD_INTEL_WA_REGISTER_CAPS					0x3f0
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_EARLYSCANLINE_SDP_SUPPORT_MASK	REG_GENMASK(1, 0)
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_FALL_BACK_TO_PSR1			0
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITH_EARLY_SCANLINE		1
-+# define INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITHOUT_EARLY_SCANLINE		2
-+
-+#endif /* __INTEL_DPCD_H__ */
+diff --git a/include/drm/display/drm_dp.h b/include/drm/display/drm_dp.h
+index b235d6833e27d9..7d3700490b68f0 100644
+--- a/include/drm/display/drm_dp.h
++++ b/include/drm/display/drm_dp.h
+@@ -955,6 +955,7 @@
+ # define DP_EDP_14			    0x03
+ # define DP_EDP_14a                         0x04    /* eDP 1.4a */
+ # define DP_EDP_14b                         0x05    /* eDP 1.4b */
++# define DP_EDP_15			    0x06    /* eDP 1.5 */
+ 
+ #define DP_EDP_GENERAL_CAP_1		    0x701
+ # define DP_EDP_TCON_BACKLIGHT_ADJUSTMENT_CAP		(1 << 0)
 -- 
 2.53.0
 
