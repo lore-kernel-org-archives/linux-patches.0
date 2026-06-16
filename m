@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A59F4502F;
-	Tue, 16 Jun 2026 16:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7137633A9EB;
+	Tue, 16 Jun 2026 16:53:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628785; cv=none; b=uH7oS6bFICyttQhLDRBG5YxSrKNOWV+yLtjQLxSwLgNoU5Udt4RVrwNIVz1lj6SV66YY8ihbpJvGDtlO5ligb9WVH/t/PBix5NjDBL8m9a9zWceFBQCBfzrODAEOHmyGKYWY5vtQfNER3SR/zClmicHcerAEhZqtvrfGGxMzNYQ=
+	t=1781628790; cv=none; b=cPCOt1On4QLwHjmldK82GHQyxSz09wt7NYIJYX5launpXR5FLgAgp17/pd0BHYmRnIY6HCUUsjvmIhsmuNjYpSxxV4virjci5OsFLLCbAPLEHnDgxEc19nlwhDzdxG/FQULFpsxAPeMCd6R7KtMmvtKm6r00auPMTQ/c/Xtft7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628785; c=relaxed/simple;
-	bh=ePOGGGUvdwO+M/P5W+yNNQ76qo/43BbBKU/dE9dhY38=;
+	s=arc-20240116; t=1781628790; c=relaxed/simple;
+	bh=r5Qs0ml6ihJjFaXeRs8/vLI4oNZ7r89dR58DyBvnnUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sXc9smINeuN2rkA+VBJ//YbIJ/LUViWwfhgjkIsdCsMLlt6skhQciqSzzl/i3TyNGoWtAyljEbUHIaDLeAI/SNkVU/VGnbxJIkMlHqUnBRRDDOlqC8J5R9COftJFB53RQMw9qDys+04OsnLyGdfUWdVej0wWXY9Exeqctr/iWpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rsLL4K/H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sosUF28NML+kyEukwvFnZSjeVIJLzh/7gHiOOn8MZ5bcfuhEYJ2ZkyZZQMVjZpPP5OiI+BW6AgI36gxMNjSeMwCNN4pRDRqt0+2iGT5foSVLnLx1likg9NI4d1Avj29in1oFYiBfmOS1EEiRS81K/pgQqrxuT+yTLJFJHfgzvSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ENoNsr4G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rsLL4K/H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33BF41F000E9;
-	Tue, 16 Jun 2026 16:53:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ENoNsr4G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2EB1F000E9;
+	Tue, 16 Jun 2026 16:53:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628784;
-	bh=XhMymvyHan5/NBN4pgxXMdzjn46vI963lypASt1TDZc=;
+	s=korg; t=1781628789;
+	bh=fL4D729GY17gTs5kKow+m6tl9Eszjwd84qAIusulwwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rsLL4K/HgpKH+uxFmfaoslE+PZMbrbyecY0KdQmrTAdQ/z4/Q4egZT6C0FChAOZ+u
-	 iqHoxhzRiB1z9W/laN1WZFF1UowdOs3n9R1U1c611ZyeHo2wZZgcg/25FEEf1w1ysV
-	 9AXRiFvGQy7lz7TAcKp5KM9AILb1DPhow4fidwGY=
+	b=ENoNsr4GcIYM/b9d6BbPRDfm39i0J3cfNwRlzN06Sy4gv2azjRe55pvuPdfvee3Pk
+	 yp4UfOnaGhBE0cGKhtpj2xtuH2tnQ8e7EjVStLdTDTRmKEiria+Heh2cnZwdnNYrZg
+	 Ye2AQnPmAwfuFKUgpA5FIApE9nSThC3HMMtdNgVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Andrew Lunn <andrew@lunn.ch>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 162/452] USB: serial: keyspan: fix missing indat transfer sanity check
-Date: Tue, 16 Jun 2026 20:26:29 +0530
-Message-ID: <20260616145126.297310187@linuxfoundation.org>
+Subject: [PATCH 6.6 163/452] USB: serial: mxuport: fix memory corruption with small endpoint
+Date: Tue, 16 Jun 2026 20:26:30 +0530
+Message-ID: <20260616145126.362470494@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,32 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit ab8336a7e414f018430aa1af3a46944032f7ff96 upstream.
+commit 4085f0dbb1ce2251c9a5938d693de6593f0ab2bd upstream.
 
-Add the missing sanity check on the size of usa49wg indat transfers to
-avoid parsing stale or uninitialised slab data.
+Make sure that the bulk-out endpoint max packet size is at least eight
+bytes to avoid user-controlled slab corruption should a malicious device
+report a smaller size.
 
-Fixes: 0ca1268e109a ("USB Serial Keyspan: add support for USA-49WG & USA-28XG")
-Cc: stable@vger.kernel.org	# 2.6.23
+Fixes: ee467a1f2066 ("USB: serial: add Moxa UPORT 12XX/14XX/16XX driver")
+Cc: stable@vger.kernel.org	# 3.14
+Cc: Andrew Lunn <andrew@lunn.ch>
 Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/keyspan.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/serial/mxuport.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/usb/serial/keyspan.c
-+++ b/drivers/usb/serial/keyspan.c
-@@ -1188,6 +1188,10 @@ static void usa49wg_indat_callback(struc
- 	len = 0;
+--- a/drivers/usb/serial/mxuport.c
++++ b/drivers/usb/serial/mxuport.c
+@@ -962,6 +962,14 @@ static int mxuport_calc_num_ports(struct
+ 	 */
+ 	BUILD_BUG_ON(ARRAY_SIZE(epds->bulk_out) < 16);
  
- 	while (i < urb->actual_length) {
-+		if (urb->actual_length - i < 3) {
-+			dev_warn_ratelimited(&urb->dev->dev, "malformed indat packet\n");
-+			break;
-+		}
++	/*
++	 * The bulk-out buffers must be large enough for the four-byte header
++	 * (and following data), but assume anything smaller than eight bytes
++	 * is broken.
++	 */
++	if (usb_endpoint_maxp(epds->bulk_out[0]) < 8)
++		return -EINVAL;
++
+ 	for (i = 1; i < num_ports; ++i)
+ 		epds->bulk_out[i] = epds->bulk_out[0];
  
- 		/* Check port number from message */
- 		if (data[i] >= serial->num_ports) {
 
 
