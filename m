@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F4A3D669A;
-	Tue, 16 Jun 2026 17:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2671A47A0B0;
+	Tue, 16 Jun 2026 17:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632279; cv=none; b=usLpKk0pm4FtNfgqotq/Lxt4wZAsBj7vlSiaBXECtSMJItXVLCXN5Ubx4d/FUrmvYMiguzCryOgGGSPssNviY0KGREA5M1RmQ5rAxIc51vc9+npLUB0c3BarjZMkaG51/qF6OCXqa6DVuod30SYpPWzrMZP/EiC67SQZ7mZFA+4=
+	t=1781632285; cv=none; b=DJzXdFoBhk5Nubmp54AOm2zB9nYx9YgMFcO/V81QdDirZ6WtWAToF4VqbVXJHwRNt5poLntDyZCPLNVwJEFGDx1H20Xl748emlSLloGhfNuQEbCFMNQ3DMfm3oJ5uE+ik2sp0mlJgzA5TOfw2izReIi2McfEn0/oTacJTxJ1FA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632279; c=relaxed/simple;
-	bh=Yq0GyMjThH8fyZEp7M0sUv7xDEnyQIQ7H0CN54Kce8I=;
+	s=arc-20240116; t=1781632285; c=relaxed/simple;
+	bh=hd8ZcIGJbE1oySxHcqe1vAFi1k+gi+I7grFX7JFHZKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=urKbNdn+/aDB526a2rtnoJzhGfGKLmnMnoiwDNLpb0KlIY1Wteya6/wn/qteOtGgYn9v2lPDXuEjuOUe6TRcjEFACY+EmO3kD81471Iso/JJsqc1RcnAOlXcVBnT1SjcQQwxojl3CTdwpG8w4relyZinStM43xGDi/3nQRe5ekk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFrHOkB0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VbosJz2xkr3xKPh2qgkrdN3BsfCixeKMq2/OHJyhSBcQgi2eG0tQyD3jOIxHCfndaGC9O/4JZBhNL6l/XUMXRY0A9biWa3SB+eBwtsPgA7rL2X2oac2JIXGweOutZC+kFuoPW1bmaC+5IqyWlHIHl/jHppX+s6HHdp3uCvLgag0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPQJSI9q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFrHOkB0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107A81F000E9;
-	Tue, 16 Jun 2026 17:51:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPQJSI9q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16BA1F000E9;
+	Tue, 16 Jun 2026 17:51:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632278;
-	bh=du+LYkAMb3JmJYOikrWDBk56ceWoSEERpvv+tc+GVIQ=;
+	s=korg; t=1781632284;
+	bh=jrK4hWwowHvy01t1Q7zPiE0Ckb3rSrbwqsCBjfZJiB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OFrHOkB0XcghEKNjxHbMe/fMR7jkBYBD5gfCYnaakqyoJ8KD4WUL0mM0mbT62fIrW
-	 LswChFYXS0EUFY9DMuYYysEt3/5IAZ1wm92BojmDvuAoekHkirFPJk1QfLDlNhxzoY
-	 dZLFNM5ZVEPE83n7NAZaDkMQXKktjS7w98wCNcno=
+	b=IPQJSI9quyBYf5uvWjihSySPtIRTB+jkuMJIPssWf29fBX5yo+QpTrthpJaItTeN4
+	 QkzAZ3vxIHpx8utqHP4zCpv9V6ScA3U/jGe7LzbnOWhj7zcUODA9AkYQrUg/Av//NQ
+	 Pv2uCmzliQtCdNo7zzl7drxU3qYdvxCOor124m1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahisa Kojima <masahisa.kojima@linaro.org>,
-	Johan Hovold <johan@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Andre Przywara <andre.przywara@arm.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 381/522] spi: syncuacer: fix controller deregistration
-Date: Tue, 16 Jun 2026 20:28:48 +0530
-Message-ID: <20260616145143.600431881@linuxfoundation.org>
+Subject: [PATCH 6.1 382/522] spi: sun4i: Convert to platform remove callback returning void
+Date: Tue, 16 Jun 2026 20:28:49 +0530
+Message-ID: <20260616145143.647843214@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -46,57 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 75d849c3452e9611de031db45b3149ba9a99035f ]
+[ Upstream commit b7b949458ac391963e56ae354b73fee63016dcee ]
 
-Make sure to deregister the controller before disabling underlying
-resources like clocks during driver unbind.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is (mostly) ignored
+and this typically results in resource leaks. To improve here there is a
+quest to make the remove callback return void. In the first step of this
+quest all drivers are converted to .remove_new() which already returns
+void.
 
-Fixes: b0823ee35cf9 ("spi: Add spi driver for Socionext SynQuacer platform")
-Cc: stable@vger.kernel.org	# 5.3
-Cc: Masahisa Kojima <masahisa.kojima@linaro.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-21-johan@kernel.org
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://lore.kernel.org/r/20230303172041.2103336-75-u.kleine-koenig@pengutronix.de
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 42108a2f03e0 ("spi: sun4i: fix controller deregistration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-synquacer.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/spi/spi-sun4i.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/spi/spi-synquacer.c
-+++ b/drivers/spi/spi-synquacer.c
-@@ -719,7 +719,7 @@ static int synquacer_spi_probe(struct pl
- 	pm_runtime_set_active(sspi->dev);
- 	pm_runtime_enable(sspi->dev);
- 
--	ret = devm_spi_register_controller(sspi->dev, host);
-+	ret = spi_register_controller(host);
- 	if (ret)
- 		goto disable_pm;
- 
-@@ -740,9 +740,15 @@ static void synquacer_spi_remove(struct
- 	struct spi_controller *host = platform_get_drvdata(pdev);
- 	struct synquacer_spi *sspi = spi_controller_get_devdata(host);
- 
-+	spi_controller_get(host);
-+
-+	spi_unregister_controller(host);
-+
- 	pm_runtime_disable(sspi->dev);
- 
- 	clk_disable_unprepare(sspi->clk);
-+
-+	spi_controller_put(host);
+--- a/drivers/spi/spi-sun4i.c
++++ b/drivers/spi/spi-sun4i.c
+@@ -519,11 +519,9 @@ err_free_master:
+ 	return ret;
  }
  
- static int __maybe_unused synquacer_spi_suspend(struct device *dev)
+-static int sun4i_spi_remove(struct platform_device *pdev)
++static void sun4i_spi_remove(struct platform_device *pdev)
+ {
+ 	pm_runtime_force_suspend(&pdev->dev);
+-
+-	return 0;
+ }
+ 
+ static const struct of_device_id sun4i_spi_match[] = {
+@@ -539,7 +537,7 @@ static const struct dev_pm_ops sun4i_spi
+ 
+ static struct platform_driver sun4i_spi_driver = {
+ 	.probe	= sun4i_spi_probe,
+-	.remove	= sun4i_spi_remove,
++	.remove_new = sun4i_spi_remove,
+ 	.driver	= {
+ 		.name		= "sun4i-spi",
+ 		.of_match_table	= sun4i_spi_match,
 
 
