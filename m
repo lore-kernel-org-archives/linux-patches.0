@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49CE7466B4B;
-	Tue, 16 Jun 2026 16:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2EF1449EC3;
+	Tue, 16 Jun 2026 16:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628642; cv=none; b=aSM+UITmy3zQWKOBKttuiOd9WRbGlAe6KyNnvDL4MGhyffObdtx2iwj1OpEXyzGA8mBUMSaxqRtQC0IHXHr/HTAbV7/DY5SaaKnGP+Go8/W5rf4MRRPZvqRRPU8vZVK7otMbaKAUrax4jEEiXFyAluI/PcnvcpYG6GOJCZpahYU=
+	t=1781628646; cv=none; b=no832EcNXw7KTxbt3i4MuO+dEbPHCvm0Rs/C9LiV1tlty4E0Oo7s9HCpEt2d53t6cmjPQO16LEd6mv/y7QWYj1NP3yXeamCWTldWerqMwVpmlz1nZJjmvhJfhyKXa8DntuSzDpA4M3NHt/i5BKTMTzfTtoCferhdK1+ehZoCx1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628642; c=relaxed/simple;
-	bh=2yHt6t+x7BzCR8MZjiU+qU0jDGz5O7+DTnfo+RczACM=;
+	s=arc-20240116; t=1781628646; c=relaxed/simple;
+	bh=qJdrgxyf4oy3z+UfOIvwK/b9hIPliyxdGV/NhyZsvwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r3+WciMopAFfG1nXEpWyX15hLi+Gws5LAOzEl1VZ86osTQL1g7GqzYHTuTLtyuUBC0MLqqjSoQmVvjcklAZXCL4LGNb6pRkuFmJE6KQgcDfbmYo/ijJFYAvmNQt29SR9lFzvYwlxoW5DMYcQrmS6cwQaDJD2EqgmV6/UeweSs44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kvh5/8oi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZgnQkvcfA79bvQYmPIrZdCv7Ia0AL3v4eRMcrN3/ZFL9aggxtc7LZit1/XwYuc8SFG1lO7juR5AClC2G6qtyI0uV2a3jg6E9SbQiWcHGDKiZGf+juJqqqHLr0SbaRsJcWHysmPOmzfrVcBzNthacquMV5sa1yelwHF2IJ2QLLys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLBnSJKH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kvh5/8oi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E431F00A3D;
-	Tue, 16 Jun 2026 16:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLBnSJKH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B751F000E9;
+	Tue, 16 Jun 2026 16:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628641;
-	bh=nIHo+HT0QVAPFcBd7m06hz22Eb3GMVAllNqOmp06iI8=;
+	s=korg; t=1781628645;
+	bh=fzLNSi93zWpwk3VBtULl8ppT7HnMc8OIszlZo/++F5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kvh5/8oiBqd+tC8fM9Lzh837SjZfWFnPTQMwUovdmax5GavVF11vZOt1sxHmpaWtK
-	 u1AwTV3uHvERwSQ0VU8iMLvZpgbjQPnHNLGQXsAdtPzpbCyxvAlXGqsLPUyT7HXdUy
-	 pwYvyyBADgmoTKHxD25ucNN5vP4qptmU2bGHtq64=
+	b=bLBnSJKHN3y78UUnIUcw5RsUyuM5NcTyZ2k12VGeATmuNaN0DgbC4Hvakq6rqBOWs
+	 59Kxsn5hl/KQOR//pApF2eQUrwl1fz08/NCyMd5gRp8RP2YJOmjdvQVX3mU0FQrsJy
+	 sZoUETFzJJD5jARCRdYXe+q4N2s9aSQdZDjeP7Do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	linux-kbuild@vger.kernel.org,
-	Arnd Bergmann <arnd@arndb.de>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.6 134/452] iommu, debugobjects: avoid gcc-16.1 section mismatch warnings
-Date: Tue, 16 Jun 2026 20:26:01 +0530
-Message-ID: <20260616145124.773030844@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Ashutosh Desai <ashutoshdesai993@gmail.com>,
+	David Heidelberg <david@ixit.cz>
+Subject: [PATCH 6.6 135/452] nfc: hci: fix out-of-bounds read in HCP header parsing
+Date: Tue, 16 Jun 2026 20:26:02 +0530
+Message-ID: <20260616145124.822756229@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -55,126 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Ashutosh Desai <ashutoshdesai993@gmail.com>
 
-commit 4c9ad387aa2d6785299722e54224d34764edaeb3 upstream.
+commit f040e590c035bfd9553fe79ee9585caf1b14d67b upstream.
 
-gcc-16 has gained some more advanced inter-procedual optimization
-techniques that enable it to inline the dummy_tlb_add_page() and
-dummy_tlb_flush() function pointers into a specialized version of
-__arm_v7s_unmap:
+Both nfc_hci_recv_from_llc() and nci_hci_data_received_cb() read
+packet->header from skb->data at function entry without first checking
+that the buffer holds at least one byte. A malicious NFC peer can send
+a 0-byte HCP frame that passes through the SHDLC layer and reaches
+these functions, causing an out-of-bounds heap read of packet->header.
+The same 0-byte frame, if queued as a non-final fragment, also causes
+the reassembly loop to underflow msg_len to UINT_MAX, triggering
+skb_over_panic() when the reassembled skb is written.
 
-WARNING: modpost: vmlinux: section mismatch in reference: __arm_v7s_unmap+0x2cc (section: .text) -> dummy_tlb_add_page (section: .init.text)
-ERROR: modpost: Section mismatches detected.
+Fix this by adding a pskb_may_pull() check at the entry of each
+function before packet->header is first accessed. The existing
+pskb_may_pull() checks before the reassembled hcp_skb is cast to
+struct hcp_packet remain in place to guard the 2-byte HCP message
+header.
 
->From what I can tell, the transformation is correct, as this is only
-called when __arm_v7s_unmap() is called from arm_v7s_do_selftests(),
-which is also __init. Since __arm_v7s_unmap() however is not __init,
-gcc cannot inline the inner function calls directly.
-
-In debug_objects_selftest(), the same thing happens. Both the
-caller and the leaf function are __init, but the IPA pulls
-it into a non-init one:
-
-WARNING: modpost: vmlinux: section mismatch in reference: lookup_object_or_alloc+0x7c (section: .text.lookup_object_or_alloc) -> is_static_object (section: .init.text)
-
-Marking the affected functions as not "__init" would reliably avoid this
-issue but is not a good solution because it removes an otherwise correct
-annotation. I tried marking the functions as 'noinline', but that ended
-up not covering all the affected configurations.
-
-With some more experimenting, I found that marking these functions as
-__attribute__((noipa)) is both logical and reliable.
-
-In order to keep the syntax readable, add a custom macro for this in
-include/linux/compiler_attributes.h next to other related macros and
-use it to annotate both files.
-
-Link: https://lore.kernel.org/all/abRB6g-48ZX6Yl2r@willie-the-truck/
-Cc: Will Deacon <will@kernel.org>
-Cc: Thomas Gleixner <tglx@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>
-Cc: linux-kbuild@vger.kernel.org
+Fixes: 8b8d2e08bf0d ("NFC: HCI support")
+Fixes: 11f54f228643 ("NFC: nci: Add HCI over NCI protocol support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Will Deacon <will@kernel.org>
-Acked-by: Thomas Gleixner <tglx@kernel.org>
-Acked-by: Miguel Ojeda <ojeda@kernel.org>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Ashutosh Desai <ashutoshdesai993@gmail.com>
+Link: https://patch.msgid.link/20260505170712.96560-1-ashutoshdesai993@gmail.com
+Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/io-pgtable-arm-v7s.c  |   18 ++++++++++++------
- include/linux/compiler_attributes.h |   11 +++++++++++
- lib/debugobjects.c                  |    2 +-
- 3 files changed, 24 insertions(+), 7 deletions(-)
+ net/nfc/hci/core.c |   10 ++++++++++
+ net/nfc/nci/hci.c  |   10 ++++++++++
+ 2 files changed, 20 insertions(+)
 
---- a/drivers/iommu/io-pgtable-arm-v7s.c
-+++ b/drivers/iommu/io-pgtable-arm-v7s.c
-@@ -894,21 +894,27 @@ struct io_pgtable_init_fns io_pgtable_ar
+--- a/net/nfc/hci/core.c
++++ b/net/nfc/hci/core.c
+@@ -861,6 +861,11 @@ static void nfc_hci_recv_from_llc(struct
+ 	struct sk_buff *frag_skb;
+ 	int msg_len;
  
- static struct io_pgtable_cfg *cfg_cookie __initdata;
- 
--static void __init dummy_tlb_flush_all(void *cookie)
-+/*
-+ * __noipa prevents gcc from turning indirect iommu_flush_ops calls
-+ * into direct calls from a specialized __arm_v7s_unmap() that triggers
-+ * a build time section mismatch assertion.
-+ */
-+static __noipa void __init dummy_tlb_flush_all(void *cookie)
- {
- 	WARN_ON(cookie != cfg_cookie);
- }
- 
--static void __init dummy_tlb_flush(unsigned long iova, size_t size,
--				   size_t granule, void *cookie)
-+static __noipa void __init dummy_tlb_flush(unsigned long iova, size_t size,
-+					   size_t granule, void *cookie)
- {
- 	WARN_ON(cookie != cfg_cookie);
- 	WARN_ON(!(size & cfg_cookie->pgsize_bitmap));
- }
- 
--static void __init dummy_tlb_add_page(struct iommu_iotlb_gather *gather,
--				      unsigned long iova, size_t granule,
--				      void *cookie)
-+static __noipa void __init dummy_tlb_add_page(struct iommu_iotlb_gather *gather,
-+					      unsigned long iova,
-+					      size_t granule,
-+					      void *cookie)
- {
- 	dummy_tlb_flush(iova, granule, granule, cookie);
- }
---- a/include/linux/compiler_attributes.h
-+++ b/include/linux/compiler_attributes.h
-@@ -384,6 +384,17 @@
- #endif
- 
- /*
-+ * Optional: not supported by clang
-+ *
-+ *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Attributes.html#index-noipa
-+ */
-+#if __has_attribute(noipa)
-+# define __noipa __attribute__((noipa))
-+#else
-+# define __noipa
-+#endif
++	if (!pskb_may_pull(skb, NFC_HCI_HCP_PACKET_HEADER_LEN)) {
++		kfree_skb(skb);
++		return;
++	}
 +
-+/*
-  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-weak-function-attribute
-  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html#index-weak-variable-attribute
-  */
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -1076,7 +1076,7 @@ struct self_test {
+ 	packet = (struct hcp_packet *)skb->data;
+ 	if ((packet->header & ~NFC_HCI_FRAGMENT) == 0) {
+ 		skb_queue_tail(&hdev->rx_hcp_frags, skb);
+@@ -904,6 +909,11 @@ static void nfc_hci_recv_from_llc(struct
+ 	 * unblock waiting cmd context. Otherwise, enqueue to dispatch
+ 	 * in separate context where handler can also execute command.
+ 	 */
++	if (!pskb_may_pull(hcp_skb, NFC_HCI_HCP_HEADER_LEN)) {
++		kfree_skb(hcp_skb);
++		return;
++	}
++
+ 	packet = (struct hcp_packet *)hcp_skb->data;
+ 	type = HCP_MSG_GET_TYPE(packet->message.header);
+ 	if (type == NFC_HCI_HCP_RESPONSE) {
+--- a/net/nfc/nci/hci.c
++++ b/net/nfc/nci/hci.c
+@@ -439,6 +439,11 @@ void nci_hci_data_received_cb(void *cont
+ 		return;
+ 	}
  
- static __initconst const struct debug_obj_descr descr_type_test;
- 
--static bool __init is_static_object(void *addr)
-+static __noipa bool __init is_static_object(void *addr)
- {
- 	struct self_test *obj = addr;
- 
++	if (!pskb_may_pull(skb, NCI_HCI_HCP_PACKET_HEADER_LEN)) {
++		kfree_skb(skb);
++		return;
++	}
++
+ 	packet = (struct nci_hcp_packet *)skb->data;
+ 	if ((packet->header & ~NCI_HCI_FRAGMENT) == 0) {
+ 		skb_queue_tail(&ndev->hci_dev->rx_hcp_frags, skb);
+@@ -482,6 +487,11 @@ void nci_hci_data_received_cb(void *cont
+ 	 * unblock waiting cmd context. Otherwise, enqueue to dispatch
+ 	 * in separate context where handler can also execute command.
+ 	 */
++	if (!pskb_may_pull(hcp_skb, NCI_HCI_HCP_HEADER_LEN)) {
++		kfree_skb(hcp_skb);
++		return;
++	}
++
+ 	packet = (struct nci_hcp_packet *)hcp_skb->data;
+ 	type = NCI_HCP_MSG_GET_TYPE(packet->message.header);
+ 	if (type == NCI_HCI_HCP_RESPONSE) {
 
 
