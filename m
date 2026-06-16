@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D868466B5E;
-	Tue, 16 Jun 2026 18:29:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8FF63D813F;
+	Tue, 16 Jun 2026 18:30:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634597; cv=none; b=tizOHDRPIIFz8JPzDTQ5ZmDyOc8dvObIn3hVb79MJ/PmkbgfaqNa84JEoIwIOfx2Cz2dxXqRwcJk4/b1Rh3pGZoKL7XTdw7ECJbmeHv+jVRuKbEba97OJ6Ikg590RyGSfhFq2cdeHbBdj7Uw1xXERPCBUXpho9LMutpWIUK6qx4=
+	t=1781634602; cv=none; b=uJ0sPRPfQGJTEuWNRl8MLGsIO59QngKQoQKQy8Ouo6pJtTHNMWJxjCtkpw24x3rFN6+DLzaGlo4OBWWhfksw5UcMDTxXJs1GJPHu2pTg6xXypqv0XBcsyOkhzUJETWkdljy3JGABFvnJveB3rhhHrPe7e4dh24bzeNVMHz5faYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634597; c=relaxed/simple;
-	bh=SQvZniLSQOTbCKEkhLBpWGUCcOMfcYNEl2Z9MDoFnhI=;
+	s=arc-20240116; t=1781634602; c=relaxed/simple;
+	bh=4faNniaUzROoGJkksre3TKFJfRCZ0JvLO1NiSe608f8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PSd0UAJkh4LK2OfrQspZp/Ex1iF7ZgXVPqqLTqMqN0xNYTfqGVBVKPEVM11JqfCbKh+EgicUYIvZT/lCEkM6YY1OpBtwgpKoh8MH3cv+hyd2mHw9mFI2qHocuCzh8bWAnKtHkLM+jJAgfCbTcKdLNR4UtclNbNR0bPIA6o4vvtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CUvdMbfC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QEGImCDlXKWro2oWdDGKB5Qmvj/jbd5zI34g2Enk1J1LsCmnmjxpYGO98krmBO7KMr2eCNayu8UzOwUc/Rz9mgaRP1nJxPxHbxt9z9WAyVETu6HB5si67cqy5iOj3mIAZP2gwgZ3mHICEw2rD8BSS/md86WNCkL7pGhdLqWLzRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9mu2AJk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CUvdMbfC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7ED21F000E9;
-	Tue, 16 Jun 2026 18:29:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9mu2AJk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FACD1F000E9;
+	Tue, 16 Jun 2026 18:30:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634596;
-	bh=nEBwFukvsRWS6YqM8gN+PT2uguPMqZavVW+f/e5nq40=;
+	s=korg; t=1781634601;
+	bh=SIq6m6FCsQVYBs2gfkbn9ldp9PsNH8Uk9MdVolBecBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CUvdMbfCJdAjkZlKgX2bAkBgoloD20QIO6J8EOncypmOuAjJNCyITFApwVQ7spYH2
-	 oqv2MXD61uicfQq4YBRsjEq1ejvwS2VnmAm0Ldm3E8UducWzW0gevp4m8NrfNb54pD
-	 ysLXQPy5VDOMuYG2q/p3Gmlnh3oLqzSYhsioSpd4=
+	b=j9mu2AJkUQyGfReAvAs2mSdlETVHzM2vNEY+fvX9WPryBjgafW5ITexiil+IrH0T8
+	 wh0GKnPW+WXYduiLy0SZa4ScbQATvFRPxiMYun4ID+M1Eb2qn4CcbijleRIYBzXBbl
+	 ttZceg1JjR9shOOUleKXrgb5kO3DolI1qjuvYKN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Daniel Hodges <git@danielhodges.dev>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 262/411] thermal: core: Fix thermal zone governor cleanup issues
-Date: Tue, 16 Jun 2026 20:28:20 +0530
-Message-ID: <20260616145114.964955587@linuxfoundation.org>
+Subject: [PATCH 5.15 263/411] wifi: mwifiex: fix use-after-free in mwifiex_adapter_cleanup()
+Date: Tue, 16 Jun 2026 20:28:21 +0530
+Message-ID: <20260616145115.021300179@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,66 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Daniel Hodges <git@danielhodges.dev>
 
-[ Upstream commit 41ff66baf81c6541f4f985dd7eac4494d03d9440 ]
+[ Upstream commit ae5e95d4157481693be2317e3ffcd84e36010cbb ]
 
-If thermal_zone_device_register_with_trips() fails after adding
-a thermal governor to the thermal zone being registered, the
-governor is not removed from it as appropriate which may lead to
-a memory leak.
+The mwifiex_adapter_cleanup() function uses timer_delete()
+(non-synchronous) for the wakeup_timer before the adapter structure is
+freed. This is incorrect because timer_delete() does not wait for any
+running timer callback to complete.
 
-In turn, thermal_zone_device_unregister() calls thermal_set_governor()
-without acquiring the thermal zone lock beforehand which may race with
-a governor update via sysfs and may lead to a use-after-free in that
-case.
+If the wakeup_timer callback (wakeup_timer_fn) is executing when
+mwifiex_adapter_cleanup() is called, the callback will continue to
+access adapter fields (adapter->hw_status, adapter->if_ops.card_reset,
+etc.) which may be freed by mwifiex_free_adapter() called later in the
+mwifiex_remove_card() path.
 
-Address these issues by adding two thermal_set_governor() calls, one to
-thermal_release() to remove the governor from the given thermal zone,
-and one to the thermal zone registration error path to cover failures
-preceding the thermal zone device registration.
+Use timer_delete_sync() instead to ensure any running timer callback has
+completed before returning.
 
-Fixes: e33df1d2f3a0 ("thermal: let governors have private data for each thermal zone")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/5092923.31r3eYUQgx@rafael.j.wysocki
-[ adapted context for missing mutex_destroy/complete ]
+Fixes: 4636187da60b ("mwifiex: add wakeup timer based recovery mechanism")
+Cc: stable@vger.kernel.org
+Signed-off-by: Daniel Hodges <git@danielhodges.dev>
+Link: https://patch.msgid.link/20260206194401.2346-1-git@danielhodges.dev
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ changed `timer_delete_sync(&adapter->wakeup_timer)` to `del_timer_sync(&adapter->wakeup_timer)` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/thermal_core.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/init.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -778,6 +778,7 @@ static void thermal_release(struct devic
- 		     sizeof("thermal_zone") - 1)) {
- 		tz = to_thermal_zone(dev);
- 		thermal_zone_destroy_device_groups(tz);
-+		thermal_set_governor(tz, NULL);
- 		kfree(tz);
- 	} else if (!strncmp(dev_name(dev), "cooling_device",
- 			    sizeof("cooling_device") - 1)) {
-@@ -1260,8 +1261,10 @@ thermal_zone_device_register(const char
- 	/* sys I/F */
- 	/* Add nodes that are always present via .groups */
- 	result = thermal_zone_create_device_groups(tz, mask);
--	if (result)
-+	if (result) {
-+		thermal_set_governor(tz, NULL);
- 		goto remove_id;
-+	}
- 
- 	/* A new thermal zone needs to be updated anyway. */
- 	atomic_set(&tz->need_update, 1);
-@@ -1385,8 +1388,6 @@ void thermal_zone_device_unregister(stru
- 
- 	cancel_delayed_work_sync(&tz->poll_queue);
- 
--	thermal_set_governor(tz, NULL);
--
- 	thermal_remove_hwmon_sysfs(tz);
- 	ida_simple_remove(&thermal_tz_ida, tz->id);
- 	ida_destroy(&tz->ida);
+--- a/drivers/net/wireless/marvell/mwifiex/init.c
++++ b/drivers/net/wireless/marvell/mwifiex/init.c
+@@ -399,7 +399,7 @@ static void mwifiex_invalidate_lists(str
+ static void
+ mwifiex_adapter_cleanup(struct mwifiex_adapter *adapter)
+ {
+-	del_timer(&adapter->wakeup_timer);
++	del_timer_sync(&adapter->wakeup_timer);
+ 	del_timer_sync(&adapter->devdump_timer);
+ 	mwifiex_cancel_all_pending_cmd(adapter);
+ 	wake_up_interruptible(&adapter->cmd_wait_q.wait);
 
 
