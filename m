@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80214508E4;
-	Tue, 16 Jun 2026 16:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8382844DB64;
+	Tue, 16 Jun 2026 16:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626830; cv=none; b=C+6bD3ucgcm852ZMki+CL6r+VtVGDFTPJYkIjXTz4daKdrOC90DaPAf+q6mN8xJDqLynYxaLEOOYN7nr6vPfu9JoScthJqtJj1/ohdcXuHC3tzYZlvKFFo2jhAhMqqlYUQKodQE785h+rDhiEjn3CMLMBlW56IGeCzcPpR3TTSg=
+	t=1781626835; cv=none; b=WgI9JOmtxsdPc9zMIV/1t6LNLz2zPZW0oZZb45PfxVtOnJQ4C9/uvpHibwhT2Qdl6agLvNWyyT3O/L5BoJKyt7CUO3h+PaZS9Pl6OR7DMcJQ2brRPQFLU6zqY71clwRmCbhHlbu20RlQR0BMCpxkcVF67PLueotgt+qXzCY3/qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626830; c=relaxed/simple;
-	bh=MEYFawXtpU1BUN6Tu/B5//sQz9gR5fskgjfqJMGH34Q=;
+	s=arc-20240116; t=1781626835; c=relaxed/simple;
+	bh=W/rm16of6RCiugA7MPH1uLM0KaqBRN2LVNS/NFt9U9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZDVkYlXADI6+U1+keQHO2tuXQBmlKErZ72iBPvp5Vyx6X2h9R/hgVzW90TXyoWVbSnF0Wg5QPge46tKvPK7Asdrr1fWPBUL7tQBwHmrtm86OvC8/m/nGn4MFQHTvSOQl3asswk0R1clgRae6mOuYLH2rNARPzkfqWUKCo4TdQgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VADd4W2n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VbzurBFV+Ub1oYsN1WOhnC+U7OlVjdE4edzxGr3KzBP8XXaCslAxmzKFQ4DzA9+MLu86fFgIzNY8Yh2u34vH0FqIn0S4bNKQLk9BF+oMdacRhXBTHkxr5/4kkNsw1vqZFDcXF3L+MAwvU/xVG+GwGRGpAJEEwxsIpuV1h9c54t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJfBjNwl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VADd4W2n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780081F000E9;
-	Tue, 16 Jun 2026 16:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJfBjNwl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C87E1F000E9;
+	Tue, 16 Jun 2026 16:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626829;
-	bh=EbOwZKP+Ga2VqHy2UKzgVtdhVqrnM1kZktOTvYdrwGs=;
+	s=korg; t=1781626834;
+	bh=AOYukaaexRwiHKJqcJCPxmqLuBI96ZBGbe7HU3Ngwgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VADd4W2nkJvav2t939PldTPiDPYmi5spL3iD6Bf37ds/xpVsmrUXWnU3mWle/yBYV
-	 hX9DtaAh7oXsY1/2bcocXAL1cMMatDvh8RXB7/fkqcYTOX3ULK7xxUrsJE3AWQSk8i
-	 4wYqqI5fShcRIyl7pcEbnWUIqDrK9GTgdAialA20=
+	b=JJfBjNwlqfz5vQ4wse5qE6YBpZNRC6rcpOovuP1a6ZC9couwcdS4tMJnRj6YF/T3o
+	 kE7kTMcbgUaS+eRCujviYe6R8ruerx+B4JBZsTcpmPkSEJhkJQ+BPv7hG2ICU1W9ya
+	 5AweVjCy+Hm6mxb22Rw0fQ5HCvm1W4SDEPL3AWvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b109633ea805cac54a61@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	HanQuan <eilaimemedsnaimel@gmail.com>,
+	MingXuan <bwnie0730@outlook.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 061/261] signal: clear JOBCTL_PENDING_MASK for caller in zap_other_threads()
-Date: Tue, 16 Jun 2026 20:28:19 +0530
-Message-ID: <20260616145047.971968772@linuxfoundation.org>
+Subject: [PATCH 6.12 079/261] net: add pskb_may_pull() to skb_gro_receive_list()
+Date: Tue, 16 Jun 2026 20:28:37 +0530
+Message-ID: <20260616145048.739900101@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,70 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: HanQuan <eilaimemedsnaimel@gmail.com>
 
-[ Upstream commit 90918794a4e2c3b440f8fcf3847765a8b1d81b25 ]
+[ Upstream commit f2bb3434544454099a5b6dec213567267b05d79d ]
 
-When a multi-threaded process receives a stop signal (e.g., SIGSTOP),
-do_signal_stop() sets JOBCTL_STOP_PENDING and JOBCTL_STOP_CONSUME on all
-threads and sets signal->group_stop_count to the number of threads. If
-one of the threads concurrently calls execve(), de_thread() invokes
-zap_other_threads() to kill all other threads. zap_other_threads()
-aborts the pending group stop by resetting signal->group_stop_count to 0
-and clears the JOBCTL_PENDING_MASK for all other threads. However, it
-fails to clear the job control flags for the calling thread.
+skb_gro_receive_list() calls skb_pull(skb, skb_gro_offset(skb)) without
+first ensuring the data is in the linear area via pskb_may_pull(). When
+the skb arrives via napi_gro_frags(), skb_headlen can be 0 (all data in
+page fragments) while skb_gro_offset is non-zero (after IP+TCP header
+parsing). The skb_pull() then decrements skb->len by skb_gro_offset
+but skb->data_len stays unchanged, hitting BUG_ON(skb->len < skb->data_len)
+in __skb_pull().
 
-When execve() completes, the calling thread returns to user mode and
-checks for pending signals. Seeing the stale JOBCTL_STOP_PENDING flag,
-it calls do_signal_stop(), which invokes task_participate_group_stop().
-Since JOBCTL_STOP_CONSUME is still set, it attempts to decrement the
-already-zero signal->group_stop_count, triggering a warning:
+The UDP fraglist GRO path already contains this guard at
+udp_offload.c:749. Adding it to skb_gro_receive_list() itself provides
+centralized protection for all callers (TCP, UDP, and any future
+protocols), and ensures the precondition of skb_pull() is satisfied
+before it is called.
 
-sig->group_stop_count == 0
-WARNING: CPU: 1 PID: 6475 at kernel/signal.c:373
-task_participate_group_stop+0x215/0x2d0
-Call Trace:
- <TASK>
- do_signal_stop+0x3be/0x5c0 kernel/signal.c:2619
- get_signal+0xa8c/0x1330 kernel/signal.c:2884
- arch_do_signal_or_restart+0xbc/0x840 arch/x86/kernel/signal.c:337
- exit_to_user_mode_loop+0x8c/0x4d0 kernel/entry/common.c:98
- do_syscall_64+0x33e/0xf80 arch/x86/entry/syscall_64.c:100
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
+On pskb_may_pull() failure, set NAPI_GRO_CB(skb)->flush = 1 so the
+skb is not held as a new GRO head and is instead delivered through the
+normal receive path, matching the UDP handling.
 
-Fix this race condition by clearing the JOBCTL_PENDING_MASK for the
-calling thread in zap_other_threads(), ensuring it does not retain any
-stale job control state after the thread group is destroyed. This aligns
-with other functions that tear down a thread group and abort group
-stops, such as zap_process() and complete_signal(), which correctly
-clear these flags for all threads including the current one.
-
-Fixes: 39efa3ef3a37 ("signal: Use GROUP_STOP_PENDING to stop once for a single group stop")
-Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
-Reported-by: syzbot+b109633ea805cac54a61@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b109633ea805cac54a61
-Link: https://syzkaller.appspot.com/ai_job?id=d70208cc-862b-4fe3-bf02-3031e10cd0b3
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Link: https://patch.msgid.link/20260521142240.2973022-1-nogikh@google.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 8d95dc474f85 ("net: add code for TCP fraglist GRO")
+Reported-by: HanQuan <eilaimemedsnaimel@gmail.com>
+Reported-by: MingXuan <bwnie0730@outlook.com>
+Signed-off-by: HanQuan <eilaimemedsnaimel@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/signal.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/gro.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/kernel/signal.c b/kernel/signal.c
-index 468b589c39e695..b832158a9c4608 100644
---- a/kernel/signal.c
-+++ b/kernel/signal.c
-@@ -1371,6 +1371,7 @@ int zap_other_threads(struct task_struct *p)
- 	int count = 0;
+diff --git a/net/core/gro.c b/net/core/gro.c
+index e4cebf162efb70..4e7b9848771edc 100644
+--- a/net/core/gro.c
++++ b/net/core/gro.c
+@@ -233,6 +233,11 @@ int skb_gro_receive_list(struct sk_buff *p, struct sk_buff *skb)
+ 	if (unlikely(p->len + skb->len >= 65536))
+ 		return -E2BIG;
  
- 	p->signal->group_stop_count = 0;
-+	task_clear_jobctl_pending(p, JOBCTL_PENDING_MASK);
- 
- 	for_other_threads(p, t) {
- 		task_clear_jobctl_pending(t, JOBCTL_PENDING_MASK);
++	if (!pskb_may_pull(skb, skb_gro_offset(skb))) {
++		NAPI_GRO_CB(skb)->flush = 1;
++		return -ENOMEM;
++	}
++
+ 	if (NAPI_GRO_CB(p)->last == p)
+ 		skb_shinfo(p)->frag_list = skb;
+ 	else
 -- 
 2.53.0
 
