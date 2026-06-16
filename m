@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA1C1E8320;
-	Tue, 16 Jun 2026 15:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30151E8320;
+	Tue, 16 Jun 2026 15:21:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623268; cv=none; b=Iggavn444p1Dr4RoBwRwhtvgimEm7GnnbCSMIymrmyJCfKFTVbIa/s3NPpchlTc7bGhbaoEgMyctZH4Qb1QCL1mZ8YIyNer756fWzh0OCXsq6J4Zqbfra3ueXiwJKjkLxrtAnktAh4nXcjaLdGt3siiLz57ekxFAormNN4+CGwo=
+	t=1781623274; cv=none; b=QuQ3jfdFDm6yk0qQsWzEc5+mTDFlErZxIQZXkGPE9viAmN4zsVQfwDcbtvOY5aJNRcxvY0GucKAKHsqX2PwjUc0a+5m6XfowQqjSQc4uKykJqKRTOijGlZOHs4922YaaywzTPbMT2X0QQLPKIxnRowTwKan1hGTod45XLR+wKwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623268; c=relaxed/simple;
-	bh=f9GZ5TXmd7yq5LRzPsPYcieJKi1mTyDo7YI81C39MdY=;
+	s=arc-20240116; t=1781623274; c=relaxed/simple;
+	bh=wPhjochYu+SLQhvSGPMoWbYr+RFlE/IPLAHK8FebWlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o6EHYeVRl77LEIzNrUo/nxhgEZJZyEj9YHxUhzknXc+f0ySNc8nV3GKwFLnnQrib3F5zhI08CMWCYzD5HgkSrN3eU1XSyX36MEF8O/H5QgpRnhvCcLB9vT76ArVMC7yD+EHLVaEqN6sw9wM7enJXOuVoisWKH1IywT13jT4jG5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uIVu77tR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fqm9VzIeOgkT32k40jZFxzgxVVoy35AO/fZGJ+E1VeXIsC3ADRipIwSRFyDFByJogMXDDHjpG9HT+IA019SSftY78PcfRUaztiS4A10o87bG75lPJrSDSrrIdkm89hIJ7tZ/KtyGdLsxqO5N/pR2SNnrNodagEY3cA/MHj2vg+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c5HOgiQZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uIVu77tR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 123271F00A3A;
-	Tue, 16 Jun 2026 15:21:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c5HOgiQZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8471F000E9;
+	Tue, 16 Jun 2026 15:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623267;
-	bh=LwocWUZtF9WQd6lilcQLs1SRa7aWEvnUsYXqv68/cXA=;
+	s=korg; t=1781623272;
+	bh=1HfJ0Vv9qhnSR/IwL1W9SjrDNGzrNdcfB6O6zmCNkag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uIVu77tR4MXOMw7nKQKpxm2GhrLksnw2b0/z53OoDajnlbfC+H0d2Re6EXocUtAaP
-	 skWsF/SkbQCLc5dAUwVZv1ZZjvFJIYiZoSgrI5428T0okZG69kRjaLQ3ahe6ALAIIv
-	 rhSNp+dEAmyiiixyQ17aVcai/JR843yPdT5/TQeE=
+	b=c5HOgiQZ9u1BXPxyQG6P2MoZiAG+SGcIEaibTgTe7rSTVt6tWOuao0HTGdvp1LPOK
+	 zWsUyWnBHP3KnXgsCD9gWtT92fjM7kzffgTSZbvcwq9gwW8Jy2UB0z0f3rhWCZHQEZ
+	 Xscr32xUlk7MZTAHM+mK65zo6pDvGoBHC0ARyjSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 117/378] net: phy: dont try to setup PHY-driven SFP cages when using genphy
-Date: Tue, 16 Jun 2026 20:25:48 +0530
-Message-ID: <20260616145116.518982775@linuxfoundation.org>
+Subject: [PATCH 7.0 118/378] net: qrtr: fix refcount saturation and potential UAF in qrtr_port_remove
+Date: Tue, 16 Jun 2026 20:25:49 +0530
+Message-ID: <20260616145116.567887734@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,57 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-[ Upstream commit 5a0082ec20a05ef2378410323a5089a8f1786f4a ]
+[ Upstream commit a2171131ecda1ed61a594a1eb715e75fdad0fef5 ]
 
-We don't have support for PHY-driver SFP cages with the genphy code.
+In qrtr_port_remove(), the socket reference count is decremented via
+__sock_put() before the port is removed from the qrtr_ports XArray and
+before the RCU grace period elapses.
 
-On top of that, it was found by sashiko that running
-sfp_bus_add_upstream() for genphy deadlocks, as for genphy the PHY
-probing runs under RTNL, which isn't the case for non-genphy drivers.
+This breaks the fundamental RCU update paradigm. It exposes a race
+window where a concurrent RCU reader (such as qrtr_reset_ports() or
+qrtr_port_lookup()) can obtain a pointer to the socket from the XArray,
+and attempt to call sock_hold() on a socket whose reference count has
+already dropped to zero.
 
-This problem was reproduced, and does lead to a deadlock on RTNL.
+This exact race condition was hit during syzkaller fuzzing, leading to
+the following refcount saturation warning and a potential Use-After-Free:
 
-Before the blamed commit, the phy_sfp_probe() call was made by
-individual PHY drivers, so there was no way to get to the SFP probing
-path when using genphy.
+  refcount_t: saturated; leaking memory.
+  WARNING: CPU: 3 PID: 1273 at lib/refcount.c:22 refcount_warn_saturate+0xae/0x1d0
+  Modules linked in: qrtr(+) bochs drm_shmem_helper ...
+  Call Trace:
+   <TASK>
+   qrtr_reset_ports net/qrtr/af_qrtr.c:768 [inline] [qrtr]
+   __qrtr_bind.isra.0+0x48b/0x570 net/qrtr/af_qrtr.c:805 [qrtr]
+   qrtr_bind+0x17d/0x210 net/qrtr/af_qrtr.c:901 [qrtr]
+   kernel_bind+0xe4/0x120 net/socket.c:3592
+   qrtr_ns_init+0x1a6/0x380 net/qrtr/ns.c:715 [qrtr]
+   qrtr_proto_init+0x3b/0xff0 net/qrtr/af_qrtr.c:169 [qrtr]
+   do_one_initcall+0xf5/0x5e0 init/main.c:1283
+   ...
+   </TASK>
 
-Let's therefore only run phy_sfp_probe when not using genphy.
+Fix this by deferring the reference count decrement until after the
+xa_erase() and the synchronize_rcu() complete.
 
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
-Fixes: bad869b5e41a ("net: phy: Only rely on phy_port for PHY-driven SFP")
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260604092819.723505-5-maxime.chevallier@bootlin.com
+(Note: The v1 of this patch incorrectly replaced __sock_put() with
+sock_put(). As Simon Horman pointed out, the callers of qrtr_port_remove()
+still hold a reference to the socket, so freeing the socket memory here
+would lead to a subsequent UAF in the caller. Thus, the __sock_put() is
+kept, but only repositioned to close the RCU race.)
+
+Fixes: bdabad3e363d ("net: Add Qualcomm IPC router")
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260604064801.1180388-1-w15303746062@163.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/phy_device.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ net/qrtr/af_qrtr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index 8b7e2789047694..830d6fb36c6409 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -3528,9 +3528,15 @@ static int phy_setup_ports(struct phy_device *phydev)
- 	if (ret)
- 		return ret;
+diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
+index d77e9c8212da51..7087bb57aeac18 100644
+--- a/net/qrtr/af_qrtr.c
++++ b/net/qrtr/af_qrtr.c
+@@ -707,13 +707,13 @@ static void qrtr_port_remove(struct qrtr_sock *ipc)
+ 	if (port == QRTR_PORT_CTRL)
+ 		port = 0;
  
--	ret = phy_sfp_probe(phydev);
--	if (ret)
--		goto out;
-+	/* We don't support SFP with genphy drivers. Also, genphy driver
-+	 * binding occurs with RTNL help, which will deadlock the call to
-+	 * sfp_bus_add_upstream().
-+	 */
-+	if (!phydev->is_genphy_driven) {
-+		ret = phy_sfp_probe(phydev);
-+		if (ret)
-+			goto out;
-+	}
+-	__sock_put(&ipc->sk);
+-
+ 	xa_erase(&qrtr_ports, port);
  
- 	if (phydev->n_ports < phydev->max_n_ports) {
- 		ret = phy_default_setup_single_port(phydev);
+ 	/* Ensure that if qrtr_port_lookup() did enter the RCU read section we
+ 	 * wait for it to up increment the refcount */
+ 	synchronize_rcu();
++
++	__sock_put(&ipc->sk);
+ }
+ 
+ /* Assign port number to socket.
 -- 
 2.53.0
 
