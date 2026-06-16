@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD0E43D504;
-	Tue, 16 Jun 2026 15:33:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F8138837F;
+	Tue, 16 Jun 2026 15:33:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624016; cv=none; b=G1CyJx/U/2Rp/xIcmTTUI7ERNO7E7/RH6MFEQH/9vuGOAtPB2gB6rhCMc/dHlxSvPJRiY+jDKOyeU0Cl17/L4WmTBCs+Q7/8kGr90yWd+mLSFg/qdctavJn1VZih+SxcLod86dd/zIC5bNU8yCeHRiMie8eBjWnW98ypYZt2J+4=
+	t=1781624021; cv=none; b=AtHKsm/LNsUT1LIwJGpIfUgk8TM/Tl++/d0ziVL0PKA6kvHv7EWtxiJTQB0L3l3hUCFVoYPuAbZBbGW4JUY0Ut6iUNqaYRhOJzjeH4rng1OvBJGfuSZJYs5jsXOFcKnI/UJQRnFc/h5RnQFtrpvySoLhl7NnS9HVY+h6d4PF0bA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624016; c=relaxed/simple;
-	bh=TvQ/QicmEAs+L0a+73HIAn5quPm55lXV/VI+KLacyjs=;
+	s=arc-20240116; t=1781624021; c=relaxed/simple;
+	bh=CjgPnMW71Q4gHGPWkjSva7yKrIoN0IKmg0dXowjQ1cU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oYtM9CSGok2+20Rxt+XU30rSu1TXgCdQI3RkpwdMQ4pEnFNFv0xCn8SMa+5mT8UxkGiBcfk/xgw2ZFb6C87y10MTo4AVpNIyVk0JM+TiT/Yf788t1XknxjNCKkexSc6POgEtGPd+T1EKJRUrBH7Gd+KYE1ut7reGZ+VbzHSgU+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBZIHqUQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PkCvHidm0/FGS1t9/ykcJLtU3GJuKOBEtLtMhUVImuD6ZleliLkp8r8ZZ/XSYUA5QrG2NZnffWzTfo1ugYoE/Fj2K+fNikgguVf698sTmwCJVFDOyDKKGMYaKRA2pV12MjagrVh8mcAeTcaH0A+oFB4U/7DBGggSLuXrngyqpEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGmMH6h7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBZIHqUQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3274C1F000E9;
-	Tue, 16 Jun 2026 15:33:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGmMH6h7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B5DF1F000E9;
+	Tue, 16 Jun 2026 15:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624015;
-	bh=OAD5X9RJ1JUR9alzQhEtZVXc20L3edwaDqIeaewCNec=;
+	s=korg; t=1781624020;
+	bh=X9BPs0/KkGn3pPKoqQc9QubUXcyH+bxpjzjIEG6VwSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iBZIHqUQkKKvqo5MMXIvB+0ZGMaBSnyz6n5nKEBu9cdhu875botOCEFHZ9lyCjF6R
-	 mZzd3kwwEkLoQ7hLDkcnAD+J/FwORLoCvUNQiY/WMVJbSAhhCURj5Adn7+xN1358df
-	 rRTSeQ92/8kEtJYAM2JUjg3qH/Yby8wg7F6djL4I=
+	b=rGmMH6h752J2H7nnx/YoShLZxmLubFP4XYPNT0bcUh/Kwee/15wpmp4UH9V70PQNs
+	 wzOHFAECla9A9F/MpIho4P2km/gCV3njuwJyef/wLLZ3Ied7uYYULsCzMZ0XsefK/S
+	 /jI+yUqfzp2O0F4rsUbXbi0YJdt9T8PUTCNGMnYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a16fb0cce329a320661c@syzkaller.appspotmail.com,
-	Nirmoy Das <nirmoyd@nvidia.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 7.0 256/378] ovl: keep err zero after successful ovl_cache_get()
-Date: Tue, 16 Jun 2026 20:28:07 +0530
-Message-ID: <20260616145123.606918881@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 7.0 257/378] pidfd: refuse access to tasks that have started exiting harder
+Date: Tue, 16 Jun 2026 20:28:08 +0530
+Message-ID: <20260616145123.649831527@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,67 +49,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nirmoy Das <nirmoyd@nvidia.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 1711b6ed6953cee5940ca4c3a6e77f1b3798cee2 upstream.
+commit 62c4d31d78294bd61cf3403626b789e854357177 upstream.
 
-ovl_iterate_merged() stores PTR_ERR(cache) in err before checking
-IS_ERR(cache). On success err holds the truncated cache pointer and
-can be returned as a bogus non-zero error.
+The recent ptrace fix closed a hole where someone could rely on task->mm
+becoming NULL during do_exit() to bypass dumpability checks. This api
+here leans on on the very same check and so inherits the fix.
 
-The syzbot reproducer reaches this through overlay-on-overlay readdir:
+But there is no good reason to let it succeed at all once the target has
+entered do_exit(). PF_EXITING is set by exit_signals() at the very top
+of do_exit(), before exit_mm() and exit_files() run. Once we observe it,
+the task is committed to dying and exit_files() will release the fdtable
+shortly.
 
-  getdents64
-    iterate_dir(outer overlay file)
-      ovl_iterate_merged()
-        ovl_cache_get()
-          ovl_dir_read_merged()
-            ovl_dir_read()
-              iterate_dir(inner overlay file)
-                ovl_iterate_merged()
-
-Only compute PTR_ERR(cache) on the error path.
-
-Fixes: d25e4b739f83 ("ovl: refactor ovl_iterate() and port to cred guard")
-Reported-by: syzbot+a16fb0cce329a320661c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a16fb0cce329a320661c
+Fixes: 8649c322f75c ("pid: Implement pidfd_getfd syscall")
 Cc: stable@vger.kernel.org
-Signed-off-by: Nirmoy Das <nirmoyd@nvidia.com>
-Link: https://patch.msgid.link/20260514144258.3068715-1-nirmoyd@nvidia.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Link: https://patch.msgid.link/20260518-obgleich-petersilie-2d77ccccf9b9@brauner
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/readdir.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ kernel/pid.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/fs/overlayfs/readdir.c
-+++ b/fs/overlayfs/readdir.c
-@@ -838,15 +838,14 @@ static int ovl_iterate_merged(struct fil
- 	struct ovl_dir_file *od = file->private_data;
- 	struct dentry *dentry = file->f_path.dentry;
- 	struct ovl_cache_entry *p;
--	int err = 0;
-+	int err;
+--- a/kernel/pid.c
++++ b/kernel/pid.c
+@@ -878,10 +878,12 @@ static struct file *__pidfd_fget(struct
+ 	if (ret)
+ 		return ERR_PTR(ret);
  
- 	if (!od->cache) {
- 		struct ovl_dir_cache *cache;
+-	if (ptrace_may_access(task, PTRACE_MODE_ATTACH_REALCREDS))
+-		file = fget_task(task, fd);
+-	else
++	if (!ptrace_may_access(task, PTRACE_MODE_ATTACH_REALCREDS))
+ 		file = ERR_PTR(-EPERM);
++	else if (task->flags & PF_EXITING)
++		file = ERR_PTR(-ESRCH);
++	else
++		file = fget_task(task, fd);
  
- 		cache = ovl_cache_get(dentry);
--		err = PTR_ERR(cache);
- 		if (IS_ERR(cache))
--			return err;
-+			return PTR_ERR(cache);
+ 	up_read(&task->signal->exec_update_lock);
  
- 		od->cache = cache;
- 		ovl_seek_cursor(od, ctx->pos);
-@@ -869,7 +868,7 @@ static int ovl_iterate_merged(struct fil
- 		od->cursor = p->l_node.next;
- 		ctx->pos++;
- 	}
--	return err;
-+	return 0;
- }
- 
- static bool ovl_need_adjust_d_ino(struct file *file)
 
 
