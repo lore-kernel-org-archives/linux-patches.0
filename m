@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46AA3D5643;
-	Tue, 16 Jun 2026 18:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F5B3DC4D9;
+	Tue, 16 Jun 2026 18:36:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635004; cv=none; b=bqFNhYBa3FHbW/N4nZJEUpa4W93gb4XAvTTVkkzQlVWkx710iEfirEVHJw5tc6JDJRha0U7r57Pe1zOPLbEHAFYyRm19D2RtjVHERhnLm8AfbbpS6zcTAJvGpO5gQqqOW31ONqMQ/WNBIGSm9r3sAlTdcWabr260NERiz3JgfRc=
+	t=1781635009; cv=none; b=EnSElBclSd1UmOoTslDRcHiAide4z1P/xaeSqtHgV59eMCthWRtdvl41nF072r50bn5xzoszfN75w9izNuYkBh93hbzg/tBdZ3ozmfP36HH9UGUzDtqW8/pQ6LmmjE7209jI/f30A4RqlHtp321kFNIJSGZWIe0Im9SQzNEeV0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635004; c=relaxed/simple;
-	bh=iC1NnaoAVCOmpjpY5GO6TbAEbjL9A1bwR1ToOBE2huI=;
+	s=arc-20240116; t=1781635009; c=relaxed/simple;
+	bh=IpJJwr0D2d28tp1bPwaEvyWE6+d3hKCfv2KkK6oXpy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HPQ77/Np9bp8E8n2Q69mXENJHyk+ToT9AToV2NVHmM+PLXwEz8PMVXdYFgkT7abJ9ux7lIE4ZYFeGgreIgjO8FtHsg5g6+HvoT4fRehFbGfj2htwvgwC3ByW7zZVwjU1aV2qyhYLSWiA5c9xLEi+iHIMMzV/FL1tHbtzkH5J8z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZA+kj1UI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FaI3t3QjmAShi/kKURPYOYuFLtroBli5vviM1TtrcUDB5eQioV02aXm/9/uRMPSrA3NwBfTMoEvd3FHYPvwZoIonwA5ghcOivj7Z1vZ7umGvcWtINYc3kCsMFw1M4ziXs3ISw1J1Uex4AjPt2z9dKZpqdQ3drIWuEt7VN4Ym/ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oW8ZuhYg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZA+kj1UI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF2F1F000E9;
-	Tue, 16 Jun 2026 18:36:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oW8ZuhYg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 869471F000E9;
+	Tue, 16 Jun 2026 18:36:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635003;
-	bh=Xkao8i823PXBwZrqKDA97Ltkg0oXrUylw8thIbxgwdw=;
+	s=korg; t=1781635008;
+	bh=blHUu70Cfa7R040/kwuM6PYY9v3F6L4kFbVyJ0Y+ens=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZA+kj1UIvWHgB+daaDajA6JznyuesqkhIt1gHWmJVfyCMkAXYEW8Tj1Bn6VsyftDm
-	 eo3ikGtllJj4+5Yrmbn1jJxOypQFcJfFb0a6inFRKWzxeVDYAy53Cia5AmdCbUtNFp
-	 NO/mFec7v4XUTbG55lfiD2OET/g/hfP2cd08mnns=
+	b=oW8ZuhYgTBxXsZFjdK7ZEMT4m0D2l1jH7t3TD/CrkaeP4E9AJ809euv8s/Iz0QMVv
+	 y1wHUOCJfyJMB6sqNLx72YERhU3WP6J8NruJJHk48Vp/Cvlply70x8FAS0D/sG5o2T
+	 /yE/HHd+JP/HGyTV97B8cmaH26pYit4ZyG8AU1HU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Lee Jones <lee@kernel.org>,
+	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+	John Keeping <john@metanate.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 373/411] usb: dwc3: xilinx: fix error handling in zynqmp init error paths
-Date: Tue, 16 Jun 2026 20:30:11 +0530
-Message-ID: <20260616145121.141591304@linuxfoundation.org>
+Subject: [PATCH 5.15 374/411] usb: gadget: f_hid: tidy error handling in hidg_alloc
+Date: Tue, 16 Jun 2026 20:30:12 +0530
+Message-ID: <20260616145121.189051317@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -51,81 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: John Keeping <john@metanate.com>
 
-[ Upstream commit c1a0ecbf32c4b397353204e2ec94c5bb9f3300ed ]
+[ Upstream commit 944fe915d00d3cb1bacb1e77cabfb6dc82e6f8b8 ]
 
-Fix error handling and resource cleanup i.e remove invalid
-phy_exit() after failed phy_init(), route failures through
-proper cleanup paths and return 0 explicitly on success.
+Unify error handling at the end of the function, reducing the risk of
+missing something on one of the error paths.
 
-Fixes: 84770f028fab ("usb: dwc3: Add driver for Xilinx platforms")
-Cc: stable@vger.kernel.org
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://patch.msgid.link/20260519115529.2980421-1-radhey.shyam.pandey@amd.com
+Moving the increment of opts->refcnt later means there is no need to
+decrement it on the error path and is safe as this is guarded by
+opts->lock which is held for this entire section.
+
+Tested-by: Lee Jones <lee@kernel.org>
+Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Reviewed-by: Lee Jones <lee@kernel.org>
+Signed-off-by: John Keeping <john@metanate.com>
+Link: https://lore.kernel.org/r/20221122123523.3068034-4-john@metanate.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 4f88d65def6f ("usb: gadget: f_hid: fix device reference leak in hidg_alloc()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-xilinx.c |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/usb/gadget/function/f_hid.c |   21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/drivers/usb/dwc3/dwc3-xilinx.c
-+++ b/drivers/usb/dwc3/dwc3-xilinx.c
-@@ -165,15 +165,13 @@ static int dwc3_xlnx_init_zynqmp(struct
- 	}
+--- a/drivers/usb/gadget/function/f_hid.c
++++ b/drivers/usb/gadget/function/f_hid.c
+@@ -1265,7 +1265,6 @@ static struct usb_function *hidg_alloc(s
+ 	opts = container_of(fi, struct f_hid_opts, func_inst);
  
- 	ret = phy_init(usb3_phy);
--	if (ret < 0) {
--		phy_exit(usb3_phy);
-+	if (ret < 0)
- 		goto err;
+ 	mutex_lock(&opts->lock);
+-	++opts->refcnt;
+ 
+ 	spin_lock_init(&hidg->write_spinlock);
+ 	spin_lock_init(&hidg->read_spinlock);
+@@ -1278,11 +1277,8 @@ static struct usb_function *hidg_alloc(s
+ 	hidg->dev.class = hidg_class;
+ 	hidg->dev.devt = MKDEV(major, opts->minor);
+ 	ret = dev_set_name(&hidg->dev, "hidg%d", opts->minor);
+-	if (ret) {
+-		--opts->refcnt;
+-		mutex_unlock(&opts->lock);
+-		return ERR_PTR(ret);
 -	}
++	if (ret)
++		goto err_unlock;
  
- 	ret = reset_control_deassert(apbrst);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to release APB reset\n");
--		goto err;
-+		goto err_phy_exit;
+ 	hidg->bInterfaceSubClass = opts->subclass;
+ 	hidg->bInterfaceProtocol = opts->protocol;
+@@ -1293,14 +1289,13 @@ static struct usb_function *hidg_alloc(s
+ 					    opts->report_desc_length,
+ 					    GFP_KERNEL);
+ 		if (!hidg->report_desc) {
+-			put_device(&hidg->dev);
+-			--opts->refcnt;
+-			mutex_unlock(&opts->lock);
+-			return ERR_PTR(-ENOMEM);
++			ret = -ENOMEM;
++			goto err_put_device;
+ 		}
  	}
+ 	hidg->use_out_ep = !opts->no_out_endpoint;
  
- 	/* Set PIPE Power Present signal in FPD Power Present Register*/
-@@ -185,20 +183,18 @@ static int dwc3_xlnx_init_zynqmp(struct
- 	ret = reset_control_deassert(crst);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to release core reset\n");
--		goto err;
-+		goto err_phy_exit;
- 	}
++	++opts->refcnt;
+ 	mutex_unlock(&opts->lock);
  
- 	ret = reset_control_deassert(hibrst);
- 	if (ret < 0) {
- 		dev_err(dev, "Failed to release hibernation reset\n");
--		goto err;
-+		goto err_phy_exit;
- 	}
+ 	hidg->func.name    = "hid";
+@@ -1315,6 +1310,12 @@ static struct usb_function *hidg_alloc(s
+ 	hidg->qlen	   = 4;
  
- 	ret = phy_power_on(usb3_phy);
--	if (ret < 0) {
--		phy_exit(usb3_phy);
--		goto err;
--	}
-+	if (ret < 0)
-+		goto err_phy_exit;
- 
- skip_usb3_phy:
- 	/*
-@@ -212,6 +208,10 @@ skip_usb3_phy:
- 		writel(reg, priv_data->regs + XLNX_USB_TRAFFIC_ROUTE_CONFIG);
- 	}
- 
-+	return 0;
+ 	return &hidg->func;
 +
-+err_phy_exit:
-+	phy_exit(usb3_phy);
- err:
- 	return ret;
++err_put_device:
++	put_device(&hidg->dev);
++err_unlock:
++	mutex_unlock(&opts->lock);
++	return ERR_PTR(ret);
  }
+ 
+ DECLARE_USB_FUNCTION_INIT(hid, hidg_alloc_inst, hidg_alloc);
 
 
