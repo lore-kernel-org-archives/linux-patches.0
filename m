@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029A53A3E78;
-	Tue, 16 Jun 2026 17:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C99332EC1;
+	Tue, 16 Jun 2026 17:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631226; cv=none; b=U4nZbdvYWPj0gSIaL65Vc/wmuJry3vctNKjNOQh/RVGZhh3riEn+1RWcUDhc+m7qZhLx5w6hNy7FbSdNn+BLxrU8wRMsXzL6qsjnGvXQYbQOBXPJlRn9adz7GVOdFp8gOnBEm+XJGXeSX0nhn9BYHLvGd4DvMKmkw2eZm9ETC1M=
+	t=1781631230; cv=none; b=tOLVgnMcDW1YhkOUCCEIObS88dKDSIu+TTRNmVClimnUJ4B4sa/Uxu6oIsxBn1TS9IMTZVhKDDIo14cJDjJzn5CHXnxIPlS/lwBMwvv4CXuHbGG1xwuGtpfevva/9VmUXlYEbADb6Z6xHLJd7h2KsN8smlxno/uFxsl8sgJvfBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631226; c=relaxed/simple;
-	bh=Sb3+/xhFiBEWs2oCAjktg86lkt8FzdQOowwfjG744RQ=;
+	s=arc-20240116; t=1781631230; c=relaxed/simple;
+	bh=+4VhhhTLToDWz6/TOUFRJFUBIgvUYmM9Mzku437V2/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WTtN6ADVGAPUedi3Rb5A84OxLQbtEQCuWm1WHFmnnolMtPGAO9LY6QD714uDvi2mSaED+D23oaaLbRwFaExccPc/vfI1RKbGYDAfzjbL25PF+vCXvxa3BCEsjLEsx0h2MCMX1qcUFH5p2TS8OMrTaLPtM40LnwWOB52KjAcv/tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbeTAIyO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J5s7u8F2wmGY8LYdoBa5WRXgYljkxCnLw7P4b1NUalTCMJHqvQxvLuxtgJUKeW5MpVwv8wMsVu17sQJ3K0Z9DJLA6TQ9TYMFEz/TwPKQWEulAzpN9Y4a7PSSst7FtyY6z6bgXoJp0buzr4NNtwimBTykHYK2cNva/vJqoOBhrOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPeLffE3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbeTAIyO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B110C1F000E9;
-	Tue, 16 Jun 2026 17:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPeLffE3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A601F000E9;
+	Tue, 16 Jun 2026 17:33:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631224;
-	bh=NUfIoEXwX0PdICovYY3cXnoWYI8vPdiGHEo5yo//Sjk=;
+	s=korg; t=1781631229;
+	bh=JoZO61y+Bm8EslaEnYnOItnv1L6uGH7QfIHztHM7l4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QbeTAIyOlyaIv/yzGSq9bRyhfu5UW0NGciYfn3ghajZ4oHWHzGsvsxC6Qecw/EkQn
-	 M42uyfPkRjAMkFdUu9kSr++bi9ysKixjiQ91ybVrIyAiSa276AP+DRWKDkTt7Ev0y6
-	 5JIQjKxjC7b0lUXW09kimUtwahzFIyjueyewqbN8=
+	b=zPeLffE3HrbpcBvQCvoSvo2x+Q1yRvYpiczXzsrCvxr7C9imQg7EN7j7/9mClt7Wz
+	 ikBE2aRB3FW7AD5Ow9up5edLYlPbI69B/Ch5wn0OdXQaBsJ1EJ7VaCHe0KOrTVh054
+	 RXcE7cVJvYoGHWJlF0UmotAqmZ2dGxLxqI/+BPug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Lee Jones <lee@kernel.org>,
+	Vladislav Nikolaev <vlad102nikolaev@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 181/522] HID: core: Fix size_t specifier in hid_report_raw_event()
-Date: Tue, 16 Jun 2026 20:25:28 +0530
-Message-ID: <20260616145134.597488491@linuxfoundation.org>
+Subject: [PATCH 6.1 182/522] RDMA/rxe: Complete the rxe_cleanup_task backport
+Date: Tue, 16 Jun 2026 20:25:29 +0530
+Message-ID: <20260616145134.640955607@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,64 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Vladislav Nikolaev <vlad102nikolaev@gmail.com>
 
-[ Upstream commit 4d3a2a466b8d68d852a1f3bbf11204b718428dc4 ]
+No upstream commit exists for this patch.
 
-When building for 32-bit platforms, for which 'size_t' is
-'unsigned int', there are warnings around using the incorrect format
-specifier to print bsize in hid_report_raw_event():
+The issue was introduced with backporting upstream commit b2b1ddc45745
+("RDMA/rxe: Fix the error "trying to register non-static key in
+rxe_cleanup_task"") to the 6.1 stable tree as commit 3236221bb8e4
+("RDMA/rxe: Fix the error "trying to register non-static key in
+rxe_cleanup_task"").
 
-  drivers/hid/hid-core.c:2054:29: error: format specifies type 'long' but the argument has type 'size_t' (aka 'unsigned int') [-Werror,-Wformat]
-   2053 |                 hid_warn_ratelimited(hid, "Event data for report %d is incorrect (%d vs %ld)\n",
-        |                                                                                         ~~~
-        |                                                                                         %zu
-   2054 |                                      report->id, csize, bsize);
-        |                                                         ^~~~~
-  drivers/hid/hid-core.c:2076:29: error: format specifies type 'long' but the argument has type 'size_t' (aka 'unsigned int') [-Werror,-Wformat]
-   2075 |                 hid_warn_ratelimited(hid, "Event data for report %d was too short (%d vs %ld)\n",
-        |                                                                                          ~~~
-        |                                                                                          %zu
-   2076 |                                      report->id, rsize, bsize);
-        |                                                         ^~~~~
+The 6.1 backport guarded qp->req.task and qp->comp.task before calling
+rxe_cleanup_task(), but left qp->resp.task unguarded. It also kept the
+responder task cleanup before deleting the RC timers, while upstream had
+already moved it after the timer shutdown by commit 960ebe97e523
+("RDMA/rxe: Remove __rxe_do_task()").
 
-Use the proper 'size_t' format specifier, '%zu', to clear up the
-warnings.
+In the 6.1 tree, rxe_qp_from_init() calls rxe_qp_init_req() before
+rxe_qp_init_resp(). Therefore, if rxe_qp_init_req() fails, cleanup can
+run before qp->resp.task has been initialized by rxe_init_task(), and the
+unconditional rxe_cleanup_task(&qp->resp.task) can still hit the same
+uninitialized task lock problem that upstream commit b2b1ddc45745 fixed.
 
-Cc: stable@vger.kernel.org
-Fixes: 2c85c61d1332 ("HID: pass the buffer size to hid_report_raw_event")
-Reported-by: Miguel Ojeda <ojeda@kernel.org>
-Closes: https://lore.kernel.org/20260516020430.110135-1-ojeda@kernel.org/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
+Move responder task cleanup after deleting the RC timers, matching the
+upstream cleanup order, and guard it with qp->resp.task.func like the
+requester and completer tasks.
+
+Fixes: 3236221bb8e4 ("RDMA/rxe: Fix the error "trying to register non-static key in rxe_cleanup_task"")
+Signed-off-by: Vladislav Nikolaev <vlad102nikolaev@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_qp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 2be5823002a3a4..2191205ce5b0bf 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -2006,7 +2006,7 @@ int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *
- 		return 0;
+diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
+index 709c63e9773c5f..171c0f4dcbecfc 100644
+--- a/drivers/infiniband/sw/rxe/rxe_qp.c
++++ b/drivers/infiniband/sw/rxe/rxe_qp.c
+@@ -781,13 +781,15 @@ static void rxe_qp_do_cleanup(struct work_struct *work)
  
- 	if (unlikely(bsize < csize)) {
--		hid_warn_ratelimited(hid, "Event data for report %d is incorrect (%d vs %ld)\n",
-+		hid_warn_ratelimited(hid, "Event data for report %d is incorrect (%d vs %zu)\n",
- 				     report->id, csize, bsize);
- 		return -EINVAL;
- 	}
-@@ -2028,7 +2028,7 @@ int hid_report_raw_event(struct hid_device *hid, enum hid_report_type type, u8 *
- 		rsize = max_buffer_size;
+ 	qp->valid = 0;
+ 	qp->qp_timeout_jiffies = 0;
+-	rxe_cleanup_task(&qp->resp.task);
  
- 	if (bsize < rsize) {
--		hid_warn_ratelimited(hid, "Event data for report %d was too short (%d vs %ld)\n",
-+		hid_warn_ratelimited(hid, "Event data for report %d was too short (%d vs %zu)\n",
- 				     report->id, rsize, bsize);
- 		return -EINVAL;
+ 	if (qp_type(qp) == IB_QPT_RC) {
+ 		del_timer_sync(&qp->retrans_timer);
+ 		del_timer_sync(&qp->rnr_nak_timer);
  	}
+ 
++	if (qp->resp.task.func)
++		rxe_cleanup_task(&qp->resp.task);
++
+ 	if (qp->req.task.func)
+ 		rxe_cleanup_task(&qp->req.task);
+ 
 -- 
 2.53.0
 
