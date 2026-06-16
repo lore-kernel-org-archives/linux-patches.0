@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3873D45E5;
-	Tue, 16 Jun 2026 18:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23A93D75A4;
+	Tue, 16 Jun 2026 18:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632819; cv=none; b=i64DwtPo9Ni7jXDsx2gs2NXbjEA/MeiAqEKuzE47Cvjf5OUopC5G44siG1UUcJDcp7Sfq5GB0mxIl7FzaotppFuW0X2Jr0YG0l/m/Q5fv/JlhnYq7VjA05lUul7Lg3EXjNc8POHjWlQaVLXRXk8R7JJ0AYV/We0Ag7SUIlSY/gA=
+	t=1781632823; cv=none; b=aGvByu6bGiG/5MdFlj93CiA5Gj8XcnZx+2uRRMW0kH9ufAXMYZ9BUpkbBOsNKG4TM7q8lLXkVwC4lIFWiGpDBpYHKAluaRWocq+bZnXLmgsbeyVGLP0rHsSbkrkRJ/WTW0HLwhIUNFm19RtBGZXDy9N1zRv1iFzvChifc4h3v7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632819; c=relaxed/simple;
-	bh=eQDddtEZrh7UQEFJ/fP46Y0FQ6QPCoUrJKvIvcCbhdQ=;
+	s=arc-20240116; t=1781632823; c=relaxed/simple;
+	bh=yW5jZ/gcPADwi8txIar/ogd0e0by1mU89Izo/qgowDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TIuqK0IHZMCd4meivj1eAb/akZfAToj7qb2pJBmcni1LUg1vC7DxMuNpz69mdliiSZ04UFpEPIXEaJaE4AtsxZLkhQVhhawT6l2AZff5GT3UuZFabRmGHV/waNgRaEKnFWGgruRsWUkO74LEvXOt1ZKH3JQAC8SdA8BV3375pk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phHe7iaY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aFtpbLKyvd+Kn7bo6bE5sJnehISGBREAOyxG9H+shl4lbIWopbekrkgxZ6QSDlMS0yPbJBA9dZI3lrPbrfcJwylfMf2ymiNwuJq7JSNwyqts3Qh1ErLHRv/bnhEcHy8YHL/SvWa3w10zpSnkojFG/uLompGldYVuRZpLuBaJqiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UksD/ecz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phHe7iaY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47FAF1F00A3A;
-	Tue, 16 Jun 2026 18:00:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UksD/ecz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931A61F000E9;
+	Tue, 16 Jun 2026 18:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632817;
-	bh=amu7NAi03w8UUTxilBvdCUWhIdy12dxA3M0jXYueicE=;
+	s=korg; t=1781632822;
+	bh=8DBcZsPAVWPWz2SXun/s9ztduqsgtYHkxMs1CLGDiLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=phHe7iaY9WjVsUT9VlKVqqNWw3HzCtQrXKaRlLwIBlfod4sgE0aasYcO/GgzgwKao
-	 FE6wN92CRx0av0eFXEeFn1k4PzXe7I+2ssdWC+c5PYLa1+Gact58dBmZm02MFO+t3H
-	 QNZ5nSjfVlJrzT8BXM47dNK4i1bjQLVYluNRFXkI=
+	b=UksD/eczxrmNOvu1bVVhCcli06i97jqKe1QI7TOHCzbjkotuFC8k3bfaiy4DOeDOu
+	 sl8cadMPreemJ2EBxfInZ1owdIPX2sKITk4FFY9yNFz+KeL5ivLH8IYn2aSGH7UrXj
+	 aDpCICWTs4NRZtgwUovPoiY8RsMHq8T2pnL5yt6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David E. Box" <david.e.box@linux.intel.com>,
-	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 449/522] platform/x86/intel/vsec: Make driver_data info const
-Date: Tue, 16 Jun 2026 20:29:56 +0530
-Message-ID: <20260616145146.926597147@linuxfoundation.org>
+Subject: [PATCH 6.1 440/522] ice: fix VF queue configuration with low MTU values
+Date: Tue, 16 Jun 2026 20:29:47 +0530
+Message-ID: <20260616145146.531846627@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -46,123 +50,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "David E. Box" <david.e.box@linux.intel.com>
+From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
 
-[ Upstream commit 9577c74c96f88d807d1ba005adbf5952e7127e55 ]
+[ Upstream commit 3ba4dd024d26372733d1c02e13e076c6016e3320 ]
 
-Treat PCI id->driver_data (intel_vsec_platform_info) as read-only by making
-vsec_priv->info a const pointer and updating all function signatures to
-accept const intel_vsec_platform_info *.
+The ice driver's VF queue configuration validation rejects
+databuffer_size values below 1024 bytes, which prevents VFs from
+using MTU values below 871 bytes.
 
-This improves const-correctness and clarifies that the platform info data
-from the driver_data table is not meant to be modified at runtime.
+The iavf driver calculates databuffer_size based on the MTU using:
+  databuffer_size = ALIGN(MTU + LIBETH_RX_LL_LEN, 128)
 
-No functional changes intended.
+where LIBETH_RX_LL_LEN = 26 (ETH_HLEN + 2*VLAN_HLEN + ETH_FCS_LEN).
 
-Signed-off-by: David E. Box <david.e.box@linux.intel.com>
-Reviewed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Link: https://patch.msgid.link/20260313015202.3660072-3-david.e.box@linux.intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Stable-dep-of: 348ccc754d89 ("platform/x86/intel/vsec: Fix enable_cnt imbalance on PCIe error recovery")
+For MTU values below 871:
+  MTU 870: 870 + 26 = 896, aligned to 128 = 896 (< 1024, rejected)
+  MTU 871: 871 + 26 = 897, aligned to 128 = 1024 (>= 1024, accepted)
+
+The 1024-byte minimum seems unnecessarily restrictive, because the hardware
+supports databuffer_size as low as 128 bytes (the alignment boundary),
+which should allow MTU values down to the standard minimum of 68 bytes.
+
+I haven't found the reason why the limit was configured in the commit
+9c7dd7566d18 ("ice: add validation in OP_CONFIG_VSI_QUEUES VF message"), so
+with no more information and since it is working, change the minimum
+databuffer_size validation from 1024 to 128 bytes to allow standard low
+MTU values while still preventing invalid configurations.
+
+Fixes: 9c7dd7566d18 ("ice: add validation in OP_CONFIG_VSI_QUEUES VF message")
+cc: stable@vger.kernel.org
+Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20260515182419.1597859-3-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ applied the change to ice_virtchnl.c ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/vsec.c |   16 ++++++++--------
- drivers/platform/x86/intel/vsec.h |    2 +-
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_virtchnl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/platform/x86/intel/vsec.c
-+++ b/drivers/platform/x86/intel/vsec.c
-@@ -74,7 +74,7 @@ static enum intel_vsec_id intel_vsec_all
- };
+--- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
++++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
+@@ -1648,7 +1648,7 @@ static int ice_vc_cfg_qs_msg(struct ice_
  
- struct vsec_priv {
--	struct intel_vsec_platform_info *info;
-+	const struct intel_vsec_platform_info *info;
- };
- 
- static const char *intel_vsec_name(enum intel_vsec_id id)
-@@ -203,7 +203,7 @@ int intel_vsec_add_aux(struct pci_dev *p
- EXPORT_SYMBOL_NS_GPL(intel_vsec_add_aux, INTEL_VSEC);
- 
- static int intel_vsec_add_dev(struct pci_dev *pdev, struct intel_vsec_header *header,
--			      struct intel_vsec_platform_info *info)
-+			      const struct intel_vsec_platform_info *info)
- {
- 	struct intel_vsec_device *intel_vsec_dev;
- 	struct resource *res, *tmp;
-@@ -263,7 +263,7 @@ static int intel_vsec_add_dev(struct pci
- }
- 
- static bool intel_vsec_walk_header(struct pci_dev *pdev,
--				   struct intel_vsec_platform_info *info)
-+				   const struct intel_vsec_platform_info *info)
- {
- 	struct intel_vsec_header **header = info->capabilities;
- 	bool have_devices = false;
-@@ -282,7 +282,7 @@ static bool intel_vsec_walk_header(struc
- }
- 
- static bool intel_vsec_walk_dvsec(struct pci_dev *pdev,
--				  struct intel_vsec_platform_info *info)
-+				  const struct intel_vsec_platform_info *info)
- {
- 	bool have_devices = false;
- 	int pos = 0;
-@@ -332,7 +332,7 @@ static bool intel_vsec_walk_dvsec(struct
- }
- 
- static bool intel_vsec_walk_vsec(struct pci_dev *pdev,
--				 struct intel_vsec_platform_info *info)
-+				 const struct intel_vsec_platform_info *info)
- {
- 	bool have_devices = false;
- 	int pos = 0;
-@@ -377,7 +377,7 @@ static bool intel_vsec_walk_vsec(struct
- }
- 
- static bool intel_vsec_get_features(struct pci_dev *pdev,
--				    struct intel_vsec_platform_info *info)
-+				    const struct intel_vsec_platform_info *info)
- {
- 	bool found = false;
- 
-@@ -403,7 +403,7 @@ static bool intel_vsec_get_features(stru
- 
- static int intel_vsec_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- {
--	struct intel_vsec_platform_info *info;
-+	const struct intel_vsec_platform_info *info;
- 	struct vsec_priv *priv;
- 	int ret;
- 
-@@ -412,7 +412,7 @@ static int intel_vsec_pci_probe(struct p
- 		return ret;
- 
- 	pci_save_state(pdev);
--	info = (struct intel_vsec_platform_info *)id->driver_data;
-+	info = (const struct intel_vsec_platform_info *)id->driver_data;
- 	if (!info)
- 		return -EINVAL;
- 
---- a/drivers/platform/x86/intel/vsec.h
-+++ b/drivers/platform/x86/intel/vsec.h
-@@ -36,7 +36,7 @@ struct intel_vsec_device {
- 	struct pci_dev *pcidev;
- 	struct resource *resource;
- 	struct ida *ida;
--	struct intel_vsec_platform_info *info;
-+	const struct intel_vsec_platform_info *info;
- 	int num_resources;
- 	int id; /* xa */
- 	void *priv_data;
+ 			if (qpi->rxq.databuffer_size != 0 &&
+ 			    (qpi->rxq.databuffer_size > ((16 * 1024) - 128) ||
+-			     qpi->rxq.databuffer_size < 1024))
++			     qpi->rxq.databuffer_size < 128))
+ 				goto error_param;
+ 			vsi->rx_buf_len = qpi->rxq.databuffer_size;
+ 			vsi->rx_rings[i]->rx_buf_len = vsi->rx_buf_len;
 
 
