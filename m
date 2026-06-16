@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47EA635292A;
-	Tue, 16 Jun 2026 18:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B0A3D45CB;
+	Tue, 16 Jun 2026 18:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633783; cv=none; b=XILOUV1jcAmhjNBlHufr12gVO+z5pvZw4dh9ls4vOQCkN6KYNHjowjB5Tb4N958xQiQLIqnDtkKWa6aSLOY9UV5p3PSi5Hc4k0ok6MZE5XFaXhhYK1MNgjSBQcTHqRIDrLSXvWheXarYI1CXkK0YxUwmLtfYEVEu5ICmrx0uBas=
+	t=1781633787; cv=none; b=kWM2xKP6cxAomwI2rErD8FPUzdcdZnIfaxlinVn5OVheOVA93QU6TDisvNi2prS1CpRi/w2LXvAwCh7ZcvwdV8clQjyK+qhtfFdHm9fC2DAflxK2Hg3rEVDUzsgrYhK0yM7zJc0eSp8rBcYDhpQ4SoQ3dsOhHiiFh2HnpH2ksoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633783; c=relaxed/simple;
-	bh=p7v3EOuaUtZ7nXQJ3SNKvOeX1xwGPi8vGlRX16Muc2s=;
+	s=arc-20240116; t=1781633787; c=relaxed/simple;
+	bh=jyQkCn0QVkPSmbZ5QdOqqBZKB138Nt/xvFbW4aFxlmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uYCdgnpHcmT1s9Pz8TWlSO9JR5iF919YKQH2o6jTorLBuhNhkeF2ckGM9d+8dlbfLU5Uua2UWCRSUWxFPxAJEoC/FaPzghQUGEuvcs1EA7i4Axyy0T2QxWwf/vhf4Y4gGnR7mCYU+OHnp136zLS9GJZCsx+8CXIVaOJsaLpRwVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJon+/Ol; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vs3eAuSriUlDE6IfGByc9t5veHhnQu8oTR4Dt2aGFLwhTVQg1GMlfCBrgSfrWoRZCc9X7f9LCxewpLUvpBOsTjTZFfeKFikuT0/WWamggYKsTk+/OibAuY8h3nXH7WFRkSh5Ugp7tqPBIAZy1DlmFCiEVP4n8P2aA7gRtbCZqpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TgP538GU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJon+/Ol"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07BE81F000E9;
-	Tue, 16 Jun 2026 18:16:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TgP538GU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5CA71F000E9;
+	Tue, 16 Jun 2026 18:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633782;
-	bh=z+yCIcs11LaKCyey8o4e5b/pBz9Hbu9PrtUVmfZJReY=;
+	s=korg; t=1781633786;
+	bh=2FIixMHxxvol7omVq714WTzXHTJnoPUv0Kxh3QVSE1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tJon+/Oln3AFjRaAOuKX4jn2aiTgBXSBglw9blpVJb90pZ43zBvLTolxi4Uq2yAgB
-	 PslKuybY74vI2cJZZ68aVnk2dev334q6j2zFLJD+jPH6WAj/RPLz50Osgm/aAWC/PF
-	 JN3UeHgdqlyZRbz9P5mOYyLAjbWffGuxQ29tsfQ8=
+	b=TgP538GUE7gdwR11mtHcKaCyhfw6ksnYtrev93h6o6dBPiJ8XbWFYF/cqaf6wrvZg
+	 Rh4vvbT/1HEzQYmt8J6J1Vdj6HqcOv/3Qj66J3/obm4M4BtglxWfP1P5R6VXEYxTvc
+	 oIxleRZhX2nDZnUlcbeRRF2PDej4cenZoAL3R0rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 144/411] USB: serial: mct_u232: fix memory corruption with small endpoint
-Date: Tue, 16 Jun 2026 20:26:22 +0530
-Message-ID: <20260616145108.035901826@linuxfoundation.org>
+Subject: [PATCH 5.15 145/411] compiler-clang.h: Add __diag infrastructure for clang
+Date: Tue, 16 Jun 2026 20:26:23 +0530
+Message-ID: <20260616145108.102141390@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,79 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 915b36d701950503c4ea0f6e314b10868e59fce3 upstream.
+commit f014a00bbeb09cea16017b82448d32a468a6b96f upstream.
 
-The driver overrides the maximum transfer size for a specific device
-which only accepts 16 byte packets for its 32 byte bulk-out endpoint.
+Add __diag macros similar to those in compiler-gcc.h, so that warnings
+that need to be adjusted for specific cases but not globally can be
+ignored when building with clang.
 
-Make sure to never increase the maximum transfer size to prevent slab
-corruption should a malicious device report a smaller endpoint max
-packet size than expected.
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://lore.kernel.org/bpf/20220304224645.3677453-6-memxor@gmail.com
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+[ Kartikeya: wrote commit message ]
+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/mct_u232.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ include/linux/compiler-clang.h | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/drivers/usb/serial/mct_u232.c b/drivers/usb/serial/mct_u232.c
-index 5070e6d5cfd9eb..a359669df3dfff 100644
---- a/drivers/usb/serial/mct_u232.c
-+++ b/drivers/usb/serial/mct_u232.c
-@@ -378,6 +378,7 @@ static int mct_u232_port_probe(struct usb_serial_port *port)
- {
- 	struct usb_serial *serial = port->serial;
- 	struct mct_u232_private *priv;
-+	u16 pid;
+diff --git a/include/linux/compiler-clang.h b/include/linux/compiler-clang.h
+index 3397f6809c8694..7ae9fc072302d4 100644
+--- a/include/linux/compiler-clang.h
++++ b/include/linux/compiler-clang.h
+@@ -119,3 +119,25 @@
  
- 	/* check first to simplify error handling */
- 	if (!serial->port[1] || !serial->port[1]->interrupt_in_urb) {
-@@ -385,6 +386,16 @@ static int mct_u232_port_probe(struct usb_serial_port *port)
- 		return -ENODEV;
- 	}
- 
-+	/*
-+	 * Compensate for a hardware bug: although the Sitecom U232-P25
-+	 * device reports a maximum output packet size of 32 bytes,
-+	 * it seems to be able to accept only 16 bytes (and that's what
-+	 * SniffUSB says too...)
-+	 */
-+	pid = le16_to_cpu(serial->dev->descriptor.idProduct);
-+	if (pid == MCT_U232_SITECOM_PID)
-+		port->bulk_out_size = min(16, port->bulk_out_size);
+ #define __nocfi		__attribute__((__no_sanitize__("cfi")))
+ #define __cficanonical	__attribute__((__cfi_canonical_jump_table__))
 +
- 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
- 	if (!priv)
- 		return -ENOMEM;
-@@ -410,7 +421,6 @@ static void mct_u232_port_remove(struct usb_serial_port *port)
- 
- static int  mct_u232_open(struct tty_struct *tty, struct usb_serial_port *port)
- {
--	struct usb_serial *serial = port->serial;
- 	struct mct_u232_private *priv = usb_get_serial_port_data(port);
- 	int retval = 0;
- 	unsigned int control_state;
-@@ -418,15 +428,6 @@ static int  mct_u232_open(struct tty_struct *tty, struct usb_serial_port *port)
- 	unsigned char last_lcr;
- 	unsigned char last_msr;
- 
--	/* Compensate for a hardware bug: although the Sitecom U232-P25
--	 * device reports a maximum output packet size of 32 bytes,
--	 * it seems to be able to accept only 16 bytes (and that's what
--	 * SniffUSB says too...)
--	 */
--	if (le16_to_cpu(serial->dev->descriptor.idProduct)
--						== MCT_U232_SITECOM_PID)
--		port->bulk_out_size = 16;
--
- 	/* Do a defined restart: the normal serial device seems to
- 	 * always turn on DTR and RTS here, so do the same. I'm not
- 	 * sure if this is really necessary. But it should not harm
++/*
++ * Turn individual warnings and errors on and off locally, depending
++ * on version.
++ */
++#define __diag_clang(version, severity, s) \
++	__diag_clang_ ## version(__diag_clang_ ## severity s)
++
++/* Severity used in pragma directives */
++#define __diag_clang_ignore	ignored
++#define __diag_clang_warn	warning
++#define __diag_clang_error	error
++
++#define __diag_str1(s)		#s
++#define __diag_str(s)		__diag_str1(s)
++#define __diag(s)		_Pragma(__diag_str(clang diagnostic s))
++
++#if CONFIG_CLANG_VERSION >= 110000
++#define __diag_clang_11(s)	__diag(s)
++#else
++#define __diag_clang_11(s)
++#endif
 -- 
 2.53.0
 
