@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4BB362149;
-	Tue, 16 Jun 2026 19:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2B8D34751B;
+	Tue, 16 Jun 2026 19:03:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636583; cv=none; b=RcX61EDJ0qbDYk5JeW3/4t9rTQbwyeoDUEA3VPKL55DwKpaKlu79pkWY4m74ybT9yGukf+5z2TpGs6iOCPF2/jS7/GJAwSCN/M7u4AK9WVbCZ9RPHg9aAyBBcvbzZ3N3FAjU26xlweexQvhajyFtBQXoA2OLQkwRWN5BzV4Mft0=
+	t=1781636588; cv=none; b=YsyZehwzTSQoZuFQfh8Q3fV0kH632Aa8P4UX4eW08MJOnl3FXnQ1XH1LXfHTiba8Per0CR6EIWFSzwCiQ7EFpxYHseqeRHLnb5D7PmEsfHeSFXsoW9/+yWl5fEmetPaIfeenU4HiNsu8PTz2YQ8Sk9pPXY4OA8sIZMAXorPXbfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636583; c=relaxed/simple;
-	bh=8di34RoH8v00slpnbu/FriGXAUbV4u3dsM1ZJ0aZw+E=;
+	s=arc-20240116; t=1781636588; c=relaxed/simple;
+	bh=NKGvEibXrvpgiTY6UEyeJlbGBASq/rejS32EYcvfso8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BXGALjvnP/r008gocRTTUQdLt8EV6bmOJNrglvS3xuj9rVZqHY/jez+oX2tg5CB+I2ukjm9F51XVF4LYvtPaOgsmOBoW+vn8S4qx6tkiwuC8Q93kqAclpG/iKwL/dWRqpHZPP9+M3g2SoIuvh9dr3ax1UddZNg2yBdRjLU/ACIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKKq8Uro; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ja+8Z+oESPf9T16grns/0kyIqJcvNWeuIXCIQ0iIJUoSOPI6rspHwhVE+LbQGRQwZcpNa97EY1xQtE9BE5fmaG/fkbIEQx2tIOVBGylutx50/KEn1fwC7bvv/cqsyvobR8d+NcuknXoDFQBvqYT6xL/BwDYyZByadL9bu0GYI+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PmLAUOA1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKKq8Uro"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E551F00A3A;
-	Tue, 16 Jun 2026 19:03:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PmLAUOA1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 809251F000E9;
+	Tue, 16 Jun 2026 19:03:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636581;
-	bh=VXoW+w2sOZMssDvoR9O+9wzPphFMR521mksWXpfkyO0=;
+	s=korg; t=1781636587;
+	bh=RRXbgdVi30H9to6PwKZyoYOwakteV0vjJZuG7oOOpBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oKKq8UroIfmfdjiwryRVZ3PgTPJT5DvtqjyZUBNdwtf8M/ufbc7EmDY01T8sI6bRY
-	 G3mnb386jDPT+xGsnvQSF8ESsqcPg4tCHntzJSXOUWsq+K63Kwl3fDuAXojyEik+VX
-	 vWw/ZDu72RuhCUSgud4eFXyaH0OPOm8K6KQioc1A=
+	b=PmLAUOA1klCSKeon3y24kaE+5eW+Dgfhr5029CraZxJkU6DYo5IHR6Fg6aB48W2C2
+	 BG+wLeGDmJsvHQSy3jcVw8ymyaQT6/cL8dfl//brvN7rTBHL+XLr/QsngvnuRwQyBb
+	 126K0bsccOEBhkUqwBijWICtC92aDdG6cyFqh2YI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yochai Eisenrich <echelonh@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	John Ogness <john.ogness@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 267/342] btrfs: fix btrfs_ioctl_space_info() slot_count TOCTOU which can lead to info-leak
-Date: Tue, 16 Jun 2026 20:29:23 +0530
-Message-ID: <20260616145100.737220849@linuxfoundation.org>
+Subject: [PATCH 5.10 250/342] printk: add print_hex_dump_devel()
+Date: Tue, 16 Jun 2026 20:29:06 +0530
+Message-ID: <20260616145059.880943585@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -51,56 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yochai Eisenrich <yochaie@sweet.security>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 973e57c726c1f8e77259d1c8e519519f1e9aea77 ]
+[ Upstream commit d134feeb5df33fbf77f482f52a366a44642dba09 ]
 
-btrfs_ioctl_space_info() has a TOCTOU race between two passes over the
-block group RAID type lists. The first pass counts entries to determine
-the allocation size, then the second pass fills the buffer. The
-groups_sem rwlock is released between passes, allowing concurrent block
-group removal to reduce the entry count.
+Add print_hex_dump_devel() as the hex dump equivalent of pr_devel(),
+which emits output only when DEBUG is enabled, but keeps call sites
+compiled otherwise.
 
-When the second pass fills fewer entries than the first pass counted,
-copy_to_user() copies the full alloc_size bytes including trailing
-uninitialized kmalloc bytes to userspace.
-
-Fix by copying only total_spaces entries (the actually-filled count from
-the second pass) instead of alloc_size bytes, and switch to kzalloc so
-any future copy size mismatch cannot leak heap data.
-
-Fixes: 7fde62bffb57 ("Btrfs: buffer results in the space_info ioctl")
-CC: stable@vger.kernel.org # 3.0
-Signed-off-by: Yochai Eisenrich <echelonh@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ adapted upstream's `return -EFAULT;` to stable's `ret = -EFAULT;` fall-through to existing `out:` cleanup label ]
+Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: John Ogness <john.ogness@linutronix.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 177730a273b1 ("crypto: caam - guard HMAC key hex dumps in hash_digest_key")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ioctl.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/linux/printk.h |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -3587,7 +3587,7 @@ static long btrfs_ioctl_space_info(struc
- 		return -ENOMEM;
+--- a/include/linux/printk.h
++++ b/include/linux/printk.h
+@@ -608,6 +608,19 @@ static inline void print_hex_dump_debug(
+ }
+ #endif
  
- 	space_args.total_spaces = 0;
--	dest = kmalloc(alloc_size, GFP_KERNEL);
-+	dest = kzalloc(alloc_size, GFP_KERNEL);
- 	if (!dest)
- 		return -ENOMEM;
- 	dest_orig = dest;
-@@ -3643,7 +3643,8 @@ static long btrfs_ioctl_space_info(struc
- 	user_dest = (struct btrfs_ioctl_space_info __user *)
- 		(arg + sizeof(struct btrfs_ioctl_space_args));
- 
--	if (copy_to_user(user_dest, dest_orig, alloc_size))
-+	if (copy_to_user(user_dest, dest_orig,
-+		 space_args.total_spaces * sizeof(*dest_orig)))
- 		ret = -EFAULT;
- 
- 	kfree(dest_orig);
++#if defined(DEBUG)
++#define print_hex_dump_devel(prefix_str, prefix_type, rowsize,		\
++			     groupsize, buf, len, ascii)		\
++	print_hex_dump(KERN_DEBUG, prefix_str, prefix_type, rowsize,	\
++		       groupsize, buf, len, ascii)
++#else
++static inline void print_hex_dump_devel(const char *prefix_str, int prefix_type,
++					int rowsize, int groupsize,
++					const void *buf, size_t len, bool ascii)
++{
++}
++#endif
++
+ /**
+  * print_hex_dump_bytes - shorthand form of print_hex_dump_debug() with default
+  *                        params
 
 
