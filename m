@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AD53C414F;
-	Tue, 16 Jun 2026 15:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E7639282C;
+	Tue, 16 Jun 2026 15:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625000; cv=none; b=CXLqgxO7J9weBOw9b584YHxIrfvAWKqNPxhde/xqJiEcB+V/QhRQT6q1ENoausr0qKoXDkc1GQdKTm3FOYOQ2FMnnLV4XoFlHim84PSb3mvFAOJs4JkiIYjiczuaP+3cgbWNLvKVuJSdGAtNplnK9B6w7aPqPJo5rqrCimXP4Yg=
+	t=1781625006; cv=none; b=YRUeotJKP1AjK9nIvcPgBGYuNF3rQO/4w1qX7m/IwAK+XF2I78W94SKbVrPke6Jebk/E3UBe71bQV49zLIIYaEP1o/xQJPhag4UUknICsaSqs9cD91YMsRba6TzOQkYHjH8Wd4bPrN3BBFH/ONAFHSF4hbm/nBzZSgbs8tAgRMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625000; c=relaxed/simple;
-	bh=VqylpI+aA5qkAeirzFHcutoXXcHXFrAewceTHQBqRO0=;
+	s=arc-20240116; t=1781625006; c=relaxed/simple;
+	bh=ZIv/J9+CgWCJCF8qX0SI/MYdLb24wZeIyZPBFCXUhG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uGzMcpM+4WN7GVYWFI2UKF+JQiRHARZS27QguGpcsgV6ojSo0kV3rrGR6ktWV4rNMs2b78jIEWB8b7q7UB74G5aISDyWzm6OX/h2Ga4nxBj4the2Ovo/EYXtUQPrI5KdTPt+TQx9RAvqpm4dAnroAQPDquewQStV6aqoJNI9thY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0y3SBbOK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GILwbLn99yRGyR12+3lmwD8t3mr4r2Vq0Ajb9udoGK26fPOpGFdXWAPGz5XDmoBV9yDLzyAwuzHcRSTLjTxY7u6aPqSoKZyTrmOvvcc5UIie0/YwmKorf5KYyjf+zUMQVrjhdagn+YfHTdKBaMob60C9O49GjN6jGL0AuKTgOyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcWkTPVe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0y3SBbOK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2051F000E9;
-	Tue, 16 Jun 2026 15:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcWkTPVe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A85C1F000E9;
+	Tue, 16 Jun 2026 15:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624998;
-	bh=WSULmL6Rr+6G02dN8k1l+h05xT7M1XIOL5QLeRtcHRc=;
+	s=korg; t=1781625005;
+	bh=HNJolk6s+dP58r/nI6MY8QBetNweOs6tO2cZsR8/04s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0y3SBbOK72fcQM9is2Bdn7QSvi/Mz+H2KjhPE7bzYwuaqio13Qg06XHeJjPfgEq8x
-	 GXJobxpy4jCsbZmDGAFXGmoOeaXqLEwCR0LCgfUm7OBsS1J2gkj1XNCzgSlQMUmeC4
-	 zcPp1r7SBXCWDuwlewjYegLHDqwY1bgsHJ5ilAWw=
+	b=rcWkTPVeKzjV1unBI70k9a3R3kqR1o5dR5Nfs96v6XWPpOjF8c7JC5zZDvY0A+jhn
+	 PY4n6FTD2rhmyYqBXAwmBZ/L/91Li/Zd/dNxUjSDtFOa0Ru/VRG390lqZiraHquT3J
+	 T7ag8jMy7k8i41qs5EXJL7jyxC4rR6fDxSltx4QQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen Mamindlapalli <naveenm@marvell.com>,
-	Nithin Dabilpuram <ndabilpuram@marvell.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Chirag Shah <chirag@nvidia.com>,
+	Andy Roulin <aroulin@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 062/325] octeontx2-af: npc: Fix CPT channel mask in npc_install_flow
-Date: Tue, 16 Jun 2026 20:27:38 +0530
-Message-ID: <20260616145100.783047134@linuxfoundation.org>
+Subject: [PATCH 6.18 063/325] vxlan: vnifilter: send notification on VNI add
+Date: Tue, 16 Jun 2026 20:27:39 +0530
+Message-ID: <20260616145100.836213319@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -53,117 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nithin Dabilpuram <ndabilpuram@marvell.com>
+From: Andy Roulin <aroulin@nvidia.com>
 
-[ Upstream commit 1d31eb27e570daa04f5373345f9ac98c95863be9 ]
+[ Upstream commit aa6ca1c5c338907817374b59f7551fd855a88754 ]
 
-Use the CPT-aware NIX channel mask in the npc_install_flow path so that
-when the host PF installs steering rules in kernel for a VF used from
-userspace (e.g. DPDK), MCAM entries see the same channel mask semantics as
-other RX paths.
+When a new VNI is added to a vxlan device with vnifilter enabled,
+no RTM_NEWTUNNEL notification is sent to userspace. This means
+'bridge monitor vni' never shows VNI add events, even though
+VNI delete events are reported correctly.
 
-Fixes: 56bcef528bd8 ("octeontx2-af: Use npc_install_flow API for promisc and broadcast entries")
-Cc: Naveen Mamindlapalli <naveenm@marvell.com>
-Signed-off-by: Nithin Dabilpuram <ndabilpuram@marvell.com>
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Link: https://patch.msgid.link/20260602045853.1558530-1-rkannoth@marvell.com
+The bug is in vxlan_vni_add(), where the notification is guarded by
+'if (changed)'. The 'changed' flag is set by vxlan_vni_update_group()
+only when the multicast group or remote IP is modified, but for a
+new VNI added without a group (e.g. in L3 VxLAN interface scenarios),
+the function returns early without setting changed=true. Since this
+is a new VNI, the notification should be sent unconditionally.
+
+The notification is not guarded by the return value of
+vxlan_vni_update_group() because, at this point, the VNI has already
+been inserted into the hash table and list with no rollback on error.
+The VNI will be visible in 'bridge vni show' regardless, so userspace
+should be informed. This is consistent with vxlan_vni_del() which also
+notifies unconditionally.
+
+The 'if (changed)' guard remains correct in vxlan_vni_update(), which
+handles the case where a VNI already exists and is being re-added --
+there, we only want to notify if the group/remote actually changed.
+
+Reproducer:
+
+ # ip link add vxlan100 type vxlan dstport 4789 local 10.0.0.1 \
+      nolearning external vnifilter
+ # ip link set vxlan100 up
+ # bridge monitor vni &
+ # bridge vni add vni 1000 dev vxlan100    # no notification
+ # bridge vni delete vni 1000 dev vxlan100 # notification received
+
+Fixes: f9c4bb0b245c ("vxlan: vni filtering support on collect metadata device")
+Reported-by: Chirag Shah <chirag@nvidia.com>
+Signed-off-by: Andy Roulin <aroulin@nvidia.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Link: https://patch.msgid.link/20260602185138.253265-2-aroulin@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/af/rvu.h   |  1 +
- .../ethernet/marvell/octeontx2/af/rvu_npc.c   | 32 +++++++++----------
- .../marvell/octeontx2/af/rvu_npc_fs.c         |  2 +-
- 3 files changed, 18 insertions(+), 17 deletions(-)
+ drivers/net/vxlan/vxlan_vnifilter.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-index b5828334192324..914ba2b691ec80 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-@@ -1124,6 +1124,7 @@ int rvu_cpt_lf_teardown(struct rvu *rvu, u16 pcifunc, int blkaddr, int lf,
- 			int slot);
- int rvu_cpt_ctx_flush(struct rvu *rvu, u16 pcifunc);
- int rvu_cpt_init(struct rvu *rvu);
-+u32 rvu_get_cpt_chan_mask(struct rvu *rvu);
+diff --git a/drivers/net/vxlan/vxlan_vnifilter.c b/drivers/net/vxlan/vxlan_vnifilter.c
+index adc89e651e27c8..43c70c395b58e5 100644
+--- a/drivers/net/vxlan/vxlan_vnifilter.c
++++ b/drivers/net/vxlan/vxlan_vnifilter.c
+@@ -759,8 +759,7 @@ static int vxlan_vni_add(struct vxlan_dev *vxlan,
+ 	err = vxlan_vni_update_group(vxlan, vninode, group, true, &changed,
+ 				     extack);
  
- #define NDC_AF_BANK_MASK       GENMASK_ULL(7, 0)
- #define NDC_AF_BANK_LINE_MASK  GENMASK_ULL(31, 16)
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-index a0d2ed56186d8d..65aa6aeab8e782 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
-@@ -599,6 +599,19 @@ void npc_set_mcam_action(struct rvu *rvu, struct npc_mcam *mcam,
- 			   NPC_AF_MCAMEX_BANKX_ACTION(index, bank), cfg);
+-	if (changed)
+-		vxlan_vnifilter_notify(vxlan, vninode, RTM_NEWTUNNEL);
++	vxlan_vnifilter_notify(vxlan, vninode, RTM_NEWTUNNEL);
+ 
+ 	return err;
  }
- 
-+u32 rvu_get_cpt_chan_mask(struct rvu *rvu)
-+{
-+	/* For cn10k the upper two bits of the channel number are
-+	 * cpt channel number. with masking out these bits in the
-+	 * mcam entry, same entry used for NIX will allow packets
-+	 * received from cpt for parsing.
-+	 */
-+	if (!is_rvu_otx2(rvu))
-+		return NIX_CHAN_CPT_X2P_MASK;
-+	else
-+		return 0xFFFu;
-+}
-+
- void rvu_npc_install_ucast_entry(struct rvu *rvu, u16 pcifunc,
- 				 int nixlf, u64 chan, u8 *mac_addr)
- {
-@@ -642,7 +655,7 @@ void rvu_npc_install_ucast_entry(struct rvu *rvu, u16 pcifunc,
- 	eth_broadcast_addr((u8 *)&req.mask.dmac);
- 	req.features = BIT_ULL(NPC_DMAC);
- 	req.channel = chan;
--	req.chan_mask = 0xFFFU;
-+	req.chan_mask = rvu_get_cpt_chan_mask(rvu);
- 	req.intf = pfvf->nix_rx_intf;
- 	req.op = action.op;
- 	req.hdr.pcifunc = 0; /* AF is requester */
-@@ -712,11 +725,7 @@ void rvu_npc_install_promisc_entry(struct rvu *rvu, u16 pcifunc,
- 	 * mcam entry, same entry used for NIX will allow packets
- 	 * received from cpt for parsing.
- 	 */
--	if (!is_rvu_otx2(rvu)) {
--		req.chan_mask = NIX_CHAN_CPT_X2P_MASK;
--	} else {
--		req.chan_mask = 0xFFFU;
--	}
-+	req.chan_mask = rvu_get_cpt_chan_mask(rvu);
- 
- 	if (chan_cnt > 1) {
- 		if (!is_power_of_2(chan_cnt)) {
-@@ -887,16 +896,7 @@ void rvu_npc_install_allmulti_entry(struct rvu *rvu, u16 pcifunc, int nixlf,
- 	ether_addr_copy(req.mask.dmac, mac_addr);
- 	req.features = BIT_ULL(NPC_DMAC);
- 
--	/* For cn10k the upper two bits of the channel number are
--	 * cpt channel number. with masking out these bits in the
--	 * mcam entry, same entry used for NIX will allow packets
--	 * received from cpt for parsing.
--	 */
--	if (!is_rvu_otx2(rvu))
--		req.chan_mask = NIX_CHAN_CPT_X2P_MASK;
--	else
--		req.chan_mask = 0xFFFU;
--
-+	req.chan_mask = rvu_get_cpt_chan_mask(rvu);
- 	req.channel = chan;
- 	req.intf = pfvf->nix_rx_intf;
- 	req.entry = index;
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
-index b56395ac5a7439..e0262fcedd8984 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
-@@ -1470,7 +1470,7 @@ int rvu_mbox_handler_npc_install_flow(struct rvu *rvu,
- 
- 	/* ignore chan_mask in case pf func is not AF, revisit later */
- 	if (!is_pffunc_af(req->hdr.pcifunc))
--		req->chan_mask = 0xFFF;
-+		req->chan_mask = rvu_get_cpt_chan_mask(rvu);
- 
- 	err = npc_check_unsupported_flows(rvu, req->features, req->intf);
- 	if (err)
 -- 
 2.53.0
 
