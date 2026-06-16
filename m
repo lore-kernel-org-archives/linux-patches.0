@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2F547CC9C;
-	Tue, 16 Jun 2026 18:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B9F47CC96;
+	Tue, 16 Jun 2026 18:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636315; cv=none; b=JLXqSNv1txQ21gC5kBxOc8IHoY1HXuo69T9fekrxuv2wb5xADiSdd84mfwiI/CfZ8JJ/gLgaB+IfigzKaOlEahWQzP/N+k2nVpDnpQIhKBNXGsCB7JMzHC7xkrbZkUz4yquW05zRqOgiFeltiohFB0g10Hd12nYQvpsU5D+YDig=
+	t=1781636320; cv=none; b=Ccj2DHFYbxEHGS3iUWcHUBp7fV7wKNHD+PXuvRi1R+TnbXiqaXY9SSIdTWWXDRc198E0W0qYns27padx3byhsDD0uq61oT5dOkHjICKdfgqtgsbHosVggS3IlygcxY15Jls+VYu5uiKJdQ//RhizccmK5LRcaZJSV8wpMwgB000=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636315; c=relaxed/simple;
-	bh=mQSxHI0D6mCsx3673eYv5mRNAzrvyZiiCxsoEqGOKAQ=;
+	s=arc-20240116; t=1781636320; c=relaxed/simple;
+	bh=b+/7PBGAnlkgOAN14Di9GpurpIHuZxJR5AwlpXOm2YQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iU5UQLMeUTSAynhHfcQLEeh+WD0KGP0xHvEpCSQOR9LxenV8onuoI3eG2mx5RuNq+DukbSSBoWHhTu+jK/u4ulK4+4J6tm1ozo+8vJwny0v/vSgSp2DGM3qs5H8wEw4ZxCQDTYITYqBCPM75rc1ldA3+2dNgaNT7DgyoiJUmYOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIGMoT8S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k6493cW77o9vR6P6m/S7NsUYskbUWbnLnR4CbXWSX4DQ+MNlu+M/Tmw7D5RvtRqcb7f/9hqDgSvIb087fciBp2YyndE6L/+n49Ie7GzuQ+XdOaBB2YbIdY6xXQ8l7npemb9pYzl9amUe2N6PAaAiWB/Xcje2HIGfzwFyp58h2B8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qI5D48yF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIGMoT8S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4012E1F000E9;
-	Tue, 16 Jun 2026 18:58:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qI5D48yF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 845601F000E9;
+	Tue, 16 Jun 2026 18:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636314;
-	bh=QUvkZH7bS91agsGrxaHo+y6ofAP0Eo4S6Fp+bLzl4CM=;
+	s=korg; t=1781636319;
+	bh=3Uy9zKBKDdFHRW3GDA63QVQO/foMtEGqgA0bAxkQps8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pIGMoT8S4+2a6sts3gppm3Kl2lmLtSBkFKIUpE6QrkEkG1I2oSsXGXQhqjqer/4rP
-	 btKeW8bYAatdrNk5kpi2n/SmPM0CsDJ4LiKIBn/i7E6Amc1TwjWOepPI9LfF+l2dQS
-	 O86TTl099UC1ZaEvTjXgDxKmfcLn4jYZA6bDjRXI=
+	b=qI5D48yF0ZRG2m1bmTHjAun/IVqCdd6MYZW7gkKgmzLePUIzK0VBam3OaJ817/k7U
+	 knm9wjZRTl6Qo7/1MMWnRLjF1wT5PuFC4B5bAKH9aGfZxhU+i4cv3VNKq22iy7zKFH
+	 I08MVDEkuhzrWCKwzp11mloA0ah/20wrimeBOTTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raf Dickson <rafdog35@gmail.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 190/342] vsock/vmci: fix sk_ack_backlog leak on failed handshake
-Date: Tue, 16 Jun 2026 20:28:06 +0530
-Message-ID: <20260616145057.031195014@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 5.10 191/342] IB/isert: Reject login PDUs shorter than ISER_HEADERS_LEN
+Date: Tue, 16 Jun 2026 20:28:07 +0530
+Message-ID: <20260616145057.074928086@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -51,53 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raf Dickson <rafdog35@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit c05fa14db43ebef3bd862ca9d073981c0358b3f0 upstream.
+commit 29e7b925ae6df64894e82ab6419994dc25580a8a upstream.
 
-When vmci_transport_recv_connecting_server() returns an error,
-vmci_transport_recv_listen() calls vsock_remove_pending() but never
-calls sk_acceptq_removed(). This leaves sk_ack_backlog incremented
-permanently.
+In drivers/infiniband/ulp/isert/ib_isert.c, isert_login_recv_done()
+computes the login request payload length as wc->byte_len minus
+ISER_HEADERS_LEN with no lower bound, and login_req_len is a signed int.
+A remote iSER initiator can post a login Send work request carrying
+fewer than ISER_HEADERS_LEN (76) bytes, so the subtraction underflows
+and login_req_len becomes negative.
 
-Repeated handshake failures (malformed packets, queue pair alloc
-failure, event subscribe failure) cause sk_ack_backlog to climb
-toward sk_max_ack_backlog. Once it reaches the limit the listener
-permanently refuses all new connections with -ECONNREFUSED, a
-silent denial of service requiring a process restart to recover.
+isert_rx_login_req() then reads that negative length back into a signed
+int, takes size = min(rx_buflen, MAX_KEY_VALUE_PAIRS), and because the
+min() is signed it keeps the negative value; the value is then passed as
+the memcpy() length and sign-extended to a multi-gigabyte size_t. The
+copy into the 8192-byte login->req_buf runs far out of bounds and
+faults, crashing the target node. The login phase precedes iSCSI
+authentication, so no credentials are required to reach this path.
 
-The two existing sk_acceptq_removed() calls in af_vsock.c do not
-cover this path: line 764 checks vsock_is_pending() which returns
-false after vsock_remove_pending(), and line 1889 is only reached
-on successful accept().
+Reject any login PDU shorter than ISER_HEADERS_LEN before the
+subtraction, mirroring the existing early return on a failed work
+completion, so login_req_len can never go negative. The upper bound was
+already safe: a posted login buffer cannot deliver more than
+ISER_RX_PAYLOAD_SIZE, so the difference stays at or below
+MAX_KEY_VALUE_PAIRS and the existing min() clamps it; only the missing
+lower bound needs to be added.
 
-Fix by balancing sk_acceptq_added() with sk_acceptq_removed() on
-the error path.
-
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Fixes: b8d26b3be8b3 ("iser-target: Add iSCSI Extensions for RDMA (iSER) target driver")
+Link: https://patch.msgid.link/r/20260602194642.2273217-1-michael.bommarito@gmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Raf Dickson <rafdog35@gmail.com>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20260526104356.469928-1-rafdog35@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/vmci_transport.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/ulp/isert/ib_isert.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/vmw_vsock/vmci_transport.c
-+++ b/net/vmw_vsock/vmci_transport.c
-@@ -974,8 +974,10 @@ static int vmci_transport_recv_listen(st
- 			err = -EINVAL;
- 		}
+--- a/drivers/infiniband/ulp/isert/ib_isert.c
++++ b/drivers/infiniband/ulp/isert/ib_isert.c
+@@ -1388,6 +1388,12 @@ isert_login_recv_done(struct ib_cq *cq,
+ 	ib_dma_sync_single_for_cpu(ib_dev, isert_conn->login_desc->dma_addr,
+ 			ISER_RX_SIZE, DMA_FROM_DEVICE);
  
--		if (err < 0)
-+		if (err < 0) {
- 			vsock_remove_pending(sk, pending);
-+			sk_acceptq_removed(sk);
-+		}
++	if (unlikely(wc->byte_len < ISER_HEADERS_LEN)) {
++		isert_dbg("login request length %u is too short\n",
++			  wc->byte_len);
++		return;
++	}
++
+ 	isert_conn->login_req_len = wc->byte_len - ISER_HEADERS_LEN;
  
- 		release_sock(pending);
- 		vmci_transport_release_pending(pending);
+ 	if (isert_conn->conn) {
 
 
