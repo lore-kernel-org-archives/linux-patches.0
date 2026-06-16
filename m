@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B2943DA2C;
-	Tue, 16 Jun 2026 15:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B51343C05C;
+	Tue, 16 Jun 2026 15:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623066; cv=none; b=RikgeMBLM2s5VyJhx4WUiwmMuN+mrlAKjN5bt+rfnU16mLEkdzeheEEafq75KR8ZqE9UjZTM8Z4LV+FKVZK/krNYA79G2JrEhLgmW2/WnPLq7ddyHoT7An1uN49HmBmNEYlkF3k9tWV5tlhJmkh4w5FijtMRcKH+HDHPfi72jME=
+	t=1781623071; cv=none; b=exJXuuEC3YZ/0194vXurwfVDEK0MO/tcRc7G63pPZe+sIIe774njCIdhbPrhfAAT1egfCV86tn9PNQF9N3mcFctHKeopg2QkLWpCJgvu801U2jLslKZf4fMDfmPwWLHswPo3cssiq38Lv36+J1a/Lww40KfKKSMGiKdc9ER25Kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623066; c=relaxed/simple;
-	bh=1S5q7Y33rQpLKUPrzG8db3bqmrnWeaOpIqis/dz4+cA=;
+	s=arc-20240116; t=1781623071; c=relaxed/simple;
+	bh=2l/GB4iH4oxXhhKRExLwhcbBkbTPfCiCfpiBKb3XfQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tkBGSab+oJ82WXoSLUCxAJNg7LYZaJxL22OVUIqtJDET+UBaGOhOaRwCrwUuP8BGOd9RktstxWX56m6D6qsS8CS7FC34YXjETe8uFfqMuNJt1H6l1hrA0b1eBy24yIsaq1b7mBpIUTXtymVQRcVZ/tKDAYNBcQTMmlvQzDxDgHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ka2dGyUW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RiSYWlzNmSmL6GmcV8/2Jv3CfHJ24d8FUE2pGnIlaB4kJUe+9R4f7flvxoBDadOgw/nAGoEPFoLX+X72i8nmkGWnzvH1mGWNww0Wf234T18yXghVZqOH/Fsic8cGApyiCJjiey8MeOunlqDr7qSZvZczYHNL3k9cSXruekQ4PT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBQoqc1Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ka2dGyUW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5781F000E9;
-	Tue, 16 Jun 2026 15:17:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBQoqc1Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1D91F000E9;
+	Tue, 16 Jun 2026 15:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623065;
-	bh=LISTWS0GTmJ9ikyhhZJClVF9WHKjgzbFSwsfj3AZAdU=;
+	s=korg; t=1781623070;
+	bh=duAPOTeNGWfCX7q9icvsGZEHWBj+Z/V4H0nkWE8GeO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ka2dGyUWaBmMZQNXOD8Gamw0LNurEyQjs9cPj+iLnyCAXAvTIBhoPzT95rWyKK3su
-	 pAA+k6ySkd9Wt2xjNAunrrKXa6bYtYfLc6WCWvnENJw6QUt/cTNIh3K6Afm6L5FLle
-	 8rfpSpGZYuUZ3j8GF1JIMA0pyplCmNKE284QvPpE=
+	b=XBQoqc1YUlu9OMxYdYuLLzKAUaIBJMCtjVWfaVXphk2e3DtQqPeUwKcDPtCmk8MYp
+	 dRSr+jogTFTTPd0Y95oVPB4w82bDUxjuZddxQ4fk/UAwGcrafySjmAlYAFgpaYKmDu
+	 Cf/XmlZUY2Jm/1kGTpduNga8Vl8iyRj0hZ3PK0Pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	syzbot+185a631927096f9da2fc@syzkaller.appspotmail.com,
+	Qing Wang <wangqing7171@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Mark Rutland <mark.rutland@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 082/378] crypto: s390 - add select CRYPTO_AEAD for aes
-Date: Tue, 16 Jun 2026 20:25:13 +0530
-Message-ID: <20260616145114.535243780@linuxfoundation.org>
+Subject: [PATCH 7.0 083/378] rseq: Fix using an uninitialized stack variable in rseq_exit_user_update()
+Date: Tue, 16 Jun 2026 20:25:14 +0530
+Message-ID: <20260616145114.595434042@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,41 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Qing Wang <wangqing7171@gmail.com>
 
-[ Upstream commit ecf3edd349dfabee9bc8a46c5ff91c9ebd858d48 ]
+[ Upstream commit 6d99479799c69c3cb588fcda19c81d8f61d64ecd ]
 
-The aes driver registers both skcipher and aead algorithms,
-but when aead is not enabled this causes a link failure:
+There is an bug in which an uninitialized stack variable is used in
+rseq_exit_user_update() as reported by syzbot:
 
-s390-linux-ld: arch/s390/crypto/aes_s390.o: in function `aes_s390_fini':
-arch/s390/crypto/aes_s390.c:969:(.text+0x115e): undefined reference to `crypto_unregister_aead'
-s390-linux-ld: arch/s390/crypto/aes_s390.o: in function `aes_s390_init':
-arch/s390/crypto/aes_s390.c:1028:(.init.text+0x294): undefined reference to `crypto_register_aead'
+BUG: KMSAN: kernel-infoleak in rseq_set_ids_get_csaddr include/linux/rseq_entry.h:502 [inline]
 
-Add the missing 'select' statement.
+The local variable:
 
-Fixes: bf7fa038707c ("s390/crypto: add s390 platform specific aes gcm support.")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+	struct rseq_ids ids = {
+		.cpu_id	 = task_cpu(t),
+		.mm_cid	 = task_mm_cid(t),
+		.node_id = cpu_to_node(ids.cpu_id),
+	};
+
+According to the C standard, the evaluation order of expressions in an
+initializer list is indeterminately sequenced. The compiler (Clang, in
+this KMSAN build) evaluates `cpu_to_node(ids.cpu_id)` *before*
+`ids.cpu_id` is initialized with `task_cpu(t)`.
+
+This is fixed by moving the assignment of ids.node_id outside the
+structure initialization.
+
+Fixes: 82f572449cfe ("rseq: Implement read only ABI enforcement for optimized RSEQ V2 mode")
+Closes: https://syzkaller.appspot.com/bug?extid=185a631927096f9da2fc
+Reported-by: syzbot+185a631927096f9da2fc@syzkaller.appspotmail.com
+Signed-off-by: Qing Wang <wangqing7171@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://patch.msgid.link/20260602030854.574038-1-wangqing7171@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/crypto/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/rseq_entry.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/crypto/Kconfig b/arch/s390/crypto/Kconfig
-index 79a2d0034258b6..1b12856acfbcb7 100644
---- a/arch/s390/crypto/Kconfig
-+++ b/arch/s390/crypto/Kconfig
-@@ -14,6 +14,7 @@ config CRYPTO_GHASH_S390
+diff --git a/include/linux/rseq_entry.h b/include/linux/rseq_entry.h
+index 413a3543fbe8ed..69bdb93951b904 100644
+--- a/include/linux/rseq_entry.h
++++ b/include/linux/rseq_entry.h
+@@ -625,10 +625,11 @@ static __always_inline bool rseq_exit_user_update(struct pt_regs *regs, struct t
+ 		return true;
+ 	}
  
- config CRYPTO_AES_S390
- 	tristate "Ciphers: AES, modes: ECB, CBC, CTR, XTS, GCM"
-+	select CRYPTO_AEAD
- 	select CRYPTO_SKCIPHER
- 	help
- 	  AEAD cipher: AES with GCM
++	int cpu = task_cpu(t);
+ 	struct rseq_ids ids = {
+-		.cpu_id	 = task_cpu(t),
++		.cpu_id	 = cpu,
+ 		.mm_cid	 = task_mm_cid(t),
+-		.node_id = cpu_to_node(ids.cpu_id),
++		.node_id = cpu_to_node(cpu),
+ 	};
+ 
+ 	return rseq_update_usr(t, regs, &ids);
 -- 
 2.53.0
 
