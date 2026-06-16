@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273BC478E5E;
-	Tue, 16 Jun 2026 18:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763A93D669D;
+	Tue, 16 Jun 2026 18:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635158; cv=none; b=KsRpvf1rS5cbEnDjTxfypsX8yRBatbV41qgPjd8sA3H7IKuPWyKQLtD/e1KWT0xzJBIherMGdlALI6fxVJ3rRFYk+D7ZRoPmTyoVlNsVT0PlbpV9p8Dxn5c9An3GHbi9UVi3BqCwEPXBfdrAA8OMkn+/mDsxPPy6vFQwRcg2O28=
+	t=1781635163; cv=none; b=uYFeAQ/HDX7Gtko6qhEgu8tQSoEMabbU1twVpjEACfuK+H5lU+/mJ3PXLxv8P77q9vzGbK1kXsBCWll0Lzx4cZDu8JVmMN6xTb2fxEDlM3CW9lfG+2TF/tWrMIVrL+YOMXJcek4FMIFGlkyml0Kbk9P5Gt1VQOV92an6Tp8E+Mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635158; c=relaxed/simple;
-	bh=kGDB6Qsbm9y1GvUV0TmhEFLK1nBQG+52sHkCyRLmBZk=;
+	s=arc-20240116; t=1781635163; c=relaxed/simple;
+	bh=lxc91tWlr8LnTSbHz0krrCNDmlliIhgL6s7H33BoPuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cltL61Qw+vkGZ+hIJzgxRJ6qkFLvMswCHzOjcSsb4v/GHge8oLdoRcg7vGKGr4k+cFN7A7xMueAbm1sHt3prKBR1AQFCHFSnL58eXSUZSDRyiowp8R9ce49Ud6THcsz5XmOK/gNAATpVQC1LVDo4gJQGlpDlQPKcCZ3nMBiP7B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzfkgVZP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QLCcqUXRsmPP5uCCz+p+AcYMpytoalTYq/m3oPUvdPD1YPttRM5/ycuSUNa2OCTG6yU9GG0NBV7ktzJX3xfzcSWAjoIIM7pv84a//PQNw+SQOLYkLUJn+MRBuzocHSKmgqn3rc7LoeBNA8oS7/inEeyPMAumfP2n/LXLGrKfSh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0/9ap5M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzfkgVZP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 199C21F000E9;
-	Tue, 16 Jun 2026 18:39:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0/9ap5M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA841F000E9;
+	Tue, 16 Jun 2026 18:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635157;
-	bh=sLA5NHvTEQFIdAGbiNEtCC221QlCAYCRMpYErXmXqsQ=;
+	s=korg; t=1781635162;
+	bh=BikgtaG1LiJ8D3QhEp6SNiD7D1Qi1O0sfdL9bGJCYKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vzfkgVZPoNGzaTPr1wTiiAtf34JpQertoPbOFT61lTbO2OJL2UgFbP3mbhy4nHILR
-	 C1nrY4c3rOxIjIkN/vZ6ztDk9VhVOEgA874wuiZ4gi+F3Pxjz6VX2laN1dLWsF4Ofb
-	 4jLWNFURzuHMNQ12tmwjeOrhYzN45DD2pTKKOoMQ=
+	b=Y0/9ap5MChsCanv6CGgWW5JGxlOQEadgIidK3vn9JZ8xgxFNkFWYlBUs7lkwBjt9Y
+	 e1gwWkLYYseEG8vdHSpOydCIZu0VmDQLqctUcc9l23TdJ8x3SoFZmoD741iaM0v0o/
+	 Dp2SEo4gE3Zvnz0t+3pm/ix+Hk+yLw+VdUBhH/x8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Peter Chen <peter.chen@cixtech.com>,
+	Minh Nguyen <minhnguyen.080505@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 368/411] usb: cdns3: plat: fix leaked usb2_phy initialization on usb3_phy acquisition failure
-Date: Tue, 16 Jun 2026 20:30:06 +0530
-Message-ID: <20260616145120.892240130@linuxfoundation.org>
+Subject: [PATCH 5.15 369/411] net: skbuff: fix missing zerocopy reference in pskb_carve helpers
+Date: Tue, 16 Jun 2026 20:30:07 +0530
+Message-ID: <20260616145120.939704891@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,45 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Chen <peter.chen@cixtech.com>
+From: Minh Nguyen <minhnguyen.080505@gmail.com>
 
-[ Upstream commit e6970cda63fd4b4546aeed9d0e2f53a7c95cd09c ]
+[ Upstream commit 98d0912e9f841e5529a5b89a972805f34cb1c69d ]
 
-Move usb2_phy initialization after usb3_phy acquisition.
+pskb_carve_inside_header() and pskb_carve_inside_nonlinear() both copy
+the old skb_shared_info header into a new buffer via memcpy(), which
+includes the destructor_arg pointer (uarg) for MSG_ZEROCOPY skbs.
+Neither function calls net_zcopy_get() for the new shinfo, creating an
+unaccounted holder: every skb_shared_info with destructor_arg set will
+call skb_zcopy_clear() once when freed, but the corresponding
+net_zcopy_get() was never called for the new copy. Repeated calls
+drive uarg->refcnt to zero prematurely, freeing ubuf_info_msgzc while
+TX skbs still hold live destructor_arg pointers.
 
-Fixes: f738957277ba ("usb: cdns3: Split core.c into cdns3-plat and core.c file")
-Cc: stable <stable@kernel.org>
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-devicetree/agKaEePSFknhDBg2@nchen-desktop/T/#m21e1d9c1574eb127ce03c0c2a1a49002ce435b52
-Signed-off-by: Peter Chen <peter.chen@cixtech.com>
-Link: https://patch.msgid.link/20260513085310.2217547-2-peter.chen@cixtech.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+KASAN reports use-after-free on a freed ubuf_info_msgzc:
+
+  BUG: KASAN: slab-use-after-free in skb_release_data+0x77b/0x810
+  Read of size 8 at addr ffff88801574d3e8 by task poc/220
+
+  Call Trace:
+   skb_release_data+0x77b/0x810
+   kfree_skb_list_reason+0x13e/0x610
+   skb_release_data+0x4cd/0x810
+   sk_skb_reason_drop+0xf3/0x340
+   skb_queue_purge_reason+0x282/0x440
+   rds_tcp_inc_free+0x1e/0x30
+   rds_recvmsg+0x354/0x1780
+   __sys_recvmsg+0xdf/0x180
+
+  Allocated by task 219:
+   msg_zerocopy_realloc+0x157/0x7b0
+   tcp_sendmsg_locked+0x2892/0x3ba0
+
+  Freed by task 219:
+   ip_recv_error+0x74a/0xb10
+   tcp_recvmsg+0x475/0x530
+
+The skb consuming the late access still referenced the same uarg via
+shinfo->destructor_arg copied by pskb_carve_inside_nonlinear() without
+a refcount bump. This has been verified to be reliably exploitable: a
+working proof-of-concept achieves full root privilege escalation from
+an unprivileged local user on a default kernel configuration.
+
+The fix follows the pattern of pskb_expand_head() which has the same
+memcpy/cloned structure. For pskb_carve_inside_header(), net_zcopy_get()
+is placed after skb_orphan_frags() succeeds, so the orphan error path
+needs no cleanup. For pskb_carve_inside_nonlinear(), net_zcopy_get() is
+placed after all failure points and just before skb_release_data(), so
+no error path needs cleanup at all -- matching pskb_expand_head() more
+closely and avoiding the need for a balancing net_zcopy_put().
+
+Fixes: 6fa01ccd8830 ("skbuff: Add pskb_extract() helper function")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-sonnet-4-6
+Signed-off-by: Minh Nguyen <minhnguyen.080505@gmail.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260526041240.329462-1-minhnguyen.080505@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdns3-plat.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/core/skbuff.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/cdns3/cdns3-plat.c
-+++ b/drivers/usb/cdns3/cdns3-plat.c
-@@ -120,14 +120,14 @@ static int cdns3_plat_probe(struct platf
- 	if (IS_ERR(cdns->usb2_phy))
- 		return PTR_ERR(cdns->usb2_phy);
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -6256,6 +6256,8 @@ static int pskb_carve_inside_header(stru
+ 			kfree(data);
+ 			return -ENOMEM;
+ 		}
++		if (skb_zcopy(skb))
++			net_zcopy_get(skb_zcopy(skb));
+ 		for (i = 0; i < skb_shinfo(skb)->nr_frags; i++)
+ 			skb_frag_ref(skb, i);
+ 		if (skb_has_frag_list(skb))
+@@ -6404,6 +6406,8 @@ static int pskb_carve_inside_nonlinear(s
+ 		kfree(data);
+ 		return -ENOMEM;
+ 	}
++	if (skb_zcopy(skb))
++		net_zcopy_get(skb_zcopy(skb));
+ 	skb_release_data(skb);
  
--	ret = phy_init(cdns->usb2_phy);
--	if (ret)
--		return ret;
--
- 	cdns->usb3_phy = devm_phy_optional_get(dev, "cdns3,usb3-phy");
- 	if (IS_ERR(cdns->usb3_phy))
- 		return PTR_ERR(cdns->usb3_phy);
- 
-+	ret = phy_init(cdns->usb2_phy);
-+	if (ret)
-+		return ret;
-+
- 	ret = phy_init(cdns->usb3_phy);
- 	if (ret)
- 		goto err_phy3_init;
+ 	skb->head = data;
 
 
