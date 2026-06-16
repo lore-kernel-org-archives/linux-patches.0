@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39B03C4178;
-	Tue, 16 Jun 2026 17:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB50946AF3C;
+	Tue, 16 Jun 2026 17:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631650; cv=none; b=PLAVipVUOXwdFuUYDW/oxCkSmElYUnFuTNUAtM7WJfFMN4VTz0PscP1OSynkwOxxp8laVdC8lLzoIqtZcCgBC3ZTm6Ao9o1REWmToJ9MIErW4PY4OegDL3eWWAVBrU3RBPCgwa6q6wI53m0ra6hkdfz/T/sBxzd3xcCM/IUqy0c=
+	t=1781631654; cv=none; b=UDGrYVAf/08IgtxVPeG+d4Xa8zV8KZ2cRBNReOWgUCOhYHLfIs9/JxdZ6x0e95YdqefiZfwOLYew9V/ssxoUACUOWC/C8pD8wrCl2/jCYtZB0ve6bd2WmlEBrXJIFSwqDfhyr4LhnLy8/c1rv56fcCt8T+8SgFe8pJkdejXueGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631650; c=relaxed/simple;
-	bh=z0LSPMcZBO/1FeXpyZNhV/LYnBqHx/nvJuuZ2ZAM89o=;
+	s=arc-20240116; t=1781631654; c=relaxed/simple;
+	bh=z3/nMbIPwWEHJ2rvOh+tQDMvjqwDj2nTMH4ETEMz1YY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HDVXFnHhzh8lyDZ8rdpLCUSRqG/sGxkmKPdWtWe8EUWN5Wt8OgMOBakvnTtnqU2v6sLdtD1B9Qc/jfeEtX5ixlJFFAcI7yEeWkeNjr1qMST3lZhV82sQbDWNy5VK1E93XaWaAgTRkpHdfo/oeD45tj3NrY50qmgxeUHnJSitopQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYzURsjA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UFLm3TbJIeeYO9+bDOkyjdgBvXyJza8tK4+513pmgQd2d0E+ZpZpMSmo3QQKeC34Ou/coryOE0hLlKr9XSHJ3t9DxmDCcL1SvPgIEY2iefvsdFMkkDzlQbcRwhqWkdzAgQlRCOGNeHlYLHvgg3j23lnG81OwgO2KlbgT94GhwbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h+DDWRGW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYzURsjA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E57461F000E9;
-	Tue, 16 Jun 2026 17:40:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+DDWRGW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13FA1F000E9;
+	Tue, 16 Jun 2026 17:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631648;
-	bh=UZoeNewoRkb9zJiRMYYtMIbuugoZohcEHIu7HZVhPgM=;
+	s=korg; t=1781631653;
+	bh=RlAqIlol1ea0NA+9Vhsxiu348vnnGoiHHW2O522FwWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QYzURsjAe80pjHXMH9GRg7n8vNqiOGX2AOsWsmIjui1Ldh7VeAqhOrBdmnBzMl2Wp
-	 pevJeJAvBRQQdF/UUKst1NJzHM+i0nna83jDgdCZLCLjxY4lBcW+VNDgr7eYBoDvl7
-	 wDVKvfbgmWwHEp1jU6BDPRYG4GtuWaGJoVvsF7B0=
+	b=h+DDWRGWzZVumkYH2vtXxuJul8+tQzfWK6SAXbANRTPjX752BlwMDp9PqaAAee1Mg
+	 jIpiEVC78ahRQinvTxG1w6fTM4ncC+EXe34uKrFDSSThVAsx1ORMK0cO0zY692pwPf
+	 wujJZlTfYLc6SOKgn0jk0HFc5VzyEIHXE84Dvd2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Til Kaiser <mail@tk154.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yao Sang <sangyao@kylinos.cn>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 261/522] net: mvpp2: limit XDP frame size to the RX buffer
-Date: Tue, 16 Jun 2026 20:26:48 +0530
-Message-ID: <20260616145138.154965069@linuxfoundation.org>
+Subject: [PATCH 6.1 244/522] net/mlx4: avoid GCC 10 __bad_copy_from() false positive
+Date: Tue, 16 Jun 2026 20:26:31 +0530
+Message-ID: <20260616145137.395405405@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,44 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Til Kaiser <mail@tk154.de>
+From: Yao Sang <sangyao@kylinos.cn>
 
-[ Upstream commit f3c6aa078927e6fe8121c9c591ddee8716c5305a ]
+[ Upstream commit 2365343f4aad3e1b1e7a2e87e98cf66d5e590589 ]
 
-mvpp2 has short and long BM pools, and short pool buffers can be smaller
-than PAGE_SIZE. The XDP path nevertheless initializes every xdp_buff with
-PAGE_SIZE as frame size.
+mlx4_init_user_cqes() fills a scratch buffer with the CQE
+initialization pattern and then copies from that buffer to userspace.
 
-XDP helpers use frame_sz to validate tail growth and to derive the hard
-end of the data area. Advertising PAGE_SIZE for short buffers can let
-bpf_xdp_adjust_tail() grow a packet past the real allocation, corrupting
-memory or later tripping skb tailroom checks.
+In the single-copy path, the copy length is array_size(entries,
+cqe_size), but the scratch buffer is allocated with PAGE_SIZE. GCC 10
+does not carry the branch invariant strongly enough through the object
+size checks and falsely triggers __bad_copy_from().
 
-Initialize the XDP buffer with bm_pool->frag_size so XDP tailroom matches
-the actual buffer backing the packet.
+Size the scratch buffer to the actual copy length for the active path,
+keep array_size() for the single-copy case, and retain a WARN_ON_ONCE()
+guard for the PAGE_SIZE invariant before allocating the buffer.
 
-Fixes: 07dd0a7aae7f ("mvpp2: add basic XDP support")
-Signed-off-by: Til Kaiser <mail@tk154.de>
-Link: https://patch.msgid.link/20260607134943.21996-3-mail@tk154.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f69bf5dee7ef ("net/mlx4: Use array_size() helper in copy_to_user()")
+Signed-off-by: Yao Sang <sangyao@kylinos.cn>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx4/cq.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index 62d72f5ed01295..8403fc4e9e7176 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -3981,7 +3981,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 			else
- 				xdp_rxq = &rxq->xdp_rxq_long;
+diff --git a/drivers/net/ethernet/mellanox/mlx4/cq.c b/drivers/net/ethernet/mellanox/mlx4/cq.c
+index 4d4f9cf9facb87..fb83d8af8dcb9c 100644
+--- a/drivers/net/ethernet/mellanox/mlx4/cq.c
++++ b/drivers/net/ethernet/mellanox/mlx4/cq.c
+@@ -290,6 +290,7 @@ static void mlx4_cq_free_icm(struct mlx4_dev *dev, int cqn)
+ static int mlx4_init_user_cqes(void *buf, int entries, int cqe_size)
+ {
+ 	int entries_per_copy = PAGE_SIZE / cqe_size;
++	size_t copy_bytes;
+ 	void *init_ents;
+ 	int err = 0;
+ 	int i;
+@@ -314,8 +315,14 @@ static int mlx4_init_user_cqes(void *buf, int entries, int cqe_size)
+ 			buf += PAGE_SIZE;
+ 		}
+ 	} else {
++		copy_bytes = array_size(entries, cqe_size);
++		if (WARN_ON_ONCE(copy_bytes > PAGE_SIZE)) {
++			err = -EINVAL;
++			goto out;
++		}
++
+ 		err = copy_to_user((void __user *)buf, init_ents,
+-				   array_size(entries, cqe_size)) ?
++				   copy_bytes) ?
+ 			-EFAULT : 0;
+ 	}
  
--			xdp_init_buff(&xdp, PAGE_SIZE, xdp_rxq);
-+			xdp_init_buff(&xdp, bm_pool->frag_size, xdp_rxq);
- 			xdp_prepare_buff(&xdp, data,
- 					 MVPP2_MH_SIZE + MVPP2_SKB_HEADROOM,
- 					 rx_bytes, false);
 -- 
 2.53.0
 
