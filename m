@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23303C3C1E;
-	Tue, 16 Jun 2026 17:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBAE3D34AD;
+	Tue, 16 Jun 2026 17:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632006; cv=none; b=Cd2I7lbKfsEd2q2igLnhpLMv/XA0JDgqBl/LVTo8brNWgtALleApFbO1ZjquK37D8+zW6s2PLoKLUkm/SJcGAbCpyzy9rbXMCe/vZSZqGLG5ywmkoq/HyoFAWJZwz0lA2whhqtPzaOKWWQNcMUvRsd8ss6lrC9SqSRGq13advqQ=
+	t=1781632013; cv=none; b=L6nnB3eF4Q0caifcdI+L5QyaBluloVOKN00gkMsnin6G2FKrHIoyHxOJ1LzLZJiBQoebJB3Tg+PsAb4Qv4agingWFF/c5K1h6ec9dG8ZIVHQJ0+I0XFvmgD2fBpfp5CCrod8PTEjzhLOC4H6d7HAe5Viej5at6IE5ne0lNFLt14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632006; c=relaxed/simple;
-	bh=r+fpgPz3eAOkjTwU/IncIlnl554hS6mV+Fguaj66Ju4=;
+	s=arc-20240116; t=1781632013; c=relaxed/simple;
+	bh=HOfaHQsZ3OBVE9jWOXbnInG3EXv0i5eOIbGp4z/ShQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NFfKekLwvUfa8gBXtm3Sh0p+7AysnPaMQcWTRmfC497ra9rFarnQMylirS45rkO3Lr5jQh0gf6d/DWYmF2mPNnxVkI1skfviIOLUyX2hzUejjtd+6FbM9zQpf01Ancwxu8CUaIiSLT/nA2qcxnBUVUHXXQ6940OOWI1c4jkRwCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hf8lXeId; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kHszu3Mo1DthbKySBYaILtsOdzQFVrKJTdPX7Dm1MVCvag6TR8CYnNAL/0uzdz3gqDuXT5sIQPFmNc6sCziP6rnmVIBCw9awzBEnHC3psCOk+D3tIhJMuPYvg5pZFybySRb0GNo+nlS57/OfDuUmI6Y5QS/f3hThPOxnyrgZu0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OH5rN6cY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hf8lXeId"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD6EE1F000E9;
-	Tue, 16 Jun 2026 17:46:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OH5rN6cY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A901F000E9;
+	Tue, 16 Jun 2026 17:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632004;
-	bh=qe1v7faPx9RilJTKmw+6zpXB5IWnwKalmmcyzlC6A74=;
+	s=korg; t=1781632009;
+	bh=O6NGo3l6z6w793Rd/4h8+ee1TK3El7g0b+TYRPS+1V8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hf8lXeIdyrG2i6VW0RWlOVTk1tRAoLiZDn99DJPVOU3JGU41KydV95UdDyzi6iQJ7
-	 a+X4FrDtLdATAFHqwOGtS7zQFyCuOd1WbjVeQP7dazMCLBjIVpvjFhFmEQxjvapYL+
-	 p/W2CP1JILqsRcXFLC3wDEIaPb5O8siEuWyGUd/s=
+	b=OH5rN6cY/1Dml4PetSILq16iMqajXp2vxloEAv3FhmFrDbbajaTg+ocqr0FnfH3Ux
+	 wzwK0eHj6gBkGObITFNpsmqJGhrnukIeEV94FRsc7I3TPamhCVg+WycmiwKWbnkgot
+	 rQEj62ay0vDyBS+EeYVnBAcYbNVID620qjOSufBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Anandu Krishnan E <anandu.e@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.1 301/522] misc: fastrpc: fix use-after-free of fastrpc_user in workqueue context
-Date: Tue, 16 Jun 2026 20:27:28 +0530
-Message-ID: <20260616145139.982223631@linuxfoundation.org>
+	Lorenzo Stoakes <ljs@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	Jann Horn <jannh@google.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 328/522] mm/hugetlb: avoid false positive lockdep assertion
+Date: Tue, 16 Jun 2026 20:27:55 +0530
+Message-ID: <20260616145141.176817776@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -45,211 +49,261 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
+From: Lorenzo Stoakes <ljs@kernel.org>
 
-commit e85eb5feca8e254905ffa6c57a3c99c89a674a0f upstream.
+[ Upstream commit b4aea43cd37afad714b5684fe9fdfcb0e78dba26 ]
 
-There is a race between fastrpc_device_release() and the workqueue
-that processes DSP responses. When the user closes the file descriptor,
-fastrpc_device_release() frees the fastrpc_user structure. Concurrently,
-an in-flight DSP invocation can complete and fastrpc_rpmsg_callback()
-schedules context cleanup via schedule_work(&ctx->put_work). If the
-workqueue runs fastrpc_context_free() in parallel with or after
-fastrpc_device_release() has freed the user structure, it dereferences
-the freed fastrpc_user. Depending on the state of the context at the
-time of the race, any one of the following accesses can be hit:
+Commit 081056dc00a2 ("mm/hugetlb: unshare page tables during VMA split,
+not before") changed the locking model around hugetlbfs PMD unsharing on
+VMA split, but did not update the function which asserts the locks,
+hugetlb_vma_assert_locked().
 
- 1. fastrpc_buf_free() calls fastrpc_ipa_to_dma_addr(buf->fl->cctx, ...)
-    to strip the SID bits from the stored IOVA before passing the
-    physical address to dma_free_coherent().
+This function asserts that either the hugetlb VMA lock is held (if a
+shared mapping) or that the reservation map lock is held (if private).
 
- 2. fastrpc_free_map() reads map->fl->cctx->vmperms[0].vmid to
-    reconstruct the source permission bitmask needed for the
-    qcom_scm_assign_mem() call that returns memory from the DSP VM
-    back to HLOS.
+If you get an unfortunate race between something which results in one of
+these locks being released and a hugetlb VMA split and you have
+CONFIG_LOCKDEP enabled, you can therefore see a false positive assertion
+arise when there is in fact no issue.
 
- 3. fastrpc_free_map() acquires map->fl->lock to safely remove the
-    map node from the fl->maps list.
+Since this change introduced a new take_locks parameter to
+hugetlb_unshare_pmds(), which, when set to false, indicates that locking
+is sufficient, simply pass this to the unsharing logic and predicate the
+lock assertions on this.
 
-The resulting use-after-free manifests as:
+This is safe, as we already asserted the file rmap lock and the VMA write
+lock prior to this (implying exclusive mmap write lock), so we cannot be
+raced by either rmap or page fault page table walkers which the asserted
+locks are intended to protect against (we don't mind GUP-fast).
 
-  pc : fastrpc_buf_free+0x38/0x80 [fastrpc]
-  lr : fastrpc_context_free+0xa8/0x1b0 [fastrpc]
-  fastrpc_context_free+0xa8/0x1b0 [fastrpc]
-  fastrpc_context_put_wq+0x78/0xa0 [fastrpc]
-  process_one_work+0x180/0x450
-  worker_thread+0x26c/0x388
+Separate out huge_pmd_unshare() into __huge_pmd_unshare() to add a
+check_locks parameter, and update hugetlb_unshare_pmds() to pass this
+parameter to it.
 
-Add kref-based reference counting to fastrpc_user. Have each invoke
-context take a reference on the user at allocation time and release it
-when the context is freed. Release the initial reference in
-fastrpc_device_release() at file close. Move the teardown of the user
-structure — freeing pending contexts, maps, mmaps, and the channel
-context reference — into the kref release callback fastrpc_user_free(),
-so that it runs only when the last reference is dropped, regardless of
-whether that happens at device close or after the final in-flight
-context completes.
+This leaves all other callers of huge_pmd_unshare() still correctly
+asserting the locks.
 
-Fixes: 6cffd79504ce ("misc: fastrpc: Add support for dmabuf exporter")
-Cc: stable@kernel.org
-Signed-off-by: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204528.116920-2-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The below reproducer will trigger the assert in a kernel with
+CONFIG_LOCKDEP enabled by racing process teardown (which will release the
+hugetlb lock) against a hugetlb split.
+
+void execute_one(void)
+{
+	void *ptr;
+	pid_t pid;
+
+	/*
+	 * Create a hugetlb mapping spanning a PUD entry.
+	 *
+	 * We force the hugetlb page allocation with populate and
+	 * noreserve.
+	 *
+	 * |---------------------|
+	 * |                     |
+	 * |---------------------|
+	 * 0                 PUD boundary
+	 */
+	ptr = mmap(0, PUD_SIZE, PROT_READ | PROT_WRITE,
+		   MAP_FIXED | MAP_SHARED | MAP_ANON |
+		   MAP_NORESERVE | MAP_HUGETLB | MAP_POPULATE,
+		   -1, 0);
+	if (ptr == MAP_FAILED) {
+		perror("mmap");
+		exit(EXIT_FAILURE);
+	}
+
+	/*
+	 * Fork but with a bogus stack pointer so we try to execute code in
+	 * a non-VM_EXEC VMA, causing segfault + teardown via exit_mmap().
+	 *
+	 * The clone will cause PMD page table sharing between the
+	 * processes first via:
+	 * copy_process() -> ... -> huge_pte_alloc() -> huge_pmd_share()
+	 *
+	 * Then tear down and release the hugetlb 'VMA' lock via:
+	 * exit_mmap() -> ... -> vma_close() -> hugetlb_vma_lock_free()
+	 */
+	pid = syscall(__NR_clone, 0, 2 * PMD_SIZE, 0, 0, 0);
+	if (pid < 0) {
+		perror("clone");
+		exit(EXIT_FAILURE);
+	} if (pid == 0) {
+		/* Pop stack... */
+		return;
+	}
+
+	/*
+	 * We are the parent process.
+	 *
+	 * Race the child process's teardown with a PMD unshare.
+	 *
+	 * We do this by triggering:
+	 *
+	 * __split_vma() -> hugetlb_split() -> hugetlb_unshare_pmds()
+	 *
+	 * Which, importantly, doesn't hold the hugetlb VMA lock (nor can
+	 * it), meaning we assert in hugetlb_vma_assert_locked().
+	 *
+	 *            .
+	 * |----------.----------|
+	 * |          .          |
+	 * |----------.----------|
+	 * 0          .     PUD boundary
+	 */
+	mmap(0, PUD_SIZE / 2, PROT_READ | PROT_WRITE,
+	     MAP_FIXED | MAP_ANON | MAP_PRIVATE, -1, 0);
+}
+
+int main(void)
+{
+	int i;
+
+	/* Kick off fork children. */
+	for (i = 0; i < NUM_FORKS; i++) {
+		pid_t pid = fork();
+
+		if (pid < 0) {
+			perror("fork");
+			exit(EXIT_FAILURE);
+		}
+
+		/* Fork children do their work and exit. */
+		if (!pid) {
+			int j;
+
+			for (j = 0; j < NUM_ITERS; j++)
+				execute_one();
+			return EXIT_SUCCESS;
+		}
+	}
+
+	/* If we succeeded, wait on children. */
+	for (i = 0; i < NUM_FORKS; i++)
+		wait(NULL);
+
+	return EXIT_SUCCESS;
+}
+
+[ljs@kernel.org: account for the !CONFIG_HUGETLB_PMD_PAGE_TABLE_SHARING case]
+  Link: https://lore.kernel.org/agWZsPGYid08uU6O@lucifer
+Link: https://lore.kernel.org/20260513085658.45264-1-ljs@kernel.org
+Fixes: 081056dc00a2 ("mm/hugetlb: unshare page tables during VMA split, not before")
+Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Cc: Jann Horn <jannh@google.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Lorenzo Stoakes <ljs@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/fastrpc.c |   75 +++++++++++++++++++++++++++++++++----------------
- 1 file changed, 52 insertions(+), 23 deletions(-)
+ mm/hugetlb.c | 56 ++++++++++++++++++++++++++++++++++------------------
+ 1 file changed, 37 insertions(+), 19 deletions(-)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -287,6 +287,8 @@ struct fastrpc_user {
- 	spinlock_t lock;
- 	/* lock for allocations */
- 	struct mutex mutex;
-+	/* Reference count */
-+	struct kref refcount;
- };
- 
- static void fastrpc_free_map(struct kref *ref)
-@@ -430,15 +432,57 @@ static void fastrpc_channel_ctx_put(stru
- 	kref_put(&cctx->refcount, fastrpc_channel_ctx_free);
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index 161f95473c2ac2..6585389f93199d 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -94,6 +94,9 @@ static int hugetlb_acct_memory(struct hstate *h, long delta);
+ static void hugetlb_vma_lock_free(struct vm_area_struct *vma);
+ static void hugetlb_vma_lock_alloc(struct vm_area_struct *vma);
+ static void __hugetlb_vma_unlock_write_free(struct vm_area_struct *vma);
++static int __huge_pmd_unshare(struct mmu_gather *tlb,
++		struct vm_area_struct *vma, unsigned long addr, pte_t *ptep,
++		bool check_locks);
+ static void hugetlb_unshare_pmds(struct vm_area_struct *vma,
+ 		unsigned long start, unsigned long end, bool take_locks);
+ static struct resv_map *vma_resv_map(struct vm_area_struct *vma);
+@@ -7116,6 +7119,31 @@ pte_t *huge_pmd_share(struct mm_struct *mm, struct vm_area_struct *vma,
+ 	return pte;
  }
  
-+static void fastrpc_context_put(struct fastrpc_invoke_ctx *ctx);
-+
-+static void fastrpc_user_free(struct kref *ref)
++static int __huge_pmd_unshare(struct mmu_gather *tlb,
++		struct vm_area_struct *vma, unsigned long addr, pte_t *ptep,
++		bool check_locks)
 +{
-+	struct fastrpc_user *fl = container_of(ref, struct fastrpc_user, refcount);
-+	struct fastrpc_invoke_ctx *ctx, *n;
-+	struct fastrpc_map *map, *m;
-+	struct fastrpc_buf *buf, *b;
++	unsigned long sz = huge_page_size(hstate_vma(vma));
++	struct mm_struct *mm = vma->vm_mm;
++	pgd_t *pgd = pgd_offset(mm, addr);
++	p4d_t *p4d = p4d_offset(pgd, addr);
++	pud_t *pud = pud_offset(p4d, addr);
 +
-+	if (fl->init_mem)
-+		fastrpc_buf_free(fl->init_mem);
++	if (sz != PMD_SIZE)
++		return 0;
++	if (!atomic_read(&virt_to_page(ptep)->pt_share_count))
++		return 0;
++	i_mmap_assert_write_locked(vma->vm_file->f_mapping);
++	if (check_locks)
++		hugetlb_vma_assert_locked(vma);
++	pud_clear(pud);
 +
-+	list_for_each_entry_safe(ctx, n, &fl->pending, node) {
-+		list_del(&ctx->node);
-+		fastrpc_context_put(ctx);
-+	}
++	tlb_unshare_pmd_ptdesc(tlb, virt_to_page(ptep), addr);
 +
-+	list_for_each_entry_safe(map, m, &fl->maps, node)
-+		fastrpc_map_put(map);
-+
-+	list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
-+		list_del(&buf->node);
-+		fastrpc_buf_free(buf);
-+	}
-+
-+	fastrpc_channel_ctx_put(fl->cctx);
-+	mutex_destroy(&fl->mutex);
-+	kfree(fl);
++	mm_dec_nr_pmds(mm);
++	return 1;
 +}
 +
-+static void fastrpc_user_get(struct fastrpc_user *fl)
-+{
-+	kref_get(&fl->refcount);
-+}
-+
-+static void fastrpc_user_put(struct fastrpc_user *fl)
-+{
-+	kref_put(&fl->refcount, fastrpc_user_free);
-+}
-+
- static void fastrpc_context_free(struct kref *ref)
+ /**
+  * huge_pmd_unshare - Unmap a pmd table if it is shared by multiple users
+  * @tlb: the current mmu_gather.
+@@ -7135,24 +7163,7 @@ pte_t *huge_pmd_share(struct mm_struct *mm, struct vm_area_struct *vma,
+ int huge_pmd_unshare(struct mmu_gather *tlb, struct vm_area_struct *vma,
+ 		unsigned long addr, pte_t *ptep)
  {
- 	struct fastrpc_invoke_ctx *ctx;
- 	struct fastrpc_channel_ctx *cctx;
-+	struct fastrpc_user *fl;
- 	unsigned long flags;
- 	int i;
- 
- 	ctx = container_of(ref, struct fastrpc_invoke_ctx, refcount);
- 	cctx = ctx->cctx;
-+	fl = ctx->fl;
- 
- 	for (i = 0; i < ctx->nbufs; i++)
- 		fastrpc_map_put(ctx->maps[i]);
-@@ -454,6 +498,8 @@ static void fastrpc_context_free(struct
- 	kfree(ctx->olaps);
- 	kfree(ctx);
- 
-+	/* Release the reference taken in fastrpc_context_alloc() */
-+	fastrpc_user_put(fl);
- 	fastrpc_channel_ctx_put(cctx);
+-	unsigned long sz = huge_page_size(hstate_vma(vma));
+-	struct mm_struct *mm = vma->vm_mm;
+-	pgd_t *pgd = pgd_offset(mm, addr);
+-	p4d_t *p4d = p4d_offset(pgd, addr);
+-	pud_t *pud = pud_offset(p4d, addr);
+-
+-	i_mmap_assert_write_locked(vma->vm_file->f_mapping);
+-	hugetlb_vma_assert_locked(vma);
+-	if (sz != PMD_SIZE)
+-		return 0;
+-	if (!atomic_read(&virt_to_page(ptep)->pt_share_count))
+-		return 0;
+-
+-	pud_clear(pud);
+-	tlb_unshare_pmd_ptdesc(tlb, virt_to_page(ptep), addr);
+-
+-	mm_dec_nr_pmds(mm);
+-	return 1;
++	return __huge_pmd_unshare(tlb, vma, addr, ptep, /*check_locks=*/true);
  }
  
-@@ -563,6 +609,8 @@ static struct fastrpc_invoke_ctx *fastrp
+ /*
+@@ -7186,6 +7197,13 @@ pte_t *huge_pmd_share(struct mm_struct *mm, struct vm_area_struct *vma,
+ 	return NULL;
+ }
  
- 	/* Released in fastrpc_context_put() */
- 	fastrpc_channel_ctx_get(cctx);
-+	/* Take a reference to user, released in fastrpc_context_free() */
-+	fastrpc_user_get(user);
- 
- 	ctx->sc = sc;
- 	ctx->retval = -1;
-@@ -593,6 +641,7 @@ err_idr:
- 	spin_lock(&user->lock);
- 	list_del(&ctx->node);
- 	spin_unlock(&user->lock);
-+	fastrpc_user_put(user);
- 	fastrpc_channel_ctx_put(cctx);
- 	kfree(ctx->maps);
- 	kfree(ctx->olaps);
-@@ -1352,9 +1401,6 @@ static int fastrpc_device_release(struct
++static int __huge_pmd_unshare(struct mmu_gather *tlb,
++		struct vm_area_struct *vma, unsigned long addr, pte_t *ptep,
++		bool check_locks)
++{
++	return 0;
++}
++
+ int huge_pmd_unshare(struct mmu_gather *tlb, struct vm_area_struct *vma,
+ 		unsigned long addr, pte_t *ptep)
  {
- 	struct fastrpc_user *fl = (struct fastrpc_user *)file->private_data;
- 	struct fastrpc_channel_ctx *cctx = fl->cctx;
--	struct fastrpc_invoke_ctx *ctx, *n;
--	struct fastrpc_map *map, *m;
--	struct fastrpc_buf *buf, *b;
- 	unsigned long flags;
- 
- 	fastrpc_release_current_dsp_process(fl);
-@@ -1363,28 +1409,10 @@ static int fastrpc_device_release(struct
- 	list_del(&fl->user);
- 	spin_unlock_irqrestore(&cctx->lock, flags);
- 
--	if (fl->init_mem)
--		fastrpc_buf_free(fl->init_mem);
--
--	list_for_each_entry_safe(ctx, n, &fl->pending, node) {
--		list_del(&ctx->node);
--		fastrpc_context_put(ctx);
--	}
--
--	list_for_each_entry_safe(map, m, &fl->maps, node)
--		fastrpc_map_put(map);
--
--	list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
--		list_del(&buf->node);
--		fastrpc_buf_free(buf);
--	}
--
- 	fastrpc_session_free(cctx, fl->sctx);
--	fastrpc_channel_ctx_put(cctx);
--
--	mutex_destroy(&fl->mutex);
--	kfree(fl);
- 	file->private_data = NULL;
-+	/* Release the reference taken in fastrpc_device_open */
-+	fastrpc_user_put(fl);
- 
- 	return 0;
- }
-@@ -1429,6 +1457,7 @@ static int fastrpc_device_open(struct in
- 	spin_lock_irqsave(&cctx->lock, flags);
- 	list_add_tail(&fl->user, &cctx->users);
- 	spin_unlock_irqrestore(&cctx->lock, flags);
-+	kref_init(&fl->refcount);
- 
- 	return 0;
- }
+@@ -7569,7 +7587,7 @@ static void hugetlb_unshare_pmds(struct vm_area_struct *vma,
+ 		if (!ptep)
+ 			continue;
+ 		ptl = huge_pte_lock(h, mm, ptep);
+-		huge_pmd_unshare(&tlb, vma, address, ptep);
++		__huge_pmd_unshare(&tlb, vma, address, ptep, take_locks);
+ 		spin_unlock(ptl);
+ 	}
+ 	huge_pmd_unshare_flush(&tlb, vma);
+-- 
+2.53.0
+
 
 
