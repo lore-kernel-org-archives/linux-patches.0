@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA9E3D45CB;
-	Tue, 16 Jun 2026 18:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D38B2F12AE;
+	Tue, 16 Jun 2026 18:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633310; cv=none; b=AafaB4Aj6nFxUZPoXSqmT+lOGs417W3rBTgAKg4z4AJWpEe1Kf2vQ6/bQSYzcqVWudBKtVeSdDoHYtOxs/Q9G5SKMf+W2jzvCgA6Gp1HRlLl0Nd6S8aQWz7oIwm9m+i0JWYdrOOtufStL5npfm9HhxP8JJ3E5DB7gsmidsPEU1w=
+	t=1781633316; cv=none; b=eVIJtPjPmXjNAJdXzLlY528fogZVz8Ix5NV11IYbHwI6nkNv/vIZxudkQK/6hHDR1oEf6aeho2U/jKPrmmHrWzdIiZKJSoeWeAjQO2LUkLXD5FOrJja1k3+5jkQCMsLnE9GifBeU9ezKYYCLNK+AiqJAl0BI8/6XGN80UwL91QE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633310; c=relaxed/simple;
-	bh=rAqgg9p3bl6+O11kxvp30IxSpJK/Ny9C42v4DWe9Wpw=;
+	s=arc-20240116; t=1781633316; c=relaxed/simple;
+	bh=1rWvHvqxZc4yahQCUDwDuSwCdlggrD98L91ysTjnKrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nI9K/uYhGlkZmQmN0w0aZESXaZ6A3u2+oh+Sz9Tqb/+CSQ8UIMAd//u44C4F/yGXMZUoPvjAzyBKEGx52Ig/uKk4peU1dJoDb/6xY1I8vS5mCfPxBUuHI7D1XDbzDkBJcXz1zUiYLaC6N1+4gsLPHmLzUHG8J848PnPNwaymopo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0aXNyXkA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oH51qdYnGeXbYqRS6R/vqnGG7IidFqfR97blZhGNbYT7gyYHuGaU+s6YVSq/OjZAjRDj/LP9PiR7zai6SdJfpfscqJ8Q/wKypJoOZHKTsIugV4y5NBK8CcqUtTciG5GACdF86rRw9wqON4Vgjugg9cbFgYSRNs+W9gXJ/388JSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sq29qgd+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0aXNyXkA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCF01F000E9;
-	Tue, 16 Jun 2026 18:08:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sq29qgd+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C8B61F000E9;
+	Tue, 16 Jun 2026 18:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633309;
-	bh=gqfC3SyspXqVH/5Prohhx4dXUiP5ljFT4LiIKvbCMBM=;
+	s=korg; t=1781633315;
+	bh=2KzzQJKxY3Uebqb3/CltoOozttAz1xa3avtR8foGEeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0aXNyXkA6HWdBfOL77A4fKDQgErc0IwJYvLX55jzTnVtgKme6X1sZWseS9UVjLkFS
-	 yuDEWQvv16/7BtMnd0OR0jexe6RtswQ6S0HUut8fFSclcZW6jMRTzWX5+7vmEb/ll5
-	 lfq7lNTWKoHu/XMymr1gAeEFpQzDem5wiqlf4X4g=
+	b=Sq29qgd+83dL07yEOrt9dvgnKug58mEuql/+UpmND+nyi1yer9KWM0J4JkSLH248p
+	 hkIKK0khoioBT84DpJzs5Onn3EkbM+gCyOdR10z4dSjB6jQ1ZgPTPUnwpvme8oAMgd
+	 wvWVJmt3wzOtZ2m5aq+wMeR46OLf71j1liTs9CoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 021/411] ASoC: Intel: bytcht_es8316: Fix MCLK leak on init errors
-Date: Tue, 16 Jun 2026 20:24:19 +0530
-Message-ID: <20260616145101.508642845@linuxfoundation.org>
+Subject: [PATCH 5.15 022/411] tunnels: load network headers after skb_cow() in iptunnel_pmtud_build_icmp[v6]()
+Date: Tue, 16 Jun 2026 20:24:20 +0530
+Message-ID: <20260616145101.559940217@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -45,114 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit afb2a3a9d8369d18122a0d7cd294eba9a98259c6 ]
+[ Upstream commit b4bc94353050b1fa7b702bd4c6600710dd926cff ]
 
-byt_cht_es8316_init() enables MCLK before configuring the codec sysclk
-and creating the headset jack. If either of those later steps fails, the
-function returns without disabling MCLK, leaving the clock enabled after
-card registration fails.
+Sashiko found that iptunnel_pmtud_build_icmp() and
+iptunnel_pmtud_build_icmpv6() were caching ip_hdr() and ipv6_hdr()
+before an skb_cow() call which can reallocate skb->head.
 
-Track whether this driver enabled MCLK and disable it on the init error
-paths. Add the matching DAI link exit callback so the same clock enable
-is also balanced when ASoC cleans up a successfully initialized link.
+Fix this possible UAF by initializing the local variables
+after the skb_cow() call.
 
-Fixes: a03bdaa565cb ("ASoC: Intel: add machine driver for BYT/CHT + ES8316")
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260519-asoc-bytcht-es8316-mclk-leak-v1-1-b4a11cdc2afd@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Remove skb_reset_network_header() calls which were not needed.
+
+Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Link: https://patch.msgid.link/20260525201335.2361845-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcht_es8316.c | 29 ++++++++++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
+ net/ipv4/ip_tunnel_core.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/intel/boards/bytcht_es8316.c b/sound/soc/intel/boards/bytcht_es8316.c
-index 923e69c7695c29..d54bc667175f50 100644
---- a/sound/soc/intel/boards/bytcht_es8316.c
-+++ b/sound/soc/intel/boards/bytcht_es8316.c
-@@ -39,6 +39,7 @@ struct byt_cht_es8316_private {
- 	struct gpio_desc *speaker_en_gpio;
- 	struct device *codec_dev;
- 	bool speaker_en;
-+	bool mclk_enabled;
- };
- 
- enum {
-@@ -169,6 +170,15 @@ static struct snd_soc_jack_pin byt_cht_es8316_jack_pins[] = {
- 	},
- };
- 
-+static void byt_cht_es8316_disable_mclk(struct byt_cht_es8316_private *priv)
-+{
-+	if (!priv->mclk_enabled)
-+		return;
-+
-+	clk_disable_unprepare(priv->mclk);
-+	priv->mclk_enabled = false;
-+}
-+
- static int byt_cht_es8316_init(struct snd_soc_pcm_runtime *runtime)
+diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
+index 3737188ba4e1e5..4d80bbcd15d5a4 100644
+--- a/net/ipv4/ip_tunnel_core.c
++++ b/net/ipv4/ip_tunnel_core.c
+@@ -194,7 +194,7 @@ EXPORT_SYMBOL_GPL(iptunnel_handle_offloads);
+  */
+ static int iptunnel_pmtud_build_icmp(struct sk_buff *skb, int mtu)
  {
- 	struct snd_soc_component *codec = asoc_rtd_to_codec(runtime, 0)->component;
-@@ -225,12 +235,14 @@ static int byt_cht_es8316_init(struct snd_soc_pcm_runtime *runtime)
- 	ret = clk_prepare_enable(priv->mclk);
- 	if (ret)
- 		dev_err(card->dev, "unable to enable MCLK\n");
-+	else
-+		priv->mclk_enabled = true;
+-	const struct iphdr *iph = ip_hdr(skb);
++	const struct iphdr *iph;
+ 	struct icmphdr *icmph;
+ 	struct iphdr *niph;
+ 	struct ethhdr eh;
+@@ -208,7 +208,6 @@ static int iptunnel_pmtud_build_icmp(struct sk_buff *skb, int mtu)
  
- 	ret = snd_soc_dai_set_sysclk(asoc_rtd_to_codec(runtime, 0), 0, 19200000,
- 				     SND_SOC_CLOCK_IN);
- 	if (ret < 0) {
- 		dev_err(card->dev, "can't set codec clock %d\n", ret);
--		return ret;
-+		goto err_disable_mclk;
- 	}
+ 	skb_copy_bits(skb, skb_mac_offset(skb), &eh, ETH_HLEN);
+ 	pskb_pull(skb, ETH_HLEN);
+-	skb_reset_network_header(skb);
  
- 	ret = snd_soc_card_jack_new(card, "Headset",
-@@ -239,13 +251,25 @@ static int byt_cht_es8316_init(struct snd_soc_pcm_runtime *runtime)
- 				    ARRAY_SIZE(byt_cht_es8316_jack_pins));
- 	if (ret) {
- 		dev_err(card->dev, "jack creation failed %d\n", ret);
--		return ret;
-+		goto err_disable_mclk;
- 	}
+ 	err = pskb_trim(skb, 576 - sizeof(*niph) - sizeof(*icmph));
+ 	if (err)
+@@ -218,7 +217,7 @@ static int iptunnel_pmtud_build_icmp(struct sk_buff *skb, int mtu)
+ 	err = skb_cow(skb, sizeof(*niph) + sizeof(*icmph) + ETH_HLEN);
+ 	if (err)
+ 		return err;
+-
++	iph = ip_hdr(skb);
+ 	icmph = skb_push(skb, sizeof(*icmph));
+ 	*icmph = (struct icmphdr) {
+ 		.type			= ICMP_DEST_UNREACH,
+@@ -290,7 +289,7 @@ static int iptunnel_pmtud_check_icmp(struct sk_buff *skb, int mtu)
+  */
+ static int iptunnel_pmtud_build_icmpv6(struct sk_buff *skb, int mtu)
+ {
+-	const struct ipv6hdr *ip6h = ipv6_hdr(skb);
++	const struct ipv6hdr *ip6h;
+ 	struct icmp6hdr *icmp6h;
+ 	struct ipv6hdr *nip6h;
+ 	struct ethhdr eh;
+@@ -305,7 +304,6 @@ static int iptunnel_pmtud_build_icmpv6(struct sk_buff *skb, int mtu)
  
- 	snd_jack_set_key(priv->jack.jack, SND_JACK_BTN_0, KEY_PLAYPAUSE);
- 	snd_soc_component_set_jack(codec, &priv->jack, NULL);
+ 	skb_copy_bits(skb, skb_mac_offset(skb), &eh, ETH_HLEN);
+ 	pskb_pull(skb, ETH_HLEN);
+-	skb_reset_network_header(skb);
  
- 	return 0;
-+
-+err_disable_mclk:
-+	byt_cht_es8316_disable_mclk(priv);
-+	return ret;
-+}
-+
-+static void byt_cht_es8316_exit(struct snd_soc_pcm_runtime *runtime)
-+{
-+	struct snd_soc_card *card = runtime->card;
-+	struct byt_cht_es8316_private *priv = snd_soc_card_get_drvdata(card);
-+
-+	byt_cht_es8316_disable_mclk(priv);
- }
+ 	err = pskb_trim(skb, IPV6_MIN_MTU - sizeof(*nip6h) - sizeof(*icmp6h));
+ 	if (err)
+@@ -316,6 +314,7 @@ static int iptunnel_pmtud_build_icmpv6(struct sk_buff *skb, int mtu)
+ 	if (err)
+ 		return err;
  
- static int byt_cht_es8316_codec_fixup(struct snd_soc_pcm_runtime *rtd,
-@@ -355,6 +379,7 @@ static struct snd_soc_dai_link byt_cht_es8316_dais[] = {
- 		.dpcm_playback = 1,
- 		.dpcm_capture = 1,
- 		.init = byt_cht_es8316_init,
-+		.exit = byt_cht_es8316_exit,
- 		SND_SOC_DAILINK_REG(ssp2_port, ssp2_codec, platform),
- 	},
- };
++	ip6h = ipv6_hdr(skb);
+ 	icmp6h = skb_push(skb, sizeof(*icmp6h));
+ 	*icmp6h = (struct icmp6hdr) {
+ 		.icmp6_type		= ICMPV6_PKT_TOOBIG,
 -- 
 2.53.0
 
