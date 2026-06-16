@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A803A5E91;
-	Tue, 16 Jun 2026 17:42:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA16F477E57;
+	Tue, 16 Jun 2026 17:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631759; cv=none; b=M/m1LrGkC6g6msL5d3XL4AqO/AAkuDbyAl49ieh/haUq+7Vm/SnF56ML4Dv62xRj1/yIvD+dXm+YIJUsKhhYFqyU/AHj9uSUn3qM24FvZJBesEocBpE/t+YvqV7Shg+qJ0Ac3bgWjfGIzRSMX26cnrmp9bA3JmedZSOHvvRSE74=
+	t=1781631765; cv=none; b=be4stMm6HDfCQbyZOXTFg8y9lWeKiLh8/Jxd5wdqou3vEJTYrCn8VRhjM5Ws8/frL8iPnNYp5UPXZUXEmVfMMPyjS14WXZVu9ZV46DKYBupKVDVNCJGqHjmQNMbiLcaMRs4vD2xUwm9/JpcQvTBIPyJI1IOAYIS9A5yrDFESigU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631759; c=relaxed/simple;
-	bh=+PN8f3NK+Zs8Wh+psyDla8qoBl4COEJwMzue7T80+OE=;
+	s=arc-20240116; t=1781631765; c=relaxed/simple;
+	bh=D51MsWQstVpPJESnld4qTgpXhBm/dAe9YptY4S16+2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KzxM981ohokdK2hDkCRHXs2/0lPGhZBNp/aL/ckvByrUbkh6KGtB0ou6mZp51S2ll4eIOVZ82SR6Ln5dXorVKzSd1bqlDXRhbuZLu2ILT1SCJ9HjCol9NGMdoxpPN5UCLVJm91LLqPI2Oq1uHUetRqfB232tCy96VlEOGTtVC94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Li8rMHd8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z0IXYcD6hnc8BIPHKA0hXiwcskQGOJjWnoUS/6XViDYbP4rTHabx5qCCCMDE4zPr0Q6o6BDKFPrNyi6srYvqCPd4k8wA3hkV4eX9sZvj4JWnil/gZTlA5oDHLeQVyy69iCA51LUaeqb9VTer8SRqr5ldFTeokBUwORsG1Zwn/NA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VmliKXpV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Li8rMHd8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A0771F000E9;
-	Tue, 16 Jun 2026 17:42:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VmliKXpV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA2D41F000E9;
+	Tue, 16 Jun 2026 17:42:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631757;
-	bh=Ug8SFWMTa1Qe5V+Oyiq7bkt075lDxYR8ZEZckdsD2vY=;
+	s=korg; t=1781631762;
+	bh=3RZ2SB1hXUxdATIQd3R5TCbYyPVC1dSvI9MPBFEidxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Li8rMHd8xXuReZxcfj8nlLOK/Yg9pG9MdEGCUy0K3wi7uZRJynDEKfPstL8smjujE
-	 ab5/exDCOWA8IJBP30Dhsu9Ol9LpWY30fdampv3h75VV8e8CmrkOF9zr4gdE1yk5dN
-	 glYPpnGF1RybxiyxZpI/OCxJ0/xNuaLzC7HlAlmA=
+	b=VmliKXpVSmStKHzRcaNMuBwuOz5QGO5EqxvsfSloEs31H+vqQIiFDWfJZge5/wQQD
+	 rQC38+cM+RCitoFpvekSwJMAcHMh20l38SmcUAtT+2ZHsCgkUPJ9Vt7exkOyCd4gmF
+	 VBcUs8JURXgMoHsO6ivuhxE1jjcR155+QTCNgDC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih Kai Hsu <hsu.chih.kai@realtek.com>,
-	Hayes Wang <hayeswang@realtek.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 250/522] r8152: handle the return value of usb_reset_device()
-Date: Tue, 16 Jun 2026 20:26:37 +0530
-Message-ID: <20260616145137.668348265@linuxfoundation.org>
+Subject: [PATCH 6.1 251/522] sctp: fix uninit-value in __sctp_rcv_asconf_lookup()
+Date: Tue, 16 Jun 2026 20:26:38 +0530
+Message-ID: <20260616145137.712469584@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,42 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chih Kai Hsu <hsu.chih.kai@realtek.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 19440600e729d4f74a42591a872099cf25c7d28a ]
+[ Upstream commit f8373d7090b745728de66308deeecc67e8d319ce ]
 
-If usb_reset_device() returns a negative error code, stop the
-process of probing.
+__sctp_rcv_asconf_lookup() in net/sctp/input.c only checks that the ASCONF
+chunk can hold the ADDIP header and a parameter header, then calls
+af->from_addr_param(), which reads the full address (16 bytes for IPv6)
+trusting the parameter's declared length.
 
-Fixes: 10c3271712f5 ("r8152: disable the ECM mode")
-Signed-off-by: Chih Kai Hsu <hsu.chih.kai@realtek.com>
-Reviewed-by: Hayes Wang <hayeswang@realtek.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260604092247.27158-450-nic_swsd@realtek.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+An unauthenticated peer can send a truncated trailing ASCONF chunk that
+declares an IPv6 address parameter but stops after the 4-byte parameter
+header; reached from the no-association lookup path, from_addr_param() then
+reads uninitialized bytes past the parameter.
+
+Impact: an unauthenticated SCTP peer makes the receive path read up to 16
+bytes of uninitialized memory past a truncated ASCONF address parameter.
+
+The sibling __sctp_rcv_init_lookup() bounds parameters with
+sctp_walk_params(); this path open-codes the fetch and omits the bound.
+Verify the whole address parameter lies within the chunk before
+from_addr_param() reads it, the same class of fix as commit 51e5ad549c43
+("net: sctp: fix KMSAN uninit-value in sctp_inq_pop").
+
+Fixes: df2185771439 ("[SCTP]: Update association lookup to look at ASCONF chunks as well")
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20260608122234.459098-1-michael.bommarito@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/r8152.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/sctp/input.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
-index e8a69d3d418379..c0f7a15e406fee 100644
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -9754,7 +9754,12 @@ static int rtl8152_probe_once(struct usb_interface *intf,
- 	struct net_device *netdev;
- 	int ret;
+diff --git a/net/sctp/input.c b/net/sctp/input.c
+index 182898cb754a52..70530cbe57d0a7 100644
+--- a/net/sctp/input.c
++++ b/net/sctp/input.c
+@@ -1197,6 +1197,14 @@ static struct sctp_association *__sctp_rcv_asconf_lookup(
+ 	/* Skip over the ADDIP header and find the Address parameter */
+ 	param = (union sctp_addr_param *)(asconf + 1);
  
--	usb_reset_device(udev);
-+	ret = usb_reset_device(udev);
-+	if (ret < 0) {
-+		dev_err(&intf->dev, "USB reset failed, errno=%d\n", ret);
-+		return ret;
-+	}
++	/* The whole address parameter must lie within the chunk before
++	 * af->from_addr_param() reads the variable-length address; otherwise a
++	 * truncated trailing ASCONF chunk lets it read uninitialized bytes past
++	 * the parameter.
++	 */
++	if (sizeof(*asconf) + ntohs(param->p.length) > ntohs(ch->length))
++		return NULL;
 +
- 	netdev = alloc_etherdev(sizeof(struct r8152));
- 	if (!netdev) {
- 		dev_err(&intf->dev, "Out of memory\n");
+ 	af = sctp_get_af_specific(param_type2af(param->p.type));
+ 	if (unlikely(!af))
+ 		return NULL;
 -- 
 2.53.0
 
