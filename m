@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECAE847AF75;
-	Tue, 16 Jun 2026 17:33:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBF43A3E78;
+	Tue, 16 Jun 2026 17:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631215; cv=none; b=ObkUcYeCaKSodPfSZJTpN9dsIsY8+jlSOQmydGO1V+8GgegLuTZQ9+cWCVZZUDpTm2jBjfPxTN47w3wHWkGKkixp5rHT3eMPyCwV1/6vb0VcVBmbnNltsbbGQy8fhsiZRiEDKUsmnLRQNJ7M/EoQDTFhzpZyWqT91gVAB4RpRaY=
+	t=1781631220; cv=none; b=P0PbCn/TLsce54upU4FrF2skxcOrkx9GB5hkhJsR+snTmii6caTI3R2wkGJmqQ/QKN9Pr+GuqNotBHITK9zcxRm4KfVCPmVcg9O+Tr3kVZ9bwKBX4Ku5jvHG9U8axfME/cRQwVQxOaG62FfWL/+lzeXDiewzgDQbz02ceDLahX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631215; c=relaxed/simple;
-	bh=+8xd25+LamK2EltzEsNHJ3HMD2ywdvShLIG28kdmyTY=;
+	s=arc-20240116; t=1781631220; c=relaxed/simple;
+	bh=EutNSmB8HfoL3V0U7GSLxfnWT0BTY0LnU54psGBocWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PotDyEODl7YeUQbb6sTglhvOX0VByVb0gkWxQQtqph/gAkN58iQ/QuWYWUIyRj2UJsXRMaRp5SHR5e9dSfdb3OqJLFUrCumq39C2eHs/gP0A4Y42mid4pkrVx4DrAnnGh4xcXPsn8Mq0+tpuBI5Gn087jAKPZCzYeOCQqC/B6pI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFZrMPJy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tiOsJunk/oT0dWMH1mYwoHVD7+lmGOf6tcdfGb15ltTYDTpXKIFkKRlFpgeP9GEejD3KV+dRDt/ONv9ViPU9THX3HZwSF5sTQb/kfzBBIaT5M8KRPqd7qyQr0Wd8dfgBzLseYk5OWt+Qw/DxekxOeIwqIXWWfDqmDK3sAGbswb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEpmd2zV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFZrMPJy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B02191F000E9;
-	Tue, 16 Jun 2026 17:33:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEpmd2zV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DFDB1F000E9;
+	Tue, 16 Jun 2026 17:33:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631213;
-	bh=DkbzccD7Zb8ST4JM/M53cwCNhCYOEd1h6G0LdpN6b+I=;
+	s=korg; t=1781631219;
+	bh=7oVSvDIo5G/4rGRvkplnTLylwjOX+2wteQ6d1JyU9T0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dFZrMPJyZr/Lvrcryu02RZDnwAoaz6++WYIY0ZDLBSv6eytHHTiViA8irshl5Vdqe
-	 VGkqdBOGvnqg20/1JF8yV9C1yFaxqmXGY6+SGcTFNhXu8kzHAbM06C+zlCTgEsK287
-	 rgbQJXV1JJm/AmOXXSc9hG61JX7izycU9Vw4tsYA=
+	b=aEpmd2zV8g4wSs3TZGQD/SlizgX+NYnFuNvCXGN4mJvajjcl94uun5WqTDy8Tv39u
+	 psgy4Ct86ZBmo+/qUBpFmCRw7XXzAOBYM2Kpdcby+wYovu2pDMPZlQt8uWDh+JdrV/
+	 0BQavr7A1bpgtFR2ZElOBTQlzBohJ4rzPVL6U38M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 135/522] ASoC: qcom: q6asm-dai: do not set stream state in event and trigger callbacks
-Date: Tue, 16 Jun 2026 20:24:42 +0530
-Message-ID: <20260616145132.421335377@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>
+Subject: [PATCH 6.1 172/522] serial: zs: Fix swapped RI/DSR modem line transition counting
+Date: Tue, 16 Jun 2026 20:25:19 +0530
+Message-ID: <20260616145134.197912777@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,67 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit cee3e63e7106c3c81b2053371fdf14240bfba2fc upstream.
+commit d15cd40cb1858f75846eaafa9a6bca841b790a92 upstream.
 
-The q6asm-dai stream state is used by prepare() to decide whether an
-existing stream setup needs to be closed before opening/configuring a new
-one. Updating the state from trigger or asynchronous DSP callbacks can make
-that state stale or incorrect relative to the actual setup lifetime.
+Fix a thinko in the status interrupt handler that has caused counters
+for the RI and DSR modem line transitions to be used for the other line
+each.
 
-In particular, setting Q6ASM_STREAM_STOPPED on STOP or EOS completion can
-make prepare() believe there is no active setup to close, which can result
-in opening/configuring the same stream more than once.
-
-Keep stream state updates tied to prepare(), where the stream is actually
-closed and reopened, and stop changing it from trigger and EOS callbacks.
-
-Fixes: bfbb12dfa144 ("ASoC: qcom: q6asm-dai: perform correct state check before closing")
-Cc: Stable@vger.kernel.org
-Closes: https://lore.kernel.org/all/afS7rTHdc9TyIeLx@rdacayan/
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260518092347.3446946-2-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 8b4a40809e53 ("zs: move to the serial subsystem")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Link: https://patch.msgid.link/alpine.DEB.2.21.2604101747110.29980@angie.orcam.me.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6asm-dai.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/tty/serial/zs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/soc/qcom/qdsp6/q6asm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
-@@ -191,7 +191,6 @@ static void event_handler(uint32_t opcod
- 				   prtd->pcm_count, 0, 0, 0);
- 		break;
- 	case ASM_CLIENT_EVENT_CMD_EOS_DONE:
--		prtd->state = Q6ASM_STREAM_STOPPED;
- 		break;
- 	case ASM_CLIENT_EVENT_DATA_WRITE_DONE: {
- 		prtd->pcm_irq_pos += prtd->pcm_count;
-@@ -338,7 +337,6 @@ static int q6asm_dai_trigger(struct snd_
- 				       0, 0, 0);
- 		break;
- 	case SNDRV_PCM_TRIGGER_STOP:
--		prtd->state = Q6ASM_STREAM_STOPPED;
- 		ret = q6asm_cmd_nowait(prtd->audio_client, prtd->stream_id,
- 				       CMD_EOS);
- 		break;
-@@ -554,8 +552,6 @@ static void compress_event_handler(uint3
- 			snd_compr_drain_notify(prtd->cstream);
- 			prtd->notify_on_drain = false;
+--- a/drivers/tty/serial/zs.c
++++ b/drivers/tty/serial/zs.c
+@@ -679,9 +679,9 @@ static void zs_status_handle(struct zs_p
+ 			uart_handle_dcd_change(uport,
+ 					       zport->mctrl & TIOCM_CAR);
+ 		if (delta & TIOCM_RNG)
+-			uport->icount.dsr++;
+-		if (delta & TIOCM_DSR)
+ 			uport->icount.rng++;
++		if (delta & TIOCM_DSR)
++			uport->icount.dsr++;
  
--		} else {
--			prtd->state = Q6ASM_STREAM_STOPPED;
- 		}
- 		spin_unlock_irqrestore(&prtd->lock, flags);
- 		break;
-@@ -1018,7 +1014,6 @@ static int q6asm_dai_compr_trigger(struc
- 				       0, 0, 0);
- 		break;
- 	case SNDRV_PCM_TRIGGER_STOP:
--		prtd->state = Q6ASM_STREAM_STOPPED;
- 		ret = q6asm_cmd_nowait(prtd->audio_client, prtd->stream_id,
- 				       CMD_EOS);
- 		break;
+ 		if (delta)
+ 			wake_up_interruptible(&uport->state->port.delta_msr_wait);
 
 
