@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379C543E4BC;
-	Tue, 16 Jun 2026 17:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B4344BCBE;
+	Tue, 16 Jun 2026 17:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629538; cv=none; b=XoAkJ+Lt+yV+56W/uRPEUULfsIN1PDdJ7DNp6k5RA1gWdDbFsOtXGpohHpKZdn7abZpx3gikmsLCBdkFgVsdoKrMoJG7RFQIcSmmKN8sFK4fCnzpZcw8p12DageAD1Vni4kIO+YzjLcutHbUm2iOSJxW71DshF3RTasoIXjKvGM=
+	t=1781629543; cv=none; b=VGXQ1QA5gfw2/eN0hxEFzcKHnLKuQAeP+r01L4guVH+qngdOHQWRSA092PUEN3msTJYxodJaAa+2zQi2LzqTVej5emapDQL3SeSJiydRQlvHhDekKGvGTaTlrZK741AtUtbOH9rmzVcd/mX5WiAal3sw3Ge1qT8tixG0zImDcJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629538; c=relaxed/simple;
-	bh=uqG+atKg4bUaXYtMdwFZ4Mv/3Iv9SUQ2IYnoVUIQ1fY=;
+	s=arc-20240116; t=1781629543; c=relaxed/simple;
+	bh=ZqqdC3zN4GqqzEyJm90zDOp9S+1CIoew9lqOSO3oV28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UqO9Onjcl/hLwCBiSsk0TcciAjaHCNJ1+VOoyyCjBTrHerl/qMy2vjbK+zcVXaB3EFMXzZxwKa0O5z7LZwOnYCLQPFtv3mJFK3spVwmxTHLbqT6AdOLspFZ3dDNSz/HEHTQYKsrCUhJL6+szAVgUmp4Gz3q9OmZVKSHppYWZ0rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDPgYmGK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hbsri8LNXMnV7pO5ccxLY46uUk2AojB7ri05eFHmQxmVui9z/aZ+9zQOfusjb6G/4DMQc+kfqKMXwTgYlXuMt+bSMGNVllLNmmCXdK4RVcsApKSZfLdj0O2seMvCAFTLKXwhQJEGAASyv5VvyfpL6/E+effzFPsIsLiBuvmlRHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1lbJGptu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDPgYmGK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB711F000E9;
-	Tue, 16 Jun 2026 17:05:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1lbJGptu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 196DF1F000E9;
+	Tue, 16 Jun 2026 17:05:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629537;
-	bh=nNniOzLM+SKU8mrL080UB0Ae0FjL2O2jArCgi1Yx1+c=;
+	s=korg; t=1781629542;
+	bh=bVTdkRei5xZt8JZh8TAsKwm5uZFiC5wgBMVzw+sboAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qDPgYmGK0KMaGTGjezDpXyEK2NHd7TFZxQc9cdGpu6ifEaQ9nQFDQM3Vl0BbPDQru
-	 hZTjdG3s0KoBbsKJCPVIzAJD88JyknFOmRk6STPxQi5qSkO/JXab9fJEB8zlY64m9O
-	 wHAEmMoRWFvodk3X4WVKOGlVqcgThJk4XbIbLHGM=
+	b=1lbJGptumtOPd34KW7sPcHeRDg75aOi+TRKab4ROOjhcnw9JZ1pciZ2UZhK4iavNZ
+	 3O81R3nfHZkk7tguGiDwpkzzQLHUGh2PBv0jQJ4y4IUGrcoUf8WSAThZvCe6fxDhlj
+	 eftFy/5v1xomBVBmJIxcLZj9+WwAbs7NWHlIrFYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuqi Xu <xuyq21@lenovo.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 292/452] Bluetooth: hci_sync: reject oversized Broadcast Announcement prepend
-Date: Tue, 16 Jun 2026 20:28:39 +0530
-Message-ID: <20260616145132.894697145@linuxfoundation.org>
+Subject: [PATCH 6.6 293/452] Bluetooth: L2CAP: reject BR/EDR signaling packets over MTUsig
+Date: Tue, 16 Jun 2026 20:28:40 +0530
+Message-ID: <20260616145132.939849042@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -55,47 +51,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuqi Xu <xuyq21@lenovo.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 5c65b96b549ea2dcfde497436bf9e048deb87758 upstream.
+commit dd214733544427587a95f66dbf3adff072568990 upstream.
 
-Existing advertising instances can already hold the maximum extended
-advertising payload. When hci_adv_bcast_annoucement() prepends the
-Broadcast Announcement service data to that payload, the combined data
-may no longer fit in the temporary buffer used to rebuild the
-advertising data.
+net/bluetooth/l2cap_core.c:l2cap_sig_channel() accepts BR/EDR
+signaling packets up to the channel MTU and dispatches each command
+without enforcing the signaling MTU (MTUsig). A Bluetooth BR/EDR peer
+within radio range can send a fixed-channel CID 0x0001 packet that is
+larger than MTUsig and contains many L2CAP_ECHO_REQ commands before
+pairing. In a real-radio stock-kernel run, one 681-byte signaling
+packet containing 168 zero-length ECHO_REQ commands made the target
+transmit 168 ECHO_RSP frames over about 220 ms.
 
-Reject that case before copying the existing payload and report the
-failure through the device log. This keeps the existing advertising
-data intact and avoids overrunning the temporary buffer.
+Impact: a Bluetooth BR/EDR peer within radio range, before pairing, can
+force 168 ECHO_RSP frames from one 681-byte fixed-channel signaling
+packet containing packed ECHO_REQ commands.
 
-Fixes: 5725bc608252 ("Bluetooth: hci_sync: Fix broadcast/PA when using an existing instance")
-Cc: stable@kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Yuqi Xu <xuyq21@lenovo.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Define Linux's BR/EDR signaling MTU as the spec minimum of 48 bytes and
+reject any larger signaling packet with one L2CAP_COMMAND_REJECT_RSP
+carrying L2CAP_REJ_MTU_EXCEEDED before any command is dispatched.
+
+The Bluetooth Core spec wording for MTUExceeded says the reject
+identifier shall match the first request command in the packet, and
+that packets containing only responses shall be silently discarded.
+Linux intentionally deviates from that prescription: silently
+discarding desynchronizes the peer because the remote stack never
+learns its responses were dropped, and locating the first request
+command requires walking command headers past MTUsig, i.e. processing
+bytes from a packet we have already decided is too large to process.
+We therefore always emit one reject and use the identifier from the
+first command header, a single fixed-offset byte read.
+
+The unrestricted BR/EDR signaling parser and ECHO_REQ response path both
+trace to the initial git import; no later introducing commit is
+available for a Fixes tag.
+
+Cc: stable@vger.kernel.org
+Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Link: https://lore.kernel.org/r/20260518002800.1361430-1-michael.bommarito@gmail.com
+Link: https://lore.kernel.org/r/20260520135034.1060859-1-michael.bommarito@gmail.com
+Link: https://lore.kernel.org/r/20260521000555.3712030-1-michael.bommarito@gmail.com
+Assisted-by: Claude:claude-opus-4-7
+Assisted-by: Codex:gpt-5-5-xhigh
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ include/net/bluetooth/l2cap.h |    1 
+ net/bluetooth/l2cap_core.c    |   46 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+)
 
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -1759,6 +1759,11 @@ static int hci_adv_bcast_annoucement(str
- 	/* Generate Broadcast ID */
- 	get_random_bytes(bid, sizeof(bid));
- 	len = eir_append_service_data(ad, 0, 0x1852, bid, sizeof(bid));
-+	if (adv->adv_data_len > sizeof(ad) - len) {
-+		bt_dev_err(hdev, "No room for Broadcast Announcement");
-+		return -EINVAL;
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -33,6 +33,7 @@
+ /* L2CAP defaults */
+ #define L2CAP_DEFAULT_MTU		672
+ #define L2CAP_DEFAULT_MIN_MTU		48
++#define L2CAP_SIG_MTU			48	/* BR/EDR signaling MTU */
+ #define L2CAP_DEFAULT_FLUSH_TO		0xFFFF
+ #define L2CAP_EFS_DEFAULT_FLUSH_TO	0xFFFFFFFF
+ #define L2CAP_DEFAULT_TX_WINDOW		63
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -5576,6 +5576,15 @@ static inline void l2cap_sig_send_rej(st
+ 	l2cap_send_cmd(conn, ident, L2CAP_COMMAND_REJ, sizeof(rej), &rej);
+ }
+ 
++static inline void l2cap_sig_send_mtu_rej(struct l2cap_conn *conn, u8 ident)
++{
++	struct l2cap_cmd_rej_mtu rej;
++
++	rej.reason = cpu_to_le16(L2CAP_REJ_MTU_EXCEEDED);
++	rej.max_mtu = cpu_to_le16(L2CAP_SIG_MTU);
++	l2cap_send_cmd(conn, ident, L2CAP_COMMAND_REJ, sizeof(rej), &rej);
++}
++
+ static inline void l2cap_sig_channel(struct l2cap_conn *conn,
+ 				     struct sk_buff *skb)
+ {
+@@ -5588,6 +5597,43 @@ static inline void l2cap_sig_channel(str
+ 	if (hcon->type != ACL_LINK)
+ 		goto drop;
+ 
++	/*
++	 * Bluetooth Core v5.4, Vol 3, Part A, Section 4: the BR/EDR
++	 * signaling channel has a fixed signaling MTU (MTUsig) whose
++	 * minimum and default is 48 octets.  Section 4.1 says that on
++	 * an MTUExceeded command reject the identifier "shall match
++	 * the first request command in the L2CAP packet" and that
++	 * packets containing only response commands "shall be
++	 * silently discarded".
++	 *
++	 * Linux intentionally deviates from that prescription:
++	 *
++	 *   1. Silently discarding desynchronizes the peer.  The
++	 *      remote stack never learns its responses were dropped,
++	 *      so any state machine waiting on a paired response
++	 *      stalls until its own timer fires.
++	 *
++	 *   2. Locating "the first request command" requires walking
++	 *      command headers past MTUsig, i.e. processing bytes
++	 *      from a packet we have already decided is too large to
++	 *      process.
++	 *
++	 * Reject every over-MTUsig signaling packet with one
++	 * L2CAP_REJ_MTU_EXCEEDED command reject.  The reject's
++	 * reason field is what tells the peer that the whole packet
++	 * was discarded; the identifier value is informational, so
++	 * we use the identifier from the first command header, a
++	 * single fixed-offset byte read.
++	 */
++	if (skb->len > L2CAP_SIG_MTU) {
++		u8 ident = skb->data[1];
++
++		BT_DBG("signaling packet exceeds MTU: %u > %u",
++		       skb->len, L2CAP_SIG_MTU);
++		l2cap_sig_send_mtu_rej(conn, ident);
++		goto drop;
 +	}
 +
- 	memcpy(ad + len, adv->adv_data, adv->adv_data_len);
- 	hci_set_adv_instance_data(hdev, adv->instance, len + adv->adv_data_len,
- 				  ad, 0, NULL);
+ 	while (skb->len >= L2CAP_CMD_HDR_SIZE) {
+ 		u16 len;
+ 
 
 
