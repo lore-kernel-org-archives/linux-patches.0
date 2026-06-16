@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2182349CF0;
-	Tue, 16 Jun 2026 19:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F0F349CF0;
+	Tue, 16 Jun 2026 19:02:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636534; cv=none; b=Q+RTARtsUSirMiEV2V0/UpnngZ9/zemI9guJXiHfMWc5Zdm+ObvPJqswdljbNkIrMc/AkB/c8vlxMofafTOhdOgrGYvH3ibQ4Kna4zCT9bSfML+KKhdUbdUmI9DszzCgpqsqyfu1g6CutRU7qLUnLT2dwOyMofGZykmJswPGqco=
+	t=1781636540; cv=none; b=AnroTfLZvKOnNeh/H3najCmigxyeQKhnOIFwQgvM6DB27glZ5r5JDwlrlHBnl2ia+uIhowQv+u5iDZCYE8z3QT4gF7E00BGWHuusVg92V4naB/pIGKPGz+DejwhA4qzunK9IQB8EanfRASzT0ByX23XlJ3hBC06bIPBVOjwBu6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636534; c=relaxed/simple;
-	bh=qGHCzmyMuTfZWX35oHh6h3j1YPUMVsH0NIVX7KhgvVY=;
+	s=arc-20240116; t=1781636540; c=relaxed/simple;
+	bh=I6i+v9JJMhlANJP4RIeqBJC4sDnGdjNz5Oork6C+yRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JtOFqKYEzKQXUCIPr/fFIE8e19MbwsHFxERRmpYp9BvJkDl9L0LKequJkRVeYS4YuFRJxLMaaCkEiBS2Y8cJ129TOQk6Ir253C60rgDlSPlnDPYQTCCP73NCi6PAEzS4u8BzjQO5yORDadzi5H5U4XoyF0Zj23IKOA/GMHrczLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KUTxXo1d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EL7LrL8EWDnXf/YsyLEnSzVvkm/ylu6ovmWbMv2jU8fXW6mrZdqIu/NtlNNcK/GhgJd0t6vpsTuzHKp1NKEOf59Rvz7iAwZIgDCtHGx/L096qG/ZrPdkjuXJK2Td+REIpcn7xqQ1pYhEQMLXxyJC2LKxgjPKKFx8MphdeKxzbTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rDVFb4u7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KUTxXo1d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61D01F000E9;
-	Tue, 16 Jun 2026 19:02:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rDVFb4u7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD481F000E9;
+	Tue, 16 Jun 2026 19:02:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636533;
-	bh=4PzeCREHDQkywYT0Kyz/pnKaNObBWzK2YKLqG2QdiQg=;
+	s=korg; t=1781636539;
+	bh=ZTXMPwibEkHdUYAwCXVhpXDTdhEqrkl4IOXcT4sjteg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KUTxXo1dNV2ovk9FjR+vyaZbuBujNQ6UZ6aA3eouCSADPzP9Pyw8etcUv4Lv+J3xJ
-	 cm6DEqEcEdR3EZfkT4XPh9Mr7VXRdObBMVTZv/WbegrkCT7P4NmncQu6ppiUqbc/Xp
-	 MEbtJ7DU/NqwF05rKsHW1FYRAgVIrySv+mQTxBx0=
+	b=rDVFb4u7yGdThygMyeTe2jVqWrB9gpGD9KPpBXjzJkpPFp/e8L0eC9q1H5Xm+NEtn
+	 H7oNKDGfNaHybFWk0l/gwQkHc/+QFZj4X+gr/RaZBEQXP/lBWDLhjDT2rYAG6/lMA5
+	 /dGze0/nfug9NvGIRniZ8m3bIenyPN3TQmdMFx3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>,
 	Johan Hovold <johan@kernel.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 258/342] spi: ti-qspi: fix controller deregistration
-Date: Tue, 16 Jun 2026 20:29:14 +0530
-Message-ID: <20260616145100.273115285@linuxfoundation.org>
+Subject: [PATCH 5.10 259/342] spi: zynq-qspi: fix controller deregistration
+Date: Tue, 16 Jun 2026 20:29:15 +0530
+Message-ID: <20260616145100.318267183@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -54,60 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 0c18a1bacbb1d8b8aa34d3d004a2cb8226c8b1ea ]
+[ Upstream commit c9c012706c9fa8ca6d129a9161caf92ab625a3fd ]
 
-Make sure to deregister the controller before disabling underlying
-resources like clocks during driver unbind.
+Make sure to deregister the controller before disabling it during driver
+unbind.
 
-Note that the controller is suspended before disabling and releasing
-resources since commit 3ac066e2227c ("spi: spi-ti-qspi: Suspend the
-queue before removing the device") which avoids issues like unclocked
-accesses but prevents SPI device drivers from doing I/O during
-deregistration.
+Note that clocks were also disabled before the recent commit
+1f8fd9490e31 ("spi: zynq-qspi: Simplify clock handling with
+devm_clk_get_enabled()").
 
-Fixes: 3b3a80019ff1 ("spi: ti-qspi: one only one interrupt handler")
-Cc: stable@vger.kernel.org	# 3.13
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Fixes: 67dca5e580f1 ("spi: spi-mem: Add support for Zynq QSPI controller")
+Cc: stable@vger.kernel.org	# 5.2: 8eb2fd00f65a
+Cc: stable@vger.kernel.org	# 5.2
+Cc: Naga Sureshkumar Relli <naga.sureshkumar.relli@xilinx.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-24-johan@kernel.org
+Link: https://patch.msgid.link/20260410081757.503099-27-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
-[ renamed spi_controller_*/host APIs to spi_master_*/master and kept remove() returning int ]
+[ kept int-returning remove() with manual clk_disable_unprepare() calls and routed probe error through existing clk_dis_all cascade instead of upstream's remove_ctlr label ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-ti-qspi.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/spi/spi-zynq-qspi.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/drivers/spi/spi-ti-qspi.c
-+++ b/drivers/spi/spi-ti-qspi.c
-@@ -895,7 +895,7 @@ no_dma:
- 	qspi->mmap_enabled = false;
- 	qspi->current_cs = -1;
+--- a/drivers/spi/spi-zynq-qspi.c
++++ b/drivers/spi/spi-zynq-qspi.c
+@@ -652,7 +652,7 @@ static int zynq_qspi_probe(struct platfo
  
--	ret = devm_spi_register_master(&pdev->dev, master);
-+	ret = spi_register_master(master);
- 	if (!ret)
- 		return 0;
+ 	xqspi = spi_controller_get_devdata(ctlr);
+ 	xqspi->dev = dev;
+-	platform_set_drvdata(pdev, xqspi);
++	platform_set_drvdata(pdev, ctlr);
+ 	xqspi->regs = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(xqspi->regs)) {
+ 		ret = PTR_ERR(xqspi->regs);
+@@ -722,9 +722,9 @@ static int zynq_qspi_probe(struct platfo
+ 	/* QSPI controller initializations */
+ 	zynq_qspi_init_hw(xqspi, ctlr->num_chipselect);
  
-@@ -910,17 +910,18 @@ free_master:
- static int ti_qspi_remove(struct platform_device *pdev)
+-	ret = devm_spi_register_controller(&pdev->dev, ctlr);
++	ret = spi_register_controller(ctlr);
+ 	if (ret) {
+-		dev_err(&pdev->dev, "spi_register_master failed\n");
++		dev_err(&pdev->dev, "failed to register controller\n");
+ 		goto clk_dis_all;
+ 	}
+ 
+@@ -752,13 +752,20 @@ remove_master:
+  */
+ static int zynq_qspi_remove(struct platform_device *pdev)
  {
- 	struct ti_qspi *qspi = platform_get_drvdata(pdev);
--	int rc;
- 
--	rc = spi_master_suspend(qspi->master);
--	if (rc)
--		return rc;
-+	spi_master_get(qspi->master);
+-	struct zynq_qspi *xqspi = platform_get_drvdata(pdev);
++	struct spi_controller *ctlr = platform_get_drvdata(pdev);
++	struct zynq_qspi *xqspi = spi_controller_get_devdata(ctlr);
 +
-+	spi_unregister_master(qspi->master);
++	spi_controller_get(ctlr);
++
++	spi_unregister_controller(ctlr);
  
- 	pm_runtime_put_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
+ 	zynq_qspi_write(xqspi, ZYNQ_QSPI_ENABLE_OFFSET, 0);
  
- 	ti_qspi_dma_cleanup(qspi);
+ 	clk_disable_unprepare(xqspi->refclk);
+ 	clk_disable_unprepare(xqspi->pclk);
  
-+	spi_master_put(qspi->master);
++	spi_controller_put(ctlr);
 +
  	return 0;
  }
