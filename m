@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 494C9477E33;
-	Tue, 16 Jun 2026 18:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CEF435292A;
+	Tue, 16 Jun 2026 18:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633819; cv=none; b=qZMpQ7SZsDT1MsTD4fcNKQ40OJ4KR270/H9I3iZh8wrt+BG4gm528p60xungvkEFY4xeX5hu0FOXZs+sPIPdV9brdtnZrOf65ZZn3/4UI4uFb05pgyUAXUl2jZA2HaeIVtcj0dnnI+8k9Nc2qhiL0pVECUSTp13eOZ33oJgHzKk=
+	t=1781633825; cv=none; b=L5NwR7d4teExYHNXpA8UfWGuWBN2uO32tSfiApmB4RsTclVn7ZjQBTTcBq6yFuesy0ACYG0DvFzEi22S5hsURvGz6FOfoZ+H/7WZUxXEopeNNX9SbB7SL+rBgA5klhBtlntOMjYtYa6J0/Us4Tc8gBCv719eDFod7cjMm/JZ/N0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633819; c=relaxed/simple;
-	bh=tY5fNEKNEfOlLtkLpogG/h5LN6ZsREnFmM3IgO0pnWg=;
+	s=arc-20240116; t=1781633825; c=relaxed/simple;
+	bh=IAv608aQs70HreLi1dLoHQz5QDpU1S2A6ugru5di540=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kFJ4ULMQl3nRB4ImHF3qRvl07c47ivqo2af/1D0+vBiQiMlPgavmd/B4ERzT+4ISPWyj0zL6T7X5XjpwpfvJc1d9dQ3dwNr5c9ogjouZ2Z24oT/KgNwcUPPowdTE9Q0ratRvPT0DfoxSyGuZH6lnsWRBEmnTSDInFcP5+WRsOSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUArkhMh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MH5pAn+dvRd22laNh8orr5sNet7VqpwMCznmxnd6IyPvfvRIxaaeZfDTIZOFzFdOAoJz7zs7RG8QcgXVqQMO1GqAbN7a+dhsqEdwV7L9jItf0jUE7FuzmM/44A+OpyoS/d9/lIhyJwIEFiFKNM0cX9FBgCPBPjn0bKRE3izRfkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIog6HFw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUArkhMh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F238C1F000E9;
-	Tue, 16 Jun 2026 18:16:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIog6HFw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0664E1F000E9;
+	Tue, 16 Jun 2026 18:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633818;
-	bh=bqfjwdlpGzHAOY7/Bidl4gIURQCBLYc/OC0DlQ8LFh0=;
+	s=korg; t=1781633823;
+	bh=ZykZOjGMuQ8j3Xw1nqxLn1VYBiybPF34cuPdgwutJNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NUArkhMh51CeXdE9WwN9l6EB3Rz9HhU+LSUlDpOiN085iDhGCX574VAvJRxvDxlcv
-	 rWXlQx74B9RqRsAcx5GQe1CiZZLude3eitl5mrGBcRqmPqZV51vHo8Qxqk3PxYYBPY
-	 8NCk0MJ3hwiXp7zou23MD59X7sIC8XF1Bya6YxTE=
+	b=rIog6HFw5h77tMZLgSV2LepaA0CA1/D0nGBwrtlKZXQdSVD0/H1M2KOL8/9+YzFzl
+	 0X1F+fBFGSE7lUdEZGLs4ypxsyShnLY9L0Bk0gBhe6ZR3BuahxlK7wi4uFGwd7wRFH
+	 Cv40BbjB20ZvjfTrl2ttnhEtz3l8zen4oocVfYaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 5.15 124/411] thunderbolt: property: Reject u32 wrap in tb_property_entry_valid()
-Date: Tue, 16 Jun 2026 20:26:02 +0530
-Message-ID: <20260616145106.915946217@linuxfoundation.org>
+	Julian Anastasov <ja@ssi.bg>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 151/411] ipvs: clear the svc scheduler ptr early on edit
+Date: Tue, 16 Jun 2026 20:26:29 +0530
+Message-ID: <20260616145108.444511719@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,65 +52,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-commit 01deda0152066c6c955f0619114ea6afa070aaec upstream.
+[ Upstream commit 193989cc6d80dd8e0460fb3992e69fa03bf0ff9b ]
 
-entry->value is u32 and entry->length is u16; the sum is performed in
-u32 and wraps.  A malicious XDomain peer can pick
-value = 0xffffff00, length = 0x100 so the sum 0x100000000 wraps to 0
-and passes the > block_len check.  tb_property_parse() then passes
-entry->value to parse_dwdata() as a dword offset into the property
-block, reading attacker-directed memory far past the allocation.
+ip_vs_edit_service() while unbinding the old scheduler clears
+the svc->scheduler ptr after the scheduler module initiates
+RCU callbacks. This can cause packets to use the old
+scheduler at the time when svc->sched_data is already freed
+after RCU grace period.
 
-For TEXT-typed entries with the "deviceid" or "vendorid" keys this
-lands in xd->device_name / xd->vendor_name and is readable back via
-the per-XDomain device_name / vendor_name sysfs attributes; the leak
-is NUL-bounded (kstrdup() stops at the first zero byte) and
-untargeted (the attacker picks a delta, not an absolute address).
-DATA-typed entries are parsed into property->value.data but not
-generically surfaced to userspace.
+Fix it by clearing the ptr early in ip_vs_unbind_scheduler(),
+before the done_service method schedules any RCU callbacks.
 
-Use check_add_overflow() so a wrapped sum is rejected.
+Also, if the new scheduler fails to initialize when replacing
+the old scheduler, try to restore the old scheduler while still
+returning the error code.
 
-Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://sashiko.dev/#/patchset/20260519015506.634185-1-rosenp%40gmail.com
+Fixes: 05f00505a89a ("ipvs: fix crash if scheduler is changed")
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/property.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/net/ip_vs.h              |  3 +--
+ net/netfilter/ipvs/ip_vs_ctl.c   | 13 ++++++++-----
+ net/netfilter/ipvs/ip_vs_sched.c | 14 +++++++-------
+ 3 files changed, 16 insertions(+), 14 deletions(-)
 
---- a/drivers/thunderbolt/property.c
-+++ b/drivers/thunderbolt/property.c
-@@ -8,6 +8,7 @@
+diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
+index 59f8412de45ac4..41e20b7e8e88db 100644
+--- a/include/net/ip_vs.h
++++ b/include/net/ip_vs.h
+@@ -1396,8 +1396,7 @@ int register_ip_vs_scheduler(struct ip_vs_scheduler *scheduler);
+ int unregister_ip_vs_scheduler(struct ip_vs_scheduler *scheduler);
+ int ip_vs_bind_scheduler(struct ip_vs_service *svc,
+ 			 struct ip_vs_scheduler *scheduler);
+-void ip_vs_unbind_scheduler(struct ip_vs_service *svc,
+-			    struct ip_vs_scheduler *sched);
++void ip_vs_unbind_scheduler(struct ip_vs_service *svc);
+ struct ip_vs_scheduler *ip_vs_scheduler_get(const char *sched_name);
+ void ip_vs_scheduler_put(struct ip_vs_scheduler *scheduler);
+ struct ip_vs_conn *
+diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
+index 4c9ef2ae4d6877..0805c9083eaa8f 100644
+--- a/net/netfilter/ipvs/ip_vs_ctl.c
++++ b/net/netfilter/ipvs/ip_vs_ctl.c
+@@ -1417,7 +1417,7 @@ ip_vs_add_service(struct netns_ipvs *ipvs, struct ip_vs_service_user_kern *u,
+ 	if (ret_hooks >= 0)
+ 		ip_vs_unregister_hooks(ipvs, u->af);
+ 	if (svc != NULL) {
+-		ip_vs_unbind_scheduler(svc, sched);
++		ip_vs_unbind_scheduler(svc);
+ 		ip_vs_service_free(svc);
+ 	}
+ 	ip_vs_scheduler_put(sched);
+@@ -1479,9 +1479,8 @@ ip_vs_edit_service(struct ip_vs_service *svc, struct ip_vs_service_user_kern *u)
+ 	old_sched = rcu_dereference_protected(svc->scheduler, 1);
+ 	if (sched != old_sched) {
+ 		if (old_sched) {
+-			ip_vs_unbind_scheduler(svc, old_sched);
+-			RCU_INIT_POINTER(svc->scheduler, NULL);
+-			/* Wait all svc->sched_data users */
++			ip_vs_unbind_scheduler(svc);
++			/* Wait all svc->scheduler/sched_data users */
+ 			synchronize_rcu();
+ 		}
+ 		/* Bind the new scheduler */
+@@ -1489,6 +1488,10 @@ ip_vs_edit_service(struct ip_vs_service *svc, struct ip_vs_service_user_kern *u)
+ 			ret = ip_vs_bind_scheduler(svc, sched);
+ 			if (ret) {
+ 				ip_vs_scheduler_put(sched);
++				/* Try to restore the old_sched */
++				if (old_sched &&
++				    !ip_vs_bind_scheduler(svc, old_sched))
++					old_sched = NULL;
+ 				goto out;
+ 			}
+ 		}
+@@ -1545,7 +1548,7 @@ static void __ip_vs_del_service(struct ip_vs_service *svc, bool cleanup)
+ 
+ 	/* Unbind scheduler */
+ 	old_sched = rcu_dereference_protected(svc->scheduler, 1);
+-	ip_vs_unbind_scheduler(svc, old_sched);
++	ip_vs_unbind_scheduler(svc);
+ 	ip_vs_scheduler_put(old_sched);
+ 
+ 	/* Unbind persistence engine, keep svc->pe */
+diff --git a/net/netfilter/ipvs/ip_vs_sched.c b/net/netfilter/ipvs/ip_vs_sched.c
+index d4903723be7e90..49b2e5d2b2c837 100644
+--- a/net/netfilter/ipvs/ip_vs_sched.c
++++ b/net/netfilter/ipvs/ip_vs_sched.c
+@@ -57,19 +57,19 @@ int ip_vs_bind_scheduler(struct ip_vs_service *svc,
+ /*
+  *  Unbind a service with its scheduler
   */
- 
- #include <linux/err.h>
-+#include <linux/overflow.h>
- #include <linux/slab.h>
- #include <linux/string.h>
- #include <linux/uuid.h>
-@@ -52,13 +53,16 @@ static inline void format_dwdata(void *d
- static bool tb_property_entry_valid(const struct tb_property_entry *entry,
- 				  size_t block_len)
+-void ip_vs_unbind_scheduler(struct ip_vs_service *svc,
+-			    struct ip_vs_scheduler *sched)
++void ip_vs_unbind_scheduler(struct ip_vs_service *svc)
  {
-+	u32 end;
-+
- 	switch (entry->type) {
- 	case TB_PROPERTY_TYPE_DIRECTORY:
- 	case TB_PROPERTY_TYPE_DATA:
- 	case TB_PROPERTY_TYPE_TEXT:
- 		if (entry->length > block_len)
- 			return false;
--		if (entry->value + entry->length > block_len)
-+		if (check_add_overflow(entry->value, entry->length, &end) ||
-+		    end > block_len)
- 			return false;
- 		break;
+-	struct ip_vs_scheduler *cur_sched;
++	struct ip_vs_scheduler *sched;
  
+-	cur_sched = rcu_dereference_protected(svc->scheduler, 1);
+-	/* This check proves that old 'sched' was installed */
+-	if (!cur_sched)
++	sched = rcu_dereference_protected(svc->scheduler, 1);
++	if (!sched)
+ 		return;
+ 
++	/* Reset the scheduler before initiating any RCU callbacks */
++	rcu_assign_pointer(svc->scheduler, NULL);
++	smp_wmb();	/* paired with smp_rmb() in ip_vs_schedule() */
+ 	if (sched->done_service)
+ 		sched->done_service(svc);
+-	/* svc->scheduler can be set to NULL only by caller */
+ }
+ 
+ 
+-- 
+2.53.0
+
 
 
