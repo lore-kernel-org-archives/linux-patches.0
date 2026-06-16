@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74ABC169AD2;
-	Tue, 16 Jun 2026 17:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4F5169AD2;
+	Tue, 16 Jun 2026 17:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632027; cv=none; b=Nhc70RHTyedJOApeP298qSalNdCh6LhYMF3wLsIR87+2w8HrGH+vM0OdzpeDEcHvhxmIr5X6JWkRvmwutxHe3G+IyLDSTqj5QhysQdGzpraYioKelgaNjqdHFqKJQ/d5R/uYZK+b6YLYfplxA2qprXTTRa3l7aNjkoM9zWcHrKI=
+	t=1781632032; cv=none; b=lhc6/ldsgBVYWqsnHtgEdpzwzte5Bv0I7rp804owx3IvNlW92+a16h8f73CnabNNRLjg1UCYOVGUKbW2fD9vVqnRL2YP5ADzbyC6zr1Cr4R/m/E/wmZKPZqsAKzom0Rjdkd7oMkG4OhbaDpB77rdwWR5Y0x4ae2Wpm1nlN2gGZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632027; c=relaxed/simple;
-	bh=VaOkP6KtTmmRVsWBkV2tPvOTbU6MqEkVvyKLtGdMN7Y=;
+	s=arc-20240116; t=1781632032; c=relaxed/simple;
+	bh=OuQdUgXmMzZb5Jk5J3Hha9eYjJ9gRFB3uKQNT37hoMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ii7qQjl7Fb4ek0j9yjA63+uudlYNZb2xAjbiAyFNd5rJi6VOzMul7aP6l134kcNlq/LQyq4bxAiBL2B+8dIC7Db94ZjrP2pigul5JOjB4w7+DJ778tlL4DUdozTg/B5Mk4kE/mrwRHhtq3Zo4WX9bNdrR+Vzb8qhhB6E4ZNNMOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPPzdi3M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RPmwGMg+kMnvAf4F/z11uJA+OQaKNaXbA4o+S959RfXoPl7PcwSogAxMcOsvUsw8XrV8j6g0HhrlSV+8qMCdt1Erwo3bdNmj9dTqDpSzK0hm0/vdTS1TQNJOxhYk5+kUdU2htOwauv9+7UA2ypzsffARNRu0eBfEOqw8trmTe6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nloIUsY5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPPzdi3M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 286281F000E9;
-	Tue, 16 Jun 2026 17:47:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nloIUsY5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749821F000E9;
+	Tue, 16 Jun 2026 17:47:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632026;
-	bh=Tfwzz+tOwgnFjPJQUqdwAJNzbDjMIeczJ9KfIRkWGrQ=;
+	s=korg; t=1781632031;
+	bh=8T5ihHyTgFDBEoK82GWvu+9iuO50yLi1rqfNExI7Hno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XPPzdi3McVmv3pCSKo5k758lYZjZ6H5CIVqhgQoODdaFQylklOpglleckrXpUQImy
-	 PfgXPhw4PaUrZ/lB7IoaZaMB5Be7OrCcgQly/usTsyNPHqQubhiOapnq2r9pXUnysH
-	 608wJ0fHC0bjtymk8Q1EEtMoABOgVHFJhxT1Ei8U=
+	b=nloIUsY5LGHMENyH8eZbB5Sl3U3buZ2hhGAUJilxRVhPzvrlQiwhZyGiVRR4tcfel
+	 HXYNjRZisYFKBTuqIPQQzLovrOcOuYsw/GRbPzWE/ZzAb3qQeow40nsv7+hvcEAniQ
+	 y/r5QjKAPp9h4AV0cntsWH1cVD5Nz5d0PpqGJSuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiazi Li <jqqlijiazi@gmail.com>,
-	"peixuan.qiu" <peixuan.qiu@transsion.com>,
+	stable@kernel.org,
+	syzbot+62538b67389ee582837a@syzkaller.appspotmail.com,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 331/522] f2fs: use kfree() instead of kvfree() to free some memory
-Date: Tue, 16 Jun 2026 20:27:58 +0530
-Message-ID: <20260616145141.311664384@linuxfoundation.org>
+Subject: [PATCH 6.1 332/522] f2fs: fix to do sanity check on dcc->discard_cmd_cnt conditionally
+Date: Tue, 16 Jun 2026 20:27:59 +0530
+Message-ID: <20260616145141.357833799@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,105 +53,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiazi Li <jqqlijiazi@gmail.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit e9705c61b1dbe7bac9dc189de434994d8a76b191 ]
+[ Upstream commit 6af249c996f7d73a3435f9e577956fa259347d18 ]
 
-options in f2fs_fill_super is alloc by kstrdup:
-	options = kstrdup((const char *)data, GFP_KERNEL)
-sit_bitmap[_mir], nat_bitmap[_mir] are alloc by kmemdup:
-	sit_i->sit_bitmap = kmemdup(src_bitmap, sit_bitmap_size, GFP_KERNEL);
-	sit_i->sit_bitmap_mir = kmemdup(src_bitmap,
-					sit_bitmap_size, GFP_KERNEL);
-	nm_i->nat_bitmap = kmemdup(version_bitmap, nm_i->bitmap_size,
-					GFP_KERNEL);
-	nm_i->nat_bitmap_mir = kmemdup(version_bitmap, nm_i->bitmap_size,
-					GFP_KERNEL);
-write_io is alloc by f2fs_kmalloc:
-	sbi->write_io[i] = f2fs_kmalloc(sbi,
-			array_size(n, sizeof(struct f2fs_bio_info))
+Syzbot reported a f2fs bug as below:
 
-Use kfree is more efficient.
+------------[ cut here ]------------
+kernel BUG at fs/f2fs/segment.c:1900!
+Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
+CPU: 1 UID: 0 PID: 6527 Comm: syz.5.110 Not tainted syzkaller #0 PREEMPT_{RT,(full)}
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2026
+RIP: 0010:f2fs_issue_discard_timeout+0x59b/0x5a0 fs/f2fs/segment.c:1900
+Code: d9 80 e1 07 80 c1 03 38 c1 0f 8c d6 fe ff ff 48 89 df e8 a8 5e fa fd e9 c9 fe ff ff e8 4e 46 94 fd 90 0f 0b e8 46 46 94 fd 90 <0f> 0b 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3
+RSP: 0018:ffffc9000494f940 EFLAGS: 00010283
+RAX: ffffffff843009ca RBX: 0000000000000001 RCX: 0000000000080000
+RDX: ffffc9001ca78000 RSI: 00000000000029f3 RDI: 00000000000029f4
+RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+R10: dffffc0000000000 R11: ffffed100893a431 R12: 1ffff1100893a430
+R13: 1ffff1100c2b702c R14: dffffc0000000000 R15: ffff8880449d2160
+FS:  00007ffa35fed6c0(0000) GS:ffff88812643d000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f2b68634000 CR3: 0000000039f62000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ __f2fs_remount fs/f2fs/super.c:2960 [inline]
+ f2fs_reconfigure+0x108a/0x1710 fs/f2fs/super.c:5443
+ reconfigure_super+0x227/0x8a0 fs/super.c:1080
+ do_remount fs/namespace.c:3391 [inline]
+ path_mount+0xdc5/0x10e0 fs/namespace.c:4151
+ do_mount fs/namespace.c:4172 [inline]
+ __do_sys_mount fs/namespace.c:4361 [inline]
+ __se_sys_mount+0x31d/0x420 fs/namespace.c:4338
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x14d/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7ffa37dbda0a
 
-Signed-off-by: Jiazi Li <jqqlijiazi@gmail.com>
-Signed-off-by: peixuan.qiu <peixuan.qiu@transsion.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+The root cause is there will be race condition in between f2fs_ioc_fitrim()
+and f2fs_remount():
+
+- f2fs_remount			- f2fs_ioc_fitrim
+ - f2fs_issue_discard_timeout
+  - __issue_discard_cmd
+  - __drop_discard_cmd
+  - __wait_all_discard_cmd
+				 - f2fs_trim_fs
+				  - f2fs_write_checkpoint
+				   - f2fs_clear_prefree_segments
+				    - f2fs_issue_discard
+				     - __issue_discard_async
+				      - __queue_discard_cmd
+				       - __update_discard_tree_range
+				        - __insert_discard_cmd
+				         - __create_discard_cmd
+				         : atomic_inc(&dcc->discard_cmd_cnt);
+  - sanity check on dcc->discard_cmd_cnt (expect discard_cmd_cnt to be zero)
+
+This will only happen when fitrim races w/ remount rw, if we remount to
+readonly filesystem, remount will wait until mnt_pcp.mnt_writers to zero,
+that means fitrim is not in process at that time.
+
+Cc: stable@kernel.org
+Fixes: 2482c4325dfe ("f2fs: detect bug_on in f2fs_wait_discard_bios")
+Reported-by: syzbot+62538b67389ee582837a@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-f2fs-devel/69b07d7c.050a0220.8df7.09a1.GAE@google.com
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 6af249c996f7 ("f2fs: fix to do sanity check on dcc->discard_cmd_cnt conditionally")
+[ adapted `f2fs_remount` call to pass `*flags & SB_RDONLY` for the old mount API ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/node.c    |    4 ++--
- fs/f2fs/segment.c |    4 ++--
- fs/f2fs/super.c   |    8 ++++----
- 3 files changed, 8 insertions(+), 8 deletions(-)
+ fs/f2fs/f2fs.h    |    2 +-
+ fs/f2fs/segment.c |    6 +++---
+ fs/f2fs/super.c   |   10 ++++++++--
+ 3 files changed, 12 insertions(+), 6 deletions(-)
 
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -3433,10 +3433,10 @@ void f2fs_destroy_node_manager(struct f2
- 	}
- 	kvfree(nm_i->free_nid_count);
- 
--	kvfree(nm_i->nat_bitmap);
-+	kfree(nm_i->nat_bitmap);
- 	kvfree(nm_i->nat_bits);
- #ifdef CONFIG_F2FS_CHECK_FS
--	kvfree(nm_i->nat_bitmap_mir);
-+	kfree(nm_i->nat_bitmap_mir);
- #endif
- 	sbi->nm_info = NULL;
- 	kfree(nm_i);
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -3638,7 +3638,7 @@ bool f2fs_is_checkpointed_data(struct f2
+ int f2fs_start_discard_thread(struct f2fs_sb_info *sbi);
+ void f2fs_drop_discard_cmd(struct f2fs_sb_info *sbi);
+ void f2fs_stop_discard_thread(struct f2fs_sb_info *sbi);
+-bool f2fs_issue_discard_timeout(struct f2fs_sb_info *sbi);
++bool f2fs_issue_discard_timeout(struct f2fs_sb_info *sbi, bool need_check);
+ void f2fs_clear_prefree_segments(struct f2fs_sb_info *sbi,
+ 					struct cp_control *cpc);
+ void f2fs_dirty_to_prefree(struct f2fs_sb_info *sbi);
 --- a/fs/f2fs/segment.c
 +++ b/fs/f2fs/segment.c
-@@ -5180,9 +5180,9 @@ static void destroy_sit_info(struct f2fs
- 	kvfree(sit_i->dirty_sentries_bitmap);
+@@ -1659,7 +1659,7 @@ void f2fs_stop_discard_thread(struct f2f
+ }
  
- 	SM_I(sbi)->sit_info = NULL;
--	kvfree(sit_i->sit_bitmap);
-+	kfree(sit_i->sit_bitmap);
- #ifdef CONFIG_F2FS_CHECK_FS
--	kvfree(sit_i->sit_bitmap_mir);
-+	kfree(sit_i->sit_bitmap_mir);
- 	kvfree(sit_i->invalid_segmap);
- #endif
- 	kfree(sit_i);
+ /* This comes from f2fs_put_super */
+-bool f2fs_issue_discard_timeout(struct f2fs_sb_info *sbi)
++bool f2fs_issue_discard_timeout(struct f2fs_sb_info *sbi, bool need_check)
+ {
+ 	struct discard_cmd_control *dcc = SM_I(sbi)->dcc_info;
+ 	struct discard_policy dpolicy;
+@@ -1673,7 +1673,7 @@ bool f2fs_issue_discard_timeout(struct f
+ 	/* just to make sure there is no pending discard commands */
+ 	__wait_all_discard_cmd(sbi, NULL);
+ 
+-	f2fs_bug_on(sbi, atomic_read(&dcc->discard_cmd_cnt));
++	f2fs_bug_on(sbi, need_check && atomic_read(&dcc->discard_cmd_cnt));
+ 	return dropped;
+ }
+ 
+@@ -2119,7 +2119,7 @@ static void destroy_discard_cmd_control(
+ 	 * fill_super(), it needs to give a chance to handle them.
+ 	 */
+ 	if (unlikely(atomic_read(&dcc->discard_cmd_cnt)))
+-		f2fs_issue_discard_timeout(sbi);
++		f2fs_issue_discard_timeout(sbi, true);
+ 
+ 	kfree(dcc);
+ 	SM_I(sbi)->dcc_info = NULL;
 --- a/fs/f2fs/super.c
 +++ b/fs/f2fs/super.c
-@@ -1683,7 +1683,7 @@ static void f2fs_put_super(struct super_
- 	destroy_percpu_info(sbi);
- 	f2fs_destroy_iostat(sbi);
- 	for (i = 0; i < NR_PAGE_TYPE; i++)
--		kvfree(sbi->write_io[i]);
-+		kfree(sbi->write_io[i]);
- #if IS_ENABLED(CONFIG_UNICODE)
- 	utf8_unload(sb->s_encoding);
- #endif
-@@ -4548,7 +4548,7 @@ reset_checkpoint:
- 		if (err)
- 			goto sync_free_meta;
+@@ -1619,7 +1619,7 @@ static void f2fs_put_super(struct super_
  	}
--	kvfree(options);
-+	kfree(options);
  
- 	/* recover broken superblock */
- 	if (recovery) {
-@@ -4627,7 +4627,7 @@ free_iostat:
- 	f2fs_destroy_iostat(sbi);
- free_bio_info:
- 	for (i = 0; i < NR_PAGE_TYPE; i++)
--		kvfree(sbi->write_io[i]);
-+		kfree(sbi->write_io[i]);
+ 	/* be sure to wait for any on-going discard commands */
+-	dropped = f2fs_issue_discard_timeout(sbi);
++	dropped = f2fs_issue_discard_timeout(sbi, true);
  
- #if IS_ENABLED(CONFIG_UNICODE)
- 	utf8_unload(sb->s_encoding);
-@@ -4639,7 +4639,7 @@ free_options:
- 		kfree(F2FS_OPTION(sbi).s_qf_names[i]);
- #endif
- 	fscrypt_free_dummy_policy(&F2FS_OPTION(sbi).dummy_enc_policy);
--	kvfree(options);
-+	kfree(options);
- free_sb_buf:
- 	kfree(raw_super);
- free_sbi:
+ 	if ((f2fs_hw_support_discard(sbi) || f2fs_hw_should_discard(sbi)) &&
+ 					!sbi->discard_blks && !dropped) {
+@@ -2452,8 +2452,14 @@ static int f2fs_remount(struct super_blo
+ 		} else {
+ 			dcc = SM_I(sbi)->dcc_info;
+ 			f2fs_stop_discard_thread(sbi);
++			/*
++			 * f2fs_ioc_fitrim() won't race w/ "remount ro"
++			 * so it's safe to check discard_cmd_cnt in
++			 * f2fs_issue_discard_timeout().
++			 */
+ 			if (atomic_read(&dcc->discard_cmd_cnt))
+-				f2fs_issue_discard_timeout(sbi);
++				f2fs_issue_discard_timeout(sbi,
++						*flags & SB_RDONLY);
+ 			need_restart_discard = true;
+ 		}
+ 	}
 
 
