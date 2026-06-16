@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8145635292A;
-	Tue, 16 Jun 2026 18:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09113A5E91;
+	Tue, 16 Jun 2026 18:18:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633877; cv=none; b=AqfQsRTZHJYD9vL/5ir3X3wlNedtsI9oN0sgnLYrhFvrl/1+6xq6/m5DqQH9kNOISqLvSkMq+B3kkfvboq7AD9MPbFWoLK0vulln66pxFuYwXl5TkjIXAQPdxWMxzyRHI5RsA9AkmmxCKmwUXcDqfDkCYMu/DZziqG5pqftTz0o=
+	t=1781633883; cv=none; b=hICgOMTKSHi2L2Uxz18K6d8Yl5uLBv1lBtmiExc41NU7sml7xRrjtQcxrFzbeMheW7Cw9fksfNWME0J9A7EqYp2plAeaAfgi8JpaYiStFMW4c2brLY8AHglPDUAa2deUMLN+4r4GXlqGLXS7rj1CMsehNGtmznE7e32xVfLxTx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633877; c=relaxed/simple;
-	bh=iomo3Hmug3felJfXA60SDPvkPzZoe69683/MGr0uSiI=;
+	s=arc-20240116; t=1781633883; c=relaxed/simple;
+	bh=GY+P1wIKJKIicNgs3A7VOoOHItc1L9QoThFTMnFLxO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g1EKYJjJcs6SbwO2rdQCDttF+lWtQK0T8dQLzNTS6mgGN5ZuYo+Kd8vzzGRLfcZyWKoXr9+6pKl1wkgZMb6Gb4VqsUONTKt98yc/QR4dT8hfR2wlVMhYOE1//lKD+HxKbSishdfqlLQUvlIXTlAAK+LbTZhrqokGAu6h1i2EHMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qMyyzVoF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F+D5cbvu3L7hswfQOGjpz0CodYkVyEpAthif+ClxuoeTIQbjPJtu9DJ9KEylrXc5Y6e/nU41LIHgAVA78AlcnnW2NjKyrpTr6FFtbwMNDmWkD01cFHR3NP32z7hPy29k/owZChbbq38jA5zC08w85J7kFiV3nINxb+1vT0fHwH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QwLkWC9I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMyyzVoF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B7B1F000E9;
-	Tue, 16 Jun 2026 18:17:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwLkWC9I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F491F000E9;
+	Tue, 16 Jun 2026 18:18:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633876;
-	bh=MKSvfolhYfKwZVVyy/OAHdGzQaZvNZAzf59o3J7/Prs=;
+	s=korg; t=1781633881;
+	bh=L1IpEPcwnIL2vP5FGsdGB5C9cQmzyjHsWwyu3J8Ju8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qMyyzVoFKxmjWrp5Lmv/4sV96pZAxT8mVWkqMyAhwPpD4SU+Kfl+wt2T25BDwBCcU
-	 Du/obclwmCn+e8M254m/wk0/49fmYbCdiFj4XNuArrD+5rsMq++VEtEeAePObBpxdr
-	 bGO5KiLe1L9HC7DLT7zXoH4YdW2J6kYRDa3q4YjY=
+	b=QwLkWC9I6Anna8ZfXD5TB9YD+xtnfJSzfg0YDQ0zCP/pdzICX2clvnMrFZF0jei6L
+	 35Xj/RoMXxeVfByHtOuacYg7qrdtTbPgTDenn9T5FYNR4TA4nwvTbZHuZTHZ1z4LnK
+	 yl5WLAJ0FbF/5JbxApzjVp5HrZJ+V8KeolEcw4Zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 127/411] scsi: scsi_transport_fc: Widen FPIN pname walker counter to u32
-Date: Tue, 16 Jun 2026 20:26:05 +0530
-Message-ID: <20260616145107.079362866@linuxfoundation.org>
+	Berkant Koc <me@berkoc.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Subject: [PATCH 5.15 128/411] drm/hyperv: validate VMBus packet size in receive callback
+Date: Tue, 16 Jun 2026 20:26:06 +0530
+Message-ID: <20260616145107.133423089@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,163 +51,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Berkant Koc <me@berkoc.com>
 
-commit a9a39233ec1fc9f97ea1340a4d09bb7ec2be5153 upstream.
+commit 7f87763f47a3c22fb50265a00619ef10f2394b18 upstream.
 
-An adjacent Fibre Channel fabric actor that can deliver an FPIN ELS
-frame to an lpfc or qla2xxx Linux initiator can trigger a non-return in
-the generic FC transport. This is not a local userspace or IP network
-path; the attacker must be able to inject fabric traffic, for example as
-a compromised switch or fabric controller, or as a same-zone N_Port on a
-fabric that permits source spoofing.
+hyperv_receive_sub() reads msg->vid_hdr.type and dispatches into one
+of four message-type branches without knowing how many bytes the host
+wrote into hv->recv_buf. The completion path then runs
+memcpy(hv->init_buf, msg, VMBUS_MAX_PACKET_SIZE), so the consumer that
+wakes on wait_for_completion_timeout() can read up to 16 KiB of
+residue from a prior message as if it were the response payload.
 
-The Link-Integrity and Peer-Congestion FPIN walkers used a u8 loop
-counter against the 32-bit on-wire pname_count field, and did not bound
-pname_count by the descriptor body already validated by the TLV walker.
-A pname_count of 256 therefore wraps the counter and keeps the loop
-condition true indefinitely.
+Pass bytes_recvd into hyperv_receive_sub() and reject any packet that
+does not cover the pipe + synthvid header. A single switch on
+msg->vid_hdr.type then computes the type-specific payload size: the
+three completion-driving types (SYNTHVID_VERSION_RESPONSE,
+SYNTHVID_RESOLUTION_RESPONSE, SYNTHVID_VRAM_LOCATION_ACK) fall through
+to a shared exit that requires that size before memcpy/complete, while
+SYNTHVID_FEATURE_CHANGE validates its own payload and returns before
+reading is_dirt_needed. Unknown types are dropped.
 
-Factor the shared pname_list[] walk into one helper, widen the counter
-to u32, and clamp pname_count against the entries that fit in the
-descriptor body before iterating.
+SYNTHVID_RESOLUTION_RESPONSE is variable length: the host fills
+resolution_count entries, not the full SYNTHVID_MAX_RESOLUTION_COUNT
+array. Validate the fixed prefix first so resolution_count can be
+read, bound it against the array, then require only the count-sized
+array, so the shorter responses the host actually sends are accepted.
 
-Fixes: 3dcfe0de5a97 ("scsi: fc: Parse FPIN packets and update statistics")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Link: https://patch.msgid.link/20260520133015.1018937-1-michael.bommarito@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Only run the sub-handler when vmbus_recvpacket() returned success. The
+memcpy length is bytes_recvd, which is bounded by VMBUS_MAX_PACKET_SIZE
+only on a successful receive; on -ENOBUFS vmbus_recvpacket() instead
+reports the required length, which can exceed hv->recv_buf, so copying
+bytes_recvd would read and write past the 16 KiB buffers. Gating on the
+success return keeps the copy bounded. The nonzero-return path is itself
+a malformed-message case and is now logged rather than silently skipped;
+channel recovery is not attempted.
+
+Rejected packets are reported via drm_err_ratelimited() rather than
+silently dropped, matching the CoCo-hardened pattern in
+hv_kvp_onchannelcallback().
+
+Fixes: 76c56a5affeb ("drm/hyperv: Add DRM driver for hyperv synthetic video device")
+Cc: stable@vger.kernel.org # 5.14+
+Signed-off-by: Berkant Koc <me@berkoc.com>
+Assisted-by: Claude:claude-opus-4-7 berkoc-pipeline
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Link: https://patch.msgid.link/8200dbc199c7a9b75ac7e8af6c748d2189b5ebd5.1779542874.git.me@berkoc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_transport_fc.c |   77 ++++++++++++++++++++-------------------
- 1 file changed, 41 insertions(+), 36 deletions(-)
+ drivers/gpu/drm/hyperv/hyperv_drm_proto.c |  100 ++++++++++++++++++++++++++----
+ 1 file changed, 87 insertions(+), 13 deletions(-)
 
---- a/drivers/scsi/scsi_transport_fc.c
-+++ b/drivers/scsi/scsi_transport_fc.c
-@@ -744,6 +744,37 @@ fc_cn_stats_update(u16 event_type, struc
- 	}
+--- a/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
++++ b/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
+@@ -422,30 +422,92 @@ static int hyperv_get_supported_resoluti
+ 	return 0;
  }
  
-+static void
-+fc_fpin_pname_stats_update(struct Scsi_Host *shost,
-+			   struct fc_rport *attach_rport, u16 event_type,
-+			   u32 desc_len, u32 fixed_len, u32 pname_count,
-+			   __be64 *pname_list,
-+			   void (*stats_update)(u16 event_type,
-+						struct fc_fpin_stats *stats))
-+{
-+	u32 i;
-+	struct fc_rport *rport;
-+	u64 wwpn;
+-static void hyperv_receive_sub(struct hv_device *hdev)
++static void hyperv_receive_sub(struct hv_device *hdev, u32 bytes_recvd)
+ {
+ 	struct hyperv_drm_device *hv = hv_get_drvdata(hdev);
+ 	struct synthvid_msg *msg;
++	size_t hdr_size;
++	size_t need;
+ 
+ 	if (!hv)
+ 		return;
+ 
+-	msg = (struct synthvid_msg *)hv->recv_buf;
+-
+-	/* Complete the wait event */
+-	if (msg->vid_hdr.type == SYNTHVID_VERSION_RESPONSE ||
+-	    msg->vid_hdr.type == SYNTHVID_RESOLUTION_RESPONSE ||
+-	    msg->vid_hdr.type == SYNTHVID_VRAM_LOCATION_ACK) {
+-		memcpy(hv->init_buf, msg, VMBUS_MAX_PACKET_SIZE);
+-		complete(&hv->wait);
++	hdr_size = sizeof(struct pipe_msg_hdr) +
++		   sizeof(struct synthvid_msg_hdr);
++	if (bytes_recvd < hdr_size) {
++		drm_err_ratelimited(&hv->dev,
++				    "synthvid packet too small for header: %u\n",
++				    bytes_recvd);
+ 		return;
+ 	}
+ 
+-	if (msg->vid_hdr.type == SYNTHVID_FEATURE_CHANGE) {
++	msg = (struct synthvid_msg *)hv->recv_buf;
++	need = hdr_size;
 +
-+	if (desc_len < fixed_len)
-+		pname_count = 0;
-+	else
-+		pname_count = min(pname_count, (desc_len - fixed_len) /
-+				   sizeof(pname_list[0]));
-+
-+	for (i = 0; i < pname_count; i++) {
-+		wwpn = be64_to_cpu(pname_list[i]);
-+		rport = fc_find_rport_by_wwpn(shost, wwpn);
-+		if (rport &&
-+		    (rport->roles & FC_PORT_ROLE_FCP_TARGET ||
-+		     rport->roles & FC_PORT_ROLE_NVME_TARGET)) {
-+			if (rport == attach_rport)
-+				continue;
-+			stats_update(event_type, &rport->fpin_stats);
++	switch (msg->vid_hdr.type) {
++	case SYNTHVID_VERSION_RESPONSE:
++		need += sizeof(struct synthvid_version_resp);
++		break;
++	case SYNTHVID_RESOLUTION_RESPONSE:
++		/*
++		 * The resolution response is variable length: the host
++		 * fills resolution_count entries, not the full
++		 * SYNTHVID_MAX_RESOLUTION_COUNT array. Require the fixed
++		 * prefix first so resolution_count can be read, then
++		 * demand exactly the count-sized array.
++		 */
++		need += offsetof(struct synthvid_supported_resolution_resp,
++				 supported_resolution);
++		if (bytes_recvd < need)
++			break;
++		if (msg->resolution_resp.resolution_count >
++		    SYNTHVID_MAX_RESOLUTION_COUNT) {
++			drm_err_ratelimited(&hv->dev,
++					    "synthvid resolution count too large: %u\n",
++					    msg->resolution_resp.resolution_count);
++			return;
 +		}
++		need += msg->resolution_resp.resolution_count *
++			sizeof(struct hvd_screen_info);
++		break;
++	case SYNTHVID_VRAM_LOCATION_ACK:
++		need += sizeof(struct synthvid_vram_location_ack);
++		break;
++	case SYNTHVID_FEATURE_CHANGE:
++		/*
++		 * Not a completion-driving message: validate its own payload
++		 * and consume it here rather than falling through to the
++		 * memcpy/complete shared by the wait-event responses.
++		 */
++		if (bytes_recvd < need +
++		    sizeof(struct synthvid_feature_change)) {
++			drm_err_ratelimited(&hv->dev,
++					    "synthvid feature change packet too small: %u\n",
++					    bytes_recvd);
++			return;
++		}
+ 		hv->dirt_needed = msg->feature_chg.is_dirt_needed;
+ 		if (hv->dirt_needed)
+ 			hyperv_hide_hw_ptr(hv->hdev);
++		return;
++	default:
++		return;
 +	}
-+}
 +
- /*
-  * fc_fpin_li_stats_update - routine to update Link Integrity
-  * event statistics.
-@@ -754,13 +785,11 @@ fc_cn_stats_update(u16 event_type, struc
- static void
- fc_fpin_li_stats_update(struct Scsi_Host *shost, struct fc_tlv_desc *tlv)
- {
--	u8 i;
- 	struct fc_rport *rport = NULL;
- 	struct fc_rport *attach_rport = NULL;
- 	struct fc_host_attrs *fc_host = shost_to_fc_host(shost);
- 	struct fc_fn_li_desc *li_desc = (struct fc_fn_li_desc *)tlv;
- 	u16 event_type = be16_to_cpu(li_desc->event_type);
--	u64 wwpn;
- 
- 	rport = fc_find_rport_by_wwpn(shost,
- 				      be64_to_cpu(li_desc->attached_wwpn));
-@@ -771,22 +800,11 @@ fc_fpin_li_stats_update(struct Scsi_Host
- 		fc_li_stats_update(event_type, &attach_rport->fpin_stats);
++	/*
++	 * Shared completion path for the wait-event responses
++	 * (VERSION_RESPONSE, RESOLUTION_RESPONSE, VRAM_LOCATION_ACK):
++	 * require the type-specific payload before handing the buffer to
++	 * the waiter.
++	 */
++	if (bytes_recvd < need) {
++		drm_err_ratelimited(&hv->dev,
++				    "synthvid packet too small for type %u: %u < %zu\n",
++				    msg->vid_hdr.type, bytes_recvd, need);
++		return;
  	}
- 
--	if (be32_to_cpu(li_desc->pname_count) > 0) {
--		for (i = 0;
--		    i < be32_to_cpu(li_desc->pname_count);
--		    i++) {
--			wwpn = be64_to_cpu(li_desc->pname_list[i]);
--			rport = fc_find_rport_by_wwpn(shost, wwpn);
--			if (rport &&
--			    (rport->roles & FC_PORT_ROLE_FCP_TARGET ||
--			    rport->roles & FC_PORT_ROLE_NVME_TARGET)) {
--				if (rport == attach_rport)
--					continue;
--				fc_li_stats_update(event_type,
--						   &rport->fpin_stats);
--			}
--		}
--	}
-+	fc_fpin_pname_stats_update(shost, attach_rport, event_type,
-+				   be32_to_cpu(li_desc->desc_len),
-+				   FC_TLV_DESC_LENGTH_FROM_SZ(*li_desc),
-+				   be32_to_cpu(li_desc->pname_count),
-+				   li_desc->pname_list, fc_li_stats_update);
- 
- 	if (fc_host->port_name == be64_to_cpu(li_desc->attached_wwpn))
- 		fc_li_stats_update(event_type, &fc_host->fpin_stats);
-@@ -834,13 +852,11 @@ static void
- fc_fpin_peer_congn_stats_update(struct Scsi_Host *shost,
- 				struct fc_tlv_desc *tlv)
- {
--	u8 i;
- 	struct fc_rport *rport = NULL;
- 	struct fc_rport *attach_rport = NULL;
- 	struct fc_fn_peer_congn_desc *pc_desc =
- 	    (struct fc_fn_peer_congn_desc *)tlv;
- 	u16 event_type = be16_to_cpu(pc_desc->event_type);
--	u64 wwpn;
- 
- 	rport = fc_find_rport_by_wwpn(shost,
- 				      be64_to_cpu(pc_desc->attached_wwpn));
-@@ -851,22 +867,11 @@ fc_fpin_peer_congn_stats_update(struct S
- 		fc_cn_stats_update(event_type, &attach_rport->fpin_stats);
- 	}
- 
--	if (be32_to_cpu(pc_desc->pname_count) > 0) {
--		for (i = 0;
--		    i < be32_to_cpu(pc_desc->pname_count);
--		    i++) {
--			wwpn = be64_to_cpu(pc_desc->pname_list[i]);
--			rport = fc_find_rport_by_wwpn(shost, wwpn);
--			if (rport &&
--			    (rport->roles & FC_PORT_ROLE_FCP_TARGET ||
--			     rport->roles & FC_PORT_ROLE_NVME_TARGET)) {
--				if (rport == attach_rport)
--					continue;
--				fc_cn_stats_update(event_type,
--						   &rport->fpin_stats);
--			}
--		}
--	}
-+	fc_fpin_pname_stats_update(shost, attach_rport, event_type,
-+				   be32_to_cpu(pc_desc->desc_len),
-+				   FC_TLV_DESC_LENGTH_FROM_SZ(*pc_desc),
-+				   be32_to_cpu(pc_desc->pname_count),
-+				   pc_desc->pname_list, fc_cn_stats_update);
++	memcpy(hv->init_buf, msg, bytes_recvd);
++	complete(&hv->wait);
  }
  
- /*
+ static void hyperv_receive(void *ctx)
+@@ -466,9 +528,21 @@ static void hyperv_receive(void *ctx)
+ 		ret = vmbus_recvpacket(hdev->channel, recv_buf,
+ 				       VMBUS_MAX_PACKET_SIZE,
+ 				       &bytes_recvd, &req_id);
+-		if (bytes_recvd > 0 &&
+-		    recv_buf->pipe_hdr.type == PIPE_MSG_DATA)
+-			hyperv_receive_sub(hdev);
++		if (ret) {
++			/*
++			 * A nonzero return (e.g. -ENOBUFS for an oversized
++			 * packet) is itself a malformed message: bytes_recvd
++			 * then reports the required length rather than a copied
++			 * payload, so it must not be forwarded to the
++			 * sub-handler. Channel recovery is not attempted.
++			 */
++			drm_err_ratelimited(&hv->dev,
++					    "vmbus_recvpacket failed: %d (need %u)\n",
++					    ret, bytes_recvd);
++		} else if (bytes_recvd > 0 &&
++			   recv_buf->pipe_hdr.type == PIPE_MSG_DATA) {
++			hyperv_receive_sub(hdev, bytes_recvd);
++		}
+ 	} while (bytes_recvd > 0 && ret == 0);
+ }
+ 
 
 
