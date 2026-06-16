@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69943CC303;
-	Tue, 16 Jun 2026 18:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F953CC303;
+	Tue, 16 Jun 2026 18:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636114; cv=none; b=TN5bSGMo2oH8ilzKBuWcnfKXyb4M5WVrsh8WNIb8lEA9w0w+DNoRaGdbtaiVjRp5mr/qMjhTkLj8xyfAmXGdIw+WjokGw+8zfDBLYUSiAaYYb2RrSoYpxfruV5DSJZGMFSek6+KrMFUDv3E9k53EfUdQSKXN9sncfRcCXuoB7c0=
+	t=1781636120; cv=none; b=C1uV0oSV1js+hzqDzYpJCQcD52Zo3tmBJstoRKMWux7OR3aIQmHD89nCzVSUQFybEVeXlJIfMEor43hEFWCnOZEgTCDJ06mf9Y1T2rEkAMNkvnZdbsoJaRss76rK2ylLQiRLndkHgZvtPNAYNPJvmZpctOSSWVlNsaZy8ZnwLPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636114; c=relaxed/simple;
-	bh=Jg90f5M6pXt8XcA6S4V72x11HuJ0TqZD8OOi8Kp65Ek=;
+	s=arc-20240116; t=1781636120; c=relaxed/simple;
+	bh=28mZAeEIFoNc824oACxXY8cFyO9AaMoNzmkyqoOoXT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CZ3kuV4yTxgLKc9sQRZaFGCeeNzArNyQazBbKX+rFvHK7ld0Sm5by/W8WbTVTuWw4CR8wplyh1iLxIRo+wShTrrk8CK53AJh5ewEaoq5NoVBfJ/yDe/SR3xYo4wkJ3PBVsDy92ZswSPhZ5S/6zAFcfk8/bx8dIdpCfnPpjNyr8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RUgqca9I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aGqBuXdB9h/wSsAmmWCMKNyfxUdtoiibyaNrKDVkFoCGCcJKj7uTuAyb2PHY0mYnZEkKvZtpyKQ6ibZfkJeP4W0rLDH2sXM5/QSmJT9210g4WKh+kVKpxFpf+tCzPb5SSzA8jNxQLLcyk1h88LErgi7wMt/C5tyx9I8ix0KY+7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FN81bMpF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RUgqca9I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F0E1F000E9;
-	Tue, 16 Jun 2026 18:55:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FN81bMpF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06D8A1F000E9;
+	Tue, 16 Jun 2026 18:55:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636113;
-	bh=5E1NXqp8nOT/FSmy/5xbAtK/M6K7suZoRvvgRQELDTI=;
+	s=korg; t=1781636118;
+	bh=6r9xeRf1jCaeVRGC6xvYYUbEfmI75Eby893ijSfHvKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RUgqca9IfSiH2xLDILllGn8Zzk0fCU3DSeoKuXnFJxNFioBt6xujFH4F/4L3wR/PH
-	 EiCMqngVWvWwayEBtllyp+mZZSkqqmZ2ghh31rSEO0MpM6febuS9btdX+hEs1LfQWI
-	 1xZucaFcqQBzlwBZHcM2vxN8jxSaO4kcDEJZgCKE=
+	b=FN81bMpFaMER5mXBeJa4Y07L1Yiw+krC6KwgHJtWZOP0GWQXzpeg8UZOTXMvvP2vv
+	 LeKLaCjQf/Y72bv+Ym/9Xu9zWpjjU3w2pflpFxxhxSI5bcaCmauYWi2HnNLdDWmDTB
+	 T1ukf1i34qcNyYxPf8/CYRBVXBKTYbXQycBQF6Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Dongli Zhang <dongli.zhang@oracle.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 160/342] tap: free page on error paths in tap_get_user_xdp()
-Date: Tue, 16 Jun 2026 20:27:36 +0530
-Message-ID: <20260616145055.619341273@linuxfoundation.org>
+	Tristan Madani <tristan@talencesecurity.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.10 178/342] netfilter: nft_tunnel: fix use-after-free on object destroy
+Date: Tue, 16 Jun 2026 20:27:54 +0530
+Message-ID: <20260616145056.496154108@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -55,57 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Tristan Madani <tristan@talencesecurity.com>
 
-[ Upstream commit 3bcf7aec6a9d16438f2cec29f5d7c8d5b8edf9b2 ]
+commit c32b26aaa2f9216520a38b3f4bfeec846eb3eb8a upstream.
 
-tap_get_user_xdp() rejects a frame shorter than ETH_HLEN with -EINVAL,
-and returns -ENOMEM when build_skb() fails. Both paths jump to the err
-label without freeing the page that vhost_net_build_xdp() allocated for
-the frame. tap_sendmsg() discards the per-buffer return value and always
-returns 0, so vhost_tx_batch() takes the success path and never frees
-the page; each rejected frame in a batch leaks one page-frag chunk.
+nft_tunnel_obj_destroy() calls metadata_dst_free() which directly
+kfree()s the metadata_dst, ignoring the dst_entry refcount. Packets
+that took a reference via dst_hold() in nft_tunnel_obj_eval() and
+are still queued (e.g. in a netem qdisc) are left with a dangling
+pointer. When these packets are eventually dequeued, dst_release()
+operates on freed memory.
 
-Free the page on both error paths, before the skb is built. This is the
-tap counterpart of the same leak in tun_xdp_one().
+Replace metadata_dst_free() with dst_release() so the metadata_dst
+is freed only after all references are dropped. The dst subsystem
+already handles metadata_dst cleanup in dst_destroy() when
+DST_METADATA is set.
 
-Fixes: 0efac27791ee ("tap: accept an array of XDP buffs through sendmsg()")
-Fixes: ed7f2afdd0e0 ("tap: add missing verification for short frame")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Dongli Zhang <dongli.zhang@oracle.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260521163230.1478627-2-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-(cherry picked from commit 3bcf7aec6a9d16438f2cec29f5d7c8d5b8edf9b2)
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: af308b94a2a4 ("netfilter: nf_tables: add tunnel support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/tap.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nft_tunnel.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/tap.c b/drivers/net/tap.c
-index 18f19fc66c64fa..6f5c996d3ed234 100644
---- a/drivers/net/tap.c
-+++ b/drivers/net/tap.c
-@@ -1145,6 +1145,7 @@ static int tap_get_user_xdp(struct tap_queue *q, struct xdp_buff *xdp)
- 	int err, depth;
+--- a/net/netfilter/nft_tunnel.c
++++ b/net/netfilter/nft_tunnel.c
+@@ -669,7 +669,7 @@ static void nft_tunnel_obj_destroy(const
+ {
+ 	struct nft_tunnel_obj *priv = nft_obj_data(obj);
  
- 	if (unlikely(xdp->data_end - xdp->data < ETH_HLEN)) {
-+		put_page(virt_to_head_page(xdp->data));
- 		err = -EINVAL;
- 		goto err;
- 	}
-@@ -1154,6 +1155,7 @@ static int tap_get_user_xdp(struct tap_queue *q, struct xdp_buff *xdp)
+-	metadata_dst_free(priv->md);
++	dst_release(&priv->md->dst);
+ }
  
- 	skb = build_skb(xdp->data_hard_start, buflen);
- 	if (!skb) {
-+		put_page(virt_to_head_page(xdp->data));
- 		err = -ENOMEM;
- 		goto err;
- 	}
--- 
-2.53.0
-
+ static struct nft_object_type nft_tunnel_obj_type;
 
 
