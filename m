@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C6B477E33;
-	Tue, 16 Jun 2026 16:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4074779AA;
+	Tue, 16 Jun 2026 16:36:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627798; cv=none; b=k0/MlMmgWYsvkug7ya92fisOOEFLutjGKqtvxgsasOvO9DknlEBnQ5k5KbK9C3ZU6b9hO0yuj8+TffvIqpFsf00sbRkfA9F47qg+YiLV4P0yv69jOM3WBnUTlWN26Cce6V/fju71lRbKb+V30cMOhBSodiJe3vCWnZi3T9xUG/Y=
+	t=1781627803; cv=none; b=V1nOE5uHja45EyFQqUCiQva36MT3RC9N235tlAr/wpBa3bpIy5qAV9SFLodjgplJdG/7wtYAP2OzCCoptWYuzfvUdCJ2diuEB0nhIIvadqAyC4j+jSV093X4V2H3zDcy2Lkn3+mMSzSUNqkmWkiTrmSY/uzEVyFxIOQjvC+jj7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627798; c=relaxed/simple;
-	bh=OppIv1YpyNhdlFD/zjoKfAAObHpyjTVilDdCP9CNysU=;
+	s=arc-20240116; t=1781627803; c=relaxed/simple;
+	bh=IaFXzbZRNB0/TJwX/4JENdk7kIJ43V88Q8RO4jXGSI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NbZiZTFnW9wiia4ha10ulh9KRmng6wIC+4SQlmImcaBWvaPsdpq6/POARzUsYJpW/QTveK+DO0M0l0RKpx/OncCN+d6ANF3PPfRdotBw0i+WkKrQVPv74fc2EJov2InyK4Q3JPo6bzdM8UAKunXL3/hKKr39P6VDeFoMhS8/Uvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7ZC8THr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mTQDmrR9YrLaEGVgguTpaGC7QdSTe6PnfGqR8NOUu4hJXSk/+KP1nG+yxL65H1viHmHZIwjpvTmm+7MjjtfRKUGEsD0tccbECce4bCnx2Utc3FM02yBplRnT04D6Zj1aF7KljbhKxsz4bFxE1ZYS59JVUicNBE5nx5ofdyO9t2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFFVx1qy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7ZC8THr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4CA1F000E9;
-	Tue, 16 Jun 2026 16:36:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFFVx1qy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF321F00A3A;
+	Tue, 16 Jun 2026 16:36:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627797;
-	bh=8FOUYN7Il0a1yNVsLQrS+I7tnyb58W5NfIFtt0HUFJk=;
+	s=korg; t=1781627802;
+	bh=lA9O+n/ZqgFCvbOek+8J6tQ6ZE0AchJOfz7zbFY4uOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K7ZC8THrFA7hjms5VJlrga5lmtnrY82lSRUtR4k3Vx45HYNM3J3SuTB9nhlEHMVGi
-	 FN/yVgEGXV9d/V3rVyzACYEYD6a3ePWYsY4gB/ygYeX/C5JDlNRYf/Xg8cRVzeC1uK
-	 85aKUPP+3fjnjJwamSGgahXMl0d1hqfD46Qpxzzw=
+	b=VFFVx1qyFtDgv5Pn9ce+/buGyYFjo8RtkiZVWsJ/P7Wr2vzAcD5dsPni94pufJwVb
+	 ++5lkHZ6keiF8Bsav9Fpr37qir6jivS5XnJYRbpBtCs1sydmYmZhto0Jf9i4nkCQEW
+	 H6Or77D1bIz5Q9RCEgMJSWnQgmAdKIkNu0yTaStA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.12 212/261] slimbus: qcom-ngd-ctrl: Correct PDR and SSR cleanup ownership
-Date: Tue, 16 Jun 2026 20:30:50 +0530
-Message-ID: <20260616145054.863717513@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.12 230/261] driver core: reject devices with unregistered buses
+Date: Tue, 16 Jun 2026 20:31:08 +0530
+Message-ID: <20260616145055.695465124@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,49 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 960b53a3f76fa214c2fc493734ae7b3c5e713bbf upstream.
+commit 36f35b8df6972167102a1c3d4361e0afb6a84534 upstream.
 
-PDR and SSR callbacks are registred from the controller probe function,
-but currently released from the child device's remove function.
+Trying to register a device on a bus which has not yet been registered
+used to trigger a NULL-pointer dereference, but since the const bus
+structure rework registration instead succeeds without the device being
+added to the bus.
 
-The remove() function should only be unwinding what was done in the
-same device's probe() function.
+This specifically means that the device will never bind to a driver and
+that the bus sysfs attributes are not created (i.e. as if the device had
+no bus).
 
-Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204421.116824-5-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reject devices with unregistered buses to catch any callers that get
+the ordering wrong and to handle bus registration failures more
+gracefully.
+
+Fixes: 5221b82d46f2 ("driver core: bus: bus_add/probe/remove_device() cleanups")
+Cc: stable@vger.kernel.org	# 6.3
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260430091718.230228-1-johan@kernel.org
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/slimbus/qcom-ngd-ctrl.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/base/bus.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1690,6 +1690,9 @@ static void qcom_slim_ngd_ctrl_remove(st
+--- a/drivers/base/bus.c
++++ b/drivers/base/bus.c
+@@ -503,10 +503,10 @@ static const struct attribute_group driv
+  */
+ int bus_add_device(struct device *dev)
  {
- 	struct qcom_slim_ngd_ctrl *ctrl = platform_get_drvdata(pdev);
+-	struct subsys_private *sp = bus_to_subsys(dev->bus);
++	struct subsys_private *sp;
+ 	int error;
  
-+	pdr_handle_release(ctrl->pdr);
-+	qcom_unregister_ssr_notifier(ctrl->notifier, &ctrl->nb);
+-	if (!sp) {
++	if (!dev->bus) {
+ 		/*
+ 		 * This is a normal operation for many devices that do not
+ 		 * have a bus assigned to them, just say that all went
+@@ -515,6 +515,13 @@ int bus_add_device(struct device *dev)
+ 		return 0;
+ 	}
+ 
++	sp = bus_to_subsys(dev->bus);
++	if (!sp) {
++		pr_err("%s: cannot add device '%s' to unregistered bus '%s'\n",
++		       __func__, dev_name(dev), dev->bus->name);
++		return -EINVAL;
++	}
 +
- 	qcom_slim_ngd_unregister(ctrl);
- 
- 	destroy_workqueue(ctrl->mwq);
-@@ -1700,8 +1703,6 @@ static void qcom_slim_ngd_remove(struct
- 	struct qcom_slim_ngd_ctrl *ctrl = platform_get_drvdata(pdev);
- 
- 	pm_runtime_disable(&pdev->dev);
--	pdr_handle_release(ctrl->pdr);
--	qcom_unregister_ssr_notifier(ctrl->notifier, &ctrl->nb);
- 	qcom_slim_ngd_enable(ctrl, false);
- 	qcom_slim_ngd_exit_dma(ctrl);
- 	qcom_slim_ngd_qmi_svc_event_deinit(&ctrl->qmi);
+ 	/*
+ 	 * Reference in sp is now incremented and will be dropped when
+ 	 * the device is removed from the bus
 
 
