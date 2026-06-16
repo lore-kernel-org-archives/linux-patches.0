@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21103EB0F5;
-	Tue, 16 Jun 2026 18:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B8C3EB0F5;
+	Tue, 16 Jun 2026 18:56:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636194; cv=none; b=iJo1aRy4fooQkYPO7U/Z1tevKy+AL5MIc0jH9zAV82OrfT0ovVjzNhJTQb3QlNaYPHvhLWSYRtq73+WEFWImCxL5ZiIluW4OfhFfjaGuy68TowkxOMI4wCEdEwk3P/Jp+gzpg8PQ2Wi6AYQItX3aQ0fLJp1VNjg6At3R1MveJSI=
+	t=1781636200; cv=none; b=P6qpnhVjAhmcgRWZe3+64x39AAI4Ci7ai2C8GoHTT/h6U7MEPI5nW8huXKIZ1WtokX4/6tZgquwkLdu+rPlvZxGg8tvRLkvqGrreRXKz+x6baQrp4T4zWWCih3HDZChp3gv+9MUj2mCPYHGU48Eons1Mj0h29ezS8bo7HWbhgdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636194; c=relaxed/simple;
-	bh=BDfmUsPCdtswEd0D7XCrnBuFBMIa6a+jJjJHbuK2IsI=;
+	s=arc-20240116; t=1781636200; c=relaxed/simple;
+	bh=HWtgREgh9RBRbUG9rPPD4r2h73Z0b6JEgf9sk4vJ8Eg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WWdIKvFR8f/RC/sJTlehhUD6YqQW+1f3QteB+RMKsTT0hs0/hB8w38MDVU/KC39Ku2922ZaorY+p9IDnzvTDNSXgoFYZo0wccNLGf6oJgYOp/9FM5Pz4OtbqL+e/Tf0MN9u1U+zv2paVEbaLhoIDFLoWbl/nb2TxXpHQD1tPmo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7ejm/3J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u5HHXXm3lN3x6s8IUBGcGv4yVGWUOhZ9s90DuL2cZLtmsS0d8AXdoNndsK/fgdM+xeg5CiQUZMjcw8Jdr/OFtUveA+MU4UPKKHcARZlqxLzbyuRXWX3f+PWEZS/JYTzSxIK00AnyQjsiLmhuFTh+UVUShd0crXyRzL8ori+XCSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t4q/JeEX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7ejm/3J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD551F000E9;
-	Tue, 16 Jun 2026 18:56:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t4q/JeEX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287E81F000E9;
+	Tue, 16 Jun 2026 18:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636193;
-	bh=i3DfIsciVvdSTUr4TxFnlMlQ27g8cQBhDNpFwhM3dVk=;
+	s=korg; t=1781636199;
+	bh=B+GDOs23yQpaJvW9sVMPkVRY6JJgzoQncgXbze6uMvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c7ejm/3J6lucJY/EJV38fP//z76z4pFQSMTE2OK6bT7kFiBBBGpIO1rWkEVWRhtjz
-	 bz1L25LoK5pol6irvNZ7fNVRSulBLVooV5OXuxpIKo6LrjnZsDv12ydD6psYmTA2Hn
-	 Pv2adtkZ1e35uNbJ5n7bNLninzZo2K9G6MdMmz6A=
+	b=t4q/JeEXSiJSlx8YvTSpk/NjCuChSxfJm7LPE0Ety7SX4APBmI3m7fmkGi1Ah0y2s
+	 EG9Y2OiD+vwJ1xMnCNjIQ0Wq51sSwktwQeyOhTbcppLECPe2OU8ovTFxd1Pti+JtRD
+	 /xVGG2JSdGH920vSqHVQHyTPsgVBqbQ9uFY6KcKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 185/342] USB: serial: kl5kusb105: fix bulk-out buffer overflow
-Date: Tue, 16 Jun 2026 20:28:01 +0530
-Message-ID: <20260616145056.804714833@linuxfoundation.org>
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 5.10 194/342] i2c: qcom-cci: Fix NULL pointer dereference in cci_remove()
+Date: Tue, 16 Jun 2026 20:28:10 +0530
+Message-ID: <20260616145057.217552707@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -50,61 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-commit 96d47e40bf9db4a9efd5c8fb53287a508d165f14 upstream.
+commit 729ac5a4b966aac42e08a94dea966f4429008548 upstream.
 
-klsi_105_prepare_write_buffer() is called by the generic write path
-with the bulk-out buffer and its size (bulk_out_size, 64 bytes). It
-stores a two-byte length header at the start of the buffer and copies
-the payload from the write fifo starting at buf + KLSI_HDR_LEN, but
-passes the full buffer size as the number of bytes to copy:
+On all modern platforms Qualcomm CCI controller provides two I2C masters,
+and on particular boards only one I2C master may be initialized, and in
+such cases the device unbinding or driver removal causes a NULL pointer
+dereference, because cci_halt() is called for all two I2C masters, but
+a completion is initialized only for the single enabled master:
 
-  count = kfifo_out_locked(&port->write_fifo, buf + KLSI_HDR_LEN,
-                           size, &port->lock);
+    % rmmod i2c-qcom-cci
+    Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+    <snip>
+    Call trace:
+    __wait_for_common+0x194/0x1a8 (P)
+    wait_for_completion_timeout+0x20/0x2c
+    cci_remove+0xc4/0x138 [i2c_qcom_cci]
+    platform_remove+0x20/0x30
+    device_remove+0x4c/0x80
+    device_release_driver_internal+0x1c8/0x224
+    driver_detach+0x50/0x98
+    bus_remove_driver+0x6c/0xbc
+    driver_unregister+0x30/0x60
+    platform_driver_unregister+0x14/0x20
+    qcom_cci_driver_exit+0x18/0x1008 [i2c_qcom_cci]
+    ....
 
-When the fifo holds at least size bytes, size bytes are copied starting
-two bytes into the size-byte buffer, writing KLSI_HDR_LEN bytes past its
-end. Copy at most size - KLSI_HDR_LEN bytes instead, leaving room for
-the header as safe_serial already does.
-
-Writing bulk_out_size or more bytes to the tty triggers a slab
-out-of-bounds write, observed with KASAN by emulating the device with
-dummy_hcd and raw-gadget:
-
-  BUG: KASAN: slab-out-of-bounds in kfifo_copy_out+0x83/0xc0
-  Write of size 64 at addr ffff888112c62202 by task python3
-   kfifo_copy_out
-   klsi_105_prepare_write_buffer [kl5kusb105]
-   usb_serial_generic_write_start [usbserial]
-  Allocated by task 139:
-   usb_serial_probe [usbserial]
-  The buggy address is located 2 bytes inside of allocated 64-byte region
-
-The out-of-bounds write no longer occurs with this change applied.
-
-Fixes: 60b3013cdaf3 ("USB: kl5usb105: reimplement using generic framework")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: <stable@vger.kernel.org> # v5.8+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260515234121.1607425-2-vladimir.zapolskiy@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/kl5kusb105.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-qcom-cci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/kl5kusb105.c
-+++ b/drivers/usb/serial/kl5kusb105.c
-@@ -359,8 +359,8 @@ static int klsi_105_prepare_write_buffer
- 	unsigned char *buf = dest;
- 	int count;
+--- a/drivers/i2c/busses/i2c-qcom-cci.c
++++ b/drivers/i2c/busses/i2c-qcom-cci.c
+@@ -683,8 +683,8 @@ static int cci_remove(struct platform_de
+ 		if (cci->master[i].cci) {
+ 			i2c_del_adapter(&cci->master[i].adap);
+ 			of_node_put(cci->master[i].adap.dev.of_node);
++			cci_halt(cci, i);
+ 		}
+-		cci_halt(cci, i);
+ 	}
  
--	count = kfifo_out_locked(&port->write_fifo, buf + KLSI_HDR_LEN, size,
--								&port->lock);
-+	count = kfifo_out_locked(&port->write_fifo, buf + KLSI_HDR_LEN,
-+				 size - KLSI_HDR_LEN, &port->lock);
- 	put_unaligned_le16(count, buf);
- 
- 	return count + KLSI_HDR_LEN;
+ 	disable_irq(cci->irq);
 
 
