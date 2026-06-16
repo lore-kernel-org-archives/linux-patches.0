@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A593D7D9D;
-	Tue, 16 Jun 2026 19:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4813191BA;
+	Tue, 16 Jun 2026 19:01:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636505; cv=none; b=Yvi603BNdzRGpYnDv1yqd4EZoJBTxfJKwsPWV6xl7XSBCbsU0iSPDyDtvY7S0Q+ObBEaKuRZNsVTyPZi2BxrZsejrCrRF3e2l2/6/pSY2q3t6c9w2fBjozIDdWHOx6Dxss8mekepD8OI/kzN7sp+lh6+i9yd8gErg4Wryf8r74c=
+	t=1781636509; cv=none; b=rL4bbSRXnJPCGzRZ/U+qrgtFcHfQnZrZvNbBRSopzVMEnK85zsf55V2+qHkSxF0WLwgBhvIQ7O4M4sGMvrfUpylLCU0WAEMjzAnRtU981pKzZ4C+2sE9ESSsd3l1ksnvcf6cF2xWGcdh5ylpy+KG3nAVTdgAhlLW824Dre090IQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636505; c=relaxed/simple;
-	bh=Pz295hyBv1VLXYWF7lGVeIk6E0vC/9s32aX5+W7qJYM=;
+	s=arc-20240116; t=1781636509; c=relaxed/simple;
+	bh=UK+sO2UenRy/AqgzZJ9PkhX5QgXSIgkpx94TI7PwUpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VeidHRmaFrzhOsNkycwCreanzufwHCkJ2TRS6I4MN3OUdLLHHZypF+PjcjPOYcM3FAQqZFgMKAZps6ZwV9NTuOQgeRTNqayJ1Rdh7PyfZ5bQkArdUjiAHaU4B1zpM6GD8OSnkgo6Dik2hiSxl6Z1Vw/mMJ/fkmVQHvkSV4XVmhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ExOF7O0J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FtDFyIFfa+hm9emL+3PnhyX1RdC4i9K5BY/cR4HYoDqaISnNUsHx5pbloP1ZANB0JPQTmmc0P4E6FpYJCc6iLwRt9bwZFVukRy6CaWSgCWtO5bZQh3ESGQTJb8DNFFemyeVpdZNodKoba241YStj6erI9O9u8XXF33CIKdfi6Do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jI9Myq7G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ExOF7O0J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAECB1F000E9;
-	Tue, 16 Jun 2026 19:01:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jI9Myq7G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7F81F000E9;
+	Tue, 16 Jun 2026 19:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636503;
-	bh=rkyyGT/1pUBDoinSVNtvGuawLBSBnQu5cRi7HJ9h9xQ=;
+	s=korg; t=1781636508;
+	bh=HRrPVDv5iuQi9z/0f/V2OurH6Bkxrk2QkSRgLaKD25Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ExOF7O0Jn51rC1qyTWID+Ryv7uzVHRdS9IKYjbpGi+n0tayBBTSUp7UWa9oFegA/K
-	 bVOZ+7CWLUXWVXT5KaiPezakSqau4nsTuDVdh983tp/zEwai1W3VHC5T3NA7MAG2Di
-	 ZJ7UehU0i9HvNK8RKnjqBL+e3qVJCMDUdHYJ+EHI=
+	b=jI9Myq7Goi/MBdjri2Kb7oYSkefOmyFfKRPQhAdXp+S50+eKk9nN7Me9Pyw2jqU2y
+	 px5IXq/Bq+4qaO2MLUT6DrEDPWIy5hs2ipmI1hUbsK9Xd54SdN/84taueI5vkJo45I
+	 I4Jtsfi/mjMb+lCgK8yjkfj1gtjHxGVgNByLfVX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+6e4cb1cac5efc96ea0ca@syzkaller.appspotmail.com,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 218/342] f2fs: fix UAF caused by decrementing sbi->nr_pages[] in f2fs_write_end_io()
-Date: Tue, 16 Jun 2026 20:28:34 +0530
-Message-ID: <20260616145058.350791848@linuxfoundation.org>
+Subject: [PATCH 5.10 219/342] smb: client: require a full NFS mode SID before reading mode bits
+Date: Tue, 16 Jun 2026 20:28:35 +0530
+Message-ID: <20260616145058.398305289@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -54,73 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 2d9c4a4ed4eef1f82c5b16b037aee8bad819fd53 ]
+[ Upstream commit 2757ad3e4b6f9e0fed4c7739594e702abc5cab21 ]
 
-The xfstests case "generic/107" and syzbot have both reported a NULL
-pointer dereference.
+parse_dacl() treats an ACE SID matching sid_unix_NFS_mode as an NFS
+mode SID and reads sid.sub_auth[2] to recover the mode bits.
 
-The concurrent scenario that triggers the panic is as follows:
+That assumes the ACE carries three subauthorities, but compare_sids()
+only compares min(a, b) subauthorities.  A malicious server can return
+an ACE with num_subauth = 2 and sub_auth[] = {88, 3}, which still
+matches sid_unix_NFS_mode and then drives the sub_auth[2] read four
+bytes past the end of the ACE.
 
-F2FS_WB_CP_DATA write callback          umount
-                                        - f2fs_write_checkpoint
-                                         - f2fs_wait_on_all_pages(sbi, F2FS_WB_CP_DATA)
-- blk_mq_end_request
- - bio_endio
-  - f2fs_write_end_io
-   : dec_page_count(sbi, F2FS_WB_CP_DATA)
-   : wake_up(&sbi->cp_wait)
-                                        - kill_f2fs_super
-                                         - kill_block_super
-                                          - f2fs_put_super
-                                           : iput(sbi->node_inode)
-                                           : sbi->node_inode = NULL
-   : f2fs_in_warm_node_list
-    - is_node_folio // sbi->node_inode is NULL and panic
+Require num_subauth >= 3 before treating the ACE as an NFS mode SID.
+This keeps the fix local to the special-SID mode path without changing
+compare_sids() semantics for the rest of cifsacl.
 
-The root cause is that f2fs_put_super() calls iput(sbi->node_inode) and
-sets sbi->node_inode to NULL after sbi->nr_pages[F2FS_WB_CP_DATA] is
-decremented to zero. As a result, f2fs_in_warm_node_list() may
-dereference a NULL node_inode when checking whether a folio belongs to
-the node inode, leading to a panic.
-
-This patch fixes the issue by calling f2fs_in_warm_node_list() before
-decrementing sbi->nr_pages[F2FS_WB_CP_DATA], thus preventing the
-use-after-free condition.
-
-Cc: stable@kernel.org
-Fixes: 50fa53eccf9f ("f2fs: fix to avoid broken of dnode block list")
-Reported-by: syzbot+6e4cb1cac5efc96ea0ca@syzkaller.appspotmail.com
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ folio => page ]
+Fixes: e2f8fbfb8d09 ("cifs: get mode bits from special sid on stat")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-6
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/cifs/cifsacl.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -377,6 +377,8 @@ static void f2fs_write_end_io(struct bio
- 
- 		f2fs_bug_on(sbi, page->mapping == NODE_MAPPING(sbi) &&
- 					page->index != nid_of_node(page));
-+		if (f2fs_in_warm_node_list(sbi, page))
-+			f2fs_del_fsync_node_entry(sbi, page);
- 
- 		dec_page_count(sbi, type);
- 
-@@ -388,8 +390,6 @@ static void f2fs_write_end_io(struct bio
- 				wq_has_sleeper(&sbi->cp_wait))
- 			wake_up(&sbi->cp_wait);
- 
--		if (f2fs_in_warm_node_list(sbi, page))
--			f2fs_del_fsync_node_entry(sbi, page);
- 		clear_cold_data(page);
- 		end_page_writeback(page);
- 	}
+--- a/fs/cifs/cifsacl.c
++++ b/fs/cifs/cifsacl.c
+@@ -757,6 +757,7 @@ static void parse_dacl(struct cifs_acl *
+ 			dump_ace(ppace[i], end_of_acl);
+ #endif
+ 			if (mode_from_special_sid &&
++			    ppace[i]->sid.num_subauth >= 3 &&
+ 			    (compare_sids(&(ppace[i]->sid),
+ 					  &sid_unix_NFS_mode) == 0)) {
+ 				/*
 
 
