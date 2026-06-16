@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700E0352007;
-	Tue, 16 Jun 2026 18:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B761B3C5842;
+	Tue, 16 Jun 2026 18:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632972; cv=none; b=Hrtvvqwtsmx/873YWbC/G1wfmOlvgQLOYU/YUvSqasTv0waS6vAcdlIhgm75yEMBIl29S/EzBxbe2Ji8wnoWoCNYqUpyrciTBU9JrkC3C7hMI9bb1dAP1OSohxI1e6X1PJ1rYrcJeZqMe39j2M4skElUuDHLhowbVJ66TnpImaE=
+	t=1781632975; cv=none; b=ml2DVF7o+W9TXxZ97fK6Vq55EMR740PVzXgG1AXHuTYtOZL92xLP5rC1StqOmDta265iPxQ3y/CHgvu2L7kVbnhArPpto49DLnTy8BUOkSOh5AbL0XtEaAZjIToQ/oDA1+oGkfJlnwq7q+GmtWy2RJ26oeZovFTy7gE1hKOvkPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632972; c=relaxed/simple;
-	bh=0qEp+jdUKeCk1QlLPxapQjuYImFEAIikGCcE1UQuzm8=;
+	s=arc-20240116; t=1781632975; c=relaxed/simple;
+	bh=IeZijJ6DWBgowb4caEOEV24Zo8WI9dRqbgWcZN5ZMjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TNnJYSIaR/khbp25wgI6pkbxjq59NCpn4lAleE1BMZWT9Fs4uDRjILRi4yVocIIN9QKVn6KF+6ZC4gk4bEopVdltmuiL/TbmrHsp/wLAy2tsNjhedo+qs0Ro9YI3VpTK/y4KbxpMwZvOpWU8yibHdj1js+Ss6V81BZQcZDaMSoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z2GHY2W5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M9opUhlNA/Kfrk0HBI2TuLw5zbT0OJdie2DovXjXFZJMHuVemzJooOvq7zTYzCp6eA2yRxbfsmOUDsMxYfyTn1YiOEBincmal159LqNyhN7diwEZq6nt6QQu9ykwhiFkUHv1zQsMDOcr410mCGwII+rgRKE8Zcy6Pat/v9PEYts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QN/p3w1H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z2GHY2W5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 563121F000E9;
-	Tue, 16 Jun 2026 18:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QN/p3w1H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914B21F000E9;
+	Tue, 16 Jun 2026 18:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632969;
-	bh=cToOLBGXaPr16aXcYow0K9QAIuY3KtAJmIp2FZsCvCQ=;
+	s=korg; t=1781632974;
+	bh=2g7vtNLDLt9hIpwKlCyxa2miV/aNVxKGlA9BbIcgtJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z2GHY2W5wchkOazu2NcEeUkwlOMl4tU+HuK9Zr1eL/kAbI5/GbGpmXw6pbCxz/P0O
-	 oOLvvS7+GiLazeM3LkUIPhmYzJnWfmBK7+BmXuwsrszig6+1/h2f3icYSVj3lHKFCb
-	 du636m6XDBjARUe/vaLcOK2mqMZk7nXebDpBp3+0=
+	b=QN/p3w1H0cKkgSUHBmNHAenNIoJcEsuRbqKIMTCnwEMrRGHMq8//nRYAP3B8olhxM
+	 8cPnrayXP660/BpqX2fE/DKAW1iD2qXXKQP9b15dOaL1rFZUtX91M0vslIh/xy8sXI
+	 EocsLiWJPyObp5fKaNs9k9MfECSNBiJPiZFkUzCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liew Rui Yan <aethernet65535@gmail.com>,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 510/522] mm/damon/lru_sort: detect and use fresh enabled and kdamond_pid values
-Date: Tue, 16 Jun 2026 20:30:57 +0530
-Message-ID: <20260616145149.600964629@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Davide Ornaghi <d.ornaghi97@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 480/522] netfilter: nft_fib: fix stale stack leak via the OIFNAME register
+Date: Tue, 16 Jun 2026 20:30:27 +0530
+Message-ID: <20260616145148.278338988@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,249 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Davide Ornaghi <d.ornaghi97@gmail.com>
 
-commit b98b7ff6025ae82570d4915e083f0cbd8d48b3cf upstream.
+[ Upstream commit ab185e0c4fb82dfba6fb86f8271e06f931d9c64c ]
 
-DAMON_LRU_SORT updates 'enabled' and 'kdamond_pid' parameter values, which
-represents the running status of its kdamond, when the user explicitly
-requests start/stop of the kdamond.  The kdamond can, however, be stopped
-in events other than the explicit user request in the following three
-events.
+For NFT_FIB_RESULT_OIFNAME the destination register is declared with
+len = IFNAMSIZ (four 32-bit registers), but on the lookup-fail,
+RTN_LOCAL and oif-mismatch paths nft_fib{4,6}_eval() only writes one
+register via "*dest = 0". The remaining three registers are left as
+whatever was on the stack in nft_do_chain()'s struct nft_regs, and a
+downstream expression that loads the register span can leak that
+uninitialised kernel stack to userspace.
 
-1. ctx->regions_score_histogram allocation failure at beginning of the
-   execution,
-2. damon_commit_ctx() failure due to invalid user input, and
-3. damon_commit_ctx() failure due to its internal allocation failures.
+The NFTA_FIB_F_PRESENT existence check has the same shape: it is only
+meaningful for NFT_FIB_RESULT_OIF, yet it was accepted for any result type
+while the eval stores a single byte via nft_reg_store8(), leaving the rest
+of the declared span stale.
 
-Hence, if the kdamond is stopped by the above three events, the values of
-the status parameters can be stale.  Users could show the stale values and
-be confused.  This is already bad, but the real consequence is worse.
-DAMON_LRU_SORT avoids unnecessary damon_start() and damon_stop() calls
-based on the 'enabled' parameter value.  And the update of 'enabled'
-parameter value depends on the damon_start() and damon_stop() call
-results.  Hence, once the kdamond has stopped by the unintentional events,
-the user cannot restart the kdamond before the system reboot.  For
-example, the issue can be reproduced via below steps.
+Fix both:
 
-    # cd /sys/module/damon_lru_sort/parameters
-    #
-    # # start DAMON_LRU_SORT
-    # echo Y > enabled
-    # ps -ef | grep kdamond
-    root         806       2  0 17:53 ?        00:00:00 [kdamond.0]
-    root         808     803  0 17:53 pts/4    00:00:00 grep kdamond
-    #
-    # # commit wrong input to stop kdamond withou explicit stop request
-    # echo 3 > addr_unit
-    # echo Y > commit_inputs
-    bash: echo: write error: Invalid argument
-    #
-    # # confirm kdamond is stopped
-    # ps -ef | grep kdamond
-    root         811     803  0 17:53 pts/4    00:00:00 grep kdamond
-    #
-    # # users casn now show stable status
-    # cat enabled
-    Y
-    # cat kdamond_pid
-    806
-    #
-    # # even after fixing the wrong parameter,
-    # # kdamond cannot be restarted.
-    # echo 1 > addr_unit
-    # echo Y > enabled
-    # ps -ef | grep kdamond
-    root         815     803  0 17:54 pts/4    00:00:00 grep kdamond
+ - replace the bare "*dest = 0" in the eval with nft_fib_store_result(),
+   which strscpy_pad()s the whole IFNAMSIZ for OIFNAME (and is already
+   used on the other early-return path), and
 
-The problem will only rarely happen in real and common setups for the
-following reasons.  The allocation failures are unlikely in such setups
-since those allocations are arguably too small to fail.  Also sane users
-on real production environments may not commit wrong input parameters.
-But once it happens, the consequence is quite bad.  And the bug is a bug.
+ - restrict NFTA_FIB_F_PRESENT to NFT_FIB_RESULT_OIF and declare its
+   destination as a single u8, so the marked span matches the one byte
+   the eval writes.
 
-The issue stems from the fact that there are multiple events that can
-change the status, and following all the events is challenging.
-Dynamically detect and use the fresh status for the parameters when those
-are requested.
-
-Link: https://lore.kernel.org/20260419161003.79176-3-sj@kernel.org
-Fixes: 40e983cca927 ("mm/damon: introduce DAMON-based LRU-lists Sorting")
-Co-developed-by: Liew Rui Yan <aethernet65535@gmail.com>
-Signed-off-by: Liew Rui Yan <aethernet65535@gmail.com>
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.0.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: SeongJae Park <sj@kernel.org>
+Fixes: f6d0cbcf09c5 ("netfilter: nf_tables: add fib expression")
+Suggested-by: Florian Westphal <fw@strlen.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Davide Ornaghi <d.ornaghi97@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[ kept the tree's existing `ip6_route_lookup`/`rt6_info` machinery (missing `fib6_lookup` refactor) and changed only `*dest = 0;` to `nft_fib_store_result(dest, priv, NULL)` ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/damon.h |    1 
- mm/damon/core.c       |   16 +++++++++
- mm/damon/lru_sort.c   |   84 +++++++++++++++++++++++++++++++++-----------------
- 3 files changed, 73 insertions(+), 28 deletions(-)
+ net/ipv4/netfilter/nft_fib_ipv4.c |    2 +-
+ net/ipv6/netfilter/nft_fib_ipv6.c |    2 +-
+ net/netfilter/nft_fib.c           |    6 ++++++
+ 3 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -572,6 +572,7 @@ static inline unsigned int damon_max_nr_
+--- a/net/ipv4/netfilter/nft_fib_ipv4.c
++++ b/net/ipv4/netfilter/nft_fib_ipv4.c
+@@ -122,7 +122,7 @@ void nft_fib4_eval(const struct nft_expr
+ 		fl4.saddr = get_saddr(iph->daddr);
+ 	}
  
- int damon_start(struct damon_ctx **ctxs, int nr_ctxs, bool exclusive);
- int damon_stop(struct damon_ctx **ctxs, int nr_ctxs);
-+bool damon_is_running(struct damon_ctx *ctx);
- int damon_kdamond_pid(struct damon_ctx *ctx);
+-	*dest = 0;
++	nft_fib_store_result(dest, priv, NULL);
  
- int damon_set_region_biggest_system_ram_default(struct damon_target *t,
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -644,6 +644,22 @@ static bool damon_check_reset_time_inter
- }
+ 	if (fib_lookup(nft_net(pkt), &fl4, &res, FIB_LOOKUP_IGNORE_LINKSTATE))
+ 		return;
+--- a/net/ipv6/netfilter/nft_fib_ipv6.c
++++ b/net/ipv6/netfilter/nft_fib_ipv6.c
+@@ -193,7 +193,7 @@ void nft_fib6_eval(const struct nft_expr
+ 		}
+ 	}
  
- /**
-+ * damon_is_running() - Returns if a given DAMON context is running.
-+ * @ctx:	The DAMON context to see if running.
-+ *
-+ * Return: true if @ctx is running, false otherwise.
-+ */
-+bool damon_is_running(struct damon_ctx *ctx)
-+{
-+	bool running;
-+
-+	mutex_lock(&ctx->kdamond_lock);
-+	running = ctx->kdamond != NULL;
-+	mutex_unlock(&ctx->kdamond_lock);
-+	return running;
-+}
-+
-+/**
-  * damon_kdamond_pid() - Return pid of a given DAMON context's worker thread.
-  * @ctx:	The DAMON context of the question.
-  *
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -113,15 +113,6 @@ module_param(monitor_region_start, ulong
- static unsigned long monitor_region_end __read_mostly;
- module_param(monitor_region_end, ulong, 0600);
+-	*dest = 0;
++	nft_fib_store_result(dest, priv, NULL);
+ 	rt = (void *)ip6_route_lookup(nft_net(pkt), &fl6, pkt->skb,
+ 				      lookup_flags);
+ 	if (rt->dst.error)
+--- a/net/netfilter/nft_fib.c
++++ b/net/netfilter/nft_fib.c
+@@ -107,6 +107,12 @@ int nft_fib_init(const struct nft_ctx *c
+ 		return -EINVAL;
+ 	}
  
--/*
-- * PID of the DAMON thread
-- *
-- * If DAMON_LRU_SORT is enabled, this becomes the PID of the worker thread.
-- * Else, -1.
-- */
--static int kdamond_pid __read_mostly = -1;
--module_param(kdamond_pid, int, 0400);
--
- static struct damos_stat damon_lru_sort_hot_stat;
- DEFINE_DAMON_MODULES_DAMOS_STATS_PARAMS(damon_lru_sort_hot_stat,
- 		lru_sort_tried_hot_regions, lru_sorted_hot_regions,
-@@ -249,37 +240,32 @@ static int damon_lru_sort_turn(bool on)
- {
- 	int err;
- 
--	if (!on) {
--		err = damon_stop(&ctx, 1);
--		if (!err)
--			kdamond_pid = -1;
--		return err;
--	}
-+	if (!on)
-+		return damon_stop(&ctx, 1);
- 
- 	err = damon_lru_sort_apply_parameters();
- 	if (err)
- 		return err;
- 
--	err = damon_start(&ctx, 1, true);
--	if (err)
--		return err;
--	kdamond_pid = ctx->kdamond->pid;
--	return 0;
-+	return damon_start(&ctx, 1, true);
-+}
-+
-+static bool damon_lru_sort_enabled(void)
-+{
-+	if (!ctx)
-+		return false;
-+	return damon_is_running(ctx);
- }
- 
- static struct delayed_work damon_lru_sort_timer;
- static void damon_lru_sort_timer_fn(struct work_struct *work)
- {
--	static bool last_enabled;
- 	bool now_enabled;
- 
- 	now_enabled = enabled;
--	if (last_enabled != now_enabled) {
--		if (!damon_lru_sort_turn(now_enabled))
--			last_enabled = now_enabled;
--		else
--			enabled = last_enabled;
--	}
-+	if (damon_lru_sort_enabled() == now_enabled)
-+		return;
-+	damon_lru_sort_turn(now_enabled);
- }
- static DECLARE_DELAYED_WORK(damon_lru_sort_timer, damon_lru_sort_timer_fn);
- 
-@@ -301,15 +287,57 @@ static int damon_lru_sort_enabled_store(
- 	return 0;
- }
- 
-+static int damon_lru_sort_enabled_load(char *buffer,
-+		const struct kernel_param *kp)
-+{
-+	return sprintf(buffer, "%c\n", damon_lru_sort_enabled() ? 'Y' : 'N');
-+}
-+
- static const struct kernel_param_ops enabled_param_ops = {
- 	.set = damon_lru_sort_enabled_store,
--	.get = param_get_bool,
-+	.get = damon_lru_sort_enabled_load,
- };
- 
- module_param_cb(enabled, &enabled_param_ops, &enabled, 0600);
- MODULE_PARM_DESC(enabled,
- 	"Enable or disable DAMON_LRU_SORT (default: disabled)");
- 
-+static int damon_lru_sort_kdamond_pid_store(const char *val,
-+		const struct kernel_param *kp)
-+{
-+	/*
-+	 * kdamond_pid is read-only, but kernel command line could write it.
-+	 * Do nothing here.
-+	 */
-+	return 0;
-+}
-+
-+static int damon_lru_sort_kdamond_pid_load(char *buffer,
-+		const struct kernel_param *kp)
-+{
-+	int kdamond_pid = -1;
-+
-+	if (ctx) {
-+		kdamond_pid = damon_kdamond_pid(ctx);
-+		if (kdamond_pid < 0)
-+			kdamond_pid = -1;
++	if (priv->flags & NFTA_FIB_F_PRESENT) {
++		if (priv->result != NFT_FIB_RESULT_OIF)
++			return -EINVAL;
++		len = sizeof(u8);
 +	}
-+	return sprintf(buffer, "%d\n", kdamond_pid);
-+}
 +
-+static const struct kernel_param_ops kdamond_pid_param_ops = {
-+	.set = damon_lru_sort_kdamond_pid_store,
-+	.get = damon_lru_sort_kdamond_pid_load,
-+};
-+
-+/*
-+ * PID of the DAMON thread
-+ *
-+ * If DAMON_LRU_SORT is enabled, this becomes the PID of the worker thread.
-+ * Else, -1.
-+ */
-+module_param_cb(kdamond_pid, &kdamond_pid_param_ops, NULL, 0400);
-+
- static int damon_lru_sort_handle_commit_inputs(void)
- {
- 	int err;
+ 	err = nft_parse_register_store(ctx, tb[NFTA_FIB_DREG], &priv->dreg,
+ 				       NULL, NFT_DATA_VALUE, len);
+ 	if (err < 0)
 
 
