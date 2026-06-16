@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4B73D091A;
-	Tue, 16 Jun 2026 18:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3E053D566F;
+	Tue, 16 Jun 2026 18:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633393; cv=none; b=MA+Mv1L08Edu8gESQluK9W+2gjoEyVfH+S8JUWjEIp9yaOvBIyt4uV9D0I/LS+BV/3UJXWdZFXu0IsYqMqUt2myCkECvbmhNjeXCt+3UaWrA1SjeUCKzpwjirQIp3Cpuy/qYS586Pntu51XUJX8AzIR7DISRzcYXt+NjLeWVDWY=
+	t=1781633398; cv=none; b=LYLCuYk4bSI+ES65fCywQMET/27DJS1qrRT40MVJaGKruWaf9cV6fEv+kqbRR4xR0nGAk48C3oYt49vNFXFpdKVTzIoS/xUQ35fkbMAfNY8XSUNkgiPjWTgW0Dht++TbIctUIulu2mY3ofIRIcZZoZ8P3nXg+w4U5QDRVYfUqiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633393; c=relaxed/simple;
-	bh=Y1bmhfTzomNWzp/P2RHsaIbKo4yHM1EzANOF9zt5li0=;
+	s=arc-20240116; t=1781633398; c=relaxed/simple;
+	bh=OeALJMHeVQxdL37Fis+ktCRIC4G0WaSuVn6nkJXgDx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uLYe5oDQ5mfJoIIs1EjDrqOWSkrN30541AjZ6Ooi0u/a+D/C37R2F+fpcdj69Ab5MVZ6Bz2kQhHL49j20Hhcr0jUKGKTRWDRuT4w1qAwzSJ44xSAU/rT4/Yg1qobWdS90OhVARQKS+IUPUBd8P0PiGTd94DucyRMBVToqSbc+2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sv6rjfzp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZrxQMgLzTQfi/55R+C1hKvwukWHdtIb/ZwccWvpfzs+7szNBt8WLjgMYblVdkmclLKjzyjqGMUCmOau86ZTwvXtsJ9plgDnPUPOORbcSUvM5ymp6qFL4fJkRYD0GffbcmfySj+nX1eUwRcwuKKH3xewv85BhvZR5tQzeVqA/q8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eeXUTPV4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sv6rjfzp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BC81F000E9;
-	Tue, 16 Jun 2026 18:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eeXUTPV4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2CA31F000E9;
+	Tue, 16 Jun 2026 18:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633392;
-	bh=EZh1eYgKCLK8ZE1W8gDNcQpoHug3i097T52twBMBSGE=;
+	s=korg; t=1781633397;
+	bh=LTcwZceMHbvuelY/SZH2P5fmhHLgMhHKw4f6RQury8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sv6rjfzp4wLgxXrbzkCa0qY/URd0AEpQTSztyqYC0depSrSKKCJBlekyC/0kAConc
-	 MgdNWkFz+Y0+3059OXmJcvF1+23sUJkbeQR4/C8KB+Mxnn8M7MPGi1maAKYcQncM7Y
-	 QA0PfE7P04w88paFXTiJQTD85DkQS0/QrsVorBlY=
+	b=eeXUTPV4ITb+VTt8ryJdRwvCBpUdYYagFA2u81DyB9eDnyHeiKANFFY+RkSMGEyel
+	 aaUZ0kMV3ycA0xSmMFCoMbfVJb1eHTv4pLstJrjbp5gGv20tYd9ELxi6b6q3tT3JpR
+	 eIJZ2qGsbcqU5RSa6yz32ajOfWxUIO26pW4Pnbjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Rodrigo Alencar <rodrigo.alencar@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 5.15 070/411] iio: dac: ad5686: fix input raw value check
-Date: Tue, 16 Jun 2026 20:25:08 +0530
-Message-ID: <20260616145104.003676711@linuxfoundation.org>
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 071/411] wireguard: send: append trailer after expanding head
+Date: Tue, 16 Jun 2026 20:25:09 +0530
+Message-ID: <20260616145104.050679612@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,35 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rodrigo Alencar <rodrigo.alencar@analog.com>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit d01220ee5e43c65a206df827b39bf5cf5f7b9dce upstream.
+commit f75e3eb08fe31d30a9af6ed80cdd22e6772837e2 upstream.
 
-Fix range check for input raw value, which is off by one, i.e., for a
-10-bit DAC the max valid value is 1023, but 1 << 10 equals 1024, which
-passes the previous check, allowing an out-of-range write. The issue
-exists since the ad5686 driver was first introduced.
+With how this is currently written, we add the trailer, zero it out, and
+then add the header space on. If that header space requires a
+reallocation + copy, the zeros in the trailer aren't copied, because the
+skb len hasn't actually been yet expanded to cover that. Instead add the
+padding at the end of the process rather than at the beginning.
 
-Fixes: c2f37c8dcadc ("iio: dac: New driver for AD5686R, AD5685R, AD5684R Digital to analog converters")
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Rodrigo Alencar <rodrigo.alencar@analog.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://patch.msgid.link/20260529173134.3080773-2-Jason@zx2c4.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/ad5686.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireguard/send.c |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
---- a/drivers/iio/dac/ad5686.c
-+++ b/drivers/iio/dac/ad5686.c
-@@ -154,7 +154,7 @@ static int ad5686_write_raw(struct iio_d
+--- a/drivers/net/wireguard/send.c
++++ b/drivers/net/wireguard/send.c
+@@ -177,16 +177,6 @@ static bool encrypt_packet(struct sk_buf
+ 	trailer_len = padding_len + noise_encrypted_len(0);
+ 	plaintext_len = skb->len + padding_len;
  
- 	switch (mask) {
- 	case IIO_CHAN_INFO_RAW:
--		if (val > (1 << chan->scan_type.realbits) || val < 0)
-+		if (val >= (1 << chan->scan_type.realbits) || val < 0)
- 			return -EINVAL;
+-	/* Expand data section to have room for padding and auth tag. */
+-	num_frags = skb_cow_data(skb, trailer_len, &trailer);
+-	if (unlikely(num_frags < 0 || num_frags > ARRAY_SIZE(sg)))
+-		return false;
+-
+-	/* Set the padding to zeros, and make sure it and the auth tag are part
+-	 * of the skb.
+-	 */
+-	memset(skb_tail_pointer(trailer), 0, padding_len);
+-
+ 	/* Expand head section to have room for our header and the network
+ 	 * stack's headers.
+ 	 */
+@@ -198,6 +188,16 @@ static bool encrypt_packet(struct sk_buf
+ 		     skb_checksum_help(skb)))
+ 		return false;
  
- 		mutex_lock(&st->lock);
++	/* Expand data section to have room for padding and auth tag. */
++	num_frags = skb_cow_data(skb, trailer_len, &trailer);
++	if (unlikely(num_frags < 0 || num_frags > ARRAY_SIZE(sg)))
++		return false;
++
++	/* Set the padding to zeros, and make sure it and the auth tag are part
++	 * of the skb.
++	 */
++	memset(skb_tail_pointer(trailer), 0, padding_len);
++
+ 	/* Only after checksumming can we safely add on the padding at the end
+ 	 * and the header.
+ 	 */
 
 
