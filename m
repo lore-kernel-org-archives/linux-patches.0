@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B2D478E50;
-	Tue, 16 Jun 2026 17:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83DC357CEC;
+	Tue, 16 Jun 2026 17:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630164; cv=none; b=sdKEbIqaAnuLw/QArAbi2xmxsKLjQQkZbKS2if/cZx4BgVDD+BIW/loJm6xg1YVUjmJotPFciLhhMFf3XhoxrV43oqdloSNiXWwDqM6XxPs2iMkfE3eFOLzWK8KKLHHK3H9+QFFpKhYTKl+q95pvfyqqtHvCWBHxUza0pquoT/A=
+	t=1781630169; cv=none; b=sa3pLtBxPkXY9tKZijWt51jiyIGet3WJwK6g3emoEE+LK0SEewUCDtcElGEOndaeUDqRQt0Cfv62s3Ig/QmpTbKrqrD1J0/XK/nqkrd84NwgMv33/VKIb7Z6bwpRZEV+JB6eqb5MoS/tYRPdK+URVxJmO9RH4goDAe31X9vimjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630164; c=relaxed/simple;
-	bh=95DudTWTjV7RVGR8OaEmKR8EqxHvVN1qsM8DxatFgHc=;
+	s=arc-20240116; t=1781630169; c=relaxed/simple;
+	bh=7v5T40q8eFdhzQIjvuZnjVbE1Px3VXEdna78aOL9nhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PSIzFKieoAs+PnMJSF5a50iQ+7lpG4dmvn9IfgaEqsN2c7/JZEKd5IEgdIvGTrd9QrEfTI0mp5rvCBEHrJbYo4Fc5ZWFXXsnsBo+mt4XkcUtFWP4XbYcndrvyHLqgsxeP7iD+CYgk44U3LX0B+3ZMXhcaohOj/zQP6tRnBaUM2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/Ul5VxH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VHEoVakAPpGi0+Dff0qrP+Xuyc0Kj3Yl9+eSwR27SrbYk9kwxI1ZoS8a6eOmstOofOMwK9e4Yzd8bqIu4lA8vdRDyKIvAWrcri+KALa32YFDgtpgbVa1/kQRz3lZEqOfrW4MJwKR48UsTJ/sEVslU/zADumIQOcebwjH6Z2ekR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNMl8KcU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/Ul5VxH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15571F000E9;
-	Tue, 16 Jun 2026 17:16:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNMl8KcU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6F31F000E9;
+	Tue, 16 Jun 2026 17:16:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630161;
-	bh=AlLRMO/RyRJ4yYCORYroaXR3yXi6VmD0BFrRxQwM2zE=;
+	s=korg; t=1781630167;
+	bh=RKRTEwPZst3v5WVW5cA4s1TjR8djCp4guPSmEF5flnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S/Ul5VxHzwjKLhcT9JYOZ599qUlR92T8iaJ7KTzE/H8z65gFWUDRR+Re1I3LlYx4M
-	 lekX6nKftnUqoCpGfJJ3qgIHqOvvXUMpkX6SN5DnukJF95ocNQ3+Fsos5wi278O0Jw
-	 Ws5Vjjrr0jyWRqexkqX1OFz/zdfQdB2EdjQcwSEM=
+	b=XNMl8KcU/rBiLC7bO5A0f3oq30D8z7m6qb2SGlLPNc0z4K21MJQgMDd5NJ2qLo8rw
+	 eTjFxeDtE3icKFCi9HhnVgWUZnQfXw2lk0piQsuAKosp+BmXHJZYDaGQR5NkrtHICx
+	 W0yoq/4knE7TPovziAf8Q8QAidJffQ4wmrhnXhHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Bommarito <michael.bommarito@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	John Garry <john.g.garry@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 423/452] thunderbolt: property: Cap recursion depth in __tb_property_parse_dir()
-Date: Tue, 16 Jun 2026 20:30:50 +0530
-Message-ID: <20260616145138.944965963@linuxfoundation.org>
+Subject: [PATCH 6.6 424/452] scsi: target: iscsi: Fix CRC overread and double-free in iscsit_handle_text_cmd()
+Date: Tue, 16 Jun 2026 20:30:51 +0530
+Message-ID: <20260616145138.990393315@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -53,107 +54,119 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 928abe19fbf0127003abcb1ea69cabc1c897d0ab ]
+[ Upstream commit 778c2ab142c625a8a8afa570e0f9b7873f445d99 ]
 
-A DIRECTORY entry's value field is used as the dir_offset for a
-recursive call into __tb_property_parse_dir() with no depth counter.
-A crafted peer that chains DIRECTORY entries into a back-reference
-loop drives the parser until the kernel stack is exhausted and the
-guard page fires.  Any untrusted XDomain peer (cable, dock, in-line
-inspector, adjacent host) that reaches the PROPERTIES_REQUEST
-control-plane exchange can trigger this without authentication.
+Two latent bugs in the Text-phase handler, both present since the
+original LIO integration in commit e48354ce078c ("iscsi-target: Add
+iSCSI fabric support for target v4.1"):
 
-Thread a depth counter through tb_property_parse() and
-__tb_property_parse_dir(), and reject blocks that exceed
-TB_PROPERTY_MAX_DEPTH = 8.  That is comfortably larger than any
-observed legitimate XDomain layout.
+1) DataDigest CRC buffer overread (4 bytes past text_in).
 
-Operators who do not need XDomain host-to-host discovery can disable
-the path entirely with thunderbolt.xdomain=0 on the kernel command
-line.
+   text_in is kzalloc()'d at ALIGN(payload_length, 4).  rx_size is then
+   incremented by ISCSI_CRC_LEN to make room for the received DataDigest
+   in the iovec, but the same (now-bumped) rx_size is passed as the
+   buffer length to iscsit_crc_buf():
 
-Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
+       if (conn->conn_ops->DataDigest) {
+               ...
+               rx_size += ISCSI_CRC_LEN;
+       }
+       ...
+       if (conn->conn_ops->DataDigest) {
+               data_crc = iscsit_crc_buf(text_in, rx_size, 0, NULL);
+
+   iscsit_crc_buf() walks rx_size bytes of text_in with crc32c(), so
+   when DataDigest is negotiated it reads 4 bytes past the end of the
+   text_in allocation.  KASAN reproduces this directly on the unpatched
+   mainline tree as slab-out-of-bounds in crc32c() called from the Text
+   PDU path.  The OOB bytes feed crc32c() and are then compared against
+   the initiator-supplied checksum, so the value does not flow back to
+   the attacker, but the kernel does read past the buffer on every Text
+   PDU with DataDigest=CRC32C.
+
+   Fix by passing the actual padded payload length
+   (ALIGN(payload_length, 4)) that was used for the kzalloc().
+
+2) Stale cmd->text_in_ptr re-free (double-free) on ERL>0 bad DataDigest
+   drop.
+
+   On DataDigest mismatch with ErrorRecoveryLevel > 0 the handler
+   silently drops the PDU and lets the initiator plug the CmdSN gap:
+
+               kfree(text_in);
+               return 0;
+
+   cmd->text_in_ptr still points at the freed buffer.  The next Text
+   Request on the same ITT re-enters iscsit_setup_text_cmd(), which
+   unconditionally does
+
+       kfree(cmd->text_in_ptr);
+       cmd->text_in_ptr = NULL;
+
+   freeing the same pointer a second time.  Session teardown via
+   iscsit_release_cmd() has the same shape and hits the same double-free
+   if the connection is dropped before a second Text Request arrives.
+
+   On an unmodified mainline tree the bug-1 CRC overread fires first on
+   the initial valid Text Request and perturbs the subsequent state, so
+   #4 was isolated by building a kernel with only the bug-1 hunk of this
+   patch applied plus temporary printk() observability around the three
+   relevant kfree() sites.  The observability prints are not part of
+   this patch.  On that build, a three-PDU Text Request sequence after
+   login produces two back-to-back splats:
+
+       BUG: KASAN: double-free in iscsit_setup_text_cmd+0x??
+       BUG: KASAN: double-free in iscsit_release_cmd+0x??
+
+   showing the same pointer freed in the ERL>0 drop path and again in
+   iscsit_setup_text_cmd() (next Text Request on the same ITT) and once
+   more in iscsit_release_cmd() (session teardown).  On distro kernels
+   with CONFIG_SLAB_FREELIST_HARDENED=y (default) the double-free
+   becomes a remote kernel BUG(); on non-hardened kernels it corrupts
+   the slab freelist.
+
+   Fix by clearing cmd->text_in_ptr after the kfree() in the ERL>0 drop
+   path.  With both hunks applied #4 is directly observable on the stock
+   tree without observability printks; fixing bug-1 alone would mask #4
+   less, not more, so the hunks are submitted together.
+
+Both fixes are one-liners.  The Text PDU state machine is unchanged and
+the wire protocol is unaffected.
+
+Fixes: e48354ce078c ("iscsi-target: Add iSCSI fabric support for target v4.1")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
+Assisted-by: Claude:claude-opus-4-7
 Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Tested-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/property.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/target/iscsi/iscsi_target.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/thunderbolt/property.c
-+++ b/drivers/thunderbolt/property.c
-@@ -35,10 +35,11 @@ struct tb_property_dir_entry {
- };
+--- a/drivers/target/iscsi/iscsi_target.c
++++ b/drivers/target/iscsi/iscsi_target.c
+@@ -2335,8 +2335,9 @@ iscsit_handle_text_cmd(struct iscsit_con
  
- #define TB_PROPERTY_ROOTDIR_MAGIC	0x55584401
-+#define TB_PROPERTY_MAX_DEPTH		8
+ 		if (conn->conn_ops->DataDigest) {
+ 			iscsit_do_crypto_hash_buf(conn->conn_rx_hash,
+-						  text_in, rx_size, 0, NULL,
+-						  &data_crc);
++						  text_in,
++						  ALIGN(payload_length, 4),
++						  0, NULL, &data_crc);
  
- static struct tb_property_dir *__tb_property_parse_dir(const u32 *block,
- 	size_t block_len, unsigned int dir_offset, size_t dir_len,
--	bool is_root);
-+	bool is_root, unsigned int depth);
- 
- static inline void parse_dwdata(void *dst, const void *src, size_t dwords)
- {
-@@ -99,7 +100,8 @@ tb_property_alloc(const char *key, enum
- }
- 
- static struct tb_property *tb_property_parse(const u32 *block, size_t block_len,
--					const struct tb_property_entry *entry)
-+					const struct tb_property_entry *entry,
-+					unsigned int depth)
- {
- 	char key[TB_PROPERTY_KEY_SIZE + 1];
- 	struct tb_property *property;
-@@ -120,7 +122,7 @@ static struct tb_property *tb_property_p
- 	switch (property->type) {
- 	case TB_PROPERTY_TYPE_DIRECTORY:
- 		dir = __tb_property_parse_dir(block, block_len, entry->value,
--					      entry->length, false);
-+					      entry->length, false, depth + 1);
- 		if (!dir) {
- 			kfree(property);
- 			return NULL;
-@@ -165,13 +167,17 @@ static struct tb_property *tb_property_p
- }
- 
- static struct tb_property_dir *__tb_property_parse_dir(const u32 *block,
--	size_t block_len, unsigned int dir_offset, size_t dir_len, bool is_root)
-+	size_t block_len, unsigned int dir_offset, size_t dir_len, bool is_root,
-+	unsigned int depth)
- {
- 	const struct tb_property_entry *entries;
- 	size_t i, content_len, nentries;
- 	unsigned int content_offset;
- 	struct tb_property_dir *dir;
- 
-+	if (depth > TB_PROPERTY_MAX_DEPTH)
-+		return NULL;
-+
- 	dir = kzalloc(sizeof(*dir), GFP_KERNEL);
- 	if (!dir)
- 		return NULL;
-@@ -206,7 +212,7 @@ static struct tb_property_dir *__tb_prop
- 	for (i = 0; i < nentries; i++) {
- 		struct tb_property *property;
- 
--		property = tb_property_parse(block, block_len, &entries[i]);
-+		property = tb_property_parse(block, block_len, &entries[i], depth);
- 		if (!property) {
- 			tb_property_free_dir(dir);
- 			return NULL;
-@@ -243,7 +249,7 @@ struct tb_property_dir *tb_property_pars
- 		return NULL;
- 
- 	return __tb_property_parse_dir(block, block_len, 0, rootdir->length,
--				       true);
-+				       true, 0);
- }
- 
- /**
+ 			if (checksum != data_crc) {
+ 				pr_err("Text data CRC32C DataDigest"
+@@ -2356,6 +2357,7 @@ iscsit_handle_text_cmd(struct iscsit_con
+ 					" Command CmdSN: 0x%08x due to"
+ 					" DataCRC error.\n", hdr->cmdsn);
+ 					kfree(text_in);
++					cmd->text_in_ptr = NULL;
+ 					return 0;
+ 				}
+ 			} else {
 
 
