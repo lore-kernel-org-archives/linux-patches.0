@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4693D8125;
-	Tue, 16 Jun 2026 18:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776803CFF55;
+	Tue, 16 Jun 2026 18:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635664; cv=none; b=tXK3gO4SZGpJgnGW8l8tAFppdYKjh+l4uchUGWkMceOk7mbgoYAooocNtGFH1Eg6arnwvoLyZGYegCt9C1ZQwjx183Xx2hVH/3jA9vNkQKyh4IA2ke4Uhy6KMhpFPyFMJM6HNd8NYhSKUM6MWYoRp+znUGe5EfJSh3l7YoVZsks=
+	t=1781635669; cv=none; b=a3bHJ+8cs+58/nDTzNbiVD8u+0GAMS37r5oJ2RYyEtf1KgswtrQzEdtJ31+O51R2Mch+wEQSrX3s0dmjVyDHXsrwtcH1TA/UOvb7T7WEABQ8DLGWR+y72/laQFZbCtorKEfmh0/4e0PU+p1pvZyq50+Dz8/10R3aX82uLqNZnMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635664; c=relaxed/simple;
-	bh=QN/0R1EFQHXlUeAomdOpIl2OaVqNc4fO9OtVrRiOKmA=;
+	s=arc-20240116; t=1781635669; c=relaxed/simple;
+	bh=2iHp9pp9P2efIlr+nNURPvNWQMUjpAxZGOV5mLCPNAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KJ9q2TCH8sPSX/qwVrORgmazFgM1cuXKhTdpR9Iq/WuNDd5WKafxlCzdcviM5Nok/cZU5uTPugFgNNlXKRuqKE8SPIgXjoo36pWYwGOyfMqEQ+xUHKgxnyFqkjzIZsFOweCcsALAJ+bEV6wkYABZSOnOS8Xo5/sk+qoyNOuIL6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdjjBvy9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hnHiU3DmkWpNqrjeIHpQgaRWA/5JAjsI61UCs/dCRcB+uw/xxfEELiB9HXNhPAnSHQOOxX/59PM6ym3031VkMxgLQ+n6oVnn2C9f6No3IFTmWkDoxuowTK9A+IEiU74fBWEG0BTvsMlgnRKaulnvA0wDRESVbLuaMklHwDZ0W+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2c8/UxTQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdjjBvy9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709C11F000E9;
-	Tue, 16 Jun 2026 18:47:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2c8/UxTQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D22D1F000E9;
+	Tue, 16 Jun 2026 18:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635663;
-	bh=PmrEwbjfMJnsAtLIeAQUsNmu28NvJFq5Yaskvgbd7kU=;
+	s=korg; t=1781635668;
+	bh=BnNJYS47TqI/3bwX2vqv/opG/rzC7RVBsxF/E5ssCy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EdjjBvy9Y4HjUdDLQ63IRs94PaDJkagsfHw7jeRg54KA779rJNWrbtW7a4FRXPO6L
-	 YirzDnmJT2xY/lIcwMNIxY19AWb8m0nKeDAj6Ji0oD9TcybjzfhJKYQ4lJieGBYM05
-	 HIzHsuxZIYSiIr1YvU6xMDhqzeX+/xV8oQ1/3TSc=
+	b=2c8/UxTQt0tUbCCIxWZDkpGhIXxH0SICyHGrhcIoG9MzAbDJauwfHfY3qof3vkEf4
+	 p8Zqchj5evfYmPuZ/3RfM0uTiNQkPJlC2S19ebC7WhjilFAdORXhwTD8gmvLS+und1
+	 wcWBX00Sj0CZrDJ8AnoXoNPYIWWENihbzEqz2iNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Rodrigo Alencar <rodrigo.alencar@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 5.10 058/342] iio: dac: ad5686: fix input raw value check
-Date: Tue, 16 Jun 2026 20:25:54 +0530
-Message-ID: <20260616145050.965132708@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 049/342] USB: serial: safe_serial: fix memory corruption with small endpoint
+Date: Tue, 16 Jun 2026 20:25:45 +0530
+Message-ID: <20260616145050.542019924@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -52,35 +49,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rodrigo Alencar <rodrigo.alencar@analog.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit d01220ee5e43c65a206df827b39bf5cf5f7b9dce upstream.
+commit 438061ed1ad85e6743e2dce826671772d81089ec upstream.
 
-Fix range check for input raw value, which is off by one, i.e., for a
-10-bit DAC the max valid value is 1023, but 1 << 10 equals 1024, which
-passes the previous check, allowing an out-of-range write. The issue
-exists since the ad5686 driver was first introduced.
+Make sure that the bulk-out buffer size is at least eight bytes to avoid
+user-controlled slab corruption in "safe" mode should a malicious device
+report a smaller size.
 
-Fixes: c2f37c8dcadc ("iio: dac: New driver for AD5686R, AD5685R, AD5684R Digital to analog converters")
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Rodrigo Alencar <rodrigo.alencar@analog.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/ad5686.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/safe_serial.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/iio/dac/ad5686.c
-+++ b/drivers/iio/dac/ad5686.c
-@@ -154,7 +154,7 @@ static int ad5686_write_raw(struct iio_d
+--- a/drivers/usb/serial/safe_serial.c
++++ b/drivers/usb/serial/safe_serial.c
+@@ -259,6 +259,7 @@ static int safe_prepare_write_buffer(str
+ static int safe_startup(struct usb_serial *serial)
+ {
+ 	struct usb_interface_descriptor	*desc;
++	int bulk_out_size;
  
- 	switch (mask) {
- 	case IIO_CHAN_INFO_RAW:
--		if (val > (1 << chan->scan_type.realbits) || val < 0)
-+		if (val >= (1 << chan->scan_type.realbits) || val < 0)
- 			return -EINVAL;
+ 	if (serial->dev->descriptor.bDeviceClass != CDC_DEVICE_CLASS)
+ 		return -ENODEV;
+@@ -279,6 +280,16 @@ static int safe_startup(struct usb_seria
+ 	default:
+ 		return -EINVAL;
+ 	}
++
++	/*
++	 * The bulk-out buffer needs to be large enough for the two-byte
++	 * trailer in safe mode, but assume anything smaller than eight bytes
++	 * is broken.
++	 */
++	bulk_out_size = serial->port[0]->bulk_out_size;
++	if (bulk_out_size > 0 && bulk_out_size < 8)
++		return -EINVAL;
++
+ 	return 0;
+ }
  
- 		mutex_lock(&st->lock);
 
 
