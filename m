@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB7447A0A6;
-	Tue, 16 Jun 2026 16:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E494779BF;
+	Tue, 16 Jun 2026 16:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628709; cv=none; b=a7eBzPh+PQduURJDMjlCMU+352q+8O4KAQLPygJJoBa7Qc2SYpam+Re1JjYys6bd7eiPCcgAOjQ6vKRtOqkyyuPfTtr4ppdY6SHo8BJQvUnV79SwoxTmiKoH9/+sl1hOWkELVSykPPSqav5QvuPDs61a8XOLU58rnbSfHNtJrjk=
+	t=1781628715; cv=none; b=gfK6BI0KpFllVUGAvcwtFGB4xCsyjpyrdA+4tBOaztYCZwhs/rz1Fkk61FtkDksCli3pZcNEEFljrUKrwlQrH4s+jJY0G5hdf8LznpPEIO7gn35ESPfyEjAWfE2c1dAKItHzDyDdhCREd8kSU6eNW3RBt5dH/xLZdnzPXsZ3lCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628709; c=relaxed/simple;
-	bh=vxuqhgk/noas0NUre/T+3uta0dV/Zl5geeKMt+w7tD8=;
+	s=arc-20240116; t=1781628715; c=relaxed/simple;
+	bh=Ne1qM0g1EafaChAXJN2EkJzfZGDnxLN+F7qEAfC2MEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F+WYw+mE/MyGnPangMD7ToJ/Z+aJ8lMvnxuKPQC+W9riWEkSkEqYpCUX550ByEB5Ejt+gU/cuuHq2Hg29//XgLaTRV6lCjxD2+bgyHTCTQR/ZSovVLNCGm9UxfhZNpt+gv4EcGEB//L5qCR/oZ0nwRTsrQf+jplFq8MCdpvj9mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vsk4PbOX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qzrALNQMkTs9eQkuT0we0eRc9MYvOAgFwgk3faaxK5uQM4S5XEkHjwtc9D6dpONqQoOqGrAFnoQVizgeE0T5wKxF5BckmQ90+ATtXfam6cjfNWMfXTmoDIf/pQgiNHIGVC902W8k9shrjiURidKhUCJjSTW2rV/UgkdERPJMKFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/aHqDJk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vsk4PbOX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB5E1F000E9;
-	Tue, 16 Jun 2026 16:51:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/aHqDJk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD131F000E9;
+	Tue, 16 Jun 2026 16:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628708;
-	bh=boGE8+iVfRihsnNTvBBuna3JrUiewHEsRm63OnGBFIo=;
+	s=korg; t=1781628714;
+	bh=r8b4/zkjaPT9tBLTk4N/Y+lBurx6sWfnpNN3sasJVN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vsk4PbOX365godvp+7wU98A05XR5Md5VC2B9YrxqJCNivGXPcZFnv5a1m3QcJhuMV
-	 yU/i4TMbQiH9d6poM1+BUv7uW10uWa+4bYG+3hotMlWkBmLT18plye1Gx7e7HZRom3
-	 /8KASUkKv1rLfHE1YK9MfOQJmP/mW1ihM5BnPhZQ=
+	b=i/aHqDJkZeBmdvo67REaiB4Ht6vGa6MaLKo/NbNR4PT8JOGAs+ag8tchJjPGhc3XN
+	 vNQk6RxudiFWKhbwfqnnXnLcnphG7EFnfb232fT1w2uIOfKuXUTgXzGcWUyHaydwKV
+	 L260rVR+i6FjjXBVQvRaLKwNs+QyFc0YSFbPH5Ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
+	Advait Dhamorikar <advaitd@mechasystems.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.6 115/452] iio: temperature: tsys01: fix broken PROM checksum validation
-Date: Tue, 16 Jun 2026 20:25:42 +0530
-Message-ID: <20260616145123.758349719@linuxfoundation.org>
+Subject: [PATCH 6.6 116/452] iio: magnetometer: st_magn: fix default DRDY pin selection for LIS2MDL
+Date: Tue, 16 Jun 2026 20:25:43 +0530
+Message-ID: <20260616145123.802932899@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,41 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Advait Dhamorikar <advaitd@mechasystems.com>
 
-commit 4701e471c16866e7aa8f5e6a3a6b0d31e097e2c9 upstream.
+commit 49f79cd28f1e3333cbe0d616ce59ead0b24bf34e upstream.
 
-The current implementation of tsys01_crc_valid() incorrectly sums the
-first word (n_prom[0]) repeatedly instead of iterating over the 8 words
-retrieved from the PROM. This leads to a checksum mismatch and probe
-failure on hardware.
+The device tree binding for st,lis2mdl does not support
+st,drdy-int-pin property. However, when no platform data is provided
+and the property is absent, the driver falls back to default_magn_pdata
+which hardcodes drdy_int_pin = 2. This causes
+`st_sensors_set_drdy_int_pin` to fail with -EINVAL because the LIS2MDL
+sensor settings have no INT2 DRDY mask defined.
 
-According to the TSYS01 datasheet, the PROM consists of 8 words. A valid
-check must iterate through all 8 words to verify the integrity of the
-calibration data. The current driver only checks the first word 8 times.
+Fix this by checking the sensor's INT2 DRDY mask availability at
+probe time and selecting the appropriate default pin. Sensors that
+do not support INT2 DRDY will default to INT1, while all others
+retain the existing default of INT2.
 
-Note: This fix was identified during a code audit and is based on
-datasheet specifications. It has not been tested on real hardware.
-
-Fixes: 43e53407f680 ("Add tsys01 meas-spec driver support")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
+Fixes: 38934daf7b5c ("iio: magnetometer: st_magn: Provide default platform data")
+Signed-off-by: Advait Dhamorikar <advaitd@mechasystems.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/temperature/tsys01.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/magnetometer/st_magn_core.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/temperature/tsys01.c
-+++ b/drivers/iio/temperature/tsys01.c
-@@ -119,7 +119,7 @@ static bool tsys01_crc_valid(u16 *n_prom
- 	u8 sum = 0;
+--- a/drivers/iio/magnetometer/st_magn_core.c
++++ b/drivers/iio/magnetometer/st_magn_core.c
+@@ -506,6 +506,11 @@ static const struct st_sensors_platform_
+ 	.drdy_int_pin = 2,
+ };
  
- 	for (cnt = 0; cnt < TSYS01_PROM_WORDS_NB; cnt++)
--		sum += ((n_prom[0] >> 8) + (n_prom[0] & 0xFF));
-+		sum += ((n_prom[cnt] >> 8) + (n_prom[cnt] & 0xFF));
++/* LIS2MDL only supports DRDY on INT1 */
++static const struct st_sensors_platform_data alt_magn_pdata = {
++	.drdy_int_pin = 1,
++};
++
+ static int st_magn_read_raw(struct iio_dev *indio_dev,
+ 			struct iio_chan_spec const *ch, int *val,
+ 							int *val2, long mask)
+@@ -628,8 +633,12 @@ int st_magn_common_probe(struct iio_dev
+ 	mdata->current_fullscale = &mdata->sensor_settings->fs.fs_avl[0];
+ 	mdata->odr = mdata->sensor_settings->odr.odr_avl[0].hz;
  
- 	return (sum == 0);
- }
+-	if (!pdata)
+-		pdata = (struct st_sensors_platform_data *)&default_magn_pdata;
++	if (!pdata) {
++		if (mdata->sensor_settings->drdy_irq.int2.mask)
++			pdata = (struct st_sensors_platform_data *)&default_magn_pdata;
++		else
++			pdata = (struct st_sensors_platform_data *)&alt_magn_pdata;
++	}
+ 
+ 	err = st_sensors_init_sensor(indio_dev, pdata);
+ 	if (err < 0)
 
 
