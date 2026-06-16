@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716AF3DE428;
-	Tue, 16 Jun 2026 19:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819EE34751B;
+	Tue, 16 Jun 2026 19:10:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781637019; cv=none; b=IdZannwlZat03aREdzgF6ryl3b2p+8L2kHqQJBFs86A2gxAM9tgfsREEX/gwlHuo0M5Z4aBq2Hdm/m2Fa+8zSRzxyYCrHtQZ3o/eZYgJGMJ2dNt+fdyqoyR+8Bv5Wfk0zV1TjjqdnHyjufjjjyOa8XC7fjToL/Mm8RVvtSxP/yU=
+	t=1781637024; cv=none; b=ZNXfexRtKW5DUv/O/ANvzKbS1xTixuMAiiKXgKeY+FkSTS1zzLidN+0w2rdpRC+lZnAhPolHi/7fqx3dTFeWf3dz19NJCozbei8h97ATr8SLCekcVHBsVaJCNkTQVwXy+9wKIoJsSBZ+e7aIMQRPoPJDs1kKS6IlBtz5Bf8Blxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781637019; c=relaxed/simple;
-	bh=c/dOxhIogakXzaljREY8zsHZay198n5OnPvRAMfW/qs=;
+	s=arc-20240116; t=1781637024; c=relaxed/simple;
+	bh=mMbkWyM9eS4cr9qejCTvonZIoT8UWJbRBjzDEE0Ntag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XoB2sWNSxq9BhdUfvLL/hZz//2ga30UVNLDkVxCQkG30yDAVKOEw+7cHfkyi1mazgjPNJPMLtw2I6jl/ERLF7JSp9Crj4veWD/rHP/uT2ubXPJRmTyANA6VaL9/jPxu8VwOsnFzwNckMD38GHRgRq4KW+UUZKD0bftEuK5mYfIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xx3G0ZU/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mGAaj4GRnn74hP/SP6D9+Ck/iiAGyL1n1iYHVjkq+WhniMGPzKz/Psh8TaZ5z86omNqxGbD+iZ28EF2nXT8CVgY2SWimXcks+vF9MRISh38Hkm5Ge7WVqwRrXRcNxwTpydPdKtHK3wA/5wRjRR79NOkWXSD4ng5kdJfwGCEktzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wckrU+tp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xx3G0ZU/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 756A71F000E9;
-	Tue, 16 Jun 2026 19:10:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wckrU+tp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B1BE1F00A3A;
+	Tue, 16 Jun 2026 19:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781637018;
-	bh=ZRaHk94nfJw2hTW2hy3ay3fEeQ8lgnplCVK8zynxw9g=;
+	s=korg; t=1781637023;
+	bh=0Zag5D9tJgoasGYtIWPQgepxbGs890VDC95iWsiQsTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xx3G0ZU/1m4AHRi7G+YkV8e6EHuwHZiDafLe0c8Hk7WliaGLlnOA6TSU2QBdDUx+5
-	 biAPc1jcGlH8iNWR6Ja6JNLggjKSATRGZYOYB8FFH0U8uq5pLo93RA/9WCcEeCwGnJ
-	 JmvXKzVBDsSVslftTWzz+v3mjPJYmYosVHcC8yCQ=
+	b=wckrU+tpEC1CvSW8y+JFl2DUXzamWvJ+gbugI+DWRm3U0OIkAyb6j81pXWwMmCeDu
+	 i8+Mol7SezF3lgLd2kHdp0zrsh33xvjaqv/cqfTDUrg0egr3Af4MJlCCA4SE3mSzf6
+	 DcZblrFp/FxXGaNV1jqb5EAF9XGsesSamuwwSTC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Protsenko <semen.protsenko@linaro.org>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	David Carlier <devnexen@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 328/342] tty: serial: samsung: use u32 for register interactions
-Date: Tue, 16 Jun 2026 20:30:24 +0530
-Message-ID: <20260616145103.869160173@linuxfoundation.org>
+Subject: [PATCH 5.10 319/342] iio: adc: npcm: fix unbalanced clk_disable_unprepare()
+Date: Tue, 16 Jun 2026 20:30:15 +0530
+Message-ID: <20260616145103.405506972@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -51,311 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit 032a725c16add79332d774348d7ad7d0d4b86479 ]
+[ Upstream commit 0d42e2c0bd6ceb89e44c6e065f9bdf9b1df3ef0c ]
 
-All registers of the IP have 32 bits. Use u32 variables when reading
-or writing from/to the registers. The purpose of those variables becomes
-clearer.
+The driver acquired the ADC clock with devm_clk_get() and read its
+rate, but never called clk_prepare_enable(). The probe error path and
+npcm_adc_remove() both called clk_disable_unprepare() unconditionally,
+causing the clk framework's enable/prepare counts to underflow on
+probe failure or module unbind.
 
-Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Link: https://lore.kernel.org/r/20240119104526.1221243-9-tudor.ambarus@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: a3bb136bff5e ("tty: serial: samsung: Remove redundant port lock acquisition in rx helpers")
+The issue went unnoticed because NPCM BMC firmware leaves the ADC
+clock enabled at boot, so the driver happened to work in practice.
+
+Switch to devm_clk_get_enabled() so the clock is properly enabled
+during probe and automatically released by the device-managed
+cleanup, and drop the now-redundant clk_disable_unprepare() from
+both the probe error path and remove().
+
+While at it, drop the duplicate error message on devm_request_irq()
+failure since the IRQ core already logs it.
+
+Fixes: 9bf85fbc9d8f ("iio: adc: add NPCM ADC driver")
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/samsung_tty.c |   67 +++++++++++++++++++--------------------
- 1 file changed, 34 insertions(+), 33 deletions(-)
+ drivers/iio/adc/npcm_adc.c |   26 ++++++++------------------
+ 1 file changed, 8 insertions(+), 18 deletions(-)
 
---- a/drivers/tty/serial/samsung_tty.c
-+++ b/drivers/tty/serial/samsung_tty.c
-@@ -186,7 +186,7 @@ static void wr_reg(struct uart_port *por
- /* Byte-order aware bit setting/clearing functions. */
+--- a/drivers/iio/adc/npcm_adc.c
++++ b/drivers/iio/adc/npcm_adc.c
+@@ -180,7 +180,6 @@ static int npcm_adc_probe(struct platfor
+ 	u32 reg_con;
+ 	struct npcm_adc *info;
+ 	struct iio_dev *indio_dev;
+-	struct device *dev = &pdev->dev;
  
- static inline void s3c24xx_set_bit(struct uart_port *port, int idx,
--				   unsigned int reg)
-+				   u32 reg)
- {
- 	unsigned long flags;
- 	u32 val;
-@@ -199,7 +199,7 @@ static inline void s3c24xx_set_bit(struc
- }
+ 	indio_dev = devm_iio_device_alloc(&pdev->dev, sizeof(*info));
+ 	if (!indio_dev)
+@@ -197,7 +196,7 @@ static int npcm_adc_probe(struct platfor
+ 	if (IS_ERR(info->reset))
+ 		return PTR_ERR(info->reset);
  
- static inline void s3c24xx_clear_bit(struct uart_port *port, int idx,
--				     unsigned int reg)
-+				     u32 reg)
- {
- 	unsigned long flags;
- 	u32 val;
-@@ -242,8 +242,8 @@ static void s3c24xx_serial_rx_enable(str
- {
- 	struct s3c24xx_uart_port *ourport = to_ourport(port);
- 	unsigned long flags;
--	unsigned int ucon, ufcon;
- 	int count = 10000;
-+	u32 ucon, ufcon;
+-	info->adc_clk = devm_clk_get(&pdev->dev, NULL);
++	info->adc_clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(info->adc_clk)) {
+ 		dev_warn(&pdev->dev, "ADC clock failed: can't read clk\n");
+ 		return PTR_ERR(info->adc_clk);
+@@ -210,17 +209,13 @@ static int npcm_adc_probe(struct platfor
+ 	info->adc_sample_hz = clk_get_rate(info->adc_clk) / ((div + 1) * 2);
  
- 	uart_port_lock_irqsave(port, &flags);
+ 	irq = platform_get_irq(pdev, 0);
+-	if (irq <= 0) {
+-		ret = -EINVAL;
+-		goto err_disable_clk;
+-	}
++	if (irq <= 0)
++		return -EINVAL;
  
-@@ -266,7 +266,7 @@ static void s3c24xx_serial_rx_disable(st
- {
- 	struct s3c24xx_uart_port *ourport = to_ourport(port);
- 	unsigned long flags;
--	unsigned int ucon;
-+	u32 ucon;
+ 	ret = devm_request_irq(&pdev->dev, irq, npcm_adc_isr, 0,
+ 			       "NPCM_ADC", indio_dev);
+-	if (ret < 0) {
+-		dev_err(dev, "failed requesting interrupt\n");
+-		goto err_disable_clk;
+-	}
++	if (ret < 0)
++		return ret;
  
- 	uart_port_lock_irqsave(port, &flags);
+ 	reg_con = ioread32(info->regs + NPCM_ADCCON);
+ 	info->vref = devm_regulator_get_optional(&pdev->dev, "vref");
+@@ -228,7 +223,7 @@ static int npcm_adc_probe(struct platfor
+ 		ret = regulator_enable(info->vref);
+ 		if (ret) {
+ 			dev_err(&pdev->dev, "Can't enable ADC reference voltage\n");
+-			goto err_disable_clk;
++			return ret;
+ 		}
  
-@@ -551,7 +551,7 @@ static inline struct s3c2410_uartcfg
- }
+ 		iowrite32(reg_con & ~NPCM_ADCCON_REFSEL,
+@@ -238,10 +233,8 @@ static int npcm_adc_probe(struct platfor
+ 		 * Any error which is not ENODEV indicates the regulator
+ 		 * has been specified and so is a failure case.
+ 		 */
+-		if (PTR_ERR(info->vref) != -ENODEV) {
+-			ret = PTR_ERR(info->vref);
+-			goto err_disable_clk;
+-		}
++		if (PTR_ERR(info->vref) != -ENODEV)
++			return PTR_ERR(info->vref);
  
- static int s3c24xx_serial_rx_fifocnt(struct s3c24xx_uart_port *ourport,
--				     unsigned long ufstat)
-+				     u32 ufstat)
- {
- 	struct s3c24xx_uart_info *info = ourport->info;
+ 		/* Use internal reference */
+ 		iowrite32(reg_con | NPCM_ADCCON_REFSEL,
+@@ -280,8 +273,6 @@ err_iio_register:
+ 	iowrite32(reg_con & ~NPCM_ADCCON_ADC_EN, info->regs + NPCM_ADCCON);
+ 	if (!IS_ERR(info->vref))
+ 		regulator_disable(info->vref);
+-err_disable_clk:
+-	clk_disable_unprepare(info->adc_clk);
  
-@@ -623,7 +623,7 @@ static void s3c64xx_start_rx_dma(struct
- static void enable_rx_dma(struct s3c24xx_uart_port *ourport)
- {
- 	struct uart_port *port = &ourport->port;
--	unsigned int ucon;
-+	u32 ucon;
- 
- 	/* set Rx mode to DMA mode */
- 	ucon = rd_regl(port, S3C2410_UCON);
-@@ -646,7 +646,7 @@ static void enable_rx_dma(struct s3c24xx
- static void enable_rx_pio(struct s3c24xx_uart_port *ourport)
- {
- 	struct uart_port *port = &ourport->port;
--	unsigned int ucon;
-+	u32 ucon;
- 
- 	/* set Rx mode to DMA mode */
- 	ucon = rd_regl(port, S3C2410_UCON);
-@@ -667,7 +667,6 @@ static void s3c24xx_serial_rx_drain_fifo
- 
- static irqreturn_t s3c24xx_serial_rx_chars_dma(void *dev_id)
- {
--	unsigned int utrstat, received;
- 	struct s3c24xx_uart_port *ourport = dev_id;
- 	struct uart_port *port = &ourport->port;
- 	struct s3c24xx_uart_dma *dma = ourport->dma;
-@@ -675,6 +674,8 @@ static irqreturn_t s3c24xx_serial_rx_cha
- 	struct tty_port *t = &port->state->port;
- 	unsigned long flags;
- 	struct dma_tx_state state;
-+	unsigned int received;
-+	u32 utrstat;
- 
- 	utrstat = rd_regl(port, S3C2410_UTRSTAT);
- 	rd_regl(port, S3C2410_UFSTAT);
-@@ -716,9 +717,10 @@ finish:
- static void s3c24xx_serial_rx_drain_fifo(struct s3c24xx_uart_port *ourport)
- {
- 	struct uart_port *port = &ourport->port;
--	unsigned int ufcon, ch, flag, ufstat, uerstat;
-+	unsigned int ch, flag;
- 	unsigned int fifocnt = 0;
- 	int max_count = port->fifosize;
-+	u32 ufcon, ufstat, uerstat;
- 
- 	while (max_count-- > 0) {
- 		/*
-@@ -898,7 +900,7 @@ static irqreturn_t s3c64xx_serial_handle
- {
- 	struct s3c24xx_uart_port *ourport = id;
- 	struct uart_port *port = &ourport->port;
--	unsigned int pend = rd_regl(port, S3C64XX_UINTP);
-+	u32 pend = rd_regl(port, S3C64XX_UINTP);
- 	irqreturn_t ret = IRQ_HANDLED;
- 
- 	if (pend & S3C64XX_UINTM_RXD_MSK) {
-@@ -915,8 +917,8 @@ static irqreturn_t s3c64xx_serial_handle
- static unsigned int s3c24xx_serial_tx_empty(struct uart_port *port)
- {
- 	struct s3c24xx_uart_info *info = s3c24xx_port_to_info(port);
--	unsigned long ufstat = rd_regl(port, S3C2410_UFSTAT);
--	unsigned long ufcon = rd_regl(port, S3C2410_UFCON);
-+	u32 ufstat = rd_regl(port, S3C2410_UFSTAT);
-+	u32 ufcon = rd_regl(port, S3C2410_UFCON);
- 
- 	if (ufcon & S3C2410_UFCON_FIFOMODE) {
- 		if ((ufstat & info->tx_fifomask) != 0 ||
-@@ -931,7 +933,7 @@ static unsigned int s3c24xx_serial_tx_em
- /* no modem control lines */
- static unsigned int s3c24xx_serial_get_mctrl(struct uart_port *port)
- {
--	unsigned int umstat = rd_reg(port, S3C2410_UMSTAT);
-+	u32 umstat = rd_reg(port, S3C2410_UMSTAT);
- 
- 	if (umstat & S3C2410_UMSTAT_CTS)
- 		return TIOCM_CAR | TIOCM_DSR | TIOCM_CTS;
-@@ -941,7 +943,7 @@ static unsigned int s3c24xx_serial_get_m
- 
- static void s3c24xx_serial_set_mctrl(struct uart_port *port, unsigned int mctrl)
- {
--	unsigned int umcon = rd_regl(port, S3C2410_UMCON);
-+	u32 umcon = rd_regl(port, S3C2410_UMCON);
- 
- 	if (mctrl & TIOCM_RTS)
- 		umcon |= S3C2410_UMCOM_RTS_LOW;
-@@ -954,7 +956,7 @@ static void s3c24xx_serial_set_mctrl(str
- static void s3c24xx_serial_break_ctl(struct uart_port *port, int break_state)
- {
- 	unsigned long flags;
--	unsigned int ucon;
-+	u32 ucon;
- 
- 	uart_port_lock_irqsave(port, &flags);
- 
-@@ -1167,7 +1169,7 @@ static int s3c64xx_serial_startup(struct
- {
- 	struct s3c24xx_uart_port *ourport = to_ourport(port);
- 	unsigned long flags;
--	unsigned int ufcon;
-+	u32 ufcon;
- 	int ret;
- 
- 	wr_regl(port, S3C64XX_UINTM, 0xf);
-@@ -1210,6 +1212,7 @@ static int s3c64xx_serial_startup(struct
  	return ret;
  }
+@@ -298,7 +289,6 @@ static int npcm_adc_remove(struct platfo
+ 	iowrite32(regtemp & ~NPCM_ADCCON_ADC_EN, info->regs + NPCM_ADCCON);
+ 	if (!IS_ERR(info->vref))
+ 		regulator_disable(info->vref);
+-	clk_disable_unprepare(info->adc_clk);
  
-+
- /* power power management control */
- 
- static void s3c24xx_serial_pm(struct uart_port *port, unsigned int level,
-@@ -1261,7 +1264,7 @@ static void s3c24xx_serial_pm(struct uar
- static inline int s3c24xx_serial_getsource(struct uart_port *port)
- {
- 	struct s3c24xx_uart_info *info = s3c24xx_port_to_info(port);
--	unsigned int ucon;
-+	u32 ucon;
- 
- 	if (info->num_clks == 1)
- 		return 0;
-@@ -1275,7 +1278,7 @@ static void s3c24xx_serial_setsource(str
- 			unsigned int clk_sel)
- {
- 	struct s3c24xx_uart_info *info = s3c24xx_port_to_info(port);
--	unsigned int ucon;
-+	u32 ucon;
- 
- 	if (info->num_clks == 1)
- 		return;
-@@ -1394,9 +1397,8 @@ static void s3c24xx_serial_set_termios(s
- 	struct clk *clk = ERR_PTR(-EINVAL);
- 	unsigned long flags;
- 	unsigned int baud, quot, clk_sel = 0;
--	unsigned int ulcon;
--	unsigned int umcon;
- 	unsigned int udivslot = 0;
-+	u32 ulcon, umcon;
- 
- 	/*
- 	 * We don't support modem control lines.
-@@ -1712,7 +1714,7 @@ static void s3c24xx_serial_resetport(str
- 				   struct s3c2410_uartcfg *cfg)
- {
- 	struct s3c24xx_uart_info *info = s3c24xx_port_to_info(port);
--	unsigned long ucon = rd_regl(port, S3C2410_UCON);
-+	u32 ucon = rd_regl(port, S3C2410_UCON);
- 	unsigned int ucon_mask;
- 
- 	ucon_mask = info->clksel_mask;
-@@ -2150,7 +2152,7 @@ static int s3c24xx_serial_resume_noirq(s
- 	if (port) {
- 		/* restore IRQ mask */
- 		if (s3c24xx_serial_has_interrupt_mask(port)) {
--			unsigned int uintm = 0xf;
-+			u32 uintm = 0xf;
- 
- 			if (ourport->tx_enabled)
- 				uintm &= ~S3C64XX_UINTM_TXD_MSK;
-@@ -2188,10 +2190,10 @@ static const struct dev_pm_ops s3c24xx_s
- static struct uart_port *cons_uart;
- 
- static int
--s3c24xx_serial_console_txrdy(struct uart_port *port, unsigned int ufcon)
-+s3c24xx_serial_console_txrdy(struct uart_port *port, u32 ufcon)
- {
- 	struct s3c24xx_uart_info *info = s3c24xx_port_to_info(port);
--	unsigned long ufstat, utrstat;
-+	u32 ufstat, utrstat;
- 
- 	if (ufcon & S3C2410_UFCON_FIFOMODE) {
- 		/* fifo mode - check amount of data in fifo registers... */
-@@ -2207,7 +2209,7 @@ s3c24xx_serial_console_txrdy(struct uart
+ 	return 0;
  }
- 
- static bool
--s3c24xx_port_configured(unsigned int ucon)
-+s3c24xx_port_configured(u32 ucon)
- {
- 	/* consider the serial port configured if the tx/rx mode set */
- 	return (ucon & 0xf) != 0;
-@@ -2222,7 +2224,7 @@ s3c24xx_port_configured(unsigned int uco
- static int s3c24xx_serial_get_poll_char(struct uart_port *port)
- {
- 	struct s3c24xx_uart_port *ourport = to_ourport(port);
--	unsigned int ufstat;
-+	u32 ufstat;
- 
- 	ufstat = rd_regl(port, S3C2410_UFSTAT);
- 	if (s3c24xx_serial_rx_fifocnt(ourport, ufstat) == 0)
-@@ -2234,8 +2236,8 @@ static int s3c24xx_serial_get_poll_char(
- static void s3c24xx_serial_put_poll_char(struct uart_port *port,
- 		unsigned char c)
- {
--	unsigned int ufcon = rd_regl(port, S3C2410_UFCON);
--	unsigned int ucon = rd_regl(port, S3C2410_UCON);
-+	u32 ufcon = rd_regl(port, S3C2410_UFCON);
-+	u32 ucon = rd_regl(port, S3C2410_UCON);
- 
- 	/* not possible to xmit on unconfigured port */
- 	if (!s3c24xx_port_configured(ucon))
-@@ -2251,7 +2253,7 @@ static void s3c24xx_serial_put_poll_char
- static void
- s3c24xx_serial_console_putchar(struct uart_port *port, int ch)
- {
--	unsigned int ufcon = rd_regl(port, S3C2410_UFCON);
-+	u32 ufcon = rd_regl(port, S3C2410_UFCON);
- 
- 	while (!s3c24xx_serial_console_txrdy(port, ufcon))
- 		cpu_relax();
-@@ -2262,7 +2264,7 @@ static void
- s3c24xx_serial_console_write(struct console *co, const char *s,
- 			     unsigned int count)
- {
--	unsigned int ucon = rd_regl(cons_uart, S3C2410_UCON);
-+	u32 ucon = rd_regl(cons_uart, S3C2410_UCON);
- 
- 	/* not possible to xmit on unconfigured port */
- 	if (!s3c24xx_port_configured(ucon))
-@@ -2276,11 +2278,9 @@ s3c24xx_serial_get_options(struct uart_p
- 			   int *parity, int *bits)
- {
- 	struct clk *clk;
--	unsigned int ulcon;
--	unsigned int ucon;
--	unsigned int ubrdiv;
- 	unsigned long rate;
- 	unsigned int clk_sel;
-+	u32 ulcon, ucon, ubrdiv;
- 	char clk_name[MAX_CLK_NAME_LENGTH];
- 
- 	ulcon  = rd_regl(port, S3C2410_ULCON);
-@@ -2677,6 +2677,7 @@ static void samsung_early_write(struct c
- 	uart_console_write(&dev->port, s, n, samsung_early_putc);
- }
- 
-+
- static int __init samsung_early_console_setup(struct earlycon_device *device,
- 					      const char *opt)
- {
 
 
