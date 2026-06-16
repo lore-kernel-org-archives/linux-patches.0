@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C8E3A16AC;
-	Tue, 16 Jun 2026 16:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C45E4534B9;
+	Tue, 16 Jun 2026 16:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626158; cv=none; b=WoOa7pMTz/5RRbi1fFCpOJYDxGF/W5D8kL7aKbo77D+f9pvtyQtZjbKpaciCbsAGwl2BshhLYX4ozcP45obBBK0RFTRA2n96cntcg9OOP2vvkYx5pIXLotfc+6ZBpXeal6DIognCLQifSl3L2xpgHyg1/HbHos6UfzuQ5ZezCmU=
+	t=1781626163; cv=none; b=PSlhq2808q92Wub89Gr1J52LjptK7BYlWWO8cWxBJQgQviMq8cpoMg9Sa5FfRoRafyNcTQjUBpKyqosraZzT7oJKXeM2REhgvPx7x3MCtklCAoZK9IV0GYNLnW5P5QPeElklx44eYPrinCMMf1bSPWMtqyAF3ihL8Jz/34yo7j8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626158; c=relaxed/simple;
-	bh=VKNL8EmqQTUSMIBY/6P3uDlchp1vscFZlUU+YsFtEGM=;
+	s=arc-20240116; t=1781626163; c=relaxed/simple;
+	bh=ineQ61bsZqVATcw7OFIMuw0SdrH6ZtPcN5jOB9avWNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Al/FKh7MQRujw0HKfYD+POxbsP7JeDwTLJCTvr/Mf1+KsLEwv0BEbpxieSr1K/BsfhTgX4GuztqELZcIY/W0J61eczNyjXjQgZ+3BGLi9//54upCvtAH8y/nKLTsjNILxgoWReMdXVQGAHNqyjn+BNOsygBhj9K8+c8FUPNFh6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qUoDgnvu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pPyn/ouMJWKJEtV3t6YYQZEqXmchwHWhXk9nR22wheCHrw9/lRZJRG/nWTFumHRBhPEdONjwpDKnelg4rneNTZ64nBqyQPRfVO7xKnv+6bQTbZTiTOgIs+3kN8B+likTN08hBkASQuyUj6TONW7M4ZjRvj2xYZh3o1HEMlBRGLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ecLzxwho; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qUoDgnvu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2ADA1F000E9;
-	Tue, 16 Jun 2026 16:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ecLzxwho"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74AB71F000E9;
+	Tue, 16 Jun 2026 16:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626156;
-	bh=+lSvKY7vmTjaKjSbl5Rsm5BqXGkCORvTBMWa/HbdZuw=;
+	s=korg; t=1781626162;
+	bh=1C2YTrL2T+9lFlqWh1agLtVrObwvXFjbjmEOYlLdEQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qUoDgnvutEgOC8DY/W31Bv3mlVZVBMCLJshvW4Mqn1lifl+fjCR4Mt+0jJ0fi+Ycy
-	 sXhkUMSzphIGbhhSpp3iMGggkSLfuKsnVUQ/7wu8uCVFw7l3fybGCkR1Fum4E8LtpP
-	 hMeXPSnSVQN4yF42L4nnjoJRtJ0ds8F0At3sEOTw=
+	b=ecLzxwhoBWIiV6oOE7gj5Rh6TG98lCnIiEi8+mQAiAqb2vO+qPNCPwEEQ8ibv8ZG2
+	 ECzMPRXSFGDQl/qrzKigrHJxtIcqk/iPIhlLQ55PkQLsDHbbHeD5mwgEoT8No5wcx5
+	 JChneGLGrrioE7GIWmfEFqd8e2qa4pJWYNkkQ+vE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.18 274/325] slimbus: qcom-ngd-ctrl: fix OF node refcount
-Date: Tue, 16 Jun 2026 20:31:10 +0530
-Message-ID: <20260616145112.360529676@linuxfoundation.org>
+	Tip ten Brink <tip@tenbrinkmeijs.com>,
+	"Christian A. Ehrhardt" <lk@c--e.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 248/325] io_uring/wait: fix min_timeout behavior
+Date: Tue, 16 Jun 2026 20:30:44 +0530
+Message-ID: <20260616145110.857842603@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -50,39 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: "Christian A. Ehrhardt" <lk@c--e.de>
 
-commit 120134fe75c6b0ae38f14eb8b548ad1e5761f912 upstream.
+Commit 29fe1bd01b99714f3136f922230a643c2742cda9 upstream.
 
-Platform devices created with platform_device_alloc() call
-platform_device_release() when the last reference to the device's
-kobject is dropped. This function calls of_node_put() unconditionally.
-This works fine for devices created with platform_device_register_full()
-but users of the split approach (platform_device_alloc() +
-platform_device_add()) must bump the reference of the of_node they
-assign manually. Add the missing call to of_node_get().
+The wakeup condition if a min timeout is present and has expired is that
+at least _one_ CQE was posted. Thus set the cq_tail target to
+->cq_min_tail + 1. Without this commit a spurious wakeup can result in a
+premature wakeup because io_should_wake() will return true even if _no_
+CQE was posted at all.
 
+Cc: Tip ten Brink <tip@tenbrinkmeijs.com>
+Fixes: e15cb2200b93 ("io_uring: fix min_wait wakeups for SQPOLL")
 Cc: stable@vger.kernel.org
-Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204421.116824-2-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Christian A. Ehrhardt <lk@c--e.de>
+Link: https://patch.msgid.link/20260606201120.1441447-1-lk@c--e.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/slimbus/qcom-ngd-ctrl.c |    2 +-
+ io_uring/io_uring.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1547,7 +1547,7 @@ static int of_qcom_slim_ngd_register(str
- 			of_node_put(node);
- 			return ret;
- 		}
--		ngd->pdev->dev.of_node = node;
-+		ngd->pdev->dev.of_node = of_node_get(node);
- 		ctrl->ngd = ngd;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2586,7 +2586,7 @@ static enum hrtimer_restart io_cqring_mi
+ 	}
  
- 		ret = platform_device_add(ngd->pdev);
+ 	/* any generated CQE posted past this time should wake us up */
+-	iowq->cq_tail = iowq->cq_min_tail;
++	iowq->cq_tail = iowq->cq_min_tail + 1;
+ 
+ 	hrtimer_update_function(&iowq->t, io_cqring_timer_wakeup);
+ 	hrtimer_set_expires(timer, iowq->timeout);
 
 
