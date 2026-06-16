@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60EE26B0A9;
-	Tue, 16 Jun 2026 15:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5667334D90C;
+	Tue, 16 Jun 2026 15:22:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623329; cv=none; b=gcH7rhaLaWkkI9sts2VA8D7QGBFvjkczB5wj2sU4uWEM573S1m4UnGHILd66LsWBSiwBkLuW8oY1Ac5sJj2KFAYdCBKlAJJZla1hoHADD8RGeWDZ4i9Muv976wCExsmzXeCoQU28wqnd3TOTtc0/cTx0YIFTJjImqSk3vtia4G8=
+	t=1781623334; cv=none; b=BXYHLnb1ri4xhs9qaQMLTRvvYyjj+CX/S6ZeNOxZdrKCo0RC0S+acpgajLMaumtI72XCr7RW6fGF/ng8x0Ajy36CpbgBs+MbPRPrgYf6x55YCZtW0Kiimr6kvAOOLxvrwId4+fSO0k3zWMNAruroUjnvT2HOsxloIn27e7IHcLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623329; c=relaxed/simple;
-	bh=wderISA0kBWDOqeJIZ03BEuIKuY2mkWjfAPZdPESFFU=;
+	s=arc-20240116; t=1781623334; c=relaxed/simple;
+	bh=r7v6V+GKY9cYMb042Ybx7lSiWP0QF26/ekQGZ8TTGGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rYGGAQmpPpuf+ClwTLRntM2B2FO4/0eLR+UP4YFMBCJwEEumMhndfvmpRQdMrVQC4psEIZbCiFjsVmj2EaWthRx5HttAs25zCK7Qf1oIyTg99ZPvDdccIeijooxsywXG3Tv9X2T5rnATtQ+m/fDvw8wTUvBUv1OseW29nLuQGOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZBq8JdX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EnBhk0wRXedPb8iPlNd7exSU/fXepVy49kYQ6eEGfAfh2LhjuznbGHSVPy7wMbKWnwIs0Q6Y2LfKJjxWr2y0Cf3C3iXGVF6HyE/D11Pid/iFKq8MXw/QU2hkFaOEcyE6enevm3jHiHQQzs/TCJ80+G6J5iu8MS1P4tO3Yfhkvis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xaM3W0GQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZBq8JdX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54DD1F000E9;
-	Tue, 16 Jun 2026 15:22:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xaM3W0GQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FCF1F000E9;
+	Tue, 16 Jun 2026 15:22:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623327;
-	bh=zouz3215zAQAeUd/pDFWT7e79yLluZnH86zcErMNjR0=;
+	s=korg; t=1781623333;
+	bh=iVWgYD8tWdYlf+fEu/Q25HriO9b3cV8AmsAnRKAZOf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zZBq8JdX+hY6qEDj2HqwsudHRT2a3hlCyEFyy+Y/tntOarefK5pkQNODKs0Pr3JVi
-	 LDPcW8DXuPy1PEB9s2fa5x4mEn/qo5dyKbWB06wFrGPrD+pwInr+2MBqf/h1a2mzYD
-	 on//HjAnPISrKnmVW02MVTNLJ7ig2jDjNhZriqY4=
+	b=xaM3W0GQAu1CnlaTopmNjGt9234Bd51wQQr/gqyhZExQCibnRdWzySEbVqQ8T7kCH
+	 Al2pGI26YS9p6kA0cVPJABf/0/vfRKsaKkE0CBQnbH90HXHb7lQSfsa9ANOkjEYLfe
+	 TbxrbPScpoPd6GcXZwJ6UBziyoEdK/7jXHosRM7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeremy Kerr <jk@codeconstruct.com.au>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 127/378] net: mctp: usb: fix race between urb completion and rx_retry cancellation
-Date: Tue, 16 Jun 2026 20:25:58 +0530
-Message-ID: <20260616145117.019884007@linuxfoundation.org>
+Subject: [PATCH 7.0 128/378] net: mctp: usb: dont fail mctp_usb_rx_queue on a deferred submission
+Date: Tue, 16 Jun 2026 20:25:59 +0530
+Message-ID: <20260616145117.066985454@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -53,130 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-[ Upstream commit 54665dce982689e2fd99b32e9a0dcc204fda8a51 ]
+[ Upstream commit 881a3113b74964918cdd72747e3bc119c02b0c0c ]
 
-It's possible that sequencing between setting ->stopped and cancelling
-the rx_retry work (in ndo_stop) could leave us with an urb queued:
+In the ndo_open path, a deferred queue open will report a failure, and
+so the netdev will not be ndo_stop()ed, leaving us with the rx_retry
+work potentially pending.
 
-    T1: ndo_stop                  T2: rx_retry_work
-    ------------                  ----------------
-                                  LD: ->stopped => false
-    ST: ->stopped <= true
-    usb_kill_urb()
-                                  mctp_usb_rx_queue()
-                                    usb_submit_urb()
-    cancel_delayed_work_sync()
-
-That urb completion can then re-schedule rx_retry_work.
-
-Strenghen the sequencing between the stop (preventing another requeue)
-and the cancel by updating both atomically under a new rx lock. After
-setting ->rx_stopped, and cancelling pending work, we know that the
-requeue cannot occur, so all that's left is killing any pending urb.
+Don't report a deferred queue as an error, as we are still operational.
+This means we use the ndo_stop() path for future cleanup, which handles
+rx_retry_work cancellation.
 
 Fixes: 0791c0327a6e ("net: mctp: Add MCTP USB transport driver")
 Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Link: https://patch.msgid.link/20260608-dev-mctp-usb-rx-requeue-v2-1-29a3aa507609@codeconstruct.com.au
+Link: https://patch.msgid.link/20260608-dev-mctp-usb-rx-requeue-v2-2-29a3aa507609@codeconstruct.com.au
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mctp/mctp-usb.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ drivers/net/mctp/mctp-usb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/mctp/mctp-usb.c b/drivers/net/mctp/mctp-usb.c
-index 3b5dff14417747..cf6f6a93a45112 100644
+index cf6f6a93a45112..fade65f2f26995 100644
 --- a/drivers/net/mctp/mctp-usb.c
 +++ b/drivers/net/mctp/mctp-usb.c
-@@ -22,7 +22,6 @@
- struct mctp_usb {
- 	struct usb_device *usbdev;
- 	struct usb_interface *intf;
--	bool stopped;
- 
- 	struct net_device *netdev;
- 
-@@ -32,6 +31,9 @@ struct mctp_usb {
- 	struct urb *tx_urb;
- 	struct urb *rx_urb;
- 
-+	/* enforces atomic access to rx_stopped and requeuing the retry work */
-+	spinlock_t rx_lock;
-+	bool rx_stopped;
- 	struct delayed_work rx_retry_work;
- };
- 
-@@ -122,6 +124,7 @@ static const unsigned long RX_RETRY_DELAY = HZ / 4;
- 
- static int mctp_usb_rx_queue(struct mctp_usb *mctp_usb, gfp_t gfp)
- {
-+	unsigned long flags;
- 	struct sk_buff *skb;
- 	int rc;
- 
-@@ -147,7 +150,10 @@ static int mctp_usb_rx_queue(struct mctp_usb *mctp_usb, gfp_t gfp)
- 	return rc;
- 
- err_retry:
--	schedule_delayed_work(&mctp_usb->rx_retry_work, RX_RETRY_DELAY);
-+	spin_lock_irqsave(&mctp_usb->rx_lock, flags);
-+	if (!mctp_usb->rx_stopped)
-+		schedule_delayed_work(&mctp_usb->rx_retry_work, RX_RETRY_DELAY);
-+	spin_unlock_irqrestore(&mctp_usb->rx_lock, flags);
- 	return rc;
+@@ -154,7 +154,7 @@ static int mctp_usb_rx_queue(struct mctp_usb *mctp_usb, gfp_t gfp)
+ 	if (!mctp_usb->rx_stopped)
+ 		schedule_delayed_work(&mctp_usb->rx_retry_work, RX_RETRY_DELAY);
+ 	spin_unlock_irqrestore(&mctp_usb->rx_lock, flags);
+-	return rc;
++	return 0;
  }
  
-@@ -248,9 +254,6 @@ static void mctp_usb_rx_retry_work(struct work_struct *work)
- 	struct mctp_usb *mctp_usb = container_of(work, struct mctp_usb,
- 						 rx_retry_work.work);
- 
--	if (READ_ONCE(mctp_usb->stopped))
--		return;
--
- 	mctp_usb_rx_queue(mctp_usb, GFP_KERNEL);
- }
- 
-@@ -258,7 +261,7 @@ static int mctp_usb_open(struct net_device *dev)
- {
- 	struct mctp_usb *mctp_usb = netdev_priv(dev);
- 
--	WRITE_ONCE(mctp_usb->stopped, false);
-+	WRITE_ONCE(mctp_usb->rx_stopped, false);
- 
- 	netif_start_queue(dev);
- 
-@@ -268,17 +271,21 @@ static int mctp_usb_open(struct net_device *dev)
- static int mctp_usb_stop(struct net_device *dev)
- {
- 	struct mctp_usb *mctp_usb = netdev_priv(dev);
-+	unsigned long flags;
- 
- 	netif_stop_queue(dev);
- 
- 	/* prevent RX submission retry */
--	WRITE_ONCE(mctp_usb->stopped, true);
-+	spin_lock_irqsave(&mctp_usb->rx_lock, flags);
-+	mctp_usb->rx_stopped = true;
-+	cancel_delayed_work(&mctp_usb->rx_retry_work);
-+	spin_unlock_irqrestore(&mctp_usb->rx_lock, flags);
-+
-+	flush_delayed_work(&mctp_usb->rx_retry_work);
- 
- 	usb_kill_urb(mctp_usb->rx_urb);
- 	usb_kill_urb(mctp_usb->tx_urb);
- 
--	cancel_delayed_work_sync(&mctp_usb->rx_retry_work);
--
- 	return 0;
- }
- 
-@@ -331,6 +338,7 @@ static int mctp_usb_probe(struct usb_interface *intf,
- 	dev->netdev = netdev;
- 	dev->usbdev = interface_to_usbdev(intf);
- 	dev->intf = intf;
-+	spin_lock_init(&dev->rx_lock);
- 	usb_set_intfdata(intf, dev);
- 
- 	dev->ep_in = ep_in->bEndpointAddress;
+ static void mctp_usb_in_complete(struct urb *urb)
 -- 
 2.53.0
 
