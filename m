@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4C43D8104;
-	Tue, 16 Jun 2026 18:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D21A2F12AE;
+	Tue, 16 Jun 2026 18:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632941; cv=none; b=YjlguysF9vai74YQBUHZYtjEvEDmvzuX3Zb06mrVSW/4svSiYTcu8XB0kGvw6zhdr3vBtVwnyDQxISjv4D0NfZaEZYijhdovFG4C+JCSZStdr6Uu7pH0BWaJo6lbbWiX+3rUdfPerUids3HQ1q2DjHlwpNRw3GYKJVLUTQIY3r4=
+	t=1781632947; cv=none; b=sfM2PRs9JSjLiTo+Syh3IJU8XXlBQxvNEvZmnxb0iaIWylBuXQpmu0Bhc1+LlPeJYUiNMGHe1umhaguTCJUDnjlg/gitoh6WP1dNF/RW7Sk/25kg8rzvlYXnUzQYcobwwOERIqmGOMX5zstiqaDRF/t1nGA8zs+I8P99z1Mp7WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632941; c=relaxed/simple;
-	bh=9WIbA4blcMAC+7j5qSndKSqsRac9eRvp6XEc129QANc=;
+	s=arc-20240116; t=1781632947; c=relaxed/simple;
+	bh=M2WIdtZYrXNEQZZMohMFlgUx+h/jy7iqJAPMAEwUYX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SSykPMj2IM473aIJ/PD7lhfhazAaFqsqj9jQGkpJn50ImmKXAcnkhDNu+pGHc4hZatbs7k5sksLvyHV4fRfMngnUhH34uKHDzTR2glq49p8BzGyOWHJKcvVwIu7y043I1V0nh4tz02nuh34askZsl1Fm90wupW3ercYHQnl9C+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBsR/hqj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fKm5wAokJ2JA4SB3z95iIdtRLHCfVvHBSrPe1R7UHtBVaWqBFv2MfrTs/yLYiAr0BGtTbWBaF0Fq+zct5AyG0RDbX0NZpHjRzh4Ncj5QzMr1BcBMrIAxSea5946juLRfA08rrCy9p8TFylIxnZt2lIuGdGuA1Cre0TtnHJi34ZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x52gDOxl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBsR/hqj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80AE11F000E9;
-	Tue, 16 Jun 2026 18:02:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x52gDOxl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB0F1F00A3A;
+	Tue, 16 Jun 2026 18:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632940;
-	bh=4/IqUcsFeYgTeh47OTxaVZGnxF6NTjJHb4e4ZZH/5YQ=;
+	s=korg; t=1781632946;
+	bh=UsEzHgxrENHKrcvqGd79kP7OjXCF3w5XqPkRk+x47IQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qBsR/hqjnmxKN+UzUHmSjbtdCsVpSzlTz197u1bb+sfiEUd3s6XwqaVwNmNSO2aVs
-	 ZViPE1h6UGnG0UGeLUrK2XOM5OYuFjsMVmBHggIb3EYj0jCOrCJhQJBO5/CdXoP3uf
-	 rhUPDqXb6qydm1mpcv6oB/FdK5x8vYVLuuKWmlK0=
+	b=x52gDOxlS0xMgQo+EyWbvcgzDCRe0mfO6AJSRgPx/FtqUj+TugXU4drbolmy2vbvx
+	 U09hHZxpXUtOUrWPb6M1ezzlRJTkVGenytUerytAVeglt9rJczqQr8BkiBcNe0VTQn
+	 HOGe/hN5W2mb4Ohnduni3iRc65PFWBkDGoxbV0f0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
-	Sasha Levin <sashal@kernel.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>
-Subject: [PATCH 6.1 479/522] usb: typec: ucsi: Dont update power_supply on power role change if not connected
-Date: Tue, 16 Jun 2026 20:30:26 +0530
-Message-ID: <20260616145148.235414469@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Ignat Korchagin <ignat@linux.win>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Yiming Qian <yimingqian591@gmail.com>
+Subject: [PATCH 6.1 506/522] lib/crypto: mpi: Fix integer underflow in mpi_read_raw_from_sgl()
+Date: Tue, 16 Jun 2026 20:30:53 +0530
+Message-ID: <20260616145149.425309274@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,42 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit d98d413ca65d0790a8f3695d0a5845538958ab84 ]
+commit 8c2f1288250a90a4b5cabed5d888d7e3aeed4035 upstream.
 
-We only need to update the power_supply on power role change if the port
-is connected, because otherwise the online status should be the same for
-both cases.
+Yiming reports an integer underflow in mpi_read_raw_from_sgl() when
+subtracting "lzeros" from the unsigned "nbytes".
 
-Cc: stable <stable@kernel.org>
-Fixes: 7616f006db07 ("usb: typec: ucsi: Update power_supply on power role change")
-Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
-Reported-and-tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Link: https://patch.msgid.link/20260519-ucsi-fix-2-v1-2-6f1239535187@qtmlabs.xyz
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ changed `UCSI_CONSTAT(con, CONNECTED)` accessor macro to `con->status.flags & UCSI_CONSTAT_CONNECTED` ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+For this to happen, the scatterlist "sgl" needs to occupy more bytes
+than the "nbytes" parameter and the first "nbytes + 1" bytes of the
+scatterlist must be zero.  Under these conditions, the while loop
+iterating over the scatterlist will count more zeroes than "nbytes",
+subtract the number of zeroes from "nbytes" and cause the underflow.
+
+When commit 2d4d1eea540b ("lib/mpi: Add mpi sgl helpers") originally
+introduced the bug, it couldn't be triggered because all callers of
+mpi_read_raw_from_sgl() passed a scatterlist whose length was equal to
+"nbytes".
+
+However since commit 63ba4d67594a ("KEYS: asymmetric: Use new crypto
+interface without scatterlists"), the underflow can now actually be
+triggered.  When invoking a KEYCTL_PKEY_ENCRYPT system call with a
+larger "out_len" than "in_len" and filling the "in" buffer with zeroes,
+crypto_akcipher_sync_prep() will create an all-zero scatterlist used for
+both the "src" and "dst" member of struct akcipher_request and thereby
+fulfil the conditions to trigger the bug:
+
+  sys_keyctl()
+    keyctl_pkey_e_d_s()
+      asymmetric_key_eds_op()
+        software_key_eds_op()
+          crypto_akcipher_sync_encrypt()
+            crypto_akcipher_sync_prep()
+              crypto_akcipher_encrypt()
+                rsa_enc()
+                  mpi_read_raw_from_sgl()
+
+To the user this will be visible as a DoS as the kernel spins forever,
+causing soft lockup splats as a side effect.
+
+Fix it.
+
+Reported-by: Yiming Qian <yimingqian591@gmail.com> # off-list
+Fixes: 2d4d1eea540b ("lib/mpi: Add mpi sgl helpers")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org # v4.4+
+Reviewed-by: Ignat Korchagin <ignat@linux.win>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/59eca92ff4f87e2081777f1423a0efaaadcfdb39.1776003111.git.lukas@wunner.de
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ lib/mpi/mpicoder.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -808,7 +808,12 @@ static void ucsi_handle_connector_change
- 
- 	if ((con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) && role != prev_role) {
- 		typec_set_pwr_role(con->port, role);
--		ucsi_port_psy_changed(con);
-+
-+		/* Some power_supply properties vary depending on the power direction when
-+		 * connected
-+		 */
-+		if (con->status.flags & UCSI_CONSTAT_CONNECTED)
-+			ucsi_port_psy_changed(con);
- 
- 		/* Complete pending power role swap */
- 		if (!completion_done(&con->complete))
+--- a/lib/mpi/mpicoder.c
++++ b/lib/mpi/mpicoder.c
+@@ -453,7 +453,7 @@ MPI mpi_read_raw_from_sgl(struct scatter
+ 	lzeros = 0;
+ 	len = 0;
+ 	while (nbytes > 0) {
+-		while (len && !*buff) {
++		while (len && !*buff && lzeros < nbytes) {
+ 			lzeros++;
+ 			len--;
+ 			buff++;
 
 
