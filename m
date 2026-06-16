@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6A5450902;
-	Tue, 16 Jun 2026 18:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC4147D929;
+	Tue, 16 Jun 2026 18:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636211; cv=none; b=PHdmtR/7S1YrHr/KPlTu7cerg1pChyiAPBzQoQ/fyKLZXJmbH0mW2/Pwyz0eKL2+QUhBjR/RfwsSoZfQBUWFBIjE/p0Fhyqm0A4E73NNTmxM+9iWELeRHhAuoSvzoEFiwN6espr/0fTR0lun66OdigatQfVPBjZo59J4sBBA58s=
+	t=1781636217; cv=none; b=UhP3JXvIs5rjqf+x9xS+ESg2rVeEr6Y+jBN1ds92a3tE5vEQX4oJzkeg+nug2kKWc7OGbgd5w/anAplppgyKC0wPwK7mCWL1mj+NTQI8OB4DtHlN1aISKSA6FcbqIBq3gOBVc8wuMOa5RfA314NbXDY705SW+y/MZOKchi4ZaN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636211; c=relaxed/simple;
-	bh=j68eS83vKLBoYhrUYntvRZhOaxaUf+5JEIa9ZDS4Pt4=;
+	s=arc-20240116; t=1781636217; c=relaxed/simple;
+	bh=B1hmnHoN2PBrzUCxJX+0xY4BqWI2QdUKh3fibc/HIno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7Shlq4NssYZxgZWuYep4jEg5dPi9dxABtzLCsYZTOgqzSbGWHRPObwjq4I9IjKZfoFj5LqJONBF1iDHQgfKFdLtlmhtjfDtb3O7BKYzNjWOl4+CZcL/mEO9YBJCliQskoJo0WW4FvtzEUoTkwuRApAW7p/ZF1vPEuMfNiSpbeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCF4HwXD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TXQX8okR3JPP6TuzZi+AtFuZlNdC2XtIkuLK0lULeCtDrbRmt37AKCRLafjIe0m3KuigD7MymYy2bHBXIMi4kL1mxr4CLHLaJULxVAdyrvgQK5Y1/R9+z2luxXvj/7AQ4pIyiAm7gR3QCxviO37yWkXZWCThQAkamoY1EfyM/J4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qcBrCz6j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCF4HwXD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD5DE1F00A3A;
-	Tue, 16 Jun 2026 18:56:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qcBrCz6j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242331F000E9;
+	Tue, 16 Jun 2026 18:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636209;
-	bh=eba+ePOy0vM23IhHFygYkXuiLx6EHppwhRvRsVbvDqA=;
+	s=korg; t=1781636216;
+	bh=R6YJNCOz5Eny7MttfpHcEWGeCwJaMPcakKBpL65g980=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZCF4HwXD/7hUskUxYB+xB3bbAeZ72lzXcKEk3rPBXQrKFxyl0UlUr2ooz7raqToAa
-	 Y72Sti8GqU2nXyVAhEdqNnXD++ub3dcCypWjuwuqjPT/ve6oBXcKggHDmfbuSkHx62
-	 hH49dAnSYyDy0kkkrct5aDBXTG+rXHzqpsPVMDG8=
+	b=qcBrCz6jzTdINkcx/Ikx/oufWdomUW51QqdxA4l98u3BfvYevM19+BkYkQLaQYnOq
+	 3NxdoxBO2p7WcESg8+6qjal2Ccj7kKbotYTXyFs0XrCe2zIoMiM9+zCOjg0GzQcgT4
+	 TnTimMzvXRds5aesEgdIVito2VYP6nQCUN4VL7q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeyu WANG <zeyu.thomas.wang@gmail.com>,
+	Hongfei Ren <lcrhf@outlook.com>,
+	stable@kernel.org,
+	Cryolitia PukNgae <cryolitia.pukngae@linux.dev>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 196/342] Input: atkbd - add DMI quirk for Lenovo Yoga Air 14 (83QK)
-Date: Tue, 16 Jun 2026 20:28:12 +0530
-Message-ID: <20260616145057.313088942@linuxfoundation.org>
+Subject: [PATCH 5.10 197/342] Input: atkbd - skip deactivate for HONOR BCC-Ns internal keyboard
+Date: Tue, 16 Jun 2026 20:28:13 +0530
+Message-ID: <20260616145057.375121895@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -50,47 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zeyu WANG <zeyu.thomas.wang@gmail.com>
+From: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
 
-commit ad0979fe053e9f2db82da82188256ef6eb41095a upstream.
+commit fb402386af4cdce108ff991a796386de55439735 upstream.
 
-The Lenovo Yoga Air 14 (83QK) laptop keyboard becomes unresponsive
-after the standard atkbd init sequence. Controlled testing on the
-actual hardware shows the F5 (ATKBD_CMD_RESET_DIS / deactivate)
-command specifically corrupts the EC state, causing zero IRQ1
-interrupts after init.
+After commit 9cf6e24c9fbf17e52de9fff07f12be7565ea6d61 ("Input: atkbd -
+do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID"), HONOR
+BCC-N, aka HONOR MagicBook 14 2026's internal keyboard stops
+working. Adding the atkbd_deactivate_fixup quirk fixes it.
 
-Skipping only the deactivate command (while keeping F4 ENABLE)
-resolves the issue completely: both keystroke input and CapsLock
-LED toggle work correctly. The reverse test - skipping only F4
-while keeping F5 - makes the problem worse (zero keystroke
-interrupts), confirming F5 is the sole culprit.
+DMI: HONOR BCC-N/BCC-N-PCB, BIOS 1.04 04/07/2026
 
-Add a DMI quirk entry for LENOVO/83QK using the existing
-atkbd_deactivate_fixup callback, consistent with the existing
-entries for LG Electronics and HONOR FMB-P that address the
-same EC F5 deactivate issue.
-
-Signed-off-by: Zeyu WANG <zeyu.thomas.wang@gmail.com>
-Link: https://patch.msgid.link/20260602170909.14725-1-zeyu.thomas.wang@gmail.com
-Cc: stable@vger.kernel.org
+Fixes: 9cf6e24c9fbf17e52de9fff07f12be7565ea6d61 ("Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID")
+Reported-by: Hongfei Ren <lcrhf@outlook.com>
+Link: https://github.com/colorcube/Linux-on-Honor-Magicbook-14-Pro/issues/1#issuecomment-4562679891
+Tested-by: Hongfei Ren <lcrhf@outlook.com>
+Cc: stable@kernel.org
+Signed-off-by: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
+Link: https://patch.msgid.link/20260605-honor-v1-1-78e05e491193@linux.dev
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/atkbd.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/input/keyboard/atkbd.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
 --- a/drivers/input/keyboard/atkbd.c
 +++ b/drivers/input/keyboard/atkbd.c
-@@ -1939,6 +1939,14 @@ static const struct dmi_system_id atkbd_
+@@ -1947,6 +1947,13 @@ static const struct dmi_system_id atkbd_
  		},
  		.callback = atkbd_deactivate_fixup,
  	},
 +	{
-+		/* Lenovo Yoga Air 14 (83QK) */
 +		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "83QK"),
++			DMI_MATCH(DMI_SYS_VENDOR, "HONOR"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "BCC-N"),
 +		},
 +		.callback = atkbd_deactivate_fixup,
 +	},
