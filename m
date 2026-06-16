@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554892F12AE;
-	Tue, 16 Jun 2026 17:46:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2023C3C1E;
+	Tue, 16 Jun 2026 17:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631968; cv=none; b=r/8Vr8MlyCnQtabIcLgtkZapR91H6ZN6acKMNtVY5iUX8AkukjbRke8qtESr11ywsfFqA60gglocGFQqhUbF4QnnwK2DKf39w3EkucLqrHu+QwcsgYJYTBpQ5YUZpxZwkaJHOa8M1k3yFu+L7N/WoJh82pqTc/WsXOUA/Yt7M6g=
+	t=1781631973; cv=none; b=UAM/yv3LF1kps/imk7G/0wXQmVdS7w/jBwaSr7GW5cK5bMWsmHHOul+M8jCYL3/NlueM1xeBZgdTdVhB7IkQWj7EcHL9Lur+ENqGUOH01da7FRK7BUFeMsBBwPbvlRAVXoVTSGfM2YzceTlbcgaBuR6HSPhghYy+3d439YSdsxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631968; c=relaxed/simple;
-	bh=YTLisOWibQMV/+f1pqVzxugSUzrRKHW7W0rL9VLbAp8=;
+	s=arc-20240116; t=1781631973; c=relaxed/simple;
+	bh=9kL45s4tnzJno8DbPEgJuhBKTEcmAIl+JvkoYDMEAgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VzMNMDhwlUuXPJBuOIGjM9P2RytLx8j3f2qPQ5NW8SF7GpOlQJX2L85/LlmsqZIdmp7cojjVvKYbn4LBG8ZzC9Z506y0pdRAhBNtzsSphx0tIsPONJ429GFYLgyoNzFWtKJDaQ8jK8YbzzPCkT6x+TAthXyq1KAxM+2UyQXilx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g4S3dnNh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EtCZKCCetZTNGFFsDEyKon03vtTgm7HCdsbdpU+a2z6xHIQssaiIdw/1IHjm0DxOJ0xGaf4gmgkcFUefOXk0TobDKA6n272TVePS+OlUS0PaMHAfFZlOdQrw7hITRRZoKgcPLd2rcxLq0PsexZb74Bwj+rPOzfkgd5XcGR4jPjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c2Q6dXlP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g4S3dnNh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF3D1F000E9;
-	Tue, 16 Jun 2026 17:46:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c2Q6dXlP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72CE61F000E9;
+	Tue, 16 Jun 2026 17:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631967;
-	bh=WMNKfNX4ExS6bDdSw5R2yFdNVfEr7GqQEViC5KO8kqU=;
+	s=korg; t=1781631972;
+	bh=eKbIhFCRrW5SyIke5JUsMHGAWf/mcLAQLIiI7kC0haE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g4S3dnNh8gFmVc7CtTpY0R0jOSwHHZfBnndECxXQ3BQ2DTrSNs6PTnrLHQMRaIiu7
-	 KThFsH12nbJBxM0l86/A7YGUeVnUU6iuE+SF0uKijmnzfYdqWYjXF7BNXUiB6zu7no
-	 UItcxTknt+iBopS4haXL7egjDiY2mP9cwLXLfSfE=
+	b=c2Q6dXlPO5Pqi4PN87B4OEpkyUX2GpG0RANge2ZKgc+vq4t2tzKgkJmb8OsVgiueG
+	 HhXlKbv+guxYQ1Mj26SXNvmNJbvrhxz/MwFr9q4bsajv9Bph6Y1N8xjdwee4Mw+JXZ
+	 FRaN9VYSFvtAigO5zf7RUo7Lxonv/66WlpuVCw9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.1 321/522] slimbus: qcom-ngd-ctrl: Avoid ABBA on tx_lock/ctrl->lock
-Date: Tue, 16 Jun 2026 20:27:48 +0530
-Message-ID: <20260616145140.869979826@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 322/522] drm/amdgpu: restart the CS if some parts of the VM are still invalidated
+Date: Tue, 16 Jun 2026 20:27:49 +0530
+Message-ID: <20260616145140.914850334@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -44,82 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Christian König <christian.koenig@amd.com>
 
-commit 55f2ea9ff83cc27a85526b14bc9b32f96a08d6ec upstream.
+commit 40396ffdf6120e2380706c59e1a84d7e765a37b6 upstream.
 
-During the SSR/PDR down notification the tx_lock is taken with the
-intent to provide synchronization with active DMA transfers.
+Make sure that we only submit work with full up to date VM page tables.
 
-But during this period qcom_slim_ngd_down() is invoked, which ends up in
-slim_report_absent(), which takes the slim_controller lock. In multiple
-other codepaths these two locks are taken in the opposite order (i.e.
-slim_controller then tx_lock).
+Backport to 7.1 and older.
 
-The result is a lockdep splat, and a possible deadlock:
-
-  rprocctl/449 is trying to acquire lock:
-  ffff00009793e620 (&ctrl->lock){+.+.}-{4:4}, at: slim_report_absent (drivers/slimbus/core.c:322) slimbus
-
-  but task is already holding lock:
-  ffff00009793fb50 (&ctrl->tx_lock){+.+.}-{4:4}, at: qcom_slim_ngd_ssr_pdr_notify (drivers/slimbus/qcom-ngd-ctrl.c:1475) slim_qcom_ngd_ctrl
-
-  which lock already depends on the new lock.
-
-  Possible unsafe locking scenario:
-
-        CPU0                    CPU1
-        ----                    ----
-   lock(&ctrl->tx_lock);
-                                lock(&ctrl->lock);
-                                lock(&ctrl->tx_lock);
-   lock(&ctrl->lock);
-
-The assumption is that the comment refers to the desire to not call
-qcom_slim_ngd_exit_dma() while we have an ongoing DMA TX transaction.
-But any such transaction is initiated and completed within a single
-qcom_slim_ngd_xfer_msg().
-
-Prior to calling qcom_slim_ngd_exit_dma() the slim_controller is torn
-down, all child devices are notified that the slimbus is gone and the
-child devices are removed.
-
-Stop taking the tx_lock in qcom_slim_ngd_ssr_pdr_notify() to avoid the
-deadlock.
-
-Fixes: a899d324863a ("slimbus: qcom-ngd-ctrl: add Sub System Restart support")
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Tested-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 59720bfd8c6dbebeb8d5a7ab64241b007efd9213)
 Cc: stable@vger.kernel.org
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204421.116824-9-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/slimbus/qcom-ngd-ctrl.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1394,15 +1394,12 @@ static int qcom_slim_ngd_ssr_pdr_notify(
- 	switch (action) {
- 	case QCOM_SSR_BEFORE_SHUTDOWN:
- 	case SERVREG_SERVICE_STATE_DOWN:
--		/* Make sure the last dma xfer is finished */
--		mutex_lock(&ctrl->tx_lock);
- 		if (ctrl->state != QCOM_SLIM_NGD_CTRL_DOWN) {
- 			pm_runtime_get_noresume(ctrl->ctrl.dev);
- 			ctrl->state = QCOM_SLIM_NGD_CTRL_DOWN;
- 			qcom_slim_ngd_down(ctrl);
- 			qcom_slim_ngd_exit_dma(ctrl);
- 		}
--		mutex_unlock(&ctrl->tx_lock);
- 		break;
- 	case QCOM_SSR_AFTER_POWERUP:
- 	case SERVREG_SERVICE_STATE_UP:
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -1227,6 +1227,7 @@ static int amdgpu_cs_submit(struct amdgp
+ {
+ 	struct amdgpu_fpriv *fpriv = p->filp->driver_priv;
+ 	struct amdgpu_job *leader = p->gang_leader;
++	struct amdgpu_vm *vm = &fpriv->vm;
+ 	struct amdgpu_bo_list_entry *e;
+ 	unsigned int i;
+ 	uint64_t seq;
+@@ -1268,7 +1269,8 @@ static int amdgpu_cs_submit(struct amdgp
+ 		r |= !amdgpu_ttm_tt_get_user_pages_done(bo->tbo.ttm, e->range);
+ 		e->range = NULL;
+ 	}
+-	if (r) {
++
++	if (r || !list_empty(&vm->invalidated)) {
+ 		r = -EAGAIN;
+ 		mutex_unlock(&p->adev->notifier_lock);
+ 		return r;
 
 
