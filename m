@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E3C35675A;
-	Tue, 16 Jun 2026 17:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D88543D4E9;
+	Tue, 16 Jun 2026 17:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629226; cv=none; b=JyQ08a3XqJPMNdDpU17PEySOUW6NPSOJkqX06tY1P2hsud4B1MHVn8lkXGAiE4mM0q/HpPV+hbn/4s/FSbXldzd0D4KVjqS4I1NIx686tcXAUZN6ANz2HFEx7Kgkim7DHfaMhFnJuavs6UCmMXkS+GxSjiEKb9byfUakgjOCDNM=
+	t=1781629232; cv=none; b=KjYsNyuj6d7KmlcuJ/zONQvJCsbN+6B23SgdMrD+OxXsxi3ZxOBI0lqdR3zNL9nZIG/c8rfydZwzvgAmSpplZNcMaurEmU1Ux+URP/nSUqQrocT2lj6YgfOb72miSVfwLIn/c6vQhNTJP5SQhhfESNANAkf4HBI2kpiqQJe+SKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629226; c=relaxed/simple;
-	bh=P3AGdGpuzy6tTviY4wi8q94qHVaSfT2s85+dCiMJAAs=;
+	s=arc-20240116; t=1781629232; c=relaxed/simple;
+	bh=yp55iwdPIWMjaF27TFt3tQJgcZe84HOXiI2lX0tiiGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UJPJ8RDHDxasehAKfOwnqRis7McnILRYpXtwTtYzCX90h5qr30rzFfFWf3HZzhdKS5LyLO1ZGayVoxhOMDSBGKsEe9vozCtfrcM/Lv0m6IUtVpn8uW+uii0v+e3rMw8yqnXT0CpEMpI7H9/183fDe9jkkOkpkL7EKrsEB7KdQfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EeAv3UyX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NLsM6KOb1b8J93rMw2RbxVGFhhJOIKRSsknSAdYeIHPIT3n96M/sAb71dbHUNbNcDsB2Y0TaItsfx7G/UUX6qPRlyzch95xmX4gX56UCj2/DIZbSpfUvP+V7hmyLQJ9gb32BmBrF8VAJD9AI2zLR/cIK+OBlR4KSuXXMlEZcoNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLNZCm/7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EeAv3UyX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84A11F000E9;
-	Tue, 16 Jun 2026 17:00:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLNZCm/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B0C1F000E9;
+	Tue, 16 Jun 2026 17:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629225;
-	bh=K2vYKahEdq0uTTR7Z4XSo07SHKUiKMg4RLEjP2ZR/4U=;
+	s=korg; t=1781629230;
+	bh=kyakmwDjRh/U0MdGlLxxLU2451OutEdxJIEC27TzafA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EeAv3UyXLS68l7FuvxOMps2fWrLAB/umGfqNHq4BxMq9XK39NMbnpkR/S8peYTHiM
-	 8XRCU+bs0sDEcm8BgpBy4MJt/rfOC8cwcubp839iboo3IEBuQVS57gxpsWj57gD2Hj
-	 BhrIDboZciVjIw+fQIG1YCXBHLkyb2MSSpTF1GTI=
+	b=sLNZCm/72hG470kO1NU4GRrkutkziLN+vF0Vfv5dM9O+JOiwCvWV6z+yID3NLV6Jy
+	 6+ZMpiWF6Svbrm8If2gkd5GSXUdGVtUFmcmZmqqZiqESvjMTy8jTPOapMdKYiqKyMR
+	 Es307YFQhXuvB1JDsd+hplPC0LJiq+QSQv3XsUWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 218/452] netfilter: conntrack_irc: fix possible out-of-bounds read
-Date: Tue, 16 Jun 2026 20:27:25 +0530
-Message-ID: <20260616145129.235777506@linuxfoundation.org>
+Subject: [PATCH 6.6 245/452] net/802/mrp: fix vector attribute parsing in mrp_pdu_parse_vecattr
+Date: Tue, 16 Jun 2026 20:27:52 +0530
+Message-ID: <20260616145130.537354661@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,48 +56,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit 66eba0ffce3b7e11449946b4cbbef8ea36112f56 ]
+[ Upstream commit 7561c7fbc694308da73300f036719e63e42bf0b4 ]
 
-When parsing fails after we've matched the command string we
-should bail out instead of trying to match a different command.
+In mrp_pdu_parse_vecattr(), vector attribute events are encoded three
+per byte and valen tracks the number of events left to process.
 
-This helper should be deprecated, given prevalence of TLS I doubt it has
-any relevance in 2026.
+The parser decrements valen after processing the first and second events
+from each event byte, but not after processing the third one. When valen
+is exactly a multiple of three, the loop continues after the last valid
+event and consumes the next byte as a new event byte, applying a
+spurious event to the MRP applicant state.
 
-Fixes: 869f37d8e48f ("[NETFILTER]: nf_conntrack/nf_nat: add IRC helper port")
-Closes: https://sashiko.dev/#/patchset/20260525182924.28456-1-fw%40strlen.de
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Additionally, when valen is zero the parser unconditionally consumes
+attrlen bytes as FirstValue and advances the offset, even though per
+IEEE 802.1ak a VectorAttribute with only a LeaveAllEvent has valen of
+zero and no FirstValue or Vector fields. This corrupts the offset for
+subsequent PDU parsing.
+
+Also, when valen exceeds three the loop crosses byte boundaries but
+the attribute value is not incremented between the last event of one
+byte and the first event of the next. This causes the first event of
+the next byte to use the same attribute value as the third event
+rather than the next consecutive value.
+
+Decrement valen after processing the third event, skip FirstValue
+consumption when valen is zero, and increment the attribute value at
+the end of each loop iteration.
+
+Fixes: febf018d2234 ("net/802: Implement Multiple Registration Protocol (MRP)")
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Link: https://patch.msgid.link/20260603060016.21522-1-zhaoyz24@mails.tsinghua.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_irc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/802/mrp.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/netfilter/nf_conntrack_irc.c b/net/netfilter/nf_conntrack_irc.c
-index 5703846bea3b69..0f50ea92ced9df 100644
---- a/net/netfilter/nf_conntrack_irc.c
-+++ b/net/netfilter/nf_conntrack_irc.c
-@@ -208,7 +208,7 @@ static int help(struct sk_buff *skb, unsigned int protoff,
- 			if (parse_dcc(data, data_limit, &dcc_ip,
- 				       &dcc_port, &addr_beg_p, &addr_end_p)) {
- 				pr_debug("unable to parse dcc command\n");
--				continue;
-+				goto out;
- 			}
+diff --git a/net/802/mrp.c b/net/802/mrp.c
+index eafc21ecc287d9..a58e697e182a8f 100644
+--- a/net/802/mrp.c
++++ b/net/802/mrp.c
+@@ -702,6 +702,12 @@ static int mrp_pdu_parse_vecattr(struct mrp_applicant *app,
+ 	valen = be16_to_cpu(get_unaligned(&mrp_cb(skb)->vah->lenflags) &
+ 			    MRP_VECATTR_HDR_LEN_MASK);
  
- 			pr_debug("DCC bound ip/port: %pI4:%u\n",
-@@ -222,7 +222,7 @@ static int help(struct sk_buff *skb, unsigned int protoff,
- 				net_warn_ratelimited("Forged DCC command from %pI4: %pI4:%u\n",
- 						     &tuple->src.u3.ip,
- 						     &dcc_ip, dcc_port);
--				continue;
-+				goto out;
- 			}
- 
- 			exp = nf_ct_expect_alloc(ct);
++	/* If valen is 0, only a LeaveAllEvent is present; FirstValue and
++	 * Vector fields are absent per IEEE 802.1ak.
++	 */
++	if (valen == 0)
++		return 0;
++
+ 	/* The VectorAttribute structure in a PDU carries event information
+ 	 * about one or more attributes having consecutive values. Only the
+ 	 * value for the first attribute is contained in the structure. So
+@@ -752,6 +758,9 @@ static int mrp_pdu_parse_vecattr(struct mrp_applicant *app,
+ 		vaevents %= __MRP_VECATTR_EVENT_MAX;
+ 		vaevent = vaevents;
+ 		mrp_pdu_parse_vecattr_event(app, skb, vaevent);
++		valen--;
++		mrp_attrvalue_inc(mrp_cb(skb)->attrvalue,
++				  mrp_cb(skb)->mh->attrlen);
+ 	}
+ 	return 0;
+ }
 -- 
 2.53.0
 
