@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE48F43D4F7;
-	Tue, 16 Jun 2026 15:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC9615B998;
+	Tue, 16 Jun 2026 15:53:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625185; cv=none; b=CYoqO1Me2a+8N47bOCzLjPRdR2uoJSALCVZLzK/Gxhuzk7uKxI0nAN6iBMkrneA/c1DXu3QyItGVpY/wkKmJSdRgNTjWTIVbaCejDykjtOkCVF+trdbQeXMkMwX13fHh1naG/RJ3JwbXwT2yjmPf77wN7ggDO0HmKKNrrMtkbOk=
+	t=1781625190; cv=none; b=N+GY3u4LtcmmRXRBNAlyRW1KZmlLQoh13CBdmGfRfeUUTiNfGJqmRLBmE8ioeBzpe9olanY9C10z558ufuTpUqZIVx8jOFxub0il3bJj6soIjctmUFMs1RJi4yiwGkgnGSfCEm4d/QA28NmJtXADWyeyzxbcMewhKt5LBcY/6HY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625185; c=relaxed/simple;
-	bh=3i8EKkwF7E6pGaXJhXwtugy3pcx06z2KvbhwE+MC2E0=;
+	s=arc-20240116; t=1781625190; c=relaxed/simple;
+	bh=BfYj4mCMOT66kEkdmd2sBqlarpZwZlSHN3Foke1uO8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KHj9Gxvlo4NQazmBds0Yt8Qe7TBeubmTzRXTG6G9Ok5m+rPZOiBkEwHVfu5uw/EPMmiM5EyQnTyBbYUPcd/rkuMTmuC+rNEeerqTuLNd+M7WLXwYutKvSJscoCjtCPFp57NtDLwURGhB6vVT2Y8GDJSOAb/IYLLL69tvggQR5jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gOYjpsYR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e1ZAiRum4W/FWXAKySjrgD428jdE4PNtvF6QaXuOx2SVqc2QJZ/CESCNDCgzy6Nvz/cNEnP/iAV8gR1HQ53r/9LpBogHmozBh7j4o7PB6Q6ZCOkEJMVqHTVO+nAgLOfERm0mx4Z8wW7KtZRNYT5tKLooKaMeOt83gF0Poc3UckY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUHTT+jC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gOYjpsYR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8BC91F000E9;
-	Tue, 16 Jun 2026 15:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUHTT+jC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37CB1F000E9;
+	Tue, 16 Jun 2026 15:53:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625184;
-	bh=ZsBCAcrSoSbwfdiK0zwPa8jTMdgx/EOwA/fVzwbylj4=;
+	s=korg; t=1781625189;
+	bh=kAArHCw6OlmZLTuYtEvMobeEs+I57zpB34zwWfkD0Do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gOYjpsYRFMZ7QMDOZqmp7qIouatyP9RdazQbu7JYxVcvBL3mhr4hk/7Uh08NrGpSo
-	 plQUC43WZY5obahJTZtu9dncnf3VK/ZZ4hkgJ9lTzLafPHxf1oxR5alVaaBVjgGT5n
-	 Bt2GCTHmITDxp67Lq+7qgaO4o7ymiZ6EblqH0gcQ=
+	b=PUHTT+jCTyg0UVjTt7EGHrjkywfLFBBmuDg7viHUdki1YGmJkmFW/y5J7Dplbzg0R
+	 GcbVW4ke1PlNXZosxVDJMRaMbLjeHUACKu5SnOYhO09TmFeJ9buJIBWlQOx3Wa7VRM
+	 Lfa1UkjMspIrucGfVLvfrkwPIA4aGkjvykVF6/DE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yun Zhou <yun.zhou@windriver.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 094/325] netlabel: validate unlabeled address and mask attribute lengths
-Date: Tue, 16 Jun 2026 20:28:10 +0530
-Message-ID: <20260616145102.379166543@linuxfoundation.org>
+Subject: [PATCH 6.18 095/325] gpio: mvebu: fix NULL pointer dereference in suspend/resume
+Date: Tue, 16 Jun 2026 20:28:11 +0530
+Message-ID: <20260616145102.426494765@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -51,85 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-[ Upstream commit 9772589b57e44aedc240211c5c3f7a684a034d3a ]
+[ Upstream commit b9ad50d7505ebd48282ec3630258dc820fc85c81 ]
 
-netlbl_unlabel_addrinfo_get() used the address attribute length to
-determine whether the attribute data could be read as an IPv4 or IPv6
-address, but did not independently validate the corresponding mask
-attribute length.  A crafted Generic Netlink request could therefore
-provide a valid IPv4/IPv6 address attribute with a shorter mask
-attribute, which would later be read as a full struct in_addr or
-struct in6_addr.
+mvebu_pwm_suspend() and mvebu_pwm_resume() are called for all GPIO
+banks during suspend/resume, but not all banks have PWM functionality.
+GPIO banks without PWM have mvchip->mvpwm set to NULL.
 
-NLA_BINARY policy lengths are maximum lengths by default, so use
-NLA_POLICY_EXACT_LEN() for the unlabeled IPv4/IPv6 address and mask
-attributes.  This rejects short attributes during policy validation and
-also exposes the exact length requirements through policy introspection.
+Calling mvebu_pwm_suspend() with mvpwm == NULL causes a NULL pointer
+dereference when it tries to access mvpwm->blink_select.
 
-Fixes: 8cc44579d1bd ("NetLabel: Introduce static network labels for unlabeled connections")
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  Unable to handle kernel NULL pointer dereference at virtual address 00000020 when write
+  [00000020] *pgd=00000000
+  Internal error: Oops: 815 [#1] PREEMPT ARM
+  Modules linked in:
+  CPU: 0 UID: 0 PID: 406 Comm: sh Not tainted 6.12.74-rt12-yocto-standard-g4e96f98fb7db-dirty #353
+  Hardware name: Marvell Armada 370/XP (Device Tree)
+  PC is at regmap_mmio_read+0x38/0x54
+  LR is at regmap_mmio_read+0x38/0x54
+  pc : [<c05fd2ac>]    lr : [<c05fd2ac>]    psr: 200f0013
+  sp : f0c11d10  ip : 00000000  fp : c100d2f0
+  r10: c14fb854  r9 : 00000000  r8 : 00000000
+  r7 : c1799c00  r6 : 00000020  r5 : 00000020  r4 : c179c7c0
+  r3 : f0a231a0  r2 : 00000020  r1 : 00000020  r0 : 00000000
+  Flags: nzCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
+  Control: 10c5387d  Table: 135ec059  DAC: 00000051
+  Call trace:
+   regmap_mmio_read from _regmap_bus_reg_read+0x78/0xac
+   _regmap_bus_reg_read from _regmap_read+0x60/0x154
+   _regmap_read from regmap_read+0x3c/0x60
+   regmap_read from mvebu_gpio_suspend+0xa4/0x14c
+   mvebu_gpio_suspend from dpm_run_callback+0x54/0x180
+   dpm_run_callback from device_suspend+0x124/0x630
+   device_suspend from dpm_suspend+0x124/0x270
+   dpm_suspend from dpm_suspend_start+0x64/0x6c
+   dpm_suspend_start from suspend_devices_and_enter+0x140/0x8e8
+   suspend_devices_and_enter from pm_suspend+0x2fc/0x308
+   pm_suspend from state_store+0x6c/0xc8
+   state_store from kernfs_fop_write_iter+0x10c/0x1f8
+   kernfs_fop_write_iter from vfs_write+0x270/0x468
+   vfs_write from ksys_write+0x70/0xf0
+   ksys_write from ret_fast_syscall+0x0/0x54
+
+Add a NULL check for mvchip->mvpwm before calling the PWM
+suspend/resume functions.
+
+Fixes: 757642f9a584 ("gpio: mvebu: Add limited PWM support")
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+Link: https://patch.msgid.link/20260608084334.2960803-1-yun.zhou@windriver.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlabel/netlabel_unlabeled.c | 30 ++++++++++--------------------
- 1 file changed, 10 insertions(+), 20 deletions(-)
+ drivers/gpio/gpio-mvebu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netlabel/netlabel_unlabeled.c b/net/netlabel/netlabel_unlabeled.c
-index dfda9ea61971b3..2237a5261dd2a2 100644
---- a/net/netlabel/netlabel_unlabeled.c
-+++ b/net/netlabel/netlabel_unlabeled.c
-@@ -114,14 +114,14 @@ static struct genl_family netlbl_unlabel_gnl_family;
- /* NetLabel Netlink attribute policy */
- static const struct nla_policy netlbl_unlabel_genl_policy[NLBL_UNLABEL_A_MAX + 1] = {
- 	[NLBL_UNLABEL_A_ACPTFLG] = { .type = NLA_U8 },
--	[NLBL_UNLABEL_A_IPV6ADDR] = { .type = NLA_BINARY,
--				      .len = sizeof(struct in6_addr) },
--	[NLBL_UNLABEL_A_IPV6MASK] = { .type = NLA_BINARY,
--				      .len = sizeof(struct in6_addr) },
--	[NLBL_UNLABEL_A_IPV4ADDR] = { .type = NLA_BINARY,
--				      .len = sizeof(struct in_addr) },
--	[NLBL_UNLABEL_A_IPV4MASK] = { .type = NLA_BINARY,
--				      .len = sizeof(struct in_addr) },
-+	[NLBL_UNLABEL_A_IPV6ADDR] =
-+		NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)),
-+	[NLBL_UNLABEL_A_IPV6MASK] =
-+		NLA_POLICY_EXACT_LEN(sizeof(struct in6_addr)),
-+	[NLBL_UNLABEL_A_IPV4ADDR] =
-+		NLA_POLICY_EXACT_LEN(sizeof(struct in_addr)),
-+	[NLBL_UNLABEL_A_IPV4MASK] =
-+		NLA_POLICY_EXACT_LEN(sizeof(struct in_addr)),
- 	[NLBL_UNLABEL_A_IFACE] = { .type = NLA_NUL_STRING,
- 				   .len = IFNAMSIZ - 1 },
- 	[NLBL_UNLABEL_A_SECCTX] = { .type = NLA_BINARY }
-@@ -757,24 +757,14 @@ static int netlbl_unlabel_addrinfo_get(struct genl_info *info,
- 				       void **mask,
- 				       u32 *len)
- {
--	u32 addr_len;
--
- 	if (info->attrs[NLBL_UNLABEL_A_IPV4ADDR] &&
- 	    info->attrs[NLBL_UNLABEL_A_IPV4MASK]) {
--		addr_len = nla_len(info->attrs[NLBL_UNLABEL_A_IPV4ADDR]);
--		if (addr_len != sizeof(struct in_addr) &&
--		    addr_len != nla_len(info->attrs[NLBL_UNLABEL_A_IPV4MASK]))
--			return -EINVAL;
--		*len = addr_len;
-+		*len = sizeof(struct in_addr);
- 		*addr = nla_data(info->attrs[NLBL_UNLABEL_A_IPV4ADDR]);
- 		*mask = nla_data(info->attrs[NLBL_UNLABEL_A_IPV4MASK]);
- 		return 0;
- 	} else if (info->attrs[NLBL_UNLABEL_A_IPV6ADDR]) {
--		addr_len = nla_len(info->attrs[NLBL_UNLABEL_A_IPV6ADDR]);
--		if (addr_len != sizeof(struct in6_addr) &&
--		    addr_len != nla_len(info->attrs[NLBL_UNLABEL_A_IPV6MASK]))
--			return -EINVAL;
--		*len = addr_len;
-+		*len = sizeof(struct in6_addr);
- 		*addr = nla_data(info->attrs[NLBL_UNLABEL_A_IPV6ADDR]);
- 		*mask = nla_data(info->attrs[NLBL_UNLABEL_A_IPV6MASK]);
- 		return 0;
+diff --git a/drivers/gpio/gpio-mvebu.c b/drivers/gpio/gpio-mvebu.c
+index ac799fced950e3..a7018e8ed88b10 100644
+--- a/drivers/gpio/gpio-mvebu.c
++++ b/drivers/gpio/gpio-mvebu.c
+@@ -997,7 +997,7 @@ static int mvebu_gpio_suspend(struct platform_device *pdev, pm_message_t state)
+ 		BUG();
+ 	}
+ 
+-	if (IS_REACHABLE(CONFIG_PWM))
++	if (IS_REACHABLE(CONFIG_PWM) && mvchip->mvpwm)
+ 		mvebu_pwm_suspend(mvchip);
+ 
+ 	return 0;
+@@ -1049,7 +1049,7 @@ static int mvebu_gpio_resume(struct platform_device *pdev)
+ 		BUG();
+ 	}
+ 
+-	if (IS_REACHABLE(CONFIG_PWM))
++	if (IS_REACHABLE(CONFIG_PWM) && mvchip->mvpwm)
+ 		mvebu_pwm_resume(mvchip);
+ 
+ 	return 0;
 -- 
 2.53.0
 
