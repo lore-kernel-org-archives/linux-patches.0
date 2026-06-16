@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A573CE4BA;
-	Tue, 16 Jun 2026 18:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A623C09E1;
+	Tue, 16 Jun 2026 18:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632926; cv=none; b=l2SfFRLYhsIZdw2Wi50oyvm+qNUyVvvNPETbDJg3WswZLC6EhYREKc0DKlPhspUe0pqW4uQ7YfLKMIwWqhK1yTNcwuVJVeK40Rr2rdnzYyri99Z39nrfAzD52U+YpyIVrPML1dzjCQX0aRiXzTwhsWQlBSsW3ranCsOL12p6nq4=
+	t=1781632931; cv=none; b=RzE0fjTdBpVjZ6zu4PHuLNFzGvuPW8h0MfDTCwhw3SKu0nwu0yAolV1YEWIt1RVgCTTXh+HlIVBlzIE0qu2bI6x8eSL7qTEU9Tm0GuNrIg9C94o0VUWlJ9zyzbWYcryNvVjAQ21gVRiAGMGuO7bv7tFXvt4Cx2pH+ABnTDAjPF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632926; c=relaxed/simple;
-	bh=HjEvR2yZkYHr2WtBsK8cn2uzmP9EkkBHisQkZyxpRjo=;
+	s=arc-20240116; t=1781632931; c=relaxed/simple;
+	bh=Ret6alQyEiMkTjnm9sdxMQCoxBdcTmMK0C9dMQhNYxU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qFwYv4DoY4pDw21w3joh7jt3wWPV5vs9Fiv4Vii25GjcvIZlPyUSHKsHaQap7YayAwqL7p0kmE1IJ6gMZv98MLSNZmIXc+H+jS1lDi1AGi2WBz8jo2hI54kwUjHiKcIge7mvJBeatXTbyzDs//IuJBkw8rp9oxsZ8K2pXXgCGdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwIvhgiT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tVQ2++KI+V5YtjeZ7LnXdcm4go9Kw7QmVre0UCbWH8985D3dSM8FHncRPNW/K03Gj2aKdTKu63h7wzk5mYuEG8jIDl0udHxkfe8NFXdi/mx46dG0KVQ/nKGxPoqDvPo48Csg/At/g5KDfbDzD92rrBJAoYqvlZ6uB88IexhtjzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTchkoNJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwIvhgiT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 491371F000E9;
-	Tue, 16 Jun 2026 18:02:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTchkoNJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3B81F000E9;
+	Tue, 16 Jun 2026 18:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632925;
-	bh=8XoN73znVi4HTSLBvG0+JC+iC7PRdxKRZ4XNdNzkhxM=;
+	s=korg; t=1781632930;
+	bh=NA+rQXcPRkh/69ToISD5R+ayunAGgzrj+qYC5tWdyXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AwIvhgiT6hi1ngPCgpE50up3ZWK8m2FJi3RfgFSYb520fYixIrAsXBNe3AcBq556q
-	 TZIiJE/UYdZt+dbcsgIefzUTLT5EXNryINTLazypt1U4mtSrX6top3oNYsuMurM700
-	 33ZTOFlspx/66Fbsc3YIXfZXlpIm9MqfCr+yZMUg=
+	b=BTchkoNJ9kDZb4fUNLhnxFuI6WqyUFJungrQLOyeFAV/+/lSYbgMwfYr7TYTRkEj6
+	 QLH1shvpZuoJp74WK46qalANtSEa0CumhFdfwJjPutj+pglmcHOy40oPn22ye+a/n0
+	 bxDW1sWM4uVPk9N0FHjlV8wK/ZeIKuTUcEkjioDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 503/522] mm/damon/core: use time_in_range_open() for damos quota window start
-Date: Tue, 16 Jun 2026 20:30:50 +0530
-Message-ID: <20260616145149.291410133@linuxfoundation.org>
+Subject: [PATCH 6.1 504/522] mm/damon/core: disallow time-quota setting zero esz
+Date: Tue, 16 Jun 2026 20:30:51 +0530
+Message-ID: <20260616145149.336236710@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,55 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 From: SeongJae Park <sj@kernel.org>
 
-commit 049a57421dd67a28c45ae7e92c36df758033e5fa upstream.
+commit 8bbde987c2b84f80da0853f739f0a920386f8b99 upstream.
 
-damos_adjust_quota() uses time_after_eq() to show if it is time to start a
-new quota charge window, comparing the current jiffies and the scheduled
-next charge window start time.  If it is, the next charge window start
-time is updated and the new charge window starts.
+When the throughput of a DAMOS scheme is very slow, DAMOS time quota can
+make the effective size quota smaller than damon_ctx->min_region_sz.  In
+the case, damos_apply_scheme() will skip applying the action, because the
+action is tried at region level, which requires >=min_region_sz size.
+That is, the quota is effectively exceeded for the quota charge window.
 
-The time check and next window start time update is skipped while the
-scheme is deactivated by the watermarks.  Let's suppose the deactivation
-is kept more than LONG_MAX jiffies (assuming CONFIG_HZ of 250, more than
-99 days in 32 bit systems and more than one billion years in 64 bit
-systems), resulting in having the jiffies larger than the next charge
-window start time + LONG_MAX.  Then, the time_after_eq() call can return
-false until another LONG_MAX jiffies are passed.
+Because no action will be applied, the total_charged_sz and
+total_charged_ns are also not updated.  damos_set_effective_quota() will
+try to update the effective size quota before starting the next charge
+window.  However, because the total_charged_sz and total_charged_ns have
+not updated, the throughput and effective size quota are also not changed.
+Since effective size quota can only be decreased, other effective size
+quota update factors including DAMOS quota goals and size quota cannot
+make any change, either.
 
-This means the scheme can continue working after being reactivated by the
-watermarks.  But, soon, the quota will be exceeded and the scheme will
-again effectively stop working until the next charge window starts.
-Because the current charge window is extended to up to LONG_MAX jiffies,
-however, it will look like it stopped unexpectedly and indefinitely, from
-the user's perspective.
+As a result, the scheme is unexpectedly deactivated until the user notices
+and mitigates the situation.  The users can mitigate this situation by
+changing the time quota online or re-install the scheme.  While the
+mitigation is somewhat straightforward, finding the situation would be
+challenging, because DAMON is not providing good observabilities for that.
+Even if such observability is provided, doing the additional monitoring
+and the mitigation is somewhat cumbersome and not aligned to the intention
+of the time quota.  The time quota was intended to help reduce the user's
+administration overhead.
 
-Fix this by using !time_in_range_open() instead.
+Fix the problem by setting time quota-modified effective size quota be at
+least min_region_sz always.
 
 The issue was discovered [1] by sashiko.
 
-Link: https://lore.kernel.org/20260329152306.45796-1-sj@kernel.org
-Link: https://lore.kernel.org/20260324040722.57944-1-sj@kernel.org [1]
-Fixes: ee801b7dd782 ("mm/damon/schemes: activate schemes based on a watermarks mechanism")
+Link: https://lore.kernel.org/20260407003153.79589-1-sj@kernel.org
+Link: https://lore.kernel.org/20260405192504.110014-1-sj@kernel.org [1]
+Fixes: 1cd243030059 ("mm/damon/schemes: implement time quota")
 Signed-off-by: SeongJae Park <sj@kernel.org>
 Cc: <stable@vger.kernel.org> # 5.16.x
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/damon/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -826,7 +826,8 @@ static void kdamond_apply_schemes(struct
- 			continue;
+@@ -802,6 +802,7 @@ static void damos_set_effective_quota(st
+ 	else
+ 		throughput = PAGE_SIZE * 1024;
+ 	esz = throughput * quota->ms;
++	esz = max(DAMON_MIN_REGION, esz);
  
- 		/* New charge window starts */
--		if (time_after_eq(jiffies, quota->charged_from +
-+		if (!time_in_range_open(jiffies, quota->charged_from,
-+					quota->charged_from +
- 					msecs_to_jiffies(
- 						quota->reset_interval))) {
- 			if (quota->esz && quota->charged_sz >= quota->esz)
+ 	if (quota->sz && quota->sz < esz)
+ 		esz = quota->sz;
 
 
