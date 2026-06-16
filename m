@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639CA478E53;
-	Tue, 16 Jun 2026 16:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2AD45348A;
+	Tue, 16 Jun 2026 16:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628632; cv=none; b=rJSsw5gWghIhIs2BlEwsEw/jUgI6oGO6KAtGluezf9DaD3wkPqucUZNG8KULQ1vTQ/5fhcwhKoI4E1RkIuWgT8rN58ubkrWGVAMAc7JKPfj+aW5x+CmomPZGewUguFvxVpfY1EohKSQpSxdakDe0kaYKGrdpnjA78y8GcvnpzGU=
+	t=1781628636; cv=none; b=ombaKqSMxqTsFrdJsOZ+S6+TAdcitGscMV2hZ81LMLdvOZhJUR3RBtZU+o8kVxhQphHPN9Pazc9wXl6/ceE91CqZ6EO8bEoypdQ6RDWAGc3V1mMIIJabatMpeO+B03nPnqUJhhlXxb9rW333uSLLteSedkkJlYACFhnjV2OqD9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628632; c=relaxed/simple;
-	bh=exKq8DrzLPleDja9UhIJOmCJ45y5koKjEUwvdsckReY=;
+	s=arc-20240116; t=1781628636; c=relaxed/simple;
+	bh=1wZ1+m8G95iHhnYFQ6DByiO/chFCgXegzvUqB34uJtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K3Cucvz5K8KrJxgmEeBt8uGpeqJvSaMNhxoj2SjGlr3LBNkaIqcWQ1P24eA1ovO7w/ByDWJPaFaHa4mcEKgvYz7BHjD1peIRvoBc1LLWKkI97yX08IDsHnn85SLW1CmBGoLJYmYIs+901/FrkAzETXwf1VVcPLt0i3E+MnXnWRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wk+97khP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=doMAZtkRMS4QyqGq/xobyS9/8ulBbh0QQZU5hN/Exnu5vKn91e0peKBOBZh7QCDkSixrc1YwoMX6x2snFeIzrPenu51WhKSn1xWipQwKU0/4uGg4DohFysazKj8Ebz9tNlS0M9xRo0mPvqMQM2gE1dXuOw0b3SzN2J9khNg0z7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3QgaMRL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wk+97khP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3481F00A3A;
-	Tue, 16 Jun 2026 16:50:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3QgaMRL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4521F000E9;
+	Tue, 16 Jun 2026 16:50:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628631;
-	bh=9dfeKOJUH1nUFOgMds0X5qIhsQBvxmaHRjFTLOp0UIo=;
+	s=korg; t=1781628635;
+	bh=bvOr7NQ8Wq1obU6MU1TOk3OrJ9TCFHUq8CiAvF1H5rY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wk+97khPD56OTqzEs29z73lxLiFc3GgNMPX/2mGtDze8fueT/trnB/81GHpv6A+mm
-	 DBz7MccDtnbBkJIOXAkrDA0hMR0dqTEVkO/KbKkQzYsW6cAfFzOY3SK9hIoOeNF4aM
-	 akWQXbIuJlBXfNt1/nAvHAzkpBAdnWrpjXRk/LFE=
+	b=a3QgaMRLJEioNLNKGIpnRf4V8Zj15tvijZhjsCYdHkJatD7ctkVtflBez3FTZGaHx
+	 4l/WNeypyrrRNKzys66apo37qZCYh+zHpM5NqICCDZf+y1M95mMsQy2aCmGNP9dZan
+	 PKx5AzLHcYgcxvsMYxHolmLfmGe9xzF/DRSRuKRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyi.xie@ntu.edu.sg>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 132/452] ip6: vti: Use ip6_tnl.net in vti6_changelink().
-Date: Tue, 16 Jun 2026 20:25:59 +0530
-Message-ID: <20260616145124.665648901@linuxfoundation.org>
+	Ping Cheng <ping.cheng@wacom.com>,
+	Lee Jones <lee@kernel.org>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.6 133/452] HID: wacom: Fix OOB write in wacom_hid_set_device_mode()
+Date: Tue, 16 Jun 2026 20:26:00 +0530
+Message-ID: <20260616145124.721167130@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,76 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Lee Jones <lee@kernel.org>
 
-commit 11b326fb0a374f4654f9be22d0f0f7abd9f7d3fe upstream.
+commit c0a8899e02ddebd51e2589835182c239c2e224ae upstream.
 
-ip netns add ns1
-ip netns add ns2
-ip -n ns1 link add vti6_test type vti6 remote ::1 local ::2 key 7
-ip -n ns1 link set vti6_test netns ns2
-ip -n ns2 link set vti6_test type vti6 remote ::3 local ::4 key 9
-ip netns del ns2
-ip netns del ns1
-[  132.495484] ------------[ cut here ]------------
-[  132.497609] kernel BUG at net/core/dev.c:12376!
+wacom_hid_set_device_mode() currently assumes that the HID_DG_INPUTMODE
+usage is always located in the first field (field[0]) of the feature report.
+However, a device can specify HID_DG_INPUTMODE in a different field.
 
-Commit 61220ab34948 ("vti6: Enable namespace changing") dropped
-NETIF_F_NETNS_LOCAL from vti6 devices. A vti6 tunnel can then
-move through IFLA_NET_NS_FD. After the move dev_net(dev) points
-at the new netns while t->net stays at the creation netns.
+If HID_DG_INPUTMODE is in a field other than the first one and the first
+field has a report_count smaller than the usage_index of HID_DG_INPUTMODE,
+this leads to an out-of-bounds write to r->field[0]->value.
 
-vti6_changelink() and vti6_update() still use dev_net(dev) and
-dev_net(t->dev). They unlink from one per netns hash and relink
-into another. The creation netns is left with a stale entry.
-cleanup_net() of that netns later walks freed memory.
+Fix this by storing the field index of HID_DG_INPUTMODE in 'struct
+hid_data' during feature mapping.  In wacom_hid_set_device_mode(), use
+this stored field index to access the correct field and add bounds
+checks to ensure both the field index and the value index are within
+valid ranges before writing.
 
-Reachable from an unprivileged user namespace (unshare --user
---map-root-user --net). Cross tenant scope on container hosts.
-
-Fixes: 61220ab34948 ("vti6: Enable namespace changing")
-Reported-by: Maoyi Xie <maoyi.xie@ntu.edu.sg>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Cc: stable@vger.kernel.org # v5.15+
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260521130555.3421684-2-maoyixie.tju@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: stable@vger.kernel.org
+Fixes: 5ae6e89f7409 ("HID: wacom: implement the finger part of the HID generic handling")
+Tested-by: Ping Cheng <ping.cheng@wacom.com>
+Reviewed-by: Ping Cheng <ping.cheng@wacom.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_vti.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/hid/wacom_sys.c |   13 ++++++++++---
+ drivers/hid/wacom_wac.h |    1 +
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
---- a/net/ipv6/ip6_vti.c
-+++ b/net/ipv6/ip6_vti.c
-@@ -726,10 +726,11 @@ vti6_tnl_change(struct ip6_tnl *t, const
- static int vti6_update(struct ip6_tnl *t, struct __ip6_tnl_parm *p,
- 		       bool keep_mtu)
- {
--	struct net *net = dev_net(t->dev);
--	struct vti6_net *ip6n = net_generic(net, vti6_net_id);
-+	struct net *net = t->net;
-+	struct vti6_net *ip6n;
- 	int err;
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -341,6 +341,7 @@ static void wacom_feature_mapping(struct
  
-+	ip6n = net_generic(net, vti6_net_id);
- 	vti6_tnl_unlink(ip6n, t);
- 	synchronize_net();
- 	err = vti6_tnl_change(t, p, keep_mtu);
-@@ -1043,11 +1044,12 @@ static int vti6_changelink(struct net_de
- 			   struct nlattr *data[],
- 			   struct netlink_ext_ack *extack)
- {
--	struct ip6_tnl *t;
-+	struct ip6_tnl *t = netdev_priv(dev);
-+	struct net *net = t->net;
- 	struct __ip6_tnl_parm p;
--	struct net *net = dev_net(dev);
--	struct vti6_net *ip6n = net_generic(net, vti6_net_id);
-+	struct vti6_net *ip6n;
+ 		hid_data->inputmode = field->report->id;
+ 		hid_data->inputmode_index = usage->usage_index;
++		hid_data->inputmode_field_index = field->index;
+ 		break;
  
-+	ip6n = net_generic(net, vti6_net_id);
- 	if (dev == ip6n->fb_tnl_dev)
- 		return -EINVAL;
+ 	case HID_UP_DIGITIZER:
+@@ -556,9 +557,14 @@ static int wacom_hid_set_device_mode(str
  
+ 	re = &(hdev->report_enum[HID_FEATURE_REPORT]);
+ 	r = re->report_id_hash[hid_data->inputmode];
+-	if (r) {
+-		r->field[0]->value[hid_data->inputmode_index] = 2;
+-		hid_hw_request(hdev, r, HID_REQ_SET_REPORT);
++	if (r && hid_data->inputmode_field_index >= 0 &&
++	    hid_data->inputmode_field_index < r->maxfield) {
++		struct hid_field *field = r->field[hid_data->inputmode_field_index];
++
++		if (field && hid_data->inputmode_index < field->report_count) {
++			field->value[hid_data->inputmode_index] = 2;
++			hid_hw_request(hdev, r, HID_REQ_SET_REPORT);
++		}
+ 	}
+ 	return 0;
+ }
+@@ -2810,6 +2816,7 @@ static int wacom_probe(struct hid_device
+ 		return error;
+ 
+ 	wacom_wac->hid_data.inputmode = -1;
++	wacom_wac->hid_data.inputmode_field_index = -1;
+ 	wacom_wac->mode_report = -1;
+ 
+ 	if (hid_is_usb(hdev)) {
+--- a/drivers/hid/wacom_wac.h
++++ b/drivers/hid/wacom_wac.h
+@@ -297,6 +297,7 @@ struct wacom_shared {
+ struct hid_data {
+ 	__s16 inputmode;	/* InputMode HID feature, -1 if non-existent */
+ 	__s16 inputmode_index;	/* InputMode HID feature index in the report */
++	__s16 inputmode_field_index; /* InputMode HID feature field index in the report */
+ 	bool sense_state;
+ 	bool inrange_state;
+ 	bool invert_state;
 
 
