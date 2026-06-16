@@ -1,169 +1,107 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819EE34751B;
-	Tue, 16 Jun 2026 19:10:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5556C38237F
+	for <patches@lists.linux.dev>; Tue, 16 Jun 2026 20:14:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781637024; cv=none; b=ZNXfexRtKW5DUv/O/ANvzKbS1xTixuMAiiKXgKeY+FkSTS1zzLidN+0w2rdpRC+lZnAhPolHi/7fqx3dTFeWf3dz19NJCozbei8h97ATr8SLCekcVHBsVaJCNkTQVwXy+9wKIoJsSBZ+e7aIMQRPoPJDs1kKS6IlBtz5Bf8Blxc=
+	t=1781640859; cv=none; b=Wd64akvDJBolocAizreKa/CItov3AqePMOE4Oytor+ahRKAeBMGv3kgu2kk6faAX7R63UeiVoIZdwmCGDKPCdBugta3zJ9jzpQnsJRAtfQiEuOyf9eOcupnwg5cL2fFL50fGGR/DeV16p7Bc+TqzR3kkTyZv+eS/rJowF/PZiB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781637024; c=relaxed/simple;
-	bh=mMbkWyM9eS4cr9qejCTvonZIoT8UWJbRBjzDEE0Ntag=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mGAaj4GRnn74hP/SP6D9+Ck/iiAGyL1n1iYHVjkq+WhniMGPzKz/Psh8TaZ5z86omNqxGbD+iZ28EF2nXT8CVgY2SWimXcks+vF9MRISh38Hkm5Ge7WVqwRrXRcNxwTpydPdKtHK3wA/5wRjRR79NOkWXSD4ng5kdJfwGCEktzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wckrU+tp; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1781640859; c=relaxed/simple;
+	bh=Z4buY0yxNSj5ughbZXoco5xIDW6nysocSW3jyixQZKE=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=nmD6MfojKZNocz+0+AadsxjlgfyFlJyLG6cGmmXYtGgKZFOoQ/W/P51jdqtV9h6lr99wswTsoiXm0g9vXhgUPRKbJJllwS31QGs6XT2lUIRdo95C5S/AOF4ewbMJLfboWvW7cgrIRmV+qLFz1ffL36zLRBYxmMs5wjMpko6Sk0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q8Bijv/f; arc=none smtp.client-ip=209.85.160.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wckrU+tp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B1BE1F00A3A;
-	Tue, 16 Jun 2026 19:10:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781637023;
-	bh=0Zag5D9tJgoasGYtIWPQgepxbGs890VDC95iWsiQsTk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wckrU+tpEC1CvSW8y+JFl2DUXzamWvJ+gbugI+DWRm3U0OIkAyb6j81pXWwMmCeDu
-	 i8+Mol7SezF3lgLd2kHdp0zrsh33xvjaqv/cqfTDUrg0egr3Af4MJlCCA4SE3mSzf6
-	 DcZblrFp/FxXGaNV1jqb5EAF9XGsesSamuwwSTC8=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 319/342] iio: adc: npcm: fix unbalanced clk_disable_unprepare()
-Date: Tue, 16 Jun 2026 20:30:15 +0530
-Message-ID: <20260616145103.405506972@linuxfoundation.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q8Bijv/f"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-5176096116fso58907251cf.0
+        for <patches@lists.linux.dev>; Tue, 16 Jun 2026 13:14:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781640857; x=1782245657; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:mime-version:user-agent:date
+         :message-id:from:references:cc:to:subject:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GB1HLk2MsE4YXVeU3KtucQOegECld/8EB1fgDTQNKH8=;
+        b=Q8Bijv/f1iQeQVQu/rzpAmRyh7BZsQRevhtR7XakmxzIvfoV1XWO9AiwItPQQzgpph
+         o3oeDmETOFPZeHKgZvEVqpYMr5nLoK9j+dLIfzvi7rWUMV02VnovcHsw2QfMqGrnAqxT
+         jrETqT3PSzlb6W40A4Y9z86cvpO6p9rMdkSjREVlYqBtQNh2jULE0Hm+Hx6AqdfXxU1u
+         tI699L3pNjDmx8xZu10PmydnX4hIBeUw9swFcx0nN14HpAFYKwt1swadACKdkqkEqsQQ
+         m6/Q7uQg3Q1cgxyJ+48TMrlz49maNW7HHRsg167j473TmArSjV4dmv6Gv3XjiUyXauKe
+         yU1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781640857; x=1782245657;
+        h=content-transfer-encoding:in-reply-to:mime-version:user-agent:date
+         :message-id:from:references:cc:to:subject:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GB1HLk2MsE4YXVeU3KtucQOegECld/8EB1fgDTQNKH8=;
+        b=j+3+zj3gon51mzVVlPisD6TlYRuPwHXeJA9kOFqQezXO7bSmBIJqqyu+g+X6iEZiow
+         g2ZCuLX6aWVFoJ1dPsTxsdhJQQHzF/FV31LQGO1S3WAJJLxzaWRTTmpV5CFEkXMiRIRd
+         OnDQHwQAZT+YpptOgBvl97vYhQ8DS1foNbxbRwiddbKiDXYgRDhPNUDLcedYR1Y2VcjD
+         utVynV2pmC8oV6mLIdtCIO4x7VkBRKc9AFCPSnNfXKpjrHM86lX92njRNbInhpBpjFH0
+         SbuQcwdvLAsRL3dEPbSGU6csc4k+bWAGy7t6zBC4sUw4CpZ7aVC7Fr1J2TmwMUfkACQ7
+         Fi5Q==
+X-Gm-Message-State: AOJu0YxS/RFAN7V4f+08bfLmRo3+3X1jMZlmcoytWd38mYO9b3SXqu8n
+	r1IP29zEUJhL0ifn5fNJeYdg1SwZxb4w/QKqOMeoZ+BzqZYa8NrDWxU=
+X-Gm-Gg: Acq92OHJ0f+wf2h/9F+IOAS+y4qjhJd/G8f3dKP7W5OvNNkc34D6cIUpfsy61yOD/Mn
+	ML5MdDaKAJkdI8iavwCgljxoOBfOy/ZADruxW+RBpH31okTUfM/l1BhKKzj8WURZVsvXAcNg4if
+	Lehg+FtAO+PrrSQ3pJ3WlQ0nni6MdXs1GzGfnwiSYkQ8hhSxrK8sQr7nYn+qL8qeQF5871l4A00
+	Xn358k6nVInDUTyhKeBwagg+4yrYp/y9Bu4nQ7T3HAqEcL45eQzhY1wdqrY3qEsVLcPvRdXAixm
+	ZcU51Lg3Pe4YA44+rVt8bACpMLVvXJF/X4AE5YW/a6ibzb8XNzMO0D1FqPFnMNxSUu0lKQlSl61
+	uK0gDg3kmdccApEogYJMGPlX6HrTfi0xJQ5PMzyqKvVathJXikokuN8g7FuXzOWTVm+2XbPIMC/
+	x45nchMHIS7OFQiDJlPA+7UBVxGWq+nflTjXUmFUvw0MivF4M9HVA=
+X-Received: by 2002:ac8:5fcf:0:b0:517:89d0:b8a9 with SMTP id d75a77b69052e-519a8ca24d1mr16762201cf.9.1781640857211;
+        Tue, 16 Jun 2026 13:14:17 -0700 (PDT)
+Received: from [120.7.1.23] (135-23-94-154.cpe.pppoe.ca. [135.23.94.154])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-517fb7dacdfsm156361931cf.20.2026.06.16.13.14.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Jun 2026 13:14:16 -0700 (PDT)
+Subject: Re: [PATCH 5.10 000/342] 5.10.259-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
 References: <20260616145048.348037099@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+From: Woody Suwalski <terraluna977@gmail.com>
+Message-ID: <88a6a3f4-7e7f-2818-1eb5-145838b9a957@gmail.com>
+Date: Tue, 16 Jun 2026 16:14:29 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101
+ Firefox/128.0 SeaMonkey/2.53.23
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.259 release.
+> There are 342 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 18 Jun 2026 14:49:57 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.259-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
+Built for i386 and booted OK on a 32 bit laptop.
 
-------------------
-
-From: David Carlier <devnexen@gmail.com>
-
-[ Upstream commit 0d42e2c0bd6ceb89e44c6e065f9bdf9b1df3ef0c ]
-
-The driver acquired the ADC clock with devm_clk_get() and read its
-rate, but never called clk_prepare_enable(). The probe error path and
-npcm_adc_remove() both called clk_disable_unprepare() unconditionally,
-causing the clk framework's enable/prepare counts to underflow on
-probe failure or module unbind.
-
-The issue went unnoticed because NPCM BMC firmware leaves the ADC
-clock enabled at boot, so the driver happened to work in practice.
-
-Switch to devm_clk_get_enabled() so the clock is properly enabled
-during probe and automatically released by the device-managed
-cleanup, and drop the now-redundant clk_disable_unprepare() from
-both the probe error path and remove().
-
-While at it, drop the duplicate error message on devm_request_irq()
-failure since the IRQ core already logs it.
-
-Fixes: 9bf85fbc9d8f ("iio: adc: add NPCM ADC driver")
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/iio/adc/npcm_adc.c |   26 ++++++++------------------
- 1 file changed, 8 insertions(+), 18 deletions(-)
-
---- a/drivers/iio/adc/npcm_adc.c
-+++ b/drivers/iio/adc/npcm_adc.c
-@@ -180,7 +180,6 @@ static int npcm_adc_probe(struct platfor
- 	u32 reg_con;
- 	struct npcm_adc *info;
- 	struct iio_dev *indio_dev;
--	struct device *dev = &pdev->dev;
- 
- 	indio_dev = devm_iio_device_alloc(&pdev->dev, sizeof(*info));
- 	if (!indio_dev)
-@@ -197,7 +196,7 @@ static int npcm_adc_probe(struct platfor
- 	if (IS_ERR(info->reset))
- 		return PTR_ERR(info->reset);
- 
--	info->adc_clk = devm_clk_get(&pdev->dev, NULL);
-+	info->adc_clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(info->adc_clk)) {
- 		dev_warn(&pdev->dev, "ADC clock failed: can't read clk\n");
- 		return PTR_ERR(info->adc_clk);
-@@ -210,17 +209,13 @@ static int npcm_adc_probe(struct platfor
- 	info->adc_sample_hz = clk_get_rate(info->adc_clk) / ((div + 1) * 2);
- 
- 	irq = platform_get_irq(pdev, 0);
--	if (irq <= 0) {
--		ret = -EINVAL;
--		goto err_disable_clk;
--	}
-+	if (irq <= 0)
-+		return -EINVAL;
- 
- 	ret = devm_request_irq(&pdev->dev, irq, npcm_adc_isr, 0,
- 			       "NPCM_ADC", indio_dev);
--	if (ret < 0) {
--		dev_err(dev, "failed requesting interrupt\n");
--		goto err_disable_clk;
--	}
-+	if (ret < 0)
-+		return ret;
- 
- 	reg_con = ioread32(info->regs + NPCM_ADCCON);
- 	info->vref = devm_regulator_get_optional(&pdev->dev, "vref");
-@@ -228,7 +223,7 @@ static int npcm_adc_probe(struct platfor
- 		ret = regulator_enable(info->vref);
- 		if (ret) {
- 			dev_err(&pdev->dev, "Can't enable ADC reference voltage\n");
--			goto err_disable_clk;
-+			return ret;
- 		}
- 
- 		iowrite32(reg_con & ~NPCM_ADCCON_REFSEL,
-@@ -238,10 +233,8 @@ static int npcm_adc_probe(struct platfor
- 		 * Any error which is not ENODEV indicates the regulator
- 		 * has been specified and so is a failure case.
- 		 */
--		if (PTR_ERR(info->vref) != -ENODEV) {
--			ret = PTR_ERR(info->vref);
--			goto err_disable_clk;
--		}
-+		if (PTR_ERR(info->vref) != -ENODEV)
-+			return PTR_ERR(info->vref);
- 
- 		/* Use internal reference */
- 		iowrite32(reg_con | NPCM_ADCCON_REFSEL,
-@@ -280,8 +273,6 @@ err_iio_register:
- 	iowrite32(reg_con & ~NPCM_ADCCON_ADC_EN, info->regs + NPCM_ADCCON);
- 	if (!IS_ERR(info->vref))
- 		regulator_disable(info->vref);
--err_disable_clk:
--	clk_disable_unprepare(info->adc_clk);
- 
- 	return ret;
- }
-@@ -298,7 +289,6 @@ static int npcm_adc_remove(struct platfo
- 	iowrite32(regtemp & ~NPCM_ADCCON_ADC_EN, info->regs + NPCM_ADCCON);
- 	if (!IS_ERR(info->vref))
- 		regulator_disable(info->vref);
--	clk_disable_unprepare(info->adc_clk);
- 
- 	return 0;
- }
-
+Tested-by: Woody Suwalski <terraluna977@gmail.com>
 
