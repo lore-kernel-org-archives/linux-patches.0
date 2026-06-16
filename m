@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9379B466B79;
-	Tue, 16 Jun 2026 16:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11AF1477980;
+	Tue, 16 Jun 2026 16:31:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627460; cv=none; b=YSP7MC5mirwaY8ZANjVEAV9xxgI3C2Kn82f35CRGgetIk93dWf8wwXoXhw9SdB/PNSHINRdbc8hu3lbd6w9uMz5nXgmuWfOD+joksvsbXhBKXQFY/eIoE+i9A4h54szmw2nn8lpB6TibfhEcCHGgBqO6RodN019669rlOuGajCw=
+	t=1781627466; cv=none; b=pnv2fWUelfKq9R/dUbwe0OjHFWIVXQZRWNQf2S6AMr+YvB4aehJMsmo1cJ5NDk1nkguKH0niU1sl6YmHTQmHCyy87/jUCmFaaWKlqXqskC523r2OqaiHnW3NxI2Jf/EwkiXYG+MHxCvXbUssl3I/k7ZhWOkm2vG5JX3r7aY+kBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627460; c=relaxed/simple;
-	bh=yV12tNu4GS6g3aXA0tR4vey7TYVSoTbLruDT1GwxUyI=;
+	s=arc-20240116; t=1781627466; c=relaxed/simple;
+	bh=t02FDf4cGRE0UpqCNAtIXu6zQ6k7kCh6H34l2P9JK/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BzPv8xV722R/2xGOQm/jmqRJx3I/lIfayF8cLvHSHI7SC0/n31Dau/4dZR0sIQxW0H2P+eyuoCwD4E/TqZT7TiMVKm5C/CiOi1/jVyqT+eEcKxgzWUeQflAyWEzu7hPqp0Glsq01QId5Di/lngzcG5J8jTadqhJhJyGbkZygzLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HRIxbrkS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=MMVGfJUMiJhLzIh/lI8BY+kUWYUwX7+am5W2g9P1N0JrBKmth+QkrFH9TtZtLwcYkTSzKZejVVfCCAfRON1xhFgZ4KLGeqxpgHXs3hMJWZq8qJ+ucSu86vZnZi8fIrdVuZaR9znaekyHc1jRHTmYTgmiyAM+Ixpz5As9mg0Fuig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0b2bd1RL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HRIxbrkS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 348E91F000E9;
-	Tue, 16 Jun 2026 16:30:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0b2bd1RL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDC581F000E9;
+	Tue, 16 Jun 2026 16:31:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627459;
-	bh=MECI/Z2yTLBq7aeXp+8JbH/CGO/VEbSpSC3z+GL12m0=;
+	s=korg; t=1781627464;
+	bh=+Vo3kvA+LCyAp15OueHKYhO45qlsxrM3jnTaBQrLHO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HRIxbrkSDYjOb65sHZGE1CCLrjNoaQUSdFFD2HcnXhISbKtMjiyoCna8gX1WYkMIF
-	 15PLjxLK4wrNDTe5PN/nE1QNL75w3w1q7q6fDRQfBgKK0s79bokp7ajdfQS51QR3ue
-	 5fSHMzpvzhDkCW1TPcOmqqVmx3IUWTi+5Hz622F0=
+	b=0b2bd1RLt/jsDRct9FZrCOALC0vn918KtIdAhaoVi40eOEvycXBQrnllr271wloj9
+	 j2KmYWQ+UE/pIb6gGbgAYoJkEXsH8mc304u+qz4SRQPdmsKNYKEeKbYheYw8C8Bmf/
+	 OMAPbtzvfFVq6t6Ey1foqOSiVzcz+L/zM4UtmudI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Guillermo=20Rodr=C3=ADguez?= <guille.rodriguez@gmail.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.12 173/261] i2c: stm32f7: fix timing computation ignoring i2c-analog-filter
-Date: Tue, 16 Jun 2026 20:30:11 +0530
-Message-ID: <20260616145053.085937377@linuxfoundation.org>
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@meta.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 145/261] io_uring/net: inherit IORING_CQE_F_BUF_MORE across bundle recv retries
+Date: Tue, 16 Jun 2026 20:29:43 +0530
+Message-ID: <20260616145051.799201493@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,56 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillermo Rodríguez <guille.rodriguez@gmail.com>
+From: Clément Léger <cleger@meta.com>
 
-commit a124579c0763da7bc408f4cd7e8f606cadc94855 upstream.
+commit ed46f39c47eb5530a9c161481a2080d3a869cfaf upstream.
 
-stm32f7_i2c_compute_timing() uses i2c_dev->analog_filter to pick
-the analog filter delay, but i2c_dev->analog_filter is parsed from
-the "i2c-analog-filter" DT property only after the compute_timing
-loop in stm32f7_i2c_setup_timing(), so in practice the timing
-calculations always ignore the analog filter. On an STM32MP1 board
-with clock-frequency = <400000> and i2c-analog-filter set, measured
-SCL frequency was ~382 kHz.
+When a bundle recv retries inside io_recv_finish(), the merge logic OR
+the saved cflags from the previous iteration with the cflags returned by
+the new iteration:
+  cflags = req->cqe.flags | (cflags & CQE_F_MASK);
 
-This also affects (widens) the computed SDADEL range. At high bus
-clock speeds, this can select an SDADEL value that violates tVD;DAT
-(data valid time).
+Bits listed in CQE_F_MASK are inherited from the new iteration, and all
+other bits (notably IORING_CQE_F_BUFFER and the buffer ID) come from the
+saved cflags. Before this change CQE_F_MASK covered only
+IORING_CQE_F_SOCK_NONEMPTY and IORING_CQE_F_MORE.
 
-Fix by parsing "i2c-analog-filter" before the compute_timing loop.
+When using provided buffer rings (IOU_PBUF_RING_INC) with incremental
+mode, and bundle recv, io_kbuf_inc_commit() can leave the head ring
+entry partially consumed, __io_put_kbufs() then sets
+IORING_CQE_F_BUF_MORE on the returned cflags so userspace knows the
+buffer ID will be reused for subsequent completions.
 
-Fixes: 83c3408f7b9c ("i2c: stm32f7: support DT binding i2c-analog-filter")
-Signed-off-by: Guillermo Rodríguez <guille.rodriguez@gmail.com>
-Cc: <stable@vger.kernel.org> # v5.13+
-Acked-by: Alain Volmat <alain.volmat@foss.st.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260526091210.20383-1-guille.rodriguez@gmail.com
+Because IORING_CQE_F_BUF_MORE was not in CQE_F_MASK, the merge above
+silently dropped it whenever the final retry iteration partially
+consumed the buffer, and the subsequent req->cqe.flags = cflags &
+~CQE_F_MASK save would have left a stale IORING_CQE_F_BUF_MORE in the
+carried-over cflags had one been present. Userspace would then
+wrongfully advance it ring head past an entry the kernel still uses.
+
+Add IORING_CQE_F_BUF_MORE to CQE_F_MASK so it is both inherited from the
+new iteration into the user-visible CQE and stripped from the saved
+cflags between iterations.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Clément Léger <cleger@meta.com>
+Assisted-by: Claude:claude-opus-4.6
+Fixes: ae98dbf43d75 ("io_uring/kbuf: add support for incremental buffer consumption")
+Link: https://patch.msgid.link/20260604160715.2482972-1-cleger@meta.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-stm32f7.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ io_uring/net.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-stm32f7.c
-+++ b/drivers/i2c/busses/i2c-stm32f7.c
-@@ -693,6 +693,9 @@ static int stm32f7_i2c_setup_timing(stru
- 	if (!of_property_read_bool(i2c_dev->dev->of_node, "i2c-digital-filter"))
- 		i2c_dev->dnf_dt = STM32F7_I2C_DNF_DEFAULT;
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -846,7 +846,8 @@ int io_recvmsg_prep(struct io_kiocb *req
+ }
  
-+	i2c_dev->analog_filter = of_property_read_bool(i2c_dev->dev->of_node,
-+						       "i2c-analog-filter");
-+
- 	do {
- 		ret = stm32f7_i2c_compute_timing(i2c_dev, setup,
- 						 &i2c_dev->timing);
-@@ -714,9 +717,6 @@ static int stm32f7_i2c_setup_timing(stru
- 		return ret;
- 	}
+ /* bits to clear in old and inherit in new cflags on bundle retry */
+-#define CQE_F_MASK	(IORING_CQE_F_SOCK_NONEMPTY|IORING_CQE_F_MORE)
++#define CQE_F_MASK	(IORING_CQE_F_SOCK_NONEMPTY|IORING_CQE_F_MORE|\
++			 IORING_CQE_F_BUF_MORE)
  
--	i2c_dev->analog_filter = of_property_read_bool(i2c_dev->dev->of_node,
--						       "i2c-analog-filter");
--
- 	dev_dbg(i2c_dev->dev, "I2C Speed(%i), Clk Source(%i)\n",
- 		setup->speed_freq, setup->clock_src);
- 	dev_dbg(i2c_dev->dev, "I2C Rise(%i) and Fall(%i) Time\n",
+ /*
+  * Finishes io_recv and io_recvmsg.
 
 
