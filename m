@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2063B840B;
-	Tue, 16 Jun 2026 15:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067A544D031;
+	Tue, 16 Jun 2026 15:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624669; cv=none; b=X1S92Xgmtn6YA672k15byXs3OBd61CedZnUcKDL02FsmCN/Rd5dNPFHBgv6FBWx+sQ7knqNbA/6/jXSrDBrhB3f/GxHXwUuCDx2OmXTujGRUqqU6V2LqGdC0WgZ9ukVyijEs0gkgfF61dTUuGHwcHdtH3whHDuUiXzLT4AyKWoI=
+	t=1781624674; cv=none; b=nwV9BmrtGdXDa2npI4LLdeACn14vqUixvAdGTeeyyZ0VkqJXkRhm2zTpf+Sas+teztCgkidK9AIezMKq297xTCVumGe16HP5kuHMwc5ULp2uzAK+oV5tRkS/Px9p0YyOiNRnydk+M2HOImodBq92KZkyWvfux+5+2dm1ezl/zak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624669; c=relaxed/simple;
-	bh=PZeyafYMYVyZjRKkxAQMpvbt05/bmQOnxIp/lkbjrHY=;
+	s=arc-20240116; t=1781624674; c=relaxed/simple;
+	bh=dxHNSep29E0UyRO/bwdsWFgBV7JMMrFE3HdG2t29WaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Brh9CkCCHgOzrWIE8uSMNTNuMlrEpUUGrN7hzvwh0G252ah/WJJUv8lip5gvgKcz4dcapVhTknHaSXq/i9oIAi6gQy+qbXZcU4WanDFN1Ym227fQMMNo6T+IMV7TaYCUxCXQb9uyd3VIqSy2MWIXoyIdzzt6dh6w3eCVULFUlQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xo2TLPBs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dtRDnZyj8LgFEINlP6T/HHIqsJ6WEG/oyVPaAB1n5csqfRGZoqIxBzp53P2cJh+KpoHo7C7gX5eTAAOZ00sDfkDb+A2QGiQ6/hPZRm2U7qgCabMnnVh9iFXB8eWWo/hv6efvNrIZUQt7V3fqcXFbefd5HaqcJ5PatlXGOzSFAvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0fvS1Db; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xo2TLPBs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E9B1F00A3A;
-	Tue, 16 Jun 2026 15:44:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0fvS1Db"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF0B1F000E9;
+	Tue, 16 Jun 2026 15:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624667;
-	bh=MEi8fmaT69eva8Z2mi2Lq2i7AadW0sf3G3upSDxgpHc=;
+	s=korg; t=1781624672;
+	bh=OJiL+WcjaQjQT3nucjWwL5hYSPXd7gQoqI8YOll05/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xo2TLPBsm3425trJCwYJffvc7X77lD3nGlH+rzbXvrqbj41UNvBUZdeMBnDdVh6V0
-	 rOTzsvQm/KXKXKj9J7CngQXyRdGz+xzhWBzuRk37KOWtKN7lwfeJn4Sg3NmO+rRW82
-	 lrzbJpxB70C28ZvFwA91zn6uzfys5/hZGV4ZJxIY=
+	b=v0fvS1DbTUIfTnyLMVPCV8BC0rlcRJMTWRJ7aIwWLeFKFi7OTnyXM2SMIXtZZhzTB
+	 bvzWZDXcssQDiJUZtPyrecS5x8464dcXKLuwTb8daWaK1rDp/T6++iDR9JzTm7X2Gm
+	 moj2yk2D7U9mXzombOoNG5ioz/CYRmX8p9PNwed8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.0 371/378] vsock/virtio: fix skb overhead accounting to preserve full buf_alloc
-Date: Tue, 16 Jun 2026 20:30:02 +0530
-Message-ID: <20260616145129.638510255@linuxfoundation.org>
+	syzbot+b8ca586b9fc235f0c0df@syzkaller.appspotmail.com,
+	Helen Koike <koike@igalia.com>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 7.0 372/378] debugobjects: Do not fill_pool() if pi_blocked_on
+Date: Tue, 16 Jun 2026 20:30:03 +0530
+Message-ID: <20260616145129.689029944@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -50,66 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Helen Koike <koike@igalia.com>
 
-commit c6087c5aaad6d1b8be1a1a641e0a422218ade911 upstream.
+commit 5f41161059fd0f1bbf18c90f3180e38cc45a14eb upstream.
 
-After commit 059b7dbd20a6 ("vsock/virtio: fix potential unbounded skb
-queue"), virtio_transport_inc_rx_pkt() subtracts per-skb overhead from
-buf_alloc when checking whether a new packet fits. This reduces the
-effective receive buffer below what the user configured via
-SO_VM_SOCKETS_BUFFER_SIZE, causing legitimate data packets to be
-silently dropped and applications that rely on the full buffer size
-to deadlock.
+On RT enabled kernels, fill_pool() ends up calling rtlock_lock(), which
+asserts if current::pi_blocked_on is set, because a task can obviously only
+block on one lock as otherwise the priority inheritenace chain gets
+corrupted.
 
-Also, the reduced space is not communicated to the remote peer, so
-its credit calculation accounts more credit than the receiver will
-actually accept, causing data loss (there is no retransmission).
+Prevent this by expanding the conditional to take current::pi_blocked_on
+into account.
 
-With this approach we currently have failures in
-tools/testing/vsock/vsock_test.c. Test 18 sometimes fails, while
-test 22 always fails in this way:
-    18 - SOCK_STREAM MSG_ZEROCOPY...hash mismatch
-
-    22 - SOCK_STREAM virtio credit update + SO_RCVLOWAT...send failed:
-    Resource temporarily unavailable
-
-Fix by allowing at most `buf_alloc * 2` as the total budget for payload
-plus skb overhead in virtio_transport_inc_rx_pkt(), similar to how
-SO_RCVBUF is doubled to reserve space for sk_buff metadata.
-This preserves the full buf_alloc for payload under normal operation,
-while still bounding the skb queue growth.
-
-With this patch, all tests in tools/testing/vsock/vsock_test.c are
-now passing again.
-
-Fixes: 059b7dbd20a6 ("vsock/virtio: fix potential unbounded skb queue")
-Cc: stable@vger.kernel.org
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20260518090656.134588-3-sgarzare@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 4bedcc28469a ("debugobjects: Make them PREEMPT_RT aware")
+Reported-by: syzbot+b8ca586b9fc235f0c0df@syzkaller.appspotmail.com
+Signed-off-by: Helen Koike <koike@igalia.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260511215359.3351259-1-koike@igalia.com
+Closes: https://syzkaller.appspot.com/bug?extid=b8ca586b9fc235f0c0df
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport_common.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ lib/debugobjects.c |   18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -427,7 +427,14 @@ static bool virtio_transport_inc_rx_pkt(
+--- a/lib/debugobjects.c
++++ b/lib/debugobjects.c
+@@ -711,6 +711,15 @@ static struct debug_obj *lookup_object_o
+ 	return NULL;
+ }
+ 
++static inline bool debug_objects_is_pi_blocked_on(void)
++{
++#ifdef CONFIG_RT_MUTEXES
++	return current->pi_blocked_on != NULL;
++#else
++	return false;
++#endif
++}
++
+ static void debug_objects_fill_pool(void)
  {
- 	u64 skb_overhead = (skb_queue_len(&vvs->rx_queue) + 1) * SKB_TRUESIZE(0);
+ 	if (!static_branch_likely(&obj_cache_enabled))
+@@ -727,11 +736,12 @@ static void debug_objects_fill_pool(void
  
--	if (skb_overhead + vvs->buf_used + len > vvs->buf_alloc)
-+	/* Allow at most buf_alloc * 2 total budget (payload + overhead),
-+	 * similar to how SO_RCVBUF is doubled to reserve space for sk_buff
-+	 * metadata. Check payload against buf_alloc to be sure the other
-+	 * peer is respecting the credit, and sk_buff overhead to bound
-+	 * queue growth.
-+	 */
-+	if ((u64)vvs->buf_used + len > vvs->buf_alloc ||
-+	    skb_overhead > vvs->buf_alloc)
- 		return false;
- 
- 	vvs->rx_bytes += len;
+ 	/*
+ 	 * On RT enabled kernels the pool refill must happen in preemptible
+-	 * context -- for !RT kernels we rely on the fact that spinlock_t and
+-	 * raw_spinlock_t are basically the same type and this lock-type
+-	 * inversion works just fine.
++	 * context and not enqueued on an rt_mutex -- for !RT kernels we rely
++	 * on the fact that spinlock_t and raw_spinlock_t are basically the
++	 * same type and this lock-type inversion works just fine.
+ 	 */
+-	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || preemptible() || system_state < SYSTEM_SCHEDULING) {
++	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || system_state < SYSTEM_SCHEDULING ||
++	    (preemptible() && !debug_objects_is_pi_blocked_on())) {
+ 		/*
+ 		 * Annotate away the spinlock_t inside raw_spinlock_t warning
+ 		 * by temporarily raising the wait-type to LD_WAIT_CONFIG, matching
 
 
