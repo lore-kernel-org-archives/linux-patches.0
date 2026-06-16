@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7779A44CF39;
-	Tue, 16 Jun 2026 15:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C4A44CF2E;
+	Tue, 16 Jun 2026 15:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624233; cv=none; b=r3BXVQQrVY6q0mMFYoJ9QHoPqPS3cKS/B7wQlel/iFYahQ0zikDq6xjGW+Uxn5mwENwLKMPDkwFk5/O2eVYSkZDF13i66Du0PjzjCuB+Mh8dwzAX+O13rlNbVlREpNN2GHCz/ThudIkFE1ZDWt3Ipw1yrA6fGM5PJtDxfIYlLl8=
+	t=1781624240; cv=none; b=ieCIosjth5NWZlGi1eUmaKw0Iqoj3i7ck2ToCX0aaaHuC15KHl3oQerSoP3ys1C1ihGora3y3fyOfwfO2R+9ATILVX6kDwQZ4XPpmY3ObpK/VmHqhrKRNl+9SulBFq0qrzp8iRLQdoZmtccB0Rzg7eQN9s7TpFfTmvfiidMmWBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624233; c=relaxed/simple;
-	bh=JRgDCbDWgzNN2xAQ+QIuIxsWw3HvIWh8F4TUcB4ZA0w=;
+	s=arc-20240116; t=1781624240; c=relaxed/simple;
+	bh=vdx5y4PfP6jnJ6eHgQX+Ga4Q5apdNPX7WBfzB48+TkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FEb4QCHb8PZMkLG323RjzCyGuatwQyFv4hb4TMKaUCAVF16IDuMxvh5wgjiwCMCBqYKMJHmxR9YVKgtAxmCO7WHt6Yskt4TfPIsyCoHzOF6DIGIMxNmnJqhVUZDioTS9b4zkt1tSgd67vIJsjvwfUL0TW+0M6AbRJq3IXhpeL6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7MLtljv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ICnvM7ru/1O7iiojsx/9TlRNQNSAnHd/gRIbGjSByyxMuy/jm4qcxIVtj/4GxIn7Ku6y38EmYY2g3Eb1YIOmoVypdD5GApVxRvxYGFUMfL2IxEQVuQ1NcmG5QF6H/I5Z/YZ5aLC1TeKYWqy57lXOHjgbpWE2qC6mbA1lo26NKpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCf1g0Qk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7MLtljv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCAD31F000E9;
-	Tue, 16 Jun 2026 15:37:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCf1g0Qk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA3131F000E9;
+	Tue, 16 Jun 2026 15:37:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624232;
-	bh=kF7IJ+IvxPTCZ+TL22JW0M+8VlqNItbjhJtDGRac7t0=;
+	s=korg; t=1781624239;
+	bh=btjDXi4O8zxD6KpLr0Ej2XAcESRaL8BkNcpfE++AcdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X7MLtljvmcJ5gdP7bGZgdPqd/HBljVm/CRdWEvu8++IfoapNF1wTiUX7KlI11XxKX
-	 fXfZPjfo+LdqhknEHuVk3r0bR75Ef3QRvXLYgYQhYcKG4gCgR7n73hcmSJlQCSiMWM
-	 yfFV7c8pl2dLU5mlvNrLkr3iYAfZpOTJeJcJmxgw=
+	b=HCf1g0Qk6JqKvHWcy4EEtlvwOk3YUXaoR8z2JMkE2w6pmnWYSQjmeIpx/VTORCk0C
+	 jFyL2AaqLyZGEsggtiRkaZihKd19A6WYTuU7BKmlpsoHzRucVD++0AbqrAAhrvuSqR
+	 guzp3KW8n1qVhBcP993+tiDKMslU7bDDsSLzTa40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.0 296/378] octeontx2-af: fix memory leak in rvu_setup_hw_resources()
-Date: Tue, 16 Jun 2026 20:28:47 +0530
-Message-ID: <20260616145125.650616613@linuxfoundation.org>
+	Judith Mendez <jm@ti.com>,
+	Linus Walleij <linusw@kernel.org>
+Subject: [PATCH 7.0 297/378] pinctrl: mcp23s08: Read spi-present-mask as u8 not u32
+Date: Tue, 16 Jun 2026 20:28:48 +0530
+Message-ID: <20260616145125.701849870@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,49 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Judith Mendez <jm@ti.com>
 
-commit 09a5bf856aa759513afc4afd233d15bcc711b84e upstream.
+commit b0c13ec17438577f90b379d448dfed1233e2c0a4 upstream.
 
-If rvu_npc_exact_init() fails in rvu_setup_hw_resources(), the function
-returns directly instead of jumping to the error handling path. This
-causes a resource leak for the previously initialized CGX, NPC, fwdata,
-and MSI-X states.
+The binding (microchip,mcp23s08) specifies microchip,spi-present-mask
+as uint8, but driver would read u32, causing type mismatch. Use
+device_property_read_u8 to match binding spec, hardware (8 chips max),
+& prevent probe failure.
 
-Fix this by replacing the direct return with goto cgx_err to ensure
-proper cleanup.
-
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still present in
-v7.1-rc6.
-
-An x86_64 allyesconfig build showed no new warnings. As we do not have
-access to Marvell OcteonTX2 RVU AF hardware to test with, no runtime
-testing was able to be performed.
-
-Fixes: 3571fe07a090 ("octeontx2-af: Drop rules for NPC MCAM")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Link: https://patch.msgid.link/20260604143756.1524482-1-dawei.feng@seu.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 3ad8d3ec6d87 ("dt-bindings: pinctrl: convert pinctrl-mcp23s08.txt to yaml format")
+Signed-off-by: Judith Mendez <jm@ti.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-mcp23s08_spi.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-@@ -1135,7 +1135,7 @@ cpt:
- 	err = rvu_npc_exact_init(rvu);
- 	if (err) {
- 		dev_err(rvu->dev, "failed to initialize exact match table\n");
--		return err;
-+		goto cgx_err;
- 	}
+--- a/drivers/pinctrl/pinctrl-mcp23s08_spi.c
++++ b/drivers/pinctrl/pinctrl-mcp23s08_spi.c
+@@ -144,13 +144,13 @@ static int mcp23s08_probe(struct spi_dev
+ 	unsigned int addr;
+ 	int chips;
+ 	int ret;
+-	u32 v;
++	u8 v;
  
- 	/* Assign MACs for CGX mapped functions */
+ 	info = spi_get_device_match_data(spi);
+ 
+-	ret = device_property_read_u32(dev, "microchip,spi-present-mask", &v);
++	ret = device_property_read_u8(dev, "microchip,spi-present-mask", &v);
+ 	if (ret) {
+-		ret = device_property_read_u32(dev, "mcp,spi-present-mask", &v);
++		ret = device_property_read_u8(dev, "mcp,spi-present-mask", &v);
+ 		if (ret) {
+ 			dev_err(dev, "missing spi-present-mask");
+ 			return ret;
 
 
