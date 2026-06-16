@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BAD344B66E;
-	Tue, 16 Jun 2026 15:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F01441035;
+	Tue, 16 Jun 2026 15:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625069; cv=none; b=PlHt4svBZwtnouuLvlU/+MsHthHLvZxqDGL8aj+0vQ4Ihbzi2Cb8SEmdGsDUtQYwjNRNDjvNw17MaXiKzfknxnhWuZRlo1yDx4ga31Fbb6Xq+CACVDXmaa88GyvC35Yb1Yj9qFIdZUbQIxeRGOtI4P2JlcABwfEYLd81VArz/5I=
+	t=1781625076; cv=none; b=e9kJX1F5srxxhk+vC0ww4RytlG110zKcdFc7rqb4Z4t1UTmxaM2D1XEbLX0963PXSG6q1nrHhiKoXh14fVrWzhVCr4+xQSYXcRi7Lrb4eA2ThTAF7RzzIBoHeIHMFudZ7t6L8jnKCzV2SgXapO6APt+VSqCid5YZcjVJAbZaAPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625069; c=relaxed/simple;
-	bh=ujBkuxjF7yTfOBd+9c1yA9DSXA1AlBfF7lPa4wB4fDk=;
+	s=arc-20240116; t=1781625076; c=relaxed/simple;
+	bh=kgGithKPT/z9ChWP3E9Ud359AOhmNMSyknUP7a7+dkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fvI+FVE1ikPe3rCC+Vbbryx8Bm/n0SzMsPVoQp7Y+q03vohE9qNKtxbvOcdv78VXtJ2YVZ0qvHb1Ukk0qIbuOuYIVP0bx//DiEsv8btf9Xr1VzWNYkAtI5F2CT7gENhqu4vsnrRXeBmVDrb3P4vexkC8ObQeI7/9F9tSPNkV+bQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CplkxtRf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CuYTcnsGZ7WjKkhyZ+sl3BKaM3zSx6SireQQcAptvyApzbMUVh259KVZigasqU3ERa9ojH0TPVTqfeZ9vKC+/JGwyujCT7mQ7DgYYUaM5pWrc0937usqG7q7RJHNaYrbD+Duu7yOdhw8E/WT1JA7ywGjob0WAHpb1zWsWvJmE8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTqQKg+w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CplkxtRf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7BFC1F000E9;
-	Tue, 16 Jun 2026 15:51:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTqQKg+w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9ED11F000E9;
+	Tue, 16 Jun 2026 15:51:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625068;
-	bh=x65rtoOVcwBamyr63QJFBBUZ937NoxlWjn54SJ2c6LY=;
+	s=korg; t=1781625075;
+	bh=OZiYwSXSYRo4yTjvvBnh29NFzn3+wKILIyF+uwyWbbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CplkxtRfYNQ3Z5+Z3WR7hIDrQUj+7QsEGIO1FQJ+jrZULgJVjMQjnRm97UL/u9iLC
-	 xJoxiZTU8xeB7NhcFMkcKWfnUY24W2I+zW7GbEeOnHCyqkvi3l2IFvbmQxLN0X+QB0
-	 maaGuzn0MO64jiNqltvhTcQUc3sJk53kGI5vz3FY=
+	b=rTqQKg+wrGMbxgkJExo9WNBUzrsJKKF91PolUjmLF/RrGc1RkG51GCCM/ein4IJuS
+	 fO2XjubinT60NK3JYYcEwFP/mRv0u8rXKaLmyGSvEi7W0B+DZsUOkLPfYuGgDjFCiS
+	 ImdbfT7yik6iWGLCD/1My+KGhrMUix5LBzUXsUPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dudu Lu <phx0fer@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	syzbot+b109633ea805cac54a61@syzkaller.appspotmail.com,
+	Aleksandr Nogikh <nogikh@google.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 045/325] Bluetooth: bnep: fix incorrect length parsing in bnep_rx_frame() extension handling
-Date: Tue, 16 Jun 2026 20:27:21 +0530
-Message-ID: <20260616145059.973581616@linuxfoundation.org>
+Subject: [PATCH 6.18 072/325] signal: clear JOBCTL_PENDING_MASK for caller in zap_other_threads()
+Date: Tue, 16 Jun 2026 20:27:48 +0530
+Message-ID: <20260616145101.310446566@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -51,68 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dudu Lu <phx0fer@gmail.com>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-[ Upstream commit 72b8deccff17a7644e0367e1aaf1a36cfb014324 ]
+[ Upstream commit 90918794a4e2c3b440f8fcf3847765a8b1d81b25 ]
 
-In bnep_rx_frame(), the BNEP_FILTER_NET_TYPE_SET and
-BNEP_FILTER_MULTI_ADDR_SET extension header parsing has two bugs:
+When a multi-threaded process receives a stop signal (e.g., SIGSTOP),
+do_signal_stop() sets JOBCTL_STOP_PENDING and JOBCTL_STOP_CONSUME on all
+threads and sets signal->group_stop_count to the number of threads. If
+one of the threads concurrently calls execve(), de_thread() invokes
+zap_other_threads() to kill all other threads. zap_other_threads()
+aborts the pending group stop by resetting signal->group_stop_count to 0
+and clears the JOBCTL_PENDING_MASK for all other threads. However, it
+fails to clear the job control flags for the calling thread.
 
-1) The 2-byte length field is read with *(u16 *)(skb->data + 1), which
-   performs a native-endian read. The BNEP protocol specifies this field
-   in big-endian (network byte order), and the same file correctly uses
-   get_unaligned_be16() for the identical fields in
-   bnep_ctrl_set_netfilter() and bnep_ctrl_set_mcfilter().
+When execve() completes, the calling thread returns to user mode and
+checks for pending signals. Seeing the stale JOBCTL_STOP_PENDING flag,
+it calls do_signal_stop(), which invokes task_participate_group_stop().
+Since JOBCTL_STOP_CONSUME is still set, it attempts to decrement the
+already-zero signal->group_stop_count, triggering a warning:
 
-2) The length is multiplied by 2, but unlike BNEP_SETUP_CONN_REQ where
-   the length byte counts UUID pairs (requiring * 2 for two UUIDs per
-   entry), the filter extension length field already represents the total
-   data size in bytes. This is confirmed by bnep_ctrl_set_netfilter()
-   which reads the same field as a byte count and divides by 4 to get
-   the number of filter entries.
+sig->group_stop_count == 0
+WARNING: CPU: 1 PID: 6475 at kernel/signal.c:373
+task_participate_group_stop+0x215/0x2d0
+Call Trace:
+ <TASK>
+ do_signal_stop+0x3be/0x5c0 kernel/signal.c:2619
+ get_signal+0xa8c/0x1330 kernel/signal.c:2884
+ arch_do_signal_or_restart+0xbc/0x840 arch/x86/kernel/signal.c:337
+ exit_to_user_mode_loop+0x8c/0x4d0 kernel/entry/common.c:98
+ do_syscall_64+0x33e/0xf80 arch/x86/entry/syscall_64.c:100
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
 
-   The bogus * 2 means skb_pull advances twice as far as it should,
-   either dropping valid data from the next header or causing the pull
-   to fail entirely when the doubled length exceeds the remaining skb.
+Fix this race condition by clearing the JOBCTL_PENDING_MASK for the
+calling thread in zap_other_threads(), ensuring it does not retain any
+stale job control state after the thread group is destroyed. This aligns
+with other functions that tear down a thread group and abort group
+stops, such as zap_process() and complete_signal(), which correctly
+clear these flags for all threads including the current one.
 
-Fix by splitting the pull into two steps: first use skb_pull_data() to
-safely pull and validate the 3-byte fixed header (ctrl type + length),
-then pull the variable-length data using the properly decoded length.
-
-Fixes: bf8b9a9cb77b ("Bluetooth: bnep: Add support to extended headers of control frames")
-Signed-off-by: Dudu Lu <phx0fer@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 39efa3ef3a37 ("signal: Use GROUP_STOP_PENDING to stop once for a single group stop")
+Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
+Reported-by: syzbot+b109633ea805cac54a61@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b109633ea805cac54a61
+Link: https://syzkaller.appspot.com/ai_job?id=d70208cc-862b-4fe3-bf02-3031e10cd0b3
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Link: https://patch.msgid.link/20260521142240.2973022-1-nogikh@google.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/bnep/core.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ kernel/signal.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/bluetooth/bnep/core.c b/net/bluetooth/bnep/core.c
-index b3cef7a4db5412..0de5df690bd0b2 100644
---- a/net/bluetooth/bnep/core.c
-+++ b/net/bluetooth/bnep/core.c
-@@ -330,11 +330,18 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
- 				goto badframe;
- 			break;
- 		case BNEP_FILTER_MULTI_ADDR_SET:
--		case BNEP_FILTER_NET_TYPE_SET:
--			/* Pull: ctrl type (1 b), len (2 b), data (len bytes) */
--			if (!skb_pull(skb, 3 + *(u16 *)(skb->data + 1) * 2))
-+		case BNEP_FILTER_NET_TYPE_SET: {
-+			u8 *hdr;
-+
-+			/* Pull ctrl type (1 b) + len (2 b) */
-+			hdr = skb_pull_data(skb, 3);
-+			if (!hdr)
-+				goto badframe;
-+			/* Pull data (len bytes); length is big-endian */
-+			if (!skb_pull(skb, get_unaligned_be16(&hdr[1])))
- 				goto badframe;
- 			break;
-+		}
- 		default:
- 			kfree_skb(skb);
- 			return 0;
+diff --git a/kernel/signal.c b/kernel/signal.c
+index fe9190d84f281e..810098300ecdcb 100644
+--- a/kernel/signal.c
++++ b/kernel/signal.c
+@@ -1340,6 +1340,7 @@ int zap_other_threads(struct task_struct *p)
+ 	int count = 0;
+ 
+ 	p->signal->group_stop_count = 0;
++	task_clear_jobctl_pending(p, JOBCTL_PENDING_MASK);
+ 
+ 	for_other_threads(p, t) {
+ 		task_clear_jobctl_pending(t, JOBCTL_PENDING_MASK);
 -- 
 2.53.0
 
