@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F420B47CC62;
-	Tue, 16 Jun 2026 17:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C6047CC6C;
+	Tue, 16 Jun 2026 17:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630843; cv=none; b=j/hyWMq4qsB6QcSZvRHPEnaS+DvFoeFBrnezO+lvzNh4duLae+VST+dVqDqQrxAredPX1suWbqmtpje1ojjiVq+G3No0les70cilC9or+RWuMsgHQFcHFLKtV+cI5oaqQPDP93BGrPqcrfN1vqR9xcWeAn8dHJ4mCctS5/ZEupA=
+	t=1781630848; cv=none; b=AUpJKjAWUgX/PLcg/iaRQGkw4OPQpWS1QuH7XuKps85iKo0M9D6fDl9/rKJLXVJxoTL+IzpX4ausxOjSeHGY3qNj7p3vaXvXhRFL/qpDr+Gh0wfMC6l303pu44xRrdkE0+uEJs5FjFefEta8WCJvebF+3o1HvuGw7mqmU20DULQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630843; c=relaxed/simple;
-	bh=Z8Vt91zj72vO6dYVtCCqt6hnUMwJA5V7w5c0JyCTuuI=;
+	s=arc-20240116; t=1781630848; c=relaxed/simple;
+	bh=gGhzUGEGXSqtK+LwEUg3LoDVfi6ViA8L0xST8vCKPSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tIbIhihU8MFRBlDk5PpSavJMbcMjUIuR3beVd6xyq6BrNOFCymhB+92T5RW5jcjzhfSBLqtW3FcZbKILol/dWh0sqW9ai3kWNJQl54xoLRKLiWoliTJDOMs+6WshHh9jOgVraCML0MEsshdtNyyZqnH8BaGUfeVdBU6NElaFg+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wW0RUixm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LmPHHxEyg5fyXumSx35jkFcnrW0KuY434gdwHXiiJoxS4EIFL5mpMQu3Pn3quGUjDSCJXanHGTLmRUowa+WkPBic36EAu8ClJmyps6Fd68Pd/CF2P1q+NJTIaRTw7V2gxajAxByGTLVgZ2ey2hIXOzvRnRq5Y+70bkmPM6248Kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQmEpz3u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wW0RUixm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456A01F00A3A;
-	Tue, 16 Jun 2026 17:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQmEpz3u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880961F000E9;
+	Tue, 16 Jun 2026 17:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630839;
-	bh=cJabSVuF17c0bnkwZ9MBiAhR+2ZcCExejqN7GUhmybM=;
+	s=korg; t=1781630844;
+	bh=5SM0LSG0fgG4fMJuyVL75SkNwRY8woNtxwuRgTdk4uA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wW0RUixmcPLcBwvzqMy2WXAHrq0YXhRApxSK9iI3zxbZrgMwHqJIkqbLX+kZvmL8E
-	 uAGxUZRwzWM3pP+/RudRJdEHPv4w5h4wjxPTKMFtGdqNBV1aj1aIaR3xlPkOKeZYQv
-	 itmQ4W0pWzzfBKywsHBAIGvvDGGc89CYe5ZlKfZc=
+	b=hQmEpz3uQkJ9iUmEXd5N/xf6iSxHGCo+7w2cnfKpffkpC4novHev3FTubGWZNOlfw
+	 7E3Ay6yqJ+53RuIDdfkWuOqkWk9qQuhDqd4ByiIOwitVGb+QF0x6vY2BzFbfmiwaph
+	 NXclpHn2zipv5iV6XRUUzak7DpbpJ2SGZlmEvddI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/522] selftests/bpf: Fix ARG_PTR_TO_LONG {half-,}uninitialized test
-Date: Tue, 16 Jun 2026 20:23:30 +0530
-Message-ID: <20260616145128.744011374@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ben Hutchings <benh@debian.org>,
+	Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Subject: [PATCH 6.1 100/522] parport: Fix race between port and client registration
+Date: Tue, 16 Jun 2026 20:24:07 +0530
+Message-ID: <20260616145130.603993159@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -54,57 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Ben Hutchings <benh@debian.org>
 
-[ Upstream commit b8e188f023e07a733b47d5865311ade51878fe40 ]
+commit ef15ccbb3e8640a723c42ad90eaf81d66ae02017 upstream.
 
-The assumption of 'in privileged mode reads from uninitialized stack locations
-are permitted' is not quite correct since the verifier was probing for read
-access rather than write access. Both tests need to be annotated as __success
-for privileged and unprivileged.
+The parport subsystem registers port devices before they are fully
+initialised, resulting in a race condition where client drivers such
+as lp can attach to ports that are not completely initialised or even
+being torn down.
 
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20240913191754.13290-6-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-[ Note: The format of logs completely changed since 6.1 so this change
-  had to be reapplied to the old test file. This commit needs to be
-  backported because it fixes a test broken by commit 32556ce93bc4
-  ("bpf: Fix helper writes to read-only maps") from the same patchset. ]
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When the port and client drivers are built as modules and loaded
+around the same time during boot, this occasionally results in a
+crash.  I was able to make this happen reliably in a VM with a
+PC-style parallel port by patching parport_pc to fail probing:
+
+> --- a/drivers/parport/parport_pc.c
+> +++ b/drivers/parport/parport_pc.c
+> @@ -2069,7 +2069,7 @@ static struct parport *__parport_pc_probe_port(unsigned long int base,
+>  	if (!p)
+>  		goto out3;
+>
+> -	base_res = request_region(base, 3, p->name);
+> +	base_res = NULL;
+>  	if (!base_res)
+>  		goto out4;
+>
+
+and then running:
+
+    while true; do
+        modprobe lp & modprobe parport_pc
+	wait
+	rmmod lp parport_pc
+    done
+
+for a few seconds.
+
+In the long term I think port registration should be changed to put
+the call to device_add() inside parport_announce_port(), but since the
+latter currently cannot fail this will require changing all port
+drivers.
+
+For now, add a flag to indicate whether a port has been "announced"
+and only try to attach client drivers to ports when the flag is set.
+
+Fixes: 6fa45a226897 ("parport: add device-model to parport subsystem")
+Closes: https://bugs.debian.org/1130365
+Closes: https://lore.kernel.org/all/6ba903ad-9897-42bb-8c2d-337385cc3746@molgen.mpg.de/
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Link: https://patch.msgid.link/afo6uBv68GDevbMD@decadent.org.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/verifier/int_ptr.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/parport/share.c |   11 +++++++++--
+ include/linux/parport.h |    1 +
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/verifier/int_ptr.c b/tools/testing/selftests/bpf/verifier/int_ptr.c
-index 02d9e004260b33..8c74cff2090364 100644
---- a/tools/testing/selftests/bpf/verifier/int_ptr.c
-+++ b/tools/testing/selftests/bpf/verifier/int_ptr.c
-@@ -25,9 +25,8 @@
- 		BPF_MOV64_IMM(BPF_REG_0, 1),
- 		BPF_EXIT_INSN(),
- 	},
--	.result = REJECT,
-+	.result = ACCEPT,
- 	.prog_type = BPF_PROG_TYPE_CGROUP_SYSCTL,
--	.errstr = "invalid indirect read from stack R4 off -16+0 size 8",
- },
+--- a/drivers/parport/share.c
++++ b/drivers/parport/share.c
+@@ -223,10 +223,14 @@ static void get_lowlevel_driver(void)
+ static int port_check(struct device *dev, void *dev_drv)
  {
- 	"ARG_PTR_TO_LONG half-uninitialized",
-@@ -57,9 +56,6 @@
- 		BPF_MOV64_IMM(BPF_REG_0, 0),
- 		BPF_EXIT_INSN(),
- 	},
--	.result_unpriv = REJECT,
--	.errstr_unpriv = "invalid indirect read from stack R4 off -16+4 size 8",
--	/* in privileged mode reads from uninitialized stack locations are permitted */
- 	.result = ACCEPT,
- },
- {
--- 
-2.53.0
-
+ 	struct parport_driver *drv = dev_drv;
++	struct parport *port;
+ 
+ 	/* only send ports, do not send other devices connected to bus */
+-	if (is_parport(dev))
+-		drv->match_port(to_parport_dev(dev));
++	if (is_parport(dev)) {
++		port = to_parport_dev(dev);
++		if (test_bit(PARPORT_ANNOUNCED, &port->devflags))
++			drv->match_port(port);
++	}
+ 	return 0;
+ }
+ 
+@@ -553,6 +557,7 @@ void parport_announce_port(struct parpor
+ 		if (slave)
+ 			attach_driver_chain(slave);
+ 	}
++	set_bit(PARPORT_ANNOUNCED, &port->devflags);
+ 	mutex_unlock(&registration_lock);
+ }
+ EXPORT_SYMBOL(parport_announce_port);
+@@ -582,6 +587,8 @@ void parport_remove_port(struct parport
+ 
+ 	mutex_lock(&registration_lock);
+ 
++	clear_bit(PARPORT_ANNOUNCED, &port->devflags);
++
+ 	/* Spread the word. */
+ 	detach_driver_chain(port);
+ 
+--- a/include/linux/parport.h
++++ b/include/linux/parport.h
+@@ -245,6 +245,7 @@ struct parport {
+ 
+ 	unsigned long devflags;
+ #define PARPORT_DEVPROC_REGISTERED	0
++#define PARPORT_ANNOUNCED		1
+ 	struct pardevice *proc_device;	/* Currently register proc device */
+ 
+ 	struct list_head full_list;
 
 
