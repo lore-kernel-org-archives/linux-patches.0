@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30B0477995;
-	Tue, 16 Jun 2026 16:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D15247A0A1;
+	Tue, 16 Jun 2026 16:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627732; cv=none; b=TOVrq1IkcAtwmawAdR7cr5tQP1Y01jOeL/C+vv4rS6+w+7FdGRcnK+mClZSbWn532ykeM3dQcKroIuuFnGIqQ0+KDzvbqWST9+5pErt0Wd9HLxuVXTYinC+O0L62je6Q+Z8QJRvFE2ZPNEx1k8AJovTkco/LqQvJwX4VAftD8ao=
+	t=1781627736; cv=none; b=TFDEONGjnQ6afInBKnsi2xjBAwmx9pswTxFspgNYe4SkTWiVdUx6eHYmPPjMP6Mclh+BYc9f4gEwhBshtxKpJOtb3409HdaXYRT0Sb58RL1yvKpySiDavn/10GaOosRNSg85vQLBeM8Pa6QH3pK0aHAyVI9P/F/7erDAhP4ymQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627732; c=relaxed/simple;
-	bh=Fg+WZPymvot35Nu3P//V2iFALnKjJtUEZBz+iQ2Tcuw=;
+	s=arc-20240116; t=1781627736; c=relaxed/simple;
+	bh=q13XvFDDNa1wOyXZmTyZhNT9AbFLASxNCRzTN9LHYYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J3PiPAjB3O5c0fMuiRcgZBADnqYuPPL30B/NbaVffqUCfd469LNHi/MpkZipA2ZcyIgz+SqP4KMpmb5OnmaK+FyH1XuNPAeP3yNkjYQaMS608jVvPZ5JdoxJL7DRupl5H4YqifP/cbOOoYYOE3f49iTHf7wffYovOHvo0eIdsEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAsVk54s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z8wEXgEO9W4482GjyjTPWMSvFe5nWOOTYe7NLiqGAloMxKeCBgR83TxiW6B33GJuVWRfMCA2pV06MGM3+ppQ7EPv9Tb4RqfimWgsLLPGRnI3PsNqgZ8hJlAigotNVeVfwza0duMaIfg0RPUA0C52eEPZBSYfc9HtShkQkc5u4jI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bKMwc1yi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAsVk54s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939291F000E9;
-	Tue, 16 Jun 2026 16:35:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bKMwc1yi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D5A1F000E9;
+	Tue, 16 Jun 2026 16:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627730;
-	bh=t/T1gn9TGkY1DUjXNAJXTbD1BbUmdCHKIE8r9ycXm2k=;
+	s=korg; t=1781627735;
+	bh=z5XHPnR7/qwDjDn6hwVxfqbaLGgJvU6zGacqe0rXGQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IAsVk54s48DaIfp2ezaVxU/YcVcIutQRDBUolrWFcw+dmOu1GpbiLZr6gIF82Kv7/
-	 SoVnhGT8m7c57/au6CT9Xo4jrojxN9CHv8/jS/Ax/jViKVYY6gXMdSnYD9UJ59yL5L
-	 ojzvuZ53GgTy84XEb7oaag+xF1g/zBh1wCSNigKI=
+	b=bKMwc1yioFdj5XVBOeHq06wbu/0JCfjEkzsJnTI8Zz3J4PX5L1CjDqsX+4CLx7BMC
+	 388GiLYK+wYLDib1leSWEEw8LOZ9CruksemYh5bmKhIxTBwItXyF1Ftzt+T+E8YXAp
+	 dy+SogL5eWEc7q193twi8PpBaW0vz9kfjEYDtHjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhaoJinming <zhaojinming@uniontech.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 183/261] net: bonding: fix NULL pointer dereference in bond_do_ioctl()
-Date: Tue, 16 Jun 2026 20:30:21 +0530
-Message-ID: <20260616145053.549565645@linuxfoundation.org>
+	Akhil R <akhilrajeev@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.12 174/261] i2c: tegra: Fix NOIRQ suspend/resume
+Date: Tue, 16 Jun 2026 20:30:12 +0530
+Message-ID: <20260616145053.137440151@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -50,57 +51,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhaoJinming <zhaojinming@uniontech.com>
+From: Akhil R <akhilrajeev@nvidia.com>
 
-commit a764b0e8317a863006e05732e1aefe821b9d8c2d upstream.
+commit 656646b3847ac6a21b074a813223feef2aadd6e2 upstream.
 
-In bond_do_ioctl(), slave_dev is obtained via __dev_get_by_name() which
-can return NULL if the requested interface name does not exist. However,
-the subsequent slave_dbg() call is placed before the NULL check:
+The Tegra I2C driver relies on runtime PM to wake up the controller before
+each transfer. However, runtime PM is disabled between the system suspend
+and NOIRQ suspend. If an I2C device initiates a transfer during this
+window, the I2C controller fails to wake up and the transfer fails. To
+handle this, the controller must be kept available for this period to
+allow transfers.
 
-    slave_dev = __dev_get_by_name(net, ifr->ifr_slave);
-    slave_dbg(bond_dev, slave_dev, "slave_dev=%p:\n", slave_dev); //here
-    if (!slave_dev)
-        return -ENODEV;
+Rework the I2C controller's system PM callbacks such that the controller
+is resumed from runtime suspend during system suspend and it stays
+RPM_ACTIVE throughout the suspend-resume cycle until it is runtime
+suspended back in the system resume. The clocks are disabled in NOIRQ
+suspend and enabled back in NOIRQ resume by calling the controller's
+runtime PM functions directly.
 
-The slave_dbg() macro expands to netdev_dbg(bond_dev, "(slave %s): " fmt,
-(slave_dev)->name, ...) which unconditionally dereferences slave_dev->name
-before the NULL check is performed. This results in a NULL pointer
-dereference kernel oops when a user calls bonding ioctl (e.g.
-SIOCBONDENSLAVE, SIOCBONDRELEASE, etc.) with a non-existent slave
-interface name.
-
-This is reachable from userspace via the bonding ioctl interface with
-CAP_NET_ADMIN capability, making it a potential local denial-of-service
-vector.
-
-Fix by moving the slave_dbg() call after the NULL check.
-
-Fixes: e2a7420df2e0 ("bonding/main: convert to using slave printk macros")
-Cc: stable@vger.kernel.org # v5.2+
-Signed-off-by: ZhaoJinming <zhaojinming@uniontech.com>
-Link: https://patch.msgid.link/20260601085649.4029067-1-zhaojinming@uniontech.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 8ebf15e9c869 ("i2c: tegra: Move suspend handling to NOIRQ phase")
+Assisted-by: Cursor:claude-4.6-opus
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Cc: <stable@vger.kernel.org> # v5.4+
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260518114013.62065-5-akhilrajeev@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/bonding/bond_main.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-tegra.c |   53 +++++++++++++++++++++++------------------
+ 1 file changed, 30 insertions(+), 23 deletions(-)
 
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -4673,11 +4673,11 @@ static int bond_do_ioctl(struct net_devi
+--- a/drivers/i2c/busses/i2c-tegra.c
++++ b/drivers/i2c/busses/i2c-tegra.c
+@@ -1887,28 +1887,37 @@ static int __maybe_unused tegra_i2c_runt
  
- 	slave_dev = __dev_get_by_name(net, ifr->ifr_slave);
- 
--	slave_dbg(bond_dev, slave_dev, "slave_dev=%p:\n", slave_dev);
--
- 	if (!slave_dev)
- 		return -ENODEV;
- 
-+	slave_dbg(bond_dev, slave_dev, "slave_dev=%p:\n", slave_dev);
+ static int __maybe_unused tegra_i2c_suspend(struct device *dev)
+ {
++	/*
++	 * Bring the controller up and hold a usage count so it stays
++	 * available until the noirq phase.
++	 */
++	return pm_runtime_resume_and_get(dev);
++}
 +
- 	switch (cmd) {
- 	case SIOCBONDENSLAVE:
- 		res = bond_enslave(bond_dev, slave_dev, NULL);
++static int __maybe_unused tegra_i2c_suspend_noirq(struct device *dev)
++{
+ 	struct tegra_i2c_dev *i2c_dev = dev_get_drvdata(dev);
+-	int err;
+ 
+ 	i2c_mark_adapter_suspended(&i2c_dev->adapter);
+ 
+-	if (!pm_runtime_status_suspended(dev)) {
+-		err = tegra_i2c_runtime_suspend(dev);
+-		if (err)
+-			return err;
+-	}
+-
+-	return 0;
++	/*
++	 * Runtime PM is already disabled at this point, so invoke the
++	 * runtime_suspend callback directly to put the controller down.
++	 */
++	return tegra_i2c_runtime_suspend(dev);
+ }
+ 
+-static int __maybe_unused tegra_i2c_resume(struct device *dev)
++static int __maybe_unused tegra_i2c_resume_noirq(struct device *dev)
+ {
+ 	struct tegra_i2c_dev *i2c_dev = dev_get_drvdata(dev);
+ 	int err;
+ 
+ 	/*
+-	 * We need to ensure that clocks are enabled so that registers can be
+-	 * restored in tegra_i2c_init().
++	 * Runtime PM is still disabled at this point, so invoke the
++	 * runtime_resume callback directly to bring the controller back up
++	 * before re-initializing the hardware. The adapter is then marked
++	 * resumed so that consumers can issue transfers from their own
++	 * resume_noirq() handlers and onwards.
+ 	 */
+ 	err = tegra_i2c_runtime_resume(dev);
+ 	if (err)
+@@ -1918,24 +1927,22 @@ static int __maybe_unused tegra_i2c_resu
+ 	if (err)
+ 		return err;
+ 
+-	/*
+-	 * In case we are runtime suspended, disable clocks again so that we
+-	 * don't unbalance the clock reference counts during the next runtime
+-	 * resume transition.
+-	 */
+-	if (pm_runtime_status_suspended(dev)) {
+-		err = tegra_i2c_runtime_suspend(dev);
+-		if (err)
+-			return err;
+-	}
+-
+ 	i2c_mark_adapter_resumed(&i2c_dev->adapter);
+ 
+ 	return 0;
+ }
+ 
++static int __maybe_unused tegra_i2c_resume(struct device *dev)
++{
++	pm_runtime_put(dev);
++
++	return 0;
++}
++
+ static const struct dev_pm_ops tegra_i2c_pm = {
+-	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(tegra_i2c_suspend, tegra_i2c_resume)
++	SET_SYSTEM_SLEEP_PM_OPS(tegra_i2c_suspend, tegra_i2c_resume)
++	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(tegra_i2c_suspend_noirq,
++				      tegra_i2c_resume_noirq)
+ 	SET_RUNTIME_PM_OPS(tegra_i2c_runtime_suspend, tegra_i2c_runtime_resume,
+ 			   NULL)
+ };
 
 
