@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1C543E4BF;
-	Tue, 16 Jun 2026 16:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90F047A0B0;
+	Tue, 16 Jun 2026 16:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628747; cv=none; b=NaGBHPWs/dX+aOLPmzdU9zVqr5csZpsBeTaOwP9ud19qaQplPRTQzYjO8Aqb32WSDvHm2GMQBBhyabmLt5wBNlRgnKHvvMI2/dHzSIaG+HmUnJmYw2vYJAo6rCqppcOfC+6w3jRRI5lUoHxaKMVEZPh5XDLppaXf+F3PfEbgHys=
+	t=1781628752; cv=none; b=qFgRs6gTy28CApnE2asNw8auwCc6mRwPkDRgdIHlt0lkl0vWIu1r/CZj10IFH5aCwdpl/YdUAfC35w+NutCXClNd+Hgcy+tRkvqkqvIB80Ke/7iy64zcG+OW0bsM9IjMW2bk+QR/JlQb/YbPvBqD50dcotOpe7HFFoV13U9go84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628747; c=relaxed/simple;
-	bh=APzlxTB2HqcJV0cYoHgZYIfLTJ1EDv+0g5SxbSqIUY4=;
+	s=arc-20240116; t=1781628752; c=relaxed/simple;
+	bh=ON2Lr0rrUC2y5IxuxSdluG5iJ8hAYNBfcs9UH0sZmBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FUgedILgpCmYPgT4vd3BGb+6Dt1hcuSDIF/R5wutcZ3BD694NrVDVpIPMdwNyem5seRfByCjxOrN0D6BuQG++oaD4+gH4492yG0mmb63w6qfijw/wGFKjUHKpWPgG/8rnlucq/VI4uW8skwJJmzUBhwpinxMDtQKeMIzYyP/Gr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yhtHCZ9K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O8QvPSuDWCVHvOeYpTiULpH0b9XQ6eJhwc5b6QN45uECHCvED0CuuhCbiprc+m6H2cEzuT5Ocrq6mUuXlsv9LDCqUOm6L9pNd2j7OUanW3oo1FFFO+SOdsJe1xrwsdCL+L9HFGhPGGk5IhxTwmB4+c5iYuTGvDTqJufNf1FRx4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXt6Ul1A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yhtHCZ9K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B311F000E9;
-	Tue, 16 Jun 2026 16:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXt6Ul1A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6930E1F000E9;
+	Tue, 16 Jun 2026 16:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628746;
-	bh=ourcz4Nf4bYnzWUxT7XoxlETObrH9YX9JhilWOhdd3g=;
+	s=korg; t=1781628751;
+	bh=bOXhqvgddTyRZQ2ITbLhJm8CP2bIt7Gc7OvTJbIvbrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yhtHCZ9KuwWAjwblRiUt5lySfjZ0U/WdR5ZJX5AQm3Y9EOGSLFtVCa1NO+mRMo4dU
-	 f9KyPtyFtaJnym7+SK0ccnwDbha4h27JxK18LQcDikJLy0rW6b456K79WPvRI8pZId
-	 5H2Hwu3CtKKaQIlw2AJFutRwX0LSSS0Pe8POvWMg=
+	b=OXt6Ul1Aqe+hrAHhsONK8AQn9FzGmXmNvq2BqvsjAb4rtOtU3OpK3Agc1c3+k4C47
+	 8QRzcYgdON+/vv4H+0esOt1yE2tKCtuYQjqPaQa+YNz83YQ5gZjT7UlvtPyq6wAj6u
+	 xzZbgP6xCEQ6ZQLDEW5aEr04kLEBEprEzKtTamYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+abbfd103085885cf16a2@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.6 155/452] usbip: vudc: Fix use after free bug in vudc_remove due to race condition
-Date: Tue, 16 Jun 2026 20:26:22 +0530
-Message-ID: <20260616145125.859169725@linuxfoundation.org>
+	Michal Pecio <michal.pecio@gmail.com>,
+	Heitor Alves de Siqueira <halves@igalia.com>
+Subject: [PATCH 6.6 156/452] usb: usbtmc: check URB actual_length for interrupt-IN notifications
+Date: Tue, 16 Jun 2026 20:26:23 +0530
+Message-ID: <20260616145125.913082722@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,77 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Heitor Alves de Siqueira <halves@igalia.com>
 
-commit d96209626a29ea64666be98c30b30ac82e5f1be6 upstream.
+commit 52f2ad3f7e5eb3b5908e1d685d4342519dc9cfcd upstream.
 
-This patch follows up Zheng Wang's 2023 report of a use-after-free in
-vudc_remove(). The original thread stalled on Shuah Khan's request for
-runtime testing of the unplug/unbind path. This patch supplies that
-testing and keeps Zheng's original fix shape.
+USBTMC devices can use an optional interrupt endpoint for notification
+messages. These typically contain two-byte headers indicating the
+payload format, but the driver does not check if these headers are
+present before accessing the data buffers. In cases where the URB
+actual_length is not enough to fit these headers, the driver will either
+cause an out-of-bounds read, or consume stale leftover data from a
+previous notification.
 
-In vudc_probe(), v_init_timer() binds udc->tr_timer.timer to v_timer().
-usbip_sockfd_store() starts the timer via v_start_timer()/v_kick_timer().
-vudc_remove() can then free the containing struct vudc while the timer is
-still pending or executing.
+Fix by checking if actual_data contains enough bytes for the headers,
+otherwise resubmit URB to the interrupt endpoint.
 
-KASAN confirms the race on an unpatched x86_64 QEMU guest with
-CONFIG_KASAN=y, CONFIG_USBIP_VUDC=y, CONFIG_USB_ZERO=y, and a tight loop
-that repeatedly writes a socket fd to usbip_sockfd, closes the socket
-pair, and unbinds/rebinds usbip-vudc.0:
-
-  BUG: KASAN: slab-use-after-free in __run_timer_base.part.0+0x8ba/0x8e0
-  Write of size 8 at addr ffff888001b80740 by task trigger_and_unb/239
-  Allocated by task 239:
-    vudc_probe+0x4d/0xaa0
-  Freed by task 239:
-    kfree+0x18f/0x520
-    device_release_driver_internal+0x388/0x540
-    unbind_store+0xd9/0x100
-
-This lands in the timer core rather than v_timer() itself because the
-embedded timer_list is being walked after its containing struct vudc has
-already been freed. The underlying lifetime bug is the same one Zheng
-reported.
-
-With v_stop_timer() called from vudc_remove() and the timer deleted
-synchronously, the same harness completed 5000 bind/unbind iterations
-with no KASAN report.
-
-Fixes: b6a0ca111867 ("usbip: vudc: Add UDC specific ops")
+Fixes: dbf3e7f654c0 ("Implement an ioctl to support the USMTMC-USB488 READ_STATUS_BYTE operation.")
+Reported-by: syzbot+abbfd103085885cf16a2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=abbfd103085885cf16a2
 Cc: stable <stable@kernel.org>
-Reported-by: Zheng Wang <zyytlz.wz@163.com>
-Closes: https://lore.kernel.org/linux-usb/20230317100954.2626573-1-zyytlz.wz@163.com/
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Link: https://patch.msgid.link/20260417163552.807548-1-michael.bommarito@gmail.com
+Suggested-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Heitor Alves de Siqueira <halves@igalia.com>
+Link: https://patch.msgid.link/20260505-usbtmc-iin-size-v3-1-a36113f62db7@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/usbip/vudc_dev.c      |    1 +
- drivers/usb/usbip/vudc_transfer.c |    3 ++-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/class/usbtmc.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/usb/usbip/vudc_dev.c
-+++ b/drivers/usb/usbip/vudc_dev.c
-@@ -632,6 +632,7 @@ int vudc_remove(struct platform_device *
- {
- 	struct vudc *udc = platform_get_drvdata(pdev);
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -2310,6 +2310,14 @@ static void usbtmc_interrupt(struct urb
  
-+	v_stop_timer(udc);
- 	usb_del_gadget_udc(&udc->gadget);
- 	cleanup_vudc_hw(udc);
- 	kfree(udc);
---- a/drivers/usb/usbip/vudc_transfer.c
-+++ b/drivers/usb/usbip/vudc_transfer.c
-@@ -490,7 +490,8 @@ void v_stop_timer(struct vudc *udc)
- {
- 	struct transfer_timer *t = &udc->tr_timer;
- 
--	/* timer itself will take care of stopping */
-+	/* Delete the timer synchronously before teardown frees udc. */
- 	dev_dbg(&udc->pdev->dev, "timer stop");
-+	timer_delete_sync(&t->timer);
- 	t->state = VUDC_TR_STOPPED;
- }
+ 	switch (status) {
+ 	case 0: /* SUCCESS */
++		/* ensure at least two bytes of headers were transferred */
++		if (urb->actual_length < 2) {
++			dev_warn(dev,
++				"actual length %d not sufficient for interrupt headers\n",
++				urb->actual_length);
++			goto exit;
++		}
++
+ 		/* check for valid STB notification */
+ 		if (data->iin_buffer[0] > 0x81) {
+ 			data->bNotify1 = data->iin_buffer[0];
 
 
