@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3843A3E78;
-	Tue, 16 Jun 2026 17:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D6D332EC1;
+	Tue, 16 Jun 2026 17:33:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631178; cv=none; b=tDHWo/nj+K8V/6yzw4Zi4qXyTUpTaaYcmw6z//lsPkT8bTXo/WQPcQaYU4EAQdoRKBPpNCTZuMoz9HROD5qbPuPl4EdU7QTjT4Nk2bsmKuY2zzwnLOthOtocG51GpeTKy+aFqhx8H0mnKSzJ+06udvrcRtmyv1Jvxr+sKLSyhlM=
+	t=1781631183; cv=none; b=cMxLLzWm8VCUbqfmrnieAhy2AGVtzxjNwJaJ9Ht6obVQe9ZZH8N9hVHFAFEjScaON6JVLJVDs677+NpBOur3jycK+vZHQJHdmZLfycaZe1/KreTeAY3nM8rexZddchO+QOYUmNfDsj2xIxlKYqexEKC2pIux3B+7wkGVSl6IPzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631178; c=relaxed/simple;
-	bh=vA4W3axpsa6D3RBCTY3plh6uepX8HdHRNmqp+AryzxE=;
+	s=arc-20240116; t=1781631183; c=relaxed/simple;
+	bh=5BPSnhAOrQvPucqIuhpcnYss0+3G69/eEmkdQBaBcSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z+TIkAW0uY+ptAg4YzYwaG8BAl0xSUDYQopuYnsn8CPxx/vV986aKz2T+J6J0egqhewtUWxRT7a+dcHGupsAvF3a0cViW+VfNN/LyWdpP0j6VU4486Z1dYNDI6sKFNmPzZcAW3prQDQ4Hzy7wP8i0SX9gjgcuZDud3lphLtRb5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qv0k1Hbp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pc6sRLOju6SUdwWisWHdWJvRyL/D6gi/SYb7qCKSqCGEtq/sb8SHeIg1RpQ6/sRWY4lyqwlBvs/KSe6F9hD11KfgkSnUWFqy6RC0uKyIYAqu45WZ9FdFxgGGAbEkeCvZADkJEBCRCT2kR0WYnLJpCUT+UkpT9qEjgHUxT/bqo/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VdaByOKY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qv0k1Hbp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6871C1F000E9;
-	Tue, 16 Jun 2026 17:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VdaByOKY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAAF61F000E9;
+	Tue, 16 Jun 2026 17:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631177;
-	bh=yvNq9VkjZDM31M9njzKgbGVKekOQM12bdQwnBzOOwg4=;
+	s=korg; t=1781631182;
+	bh=7mXIj/qs0qNdMD1Y1WOL8dsUlRQsiXqloKUEACWdcAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qv0k1HbpnLxHDoIOqEktagpAm6nwpsiz2qWjrAyUS76M7X5ECdoiv6JKLuLjqJGry
-	 Niv/GhJbycYwALgonwgzI4T4FH0K82Am7lRyGL5gM5ATVYdC6nC3akP8ncaYJ1Dg6t
-	 yvaYlRID32Y8hqGXHNk242TXoQhwHZavQoIUlzrI=
+	b=VdaByOKYSpcJp1BnDT7ot0/4uEJXaMj97yyyjC3HgFPji2bcuYRfxL+/AohAKMruU
+	 XN9MTfExEUSUg/P3wR/S2LzzIU3B2ETqi6cFhmyAaBHPPIrch1nqwxpNKXSSOBHc0W
+	 eLjLsrsIPlRx/vBSmF5eJJBlFnyyZKBVEE34nzkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>
-Subject: [PATCH 6.1 170/522] serial: altera_jtaguart: handle uart_add_one_port() failures
-Date: Tue, 16 Jun 2026 20:25:17 +0530
-Message-ID: <20260616145134.107391705@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 6.1 139/522] comedi: comedi_test: fix check for valid scan_begin_src in waveform_ai_cmdtest()
+Date: Tue, 16 Jun 2026 20:24:46 +0530
+Message-ID: <20260616145132.599879437@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,54 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit ea66be25f0e934f49d24cd0c5845d13cdba3520b upstream.
+commit 542f5248cb481073203e0dadab5bcbd28aeae308 upstream.
 
-altera_jtaguart_probe() maps the register window before registering the
-UART port, but it ignores failures from uart_add_one_port(). If port
-registration fails, probe still returns success and the mapping remains
-live until a later remove path that is not part of probe failure cleanup.
+Commit 783ddaebd397 ("staging: comedi: comedi_test: support
+scan_begin_src == TRIG_FOLLOW") neglected to add a test that
+`scan_begin_src` has only one bit set.  The allowed values are
+`TRIG_FOLLOW` and `TRIG_TIMER`, but the code incorrectly also allows
+`TRIG_FOLLOW | TRIG_TIMER`.  Add a call to
+`comedi_check_trigger_is_unique()` to check that only one trigger source
+bit is set.
 
-Return the uart_add_one_port() error and unmap the register window on
-that failure path.
-
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
-
-Fixes: 5bcd601049c6 ("serial: Add driver for the Altera JTAG UART")
+Fixes: 783ddaebd397 ("staging: comedi: comedi_test: support scan_begin_src == TRIG_FOLLOW")
 Cc: stable <stable@kernel.org>
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260512065837.79528-1-mhun512@gmail.com
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260422162138.36003-1-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/altera_jtaguart.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/comedi/drivers/comedi_test.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/tty/serial/altera_jtaguart.c
-+++ b/drivers/tty/serial/altera_jtaguart.c
-@@ -425,6 +425,7 @@ static int altera_jtaguart_probe(struct
- 	struct resource *res_mem;
- 	int i = pdev->id;
- 	int irq;
-+	int ret;
+--- a/drivers/comedi/drivers/comedi_test.c
++++ b/drivers/comedi/drivers/comedi_test.c
+@@ -271,6 +271,7 @@ static int waveform_ai_cmdtest(struct co
+ 	/* Step 2a : make sure trigger sources are unique */
  
- 	/* -1 emphasizes that the platform must have one port, no .N suffix */
- 	if (i == -1)
-@@ -464,7 +465,11 @@ static int altera_jtaguart_probe(struct
- 	port->flags = UPF_BOOT_AUTOCONF;
- 	port->dev = &pdev->dev;
+ 	err |= comedi_check_trigger_is_unique(cmd->convert_src);
++	err |= comedi_check_trigger_is_unique(cmd->scan_begin_src);
+ 	err |= comedi_check_trigger_is_unique(cmd->stop_src);
  
--	uart_add_one_port(&altera_jtaguart_driver, port);
-+	ret = uart_add_one_port(&altera_jtaguart_driver, port);
-+	if (ret) {
-+		iounmap(port->membase);
-+		return ret;
-+	}
- 
- 	return 0;
- }
+ 	/* Step 2b : and mutually compatible */
 
 
