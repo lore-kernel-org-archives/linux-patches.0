@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD77449EB8;
-	Tue, 16 Jun 2026 15:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C6544BCB0;
+	Tue, 16 Jun 2026 15:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624221; cv=none; b=bmAB5cYRwBAxMj3FMieyURZW0pBGrliroCAz+up9W7dfX1/zjKDWLoT6gVpP0jyeqDsJsuO61Z7EgGMpAUWYco8Yy/eRFnQCSzTTjCEauomvn/r21ndelRCowYuM6LWgrx6GN8LliMTnn+/n1JXuZKLQk3U07lNMq3fAXc9FXo8=
+	t=1781624226; cv=none; b=jwpZ2ZuEbiNjItXPmSxtBvKmP0A7J5TMvhEz6FPRVSfI07qbgOBGC9JxiZO3vakUJuyapsmzv1wx4dULHYERBKtlDgpFDBSvtaRy4PcnzjgxDo3TnWsy5XAAefZCiHZDhQovUhePanVqk31Uo/Cmm7eUjm86uq8XIjDO8ugAD7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624221; c=relaxed/simple;
-	bh=gMkWbDmpJtYk4chzy1ZD70kFBBjxOoboB+gAjf8VF9U=;
+	s=arc-20240116; t=1781624226; c=relaxed/simple;
+	bh=TSmged4tdxUG2a9JsFVUIkMNO9gJ3ebGfCLa0DR/4G0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jZxXCKIHdaIzdvdwDoRdmNUa4jdY/uszG+TBITssgWg1QNaEU64B/GLKp+bYDztKCpX7qXn7YACkaV7du6T1A0oM3k0EqzmGk33yVm/e4/aZf7K5ANfgRcwXp9KYIGG/B+fz/FARGvr8bVpLpG0MJQbYFY71svqB17gX62+QIB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZzRgicUq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RMM0WKBgiJna/ARN+0aObjkbvCGGR5V78ekw5aGc3CpNnREpAX/PT82LjPJJdUpLpc7dts0Fa+a0YRvriArmp+AffVemjcLlQOmo8hWwEo57ljfRr3b7WG6QZ5oEXNBoQJXAhk/gU6V/Hr4rjAH8/hHuZeXS0mRTOsViEapGxfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBcL0aAu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZzRgicUq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38B01F00A3D;
-	Tue, 16 Jun 2026 15:36:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBcL0aAu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0341F00A3A;
+	Tue, 16 Jun 2026 15:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624220;
-	bh=Bvo5CCYzPKVZ0uBdr+VH1DdEgcbCCz2OOu/EiViYqBw=;
+	s=korg; t=1781624225;
+	bh=z1fD4P1Stsk+Z6E430S7KrkuCwu15b7kck0Bsbmde1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZzRgicUqFZk7K9UgStYH2J7oP/QJBM70FIu2pWz79fOgBpdORi5rNFhVrH+VxX1TR
-	 f/1p/IljAGfNxskiNuKiwf7ihp/S7KSovX+/9PHR/oWLGUdve9upJ+iMqCHvBpcpO3
-	 3GWy5ZNcR9Mjl6cLVAeLq4ANpxyojOcBfogPL9/A=
+	b=uBcL0aAu6povUrElsUsEVhBwqulPUYsQTn/5EBd2ZUxf2u2pp2ChiD561P8FHFNqK
+	 dRsRsS46+c5F6L+XXReVhB3egbUUh2t49wL2/TLuPE0NTm+DWUpEbJlbBmCArAb2Ub
+	 rZ6C+mihpmTBYTyo0fR6Wz/PEcGOP79GeaMcAAt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Stable@vger.kernel.org,
+	Andre Heider <a.heider@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 7.0 294/378] nvmem: core: fix use-after-free bugs in error paths
-Date: Tue, 16 Jun 2026 20:28:45 +0530
-Message-ID: <20260616145125.536458738@linuxfoundation.org>
+Subject: [PATCH 7.0 295/378] nvmem: layouts: onie-tlv: fix hang on unknown types
+Date: Tue, 16 Jun 2026 20:28:46 +0530
+Message-ID: <20260616145125.589210554@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -50,62 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Andre Heider <a.heider@gmail.com>
 
-commit 5b6b6fc491899d583eaa75344e094796ae9b530b upstream.
+commit ea41020b9018e31c2ea7e9d89021e3e6d7470883 upstream.
 
-Fix several instances of error paths in which we call
-__nvmem_device_put() - which may end up freeing the underlying memory
-and other resources - and then keep on using the nvmem structure. Always
-put the reference to the nvmem device as the last step before returning
-the error code.
+The EEPROM on my board has a vendor specific entry of type 0x41. When
+stumbling upon that, this driver hangs in an endless loop.
 
-Cc: stable@vger.kernel.org
-Fixes: 7ae6478b304b ("nvmem: core: rework nvmem cell instance creation")
-Fixes: e888d445ac33 ("nvmem: resolve cells from DT at registration time")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fix it by keep incrementing the offset on unknown entries, so the loop
+will eventually stop.
+
+Fixes: d3c0d12f6474 ("nvmem: layouts: onie-tlv: Add new layout driver")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Andre Heider <a.heider@gmail.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530204340.116743-3-srini@kernel.org
+Link: https://patch.msgid.link/20260530204340.116743-2-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/core.c |   12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/nvmem/layouts/onie-tlv.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/nvmem/core.c
-+++ b/drivers/nvmem/core.c
-@@ -1468,18 +1468,16 @@ struct nvmem_cell *of_nvmem_cell_get(str
- 	cell_entry = nvmem_find_cell_entry_by_node(nvmem, cell_np);
- 	of_node_put(cell_np);
- 	if (!cell_entry) {
--		__nvmem_device_put(nvmem);
- 		nvmem_layout_module_put(nvmem);
--		if (nvmem->layout)
--			return ERR_PTR(-EPROBE_DEFER);
--		else
--			return ERR_PTR(-ENOENT);
-+		ret = nvmem->layout ? -EPROBE_DEFER : -ENOENT;
-+		__nvmem_device_put(nvmem);
-+		return ERR_PTR(ret);
+--- a/drivers/nvmem/layouts/onie-tlv.c
++++ b/drivers/nvmem/layouts/onie-tlv.c
+@@ -119,7 +119,7 @@ static int onie_tlv_add_cells(struct dev
+ 
+ 		cell.name = onie_tlv_cell_name(tlv.type);
+ 		if (!cell.name)
+-			continue;
++			goto next;
+ 
+ 		cell.offset = hdr_len + offset + sizeof(tlv.type) + sizeof(tlv.len);
+ 		cell.bytes = tlv.len;
+@@ -132,6 +132,7 @@ static int onie_tlv_add_cells(struct dev
+ 			return ret;
+ 		}
+ 
++next:
+ 		offset += sizeof(tlv) + tlv.len;
  	}
- 
- 	cell = nvmem_create_cell(cell_entry, id, cell_index);
- 	if (IS_ERR(cell)) {
--		__nvmem_device_put(nvmem);
- 		nvmem_layout_module_put(nvmem);
-+		__nvmem_device_put(nvmem);
- 	}
- 
- 	return cell;
-@@ -1593,8 +1591,8 @@ void nvmem_cell_put(struct nvmem_cell *c
- 		kfree_const(cell->id);
- 
- 	kfree(cell);
--	__nvmem_device_put(nvmem);
- 	nvmem_layout_module_put(nvmem);
-+	__nvmem_device_put(nvmem);
- }
- EXPORT_SYMBOL_GPL(nvmem_cell_put);
  
 
 
