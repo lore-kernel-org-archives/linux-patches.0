@@ -1,54 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6389D356766;
-	Tue, 16 Jun 2026 17:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3EB3A5E91;
+	Tue, 16 Jun 2026 17:56:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632574; cv=none; b=FOvYqObzFTo9fxm1VocLyjTnGGfuZrLG310AHk/UQLXIrM1PN3gfOYN2bD3R7Pv12hviN51iG72iJ02YMR4fSLyzGBTEwEPPWc5INS8P1zV7l+oqjW0/O0GwNUF8qpommrawwKPnRzn6dkeOderTkPK6G3CeWVRvjo5KgZAgptM=
+	t=1781632578; cv=none; b=JBLIowJWS7cz953SP9NRiOE0qtU/VCev83nhFSZIXODKw5xOsx9mSsmljIHt7joJ6rxmEh6Z/i0XwNjGbnL5BIYUB6ojW0/p2n06FgUuFE6b8d4DhowIvu+6a/UdGsLB60QWfdL2jR2utDYnQ960d92fRQyCLn79LkSGd7yb2js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632574; c=relaxed/simple;
-	bh=a3LBogworAIxLZ5KRWqebH+DF9hpwU8tHIxiZxN7qtM=;
+	s=arc-20240116; t=1781632578; c=relaxed/simple;
+	bh=OL8MRCW6eQZBtoO7eOeAQ6Yv/tQSIthB45l03ujLyoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ssg4rWLBzXTGVIoSsvi68nDxQMe9yoh9eIovW0OQZhaEovx+ueN0VevRBk0gmY+wCzSs8fdYGHpShhR9UPHFSCjUdp5Tk0DnqWA6NggWG6PpPgCY15BmGVu0D66+ibmk2/qSwch7gpkX1e+nHQCioujRTOOocsNC9R2H1L+3tjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBBR9KAL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bsqWVn2H8RT/P7B0jUwRRQxTfuTPYNYo1fwCfrdGMVbkLZ1edwGqOwq11cnaFvVMevF8By8sL+/zHWZKTGsJGeb6xUpqRv7AIXeuhocHMQ9ibnjc/cAQZKBqOTxbnks7pN1f/RD/yZ41uqGwVbk6Coafs8jqehuyZshRg4b8tsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QsXLILoT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBBR9KAL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 171501F000E9;
-	Tue, 16 Jun 2026 17:56:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QsXLILoT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7021F000E9;
+	Tue, 16 Jun 2026 17:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632571;
-	bh=w1P0+CpnbdWo+orDwwDCRQa+whO8Hf+bxQeQdjS28MM=;
+	s=korg; t=1781632576;
+	bh=s2vlNjgDQxEGmM7p7pcsacTeoWj/GxIbZ0v3xZhe0io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aBBR9KALOeFvxWXa76UrDQ0EJoYVK3bJ7JuK8u6tfJtGv7KWzPf1+zipf9xvBBEBK
-	 IEm6AnPBThz39SMRCa9wdB+CcJjIdp5QE4KwRv0f2OKJ4rxPS1f/XJk4TKzIH8kjq3
-	 3IJ8+FEv49j/0JtljuJNwr309JQrwThsCJ6gyiU4=
+	b=QsXLILoTP6tpgUn4sL22F00GRxgGBY1TH7SfO2M5SesV2A/F396+UvYOUpulXJuM5
+	 dkkbZ3vNnrSNL32o+K7bj38M93PX2xPGzxiHHM+xqTJsHrNWZl0zukJ8yGOJ9Sl+Gz
+	 BYmlghunE9DEZl7fciYdkRxsb16TEFUIQ8HlUXLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alistair Popple <apopple@nvidia.com>,
-	=?UTF-8?q?Arsen=20Arsenovi=C4=87?= <aarsenovic@baylibre.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	David Hildenbrand <david@kernel.org>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Peter Xu <peterx@redhat.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 435/522] mm/memory: fix spurious warning when unmapping device-private/exclusive pages
-Date: Tue, 16 Jun 2026 20:29:42 +0530
-Message-ID: <20260616145146.309256047@linuxfoundation.org>
+Subject: [PATCH 6.1 436/522] Bluetooth: Init sk_peer_* on bt_sock_alloc
+Date: Tue, 16 Jun 2026 20:29:43 +0530
+Message-ID: <20260616145146.353727620@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -61,196 +44,142 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alistair Popple <apopple@nvidia.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit be3f38d05cc5a7c3f13e51994c5dd043ab604d28 ]
+[ Upstream commit 464c702fb9374ff8f3f816f24fb7ac719dd20e1e ]
 
-Device private and exclusive entries are only supported for anonymous
-folios.  This condition is tested in __migrate_device_pages() and
-make_device_exclusive() using folio_test_anon().  However the unmap path
-tests this assumption using vma_is_anonymous().
+This makes sure peer information is always available via sock when using
+bt_sock_alloc.
 
-This is wrong because whilst anonymous VMAs can only contain folios where
-folio_test_anon() is true the opposite relation does not hold.  A folio
-for which folio_test_anon() is true does not imply vma_is_anonymous() is
-true.  Such a condition can occur if for example a folio is part of a
-private filebacked mapping.
-
-In this case vma_is_anonymous() is false as the mapping is filebacked, but
-folio_test_anon() may be true, thus permitting devices to migrate the
-folio to device private memory.  This can lead to the following spurious
-warnings during process teardown:
-
-[  772.737706] ------------[ cut here ]------------
-[  772.739201] WARNING: mm/memory.c:1754 at unmap_page_range.cold+0x26/0x18a, CPU#17: hmm-tests/2041
-[  772.742050] Modules linked in: test_hmm nvidia_uvm(O) nvidia(O)
-[  772.743959] CPU: 17 UID: 0 PID: 2041 Comm: hmm-tests Tainted: G        W  O        7.0.0+ #387 PREEMPT(full)
-[  772.747104] Tainted: [W]=WARN, [O]=OOT_MODULE
-[  772.748509] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-[  772.752117] RIP: 0010:unmap_page_range.cold+0x26/0x18a
-[  772.753780] Code: 7e fe ff ff 48 89 4c 24 78 4c 89 44 24 38 e8 f2 ff b1 00 48 8b 4c 24 78 4c 8b 44 24 38 48 8b 44 24 18 48 83 78 48 00 74 04 90 <0f> 0b 90 48 89 ca b8 ff ff 37 00 48 c1 ea 03 48 c1 e0 2a 80 3c 02
-[  772.759602] RSP: 0018:ffff888112607550 EFLAGS: 00010286
-[  772.761310] RAX: ffff88811bbf4dc0 RBX: dffffc0000000000 RCX: ffffea03e9bfffd8
-[  772.763583] RDX: 1ffff1102377e9c1 RSI: 0000000000000008 RDI: ffff88811bbf4e08
-[  772.765914] RBP: 0000000000000006 R08: ffff8881059f7448 R09: ffffed10224c0e68
-[  772.768184] R10: ffff888112607347 R11: 0000000000000001 R12: 0000000000000001
-[  772.770461] R13: ffffea03e9bfffc0 R14: ffff888112607908 R15: ffffea03e9bfffc0
-[  772.772782] FS:  00007f327caa2780(0000) GS:ffff888427b7d000(0000) knlGS:0000000000000000
-[  772.775328] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  772.777187] CR2: 00007f327ca89000 CR3: 00000001994d5000 CR4: 00000000000006f0
-[  772.779135] Call Trace:
-[  772.779792]  <TASK>
-[  772.780317]  ? dmirror_interval_invalidate+0x1a3/0x290 [test_hmm]
-[  772.781873]  ? vm_normal_page_pud+0x2b0/0x2b0
-[  772.782992]  ? __rwlock_init+0x150/0x150
-[  772.784006]  ? lock_release+0x216/0x2b0
-[  772.785008]  ? __mmu_notifier_invalidate_range_start+0x505/0x6e0
-[  772.786522]  ? lock_release+0x216/0x2b0
-[  772.787498]  ? unmap_single_vma+0xb6/0x210
-[  772.788573]  unmap_vmas+0x27d/0x520
-[  772.789506]  ? unmap_single_vma+0x210/0x210
-[  772.790607]  ? mas_update_gap.part.0+0x620/0x620
-[  772.791834]  unmap_region+0x19e/0x350
-[  772.792769]  ? remove_vma+0x130/0x130
-[  772.793684]  ? mas_alloc_nodes+0x1f2/0x300
-[  772.794730]  vms_complete_munmap_vmas+0x8c1/0xe20
-[  772.795926]  ? unmap_region+0x350/0x350
-[  772.796917]  do_vmi_align_munmap+0x36a/0x4e0
-[  772.798018]  ? lock_release+0x216/0x2b0
-[  772.799024]  ? vma_shrink+0x620/0x620
-[  772.799983]  do_vmi_munmap+0x150/0x2c0
-[  772.800939]  __vm_munmap+0x161/0x2c0
-[  772.801872]  ? expand_downwards+0xd60/0xd60
-[  772.802948]  ? clockevents_program_event+0x1ef/0x540
-[  772.804217]  ? lock_release+0x216/0x2b0
-[  772.805158]  __x64_sys_munmap+0x59/0x80
-[  772.805776]  do_syscall_64+0xfc/0x670
-[  772.806336]  ? irqentry_exit+0xda/0x580
-[  772.806976]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
-[  772.807772] RIP: 0033:0x7f327cbb2717
-[  772.808323] Code: 73 01 c3 48 8b 0d f9 76 0d 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 b8 0b 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d c9 76 0d 00 f7 d8 64 89 01 48
-[  772.811337] RSP: 002b:00007ffde7f57d38 EFLAGS: 00000202 ORIG_RAX: 000000000000000b
-[  772.812564] RAX: ffffffffffffffda RBX: 00007f327cc9c000 RCX: 00007f327cbb2717
-[  772.813733] RDX: 0000000000000000 RSI: 0000000000400000 RDI: 00007f327c289000
-[  772.814867] RBP: 0000000000421360 R08: 000000000000001a R09: 0000000000000000
-[  772.815991] R10: 0000000000000003 R11: 0000000000000202 R12: 00007ffde7f57d74
-[  772.817121] R13: 00007f327c689010 R14: 0000000000100000 R15: 00007f327c289000
-[  772.818272]  </TASK>
-[  772.818614] irq event stamp: 0
-[  772.819159] hardirqs last  enabled at (0): [<0000000000000000>] 0x0
-[  772.820174] hardirqs last disabled at (0): [<ffffffff82a57ab3>] copy_process+0x19f3/0x6440
-[  772.821511] softirqs last  enabled at (0): [<ffffffff82a57b00>] copy_process+0x1a40/0x6440
-[  772.822869] softirqs last disabled at (0): [<0000000000000000>] 0x0
-[  772.823871] ---[ end trace 0000000000000000 ]---
-
-Fix this by using the same check for folio_test_anon() in
-zap_nonpresent_ptes(). Also add a hmm-test case for this.
-
-Link: https://lore.kernel.org/20260501065116.2057242-1-apopple@nvidia.com
-Fixes: 999dad824c39 ("mm/shmem: persist uffd-wp bit across zapping for file-backed")
-Signed-off-by: Alistair Popple <apopple@nvidia.com>
-Reported-by: Arsen Arsenović <aarsenovic@baylibre.com>
-Reviewed-by: Balbir Singh <balbirs@nvidia.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ adapted `folio_test_anon(folio)` to `PageAnon(page)` ]
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: e83f5e24da74 ("Bluetooth: serialize accept_q access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c                            |    2 -
- tools/testing/selftests/vm/hmm-tests.c |   50 +++++++++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+), 1 deletion(-)
+ net/bluetooth/af_bluetooth.c |   24 ++++++++++++++++++++++++
+ net/bluetooth/hidp/sock.c    |   10 +---------
+ net/bluetooth/l2cap_sock.c   |   19 -------------------
+ 3 files changed, 25 insertions(+), 28 deletions(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -1471,7 +1471,7 @@ again:
- 			 * consider uffd-wp bit when zap. For more information,
- 			 * see zap_install_uffd_wp_if_needed().
- 			 */
--			WARN_ON_ONCE(!vma_is_anonymous(vma));
-+			WARN_ON_ONCE(!PageAnon(page));
- 			rss[mm_counter(page)]--;
- 			if (is_device_private_entry(entry))
- 				page_remove_rmap(page, vma, false);
---- a/tools/testing/selftests/vm/hmm-tests.c
-+++ b/tools/testing/selftests/vm/hmm-tests.c
-@@ -994,6 +994,56 @@ TEST_F(hmm, migrate)
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -157,6 +157,14 @@ struct sock *bt_sock_alloc(struct net *n
+ 	sk->sk_protocol = proto;
+ 	sk->sk_state    = BT_OPEN;
+ 
++	/* Init peer information so it can be properly monitored */
++	if (!kern) {
++		spin_lock(&sk->sk_peer_lock);
++		sk->sk_peer_pid  = get_pid(task_tgid(current));
++		sk->sk_peer_cred = get_current_cred();
++		spin_unlock(&sk->sk_peer_lock);
++	}
++
+ 	return sk;
+ }
+ EXPORT_SYMBOL(bt_sock_alloc);
+@@ -201,6 +209,9 @@ EXPORT_SYMBOL(bt_sock_linked);
+ 
+ void bt_accept_enqueue(struct sock *parent, struct sock *sk, bool bh)
+ {
++	const struct cred *old_cred;
++	struct pid *old_pid;
++
+ 	BT_DBG("parent %p, sk %p", parent, sk);
+ 
+ 	sock_hold(sk);
+@@ -213,6 +224,19 @@ void bt_accept_enqueue(struct sock *pare
+ 	list_add_tail(&bt_sk(sk)->accept_q, &bt_sk(parent)->accept_q);
+ 	bt_sk(sk)->parent = parent;
+ 
++	/* Copy credentials from parent since for incoming connections the
++	 * socket is allocated by the kernel.
++	 */
++	spin_lock(&sk->sk_peer_lock);
++	old_pid = sk->sk_peer_pid;
++	old_cred = sk->sk_peer_cred;
++	sk->sk_peer_pid = get_pid(parent->sk_peer_pid);
++	sk->sk_peer_cred = get_cred(parent->sk_peer_cred);
++	spin_unlock(&sk->sk_peer_lock);
++
++	put_pid(old_pid);
++	put_cred(old_cred);
++
+ 	if (bh)
+ 		bh_unlock_sock(sk);
+ 	else
+--- a/net/bluetooth/hidp/sock.c
++++ b/net/bluetooth/hidp/sock.c
+@@ -256,21 +256,13 @@ static int hidp_sock_create(struct net *
+ 	if (sock->type != SOCK_RAW)
+ 		return -ESOCKTNOSUPPORT;
+ 
+-	sk = sk_alloc(net, PF_BLUETOOTH, GFP_ATOMIC, &hidp_proto, kern);
++	sk = bt_sock_alloc(net, sock, &hidp_proto, protocol, GFP_ATOMIC, kern);
+ 	if (!sk)
+ 		return -ENOMEM;
+ 
+-	sock_init_data(sock, sk);
+-
+ 	sock->ops = &hidp_sock_ops;
+-
+ 	sock->state = SS_UNCONNECTED;
+ 
+-	sock_reset_flag(sk, SOCK_ZAPPED);
+-
+-	sk->sk_protocol = protocol;
+-	sk->sk_state	= BT_OPEN;
+-
+ 	bt_sock_link(&hidp_sk_list, sk);
+ 
+ 	return 0;
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -178,21 +178,6 @@ done:
+ 	return err;
  }
  
- /*
-+ * Migrate private file memory to device private memory.
-+ */
-+TEST_F(hmm, migrate_file_private)
-+{
-+	struct hmm_buffer *buffer;
-+	unsigned long npages;
-+	unsigned long size;
-+	unsigned long i;
-+	int *ptr;
-+	int ret;
-+	int fd;
-+
-+	npages = ALIGN(HMM_BUFFER_SIZE, self->page_size) >> self->page_shift;
-+	ASSERT_NE(npages, 0);
-+	size = npages << self->page_shift;
-+
-+	fd = hmm_create_file(size);
-+	ASSERT_GE(fd, 0);
-+
-+	buffer = malloc(sizeof(*buffer));
-+	ASSERT_NE(buffer, NULL);
-+
-+	buffer->fd = fd;
-+	buffer->size = size;
-+	buffer->mirror = malloc(size);
-+	ASSERT_NE(buffer->mirror, NULL);
-+
-+	buffer->ptr = mmap(NULL, size,
-+			   PROT_READ | PROT_WRITE,
-+			   MAP_PRIVATE,
-+			   buffer->fd, 0);
-+	ASSERT_NE(buffer->ptr, MAP_FAILED);
-+
-+	/* Initialize buffer in system memory. */
-+	for (i = 0, ptr = buffer->ptr; i < size / sizeof(*ptr); ++i)
-+		ptr[i] = i;
-+
-+	/* Migrate memory to device. */
-+	ret = hmm_migrate_sys_to_dev(self->fd, buffer, npages);
-+	ASSERT_EQ(ret, 0);
-+	ASSERT_EQ(buffer->cpages, npages);
-+
-+	/* Check what the device read. */
-+	for (i = 0, ptr = buffer->mirror; i < size / sizeof(*ptr); ++i)
-+		ASSERT_EQ(ptr[i], i);
-+
-+	hmm_buffer_free(buffer);
-+}
-+
-+/*
-  * Migrate anonymous memory to device private memory and fault some of it back
-  * to system memory, then try migrating the resulting mix of system and device
-  * private memory to the device.
+-static void l2cap_sock_init_pid(struct sock *sk)
+-{
+-	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
+-
+-	/* Only L2CAP_MODE_EXT_FLOWCTL ever need to access the PID in order to
+-	 * group the channels being requested.
+-	 */
+-	if (chan->mode != L2CAP_MODE_EXT_FLOWCTL)
+-		return;
+-
+-	spin_lock(&sk->sk_peer_lock);
+-	sk->sk_peer_pid = get_pid(task_tgid(current));
+-	spin_unlock(&sk->sk_peer_lock);
+-}
+-
+ static int l2cap_sock_connect(struct socket *sock, struct sockaddr *addr,
+ 			      int alen, int flags)
+ {
+@@ -268,8 +253,6 @@ static int l2cap_sock_connect(struct soc
+ 	    chan->mode != L2CAP_MODE_EXT_FLOWCTL)
+ 		chan->mode = L2CAP_MODE_LE_FLOWCTL;
+ 
+-	l2cap_sock_init_pid(sk);
+-
+ 	err = l2cap_chan_connect(chan, la.l2_psm, __le16_to_cpu(la.l2_cid),
+ 				 &la.l2_bdaddr, la.l2_bdaddr_type);
+ 	if (err)
+@@ -325,8 +308,6 @@ static int l2cap_sock_listen(struct sock
+ 		goto done;
+ 	}
+ 
+-	l2cap_sock_init_pid(sk);
+-
+ 	sk->sk_max_ack_backlog = backlog;
+ 	sk->sk_ack_backlog = 0;
+ 
 
 
