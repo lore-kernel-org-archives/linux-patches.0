@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEC82F8EBC;
-	Tue, 16 Jun 2026 15:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7D8449ED2;
+	Tue, 16 Jun 2026 15:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623194; cv=none; b=tTDfoPVa4HGaBqdi2xVPIAMUAdonUFJJM/PHIqR1UFg5M9Ld6NUVKVa6b/YL4H0+mlPTSisUhjUlOyukuBRWOZUaedh05OW6qBwakbk4SGVGioljOVFNN9dlQEKQEy+b+PpNSMDtyqZ5LJNTwFyMmyNGz9DRWRZFgXGV6kPDJlQ=
+	t=1781623199; cv=none; b=ggN6GLONm1Anbp4a3/rim/n5B63eNsiRodIxaPlTyLgRfVoaw0XHSzuRkzQGXfH1reGlfTfCElM8T9oqhAbkU/vLmRi46X5UGFg6Aj9FKqBpwQ8yy1QyGwuVbUexxZbkigPtFqBH/z4ex87yn8ocnWftnLK+P8QciIqD4lm0hnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623194; c=relaxed/simple;
-	bh=NJIvOhvELW7KjCMoOUtDbanOwFBk3unDn8k0PFp+vjs=;
+	s=arc-20240116; t=1781623199; c=relaxed/simple;
+	bh=8XdvS6P7xX50ODHPb30lcUtXFPUrKQBXAelFzl8q33Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VnfRU0YDkwfYmlMNpAVqYfS7WaFli8zWYkByirPj3v6G+KcN0EPwGm82XeI4A03dUN/NMFjXRLOoWOnJ826maURKOyNzJodYo2u39wuhVngs3HenyTxfeZi6F4XCHIXjjKbtlL01hhzFHSrArKH42r/n0+e8Oedz3rCjHiIZAj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wba7Q8xh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pw6djJajRNMOrGMTt9ku+a92KcHCG842XjNmP/w6QzKQpqsj618NGUiNepbAG/s6XpGeEco2vgDSaqGej8EWpK2CZhbzbmnWKnqgwR4IPs+5UK3lvKOHOYhf200wfFhqH7pQn8JLBrMNFGGjJs4Yi3soUq4CRFuWPHZXXGWL93s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RK6J+KsI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wba7Q8xh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA5A1F000E9;
-	Tue, 16 Jun 2026 15:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RK6J+KsI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 882111F00A3A;
+	Tue, 16 Jun 2026 15:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623192;
-	bh=51A8FErQlr82zfbaiJbsud3xD2KSMqF+R3fBz5Udgz0=;
+	s=korg; t=1781623198;
+	bh=NVo6NCXZVjqV0JeO7FtFhyYz3edM5HXjhsK0vWIOtvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wba7Q8xhaGa4POWUsW2DZoOnwtQR0xiUkmbO7/cVQngt0HjA0xJ53WICCBqeIKtFn
-	 DKn9LyNodRsBiDzS/xLtV7ZO69oUXdxCW0+O0OOg2L3dBX1vCuenjkiBHdEr+Oyx0t
-	 iNCZnt+QbvWr8d5WIX/ewqL3an1XfrWtdOeDCYOI=
+	b=RK6J+KsIx9+m3u/ZcAMnisjAmBESRRzg/N4+fNHjMD2+vb+QiaRikY3jISVo9sn3n
+	 qT60YyiSF+3wlY8sOZiGWkzwRpnxa0yUQNg1F9aH2xu8nFnIvyh4dtExy/tQ0ty/HK
+	 f/KhZgHzF2x6MNT1EOjtn5EI6JoBoRVS3o8s7SOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Samuel Salin <Samuel.salin@intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Petr Oros <poros@redhat.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 7.0 102/378] ice: fix missing priority callbacks for U.FL DPLL pins
-Date: Tue, 16 Jun 2026 20:25:33 +0530
-Message-ID: <20260616145115.729372503@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.0 103/378] idpf: fix mailbox capability for set device clock time
+Date: Tue, 16 Jun 2026 20:25:34 +0530
+Message-ID: <20260616145115.785935558@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -55,72 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Oros <poros@redhat.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit f1fa677e428e8873486938086bd934dc18169b47 ]
+[ Upstream commit 85b0cbc1f38bc1e38956a9e6d7b04d309b435697 ]
 
-The U.FL2 input pin advertises DPLL_PIN_CAPABILITIES_PRIORITY_CAN_CHANGE
-in its capability mask, but ice_dpll_pin_ufl_ops does not provide
-.prio_get and .prio_set callbacks. As a result the DPLL subsystem
-cannot report or accept priority for U.FL pins: pin-get omits the prio
-field on U.FL2 and pin-set with prio is rejected as invalid, even
-though the capability is present. This prevents user space from using
-priority to select or disable U.FL2 as a DPLL input source.
+The current code incorrectly uses VIRTCHNL2_CAP_PTP_SET_DEVICE_CLK_TIME
+for both direct and mailbox capabilities, causing mailbox-only support
+to be ignored and potentially reporting IDPF_PTP_NONE.
 
-Reproducer with iproute2 (dpll command):
-
-  # dpll pin show board-label U.FL2
-  pin id 16:
-    module-name ice
-    board-label U.FL2
-    type ext
-    capabilities priority-can-change|state-can-change
-    parent-device:
-      id 0 direction input state selectable phase-offset 0
-    /* note: no "prio" between "direction" and "state",
-       even though priority-can-change is advertised */
-
-  # dpll pin set id 16 parent-device 0 prio 5
-  RTNETLINK answers: Operation not supported
-
-After the fix the prio field is reported by pin show and pin set with
-prio is accepted on U.FL2.
-
-Add the missing .prio_get and .prio_set callbacks to
-ice_dpll_pin_ufl_ops, reusing ice_dpll_sw_input_prio_{get,set}. The
-same ops struct is shared by U.FL1 and U.FL2: U.FL2 (input) delegates
-to the backing hardware input pin, while U.FL1 (output) does not
-advertise DPLL_PIN_CAPABILITIES_PRIORITY_CAN_CHANGE so the dpll core
-capability gate never invokes prio_set for it, and prio_get reports
-the OUTPUT sentinel (ICE_DPLL_PIN_PRIO_OUTPUT) on the output side
-exactly like the SMA path does today.
-
-Fixes: 2dd5d03c77e2 ("ice: redesign dpll sma/u.fl pins control")
+Fixes: d5dba8f7206da ("idpf: add PTP clock configuration")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Petr Oros <poros@redhat.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20260602225513.393338-3-anthony.l.nguyen@intel.com
+Link: https://patch.msgid.link/20260602225513.393338-4-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_dpll.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/intel/idpf/idpf_ptp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_dpll.c b/drivers/net/ethernet/intel/ice/ice_dpll.c
-index 892bc7c2e28b46..0704e92ab04305 100644
---- a/drivers/net/ethernet/intel/ice/ice_dpll.c
-+++ b/drivers/net/ethernet/intel/ice/ice_dpll.c
-@@ -2633,6 +2633,8 @@ static const struct dpll_pin_ops ice_dpll_pin_ufl_ops = {
- 	.state_on_dpll_set = ice_dpll_ufl_pin_state_set,
- 	.state_on_dpll_get = ice_dpll_sw_pin_state_get,
- 	.direction_get = ice_dpll_pin_sw_direction_get,
-+	.prio_get = ice_dpll_sw_input_prio_get,
-+	.prio_set = ice_dpll_sw_input_prio_set,
- 	.frequency_get = ice_dpll_sw_pin_frequency_get,
- 	.frequency_set = ice_dpll_sw_pin_frequency_set,
- 	.esync_set = ice_dpll_sw_esync_set,
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_ptp.c b/drivers/net/ethernet/intel/idpf/idpf_ptp.c
+index 4a51d2727547d9..71fe8b2a8b4e42 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_ptp.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_ptp.c
+@@ -51,7 +51,7 @@ void idpf_ptp_get_features_access(const struct idpf_adapter *adapter)
+ 
+ 	/* Set the device clock time */
+ 	direct = VIRTCHNL2_CAP_PTP_SET_DEVICE_CLK_TIME;
+-	mailbox = VIRTCHNL2_CAP_PTP_SET_DEVICE_CLK_TIME;
++	mailbox = VIRTCHNL2_CAP_PTP_SET_DEVICE_CLK_TIME_MB;
+ 	ptp->set_dev_clk_time_access = idpf_ptp_get_access(adapter,
+ 							   direct,
+ 							   mailbox);
 -- 
 2.53.0
 
