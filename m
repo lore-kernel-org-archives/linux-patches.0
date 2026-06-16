@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8FF63D813F;
-	Tue, 16 Jun 2026 18:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B57947CC82;
+	Tue, 16 Jun 2026 18:30:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634602; cv=none; b=uJ0sPRPfQGJTEuWNRl8MLGsIO59QngKQoQKQy8Ouo6pJtTHNMWJxjCtkpw24x3rFN6+DLzaGlo4OBWWhfksw5UcMDTxXJs1GJPHu2pTg6xXypqv0XBcsyOkhzUJETWkdljy3JGABFvnJveB3rhhHrPe7e4dh24bzeNVMHz5faYc=
+	t=1781634609; cv=none; b=iZXoxRvR5ZTyFeBki7l/Hk5WL7NGwv2xX4sB7aPPjBpevUz5yCJSEFM8v3KrzrlX5VIS0utpJ+aYNenQP1YGB6gZeYzrEzuCMW0+cShwBm3G4X9V5VHs7F8QBeEKyVcOkfuJYtm0ByhE7tdfm+m2w2Jbw0EfXKsrzDMnxt6BYxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634602; c=relaxed/simple;
-	bh=4faNniaUzROoGJkksre3TKFJfRCZ0JvLO1NiSe608f8=;
+	s=arc-20240116; t=1781634609; c=relaxed/simple;
+	bh=SXFMu7QGKMdCzWOn/Hg9Yy5JDO8eH8+5d9VdT9OgY5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QEGImCDlXKWro2oWdDGKB5Qmvj/jbd5zI34g2Enk1J1LsCmnmjxpYGO98krmBO7KMr2eCNayu8UzOwUc/Rz9mgaRP1nJxPxHbxt9z9WAyVETu6HB5si67cqy5iOj3mIAZP2gwgZ3mHICEw2rD8BSS/md86WNCkL7pGhdLqWLzRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9mu2AJk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HKeIDA2Y/VazOy3wsp/0YRQrc3iBfPUPRjwjCLto3AOgUY8sYHv0BQ99V5YUX3XFLBXjU61FZ8Mgp0q+TscDb+0mW9yU/F5o9CxJ5azrKwP+aEagxlgjEonk4HZCBytvJPvczmHdxDVcC5CKSK2K7+uof3Z0rm5y3i6ncSmfsiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1KsZ0B/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9mu2AJk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FACD1F000E9;
-	Tue, 16 Jun 2026 18:30:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1KsZ0B/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15491F000E9;
+	Tue, 16 Jun 2026 18:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634601;
-	bh=SIq6m6FCsQVYBs2gfkbn9ldp9PsNH8Uk9MdVolBecBE=;
+	s=korg; t=1781634607;
+	bh=XSn5SArXOCBmgtSVfTj58DZTB6eK5y0EOclBQP4dZ9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j9mu2AJkUQyGfReAvAs2mSdlETVHzM2vNEY+fvX9WPryBjgafW5ITexiil+IrH0T8
-	 wh0GKnPW+WXYduiLy0SZa4ScbQATvFRPxiMYun4ID+M1Eb2qn4CcbijleRIYBzXBbl
-	 ttZceg1JjR9shOOUleKXrgb5kO3DolI1qjuvYKN4=
+	b=L1KsZ0B/arlPrhN0RG2Zl8xB5RMJXbgCcndCaRl22NPSInb+qYldYlWK5qEyy0OUN
+	 uXB2LmP8MwoHvtUItDLfRCMhB+PcZ9GDGtir3ozKZo7Su6ux55XwwfBZxEyzyahRQa
+	 p4VvY1UPzElvR0t7eS2P/kgZvop2kgfV5/szrvts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Hodges <git@danielhodges.dev>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 263/411] wifi: mwifiex: fix use-after-free in mwifiex_adapter_cleanup()
-Date: Tue, 16 Jun 2026 20:28:21 +0530
-Message-ID: <20260616145115.021300179@linuxfoundation.org>
+Subject: [PATCH 5.15 264/411] ALSA: aoa: Use guard() for mutex locks
+Date: Tue, 16 Jun 2026 20:28:22 +0530
+Message-ID: <20260616145115.089593775@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -51,46 +50,1038 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Hodges <git@danielhodges.dev>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit ae5e95d4157481693be2317e3ffcd84e36010cbb ]
+[ Upstream commit 1cb6ecbb372002ef9e531c5377e5f60122411e40 ]
 
-The mwifiex_adapter_cleanup() function uses timer_delete()
-(non-synchronous) for the wakeup_timer before the adapter structure is
-freed. This is incorrect because timer_delete() does not wait for any
-running timer callback to complete.
+Replace the manual mutex lock/unlock pairs with guard() for code
+simplification.
 
-If the wakeup_timer callback (wakeup_timer_fn) is executing when
-mwifiex_adapter_cleanup() is called, the callback will continue to
-access adapter fields (adapter->hw_status, adapter->if_ops.card_reset,
-etc.) which may be freed by mwifiex_free_adapter() called later in the
-mwifiex_remove_card() path.
+Only code refactoring, and no behavior change.
 
-Use timer_delete_sync() instead to ensure any running timer callback has
-completed before returning.
-
-Fixes: 4636187da60b ("mwifiex: add wakeup timer based recovery mechanism")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daniel Hodges <git@danielhodges.dev>
-Link: https://patch.msgid.link/20260206194401.2346-1-git@danielhodges.dev
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ changed `timer_delete_sync(&adapter->wakeup_timer)` to `del_timer_sync(&adapter->wakeup_timer)` ]
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250829151335.7342-14-tiwai@suse.de
+Stable-dep-of: 5ed060d54915 ("ALSA: aoa: i2sbus: clear stale prepared state")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/init.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/aoa/codecs/onyx.c         |  104 +++++++++++-------------------------
+ sound/aoa/codecs/tas.c          |  113 +++++++++++++---------------------------
+ sound/aoa/core/gpio-feature.c   |   20 ++-----
+ sound/aoa/core/gpio-pmf.c       |   26 +++------
+ sound/aoa/soundbus/i2sbus/pcm.c |   76 ++++++++------------------
+ 5 files changed, 112 insertions(+), 227 deletions(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/init.c
-+++ b/drivers/net/wireless/marvell/mwifiex/init.c
-@@ -399,7 +399,7 @@ static void mwifiex_invalidate_lists(str
- static void
- mwifiex_adapter_cleanup(struct mwifiex_adapter *adapter)
+--- a/sound/aoa/codecs/onyx.c
++++ b/sound/aoa/codecs/onyx.c
+@@ -121,10 +121,9 @@ static int onyx_snd_vol_get(struct snd_k
+ 	struct onyx *onyx = snd_kcontrol_chip(kcontrol);
+ 	s8 l, r;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 	onyx_read_register(onyx, ONYX_REG_DAC_ATTEN_LEFT, &l);
+ 	onyx_read_register(onyx, ONYX_REG_DAC_ATTEN_RIGHT, &r);
+-	mutex_unlock(&onyx->mutex);
+ 
+ 	ucontrol->value.integer.value[0] = l + VOLUME_RANGE_SHIFT;
+ 	ucontrol->value.integer.value[1] = r + VOLUME_RANGE_SHIFT;
+@@ -145,15 +144,13 @@ static int onyx_snd_vol_put(struct snd_k
+ 	    ucontrol->value.integer.value[1] > -1 + VOLUME_RANGE_SHIFT)
+ 		return -EINVAL;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 	onyx_read_register(onyx, ONYX_REG_DAC_ATTEN_LEFT, &l);
+ 	onyx_read_register(onyx, ONYX_REG_DAC_ATTEN_RIGHT, &r);
+ 
+ 	if (l + VOLUME_RANGE_SHIFT == ucontrol->value.integer.value[0] &&
+-	    r + VOLUME_RANGE_SHIFT == ucontrol->value.integer.value[1]) {
+-		mutex_unlock(&onyx->mutex);
++	    r + VOLUME_RANGE_SHIFT == ucontrol->value.integer.value[1])
+ 		return 0;
+-	}
+ 
+ 	onyx_write_register(onyx, ONYX_REG_DAC_ATTEN_LEFT,
+ 			    ucontrol->value.integer.value[0]
+@@ -161,7 +158,6 @@ static int onyx_snd_vol_put(struct snd_k
+ 	onyx_write_register(onyx, ONYX_REG_DAC_ATTEN_RIGHT,
+ 			    ucontrol->value.integer.value[1]
+ 			     - VOLUME_RANGE_SHIFT);
+-	mutex_unlock(&onyx->mutex);
+ 
+ 	return 1;
+ }
+@@ -197,9 +193,8 @@ static int onyx_snd_inputgain_get(struct
+ 	struct onyx *onyx = snd_kcontrol_chip(kcontrol);
+ 	u8 ig;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 	onyx_read_register(onyx, ONYX_REG_ADC_CONTROL, &ig);
+-	mutex_unlock(&onyx->mutex);
+ 
+ 	ucontrol->value.integer.value[0] =
+ 		(ig & ONYX_ADC_PGA_GAIN_MASK) + INPUTGAIN_RANGE_SHIFT;
+@@ -216,14 +211,13 @@ static int onyx_snd_inputgain_put(struct
+ 	if (ucontrol->value.integer.value[0] < 3 + INPUTGAIN_RANGE_SHIFT ||
+ 	    ucontrol->value.integer.value[0] > 28 + INPUTGAIN_RANGE_SHIFT)
+ 		return -EINVAL;
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 	onyx_read_register(onyx, ONYX_REG_ADC_CONTROL, &v);
+ 	n = v;
+ 	n &= ~ONYX_ADC_PGA_GAIN_MASK;
+ 	n |= (ucontrol->value.integer.value[0] - INPUTGAIN_RANGE_SHIFT)
+ 		& ONYX_ADC_PGA_GAIN_MASK;
+ 	onyx_write_register(onyx, ONYX_REG_ADC_CONTROL, n);
+-	mutex_unlock(&onyx->mutex);
+ 
+ 	return n != v;
+ }
+@@ -251,9 +245,8 @@ static int onyx_snd_capture_source_get(s
+ 	struct onyx *onyx = snd_kcontrol_chip(kcontrol);
+ 	s8 v;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 	onyx_read_register(onyx, ONYX_REG_ADC_CONTROL, &v);
+-	mutex_unlock(&onyx->mutex);
+ 
+ 	ucontrol->value.enumerated.item[0] = !!(v&ONYX_ADC_INPUT_MIC);
+ 
+@@ -264,13 +257,12 @@ static void onyx_set_capture_source(stru
  {
--	del_timer(&adapter->wakeup_timer);
-+	del_timer_sync(&adapter->wakeup_timer);
- 	del_timer_sync(&adapter->devdump_timer);
- 	mwifiex_cancel_all_pending_cmd(adapter);
- 	wake_up_interruptible(&adapter->cmd_wait_q.wait);
+ 	s8 v;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 	onyx_read_register(onyx, ONYX_REG_ADC_CONTROL, &v);
+ 	v &= ~ONYX_ADC_INPUT_MIC;
+ 	if (mic)
+ 		v |= ONYX_ADC_INPUT_MIC;
+ 	onyx_write_register(onyx, ONYX_REG_ADC_CONTROL, v);
+-	mutex_unlock(&onyx->mutex);
+ }
+ 
+ static int onyx_snd_capture_source_put(struct snd_kcontrol *kcontrol,
+@@ -311,9 +303,8 @@ static int onyx_snd_mute_get(struct snd_
+ 	struct onyx *onyx = snd_kcontrol_chip(kcontrol);
+ 	u8 c;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 	onyx_read_register(onyx, ONYX_REG_DAC_CONTROL, &c);
+-	mutex_unlock(&onyx->mutex);
+ 
+ 	ucontrol->value.integer.value[0] = !(c & ONYX_MUTE_LEFT);
+ 	ucontrol->value.integer.value[1] = !(c & ONYX_MUTE_RIGHT);
+@@ -328,9 +319,9 @@ static int onyx_snd_mute_put(struct snd_
+ 	u8 v = 0, c = 0;
+ 	int err = -EBUSY;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 	if (onyx->analog_locked)
+-		goto out_unlock;
++		return -EBUSY;
+ 
+ 	onyx_read_register(onyx, ONYX_REG_DAC_CONTROL, &v);
+ 	c = v;
+@@ -341,9 +332,6 @@ static int onyx_snd_mute_put(struct snd_
+ 		c |= ONYX_MUTE_RIGHT;
+ 	err = onyx_write_register(onyx, ONYX_REG_DAC_CONTROL, c);
+ 
+- out_unlock:
+-	mutex_unlock(&onyx->mutex);
+-
+ 	return !err ? (v != c) : err;
+ }
+ 
+@@ -372,9 +360,8 @@ static int onyx_snd_single_bit_get(struc
+ 	u8 address = (pv >> 8) & 0xff;
+ 	u8 mask = pv & 0xff;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 	onyx_read_register(onyx, address, &c);
+-	mutex_unlock(&onyx->mutex);
+ 
+ 	ucontrol->value.integer.value[0] = !!(c & mask) ^ polarity;
+ 
+@@ -393,11 +380,10 @@ static int onyx_snd_single_bit_put(struc
+ 	u8 address = (pv >> 8) & 0xff;
+ 	u8 mask = pv & 0xff;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 	if (spdiflock && onyx->spdif_locked) {
+ 		/* even if alsamixer doesn't care.. */
+-		err = -EBUSY;
+-		goto out_unlock;
++		return -EBUSY;
+ 	}
+ 	onyx_read_register(onyx, address, &v);
+ 	c = v;
+@@ -406,9 +392,6 @@ static int onyx_snd_single_bit_put(struc
+ 		c |= mask;
+ 	err = onyx_write_register(onyx, address, c);
+ 
+- out_unlock:
+-	mutex_unlock(&onyx->mutex);
+-
+ 	return !err ? (v != c) : err;
+ }
+ 
+@@ -489,7 +472,7 @@ static int onyx_spdif_get(struct snd_kco
+ 	struct onyx *onyx = snd_kcontrol_chip(kcontrol);
+ 	u8 v;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 	onyx_read_register(onyx, ONYX_REG_DIG_INFO1, &v);
+ 	ucontrol->value.iec958.status[0] = v & 0x3e;
+ 
+@@ -501,7 +484,6 @@ static int onyx_spdif_get(struct snd_kco
+ 
+ 	onyx_read_register(onyx, ONYX_REG_DIG_INFO4, &v);
+ 	ucontrol->value.iec958.status[4] = v & 0x0f;
+-	mutex_unlock(&onyx->mutex);
+ 
+ 	return 0;
+ }
+@@ -512,7 +494,7 @@ static int onyx_spdif_put(struct snd_kco
+ 	struct onyx *onyx = snd_kcontrol_chip(kcontrol);
+ 	u8 v;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 	onyx_read_register(onyx, ONYX_REG_DIG_INFO1, &v);
+ 	v = (v & ~0x3e) | (ucontrol->value.iec958.status[0] & 0x3e);
+ 	onyx_write_register(onyx, ONYX_REG_DIG_INFO1, v);
+@@ -527,7 +509,6 @@ static int onyx_spdif_put(struct snd_kco
+ 	onyx_read_register(onyx, ONYX_REG_DIG_INFO4, &v);
+ 	v = (v & ~0x0f) | (ucontrol->value.iec958.status[4] & 0x0f);
+ 	onyx_write_register(onyx, ONYX_REG_DIG_INFO4, v);
+-	mutex_unlock(&onyx->mutex);
+ 
+ 	return 1;
+ }
+@@ -672,14 +653,13 @@ static int onyx_usable(struct codec_info
+ 	struct onyx *onyx = cii->codec_data;
+ 	int spdif_enabled, analog_enabled;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 	onyx_read_register(onyx, ONYX_REG_DIG_INFO4, &v);
+ 	spdif_enabled = !!(v & ONYX_SPDIF_ENABLE);
+ 	onyx_read_register(onyx, ONYX_REG_DAC_CONTROL, &v);
+ 	analog_enabled =
+ 		(v & (ONYX_MUTE_RIGHT|ONYX_MUTE_LEFT))
+ 		 != (ONYX_MUTE_RIGHT|ONYX_MUTE_LEFT);
+-	mutex_unlock(&onyx->mutex);
+ 
+ 	switch (ti->tag) {
+ 	case 0: return 1;
+@@ -695,9 +675,8 @@ static int onyx_prepare(struct codec_inf
+ {
+ 	u8 v;
+ 	struct onyx *onyx = cii->codec_data;
+-	int err = -EBUSY;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 
+ #ifdef SNDRV_PCM_FMTBIT_COMPRESSED_16BE
+ 	if (substream->runtime->format == SNDRV_PCM_FMTBIT_COMPRESSED_16BE) {
+@@ -706,10 +685,9 @@ static int onyx_prepare(struct codec_inf
+ 		if (onyx_write_register(onyx,
+ 					ONYX_REG_DAC_CONTROL,
+ 					v | ONYX_MUTE_RIGHT | ONYX_MUTE_LEFT))
+-			goto out_unlock;
++			return -EBUSY;
+ 		onyx->analog_locked = 1;
+-		err = 0;
+-		goto out_unlock;
++		return 0;
+ 	}
+ #endif
+ 	switch (substream->runtime->rate) {
+@@ -719,8 +697,7 @@ static int onyx_prepare(struct codec_inf
+ 		/* these rates are ok for all outputs */
+ 		/* FIXME: program spdif channel control bits here so that
+ 		 *	  userspace doesn't have to if it only plays pcm! */
+-		err = 0;
+-		goto out_unlock;
++		return 0;
+ 	default:
+ 		/* got some rate that the digital output can't do,
+ 		 * so disable and lock it */
+@@ -728,16 +705,12 @@ static int onyx_prepare(struct codec_inf
+ 		if (onyx_write_register(onyx,
+ 					ONYX_REG_DIG_INFO4,
+ 					v & ~ONYX_SPDIF_ENABLE))
+-			goto out_unlock;
++			return -EBUSY;
+ 		onyx->spdif_locked = 1;
+-		err = 0;
+-		goto out_unlock;
++		return 0;
+ 	}
+ 
+- out_unlock:
+-	mutex_unlock(&onyx->mutex);
+-
+-	return err;
++	return -EBUSY;
+ }
+ 
+ static int onyx_open(struct codec_info_item *cii,
+@@ -745,9 +718,8 @@ static int onyx_open(struct codec_info_i
+ {
+ 	struct onyx *onyx = cii->codec_data;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 	onyx->open_count++;
+-	mutex_unlock(&onyx->mutex);
+ 
+ 	return 0;
+ }
+@@ -757,11 +729,10 @@ static int onyx_close(struct codec_info_
+ {
+ 	struct onyx *onyx = cii->codec_data;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 	onyx->open_count--;
+ 	if (!onyx->open_count)
+ 		onyx->spdif_locked = onyx->analog_locked = 0;
+-	mutex_unlock(&onyx->mutex);
+ 
+ 	return 0;
+ }
+@@ -771,7 +742,7 @@ static int onyx_switch_clock(struct code
+ {
+ 	struct onyx *onyx = cii->codec_data;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 	/* this *MUST* be more elaborate later... */
+ 	switch (what) {
+ 	case CLOCK_SWITCH_PREPARE_SLAVE:
+@@ -783,7 +754,6 @@ static int onyx_switch_clock(struct code
+ 	default: /* silence warning */
+ 		break;
+ 	}
+-	mutex_unlock(&onyx->mutex);
+ 
+ 	return 0;
+ }
+@@ -794,27 +764,21 @@ static int onyx_suspend(struct codec_inf
+ {
+ 	struct onyx *onyx = cii->codec_data;
+ 	u8 v;
+-	int err = -ENXIO;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 	if (onyx_read_register(onyx, ONYX_REG_CONTROL, &v))
+-		goto out_unlock;
++		return -ENXIO;
+ 	onyx_write_register(onyx, ONYX_REG_CONTROL, v | ONYX_ADPSV | ONYX_DAPSV);
+ 	/* Apple does a sleep here but the datasheet says to do it on resume */
+-	err = 0;
+- out_unlock:
+-	mutex_unlock(&onyx->mutex);
+-
+-	return err;
++	return 0;
+ }
+ 
+ static int onyx_resume(struct codec_info_item *cii)
+ {
+ 	struct onyx *onyx = cii->codec_data;
+ 	u8 v;
+-	int err = -ENXIO;
+ 
+-	mutex_lock(&onyx->mutex);
++	guard(mutex)(&onyx->mutex);
+ 
+ 	/* reset codec */
+ 	onyx->codec.gpio->methods->set_hw_reset(onyx->codec.gpio, 0);
+@@ -826,17 +790,13 @@ static int onyx_resume(struct codec_info
+ 
+ 	/* take codec out of suspend (if it still is after reset) */
+ 	if (onyx_read_register(onyx, ONYX_REG_CONTROL, &v))
+-		goto out_unlock;
++		return -ENXIO;
+ 	onyx_write_register(onyx, ONYX_REG_CONTROL, v & ~(ONYX_ADPSV | ONYX_DAPSV));
+ 	/* FIXME: should divide by sample rate, but 8k is the lowest we go */
+ 	msleep(2205000/8000);
+ 	/* reset all values */
+ 	onyx_register_init(onyx);
+-	err = 0;
+- out_unlock:
+-	mutex_unlock(&onyx->mutex);
+-
+-	return err;
++	return 0;
+ }
+ 
+ #endif /* CONFIG_PM */
+--- a/sound/aoa/codecs/tas.c
++++ b/sound/aoa/codecs/tas.c
+@@ -235,10 +235,9 @@ static int tas_snd_vol_get(struct snd_kc
+ {
+ 	struct tas *tas = snd_kcontrol_chip(kcontrol);
+ 
+-	mutex_lock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
+ 	ucontrol->value.integer.value[0] = tas->cached_volume_l;
+ 	ucontrol->value.integer.value[1] = tas->cached_volume_r;
+-	mutex_unlock(&tas->mtx);
+ 	return 0;
+ }
+ 
+@@ -254,18 +253,15 @@ static int tas_snd_vol_put(struct snd_kc
+ 	    ucontrol->value.integer.value[1] > 177)
+ 		return -EINVAL;
+ 
+-	mutex_lock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
+ 	if (tas->cached_volume_l == ucontrol->value.integer.value[0]
+-	 && tas->cached_volume_r == ucontrol->value.integer.value[1]) {
+-		mutex_unlock(&tas->mtx);
++	 && tas->cached_volume_r == ucontrol->value.integer.value[1])
+ 		return 0;
+-	}
+ 
+ 	tas->cached_volume_l = ucontrol->value.integer.value[0];
+ 	tas->cached_volume_r = ucontrol->value.integer.value[1];
+ 	if (tas->hw_enabled)
+ 		tas_set_volume(tas);
+-	mutex_unlock(&tas->mtx);
+ 	return 1;
+ }
+ 
+@@ -285,10 +281,9 @@ static int tas_snd_mute_get(struct snd_k
+ {
+ 	struct tas *tas = snd_kcontrol_chip(kcontrol);
+ 
+-	mutex_lock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
+ 	ucontrol->value.integer.value[0] = !tas->mute_l;
+ 	ucontrol->value.integer.value[1] = !tas->mute_r;
+-	mutex_unlock(&tas->mtx);
+ 	return 0;
+ }
+ 
+@@ -297,18 +292,15 @@ static int tas_snd_mute_put(struct snd_k
+ {
+ 	struct tas *tas = snd_kcontrol_chip(kcontrol);
+ 
+-	mutex_lock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
+ 	if (tas->mute_l == !ucontrol->value.integer.value[0]
+-	 && tas->mute_r == !ucontrol->value.integer.value[1]) {
+-		mutex_unlock(&tas->mtx);
++	 && tas->mute_r == !ucontrol->value.integer.value[1])
+ 		return 0;
+-	}
+ 
+ 	tas->mute_l = !ucontrol->value.integer.value[0];
+ 	tas->mute_r = !ucontrol->value.integer.value[1];
+ 	if (tas->hw_enabled)
+ 		tas_set_volume(tas);
+-	mutex_unlock(&tas->mtx);
+ 	return 1;
+ }
+ 
+@@ -337,10 +329,9 @@ static int tas_snd_mixer_get(struct snd_
+ 	struct tas *tas = snd_kcontrol_chip(kcontrol);
+ 	int idx = kcontrol->private_value;
+ 
+-	mutex_lock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
+ 	ucontrol->value.integer.value[0] = tas->mixer_l[idx];
+ 	ucontrol->value.integer.value[1] = tas->mixer_r[idx];
+-	mutex_unlock(&tas->mtx);
+ 
+ 	return 0;
+ }
+@@ -351,19 +342,16 @@ static int tas_snd_mixer_put(struct snd_
+ 	struct tas *tas = snd_kcontrol_chip(kcontrol);
+ 	int idx = kcontrol->private_value;
+ 
+-	mutex_lock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
+ 	if (tas->mixer_l[idx] == ucontrol->value.integer.value[0]
+-	 && tas->mixer_r[idx] == ucontrol->value.integer.value[1]) {
+-		mutex_unlock(&tas->mtx);
++	 && tas->mixer_r[idx] == ucontrol->value.integer.value[1])
+ 		return 0;
+-	}
+ 
+ 	tas->mixer_l[idx] = ucontrol->value.integer.value[0];
+ 	tas->mixer_r[idx] = ucontrol->value.integer.value[1];
+ 
+ 	if (tas->hw_enabled)
+ 		tas_set_mixer(tas);
+-	mutex_unlock(&tas->mtx);
+ 	return 1;
+ }
+ 
+@@ -396,9 +384,8 @@ static int tas_snd_drc_range_get(struct
+ {
+ 	struct tas *tas = snd_kcontrol_chip(kcontrol);
+ 
+-	mutex_lock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
+ 	ucontrol->value.integer.value[0] = tas->drc_range;
+-	mutex_unlock(&tas->mtx);
+ 	return 0;
+ }
+ 
+@@ -411,16 +398,13 @@ static int tas_snd_drc_range_put(struct
+ 	    ucontrol->value.integer.value[0] > TAS3004_DRC_MAX)
+ 		return -EINVAL;
+ 
+-	mutex_lock(&tas->mtx);
+-	if (tas->drc_range == ucontrol->value.integer.value[0]) {
+-		mutex_unlock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
++	if (tas->drc_range == ucontrol->value.integer.value[0])
+ 		return 0;
+-	}
+ 
+ 	tas->drc_range = ucontrol->value.integer.value[0];
+ 	if (tas->hw_enabled)
+ 		tas3004_set_drc(tas);
+-	mutex_unlock(&tas->mtx);
+ 	return 1;
+ }
+ 
+@@ -440,9 +424,8 @@ static int tas_snd_drc_switch_get(struct
+ {
+ 	struct tas *tas = snd_kcontrol_chip(kcontrol);
+ 
+-	mutex_lock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
+ 	ucontrol->value.integer.value[0] = tas->drc_enabled;
+-	mutex_unlock(&tas->mtx);
+ 	return 0;
+ }
+ 
+@@ -451,16 +434,13 @@ static int tas_snd_drc_switch_put(struct
+ {
+ 	struct tas *tas = snd_kcontrol_chip(kcontrol);
+ 
+-	mutex_lock(&tas->mtx);
+-	if (tas->drc_enabled == ucontrol->value.integer.value[0]) {
+-		mutex_unlock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
++	if (tas->drc_enabled == ucontrol->value.integer.value[0])
+ 		return 0;
+-	}
+ 
+ 	tas->drc_enabled = !!ucontrol->value.integer.value[0];
+ 	if (tas->hw_enabled)
+ 		tas3004_set_drc(tas);
+-	mutex_unlock(&tas->mtx);
+ 	return 1;
+ }
+ 
+@@ -486,9 +466,8 @@ static int tas_snd_capture_source_get(st
+ {
+ 	struct tas *tas = snd_kcontrol_chip(kcontrol);
+ 
+-	mutex_lock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
+ 	ucontrol->value.enumerated.item[0] = !!(tas->acr & TAS_ACR_INPUT_B);
+-	mutex_unlock(&tas->mtx);
+ 	return 0;
+ }
+ 
+@@ -500,7 +479,7 @@ static int tas_snd_capture_source_put(st
+ 
+ 	if (ucontrol->value.enumerated.item[0] > 1)
+ 		return -EINVAL;
+-	mutex_lock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
+ 	oldacr = tas->acr;
+ 
+ 	/*
+@@ -512,13 +491,10 @@ static int tas_snd_capture_source_put(st
+ 	if (ucontrol->value.enumerated.item[0])
+ 		tas->acr |= TAS_ACR_INPUT_B | TAS_ACR_B_MONAUREAL |
+ 		      TAS_ACR_B_MON_SEL_RIGHT;
+-	if (oldacr == tas->acr) {
+-		mutex_unlock(&tas->mtx);
++	if (oldacr == tas->acr)
+ 		return 0;
+-	}
+ 	if (tas->hw_enabled)
+ 		tas_write_reg(tas, TAS_REG_ACR, 1, &tas->acr);
+-	mutex_unlock(&tas->mtx);
+ 	return 1;
+ }
+ 
+@@ -557,9 +533,8 @@ static int tas_snd_treble_get(struct snd
+ {
+ 	struct tas *tas = snd_kcontrol_chip(kcontrol);
+ 
+-	mutex_lock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
+ 	ucontrol->value.integer.value[0] = tas->treble;
+-	mutex_unlock(&tas->mtx);
+ 	return 0;
+ }
+ 
+@@ -571,16 +546,13 @@ static int tas_snd_treble_put(struct snd
+ 	if (ucontrol->value.integer.value[0] < TAS3004_TREBLE_MIN ||
+ 	    ucontrol->value.integer.value[0] > TAS3004_TREBLE_MAX)
+ 		return -EINVAL;
+-	mutex_lock(&tas->mtx);
+-	if (tas->treble == ucontrol->value.integer.value[0]) {
+-		mutex_unlock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
++	if (tas->treble == ucontrol->value.integer.value[0])
+ 		return 0;
+-	}
+ 
+ 	tas->treble = ucontrol->value.integer.value[0];
+ 	if (tas->hw_enabled)
+ 		tas_set_treble(tas);
+-	mutex_unlock(&tas->mtx);
+ 	return 1;
+ }
+ 
+@@ -608,9 +580,8 @@ static int tas_snd_bass_get(struct snd_k
+ {
+ 	struct tas *tas = snd_kcontrol_chip(kcontrol);
+ 
+-	mutex_lock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
+ 	ucontrol->value.integer.value[0] = tas->bass;
+-	mutex_unlock(&tas->mtx);
+ 	return 0;
+ }
+ 
+@@ -622,16 +593,13 @@ static int tas_snd_bass_put(struct snd_k
+ 	if (ucontrol->value.integer.value[0] < TAS3004_BASS_MIN ||
+ 	    ucontrol->value.integer.value[0] > TAS3004_BASS_MAX)
+ 		return -EINVAL;
+-	mutex_lock(&tas->mtx);
+-	if (tas->bass == ucontrol->value.integer.value[0]) {
+-		mutex_unlock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
++	if (tas->bass == ucontrol->value.integer.value[0])
+ 		return 0;
+-	}
+ 
+ 	tas->bass = ucontrol->value.integer.value[0];
+ 	if (tas->hw_enabled)
+ 		tas_set_bass(tas);
+-	mutex_unlock(&tas->mtx);
+ 	return 1;
+ }
+ 
+@@ -722,13 +690,13 @@ static int tas_switch_clock(struct codec
+ 		break;
+ 	case CLOCK_SWITCH_SLAVE:
+ 		/* Clocks are back, re-init the codec */
+-		mutex_lock(&tas->mtx);
+-		tas_reset_init(tas);
+-		tas_set_volume(tas);
+-		tas_set_mixer(tas);
+-		tas->hw_enabled = 1;
+-		tas->codec.gpio->methods->all_amps_restore(tas->codec.gpio);
+-		mutex_unlock(&tas->mtx);
++		scoped_guard(mutex, &tas->mtx) {
++			tas_reset_init(tas);
++			tas_set_volume(tas);
++			tas_set_mixer(tas);
++			tas->hw_enabled = 1;
++			tas->codec.gpio->methods->all_amps_restore(tas->codec.gpio);
++		}
+ 		break;
+ 	default:
+ 		/* doesn't happen as of now */
+@@ -743,23 +711,21 @@ static int tas_switch_clock(struct codec
+  * our i2c device is suspended, and then take note of that! */
+ static int tas_suspend(struct tas *tas)
+ {
+-	mutex_lock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
+ 	tas->hw_enabled = 0;
+ 	tas->acr |= TAS_ACR_ANALOG_PDOWN;
+ 	tas_write_reg(tas, TAS_REG_ACR, 1, &tas->acr);
+-	mutex_unlock(&tas->mtx);
+ 	return 0;
+ }
+ 
+ static int tas_resume(struct tas *tas)
+ {
+ 	/* reset codec */
+-	mutex_lock(&tas->mtx);
++	guard(mutex)(&tas->mtx);
+ 	tas_reset_init(tas);
+ 	tas_set_volume(tas);
+ 	tas_set_mixer(tas);
+ 	tas->hw_enabled = 1;
+-	mutex_unlock(&tas->mtx);
+ 	return 0;
+ }
+ 
+@@ -802,14 +768,13 @@ static int tas_init_codec(struct aoa_cod
+ 		return -EINVAL;
+ 	}
+ 
+-	mutex_lock(&tas->mtx);
+-	if (tas_reset_init(tas)) {
+-		printk(KERN_ERR PFX "tas failed to initialise\n");
+-		mutex_unlock(&tas->mtx);
+-		return -ENXIO;
++	scoped_guard(mutex, &tas->mtx) {
++		if (tas_reset_init(tas)) {
++			printk(KERN_ERR PFX "tas failed to initialise\n");
++			return -ENXIO;
++		}
++		tas->hw_enabled = 1;
+ 	}
+-	tas->hw_enabled = 1;
+-	mutex_unlock(&tas->mtx);
+ 
+ 	if (tas->codec.soundbus_dev->attach_codec(tas->codec.soundbus_dev,
+ 						   aoa_get_card(),
+--- a/sound/aoa/core/gpio-feature.c
++++ b/sound/aoa/core/gpio-feature.c
+@@ -212,10 +212,9 @@ static void ftr_handle_notify(struct wor
+ 	struct gpio_notification *notif =
+ 		container_of(work, struct gpio_notification, work.work);
+ 
+-	mutex_lock(&notif->mutex);
++	guard(mutex)(&notif->mutex);
+ 	if (notif->notify)
+ 		notif->notify(notif->data);
+-	mutex_unlock(&notif->mutex);
+ }
+ 
+ static void gpio_enable_dual_edge(int gpio)
+@@ -341,19 +340,17 @@ static int ftr_set_notify(struct gpio_ru
+ 	if (!irq)
+ 		return -ENODEV;
+ 
+-	mutex_lock(&notif->mutex);
++	guard(mutex)(&notif->mutex);
+ 
+ 	old = notif->notify;
+ 
+-	if (!old && !notify) {
+-		err = 0;
+-		goto out_unlock;
+-	}
++	if (!old && !notify)
++		return 0;
+ 
+ 	if (old && notify) {
+ 		if (old == notify && notif->data == data)
+ 			err = 0;
+-		goto out_unlock;
++		return err;
+ 	}
+ 
+ 	if (old && !notify)
+@@ -362,16 +359,13 @@ static int ftr_set_notify(struct gpio_ru
+ 	if (!old && notify) {
+ 		err = request_irq(irq, ftr_handle_notify_irq, 0, name, notif);
+ 		if (err)
+-			goto out_unlock;
++			return err;
+ 	}
+ 
+ 	notif->notify = notify;
+ 	notif->data = data;
+ 
+-	err = 0;
+- out_unlock:
+-	mutex_unlock(&notif->mutex);
+-	return err;
++	return 0;
+ }
+ 
+ static int ftr_get_detect(struct gpio_runtime *rt,
+--- a/sound/aoa/core/gpio-pmf.c
++++ b/sound/aoa/core/gpio-pmf.c
+@@ -74,10 +74,9 @@ static void pmf_handle_notify(struct wor
+ 	struct gpio_notification *notif =
+ 		container_of(work, struct gpio_notification, work.work);
+ 
+-	mutex_lock(&notif->mutex);
++	guard(mutex)(&notif->mutex);
+ 	if (notif->notify)
+ 		notif->notify(notif->data);
+-	mutex_unlock(&notif->mutex);
+ }
+ 
+ static void pmf_gpio_init(struct gpio_runtime *rt)
+@@ -154,19 +153,17 @@ static int pmf_set_notify(struct gpio_ru
+ 		return -EINVAL;
+ 	}
+ 
+-	mutex_lock(&notif->mutex);
++	guard(mutex)(&notif->mutex);
+ 
+ 	old = notif->notify;
+ 
+-	if (!old && !notify) {
+-		err = 0;
+-		goto out_unlock;
+-	}
++	if (!old && !notify)
++		return 0;
+ 
+ 	if (old && notify) {
+ 		if (old == notify && notif->data == data)
+ 			err = 0;
+-		goto out_unlock;
++		return err;
+ 	}
+ 
+ 	if (old && !notify) {
+@@ -178,10 +175,8 @@ static int pmf_set_notify(struct gpio_ru
+ 	if (!old && notify) {
+ 		irq_client = kzalloc(sizeof(struct pmf_irq_client),
+ 				     GFP_KERNEL);
+-		if (!irq_client) {
+-			err = -ENOMEM;
+-			goto out_unlock;
+-		}
++		if (!irq_client)
++			return -ENOMEM;
+ 		irq_client->data = notif;
+ 		irq_client->handler = pmf_handle_notify_irq;
+ 		irq_client->owner = THIS_MODULE;
+@@ -192,17 +187,14 @@ static int pmf_set_notify(struct gpio_ru
+ 			printk(KERN_ERR "snd-aoa: gpio layer failed to"
+ 					" register %s irq (%d)\n", name, err);
+ 			kfree(irq_client);
+-			goto out_unlock;
++			return err;
+ 		}
+ 		notif->gpio_private = irq_client;
+ 	}
+ 	notif->notify = notify;
+ 	notif->data = data;
+ 
+-	err = 0;
+- out_unlock:
+-	mutex_unlock(&notif->mutex);
+-	return err;
++	return 0;
+ }
+ 
+ static int pmf_get_detect(struct gpio_runtime *rt,
+--- a/sound/aoa/soundbus/i2sbus/pcm.c
++++ b/sound/aoa/soundbus/i2sbus/pcm.c
+@@ -79,11 +79,10 @@ static int i2sbus_pcm_open(struct i2sbus
+ 	u64 formats = 0;
+ 	unsigned int rates = 0;
+ 	struct transfer_info v;
+-	int result = 0;
+ 	int bus_factor = 0, sysclock_factor = 0;
+ 	int found_this;
+ 
+-	mutex_lock(&i2sdev->lock);
++	guard(mutex)(&i2sdev->lock);
+ 
+ 	get_pcm_info(i2sdev, in, &pi, &other);
+ 
+@@ -92,8 +91,7 @@ static int i2sbus_pcm_open(struct i2sbus
+ 
+ 	if (pi->active) {
+ 		/* alsa messed up */
+-		result = -EBUSY;
+-		goto out_unlock;
++		return -EBUSY;
+ 	}
+ 
+ 	/* we now need to assign the hw */
+@@ -117,10 +115,8 @@ static int i2sbus_pcm_open(struct i2sbus
+ 			ti++;
+ 		}
+ 	}
+-	if (!masks_inited || !bus_factor || !sysclock_factor) {
+-		result = -ENODEV;
+-		goto out_unlock;
+-	}
++	if (!masks_inited || !bus_factor || !sysclock_factor)
++		return -ENODEV;
+ 	/* bus dependent stuff */
+ 	hw->info = SNDRV_PCM_INFO_MMAP | SNDRV_PCM_INFO_MMAP_VALID |
+ 		   SNDRV_PCM_INFO_INTERLEAVED | SNDRV_PCM_INFO_RESUME |
+@@ -194,15 +190,12 @@ static int i2sbus_pcm_open(struct i2sbus
+ 	hw->periods_max = MAX_DBDMA_COMMANDS;
+ 	err = snd_pcm_hw_constraint_integer(pi->substream->runtime,
+ 					    SNDRV_PCM_HW_PARAM_PERIODS);
+-	if (err < 0) {
+-		result = err;
+-		goto out_unlock;
+-	}
++	if (err < 0)
++		return err;
+ 	list_for_each_entry(cii, &sdev->codec_list, list) {
+ 		if (cii->codec->open) {
+ 			err = cii->codec->open(cii, pi->substream);
+ 			if (err) {
+-				result = err;
+ 				/* unwind */
+ 				found_this = 0;
+ 				list_for_each_entry_reverse(rev,
+@@ -214,14 +207,12 @@ static int i2sbus_pcm_open(struct i2sbus
+ 					if (rev == cii)
+ 						found_this = 1;
+ 				}
+-				goto out_unlock;
++				return err;
+ 			}
+ 		}
+ 	}
+ 
+- out_unlock:
+-	mutex_unlock(&i2sdev->lock);
+-	return result;
++	return 0;
+ }
+ 
+ #undef CHECK_RATE
+@@ -232,7 +223,7 @@ static int i2sbus_pcm_close(struct i2sbu
+ 	struct pcm_info *pi;
+ 	int err = 0, tmp;
+ 
+-	mutex_lock(&i2sdev->lock);
++	guard(mutex)(&i2sdev->lock);
+ 
+ 	get_pcm_info(i2sdev, in, &pi, NULL);
+ 
+@@ -246,7 +237,6 @@ static int i2sbus_pcm_close(struct i2sbu
+ 
+ 	pi->substream = NULL;
+ 	pi->active = 0;
+-	mutex_unlock(&i2sdev->lock);
+ 	return err;
+ }
+ 
+@@ -330,33 +320,26 @@ static int i2sbus_pcm_prepare(struct i2s
+ 	int input_16bit;
+ 	struct pcm_info *pi, *other;
+ 	int cnt;
+-	int result = 0;
+ 	unsigned int cmd, stopaddr;
+ 
+-	mutex_lock(&i2sdev->lock);
++	guard(mutex)(&i2sdev->lock);
+ 
+ 	get_pcm_info(i2sdev, in, &pi, &other);
+ 
+-	if (pi->dbdma_ring.running) {
+-		result = -EBUSY;
+-		goto out_unlock;
+-	}
++	if (pi->dbdma_ring.running)
++		return -EBUSY;
+ 	if (pi->dbdma_ring.stopping)
+ 		i2sbus_wait_for_stop(i2sdev, pi);
+ 
+-	if (!pi->substream || !pi->substream->runtime) {
+-		result = -EINVAL;
+-		goto out_unlock;
+-	}
++	if (!pi->substream || !pi->substream->runtime)
++		return -EINVAL;
+ 
+ 	runtime = pi->substream->runtime;
+ 	pi->active = 1;
+ 	if (other->active &&
+ 	    ((i2sdev->format != runtime->format)
+-	     || (i2sdev->rate != runtime->rate))) {
+-		result = -EINVAL;
+-		goto out_unlock;
+-	}
++	     || (i2sdev->rate != runtime->rate)))
++		return -EINVAL;
+ 
+ 	i2sdev->format = runtime->format;
+ 	i2sdev->rate = runtime->rate;
+@@ -412,10 +395,8 @@ static int i2sbus_pcm_prepare(struct i2s
+ 			bi.bus_factor = cii->codec->bus_factor;
+ 			break;
+ 		}
+-		if (!bi.bus_factor) {
+-			result = -ENODEV;
+-			goto out_unlock;
+-		}
++		if (!bi.bus_factor)
++			return -ENODEV;
+ 		input_16bit = 1;
+ 		break;
+ 	case SNDRV_PCM_FORMAT_S32_BE:
+@@ -426,8 +407,7 @@ static int i2sbus_pcm_prepare(struct i2s
+ 		input_16bit = 0;
+ 		break;
+ 	default:
+-		result = -EINVAL;
+-		goto out_unlock;
++		return -EINVAL;
+ 	}
+ 	/* we assume all sysclocks are the same! */
+ 	list_for_each_entry(cii, &i2sdev->sound.codec_list, list) {
+@@ -438,10 +418,8 @@ static int i2sbus_pcm_prepare(struct i2s
+ 	if (clock_and_divisors(bi.sysclock_factor,
+ 			       bi.bus_factor,
+ 			       runtime->rate,
+-			       &sfr) < 0) {
+-		result = -EINVAL;
+-		goto out_unlock;
+-	}
++			       &sfr) < 0)
++		return -EINVAL;
+ 	switch (bi.bus_factor) {
+ 	case 32:
+ 		sfr |= I2S_SF_SERIAL_FORMAT_I2S_32X;
+@@ -457,10 +435,8 @@ static int i2sbus_pcm_prepare(struct i2s
+ 		int err = 0;
+ 		if (cii->codec->prepare)
+ 			err = cii->codec->prepare(cii, &bi, pi->substream);
+-		if (err) {
+-			result = err;
+-			goto out_unlock;
+-		}
++		if (err)
++			return err;
+ 	}
+ 	/* codecs are fine with it, so set our clocks */
+ 	if (input_16bit)
+@@ -476,7 +452,7 @@ static int i2sbus_pcm_prepare(struct i2s
+ 	/* not locking these is fine since we touch them only in this function */
+ 	if (in_le32(&i2sdev->intfregs->serial_format) == sfr
+ 	 && in_le32(&i2sdev->intfregs->data_word_sizes) == dws)
+-		goto out_unlock;
++		return 0;
+ 
+ 	/* let's notify the codecs about clocks going away.
+ 	 * For now we only do mastering on the i2s cell... */
+@@ -514,9 +490,7 @@ static int i2sbus_pcm_prepare(struct i2s
+ 		if (cii->codec->switch_clock)
+ 			cii->codec->switch_clock(cii, CLOCK_SWITCH_SLAVE);
+ 
+- out_unlock:
+-	mutex_unlock(&i2sdev->lock);
+-	return result;
++	return 0;
+ }
+ 
+ #ifdef CONFIG_PM
 
 
