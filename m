@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6950734FF79;
-	Tue, 16 Jun 2026 18:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A4638C437;
+	Tue, 16 Jun 2026 18:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634624; cv=none; b=eO7Dv0lglarFKXJhVAhe9r94D2QS6YK1VCysO+qZrlVwDXLUPwlGxmt5B78wH9yRAto3MI2nwjKbXfOxSbcz275t0mF93C37Uhy+Xwet/C/6s3pX8ZiYIz7l9atSn1HpCAYiqRyYju0Fn3pDDdYHgrGfN7j7s2xqM8Czd06k2/Q=
+	t=1781634630; cv=none; b=W88QWD8uFDsp/vGs8yWoi5twUr3MOCKgiAW8TWA3T8NysFUK+FK5DHq9gqSiSfhW8PC5BBTv/dA0lNccaTOPfRHCg+809UFmJTxxUciwgCOaXT8O5VSGl4qouU6wylqvgM9lLbmCh/WzCym0GoqF+Onnrs/jlQFvVld5G8+upE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634624; c=relaxed/simple;
-	bh=Pl3nll2BmjiYkI9mxxDw2co+UoynoUxnBlY/6REjX1k=;
+	s=arc-20240116; t=1781634630; c=relaxed/simple;
+	bh=odqXIaSL8bNKcEc3VXBmfG+QZBi9hmykJXnIfXCC2p0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RD8T9MqwRkePMjmepfwdfqDKPojjvFStRTZAu1uX9exG7lgq49Ib5Y33nRDltsyj0nGc7QryirkilRuRMJdHpyg36PhEATn5nXbAt1KjoSUuD6e08LK8ZwYwXW5DNuUI9I6KrZvzHnbHrhSb8tppwKWp4vjlCK3FZvH5ypTyIko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ao41mKa2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lsdOOnNGHJnm1cKZkwtbmbX4/rTfyN9jif9hzNFc7nRgE7WEGgOOF48ur3EW8OlHQofXnUwQBPXWFE6eFCvHjGHoY9LFItqRsw4ev0H/x+7LOTn3BeASDNX0t8OEjytSqlQmKMAAan++9/yKQm02maIq9YMw4bWGr9W3fGxkrpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cf+DvQLm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ao41mKa2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BFC61F000E9;
-	Tue, 16 Jun 2026 18:30:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cf+DvQLm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02DEA1F000E9;
+	Tue, 16 Jun 2026 18:30:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634623;
-	bh=zF1D6WJsr5i0nk37hs5+3W/LPb6ONbGZy399Ci4OY+0=;
+	s=korg; t=1781634628;
+	bh=/5/4OQwFJvHJExDoRk1xnKvFjCgw5q4mlt5dajkCVmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ao41mKa2z7EYWUhhbCEKbyvLa++fxzjlDCqeD2lEAJqg9tBKT7mxn3Za8tEyMZSSy
-	 w+A9t6q+4En0+3oRluMAbwxczqOn3lqs/0F+Eptze0Hcuo17gOx0Ije7SPUTMC0AwY
-	 /3gSwG4C2shzxPIK+1LxyxByOnnBikJzBDP2Q2Mk=
+	b=Cf+DvQLm7b9k5SnHXKIXNOxErSvkbO9ifD8eZKB3ij7mq9EvyWY2os6MpjY83tZ7t
+	 N1sKMjVfp7I58lc2ctxPr/p/3uSvf4F9S5C3VhEU21VTMI0DEJ+sfr1d4/HddXxjV8
+	 4du4FyXK8Iak0qw45146DodoUeuEz9J0fwJLcuak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	David Carlier <devnexen@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 293/411] erofs: fix unsigned underflow in z_erofs_lz4_handle_overlap()
-Date: Tue, 16 Jun 2026 20:28:51 +0530
-Message-ID: <20260616145116.726572985@linuxfoundation.org>
+Subject: [PATCH 5.15 302/411] tracepoint: balance regfunc() on func_add() failure in tracepoint_add_func()
+Date: Tue, 16 Jun 2026 20:29:00 +0530
+Message-ID: <20260616145117.191196213@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,55 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit 21e161de2dc660b1bb70ef5b156ab8e6e1cca3ab ]
+[ Upstream commit fad217e16fded7f3c09f8637b0f6a224d58b5f2e ]
 
-Some crafted images can have illegal (!partial_decoding &&
-m_llen < m_plen) extents, and the LZ4 inplace decompression path
-can be wrongly hit, but it cannot handle (outpages < inpages)
-properly: "outpages - inpages" wraps to a large value and
-the subsequent rq->out[] access reads past the decompressed_pages
-array.
+When a tracepoint goes through the 0 -> 1 transition, tracepoint_add_func()
+invokes the subsystem's ext->regfunc() before attempting to install the
+new probe via func_add(). If func_add() then fails (for example, when
+allocate_probes() cannot allocate a new probe array under memory pressure
+and returns -ENOMEM), the function returns the error without calling the
+matching ext->unregfunc(), leaving the side effects of regfunc() behind
+with no installed probe to justify them.
 
-However, such crafted cases can correctly result in a corruption
-report in the normal LZ4 non-inplace path.
+For syscall tracepoints this is particularly unpleasant: syscall_regfunc()
+bumps sys_tracepoint_refcount and sets SYSCALL_TRACEPOINT on every task.
+After a leaked failure, the refcount is stuck at a non-zero value with no
+consumer, and every task continues paying the syscall trace entry/exit
+overhead until reboot. Other subsystems providing regfunc()/unregfunc()
+pairs exhibit similarly scoped persistent state.
 
-Let's add an additional check to fix this for backporting.
+Mirror the existing 1 -> 0 cleanup and call ext->unregfunc() in the
+func_add() error path, gated on the same condition used there so the
+unwind is symmetric with the registration.
 
-Reproducible image (base64-encoded gzipped blob):
-
-H4sIAJGR12kCA+3SPUoDQRgG4MkmkkZk8QRbRFIIi9hbpEjrHQI5ghfwCN5BLCzTGtLbBI+g
-dilSJo1CnIm7GEXFxhT6PDDwfrs73/ywIQD/1ePD4r7Ou6ETsrq4mu7XcWfj++Pb58nJU/9i
-PNtbjhan04/9GtX4qVYc814WDqt6FaX5s+ZwXXeq52lndT6IuVvlblytLMvh4Gzwaf90nsvz
-2DF/21+20T/ldgp5s1jXRaN4t/8izsy/OUB6e/Qa79r+JwAAAAAAAL52vQVuGQAAAP6+my1w
-ywAAAAAAAADwu14ATsEYtgBQAAA=
-
-$ mount -t erofs -o cache_strategy=disabled foo.erofs /mnt
-$ dd if=/mnt/data of=/dev/null bs=4096 count=1
-
-Fixes: 598162d05080 ("erofs: support decompress big pcluster for lz4 backend")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Fixes: 8cf868affdc4 ("tracing: Have the reg function allow to fail")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-[ renamed `rq->outpages`/`rq->inpages` to `nrpages_out`/`nrpages_in` and inverted the check to `nrpages_out < nrpages_in` on the existing `goto docopy` chain ]
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://patch.msgid.link/20260413190601.21993-1-devnexen@gmail.com
+Signed-off-by: David Carlier <devnexen@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+[ changed `tp->ext->unregfunc` to `tp->unregfunc` to match older struct layout ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/decompressor.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/tracepoint.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/erofs/decompressor.c
-+++ b/fs/erofs/decompressor.c
-@@ -140,6 +140,7 @@ static void *z_erofs_handle_inplace_io(s
- 
- 	if (rq->inplace_io) {
- 		if (rq->partial_decoding || !support_0padding ||
-+		    nrpages_out < nrpages_in ||
- 		    ofull - oend < LZ4_DECOMPRESS_INPLACE_MARGIN(inputsize))
- 			goto docopy;
- 
+--- a/kernel/tracepoint.c
++++ b/kernel/tracepoint.c
+@@ -337,6 +337,8 @@ static int tracepoint_add_func(struct tr
+ 			lockdep_is_held(&tracepoints_mutex));
+ 	old = func_add(&tp_funcs, func, prio);
+ 	if (IS_ERR(old)) {
++		if (tp->unregfunc && !static_key_enabled(&tp->key))
++			tp->unregfunc();
+ 		WARN_ON_ONCE(warn && PTR_ERR(old) != -ENOMEM);
+ 		return PTR_ERR(old);
+ 	}
 
 
