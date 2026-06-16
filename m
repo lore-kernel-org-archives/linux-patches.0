@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9B443E4A1;
-	Tue, 16 Jun 2026 15:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B21A44103D;
+	Tue, 16 Jun 2026 15:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624057; cv=none; b=L91iNsSxMkKPinEH8ABUTjsJV1o50zWUjhttBqFhudiRsg2xEoz+eCPBPtYv2SEtS0EXOMw8yZCT5jOrZ93pvAHOEvsS+17h6BvNzTMfw1b3Ne3llDUs4AdLzOy7cqCisUqKKcMbi2dnlozWGggDVs4e9i4faudhEJO7v+EI+Ls=
+	t=1781624062; cv=none; b=akEuA7huSiKcBnDhFAvx63rpPURXZSXQkPXb8Jzxb95YoWxPE7F1LB8ITr8ek/UNzjfKkZOib9k3lb75ACsImuxslhYUmQ4FYY25ommfRNQ8bbUAizTRsfb1vE5aJn38JKL/b1ng4DUqzYWKBRw9O9W9/nabNAOuOiPhTEoyc9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624057; c=relaxed/simple;
-	bh=fk0nI++z9zA2W7mrXMuTSf2dYOcVyhFkN6EX/YUcAO8=;
+	s=arc-20240116; t=1781624062; c=relaxed/simple;
+	bh=YeWg3IT2aNFrh9mFcR6onekUkbALkq+8VM6VFVH9aFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dz1MaodAZgpdR+UeMc5wnMQNfoa6/+iVoUHBk7PHql+VlGxUfPcqa0oBAcfOLQKgagULKHi2Mx/S9gHJRLjuBou/Vg+FhbigU5eIB7igEJsWibAxj6aM9uMj37+ElOYg3BFyamBUn5ynTwyX+boR6nu9jX1F05ivuNoRGo1viIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mz1VXdJ5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pWX7zCoU9V6Fydn9EhO8ZMubltLyQlNX19ruBq8coEVaVbXUGb7hguGkpx/nfjKBQ3dVOyBxj1FfqgPT6YH2f0wcGkDMdY8BZ0v4o3b979YUrxXQg9hS24bmkbolfMSx/ohfcp1aEMyVuo2jFBVlEEFOWg+P3kDeyqLOgpVPrC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDHpVIwV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mz1VXdJ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E65D1F000E9;
-	Tue, 16 Jun 2026 15:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDHpVIwV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595951F00A3D;
+	Tue, 16 Jun 2026 15:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624056;
-	bh=XBdYSq7UZNe7V4/tBuQfbQLNKSNdO1t2qJosLASfftk=;
+	s=korg; t=1781624061;
+	bh=/LfHq1+5C+tfegnS0uoKBTjrRPjEt2sYYhd54++67ik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mz1VXdJ5TQEB4ykVLuou73gEVQ1ttTiwm2v7+fW6eA5GYyv0ZyyGw+UBpAf+Vf+vF
-	 fkM8js+zl7o25olSHs5pBi4iPJRRxa7bX+tvqfpZMG3kvqDH7ljDtoVk7sHhfrF6S0
-	 Llc0wvYQot1pHguGge1yEL7T+Wn345k5K/YdShR8=
+	b=xDHpVIwV/OFUlvuTKu7vSuDY5ht1vBSzyJSte5SIgooVLwi7Tf2Pwysvnbp1v/aIu
+	 vsrLIt5jT5EOeQK5ymJm1UyA+iqr2wvmW/NidISGd+bQ/7RcRV4lN9ag4rCWZafdRQ
+	 hRbBr92VnC5BbsVUKsiXaYpGuY79jsU2O53SvjMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.0 231/378] mptcp: fix retransmission loop when csum is enabled
-Date: Tue, 16 Jun 2026 20:27:42 +0530
-Message-ID: <20260616145122.424610934@linuxfoundation.org>
+Subject: [PATCH 7.0 232/378] mptcp: close TOCTOU race while computing rcv_wnd
+Date: Tue, 16 Jun 2026 20:27:43 +0530
+Message-ID: <20260616145122.468964965@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -53,40 +53,123 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-commit d1918b36edcaed0ec4ef6888b2358c6b1ddcff47 upstream.
+commit 8ab24fdebc369c0dfb90f82c1650b1e66662bb45 upstream.
 
-Sashiko noted that retransmission with csum enabled can actually
-transmit new data, but currently the relevant code does not update
-accordingly snd_nxt.
+The MPTCP output path access locklessly the MPTCP-level ack_seq
+in multiple times, using possibly different values for the data_ack
+in the DSS option and to compute the announced rcv wnd for the same
+packet.
 
-The may cause incoming ack drop and an endless retransmission loop.
+Refactor the cote to avoid inconsistencies which may confuse the
+peer. Also ensure that the MPTCP level rcv wnd is updated only when
+the egress packet actually contains a DSS ack.
 
-Address the issue incrementing snd_nxt as needed.
-
-Fixes: 4e14867d5e91 ("mptcp: tune re-injections for csum enabled mode")
+Fixes: fa3fe2b15031 ("mptcp: track window announced to peer")
 Cc: stable@vger.kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260602-net-mptcp-misc-fixes-7-1-rc7-v2-2-856831229976@kernel.org
+Link: https://patch.msgid.link/20260602-net-mptcp-misc-fixes-7-1-rc7-v2-3-856831229976@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/mptcp/options.c |   36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2852,6 +2852,10 @@ static void __mptcp_retrans(struct sock
- 	msk->bytes_retrans += len;
- 	dfrag->already_sent = max(dfrag->already_sent, len);
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -570,7 +570,6 @@ static bool mptcp_established_options_ds
+ 	struct mptcp_ext *mpext;
+ 	unsigned int ack_size;
+ 	bool ret = false;
+-	u64 ack_seq;
  
-+	/* With csum enabled retransmission can send new data. */
-+	if (after64(dfrag->already_sent + dfrag->data_seq, msk->snd_nxt))
-+		WRITE_ONCE(msk->snd_nxt, dfrag->already_sent + dfrag->data_seq);
+ 	opts->csum_reqd = READ_ONCE(msk->csum_enabled);
+ 	mpext = skb ? mptcp_get_ext(skb) : NULL;
+@@ -601,14 +600,11 @@ static bool mptcp_established_options_ds
+ 		return ret;
+ 	}
+ 
+-	ack_seq = READ_ONCE(msk->ack_seq);
+ 	if (READ_ONCE(msk->use_64bit_ack)) {
+ 		ack_size = TCPOLEN_MPTCP_DSS_ACK64;
+-		opts->ext_copy.data_ack = ack_seq;
+ 		opts->ext_copy.ack64 = 1;
+ 	} else {
+ 		ack_size = TCPOLEN_MPTCP_DSS_ACK32;
+-		opts->ext_copy.data_ack32 = (uint32_t)ack_seq;
+ 		opts->ext_copy.ack64 = 0;
+ 	}
+ 	opts->ext_copy.use_ack = 1;
+@@ -1296,19 +1292,14 @@ bool mptcp_incoming_options(struct sock
+ 	return true;
+ }
+ 
+-static void mptcp_set_rwin(struct tcp_sock *tp, struct tcphdr *th)
++static u64 mptcp_set_rwin(struct mptcp_sock *msk, struct tcp_sock *tp,
++			  struct tcphdr *th, u64 ack_seq)
+ {
+ 	const struct sock *ssk = (const struct sock *)tp;
+-	struct mptcp_subflow_context *subflow;
+-	u64 ack_seq, rcv_wnd_old, rcv_wnd_new;
+-	struct mptcp_sock *msk;
++	u64 rcv_wnd_old, rcv_wnd_new;
+ 	u32 new_win;
+ 	u64 win;
+ 
+-	subflow = mptcp_subflow_ctx(ssk);
+-	msk = mptcp_sk(subflow->conn);
+-
+-	ack_seq = READ_ONCE(msk->ack_seq);
+ 	rcv_wnd_new = ack_seq + tp->rcv_wnd;
+ 
+ 	rcv_wnd_old = atomic64_read(&msk->rcv_wnd_sent);
+@@ -1360,7 +1351,7 @@ raise_win:
+ 
+ update_wspace:
+ 	WRITE_ONCE(msk->old_wspace, tp->rcv_wnd);
+-	subflow->rcv_wnd_sent = rcv_wnd_new;
++	return rcv_wnd_new;
+ }
+ 
+ static void mptcp_track_rwin(struct tcp_sock *tp)
+@@ -1472,13 +1463,25 @@ void mptcp_write_options(struct tcphdr *
+ 		*ptr++ = mptcp_option(MPTCPOPT_DSS, len, 0, flags);
+ 
+ 		if (mpext->use_ack) {
++			struct mptcp_sock *msk;
++			u64 ack_seq;
 +
- reset_timer:
- 	mptcp_check_and_set_pending(sk);
++			/* DSS option is set only by mptcp_established_options,
++			 * the caller is __tcp_transmit_skb() and ssk is always
++			 * not NULL.
++			 */
++			subflow = mptcp_subflow_ctx(ssk);
++			msk = mptcp_sk(subflow->conn);
++			ack_seq = READ_ONCE(msk->ack_seq);
+ 			if (mpext->ack64) {
+-				put_unaligned_be64(mpext->data_ack, ptr);
++				put_unaligned_be64(ack_seq, ptr);
+ 				ptr += 2;
+ 			} else {
+-				put_unaligned_be32(mpext->data_ack32, ptr);
++				put_unaligned_be32(ack_seq, ptr);
+ 				ptr += 1;
+ 			}
++			subflow->rcv_wnd_sent = mptcp_set_rwin(msk, tp, th,
++							       ack_seq);
+ 		}
  
+ 		if (mpext->use_map) {
+@@ -1706,9 +1709,6 @@ mp_capable_done:
+ 			i += 4;
+ 		}
+ 	}
+-
+-	if (tp)
+-		mptcp_set_rwin(tp, th);
+ }
+ 
+ __be32 mptcp_get_reset_option(const struct sk_buff *skb)
 
 
