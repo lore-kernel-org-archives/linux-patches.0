@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89CF3EB0F5;
-	Tue, 16 Jun 2026 18:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6E83EB0F5;
+	Tue, 16 Jun 2026 18:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636388; cv=none; b=dyJ3JdBJNMFeRySZRPjNIGVb3RwqgNXDDJGDKKY1JVjF9zYXtgKayFmF4skoHwO2gb9OXMsqM7CYisBuwQyulnDly4WuV7YYart2OSOt9QnFbxMsZJ6EtMhnmGfobFlzOP7RKdSPRV9mONW/kmxZvz0ePXxM8bNM0Xvcxj7pQgk=
+	t=1781636394; cv=none; b=WsnwY0WtmgVbNP06E7fye6Y5rb+tH9Ku8i1kvCqHN0JsEoQINupDm5Lgqp9GMpqwv7hkApIFSjSXOrmskxO6aVg2pQiGwwLbP7P5fOiQFvf6EuNuVDQIYx4jIKAYRSSxJqRhPDXfQTwOwYc0bOMjHjzALFSyA2U0VFb74mL+afE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636388; c=relaxed/simple;
-	bh=fpUqcsWcSuPwurLOKxMK3/5ELq/5o8AM+etUVGgnJ2c=;
+	s=arc-20240116; t=1781636394; c=relaxed/simple;
+	bh=LF+/ZotUdtGrHRhg94JPu7cpfLLB7jRO0/Po55ufaw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PCbsrbNcyryZJkOHoXa/6gON98+oHB/qq+8HTdCQRH4SiZN5VuV45nNJZ70ErD3fS7Kv80YJPZsoKDuY49nVAeyC0Lqb7nLdhdQthA8UF9qOcKbbxlEdlcn6AkiMgNEn/9XahEkUsKZomu0xFgJwzjJD4QDzhpMxKOkYaxBmc2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h+QMx+ZV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eildktru95hbDorkKX/h5Zzdl4yZ0DAFhqv5b2YpzMyf1fP5EryeDfupTXNDgZ3XN/naWKiYK4eWeGbj5yiO1cSzHg3kPEpH1GC8BR09WOvLQhPwCpcgh7ax4PB/pazZFoh/1qaojMHfujqicT5VrPwmrXTMefQN57SPUNPs5Y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uKX36nYF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h+QMx+ZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20C81F000E9;
-	Tue, 16 Jun 2026 18:59:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uKX36nYF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F08D1F000E9;
+	Tue, 16 Jun 2026 18:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636387;
-	bh=anpk9jAuhVIaBXtTgi+Ko9Nx0rq4c3+Twz9p3EnZq6g=;
+	s=korg; t=1781636393;
+	bh=LgmmIL7IDYOs6PGxyq1SQCni9aAuaz1EE1qbHtWj22o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h+QMx+ZV26nK+faf8LfLZJOOjvWakdsiC6LZ3WqUR3kemN9y9ICW8hbB39XS1pg4l
-	 3732WWq1+LD4M367JbyAMX98gp1qfymdsQCAG9TdFtu9gEZ8ehHuYPkY1jyIm7X9zp
-	 Pg5+3Sdj9uUt1LOgkqlGVO7QB/qEVJLVDwusMD7Y=
+	b=uKX36nYFWG3caLR7X3OLwMla/gKR6bXeg3VbEuO49RNkNnOQEBawgFMgRPO7fHD5B
+	 hTafLL0aw+YbUqXvTTclqyPfirmJBCmPHp2a4OZomi8EfUYV5Y+Y2XQ4yo15w+8aBg
+	 5kXgwC7fzq/k8u3oRLCCZ3Y5cquRwSvFXXvFy9ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Chao Yu <chao@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 230/342] erofs: fix the out-of-bounds nameoff handling for trailing dirents
-Date: Tue, 16 Jun 2026 20:28:46 +0530
-Message-ID: <20260616145058.915038002@linuxfoundation.org>
+Subject: [PATCH 5.10 231/342] media: rc: igorplugusb: heed coherency rules
+Date: Tue, 16 Jun 2026 20:28:47 +0530
+Message-ID: <20260616145058.963204459@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -53,92 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit d18a3b5d337fa412a38e776e6b4b857a58836575 ]
+[ Upstream commit eac69475b01fe1e861dfe3960b57fa95671c132e ]
 
-Currently we already have boundary-checks for nameoffs, but the trailing
-dirents are special since the namelens are calculated with strnlen()
-with unchecked nameoffs.
+In a control request, the USB request structure
+can be subject to DMA on some HCs. Hence it must obey
+the rules for DMA coherency. Allocate it separately.
 
-If a crafted EROFS has a trailing dirent with nameoff >= maxsize,
-maxsize - nameoff can underflow, causing strnlen() to read past the
-directory block.
-
-nameoff0 should also be verified to be a multiple of
-`sizeof(struct erofs_dirent)` as well [1].
-
-[1] https://sashiko.dev/#/patchset/20260416063511.3173774-1-hsiangkao%40linux.alibaba.com
-
-Fixes: 3aa8ec716e52 ("staging: erofs: add directory operations")
-Fixes: 33bac912840f ("staging: erofs: keep corrupted fs from crashing kernel in erofs_readdir()")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Reported-by: Junrui Luo <moonafterrain@outlook.com>
-Closes: https://lore.kernel.org/r/A0FD7E0F-7558-49B0-8BC8-EB1ECDB2479A@outlook.com
+Fixes: b1c97193c6437 ("[media] rc: port IgorPlug-USB to rc-core")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-[ replaced upstream `bsz` with `PAGE_SIZE` and `sizeof(*de)` with `sizeof(struct erofs_dirent)` ]
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ replaced kzalloc_obj() with kzalloc(sizeof(*ir->request), GFP_KERNEL) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/dir.c |   30 ++++++++++++++++--------------
- 1 file changed, 16 insertions(+), 14 deletions(-)
+ drivers/media/rc/igorplugusb.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/fs/erofs/dir.c
-+++ b/fs/erofs/dir.c
-@@ -38,20 +38,18 @@ static int erofs_fill_dentries(struct in
- 		nameoff = le16_to_cpu(de->nameoff);
- 		de_name = (char *)dentry_blk + nameoff;
+--- a/drivers/media/rc/igorplugusb.c
++++ b/drivers/media/rc/igorplugusb.c
+@@ -14,6 +14,7 @@
+ #include <linux/device.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
++#include <linux/slab.h>
+ #include <linux/usb.h>
+ #include <linux/usb/input.h>
+ #include <media/rc-core.h>
+@@ -34,7 +35,7 @@ struct igorplugusb {
+ 	struct device *dev;
  
--		/* the last dirent in the block? */
--		if (de + 1 >= end)
--			de_namelen = strnlen(de_name, maxsize - nameoff);
--		else
-+		/* non-trailing dirent in the directory block? */
-+		if (de + 1 < end)
- 			de_namelen = le16_to_cpu(de[1].nameoff) - nameoff;
-+		else if (maxsize <= nameoff)
-+			goto err_bogus;
-+		else
-+			de_namelen = strnlen(de_name, maxsize - nameoff);
+ 	struct urb *urb;
+-	struct usb_ctrlrequest request;
++	struct usb_ctrlrequest *request;
  
--		/* a corrupted entry is found */
--		if (nameoff + de_namelen > maxsize ||
--		    de_namelen > EROFS_NAME_LEN) {
--			erofs_err(dir->i_sb, "bogus dirent @ nid %llu",
--				  EROFS_I(dir)->nid);
--			DBG_BUGON(1);
--			return -EFSCORRUPTED;
--		}
-+		/* a corrupted entry is found (including negative namelen) */
-+		if (!in_range32(de_namelen, 1, EROFS_NAME_LEN) ||
-+		    nameoff + de_namelen > maxsize)
-+			goto err_bogus;
+ 	struct timer_list timer;
  
- 		debug_one_dentry(d_type, de_name, de_namelen);
- 		if (!dir_emit(ctx, de_name, de_namelen,
-@@ -63,6 +61,10 @@ static int erofs_fill_dentries(struct in
- 	}
- 	*ofs = maxsize;
- 	return 0;
-+err_bogus:
-+	erofs_err(dir->i_sb, "bogus dirent @ nid %llu", EROFS_I(dir)->nid);
-+	DBG_BUGON(1);
-+	return -EFSCORRUPTED;
+@@ -123,7 +124,7 @@ static void igorplugusb_cmd(struct igorp
+ {
+ 	int ret;
+ 
+-	ir->request.bRequest = cmd;
++	ir->request->bRequest = cmd;
+ 	ir->urb->transfer_flags = 0;
+ 	ret = usb_submit_urb(ir->urb, GFP_ATOMIC);
+ 	if (ret)
+@@ -165,13 +166,17 @@ static int igorplugusb_probe(struct usb_
+ 	if (!ir)
+ 		return -ENOMEM;
+ 
++	ir->request = kzalloc(sizeof(*ir->request), GFP_KERNEL);
++	if (!ir->request)
++		goto fail;
++
+ 	ir->dev = &intf->dev;
+ 
+ 	timer_setup(&ir->timer, igorplugusb_timer, 0);
+ 
+-	ir->request.bRequest = GET_INFRACODE;
+-	ir->request.bRequestType = USB_TYPE_VENDOR | USB_DIR_IN;
+-	ir->request.wLength = cpu_to_le16(sizeof(ir->buf_in));
++	ir->request->bRequest = GET_INFRACODE;
++	ir->request->bRequestType = USB_TYPE_VENDOR | USB_DIR_IN;
++	ir->request->wLength = cpu_to_le16(sizeof(ir->buf_in));
+ 
+ 	ir->urb = usb_alloc_urb(0, GFP_KERNEL);
+ 	if (!ir->urb)
+@@ -223,6 +228,7 @@ fail:
+ 	rc_free_device(ir->rc);
+ 	usb_free_urb(ir->urb);
+ 	del_timer(&ir->timer);
++	kfree(ir->request);
+ 
+ 	return ret;
+ }
+@@ -236,6 +242,7 @@ static void igorplugusb_disconnect(struc
+ 	usb_set_intfdata(intf, NULL);
+ 	usb_kill_urb(ir->urb);
+ 	usb_free_urb(ir->urb);
++	kfree(ir->request);
  }
  
- static int erofs_readdir(struct file *f, struct dir_context *ctx)
-@@ -96,8 +98,8 @@ static int erofs_readdir(struct file *f,
- 
- 		nameoff = le16_to_cpu(de->nameoff);
- 
--		if (nameoff < sizeof(struct erofs_dirent) ||
--		    nameoff >= PAGE_SIZE) {
-+		if (!nameoff || nameoff >= PAGE_SIZE ||
-+		    (nameoff % sizeof(struct erofs_dirent))) {
- 			erofs_err(dir->i_sb,
- 				  "invalid de[0].nameoff %u @ nid %llu",
- 				  nameoff, EROFS_I(dir)->nid);
+ static const struct usb_device_id igorplugusb_table[] = {
 
 
