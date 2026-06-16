@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DAC63CE4BA;
-	Tue, 16 Jun 2026 18:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2AB23C5842;
+	Tue, 16 Jun 2026 18:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633019; cv=none; b=RBo8KrvMwQVc9+Jg37HohdYdFu/BJVe7Z63DqzIxVgyYR55Xl2ocECpF/XMSZR2Mt+e/UPnxJ5x+o4RdXAK6ZOQtwYiHmE/CpM3E9Rz4gPlIejqnk/sMOhZ1CAzG7T9RVs3thY8RYFRUiKXRR38INei7TtNG4BdpVUMaEbpFsKY=
+	t=1781633024; cv=none; b=sqwQUEekZcAZgflsJ+VTe17cIwU8Hat5V9YFlz0Q+6nZY8HUsTQl7naWANLg51u5EwWbPkfNyEVu1GwjQ7DFUkvHzv+bBAE3t4/YHOqHhiJUqa4tfy53x5vzpGBa5mv76Fi3hELjoXfIAerpCDIlNHPROXURgzIbAvM9JSsKmFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633019; c=relaxed/simple;
-	bh=QnOjdhaYH9AinWLDnVXJ1vkN8W2jv5jqVLPLV3h8KXU=;
+	s=arc-20240116; t=1781633024; c=relaxed/simple;
+	bh=3yCj4jDpjAozuU8CWYTU96A6wEO4rD1GbiMsGJQBYv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eo9D5pIIkikAq8pEiEaB2PZXut2bTPuv3gjm7vIPHZ2mwRkz3JlaTRunEqygf53+4YDuvtngdFMpMIiEZVwpqNbMDhZUwE/HJac9tEjTYpQbMB0ROzKBsIBXAqP7XrkpNzRX44f6EzOL7GKisMMcR6CyZokA4esfsU1cMSi5MY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7jw4Jgf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KsDcKej/sNREeAfZ9haxaffwHH5qakoB98kA4QWxFkLgSLhDgsiZPRkv2f1XfOt+m79NJvxv7x60MUIQn0IGZzOqnvJn+E67fdUiLqGaqQ8SgKhNP8QeBXCEi3zzJoVfaGz1S1qnSqDwZCK/qOrPi71HBHaymKPOuwJcuv0T9ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNqaEdym; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7jw4Jgf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9771F000E9;
-	Tue, 16 Jun 2026 18:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNqaEdym"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD62F1F000E9;
+	Tue, 16 Jun 2026 18:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633018;
-	bh=LOLnL+PxyjH5gq0zC9QilhxKAqc0KtAC+ZopHc8lyCY=;
+	s=korg; t=1781633023;
+	bh=ub5G/pKmPoH7gAcLtRSFWSXsyNQZX5kVgMIaURp77sA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X7jw4JgfMo+wlHzwPN5uMgCJmttUgtg+DhMZpx73H8XT7VpJzTRQ8qbMfa1CoraGp
-	 SyGAtv9baaR23TUn5ekpwJqJJ2Oug3X97uPF4foTUz4kbbT0AX0l5ipOegnWjnPIxh
-	 NNr8kAnAitfebXGkuPxnS196zBCHXLB4/skj245c=
+	b=nNqaEdymo0Y9zTNpYhwvczBkdrKeMjXe5+Dd/d6We+sPLYb7sVLUMXhx2JDAgBHkj
+	 tCwJu3gFaMkpmsU4ceNINoS4UXsb+Ra+DsX1t0hG1LPn+LviLVtn4HT4kktcG6lpvy
+	 IGmDG0KTx+ZFXgUxQJNhGLlg536lWxmkEnyFWrro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Nikolay Borisov <nik.borisov@suse.com>,
 	Ben Hutchings <benh@debian.org>
-Subject: [PATCH 6.1 521/522] apparmor: validate default DFA states are in bounds
-Date: Tue, 16 Jun 2026 20:31:08 +0530
-Message-ID: <20260616145150.082886843@linuxfoundation.org>
+Subject: [PATCH 6.1 522/522] x86/CPU/AMD: Move the Zen3 BTC_NO detection to the Zen3 init function
+Date: Tue, 16 Jun 2026 20:31:09 +0530
+Message-ID: <20260616145150.126541553@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -49,78 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Hutchings <benh@debian.org>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-Some backports of commit 9063d7e2615f ("apparmor: validate DFA start
-states are in bounds in unpack_pdb") limited the bounds checks on DFA
-start states to the case where the start state was explicit in the
-policy.  However, the default DFA start state (DFA_START = 1) could
-also be out-of-bounds.
+commit affc66cb96f865b3763a8e18add52e133d864f04 upstream.
 
-Move these checks out of the else-branches so that they are applied
-regardless of how the start state was initialised.
+No functional changes.
 
-Fixes: 5443c027ec16 ("apparmor: validate DFA start states are in bounds in unpack_pdb")
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Nikolay Borisov <nik.borisov@suse.com>
+Link: http://lore.kernel.org/r/20231120104152.13740-4-bp@alien8.de
+Stable-dep-of: 7c81ad8e8bc2 ("x86/CPU/AMD: Rename init_amd_zn() to init_amd_zen_common()")
+[bwh: Adjusted to apply after backports of the above commit which actually
+ depended on this]
 Signed-off-by: Ben Hutchings <benh@debian.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/policy_unpack.c |   27 +++++++++++++++------------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ arch/x86/kernel/cpu/amd.c |   18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
---- a/security/apparmor/policy_unpack.c
-+++ b/security/apparmor/policy_unpack.c
-@@ -829,6 +829,8 @@ static struct aa_profile *unpack_profile
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1087,14 +1087,6 @@ static void init_amd_zen1(struct cpuinfo
+ 		/* Erratum 1076: CPB feature bit not being set in CPUID. */
+ 		if (!cpu_has(c, X86_FEATURE_CPB))
+ 			set_cpu_cap(c, X86_FEATURE_CPB);
+-
+-		/*
+-		 * Zen3 (Fam19 model < 0x10) parts are not susceptible to
+-		 * Branch Type Confusion, but predate the allocation of the
+-		 * BTC_NO bit.
+-		 */
+-		if (c->x86 == 0x19 && !cpu_has(c, X86_FEATURE_BTC_NO))
+-			set_cpu_cap(c, X86_FEATURE_BTC_NO);
  	}
  
- 	if (aa_unpack_nameX(e, AA_STRUCT, "policydb")) {
-+		size_t state_count;
+ 	pr_notice_once("AMD Zen1 FPDSS bug detected, enabling mitigation.\n");
+@@ -1154,6 +1146,16 @@ static void init_amd_zen2(struct cpuinfo
+ static void init_amd_zen3(struct cpuinfo_x86 *c)
+ {
+ 	init_amd_zen_common();
 +
- 		/* generic policy dfa - optional and may be NULL */
- 		info = "failed to unpack policydb";
- 		profile->policy.dfa = unpack_dfa(e);
-@@ -843,13 +845,12 @@ static struct aa_profile *unpack_profile
- 		if (!aa_unpack_u32(e, &profile->policy.start[0], "start")) {
- 			/* default start state */
- 			profile->policy.start[0] = DFA_START;
--		} else {
--			size_t state_count = profile->policy.dfa->tables[YYTD_ID_BASE]->td_lolen;
-+		}
++	if (!cpu_has(c, X86_FEATURE_HYPERVISOR)) {
++		/*
++		 * Zen3 (Fam19 model < 0x10) parts are not susceptible to
++		 * Branch Type Confusion, but predate the allocation of the
++		 * BTC_NO bit.
++		 */
++		if (!cpu_has(c, X86_FEATURE_BTC_NO))
++			set_cpu_cap(c, X86_FEATURE_BTC_NO);
++	}
+ }
  
--			if (profile->policy.start[0] >= state_count) {
--				info = "invalid dfa start state";
--				goto fail;
--			}
-+		state_count = profile->policy.dfa->tables[YYTD_ID_BASE]->td_lolen;
-+		if (profile->policy.start[0] >= state_count) {
-+			info = "invalid dfa start state";
-+			goto fail;
- 		}
- 
- 		/* setup class index */
-@@ -872,16 +873,18 @@ static struct aa_profile *unpack_profile
- 		info = "failed to unpack profile file rules";
- 		goto fail;
- 	} else if (profile->file.dfa) {
-+		size_t state_count;
-+
- 		if (!aa_unpack_u32(e, &profile->file.start, "dfa_start")) {
- 			/* default start state */
- 			profile->file.start = DFA_START;
--		} else {
--			size_t state_count = profile->file.dfa->tables[YYTD_ID_BASE]->td_lolen;
-+		}
-+
-+		state_count = profile->file.dfa->tables[YYTD_ID_BASE]->td_lolen;
- 
--			if (profile->file.start >= state_count) {
--				info = "invalid dfa start state";
--				goto fail;
--			}
-+		if (profile->file.start >= state_count) {
-+			info = "invalid dfa start state";
-+			goto fail;
- 		}
- 	} else if (profile->policy.dfa &&
- 		   profile->policy.start[AA_CLASS_FILE]) {
+ static void init_amd_zen4(struct cpuinfo_x86 *c)
 
 
