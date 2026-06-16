@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A3343C05C;
-	Tue, 16 Jun 2026 15:17:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432A143E9DC;
+	Tue, 16 Jun 2026 15:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623027; cv=none; b=ArHrn/sC5wDjeASonhEGhEd5xTSCdUTg13wTXeshif7eVvYnAfDly6J82xh8db0RfFmq2UxGI52UeWobWDSxJYv2h5+XZVGEraolcnUscGgGKZ1RiX87799d4PrIvZu7N6p7EIp2+9bYfux9CFriz6oWl6o5fe63xwKXmZYUQ6o=
+	t=1781623033; cv=none; b=P8pI2N8a0Jh/xArl3XRe6Vfe4g6yiALcguuL8ngjAOZhJcvtLCXU3PWrHzeuhVLtan1ituluL+kZoAxHqQZ1XY5ZNT8tz6s/Dm5++pp2jKhZP7NC2kwCocXS6xKA+aTIApf3vvB2JadFw/SjxsseISrnLMl7R92IiBFEdm7YfUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623027; c=relaxed/simple;
-	bh=2xNehpR3PyWjuZBS8z49TVituj7xrOwAqNdvYhqxfdk=;
+	s=arc-20240116; t=1781623033; c=relaxed/simple;
+	bh=qzd43nYe+B1L2BCxq96s+1Ke0nLQOlFIU/TqHlcwfzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t92Y/TknR66cEpXzcmxt55De9XFiM8Tdygk92rfEPwbDf0y1XX3HBFVuQ0aWTREzR0Y6Olx1a/E6KhSqPREQ5qnzR7TF0qbdWKsLs9lQM2MI3Yd/xTogLdMWoE3f0ILbh42Dhs+izynIYgVVEKXDNY+8F3sEcC88zowPli6VGrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=frVyN/YP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hr7EUky1Di6OtzGc8IY1RbVQ0WFECdIio/IUMZVLaZvMOYZw317I7vZivXA6wqKOyqkN15YyWt00QvzhzxYRES5uJKovczDYPTOjW1dApLIVT5aWB16V7WozaoJRnBkBW0RD73gBIB3wZIhLsFwI9KuEmV6jAy3yo+vvd2JVxfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPJ2SkNn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="frVyN/YP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E63E31F000E9;
-	Tue, 16 Jun 2026 15:17:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPJ2SkNn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03FD31F00A3D;
+	Tue, 16 Jun 2026 15:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623026;
-	bh=W41CLREQVqv9Yna/Om4SWozzdOoMcvueXt9jt4w/MoA=;
+	s=korg; t=1781623031;
+	bh=HNJQUiCjnnW1VFccxJRGkre0JQdylPKiC+FpV7EMC+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=frVyN/YPXicaIizoTdJ0uaNKjfaYjF1mUe6V6WIpdmtlqHru+Re5MCpX5zbQoI+41
-	 ySjk1ooadT0H04ed6KWRLlyE97GRQHWtOvD1TOfTN1Qc7eSFmK+legEPI5QVntXG2d
-	 hPHUphihs6JXJpFWZwoDg5N2kXk9zDmrKVvTJaGQ=
+	b=zPJ2SkNn/vCxutv0+NHvYFTa3sP84R1vitTqBlsp4NOwccnW8fXlPj879r+zoW7kr
+	 n0+IXRTY1gJ+uNITHHBTzqTd5HvWjFPB4QQhH1r8iceAsSFt3kEy1sFWdxxcOOJH10
+	 5L+cLCwUF0iQ5Xi7P3f1xyl1idRfMlsXjRtwR+9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Chandrakanthan <quic_haric@quicinc.com>,
-	Amith A <amith.a@oss.qualcomm.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 041/378] wifi: cfg80211: add support to handle incumbent signal detected event from mac80211/driver
-Date: Tue, 16 Jun 2026 20:24:32 +0530
-Message-ID: <20260616145112.059532063@linuxfoundation.org>
+Subject: [PATCH 7.0 042/378] wifi: nl80211: split out UHR operation information
+Date: Tue, 16 Jun 2026 20:24:33 +0530
+Message-ID: <20260616145112.121213576@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,203 +50,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Chandrakanthan <quic_haric@quicinc.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 6a584e336cefb230e2d981a464f4d85562eb750c ]
+[ Upstream commit e4b993f2bca78357b430170574f8de7bc7874088 ]
 
-When any incumbent signal is detected by an AP/mesh interface operating
-in 6 GHz band, FCC mandates the AP/mesh to vacate the channels affected
-by it [1].
+The beacon doesn't contain the full UHR operation, a number
+of fields (such as NPCA) are only partially there. Add a new
+attribute to contain the full information, so it's available
+to the driver/mac80211.
 
-Add a new API cfg80211_incumbent_signal_notify() that can be used
-by mac80211 or drivers to notify the higher layers about the signal
-interference event with the interference bitmap in which each bit
-denotes the affected 20 MHz in the operating channel.
-
-Add support for the new nl80211 event and nl80211 attribute as well to
-notify userspace on the details about the interference event. Userspace is
-expected to process it and take further action - vacate the channel, or
-reduce the bandwidth.
-
-[1] - https://apps.fcc.gov/kdb/GetAttachment.html?id=nXQiRC%2B4mfiA54Zha%2BrW4Q%3D%3D&desc=987594%20D02%20U-NII%206%20GHz%20EMC%20Measurement%20v03&tracking_number=277034
-
-Signed-off-by: Hari Chandrakanthan <quic_haric@quicinc.com>
-Signed-off-by: Amith A <amith.a@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260216032027.2310956-2-amith.a@oss.qualcomm.com
+Link: https://patch.msgid.link/20260303221710.866bacf82639.Iafdf37fb0f4304bdcdb824977d61e17b38c47685@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Stable-dep-of: cb9959ab5f99 ("wifi: cfg80211: enforce HE/EHT cap/oper consistency")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cfg80211.h       | 23 +++++++++++++++++++++
- include/uapi/linux/nl80211.h | 19 +++++++++++++++++
- net/wireless/nl80211.c       | 40 ++++++++++++++++++++++++++++++++++++
- net/wireless/trace.h         | 19 +++++++++++++++++
- 4 files changed, 101 insertions(+)
+ include/uapi/linux/nl80211.h |  6 ++++++
+ net/wireless/nl80211.c       | 26 ++++++++++++++++----------
+ 2 files changed, 22 insertions(+), 10 deletions(-)
 
-diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index fc01de19c7981a..2311d852e19ebc 100644
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -10472,4 +10472,27 @@ cfg80211_s1g_get_primary_sibling(struct wiphy *wiphy,
- 	return ieee80211_get_channel_khz(wiphy, sibling_1mhz_khz);
- }
- 
-+
-+/**
-+ * cfg80211_incumbent_signal_notify - Notify userspace of incumbent signal detection
-+ * @wiphy: the wiphy to use
-+ * @chandef: channel definition in which the interference was detected
-+ * @signal_interference_bitmap: bitmap indicating interference across 20 MHz segments
-+ * @gfp: allocation context for message creation and multicast; pass GFP_ATOMIC
-+ *	if called from atomic context (e.g. firmware event handler), otherwise
-+ *	GFP_KERNEL
-+ *
-+ * Use this function to notify userspace when an incumbent signal is detected on
-+ * the operating channel in the 6 GHz band. The notification includes the
-+ * current channel definition and a bitmap representing interference across
-+ * the operating bandwidth. Each bit in the bitmap corresponds to a 20 MHz
-+ * segment, with the lowest bit representing the lowest frequency segment.
-+ * Punctured sub-channels are included in the bitmap structure but are always
-+ * set to zero since interference detection is not performed on them.
-+ */
-+void cfg80211_incumbent_signal_notify(struct wiphy *wiphy,
-+				      const struct cfg80211_chan_def *chandef,
-+				      u32 signal_interference_bitmap,
-+				      gfp_t gfp);
-+
- #endif /* __NET_CFG80211_H */
 diff --git a/include/uapi/linux/nl80211.h b/include/uapi/linux/nl80211.h
-index b63f718509060d..b53e2d78c7bb3f 100644
+index b53e2d78c7bb3f..b997e6c6fc4b38 100644
 --- a/include/uapi/linux/nl80211.h
 +++ b/include/uapi/linux/nl80211.h
-@@ -1361,6 +1361,12 @@
-  *	user space that the NAN new cluster has been joined. The cluster ID is
-  *	indicated by %NL80211_ATTR_MAC.
+@@ -3001,6 +3001,10 @@ enum nl80211_commands {
+  *	interference detection is not performed on these sub-channels, their
+  *	corresponding bits are consistently set to zero.
   *
-+ * @NL80211_CMD_INCUMBENT_SIGNAL_DETECT: Once any incumbent signal is detected
-+ *	on the operating channel in 6 GHz band, userspace is notified with the
-+ *	signal interference bitmap using
-+ *	%NL80211_ATTR_INCUMBENT_SIGNAL_INTERFERENCE_BITMAP. The current channel
-+ *	definition is also sent.
-+ *
-  * @NL80211_CMD_MAX: highest used command number
-  * @__NL80211_CMD_AFTER_LAST: internal use
-  */
-@@ -1624,6 +1630,8 @@ enum nl80211_commands {
- 	NL80211_CMD_NAN_NEXT_DW_NOTIFICATION,
- 	NL80211_CMD_NAN_CLUSTER_JOINED,
- 
-+	NL80211_CMD_INCUMBENT_SIGNAL_DETECT,
-+
- 	/* add new commands above here */
- 
- 	/* used to define NL80211_CMD_MAX below */
-@@ -2984,6 +2992,15 @@ enum nl80211_commands {
-  *	this feature during association. This is a flag attribute.
-  *	Currently only supported in mac80211 drivers.
-  *
-+ * @NL80211_ATTR_INCUMBENT_SIGNAL_INTERFERENCE_BITMAP: u32 attribute specifying
-+ *	the signal interference bitmap detected on the operating bandwidth for
-+ *	%NL80211_CMD_INCUMBENT_SIGNAL_DETECT. Each bit represents a 20 MHz
-+ *	segment, lowest bit corresponds to the lowest 20 MHz segment, in the
-+ *	operating bandwidth where the interference is detected. Punctured
-+ *	sub-channels are included in the bitmap structure; however, since
-+ *	interference detection is not performed on these sub-channels, their
-+ *	corresponding bits are consistently set to zero.
++ * @NL80211_ATTR_UHR_OPERATION: Full UHR Operation element, as it appears in
++ *	association response etc., since it's abridged in the beacon. Used
++ *	for START_AP etc.
 + *
   * @NUM_NL80211_ATTR: total number of nl80211_attrs available
   * @NL80211_ATTR_MAX: highest attribute number currently defined
   * @__NL80211_ATTR_AFTER_LAST: internal use
-@@ -3557,6 +3574,8 @@ enum nl80211_attrs {
- 	NL80211_ATTR_UHR_CAPABILITY,
- 	NL80211_ATTR_DISABLE_UHR,
+@@ -3576,6 +3580,8 @@ enum nl80211_attrs {
  
-+	NL80211_ATTR_INCUMBENT_SIGNAL_INTERFERENCE_BITMAP,
+ 	NL80211_ATTR_INCUMBENT_SIGNAL_INTERFERENCE_BITMAP,
+ 
++	NL80211_ATTR_UHR_OPERATION,
 +
  	/* add attributes here, update the policy in nl80211.c */
  
  	__NL80211_ATTR_AFTER_LAST,
 diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index b94231c8441c48..d00357488ea8ea 100644
+index d00357488ea8ea..84fcfb1e53a156 100644
 --- a/net/wireless/nl80211.c
 +++ b/net/wireless/nl80211.c
-@@ -21120,6 +21120,46 @@ void cfg80211_ch_switch_notify(struct net_device *dev,
+@@ -341,6 +341,17 @@ static int validate_uhr_capa(const struct nlattr *attr,
+ 	return ieee80211_uhr_capa_size_ok(data, len, false);
  }
- EXPORT_SYMBOL(cfg80211_ch_switch_notify);
  
-+void cfg80211_incumbent_signal_notify(struct wiphy *wiphy,
-+				      const struct cfg80211_chan_def *chandef,
-+				      u32 signal_interference_bitmap,
-+				      gfp_t gfp)
++static int validate_uhr_operation(const struct nlattr *attr,
++				  struct netlink_ext_ack *extack)
 +{
-+	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
-+	struct sk_buff *msg;
-+	void *hdr;
++	const u8 *data = nla_data(attr);
++	unsigned int len = nla_len(attr);
 +
-+	trace_cfg80211_incumbent_signal_notify(wiphy, chandef, signal_interference_bitmap);
-+
-+	msg = nlmsg_new(NLMSG_DEFAULT_SIZE, gfp);
-+	if (!msg)
-+		return;
-+
-+	hdr = nl80211hdr_put(msg, 0, 0, 0, NL80211_CMD_INCUMBENT_SIGNAL_DETECT);
-+	if (!hdr)
-+		goto nla_put_failure;
-+
-+	if (nla_put_u32(msg, NL80211_ATTR_WIPHY, rdev->wiphy_idx))
-+		goto nla_put_failure;
-+
-+	if (nl80211_send_chandef(msg, chandef))
-+		goto nla_put_failure;
-+
-+	if (nla_put_u32(msg, NL80211_ATTR_INCUMBENT_SIGNAL_INTERFERENCE_BITMAP,
-+			signal_interference_bitmap))
-+		goto nla_put_failure;
-+
-+	genlmsg_end(msg, hdr);
-+
-+	genlmsg_multicast_netns(&nl80211_fam, wiphy_net(&rdev->wiphy), msg, 0,
-+				NL80211_MCGRP_MLME, gfp);
-+	return;
-+
-+nla_put_failure:
-+	nlmsg_free(msg);
++	if (!ieee80211_uhr_oper_size_ok(data, len, false))
++		return -EINVAL;
++	return 0;
 +}
-+EXPORT_SYMBOL(cfg80211_incumbent_signal_notify);
 +
- void cfg80211_ch_switch_started_notify(struct net_device *dev,
- 				       struct cfg80211_chan_def *chandef,
- 				       unsigned int link_id, u8 count,
-diff --git a/net/wireless/trace.h b/net/wireless/trace.h
-index 643ccf4f022722..352a57d8b96819 100644
---- a/net/wireless/trace.h
-+++ b/net/wireless/trace.h
-@@ -4225,6 +4225,25 @@ TRACE_EVENT(cfg80211_nan_cluster_joined,
- 		  WDEV_PR_ARG, __entry->cluster_id,
- 		  __entry->new_cluster ? " [new]" : "")
- );
-+
-+TRACE_EVENT(cfg80211_incumbent_signal_notify,
-+	TP_PROTO(struct wiphy *wiphy,
-+		 const struct cfg80211_chan_def *chandef,
-+		 u32 signal_interference_bitmap),
-+	TP_ARGS(wiphy, chandef, signal_interference_bitmap),
-+	TP_STRUCT__entry(
-+		WIPHY_ENTRY
-+		CHAN_DEF_ENTRY
-+		__field(u32, signal_interference_bitmap)
-+	),
-+	TP_fast_assign(
-+		WIPHY_ASSIGN;
-+		CHAN_DEF_ASSIGN(chandef);
-+		__entry->signal_interference_bitmap = signal_interference_bitmap;
-+	),
-+	TP_printk(WIPHY_PR_FMT ", " CHAN_DEF_PR_FMT ", signal_interference_bitmap=0x%x",
-+		  WIPHY_PR_ARG, CHAN_DEF_PR_ARG, __entry->signal_interference_bitmap)
-+);
- #endif /* !__RDEV_OPS_TRACE || TRACE_HEADER_MULTI_READ */
+ /* policy for the attributes */
+ static const struct nla_policy nl80211_policy[NUM_NL80211_ATTR];
  
- #undef TRACE_INCLUDE_PATH
+@@ -946,6 +957,8 @@ static const struct nla_policy nl80211_policy[NUM_NL80211_ATTR] = {
+ 	[NL80211_ATTR_UHR_CAPABILITY] =
+ 		NLA_POLICY_VALIDATE_FN(NLA_BINARY, validate_uhr_capa, 255),
+ 	[NL80211_ATTR_DISABLE_UHR] = { .type = NLA_FLAG },
++	[NL80211_ATTR_UHR_OPERATION] =
++		NLA_POLICY_VALIDATE_FN(NLA_BINARY, validate_uhr_operation),
+ };
+ 
+ /* policy for the key attributes */
+@@ -6486,16 +6499,6 @@ static int nl80211_calculate_ap_params(struct cfg80211_ap_settings *params)
+ 			return -EINVAL;
+ 	}
+ 
+-	cap = cfg80211_find_ext_elem(WLAN_EID_EXT_UHR_OPER, ies, ies_len);
+-	if (cap) {
+-		if (!cap->datalen)
+-			return -EINVAL;
+-		params->uhr_oper = (void *)(cap->data + 1);
+-		if (!ieee80211_uhr_oper_size_ok((const u8 *)params->uhr_oper,
+-						cap->datalen - 1, true))
+-			return -EINVAL;
+-	}
+-
+ 	return 0;
+ }
+ 
+@@ -6928,6 +6931,9 @@ static int nl80211_start_ap(struct sk_buff *skb, struct genl_info *info)
+ 	if (err)
+ 		goto out;
+ 
++	if (info->attrs[NL80211_ATTR_UHR_OPERATION])
++		params->uhr_oper = nla_data(info->attrs[NL80211_ATTR_UHR_OPERATION]);
++
+ 	err = nl80211_validate_ap_phy_operation(params);
+ 	if (err)
+ 		goto out;
 -- 
 2.53.0
 
