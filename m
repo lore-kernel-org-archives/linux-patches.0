@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3E63D5656;
-	Tue, 16 Jun 2026 18:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3FD3D8125;
+	Tue, 16 Jun 2026 18:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633493; cv=none; b=QL8DT3qi1OCLl0qyr5+72RyjyqKSBjSZIbljNHmzChDyOO6CYlqWshi5t8ch7cegyhGpR1wIDBwI5AJxJ4sbsb1ZE4YrDGrrhUa55IzOPZQg6k1CUXSLqqy4U32UQ17ggCJgQQy2Tcp/PhLvOnnFzzLE/TP4KURNcvT8NXKe7q8=
+	t=1781633498; cv=none; b=b6xe+hk3xTSLaEGtfezONcNRNavCgrKSkGprDu82wROb8UGBSDSSSQGd+5BY0/kZLeu3UFHPyahqQ8aReIgqFzbpP6cFlsdr8gsdHwj4D1UrLuDEEqA7ugVE1dN96TMogJIZyB1zYYatDtk18bde0qxMFR4L2+mKVi8A2zElCTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633493; c=relaxed/simple;
-	bh=7hOLrNYyrcBsTD069r9JTM+ALgInoBC9X5qqrVQyMAI=;
+	s=arc-20240116; t=1781633498; c=relaxed/simple;
+	bh=nN12wk0370q6BTku3SLslm6dT0VA/tb/+YPOo3lAcoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kBiSegbLKNrpCrQs8qExjDAC/3r3amC25ziae8lp7CsIh6JMT5KudC/ZpwbPkvGKSSLA2vT2LwNhue3CBCIP8+QWec2jCu3PX0EDIujszWd8UVOEY1CLyrn5AZxVEevtRdYOdUR/n1oAMC9FX+WTn//h+MaHCK03RpSgC1R80sU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWi7bsnV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sOuZf/Nd1M0zzW5Z4snBQDlS7WIuOE4RPGuIZpOfxMNf32pR7OtLNSBKg1pObWXV+CNSbMtWC0MPU5GjXtrMBoNndnFZeUHvOAkRRyXsF5pG7Mo50Hp3QGT528tHjd/LgiEoT3OTa6OlllfeQ5onB7YkaUCTE5rnEab6gp47YsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1tT5HAPU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWi7bsnV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB191F000E9;
-	Tue, 16 Jun 2026 18:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1tT5HAPU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B0E11F000E9;
+	Tue, 16 Jun 2026 18:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633492;
-	bh=NNB44iMdnTIEtYMjqHSngrhU0YWLpx7BP9DSINAbLWY=;
+	s=korg; t=1781633497;
+	bh=2Li4RzrfXdeQO8miKKoACVpfnoGFjrEDdZK3UWa4xUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IWi7bsnVPv2axWEzOuUeKZMpdGfmW9TKGFzahkyM0LuIfy30+JkJb5G03h7KUaC57
-	 jZuOhqQZ7tko01TzssigYfUUAHex3S9ZIQGNy8dL5A8tS/WOrJWD1hFvkIBlc4OjNU
-	 27xZUzRVOrzZlh6u/aq5x6+VlFmRsJbZHYG3CRPo=
+	b=1tT5HAPUNjpIEAOSCZbA4Gg6+dQiJb4CeOO8f+58Jw1zVV3UCiwXlSbgsuNc1k/Dc
+	 62f2NttaXMG4xP96wFOnpVQmL/RgxUIu96Sbd8gqBl007CxIJG7aiUtWge2pnBk2dB
+	 2d1GgZxwfFr5KAbSX6qBvnBITAQ0/9d26uTwf8N8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Pooja Katiyar <pooja.katiyar@intel.com>,
+	Johan Hovold <johan@kernel.org>,
 	stable <stable@kernel.org>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.15 056/411] usb: typec: ucsi: ccg: reject firmware images without a : record header
-Date: Tue, 16 Jun 2026 20:24:54 +0530
-Message-ID: <20260616145103.258469150@linuxfoundation.org>
+Subject: [PATCH 5.15 057/411] usb: typec: ucsi: displayport: NAK DP_CMD_CONFIGURE without a payload VDO
+Date: Tue, 16 Jun 2026 20:24:55 +0530
+Message-ID: <20260616145103.311911976@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,52 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit d7486952bf74e546ee3748fb14b2d07881fa6273 upstream.
+commit 167dd8d12226587ee554f520aed0256b7769cd5d upstream.
 
-do_flash() locates the first .cyacd record with
+ucsi_displayport_vdm() handles a DP_CMD_CONFIGURE by copying the first
+payload VDO from data[], but unlike the equivalent handler in
+altmodes/displayport.c it does not check that count covers a VDO beyond
+the header.  A header-only Configure VDM (count == 1) would read one u32
+past the caller's array.
 
-	p = strnchr(fw->data, fw->size, ':');
-	while (p < eof) {
-		s = strnchr(p + 1, eof - p - 1, ':');
-		...
-	}
-
-If the firmware image contains no ':' byte,  strnchr() returns NULL.
-NULL compares less than the valid kernel pointer eof, so the loop body
-runs and strnchr() is called with p + 1 == (void *)1 and a length of
-roughly (unsigned long)eof, causing a wonderful crash.
-
-The not_signed_fw fallthrough earlier in do_flash() and the chip-state
-branches in ccg_fw_update_needed() allow an unsigned blob to reach this
-loop, so a root user who can place a crafted file under /lib/firmware
-and write the do_flash sysfs attribute can trigger the oops.
-
-Bail out with -EINVAL when the initial strnchr() returns NULL.
+In the normal UCSI path the caller controls count, so this is hardening
+for non-standard delivery paths.  NAK and bail when no configuration VDO
+is present, matching the generic DP altmode driver's existing guard.
 
 Assisted-by: gkh_clanker_t1000
+Cc: Pooja Katiyar <pooja.katiyar@intel.com>
+Cc: Johan Hovold <johan@kernel.org>
 Cc: stable <stable@kernel.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026051405-posture-shrill-7884@gregkh
+Link: https://patch.msgid.link/2026051351-vividly-flattered-eb3d@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi_ccg.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/typec/ucsi/displayport.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/typec/ucsi/ucsi_ccg.c
-+++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
-@@ -1156,6 +1156,11 @@ not_signed_fw:
- 	 *****************************************************************/
- 
- 	p = strnchr(fw->data, fw->size, ':');
-+	if (!p) {
-+		dev_err(dev, "Bad FW format: no ':' record header found\n");
-+		err = -EINVAL;
-+		goto release_mem;
-+	}
- 	while (p < eof) {
- 		s = strnchr(p + 1, eof - p - 1, ':');
- 
+--- a/drivers/usb/typec/ucsi/displayport.c
++++ b/drivers/usb/typec/ucsi/displayport.c
+@@ -240,6 +240,10 @@ static int ucsi_displayport_vdm(struct t
+ 				dp->header |= VDO_CMDT(CMDT_RSP_ACK);
+ 			break;
+ 		case DP_CMD_CONFIGURE:
++			if (count < 2) {
++				dp->header |= VDO_CMDT(CMDT_RSP_NAK);
++				break;
++			}
+ 			dp->data.conf = *data;
+ 			if (ucsi_displayport_configure(dp)) {
+ 				dp->header |= VDO_CMDT(CMDT_RSP_NAK);
 
 
