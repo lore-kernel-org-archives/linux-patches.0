@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C78F4657D0;
-	Tue, 16 Jun 2026 17:21:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC30247AF4D;
+	Tue, 16 Jun 2026 17:21:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630465; cv=none; b=Pooz8gNtY0bi9mxu6ya0TfjImeM0mVC5/z3vsWyXsmekEH6CLnhw/spn/mvk8/dUoB9GPqydVAySvG01P2mdwAuiRj2dSVizaPiXC6j55bO6IH2UFgrGwnrFovU3obNdI4NiGbLi/ZxHqZMMUW/3ajTesFYpzkyW82260UuCA1E=
+	t=1781630471; cv=none; b=ZWUKcnQgdQ9K257TWWjXlX+rb4syoAfphtlN1ZjCSfx/4vXXP2qtOmwobsvwDYG2qoIi742a04H2X1Y2iDN7DnbRZlF4yxEA5orV+HLa9I6HfkBlRF+dywfHmHMh5NDQ0hM+na2Z+/e8WI1HrJTTypTZwCD2r6tB/z3xk3Xzgs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630465; c=relaxed/simple;
-	bh=/eF0D76Kq3LdmO62QD4GB4JdBoQe/PHTrIR+OP1v5ys=;
+	s=arc-20240116; t=1781630471; c=relaxed/simple;
+	bh=W8LzRzJW7owpJ36z8S15dvhdxcrGpUo2pVIA6bNL16Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mCliDJg0Wfciw0ftzf5gyOgu2c/D7NGEwWhTo8aFwMBe9Vp0TpitXYpw4tucHgk3ZwuG4UOP2nkA53xJUaXtkmKwL8G164RdG1nqF/xFOA3sKqndIg0z8Ya2lOXjx/bCsNXFRXKmWA90mBn/lqGrHcrIR+KqT3qjyKZUQaR5UG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=msk+ftab; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZEZDravmHPqb4jQjfPY5ftHQk37Y4Ik66AZm6PKdO/muJRK+SUY7FmTh1d/dBdIA1CKikVCuI66BBtJUbyqq95rQV2KWhslytdhHWbOArwX/szSlBHtlfhvoe+xUjkQ5VyK2HJNvPtu1J8ectHVAzwCXdWsX/wEryIkFZ9BscV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RnoBSN6F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="msk+ftab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C0611F000E9;
-	Tue, 16 Jun 2026 17:21:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RnoBSN6F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA881F000E9;
+	Tue, 16 Jun 2026 17:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630464;
-	bh=+XpWFDL/UcWFkO9pN2Nahbhz3w5DvABuEBSe/NCNSwo=;
+	s=korg; t=1781630469;
+	bh=jgl5CSmqIEz/XAewyexz11GuKl6ACMhPHKyfiLOyDV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=msk+ftab5ZwumMNSFy621WsJf0p7NhJ0zsqKAb55QDDFTIvUmRb+J4+vt607UBgMO
-	 Fs5M7l686NPQYj/6et8cWRNFsS0BQwal/MWJ+ItBbd+fmz5yC6zAeThUOXWS5nJrMo
-	 dbeIJJtkBs/J81/jBuviFAysCJUM/o97jUXh5CCQ=
+	b=RnoBSN6FENGzOkw/AF96dBDr/J1bUtBBcOcTP5ptUM5/uohdWNX8dmIQ+UUFdXs9Y
+	 UPv1mUyKIn6tcsJ3QRNmnR2CPDJRoC2f2yNP2TzpyOXdmR1mnjJJkYImtczEFJwYLN
+	 y0qUp69MvodIh99b+/XxSdQeGBOQRuNn87ice9jE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hao <haokexin@gmail.com>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Wenshan Lan <jetlan9@163.com>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 006/522] net: cpsw_new: Fix potential unregister of netdev that has not been registered yet
-Date: Tue, 16 Jun 2026 20:22:33 +0530
-Message-ID: <20260616145125.661056557@linuxfoundation.org>
+Subject: [PATCH 6.1 028/522] ASoC: codecs: simple-mux: Fix enum control bounds check
+Date: Tue, 16 Jun 2026 20:22:55 +0530
+Message-ID: <20260616145126.959552665@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -47,58 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kevin Hao <haokexin@gmail.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 9d724b34fbe13b71865ad0906a4be97571f19cf5 ]
+[ Upstream commit f63ad68e18d774a5d15cd7e405ead63f6b322679 ]
 
-If an error occurs during register_netdev() for the first MAC in
-cpsw_register_ports(), even though cpsw->slaves[0].ndev is set to NULL,
-cpsw->slaves[1].ndev would remain unchanged. This could later cause
-cpsw_unregister_ports() to attempt unregistering the second MAC.
-To address this, add a check for ndev->reg_state before calling
-unregister_netdev(). With this change, setting cpsw->slaves[i].ndev
-to NULL becomes unnecessary and can be removed accordingly.
+simple_mux_control_put() rejects values greater than e->items, but
+enum control values are zero based. For the two-entry mux used by this
+driver, valid values are 0 and 1, so value 2 must be rejected as well.
 
-Fixes: ed3525eda4c4 ("net: ethernet: ti: introduce cpsw switchdev based driver part 1 - dual-emac")
-Signed-off-by: Kevin Hao <haokexin@gmail.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-Link: https://patch.msgid.link/20260205-cpsw-error-path-v1-2-6e58bae6b299@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Wenshan Lan <jetlan9@163.com>
+Accepting e->items can store an invalid mux state, pass it to the GPIO
+setter, and pass it on to the DAPM mux update path where it is used as
+an index into the enum text array.
+
+Use the same >= e->items check used by the ASoC enum helpers.
+
+Fixes: 342fbb7578d1 ("ASoC: add simple-mux")
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260527-asoc-simple-mux-enum-bounds-v1-1-3f805b9fc671@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/cpsw_new.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/simple-mux.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ti/cpsw_new.c b/drivers/net/ethernet/ti/cpsw_new.c
-index c99dde9dbe7750..17c267f6d79aa9 100644
---- a/drivers/net/ethernet/ti/cpsw_new.c
-+++ b/drivers/net/ethernet/ti/cpsw_new.c
-@@ -1437,7 +1437,8 @@ static void cpsw_unregister_ports(struct cpsw_common *cpsw)
- 	int i = 0;
+diff --git a/sound/soc/codecs/simple-mux.c b/sound/soc/codecs/simple-mux.c
+index d30c0d24d90a65..c5aa58c6e7bae6 100644
+--- a/sound/soc/codecs/simple-mux.c
++++ b/sound/soc/codecs/simple-mux.c
+@@ -40,7 +40,7 @@ static int simple_mux_control_put(struct snd_kcontrol *kcontrol,
+ 	struct snd_soc_component *c = snd_soc_dapm_to_component(dapm);
+ 	struct simple_mux *priv = snd_soc_component_get_drvdata(c);
  
- 	for (i = 0; i < cpsw->data.slaves; i++) {
--		if (!cpsw->slaves[i].ndev)
-+		if (!cpsw->slaves[i].ndev ||
-+		    cpsw->slaves[i].ndev->reg_state != NETREG_REGISTERED)
- 			continue;
+-	if (ucontrol->value.enumerated.item[0] > e->items)
++	if (ucontrol->value.enumerated.item[0] >= e->items)
+ 		return -EINVAL;
  
- 		unregister_netdev(cpsw->slaves[i].ndev);
-@@ -1457,7 +1458,6 @@ static int cpsw_register_ports(struct cpsw_common *cpsw)
- 		if (ret) {
- 			dev_err(cpsw->dev,
- 				"cpsw: err registering net device%d\n", i);
--			cpsw->slaves[i].ndev = NULL;
- 			break;
- 		}
- 	}
+ 	if (priv->mux == ucontrol->value.enumerated.item[0])
 -- 
 2.53.0
 
