@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591703DC87A;
-	Tue, 16 Jun 2026 19:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35D63DDDA0;
+	Tue, 16 Jun 2026 19:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636409; cv=none; b=LfWhd1phy1ukHL3/qPbmjZo1yd4r0lptmuTTtG4o5NCp1jCQHDxbczzW6Ici9jHr1DBooHxcPbYKI5ipCFALhDJpxLVUG8vjt+VGf7elUKSakJvJufvSMh39d5kscMs9DY2N8rqq9EvjRy42PyKMavsENC5tak5q81Twm6Cn/5Y=
+	t=1781636414; cv=none; b=OlaSfjnXRwETHTHSgL6Jr9nKWK6X06jccI6nkELUaI81rZB4VVDU+JumXjLvs+tD+NTXE6lYQe9Yk8bIgDrgoukS8GXkdbtIcJGYfLHQ9/xzzHQQmM/Qd+iy79G2BB3qT9mg6o9M12MKRTo03Vv3u3BUEir5IlLF6cJs0FNt+28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636409; c=relaxed/simple;
-	bh=Og1W0G8K2lDbCVrxhLEEszlsCDMSbDQDq34mogvlt+I=;
+	s=arc-20240116; t=1781636414; c=relaxed/simple;
+	bh=CpMeTqx4jGE/nVzUNGtw44QB40V/twVUn8+SEHEgr48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BPbjDTTwIyEhpOv+kGm81ttczDpy3IQMUVazNObCVl8FZzwRcs9W7SCrTiXR0v3DzCDhg6p4H4Qxum9/FAj3Nn+kvw9TQfv4y6yB/zvFA0KiU03ZjP+tktQEJmQ6VARP/PYmk4F7pmKoctFED2S3r/KLrnushooAJw6mMssvYhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znO7Vv1B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jBYdAsb0kM9DXCUDAnOTk5wcH23qPVui5SUF6tAzxoeTOnk+gGJHwruQjr112MG3Oj+9uAYKwGaaB/6ZoQZVld8xio4Yc6eOABaYjsiBdTC+vRIZ3hKoQge7P9BgO7S3NEZOy9An+yDQJUmDvPVhmYVRGBtzI6ViybflYinE+Io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxpfgL9q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znO7Vv1B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF551F000E9;
-	Tue, 16 Jun 2026 19:00:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxpfgL9q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9891F000E9;
+	Tue, 16 Jun 2026 19:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636408;
-	bh=k35Bh/G1YCGQ1+2cLksSA7HMNlTf9KtSLsifryMzU8E=;
+	s=korg; t=1781636413;
+	bh=srlf/+/ix78n/uiu51HatcIJL3WRoKbFuM82kG6/BOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=znO7Vv1BV/KEDSKEYIUPz2EUr9m3Jbx24t3M3ECWfEgzWCL/HuWVtCV0hptUdkjNS
-	 RsVeSd+CgaAX5+nBUDdhWnNFae1T+LLYHGpNP3KzvvDHr3RwYGIlAkIcT6KxUPOUgi
-	 Iu02ef48Ad7B3q/HC/WIZK2RM6ZnLywLavHbZeDA=
+	b=KxpfgL9qHIy1KHvdcdnIIV54W7C6EXBeClBe+wGEgkSjGSK4kVwA0UOykIaxM8F30
+	 VdXZE0fBdqniBYPFXhq+s4pwH+Dmy9mAyVutKymx5XoditWg7Kha6kJv+60UiRKL6s
+	 wYX4q9q6XjGShjWyrMv5g2A+L1HsJ/MJKyvs9DZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jake Lamberson <lamberson.jake@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 233/342] ALSA: core: Fix potential data race at fasync handling
-Date: Tue, 16 Jun 2026 20:28:49 +0530
-Message-ID: <20260616145059.055164540@linuxfoundation.org>
+Subject: [PATCH 5.10 234/342] net: qrtr: ns: Limit the maximum number of lookups
+Date: Tue, 16 Jun 2026 20:28:50 +0530
+Message-ID: <20260616145059.100980140@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -51,73 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 8146cd333d235ed32d48bb803fdf743472d7c783 ]
+[ Upstream commit 5640227d9a21c6a8be249a10677b832e7f40dc55 ]
 
-In snd_fasync_work_fn(), which is the offload work for traversing and
-processing the pending fasync list, the call of kill_fasync() is done
-outside the snd_fasync_lock for avoiding deadlocks.  The problem is
-that its the references of fasync->on, fasync->signal and fasync->poll
-are done there also outside the lock.  Since these may be modified by
-snd_kill_fasync() call concurrently from other process, inconsistent
-values might be passed to kill_fasync().  Although there shouldn't be
-critical UAF, it's still better to be addressed.
+Current code does no bound checking on the number of lookups a client can
+perform. Though the code restricts the lookups to local clients, there is
+still a possibility of a malicious local client sending a flood of
+NEW_LOOKUP messages over the same socket.
 
-This patch moves the kill_fasync() argument evaluations inside the
-snd_fasync_lock for avoiding the data races above.  The handling in
-fasync->on flag is optimized in the loop to skip directly.
+Fix this issue by limiting the maximum number of lookups to 64 globally.
+Since the nameserver allows only atmost one local observer, this global
+lookup count will ensure that the lookups stay within the limit.
 
-Also, for more clarity, snd_fasync_free() takes the lock and unlink
-the pending entry more directly instead of clearing fasync->on flag.
+Note that, limit of 64 is chosen based on the current platform
+requirements. If requirement changes in the future, this limit can be
+increased.
 
-Reported-by: Jake Lamberson <lamberson.jake@gmail.com>
-Fixes: ef34a0ae7a26 ("ALSA: core: Add async signal helpers")
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260420061721.3253644-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ replaced scoped_guard(spinlock_irq, &snd_fasync_lock) with explicit spin_lock_irq()/spin_unlock_irq() ]
+Cc: stable@vger.kernel.org
+Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260409-qrtr-fix-v3-2-00a8a5ff2b51@oss.qualcomm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ adapted comment block to only mention QRTR_NS_MAX_LOOKUPS and kept kzalloc() instead of kzalloc_obj() due to missing prerequisite commits ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/misc.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ net/qrtr/ns.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/sound/core/misc.c
-+++ b/sound/core/misc.c
-@@ -171,14 +171,18 @@ static LIST_HEAD(snd_fasync_list);
- static void snd_fasync_work_fn(struct work_struct *work)
- {
- 	struct snd_fasync *fasync;
-+	int signal, poll;
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -21,6 +21,7 @@ static struct {
+ 	struct socket *sock;
+ 	struct sockaddr_qrtr bcast_sq;
+ 	struct list_head lookups;
++	u32 lookup_count;
+ 	struct workqueue_struct *workqueue;
+ 	struct work_struct work;
+ 	void (*saved_data_ready)(struct sock *sk);
+@@ -69,6 +70,11 @@ struct qrtr_node {
+ 	struct radix_tree_root servers;
+ };
  
- 	spin_lock_irq(&snd_fasync_lock);
- 	while (!list_empty(&snd_fasync_list)) {
- 		fasync = list_first_entry(&snd_fasync_list, struct snd_fasync, list);
- 		list_del_init(&fasync->list);
-+		if (!fasync->on)
-+			continue;
-+		signal = fasync->signal;
-+		poll = fasync->poll;
- 		spin_unlock_irq(&snd_fasync_lock);
--		if (fasync->on)
--			kill_fasync(&fasync->fasync, fasync->signal, fasync->poll);
-+		kill_fasync(&fasync->fasync, signal, poll);
- 		spin_lock_irq(&snd_fasync_lock);
- 	}
- 	spin_unlock_irq(&snd_fasync_lock);
-@@ -234,7 +238,11 @@ void snd_fasync_free(struct snd_fasync *
++/* Max lookup limit is chosen based on the current platform requirements. If the
++ * requirement changes in the future, this value can be increased.
++ */
++#define QRTR_NS_MAX_LOOKUPS 64
++
+ static struct qrtr_node *node_get(unsigned int node_id)
  {
- 	if (!fasync)
- 		return;
--	fasync->on = 0;
+ 	struct qrtr_node *node;
+@@ -457,6 +463,7 @@ static int ctrl_cmd_del_client(struct so
+ 
+ 		list_del(&lookup->li);
+ 		kfree(lookup);
++		qrtr_ns.lookup_count--;
+ 	}
+ 
+ 	/* Remove the server belonging to this port but don't broadcast
+@@ -598,6 +605,11 @@ static int ctrl_cmd_new_lookup(struct so
+ 	if (from->sq_node != qrtr_ns.local_node)
+ 		return -EINVAL;
+ 
++	if (qrtr_ns.lookup_count >= QRTR_NS_MAX_LOOKUPS) {
++		pr_err_ratelimited("QRTR client node exceeds max lookup limit!\n");
++		return -ENOSPC;
++	}
 +
-+	spin_lock_irq(&snd_fasync_lock);
-+	list_del_init(&fasync->list);
-+	spin_unlock_irq(&snd_fasync_lock);
-+
- 	flush_work(&snd_fasync_work);
- 	kfree(fasync);
+ 	lookup = kzalloc(sizeof(*lookup), GFP_KERNEL);
+ 	if (!lookup)
+ 		return -ENOMEM;
+@@ -606,6 +618,7 @@ static int ctrl_cmd_new_lookup(struct so
+ 	lookup->service = service;
+ 	lookup->instance = instance;
+ 	list_add_tail(&lookup->li, &qrtr_ns.lookups);
++	qrtr_ns.lookup_count++;
+ 
+ 	memset(&filter, 0, sizeof(filter));
+ 	filter.service = service;
+@@ -672,6 +685,7 @@ static void ctrl_cmd_del_lookup(struct s
+ 
+ 		list_del(&lookup->li);
+ 		kfree(lookup);
++		qrtr_ns.lookup_count--;
+ 	}
  }
+ 
 
 
