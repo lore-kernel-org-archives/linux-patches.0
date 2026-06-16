@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2016644D686;
-	Tue, 16 Jun 2026 15:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF3E44E025;
+	Tue, 16 Jun 2026 15:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625470; cv=none; b=URFWMdXGSpzPxisyq97OlZO56A6IP5O3AMgyWC1lEjCaERQzJxXOFmIC9ICQtGuv+0Kg5G1PtHpGuTBy8hhD661nhCrLAcyfBjwc3VOIogbYcI4EKISl6Nfi1mCm8w0KQvm8XvIJyXik+p0aqImlzfhFFr7yhUcQa6AW8zwFO7o=
+	t=1781625474; cv=none; b=JXjwxHA+L8W1IMZu/TdwAW2rITYKD8POhIlkfDiRIDdne4ZbRtdl917AemSA2iYXyUFB765Uw3jhaoCzCei/Tfb/MwmW5ZuQy3lQ2TnBowdoxzWbudP/9ztCfo41y46pdKbqd3SVJkdEe1shSCjaHxYVI3wCIAuS7zgmN6y39A4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625470; c=relaxed/simple;
-	bh=vgZ9qGtxv0VTAKDuMcEPtL9sHOuUq60GONqZb4upNsA=;
+	s=arc-20240116; t=1781625474; c=relaxed/simple;
+	bh=uXV0m8L06y7udZsKNSLHWJ4yQ3+WOv5S8wG7hWva1BU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mUxahe+8Gxc0qbAjaf4HEPJtz5ocCbNr13Px771RehBY+lhsR/k7me2/or8/1PmF76wjfi0v7Xgzt8WSWCCRXH7IU/oz7QqaEskNAnzgvyjd3Hfv18HJohwUE9ih/4SnmDY3bQFwXv8HB1QMg4VmWUrp1WJIG9qy9jlUhlUd+Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GiHm5dMe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jWKud0sKgXBcszxsTr4QkR7uBuGC6yqR7FrhWRV3coBi5FnUMR3H7HojgtXyEApRVVdjFXujVX7kYqaBdSVozHCwnt4gpvnLLa+NufvxWIZROELLRORBL4wRtQIZsyJsFeLEtSgUCDH19XKIfDKonSHScmL2YejLHhSyQ5gHstE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Ys7X0do; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GiHm5dMe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB1951F000E9;
-	Tue, 16 Jun 2026 15:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Ys7X0do"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9FF1F000E9;
+	Tue, 16 Jun 2026 15:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625467;
-	bh=3FaTIOBMXzVYVHHFDS6qXeKJG6jqPSwIjEC2CtxSl4g=;
+	s=korg; t=1781625473;
+	bh=lPKm3HDwhsxZwFmv9gyhKrSM6dqGmhTBFAxM1RnlXuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GiHm5dMeyFLlf880zrFJef8584OkfOcbD6nwGt2vabx3Ny0Y+w6HJvR8ew/NN661o
-	 uPEZYveU/hyHY25Og89C9aE4CCmeFT/gI6S2vHe/kXabmmMwpw9xUpnZDeGftW6G0W
-	 k0TyGHDh9YL1R7pQgHyEJmyEEO6pAGoCJ928uEbQ=
+	b=2Ys7X0doqFeuOwfFpiFe5oep7EG+AJWd+lpZ0tmmGZGAdX5/7o3GtarIymtJUg26j
+	 c3mG+AhBdSOGM+Yr0i1f2pj6qyNezxImad5ovSKCX4cZv4u00GfaGJElbrNfhVt3cl
+	 3Ab8jnPKZ5uMprfWHrLy18kpYGHojz7IDhrOhHKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Madani <tristan@talencesecurity.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Florian Westphal <fw@strlen.de>,
+	Davide Ornaghi <d.ornaghi97@gmail.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.18 147/325] netfilter: nft_tunnel: fix use-after-free on object destroy
-Date: Tue, 16 Jun 2026 20:29:03 +0530
-Message-ID: <20260616145105.046087269@linuxfoundation.org>
+Subject: [PATCH 6.18 148/325] netfilter: nft_meta_bridge: fix stale stack leak via IIFHWADDR register
+Date: Tue, 16 Jun 2026 20:29:04 +0530
+Message-ID: <20260616145105.092681738@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,43 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Madani <tristan@talencesecurity.com>
+From: Davide Ornaghi <d.ornaghi97@gmail.com>
 
-commit c32b26aaa2f9216520a38b3f4bfeec846eb3eb8a upstream.
+commit c7d573551f9286100a055ef696cde6af54549677 upstream.
 
-nft_tunnel_obj_destroy() calls metadata_dst_free() which directly
-kfree()s the metadata_dst, ignoring the dst_entry refcount. Packets
-that took a reference via dst_hold() in nft_tunnel_obj_eval() and
-are still queued (e.g. in a netem qdisc) are left with a dangling
-pointer. When these packets are eventually dequeued, dst_release()
-operates on freed memory.
+NFT_META_BRI_IIFHWADDR declares its destination register with
+len = ETH_ALEN (6 bytes), which the register-init tracking rounds up to
+two 32-bit registers (8 bytes). nft_meta_bridge_get_eval() then does
+memcpy(dest, br_dev->dev_addr, ETH_ALEN), writing only 6 bytes and
+leaving the upper 2 bytes of the second register as uninitialised
+nft_do_chain() stack. A downstream load of that register span leaks
+those stale bytes to userspace.
 
-Replace metadata_dst_free() with dst_release() so the metadata_dst
-is freed only after all references are dropped. The dst subsystem
-already handles metadata_dst cleanup in dst_destroy() when
-DST_METADATA is set.
+Zero the second register before the memcpy so the full declared span is
+written.
 
-Fixes: af308b94a2a4 ("netfilter: nf_tables: add tunnel support")
+Fixes: cbd2257dc96e ("netfilter: nft_meta_bridge: introduce NFT_META_BRI_IIFHWADDR support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tristan Madani <tristan@talencesecurity.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Davide Ornaghi <d.ornaghi97@gmail.com>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_tunnel.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bridge/netfilter/nft_meta_bridge.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/netfilter/nft_tunnel.c
-+++ b/net/netfilter/nft_tunnel.c
-@@ -702,7 +702,7 @@ static void nft_tunnel_obj_destroy(const
- {
- 	struct nft_tunnel_obj *priv = nft_obj_data(obj);
+diff --git a/net/bridge/netfilter/nft_meta_bridge.c b/net/bridge/netfilter/nft_meta_bridge.c
+index 7763e78abb00..219c40680260 100644
+--- a/net/bridge/netfilter/nft_meta_bridge.c
++++ b/net/bridge/netfilter/nft_meta_bridge.c
+@@ -64,6 +64,8 @@ static void nft_meta_bridge_get_eval(const struct nft_expr *expr,
+ 		if (!br_dev)
+ 			goto err;
  
--	metadata_dst_free(priv->md);
-+	dst_release(&priv->md->dst);
- }
- 
- static struct nft_object_type nft_tunnel_obj_type;
++		/* ETH_ALEN (6) is shorter than the destination register span (8) */
++		dest[1] = 0;
+ 		memcpy(dest, br_dev->dev_addr, ETH_ALEN);
+ 		return;
+ 	default:
+-- 
+2.54.0
+
 
 
