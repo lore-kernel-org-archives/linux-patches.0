@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1AF35DA78;
-	Tue, 16 Jun 2026 19:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B1834751B;
+	Tue, 16 Jun 2026 19:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636992; cv=none; b=KBTUlYGHvsaZYT+1CDfZ30AdtGPs1qK923guyf9wYYK5loK7X795seIz4PQPMIjmKFiw75EYXBRtlzfcgeCwfl+Qh/GLif5zY2ZhihudxtpAuInukw+8bzYbRKQ2mm0sL291/CSsXXZy3lGYIRENx8ct/U84grA8DuSFO74EIb8=
+	t=1781636998; cv=none; b=B+txgmwJn6IzP8YGJ9DnUry3K2ySb/TcIzToDHO3GgkOmqQxrYwdoIQnVrjduOU/FCNTU3qky2CKsH2SO7t0CDLkQlevLX9RzzQCV3Ya9vGdHXm+fdQVhXUDXH/LvbLXoLoWigcyQjf0uXEBxTLvZysPn+W3k0KEjwqRCpSP5v8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636992; c=relaxed/simple;
-	bh=nuIqDvt4GrsurTCDuKCfdCSSt5V41NGOt6ve8CkHJR0=;
+	s=arc-20240116; t=1781636998; c=relaxed/simple;
+	bh=mo6jOj6t1PEkrACOyUolmibDgevIJSGCjlDMP4CXPs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lm5+2hq/IEoYcEvYQlqnxizaY1AjNtUgkMerHxa35DK2NEYk7NGNnw89GBMURDw3SMJROl/RP2lc2vh0t+5YWTpSs7e7fRU+D8N9ay4WMFn88CZuAxlYDI0D1K0XZo3YATsQ+XkLyS6+yUiqipPOc3J4V0Bw8frKiioVU7zLEN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PgWtW+FC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g001An7kbXCmnKm6E6AUJjMtLpi2+9k6RK6HqM2+PNBFAGh+8nGZJx66DoxwkVGHsLZxzjShSzEQRgAQxlpnCgywCZeFdXuG93jOjVVgEIShdb7/gBx3gG57kTMN9XZc+LzAj0AREzqaGZrIoZAWoef2hK8wFFC4s3KpcCd1mWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Lw5TyII; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PgWtW+FC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE881F000E9;
-	Tue, 16 Jun 2026 19:09:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Lw5TyII"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2675C1F00AC4;
+	Tue, 16 Jun 2026 19:09:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636991;
-	bh=qwcKFCAIqQFdbWh+LSHANM6yAZsD/h4dOZnHkafwinQ=;
+	s=korg; t=1781636997;
+	bh=sxsilXVLVUFKCiUpdq9EH/42EyRB3bLiminX9WtRqU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PgWtW+FClFr/6ncqF0oZ1Cu9DKAgLPTvErAZimEvoymtBKClOJRipFWp+JlPp59hf
-	 bsoQKzShgQVY9n81F/uD/a0w9NFgMZhsgFlCm95NP8mZU5ig0YP9Y+/f67r0QpFRt+
-	 +VwBg9fzlK8uwTi9IWDmO7uCGjv17tLoZIbWuQ2g=
+	b=2Lw5TyIIWBpmRUBzZHeq9DDQO30LsnrvG/BTe+McQi4jYq6pIh7UJIDpOMY4bxcww
+	 oiq5zFQ8DULmU05VFBYzA8mjF1Qb8et1pHKDsFl1wevMrtppm5zDQD1zXKJflS/PYd
+	 KamVE0AHB0t4hJejOcOi/fKMtJzINXNakKXvfdRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoniu Miclaus <antoniu.miclaus@analog.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Rodrigo Alencar <rodrigo.alencar@analog.com>,
 	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 323/342] iio: gyro: adis16260: fix division by zero in write_raw
-Date: Tue, 16 Jun 2026 20:30:19 +0530
-Message-ID: <20260616145103.614501760@linuxfoundation.org>
+Subject: [PATCH 5.10 324/342] iio: dac: ad5686: fix ref bit initialization for single-channel parts
+Date: Tue, 16 Jun 2026 20:30:20 +0530
+Message-ID: <20260616145103.666519824@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -47,43 +47,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antoniu Miclaus <antoniu.miclaus@analog.com>
+From: Rodrigo Alencar <rodrigo.alencar@analog.com>
 
-[ Upstream commit 761e8b489e6cf166c574034b70637f8a7eadd0ee ]
+[ Upstream commit ecae2ae606d493cf11457946436335bd0e726663 ]
 
-Add a validation check for the sampling frequency value before using it
-as a divisor. A user writing zero to the sampling_frequency sysfs
-attribute triggers a division by zero in the kernel.
+The reference bit position was ignored when writing the register at the
+probe() function (!!val was used). When such bit is 1, internal voltage
+reference is disabled so that an external one can be used. For
+multi-channel devices, bit 0 of the Internal Reference Setup command
+behaves the same way, so AD5686_REF_BIT_MSK is created. The issue exists
+since support for single-channel devices were first introduced.
 
-Fixes: 089a41985c6c ("staging: iio: adis16260 digital gyro driver")
-Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Fixes: be1b24d24541 ("iio:dac:ad5686: Add AD5691R/AD5692R/AD5693/AD5693R support")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: Rodrigo Alencar <rodrigo.alencar@analog.com>
 Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+[ adapted `has_external_vref` to the in-tree equivalent `voltage_uv` variable in the `val =` computation ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/gyro/adis16260.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/dac/ad5686.c |    6 +++---
+ drivers/iio/dac/ad5686.h |    1 +
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/iio/gyro/adis16260.c
-+++ b/drivers/iio/gyro/adis16260.c
-@@ -293,6 +293,9 @@ static int adis16260_write_raw(struct ii
- 		addr = adis16260_addresses[chan->scan_index][1];
- 		return adis_write_reg_16(adis, addr, val);
- 	case IIO_CHAN_INFO_SAMP_FREQ:
-+		if (val <= 0)
-+			return -EINVAL;
-+
- 		mutex_lock(&adis->state_lock);
- 		if (spi_get_device_id(adis->spi)->driver_data)
- 			t = 256 / val;
+--- a/drivers/iio/dac/ad5686.c
++++ b/drivers/iio/dac/ad5686.c
+@@ -488,7 +488,7 @@ int ad5686_probe(struct device *dev,
+ 		break;
+ 	case AD5686_REGMAP:
+ 		cmd = AD5686_CMD_INTERNAL_REFER_SETUP;
+-		ref_bit_msk = 0;
++		ref_bit_msk = AD5686_REF_BIT_MSK;
+ 		break;
+ 	case AD5693_REGMAP:
+ 		cmd = AD5686_CMD_CONTROL_REG;
+@@ -500,9 +500,9 @@ int ad5686_probe(struct device *dev,
+ 		goto error_disable_reg;
+ 	}
+ 
+-	val = (voltage_uv | ref_bit_msk);
++	val = voltage_uv ? ref_bit_msk : 0;
+ 
+-	ret = st->write(st, cmd, 0, !!val);
++	ret = st->write(st, cmd, 0, val);
+ 	if (ret)
+ 		goto error_disable_reg;
+ 
+--- a/drivers/iio/dac/ad5686.h
++++ b/drivers/iio/dac/ad5686.h
+@@ -44,6 +44,7 @@
+ 
+ #define AD5310_REF_BIT_MSK			BIT(8)
+ #define AD5683_REF_BIT_MSK			BIT(12)
++#define AD5686_REF_BIT_MSK			BIT(0)
+ #define AD5693_REF_BIT_MSK			BIT(12)
+ 
+ /**
 
 
