@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513E52F12AE;
-	Tue, 16 Jun 2026 17:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E9D2F12AE;
+	Tue, 16 Jun 2026 17:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632641; cv=none; b=N7FnTYf5QbxMdFwrOcAFCUSEa2JgAdWV+mxTxZFuhxSN1eTPWApT7jnmwDJCTbf3b8JFOZ2h+alK9iYsnuyP29+1J3ob0etXjUB3fL0fjl/tS3Y/0kBHDg7AEa23M8PGmWNAe6hceRALcMiUv0yVe3Sja1pQrvZftqLjHTggX4c=
+	t=1781632647; cv=none; b=JcymLEMVlgjAIuMAEBBAJl8fWaC7jzfuAdsBECcrN7INV4gSX+gLJcRZo9nEt9cpn8ScEBKEtzdGjlOnfrIRwNnm7vIidkekWOlAIie5sT4JB0G2G6pQmuUB/pg9z4+05Nw6iyzzwhbYfvdn/bPPm99GpStBEQYRpKdTzlP0ttE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632641; c=relaxed/simple;
-	bh=wmmGhXwh/KuaVk63AF3b9BHNtF3hHfZf+qN5/ny5diI=;
+	s=arc-20240116; t=1781632647; c=relaxed/simple;
+	bh=fjkvkJtVWuwVUiiiq8PnkZ19eq3E9zHJIqjU1r56/h0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LKjCcsuF3WYfEgHukLxYt5BSRiMn/W4uhDrfn8cMR2PNVHPgaHjLpUPIyx3GxOMnEEMjgWihdyM2sHWqrk0vwK6KWnYMSaQkc/D0Izk9NdHtXVMFtpFYXpGn6YpL6gdsc8jLxrOwBvbgEhdcGAg0LDrygD64lSdD9xR79PrUiOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XWgIywsr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qaCF3E4NlkqIZaEvPueaBTs4ijdfki2j/lP3Cq0wFjusAgyGgq4211QMCp7bQ4f4Xrz07IDABxWpom83mynOR4Dy8qWn8qoXSQkx0VqMbH1AMBKwv/EIsvqBkQsOTNJBkHiydKXRRaovaF9GamNmud36j4mo2LkPiKvNW846D48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6Hczzid; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XWgIywsr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BCB21F000E9;
-	Tue, 16 Jun 2026 17:57:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6Hczzid"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6DE1F000E9;
+	Tue, 16 Jun 2026 17:57:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632640;
-	bh=bKjLu9lKWHqBksY+1iThrmFkdvLfj9Nfnuitip1Zi3I=;
+	s=korg; t=1781632646;
+	bh=COcwN3ZDTU5KHqmnY9uniAz2+ik44BMQsuE6AmH1Grk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XWgIywsrJpBAuW6eVf/VoNpoAqkfxM9Kw7Gub1YkpH3+Kne9mfNTP/jjwEIdblJxo
-	 07v7Jbyh4jUFHL0kvqy3baL0fAgbvYtv9X/WJTYbwtM/gktI9t1zW2disezSLBZQju
-	 BjaD7c3xwRnYdB/pn0BTZnCTeAVcgdGotORjNypg=
+	b=l6HczzidcM5h3W/caiGBlO1+7L7PTrqnJwj2uT4Mgy8W2BQS48uVMeSIGthk9e9Au
+	 ok0w4MJjQuOp6eqbnhBUfikvicBUYqyTLf20Ck9C2bwldm5yv/aCh9JN+Q8MS2uZ/S
+	 s5x/n4yE0MGo84T9oR4GyyzJmqiQitSSyuNy41w8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 450/522] platform/x86/intel/vsec: Fix enable_cnt imbalance on PCIe error recovery
-Date: Tue, 16 Jun 2026 20:29:57 +0530
-Message-ID: <20260616145146.970751711@linuxfoundation.org>
+Subject: [PATCH 6.1 451/522] octeontx2-pf: avoid double free of pool->stack on AQ init failure
+Date: Tue, 16 Jun 2026 20:29:58 +0530
+Message-ID: <20260616145147.015004822@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -45,99 +47,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-[ Upstream commit 348ccc754d8939e21ca5956ff45720b81d6e407f ]
+[ Upstream commit 9b244c242bec48b37e82b89787afd6a4c43457e1 ]
 
-After a PCIe Uncorrectable Error has been reported by a device with
-Intel Vendor Specific Extended Capabilities and has been recovered
-through a Secondary Bus Reset, its driver calls intel_vsec_pci_probe()
-to rescan and reinitialize VSECs.
+otx2_pool_aq_init() frees pool->stack when mailbox sync or retry
+allocation fails, but leaves the pointer unchanged. Later,
+otx2_sq_aura_pool_init() unwinds the partial setup through
+otx2_aura_pool_free(), which frees pool->stack again. The CN20K-specific
+cn20k_pool_aq_init() implementation has the same bug in
+its corresponding error path.
 
-intel_vsec_pci_probe() invokes pcim_enable_device() and thereby adds
-another devm action which calls pcim_disable_device() on driver unbind.
+Set pool->stack to NULL immediately after the local free so the shared
+cleanup path does not free the same stack again while cleaning up
+partially initialized pool state.
 
-So once the driver unbinds, pcim_disable_device() will be called as many
-times as an Uncorrectable Error occurred, plus one.  This will lead to
-an enable_cnt imbalance on driver unbind.
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still present in
+v7.1-rc3.
 
-Additionally, since commit dc957ab6aa05 ("platform/x86/intel/vsec: Add
-private data for per-device data"), a devm_kzalloc() allocation is
-leaked on every Uncorrectable Error.
+Runtime validation was not performed because reproducing this path
+requires OcteonTX2/CN20K hardware.
 
-Avoid by splitting the VSEC rescan out of intel_vsec_pci_probe() into a
-separate helper and calling that on PCIe error recovery.
-
-Fixes: 936874b77dd0 ("platform/x86/intel/vsec: Add PCI error recovery support to Intel PMT")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org  # v6.0+
-Link: https://patch.msgid.link/bd594d09fa866dc51dddc9a447c3b23f9b1402cc.1778736835.git.lukas@wunner.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: caa2da34fd25 ("octeontx2-pf: Initialize and config queues")
+Fixes: d322fbd17203 ("octeontx2-pf: Initialize cn20k specific aura and pool contexts")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260515151826.1005397-1-dawei.feng@seu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/vsec.c |   21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/platform/x86/intel/vsec.c
-+++ b/drivers/platform/x86/intel/vsec.c
-@@ -401,6 +401,17 @@ static bool intel_vsec_get_features(stru
- 	return found;
- }
- 
-+static int intel_vsec_pci_init(struct pci_dev *pdev)
-+{
-+	struct vsec_priv *priv = pci_get_drvdata(pdev);
-+	const struct intel_vsec_platform_info *info = priv->info;
-+
-+	if (!intel_vsec_get_features(pdev, info))
-+		return -ENODEV;
-+
-+	return 0;
-+}
-+
- static int intel_vsec_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- {
- 	const struct intel_vsec_platform_info *info;
-@@ -423,10 +434,7 @@ static int intel_vsec_pci_probe(struct p
- 	priv->info = info;
- 	pci_set_drvdata(pdev, priv);
- 
--	if (!intel_vsec_get_features(pdev, info))
--		return -ENODEV;
--
--	return 0;
-+	return intel_vsec_pci_init(pdev);
- }
- 
- /* TGL info */
-@@ -489,7 +497,6 @@ static pci_ers_result_t intel_vsec_pci_s
- {
- 	struct intel_vsec_device *intel_vsec_dev;
- 	pci_ers_result_t status = PCI_ERS_RESULT_DISCONNECT;
--	const struct pci_device_id *pci_dev_id;
- 	unsigned long index;
- 
- 	dev_info(&pdev->dev, "Resetting PCI slot\n");
-@@ -510,10 +517,8 @@ static pci_ers_result_t intel_vsec_pci_s
- 		devm_release_action(&pdev->dev, intel_vsec_remove_aux,
- 				    &intel_vsec_dev->auxdev);
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
+@@ -1374,11 +1374,13 @@ int otx2_pool_init(struct otx2_nic *pfvf
+ 		err = otx2_sync_mbox_msg(&pfvf->mbox);
+ 		if (err) {
+ 			qmem_free(pfvf->dev, pool->stack);
++			pool->stack = NULL;
+ 			return err;
+ 		}
+ 		aq = otx2_mbox_alloc_msg_npa_aq_enq(&pfvf->mbox);
+ 		if (!aq) {
+ 			qmem_free(pfvf->dev, pool->stack);
++			pool->stack = NULL;
+ 			return -ENOMEM;
+ 		}
  	}
--	pci_disable_device(pdev);
- 	pci_restore_state(pdev);
--	pci_dev_id = pci_match_id(intel_vsec_pci_ids, pdev);
--	intel_vsec_pci_probe(pdev, pci_dev_id);
-+	intel_vsec_pci_init(pdev);
- 
- out:
- 	return status;
 
 
