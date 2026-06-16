@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EEF835AC3E;
-	Tue, 16 Jun 2026 16:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D961435AC3E;
+	Tue, 16 Jun 2026 16:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628323; cv=none; b=JsU8AZdFsPLtC5qZVlHYXwZDf2lGIjnqmpU6EQuvV7A5frIs+fwQBj/Ar6WIrVWX7TOeB97VcUYZrCd0d1mLCXnwwV034H9GLIZai7Ss2d82/cMjcmzHqIFg2mSckeWcWkgJHeMZ3Yo78d1P3e0cWPkVk+UkYUz7rWnQfLhz5B0=
+	t=1781628328; cv=none; b=L3zyKhLe21ClYuJE5Bz5wLzT7d39coBbq8uz8O6FYnaRdV8wBpGZ7qsAMX/bmUjV9CfQBfZ5BRARWU9D4OOdo2W74pRHaZL2qqdh/KayVxC2kkHedM+I1j+feMK0PI1C+gEnwYkM9cMVt++3mtGJ8Rran9oPZgWL+9ElVEE48MU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628323; c=relaxed/simple;
-	bh=asNNAArjyxfIySpwDt3Cc42mDJSg0ZlHSPi7RyDu2YA=;
+	s=arc-20240116; t=1781628328; c=relaxed/simple;
+	bh=7PlTOqt8VwFUJkYPZkQNfjdmds5ccbD/ZLOGhNrQ4Ek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AfJVrjLiD4m0+QZehMAfYHYhrUN6Urq8/RIq9Knb5/5l8jLDwEzxnAlslidjmBFQ80yZgGnF05qOI1swLb88DGBd6wuYjz5FbFa8qs2wGpv4pgwuCzgGgRMrk3jQqCWiinCsAdy0cUi8oywaYaGfjCKvtLgUN9FVwY/cY2Okd+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYvIkVra; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rCRHBd91suPLtBLcZEPYzL8XHvsq89UO7UxZjxkuM7+LX0OhZ9ncNVYeIxcFEtsRnHc/CyoAuDCCfU6mr3nRGUMMeDjaaa7NLRn0Es1qHdDVsqQ1n3I2/KXMks7UM7OI+kia+Gw7hxZWEFRJeCDYFMGg4/vAh3d51IfyVb7GeKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0/+tloU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYvIkVra"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EDDD1F000E9;
-	Tue, 16 Jun 2026 16:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0/+tloU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E876F1F00A3A;
+	Tue, 16 Jun 2026 16:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628322;
-	bh=ZGljjjpFLSWN+FiRK45u9jda7yyLmirnUfR3l/2PLo4=;
+	s=korg; t=1781628327;
+	bh=Pqc1d9S6zcO0A0a1+zDWS0QNBkJ4cdgVevZl6xXt17Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WYvIkVraLMpfF0KQFKxmQIfOEj1Sw8N4JH9EEtUekWRGqmH3Qa2+uipoQZhVF+28T
-	 oKWQ7vq+Jc3up8pj5TuCkgNNpnFvzaK7XfvV6Kv4dn7G45m5QoCAjrZ9+2uhR1wKc8
-	 kfeyAqIt8zVT3KXBs3oz4JC5gq3NOZE9z5UUHP4o=
+	b=S0/+tloUSnmvg3fPCJfNr7NueM5n9PWBpSXMjiv811kksytb3YAj18Zho1pxeSd9Q
+	 UmD3ZsKt2hIYB1+v2wYvk9Uz6kL8PTkoqrJGRWrwcl1ynyyBMZ14TKOES+pWuyZQFm
+	 Ra2rmxleSpbnLezZ5dMz1D5X/F1x0Db4i/dzxOnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Zeng Heng <zengheng4@huawei.com>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 072/452] drm/i915/psr: Apply Intel DPCD workaround when SDP on prior line used
-Date: Tue, 16 Jun 2026 20:24:59 +0530
-Message-ID: <20260616145121.699645680@linuxfoundation.org>
+Subject: [PATCH 6.6 073/452] arm64: io: Rename ioremap_prot() to __ioremap_prot()
+Date: Tue, 16 Jun 2026 20:25:00 +0530
+Message-ID: <20260616145121.750265102@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -46,79 +48,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Will Deacon <will@kernel.org>
 
-commit 4703049f768fc1c1caac754134118bee1a3af189 upstream.
+commit f6bf47ab32e0863df50f5501d207dcdddb7fc507 upstream.
 
-There is Intel specific workaround DPCD address containing workaround for
-case where SDP is on prior line. Apply this workaround according to values
-in the offset.
+Rename our ioremap_prot() implementation to __ioremap_prot() and convert
+all arch-internal callers over to the new function.
 
-Fixes: 61e887329e33 ("drm/i915/xelpd: Handle PSR2 SDP indication in the prior scanline")
-Cc: <stable@vger.kernel.org> # v5.15+
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260515095756.2799483-4-jouni.hogander@intel.com
-(cherry picked from commit c3fe899fbeac86ea4a5ca9dd845b2cbc0da46249)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+ioremap_prot() remains as a #define to __ioremap_prot() for
+generic_access_phys() and will be subsequently extended to handle user
+permissions in 'prot'.
+
+Cc: Zeng Heng <zengheng4@huawei.com>
+Cc: Jinjiang Tu <tujinjiang@huawei.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c | 27 +++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/io.h | 8 +++++---
+ arch/arm64/kernel/acpi.c    | 2 +-
+ arch/arm64/mm/ioremap.c     | 8 ++++----
+ 3 files changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index 49842f7877f435..416686a6566bab 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -1007,6 +1007,30 @@ static bool psr2_granularity_check(struct intel_dp *intel_dp,
- 	return true;
+diff --git a/arch/arm64/include/asm/io.h b/arch/arm64/include/asm/io.h
+index 3b694511b98f83..46d9f3f8290828 100644
+--- a/arch/arm64/include/asm/io.h
++++ b/arch/arm64/include/asm/io.h
+@@ -139,14 +139,16 @@ extern void __memset_io(volatile void __iomem *, int, size_t);
+  * I/O memory mapping functions.
+  */
+ 
++void __iomem *__ioremap_prot(phys_addr_t phys, size_t size, pgprot_t prot);
++
+ #define ioremap_prot ioremap_prot
+ 
+ #define _PAGE_IOREMAP PROT_DEVICE_nGnRE
+ 
+ #define ioremap_wc(addr, size)	\
+-	ioremap_prot((addr), (size), PROT_NORMAL_NC)
++	__ioremap_prot((addr), (size), __pgprot(PROT_NORMAL_NC))
+ #define ioremap_np(addr, size)	\
+-	ioremap_prot((addr), (size), PROT_DEVICE_nGnRnE)
++	__ioremap_prot((addr), (size), __pgprot(PROT_DEVICE_nGnRnE))
+ 
+ /*
+  * io{read,write}{16,32,64}be() macros
+@@ -167,7 +169,7 @@ static inline void __iomem *ioremap_cache(phys_addr_t addr, size_t size)
+ 	if (pfn_is_map_memory(__phys_to_pfn(addr)))
+ 		return (void __iomem *)__phys_to_virt(addr);
+ 
+-	return ioremap_prot(addr, size, PROT_NORMAL);
++	return __ioremap_prot(addr, size, __pgprot(PROT_NORMAL));
  }
  
-+static bool apply_scanline_indication_wa(struct intel_dp *intel_dp,
-+					 struct intel_crtc_state *crtc_state)
-+{
-+	u8 early_scanline_support = intel_dp->intel_wa_dpcd &
-+		INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_EARLYSCANLINE_SDP_SUPPORT_MASK;
-+
-+	if (intel_dp->edp_dpcd[0] >= DP_EDP_15)
-+		return true;
-+
-+	switch (early_scanline_support)	{
-+	case INTEL_DPCD_INTEL_WA_REGISTER_CAPS_FALL_BACK_TO_PSR1:
-+		crtc_state->req_psr2_sdp_prior_scanline = false;
-+		return false;
-+	case INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITH_EARLY_SCANLINE:
-+		return true;
-+	case INTEL_DPCD_INTEL_WA_REGISTER_CAPS_PSR2_WITHOUT_EARLY_SCANLINE:
-+		crtc_state->req_psr2_sdp_prior_scanline = false;
-+		return true;
-+	default:
-+		MISSING_CASE(early_scanline_support);
-+		return false;
-+	}
-+}
-+
- static bool _compute_psr2_sdp_prior_scanline_indication(struct intel_dp *intel_dp,
- 							struct intel_crtc_state *crtc_state)
+ /*
+diff --git a/arch/arm64/kernel/acpi.c b/arch/arm64/kernel/acpi.c
+index dba8fcec7f33d6..0b06e6c2ebc4de 100644
+--- a/arch/arm64/kernel/acpi.c
++++ b/arch/arm64/kernel/acpi.c
+@@ -352,7 +352,7 @@ void __iomem *acpi_os_ioremap(acpi_physical_address phys, acpi_size size)
+ 				prot = __acpi_get_writethrough_mem_attribute();
+ 		}
+ 	}
+-	return ioremap_prot(phys, size, pgprot_val(prot));
++	return __ioremap_prot(phys, size, prot);
+ }
+ 
+ /*
+diff --git a/arch/arm64/mm/ioremap.c b/arch/arm64/mm/ioremap.c
+index 269f2f63ab7dc4..49fd31e33c3146 100644
+--- a/arch/arm64/mm/ioremap.c
++++ b/arch/arm64/mm/ioremap.c
+@@ -3,8 +3,8 @@
+ #include <linux/mm.h>
+ #include <linux/io.h>
+ 
+-void __iomem *ioremap_prot(phys_addr_t phys_addr, size_t size,
+-			   unsigned long prot)
++void __iomem *__ioremap_prot(phys_addr_t phys_addr, size_t size,
++			     pgprot_t pgprot)
  {
-@@ -1028,7 +1052,8 @@ static bool _compute_psr2_sdp_prior_scanline_indication(struct intel_dp *intel_d
- 		return false;
+ 	unsigned long last_addr = phys_addr + size - 1;
  
- 	crtc_state->req_psr2_sdp_prior_scanline = true;
--	return true;
-+
-+	return apply_scanline_indication_wa(intel_dp, crtc_state);
+@@ -16,9 +16,9 @@ void __iomem *ioremap_prot(phys_addr_t phys_addr, size_t size,
+ 	if (WARN_ON(pfn_is_map_memory(__phys_to_pfn(phys_addr))))
+ 		return NULL;
+ 
+-	return generic_ioremap_prot(phys_addr, size, __pgprot(prot));
++	return generic_ioremap_prot(phys_addr, size, pgprot);
  }
+-EXPORT_SYMBOL(ioremap_prot);
++EXPORT_SYMBOL(__ioremap_prot);
  
- static bool _compute_psr2_wake_times(struct intel_dp *intel_dp,
+ /*
+  * Must be called after early_fixmap_init
 -- 
 2.53.0
 
