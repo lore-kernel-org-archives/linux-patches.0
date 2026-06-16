@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B9F44DB64;
-	Tue, 16 Jun 2026 16:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FF337DEBF;
+	Tue, 16 Jun 2026 16:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626755; cv=none; b=o4tipfvawow6mZqFdmSYXyJF+jfr95vQrsdxTVbL4EcDSOoMJbOENsTNR/I3GC2aiukEhNEzXHQfZIhVKt/UdcwdBxpbqym2tyKjsFUlynNCROx+EYMVYbfHnJi7frGEX8O1qNZMbhwUVhgrc+/D+iJDYzx04ehnWyFefYaXxMw=
+	t=1781626760; cv=none; b=sbjXAEXf1/9aMxk4Z1uEcfUbqGb7arACCjOjWwP6qC8MlPb0MvxHCtES07uPdHwTdyJkK5t1u99GPYpVVNH4aP7fYu9vjn2MVhKNJ9mhEUKU/GuPsmxGgxBOVZF4bagV6d2axeSZ59ugVj2sqJfNRPc2tnWiyaKPYUGTfDzBVz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626755; c=relaxed/simple;
-	bh=r2HJufjgW14U0QkTayXCbtGpGLXH6J9AHR1frxEmpko=;
+	s=arc-20240116; t=1781626760; c=relaxed/simple;
+	bh=oE4Xis7MnO8TQ4yuLllR4NZ4shnfMOrtt1PPlelwHMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c4c9vaEvGL2wV3IgELj+BRtURwhvwbxrAj3GfQwF8855LbVof03KPCyvXiQXlHAiUfpit//Sg1eMh4dZfNyXiELAe2HhkuL5nw1tqxI5hjOk1D3W8YVJpF6UDHTVSzIVRsMCZbCxYzoG6lnnOogqsippBUeCSTnXUiikeB1IKuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MIQhS9Jo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KlLarFkTItjdPINrd1DW4N+xioZ77RU+Ek57CUGMc38IaBMASRvCR7nMmEUqP8YH56fEj3KvPRoQro0yNHaerPfsb/eoR6eYGMyO4pCbgynC0LpEmJ93XeNXdmAgWUUHL7Dv9ZZF3CJYBM/tmrE0e6DIrUbc/SB9uQjXdfxpxiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6X0jSQl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MIQhS9Jo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 037DD1F000E9;
-	Tue, 16 Jun 2026 16:19:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6X0jSQl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540631F000E9;
+	Tue, 16 Jun 2026 16:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626753;
-	bh=WS6FkEuls3+Noy+1nqAm+DElKCckpo5KnS3GF6TDnu8=;
+	s=korg; t=1781626759;
+	bh=9dGPpokWgJrPjX+CFbuXrsKyzOvaf41CeRyvfHEeTA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MIQhS9JosOvsWgyruF9RjNPTxlPuqc0p16TQOCZWUBAHMMQ+Hx3iFZZ0Cd8Z6ABV3
-	 EBCXvd6MUH7QhzNgdwEsEZIGd/mII7VGknBNlMgUJdPmJ6/xzlEh1nzxGMvSkdGanF
-	 BNsUuJkFmCDAhVnZLZXgt4TtDQlcr66ajb80fH/8=
+	b=m6X0jSQlvtH6lj2yQLpnvMKEJy/i1lPwF1I9DMHCEZ2ZMdhFxS0WuXBjtjMrSGzNg
+	 pBdQxmE/fkq3eCj1AGjTknd0GIdGhTWO16OT0HfqGYU3k9DF/NWO9pa5y5MHKaMfeq
+	 WIOagWDdiLeq+SRHbNQIEjs8TI1THw6gmZoRp2b0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8e0622f6d9446420271f@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Oscar Maes <oscmaes92@gmail.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 030/261] wifi: mac80211: limit injected antenna index in ieee80211_parse_tx_radiotap
-Date: Tue, 16 Jun 2026 20:27:48 +0530
-Message-ID: <20260616145046.449527373@linuxfoundation.org>
+Subject: [PATCH 6.12 031/261] pcnet32: stop holding device spin lock during napi_complete_done
+Date: Tue, 16 Jun 2026 20:27:49 +0530
+Message-ID: <20260616145046.494497613@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,58 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Oscar Maes <oscmaes92@gmail.com>
 
-[ Upstream commit 6c0cf89f36ac0c0fd8687a4ccdce2efb23a9c663 ]
+[ Upstream commit 73bf3cca7de6a73f53b6a52dc3b1c82ae5667a4d ]
 
-When parsing the radiotap header of an injected frame,
-ieee80211_parse_tx_radiotap() uses the IEEE80211_RADIOTAP_ANTENNA value
-directly as a shift count:
+napi_complete_done may call gro_flush_normal (though not currently, as GRO
+is unsupported at the moment), which may result in packet TX. This will
+eventually result in calling pcnet32_start_xmit - resulting in a deadlock
+while trying to re-acquire the already locked spin lock.
 
-	info->control.antennas |= BIT(*iterator.this_arg);
+It is safe to split the spinlock block into two, because the hardware
+registers are still protected from concurrent access, and the two blocks
+perform unrelated operations that don't need to happen atomically.
 
-*iterator.this_arg is an 8-bit value taken straight from the frame
-supplied by userspace, so BIT() can be asked to shift by up to 255. That
-is undefined behaviour on the unsigned long and is reported by UBSAN:
-
-  UBSAN: shift-out-of-bounds in net/mac80211/tx.c:2174:30
-  shift exponent 235 is too large for 64-bit type 'unsigned long'
-  Call Trace:
-   ieee80211_parse_tx_radiotap+0xadb/0x1950 net/mac80211/tx.c:2174
-   ieee80211_monitor_start_xmit+0xb1f/0x1250 net/mac80211/tx.c:2451
-   ...
-   packet_sendmsg+0x3eb6/0x50f0 net/packet/af_packet.c:3109
-
-info->control.antennas is a 2-bit bitmap (u8 antennas:2), so only antenna
-indices 0 and 1 can ever be represented. Ignore any larger value instead
-of shifting out of bounds.
-
-Reported-by: syzbot+8e0622f6d9446420271f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8e0622f6d9446420271f
-Fixes: ef246a1480cc ("wifi: mac80211: support antenna control in injection")
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Link: https://patch.msgid.link/20260531011721.102941-1-kartikey406@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 5b2ec6f2be51 ("pcnet32: use napi_complete_done()")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Oscar Maes <oscmaes92@gmail.com>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Link: https://patch.msgid.link/20260528140320.5556-1-oscmaes92@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 4 +++-
+ drivers/net/ethernet/amd/pcnet32.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 0458cbba232e21..b82c7884a92db3 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -2169,7 +2169,9 @@ bool ieee80211_parse_tx_radiotap(struct sk_buff *skb,
+diff --git a/drivers/net/ethernet/amd/pcnet32.c b/drivers/net/ethernet/amd/pcnet32.c
+index 72db9f9e7beeae..81cb83caf62a15 100644
+--- a/drivers/net/ethernet/amd/pcnet32.c
++++ b/drivers/net/ethernet/amd/pcnet32.c
+@@ -1403,8 +1403,10 @@ static int pcnet32_poll(struct napi_struct *napi, int budget)
+ 		pcnet32_restart(dev, CSR0_START);
+ 		netif_wake_queue(dev);
+ 	}
++	spin_unlock_irqrestore(&lp->lock, flags);
  
- 		case IEEE80211_RADIOTAP_ANTENNA:
- 			/* this can appear multiple times, keep a bitmap */
--			info->control.antennas |= BIT(*iterator.this_arg);
-+			/* control.antennas is only a 2-bit bitmap */
-+			if (*iterator.this_arg < 2)
-+				info->control.antennas |= BIT(*iterator.this_arg);
- 			break;
+ 	if (work_done < budget && napi_complete_done(napi, work_done)) {
++		spin_lock_irqsave(&lp->lock, flags);
+ 		/* clear interrupt masks */
+ 		val = lp->a->read_csr(ioaddr, CSR3);
+ 		val &= 0x00ff;
+@@ -1412,9 +1414,9 @@ static int pcnet32_poll(struct napi_struct *napi, int budget)
  
- 		case IEEE80211_RADIOTAP_DATA_RETRIES:
+ 		/* Set interrupt enable. */
+ 		lp->a->write_csr(ioaddr, CSR0, CSR0_INTEN);
++		spin_unlock_irqrestore(&lp->lock, flags);
+ 	}
+ 
+-	spin_unlock_irqrestore(&lp->lock, flags);
+ 	return work_done;
+ }
+ 
 -- 
 2.53.0
 
