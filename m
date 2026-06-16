@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2723101A7;
-	Tue, 16 Jun 2026 17:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13194779B9;
+	Tue, 16 Jun 2026 17:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631709; cv=none; b=RP1K4nXtx9yA30GnfXBXEgQN+qznSCU7wEeq6UuOLzAmXa7pq/uT2eFxKUmtDwhRgt2H9hONNhf7pAWsGfq6saA7MeLMdq1C2gqiRN/+nU3/IiuNJTsdWSdAGiIaxlHdzY3j73zQLTHvazGVyO9U/GUcvghaRo995VDExQNwHwA=
+	t=1781631715; cv=none; b=mea9mmXhUwWUHbbGkzVEpv/o0kHx1QPYqrDmXSRVwYQRCpO9PVreCa3edNWiBIcPGOgKspqIpsE2/xkmoASahutLqBcbviKNhdZcWknKYIOyCZbzf/z2jrSqZrnZerhTcX2orKERDRd9kNN6DTwKLL4pRr+LILfLyfPUgu/3lt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631709; c=relaxed/simple;
-	bh=Q1lpmYRLAPI68r+S9mL8aTocRpnmO4gn/mm/82gJxds=;
+	s=arc-20240116; t=1781631715; c=relaxed/simple;
+	bh=bM5FkfKyYMS8M4e8B4+KYpI95uOTPyyokrABRI8aNB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JIXi4UZSmUeQ2yGKvka+s6GYBm2pa4YEst3pHFaro/tqjQe6Iy+fftdDXVUonT+2DAJIwQkpKKZpsO3+KMOBmqKaVz5OANJpJg/iuUcoiwYk0G1d4OMw53AtNhfFBm5Jl6behpzLymSVQhqPHc4PvcXGPmeSc47KeKLe1JmGsnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ipnEkZ0S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iVWTIyq7gWkPXILTQJC+ipO3nCG7InKq0U73c1iAIkO/NafivyzFZMb2s4YEnCM8tYAFxNjT/sBO0dlO3g7KSBQhBgSWA7OJ4qYfXqyAmGM2MvGpx0v8bkpvpjJTnHBUBw1nYJlGkPGMMeV+ubvAgvxkWsGHmI0F6ZDvqcDcZpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NC8lm6zQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ipnEkZ0S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DB731F00A3A;
-	Tue, 16 Jun 2026 17:41:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NC8lm6zQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CBFD1F000E9;
+	Tue, 16 Jun 2026 17:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631705;
-	bh=ppCKdnYNxlxN9kwK6RIs4BOSZr1mJT3XPcB/6yASsAI=;
+	s=korg; t=1781631710;
+	bh=Ka4g3SPJ/5G1+p9xLGzfZlKeqFhrYikAL0mZNcbJuCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ipnEkZ0SqIaHfqAOu2t3wcQW+8ZZlxubAsTN+ZOqfvODBK8RgtJIT9D8hsw+3WoKZ
-	 BF3RiBtDL3v7rQ3Sym9YAbfV/HFkDi396pCFUEmMhbo200ICZsPN3xZfFeTIrgZpkj
-	 I1UOl8baM1AsamEf9Zo42fa+4YTvG9p4zBBbcB1s=
+	b=NC8lm6zQPz3S+M0j+aPcm4pOFBxI+Kdq6h7HZwTG9V3U5Bwyeouzy001LbtcLA2Hj
+	 D0Fz4rLBfPvwr8/+E99ODdpt4jcUP3VWKOBNUxK/Lba5kzucodXKAmZGkukmXX6GOP
+	 n95Tpc43kevMWYvFfFDYPkSKWDwDFY3hrQrQepj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Simona Vetter <simona@ffwll.ch>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Subject: [PATCH 6.1 271/522] drm/i915/gem: Fix phys BO pread/pwrite with offset
-Date: Tue, 16 Jun 2026 20:26:58 +0530
-Message-ID: <20260616145138.640788756@linuxfoundation.org>
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 245/522] net: qrtr: fix refcount saturation and potential UAF in qrtr_port_remove
+Date: Tue, 16 Jun 2026 20:26:32 +0530
+Message-ID: <20260616145137.439573029@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -55,89 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-commit d21ad938398bca695a511307de38a65889e3b354 upstream.
+[ Upstream commit a2171131ecda1ed61a594a1eb715e75fdad0fef5 ]
 
-sg_page() returns struct page pointer not (void *) so the scaling
-of pread/pwrite is wrong for phys BO and wrong parts of BO would be
-accessed if non-zero offset is used.
+In qrtr_port_remove(), the socket reference count is decremented via
+__sock_put() before the port is removed from the qrtr_ports XArray and
+before the RCU grace period elapses.
 
-Last impacted platform with overlay or cursor planes using phys
-mapping was Gen3/945G/Lakeport.
+This breaks the fundamental RCU update paradigm. It exposes a race
+window where a concurrent RCU reader (such as qrtr_reset_ports() or
+qrtr_port_lookup()) can obtain a pointer to the socket from the XArray,
+and attempt to call sock_hold() on a socket whose reference count has
+already dropped to zero.
 
-Reported-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Fixes: c6790dc22312 ("drm/i915: Wean off drm_pci_alloc/drm_pci_free")
-Cc: <stable@vger.kernel.org> # v4.5+
-Cc: Tvrtko Ursulin <tursulin@ursulin.net>
-Cc: Simona Vetter <simona@ffwll.ch>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Link: https://patch.msgid.link/20260610060314.26111-1-joonas.lahtinen@linux.intel.com
-(cherry picked from commit 3e49a2f85070b2fb672c1e0fdba281a4ea3aebe6)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This exact race condition was hit during syzkaller fuzzing, leading to
+the following refcount saturation warning and a potential Use-After-Free:
+
+  refcount_t: saturated; leaking memory.
+  WARNING: CPU: 3 PID: 1273 at lib/refcount.c:22 refcount_warn_saturate+0xae/0x1d0
+  Modules linked in: qrtr(+) bochs drm_shmem_helper ...
+  Call Trace:
+   <TASK>
+   qrtr_reset_ports net/qrtr/af_qrtr.c:768 [inline] [qrtr]
+   __qrtr_bind.isra.0+0x48b/0x570 net/qrtr/af_qrtr.c:805 [qrtr]
+   qrtr_bind+0x17d/0x210 net/qrtr/af_qrtr.c:901 [qrtr]
+   kernel_bind+0xe4/0x120 net/socket.c:3592
+   qrtr_ns_init+0x1a6/0x380 net/qrtr/ns.c:715 [qrtr]
+   qrtr_proto_init+0x3b/0xff0 net/qrtr/af_qrtr.c:169 [qrtr]
+   do_one_initcall+0xf5/0x5e0 init/main.c:1283
+   ...
+   </TASK>
+
+Fix this by deferring the reference count decrement until after the
+xa_erase() and the synchronize_rcu() complete.
+
+(Note: The v1 of this patch incorrectly replaced __sock_put() with
+sock_put(). As Simon Horman pointed out, the callers of qrtr_port_remove()
+still hold a reference to the socket, so freeing the socket memory here
+would lead to a subsequent UAF in the caller. Thus, the __sock_put() is
+kept, but only repositioned to close the RCU race.)
+
+Fixes: bdabad3e363d ("net: Add Qualcomm IPC router")
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260604064801.1180388-1-w15303746062@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_phys.c |   19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ net/qrtr/af_qrtr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_phys.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_phys.c
-@@ -17,6 +17,17 @@
- #include "i915_gem_tiling.h"
- #include "i915_scatterlist.h"
+diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
+index 3831eb25e240ae..8cedf26d78ee02 100644
+--- a/net/qrtr/af_qrtr.c
++++ b/net/qrtr/af_qrtr.c
+@@ -702,13 +702,13 @@ static void qrtr_port_remove(struct qrtr_sock *ipc)
+ 	if (port == QRTR_PORT_CTRL)
+ 		port = 0;
  
-+/* Abuse scatterlist to store pointer instead of struct page. */
-+static inline void __set_phys_vaddr(struct scatterlist *sg, void *vaddr)
-+{
-+	sg_assign_page(sg, (struct page *)vaddr);
-+}
+-	__sock_put(&ipc->sk);
+-
+ 	xa_erase(&qrtr_ports, port);
+ 
+ 	/* Ensure that if qrtr_port_lookup() did enter the RCU read section we
+ 	 * wait for it to up increment the refcount */
+ 	synchronize_rcu();
 +
-+static inline void *__get_phys_vaddr(struct scatterlist *sg)
-+{
-+	return (void *)sg_page(sg);
-+}
-+
- static int i915_gem_object_get_pages_phys(struct drm_i915_gem_object *obj)
- {
- 	struct address_space *mapping = obj->base.filp->f_mapping;
-@@ -53,7 +64,7 @@ static int i915_gem_object_get_pages_phy
- 	sg->offset = 0;
- 	sg->length = obj->base.size;
++	__sock_put(&ipc->sk);
+ }
  
--	sg_assign_page(sg, (struct page *)vaddr);
-+	__set_phys_vaddr(sg, vaddr);
- 	sg_dma_address(sg) = dma;
- 	sg_dma_len(sg) = obj->base.size;
- 
-@@ -97,7 +108,7 @@ i915_gem_object_put_pages_phys(struct dr
- 			       struct sg_table *pages)
- {
- 	dma_addr_t dma = sg_dma_address(pages->sgl);
--	void *vaddr = sg_page(pages->sgl);
-+	void *vaddr = __get_phys_vaddr(pages->sgl);
- 
- 	__i915_gem_object_release_shmem(obj, pages, false);
- 
-@@ -140,7 +151,7 @@ i915_gem_object_put_pages_phys(struct dr
- int i915_gem_object_pwrite_phys(struct drm_i915_gem_object *obj,
- 				const struct drm_i915_gem_pwrite *args)
- {
--	void *vaddr = sg_page(obj->mm.pages->sgl) + args->offset;
-+	void *vaddr = __get_phys_vaddr(obj->mm.pages->sgl) + args->offset;
- 	char __user *user_data = u64_to_user_ptr(args->data_ptr);
- 	struct drm_i915_private *i915 = to_i915(obj->base.dev);
- 	int err;
-@@ -171,7 +182,7 @@ int i915_gem_object_pwrite_phys(struct d
- int i915_gem_object_pread_phys(struct drm_i915_gem_object *obj,
- 			       const struct drm_i915_gem_pread *args)
- {
--	void *vaddr = sg_page(obj->mm.pages->sgl) + args->offset;
-+	void *vaddr = __get_phys_vaddr(obj->mm.pages->sgl) + args->offset;
- 	char __user *user_data = u64_to_user_ptr(args->data_ptr);
- 	int err;
- 
+ /* Assign port number to socket.
+-- 
+2.53.0
+
 
 
