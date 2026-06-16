@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FE946AF1E;
-	Tue, 16 Jun 2026 17:32:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C939846AF1E;
+	Tue, 16 Jun 2026 17:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631131; cv=none; b=c1+xeZdgs9C1jAxAUZJXnYo5GdOgRl4dmsP4qxgvCnA1jtseyPQoM3qFhr1OLD2MlgxgGVdT8ocpEBooGPakrUiYkMS3JoOZDHvJz9lZDvMcekOlEGjJpoC93cfpu+8TcbT/g2YLxxFEacP1risd4ldEM8/HsdmFhVGjkBjcGuY=
+	t=1781631136; cv=none; b=NLQe94bRXuvFpSJdxR0cn60mUFQ86R2X0+WEySfMUIZ6TiWpv0t2sRa3p0nbEG/LQaKvmwCf/iVRVO2nAiXFR17I52KA8zqdc78bc5zDA218Rj951As7U1aPXga1zceGxEeaWlm8Z6noyWNhXn27vUQ9bvKaQL797xZTJzlL64s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631131; c=relaxed/simple;
-	bh=gXx19f0miNnqLNpbzBRIbgFVk7j44ciwUxYGRno3Oy0=;
+	s=arc-20240116; t=1781631136; c=relaxed/simple;
+	bh=Yz2LBSovQrFA26aa6eEzk3ybMdNOiZpt6KHzCo44z1I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iWfYG+VDj+Wd1gMEr7GK3ELLvZpQqLLfckpX4jSDvs77vhmA++guhc2yPih9XdTrUDthb9wHYOXL0DIBuApWRAa/AThQwkOlPZU9SPs8OE25U7U6AeQI10NcJMq26UlFj1NUWhu/MRk54GpO/XliIYOBQF3TO7GNfGpDUrcP7q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1P4sJ3/b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BEtkkd8iPcVRfSmrptdecQl1LLoyYdAjg24wyEXfkAQcv77x6xgoZzM3mJsICO+GOtFSc3BRA5c9l/1UrnCF69sFgxGksQf+llUKND6p2PobqXDsfSOhR5B6guiJwlPM7zSf+0NsLDBHrzJSK9vBCeDA98nHMRUdurv2t0gnBCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0PWB72ty; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1P4sJ3/b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC821F000E9;
-	Tue, 16 Jun 2026 17:32:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0PWB72ty"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E231F000E9;
+	Tue, 16 Jun 2026 17:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631130;
-	bh=0BtF949bdDEzSUC1+8TyKDFd7Hsk52A0FRHs1Ekpwzc=;
+	s=korg; t=1781631135;
+	bh=M46BM48da2IZ5q23bxeKyNk5IKvgsbA1txeJixAPOTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1P4sJ3/bgHbitAeQi+mkumqrWtxo4T2Z03y7qP8bsBWuioxukvP+Ef2MIsXYBter1
-	 ohDcleD2YdP72wbkOcapJasAIhFkgugaCEU9NU60+d9T/KksZEq8NS6W0/tYk1f6Me
-	 3qR5hlojBlCdd8sSHgRk4r6IaYsHUuV2BPsX++Mo=
+	b=0PWB72tycKvvZ4pxFQIso17K6SGjs2+2otLzo7630jTXrjjnSb3NYuPxrfJ0ZkYNL
+	 RiSb3oynnvpjtFwxE0H1IjiXZ+D1rGVTEchZ1HH7xldOrh8gmlsiQoAHTm/QORDu3E
+	 pO4z00pezTrEVh99eNpVtBBK9+yzD5LDmDix3yiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Bommarito <michael.bommarito@gmail.com>,
-	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	John Garry <john.g.garry@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 162/522] scsi: fcoe: Reject FIP descriptors with zero fip_dlen in CVL walker
-Date: Tue, 16 Jun 2026 20:25:09 +0530
-Message-ID: <20260616145133.720729084@linuxfoundation.org>
+Subject: [PATCH 6.1 163/522] scsi: scsi_transport_fc: Widen FPIN pname walker counter to u32
+Date: Tue, 16 Jun 2026 20:25:10 +0530
+Message-ID: <20260616145133.774410558@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,51 +54,161 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 9eed1bd59937e6828b00d2f2dfef631d964f3636 upstream.
+commit a9a39233ec1fc9f97ea1340a4d09bb7ec2be5153 upstream.
 
-drivers/scsi/fcoe/fcoe_ctlr.c::fcoe_ctlr_recv_clr_vlink() advanced the
-descriptor cursor by an attacker-supplied fip_dlen without ever
-requiring dlen >= sizeof(struct fip_desc) in the default branch.  The
-named descriptor cases (FIP_DT_MAC, FIP_DT_NAME, FIP_DT_VN_ID) checked
-their per-type minimum lengths, but a FIP_DT_NON_CRITICAL descriptor
-(fip_dtype >= 128, which the standard requires receivers to silently
-ignore) skipped that check entirely.
+An adjacent Fibre Channel fabric actor that can deliver an FPIN ELS
+frame to an lpfc or qla2xxx Linux initiator can trigger a non-return in
+the generic FC transport. This is not a local userspace or IP network
+path; the attacker must be able to inject fabric traffic, for example as
+a compromised switch or fabric controller, or as a same-zone N_Port on a
+fabric that permits source spoofing.
 
-An unauthenticated L2 peer on the FCoE control VLAN could hang
-fcoe_ctlr_recv_work on an fcoe, qedf, or bnx2fc initiator indefinitely
-by emitting one FIP CVL frame whose single descriptor had fip_dtype ==
-FIP_DT_NON_CRITICAL and fip_dlen == 0: the cursor advanced zero bytes
-per iteration and the loop condition rlen >= sizeof(*desc) stayed true
-forever, blocking every subsequent FIP frame on that controller.
+The Link-Integrity and Peer-Congestion FPIN walkers used a u8 loop
+counter against the 32-bit on-wire pname_count field, and did not bound
+pname_count by the descriptor body already validated by the TLV walker.
+A pname_count of 256 therefore wraps the counter and keeps the loop
+condition true indefinitely.
 
-Tighten the outer dlen guard to also reject dlen < sizeof(struct
-fip_desc), so a malformed descriptor whose length cannot even cover the
-descriptor header is rejected before the switch.  This is the same
-lower-bound the named cases already apply and is the minimum scope that
-closes the loop.
+Factor the shared pname_list[] walk into one helper, widen the counter
+to u32, and clamp pname_count against the entries that fit in the
+descriptor body before iterating.
 
-Fixes: 97c8389d54b9 ("[SCSI] fcoe, libfcoe: Add support for FIP. FCoE discovery and keep-alive.")
+Fixes: 3dcfe0de5a97 ("scsi: fc: Parse FPIN packets and update statistics")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4-7
 Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260518144307.2820961-1-michael.bommarito@gmail.com
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Link: https://patch.msgid.link/20260520133015.1018937-1-michael.bommarito@gmail.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/fcoe/fcoe_ctlr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/scsi_transport_fc.c |   77 ++++++++++++++++++++-------------------
+ 1 file changed, 41 insertions(+), 36 deletions(-)
 
---- a/drivers/scsi/fcoe/fcoe_ctlr.c
-+++ b/drivers/scsi/fcoe/fcoe_ctlr.c
-@@ -1386,7 +1386,7 @@ static void fcoe_ctlr_recv_clr_vlink(str
+--- a/drivers/scsi/scsi_transport_fc.c
++++ b/drivers/scsi/scsi_transport_fc.c
+@@ -746,6 +746,37 @@ fc_cn_stats_update(u16 event_type, struc
+ 	}
+ }
  
- 	while (rlen >= sizeof(*desc)) {
- 		dlen = desc->fip_dlen * FIP_BPW;
--		if (dlen > rlen)
-+		if (dlen < sizeof(*desc) || dlen > rlen)
- 			goto err;
- 		/* Drop CVL if there are duplicate critical descriptors */
- 		if ((desc->fip_dtype < 32) &&
++static void
++fc_fpin_pname_stats_update(struct Scsi_Host *shost,
++			   struct fc_rport *attach_rport, u16 event_type,
++			   u32 desc_len, u32 fixed_len, u32 pname_count,
++			   __be64 *pname_list,
++			   void (*stats_update)(u16 event_type,
++						struct fc_fpin_stats *stats))
++{
++	u32 i;
++	struct fc_rport *rport;
++	u64 wwpn;
++
++	if (desc_len < fixed_len)
++		pname_count = 0;
++	else
++		pname_count = min(pname_count, (desc_len - fixed_len) /
++				   sizeof(pname_list[0]));
++
++	for (i = 0; i < pname_count; i++) {
++		wwpn = be64_to_cpu(pname_list[i]);
++		rport = fc_find_rport_by_wwpn(shost, wwpn);
++		if (rport &&
++		    (rport->roles & FC_PORT_ROLE_FCP_TARGET ||
++		     rport->roles & FC_PORT_ROLE_NVME_TARGET)) {
++			if (rport == attach_rport)
++				continue;
++			stats_update(event_type, &rport->fpin_stats);
++		}
++	}
++}
++
+ /*
+  * fc_fpin_li_stats_update - routine to update Link Integrity
+  * event statistics.
+@@ -756,13 +787,11 @@ fc_cn_stats_update(u16 event_type, struc
+ static void
+ fc_fpin_li_stats_update(struct Scsi_Host *shost, struct fc_tlv_desc *tlv)
+ {
+-	u8 i;
+ 	struct fc_rport *rport = NULL;
+ 	struct fc_rport *attach_rport = NULL;
+ 	struct fc_host_attrs *fc_host = shost_to_fc_host(shost);
+ 	struct fc_fn_li_desc *li_desc = (struct fc_fn_li_desc *)tlv;
+ 	u16 event_type = be16_to_cpu(li_desc->event_type);
+-	u64 wwpn;
+ 
+ 	rport = fc_find_rport_by_wwpn(shost,
+ 				      be64_to_cpu(li_desc->attached_wwpn));
+@@ -773,22 +802,11 @@ fc_fpin_li_stats_update(struct Scsi_Host
+ 		fc_li_stats_update(event_type, &attach_rport->fpin_stats);
+ 	}
+ 
+-	if (be32_to_cpu(li_desc->pname_count) > 0) {
+-		for (i = 0;
+-		    i < be32_to_cpu(li_desc->pname_count);
+-		    i++) {
+-			wwpn = be64_to_cpu(li_desc->pname_list[i]);
+-			rport = fc_find_rport_by_wwpn(shost, wwpn);
+-			if (rport &&
+-			    (rport->roles & FC_PORT_ROLE_FCP_TARGET ||
+-			    rport->roles & FC_PORT_ROLE_NVME_TARGET)) {
+-				if (rport == attach_rport)
+-					continue;
+-				fc_li_stats_update(event_type,
+-						   &rport->fpin_stats);
+-			}
+-		}
+-	}
++	fc_fpin_pname_stats_update(shost, attach_rport, event_type,
++				   be32_to_cpu(li_desc->desc_len),
++				   FC_TLV_DESC_LENGTH_FROM_SZ(*li_desc),
++				   be32_to_cpu(li_desc->pname_count),
++				   li_desc->pname_list, fc_li_stats_update);
+ 
+ 	if (fc_host->port_name == be64_to_cpu(li_desc->attached_wwpn))
+ 		fc_li_stats_update(event_type, &fc_host->fpin_stats);
+@@ -836,13 +854,11 @@ static void
+ fc_fpin_peer_congn_stats_update(struct Scsi_Host *shost,
+ 				struct fc_tlv_desc *tlv)
+ {
+-	u8 i;
+ 	struct fc_rport *rport = NULL;
+ 	struct fc_rport *attach_rport = NULL;
+ 	struct fc_fn_peer_congn_desc *pc_desc =
+ 	    (struct fc_fn_peer_congn_desc *)tlv;
+ 	u16 event_type = be16_to_cpu(pc_desc->event_type);
+-	u64 wwpn;
+ 
+ 	rport = fc_find_rport_by_wwpn(shost,
+ 				      be64_to_cpu(pc_desc->attached_wwpn));
+@@ -853,22 +869,11 @@ fc_fpin_peer_congn_stats_update(struct S
+ 		fc_cn_stats_update(event_type, &attach_rport->fpin_stats);
+ 	}
+ 
+-	if (be32_to_cpu(pc_desc->pname_count) > 0) {
+-		for (i = 0;
+-		    i < be32_to_cpu(pc_desc->pname_count);
+-		    i++) {
+-			wwpn = be64_to_cpu(pc_desc->pname_list[i]);
+-			rport = fc_find_rport_by_wwpn(shost, wwpn);
+-			if (rport &&
+-			    (rport->roles & FC_PORT_ROLE_FCP_TARGET ||
+-			     rport->roles & FC_PORT_ROLE_NVME_TARGET)) {
+-				if (rport == attach_rport)
+-					continue;
+-				fc_cn_stats_update(event_type,
+-						   &rport->fpin_stats);
+-			}
+-		}
+-	}
++	fc_fpin_pname_stats_update(shost, attach_rport, event_type,
++				   be32_to_cpu(pc_desc->desc_len),
++				   FC_TLV_DESC_LENGTH_FROM_SZ(*pc_desc),
++				   be32_to_cpu(pc_desc->pname_count),
++				   pc_desc->pname_list, fc_cn_stats_update);
+ }
+ 
+ /*
 
 
