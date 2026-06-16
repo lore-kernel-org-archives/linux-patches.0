@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F02E43DA2C;
-	Tue, 16 Jun 2026 15:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6443443DA56;
+	Tue, 16 Jun 2026 15:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781622937; cv=none; b=K/Xzp8a/yhWqq2ZA67Olnda7asUTa8m7FlPAWyyX7Rf/hqXDI6CDh1BC/E61ki+CDyVg+mvqF2Hc1hFSs3VnG25BLZUYtWDRHrDc8aJTjCNbyw/RGWEJpujbCYTHK9thbMHElpmEVSfRAtzIFiJSHG0xqa9x1YlbUavupiobpYM=
+	t=1781622942; cv=none; b=QFkd9s/Zs335l4THJJUUVMXD2RHFZH3VZUYV8vcxApcqx+vWQHfhx/icdhmdApIGoFZ4eQlhdnEKn9fMYGm1GwtoaR7w5j0ItfZI8SJaNVG+eGsWqUkzJ81QloH3eEEQ9Yc44ke0yBe43UH6c7i0sgvyrrP47+PPDh4ofZMgGR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781622937; c=relaxed/simple;
-	bh=1JyMyZJC/blU6RyYQLPvu+QqH0DxTkBThBDTj4l0qEE=;
+	s=arc-20240116; t=1781622942; c=relaxed/simple;
+	bh=60xAuKGInUl3P7PMu0lq2zAWVia9KzwzQrvZdeP9e04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FuYLluSCW1jhDbe9EQ3pp4j87l/Z0ZCazmT7hStcfM9guxheBH9OefFneCbNqpvjaLMWQQ0m63CV2J9Bh3L2OnZY9RtAAIW1RhYesaIlBD/1jXl9jpQkm+U+I4RucDARMbfynQ2KoPXU5VfpVh6r8HpLOkSmLyDLC3sFb68meMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dJWjsvMW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OcuM6sFOpoUg2C2C6laauqoSWMh0PI6luw1NmPk751P0UnvLcEFJ5iK+rXCv8bIrLD/acdyfS8jHO7upBeKF97s8UaXr/pdnRuHKvmxREeAixGM9jSBOJNwL2krjEV6Gc6Z+jk86oAQNBnxJjwp9UO+4kAMNAQ+4kIkfCQE2aSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRTyHetq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dJWjsvMW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E5461F000E9;
-	Tue, 16 Jun 2026 15:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRTyHetq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3220E1F000E9;
+	Tue, 16 Jun 2026 15:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781622936;
-	bh=NFy4586kmgSwsqEKx+5xJsVDAHL0OP0tizJ+UF1CqGA=;
+	s=korg; t=1781622941;
+	bh=lx8PFpJMiiHy+4WglP0bu7h34/phgFdovUS1r+FBVDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dJWjsvMWt8UkKFLbwP4KBKUKdVmTSc4NAxttgimP3eMlCqomXbnOPA91IXufY/rZH
-	 n5VNMz7J8WW4DY6So3GRa/OZ3GPwkZ9CtcsOPpR2WOdhv7na9HCFFKPQO3A06A5G1K
-	 DCUSNty9cLCOS12Z+wr272fig92k3stFuglzPeRM=
+	b=iRTyHetqY7wm+C+Wp3jIkLLhSY+/5PeCQM0rhF+AFN71g1yqTL2T954wX4bvfo1UP
+	 lkLX1fV4w07+r1OY78JOuEhbjaZ9gp9bWUmNGTkfgqu2kbh6PPE2ALnONdpLYywSHg
+	 QwpcNc8m1E9WJ8eJ9B97gbDdG8U4dtdM0XUOn0oE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianyu Li <jianyu.li@mediatek.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Tamir Shahar <tamirthesis@gmail.com>,
+	Amit Klein <aksecurity@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 057/378] af_unix: Fix inq_len update problem in partial read
-Date: Tue, 16 Jun 2026 20:24:48 +0530
-Message-ID: <20260616145112.977450472@linuxfoundation.org>
+Subject: [PATCH 7.0 058/378] ipv4: restrict IPOPT_SSRR and IPOPT_LSRR options
+Date: Tue, 16 Jun 2026 20:24:49 +0530
+Message-ID: <20260616145113.031603304@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,58 +55,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianyu Li <jianyu.li@mediatek.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c1f07a7f2d47aeb9878301e7bb36bc1c2bc2be8e ]
+[ Upstream commit d3915a1f5a4bc0ac911032903c3c6ab8df9fcc7c ]
 
-Currently inq_len is updated only when the whole skb is consumed.
-If only part of the data is read, following SIOCINQ query would
-get value greater than what actually left.
+This patch restricts setting Loose Source and Record Route (LSRR)
+and Strict Source and Record Route (SSRR) IP options to users
+with CAP_NET_RAW capability.
 
-This change update inq_len timely in unix_stream_read_generic(),
-and adjust unix_stream_read_skb() accordingly to prevent
-repetitive update.
+This prevents unprivileged applications from forcing packets to route
+through attacker-controlled nodes to leak TCP ISN and possibly other
+protocol information.
 
-Fixes: f4e1fb04c123 ("af_unix: Use cached value for SOCK_STREAM in unix_inq_len().")
-Signed-off-by: Jianyu Li <jianyu.li@mediatek.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260601113640.231897-2-jianyu.li@mediatek.com
+While LSRR and SSRR are commonly filtered in many network environments,
+they may still be supported and forwarded along some network paths.
+
+RFC 7126 (Recommendations on Filtering of IPv4 Packets Containing
+IPv4 Options) recommend to drop these options in 4.3 and 4.4.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Tamir Shahar <tamirthesis@gmail.com>
+Reported-by: Amit Klein <aksecurity@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260602161547.2642155-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/ipv4/ip_options.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index c3d68bf26ce19b..62ec16c8ab2ede 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2882,7 +2882,7 @@ static int unix_stream_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
- 		return -EAGAIN;
+diff --git a/net/ipv4/ip_options.c b/net/ipv4/ip_options.c
+index be8815ce3ac242..09d745112c1526 100644
+--- a/net/ipv4/ip_options.c
++++ b/net/ipv4/ip_options.c
+@@ -530,6 +530,10 @@ int ip_options_get(struct net *net, struct ip_options_rcu **optp,
+ 		kfree(opt);
+ 		return -EINVAL;
  	}
- 
--	WRITE_ONCE(u->inq_len, u->inq_len - skb->len);
-+	WRITE_ONCE(u->inq_len, u->inq_len - unix_skb_len(skb));
- 
- #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
- 	if (skb == u->oob_skb) {
-@@ -3059,11 +3059,12 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
- 				unix_detach_fds(&scm, skb);
- 			}
- 
--			if (unix_skb_len(skb))
--				break;
--
- 			spin_lock(&sk->sk_receive_queue.lock);
--			WRITE_ONCE(u->inq_len, u->inq_len - skb->len);
-+			WRITE_ONCE(u->inq_len, u->inq_len - chunk);
-+			if (unix_skb_len(skb)) {
-+				spin_unlock(&sk->sk_receive_queue.lock);
-+				break;
-+			}
- 			__skb_unlink(skb, &sk->sk_receive_queue);
- 			spin_unlock(&sk->sk_receive_queue.lock);
- 
++	if (opt->opt.srr && !ns_capable(net->user_ns, CAP_NET_RAW)) {
++		kfree(opt);
++		return -EPERM;
++	}
+ 	kfree(*optp);
+ 	*optp = opt;
+ 	return 0;
 -- 
 2.53.0
 
