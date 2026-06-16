@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13C0376A19;
-	Tue, 16 Jun 2026 17:05:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B461B43E4BC;
+	Tue, 16 Jun 2026 17:05:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629553; cv=none; b=l3nw7zrQDUF+SaquJJaI3UWr3NgTHmcSwSqQcZnp+YVx2XNrJP9vTX3o9/Q5aMpfU+ykJmm1BsemtiD2VnV55+puzKrz7nc4iTsmrUYcw8GB7uhkkau3oGIfv/pGqmXLWverAhdMEl/+RalZgFpvj5911z15/hQueJ5IsQZiQBM=
+	t=1781629558; cv=none; b=HfAh7E0hx8H1tK6IhWro47lHU8pjgsEOSzjJ4M+cp7601+tSLtTfjKMgBrJGzdwtop0TJA+YqAFEVq9CWKxhmvEje4f8nMhxal2fLnMDwE//etfekyujO6321EPqe6VsXd0YnHjN+DYYO+JiDem3WghyH5o73Uyk4pLL3zjeSMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629553; c=relaxed/simple;
-	bh=1VYVNRbmVceGgpE8+NscvQnLCzs3jFlUVYfIxWuiAUU=;
+	s=arc-20240116; t=1781629558; c=relaxed/simple;
+	bh=tNx1pJmyQ/nL+VeM8xxzPlvttxxehSJc1hVUvIwZ7HQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EyHBD6FLIbIbTctzqsej7egp4ZJmTo9V7SqiZU3U1ENX+9qKtE5sm0FZBp1FHYDUxSxo0SpdrZ1k3FuQPIzs4Y+9VfLJe5JtbMCdcBG78ZRn2nV1/vYM6JsNRovRA1htOo+g+0VJaIuPLEZmWS3Px6oEI6V8AHzWMCBeTTmihjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZJr305H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b+BjFsY+o0nkOYadnTMLrQ2PF4lpjeXAuknlbOD0vd51htEnVMplp1cC/edeGqpFuQmFeKJWhj1+t7sAD/kmeiOxZLs1TTQGBSSi/1GCuiFB8tUdF2RwR3crSXTgzQe9TLtHIkiCQsvUGx2Fmtct5yQgUMbgFDCDzhNckCAHqJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbflZi4r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZJr305H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA041F000E9;
-	Tue, 16 Jun 2026 17:05:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbflZi4r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48471F000E9;
+	Tue, 16 Jun 2026 17:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629552;
-	bh=1IbOppDXXFQBgxGiDRFxdjfqGLyvh5j+fkLmPqDeFxQ=;
+	s=korg; t=1781629557;
+	bh=4eHwn+yXwOvYqpYqHktfBx+dJT9pq3h0h7ktWPsqXXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IZJr305H6yZXoE0aUDW6dH4bmASickFE7K30uQE0SnEr/ot3KEtlIGV/rukwyN13D
-	 /4uCI42bP37cm5tT+1LX8MJjzj0jFpi8ua2jPmB0UVbLUVcq/QmB9ocLpr9k1UMISs
-	 zvTTLhNsyl2apK/99J2Z2cFRnE7HWsScZG9N+G1Y=
+	b=cbflZi4r8T2nbIBhzaaxXHjiw8eUyDxJkorakZ7/VdL5VQPz8w1cGRH+XGBTWRs2g
+	 vyG+NaIjHD4DRu1cSB63RIUBBPxjGLjTp0F67yftv10eMCdvGx8o9/AH+6em/M8Iu9
+	 WL2DuQDJt7/IQtOG25L4Ba5zTkKv0H8SYWepf474=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Gabriel Somlo <gsomlo@gmail.com>,
-	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.6 295/452] mmc: litex_mmc: Use DIV_ROUND_UP for more accurate clock calculation
-Date: Tue, 16 Jun 2026 20:28:42 +0530
-Message-ID: <20260616145133.034136235@linuxfoundation.org>
+	Michael Roth <michael.roth@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.6 296/452] KVM: Dont WARN if memory is dirtied without a vCPU when the VM is dying
+Date: Tue, 16 Jun 2026 20:28:43 +0530
+Message-ID: <20260616145133.079164654@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,49 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Inochi Amaoto <inochiama@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit b837e38c255dd9f8b53511d52e87f1fda32b3dfe upstream.
+commit 8618004d3e897c0f1b71d9a9ab860461289bb89a upstream.
 
-The previous clock uses roundup_pow_of_two() to calculate the core
-clock frequency. It does not meet the actual hardware meaning.
-The actual frequency is calculated by "ref_clk / ((div >> 1) << 1)".
+When marking a page dirty, complain about not having a running/loaded vCPU
+if and only if the VM is still alive, i.e. its refcount is non-zero.  This
+will allow fixing a memory leak for x86 SEV-ES guests without hitting what
+is effectively a false positive on the WARN.
 
-Fix the clock divider calculation.
+For some SEV-ES VM-Exits, KVM keeps a writable mapping of a guest page
+across an exit to userspace, and typically unmaps the page on the next
+KVM_RUN.  But if userspace never calls KVM_RUN after such an exit, then KVM
+needs to unmap the page when the vCPU is destroyed, which in turn triggers
+the WARN about not having a running vCPU.
 
-Fixes: 92e099104729 ("mmc: Add driver for LiteX's LiteSDCard interface")
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Reviewed-by: Gabriel Somlo <gsomlo@gmail.com>
+Alternatively, SEV-ES could temporarily load the vCPU to suppress the WARN,
+as is done in nested_vmx_free_vcpu() (but for completely unrelated reasons;
+suppressing WARN from nested_put_vmcs12_pages() is pure happenstance).  But
+loading a vCPU during destruction is gross (ideally nVMX code would be
+cleaned up), risks complicating the SEV-ES code (KVM would need to ensure
+the temporarily load()+put() only runs when the vCPU isn't already loaded),
+and is ultimately pointless.
+
+The motivation for the WARN is to guard against KVM dirtying guest memory
+without pushing the corresponding GFN to the active vCPU's dirty ring, e.g.
+to ensure userspace doesn't miss a dirty page.  But for the VM's refcount
+to reach zero, there can't be _any_ userspace mappings to the dirty ring,
+as mapping the dirty ring requires doing mmap() on the vCPU FD.  I.e. if
+userspace had a valid mapping for the dirty ring, then the vCPU file and
+thus the owning VM would still be alive.  And so since userspace can't
+possibly reach the dirty ring, whether or not KVM technically "misses" a
+push to the dirty ring is irrelevant.
+
+Reported-by: Michael Roth <michael.roth@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Reviewed-by: Michael Roth <michael.roth@amd.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260501202250.2115252-15-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <20260529183549.1104619-15-pbonzini@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/litex_mmc.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ virt/kvm/kvm_main.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/litex_mmc.c
-+++ b/drivers/mmc/host/litex_mmc.c
-@@ -16,6 +16,7 @@
- #include <linux/interrupt.h>
- #include <linux/iopoll.h>
- #include <linux/litex.h>
-+#include <linux/math.h>
- #include <linux/mod_devicetable.h>
- #include <linux/module.h>
- #include <linux/platform_device.h>
-@@ -436,11 +437,10 @@ static void litex_mmc_setclk(struct lite
- 	struct device *dev = mmc_dev(host->mmc);
- 	u32 div;
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -3357,7 +3357,8 @@ void mark_page_dirty_in_slot(struct kvm
+ 	if (WARN_ON_ONCE(vcpu && vcpu->kvm != kvm))
+ 		return;
  
--	div = freq ? host->ref_clk / freq : 256U;
--	div = roundup_pow_of_two(div);
-+	div = freq ? DIV_ROUND_UP(host->ref_clk, freq) : 256U;
- 	div = clamp(div, 2U, 256U);
- 	dev_dbg(dev, "sd_clk_freq=%d: set to %d via div=%d\n",
--		freq, host->ref_clk / div, div);
-+		freq, host->ref_clk / ((div + 1) & ~1U), div);
- 	litex_write16(host->sdphy + LITEX_PHY_CLOCKERDIV, div);
- 	host->sd_clk = freq;
- }
+-	WARN_ON_ONCE(!vcpu && !kvm_arch_allow_write_without_running_vcpu(kvm));
++	WARN_ON_ONCE(!vcpu && refcount_read(&kvm->users_count) &&
++		     !kvm_arch_allow_write_without_running_vcpu(kvm));
+ #endif
+ 
+ 	if (memslot && kvm_slot_dirty_track_enabled(memslot)) {
 
 
