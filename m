@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95491E8320;
-	Tue, 16 Jun 2026 16:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3994477986;
+	Tue, 16 Jun 2026 16:23:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626984; cv=none; b=LPdYRvIiuIYRAq50igejiZezx5o6Sxv+bkRZB8qspa3RSTpOjcfbFd5aivzKDv2f+sxQEIe9TkMB7w2Ndp2yBH/vk08lteCRbXPFrBMEUtmwq8p12MOAC0gk80EAg2ebmkXfqf3qAYMtV2IJ4iSMOo3qj+zJpRcb9JwDmvrd0O4=
+	t=1781626990; cv=none; b=PpGvDEWdwJ8Ebh1fPKZxO8GQC2Jtk8FV2+Tb5924TdtdYLHqi9kPJkVI1U2nvmiAadLUSaOfYdx8rVS4vN/jT8Mbunk3EuaS8g63P3pnD03SzMexcOcWTe2rinY3gQUW6O1wiLB2SB+9mAr3pvbTb1SHsbdm9WJ7AQA+7QfwoaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626984; c=relaxed/simple;
-	bh=P/yAgMKFU3k7oj1pdvkaJc5h2b9WDrlfej5Th7saj94=;
+	s=arc-20240116; t=1781626990; c=relaxed/simple;
+	bh=4Yc+JhDRInUeu6dMgSKtzIWH4gIKV0hxLeYZOYqDsvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oB0yQVWXmB6W7kQwt2nKADRaZ3O52EL6X4ybIl9TfKr/2eqGO/A0WEkr2kpUPe+ng9dHOQ0lynANvnvWKeJRnGi+04aHSfz6bcCKjHrF/nVAcbWDaZdbBGnIWIbMn2YfLMwVhmS2rtfnqdyO0rxCpZOuVma6plUwbe7F0ZFAz84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vT0H4Ic/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k68VBsEYIS/7s/fsvyUPNt0/0IzCrF9KWEIDxrSMYIIoMIJc/zLhZq9b4E5ow4WiMhOq4nEFa4jCdiYT3SFpFB9bGqNPuXEjktKk82oM5PcaMMfFNndy2tMQiLAFROGG42RabvRFTkvl6HRLpso010M4soCkAKJGsQRP4zm/54k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AI/3Mloa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vT0H4Ic/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDC671F000E9;
-	Tue, 16 Jun 2026 16:22:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AI/3Mloa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B521F000E9;
+	Tue, 16 Jun 2026 16:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626983;
-	bh=qpyGesDQj+gPTsFM+QrkZv6pEY3xo2jgnU7gvAll8bY=;
+	s=korg; t=1781626989;
+	bh=eisGFZfQ1s9ZxWl4Y0gSr0JuqbOdJroGDE8oJHGZ29g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vT0H4Ic/QJCGfL+uSWPS3/0Qk/0WsrMuHgWQW+rA9WIiM90JdeDsDqlMzwMi5O/Zq
-	 xqFIRK+kSKXriqTdjr1Y1i09+Tlhcbf2OdvfsjMAEr6DJnQJLiUMEMD8vmFuPqY+Q3
-	 GEudxgVBGtgQ+3oKeinw9eQQyIGTnNVlMbx5JIEk=
+	b=AI/3MloaXgvBII4WlJmmm27D5cn69fybfh+Ys6kEcqHXF/tf8OVLWiENxDAIv2lUC
+	 giu3CQ1ososUDIcMsUbtMMgkL8y3ChDxeT9ihOXukpkq5iIOV54JytcNdpkvz6WjJf
+	 L6kshqn/i1II2jrGy08b8GstGwlSLRH4BlHPx5so=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yuqi Xu <xuyq21@lenovo.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Xin Long <lucien.xin@gmail.com>,
+	Breno Leitao <leitao@debian.org>,
+	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 059/261] sctp: purge outqueue on stale COOKIE-ECHO handling
-Date: Tue, 16 Jun 2026 20:28:17 +0530
-Message-ID: <20260616145047.885995066@linuxfoundation.org>
+Subject: [PATCH 6.12 096/261] rds: mark snapshot pages dirty in rds_info_getsockopt()
+Date: Tue, 16 Jun 2026 20:28:54 +0530
+Message-ID: <20260616145049.486279529@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -58,85 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit e374b22e9b07b72a25909621464ff74096151bfb ]
+[ Upstream commit 512db8267b73a220a64180d95ab5eebe7c4964a8 ]
 
-sctp_stream_update() is only invoked when the association is moved into
-COOKIE_WAIT during association setup/reconfiguration. In this path, the
-outbound stream scheduler state (stream->out_curr) is expected to be
-clean, since no user data should have been transmitted yet unless the
-state machine has already partially progressed.
+rds_info_getsockopt() pins the destination user pages with FOLL_WRITE and
+the RDS_INFO_* producers memcpy the snapshot into them through
+kmap_atomic(). Because that copy goes through the kernel direct map, the
+dirty bit on the user PTE is never set, so unpin_user_pages() releases the
+pages without marking them dirty. A file-backed destination page can then
+be reclaimed without writeback, silently discarding the copied data.
 
-However, a corner case exists in sctp_sf_do_5_2_6_stale(): when a
-Stale Cookie ERROR is received, the association is rolled back from
-COOKIE_ECHOED to COOKIE_WAIT. In this scenario, user data may already
-have been queued and even bundled with the COOKIE-ECHO chunk.
+Use unpin_user_pages_dirty_lock() with make_dirty=true so the modified
+pages are marked dirty before they are unpinned.
 
-During the rollback, sctp_stream_update() frees the old stream table
-and installs a new one, but it does not invalidate stream->out_curr.
-As a result, out_curr may still point to a freed sctp_stream_out
-entry from the previous stream state.
-
-Later, SCTP scheduler dequeue paths (FCFS, RR, PRIO, etc.) rely on
-stream->out_curr->ext, which can lead to use-after-free once the old
-stream state has been released via sctp_stream_free().
-
-This results in crashes such as (reported by Yuqi):
-
-  BUG: KASAN: slab-use-after-free in sctp_sched_fcfs_dequeue+0x13a/0x140
-  Read of size 8 at addr ff1100004d4d3208 by task mini_poc/9312
-  CPU: 1 UID: 1001 PID: 9312 Comm: mini_poc Not tainted
-     7.1.0-rc1-00305-gbd3a4795d574 #5 PREEMPT(full)
-   sctp_sched_fcfs_dequeue+0x13a/0x140
-   sctp_outq_flush+0x1603/0x33e0
-   sctp_do_sm+0x31c9/0x5d30
-   sctp_assoc_bh_rcv+0x392/0x6f0
-   sctp_inq_push+0x1db/0x270
-   sctp_rcv+0x138d/0x3c10
-
-Fix this by fully purging the association outqueue when handling the
-Stale Cookie case. This ensures all pending transmit and retransmit
-state is dropped, and any scheduler cached pointers are invalidated,
-making it safe to rebuild stream state during COOKIE_WAIT restart.
-
-Updating only stream->out_curr would be insufficient, since queued
-and retransmittable data would still reference the old stream state and
-trigger later use-after-free in dequeue paths.
-
-Fixes: 5bbbbe32a431 ("sctp: introduce stream scheduler foundations")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Reported-by: Yuqi Xu <xuyq21@lenovo.com>
-Reported-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/94318159b9052907a6cbb7256aee8b5f8dfbfccb.1780510304.git.lucien.xin@gmail.com
+Fixes: a8c879a7ee98 ("RDS: Info and stats")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260608-rds_fix-v1-1-006c88543408@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ net/rds/info.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index 376d4ce5ebb3cb..613c5c3fa8462e 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -2598,11 +2598,7 @@ static enum sctp_disposition sctp_sf_do_5_2_6_stale(
- 	 */
- 	sctp_add_cmd_sf(commands, SCTP_CMD_DEL_NON_PRIMARY, SCTP_NULL());
+diff --git a/net/rds/info.c b/net/rds/info.c
+index b6b46a8214a0a5..b3ee5f8238c44d 100644
+--- a/net/rds/info.c
++++ b/net/rds/info.c
+@@ -235,7 +235,7 @@ int rds_info_getsockopt(struct socket *sock, int optname, char __user *optval,
  
--	/* If we've sent any data bundled with COOKIE-ECHO we will need to
--	 * resend
--	 */
--	sctp_add_cmd_sf(commands, SCTP_CMD_T1_RETRAN,
--			SCTP_TRANSPORT(asoc->peer.primary_path));
-+	sctp_add_cmd_sf(commands, SCTP_CMD_PURGE_OUTQUEUE, SCTP_NULL());
+ out:
+ 	if (pages)
+-		unpin_user_pages(pages, nr_pages);
++		unpin_user_pages_dirty_lock(pages, nr_pages, true);
+ 	kfree(pages);
  
- 	/* Cast away the const modifier, as we want to just
- 	 * rerun it through as a sideffect.
+ 	return ret;
 -- 
 2.53.0
 
