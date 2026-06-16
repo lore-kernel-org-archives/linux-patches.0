@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB29472769;
-	Tue, 16 Jun 2026 16:46:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5612D32B138;
+	Tue, 16 Jun 2026 16:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628414; cv=none; b=BhntjZC/AZAeHpv8fM9Bnax3mQhPa8TcynlfjB7cCdoOoaSHijvFTvHdtlk/ax+TAn4bL9VHy2dYVyTDZtJTB4tVOcuLpI3iMiEVy/OG51e8hMLq5WoJfRFS3wrvUUJuQ2pctEjK1ZIykg4w/yPgfCvPWjqG9zxXWmnLlge4MJ8=
+	t=1781628419; cv=none; b=tPtNJ1hGpaM0V2Dg5U+ij1Vp7Fsb4ARpsjNG3lKhPzxfr3Uz8cvb3Q0/GOLuGJ3VghjXhaRQ+jOQqO3zlQeaFN+o9XxeMq3fX3SIKe8xLlQD13mcgvBtkAOTpQgWD5/BgZehgb2d3+RIUfp+0pcKa9cf5FIjlvSx83NipCp6gtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628414; c=relaxed/simple;
-	bh=HYIvruyAxWnBmgCRBkqgTiOZ7jTsLaFsak2MqHvSB/s=;
+	s=arc-20240116; t=1781628419; c=relaxed/simple;
+	bh=GqcTH2wf1WqKUqMRDrbRHcwlJHYsj16eaN33u/0vVh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JPF0cYxBj7Ia7Vv0Jgx2TmJ48ANMgRwOve4rq0dxBQjNLLtpCmnN87QoJ2q3UQOoLQ3Y5ECKkJ/nK8v7/WVF8SxF7Ow6hZFuD1IdwQVYBhOnxLq2LvbSM0hLw1tq6TB7S7yMWH7N8h9e9FVhSVhgW5F1fPM+BoaOhOutc8QZP2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0nFuMq5R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hzRRZbALt6DJttZhOBBMlwkjU1EtvWp6N0PXS5Ewh39rnlErKHsqjwiqjEsYFm7hR/Ccocug35xZPHhpzDTnySUNLdvz0SGmWfFpOOrnW+eKAD4roGtknzjkOgIQrrpJ3m8pw2lQs1tHbKbf6r90+lReoYQVHoldrWlMQqs2gs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3aazPrO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0nFuMq5R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D67751F000E9;
-	Tue, 16 Jun 2026 16:46:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3aazPrO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25DF91F000E9;
+	Tue, 16 Jun 2026 16:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628412;
-	bh=Rh9NS7EjoAmovKZBELHiQjCfkuCT54Elb0EfyjcM+JU=;
+	s=korg; t=1781628418;
+	bh=5BbA/aT32hPhz3S8AWlQ10d+JMDOqVFOnfBXa59mzEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0nFuMq5RR5SHVLb+2fWf8i+U/yb7mGbz2HJSzXhw5xE2OyOAYyG1293XkhAp/ArG3
-	 7+oD/g+OUrYwoxwf2Z3JnOuzVw5wvgkqEwy7Rr4j8ZT5DHGqDJWUUx8JX9HE3QMLSJ
-	 im5w93qmFj4TkGt99nJzua1sZX1EiQTpGJ+kaoJ8=
+	b=K3aazPrO1aKZVfEnkqyKQaRxqbG2+spsJbhJ7rjUCE4Sxna+R43J0Hzlt3BdBit4O
+	 bP/GbjbKSqOFMNQ5JNwf4WaeGjfFOljQKdjxemtfRpsLCQoMy5y+d/aanOnOHkgivo
+	 mdX/Kt6M9iJ7GeL4O6y1bwGtV2Ut4fcc/PThZUvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 091/452] Input: ims-pcu - fix usb_free_coherent() size in ims_pcu_buffers_free()
-Date: Tue, 16 Jun 2026 20:25:18 +0530
-Message-ID: <20260616145122.615651345@linuxfoundation.org>
+	hlleng <a909204013@gmail.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.6 092/452] HID: quirks: Add ALWAYS_POLL quirk for SIGMACHIP USB mouse
+Date: Tue, 16 Jun 2026 20:25:19 +0530
+Message-ID: <20260616145122.661007459@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -50,35 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: hlleng <a909204013@gmail.com>
 
-commit dab48a7e74e6a394f3aa0461a2b1fb0c7b38fcb8 upstream.
+commit 07466fc91c55532edcfb5c6a7ccd2ea52728d6bd upstream.
 
-The input buffer size is pcu->max_in_size, but pcu->max_out_size is
-passed to usb_free_coherent().
+The SIGMACHIP USB mouse with VID/PID 1c4f:0034 can disconnect and
+re-enumerate repeatedly after it has been enumerated if its interrupt
+endpoint is not continuously polled.
 
-Change size to match the allocation size.
+This was observed with the device reporting itself as "SIGMACHIP Usb
+Mouse". Keeping the input event device open avoids the disconnects.
 
-Fixes: 628329d52474 ("Input: add IMS Passenger Control Unit driver")
+Add HID_QUIRK_ALWAYS_POLL for this device so the HID core keeps polling
+it even when there is no userspace input consumer.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://patch.msgid.link/20260522085412.45430-2-fourier.thomas@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: hlleng <a909204013@gmail.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/misc/ims-pcu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-ids.h    |    1 +
+ drivers/hid/hid-quirks.c |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/drivers/input/misc/ims-pcu.c
-+++ b/drivers/input/misc/ims-pcu.c
-@@ -1598,7 +1598,7 @@ static void ims_pcu_buffers_free(struct
- 	usb_kill_urb(pcu->urb_in);
- 	usb_free_urb(pcu->urb_in);
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -1212,6 +1212,7 @@
  
--	usb_free_coherent(pcu->udev, pcu->max_out_size,
-+	usb_free_coherent(pcu->udev, pcu->max_in_size,
- 			  pcu->urb_in_buf, pcu->read_dma);
+ #define USB_VENDOR_ID_SIGMA_MICRO	0x1c4f
+ #define USB_DEVICE_ID_SIGMA_MICRO_KEYBOARD	0x0002
++#define USB_DEVICE_ID_SIGMA_MICRO_USB_MOUSE	0x0034
+ #define USB_DEVICE_ID_SIGMA_MICRO_KEYBOARD2	0x0059
  
- 	kfree(pcu->urb_out_buf);
+ #define USB_VENDOR_ID_SIGMATEL		0x066F
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -186,6 +186,7 @@ static const struct hid_device_id hid_qu
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_SEMICO, USB_DEVICE_ID_SEMICO_USB_KEYKOARD), HID_QUIRK_NO_INIT_REPORTS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_SENNHEISER, USB_DEVICE_ID_SENNHEISER_BTD500USB), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_SIGMA_MICRO, USB_DEVICE_ID_SIGMA_MICRO_KEYBOARD), HID_QUIRK_NO_INIT_REPORTS },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_SIGMA_MICRO, USB_DEVICE_ID_SIGMA_MICRO_USB_MOUSE), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_SIGMATEL, USB_DEVICE_ID_SIGMATEL_STMP3780), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_SIS_TOUCH, USB_DEVICE_ID_SIS1030_TOUCH), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_SIS_TOUCH, USB_DEVICE_ID_SIS817_TOUCH), HID_QUIRK_NOGET },
 
 
