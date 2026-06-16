@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725BA47D92C;
-	Tue, 16 Jun 2026 18:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9F93D88EF;
+	Tue, 16 Jun 2026 18:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633579; cv=none; b=Bq7WKw4hzVVHe8If1/luJmBlNhwF7lmnc6KSlQbo+44C/6sbgWDF3RwfgPDX42lrhv0A1NhyN1rDViTQIB/Fom3ZJdzs9llR8h1qa79N38kBiCsqFJEOkBw047XYlCgC6En87ftGXM6npbOt3BifpX+LPopdMYglxpsEPBIkF8Y=
+	t=1781633584; cv=none; b=VwDHemmbk86tlzYKgyYfLispvCTqp0f5Y2PhPKvDblyZmJtfCME1Fek6hTMEZxGhDgSFDjcBjT7j0jn/oAxvn4Vfr4Da9XQX1EV7ZOmbbqcDyr71hwcehN/BJaaAP4bl/8/PBONd5H8ZgKIkb78d8DQHktba81f350kDmzqhipc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633579; c=relaxed/simple;
-	bh=JbnjKNCpSjn0+iXG4fUbgY8fvJ6UNj/TtLtBg+fZ5/8=;
+	s=arc-20240116; t=1781633584; c=relaxed/simple;
+	bh=npT6rt/zdG2EHk5345nH+WubsnSTHmiN1Zx5anYVBiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qfw6bk7hzT7IZunQp0HvA/fuPP9Evpnka+g1uQEE35c2Okd0ALTulW/coLMoWeXXtH8oSci/KdoNxqz0pUI9YxhXBK6DCK7KxbomiBzmvBRn5F4lOYfdE7AIp/rQUN/DPYKMx6wdAybJoSgexYwnfAy5ykfI+O3F11NiFyxFYwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZ9m6lFV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YMX7/u1VevyA+b20MKgHAFkDFrydKrEIShDDafARuHf2mzEtGEgQ9nvRNVb0lImvDy1XBcS+eAs9d2UIpPANPFxcmBWZTMsmGZUz0AXYw22S3BYHksG7SotXx5l8AKUo70S1rmwSDTTkVcsKyjCe++bNdvfRF/+8ZAs5jNImFAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1A9OK7hU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZ9m6lFV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40EEC1F00A3F;
-	Tue, 16 Jun 2026 18:12:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1A9OK7hU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D6971F000E9;
+	Tue, 16 Jun 2026 18:13:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633578;
-	bh=R6+byuhJ2Tc74OcXc9OdA4kwTqr3S3a1uN89/IZc8m8=;
+	s=korg; t=1781633583;
+	bh=E8Z21gqVDz0vQoJYNPoBII6iW4losEZ9upVQLRBs5xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OZ9m6lFV8ZeqNKfqFVz1zR4ieFUPHp6hsL7lBZ+F2QJYjJSxIcwtkGlIGrJ493c01
-	 0Ii6qzwHM6X7/lR052f2yUBfbt8Jn7fWY/R8XiWXZFawwvPo5aPBPYuFuaUwbHzbop
-	 DhHRVi1VnAYGNHgYtsvXul8k1xfEZbYEflAfZHYI=
+	b=1A9OK7hULJB5l37YuGTzNN2Y+3Ur/BgLARBXSBC9SEbfTH6a2PNZYrf0KPkxcyVmM
+	 2IoneLM77DuC3XrdYDOND25mTZWVYqPO3VYJR8eBBGK6VntpGgnoAbg1xckPrwbOnv
+	 uN6A7klpwvC6a7dH2l0r/iZ8KL4gikouaWVVCzZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 5.15 105/411] comedi: comedi_test: Fix limiting of convert_arg in waveform_ai_cmdtest()
-Date: Tue, 16 Jun 2026 20:25:43 +0530
-Message-ID: <20260616145105.831503991@linuxfoundation.org>
+	Zhaoyang Yu <2426767509@qq.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 5.15 106/411] tty: serial: pch_uart: add check for dma_alloc_coherent()
+Date: Tue, 16 Jun 2026 20:25:44 +0530
+Message-ID: <20260616145105.889380201@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,69 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Zhaoyang Yu <2426767509@qq.com>
 
-commit 8a3bee801d420be8a7a0bae4a26547b353b8fe22 upstream.
+commit 6fe472c1bbbe238e91141f7cabc1226e96a60d43 upstream.
 
-The function checks and possibly modifies the description of an
-asynchronous command to be run on the analog input subdevice of a comedi
-device attached to the "comedi_test" driver, returning 0 if no
-modifications were required, or a positive value that indicates which
-step of the checking process it failed on.  Step 4 fixes up various
-argument values for various trigger sources.
+Add a check for dma_alloc_coherent() failure to prevent a potential
+NULL pointer dereference in dma_handle_rx(). Properly release DMA
+channels and the PCI device reference using a goto ladder if the
+allocation fails.
 
-There are two bugs in the fixing up of the `convert_arg` value to keep
-the `scan_begin_arg` value within the range of `unsigned int` when
-`scan_begin_src` and `convert_src` both have the value `TRIG_TIMER`,
-which indicates that the corresponding `_arg` values hold a time period
-in nanoseconds.  The code also uses `scan_end_arg` which hold the number
-of "conversions" within each "scan".  The goal is to end up with the
-scan period being less than or equal to the convert period multiplied by
-the number of conversions per scan.  It intends to do that by clamping
-the `convert_arg` value to a maximum value of `UINT_MAX / scan_end_arg`
-rounded down to a multiple of 1000 (`NSEC_PER_USEC`).
-
-(The rounding from nanoseconds to microseconds is because the driver is
-modelling a device that uses a 1 MHz clock for timing.  This is partly
-because that is a more typical timing base for real hardware devices
-driven by comedi, and partly because the driver used to use `struct
-timeval` internally.)
-
-The first bug is that the code checks if `scan_begin_arg == TRIG_TIMER`
-when it should be checking if `scan_begin_src == TRIG_TIMER`.  The
-bugged check will always fail because if `scan_begin_src == TRIG_TIMER`,
-then `scan_begin_arg` will be at least 1000 (`NSEC_PER_USEC`), otherwise
-`scan_begin_src == TRIG_FOLLOW` and `scan_begin_arg` will be 0.  (N.B
-`TRIG_TIMER` is defined as `0x10`.)  The second bug is that is rounding
-the maximum value down to a multiple of 1000000000 (`NSEC_PER_SEC`)
-instead of 1000 (`NSEC_PER_USEC`), however this bug is not reached due
-to the first bug.  This patch fixes both bugs.
-
-Fixes: 783ddaebd397 ("staging: comedi: comedi_test: support scan_begin_src == TRIG_FOLLOW")
-Fixes: 5afdcad2f818 ("staging: comedi: comedi_test: limit maximum convert_arg")
+Fixes: 3c6a483275f4 ("Serial: EG20T: add PCH_UART driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260422144637.27692-1-abbotti@mev.co.uk
+Signed-off-by: Zhaoyang Yu <2426767509@qq.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/tencent_E328416B7CFD436F6029F2DF02AD7ED89C08@qq.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/comedi_test.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/pch_uart.c |   19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/drivers/comedi/drivers/comedi_test.c
-+++ b/drivers/comedi/drivers/comedi_test.c
-@@ -324,10 +324,10 @@ static int waveform_ai_cmdtest(struct co
- 		arg = min(arg,
- 			  rounddown(UINT_MAX, (unsigned int)NSEC_PER_USEC));
- 		arg = NSEC_PER_USEC * DIV_ROUND_CLOSEST(arg, NSEC_PER_USEC);
--		if (cmd->scan_begin_arg == TRIG_TIMER) {
-+		if (cmd->scan_begin_src == TRIG_TIMER) {
- 			/* limit convert_arg to keep scan_begin_arg in range */
- 			limit = UINT_MAX / cmd->scan_end_arg;
--			limit = rounddown(limit, (unsigned int)NSEC_PER_SEC);
-+			limit = rounddown(limit, (unsigned int)NSEC_PER_USEC);
- 			arg = min(arg, limit);
- 		}
- 		err |= comedi_check_trigger_arg_is(&cmd->convert_arg, arg);
+--- a/drivers/tty/serial/pch_uart.c
++++ b/drivers/tty/serial/pch_uart.c
+@@ -707,8 +707,7 @@ static void pch_request_dma(struct uart_
+ 	if (!chan) {
+ 		dev_err(priv->port.dev, "%s:dma_request_channel FAILS(Tx)\n",
+ 			__func__);
+-		pci_dev_put(dma_dev);
+-		return;
++		goto err_pci_get;
+ 	}
+ 	priv->chan_tx = chan;
+ 
+@@ -722,18 +721,26 @@ static void pch_request_dma(struct uart_
+ 	if (!chan) {
+ 		dev_err(priv->port.dev, "%s:dma_request_channel FAILS(Rx)\n",
+ 			__func__);
+-		dma_release_channel(priv->chan_tx);
+-		priv->chan_tx = NULL;
+-		pci_dev_put(dma_dev);
+-		return;
++		goto err_req_tx;
+ 	}
+ 
+ 	/* Get Consistent memory for DMA */
+ 	priv->rx_buf_virt = dma_alloc_coherent(port->dev, port->fifosize,
+ 				    &priv->rx_buf_dma, GFP_KERNEL);
++	if (!priv->rx_buf_virt)
++		goto err_req_rx;
+ 	priv->chan_rx = chan;
+ 
+ 	pci_dev_put(dma_dev);
++	return;
++
++err_req_rx:
++	dma_release_channel(chan);
++err_req_tx:
++	dma_release_channel(priv->chan_tx);
++	priv->chan_tx = NULL;
++err_pci_get:
++	pci_dev_put(dma_dev);
+ }
+ 
+ static void pch_dma_rx_complete(void *arg)
 
 
