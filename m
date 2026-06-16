@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CB245349C;
-	Tue, 16 Jun 2026 16:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACB93A9627;
+	Tue, 16 Jun 2026 16:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626011; cv=none; b=oVKuTFKQMDZxtBGXO/JqhJjiJeXtBpagGl4zXBMiKWuxhuVaG8bHZgFilpWQguKmCi+VsbVXjVhHFVSVXaRCKHNuelYnyd9Z9RMtuTBNKyPLffbJ0SwzS/RHDi7aI2Wg3kNwetTK0EaX1dhBtskm0xKuXzCbfjcNXi7mm6iZ5j4=
+	t=1781626015; cv=none; b=sDZHZr8UYX9J1VecqIzQVs6gVeke23R2/uHbeIoPWzmTUwlJeLUPwQfvo/E89iCgxKKWGlVCiN7WlXoDTo/diYtoK01rZLjrN2ROmkmDLAj4MqKzZL9iaabd+4DgXsEx2+dbaWk4WtqUitT+p+iWycjUUdISHgp95N+Hc6bIx4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626011; c=relaxed/simple;
-	bh=zfRPIsFnak2uaAS0aNza/aN8bAEu+64fERY/3C8S+d0=;
+	s=arc-20240116; t=1781626015; c=relaxed/simple;
+	bh=Nblf+abPAV8QKe7K8udCU5zGOl9GlMXwSXxEWlFe0NE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ueAa+AoqN/QrkErrl3O/B4zMMm0d5poA93N5Ccz3BbrfOtz8msRdJNWNKfc39Jx++e5FRhjm/O+dSHz3hYwFqs4/GvsfN4D8we3POohAX6YrhRlLO8ru5SmJvR1ZBxjvFJYJ3WLmLwlYneB7I1q849SZtHHMDRnEOcaZvLSwMiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUGfEW74; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=etCdWtjtNAqNcP1ZWzPfyXH07s/K2n36VO/f2SIFcDwre2oy1awnZcYzUIVtpi2hTXVzcFhbakuiPRaAE+ax8YhYGe/YgUI6wSMzhUYFn6n9k0+Grd2ABgPWgLP68uNMNBBL2h4yVQP+xmAcC6aLfIRoLM3mfeAsXktXHKG7ZSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmiY7tpB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUGfEW74"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA9EE1F000E9;
-	Tue, 16 Jun 2026 16:06:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmiY7tpB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C90751F000E9;
+	Tue, 16 Jun 2026 16:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626009;
-	bh=8oFjORXxv0IKKLiRd43nSBwz6dQqZ8hM6voPJ4H6gW4=;
+	s=korg; t=1781626014;
+	bh=vL8e/zg9bYvvngSJU+qZzKXmLCVfjyfGVgpuORr15ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SUGfEW74oOZC3K5+36sbGbD99/Vq1T/sq15WC6ifj2MknhWGy08FkSsM0QVBRbMKg
-	 0hWCBeXzYaWYQC7osjs4k/N0g5XG7xX1sG6ExqtbJoDCzUgXyqvnkcNkiOhUzG44it
-	 CLKqZatZt39Ri97ZiM+Mwv30AufDkA690rwkG9tM=
+	b=RmiY7tpBI72tE1RflvcsBWUcCx3wxEwTkOSEde13hNhmtE1TU3mRjzPJO7JSOG7R1
+	 b4psPCw3bLbCJac29hvrVjuQR5FiTJ00LTLQz0S3biC818dcCTWbW4Irwzsq1fUfSA
+	 /W3k9jfSNFAfrBRyaCxRUaIVeuZIW48t+LraNgEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arpith Kalaginanavoor <arpithk@nvidia.com>,
+	Jann Horn <jannh@google.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 216/325] fs/qnx6: fix pointer arithmetic in directory iteration
-Date: Tue, 16 Jun 2026 20:30:12 +0530
-Message-ID: <20260616145108.924747964@linuxfoundation.org>
+Subject: [PATCH 6.18 217/325] fuse: reject fuse_notify() pagecache ops on directories
+Date: Tue, 16 Jun 2026 20:30:13 +0530
+Message-ID: <20260616145108.986891337@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -50,58 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arpith Kalaginanavoor <arpithk@nvidia.com>
+From: Jann Horn <jannh@google.com>
 
-commit 89c4a1167f3a0a0efd2ec3e1801036d2eb65ae1a upstream.
+commit 9c954499d43aefac01c5dfb57a82b13d2dcf4b94 upstream.
 
-The conversion to qnx6_get_folio() in commit b2aa61556fcf
-("qnx6: Convert qnx6_get_page() to qnx6_get_folio()")
-introduced a regression in directory iteration. The pointer 'de'
-and the 'limit' address were calculated using byte offsets from
-a char pointer without scaling by the size of a QNX6 directory
-entry.
+The operations FUSE_NOTIFY_STORE and FUSE_NOTIFY_RETRIEVE allow the
+FUSE daemon to actively write/read pagecache contents.
 
-This causes the driver to read from incorrect memory offsets,
-leading to "invalid direntry size" errors and premature
-termination of directory scans.
+For directories with FOPEN_CACHE_DIR, the pagecache is used as
+kernel-internal cache storage, and userspace is not supposed to have
+direct access to this cache - in particular, fuse_parse_cache() will hit
+WARN_ON() if the cache contains bogus data.
 
-Fix this by casting 'kaddr' to 'struct qnx6_dir_entry *' before
-applying the offset and last_entry(...) increments. This allows the
-compiler to correctly scale the pointer arithmetic by the 32-byte
-stride of the directory entry structure.
+Reject FUSE_NOTIFY_STORE and FUSE_NOTIFY_RETRIEVE on anything other than
+regular files with -EINVAL.
 
-Fixes: b2aa61556fcf ("qnx6: Convert qnx6_get_page() to qnx6_get_folio()")
+Fixes: 5d7bc7e8680c ("fuse: allow using readdir cache")
 Cc: stable@vger.kernel.org
-Signed-off-by: Arpith Kalaginanavoor <arpithk@nvidia.com>
-Link: https://patch.msgid.link/20260526123858.1683035-1-arpithk@nvidia.com
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://patch.msgid.link/20260519-fuse-dir-pagecache-v2-1-5428fa48e175@google.com
+Acked-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/qnx6/dir.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/fuse/dev.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/fs/qnx6/dir.c
-+++ b/fs/qnx6/dir.c
-@@ -131,16 +131,16 @@ static int qnx6_readdir(struct file *fil
- 		struct qnx6_dir_entry *de;
- 		struct folio *folio;
- 		char *kaddr = qnx6_get_folio(inode, n, &folio);
--		char *limit;
-+		struct qnx6_dir_entry *limit;
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -1798,6 +1798,10 @@ static int fuse_notify_store(struct fuse
+ 	inode = fuse_ilookup(fc, nodeid,  NULL);
+ 	if (!inode)
+ 		goto out_up_killsb;
++	if (!S_ISREG(inode->i_mode)) {
++		err = -EINVAL;
++		goto out_iput;
++	}
  
- 		if (IS_ERR(kaddr)) {
- 			pr_err("%s(): read failed\n", __func__);
- 			ctx->pos = (n + 1) << PAGE_SHIFT;
- 			return PTR_ERR(kaddr);
- 		}
--		de = (struct qnx6_dir_entry *)(kaddr + offset);
--		limit = kaddr + last_entry(inode, n);
--		for (; (char *)de < limit; de++, ctx->pos += QNX6_DIR_ENTRY_SIZE) {
-+		de = (struct qnx6_dir_entry *)kaddr + offset;
-+		limit = (struct qnx6_dir_entry *)kaddr + last_entry(inode, n);
-+		for (; de < limit; de++, ctx->pos += QNX6_DIR_ENTRY_SIZE) {
- 			int size = de->de_size;
- 			u32 no_inode = fs32_to_cpu(sbi, de->de_inode);
+ 	mapping = inode->i_mapping;
+ 	index = outarg.offset >> PAGE_SHIFT;
+@@ -1977,7 +1981,10 @@ static int fuse_notify_retrieve(struct f
  
+ 	inode = fuse_ilookup(fc, nodeid, &fm);
+ 	if (inode) {
+-		err = fuse_retrieve(fm, inode, &outarg);
++		if (!S_ISREG(inode->i_mode))
++			err = -EINVAL;
++		else
++			err = fuse_retrieve(fm, inode, &outarg);
+ 		iput(inode);
+ 	}
+ 	up_read(&fc->killsb);
 
 
