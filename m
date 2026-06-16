@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9AE33D812A;
-	Tue, 16 Jun 2026 18:13:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3DE3D47CE;
+	Tue, 16 Jun 2026 18:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633594; cv=none; b=jFaVmaGv3bsjQdCaFIWADncJCXMUlgV2SFLHTGpEeakgq6/aFqspKcEWqR+L+trh6r8os02EEfxS9fSXc783ngmQXpqaVHfjIZJjVSpfiOL2sblDaZB27yqPO0lf99C1l0sL1YoqjfERwChBHmZ1Cg28QpeQFUDn69HsH8sUzV8=
+	t=1781633599; cv=none; b=b8YcQEN5XsKGRs5iX+K+7Nq6z7jsi8t6YbcEZBGd1dmpMVFJRAI4rQ7mcCaxSE160gZbhcaCsECbPKI0y4T80px24zOkSv3PPXih0iN3dv5UIOmAgNbJwTAFF06r2POhlumuUHBVdgURk+YqzaE2t5gjlOtXuTfHEZeCgSCi9cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633594; c=relaxed/simple;
-	bh=oC3AKgPQ9WjE6XjeSRM3+QvBQpv3a0epUMTkqtBvzsk=;
+	s=arc-20240116; t=1781633599; c=relaxed/simple;
+	bh=38jk3uO1FJK3Igc7wHQ8UE+6juMCJACIufX3xW7GrSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hoP+9fwqy0sYXW8K6EvKpebcjnEYa/wfxpkkvKrG8GF2KxXd++y6p2DNlxGpCtVQpqvACPfTnSQbdSgkrxzFTzSX7Ib1h/H6LebnJp/7v/lVhdK7wpo8SzirAsOsGCrsUdfYLX65zweXS1/ScbzMGngqM+L824hCA9D36QjDt8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fkPcNZ5O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BI7PW5yVD4aTA5VsuwwCV5tIj8ZwoqW1FX24jYEUVJlhoKb7V7Ov05XFvFdJRLAtS9wxbfvgkNZ++7/9nRUuOf0E7RgJ3UKds1vZ8WAXMLJUATpG70V6iPeCWVb31N2Kvd0tKQzqoLla6HS/nKadwOLu/apYVAdmqiaFBqj/+2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dddWSme4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fkPcNZ5O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEEBB1F000E9;
-	Tue, 16 Jun 2026 18:13:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dddWSme4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD3A1F00A3A;
+	Tue, 16 Jun 2026 18:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633593;
-	bh=5AY2Pap/ddtkpyVsu6swpi1p9rDGAd4X3imOqGpsB3Q=;
+	s=korg; t=1781633598;
+	bh=TCWg5OWGvs1jAMv9g4U8idC3jh4gqgu5hSYwM8d7gCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fkPcNZ5ONwxnLOhhu1/duUA2eji/aeeVuy3LmV3gISzqV9a1qJJo56nbg+o5CyN2+
-	 rjEGXRt+2IW3SoPBXUDsOyZDyfApZBniFEXeyfdV13t3prgrNXEZtlKCFJNZXqdfbG
-	 FLHGXwiDp4zHaYjmJti+4usIEP4/O38742sEXxOc=
+	b=dddWSme4qmDq6T0hPB8AaVjHBGDXbI8CBEiPnheXzJ0vhZAfWrvJajeLPaRy+hdcW
+	 BbTkrLLctsEFW9CBhoxrSbzpN4BRmBKsM66ziMnBcRTjf2uJHdUBJKx8Cz8CnqAh9z
+	 iprDy21eG9Hv3hCS81SdcWJPII+pPMS2t+2BBQbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Tao Xue <xuetao09@huawei.com>
-Subject: [PATCH 5.15 108/411] usb: core: Fix up Interrupt IN endpoints with bogus wBytesPerInterval
-Date: Tue, 16 Jun 2026 20:25:46 +0530
-Message-ID: <20260616145106.007976210@linuxfoundation.org>
+	"Stephen J. Fuhry" <fuhrysteve@gmail.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 109/411] USB: quirks: add NO_LPM for Lenovo ThinkPad USB-C Dock Gen2 hub controllers
+Date: Tue, 16 Jun 2026 20:25:47 +0530
+Message-ID: <20260616145106.066169430@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,65 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Stephen J. Fuhry <fuhrysteve@gmail.com>
 
-commit 727d045d064b7c9a24db3bce9c0485a382cb768b upstream.
+commit 9ddb9c0deca48d2c2a22ebf4d2f35c925a520328 upstream.
 
-Tao Xue found that some common devices violate USB 3.x section 9.6.7
-by reporting wBytesPerInterval lower than the size of packets they
-actually send. I confirmed that AX88179 may set it to 0 and RTL8153
-CDC configuration sets it to 8 but sends both 8 and 16 byte packets:
+The Lenovo ThinkPad USB-C Dock Gen2 (17ef:a391, 17ef:a392) hub
+controllers exhibit link instability when USB Link Power Management
+is enabled, similar to the dock's Ethernet adapter (17ef:a387) which
+already carries USB_QUIRK_NO_LPM.
 
-S Ii:11:007:3 -115:128 16 <
-C Ii:11:007:3 0:128 8 = a1000000 01000000
-S Ii:11:007:3 -115:128 16 <
-C Ii:11:007:3 0:128 16 = a12a0000 01000800 00000000 00000000
+When the dock reconnects after a transient disconnect, the hub
+controllers enter LPM states between re-enumeration retries, causing
+repeated disconnect/reconnect cycles lasting up to two minutes.
+Disabling LPM for these devices restores stable enumeration.
 
-Most xHCI host controllers neglect interrupt bandwidth reservations
-and let such devices exceed theirs, some fail the URB with EOVERFLOW.
-
-Assume that wBytesPerInterval lower than wMaxPacketSize is bogus and
-increase it to the worst case maximum on interrupt IN endpoints. This
-solves xHCI problems and appears to have no other effect. Interrupt
-transfers are not limited to one interval and drivers submit URBs of
-class defined size without looking at wBytesPerInterval. Any multi-
-interval transfer is considered terminated by a packet shorter than
-wMaxPacketSize regardless of wBytesPerInterval - see USB3 8.10.3.
-
-Stay in spec on OUT endpoints and isochronous. No buggy devices are
-known and we don't want to risk sending more data than the device
-is prepared to handle or confusing isoc drivers regarding altsetting
-capacities guaranteed by the device itself. And don't complain when
-wMaxPacketSize <= wBytesPerInterval < wMaxPacketSize * (bMaxBurst+1)
-because enabling this seems to be the exact goal of the spec.
-
-Reported-and-tested-by: Tao Xue <xuetao09@huawei.com>
-Closes: https://lore.kernel.org/linux-usb/20260402021400.28853-1-xuetao09@huawei.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Link: https://patch.msgid.link/20260518073207.5b7d26e7.michal.pecio@gmail.com
+Signed-off-by: Stephen J. Fuhry <fuhrysteve@gmail.com>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260513171419.44849-1-fuhrysteve@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/config.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/usb/core/quirks.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/core/config.c
-+++ b/drivers/usb/core/config.c
-@@ -165,7 +165,14 @@ static void usb_parse_ss_endpoint_compan
- 			(desc->bMaxBurst + 1);
- 	else
- 		max_tx = 999999;
--	if (le16_to_cpu(desc->wBytesPerInterval) > max_tx) {
-+	/*
-+	 * wBytesPerInterval > max_tx is bogus, but USB3 spec doesn't forbid the opposite.
-+	 * Experience shows that wBytesPerInterval < wMaxPacketSize on common interrupt IN
-+	 * endpoints is usually bogus too, and recent HCs enforce interrupt BW limits.
-+	 */
-+	if (le16_to_cpu(desc->wBytesPerInterval) > max_tx ||
-+	    (le16_to_cpu(desc->wBytesPerInterval) < usb_endpoint_maxp(&ep->desc) &&
-+	     usb_endpoint_is_int_in(&ep->desc))) {
- 		dev_notice(ddev, "%s endpoint with wBytesPerInterval of %d in "
- 				"config %d interface %d altsetting %d ep %d: "
- 				"setting to %d\n",
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -497,6 +497,10 @@ static const struct usb_device_id usb_qu
+ 	/* Lenovo ThinkPad USB-C Dock Gen2 Ethernet (RTL8153 GigE) */
+ 	{ USB_DEVICE(0x17ef, 0xa387), .driver_info = USB_QUIRK_NO_LPM },
+ 
++	/* Lenovo ThinkPad USB-C Dock Gen2 USB 3.1 and USB 2.0 hub controllers */
++	{ USB_DEVICE(0x17ef, 0xa391), .driver_info = USB_QUIRK_NO_LPM },
++	{ USB_DEVICE(0x17ef, 0xa392), .driver_info = USB_QUIRK_NO_LPM },
++
+ 	/* BUILDWIN Photo Frame */
+ 	{ USB_DEVICE(0x1908, 0x1315), .driver_info =
+ 			USB_QUIRK_HONOR_BNUMINTERFACES },
 
 
