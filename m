@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C4A4508E9;
-	Tue, 16 Jun 2026 15:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF951A682B;
+	Tue, 16 Jun 2026 15:43:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624581; cv=none; b=T0Mc0o3acj5PqDMCee891JrAWEr6ePH+StoUrSGpUlaXTZkZTjCzGMMJbjthAKgKRLcM2HfSFqWDWu1DSjkHMXFom+GUwqYmzDPS7KfFF24McONCQyZ9WhO/DcoSNiRX8+X41HyyzRymsGxMcQL2uSUIzRTmhxd4RDZGc24IFdk=
+	t=1781624586; cv=none; b=rndzACcdMUpP2TsD4HMOeC8OFbnc5MUY9E3K3J6ZtrXwTzCa6K/klmsI1CjiaSSpoW3FQ3RJJvlQ1FHDKS9dFw/0Ndb4y0zL1GzQd5Ade+JwXg7BuoQ9D1XFIIkHJpGgpGrdHRTg1+qKJkVf8tsCxXuybIFT80Zog66iBZat0l4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624581; c=relaxed/simple;
-	bh=Zda4/a1XI6RIWubodTfJPzCgmybhRtPW0Oriu98dnIM=;
+	s=arc-20240116; t=1781624586; c=relaxed/simple;
+	bh=eHGllp0SuCacImxsliIAHCGOyhjC15n+gBZzZ9F6hlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZM0GdOdy3tWjz+3j370zJgC2fV1iSq0dKbPp0Jz4fVqSTxAFRMToP74u+m0NhCkjdcoTt+HIUjoSPBTKVieytlWy8qm6u6wZxrUFSYK7+eOxy0ueXOxn2run7EfmBOmPRpWLN3cUfASDc20f5OmeN3XRtUIvbB2/Pq2QEf8XaTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZJzq40i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gcQdTz4OfvWicn2rojl0AcqoECgapu+h5PHrGcm5LeSg6nYtMmI04Qj2t+/j8DjK6HSNu9o9QvfBZYUjNxqPst3DY0xy3yOW7lonnovQ+JG82R/75v0lliFT7ApfYQ0qDx08ob+GX0sGXHDltAMrxUF6k+NFUtCsaE2KTTkUgaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gpmfulKJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZJzq40i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142971F000E9;
-	Tue, 16 Jun 2026 15:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gpmfulKJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897181F000E9;
+	Tue, 16 Jun 2026 15:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624579;
-	bh=ijRcGm6Xde9vXhlwCX9W0s6ZTOMI++aUECPrfZ6sWTA=;
+	s=korg; t=1781624585;
+	bh=ZGRlFi/xW4wTWEYCumwrnLS44Xu+Dl/FxPMWi6Ht28I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2ZJzq40iJMTUmIXI0mVa9DfUFaB5BhdNmJ3+sVYPWwHxkGkdwJweD/P9pshF/5hGu
-	 XGwGvD42hMHL5+e+Yb0DFhG2I+YdTbmCRcQJCaXHSfqzdYHx9UB5Tk5oJvE3JV8oGf
-	 J3vXwFhcVFxD/b/lLqENQTmM5Z4sORCJmL21621I=
+	b=gpmfulKJaEe44vI4uPdNIgPmAklCJ/wckUR4wJID+8g62o84i28Zt9RD+FhALP5SA
+	 ptPheLz6URjvYeAN8+RscLbEmf+ifxI46vyEnYZPErVYiBIlTI7smbyw8REI80JoZw
+	 PjcL3b7Bbsf8hoEkpE9McyuXxJ99j1MPFv/uB3Hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 7.0 361/378] driver core: reject devices with unregistered buses
-Date: Tue, 16 Jun 2026 20:29:52 +0530
-Message-ID: <20260616145129.146341628@linuxfoundation.org>
+	Philip Tsukerman <philiptsukerman@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 7.0 362/378] RDMA: During rereg_mr ensure that REREG_ACCESS is compatible
+Date: Tue, 16 Jun 2026 20:29:53 +0530
+Message-ID: <20260616145129.197307742@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -50,62 +50,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit 36f35b8df6972167102a1c3d4361e0afb6a84534 upstream.
+commit badad6fad60def1b9805559dd81dbab3d97b82aa upstream.
 
-Trying to register a device on a bus which has not yet been registered
-used to trigger a NULL-pointer dereference, but since the const bus
-structure rework registration instead succeeds without the device being
-added to the bus.
+If IB_MR_REREG_ACCESS changes from RO to RW then the umem has to be
+re-evaluated to ensure it is properly pinned as RW. Since the umem is
+hidden inside each driver's mr struct add a ib_umem_check_rereg() function
+that each driver has to call before processing IB_MR_REREG_ACCESS.
 
-This specifically means that the device will never bind to a driver and
-that the bus sysfs attributes are not created (i.e. as if the device had
-no bus).
+mlx4 has to retain its duplicate ib_access_writable check because it
+implements IB_MR_REREG_ACCESS | IB_MR_REREG_TRANS by changing both items
+in place sequentially while the MR is live, so it will continue to not
+support this combination.
 
-Reject devices with unregistered buses to catch any callers that get
-the ordering wrong and to handle bus registration failures more
-gracefully.
-
-Fixes: 5221b82d46f2 ("driver core: bus: bus_add/probe/remove_device() cleanups")
-Cc: stable@vger.kernel.org	# 6.3
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260430091718.230228-1-johan@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: b40656aa7d55 ("RDMA/umem: remove FOLL_FORCE usage")
+Link: https://patch.msgid.link/r/0-v1-06fb1a2d6cf5+107-rereg_access_jgg@nvidia.com
+Reported-by: Philip Tsukerman <philiptsukerman@gmail.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/bus.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/umem.c          |   16 ++++++++++++++++
+ drivers/infiniband/hw/hns/hns_roce_mr.c |    4 ++++
+ drivers/infiniband/hw/irdma/verbs.c     |    4 ++++
+ drivers/infiniband/hw/mlx4/mr.c         |    4 ++++
+ drivers/infiniband/hw/mlx5/mr.c         |    4 ++++
+ drivers/infiniband/sw/rxe/rxe_verbs.c   |    5 +++++
+ include/rdma/ib_umem.h                  |    8 ++++++++
+ 7 files changed, 45 insertions(+)
 
---- a/drivers/base/bus.c
-+++ b/drivers/base/bus.c
-@@ -544,10 +544,10 @@ static const struct attribute_group driv
-  */
- int bus_add_device(struct device *dev)
- {
--	struct subsys_private *sp = bus_to_subsys(dev->bus);
-+	struct subsys_private *sp;
- 	int error;
- 
--	if (!sp) {
-+	if (!dev->bus) {
- 		/*
- 		 * This is a normal operation for many devices that do not
- 		 * have a bus assigned to them, just say that all went
-@@ -556,6 +556,13 @@ int bus_add_device(struct device *dev)
+--- a/drivers/infiniband/core/umem.c
++++ b/drivers/infiniband/core/umem.c
+@@ -332,3 +332,19 @@ int ib_umem_copy_from(void *dst, struct
  		return 0;
+ }
+ EXPORT_SYMBOL(ib_umem_copy_from);
++
++/*
++ * Called during rereg mr if the driver is able to re-use a umem for
++ * IB_MR_REREG_ACCESS.
++ */
++int ib_umem_check_rereg(struct ib_umem *umem, int flags, int new_access_flags)
++{
++	if (!umem)
++		return 0;
++
++	if ((flags & IB_MR_REREG_ACCESS) && !(flags & IB_MR_REREG_TRANS))
++		if (ib_access_writable(new_access_flags) && !umem->writable)
++			return -EACCES;
++	return 0;
++}
++EXPORT_SYMBOL(ib_umem_check_rereg);
+--- a/drivers/infiniband/hw/hns/hns_roce_mr.c
++++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
+@@ -300,6 +300,10 @@ struct ib_mr *hns_roce_rereg_user_mr(str
+ 		goto err_out;
  	}
  
-+	sp = bus_to_subsys(dev->bus);
-+	if (!sp) {
-+		pr_err("%s: cannot add device '%s' to unregistered bus '%s'\n",
-+		       __func__, dev_name(dev), dev->bus->name);
-+		return -EINVAL;
-+	}
++	ret = ib_umem_check_rereg(mr->pbl_mtr.umem, flags, mr_access_flags);
++	if (ret)
++		goto err_out;
 +
- 	/*
- 	 * Reference in sp is now incremented and will be dropped when
- 	 * the device is removed from the bus
+ 	mailbox = hns_roce_alloc_cmd_mailbox(hr_dev);
+ 	ret = PTR_ERR_OR_ZERO(mailbox);
+ 	if (ret)
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -3759,6 +3759,10 @@ static struct ib_mr *irdma_rereg_user_mr
+ 	if (flags & ~(IB_MR_REREG_TRANS | IB_MR_REREG_PD | IB_MR_REREG_ACCESS))
+ 		return ERR_PTR(-EOPNOTSUPP);
+ 
++	ret = ib_umem_check_rereg(iwmr->region, flags, new_access);
++	if (ret)
++		return ERR_PTR(ret);
++
+ 	ret = irdma_hwdereg_mr(ib_mr);
+ 	if (ret)
+ 		return ERR_PTR(ret);
+--- a/drivers/infiniband/hw/mlx4/mr.c
++++ b/drivers/infiniband/hw/mlx4/mr.c
+@@ -208,6 +208,10 @@ struct ib_mr *mlx4_ib_rereg_user_mr(stru
+ 	struct mlx4_mpt_entry **pmpt_entry = &mpt_entry;
+ 	int err;
+ 
++	err = ib_umem_check_rereg(mmr->umem, flags, mr_access_flags);
++	if (err)
++		return ERR_PTR(err);
++
+ 	/* Since we synchronize this call and mlx4_ib_dereg_mr via uverbs,
+ 	 * we assume that the calls can't run concurrently. Otherwise, a
+ 	 * race exists.
+--- a/drivers/infiniband/hw/mlx5/mr.c
++++ b/drivers/infiniband/hw/mlx5/mr.c
+@@ -1895,6 +1895,10 @@ struct ib_mr *mlx5_ib_rereg_user_mr(stru
+ 	if (flags & ~(IB_MR_REREG_TRANS | IB_MR_REREG_PD | IB_MR_REREG_ACCESS))
+ 		return ERR_PTR(-EOPNOTSUPP);
+ 
++	err = ib_umem_check_rereg(mr->umem, flags, new_access_flags);
++	if (err)
++		return ERR_PTR(err);
++
+ 	if (!(flags & IB_MR_REREG_ACCESS))
+ 		new_access_flags = mr->access_flags;
+ 	if (!(flags & IB_MR_REREG_PD))
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.c
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
+@@ -1332,6 +1332,7 @@ static struct ib_mr *rxe_rereg_user_mr(s
+ 	struct rxe_mr *mr = to_rmr(ibmr);
+ 	struct rxe_pd *old_pd = to_rpd(ibmr->pd);
+ 	struct rxe_pd *pd = to_rpd(ibpd);
++	int err;
+ 
+ 	/* for now only support the two easy cases:
+ 	 * rereg_pd and rereg_access
+@@ -1341,6 +1342,10 @@ static struct ib_mr *rxe_rereg_user_mr(s
+ 		return ERR_PTR(-EOPNOTSUPP);
+ 	}
+ 
++	err = ib_umem_check_rereg(mr->umem, flags, access);
++	if (err)
++		return ERR_PTR(err);
++
+ 	if (flags & IB_MR_REREG_PD) {
+ 		rxe_put(old_pd);
+ 		rxe_get(pd);
+--- a/include/rdma/ib_umem.h
++++ b/include/rdma/ib_umem.h
+@@ -179,6 +179,8 @@ void ib_umem_dmabuf_unmap_pages(struct i
+ void ib_umem_dmabuf_release(struct ib_umem_dmabuf *umem_dmabuf);
+ void ib_umem_dmabuf_revoke(struct ib_umem_dmabuf *umem_dmabuf);
+ 
++int ib_umem_check_rereg(struct ib_umem *umem, int flags, int new_access_flags);
++
+ #else /* CONFIG_INFINIBAND_USER_MEM */
+ 
+ #include <linux/err.h>
+@@ -239,5 +241,11 @@ static inline void ib_umem_dmabuf_unmap_
+ static inline void ib_umem_dmabuf_release(struct ib_umem_dmabuf *umem_dmabuf) { }
+ static inline void ib_umem_dmabuf_revoke(struct ib_umem_dmabuf *umem_dmabuf) {}
+ 
++static inline int ib_umem_check_rereg(struct ib_umem *umem, int flags,
++				      int new_access_flags)
++{
++	return -EOPNOTSUPP;
++}
++
+ #endif /* CONFIG_INFINIBAND_USER_MEM */
+ #endif /* IB_UMEM_H */
 
 
