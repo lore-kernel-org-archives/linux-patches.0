@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DE33EB0F5;
-	Tue, 16 Jun 2026 18:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14CBD3CEBBD;
+	Tue, 16 Jun 2026 18:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636378; cv=none; b=tWoX5CueZ2EiCCgKnvIWEf4ZzEpv/zpBMq532Dut9Eq6m7eX5bJtLLPyNVXhMMXTTRLQMjZaw5o4cQpl0+iUBDF2hdlZqIXgFmnLRzBA1rSaU1BMZOgWwgC5nSooKoyOJDjtwELaL1/rSSR3wQjPQAzmrM/q7RbRE49k7eM/TAU=
+	t=1781636384; cv=none; b=uhN742dKnU2boaELCo6SQHzYF0skYxBqehUVgtn5OkWFLYVo+eO4DPgXl7B0uLcmzzhp5DnsDSbqjrsVNcnDEfiTPpJlB8RxfgQFXwqRtiBptvjfQdHY69wZI0dQBdfwk9Lt6E0UfJgQ1X4QQJKHJ6ajYbwHOZMYueWXewytFbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636378; c=relaxed/simple;
-	bh=sJb6QhnCLXttXQDVRjz8b7+cn8FMIAAfJNwHKfWGCB4=;
+	s=arc-20240116; t=1781636384; c=relaxed/simple;
+	bh=UruRXTw9AFkIoxCBr/n2aA5XwA3CRxwEbStOpG08YS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SLzOkYKdKt3ZUg0fheFH3ZTHNLJQArLSTrHwjb2VmOaZs4tsWvfVlC9R58FUDjtIVm1dttic7tMJt/w5Aux2w3Lom41xsqaYJbeX08HJPW7u03EHiil6r0CglcGSQOcFpfval7s1AbdY0pysn6AZGiHY3PMwAvVwr9OiWzk154A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tE7p7YvN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WujcxgmnDWhET63gF3YXuXf6BEXD/cJQp4FKnll/fMcWI39bWKIcZzBeP93JLH4gTY0KskK3qxsGi5M4jBOS+yvofYPAVhLP9wlP/pgwxhNBjew3jgHzy8rZM85CFlexsJvcSTEaldNBfcxB+o0NV1Z8UPT2jy2dFUmirU0EInU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gkEZwPEO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tE7p7YvN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 981811F00A3A;
-	Tue, 16 Jun 2026 18:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gkEZwPEO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E8A1F000E9;
+	Tue, 16 Jun 2026 18:59:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636377;
-	bh=xIcsZU55IKnsZjKv3nOh9zCOqvXSAE5V+KdD/j1ktf0=;
+	s=korg; t=1781636383;
+	bh=B+3wtoHpvOcKD+Jt8AZkzbUIFN800iK1Bn6yzrNRtGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tE7p7YvNrTFJBuslO2BRUm7PXbTi0cTHuh2/G3hZOvAgzqKPP4xtswUB0IgXmmNwF
-	 GilIsGsC8ia+yIej27Vs6v4HhO964EpbPkJrmONrKPajbBNz1z3jGHc8umaHlUQv9g
-	 8qRDyzw+nNUMlVV3mdHevINGXJFwUjxr1W3aizOo=
+	b=gkEZwPEOaWqdgXSjvOq6mjpXnI2uEWx0z7sobui+33am2WXgDaFMKCVBOmd/fyZbf
+	 4/ubQ8V2PBqpgH9aRzlLWERMjvQJ1610I1ufs2BNPR0lxkg0QAQ1eYDF0WdH9tljWu
+	 b6+PC1YQeDlEDBRH4INHFByv2wSNjxNM3hOuyqgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 228/342] media: rc: ttusbir: respect DMA coherency rules
-Date: Tue, 16 Jun 2026 20:28:44 +0530
-Message-ID: <20260616145058.821465565@linuxfoundation.org>
+Subject: [PATCH 5.10 229/342] ALSA: aoa: Skip devices with no codecs in i2sbus_resume()
+Date: Tue, 16 Jun 2026 20:28:45 +0530
+Message-ID: <20260616145058.865984631@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -52,80 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 50acaad3d202c064779db8dc3d010007347f59c7 ]
+[ Upstream commit fd7df93013c5118812e63a52635dc6c3a805a1de ]
 
-Buffers must not share a cache line with other data structures.
-Allocate separately.
+In i2sbus_resume(), skip devices with an empty codec list, which avoids
+using an uninitialized 'sysclock_factor' in the 32-bit format path in
+i2sbus_pcm_prepare().
 
-Fixes: 0938069fa0897 ("[media] rc: Add support for the TechnoTrend USB IR Receiver")
+In i2sbus_pcm_prepare(), replace two list_for_each_entry() loops with a
+single list_first_entry() now that the codec list is guaranteed to be
+non-empty by all callers.
+
+Fixes: f3d9478b2ce4 ("[ALSA] snd-aoa: add snd-aoa")
 Cc: stable@vger.kernel.org
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ kept kzalloc(sizeof(*tt), GFP_KERNEL) instead of kzalloc_obj() ]
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Link: https://patch.msgid.link/20260310102921.210109-3-thorsten.blum@linux.dev
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/ttusbir.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ sound/aoa/soundbus/i2sbus/core.c |    3 +++
+ sound/aoa/soundbus/i2sbus/pcm.c  |   16 +++++-----------
+ 2 files changed, 8 insertions(+), 11 deletions(-)
 
---- a/drivers/media/rc/ttusbir.c
-+++ b/drivers/media/rc/ttusbir.c
-@@ -32,7 +32,7 @@ struct ttusbir {
+--- a/sound/aoa/soundbus/i2sbus/core.c
++++ b/sound/aoa/soundbus/i2sbus/core.c
+@@ -411,6 +411,9 @@ static int i2sbus_resume(struct macio_de
+ 	int err, ret = 0;
  
- 	struct led_classdev led;
- 	struct urb *bulk_urb;
--	uint8_t bulk_buffer[5];
-+	u8 *bulk_buffer;
- 	int bulk_out_endp, iso_in_endp;
- 	bool led_on, is_led_on;
- 	atomic_t led_complete;
-@@ -188,13 +188,16 @@ static int ttusbir_probe(struct usb_inte
- 	struct rc_dev *rc;
- 	int i, j, ret;
- 	int altsetting = -1;
-+	u8 *buffer;
+ 	list_for_each_entry(i2sdev, &control->list, item) {
++		if (list_empty(&i2sdev->sound.codec_list))
++			continue;
++
+ 		/* reset i2s bus format etc. */
+ 		i2sbus_pcm_prepare_both(i2sdev);
  
- 	tt = kzalloc(sizeof(*tt), GFP_KERNEL);
-+	buffer = kzalloc(5, GFP_KERNEL);
- 	rc = rc_allocate_device(RC_DRIVER_IR_RAW);
--	if (!tt || !rc) {
-+	if (!tt || !rc || buffer) {
- 		ret = -ENOMEM;
- 		goto out;
+--- a/sound/aoa/soundbus/i2sbus/pcm.c
++++ b/sound/aoa/soundbus/i2sbus/pcm.c
+@@ -411,6 +411,9 @@ static int i2sbus_pcm_prepare(struct i2s
+ 	/* set stop command */
+ 	command->command = cpu_to_le16(DBDMA_STOP);
+ 
++	cii = list_first_entry(&i2sdev->sound.codec_list,
++			       struct codec_info_item, list);
++
+ 	/* ok, let's set the serial format and stuff */
+ 	switch (runtime->format) {
+ 	/* 16 bit formats */
+@@ -418,13 +421,7 @@ static int i2sbus_pcm_prepare(struct i2s
+ 	case SNDRV_PCM_FORMAT_U16_BE:
+ 		/* FIXME: if we add different bus factors we need to
+ 		 * do more here!! */
+-		bi.bus_factor = 0;
+-		list_for_each_entry(cii, &i2sdev->sound.codec_list, list) {
+-			bi.bus_factor = cii->codec->bus_factor;
+-			break;
+-		}
+-		if (!bi.bus_factor)
+-			return -ENODEV;
++		bi.bus_factor = cii->codec->bus_factor;
+ 		input_16bit = 1;
+ 		break;
+ 	case SNDRV_PCM_FORMAT_S32_BE:
+@@ -438,10 +435,7 @@ static int i2sbus_pcm_prepare(struct i2s
+ 		return -EINVAL;
  	}
-+	tt->bulk_buffer = buffer;
+ 	/* we assume all sysclocks are the same! */
+-	list_for_each_entry(cii, &i2sdev->sound.codec_list, list) {
+-		bi.sysclock_factor = cii->codec->sysclock_factor;
+-		break;
+-	}
++	bi.sysclock_factor = cii->codec->sysclock_factor;
  
- 	/* find the correct alt setting */
- 	for (i = 0; i < intf->num_altsetting && altsetting == -1; i++) {
-@@ -283,8 +286,8 @@ static int ttusbir_probe(struct usb_inte
- 	tt->bulk_buffer[3] = 0x01;
- 
- 	usb_fill_bulk_urb(tt->bulk_urb, tt->udev, usb_sndbulkpipe(tt->udev,
--		tt->bulk_out_endp), tt->bulk_buffer, sizeof(tt->bulk_buffer),
--						ttusbir_bulk_complete, tt);
-+			  tt->bulk_out_endp), tt->bulk_buffer, 5,
-+			  ttusbir_bulk_complete, tt);
- 
- 	tt->led.name = "ttusbir:green:power";
- 	tt->led.default_trigger = "rc-feedback";
-@@ -353,6 +356,7 @@ out:
- 		kfree(tt);
- 	}
- 	rc_free_device(rc);
-+	kfree(buffer);
- 
- 	return ret;
- }
-@@ -375,6 +379,7 @@ static void ttusbir_disconnect(struct us
- 	}
- 	usb_kill_urb(tt->bulk_urb);
- 	usb_free_urb(tt->bulk_urb);
-+	kfree(tt->bulk_buffer);
- 	usb_set_intfdata(intf, NULL);
- 	kfree(tt);
- }
+ 	if (clock_and_divisors(bi.sysclock_factor,
+ 			       bi.bus_factor,
 
 
