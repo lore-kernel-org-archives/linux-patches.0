@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9869546AF1B;
-	Tue, 16 Jun 2026 16:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33251E8320;
+	Tue, 16 Jun 2026 16:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627011; cv=none; b=HkbdrhukFxewE/K8oBidRArEWeYm2Qz0AbuVA+oN742umN7M6z88OC1uIohYNO+VDDhLKR/ASOWI8JE91qrcffe88COEYUxiePCwUL998rKVR6yg47ffu3c1KT3yqcSo+ds1x2nr8TGiEfFHisD3mjp8KtV23AoTn6hO7X3v9M4=
+	t=1781627022; cv=none; b=tgczjpvaynPj5gslk6owqzcLBDpt6EyJgiyxhCwD5wpDEDtDaDyVdSPMTivlZEWVp8K5NtXSCtxlP7yrbQHkAEkCuHhLYvW/m0ll7L3AUcEWc62GaS27s6g7hxbJmp1VaD6e4QuJhi8lsyvuRr1r8kV2A5Qu/csNXAuIDHxkqfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627011; c=relaxed/simple;
-	bh=sNrHu11c2nL9MWV5vDpeN6L/OZu3MnZE9sBknFGmQmE=;
+	s=arc-20240116; t=1781627022; c=relaxed/simple;
+	bh=d0kgvPDrst4wyULrA/zXa74PQvgFiWKBG33QfzMRBNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/CYwTBsaIY9391LO1zDOtGj+EEuJ8kP5R0V2u96MstEyqIDIQsoxOCxVp5AARz0A1DoU4DUn1QIdcEhUt+d14mk0sModvtGR+vvD7iKrBmdThtHxmLfuOaQDRSgtV6eJDnY2MYh1obLOq07X/l7sHPzvTcSBCTHBIyZk+wCcuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YM5wUkHY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=StJBbqmvXgk0iz8i1fPp5nfQfQvUSxppoTeHDH2QjrrIwDAtAAJxfZrMiSAGUg9TFjdoMZLINnGqWMxgcSLpM1zthXqVLlVEZBzqJhivem1TmXG+9q0YCVhT8CpdodjkyMNvXVZj+rCqp7gKMjxynpQvFlSx55jQ3fceK34sU3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRz8fWqh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YM5wUkHY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5160F1F000E9;
-	Tue, 16 Jun 2026 16:23:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRz8fWqh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9898C1F000E9;
+	Tue, 16 Jun 2026 16:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627010;
-	bh=UMqpeRZWAN1ChiNHCg0eqi6dfmofJhHqfoRNKnBYSR0=;
+	s=korg; t=1781627020;
+	bh=KC950CIoc20OHTxw66T6yaE3Y82+WyC13zW4+OXIq+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YM5wUkHYrk4cGMxcx/LU9BSJLZnwyWXKcZqPnXxEoO5nusl9y2Vp6rMNz9iYQ5cH+
-	 0Sj+lGpkBqy16f7s3WNol0MG/R+uOBxtBuqwmd0bv/ZHblEBGZGZHkz8sXqCGjYwA9
-	 T9LYvwZzlOEjSskwOqFMtpFrlbrpyYsPmkP2UZ8s=
+	b=zRz8fWqhl4Mrnr+QAzGDVu9xcS0gPc9O4K09GpRVV0P2ufpcW1wxBQHrR87BoDIbj
+	 hol0GRKHV8T92oLALRwGnhAK0h5IWQ/MJzdf05Qn87FBFtG3owPagCT3hJ7X9g0Jcu
+	 trsmDPNSGO5KBfe86dTXhm/9CRG07/RUtQK9m5h0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Zhou <eilaimemedsnaimel@gmail.com>,
-	David Ahern <dahern@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Mark Bundschuh <mkbund@amazon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 107/261] ipv6: Fix a potential NPD in cleanup_prefix_route()
-Date: Tue, 16 Jun 2026 20:29:05 +0530
-Message-ID: <20260616145050.011266364@linuxfoundation.org>
+Subject: [PATCH 6.12 108/261] netfilter: ctnetlink: ensure safe access to master conntrack
+Date: Tue, 16 Jun 2026 20:29:06 +0530
+Message-ID: <20260616145050.063454212@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -53,87 +52,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit b70c687b7cf267fb08586667a3946c8851cad672 ]
+[ Upstream commit bffcaad9afdfe45d7fc777397d3b83c1e3ebffe5 ]
 
-addrconf_get_prefix_route() can return the fib6_null_entry sentinel
-entry which has a NULL fib6_table pointer. Therefore, before setting the
-route's expiration time, check that we are not working with this entry,
-as otherwise a NPD will be triggered [1].
+Holding reference on the expectation is not sufficient, the master
+conntrack object can just go away, making exp->master invalid.
 
-Note that the other callers of addrconf_get_prefix_route() are not
-susceptible to this bug:
+To access exp->master safely:
 
-1. addrconf_prefix_rcv(): Requests a route with the 'RTF_ADDRCONF |
-   RTF_PREFIX_RT' flags which are not set on fib6_null_entry.
+- Grab the nf_conntrack_expect_lock, this gets serialized with
+  clean_from_lists() which also holds this lock when the master
+  conntrack goes away.
 
-2. modify_prefix_route(): Fixed by commit a747e02430df ("ipv6: avoid
-   possible NULL deref in modify_prefix_route()").
+- Hold reference on master conntrack via nf_conntrack_find_get().
+  Not so easy since the master tuple to look up for the master conntrack
+  is not available in the existing problematic paths.
 
-3. __ipv6_ifa_notify(): Calls ip6_del_rt() which specifically checks for
-   fib6_null_entry and returns an error.
+This patch goes for extending the nf_conntrack_expect_lock section
+to address this issue for simplicity, in the cases that are described
+below this is just slightly extending the lock section.
 
-[1]
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006: 0000 [#1] SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
-[...]
-Call Trace:
-<TASK>
-__kasan_check_byte (mm/kasan/common.c:573)
-lock_acquire.part.0 (kernel/locking/lockdep.c:5842 (discriminator 1))
-_raw_spin_lock_bh (kernel/locking/spinlock.c:182 (discriminator 1))
-cleanup_prefix_route (net/ipv6/addrconf.c:1280)
-ipv6_del_addr (net/ipv6/addrconf.c:1342)
-inet6_addr_del.isra.0 (net/ipv6/addrconf.c:3119)
-inet6_rtm_deladdr (net/ipv6/addrconf.c:4812)
-rtnetlink_rcv_msg (net/core/rtnetlink.c:6997)
-netlink_rcv_skb (net/netlink/af_netlink.c:2555)
-netlink_unicast (net/netlink/af_netlink.c:1344)
-netlink_sendmsg (net/netlink/af_netlink.c:1899)
-__sock_sendmsg (net/socket.c:802 (discriminator 4))
-____sys_sendmsg (net/socket.c:2698)
-___sys_sendmsg (net/socket.c:2752)
-__sys_sendmsg (net/socket.c:2784)
-do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
-entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+The add expectation command already holds a reference to the master
+conntrack from ctnetlink_create_expect().
 
-Fixes: 5eb902b8e719 ("net/ipv6: Remove expired routes with a separated list of routes.")
-Reported-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
-Reviewed-by: David Ahern <dahern@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260609145448.768318-1-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+However, the delete expectation command needs to grab the spinlock
+before looking up for the expectation. Expand the existing spinlock
+section to address this to cover the expectation lookup. Note that,
+the nf_ct_expect_iterate_net() calls already grabs the spinlock while
+iterating over the expectation table, which is correct.
+
+The get expectation command needs to grab the spinlock to ensure master
+conntrack does not go away. This also expands the existing spinlock
+section to cover the expectation lookup too. I needed to move the
+netlink skb allocation out of the spinlock to keep it GFP_KERNEL.
+
+For the expectation events, the IPEXP_DESTROY event is already delivered
+under the spinlock, just move the delivery of IPEXP_NEW under the
+spinlock too because the master conntrack event cache is reached through
+exp->master.
+
+While at it, add lockdep notations to help identify what codepaths need
+to grab the spinlock.
+
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[ fix timer_delete -> del_timer in diff context lines since 8fa7292
+("treewide: Switch/rename to timer_delete[_sync]()") landed in 6.15 ]
+Signed-off-by: Mark Bundschuh <mkbund@amazon.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/net/netfilter/nf_conntrack_core.h |  5 ++++
+ net/netfilter/nf_conntrack_ecache.c       |  2 ++
+ net/netfilter/nf_conntrack_expect.c       | 10 +++++++-
+ net/netfilter/nf_conntrack_netlink.c      | 28 +++++++++++++++--------
+ 4 files changed, 35 insertions(+), 10 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index e104ec8efe1c0c..c6fcdb60dfee14 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -1259,6 +1259,7 @@ static void
- cleanup_prefix_route(struct inet6_ifaddr *ifp, unsigned long expires,
- 		     bool del_rt, bool del_peer)
+diff --git a/include/net/netfilter/nf_conntrack_core.h b/include/net/netfilter/nf_conntrack_core.h
+index 3384859a892101..8883575adcc1e7 100644
+--- a/include/net/netfilter/nf_conntrack_core.h
++++ b/include/net/netfilter/nf_conntrack_core.h
+@@ -83,6 +83,11 @@ void nf_conntrack_lock(spinlock_t *lock);
+ 
+ extern spinlock_t nf_conntrack_expect_lock;
+ 
++static inline void lockdep_nfct_expect_lock_held(void)
++{
++	lockdep_assert_held(&nf_conntrack_expect_lock);
++}
++
+ /* ctnetlink code shared by both ctnetlink and nf_conntrack_bpf */
+ 
+ static inline void __nf_ct_set_timeout(struct nf_conn *ct, u64 timeout)
+diff --git a/net/netfilter/nf_conntrack_ecache.c b/net/netfilter/nf_conntrack_ecache.c
+index 69948e1d6974e3..6526bdcca580fd 100644
+--- a/net/netfilter/nf_conntrack_ecache.c
++++ b/net/netfilter/nf_conntrack_ecache.c
+@@ -237,6 +237,8 @@ void nf_ct_expect_event_report(enum ip_conntrack_expect_events event,
+ 	struct nf_ct_event_notifier *notify;
+ 	struct nf_conntrack_ecache *e;
+ 
++	lockdep_nfct_expect_lock_held();
++
+ 	rcu_read_lock();
+ 	notify = rcu_dereference(net->ct.nf_conntrack_event_cb);
+ 	if (!notify)
+diff --git a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
+index f5c45989df5736..bb8b87f9ee50da 100644
+--- a/net/netfilter/nf_conntrack_expect.c
++++ b/net/netfilter/nf_conntrack_expect.c
+@@ -51,6 +51,7 @@ void nf_ct_unlink_expect_report(struct nf_conntrack_expect *exp,
+ 	struct net *net = nf_ct_exp_net(exp);
+ 	struct nf_conntrack_net *cnet;
+ 
++	lockdep_nfct_expect_lock_held();
+ 	WARN_ON(!master_help);
+ 	WARN_ON(timer_pending(&exp->timeout));
+ 
+@@ -118,6 +119,8 @@ nf_ct_exp_equal(const struct nf_conntrack_tuple *tuple,
+ 
+ bool nf_ct_remove_expect(struct nf_conntrack_expect *exp)
  {
-+	struct net *net = dev_net(ifp->idev->dev);
- 	struct fib6_table *table;
- 	struct fib6_info *f6i;
++	lockdep_nfct_expect_lock_held();
++
+ 	if (del_timer(&exp->timeout)) {
+ 		nf_ct_unlink_expect(exp);
+ 		nf_ct_expect_put(exp);
+@@ -177,6 +180,8 @@ nf_ct_find_expectation(struct net *net,
+ 	struct nf_conntrack_expect *i, *exp = NULL;
+ 	unsigned int h;
  
-@@ -1267,9 +1268,10 @@ cleanup_prefix_route(struct inet6_ifaddr *ifp, unsigned long expires,
- 					ifp->idev->dev, 0, RTF_DEFAULT, true);
- 	if (f6i) {
- 		if (del_rt)
--			ip6_del_rt(dev_net(ifp->idev->dev), f6i, false);
-+			ip6_del_rt(net, f6i, false);
- 		else {
--			if (!(f6i->fib6_flags & RTF_EXPIRES)) {
-+			if (f6i != net->ipv6.fib6_null_entry &&
-+			    !(f6i->fib6_flags & RTF_EXPIRES)) {
- 				table = f6i->fib6_table;
- 				spin_lock_bh(&table->tb6_lock);
++	lockdep_nfct_expect_lock_held();
++
+ 	if (!cnet->expect_count)
+ 		return NULL;
  
+@@ -459,6 +464,8 @@ static inline int __nf_ct_expect_check(struct nf_conntrack_expect *expect,
+ 	unsigned int h;
+ 	int ret = 0;
+ 
++	lockdep_nfct_expect_lock_held();
++
+ 	if (!master_help) {
+ 		ret = -ESHUTDOWN;
+ 		goto out;
+@@ -515,8 +522,9 @@ int nf_ct_expect_related_report(struct nf_conntrack_expect *expect,
+ 
+ 	nf_ct_expect_insert(expect);
+ 
+-	spin_unlock_bh(&nf_conntrack_expect_lock);
+ 	nf_ct_expect_event_report(IPEXP_NEW, expect, portid, report);
++	spin_unlock_bh(&nf_conntrack_expect_lock);
++
+ 	return 0;
+ out:
+ 	spin_unlock_bh(&nf_conntrack_expect_lock);
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index f51cdfba68fbdb..507f17722f375b 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -3332,31 +3332,37 @@ static int ctnetlink_get_expect(struct sk_buff *skb,
+ 	if (err < 0)
+ 		return err;
+ 
++	skb2 = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_KERNEL);
++	if (!skb2)
++		return -ENOMEM;
++
++	spin_lock_bh(&nf_conntrack_expect_lock);
+ 	exp = nf_ct_expect_find_get(info->net, &zone, &tuple);
+-	if (!exp)
++	if (!exp) {
++		spin_unlock_bh(&nf_conntrack_expect_lock);
++		kfree_skb(skb2);
+ 		return -ENOENT;
++	}
+ 
+ 	if (cda[CTA_EXPECT_ID]) {
+ 		__be32 id = nla_get_be32(cda[CTA_EXPECT_ID]);
+ 
+ 		if (id != nf_expect_get_id(exp)) {
+ 			nf_ct_expect_put(exp);
++			spin_unlock_bh(&nf_conntrack_expect_lock);
++			kfree_skb(skb2);
+ 			return -ENOENT;
+ 		}
+ 	}
+ 
+-	skb2 = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_KERNEL);
+-	if (!skb2) {
+-		nf_ct_expect_put(exp);
+-		return -ENOMEM;
+-	}
+-
+ 	rcu_read_lock();
+ 	err = ctnetlink_exp_fill_info(skb2, NETLINK_CB(skb).portid,
+ 				      info->nlh->nlmsg_seq, IPCTNL_MSG_EXP_NEW,
+ 				      exp);
+ 	rcu_read_unlock();
+ 	nf_ct_expect_put(exp);
++	spin_unlock_bh(&nf_conntrack_expect_lock);
++
+ 	if (err <= 0) {
+ 		kfree_skb(skb2);
+ 		return -ENOMEM;
+@@ -3403,22 +3409,26 @@ static int ctnetlink_del_expect(struct sk_buff *skb,
+ 		if (err < 0)
+ 			return err;
+ 
++		spin_lock_bh(&nf_conntrack_expect_lock);
++
+ 		/* bump usage count to 2 */
+ 		exp = nf_ct_expect_find_get(info->net, &zone, &tuple);
+-		if (!exp)
++		if (!exp) {
++			spin_unlock_bh(&nf_conntrack_expect_lock);
+ 			return -ENOENT;
++		}
+ 
+ 		if (cda[CTA_EXPECT_ID]) {
+ 			__be32 id = nla_get_be32(cda[CTA_EXPECT_ID]);
+ 
+ 			if (id != nf_expect_get_id(exp)) {
+ 				nf_ct_expect_put(exp);
++				spin_unlock_bh(&nf_conntrack_expect_lock);
+ 				return -ENOENT;
+ 			}
+ 		}
+ 
+ 		/* after list removal, usage count == 1 */
+-		spin_lock_bh(&nf_conntrack_expect_lock);
+ 		if (del_timer(&exp->timeout)) {
+ 			nf_ct_unlink_expect_report(exp, NETLINK_CB(skb).portid,
+ 						   nlmsg_report(info->nlh));
 -- 
 2.53.0
 
