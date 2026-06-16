@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E024611CF;
-	Tue, 16 Jun 2026 17:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1999C331A44;
+	Tue, 16 Jun 2026 17:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631429; cv=none; b=Q2tDBSdQapubXA0PdL08Bx34yLHkQTRqxy9gryc/8egSOaRhJsV3iALV2YoERXkIHhy1MHdvoI1S48xWki212w8GD7rri8LLtBx95DszWNPq5wxF64C/TItD6II0u6Dr4J0XhBawqml3fdL9o7ZneB+pbWC8hL4RQ+rcmuKmVfA=
+	t=1781631435; cv=none; b=ND8+j81AQaTsRIm2TPNs4tcoVRV5AF6MO4PX1CR1s+dQMDY0NEHKdXTO5AIPial+hVN2df9eR9mv1IdkIklYIscpY1CmbHNPnPqil9ezVT4M3JIteRaPG+gqNFtymRU2kau/h39YZR4H3dZ5WmQpsxvOSFuqoAxB/rGmd7XzAXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631429; c=relaxed/simple;
-	bh=mrosaReMLBLtnQOa67SRauUNlMa9MueLEXYe89sNBqc=;
+	s=arc-20240116; t=1781631435; c=relaxed/simple;
+	bh=vr9yrF9g1HnKPrJEfwK0i0wyn3LsFSqSCjb23ndBuEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hPd1xmC7JBMk+9l8OZSrFW2fFkVJNDR0jBktLRiG4q84tuD7OqVR4mVGOraBXSK+FUYTCe1YXNnMe29flZGLqIfIr5YLhOgEGVMP55/MuRYkS6EZOiMF9cry1HCCwdsXFmVgr57l6e+7SZnWqonFtUHmPL6U6nwW/Xmo4koRajc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNzGsLvD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b/Q5fxiTaqIYXFjMB/B8267/+78KXwOzZNICo4EVPJ0iBbJDNfPEoycEoqaVmAI1V1KVibIBTuazCH9d+YCYJL8rJqqmxAHwoRUkjDZ4wp9ScK9K7h1VKbADvVc8DCP6In5/tPqIT7IvofDueUyvNidTbwmVVbLiVJlD8iNzqoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bturRMP0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNzGsLvD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F701F000E9;
-	Tue, 16 Jun 2026 17:37:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bturRMP0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 283801F000E9;
+	Tue, 16 Jun 2026 17:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631428;
-	bh=1p934KGyhoxJdNp402YN5XGSsN++ZwKcHai43pet5SU=;
+	s=korg; t=1781631434;
+	bh=d27B7WeC/Re/rlhQonTZuPhVmVp9H3CZ026rO/lJ6gI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VNzGsLvDL7e+QBzICwwqWhTNHOwFTBww0Vn6dEoN9+OnWVBJ2xagIFWDDjNRHYckX
-	 RtmdX6CXqsRxPyIBZg1//txm6HhQ49vWyCRMCTsJ9w9OaVO3h4ZgWPqo5fTgmrtiae
-	 KLYrqi+Yu0lSfVYflN6R/6yOvsNMgZ0HyZs2VH0c=
+	b=bturRMP0itw0E5aIXnkdLLlj+8ZPKIx2VtmzBDa2uguBNQ0yvVqzoUfoP4Qm8OENI
+	 Eob4wW5kpj+0gwL1ePTrF5HIORby/ZZmwXxOnRgaLrII5jkfHdpOxL9D0Z80HEF1+R
+	 IsMDN8p21EQkjlhKxckhIJ91v+OWDJuetSPSyWpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Zeitz <florian.zeitz@schettke.com>,
-	Kurt Kanzenbach <kurt@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Naveen Mamindlapalli <naveenm@marvell.com>,
+	Nithin Dabilpuram <ndabilpuram@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 220/522] ptp: vclock: Switch from RCU to SRCU
-Date: Tue, 16 Jun 2026 20:26:07 +0530
-Message-ID: <20260616145136.318477611@linuxfoundation.org>
+Subject: [PATCH 6.1 221/522] octeontx2-af: npc: Fix CPT channel mask in npc_install_flow
+Date: Tue, 16 Jun 2026 20:26:08 +0530
+Message-ID: <20260616145136.361470994@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -53,83 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kurt Kanzenbach <kurt@linutronix.de>
+From: Nithin Dabilpuram <ndabilpuram@marvell.com>
 
-[ Upstream commit 672bd0519e27c357c43b7f8c0d653fce3817d06e ]
+[ Upstream commit 1d31eb27e570daa04f5373345f9ac98c95863be9 ]
 
-The usage of PTP vClocks leads immediately to the following issues with
-ptp4l with LOCKDEP and DEBUG_ATOMIC_SLEEP enabled: "BUG: sleeping function
-called from invalid context".
+Use the CPT-aware NIX channel mask in the npc_install_flow path so that
+when the host PF installs steering rules in kernel for a VF used from
+userspace (e.g. DPDK), MCAM entries see the same channel mask semantics as
+other RX paths.
 
-ptp_convert_timestamp() acquires a mutex_t within a RCU read section.  This
-is illegal, because acquiring a mutex_t can result in voluntary scheduling
-request which is not allowed within a RCU read section.
-
-Replace the RCU usage with SRCU where sleeping is allowed.
-
-Reported-by: Florian Zeitz <florian.zeitz@schettke.com>
-Closes: https://lore.kernel.org/all/00a8cce8-410e-4038-98af-49be6d93d7bd@schettke.com/
-Fixes: 67d93ffc0f3c ("ptp: vclock: use mutex to fix "sleep on atomic" bug")
-Signed-off-by: Kurt Kanzenbach <kurt@linutronix.de>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20260529-vclock_rcu-v2-1-02a5531fab92@linutronix.de
+Fixes: 56bcef528bd8 ("octeontx2-af: Use npc_install_flow API for promisc and broadcast entries")
+Cc: Naveen Mamindlapalli <naveenm@marvell.com>
+Signed-off-by: Nithin Dabilpuram <ndabilpuram@marvell.com>
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Link: https://patch.msgid.link/20260602045853.1558530-1-rkannoth@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_vclock.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ .../net/ethernet/marvell/octeontx2/af/rvu.h   |  1 +
+ .../ethernet/marvell/octeontx2/af/rvu_npc.c   | 32 +++++++++----------
+ .../marvell/octeontx2/af/rvu_npc_fs.c         |  2 +-
+ 3 files changed, 18 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/ptp/ptp_vclock.c b/drivers/ptp/ptp_vclock.c
-index dcf752c9e04506..eb57338a32414a 100644
---- a/drivers/ptp/ptp_vclock.c
-+++ b/drivers/ptp/ptp_vclock.c
-@@ -19,6 +19,8 @@ static DEFINE_SPINLOCK(vclock_hash_lock);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+index fc0f3398a556bb..86ef67745ebdf7 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+@@ -895,6 +895,7 @@ int rvu_cpt_lf_teardown(struct rvu *rvu, u16 pcifunc, int blkaddr, int lf,
+ 			int slot);
+ int rvu_cpt_ctx_flush(struct rvu *rvu, u16 pcifunc);
+ int rvu_cpt_init(struct rvu *rvu);
++u32 rvu_get_cpt_chan_mask(struct rvu *rvu);
  
- static DEFINE_READ_MOSTLY_HASHTABLE(vclock_hash, 8);
+ #define NDC_AF_BANK_MASK       GENMASK_ULL(7, 0)
+ #define NDC_AF_BANK_LINE_MASK  GENMASK_ULL(31, 16)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+index 9b8a6046e6dff0..65ad7476e60983 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+@@ -609,6 +609,19 @@ static u64 npc_get_mcam_action(struct rvu *rvu, struct npc_mcam *mcam,
+ 			  NPC_AF_MCAMEX_BANKX_ACTION(index, bank));
+ }
  
-+DEFINE_STATIC_SRCU(vclock_srcu);
++u32 rvu_get_cpt_chan_mask(struct rvu *rvu)
++{
++	/* For cn10k the upper two bits of the channel number are
++	 * cpt channel number. with masking out these bits in the
++	 * mcam entry, same entry used for NIX will allow packets
++	 * received from cpt for parsing.
++	 */
++	if (!is_rvu_otx2(rvu))
++		return NIX_CHAN_CPT_X2P_MASK;
++	else
++		return 0xFFFu;
++}
 +
- static void ptp_vclock_hash_add(struct ptp_vclock *vclock)
+ void rvu_npc_install_ucast_entry(struct rvu *rvu, u16 pcifunc,
+ 				 int nixlf, u64 chan, u8 *mac_addr)
  {
- 	spin_lock(&vclock_hash_lock);
-@@ -37,7 +39,7 @@ static void ptp_vclock_hash_del(struct ptp_vclock *vclock)
+@@ -652,7 +665,7 @@ void rvu_npc_install_ucast_entry(struct rvu *rvu, u16 pcifunc,
+ 	eth_broadcast_addr((u8 *)&req.mask.dmac);
+ 	req.features = BIT_ULL(NPC_DMAC);
+ 	req.channel = chan;
+-	req.chan_mask = 0xFFFU;
++	req.chan_mask = rvu_get_cpt_chan_mask(rvu);
+ 	req.intf = pfvf->nix_rx_intf;
+ 	req.op = action.op;
+ 	req.hdr.pcifunc = 0; /* AF is requester */
+@@ -722,11 +735,7 @@ void rvu_npc_install_promisc_entry(struct rvu *rvu, u16 pcifunc,
+ 	 * mcam entry, same entry used for NIX will allow packets
+ 	 * received from cpt for parsing.
+ 	 */
+-	if (!is_rvu_otx2(rvu)) {
+-		req.chan_mask = NIX_CHAN_CPT_X2P_MASK;
+-	} else {
+-		req.chan_mask = 0xFFFU;
+-	}
++	req.chan_mask = rvu_get_cpt_chan_mask(rvu);
  
- 	spin_unlock(&vclock_hash_lock);
+ 	if (chan_cnt > 1) {
+ 		if (!is_power_of_2(chan_cnt)) {
+@@ -915,16 +924,7 @@ void rvu_npc_install_allmulti_entry(struct rvu *rvu, u16 pcifunc, int nixlf,
+ 	ether_addr_copy(req.mask.dmac, mac_addr);
+ 	req.features = BIT_ULL(NPC_DMAC);
  
--	synchronize_rcu();
-+	synchronize_srcu(&vclock_srcu);
- }
+-	/* For cn10k the upper two bits of the channel number are
+-	 * cpt channel number. with masking out these bits in the
+-	 * mcam entry, same entry used for NIX will allow packets
+-	 * received from cpt for parsing.
+-	 */
+-	if (!is_rvu_otx2(rvu))
+-		req.chan_mask = NIX_CHAN_CPT_X2P_MASK;
+-	else
+-		req.chan_mask = 0xFFFU;
+-
++	req.chan_mask = rvu_get_cpt_chan_mask(rvu);
+ 	req.channel = chan;
+ 	req.intf = pfvf->nix_rx_intf;
+ 	req.entry = index;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
+index 80d6aa3f14c11f..b79b28192a5764 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
+@@ -1320,7 +1320,7 @@ int rvu_mbox_handler_npc_install_flow(struct rvu *rvu,
  
- static int ptp_vclock_adjfine(struct ptp_clock_info *ptp, long scaled_ppm)
-@@ -269,14 +271,16 @@ ktime_t ptp_convert_timestamp(const ktime_t *hwtstamp, int vclock_index)
- {
- 	unsigned int hash = vclock_index % HASH_SIZE(vclock_hash);
- 	struct ptp_vclock *vclock;
--	u64 ns;
- 	u64 vclock_ns = 0;
-+	int srcu_idx;
-+	u64 ns;
+ 	/* ignore chan_mask in case pf func is not AF, revisit later */
+ 	if (!is_pffunc_af(req->hdr.pcifunc))
+-		req->chan_mask = 0xFFF;
++		req->chan_mask = rvu_get_cpt_chan_mask(rvu);
  
- 	ns = ktime_to_ns(*hwtstamp);
- 
--	rcu_read_lock();
-+	srcu_idx = srcu_read_lock(&vclock_srcu);
- 
--	hlist_for_each_entry_rcu(vclock, &vclock_hash[hash], vclock_hash_node) {
-+	hlist_for_each_entry_srcu(vclock, &vclock_hash[hash], vclock_hash_node,
-+				  srcu_read_lock_held(&vclock_srcu)) {
- 		if (vclock->clock->index != vclock_index)
- 			continue;
- 
-@@ -287,7 +291,7 @@ ktime_t ptp_convert_timestamp(const ktime_t *hwtstamp, int vclock_index)
- 		break;
- 	}
- 
--	rcu_read_unlock();
-+	srcu_read_unlock(&vclock_srcu, srcu_idx);
- 
- 	return ns_to_ktime(vclock_ns);
- }
+ 	err = npc_check_unsupported_flows(rvu, req->features, req->intf);
+ 	if (err)
 -- 
 2.53.0
 
