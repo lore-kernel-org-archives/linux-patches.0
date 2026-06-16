@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2471747A0D1;
-	Tue, 16 Jun 2026 17:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C694D477E36;
+	Tue, 16 Jun 2026 17:16:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630180; cv=none; b=F3M42pyBLtlRb5NMPEaz4Pv8zpbkZSe6x3QGwvXJ1GH/2sRj3vi3Dusx1qrYj0Q/XTaz2o9AAjrrM21CktgHLqoCUwhkEcK4V8QtKep8Di4gEe40rjfAVsTyisnWDJcjLz7idqFD8TUvICLGPqdJLrj3nlg2+0HY8fzf61GwIk8=
+	t=1781630185; cv=none; b=NDt9bu2oDgcrOAMfjqT+1AlLgxiiXHZF1e8xR2aEU63V0tyJzAoQupOzZmc7rfkPD0S+fqeH3RFXOLG2vWCn/HjZyzceaCkoNUpSyHfNOZwGNcJHk7m1qfsgojU+6OF2Dq0IELYboSOqzeGucpIeomexyP/3kb0oRUrHt6bMu8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630180; c=relaxed/simple;
-	bh=JQ9gRxgCrp4JCLCC6IwttvaWwTQupPX2HIDhyygM5kA=;
+	s=arc-20240116; t=1781630185; c=relaxed/simple;
+	bh=7982pmaxv8Z4BnZrUDozyo4hyg3GfgSjxu/c2j9P39c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RhuCjbDb/E2xzIkHETakV9GjCYLhe1Y/zGGev+2R/b7g98xaF4rIbU+iUPhlvi6RVsw5zfGeeEj4iX3KupwmesgMGX27teXMUPGYZsS9LIpcQGe41y4z8ve+Hi2/+RZ08kx4712+c3RJFXxSd8lT4FOFLRMDm4jzfKaPm3YTf2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/2tQ04B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DSJAphJY+qJU/Mz/kv2WjDz3/Yhhnk61Md/1+BMCWx1+s6AIqDelc6c1CywaiE2+P/UvweRbmfP3Q+T+eBoCSHh9n5+vTZcsfKK1jYZHAuaQT/kE5T4mVusLpVDzoZQz+37HNvhoq+ZzTcLHy39zcHcCQ7cG8X4J5V4FxUszLuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sk0/FWBj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/2tQ04B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B729F1F00A3A;
-	Tue, 16 Jun 2026 17:16:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sk0/FWBj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465381F000E9;
+	Tue, 16 Jun 2026 17:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630177;
-	bh=EJ7TXhR+XzxIGqXqlqimI61bIxL+EIHatdCiFqR7Klo=;
+	s=korg; t=1781630183;
+	bh=X/Ut174tgBwX/MvemaN9PJaa6QfS9rs9BdNyv/vD01E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O/2tQ04BJv2Ql2jMYgZo2Hntg3D1vdOAcwBAXKw6jj7Q+Elnjdd7e35QV4bJ1Lf5S
-	 zTOZonOKrYbdPBWwXI9nAv6DcxxI3WAA8Ru9cJYiiPREjY+OdKyDHEVaJy6KknxH7E
-	 oLD75IAZfaI5ZEaTWIENMlBwLaUVUjXSTuA2NW/8=
+	b=Sk0/FWBjs7MgjsaIsQF9WkPe9hri1W9kmG2QmBuSnjhknG0VM/ZCGxjj5A7tg1Vw2
+	 6TyAtEKhbGzOEQD7VhxDCVl688XbSp/JJ6mDbRqametdz4Rc7cZrB4UQ6wVpDw+foe
+	 ipWYnHkGT6q8QXi/qXJ2Y5yUsymGakaSseMHHR2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 408/452] mptcp: handle first subflow closing consistently
-Date: Tue, 16 Jun 2026 20:30:35 +0530
-Message-ID: <20260616145138.232951797@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
+	Sasha Levin <sashal@kernel.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>
+Subject: [PATCH 6.6 426/452] usb: typec: ucsi: Dont update power_supply on power role change if not connected
+Date: Tue, 16 Jun 2026 20:30:53 +0530
+Message-ID: <20260616145139.075808989@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -53,100 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
 
-[ Upstream commit 0eeb372deebce6c25b9afc09e35d6c75a744299a ]
+[ Upstream commit d98d413ca65d0790a8f3695d0a5845538958ab84 ]
 
-Currently, as soon as the PM closes a subflow, the msk stops accepting
-data from it, even if the TCP socket could be still formally open in the
-incoming direction, with the notable exception of the first subflow.
+We only need to update the power_supply on power role change if the port
+is connected, because otherwise the online status should be the same for
+both cases.
 
-The root cause of such behavior is that code currently piggy back two
-separate semantic on the subflow->disposable bit: the subflow context
-must be released and that the subflow must stop accepting incoming
-data.
-
-The first subflow is never disposed, so it also never stop accepting
-incoming data. Use a separate bit to mark the latter status and set such
-bit in __mptcp_close_ssk() for all subflows.
-
-Beyond making per subflow behaviour more consistent this will also
-simplify the next patch.
-
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251121-net-next-mptcp-memcg-backlog-imp-v1-11-1f34b6c1e0b1@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 50c2d91c5dfa ("mptcp: do not drop partial packets")
+Cc: stable <stable@kernel.org>
+Fixes: 7616f006db07 ("usb: typec: ucsi: Update power_supply on power role change")
+Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+Reported-and-tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Link: https://patch.msgid.link/20260519-ucsi-fix-2-v1-2-6f1239535187@qtmlabs.xyz
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ changed `UCSI_CONSTAT(con, CONNECTED)` accessor macro to `con->status.flags & UCSI_CONSTAT_CONNECTED` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   14 +++++++++-----
- net/mptcp/protocol.h |    3 ++-
- 2 files changed, 11 insertions(+), 6 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -889,10 +889,10 @@ void mptcp_data_ready(struct sock *sk, s
- 	int sk_rbuf, ssk_rbuf;
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -912,7 +912,12 @@ static void ucsi_handle_connector_change
  
- 	/* The peer can send data while we are shutting down this
--	 * subflow at msk destruction time, but we must avoid enqueuing
-+	 * subflow at subflow destruction time, but we must avoid enqueuing
- 	 * more data to the msk receive queue
- 	 */
--	if (unlikely(subflow->disposable))
-+	if (unlikely(subflow->closing))
- 		return;
- 
- 	ssk_rbuf = READ_ONCE(ssk->sk_rcvbuf);
-@@ -2491,6 +2491,13 @@ static void __mptcp_close_ssk(struct soc
- 	struct mptcp_sock *msk = mptcp_sk(sk);
- 	bool dispose_it, need_push = false;
- 
-+	/* Do not pass RX data to the msk, even if the subflow socket is not
-+	 * going to be freed (i.e. even for the first subflow on graceful
-+	 * subflow close.
-+	 */
-+	lock_sock_nested(ssk, SINGLE_DEPTH_NESTING);
-+	subflow->closing = 1;
+ 	if ((con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) && role != prev_role) {
+ 		typec_set_pwr_role(con->port, role);
+-		ucsi_port_psy_changed(con);
 +
- 	/* If the first subflow moved to a close state before accept, e.g. due
- 	 * to an incoming reset or listener shutdown, the subflow socket is
- 	 * already deleted by inet_child_forget() and the mptcp socket can't
-@@ -2501,7 +2508,6 @@ static void __mptcp_close_ssk(struct soc
- 		/* ensure later check in mptcp_worker() will dispose the msk */
- 		mptcp_set_close_tout(sk, tcp_jiffies32 - (TCP_TIMEWAIT_LEN + 1));
- 		sock_set_flag(sk, SOCK_DEAD);
--		lock_sock_nested(ssk, SINGLE_DEPTH_NESTING);
- 		mptcp_subflow_drop_ctx(ssk);
- 		goto out_release;
- 	}
-@@ -2510,8 +2516,6 @@ static void __mptcp_close_ssk(struct soc
- 	if (dispose_it)
- 		list_del(&subflow->node);
++		/* Some power_supply properties vary depending on the power direction when
++		 * connected
++		 */
++		if (con->status.flags & UCSI_CONSTAT_CONNECTED)
++			ucsi_port_psy_changed(con);
  
--	lock_sock_nested(ssk, SINGLE_DEPTH_NESTING);
--
- 	if (subflow->send_fastclose && ssk->sk_state != TCP_CLOSE)
- 		tcp_set_state(ssk, TCP_CLOSE);
- 
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -503,11 +503,12 @@ struct mptcp_subflow_context {
- 		send_infinite_map : 1,
- 		remote_key_valid : 1,        /* received the peer key from */
- 		disposable : 1,	    /* ctx can be free at ulp release time */
-+		closing : 1,	    /* must not pass rx data to msk anymore */
- 		stale : 1,	    /* unable to snd/rcv data, do not use for xmit */
- 		valid_csum_seen : 1,        /* at least one csum validated */
- 		is_mptfo : 1,	    /* subflow is doing TFO */
- 		close_event_done : 1,       /* has done the post-closed part */
--		__unused : 9;
-+		__unused : 8;
- 	bool	data_avail;
- 	bool	scheduled;
- 	bool	pm_listener;	    /* a listener managed by the kernel PM? */
+ 		/* Complete pending power role swap */
+ 		if (!completion_done(&con->complete))
 
 
