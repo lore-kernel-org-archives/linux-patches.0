@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC69544D6B2;
-	Tue, 16 Jun 2026 15:56:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7FD744CAF9;
+	Tue, 16 Jun 2026 15:56:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625383; cv=none; b=i9FPNbFLz3D6mTfCsb6/OcujfiGhTkxRVIkgQo3YzGUC3XreIV/gJA3oN4N6SSn23StI6DQ6haa43SOwqbx95TSthuzjAlK98ncSaq7Dns0tKDzMoVnOyK+kR2BaTvnAaWJwD2YXbu/ErIJP1sDoeUYxR0TBJCZBXbc7LLOc2FA=
+	t=1781625388; cv=none; b=IPW/ZJIu6ak8CQYWJ7xgNu0nMTat1VvfwT1gGl+xpbWRMtmjGZe2rctHykjD9ugzSlI2WxPgpsOTbHeW3+X6WFFA6GgMhJnafl7GNTJ3/obcqyToqAu3FNkVs/zDrpevxIILHh4N7OhyYwUrblrCFu5ghdrbmHBqoWIa8noLXvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625383; c=relaxed/simple;
-	bh=oCK6DoY2MQdw4+ij98skzM5cDpni7gRYAOwgS63JCkM=;
+	s=arc-20240116; t=1781625388; c=relaxed/simple;
+	bh=clAr/0Xl5MGQGm7VSLdShiUcjUEQ3Pay5iGyt+pMjLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mt7y34JKaCC7RlSY6d2YE+701woXNsmQpO9FLOAeBqrs+XG8ivQsSPEG48TyULgAb3n5N/M1WguFxlk8X7Rp8AY3UzHq0H6kh0tJTpFg2hxmW1rTnhZ4gvA92RHGC6FIdoMY3dGjqSxbQQOyyRp97ot1dAFMDscSWDBxQIDVYbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHBZQ8O0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nTwlUWtc6LBT34B096yVOfmlWzqOjc6DFlxTeGrEkb+jJovQkrG4lsHILIavZmJpYfj6lO23WT1ugD+NVEePJcvT8jSk5KXVXskUi0Z1RCaHlDOjy7+NFXVnHN4gdqW9ntA/yF/nUSqHmZGe4AnOan37LcIeicnpb5X6adju000=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1uGbj2id; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHBZQ8O0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 912C01F000E9;
-	Tue, 16 Jun 2026 15:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1uGbj2id"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C74D51F000E9;
+	Tue, 16 Jun 2026 15:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625382;
-	bh=OaDulcuoPdASDPWrpBfLiaCjLVt8tZEoyBGskTIzbGo=;
+	s=korg; t=1781625387;
+	bh=RinjpnmoG/jSfhwNFHsUlxm3Sx+L0fSM98RlbEwuL7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GHBZQ8O0Nidri6aURF5QxQnMBiK1kBjlk1OfCIjrOUPwxSJAIIx1u5soBdgKQiNkm
-	 UQO+7cjO3fUCMycC2jQ762OBKKt1H7LFnbukhBGCKQZ9vGVSHsQe/aa0t/UxBT8WjJ
-	 4RTFX6aSj1STTV/BREHkncEeDB4Uck4fHWHmabAo=
+	b=1uGbj2id5AOMKE9orEXr5/zU2KbCfX7k+Kj/7h4yL+UfeOj6H/YM8e8v3VNaYs/dk
+	 +kA45YDAJu+foRhnGICBFiMbRosaJ6lYc1zhsIwwHiXKOGqbVmLd+6/M8j7NAHEd4R
+	 c1lxgVsyE+4OUqyMOOu3TBvEcKKqQyuXpW3N8qBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Til Kaiser <mail@tk154.de>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 132/325] net: mvpp2: build skb from XDP-adjusted data on XDP_PASS
-Date: Tue, 16 Jun 2026 20:28:48 +0530
-Message-ID: <20260616145104.305262038@linuxfoundation.org>
+Subject: [PATCH 6.18 133/325] net: txgbe: optimize the flow to setup PHY for AML devices
+Date: Tue, 16 Jun 2026 20:28:49 +0530
+Message-ID: <20260616145104.358541016@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -51,104 +51,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Til Kaiser <mail@tk154.de>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-[ Upstream commit 77a6b90ce56bc982dcfa94229b8e28e6abb16e95 ]
+[ Upstream commit 1f863ce5c71276710a7689c88bf4003fa5173998 ]
 
-When an XDP program uses bpf_xdp_adjust_head() or bpf_xdp_adjust_tail()
-and then returns XDP_PASS, mvpp2 still builds the skb from fixed offsets
-derived from the original RX descriptor. Packet geometry changes made by
-the XDP program are therefore discarded before the skb reaches the stack.
+To adapt to new firmware for AML devices, the driver should send the
+"SET_LINK_CMD" to the firmware only once when switching PHY interface
+mode, and no longer needs to re-trigger PHY configuration based on the
+RX signal interrupt (TXGBE_GPIOBIT_3).
 
-Update rx_offset and rx_bytes from xdp.data and xdp.data_end for
-XDP_PASS. This makes skb_reserve() and skb_put() reflect the packet seen
-by XDP, and makes RX byte accounting for XDP_PASS follow the length of the
-skb passed to the network stack.
+In previous firmware versions, the PHY was configured only after receiving
+"SET_LINK_CMD", and might remain incomplete if the RX signal was lost.
+To handle this case, the driver used TXGBE_GPIOBIT_3 interrupt to resend
+the command. This workaround is no longer necessary with the new firmware.
 
-Keep a separate rx_sync_size for page-pool recycling on skb allocation
-failure, which must stay tied to the received buffer range.
+And the unknown link speed is permitted in the mailbox buffer.
 
-Non-PASS verdicts continue to account the descriptor length because no skb
-is passed up in those cases.
-
-Fixes: 07dd0a7aae7f ("mvpp2: add basic XDP support")
-Signed-off-by: Til Kaiser <mail@tk154.de>
-Link: https://patch.msgid.link/20260607134943.21996-5-mail@tk154.de
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Link: https://patch.msgid.link/20251014061726.36660-3-jiawenwu@trustnetic.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 0487cfca4651 ("net: txgbe: initialize module info buffer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/mvpp2/mvpp2_main.c   | 21 +++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/wangxun/libwx/wx_type.h  |  2 -
+ .../net/ethernet/wangxun/txgbe/txgbe_aml.c    | 50 ++++++-------------
+ .../net/ethernet/wangxun/txgbe/txgbe_type.h   |  1 +
+ 3 files changed, 15 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index 7f748cd6605ae4..79f8e0abfdbfd1 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -3919,10 +3919,10 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 		struct mvpp2_bm_pool *bm_pool;
- 		struct page_pool *pp = NULL;
- 		struct sk_buff *skb;
--		unsigned int frag_size;
-+		unsigned int frag_size, rx_sync_size;
- 		dma_addr_t dma_addr;
- 		phys_addr_t phys_addr;
--		int pool, rx_bytes, err, ret;
-+		int pool, rx_bytes, rx_offset, err, ret;
- 		struct page *page;
- 		void *data;
+diff --git a/drivers/net/ethernet/wangxun/libwx/wx_type.h b/drivers/net/ethernet/wangxun/libwx/wx_type.h
+index 2f8319e031820c..d367644debef36 100644
+--- a/drivers/net/ethernet/wangxun/libwx/wx_type.h
++++ b/drivers/net/ethernet/wangxun/libwx/wx_type.h
+@@ -1271,8 +1271,6 @@ struct wx {
  
-@@ -3935,6 +3935,8 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 		rx_status = mvpp2_rxdesc_status_get(port, rx_desc);
- 		rx_bytes = mvpp2_rxdesc_size_get(port, rx_desc);
- 		rx_bytes -= MVPP2_MH_SIZE;
-+		rx_sync_size = rx_bytes + MVPP2_MH_SIZE;
-+		rx_offset = MVPP2_MH_SIZE + MVPP2_SKB_HEADROOM;
- 		dma_addr = mvpp2_rxdesc_dma_addr_get(port, rx_desc);
+ 	/* PHY stuff */
+ 	bool notify_down;
+-	int adv_speed;
+-	int adv_duplex;
+ 	unsigned int link;
+ 	int speed;
+ 	int duplex;
+diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c b/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
+index 08b9b426f64846..80413504e4bc86 100644
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
+@@ -19,8 +19,8 @@ void txgbe_gpio_init_aml(struct wx *wx)
+ {
+ 	u32 status;
  
- 		pool = (rx_status & MVPP2_RXD_BM_POOL_ID_MASK) >>
-@@ -3950,7 +3952,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
+-	wr32(wx, WX_GPIO_INTTYPE_LEVEL, TXGBE_GPIOBIT_2 | TXGBE_GPIOBIT_3);
+-	wr32(wx, WX_GPIO_INTEN, TXGBE_GPIOBIT_2 | TXGBE_GPIOBIT_3);
++	wr32(wx, WX_GPIO_INTTYPE_LEVEL, TXGBE_GPIOBIT_2);
++	wr32(wx, WX_GPIO_INTEN, TXGBE_GPIOBIT_2);
  
- 		dma_sync_single_range_for_cpu(dev->dev.parent, dma_addr,
- 					      MVPP2_SKB_HEADROOM,
--					      rx_bytes + MVPP2_MH_SIZE,
-+					      rx_sync_size,
- 					      dma_dir);
+ 	status = rd32(wx, WX_GPIO_INTSTATUS);
+ 	for (int i = 0; i < 6; i++) {
+@@ -42,11 +42,6 @@ irqreturn_t txgbe_gpio_irq_handler_aml(int irq, void *data)
+ 		wr32(wx, WX_GPIO_EOI, TXGBE_GPIOBIT_2);
+ 		wx_service_event_schedule(wx);
+ 	}
+-	if (status & TXGBE_GPIOBIT_3) {
+-		set_bit(WX_FLAG_NEED_LINK_CONFIG, wx->flags);
+-		wx_service_event_schedule(wx);
+-		wr32(wx, WX_GPIO_EOI, TXGBE_GPIOBIT_3);
+-	}
  
- 		/* Buffer header not supported */
-@@ -4001,6 +4003,14 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 				continue;
- 			}
+ 	wr32(wx, WX_GPIO_INTMASK, 0);
+ 	return IRQ_HANDLED;
+@@ -96,6 +91,9 @@ static int txgbe_set_phy_link_hostif(struct wx *wx, int speed, int autoneg, int
+ 	case SPEED_10000:
+ 		buffer.speed = TXGBE_LINK_SPEED_10GB_FULL;
+ 		break;
++	default:
++		buffer.speed = TXGBE_LINK_SPEED_UNKNOWN;
++		break;
+ 	}
  
-+			rx_sync_size = max_t(unsigned int, rx_sync_size,
-+					     xdp.data_end - xdp.data_hard_start -
-+					     MVPP2_SKB_HEADROOM);
-+
-+			/* Update offset and length to reflect any XDP adjustments. */
-+			rx_offset = xdp.data     - data;
-+			rx_bytes  = xdp.data_end - xdp.data;
-+
- 			metasize = xdp.data - xdp.data_meta;
- 		}
+ 	buffer.fec_mode = TXGBE_PHY_FEC_AUTO;
+@@ -106,19 +104,18 @@ static int txgbe_set_phy_link_hostif(struct wx *wx, int speed, int autoneg, int
+ 					 WX_HI_COMMAND_TIMEOUT, false);
+ }
  
-@@ -4012,8 +4022,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 			netdev_warn(port->dev, "skb build failed\n");
- 			if (pp) {
- 				page_pool_put_page(pp, virt_to_head_page(data),
--						   rx_bytes + MVPP2_MH_SIZE,
--						   true);
-+						   rx_sync_size, true);
- 			} else {
- 				dma_unmap_single_attrs(dev->dev.parent, dma_addr,
- 						       bm_pool->buf_size,
-@@ -4043,7 +4052,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 		ps.rx_packets++;
- 		ps.rx_bytes += rx_bytes;
+-static void txgbe_get_link_capabilities(struct wx *wx)
++static void txgbe_get_link_capabilities(struct wx *wx, int *speed, int *duplex)
+ {
+ 	struct txgbe *txgbe = wx->priv;
  
--		skb_reserve(skb, MVPP2_MH_SIZE + MVPP2_SKB_HEADROOM);
-+		skb_reserve(skb, rx_offset);
- 		skb_put(skb, rx_bytes);
- 		if (metasize)
- 			skb_metadata_set(skb, metasize);
+ 	if (test_bit(PHY_INTERFACE_MODE_25GBASER, txgbe->sfp_interfaces))
+-		wx->adv_speed = SPEED_25000;
++		*speed = SPEED_25000;
+ 	else if (test_bit(PHY_INTERFACE_MODE_10GBASER, txgbe->sfp_interfaces))
+-		wx->adv_speed = SPEED_10000;
++		*speed = SPEED_10000;
+ 	else
+-		wx->adv_speed = SPEED_UNKNOWN;
++		*speed = SPEED_UNKNOWN;
+ 
+-	wx->adv_duplex = wx->adv_speed == SPEED_UNKNOWN ?
+-			 DUPLEX_HALF : DUPLEX_FULL;
++	*duplex = *speed == SPEED_UNKNOWN ? DUPLEX_HALF : DUPLEX_FULL;
+ }
+ 
+ static void txgbe_get_phy_link(struct wx *wx, int *speed)
+@@ -138,23 +135,11 @@ static void txgbe_get_phy_link(struct wx *wx, int *speed)
+ 
+ int txgbe_set_phy_link(struct wx *wx)
+ {
+-	int speed, err;
+-	u32 gpio;
++	int speed, duplex, err;
+ 
+-	/* Check RX signal */
+-	gpio = rd32(wx, WX_GPIO_EXT);
+-	if (gpio & TXGBE_GPIOBIT_3)
+-		return -ENODEV;
++	txgbe_get_link_capabilities(wx, &speed, &duplex);
+ 
+-	txgbe_get_link_capabilities(wx);
+-	if (wx->adv_speed == SPEED_UNKNOWN)
+-		return -ENODEV;
+-
+-	txgbe_get_phy_link(wx, &speed);
+-	if (speed == wx->adv_speed)
+-		return 0;
+-
+-	err = txgbe_set_phy_link_hostif(wx, wx->adv_speed, 0, wx->adv_duplex);
++	err = txgbe_set_phy_link_hostif(wx, speed, 0, duplex);
+ 	if (err) {
+ 		wx_err(wx, "Failed to setup link\n");
+ 		return err;
+@@ -230,14 +215,7 @@ int txgbe_identify_sfp(struct wx *wx)
+ 		return -ENODEV;
+ 	}
+ 
+-	err = txgbe_sfp_to_linkmodes(wx, id);
+-	if (err)
+-		return err;
+-
+-	if (gpio & TXGBE_GPIOBIT_3)
+-		set_bit(WX_FLAG_NEED_LINK_CONFIG, wx->flags);
+-
+-	return 0;
++	return txgbe_sfp_to_linkmodes(wx, id);
+ }
+ 
+ void txgbe_setup_link(struct wx *wx)
+diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h b/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
+index be78f8f61a7950..34920b49d0c09b 100644
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_type.h
+@@ -314,6 +314,7 @@ void txgbe_up(struct wx *wx);
+ int txgbe_setup_tc(struct net_device *dev, u8 tc);
+ void txgbe_do_reset(struct net_device *netdev);
+ 
++#define TXGBE_LINK_SPEED_UNKNOWN        0
+ #define TXGBE_LINK_SPEED_10GB_FULL      4
+ #define TXGBE_LINK_SPEED_25GB_FULL      0x10
+ 
 -- 
 2.53.0
 
