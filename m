@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26FC466B4C;
-	Tue, 16 Jun 2026 16:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C86F44D031;
+	Tue, 16 Jun 2026 16:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626058; cv=none; b=h/8UkyBSaqMo8BunC1zgr+U/9Txb51Msy02Ti+QqHXgC0Ff8hKtiE4W2f3B+UFwI6gVsTbsCn6c/dVnsxoB3KvpPcYx1mj9+UgBP9vC1kACyfZMt33vZyA+Kt981UtHJbO0GCK9NRQrpJ/J5hCW7qB1IIwG3OxaSJHH8GyhZERM=
+	t=1781626063; cv=none; b=IuboD+FgLcRdGe7PsPrhFoSl1zP7GgfPHOC4MjtDPcRqqk9UElEM2oa9J28KJ7DkTo1BYdyoOBTeIcy7Zb1sOzFeqtVG2fhfB3GqUXET9/X2cvB/Zk4nNT7ZEIC9WFwb9TOXlAq10Ja/hWBW3vBDUa7NVo9OPHBanTX+HMPLoco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626058; c=relaxed/simple;
-	bh=G7+gKCh5R5XxY6Fy1REdwWSMimFwqI8QiwXUarmJb0A=;
+	s=arc-20240116; t=1781626063; c=relaxed/simple;
+	bh=MbK6jDcTCPP9P7TcGzV59caAkmNGFiN71iXA119ypYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cefaJZJHLszvuNkpdjDKI/r7U+oJhSNCCSboWc3W1hONcAwkb03bDWO8EXpMD7tdZXKviV2sBia7Qqq2pL7UnF1y5zPMCWjooVxtUlT6LgfwkYzrITfk5DN4A1MkwtYk5OG/C5OyZWTXTQAPk7jjiq4Aa2UOctCV1SIJSEVd/Z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=McnMkGFw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rXDOlJLRjz6v2pNKPYKMYAxspOR94ZhnKJO8hAiKlg7QhbSaQ2EAY1ssU4fDFKYahRw7wgkJVV7nZgelMecbeOP+GnyiIB0HgnPbng//a6KZgw+b4PpeJV+efIvJAS/+yv1d/mgeIl+PPo+u33VreacqBs11SV9DxhJMKDDcryA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVGfE7oo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="McnMkGFw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F0B1F000E9;
-	Tue, 16 Jun 2026 16:07:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVGfE7oo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B561F000E9;
+	Tue, 16 Jun 2026 16:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626056;
-	bh=NnsomVzyB0hJHK+r2IQnL1jNxVObh0Q7x8OXrjkf4nQ=;
+	s=korg; t=1781626062;
+	bh=yzWtHZwRYmJtHnSgy/Lie3yFcnVoeZUybgDP/si5UqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=McnMkGFwV74WQF47lac+dD66aS6IZmdjMEHTWoJ2mjQC+GbA1Vq3j/HcZ/eYZdrK0
-	 dsHZWYZDNTpixQf8B/zmedG/0sIButSmdDzxJZgknFu1PACbTbYt426IArwnjc+Whc
-	 67tDOQQmXmv865oLSU8hGwiHqewvcB6UDdgGPxQQ=
+	b=PVGfE7ooZ1JnhkvAAzCAMoDFqr0l5Ee3YLk5O+rMu+xpGi8nrYnwVQMKXV3P9n6um
+	 UHmqkJH3eSNZEGC73PDKfUyMl+lteGE84EgxT76CHMacaqRqMlTtzVv0cJiO0TyG09
+	 6g1gJRTrfp2r0Fgk0ipA2rHhIveAaYw7C70iPjGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko@sntech.de>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Gabriel Somlo <gsomlo@gmail.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.18 258/325] mmc: dw_mmc-rockchip: Add missing private data for very old controllers
-Date: Tue, 16 Jun 2026 20:30:54 +0530
-Message-ID: <20260616145111.434612416@linuxfoundation.org>
+Subject: [PATCH 6.18 259/325] mmc: litex_mmc: Set mandatory idle clocks before CMD0
+Date: Tue, 16 Jun 2026 20:30:55 +0530
+Message-ID: <20260616145111.489016956@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -51,69 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Stuebner <heiko@sntech.de>
+From: Inochi Amaoto <inochiama@gmail.com>
 
-commit 1e9a4850afa0ceb63984fb1a9f3e86d0fc4fd18f upstream.
+commit 99982b743e5ba72bd1f5de0e03e3b96ae70b1e51 upstream.
 
-The really old controllers (rk2928, rk3066, rk3188) do not support UHS
-speeds at all, and thus never handled phase data.
+The litex_mmc driver assumes the card is already probed in the BIOS
+and skip the phy initialization. This will cause the command fail
+like the following when the old card is unplugged and then insert
+a new card:
 
-For that reason it never had a parse_dt callback and no driver private
-data at all.
+[   62.923593] litex-mmc f0004000.mmc: Command (cmd 8) error, status -110
+[   62.949717] litex-mmc f0004000.mmc: Command (cmd 55) error, status -110
+[   62.976606] litex-mmc f0004000.mmc: Command (cmd 55) error, status -110
+[   63.002516] litex-mmc f0004000.mmc: Command (cmd 55) error, status -110
+[   63.028442] litex-mmc f0004000.mmc: Command (cmd 55) error, status -110
 
-Commit ff6f0286c896 ("mmc: dw_mmc-rockchip: Add memory clock auto-gating
-support") makes the private data sort of mandatory, because the init
-function checks whether phases are configured internally or through the
-clock controller.
+Add required clock settings and initialization for the CMD 0, so it can
+probe the new card.
 
-This results in the old SoCs then experiencing NULL-pointer dereferences
-when they try to access that private-data struct.
-
-While we could have if (priv) conditionals in all places, it's way less
-cluttery to just give the old types their private-data struct.
-
-Fixes: ff6f0286c896 ("mmc: dw_mmc-rockchip: Add memory clock auto-gating support")
+Fixes: 92e099104729 ("mmc: Add driver for LiteX's LiteSDCard interface")
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Reviewed-by: Gabriel Somlo <gsomlo@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/dw_mmc-rockchip.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/mmc/host/litex_mmc.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/mmc/host/dw_mmc-rockchip.c
-+++ b/drivers/mmc/host/dw_mmc-rockchip.c
-@@ -434,6 +434,22 @@ static int dw_mci_common_parse_dt(struct
- 	return 0;
- }
+--- a/drivers/mmc/host/litex_mmc.c
++++ b/drivers/mmc/host/litex_mmc.c
+@@ -69,6 +69,9 @@
+ #define SD_SLEEP_US       5
+ #define SD_TIMEOUT_US 20000
  
-+static int dw_mci_rk2928_parse_dt(struct dw_mci *host)
-+{
-+	struct dw_mci_rockchip_priv_data *priv;
-+	int err;
++#define SD_INIT_DELAY_US  1000
++#define SD_INIT_CLK_HZ    400000
 +
-+	err = dw_mci_common_parse_dt(host);
-+	if (err)
-+		return err;
-+
-+	priv = host->priv;
-+
-+	priv->internal_phase = false;
-+
-+	return 0;
-+}
-+
- static int dw_mci_rk3288_parse_dt(struct dw_mci *host)
- {
- 	struct dw_mci_rockchip_priv_data *priv;
-@@ -507,6 +523,7 @@ static int dw_mci_rockchip_init(struct d
+ #define SDIRQ_CARD_DETECT    1
+ #define SDIRQ_SD_TO_MEM_DONE 2
+ #define SDIRQ_MEM_TO_SD_DONE 4
+@@ -450,6 +453,17 @@ static void litex_mmc_set_ios(struct mmc
+ 	struct litex_mmc_host *host = mmc_priv(mmc);
  
- static const struct dw_mci_drv_data rk2928_drv_data = {
- 	.init			= dw_mci_rockchip_init,
-+	.parse_dt		= dw_mci_rk2928_parse_dt,
- };
- 
- static const struct dw_mci_drv_data rk3288_drv_data = {
+ 	/*
++	 * The SD specification requires at least 74 idle clocks before CMD0.
++	 * These dummy cycles is generated by writing LITEX_PHY_INITIALIZE.
++	 */
++	if (ios->chip_select == MMC_CS_HIGH) {
++		litex_mmc_setclk(host, SD_INIT_CLK_HZ);
++		litex_write8(host->sdphy + LITEX_PHY_INITIALIZE, 1);
++		fsleep(SD_INIT_DELAY_US);
++		return;
++	}
++
++	/*
+ 	 * NOTE: Ignore any ios->bus_width updates; they occur right after
+ 	 * the mmc core sends its own acmd6 bus-width change notification,
+ 	 * which is redundant since we snoop on the command flow and inject
 
 
