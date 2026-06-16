@@ -1,41 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDF844DB64;
-	Tue, 16 Jun 2026 16:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5640244DB64;
+	Tue, 16 Jun 2026 16:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625889; cv=none; b=ptP2AG8iJQgzGrxck3iow+SLRinODO8rsHfqyGbmmrGJ1ktvCVZwmPwNPHNhoKUqIkCs4Uol+umJwAz34z1yNAxhZoeujacVqoOFEuHF0R+Lhy3KCm9nOaDIt8fqYtKCAwfx6W1Ep8cNfe7XFznAl/fgAyd3pdHAixZSpS+CKvY=
+	t=1781625894; cv=none; b=Q7oLNw3I+V0ID8CqGPvLKtYNu8J6C62IkO5ez/tTGpD7JX2KPGt+rSqr1ZaypmZfQPGq3OufCli/XvMyEns1YGMNmaf1f+XI24On85C+sl14AXFkVU6nX0g9RRPz9m5jYmwlAEFX21vmFU7Zl8Vj3+Hr2TUHDzPa5A17sW8mzdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625889; c=relaxed/simple;
-	bh=8jvyuvvBdN8kfWSQG2mUn5NAodIh6WQ6/4pqn75Ai8Y=;
+	s=arc-20240116; t=1781625894; c=relaxed/simple;
+	bh=XNzqxF0NQ8rcUo1MbArExBpZcnjjv8wVmwHdrRZKnao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m0SqyJJMS2BMwtOEx36lnwj8gCw35Q86xR3rouBuUTOuQEGUU1bWqsdM7U5xY8KO3k/LJ1M4SrmbpphY4+/EGnDW+H5AgDuMPwcT+U5tqTh/YnEtFT83hE30Nl81qArsQKeBxo1QHo8/kvEbPjn3GI0KCegkaww8AZj8q2xWh+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nx1bTtWa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ViU8FLVZo9SR6g//WZESP+2zvNdezq3upbyMnvrE2DsPMlOT+zBy1Ww0fDIRwBrX3pI8sbkcYHjB3KoF3R+FLO3BNHYc6cwvlGBIQFnD3zyt6AOJqeNmy6oC3d9hrRvngBjg1ufSSCj/x+Ey7dNXz0R1PDnWrDK+svvRhKexCvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6KPt4fl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nx1bTtWa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209711F000E9;
-	Tue, 16 Jun 2026 16:04:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6KPt4fl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 075171F000E9;
+	Tue, 16 Jun 2026 16:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625888;
-	bh=ttM8uhy2BI3rzh4whiXnb8TN+Rwb7rNejeZJ7LjNFG0=;
+	s=korg; t=1781625893;
+	bh=Gvrle3mQqD05KF5TFrVe3ebfvaDeseIh4V2/aRIHQOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nx1bTtWaFV03cFdKFg338Svwi4v3CrparC2rzSu1HY7LZu+CTrhs5IF1iWx119wWE
-	 nvNVW4ujSqEY1E62+epF29ze+xTyZtOmgYfJhREJADJQ4FJA/eWwnHPCT8ckazq8Do
-	 ofeQAtDK5P5oCKeKGsD7VgFbq68SSd90b3mQdzyQ=
+	b=U6KPt4flf0o1Gm2DjaV3ATsB488wI8e0V2gZ0QFVDoTtC/DY7qSn6ZkKFpzZoTM4a
+	 42td3TPw2p0yTSVsHIiYMFlJSFFTt9J07WGRKHbteWyjrC+dfhmAlY+V16dfsMlFtq
+	 2uD2m4NccR8VALGmCtE3vxgPbBGzrI6QeBI9N/e4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Lord <mlord@pobox.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: [PATCH 6.18 227/325] iommu/dma: Do not try to iommu_map a 0 length region in swiotlb
-Date: Tue, 16 Jun 2026 20:30:23 +0530
-Message-ID: <20260616145109.692185376@linuxfoundation.org>
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yilin Zhu <zylzyl2333@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Christian Brauner <brauner@kernel.org>,
+	Jeongjun Park <aha310510@gmail.com>,
+	Kees Cook <kees@kernel.org>,
+	Liam Howlett <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Serge Hallyn <sergeh@kernel.org>,
+	Vasiliy Kulikov <segoon@openwall.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Serge Hallyn <serge@hallyn.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 228/325] ipc/shm: serialize orphan cleanup with shm_nattch updates
+Date: Tue, 16 Jun 2026 20:30:24 +0530
+Message-ID: <20260616145109.751425796@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -54,74 +65,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Yilin Zhu <zylzyl2333@gmail.com>
 
-commit 6ec91df8aff77e2e8fe3179c1f3fc15b43a40ba3 upstream.
+commit 2e5c6f4fd4001562781e99bbfc7f1f0127187542 upstream.
 
-iommu_dma_iova_link_swiotlb() processes a mapping that is unaligned in three
-parts, the head, middle and trailer. If the middle is empty because there
-are no aligned pages it will call down to iommu_map() with a 0 size
-which the iommupt implementation will fail as illegal.
+shm_destroy_orphaned() walks the shm idr under shm_ids(ns).rwsem, but that
+does not serialize all fields tested by shm_may_destroy().  In particular,
+shm_nattch is updated while holding shm_perm.lock, and attach paths can do
+that without holding the rwsem.
 
-It then tries to do an error unwind and starts from the wrong spot
-corrupting the mapping so the eventual destruction triggers a WARN_ON.
+Do not decide that an orphaned segment is unused before taking the object
+lock.  Move the shm_may_destroy() check under shm_perm.lock, matching the
+other destroy paths, and unlock the segment when it no longer qualifies
+for removal.
 
-Check for 0 length and avoid mapping and use offset not 0 as the starting
-point to unlink.
-
-This is frequently triggered by using some kinds of thunderbolt NVMe
-drives that trigger forced SWIOTLB for unaligned memory. NVMe seems to
-pass in oddly aligned buffers for the passthrough commands from smartctl
-that hit this condition.
-
-Cc: stable@vger.kernel.org
-Fixes: 433a76207dcf ("dma-mapping: Implement link/unlink ranges API")
-Reported-by: Mark Lord <mlord@pobox.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/0-v1-8536728bc89f+469-swiotlb_warn_jgg@nvidia.com
+Link: https://lore.kernel.org/9d97cc1031de2d0bace0edf3a668818aa2f4eca6.1777410234.git.zylzyl2333@gmail.com
+Fixes: 4c677e2eefdb ("shm: optimize locking and ipc_namespace getting")
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Yilin Zhu <zylzyl2333@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jeongjun Park <aha310510@gmail.com>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Liam Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Serge Hallyn <sergeh@kernel.org>
+Cc: Vasiliy Kulikov <segoon@openwall.com>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: Oleg Nesterov <oleg@redhat.com>
+Cc: Serge Hallyn <serge@hallyn.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/dma-iommu.c |   19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ ipc/shm.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/iommu/dma-iommu.c
-+++ b/drivers/iommu/dma-iommu.c
-@@ -1894,12 +1894,18 @@ static int iommu_dma_iova_link_swiotlb(s
- 			return 0;
- 	}
+--- a/ipc/shm.c
++++ b/ipc/shm.c
+@@ -418,15 +418,17 @@ static int shm_try_destroy_orphaned(int
+ 	 * We want to destroy segments without users and with already
+ 	 * exit'ed originating process.
+ 	 *
+-	 * As shp->* are changed under rwsem, it's safe to skip shp locking.
++	 * shm_nattch can be changed under shm_perm.lock without holding the
++	 * rwsem, so take the object lock before checking shm_may_destroy().
+ 	 */
+ 	if (!list_empty(&shp->shm_clist))
+ 		return 0;
  
-+	/*
-+	 * After removing the partial head and tail, there may be no aligned
-+	 * middle left to map.  The tail still gets bounced below.
-+	 */
- 	size -= iova_end_pad;
--	error = __dma_iova_link(dev, addr + mapped, phys + mapped, size, dir,
--			attrs);
--	if (error)
--		goto out_unmap;
--	mapped += size;
-+	if (size) {
-+		error = __dma_iova_link(dev, addr + mapped, phys + mapped,
-+				size, dir, attrs);
-+		if (error)
-+			goto out_unmap;
-+		mapped += size;
-+	}
- 
- 	if (iova_end_pad) {
- 		error = iommu_dma_iova_bounce_and_link(dev, addr + mapped,
-@@ -1912,7 +1918,8 @@ static int iommu_dma_iova_link_swiotlb(s
+-	if (shm_may_destroy(shp)) {
+-		shm_lock_by_ptr(shp);
++	shm_lock_by_ptr(shp);
++	if (shm_may_destroy(shp))
+ 		shm_destroy(ns, shp);
+-	}
++	else
++		shm_unlock(shp);
  	return 0;
- 
- out_unmap:
--	dma_iova_unlink(dev, state, 0, mapped, dir, attrs);
-+	if (mapped)
-+		dma_iova_unlink(dev, state, offset, mapped, dir, attrs);
- 	return error;
  }
  
 
