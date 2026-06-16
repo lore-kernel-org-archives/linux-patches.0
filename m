@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61CF2472798;
-	Tue, 16 Jun 2026 18:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E4A43D4E8;
+	Tue, 16 Jun 2026 18:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635868; cv=none; b=ZSNDdbmWcm2TzO5CKaIqXfCFMpdKf/tEuQIXDJUSbcM/cfQT9FQ1AqL1H/hwOZ91qeXL5g3WY9iTyoKKE3bqICwsDg700qE81jDmWMz/MWn7LpjLIbY7I62fDSjM7SYTisPfk3v58TydH1ijXEiLIz/fTVrskgsYHm1Og32749U=
+	t=1781635873; cv=none; b=hlBVLT9xIAtxbDiy4+mK2+Vu0equMeoor1QEvX+XOKoP8YecglgelllRTtKEIMUOgzZwZrTUEPg3/c30RQ2WeZWetTja/O2ZNfd1PiKgeSaa/+md04p+sxtUfAPsqQniYwn0Yg/MROyupOdvZUm8qXJnskwyrMXFAkp6j479IOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635868; c=relaxed/simple;
-	bh=0YmU2HgTi1tGerrioqyO3DxbAwno5H6abxC2UDyNWLk=;
+	s=arc-20240116; t=1781635873; c=relaxed/simple;
+	bh=QqQUArD9C4NxzZP4uuAz8Djq+E07nzWF1PeuW99vNy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dZUCRVvR5iUMIuKDnLsOJ6FGqH+IKmHbaGQhunTTAhTUNpb3rR+gf5KoM18MnsI8+di5LyUezx9Iax66/yykU5dk/NWslA8n1uUX+R0CeK0c433iLlRsToA/qx5zS2rg3iBVg0giFVmjMzbM1waxFZSx2UHkWBOUlMCYR2wR3FI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rj6F1B8A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RGdzDjANp5m3FiZjFhzy+WVJ01sKAGJ1xdwRqeDRiaRSnwHOnUUFnTVXKNXHA+62XWrSgTWzIJCxYWXW++vwF2ve96PX8VPBZkRWpMx50AMshzu8XVu8mPvGHnryCoPxRSgp51KOkYk/TV8zjaCD3wo0NFWrLuDqVN5cDYx36xM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QvwTh5Rk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rj6F1B8A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6267D1F000E9;
-	Tue, 16 Jun 2026 18:51:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QvwTh5Rk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7A11F000E9;
+	Tue, 16 Jun 2026 18:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635867;
-	bh=uEfFpHBJKw4S7UIxA+Xk7Kt9wON26upafeTLkekYkNA=;
+	s=korg; t=1781635871;
+	bh=RDZl7FwlaZo+Be1woS3i8G4fcm0JGZx1zD4B5nd3ERA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rj6F1B8AGR7sQ3I4ZF8yxWIDlH6Xg3V0p6lhN2uc3WWHo8IlDmu/uM6aprTPrvsUr
-	 2RCr5vr52FF8/lmM6xR0yjmARTwLVhRtt5MJa33Wk/u3KH9+y0+5nB3NefRHFXqP+d
-	 yrP+WCn1zbiyWwr4FziOObBlL/I76ASTXvrk02RM=
+	b=QvwTh5RkM8825EcGuO8UAjP2vf3xWGm70eCjsA3FpOZAJBXMYrWJF5yAxiDOrqIej
+	 m31dczoe7t8wVLiPZSFNdtFzipve9eGpIrjobGhOUc1ghlSc0k/WYE3esaRA1eblxQ
+	 TIOID4d6K+9oxYkIp15GGB4gQNqMWwDkWGQJ5uig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eulgyu Kim <eulgyukim@snu.ac.kr>,
-	Taeyang Lee <0wn@theori.io>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 123/342] bpf: Free reuseport cBPF prog after RCU grace period.
-Date: Tue, 16 Jun 2026 20:26:59 +0530
-Message-ID: <20260616145053.939452977@linuxfoundation.org>
+Subject: [PATCH 5.10 132/342] netfilter: xt_NFQUEUE: prefer raw_smp_processor_id
+Date: Tue, 16 Jun 2026 20:27:08 +0530
+Message-ID: <20260616145054.346251048@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -53,137 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 18fc650ccd7fe3376eca89203668cfb8268f60df ]
+[ Upstream commit c6c5327dd18bec1e1bbf139b2cf5ae53608a9d30 ]
 
-Eulgyu Kim reported the splat below with a repro. [0]
+With PREEMPT_RCU this triggers a splat because smp_processor_id() can be
+preempted while inside a RCU critical section. If xt_NFQUEUE target is
+invoked via nft_compat_eval() path, we are inside a RCU critical
+section.
 
-The repro sets up a UDP reuseport group with a cBPF prog and
-replaces it with a new one while another thread is sending
-a UDP packet to the group.
+Just use the raw version instead.
 
-The reuseport prog is freed by sk_reuseport_prog_free().
-bpf_prog_put() is called for "e"BPF prog to destruct through
-multiple stages while cBPF prog is freed immediately by
-bpf_release_orig_filter() and bpf_prog_free().
-
-If a reuseport prog is detached from the setsockopt() path
-(reuseport_attach_prog() or reuseport_detach_prog()),
-sk_reuseport_prog_free() is called without waiting for RCU
-readers to complete, resulting in various bugs.
-
-Let's defer freeing the reuseport cBPF prog after one RCU
-grace period.
-
-Note "e"BPF prog is safe as is unless the fast path starts
-to touch fields destroyed in bpf_prog_put_deferred() and
-__bpf_prog_put_noref().
-
-[0]:
-BUG: KASAN: vmalloc-out-of-bounds in reuseport_select_sock+0xedc/0x1220 net/core/sock_reuseport.c:596
-Read of size 4 at addr ffffc9000051e004 by task slowme/10208
-CPU: 6 UID: 1000 PID: 10208 Comm: slowme Not tainted 7.0.0-geb7ac95ff75e #32 PREEMPT(full)
-Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Call Trace:
- <IRQ>
- dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xca/0x240 mm/kasan/report.c:482
- kasan_report+0x118/0x150 mm/kasan/report.c:595
- reuseport_select_sock+0xedc/0x1220 net/core/sock_reuseport.c:596
- udp4_lib_lookup2+0x3bc/0x950 net/ipv4/udp.c:495
- __udp4_lib_lookup+0x768/0xe20 net/ipv4/udp.c:723
- __udp4_lib_lookup_skb+0x297/0x390 net/ipv4/udp.c:752
- __udp4_lib_rcv+0x1312/0x2620 net/ipv4/udp.c:2752
- ip_protocol_deliver_rcu+0x282/0x440 net/ipv4/ip_input.c:207
- ip_local_deliver_finish+0x3bb/0x6f0 net/ipv4/ip_input.c:241
- NF_HOOK+0x30c/0x3a0 include/linux/netfilter.h:318
- NF_HOOK+0x30c/0x3a0 include/linux/netfilter.h:318
- __netif_receive_skb_one_core net/core/dev.c:6181 [inline]
- __netif_receive_skb net/core/dev.c:6294 [inline]
- process_backlog+0xaa4/0x1960 net/core/dev.c:6645
- __napi_poll+0xae/0x340 net/core/dev.c:7709
- napi_poll net/core/dev.c:7772 [inline]
- net_rx_action+0x5d7/0xf50 net/core/dev.c:7929
- handle_softirqs+0x22b/0x870 kernel/softirq.c:622
- do_softirq+0x76/0xd0 kernel/softirq.c:523
- </IRQ>
- <TASK>
- __local_bh_enable_ip+0xf8/0x130 kernel/softirq.c:450
- local_bh_enable include/linux/bottom_half.h:33 [inline]
- rcu_read_unlock_bh include/linux/rcupdate.h:924 [inline]
- __dev_queue_xmit+0x1dd7/0x3710 net/core/dev.c:4890
- neigh_output include/net/neighbour.h:556 [inline]
- ip_finish_output2+0xca9/0x1070 net/ipv4/ip_output.c:237
- NF_HOOK_COND include/linux/netfilter.h:307 [inline]
- ip_output+0x29f/0x450 net/ipv4/ip_output.c:438
- ip_send_skb+0x45/0xc0 net/ipv4/ip_output.c:1508
- udp_send_skb+0xb04/0x1510 net/ipv4/udp.c:1195
- udp_sendmsg+0x1a71/0x2350 net/ipv4/udp.c:1485
- sock_sendmsg_nosec net/socket.c:727 [inline]
- __sock_sendmsg net/socket.c:742 [inline]
- __sys_sendto+0x554/0x680 net/socket.c:2206
- __do_sys_sendto net/socket.c:2213 [inline]
- __se_sys_sendto net/socket.c:2209 [inline]
- __x64_sys_sendto+0xde/0x100 net/socket.c:2209
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x160/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x415a2d
-Code: b3 66 2e 0f 1f 84 00 00 00 00 00 66 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f6bc31e41e8 EFLAGS: 00000212 ORIG_RAX: 000000000000002c
-RAX: ffffffffffffffda RBX: 00007f6bc31e4cdc RCX: 0000000000415a2d
-RDX: 0000000000000001 RSI: 00007f6bc31e421f RDI: 0000000000000003
-RBP: 00007f6bc31e4240 R08: 00007f6bc31e4220 R09: 0000000000000010
-R10: 0000000000000000 R11: 0000000000000212 R12: 00007f6bc31e46c0
-R13: ffffffffffffffb8 R14: 0000000000000000 R15: 00007ffc9b0d70b0
- </TASK>
-
-Fixes: 538950a1b752 ("soreuseport: setsockopt SO_ATTACH_REUSEPORT_[CE]BPF")
-Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
-Reported-by: Taeyang Lee <0wn@theori.io>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20260426012647.3233119-1-kuniyu@google.com
+Fixes: 0ca743a55991 ("netfilter: nf_tables: add compatibility layer for x_tables")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ net/netfilter/xt_NFQUEUE.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 5fbce37db28323..27550e8b05a655 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -1640,15 +1640,24 @@ int sk_reuseport_attach_bpf(u32 ufd, struct sock *sk)
- 	return err;
- }
+diff --git a/net/netfilter/xt_NFQUEUE.c b/net/netfilter/xt_NFQUEUE.c
+index 466da23e36ff47..b32d153e3a1862 100644
+--- a/net/netfilter/xt_NFQUEUE.c
++++ b/net/netfilter/xt_NFQUEUE.c
+@@ -91,7 +91,7 @@ nfqueue_tg_v3(struct sk_buff *skb, const struct xt_action_param *par)
  
-+static void sk_reuseport_prog_free_rcu(struct rcu_head *rcu)
-+{
-+	struct bpf_prog_aux *aux = container_of(rcu, struct bpf_prog_aux, rcu);
-+	struct bpf_prog *prog = aux->prog;
-+
-+	bpf_release_orig_filter(prog);
-+	bpf_prog_free(prog);
-+}
-+
- void sk_reuseport_prog_free(struct bpf_prog *prog)
- {
- 	if (!prog)
- 		return;
+ 	if (info->queues_total > 1) {
+ 		if (info->flags & NFQ_FLAG_CPU_FANOUT) {
+-			int cpu = smp_processor_id();
++			int cpu = raw_smp_processor_id();
  
--	if (prog->type == BPF_PROG_TYPE_SK_REUSEPORT)
--		bpf_prog_put(prog);
-+	if (bpf_prog_was_classic(prog))
-+		call_rcu(&prog->aux->rcu, sk_reuseport_prog_free_rcu);
- 	else
--		bpf_prog_destroy(prog);
-+		bpf_prog_put(prog);
- }
- 
- struct bpf_scratchpad {
+ 			queue = info->queuenum + cpu % info->queues_total;
+ 		} else {
 -- 
 2.53.0
 
