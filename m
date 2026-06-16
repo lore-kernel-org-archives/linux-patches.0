@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B04349CF0;
-	Tue, 16 Jun 2026 19:06:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800673DD51C;
+	Tue, 16 Jun 2026 19:06:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636768; cv=none; b=Iy78acbmqTCokW61MLd7ZL6X6R5MI33ams1zDpMr29UpXETd3n8Fzdx08MWIJ188OnoNS5Kn0pcd9zjQRkcihR/utX+gnUiC/wd6kUTsa5sAOJcLmDWVW7DCbePJAHM695IaIOptTEEcg+MbZ7QwekAKmQrWAdbwyrhhm934lmY=
+	t=1781636773; cv=none; b=jMUspuEocB3uhvhrH3yAs9wLCkSpDac/XHrIkG9rGnxJ8VCtqGjbHTNpsWCY3f/Z7N9qDlgiP+qPCAWD2WKaBoqS/2U0B4HAzp9AbUnHOcqjuDVKK9m1IuPARMbbm/VANlcA3A50LhZc+BWkIupELoAEd6GVAoMrdazLT6lVu1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636768; c=relaxed/simple;
-	bh=PESs/1uhxVl0ZfHpNcz438xnr0mkxnxwpfS7JqfEEms=;
+	s=arc-20240116; t=1781636773; c=relaxed/simple;
+	bh=x2EkrbdnC5AjLGo1lchO1smrrbSOXgNHuNxMoLBosdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a5a400OlvIoNUv4qyhMSFockLwtuhw2XxsmzaYRgOjd1N8pmcp5Kx0Zso5tFLVGKVmtCnP5ruj1zHUB4dDWMlVN7H1HxgSNKWcKo28dlxJInaGhGIcjbsVKoitB/iaBDSgCS4K/B12Guptyfmw5gGoxZS0rB5NZazil6DOZNcWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0gRYIcC6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=c++LSrnY/6vw/3/aeauTiJs3VcFhyJ3Co1st4lzcCMnMTN609aIu6z6TgWW8tQKXAW/aWqJddJ0f2nFmwQZtIMo0llTB8Y2Q/3oigcoiqalgi6LqKD3TdaXmOolO81PiHBRso/5vyATgXa8B+vqotfSgFKrJ34FARRjsBqzAPtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zobC8bC5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gRYIcC6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5CC1F000E9;
-	Tue, 16 Jun 2026 19:06:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zobC8bC5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49DEA1F000E9;
+	Tue, 16 Jun 2026 19:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636766;
-	bh=fDtlreKyajm2JnuPTMB4UFeg20kXHMh4Ourh2EtVF7I=;
+	s=korg; t=1781636772;
+	bh=9VbOwgRxOi/gVD395v4YCFmTr8aTn3Ulp0KLSPov4/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0gRYIcC6b0ntnHDKlYvDo2LnhaM+BV/OCMDC2wCrOItYeLAcoF2YZUPt2q32ZLQ2s
-	 HTp9X406nh/Gr6mmjp36jbq3Ew5IHbc7TNU98ZSASsnBV3mpDNHgi3lQAx/RGBmtXK
-	 XsI2lvtso13HVv1oWppUKJcfqjIE/2kmXU76RN3g=
+	b=zobC8bC50BK3L9r/vjb1xFLzxMr6pSOEJ++HK6dulPlIMiiD6n0GWKWROVcbZgtle
+	 tEfC3EClEDxIm2eRVD1bMFgilg6c/De2MvFAViBrXipkSBS9v7q8fCND3Rv/LzAdvh
+	 VZ+j7G3g9rA6bJOUUdK61htZUgPG4K+2L3KKlBN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>
-Subject: [PATCH 5.10 302/342] usb: typec: ucsi: Check if power role change actually happened before handling
-Date: Tue, 16 Jun 2026 20:29:58 +0530
-Message-ID: <20260616145102.502103327@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 285/342] Bluetooth: Init sk_peer_* on bt_sock_alloc
+Date: Tue, 16 Jun 2026 20:29:41 +0530
+Message-ID: <20260616145101.685199363@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -53,66 +50,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit b80e7d34c7ea6a564525119d6138fbb577a23dba ]
+[ Upstream commit 464c702fb9374ff8f3f816f24fb7ac719dd20e1e ]
 
-The CrOS EC may send a connector status change event with the power
-direction changed flag set even if the power direction hasn't actually
-changed after initiating a SET_PDR command internally [1]. In practice
-this happens on every system suspend due to other changes performed by
-the EC [2][3][4], causing suspend to fail.
+This makes sure peer information is always available via sock when using
+bt_sock_alloc.
 
-Fix this by checking if the power role change actually happened before
-handling it.
-
-[1]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=1689;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
-[2]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=3923;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
-[3]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=5094;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
-[4]: https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/ec/zephyr/subsys/pd_controller/pdc_power_mgmt.c;l=2229;drc=2d5a1cffce4e5ac8a39442cb3b764d2d5e1cf794
-
-Cc: stable <stable@kernel.org>
-Fixes: 7616f006db07 ("usb: typec: ucsi: Update power_supply on power role change")
-Signed-off-by: Myrrh Periwinkle <myrrhperiwinkle@qtmlabs.xyz>
-Reported-and-tested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260519-ucsi-fix-2-v1-1-6f1239535187@qtmlabs.xyz
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: e83f5e24da74 ("Bluetooth: serialize accept_q access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/bluetooth/af_bluetooth.c |   24 ++++++++++++++++++++++++
+ net/bluetooth/hidp/sock.c    |   10 +---------
+ net/bluetooth/l2cap_sock.c   |   19 -------------------
+ 3 files changed, 25 insertions(+), 28 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -656,7 +656,7 @@ static void ucsi_handle_connector_change
- 	struct ucsi *ucsi = con->ucsi;
- 	struct ucsi_connector_status pre_ack_status;
- 	struct ucsi_connector_status post_ack_status;
--	enum typec_role role;
-+	enum typec_role role, prev_role;
- 	u16 inferred_changes;
- 	u16 changed_flags;
- 	u64 command;
-@@ -692,6 +692,8 @@ static void ucsi_handle_connector_change
- 	 * short transitional changes.
- 	 */
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -155,6 +155,14 @@ struct sock *bt_sock_alloc(struct net *n
+ 	sk->sk_protocol = proto;
+ 	sk->sk_state    = BT_OPEN;
  
-+	prev_role = !!(con->status.flags & UCSI_CONSTAT_PWR_DIR);
++	/* Init peer information so it can be properly monitored */
++	if (!kern) {
++		spin_lock(&sk->sk_peer_lock);
++		sk->sk_peer_pid  = get_pid(task_tgid(current));
++		sk->sk_peer_cred = get_current_cred();
++		spin_unlock(&sk->sk_peer_lock);
++	}
 +
- 	/* 1. First UCSI_GET_CONNECTOR_STATUS */
- 	command = UCSI_GET_CONNECTOR_STATUS | UCSI_CONNECTOR_NUMBER(con->num);
- 	ret = ucsi_send_command(ucsi, command, &pre_ack_status,
-@@ -769,7 +771,8 @@ static void ucsi_handle_connector_change
- 		ucsi_port_psy_changed(con);
+ 	return sk;
+ }
+ EXPORT_SYMBOL(bt_sock_alloc);
+@@ -177,6 +185,9 @@ EXPORT_SYMBOL(bt_sock_unlink);
+ 
+ void bt_accept_enqueue(struct sock *parent, struct sock *sk, bool bh)
+ {
++	const struct cred *old_cred;
++	struct pid *old_pid;
++
+ 	BT_DBG("parent %p, sk %p", parent, sk);
+ 
+ 	sock_hold(sk);
+@@ -189,6 +200,19 @@ void bt_accept_enqueue(struct sock *pare
+ 	list_add_tail(&bt_sk(sk)->accept_q, &bt_sk(parent)->accept_q);
+ 	bt_sk(sk)->parent = parent;
+ 
++	/* Copy credentials from parent since for incoming connections the
++	 * socket is allocated by the kernel.
++	 */
++	spin_lock(&sk->sk_peer_lock);
++	old_pid = sk->sk_peer_pid;
++	old_cred = sk->sk_peer_cred;
++	sk->sk_peer_pid = get_pid(parent->sk_peer_pid);
++	sk->sk_peer_cred = get_cred(parent->sk_peer_cred);
++	spin_unlock(&sk->sk_peer_lock);
++
++	put_pid(old_pid);
++	put_cred(old_cred);
++
+ 	if (bh)
+ 		bh_unlock_sock(sk);
+ 	else
+--- a/net/bluetooth/hidp/sock.c
++++ b/net/bluetooth/hidp/sock.c
+@@ -255,21 +255,13 @@ static int hidp_sock_create(struct net *
+ 	if (sock->type != SOCK_RAW)
+ 		return -ESOCKTNOSUPPORT;
+ 
+-	sk = sk_alloc(net, PF_BLUETOOTH, GFP_ATOMIC, &hidp_proto, kern);
++	sk = bt_sock_alloc(net, sock, &hidp_proto, protocol, GFP_ATOMIC, kern);
+ 	if (!sk)
+ 		return -ENOMEM;
+ 
+-	sock_init_data(sock, sk);
+-
+ 	sock->ops = &hidp_sock_ops;
+-
+ 	sock->state = SS_UNCONNECTED;
+ 
+-	sock_reset_flag(sk, SOCK_ZAPPED);
+-
+-	sk->sk_protocol = protocol;
+-	sk->sk_state	= BT_OPEN;
+-
+ 	bt_sock_link(&hidp_sk_list, sk);
+ 
+ 	return 0;
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -177,21 +177,6 @@ done:
+ 	return err;
+ }
+ 
+-static void l2cap_sock_init_pid(struct sock *sk)
+-{
+-	struct l2cap_chan *chan = l2cap_pi(sk)->chan;
+-
+-	/* Only L2CAP_MODE_EXT_FLOWCTL ever need to access the PID in order to
+-	 * group the channels being requested.
+-	 */
+-	if (chan->mode != L2CAP_MODE_EXT_FLOWCTL)
+-		return;
+-
+-	spin_lock(&sk->sk_peer_lock);
+-	sk->sk_peer_pid = get_pid(task_tgid(current));
+-	spin_unlock(&sk->sk_peer_lock);
+-}
+-
+ static int l2cap_sock_connect(struct socket *sock, struct sockaddr *addr,
+ 			      int alen, int flags)
+ {
+@@ -267,8 +252,6 @@ static int l2cap_sock_connect(struct soc
+ 	    chan->mode != L2CAP_MODE_EXT_FLOWCTL)
+ 		chan->mode = L2CAP_MODE_LE_FLOWCTL;
+ 
+-	l2cap_sock_init_pid(sk);
+-
+ 	err = l2cap_chan_connect(chan, la.l2_psm, __le16_to_cpu(la.l2_cid),
+ 				 &la.l2_bdaddr, la.l2_bdaddr_type);
+ 	if (err)
+@@ -324,8 +307,6 @@ static int l2cap_sock_listen(struct sock
+ 		goto done;
  	}
  
--	if (con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) {
-+	if ((con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) &&
-+	    role != prev_role) {
- 		typec_set_pwr_role(con->port, role);
+-	l2cap_sock_init_pid(sk);
+-
+ 	sk->sk_max_ack_backlog = backlog;
+ 	sk->sk_ack_backlog = 0;
  
- 		/* Complete pending power role swap */
 
 
