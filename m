@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3675446AF1D;
-	Tue, 16 Jun 2026 16:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D21643E4BE;
+	Tue, 16 Jun 2026 16:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627139; cv=none; b=At7ypPNCouRKPMN1qD/FVtyeA5KrkTNYF7G90y4hLjAKmEQKJ3mTewqemzN0FrF5sDBvX64/Nnf6zXloWgNWyigv2e/sEOeQ7oRwJAJZtZC5lMyPyXgU3D6G7fPQ9xBqErgbvGn5WvINDmfrPn6Nl3zy0FZbqozXIQZyvMG5wVU=
+	t=1781627147; cv=none; b=YmHGZm0AeLwUOQee3EMw64UKGr7vSE4/QaZUgCiracJvLpdVChdvbuZGschtyu4prSgWJLK+2qU8XqGggzqk2VvaT4ErhA6VPC953kboc+FxTt2uFC8oDm2cMdqie7Q1bAmVdM4ZdE44XYtQDQhQ5nCOmWv10FwMuwSAZ/0jdM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627139; c=relaxed/simple;
-	bh=m1tVhkoeSINQVe97koRWqn1ML+/3WXPT2I9fPpu4oUI=;
+	s=arc-20240116; t=1781627147; c=relaxed/simple;
+	bh=gFmHiJtEsRiLGbztsvstXebFO3/vPqbFBwIzjg5EpiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OB9QaDNm1P+bvBPiZJeMY0xkRlkoTUTLGela2lMeFUb0PzF1Q9evcKb6sd8cML9l3J6b1Q2MK5MOIjPxx19XfKT6yYI2RF09nM2/Nm2OwHWMCQYf+6Jk0glyzvS0jKDEhleWp3qVwBL2edAI0Wziz+jb/u6AisTXWyVrLbCd9ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQ3cDF7M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=px+3a18lwGZwr3tQhxO4pJZxHcoSTk9RyAnizzUz9har2HPrKO5Gk4UbZceowdUCnERc6G3rFyNUQgXTrO24dVNibAw2Jxt3B+bGuDLj+Ce4U6NiAI+L/xbhJ1OtmBxXHrLorajvpJlPDV50NXnJmUWlE0rWbLO5NvinddpIFyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InX3F6VH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQ3cDF7M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5451F000E9;
-	Tue, 16 Jun 2026 16:25:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InX3F6VH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9732C1F000E9;
+	Tue, 16 Jun 2026 16:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627137;
-	bh=bNu9vumZaViLEyH49u/xbqD9Y+rHjVbw2Mx8ulM/zE8=;
+	s=korg; t=1781627146;
+	bh=3bFrGQilEl2VDrKh1tHay4mSY4+6TuIwhdhMR8FCZHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JQ3cDF7MCk99kn73hdKJrQCWo4DerIbZyS/lMuzBvLVC9t30eKutB59kLQI2yT1TX
-	 IFU+PJaY0xYlNXL3K3abbEQ3VrEbDC/2HyuBGfoA0uBIIUc3oNaXLSWKrrwNLvK8m5
-	 jOwQgVewCqbI1MEHAp07gOmmNn7Q75azJQSJ4WsU=
+	b=InX3F6VHajr8uKgQqEclXLIklgsbAi5AT5u3EpmWm/4CChJ194VQJ/sAgZ+JrCMM3
+	 AxjwlM4iY5YkoxGcAsJehKpNFmWraJ2CR38ttlEQ2xUMUdzKLb+h7ry8PNmbqmsFk3
+	 EVoL+f3cT3+35nqww5sihO3jZavG6KQ/18J+W6yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>,
 	Karol Wachowski <karol.wachowski@linux.intel.com>
-Subject: [PATCH 6.12 125/261] accel/ivpu: Add bounds checks for firmware log indices
-Date: Tue, 16 Jun 2026 20:29:23 +0530
-Message-ID: <20260616145050.872498239@linuxfoundation.org>
+Subject: [PATCH 6.12 126/261] accel/ivpu: Add buffer overflow check in MS get_info_ioctl
+Date: Tue, 16 Jun 2026 20:29:24 +0530
+Message-ID: <20260616145050.923307629@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,45 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
 
-commit dd1311bcf0e62f0c515115f46a3813370f4a4bb1 upstream.
+commit fb176425837693f50c5c9fc8db6fbb04af22bd0a upstream.
 
-Add validation that read and write indices in the firmware log buffer
-are within valid bounds (< data_size) before using them. If
-out-of-bounds indices are encountered (from firmware), clamp them to
-safe values instead of proceeding with invalid offsets.
+Add validation that the info size returned from the metric stream info
+query is not exceeded when checked against the allocated buffer size.
+If the firmware returns a size larger than the buffer, reject the
+operation with -EOVERFLOW instead of proceeding with an incorrect
+buffer copy.
 
-This prevents potential out-of-bounds buffer access when firmware
-supplies invalid log indices.
-
-Fixes: 1fc1251149a7 ("accel/ivpu: Refactor functions in ivpu_fw_log.c")
+Fixes: cdfad4db7756 ("accel/ivpu: Add NPU profiling support")
 Cc: stable@vger.kernel.org # v6.18+
 Signed-off-by: Andrzej Kacprowski <andrzej.kacprowski@linux.intel.com>
 Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
 Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Link: https://patch.msgid.link/20260529115842.135378-1-andrzej.kacprowski@linux.intel.com
+Link: https://patch.msgid.link/20260529120841.135852-1-andrzej.kacprowski@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_fw_log.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/accel/ivpu/ivpu_ms.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/accel/ivpu/ivpu_fw_log.c b/drivers/accel/ivpu/ivpu_fw_log.c
-index 337c906b0210..275baf844b56 100644
---- a/drivers/accel/ivpu/ivpu_fw_log.c
-+++ b/drivers/accel/ivpu/ivpu_fw_log.c
-@@ -98,6 +98,11 @@ static void fw_log_print_buffer(struct vpu_tracing_buffer_header *log, const cha
- 	u32 log_start = only_new_msgs ? READ_ONCE(log->read_index) : 0;
- 	u32 log_end = READ_ONCE(log->write_index);
+--- a/drivers/accel/ivpu/ivpu_ms.c
++++ b/drivers/accel/ivpu/ivpu_ms.c
+@@ -282,6 +282,13 @@ int ivpu_ms_get_info_ioctl(struct drm_de
+ 	if (ret)
+ 		goto unlock;
  
-+	if (log_start >= data_size)
-+		log_start = 0;
-+	if (log_end > data_size)
-+		log_end = data_size;
++	if (info_size > ivpu_bo_size(bo)) {
++		ivpu_warn_ratelimited(vdev, "MS info overflow: %#llx > %#zx\n",
++				      info_size, ivpu_bo_size(bo));
++		ret = -EOVERFLOW;
++		goto unlock;
++	}
 +
- 	if (log->wrap_count == log->read_wrap_count) {
- 		if (log_end <= log_start) {
- 			drm_printf(p, "==== %s \"%s\" log empty ====\n", prefix, log->name);
--- 
-2.54.0
-
+ 	if (args->buffer_size < info_size) {
+ 		ret = -ENOSPC;
+ 		goto unlock;
 
 
