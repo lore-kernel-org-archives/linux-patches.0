@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C530526B0A9;
-	Tue, 16 Jun 2026 15:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30383A8746;
+	Tue, 16 Jun 2026 15:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623239; cv=none; b=AdC0VhpmaxwldGU0klJgkgzBcbvotf2iKi214Sgq8ymzNT7kYRJVPdKM4wQUqVDdkYEe7UnNZmcpQ5oBRniFrjYoCEwaW97Sra4nojex/U0bcPtDdRGmJtw3TG8OKVRBsX8sgEt2crJXWE3+K8+BydXvXlOqCOP4f2r45sJVY8E=
+	t=1781623246; cv=none; b=ckKi4N0aeRcXSNeb+vx75El3INXubJLmXF6bJ+evX2K2yVQS7zBbQWcUOCSfDqSehR78d8FyVe3FcUvaEDxjzUxpVg2o2tNraFoa11NfOnuWGmNYFj6HzA5Yfy6e29bOCk3kKU1MxvgNuBnSlmcUKcYeLO5O3+2wqf9PQaxW9BA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623239; c=relaxed/simple;
-	bh=wrIsw6Fd3LBdNlg444Yl+bnS+76ROdtFMxp36izius4=;
+	s=arc-20240116; t=1781623246; c=relaxed/simple;
+	bh=EUVe/fBn6EiF3ArHruSvQrtAKMgqSZMfK21tLhr5Ets=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e1HvC5PAj2HX1KukpJxwgP/BngMGBmUbmjJFZrLDvf29GYadS/xYT8EbCC5N7QjNAdObkPN/carGeaVhKSNPm9aX0G5tZk5EbgPfLVIT3v2dbyb7Sgz4KdXI6Kii34ZKbW9nla+VakXeZrvwXU3UE/AcqNVMoDVuvr7mD+ReCtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OuxzdFJp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZwOg1x23sfPAMyLgfu/JlXNSvXo6RJ6wW5CFTvEFTGDsAD/UHl5dK+/1I/TUKFltFGpOBQkmOTByKzpdPDd8PuwQ6pwiHj1OjA+lJwQdCToHAnGi0Vc0E/qXYIO5RLNf0Wpkq7165n/U0OqGdM7xMGpkV1WFw9WKe5pRnz/KCCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YgYooXxU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OuxzdFJp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D2B1F000E9;
-	Tue, 16 Jun 2026 15:20:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YgYooXxU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C10A1F000E9;
+	Tue, 16 Jun 2026 15:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623238;
-	bh=TbeTjazUGzd9G3CYLQcnrtaacj10TwaO3AjXz1zA3ao=;
+	s=korg; t=1781623244;
+	bh=TKA9wFvP97BExgBXc2Z5Y1vsRU2eq8apbbBrtWoDiv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OuxzdFJpw3Tozc0K13ylOBmEfnqiNa+4S0DDM7DJmqDVA02FCObZlbISz9VdYuVTA
-	 8UshFQOqBJtefBrm7qHn5OPUVqoPeZnTw4Z6HVpJg5NtDpe+cK1bVIJNRr9fu+ymR5
-	 pWq7CbanWRA8jJTUH2aOJINrcNItfLwL4LqvU4v0=
+	b=YgYooXxUIZy+6etfBHCEluMZaaHGqUYgbGb98z2vPtsLvcH0lP04G3mgY9N7ZdQdc
+	 hkjci/9Wo0z1CJB0Fvl/JMukBBI0mLl5hoWoI/2SHc4IAwMm5YlaqYX/7ZdJlxjgYV
+	 rubEB/BN4jHNTqjpGRVxV0YBopL9j6PYb7OKOWaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b109633ea805cac54a61@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 078/378] signal: clear JOBCTL_PENDING_MASK for caller in zap_other_threads()
-Date: Tue, 16 Jun 2026 20:25:09 +0530
-Message-ID: <20260616145114.285011628@linuxfoundation.org>
+Subject: [PATCH 7.0 069/378] net/802/mrp: fix vector attribute parsing in mrp_pdu_parse_vecattr
+Date: Tue, 16 Jun 2026 20:25:00 +0530
+Message-ID: <20260616145113.743330143@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,70 +56,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit 90918794a4e2c3b440f8fcf3847765a8b1d81b25 ]
+[ Upstream commit 7561c7fbc694308da73300f036719e63e42bf0b4 ]
 
-When a multi-threaded process receives a stop signal (e.g., SIGSTOP),
-do_signal_stop() sets JOBCTL_STOP_PENDING and JOBCTL_STOP_CONSUME on all
-threads and sets signal->group_stop_count to the number of threads. If
-one of the threads concurrently calls execve(), de_thread() invokes
-zap_other_threads() to kill all other threads. zap_other_threads()
-aborts the pending group stop by resetting signal->group_stop_count to 0
-and clears the JOBCTL_PENDING_MASK for all other threads. However, it
-fails to clear the job control flags for the calling thread.
+In mrp_pdu_parse_vecattr(), vector attribute events are encoded three
+per byte and valen tracks the number of events left to process.
 
-When execve() completes, the calling thread returns to user mode and
-checks for pending signals. Seeing the stale JOBCTL_STOP_PENDING flag,
-it calls do_signal_stop(), which invokes task_participate_group_stop().
-Since JOBCTL_STOP_CONSUME is still set, it attempts to decrement the
-already-zero signal->group_stop_count, triggering a warning:
+The parser decrements valen after processing the first and second events
+from each event byte, but not after processing the third one. When valen
+is exactly a multiple of three, the loop continues after the last valid
+event and consumes the next byte as a new event byte, applying a
+spurious event to the MRP applicant state.
 
-sig->group_stop_count == 0
-WARNING: CPU: 1 PID: 6475 at kernel/signal.c:373
-task_participate_group_stop+0x215/0x2d0
-Call Trace:
- <TASK>
- do_signal_stop+0x3be/0x5c0 kernel/signal.c:2619
- get_signal+0xa8c/0x1330 kernel/signal.c:2884
- arch_do_signal_or_restart+0xbc/0x840 arch/x86/kernel/signal.c:337
- exit_to_user_mode_loop+0x8c/0x4d0 kernel/entry/common.c:98
- do_syscall_64+0x33e/0xf80 arch/x86/entry/syscall_64.c:100
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
+Additionally, when valen is zero the parser unconditionally consumes
+attrlen bytes as FirstValue and advances the offset, even though per
+IEEE 802.1ak a VectorAttribute with only a LeaveAllEvent has valen of
+zero and no FirstValue or Vector fields. This corrupts the offset for
+subsequent PDU parsing.
 
-Fix this race condition by clearing the JOBCTL_PENDING_MASK for the
-calling thread in zap_other_threads(), ensuring it does not retain any
-stale job control state after the thread group is destroyed. This aligns
-with other functions that tear down a thread group and abort group
-stops, such as zap_process() and complete_signal(), which correctly
-clear these flags for all threads including the current one.
+Also, when valen exceeds three the loop crosses byte boundaries but
+the attribute value is not incremented between the last event of one
+byte and the first event of the next. This causes the first event of
+the next byte to use the same attribute value as the third event
+rather than the next consecutive value.
 
-Fixes: 39efa3ef3a37 ("signal: Use GROUP_STOP_PENDING to stop once for a single group stop")
-Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
-Reported-by: syzbot+b109633ea805cac54a61@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b109633ea805cac54a61
-Link: https://syzkaller.appspot.com/ai_job?id=d70208cc-862b-4fe3-bf02-3031e10cd0b3
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Link: https://patch.msgid.link/20260521142240.2973022-1-nogikh@google.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Decrement valen after processing the third event, skip FirstValue
+consumption when valen is zero, and increment the attribute value at
+the end of each loop iteration.
+
+Fixes: febf018d2234 ("net/802: Implement Multiple Registration Protocol (MRP)")
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Link: https://patch.msgid.link/20260603060016.21522-1-zhaoyz24@mails.tsinghua.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/signal.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/802/mrp.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/kernel/signal.c b/kernel/signal.c
-index d65d0fe24bfb8c..1c9b5bf8126e01 100644
---- a/kernel/signal.c
-+++ b/kernel/signal.c
-@@ -1340,6 +1340,7 @@ int zap_other_threads(struct task_struct *p)
- 	int count = 0;
+diff --git a/net/802/mrp.c b/net/802/mrp.c
+index ff0e80574e6b7b..160a3b14569cbd 100644
+--- a/net/802/mrp.c
++++ b/net/802/mrp.c
+@@ -703,6 +703,12 @@ static int mrp_pdu_parse_vecattr(struct mrp_applicant *app,
+ 	valen = be16_to_cpu(get_unaligned(&mrp_cb(skb)->vah->lenflags) &
+ 			    MRP_VECATTR_HDR_LEN_MASK);
  
- 	p->signal->group_stop_count = 0;
-+	task_clear_jobctl_pending(p, JOBCTL_PENDING_MASK);
- 
- 	for_other_threads(p, t) {
- 		task_clear_jobctl_pending(t, JOBCTL_PENDING_MASK);
++	/* If valen is 0, only a LeaveAllEvent is present; FirstValue and
++	 * Vector fields are absent per IEEE 802.1ak.
++	 */
++	if (valen == 0)
++		return 0;
++
+ 	/* The VectorAttribute structure in a PDU carries event information
+ 	 * about one or more attributes having consecutive values. Only the
+ 	 * value for the first attribute is contained in the structure. So
+@@ -753,6 +759,9 @@ static int mrp_pdu_parse_vecattr(struct mrp_applicant *app,
+ 		vaevents %= __MRP_VECATTR_EVENT_MAX;
+ 		vaevent = vaevents;
+ 		mrp_pdu_parse_vecattr_event(app, skb, vaevent);
++		valen--;
++		mrp_attrvalue_inc(mrp_cb(skb)->attrvalue,
++				  mrp_cb(skb)->mh->attrlen);
+ 	}
+ 	return 0;
+ }
 -- 
 2.53.0
 
