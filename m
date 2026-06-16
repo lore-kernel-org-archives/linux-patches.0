@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F01441035;
-	Tue, 16 Jun 2026 15:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7874615B998;
+	Tue, 16 Jun 2026 15:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625076; cv=none; b=e9kJX1F5srxxhk+vC0ww4RytlG110zKcdFc7rqb4Z4t1UTmxaM2D1XEbLX0963PXSG6q1nrHhiKoXh14fVrWzhVCr4+xQSYXcRi7Lrb4eA2ThTAF7RzzIBoHeIHMFudZ7t6L8jnKCzV2SgXapO6APt+VSqCid5YZcjVJAbZaAPs=
+	t=1781625082; cv=none; b=FbmPQkInTaDUWeCvx6RreMs1MQ63S4x0X+KJqPXS63uavxq1QCJ5s9hY/cCv8+lN2ri1nk7Z1QdnITJ6sEtqdv/r+K8D8wYDOweOqO9GscNim7Sc/TQyfUE0oHb2CUeyARWU1ugGzWKmKmyoefm/2rAzJP3TzXx05JPpDH8xJEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625076; c=relaxed/simple;
-	bh=kgGithKPT/z9ChWP3E9Ud359AOhmNMSyknUP7a7+dkM=;
+	s=arc-20240116; t=1781625082; c=relaxed/simple;
+	bh=OPWXm6Nl/H39Sr+fBORkSIFn6eqV6Lt497bNzh1qh40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CuYTcnsGZ7WjKkhyZ+sl3BKaM3zSx6SireQQcAptvyApzbMUVh259KVZigasqU3ERa9ojH0TPVTqfeZ9vKC+/JGwyujCT7mQ7DgYYUaM5pWrc0937usqG7q7RJHNaYrbD+Duu7yOdhw8E/WT1JA7ywGjob0WAHpb1zWsWvJmE8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTqQKg+w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K7tdKc72cee0S2riqTOUDDAVlV1grzMeTCai+CtfQy8QaSD9sS3t+Sl5th5Vz6siYgUjsRmK0nsUeBLjSestyym7bQKDvRwLmORzy/K9qB5MsqyBAg38uuqThkd/vCZMtlkG5YGSBAhD+zD117VeyWvq7baMPv0wDgKEBkH83GU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lam7UGXd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTqQKg+w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9ED11F000E9;
-	Tue, 16 Jun 2026 15:51:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lam7UGXd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3597E1F000E9;
+	Tue, 16 Jun 2026 15:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625075;
-	bh=OZiYwSXSYRo4yTjvvBnh29NFzn3+wKILIyF+uwyWbbw=;
+	s=korg; t=1781625081;
+	bh=4SN5cdQLQJ7W8QXbaKjc66DI+zGDz288b9DD+zw75n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rTqQKg+wrGMbxgkJExo9WNBUzrsJKKF91PolUjmLF/RrGc1RkG51GCCM/ein4IJuS
-	 fO2XjubinT60NK3JYYcEwFP/mRv0u8rXKaLmyGSvEi7W0B+DZsUOkLPfYuGgDjFCiS
-	 ImdbfT7yik6iWGLCD/1My+KGhrMUix5LBzUXsUPg=
+	b=lam7UGXdKjVAWSwOXnD6HgZa4M8zHNaHeT8C7bXsXDePoTuJirGlI1tSfkwkQhB/g
+	 sSimARkKv6pqCbaTUbpU+LKfwyxqV51S6OyW/toLqoKQKAZAbAVNc7YN4vCbVrmL6Y
+	 fbCV5gwnyHzeMfQXkIMdMjmn6uoS2rPA0478imFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b109633ea805cac54a61@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Dexuan Cui <decui@microsoft.com>,
+	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 072/325] signal: clear JOBCTL_PENDING_MASK for caller in zap_other_threads()
-Date: Tue, 16 Jun 2026 20:27:48 +0530
-Message-ID: <20260616145101.310446566@linuxfoundation.org>
+Subject: [PATCH 6.18 073/325] hyperv: Clean up and fix the guest ID comment in hvgdk.h
+Date: Tue, 16 Jun 2026 20:27:49 +0530
+Message-ID: <20260616145101.370121539@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,70 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Dexuan Cui <decui@microsoft.com>
 
-[ Upstream commit 90918794a4e2c3b440f8fcf3847765a8b1d81b25 ]
+[ Upstream commit 83eb00f31eb1b10735d48e469df72cc2b0e06f6d ]
 
-When a multi-threaded process receives a stop signal (e.g., SIGSTOP),
-do_signal_stop() sets JOBCTL_STOP_PENDING and JOBCTL_STOP_CONSUME on all
-threads and sets signal->group_stop_count to the number of threads. If
-one of the threads concurrently calls execve(), de_thread() invokes
-zap_other_threads() to kill all other threads. zap_other_threads()
-aborts the pending group stop by resetting signal->group_stop_count to 0
-and clears the JOBCTL_PENDING_MASK for all other threads. However, it
-fails to clear the job control flags for the calling thread.
+Change the "64 bit" to "64-bit", and the "Os" to "OS".
 
-When execve() completes, the calling thread returns to user mode and
-checks for pending signals. Seeing the stale JOBCTL_STOP_PENDING flag,
-it calls do_signal_stop(), which invokes task_participate_group_stop().
-Since JOBCTL_STOP_CONSUME is still set, it attempts to decrement the
-already-zero signal->group_stop_count, triggering a warning:
+Remove the obsolete paragraph since the guideline has been
+published in the Hypervisor Top Level Functional Specification
+for many years.
 
-sig->group_stop_count == 0
-WARNING: CPU: 1 PID: 6475 at kernel/signal.c:373
-task_participate_group_stop+0x215/0x2d0
-Call Trace:
- <TASK>
- do_signal_stop+0x3be/0x5c0 kernel/signal.c:2619
- get_signal+0xa8c/0x1330 kernel/signal.c:2884
- arch_do_signal_or_restart+0xbc/0x840 arch/x86/kernel/signal.c:337
- exit_to_user_mode_loop+0x8c/0x4d0 kernel/entry/common.c:98
- do_syscall_64+0x33e/0xf80 arch/x86/entry/syscall_64.c:100
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
+The "OS Type" is 0x1 for Linux, not 0x100.
 
-Fix this race condition by clearing the JOBCTL_PENDING_MASK for the
-calling thread in zap_other_threads(), ensuring it does not retain any
-stale job control state after the thread group is destroyed. This aligns
-with other functions that tear down a thread group and abort group
-stops, such as zap_process() and complete_signal(), which correctly
-clear these flags for all threads including the current one.
+No functional change.
 
-Fixes: 39efa3ef3a37 ("signal: Use GROUP_STOP_PENDING to stop once for a single group stop")
-Assisted-by: Gemini:gemini-3.1-pro-preview Gemini:gemini-3-flash-preview syzbot
-Reported-by: syzbot+b109633ea805cac54a61@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b109633ea805cac54a61
-Link: https://syzkaller.appspot.com/ai_job?id=d70208cc-862b-4fe3-bf02-3031e10cd0b3
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Link: https://patch.msgid.link/20260521142240.2973022-1-nogikh@google.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 83ba0c4f3f31 ("Drivers: hv: Cleanup the guest ID computation")
+Signed-off-by: Dexuan Cui <decui@microsoft.com>
+Reviewed-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/signal.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/hyperv/hvgdk.h | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/signal.c b/kernel/signal.c
-index fe9190d84f281e..810098300ecdcb 100644
---- a/kernel/signal.c
-+++ b/kernel/signal.c
-@@ -1340,6 +1340,7 @@ int zap_other_threads(struct task_struct *p)
- 	int count = 0;
+diff --git a/include/hyperv/hvgdk.h b/include/hyperv/hvgdk.h
+index dd6d4939ea29b0..a837a6bc1275bd 100644
+--- a/include/hyperv/hvgdk.h
++++ b/include/hyperv/hvgdk.h
+@@ -10,18 +10,12 @@
  
- 	p->signal->group_stop_count = 0;
-+	task_clear_jobctl_pending(p, JOBCTL_PENDING_MASK);
- 
- 	for_other_threads(p, t) {
- 		task_clear_jobctl_pending(t, JOBCTL_PENDING_MASK);
+ /*
+  * The guest OS needs to register the guest ID with the hypervisor.
+- * The guest ID is a 64 bit entity and the structure of this ID is
++ * The guest ID is a 64-bit entity and the structure of this ID is
+  * specified in the Hyper-V TLFS specification.
+  *
+- * While the current guideline does not specify how Linux guest ID(s)
+- * need to be generated, our plan is to publish the guidelines for
+- * Linux and other guest operating systems that currently are hosted
+- * on Hyper-V. The implementation here conforms to this yet
+- * unpublished guidelines.
+- *
+  * Bit(s)
+  * 63 - Indicates if the OS is Open Source or not; 1 is Open Source
+- * 62:56 - Os Type; Linux is 0x100
++ * 62:56 - OS Type; Linux is 0x1
+  * 55:48 - Distro specific identification
+  * 47:16 - Linux kernel version number
+  * 15:0  - Distro specific identification
 -- 
 2.53.0
 
