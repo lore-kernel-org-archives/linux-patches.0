@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B02E335081;
-	Tue, 16 Jun 2026 17:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D05132E728;
+	Tue, 16 Jun 2026 17:36:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631371; cv=none; b=EgKUIr1Bw3WXo6HOL5XT3iCFWkifuK6BD8m9CdckeTYb/SpAP7EdPn6X/HddHEm8que2k0bXAaqPyhZBKw1NMuj1vMo2+OY1v1a2188tDo31QkHMMOh4FavdNnrEgFj80eSePIta3xj/2W40LKSc94BwwxAJ9WJqtXzvhfyMbu8=
+	t=1781631377; cv=none; b=cseiqrNmpY1N3O5aRJ405ANYXezoIlRodcqA8uHgkyaqiWY0aFcp6nmSvXlKgdDoJVne/TwFXEyAJk+2xgTXp+0fj/Tws0oFLt6weRJdCLVj294YzkMYPjxk2pWqOjDbHQReamq8DbMHklS0Mh9SZ/QYHc7sHCD6DzFGqzhIQ3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631371; c=relaxed/simple;
-	bh=0Nf/V7DiuCHNdMBINvuB9wHaa4c7AV0KoXPSOXL4VHs=;
+	s=arc-20240116; t=1781631377; c=relaxed/simple;
+	bh=jYoznuLXUYnvswTsSUIl9amYrWS9HDcn3o5wBpxkSm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PBPAAK+ebXgsls3A7Xo2bagvBdxrI4ZLKi9BSirBcwwwq41M9hMMsmH1woytJ15oG330iNrGQCvyDjqws6RgFl9Z8iXNyVVk8y9wx4lcFbI4gIzebgl8YEnFYGtaKzi7g/rOf/9DWhw+o8SkHDONdZp49ihRUBZfcJt5HdIFp7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrDclyIh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eHLyj9aSgD2btNKvoksD28z42uJAImPyNuL+eYYFEiIqRkYilW06aMUUOByIYVy4wYuXAxTa7aN4wBFi0zzfxuwJIrdZNOb9o+XcF6VDjeLjpkcoS6i234Glw5jDZTTAVFAWpc7B8RbsGuST8kixN+fuT1szjLRLoJ/owC5puCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZSn7E8u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrDclyIh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2F81F000E9;
-	Tue, 16 Jun 2026 17:36:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZSn7E8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E201F000E9;
+	Tue, 16 Jun 2026 17:36:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631370;
-	bh=kQxowTJVsmHuM7Ngj4kuLyUdWKHNjGczNmBnTG8x23Y=;
+	s=korg; t=1781631376;
+	bh=Rb0I/7upC2fhuEphtpCufEORASGJMh0EfKBxq4XpO7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yrDclyIhbH3DvnX0zMTy/JQ95in1YUN9+RFrckE9BUdKZiL2c1T82q5sowNAZYzgV
-	 xk3qAT8TxMeUyWglmPJMFt42IEUGhoAgfWv+17jRZ+tHrUYxU2R/cQPdyBMayHEjNN
-	 JFLbEx3wzENIJmIjnz/XmR0SXkz27VqCS6ISRSg8=
+	b=CZSn7E8uQxaeCVjw/SrBTEM7hia5tZNuZWEUn2lWrQZyZifytPvhkTBFlSf1bMg95
+	 TWJ1LY57E2lEhEF2OzlprZ4rybN6WT82xvPfHWiQnsj62OeJvlwD8cBdb2wKDN1+Q4
+	 ww2k/ElOV50RiW84L3DiP1q+YbpOx9RDLYjaYQmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Francis <David.Francis@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 175/522] drm/amdkfd: Check for pdd drm file first in CRIU restore path
-Date: Tue, 16 Jun 2026 20:25:22 +0530
-Message-ID: <20260616145134.331708622@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>
+Subject: [PATCH 6.1 176/522] serial: dz: Fix bootconsole message clobbering at chip reset
+Date: Tue, 16 Jun 2026 20:25:23 +0530
+Message-ID: <20260616145134.375292094@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -50,52 +49,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Francis <David.Francis@amd.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit 6842b6a4b72da9b2906ffc5ca9d846ace2c54c14 upstream.
+commit ca904f4b42355287bc5ce8b7550ebe909cda4c2c upstream.
 
-CRIU restore ioctls are meant to be called by CRIU with no
-existing drm file. There's an error path
-for if the drm file unexpectedly exists. It was positioned so
-it was missing a fput(drm_file).
+In the DZ interface as implemented by the DC7085 gate array the serial
+transmitters are double buffered, meaning that at the time a transmitter
+is ready to accept the next character there is one in the transmit shift
+register still being sent to the line.  Issuing a master clear at this
+time causes this character to be lost, so wait an extra amount of time
+sufficient for the transmit shift register to drain at 9600bps, which is
+the baud rate setting used by the firmware console.
 
-Do that check earlier, as soon as we have the pdd.
+Mind the specified 1.4us TRDY recovery time in the course and continue
+using iob() as the completion barrier, since the platforms involved use
+a write buffer that can delay and combine writes, and reorder them with
+respect to reads regardless of the MMIO locations accessed and we still
+lack a platform-independent handler for that.
 
-Signed-off-by: David Francis <David.Francis@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 2bab781dac78916c5cc8de76345a4102449267d7)
-Cc: stable@vger.kernel.org
+When called from dz_serial_console_init() this is too early for fsleep()
+to work and even before lpj has been calculated and therefore the delay
+is actually not sufficient for the transmitter to drain and is merely a
+placeholder now.  This will be addressed in a follow-up change.
+
+Fixes: e6ee512f5a77 ("dz.c: Resource management")
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Cc: stable@vger.kernel.org # v2.6.25+
+Link: https://patch.msgid.link/alpine.DEB.2.21.2605062259080.46195@angie.orcam.me.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/tty/serial/dz.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -2171,6 +2171,11 @@ static int criu_restore_devices(struct k
- 			ret = -EINVAL;
- 			goto exit;
- 		}
+--- a/drivers/tty/serial/dz.c
++++ b/drivers/tty/serial/dz.c
+@@ -544,10 +544,31 @@ static int dz_encode_baud_rate(unsigned
+ static void dz_reset(struct dz_port *dport)
+ {
+ 	struct dz_mux *mux = dport->mux;
++	unsigned short tcr;
++	int loops = 10000;
+ 
+ 	if (mux->initialised)
+ 		return;
+ 
++	tcr = dz_in(dport, DZ_TCR);
 +
-+		if (pdd->drm_file) {
-+			ret = -EINVAL;
-+			goto exit;
++	/* Do not disturb any ongoing transmissions.  */
++	if (dz_in(dport, DZ_CSR) & DZ_MSE) {
++		unsigned short csr, mask;
++
++		mask = tcr;
++		while ((mask & DZ_LNENB) && loops--) {
++			csr = dz_in(dport, DZ_CSR);
++			if (!(csr & DZ_TRDY))
++				continue;
++			mask &= ~(1 << ((csr & DZ_TLINE) >> 8));
++			dz_out(dport, DZ_TCR, mask);
++			iob();
++			udelay(2);		/* 1.4us TRDY recovery.  */
 +		}
- 		pdd->user_gpu_id = device_buckets[i].user_gpu_id;
- 
- 		drm_file = fget(device_buckets[i].drm_fd);
-@@ -2180,11 +2185,6 @@ static int criu_restore_devices(struct k
- 			ret = -EINVAL;
- 			goto exit;
- 		}
--
--		if (pdd->drm_file) {
--			ret = -EINVAL;
--			goto exit;
--		}
- 
- 		/* create the vm using render nodes for kfd pdd */
- 		if (kfd_process_device_init_vm(pdd, drm_file)) {
++		udelay(1200);			/* Transmitter drain.  */
++	}
++
+ 	dz_out(dport, DZ_CSR, DZ_CLR);
+ 	while (dz_in(dport, DZ_CSR) & DZ_CLR);
+ 	iob();
 
 
