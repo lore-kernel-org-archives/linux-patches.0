@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460003CC303;
-	Tue, 16 Jun 2026 18:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C3F3CC303;
+	Tue, 16 Jun 2026 18:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636125; cv=none; b=KxMhN7tCI6ttq5fYhbqkEeW/f6YqckvF+WgHpTpTArgw392HdM0Gcnak1fn5fx+GqtxyuFr0BY6REhM6q2EIEFT8JovqLsj3VvYZatols1lvuVoODqCBTPY7tkAmn/t5zSVP9ktibycy0fLMG4Nb+6Rmj45CcAZoabTjglIl2Rc=
+	t=1781636130; cv=none; b=VaXdD2PV6h0PIjRopH3OJSA584E0lkA8xbGBt1J+5VmrIbs/Hb0hVS8ZPsh7Sl/dN+TSoTXL3LtE3Y4yv0+YRjwBx6wc3riic2QTa9q4+GAxGsaMvixfiEnW8ebR+aymT0c6REcsvYtAm4qCoKyF671nw09glDINfR2MOik9KtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636125; c=relaxed/simple;
-	bh=/EZaHKW9TbyuZrdgJ2DPwnkrGMFqD4N9ChouPMcVPAI=;
+	s=arc-20240116; t=1781636130; c=relaxed/simple;
+	bh=bhpattlhfVfzBma5qmOvHApPYcEAYOyRefDF6Xu7MuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R35WyvW2Yz1elGxGoAv5+KmjDWuTwSY6D3jFBl6KyeLIYJHKzYZW8A7Kb+shKkbNktEKFM4lyGrBa/KISZ6I8yTghiHqDVV6GGZo7RmvZ1nKrVgukvOwMLgVNNP6d6sh1yBwLkALEjUUErqj9GFS1ZHC7GrXRvqFvGDs5hB++b4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=btNWyRTx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kc6orM3qnBiq4KBnkqse2bHz0dLOsqL74ToaoZZCHcsyLwLeZdliaafD5BkgpzW5aNEwoKxIMkJg5pBhTA3uAhXpw603bOSCFywqNKzUCUIbLgHePZOAJ+SOd4m+5AzTestOS7i0U4MnXlgyXVGUzSii02uGNM11vtstR4LbbBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgCiDr13; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btNWyRTx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E7E1F000E9;
-	Tue, 16 Jun 2026 18:55:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgCiDr13"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD301F000E9;
+	Tue, 16 Jun 2026 18:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636124;
-	bh=ZmgTRncklbiQnG0hjlOyRFGlvrdQtkqYeTnOHTsIm+w=;
+	s=korg; t=1781636129;
+	bh=LXhFh3DzZhqRfxrlC4AXe46erwPtH+eaVLcz9jW5Ut0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=btNWyRTxVCsxCw8jM9eXhIT0EfwuTKohqcPfdcVk3y1etLDwZoCEeIrIAtoccffXO
-	 bxjZsdYeH8eJVrYpQy9G02gGWtFJ3eX5s+68JYjnxNKMars9J8Zj899WBSEeOh8H2L
-	 TNftY1seQcRM/NPESQkau7EQpC3i/PiSMn/7RVb4=
+	b=tgCiDr13eATnSloO3HWETTz2U2Ju+E+JUo7sbE6leU1jU5WYUwxg49FQ6vlftz3dv
+	 x8A8YHVIUDwv2pItefHAoQmXhfYSF2RzNicoXmHdXeZPlw70lX7fhrO8bQ2YJ0os46
+	 GGgRX3g780ji/bW7eGUDlloxpUpJ3qqhVdtG4uxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 179/342] Bluetooth: L2CAP: reject BR/EDR signaling packets over MTUsig
-Date: Tue, 16 Jun 2026 20:27:55 +0530
-Message-ID: <20260616145056.540921320@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Simona Vetter <simona@ffwll.ch>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Subject: [PATCH 5.10 180/342] drm/i915/gem: Fix phys BO pread/pwrite with offset
+Date: Tue, 16 Jun 2026 20:27:56 +0530
+Message-ID: <20260616145056.584014436@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -51,128 +55,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 
-commit dd214733544427587a95f66dbf3adff072568990 upstream.
+commit d21ad938398bca695a511307de38a65889e3b354 upstream.
 
-net/bluetooth/l2cap_core.c:l2cap_sig_channel() accepts BR/EDR
-signaling packets up to the channel MTU and dispatches each command
-without enforcing the signaling MTU (MTUsig). A Bluetooth BR/EDR peer
-within radio range can send a fixed-channel CID 0x0001 packet that is
-larger than MTUsig and contains many L2CAP_ECHO_REQ commands before
-pairing. In a real-radio stock-kernel run, one 681-byte signaling
-packet containing 168 zero-length ECHO_REQ commands made the target
-transmit 168 ECHO_RSP frames over about 220 ms.
+sg_page() returns struct page pointer not (void *) so the scaling
+of pread/pwrite is wrong for phys BO and wrong parts of BO would be
+accessed if non-zero offset is used.
 
-Impact: a Bluetooth BR/EDR peer within radio range, before pairing, can
-force 168 ECHO_RSP frames from one 681-byte fixed-channel signaling
-packet containing packed ECHO_REQ commands.
+Last impacted platform with overlay or cursor planes using phys
+mapping was Gen3/945G/Lakeport.
 
-Define Linux's BR/EDR signaling MTU as the spec minimum of 48 bytes and
-reject any larger signaling packet with one L2CAP_COMMAND_REJECT_RSP
-carrying L2CAP_REJ_MTU_EXCEEDED before any command is dispatched.
-
-The Bluetooth Core spec wording for MTUExceeded says the reject
-identifier shall match the first request command in the packet, and
-that packets containing only responses shall be silently discarded.
-Linux intentionally deviates from that prescription: silently
-discarding desynchronizes the peer because the remote stack never
-learns its responses were dropped, and locating the first request
-command requires walking command headers past MTUsig, i.e. processing
-bytes from a packet we have already decided is too large to process.
-We therefore always emit one reject and use the identifier from the
-first command header, a single fixed-offset byte read.
-
-The unrestricted BR/EDR signaling parser and ECHO_REQ response path both
-trace to the initial git import; no later introducing commit is
-available for a Fixes tag.
-
-Cc: stable@vger.kernel.org
-Suggested-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Link: https://lore.kernel.org/r/20260518002800.1361430-1-michael.bommarito@gmail.com
-Link: https://lore.kernel.org/r/20260520135034.1060859-1-michael.bommarito@gmail.com
-Link: https://lore.kernel.org/r/20260521000555.3712030-1-michael.bommarito@gmail.com
-Assisted-by: Claude:claude-opus-4-7
-Assisted-by: Codex:gpt-5-5-xhigh
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reported-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Fixes: c6790dc22312 ("drm/i915: Wean off drm_pci_alloc/drm_pci_free")
+Cc: <stable@vger.kernel.org> # v4.5+
+Cc: Tvrtko Ursulin <tursulin@ursulin.net>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Link: https://patch.msgid.link/20260610060314.26111-1-joonas.lahtinen@linux.intel.com
+(cherry picked from commit 3e49a2f85070b2fb672c1e0fdba281a4ea3aebe6)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/l2cap.h |    1 
- net/bluetooth/l2cap_core.c    |   46 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+)
+ drivers/gpu/drm/i915/gem/i915_gem_phys.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -33,6 +33,7 @@
- /* L2CAP defaults */
- #define L2CAP_DEFAULT_MTU		672
- #define L2CAP_DEFAULT_MIN_MTU		48
-+#define L2CAP_SIG_MTU			48	/* BR/EDR signaling MTU */
- #define L2CAP_DEFAULT_FLUSH_TO		0xFFFF
- #define L2CAP_EFS_DEFAULT_FLUSH_TO	0xFFFFFFFF
- #define L2CAP_DEFAULT_TX_WINDOW		63
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -6618,6 +6618,15 @@ static inline void l2cap_sig_send_rej(st
- 	l2cap_send_cmd(conn, ident, L2CAP_COMMAND_REJ, sizeof(rej), &rej);
- }
+--- a/drivers/gpu/drm/i915/gem/i915_gem_phys.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_phys.c
+@@ -17,6 +17,17 @@
+ #include "i915_gem_region.h"
+ #include "i915_scatterlist.h"
  
-+static inline void l2cap_sig_send_mtu_rej(struct l2cap_conn *conn, u8 ident)
++/* Abuse scatterlist to store pointer instead of struct page. */
++static inline void __set_phys_vaddr(struct scatterlist *sg, void *vaddr)
 +{
-+	struct l2cap_cmd_rej_mtu rej;
-+
-+	rej.reason = cpu_to_le16(L2CAP_REJ_MTU_EXCEEDED);
-+	rej.max_mtu = cpu_to_le16(L2CAP_SIG_MTU);
-+	l2cap_send_cmd(conn, ident, L2CAP_COMMAND_REJ, sizeof(rej), &rej);
++	sg_assign_page(sg, (struct page *)vaddr);
 +}
 +
- static inline void l2cap_sig_channel(struct l2cap_conn *conn,
- 				     struct sk_buff *skb)
++static inline void *__get_phys_vaddr(struct scatterlist *sg)
++{
++	return (void *)sg_page(sg);
++}
++
+ static int i915_gem_object_get_pages_phys(struct drm_i915_gem_object *obj)
  {
-@@ -6630,6 +6639,43 @@ static inline void l2cap_sig_channel(str
- 	if (hcon->type != ACL_LINK)
- 		goto drop;
+ 	struct address_space *mapping = obj->base.filp->f_mapping;
+@@ -52,7 +63,7 @@ static int i915_gem_object_get_pages_phy
+ 	sg->offset = 0;
+ 	sg->length = obj->base.size;
  
-+	/*
-+	 * Bluetooth Core v5.4, Vol 3, Part A, Section 4: the BR/EDR
-+	 * signaling channel has a fixed signaling MTU (MTUsig) whose
-+	 * minimum and default is 48 octets.  Section 4.1 says that on
-+	 * an MTUExceeded command reject the identifier "shall match
-+	 * the first request command in the L2CAP packet" and that
-+	 * packets containing only response commands "shall be
-+	 * silently discarded".
-+	 *
-+	 * Linux intentionally deviates from that prescription:
-+	 *
-+	 *   1. Silently discarding desynchronizes the peer.  The
-+	 *      remote stack never learns its responses were dropped,
-+	 *      so any state machine waiting on a paired response
-+	 *      stalls until its own timer fires.
-+	 *
-+	 *   2. Locating "the first request command" requires walking
-+	 *      command headers past MTUsig, i.e. processing bytes
-+	 *      from a packet we have already decided is too large to
-+	 *      process.
-+	 *
-+	 * Reject every over-MTUsig signaling packet with one
-+	 * L2CAP_REJ_MTU_EXCEEDED command reject.  The reject's
-+	 * reason field is what tells the peer that the whole packet
-+	 * was discarded; the identifier value is informational, so
-+	 * we use the identifier from the first command header, a
-+	 * single fixed-offset byte read.
-+	 */
-+	if (skb->len > L2CAP_SIG_MTU) {
-+		u8 ident = skb->data[1];
-+
-+		BT_DBG("signaling packet exceeds MTU: %u > %u",
-+		       skb->len, L2CAP_SIG_MTU);
-+		l2cap_sig_send_mtu_rej(conn, ident);
-+		goto drop;
-+	}
-+
- 	while (skb->len >= L2CAP_CMD_HDR_SIZE) {
- 		u16 len;
+-	sg_assign_page(sg, (struct page *)vaddr);
++	__set_phys_vaddr(sg, vaddr);
+ 	sg_dma_address(sg) = dma;
+ 	sg_dma_len(sg) = obj->base.size;
+ 
+@@ -94,7 +105,7 @@ i915_gem_object_put_pages_phys(struct dr
+ 			       struct sg_table *pages)
+ {
+ 	dma_addr_t dma = sg_dma_address(pages->sgl);
+-	void *vaddr = sg_page(pages->sgl);
++	void *vaddr = __get_phys_vaddr(pages->sgl);
+ 
+ 	__i915_gem_object_release_shmem(obj, pages, false);
+ 
+@@ -138,7 +149,7 @@ static int
+ phys_pwrite(struct drm_i915_gem_object *obj,
+ 	    const struct drm_i915_gem_pwrite *args)
+ {
+-	void *vaddr = sg_page(obj->mm.pages->sgl) + args->offset;
++	void *vaddr = __get_phys_vaddr(obj->mm.pages->sgl) + args->offset;
+ 	char __user *user_data = u64_to_user_ptr(args->data_ptr);
+ 	int err;
+ 
+@@ -169,7 +180,7 @@ static int
+ phys_pread(struct drm_i915_gem_object *obj,
+ 	   const struct drm_i915_gem_pread *args)
+ {
+-	void *vaddr = sg_page(obj->mm.pages->sgl) + args->offset;
++	void *vaddr = __get_phys_vaddr(obj->mm.pages->sgl) + args->offset;
+ 	char __user *user_data = u64_to_user_ptr(args->data_ptr);
+ 	int err;
  
 
 
