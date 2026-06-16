@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B2146AF14;
-	Tue, 16 Jun 2026 16:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C8743E4BA;
+	Tue, 16 Jun 2026 16:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627107; cv=none; b=Knt3FdId18i72krCwWqHYtpQFMGvNHM2+MqS4x5eTtHqk4y55hZuiVFuv9TfP2I/A0u9rc2E0d/B7uXQ8d52YXypYTV6cHeR7GRMAB19pFfvr1O/nlD6kUmuv9FLCCKOzogD7siPbcYllKQ2B9kOhWBmHgWdgFHwQ6DrVUeFbNU=
+	t=1781627111; cv=none; b=kPC3mbOFt7tPaA6WviAT4Gj8VSgdSrdsFrvs0Jc26ILDnkFIk+14LYmaO/+qt7dytVIFWvF94/D/ifjc3OsWLgu1jcro8mwi8XSpDRJ4mt4c8rLyfrjyHwtLTl1WxedzBsvzycMCAXhs89aqvbCcl4cK609dsVPowNW2+kfViJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627107; c=relaxed/simple;
-	bh=uSqWB07I/yVd0s0IwXFb5tmmEtb6M/Q48H8nG6WDGo8=;
+	s=arc-20240116; t=1781627111; c=relaxed/simple;
+	bh=M80M6robitPHzdGntb/+DwXO43niJZqtO+JsWpUbkLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s0B14wiyaolS8fxqCGmIwOret//KDWccMMWeUzGA4DrmFmumhBFECFGcv+UKhMb8+cLxZggdnZk82DoDUvbzxYa5PCN7UBZetA85MOz6fGyL5Ib+9CRJNvBrUb+X1ZhBLmIEmpau9T5t2i0wO9pDKGyOKVC7sJA3jme0D6aWsuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cI++N0fw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RJuVcbDVd1YFMHt+tQ7kpcwnQbwx0Gzg82f2khr01CT6nF2LkMo8YC6bZZq9t26tuztR5SZOTVy1jdxaYPO/apFwlbyGT9yJ2JxIzcwlu11MOAoMFxzlO5U+XWHd5M1sIMWi6Qw8USJSnDcWsRHG5fk9KQXump+g82t2nnO55Fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbIRub4O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cI++N0fw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6BB1F000E9;
-	Tue, 16 Jun 2026 16:25:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbIRub4O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427491F000E9;
+	Tue, 16 Jun 2026 16:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627105;
-	bh=uzSO8i2yHqbP1FFF37eL9VgZvdms1hODCIsgaHFKSeM=;
+	s=korg; t=1781627110;
+	bh=sps2DuVbdkk3cv/LdocmbpZ2crRXRVP9O/N+j77Xuxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cI++N0fwQsP79E6zPWcsPB8ZXze3TmanFevj3i4x84L+G72bPXwDPoSG8h4mtxfJS
-	 XO7dMpKm0+UNah92XzRijzjbhQd6fakWEucNipB1aa5RLhOf9xG71Bvo2b5F8ygHrR
-	 m7Ay23zf8yc09VzvLLNhXR/iBSrWahf9A7uP2eZg=
+	b=HbIRub4OJhVtQluPRJcgKVSMDBDFTq+YbVkTwDdmzdMVAMRynjsSDUg8zW1CS+2Id
+	 bEfpeEDKFUvJg9iOcrDH8H/lH7ov52E+cODi64bB/aoGbGUzc9Ak3j4VS3V8zJcdYU
+	 XM2QRG+5tZx061X9pDs/9JQntM8JzdobDm6D/W/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lvc-project@linuxtesting.org,
-	Georgiy Osokin <g.osokin@auroraos.dev>,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>
-Subject: [PATCH 6.12 121/261] tee: shm: fix shm leak in register_shm_helper()
-Date: Tue, 16 Jun 2026 20:29:19 +0530
-Message-ID: <20260616145050.656377265@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Yuqi Xu <xuyq21@lenovo.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.12 122/261] Bluetooth: hci_sync: reject oversized Broadcast Announcement prepend
+Date: Tue, 16 Jun 2026 20:29:20 +0530
+Message-ID: <20260616145050.729873617@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,40 +55,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Georgiy Osokin <g.osokin@auroraos.dev>
+From: Yuqi Xu <xuyq21@lenovo.com>
 
-commit 26682f5efc276e3ad96d102019472bfbf03833b2 upstream.
+commit 5c65b96b549ea2dcfde497436bf9e048deb87758 upstream.
 
-register_shm_helper() allocates shm before calling
-iov_iter_npages(). If iov_iter_npages() returns 0, the function
-jumps to err_ctx_put and leaks shm.
+Existing advertising instances can already hold the maximum extended
+advertising payload. When hci_adv_bcast_annoucement() prepends the
+Broadcast Announcement service data to that payload, the combined data
+may no longer fit in the temporary buffer used to rebuild the
+advertising data.
 
-This can be triggered by TEE_IOC_SHM_REGISTER with
-struct tee_ioctl_shm_register_data where length is 0.
+Reject that case before copying the existing payload and report the
+failure through the device log. This keeps the existing advertising
+data intact and avoids overrunning the temporary buffer.
 
-Jump to err_free_shm instead.
-
-Fixes: 7bdee4157591 ("tee: Use iov_iter to better support shared buffer registration")
-Cc: stable@vger.kernel.org
-Cc: lvc-project@linuxtesting.org
-Signed-off-by: Georgiy Osokin <g.osokin@auroraos.dev>
-Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+Fixes: 5725bc608252 ("Bluetooth: hci_sync: Fix broadcast/PA when using an existing instance")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Yuqi Xu <xuyq21@lenovo.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tee/tee_shm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/hci_sync.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/tee/tee_shm.c
-+++ b/drivers/tee/tee_shm.c
-@@ -307,7 +307,7 @@ register_shm_helper(struct tee_context *
- 	num_pages = iov_iter_npages(iter, INT_MAX);
- 	if (!num_pages) {
- 		ret = ERR_PTR(-ENOMEM);
--		goto err_ctx_put;
-+		goto err_free_shm;
- 	}
- 
- 	shm->pages = kcalloc(num_pages, sizeof(*shm->pages), GFP_KERNEL);
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -1725,6 +1725,11 @@ static int hci_adv_bcast_annoucement(str
+ 	/* Generate Broadcast ID */
+ 	get_random_bytes(bid, sizeof(bid));
+ 	len = eir_append_service_data(ad, 0, 0x1852, bid, sizeof(bid));
++	if (adv->adv_data_len > sizeof(ad) - len) {
++		bt_dev_err(hdev, "No room for Broadcast Announcement");
++		return -EINVAL;
++	}
++
+ 	memcpy(ad + len, adv->adv_data, adv->adv_data_len);
+ 	hci_set_adv_instance_data(hdev, adv->instance, len + adv->adv_data_len,
+ 				  ad, 0, NULL);
 
 
