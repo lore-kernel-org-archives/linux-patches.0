@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5028B3CC303;
-	Tue, 16 Jun 2026 18:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78914779BF;
+	Tue, 16 Jun 2026 18:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636003; cv=none; b=QxifNImN8lWfu0FUQNpesrNIulW4DiEj9yHsnVifr6HZ0/Tje7OZ5Rg8gTXjdK90vx+4a7kQKH5EfvCOevDu+GCnWCv7GGd+ZglSuxSieoLKJto7hIwLJgoN+PblMgirmnH0FqdWXVAPrUpr8R0K8n+JYoBmjZkSPoNG67e02L0=
+	t=1781636008; cv=none; b=jyTbQaWQh2TIaoQX8jdlA+suj1a+BkO6nJ6ui9BaGC82H6ABbxxehQAMwJMX6ojJa16IEzC8+NGMJsvTR/j1ahwsKW8ha/yFiwtlZNH1+hhPnUEs91aBnTSf/pLtfs6i/Kkjpp6PfWON7cu1sYgcEqdXnvv/4N3IJY6uYioO7jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636003; c=relaxed/simple;
-	bh=37y1V9u5gyB9J2JN58b2o5XJ5swAK/YzXs13A4OqLb4=;
+	s=arc-20240116; t=1781636008; c=relaxed/simple;
+	bh=y7u355cv3pHdQHGQCKJ7cgeDhxBvtjLpuMv3r7wU/iI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L6zLlZ+/TAX2qiUoKBfYrJfzRttea55rrtYRHJLrnZbUmlasvaywZL0lj6kz9dzLFT7Jz56ZVaagwuZKb1oXzYl/BVWwRoknxNKSm7WXxdIwhG4m2lMMskEcH0OXBPmE/wI4giUNLBMrrzSrRNbKPKe0F1lpoVX4NMvBX7jIzMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tjq2OzhI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lX5XlcDzh6+Tgjqu/K8beXz42BNq5Nnarr1ZVZONXPKLQfPRXemN/P5yvXYEMkpzJw5O9OVH02o0lCzSgG7hGey3fbp6VFGdTh1XqYXkCOjAPqG3+ahajoKPrJBYuQSSVA0EjBsNgwVgMLJ9tAHsJNNP8wC1efrSHOGSqenHc08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVcRa7HB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tjq2OzhI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496E01F000E9;
-	Tue, 16 Jun 2026 18:53:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVcRa7HB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988B81F000E9;
+	Tue, 16 Jun 2026 18:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636002;
-	bh=uz0uqLkopI5p4YSalrtaZ7g7IY2R/dsHXMLz1IdVayQ=;
+	s=korg; t=1781636007;
+	bh=+3o5gOa+/YTPeRr2ELdCXqMfq+PiavHOa7iZHEMXdaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tjq2OzhI5WTfgDNEiIk8bZPn+8jjBk/79Pq3p2mY/WO7Vfkt+a8+6QV8L5IUw6ZtN
-	 4VUSId8MQ8hw0vk2ylONV8VxsOF4K0o+6yIfeVVEYIltjrR4XucjJjezGObmX5hw4B
-	 hYcDZHlrCSCzklwnz9lQUQEkV8geFsCMXYKnhjKI=
+	b=AVcRa7HBOFDMZQcH2643qlnwG/NPdq14H/Q57skwoCzRujdDzLgmy8X+UuEzgqDwl
+	 lCSPYlGAgnmaIMBPbCxZF15/C8IqPRIxDBoLISz1mcRmYFFqa42Itx13bZNr8yGm90
+	 aPu7mCWX/AgIR17+GF8PqPBckAvNun6lUKTuN7uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Zqiang <qiang.zhang@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Alexey Panov <apanov@astralinux.ru>,
+	syzbot+e34ad04f27991521104c@syzkaller.appspotmail.com,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Vladislav Nikolaev <vlad102nikolaev@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 155/342] usbnet: Fix using smp_processor_id() in preemptible code warnings
-Date: Tue, 16 Jun 2026 20:27:31 +0530
-Message-ID: <20260616145055.380558271@linuxfoundation.org>
+Subject: [PATCH 5.10 156/342] nfsd: dont ignore the return code of svc_proc_register()
+Date: Tue, 16 Jun 2026 20:27:32 +0530
+Message-ID: <20260616145055.429150969@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -53,78 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang@linux.dev>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 327cd4b68b4398b6c24f10eb2b2533ffbfc10185 upstream.
+commit 930b64ca0c511521f0abdd1d57ce52b2a6e3476b upstream.
 
-Syzbot reported the following warning:
+Currently, nfsd_proc_stat_init() ignores the return value of
+svc_proc_register(). If the procfile creation fails, then the kernel
+will WARN when it tries to remove the entry later.
 
-BUG: using smp_processor_id() in preemptible [00000000] code: dhcpcd/2879
-caller is usbnet_skb_return+0x74/0x490 drivers/net/usb/usbnet.c:331
-CPU: 1 UID: 0 PID: 2879 Comm: dhcpcd Not tainted 6.15.0-rc4-syzkaller-00098-g615dca38c2ea #0 PREEMPT(voluntary)
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
- check_preemption_disabled+0xd0/0xe0 lib/smp_processor_id.c:49
- usbnet_skb_return+0x74/0x490 drivers/net/usb/usbnet.c:331
- usbnet_resume_rx+0x4b/0x170 drivers/net/usb/usbnet.c:708
- usbnet_change_mtu+0x1be/0x220 drivers/net/usb/usbnet.c:417
- __dev_set_mtu net/core/dev.c:9443 [inline]
- netif_set_mtu_ext+0x369/0x5c0 net/core/dev.c:9496
- netif_set_mtu+0xb0/0x160 net/core/dev.c:9520
- dev_set_mtu+0xae/0x170 net/core/dev_api.c:247
- dev_ifsioc+0xa31/0x18d0 net/core/dev_ioctl.c:572
- dev_ioctl+0x223/0x10e0 net/core/dev_ioctl.c:821
- sock_do_ioctl+0x19d/0x280 net/socket.c:1204
- sock_ioctl+0x42f/0x6a0 net/socket.c:1311
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:906 [inline]
- __se_sys_ioctl fs/ioctl.c:892 [inline]
- __x64_sys_ioctl+0x190/0x200 fs/ioctl.c:892
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xcd/0x260 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Fix nfsd_proc_stat_init() to return the same type of pointer as
+svc_proc_register(), and fix up nfsd_net_init() to check that and fail
+the nfsd_net construction if it occurs.
 
-For historical and portability reasons, the netif_rx() is usually
-run in the softirq or interrupt context, this commit therefore add
-local_bh_disable/enable() protection in the usbnet_resume_rx().
+svc_proc_register() can fail if the dentry can't be allocated, or if an
+identical dentry already exists. The second case is pretty unlikely in
+the nfsd_net construction codepath, so if this happens, return -ENOMEM.
 
-Fixes: 43daa96b166c ("usbnet: Stop RX Q on MTU change")
-Link: https://syzkaller.appspot.com/bug?id=81f55dfa587ee544baaaa5a359a060512228c1e1
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Zqiang <qiang.zhang@linux.dev>
-Link: https://patch.msgid.link/20251011070518.7095-1-qiang.zhang@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ Alexey: Keep tasklet_schedule() because commit 2c04d279e857 ("net: usb:
-  Convert tasklet API to new bottom half workqueue mechanism") is not present
-  in linux-5.10.y. ]
-Signed-off-by: Alexey Panov <apanov@astralinux.ru>
+Reported-by: syzbot+e34ad04f27991521104c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-nfs/67a47501.050a0220.19061f.05f9.GAE@google.com/
+Cc: stable@vger.kernel.org # v6.9
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Vladislav Nikolaev <vlad102nikolaev@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/usbnet.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfsd/nfsctl.c | 9 ++++++++-
+ fs/nfsd/stats.c  | 4 ++--
+ fs/nfsd/stats.h  | 2 +-
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
-index 4a83228a2db578..4b34544d88aa86 100644
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -684,6 +684,7 @@ void usbnet_resume_rx(struct usbnet *dev)
- 	struct sk_buff *skb;
- 	int num = 0;
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 8178d7d016487a..5cd264171daeee 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1471,17 +1471,24 @@ static __net_init int nfsd_init_net(struct net *net)
+ 	retval = nfsd_stat_counters_init(nn);
+ 	if (retval)
+ 		goto out_repcache_error;
++
+ 	memset(&nn->nfsd_svcstats, 0, sizeof(nn->nfsd_svcstats));
+ 	nn->nfsd_svcstats.program = &nfsd_program;
++	if (!nfsd_proc_stat_init(net)) {
++		retval = -ENOMEM;
++		goto out_proc_error;
++	}
++
+ 	nn->nfsd_versions = NULL;
+ 	nn->nfsd4_minorversions = NULL;
+ 	nfsd4_init_leases_net(nn);
+ 	get_random_bytes(&nn->siphash_key, sizeof(nn->siphash_key));
+ 	seqlock_init(&nn->writeverf_lock);
+-	nfsd_proc_stat_init(net);
  
-+	local_bh_disable();
- 	clear_bit(EVENT_RX_PAUSED, &dev->flags);
+ 	return 0;
  
- 	while ((skb = skb_dequeue(&dev->rxq_pause)) != NULL) {
-@@ -692,6 +693,7 @@ void usbnet_resume_rx(struct usbnet *dev)
- 	}
++out_proc_error:
++	nfsd_stat_counters_destroy(nn);
+ out_repcache_error:
+ 	nfsd_idmap_shutdown(net);
+ out_idmap_error:
+diff --git a/fs/nfsd/stats.c b/fs/nfsd/stats.c
+index 7a58dba0045c3b..6d1c6067c80e3b 100644
+--- a/fs/nfsd/stats.c
++++ b/fs/nfsd/stats.c
+@@ -113,11 +113,11 @@ void nfsd_stat_counters_destroy(struct nfsd_net *nn)
+ 	nfsd_percpu_counters_destroy(nn->counter, NFSD_STATS_COUNTERS_NUM);
+ }
  
- 	tasklet_schedule(&dev->bh);
-+	local_bh_enable();
+-void nfsd_proc_stat_init(struct net *net)
++struct proc_dir_entry *nfsd_proc_stat_init(struct net *net)
+ {
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
  
- 	netif_dbg(dev, rx_status, dev->net,
- 		  "paused rx queue disabled, %d skbs requeued\n", num);
+-	svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
++	return svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
+ }
+ 
+ void nfsd_proc_stat_shutdown(struct net *net)
+diff --git a/fs/nfsd/stats.h b/fs/nfsd/stats.h
+index 14525e854cbac3..b9329285bc1d79 100644
+--- a/fs/nfsd/stats.h
++++ b/fs/nfsd/stats.h
+@@ -15,7 +15,7 @@ void nfsd_percpu_counters_reset(struct percpu_counter *counters, int num);
+ void nfsd_percpu_counters_destroy(struct percpu_counter *counters, int num);
+ int nfsd_stat_counters_init(struct nfsd_net *nn);
+ void nfsd_stat_counters_destroy(struct nfsd_net *nn);
+-void nfsd_proc_stat_init(struct net *net);
++struct proc_dir_entry *nfsd_proc_stat_init(struct net *net);
+ void nfsd_proc_stat_shutdown(struct net *net);
+ 
+ static inline void nfsd_stats_rc_hits_inc(struct nfsd_net *nn)
 -- 
 2.53.0
 
