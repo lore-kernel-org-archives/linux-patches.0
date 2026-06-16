@@ -1,37 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF6032A3C9;
-	Tue, 16 Jun 2026 17:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19A2169AD2;
+	Tue, 16 Jun 2026 17:48:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632135; cv=none; b=MAQ1k2Ty6jZmbnWgy5+zRO7fBQNd2xxv22OyjDMA0rPE23G7kEgHDc88Tx4d46RmeYAqgMPE+UUWVRVZL8xdeZsAgFr5R7caouGE1iYAe344RUTQccRV8Utw76ExGTnHHecb0U5T0lOD9cAwojhewsZJ900CGW90Dr8zA8ixMNI=
+	t=1781632139; cv=none; b=mHpTD6gejPrdw/ttFs4oAPhUnWrTNCWvvhoi3CjZdFcvdK6xQ5nM0gwdzHoTK2bD7Y/oqzk//Zsv17S4X5H3k0y32uP/+Der8/qQl0hOWNYdaFy+/A0GlBYY7vDFJtx59V0KD1PWSyUqMpSyfI3VfNVBVQV2JIHTJJDBDyi4xAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632135; c=relaxed/simple;
-	bh=GA0Di/tzcpFAdhyiXH7YWkmnJjrO16EdYWyBBJyJ4/Q=;
+	s=arc-20240116; t=1781632139; c=relaxed/simple;
+	bh=hDcyjXlMUrUbVYf9981Uhc9bWmR9P2LKVNB8uScN3as=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EZ6wGpMbxQfeMApSjwmVDb0bEvyLjKqPIOKS5Eq3PxiZTYH5vXnOPnNfpfWul/BBTFe841cOcEiLdJuRp3xNmaVh468Ey+boBaTWvn9p+QWVXgRFoSinjQ3jaC601sb2kuhAQufo4+tK9/OQkEYVr+fq9iG+56urCDF5piyzpNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvHv9CLO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I1jz+BH+6c95r3uIMkp7AuT+tfRsD62sUdm5NTIOyJGDEBxPaqEdBtW6iaFty4j4M0JvaocBPkFE/cu4UM62yjV6ALRUUMUyqUON2+s/q00ZJULf27C2HgjzqfAaZ9OV3OmlKMMR7RghZjgoUsuE937GOlYIFfjuAtfpCxSypXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXtuwzug; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvHv9CLO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE081F00A3A;
-	Tue, 16 Jun 2026 17:48:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXtuwzug"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A0A71F000E9;
+	Tue, 16 Jun 2026 17:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632134;
-	bh=EHTDeZElCiVyvRJ825ycGCIVTLxgVgw8vI67p8XANT0=;
+	s=korg; t=1781632138;
+	bh=ck2MhDWCTRNEcGvi2vg8yq2PdiWmwkYSd8SDmHj0dYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vvHv9CLOpVrqcJEEySnC0cDHhlENi/SEC3MPW0/75p8iNN7ZSOcsqMx9WW0XvCBQD
-	 hPHa8KXFYVu/8ByNONX/zIZGKI+b2wvX2/dhcNfeRNLVmKCmzLe9ZPlOhOu/wzoWFn
-	 erbjkagOxIM46FOKFt/a8BS3hNMAkZ515/ZTnIqQ=
+	b=nXtuwzugqXU8UuvsdGmTyK/1U8pzmBPTTQkkC6wa3iIbVfjSNeAT6UKCGhG3vVmnp
+	 MJ4QNgOteF4QEI33v4lRkChkkgIVHqPmZDhm38cvq5Phtrt1IB7B39gtMOmoCjXuqI
+	 mK0EP8Eho+NRMqu1MlyqlP1zvWTAMoMIlPK05kCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	stable@kernel.org,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 336/522] LoongArch: Add spectre boundry for syscall dispatch table
-Date: Tue, 16 Jun 2026 20:28:03 +0530
-Message-ID: <20260616145141.540830242@linuxfoundation.org>
+Subject: [PATCH 6.1 354/522] net: bridge: use a stable FDB dst snapshot in RCU readers
+Date: Tue, 16 Jun 2026 20:28:21 +0530
+Message-ID: <20260616145142.355242059@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -50,42 +60,173 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Zhengchuan Liang <zcliangcn@gmail.com>
 
-[ Upstream commit 0c965d2784fbbd7f8e3b96d875c9cfdf7c00da3d ]
+[ Upstream commit df4601653201de21b487c3e7fffd464790cab808 ]
 
-The LoongArch syscall number is directly controlled by userspace, but
-does not have a array_index_nospec() boundry to prevent access past the
-syscall function pointer tables.
+Local FDB entries can be rewritten in place by `fdb_delete_local()`, which
+updates `f->dst` to another port or to `NULL` while keeping the entry
+alive. Several bridge RCU readers inspect `f->dst`, including
+`br_fdb_fillbuf()` through the `brforward_read()` sysfs path.
 
-Cc: stable@vger.kernel.org
-Assisted-by: gkh_clanker_2000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+These readers currently load `f->dst` multiple times and can therefore
+observe inconsistent values across the check and later dereference.
+In `br_fdb_fillbuf()`, this means a concurrent local-FDB update can change
+`f->dst` after the NULL check and before the `port_no` dereference,
+leading to a NULL-ptr-deref.
+
+Fix this by taking a single `READ_ONCE()` snapshot of `f->dst` in each
+affected RCU reader and using that snapshot for the rest of the access
+sequence. Also publish the in-place `f->dst` updates in `fdb_delete_local()`
+with `WRITE_ONCE()` so the readers and writer use matching access patterns.
+
+Fixes: 960b589f86c7 ("bridge: Properly check if local fdb entry can be deleted in br_fdb_change_mac_address")
+Cc: stable@kernel.org
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/6570fabb85ecadb8baaf019efe856f407711c7b9.1776043229.git.zcliangcn@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ kept combined `BR_PROXYARP_WIFI | BR_NEIGH_SUPPRESS` check and `cb->args[2]` instead of `br_is_neigh_suppress_enabled()` helper and `ctx->fdb_idx` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/syscall.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/bridge/br_arp_nd_proxy.c |    8 +++++---
+ net/bridge/br_fdb.c          |   28 ++++++++++++++++++----------
+ 2 files changed, 23 insertions(+), 13 deletions(-)
 
---- a/arch/loongarch/kernel/syscall.c
-+++ b/arch/loongarch/kernel/syscall.c
-@@ -9,6 +9,7 @@
- #include <linux/entry-common.h>
- #include <linux/errno.h>
- #include <linux/linkage.h>
-+#include <linux/nospec.h>
- #include <linux/syscalls.h>
- #include <linux/unistd.h>
+--- a/net/bridge/br_arp_nd_proxy.c
++++ b/net/bridge/br_arp_nd_proxy.c
+@@ -199,11 +199,12 @@ void br_do_proxy_suppress_arp(struct sk_
  
-@@ -54,7 +55,7 @@ void noinstr do_syscall(struct pt_regs *
- 	nr = syscall_enter_from_user_mode(regs, nr);
+ 		f = br_fdb_find_rcu(br, n->ha, vid);
+ 		if (f) {
++			const struct net_bridge_port *dst = READ_ONCE(f->dst);
+ 			bool replied = false;
  
- 	if (nr < NR_syscalls) {
--		syscall_fn = sys_call_table[nr];
-+		syscall_fn = sys_call_table[array_index_nospec(nr, NR_syscalls)];
- 		regs->regs[4] = syscall_fn(regs->orig_a0, regs->regs[5], regs->regs[6],
- 					   regs->regs[7], regs->regs[8], regs->regs[9]);
+ 			if ((p && (p->flags & BR_PROXYARP)) ||
+-			    (f->dst && (f->dst->flags & (BR_PROXYARP_WIFI |
+-							 BR_NEIGH_SUPPRESS)))) {
++			    (dst && (dst->flags & (BR_PROXYARP_WIFI |
++						   BR_NEIGH_SUPPRESS)))) {
+ 				if (!vid)
+ 					br_arp_send(br, p, skb->dev, sip, tip,
+ 						    sha, n->ha, sha, 0, 0);
+@@ -463,9 +464,10 @@ void br_do_suppress_nd(struct sk_buff *s
+ 
+ 		f = br_fdb_find_rcu(br, n->ha, vid);
+ 		if (f) {
++			const struct net_bridge_port *dst = READ_ONCE(f->dst);
+ 			bool replied = false;
+ 
+-			if (f->dst && (f->dst->flags & BR_NEIGH_SUPPRESS)) {
++			if (dst && (dst->flags & BR_NEIGH_SUPPRESS)) {
+ 				if (vid != 0)
+ 					br_nd_send(br, p, skb, n,
+ 						   skb->vlan_proto,
+--- a/net/bridge/br_fdb.c
++++ b/net/bridge/br_fdb.c
+@@ -239,6 +239,7 @@ struct net_device *br_fdb_find_port(cons
+ 				    const unsigned char *addr,
+ 				    __u16 vid)
+ {
++	const struct net_bridge_port *dst;
+ 	struct net_bridge_fdb_entry *f;
+ 	struct net_device *dev = NULL;
+ 	struct net_bridge *br;
+@@ -251,8 +252,11 @@ struct net_device *br_fdb_find_port(cons
+ 	br = netdev_priv(br_dev);
+ 	rcu_read_lock();
+ 	f = br_fdb_find_rcu(br, addr, vid);
+-	if (f && f->dst)
+-		dev = f->dst->dev;
++	if (f) {
++		dst = READ_ONCE(f->dst);
++		if (dst)
++			dev = dst->dev;
++	}
+ 	rcu_read_unlock();
+ 
+ 	return dev;
+@@ -342,7 +346,7 @@ static void fdb_delete_local(struct net_
+ 		vg = nbp_vlan_group(op);
+ 		if (op != p && ether_addr_equal(op->dev->dev_addr, addr) &&
+ 		    (!vid || br_vlan_find(vg, vid))) {
+-			f->dst = op;
++			WRITE_ONCE(f->dst, op);
+ 			clear_bit(BR_FDB_ADDED_BY_USER, &f->flags);
+ 			return;
+ 		}
+@@ -353,7 +357,7 @@ static void fdb_delete_local(struct net_
+ 	/* Maybe bridge device has same hw addr? */
+ 	if (p && ether_addr_equal(br->dev->dev_addr, addr) &&
+ 	    (!vid || (v && br_vlan_should_use(v)))) {
+-		f->dst = NULL;
++		WRITE_ONCE(f->dst, NULL);
+ 		clear_bit(BR_FDB_ADDED_BY_USER, &f->flags);
+ 		return;
  	}
+@@ -783,6 +787,7 @@ int br_fdb_test_addr(struct net_device *
+ int br_fdb_fillbuf(struct net_bridge *br, void *buf,
+ 		   unsigned long maxnum, unsigned long skip)
+ {
++	const struct net_bridge_port *dst;
+ 	struct net_bridge_fdb_entry *f;
+ 	struct __fdb_entry *fe = buf;
+ 	int num = 0;
+@@ -798,7 +803,8 @@ int br_fdb_fillbuf(struct net_bridge *br
+ 			continue;
+ 
+ 		/* ignore pseudo entry for local MAC address */
+-		if (!f->dst)
++		dst = READ_ONCE(f->dst);
++		if (!dst)
+ 			continue;
+ 
+ 		if (skip) {
+@@ -810,8 +816,8 @@ int br_fdb_fillbuf(struct net_bridge *br
+ 		memcpy(fe->mac_addr, f->key.addr.addr, ETH_ALEN);
+ 
+ 		/* due to ABI compat need to split into hi/lo */
+-		fe->port_no = f->dst->port_no;
+-		fe->port_hi = f->dst->port_no >> 8;
++		fe->port_no = dst->port_no;
++		fe->port_hi = dst->port_no >> 8;
+ 
+ 		fe->is_local = test_bit(BR_FDB_LOCAL, &f->flags);
+ 		if (!test_bit(BR_FDB_STATIC, &f->flags))
+@@ -924,9 +930,11 @@ int br_fdb_dump(struct sk_buff *skb,
+ 
+ 	rcu_read_lock();
+ 	hlist_for_each_entry_rcu(f, &br->fdb_list, fdb_node) {
++		const struct net_bridge_port *dst = READ_ONCE(f->dst);
++
+ 		if (*idx < cb->args[2])
+ 			goto skip;
+-		if (filter_dev && (!f->dst || f->dst->dev != filter_dev)) {
++		if (filter_dev && (!dst || dst->dev != filter_dev)) {
+ 			if (filter_dev != dev)
+ 				goto skip;
+ 			/* !f->dst is a special case for bridge
+@@ -934,10 +942,10 @@ int br_fdb_dump(struct sk_buff *skb,
+ 			 * Therefore need a little more filtering
+ 			 * we only want to dump the !f->dst case
+ 			 */
+-			if (f->dst)
++			if (dst)
+ 				goto skip;
+ 		}
+-		if (!filter_dev && f->dst)
++		if (!filter_dev && dst)
+ 			goto skip;
+ 
+ 		err = fdb_fill_info(skb, br, f,
 
 
