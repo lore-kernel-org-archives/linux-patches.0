@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29FEC466B5E;
-	Tue, 16 Jun 2026 17:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6985F47A0B0;
+	Tue, 16 Jun 2026 17:25:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630716; cv=none; b=UiZxHjIIgJyHwrtkuN4qQ1G85b9mvVQ7TDKlQ5Pz5h3jyuHeTLyj+r8EAgdp7dHdm/S4BsOeMl7GWuGUKkG9AkWjtWa0N1nBm3AVUJhsi7kVAnit8+P8PPKcQavuJW4VZ4XAImQCcJFLYnAya7jELAXm4QniIzXbsNkzktnC4Hg=
+	t=1781630721; cv=none; b=pCSQUaCRlyWDnn+AQaS2vLufO9/9t8DkvrIlyot12S5sIYDVYI1TDpbe+xHblQiTG18t6JNBRxJ5N7fBYnsv/dyRymCH4P1dt7P3mOzxwK1hb/qsyLucRwF0zScixWmBLhanhhnxhZqT3A6tiP4bpTs2O/rgVgqns7aApNfJQxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630716; c=relaxed/simple;
-	bh=HIqGEVlvOXo5berEeHlD67d4ezl1oEEKIyb8GWZ0o18=;
+	s=arc-20240116; t=1781630721; c=relaxed/simple;
+	bh=G2xBhVdLjn1lTU+4u6EppP4Gy98CaaHI5P/UgohJJOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VX58DIIy8EDgNizhmmhGpToJ38dHf0O8oG0ZwNd4YtzHS/QCZEiuNEyELasUKZaDokVBWEMhqzI0Jp+S6rooYwO+ui/AOPmjc0/l3OmZXsCsZn7KORHmlaNm6uGXOML89LrHD4UH/LROLKwdl/sj1FsD7mbJ06w9aV2/A/glUHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUexXK4m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GWsVvU8IiKbL2TC1oytcbr9CLFiFtvKgLiVljK4NI4N70hwi7uTF5OAdVhfjcpU7yh3aLcDSwjTRPVwa1iA9zjIq/3//HigOojBQC2HUSV/p3zjnSr3ERxMNsXlzeYwl64cwss+ohuhM7wWfn8N1QAVSncgiIuaKHS1RSQ3NFHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZySpsF7t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUexXK4m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29AAC1F000E9;
-	Tue, 16 Jun 2026 17:25:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZySpsF7t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 789931F000E9;
+	Tue, 16 Jun 2026 17:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630715;
-	bh=EqZyJMl+Szf4KEVjzCJLAU3kPe4k2Bs7o2F2H5WycqA=;
+	s=korg; t=1781630720;
+	bh=MTY/2mLGtaWwzERKBSe5t/I3Ax+ra7KGETftBWW0/Hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XUexXK4m+nCOYqjq44FruuOELpXrE36muvl3iTdnwF82TUssW3/Qs0KFC8lD6H+pl
-	 j6TlHeifNFx87DxJqMz6wy6xxB6+/crT2XOHbchCmN0bnQRN1L3U//XPMgGryqq3jx
-	 9GuqI4558zabg6UOXKPOYh2b2ehpAU6UijeFL/Bw=
+	b=ZySpsF7tPUBXd3ZwsEl+MRx2h5l4h84j9l8z+Osq7sqGsZunHFpRLC3LHIL5Rkf4Z
+	 Yhy34ymUkH+pcQw/HIQ4CjYS8EfUYZ4H7CNEvB5pdv1dqB72brMAB2SNhEJSKGsiSY
+	 OUZ90klsgae28nrzQDlBs9XdMuzTB5tKQRz6yWK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/522] net/packet: convert po->tp_tx_has_off to an atomic flag
-Date: Tue, 16 Jun 2026 20:23:32 +0530
-Message-ID: <20260616145128.836527112@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.1 083/522] usb: typec: ucsi: ccg: reject firmware images without a : record header
+Date: Tue, 16 Jun 2026 20:23:50 +0530
+Message-ID: <20260616145129.751629241@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,77 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 7438344660fa55b33b8234c1797c886eb73667a7 ]
+commit d7486952bf74e546ee3748fb14b2d07881fa6273 upstream.
 
-This is to use existing space in po->flags, and reclaim
-the storage used by the non atomic bit fields.
+do_flash() locates the first .cyacd record with
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 2c054e17d9d4 ("net/packet: fix TOCTOU race on mmap'd vnet_hdr in tpacket_snd()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+	p = strnchr(fw->data, fw->size, ':');
+	while (p < eof) {
+		s = strnchr(p + 1, eof - p - 1, ':');
+		...
+	}
+
+If the firmware image contains no ':' byte,  strnchr() returns NULL.
+NULL compares less than the valid kernel pointer eof, so the loop body
+runs and strnchr() is called with p + 1 == (void *)1 and a length of
+roughly (unsigned long)eof, causing a wonderful crash.
+
+The not_signed_fw fallthrough earlier in do_flash() and the chip-state
+branches in ccg_fw_update_needed() allow an unsigned blob to reach this
+loop, so a root user who can place a crafted file under /lib/firmware
+and write the do_flash sysfs attribute can trigger the oops.
+
+Bail out with -EINVAL when the initial strnchr() returns NULL.
+
+Assisted-by: gkh_clanker_t1000
+Cc: stable <stable@kernel.org>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026051405-posture-shrill-7884@gregkh
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c | 6 +++---
- net/packet/internal.h  | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_ccg.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 502d2f6de18a29..1ceb8f765114b3 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2723,7 +2723,7 @@ static int tpacket_parse_header(struct packet_sock *po, void *frame,
- 		return -EMSGSIZE;
- 	}
+--- a/drivers/usb/typec/ucsi/ucsi_ccg.c
++++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
+@@ -1178,6 +1178,11 @@ not_signed_fw:
+ 	 *****************************************************************/
  
--	if (unlikely(po->tp_tx_has_off)) {
-+	if (unlikely(packet_sock_flag(po, PACKET_SOCK_TX_HAS_OFF))) {
- 		int off_min, off_max;
+ 	p = strnchr(fw->data, fw->size, ':');
++	if (!p) {
++		dev_err(dev, "Bad FW format: no ':' record header found\n");
++		err = -EINVAL;
++		goto release_mem;
++	}
+ 	while (p < eof) {
+ 		s = strnchr(p + 1, eof - p - 1, ':');
  
- 		off_min = po->tp_hdrlen - sizeof(struct sockaddr_ll);
-@@ -4064,7 +4064,7 @@ packet_setsockopt(struct socket *sock, int level, int optname, sockptr_t optval,
- 
- 		lock_sock(sk);
- 		if (!po->rx_ring.pg_vec && !po->tx_ring.pg_vec)
--			po->tp_tx_has_off = !!val;
-+			packet_sock_flag_set(po, PACKET_SOCK_TX_HAS_OFF, val);
- 
- 		release_sock(sk);
- 		return 0;
-@@ -4191,7 +4191,7 @@ static int packet_getsockopt(struct socket *sock, int level, int optname,
- 		lv = sizeof(rstats);
- 		break;
- 	case PACKET_TX_HAS_OFF:
--		val = po->tp_tx_has_off;
-+		val = packet_sock_flag(po, PACKET_SOCK_TX_HAS_OFF);
- 		break;
- 	case PACKET_QDISC_BYPASS:
- 		val = packet_use_direct_xmit(po);
-diff --git a/net/packet/internal.h b/net/packet/internal.h
-index b2edfe6fc8e770..31bac09a687233 100644
---- a/net/packet/internal.h
-+++ b/net/packet/internal.h
-@@ -119,8 +119,7 @@ struct packet_sock {
- 	unsigned long		flags;
- 	unsigned int		running;	/* bind_lock must be held */
- 	unsigned int		has_vnet_hdr:1, /* writer must hold sock lock */
--				tp_loss:1,
--				tp_tx_has_off:1;
-+				tp_loss:1;
- 	int			pressure;
- 	int			ifindex;	/* bound device		*/
- 	__be16			num;
-@@ -146,6 +145,7 @@ static inline struct packet_sock *pkt_sk(struct sock *sk)
- enum packet_sock_flags {
- 	PACKET_SOCK_ORIGDEV,
- 	PACKET_SOCK_AUXDATA,
-+	PACKET_SOCK_TX_HAS_OFF,
- };
- 
- static inline void packet_sock_flag_set(struct packet_sock *po,
--- 
-2.53.0
-
 
 
