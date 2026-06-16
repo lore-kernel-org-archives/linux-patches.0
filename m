@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F8D44E021;
-	Tue, 16 Jun 2026 15:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D5F4611C2;
+	Tue, 16 Jun 2026 15:41:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624489; cv=none; b=lAIYU7AmBlPRa9rbGb+h2UXM1s7mj29CZQlXFHBQq/fRsHGDVVS0K8VlG/Vgx+APYnp8RCb5B7dHHg+yoYzvxV84sywwvndkljKn8oS/dD0EDY1JYIAC5hvw1D9n/Qgld9lNpn2Db4SkeUE9Uv07XEdUmfzMxkqu66zKBJwsAv0=
+	t=1781624494; cv=none; b=jYUfvJVvbtIkHdFa8IiNQGdzv67Diwox0CJR5894pn/wHE1DGoCklbPt4gPoiiXpHDK9RlDjUVH7HHd/6sGa9Btu2eApoq9SxBXIFVS/ct2Q8e6WmZkvplE7FImDQOT30zufgv0tkODwS3U5OQOYuvMpzj3NbOVoXMlhuuV03Z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624489; c=relaxed/simple;
-	bh=AjksXOS2H0DdijgZbpkH7GoAO3wwhnv0xKk80J5nqOM=;
+	s=arc-20240116; t=1781624494; c=relaxed/simple;
+	bh=s2lH5y8hQB6awWW4Fng8HXZnntn82NaHiFeltELGArk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aoCvSozREBCD8j77iZsCddaDWIkfehLYSmc5/1ygh+Manom7a0Uo5dASlGQ3CHyE2xyaRQywUfWhyJ+uub9DSyInQFkB2Azxm6IQR9PLCruGTrQ15rilCWqaTgJFkywaw4GIYc5bivCFB8hpDgOiXl4G0EtfFvdYSa7KSd0kokQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bTGzFJh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qZkBRAiFLynuqI1/fPpfNMFo4oD4UH10A4VTOO+0h3VWmAQQRK3EtJVcwzI4Btu1Y3anB9wkWyjsnNV7RvTReNaGo7GYtHPzg8fQltPLA84FI2kzMIk+yqgLiVl4t40H9sJeQ3X7xaUTbdltuCYgg+E6fpyr+TfDUEU0B/ffatQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xfl+slYI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bTGzFJh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF081F000E9;
-	Tue, 16 Jun 2026 15:41:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xfl+slYI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462CC1F00A3A;
+	Tue, 16 Jun 2026 15:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624488;
-	bh=9+d7yA6Wpo6n/h1x2ScXz8N+gnBuxlEXz8ItrPMRj+M=;
+	s=korg; t=1781624493;
+	bh=bTFe0mMoQdH4WrpoxAAAUUiOPNS6wewKQymZO6gxLOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0bTGzFJhtnCP+XZoSCtmtHeiem6OsPYahaOEMqbEnTAcaafvsiFjbaz7GQRAxLjIi
-	 M3LYgzw13eq9a2qeiyUHs1bjgVcZiuwewsjcmfyCr9bNqLpo7TG0Y6Zueb3KCj2bzW
-	 6kO8yZ4L6s2uHLAZwzB5cGzJ1NvUocvqSvEjWj6Q=
+	b=Xfl+slYIRu7QVE3eoZs0TRXzAebdKiFK57zoMwGPT3b9KvHjtuIa8uxWnMPV1RtsN
+	 tZMi0HLQuUr9Wsjc6Xfcoups0aB6lhbfVvzfT8X7w1Fxn5tpeGXdp7UbjWQv7LA//P
+	 fy5xqfHHzRv12XWL5YNpSxGUjdWay02E0eh24/lU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Donet Tom <donettom@linux.ibm.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.0 347/378] drm/amdgpu: Fix incorrect VRAM GART mappings on non-4K page size systems
-Date: Tue, 16 Jun 2026 20:29:38 +0530
-Message-ID: <20260616145128.432529886@linuxfoundation.org>
+Subject: [PATCH 7.0 348/378] drm/amd/pm: apply SMU 13.0.10 workaround during MP1 unload
+Date: Tue, 16 Jun 2026 20:29:39 +0530
+Message-ID: <20260616145128.478565137@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -46,67 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Donet Tom <donettom@linux.ibm.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-commit ec4c462e2d8161b32038e21e7187f4a15fe1661d upstream.
+commit 2493d87bb4c31ec9ca7f0ef7257e33b8b175f913 upstream.
 
-When mapping VRAM pages into the GART page table,
-amdgpu_gart_map_vram_range() assumes that the system page size is the
-same as the GPU page size.
+On SMU v13.0.10, sending PrepareMp1ForUnload with the default
+parameter may leave the device in an inaccessible state. This can
+affect runtime power management and partial PnP flows.
+e.g: kexec, driver unload, boco/d3cold.
 
-On systems with non-4K page sizes, multiple GPU pages can exist within
-a single CPU page. As a result, the mappings are created incorrectly
-because fewer page table entries are programmed than required.
+Pass the required workaround parameter 0x55, when preparing MP1 for
+unload on SMU v13.0.10, keep the existing behavior for other SMU
+versions.
 
-Fix this by programming the mappings correctly for non-4K page size
-systems.
-
-Fixes: 237d623ae659 ("drm/amdgpu/gart: Add helper to bind VRAM pages (v2)")
-Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Donet Tom <donettom@linux.ibm.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5133
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a8f0bc22388f74e0cf4ed8b7d1846c580eaf44cc)
+(cherry picked from commit 4e8ee1afeedb8d24dd22cdd5ae9f98a6d76ebe4b)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gart.c
-@@ -394,7 +394,8 @@ void amdgpu_gart_map_vram_range(struct a
- 				uint64_t start_page, uint64_t num_pages,
- 				uint64_t flags, void *dst)
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -2801,11 +2801,19 @@ static void smu_v13_0_0_i2c_control_fini
+ static int smu_v13_0_0_set_mp1_state(struct smu_context *smu,
+ 				     enum pp_mp1_state mp1_state)
  {
--	u32 i, idx;
-+	u32 i, j, t, idx;
-+	u64 page_base;
++	uint32_t param;
+ 	int ret;
  
- 	/* The SYSTEM flag indicates the pages aren't in VRAM. */
- 	WARN_ON_ONCE(flags & AMDGPU_PTE_SYSTEM);
-@@ -402,9 +403,12 @@ void amdgpu_gart_map_vram_range(struct a
- 	if (!drm_dev_enter(adev_to_drm(adev), &idx))
- 		return;
- 
--	for (i = 0; i < num_pages; ++i) {
--		amdgpu_gmc_set_pte_pde(adev, dst,
--			start_page + i, pa + AMDGPU_GPU_PAGE_SIZE * i, flags);
-+	page_base = pa;
-+	for (i = 0, t = 0; i < num_pages; i++) {
-+		for (j = 0; j < AMDGPU_GPU_PAGES_IN_CPU_PAGE; j++, t++) {
-+			amdgpu_gmc_set_pte_pde(adev, dst, start_page + t, page_base, flags);
-+			page_base += AMDGPU_GPU_PAGE_SIZE;
-+		}
- 	}
- 
- 	drm_dev_exit(idx);
+ 	switch (mp1_state) {
+ 	case PP_MP1_STATE_UNLOAD:
+-		ret = smu_cmn_set_mp1_state(smu, mp1_state);
++		/*
++		 * NOTE: Param 0x55 comes from PMFW 80.31.0, ignored in older versions.
++		 * No PMFW version check required.
++		 */
++		param = amdgpu_ip_version(smu->adev, MP1_HWIP, 0) == IP_VERSION(13, 0, 10) ?
++			0x55 : 0x00;
++		ret = smu_cmn_send_smc_msg_with_param(smu, SMU_MSG_PrepareMp1ForUnload,
++						      param, NULL);
+ 		break;
+ 	default:
+ 		/* Ignore others */
 
 
