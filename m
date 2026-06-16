@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F1243D4E8;
-	Tue, 16 Jun 2026 18:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC36478E5E;
+	Tue, 16 Jun 2026 18:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635295; cv=none; b=MmA9bVsHwKuftO3Jo0d2uRW6V8rdbu/xmNXuUAB6H7+2CuRMfRnrIFb1FFGPhkC5n6NSO2OOPgH/bweULspGo00d+ygZ9cNBi27biow2wyCZa5WAIq/1Xlcuhzk3wRRO8uwvRPezQelbYNfluUR0fwKIaPSXOBVJFGHc9Gshnz8=
+	t=1781635301; cv=none; b=n1wp2alupoppXDnwzbVyNC0YW8fb3loYFnUPHO21yeNsolH84ZhTNPP9ih810M/g4MZjgVFA46spxmXy+0a61lRoZ6+pmVJknbNgo4sW5K+QIJHnklSsfz6RMk75wsuaXROMwPdP/ZVBjQ+6t2X8km9qUrjakl0m3kXrn/pMFcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635295; c=relaxed/simple;
-	bh=mUXFtCsNJPTwbv9jPirN9phJQQ168ffK3TBVLzwSl3Q=;
+	s=arc-20240116; t=1781635301; c=relaxed/simple;
+	bh=4XhJZllj2MOpYt9s1YFBwzZj2mjh79lyq2//Jfie6gg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gK8tgyoH6AXAWPCTxMf0tUh75zGEBLK7hLDue8sToeP82CLlam+qNsIgHpS7GCoJbak7ujH7dF8rlhmaqCRcQ60WLK3mkiicnpIlZf/mbf30nZVFKUaRvZXnrm81tYo9OFEluLzWkMUqlLlZnjKlJrzXImuBkYIfOTPWMt3fc6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9Rg8Z54; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tj7Aj3a/4rBi1zXlrprdkbUsTgTtF7vnNXeNOpJat+fynam832TQNlk3vzaK+x/oX3zJt+O6b6vroSxPtAqZohvAD3ySLusQs0uhpIqftNDtZLwtpWTBw8JEloF7TfWyO2d/CowPspZEx003PvL4PrsxaOcwhf24cXl/aJdvagA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYTtUY6H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9Rg8Z54"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE271F000E9;
-	Tue, 16 Jun 2026 18:41:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYTtUY6H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9931F000E9;
+	Tue, 16 Jun 2026 18:41:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635294;
-	bh=t7nc+OFlJMNRYU89ds9JhCtaJba7AUOXYyzDi0Nb5SE=;
+	s=korg; t=1781635299;
+	bh=kuT44lmlS9cqN8VQheeLeYxSW11Y2qQX2QHoopTQriQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H9Rg8Z54jjLpIveidjFfmC7mEHCa1N06FD7hDIEmlcXg1nCCL7GEUUrAVy6Te9id+
-	 3CmYlXcuStO2M4xICXJF4gmkbwzW65QvArFAaDYC3xuDOpfH1DlpXiDIWpLotvUWcg
-	 wFvm6cWSXHwMSqzDDgNTBmwe6zG9Oa8j/AWoGsBA=
+	b=cYTtUY6HDEOUSffhtnkzHwYcQL2Z7oVrZ0i4Wtd1BmMcJyygSfjML2FHu1pxyR5rf
+	 6Bu2f/442VZ9KA3HIJmbSovKSd/x0J4Itn1W1ILTilNJqGkAFHebSv6eL1f84JXoE9
+	 Z3Lw3rmGBL5XTSiPleDrgxlGHCljMe4vopLR2Ze4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Dongli Zhang <dongli.zhang@oracle.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Damiano Melotti <melotti@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 014/342] tun: free page on short-frame rejection in tun_xdp_one()
-Date: Tue, 16 Jun 2026 20:25:10 +0530
-Message-ID: <20260616145048.958691317@linuxfoundation.org>
+Subject: [PATCH 5.10 023/342] tunnels: do not assume transport header in iptunnel_pmtud_check_icmp()
+Date: Tue, 16 Jun 2026 20:25:19 +0530
+Message-ID: <20260616145049.338928260@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -54,52 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f4feb1e20058e407cb00f45aff47f5b7e19a6bbf ]
+[ Upstream commit 509323077ef79a26ba0c60bb556e45c12c398b2d ]
 
-tun_xdp_one() returns -EINVAL on a frame shorter than ETH_HLEN without
-freeing the page that vhost_net_build_xdp() allocated for it.
-tun_sendmsg() discards that -EINVAL and still returns total_len, so
-vhost_tx_batch() takes the success path and never frees the page; each
-short frame in a batch leaks one page-frag chunk.
+In some cases, iptunnel_pmtud_check_icmp() can be called while
+skb transport header is not set.
 
-A local process that can open /dev/net/tun and /dev/vhost-net can hit
-this path: it attaches a tun/tap device as the vhost-net backend and
-feeds TX descriptors whose length minus the virtio-net header is below
-ETH_HLEN. Each kick leaks the page-frag chunks for that batch, and a
-tight submission loop exhausts host memory and triggers an OOM panic.
-Free the page before returning -EINVAL, matching the XDP-program error
-path in the same function.
+This triggers an out-of-bound access, because
+(typeof(skb->transport_header))~0U is 65535.
 
-Fixes: 049584807f1d ("tun: add missing verification for short frame")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Dongli Zhang <dongli.zhang@oracle.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260520160020.375349-2-bestswngs@gmail.com
+Access the icmp header based on IPv4 network header,
+after making sure icmp->type is present in skb linear part.
+
+Note that iptunnel_pmtud_check_icmpv6()) is fine.
+
+Fixes: 4cb47a8644cc ("tunnels: PMTU discovery support for directly bridged IP packets")
+Reported-by: Damiano Melotti <melotti@google.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260522115512.1519110-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ipv4/ip_tunnel_core.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 3a89f9457fa242..930086d79f97c8 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -2472,8 +2472,10 @@ static int tun_xdp_one(struct tun_struct *tun,
- 	bool skb_xdp = false;
- 	struct page *page;
+diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
+index 05c7bb78fe96f0..712555c56a1836 100644
+--- a/net/ipv4/ip_tunnel_core.c
++++ b/net/ipv4/ip_tunnel_core.c
+@@ -262,7 +262,6 @@ static int iptunnel_pmtud_build_icmp(struct sk_buff *skb, int mtu)
+  */
+ static int iptunnel_pmtud_check_icmp(struct sk_buff *skb, int mtu)
+ {
+-	const struct icmphdr *icmph = icmp_hdr(skb);
+ 	const struct iphdr *iph = ip_hdr(skb);
  
--	if (unlikely(datasize < ETH_HLEN))
-+	if (unlikely(datasize < ETH_HLEN)) {
-+		put_page(virt_to_head_page(xdp->data));
- 		return -EINVAL;
+ 	if (mtu < 576 || iph->frag_off != htons(IP_DF))
+@@ -273,9 +272,17 @@ static int iptunnel_pmtud_check_icmp(struct sk_buff *skb, int mtu)
+ 	    ipv4_is_lbcast(iph->saddr)  || ipv4_is_multicast(iph->saddr))
+ 		return 0;
+ 
+-	if (iph->protocol == IPPROTO_ICMP && icmp_is_err(icmph->type))
+-		return 0;
++	if (iph->protocol == IPPROTO_ICMP) {
++		const struct icmphdr *icmph;
+ 
++		if (!pskb_network_may_pull(skb, iph->ihl * 4 +
++						offsetofend(struct icmphdr, type)))
++			return 0;
++		iph = ip_hdr(skb);
++		icmph = (void *)iph + iph->ihl * 4;
++		if (icmp_is_err(icmph->type))
++			return 0;
 +	}
+ 	return iptunnel_pmtud_build_icmp(skb, mtu);
+ }
  
- 	xdp_prog = rcu_dereference(tun->xdp_prog);
- 	if (xdp_prog) {
 -- 
 2.53.0
 
