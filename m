@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127863D8105;
-	Tue, 16 Jun 2026 18:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78273D810C;
+	Tue, 16 Jun 2026 18:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634080; cv=none; b=O1j1Z/khL9v2bagAMtbMlZiW1LG4kAVv1no7M3rv51cLW0d6sjaHonOPyrbNp4h3qqv2MpCnBt45vNYZUFKFy87iuQ8w443A6RZagLHVWdjE2y5Y1tPARERndblOFoaFEmwOQ7RBB3ifpRH9l05FGpmPb00buBO8izc3YsStoXc=
+	t=1781634086; cv=none; b=NFvJD6dmB5ctaexw538gFkgOL793sfIB0R2NNVNZKO4nKpa+rcfVXhW9NdPHQULodC0AjXA7R08GlUr0rkofJqmAO7Iq+pb6B2UJDkOdRAx7woFA3YfBMhQCFjdpOt05pANU1Tb1h1nZWvADcFpzonyDEZt4iNRJ/X9C6xPabOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634080; c=relaxed/simple;
-	bh=0DRJpwypuUaUxO6/G2qfesozHrif0FvpqVB6T9jh6MM=;
+	s=arc-20240116; t=1781634086; c=relaxed/simple;
+	bh=vhmFKbGuanbLe4eIfSSiCQNO8wU8yX76NpTN1V4eVhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eP8mZBFuuk0KwXQPvO/guAvhGP8azlU1APMOXV28cibTCST9U0fe15gahOlwVdNpGi4iK20s4giGkOxf8QPDeu8Xa+tw4UKFuukdCGLNOp+51IZdEmPDutdq2heyEupYY53OqnHbXQy5l+RZDqtV378jkE9jxwevohAV3gnnx7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p21VZ8J6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WU14Aas7A80Gnt57e/e7Fk/lqEEd2NDnPBmlh8fFvk2luauXlSxeV5sTnlCrGOobVH/h13p/tjc3SYT+OcdzUIcJH38zey6i07D+D/y2n1n+MhktcHFJhL6nyBCr/hor2x1zsRv9lKvm4tlUOjeuBjBaUEbWiaFbpX4D9pq2yrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RRRcUlNS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p21VZ8J6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D431F000E9;
-	Tue, 16 Jun 2026 18:21:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RRRcUlNS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78F81F000E9;
+	Tue, 16 Jun 2026 18:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634078;
-	bh=VRF47LZJGngGM7uR3x2yZbARpjXYtHE761ejhfGmVzM=;
+	s=korg; t=1781634084;
+	bh=x7U9W50OyDck8VE9g/ffznVuAIYWFTgVYF11UOLYfLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p21VZ8J6wP/2cXQ9TaljD4g6AfyNWCkgiQu0KKUB63hwqFCuj5FGWJbc/Uojj31x/
-	 EqL1EVS9YQiOlIQ2nH1N6xcARBbbffanTzpdD4unr/9yjlkqlLiuYJMWGBnnAHrtac
-	 hyF3rQQ6KJizThZNvX53QLiUHCswlB13+oWGor0Y=
+	b=RRRcUlNSINmUKNQtzxWTUGho11dBYYxSLlw8UmbL29x3bUjEtc+cXMUQgj1fq5j7w
+	 LDDNumzsFyd/kGZ+ajxBXymu59Jab+quGa1D2V/ife7Zu134qJ22Wi7TmrZWtR2e+b
+	 do76NdccrcoMxu1CLYBV8letb+wC10zF+odtTscQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dudu Lu <phx0fer@gmail.com>,
+	Zhang Cen <rollkingzzc@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 165/411] Bluetooth: bnep: fix incorrect length parsing in bnep_rx_frame() extension handling
-Date: Tue, 16 Jun 2026 20:26:43 +0530
-Message-ID: <20260616145109.285555902@linuxfoundation.org>
+Subject: [PATCH 5.15 166/411] Bluetooth: bnep: reject short frames before parsing
+Date: Tue, 16 Jun 2026 20:26:44 +0530
+Message-ID: <20260616145109.361380553@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -51,65 +51,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dudu Lu <phx0fer@gmail.com>
+From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit 72b8deccff17a7644e0367e1aaf1a36cfb014324 ]
+[ Upstream commit 6770d3a8acdf9151769180cc3710346c4cfbe6f0 ]
 
-In bnep_rx_frame(), the BNEP_FILTER_NET_TYPE_SET and
-BNEP_FILTER_MULTI_ADDR_SET extension header parsing has two bugs:
+A BNEP peer can send a short BNEP SDU. bnep_rx_frame() reads the
+packet type byte immediately and, for control packets, reads the control
+opcode and setup UUID-size byte before proving that those bytes are
+present. bnep_rx_control() also dereferences the control opcode without
+rejecting an empty control payload.
 
-1) The 2-byte length field is read with *(u16 *)(skb->data + 1), which
-   performs a native-endian read. The BNEP protocol specifies this field
-   in big-endian (network byte order), and the same file correctly uses
-   get_unaligned_be16() for the identical fields in
-   bnep_ctrl_set_netfilter() and bnep_ctrl_set_mcfilter().
+Use skb_pull_data() for the fixed fields in bnep_rx_frame() so a NULL
+return gates each dereference. Split the control handler so the frame
+path can pass an opcode that has already been pulled, and keep the
+byte-buffer wrapper for extension control payloads.
 
-2) The length is multiplied by 2, but unlike BNEP_SETUP_CONN_REQ where
-   the length byte counts UUID pairs (requiring * 2 for two UUIDs per
-   entry), the filter extension length field already represents the total
-   data size in bytes. This is confirmed by bnep_ctrl_set_netfilter()
-   which reads the same field as a byte count and divides by 4 to get
-   the number of filter entries.
+For BNEP_SETUP_CONN_REQ, name the UUID-size byte before pulling the
+setup payload. struct bnep_setup_conn_req carries destination and source
+service UUIDs after that byte, each uuid_size bytes, so the parser now
+documents that tuple explicitly instead of leaving the pull length as an
+opaque multiplication.
 
-   The bogus * 2 means skb_pull advances twice as far as it should,
-   either dropping valid data from the next header or causing the pull
-   to fail entirely when the doubled length exceeds the remaining skb.
+Validation reproduced this kernel report:
+KASAN slab-out-of-bounds in bnep_rx_frame.isra.0+0x130c/0x1790
+The buggy address belongs to the object at ffff88800c0f7908 which belongs
+to the cache kmalloc-8 of size 8
+The buggy address is located 0 bytes to the right of allocated 1-byte
+region [ffff88800c0f7908, ffff88800c0f7909)
+Read of size 1
+Call trace:
+  dump_stack_lvl+0xb3/0x140 (?:?)
+  print_address_description+0x57/0x3a0 (?:?)
+  bnep_rx_frame+0x130c/0x1790 (net/bluetooth/bnep/core.c:306)
+  print_report+0xb9/0x2b0 (?:?)
+  __virt_addr_valid+0x1ba/0x3a0 (?:?)
+  srso_alias_return_thunk+0x5/0xfbef5 (?:?)
+  kasan_addr_to_slab+0x21/0x60 (?:?)
+  kasan_report+0xe0/0x110 (?:?)
+  process_one_work+0xfce/0x17e0 (kernel/workqueue.c:3200)
+  worker_thread+0x65c/0xe40 (?:?)
+  __kthread_parkme+0x184/0x230 (?:?)
+  kthread+0x35e/0x470 (?:?)
+  _raw_spin_unlock_irq+0x28/0x50 (?:?)
+  ret_from_fork+0x586/0x870 (?:?)
+  __switch_to+0x74f/0xdc0 (?:?)
+  ret_from_fork_asm+0x1a/0x30 (?:?)
 
-Fix by splitting the pull into two steps: first use skb_pull_data() to
-safely pull and validate the 3-byte fixed header (ctrl type + length),
-then pull the variable-length data using the properly decoded length.
-
-Fixes: bf8b9a9cb77b ("Bluetooth: bnep: Add support to extended headers of control frames")
-Signed-off-by: Dudu Lu <phx0fer@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/bnep/core.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/bluetooth/bnep/core.c | 57 ++++++++++++++++++++++++---------------
+ 1 file changed, 36 insertions(+), 21 deletions(-)
 
 diff --git a/net/bluetooth/bnep/core.c b/net/bluetooth/bnep/core.c
-index f3b9c1dee1bb61..1798069ce79149 100644
+index 1798069ce79149..627ce3de29c8ee 100644
 --- a/net/bluetooth/bnep/core.c
 +++ b/net/bluetooth/bnep/core.c
-@@ -330,11 +330,18 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
- 				goto badframe;
- 			break;
- 		case BNEP_FILTER_MULTI_ADDR_SET:
--		case BNEP_FILTER_NET_TYPE_SET:
--			/* Pull: ctrl type (1 b), len (2 b), data (len bytes) */
--			if (!skb_pull(skb, 3 + *(u16 *)(skb->data + 1) * 2))
-+		case BNEP_FILTER_NET_TYPE_SET: {
-+			u8 *hdr;
+@@ -206,14 +206,11 @@ static int bnep_ctrl_set_mcfilter(struct bnep_session *s, u8 *data, int len)
+ 	return 0;
+ }
+ 
+-static int bnep_rx_control(struct bnep_session *s, void *data, int len)
++static int bnep_rx_control_cmd(struct bnep_session *s, u8 cmd, void *data,
++			       int len)
+ {
+-	u8  cmd = *(u8 *)data;
+ 	int err = 0;
+ 
+-	data++;
+-	len--;
+-
+ 	switch (cmd) {
+ 	case BNEP_CMD_NOT_UNDERSTOOD:
+ 	case BNEP_SETUP_CONN_RSP:
+@@ -254,6 +251,14 @@ static int bnep_rx_control(struct bnep_session *s, void *data, int len)
+ 	return err;
+ }
+ 
++static int bnep_rx_control(struct bnep_session *s, void *data, int len)
++{
++	if (len < 1)
++		return -EILSEQ;
 +
-+			/* Pull ctrl type (1 b) + len (2 b) */
-+			hdr = skb_pull_data(skb, 3);
-+			if (!hdr)
++	return bnep_rx_control_cmd(s, *(u8 *)data, data + 1, len - 1);
++}
++
+ static int bnep_rx_extension(struct bnep_session *s, struct sk_buff *skb)
+ {
+ 	struct bnep_ext_hdr *h;
+@@ -299,19 +304,26 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
+ {
+ 	struct net_device *dev = s->dev;
+ 	struct sk_buff *nskb;
++	u8 *data;
+ 	u8 type, ctrl_type;
+ 
+ 	dev->stats.rx_bytes += skb->len;
+ 
+-	type = *(u8 *) skb->data;
+-	skb_pull(skb, 1);
+-	ctrl_type = *(u8 *)skb->data;
++	data = skb_pull_data(skb, sizeof(type));
++	if (!data)
++		goto badframe;
++	type = *data;
+ 
+ 	if ((type & BNEP_TYPE_MASK) >= sizeof(__bnep_rx_hlen))
+ 		goto badframe;
+ 
+ 	if ((type & BNEP_TYPE_MASK) == BNEP_CONTROL) {
+-		if (bnep_rx_control(s, skb->data, skb->len) < 0) {
++		data = skb_pull_data(skb, sizeof(ctrl_type));
++		if (!data)
++			goto badframe;
++		ctrl_type = *data;
++
++		if (bnep_rx_control_cmd(s, ctrl_type, skb->data, skb->len) < 0) {
+ 			dev->stats.tx_errors++;
+ 			kfree_skb(skb);
+ 			return 0;
+@@ -324,24 +336,27 @@ static int bnep_rx_frame(struct bnep_session *s, struct sk_buff *skb)
+ 
+ 		/* Verify and pull ctrl message since it's already processed */
+ 		switch (ctrl_type) {
+-		case BNEP_SETUP_CONN_REQ:
+-			/* Pull: ctrl type (1 b), len (1 b), data (len bytes) */
+-			if (!skb_pull(skb, 2 + *(u8 *)(skb->data + 1) * 2))
++		case BNEP_SETUP_CONN_REQ: {
++			u8 uuid_size;
++
++			/* Pull uuid_size and the dst/src service UUIDs. */
++			data = skb_pull_data(skb, sizeof(uuid_size));
++			if (!data)
 +				goto badframe;
-+			/* Pull data (len bytes); length is big-endian */
-+			if (!skb_pull(skb, get_unaligned_be16(&hdr[1])))
++			uuid_size = *data;
++			if (!skb_pull(skb, uuid_size + uuid_size))
  				goto badframe;
  			break;
 +		}
+ 		case BNEP_FILTER_MULTI_ADDR_SET:
+-		case BNEP_FILTER_NET_TYPE_SET: {
+-			u8 *hdr;
+-
+-			/* Pull ctrl type (1 b) + len (2 b) */
+-			hdr = skb_pull_data(skb, 3);
+-			if (!hdr)
++		case BNEP_FILTER_NET_TYPE_SET:
++			/* Pull: len (2 b), data (len bytes) */
++			data = skb_pull_data(skb, sizeof(u16));
++			if (!data)
+ 				goto badframe;
+-			/* Pull data (len bytes); length is big-endian */
+-			if (!skb_pull(skb, get_unaligned_be16(&hdr[1])))
++			if (!skb_pull(skb, get_unaligned_be16(data)))
+ 				goto badframe;
+ 			break;
+-		}
  		default:
  			kfree_skb(skb);
  			return 0;
