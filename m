@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8613DA5A8;
-	Tue, 16 Jun 2026 19:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BE63DBD76;
+	Tue, 16 Jun 2026 19:05:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636716; cv=none; b=q2TbgjfI1nlToYpS4IwSA7dA3f9y1AX/2c9D4uM0AgqmJ8waGsArgEAhsrLHAElTUWEaONY8IFZ4vTuqqpU9m7XpWlfEDqTM6CtR98bO8zq4nLDkbQ8e5kxqS9d7pt7ucVhuL+r1QSOHbQgEQNKnS2ivYFzOL0OlCuKmqVo6fRk=
+	t=1781636721; cv=none; b=Y3DHyUFCMyiNwWDaO85Hkqm/wWXd0aWxoucV7qdEehKMrd2hUOpbWmJfHQMv10PLPN3wFjHAdFTGqGU2PPoqz0RrNdPelQUcESiSJia3NitNI6oC5BOrDc8zEG4AnVXBH4BLKlpUMz3ia0wkndU4j+qevmk78IexwSGMywmNfII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636716; c=relaxed/simple;
-	bh=cOKmtjqLETH7CFIeTranu1CrqlIcA1G3tVHVTK31U2g=;
+	s=arc-20240116; t=1781636721; c=relaxed/simple;
+	bh=XyHJpVibneMaRBtsYKDmTBklbL/bc6eJ1LpA9O6pWZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eqt0D+zueoMKXnu141a5xRDOd1GmY5hkbhYoxp0M+BpuBNOrYH1rTpFMADEL7h/p5eGoRbbr32hfC9h09HLZHFAw2mZ8gMSgIJL0kE1aCJ0kax/z5h/Xp0lvwdCs1R26CIqoN6xp8Y6usQA1afSJ9mSV/370obuAG6U7faEfTRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAJpB2Le; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CeN1iwjwO4VIGLxAaUNE2q7LmRoBc/P0JSFwz1V1aTHZjj0X2Tzaysg6p/1qsP8U/XdbzezOktsBaWfLhDhTMMk5LeTPvO6PLX452RQzeCUvLeTCSzmUKExXhKGE77+pKfeB9PE8VgS7t80ThgOHDWKXQJwr8B6ZcnOc/tfk4m0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qji0gmgS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAJpB2Le"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F2A81F000E9;
-	Tue, 16 Jun 2026 19:05:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qji0gmgS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2936E1F000E9;
+	Tue, 16 Jun 2026 19:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636715;
-	bh=7C1IT9mdaG3Gk064FTpq1V4QHb+InuQ3JGGKj2/+nIY=;
+	s=korg; t=1781636720;
+	bh=QnvMU++g56Lyd/envMKqf8kMHKF+4BqPhZwMG43nEKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fAJpB2Le2/EJjUE8LIxB0lwnu6duJZcQZQB6NZTN6ft9Qh5EoHX0+G8qCx9563Bqa
-	 Tfo7HM81DqG7AEZ6xJOdYiuHnL2CZyE9MW4FrNZqIjYMjwUAnusGMad8BYrICcktlq
-	 bujfPaSZjJ6y4+mEmfGISpggC914Nsl9SSOT28gU=
+	b=Qji0gmgStDBbb4a6m2KkrYB9hO/IejLn2chudsXYvZN+kOH7eX64KSdWtqA+xoaxe
+	 b/WIiAKwO6fVmh2gXjuL8xKMnsZxeTgDHH1fyy15lZECuFqe9Ok2PrgSoXnSmYPX4U
+	 M5DnoMIXnKAl/bBo10WCf1ZPyzZx5+eqPH6tQJF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
+	Sai Krishna <saikrishnag@marvell.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 284/342] Bluetooth: Consolidate code around sk_alloc into a helper function
-Date: Tue, 16 Jun 2026 20:29:40 +0530
-Message-ID: <20260616145101.637450836@linuxfoundation.org>
+Subject: [PATCH 5.10 293/342] octeontx2-af: Add validation for lmac type
+Date: Tue, 16 Jun 2026 20:29:49 +0530
+Message-ID: <20260616145102.069841196@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -50,201 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit 6bfa273e533d7b25eee3d74e28a7fe8e6a8e7a93 ]
+[ Upstream commit cb5edce271764524b88b1a6866b3e626686d9a33 ]
 
-This consolidates code around sk_alloc into bt_sock_alloc which does
-take care of common initialization.
+Upon physical link change, firmware reports to the kernel about the
+change along with the details like speed, lmac_type_id, etc.
+Kernel derives lmac_type based on lmac_type_id received from firmware.
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: e83f5e24da74 ("Bluetooth: serialize accept_q access")
+In a few scenarios, firmware returns an invalid lmac_type_id, which
+is resulting in below kernel panic. This patch adds the missing
+validation of the lmac_type_id field.
+
+Internal error: Oops: 96000005 [#1] PREEMPT SMP
+[   35.321595] Modules linked in:
+[   35.328982] CPU: 0 PID: 31 Comm: kworker/0:1 Not tainted
+5.4.210-g2e3169d8e1bc-dirty #17
+[   35.337014] Hardware name: Marvell CN103XX board (DT)
+[   35.344297] Workqueue: events work_for_cpu_fn
+[   35.352730] pstate: 40400089 (nZcv daIf +PAN -UAO)
+[   35.360267] pc : strncpy+0x10/0x30
+[   35.366595] lr : cgx_link_change_handler+0x90/0x180
+
+Fixes: 61071a871ea6 ("octeontx2-af: Forward CGX link notifications to PFs")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
+Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: c0bf0a4f3f1f ("octeontx2-af: CGX: add bounds check to cgx_speed_mbps index")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/bluetooth.h |    2 ++
- net/bluetooth/af_bluetooth.c      |   21 +++++++++++++++++++++
- net/bluetooth/bnep/sock.c         |   10 +---------
- net/bluetooth/hci_sock.c          |   10 ++--------
- net/bluetooth/l2cap_sock.c        |   10 +---------
- net/bluetooth/rfcomm/sock.c       |   13 +++----------
- net/bluetooth/sco.c               |   10 +---------
- 7 files changed, 31 insertions(+), 45 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/cgx.c  |   15 +++++++++++----
+ drivers/net/ethernet/marvell/octeontx2/af/mbox.h |    1 +
+ 2 files changed, 12 insertions(+), 4 deletions(-)
 
---- a/include/net/bluetooth/bluetooth.h
-+++ b/include/net/bluetooth/bluetooth.h
-@@ -314,6 +314,8 @@ int  bt_sock_register(int proto, const s
- void bt_sock_unregister(int proto);
- void bt_sock_link(struct bt_sock_list *l, struct sock *s);
- void bt_sock_unlink(struct bt_sock_list *l, struct sock *s);
-+struct sock *bt_sock_alloc(struct net *net, struct socket *sock,
-+			   struct proto *prot, int proto, gfp_t prio, int kern);
- int  bt_sock_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
- 		     int flags);
- int  bt_sock_stream_recvmsg(struct socket *sock, struct msghdr *msg,
---- a/net/bluetooth/af_bluetooth.c
-+++ b/net/bluetooth/af_bluetooth.c
-@@ -138,6 +138,27 @@ static int bt_sock_create(struct net *ne
- 	return err;
+--- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
+@@ -669,15 +669,22 @@ static inline void link_status_user_form
+ 					   struct cgx_link_user_info *linfo,
+ 					   struct cgx *cgx, u8 lmac_id)
+ {
+-	char *lmac_string;
+-
+ 	linfo->link_up = FIELD_GET(RESP_LINKSTAT_UP, lstat);
+ 	linfo->full_duplex = FIELD_GET(RESP_LINKSTAT_FDUPLEX, lstat);
+ 	linfo->speed = cgx_speed_mbps[FIELD_GET(RESP_LINKSTAT_SPEED, lstat)];
++	linfo->an = FIELD_GET(RESP_LINKSTAT_AN, lstat);
+ 	linfo->fec = FIELD_GET(RESP_LINKSTAT_FEC, lstat);
+ 	linfo->lmac_type_id = cgx_get_lmac_type(cgx, lmac_id);
+-	lmac_string = cgx_lmactype_string[linfo->lmac_type_id];
+-	strncpy(linfo->lmac_type, lmac_string, LMACTYPE_STR_LEN - 1);
++
++	if (linfo->lmac_type_id >= LMAC_MODE_MAX) {
++		dev_err(&cgx->pdev->dev, "Unknown lmac_type_id %d reported by firmware on cgx port%d:%d",
++			linfo->lmac_type_id, cgx->cgx_id, lmac_id);
++		strncpy(linfo->lmac_type, "Unknown", LMACTYPE_STR_LEN - 1);
++		return;
++	}
++
++	strncpy(linfo->lmac_type, cgx_lmactype_string[linfo->lmac_type_id],
++		LMACTYPE_STR_LEN - 1);
  }
  
-+struct sock *bt_sock_alloc(struct net *net, struct socket *sock,
-+			   struct proto *prot, int proto, gfp_t prio, int kern)
-+{
-+	struct sock *sk;
-+
-+	sk = sk_alloc(net, PF_BLUETOOTH, prio, prot, kern);
-+	if (!sk)
-+		return NULL;
-+
-+	sock_init_data(sock, sk);
-+	INIT_LIST_HEAD(&bt_sk(sk)->accept_q);
-+
-+	sock_reset_flag(sk, SOCK_ZAPPED);
-+
-+	sk->sk_protocol = proto;
-+	sk->sk_state    = BT_OPEN;
-+
-+	return sk;
-+}
-+EXPORT_SYMBOL(bt_sock_alloc);
-+
- void bt_sock_link(struct bt_sock_list *l, struct sock *sk)
- {
- 	write_lock(&l->lock);
---- a/net/bluetooth/bnep/sock.c
-+++ b/net/bluetooth/bnep/sock.c
-@@ -204,21 +204,13 @@ static int bnep_sock_create(struct net *
- 	if (sock->type != SOCK_RAW)
- 		return -ESOCKTNOSUPPORT;
- 
--	sk = sk_alloc(net, PF_BLUETOOTH, GFP_ATOMIC, &bnep_proto, kern);
-+	sk = bt_sock_alloc(net, sock, &bnep_proto, protocol, GFP_ATOMIC, kern);
- 	if (!sk)
- 		return -ENOMEM;
- 
--	sock_init_data(sock, sk);
--
- 	sock->ops = &bnep_sock_ops;
--
- 	sock->state = SS_UNCONNECTED;
- 
--	sock_reset_flag(sk, SOCK_ZAPPED);
--
--	sk->sk_protocol = protocol;
--	sk->sk_state	= BT_OPEN;
--
- 	bt_sock_link(&bnep_sk_list, sk);
- 	return 0;
- }
---- a/net/bluetooth/hci_sock.c
-+++ b/net/bluetooth/hci_sock.c
-@@ -2091,18 +2091,12 @@ static int hci_sock_create(struct net *n
- 
- 	sock->ops = &hci_sock_ops;
- 
--	sk = sk_alloc(net, PF_BLUETOOTH, GFP_ATOMIC, &hci_sk_proto, kern);
-+	sk = bt_sock_alloc(net, sock, &hci_sk_proto, protocol, GFP_ATOMIC,
-+			   kern);
- 	if (!sk)
- 		return -ENOMEM;
- 
--	sock_init_data(sock, sk);
--
--	sock_reset_flag(sk, SOCK_ZAPPED);
--
--	sk->sk_protocol = protocol;
--
- 	sock->state = SS_UNCONNECTED;
--	sk->sk_state = BT_OPEN;
- 	sk->sk_destruct = hci_sock_destruct;
- 
- 	bt_sock_link(&hci_sk_list, sk);
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1901,21 +1901,13 @@ static struct sock *l2cap_sock_alloc(str
- 	struct sock *sk;
- 	struct l2cap_chan *chan;
- 
--	sk = sk_alloc(net, PF_BLUETOOTH, prio, &l2cap_proto, kern);
-+	sk = bt_sock_alloc(net, sock, &l2cap_proto, proto, prio, kern);
- 	if (!sk)
- 		return NULL;
- 
--	sock_init_data(sock, sk);
--	INIT_LIST_HEAD(&bt_sk(sk)->accept_q);
--
- 	sk->sk_destruct = l2cap_sock_destruct;
- 	sk->sk_sndtimeo = L2CAP_CONN_TIMEOUT;
- 
--	sock_reset_flag(sk, SOCK_ZAPPED);
--
--	sk->sk_protocol = proto;
--	sk->sk_state = BT_OPEN;
--
- 	chan = l2cap_chan_create();
- 	if (!chan) {
- 		sk_free(sk);
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -280,18 +280,16 @@ static struct proto rfcomm_proto = {
- 	.obj_size	= sizeof(struct rfcomm_pinfo)
- };
- 
--static struct sock *rfcomm_sock_alloc(struct net *net, struct socket *sock, int proto, gfp_t prio, int kern)
-+static struct sock *rfcomm_sock_alloc(struct net *net, struct socket *sock,
-+				      int proto, gfp_t prio, int kern)
- {
- 	struct rfcomm_dlc *d;
- 	struct sock *sk;
- 
--	sk = sk_alloc(net, PF_BLUETOOTH, prio, &rfcomm_proto, kern);
-+	sk = bt_sock_alloc(net, sock, &rfcomm_proto, proto, prio, kern);
- 	if (!sk)
- 		return NULL;
- 
--	sock_init_data(sock, sk);
--	INIT_LIST_HEAD(&bt_sk(sk)->accept_q);
--
- 	d = rfcomm_dlc_alloc(prio);
- 	if (!d) {
- 		sk_free(sk);
-@@ -310,11 +308,6 @@ static struct sock *rfcomm_sock_alloc(st
- 	sk->sk_sndbuf = RFCOMM_MAX_CREDITS * RFCOMM_DEFAULT_MTU * 10;
- 	sk->sk_rcvbuf = RFCOMM_MAX_CREDITS * RFCOMM_DEFAULT_MTU * 10;
- 
--	sock_reset_flag(sk, SOCK_ZAPPED);
--
--	sk->sk_protocol = proto;
--	sk->sk_state    = BT_OPEN;
--
- 	bt_sock_link(&rfcomm_sk_list, sk);
- 
- 	BT_DBG("sk %p", sk);
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -491,21 +491,13 @@ static struct sock *sco_sock_alloc(struc
- {
- 	struct sock *sk;
- 
--	sk = sk_alloc(net, PF_BLUETOOTH, prio, &sco_proto, kern);
-+	sk = bt_sock_alloc(net, sock, &sco_proto, proto, prio, kern);
- 	if (!sk)
- 		return NULL;
- 
--	sock_init_data(sock, sk);
--	INIT_LIST_HEAD(&bt_sk(sk)->accept_q);
--
- 	sk->sk_destruct = sco_sock_destruct;
- 	sk->sk_sndtimeo = SCO_CONN_TIMEOUT;
- 
--	sock_reset_flag(sk, SOCK_ZAPPED);
--
--	sk->sk_protocol = proto;
--	sk->sk_state    = BT_OPEN;
--
- 	sco_pi(sk)->setting = BT_VOICE_CVSD_16BIT;
- 
- 	bt_sock_link(&sco_sk_list, sk);
+ /* Hardware event handlers */
+--- a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
+@@ -369,6 +369,7 @@ struct cgx_link_user_info {
+ 	uint64_t full_duplex:1;
+ 	uint64_t lmac_type_id:4;
+ 	uint64_t speed:20; /* speed in Mbps */
++	uint64_t an:1;		/* AN supported or not */
+ 	uint64_t fec:2;	 /* FEC type if enabled else 0 */
+ #define LMACTYPE_STR_LEN 16
+ 	char lmac_type[LMACTYPE_STR_LEN];
 
 
