@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2075843D4E9;
-	Tue, 16 Jun 2026 17:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59865328610;
+	Tue, 16 Jun 2026 17:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629411; cv=none; b=VfkDfvL8gGyEjColj0bQE2EyhgTYhg/Tj2k+7rdqTMiGDo2S5uqo/h4+9WUGPYQiwegdA16zGRuEoD9nlHOCoe1URVgEuqO3XNqmiwu+M5suZlUTme2axTTx4F/qU+mIRqoaQKLbNpDe0OLy4tl4Zp2hDpfePuYyB6S6tlMjBuE=
+	t=1781629416; cv=none; b=I24G9LJQGFfZ1iFve8sp6KxUq/JPQxpQJxVJtWBkxMOMFfkurZTTAoO4tAbvnJTcnYeYl5EKboelE6kNHg8Qmvs2KHA+uNm2sKZytR4cx1iBQZC7VAu7wce4jjQk8R02una9Q+EjE6fNPg6jZpfz6YhGN9IX1nZk7Yf7u2iy+oI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629411; c=relaxed/simple;
-	bh=A3soO1bcpb/a/s2RiBhvowR/QAlcS7L/I/riLXGGWk0=;
+	s=arc-20240116; t=1781629416; c=relaxed/simple;
+	bh=tvZjCx93KAg992l8Wdnj0ra/p7YWxw6l6Jh1NTcxsRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fH1gBtAiAn+FVd3cgUMlRMG7zP/H7V47fxr28G1Dc3XpsEEU5sbZjtJuQmMI/rNuUBzMJnVdZD5H638AmpotvGRLIDjNHfJvgFf3YQOszpWqJwKXOhY6gMZxsKFdMQwyBe5cEZnBIWvNfE9fB11lg6hM/M/zCUyWBqxGmZV636A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PGdEQkBB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=txq3BZ8AtpIV3D9lWni0ps33ClFVo/CBUt4v80v4U5PckVNi5IHmI7+eou9eQKjijVAGffUJQ+TGBh53PIbL6mItmTX6/A0Xq5FKvlwQ/aQqI1+io3Mv0dA5dBSytChkR5+27ejWpOrbIdu9lw1yjW8BfY8sn66vf7rYeITkeE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kinchj4u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PGdEQkBB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DD01F000E9;
-	Tue, 16 Jun 2026 17:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kinchj4u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 695BC1F00A3A;
+	Tue, 16 Jun 2026 17:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629410;
-	bh=ex5zxEdzlyeA5oU6KLbgsxE6Ln4BVnxso0IdiZG1Ko4=;
+	s=korg; t=1781629415;
+	bh=eF925jAxu4RhPId/Z7sfiGUPfLP33qu+GqyApxn53wQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PGdEQkBBHu7HdaUs2Ldfk8hBX39QXew0lNIMz+ksKjdwxl9mb1WtXsxVYqkXebSJF
-	 d6rc6/tuMrfdcquHPyyJpym+SLvYJLQcTfwGQ2sOUuDX5Ue7BNedgeuoaRgHnAxWd0
-	 1TVZJspY3rwkWSldFYzWOVQp1yr/lYirp6oIeCBY=
+	b=kinchj4uN0VJ6KbDTiaI02IbO/mEC2+2KAlUVYV5pXufmvfOfmEZyArU7P23aDwk+
+	 IxkwiJzw87PzHVNmWCN316+ny6htAAhgUEQCdgsz4H8OsJm8CqQAas1o+U/RI+yulC
+	 KQ0GUv2mlgY93cCBGGaDtMqkuXzyGbys6KsRiw5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
+	Jian Zhou <eilaimemedsnaimel@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 279/452] netfilter: nf_log: validate MAC header was set before dumping it
-Date: Tue, 16 Jun 2026 20:28:26 +0530
-Message-ID: <20260616145132.293104414@linuxfoundation.org>
+Subject: [PATCH 6.6 280/452] netfilter: nft_exthdr: fix register tracking for F_PRESENT flag
+Date: Tue, 16 Jun 2026 20:28:27 +0530
+Message-ID: <20260616145132.338179138@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -52,68 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit a84b6fedbc97078788be78dbdd7517d143ad1a77 ]
+[ Upstream commit 772cecf198da732faebb5dcfc46d66a505be8495 ]
 
-The fallback path of dump_mac_header() guards the MAC header access
-only with "skb->mac_header != skb->network_header", without checking
-skb_mac_header_was_set(). When the MAC header is unset, mac_header is
-0xffff, so the test passes and skb_mac_header(skb) returns
-skb->head + 0xffff, ~64 KiB past the buffer; the loop then reads
-dev->hard_header_len bytes out of bounds into the kernel log.
+nft_exthdr_init() passes user-controlled priv->len to
+nft_parse_register_store(), which marks that many bytes in the
+register bitmap as initialized.  However, when NFT_EXTHDR_F_PRESENT
+is set, the eval paths write only 1 byte (nft_reg_store8) or
+4 bytes (*dest = 0 on TCP/DCCP error path).  When len > 4,
+registers beyond the first are never written, retaining
+uninitialized stack data from nft_regs.
 
-This is reachable via the netdev logger: nf_log_unknown_packet() calls
-dump_mac_header() unconditionally, and an skb sent through AF_PACKET
-with PACKET_QDISC_BYPASS reaches the egress hook with mac_header still
-unset (__dev_queue_xmit(), which would reset it, is bypassed).
+Bail out if userspace requests too much data when F_PRESENT is set.
 
-Add the skb_mac_header_was_set() check the ARPHRD_ETHER path already
-uses, and replace the open-coded MAC header length test with
-skb_mac_header_len(). Only skbs with an unset MAC header are affected;
-valid ones are dumped as before.
-
- BUG: KASAN: slab-out-of-bounds in dump_mac_header (net/netfilter/nf_log_syslog.c:831)
- Read of size 1 at addr ffff88800ea49d3f by task exploit/148
- Call Trace:
-  kasan_report (mm/kasan/report.c:595)
-  dump_mac_header (net/netfilter/nf_log_syslog.c:831)
-  nf_log_netdev_packet (net/netfilter/nf_log_syslog.c:938 net/netfilter/nf_log_syslog.c:963)
-  nf_log_packet (net/netfilter/nf_log.c:260)
-  nft_log_eval (net/netfilter/nft_log.c:60)
-  nft_do_chain (net/netfilter/nf_tables_core.c:285)
-  nft_do_chain_netdev (net/netfilter/nft_chain_filter.c:307)
-  nf_hook_slow (net/netfilter/core.c:619)
-  nf_hook_direct_egress (net/packet/af_packet.c:257)
-  packet_xmit (net/packet/af_packet.c:280)
-  packet_sendmsg (net/packet/af_packet.c:3114)
-  __sys_sendto (net/socket.c:2265)
-
-Fixes: 7eb9282cd0ef ("netfilter: ipt_LOG/ip6t_LOG: add option to print decoded MAC header")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reported-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
+Fixes: c078ca3b0c5b ("netfilter: nft_exthdr: Add support for existence check")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_log_syslog.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nft_exthdr.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/netfilter/nf_log_syslog.c b/net/netfilter/nf_log_syslog.c
-index 58402226045e84..09b9152e9e5492 100644
---- a/net/netfilter/nf_log_syslog.c
-+++ b/net/netfilter/nf_log_syslog.c
-@@ -799,8 +799,8 @@ static void dump_mac_header(struct nf_log_buf *m,
+diff --git a/net/netfilter/nft_exthdr.c b/net/netfilter/nft_exthdr.c
+index 1d4c9632072c8d..cac46accf566b5 100644
+--- a/net/netfilter/nft_exthdr.c
++++ b/net/netfilter/nft_exthdr.c
+@@ -530,6 +530,9 @@ static int nft_exthdr_init(const struct nft_ctx *ctx,
+ 			return err;
+ 	}
  
- fallback:
- 	nf_log_buf_add(m, "MAC=");
--	if (dev->hard_header_len &&
--	    skb->mac_header != skb->network_header) {
-+	if (dev->hard_header_len && skb_mac_header_was_set(skb) &&
-+	    skb_mac_header_len(skb) != 0) {
- 		const unsigned char *p = skb_mac_header(skb);
- 		unsigned int i;
- 
++	if ((flags & NFT_EXTHDR_F_PRESENT) && len != 1)
++		return -EINVAL;
++
+ 	priv->type   = nla_get_u8(tb[NFTA_EXTHDR_TYPE]);
+ 	priv->offset = offset;
+ 	priv->len    = len;
 -- 
 2.53.0
 
