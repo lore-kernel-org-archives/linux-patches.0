@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD60441035;
-	Tue, 16 Jun 2026 15:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4EF4418DF;
+	Tue, 16 Jun 2026 15:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625089; cv=none; b=IXH6M+prcsPclIXf494iaUUR53hvFYuPhnZnalIig47tWomGTFMpa+b6NGmtttKXxk13Fbe/83X5unIq2iT+9J9UUd0L8QK3lxvjbnho1QHpJ/4Fl3SUWmNov0QtHou5yYLHYT56VPyu1ugafbFBjJuQt6tkNxGN6FhiMjE/TX4=
+	t=1781625095; cv=none; b=R4J01wuUvCDifkLLdHsGZOcjCD0TbxDkhwry5EAefmsFLPXGKEiBL+LmR6Dubd7/7LmOqWM89v5mrksCZLbKDPGc0s6sJvp/Xf2hq1AwU6PzwUCHPI9fzPictHhQOV9RD4NVddqti5j6rDU3Dg1sjyuRclF7M0uMDKfdk3AqNe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625089; c=relaxed/simple;
-	bh=kP1KXy0yS54mV5WCAgk4EDdNMzbC+EEB4J0WIsl1hn0=;
+	s=arc-20240116; t=1781625095; c=relaxed/simple;
+	bh=MTUJG+wb9zXgxfm+QTkvUedxlIiJrTaF0InaUl3Ag88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RVy+f5uV0dFTyx7wBkJ3JZS0nEBZ35WD1NIoJVJCQpU5A9rbJQ4r7aMgnhllG0On6uvULMcpqiq/T2fOzWx/DC+6TNCYaEKbiF8/gIbZnDy+BpbsiGv5xwLpywpbmqB+Zf97+Rj804L91fVUFVuCRmOUTXuvW64NnqWiWPYrxrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xa9QEQaM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IhDNpGxoELJy6fovbleP9n20MOfdbjkaGix1qDsA/7fpWhem6UD6YRD56UOqcgWCXZwM0TtaTKB+HCeHEVo+FkyzYpBVxuCx7a7UahjLAbNoJZn6FWng6holWsdBZay53CDYFEKlTII7HReyrF9FwjxCqHkd3Lgbz6FNwMQG+xQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DdjE9c+i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xa9QEQaM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C49D1F000E9;
-	Tue, 16 Jun 2026 15:51:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DdjE9c+i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C911F000E9;
+	Tue, 16 Jun 2026 15:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625088;
-	bh=Rv7YdLkH7qfhH8hWPtiKWxynd69/5FnM8SjcJFRQVI4=;
+	s=korg; t=1781625094;
+	bh=Y0bd+fDTyX4hBbIcI5qK1MpiOkEQaU+/aQ5e4Ead61E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xa9QEQaM9Ix5IRBW5rIcsOvuMKko+3Y1e9wHPbCYNPyiJzMW8jyo4yfxpl72JdA2H
-	 TRhtnlpHBWs6FZx0n/Pj+z7GvywK9ltKiAEm2RjLopGPxef34Dk/KCLJzq7qw61pvb
-	 ZQTD0n2Hh4jeSpik1L0EWbETtCwoBpvpJsP/3MWk=
+	b=DdjE9c+i3G5u10ZgDJTQ0GICkTyo0j35QH2iCQ8IR8oF3N/+m58xfQh8ail6022Q5
+	 ZC6NCougg+zl70LAss1LTperoAvvcbrh1doWEiX15Tu4jo2arFDAPD/R38GZ4QPtiV
+	 +9duwMLzm4jbRaOwckny+a1txNMwcOsBdflCBrTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	John Stultz <jstultz@google.com>,
+	Jian Zhou <eilaimemedsnaimel@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 074/325] time: Fix off-by-one in settimeofday() usec validation
-Date: Tue, 16 Jun 2026 20:27:50 +0530
-Message-ID: <20260616145101.425175533@linuxfoundation.org>
+Subject: [PATCH 6.18 075/325] ALSA: PCM: Fix wait queue list corruption in snd_pcm_drain() on linked streams
+Date: Tue, 16 Jun 2026 20:27:51 +0530
+Message-ID: <20260616145101.473553330@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,42 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
+From: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
 
-[ Upstream commit ce4abda5e12622f33450159e76c8f56d28d7f03d ]
+[ Upstream commit 88fe2e3658726cb21ff2dcf9770bf672f9b9d31b ]
 
-The validation check uses '>' instead of '>=' when comparing tv_usec
-against USEC_PER_SEC, allowing the value 1000000 through. After
-conversion to nanoseconds (*= 1000), this produces tv_nsec ==
-NSEC_PER_SEC, violating the timespec invariant that tv_nsec must be
-less than NSEC_PER_SEC.
+snd_pcm_drain() uses init_waitqueue_entry which does not clear
+entry.prev/next, and add_wait_queue with a conditional
+remove_wait_queue that is skipped when to_check is no longer
+in the group after concurrent UNLINK.  The orphaned wait entry
+remains on the unlinked substream sleep queue.  On the next
+drain iteration, add_wait_queue adds the entry to a new queue
+while still linked on the old one, corrupting both lists.  A
+subsequent wake_up dereferences NULL at the func pointer
+(mapped from the spinlock at offset 0 of the misinterpreted
+wait_queue_head_t), causing a kernel panic.
 
-Use '>=' to reject tv_usec values that are not in the valid range of
-0 to 999999.
+Replace init_waitqueue_entry/add_wait_queue/conditional
+remove_wait_queue with init_wait_entry/prepare_to_wait/
+finish_wait.  init_wait_entry clears prev/next via
+INIT_LIST_HEAD on each iteration and sets
+autoremove_wake_function which auto-removes the entry on
+wake-up.  finish_wait safely handles both the already-removed
+and still-queued cases.
 
-Fixes: 5e0fb1b57bea ("y2038: time: avoid timespec usage in settimeofday()")
-Signed-off-by: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Acked-by: John Stultz <jstultz@google.com>
-Link: https://patch.msgid.link/4rikk44zew3s6577dugmx4jyblz7o5c57niuap6ct3td5yfm6w@gh7pcumg7qor
+Fixes: 9b1dbd69ba6f ("ALSA: pcm: fix use-after-free on linked stream runtime in snd_pcm_drain")
+Signed-off-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
+Link: https://patch.msgid.link/20260604142559.3840881-1-eilaimemedsnaimel@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/time.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/pcm_native.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/time/time.c b/kernel/time/time.c
-index 155cf7def9146d..3c1518a7a52652 100644
---- a/kernel/time/time.c
-+++ b/kernel/time/time.c
-@@ -207,7 +207,7 @@ SYSCALL_DEFINE2(settimeofday, struct __kernel_old_timeval __user *, tv,
- 		    get_user(new_ts.tv_nsec, &tv->tv_usec))
- 			return -EFAULT;
- 
--		if (new_ts.tv_nsec > USEC_PER_SEC || new_ts.tv_nsec < 0)
-+		if (new_ts.tv_nsec >= USEC_PER_SEC || new_ts.tv_nsec < 0)
- 			return -EINVAL;
- 
- 		new_ts.tv_nsec *= NSEC_PER_USEC;
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index 495ff93fcd1db2..0ae95a46708915 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -2176,9 +2176,8 @@ static int snd_pcm_drain(struct snd_pcm_substream *substream,
+ 		drain_no_period_wakeup = to_check->no_period_wakeup;
+ 		drain_rate = to_check->rate;
+ 		drain_bufsz = to_check->buffer_size;
+-		init_waitqueue_entry(&wait, current);
+-		set_current_state(TASK_INTERRUPTIBLE);
+-		add_wait_queue(&to_check->sleep, &wait);
++		init_wait_entry(&wait, 0);
++		prepare_to_wait(&to_check->sleep, &wait, TASK_INTERRUPTIBLE);
+ 		snd_pcm_stream_unlock_irq(substream);
+ 		if (drain_no_period_wakeup)
+ 			tout = MAX_SCHEDULE_TIMEOUT;
+@@ -2196,7 +2195,7 @@ static int snd_pcm_drain(struct snd_pcm_substream *substream,
+ 		group = snd_pcm_stream_group_ref(substream);
+ 		snd_pcm_group_for_each_entry(s, substream) {
+ 			if (s->runtime == to_check) {
+-				remove_wait_queue(&to_check->sleep, &wait);
++				finish_wait(&to_check->sleep, &wait);
+ 				break;
+ 			}
+ 		}
 -- 
 2.53.0
 
