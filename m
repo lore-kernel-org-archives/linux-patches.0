@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BF838837F;
-	Tue, 16 Jun 2026 15:31:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B4644CAF8;
+	Tue, 16 Jun 2026 15:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623886; cv=none; b=bnT5Jr0H1IngWhLeH9ViwQSsJrhT0+m/zqDRmB3D0hSRI4Np4UtVORUydYlLOidO4PWkt9u/FtoTxCTGphWXl7iEZryTTGWaw2zFRuSnzvW0A+4rDReleh7gwtwcUMNRta4panPKQ7IueNBf+/nlfCGicC8hrYY9pHk682nOzvI=
+	t=1781623892; cv=none; b=ibnvLDoNm+9/y4POLSYHMX2EuOUGqYK9FjXhZQ/6bF0tRTIMCGFgg8LPij/4+GyJkXYhRGvIKLfuOjJbF6/13vtEs+WuWmJ8Db6AaSzUUDs9DoFKOmSARL0CPfXJ12pe7Z6baYj85EUaWUzROex9PVG+H7P5r7qtW5zpztopiFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623886; c=relaxed/simple;
-	bh=J6lloqhGAXfAfAEZRVDHyit7SdU4kL+CUbJrbPcjrso=;
+	s=arc-20240116; t=1781623892; c=relaxed/simple;
+	bh=dau2Hjo2o1vDuzSs8KWPbugi2K6eoiCxCFBgwBGumDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VUjpFEh4BdamrVnuE2/2sYvQVBaine1Kc36/lXWwgMRsTjIMsxnOCqbfeSItNNGYlrAv5atJ97LhMcZP86LdrL5FT2hb/40zapPY/P+Dz1QY/xQbb9BNJGdFOeSGYz1N9S7TiK4vP10hYYHK3K6uoiPo9KYOZJmlbnec6AgZ8tA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ms9nhUe9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aLlSghPELHGJMmfCqoPwF94dxdRQagxI3K7n/hEiHsnph4E8hfyMoc9aH0UofTifNg5SE8dfNIpCep6pgHRehBY2ICJr1Ia1l7RP+dM4VipYtlUQJ2/LAKEfHjE+5xGjT0/gb/30Mp9V8GshcIRZVTJO9Cxv1PyvBYK0bMZ36kI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xH1gr75W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ms9nhUe9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 433B51F00A3A;
-	Tue, 16 Jun 2026 15:31:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xH1gr75W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351F21F000E9;
+	Tue, 16 Jun 2026 15:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623885;
-	bh=gQsgOPITXkzu1xE+fcee4tQEyuha5dC0z+YNavpiiSg=;
+	s=korg; t=1781623891;
+	bh=5IlGzjv+FxJNmL5syoeBRwDifn0+jOwJhlKkfAkWsE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ms9nhUe9KFO/lvaJUbE1jr+pRkkOvFfRysTwEGy1oSj6Ayqol4wn0CJIhpZlRNzdg
-	 KLNaE/2Pt16C+tk7aoWgmMTPYhFl4kAnnVpDYCvrLBEhw51+eEIu0Q6YPOqX2IQJLf
-	 QJ1IU406QPhNQPpIHQ0vFx6Yd9dW8Misamy30GlE=
+	b=xH1gr75WIAPRBlg2wsJn156gwWB8yLPQUL8I3nTli5ckQL03m6/Y9TqZeyeQ9d5Xj
+	 8v8K7efxu//uhstJmSuQ7u7o71tmO43VxGBv121sCZ3EvluL2glx/TD/Mb4aUov4WY
+	 /4Qzt3pULLrHwjYMDx2epmVZqWVTS01U0m8VUCaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Russell King <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 7.0 227/378] ARM: 9474/1: io: avoid KASAN instrumentation of raw halfword I/O
-Date: Tue, 16 Jun 2026 20:27:38 +0530
-Message-ID: <20260616145122.235600808@linuxfoundation.org>
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.0 236/378] mptcp: sockopt: check timestamping ret value
+Date: Tue, 16 Jun 2026 20:27:47 +0530
+Message-ID: <20260616145122.659837967@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,57 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit d59ed803715a71fb9582e139d648ece8d66dc743 upstream.
+commit 57132affbc89c02e1bf73fdf5724311bdc9a29da upstream.
 
-For CPUs before ARMv6, __raw_readw() and __raw_writew() are implemented
-as C volatile halfword accesses so the compiler can generate an access
-sequence that is safe for those machines. With KASAN enabled, those C
-accesses are instrumented as normal memory accesses.
+sock_set_timestamping() can fail for different reasons. The returned
+value should then be checked.
 
-That is not valid for MMIO. On ARM926/VersatilePB with KASAN enabled,
-PL011 probing traps in __asan_store2() while registering the UART, because
-the instrumented writew() tries to check KASAN shadow for an MMIO address.
+If sock_set_timestamping() fails for at least one subflow, the first
+error is now reported to the userspace, similar to what is done with
+other socket options.
 
-Keep the existing volatile halfword access, but move the ARMv5 definitions
-into __no_kasan_or_inline functions so raw MMIO halfword accesses are not
-instrumented by KASAN. The ARMv6-and-newer inline assembly path is
-unchanged.
-
-Fixes: 421015713b30 ("ARM: 9017/2: Enable KASan for ARM")
-Cc: stable@vger.kernel.org # v5.11+
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Fixes: 9061f24bf82e ("mptcp: sockopt: propagate timestamp request to subflows")
+Cc: stable@vger.kernel.org
+Reported-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Closes: https://lore.kernel.org/willemdebruijn.kernel.178a41a53d041@gmail.com
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260602-net-mptcp-misc-fixes-7-1-rc7-v2-7-856831229976@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/include/asm/io.h |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ net/mptcp/sockopt.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/arch/arm/include/asm/io.h
-+++ b/arch/arm/include/asm/io.h
-@@ -56,8 +56,19 @@ void __raw_readsl(const volatile void __
-  * the bus. Rather than special-case the machine, just let the compiler
-  * generate the access for CPUs prior to ARMv6.
-  */
--#define __raw_readw(a)         (__chk_io_ptr(a), *(volatile unsigned short __force *)(a))
--#define __raw_writew(v,a)      ((void)(__chk_io_ptr(a), *(volatile unsigned short __force *)(a) = (v)))
-+#define __raw_writew __raw_writew
-+static __no_kasan_or_inline void __raw_writew(u16 val, volatile void __iomem *addr)
-+{
-+	__chk_io_ptr(addr);
-+	*(volatile unsigned short __force *)addr = val;
-+}
+--- a/net/mptcp/sockopt.c
++++ b/net/mptcp/sockopt.c
+@@ -235,15 +235,19 @@ static int mptcp_setsockopt_sol_socket_t
+ 
+ 	mptcp_for_each_subflow(msk, subflow) {
+ 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
++		int err;
+ 
+ 		lock_sock(ssk);
+-		sock_set_timestamping(ssk, optname, timestamping);
++		err = sock_set_timestamping(ssk, optname, timestamping);
+ 		release_sock(ssk);
 +
-+#define __raw_readw __raw_readw
-+static __no_kasan_or_inline u16 __raw_readw(const volatile void __iomem *addr)
-+{
-+	__chk_io_ptr(addr);
-+	return *(const volatile unsigned short __force *)addr;
-+}
- #else
- /*
-  * When running under a hypervisor, we want to avoid I/O accesses with
++		if (err < 0 && ret == 0)
++			ret = err;
+ 	}
+ 
+ 	release_sock(sk);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int mptcp_setsockopt_sol_socket_linger(struct mptcp_sock *msk, sockptr_t optval,
 
 
