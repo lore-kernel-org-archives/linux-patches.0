@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F7C283FE5;
-	Tue, 16 Jun 2026 15:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29AB71A682B;
+	Tue, 16 Jun 2026 15:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623616; cv=none; b=KOVAZ4tJd0TNpywxbCrO5aMyMdQSTx4nyH4vDuG+Gyex0VBiS0FGjViY+DXO7eR/hMBN4qXNQiXavXpglAehqyowAfh92vVM+dTVjKe4UV/MVH1uBiM6F835UGs3g7Azv5OQog3qMXHtIfyRUY6+FNg5/Sq8iDyfpSAE09ecgHQ=
+	t=1781623621; cv=none; b=a2olpkRSAwIT20C6xbo2XGeYInfAvWKaHn4VZ5IPjVd9VkvR1mjeve1bV570cpeYSPF3rrSx3GQLA1tF0KhC8+lYiU/+Naw6bC8VM69OZfRoCdudOYFPBwqPnfyBGBYna2qQCB0dJoIJ0ziG7B/hgB8DwxYpnY8YAiY4Z45rXNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623616; c=relaxed/simple;
-	bh=J2K6ZtdzlXvuUlPDmRidphsxO+4Bn3xITJx+73zej6Q=;
+	s=arc-20240116; t=1781623621; c=relaxed/simple;
+	bh=Lbzm4sGjsFhgXmB7c4jjuuQ6+DL29hQOQ99VVSplUDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=daUjCLYDE0E5p4pyQOom9D5ZPukh+hYabLcxqligYa2ZSkdtIV0tPQYi4xap42IB/LBYQLDEVEDPyCqkuUqpStCJ9hIObN4DcbgD0vjRayhIkBOAWpZoypUMZG6r+DHJ40osbaFbK44jdtmuXUOik/7dYA4/Gc9p3DeHLAtHw7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+3RV/l3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MIfhmo6Aod748B9v24Y3P30xyUrWCh7x4Iv0HjOKA++5Cb1iN+ZSrn2CkhI2nrIupt5+wQjURP9BlYR4k8l4DG9gFrd0HjTmk8xbKS5PXrB/DQtRxCIuYXBjX1k+/1BHr0qSlVrsSWFt+7trep4x+tEOoA0u1IuKvy2CuOngllM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osVU/F6t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+3RV/l3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081A01F000E9;
-	Tue, 16 Jun 2026 15:26:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osVU/F6t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B1A01F000E9;
+	Tue, 16 Jun 2026 15:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623614;
-	bh=IWNoIWGJytMEISJX8eBQ+WwQWWWSJUyQSYfts2dgWTE=;
+	s=korg; t=1781623620;
+	bh=tHCCVQbEtHzVUWqGUnfDuf/mEW//3/5rCANHw0UKTSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n+3RV/l3Z5nijxA3Y3V/81nIRrWC7ur/joh3UepTJd2CHrcWmIbPVA7KNm8Vj1y06
-	 XDQmics6WWnQKcqoveXKQD9nsHWUm+ZeCw0HtoWev8F3IiCOJKVZkH7ME9s6VpH79A
-	 Y27Oc4VdAcY40NZS55FWiUJbrT9vXVWXjjFAhq5E=
+	b=osVU/F6td3m0YTfzWqXM5LM6SX18hfsFE4WaPExdcQJbOIPyLVuvoVhfl6zx4T+NY
+	 +QQTADUYEwI58UCbTfBp3/U+dWufklHQWzj67SrchJxXYNL5+ss0NUjb+wnAiLy79W
+	 NFrOH9ZPmkfRXE0OxO9fwHvV+muIg55v0+4nwn3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Til Kaiser <mail@tk154.de>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 149/378] net: mvpp2: build skb from XDP-adjusted data on XDP_PASS
-Date: Tue, 16 Jun 2026 20:26:20 +0530
-Message-ID: <20260616145118.102215211@linuxfoundation.org>
+Subject: [PATCH 7.0 150/378] net: txgbe: initialize module info buffer
+Date: Tue, 16 Jun 2026 20:26:21 +0530
+Message-ID: <20260616145118.149106506@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -51,104 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Til Kaiser <mail@tk154.de>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-[ Upstream commit 77a6b90ce56bc982dcfa94229b8e28e6abb16e95 ]
+[ Upstream commit 0487cfca46517ff6699c72dc1a8872b0af3c31a9 ]
 
-When an XDP program uses bpf_xdp_adjust_head() or bpf_xdp_adjust_tail()
-and then returns XDP_PASS, mvpp2 still builds the skb from fixed offsets
-derived from the original RX descriptor. Packet geometry changes made by
-the XDP program are therefore discarded before the skb reaches the stack.
+The module info buffer should be initialized to 0 before the firmware
+returns information. Otherwise, there is a risk that the buffer field
+not filled by the firmware is random value.
 
-Update rx_offset and rx_bytes from xdp.data and xdp.data_end for
-XDP_PASS. This makes skb_reserve() and skb_put() reflect the packet seen
-by XDP, and makes RX byte accounting for XDP_PASS follow the length of the
-skb passed to the network stack.
-
-Keep a separate rx_sync_size for page-pool recycling on skb allocation
-failure, which must stay tied to the received buffer range.
-
-Non-PASS verdicts continue to account the descriptor length because no skb
-is passed up in those cases.
-
-Fixes: 07dd0a7aae7f ("mvpp2: add basic XDP support")
-Signed-off-by: Til Kaiser <mail@tk154.de>
-Link: https://patch.msgid.link/20260607134943.21996-5-mail@tk154.de
+Fixes: 343929799ace ("net: txgbe: Support to handle GPIO IRQs for AML devices")
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Link: https://patch.msgid.link/20260608070842.36504-2-jiawenwu@trustnetic.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/mvpp2/mvpp2_main.c   | 21 +++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index 481daafdc1cbc7..ccc24a1301f22d 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -3917,10 +3917,10 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 		struct mvpp2_bm_pool *bm_pool;
- 		struct page_pool *pp = NULL;
- 		struct sk_buff *skb;
--		unsigned int frag_size;
-+		unsigned int frag_size, rx_sync_size;
- 		dma_addr_t dma_addr;
- 		phys_addr_t phys_addr;
--		int pool, rx_bytes, err, ret;
-+		int pool, rx_bytes, rx_offset, err, ret;
- 		struct page *page;
- 		void *data;
+diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c b/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
+index f0514251d4f342..a7e81f9e1be148 100644
+--- a/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
++++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
+@@ -335,7 +335,7 @@ static int txgbe_qsfp_to_linkmodes(struct wx *wx, struct txgbe_sff_id *id)
  
-@@ -3933,6 +3933,8 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 		rx_status = mvpp2_rxdesc_status_get(port, rx_desc);
- 		rx_bytes = mvpp2_rxdesc_size_get(port, rx_desc);
- 		rx_bytes -= MVPP2_MH_SIZE;
-+		rx_sync_size = rx_bytes + MVPP2_MH_SIZE;
-+		rx_offset = MVPP2_MH_SIZE + MVPP2_SKB_HEADROOM;
- 		dma_addr = mvpp2_rxdesc_dma_addr_get(port, rx_desc);
- 
- 		pool = (rx_status & MVPP2_RXD_BM_POOL_ID_MASK) >>
-@@ -3948,7 +3950,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 
- 		dma_sync_single_range_for_cpu(dev->dev.parent, dma_addr,
- 					      MVPP2_SKB_HEADROOM,
--					      rx_bytes + MVPP2_MH_SIZE,
-+					      rx_sync_size,
- 					      dma_dir);
- 
- 		/* Buffer header not supported */
-@@ -3999,6 +4001,14 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 				continue;
- 			}
- 
-+			rx_sync_size = max_t(unsigned int, rx_sync_size,
-+					     xdp.data_end - xdp.data_hard_start -
-+					     MVPP2_SKB_HEADROOM);
-+
-+			/* Update offset and length to reflect any XDP adjustments. */
-+			rx_offset = xdp.data     - data;
-+			rx_bytes  = xdp.data_end - xdp.data;
-+
- 			metasize = xdp.data - xdp.data_meta;
- 		}
- 
-@@ -4010,8 +4020,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 			netdev_warn(port->dev, "skb build failed\n");
- 			if (pp) {
- 				page_pool_put_page(pp, virt_to_head_page(data),
--						   rx_bytes + MVPP2_MH_SIZE,
--						   true);
-+						   rx_sync_size, true);
- 			} else {
- 				dma_unmap_single_attrs(dev->dev.parent, dma_addr,
- 						       bm_pool->buf_size,
-@@ -4041,7 +4050,7 @@ static int mvpp2_rx(struct mvpp2_port *port, struct napi_struct *napi,
- 		ps.rx_packets++;
- 		ps.rx_bytes += rx_bytes;
- 
--		skb_reserve(skb, MVPP2_MH_SIZE + MVPP2_SKB_HEADROOM);
-+		skb_reserve(skb, rx_offset);
- 		skb_put(skb, rx_bytes);
- 		if (metasize)
- 			skb_metadata_set(skb, metasize);
+ int txgbe_identify_module(struct wx *wx)
+ {
+-	struct txgbe_hic_get_module_info buffer;
++	struct txgbe_hic_get_module_info buffer = { 0 };
+ 	struct txgbe_sff_id *id;
+ 	int err = 0;
+ 	u32 mod_abs;
 -- 
 2.53.0
 
