@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886C934889F;
-	Tue, 16 Jun 2026 15:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED2726B0A9;
+	Tue, 16 Jun 2026 15:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623472; cv=none; b=GM8DiJUdsSALiRSi1wsOTnvFK5xaxF9QSbnC6IF7ktZgDfDgn+O2NLcdVap97lNhqKGhYEsEJM99e0SkeMs60YIVc72NBkUGqOjrs37RUTh5DeKB6zbc/hHbaeXN1Ct6qpkM3IA1bX/9mluM/7eMXIBQj5xz4C3VerSHw2hbDqQ=
+	t=1781623477; cv=none; b=fy2Qtkcu0nWOjda+G2cDeWaECDvhlZZRP8unTx88Ub0s/SCyNfDEc6aDRTBY02t7GuspQ6fHW2aRFKKuUXtnM/5JyhuhEvh9IQmw4tv1jG+5WdSgh+y5n8bbOIE1ttktkwZkUnY6v51utUegUweCOb9bvMoU/OQuAQ7JTATD52o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623472; c=relaxed/simple;
-	bh=ByHqWkuFRjSLjzMZofxIjRPekGdynBwGCcr3RbhWg4o=;
+	s=arc-20240116; t=1781623477; c=relaxed/simple;
+	bh=dMNc/uFGSEtAo2wGzv91/XivMAzp57JRgYz2qJCdZGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZLtcaRgIRcRjfdNVNt+7YlioGS6d1iUVfVJ1x0/MpWVUWpusta3G3InZw10MpmTkw3n1tuoSmQ+KfbJe1Lfp8Qea3xZJ/oZROIhdOcQ3wrRGmE7J57RKadbgJGAdHZ85//bj1V4F84XLRDR4TfYHR8UGA9Qq/O4BmT+POepSsRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=en5opRh/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=imC8XrVEvCF76H6LSAEU4BH6+lLTFpbasjCG3HZrE8uK6gQ8ZJmJo5cf28oXiXWT6R40dBB4GveZegL8NkNYNURZRQrlgHlyF+ek8xqALrU//gjOm97RGEerMUOh1YjpaQuKIPjFAyRqe0KzOPw5OgrhGmaEgf984hzWC4BmEbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Az5h3esr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="en5opRh/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30FF41F000E9;
-	Tue, 16 Jun 2026 15:24:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Az5h3esr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71EBE1F000E9;
+	Tue, 16 Jun 2026 15:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623471;
-	bh=b1Mg1AbJqZEfjIrE3qloEK5J9eRDwr25EL+wqHG4Lnk=;
+	s=korg; t=1781623476;
+	bh=hLv6pYNOnAX2/BderrNE/z6hGlSYBboRKvU5uAwQyLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=en5opRh/cD+GubPtIenO94Qedfx/uQ0sCdBj/kpsu2LqGbfm8qPLRc45sUKrmlSz0
-	 3/ovJBN53XdQGS4iWOzo6g0SHjemt1aj71mlmyptrZXynhSdv3tJda/s1c3FwNv3kR
-	 FvhP0wt3UFQcrFDocEJASVjoTBTcGbVAegQiL1h0=
+	b=Az5h3esreUXn7MYFVdeq58QNZ1lNvNJ1xKR/w2IjOCqigi2r3QsS+af9skfAGBtk/
+	 2nZdoPnlEr14kxCVDiagDKFPwphRvkk3E2aRx0EodLwtQcQKs0kntNky70vMMsk/+V
+	 KW+Xn076ivOUNoHLk96uNgiSNPh2t6heSkVJjZPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.0 155/378] clk: qcom: x1e80100-dispcc: Stop disp_cc_mdss_mdp_clk_src from getting parked
-Date: Tue, 16 Jun 2026 20:26:26 +0530
-Message-ID: <20260616145118.409211072@linuxfoundation.org>
+Subject: [PATCH 7.0 156/378] clk: samsung: gs101: Fix missing USI7_USI DIV clock in peric0_clk_regs
+Date: Tue, 16 Jun 2026 20:26:27 +0530
+Message-ID: <20260616145118.457591243@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -52,42 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <johannes.goede@oss.qualcomm.com>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit bc27dbefae6ed11376d991a2921eff806ffef67c ]
+[ Upstream commit 78ee734b36284d82454e87a92094fdb926985b47 ]
 
-Parking disp_cc_mdss_mdp_clk_src at 19.2MHz causing the EFI GOP framebuffer
-to stop functioning. The EFI GOP framebuffer should keep working until
-the msm display driver loads, to help with boot debugging and to ensure
-display output when the msm module is not in the initramfs.
+In the peric0_clk_regs array, the divider register offset for USI6 was
+accidentally listed twice, while the divider for USI7 was omitted.
 
-Switch disp_cc_mdss_mdp_clk_src over to clk_rcg2_shared_no_init_park_ops
-to keep the EFI GOP working after binding the x1e80100-dispcc driver.
+Missing this DIV register causes the USI7 clock divider setting to be
+lost and reset to its hardware default value during a suspend/resume
+cycle.
 
-Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
-Link: https://lore.kernel.org/r/20260425123351.6292-1-johannes.goede@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Replace the duplicated USI6 DIV entry with the correct USI7 DIV
+register.
+
+Fixes: 893f133a040b ("clk: samsung: gs101: add support for cmu_peric0")
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://patch.msgid.link/20260505171457.1960837-1-visitorckw@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-x1e80100.c | 2 +-
+ drivers/clk/samsung/clk-gs101.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/dispcc-x1e80100.c b/drivers/clk/qcom/dispcc-x1e80100.c
-index aa7fd43969f9c8..cd45bedf26494c 100644
---- a/drivers/clk/qcom/dispcc-x1e80100.c
-+++ b/drivers/clk/qcom/dispcc-x1e80100.c
-@@ -580,7 +580,7 @@ static struct clk_rcg2 disp_cc_mdss_mdp_clk_src = {
- 		.parent_data = disp_cc_parent_data_6,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_6),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_shared_ops,
-+		.ops = &clk_rcg2_shared_no_init_park_ops,
- 	},
- };
- 
+diff --git a/drivers/clk/samsung/clk-gs101.c b/drivers/clk/samsung/clk-gs101.c
+index 44a8ecd332fddc..b439b7ae30ea39 100644
+--- a/drivers/clk/samsung/clk-gs101.c
++++ b/drivers/clk/samsung/clk-gs101.c
+@@ -3921,7 +3921,7 @@ static const unsigned long peric0_clk_regs[] __initconst = {
+ 	CLK_CON_DIV_DIV_CLK_PERIC0_USI4_USI,
+ 	CLK_CON_DIV_DIV_CLK_PERIC0_USI5_USI,
+ 	CLK_CON_DIV_DIV_CLK_PERIC0_USI6_USI,
+-	CLK_CON_DIV_DIV_CLK_PERIC0_USI6_USI,
++	CLK_CON_DIV_DIV_CLK_PERIC0_USI7_USI,
+ 	CLK_CON_DIV_DIV_CLK_PERIC0_USI8_USI,
+ 	CLK_CON_BUF_CLKBUF_PERIC0_IP,
+ 	CLK_CON_GAT_CLK_BLK_PERIC0_UID_PERIC0_CMU_PERIC0_IPCLKPORT_PCLK,
 -- 
 2.53.0
 
