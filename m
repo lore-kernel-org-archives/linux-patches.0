@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F513DF007;
-	Tue, 16 Jun 2026 18:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E02713777E;
+	Tue, 16 Jun 2026 18:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635264; cv=none; b=L1FZn16+BelTrkbPk+0hRwsIgBfaiwbKg/qT7El+Fy6R+w4lkmdRM2gunOnLbydQqYU6pCCOewiqnlx7I7m+w58dQtbXpzU39TEWy+k8b7d3ng9zCvAsxclYZkg0YT1zioRfR89Pe98+jZbcfaBDrgeVGAzOitLtkMm1su3HHBY=
+	t=1781635269; cv=none; b=sLASWFh4DRROBC6r74y5Bwt73ea7Ht8gmvLQj0jA8ApBDD+T8qdn7pOaP0+oUHQuo5KMmOht00ByUZT2Q1iPV00wjKPPrtq+zis1XCIT9hPQ4N8FQ0q/wFmBB56Sbxy7b8lbg6raIjlyKeESy7NwT2MPcDYOB40ooxaWyeOqysc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635264; c=relaxed/simple;
-	bh=H00Ygf3SBTVA6R1JyVQS1ilA6U1ZYTPsPsfPXcxDImw=;
+	s=arc-20240116; t=1781635269; c=relaxed/simple;
+	bh=Qt/HIh14W6wfCybBk98zA0RmbW+H1ZKsbjj6kb1LhYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tiek3KkfI8owGw3tioksJnYJd0G069QMdkrVJOmeR7wKwqsubXOK8O9NbyUkyhSOlFujHxQUFxzNIP7c1z/gcK5lb7JTVUicXxXH6LrfRhbe1YDeB1RNQlv/PSYUsE4kgEHogbeskWg0zs62ohYnOffS4JLMMlqnibyvj4dNIAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/ScRSrt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UXpUS3mPjNlvATD40i7/iSaxyuj0FDMRmlUlnGx+FAZyVkIqrHS9CKYT58LsC916Hjkgp/XSDdOF6YqZubHHOXhFBrEIG8Kt7z0PBKMAd8Wj8SraQiz6YoSrqT+Zq7bBN3Cy6V7LAg0iH4voL5UJW6esRJzdXTepNTe6CKQliE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FrVlQx6K; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/ScRSrt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44BA1F00A3A;
-	Tue, 16 Jun 2026 18:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FrVlQx6K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258051F000E9;
+	Tue, 16 Jun 2026 18:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635262;
-	bh=jTADwDiA2Iyb9pEmZmpJiJKH7+f2Er6uvQ/LfiSWpAA=;
+	s=korg; t=1781635268;
+	bh=2zpzb6GMaxyzJuBlcbh+VUHKRk1NNd+IseIiUpUQnNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R/ScRSrt5oe+dIklu77JCnjlbtQpFzYh++AISkNnshlrpje8IRJOvRMEFcjWxkUpb
-	 oNNj6eB5flj1eBnHGoASyuaWkKgeUUi2DSPhGnheKbUy4c7JK0qKLk98yDpqOzBysh
-	 VQ0ma0kvYJzxCY+5GhOrLKftUuWBWC059amlSl/A=
+	b=FrVlQx6KufnV6Y5JcTkYP7WvuPYbXBnugtTAh1J7/Dys+OGL3ZLDDFbQPPoaFc6+S
+	 oicdgtBJaAilf7ovheam/qvBtgpsxyjWYgc1aq+dZhFhPF5Q7ZjhAzyiihkAk/H+Y8
+	 19Sr9ccBIzsfoQznEcpR/glziMuuct+X94lRrCpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	David Heidelberg <david@ixit.cz>,
+	Leo Lin <leo@depthfirst.com>,
+	David Ahern <dahern@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 008/342] nfc: llcp: Fix use-after-free race in nfc_llcp_recv_cc()
-Date: Tue, 16 Jun 2026 20:25:04 +0530
-Message-ID: <20260616145048.712218161@linuxfoundation.org>
+Subject: [PATCH 5.10 009/342] xfrm: Check for underflow in xfrm_state_mtu
+Date: Tue, 16 Jun 2026 20:25:05 +0530
+Message-ID: <20260616145048.753110021@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -52,64 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: David Ahern <dahern@nvidia.com>
 
-[ Upstream commit b493ea2765cc17cb8aa7e7544a4b6dcb05b6ed77 ]
+[ Upstream commit 742b04d0550b0ec89dcbc99537ec88653bd1ad90 ]
 
-A race condition exists in the NFC LLCP connection state machine where
-the connection acceptance packet (CC) can be processed concurrently with
-socket release.  This can lead to a use-after-free of the socket object.
+Leo Lin reported OOB write issue in esp component:
 
-When nfc_llcp_recv_cc() moves the socket from the connecting_sockets
-list to the sockets list, it does so without holding the socket lock.
-If llcp_sock_release() is executing concurrently, it might have already
-unlinked the socket and dropped its references, which can result in
-nfc_llcp_recv_cc() linking a freed socket into the live list.
+  xfrm_state_mtu() returns u32 but performs its arithmetic in unsigned
+  modulo-2^32 space using an attacker-influenced "header_len + authsize +
+  net_adj" subtracted from a small "mtu" argument. A nobody user can
+  install an IPv4 ESP tunnel SA with a large authentication key
+  (XFRMA_ALG_AUTH_TRUNC, e.g. hmac(sha512), 64-byte key, 64-byte trunc),
+  configure a small interface MTU (68 bytes), and set XFRMA_TFCPAD to a
+  large value. When a single UDP datagram is then sent through the
+  tunnel, xfrm_state_mtu() underflows to a near-2^32 value, and
+  esp_output() consumes it as a signed int via:
 
-Fix this by holding lock_sock() during the state transition and list
-movement in nfc_llcp_recv_cc().  After acquiring the lock, check if
-the socket is still hashed to ensure it hasn't already been unlinked
-and marked for destruction by the release path.  This aligns the locking
-pattern with recv_hdlc() and recv_disc().
+        padto      = min(x->tfcpad, xfrm_state_mtu(x, mtu_cached))
+        esp.tfclen = padto - skb->len   (assigned to int)
 
-Fixes: a69f32af86e3 ("NFC: Socket linked list")
-Signed-off-by: Lee Jones <lee@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260429134115.3558604-2-lee@kernel.org
-Signed-off-by: David Heidelberg <david@ixit.cz>
+  esp.tfclen ends up negative (e.g. -207). It is sign-extended to size_t
+  when passed to memset() inside esp_output_fill_trailer(), producing a
+  ~16 EB write of zeroes at skb_tail_pointer(skb). KASAN logs it as
+  "Write of size 18446744073709551537 at addr ffff888...".
+
+Check for underflow and return 1. This causes the sendmsg attempt to
+fail with ENETUNREACH.
+
+Fixes: c5c252389374 ("[XFRM]: Optimize MTU calculation")
+Reported-by: Leo Lin <leo@depthfirst.com>
+Assisted-by: Codex:26.506.31004
+Signed-off-by: David Ahern <dahern@nvidia.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/llcp_core.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/xfrm/xfrm_state.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
-index e04634f22b49f4..c7de44637e0187 100644
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -1225,6 +1225,15 @@ static void nfc_llcp_recv_cc(struct nfc_llcp_local *local,
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index 02d1d8d1fdea40..5f407f4f8eee7a 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -2549,10 +2549,14 @@ u32 xfrm_state_mtu(struct xfrm_state *x, int mtu)
+ 	const struct xfrm_type *type = READ_ONCE(x->type);
+ 	struct crypto_aead *aead;
+ 	u32 blksize, net_adj = 0;
++	u32 overhead, payload_mtu;
  
- 	sk = &llcp_sock->sk;
- 
-+	lock_sock(sk);
-+
-+	/* Check if socket was destroyed whilst waiting for the lock */
-+	if (!sk_hashed(sk)) {
-+		release_sock(sk);
-+		nfc_llcp_sock_put(llcp_sock);
-+		return;
+ 	if (x->km.state != XFRM_STATE_VALID ||
+-	    !type || type->proto != IPPROTO_ESP)
++	    !type || type->proto != IPPROTO_ESP) {
++		if (mtu <= x->props.header_len)
++			return 1;
+ 		return mtu - x->props.header_len;
 +	}
-+
- 	/* Unlink from connecting and link to the client array */
- 	nfc_llcp_sock_unlink(&local->connecting_sockets, sk);
- 	nfc_llcp_sock_link(&local->sockets, sk);
-@@ -1236,6 +1245,8 @@ static void nfc_llcp_recv_cc(struct nfc_llcp_local *local,
- 	sk->sk_state = LLCP_CONNECTED;
- 	sk->sk_state_change(sk);
  
-+	release_sock(sk);
+ 	aead = x->data;
+ 	blksize = ALIGN(crypto_aead_blocksize(aead), 4);
+@@ -2572,8 +2576,17 @@ u32 xfrm_state_mtu(struct xfrm_state *x, int mtu)
+ 		break;
+ 	}
+ 
+-	return ((mtu - x->props.header_len - crypto_aead_authsize(aead) -
+-		 net_adj) & ~(blksize - 1)) + net_adj - 2;
++	overhead = x->props.header_len + crypto_aead_authsize(aead) + net_adj;
++	if (mtu <= overhead)
++		return 1;
 +
- 	nfc_llcp_sock_put(llcp_sock);
++	payload_mtu = mtu - overhead;
++	payload_mtu &= ~(blksize - 1);
++	if (payload_mtu <= 2)
++		return 1;
++
++	return payload_mtu + net_adj - 2;
++
  }
+ EXPORT_SYMBOL_GPL(xfrm_state_mtu);
  
 -- 
 2.53.0
