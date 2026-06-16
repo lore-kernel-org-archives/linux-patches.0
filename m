@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB5632E13B;
-	Tue, 16 Jun 2026 18:31:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E1935AC3E;
+	Tue, 16 Jun 2026 18:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634676; cv=none; b=eTK8wESTxqS5qS3uOMUOIkhtREaFr2il/2cBOJni0Zx4jxGy31REryv1bYKWOiwhDf4gszUfHor0mnTiri7c3a4YZxLBw8uIlg+tTNCg7oCA9hai0HLBMUJQ/Fz7RD5Yut7RY6Z97eJFV7eakN7tBTIeCOYIdrjvRWS37Z41PPw=
+	t=1781634681; cv=none; b=SdCEdm4ALq683fsA5Fe91Hj9EveziNJK5yhi1a8g70qO9ELQLEkovsvXbmf5GnGf/D9rdH/rXCUfyFNCn59ps/DyG4FBstiKRDbpNxG4IsR1TEo57vvZcQB0R7L28uCkdBtKhF1BtNLL1auxdcwCyUD0wkwpKGDc0J8YH18Y7+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634676; c=relaxed/simple;
-	bh=YteqI0JdaJUbsmTpg6C6ixOiCHUkRFqjSGrIQGyuafw=;
+	s=arc-20240116; t=1781634681; c=relaxed/simple;
+	bh=qK+6Ku89tSQ06ucObwoYulDz0SHRUI6djXr/I4VhRzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bu+4dR1sMRvrZnRZjZKuv6PKio/kXEeHsmNnRu/b0zdKMJ+GKaPgF6GB+WrZp/rdB3spkU76LlaO7X0uf5efXxkCLvJbLPV41bKbBVFTJePtwPRmsQyharbYqLyIRYxsTxq6L5LiGM9XzZ0+LgibV6nEIoZ4EsE5HoY9y6C0Duk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bcYwT8pB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H8meI3VbshDfLG4HZgjraBSwZOtxSB3dwKzH/Y3oJCHWzHwGlIWs26/hHPKOOjr3S0L/+ZUE/HXwo3cfcdCSkTIyzfU9zgS/xpJMwJmfei24QYJMfJ2yoK2HG/vUSqsU1W2e8bamhkwOU/mRsoieLjMOt7sZ5jAmQAHHOUKjw3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOkfipKV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bcYwT8pB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D451F000E9;
-	Tue, 16 Jun 2026 18:31:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOkfipKV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AFBC1F000E9;
+	Tue, 16 Jun 2026 18:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634675;
-	bh=YRcWNpYq/sxw+4RB6bNMmOPx4WPQkI8IVa0joWGzlkE=;
+	s=korg; t=1781634680;
+	bh=NBJH3fu17zdBxZnkJkdKYOLM4tC/Fp/pQSYJFU1Y/PY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bcYwT8pBbHFYesKrViPW7WEUaUzqWETE73OZIf74CKwUbLTHNTc/BQtf42AZiEGk7
-	 l02YD8nD4ri4HMLuYuF/XYNH8FH0EI5gb0hzbvoOtNHFCytOZ/0a8rXuHLHgz0BFuB
-	 YuN7Z6FS/Vsas20tL2qr7fyMkl6IdYZh8xLT3YLo=
+	b=iOkfipKVmQEdypZweeOXuC8qdxzPUSwQA8ZWG92276aS5TdoYsvFtjOyFktIsmdf3
+	 xwpmvCpxqvIV3kzqjbOOc4luYJ4AtkEdHk8if6g9mZQ0W5uqWtEZvFxzpRyQptYnR6
+	 DNdC42za1nwWHuuWElpVYzwJak7nHqrwU24H92oQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahisa Kojima <masahisa.kojima@linaro.org>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 311/411] spi: syncuacer: fix controller deregistration
-Date: Tue, 16 Jun 2026 20:29:09 +0530
-Message-ID: <20260616145117.677652732@linuxfoundation.org>
+Subject: [PATCH 5.15 294/411] ceph: only d_add() negative dentries when they are unhashed
+Date: Tue, 16 Jun 2026 20:28:52 +0530
+Message-ID: <20260616145116.780766186@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,53 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit 75d849c3452e9611de031db45b3149ba9a99035f ]
+[ Upstream commit 803447f93d75ab6e40c85e6d12b5630d281d70d6 ]
 
-Make sure to deregister the controller before disabling underlying
-resources like clocks during driver unbind.
+Ceph can call d_add(dentry, NULL) on a negative dentry that is already
+present in the primary dcache hash.
 
-Fixes: b0823ee35cf9 ("spi: Add spi driver for Socionext SynQuacer platform")
-Cc: stable@vger.kernel.org	# 5.3
-Cc: Masahisa Kojima <masahisa.kojima@linaro.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260410081757.503099-21-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ renamed spi_controller/host to spi_master/master and kept int return type with `return 0;` ]
+In the current VFS that is not safe.  d_add() goes through __d_add()
+to __d_rehash(), which unconditionally reinserts dentry->d_hash into
+the hlist_bl bucket.  If the dentry is already hashed, reinserting the
+same node can corrupt the bucket, including creating a self-loop.
+Once that happens, __d_lookup() can spin forever in the hlist_bl walk,
+typically looping only on the d_name.hash mismatch check and
+eventually triggering RCU stall reports like this one:
+
+ rcu: INFO: rcu_sched self-detected stall on CPU
+ rcu:         87-....: (2100 ticks this GP) idle=3a4c/1/0x4000000000000000 softirq=25003319/25003319 fqs=829
+ rcu:         (t=2101 jiffies g=79058445 q=698988 ncpus=192)
+ CPU: 87 UID: 2952868916 PID: 3933303 Comm: php-cgi8.3 Not tainted 6.18.17-i1-amd #950 NONE
+ Hardware name: Dell Inc. PowerEdge R7615/0G9DHV, BIOS 1.6.6 09/22/2023
+ RIP: 0010:__d_lookup+0x46/0xb0
+ Code: c1 e8 07 48 8d 04 c2 48 8b 00 49 89 fc 49 89 f5 48 89 c3 48 83 e3 fe 48 83 f8 01 77 0f eb 2d 0f 1f 44 00 00 48 8b 1b 48 85 db <74> 20 39 6b 18 75 f3 48 8d 7b 78 e8 ba 85 d0 00 4c 39 63 10 74 1f
+ RSP: 0018:ff745a70c8253898 EFLAGS: 00000282
+ RAX: ff26e470054cb208 RBX: ff26e470054cb208 RCX: 000000006e958966
+ RDX: ff26e48267340000 RSI: ff745a70c82539b0 RDI: ff26e458f74655c0
+ RBP: 000000006e958966 R08: 0000000000000180 R09: 9cd08d909b919a89
+ R10: ff26e458f74655c0 R11: 0000000000000000 R12: ff26e458f74655c0
+ R13: ff745a70c82539b0 R14: d0d0d0d0d0d0d0d0 R15: 2f2f2f2f2f2f2f2f
+ FS:  00007f5770896980(0000) GS:ff26e482c5d88000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007f5764de50c0 CR3: 000000a72abb5001 CR4: 0000000000771ef0
+ PKRU: 55555554
+ Call Trace:
+  <TASK>
+  lookup_fast+0x9f/0x100
+  walk_component+0x1f/0x150
+  link_path_walk+0x20e/0x3d0
+  path_lookupat+0x68/0x180
+  filename_lookup+0xdc/0x1e0
+  vfs_statx+0x6c/0x140
+  vfs_fstatat+0x67/0xa0
+  __do_sys_newfstatat+0x24/0x60
+  do_syscall_64+0x6a/0x230
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+This is reachable with reused cached negative dentries.  A Ceph lookup
+or atomic_open can be handed a negative dentry that is already hashed,
+and fs/ceph/dir.c then hits one of two paths that incorrectly assume
+"negative" also means "unhashed":
+
+  - ceph_finish_lookup():
+      MDS reply is -ENOENT with no trace
+      -> d_add(dentry, NULL)
+
+  - ceph_lookup():
+      local ENOENT fast path for a complete directory with shared caps
+      -> d_add(dentry, NULL)
+
+Both paths can therefore re-add an already-hashed negative dentry.
+
+Ceph already uses the correct pattern elsewhere: ceph_fill_trace() only
+calls d_add(dn, NULL) for a negative null-dentry reply when d_unhashed(dn)
+is true.
+
+Fix both fs/ceph/dir.c sites the same way: only call d_add() for a
+negative dentry when it is actually unhashed.  If the negative dentry
+is already hashed, leave it in place and reuse it as-is.
+
+This preserves the existing behavior for unhashed dentries while
+avoiding d_hash list corruption for reused hashed negatives.
+
+Cc: stable@vger.kernel.org
+Fixes: 2817b000b02c ("ceph: directory operations")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[ kept existing dout() debug call instead of upstream's doutc() form when adding the d_unhashed() guard around d_add() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-synquacer.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/ceph/dir.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/spi/spi-synquacer.c
-+++ b/drivers/spi/spi-synquacer.c
-@@ -719,7 +719,7 @@ static int synquacer_spi_probe(struct pl
- 	pm_runtime_set_active(sspi->dev);
- 	pm_runtime_enable(sspi->dev);
- 
--	ret = devm_spi_register_master(sspi->dev, master);
-+	ret = spi_register_master(master);
- 	if (ret)
- 		goto disable_pm;
- 
-@@ -740,10 +740,16 @@ static int synquacer_spi_remove(struct p
- 	struct spi_master *master = platform_get_drvdata(pdev);
- 	struct synquacer_spi *sspi = spi_master_get_devdata(master);
- 
-+	spi_master_get(master);
-+
-+	spi_unregister_master(master);
-+
- 	pm_runtime_disable(sspi->dev);
- 
- 	clk_disable_unprepare(sspi->clk);
- 
-+	spi_master_put(master);
-+
- 	return 0;
- }
- 
+--- a/fs/ceph/dir.c
++++ b/fs/ceph/dir.c
+@@ -721,7 +721,8 @@ struct dentry *ceph_finish_lookup(struct
+ 				d_drop(dentry);
+ 				err = -ENOENT;
+ 			} else {
+-				d_add(dentry, NULL);
++				if (d_unhashed(dentry))
++					d_add(dentry, NULL);
+ 			}
+ 		}
+ 	}
+@@ -777,7 +778,8 @@ static struct dentry *ceph_lookup(struct
+ 			__ceph_touch_fmode(ci, mdsc, CEPH_FILE_MODE_RD);
+ 			spin_unlock(&ci->i_ceph_lock);
+ 			dout(" dir %p complete, -ENOENT\n", dir);
+-			d_add(dentry, NULL);
++			if (d_unhashed(dentry))
++				d_add(dentry, NULL);
+ 			di->lease_shared_gen = atomic_read(&ci->i_shared_gen);
+ 			return NULL;
+ 		}
 
 
