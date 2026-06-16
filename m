@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621744418D7;
-	Tue, 16 Jun 2026 18:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B487738C437;
+	Tue, 16 Jun 2026 18:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635409; cv=none; b=CNBtR1zHfOW6KtJGYVra1gg2rEmZdOVd3VxPunL7GxYujPIsfBOpBr1PDPEjxo75a3xuyVs2tOpIGex7m2/GV5QRMIPy0hw8N4/Wf0dbkgElyEX/0iI+ovZzp2+78EnAkW0vilukJHejSdzmTb/9qoM/JSYQbg3jPjKQs++fPQU=
+	t=1781635414; cv=none; b=d23FA0E3/W3PalL/v9BrCHtCysSMcPyGWQGvs1qIaq0YBqomon+fmvaz8sDyhEJZA6oAJk0E2EpvfLPh/Y7CdvpZaw7DdPZ2D/2KZNrLBPbErhbA0CKRd8BrErxD7kdqp0f3SNhhCWyt0QeS8irUVQ7ZqbzNfq74z1mB5EUsPtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635409; c=relaxed/simple;
-	bh=40rRIIGcUkFrCA46Z2VY8mGvus+l0H5vGPVOCt3Aees=;
+	s=arc-20240116; t=1781635414; c=relaxed/simple;
+	bh=dUdMb8Ap8P2TAxFA86d/1QjUmfEm+nVlHWokXYqfymI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fhzRaJftos/VNKGoUnH/nAopH8x+enM6S1Rc/ralEGOkwEd4ZprKDZF3YSyt0KuI1Nlbq1VEh5FzTjSfhwVeirZY/ETLwkYKocUK17ZU9viYr8Sp8Ih9o1ucvj/Ua97kXU5K4/1DO1Br3dsy3mwnA7XF4R0NVwZp8oOFYPxWTZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pwpg9RYl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZKGhkj8Tv/hOZnVHstKHFdxDvJMbw9FuiCZySUMMlPOV6PdsHn964elp8vmARf4aZ/Kr5uf5tnPyTzjijWCnmrFPBEYafYdGDZblrLcKd4zB3H14j7J2JP7DamnBiJGmFtaAumitOy5/h8UEjoOAjmBHaPvEqrCrMrpjlm2xbVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMLV/PIu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pwpg9RYl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDAA1F000E9;
-	Tue, 16 Jun 2026 18:43:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMLV/PIu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B971F000E9;
+	Tue, 16 Jun 2026 18:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635408;
-	bh=36Z3n0KePFz3B5JW0QziBzfdGdGHRlk3JwuZpvNB1zo=;
+	s=korg; t=1781635413;
+	bh=V9wMoyQqU1WViNCRjFa5pY+TxWwmNJSm+yJM/bcidhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pwpg9RYl+cfov9Z/0+i2qc3uoBtO3JxXTcmYZnx0c7Gd9t8+2zMaqgipr7PbmOUK+
-	 kYLJ1ZFb9jSw3agThn6ZTWPV6VknQzZPUumuVXrgIzbq1B2yCkGAoesd2k6jdFWQKg
-	 FD8BzRNBNhhmtd2KTZl7m8+XqaEfVfkIcoj4kUsE=
+	b=PMLV/PIug2IG9g3UbSDfpAo5DcPjBb1hzwWQ+pYzzzhZM12UPNpBkLKEk66i9DXag
+	 DubzofQbp6KwnCg4buZ0WQm33bYMzJRcp6SVu4MAWJvw5odxDgv+sk6k9HhXzTwJxV
+	 bXwtSOwT60izeabe0xF72grCKBPPVNN8ViPdlf2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matteo Perin <matteo.perin@canonical.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Long Li <longli@microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 016/342] net: netlink: dont set nsid on local notifications
-Date: Tue, 16 Jun 2026 20:25:12 +0530
-Message-ID: <20260616145049.042082641@linuxfoundation.org>
+Subject: [PATCH 5.10 043/342] smb: client: fix smbdirect_recv_io leak in smbd_negotiate() error path
+Date: Tue, 16 Jun 2026 20:25:39 +0530
+Message-ID: <20260616145050.263486060@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -53,80 +57,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit 88b126b39f9757e9debc322d4679239e9af089c7 ]
+[ Upstream commit daac51c7032036a0ca5f1aa419ad1b0471d1c6e0 ]
 
-In most cases, notifications on sockets with NETLINK_LISTEN_ALL_NSID
-do not contain NSID in their ancillary data in case the event is local
-to the listener.
+During tests of another unrelated patch I was able to trigger this
+error: Objects remaining on __kmem_cache_shutdown()
 
-However, when a self-referential NSID is allocated for a namespace,
-every local notification starts sending this ID to the user space.
-
-This is problematic, because the listener cannot tell if those
-notifications are local or not anymore without making extra requests
-to figure out if the provided NSID is local or not.  The listener
-can also not figure out the local NSID beforehand as it can be
-allocated at any point in time by other processes, changing the
-structure of the future notifications for everyone.
-
-The value is practically not useful, since it's the namespace's own
-ID that the application has to obtain from other sources in order to
-figure out if it's the same or not.  So, for the application it's
-just an extra busy work with no benefits.  Moreover, applications
-that do not know about this quirk may be mishandling notifications
-with NSID set as notifications from remote namespaces.  This is the
-case for ovs-vswitchd and the iproute2's 'ip monitor' that stops
-printing 'current' and starts printing the nsid number mid-session.
-
-Lack of clear documentation for this behavior is also not helping.
-
-A search though open-source projects doesn't reveal any projects
-that use NETNSA_NSID_NOT_ASSIGNED and rely on metadata to contain
-self-referential NSIDs (expected, since the value is not useful).
-Quite the opposite, as already mentioned, there are few applications
-that rely on NSID to not be present in local events.
-
-Since the value is not useful and actively harmful in some cases,
-let's not report it for local events, making the notifications more
-consistent.
-
-Also adding some blank lines for readability.
-
-Fixes: 59324cf35aba ("netlink: allow to listen "all" netns")
-Reported-by: Matteo Perin <matteo.perin@canonical.com>
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Link: https://patch.msgid.link/20260520172317.175168-3-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Fixes: f198186aa9bb ("CIFS: SMBD: Establish SMB Direct connection")
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/cifs/smbdirect.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index e8301a36926275..e091b65c9d2b8c 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -1478,10 +1478,14 @@ static void do_one_broadcast(struct sock *sk,
- 		p->skb2 = NULL;
- 		goto out;
- 	}
-+
- 	NETLINK_CB(p->skb2).nsid_is_set = false;
--	NETLINK_CB(p->skb2).nsid = peernet2id(sock_net(sk), p->net);
--	if (NETLINK_CB(p->skb2).nsid != NETNSA_NSID_NOT_ASSIGNED)
--		NETLINK_CB(p->skb2).nsid_is_set = true;
-+	if (!net_eq(sock_net(sk), p->net)) {
-+		NETLINK_CB(p->skb2).nsid = peernet2id(sock_net(sk), p->net);
-+		if (NETLINK_CB(p->skb2).nsid != NETNSA_NSID_NOT_ASSIGNED)
-+			NETLINK_CB(p->skb2).nsid_is_set = true;
+diff --git a/fs/cifs/smbdirect.c b/fs/cifs/smbdirect.c
+index ae332f3771f634..e273f3b9efcb63 100644
+--- a/fs/cifs/smbdirect.c
++++ b/fs/cifs/smbdirect.c
+@@ -1083,8 +1083,10 @@ static int smbd_negotiate(struct smbd_connection *info)
+ 	log_rdma_event(INFO, "smbd_post_recv rc=%d iov.addr=%llx iov.length=%x iov.lkey=%x\n",
+ 		       rc, response->sge.addr,
+ 		       response->sge.length, response->sge.lkey);
+-	if (rc)
++	if (rc) {
++		put_receive_buffer(info, response);
+ 		return rc;
 +	}
-+
- 	val = netlink_broadcast_deliver(sk, p->skb2);
- 	if (val < 0) {
- 		netlink_overrun(sk);
+ 
+ 	init_completion(&info->negotiate_completion);
+ 	info->negotiate_done = false;
 -- 
 2.53.0
 
