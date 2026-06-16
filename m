@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB723D091A;
-	Tue, 16 Jun 2026 18:10:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515133CC324;
+	Tue, 16 Jun 2026 18:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633414; cv=none; b=nc8BWcTfaYaR+8SAQtczs8OHhjFEmL+5/1NkKR1ciGJIWGbK+rV4MwbDPmnR9vaoSnWyGLvV0Z1jYaz3+R/DtU6O57BwvCTIVY7pg/hkyBennDYswyJWsnGVKhCbgQKwRMeknXFYQyhCoAYJKzjbHi9FjljeZHQMmr2LY9FOPVs=
+	t=1781633419; cv=none; b=q40hs8yLiZ/6CeP/E909T3AM7sOWX+Ihgk/2lxLEo4/tG6++z9xQiY31h67BN/+s1gOlWdR19NoJStvfB/lPrKDjfkp074mq9FYVjLSd2VUmlgKugeC5vryE+L/yGf3ScXviGnDzktbA8ihlS6ehb1uvtuDudOpRSNLRZFIwHVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633414; c=relaxed/simple;
-	bh=eUhvbSBG/Rt9cElXMrtFnZVflHTFNuI8QhvLZ+y4/3o=;
+	s=arc-20240116; t=1781633419; c=relaxed/simple;
+	bh=8RATmtimUNz0U2uJjKEQ8WHDpOwxh9YXo6jN5KUc9Oc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uiNOBJJ52ia1H7/oDARkQlBxV/M3UtiBMOnoChekboiBTaL6csvgagxNyrOW5I3nVfdEPBuAD3bNdXpb72WqWeF/uWHxmZAeauUqb+lF7PJxfqs6PYY6FoWvoUmmfns/3rHlFrP+y7vMFmtJc/icQwlOx0/7hvamkcKU9dfToRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGV09fqf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FWOnb52RjA+v/wDr425BXrlXOeDQhm7tNSxJoykqWkjC7/NVZUnjuxdx3NY0HBlLgF2N+Yin0+peCeduOAnmQRjiWVp7ZUS0pZydrDiW9Ko8lEe+cFRJoG4Of3W0enc+HAsrh7a7KIT+zAPGqPK9TNOsgYCsVBz5efy4OfMOYhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwtQKLwb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGV09fqf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167A41F000E9;
-	Tue, 16 Jun 2026 18:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwtQKLwb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59BCE1F000E9;
+	Tue, 16 Jun 2026 18:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633412;
-	bh=qmvxLqF5b6ZWYxU5+1wQskHAMjhlbETBVo9/LijALck=;
+	s=korg; t=1781633418;
+	bh=XTnCm4eCP65i7xvp221Oq7+XadSVCfU1HcsTKrREIMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cGV09fqfZ+NSuzH6WUN4KA+wx/BlyCuDExcNV8nVxol22iKHxcwdu1KfDiLzEarXe
-	 ar0UXEiGuYHFAPLfTt2ZZ2QHKj65/cVJmgj8aVD2NhRhclpzluOKXiVD4rs37U+eR1
-	 wuBXfT3qNxgOpl8fkKr3fPmzIhALD9kzYyGPuIow=
+	b=KwtQKLwbQBx7xdl1mZibc2u2IqkJLRHmWxYhK2u++l4KTQ683FiMqTzuRzqYrx9Ma
+	 QIKhZC+AyCzcO8AUWwCHFxDnZGW9ZOSWFJ0ks+Z6Twqwr8XhTBEyhMGGeycGAJggms
+	 OcivhZqjS8W5qWr2W2uuCAVQHUxZyHmTfBiDY348=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanjay Chitroda <sanjayembeddedse@gmail.com>,
+	Salah Triki <salah.triki@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 5.15 074/411] iio: ssp_sensors: cancel delayed work_refresh on remove
-Date: Tue, 16 Jun 2026 20:25:12 +0530
-Message-ID: <20260616145104.213563163@linuxfoundation.org>
+Subject: [PATCH 5.15 075/411] iio: temperature: tsys01: fix broken PROM checksum validation
+Date: Tue, 16 Jun 2026 20:25:13 +0530
+Message-ID: <20260616145104.259794318@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -51,31 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanjay Chitroda <sanjayembeddedse@gmail.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-commit eedf7602fbd929e97e0c480da501dc7a34beb2a8 upstream.
+commit 4701e471c16866e7aa8f5e6a3a6b0d31e097e2c9 upstream.
 
-The work_refresh may still be pending or running when the device is
-removed, cancel the delayed work_refresh in remove path.
+The current implementation of tsys01_crc_valid() incorrectly sums the
+first word (n_prom[0]) repeatedly instead of iterating over the 8 words
+retrieved from the PROM. This leads to a checksum mismatch and probe
+failure on hardware.
 
-Fixes: 50dd64d57eee ("iio: common: ssp_sensors: Add sensorhub driver")
-Signed-off-by: Sanjay Chitroda <sanjayembeddedse@gmail.com>
+According to the TSYS01 datasheet, the PROM consists of 8 words. A valid
+check must iterate through all 8 words to verify the integrity of the
+calibration data. The current driver only checks the first word 8 times.
+
+Note: This fix was identified during a code audit and is based on
+datasheet specifications. It has not been tested on real hardware.
+
+Fixes: 43e53407f680 ("Add tsys01 meas-spec driver support")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/common/ssp_sensors/ssp_dev.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/temperature/tsys01.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/common/ssp_sensors/ssp_dev.c
-+++ b/drivers/iio/common/ssp_sensors/ssp_dev.c
-@@ -602,6 +602,7 @@ static int ssp_remove(struct spi_device
- 	ssp_clean_pending_list(data);
+--- a/drivers/iio/temperature/tsys01.c
++++ b/drivers/iio/temperature/tsys01.c
+@@ -119,7 +119,7 @@ static bool tsys01_crc_valid(u16 *n_prom
+ 	u8 sum = 0;
  
- 	free_irq(data->spi->irq, data);
-+	cancel_delayed_work_sync(&data->work_refresh);
+ 	for (cnt = 0; cnt < TSYS01_PROM_WORDS_NB; cnt++)
+-		sum += ((n_prom[0] >> 8) + (n_prom[0] & 0xFF));
++		sum += ((n_prom[cnt] >> 8) + (n_prom[cnt] & 0xFF));
  
- 	del_timer_sync(&data->wdt_timer);
- 	cancel_work_sync(&data->work_wdt);
+ 	return (sum == 0);
+ }
 
 
