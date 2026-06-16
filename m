@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C3543E4BA;
-	Tue, 16 Jun 2026 16:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938E535AC1E;
+	Tue, 16 Jun 2026 16:17:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626624; cv=none; b=hUjfT+LENga//UT7yXJOo28k1t7e4YgxN3yLofP8WWifJj0v/PGdVKl6/Pbk9RAJ+HJ5GwNZzMOuIk6S/+q9W5V/J09X8pWEtcFICdPCMTXy7YIPbfG5gd+wI+M0Ii2mxLb3SjQwgLHahOI5QeVL/Wm4KRsclMcysQ+1+vg2flU=
+	t=1781626629; cv=none; b=AlMjENo3Van+Vrf6u6V7C2dT5tqFBrzLPSqaMzYlm/Q5OovAWLrvhzpjLQC4qTX69wDlU93ygxfaLyIlWBm5m50174Cj56cICKhRxaov+es6+ULGTLAjpVrc6YKKE3gHt8ibjVFSzxcrAKlDze5ur1MeBLSeacQ3ss1omDCwMBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626624; c=relaxed/simple;
-	bh=+BmwlgMb6lMAY62jAEEUXbMaeS1ye2HxxGgNt0DioAQ=;
+	s=arc-20240116; t=1781626629; c=relaxed/simple;
+	bh=hg5QYhXMAjv8hX/Yd862LH4G/WVX4uvVUUgiIu3kFjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PHboHV5Lmwo91u4JmTTAMXpkU/hlB3QrYa9AZkMct3LpA+/ztaMjWqhflZWxVwTFXyy3QafQudI8I8zM0a7Q4vYkvDLL/bmN/Jde3j+loVJKZ/FzLr4Jk/eM6/WIC4wwqS3YspBZlFNOpDpm3uCIv8d2w05KsiGB37YcDSG3ABw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrkUJjpa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gqp1J+kHnZUzoPme3dCUsuZWdPvFTNipCt0Vxk72YQsRkaxS87cE++iFUmD1HDxzmr0w+Btjltz1L72F9VYPk49xJ9Y/PcXVz4Po/0TBGe+gxWbmZ1muux0Uc+RxY4LYlexESHNiUzKI6pqs38IIjDgcD3BHPoqsFMpyMn9SPVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AMctfhpD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrkUJjpa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554541F000E9;
-	Tue, 16 Jun 2026 16:17:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AMctfhpD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A02FF1F000E9;
+	Tue, 16 Jun 2026 16:17:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626623;
-	bh=6MDmVAhpWPsAlnlivbx36HW3AI29lAeRAydBPWjrCMM=;
+	s=korg; t=1781626628;
+	bh=lGckGrDSCpDfS6C9dpl9N09aZjGiuIEvk3BbHk0kd/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DrkUJjpaPMNtvctgnYL/CquQs0xnkzY24z2Srr8nyOC5c/fMl29cb15AlfI55WyWV
-	 dGea1cr++rWJpcxMBLXLxJhKg/e6Lxc9mLxrZCneSie+4FG3rOwjh0xBjDm2K7hqbZ
-	 OgrBjWGmLGiskdgfK1MHh773ZZG2JyPRbucQa9CI=
+	b=AMctfhpDghVqfboB1SkZ1iOyXh3wYckBuMJkBfYo9V3Z3QF77nK3H4Km/pqv3wwja
+	 RNHUIk58A+NzkAw40ntQX+26+wy5bmV7tHQzYZn6jjHXYhyVupM8r3d528Br73zD1z
+	 U2xTrrkUxGT6bLMBpdgaUxsP2HvN+2i8lzyInX7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Zhang Cen <rollkingzzc@gmail.com>,
+	Muhammad Bilal <meatuni001@gmail.com>,
+	SeungJu Cheon <suunj1331@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 038/261] Bluetooth: MGMT: validate advertising TLV before type checks
-Date: Tue, 16 Jun 2026 20:27:56 +0530
-Message-ID: <20260616145046.897611487@linuxfoundation.org>
+Subject: [PATCH 6.12 039/261] Bluetooth: RFCOMM: validate skb length in MCC handlers
+Date: Tue, 16 Jun 2026 20:27:57 +0530
+Message-ID: <20260616145046.939467435@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,71 +52,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Cen <rollkingzzc@gmail.com>
+From: SeungJu Cheon <suunj1331@gmail.com>
 
-[ Upstream commit de23fb62259aa01d294f77238ae3b835eb674413 ]
+[ Upstream commit 23882b828c3c8c51d0c946446a396b10abb3b16b ]
 
-tlv_data_is_valid() reads each advertising data field length from
-data[i], then inspects data[i + 1] for managed EIR types before
-checking that the current field still fits inside the supplied buffer.
+The RFCOMM MCC handlers cast skb->data to protocol-specific structs
+without validating skb->len first. A malicious remote device can send
+truncated MCC frames and trigger out-of-bounds reads in these handlers.
 
-A malformed field whose length byte is the last byte of the buffer can
-therefore make the parser read one byte past the advertising data.
+Fix this by using skb_pull_data() to validate and access the required
+data before dereferencing it.
 
-KASAN reported the following when a malformed MGMT_OP_ADD_ADVERTISING
-request reached that path:
+rfcomm_recv_rpn() requires special handling since ETSI TS 07.10 allows
+1-byte RPN requests. Handle this by validating only the DLCI byte first,
+and validating the full struct only when len > 1.
 
-  BUG: KASAN: vmalloc-out-of-bounds in tlv_data_is_valid()
-  Read of size 1
-  Call trace:
-    tlv_data_is_valid()
-    add_advertising()
-    hci_mgmt_cmd()
-    hci_sock_sendmsg()
-
-Move the existing element-length check before any type-octet inspection
-so each non-empty element is proven to contain its type byte before the
-parser looks at data[i + 1].
-
-Fixes: 2bb36870e8cb ("Bluetooth: Unify advertising instance flags check")
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Suggested-by: Muhammad Bilal <meatuni001@gmail.com>
+Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/bluetooth/rfcomm/core.c | 67 +++++++++++++++++++++++++++----------
+ 1 file changed, 49 insertions(+), 18 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index a2bdf25a77aece..040a5595f45fee 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -8721,6 +8721,12 @@ static bool tlv_data_is_valid(struct hci_dev *hdev, u32 adv_flags, u8 *data,
- 		if (!cur_len)
- 			continue;
+diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
+index ad5177e3a69b77..293bf67cf10d3e 100644
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -1431,10 +1431,15 @@ static int rfcomm_apply_pn(struct rfcomm_dlc *d, int cr, struct rfcomm_pn *pn)
  
-+		/* If the current field length would exceed the total data
-+		 * length, then it's invalid.
-+		 */
-+		if (i + cur_len >= len)
-+			return false;
+ static int rfcomm_recv_pn(struct rfcomm_session *s, int cr, struct sk_buff *skb)
+ {
+-	struct rfcomm_pn *pn = (void *) skb->data;
++	struct rfcomm_pn *pn;
+ 	struct rfcomm_dlc *d;
+-	u8 dlci = pn->dlci;
++	u8 dlci;
 +
- 		if (data[i + 1] == EIR_FLAGS &&
- 		    (!is_adv_data || flags_managed(adv_flags)))
- 			return false;
-@@ -8737,12 +8743,6 @@ static bool tlv_data_is_valid(struct hci_dev *hdev, u32 adv_flags, u8 *data,
- 		if (data[i + 1] == EIR_APPEARANCE &&
- 		    appearance_managed(adv_flags))
- 			return false;
--
--		/* If the current field length would exceed the total data
--		 * length, then it's invalid.
--		 */
--		if (i + cur_len >= len)
--			return false;
++	pn = skb_pull_data(skb, sizeof(*pn));
++	if (!pn)
++		return -EILSEQ;
+ 
++	dlci = pn->dlci;
+ 	BT_DBG("session %p state %ld dlci %d", s, s->state, dlci);
+ 
+ 	if (!dlci)
+@@ -1483,8 +1488,8 @@ static int rfcomm_recv_pn(struct rfcomm_session *s, int cr, struct sk_buff *skb)
+ 
+ static int rfcomm_recv_rpn(struct rfcomm_session *s, int cr, int len, struct sk_buff *skb)
+ {
+-	struct rfcomm_rpn *rpn = (void *) skb->data;
+-	u8 dlci = __get_dlci(rpn->dlci);
++	struct rfcomm_rpn *rpn;
++	u8 dlci;
+ 
+ 	u8 bit_rate  = 0;
+ 	u8 data_bits = 0;
+@@ -1495,15 +1500,16 @@ static int rfcomm_recv_rpn(struct rfcomm_session *s, int cr, int len, struct sk_
+ 	u8 xoff_char = 0;
+ 	u16 rpn_mask = RFCOMM_RPN_PM_ALL;
+ 
+-	BT_DBG("dlci %d cr %d len 0x%x bitr 0x%x line 0x%x flow 0x%x xonc 0x%x xoffc 0x%x pm 0x%x",
+-		dlci, cr, len, rpn->bit_rate, rpn->line_settings, rpn->flow_ctrl,
+-		rpn->xon_char, rpn->xoff_char, rpn->param_mask);
++	if (len == 1) {
++		rpn = skb_pull_data(skb, 1);
++		if (!rpn)
++			return -EILSEQ;
+ 
+-	if (!cr)
+-		return 0;
++		dlci = __get_dlci(rpn->dlci);
++
++		if (!cr)
++			return 0;
+ 
+-	if (len == 1) {
+-		/* This is a request, return default (according to ETSI TS 07.10) settings */
+ 		bit_rate  = RFCOMM_RPN_BR_9600;
+ 		data_bits = RFCOMM_RPN_DATA_8;
+ 		stop_bits = RFCOMM_RPN_STOP_1;
+@@ -1514,6 +1520,19 @@ static int rfcomm_recv_rpn(struct rfcomm_session *s, int cr, int len, struct sk_
+ 		goto rpn_out;
  	}
  
- 	return true;
++	rpn = skb_pull_data(skb, sizeof(*rpn));
++	if (!rpn)
++		return -EILSEQ;
++
++	dlci = __get_dlci(rpn->dlci);
++
++	BT_DBG("dlci %d cr %d len 0x%x bitr 0x%x line 0x%x flow 0x%x xonc 0x%x xoffc 0x%x pm 0x%x",
++	       dlci, cr, len, rpn->bit_rate, rpn->line_settings, rpn->flow_ctrl,
++	       rpn->xon_char, rpn->xoff_char, rpn->param_mask);
++
++	if (!cr)
++		return 0;
++
+ 	/* Check for sane values, ignore/accept bit_rate, 8 bits, 1 stop bit,
+ 	 * no parity, no flow control lines, normal XON/XOFF chars */
+ 
+@@ -1589,9 +1608,14 @@ static int rfcomm_recv_rpn(struct rfcomm_session *s, int cr, int len, struct sk_
+ 
+ static int rfcomm_recv_rls(struct rfcomm_session *s, int cr, struct sk_buff *skb)
+ {
+-	struct rfcomm_rls *rls = (void *) skb->data;
+-	u8 dlci = __get_dlci(rls->dlci);
++	struct rfcomm_rls *rls;
++	u8 dlci;
+ 
++	rls = skb_pull_data(skb, sizeof(*rls));
++	if (!rls)
++		return -EILSEQ;
++
++	dlci = __get_dlci(rls->dlci);
+ 	BT_DBG("dlci %d cr %d status 0x%x", dlci, cr, rls->status);
+ 
+ 	if (!cr)
+@@ -1608,10 +1632,15 @@ static int rfcomm_recv_rls(struct rfcomm_session *s, int cr, struct sk_buff *skb
+ 
+ static int rfcomm_recv_msc(struct rfcomm_session *s, int cr, struct sk_buff *skb)
+ {
+-	struct rfcomm_msc *msc = (void *) skb->data;
++	struct rfcomm_msc *msc;
+ 	struct rfcomm_dlc *d;
+-	u8 dlci = __get_dlci(msc->dlci);
++	u8 dlci;
++
++	msc = skb_pull_data(skb, sizeof(*msc));
++	if (!msc)
++		return -EILSEQ;
+ 
++	dlci = __get_dlci(msc->dlci);
+ 	BT_DBG("dlci %d cr %d v24 0x%x", dlci, cr, msc->v24_sig);
+ 
+ 	d = rfcomm_dlc_get(s, dlci);
+@@ -1644,17 +1673,19 @@ static int rfcomm_recv_msc(struct rfcomm_session *s, int cr, struct sk_buff *skb
+ 
+ static int rfcomm_recv_mcc(struct rfcomm_session *s, struct sk_buff *skb)
+ {
+-	struct rfcomm_mcc *mcc = (void *) skb->data;
++	struct rfcomm_mcc *mcc;
+ 	u8 type, cr, len;
+ 
++	mcc = skb_pull_data(skb, sizeof(*mcc));
++	if (!mcc)
++		return -EILSEQ;
++
+ 	cr   = __test_cr(mcc->type);
+ 	type = __get_mcc_type(mcc->type);
+ 	len  = __get_mcc_len(mcc->len);
+ 
+ 	BT_DBG("%p type 0x%x cr %d", s, type, cr);
+ 
+-	skb_pull(skb, 2);
+-
+ 	switch (type) {
+ 	case RFCOMM_PN:
+ 		rfcomm_recv_pn(s, cr, skb);
 -- 
 2.53.0
 
