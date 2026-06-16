@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090453AA1A8;
-	Tue, 16 Jun 2026 17:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECAE847AF75;
+	Tue, 16 Jun 2026 17:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631210; cv=none; b=fnpT5IjHZdQqjyNtLCf0pIooJxEDYtQI/+8M1Em0Pa/s0F3Op99P9SAuiROWL5kC+zZo7oxORZYhWsT6zqT2a0IwbYK89DaF9NlMvx7RGEvC0Qlp1LFQmI2v+nObCQFEKU4T5mgWRyDkr/WOJd+5jKbE3uFSTHt449oPygM6MFA=
+	t=1781631215; cv=none; b=ObkUcYeCaKSodPfSZJTpN9dsIsY8+jlSOQmydGO1V+8GgegLuTZQ9+cWCVZZUDpTm2jBjfPxTN47w3wHWkGKkixp5rHT3eMPyCwV1/6vb0VcVBmbnNltsbbGQy8fhsiZRiEDKUsmnLRQNJ7M/EoQDTFhzpZyWqT91gVAB4RpRaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631210; c=relaxed/simple;
-	bh=trCLTPSN15QvXSXYfBfsmeAHZanNtC+86rBefy5ME90=;
+	s=arc-20240116; t=1781631215; c=relaxed/simple;
+	bh=+8xd25+LamK2EltzEsNHJ3HMD2ywdvShLIG28kdmyTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XqnK5XRwvy8CxHRoAQE0H/4dm00ipSdGxhPhKyh27MjhEx+XwP+YKH2tP9z8oqqpr1APiYXAJuuMNRYxVGpy8mh3HE6JbcyNPp3QIa3DKstQF29S+rFFwi0antqX49S3PIvT9lsRD84KhHOWS25eOMPBRX5LtR96t9g48tc6zwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U7CIU4bd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PotDyEODl7YeUQbb6sTglhvOX0VByVb0gkWxQQtqph/gAkN58iQ/QuWYWUIyRj2UJsXRMaRp5SHR5e9dSfdb3OqJLFUrCumq39C2eHs/gP0A4Y42mid4pkrVx4DrAnnGh4xcXPsn8Mq0+tpuBI5Gn087jAKPZCzYeOCQqC/B6pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFZrMPJy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U7CIU4bd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D271F00A3A;
-	Tue, 16 Jun 2026 17:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFZrMPJy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B02191F000E9;
+	Tue, 16 Jun 2026 17:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631208;
-	bh=VApkQKRUafh3HH9kw7Q4z7yTg29Gg5g2cr1bqU540Ao=;
+	s=korg; t=1781631213;
+	bh=DkbzccD7Zb8ST4JM/M53cwCNhCYOEd1h6G0LdpN6b+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U7CIU4bdDT6/6YR9VAPfTGZhlkzi8I1fwsixCATcQssA1CsXfnQWttLhCiStBwXZ5
-	 RIZ06LlHotzXpUgpvsrg4Wm0dlaomuJxX+6T9QpFEIHCPqhrtc+5Z4du0zPTV7N3KV
-	 jgBXaGc2dGkAGyVQId3MzEIp1rD91rFZx0dDvaRY=
+	b=dFZrMPJyZr/Lvrcryu02RZDnwAoaz6++WYIY0ZDLBSv6eytHHTiViA8irshl5Vdqe
+	 VGkqdBOGvnqg20/1JF8yV9C1yFaxqmXGY6+SGcTFNhXu8kzHAbM06C+zlCTgEsK287
+	 rgbQJXV1JJm/AmOXXSc9hG61JX7izycU9Vw4tsYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Tao Xue <xuetao09@huawei.com>
-Subject: [PATCH 6.1 144/522] usb: core: Fix up Interrupt IN endpoints with bogus wBytesPerInterval
-Date: Tue, 16 Jun 2026 20:24:51 +0530
-Message-ID: <20260616145132.825523758@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 135/522] ASoC: qcom: q6asm-dai: do not set stream state in event and trigger callbacks
+Date: Tue, 16 Jun 2026 20:24:42 +0530
+Message-ID: <20260616145132.421335377@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -50,65 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit 727d045d064b7c9a24db3bce9c0485a382cb768b upstream.
+commit cee3e63e7106c3c81b2053371fdf14240bfba2fc upstream.
 
-Tao Xue found that some common devices violate USB 3.x section 9.6.7
-by reporting wBytesPerInterval lower than the size of packets they
-actually send. I confirmed that AX88179 may set it to 0 and RTL8153
-CDC configuration sets it to 8 but sends both 8 and 16 byte packets:
+The q6asm-dai stream state is used by prepare() to decide whether an
+existing stream setup needs to be closed before opening/configuring a new
+one. Updating the state from trigger or asynchronous DSP callbacks can make
+that state stale or incorrect relative to the actual setup lifetime.
 
-S Ii:11:007:3 -115:128 16 <
-C Ii:11:007:3 0:128 8 = a1000000 01000000
-S Ii:11:007:3 -115:128 16 <
-C Ii:11:007:3 0:128 16 = a12a0000 01000800 00000000 00000000
+In particular, setting Q6ASM_STREAM_STOPPED on STOP or EOS completion can
+make prepare() believe there is no active setup to close, which can result
+in opening/configuring the same stream more than once.
 
-Most xHCI host controllers neglect interrupt bandwidth reservations
-and let such devices exceed theirs, some fail the URB with EOVERFLOW.
+Keep stream state updates tied to prepare(), where the stream is actually
+closed and reopened, and stop changing it from trigger and EOS callbacks.
 
-Assume that wBytesPerInterval lower than wMaxPacketSize is bogus and
-increase it to the worst case maximum on interrupt IN endpoints. This
-solves xHCI problems and appears to have no other effect. Interrupt
-transfers are not limited to one interval and drivers submit URBs of
-class defined size without looking at wBytesPerInterval. Any multi-
-interval transfer is considered terminated by a packet shorter than
-wMaxPacketSize regardless of wBytesPerInterval - see USB3 8.10.3.
-
-Stay in spec on OUT endpoints and isochronous. No buggy devices are
-known and we don't want to risk sending more data than the device
-is prepared to handle or confusing isoc drivers regarding altsetting
-capacities guaranteed by the device itself. And don't complain when
-wMaxPacketSize <= wBytesPerInterval < wMaxPacketSize * (bMaxBurst+1)
-because enabling this seems to be the exact goal of the spec.
-
-Reported-and-tested-by: Tao Xue <xuetao09@huawei.com>
-Closes: https://lore.kernel.org/linux-usb/20260402021400.28853-1-xuetao09@huawei.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Link: https://patch.msgid.link/20260518073207.5b7d26e7.michal.pecio@gmail.com
+Fixes: bfbb12dfa144 ("ASoC: qcom: q6asm-dai: perform correct state check before closing")
+Cc: Stable@vger.kernel.org
+Closes: https://lore.kernel.org/all/afS7rTHdc9TyIeLx@rdacayan/
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260518092347.3446946-2-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/config.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ sound/soc/qcom/qdsp6/q6asm-dai.c |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/drivers/usb/core/config.c
-+++ b/drivers/usb/core/config.c
-@@ -165,7 +165,14 @@ static void usb_parse_ss_endpoint_compan
- 			(desc->bMaxBurst + 1);
- 	else
- 		max_tx = 999999;
--	if (le16_to_cpu(desc->wBytesPerInterval) > max_tx) {
-+	/*
-+	 * wBytesPerInterval > max_tx is bogus, but USB3 spec doesn't forbid the opposite.
-+	 * Experience shows that wBytesPerInterval < wMaxPacketSize on common interrupt IN
-+	 * endpoints is usually bogus too, and recent HCs enforce interrupt BW limits.
-+	 */
-+	if (le16_to_cpu(desc->wBytesPerInterval) > max_tx ||
-+	    (le16_to_cpu(desc->wBytesPerInterval) < usb_endpoint_maxp(&ep->desc) &&
-+	     usb_endpoint_is_int_in(&ep->desc))) {
- 		dev_notice(ddev, "%s endpoint with wBytesPerInterval of %d in "
- 				"config %d interface %d altsetting %d ep %d: "
- 				"setting to %d\n",
+--- a/sound/soc/qcom/qdsp6/q6asm-dai.c
++++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
+@@ -191,7 +191,6 @@ static void event_handler(uint32_t opcod
+ 				   prtd->pcm_count, 0, 0, 0);
+ 		break;
+ 	case ASM_CLIENT_EVENT_CMD_EOS_DONE:
+-		prtd->state = Q6ASM_STREAM_STOPPED;
+ 		break;
+ 	case ASM_CLIENT_EVENT_DATA_WRITE_DONE: {
+ 		prtd->pcm_irq_pos += prtd->pcm_count;
+@@ -338,7 +337,6 @@ static int q6asm_dai_trigger(struct snd_
+ 				       0, 0, 0);
+ 		break;
+ 	case SNDRV_PCM_TRIGGER_STOP:
+-		prtd->state = Q6ASM_STREAM_STOPPED;
+ 		ret = q6asm_cmd_nowait(prtd->audio_client, prtd->stream_id,
+ 				       CMD_EOS);
+ 		break;
+@@ -554,8 +552,6 @@ static void compress_event_handler(uint3
+ 			snd_compr_drain_notify(prtd->cstream);
+ 			prtd->notify_on_drain = false;
+ 
+-		} else {
+-			prtd->state = Q6ASM_STREAM_STOPPED;
+ 		}
+ 		spin_unlock_irqrestore(&prtd->lock, flags);
+ 		break;
+@@ -1018,7 +1014,6 @@ static int q6asm_dai_compr_trigger(struc
+ 				       0, 0, 0);
+ 		break;
+ 	case SNDRV_PCM_TRIGGER_STOP:
+-		prtd->state = Q6ASM_STREAM_STOPPED;
+ 		ret = q6asm_cmd_nowait(prtd->audio_client, prtd->stream_id,
+ 				       CMD_EOS);
+ 		break;
 
 
