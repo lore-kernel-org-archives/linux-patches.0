@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D88547AF68;
-	Tue, 16 Jun 2026 18:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1D03D091A;
+	Tue, 16 Jun 2026 18:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635981; cv=none; b=IzUwHWTgQgsDvEM9CAseVk+gQGVcBGWI3x9WS3WHjIB1GbC9ml7SSsKSi+u+Orpj/Bmmnf/25oybscnIbZQkrDkT6lC6LJgR4o7JvL2Y/MNg2SHI7Mbmqf26Zvw0SHalsAFz3iX2THedi03TEaa7ocbUdHdvjeVtWpQJRVSIr1w=
+	t=1781635986; cv=none; b=OkaSRci/FMRfTbM+44xOkT6GWn5As+n7GUW9fD6jj+TZF/4L9OduV46+bLsDmIJF4U6QYgadxlj7IlDqoBFrJNFJjlO1eCBczZSc9xQPqw34NWT4OCWzstAkLFWN7eBU3L61chRAK76oFtrQvcU2TDiDulorGWXBPM+psXDDGvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635981; c=relaxed/simple;
-	bh=GNkVGmUZYXnL/gtcf1lWhv0LgrZuypLxFJ6nrJhvwok=;
+	s=arc-20240116; t=1781635986; c=relaxed/simple;
+	bh=ukQ1QFAhgTy6L/9lnDDK4m+4DgeafPzZAcC2huLjTOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eHR6+lSSTmz29U/KzsUjyYERb2ulK/0L360uRDrZMA/BMkP5NojZUpm0dym1f1ulfcXnileGEeQSepVC1mRVf498AnjVAiXeHCG6g3pqU4w+57Ka//50ZgFDiQXCtnDblDScLcgff3lt6ooLp+7QQRLDpeiBGuylqsfBNBeD218=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4ld+ZGn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JgQa+AtgyQYsDqnRH2QxZX4Ag+x8jCF/79PiK/RzdYSawvtIupHV4ETigd+bu8tMUv3hh3HPRzK+jvKGGdazDwPG73gnJFbGGbYufj5wUp9XBe/YZIZNqtOlkhUBoBTDXn+k358N3PyzY1AdsBjhPFKXrTGcjUlfzPk7lr+8Ank=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJYW5DIJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4ld+ZGn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7411F000E9;
-	Tue, 16 Jun 2026 18:52:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJYW5DIJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DE01F000E9;
+	Tue, 16 Jun 2026 18:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635980;
-	bh=/b2oBwUa8Pj+qPN7kjzDcqHhVOmx3O/4lyrF00zNqXo=;
+	s=korg; t=1781635985;
+	bh=NvSh5VYREawBYFYjpIOsXujrzt0YG2KIqpaBibBLU7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L4ld+ZGnb21SG3oFOfXX0W7Gpi0CJIruTJRzR2/NUfY3K9gEHdHrq/7xxdHafViyg
-	 W8Rr9nuUGDRzzsP79VuZp63QJufJLgAZChVoPssu4H69Fk/9865c6XmcBJA7qxDSx8
-	 oXl0jYgRcQr/BR3E6begtLptsVCmXMJFE9yNfby8=
+	b=jJYW5DIJYQI2wMi1yaWMZWILX2vPI1D6458HbIHSo1N9518/6Huzfk291b+P+NCca
+	 7XK2qcdiGeQCrM61ywp33gn23ZsTn1oyg7Uh01slNHgzAqw9kr7PrZy4eOZM4FFmKT
+	 2dGdZPLTK0rCf5nax/kysVib6Q23KOh8+dpYudDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Jiri Kosina <jkosina@suse.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 5.10 125/342] HID: pass the buffer size to hid_report_raw_event
-Date: Tue, 16 Jun 2026 20:27:01 +0530
-Message-ID: <20260616145054.027656436@linuxfoundation.org>
+	Jian Zhou <eilaimemedsnaimel@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 152/342] ALSA: PCM: Fix wait queue list corruption in snd_pcm_drain() on linked streams
+Date: Tue, 16 Jun 2026 20:27:28 +0530
+Message-ID: <20260616145055.245421962@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -53,271 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Tissoires <bentiss@kernel.org>
+From: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
 
-[ Upstream commit 2c85c61d1332e1e16f020d76951baf167dcb6f7a ]
+[ Upstream commit 88fe2e3658726cb21ff2dcf9770bf672f9b9d31b ]
 
-commit 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing
-bogus memset()") enforced the provided data to be at least the size of
-the declared buffer in the report descriptor to prevent a buffer
-overflow. However, we can try to be smarter by providing both the buffer
-size and the data size, meaning that hid_report_raw_event() can make
-better decision whether we should plaining reject the buffer (buffer
-overflow attempt) or if we can safely memset it to 0 and pass it to the
-rest of the stack.
+snd_pcm_drain() uses init_waitqueue_entry which does not clear
+entry.prev/next, and add_wait_queue with a conditional
+remove_wait_queue that is skipped when to_check is no longer
+in the group after concurrent UNLINK.  The orphaned wait entry
+remains on the unlinked substream sleep queue.  On the next
+drain iteration, add_wait_queue adds the entry to a new queue
+while still linked on the old one, corrupting both lists.  A
+subsequent wake_up dereferences NULL at the func pointer
+(mapped from the spinlock at offset 0 of the misinterpreted
+wait_queue_head_t), causing a kernel panic.
 
-Fixes: 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing bogus memset()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-Acked-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Stable-dep-of: 206342541fc8 ("HID: core: introduce hid_safe_input_report()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-(cherry picked from commit 509c2605065004fc4cd86ee50a9350d402785307)
-[Lee: Backported to linux-6.12.y and beyond]
-Signed-off-by: Lee Jones <lee@kernel.org>
-(cherry picked from commit f9393998660f146970047bda31526aeb96190f28)
-Signed-off-by: Lee Jones <lee@kernel.org>
+Replace init_waitqueue_entry/add_wait_queue/conditional
+remove_wait_queue with init_wait_entry/prepare_to_wait/
+finish_wait.  init_wait_entry clears prev/next via
+INIT_LIST_HEAD on each iteration and sets
+autoremove_wake_function which auto-removes the entry on
+wake-up.  finish_wait safely handles both the already-removed
+and still-queued cases.
+
+Fixes: 9b1dbd69ba6f ("ALSA: pcm: fix use-after-free on linked stream runtime in snd_pcm_drain")
+Signed-off-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
+Link: https://patch.msgid.link/20260604142559.3840881-1-eilaimemedsnaimel@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c           | 29 ++++++++++++++++++++++-------
- drivers/hid/hid-gfrm.c           |  4 ++--
- drivers/hid/hid-logitech-hidpp.c |  2 +-
- drivers/hid/hid-multitouch.c     |  2 +-
- drivers/hid/hid-primax.c         |  2 +-
- drivers/hid/hid-vivaldi.c        |  2 +-
- drivers/hid/wacom_sys.c          |  6 +++---
- drivers/staging/greybus/hid.c    |  2 +-
- include/linux/hid.h              |  4 ++--
- 9 files changed, 34 insertions(+), 19 deletions(-)
+ sound/core/pcm_native.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index aa9ae6ccb28a8f..c73f4ac16fdf24 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -1775,8 +1775,8 @@ int __hid_request(struct hid_device *hid, struct hid_report *report,
- }
- EXPORT_SYMBOL_GPL(__hid_request);
- 
--int hid_report_raw_event(struct hid_device *hid, int type, u8 *data, u32 size,
--		int interrupt)
-+int hid_report_raw_event(struct hid_device *hid, int type, u8 *data,
-+			 size_t bufsize, u32 size, int interrupt)
- {
- 	struct hid_report_enum *report_enum = hid->report_enum + type;
- 	struct hid_report *report;
-@@ -1784,16 +1784,24 @@ int hid_report_raw_event(struct hid_device *hid, int type, u8 *data, u32 size,
- 	int max_buffer_size = HID_MAX_BUFFER_SIZE;
- 	unsigned int a;
- 	u32 rsize, csize = size;
-+	size_t bsize = bufsize;
- 	u8 *cdata = data;
- 	int ret = 0;
- 
- 	report = hid_get_report(report_enum, data);
- 	if (!report)
--		goto out;
-+		return 0;
-+
-+	if (unlikely(bsize < csize)) {
-+		hid_warn_ratelimited(hid, "Event data for report %d is incorrect (%d vs %ld)\n",
-+				     report->id, csize, bsize);
-+		return -EINVAL;
-+	}
- 
- 	if (report_enum->numbered) {
- 		cdata++;
- 		csize--;
-+		bsize--;
- 	}
- 
- 	rsize = hid_compute_report_size(report);
-@@ -1806,9 +1814,15 @@ int hid_report_raw_event(struct hid_device *hid, int type, u8 *data, u32 size,
- 	else if (rsize > max_buffer_size)
- 		rsize = max_buffer_size;
- 
-+	if (bsize < rsize) {
-+		hid_warn_ratelimited(hid, "Event data for report %d was too short (%d vs %ld)\n",
-+				     report->id, rsize, bsize);
-+		return -EINVAL;
-+	}
-+
- 	if (csize < rsize) {
- 		dbg_hid("report %d is too short, (%d < %d)\n", report->id,
--				csize, rsize);
-+			csize, rsize);
- 		memset(cdata + csize, 0, rsize - csize);
- 	}
- 
-@@ -1817,7 +1831,7 @@ int hid_report_raw_event(struct hid_device *hid, int type, u8 *data, u32 size,
- 	if (hid->claimed & HID_CLAIMED_HIDRAW) {
- 		ret = hidraw_report_event(hid, data, size);
- 		if (ret)
--			goto out;
-+			return ret;
- 	}
- 
- 	if (hid->claimed != HID_CLAIMED_HIDRAW && report->maxfield) {
-@@ -1830,7 +1844,7 @@ int hid_report_raw_event(struct hid_device *hid, int type, u8 *data, u32 size,
- 
- 	if (hid->claimed & HID_CLAIMED_INPUT)
- 		hidinput_report_event(hid, report);
--out:
-+
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(hid_report_raw_event);
-@@ -1851,6 +1865,7 @@ int hid_input_report(struct hid_device *hid, int type, u8 *data, u32 size, int i
- 	struct hid_report_enum *report_enum;
- 	struct hid_driver *hdrv;
- 	struct hid_report *report;
-+	size_t bufsize = size;
- 	int ret = 0;
- 
- 	if (!hid)
-@@ -1889,7 +1904,7 @@ int hid_input_report(struct hid_device *hid, int type, u8 *data, u32 size, int i
- 			goto unlock;
- 	}
- 
--	ret = hid_report_raw_event(hid, type, data, size, interrupt);
-+	ret = hid_report_raw_event(hid, type, data, bufsize, size, interrupt);
- 
- unlock:
- 	up(&hid->driver_input_lock);
-diff --git a/drivers/hid/hid-gfrm.c b/drivers/hid/hid-gfrm.c
-index 699186ff2349e9..d2a56bf92b416e 100644
---- a/drivers/hid/hid-gfrm.c
-+++ b/drivers/hid/hid-gfrm.c
-@@ -66,7 +66,7 @@ static int gfrm_raw_event(struct hid_device *hdev, struct hid_report *report,
- 	switch (data[1]) {
- 	case GFRM100_SEARCH_KEY_DOWN:
- 		ret = hid_report_raw_event(hdev, HID_INPUT_REPORT, search_key_dn,
--					   sizeof(search_key_dn), 1);
-+					   sizeof(search_key_dn), sizeof(search_key_dn), 1);
- 		break;
- 
- 	case GFRM100_SEARCH_KEY_AUDIO_DATA:
-@@ -74,7 +74,7 @@ static int gfrm_raw_event(struct hid_device *hdev, struct hid_report *report,
- 
- 	case GFRM100_SEARCH_KEY_UP:
- 		ret = hid_report_raw_event(hdev, HID_INPUT_REPORT, search_key_up,
--					   sizeof(search_key_up), 1);
-+					   sizeof(search_key_up), sizeof(search_key_up), 1);
- 		break;
- 
- 	default:
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index 98562a0ed0c338..d31f2737b13dca 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -3176,7 +3176,7 @@ static int hidpp10_consumer_keys_raw_event(struct hidpp_device *hidpp,
- 	memcpy(&consumer_report[1], &data[3], 4);
- 	/* We are called from atomic context */
- 	hid_report_raw_event(hidpp->hid_dev, HID_INPUT_REPORT,
--			     consumer_report, 5, 1);
-+			     consumer_report, sizeof(consumer_report), 5, 1);
- 
- 	return 1;
- }
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 948bd59ab5d21f..c3bcc23d7c7ca1 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -449,7 +449,7 @@ static void mt_get_feature(struct hid_device *hdev, struct hid_report *report)
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index 09b4ad414ffbe0..51e5dd9ee793b5 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -2161,9 +2161,8 @@ static int snd_pcm_drain(struct snd_pcm_substream *substream,
+ 		drain_no_period_wakeup = to_check->no_period_wakeup;
+ 		drain_rate = to_check->rate;
+ 		drain_bufsz = to_check->buffer_size;
+-		init_waitqueue_entry(&wait, current);
+-		set_current_state(TASK_INTERRUPTIBLE);
+-		add_wait_queue(&to_check->sleep, &wait);
++		init_wait_entry(&wait, 0);
++		prepare_to_wait(&to_check->sleep, &wait, TASK_INTERRUPTIBLE);
+ 		snd_pcm_stream_unlock_irq(substream);
+ 		if (drain_no_period_wakeup)
+ 			tout = MAX_SCHEDULE_TIMEOUT;
+@@ -2181,7 +2180,7 @@ static int snd_pcm_drain(struct snd_pcm_substream *substream,
+ 		group = snd_pcm_stream_group_ref(substream);
+ 		snd_pcm_group_for_each_entry(s, substream) {
+ 			if (s->runtime == to_check) {
+-				remove_wait_queue(&to_check->sleep, &wait);
++				finish_wait(&to_check->sleep, &wait);
+ 				break;
+ 			}
  		}
- 
- 		ret = hid_report_raw_event(hdev, HID_FEATURE_REPORT, buf,
--					   size, 0);
-+					   size, size, 0);
- 		if (ret)
- 			dev_warn(&hdev->dev, "failed to report feature\n");
- 	}
-diff --git a/drivers/hid/hid-primax.c b/drivers/hid/hid-primax.c
-index 1e6413d07cae21..16e2a811eda9f0 100644
---- a/drivers/hid/hid-primax.c
-+++ b/drivers/hid/hid-primax.c
-@@ -44,7 +44,7 @@ static int px_raw_event(struct hid_device *hid, struct hid_report *report,
- 			data[0] |= (1 << (data[idx] - 0xE0));
- 			data[idx] = 0;
- 		}
--		hid_report_raw_event(hid, HID_INPUT_REPORT, data, size, 0);
-+		hid_report_raw_event(hid, HID_INPUT_REPORT, data, size, size, 0);
- 		return 1;
- 
- 	default:	/* unknown report */
-diff --git a/drivers/hid/hid-vivaldi.c b/drivers/hid/hid-vivaldi.c
-index d57ec17670379c..fdfea1355ee782 100644
---- a/drivers/hid/hid-vivaldi.c
-+++ b/drivers/hid/hid-vivaldi.c
-@@ -126,7 +126,7 @@ static void vivaldi_feature_mapping(struct hid_device *hdev,
- 	}
- 
- 	ret = hid_report_raw_event(hdev, HID_FEATURE_REPORT, report_data,
--				   report_len, 0);
-+				   report_len, report_len, 0);
- 	if (ret) {
- 		dev_warn(&hdev->dev, "failed to report feature %d\n",
- 			 field->report->id);
-diff --git a/drivers/hid/wacom_sys.c b/drivers/hid/wacom_sys.c
-index 641898bde9c730..5043bc809aaeb5 100644
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -79,7 +79,7 @@ static void wacom_wac_queue_flush(struct hid_device *hdev,
- 		int err;
- 
- 		size = kfifo_out(fifo, buf, sizeof(buf));
--		err = hid_report_raw_event(hdev, HID_INPUT_REPORT, buf, size, false);
-+		err = hid_report_raw_event(hdev, HID_INPUT_REPORT, buf, size, size, false);
- 		if (err) {
- 			hid_warn(hdev, "%s: unable to flush event due to error %d\n",
- 				 __func__, err);
-@@ -324,7 +324,7 @@ static void wacom_feature_mapping(struct hid_device *hdev,
- 					       data, n, WAC_CMD_RETRIES);
- 			if (ret == n && features->type == HID_GENERIC) {
- 				ret = hid_report_raw_event(hdev,
--					HID_FEATURE_REPORT, data, n, 0);
-+					HID_FEATURE_REPORT, data, n, n, 0);
- 			} else if (ret == 2 && features->type != HID_GENERIC) {
- 				features->touch_max = data[1];
- 			} else {
-@@ -386,7 +386,7 @@ static void wacom_feature_mapping(struct hid_device *hdev,
- 					data, n, WAC_CMD_RETRIES);
- 		if (ret == n) {
- 			ret = hid_report_raw_event(hdev, HID_FEATURE_REPORT,
--						   data, n, 0);
-+						   data, n, n, 0);
- 		} else {
- 			hid_warn(hdev, "%s: could not retrieve sensor offsets\n",
- 				 __func__);
-diff --git a/drivers/staging/greybus/hid.c b/drivers/staging/greybus/hid.c
-index ed706f39e87a19..d68f60da0dd169 100644
---- a/drivers/staging/greybus/hid.c
-+++ b/drivers/staging/greybus/hid.c
-@@ -201,7 +201,7 @@ static void gb_hid_init_report(struct gb_hid *ghid, struct hid_report *report)
- 	 * we just need to setup the input fields, so using
- 	 * hid_report_raw_event is safe.
- 	 */
--	hid_report_raw_event(ghid->hid, report->type, ghid->inbuf, size, 1);
-+	hid_report_raw_event(ghid->hid, report->type, ghid->inbuf, ghid->bufsize, size, 1);
- }
- 
- static void gb_hid_init_reports(struct gb_hid *ghid)
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index ab56fffb74a200..aaae2fecd4ae6e 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -1175,8 +1175,8 @@ static inline u32 hid_report_len(struct hid_report *report)
- 	return DIV_ROUND_UP(report->size, 8) + (report->id > 0);
- }
- 
--int hid_report_raw_event(struct hid_device *hid, int type, u8 *data, u32 size,
--		int interrupt);
-+int hid_report_raw_event(struct hid_device *hid, int type, u8 *data,
-+			 size_t bufsize, u32 size, int interrupt);
- 
- /* HID quirks API */
- unsigned long hid_lookup_quirk(const struct hid_device *hdev);
 -- 
 2.53.0
 
