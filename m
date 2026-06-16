@@ -1,44 +1,47 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from bregans-1.gladserv.net (bregans-1.gladserv.net [185.128.211.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636ED3AE71F;
-	Tue, 16 Jun 2026 17:11:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D823AE71F;
+	Tue, 16 Jun 2026 17:11:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.211.58
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629911; cv=none; b=gjWPZuBMIewRzcgUMA7qX16KTKTZhFd4jvwtGcjPS5oOl9Vvq/+e999vCSTAJI8ojAaHrue7/kmAr9a1cuztbHj4knHP2uQYOey90/TLuRNjs1eiKfiIsjJSUxuAUsCk/vues34anN1xnpnXCDtVatPIAqTcld7gX+ssIJF7OvE=
+	t=1781629914; cv=none; b=fP7jZfB0FMV1pRcj6EL69eVIIQ7Ph8q+Vloq+Z0Sr1XWSu74Gt3iCjSJRRhAhjcDIXYGE7juw2OCZtPuujXtGuxjlVxjrArXWl36aRnavPiQbiYaE7bbabBxFhwSE9OCy6ounNQHWRd4SqoiAV7T7Nr9pQ8aG9gyQGXWDL8p2zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629911; c=relaxed/simple;
-	bh=g7adNw6j1QhXACIkRwLYWbjJNoA1d7BAF1ZcrUONWbM=;
+	s=arc-20240116; t=1781629914; c=relaxed/simple;
+	bh=hhYCXH0EbxACKfTiZ85f6ocbt2yQ0dEia8aqyPkRMkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DvFG5vnSmy3IBiefE9lv3kbGBMeRIQagddUpyuND2CVzLdpn6/fa6Bjmk/oXBJI1vgINsLD+ziVyadPGuOVzXqdEk3WLYjEKzGsqdO/y7ELEi1Ct4t7cbbU3SZlMV1lZesx0wWS28G5nA7CJNHvrCmHhzE2F9zV6eqnU1tRNnbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eku9kQ4l; arc=none smtp.client-ip=100.103.45.18
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eku9kQ4l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 624931F000E9;
-	Tue, 16 Jun 2026 17:11:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629910;
-	bh=4As23+kR10RPK0i/9LeCcVsHnf5FdM6/8aRKxuDVNxs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eku9kQ4lewSgpJwDfq7Q+Pm8+iMjzwsn2viZEr5BpJS8jIQuPSB2lGUBfd5hPDaQZ
-	 NpSBGezH+pq2zGk7PbKziJqGm9Vdnmi88QnGsFQiuRXSiZRc9h8h0J5Kc142LO9YHx
-	 dHQYeoGr9a6LM957dglsicJ2/vvVnOJJE9XpdCyw=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	 MIME-Version; b=rpw2/EZsm1k37dq0cQnqTR25B1WFpj9IwFseJoB0kfdjVZEcS1G0/MnF4erSAjaCpw93QcLZymt8SX2dPJOX3rKWJMpHhiXjzBF4mTh2PPjfzxPkx9jz/wENmQNMisUMkCeaGyXsSnscm94Ktx2uAS5KiHUWo4l2P5XNyE0m9vY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.211.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+From: Brett A C Sheffield <bacs@librecast.net>
+To: gregkh@linuxfoundation.org
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 342/452] octeontx2-af: fix memory leak in rvu_setup_hw_resources()
-Date: Tue, 16 Jun 2026 20:29:29 +0530
-Message-ID: <20260616145135.247273799@linuxfoundation.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
-References: <20260616145117.796205997@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	Brett A C Sheffield <bacs@librecast.net>
+Subject: Re: [PATCH 5.15 000/411] 5.15.210-rc1 review
+Date: Tue, 16 Jun 2026 16:55:28 +0000
+Message-ID: <20260616165534.26583-1-bacs@librecast.net>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
+References: <20260616145100.376842714@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,53 +50,12 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+# Librecast Test Results
 
-------------------
+020/020 [ OK ] liblcrq
+010/010 [ OK ] libmld
+120/120 [ OK ] liblibrecast
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+CPU/kernel: Linux auntie 5.15.210-rc1-01182-g1447d275e58b #1 SMP Tue Jun 16 15:49:14 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
 
-commit 09a5bf856aa759513afc4afd233d15bcc711b84e upstream.
-
-If rvu_npc_exact_init() fails in rvu_setup_hw_resources(), the function
-returns directly instead of jumping to the error handling path. This
-causes a resource leak for the previously initialized CGX, NPC, fwdata,
-and MSI-X states.
-
-Fix this by replacing the direct return with goto cgx_err to ensure
-proper cleanup.
-
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still present in
-v7.1-rc6.
-
-An x86_64 allyesconfig build showed no new warnings. As we do not have
-access to Marvell OcteonTX2 RVU AF hardware to test with, no runtime
-testing was able to be performed.
-
-Fixes: 3571fe07a090 ("octeontx2-af: Drop rules for NPC MCAM")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Link: https://patch.msgid.link/20260604143756.1524482-1-dawei.feng@seu.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/net/ethernet/marvell/octeontx2/af/rvu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-@@ -1130,7 +1130,7 @@ cpt:
- 	err = rvu_npc_exact_init(rvu);
- 	if (err) {
- 		dev_err(rvu->dev, "failed to initialize exact match table\n");
--		return err;
-+		goto cgx_err;
- 	}
- 
- 	/* Assign MACs for CGX mapped functions */
-
-
+Tested-by: Brett A C Sheffield <bacs@librecast.net>
