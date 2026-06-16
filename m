@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E206F3A16AC;
-	Tue, 16 Jun 2026 16:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AC344CF44;
+	Tue, 16 Jun 2026 16:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625777; cv=none; b=pOB0TDYITm49L0vdEbHf3WTnARA1oYnbht5SRDxcICpOZoS5tWZY4Doop/9DtKf51FCe2m122UDVPrSLnaLaLRqjbheFuhVTR6bsoLvtjve1+7yGk1dBszU8zmI8VMzACF6sdx7kYq4d1WeIf2k0QpYnoNs4EtyrSpStg3RGFhE=
+	t=1781625783; cv=none; b=hXh+5vHkj892SwQSzjnSOBj/c8gYqN6Zw4OeMD8o3yZMNgQEXg5lg3gnNkBcfZd/etbXWeI0Zn6674/AC6AlPHxZN8jkgm2OUT0TyuEWKSUH0qEtriQ1e3crKe2ToOxIAfVDbCHYBFsk2X5Xm6dVO/RzVTuAChJycYkzqEgweFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625777; c=relaxed/simple;
-	bh=wBIgiiaosq+JDkAogFtvjYOLQbKL4XJm3hlGYVfyopo=;
+	s=arc-20240116; t=1781625783; c=relaxed/simple;
+	bh=g4kUaDXkuWKkzsgZepw1NU+9uhkyYylBRpwCiBG4F8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L67Lq9+FYD4z7ANyPU6zZLgLvUlRaU9A62Von+HFhN9v2EfW8BOnyGSGfXoZqToqE+3RKxgnbu+CedfNvg63Mv8t7CSBXUU+3pRvaofSKIyLBA1lLMvC4aPcx6NZDJ4CEvJfvDhKt+2ibNaN0di6dwm6iYhZB6xCHz+iFArLyPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSUCS0il; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PHU2ZrBs5J+5osQzds4cgZoKzaJf5DA09iEjCs6AOnrc64IJ9Yc50auyihWxvDk2dQogPpydLFQSaOgdyFq8eTUDL3xBRiDek4cCvkOOavFTUgZ2QHlcdyh/uo1vi56b7PzPK4gCAsQFq/vocLZNtZDAkyS/6ztPIhsk7NbRMgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqyBlQeE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSUCS0il"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BACC61F000E9;
-	Tue, 16 Jun 2026 16:02:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqyBlQeE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6DF1F000E9;
+	Tue, 16 Jun 2026 16:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625776;
-	bh=JCx/ilaYQz/A6Dp11Fw0tVPN3d0JR7m3i1B3515DOIs=;
+	s=korg; t=1781625782;
+	bh=55q7SWwM1E0+tKa2hz0LM0o3pSUsLhXzrvvU0MxeWo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zSUCS0ilYrAsQIfgF41sKKvty2eOQ/mLjpoZxksmeRabOCGAO1AnmJhRtFaw7Ipco
-	 XyH5mT5DLrPivyxyuAhgYFHpvhU/tjko0DLh1iAqSM1KN4S/lpPtT2RZXMLOo5YQqr
-	 q01aubLkBOZkYBXA7XYZM+e9qtTpluxsg8Gt5am8=
+	b=cqyBlQeE9HgMZzi7zABtM0tr4Dq33iBVSaBZJVuaDbgYaa5IMBfctEouvlosPYR4y
+	 6zX0BMul1JOkTm4FjtEMZjL9MDvUJQ/T4xxm7B3ibrRCjxkwPbNYNhu23vjZ9gLmuw
+	 7xsdzWVWNNBlJwEGWeEy00zvdEzlPp27mf3wlLOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Subject: [PATCH 6.18 205/325] wifi: iwlwifi: pcie: simplify the resume flow if fast resume is not used
-Date: Tue, 16 Jun 2026 20:30:01 +0530
-Message-ID: <20260616145108.257211308@linuxfoundation.org>
+	Kyle Zeng <kylebot@openai.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 179/325] ALSA: timer: Fix UAF at snd_timer_user_params()
+Date: Tue, 16 Jun 2026 20:29:35 +0530
+Message-ID: <20260616145106.792416970@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -50,102 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 093305d801fae6ff9b8bb531fd78b579794c4f80 upstream.
+commit 053a401b592be424fea9d57c789f66cd5d8cec11 upstream.
 
-In most distributions, NetworkManager shuts the device down before
-entering system suspend, so fast suspend is typically not used.
+At releasing a timer object, e.g. when a userspace timer
+(CONFIG_SND_UTIMER) gets closed and snd_timer_free() is called, it
+tries to detach the timer instances and release the resources.
+However, it's still possible that other in-flight tasks are holding
+the timer instance where the to-be-deleted timer object is associated,
+and this may lead to racy accesses.
 
-On older devices, resume currently tries to grab NIC access to infer
-whether the device was powered off while suspended. That probe is only
-meaningful for the fast-suspend path where the device is expected to
-remain alive.
+Fortunately, most of ioctls dealing with the timer instance list
+already have the protection with register_mutex, and this also avoids
+such races.  But, SNDRV_TIMER_IOCTL_PARAMS isn't protected, hence the
+concurrent ioctl may lead to use-after-free.
 
-Unfortunately, for unclear reasons, grabbing NIC access was harmful as
-reported in the bugzilla ticket below.
+This patch just adds the guard with register_mutex to protect
+snd_timer_user_params() for covering the code path as a quick
+workaround.  It's no hot-path but rather a rarely issued ioctl, so the
+performance penalty doesn't matter.
 
-Workaround this issue by simply not grabbing NIC access if fast suspend
-is not used.
-
-Cc: stable@vger.kernel.org
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221501
-Assisted-by: GitHub Copilot:gpt-5.3-codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260531133005.e2ed9e0cd44f.If283625983a843933e0c01561a421daff184e9e9@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Tested-by: Kyle Zeng <kylebot@openai.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260606161145.1933447-2-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/drv.c |   56 ++++++++++++++------------
- 1 file changed, 32 insertions(+), 24 deletions(-)
+ sound/core/timer.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-@@ -1224,33 +1224,41 @@ static int _iwl_pci_resume(struct device
- 	if (!trans->op_mode)
- 		return 0;
+--- a/sound/core/timer.c
++++ b/sound/core/timer.c
+@@ -1791,6 +1791,7 @@ static int snd_timer_user_params(struct
+ 	struct snd_timer *t;
+ 	int err;
  
--	/*
--	 * Scratch value was altered, this means the device was powered off, we
--	 * need to reset it completely.
--	 * Note: MAC (bits 0:7) will be cleared upon suspend even with wowlan,
--	 * but not bits [15:8]. So if we have bits set in lower word, assume
--	 * the device is alive.
--	 * Alternatively, if the scratch value is 0xFFFFFFFF, then we no longer
--	 * have access to the device and consider it powered off.
--	 * For older devices, just try silently to grab the NIC.
--	 */
--	if (trans->mac_cfg->device_family >= IWL_DEVICE_FAMILY_BZ) {
--		u32 scratch = iwl_read32(trans, CSR_FUNC_SCRATCH);
--
--		if (!(scratch & CSR_FUNC_SCRATCH_POWER_OFF_MASK) ||
--		    scratch == ~0U)
--			device_was_powered_off = true;
--	} else {
-+	if (test_bit(STATUS_DEVICE_ENABLED, &trans->status)) {
- 		/*
--		 * bh are re-enabled by iwl_trans_pcie_release_nic_access,
--		 * so re-enable them if _iwl_trans_pcie_grab_nic_access fails.
-+		 * Scratch value was altered, this means the device was powered
-+		 * off, we need to reset it completely.
-+		 * Note: MAC (bits 0:7) will be cleared upon suspend even with
-+		 * wowlan, but not bits [15:8]. So if we have bits set in lower
-+		 * word, assume the device is alive.
-+		 * Alternatively, if the scratch value is 0xFFFFFFFF, then we
-+		 * no longer have access to the device and consider it powered
-+		 * off.
-+		 * For older devices, just try silently to grab the NIC.
- 		 */
--		local_bh_disable();
--		if (_iwl_trans_pcie_grab_nic_access(trans, true)) {
--			iwl_trans_pcie_release_nic_access(trans);
-+		if (trans->mac_cfg->device_family >= IWL_DEVICE_FAMILY_BZ) {
-+			u32 scratch = iwl_read32(trans, CSR_FUNC_SCRATCH);
-+
-+			if (!(scratch & CSR_FUNC_SCRATCH_POWER_OFF_MASK) ||
-+			    scratch == ~0U) {
-+				IWL_DEBUG_WOWLAN(trans,
-+						 "Scratch 0x%08x indicates device was powered off\n",
-+						 scratch);
-+				device_was_powered_off = true;
-+			}
- 		} else {
--			device_was_powered_off = true;
--			local_bh_enable();
-+			/*
-+			 * bh are re-enabled by iwl_trans_pcie_release_nic_access,
-+			 * so re-enable them if _iwl_trans_pcie_grab_nic_access
-+			 * fails.
-+			 */
-+			local_bh_disable();
-+			if (_iwl_trans_pcie_grab_nic_access(trans, true)) {
-+				iwl_trans_pcie_release_nic_access(trans);
-+			} else {
-+				device_was_powered_off = true;
-+				local_bh_enable();
-+			}
- 		}
- 	}
- 
++	guard(mutex)(&register_mutex);
+ 	tu = file->private_data;
+ 	if (!tu->timeri)
+ 		return -EBADFD;
 
 
