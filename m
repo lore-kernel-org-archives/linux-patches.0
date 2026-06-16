@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E6A472798;
-	Tue, 16 Jun 2026 18:58:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2AF47CC96;
+	Tue, 16 Jun 2026 18:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636295; cv=none; b=awgB8kcxdQVoqOsH91T/ibVb6X44DqdmEzxmmhjei+jSk1NGJoel6n3iYcQvYDHY9WMPPYhna+OHudtdEKczPqlzjaHb0FnsOC7aXbB02XkSn12IFxGpIN9k7O0reGrdz2tZJZq89rQGnx8XiT1rB34Y4C/G6ZDxjlEmSukVGbE=
+	t=1781636300; cv=none; b=LZSMv65d+RTBOVU83sX14yXMWJdkAN8L5cDh+gL0y4I3RCwuspYxEscEVFsZVWNbghDicg0iQN5LbPgNw+W8Fm0FGIRA4aWTlsf/fZZPHYXr2eFP4ZihzTBP3CBQ7pwjiSIVEGVFwWHs7f6zlA5zzj1Oz/C6xpo6NyOgtGmu32E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636295; c=relaxed/simple;
-	bh=G2TjFP4ld/qMLSi9ZbLdxoPYJ3rO2gOmDHDxzW3BMq0=;
+	s=arc-20240116; t=1781636300; c=relaxed/simple;
+	bh=3jr3okUo+L3m9RKE1xvgJGjJheRdwjVDaK0RXtVP4lI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qw+2btNF4nIoSpzqwvwohes5zU5ZmSiPouGlMJAJNiOhcTcymw67AYUH4iLXpHtOdLDA+yYm8PIo9/r2N8MldGNdk2y2AFlMxMA0K9I1wKLKC/gFupw/nKA3YE+ZQSWNPFL4s9Gs5lVaQ77SP/EW72CCWYUsTism6gnFP+r0Wzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WXs0ZuRN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rHej4USsTZxnWfFe7T89HzhfrgI9xZZPxXqYMwox5waLQW1j3DOCm2BtR6f+I4HU3e8OOWzc5chDGHu6Mjrm0DffS0wuobblMFtklsf+eEBM54XM5ju6zp5RsZ0LQXzFCcDfhzNzFErDAK0SblQ99MdE0iSal9DSymWb6uCwG8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0lum7s7u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WXs0ZuRN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34D61F000E9;
-	Tue, 16 Jun 2026 18:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0lum7s7u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 486E91F000E9;
+	Tue, 16 Jun 2026 18:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636293;
-	bh=eujMNA45xU47jpqNa+ARebpGVvpe8H2tq6tOpaMB65E=;
+	s=korg; t=1781636299;
+	bh=3iEZ/EGpUD9cgdr3sYtYNTDXHxDuEyR+tdSNJAMfwJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WXs0ZuRN+Zt1UWwS9zxl2YqAa3O3JcIAgj/RftyoG+dDTFQbIVwET4iXzXtsAXlh8
-	 98POVKBtHqVxB9x1YWi26/vCHnan9Uik+xe4J+xS0cC0kioWxBLMbytJiCp37SCYZQ
-	 lG9b1EcPRw6MD4lX80H8Gk+rct8Blj2uFb62uf/I=
+	b=0lum7s7uJRJ8uXziyIT0GeyqHmltDEqKiq+DxE7F22lR5HV/tBPld7vs5fYYdGWXN
+	 bJu2PxyIokWAzFm7mq8zFsK/+nwBuyY5M500CRlgwAiBM4qb736IPIQWxxU2YT6wqY
+	 /mbCG1ftr7Pu863c2P+TPfBu1ZDBIUOBpLebVmB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ray Wu <ray.wu@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.10 211/342] drm/amd/display: Clamp HDMI HDCP2 rx_id_list read to buffer size
-Date: Tue, 16 Jun 2026 20:28:27 +0530
-Message-ID: <20260616145058.005032959@linuxfoundation.org>
+Subject: [PATCH 5.10 187/342] drm/amd/display: Reject gpio_bitshift >= 32 in bios_parser_get_gpio_pin_info()
+Date: Tue, 16 Jun 2026 20:28:03 +0530
+Message-ID: <20260616145056.894288438@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -55,45 +55,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Harry Wentland <harry.wentland@amd.com>
 
-commit f0f3981c43b32cadfe373d636d9e9ca522bb3702 upstream.
+commit 49c3da65961fe9857c831d47fa1989084e87514a upstream.
 
 [Why & How]
-During HDCP 2.x repeater authentication over HDMI, the driver reads the
-sink's RxStatus register and extracts a 10-bit message size field (max
-value 1023). This value is used as the read length for the ReceiverID
-list without being clamped to the size of the destination buffer
-rx_id_list[177]. A malicious HDMI repeater could advertise a message
-size larger than the buffer, causing an out-of-bounds write during the
-I2C read.
+gpio_bitshift is a uint8_t read directly from the VBIOS GPIO pin table.
+If the value is >= 32, the expression "1 << gpio_bitshift" triggers
+undefined behaviour in C (shift count exceeds type width). On x86 the
+shift is silently masked to 5 bits, producing an incorrect GPIO mask
+that may cause wrong MMIO register bits to be toggled.
 
-Clamp the read length in mod_hdcp_read_rx_id_list() to the size of the
-rx_id_list buffer, matching the approach already used in the DP branch.
+Validate gpio_bitshift before use and return BP_RESULT_BADBIOSTABLE for
+out-of-range values.
 
-Fixes: eff682f83c9c ("drm/amd/display: Add DDC handles for HDCP2.2")
+Fixes: ae79c310b1a6 ("drm/amd/display: Add DCE12 bios parser support")
 Assisted-by: Copilot:claude-opus-4.6
 Reviewed-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Harry Wentland <harry.wentland@amd.com>
 Signed-off-by: Ray Wu <ray.wu@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 229212219e4247d9486f8ba41ef087358490be09)
+(cherry picked from commit eadf438ab8d370b9d19acee9359918c85afeb80d)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c
-+++ b/drivers/gpu/drm/amd/display/modules/hdcp/hdcp_ddc.c
-@@ -533,7 +533,8 @@ enum mod_hdcp_status mod_hdcp_read_rx_id
- 	} else {
- 		status = read(hdcp, MOD_HDCP_MESSAGE_ID_READ_REPEATER_AUTH_SEND_RECEIVERID_LIST,
- 				hdcp->auth.msg.hdcp2.rx_id_list,
--				hdcp->auth.msg.hdcp2.rx_id_list_size);
-+				MIN(hdcp->auth.msg.hdcp2.rx_id_list_size,
-+				    sizeof(hdcp->auth.msg.hdcp2.rx_id_list)));
- 	}
- 	return status;
- }
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+@@ -546,8 +546,10 @@ static enum bp_result bios_parser_get_gp
+ 		info->offset_en = info->offset + 1;
+ 		info->offset_mask = info->offset - 1;
+ 
+-		info->mask = (uint32_t) (1 <<
+-			header->gpio_pin[i].gpio_bitshift);
++		if (header->gpio_pin[i].gpio_bitshift >= 32)
++			return BP_RESULT_BADBIOSTABLE;
++
++		info->mask = 1u << header->gpio_pin[i].gpio_bitshift;
+ 		info->mask_y = info->mask + 2;
+ 		info->mask_en = info->mask + 1;
+ 		info->mask_mask = info->mask - 1;
 
 
