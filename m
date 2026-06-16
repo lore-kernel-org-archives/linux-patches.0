@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A64466B4C;
-	Tue, 16 Jun 2026 16:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E5144BCB8;
+	Tue, 16 Jun 2026 16:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626449; cv=none; b=IaF5KV08/AWMzXdEbGqSuQ71OpIDPGwT0XJPEG6xNzTxHD/GRzonHcOqmMkQqVm4gxNujmhNvjYcph9SHmdMVs/ELx045bpFzEJzoXX6IVJIBKVLw4kukvVV1rAJUfZswlo+I035vbDBqPlLh6zzUj6+iDyJV0yVQeb+BjuRhz8=
+	t=1781626455; cv=none; b=tuYC5xZAQDUGCvcZQQY5j+0H6h6/46ueJanM2tjhnzt/pjiof3llRGLRWqEeqMTwFHFUhzq8o5PEsArnCDnYsWlsykaW55sO19IrmpTbHD/0QJH7LCgeteoM8DRx8yKu5wXeXSX8wFv/Fih+VXMRVvhJn9ACiIjhDsrA5W8BVH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626449; c=relaxed/simple;
-	bh=1madfhPKR3dVfYhOTekT5x++F4/kP7Dv8iQ3w3tdNos=;
+	s=arc-20240116; t=1781626455; c=relaxed/simple;
+	bh=bGJ3mvSaZYW0DHtae7qG346lD7yEs/EaL6H57Yqdsew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QGHJhSWyT2oF4eeRev+z7a05s8rkQxgf6hPGhzVIkPUl3wBhdXC3bLIOaCzq3O6BK22X7OHvz5iY2K9ETd0BmprAirEQDm10mvCpufVDOV+K5PUsOrrN3D/WHG96AHFSr6nA/ZT311hCB4B68ADhSfeFx8zhMgkoriIop1pdujA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aDvuG8m0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m5rH5NwIMcUa+dGDEGKLUktWhKNSdz6EOS/e5EiCpT3St0unLqh//apiDy6D68Ma6ok6TJhMmHRjvHkPtrOUrOIns8AzmR4ApGHy70t1aApqynW63NkXETcHdJlgogeNAq9CipGSQlZP8ZG2DTXmGblJdqja12CRnfEC4tkDaow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p6po6iP8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDvuG8m0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB411F000E9;
-	Tue, 16 Jun 2026 16:14:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6po6iP8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28CE71F000E9;
+	Tue, 16 Jun 2026 16:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626448;
-	bh=L1q8dsIrs0q2T75mYcEkbjwKmXKUS1JyrXE9n2R7G+k=;
+	s=korg; t=1781626454;
+	bh=6vxqq9fxFwYOOE0ynnBrq8TRFw36cimmnqvDyUD1olk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aDvuG8m0+iMp/sJeeZHu/7Pm4Fxo2khAP/tlxvn8DzWasNxQj8C1d80B2f2hnfbv8
-	 UBhQIhJThRyPQyjaQeR6Am5sDGpEM8nm376lAXOPdEzeos41b4Vku4HONwTjYOdLy1
-	 COmz9V4ij2fzZAIe2hJpfh6kkwf+3EUrnFMLCOBs=
+	b=p6po6iP8wTppnB12zP5I0tfDV9KUtMj5PCfmlBGazDH7CBSfG6UTmJ2skQvar/edm
+	 aTjYjLSHPH2A9toVUU9BWTcm8z7zeDFYIs49lO82ZwmgCt5V1+jL3ZiOEBGq+mM+gP
+	 nw/kLVH0JL8CbaQGZJttFRBG5EuhgIjwElGkNles=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 6.18 290/325] drm/v3d: Skip CSD when it has zeroed workgroups
-Date: Tue, 16 Jun 2026 20:31:26 +0530
-Message-ID: <20260616145113.233330618@linuxfoundation.org>
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: [PATCH 6.18 281/325] slimbus: qcom-ngd-ctrl: Avoid ABBA on tx_lock/ctrl->lock
+Date: Tue, 16 Jun 2026 20:31:17 +0530
+Message-ID: <20260616145112.724897144@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -45,79 +44,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-commit 7f93fad5ea0affc9e1505dd0f7596c0fdb496213 upstream.
+commit 55f2ea9ff83cc27a85526b14bc9b32f96a08d6ec upstream.
 
-A compute shader dispatch encodes its workgroup counts in the CFG0..CFG2
-registers. Kicking off a dispatch with a zero count in any of the three
-dimensions is invalid. First, the hardware will process 0 as 65536,
-while the user-space driver exposes a maximum of 65535. Over that, a
-submission with a zeroed workgroup dimension should be a no-op.
+During the SSR/PDR down notification the tx_lock is taken with the
+intent to provide synchronization with active DMA transfers.
 
-These zeroed counts can reach the dispatch path through an indirect CSD
-job, whose workgroup counts are only known once the indirect buffer is
-read and may legitimately be zero, but such scenario should only result in
-a no-op.
+But during this period qcom_slim_ngd_down() is invoked, which ends up in
+slim_report_absent(), which takes the slim_controller lock. In multiple
+other codepaths these two locks are taken in the opposite order (i.e.
+slim_controller then tx_lock).
 
-Overwrite the indirect CSD job workgroup counts with the indirect BO
-ones, even if they are zeroed, and don't submit the job to the hardware
-when any of the workgroup counts is zero, so the job completes immediately
-instead of running the shader.
+The result is a lockdep splat, and a possible deadlock:
 
+  rprocctl/449 is trying to acquire lock:
+  ffff00009793e620 (&ctrl->lock){+.+.}-{4:4}, at: slim_report_absent (drivers/slimbus/core.c:322) slimbus
+
+  but task is already holding lock:
+  ffff00009793fb50 (&ctrl->tx_lock){+.+.}-{4:4}, at: qcom_slim_ngd_ssr_pdr_notify (drivers/slimbus/qcom-ngd-ctrl.c:1475) slim_qcom_ngd_ctrl
+
+  which lock already depends on the new lock.
+
+  Possible unsafe locking scenario:
+
+        CPU0                    CPU1
+        ----                    ----
+   lock(&ctrl->tx_lock);
+                                lock(&ctrl->lock);
+                                lock(&ctrl->tx_lock);
+   lock(&ctrl->lock);
+
+The assumption is that the comment refers to the desire to not call
+qcom_slim_ngd_exit_dma() while we have an ongoing DMA TX transaction.
+But any such transaction is initiated and completed within a single
+qcom_slim_ngd_xfer_msg().
+
+Prior to calling qcom_slim_ngd_exit_dma() the slim_controller is torn
+down, all child devices are notified that the slimbus is gone and the
+child devices are removed.
+
+Stop taking the tx_lock in qcom_slim_ngd_ssr_pdr_notify() to avoid the
+deadlock.
+
+Fixes: a899d324863a ("slimbus: qcom-ngd-ctrl: add Sub System Restart support")
 Cc: stable@vger.kernel.org
-Fixes: d223f98f0209 ("drm/v3d: Add support for compute shader dispatch.")
-Suggested-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20260602-v3d-fix-indirect-csd-v4-2-654309e32bc0@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260530204421.116824-9-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/v3d/v3d_sched.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/slimbus/qcom-ngd-ctrl.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -377,6 +377,16 @@ v3d_csd_job_run(struct drm_sched_job *sc
- 		return NULL;
- 	}
- 
-+	/* The HW interprets a workgroup size of 0 as 65536; however, the
-+	 * user-space driver exposes a maximum of 65535. Therefore, a 0 in
-+	 * any dimension means that we have no workgroups and the compute
-+	 * shader should not be dispatched.
-+	 */
-+	if (!V3D_GET_FIELD(job->args.cfg[0], V3D_CSD_QUEUED_CFG0_NUM_WGS_X) ||
-+	    !V3D_GET_FIELD(job->args.cfg[1], V3D_CSD_QUEUED_CFG1_NUM_WGS_Y) ||
-+	    !V3D_GET_FIELD(job->args.cfg[2], V3D_CSD_QUEUED_CFG2_NUM_WGS_Z))
-+		return NULL;
-+
- 	v3d->queue[V3D_CSD].active_job = &job->base;
- 
- 	v3d_invalidate_caches(v3d);
-@@ -427,13 +437,13 @@ v3d_rewrite_csd_job_wg_counts_from_indir
- 
- 	wg_counts = (uint32_t *)(bo->vaddr + indirect_csd->offset);
- 
--	if (wg_counts[0] == 0 || wg_counts[1] == 0 || wg_counts[2] == 0)
--		goto unmap_bo;
--
- 	args->cfg[0] = wg_counts[0] << V3D_CSD_CFG012_WG_COUNT_SHIFT;
- 	args->cfg[1] = wg_counts[1] << V3D_CSD_CFG012_WG_COUNT_SHIFT;
- 	args->cfg[2] = wg_counts[2] << V3D_CSD_CFG012_WG_COUNT_SHIFT;
- 
-+	if (wg_counts[0] == 0 || wg_counts[1] == 0 || wg_counts[2] == 0)
-+		goto unmap_bo;
-+
- 	num_batches = DIV_ROUND_UP(indirect_csd->wg_size, 16) *
- 		      (wg_counts[0] * wg_counts[1] * wg_counts[2]);
- 
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1471,15 +1471,12 @@ static int qcom_slim_ngd_ssr_pdr_notify(
+ 	switch (action) {
+ 	case QCOM_SSR_BEFORE_SHUTDOWN:
+ 	case SERVREG_SERVICE_STATE_DOWN:
+-		/* Make sure the last dma xfer is finished */
+-		mutex_lock(&ctrl->tx_lock);
+ 		if (ctrl->state != QCOM_SLIM_NGD_CTRL_DOWN) {
+ 			pm_runtime_get_noresume(ctrl->ctrl.dev);
+ 			ctrl->state = QCOM_SLIM_NGD_CTRL_DOWN;
+ 			qcom_slim_ngd_down(ctrl);
+ 			qcom_slim_ngd_exit_dma(ctrl);
+ 		}
+-		mutex_unlock(&ctrl->tx_lock);
+ 		break;
+ 	case QCOM_SSR_AFTER_POWERUP:
+ 	case SERVREG_SERVICE_STATE_UP:
 
 
