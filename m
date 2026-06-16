@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF073A16AC;
-	Tue, 16 Jun 2026 16:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE41C3A16AC;
+	Tue, 16 Jun 2026 16:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626327; cv=none; b=ov/B1DEGdupC1Jd4jmSOJXTTBV28sCzcB2RPrU6OX1cZ33KvdbDrp3PamHY+S+8NtUZwKewIkmqasKbpRPfLixSdKY2hmv1598LL21w7pVkrAlVA19md5e3o9zEDK/xbmmvwISJ5OEDrHcV+jFiue6oBZ0gEVUYEWrY7f8Q35u4=
+	t=1781626333; cv=none; b=bWSKw+k8TGwgyh/2sL5uMGZfHWQdmlxaHFZjL+nlnbcWqIcb6GV08n0XTlGIQQkE1NrJ6zICgALfHpPcqlclpGDIM4EKb+qI9SRpsjstUflXFG9b/Sq1JeHS1BsDGtla2MIFBEIIRCdQT2aNSprzFALBNI3Ut5o/t7marw0NSlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626327; c=relaxed/simple;
-	bh=LrfG1ta2MlTN1oEE3sTu77kFsV/DAZI5RvDk8vLROKQ=;
+	s=arc-20240116; t=1781626333; c=relaxed/simple;
+	bh=HDmTAww1bwyVvGWEeb7yhnqeV8lmvzkQSeUKHDB5z00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RV1gk2CsslA7PbMU4hEHu+FOIP4alm76YLOkgNkwOvsq7UR9LBgY7ZvLMQVMPAmF9gLnd4rLTBpQACOf0+zBM/aLpNIO6utLjYtl3hV9RaDhLuhFJzcQdeb5lSwt3tszpIv4FnPFrJHyuFUn4hyXF1YDCI6QrA562LBTnYYAh3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KE0D4aS1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sxr/+duEnNJ4slc09AaJT67uSMFPYFUV2137dRXPqhHLV8YCYDho2QG0tnLi16ESF2X2NhDQj+q0aqaU9zRBOxHOzIMiX2UiiFmCS/pmhHgs1FTrJdcwfUTnc/XJMikVCSSFSSs5zM9TFM3Iao1grZDbwHwurt/DbpNtT/a0m+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUelPHOa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KE0D4aS1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 570DD1F000E9;
-	Tue, 16 Jun 2026 16:12:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUelPHOa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9795A1F000E9;
+	Tue, 16 Jun 2026 16:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626326;
-	bh=lAtFJHATujh6Wi3s9zypPPsQfonDxGIPfIBXcmH8nk0=;
+	s=korg; t=1781626331;
+	bh=ePsVbsbxM5Wlbu/owcjAgeugIHMO3GExXDaVNAzvKmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KE0D4aS1zVlIE1eaGiTdCPYYghwq+y82ZrXaJbHHRPszxYHS2iOQOqGar6ssRehz6
-	 6bpjlPN9qlC2lZSIo8IAlbZ06TATNeCm7I2H24aikLzcV/Lq5bPU8IiM3HefZu7g/f
-	 7HiNFLftqUJMGgVUJ0jlXaPEpyT+R8e9ZHzhUV/U=
+	b=AUelPHOawIaKSRt4cBuyYuihTgxNJ1u9cd4V1Lc6VsAWIuk01lZunPmJBNjt3oO8+
+	 Jgl7x1rcgMzQa0jlI7HUhQjOjiV3zYlsZSIFtjnqGlrlmXxHR9vZ2pT3DWTIkf+E1q
+	 UWGk7TU///d6coBsUCKOvrHRlYbhrus+aoeaRB1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 303/325] drm/amd/display: Use krealloc_array() in dal_vector_reserve()
-Date: Tue, 16 Jun 2026 20:31:39 +0530
-Message-ID: <20260616145114.053396367@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.18 304/325] fs/fcntl: fix SOFTIRQ-unsafe lock order in fasync signaling
+Date: Tue, 16 Jun 2026 20:31:40 +0530
+Message-ID: <20260616145114.107789034@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -53,46 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
 
-commit da48bc4461b8a5ebfb9264c9b191a701d8e99009 upstream.
+commit 00633c4683828acd5256fa8d5163f440d74bbe71 upstream.
 
-[Why & How]
-dal_vector_reserve() computes the allocation size as
-"capacity * vector->struct_size" using uint32_t arithmetic, which can
-silently wrap to a small value on overflow. This would cause krealloc to
-return a smaller buffer than expected, leading to heap overflows on
-subsequent vector appends.
+A SOFTIRQ-safe to SOFTIRQ-unsafe lock order deadlock can occur in
+send_sigio() and send_sigurg() when a process group receives a signal.
 
-Replace krealloc() with krealloc_array() which performs an internal
-overflow check and returns NULL on wrap, preventing the issue.
+When FASYNC is configured for a process group (PIDTYPE_PGID), both
+functions use read_lock(&tasklist_lock) to traverse the task list.
+However, they are frequently called from softirq context:
+- send_sigio() via input_inject_event -> kill_fasync
+- send_sigurg() via tcp_check_urg -> sk_send_sigurg (NET_RX_SOFTIRQ)
 
-Fixes: 2004f45ef83f ("drm/amd/display: Use kernel alloc/free")
-Assisted-by: Copilot:claude-opus-4.6
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 37668568641ccc4cc1dbca4923d0a16609dd5707)
-Cc: stable@vger.kernel.org
+The deadlock is caused by the rwlock writer fairness mechanism:
+1. CPU 0 (process context) holds read_lock(&tasklist_lock) in do_wait().
+2. CPU 1 (process context) attempts write_lock(&tasklist_lock) in
+   fork() or exit() and spins, which blocks all new readers.
+3. CPU 0 is interrupted by a softirq (e.g., TCP URG packet reception).
+4. The softirq calls send_sigurg() and attempts to acquire
+   read_lock(&tasklist_lock), deadlocking because CPU 1 is waiting.
+
+Since PID hashing and do_each_pid_task() traversals are already
+RCU-protected, the read_lock on tasklist_lock is no longer strictly
+required for safe traversal. Fix this by replacing tasklist_lock with
+rcu_read_lock(), aligning the process group signaling path with the
+single-PID path. This also mitigates a potential remote denial of
+service vector via TCP URG packets.
+
+Lockdep splat:
+=====================================================
+WARNING: SOFTIRQ-safe -> SOFTIRQ-unsafe lock order detected
+[...]
+Chain exists of:
+  &dev->event_lock --> &f_owner->lock --> tasklist_lock
+
+Possible interrupt unsafe locking scenario:
+       CPU0                    CPU1
+       ----                    ----
+  lock(tasklist_lock);
+                           local_irq_disable();
+                           lock(&dev->event_lock);
+                           lock(&f_owner->lock);
+  <Interrupt>
+    lock(&dev->event_lock);
+
+*** DEADLOCK ***
+
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20260523135210.590928-1-w15303746062@163.com
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/basics/vector.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/fcntl.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/basics/vector.c
-+++ b/drivers/gpu/drm/amd/display/dc/basics/vector.c
-@@ -288,8 +288,8 @@ bool dal_vector_reserve(struct vector *v
- 	if (capacity <= vector->capacity)
- 		return true;
- 
--	new_container = krealloc(vector->container,
--				 capacity * vector->struct_size, GFP_KERNEL);
-+	new_container = krealloc_array(vector->container,
-+				       capacity, vector->struct_size, GFP_KERNEL);
- 
- 	if (new_container) {
- 		vector->container = new_container;
+--- a/fs/fcntl.c
++++ b/fs/fcntl.c
+@@ -916,11 +916,11 @@ void send_sigio(struct fown_struct *fown
+ 			send_sigio_to_task(p, fown, fd, band, type);
+ 		rcu_read_unlock();
+ 	} else {
+-		read_lock(&tasklist_lock);
++		rcu_read_lock();
+ 		do_each_pid_task(pid, type, p) {
+ 			send_sigio_to_task(p, fown, fd, band, type);
+ 		} while_each_pid_task(pid, type, p);
+-		read_unlock(&tasklist_lock);
++		rcu_read_unlock();
+ 	}
+  out_unlock_fown:
+ 	read_unlock_irqrestore(&fown->lock, flags);
+@@ -962,11 +962,11 @@ int send_sigurg(struct file *file)
+ 			send_sigurg_to_task(p, fown, type);
+ 		rcu_read_unlock();
+ 	} else {
+-		read_lock(&tasklist_lock);
++		rcu_read_lock();
+ 		do_each_pid_task(pid, type, p) {
+ 			send_sigurg_to_task(p, fown, type);
+ 		} while_each_pid_task(pid, type, p);
+-		read_unlock(&tasklist_lock);
++		rcu_read_unlock();
+ 	}
+  out_unlock_fown:
+ 	read_unlock_irqrestore(&fown->lock, flags);
 
 
