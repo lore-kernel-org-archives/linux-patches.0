@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3AA4657D0;
-	Tue, 16 Jun 2026 17:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665C447AF68;
+	Tue, 16 Jun 2026 17:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631890; cv=none; b=pq/56e5WioKNJ3mand00Cv0hD09tLsRwYlDpcIDYLpo9far2l9+bWcuGg4TJunTAk9O6iwISlMz3r38e0RsMeYt60qRfVyVgTqx0yl/wggc2dEyMIRzYELbTny7aVpos7w4r5/wqtX7xgyL6h5wwsrci8/Cm8+xq4nnnW54kRq8=
+	t=1781631896; cv=none; b=csh9c96/U0aDqJUIerijV1jcnWT8nHAqblAHUrYXvr5xqvGX/WYfJ+Y6tVPmjIUkwj6jjaOwokksTfV0+2DxNmd9qL93x9QyMaVSfHE7sq7YgAheISneKSeO56M85oePnIn+TzgtHzKEhxsX1V6YKzb28UHfTlKanGtp/PR4uKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631890; c=relaxed/simple;
-	bh=4jvVfiaTV3dZ/rx2l0GPFhfO6PTQgSaIgsfBtVhkDFc=;
+	s=arc-20240116; t=1781631896; c=relaxed/simple;
+	bh=++//MLpXtGfeEP5JP0a/GAmIKdCTExB72ntKEVClOZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EykboQFnZu8BPNwdMws//E3xO5U6eoPyjmiWBwZbyIvuzkppTxN21rXedOCjBKT7HlduDJyQSrVxG/rZBUbf3PYI2vrpaFFN3z1jmQtUKY1Uybs3yxnjv9tMEw3nRvX/ptjinopAHAa2qAEj/bqrcZxVK4m2YZSvicZdL2zc1ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bN2cN0xF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UF+W9XdGsXzoVi9EWpfyAsU3q694rtlTOSG7Vjwlql0Dndx51g01g9iwvAtAGbe4rZdJCwCBBJPrkMb1AqjyQEKwm8G2pCVE094mflTULVLousqhjmQDbwkqLmTSksB+d47yBEuNsMsNJnVop+Oz+D51i0BkKJNgfQ4E2QblbXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVCP1k/L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bN2cN0xF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278301F000E9;
-	Tue, 16 Jun 2026 17:44:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVCP1k/L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599141F000E9;
+	Tue, 16 Jun 2026 17:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631889;
-	bh=PdGBEAaa7AAxmJZRCvd6lwJ5hMBb1/8ch+RK+JcPo54=;
+	s=korg; t=1781631894;
+	bh=PqRNkvMQ5+JsZd0TwegxDf4qwoCEC6JbUgiA0I9eZyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bN2cN0xFkGOPHPxcpxJfBGskNiH0+MD26yecxlBU3FpU/aFUPssUK+fvp76nIH7Bf
-	 FCo8xhLz7IyTZJrgBOo6+Zx1LTltpWkFKv6cpCjdBgk9gei6DBklwrfM/CK4VuDXN4
-	 52BfhIEajCdSKoTZ9w2Ho4Fivznk0EV/cXtWs+Cw=
+	b=gVCP1k/LJp3TPBfpQXqXtrRBY2aIvFAXFTU/KnIsxZtGJwGqm9O77lXSipVLB+aCa
+	 3PTLEmPeWenj6CVV1YASvoxa67SYkuALprrKcqUWD5dOJNBA+gb2G8TbW3xQgN4C18
+	 4upVtRnVny4OFs9Hw1vC+OohloYrsvhxHeHtcD0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongfei Ren <lcrhf@outlook.com>,
-	stable@kernel.org,
-	Cryolitia PukNgae <cryolitia.pukngae@linux.dev>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 299/522] Input: atkbd - skip deactivate for HONOR BCC-Ns internal keyboard
-Date: Tue, 16 Jun 2026 20:27:26 +0530
-Message-ID: <20260616145139.895170668@linuxfoundation.org>
+	Dawei Feng <dawei.feng@seu.edu.cn>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 308/522] octeontx2-af: fix memory leak in rvu_setup_hw_resources()
+Date: Tue, 16 Jun 2026 20:27:35 +0530
+Message-ID: <20260616145140.283178501@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,45 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
+From: Dawei Feng <dawei.feng@seu.edu.cn>
 
-commit fb402386af4cdce108ff991a796386de55439735 upstream.
+commit 09a5bf856aa759513afc4afd233d15bcc711b84e upstream.
 
-After commit 9cf6e24c9fbf17e52de9fff07f12be7565ea6d61 ("Input: atkbd -
-do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID"), HONOR
-BCC-N, aka HONOR MagicBook 14 2026's internal keyboard stops
-working. Adding the atkbd_deactivate_fixup quirk fixes it.
+If rvu_npc_exact_init() fails in rvu_setup_hw_resources(), the function
+returns directly instead of jumping to the error handling path. This
+causes a resource leak for the previously initialized CGX, NPC, fwdata,
+and MSI-X states.
 
-DMI: HONOR BCC-N/BCC-N-PCB, BIOS 1.04 04/07/2026
+Fix this by replacing the direct return with goto cgx_err to ensure
+proper cleanup.
 
-Fixes: 9cf6e24c9fbf17e52de9fff07f12be7565ea6d61 ("Input: atkbd - do not skip atkbd_deactivate() when skipping ATKBD_CMD_GETID")
-Reported-by: Hongfei Ren <lcrhf@outlook.com>
-Link: https://github.com/colorcube/Linux-on-Honor-Magicbook-14-Pro/issues/1#issuecomment-4562679891
-Tested-by: Hongfei Ren <lcrhf@outlook.com>
-Cc: stable@kernel.org
-Signed-off-by: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
-Link: https://patch.msgid.link/20260605-honor-v1-1-78e05e491193@linux.dev
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+The bug was first flagged by an experimental analysis tool we are
+developing for kernel memory-management bugs while analyzing
+v6.13-rc1. The tool is still under development and is not yet publicly
+available. Manual inspection confirms that the bug is still present in
+v7.1-rc6.
+
+An x86_64 allyesconfig build showed no new warnings. As we do not have
+access to Marvell OcteonTX2 RVU AF hardware to test with, no runtime
+testing was able to be performed.
+
+Fixes: 3571fe07a090 ("octeontx2-af: Drop rules for NPC MCAM")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Link: https://patch.msgid.link/20260604143756.1524482-1-dawei.feng@seu.edu.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/atkbd.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/keyboard/atkbd.c
-+++ b/drivers/input/keyboard/atkbd.c
-@@ -1932,6 +1932,13 @@ static const struct dmi_system_id atkbd_
- 		},
- 		.callback = atkbd_deactivate_fixup,
- 	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "HONOR"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "BCC-N"),
-+		},
-+		.callback = atkbd_deactivate_fixup,
-+	},
- 	{ }
- };
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+@@ -1130,7 +1130,7 @@ cpt:
+ 	err = rvu_npc_exact_init(rvu);
+ 	if (err) {
+ 		dev_err(rvu->dev, "failed to initialize exact match table\n");
+-		return err;
++		goto cgx_err;
+ 	}
  
+ 	/* Assign MACs for CGX mapped functions */
 
 
