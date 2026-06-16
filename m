@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2A121C16A;
-	Tue, 16 Jun 2026 17:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643E747AF68;
+	Tue, 16 Jun 2026 17:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631771; cv=none; b=jH4HvJbDiROy6AjKx9liVTYzy5N/C5YbA6qkY38hFvwE41SegzlIpEO3aUfd6Q0wEymor5Wle+xqwISi6rtCAG1JrdyOQ6BUOLfxkOo6/gLgpiazBAxUlWgTH4YalOnjBgpPNpMRLagv2ZsoxShtxXzzk5mV6K8mdDAnoAXPIjA=
+	t=1781631776; cv=none; b=hth79PYp3AA5yZZl1WGBlXzb+aSPqtGWePkjth57CTi2mM8n5cFERbWlMQ88oU2awF1S0G12ktgz2umml4s8J28F5NiM5ye759745hLUb9hKzHGx2mQn80U48jpfnx/ZmAeOA+C7D9/7Zu2Kon+YKO4sxk03Cy51RYCJQ/2hoKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631771; c=relaxed/simple;
-	bh=dK22F0HUs+t8y9FIoa2ymLrcP/etMrg8HuMsOnVPbo4=;
+	s=arc-20240116; t=1781631776; c=relaxed/simple;
+	bh=sO+TOePnY4ZsxPj3SFaQl7hX0CUO2uR4iifOFC3+US4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i/jbiehmTqKCfI2vGmXVVzKBhaRbYQTO8grz8ZhoDuDKV2c8VRMqpj4wpW4Uyrdigd5UYc3+V9Vl4VSKEC33T20T/sV2OxbbDTb22RvNGClk99LDZIDiutbEqsxsmQ6b5r8HBHvXSspmjZP2SMyUgknN/p3cV9DCBba/o0vK4pU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCnW3O59; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Fagq+UG9g9efMAsz5y9MHiFSI1Js8l6d8u2BYDy0lm27GKgG8mbDfL5CKzIftMnntweZMnl774xtlCaBYEO3ULnnYRW8wzfRlC/vqZEEstZno7CE7wGrFbxTSm4U8dv402LUNbFDv/wq+35eaDOeFQOZveN+BAL2cN3BXM/a7fI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MzyxFsTX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCnW3O59"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CBD1F000E9;
-	Tue, 16 Jun 2026 17:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MzyxFsTX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 063811F000E9;
+	Tue, 16 Jun 2026 17:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631768;
-	bh=0R+gDhRpUY1Aa4TGNg1D4+WZZmHNGMGYWtbrRJtgp5Y=;
+	s=korg; t=1781631773;
+	bh=z3EZyQKETQ2SeBgfsHRHflmVhthsh3g7wIfH2Sn/mMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xCnW3O59w8WEmtBIIpFnhOeaoDLRsnBxHraW/rN871tO1k3ZASWJncNOcmmGdEo/D
-	 q9OpIzjAtEOPkiSbWzL0zDa4g2UAu7T8ZyqQ9MUdGHQwLxSmtZCKw/Vo747RJpm0o9
-	 tcrKmON2uvqkLBMdnmLuqw1G0oqMmbOizDXmGyJo=
+	b=MzyxFsTXxTpDjcWkoO4rBUy7+WZfygekD8NvT7zPEnS4xlSopPBmUskU5ZDEvu2UT
+	 jEoyMdzX7Jj4jWU9XdaTUfSpGnfkp3azrZ+fGm2n56Lg+wWumh8E+idkioFdRh2mqV
+	 ItOaFpEo7Pt9L9ZSAMJO2DD9mAGVZ6gyksL6aA4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 242/522] ASoC: wm_adsp: Fix NULL dereference when removing firmware controls
-Date: Tue, 16 Jun 2026 20:26:29 +0530
-Message-ID: <20260616145137.303655475@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 277/522] USB: serial: kl5kusb105: fix bulk-out buffer overflow
+Date: Tue, 16 Jun 2026 20:27:04 +0530
+Message-ID: <20260616145138.911493552@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,52 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 7d3fb78b550301e43fdc60312aed733069694426 ]
+commit 96d47e40bf9db4a9efd5c8fb53287a508d165f14 upstream.
 
-In wm_adsp_control_remove() check that the priv pointer is not NULL
-before attempting to cleanup what it points to.
+klsi_105_prepare_write_buffer() is called by the generic write path
+with the bulk-out buffer and its size (bulk_out_size, 64 bytes). It
+stores a two-byte length header at the start of the buffer and copies
+the payload from the write fifo starting at buf + KLSI_HDR_LEN, but
+passes the full buffer size as the number of bytes to copy:
 
-When cs_dsp creates a control it calls wm_adsp_control_add_cb() so that
-wm_adsp can create its own private control data. There are two cases
-where private data is not created:
+  count = kfifo_out_locked(&port->write_fifo, buf + KLSI_HDR_LEN,
+                           size, &port->lock);
 
-1. The control is a SYSTEM control, so an ALSA control is not created.
+When the fifo holds at least size bytes, size bytes are copied starting
+two bytes into the size-byte buffer, writing KLSI_HDR_LEN bytes past its
+end. Copy at most size - KLSI_HDR_LEN bytes instead, leaving room for
+the header as safe_serial already does.
 
-2. The codec driver has registered a control_add() callback that
-   hides the control, so wm_adsp_control_add() is not called.
+Writing bulk_out_size or more bytes to the tty triggers a slab
+out-of-bounds write, observed with KASAN by emulating the device with
+dummy_hcd and raw-gadget:
 
-When cs_dsp_remove destroys its control list it calls
-wm_adsp_control_remove() for each control. But wm_adsp_control_remove()
-was attempting to cleanup the private data pointed to by cs_ctl->priv
-without checking the pointer for NULL.
+  BUG: KASAN: slab-out-of-bounds in kfifo_copy_out+0x83/0xc0
+  Write of size 64 at addr ffff888112c62202 by task python3
+   kfifo_copy_out
+   klsi_105_prepare_write_buffer [kl5kusb105]
+   usb_serial_generic_write_start [usbserial]
+  Allocated by task 139:
+   usb_serial_probe [usbserial]
+  The buggy address is located 2 bytes inside of allocated 64-byte region
 
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: 0700bc2fb94c ("ASoC: wm_adsp: Separate generic cs_dsp_coeff_ctl handling")
-Link: https://patch.msgid.link/20260604101244.1402862-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The out-of-bounds write no longer occurs with this change applied.
+
+Fixes: 60b3013cdaf3 ("USB: kl5usb105: reimplement using generic framework")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wm_adsp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/serial/kl5kusb105.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/wm_adsp.c b/sound/soc/codecs/wm_adsp.c
-index 47a4c363227ccd..bc9798ea5a25e2 100644
---- a/sound/soc/codecs/wm_adsp.c
-+++ b/sound/soc/codecs/wm_adsp.c
-@@ -666,6 +666,9 @@ static void wm_adsp_control_remove(struct cs_dsp_coeff_ctl *cs_ctl)
- {
- 	struct wm_coeff_ctl *ctl = cs_ctl->priv;
+--- a/drivers/usb/serial/kl5kusb105.c
++++ b/drivers/usb/serial/kl5kusb105.c
+@@ -331,8 +331,8 @@ static int klsi_105_prepare_write_buffer
+ 	unsigned char *buf = dest;
+ 	int count;
  
-+	if (!ctl)
-+		return;
-+
- 	cancel_work_sync(&ctl->work);
+-	count = kfifo_out_locked(&port->write_fifo, buf + KLSI_HDR_LEN, size,
+-								&port->lock);
++	count = kfifo_out_locked(&port->write_fifo, buf + KLSI_HDR_LEN,
++				 size - KLSI_HDR_LEN, &port->lock);
+ 	put_unaligned_le16(count, buf);
  
- 	kfree(ctl->name);
--- 
-2.53.0
-
+ 	return count + KLSI_HDR_LEN;
 
 
