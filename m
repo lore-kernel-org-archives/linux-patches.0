@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FBF3D8902;
-	Tue, 16 Jun 2026 18:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5367B3DC4D9;
+	Tue, 16 Jun 2026 18:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634820; cv=none; b=jUciY1AJhQwD2u32wB62HRvZPJo8seAwT/P93tUCfx6QoYj9IePN1xjWixYoGcjThklYkJQtaxO8CxU9skJH42DSJJ5kGnsv/C+fMVw3CZd5uRf1DZbt/Q1thYWR06/Nov3Epv8wi4BgFvdJe4wOye5zrU6J29lWSDT2UFSNQ5k=
+	t=1781634825; cv=none; b=lEPMl/llhFpAgJZmRJK1q5/Y+qMNShJ3DL++uK7gPfGJwakoN4nrAH7wzfqITIvNH0BwcJm4kp7Pj6gjcIAsWsC/N7tBYJ+t2S8ZJn1VLQn9N8zUu7gO4n5oszYiccZ8QUkFAESZBazIN1ADlxWj5zVPUNYEv/dT6/zVWG4vF0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634820; c=relaxed/simple;
-	bh=dN0breCfDOVhXFMQZfTraM/m2nRmgWjMrVHudGhbWWI=;
+	s=arc-20240116; t=1781634825; c=relaxed/simple;
+	bh=a/2QdgDvNnD2wZGXjjjEP+tnfzUTts4gDrncJ876DbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dxoF946/RxK1DO5ezFRwwI0gtHvZKIo+BdThEZu0BSeHHiQsyDDmGvfIqypEkvNgjtdPk/qWNJ5aWfR96xOdua3MKyqbQvrJ8qgMUoYnqpgsV6cHtlrZafOj3I1p8nuPApVoQ7f46eXGtJAHgEZr1xPJZxaMyvJzIxs1GiLlqsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XI9T7UYE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=WkI8Foj08Vdfz+PrxhaKKsyw99sIon6vJM9JYHuIajSiSfJe9NcbEJmT8BASHiS27fLVcjG4IpxXnyznVYcYUNcPRTaSLUzw8M29ThWZJpfc2pzp3H/A5tisPOMJx7qv1CgTvIWw1U/yZUebkv/5/OO2qRYuabTwEBFaM/ZiGYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKobxlEk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XI9T7UYE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 906561F000E9;
-	Tue, 16 Jun 2026 18:33:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKobxlEk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6267C1F000E9;
+	Tue, 16 Jun 2026 18:33:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634819;
-	bh=P51RblIe5Ruh4fDKAMGYQw56hHbwpvOeO9CVgxTeHdk=;
+	s=korg; t=1781634824;
+	bh=h2m4NiD5YdAk4QxdxymrS5s4GIWIgLKgwGgPlAYsIcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XI9T7UYE7CRpW2UcqsMkMSRcBwgWFj0snmzJei2hsaywtzAmC2zGPNjnxPF01DAe2
-	 6ZRun42ksmJsNEB+LJK+X/15g00tGVU/CwMCkhEqlqozzm2ZAE4CLYQ57Z+KhdeiJ9
-	 pgec4Q9zanYQoFgno0WGV6QPphtc7/SgBo8XIf0A=
+	b=zKobxlEkBtNsU4EEo8DiK3BKu8ruBJ0gEF90SDc9Chb/WQJdBpzSx7t0FdiUSk2og
+	 374pY473ePJ2GWTKtdmZgpe8U4gBQmYjFej4AX3IEkdeodr5oDp6DFET9kT3x10a8e
+	 aSCZLJ7KKw2vmxctafQEvxqSKfy0gAG0fJ41ASfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Steve French <stfrench@microsoft.com>,
+	Siwei Zhang <oss@fourdim.xyz>,
+	=?UTF-8?q?Safa=20Karaku=C5=9F?= <safa.karakus@secunnix.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 338/411] smb: client: require net admin for CIFS SWN netlink
-Date: Tue, 16 Jun 2026 20:29:36 +0530
-Message-ID: <20260616145119.167158381@linuxfoundation.org>
+Subject: [PATCH 5.15 339/411] Bluetooth: fix UAF in l2cap_sock_cleanup_listen() vs l2cap_conn_del()
+Date: Tue, 16 Jun 2026 20:29:37 +0530
+Message-ID: <20260616145119.228215373@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -45,65 +46,214 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Safa Karakuş <safa.karakus@secunnix.com>
 
-[ Upstream commit d1ebfce2c1d161186a82e77590bf7da2ea1bce91 ]
+[ Upstream commit ab1513597c6cf17cd1ad2a21e3b045421b48e022 ]
 
-CIFS_GENL_CMD_SWN_NOTIFY is the userspace witness-notify command.  The
-intended sender is the cifs.witness helper, but the generic-netlink
-operation currently has no capability flag, so any local process can send
-RESOURCE_CHANGE or CLIENT_MOVE notifications to the in-kernel witness
-handler.
+bt_accept_dequeue() unlinks a not-yet-accepted child from the parent
+accept queue and release_sock()s it before returning, so the returned
+sk has no caller reference and is unlocked.
 
-The same family exposes CIFS_GENL_MCGRP_SWN without multicast-group
-capability flags.  Register messages sent to that group include the witness
-registration id and, for NTLM-authenticated mounts, the username, domain,
-and password attributes copied from the CIFS session.  An unprivileged
-local process should not be able to join that group and receive those
-messages.
+l2cap_sock_cleanup_listen() walks these children on listening-socket
+close.  A concurrent HCI disconnect drives hci_rx_work ->
+l2cap_conn_del() which runs l2cap_chan_del() + l2cap_sock_kill() and
+frees the child sk and its l2cap_chan; cleanup_listen() then uses both:
 
-Require CAP_NET_ADMIN for incoming SWN_NOTIFY commands with
-GENL_ADMIN_PERM, and require CAP_NET_ADMIN over the network namespace for
-joining the SWN multicast group with GENL_MCAST_CAP_NET_ADMIN.  The
-cifs.witness service runs with the privileges needed for both operations.
+  BUG: KASAN: slab-use-after-free in l2cap_sock_kill
+    l2cap_sock_kill / l2cap_sock_cleanup_listen / __x64_sys_close
+  Freed by: l2cap_conn_del -> l2cap_sock_close_cb -> l2cap_sock_kill
 
-Fixes: fed979a7e082 ("cifs: Set witness notification handler for messages from userspace daemon")
+This is distinct from the two fixes already in this area: commit
+e83f5e24da741 ("Bluetooth: serialize accept_q access") serialises the
+accept_q list/poll and takes temporary refs inside bt_accept_dequeue(),
+and CVE-2025-39860 serialises the userspace close()/accept() race by
+calling cleanup_listen() under lock_sock() in l2cap_sock_release().
+Neither covers l2cap_conn_del() running from hci_rx_work, so this UAF
+still reproduces on current bluetooth/master.
+
+Take the reference at the source: bt_accept_dequeue() does sock_hold()
+while sk is still locked, before release_sock(); callers sock_put().
+cleanup_listen() pins the chan with l2cap_chan_hold_unless_zero() under
+a brief child sk lock (serialising vs l2cap_sock_teardown_cb()), drops
+it before l2cap_chan_lock(), and skips a duplicate l2cap_sock_kill() on
+SOCK_DEAD.  conn->lock is not taken here: cleanup_listen() runs under
+the parent sk lock and that would invert
+conn->lock -> chan->lock -> sk_lock (lockdep).
+
+KASAN/SMP: an unprivileged listen/close vs HCI-disconnect race produced
+12 use-after-free reports per run before this change; 0, and no lockdep
+report, over 1600+ raced iterations after it on bluetooth/master.
+
+Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: Siwei Zhang <oss@fourdim.xyz>
+Reviewed-by: Siwei Zhang <oss@fourdim.xyz>
+Signed-off-by: Safa Karakuş <safa.karakus@secunnix.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/netlink.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/bluetooth/af_bluetooth.c |   10 ++++++++
+ net/bluetooth/l2cap_sock.c   |   51 +++++++++++++++++++++++++++++++++++++------
+ net/bluetooth/rfcomm/sock.c  |    9 ++++++-
+ net/bluetooth/sco.c          |    9 ++++++-
+ 4 files changed, 70 insertions(+), 9 deletions(-)
 
---- a/fs/cifs/netlink.c
-+++ b/fs/cifs/netlink.c
-@@ -33,13 +33,17 @@ static const struct nla_policy cifs_genl
- static const struct genl_ops cifs_genl_ops[] = {
- 	{
- 		.cmd = CIFS_GENL_CMD_SWN_NOTIFY,
-+		.flags = GENL_ADMIN_PERM,
- 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
- 		.doit = cifs_swn_notify,
- 	},
- };
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -259,6 +259,16 @@ restart:
+ 			if (newsock)
+ 				sock_graft(sk, newsock);
  
- static const struct genl_multicast_group cifs_genl_mcgrps[] = {
--	[CIFS_GENL_MCGRP_SWN] = { .name = CIFS_GENL_MCGRP_SWN_NAME },
-+	[CIFS_GENL_MCGRP_SWN] = {
-+		.name = CIFS_GENL_MCGRP_SWN_NAME,
-+		.flags = GENL_MCAST_CAP_NET_ADMIN,
-+	},
- };
++			/* Hand the caller a reference taken while sk is
++			 * still locked.  bt_accept_unlink() just dropped
++			 * the accept-queue reference; without this hold a
++			 * concurrent teardown (e.g. l2cap_conn_del() ->
++			 * l2cap_sock_kill()) could free sk between
++			 * release_sock() and the caller using it.  Every
++			 * caller drops this with sock_put() when done.
++			 */
++			sock_hold(sk);
++
+ 			release_sock(sk);
+ 			return sk;
+ 		}
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -366,8 +366,13 @@ static int l2cap_sock_accept(struct sock
+ 		}
  
- struct genl_family cifs_genl_family = {
+ 		nsk = bt_accept_dequeue(sk, newsock);
+-		if (nsk)
++		if (nsk) {
++			/* Drop the bridging ref from bt_accept_dequeue();
++			 * the grafted socket keeps nsk alive from here.
++			 */
++			sock_put(nsk);
+ 			break;
++		}
+ 
+ 		if (!timeo) {
+ 			err = -EAGAIN;
+@@ -1444,22 +1449,54 @@ static void l2cap_sock_cleanup_listen(st
+ 	BT_DBG("parent %p state %s", parent,
+ 	       state_to_string(parent->sk_state));
+ 
+-	/* Close not yet accepted channels */
++	/* Close not yet accepted channels.
++	 *
++	 * bt_accept_dequeue() now returns sk with an extra reference held
++	 * (taken while sk was still locked) so a concurrent l2cap_conn_del()
++	 * -> l2cap_sock_kill() cannot free sk under us.
++	 *
++	 * cleanup_listen() runs under the parent sk lock, so unlike
++	 * l2cap_sock_shutdown() we must NOT take conn->lock here: that would
++	 * establish sk_lock -> conn->lock and invert the established
++	 * conn->lock -> chan->lock -> sk_lock order (lockdep deadlock).
++	 *
++	 * Instead, briefly take the child sk lock to fetch and pin its chan.
++	 * l2cap_conn_del() reaches the chan free only via
++	 * l2cap_chan_del() -> l2cap_sock_teardown_cb(), which itself takes
++	 * the child sk lock; holding it across l2cap_chan_hold_unless_zero()
++	 * therefore guarantees the chan cannot be freed while we read and
++	 * pin it (hold_unless_zero() additionally skips a chan already past
++	 * its last reference).  We then drop the sk lock before taking
++	 * chan->lock, so sk and chan locks are never held together.
++	 */
+ 	while ((sk = bt_accept_dequeue(parent, NULL))) {
+-		struct l2cap_chan *chan = l2cap_pi(sk)->chan;
++		struct l2cap_chan *chan;
++
++		lock_sock_nested(sk, L2CAP_NESTING_NORMAL);
++		chan = l2cap_chan_hold_unless_zero(l2cap_pi(sk)->chan);
++		release_sock(sk);
++		if (!chan) {
++			/* l2cap_conn_del() already tearing this child down */
++			sock_put(sk);
++			continue;
++		}
+ 
+ 		BT_DBG("child chan %p state %s", chan,
+ 		       state_to_string(chan->state));
+ 
+-		l2cap_chan_hold(chan);
+ 		l2cap_chan_lock(chan);
+-
+ 		__clear_chan_timer(chan);
+ 		l2cap_chan_close(chan, ECONNRESET);
+-		l2cap_sock_kill(sk);
+-
++		/* l2cap_conn_del() may already have killed this socket
++		 * (it sets SOCK_DEAD); skip the duplicate to avoid a
++		 * double sock_put()/l2cap_chan_put().
++		 */
++		if (!sock_flag(sk, SOCK_DEAD))
++			l2cap_sock_kill(sk);
+ 		l2cap_chan_unlock(chan);
++
+ 		l2cap_chan_put(chan);
++		sock_put(sk);
+ 	}
+ }
+ 
+--- a/net/bluetooth/rfcomm/sock.c
++++ b/net/bluetooth/rfcomm/sock.c
+@@ -190,6 +190,8 @@ static void rfcomm_sock_cleanup_listen(s
+ 	while ((sk = bt_accept_dequeue(parent, NULL))) {
+ 		rfcomm_sock_close(sk);
+ 		rfcomm_sock_kill(sk);
++		/* Drop the reference handed back by bt_accept_dequeue(). */
++		sock_put(sk);
+ 	}
+ 
+ 	parent->sk_state  = BT_CLOSED;
+@@ -513,8 +515,13 @@ static int rfcomm_sock_accept(struct soc
+ 		}
+ 
+ 		nsk = bt_accept_dequeue(sk, newsock);
+-		if (nsk)
++		if (nsk) {
++			/* Drop the bridging ref from bt_accept_dequeue();
++			 * the grafted socket keeps nsk alive from here.
++			 */
++			sock_put(nsk);
+ 			break;
++		}
+ 
+ 		if (!timeo) {
+ 			err = -EAGAIN;
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -394,6 +394,8 @@ static void sco_sock_cleanup_listen(stru
+ 	while ((sk = bt_accept_dequeue(parent, NULL))) {
+ 		sco_sock_close(sk);
+ 		sco_sock_kill(sk);
++		/* Drop the reference handed back by bt_accept_dequeue(). */
++		sock_put(sk);
+ 	}
+ 
+ 	parent->sk_state  = BT_CLOSED;
+@@ -687,8 +689,13 @@ static int sco_sock_accept(struct socket
+ 		}
+ 
+ 		ch = bt_accept_dequeue(sk, newsock);
+-		if (ch)
++		if (ch) {
++			/* Drop the bridging ref from bt_accept_dequeue();
++			 * the grafted socket keeps ch alive from here.
++			 */
++			sock_put(ch);
+ 			break;
++		}
+ 
+ 		if (!timeo) {
+ 			err = -EAGAIN;
 
 
