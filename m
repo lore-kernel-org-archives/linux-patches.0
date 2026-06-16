@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1283D8105;
-	Tue, 16 Jun 2026 18:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334413D8105;
+	Tue, 16 Jun 2026 18:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635040; cv=none; b=Fg0Bqrjqhj0dEQAGdlQMrHSBpseJ/8aaPbcNeQA/21ldTDM80egUoNiMj3JBbLdQGBC860yJqhqMpecVlL1EDARb5++2bq7zeKvcRUvbfh0m/JVCfWV5jbc30VyL2uhx4p4RQd80RzkYn/3nq3DP2+MPOxNzyIy1guu89atcht4=
+	t=1781635046; cv=none; b=pylcv8IFsfRfIKTnaCrUoJqd9GkzQXwxA/m1t6fpB7i29OAXBkN3BuBxfvpes5bteDbJcHd9b/1V2SBxPdCc8Hoxz8hPTLOSsWAhHOGVBiO27djW3Wu3cmEI6CoFpMKqDxvjcvAllhZ5claD1OM61ZflizYYhMTZzQ6c6Clcr0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635040; c=relaxed/simple;
-	bh=2sV+GB0ijThM3NJgqsL0UHQfPE96R5nRtHt4Uud8+xk=;
+	s=arc-20240116; t=1781635046; c=relaxed/simple;
+	bh=Tji2aXtQlr/grkJQTnCAouXq/0XRmLbGfdtnGJjdsS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kkL0MmER8WFMIbvXql9KY2xywfSlzcHR0aOnK+e1AD1jT1+kASXl0pLPTcE44Z90zIyL0q8xuBYz39lGzlaR08502yglIzlAI14BADqWuOCxSDVHyrEBbOKIS9pwK19wkzhsOsqVkR84HVFldveaArHaHca+IklBqDRgTDOcdRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGYFjUwq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pHZ8+9FxB5fEodBuQekk0nWaybfKvLyb/ktV4Cy0SpQUVLwx/77RkO883koJUh8aTwdeHSP8ECRD0FjW2e3OO3iX696NsYqpe+sJgp2tQr0ekNMBuQYw+6LyqfyBdH63Clq0BvDtU91+57UfRhtDpwowCUtz1Hpjf2Yq9jAIj1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9rGDC/2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGYFjUwq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F3051F000E9;
-	Tue, 16 Jun 2026 18:37:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9rGDC/2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DE31F000E9;
+	Tue, 16 Jun 2026 18:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635039;
-	bh=rMEORZ3nocbfspl4LzbdeI4GRthLU/VqlTnQrUrip08=;
+	s=korg; t=1781635045;
+	bh=2z71P/r/entEIwtH0qmWrxaGMvBYwqvDLMhEuEZsFWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fGYFjUwqUSrt/6Q1ptEpnA2rRKjlDVKTOvOQzFhKNovm9ZjJCF3B7RzC1RzLVgLEX
-	 7hSAfanIlarJdS7emmGxIR3YOuhCRaLlDwp15dCcCpSIwXBXoZCk6VL5Rsspe/mBUH
-	 n2QIIzwHv0lvGDRlto6mXgx02f8ha6iz8CEWRxic=
+	b=k9rGDC/2FQTkkQ8B/2SgCWYPtLKTy0sgCO21I+Nd1mypAiJSSchnoiNRxZj4O9fUb
+	 nEZFQmuKxF9hGO0CMQeimC/DzZGY38875Jf9vAKppaJBuiMk44c1XhdA8lYnZWtqfr
+	 Ey6zaAnQ6SoNPJ2YrXoC7s2SeUjlT72rVI/saD4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Berkant Koc <me@berkoc.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 380/411] drm/hyperv: validate resolution_count and fix WIN8 fallback
-Date: Tue, 16 Jun 2026 20:30:18 +0530
-Message-ID: <20260616145121.481758001@linuxfoundation.org>
+Subject: [PATCH 5.15 381/411] serial: altera_jtaguart: Use platform_get_irq_optional() to get the interrupt
+Date: Tue, 16 Jun 2026 20:30:19 +0530
+Message-ID: <20260616145121.528316852@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -52,68 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Berkant Koc <me@berkoc.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 13d33b9ef67066c77c84273fac5a1d3fde3533d1 ]
+[ Upstream commit 60302276caff50f907bc3391a364691ab4a21b43 ]
 
-A SYNTHVID_RESOLUTION_RESPONSE with resolution_count > 64 walks past
-the supported_resolution[SYNTHVID_MAX_RESOLUTION_COUNT] array in the
-parse loop. Bound resolution_count against the array size, folded
-into the existing zero-check.
+platform_get_resource(pdev, IORESOURCE_IRQ, ..) relies on static
+allocation of IRQ resources in DT core code, this causes an issue
+when using hierarchical interrupt domains using "interrupts" property
+in the node as this bypasses the hierarchical setup and messes up the
+irq chaining.
 
-When the WIN10 resolution probe fails, the caller in
-hyperv_connect_vsp() left hv->screen_*_max / preferred_* unpopulated,
-which sets mode_config.max_width / max_height to 0 and makes
-drm_internal_framebuffer_create() reject every userspace framebuffer
-with -EINVAL. The pre-WIN10 branch had the same gap for
-preferred_width / preferred_height. Use a single post-probe fallback
-guarded by screen_width_max == 0 so both paths converge on the WIN8
-defaults.
+In preparation for removal of static setup of IRQ resource from DT core
+code use platform_get_irq_optional().
 
-Signed-off-by: Berkant Koc <me@berkoc.com>
-Assisted-by: Claude:claude-opus-4-7 berkoc-pipeline
-Fixes: 76c56a5affeb ("drm/hyperv: Add DRM driver for hyperv synthetic video device")
-Cc: stable@vger.kernel.org # 5.14+
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Link: https://patch.msgid.link/6945b22419c7d404b4954a113de2ac9c900dba93.1779542874.git.me@berkoc.com
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20211224142917.6966-7-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: ea66be25f0e9 ("serial: altera_jtaguart: handle uart_add_one_port() failures")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/hyperv/hyperv_drm_proto.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/tty/serial/altera_jtaguart.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
-+++ b/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
-@@ -396,8 +396,11 @@ static int hyperv_get_supported_resoluti
- 		return -ETIMEDOUT;
- 	}
+--- a/drivers/tty/serial/altera_jtaguart.c
++++ b/drivers/tty/serial/altera_jtaguart.c
+@@ -418,8 +418,9 @@ static int altera_jtaguart_probe(struct
+ 	struct altera_jtaguart_platform_uart *platp =
+ 			dev_get_platdata(&pdev->dev);
+ 	struct uart_port *port;
+-	struct resource *res_irq, *res_mem;
++	struct resource *res_mem;
+ 	int i = pdev->id;
++	int irq;
  
--	if (msg->resolution_resp.resolution_count == 0) {
--		drm_err(dev, "No supported resolutions\n");
-+	if (msg->resolution_resp.resolution_count == 0 ||
-+	    msg->resolution_resp.resolution_count >
-+	    SYNTHVID_MAX_RESOLUTION_COUNT) {
-+		drm_err(dev, "Invalid resolution count: %d\n",
-+			msg->resolution_resp.resolution_count);
+ 	/* -1 emphasizes that the platform must have one port, no .N suffix */
+ 	if (i == -1)
+@@ -438,9 +439,11 @@ static int altera_jtaguart_probe(struct
+ 	else
  		return -ENODEV;
- 	}
  
-@@ -587,9 +590,13 @@ int hyperv_connect_vsp(struct hv_device
- 		ret = hyperv_get_supported_resolution(hdev);
- 		if (ret)
- 			drm_err(dev, "Failed to get supported resolution from host, use default\n");
--	} else {
-+	}
-+
-+	if (!hv->screen_width_max) {
- 		hv->screen_width_max = SYNTHVID_WIDTH_WIN8;
- 		hv->screen_height_max = SYNTHVID_HEIGHT_WIN8;
-+		hv->preferred_width = SYNTHVID_WIDTH_WIN8;
-+		hv->preferred_height = SYNTHVID_HEIGHT_WIN8;
- 	}
- 
- 	hv->mmio_megabytes = hdev->channel->offermsg.offer.mmio_megabytes;
+-	res_irq = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
+-	if (res_irq)
+-		port->irq = res_irq->start;
++	irq = platform_get_irq_optional(pdev, 0);
++	if (irq < 0 && irq != -ENXIO)
++		return irq;
++	if (irq > 0)
++		port->irq = irq;
+ 	else if (platp)
+ 		port->irq = platp->irq;
+ 	else
 
 
