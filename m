@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147D51A6803;
-	Tue, 16 Jun 2026 17:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382AB4657D0;
+	Tue, 16 Jun 2026 17:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630366; cv=none; b=qlLTWDSs5FVBvLkWVUkVBD7CctxATFzRuBQoE07R+pw3cmiDr5GJ6cSCp4yegB+qWxccVHHXnRfAcXLLVvGvXhyI8gGQCD1GVvQMNLaHJyJt80sHibm7EIQHvpTcSp5gqCRCXNe144GWtnPd9iXpfHbPTZc9DGv7FN3G6DrsTfw=
+	t=1781630371; cv=none; b=gxDYlUtVin95gLyOEjMmD2vpQwVeQ2O+sk/LURcDNM1Q8dM51Ax1XIc5cGtQxrJG4DLCiaL+iAD701tqp5xwws9X7fOqSkQbv50FZHIykL81CLL1uLyo/UjEYCZnbUZyUfLt6VjPbe0gPdkkWo166OXLdWhAIuOD3A0pRu3JiQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630366; c=relaxed/simple;
-	bh=jsl4OoZ0mheyRzy5kl0NqKCUmluNt+KFEGQmBcIrFSc=;
+	s=arc-20240116; t=1781630371; c=relaxed/simple;
+	bh=57EON4Ym8lM/oVzOh5Qr0InksdGtoiBrVPZY21sRxL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VSffKtf8ja4CiQCsNxXna1I7FGt/CAxG19lQ0vMyIzhuE+a0fK3zWSo4xhEAa+Md/f7PU0UD8ZU5wvKyQQaT3B61RsvwoiQzAVLg70OGAou/MVsPJ0dDv0D0tkIFfDkrxYPV31bkf94EU7X09jLP5wDdEOrez0nveGTkTMyO4s0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tlibf1Jj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sa1qvCWzcIRK8/a7hqnoNv1dmz5u5CowJXQOK9xOPXH3c1Id2lscfu3/mHqG34mSxvglQHvieEgHSor7Stf8L7p5h5QpZFfZ9wx7JD4AOfJLaBN9vCM4dQ8JWvK/5QIi+rpiNjL6C9BhkVn4mkx+x7hh8DNii5EfnRYvGFk91M0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTozNr13; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tlibf1Jj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05021F000E9;
-	Tue, 16 Jun 2026 17:19:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTozNr13"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDA41F000E9;
+	Tue, 16 Jun 2026 17:19:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630365;
-	bh=leWajpUQG5lyLPFCTyfydrsq6ATNbOruh9X2lZabyIQ=;
+	s=korg; t=1781630369;
+	bh=XBNLP/CkDe+Ijq0k20mMoVovWRzKs5TCn4VL5JTd+Yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tlibf1Jjm6FcoQ+YWo4gDBd35pFDACzBn8p2sgWAc5kYqMnxk7vXehqIrrFWrk2wV
-	 X1ArBaRyMtyXInvpnWAiVuPASpPtsF5v3UkPHIKa4mo+gkDR/OopRxbvAwXrgYYPp+
-	 Ba4BrhynOtr11DIjSkdC/E9HHZN8Rzk+Qt4UhxL0=
+	b=mTozNr134kpRJFp2Fnv6G21BNlCuehCTBLoOyRfbKIHF29PLBbX18X7q+TLOhdmzW
+	 70/agrp+LuaUSYOwkHvgKUC7AOlnpzd8c4b5C9nHfzYKLGAGyU7prNGZs1yy08znCf
+	 rBIP7gxrLIwUE9aYJNYWiXA6kQ1MErOisH0zWO/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	David Heidelberg <david@ixit.cz>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Dongli Zhang <dongli.zhang@oracle.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 007/522] nfc: llcp: Fix use-after-free in llcp_sock_release()
-Date: Tue, 16 Jun 2026 20:22:34 +0530
-Message-ID: <20260616145125.717105510@linuxfoundation.org>
+Subject: [PATCH 6.1 016/522] tun: free page on short-frame rejection in tun_xdp_one()
+Date: Tue, 16 Jun 2026 20:22:43 +0530
+Message-ID: <20260616145126.267203777@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -46,43 +49,58 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Message-ID: <20260616145243.uPanzFHHPEp5a1vs3Jyqgsz8dG2TSOdXnuCbeo3WcmM@z>
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit f4268b466190dae95a7585f69b4f1f8ad097632c ]
+[ Upstream commit f4feb1e20058e407cb00f45aff47f5b7e19a6bbf ]
 
-llcp_sock_release() unconditionally unlinks the socket from the local
-sockets list.  However, if the socket is still in connecting state, it
-is on the connecting list.
+tun_xdp_one() returns -EINVAL on a frame shorter than ETH_HLEN without
+freeing the page that vhost_net_build_xdp() allocated for it.
+tun_sendmsg() discards that -EINVAL and still returns total_len, so
+vhost_tx_batch() takes the success path and never frees the page; each
+short frame in a batch leaks one page-frag chunk.
 
-Fix this by checking the socket state and unlinking from the correct list.
+A local process that can open /dev/net/tun and /dev/vhost-net can hit
+this path: it attaches a tun/tap device as the vhost-net backend and
+feeds TX descriptors whose length minus the virtio-net header is below
+ETH_HLEN. Each kick leaks the page-frag chunks for that batch, and a
+tight submission loop exhausts host memory and triggers an OOM panic.
+Free the page before returning -EINVAL, matching the XDP-program error
+path in the same function.
 
-Fixes: b4011239a08e ("NFC: llcp: Fix non blocking sockets connections")
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://patch.msgid.link/20260429134115.3558604-1-lee@kernel.org
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Fixes: 049584807f1d ("tun: add missing verification for short frame")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Dongli Zhang <dongli.zhang@oracle.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260520160020.375349-2-bestswngs@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/llcp_sock.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/tun.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/nfc/llcp_sock.c b/net/nfc/llcp_sock.c
-index cd0fd26196b8b6..6cdcc49a58bcd5 100644
---- a/net/nfc/llcp_sock.c
-+++ b/net/nfc/llcp_sock.c
-@@ -633,6 +633,8 @@ static int llcp_sock_release(struct socket *sock)
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index 03478ae3ff2448..1ad6af74de7c3f 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -2448,8 +2448,10 @@ static int tun_xdp_one(struct tun_struct *tun,
+ 	bool skb_xdp = false;
+ 	struct page *page;
  
- 	if (sock->type == SOCK_RAW)
- 		nfc_llcp_sock_unlink(&local->raw_sockets, sk);
-+	else if (sk->sk_state == LLCP_CONNECTING)
-+		nfc_llcp_sock_unlink(&local->connecting_sockets, sk);
- 	else
- 		nfc_llcp_sock_unlink(&local->sockets, sk);
+-	if (unlikely(datasize < ETH_HLEN))
++	if (unlikely(datasize < ETH_HLEN)) {
++		put_page(virt_to_head_page(xdp->data));
+ 		return -EINVAL;
++	}
  
+ 	xdp_prog = rcu_dereference(tun->xdp_prog);
+ 	if (xdp_prog) {
 -- 
 2.53.0
 
