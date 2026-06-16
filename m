@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA84C47884C;
-	Tue, 16 Jun 2026 16:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF18478E53;
+	Tue, 16 Jun 2026 16:59:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629148; cv=none; b=LGtiX9pa1AyBZqgLhFojt26LeSl3IqYGtCK9pLLM4w1wmUQqlnwed99aIO1KZ3/4pkgBUhVx3N2Z0M6pAFoSgbAegB84zZPmh97RNsmmIcvJQgWs8NpCn05rQWx8Q0ebmeyz/1uf5mFHevR1XY0RXcmcN4qLBOUlkZ1ljE+h8q8=
+	t=1781629154; cv=none; b=Tdq62bNor/SLniT7CQmVqgEn3eHacVUqcTpEbvWkKYHfbarjjoq9BeVdX5S+34ofgj3kk+dt1BDaz73iOwh454cG8lFd3k2jNy3KRTQ7S1WxPcSTHkQ4PzE+NO/yz/jdrEUm2rraL0RQ3aq57Vs6Xnrt5zmjfz63jEEWDnUuGSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629148; c=relaxed/simple;
-	bh=/yi/R3liYvxcUuZlBGVfXzAe0YjAQ6tzUhac98wDkZQ=;
+	s=arc-20240116; t=1781629154; c=relaxed/simple;
+	bh=ZYxQPnCciAmjL1xuYY9YZ+vuNVB8FYaZQ8PIfMHOlX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IALTkdPfDLaSnWeGL4AiYyC3w/qY98qkDgDDmTXx8gPpVEXuu9v2awIRaWtum9R7msib9aheGfsKX7/WOflE8qyKwab/gCukf9+RtuXdulJ/WPAYkrEI4riWlGBJgZuHuz1yyeL44UI4d+IoDMpOLkq1zF295GV8zmbpb4CMX5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axMTSQmx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AM/jI9/vC8fhRmu62VT6QLYi3lStSU+R0V+I1YQpCR3Cu6S6T9xgaEU6/Jo9QkLiEHQEa4xwwIig7k4DZDaE3wuUMty6wcGUnL8x1o2/bSmB9wqSw+RYCw8bK5BxDJSPKeIgkWCV5PUBHIaJc62BRy8bM8no0SDH/oBWsmYTAUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4sln9qN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axMTSQmx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE801F000E9;
-	Tue, 16 Jun 2026 16:59:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4sln9qN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3083C1F000E9;
+	Tue, 16 Jun 2026 16:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629147;
-	bh=19GYJIxIeNv+18dzMCJq+trkQ3tlGGLdTPWo2NUC0Kg=;
+	s=korg; t=1781629153;
+	bh=reNH4HoZ7gsGm67UmJWyILLFKAVo0ijkKCCsGMT8jgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=axMTSQmxojOAxBe+aOejkvh1z7s5oMDClqbOOoJNaVTUPopumvsxuplUfj29ePLRS
-	 0PqXYbWu6uAvVb51zSWase1Z5PE3arBYYjvdj+zDBR8XwlZat8nk+4hczI3do5wNBw
-	 THkwuSRklKtYQ4Rfz7L86wJj7NO8DZObdyYNAJ5A=
+	b=E4sln9qNpqIcKK4ScGfMBlxjvskWnpvmLk/+5byIZZAbmEzDMiv/RghuVcVz4d4Zo
+	 9GK+cU1poYkIWRycrDyMnLvs1cqn48jJCiboSBas3VuI2zRwoLqzDZcsSpzOsIXSZx
+	 YN+2C7RZzlMO3RbJDfvyyCEk0ufgks898RKCmrYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Zhang Cen <rollkingzzc@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 231/452] Bluetooth: RFCOMM: hold listener socket in rfcomm_connect_ind()
-Date: Tue, 16 Jun 2026 20:27:38 +0530
-Message-ID: <20260616145129.853608962@linuxfoundation.org>
+Subject: [PATCH 6.6 232/452] Bluetooth: MGMT: validate advertising TLV before type checks
+Date: Tue, 16 Jun 2026 20:27:39 +0530
+Message-ID: <20260616145129.901149711@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -53,122 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhang Cen <rollkingzzc@gmail.com>
 
-[ Upstream commit 43c441edacf953b39517a44f5e5e10a93618b226 ]
+[ Upstream commit de23fb62259aa01d294f77238ae3b835eb674413 ]
 
-rfcomm_get_sock_by_channel() scans rfcomm_sk_list under the list lock,
-but returns the selected listener after dropping that lock without
-taking a reference. rfcomm_connect_ind() then locks the listener,
-queues a child socket on it, and may notify it after unlocking it.
+tlv_data_is_valid() reads each advertising data field length from
+data[i], then inspects data[i + 1] for managed EIR types before
+checking that the current field still fits inside the supplied buffer.
 
-The buggy scenario involves two paths, with each column showing the
-order within that path:
+A malformed field whose length byte is the last byte of the buffer can
+therefore make the parser read one byte past the advertising data.
 
-rfcomm_connect_ind():            listener close:
-  1. Find parent in              1. close() enters
-     rfcomm_get_sock_by_channel()   rfcomm_sock_release().
-  2. Drop rfcomm_sk_list.lock    2. rfcomm_sock_shutdown()
-     without pinning parent.        closes the listener.
-  3. Call lock_sock(parent) and  3. rfcomm_sock_kill()
-     bt_accept_enqueue(parent,      unlinks and puts parent.
-     sk, true).
-  4. Read parent flags and may   4. parent can be freed.
-     call sk_state_change().
+KASAN reported the following when a malformed MGMT_OP_ADD_ADVERTISING
+request reached that path:
 
-If close wins the race, parent can be freed before
-rfcomm_connect_ind() reaches lock_sock(), bt_accept_enqueue(), or the
-deferred-setup callback.
+  BUG: KASAN: vmalloc-out-of-bounds in tlv_data_is_valid()
+  Read of size 1
+  Call trace:
+    tlv_data_is_valid()
+    add_advertising()
+    hci_mgmt_cmd()
+    hci_sock_sendmsg()
 
-Take a reference on the listener before leaving rfcomm_sk_list.lock.
-After lock_sock() succeeds, recheck that it is still in BT_LISTEN
-before queueing a child, cache the deferred-setup bit while the parent
-is locked, and drop the reference after the last parent use.
+Move the existing element-length check before any type-octet inspection
+so each non-empty element is proven to contain its type byte before the
+parser looks at data[i + 1].
 
-KASAN reported a slab-use-after-free in lock_sock_nested() from
-rfcomm_connect_ind(), with the freeing stack going through
-rfcomm_sock_kill() and rfcomm_sock_release().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 2bb36870e8cb ("Bluetooth: Unify advertising instance flags check")
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Signed-off-by: Zhang Cen <rollkingzzc@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/sock.c | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ net/bluetooth/mgmt.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
-index bc2b22c2b3aec7..d72cdcd2e2bb11 100644
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -122,7 +122,7 @@ static struct sock *__rfcomm_get_listen_sock_by_addr(u8 channel, bdaddr_t *src)
- }
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 4271fba3245ce1..7b86e287b12d64 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -8667,6 +8667,12 @@ static bool tlv_data_is_valid(struct hci_dev *hdev, u32 adv_flags, u8 *data,
+ 		if (!cur_len)
+ 			continue;
  
- /* Find socket with channel and source bdaddr.
-- * Returns closest match.
-+ * Returns closest match with an extra reference held.
-  */
- static struct sock *rfcomm_get_sock_by_channel(int state, u8 channel, bdaddr_t *src)
- {
-@@ -136,15 +136,25 @@ static struct sock *rfcomm_get_sock_by_channel(int state, u8 channel, bdaddr_t *
- 
- 		if (rfcomm_pi(sk)->channel == channel) {
- 			/* Exact match. */
--			if (!bacmp(&rfcomm_pi(sk)->src, src))
-+			if (!bacmp(&rfcomm_pi(sk)->src, src)) {
-+				sock_hold(sk);
- 				break;
-+			}
- 
- 			/* Closest match */
--			if (!bacmp(&rfcomm_pi(sk)->src, BDADDR_ANY))
-+			if (!bacmp(&rfcomm_pi(sk)->src, BDADDR_ANY)) {
-+				if (sk1)
-+					sock_put(sk1);
++		/* If the current field length would exceed the total data
++		 * length, then it's invalid.
++		 */
++		if (i + cur_len >= len)
++			return false;
 +
- 				sk1 = sk;
-+				sock_hold(sk1);
-+			}
- 		}
+ 		if (data[i + 1] == EIR_FLAGS &&
+ 		    (!is_adv_data || flags_managed(adv_flags)))
+ 			return false;
+@@ -8683,12 +8689,6 @@ static bool tlv_data_is_valid(struct hci_dev *hdev, u32 adv_flags, u8 *data,
+ 		if (data[i + 1] == EIR_APPEARANCE &&
+ 		    appearance_managed(adv_flags))
+ 			return false;
+-
+-		/* If the current field length would exceed the total data
+-		 * length, then it's invalid.
+-		 */
+-		if (i + cur_len >= len)
+-			return false;
  	}
  
-+	if (sk && sk1)
-+		sock_put(sk1);
-+
- 	read_unlock(&rfcomm_sk_list.lock);
- 
- 	return sk ? sk : sk1;
-@@ -941,6 +951,7 @@ int rfcomm_connect_ind(struct rfcomm_session *s, u8 channel, struct rfcomm_dlc *
- {
- 	struct sock *sk, *parent;
- 	bdaddr_t src, dst;
-+	bool defer_setup = false;
- 	int result = 0;
- 
- 	BT_DBG("session %p channel %d", s, channel);
-@@ -954,6 +965,11 @@ int rfcomm_connect_ind(struct rfcomm_session *s, u8 channel, struct rfcomm_dlc *
- 
- 	lock_sock(parent);
- 
-+	if (parent->sk_state != BT_LISTEN)
-+		goto done;
-+
-+	defer_setup = test_bit(BT_SK_DEFER_SETUP, &bt_sk(parent)->flags);
-+
- 	/* Check for backlog size */
- 	if (sk_acceptq_is_full(parent)) {
- 		BT_DBG("backlog full %d", parent->sk_ack_backlog);
-@@ -981,9 +997,11 @@ int rfcomm_connect_ind(struct rfcomm_session *s, u8 channel, struct rfcomm_dlc *
- done:
- 	release_sock(parent);
- 
--	if (test_bit(BT_SK_DEFER_SETUP, &bt_sk(parent)->flags))
-+	if (defer_setup)
- 		parent->sk_state_change(parent);
- 
-+	sock_put(parent);
-+
- 	return result;
- }
- 
+ 	return true;
 -- 
 2.53.0
 
