@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005C64657F3;
-	Tue, 16 Jun 2026 15:42:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CC7466B66;
+	Tue, 16 Jun 2026 15:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624533; cv=none; b=uw10LvFDEsceKn7DT0+F8MZUyUNeef2hyhrxRpgzPlnviN/JGQjP97huj7murRfmZxPxCT2yVRFKvaiIClhstNHIVK4ZtoyrhAeOBtr5x/ov/9ZY4WSyh/o1cTT8OFGLzvBbQmNairOPHuQ9KAIB3AeHwpQh+6KP5PhwOhtZMKY=
+	t=1781624540; cv=none; b=IwmefX3VHtYB8iNKsQPsNtvzq3DqN80ba/MQeugq6lfDmcAc9+3U3c/RdcAWxQ5TYWe7e52bOf7W4xE6jRNEKPXTE6TMn4RCEC+8CWbMR88zDyo6eiehuhL2dMXd7lIgDXgvdJJsa4sdAsBdhua6+4kGXak+r2b3+Su+LvpCbHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624533; c=relaxed/simple;
-	bh=aJGd4EBLy2brfJuDigUXoK+vZMp004RmgGUAVhD//AU=;
+	s=arc-20240116; t=1781624540; c=relaxed/simple;
+	bh=Lkf7B5pwrDB5rNx6VSkUEkLnV9BP5loT97lzVW4qmBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kEWkDNsu8vTnkG5VBJM16mkDhm3yRMNKgpNewnI8ed6YDnS80kqXDssA+kXqzUVWwTGkNzjmYsGn7dmosPP9waPk/4MeNVhnNUMKOoGNYs1I4et05zuViqJRVUeoHGoeMaD/sdN4D71WQSLeRIuFlSBR+FZiUlRLRkwJ+8xTFnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iGwsRw+F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u+Yzmnbz6ZWewBNv0BAQZLuQLblMJzPFyXMhN7S+Ipr5JulMGDZ52Y/iy+loE4OmZwaozS/Z9fMf2seTPEqZe+QPxTKhEuMvOzHeixRsZ7+oL5PiaAT/RpCv4pkIWP7o16EOOm6YDwmjfozhe3MgHcciifHWNMurhdWspgvkU1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BmoypmeU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iGwsRw+F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC571F000E9;
-	Tue, 16 Jun 2026 15:42:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BmoypmeU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67A241F00A3A;
+	Tue, 16 Jun 2026 15:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624531;
-	bh=tGoRHHelSX3OBiy68MazwML/p7rbaURtyDuSj0fHpbk=;
+	s=korg; t=1781624538;
+	bh=2HN2mE9GL5BeZ0N01YHXAmDVG2L1aWwgXlswSIxSzpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iGwsRw+FDEypK/lgpMsohhuJGVIk2RiqcwRpuzesTEY2nlELyloSmTUQ0vXMNsIBg
-	 lemgFc+Xlq0M5NdJhPl2b+ZtfViu7IVMzUnN5CjeWObs/iVbkd7iJdlwtxiXsMU8xW
-	 vkUspL3cVeij8WkhoDcRO5ab6utkPT4oPoDSrCMs=
+	b=BmoypmeUy/qtPfbW3Y7s636xykcWI6VuOUVDfabbJ8/5ygdepU4QoN7lkzdEAMxgw
+	 5DBBawraUd9TEdqfdLhJ8tZklxunxj3xhzi0DMsc6ICz/ivqStgVF9ARaPKHEm7TWv
+	 y5zvXXgLBB9jdA8aSoBtkBe+h+09whvpdfELsVGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Leorize <leorize+oss@disroot.org>,
 	Alex Hung <alex.hung@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Ray Wu <ray.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.0 354/378] drm/amd/display: Clamp VBIOS HDMI retimer register count to array size
-Date: Tue, 16 Jun 2026 20:29:45 +0530
-Message-ID: <20260616145128.771964018@linuxfoundation.org>
+Subject: [PATCH 7.0 355/378] drm/amd/display: add missing CSC entries for BT.2020 for DCE IPs
+Date: Tue, 16 Jun 2026 20:29:46 +0530
+Message-ID: <20260616145128.832796610@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -53,188 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: Leorize <leorize+oss@disroot.org>
 
-commit fb0707ce00eef4e2d60c3020e1c0432739703e4a upstream.
+commit 6590fe323ce2807f5d9454e7fccf3fab875d4352 upstream.
 
-[Why & How]
-The VBIOS integrated info tables (v1_11 and v2_1) contain HdmiRegNum and
-Hdmi6GRegNum fields that are used as loop bounds when copying retimer I2C
-register settings into fixed-size arrays (dp*_ext_hdmi_reg_settings[9]
-and dp*_ext_hdmi_6g_reg_settings[3]). These u8 fields are not validated
-before use, so a malformed VBIOS can specify values up to 255, causing an
-out-of-bounds heap write during driver probe.
+DCE-based hardware does not have the CSC matrices for BT.2020, which
+causes the driver to fallback to the GPU built-in matrices. This does
+not appear to cause any issues for RGB sinks, but causes major color
+artifacts for YCbCr ones (e.g. black becomes green).
 
-Clamp each register count to the destination array size using min_t()
-before the copy loops, in both get_integrated_info_v11() and
-get_integrated_info_v2_1().
+This commit adds the missing CSC matrices (taken from DC common) to DCE
+CSC tables, resolving the issue.
 
-Assisted-by: GitHub Copilot:claude-opus-4.6
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/3358
+Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5333
+Assisted-by: oh-my-pi:GPT-5.5
+Signed-off-by: Leorize <leorize+oss@disroot.org>
 Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Ray Wu <ray.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5a7f0ef90195940c54b0f5bb85b87da55f038c69)
+(cherry picked from commit 51e6668ab4baf55b082c376318d51ef965757196)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c |   48 ++++++++++++++-------
- 1 file changed, 32 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dce/dce_transform.c       |   10 +++++++++-
+ drivers/gpu/drm/amd/display/dc/dce110/dce110_opp_csc_v.c |   10 +++++++++-
+ 2 files changed, 18 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-@@ -2602,14 +2602,16 @@ static enum bp_result get_integrated_inf
- 	info_v11->extdispconninfo.checksum;
+--- a/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
++++ b/drivers/gpu/drm/amd/display/dc/dce/dce_transform.c
+@@ -110,7 +110,15 @@ static const struct out_csc_color_matrix
+ { COLOR_SPACE_YCBCR601_LIMITED, { 0xE00, 0xF447, 0xFDB9, 0x1000, 0x991,
+ 	0x12C9, 0x3A6, 0x200, 0xFB47, 0xF6B9, 0xE00, 0x1000} },
+ { COLOR_SPACE_YCBCR709_LIMITED, { 0xE00, 0xF349, 0xFEB7, 0x1000, 0x6CE, 0x16E3,
+-	0x24F, 0x200, 0xFCCB, 0xF535, 0xE00, 0x1000} }
++	0x24F, 0x200, 0xFCCB, 0xF535, 0xE00, 0x1000} },
++{ COLOR_SPACE_2020_RGB_FULLRANGE,
++	{ 0x2000, 0, 0, 0, 0, 0x2000, 0, 0, 0, 0, 0x2000, 0} },
++{ COLOR_SPACE_2020_RGB_LIMITEDRANGE,
++	{ 0x1B67, 0, 0, 0x201, 0, 0x1B67, 0, 0x201, 0, 0, 0x1B67, 0x201} },
++{ COLOR_SPACE_2020_YCBCR_LIMITED, { 0x1000, 0xF149, 0xFEB7, 0x1004, 0x0868,
++	0x15B2, 0x01E6, 0x201, 0xFB88, 0xF478, 0x1000, 0x1004} },
++{ COLOR_SPACE_2020_YCBCR_FULL, { 0x1000, 0xF149, 0xFEB7, 0x1004, 0x0868, 0x15B2,
++	0x01E6, 0x201, 0xFB88, 0xF478, 0x1000, 0x1004} }
+ };
  
- 	info->dp0_ext_hdmi_slv_addr = info_v11->dp0_retimer_set.HdmiSlvAddr;
--	info->dp0_ext_hdmi_reg_num = info_v11->dp0_retimer_set.HdmiRegNum;
-+	info->dp0_ext_hdmi_reg_num = min_t(u8, info_v11->dp0_retimer_set.HdmiRegNum,
-+					    ARRAY_SIZE(info->dp0_ext_hdmi_reg_settings));
- 	for (i = 0; i < info->dp0_ext_hdmi_reg_num; i++) {
- 		info->dp0_ext_hdmi_reg_settings[i].i2c_reg_index =
- 				info_v11->dp0_retimer_set.HdmiRegSetting[i].ucI2cRegIndex;
- 		info->dp0_ext_hdmi_reg_settings[i].i2c_reg_val =
- 				info_v11->dp0_retimer_set.HdmiRegSetting[i].ucI2cRegVal;
- 	}
--	info->dp0_ext_hdmi_6g_reg_num = info_v11->dp0_retimer_set.Hdmi6GRegNum;
-+	info->dp0_ext_hdmi_6g_reg_num = min_t(u8, info_v11->dp0_retimer_set.Hdmi6GRegNum,
-+					       ARRAY_SIZE(info->dp0_ext_hdmi_6g_reg_settings));
- 	for (i = 0; i < info->dp0_ext_hdmi_6g_reg_num; i++) {
- 		info->dp0_ext_hdmi_6g_reg_settings[i].i2c_reg_index =
- 				info_v11->dp0_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegIndex;
-@@ -2618,14 +2620,16 @@ static enum bp_result get_integrated_inf
- 	}
+ static bool setup_scaling_configuration(
+--- a/drivers/gpu/drm/amd/display/dc/dce110/dce110_opp_csc_v.c
++++ b/drivers/gpu/drm/amd/display/dc/dce110/dce110_opp_csc_v.c
+@@ -88,7 +88,15 @@ static const struct out_csc_color_matrix
+ { COLOR_SPACE_YCBCR601_LIMITED, { 0xE00, 0xF447, 0xFDB9, 0x1000, 0x991,
+ 	0x12C9, 0x3A6, 0x200, 0xFB47, 0xF6B9, 0xE00, 0x1000} },
+ { COLOR_SPACE_YCBCR709_LIMITED, { 0xE00, 0xF349, 0xFEB7, 0x1000, 0x6CE, 0x16E3,
+-	0x24F, 0x200, 0xFCCB, 0xF535, 0xE00, 0x1000} }
++	0x24F, 0x200, 0xFCCB, 0xF535, 0xE00, 0x1000} },
++{ COLOR_SPACE_2020_RGB_FULLRANGE,
++	{ 0x2000, 0, 0, 0, 0, 0x2000, 0, 0, 0, 0, 0x2000, 0} },
++{ COLOR_SPACE_2020_RGB_LIMITEDRANGE,
++	{ 0x1B67, 0, 0, 0x201, 0, 0x1B67, 0, 0x201, 0, 0, 0x1B67, 0x201} },
++{ COLOR_SPACE_2020_YCBCR_LIMITED, { 0x1000, 0xF149, 0xFEB7, 0x1004, 0x0868,
++	0x15B2, 0x01E6, 0x201, 0xFB88, 0xF478, 0x1000, 0x1004} },
++{ COLOR_SPACE_2020_YCBCR_FULL, { 0x1000, 0xF149, 0xFEB7, 0x1004, 0x0868, 0x15B2,
++	0x01E6, 0x201, 0xFB88, 0xF478, 0x1000, 0x1004} }
+ };
  
- 	info->dp1_ext_hdmi_slv_addr = info_v11->dp1_retimer_set.HdmiSlvAddr;
--	info->dp1_ext_hdmi_reg_num = info_v11->dp1_retimer_set.HdmiRegNum;
-+	info->dp1_ext_hdmi_reg_num = min_t(u8, info_v11->dp1_retimer_set.HdmiRegNum,
-+					    ARRAY_SIZE(info->dp1_ext_hdmi_reg_settings));
- 	for (i = 0; i < info->dp1_ext_hdmi_reg_num; i++) {
- 		info->dp1_ext_hdmi_reg_settings[i].i2c_reg_index =
- 				info_v11->dp1_retimer_set.HdmiRegSetting[i].ucI2cRegIndex;
- 		info->dp1_ext_hdmi_reg_settings[i].i2c_reg_val =
- 				info_v11->dp1_retimer_set.HdmiRegSetting[i].ucI2cRegVal;
- 	}
--	info->dp1_ext_hdmi_6g_reg_num = info_v11->dp1_retimer_set.Hdmi6GRegNum;
-+	info->dp1_ext_hdmi_6g_reg_num = min_t(u8, info_v11->dp1_retimer_set.Hdmi6GRegNum,
-+					       ARRAY_SIZE(info->dp1_ext_hdmi_6g_reg_settings));
- 	for (i = 0; i < info->dp1_ext_hdmi_6g_reg_num; i++) {
- 		info->dp1_ext_hdmi_6g_reg_settings[i].i2c_reg_index =
- 				info_v11->dp1_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegIndex;
-@@ -2634,14 +2638,16 @@ static enum bp_result get_integrated_inf
- 	}
- 
- 	info->dp2_ext_hdmi_slv_addr = info_v11->dp2_retimer_set.HdmiSlvAddr;
--	info->dp2_ext_hdmi_reg_num = info_v11->dp2_retimer_set.HdmiRegNum;
-+	info->dp2_ext_hdmi_reg_num = min_t(u8, info_v11->dp2_retimer_set.HdmiRegNum,
-+					    ARRAY_SIZE(info->dp2_ext_hdmi_reg_settings));
- 	for (i = 0; i < info->dp2_ext_hdmi_reg_num; i++) {
- 		info->dp2_ext_hdmi_reg_settings[i].i2c_reg_index =
- 				info_v11->dp2_retimer_set.HdmiRegSetting[i].ucI2cRegIndex;
- 		info->dp2_ext_hdmi_reg_settings[i].i2c_reg_val =
- 				info_v11->dp2_retimer_set.HdmiRegSetting[i].ucI2cRegVal;
- 	}
--	info->dp2_ext_hdmi_6g_reg_num = info_v11->dp2_retimer_set.Hdmi6GRegNum;
-+	info->dp2_ext_hdmi_6g_reg_num = min_t(u8, info_v11->dp2_retimer_set.Hdmi6GRegNum,
-+					       ARRAY_SIZE(info->dp2_ext_hdmi_6g_reg_settings));
- 	for (i = 0; i < info->dp2_ext_hdmi_6g_reg_num; i++) {
- 		info->dp2_ext_hdmi_6g_reg_settings[i].i2c_reg_index =
- 				info_v11->dp2_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegIndex;
-@@ -2650,14 +2656,16 @@ static enum bp_result get_integrated_inf
- 	}
- 
- 	info->dp3_ext_hdmi_slv_addr = info_v11->dp3_retimer_set.HdmiSlvAddr;
--	info->dp3_ext_hdmi_reg_num = info_v11->dp3_retimer_set.HdmiRegNum;
-+	info->dp3_ext_hdmi_reg_num = min_t(u8, info_v11->dp3_retimer_set.HdmiRegNum,
-+					    ARRAY_SIZE(info->dp3_ext_hdmi_reg_settings));
- 	for (i = 0; i < info->dp3_ext_hdmi_reg_num; i++) {
- 		info->dp3_ext_hdmi_reg_settings[i].i2c_reg_index =
- 				info_v11->dp3_retimer_set.HdmiRegSetting[i].ucI2cRegIndex;
- 		info->dp3_ext_hdmi_reg_settings[i].i2c_reg_val =
- 				info_v11->dp3_retimer_set.HdmiRegSetting[i].ucI2cRegVal;
- 	}
--	info->dp3_ext_hdmi_6g_reg_num = info_v11->dp3_retimer_set.Hdmi6GRegNum;
-+	info->dp3_ext_hdmi_6g_reg_num = min_t(u8, info_v11->dp3_retimer_set.Hdmi6GRegNum,
-+					       ARRAY_SIZE(info->dp3_ext_hdmi_6g_reg_settings));
- 	for (i = 0; i < info->dp3_ext_hdmi_6g_reg_num; i++) {
- 		info->dp3_ext_hdmi_6g_reg_settings[i].i2c_reg_index =
- 				info_v11->dp3_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegIndex;
-@@ -2807,14 +2815,16 @@ static enum bp_result get_integrated_inf
- 	info->ext_disp_conn_info.checksum =
- 		info_v2_1->extdispconninfo.checksum;
- 	info->dp0_ext_hdmi_slv_addr = info_v2_1->dp0_retimer_set.HdmiSlvAddr;
--	info->dp0_ext_hdmi_reg_num = info_v2_1->dp0_retimer_set.HdmiRegNum;
-+	info->dp0_ext_hdmi_reg_num = min_t(u8, info_v2_1->dp0_retimer_set.HdmiRegNum,
-+					    ARRAY_SIZE(info->dp0_ext_hdmi_reg_settings));
- 	for (i = 0; i < info->dp0_ext_hdmi_reg_num; i++) {
- 		info->dp0_ext_hdmi_reg_settings[i].i2c_reg_index =
- 				info_v2_1->dp0_retimer_set.HdmiRegSetting[i].ucI2cRegIndex;
- 		info->dp0_ext_hdmi_reg_settings[i].i2c_reg_val =
- 				info_v2_1->dp0_retimer_set.HdmiRegSetting[i].ucI2cRegVal;
- 	}
--	info->dp0_ext_hdmi_6g_reg_num = info_v2_1->dp0_retimer_set.Hdmi6GRegNum;
-+	info->dp0_ext_hdmi_6g_reg_num = min_t(u8, info_v2_1->dp0_retimer_set.Hdmi6GRegNum,
-+					       ARRAY_SIZE(info->dp0_ext_hdmi_6g_reg_settings));
- 	for (i = 0; i < info->dp0_ext_hdmi_6g_reg_num; i++) {
- 		info->dp0_ext_hdmi_6g_reg_settings[i].i2c_reg_index =
- 				info_v2_1->dp0_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegIndex;
-@@ -2822,14 +2832,16 @@ static enum bp_result get_integrated_inf
- 				info_v2_1->dp0_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegVal;
- 	}
- 	info->dp1_ext_hdmi_slv_addr = info_v2_1->dp1_retimer_set.HdmiSlvAddr;
--	info->dp1_ext_hdmi_reg_num = info_v2_1->dp1_retimer_set.HdmiRegNum;
-+	info->dp1_ext_hdmi_reg_num = min_t(u8, info_v2_1->dp1_retimer_set.HdmiRegNum,
-+					    ARRAY_SIZE(info->dp1_ext_hdmi_reg_settings));
- 	for (i = 0; i < info->dp1_ext_hdmi_reg_num; i++) {
- 		info->dp1_ext_hdmi_reg_settings[i].i2c_reg_index =
- 				info_v2_1->dp1_retimer_set.HdmiRegSetting[i].ucI2cRegIndex;
- 		info->dp1_ext_hdmi_reg_settings[i].i2c_reg_val =
- 				info_v2_1->dp1_retimer_set.HdmiRegSetting[i].ucI2cRegVal;
- 	}
--	info->dp1_ext_hdmi_6g_reg_num = info_v2_1->dp1_retimer_set.Hdmi6GRegNum;
-+	info->dp1_ext_hdmi_6g_reg_num = min_t(u8, info_v2_1->dp1_retimer_set.Hdmi6GRegNum,
-+					       ARRAY_SIZE(info->dp1_ext_hdmi_6g_reg_settings));
- 	for (i = 0; i < info->dp1_ext_hdmi_6g_reg_num; i++) {
- 		info->dp1_ext_hdmi_6g_reg_settings[i].i2c_reg_index =
- 				info_v2_1->dp1_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegIndex;
-@@ -2837,14 +2849,16 @@ static enum bp_result get_integrated_inf
- 				info_v2_1->dp1_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegVal;
- 	}
- 	info->dp2_ext_hdmi_slv_addr = info_v2_1->dp2_retimer_set.HdmiSlvAddr;
--	info->dp2_ext_hdmi_reg_num = info_v2_1->dp2_retimer_set.HdmiRegNum;
-+	info->dp2_ext_hdmi_reg_num = min_t(u8, info_v2_1->dp2_retimer_set.HdmiRegNum,
-+					    ARRAY_SIZE(info->dp2_ext_hdmi_reg_settings));
- 	for (i = 0; i < info->dp2_ext_hdmi_reg_num; i++) {
- 		info->dp2_ext_hdmi_reg_settings[i].i2c_reg_index =
- 				info_v2_1->dp2_retimer_set.HdmiRegSetting[i].ucI2cRegIndex;
- 		info->dp2_ext_hdmi_reg_settings[i].i2c_reg_val =
- 				info_v2_1->dp2_retimer_set.HdmiRegSetting[i].ucI2cRegVal;
- 	}
--	info->dp2_ext_hdmi_6g_reg_num = info_v2_1->dp2_retimer_set.Hdmi6GRegNum;
-+	info->dp2_ext_hdmi_6g_reg_num = min_t(u8, info_v2_1->dp2_retimer_set.Hdmi6GRegNum,
-+					       ARRAY_SIZE(info->dp2_ext_hdmi_6g_reg_settings));
- 	for (i = 0; i < info->dp2_ext_hdmi_6g_reg_num; i++) {
- 		info->dp2_ext_hdmi_6g_reg_settings[i].i2c_reg_index =
- 				info_v2_1->dp2_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegIndex;
-@@ -2852,14 +2866,16 @@ static enum bp_result get_integrated_inf
- 				info_v2_1->dp2_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegVal;
- 	}
- 	info->dp3_ext_hdmi_slv_addr = info_v2_1->dp3_retimer_set.HdmiSlvAddr;
--	info->dp3_ext_hdmi_reg_num = info_v2_1->dp3_retimer_set.HdmiRegNum;
-+	info->dp3_ext_hdmi_reg_num = min_t(u8, info_v2_1->dp3_retimer_set.HdmiRegNum,
-+					    ARRAY_SIZE(info->dp3_ext_hdmi_reg_settings));
- 	for (i = 0; i < info->dp3_ext_hdmi_reg_num; i++) {
- 		info->dp3_ext_hdmi_reg_settings[i].i2c_reg_index =
- 				info_v2_1->dp3_retimer_set.HdmiRegSetting[i].ucI2cRegIndex;
- 		info->dp3_ext_hdmi_reg_settings[i].i2c_reg_val =
- 				info_v2_1->dp3_retimer_set.HdmiRegSetting[i].ucI2cRegVal;
- 	}
--	info->dp3_ext_hdmi_6g_reg_num = info_v2_1->dp3_retimer_set.Hdmi6GRegNum;
-+	info->dp3_ext_hdmi_6g_reg_num = min_t(u8, info_v2_1->dp3_retimer_set.Hdmi6GRegNum,
-+					       ARRAY_SIZE(info->dp3_ext_hdmi_6g_reg_settings));
- 	for (i = 0; i < info->dp3_ext_hdmi_6g_reg_num; i++) {
- 		info->dp3_ext_hdmi_6g_reg_settings[i].i2c_reg_index =
- 				info_v2_1->dp3_retimer_set.Hdmi6GhzRegSetting[i].ucI2cRegIndex;
+ enum csc_color_mode {
 
 
