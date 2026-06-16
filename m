@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A08D44DB64;
-	Tue, 16 Jun 2026 15:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1503244CF44;
+	Tue, 16 Jun 2026 15:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625346; cv=none; b=Y5UZM8hMhC7zO1AuhBHrXEPChtiDfingrfSzEdebLBXwJg6RWxBgk35JX4zNd8a9rKfo0u8FxRwEpwzL61Tl6ffw8ATw6UArThbhvG3FtscuzQLfYHTPkw5dpyV3K2g0ek9z+Mle6kqjxEz+9LNhLPYjU/SHmT8ngKM687trBKg=
+	t=1781625352; cv=none; b=A8xR6ZZH/bFBv6BZd0fJCZc/jUev0EwfYIRVir+4kj7rC5BVW1ZDFMzXyg/WNnfNNSWi2Mdce1OFJkHQCohJhH/zCZBe3bIuchrB+31GNgIE3eKOlaq/k6dL6KwpTohAoMROFDbpioBMDYQA13Ne8W4t0ZikV9GGO/Xl1y2gdYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625346; c=relaxed/simple;
-	bh=O0OqYT0RBjoIG6gFFsRu6tgvw/Qj9phWRrW9WaZBAw4=;
+	s=arc-20240116; t=1781625352; c=relaxed/simple;
+	bh=e4lTl9LbAh0aEDSQBhP2y9UEtAV0WG29TVZb5b/w1fI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MexF1X5h8b7BKDTxoyW3wc5bfz7HRDvKlzWh4/shin0Hrt9FJJ+tgXidJKthVo+2hB1TTgQEVv55lsgx6N3WE2CBpcbq3E+WHiqtuEzA0gKG9618Lwapj/1Kkzu+HdFoL3Ati2xCGZhMPavj+/YRRwQIlrdR/p0J/dwc3xtN/7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RDltk+AM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZsGmo+tFnYt/JAfzT4d95xAH+/oqYmgAkuMPBhsIB7neLRDrZhmDaFvSapnkNsNbgKkEDxtiT31QM9UmBzBihYgOXhEPPEf+katlyBU8NBGPFH71j13MbxAldM0gGb+S32Fxu4e7SUfv/AukOIFLhNmZ9Frxrl1ObaEvJefQ1vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JTyYbwfp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RDltk+AM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604D51F000E9;
-	Tue, 16 Jun 2026 15:55:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JTyYbwfp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A25871F000E9;
+	Tue, 16 Jun 2026 15:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625345;
-	bh=q7+qyvejDPxf0yiOGSlQCf92d7TuBoNa6GYrYjoHd04=;
+	s=korg; t=1781625350;
+	bh=1gp9VBybFUez6Po7dX0ttaOR6EURLWz6ktngZ0oaRAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RDltk+AMu5P53eTGtx2YVAQEqCqUTOFpOc7O6TbRn+e4l2Uqpt73PuPwbonmc+Zsb
-	 QfKtrEI88NrukbhhmFoFA3XskIrKfPTWPQkokRCM71pIiilsi8JfKT6MZWGKOx6nRW
-	 B9zNhwRgRnc8dT7C3sM6VNL1/n4EPYlKRjys+hqQ=
+	b=JTyYbwfpSFhx+C4AGBPKGLSiHkvMVBXOfZ6WbJe/YNlAZ0hUjM2UyHNeAnjIHw/8T
+	 VDhng4qDgakW/suG5eHUOu7nIFpde4HaWGkx2KwbAkqhYQfEH0Lmad5nd3Ze0iyqVx
+	 DGg4gygOWGudp5jPZtD09aWfJW3hOrsd5pQxn4WU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
+	Kyle Zeng <kylebot@openai.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 125/325] netfilter: nf_conntrack: destroy stale expectfn expectations on unregister
-Date: Tue, 16 Jun 2026 20:28:41 +0530
-Message-ID: <20260616145103.943742907@linuxfoundation.org>
+Subject: [PATCH 6.18 126/325] netfilter: x_tables: avoid leaking percpu counter pointers
+Date: Tue, 16 Jun 2026 20:28:42 +0530
+Message-ID: <20260616145103.994995161@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,147 +51,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit c3009418f9fa1dcb3eb86f4d8c92583537b5faa3 ]
+[ Upstream commit f7f2fbb0e893a0238dc464f8d8c0f5609bec584f ]
 
-NAT helpers such as nf_nat_h323 store a raw pointer to module text in
-exp->expectfn (e.g. ip_nat_q931_expect). nf_ct_helper_expectfn_unregister()
-only unlinks the callback descriptor and never walks the expectation table,
-so an expectation pending at module removal survives with a dangling
-exp->expectfn into freed module text.
+The native and compat get-entries paths copy the fixed rule entry header
+from the kernelized rule blob to userspace before overwriting the entry's
+counter fields with a sanitized counter snapshot.
 
-When the expected connection arrives, init_conntrack() invokes
-exp->expectfn(), now a stale pointer into the unloaded module. Reproduced
-on a KASAN build by loading the H.323 helpers, creating a Q.931
-expectation, unloading nf_nat_h323, then connecting to the expected port:
+On SMP kernels, entry->counters.pcnt contains the percpu allocation
+address used by x_tables rule counters. A caller can provide a userspace
+buffer that faults during the initial fixed-header copy after pcnt has
+been copied but before the later sanitized counter copy runs. The syscall
+then returns -EFAULT while leaving the raw percpu pointer in userspace.
 
- Oops: int3: 0000 [#1] SMP KASAN NOPTI
- RIP: 0010:0xffffffffa06102d1
-  init_conntrack.isra.0 (net/netfilter/nf_conntrack_core.c:1862)
-  nf_conntrack_in (net/netfilter/nf_conntrack_core.c:2049)
-  ipv4_conntrack_local (net/netfilter/nf_conntrack_proto.c:223)
-  nf_hook_slow (net/netfilter/core.c:619)
-  __ip_local_out (net/ipv4/ip_output.c:120)
-  __tcp_transmit_skb (net/ipv4/tcp_output.c:1715)
-  tcp_connect (net/ipv4/tcp_output.c:4374)
-  tcp_v4_connect (net/ipv4/tcp_ipv4.c:345)
-  __sys_connect (net/socket.c:2167)
- Modules linked in: nf_conntrack_h323 [last unloaded: nf_nat_h323]
+Copy only the fixed entry prefix before counters from the kernelized rule
+blob, then copy the sanitized counter snapshot into the counter field.
+Apply this ordering to the IPv4, IPv6, and ARP native and compat
+get-entries implementations so a fault cannot expose the internal percpu
+counter pointer.
 
-Reaching the dangling state requires CAP_SYS_MODULE in the initial user
-namespace to remove a NAT helper that still has live expectations, so this
-is a robustness fix; leaving an expectation pointing at freed text is wrong
-regardless.
-
-Add nf_ct_helper_expectfn_destroy(), which walks the expectation table and
-drops every expectation whose ->expectfn matches the descriptor being torn
-down. Call it from each NAT helper's exit path after the existing RCU grace
-period, so no expectation outlives the code it points at and no extra
-synchronize_rcu() is introduced. With the fix, the same reproducer runs to
-completion without the Oops.
-
-Fixes: f587de0e2feb ("[NETFILTER]: nf_conntrack/nf_nat: add H.323 helper port")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Fixes: 71ae0dff02d7 ("netfilter: xtables: use percpu rule counters")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_conntrack_helper.h |  1 +
- net/ipv4/netfilter/nf_nat_h323.c            |  2 ++
- net/netfilter/nf_conntrack_helper.c         | 19 +++++++++++++++++++
- net/netfilter/nf_nat_core.c                 |  2 ++
- net/netfilter/nf_nat_sip.c                  |  1 +
- 5 files changed, 25 insertions(+)
+ net/ipv4/netfilter/arp_tables.c | 15 ++++++---------
+ net/ipv4/netfilter/ip_tables.c  | 15 ++++++---------
+ net/ipv6/netfilter/ip6_tables.c | 15 ++++++---------
+ 3 files changed, 18 insertions(+), 27 deletions(-)
 
-diff --git a/include/net/netfilter/nf_conntrack_helper.h b/include/net/netfilter/nf_conntrack_helper.h
-index de2f956abf3480..24cf3d2d97450f 100644
---- a/include/net/netfilter/nf_conntrack_helper.h
-+++ b/include/net/netfilter/nf_conntrack_helper.h
-@@ -155,6 +155,7 @@ void nf_ct_helper_log(struct sk_buff *skb, const struct nf_conn *ct,
+diff --git a/net/ipv4/netfilter/arp_tables.c b/net/ipv4/netfilter/arp_tables.c
+index f3dadbc416a3a5..1490466b146e4b 100644
+--- a/net/ipv4/netfilter/arp_tables.c
++++ b/net/ipv4/netfilter/arp_tables.c
+@@ -702,14 +702,12 @@ static int copy_entries_to_user(unsigned int total_size,
+ 		const struct xt_entry_target *t;
  
- void nf_ct_helper_expectfn_register(struct nf_ct_helper_expectfn *n);
- void nf_ct_helper_expectfn_unregister(struct nf_ct_helper_expectfn *n);
-+void nf_ct_helper_expectfn_destroy(const struct nf_ct_helper_expectfn *n);
- struct nf_ct_helper_expectfn *
- nf_ct_helper_expectfn_find_by_name(const char *name);
- struct nf_ct_helper_expectfn *
-diff --git a/net/ipv4/netfilter/nf_nat_h323.c b/net/ipv4/netfilter/nf_nat_h323.c
-index faee20af485613..10e1b0837731b7 100644
---- a/net/ipv4/netfilter/nf_nat_h323.c
-+++ b/net/ipv4/netfilter/nf_nat_h323.c
-@@ -555,6 +555,8 @@ static void __exit nf_nat_h323_fini(void)
- 	nf_ct_helper_expectfn_unregister(&q931_nat);
- 	nf_ct_helper_expectfn_unregister(&callforwarding_nat);
- 	synchronize_rcu();
-+	nf_ct_helper_expectfn_destroy(&q931_nat);
-+	nf_ct_helper_expectfn_destroy(&callforwarding_nat);
- }
+ 		e = loc_cpu_entry + off;
+-		if (copy_to_user(userptr + off, e, sizeof(*e))) {
+-			ret = -EFAULT;
+-			goto free_counters;
+-		}
+-		if (copy_to_user(userptr + off
++		if (copy_to_user(userptr + off, e,
++				 offsetof(struct arpt_entry, counters)) ||
++		    copy_to_user(userptr + off
+ 				 + offsetof(struct arpt_entry, counters),
+ 				 &counters[num],
+-				 sizeof(counters[num])) != 0) {
++				 sizeof(counters[num]))) {
+ 			ret = -EFAULT;
+ 			goto free_counters;
+ 		}
+@@ -1327,9 +1325,8 @@ static int compat_copy_entry_to_user(struct arpt_entry *e, void __user **dstptr,
  
- /****************************************************************************/
-diff --git a/net/netfilter/nf_conntrack_helper.c b/net/netfilter/nf_conntrack_helper.c
-index a715304a53d8c2..9150bcfd7ca83b 100644
---- a/net/netfilter/nf_conntrack_helper.c
-+++ b/net/netfilter/nf_conntrack_helper.c
-@@ -283,6 +283,25 @@ void nf_ct_helper_expectfn_unregister(struct nf_ct_helper_expectfn *n)
- }
- EXPORT_SYMBOL_GPL(nf_ct_helper_expectfn_unregister);
+ 	origsize = *size;
+ 	ce = *dstptr;
+-	if (copy_to_user(ce, e, sizeof(struct arpt_entry)) != 0 ||
+-	    copy_to_user(&ce->counters, &counters[i],
+-	    sizeof(counters[i])) != 0)
++	if (copy_to_user(ce, e, offsetof(struct compat_arpt_entry, counters)) ||
++	    copy_to_user(&ce->counters, &counters[i], sizeof(counters[i])))
+ 		return -EFAULT;
  
-+static bool expect_iter_expectfn(struct nf_conntrack_expect *exp, void *data)
-+{
-+	const struct nf_ct_helper_expectfn *n = data;
-+
-+	/* Relies on registered expectfn descriptors having unique ->expectfn
-+	 * pointers, which holds for the in-tree NAT helpers.
-+	 */
-+	return exp->expectfn == n->expectfn;
-+}
-+
-+/* Destroy expectations still pointing at @n->expectfn; call after the
-+ * caller's RCU grace period so none outlives the (often modular) callback.
-+ */
-+void nf_ct_helper_expectfn_destroy(const struct nf_ct_helper_expectfn *n)
-+{
-+	nf_ct_expect_iterate_destroy(expect_iter_expectfn, (void *)n);
-+}
-+EXPORT_SYMBOL_GPL(nf_ct_helper_expectfn_destroy);
-+
- /* Caller should hold the rcu lock */
- struct nf_ct_helper_expectfn *
- nf_ct_helper_expectfn_find_by_name(const char *name)
-diff --git a/net/netfilter/nf_nat_core.c b/net/netfilter/nf_nat_core.c
-index 8e36b4e3e5c478..d3e158ecf729a3 100644
---- a/net/netfilter/nf_nat_core.c
-+++ b/net/netfilter/nf_nat_core.c
-@@ -1347,6 +1347,7 @@ static int __init nf_nat_init(void)
- 		RCU_INIT_POINTER(nf_nat_hook, NULL);
- 		nf_ct_helper_expectfn_unregister(&follow_master_nat);
- 		synchronize_net();
-+		nf_ct_helper_expectfn_destroy(&follow_master_nat);
- 		unregister_pernet_subsys(&nat_net_ops);
- 		kvfree(nf_nat_bysource);
- 	}
-@@ -1364,6 +1365,7 @@ static void __exit nf_nat_cleanup(void)
- 	RCU_INIT_POINTER(nf_nat_hook, NULL);
+ 	*dstptr += sizeof(struct compat_arpt_entry);
+diff --git a/net/ipv4/netfilter/ip_tables.c b/net/ipv4/netfilter/ip_tables.c
+index f4079f0718deae..0549fad53c0364 100644
+--- a/net/ipv4/netfilter/ip_tables.c
++++ b/net/ipv4/netfilter/ip_tables.c
+@@ -832,14 +832,12 @@ copy_entries_to_user(unsigned int total_size,
+ 		const struct xt_entry_target *t;
  
- 	synchronize_net();
-+	nf_ct_helper_expectfn_destroy(&follow_master_nat);
- 	kvfree(nf_nat_bysource);
- 	unregister_pernet_subsys(&nat_net_ops);
- }
-diff --git a/net/netfilter/nf_nat_sip.c b/net/netfilter/nf_nat_sip.c
-index 9fbfc6bff0c221..00838c0cc5bb28 100644
---- a/net/netfilter/nf_nat_sip.c
-+++ b/net/netfilter/nf_nat_sip.c
-@@ -655,6 +655,7 @@ static void __exit nf_nat_sip_fini(void)
- 	RCU_INIT_POINTER(nf_nat_sip_hooks, NULL);
- 	nf_ct_helper_expectfn_unregister(&sip_nat);
- 	synchronize_rcu();
-+	nf_ct_helper_expectfn_destroy(&sip_nat);
- }
+ 		e = loc_cpu_entry + off;
+-		if (copy_to_user(userptr + off, e, sizeof(*e))) {
+-			ret = -EFAULT;
+-			goto free_counters;
+-		}
+-		if (copy_to_user(userptr + off
++		if (copy_to_user(userptr + off, e,
++				 offsetof(struct ipt_entry, counters)) ||
++		    copy_to_user(userptr + off
+ 				 + offsetof(struct ipt_entry, counters),
+ 				 &counters[num],
+-				 sizeof(counters[num])) != 0) {
++				 sizeof(counters[num]))) {
+ 			ret = -EFAULT;
+ 			goto free_counters;
+ 		}
+@@ -1228,9 +1226,8 @@ compat_copy_entry_to_user(struct ipt_entry *e, void __user **dstptr,
  
- static const struct nf_nat_sip_hooks sip_hooks = {
+ 	origsize = *size;
+ 	ce = *dstptr;
+-	if (copy_to_user(ce, e, sizeof(struct ipt_entry)) != 0 ||
+-	    copy_to_user(&ce->counters, &counters[i],
+-	    sizeof(counters[i])) != 0)
++	if (copy_to_user(ce, e, offsetof(struct compat_ipt_entry, counters)) ||
++	    copy_to_user(&ce->counters, &counters[i], sizeof(counters[i])))
+ 		return -EFAULT;
+ 
+ 	*dstptr += sizeof(struct compat_ipt_entry);
+diff --git a/net/ipv6/netfilter/ip6_tables.c b/net/ipv6/netfilter/ip6_tables.c
+index dfaea4f6727ed9..3586e636c66bdc 100644
+--- a/net/ipv6/netfilter/ip6_tables.c
++++ b/net/ipv6/netfilter/ip6_tables.c
+@@ -848,14 +848,12 @@ copy_entries_to_user(unsigned int total_size,
+ 		const struct xt_entry_target *t;
+ 
+ 		e = loc_cpu_entry + off;
+-		if (copy_to_user(userptr + off, e, sizeof(*e))) {
+-			ret = -EFAULT;
+-			goto free_counters;
+-		}
+-		if (copy_to_user(userptr + off
++		if (copy_to_user(userptr + off, e,
++				 offsetof(struct ip6t_entry, counters)) ||
++		    copy_to_user(userptr + off
+ 				 + offsetof(struct ip6t_entry, counters),
+ 				 &counters[num],
+-				 sizeof(counters[num])) != 0) {
++				 sizeof(counters[num]))) {
+ 			ret = -EFAULT;
+ 			goto free_counters;
+ 		}
+@@ -1244,9 +1242,8 @@ compat_copy_entry_to_user(struct ip6t_entry *e, void __user **dstptr,
+ 
+ 	origsize = *size;
+ 	ce = *dstptr;
+-	if (copy_to_user(ce, e, sizeof(struct ip6t_entry)) != 0 ||
+-	    copy_to_user(&ce->counters, &counters[i],
+-	    sizeof(counters[i])) != 0)
++	if (copy_to_user(ce, e, offsetof(struct compat_ip6t_entry, counters)) ||
++	    copy_to_user(&ce->counters, &counters[i], sizeof(counters[i])))
+ 		return -EFAULT;
+ 
+ 	*dstptr += sizeof(struct compat_ip6t_entry);
 -- 
 2.53.0
 
