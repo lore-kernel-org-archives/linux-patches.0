@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364B02EEE68;
-	Tue, 16 Jun 2026 15:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948BC1A6803;
+	Tue, 16 Jun 2026 15:28:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781623729; cv=none; b=bzxnh5+YnEb1BBdfKKml5bvG+W72lWuRX1sl9gc9R/BfQB0xrD1fVeBRN86etQBzmZe+mrt8q4dA6qrdbkCobM0ooJudLKFr+/aaw8he0jqT/Ei4JNXaSmA5fSVPDc1HuQsOOMyh03Sq+2xuS1c3Ty5LDnfzZWzx8pogRh6cYsE=
+	t=1781623735; cv=none; b=daKwCugcTg8mimsbl+38Q4wrxgszH0VFrjRuuCLci4nV+b+epO0klRIJ1SedLD3v2QnRapP+bBiIFp50yS7oG1SmAqtOVTq45cL2gAz8Y4iLyf2Id3m/TZVGXDS9ptDHnF/5+lnhCligPBdxVQ+noI2wau/zCGGcqWB/773VHFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781623729; c=relaxed/simple;
-	bh=M0H9EsbWtq080iywAY928VaI/nD5rlETw6qLhBU5JLo=;
+	s=arc-20240116; t=1781623735; c=relaxed/simple;
+	bh=dE81CNlwl+aIpShqf3U2O/NRdS4hmPCzPMF0DUypy6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ieLG5tGhCS+hQfXIGhg2OnP2S7BPYkMGWj3doVt8PR/Fbiw+4kEvkCN9wCvDcQNJZBmcy3TeI+vYUN/V0BwdVBWl4ph+m0Mo3PPxYqdPHD+CnIXE/XPIRCGCdg3/Axd9mgxfp54gd81n6+KGzxr75aQCVyC3gas2vaTEgkz8fT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RD/3NNAH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b/OaAKoXF8mIuUz/hGyTb3aIaCDOhWzsBvqQndJgttEeePYuKhHevDXhRR7XlEB3UfqC3sy3wm1HMSOsT3SlwcFIV1h5r75/6XNa0t8F3gURAkphWD6dpt4dhJ4Ov6Nh8hSowQKti0qh2+tsUQuvmTEDFAhSZMpaXIqdfDQ4cUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npxzUAuT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RD/3NNAH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A593D1F000E9;
-	Tue, 16 Jun 2026 15:28:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npxzUAuT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0386F1F000E9;
+	Tue, 16 Jun 2026 15:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781623727;
-	bh=W9jb3RH9y1dZcGikupeBoy6pqFYYRzEO0+09LALptK4=;
+	s=korg; t=1781623733;
+	bh=Cnj8XdyETqbvYzRlpy9d1CRq6kXmQ9Qc95IkJUPzlPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RD/3NNAH2CTM0cnnO128lodDuQmyS/lvvwBJTAunBlq1nxS2RvIIHcFASorXKaa+5
-	 lPkbF7Gf2hv8meLv8tykDArFd2pMCKAdcNJYR6xAr4uK/QoSMF3uX/yRLXY/Ml8BDZ
-	 wA0BTZzqMCpxymuMbvJNjWysOhip8Z/zH9Mp3aWQ=
+	b=npxzUAuTAs8acGJxKjNUivlWMhEiJ0BCdbZcDS5pPki9Iz6RIgAl1lSGWrYGR1Hqv
+	 byfxYttoEboFekZ2ZMr9fswgvUIEngsf8gm8iXXADIHFpFQ72I/Pizj3TthpNLDiVU
+	 k0qhhtEVNEfVXYYtdpUEbMDnxSLfer8GEg2jL+9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.0 185/378] tracing/probes: Point the error offset correctly for eprobe argument error
-Date: Tue, 16 Jun 2026 20:26:56 +0530
-Message-ID: <20260616145120.119272267@linuxfoundation.org>
+	Zhang Guopeng <zhangguopeng@kylinos.cn>,
+	Sun Shaojie <sunshaojie@kylinos.cn>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 7.0 186/378] cgroup/cpuset: Use effective_xcpus in partcmd_update add/del mask calculation
+Date: Tue, 16 Jun 2026 20:26:57 +0530
+Message-ID: <20260616145120.169512940@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -50,51 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Sun Shaojie <sunshaojie@kylinos.cn>
 
-commit 85e0f27dd1396307913ffc5745b0c05137e9beac upstream.
+commit 0a68853de27b522bca2b9934127277185374a24f upstream.
 
-Fix to point the error offset correctly for eprobe argument error.
-In the cleanup commit 1b8b0cd754cd ("tracing/probes: Move event parameter
-fetching code to common parser"), due to incorrect backward compatibility
-aimed at conforming to the test specifications, the error location was set
-to 0 when a non-existent formal parameter was specified for Eprobe.
-However, this should be corrected in both the test and the implementation
-to point correct error position.
+When sibling CPU exclusion occurs, a partition's user_xcpus may contain
+CPUs that were never actually granted to it. These CPUs are present in
+user_xcpus(cs) but not in cs->effective_xcpus.
 
-Link: https://lore.kernel.org/all/177967567399.209006.1451571244515632097.stgit@devnote2/
+The partcmd_update path in update_parent_effective_cpumask() uses
+user_xcpus(cs) (via the local variable xcpus) to compute the addmask
+(CPUs to return to parent) and delmask (CPUs to request from parent).
+This is incorrect:
 
-Fixes: 1b8b0cd754cd ("tracing/probes: Move event parameter fetching code to common parser")
-Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
+ 1) When newmask removes a CPU that was previously excluded by a
+    sibling, addmask incorrectly includes that CPU and tries to return
+    it to the parent even though the partition never actually owned it,
+    causing CPU overlap with sibling partitions and triggering warnings
+    in generate_sched_domains().
+
+ 2) When newmask adds a previously excluded CPU that is now available,
+    delmask fails to request it from the parent because user_xcpus(cs)
+    already includes it.
+
+Fix this by using cs->effective_xcpus instead of user_xcpus(cs) in all
+partcmd_update paths that calculate addmask or delmask, including the
+PERR_NOCPUS error handling paths.
+
+Reproducers:
+
+  Example 1 - Removing a sibling-excluded CPU incorrectly returns it:
+
+    # cd /sys/fs/cgroup
+    # echo "0-1" > a1/cpuset.cpus
+    # echo "root" > a1/cpuset.cpus.partition
+    # echo "0-2" > b1/cpuset.cpus
+    # echo "root" > b1/cpuset.cpus.partition
+    # echo "2" > b1/cpuset.cpus
+    # cat cpuset.cpus.effective
+    # Actual: 0-1,3    Expected: 3
+
+  Example 2 - Expanding to a previously excluded CPU fails to request it:
+
+    # cd /sys/fs/cgroup
+    # echo "0-1" > a1/cpuset.cpus
+    # echo "root" > a1/cpuset.cpus.partition
+    # echo "0-2" > b1/cpuset.cpus
+    # echo "root" > b1/cpuset.cpus.partition
+    # echo "member" > a1/cpuset.cpus.partition
+    # echo "1-2" > b1/cpuset.cpus
+    # cat cpuset.cpus.effective
+    # Actual: 0-1,3    Expected: 0,3
+
+Fixes: 2a3602030d80 ("cgroup/cpuset: Don't invalidate sibling partitions on cpuset.cpus conflict")
+Cc: stable@vger.kernel.org # v7.0+
+Suggested-by: Zhang Guopeng <zhangguopeng@kylinos.cn>
+Signed-off-by: Sun Shaojie <sunshaojie@kylinos.cn>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_probe.c                                              |    2 --
- tools/testing/selftests/ftrace/test.d/dynevent/eprobes_syntax_errors.tc |    2 +-
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ kernel/cgroup/cpuset.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -962,8 +962,6 @@ static int parse_probe_vars(char *orig_a
- 			code->op = FETCH_OP_COMM;
- 			return 0;
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 5c33ab20cc20..c9e14fda3d6f 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1811,9 +1811,9 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
+ 		 * Compute add/delete mask to/from effective_cpus
+ 		 *
+ 		 * For valid partition:
+-		 *   addmask = exclusive_cpus & ~newmask
++		 *   addmask = effective_xcpus & ~newmask
+ 		 *			      & parent->effective_xcpus
+-		 *   delmask = newmask & ~exclusive_cpus
++		 *   delmask = newmask & ~effective_xcpus
+ 		 *		       & parent->effective_xcpus
+ 		 *
+ 		 * For invalid partition:
+@@ -1825,11 +1825,11 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
+ 			deleting = cpumask_and(tmp->delmask,
+ 					newmask, parent->effective_xcpus);
+ 		} else {
+-			cpumask_andnot(tmp->addmask, xcpus, newmask);
++			cpumask_andnot(tmp->addmask, cs->effective_xcpus, newmask);
+ 			adding = cpumask_and(tmp->addmask, tmp->addmask,
+ 					     parent->effective_xcpus);
+ 
+-			cpumask_andnot(tmp->delmask, newmask, xcpus);
++			cpumask_andnot(tmp->delmask, newmask, cs->effective_xcpus);
+ 			deleting = cpumask_and(tmp->delmask, tmp->delmask,
+ 					       parent->effective_xcpus);
  		}
--		/* backward compatibility */
--		ctx->offset = 0;
- 		goto inval;
- 	}
- 
---- a/tools/testing/selftests/ftrace/test.d/dynevent/eprobes_syntax_errors.tc
-+++ b/tools/testing/selftests/ftrace/test.d/dynevent/eprobes_syntax_errors.tc
-@@ -20,7 +20,7 @@ check_error 'e:foo/^12345678901234567890
- check_error 'e:foo/^bar.1 syscalls/sys_enter_openat'	# BAD_EVENT_NAME
- 
- check_error 'e:foo/bar syscalls/sys_enter_openat arg=^dfd'	# BAD_FETCH_ARG
--check_error 'e:foo/bar syscalls/sys_enter_openat ^arg=$foo'	# BAD_ATTACH_ARG
-+check_error 'e:foo/bar syscalls/sys_enter_openat arg=^$foo'	# BAD_ATTACH_ARG
- 
- if grep -q '<attached-group>\.<attached-event>.*\[if <filter>\]' README; then
-   check_error 'e:foo/bar syscalls/sys_enter_openat if ^'	# NO_EP_FILTER
+@@ -1868,7 +1868,7 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
+ 			part_error = PERR_NOCPUS;
+ 			deleting = false;
+ 			adding = cpumask_and(tmp->addmask,
+-					     xcpus, parent->effective_xcpus);
++					     cs->effective_xcpus, parent->effective_xcpus);
+ 		}
+ 	} else {
+ 		/*
+@@ -1890,7 +1890,8 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
+ 			part_error = PERR_NOCPUS;
+ 			if (is_partition_valid(cs))
+ 				adding = cpumask_and(tmp->addmask,
+-						xcpus, parent->effective_xcpus);
++						     cs->effective_xcpus,
++						     parent->effective_xcpus);
+ 		} else if (is_partition_invalid(cs) && !cpumask_empty(xcpus) &&
+ 			   cpumask_subset(xcpus, parent->effective_xcpus)) {
+ 			struct cgroup_subsys_state *css;
+-- 
+2.54.0
+
 
 
