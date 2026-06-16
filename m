@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6AFA466B5B;
-	Tue, 16 Jun 2026 17:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4273C276B;
+	Tue, 16 Jun 2026 17:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631905; cv=none; b=cyn6LwmSR741mk1L5GaFBk+BMogCqVRC7toEpme+SYCnozuORpOCccrG3vuZPHYKSoHGtMXYcAFFzXsdh4UEbu2/ZuDkxOGtVl1QJT8wSWLrPkeh5AdqLJADcUyrVgjRR3ZOQ9ioCdw1ZKUyaz68g8mSUpy8IKtAl+M+BgKt7qM=
+	t=1781631911; cv=none; b=NxVi+I3ZfC51vHaiZLRXw6CLeDqvhKkuaYkBo2fcDXRIRAdK9wITJmy8Jv46R7aiuryE+ibCDPPNrkCDsooxq+5b5rSLPqKNWEkPlLzYQSI/2EjrzcYtl69+OgiqzM+qXk4WC1gd29UhSdZS1I0ZqGncYdoiOmsIv12vHpBl/oI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631905; c=relaxed/simple;
-	bh=wSszrKdZryiwIT7NQhJ3/NOjMA0Z28C3weooqg8qIxU=;
+	s=arc-20240116; t=1781631911; c=relaxed/simple;
+	bh=f4iIkDeO1Lt/nCnz/LozeBifXbNy1jjvzcl3qVtVSt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gkztd4mS6jWBVPwpk9dFGNg1A7thjjeGxyId2UdgUVX7FyhBA0Eo0UgAb07NgxectoVLYQEJfTEu4W1dcemKfk8ca1myJV+g7kLMeMOgFtSOcFXl/O3DWv4UM80F8tx4zgFyYklt0OCixm5kr0DinJ+ViY8NsWDzbcsJAKxwsoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEye7asD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y20DKTqpmC4OJ5UQiZo+vXG7FuPk92MCMaTnoc7p31yC6+fAMR2Bhzc50BXviud6dyzKsW9Gr7zzm/3TXtkCnlCIILqmFtbxBe3h1GZ17okITkmoJid5qAo7KeWsrD5gDYqlDIuBr4GX/K9L9oxm9YaYCt4mXYFuVp5JsjQc+1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Feflf855; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEye7asD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0CFD1F000E9;
-	Tue, 16 Jun 2026 17:45:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Feflf855"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A8F81F000E9;
+	Tue, 16 Jun 2026 17:45:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631904;
-	bh=qWBoClFF0JxwMchntC96/YS48UBR9Y/sVBF71+wkNhc=;
+	s=korg; t=1781631909;
+	bh=iIHQAzw2ywx9tI73PmNwItAGvbDtU/JYA+0q4immucw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wEye7asDKdO995T394L9IkvPFJANNZaT7Gjzo1gqAOrUQbANT+e+G8RC1AgVxupuD
-	 hz01m5sT2hhXdUaQtsTPRIfwWG+P0lYY6qcZsOwp+dFUxuNl/xUbBJyu/LlLEzOkT/
-	 HBwCihn0EAOjoh7ZjEZYlksVpWllChjrc3GXoAhE=
+	b=Feflf8555zdMz5fNIWwOn1wXhbRqASFTk98F/ySYbDJYeaJELYd/ZuWCkeUEoaWQ9
+	 qitsH3EYFaDgIGB+6pH/9DVkw8zAlOCBuUzmk6o5xQA+tyKOyg6++0Nydt4O0STtLG
+	 8YbtaIlWBI8iDL/r4OZnpexsiibmheOTw2mhRL0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Gabriel Somlo <gsomlo@gmail.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.1 310/522] mmc: litex_mmc: Set mandatory idle clocks before CMD0
-Date: Tue, 16 Jun 2026 20:27:37 +0530
-Message-ID: <20260616145140.373368316@linuxfoundation.org>
+Subject: [PATCH 6.1 311/522] mmc: renesas_sdhi: Add OF entry for RZ/G2H SoC
+Date: Tue, 16 Jun 2026 20:27:38 +0530
+Message-ID: <20260616145140.427457034@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,63 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Inochi Amaoto <inochiama@gmail.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-commit 99982b743e5ba72bd1f5de0e03e3b96ae70b1e51 upstream.
+commit f48ee49726ee4ab545fd2dc644f169c0809b19b3 upstream.
 
-The litex_mmc driver assumes the card is already probed in the BIOS
-and skip the phy initialization. This will cause the command fail
-like the following when the old card is unplugged and then insert
-a new card:
+The RZ/G2H (R8A774E1) SoC was previously handled via the generic
+"renesas,rcar-gen3-sdhi" fallback compatible string. However, because
+the SDHI IP on RZ/G2H is identical with the R-Car H3-N (R8A77951), it
+requires the specific quirks and configuration defined in
+`of_r8a7795_compatible` rather than the generic Gen3 data.
 
-[   62.923593] litex-mmc f0004000.mmc: Command (cmd 8) error, status -110
-[   62.949717] litex-mmc f0004000.mmc: Command (cmd 55) error, status -110
-[   62.976606] litex-mmc f0004000.mmc: Command (cmd 55) error, status -110
-[   63.002516] litex-mmc f0004000.mmc: Command (cmd 55) error, status -110
-[   63.028442] litex-mmc f0004000.mmc: Command (cmd 55) error, status -110
+Add the explicit "renesas,sdhi-r8a774e1" match entry to map it correctly.
+Note that the DT binding file renesas,sdhi.yaml does not need an update
+as the entry for this SoC is already present.
 
-Add required clock settings and initialization for the CMD 0, so it can
-probe the new card.
-
-Fixes: 92e099104729 ("mmc: Add driver for LiteX's LiteSDCard interface")
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Reviewed-by: Gabriel Somlo <gsomlo@gmail.com>
+Fixes: 31941342888d ("arm64: dts: renesas: r8a774e1: Add SDHI nodes")
 Cc: stable@vger.kernel.org
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/litex_mmc.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/mmc/host/renesas_sdhi_internal_dmac.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mmc/host/litex_mmc.c
-+++ b/drivers/mmc/host/litex_mmc.c
-@@ -69,6 +69,9 @@
- #define SD_SLEEP_US       5
- #define SD_TIMEOUT_US 20000
- 
-+#define SD_INIT_DELAY_US  1000
-+#define SD_INIT_CLK_HZ    400000
-+
- #define SDIRQ_CARD_DETECT    1
- #define SDIRQ_SD_TO_MEM_DONE 2
- #define SDIRQ_MEM_TO_SD_DONE 4
-@@ -450,6 +453,17 @@ static void litex_mmc_set_ios(struct mmc
- 	struct litex_mmc_host *host = mmc_priv(mmc);
- 
- 	/*
-+	 * The SD specification requires at least 74 idle clocks before CMD0.
-+	 * These dummy cycles is generated by writing LITEX_PHY_INITIALIZE.
-+	 */
-+	if (ios->chip_select == MMC_CS_HIGH) {
-+		litex_mmc_setclk(host, SD_INIT_CLK_HZ);
-+		litex_write8(host->sdphy + LITEX_PHY_INITIALIZE, 1);
-+		fsleep(SD_INIT_DELAY_US);
-+		return;
-+	}
-+
-+	/*
- 	 * NOTE: Ignore any ios->bus_width updates; they occur right after
- 	 * the mmc core sends its own acmd6 bus-width change notification,
- 	 * which is redundant since we snoop on the command flow and inject
+--- a/drivers/mmc/host/renesas_sdhi_internal_dmac.c
++++ b/drivers/mmc/host/renesas_sdhi_internal_dmac.c
+@@ -269,6 +269,7 @@ static const struct renesas_sdhi_of_data
+ static const struct of_device_id renesas_sdhi_internal_dmac_of_match[] = {
+ 	{ .compatible = "renesas,sdhi-r7s9210", .data = &of_rza2_compatible, },
+ 	{ .compatible = "renesas,sdhi-mmc-r8a77470", .data = &of_rcar_gen3_compatible, },
++	{ .compatible = "renesas,sdhi-r8a774e1", .data = &of_r8a7795_compatible, },
+ 	{ .compatible = "renesas,sdhi-r8a7795", .data = &of_r8a7795_compatible, },
+ 	{ .compatible = "renesas,sdhi-r8a77961", .data = &of_r8a77961_compatible, },
+ 	{ .compatible = "renesas,sdhi-r8a77965", .data = &of_r8a77965_compatible, },
 
 
