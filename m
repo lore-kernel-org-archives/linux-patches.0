@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB08169AD2;
-	Tue, 16 Jun 2026 17:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23303C3C1E;
+	Tue, 16 Jun 2026 17:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632001; cv=none; b=tqONwO/AEUPFD4uuLyNymXE4zQ/+EoMallOSEyjzbE4X2pghYdq6jSg5h0qpcJcuu10wKtg6dUKHKehI7MI99sK92C8exPnHupcVJydP95P8W4+FFz8mE2kZePRQkfSZZDLU8hoCNxviImgOulwLN2l19L8qHQNRcEkeN7YjMSg=
+	t=1781632006; cv=none; b=Cd2I7lbKfsEd2q2igLnhpLMv/XA0JDgqBl/LVTo8brNWgtALleApFbO1ZjquK37D8+zW6s2PLoKLUkm/SJcGAbCpyzy9rbXMCe/vZSZqGLG5ywmkoq/HyoFAWJZwz0lA2whhqtPzaOKWWQNcMUvRsd8ss6lrC9SqSRGq13advqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632001; c=relaxed/simple;
-	bh=rCDNYuc5+pvCT69qaAmvqF88GBA2FyMiF5KQk/NTN2w=;
+	s=arc-20240116; t=1781632006; c=relaxed/simple;
+	bh=r+fpgPz3eAOkjTwU/IncIlnl554hS6mV+Fguaj66Ju4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=duwroWnpo7HowpwJDqKzWM3C21S5hvqAzy89VDrztxIjUNeU2MNQvXOb5cwW3eZlKPRmvhHtqb0DvuVkalYLXtS9KIi275tWGNqQsGCpJYdJd4lzVuSGJJoRzEhJXykdPhUWVVVeW8syzE8FmKKd0WTiLKKUwGOh2qa/NowHNMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XYnf21LO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NFfKekLwvUfa8gBXtm3Sh0p+7AysnPaMQcWTRmfC497ra9rFarnQMylirS45rkO3Lr5jQh0gf6d/DWYmF2mPNnxVkI1skfviIOLUyX2hzUejjtd+6FbM9zQpf01Ancwxu8CUaIiSLT/nA2qcxnBUVUHXXQ6940OOWI1c4jkRwCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hf8lXeId; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XYnf21LO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E4901F000E9;
-	Tue, 16 Jun 2026 17:46:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hf8lXeId"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD6EE1F000E9;
+	Tue, 16 Jun 2026 17:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632000;
-	bh=FUQtrtkXB5S1EpFjpob3jl45Hpb1CPaeBxIiZHayG2k=;
+	s=korg; t=1781632004;
+	bh=qe1v7faPx9RilJTKmw+6zpXB5IWnwKalmmcyzlC6A74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XYnf21LO7JK443wySRsCjXQbkR9i0VSVeka3eAy7nSPyGBa181qBkP4c3NWXAv/li
-	 MfY0KhKAyTlHpaH3vH3AXl+6cV5Rr6yfg/XQUCHex6SKSRDbpCBwVQPwqdgEAGAAWn
-	 u13D2pcic3l/8xLbRc4GZEeQK5XviQym2QumOBYw=
+	b=Hf8lXeIdyrG2i6VW0RWlOVTk1tRAoLiZDn99DJPVOU3JGU41KydV95UdDyzi6iQJ7
+	 a+X4FrDtLdATAFHqwOGtS7zQFyCuOd1WbjVeQP7dazMCLBjIVpvjFhFmEQxjvapYL+
+	 p/W2CP1JILqsRcXFLC3wDEIaPb5O8siEuWyGUd/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.1 327/522] fs/fcntl: fix SOFTIRQ-unsafe lock order in fasync signaling
-Date: Tue, 16 Jun 2026 20:27:54 +0530
-Message-ID: <20260616145141.131555460@linuxfoundation.org>
+	stable@kernel.org,
+	Anandu Krishnan E <anandu.e@oss.qualcomm.com>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: [PATCH 6.1 301/522] misc: fastrpc: fix use-after-free of fastrpc_user in workqueue context
+Date: Tue, 16 Jun 2026 20:27:28 +0530
+Message-ID: <20260616145139.982223631@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -45,97 +45,211 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
 
-commit 00633c4683828acd5256fa8d5163f440d74bbe71 upstream.
+commit e85eb5feca8e254905ffa6c57a3c99c89a674a0f upstream.
 
-A SOFTIRQ-safe to SOFTIRQ-unsafe lock order deadlock can occur in
-send_sigio() and send_sigurg() when a process group receives a signal.
+There is a race between fastrpc_device_release() and the workqueue
+that processes DSP responses. When the user closes the file descriptor,
+fastrpc_device_release() frees the fastrpc_user structure. Concurrently,
+an in-flight DSP invocation can complete and fastrpc_rpmsg_callback()
+schedules context cleanup via schedule_work(&ctx->put_work). If the
+workqueue runs fastrpc_context_free() in parallel with or after
+fastrpc_device_release() has freed the user structure, it dereferences
+the freed fastrpc_user. Depending on the state of the context at the
+time of the race, any one of the following accesses can be hit:
 
-When FASYNC is configured for a process group (PIDTYPE_PGID), both
-functions use read_lock(&tasklist_lock) to traverse the task list.
-However, they are frequently called from softirq context:
-- send_sigio() via input_inject_event -> kill_fasync
-- send_sigurg() via tcp_check_urg -> sk_send_sigurg (NET_RX_SOFTIRQ)
+ 1. fastrpc_buf_free() calls fastrpc_ipa_to_dma_addr(buf->fl->cctx, ...)
+    to strip the SID bits from the stored IOVA before passing the
+    physical address to dma_free_coherent().
 
-The deadlock is caused by the rwlock writer fairness mechanism:
-1. CPU 0 (process context) holds read_lock(&tasklist_lock) in do_wait().
-2. CPU 1 (process context) attempts write_lock(&tasklist_lock) in
-   fork() or exit() and spins, which blocks all new readers.
-3. CPU 0 is interrupted by a softirq (e.g., TCP URG packet reception).
-4. The softirq calls send_sigurg() and attempts to acquire
-   read_lock(&tasklist_lock), deadlocking because CPU 1 is waiting.
+ 2. fastrpc_free_map() reads map->fl->cctx->vmperms[0].vmid to
+    reconstruct the source permission bitmask needed for the
+    qcom_scm_assign_mem() call that returns memory from the DSP VM
+    back to HLOS.
 
-Since PID hashing and do_each_pid_task() traversals are already
-RCU-protected, the read_lock on tasklist_lock is no longer strictly
-required for safe traversal. Fix this by replacing tasklist_lock with
-rcu_read_lock(), aligning the process group signaling path with the
-single-PID path. This also mitigates a potential remote denial of
-service vector via TCP URG packets.
+ 3. fastrpc_free_map() acquires map->fl->lock to safely remove the
+    map node from the fl->maps list.
 
-Lockdep splat:
-=====================================================
-WARNING: SOFTIRQ-safe -> SOFTIRQ-unsafe lock order detected
-[...]
-Chain exists of:
-  &dev->event_lock --> &f_owner->lock --> tasklist_lock
+The resulting use-after-free manifests as:
 
-Possible interrupt unsafe locking scenario:
-       CPU0                    CPU1
-       ----                    ----
-  lock(tasklist_lock);
-                           local_irq_disable();
-                           lock(&dev->event_lock);
-                           lock(&f_owner->lock);
-  <Interrupt>
-    lock(&dev->event_lock);
+  pc : fastrpc_buf_free+0x38/0x80 [fastrpc]
+  lr : fastrpc_context_free+0xa8/0x1b0 [fastrpc]
+  fastrpc_context_free+0xa8/0x1b0 [fastrpc]
+  fastrpc_context_put_wq+0x78/0xa0 [fastrpc]
+  process_one_work+0x180/0x450
+  worker_thread+0x26c/0x388
 
-*** DEADLOCK ***
+Add kref-based reference counting to fastrpc_user. Have each invoke
+context take a reference on the user at allocation time and release it
+when the context is freed. Release the initial reference in
+fastrpc_device_release() at file close. Move the teardown of the user
+structure — freeing pending contexts, maps, mmaps, and the channel
+context reference — into the kref release callback fastrpc_user_free(),
+so that it runs only when the last reference is dropped, regardless of
+whether that happens at device close or after the final in-flight
+context completes.
 
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20260523135210.590928-1-w15303746062@163.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: 6cffd79504ce ("misc: fastrpc: Add support for dmabuf exporter")
+Cc: stable@kernel.org
+Signed-off-by: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20260530204528.116920-2-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fcntl.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/misc/fastrpc.c |   75 +++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 52 insertions(+), 23 deletions(-)
 
---- a/fs/fcntl.c
-+++ b/fs/fcntl.c
-@@ -781,11 +781,11 @@ void send_sigio(struct fown_struct *fown
- 			send_sigio_to_task(p, fown, fd, band, type);
- 		rcu_read_unlock();
- 	} else {
--		read_lock(&tasklist_lock);
-+		rcu_read_lock();
- 		do_each_pid_task(pid, type, p) {
- 			send_sigio_to_task(p, fown, fd, band, type);
- 		} while_each_pid_task(pid, type, p);
--		read_unlock(&tasklist_lock);
-+		rcu_read_unlock();
- 	}
-  out_unlock_fown:
- 	read_unlock_irqrestore(&fown->lock, flags);
-@@ -822,11 +822,11 @@ int send_sigurg(struct fown_struct *fown
- 			send_sigurg_to_task(p, fown, type);
- 		rcu_read_unlock();
- 	} else {
--		read_lock(&tasklist_lock);
-+		rcu_read_lock();
- 		do_each_pid_task(pid, type, p) {
- 			send_sigurg_to_task(p, fown, type);
- 		} while_each_pid_task(pid, type, p);
--		read_unlock(&tasklist_lock);
-+		rcu_read_unlock();
- 	}
-  out_unlock_fown:
- 	read_unlock_irqrestore(&fown->lock, flags);
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -287,6 +287,8 @@ struct fastrpc_user {
+ 	spinlock_t lock;
+ 	/* lock for allocations */
+ 	struct mutex mutex;
++	/* Reference count */
++	struct kref refcount;
+ };
+ 
+ static void fastrpc_free_map(struct kref *ref)
+@@ -430,15 +432,57 @@ static void fastrpc_channel_ctx_put(stru
+ 	kref_put(&cctx->refcount, fastrpc_channel_ctx_free);
+ }
+ 
++static void fastrpc_context_put(struct fastrpc_invoke_ctx *ctx);
++
++static void fastrpc_user_free(struct kref *ref)
++{
++	struct fastrpc_user *fl = container_of(ref, struct fastrpc_user, refcount);
++	struct fastrpc_invoke_ctx *ctx, *n;
++	struct fastrpc_map *map, *m;
++	struct fastrpc_buf *buf, *b;
++
++	if (fl->init_mem)
++		fastrpc_buf_free(fl->init_mem);
++
++	list_for_each_entry_safe(ctx, n, &fl->pending, node) {
++		list_del(&ctx->node);
++		fastrpc_context_put(ctx);
++	}
++
++	list_for_each_entry_safe(map, m, &fl->maps, node)
++		fastrpc_map_put(map);
++
++	list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
++		list_del(&buf->node);
++		fastrpc_buf_free(buf);
++	}
++
++	fastrpc_channel_ctx_put(fl->cctx);
++	mutex_destroy(&fl->mutex);
++	kfree(fl);
++}
++
++static void fastrpc_user_get(struct fastrpc_user *fl)
++{
++	kref_get(&fl->refcount);
++}
++
++static void fastrpc_user_put(struct fastrpc_user *fl)
++{
++	kref_put(&fl->refcount, fastrpc_user_free);
++}
++
+ static void fastrpc_context_free(struct kref *ref)
+ {
+ 	struct fastrpc_invoke_ctx *ctx;
+ 	struct fastrpc_channel_ctx *cctx;
++	struct fastrpc_user *fl;
+ 	unsigned long flags;
+ 	int i;
+ 
+ 	ctx = container_of(ref, struct fastrpc_invoke_ctx, refcount);
+ 	cctx = ctx->cctx;
++	fl = ctx->fl;
+ 
+ 	for (i = 0; i < ctx->nbufs; i++)
+ 		fastrpc_map_put(ctx->maps[i]);
+@@ -454,6 +498,8 @@ static void fastrpc_context_free(struct
+ 	kfree(ctx->olaps);
+ 	kfree(ctx);
+ 
++	/* Release the reference taken in fastrpc_context_alloc() */
++	fastrpc_user_put(fl);
+ 	fastrpc_channel_ctx_put(cctx);
+ }
+ 
+@@ -563,6 +609,8 @@ static struct fastrpc_invoke_ctx *fastrp
+ 
+ 	/* Released in fastrpc_context_put() */
+ 	fastrpc_channel_ctx_get(cctx);
++	/* Take a reference to user, released in fastrpc_context_free() */
++	fastrpc_user_get(user);
+ 
+ 	ctx->sc = sc;
+ 	ctx->retval = -1;
+@@ -593,6 +641,7 @@ err_idr:
+ 	spin_lock(&user->lock);
+ 	list_del(&ctx->node);
+ 	spin_unlock(&user->lock);
++	fastrpc_user_put(user);
+ 	fastrpc_channel_ctx_put(cctx);
+ 	kfree(ctx->maps);
+ 	kfree(ctx->olaps);
+@@ -1352,9 +1401,6 @@ static int fastrpc_device_release(struct
+ {
+ 	struct fastrpc_user *fl = (struct fastrpc_user *)file->private_data;
+ 	struct fastrpc_channel_ctx *cctx = fl->cctx;
+-	struct fastrpc_invoke_ctx *ctx, *n;
+-	struct fastrpc_map *map, *m;
+-	struct fastrpc_buf *buf, *b;
+ 	unsigned long flags;
+ 
+ 	fastrpc_release_current_dsp_process(fl);
+@@ -1363,28 +1409,10 @@ static int fastrpc_device_release(struct
+ 	list_del(&fl->user);
+ 	spin_unlock_irqrestore(&cctx->lock, flags);
+ 
+-	if (fl->init_mem)
+-		fastrpc_buf_free(fl->init_mem);
+-
+-	list_for_each_entry_safe(ctx, n, &fl->pending, node) {
+-		list_del(&ctx->node);
+-		fastrpc_context_put(ctx);
+-	}
+-
+-	list_for_each_entry_safe(map, m, &fl->maps, node)
+-		fastrpc_map_put(map);
+-
+-	list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
+-		list_del(&buf->node);
+-		fastrpc_buf_free(buf);
+-	}
+-
+ 	fastrpc_session_free(cctx, fl->sctx);
+-	fastrpc_channel_ctx_put(cctx);
+-
+-	mutex_destroy(&fl->mutex);
+-	kfree(fl);
+ 	file->private_data = NULL;
++	/* Release the reference taken in fastrpc_device_open */
++	fastrpc_user_put(fl);
+ 
+ 	return 0;
+ }
+@@ -1429,6 +1457,7 @@ static int fastrpc_device_open(struct in
+ 	spin_lock_irqsave(&cctx->lock, flags);
+ 	list_add_tail(&fl->user, &cctx->users);
+ 	spin_unlock_irqrestore(&cctx->lock, flags);
++	kref_init(&fl->refcount);
+ 
+ 	return 0;
+ }
 
 
