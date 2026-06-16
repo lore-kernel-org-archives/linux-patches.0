@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B95D3DBD76;
-	Tue, 16 Jun 2026 19:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5F53D810C;
+	Tue, 16 Jun 2026 19:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636695; cv=none; b=bj4a5A+LKG2a92n8FtkRC4w5huunp44JRQhVH6Hu9tVpv228lWVcbBwBRe7AE313d6naJqng17AtMGYFvPuknwmpgFzKBJplNRNOsZX3GGx4OBVxk7Gmc93rtqpc/NRBUjjdABi6SgN8RvTivwTYY6SclozXK6BZQATtoIF+Oqk=
+	t=1781636700; cv=none; b=j9ovDHiCI8RxrTmx7bk00HKpzQYuhZ9H05JCLS/IH0lr8gyJ5aiUt8QI5iSt9Wz6OHSAOHL9k9iDUi4slH/wAKLhen8ltG+HAWcukUsnKWH2RLg/7O2JWxglCP+7o+G0fw+onUJMx/oBKSbDyimfaHkoIoMGTs/Rp/UhVB2PK54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636695; c=relaxed/simple;
-	bh=tP/P0FFQMedIgZVdK89LKPxKYHzGNS/XyN/5hhn5BHE=;
+	s=arc-20240116; t=1781636700; c=relaxed/simple;
+	bh=tJG/cmFWWruoSFajVeZ9Ivu33u4IfEy70G6/b9WGg7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SvFCWLlQiYnUf4juqC6rOp3T3Lfi23NnqDwLuzSXc3y/HB0mYiOP3hILvetqAbQHSDnXInWJT9/+qFydmRF8KXXXkF2I1QwWcNdtBYbA+8dAHjq8xEglQSFV5S4fT1cd/Yh0gO6LNtAFrszw7bGTqSatIZL0e5MCRlCfStU+Pzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8nNh/CC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qw8RbjeruI7sLNbZGhWJFDrC7jnoIVVVpQGvc86Afe0n3N8Ur+eodxUEaN936j6QceOiJD2DOeqjMEM1GSWT/JumZ080pF/gL7Fx/nkH2qWYEkM/vMw5y/zcDA8IcwqoWwNhKmbgTsHV6IlGBY6FQ+9P729GDP2buNXTCLYhPfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJZZpinF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8nNh/CC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691961F000E9;
-	Tue, 16 Jun 2026 19:04:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJZZpinF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06C01F000E9;
+	Tue, 16 Jun 2026 19:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636694;
-	bh=Dbow8YkyJKbnasqnWb9La0DPTKCI3rO7SqtMNkyuZeM=;
+	s=korg; t=1781636699;
+	bh=NhbuBQ38YFgonQsQgvY5mSPweQohB7KCVqdzWOYtqB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z8nNh/CCRpjbqu8+SflU27yFtoueWKyv/e35Edr8AnFbVD5aAM1PIP+Nz42QoHbfo
-	 WcIOPEGik+NsIf4YmlRpMzny4O+IqpOKBcpKWhEkC4ZaQ1BvsKLZR6vScqvrDKvzJ+
-	 wk9OHoUoroBq/2r91RGJm4KNP65xyeCwIk4rzzbw=
+	b=QJZZpinFr7r27dBzsxg6D8z3HvKYTywAdItcCdK0A3pfUM232ntM6ukyoMHUurYJE
+	 h2ZiF3yE6gfFdTaY+l2KJjx5oir0bvK/GqaNlXwE03J5KQSvKBSaQcc1hA92tLjfR6
+	 JiV9T+/HIW1/Xb5qUaXWE7w6qmn7amr1WAVU5Jt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Pritam Manohar Sutar <pritam.sutar@samsung.com>,
-	Selvarasu Ganesan <selvarasu.g@samsung.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Masahisa Kojima <masahisa.kojima@linaro.org>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 255/342] usb: dwc3: Move GUID programming after PHY initialization
-Date: Tue, 16 Jun 2026 20:29:11 +0530
-Message-ID: <20260616145100.132012785@linuxfoundation.org>
+Subject: [PATCH 5.10 256/342] spi: syncuacer: fix controller deregistration
+Date: Tue, 16 Jun 2026 20:29:12 +0530
+Message-ID: <20260616145100.178735483@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -53,60 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvarasu Ganesan <selvarasu.g@samsung.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit aad35f9c926ec220b0742af1ada45666ae667956 ]
+[ Upstream commit 75d849c3452e9611de031db45b3149ba9a99035f ]
 
-The Linux Version Code is currently written to the GUID register before
-PHY initialization. Certain PHY implementations (such as Synopsys eUSB
-PHY performing link_sw_reset) clear the GUID register to its default
-value during initialization, causing the kernel version information to
-be lost.
+Make sure to deregister the controller before disabling underlying
+resources like clocks during driver unbind.
 
-Move the GUID register programming to occur after PHY initialization
-completes to ensure the Linux version information persists.
-
-Fixes: fa0ea13e9f1c ("usb: dwc3: core: write LINUX_VERSION_CODE to our GUID register")
-Cc: stable <stable@kernel.org>
-Reported-by: Pritam Manohar Sutar <pritam.sutar@samsung.com>
-Signed-off-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/20260417063314.2359-1-selvarasu.g@samsung.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ adapted dwc3_writel(dwc, ...) to dwc3_writel(dwc->regs, ...) ]
+Fixes: b0823ee35cf9 ("spi: Add spi driver for Socionext SynQuacer platform")
+Cc: stable@vger.kernel.org	# 5.3
+Cc: Masahisa Kojima <masahisa.kojima@linaro.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260410081757.503099-21-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ renamed spi_controller/host to spi_master/master and kept int return type with `return 0;` ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/spi/spi-synquacer.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -978,12 +978,6 @@ static int dwc3_core_init(struct dwc3 *d
+--- a/drivers/spi/spi-synquacer.c
++++ b/drivers/spi/spi-synquacer.c
+@@ -719,7 +719,7 @@ static int synquacer_spi_probe(struct pl
+ 	pm_runtime_set_active(sspi->dev);
+ 	pm_runtime_enable(sspi->dev);
  
- 	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
- 
--	/*
--	 * Write Linux Version Code to our GUID register so it's easy to figure
--	 * out which kernel version a bug was found.
--	 */
--	dwc3_writel(dwc->regs, DWC3_GUID, LINUX_VERSION_CODE);
--
- 	ret = dwc3_phy_setup(dwc);
+-	ret = devm_spi_register_master(sspi->dev, master);
++	ret = spi_register_master(master);
  	if (ret)
- 		goto err0;
-@@ -1023,6 +1017,12 @@ static int dwc3_core_init(struct dwc3 *d
- 	if (ret)
- 		goto err1;
+ 		goto disable_pm;
  
-+	/*
-+	 * Write Linux Version Code to our GUID register so it's easy to figure
-+	 * out which kernel version a bug was found.
-+	 */
-+	dwc3_writel(dwc->regs, DWC3_GUID, LINUX_VERSION_CODE);
+@@ -740,10 +740,16 @@ static int synquacer_spi_remove(struct p
+ 	struct spi_master *master = platform_get_drvdata(pdev);
+ 	struct synquacer_spi *sspi = spi_master_get_devdata(master);
+ 
++	spi_master_get(master);
 +
- 	dwc3_core_setup_global_control(dwc);
- 	dwc3_core_num_eps(dwc);
++	spi_unregister_master(master);
++
+ 	pm_runtime_disable(sspi->dev);
+ 
+ 	clk_disable_unprepare(sspi->clk);
+ 
++	spi_master_put(master);
++
+ 	return 0;
+ }
  
 
 
