@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF82F3D45CB;
-	Tue, 16 Jun 2026 18:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9743D75AA;
+	Tue, 16 Jun 2026 18:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633373; cv=none; b=JdXuRdIUkkKH9aefNViq2M0c2Nd/pnRc94Ik7U8/ZiymGUYfucAihx0bGirq3mZWLEffocXvC3auFcRrozqYs9P90aUb+n/5UYb22TPZDrJ0Hf8Duc6DI8wxWHowUe6IsylkBgz2MNDcULSZYNGSFVBriI+CpVBV/s0J/IELMMk=
+	t=1781633378; cv=none; b=jGhbLYfjsxK9Z6tUcamSkF7nnMqbdRThTEhJXRqS73OrR/SNj1mzsj146a7I2Z3vDYPIOGlwr8l3igLEpIAWHHGfdjJ6hBQNGcpucRKxCFGCfDXu4XrYGnr9lKilgHudtrMeOP1bvc/MP+h77oWGrC9e1XRLdrgoeGTIu36OlQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633373; c=relaxed/simple;
-	bh=SNCt+cBrJXgkvIJ0lpE3oVsqGWRhknvYHSc9vl8Yb4Q=;
+	s=arc-20240116; t=1781633378; c=relaxed/simple;
+	bh=N+AXtiSIt5+73KQp2fnvxGKXvqiuLUlSytbFMKUFsKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bpVKJD7/p5a0U1MuuKIS91e6VHLdFGqVFd1tfEOynLS1Y8vTcwUtgy1sMrhHEZ1LW1IsSIpKoXphEPXJHBydjb6MfcyPLJQMgbZiESD/6GcuTuC/0wC5fztpTuP/4i4xk74oOFGFw6tbhCwbODkuytybpYkZffeSDcGVN1zf2ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UaqXRy2S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Wiq4IjlKUx+xEJAWGtTXdB8UX/7dkWWbH5Z4zPd6Zs2eC8rtwpEl5lSpQdjX1MZfm6hojgj9aackf3aNVgHveZgIj3KezX16+KF+lkV8FgjNRUCMPyFoICARQ/nRAAQn65PaavZEwFvuI9dWgBZph3x2ZJoI4gPO6QLqPhAI4+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFNOwZ/c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UaqXRy2S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978261F000E9;
-	Tue, 16 Jun 2026 18:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFNOwZ/c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C5B1F000E9;
+	Tue, 16 Jun 2026 18:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633372;
-	bh=cue1zg8pZ0opkEoayGgHbI6zLuVP5Zf+d6D3b47lOEk=;
+	s=korg; t=1781633377;
+	bh=yyLpLMBi3JbLUobClJ1JVJXeN3oZe4B5gLSSl3HhxOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UaqXRy2SPQFxftFuH+cOUkyDBkgmy6fG4jcgOwdDYIJAUIMniHYZlo7jEajlBY11z
-	 cBx6LubW4ibkDj0/Bf5bIO8y5atCnKAdWi5TvOTt5pjVCJU0Nj/e5JENjJc8ha6kaz
-	 OR5DvT+mg3rIXgPQ//BfIbjRet61XJj42/pczX1s=
+	b=EFNOwZ/cGQR4A/460mciKs61vbsP/Pu2yTZvZoyZ6j6mAeaCX012oJe72CgBQXmMH
+	 iqC7qn6xHHYVs+Gy6vLkAyUawSrnuYt3pwL1cB9oONaBG1bL00oaPr/qFi686v9NNt
+	 OsQsNulA6WNcNrSio35SEeIPPBbBfe7fvpIh5twQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ben Hutchings <benh@debian.org>,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Subject: [PATCH 5.15 067/411] parport: Fix race between port and client registration
-Date: Tue, 16 Jun 2026 20:25:05 +0530
-Message-ID: <20260616145103.845505561@linuxfoundation.org>
+	Christofer Jonason <christofer.jonason@guidelinegeo.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Salih Erim <salih.erim@amd.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 068/411] iio: adc: xilinx-xadc: Fix sequencer mode in postdisable for dual mux
+Date: Tue, 16 Jun 2026 20:25:06 +0530
+Message-ID: <20260616145103.897168621@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -45,115 +47,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ben Hutchings <benh@debian.org>
+From: Christofer Jonason <christofer.jonason@guidelinegeo.com>
 
-commit ef15ccbb3e8640a723c42ad90eaf81d66ae02017 upstream.
+commit 852534744c2d35626a604f128ff0b8ec12805591 upstream.
 
-The parport subsystem registers port devices before they are fully
-initialised, resulting in a race condition where client drivers such
-as lp can attach to ports that are not completely initialised or even
-being torn down.
+xadc_postdisable() unconditionally sets the sequencer to continuous
+mode. For dual external multiplexer configurations this is incorrect:
+simultaneous sampling mode is required so that ADC-A samples through
+the mux on VAUX[0-7] while ADC-B simultaneously samples through the
+mux on VAUX[8-15]. In continuous mode only ADC-A is active, so
+VAUX[8-15] channels return incorrect data.
 
-When the port and client drivers are built as modules and loaded
-around the same time during boot, this occasionally results in a
-crash.  I was able to make this happen reliably in a VM with a
-PC-style parallel port by patching parport_pc to fail probing:
+Since postdisable is also called from xadc_probe() to set the initial
+idle state, the wrong sequencer mode is active from the moment the
+driver loads.
 
-> --- a/drivers/parport/parport_pc.c
-> +++ b/drivers/parport/parport_pc.c
-> @@ -2069,7 +2069,7 @@ static struct parport *__parport_pc_probe_port(unsigned long int base,
->  	if (!p)
->  		goto out3;
->
-> -	base_res = request_region(base, 3, p->name);
-> +	base_res = NULL;
->  	if (!base_res)
->  		goto out4;
->
+The preenable path already uses xadc_get_seq_mode() which returns
+SIMULTANEOUS for dual mux. Fix postdisable to do the same.
 
-and then running:
-
-    while true; do
-        modprobe lp & modprobe parport_pc
-	wait
-	rmmod lp parport_pc
-    done
-
-for a few seconds.
-
-In the long term I think port registration should be changed to put
-the call to device_add() inside parport_announce_port(), but since the
-latter currently cannot fail this will require changing all port
-drivers.
-
-For now, add a flag to indicate whether a port has been "announced"
-and only try to attach client drivers to ports when the flag is set.
-
-Fixes: 6fa45a226897 ("parport: add device-model to parport subsystem")
-Closes: https://bugs.debian.org/1130365
-Closes: https://lore.kernel.org/all/6ba903ad-9897-42bb-8c2d-337385cc3746@molgen.mpg.de/
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ben Hutchings <benh@debian.org>
-Acked-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Link: https://patch.msgid.link/afo6uBv68GDevbMD@decadent.org.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bdc8cda1d010 ("iio:adc: Add Xilinx XADC driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Christofer Jonason <christofer.jonason@guidelinegeo.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Reviewed-by: Salih Erim <salih.erim@amd.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parport/share.c |   11 +++++++++--
- include/linux/parport.h |    1 +
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ drivers/iio/adc/xilinx-xadc-core.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/parport/share.c
-+++ b/drivers/parport/share.c
-@@ -223,10 +223,14 @@ static void get_lowlevel_driver(void)
- static int port_check(struct device *dev, void *dev_drv)
+--- a/drivers/iio/adc/xilinx-xadc-core.c
++++ b/drivers/iio/adc/xilinx-xadc-core.c
+@@ -819,6 +819,7 @@ static int xadc_postdisable(struct iio_d
  {
- 	struct parport_driver *drv = dev_drv;
-+	struct parport *port;
+ 	struct xadc *xadc = iio_priv(indio_dev);
+ 	unsigned long scan_mask;
++	int seq_mode;
+ 	int ret;
+ 	int i;
  
- 	/* only send ports, do not send other devices connected to bus */
--	if (is_parport(dev))
--		drv->match_port(to_parport_dev(dev));
-+	if (is_parport(dev)) {
-+		port = to_parport_dev(dev);
-+		if (test_bit(PARPORT_ANNOUNCED, &port->devflags))
-+			drv->match_port(port);
-+	}
- 	return 0;
- }
+@@ -826,6 +827,12 @@ static int xadc_postdisable(struct iio_d
+ 	for (i = 0; i < indio_dev->num_channels; i++)
+ 		scan_mask |= BIT(indio_dev->channels[i].scan_index);
  
-@@ -553,6 +557,7 @@ void parport_announce_port(struct parpor
- 		if (slave)
- 			attach_driver_chain(slave);
- 	}
-+	set_bit(PARPORT_ANNOUNCED, &port->devflags);
- 	mutex_unlock(&registration_lock);
- }
- EXPORT_SYMBOL(parport_announce_port);
-@@ -582,6 +587,8 @@ void parport_remove_port(struct parport
- 
- 	mutex_lock(&registration_lock);
- 
-+	clear_bit(PARPORT_ANNOUNCED, &port->devflags);
++	/*
++	 * Use the correct sequencer mode for the idle state: simultaneous
++	 * mode for dual external mux configurations, continuous otherwise.
++	 */
++	seq_mode = xadc_get_seq_mode(xadc, scan_mask);
 +
- 	/* Spread the word. */
- 	detach_driver_chain(port);
+ 	/* Enable all channels and calibration */
+ 	ret = xadc_write_adc_reg(xadc, XADC_REG_SEQ(0), scan_mask & 0xffff);
+ 	if (ret)
+@@ -836,11 +843,11 @@ static int xadc_postdisable(struct iio_d
+ 		return ret;
  
---- a/include/linux/parport.h
-+++ b/include/linux/parport.h
-@@ -245,6 +245,7 @@ struct parport {
+ 	ret = xadc_update_adc_reg(xadc, XADC_REG_CONF1, XADC_CONF1_SEQ_MASK,
+-		XADC_CONF1_SEQ_CONTINUOUS);
++				  seq_mode);
+ 	if (ret)
+ 		return ret;
  
- 	unsigned long devflags;
- #define PARPORT_DEVPROC_REGISTERED	0
-+#define PARPORT_ANNOUNCED		1
- 	struct pardevice *proc_device;	/* Currently register proc device */
+-	return xadc_power_adc_b(xadc, XADC_CONF1_SEQ_CONTINUOUS);
++	return xadc_power_adc_b(xadc, seq_mode);
+ }
  
- 	struct list_head full_list;
+ static int xadc_preenable(struct iio_dev *indio_dev)
 
 
