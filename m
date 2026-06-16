@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91F032A3C9;
-	Tue, 16 Jun 2026 17:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D08B3D34AD;
+	Tue, 16 Jun 2026 17:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632257; cv=none; b=BOEvJuu5+TmTgT1j1PiRqVBvTmmVHt9Sxy2xXQiTTK1dstlOPrTy3g065AE02vAUjTJUR0zDKD0jEwZl9CKGUl/3psfCkC1tWXDeoIRSNNE5g5uPJN2Y0ravgJU2AAm+2Suc5nZaeMfS/NHu1nwPG3oPWU/0BfPL5mdrIZqUMl8=
+	t=1781632262; cv=none; b=P8W97wBctXv3d8c0lo6GSMrWjQ01ygq5OJw/4mRu/OvlW0DT/ZyzWpmud6CeXLG5ugNBsEYMldjbXYgTCTCiu5nG71S22Ldj86mJmHkLUBfyLkn0RkhEuXAYHdzkwYkWRAYFZnJ/yh6mFqbYuQvymnn+r89/exMhVhuWeUvibIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632257; c=relaxed/simple;
-	bh=HhFnFmmNTxqY5bV+uHYELeANELdm+zn5qi/4qeDBxls=;
+	s=arc-20240116; t=1781632262; c=relaxed/simple;
+	bh=I7yhPzysYbVWFyRv0IUNH4ixdZz3eUq3fAX/SygOtC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XfvkH6Z/84uNJHsid3VoWEj4YtBRheS8T9ELSq/5CNRo05Gl2aVOF5Hf4+uH+3vrLnZLsvXmfc2kQJhGmQct3obZswjnh85t0RSj+ZdnAmg0Bfv9qZzXnLnyx2BZmu9FjDn+UvdUMPYKPMp+bGRJI5+ZP56vhs1FlDg2BEtIhi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXC/OlJI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eQH0gX+KixX0RFj2a/wDWU8z3Gh/KqEGsshwsRr64/ihBYFppgPLLI8wWV0uCqoEKzxwvV46dedTIDOURGgSqL7aQ3jM2cfPqqlPzGVIK0vV1HahZKOuh3gFNKfcRgVs9KqeV9fsUQOYqeH8GuyhqTqM9tqIhaeE7GCf0G8W3PQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DW0a1Qp0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXC/OlJI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC471F000E9;
-	Tue, 16 Jun 2026 17:50:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DW0a1Qp0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1051F000E9;
+	Tue, 16 Jun 2026 17:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632256;
-	bh=ze2lXB8E0aMO17X5xnmQXb07UNJ6WebAAG3TzvBVtII=;
+	s=korg; t=1781632261;
+	bh=rbe0HN/D2kxLHSnKyE1tMDrV2KS9TFqKmuftlvb2lnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RXC/OlJI6Ce0GCKbIOo4FrSTo02krssb6uDaCIYLXdZNZi9bR2wbJnz4pt03USdcq
-	 wNJ5qamaL6RGfD37dHbnApglZmkRjramnt+0Ma4EPJNPM2Ovjm1YgMJFzS49s7MRtY
-	 x4a4I4CEYACQ8kfShuUEl86d/95o/l8YLwvVz3R4=
+	b=DW0a1Qp0PCgnULX1hHT8g9sm6+nSPNgS0SBTEAmKCogw87PM1HtdYCFa6QxmlnXCK
+	 +IgzzRFWQqsLPvFenOAHonJZ5dOXHYH1QoQ+VbQKX7vFvtqKDJV0QLKkmcjAgl910/
+	 wZljQRMI/KVXYQwynDMKWqDIC2ei5DLoEocDLCIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Sam Edwards <CFSworks@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 334/522] ksmbd: require minimum ACE size in smb_check_perm_dacl()
-Date: Tue, 16 Jun 2026 20:28:01 +0530
-Message-ID: <20260616145141.449373576@linuxfoundation.org>
+Subject: [PATCH 6.1 370/522] net: stmmac: Prevent NULL deref when RX memory exhausted
+Date: Tue, 16 Jun 2026 20:28:37 +0530
+Message-ID: <20260616145143.085132241@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,104 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Sam Edwards <cfsworks@gmail.com>
 
-[ Upstream commit d07b26f39246a82399661936dd0c853983cfade7 ]
+[ Upstream commit 0bb05e6adfa99a2ea1fee1125cc0953409f83ed8 ]
 
-Both ACE-walk loops in smb_check_perm_dacl() only guard against an
-under-sized remaining buffer, not against an ACE whose declared
-`ace->size` is smaller than the struct it claims to describe:
+The CPU receives frames from the MAC through conventional DMA: the CPU
+allocates buffers for the MAC, then the MAC fills them and returns
+ownership to the CPU. For each hardware RX queue, the CPU and MAC
+coordinate through a shared ring array of DMA descriptors: one
+descriptor per DMA buffer. Each descriptor includes the buffer's
+physical address and a status flag ("OWN") indicating which side owns
+the buffer: OWN=0 for CPU, OWN=1 for MAC. The CPU is only allowed to set
+the flag and the MAC is only allowed to clear it, and both must move
+through the ring in sequence: thus the ring is used for both
+"submissions" and "completions."
 
-  if (offsetof(struct smb_ace, access_req) > aces_size)
-      break;
-  ace_size = le16_to_cpu(ace->size);
-  if (ace_size > aces_size)
-      break;
+In the stmmac driver, stmmac_rx() bookmarks its position in the ring
+with the `cur_rx` index. The main receive loop in that function checks
+for rx_descs[cur_rx].own=0, gives the corresponding buffer to the
+network stack (NULLing the pointer), and increments `cur_rx` modulo the
+ring size. After the loop exits, stmmac_rx_refill(), which bookmarks its
+position with `dirty_rx`, allocates fresh buffers and rearms the
+descriptors (setting OWN=1). If it fails any allocation, it simply stops
+early (leaving OWN=0) and will retry where it left off when next called.
 
-The first check only requires the 4-byte ACE header to be in bounds;
-it does not require access_req (4 bytes at offset 4) to be readable.
-An attacker who has set a crafted DACL on a file they own can declare
-ace->size == 4 with aces_size == 4, pass both checks, and then
+This means descriptors have a three-stage lifecycle (terms my own):
+- `empty` (OWN=1, buffer valid)
+- `full` (OWN=0, buffer valid and populated)
+- `dirty` (OWN=0, buffer NULL)
 
-  granted |= le32_to_cpu(ace->access_req);               /* upper loop */
-  compare_sids(&sid, &ace->sid);                         /* lower loop */
+But because stmmac_rx() only checks OWN, it confuses `full`/`dirty`. In
+the past (see 'Fixes:'), there was a bug where the loop could cycle
+`cur_rx` all the way back to the first descriptor it dirtied, resulting
+in a NULL dereference when mistaken for `full`. The aforementioned
+commit resolved that *specific* failure by capping the loop's iteration
+limit at `dma_rx_size - 1`, but this is only a partial fix: if the
+previous stmmac_rx_refill() didn't complete, then there are leftover
+`dirty` descriptors that the loop might encounter without needing to
+cycle fully around. The current code therefore panics (see 'Closes:')
+when stmmac_rx_refill() is memory-starved long enough for `cur_rx` to
+catch up to `dirty_rx`.
 
-reads access_req at offset 4 (OOB by up to 4 bytes) and ace->sid at
-offset 8 (OOB by up to CIFS_SID_BASE_SIZE + SID_MAX_SUB_AUTHORITIES
-* 4 bytes).
+Fix this by explicitly checking, before advancing `cur_rx`, if the next
+entry is dirty; exit the loop if so. This prevents processing of the
+final, used descriptor until stmmac_rx_refill() succeeds, but
+fully prevents the `cur_rx == dirty_rx` ambiguity as the previous bugfix
+intended: so remove the clamp as well. Since stmmac_rx_zc() is a
+copy-paste-and-tweak of stmmac_rx() and the code structure is identical,
+any fix to stmmac_rx() will also need a corresponding fix for
+stmmac_rx_zc(). Therefore, apply the same check there.
 
-Tighten both loops to require
+In stmmac_rx() (not stmmac_rx_zc()), a related bug remains: after the
+MAC sets OWN=0 on the final descriptor, it will be unable to send any
+further DMA-complete IRQs until it's given more `empty` descriptors.
+Currently, the driver simply *hopes* that the next stmmac_rx_refill()
+succeeds, risking an indefinite stall of the receive process if not. But
+this is not a regression, so it can be addressed in a future change.
 
-  ace_size >= offsetof(struct smb_ace, sid) + CIFS_SID_BASE_SIZE
-
-which is the smallest valid on-wire ACE layout (4-byte header +
-4-byte access_req + 8-byte sid base with zero sub-auths).  Also
-reject ACEs whose sid.num_subauth exceeds SID_MAX_SUB_AUTHORITIES
-before letting compare_sids() dereference sub_auth[] entries.
-
-parse_sec_desc() already enforces an equivalent check (lines 441-448);
-smb_check_perm_dacl() simply grew weaker validation over time.
-
-Reachability: authenticated SMB client with permission to set an ACL
-on a file.  On a subsequent CREATE against that file, the kernel
-walks the stored DACL via smb_check_perm_dacl() and triggers the
-OOB read.  Not pre-auth, and the OOB read is not reflected to the
-attacker, but KASAN reports and kernel state corruption are
-possible.
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Fixes: b6cb4541853c7 ("net: stmmac: avoid rx queue overrun")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221010
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ changed le16_to_cpu to le32_to_cpu for num_aces field which is __le32 ]
+Suggested-by: Russell King <linux@armlinux.org.uk>
+Signed-off-by: Sam Edwards <CFSworks@gmail.com>
+Link: https://patch.msgid.link/20260422044503.5349-1-CFSworks@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smbacl.c |   17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -1297,10 +1297,13 @@ int smb_check_perm_dacl(struct ksmbd_con
- 		ace = (struct smb_ace *)((char *)pdacl + sizeof(struct smb_acl));
- 		aces_size = acl_size - sizeof(struct smb_acl);
- 		for (i = 0; i < le32_to_cpu(pdacl->num_aces); i++) {
--			if (offsetof(struct smb_ace, access_req) > aces_size)
-+			if (offsetof(struct smb_ace, sid) +
-+			    aces_size < CIFS_SID_BASE_SIZE)
- 				break;
- 			ace_size = le16_to_cpu(ace->size);
--			if (ace_size > aces_size)
-+			if (ace_size > aces_size ||
-+			    ace_size < offsetof(struct smb_ace, sid) +
-+				       CIFS_SID_BASE_SIZE)
- 				break;
- 			aces_size -= ace_size;
- 			granted |= le32_to_cpu(ace->access_req);
-@@ -1318,13 +1321,19 @@ int smb_check_perm_dacl(struct ksmbd_con
- 	ace = (struct smb_ace *)((char *)pdacl + sizeof(struct smb_acl));
- 	aces_size = acl_size - sizeof(struct smb_acl);
- 	for (i = 0; i < le32_to_cpu(pdacl->num_aces); i++) {
--		if (offsetof(struct smb_ace, access_req) > aces_size)
-+		if (offsetof(struct smb_ace, sid) +
-+		    aces_size < CIFS_SID_BASE_SIZE)
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -5103,9 +5103,12 @@ read_again:
  			break;
- 		ace_size = le16_to_cpu(ace->size);
--		if (ace_size > aces_size)
-+		if (ace_size > aces_size ||
-+		    ace_size < offsetof(struct smb_ace, sid) +
-+			       CIFS_SID_BASE_SIZE)
- 			break;
- 		aces_size -= ace_size;
  
-+		if (ace->sid.num_subauth > SID_MAX_SUB_AUTHORITIES)
+ 		/* Prefetch the next RX descriptor */
+-		rx_q->cur_rx = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
+-						priv->dma_conf.dma_rx_size);
+-		next_entry = rx_q->cur_rx;
++		next_entry = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
++					       priv->dma_conf.dma_rx_size);
++		if (unlikely(next_entry == rx_q->dirty_rx))
 +			break;
 +
- 		if (!compare_sids(&sid, &ace->sid) ||
- 		    !compare_sids(&sid_unix_NFS_mode, &ace->sid)) {
- 			found = 1;
++		rx_q->cur_rx = next_entry;
+ 
+ 		if (priv->extend_desc)
+ 			np = (struct dma_desc *)(rx_q->dma_erx + next_entry);
+@@ -5239,7 +5242,6 @@ static int stmmac_rx(struct stmmac_priv
+ 
+ 	dma_dir = page_pool_get_dma_dir(rx_q->page_pool);
+ 	bufsz = DIV_ROUND_UP(priv->dma_conf.dma_buf_sz, PAGE_SIZE) * PAGE_SIZE;
+-	limit = min(priv->dma_conf.dma_rx_size - 1, (unsigned int)limit);
+ 
+ 	if (netif_msg_rx_status(priv)) {
+ 		void *rx_head;
+@@ -5295,9 +5297,12 @@ read_again:
+ 		if (unlikely(status & dma_own))
+ 			break;
+ 
+-		rx_q->cur_rx = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
+-						priv->dma_conf.dma_rx_size);
+-		next_entry = rx_q->cur_rx;
++		next_entry = STMMAC_NEXT_ENTRY(rx_q->cur_rx,
++					       priv->dma_conf.dma_rx_size);
++		if (unlikely(next_entry == rx_q->dirty_rx))
++			break;
++
++		rx_q->cur_rx = next_entry;
+ 
+ 		if (priv->extend_desc)
+ 			np = (struct dma_desc *)(rx_q->dma_erx + next_entry);
 
 
