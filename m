@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4E1352007;
-	Tue, 16 Jun 2026 18:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4828D169AD2;
+	Tue, 16 Jun 2026 18:03:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632981; cv=none; b=cJRYgb9b0gYT+DnwhpmfzLSmh+JMfcSQqrERKdtSMY3/spTwRpKSZ2SBviQBETL+nT2p6J487/iJEkjswx1S8X3qkerOK3d7u++zRk7H1TNbzWp6NBEbKXQjGBkDvN8i0zRmyQDvBNz4zdk1zckUMbgtKTb7DIk5/4l2Chppu6Y=
+	t=1781632986; cv=none; b=Ond9I3xvWeloX69qHNmaQdOvF/WiDhrOajb8iJDB/HqnJ7kqCno7sn8FHRNxSCC+x/rHRGYr2mtq3Q0JpAgd2QtBVvs1HkRzv4zmmE+XP3bh4Ks2hKAkzEw9MH6hMY3VBd/yvO1QdcSCGw+kbKr00P1AT5ey0ptbYCsbGFY/hc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632981; c=relaxed/simple;
-	bh=OvT6guNYowoJ2J2Z7wmU3Vx9XKS82AOKbKEiQ2Dfvxo=;
+	s=arc-20240116; t=1781632986; c=relaxed/simple;
+	bh=2As2Js8C5v4wbyj4P2Rt+k3nwjVLEwC7ZNsFyFyeCNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eHRk/LTxcIF/7hgfBgQ8nvPZMhfglXq8ahkjIoMA2ATCyIUXDq06Oqdjy68iZO3W1CiVYLRGbipGtmozt8fSUuC6ppg3yLtZqJ4IShTQW19KIgv+WUDH/a6QbiSaZr+n8R+ukpuPsCy56IROoe1hvQx/BUZAp7eT2z8nEtuhEc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uy8OFc/Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U0njdSfl5k07wRAZMNfzTrni3P+MFtqNivt1sbj7RAVewSGPswcF2DmCu8jLqgggIEWQ+AvRhMcCz0N/pgX3gZvv93iChLQx7V9v82YTsgld8wVKv3bEhjls1z8Pn/Up3thLmG6Zd7+UFBx1bPpPBbwmy7FPM7disHl3JETnte0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pyxap7yH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uy8OFc/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D001F000E9;
-	Tue, 16 Jun 2026 18:02:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pyxap7yH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2C21F000E9;
+	Tue, 16 Jun 2026 18:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632980;
-	bh=nkYZ30zeDTEho5PYqAwIerUE+ETh+ep+H5WM1M+AsTQ=;
+	s=korg; t=1781632985;
+	bh=FziLQ/y9piXVvvJj6qUmatNHOd9gGj1LQcWdkwddcu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uy8OFc/QvkioPWN7D+gUyWnvmz/hPEAliYGG2cKVthRUP7Lk8wLCbKeAltfhgL7nO
-	 iojDkPhTh62y0c6eVE3DuhDcjYqu0hsqh/gAU84+shBh3F5G9BPh0mG0/DtiWnia7H
-	 G+yI757zZW2wKFblSFqWhRiBsase0huSWx1W52lk=
+	b=Pyxap7yHFoTzsQchhg1/pi8k8VSO0LpCQZUiV10xZ5rxtYU7uC/vSGNFBJdJFMjPM
+	 NdavhtZ8Ma1E4g1Upf7IAUEVHLIduZPKDFqECw5LpIC+rmrKodFytP6zoy7BgPENNO
+	 3Y7qhytvf2MwNBwRY32bHdd4O076hDFOAHWRWCiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Leontev <leontyevantony@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 481/522] hv_netvsc: use kmap_local_page in netvsc_copy_to_send_buf
-Date: Tue, 16 Jun 2026 20:30:28 +0530
-Message-ID: <20260616145148.322925731@linuxfoundation.org>
+Subject: [PATCH 6.1 482/522] mm/hugetlb: rename isolate_hugetlb() to folio_isolate_hugetlb()
+Date: Tue, 16 Jun 2026 20:30:29 +0530
+Message-ID: <20260616145148.373150969@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,89 +55,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Leontev <leontyevantony@gmail.com>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit 004e9ecfe6c5384f9e0b2f6f6389d42ec22789af ]
+[ Upstream commit 4c640f128074e0d4459ecf072595a44df5c2ae18 ]
 
-netvsc_copy_to_send_buf() copies page buffer entries into the VMBus
-send buffer using phys_to_virt() on the entry PFN. Entries for the
-RNDIS header and the skb linear data come from kmalloc'd memory and
-are always in the kernel direct map, but entries for skb fragments
-reference page cache or user pages, which on 32-bit x86 with
-CONFIG_HIGHMEM=y can live above the LOWMEM boundary. For such a page
-phys_to_virt() returns an address outside the direct map and the
-subsequent memcpy() faults on the transmit softirq path, which is
-fatal.
+Let's make the function name match "folio_isolate_lru()", and add some
+kernel doc.
 
-Map the pages with kmap_local_page() instead, handling two properties
-of the page buffer entries:
-
- - pb[i].pfn is a Hyper-V PFN at HV_HYP_PAGE_SIZE (4K) granularity,
-   not a native PFN. Reconstruct the physical address first and derive
-   the native page from it, so the mapping stays correct where
-   PAGE_SIZE > HV_HYP_PAGE_SIZE (e.g. arm64 with 64K pages).
-
- - Since commit 41a6328b2c55 ("hv_netvsc: Preserve contiguous PFN
-   grouping in the page buffer array"), an entry describes a full
-   physically contiguous fragment and pb[i].len can exceed PAGE_SIZE,
-   while kmap_local_page() maps a single page. Copy page by page,
-   splitting at native page boundaries.
-
-The copy path only handles packets smaller than the send section size
-(6144 bytes by default); larger packets take the cp_partial path where
-only the RNDIS header is copied. So entries here are bounded by the
-section size and a copy is split at most once on 4K-page systems. On
-!CONFIG_HIGHMEM configs kmap_local_page() folds to page_address() and
-no mapping work is added.
-
-Fixes: c25aaf814a63 ("hyperv: Enable sendbuf mechanism on the send path")
-Cc: stable@vger.kernel.org
-Signed-off-by: Anton Leontev <leontyevantony@gmail.com>
-Link: https://patch.msgid.link/20260604165938.32033-1-leontyevantony@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ adapted `phys_to_page(paddr)` to `pfn_to_page(PHYS_PFN(paddr))` ]
+Link: https://lkml.kernel.org/r/20250113131611.2554758-3-david@redhat.com
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 3c2d42b8ee34 ("mm/memory-failure: fix hugetlb_lock AA deadlock in get_huge_page_for_hwpoison")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/hyperv/netvsc.c |   19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ include/linux/hugetlb.h |    4 ++--
+ mm/gup.c                |    2 +-
+ mm/hugetlb.c            |   23 ++++++++++++++++++++---
+ mm/memory-failure.c     |    2 +-
+ mm/memory_hotplug.c     |    2 +-
+ mm/mempolicy.c          |    2 +-
+ mm/migrate.c            |    4 ++--
+ 7 files changed, 28 insertions(+), 11 deletions(-)
 
---- a/drivers/net/hyperv/netvsc.c
-+++ b/drivers/net/hyperv/netvsc.c
-@@ -12,6 +12,7 @@
- #include <linux/sched.h>
- #include <linux/wait.h>
- #include <linux/mm.h>
-+#include <linux/highmem.h>
- #include <linux/delay.h>
- #include <linux/io.h>
- #include <linux/slab.h>
-@@ -992,12 +993,22 @@ static void netvsc_copy_to_send_buf(stru
- 	}
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -182,7 +182,7 @@ bool hugetlb_reserve_pages(struct inode
+ 						vm_flags_t vm_flags);
+ long hugetlb_unreserve_pages(struct inode *inode, long start, long end,
+ 						long freed);
+-int isolate_hugetlb(struct page *page, struct list_head *list);
++int folio_isolate_hugetlb(struct page *page, struct list_head *list);
+ int get_hwpoison_huge_page(struct page *page, bool *hugetlb);
+ int get_huge_page_for_hwpoison(unsigned long pfn, int flags);
+ void putback_active_hugepage(struct page *page);
+@@ -428,7 +428,7 @@ static inline pte_t *huge_pte_offset(str
+ 	return NULL;
+ }
  
- 	for (i = 0; i < page_count; i++) {
--		char *src = phys_to_virt(pb[i].pfn << HV_HYP_PAGE_SHIFT);
--		u32 offset = pb[i].offset;
-+		phys_addr_t paddr = (pb[i].pfn << HV_HYP_PAGE_SHIFT) +
-+				    pb[i].offset;
- 		u32 len = pb[i].len;
+-static inline int isolate_hugetlb(struct page *page, struct list_head *list)
++static inline int folio_isolate_hugetlb(struct page *page, struct list_head *list)
+ {
+ 	return -EBUSY;
+ }
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -1986,7 +1986,7 @@ static unsigned long collect_longterm_un
+ 			continue;
  
--		memcpy(dest, (src + offset), len);
--		dest += len;
-+		while (len) {
-+			struct page *page = pfn_to_page(PHYS_PFN(paddr));
-+			u32 off = offset_in_page(paddr);
-+			u32 chunk = min_t(u32, len, PAGE_SIZE - off);
-+			char *src = kmap_local_page(page);
-+
-+			memcpy(dest, src + off, chunk);
-+			kunmap_local(src);
-+			dest += chunk;
-+			paddr += chunk;
-+			len -= chunk;
-+		}
- 	}
+ 		if (folio_test_hugetlb(folio)) {
+-			isolate_hugetlb(&folio->page, movable_page_list);
++			folio_isolate_hugetlb(&folio->page, movable_page_list);
+ 			continue;
+ 		}
  
- 	if (padding)
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -2994,7 +2994,7 @@ retry:
+ 		 * Fail with -EBUSY if not possible.
+ 		 */
+ 		spin_unlock_irq(&hugetlb_lock);
+-		ret = isolate_hugetlb(old_page, list);
++		ret = folio_isolate_hugetlb(old_page, list);
+ 		spin_lock_irq(&hugetlb_lock);
+ 		goto free_new;
+ 	} else if (!HPageFreed(old_page)) {
+@@ -3070,7 +3070,7 @@ int isolate_or_dissolve_huge_page(struct
+ 	if (hstate_is_gigantic(h))
+ 		return -ENOMEM;
+ 
+-	if (page_count(head) && !isolate_hugetlb(head, list))
++	if (page_count(head) && !folio_isolate_hugetlb(head, list))
+ 		ret = 0;
+ 	else if (!page_count(head))
+ 		ret = alloc_and_dissolve_huge_page(h, head, list);
+@@ -7445,7 +7445,24 @@ follow_huge_pgd(struct mm_struct *mm, un
+ 	return pte_page(*(pte_t *)pgd) + ((address & ~PGDIR_MASK) >> PAGE_SHIFT);
+ }
+ 
+-int isolate_hugetlb(struct page *page, struct list_head *list)
++/**
++ * folio_isolate_hugetlb - try to isolate an allocated hugetlb page
++ * @page: the page to isolate
++ * @list: the list to add the page to on success
++ *
++ * Isolate an allocated (refcount > 0) hugetlb page, marking it as
++ * isolated/non-migratable, and moving it from the active list to the
++ * given list.
++ *
++ * Isolation will fail if @page is not an allocated hugetlb page, or if
++ * it is already isolated/non-migratable.
++ *
++ * On success, an additional page reference is taken that must be dropped
++ * using putback_active_hugepage() to undo the isolation.
++ *
++ * Return: 0 if isolation worked, otherwise -EBUSY.
++ */
++int folio_isolate_hugetlb(struct page *page, struct list_head *list)
+ {
+ 	int ret = 0;
+ 
+--- a/mm/memory-failure.c
++++ b/mm/memory-failure.c
+@@ -2444,7 +2444,7 @@ static bool isolate_page(struct page *pa
+ 	bool isolated = false;
+ 
+ 	if (PageHuge(page)) {
+-		isolated = !isolate_hugetlb(page, pagelist);
++		isolated = !folio_isolate_hugetlb(page, pagelist);
+ 	} else {
+ 		bool lru = !__PageMovable(page);
+ 
+--- a/mm/memory_hotplug.c
++++ b/mm/memory_hotplug.c
+@@ -1641,7 +1641,7 @@ do_migrate_range(unsigned long start_pfn
+ 
+ 		if (PageHuge(page)) {
+ 			pfn = page_to_pfn(head) + compound_nr(head) - 1;
+-			isolate_hugetlb(head, &source);
++			folio_isolate_hugetlb(head, &source);
+ 			continue;
+ 		} else if (PageTransHuge(page))
+ 			pfn = page_to_pfn(head) + thp_nr_pages(page) - 1;
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -598,7 +598,7 @@ static int queue_pages_hugetlb(pte_t *pt
+ 	if (flags & (MPOL_MF_MOVE_ALL) ||
+ 	    (flags & MPOL_MF_MOVE && page_mapcount(page) == 1 &&
+ 	     !hugetlb_pmd_shared(pte))) {
+-		if (isolate_hugetlb(page, qp->pagelist) &&
++		if (folio_isolate_hugetlb(page, qp->pagelist) &&
+ 			(flags & MPOL_MF_STRICT))
+ 			/*
+ 			 * Failed to isolate page but allow migrating pages
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -133,7 +133,7 @@ static void putback_movable_page(struct
+  *
+  * This function shall be used whenever the isolated pageset has been
+  * built from lru, balloon, hugetlbfs page. See isolate_migratepages_range()
+- * and isolate_hugetlb().
++ * and folio_isolate_hugetlb().
+  */
+ void putback_movable_pages(struct list_head *l)
+ {
+@@ -1995,7 +1995,7 @@ static int add_page_for_migration(struct
+ 
+ 	if (PageHuge(page)) {
+ 		if (PageHead(page)) {
+-			err = isolate_hugetlb(page, pagelist);
++			err = folio_isolate_hugetlb(page, pagelist);
+ 			if (!err)
+ 				err = 1;
+ 		}
 
 
