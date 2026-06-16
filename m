@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A643CFF55;
-	Tue, 16 Jun 2026 18:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EFA93CFF55;
+	Tue, 16 Jun 2026 18:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781635674; cv=none; b=tKCxSHD08HP7/SxJRirxKHlAqoyqAR1dDDQ2hdR1Pa6o/RXLiPgXnGyyKIIK9wFOsQA1BD7ebG3DpUl6jqVobyCykC6XIECNgaGXohNgO2g0i/+UbEzoNOWB2mO0mCSeZH43rOKK7Gd9Bydi3jCkzdMWcMI/H15gkAi0vKiLVpg=
+	t=1781635679; cv=none; b=oKadRqwhOmXaZIw3aO1qCjB2cp4I0ML+I4p+y/js6psepIDMm9qogwJTN8JrP5EqVCrpX4/paUApQaKHEhNuhhp5JR/D8j13qIaC02zEFjvN/wH6dkCPphf7cU0U3s18esDJndlNzQy7jP5s6BGDMofLAPPVXGYgqW1q0iNG0h0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781635674; c=relaxed/simple;
-	bh=MGZIDsosC/AUoM8xgSf2W2Xy+8CydFfMYBd2MAaWPMI=;
+	s=arc-20240116; t=1781635679; c=relaxed/simple;
+	bh=TZ9//Q4RA7aHcocuD7nUTGUdve0pls6Aw7z+Ao4mSbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HqeM9xounIkS8RC/hMhBSeV2AZwINknYIoaGaPP+M+pY0ROEpnUHUoSJoVa/ugphIfhkLperoZFS8pFf7p9MUvwXrV2TjCVoxArNOHNQBealVi4OLxBVAghK65BnNlbb7Bk2JVQOxU27lPhl1a/Pt6m8PCx9UyoELDt7nln0H6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfqH4wBd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JBEqBzoWixqtW69AAIsxNaoTxuu9oexG4TH4oerRSaL/T7aBGtjjUymW7mkJObT+NI4I+H7eE9d2nIFwD1dkj7+7+gACxUzb1/1GTGhYcJKWbqB2A34Iv4EK6+4K9yKs8QIFicK9T7ycDvmsaA60qLA4zdDlzHqDuQiTJmNNJD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AxQ+Wc1m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfqH4wBd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 017621F000E9;
-	Tue, 16 Jun 2026 18:47:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AxQ+Wc1m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A50A51F000E9;
+	Tue, 16 Jun 2026 18:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781635673;
-	bh=BepRviHacykBjclTdWIWT1GhGnVX61oG3CybrI5h17g=;
+	s=korg; t=1781635678;
+	bh=mZfweAjXpoGiikCuFWJOWLfiqexZOGTMrTjalZbe/34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UfqH4wBd5gn9c2G70r7r59jzqOI2iuwuh7tkllTlWA4ogwnhTJPJhfrP7rhSZ9IVy
-	 5N0q5JaRpjjZ87KPiFenx/yuHIXKPAaGDXkN7TaEJa2zrE6ErgyvLtE9mwgaD0LqYu
-	 Fv9Pxq+F6suqdo5HOEutMqU8PgDZX4WqRlSw3MUU=
+	b=AxQ+Wc1mGG/DR/KgKZwBP6mTXTrMY3NyYjZjab1PTQoJGQcE+KSFn9KxiUhEhRSR/
+	 lhNaXI8cNyirHI09eZgcxhEKzKtYMdfbRurVoCsC/Lvxp/lQjkgTDyuo79uc0cNhLJ
+	 TeZX1xG1mz/+BfHAvefR4hAvw5VfvSAnt0T16btc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nicol=C3=A1s=20Bazaes?= <contacto@bazaes.cl>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 086/342] Input: synaptics - add LEN2058 to SMBus passlist for ThinkPad E490
-Date: Tue, 16 Jun 2026 20:26:22 +0530
-Message-ID: <20260616145052.253625798@linuxfoundation.org>
+	syzbot+abbfd103085885cf16a2@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Michal Pecio <michal.pecio@gmail.com>,
+	Heitor Alves de Siqueira <halves@igalia.com>
+Subject: [PATCH 5.10 095/342] usb: usbtmc: check URB actual_length for interrupt-IN notifications
+Date: Tue, 16 Jun 2026 20:26:31 +0530
+Message-ID: <20260616145052.655583240@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -44,49 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicolás Bazaes <contacto@bazaes.cl>
+From: Heitor Alves de Siqueira <halves@igalia.com>
 
-commit 16ca52bc209fa4bf9239cd9e5643e95533476b58 upstream.
+commit 52f2ad3f7e5eb3b5908e1d685d4342519dc9cfcd upstream.
 
-The Lenovo ThinkPad E490 (PNP ID: LEN2058) has a Synaptics TM3471-020
-touchpad that supports SMBus/RMI4 mode but is not listed in
-smbus_pnp_ids[]. Without this entry, RMI4 over SMBus is not enabled
-by default, and the touchpad falls back to PS/2 mode.
+USBTMC devices can use an optional interrupt endpoint for notification
+messages. These typically contain two-byte headers indicating the
+payload format, but the driver does not check if these headers are
+present before accessing the data buffers. In cases where the URB
+actual_length is not enough to fit these headers, the driver will either
+cause an out-of-bounds read, or consume stale leftover data from a
+previous notification.
 
-Adding LEN2058 to the passlist enables automatic RMI4 detection without
-requiring the psmouse.synaptics_intertouch parameter, and matches
-the behavior of similar ThinkPad models already in the list
-(E480/LEN2054, E580/LEN2055).
+Fix by checking if actual_data contains enough bytes for the headers,
+otherwise resubmit URB to the interrupt endpoint.
 
-Tested on ThinkPad E490 with kernel 7.0.5-zen1 and Arch Linux.
-RMI4 over SMBus is confirmed working without any kernel parameters.
-
-Signed-off-by: Nicolás Bazaes <contacto@bazaes.cl>
-Assisted-by: Claude:claude-sonnet-4-6
-Link: https://patch.msgid.link/20260514013552.14234-1-contacto@bazaes.cl
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: dbf3e7f654c0 ("Implement an ioctl to support the USMTMC-USB488 READ_STATUS_BYTE operation.")
+Reported-by: syzbot+abbfd103085885cf16a2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=abbfd103085885cf16a2
+Cc: stable <stable@kernel.org>
+Suggested-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Heitor Alves de Siqueira <halves@igalia.com>
+Link: https://patch.msgid.link/20260505-usbtmc-iin-size-v3-1-a36113f62db7@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/synaptics.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/class/usbtmc.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -187,6 +187,7 @@ static const char * const smbus_pnp_ids[
- 	"LEN2044", /* L470  */
- 	"LEN2054", /* E480 */
- 	"LEN2055", /* E580 */
-+	"LEN2058", /* E490 */
- 	"LEN2068", /* T14 Gen 1 */
- 	"SYN1221", /* TUXEDO InfinityBook Pro 14 v5 */
- 	"SYN3003", /* HP EliteBook 850 G1 */
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -2268,6 +2268,14 @@ static void usbtmc_interrupt(struct urb
+ 
+ 	switch (status) {
+ 	case 0: /* SUCCESS */
++		/* ensure at least two bytes of headers were transferred */
++		if (urb->actual_length < 2) {
++			dev_warn(dev,
++				"actual length %d not sufficient for interrupt headers\n",
++				urb->actual_length);
++			goto exit;
++		}
++
+ 		/* check for valid STB notification */
+ 		if (data->iin_buffer[0] > 0x81) {
+ 			data->bNotify1 = data->iin_buffer[0];
 
 
