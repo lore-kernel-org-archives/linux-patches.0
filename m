@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A275B18871F;
-	Tue, 16 Jun 2026 16:54:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9D8472769;
+	Tue, 16 Jun 2026 16:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628897; cv=none; b=I/QWkPc2NEGAdKJDGO+U8INjKqrOotTNR/t3qjM75wJYRiNdCriDP3nzJ7XVHiBK37JO39yx3vD6/ajspOYztme7+OpOEtf/bHPcGPzKP2NqURTv5LUPIaaQi9ntInJJMnOE5c/GDDx4oKC9bOHcZSD1RldwUZ/Lsgl1WfEO+5k=
+	t=1781628903; cv=none; b=WXN1LxC6xG3AAt2KYcTQdiFRuFp3LeA//LOVuYiivUig1JXdkUJq71Dmm7k7F2CXl5pmAiyNcBWGVGSHJUcr9/c90ioZ4Wk0acjOpaes79rWY9R9ql9vOAc/2nW/G0b3BS9i9s2Y6IrySnpdPkdYbSCAZobmgX4cLwJyaS4V6zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628897; c=relaxed/simple;
-	bh=OLjMju1mSWEMY3tOvaoaGlEmkk7PP01b4d9owXIEyBc=;
+	s=arc-20240116; t=1781628903; c=relaxed/simple;
+	bh=F/hway9+p0Vmu9/lfLp0I0rSF489eoAR5oLQbVH9VfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mJldtJo4866Uaj7c/ZF6sMDdIOZo2iASQfLVYr5iJ79AURfzmVyCMjg1FX3cjG42yCFMslzT9DnRFn1eeq4kUItgPpDzjS3XRl0cjDy8/G3FuJ7WjYV75DfiqqAohqRM1Vd/oau6pGnCFS2MDYSfSTnFAHQ9BBlr8bVsEDeyObY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVnr6tq2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sR0O1kzi1uByaA32LRBSFLVYlT/ivrtyjq0qWvPhYUz/nRmmUSo5Jvhg0C9NP8iqicqtimYdb1jPpdFzfil42hExiQCr/yBHyP/qWaNfWElEaG+7Bc45DhlKLSfp8e4pHq+JWHiD3uHjMw2ZA5BH8dINLvrlErUILy1Awvmtt0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xOhwhP+L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVnr6tq2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650B01F000E9;
-	Tue, 16 Jun 2026 16:54:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xOhwhP+L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 219921F000E9;
+	Tue, 16 Jun 2026 16:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628896;
-	bh=idJTrW4zuGYmhWVdl8aZq4iBuFbqLE5WsG0qeBBFNwc=;
+	s=korg; t=1781628902;
+	bh=RR0UchwkYrzMgVI1f9r5IrCwhDFJRmlc6pNdj93OWbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vVnr6tq2bE07FOwm+XbNHGIa/IqLFFF8qFLrcV+JsSDbn9OsFaxr5HYEKMdI8hK6q
-	 44yiU8swOwkCxmBn9DHR2F0S5d6PDbFCeWNuGZTq4xxtci9EObtPWjUnFl+ffDkOn4
-	 rv5U80kE+ttIlXaRRSFnNLDpTLWOhscQWVQizvSQ=
+	b=xOhwhP+L9WleB7fQdfnvTTJxPQAIHQMgPjXMO6L4vTQ+9GBkQGdjNrokJ66uTILsY
+	 bMgVYOGEMZpsNCMgH9TMH3V21AvjlxeJ5r8qD9kx6gPD4tEhB33b5nqw5QoD05l2l1
+	 xm22v9G/vDu0XLQ9dPfI8lfQgjybMdmP6/CZLP20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	William Breathitt Gray <wbg@kernel.org>
-Subject: [PATCH 6.6 149/452] counter: Fix refcount leak in counter_alloc() error path
-Date: Tue, 16 Jun 2026 20:26:16 +0530
-Message-ID: <20260616145125.532610693@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Zhaoyang Yu <2426767509@qq.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: [PATCH 6.6 150/452] tty: serial: pch_uart: add check for dma_alloc_coherent()
+Date: Tue, 16 Jun 2026 20:26:17 +0530
+Message-ID: <20260616145125.582936852@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -50,47 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Zhaoyang Yu <2426767509@qq.com>
 
-commit d9eeb0ea0d2de658663bfaa9c26eccdd8fd64440 upstream.
+commit 6fe472c1bbbe238e91141f7cabc1226e96a60d43 upstream.
 
-After device_initialize(), the lifetime of the embedded struct device
-is expected to be managed through the device core reference counting.
+Add a check for dma_alloc_coherent() failure to prevent a potential
+NULL pointer dereference in dma_handle_rx(). Properly release DMA
+channels and the PCI device reference using a goto ladder if the
+allocation fails.
 
-In counter_alloc(), if dev_set_name() fails after device_initialize(),
-the error path removes the chrdev, frees the ID, and frees the backing
-allocation directly instead of releasing the device reference with
-put_device(). This bypasses the normal device lifetime rules and may
-leave the reference count of the embedded struct device unbalanced,
-resulting in a refcount leak.
-
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
-
-Fix this by using put_device() in the dev_set_name() failure path and
-let counter_device_release() handle the final cleanup.
-
-Fixes: 4da08477ea1f ("counter: Set counter device name")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://lore.kernel.org/r/20260413134604.2861772-1-lgs201920130244@gmail.com
-Signed-off-by: William Breathitt Gray <wbg@kernel.org>
+Fixes: 3c6a483275f4 ("Serial: EG20T: add PCH_UART driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Zhaoyang Yu <2426767509@qq.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/tencent_E328416B7CFD436F6029F2DF02AD7ED89C08@qq.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/counter/counter-core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/tty/serial/pch_uart.c |   19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/drivers/counter/counter-core.c
-+++ b/drivers/counter/counter-core.c
-@@ -123,7 +123,8 @@ struct counter_device *counter_alloc(siz
+--- a/drivers/tty/serial/pch_uart.c
++++ b/drivers/tty/serial/pch_uart.c
+@@ -694,8 +694,7 @@ static void pch_request_dma(struct uart_
+ 	if (!chan) {
+ 		dev_err(priv->port.dev, "%s:dma_request_channel FAILS(Tx)\n",
+ 			__func__);
+-		pci_dev_put(dma_dev);
+-		return;
++		goto err_pci_get;
+ 	}
+ 	priv->chan_tx = chan;
  
- err_dev_set_name:
+@@ -709,18 +708,26 @@ static void pch_request_dma(struct uart_
+ 	if (!chan) {
+ 		dev_err(priv->port.dev, "%s:dma_request_channel FAILS(Rx)\n",
+ 			__func__);
+-		dma_release_channel(priv->chan_tx);
+-		priv->chan_tx = NULL;
+-		pci_dev_put(dma_dev);
+-		return;
++		goto err_req_tx;
+ 	}
  
--	counter_chrdev_remove(counter);
-+	put_device(dev);
-+	return NULL;
- err_chrdev_add:
+ 	/* Get Consistent memory for DMA */
+ 	priv->rx_buf_virt = dma_alloc_coherent(port->dev, port->fifosize,
+ 				    &priv->rx_buf_dma, GFP_KERNEL);
++	if (!priv->rx_buf_virt)
++		goto err_req_rx;
+ 	priv->chan_rx = chan;
  
- 	ida_free(&counter_ida, dev->id);
+ 	pci_dev_put(dma_dev);
++	return;
++
++err_req_rx:
++	dma_release_channel(chan);
++err_req_tx:
++	dma_release_channel(priv->chan_tx);
++	priv->chan_tx = NULL;
++err_pci_get:
++	pci_dev_put(dma_dev);
+ }
+ 
+ static void pch_dma_rx_complete(void *arg)
 
 
