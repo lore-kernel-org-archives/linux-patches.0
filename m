@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795B7450903;
-	Tue, 16 Jun 2026 15:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628784779BB;
+	Tue, 16 Jun 2026 15:58:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625489; cv=none; b=QjNNEqVPP6exwc5FujpCEKD0ALNn/vY0s0p/uzw406cOBtt6s6LLQGxiWJ8SOjdz4iDtoMQsK5DJs01mrsG1Sytx0Tw3tx3JZqp9H4ctJDG0doyCVQYuwq+xpCDoy+ojGxCUF5Aac3pmQA/Nz0EkB/4e0a2uAs99m+yxG4W/reM=
+	t=1781625494; cv=none; b=F5Fac6h7dCwnLpdqpblmG+sH1DKv76GFx6/E7KqiCMJcK3r/KDykIVmchstT9ft6Ke6DzwEkcPBf0F1+FRAoSfM+kcYzmvkLG/Iq1lhd+hzDvmiqt0/0wKsC/qOnWVcupbyDZwlkThM25aMUTa9QIlsaH1b4ZMSd6LKUhanxZlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625489; c=relaxed/simple;
-	bh=xuEiAjwZ020NUh/BDUDYJdkf2CFqai8fWb9DIzxgv3A=;
+	s=arc-20240116; t=1781625494; c=relaxed/simple;
+	bh=0wvTsO2FWFJzHBlIaKgnRvTqXdAHugSE/KzXGgHqHIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Chme9xTL296fdLWaNjTr/Hccck3XT2n4Bij/Te0XeasjKDL6fg33XETnG1CdrxjuVR72tnDb4aDXGAjtlMBYYHGw4dpjSyB5mOnAE+RGUyfKGx6t8xOLb7yls2DTfxv3FPCxV3CIgKBZmLAOxzzNoXrRv46H+FHc4UnOUe67J8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KCKmjgzw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a6Yq9srDwwRz/4ziRweJfG4PgWCSQCp55bCOSwu7v8K2CKz9K1/vzeXFh5jmdgSov1RVPrJ/CgJPsKcTta49kdDgkbxffbOkMjdcL9shKC5QCbPGJzH4nr/elpGZ2u4mH9Rm8+FuwClVEksRJzf0wR/VIYwIHPfhf8tw2LAfIHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ris3gpbb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KCKmjgzw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B7751F000E9;
-	Tue, 16 Jun 2026 15:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ris3gpbb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366951F000E9;
+	Tue, 16 Jun 2026 15:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625488;
-	bh=ZsuGtyayaX736xm2j/mGcpb8+NDfRDLB6WY6BJQanNo=;
+	s=korg; t=1781625493;
+	bh=Jhm5EaWRn/LVY1xdaZgw4dvhumt/GBZXPHQas3zHd+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KCKmjgzw3g9Y28LT5EEPC2Nh76VMQhDqVWSCHn+X32tzP98igwTvTxVfpd1we3jfm
-	 oRjEopC2LqkKvrs46talOeUp4ZyvDoqheSCmhQMiLlK7qXEaHFKeYN/SRs/rSrVMLv
-	 IKsZ/VHAyQZJXBGg6rp7Tn0LfhcnltQqHw+juQkY=
+	b=Ris3gpbbNfSIKfm/2DinajMgR4cPKd5mvrJAloYDsNeHTvkSbS9GJc/ozb4/0mzcA
+	 0xJZd+YvpG3dxnuPOPGs75R88btVa3MmIh3Whlcs2wMiHU4SBMefJjRl8Q10dog66S
+	 Doz4APWQFDc8RISYd0GYiEg3rgwkhdiVC8GWkgnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Willem de Bruijn <willemb@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 120/325] tun: zero the whole vnet header in tun_put_user()
-Date: Tue, 16 Jun 2026 20:28:36 +0530
-Message-ID: <20260616145103.690217179@linuxfoundation.org>
+Subject: [PATCH 6.18 121/325] ip6_vti: fix incorrect tunnel matching in vti6_tnl_lookup()
+Date: Tue, 16 Jun 2026 20:28:37 +0530
+Message-ID: <20260616145103.741402944@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -53,47 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 7f2fcff15e99bb852f6967396ed12b38376e2c8d ]
+[ Upstream commit a5c0359f5cbc51a2e2b114d6041e0f3c73f903e9 ]
 
-tun_put_user() declares an on-stack struct virtio_net_hdr_v1_hash_tunnel
-without zeroing it. For a non-tunnel skb, virtio_net_hdr_tnl_from_skb()
-only initializes the first 10 bytes (sizeof(struct virtio_net_hdr)),
-leaving bytes 10..23 (num_buffers and the hash/tunnel fields) as stack
-garbage.
+In vti6_tnl_lookup(), when an exact match for a tunnel fails,
+the code falls back to searching for wildcard tunnels:
 
-An unprivileged user can set the vnet header size to 24 with
-TUNSETVNETHDRSZ, so __tun_vnet_hdr_put() copies all 24 bytes of the
-partially-initialized struct to userspace, leaking 14 bytes of kernel
-stack on every read of a non-tunnel packet.
+- Tunnels matching the packet's local address, with any remote address
+  wildcard remote).
 
-Fix it the same way tun_get_user() already does by zeroing the whole
-header right after declaration.
+- Tunnels matching the packet's remote address, with any local address
+  (wildcard local).
 
-Fixes: 288f30435132 ("tun: enable gso over UDP tunnel support.")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260607054428.3050243-1-xmei5@asu.edu
+However, vti6 stores all these different types of tunnels in the same
+hash table (ip6n->tnls_r_l) prone to hash collisions.
+
+The bug is that the fallback search loops in vti6_tnl_lookup() were
+missing checks to ensure that the candidate tunnel actually has
+a wildcard address.
+
+Fixes: fbe68ee87522 ("vti6: Add a lookup method for tunnels with wildcard endpoints.")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Reviewed-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Link: https://patch.msgid.link/20260608164613.933023-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/ipv6/ip6_vti.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 9a767da38c71e7..d27c3229465ad9 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -2068,6 +2068,7 @@ static ssize_t tun_put_user(struct tun_struct *tun,
- 		struct virtio_net_hdr_v1_hash_tunnel hdr;
- 		struct virtio_net_hdr *gso;
- 
-+		memset(&hdr, 0, sizeof(hdr));
- 		ret = tun_vnet_hdr_tnl_from_skb(tun->flags, tun->dev, skb,
- 						&hdr);
- 		if (ret)
+diff --git a/net/ipv6/ip6_vti.c b/net/ipv6/ip6_vti.c
+index d2b74a6f2cf62d..d871cab6938d36 100644
+--- a/net/ipv6/ip6_vti.c
++++ b/net/ipv6/ip6_vti.c
+@@ -106,6 +106,7 @@ vti6_tnl_lookup(struct net *net, const struct in6_addr *remote,
+ 	hash = HASH(&any, local);
+ 	for_each_vti6_tunnel_rcu(ip6n->tnls_r_l[hash]) {
+ 		if (ipv6_addr_equal(local, &t->parms.laddr) &&
++		    ipv6_addr_any(&t->parms.raddr) &&
+ 		    (t->dev->flags & IFF_UP))
+ 			return t;
+ 	}
+@@ -113,6 +114,7 @@ vti6_tnl_lookup(struct net *net, const struct in6_addr *remote,
+ 	hash = HASH(remote, &any);
+ 	for_each_vti6_tunnel_rcu(ip6n->tnls_r_l[hash]) {
+ 		if (ipv6_addr_equal(remote, &t->parms.raddr) &&
++		    ipv6_addr_any(&t->parms.laddr) &&
+ 		    (t->dev->flags & IFF_UP))
+ 			return t;
+ 	}
 -- 
 2.53.0
 
