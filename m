@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B2244CAF9;
-	Tue, 16 Jun 2026 15:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A2044E05B;
+	Tue, 16 Jun 2026 15:44:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781624658; cv=none; b=aTSBDcXEXnBjWw+DsR7qYwz7W/wIt80LUr7uOPqEtEQt94yFW1vShXVQwchYqDYiaBgBHGPYs/0sy1LedrMqvFExT1As8sfvrd6t+1ujA0jp9OcRsmbGGlxjifpsNC6+uV364KuibY8bk/sCKXe7StV9aJN0JTLEfxRuwAvOVBs=
+	t=1781624663; cv=none; b=ZRVJibW/qI4Tbcph0Jvoj/KFAZd0SNVF7fWCJGJf+dqIva9ODxw1pyv+T2ul3Tzm/snvr2Z/40OF9d62AryvDHldj1G+EfVyIzgZA2+tKIue63Ji0+i54Rdoxl/EgS7iLerLmPodXjyPokHceDjBSMHb3hcIjDSYCajt6z6i570=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781624658; c=relaxed/simple;
-	bh=9YhiUTzNabBq38bqVCdPLxmsnG/fbT9eGKQqnH/f2lI=;
+	s=arc-20240116; t=1781624663; c=relaxed/simple;
+	bh=8WOfC5/DOQP1vdXG2hwUh27Q5tg+T93FtDLR2xJk5BM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Pu54/+mFEdPiRADYK+WBF01KGPeMCC08kg0FpSuFBg8kVgU/VOTsVrLlCRC98kEWGfHgkcv63bCGPycd4ZPC/a4praPIM3ZE/QsTu3T5+5z3N0AbncF+N+xWCBTelMKImof1AmTnE6wUWhcnuWyHBjgaGiogg44sprSIYsk63EM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tz/uxdxR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SwZiPqrSHH3D+VNG+61xERey4LUjrKkdvonJMAT6gZty8Si5jPeG8FBSee8Dtc9ttxmwf9gevxW2hh5t3CGO3k9Q6JR7PpBPx0sOiqwxK2/3lyScDiqhUh19VtCpjhGEL1sDmy1EDE1PpJkNU2c/MXHNNZrJ7fHYgtqdLkm/GRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AEMikakB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tz/uxdxR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079831F00A3A;
-	Tue, 16 Jun 2026 15:44:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AEMikakB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87B71F000E9;
+	Tue, 16 Jun 2026 15:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781624657;
-	bh=1eOwyxhXxzXYj9tZORPAN9u9VJ0Uz8h73HxhojrwEME=;
+	s=korg; t=1781624662;
+	bh=z8g4uwPifVcennyRQwGfijDUK/YDIW8yrrV/f3gLWos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tz/uxdxRNZPAr1SHoVBgDjCmST3LZrmOJQBA8BFo3jUkrW90HAe9eRabPZJWUFYsp
-	 BxZUbRQzhDVXET5mo8THGayJ5oN1BjZOiTVGm61L28BmsEaebixKcFV/L82h1n1NP5
-	 ioPoU61AXTBUO8wJme0C+Df69prlYch6Wmn1Pjd4=
+	b=AEMikakB5GBXm9hRvKstK1gSVibWwf7i3HZvwbkJKocZ1ZJfpn0Kdn5uNafwro5nP
+	 D4NfS7IvarS1d1MHVMqWOIWdFX/o00knhZ+mzjXOZxSFfI4B4/PcGC8De1MDmqClHS
+	 ZYa5ZyfUFhAnxdUzOe1ccpVM8Xt/Spk2Wh0hl5s8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
-Subject: [PATCH 7.0 343/378] drm/v3d: Skip CSD when it has zeroed workgroups
-Date: Tue, 16 Jun 2026 20:29:34 +0530
-Message-ID: <20260616145128.238600770@linuxfoundation.org>
+	Uma Shankar <uma.shankar@intel.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Pranay Samala <pranay.samala@intel.com>
+Subject: [PATCH 7.0 334/378] drm/i915: Fix color blob reference handling in intel_plane_state
+Date: Tue, 16 Jun 2026 20:29:25 +0530
+Message-ID: <20260616145127.803645838@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145109.744539446@linuxfoundation.org>
 References: <20260616145109.744539446@linuxfoundation.org>
@@ -45,79 +46,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.0-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
 
-commit 7f93fad5ea0affc9e1505dd0f7596c0fdb496213 upstream.
+commit 26eb7c0a7ab09d83eec833db6a5a2bc60b9d4d9a upstream.
 
-A compute shader dispatch encodes its workgroup counts in the CFG0..CFG2
-registers. Kicking off a dispatch with a zero count in any of the three
-dimensions is invalid. First, the hardware will process 0 as 65536,
-while the user-space driver exposes a maximum of 65535. Over that, a
-submission with a zeroed workgroup dimension should be a no-op.
+Take proper references for hw color blobs (degamma_lut, gamma_lut,
+ctm, lut_3d) in intel_plane_duplicate_state() and drop them in
+intel_plane_destroy_state().
 
-These zeroed counts can reach the dispatch path through an indirect CSD
-job, whose workgroup counts are only known once the indirect buffer is
-read and may legitimately be zero, but such scenario should only result in
-a no-op.
+v2:
+- handle blobs in hw state clear
 
-Overwrite the indirect CSD job workgroup counts with the indirect BO
-ones, even if they are zeroed, and don't submit the job to the hardware
-when any of the workgroup counts is zero, so the job completes immediately
-instead of running the shader.
-
-Cc: stable@vger.kernel.org
-Fixes: d223f98f0209 ("drm/v3d: Add support for compute shader dispatch.")
-Suggested-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20260602-v3d-fix-indirect-csd-v4-2-654309e32bc0@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Cc: <stable@vger.kernel.org> #v6.19+
+Fixes: 3b7476e786c2 ("drm/i915/color: Add framework to program PRE/POST CSC LUT")
+Fixes: a78f1b6baf4d ("drm/i915/color: Add framework to program CSC")
+Fixes: 65db7a1f9cf7 ("drm/i915/color: Add 3D LUT to color pipeline")
+Reviewed-by: Pranay Samala <pranay.samala@intel.com> #v1
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Signed-off-by: Uma Shankar <uma.shankar@intel.com>
+Link: https://patch.msgid.link/20260601082953.128539-4-chaitanya.kumar.borah@intel.com
+(cherry picked from commit c6eea1925154b6697fe22b217faab9bb30635e6b)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/v3d/v3d_sched.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/display/intel_plane.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -378,6 +378,16 @@ v3d_csd_job_run(struct drm_sched_job *sc
- 		return NULL;
- 	}
+--- a/drivers/gpu/drm/i915/display/intel_plane.c
++++ b/drivers/gpu/drm/i915/display/intel_plane.c
+@@ -144,6 +144,15 @@ intel_plane_duplicate_state(struct drm_p
+ 	if (intel_state->hw.fb)
+ 		drm_framebuffer_get(intel_state->hw.fb);
  
-+	/* The HW interprets a workgroup size of 0 as 65536; however, the
-+	 * user-space driver exposes a maximum of 65535. Therefore, a 0 in
-+	 * any dimension means that we have no workgroups and the compute
-+	 * shader should not be dispatched.
-+	 */
-+	if (!V3D_GET_FIELD(job->args.cfg[0], V3D_CSD_QUEUED_CFG0_NUM_WGS_X) ||
-+	    !V3D_GET_FIELD(job->args.cfg[1], V3D_CSD_QUEUED_CFG1_NUM_WGS_Y) ||
-+	    !V3D_GET_FIELD(job->args.cfg[2], V3D_CSD_QUEUED_CFG2_NUM_WGS_Z))
-+		return NULL;
++	if (intel_state->hw.degamma_lut)
++		drm_property_blob_get(intel_state->hw.degamma_lut);
++	if (intel_state->hw.gamma_lut)
++		drm_property_blob_get(intel_state->hw.gamma_lut);
++	if (intel_state->hw.ctm)
++		drm_property_blob_get(intel_state->hw.ctm);
++	if (intel_state->hw.lut_3d)
++		drm_property_blob_get(intel_state->hw.lut_3d);
 +
- 	v3d->queue[V3D_CSD].active_job = &job->base;
+ 	return &intel_state->uapi;
+ }
  
- 	v3d_invalidate_caches(v3d);
-@@ -428,13 +438,13 @@ v3d_rewrite_csd_job_wg_counts_from_indir
- 
- 	wg_counts = (uint32_t *)(bo->vaddr + indirect_csd->offset);
- 
--	if (wg_counts[0] == 0 || wg_counts[1] == 0 || wg_counts[2] == 0)
--		goto unmap_bo;
--
- 	args->cfg[0] = wg_counts[0] << V3D_CSD_CFG012_WG_COUNT_SHIFT;
- 	args->cfg[1] = wg_counts[1] << V3D_CSD_CFG012_WG_COUNT_SHIFT;
- 	args->cfg[2] = wg_counts[2] << V3D_CSD_CFG012_WG_COUNT_SHIFT;
- 
-+	if (wg_counts[0] == 0 || wg_counts[1] == 0 || wg_counts[2] == 0)
-+		goto unmap_bo;
+@@ -167,6 +176,16 @@ intel_plane_destroy_state(struct drm_pla
+ 	__drm_atomic_helper_plane_destroy_state(&plane_state->uapi);
+ 	if (plane_state->hw.fb)
+ 		drm_framebuffer_put(plane_state->hw.fb);
 +
- 	num_batches = DIV_ROUND_UP(indirect_csd->wg_size, 16) *
- 		      (wg_counts[0] * wg_counts[1] * wg_counts[2]);
++	if (plane_state->hw.degamma_lut)
++		drm_property_blob_put(plane_state->hw.degamma_lut);
++	if (plane_state->hw.gamma_lut)
++		drm_property_blob_put(plane_state->hw.gamma_lut);
++	if (plane_state->hw.ctm)
++		drm_property_blob_put(plane_state->hw.ctm);
++	if (plane_state->hw.lut_3d)
++		drm_property_blob_put(plane_state->hw.lut_3d);
++
+ 	kfree(plane_state);
+ }
  
+@@ -317,6 +336,14 @@ static void intel_plane_clear_hw_state(s
+ {
+ 	if (plane_state->hw.fb)
+ 		drm_framebuffer_put(plane_state->hw.fb);
++	if (plane_state->hw.degamma_lut)
++		drm_property_blob_put(plane_state->hw.degamma_lut);
++	if (plane_state->hw.gamma_lut)
++		drm_property_blob_put(plane_state->hw.gamma_lut);
++	if (plane_state->hw.ctm)
++		drm_property_blob_put(plane_state->hw.ctm);
++	if (plane_state->hw.lut_3d)
++		drm_property_blob_put(plane_state->hw.lut_3d);
+ 
+ 	memset(&plane_state->hw, 0, sizeof(plane_state->hw));
+ }
 
 
