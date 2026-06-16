@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD554657EA;
-	Tue, 16 Jun 2026 16:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8905466B74;
+	Tue, 16 Jun 2026 16:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626241; cv=none; b=TciKLBRm/0rGFBW2c45ee2cMrSyqDBrtXo1WhdZ9hkGNUyqUTvTr5QyK97T3RZoCWBQz4wCtSAlro+U23AY4zQ9INAtbMeUrasx8g6IQqKdYj09OtpXWNYRjO7pifzUTJXby+ft3LaG7DjFy2LLTkaRMJYAAx8qsK4AYWLcbz68=
+	t=1781626246; cv=none; b=JkcjmVFVoBkSCSl3WwqmOCYzTBCzUMs12etQ5XsIRBZ1wwxcsR57JRaRHcafFCpFdYusYtehQfY0WVzvhcGZ6jH16h3xVrxAKm90kSFVLN0GbRwyTtzO4jLgSryzPUOdCoU456tsnx6lTR77/S2gwNHpaI64WMQ80EKWxj36YMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626241; c=relaxed/simple;
-	bh=Dewr3eXEdcb5NeVhCM+8O/Fmtm6RMkChwoPoAK1Ye6w=;
+	s=arc-20240116; t=1781626246; c=relaxed/simple;
+	bh=MDOeOo/6SLgRCrFbfHQMLaCK8VMtzsewGbvBv/rv9qY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b82pADmYFNf9fkp2WBUcw9DLaSFaI0p4Fp7GsJxElYId3z3thk4IE0Ug0v1D2RgVpMsP7y60CNOsXJ7IlLa6W9DMgdqBta1ovVrZdlJ6BwYe6E9+wgqko61VZDHdUZ6fgQ5dsYvlZYqk1foH6mj5Abys88+Q3l/IjOmJBKlepno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OmjRcNWu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tQnjZ3+UAwCVFENbMGhmp41g2iLbqdr4F+vQIjyFeXL/rzRrADnyObMUQ5lhU5tJafnduWzn8lM7Dve7qGprldXQ3vKt5kupKJn5HRa9jyAsxv+tcRmT77GKLHMNX2x/XOmso10LmHuhvKsL34KXqYauXNFnyBeb98runUPaoAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4d6wHiu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OmjRcNWu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874D81F000E9;
-	Tue, 16 Jun 2026 16:10:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4d6wHiu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98CB1F000E9;
+	Tue, 16 Jun 2026 16:10:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626240;
-	bh=sS8TEhh4RsxoJj3Z8Chs4cSQYXIycI6miOwpRW/iKVg=;
+	s=korg; t=1781626245;
+	bh=G8caWg0dV06aoJc4OAdnG/ejJzNkhlLDC6rLjffgP/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OmjRcNWuCo4+ZkZGCSYH1v4dPeV+nPQoNe+j/MrVZXJUpRjAJjnMe5dFwW+EoCOmE
-	 +LcT8ftQdTMRGpF+/TnHcLktB5Vo/eDW9Quk4fHo8mAx82OvWW5n9BdU8/hSpdbQ2Y
-	 i+VRC0AW3BgnvGkxuF967DKi1gMUElJ753RBm5Xw=
+	b=c4d6wHiuCD/KTGSQp9/I5fUWqVAKVGcHV1hdwMbsRSkdYrBLyZ3ZmctGnKC3JNkq9
+	 a7ViWDVFTYdAGALjY861P1rMfqP0Y+qnIaA0AXR2wzeeHQ7vl3x1EizVEqRW/pnPoy
+	 ic0qeMyWyxGlwUsUSKMq2byme7HhldEslYKJmWOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Vitaly Prosyak <vitaly.prosyak@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 291/325] drm/amdgpu: fix waiting for all submissions for userptrs
-Date: Tue, 16 Jun 2026 20:31:27 +0530
-Message-ID: <20260616145113.306581199@linuxfoundation.org>
+Subject: [PATCH 6.18 292/325] drm/amdgpu: restart the CS if some parts of the VM are still invalidated
+Date: Tue, 16 Jun 2026 20:31:28 +0530
+Message-ID: <20260616145113.358474596@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -54,44 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian König <christian.koenig@amd.com>
 
-commit 58bafc666c484b21839a2d27e923ae1b2727a1df upstream.
+commit 40396ffdf6120e2380706c59e1a84d7e765a37b6 upstream.
 
-Wait for all submissions when userptrs need to be invalidated by the MMU
-notifier, not just the one the userptr was involved into.
+Make sure that we only submit work with full up to date VM page tables.
+
+Backport to 7.1 and older.
 
 Signed-off-by: Christian König <christian.koenig@amd.com>
 Reviewed-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
 Tested-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 91250893cbaa25c86872deca95a540d08de1f91e)
+(cherry picked from commit 59720bfd8c6dbebeb8d5a7ab64241b007efd9213)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_hmm.c
-@@ -69,6 +69,7 @@ static bool amdgpu_hmm_invalidate_gfx(st
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -1282,6 +1282,7 @@ static int amdgpu_cs_submit(struct amdgp
  {
- 	struct amdgpu_bo *bo = container_of(mni, struct amdgpu_bo, notifier);
- 	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
-+	struct amdgpu_bo *vm_root = bo->vm_bo->vm->root.bo;
- 	long r;
- 
- 	if (!mmu_notifier_range_blockable(range))
-@@ -79,8 +80,9 @@ static bool amdgpu_hmm_invalidate_gfx(st
- 	mmu_interval_set_seq(mni, cur_seq);
- 
- 	amdgpu_vm_bo_invalidate(bo, false);
--	r = dma_resv_wait_timeout(bo->tbo.base.resv, DMA_RESV_USAGE_BOOKKEEP,
--				  false, MAX_SCHEDULE_TIMEOUT);
-+	r = dma_resv_wait_timeout(vm_root->tbo.base.resv,
-+				  DMA_RESV_USAGE_BOOKKEEP, false,
-+				  MAX_SCHEDULE_TIMEOUT);
- 	mutex_unlock(&adev->notifier_lock);
- 	if (r <= 0)
- 		DRM_ERROR("(%ld) failed to wait for user bo\n", r);
+ 	struct amdgpu_fpriv *fpriv = p->filp->driver_priv;
+ 	struct amdgpu_job *leader = p->gang_leader;
++	struct amdgpu_vm *vm = &fpriv->vm;
+ 	struct amdgpu_bo_list_entry *e;
+ 	struct drm_gem_object *gobj;
+ 	unsigned long index;
+@@ -1327,7 +1328,8 @@ static int amdgpu_cs_submit(struct amdgp
+ 							e->range);
+ 		e->range = NULL;
+ 	}
+-	if (r) {
++
++	if (r || !list_empty(&vm->invalidated)) {
+ 		r = -EAGAIN;
+ 		mutex_unlock(&p->adev->notifier_lock);
+ 		return r;
 
 
