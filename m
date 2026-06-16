@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2FCB472798;
-	Tue, 16 Jun 2026 18:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D86B3ACA68;
+	Tue, 16 Jun 2026 19:00:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636398; cv=none; b=ifIjP3Y/V9DWhhy/NMQDtNybumEp0pZJgi4Nn/r2ZfqSNblRPiQl2j4poSGRsdCrm4KWN2J76ifefF59S4qc5sJGTTokc3k2Qu4Fx4RPRnlh+Rg5EaRPkEoRS26Dv7rVzT/O8F7REcqOPsBB1xQvLxVeQtxDcP7n2yAAgPiDwq4=
+	t=1781636404; cv=none; b=EbNoB0A3JINPryytPhoIk4+2x5Qg81MvwSeLbjlDFuKMIMyx9mr575FcRi8erxFitcxFE+WIN4M+yoic9kkhfXBktNQSct6hPymZqVVZR8siJ49P53Wbjn3NtnexBIIcxJRdvQT0isE429N2dz/Dnt7BD2EgQfPWO0Rj8/Uv+ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636398; c=relaxed/simple;
-	bh=UACtSUDjlrYbM2OsKpTx/C30KQ6X2W0ULdkBPOMfxTU=;
+	s=arc-20240116; t=1781636404; c=relaxed/simple;
+	bh=ZwpNfZf5qHG8uDqCOVe3MjmfEPwKGYenPtBRGwSKFw8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=odhAF37WU1ES5Uzu/B5ZEsQQJ6788Juelze5e/PldaOlT6G+jydNp9bvicWYeRwwlDi/vyWf1PkWZ2+dnHeLe5lPQFH2ar+nrFTSTamUPG7aqM6EBGC5O+eP7vU/rmft2eZ5WTcvrm9JFPXKhcxDGy2yMnUG3Fsd7MXBOROpG4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kS1IVsva; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YvKeIN2dvD93qOKEeeZRwQdQ85NKFfcQ4VYI2tKjIgGAamdw7G2ct/x+cAVfUjTrjwqRant2OMCW25ZZ69/x18NGjPHzMRP4Bkx01DKhkEAqKECVss3iFkN2g4Ww1YWTtro0VN4Ifcx/sKHecvxVTVWQ+hU9FmomYPGTkBQ2uwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBvy8lcs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kS1IVsva"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D3B1F000E9;
-	Tue, 16 Jun 2026 18:59:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBvy8lcs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195A61F000E9;
+	Tue, 16 Jun 2026 19:00:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636397;
-	bh=PTQoYmxuADBnPi0ukGnrtDobUwlKsm8/DzoWH4FYV1o=;
+	s=korg; t=1781636403;
+	bh=Hghlkp8QU9jmfAPmUpPzHZJ0GHKBT1Hw1TJctqATKRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kS1IVsvaUF1dMcKz7bm/V5rT9+yyOHBJnh9lo/77qLIF4BqX4h9dFtfCSujPVMJZw
-	 vOwtxmA0kwtVcQMl/vdToQf0OG+2k9wRRG7SWgFUtWCuePI8R7sKtElpEz2qpFNFbi
-	 sxlorxJsUeDYQYYZKMkDdmSXXwKHzBoiS/Rzq83M=
+	b=LBvy8lcsHo5cFHkii+KtWkH97ASgyjSuJy2sBfMuqrVXd+rmkZhgpgi8cfMG1JCBD
+	 CAw8/WHPA70PoyixppPjScCMCh49BUdvS4JGgtMfw4u3WeiGOq/EyYzvTf8qaX2agg
+	 fo37LwTsrDkybue+417AhqQRC1WgsNvYcgJMMlm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <yuantan098@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Longxuan Yu <ylong030@ucr.edu>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 214/342] io_uring/poll: fix signed comparison in io_poll_get_ownership()
-Date: Tue, 16 Jun 2026 20:28:30 +0530
-Message-ID: <20260616145058.149589321@linuxfoundation.org>
+	Joseph Salisbury <joseph.salisbury@oracle.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 232/342] sched: Use u64 for bandwidth ratio calculations
+Date: Tue, 16 Jun 2026 20:28:48 +0530
+Message-ID: <20260616145059.010270287@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -57,52 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Longxuan Yu <ylong030@ucr.edu>
+From: Joseph Salisbury <joseph.salisbury@oracle.com>
 
-Commit 326941b22806cbf2df1fbfe902b7908b368cce42 usptream.
+[ Upstream commit c6e80201e057dfb7253385e60bf541121bf5dc33 ]
 
-io_poll_get_ownership() uses a signed comparison to check whether
-poll_refs has reached the threshold for the slowpath:
+to_ratio() computes BW_SHIFT-scaled bandwidth ratios from u64 period and
+runtime values, but it returns unsigned long.  tg_rt_schedulable() also
+stores the current group limit and the accumulated child sum in unsigned
+long.
 
-    if (unlikely(atomic_read(&req->poll_refs) >= IO_POLL_REF_BIAS))
+On 32-bit builds, large bandwidth ratios can be truncated and the RT
+group sum can wrap when enough siblings are present.  That can let an
+overcommitted RT hierarchy pass the schedulability check, and it also
+narrows the helper result for other callers.
 
-atomic_read() returns int (signed). When IO_POLL_CANCEL_FLAG
-(BIT(31)) is set in poll_refs, the value becomes negative in
-signed arithmetic, so the >= 128 comparison always evaluates to
-false and the slowpath is never taken.
+Return u64 from to_ratio() and use u64 for the RT group totals so
+bandwidth ratios are preserved and compared at full width on both 32-bit
+and 64-bit builds.
 
-Fix this by casting the atomic_read() result to unsigned int
-before the comparison, so that the cancel flag is treated as a
-large positive value and correctly triggers the slowpath.
-
-Fixes: a26a35e9019f ("io_uring: make poll refs more robust")
+Fixes: b40b2e8eb521 ("sched: rt: multi level group constraints")
+Assisted-by: Codex:GPT-5
+Signed-off-by: Joseph Salisbury <joseph.salisbury@oracle.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Co-developed-by: Yuan Tan <yuantan098@gmail.com>
-Signed-off-by: Yuan Tan <yuantan098@gmail.com>
-Suggested-by: Xin Liu <bird@lzu.edu.cn>
-Tested-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Signed-off-by: Longxuan Yu <ylong030@ucr.edu>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://patch.msgid.link/3a3508b08bcd7f1bc3beff848ae6e1d73d355043.1775965597.git.ylong030@ucr.edu
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://patch.msgid.link/20260403210014.2713404-1-joseph.salisbury@oracle.com
+[ dropped `extern` keyword from `to_ratio()` declaration ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/core.c  |    2 +-
+ kernel/sched/rt.c    |    2 +-
+ kernel/sched/sched.h |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -5378,7 +5378,7 @@ static bool io_poll_get_ownership_slowpa
-  */
- static inline bool io_poll_get_ownership(struct io_kiocb *req)
- {
--	if (unlikely(atomic_read(&req->poll_refs) >= IO_POLL_REF_BIAS))
-+	if (unlikely((unsigned int)atomic_read(&req->poll_refs) >= IO_POLL_REF_BIAS))
- 		return io_poll_get_ownership_slowpath(req);
- 	return !(atomic_fetch_inc(&req->poll_refs) & IO_POLL_REF_MASK);
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -3328,7 +3328,7 @@ void sched_post_fork(struct task_struct
+ 	uclamp_post_fork(p);
  }
+ 
+-unsigned long to_ratio(u64 period, u64 runtime)
++u64 to_ratio(u64 period, u64 runtime)
+ {
+ 	if (runtime == RUNTIME_INF)
+ 		return BW_UNIT;
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -2527,7 +2527,7 @@ static int tg_rt_schedulable(struct task
+ {
+ 	struct rt_schedulable_data *d = data;
+ 	struct task_group *child;
+-	unsigned long total, sum = 0;
++	u64 total, sum = 0;
+ 	u64 period, runtime;
+ 
+ 	period = ktime_to_ns(tg->rt_bandwidth.rt_period);
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -1956,7 +1956,7 @@ extern void init_dl_inactive_task_timer(
+ #define RATIO_SHIFT		8
+ #define MAX_BW_BITS		(64 - BW_SHIFT)
+ #define MAX_BW			((1ULL << MAX_BW_BITS) - 1)
+-unsigned long to_ratio(u64 period, u64 runtime);
++u64 to_ratio(u64 period, u64 runtime);
+ 
+ extern void init_entity_runnable_average(struct sched_entity *se);
+ extern void post_init_entity_util_avg(struct task_struct *p);
 
 
