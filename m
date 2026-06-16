@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6937A3876CF;
-	Tue, 16 Jun 2026 16:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2CD83876CF;
+	Tue, 16 Jun 2026 16:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628590; cv=none; b=rl5M+M07OUjL++abu6cGNmVaNw0r2b0cLtBdRVVsfiCask8vfJ0Rxs9DB8BW3k1zPocgcLkxDBfxxlzL6G7Tuhf9+14XDRKMroejcuXtcmF7iGnxpF+pc4jmIVOvJm6bK+eu2vo51yI7uxTBiTSP11Jj6O810uB+WX9eIfuX//Q=
+	t=1781628595; cv=none; b=WRnoRMCMBL9Z5ukYPA/NDsPtdafznAdK132Zt9YSZ8rP1dtKrXwC2biKY+hEPWDKWDQyrKCTR2YDh1uCzHm5dZnU6fE+pkimPsVTJvVIN8j9Bu97a3UTwC4c5Ba8/FLs/xDd9spfJiCV/RML9BCIJ0g61K9PWBV8KuReWdGZpuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628590; c=relaxed/simple;
-	bh=OJvROmWuHygzPkwczYGF2+90eyDwvqDrAHtCUlweGDc=;
+	s=arc-20240116; t=1781628595; c=relaxed/simple;
+	bh=qSHyr3b6sh36EDp8GFzX3U/b4UunvpLZBMewpuwFjGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mDdsLa1AlP1MmddrBwdhMCT1dgl0S0ysRt7X0YxY7aqaIgekmukLZsrVWJKmlcjwV6yMWvjwndhFiD0LKN6VB+KVLDOxb0M8NO+5W3ChaM2OMcapttIEm29FVKgPiqkj2/lwUmRVT2rKWw7ClYUI8syLc7MC6vFjaM1mwKblDHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWnyQmuo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a6Rl6+zrmDIoEWUXgi2nPXY2oSn/m/EoSTHM7G4/uJ5e0TZiAYNBDJFtvHlMjEUEm/yDybT1B0g4oCKmDQEel1cRYe8D9E96qdkocNp3XJJrR8EkdYBbdGbFfr+3sytEZJq+7uzLkgpxgNvlb7RWpgkR4JpKVAfnCUAEJnJRh4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+yX8EtB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWnyQmuo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E24B1F000E9;
-	Tue, 16 Jun 2026 16:49:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+yX8EtB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934CA1F000E9;
+	Tue, 16 Jun 2026 16:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628589;
-	bh=9SUuFkbQdvtpeDh1k3CRGtSwHuIapV3xInG+Oau+IjA=;
+	s=korg; t=1781628594;
+	bh=g3m53FX2ek1iYTTzSMNCZsg9Qyd26ai0Iaz698Fa4CE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dWnyQmuoEcugMQsW1YEoL2clF2Sqb+RqTss/2SncqdGn6FVnWc4Ts66RsCwOEBlcE
-	 WRVKnUwGBVwpuRSp2k4dXiJTgK6PZ+hJKcixWaqstoBGp6yi6VBDTEOIQ87EL21j4L
-	 B66J+I9G5Mr4jazPMv/g1wQtvwHGDZSZkorDIq/A=
+	b=o+yX8EtB/VppKCJLcgv0HphN+oZ/ta2uKlgwiDFvhePaLg/gyI9VwwNSTYqpx9Ap4
+	 2nt2uDIUmJqpnBVskb7C/0t48X1qqmGApmszkXuLKXFT1SQOdMo17o3Ovr2bUefcXG
+	 TH4K6+etHhaW7wX8SFzUG4C0dO36nSrk3gdnGP0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
+	Justin Iurman <justin.iurman@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 125/452] macsec: fix replay protection at XPN lower-PN wrap
-Date: Tue, 16 Jun 2026 20:25:52 +0530
-Message-ID: <20260616145124.315387764@linuxfoundation.org>
+Subject: [PATCH 6.6 126/452] ipv6: exthdrs: refresh nh pointer after ipv6_hop_jumbo()
+Date: Tue, 16 Jun 2026 20:25:53 +0530
+Message-ID: <20260616145124.365565510@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,43 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Justin Iurman <justin.iurman@gmail.com>
 
-commit e68842b3356471ba56c882209f324613dac47f64 upstream.
+commit d47548a36639095939f4747d4c43f2271366f565 upstream.
 
-In macsec_post_decrypt(), when pn is U32_MAX, pn + 1 overflows u32 to 0
-and the first branch never fires. If next_pn_halves.lower is also in the
-upper half, pn_same_half(pn, lower) is true and the XPN else-if does not
-fire either, leaving next_pn_halves unchanged. An attacker that captures
-the legitimate frame carrying pn == 0xFFFFFFFF on an XPN association
-can then replay it indefinitely, since lowest_pn never rises above
-the captured pn and macsec_decrypt() reconstructs the same IV.
+ipv6_hop_jumbo() calls pskb_trim_rcsum(), which can change skb pointers.
+Let's recompute nh pointer to make sure any change won't mess things up.
 
-Extend the XPN else-if to also fire when pn + 1 wraps to 0, so receipt
-of pn == U32_MAX advances next_pn_halves to (upper + 1, 0).
-
-Fixes: a21ecf0e0338 ("macsec: Support XPN frame handling - IEEE 802.1AEbw")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://patch.msgid.link/SYBPR01MB78813FD49E58F253B989F197AF012@SYBPR01MB7881.ausprd01.prod.outlook.com
+Signed-off-by: Justin Iurman <justin.iurman@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260522112013.12342-1-justin.iurman@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/macsec.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv6/exthdrs.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -800,7 +800,8 @@ static bool macsec_post_decrypt(struct s
- 		if (pn + 1 > rx_sa->next_pn_halves.lower) {
- 			rx_sa->next_pn_halves.lower = pn + 1;
- 		} else if (secy->xpn &&
--			   !pn_same_half(pn, rx_sa->next_pn_halves.lower)) {
-+			   (pn + 1 == 0 ||
-+			    !pn_same_half(pn, rx_sa->next_pn_halves.lower))) {
- 			rx_sa->next_pn_halves.upper++;
- 			rx_sa->next_pn_halves.lower = pn + 1;
- 		}
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -183,6 +183,8 @@ static bool ip6_parse_tlv(bool hopbyhop,
+ 				case IPV6_TLV_JUMBO:
+ 					if (!ipv6_hop_jumbo(skb, off))
+ 						return false;
++
++					nh = skb_network_header(skb);
+ 					break;
+ 				case IPV6_TLV_CALIPSO:
+ 					if (!ipv6_hop_calipso(skb, off))
 
 
