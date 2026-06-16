@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36B744BCB8;
-	Tue, 16 Jun 2026 16:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9AC644DB64;
+	Tue, 16 Jun 2026 16:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627427; cv=none; b=osZCeC2qcneVF6iIUJXimCuujWpx+jYACQ3puHI/QuwEVJpEyER0Rcf5MHMhnlYU210i8qFvOtuXVdHrzDLnbmprjSBbtzO/z8Lf7YmIMFSdRzyq1spCivoMK2tK9Cb1ra2cCXeBzbqA14G6fUlSTrT3jx/Y9oNxI6NZ4EQNwGM=
+	t=1781627431; cv=none; b=B0IlVce+7zX+qOaBar7pukk/18ZJeOCZy3+mrs3J+TmsKgJ7A6tyzxAlu04ohTBmaPDYq0U9AbjYP1iU4Owy6m2DbVPyGvXwKEwYp4iv8azHwmxo9kbIQxUfcEDemKg8v7rmgWEMc4mC2a1Id2AmbftYxw0fMV/JkOCQY7pWbOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627427; c=relaxed/simple;
-	bh=EDaX+vHNuu/Rzauk1AHZgym4tSio4k/xdOdwH5YkYSA=;
+	s=arc-20240116; t=1781627431; c=relaxed/simple;
+	bh=hl4h0bnrt76QXDyP3bwReIxfEt1z+7B3XrrsSS6vvaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fb6vpMb0J87X95+gHiDhS2JCSoianhNofmNGdrQucKKHZbD8sBxE1OTMoyYYRp0gMh5KPJVCJXuNc8p9PSEczPHKRj/2872sbjXwylE9/E5HVaCHjhnXbAZqRsnOEe0PxE1tV9IcA2gBtbJNJcFyoOjjVT9JNDjAxJTZDutLJEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hn4+svQV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S7ka0MwkUhhmOHda8naICoq0bPyp+3UF7z2sLD5W+kNdeLKPFGHnazf8AvCepeGPlyWKdibDuJfmU8QNc6XCRL5ZqsZSdmRJATyjykv+dZyMHVMRrHJ9DLEocD+TeM/NjF+mb1yHvixNWQNcaxdogSs0yILjoErEg+Y4Q6Ll4HU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sNGGuyGn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hn4+svQV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577FA1F000E9;
-	Tue, 16 Jun 2026 16:30:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sNGGuyGn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0157B1F000E9;
+	Tue, 16 Jun 2026 16:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627426;
-	bh=CrbCbEE1NI8yDonYoQ+BenftR0OU88BRCjmYw1Jfoo4=;
+	s=korg; t=1781627430;
+	bh=G+7lNwwYAp2lCGzVBop2FHXYZTZkNl9f58M/ulB7PZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hn4+svQVwQQqc3Z3+TNDHRm83ESkAWsalh59NE1WgoE/njgo0OCb40PjwrQW6/97r
-	 xfahKUj/GhQtiipZsK6TtLdldVlP2OYghswZV/SYlBWoeBi+9KKI5H8GoAC1CRtzY0
-	 07bJ/+5+z8Gsqi3xpkXl1E507AvKiRIojsgJ3wHI=
+	b=sNGGuyGnX6IXgvFzUm351cl78hqWrp1gxO5Fc6KH5n+rM2L9/oTm0SiQ6+BKIRyjE
+	 3bOPtn7QGY71edCbTHrwwFof2/saoyNbN32wCUudPLaoDEBUrccwyFSj+4T/DJF9dM
+	 f/OPlp3eIhG/BA3HDC0j4Nnd050SQkV3L1dTUnO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 168/261] inet: frags: fix use-after-free caused by the fqdir_pre_exit() flush
-Date: Tue, 16 Jun 2026 20:30:06 +0530
-Message-ID: <20260616145052.857670306@linuxfoundation.org>
+	"Christian Brauner (Amutable)" <brauner@kernel.org>
+Subject: [PATCH 6.12 169/261] pidfd: refuse access to tasks that have started exiting harder
+Date: Tue, 16 Jun 2026 20:30:07 +0530
+Message-ID: <20260616145052.904014255@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -51,70 +49,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 32594b09854970d7ba83eb2dc8c69a2edd158c8e upstream.
+commit 62c4d31d78294bd61cf3403626b789e854357177 upstream.
 
-On netns teardown, fqdir_pre_exit() walks the fqdir rhashtable and
-flushes every fragment queue that is not yet complete using
-inet_frag_queue_flush(). That helper frees all the skbs queued on the
-fragment queue but does not set INET_FRAG_COMPLETE, and leaves
-q->fragments_tail and q->last_run_head pointing at the freed skbs.
-The queue itself stays in the rhashtable.
+The recent ptrace fix closed a hole where someone could rely on task->mm
+becoming NULL during do_exit() to bypass dumpability checks. This api
+here leans on on the very same check and so inherits the fix.
 
-fqdir_pre_exit() first lowers high_thresh to 0 to stop new queue lookups,
-but it cannot stop a fragment that already obtained the queue through
-inet_frag_find() earlier and stalled just before taking the queue lock.
-Once that fragment resumes after the flush and takes the queue lock,
-it passes the INET_FRAG_COMPLETE check and then dereferences the freed
-fragments_tail. inet_frag_queue_insert() reads FRAG_CB() and ->len of
-that pointer and, on the append path, writes ->next_frag, causing a
-slab use-after-free. IPv6, nf_conntrack_reasm6 and 6lowpan reassembly
-share the same flush path and are affected as well.
+But there is no good reason to let it succeed at all once the target has
+entered do_exit(). PF_EXITING is set by exit_signals() at the very top
+of do_exit(), before exit_mm() and exit_files() run. Once we observe it,
+the task is committed to dying and exit_files() will release the fdtable
+shortly.
 
-Reset rb_fragments, fragments_tail and last_run_head in
-inet_frag_queue_flush() so a flushed queue no longer points at the
-freed skbs. A fragment that resumes after the flush and takes the
-queue lock then finds an empty queue and starts a new run instead of
-dereferencing the freed fragments_tail. ip_frag_reinit() already
-performed this reset after its own flush, so drop the now duplicate
-code there.
-
+Fixes: 8649c322f75c ("pid: Implement pidfd_getfd syscall")
 Cc: stable@vger.kernel.org
-Fixes: 006a5035b495 ("inet: frags: flush pending skbs in fqdir_pre_exit()")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Link: https://patch.msgid.link/ah6ukYq5G98LshdA@v4bel
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260518-obgleich-petersilie-2d77ccccf9b9@brauner
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_fragment.c |    3 +++
- net/ipv4/ip_fragment.c   |    3 ---
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ kernel/pid.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/net/ipv4/inet_fragment.c
-+++ b/net/ipv4/inet_fragment.c
-@@ -329,6 +329,9 @@ void inet_frag_queue_flush(struct inet_f
- 	reason = reason ?: SKB_DROP_REASON_FRAG_REASM_TIMEOUT;
- 	sum = inet_frag_rbtree_purge(&q->rb_fragments, reason);
- 	sub_frag_mem_limit(q->fqdir, sum);
-+	q->rb_fragments = RB_ROOT;
-+	q->fragments_tail = NULL;
-+	q->last_run_head = NULL;
- }
- EXPORT_SYMBOL(inet_frag_queue_flush);
+--- a/kernel/pid.c
++++ b/kernel/pid.c
+@@ -674,10 +674,12 @@ static struct file *__pidfd_fget(struct
+ 	if (ret)
+ 		return ERR_PTR(ret);
  
---- a/net/ipv4/ip_fragment.c
-+++ b/net/ipv4/ip_fragment.c
-@@ -265,9 +265,6 @@ static int ip_frag_reinit(struct ipq *qp
- 	qp->q.flags = 0;
- 	qp->q.len = 0;
- 	qp->q.meat = 0;
--	qp->q.rb_fragments = RB_ROOT;
--	qp->q.fragments_tail = NULL;
--	qp->q.last_run_head = NULL;
- 	qp->iif = 0;
- 	qp->ecn = 0;
+-	if (ptrace_may_access(task, PTRACE_MODE_ATTACH_REALCREDS))
+-		file = fget_task(task, fd);
+-	else
++	if (!ptrace_may_access(task, PTRACE_MODE_ATTACH_REALCREDS))
+ 		file = ERR_PTR(-EPERM);
++	else if (task->flags & PF_EXITING)
++		file = ERR_PTR(-ESRCH);
++	else
++		file = fget_task(task, fd);
+ 
+ 	up_read(&task->signal->exec_update_lock);
  
 
 
