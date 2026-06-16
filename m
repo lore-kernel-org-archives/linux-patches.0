@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E7D3C0628;
-	Tue, 16 Jun 2026 16:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E206F3A16AC;
+	Tue, 16 Jun 2026 16:02:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625772; cv=none; b=arAlSD7EAItFVLQR6CRdAe3RtQoFr0QCyFbV1d5TpgMo7m39ZGN3rI9Y9LW9dtHzCWv+fgARAgR/7V/rYLuaxJxtvY4Wnl37tTxImilwWCkGWPUhgK75npWSn6boQ1E+c6nxhbvFWF/kQyA3/HcqLAkjMaSjmdHItPnRZ8HEww8=
+	t=1781625777; cv=none; b=pOB0TDYITm49L0vdEbHf3WTnARA1oYnbht5SRDxcICpOZoS5tWZY4Doop/9DtKf51FCe2m122UDVPrSLnaLaLRqjbheFuhVTR6bsoLvtjve1+7yGk1dBszU8zmI8VMzACF6sdx7kYq4d1WeIf2k0QpYnoNs4EtyrSpStg3RGFhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625772; c=relaxed/simple;
-	bh=E/v0iZXqO5GHrjQXdjVpG+HwwnPdyfZ8ubIPWdQ1pC8=;
+	s=arc-20240116; t=1781625777; c=relaxed/simple;
+	bh=wBIgiiaosq+JDkAogFtvjYOLQbKL4XJm3hlGYVfyopo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kRC/K0rM6AiBx3f4qWGr4nZSaLlZmc+K8c9zfNUPiMHJdKDUzRHP6xlGJIP6WPAJ5v+j5kVfLcxzc46M5Qf7fGmOykTtJYGcqYB9rX9DvQl7O60JhH6HRfpmhpw9iO2IPj1/OdrKMlJE5p4OM1AvAWmsvqpCWkw6luOY7yoizu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jTQIrska; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L67Lq9+FYD4z7ANyPU6zZLgLvUlRaU9A62Von+HFhN9v2EfW8BOnyGSGfXoZqToqE+3RKxgnbu+CedfNvg63Mv8t7CSBXUU+3pRvaofSKIyLBA1lLMvC4aPcx6NZDJ4CEvJfvDhKt+2ibNaN0di6dwm6iYhZB6xCHz+iFArLyPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSUCS0il; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jTQIrska"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 448C61F000E9;
-	Tue, 16 Jun 2026 16:02:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSUCS0il"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BACC61F000E9;
+	Tue, 16 Jun 2026 16:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625771;
-	bh=4PM1OT3VUcYiPAXDrEXeKzEFet49MgxOZOlAcZ0kLCA=;
+	s=korg; t=1781625776;
+	bh=JCx/ilaYQz/A6Dp11Fw0tVPN3d0JR7m3i1B3515DOIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jTQIrska0zDA+iv+IRI3Ri+64v1eSeq9Tp9rZc3SL7bGnLodYfE2cXzzo1JTQ1DKQ
-	 TS4A5gP1isOru7TUUb9v2FZL2xQZ3b5jjbuDCFyWf/RC25ydcBXDIStf7xVxgx1e/V
-	 6Uh65b6LaiSTU4gZvlPN4zd6ArwOkqsnwnhdpsGs=
+	b=zSUCS0ilYrAsQIfgF41sKKvty2eOQ/mLjpoZxksmeRabOCGAO1AnmJhRtFaw7Ipco
+	 XyH5mT5DLrPivyxyuAhgYFHpvhU/tjko0DLh1iAqSM1KN4S/lpPtT2RZXMLOo5YQqr
+	 q01aubLkBOZkYBXA7XYZM+e9qtTpluxsg8Gt5am8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yingjie Gao <gaoyingjie@uniontech.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 204/325] xfs: fix rtgroup cleanup in CoW fork repair
-Date: Tue, 16 Jun 2026 20:30:00 +0530
-Message-ID: <20260616145108.198055186@linuxfoundation.org>
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Subject: [PATCH 6.18 205/325] wifi: iwlwifi: pcie: simplify the resume flow if fast resume is not used
+Date: Tue, 16 Jun 2026 20:30:01 +0530
+Message-ID: <20260616145108.257211308@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -51,44 +50,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Gao <gaoyingjie@uniontech.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-commit c3e073894379532c00cca7ba5762e18fafe29da8 upstream.
+commit 093305d801fae6ff9b8bb531fd78b579794c4f80 upstream.
 
-xrep_cow_find_bad_rt() initializes scrub rtgroup state before the
-force-rebuild path calls xrep_cow_mark_file_range(). If that call
-fails, the code jumps directly to out_rtg, which skips the scrub
-rtgroup cleanup and only drops the local rtgroup reference.
+In most distributions, NetworkManager shuts the device down before
+entering system suspend, so fast suspend is typically not used.
 
-Remove the unnecessary jump so the function falls through to out_sr,
-ensuring the realtime cursors, lock state, and sr->rtg reference are
-released before returning.
+On older devices, resume currently tries to grab NIC access to infer
+whether the device was powered off while suspended. That probe is only
+meaningful for the fast-suspend path where the device is expected to
+remain alive.
 
-Fixes: fd97fe111208 ("xfs: fix CoW forks for realtime files")
-Cc: <stable@vger.kernel.org> # v6.14
-Signed-off-by: Yingjie Gao <gaoyingjie@uniontech.com>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Unfortunately, for unclear reasons, grabbing NIC access was harmful as
+reported in the bugzilla ticket below.
+
+Workaround this issue by simply not grabbing NIC access if fast suspend
+is not used.
+
+Cc: stable@vger.kernel.org
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221501
+Assisted-by: GitHub Copilot:gpt-5.3-codex
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Link: https://patch.msgid.link/20260531133005.e2ed9e0cd44f.If283625983a843933e0c01561a421daff184e9e9@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/cow_repair.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/drv.c |   56 ++++++++++++++------------
+ 1 file changed, 32 insertions(+), 24 deletions(-)
 
---- a/fs/xfs/scrub/cow_repair.c
-+++ b/fs/xfs/scrub/cow_repair.c
-@@ -382,12 +382,9 @@ xrep_cow_find_bad_rt(
- 	 * CoW fork and then scan for staging extents in the refcountbt.
- 	 */
- 	if ((sc->sm->sm_flags & XFS_SCRUB_IFLAG_FORCE_REBUILD) ||
--	    XFS_TEST_ERROR(sc->mp, XFS_ERRTAG_FORCE_SCRUB_REPAIR)) {
-+	    XFS_TEST_ERROR(sc->mp, XFS_ERRTAG_FORCE_SCRUB_REPAIR))
- 		error = xrep_cow_mark_file_range(xc, xc->irec.br_startblock,
- 				xc->irec.br_blockcount);
--		if (error)
--			goto out_rtg;
--	}
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+@@ -1224,33 +1224,41 @@ static int _iwl_pci_resume(struct device
+ 	if (!trans->op_mode)
+ 		return 0;
  
- out_sr:
- 	xchk_rtgroup_btcur_free(&sc->sr);
+-	/*
+-	 * Scratch value was altered, this means the device was powered off, we
+-	 * need to reset it completely.
+-	 * Note: MAC (bits 0:7) will be cleared upon suspend even with wowlan,
+-	 * but not bits [15:8]. So if we have bits set in lower word, assume
+-	 * the device is alive.
+-	 * Alternatively, if the scratch value is 0xFFFFFFFF, then we no longer
+-	 * have access to the device and consider it powered off.
+-	 * For older devices, just try silently to grab the NIC.
+-	 */
+-	if (trans->mac_cfg->device_family >= IWL_DEVICE_FAMILY_BZ) {
+-		u32 scratch = iwl_read32(trans, CSR_FUNC_SCRATCH);
+-
+-		if (!(scratch & CSR_FUNC_SCRATCH_POWER_OFF_MASK) ||
+-		    scratch == ~0U)
+-			device_was_powered_off = true;
+-	} else {
++	if (test_bit(STATUS_DEVICE_ENABLED, &trans->status)) {
+ 		/*
+-		 * bh are re-enabled by iwl_trans_pcie_release_nic_access,
+-		 * so re-enable them if _iwl_trans_pcie_grab_nic_access fails.
++		 * Scratch value was altered, this means the device was powered
++		 * off, we need to reset it completely.
++		 * Note: MAC (bits 0:7) will be cleared upon suspend even with
++		 * wowlan, but not bits [15:8]. So if we have bits set in lower
++		 * word, assume the device is alive.
++		 * Alternatively, if the scratch value is 0xFFFFFFFF, then we
++		 * no longer have access to the device and consider it powered
++		 * off.
++		 * For older devices, just try silently to grab the NIC.
+ 		 */
+-		local_bh_disable();
+-		if (_iwl_trans_pcie_grab_nic_access(trans, true)) {
+-			iwl_trans_pcie_release_nic_access(trans);
++		if (trans->mac_cfg->device_family >= IWL_DEVICE_FAMILY_BZ) {
++			u32 scratch = iwl_read32(trans, CSR_FUNC_SCRATCH);
++
++			if (!(scratch & CSR_FUNC_SCRATCH_POWER_OFF_MASK) ||
++			    scratch == ~0U) {
++				IWL_DEBUG_WOWLAN(trans,
++						 "Scratch 0x%08x indicates device was powered off\n",
++						 scratch);
++				device_was_powered_off = true;
++			}
+ 		} else {
+-			device_was_powered_off = true;
+-			local_bh_enable();
++			/*
++			 * bh are re-enabled by iwl_trans_pcie_release_nic_access,
++			 * so re-enable them if _iwl_trans_pcie_grab_nic_access
++			 * fails.
++			 */
++			local_bh_disable();
++			if (_iwl_trans_pcie_grab_nic_access(trans, true)) {
++				iwl_trans_pcie_release_nic_access(trans);
++			} else {
++				device_was_powered_off = true;
++				local_bh_enable();
++			}
+ 		}
+ 	}
+ 
 
 
