@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC90935292A;
-	Tue, 16 Jun 2026 18:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59103ACA5A;
+	Tue, 16 Jun 2026 18:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633799; cv=none; b=PxrkBzehudgC7iKi+tEKorO7WZxnQsRi6nLapsOPA92LDEWCU/pGs7wt1z+iusSNFndjgf56oh7pBB0HiDWyLM53ZFPtHZ0i6kbob0J/VYotQ0X1ZVaXgSuI/LS/s1BV8N/LWPfzbYSnDB/yDjOzDrAFmZO2fk8LAHuJpzWx1cA=
+	t=1781633803; cv=none; b=iLn1bf6fXw01d+fnNzRhCbCXTkHfrroHCi5Vr52k8STBRmo2mE6Dc2uLv0htm7S0xw/cmr/vtcxpJIAtEKuqpjPeVaihzlZd8EllowKkbxMq1JlJcntapKONDHfz6osUIx9xGjc7r6/wShMmdBh7d2pggrmFQ2HQNivOg/XIzvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633799; c=relaxed/simple;
-	bh=2T2B/Uzei8OI3mMKWiZhBHMwuJtthWt+1nnGsFQSG68=;
+	s=arc-20240116; t=1781633803; c=relaxed/simple;
+	bh=39WYvcBsmWRoA1pQMXwVqaxqWcOEwNPhsALGlVkf/2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jsT/PLmlQ+bki0fSDYGBOdJEpvEj44m2rM6yDmkYSC4YRNayqQD3B/oNtFjFhPoinNKW+CSQNFuw1Dg7zX71HCaSognTM6kl3WGg9jeNK8gK/YBlPwAcd0nu9tI5F5bF0w2KT/NJxwoJl3gLyF9lfP2zx+lQcCffgFQ5XY4XcnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjpAKxPV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tpi2//80scznNGJiHrSAomU8DCF1r3/4TSCjMSOeH4zS4CxPSD4aFKoT8E1GBTwt5Dk5IhPitScTIBA+qW85YnHeCmvgFTRAVopNO+zHVBqepD5SdRDTkUm9gZQk5gXePZ6p7Ev9XWiFT6AgTTuGZKHktdSPIDWvR+jX7eub7Lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzi/dRjm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjpAKxPV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724C81F000E9;
-	Tue, 16 Jun 2026 18:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzi/dRjm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84D41F000E9;
+	Tue, 16 Jun 2026 18:16:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633797;
-	bh=8+WT+H+8tXbWCf96jeB1UujGO1MTkV74Zr03oqLgFKU=;
+	s=korg; t=1781633802;
+	bh=gAca+aF5VfpFweuayMUAkOgHNcXU73q5X2J0I1QeqLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xjpAKxPVfn7CRap1kNji5XBbh9/Ik+VpGGUAdjh+0U9uuH+FVVHbf6Pn0GEUiRtye
-	 r9cr9FQh8sALrgI0jZ9FBwnRWy9BTCvQcozCdIDvddIIg/dqiUFkGFXg/z4kKOUG+c
-	 HiO6MG6bHJJPn8NK0wrMeSAVV6pvrbuNkY3zVFKk=
+	b=wzi/dRjmXXhBURIOMXz6ousFw8sm6xc/Qbg+KIpduLRKCLsHZFwWnqisc0EYaxGQd
+	 Ydrqa9zw6v6Cz0QRNRKFeEhezIz+yYXKogHAfaX5Myq6dawgBRZZ6owDswD3Zs2lGN
+	 S5TYTr3l/o59DRZL8/x2cE21U7EHKNnUTLk827m0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 5.15 147/411] i2c: dev: prevent integer overflow in I2C_TIMEOUT ioctl
-Date: Tue, 16 Jun 2026 20:26:25 +0530
-Message-ID: <20260616145108.222960027@linuxfoundation.org>
+	Leo Lin <leo@depthfirst.com>,
+	David Ahern <dahern@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 148/411] ipv6: mcast: Fix use-after-free when processing MLD queries
+Date: Tue, 16 Jun 2026 20:26:26 +0530
+Message-ID: <20260616145108.277206656@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -50,60 +54,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 617eb7c0961a8dfcfc811844a6396e406b2923ea upstream.
+commit 791c91dc7a9dfb2457d5e29b8216a6484b9c4b40 upstream.
 
-While fuzzing with Syzkaller, a persistent `schedule_timeout: wrong
-timeout value` warning was observed, accompanied by SMBus controller
-state machine corruption.
+When processing an MLD query, a pointer to the multicast group address
+is retrieved when initially parsing the packet. This pointer is later
+dereferenced without being reloaded despite the fact that the skb header
+might have been reallocated following the pskb_may_pull() calls, leading
+to a use-after-free [1].
 
-The I2C_TIMEOUT ioctl accepts a user-provided timeout in multiples of
-10 ms. The user argument is checked against INT_MAX, but it is
-subsequently multiplied by 10 before being passed to msecs_to_jiffies().
+Fix by copying the multicast group address when the packet is initially
+parsed.
 
-A malicious user can pass a large value (e.g., 429496729) that passes
-the `arg > INT_MAX` check but overflows when multiplied by 10. This
-results in a truncated 32-bit unsigned value that bypasses the
-internal `(int)m < 0` check in `msecs_to_jiffies()`.
+[1]
+BUG: KASAN: slab-use-after-free in __mld_query_work (net/ipv6/mcast.c:1512)
+Read of size 8 at addr ffff8881154b8e90 by task kworker/4:1/118
 
-The truncated value is then assigned to `client->adapter->timeout`
-(a signed 32-bit int), which is reinterpreted as a negative number.
-When passed to wait_for_completion_timeout(), this negative value
-undergoes sign extension to a 64-bit unsigned long, triggering the
-`schedule_timeout` warning and causing premature returns. This leaves
-the SMBus state machine in an unrecoverable state, constituting a
-local Denial of Service (DoS).
+Workqueue: mld mld_query_work
+Call Trace:
+<TASK>
+dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+print_address_description.constprop.0 (mm/kasan/report.c:378)
+print_report (mm/kasan/report.c:482)
+kasan_report (mm/kasan/report.c:595)
+__mld_query_work (net/ipv6/mcast.c:1512)
+mld_query_work (net/ipv6/mcast.c:1563)
+process_one_work (kernel/workqueue.c:3314)
+worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
+kthread (kernel/kthread.c:436)
+ret_from_fork (arch/x86/kernel/process.c:158)
+ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+</TASK>
 
-Fix this by bounding the user argument to `INT_MAX / 10`.
+[...]
 
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
-[wsa: move the comment as well]
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Freed by task 118:
+kasan_save_stack (mm/kasan/common.c:57)
+kasan_save_track (mm/kasan/common.c:78)
+kasan_save_free_info (mm/kasan/generic.c:584)
+__kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
+kfree (./include/linux/kasan.h:235 mm/slub.c:2689 mm/slub.c:6251 mm/slub.c:6566)
+pskb_expand_head (net/core/skbuff.c:2335)
+__pskb_pull_tail (net/core/skbuff.c:2878 (discriminator 4))
+__mld_query_work (net/ipv6/mcast.c:1495 (discriminator 1))
+mld_query_work (net/ipv6/mcast.c:1563)
+process_one_work (kernel/workqueue.c:3314)
+worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
+kthread (kernel/kthread.c:436)
+ret_from_fork (arch/x86/kernel/process.c:158)
+ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+
+Fixes: 97300b5fdfe2 ("[MCAST] IPv6: Check packet size when process Multicast")
+Reported-by: Leo Lin <leo@depthfirst.com>
+Reviewed-by: David Ahern <dahern@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260603101811.612594-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-dev.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/ipv6/mcast.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/i2c/i2c-dev.c
-+++ b/drivers/i2c/i2c-dev.c
-@@ -476,12 +476,13 @@ static long i2cdev_ioctl(struct file *fi
- 		client->adapter->retries = arg;
- 		break;
- 	case I2C_TIMEOUT:
--		if (arg > INT_MAX)
-+		/*
-+		 * For historical reasons, user-space sets the timeout value in
-+		 * units of 10 ms.
-+		 */
-+		if (arg > INT_MAX / 10)
- 			return -EINVAL;
+--- a/net/ipv6/mcast.c
++++ b/net/ipv6/mcast.c
+@@ -1392,9 +1392,9 @@ out:
+ static void __mld_query_work(struct sk_buff *skb)
+ {
+ 	struct mld2_query *mlh2 = NULL;
+-	const struct in6_addr *group;
+ 	unsigned long max_delay;
+ 	struct inet6_dev *idev;
++	struct in6_addr group;
+ 	struct ifmcaddr6 *ma;
+ 	struct mld_msg *mld;
+ 	int group_type;
+@@ -1426,8 +1426,8 @@ static void __mld_query_work(struct sk_b
+ 		goto kfree_skb;
  
--		/* For historical reasons, user-space sets the timeout
--		 * value in units of 10 ms.
--		 */
- 		client->adapter->timeout = msecs_to_jiffies(arg * 10);
- 		break;
- 	default:
+ 	mld = (struct mld_msg *)icmp6_hdr(skb);
+-	group = &mld->mld_mca;
+-	group_type = ipv6_addr_type(group);
++	group = mld->mld_mca;
++	group_type = ipv6_addr_type(&group);
+ 
+ 	if (group_type != IPV6_ADDR_ANY &&
+ 	    !(group_type&IPV6_ADDR_MULTICAST))
+@@ -1477,7 +1477,7 @@ static void __mld_query_work(struct sk_b
+ 		}
+ 	} else {
+ 		for_each_mc_mclock(idev, ma) {
+-			if (!ipv6_addr_equal(group, &ma->mca_addr))
++			if (!ipv6_addr_equal(&group, &ma->mca_addr))
+ 				continue;
+ 			if (ma->mca_flags & MAF_TIMER_RUNNING) {
+ 				/* gsquery <- gsquery && mark */
 
 
