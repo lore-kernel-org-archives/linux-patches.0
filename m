@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21C747AF43;
-	Tue, 16 Jun 2026 17:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2DD4657D0;
+	Tue, 16 Jun 2026 17:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781630230; cv=none; b=TA+e9qhR7s5IW8a9sPUnAfaOcdQoi3UzgvBGfQ2IhCPyttbze1huehzsJvRV9qpKAbe+Bx8wpurjuN9RHh44OihwKheDzGwre7bg3TxNKPB0bGquH/+935QlV1knhFe1lDYO9tm5f8uIhLVYyP8vr42DQTlq+QUOFmop/j9Oo74=
+	t=1781630235; cv=none; b=mDOkOK3PO0J+qLfVW4d+SumodzuirBgFT1bE7ZUmVC08PNf1Q3oLs1yHfK2BUhW24a01xM8Gl1d+b1kgqQ3Apm2/llp+tDQ2VNlGiM/YP9W58NExoe9pRYID/vBeuex+f7gYnVuUMmiTJaw6HxvzMBugrVA462VZmBmZdJUxhT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781630230; c=relaxed/simple;
-	bh=6D7TnaJG9IOs/wEwklVWZzRndRVJ2nFjTZahwybsjs8=;
+	s=arc-20240116; t=1781630235; c=relaxed/simple;
+	bh=ZMoEIbEz6b0yLTMjvPoIwO6tI8YB9HOjQKVPBaQIexY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KkTk4kVPKMRd5FvfPsVogpZFlIgGUbxSgAh3vOpe3n2S5iBX4yAKwgN542w7vJiYDaWJVAugrDAEijz0InNWvv1LNb9NZxvEyXGqa9+OY6vERLR7y15si0kbZtgHx+920KvkTbDN71ZQSZ1JAtkCve7CQKTnrMS8GAa9osOVUTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZKcMpUN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=C498GJpeMDIuohay2WQQs71q9pQThseT5LNxWwL41rhprcO+h6kPwGumEbPiwmVxqNUdi2cyLEoqzlMfd0zjX52LcRq4Q5tqS0dLIefYPvkGdgbgWSIXfzfri37U/o9Gc3OuSqxrbcMbt7KzYWIvMkZPlVyBCaDpa+ccnBNStkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BqZZ5Whq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZKcMpUN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C968E1F000E9;
-	Tue, 16 Jun 2026 17:17:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BqZZ5Whq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C11771F000E9;
+	Tue, 16 Jun 2026 17:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781630228;
-	bh=BS/L4jxbfMbGF4VwhGPh42uPx35PT699kS8EAQ2AeUg=;
+	s=korg; t=1781630233;
+	bh=17CNR+EMwBIi+H6pZji750kjlBbE/qsRBT67yM11mdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bZKcMpUNhHILT0qhSpMWep4qFgiCSwMq4tNgT+WrAWqEz1uFKJsvN45Lea41dzLyG
-	 p3l41EbiEIXFx7KBkauJL0qkxztPMde+GEJvQGWFI+o1CIgE/N3Xqk/Eqw5NpNbfdM
-	 6cRfFxnZZPY7edRn4zTklSrUr+OmJlCUbI7B+hKU=
+	b=BqZZ5Whqduw+Gn7DgyE6HmLj4YWrnFCQscc/KAsBXBxrFShQnOtabmD2d5NrlyC7/
+	 CNNK8b5Ecq+1DvnRKbuUMRhebjGAUO8pYzOPid++qthYQ8tWMboZ8StfMCdcGH9RNp
+	 aKRFIbSFY1qXXVAutOhguTVvN8HuWeLGbVPtC5ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Leon Romanovsky <leon@kernel.org>,
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 435/452] RDMA/umem: fix kernel-doc warnings
-Date: Tue, 16 Jun 2026 20:31:02 +0530
-Message-ID: <20260616145139.482640304@linuxfoundation.org>
+Subject: [PATCH 6.6 409/452] iio: gyro: adis16260: fix division by zero in write_raw
+Date: Tue, 16 Jun 2026 20:30:36 +0530
+Message-ID: <20260616145138.280855860@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -45,63 +47,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-[ Upstream commit ff46d1392750444fab5ae5a0194764ffdc4ac0d2 ]
+[ Upstream commit 761e8b489e6cf166c574034b70637f8a7eadd0ee ]
 
-Add or correct kernel-doc comments to eliminate warnings:
+Add a validation check for the sampling frequency value before using it
+as a divisor. A user writing zero to the sampling_frequency sysfs
+attribute triggers a division by zero in the kernel.
 
-Warning: include/rdma/ib_umem.h:104 function parameter 'biter' not
- described in 'rdma_umem_for_each_dma_block'
-Warning: include/rdma/ib_umem.h:140 function parameter 'pgsz_bitmap' not
- described in 'ib_umem_find_best_pgoff'
-Warning: include/rdma/ib_umem.h:141 No description found for return
- value of 'ib_umem_find_best_pgoff'
-
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://patch.msgid.link/20260224003120.3173892-1-rdunlap@infradead.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: 15fe76e23615 ("RDMA/umem: Fix truncation for block sizes >= 4G")
+Fixes: 089a41985c6c ("staging: iio: adis16260 digital gyro driver")
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/rdma/ib_umem.h |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/iio/gyro/adis16260.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/include/rdma/ib_umem.h
-+++ b/include/rdma/ib_umem.h
-@@ -89,6 +89,7 @@ static inline bool __rdma_umem_block_ite
- /**
-  * rdma_umem_for_each_dma_block - iterate over contiguous DMA blocks of the umem
-  * @umem: umem to iterate over
-+ * @biter: block iterator variable
-  * @pgsz: Page size to split the list into
-  *
-  * pgsz must be <= PAGE_SIZE or computed by ib_umem_find_best_pgsz(). The
-@@ -116,7 +117,7 @@ unsigned long ib_umem_find_best_pgsz(str
-  * ib_umem_find_best_pgoff - Find best HW page size
-  *
-  * @umem: umem struct
-- * @pgsz_bitmap bitmap of HW supported page sizes
-+ * @pgsz_bitmap: bitmap of HW supported page sizes
-  * @pgoff_bitmask: Mask of bits that can be represented with an offset
-  *
-  * This is very similar to ib_umem_find_best_pgsz() except instead of accepting
-@@ -129,6 +130,9 @@ unsigned long ib_umem_find_best_pgsz(str
-  *
-  * If the pgoff_bitmask requires either alignment in the low bit or an
-  * unavailable page size for the high bits, this function returns 0.
-+ *
-+ * Returns: best HW page size for the parameters or 0 if none available
-+ *   for the given parameters.
-  */
- static inline unsigned long ib_umem_find_best_pgoff(struct ib_umem *umem,
- 						    unsigned long pgsz_bitmap,
+--- a/drivers/iio/gyro/adis16260.c
++++ b/drivers/iio/gyro/adis16260.c
+@@ -288,6 +288,9 @@ static int adis16260_write_raw(struct ii
+ 		addr = adis16260_addresses[chan->scan_index][1];
+ 		return adis_write_reg_16(adis, addr, val);
+ 	case IIO_CHAN_INFO_SAMP_FREQ:
++		if (val <= 0)
++			return -EINVAL;
++
+ 		adis_dev_lock(adis);
+ 		if (spi_get_device_id(adis->spi)->driver_data)
+ 			t = 256 / val;
 
 
