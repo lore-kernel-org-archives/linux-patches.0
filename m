@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AC23CF97E;
-	Tue, 16 Jun 2026 18:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB2A3D45D0;
+	Tue, 16 Jun 2026 18:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633180; cv=none; b=ozZidq9OIQVBUqAyyQNOd11hnP9qo6x+nMIvIMAHgHhtL9PwGjY+Yl7vekKujSo7I8MWgCavI4ALM4VT9WgPkwghKyReADY1DFTcPMHAS4X+3wEORRK7R5j6bZnD2a542YxyF/vhUaVQkmTmiMAGX0xOfQq4Z6QpkQCXw4AmMvM=
+	t=1781633187; cv=none; b=kvMj6tsUuZQIs2C1zbAngUUb62xwaR3VWWlSiQrAYVb+3xM23ZpzetDzuQ/JDtJ9qR2A7NSHphZJbiAnHo/Rj3y70jiYhoOnBdvJxHd7djHwVWIjwxzT1OyHTaJGXRyrF8yUZkpj4Lw+Vau4DgC+X/nBxwuEzvrgy+tQHuF2xK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633180; c=relaxed/simple;
-	bh=RM555ANUHfa0zcO6ZrVt3IsNsvvk28DDv2ojxL48QTI=;
+	s=arc-20240116; t=1781633187; c=relaxed/simple;
+	bh=iNzxiOy6nnn82X08Q91Q/J0eXEcTGdc/kwXatjKiads=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gX1j2ZIKU8PT7eqW4napVVsim5H8A6T9Mn13Nlm2gSd5tbX+L4DxvyGF4mD3Cdqw+9DHrpQm9re1tKQrvwr/yexytBoIqQhUwnzK9K0YqcY7JW11vl15OCI7fInF/TUTvGYKB41aJW0Oh5Da99wXsgJbccYKOBwu9qvXylPqFnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ICEqbgEO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I+KSA1CX4+uZyRLkMT/nME32RkfNv2viFoDUqxg1/bvQT8g8fiVHZJE6Sguxd7OfI4bIVDIpdQZi3REWofznCXjy+Ys9p23YEh4VbhpQ8AKAycQFq+Xkv58O4nwpEF3Vr8sS90W6BkXHUKY1dM/x81hSgM7nwgkL7ivb2ZDLYN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tezS9KXW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ICEqbgEO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C59F1F000E9;
-	Tue, 16 Jun 2026 18:06:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tezS9KXW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32581F000E9;
+	Tue, 16 Jun 2026 18:06:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633179;
-	bh=oni1496l7cdFaqA8PFLo+5fRJSqSZCjinAD4P7Fd9cc=;
+	s=korg; t=1781633186;
+	bh=Emz4QOHuUjuSejMLInnFeEWTr3EZ0Q9cdYyj9DYF78M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ICEqbgEOBT8HNueR1memkcZOKwbXz1Q56yGnJzMi7rL0m1GU9W7xc+IK7OjFmXnbb
-	 jIP6cfai5ph9jDHhhzDOfEiyZef8+ErJgGvbVCbPf55OQd+4VxY3DjOFHZRK6Q+EfE
-	 EfKhdeLZ24ICKxzIKruuR0fuNl+Atjroa5MRUNSA=
+	b=tezS9KXWyDgNg+MV2KGWY1Jbem8BqVX6j8kUzBsqf1Zc2+wdYDcQ4UDCTlM/J6a5w
+	 sdyZo5w8GNhGoF8DKQRMDOIqLadonC1DH9TmaNQB7KAgzjm01ZIwOupOFuTtpD9rmu
+	 EAogjIXILj1Y+Vod6DbK2w7F+cbB0Nwfdvpn97Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Dongli Zhang <dongli.zhang@oracle.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Marco Scardovi <scardracs@disroot.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 015/411] tun: free page on short-frame rejection in tun_xdp_one()
-Date: Tue, 16 Jun 2026 20:24:13 +0530
-Message-ID: <20260616145101.188523738@linuxfoundation.org>
+Subject: [PATCH 5.15 033/411] gpio: rockchip: convert bank->clk to devm_clk_get_enabled()
+Date: Tue, 16 Jun 2026 20:24:31 +0530
+Message-ID: <20260616145102.094673612@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -54,52 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Marco Scardovi <scardracs@disroot.org>
 
-[ Upstream commit f4feb1e20058e407cb00f45aff47f5b7e19a6bbf ]
+[ Upstream commit 3e46c18d5d87f063a93ae0fe7662fbf6660459d5 ]
 
-tun_xdp_one() returns -EINVAL on a frame shorter than ETH_HLEN without
-freeing the page that vhost_net_build_xdp() allocated for it.
-tun_sendmsg() discards that -EINVAL and still returns total_len, so
-vhost_tx_batch() takes the success path and never frees the page; each
-short frame in a batch leaks one page-frag chunk.
+The bank->clk was previously obtained via of_clk_get() and manually
+prepared/enabled. However, it was missing a corresponding clk_put() in
+both the error paths and the remove function, leading to a reference leak.
 
-A local process that can open /dev/net/tun and /dev/vhost-net can hit
-this path: it attaches a tun/tap device as the vhost-net backend and
-feeds TX descriptors whose length minus the virtio-net header is below
-ETH_HLEN. Each kick leaks the page-frag chunks for that batch, and a
-tight submission loop exhausts host memory and triggers an OOM panic.
-Free the page before returning -EINVAL, matching the XDP-program error
-path in the same function.
+Convert the allocation to devm_clk_get_enabled(), which also properly
+propagates failures from clk_prepare_enable() that were previously ignored.
 
-Fixes: 049584807f1d ("tun: add missing verification for short frame")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Dongli Zhang <dongli.zhang@oracle.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260520160020.375349-2-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The GPIO bank device uses the same OF node as the previous of_clk_get()
+call, so devm_clk_get_enabled(dev, NULL) correctly resolves the same
+clock provider entry.
+
+Fix the reference leak and simplify the code by removing the manual
+clk_disable_unprepare() calls in the probe error paths and in the
+remove function.
+
+Fixes: 936ee2675eee ("gpio/rockchip: add driver for rockchip gpio")
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Marco Scardovi <scardracs@disroot.org>
+Link: https://patch.msgid.link/20260526171050.12785-2-scardracs@disroot.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-rockchip.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 5c9e7d0beffa26..803cb4722dbf4a 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -2422,8 +2422,10 @@ static int tun_xdp_one(struct tun_struct *tun,
- 	bool skb_xdp = false;
- 	struct page *page;
- 
--	if (unlikely(datasize < ETH_HLEN))
-+	if (unlikely(datasize < ETH_HLEN)) {
-+		put_page(virt_to_head_page(xdp->data));
+diff --git a/drivers/gpio/gpio-rockchip.c b/drivers/gpio/gpio-rockchip.c
+index d331745da1a3a8..df2eefc1554a01 100644
+--- a/drivers/gpio/gpio-rockchip.c
++++ b/drivers/gpio/gpio-rockchip.c
+@@ -649,11 +649,10 @@ static int rockchip_get_bank_data(struct rockchip_pin_bank *bank)
+ 	if (!bank->irq)
  		return -EINVAL;
-+	}
  
- 	xdp_prog = rcu_dereference(tun->xdp_prog);
- 	if (xdp_prog) {
+-	bank->clk = of_clk_get(bank->of_node, 0);
++	bank->clk = devm_clk_get_enabled(bank->dev, NULL);
+ 	if (IS_ERR(bank->clk))
+ 		return PTR_ERR(bank->clk);
+ 
+-	clk_prepare_enable(bank->clk);
+ 	id = readl(bank->reg_base + gpio_regs_v2.version_id);
+ 
+ 	/* If not gpio v2, that is default to v1. */
+@@ -663,7 +662,6 @@ static int rockchip_get_bank_data(struct rockchip_pin_bank *bank)
+ 		bank->db_clk = of_clk_get(bank->of_node, 1);
+ 		if (IS_ERR(bank->db_clk)) {
+ 			dev_err(bank->dev, "cannot find debounce clk\n");
+-			clk_disable_unprepare(bank->clk);
+ 			return -EINVAL;
+ 		}
+ 	} else {
+@@ -737,7 +735,6 @@ static int rockchip_gpio_probe(struct platform_device *pdev)
+ 
+ 	ret = rockchip_gpiolib_register(bank);
+ 	if (ret) {
+-		clk_disable_unprepare(bank->clk);
+ 		mutex_unlock(&bank->deferred_lock);
+ 		return ret;
+ 	}
+@@ -773,7 +770,6 @@ static int rockchip_gpio_remove(struct platform_device *pdev)
+ {
+ 	struct rockchip_pin_bank *bank = platform_get_drvdata(pdev);
+ 
+-	clk_disable_unprepare(bank->clk);
+ 	gpiochip_remove(&bank->gpio_chip);
+ 
+ 	return 0;
 -- 
 2.53.0
 
