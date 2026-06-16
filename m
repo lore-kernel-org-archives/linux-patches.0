@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A316535AC3E;
-	Tue, 16 Jun 2026 18:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 903644418D7;
+	Tue, 16 Jun 2026 18:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634635; cv=none; b=PyT6M++NrcVUFPbAfP0j4WKoSX5VnDLZVC8DlSIALw10FY2eMIaQ+nXgxR/yAx/XBOfs8F7E5nTa34YgJsnBt10CVWaCxmR6/pJ7lLqihIRfHzj/Vr1lITttxGxYRERHdequJ5f2k9wlWlOkgzCbHZBN/rnUe21vYzOi5hUsyWk=
+	t=1781634640; cv=none; b=MoRad4+XuIzk3qpBOlEmyoeD5xUQPFTxSnpqtTmUuWOWyoa3Sbmmeng46BammokpaLA4e2hw1hIeEb649B1iYvAvzXhpSGDFdC/7pJAx1uZ8+YsYV486Ei6pBWIERQnUx25ct5OuS1Fsu634TuD0gbKJz9saMPwZZPPuDIHMCJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634635; c=relaxed/simple;
-	bh=1OYNuAWhpLmL0jVCLuVo9vrpV6H406O1qJ7RJhwHvH4=;
+	s=arc-20240116; t=1781634640; c=relaxed/simple;
+	bh=5UJH0UoqVZffacw4+0mLrjTnse9yxOlkSh7YunMWujc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmv1KlSIz8RdWMjnQTNLekd3W4uYvu7N5yYHFvJ9rkzw+7USPfxn6TtF1K4fpzkiHqT06CCaHOD5M693kz69WgEr1tEi9RIO4OE3v+Kb+kNPc0SXRwAT+kEcQrwzOOIjxcXA6/HWlnz0KiVfx0Ekcaifo3+4Zh+UKCa55ttRAXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jwobt6Fd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SpLGB19+H4VSsaP5q8ZUdWhGHBOh4SEkpQq+3kolqOvep1GXxUdumUv5mlQOXA2ULXPT43gYH/aLnkYHCJXyv0EJ1D/hcnarXK7CIKPmTUMSZtRHDa/Tq5VtYFTHnVw7haEwS3ZqUmdiav7TzosDpmFzYRG9KEtg5iSm5YdjdJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OqNqDLAy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jwobt6Fd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D74E1F000E9;
-	Tue, 16 Jun 2026 18:30:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OqNqDLAy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9457C1F000E9;
+	Tue, 16 Jun 2026 18:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634634;
-	bh=/O4qZvwycKZjzn+jKGdbVfjzhHIC/UqM4sIQ4BZgNGQ=;
+	s=korg; t=1781634639;
+	bh=G3taWQjl1BfsPxdjG5iodc2cSxnqUL9MLYVql2ioS6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jwobt6FdGbKUqj+W+JSorfVv/vG0V4RwF/WfVF/vwMfRtR91fOqf1H3D0K0l/knrV
-	 sJ8sP832cG48jvCytZ6NQXWchpByC2YPBp8iNwBTqyXUsoBP6DfaQ3IcAWnGDPW0Hb
-	 ohiTcLQVSx3a5GzrsAhRKfpL2OygUTPw9uQzCvP0=
+	b=OqNqDLAy1/9Suf7Cnh21ioWaKobXzYT/NuL39wzq3wwBCFnEZrmc7qxfEN3MWJVrx
+	 IKSBtPeQPE72oJgNeQ7EbTb3rZE7fa3HIUk0cLwV6Ao0M4AO1K2HZqa0dvFJUXVQHA
+	 WnBM1sy4/1/emyP4Aq9d8HrGdyry/0WHnKPddrCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Steve French <stfrench@microsoft.com>,
+	Amit Sunil Dhamne <amitsd@google.com>,
+	stable <stable@kernel.org>,
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 303/411] smb: client: validate the whole DACL before rewriting it in cifsacl
-Date: Tue, 16 Jun 2026 20:29:01 +0530
-Message-ID: <20260616145117.260028844@linuxfoundation.org>
+Subject: [PATCH 5.15 304/411] usb: typec: tcpm: reset internal port states on soft reset AMS
+Date: Tue, 16 Jun 2026 20:29:02 +0530
+Message-ID: <20260616145117.309810031@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -51,189 +53,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Amit Sunil Dhamne <amitsd@google.com>
 
-commit 0a8cf165566ba55a39fd0f4de172119dd646d39a upstream.
+[ Upstream commit 2909f0d4994fb4306bf116df5ccee797791fce2c ]
 
-build_sec_desc() and id_mode_to_cifs_acl() derive a DACL pointer from a
-server-supplied dacloffset and then use the incoming ACL to rebuild the
-chmod/chown security descriptor.
+Reset internal port states (such as vdm_sm_running and
+explicit_contract) on soft reset AMS as the port needs to negotiate a
+new contract. The consequence of leaving the states in as-is cond are as
+follows:
+  * port is in SRC power role and an explicit contract is negotiated
+    with the port partner (in sink role)
+  * port partner sends a Soft Reset AMS while VDM State Machine is
+    running
+  * port accepts the Soft Reset request and the port advertises src caps
+  * port partner sends a Request message but since the explicit_contract
+    and vdm_sm_running are true from previous negotiation, the port ends
+    up sending Soft Reset instead of Accept msg.
 
-The original fix only checked that the struct smb_acl header fits before
-reading dacl_ptr->size or dacl_ptr->num_aces.  That avoids the immediate
-header-field OOB read, but the rewrite helpers still walk ACEs based on
-pdacl->num_aces with no structural validation of the incoming DACL body.
+Stub Log:
+[  203.653942] AMS DISCOVER_IDENTITY start
+[  203.653947] PD TX, header: 0x176f
+[  203.655901] PD TX complete, status: 0
+[  203.657470] PD RX, header: 0x124f [1]
+[  203.657477] Rx VDM cmd 0xff008081 type 2 cmd 1 len 1
+[  203.657482] AMS DISCOVER_IDENTITY finished
+[  203.657484] cc:=4
+[  204.155698] PD RX, header: 0x144f [1]
+[  204.155718] Rx VDM cmd 0xeeee8001 type 0 cmd 1 len 1
+[  204.155741] PD TX, header: 0x196f
+[  204.157622] PD TX complete, status: 0
+[  204.160060] PD RX, header: 0x4d [1]
+[  204.160066] state change SRC_READY -> SOFT_RESET [rev2 SOFT_RESET_AMS]
+[  204.160076] PD TX, header: 0x163
+[  204.162486] PD TX complete, status: 0
+[  204.162832] AMS SOFT_RESET_AMS finished
+[  204.162840] cc:=4
+[  204.162891] AMS POWER_NEGOTIATION start
+[  204.162896] state change SOFT_RESET -> AMS_START [rev2 POWER_NEGOTIATION]
+[  204.162908] state change AMS_START -> SRC_SEND_CAPABILITIES [rev2 POWER_NEGOTIATION]
+[  204.162913] PD TX, header: 0x1361
+[  204.165529] PD TX complete, status: 0
+[  204.165571] pending state change SRC_SEND_CAPABILITIES -> SRC_SEND_CAPABILITIES_TIMEOUT @ 60 ms [rev2 POWER_NEGOTIATION]
+[  204.166996] PD RX, header: 0x1242 [1]
+[  204.167009] state change SRC_SEND_CAPABILITIES -> SRC_SOFT_RESET_WAIT_SNK_TX [rev2 POWER_NEGOTIATION]
+[  204.167019] AMS POWER_NEGOTIATION finished
+[  204.167020] cc:=4
+[  204.167083] AMS SOFT_RESET_AMS start
+[  204.167086] state change SRC_SOFT_RESET_WAIT_SNK_TX -> SOFT_RESET_SEND [rev2 SOFT_RESET_AMS]
+[  204.167092] PD TX, header: 0x16d
+[  204.168824] PD TX complete, status: 0
+[  204.168854] pending state change SOFT_RESET_SEND -> HARD_RESET_SEND @ 60 ms [rev2 SOFT_RESET_AMS]
+[  204.171876] PD RX, header: 0x43 [1]
+[  204.171879] AMS SOFT_RESET_AMS finished
 
-A malicious server can return a truncated DACL that still contains a
-header, claims one or more ACEs, and then drive
-replace_sids_and_copy_aces() or set_chmod_dacl() past the validated
-extent while they compare or copy attacker-controlled ACEs.
+This causes COMMON.PROC.PD.11.2 check failure for
+TEST.PD.VDM.SRC.2_Rev2Src test on the PD compliance tester.
 
-Factor the DACL structural checks into validate_dacl(), extend them to
-validate each ACE against the DACL bounds, and use the shared validator
-before the chmod/chown rebuild paths.  parse_dacl() reuses the same
-validator so the read-side parser and write-side rewrite paths agree on
-what constitutes a well-formed incoming DACL.
-
-Fixes: bc3e9dd9d104 ("cifs: Change SIDs in ACEs while transferring file ownership.")
-Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-6
-Assisted-by: Codex:gpt-5-4
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ renamed smb_acl/smb_ace/smb_sid/smb_ntsd to cifs_* and widened num_aces from u16 to u32 for 6.1's __le32 field ]
+Signed-off-by: Amit Sunil Dhamne <amitsd@google.com>
+Fixes: 8d3a0578ad1a ("usb: typec: tcpm: Respond Wait if VDM state machine is running")
+Fixes: f0690a25a140 ("staging: typec: USB Type-C Port Manager (tcpm)")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260414-fix-soft-reset-v1-1-01d7cb9764e2@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ kept `tcpm_pd_send_control(port, PD_CTRL_ACCEPT)` call unchanged ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifsacl.c |   95 ++++++++++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 85 insertions(+), 10 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/cifs/cifsacl.c
-+++ b/fs/cifs/cifsacl.c
-@@ -753,6 +753,78 @@ static void dump_ace(struct cifs_ace *pa
- }
- #endif
- 
-+static int validate_dacl(struct cifs_acl *pdacl, char *end_of_acl)
-+{
-+	int i, ace_hdr_size, ace_size, min_ace_size;
-+	u16 dacl_size;
-+	u32 num_aces;
-+	char *acl_base, *end_of_dacl;
-+	struct cifs_ace *pace;
-+
-+	if (!pdacl)
-+		return 0;
-+
-+	if (end_of_acl < (char *)pdacl + sizeof(struct cifs_acl)) {
-+		cifs_dbg(VFS, "ACL too small to parse DACL\n");
-+		return -EINVAL;
-+	}
-+
-+	dacl_size = le16_to_cpu(pdacl->size);
-+	if (dacl_size < sizeof(struct cifs_acl) ||
-+	    end_of_acl < (char *)pdacl + dacl_size) {
-+		cifs_dbg(VFS, "ACL too small to parse DACL\n");
-+		return -EINVAL;
-+	}
-+
-+	num_aces = le32_to_cpu(pdacl->num_aces);
-+	if (!num_aces)
-+		return 0;
-+
-+	ace_hdr_size = offsetof(struct cifs_ace, sid) +
-+		offsetof(struct cifs_sid, sub_auth);
-+	min_ace_size = ace_hdr_size + sizeof(__le32);
-+	if (num_aces > (dacl_size - sizeof(struct cifs_acl)) / min_ace_size) {
-+		cifs_dbg(VFS, "ACL too small to parse DACL\n");
-+		return -EINVAL;
-+	}
-+
-+	end_of_dacl = (char *)pdacl + dacl_size;
-+	acl_base = (char *)pdacl;
-+	ace_size = sizeof(struct cifs_acl);
-+
-+	for (i = 0; i < num_aces; ++i) {
-+		if (end_of_dacl - acl_base < ace_size) {
-+			cifs_dbg(VFS, "ACL too small to parse ACE\n");
-+			return -EINVAL;
-+		}
-+
-+		pace = (struct cifs_ace *)(acl_base + ace_size);
-+		acl_base = (char *)pace;
-+
-+		if (end_of_dacl - acl_base < ace_hdr_size ||
-+		    pace->sid.num_subauth == 0 ||
-+		    pace->sid.num_subauth > SID_MAX_SUB_AUTHORITIES) {
-+			cifs_dbg(VFS, "ACL too small to parse ACE\n");
-+			return -EINVAL;
-+		}
-+
-+		ace_size = ace_hdr_size + sizeof(__le32) * pace->sid.num_subauth;
-+		if (end_of_dacl - acl_base < ace_size ||
-+		    le16_to_cpu(pace->size) < ace_size) {
-+			cifs_dbg(VFS, "ACL too small to parse ACE\n");
-+			return -EINVAL;
-+		}
-+
-+		ace_size = le16_to_cpu(pace->size);
-+		if (end_of_dacl - acl_base < ace_size) {
-+			cifs_dbg(VFS, "ACL too small to parse ACE\n");
-+			return -EINVAL;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static void parse_dacl(struct cifs_acl *pdacl, char *end_of_acl,
- 		       struct cifs_sid *pownersid, struct cifs_sid *pgrpsid,
- 		       struct cifs_fattr *fattr, bool mode_from_special_sid)
-@@ -760,7 +832,7 @@ static void parse_dacl(struct cifs_acl *
- 	int i;
- 	int num_aces = 0;
- 	int acl_size;
--	char *acl_base;
-+	char *acl_base, *end_of_dacl;
- 	struct cifs_ace **ppace;
- 
- 	/* BB need to add parm so we can store the SID BB */
-@@ -772,11 +844,8 @@ static void parse_dacl(struct cifs_acl *
- 		return;
- 	}
- 
--	/* validate that we do not go past end of acl */
--	if (end_of_acl < (char *)pdacl + le16_to_cpu(pdacl->size)) {
--		cifs_dbg(VFS, "ACL too small to parse DACL\n");
-+	if (validate_dacl(pdacl, end_of_acl))
- 		return;
--	}
- 
- 	cifs_dbg(NOISY, "DACL revision %d size %d num aces %d\n",
- 		 le16_to_cpu(pdacl->revision), le16_to_cpu(pdacl->size),
-@@ -787,6 +856,7 @@ static void parse_dacl(struct cifs_acl *
- 	   user/group/other have no permissions */
- 	fattr->cf_mode &= ~(0777);
- 
-+	end_of_dacl = (char *)pdacl + le16_to_cpu(pdacl->size);
- 	acl_base = (char *)pdacl;
- 	acl_size = sizeof(struct cifs_acl);
- 
-@@ -804,7 +874,7 @@ static void parse_dacl(struct cifs_acl *
- 		for (i = 0; i < num_aces; ++i) {
- 			ppace[i] = (struct cifs_ace *) (acl_base + acl_size);
- #ifdef CONFIG_CIFS_DEBUG2
--			dump_ace(ppace[i], end_of_acl);
-+			dump_ace(ppace[i], end_of_dacl);
- #endif
- 			if (mode_from_special_sid &&
- 			    ppace[i]->sid.num_subauth >= 3 &&
-@@ -1263,10 +1333,9 @@ static int build_sec_desc(struct cifs_nt
- 	dacloffset = le32_to_cpu(pntsd->dacloffset);
- 	if (dacloffset) {
- 		dacl_ptr = (struct cifs_acl *)((char *)pntsd + dacloffset);
--		if (end_of_acl < (char *)dacl_ptr + le16_to_cpu(dacl_ptr->size)) {
--			cifs_dbg(VFS, "Server returned illegal ACL size\n");
--			return -EINVAL;
--		}
-+		rc = validate_dacl(dacl_ptr, end_of_acl);
-+		if (rc)
-+			return rc;
- 	}
- 
- 	owner_sid_ptr = (struct cifs_sid *)((char *)pntsd +
-@@ -1626,6 +1695,12 @@ id_mode_to_cifs_acl(struct inode *inode,
- 		dacloffset = le32_to_cpu(pntsd->dacloffset);
- 		if (dacloffset) {
- 			dacl_ptr = (struct cifs_acl *)((char *)pntsd + dacloffset);
-+			rc = validate_dacl(dacl_ptr, (char *)pntsd + secdesclen);
-+			if (rc) {
-+				kfree(pntsd);
-+				cifs_put_tlink(tlink);
-+				return rc;
-+			}
- 			if (mode_from_sid)
- 				nsecdesclen +=
- 					le32_to_cpu(dacl_ptr->num_aces) * sizeof(struct cifs_ace);
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -4576,6 +4576,8 @@ static void run_state_machine(struct tcp
+ 		port->message_id = 0;
+ 		port->rx_msgid = -1;
+ 		tcpm_pd_send_control(port, PD_CTRL_ACCEPT);
++		port->vdm_sm_running = false;
++		port->explicit_contract = false;
+ 		tcpm_ams_finish(port);
+ 		if (port->pwr_role == TYPEC_SOURCE) {
+ 			port->upcoming_state = SRC_SEND_CAPABILITIES;
 
 
