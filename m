@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A065944CAF5;
-	Tue, 16 Jun 2026 16:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DAE44CAF5;
+	Tue, 16 Jun 2026 16:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626383; cv=none; b=qcOYHltTL38gRlwkvYuGTNkvf5gmvnz3mouRD14YqI4DOoux9rIl8YUGCJZLhv+98bp3ypKRSyi8MjYcSg5Mr4dz69qMmd2MAMitIIQT0kAohz05iUW8r5RBI8iyAMMt5ypu0mUhH5EYg6yVgD/3i4b9xHHZNw/fWETp3ipUQEA=
+	t=1781626388; cv=none; b=tzJS2DPBX8FGXUDz5SAGyof5JkVa6skeeIy+RdK6H1p8BJBeKr8C9HfsYZ3wfRUg2QbXHy9eNqswaTULYaa/MJ0aLJh7d1oVWt8eZIJnf8/ZyLYKIpRNS5sB/NdNt1DMteScvMcmR4FQmSydna9+CeFbw6QVAxsoGmbV5j7YQ9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626383; c=relaxed/simple;
-	bh=iHyOJ69a+ELdi4Po8tVxhbrFX4GuDvNS/T6U768kHow=;
+	s=arc-20240116; t=1781626388; c=relaxed/simple;
+	bh=17FBKuKtAlOk6l2TuFyk0G9UtBaVuVG1y5XORlRV4DQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xbl0MdtU7qL160M3Z0/MEvYwa9xB1D7Fq1FqKrWdl6VSgVDXNt61XaeW4ro/eKugME7M6IlAEtA5wlW5nRuas1U54aIYFetvPYTylk+o56EHGCEkuf0e4se+qKXz2GshfADNDqUv8wSmMa789H1tN2EH3CJa6WZFahfrs1/azDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YV6HW/Gr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qbxs7zBbHev+tzszUVB0yurc0doNIeyAUfPXYSu42XDSGETpgOOdGg7QgZOPoS5+HW0DivkuYfAjnBaerLpA52Fcq2gQFghwYnECKZ9JOAG+1pwCJxAGiL/1e8/P6S1ZESsFQaE31JXR6EKA4GxeQQ4DIaVc9N631TaT74UzGLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ytcTQHj1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YV6HW/Gr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A931C1F000E9;
-	Tue, 16 Jun 2026 16:13:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ytcTQHj1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77FB41F000E9;
+	Tue, 16 Jun 2026 16:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626382;
-	bh=zBqFQoWXpLdFi5SY5FGVO5waDG6qucpiX3ynt8b85eg=;
+	s=korg; t=1781626387;
+	bh=OauDdvesdxsRGltZvTHaNTw7Ue8RUBeA9NA4BsqWEj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YV6HW/GrH0B6H4LRuyNXWziwuOL6PBBh1PFR5DL/NgR02knfZ3i/yDsS2q11+B2jI
-	 6/ph6tQrQGKhq8lAIaoLfRgeJ2ESVxhgY911PBjNXWiIwChK7A/LP2ALyYFkt9UUac
-	 5okzKmFRM8/PEt0/kKg93BNCMj6hrtkdVfKTYaBw=
+	b=ytcTQHj1JiAfP4A3wajWX2YAszvqWeCBUzTEYmjVb3jQlmd4M2E58yJl0ByrNs5w6
+	 eB1GY0gyjnV6QWNjcy5wtIkwQaj5QkIv6+QLqY2ea9hfWCCeRSNRLq+nROQPsq6R/P
+	 IiYDID2YM84g7YTQqBAwcM4V7A5w/FeOcaxzBucM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 310/325] RDMA/umem: Move umem dmabuf revoke logic into helper function
-Date: Tue, 16 Jun 2026 20:31:46 +0530
-Message-ID: <20260616145114.467720743@linuxfoundation.org>
+	Andrew Martin <andrew.martin@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 284/325] drm/amdkfd: Fix buffer overflow in SDMA queue checkpoint/restore on GFX11
+Date: Tue, 16 Jun 2026 20:31:20 +0530
+Message-ID: <20260616145112.891041026@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -51,65 +50,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Andrew Martin <andrew.martin@amd.com>
 
-[ Upstream commit 797291a66ce346c96114b72222fc290d402da005 ]
+commit 352ea59028ea48a6fff77f19ae28f98f71946a80 upstream.
 
-This same logic will eventually be reused from within the
-invalidate_mappings callback which already has the dma_resv_lock
-held, so break it out into a separate function so it can be reused.
+The v11 MQD manager incorrectly assigned the CP-compute variants of
+checkpoint_mqd/restore_mqd for KFD_MQD_TYPE_SDMA queues. These functions
+use sizeof(struct v11_compute_mqd) (2048 bytes) instead of sizeof(struct
+v11_sdma_mqd) (512 bytes), causing a 1536-byte overflow.
 
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
-Link: https://patch.msgid.link/20260305170826.3803155-3-jmoroni@google.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Stable-dep-of: badad6fad60d ("RDMA: During rereg_mr ensure that REREG_ACCESS is compatible")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+During CRIU checkpoint of an SDMA queue on Navi3x:
+- checkpoint_mqd() reads 2048 bytes from a 512-byte SDMA MQD buffer,
+  leaking 1536 bytes of adjacent GTT memory to userspace
+
+During CRIU restore:
+- restore_mqd() writes 2048 bytes into a 512-byte SDMA MQD buffer,
+  corrupting 1536 bytes of adjacent GTT memory (often the ring buffer
+  or neighboring MQDs)
+
+This is a copy-paste regression unique to v11. All other ASIC backends
+(cik, vi, v9, v10, v12) correctly use the SDMA-specific variants.
+
+Add checkpoint_mqd_sdma() and restore_mqd_sdma() functions that properly
+handle the smaller v11_sdma_mqd structure, matching the pattern used in
+other MQD managers.
+
+Fixes: cc009e613de6 ("drm/amdkfd: Add KFD support for soc21 v3")
+Assisted-by: Claude:Sonnet 4-5
+Signed-off-by: Andrew Martin <andrew.martin@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 6fa41db7ffdec97d62433adf03b7b9b759af8c2c)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/umem_dmabuf.c |   26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c |   49 +++++++++++++++++++----
+ 1 file changed, 41 insertions(+), 8 deletions(-)
 
---- a/drivers/infiniband/core/umem_dmabuf.c
-+++ b/drivers/infiniband/core/umem_dmabuf.c
-@@ -198,6 +198,22 @@ static struct dma_buf_attach_ops ib_umem
- 	.move_notify = ib_umem_dmabuf_unsupported_move_notify,
- };
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v11.c
+@@ -334,8 +334,7 @@ static void checkpoint_mqd(struct mqd_ma
  
-+static void ib_umem_dmabuf_revoke_locked(struct dma_buf_attachment *attach)
+ static void restore_mqd(struct mqd_manager *mm, void **mqd,
+ 			struct kfd_mem_obj *mqd_mem_obj, uint64_t *gart_addr,
+-			struct queue_properties *qp,
+-			const void *mqd_src,
++			struct queue_properties *qp, const void *mqd_src,
+ 			const void *ctl_stack_src, const u32 ctl_stack_size)
+ {
+ 	uint64_t addr;
+@@ -351,14 +350,48 @@ static void restore_mqd(struct mqd_manag
+ 		*gart_addr = addr;
+ 
+ 	m->cp_hqd_pq_doorbell_control =
+-		qp->doorbell_off <<
+-			CP_HQD_PQ_DOORBELL_CONTROL__DOORBELL_OFFSET__SHIFT;
+-	pr_debug("cp_hqd_pq_doorbell_control 0x%x\n",
+-			m->cp_hqd_pq_doorbell_control);
++		qp->doorbell_off << CP_HQD_PQ_DOORBELL_CONTROL__DOORBELL_OFFSET__SHIFT;
++	pr_debug("cp_hqd_pq_doorbell_control 0x%x\n", m->cp_hqd_pq_doorbell_control);
+ 
+ 	qp->is_active = 0;
+ }
+ 
++static void checkpoint_mqd_sdma(struct mqd_manager *mm,
++				void *mqd,
++				void *mqd_dst,
++				void *ctl_stack_dst)
 +{
-+	struct ib_umem_dmabuf *umem_dmabuf = attach->importer_priv;
++	struct v11_sdma_mqd *m;
 +
-+	dma_resv_assert_held(attach->dmabuf->resv);
++	m = get_sdma_mqd(mqd);
 +
-+	if (umem_dmabuf->revoked)
-+		return;
-+	ib_umem_dmabuf_unmap_pages(umem_dmabuf);
-+	if (umem_dmabuf->pinned) {
-+		dma_buf_unpin(umem_dmabuf->attach);
-+		umem_dmabuf->pinned = 0;
-+	}
-+	umem_dmabuf->revoked = 1;
++	memcpy(mqd_dst, m, sizeof(struct v11_sdma_mqd));
 +}
 +
- static struct ib_umem_dmabuf *
- ib_umem_dmabuf_get_pinned_and_lock(struct ib_device *device,
- 				   struct device *dma_device,
-@@ -265,15 +281,7 @@ void ib_umem_dmabuf_revoke(struct ib_ume
- 	struct dma_buf *dmabuf = umem_dmabuf->attach->dmabuf;
++static void restore_mqd_sdma(struct mqd_manager *mm, void **mqd,
++			     struct kfd_mem_obj *mqd_mem_obj, uint64_t *gart_addr,
++			     struct queue_properties *qp,
++			     const void *mqd_src,
++			     const void *ctl_stack_src,
++			     const u32 ctl_stack_size)
++{
++	uint64_t addr;
++	struct v11_sdma_mqd *m;
++
++	m = (struct v11_sdma_mqd *) mqd_mem_obj->cpu_ptr;
++	addr = mqd_mem_obj->gpu_addr;
++
++	memcpy(m, mqd_src, sizeof(*m));
++
++	m->sdmax_rlcx_doorbell_offset =
++		qp->doorbell_off << SDMA0_QUEUE0_DOORBELL_OFFSET__OFFSET__SHIFT;
++
++	*mqd = m;
++	if (gart_addr)
++		*gart_addr = addr;
++
++	qp->is_active = 0;
++}
  
- 	dma_resv_lock(dmabuf->resv, NULL);
--	if (umem_dmabuf->revoked)
--		goto end;
--	ib_umem_dmabuf_unmap_pages(umem_dmabuf);
--	if (umem_dmabuf->pinned) {
--		dma_buf_unpin(umem_dmabuf->attach);
--		umem_dmabuf->pinned = 0;
--	}
--	umem_dmabuf->revoked = 1;
--end:
-+	ib_umem_dmabuf_revoke_locked(umem_dmabuf->attach);
- 	dma_resv_unlock(dmabuf->resv);
- }
- EXPORT_SYMBOL(ib_umem_dmabuf_revoke);
+ static void init_mqd_hiq(struct mqd_manager *mm, void **mqd,
+ 			struct kfd_mem_obj *mqd_mem_obj, uint64_t *gart_addr,
+@@ -543,8 +576,8 @@ struct mqd_manager *mqd_manager_init_v11
+ 		mqd->update_mqd = update_mqd_sdma;
+ 		mqd->destroy_mqd = kfd_destroy_mqd_sdma;
+ 		mqd->is_occupied = kfd_is_occupied_sdma;
+-		mqd->checkpoint_mqd = checkpoint_mqd;
+-		mqd->restore_mqd = restore_mqd;
++		mqd->checkpoint_mqd = checkpoint_mqd_sdma;
++		mqd->restore_mqd = restore_mqd_sdma;
+ 		mqd->mqd_size = sizeof(struct v11_sdma_mqd);
+ 		mqd->mqd_stride = kfd_mqd_stride;
+ #if defined(CONFIG_DEBUG_FS)
 
 
