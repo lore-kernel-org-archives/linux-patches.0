@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24D43CC324;
-	Tue, 16 Jun 2026 18:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EFE3D45CB;
+	Tue, 16 Jun 2026 18:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633672; cv=none; b=b1I6OJdjILt1AOtCKCma3i9E4er77jF7WuF0iFhQybrnvAl2ZY1+vqAiVuRBr8H0pN+mcKeRF8e4+CzQQ8C+LJXIs7AacuLPVojYy1waTkakhOeDa0nxJABNqth21pP5oMT924Ut6jeozaJJQOohNPAwmxRX28BkdapEubfSjbI=
+	t=1781633679; cv=none; b=DgXruEaUuuMIqAaOvvG7gDETdaxY7Dzqfz58NwqlJvmuQRl0AIbqTLXUQL9scXOVP2BxsCPyT3/Qj7wm+QvYssb78pjAhEBtZ89KCHGr+xlnW4wbgFONO00/HzjF1gTU56ad1/pZYx/buYbtl8Puyk0jclpOcfwa2KSmBlEEzFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633672; c=relaxed/simple;
-	bh=SYMEGP6fsaadlYJiwP2Dig/W7GrNytyRP2JAjw669ys=;
+	s=arc-20240116; t=1781633679; c=relaxed/simple;
+	bh=Q5anU0VdRhBOOI8KsHqlUvV9SnaHnEjG+0/K+OnOhsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qTsZYz6cEoUOJr5DZIlSSaXo9tOiwtuKximLL8arCMP6IFnmpl1kyXi5dPRQLGSeexm28WPkmpTlVH71BTorv3GXY5glwgcf4fg7/0H2/3bmnidH5kQ97sE69FGIKmlLYWph6N9sXFBR/pzJamQRHfEFLNxX44ywj8lZ8DGCvFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bsHTAkqF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rvZ1nIy96Ilqrq0+NTwl0krbOO9yGwacftNzL4A2z/ok8f//crw9kCi+vWW3ecHWp3kYQ8vGSRUjOO9VC46zuRYBgeLf0ZZGN9qAd/nb2G6XFrhjo+YQLnhqJc19lXgtOdeDv98fn0P/5yc+CmP02PC2I8AvI4tryhQIAItT/54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWG4Qw/7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bsHTAkqF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75441F000E9;
-	Tue, 16 Jun 2026 18:14:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWG4Qw/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39CBE1F000E9;
+	Tue, 16 Jun 2026 18:14:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633671;
-	bh=FBcUdq8YqN1zP6GYyrofAY74ebrusB59AduhMWGuSJA=;
+	s=korg; t=1781633677;
+	bh=1pEdfZjf/dKl2iTH1oygF2mK7HTtOJUmXiTOliClzjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bsHTAkqFrFJ9z7EkD+EcwTKO51ON4IsnS/sU0LeUXAGXXdgHsn3Hv20k1f6qpeyOz
-	 9fUv/PdpyNP+JbWGufFAf+fQOjLtZUi3ooJW3kw/Id2dflAKICzBbVH0ma7SVK8TxU
-	 BUkLMs6OspNLzcvVP/2im3qjPfFpOCVlCU/Ineuc=
+	b=MWG4Qw/7xEZVpqawjNOq54DKTSAOSiMfQjcTg+1az4jTd9eKkW9cQ6FUFDobZAz9p
+	 miPPRgjqg5lhAgdx7eA8ti/fuLFyhJbXXxx0Yyk8mjs4bmbx/3+LiakVjQZpxroz2/
+	 ppWQgDmueQuagvXGg4V1Ni7DwsSg9wh6t3nevsaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Tang <tpluszz77@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 090/411] ipv6: validate extension header length before copying to cmsg
-Date: Tue, 16 Jun 2026 20:25:28 +0530
-Message-ID: <20260616145105.016331112@linuxfoundation.org>
+	stable@kernel.org,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Luxing Yin <tr0jan@lzu.edu.cn>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 5.15 091/411] xfrm: input: hold netns during deferred transport reinjection
+Date: Tue, 16 Jun 2026 20:25:29 +0530
+Message-ID: <20260616145105.063509734@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -51,166 +55,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Tang <tpluszz77@gmail.com>
+From: Zhengchuan Liang <zcliangcn@gmail.com>
 
-commit dd433671fef381fdaf7b530c631e6b782d66e224 upstream.
+commit c16f74dc1d75d0e2e7670076d5375deda110ebeb upstream.
 
-ip6_datagram_recv_specific_ctl() builds IPV6_{HOPOPTS,DSTOPTS,RTHDR}
-cmsgs (and their IPV6_2292* legacy counterparts) by trusting the
-on-wire hdrlen byte (ptr[1]) when computing the put_cmsg() length.
-The length was validated only at parse time (ipv6_parse_hopopts(),
-etc.).  An nftables payload-write expression can rewrite hdrlen after
-parsing and before the skb reaches recvmsg; the write itself is
-in-bounds but put_cmsg() then reads up to ((hdrlen+1) << 3) = 2040
-bytes from an 8-byte header.  nftables is reachable from an
-unprivileged user namespace, so this is an unprivileged
-slab-out-of-bounds read:
+Transport-mode reinjection stores a struct net pointer in skb->cb and
+uses it later from xfrm_trans_reinject(). That pointer must stay valid
+until the deferred callback runs.
 
-  BUG: KASAN: slab-out-of-bounds in put_cmsg+0x3ac/0x540
-   put_cmsg+0x3ac/0x540
-   udpv6_recvmsg+0xca0/0x1250
-   sock_recvmsg+0xdf/0x190
-   ____sys_recvmsg+0x1b1/0x620
+Take a netns reference when queueing deferred reinjection work and drop
+it after the callback completes. Use maybe_get_net() so the queueing
+path does not revive a namespace that is already being torn down.
 
-Add ipv6_get_exthdr_len() which validates that at least two bytes
-are accessible before reading the hdrlen field, then checks the
-computed length against skb_tail_pointer(skb), returning 0 on
-failure.  Extension headers are kept in the linear skb area by
-pskb_may_pull() during input, so skb_tail_pointer() is the correct
-bound.
+This keeps the existing workqueue design and fixes the netns lifetime
+handling in one place for all users of xfrm_trans_queue_net().
 
-Use ipv6_get_exthdr_len() at all non-AH call sites: the five
-standalone cmsg blocks (HbH, 2292HbH, 2292DSTOPTS x2, 2292RTHDR)
-and the three standard cases in the extension-header walk loop
-(DSTOPTS, ROUTING, default).  AH retains an inline bounds check
-because its length formula differs ((ptr[1]+2)<<2).
-
-The walk loop also gets a pre-read bounds check at the top to
-validate ptr before any case accesses ptr[0] or ptr[1].
-
-When the walk loop detects a corrupted header, return from the
-function instead of continuing to process later socket options.
-
-Cc: stable@vger.kernel.org
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Qi Tang <tpluszz77@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260523143245.2281415-1-tpluszz77@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7b3801927e52 ("xfrm: introduce xfrm_trans_queue_net")
+Cc: stable@kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Co-developed-by: Luxing Yin <tr0jan@lzu.edu.cn>
+Signed-off-by: Luxing Yin <tr0jan@lzu.edu.cn>
+Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Assisted-by: Codex:gpt-5.4
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/datagram.c |   54 ++++++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 46 insertions(+), 8 deletions(-)
+ net/xfrm/xfrm_input.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/net/ipv6/datagram.c
-+++ b/net/ipv6/datagram.c
-@@ -611,6 +611,18 @@ void ip6_datagram_recv_common_ctl(struct
- 	}
+--- a/net/xfrm/xfrm_input.c
++++ b/net/xfrm/xfrm_input.c
+@@ -781,9 +781,12 @@ static void xfrm_trans_reinject(struct w
+ 	spin_unlock_bh(&trans->queue_lock);
+ 
+ 	local_bh_disable();
+-	while ((skb = __skb_dequeue(&queue)))
+-		XFRM_TRANS_SKB_CB(skb)->finish(XFRM_TRANS_SKB_CB(skb)->net,
+-					       NULL, skb);
++	while ((skb = __skb_dequeue(&queue))) {
++		struct net *net = XFRM_TRANS_SKB_CB(skb)->net;
++
++		XFRM_TRANS_SKB_CB(skb)->finish(net, NULL, skb);
++		put_net(net);
++	}
+ 	local_bh_enable();
  }
  
-+static u16 ipv6_get_exthdr_len(const struct sk_buff *skb, const u8 *ptr)
-+{
-+	u16 len;
-+
-+	if (ptr + 2 > skb_tail_pointer(skb))
-+		return 0;
-+
-+	len = (ptr[1] + 1) << 3;
-+
-+	return (len <= skb_tail_pointer(skb) - ptr) ? len : 0;
-+}
-+
- void ip6_datagram_recv_specific_ctl(struct sock *sk, struct msghdr *msg,
- 				    struct sk_buff *skb)
+@@ -792,6 +795,7 @@ int xfrm_trans_queue_net(struct net *net
+ 				       struct sk_buff *))
  {
-@@ -637,7 +649,10 @@ void ip6_datagram_recv_specific_ctl(stru
- 	/* HbH is allowed only once */
- 	if (np->rxopt.bits.hopopts && (opt->flags & IP6SKB_HOPBYHOP)) {
- 		u8 *ptr = nh + sizeof(struct ipv6hdr);
--		put_cmsg(msg, SOL_IPV6, IPV6_HOPOPTS, (ptr[1]+1)<<3, ptr);
-+		u16 len = ipv6_get_exthdr_len(skb, ptr);
-+
-+		if (len)
-+			put_cmsg(msg, SOL_IPV6, IPV6_HOPOPTS, len, ptr);
- 	}
+ 	struct xfrm_trans_tasklet *trans;
++	struct net *hold_net;
  
- 	if (opt->lastopt &&
-@@ -658,26 +673,37 @@ void ip6_datagram_recv_specific_ctl(stru
- 			unsigned int len;
- 			u8 *ptr = nh + off;
+ 	trans = this_cpu_ptr(&xfrm_trans_tasklet);
  
-+			if (ptr + 2 > skb_tail_pointer(skb))
-+				return;
-+
- 			switch (nexthdr) {
- 			case IPPROTO_DSTOPTS:
- 				nexthdr = ptr[0];
--				len = (ptr[1] + 1) << 3;
-+				len = ipv6_get_exthdr_len(skb, ptr);
-+				if (!len)
-+					return;
- 				if (np->rxopt.bits.dstopts)
- 					put_cmsg(msg, SOL_IPV6, IPV6_DSTOPTS, len, ptr);
- 				break;
- 			case IPPROTO_ROUTING:
- 				nexthdr = ptr[0];
--				len = (ptr[1] + 1) << 3;
-+				len = ipv6_get_exthdr_len(skb, ptr);
-+				if (!len)
-+					return;
- 				if (np->rxopt.bits.srcrt)
- 					put_cmsg(msg, SOL_IPV6, IPV6_RTHDR, len, ptr);
- 				break;
- 			case IPPROTO_AH:
- 				nexthdr = ptr[0];
- 				len = (ptr[1] + 2) << 2;
-+				if (ptr + len > skb_tail_pointer(skb))
-+					return;
- 				break;
- 			default:
- 				nexthdr = ptr[0];
--				len = (ptr[1] + 1) << 3;
-+				len = ipv6_get_exthdr_len(skb, ptr);
-+				if (!len)
-+					return;
- 				break;
- 			}
+@@ -800,8 +804,12 @@ int xfrm_trans_queue_net(struct net *net
  
-@@ -699,19 +725,31 @@ void ip6_datagram_recv_specific_ctl(stru
- 	}
- 	if (np->rxopt.bits.ohopopts && (opt->flags & IP6SKB_HOPBYHOP)) {
- 		u8 *ptr = nh + sizeof(struct ipv6hdr);
--		put_cmsg(msg, SOL_IPV6, IPV6_2292HOPOPTS, (ptr[1]+1)<<3, ptr);
-+		u16 len = ipv6_get_exthdr_len(skb, ptr);
+ 	BUILD_BUG_ON(sizeof(struct xfrm_trans_cb) > sizeof(skb->cb));
+ 
++	hold_net = maybe_get_net(net);
++	if (!hold_net)
++		return -ENODEV;
 +
-+		if (len)
-+			put_cmsg(msg, SOL_IPV6, IPV6_2292HOPOPTS, len, ptr);
- 	}
- 	if (np->rxopt.bits.odstopts && opt->dst0) {
- 		u8 *ptr = nh + opt->dst0;
--		put_cmsg(msg, SOL_IPV6, IPV6_2292DSTOPTS, (ptr[1]+1)<<3, ptr);
-+		u16 len = ipv6_get_exthdr_len(skb, ptr);
-+
-+		if (len)
-+			put_cmsg(msg, SOL_IPV6, IPV6_2292DSTOPTS, len, ptr);
- 	}
- 	if (np->rxopt.bits.osrcrt && opt->srcrt) {
- 		struct ipv6_rt_hdr *rthdr = (struct ipv6_rt_hdr *)(nh + opt->srcrt);
--		put_cmsg(msg, SOL_IPV6, IPV6_2292RTHDR, (rthdr->hdrlen+1) << 3, rthdr);
-+		u16 len = ipv6_get_exthdr_len(skb, (u8 *)rthdr);
-+
-+		if (len)
-+			put_cmsg(msg, SOL_IPV6, IPV6_2292RTHDR, len, rthdr);
- 	}
- 	if (np->rxopt.bits.odstopts && opt->dst1) {
- 		u8 *ptr = nh + opt->dst1;
--		put_cmsg(msg, SOL_IPV6, IPV6_2292DSTOPTS, (ptr[1]+1)<<3, ptr);
-+		u16 len = ipv6_get_exthdr_len(skb, ptr);
-+
-+		if (len)
-+			put_cmsg(msg, SOL_IPV6, IPV6_2292DSTOPTS, len, ptr);
- 	}
- 	if (np->rxopt.bits.rxorigdstaddr) {
- 		struct sockaddr_in6 sin6;
+ 	XFRM_TRANS_SKB_CB(skb)->finish = finish;
+-	XFRM_TRANS_SKB_CB(skb)->net = net;
++	XFRM_TRANS_SKB_CB(skb)->net = hold_net;
+ 	spin_lock_bh(&trans->queue_lock);
+ 	__skb_queue_tail(&trans->queue, skb);
+ 	spin_unlock_bh(&trans->queue_lock);
 
 
