@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DEC449EA8;
-	Tue, 16 Jun 2026 17:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1AC1A6803;
+	Tue, 16 Jun 2026 17:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629793; cv=none; b=AizuMuVMhBuOUJQj0XEElhW6Z6wKbdVt4P3qld3U1sXDYF0PUu0S/JQffV24/WaKzjGJpi5alB32NUl3q43E0akVYRy7AIb45iFKMSEmbIgpcZi4TQBBKKoVtxiHfB5dtgh0AWn1VAVVifyEayt7QyG5tuGi7LOiYurExfI42HM=
+	t=1781629799; cv=none; b=ELYuif7v69N81WUQ12XPN3R1y03njKSd2Gq+hxZN38KXAEY94XWcO9JQbwAIrlO0QeiroBE1IbMfU2KEgL63Qp95GTOEO9OtgIxtjMTmlF4PiQnw3vCTPYnh1p8qWxo1bu0Hc/tUVth0mxyDa8K8ynPTvG6ZjcCKCOqvJwpWn2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629793; c=relaxed/simple;
-	bh=CbTdQqpZQ5EDnhxAB/L8GMTOCgpetWO25XMmbyJdd1k=;
+	s=arc-20240116; t=1781629799; c=relaxed/simple;
+	bh=lfyBDrVCB4sekq2iz044xATwWmU1/JBb2kjqH578MEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hkgTqzmK59cvy5T+4oNlYXXus5rPGbJuWriayry3asdLEm0n9RkhyWWLGOvTMqhWfSbRxDhcIlQ7IGiOFvG0WAxl3RzE2fog0HmWsQ04A464kSjUt+UD4vqCnO0Rm3CB6ftDRrxYGH8bTS6uwEGgan21a5Otqp9Qw4lNoy9tQR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=akYuV5F2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=em0S3xZ95wHzn1Ce/S2djGU9+4FPJ1GkhqfnWZ28Wkhq/sjNfNWAgOPyOKn/tGR5WnS++Oe9EFYn+zMazGyOsO6wXeD0dBTZtEZjaXZZJmRZLv3IX72nViWW6aKkdvdh6/d9Z0eGjWuY/7BfoDvUCY4h6bfA1IhXQHqlOUEHYZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BeIoXz1L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="akYuV5F2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7616B1F000E9;
-	Tue, 16 Jun 2026 17:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BeIoXz1L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC721F000E9;
+	Tue, 16 Jun 2026 17:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629792;
-	bh=UymSEn4PTHCEJIwsxUHj8xD5/LQMleziPtWsyPPQbNE=;
+	s=korg; t=1781629797;
+	bh=L9LV+TJVu4yiYkipv9+GpQaqf+Upsn6l32176YhYiok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=akYuV5F2ytpbMtcd61hYpzjOkV/tjXVN4c7Dh+h4M++cS5up7Gii+CHCj5WHnsgsq
-	 ZM33/iP7L4KoIwUlW3xSM9oRvW1HYLfjg/TS5iWAVcHV/TB0y0FmrZQj5HTljEz/VU
-	 dBp7NpnZdZZKK+agCMk/eWSDjXlrhC7OVqNzazao=
+	b=BeIoXz1LAC9HeN4GQkReQSXlJ/S0sbNF/b4EZT5Et+qLocFl8BK4o3Qh3wTznhIH4
+	 pXEx/On7he9OYhxYgzmH+IOXuIfuSwVAeRjZVuuXXzlEo2E0LZkrb7wMZ3kM0aTQ+V
+	 wJl6tMqpPnbbpw2nJJkBG22ZZ6GnIiPr9EjppIhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.6 354/452] thunderbolt: Reject zero-length property entries in validator
-Date: Tue, 16 Jun 2026 20:29:41 +0530
-Message-ID: <20260616145135.770331268@linuxfoundation.org>
+	Nikolay Kuratov <kniv@yandex-team.ru>,
+	Md Haris Iqbal <haris.iqbal@linux.dev>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 337/452] net/mlx5: Reorder completion before putting command entry in cmd_work_handler
+Date: Tue, 16 Jun 2026 20:29:24 +0530
+Message-ID: <20260616145135.029083358@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -50,42 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Nikolay Kuratov <kniv@yandex-team.ru>
 
-commit cff8eb65d1eafe7793e54b4d0cf6bf831644630b upstream.
+commit 02896a7fa4cd3ec61d60ba30136841e4f04bdeac upstream.
 
-tb_property_entry_valid() accepts entries with length == 0 for
-DIRECTORY, DATA, and TEXT types.  A zero-length TEXT entry passes
-validation but causes an underflow in the null-termination logic:
+Assuming callback != NULL && !page_queue, cmd_work_handler takes
+command entry with refcnt == 1 from mlx5_cmd_invoke.
+If either semaphore timeout or index allocation error happens,
+it does final cmd_ent_put(ent). To avoid access to freed memory,
+notify slotted completion before cmd_ent_put.
 
-  property->value.text[property->length * 4 - 1] = '\0';
+This is theoretical issue found by Svace static analyser.
 
-When property->length is 0 this writes to offset -1 relative to
-the allocation.
-
-Reject zero-length entries early in the validator since they have no
-valid representation in the XDomain property protocol.
-
-Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Fixes: 485d65e135712 ("net/mlx5: Add a timeout to acquire the command queue semaphore")
+Fixes: 0e2909c6bec90 ("net/mlx5: Fix variable not being completed when function returns")
+Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
+Reviewed-by: Md Haris Iqbal <haris.iqbal@linux.dev>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Acked-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260526162932.501584-1-kniv@yandex-team.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/property.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/cmd.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/thunderbolt/property.c
-+++ b/drivers/thunderbolt/property.c
-@@ -59,6 +59,8 @@ static bool tb_property_entry_valid(cons
- 	case TB_PROPERTY_TYPE_DIRECTORY:
- 	case TB_PROPERTY_TYPE_DATA:
- 	case TB_PROPERTY_TYPE_TEXT:
-+		if (!entry->length)
-+			return false;
- 		if (entry->length > block_len)
- 			return false;
- 		if (check_add_overflow(entry->value, entry->length, &end) ||
+--- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+@@ -989,12 +989,13 @@ static void cmd_work_handler(struct work
+ 				ent->callback(-EBUSY, ent->context);
+ 				mlx5_free_cmd_msg(dev, ent->out);
+ 				free_msg(dev, ent->in);
++				complete(&ent->slotted);
+ 				cmd_ent_put(ent);
+ 			} else {
+ 				ent->ret = -EBUSY;
+ 				complete(&ent->done);
++				complete(&ent->slotted);
+ 			}
+-			complete(&ent->slotted);
+ 			return;
+ 		}
+ 		alloc_ret = cmd_alloc_index(cmd, ent);
+@@ -1004,13 +1005,14 @@ static void cmd_work_handler(struct work
+ 				ent->callback(-EAGAIN, ent->context);
+ 				mlx5_free_cmd_msg(dev, ent->out);
+ 				free_msg(dev, ent->in);
++				complete(&ent->slotted);
+ 				cmd_ent_put(ent);
+ 			} else {
+ 				ent->ret = -EAGAIN;
+ 				complete(&ent->done);
++				complete(&ent->slotted);
+ 			}
+ 			up(&cmd->vars.sem);
+-			complete(&ent->slotted);
+ 			return;
+ 		}
+ 	} else {
 
 
