@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDED936E46C;
-	Tue, 16 Jun 2026 15:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892EA36E46C;
+	Tue, 16 Jun 2026 15:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625438; cv=none; b=eozr9xvQDsxdJxxwTyR0OacF1Xsl+7AQlp0hyAZKTMJMDfE0GD9XRlhqOLn1yLtaX3+f4hiFrfyJqWF7yOHL/8pK7dWxVfjr8SKuuLvs2hm1GwTLf3ftxGlSJFwCX6J+GWFWS7/FfqXYsuDMdbB2PPgq5mgCxVbwCTNPxirL5j4=
+	t=1781625443; cv=none; b=gn4FlBrmQ/zzxYiymPpjQKqddizTAD7dYWAmGDodMf9+UGRj+C4/hXyWoYzqhxZmm1IQe1Rz1eBkmWpycUmpp9V56pobmvRRtiiMD2VfykR70eYwimOFODCrKD8hbo2AFGP/Hs2btbyHG5X+3r3jH+YK0f1R1+ppmu1A4L8ubB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625438; c=relaxed/simple;
-	bh=sNteZ4JFuKDKqJw/FpzkGZk4onfAmK10wZlsnPit25o=;
+	s=arc-20240116; t=1781625443; c=relaxed/simple;
+	bh=rOVo6jBtbzlv3bjHuHo7xUln89A2xBBBw3E8BWkdnqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gTIfUIKYeymIT58M1pOHrhkbjcj5vGSW3wUt6k1Snwl8rg3MfnRc/RQSkB7q+eRLf/OQYabX9EU1jedGC2wSprZGnO8FLbUmzW6v3mmWDPgptwZMyg0NjQXnB/5mMKobJt4csy7gP1F86C79rR2rf7RDKImTR3Vr4IjUaLRQqaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ihdCgk9L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xr8nLxVYPc3W9kSKsV34TKEai41LALC0T7lFtXHYpDdJUHbI3FIA1CQFPxxv8xEsEWY0iNff5vvcr4jK4jP0ig0UuheDIS23b3JcCboKVu5pFCqHnfsgFV7C5kZtscWJxN+Wdy/tcKWZLvWYudMzRkMxfM6hoknPG5dmkVK2Ly8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7XaFAjj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihdCgk9L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 020F11F000E9;
-	Tue, 16 Jun 2026 15:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7XaFAjj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993B11F000E9;
+	Tue, 16 Jun 2026 15:57:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625437;
-	bh=GmXv6WV4zV1P8ldGF85o1sYQU9vTHL8mnDryduucjs0=;
+	s=korg; t=1781625442;
+	bh=ZRZviinv0nxADfsmEqHfeDQ4qiDdQJM8lo2U8M7gs78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ihdCgk9L3LGhmYKYWLxCZbPxoiqcuSeIOwAkp6jSapT2SWzNzVbRxtkjoPftjSkzP
-	 OGQ4pP/hRsfyrjunCYY5t78VzaJVEb8XhD8Q7nUDbLtVWggQQGKp1AjeBkgROyu8NW
-	 opxCzy8Iy9hdXKt0cXxXkPZhJD6zw1iALzldpOjU=
+	b=c7XaFAjjzPe5IBrTadZiyTJpQnc2EMwKwntkVViU1Z7Jo+rWSuwic8nEF/Xe1WZCu
+	 d0/N6rK5quyOMKCpgD9KSA9j7Z2X1h5JhPflEKbbP6j/RaW/wcPNXZR8Q/YfPBwHPj
+	 DcP0YQuAQltuE1isoFJ726ZSpV29Zcql2+pOIeoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Ryosuke Yasuoka <ryasuoka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 142/325] drm/i915/edp: Check supported link rates DPCD read
-Date: Tue, 16 Jun 2026 20:28:58 +0530
-Message-ID: <20260616145104.812163893@linuxfoundation.org>
+Subject: [PATCH 6.18 143/325] drm/virtio: Fix driver removal with disabled KMS
+Date: Tue, 16 Jun 2026 20:28:59 +0530
+Message-ID: <20260616145104.856570165@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,57 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-[ Upstream commit 2673cefa99ca918e7ac5b0388ff578a83656c896 ]
+[ Upstream commit f329e8325e054bd6d84d10904f8dd51137281b92 ]
 
-intel_edp_set_sink_rates() reads DP_SUPPORTED_LINK_RATES into a local
-stack array and then parses the array unconditionally. If the read
-fails, the array contents are not valid and may result in bogus sink
-link rates being used.
+DRM atomic and modesetting aren't initialized if virtio-gpu driver built
+with disabled KMS, leading to access of uninitialized data on driver
+removal/unbinding and crashing kernel. Fix it by skipping shutting down
+atomic core with unavailable KMS.
 
-Use drm_dp_dpcd_read_data() and clear the sink rate array on failure,
-so the existing parser falls back to the default sink rate handling.
-
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: 68f357cb7347 ("drm/i915/dp: generate and cache sink rate array for all DP, not just eDP 1.4")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patch.msgid.link/20260529145759.1640646-1-n.zhandarovich@fintech.ru
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit bd61c7756b34157e093028225a69383b4b1203cc)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Fixes: 72122c69d717 ("drm/virtio: Add option to disable KMS support")
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Tested-by: Ryosuke Yasuoka <ryasuoka@redhat.com>
+Reviewed-by: Ryosuke Yasuoka <ryasuoka@redhat.com>
+Link: https://patch.msgid.link/20260604122743.13383-1-dmitry.osipenko@collabora.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/virtio/virtgpu_drv.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
-index a44fbac1e5e272..c7886b36477067 100644
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -4372,10 +4372,17 @@ intel_edp_set_sink_rates(struct intel_dp *intel_dp)
+diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.c b/drivers/gpu/drm/virtio/virtgpu_drv.c
+index 71c6ccad4b99b4..d9556e1b67b10b 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_drv.c
++++ b/drivers/gpu/drm/virtio/virtgpu_drv.c
+@@ -123,7 +123,10 @@ static void virtio_gpu_remove(struct virtio_device *vdev)
+ 	struct drm_device *dev = vdev->priv;
  
- 	if (intel_dp->edp_dpcd[0] >= DP_EDP_14) {
- 		__le16 sink_rates[DP_MAX_SUPPORTED_RATES];
-+		int ret;
- 		int i;
- 
--		drm_dp_dpcd_read(&intel_dp->aux, DP_SUPPORTED_LINK_RATES,
--				 sink_rates, sizeof(sink_rates));
-+		ret = drm_dp_dpcd_read_data(&intel_dp->aux,
-+					    DP_SUPPORTED_LINK_RATES,
-+					    sink_rates, sizeof(sink_rates));
-+		if (ret < 0) {
-+			drm_dbg_kms(display->drm,
-+				    "Unable to read eDP supported link rates, using default rates\n");
-+			memset(sink_rates, 0, sizeof(sink_rates));
-+		}
- 
- 		for (i = 0; i < ARRAY_SIZE(sink_rates); i++) {
- 			int rate;
+ 	drm_dev_unplug(dev);
+-	drm_atomic_helper_shutdown(dev);
++
++	if (drm_core_check_feature(dev, DRIVER_ATOMIC))
++		drm_atomic_helper_shutdown(dev);
++
+ 	virtio_gpu_deinit(dev);
+ 	drm_dev_put(dev);
+ }
 -- 
 2.53.0
 
