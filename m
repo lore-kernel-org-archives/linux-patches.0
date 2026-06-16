@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C366546AEE8;
-	Tue, 16 Jun 2026 16:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13AE13A8746;
+	Tue, 16 Jun 2026 16:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625899; cv=none; b=L84Nrks1sneFui/LrcAjwWVh6dbX3adK63KZV5nATYhHM6slB3t8Vkw51u/MoZ65gUOf1nFovDk1LDI4OaGP3+/4YLyyGY5MwvV9IEDLXZtIlX6XsWZ0BmDKhPO83WRJMfFSOjuDz4PYGYzXZMMEl4oDrA8JNN07N/AKpUMdrL8=
+	t=1781625905; cv=none; b=INfqk11AYfmkdxquRkqWXP5bgpq4AX0Ebu0LTYJbAnULbCleLOh86pP9q7WDz9IiD6CQUUACe4OwR6yKYVztatm8xUoS3D+ewMtyJZEZQEWXG1/okDNybt1MCuk0PNBtkSl2DCoAUGLF4jZnYbJD6RbR2HLyx0knZ/G5QzyH2eU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625899; c=relaxed/simple;
-	bh=fhPTOnkufZOuzyhqiZy0GQXzts6G7BYk7jpA6jcm9tI=;
+	s=arc-20240116; t=1781625905; c=relaxed/simple;
+	bh=XWozZlTtTBKXFvkBfd7LjvkGWytVfnbZ2pfoFSXj4jY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J9E85HwITnhf3UVe8YuSW8u06FRZ19DTYaxcpi2M4aAbB4FLLZs3p1AkKaETJ8zX2fKLgOfm2mMUz3w6+EWffMpo88cqP+XE/M7rx/IgIUM4xwXFMjfU4GYa+QseXktdNtpGD+FRK+bTQHh+HsCWOxhG03Fo3BqRgICChQugXe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTkJxzX8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fAzVZC9nSEFQds9u3p6LwmENUOVUiGshT/R16/w/u2OzZU2BVmyvV4CjCguJtitGRqA+350c4GAXUu/y0+/e2+5maXp6Igr+XUexYTnlVe7JO52PI6qIzf1SI1bdwAcsuvf/OEScly1evCOURVtLwtippFqqbOd+/s521aajHAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u72H14Bl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTkJxzX8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69711F000E9;
-	Tue, 16 Jun 2026 16:04:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u72H14Bl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C981F000E9;
+	Tue, 16 Jun 2026 16:05:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625898;
-	bh=uT2S7aurb8XCnybllwlZIT3SZ4Nv65KCZnUyfjPfo3c=;
+	s=korg; t=1781625904;
+	bh=ZrxVQ8v29yx10hxq8/Xc+7H1SQU7P4f2jpYxLLpVRRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nTkJxzX8YUzDfTGz5feS1G1uB5+23ubCI8muXO9QSsIx68gMtHfwojMnW0nFexhAa
-	 eYiQeDOuTPXSuDm1Zgkz8U+sMVUHEzoouDMxaqOPCGLi7uso5DVLkui1HKYJzn5Umg
-	 7rcFnl9qsFpl0Vq6T4dB3QLH222bWuGYB0T6Icc0=
+	b=u72H14BlDgw/3Lp76E9gSvk83eBsJSlHLeebwyh5RYC6rP1YRH6GyT2CwsCgqEt4i
+	 WIuQmm1HpfEKvwq61DbMuIaMCkdFwkVAEE/LcKCs581ezE0b55Y+4Jk2/dFbfWrceZ
+	 QI9zxnADwRTs+ko+ntyRm/rQQnVMdK0EJ1i4w8jA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Meyer <kyle.meyer@hpe.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 211/325] bnxt_en: Fix NULL pointer dereference
-Date: Tue, 16 Jun 2026 20:30:07 +0530
-Message-ID: <20260616145108.605354298@linuxfoundation.org>
+	syzbot+78147abe6c524f183ee9@syzkaller.appspotmail.com,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.18 229/325] locking/rtmutex: Skip remove_waiter() when waiter is not enqueued
+Date: Tue, 16 Jun 2026 20:30:25 +0530
+Message-ID: <20260616145109.805242622@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -51,45 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Meyer <kyle.meyer@hpe.com>
+From: Davidlohr Bueso <dave@stgolabs.net>
 
-commit d930276f2cddd0b7294cac7a8fe7b877f6d9e08d upstream.
+commit 40a25d59e85b3c8709ac2424d44f65610467871e upstream.
 
-PCIe errors detected by a Root Port or Downstream Port cause error
-recovery services to run on all subordinate devices regardless of
-administrative state.
+syzbot triggered the following splat in remove_waiter() via
+FUTEX_CMP_REQUEUE_PI:
 
-The .error_detected() callback, bnxt_io_error_detected(), disables
-and synchronizes IRQs via bnxt_disable_int_sync(), which calls
-bnxt_cp_num_to_irq_num() to map completion rings to IRQs using
-bp->bnapi.
+  KASAN: null-ptr-deref in range [0x0000000000000a88-0x0000000000000a8f]
+   class_raw_spinlock_constructor
+   remove_waiter+0x159/0x1200 kernel/locking/rtmutex.c:1561
+   rt_mutex_start_proxy_lock+0x103/0x120
+   futex_requeue+0x10e4/0x20d0
+   __x64_sys_futex+0x34f/0x4d0
 
-Since bp->bnapi is allocated on NIC open and freed on NIC close, PCIe
-error recovery on a closed NIC can dereference a NULL pointer.
+task_blocks_on_rt_mutex() does not arm the waiter upon deadlock detection,
+leaving waiter->task nil, where 3bfdc63936dd ("rtmutex: Use waiter::task instead
+of current in remove_waiter()") made this fatal.
 
-Check if bp->bnapi is NULL before disabling and synchronizing IRQs.
+Furthermore, rt_mutex_start_proxy_lock() should not be calling into remove_waiter()
+upon a successfully grabbing the rtmutex. 1a1fb985f2e2 ("futex: Handle early deadlock
+return correctly"), moved the remove_waiter() out of __rt_mutex_start_proxy_lock()
+(where 'ret' was only ever 0 or < 0) into the wrapper. Tighten this check to
+account for try_to_take_rt_mutex().
 
-Fixes: e5811b8c09df ("bnxt_en: Add IRQ remapping logic.")
+Fixes: 3bfdc63936dd ("rtmutex: Use waiter::task instead of current in remove_waiter()")
+Reported-by: syzbot+78147abe6c524f183ee9@syzkaller.appspotmail.com
+Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Kyle Meyer <kyle.meyer@hpe.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://patch.msgid.link/aiNM1CY2-StPilxW@hpe.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://lore.kernel.org/all/69f114ac.050a0220.ac8b.0003.GAE@google.com/
+Link: https://patch.msgid.link/20260507112913.1019537-1-dave@stgolabs.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/locking/rtmutex.c     |    3 +++
+ kernel/locking/rtmutex_api.c |    2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -5629,7 +5629,7 @@ static void bnxt_disable_int_sync(struct
- {
- 	int i;
+--- a/kernel/locking/rtmutex.c
++++ b/kernel/locking/rtmutex.c
+@@ -1548,6 +1548,9 @@ static void __sched remove_waiter(struct
  
--	if (!bp->irq_tbl)
-+	if (!bp->irq_tbl || !bp->bnapi)
- 		return;
+ 	lockdep_assert_held(&lock->wait_lock);
  
- 	atomic_inc(&bp->intr_sem);
++	if (!waiter_task) /* never enqueued */
++		return;
++
+ 	scoped_guard(raw_spinlock, &waiter_task->pi_lock) {
+ 		rt_mutex_dequeue(lock, waiter);
+ 		waiter_task->pi_blocked_on = NULL;
+--- a/kernel/locking/rtmutex_api.c
++++ b/kernel/locking/rtmutex_api.c
+@@ -365,7 +365,7 @@ int __sched rt_mutex_start_proxy_lock(st
+ 
+ 	raw_spin_lock_irq(&lock->wait_lock);
+ 	ret = __rt_mutex_start_proxy_lock(lock, waiter, task, &wake_q);
+-	if (unlikely(ret))
++	if (unlikely(ret < 0))
+ 		remove_waiter(lock, waiter);
+ 	preempt_disable();
+ 	raw_spin_unlock_irq(&lock->wait_lock);
 
 
