@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9329344BCB8;
-	Tue, 16 Jun 2026 16:13:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8913C0633;
+	Tue, 16 Jun 2026 16:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626404; cv=none; b=G1AHcS35JkruXRpjfG12nkIRak9V6ILAhKxf+nd6r2Q/izBVNEJTHKiJ5f5aSYgf2Krsw89MQ0E9DEND8rC5S7SkZCNCHAYwUrnKKoI2y7KmG+v/ZWWOZbcMFQqUKBn5Cw1FgQbggZFS3Y3frEtyYEGc8Hy82KqIRsSZXIsEaF8=
+	t=1781626408; cv=none; b=aSKo3TgmKV8SRdjGJI3tCctqGbPpC3Qf3vSQuP1LvYSJ9PyOFVf3UfHac+11f8I6KttAMzbnW8P3mE4Csm0evLKntKqv8uvfeUTV6jGob6xrF+7Rns33Qc2/aZate8DkPAFfzQrLMIi/q5u4HzK6m3k04UHdUCmVxqM4XC+F4UM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626404; c=relaxed/simple;
-	bh=stSbWcaFBA5ecJjLC+6jtY5kh0+Srqb9iXmGmZLGwdY=;
+	s=arc-20240116; t=1781626408; c=relaxed/simple;
+	bh=EKtmcD+dPZr+yoxit+mW8+jqFygdBvdgs6QFhwJsU6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V+x+K4+R7BrX8dFJ4BBwdxBTp+D2edADaHgiVjUlqopmF84wRmYDAFyrHM6MACG3MMU5kLires4yF3DuQWME3wzphEF+/c4+A6X+6ewo1eO1989pc/6usDYHY4GmoeretApajHHelbDlqnHBsC4t5I5YfSYhHGFGMeofuXquEAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1UDfjsKm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f3ElChQOfFl5gwzcg9dSx79Y639zErTnQEtbb6FOAh+8anRQWEscr4Cx8bROghMUsm3e0EtROEyTVJ9868np4uMPgrCRyrdUe36ZiqsmarzX3hIgzne/vMf9mdunrTfbDDrJWgxHgkQSML6etJgKG5UjdOXqaiZseHxb782jBXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Bb1PGpx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1UDfjsKm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559C71F000E9;
-	Tue, 16 Jun 2026 16:13:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Bb1PGpx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F219D1F000E9;
+	Tue, 16 Jun 2026 16:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626403;
-	bh=q/Dk/7ERfY5ZlYJdLnAL/LTUq4cN07UJHSWC+JSonfk=;
+	s=korg; t=1781626407;
+	bh=WCauZuEZeqRKN7piwhPY+Rho0WZTqq7IaK1YgIzMFgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1UDfjsKmB2NijWvpih/h0jIowZA7fVawJbCQgQYN7wuTiJ+qbfpgKzqn/Ptv5riid
-	 WV73tdUmYH+YYqRolls1tdcQ5gHiJfirFdo0CMsZYcfeOdW+wIGWAmGbodUbTlW9tw
-	 0KCbLK+BoT6fivQzfx9oVSGf8KkUL3P1q/LTJWGQ=
+	b=0Bb1PGpxBZlkJ1+1OGpdBh5A/4rd4SrybObN+tCkZEv7EBucxJiOSAToRtABQW6ep
+	 0n7m5lFWsDnhmluAunfuitJFHsmV/xA5AwBHESGB43+n6uLV18xDE3S9sGRN96u5Vw
+	 lL1nYUygi9dyJAN2ym3bHjw/OanxdKUd3LhEOHgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Davide Ornaghi <d.ornaghi97@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 313/325] netfilter: nft_fib: fix stale stack leak via the OIFNAME register
-Date: Tue, 16 Jun 2026 20:31:49 +0530
-Message-ID: <20260616145114.637186695@linuxfoundation.org>
+Subject: [PATCH 6.18 314/325] RDMA/umem: fix kernel-doc warnings
+Date: Tue, 16 Jun 2026 20:31:50 +0530
+Message-ID: <20260616145114.697012455@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -52,83 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davide Ornaghi <d.ornaghi97@gmail.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit ab185e0c4fb82dfba6fb86f8271e06f931d9c64c ]
+[ Upstream commit ff46d1392750444fab5ae5a0194764ffdc4ac0d2 ]
 
-For NFT_FIB_RESULT_OIFNAME the destination register is declared with
-len = IFNAMSIZ (four 32-bit registers), but on the lookup-fail,
-RTN_LOCAL and oif-mismatch paths nft_fib{4,6}_eval() only writes one
-register via "*dest = 0". The remaining three registers are left as
-whatever was on the stack in nft_do_chain()'s struct nft_regs, and a
-downstream expression that loads the register span can leak that
-uninitialised kernel stack to userspace.
+Add or correct kernel-doc comments to eliminate warnings:
 
-The NFTA_FIB_F_PRESENT existence check has the same shape: it is only
-meaningful for NFT_FIB_RESULT_OIF, yet it was accepted for any result type
-while the eval stores a single byte via nft_reg_store8(), leaving the rest
-of the declared span stale.
+Warning: include/rdma/ib_umem.h:104 function parameter 'biter' not
+ described in 'rdma_umem_for_each_dma_block'
+Warning: include/rdma/ib_umem.h:140 function parameter 'pgsz_bitmap' not
+ described in 'ib_umem_find_best_pgoff'
+Warning: include/rdma/ib_umem.h:141 No description found for return
+ value of 'ib_umem_find_best_pgoff'
 
-Fix both:
-
- - replace the bare "*dest = 0" in the eval with nft_fib_store_result(),
-   which strscpy_pad()s the whole IFNAMSIZ for OIFNAME (and is already
-   used on the other early-return path), and
-
- - restrict NFTA_FIB_F_PRESENT to NFT_FIB_RESULT_OIF and declare its
-   destination as a single u8, so the marked span matches the one byte
-   the eval writes.
-
-Fixes: f6d0cbcf09c5 ("netfilter: nf_tables: add fib expression")
-Suggested-by: Florian Westphal <fw@strlen.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Davide Ornaghi <d.ornaghi97@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-[ kept the tree's older `ip6_route_lookup()`/`rt6_info` IPv6 context and changed only `*dest = 0;` to `nft_fib_store_result(dest, priv, NULL);` ]
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://patch.msgid.link/20260224003120.3173892-1-rdunlap@infradead.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 15fe76e23615 ("RDMA/umem: Fix truncation for block sizes >= 4G")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/netfilter/nft_fib_ipv4.c |    2 +-
- net/ipv6/netfilter/nft_fib_ipv6.c |    2 +-
- net/netfilter/nft_fib.c           |    6 ++++++
- 3 files changed, 8 insertions(+), 2 deletions(-)
+ include/rdma/ib_umem.h |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/ipv4/netfilter/nft_fib_ipv4.c
-+++ b/net/ipv4/netfilter/nft_fib_ipv4.c
-@@ -128,7 +128,7 @@ void nft_fib4_eval(const struct nft_expr
- 		fl4.saddr = get_saddr(iph->daddr);
- 	}
- 
--	*dest = 0;
-+	nft_fib_store_result(dest, priv, NULL);
- 
- 	if (fib_lookup(nft_net(pkt), &fl4, &res, FIB_LOOKUP_IGNORE_LINKSTATE))
- 		return;
---- a/net/ipv6/netfilter/nft_fib_ipv6.c
-+++ b/net/ipv6/netfilter/nft_fib_ipv6.c
-@@ -192,7 +192,7 @@ void nft_fib6_eval(const struct nft_expr
- 
- 	lookup_flags = nft_fib6_flowi_init(&fl6, priv, pkt, oif, iph);
- 
--	*dest = 0;
-+	nft_fib_store_result(dest, priv, NULL);
- 	rt = (void *)ip6_route_lookup(nft_net(pkt), &fl6, pkt->skb,
- 				      lookup_flags);
- 	if (rt->dst.error)
---- a/net/netfilter/nft_fib.c
-+++ b/net/netfilter/nft_fib.c
-@@ -107,6 +107,12 @@ int nft_fib_init(const struct nft_ctx *c
- 		return -EINVAL;
- 	}
- 
-+	if (priv->flags & NFTA_FIB_F_PRESENT) {
-+		if (priv->result != NFT_FIB_RESULT_OIF)
-+			return -EINVAL;
-+		len = sizeof(u8);
-+	}
-+
- 	err = nft_parse_register_store(ctx, tb[NFTA_FIB_DREG], &priv->dreg,
- 				       NULL, NFT_DATA_VALUE, len);
- 	if (err < 0)
+--- a/include/rdma/ib_umem.h
++++ b/include/rdma/ib_umem.h
+@@ -94,6 +94,7 @@ static inline bool __rdma_umem_block_ite
+ /**
+  * rdma_umem_for_each_dma_block - iterate over contiguous DMA blocks of the umem
+  * @umem: umem to iterate over
++ * @biter: block iterator variable
+  * @pgsz: Page size to split the list into
+  *
+  * pgsz must be <= PAGE_SIZE or computed by ib_umem_find_best_pgsz(). The
+@@ -121,7 +122,7 @@ unsigned long ib_umem_find_best_pgsz(str
+  * ib_umem_find_best_pgoff - Find best HW page size
+  *
+  * @umem: umem struct
+- * @pgsz_bitmap bitmap of HW supported page sizes
++ * @pgsz_bitmap: bitmap of HW supported page sizes
+  * @pgoff_bitmask: Mask of bits that can be represented with an offset
+  *
+  * This is very similar to ib_umem_find_best_pgsz() except instead of accepting
+@@ -134,6 +135,9 @@ unsigned long ib_umem_find_best_pgsz(str
+  *
+  * If the pgoff_bitmask requires either alignment in the low bit or an
+  * unavailable page size for the high bits, this function returns 0.
++ *
++ * Returns: best HW page size for the parameters or 0 if none available
++ *   for the given parameters.
+  */
+ static inline unsigned long ib_umem_find_best_pgoff(struct ib_umem *umem,
+ 						    unsigned long pgsz_bitmap,
 
 
