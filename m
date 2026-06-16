@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226523D45D0;
-	Tue, 16 Jun 2026 18:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC103D45CB;
+	Tue, 16 Jun 2026 18:08:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633296; cv=none; b=EMTvnEUWteJJ1t2tPI7WJ+Zt19JtLhxRVx6EjMqYRuMlUgA+T/MUtp0yUASkfeJJS5QeVk5D26QfkaSb7XItrbBQkf7rjiSldkQaqkw8dug29jCoABkQRynKXpxsxTgaCL753+FQ/ZUquJ5QTlqLdO+X5p/+3PV20O/RaEImW9I=
+	t=1781633300; cv=none; b=HNhjcTfN0feJhBVxTIvAD+CEaN6ssZoTu+hCUgGW8G8VAfwZBHNMWWWgeKOGpeS4AYNdKHpEPM5ZHOs021nk/fRXs0c/euDwzi9A/zXiUpi2l3OXZT70I15hqP83UFF6QboIOUXOvzASxqCXuyQEWy7gMGvS6ARfZW/JnpSCsAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633296; c=relaxed/simple;
-	bh=hDH0mfDA1JcLkBjL5fCCAe0FQCt33o6bXN2O+8NX3xs=;
+	s=arc-20240116; t=1781633300; c=relaxed/simple;
+	bh=+u/zyOq3AHe331UweUAigjygqtWfeUGb8hea/PiUI4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RR1ZwxIzegI6dhMMYjpfcgaogyQ3n5O4IlPmaIq6g5Lt6mZ15WVMAjFWrW9zkxKW9dHJRSV3LKq8TR0qI4EdKc1aJvdqVY0v2sfQCDSXZt6wz7Xf2BFvJ7MRUibH5ow3uU9fsFp92LuGnlLte0pov8Ge3m7nSBJaasfSagqaHi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQyKtXW4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gPd5aC8Lsli3mT4hmpONJLEL4JbGUrmAMvvGRbuTtJm/kW0sEkApqJHtszMl0lnTLY3pBZi9P1cJxr6PZ8HxVmfxrgcZFAW8J7XGYWByv7FCMCMjLiY/9D7CmDqe1ckjD+8eTJ+tav8rkOPJINaLQstzER8Bit8mNZ0nYPhExVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/jsa4Nq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQyKtXW4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21EED1F000E9;
-	Tue, 16 Jun 2026 18:08:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/jsa4Nq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A78F1F000E9;
+	Tue, 16 Jun 2026 18:08:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633295;
-	bh=DzsiD6DjgAHegXiZWIUWuX4sSVRhgRqb53Hz0sD1MQ8=;
+	s=korg; t=1781633299;
+	bh=X7xz2iv3AiNOLtmd9H+zdzGLhcBc66YnyAxefFB/CaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YQyKtXW48dVAB5McDW7VJJmk+PqEKQBcc+7sIJEr+F40LgvakgX/xpacgxbIOkAB+
-	 OLcI9B1EOD1gVDtZ4Y5e4ZsVPOLsDEfX9fAYGIZHagK5T3dcAUxZbXNCxvED5x7DqE
-	 7tXoVMUoxTGNRzily406qGeAu7Jb2v5+tp/whafU=
+	b=c/jsa4NqD+L7txV3YIDjcTX3cL6eb3kHJK1w0VdgS+BdTWd6CGddLq0TdWXjbcFOu
+	 Z5csE6Qz8TOLTpxGqlEm0f5T8n6vEdhRfGrJQBdNmA0JArxMAY14xUIU6XB3nXqbfZ
+	 /UaJltB3cmpNFDr79S1EJYnzhKPgjTdXbV2j91N4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Halil Pasic <pasic@linux.ibm.com>,
+	Stanislav Fomichev <sdf.kernel@gmail.com>,
+	Breno Leitao <leitao@debian.org>,
 	Alexandra Winter <wintera@linux.ibm.com>,
-	Mahanta Jambigi <mjambigi@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 018/411] net/smc: Do not re-initialize smc hashtables
-Date: Tue, 16 Jun 2026 20:24:16 +0530
-Message-ID: <20260616145101.357038661@linuxfoundation.org>
+Subject: [PATCH 5.15 019/411] net/iucv: fix locking in .getsockopt
+Date: Tue, 16 Jun 2026 20:24:17 +0530
+Message-ID: <20260616145101.407519169@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -53,57 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 9e4389b0038781f19f97895186ed941ff8ac1678 ]
+[ Upstream commit 3589d20a666caf30ad100c960a2de7de390fce88 ]
 
-INIT_HLIST_HEAD(&smc_v*_hashinfo.ht) are called after smc_nl_init(),
-proto_register() and sock_register(). This can lead to smc_v*_hashinfo.ht
-being reset even though hash entries already exist and are being used,
-possibly resulting in a corrupted list.
+Mirror iucv_sock_setsockopt() and wrap the whole switch in
+lock_sock()/release_sock(). The pre-existing SO_MSGLIMIT-only lock
+becomes redundant and is removed.
 
-Remove unnecessary and dangerous re-initialisation of smc_v*_hashinfo.ht in
-smc_init(); it is implicitly initialised to zero anyhow. Add
-HLIST_HEAD_INIT to the definitions for clarity.
+Any AF_IUCV HIPER user can potentially crash the kernel by racing
+recvmsg() with getsockopt(SO_MSGSIZE): the SO_MSGSIZE arm dereferences
+iucv->hs_dev->mtu after iucv_sock_close() (called from the racing
+recvmsg()) has set hs_dev to NULL, producing a NULL pointer dereference
+oops.
 
-Fixes: f16a7dd5cf27 ("smc: netlink interface for SMC sockets")
-Suggested-by: Halil Pasic <pasic@linux.ibm.com>
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Acked-by: Halil Pasic <pasic@linux.ibm.com>
-Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
-Link: https://patch.msgid.link/20260521145639.10317-1-wintera@linux.ibm.com
+Suggested-by: Stanislav Fomichev <sdf.kernel@gmail.com>
+Fixes: 51363b8751a6 ("af_iucv: allow retrieval of maximum message size")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Tested-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://patch.msgid.link/20260521-af_iucv_fix2-v1-1-f16b1c510aa9@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/iucv/af_iucv.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 5425c46a2e7c71..6b60a5dd240dd1 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -123,10 +123,12 @@ static struct sock *smc_tcp_syn_recv_sock(const struct sock *sk,
+diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
+index e6cb3e1cbbf9b8..3188d719a2e42d 100644
+--- a/net/iucv/af_iucv.c
++++ b/net/iucv/af_iucv.c
+@@ -1533,7 +1533,7 @@ static int iucv_sock_getsockopt(struct socket *sock, int level, int optname,
+ 	struct sock *sk = sock->sk;
+ 	struct iucv_sock *iucv = iucv_sk(sk);
+ 	unsigned int val;
+-	int len;
++	int len, rc;
  
- static struct smc_hashinfo smc_v4_hashinfo = {
- 	.lock = __RW_LOCK_UNLOCKED(smc_v4_hashinfo.lock),
-+	.ht = HLIST_HEAD_INIT,
- };
+ 	if (level != SOL_IUCV)
+ 		return -ENOPROTOOPT;
+@@ -1546,26 +1546,34 @@ static int iucv_sock_getsockopt(struct socket *sock, int level, int optname,
  
- static struct smc_hashinfo smc_v6_hashinfo = {
- 	.lock = __RW_LOCK_UNLOCKED(smc_v6_hashinfo.lock),
-+	.ht = HLIST_HEAD_INIT,
- };
+ 	len = min_t(unsigned int, len, sizeof(int));
  
- int smc_hash_sk(struct sock *sk)
-@@ -2938,8 +2940,6 @@ static int __init smc_init(void)
- 		pr_err("%s: sock_register fails with %d\n", __func__, rc);
- 		goto out_proto6;
++	rc = 0;
++
++	lock_sock(sk);
+ 	switch (optname) {
+ 	case SO_IPRMDATA_MSG:
+ 		val = (iucv->flags & IUCV_IPRMDATA) ? 1 : 0;
+ 		break;
+ 	case SO_MSGLIMIT:
+-		lock_sock(sk);
+ 		val = (iucv->path != NULL) ? iucv->path->msglim	/* connected */
+ 					   : iucv->msglimit;	/* default */
+-		release_sock(sk);
+ 		break;
+ 	case SO_MSGSIZE:
+-		if (sk->sk_state == IUCV_OPEN)
+-			return -EBADFD;
++		if (sk->sk_state == IUCV_OPEN) {
++			rc = -EBADFD;
++			break;
++		}
+ 		val = (iucv->hs_dev) ? iucv->hs_dev->mtu -
+ 				sizeof(struct af_iucv_trans_hdr) - ETH_HLEN :
+ 				0x7fffffff;
+ 		break;
+ 	default:
+-		return -ENOPROTOOPT;
++		rc = -ENOPROTOOPT;
++		break;
  	}
--	INIT_HLIST_HEAD(&smc_v4_hashinfo.ht);
--	INIT_HLIST_HEAD(&smc_v6_hashinfo.ht);
++	release_sock(sk);
++
++	if (rc)
++		return rc;
  
- 	rc = smc_ib_register_client();
- 	if (rc) {
+ 	if (put_user(len, optlen))
+ 		return -EFAULT;
 -- 
 2.53.0
 
