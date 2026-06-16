@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B6B3BFE5A;
-	Tue, 16 Jun 2026 18:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8313BFE5A;
+	Tue, 16 Jun 2026 18:25:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781634301; cv=none; b=hP98t9y40zqQMJg6qSoj2cZJMCq1AJR5bk2GQPe8A9q2V9GV7Kz/jZbyIA03ZKAaah65EemQklMdwQ+wPYSXp/Q1DKT4TzII9dQDqv0fUQafvhSK5Gt+q7u5N128ueXikhxEaIMp8Sied4KLiEOxFQuYc8zCxAcdonhbB1wu4qQ=
+	t=1781634307; cv=none; b=U6TFJZkNDD9KAifh20oUFBzwrLqmdJmJ0NkSSd9Ir1ZoNPjatKZJzKQJiqZ9s1T2+ub9W85XmJZ4XTbHe8jMW0VKzcvpCCLXvclmOUSPI8bFWAv1bMn+d6OxPJYifNOgpQks9N5l6x5pYBA/IaBePfTWIGpVS/+tuhT4OXpKGcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781634301; c=relaxed/simple;
-	bh=EuQPfIaWeStx0kA9Y+KZIyPy1SKitUMVKefBOhzbIps=;
+	s=arc-20240116; t=1781634307; c=relaxed/simple;
+	bh=k+ijF8fAOvMNdFiTnNqFp7DfppmTMREx2TDTP0FpI7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nayJ5bBs3nL6D/lB6w1kp1HIQVDZjSMKfnYNykVBTemqg2Q0wBxXsgwRZ1NHMADFkVKVISSFkSCXxP0et12+cIFw6HLQjN63aqIerH4TFRINQGP+isTdQciYgk/4FPi1s+SabWerNo/7TCXu+2A7QNmxg0DwHjY3hrKm55lKXys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9Ee9Ot4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y4qxhh3nQiIq+5q48OZ8WeLb5o5uWPUAbUxftm/v/9eXVoc5rxN4VxJ/TbRIA81wEe/4VUc0Fj+2uTxwKDj4Mwr9mN3dlWh1WsJfweRWBUZGmtGl8W+bUqN/aiLQS5Ii+zVN0p2knS+JyYIm0j68H8L4BkzL9niW08RQvkZaVJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFlGtaP6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9Ee9Ot4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F081F000E9;
-	Tue, 16 Jun 2026 18:24:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFlGtaP6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 149F11F000E9;
+	Tue, 16 Jun 2026 18:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781634300;
-	bh=Ew2IUvP5/tAY0drFZO18RvNQ78s2blUi7BGxjLTeMjE=;
+	s=korg; t=1781634306;
+	bh=N5nxG92jzAspVdZAda+DwaekFAKptW+fcMrn/fWZhvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l9Ee9Ot43gqPDwio/D5W3l/yBjNLiGK1Ek55P6PlBmhdDj3yAkUngmCWOd4FWO3h4
-	 EEOLFxNcPxlK1CJjuRqSDtL5Q/TlO+y+AliQuYTpUkXFxsSYPBAiteaUKLgjni0nzK
-	 GIHgwEx7lAfdiWlBhjH/Gz4pSUlUKWslXMJ8Vk7o=
+	b=pFlGtaP655MEtu3qCsT6OzEUODSsuAUoRJaCnaDF026ZloK8yW/Eo60u9IdOtrUK0
+	 4PrPvQyfonZQuwx1pGwJKjShNr7T1oDuq46CKLc1wwG6Qgbj6f7ijeg8SiTICUJVpD
+	 Xxgs868xJhQKvIbt88slsV78V8fiJ7CwG+0WGQuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Guillermo=20Rodr=C3=ADguez?= <guille.rodriguez@gmail.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 5.15 222/411] i2c: stm32f7: fix timing computation ignoring i2c-analog-filter
-Date: Tue, 16 Jun 2026 20:27:40 +0530
-Message-ID: <20260616145112.603998958@linuxfoundation.org>
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 5.15 240/411] thunderbolt: Limit XDomain response copy to actual frame size
+Date: Tue, 16 Jun 2026 20:27:58 +0530
+Message-ID: <20260616145113.650066405@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -45,63 +44,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guillermo Rodríguez <guille.rodriguez@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit a124579c0763da7bc408f4cd7e8f606cadc94855 upstream.
+commit 4db2bd2ed4785dbadaeeab9f4e346b21ac5fb8eb upstream.
 
-stm32f7_i2c_compute_timing() uses i2c_dev->analog_filter to pick
-the analog filter delay, but i2c_dev->analog_filter is parsed from
-the "i2c-analog-filter" DT property only after the compute_timing
-loop in stm32f7_i2c_setup_timing(), so in practice the timing
-calculations always ignore the analog filter. On an STM32MP1 board
-with clock-frequency = <400000> and i2c-analog-filter set, measured
-SCL frequency was ~382 kHz.
+tb_xdomain_copy() copies req->response_size bytes from the received
+packet buffer regardless of the actual frame size.  When a short
+response arrives, this reads past the valid frame data in the DMA
+pool buffer into stale contents from previous transactions.
 
-This also affects (widens) the computed SDADEL range. At high bus
-clock speeds, this can select an SDADEL value that violates tVD;DAT
-(data valid time).
+Use the minimum of frame size and expected response size for the
+copy length.
 
-Fix by parsing "i2c-analog-filter" before the compute_timing loop.
-
-Fixes: 83c3408f7b9c ("i2c: stm32f7: support DT binding i2c-analog-filter")
-Signed-off-by: Guillermo Rodríguez <guille.rodriguez@gmail.com>
-Cc: <stable@vger.kernel.org> # v5.13+
-Acked-by: Alain Volmat <alain.volmat@foss.st.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260526091210.20383-1-guille.rodriguez@gmail.com
+Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-7
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-stm32f7.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/thunderbolt/xdomain.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-stm32f7.c
-+++ b/drivers/i2c/busses/i2c-stm32f7.c
-@@ -673,6 +673,9 @@ static int stm32f7_i2c_setup_timing(stru
- 	if (!of_property_read_bool(i2c_dev->dev->of_node, "i2c-digital-filter"))
- 		i2c_dev->dnf_dt = STM32F7_I2C_DNF_DEFAULT;
- 
-+	i2c_dev->analog_filter = of_property_read_bool(i2c_dev->dev->of_node,
-+						       "i2c-analog-filter");
+--- a/drivers/thunderbolt/xdomain.c
++++ b/drivers/thunderbolt/xdomain.c
+@@ -96,7 +96,9 @@ static bool tb_xdomain_match(const struc
+ static bool tb_xdomain_copy(struct tb_cfg_request *req,
+ 			    const struct ctl_pkg *pkg)
+ {
+-	memcpy(req->response, pkg->buffer, req->response_size);
++	size_t len = min_t(size_t, pkg->frame.size, req->response_size);
 +
- 	do {
- 		ret = stm32f7_i2c_compute_timing(i2c_dev, setup,
- 						 &i2c_dev->timing);
-@@ -694,9 +697,6 @@ static int stm32f7_i2c_setup_timing(stru
- 		return ret;
- 	}
- 
--	i2c_dev->analog_filter = of_property_read_bool(i2c_dev->dev->of_node,
--						       "i2c-analog-filter");
--
- 	dev_dbg(i2c_dev->dev, "I2C Speed(%i), Clk Source(%i)\n",
- 		setup->speed_freq, setup->clock_src);
- 	dev_dbg(i2c_dev->dev, "I2C Rise(%i) and Fall(%i) Time\n",
++	memcpy(req->response, pkg->buffer, len);
+ 	req->result.err = 0;
+ 	return true;
+ }
 
 
