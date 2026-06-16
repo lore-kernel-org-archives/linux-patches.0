@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD154502F;
-	Tue, 16 Jun 2026 16:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F71E4502F;
+	Tue, 16 Jun 2026 16:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628866; cv=none; b=egKkMIJRl9NthFsNG2Z8kLGkAGgDODvIMuSKS63l0kJByRVPj11msfnq+16OK9i2/cvsLpkLiK0Pzf+oqdHCkSo5EpuVfWNGNPCVv9xCBgDWxgOXxIfSPW+B4qK9sug1esDVbmybGhZQURtxPBQ/98/x5hmpwYYupd4hGsrErKA=
+	t=1781628871; cv=none; b=qf6Uhi7B86eAfqRavi/LVuqr0s3yZprkfSZGQA8r/qCa4pCZEZ6eTD903DHOtos1voNjmhcgx0WdNnf/UCcQ2dbQNq4B6g8wZZfyxg9Swfl/pEiGnuW446AOLlYD8MJtkdpWPvP8UGDffpiV42WhI/RzQnzC7nHpeXE7Zg1W1S4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628866; c=relaxed/simple;
-	bh=jGHrcqvzNjlyrxPEebr5giDjGZPFS0ySfzx9jksid5M=;
+	s=arc-20240116; t=1781628871; c=relaxed/simple;
+	bh=7p4Tw0tQzaDE5PXhOL2NVJx8JuhXHllhnvbttPVl9A8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QkEG0qKXZ6gmwfgDy08YhQfpXXxk/joM1kBsB7iYQeznVkvleXWO3hcH0SY6RUu4WHvUoAVJS7pspBN6SkfisYShJ0VEaO0dhnhiXHk5BuPyFSmQhjmTY1Y0W9K4IVHNIzuqwYnX670UwPHhZ8IvaHQL2TGtrgwxZRuFkt5OXjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9Zo8sD9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FoiDChBflVfDrosAyAIskeHFPb6lcc8SCRMYpvkchuKBoYaM0/D1f5cJWoDR0Vtpxc+7hVn0uXF2bRTDnKK7zb6BGxhRQ9fZiCYB3MCMjiYmtSF9+8HeAZX9sc5TE1ONlckodObmnKl7d7dLuWlTgU4aab6+Wi9a8Wul3QtRBc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C95X7x4D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9Zo8sD9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8EAD1F000E9;
-	Tue, 16 Jun 2026 16:54:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C95X7x4D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 099341F000E9;
+	Tue, 16 Jun 2026 16:54:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628864;
-	bh=nHF7M+gY4JS7zboJFE5h1zxjYVMI/iCpctJn0q3/4xI=;
+	s=korg; t=1781628869;
+	bh=o5wlOKnM13/xiF3pU1XwtZCwDMJtKyND3GxVfq24Yks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y9Zo8sD9SjC8OIR2EuOpaUzsCS/0dWmzTcASCe/AsEO02KUaDLqExrOxdPPVcjS4n
-	 077s836cvBN9ZPvVL3Wfax6UNBtWQAj6dTeRAd9oKCKVO8S60UGMRuMLpHi8QhrSz2
-	 duOQQXHegajIuVyAnqvI3PNqvq4zFOspMr/0M4+o=
+	b=C95X7x4DKvx9q5KxwL90QEaoSYsEQfCf9T9WXalARh5YQb0e8wYYSjSR+pkT9UNVd
+	 hBazRU0J73uOBHUhPupDdqD0zlTRDsMvFvCpojqP6R36ftxv6W5agD/iM117epY/0y
+	 cmuJYHpcZ+YO5lpF+qRMuXTKbGkyva5GJUv6iZ3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandru Hossu <hossu.alexandru@gmail.com>,
-	David Disseldorp <ddiss@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 175/452] scsi: target: iscsi: Validate CHAP_R length before base64 decode
-Date: Tue, 16 Jun 2026 20:26:42 +0530
-Message-ID: <20260616145127.074475162@linuxfoundation.org>
+	Berkant Koc <me@berkoc.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Subject: [PATCH 6.6 176/452] drm/hyperv: validate resolution_count and fix WIN8 fallback
+Date: Tue, 16 Jun 2026 20:26:43 +0530
+Message-ID: <20260616145127.125049467@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,92 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Hossu <hossu.alexandru@gmail.com>
+From: Berkant Koc <me@berkoc.com>
 
-commit 85db7391310b1304d2dc8ae3b0b12105a9567147 upstream.
+commit 13d33b9ef67066c77c84273fac5a1d3fde3533d1 upstream.
 
-chap_server_compute_hash() allocates client_digest as
-kzalloc(chap->digest_size) and then, for BASE64-encoded responses,
-passes chap_r directly to chap_base64_decode() without checking whether
-the input length could produce more than digest_size bytes of output.
+A SYNTHVID_RESOLUTION_RESPONSE with resolution_count > 64 walks past
+the supported_resolution[SYNTHVID_MAX_RESOLUTION_COUNT] array in the
+parse loop. Bound resolution_count against the array size, folded
+into the existing zero-check.
 
-chap_base64_decode() writes to the destination unconditionally as long
-as there is input to consume. With MAX_RESPONSE_LENGTH set to 128 and
-the "0b" prefix stripped by extract_param(), up to 127 base64 characters
-can reach the decoder. 127 characters decode to 95 bytes. For SHA-256
-(digest_size=32) this overflows client_digest by 63 bytes; for MD5
-(digest_size=16) the overflow is 79 bytes.
+When the WIN10 resolution probe fails, the caller in
+hyperv_connect_vsp() left hv->screen_*_max / preferred_* unpopulated,
+which sets mode_config.max_width / max_height to 0 and makes
+drm_internal_framebuffer_create() reject every userspace framebuffer
+with -EINVAL. The pre-WIN10 branch had the same gap for
+preferred_width / preferred_height. Use a single post-probe fallback
+guarded by screen_width_max == 0 so both paths converge on the WIN8
+defaults.
 
-The length check at line 344 fires after the write has already happened.
-
-The HEX branch in the same switch statement already validates the length
-up front. Apply the same approach to the BASE64 branch: strip trailing
-base64 padding characters, then reject any input whose data length
-exceeds DIV_ROUND_UP(digest_size * 4, 3) before calling the decoder.
-
-Stripping trailing '=' before the comparison handles both padded and
-unpadded encodings. chap_base64_decode() already returns early on '=',
-so the full original string is still passed to the decoder unchanged.
-
-The mutual CHAP path decodes CHAP_C into initiatorchg_binhex, which is
-kzalloc(CHAP_CHALLENGE_STR_LEN). extract_param() caps initiatorchg at
-CHAP_CHALLENGE_STR_LEN characters, so at most CHAP_CHALLENGE_STR_LEN-1
-base64 characters reach the decoder. The maximum decoded size,
-DIV_ROUND_UP((CHAP_CHALLENGE_STR_LEN-1) * 3, 4), is less than
-CHAP_CHALLENGE_STR_LEN, so no overflow is possible there. A comment is
-added at the call site to document this.
-
-Fixes: 1e5733883421 ("scsi: target: iscsi: Support base64 in CHAP")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexandru Hossu <hossu.alexandru@gmail.com>
-Reviewed-by: David Disseldorp <ddiss@suse.de>
-Link: https://patch.msgid.link/20260521151121.808477-1-hossu.alexandru@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Berkant Koc <me@berkoc.com>
+Assisted-by: Claude:claude-opus-4-7 berkoc-pipeline
+Fixes: 76c56a5affeb ("drm/hyperv: Add DRM driver for hyperv synthetic video device")
+Cc: stable@vger.kernel.org # 5.14+
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Link: https://patch.msgid.link/6945b22419c7d404b4954a113de2ac9c900dba93.1779542874.git.me@berkoc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/iscsi/iscsi_target_auth.c |   19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/hyperv/hyperv_drm_proto.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/target/iscsi/iscsi_target_auth.c
-+++ b/drivers/target/iscsi/iscsi_target_auth.c
-@@ -339,13 +339,22 @@ static int chap_server_compute_hash(
- 			goto out;
- 		}
- 		break;
--	case BASE64:
-+	case BASE64: {
-+		size_t r_len = strlen(chap_r);
-+
-+		while (r_len > 0 && chap_r[r_len - 1] == '=')
-+			r_len--;
-+		if (r_len > DIV_ROUND_UP(chap->digest_size * 4, 3)) {
-+			pr_err("Malformed CHAP_R: base64 payload too long\n");
-+			goto out;
-+		}
- 		if (chap_base64_decode(client_digest, chap_r, strlen(chap_r)) !=
- 		    chap->digest_size) {
- 			pr_err("Malformed CHAP_R: invalid BASE64\n");
- 			goto out;
- 		}
- 		break;
+--- a/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
++++ b/drivers/gpu/drm/hyperv/hyperv_drm_proto.c
+@@ -396,8 +396,11 @@ static int hyperv_get_supported_resoluti
+ 		return -ETIMEDOUT;
+ 	}
+ 
+-	if (msg->resolution_resp.resolution_count == 0) {
+-		drm_err(dev, "No supported resolutions\n");
++	if (msg->resolution_resp.resolution_count == 0 ||
++	    msg->resolution_resp.resolution_count >
++	    SYNTHVID_MAX_RESOLUTION_COUNT) {
++		drm_err(dev, "Invalid resolution count: %d\n",
++			msg->resolution_resp.resolution_count);
+ 		return -ENODEV;
+ 	}
+ 
+@@ -513,9 +516,13 @@ int hyperv_connect_vsp(struct hv_device
+ 		ret = hyperv_get_supported_resolution(hdev);
+ 		if (ret)
+ 			drm_err(dev, "Failed to get supported resolution from host, use default\n");
+-	} else {
 +	}
- 	default:
- 		pr_err("Could not find CHAP_R\n");
- 		goto out;
-@@ -472,6 +481,14 @@ static int chap_server_compute_hash(
- 		}
- 		break;
- 	case BASE64:
-+		/*
-+		 * No overflow check needed: initiatorchg_binhex is
-+		 * CHAP_CHALLENGE_STR_LEN bytes and extract_param() caps
-+		 * initiatorchg at CHAP_CHALLENGE_STR_LEN characters, so
-+		 * the decoded output is at most DIV_ROUND_UP(
-+		 * (CHAP_CHALLENGE_STR_LEN - 1) * 3, 4) bytes, which is
-+		 * less than CHAP_CHALLENGE_STR_LEN.
-+		 */
- 		initiatorchg_len = chap_base64_decode(initiatorchg_binhex,
- 						      initiatorchg,
- 						      strlen(initiatorchg));
++
++	if (!hv->screen_width_max) {
+ 		hv->screen_width_max = SYNTHVID_WIDTH_WIN8;
+ 		hv->screen_height_max = SYNTHVID_HEIGHT_WIN8;
++		hv->preferred_width = SYNTHVID_WIDTH_WIN8;
++		hv->preferred_height = SYNTHVID_HEIGHT_WIN8;
+ 	}
+ 
+ 	hv->mmio_megabytes = hdev->channel->offermsg.offer.mmio_megabytes;
 
 
