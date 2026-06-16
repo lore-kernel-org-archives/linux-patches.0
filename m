@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54ECA33688F;
-	Tue, 16 Jun 2026 16:10:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7AA3A16AC;
+	Tue, 16 Jun 2026 16:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626231; cv=none; b=tZ+u8Tt7u7jZCj4LdrYVDCOvHtAVlUaMG+H03mAF4Qs2W1yyw0FLblHdZAT4MJmXyrg+g8KQxB8ecXv3suUvQ3A6p4J9RqR+jWCx4AMmy/OIIygIqKLEmz5JlUUpJPP6tWjqOR+hANKy4TFrhvF3Xi7HCRx524hYi/sHWzZC1rE=
+	t=1781626236; cv=none; b=RHi15FIDXywBeMgPSDPNe/S77LURxtoqdCBVLkZZ0qBzfP6M24seDGj7zVfLIt93m7JjW0CiGWN98bcrzbSIaCu8iLDtqzrfT0n+DwqnWBSgujSAEnyGmvevB8314HQPBeJsfr8hdwvwdvVByA/TxeqHQZhP3Y+FATYs1AYgjso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626231; c=relaxed/simple;
-	bh=WBBUOAtnVe/F6A2e2LRQVnR7OWpEOphKOdbPuHQYboY=;
+	s=arc-20240116; t=1781626236; c=relaxed/simple;
+	bh=38xfIT9yF9hft8jR4b5CL920oKOoMpiEnJeqlrkhi7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YuLgtYHQec9zMmmW3nTJVdYCIddMn94z5lg50eTwsZ3LVl+aU/D5bR2CKbej2hJxdjJ0RBKWtpBeIjG1Yh72kYpDjmwJtJFuryGIGYRQHzsEPNsf0YG8GP75KW8UN/k1VKFJLTSC7EOUizoOwFeKHDxxmx9PqlpMntY+gthbKOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=luGJwVrM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BzX9nbfPhy3hVMfp+U6ytHanw1YhfEMs4LuzTfP+F8XGsFotPZUbSL3s//KADOwYL1uZKORol61fLaixOF/LaoR/D/CnN+FH811d4DsAqzk4rDUbvnThr2hA3wdTPxhQs9H2rcVQQlM+S9coElcju+poBawTEXB59kHbZMWNlW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cRBtwtDQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="luGJwVrM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4132A1F000E9;
-	Tue, 16 Jun 2026 16:10:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cRBtwtDQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72AB11F00A3A;
+	Tue, 16 Jun 2026 16:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626230;
-	bh=W9ql1PgQ96gYG/QtqeVfJT1k4jWf+Ollopx6+IqCPXg=;
+	s=korg; t=1781626235;
+	bh=5X1hb9bpNanHJ0+sFgPVLNz3l8qXzDv03lcCbRlY+vM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=luGJwVrMRP9WPIsVhHPQXZ3NY6a7gPaRtitR1I34xhrb/qZuSyOYrbfesA3V8PCyS
-	 0AhIiBhfXa/arlRGwnVUAXuojqxcKRliTWvf0CARG9c5u/Z0Cs69J9k0bp/XPiuAsj
-	 vTP06q4Sg/H52YufU/3VqHW/zA7ouB/cgTrobClI=
+	b=cRBtwtDQVitNxpnH+cMjvDpo4/VXz2dTd/vWeZr2iGH4xWnmBwuzfqMBonCxrzlv9
+	 eE/6vFKAK9EBfSZ5xYcH9Yqk04KB0OcERJgKpwnHs6/UYsyAiZGbH56xS/GrfgcdvQ
+	 HE+W4FmBl03VBaodhrVCyX1GN1BdSN2RPQIF4RVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 245/325] octeontx2-af: fix memory leak in rvu_setup_hw_resources()
-Date: Tue, 16 Jun 2026 20:30:41 +0530
-Message-ID: <20260616145110.687848302@linuxfoundation.org>
+	"DARKNAVY (@DarkNavyOrg)" <vr@darknavy.com>,
+	Simona Vetter <simona.vetter@ffwll.ch>,
+	syzbot+d7c9eed171647e421013@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Francis <David.Francis@amd.com>,
+	Puttimet Thammasaeng <pwn8official@gmail.com>,
+	Christian Koenig <Christian.Koenig@amd.com>,
+	Zhenghang Xiao <kipreyyy@gmail.com>
+Subject: [PATCH 6.18 282/325] drm/gem: Try to fix change_handle ioctl, attempt 4
+Date: Tue, 16 Jun 2026 20:31:18 +0530
+Message-ID: <20260616145112.778953805@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -51,49 +60,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Simona Vetter <simona.vetter@ffwll.ch>
 
-commit 09a5bf856aa759513afc4afd233d15bcc711b84e upstream.
+commit 1a4f03d22fb655e5f192244fb2c87d8066fcfca2 upstream.
 
-If rvu_npc_exact_init() fails in rvu_setup_hw_resources(), the function
-returns directly instead of jumping to the error handling path. This
-causes a resource leak for the previously initialized CGX, NPC, fwdata,
-and MSI-X states.
+[airlied: just added some comments on how to reenable]
+On-list because the cat is out of the bag and we're clearly not good
+enough to figure this out in private. The story thus far:
 
-Fix this by replacing the direct return with goto cgx_err to ensure
-proper cleanup.
+5e28b7b94408 ("drm: Set old handle to NULL before prime swap in
+change_handle") tried to fix a race condition between the gem_close and
+gem_change_handle ioctls, but got a few things wrong:
 
-The bug was first flagged by an experimental analysis tool we are
-developing for kernel memory-management bugs while analyzing
-v6.13-rc1. The tool is still under development and is not yet publicly
-available. Manual inspection confirms that the bug is still present in
-v7.1-rc6.
+- There's a confusion with the local variable handle, which is actually
+  the new handle, and so the two-stage trick was actually applied to the
+  wrong idr slot. 7164d78559b0 ("drm/gem: fix race between
+  change_handle and handle_delete") tried to fix that by adding yet
+  another code block, but forgot to add the error handling. Which meant
+  we now have two paths, both kinda wrong.
 
-An x86_64 allyesconfig build showed no new warnings. As we do not have
-access to Marvell OcteonTX2 RVU AF hardware to test with, no runtime
-testing was able to be performed.
+- dc366607c41c ("drm: Replace old pointer to new idr") tried to apply
+  another fix, but inconsistently, again because of the handle confusion
+  - this would be the right fix (kinda, somewhat, it's a mess) if we'd
+  do the two-stage approach for the new handle. Except that wasn't the
+  intent of the original fix.
 
-Fixes: 3571fe07a090 ("octeontx2-af: Drop rules for NPC MCAM")
+We also didn't have an igt merged for the original ioctl, which is a big
+no-go. This was attempted to address off-list in the original bugfix,
+and amd QA people claimed the bug was fixed now. Very clearly that's not
+the case. Here's my attempt to sort this out:
+
+- Rename the local variable to new_handle, the old aliasing with
+  args->handle is just too dangerously confusing.
+
+- Merge the gem obj lookup with the two-stage idr_replace so that we
+  avoid getting ourselves confused there.
+
+- This means we don't have a surplus temporary reference anymore, only
+  an inherited from the idr. A concurrent gem_close on the new_handle
+  could steal that. Fix that with the same two-stage approach
+  create_tail uses. This is a bit overkill as documented in the comment,
+  but I also don't trust my ability to understand this all correctly, so
+  go with the established pattern we have from other ioctls instead for
+  maximum paranoia.
+
+- Adjust error paths. I've tried to make the error and success paths
+  common, because they are identical except for which handle is removed
+  and on which we call idr_replace to (re)install the object again. But
+  that made things messier to read, so I've left it at the more verbose
+  version, which unfortunately hides the symmetry in the entire code
+  flow a bit.
+
+- While at it, also replace the 7 space indent with 1 tab.
+
+And finally, because I flat out don't trust my abilities here at all
+anymore:
+
+- Disable the ioctl until we have the igt situation and everything else
+  sorted out on-list and with full consensus.
+
+v2:
+
+Sashiko noticed that I didn't handle the error path for idr_replace
+correctly, it must be checked with IS_ERR_OR_NULL like in
+gem_handle_delete. So yeah, definitely should just the existing paths
+1:1 because this is endless amounts of tricky.
+
+Also add the Fixes: line for the original ioctl, I forgot that too.
+
+Reported-by: DARKNAVY (@DarkNavyOrg) <vr@darknavy.com>
+Signed-off-by: Simona Vetter <simona.vetter@ffwll.ch>
+Fixes: dc366607c41c ("drm: Replace old pointer to new idr")
+Cc: syzbot+d7c9eed171647e421013@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Link: https://patch.msgid.link/20260604143756.1524482-1-dawei.feng@seu.edu.cn
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: Edward Adam Davis <eadavis@qq.com>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 5e28b7b94408 ("drm: Set old handle to NULL before prime swap in change_handle")
+Cc: David Francis <David.Francis@amd.com>
+Cc: Puttimet Thammasaeng <pwn8official@gmail.com>
+Cc: Christian Koenig <Christian.Koenig@amd.com>
+Fixes: 7164d78559b0 ("drm/gem: fix race between change_handle and handle_delete")
+Cc: Zhenghang Xiao <kipreyyy@gmail.com>
+Fixes: 5e28b7b94408 ("drm: Set old handle to NULL before prime swap in change_handle")
+Reviewed-by: David Francis <David.Francis@amd.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://patch.msgid.link/20260604194437.1725314-1-simona.vetter@ffwll.ch
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_gem.c   |   73 ++++++++++++++++++++------------------------
+ drivers/gpu/drm/drm_ioctl.c |    3 +
+ 2 files changed, 36 insertions(+), 40 deletions(-)
 
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-@@ -1135,7 +1135,7 @@ cpt:
- 	err = rvu_npc_exact_init(rvu);
- 	if (err) {
- 		dev_err(rvu->dev, "failed to initialize exact match table\n");
--		return err;
-+		goto cgx_err;
- 	}
+--- a/drivers/gpu/drm/drm_gem.c
++++ b/drivers/gpu/drm/drm_gem.c
+@@ -965,12 +965,25 @@ err:
+ 	return ret;
+ }
  
- 	/* Assign MACs for CGX mapped functions */
++/*
++ * This ioctl is disabled for security reasons but also it failed
++ * to follow process in terms of adding testing in igt and verifying
++ * all the corner cases which made fixing security bugs in it even
++ * harder than necessary.
++ *
++ * To re-enable this ioctl
++ * 1. land working IGT tests in igt-gpu-tools that cover
++ *    all corner cases and race conditions.
++ * 2. handle idr_preload
++ * 3. handle == 0
++ * 4. handle == new_handle semantics definition.
++ */
+ int drm_gem_change_handle_ioctl(struct drm_device *dev, void *data,
+ 				struct drm_file *file_priv)
+ {
+ 	struct drm_gem_change_handle *args = data;
+-	struct drm_gem_object *obj, *idrobj;
+-	int handle, ret;
++	struct drm_gem_object *obj;
++	int new_handle, ret;
+ 
+ 	if (!drm_core_check_feature(dev, DRIVER_GEM))
+ 		return -EOPNOTSUPP;
+@@ -978,52 +991,36 @@ int drm_gem_change_handle_ioctl(struct d
+ 	/* idr_alloc() limitation. */
+ 	if (args->new_handle > INT_MAX)
+ 		return -EINVAL;
+-	handle = args->new_handle;
++	new_handle = args->new_handle;
+ 
+-	obj = drm_gem_object_lookup(file_priv, args->handle);
+-	if (!obj)
+-		return -ENOENT;
+-
+-	if (args->handle == handle) {
+-		ret = 0;
+-		goto out;
+-	}
++	if (args->handle == new_handle)
++		return 0;
+ 
+ 	mutex_lock(&file_priv->prime.lock);
+-
+ 	spin_lock(&file_priv->table_lock);
+-
+-       /* When create_tail allocs an obj idr, it needs to first alloc as NULL,
+-	* then later replace with the correct object. This is not necessary
+-	* here, because the only operations that could race are drm_prime
+-	* bookkeeping, and we hold the prime lock.
+-	*/
+-	ret = idr_alloc(&file_priv->object_idr, obj, handle, handle + 1,
++	ret = idr_alloc(&file_priv->object_idr, NULL, new_handle, new_handle + 1,
+ 			GFP_NOWAIT);
+ 
+-       if (ret < 0) {
+-	       spin_unlock(&file_priv->table_lock);
+-	       goto out_unlock;
+-       }
+-
+-       idrobj = idr_replace(&file_priv->object_idr, NULL, handle);
+-       if (idrobj != obj) {
+-	       idr_replace(&file_priv->object_idr, idrobj, handle);
+-	       idr_remove(&file_priv->object_idr, args->new_handle);
+-	       spin_unlock(&file_priv->table_lock);
+-	       ret = -ENOENT;
+-	       goto out_unlock;
+-       }
++	if (ret < 0) {
++		spin_unlock(&file_priv->table_lock);
++		goto out_unlock;
++	}
+ 
+-	idr_replace(&file_priv->object_idr, NULL, args->handle);
++	obj = idr_replace(&file_priv->object_idr, NULL, args->handle);
++	if (IS_ERR_OR_NULL(obj)) {
++		idr_remove(&file_priv->object_idr, new_handle);
++		spin_unlock(&file_priv->table_lock);
++		ret = -ENOENT;
++		goto out_unlock;
++	}
+ 	spin_unlock(&file_priv->table_lock);
+ 
+ 	if (obj->dma_buf) {
+ 		ret = drm_prime_add_buf_handle(&file_priv->prime, obj->dma_buf,
+-					       handle);
++					       new_handle);
+ 		if (ret < 0) {
+ 			spin_lock(&file_priv->table_lock);
+-			idr_remove(&file_priv->object_idr, handle);
++			idr_remove(&file_priv->object_idr, new_handle);
+ 			idr_replace(&file_priv->object_idr, obj, args->handle);
+ 			spin_unlock(&file_priv->table_lock);
+ 			goto out_unlock;
+@@ -1036,14 +1033,12 @@ int drm_gem_change_handle_ioctl(struct d
+ 
+ 	spin_lock(&file_priv->table_lock);
+ 	idr_remove(&file_priv->object_idr, args->handle);
+-	idrobj = idr_replace(&file_priv->object_idr, obj, handle);
++	obj = idr_replace(&file_priv->object_idr, obj, new_handle);
+ 	spin_unlock(&file_priv->table_lock);
+-	WARN_ON(idrobj != NULL);
++	WARN_ON(obj != NULL);
+ 
+ out_unlock:
+ 	mutex_unlock(&file_priv->prime.lock);
+-out:
+-	drm_gem_object_put(obj);
+ 
+ 	return ret;
+ }
+--- a/drivers/gpu/drm/drm_ioctl.c
++++ b/drivers/gpu/drm/drm_ioctl.c
+@@ -653,7 +653,8 @@ static const struct drm_ioctl_desc drm_i
+ 	DRM_IOCTL_DEF(DRM_IOCTL_GEM_CLOSE, drm_gem_close_ioctl, DRM_RENDER_ALLOW),
+ 	DRM_IOCTL_DEF(DRM_IOCTL_GEM_FLINK, drm_gem_flink_ioctl, DRM_AUTH),
+ 	DRM_IOCTL_DEF(DRM_IOCTL_GEM_OPEN, drm_gem_open_ioctl, DRM_AUTH),
+-	DRM_IOCTL_DEF(DRM_IOCTL_GEM_CHANGE_HANDLE, drm_gem_change_handle_ioctl, DRM_RENDER_ALLOW),
++	/* see drm_gem.c:drm_gem_change_handle_ioctl for why this is invalid */
++	DRM_IOCTL_DEF(DRM_IOCTL_GEM_CHANGE_HANDLE, drm_invalid_op, DRM_RENDER_ALLOW),
+ 
+ 	DRM_IOCTL_DEF(DRM_IOCTL_MODE_GETRESOURCES, drm_mode_getresources, 0),
+ 
 
 
