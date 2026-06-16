@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7244508F2;
-	Tue, 16 Jun 2026 16:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060FD3BE650;
+	Tue, 16 Jun 2026 16:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626428; cv=none; b=FGDYIf5RW/4zQ7IGv9nkFm/ldeEXdUShp+j0hpDmxYzafz93uqCfpjvu4YnyMhRykbo+WLfxPuu/LjSJjBjZPd1nZ9H7G+K1PfrGERjRli1yUQ3eJgnvf71y2g0kvj3E7LTCInQrcXdT1EqH2auN1elqTgDtLccd6CiKngjS+T0=
+	t=1781626434; cv=none; b=ktK/H5rOvI+u6DalgkPOGWl5O4DMV3u20xUOtqYmnctUthhLON1JAXaQcLnPs+hV9eOjPOcPQvFsoB6vVyRvHSUDhQ+3jrPKy6+1Ucfwz2KefVFb3lNQ1AllnjXguW8SSgbnAG7m7h4q8RYudPi8mUFG0dXTcdmGJOEojU3pk9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626428; c=relaxed/simple;
-	bh=mrX8ZOkDF6jFWbaGqwY4pdUdikAQmMI1LKwyoQZhtxY=;
+	s=arc-20240116; t=1781626434; c=relaxed/simple;
+	bh=diWRuINQzW8b3pnUZD8YpMFHgO1j4paAdqboD0HAxrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iquD+t04k2/RQHqKZJQFvGJLAXugQKiWAjETTmnn9KNgJLOZhHNvK33kitjkP1zDRxzJwbKQHbYRCEtfTVY0jP0GhHM+XTZHbAE6qnbT0z9cToXCePqExaDppANwdzwxlh28ZSD8GvYfSmp0U8ZpOr3ERd+iYS/2yMhdJIyx8vE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BU4vHcQu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IiEoLLAvXy6f5qiBBDtz9Jb6eEB1u0c88L2YqnDjX2y0Vn7SUjAy98eUczJs4kpqcQME5M3JDNJsl5ZKYNmj7B2WBa1tNXITGx+tAv53TKFhMWMml+k9RDphbCcZRvIUrBJaXrcKBUN+n1Hms+FLANopJMf7zNx6kgFY9nhKrgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R4MMsnwD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BU4vHcQu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB6971F000E9;
-	Tue, 16 Jun 2026 16:13:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R4MMsnwD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A36291F000E9;
+	Tue, 16 Jun 2026 16:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626427;
-	bh=WNobPzyWDdEETFgjhL5VNXzAzwAw/zJ9rjtoWe58rbQ=;
+	s=korg; t=1781626432;
+	bh=xMZPHxBU5fuDi++OT9IwTSLpdLmy4bTQYfgRhp2ZXow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BU4vHcQuHFKDWzzkKgxI/2nPt61GG507E/qeU5cFmInl++gUUqxGXVcvpX5z2s647
-	 Rb4CCNaVYqQOHSmfxXtT1x9aY1neyYZjUuWHnknnlyQWIBpQQHDf1SOvfhzkkBLlwh
-	 vuOZLIuBKx9BgmSZKUC+EmG2JKAq7KhrozMFeR/0=
+	b=R4MMsnwDn4Ml6ak5tyLTT9MfQSrtcg9OUZxJ1VKi3gEh4kSvpq+W9JN2lZU0JDphq
+	 L93UJdbjlV3C78XMF25IXx/mwQLHf0tONu1kCct9CbvmELssXUCu8agVjfMxnLHrUs
+	 23DWruWZwujszOZvcRcF4TCtZWTq+d6POX3xw4Kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>,
-	Thomas Hellstrom <thomas.hellstrom@linux.intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.18 286/325] drm/xe: Clear pending_disable before signaling suspend fence
-Date: Tue, 16 Jun 2026 20:31:22 +0530
-Message-ID: <20260616145113.012080502@linuxfoundation.org>
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Iago Toral Quiroga <itoral@igalia.com>
+Subject: [PATCH 6.18 287/325] drm/v3d: Wait for pending L2T flush before cleaning caches
+Date: Tue, 16 Jun 2026 20:31:23 +0530
+Message-ID: <20260616145113.068448839@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -46,52 +44,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-commit 54f2a0442a30fe7a0f6bc8345e81f8b2db8effbd upstream.
+commit abf888b03a9805a3bc37948a0df443553b1c0910 upstream.
 
-In the schedule-disable done path for suspend, we
-signal the suspend fence before clearing pending_disable.
+v3d_clean_caches() starts the cache-clean sequence by writing
+V3D_L2TCACTL_TMUWCF to V3D_CTL_L2TCACTL and then polling for that bit to
+clear. It does not, however, check for an L2T flush (L2TFLS) that may
+still be in flight from a previous operation.
 
-That wakeup can let suspend_wait complete and resume be queued
-immediately. The resume path may then reach enable_scheduling()
-while pending_disable is still set and hit the
-!exec_queue_pending_disable(q) assertion.
+On pre-V3D 7.1 hardware, kicking off the TMU write-combiner flush while an
+L2T flush is still pending can clobber bits in L2TCACTL and cause cache
+inconsistencies.
 
-Fix this by clearing pending_disable before signaling
-the suspend fence, so any resumed transition observes a
-consistent state.
+Poll for L2TFLS to clear before writing L2TCACTL on V3D < 7.1, ensuring
+any pending flush has completed before a new clean is issued.
 
-Fixes: 87651f31ae4e ("drm/xe/guc_submit: fix race around suspend_pending")
-Cc: stable@vger.kernel.org # v7.0+
-Signed-off-by: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>
-Reviewed-by: Thomas Hellstrom <thomas.hellstrom@linux.intel.com>
-Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Link: https://patch.msgid.link/20260603065217.3131066-3-tilak.tirumalesh.tangudu@intel.com
-(cherry picked from commit 4b1ae138b0e103d753773956a84eebc2edbf62c4)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: d223f98f0209 ("drm/v3d: Add support for compute shader dispatch.")
+Link: https://patch.msgid.link/20260530-v3d-fix-rpi4-freezes-v1-1-c2c8307da6ce@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_guc_submit.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/v3d/v3d_gem.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/gpu/drm/xe/xe_guc_submit.c
-+++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -2179,8 +2179,8 @@ static void handle_sched_done(struct xe_
- 		xe_gt_assert(guc_to_gt(guc), exec_queue_pending_disable(q));
+--- a/drivers/gpu/drm/v3d/v3d_gem.c
++++ b/drivers/gpu/drm/v3d/v3d_gem.c
+@@ -212,6 +212,14 @@ v3d_clean_caches(struct v3d_dev *v3d)
  
- 		if (q->guc->suspend_pending) {
--			suspend_fence_signal(q);
- 			clear_exec_queue_pending_disable(q);
-+			suspend_fence_signal(q);
- 		} else {
- 			if (exec_queue_banned(q) || check_timeout) {
- 				smp_wmb();
+ 	trace_v3d_cache_clean_begin(dev);
+ 
++	/* GFXH-1897: Ensure pending flushes complete before writing L2TCACTL */
++	if (v3d->ver < V3D_GEN_71) {
++		if (wait_for(!(V3D_CORE_READ(core, V3D_CTL_L2TCACTL) &
++			       V3D_L2TCACTL_L2TFLS), 100)) {
++			drm_err(dev, "Timeout waiting for L2T clean\n");
++		}
++	}
++
+ 	V3D_CORE_WRITE(core, V3D_CTL_L2TCACTL, V3D_L2TCACTL_TMUWCF);
+ 	if (wait_for(!(V3D_CORE_READ(core, V3D_CTL_L2TCACTL) &
+ 		       V3D_L2TCACTL_TMUWCF), 100)) {
 
 
