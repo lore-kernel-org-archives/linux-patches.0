@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59103ACA5A;
-	Tue, 16 Jun 2026 18:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368E4449EC3;
+	Tue, 16 Jun 2026 18:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781633803; cv=none; b=iLn1bf6fXw01d+fnNzRhCbCXTkHfrroHCi5Vr52k8STBRmo2mE6Dc2uLv0htm7S0xw/cmr/vtcxpJIAtEKuqpjPeVaihzlZd8EllowKkbxMq1JlJcntapKONDHfz6osUIx9xGjc7r6/wShMmdBh7d2pggrmFQ2HQNivOg/XIzvI=
+	t=1781633812; cv=none; b=BoAYiPZFwgs5Y79QDgYmg+4Li4x3F42BhFfmbzZu1BPdBea8GDCJ5eujCzUGnZSbUQ9mAhZegvUXtdaE7XA9Og5Z+kO+zq+zhz9qat5iyZPDceSzafM9yF62yJcBGloWsOH6S8dcVGRLyoVe1VmkATqEeu23RhkF6tZR+zCF2ME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781633803; c=relaxed/simple;
-	bh=39WYvcBsmWRoA1pQMXwVqaxqWcOEwNPhsALGlVkf/2M=;
+	s=arc-20240116; t=1781633812; c=relaxed/simple;
+	bh=pPB4+Zi7mu8bfCdCFYHFJww793+zvcwClMlgWtDmsBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tpi2//80scznNGJiHrSAomU8DCF1r3/4TSCjMSOeH4zS4CxPSD4aFKoT8E1GBTwt5Dk5IhPitScTIBA+qW85YnHeCmvgFTRAVopNO+zHVBqepD5SdRDTkUm9gZQk5gXePZ6p7Ev9XWiFT6AgTTuGZKHktdSPIDWvR+jX7eub7Lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzi/dRjm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SiCNNuSTMiB9mebgtfT1SeGNDoUpzBeHUMQQmuvVpwOpsPvBnAyQ+rB4fhNuQOp64Mgq5pZVJevl2bBYNZbUMqbMAk+7JUZkfL81zO9ZqnrMtwTmMBkM7TLikFj1fbTk3rS9kBc7mXBYGhzITWik9jHajHDYhYx0EzAZSdB1Yk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqIfzZJo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzi/dRjm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84D41F000E9;
-	Tue, 16 Jun 2026 18:16:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqIfzZJo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35BD1F00A3F;
+	Tue, 16 Jun 2026 18:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781633802;
-	bh=gAca+aF5VfpFweuayMUAkOgHNcXU73q5X2J0I1QeqLQ=;
+	s=korg; t=1781633807;
+	bh=5KpskUHR1WYhiXvmXslhq6CC9D1D5kPe4KC/5yJ6JYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wzi/dRjmXXhBURIOMXz6ousFw8sm6xc/Qbg+KIpduLRKCLsHZFwWnqisc0EYaxGQd
-	 Ydrqa9zw6v6Cz0QRNRKFeEhezIz+yYXKogHAfaX5Myq6dawgBRZZ6owDswD3Zs2lGN
-	 S5TYTr3l/o59DRZL8/x2cE21U7EHKNnUTLk827m0=
+	b=tqIfzZJoJVTThLSyoMAPVQs2BSaSbIW20diQFPjixKSC3GKuSDo/zDyIfX+/2rTH+
+	 TtuWc3tPj5k+x6bqchZe13tF55LDsrZldamUFrSfy/Tgtss3o6mi/KZu+myKr8ntzR
+	 VZseiGWWstfag52Y1qPYNMs4kjgAK8VFOT6GDy/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Lin <leo@depthfirst.com>,
-	David Ahern <dahern@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 148/411] ipv6: mcast: Fix use-after-free when processing MLD queries
-Date: Tue, 16 Jun 2026 20:26:26 +0530
-Message-ID: <20260616145108.277206656@linuxfoundation.org>
+	Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>,
+	Ox Yeh <ox.yeh@mediatek.com>,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>,
+	Jens Wiklander <jens.wiklander@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 149/411] tee: optee: prevent use-after-free when the client exits before the supplicant
+Date: Tue, 16 Jun 2026 20:26:27 +0530
+Message-ID: <20260616145108.329336326@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145100.376842714@linuxfoundation.org>
 References: <20260616145100.376842714@linuxfoundation.org>
@@ -54,102 +53,286 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
 
-commit 791c91dc7a9dfb2457d5e29b8216a6484b9c4b40 upstream.
+[ Upstream commit 387a926ee166814611acecb960207fe2f3c4fd3e ]
 
-When processing an MLD query, a pointer to the multicast group address
-is retrieved when initially parsing the packet. This pointer is later
-dereferenced without being reloaded despite the fact that the skb header
-might have been reallocated following the pskb_may_pull() calls, leading
-to a use-after-free [1].
+Commit 70b0d6b0a199 ("tee: optee: Fix supplicant wait loop") made the
+client wait as killable so it can be interrupted during shutdown or
+after a supplicant crash. This changes the original lifetime expectations:
+the client task can now terminate while the supplicant is still processing
+its request.
 
-Fix by copying the multicast group address when the packet is initially
-parsed.
+If the client exits first it removes the request from its queue and
+kfree()s it, while the request ID remains in supp->idr. A subsequent
+lookup on the supplicant path then dereferences freed memory, leading to
+a use-after-free.
 
-[1]
-BUG: KASAN: slab-use-after-free in __mld_query_work (net/ipv6/mcast.c:1512)
-Read of size 8 at addr ffff8881154b8e90 by task kworker/4:1/118
+Serialise access to the request with supp->mutex:
 
-Workqueue: mld mld_query_work
-Call Trace:
-<TASK>
-dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-print_address_description.constprop.0 (mm/kasan/report.c:378)
-print_report (mm/kasan/report.c:482)
-kasan_report (mm/kasan/report.c:595)
-__mld_query_work (net/ipv6/mcast.c:1512)
-mld_query_work (net/ipv6/mcast.c:1563)
-process_one_work (kernel/workqueue.c:3314)
-worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
-kthread (kernel/kthread.c:436)
-ret_from_fork (arch/x86/kernel/process.c:158)
-ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-</TASK>
+  * Hold supp->mutex in optee_supp_recv() and optee_supp_send() while
+    looking up and touching the request.
+  * Let optee_supp_thrd_req() notice that the client has terminated and
+    signal optee_supp_send() accordingly.
 
-[...]
+With these changes the request cannot be freed while the supplicant still
+has a reference, eliminating the race.
 
-Freed by task 118:
-kasan_save_stack (mm/kasan/common.c:57)
-kasan_save_track (mm/kasan/common.c:78)
-kasan_save_free_info (mm/kasan/generic.c:584)
-__kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
-kfree (./include/linux/kasan.h:235 mm/slub.c:2689 mm/slub.c:6251 mm/slub.c:6566)
-pskb_expand_head (net/core/skbuff.c:2335)
-__pskb_pull_tail (net/core/skbuff.c:2878 (discriminator 4))
-__mld_query_work (net/ipv6/mcast.c:1495 (discriminator 1))
-mld_query_work (net/ipv6/mcast.c:1563)
-process_one_work (kernel/workqueue.c:3314)
-worker_thread (kernel/workqueue.c:3397 kernel/workqueue.c:3478)
-kthread (kernel/kthread.c:436)
-ret_from_fork (arch/x86/kernel/process.c:158)
-ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-
-Fixes: 97300b5fdfe2 ("[MCAST] IPv6: Check packet size when process Multicast")
-Reported-by: Leo Lin <leo@depthfirst.com>
-Reviewed-by: David Ahern <dahern@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260603101811.612594-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 70b0d6b0a199 ("tee: optee: Fix supplicant wait loop")
+Signed-off-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+Tested-by: Ox Yeh <ox.yeh@mediatek.com>
+Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/mcast.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/tee/optee/supp.c | 107 +++++++++++++++++++++++++++------------
+ 1 file changed, 74 insertions(+), 33 deletions(-)
 
---- a/net/ipv6/mcast.c
-+++ b/net/ipv6/mcast.c
-@@ -1392,9 +1392,9 @@ out:
- static void __mld_query_work(struct sk_buff *skb)
+diff --git a/drivers/tee/optee/supp.c b/drivers/tee/optee/supp.c
+index d0f397c9024201..2386bbd38ce78b 100644
+--- a/drivers/tee/optee/supp.c
++++ b/drivers/tee/optee/supp.c
+@@ -10,7 +10,11 @@
+ struct optee_supp_req {
+ 	struct list_head link;
+ 
++	int id;
++
+ 	bool in_queue;
++	bool processed;
++
+ 	u32 func;
+ 	u32 ret;
+ 	size_t num_params;
+@@ -19,6 +23,9 @@ struct optee_supp_req {
+ 	struct completion c;
+ };
+ 
++/* It is temporary request used for revoked pending request in supp->idr. */
++#define INVALID_REQ_PTR ((struct optee_supp_req *)ERR_PTR(-EBADF))
++
+ void optee_supp_init(struct optee_supp *supp)
  {
- 	struct mld2_query *mlh2 = NULL;
--	const struct in6_addr *group;
- 	unsigned long max_delay;
- 	struct inet6_dev *idev;
-+	struct in6_addr group;
- 	struct ifmcaddr6 *ma;
- 	struct mld_msg *mld;
- 	int group_type;
-@@ -1426,8 +1426,8 @@ static void __mld_query_work(struct sk_b
- 		goto kfree_skb;
+ 	memset(supp, 0, sizeof(*supp));
+@@ -39,21 +46,23 @@ void optee_supp_release(struct optee_supp *supp)
+ {
+ 	int id;
+ 	struct optee_supp_req *req;
+-	struct optee_supp_req *req_tmp;
  
- 	mld = (struct mld_msg *)icmp6_hdr(skb);
--	group = &mld->mld_mca;
--	group_type = ipv6_addr_type(group);
-+	group = mld->mld_mca;
-+	group_type = ipv6_addr_type(&group);
+ 	mutex_lock(&supp->mutex);
  
- 	if (group_type != IPV6_ADDR_ANY &&
- 	    !(group_type&IPV6_ADDR_MULTICAST))
-@@ -1477,7 +1477,7 @@ static void __mld_query_work(struct sk_b
+-	/* Abort all request retrieved by supplicant */
++	/* Abort all request */
+ 	idr_for_each_entry(&supp->idr, req, id) {
+ 		idr_remove(&supp->idr, id);
+-		req->ret = TEEC_ERROR_COMMUNICATION;
+-		complete(&req->c);
+-	}
++		/* Skip if request was already marked invalid */
++		if (IS_ERR(req))
++			continue;
+ 
+-	/* Abort all queued requests */
+-	list_for_each_entry_safe(req, req_tmp, &supp->reqs, link) {
+-		list_del(&req->link);
+-		req->in_queue = false;
++		/* For queued requests where supplicant has not seen it */
++		if (req->in_queue) {
++			list_del(&req->link);
++			req->in_queue = false;
++		}
++
++		req->processed = true;
+ 		req->ret = TEEC_ERROR_COMMUNICATION;
+ 		complete(&req->c);
+ 	}
+@@ -100,8 +109,16 @@ u32 optee_supp_thrd_req(struct tee_context *ctx, u32 func, size_t num_params,
+ 
+ 	/* Insert the request in the request list */
+ 	mutex_lock(&supp->mutex);
++	req->id = idr_alloc(&supp->idr, req, 1, 0, GFP_KERNEL);
++	if (req->id < 0) {
++		mutex_unlock(&supp->mutex);
++		kfree(req);
++		return TEEC_ERROR_OUT_OF_MEMORY;
++	}
++
+ 	list_add_tail(&req->link, &supp->reqs);
+ 	req->in_queue = true;
++	req->processed = false;
+ 	mutex_unlock(&supp->mutex);
+ 
+ 	/* Tell an eventual waiter there's a new request */
+@@ -117,21 +134,43 @@ u32 optee_supp_thrd_req(struct tee_context *ctx, u32 func, size_t num_params,
+ 	if (wait_for_completion_killable(&req->c)) {
+ 		mutex_lock(&supp->mutex);
+ 		if (req->in_queue) {
++			/* Supplicant has not seen this request yet. */
++			idr_remove(&supp->idr, req->id);
+ 			list_del(&req->link);
+ 			req->in_queue = false;
++
++			ret = TEEC_ERROR_COMMUNICATION;
++		} else if (req->processed) {
++			/*
++			 * Supplicant has processed this request. Ignore the
++			 * kill signal for now and submit the result. req is not
++			 * in supp->reqs (removed by supp_pop_entry()) nor in
++			 * supp->idr (removed by supp_pop_req()).
++			 */
++			ret = req->ret;
++		} else {
++			/*
++			 * Supplicant is in the middle of processing this
++			 * request. Replace req with INVALID_REQ_PTR so that
++			 * the ID remains busy, causing optee_supp_send() to
++			 * fail on the next call to supp_pop_req() with this ID.
++			 */
++			idr_replace(&supp->idr, INVALID_REQ_PTR, req->id);
++			ret = TEEC_ERROR_COMMUNICATION;
  		}
++
+ 		mutex_unlock(&supp->mutex);
+-		req->ret = TEEC_ERROR_COMMUNICATION;
++	} else {
++		ret = req->ret;
+ 	}
+ 
+-	ret = req->ret;
+ 	kfree(req);
+ 
+ 	return ret;
+ }
+ 
+ static struct optee_supp_req  *supp_pop_entry(struct optee_supp *supp,
+-					      int num_params, int *id)
++					      int num_params)
+ {
+ 	struct optee_supp_req *req;
+ 
+@@ -153,10 +192,6 @@ static struct optee_supp_req  *supp_pop_entry(struct optee_supp *supp,
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
+-	*id = idr_alloc(&supp->idr, req, 1, 0, GFP_KERNEL);
+-	if (*id < 0)
+-		return ERR_PTR(-ENOMEM);
+-
+ 	list_del(&req->link);
+ 	req->in_queue = false;
+ 
+@@ -214,7 +249,6 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
+ 	struct optee *optee = tee_get_drvdata(teedev);
+ 	struct optee_supp *supp = &optee->supp;
+ 	struct optee_supp_req *req = NULL;
+-	int id;
+ 	size_t num_meta;
+ 	int rc;
+ 
+@@ -224,15 +258,11 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
+ 
+ 	while (true) {
+ 		mutex_lock(&supp->mutex);
+-		req = supp_pop_entry(supp, *num_params - num_meta, &id);
++		req = supp_pop_entry(supp, *num_params - num_meta);
++		if (req)
++			break; /* Keep mutex held. */
+ 		mutex_unlock(&supp->mutex);
+ 
+-		if (req) {
+-			if (IS_ERR(req))
+-				return PTR_ERR(req);
+-			break;
+-		}
+-
+ 		/*
+ 		 * If we didn't get a request we'll block in
+ 		 * wait_for_completion() to avoid needless spinning.
+@@ -245,6 +275,13 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
+ 			return -ERESTARTSYS;
+ 	}
+ 
++	/* supp->mutex held and req != NULL. */
++
++	if (IS_ERR(req)) {
++		mutex_unlock(&supp->mutex);
++		return PTR_ERR(req);
++	}
++
+ 	if (num_meta) {
+ 		/*
+ 		 * tee-supplicant support meta parameters -> requsts can be
+@@ -252,13 +289,11 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
+ 		 */
+ 		param->attr = TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INOUT |
+ 			      TEE_IOCTL_PARAM_ATTR_META;
+-		param->u.value.a = id;
++		param->u.value.a = req->id;
+ 		param->u.value.b = 0;
+ 		param->u.value.c = 0;
  	} else {
- 		for_each_mc_mclock(idev, ma) {
--			if (!ipv6_addr_equal(group, &ma->mca_addr))
-+			if (!ipv6_addr_equal(&group, &ma->mca_addr))
- 				continue;
- 			if (ma->mca_flags & MAF_TIMER_RUNNING) {
- 				/* gsquery <- gsquery && mark */
+-		mutex_lock(&supp->mutex);
+-		supp->req_id = id;
+-		mutex_unlock(&supp->mutex);
++		supp->req_id = req->id;
+ 	}
+ 
+ 	*func = req->func;
+@@ -266,6 +301,7 @@ int optee_supp_recv(struct tee_context *ctx, u32 *func, u32 *num_params,
+ 	memcpy(param + num_meta, req->param,
+ 	       sizeof(struct tee_param) * req->num_params);
+ 
++	mutex_unlock(&supp->mutex);
+ 	return 0;
+ }
+ 
+@@ -297,12 +333,17 @@ static struct optee_supp_req *supp_pop_req(struct optee_supp *supp,
+ 	if (!req)
+ 		return ERR_PTR(-ENOENT);
+ 
++	/* optee_supp_thrd_req() already returned to optee. */
++	if (IS_ERR(req))
++		goto failed_req;
++
+ 	if ((num_params - nm) != req->num_params)
+ 		return ERR_PTR(-EINVAL);
+ 
++	*num_meta = nm;
++failed_req:
+ 	idr_remove(&supp->idr, id);
+ 	supp->req_id = -1;
+-	*num_meta = nm;
+ 
+ 	return req;
+ }
+@@ -328,10 +369,9 @@ int optee_supp_send(struct tee_context *ctx, u32 ret, u32 num_params,
+ 
+ 	mutex_lock(&supp->mutex);
+ 	req = supp_pop_req(supp, num_params, param, &num_meta);
+-	mutex_unlock(&supp->mutex);
+-
+ 	if (IS_ERR(req)) {
+-		/* Something is wrong, let supplicant restart. */
++		mutex_unlock(&supp->mutex);
++		/* Something is wrong, let supplicant handel it. */
+ 		return PTR_ERR(req);
+ 	}
+ 
+@@ -355,9 +395,10 @@ int optee_supp_send(struct tee_context *ctx, u32 ret, u32 num_params,
+ 		}
+ 	}
+ 	req->ret = ret;
+-
++	req->processed = true;
+ 	/* Let the requesting thread continue */
+ 	complete(&req->c);
++	mutex_unlock(&supp->mutex);
+ 
+ 	return 0;
+ }
+-- 
+2.53.0
+
 
 
