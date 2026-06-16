@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E68A466B57;
-	Tue, 16 Jun 2026 16:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3BE43E4BA;
+	Tue, 16 Jun 2026 16:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627122; cv=none; b=XRHoRqpeUpWdgtg7BGgspuMe5de4EGxfqQWcZCTdD9drN3GJcp2Yf2mCcFG/LkTATqnF4pkv80W3P1T57yE5WEmMRLskAnSqNDSe/CP2nron/o5XBCtJspkd4uML/o1A+Sr8g9MdsTR7PdA5CxTmeqbaObBUnmxvnXIRdJ9IWnE=
+	t=1781627131; cv=none; b=U2klXLM+legrzAeiIwtYfEJNucznw2rbrDMFp2+UUhd/7+jPn+gOLEw5Qfi2LIGeG4ENu7sW6sVyCJaj82Licyj1zSdrXfSZ4WbLyb0XHIxhZvQaZifIrkMjmbFTNTJsTXNt/BgqptewvC7z6Qf3b7LCtjPqvYeZsq5GZ3cM71E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627122; c=relaxed/simple;
-	bh=sXmyHbCHU/J55V2L6EYxllGCC9voTopEehn5YDaKxmE=;
+	s=arc-20240116; t=1781627131; c=relaxed/simple;
+	bh=m7eY3Z9YArHfN3BKXMI6x/CP1+MdSm7vPvjk3lEbeMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UOPWNwAh4k2IEDDLMELqDlgI7AzoRhCbeedPejqHNPEAlA9hUgJDH0wF2wl0G+Blpi4E97jh1IET/+cR3TvmGca9rH2ZLbf/Rwt4P9Cwo9d7hfmfr7dPdvZ9XOU+mInr/SXYJCiJkTw29Rg+ctGoQjUMzCNv6m+B+HcCPFFoR70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CH+i/s/y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ooUIS5aj/BeeskUZWStzi/DvzwGjuGWg5Sq2ZVbJx9hTIxkBeQIW/XspuDuTIaBrcKTavtXybtzKAkvuuFI8LGChDd0kYm1vWWu45565yUQ/FsXJQPU5jyu6NaDgtw7CHz4mTdUa0OifUBG6wTgIw5nMbSUWyzPveHzNkcmkG9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrE0fCgI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CH+i/s/y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1545C1F000E9;
-	Tue, 16 Jun 2026 16:25:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrE0fCgI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187391F000E9;
+	Tue, 16 Jun 2026 16:25:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627121;
-	bh=TZjH+1nEXAfwzEO/PjB0D+grZF5fnd9JOVEjdWY01g0=;
+	s=korg; t=1781627130;
+	bh=cJIBC/+YkZjwOFslUDUrq6QsYUrthSUj0mdmyUh/qb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CH+i/s/yGxkhqTBeoOMcdXNrml3o2cOD+myWGyO2IHpelJpumCvTFsygjdsuZYYtF
-	 j9WEMYqVkv5R0NFD5VCPEwiDdHzlBaCQIuEgnfN5JOxgUOuBdeyxE7hrg0ev9F5w/j
-	 2U7GputOJW9u0HgHi3o2h94z4f859Tt0+6VOBe1Q=
+	b=qrE0fCgI30UE3/1X6D5Za6AP1VZZ27FmFJgouNSIQ304pBoD9G01jPqn859J3pK8U
+	 +OcQ5ODp7DszbTI2DA2Hv7Xs0JTF9/s1ezljAZSr5SBhPdtaja1gUs5cVyCF08bpx7
+	 xqxnz1YyKt0n5l9zRYVDdWYTuMsNLzv8MZeTGuTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.12 124/261] soc: qcom: ice: Fix race between qcom_ice_probe() and of_qcom_ice_get()
-Date: Tue, 16 Jun 2026 20:29:22 +0530
-Message-ID: <20260616145050.824938493@linuxfoundation.org>
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 098/261] netfilter: nf_conntrack: destroy stale expectfn expectations on unregister
+Date: Tue, 16 Jun 2026 20:28:56 +0530
+Message-ID: <20260616145049.581306411@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -51,150 +52,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit d922113ef91e6e7e8065e9070f349365341ba32e upstream.
+[ Upstream commit c3009418f9fa1dcb3eb86f4d8c92583537b5faa3 ]
 
-The current platform driver design causes probe ordering races with
-consumers (UFS, eMMC) due to ICE's dependency on SCM firmware calls. If ICE
-probe fails (missing ICE SCM or DT registers), devm_of_qcom_ice_get() loops
-with -EPROBE_DEFER, leaving consumers non-functional even when ICE should
-be gracefully disabled. devm_of_qcom_ice_get() doesn't know if the ICE
-driver probe has failed due to above reasons or it is waiting for the SCM
-driver.
+NAT helpers such as nf_nat_h323 store a raw pointer to module text in
+exp->expectfn (e.g. ip_nat_q931_expect). nf_ct_helper_expectfn_unregister()
+only unlinks the callback descriptor and never walks the expectation table,
+so an expectation pending at module removal survives with a dangling
+exp->expectfn into freed module text.
 
-Moreover, there is no devlink dependency between ICE and consumer drivers
-as 'qcom,ice' is not considered as a DT 'supplier'. So the consumer drivers
-have no idea of when the ICE driver is going to probe.
+When the expected connection arrives, init_conntrack() invokes
+exp->expectfn(), now a stale pointer into the unloaded module. Reproduced
+on a KASAN build by loading the H.323 helpers, creating a Q.931
+expectation, unloading nf_nat_h323, then connecting to the expected port:
 
-To address these issues, store the error pointer in a global xarray with
-ice node phandle as a key during probe in addition to the valid ice pointer
-and synchronize both qcom_ice_probe() and of_qcom_ice_get() using a mutex.
+ Oops: int3: 0000 [#1] SMP KASAN NOPTI
+ RIP: 0010:0xffffffffa06102d1
+  init_conntrack.isra.0 (net/netfilter/nf_conntrack_core.c:1862)
+  nf_conntrack_in (net/netfilter/nf_conntrack_core.c:2049)
+  ipv4_conntrack_local (net/netfilter/nf_conntrack_proto.c:223)
+  nf_hook_slow (net/netfilter/core.c:619)
+  __ip_local_out (net/ipv4/ip_output.c:120)
+  __tcp_transmit_skb (net/ipv4/tcp_output.c:1715)
+  tcp_connect (net/ipv4/tcp_output.c:4374)
+  tcp_v4_connect (net/ipv4/tcp_ipv4.c:345)
+  __sys_connect (net/socket.c:2167)
+ Modules linked in: nf_conntrack_h323 [last unloaded: nf_nat_h323]
 
-If the xarray entry is NULL, then it implies that the driver is not
-probed yet, so return -EPROBE_DEFER. If it has any error pointer, return
-that error pointer directly. Otherwise, add the devlink as usual and return
-the valid pointer to the consumer.
+Reaching the dangling state requires CAP_SYS_MODULE in the initial user
+namespace to remove a NAT helper that still has live expectations, so this
+is a robustness fix; leaving an expectation pointing at freed text is wrong
+regardless.
 
-Xarray is used instead of platform drvdata, since driver core frees the
-drvdata during probe failure. So it cannot be used to pass the error
-pointer to the consumers.
+Add nf_ct_helper_expectfn_destroy(), which walks the expectation table and
+drops every expectation whose ->expectfn matches the descriptor being torn
+down. Call it from each NAT helper's exit path after the existing RCU grace
+period, so no expectation outlives the code it points at and no extra
+synchronize_rcu() is introduced. With the fix, the same reproducer runs to
+completion without the Oops.
 
-Note that this change only fixes the standalone ICE DT node bindings and
-not the ones with 'ice' range embedded in the consumer nodes, where there
-is no issue.
-
-Fixes: 2afbf43a4aec ("soc: qcom: Make the Qualcomm UFS/SDCC ICE a dedicated driver")
-Reported-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Tested-by: Sumit Garg <sumit.garg@oss.qualcomm.com> # OP-TEE as TZ
-Acked-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Cc: stable@vger.kernel.org # 6.4
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260518-qcom-ice-fix-v7-1-2a595382185b@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f587de0e2feb ("[NETFILTER]: nf_conntrack/nf_nat: add H.323 helper port")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/ice.c |   38 +++++++++++++++++++++++++++++++-------
- 1 file changed, 31 insertions(+), 7 deletions(-)
+ include/net/netfilter/nf_conntrack_helper.h |  1 +
+ net/ipv4/netfilter/nf_nat_h323.c            |  2 ++
+ net/netfilter/nf_conntrack_helper.c         | 19 +++++++++++++++++++
+ net/netfilter/nf_nat_core.c                 |  2 ++
+ net/netfilter/nf_nat_sip.c                  |  1 +
+ 5 files changed, 25 insertions(+)
 
---- a/drivers/soc/qcom/ice.c
-+++ b/drivers/soc/qcom/ice.c
-@@ -16,6 +16,7 @@
- #include <linux/of.h>
- #include <linux/of_platform.h>
- #include <linux/platform_device.h>
-+#include <linux/xarray.h>
+diff --git a/include/net/netfilter/nf_conntrack_helper.h b/include/net/netfilter/nf_conntrack_helper.h
+index de2f956abf3480..24cf3d2d97450f 100644
+--- a/include/net/netfilter/nf_conntrack_helper.h
++++ b/include/net/netfilter/nf_conntrack_helper.h
+@@ -155,6 +155,7 @@ void nf_ct_helper_log(struct sk_buff *skb, const struct nf_conn *ct,
  
- #include <linux/firmware/qcom/qcom_scm.h>
- 
-@@ -50,6 +51,9 @@ struct qcom_ice {
- 	struct clk *core_clk;
- };
- 
-+static DEFINE_XARRAY(ice_handles);
-+static DEFINE_MUTEX(ice_mutex);
-+
- static bool qcom_ice_check_supported(struct qcom_ice *ice)
- {
- 	u32 regval = qcom_ice_readl(ice, QCOM_ICE_REG_VERSION);
-@@ -288,6 +292,8 @@ struct qcom_ice *of_qcom_ice_get(struct
- 		return qcom_ice_create(&pdev->dev, base);
- 	}
- 
-+	guard(mutex)(&ice_mutex);
-+
- 	/*
- 	 * If the consumer node does not provider an 'ice' reg range
- 	 * (legacy DT binding), then it must at least provide a phandle
-@@ -304,12 +310,13 @@ struct qcom_ice *of_qcom_ice_get(struct
- 		return ERR_PTR(-ENODEV);
- 	}
- 
--	ice = platform_get_drvdata(pdev);
--	if (!ice) {
--		dev_err(dev, "Cannot get ice instance from %s\n",
--			dev_name(&pdev->dev));
-+	ice = xa_load(&ice_handles, pdev->dev.of_node->phandle);
-+	if (IS_ERR_OR_NULL(ice)) {
- 		platform_device_put(pdev);
--		return ERR_PTR(-EPROBE_DEFER);
-+		if (!ice)
-+			return ERR_PTR(-EPROBE_DEFER);
-+		else
-+			return ice;
- 	}
- 
- 	ice->link = device_link_add(dev, &pdev->dev, DL_FLAG_AUTOREMOVE_SUPPLIER);
-@@ -374,24 +381,40 @@ EXPORT_SYMBOL_GPL(devm_of_qcom_ice_get);
- 
- static int qcom_ice_probe(struct platform_device *pdev)
- {
-+	unsigned long phandle = pdev->dev.of_node->phandle;
- 	struct qcom_ice *engine;
- 	void __iomem *base;
- 
-+	guard(mutex)(&ice_mutex);
-+
- 	base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(base)) {
- 		dev_warn(&pdev->dev, "ICE registers not found\n");
-+		/* Store the error pointer for devm_of_qcom_ice_get() */
-+		xa_store(&ice_handles, phandle, (__force void *)base, GFP_KERNEL);
- 		return PTR_ERR(base);
- 	}
- 
- 	engine = qcom_ice_create(&pdev->dev, base);
--	if (IS_ERR(engine))
-+	if (IS_ERR(engine)) {
-+		/* Store the error pointer for devm_of_qcom_ice_get() */
-+		xa_store(&ice_handles, phandle, engine, GFP_KERNEL);
- 		return PTR_ERR(engine);
-+	}
- 
--	platform_set_drvdata(pdev, engine);
-+	xa_store(&ice_handles, phandle, engine, GFP_KERNEL);
- 
- 	return 0;
+ void nf_ct_helper_expectfn_register(struct nf_ct_helper_expectfn *n);
+ void nf_ct_helper_expectfn_unregister(struct nf_ct_helper_expectfn *n);
++void nf_ct_helper_expectfn_destroy(const struct nf_ct_helper_expectfn *n);
+ struct nf_ct_helper_expectfn *
+ nf_ct_helper_expectfn_find_by_name(const char *name);
+ struct nf_ct_helper_expectfn *
+diff --git a/net/ipv4/netfilter/nf_nat_h323.c b/net/ipv4/netfilter/nf_nat_h323.c
+index faee20af485613..10e1b0837731b7 100644
+--- a/net/ipv4/netfilter/nf_nat_h323.c
++++ b/net/ipv4/netfilter/nf_nat_h323.c
+@@ -555,6 +555,8 @@ static void __exit nf_nat_h323_fini(void)
+ 	nf_ct_helper_expectfn_unregister(&q931_nat);
+ 	nf_ct_helper_expectfn_unregister(&callforwarding_nat);
+ 	synchronize_rcu();
++	nf_ct_helper_expectfn_destroy(&q931_nat);
++	nf_ct_helper_expectfn_destroy(&callforwarding_nat);
  }
  
-+static void qcom_ice_remove(struct platform_device *pdev)
+ /****************************************************************************/
+diff --git a/net/netfilter/nf_conntrack_helper.c b/net/netfilter/nf_conntrack_helper.c
+index a715304a53d8c2..9150bcfd7ca83b 100644
+--- a/net/netfilter/nf_conntrack_helper.c
++++ b/net/netfilter/nf_conntrack_helper.c
+@@ -283,6 +283,25 @@ void nf_ct_helper_expectfn_unregister(struct nf_ct_helper_expectfn *n)
+ }
+ EXPORT_SYMBOL_GPL(nf_ct_helper_expectfn_unregister);
+ 
++static bool expect_iter_expectfn(struct nf_conntrack_expect *exp, void *data)
 +{
-+	unsigned long phandle = pdev->dev.of_node->phandle;
++	const struct nf_ct_helper_expectfn *n = data;
 +
-+	guard(mutex)(&ice_mutex);
-+	xa_store(&ice_handles, phandle, NULL, GFP_KERNEL);
++	/* Relies on registered expectfn descriptors having unique ->expectfn
++	 * pointers, which holds for the in-tree NAT helpers.
++	 */
++	return exp->expectfn == n->expectfn;
 +}
 +
- static const struct of_device_id qcom_ice_of_match_table[] = {
- 	{ .compatible = "qcom,inline-crypto-engine" },
- 	{ },
-@@ -400,6 +423,7 @@ MODULE_DEVICE_TABLE(of, qcom_ice_of_matc
++/* Destroy expectations still pointing at @n->expectfn; call after the
++ * caller's RCU grace period so none outlives the (often modular) callback.
++ */
++void nf_ct_helper_expectfn_destroy(const struct nf_ct_helper_expectfn *n)
++{
++	nf_ct_expect_iterate_destroy(expect_iter_expectfn, (void *)n);
++}
++EXPORT_SYMBOL_GPL(nf_ct_helper_expectfn_destroy);
++
+ /* Caller should hold the rcu lock */
+ struct nf_ct_helper_expectfn *
+ nf_ct_helper_expectfn_find_by_name(const char *name)
+diff --git a/net/netfilter/nf_nat_core.c b/net/netfilter/nf_nat_core.c
+index 746acd124ea285..6ba7733355df39 100644
+--- a/net/netfilter/nf_nat_core.c
++++ b/net/netfilter/nf_nat_core.c
+@@ -1353,6 +1353,7 @@ static int __init nf_nat_init(void)
+ 		RCU_INIT_POINTER(nf_nat_hook, NULL);
+ 		nf_ct_helper_expectfn_unregister(&follow_master_nat);
+ 		synchronize_net();
++		nf_ct_helper_expectfn_destroy(&follow_master_nat);
+ 		unregister_pernet_subsys(&nat_net_ops);
+ 		kvfree(nf_nat_bysource);
+ 	}
+@@ -1370,6 +1371,7 @@ static void __exit nf_nat_cleanup(void)
+ 	RCU_INIT_POINTER(nf_nat_hook, NULL);
  
- static struct platform_driver qcom_ice_driver = {
- 	.probe	= qcom_ice_probe,
-+	.remove	= qcom_ice_remove,
- 	.driver = {
- 		.name = "qcom-ice",
- 		.of_match_table = qcom_ice_of_match_table,
+ 	synchronize_net();
++	nf_ct_helper_expectfn_destroy(&follow_master_nat);
+ 	kvfree(nf_nat_bysource);
+ 	unregister_pernet_subsys(&nat_net_ops);
+ }
+diff --git a/net/netfilter/nf_nat_sip.c b/net/netfilter/nf_nat_sip.c
+index 9fbfc6bff0c221..00838c0cc5bb28 100644
+--- a/net/netfilter/nf_nat_sip.c
++++ b/net/netfilter/nf_nat_sip.c
+@@ -655,6 +655,7 @@ static void __exit nf_nat_sip_fini(void)
+ 	RCU_INIT_POINTER(nf_nat_sip_hooks, NULL);
+ 	nf_ct_helper_expectfn_unregister(&sip_nat);
+ 	synchronize_rcu();
++	nf_ct_helper_expectfn_destroy(&sip_nat);
+ }
+ 
+ static const struct nf_nat_sip_hooks sip_hooks = {
+-- 
+2.53.0
+
 
 
