@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B52436493F;
-	Tue, 16 Jun 2026 16:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3232F745E;
+	Tue, 16 Jun 2026 16:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628281; cv=none; b=ffpvHywStofFi0mm11xE42aayTO2W0MmNnHrSrT5pu40ILoBrZ3IxnOxomqe527Yx79XptTkEboB5Nvm8M+1xeH1776oyhFejVy+o6QWlWW98g2nULHCczqIVfIDwxc4En4zDyQM0hwMOtLHWux8viPjqwlIWDgd37GQIZkkQls=
+	t=1781628286; cv=none; b=WR0jFbrpOqulVNKgJXgnkNBsQu6jfDRkmYFl11Y2MbwgAXR0rpqFFe/0Jg2Wmd4Run8A8WmU5kAbM/tCZt9dfUi6y/fnHP9AmsdmS6YtUIvvL59nQ6uuOkhxYFUUcLELvFm3bbvdBcfViay7gh3hSlBIQfXPxhGlfd9kWQPaHVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628281; c=relaxed/simple;
-	bh=0Wn+fwuRruur8S45AlFeIFv2gDQmKt8BFI5wM+LzDO8=;
+	s=arc-20240116; t=1781628286; c=relaxed/simple;
+	bh=tSTzz9YFu3qY40vaY2UhnIOYfmbt+LTbQvdmEQ+6iDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QWIVcI54BOoQag3LkWunUHjSZY0MD75kn18BZt8LH02zJcY32DdRCSozlsvMdTOpzeyF1CjAvzIJ0dJoPkKR9AmkO9Ln/CEiwluSzrC6n5kwMwYujSyskN5k2DxfcNVO7zvYET/VjNYhg87qXtS3VBmXHn/xzvdCikEL2tWo/6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=roLGj11D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GgKELJntIalY2G88EoharKz8X7mK7OvN5fPZ/8tEah1rYlCztVEq37dR6EnQBWtW01VE68eHbn+GpRZcxlfWBXh1J+9RhLNAnt/saRll1dk5GpkPFLFlA+TlPtTUzVV2cvY76X3m7pkOi3rsZl6OBZD1UdKruCE5H1jf0OHjric=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iy5W1n4Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="roLGj11D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37FFF1F000E9;
-	Tue, 16 Jun 2026 16:44:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iy5W1n4Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C513E1F000E9;
+	Tue, 16 Jun 2026 16:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628280;
-	bh=6+SskHldMZWryoZDFsGE3Kj64T5MfhL6AFdQRrR5pnQ=;
+	s=korg; t=1781628284;
+	bh=velsIa0PoEapjjZMVGg+B0C8V6ciU6jf50FEvGQwZhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=roLGj11DJKntYqAKlj3LUiJQAGy/QHmogtDTmndkOttO5ufFmVBGOjkIPQodvEAC6
-	 OD22Ez/IxNNK7bC2Xj/jhVukz8W5ttkaGkl+WOgZRLb5bwnwwig2INGR6oqUC3EHoM
-	 RrYH1cK/aVhZ/jk4Vb2EaelkpYL3qu7X57wpxlbk=
+	b=iy5W1n4QpS+5ks7z4q481STMzvCcoOtd/PSQD4f0o7yTryqfxYB6wWsR3xBEMYPpv
+	 l0upfmgddaNhDCmoaWWXVGHREUUge62Nbw3badcAvXsRYmkdTBcM4EkhlIffLOVGqW
+	 1eB3RQkYbBRBAZeM39FtOYm6byZkbJ/sRCF+dpy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	Javier Martinez Canillas <javierm@redhat.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	dri-devel@lists.freedesktop.org,
+	nouveau@lists.freedesktop.org,
+	amd-gfx@lists.freedesktop.org,
+	linux-fbdev@vger.kernel.org,
 	Wenshan Lan <jetlan9@163.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 065/452] drm/fbdev-helper: Set and clear VGA switcheroo client from fb_info
-Date: Tue, 16 Jun 2026 20:24:52 +0530
-Message-ID: <20260616145121.356199655@linuxfoundation.org>
+Subject: [PATCH 6.6 066/452] drm, fbcon, vga_switcheroo: Avoid race condition in fbcon setup
+Date: Tue, 16 Jun 2026 20:24:53 +0530
+Message-ID: <20260616145121.406910500@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -54,85 +59,140 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 02257549daf7ff839e2be6d4f3cac975e522fd7a ]
+[ Upstream commit eb76d0f5553575599561010f24c277cc5b31d003 ]
 
-Call vga_switcheroo_client_fb_set() with the PCI device from the
-instance of struct fb_info. All fbdev clients now run these calls.
-For non-PCI devices or drivers without vga-switcheroo, this does
-nothing. For i915 and radeon, it allows these drivers to use a
-common fbdev client.
+Protect vga_switcheroo_client_fb_set() with console lock. Avoids OOB
+access in fbcon_remap_all(). Without holding the console lock the call
+races with switching outputs.
 
-The device is the same as the one stored in struct drm_client and
-struct drm_fb_helper, so there is no difference in behavior. Some
-NULL-pointer checks are being removed, where those pointers cannot
-be NULL.
+VGA switcheroo calls fbcon_remap_all() when switching clients. The fbcon
+function uses struct fb_info.node, which is set by register_framebuffer().
+As the fb-helper code currently sets up VGA switcheroo before registering
+the framebuffer, the value of node is -1 and therefore not a legal value.
+For example, fbcon uses the value within set_con2fb_map() [1] as an index
+into an array.
 
-v4:
-- clarify call semantics for drm_fb_helper_unregister_info() (Javier)
+Moving vga_switcheroo_client_fb_set() after register_framebuffer() can
+result in VGA switching that does not switch fbcon correctly.
+
+Therefore move vga_switcheroo_client_fb_set() under fbcon_fb_registered(),
+which already holds the console lock. Fbdev calls fbcon_fb_registered()
+from within register_framebuffer(). Serializes the helper with VGA
+switcheroo's call to fbcon_remap_all().
+
+Although vga_switcheroo_client_fb_set() takes an instance of struct fb_info
+as parameter, it really only needs the contained fbcon state. Moving the
+call to fbcon initialization is therefore cleaner than before. Only amdgpu,
+i915, nouveau and radeon support vga_switcheroo. For all other drivers,
+this change does nothing.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240924071734.98201-3-tzimmermann@suse.de
-[ The variable 'dev' in the function drm_fb_helper_single_fb_probe() is
-unused; remove it in v6.6. ]
+Link: https://elixir.bootlin.com/linux/v6.17/source/drivers/video/fbdev/core/fbcon.c#L2942 # [1]
+Fixes: 6a9ee8af344e ("vga_switcheroo: initial implementation (v15)")
+Acked-by: Javier Martinez Canillas <javierm@redhat.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: nouveau@lists.freedesktop.org
+Cc: amd-gfx@lists.freedesktop.org
+Cc: linux-fbdev@vger.kernel.org
+Cc: <stable@vger.kernel.org> # v2.6.34+
+Link: https://patch.msgid.link/20251105161549.98836-1-tzimmermann@suse.de
+[ Minor context conflict resolved. ]
 Signed-off-by: Wenshan Lan <jetlan9@163.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_fb_helper.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/drm_fb_helper.c  | 14 --------------
+ drivers/video/fbdev/core/fbcon.c |  9 +++++++++
+ 2 files changed, 9 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
-index b507c1c008a3e9..eee7b56d441f71 100644
+index eee7b56d441f71..9691c93f19a0dd 100644
 --- a/drivers/gpu/drm/drm_fb_helper.c
 +++ b/drivers/gpu/drm/drm_fb_helper.c
-@@ -567,7 +567,7 @@ EXPORT_SYMBOL(drm_fb_helper_release_info);
+@@ -30,9 +30,7 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
- /**
-  * drm_fb_helper_unregister_info - unregister fb_info framebuffer device
-- * @fb_helper: driver-allocated fbdev helper, can be NULL
-+ * @fb_helper: driver-allocated fbdev helper, must not be NULL
-  *
-  * A wrapper around unregister_framebuffer, to release the fb_info
-  * framebuffer device. This must be called before releasing all resources for
-@@ -575,8 +575,12 @@ EXPORT_SYMBOL(drm_fb_helper_release_info);
+ #include <linux/console.h>
+-#include <linux/pci.h>
+ #include <linux/sysrq.h>
+-#include <linux/vga_switcheroo.h>
+ 
+ #include <drm/drm_atomic.h>
+ #include <drm/drm_drv.h>
+@@ -575,11 +573,6 @@ EXPORT_SYMBOL(drm_fb_helper_release_info);
   */
  void drm_fb_helper_unregister_info(struct drm_fb_helper *fb_helper)
  {
--	if (fb_helper && fb_helper->info)
--		unregister_framebuffer(fb_helper->info);
-+	struct fb_info *info = fb_helper->info;
-+	struct device *dev = info->device;
-+
-+	if (dev_is_pci(dev))
-+		vga_switcheroo_client_fb_set(to_pci_dev(dev), NULL);
-+	unregister_framebuffer(fb_helper->info);
+-	struct fb_info *info = fb_helper->info;
+-	struct device *dev = info->device;
+-
+-	if (dev_is_pci(dev))
+-		vga_switcheroo_client_fb_set(to_pci_dev(dev), NULL);
+ 	unregister_framebuffer(fb_helper->info);
  }
  EXPORT_SYMBOL(drm_fb_helper_unregister_info);
- 
-@@ -1668,8 +1672,8 @@ static int drm_fb_helper_find_sizes(struct drm_fb_helper *fb_helper,
- static int drm_fb_helper_single_fb_probe(struct drm_fb_helper *fb_helper)
+@@ -1673,7 +1666,6 @@ static int drm_fb_helper_single_fb_probe(struct drm_fb_helper *fb_helper)
  {
  	struct drm_client_dev *client = &fb_helper->client;
--	struct drm_device *dev = fb_helper->dev;
  	struct drm_fb_helper_surface_size sizes;
-+	struct fb_info *info;
+-	struct fb_info *info;
  	int ret;
  
  	ret = drm_fb_helper_find_sizes(fb_helper, &sizes);
-@@ -1687,9 +1691,11 @@ static int drm_fb_helper_single_fb_probe(struct drm_fb_helper *fb_helper)
+@@ -1691,12 +1683,6 @@ static int drm_fb_helper_single_fb_probe(struct drm_fb_helper *fb_helper)
  
  	strcpy(fb_helper->fb->comm, "[fbcon]");
  
-+	info = fb_helper->info;
-+
- 	/* Set the fb info for vgaswitcheroo clients. Does nothing otherwise. */
--	if (dev_is_pci(dev->dev))
--		vga_switcheroo_client_fb_set(to_pci_dev(dev->dev), fb_helper->info);
-+	if (dev_is_pci(info->device))
-+		vga_switcheroo_client_fb_set(to_pci_dev(info->device), info);
- 
+-	info = fb_helper->info;
+-
+-	/* Set the fb info for vgaswitcheroo clients. Does nothing otherwise. */
+-	if (dev_is_pci(info->device))
+-		vga_switcheroo_client_fb_set(to_pci_dev(info->device), info);
+-
  	return 0;
  }
+ 
+diff --git a/drivers/video/fbdev/core/fbcon.c b/drivers/video/fbdev/core/fbcon.c
+index 703c4e851612c8..d1ac4e45eea68e 100644
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -64,6 +64,7 @@
+ #include <linux/console.h>
+ #include <linux/string.h>
+ #include <linux/kd.h>
++#include <linux/pci.h>
+ #include <linux/slab.h>
+ #include <linux/fb.h>
+ #include <linux/fbcon.h>
+@@ -75,6 +76,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/crc32.h> /* For counting font checksums */
+ #include <linux/uaccess.h>
++#include <linux/vga_switcheroo.h>
+ #include <asm/irq.h>
+ 
+ #include "fbcon.h"
+@@ -2914,6 +2916,9 @@ void fbcon_fb_unregistered(struct fb_info *info)
+ 
+ 	console_lock();
+ 
++	if (info->device && dev_is_pci(info->device))
++		vga_switcheroo_client_fb_set(to_pci_dev(info->device), NULL);
++
+ 	fbcon_registered_fb[info->node] = NULL;
+ 	fbcon_num_registered_fb--;
+ 
+@@ -3047,6 +3052,10 @@ static int do_fb_registered(struct fb_info *info)
+ 		}
+ 	}
+ 
++	/* Set the fb info for vga_switcheroo clients. Does nothing otherwise. */
++	if (info->device && dev_is_pci(info->device))
++		vga_switcheroo_client_fb_set(to_pci_dev(info->device), info);
++
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
