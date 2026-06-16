@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484C63AA1BA;
-	Tue, 16 Jun 2026 17:57:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5A93043C8;
+	Tue, 16 Jun 2026 17:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632626; cv=none; b=acNJ8ZcI4eG9D2OC7zcZUVss/j2ADlaBJbGPr0s4AxDNksz4AlqtZHwsEu29ALnyc/06YWtiACrJNyaeT3Hp4+RUk5BQph6PtGS51kldbtjUBbP8T79E4mma6t5K+yYE9GmsvdlnGAz8bw5kFQI5WeAUIVJdL25LtRV27ovt6ZM=
+	t=1781632630; cv=none; b=OyQqmtuBAFutve8iGi8clZ7pzpdZPo0BaknZh7YIhgEgtas+B4+wPn0jtIuT1XMSxdYE03UlwNUnZa5378r65oRghSrUcb/74FgWoipMsoTIaaYbWoMrrEY6x87e17VMsosJsxaom57wV+ob+B184uNZncs2hE1sij3H0NOw5Hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632626; c=relaxed/simple;
-	bh=P/ZjwVMLCMeoefWtAOD8x411rLJS91LYJyqhG/n15iU=;
+	s=arc-20240116; t=1781632630; c=relaxed/simple;
+	bh=ByE6Sq139bZmIM0EHgPaRUb4gIfNjR8egGKBsdIBF8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gakzAgNIjXxQCzgniS3jpEqy8TFk/7rtegMTkiE6OGc+KrzOaOB/3YsVCzoQoBjZxB6muP4w1XQF3/KQdlZcOz4/0Z82E6XrJl8FtIKksuWRR0K3neurkqzjx1YXm22st1eyN0TcNmXCQWc/h0/aoN7rx7MgS8pGvluVUgjMdI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jCkAFRaM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gkp++rBe87COc9gg3IL6jJlcRAcSaN/2gAOLMse+zikcAtcWCn0oHKHMico0axOEZe4n5Xuf63nCD/XDDGjt/Xcg05i8eglQ7Z5eGRJUFhonkmgq5VV58hrEo8CiMSkQuTCYrlRkPjwWmXNe3H+GFAclz47jMvOZeB6O0eEgMak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RWPFIzML; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jCkAFRaM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30261F000E9;
-	Tue, 16 Jun 2026 17:57:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RWPFIzML"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10FF1F000E9;
+	Tue, 16 Jun 2026 17:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632624;
-	bh=YmessaQAvjp12kmWFc0Fek87G2LpFiyGQLWTl/lsstg=;
+	s=korg; t=1781632629;
+	bh=Pf+XPPv/nAv+QqgQCIhIDdsbmFRwOOWOQd7A5PWf9ZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jCkAFRaMYLpL5leMnfjohUqe/fvyhw3vBoDO5jRKEzKS7Y65cOTXvKdhKJSiK32Y4
-	 Is6AijjuxqiAZgf8S1TtmEuZdzxqBUVdaHz7227Itg18OevPGrhPsP3WGZyCj6Q4ur
-	 o7KJojtGRbGFoZp7nj8+gil/asb72/2QjdKsq7dY=
+	b=RWPFIzMLMbh5m4LtmqWLHg2KnYF3E4MQfMHXL60rZjFruwn6ec4nSAn+FUxi/iAAC
+	 nwh1q5WGCH2jvEOzrAhxyQlgiI5Xnim0FvGUupGO61h1g3EPSU3j7KR7ZRhsmMiuNF
+	 zxHK7NR/Rb3C9mo4q5LqE/at1/OqkmqJ4ROhikU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Sang-Heon Jeon <ekffu200098@gmail.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	David Hildenbrand <david@kernel.org>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 414/522] btrfs: remove fs_info argument from btrfs_sysfs_add_space_info_type()
-Date: Tue, 16 Jun 2026 20:29:21 +0530
-Message-ID: <20260616145145.409950967@linuxfoundation.org>
+Subject: [PATCH 6.1 405/522] mm/hugetlb_cma: round up per_node before logging it
+Date: Tue, 16 Jun 2026 20:29:12 +0530
+Message-ID: <20260616145145.013027685@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,75 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Sang-Heon Jeon <ekffu200098@gmail.com>
 
-[ Upstream commit 771af6ff72e0ed0eb8bf97e5ae4fa5094e0c5d1d ]
+[ Upstream commit 8f5ce56b76303c55b78a87af996e2e0f8535f979 ]
 
-We don't need it since we can grab fs_info from the given space_info.
-So remove the fs_info argument.
+When the user requests a total hugetlb CMA size without per-node
+specification, hugetlb_cma_reserve() computes per_node from
+hugetlb_cma_size and the number of nodes that have memory
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: a7449edf9614 ("btrfs: fix double free in create_space_info_sub_group() error path")
+        per_node = DIV_ROUND_UP(hugetlb_cma_size,
+                                nodes_weight(hugetlb_bootmem_nodes));
+
+The reservation loop later computes
+
+        size = round_up(min(per_node, hugetlb_cma_size - reserved),
+                          PAGE_SIZE << order);
+
+So the actually reserved per_node size is multiple of (PAGE_SIZE <<
+order), but the logged per_node is not rounded up, so it may be smaller
+than the actual reserved size.
+
+For example, as the existing comment describes, if a 3 GB area is
+requested on a machine with 4 NUMA nodes that have memory, 1 GB is
+allocated on the first three nodes, but the printed log is
+
+        hugetlb_cma: reserve 3072 MiB, up to 768 MiB per node
+
+Round per_node up to (PAGE_SIZE << order) before logging so that the
+printed log always matches the actual reserved size.  No functional change
+to the actual reservation size, as the following case analysis shows
+
+1. remaining (hugetlb_cma_size - reserved) >= rounded per_node
+ - AS-IS: min() picks unrounded per_node;
+    round_up() returns rounded per_node
+ - TO-BE: min() picks rounded per_node;
+    round_up() returns rounded per_node (no-op)
+2. remaining < unrounded per_node
+ - AS-IS: min() picks remaining;
+    round_up() returns round_up(remaining)
+ - TO-BE: min() picks remaining;
+    round_up() returns round_up(remaining)
+3. unrounded per_node <= remaining < rounded per_node
+ - AS-IS: min() picks unrounded per_node;
+    round_up() returns rounded per_node
+ - TO-BE: min() picks remaining;
+    round_up() returns round_up(remaining) equals rounded per_node
+
+Link: https://lore.kernel.org/20260422143353.852257-1-ekffu200098@gmail.com
+Fixes: cf11e85fc08c ("mm: hugetlb: optionally allocate gigantic hugepages using cma") # 5.7
+Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+Reviewed-by: Muchun Song <muchun.song@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ applied the single-line addition to mm/hugetlb.c since mm/hugetlb_cma.c didn't exist yet in 6.12 ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/space-info.c |    4 ++--
- fs/btrfs/sysfs.c      |    5 ++---
- fs/btrfs/sysfs.h      |    3 +--
- 3 files changed, 5 insertions(+), 7 deletions(-)
+ mm/hugetlb.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/btrfs/space-info.c
-+++ b/fs/btrfs/space-info.c
-@@ -259,7 +259,7 @@ static int create_space_info_sub_group(s
- 	sub_group->parent = parent;
- 	sub_group->subgroup_id = id;
- 
--	ret = btrfs_sysfs_add_space_info_type(fs_info, sub_group);
-+	ret = btrfs_sysfs_add_space_info_type(sub_group);
- 	if (ret) {
- 		kfree(sub_group);
- 		parent->sub_group[index] = NULL;
-@@ -288,7 +288,7 @@ static int create_space_info(struct btrf
- 			goto out_free;
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -7705,6 +7705,7 @@ void __init hugetlb_cma_reserve(int orde
+ 		 * let's allocate 1 GB on first three nodes and ignore the last one.
+ 		 */
+ 		per_node = DIV_ROUND_UP(hugetlb_cma_size, nr_online_nodes);
++		per_node = round_up(per_node, PAGE_SIZE << order);
+ 		pr_info("hugetlb_cma: reserve %lu MiB, up to %lu MiB per node\n",
+ 			hugetlb_cma_size / SZ_1M, per_node / SZ_1M);
  	}
- 
--	ret = btrfs_sysfs_add_space_info_type(info, space_info);
-+	ret = btrfs_sysfs_add_space_info_type(space_info);
- 	if (ret)
- 		return ret;
- 
---- a/fs/btrfs/sysfs.c
-+++ b/fs/btrfs/sysfs.c
-@@ -1618,13 +1618,12 @@ static const char *alloc_name(struct btr
-  * Create a sysfs entry for a space info type at path
-  * /sys/fs/btrfs/UUID/allocation/TYPE
-  */
--int btrfs_sysfs_add_space_info_type(struct btrfs_fs_info *fs_info,
--				    struct btrfs_space_info *space_info)
-+int btrfs_sysfs_add_space_info_type(struct btrfs_space_info *space_info)
- {
- 	int ret;
- 
- 	ret = kobject_init_and_add(&space_info->kobj, &space_info_ktype,
--				   fs_info->space_info_kobj, "%s",
-+				   space_info->fs_info->space_info_kobj, "%s",
- 				   alloc_name(space_info));
- 	if (ret) {
- 		kobject_put(&space_info->kobj);
---- a/fs/btrfs/sysfs.h
-+++ b/fs/btrfs/sysfs.h
-@@ -28,8 +28,7 @@ void __cold btrfs_exit_sysfs(void);
- int btrfs_sysfs_add_mounted(struct btrfs_fs_info *fs_info);
- void btrfs_sysfs_remove_mounted(struct btrfs_fs_info *fs_info);
- void btrfs_sysfs_add_block_group_type(struct btrfs_block_group *cache);
--int btrfs_sysfs_add_space_info_type(struct btrfs_fs_info *fs_info,
--				    struct btrfs_space_info *space_info);
-+int btrfs_sysfs_add_space_info_type(struct btrfs_space_info *space_info);
- void btrfs_sysfs_remove_space_info(struct btrfs_space_info *space_info);
- void btrfs_sysfs_update_devid(struct btrfs_device *device);
- 
 
 
