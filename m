@@ -1,52 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B443342847F;
-	Tue, 16 Jun 2026 15:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6266044B69C;
+	Tue, 16 Jun 2026 15:53:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625200; cv=none; b=uxPdSe+ZdIHKTRyBGOo9cuOzofeFOGrnrOA7jn61omiaxmTeQdu51I2KOcBUBT8Lv2KvaDk9ctcgHJ1NLU4mMEhnIswUYi3TGkuaDc0l8SYiExfWeSltkueJXn4jTlXBRYk1xLM8ErpMEZzFod4Rw7Jxm0Yc7ZALwtG1svT015I=
+	t=1781625206; cv=none; b=u1mq79kc7lS8Gtn6zAc0C1r2XD6ePMxmS8HZljcPegSdvMTybdeTTveg/e3S0ldmHRUHPe7Nv2z2I/nBC5b5GS+cyi8lbLS31JZzDo+Z/uBEbMiMx6FMxC0He7VU1oGVdWBn0rxFrgnhVnXYGPz69zysZuor2FZrf4DyexgRaUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625200; c=relaxed/simple;
-	bh=lOHOxH6UXht5Gt2Z0Oyrbz7iJcOnL6x43Jyeoh2IsXU=;
+	s=arc-20240116; t=1781625206; c=relaxed/simple;
+	bh=moFNeglWY3cZBjNVMCPayV7Kgz10kP8OVsmoH27JgFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CHyBC0+BAZodA59aG0uTtdslPPeNTNmgkCqpjzuFFpOxVR+htws55jFz4mfONf57GYlamglfhySZ+1Am3MSAN0DCComFdHOn9+Q7mkTDc6B04zuEgAHEL9B04yZKn7ZbV5MJQRLHdfQt8H231PlZdyAeP6XKBVyJWFD7QcSA7pQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cuKXBUqz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s1M1yeRxowRoAmjKkDt6Gzon2qrz7iuLFi90Hp0ukeF1kyYZxFBcqeWkNl0uBcnsAtviBIdxE1yr7aBkvdb/ZmLq01PdaKuralaRBjIzBKjW30OkPB9LWOR+M0odk/qH2Cr3omcxfCf41EWUxBvuR+mT5PjlUT61g5vDxfJkM7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2DWzKm9I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cuKXBUqz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FBE1F000E9;
-	Tue, 16 Jun 2026 15:53:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2DWzKm9I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A531F000E9;
+	Tue, 16 Jun 2026 15:53:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625199;
-	bh=yjcZv062jBe2DysJ1qCr+cHCs2MkFsb2jbyQmNqRRlw=;
+	s=korg; t=1781625205;
+	bh=zsQVQ4KwuONMlE8Byc+4rqcWmkqXWpoBbqVJJvms9l8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cuKXBUqzaNzHw51QYlfrZprozKVBPX8S8/7ypFKiJyG5rIgrv+4WrVNmpBP643ny2
-	 qtYws9WNN8N9iP9iHlvvfAqsK/3HNBbYzwtZ0OVxZvyiS1NV6Bko4gHU8Uu7G2VUdX
-	 i/V4hn/d9vIr2C2fsT3SsaK9nGnsh6wMIzHvj+Ic=
+	b=2DWzKm9I/30+AHV+aRu6X4ZIzDu+gAgZxLl3FWLygTlTdwKewJj4GrLT/0SkrMOvs
+	 vm4en3a8SiyhdrAN5UTH/OB0vrWRZEXcuuMnwjIKYVmPjDzf3gFZY8jAb8nLgTDS+T
+	 1fIJNagyWhldIqlTYQQr+rjDXqoCu6dG+spESb7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Tamir Shahar <tamirthesis@gmail.com>,
-	Amit Klein <aksecurity@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Song Liu <song@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Jiri Olsa <jolsa@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nam Cao <namcao@linutronix.de>,
+	Gabriele Monaco <gmonaco@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 097/325] tcp: restrict SO_ATTACH_FILTER to priv users
-Date: Tue, 16 Jun 2026 20:28:13 +0530
-Message-ID: <20260616145102.521142898@linuxfoundation.org>
+Subject: [PATCH 6.18 080/325] tools/rv: Fix substring match bug in monitor name search
+Date: Tue, 16 Jun 2026 20:27:56 +0530
+Message-ID: <20260616145101.711728433@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -65,56 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Gabriele Monaco <gmonaco@redhat.com>
 
-[ Upstream commit 5d39580f68e6ddeedd15e587282207489dfb3da2 ]
+[ Upstream commit a963fbf3166f2e178ac38b6c3c186a0c98092fb9 ]
 
-This patch restricts the use of SO_ATTACH_FILTER (cBPF) on TCP sockets
-to users with CAP_NET_ADMIN capability.
+__ikm_find_monitor_name() relies on strstr() to find a monitor by name,
+which fails if the target monitor is a substring of a previously listed
+monitor.
 
-This blocks potential side-channel attack where an unprivileged application
-attaches a filter to leak TCP sequence/acknowledgment numbers.
+Fix it by tokenizing the available_monitors file and matching full
+tokens instead.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: Tamir Shahar <tamirthesis@gmail.com>
-Reported-by: Amit Klein <aksecurity@gmail.com>
-Cc: Willem de Bruijn <willemb@google.com>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: Martin KaFai Lau <martin.lau@linux.dev>
-Cc: Eduard Zingerman <eddyz87@gmail.com>
-Cc: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: Song Liu <song@kernel.org>
-Cc: Yonghong Song <yonghong.song@linux.dev>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Cc: Stanislav Fomichev <sdf@fomichev.me>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: eba321a16fc6 ("tools/rv: Add support for nested monitors")
+Reviewed-by: Nam Cao <namcao@linutronix.de>
+Link: https://lore.kernel.org/r/20260514152055.229162-2-gmonaco@redhat.com
+Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/verification/rv/src/in_kernel.c | 48 ++++++++++++++-------------
+ 1 file changed, 25 insertions(+), 23 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 82470f59fa5c50..04fa0c18adc3e4 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -1457,6 +1457,11 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
- 	case SO_ATTACH_FILTER: {
- 		struct sock_fprog fprog;
+diff --git a/tools/verification/rv/src/in_kernel.c b/tools/verification/rv/src/in_kernel.c
+index d324538249d3ab..95eac9ab148468 100644
+--- a/tools/verification/rv/src/in_kernel.c
++++ b/tools/verification/rv/src/in_kernel.c
+@@ -58,38 +58,40 @@ static int __ikm_read_enable(char *monitor_name)
+  */
+ static int __ikm_find_monitor_name(char *monitor_name, char *out_name)
+ {
+-	char *available_monitors, container[MAX_DA_NAME_LEN+1], *cursor, *end;
+-	int retval = 1;
++	char *available_monitors, *cursor, *line;
++	int len = strlen(monitor_name);
++	int found = 0;
  
-+		if (sk_is_tcp(sk) &&
-+		    !sockopt_ns_capable(sock_net(sk)->user_ns, CAP_NET_ADMIN)) {
-+			ret = -EPERM;
-+			break;
+ 	available_monitors = tracefs_instance_file_read(NULL, "rv/available_monitors", NULL);
+ 	if (!available_monitors)
+ 		return -1;
+ 
+-	cursor = strstr(available_monitors, monitor_name);
+-	if (!cursor) {
+-		retval = 0;
+-		goto out_free;
+-	}
++	config_is_container = 0;
++	cursor = available_monitors;
++	while ((line = strsep(&cursor, "\n"))) {
++		char *colon = strchr(line, ':');
+ 
+-	for (; cursor > available_monitors; cursor--)
+-		if (*(cursor-1) == '\n')
+-			break;
+-	end = strstr(cursor, "\n");
+-	memcpy(out_name, cursor, end-cursor);
+-	out_name[end-cursor] = '\0';
+-
+-	cursor = strstr(out_name, ":");
+-	if (cursor)
+-		*cursor = '/';
+-	else {
+-		sprintf(container, "%s:", monitor_name);
+-		if (strstr(available_monitors, container))
+-			config_is_container = 1;
++		if (strcmp(line, monitor_name) && (!colon || strcmp(colon + 1, monitor_name)))
++			continue;
++
++		strncpy(out_name, line, 2 * MAX_DA_NAME_LEN);
++		out_name[2 * MAX_DA_NAME_LEN - 1] = '\0';
++
++		if (colon) {
++			out_name[colon - line] = '/';
++		} else {
++			/* If there are children, they are on the next line. */
++			line = strsep(&cursor, "\n");
++			if (line && !strncmp(line, monitor_name, len) && line[len] == ':')
++				config_is_container = 1;
 +		}
- 		ret = copy_bpf_fprog_from_user(&fprog, optval, optlen);
- 		if (!ret)
- 			ret = sk_attach_filter(&fprog, sk);
++
++		found = 1;
++		break;
+ 	}
+ 
+-out_free:
+ 	free(available_monitors);
+-	return retval;
++	return found;
+ }
+ 
+ /*
 -- 
 2.53.0
 
