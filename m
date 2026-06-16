@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51F53A8746;
-	Tue, 16 Jun 2026 16:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F43731D367;
+	Tue, 16 Jun 2026 16:24:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627069; cv=none; b=dIzmSAlc/NlBlp8M6ntnd/1z1X2YhYnZsPiflZC2MCrs8fnARwnTV4gZvhsXz3WGWbdAyIzHoou3EWgxjdFjz1RD51X/1TfQDICIRXTVoiGeu6bnWIoLJV1daz5we5DV9dzz9ymaJKE+bGia7wJbn2oR+69ydVL+tEPR7WKjpd4=
+	t=1781627074; cv=none; b=MgIa4Z/s+MB+c2AeA3dgrLKfx8cvw6KxJxU+1zVMTlnDUNNFXq080wrBcic2DsqDpJRfy/CxHS3+DlussvwtxmSa5bBSPY9EIZathEUoEYG0XLXMOmkNPPrs56HjFnAq4CVv0/plnhonsQEKRbXej6brd9p3a5ZYtDiO7/X1lQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627069; c=relaxed/simple;
-	bh=uO0KvMVUSYKsJ4ISK3bVyrbV0gCqicZIF79vQ4O4Kd0=;
+	s=arc-20240116; t=1781627074; c=relaxed/simple;
+	bh=OimzjarTHQfRTJiPKiVzCxodyoF7Pv+SYAz5cX1ZPes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AXYEkEMb26NgRBZV2JmWtUNXReEhS4DnBchcCy7n1oBVSXmOyqXwU56HMk+b9tVEHdupr1/3PV+L7KOChd0sstybx61SBkYKHAC8NkJmQJ0OvujE0dK34U0ERhbXmJ8hQ9v62w7fraI0sRpGq5aqDLQHu90yxtfBTatqgHGxiVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kiL0W4w8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B9/huff/mZLagwmKzIL7mjKvjO5397aM5lVF8Utvl1t+rfgKkoR94P3NEi/9ruDqCBV6pbLJIqXo/8x+cQSiGZ6GZGep3HLoXq0pER9HTTBrvNnmDLVQOEzOBZVWDxEM80nAT8panoIjFbfgfQcPbLStsZpNKUIpnSHKVO37nGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZk9AI8X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kiL0W4w8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F420D1F000E9;
-	Tue, 16 Jun 2026 16:24:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZk9AI8X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDD21F000E9;
+	Tue, 16 Jun 2026 16:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627067;
-	bh=2GjyZCyVf7iO96XdjM8uY2uzTYZdASwpzObOeQh5J5c=;
+	s=korg; t=1781627073;
+	bh=K7PuSwPkxyxg4N+IGMguTcXkFCJxjwjRlCbJCZVXWXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kiL0W4w8H9HvCHkopgHX1tBJiNDrN9d5xUeDsy/3M8+/6RCk9RaPrk19ko2dOhCK+
-	 O2LqOudmEx2zI1B/hOFz8XjtF7HIOqJc6SrjoUG2JMsSGqvD4vagIZsPxR7AjvYeM/
-	 Q3FJ1mA1FNSMG5BRByE/5cgwxbuoMjlnAbOggTag=
+	b=TZk9AI8X+FBGDf4Wgvry5q642hwyJMQmo+x0rODVNcNiOaojiOpQnqDhX315Ydvn9
+	 Q4oTruSmc/wkywoxyBr0K7ndDcBR5hPpreqHruzNdsbp5PBIUa7iNIQ7EVDTVAraqn
+	 mNZDaTQ5SPqVexR/y4G4scgaJJuiWnvgGS6zNgr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Zhou <eilaimemedsnaimel@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 097/261] netfilter: revalidate bridge ports
-Date: Tue, 16 Jun 2026 20:28:55 +0530
-Message-ID: <20260616145049.534848482@linuxfoundation.org>
+Subject: [PATCH 6.12 115/261] clk: samsung: gs101: Fix missing USI7_USI DIV clock in peric0_clk_regs
+Date: Tue, 16 Jun 2026 20:29:13 +0530
+Message-ID: <20260616145050.394131994@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -52,237 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit ccb9fd4b87538ccf19ccff78ee26700526d94867 ]
+[ Upstream commit 78ee734b36284d82454e87a92094fdb926985b47 ]
 
-ebt_redirect_tg() dereferences br_port_get_rcu() return without a
-NULL check, causing a kernel panic when the bridge port has been
-removed between the original hook invocation and an NFQUEUE
-reinject.
+In the peric0_clk_regs array, the divider register offset for USI6 was
+accidentally listed twice, while the divider for USI7 was omitted.
 
-A mere NULL check isn't sufficient, however.  As sashiko review
-points out userspace can not only remove the port from the bridge,
-it could also place the device in a different virtual device, e.g.
-macvlan.
+Missing this DIV register causes the USI7 clock divider setting to be
+lost and reset to its hardware default value during a suspend/resume
+cycle.
 
-If this happens, we must drop the packet, there is no way for us to
-reinject it into the bridge path.
+Replace the duplicated USI6 DIV entry with the correct USI7 DIV
+register.
 
-Switch to _upper API, we don't need the bridge port structure.
-Also, this fix keeps another bug intact:
-
-Both nfnetlink_log and nfnetlink_queue use CONFIG_BRIDGE_NETFILTER
-too aggressive, which prevents certain logging features when queueing
-in bridge family: NETFILTER_FAMILY_BRIDGE can be enabled while the old
-CONFIG_BRIDGE_NETFILTER cruft is off.
-
-Fixes tag is a common ancestor, this was always broken.
-
-Fixes: f350a0a87374 ("bridge: use rx_handler_data pointer to store net_bridge_port pointer")
-Reported-by: Ji'an Zhou <eilaimemedsnaimel@gmail.com>
-Assisted-by: Claude:claude-sonnet-4-6
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 893f133a040b ("clk: samsung: gs101: add support for cmu_peric0")
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://patch.msgid.link/20260505171457.1960837-1-visitorckw@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/ebt_dnat.c     |  4 +-
- net/bridge/netfilter/ebt_redirect.c | 16 +++++---
- net/netfilter/nfnetlink_log.c       | 23 +++++++++--
- net/netfilter/nfnetlink_queue.c     | 64 +++++++++++++++++++++++++----
- 4 files changed, 89 insertions(+), 18 deletions(-)
+ drivers/clk/samsung/clk-gs101.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bridge/netfilter/ebt_dnat.c b/net/bridge/netfilter/ebt_dnat.c
-index 3fda71a8579d13..73f185cccd63df 100644
---- a/net/bridge/netfilter/ebt_dnat.c
-+++ b/net/bridge/netfilter/ebt_dnat.c
-@@ -39,7 +39,9 @@ ebt_dnat_tg(struct sk_buff *skb, const struct xt_action_param *par)
- 			dev = xt_in(par);
- 			break;
- 		case NF_BR_PRE_ROUTING:
--			dev = br_port_get_rcu(xt_in(par))->br->dev;
-+			dev = netdev_master_upper_dev_get_rcu(xt_in(par));
-+			if (!dev) /* bridge port removed? */
-+				return EBT_DROP;
- 			break;
- 		default:
- 			dev = NULL;
-diff --git a/net/bridge/netfilter/ebt_redirect.c b/net/bridge/netfilter/ebt_redirect.c
-index 307790562b4929..83486cd4d564b1 100644
---- a/net/bridge/netfilter/ebt_redirect.c
-+++ b/net/bridge/netfilter/ebt_redirect.c
-@@ -24,12 +24,18 @@ ebt_redirect_tg(struct sk_buff *skb, const struct xt_action_param *par)
- 	if (skb_ensure_writable(skb, 0))
- 		return EBT_DROP;
- 
--	if (xt_hooknum(par) != NF_BR_BROUTING)
--		/* rcu_read_lock()ed by nf_hook_thresh */
--		ether_addr_copy(eth_hdr(skb)->h_dest,
--				br_port_get_rcu(xt_in(par))->br->dev->dev_addr);
--	else
-+	if (xt_hooknum(par) != NF_BR_BROUTING) {
-+		const struct net_device *dev;
-+
-+		dev = netdev_master_upper_dev_get_rcu(xt_in(par));
-+		if (!dev)
-+			return EBT_DROP;
-+
-+		ether_addr_copy(eth_hdr(skb)->h_dest, dev->dev_addr);
-+	} else {
- 		ether_addr_copy(eth_hdr(skb)->h_dest, xt_in(par)->dev_addr);
-+	}
-+
- 	skb->pkt_type = PACKET_HOST;
- 	return info->target;
- }
-diff --git a/net/netfilter/nfnetlink_log.c b/net/netfilter/nfnetlink_log.c
-index 3da32d2f68e092..cfd68bc005d26b 100644
---- a/net/netfilter/nfnetlink_log.c
-+++ b/net/netfilter/nfnetlink_log.c
-@@ -450,6 +450,23 @@ static int nfulnl_put_bridge(struct nfulnl_instance *inst, const struct sk_buff
- 	return -1;
- }
- 
-+#if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
-+static int nflog_put_master_ifindex(struct sk_buff *nlskb, int attr,
-+				    const struct net_device *dev)
-+{
-+	const struct net_device *upper;
-+
-+	if (dev && !netif_is_bridge_port(dev))
-+		return 0;
-+
-+	upper = netdev_master_upper_dev_get_rcu((struct net_device *)dev);
-+	if (upper && nla_put_be32(nlskb, attr, htonl(upper->ifindex)))
-+		return -EMSGSIZE;
-+
-+	return 0;
-+}
-+#endif
-+
- /* This is an inline function, we don't really care about a long
-  * list of arguments */
- static inline int
-@@ -504,8 +521,7 @@ __build_packet_message(struct nfnl_log_net *log,
- 			/* rcu_read_lock()ed by nf_hook_thresh or
- 			 * nf_log_packet.
- 			 */
--			    nla_put_be32(inst->skb, NFULA_IFINDEX_INDEV,
--					 htonl(br_port_get_rcu(indev)->br->dev->ifindex)))
-+			    nflog_put_master_ifindex(inst->skb, NFULA_IFINDEX_INDEV, indev))
- 				goto nla_put_failure;
- 		} else {
- 			int physinif;
-@@ -541,8 +557,7 @@ __build_packet_message(struct nfnl_log_net *log,
- 			/* rcu_read_lock()ed by nf_hook_thresh or
- 			 * nf_log_packet.
- 			 */
--			    nla_put_be32(inst->skb, NFULA_IFINDEX_OUTDEV,
--					 htonl(br_port_get_rcu(outdev)->br->dev->ifindex)))
-+			    nflog_put_master_ifindex(inst->skb, NFULA_IFINDEX_OUTDEV, outdev))
- 				goto nla_put_failure;
- 		} else {
- 			struct net_device *physoutdev;
-diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
-index 8518b620ae50ed..1b517cd2bb58cc 100644
---- a/net/netfilter/nfnetlink_queue.c
-+++ b/net/netfilter/nfnetlink_queue.c
-@@ -426,10 +426,47 @@ static bool nf_ct_drop_unconfirmed(const struct nf_queue_entry *entry, bool *is_
- 	return false;
- }
- 
-+static bool nf_bridge_port_valid(const struct net_device *dev)
-+{
-+	if (!dev)
-+		return true;
-+
-+	return netif_is_bridge_port(dev);
-+}
-+
-+/* queued skbs leave rcu protection.  We bump device refcount so that
-+ * the device cannot go away.  However, while packet was out the port
-+ * could have been removed from the bridge.
-+ *
-+ * Ensure in+outdev are still part of a bridge at reinject time.
-+ *
-+ * The device rx_handler_data could even be pointing at data that is
-+ * not a net_bridge_port structure.
-+ */
-+static bool nf_bridge_ports_valid(const struct nf_queue_entry *entry)
-+{
-+#if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
-+	if (!nf_bridge_port_valid(entry->physin) ||
-+	    !nf_bridge_port_valid(entry->physout))
-+		return false;
-+#endif
-+	if (entry->state.pf != PF_BRIDGE)
-+		return true;
-+
-+	if (!nf_bridge_port_valid(entry->state.in) ||
-+	    !nf_bridge_port_valid(entry->state.out))
-+		return false;
-+
-+	return true;
-+}
-+
- static void nfqnl_reinject(struct nf_queue_entry *entry, unsigned int verdict)
- {
- 	const struct nf_ct_hook *ct_hook;
- 
-+	if (!nf_bridge_ports_valid(entry))
-+		verdict = NF_DROP;
-+
- 	if (verdict == NF_ACCEPT ||
- 	    verdict == NF_REPEAT ||
- 	    verdict == NF_STOP) {
-@@ -622,6 +659,23 @@ static int nf_queue_checksum_help(struct sk_buff *entskb)
- 	return skb_checksum_help(entskb);
- }
- 
-+#if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
-+static int nfqnl_put_master_ifindex(struct sk_buff *nlskb, int attr,
-+				    const struct net_device *dev)
-+{
-+	const struct net_device *upper;
-+
-+	if (dev && !netif_is_bridge_port(dev))
-+		return 0;
-+
-+	upper = netdev_master_upper_dev_get_rcu((struct net_device *)dev);
-+	if (upper && nla_put_be32(nlskb, attr, htonl(upper->ifindex)))
-+		return -EMSGSIZE;
-+
-+	return 0;
-+}
-+#endif
-+
- static struct sk_buff *
- nfqnl_build_packet_message(struct net *net, struct nfqnl_instance *queue,
- 			   struct nf_queue_entry *entry,
-@@ -755,10 +809,7 @@ nfqnl_build_packet_message(struct net *net, struct nfqnl_instance *queue,
- 			 * netfilter_bridge) */
- 			if (nla_put_be32(skb, NFQA_IFINDEX_PHYSINDEV,
- 					 htonl(indev->ifindex)) ||
--			/* this is the bridge group "brX" */
--			/* rcu_read_lock()ed by __nf_queue */
--			    nla_put_be32(skb, NFQA_IFINDEX_INDEV,
--					 htonl(br_port_get_rcu(indev)->br->dev->ifindex)))
-+			    nfqnl_put_master_ifindex(skb, NFQA_IFINDEX_INDEV, indev))
- 				goto nla_put_failure;
- 		} else {
- 			int physinif;
-@@ -789,10 +840,7 @@ nfqnl_build_packet_message(struct net *net, struct nfqnl_instance *queue,
- 			 * netfilter_bridge) */
- 			if (nla_put_be32(skb, NFQA_IFINDEX_PHYSOUTDEV,
- 					 htonl(outdev->ifindex)) ||
--			/* this is the bridge group "brX" */
--			/* rcu_read_lock()ed by __nf_queue */
--			    nla_put_be32(skb, NFQA_IFINDEX_OUTDEV,
--					 htonl(br_port_get_rcu(outdev)->br->dev->ifindex)))
-+			    nfqnl_put_master_ifindex(skb, NFQA_IFINDEX_OUTDEV, outdev))
- 				goto nla_put_failure;
- 		} else {
- 			int physoutif;
+diff --git a/drivers/clk/samsung/clk-gs101.c b/drivers/clk/samsung/clk-gs101.c
+index fa628fab28ac4e..7cc6a1173d44fb 100644
+--- a/drivers/clk/samsung/clk-gs101.c
++++ b/drivers/clk/samsung/clk-gs101.c
+@@ -3602,7 +3602,7 @@ static const unsigned long peric0_clk_regs[] __initconst = {
+ 	CLK_CON_DIV_DIV_CLK_PERIC0_USI4_USI,
+ 	CLK_CON_DIV_DIV_CLK_PERIC0_USI5_USI,
+ 	CLK_CON_DIV_DIV_CLK_PERIC0_USI6_USI,
+-	CLK_CON_DIV_DIV_CLK_PERIC0_USI6_USI,
++	CLK_CON_DIV_DIV_CLK_PERIC0_USI7_USI,
+ 	CLK_CON_DIV_DIV_CLK_PERIC0_USI8_USI,
+ 	CLK_CON_BUF_CLKBUF_PERIC0_IP,
+ 	CLK_CON_GAT_CLK_BLK_PERIC0_UID_PERIC0_CMU_PERIC0_IPCLKPORT_PCLK,
 -- 
 2.53.0
 
