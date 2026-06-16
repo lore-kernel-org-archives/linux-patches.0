@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7663BFE5B;
-	Tue, 16 Jun 2026 16:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B4E3876CF;
+	Tue, 16 Jun 2026 16:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628726; cv=none; b=mTXGI1rU5/qCW969ut4UNS3RvJ93J7gQ4gO5t55bYJAcw5mbwqLu0ji5TkGdwUnXFysbKLNso/vRLDOJTMr0fbIOnDiR7QpGSIIB6wkkkQYK9RwyA8dS0aS3OaXeR7xRzmbZ18FST5wHw4muCNtV+1oc0Gpfr4JHnsYqr1YYhR8=
+	t=1781628731; cv=none; b=hLbIxHOoNhT5CMdHtTY6KDyRzG9DjbX1kgPw2HQO8GqTuyRCFs3ODrDNYEdVLXSAZSmvyVQRFBjIlalHdyWxq887GOCFypIMHtOpdDFVPzG7z6DIsCjRfs5WuvK2yPIcBvfomwOVMiDdsJ3B+VAYaxo1tZN1gDhwDcB8XCFmV3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628726; c=relaxed/simple;
-	bh=J7338RDpNNyVtmhMPFTkWqqMf8clmQjVO5U6p43NsHQ=;
+	s=arc-20240116; t=1781628731; c=relaxed/simple;
+	bh=QTX29ZhlWp5yWZtiP4ZhTaJAeF577qO3H+sOcN5meto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=REfiFD35Yq6k0ZRKfxuCoV7rj+ipaHsf7mNk8Z+Bbofgt9OxfzIMJNjxdTQ0PheJ4MZjYoXgI+lERAgRaBq1yHG/BKFlN61/sTNmK0Dhye+yE1DAjLSCP9WDeNuaV7wTxw4U2dfxeC3LVnGfkERSifNMT76n1ASEwii4CO5aORw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cslxy6pD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=drFFdcvRexVI5YmmUw93OCYMiMsDsDFNVms9BJEr/GPM1DFW5CFeVBAVQMenmikuLtvUjK2FCXPyv2lWDXbnT2narq24/Au5Kx+EWgYJS6P71LJhfc8Dv9XMLmkMFqbftyJlFWpVYd5KVvU1y0SKeWtxfYXUs9uU5/qVtT7qx0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wlr+QrwE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cslxy6pD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F111F000E9;
-	Tue, 16 Jun 2026 16:52:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wlr+QrwE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618E41F000E9;
+	Tue, 16 Jun 2026 16:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628724;
-	bh=6S9PjM9qt2a3hyeZ1KHGv5IceEHUWVplOxubH8L1cn4=;
+	s=korg; t=1781628730;
+	bh=tdO6y7CFGxmk/p2f6unzf5q2XX0KmWLYw+wkIyYHv1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cslxy6pDfxpKRMZBjHP4B0CdV6kfuCYfq1yT4Fd70Hb0zyTn7f0C/KAMwmm46Mxl8
-	 xwcdjYKbaLQY610VAk71HHot8phmRcACjCOpG+JiYrU4x63iHfdgHHKrTZg09c7aRh
-	 bYWXNFYs+d2J+XYOgMk18d7MAlsqdJ0YhHk7D5lc=
+	b=wlr+QrwEQoQpGor/NCm0ea67meFPY4S2sqOMUD8hkukZ39w00SXxC9SHK46b78Fru
+	 rhEYrnxZL9YhjYo4j+RVaLVYUxCHb+yVk8DLwuhwKSWU11N61w94ewCuU2oRosmDEG
+	 dw6RTGc0VuNET9WPxSy6A8kif6OFaqMFweg33z/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko <sashiko-bot@kernel.org>,
-	Felix Gu <ustc.gu@gmail.com>,
+	Salah Triki <salah.triki@gmail.com>,
 	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Maxwell Doose <m32285159@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.6 118/452] iio: buffer: hw-consumer: fix use-after-free in error path
-Date: Tue, 16 Jun 2026 20:25:45 +0530
-Message-ID: <20260616145123.904709591@linuxfoundation.org>
+Subject: [PATCH 6.6 109/452] iio: dac: max5821: fix return value check in powerdown sync
+Date: Tue, 16 Jun 2026 20:25:36 +0530
+Message-ID: <20260616145123.476911715@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -49,58 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Salah Triki <salah.triki@gmail.com>
 
-commit 6f5ed4f2c7c83f33344e0ba179f72a12e5dad4a4 upstream.
+commit d0a228d903425e653f18a4341e60c0538afb6d41 upstream.
 
-In the err_put_buffers cleanup path of iio_hw_consumer_alloc(), the code
-was using list_for_each_entry() to iterate through buffers while calling
-iio_buffer_put() which can free the current buffer if refcount drops to 0.
-The list_for_each_entry() loop macro then evaluates buf->head.next to
-continue iteration, accessing the freed buffer.
+The function max5821_sync_powerdown_mode() returned the result of
+i2c_master_send() directly. If a partial transfer occurred, it would
+be incorrectly treated as a success by the caller.
 
-Fix this by using list_for_each_entry_safe().
+While the caller currently handles the positive return value of 2 as
+success, this patch refactors the function to return 0 on full success
+and -EIO on short writes. This ensures robust error handling for
+incomplete transfers and improves code maintainability by using
+sizeof(outbuf).
 
-Fixes: 48b66f8f936f ("iio: Add hardware consumer buffer support")
-Reported-by: sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260427-iio_buf-v1-1-2bbdac844647%40gmail.com
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Fixes: 472988972737 ("iio: add support of the max5821")
+Signed-off-by: Salah Triki <salah.triki@gmail.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Maxwell Doose <m32285159@gmail.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/buffer/industrialio-hw-consumer.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/dac/max5821.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/buffer/industrialio-hw-consumer.c
-+++ b/drivers/iio/buffer/industrialio-hw-consumer.c
-@@ -82,7 +82,7 @@ static struct hw_consumer_buffer *iio_hw
-  */
- struct iio_hw_consumer *iio_hw_consumer_alloc(struct device *dev)
+--- a/drivers/iio/dac/max5821.c
++++ b/drivers/iio/dac/max5821.c
+@@ -91,6 +91,7 @@ static int max5821_sync_powerdown_mode(s
+ 				       const struct iio_chan_spec *chan)
  {
--	struct hw_consumer_buffer *buf;
-+	struct hw_consumer_buffer *buf, *tmp;
- 	struct iio_hw_consumer *hwc;
- 	struct iio_channel *chan;
- 	int ret;
-@@ -113,7 +113,7 @@ struct iio_hw_consumer *iio_hw_consumer_
- 	return hwc;
+ 	u8 outbuf[2];
++	int ret;
  
- err_put_buffers:
--	list_for_each_entry(buf, &hwc->buffers, head)
-+	list_for_each_entry_safe(buf, tmp, &hwc->buffers, head)
- 		iio_buffer_put(&buf->buffer);
- 	iio_channel_release_all(hwc->channels);
- err_free_hwc:
+ 	outbuf[0] = MAX5821_EXTENDED_COMMAND_MODE;
+ 
+@@ -104,7 +105,13 @@ static int max5821_sync_powerdown_mode(s
+ 	else
+ 		outbuf[1] |= MAX5821_EXTENDED_POWER_UP;
+ 
+-	return i2c_master_send(data->client, outbuf, 2);
++	ret = i2c_master_send(data->client, outbuf, sizeof(outbuf));
++	if (ret < 0)
++		return ret;
++	if (ret != sizeof(outbuf))
++		return -EIO;
++
++	return 0;
+ }
+ 
+ static ssize_t max5821_write_dac_powerdown(struct iio_dev *indio_dev,
 
 
