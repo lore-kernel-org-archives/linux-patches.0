@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B8C47A0C3;
-	Tue, 16 Jun 2026 17:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D9743D4E8;
+	Tue, 16 Jun 2026 17:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629663; cv=none; b=qvgOFb1InUPZzi0brEdaXIcMpOkfItUOZRaWpnUJTALfRS1toLcmRJOL9S6QmYmKSmHNWQS/bXitw7PMVAZ4CwB8dli6oivj/ZkQQiZttNCZjVbH3WdWMBj4X3tu9zOX0in93BYbZjrHxga8kNnddBq06qyV/48mW2a32MRAWOI=
+	t=1781629668; cv=none; b=XWK1cz3+xZK7KHgHkieZ7Pb+2UpC7nf2fV2JvFi80ywfQW3YlcWQUpwzRHddjy2BqZxR0oF15r/QRN/S4LpH/8mAaGIvE3LIULtqta5GgnKjkuI2UWlzc0Sn+KRAL6v1KFOu867c+q5BTLUefG/PKT1fmFwSeGtiRBL5cTt/G10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629663; c=relaxed/simple;
-	bh=PvLY5moFT/RvLrzSFnczrAbTgaceVHHbYFWrkhHSUDU=;
+	s=arc-20240116; t=1781629668; c=relaxed/simple;
+	bh=3jNq3XX0bUc8SoJXdrcAlGRZTJE+rZo/ppXIShwH/KE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kt3xERTO+94T41fbIBhRde4735jaIXbsmgTBT8OUd8NLjM3Lq9plgAP0Zgs/mnjuXMVhpg5YQlqJJRFDbMLaoSXkU9luNLkDPWy9wKWInpNabakHhpqedHDiWpA4TY0WifvNwEg4YkciBjynGC3GIjHAhNgdJupD9MtGxWCoHbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zLPhy4yT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BKmkLOd5BOILQGHEQFq/1KXGLaBoWapVqv9zMm01bKizbq4i+bI3vzEXRWuRTuWgDl94IHtNk50V81s1nBtisVdl30l450riBy92m+kCMqsZK+z8iZnl6NTdc2l3ipNJhm9jXe1GInfZ2DCYCBgGx4LhwxLa3Zcm/fRzI8dRSZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SrHPyiLT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zLPhy4yT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 423811F000E9;
-	Tue, 16 Jun 2026 17:07:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SrHPyiLT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871C11F000E9;
+	Tue, 16 Jun 2026 17:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629662;
-	bh=szQC6sBHG8DrMFKu8/Gh9eVC8GKzMh8hMx9/yWelmMs=;
+	s=korg; t=1781629667;
+	bh=ty+Fni5IIVeoZGKFm4FzNbxQzND03MznNSe6PuKXvro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zLPhy4yTg6835G05mJb/s2fN7RrItCVXvApAq3BCUC3xu8nNq9Z+UgZrFeC4P1TD4
-	 rqaRRaX2ICn4xMFpRqHMT8Cfwy5SMIeFGLZhQakclT4/xsuD7kYl+WlIds/0OdSRC9
-	 iWCExs0Xz6OAQ74we7eGqb1eGHlRlWp4SfGm8NIg=
+	b=SrHPyiLTIxvCmWBKybJynWJZUfXEfjRXySb4yzgPsQBxUnj8V0FdZ6ED+/2ERXm5r
+	 X6+LzccKfiOc5vlr8DtM9hu4bOTQHqmspAqD6/9RXLf7qIOgzAwH5pEIo5N+W5ASlW
+	 64THHypIvqHV6i+DRgob0imC/TjrTmufnnkTUMqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Guillermo=20Rodr=C3=ADguez?= <guille.rodriguez@gmail.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
+	Akhil R <akhilrajeev@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.6 328/452] i2c: stm32f7: fix timing computation ignoring i2c-analog-filter
-Date: Tue, 16 Jun 2026 20:29:15 +0530
-Message-ID: <20260616145134.620626627@linuxfoundation.org>
+Subject: [PATCH 6.6 329/452] i2c: tegra: Fix NOIRQ suspend/resume
+Date: Tue, 16 Jun 2026 20:29:16 +0530
+Message-ID: <20260616145134.665353471@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -45,63 +45,127 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guillermo Rodríguez <guille.rodriguez@gmail.com>
+From: Akhil R <akhilrajeev@nvidia.com>
 
-commit a124579c0763da7bc408f4cd7e8f606cadc94855 upstream.
+commit 656646b3847ac6a21b074a813223feef2aadd6e2 upstream.
 
-stm32f7_i2c_compute_timing() uses i2c_dev->analog_filter to pick
-the analog filter delay, but i2c_dev->analog_filter is parsed from
-the "i2c-analog-filter" DT property only after the compute_timing
-loop in stm32f7_i2c_setup_timing(), so in practice the timing
-calculations always ignore the analog filter. On an STM32MP1 board
-with clock-frequency = <400000> and i2c-analog-filter set, measured
-SCL frequency was ~382 kHz.
+The Tegra I2C driver relies on runtime PM to wake up the controller before
+each transfer. However, runtime PM is disabled between the system suspend
+and NOIRQ suspend. If an I2C device initiates a transfer during this
+window, the I2C controller fails to wake up and the transfer fails. To
+handle this, the controller must be kept available for this period to
+allow transfers.
 
-This also affects (widens) the computed SDADEL range. At high bus
-clock speeds, this can select an SDADEL value that violates tVD;DAT
-(data valid time).
+Rework the I2C controller's system PM callbacks such that the controller
+is resumed from runtime suspend during system suspend and it stays
+RPM_ACTIVE throughout the suspend-resume cycle until it is runtime
+suspended back in the system resume. The clocks are disabled in NOIRQ
+suspend and enabled back in NOIRQ resume by calling the controller's
+runtime PM functions directly.
 
-Fix by parsing "i2c-analog-filter" before the compute_timing loop.
-
-Fixes: 83c3408f7b9c ("i2c: stm32f7: support DT binding i2c-analog-filter")
-Signed-off-by: Guillermo Rodríguez <guille.rodriguez@gmail.com>
-Cc: <stable@vger.kernel.org> # v5.13+
-Acked-by: Alain Volmat <alain.volmat@foss.st.com>
+Fixes: 8ebf15e9c869 ("i2c: tegra: Move suspend handling to NOIRQ phase")
+Assisted-by: Cursor:claude-4.6-opus
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Cc: <stable@vger.kernel.org> # v5.4+
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260526091210.20383-1-guille.rodriguez@gmail.com
+Link: https://lore.kernel.org/r/20260518114013.62065-5-akhilrajeev@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-stm32f7.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/i2c/busses/i2c-tegra.c |   53 +++++++++++++++++++++++------------------
+ 1 file changed, 30 insertions(+), 23 deletions(-)
 
---- a/drivers/i2c/busses/i2c-stm32f7.c
-+++ b/drivers/i2c/busses/i2c-stm32f7.c
-@@ -680,6 +680,9 @@ static int stm32f7_i2c_setup_timing(stru
- 	if (!of_property_read_bool(i2c_dev->dev->of_node, "i2c-digital-filter"))
- 		i2c_dev->dnf_dt = STM32F7_I2C_DNF_DEFAULT;
+--- a/drivers/i2c/busses/i2c-tegra.c
++++ b/drivers/i2c/busses/i2c-tegra.c
+@@ -1889,28 +1889,37 @@ static int __maybe_unused tegra_i2c_runt
  
-+	i2c_dev->analog_filter = of_property_read_bool(i2c_dev->dev->of_node,
-+						       "i2c-analog-filter");
+ static int __maybe_unused tegra_i2c_suspend(struct device *dev)
+ {
++	/*
++	 * Bring the controller up and hold a usage count so it stays
++	 * available until the noirq phase.
++	 */
++	return pm_runtime_resume_and_get(dev);
++}
 +
- 	do {
- 		ret = stm32f7_i2c_compute_timing(i2c_dev, setup,
- 						 &i2c_dev->timing);
-@@ -701,9 +704,6 @@ static int stm32f7_i2c_setup_timing(stru
- 		return ret;
- 	}
++static int __maybe_unused tegra_i2c_suspend_noirq(struct device *dev)
++{
+ 	struct tegra_i2c_dev *i2c_dev = dev_get_drvdata(dev);
+-	int err;
  
--	i2c_dev->analog_filter = of_property_read_bool(i2c_dev->dev->of_node,
--						       "i2c-analog-filter");
+ 	i2c_mark_adapter_suspended(&i2c_dev->adapter);
+ 
+-	if (!pm_runtime_status_suspended(dev)) {
+-		err = tegra_i2c_runtime_suspend(dev);
+-		if (err)
+-			return err;
+-	}
 -
- 	dev_dbg(i2c_dev->dev, "I2C Speed(%i), Clk Source(%i)\n",
- 		setup->speed_freq, setup->clock_src);
- 	dev_dbg(i2c_dev->dev, "I2C Rise(%i) and Fall(%i) Time\n",
+-	return 0;
++	/*
++	 * Runtime PM is already disabled at this point, so invoke the
++	 * runtime_suspend callback directly to put the controller down.
++	 */
++	return tegra_i2c_runtime_suspend(dev);
+ }
+ 
+-static int __maybe_unused tegra_i2c_resume(struct device *dev)
++static int __maybe_unused tegra_i2c_resume_noirq(struct device *dev)
+ {
+ 	struct tegra_i2c_dev *i2c_dev = dev_get_drvdata(dev);
+ 	int err;
+ 
+ 	/*
+-	 * We need to ensure that clocks are enabled so that registers can be
+-	 * restored in tegra_i2c_init().
++	 * Runtime PM is still disabled at this point, so invoke the
++	 * runtime_resume callback directly to bring the controller back up
++	 * before re-initializing the hardware. The adapter is then marked
++	 * resumed so that consumers can issue transfers from their own
++	 * resume_noirq() handlers and onwards.
+ 	 */
+ 	err = tegra_i2c_runtime_resume(dev);
+ 	if (err)
+@@ -1920,24 +1929,22 @@ static int __maybe_unused tegra_i2c_resu
+ 	if (err)
+ 		return err;
+ 
+-	/*
+-	 * In case we are runtime suspended, disable clocks again so that we
+-	 * don't unbalance the clock reference counts during the next runtime
+-	 * resume transition.
+-	 */
+-	if (pm_runtime_status_suspended(dev)) {
+-		err = tegra_i2c_runtime_suspend(dev);
+-		if (err)
+-			return err;
+-	}
+-
+ 	i2c_mark_adapter_resumed(&i2c_dev->adapter);
+ 
+ 	return 0;
+ }
+ 
++static int __maybe_unused tegra_i2c_resume(struct device *dev)
++{
++	pm_runtime_put(dev);
++
++	return 0;
++}
++
+ static const struct dev_pm_ops tegra_i2c_pm = {
+-	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(tegra_i2c_suspend, tegra_i2c_resume)
++	SET_SYSTEM_SLEEP_PM_OPS(tegra_i2c_suspend, tegra_i2c_resume)
++	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(tegra_i2c_suspend_noirq,
++				      tegra_i2c_resume_noirq)
+ 	SET_RUNTIME_PM_OPS(tegra_i2c_runtime_suspend, tegra_i2c_runtime_resume,
+ 			   NULL)
+ };
 
 
