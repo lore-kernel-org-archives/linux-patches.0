@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5283E2F12AE;
-	Tue, 16 Jun 2026 17:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A012F12AE;
+	Tue, 16 Jun 2026 17:45:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631952; cv=none; b=UNOQPth2L+kAeKrFht4f4Iz4hnDgOS6FXFgxDTheX1LEIFH5zlItknSIPyrmd+zOkU7UAmlrVgxv+YFe45mP64R3LxBONK7E4kdHIfrxTwARW7t41Dy35hUweIFV+NHBflG9Rm5heaZqXSm2w7BuhbMptUVOmR0gzrLYY+T7L0A=
+	t=1781631957; cv=none; b=I87VDKF5diTPk8twDFJx2YKmgTXXFfaHMy3XLcBwQC7er4TIlImWSCLUs0XwnH5T3eS5nK2y/ys1zS7r6zCYCrZmqp84jVI8brLWYpbB2vlpBKqZWkze7snp3tAqsR3xmdDGVp9zSqK5Hswc/Ur9fEvyAS04dIjeeCkQJynGuTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631952; c=relaxed/simple;
-	bh=k1DyQI1kwHdf48gyO7nHFeXRldKbuedt5bIR4f8HFI4=;
+	s=arc-20240116; t=1781631957; c=relaxed/simple;
+	bh=YwDEemPl8bxUXFemVpH+By8+AyEeauPzQIDQbts3lkI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hLoPg8B1/rTSYRrLFg/NP+1qAv9dui+Z3udRRTwraOpcJGYgch34QekJNgpgoUtxqFMuiDXKjr+/1577EQYwGR6TBb3EzHwvMnTYRjUR/TBwisSmKql8a4Cw7UMry8wD6uZ+hWT7Qr876Nf5oYO/wg9Wzhv6q3aU98C7is3T/Ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osmC2wdP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vB/OTJqd1sXeD2zi0fn7gtMUUTvv52t98Uq6CUIL9FssCb4PwVCp8xxTFi7AhiTYtVrPTqn/Dhh+VN8daR9ObxMkGN9rfBz0ag/dxR3+4gi3FEYm9DA979OD5PIzeC+J1EkUh8WaH+pqCrBVdCZrofkATWwOrId2dG+ocnJiD3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i0+/HAeD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osmC2wdP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F71C1F000E9;
-	Tue, 16 Jun 2026 17:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i0+/HAeD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D5D91F000E9;
+	Tue, 16 Jun 2026 17:45:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631951;
-	bh=mYP68NT1eZl3uy0crsopTcDSBR3Qy+DkimxzsJtURHg=;
+	s=korg; t=1781631956;
+	bh=h8ja8ZuW3sRqkpqQ4V4nJVEGlc+xTSdk82NEtGgs8pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=osmC2wdPBJ/Xz5m/s+I5KbRGh68wWt/qDxSr717x9LssHH9Lgc/RnFXT8b6uhU9ba
-	 bToFhJ0HH2FGmXAdwY10y8zViy1xcyCanxU9VqZBIRNJyfCTRE3qr7N5jpSGaSyqvR
-	 GZ+xtj4qb5o7mPxSIjcF+yJUsHBtVTu2gTfr9irw=
+	b=i0+/HAeDJzqcojW42UQDVs6Jh33RmaSAg86J6/WaDmpej+D5aaKpFsEQ7LZrAAlAN
+	 cb5NvqcVGl9KoLl97lm87AJBZkKkD3iIuCMppI5713B6yKdB4bNkR8B32FiUtpuhHx
+	 MYVx7T7+Srf+F2/cPIzaEd42SP1dSVP4Fq5yl3kA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.1 318/522] thunderbolt: Validate XDomain request packet size before type cast
-Date: Tue, 16 Jun 2026 20:27:45 +0530
-Message-ID: <20260616145140.730322272@linuxfoundation.org>
+Subject: [PATCH 6.1 319/522] thunderbolt: Limit XDomain response copy to actual frame size
+Date: Tue, 16 Jun 2026 20:27:46 +0530
+Message-ID: <20260616145140.773405890@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,19 +52,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit a504b9f2797b739e0304d537e8aa4ce883ecce39 upstream.
+commit 4db2bd2ed4785dbadaeeab9f4e346b21ac5fb8eb upstream.
 
-tb_xdp_handle_request() casts the received packet buffer to
-protocol-specific structs without verifying that the allocation
-is large enough for the target type.  A peer can send a minimal
-XDomain packet that passes the generic header length check but is
-shorter than the struct accessed after the cast, causing out-of-
-bounds reads from the kmemdup allocation.
+tb_xdomain_copy() copies req->response_size bytes from the received
+packet buffer regardless of the actual frame size.  When a short
+response arrives, this reads past the valid frame data in the DMA
+pool buffer into stale contents from previous transactions.
 
-Plumb the packet length through xdomain_request_work and validate
-it against the expected struct size before each cast.
+Use the minimum of frame size and expected response size for the
+copy length.
 
-Fixes: 8e1de7042596 ("thunderbolt: Add support for XDomain lane bonding")
 Fixes: cdae7c07e3e3 ("thunderbolt: Add support for XDomain properties")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4-7
@@ -72,53 +69,21 @@ Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/xdomain.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/thunderbolt/xdomain.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/drivers/thunderbolt/xdomain.c
 +++ b/drivers/thunderbolt/xdomain.c
-@@ -54,6 +54,7 @@ static const char * const state_names[]
- struct xdomain_request_work {
- 	struct work_struct work;
- 	struct tb_xdp_header *pkg;
-+	size_t pkg_len;
- 	struct tb *tb;
- };
- 
-@@ -732,6 +733,7 @@ static void tb_xdp_handle_request(struct
- 	struct xdomain_request_work *xw = container_of(work, typeof(*xw), work);
- 	const struct tb_xdp_header *pkg = xw->pkg;
- 	const struct tb_xdomain_header *xhdr = &pkg->xd_hdr;
-+	size_t pkg_len = xw->pkg_len;
- 	struct tb *tb = xw->tb;
- 	struct tb_ctl *ctl = tb->ctl;
- 	struct tb_xdomain *xd;
-@@ -763,7 +765,7 @@ static void tb_xdp_handle_request(struct
- 	switch (pkg->type) {
- 	case PROPERTIES_REQUEST:
- 		tb_dbg(tb, "%llx: received XDomain properties request\n", route);
--		if (xd) {
-+		if (xd && pkg_len >= sizeof(struct tb_xdp_properties)) {
- 			ret = tb_xdp_properties_response(tb, ctl, xd, sequence,
- 				(const struct tb_xdp_properties *)pkg);
- 		}
-@@ -817,7 +819,8 @@ static void tb_xdp_handle_request(struct
- 		tb_dbg(tb, "%llx: received XDomain link state change request\n",
- 		       route);
- 
--		if (xd && xd->state == XDOMAIN_STATE_BONDING_UUID_HIGH) {
-+		if (xd && xd->state == XDOMAIN_STATE_BONDING_UUID_HIGH &&
-+		    pkg_len >= sizeof(struct tb_xdp_link_state_change)) {
- 			const struct tb_xdp_link_state_change *lsc =
- 				(const struct tb_xdp_link_state_change *)pkg;
- 
-@@ -869,6 +872,7 @@ tb_xdp_schedule_request(struct tb *tb, c
- 		kfree(xw);
- 		return false;
- 	}
-+	xw->pkg_len = size;
- 	xw->tb = tb_domain_get(tb);
- 
- 	schedule_work(&xw->work);
+@@ -122,7 +122,9 @@ static bool tb_xdomain_match(const struc
+ static bool tb_xdomain_copy(struct tb_cfg_request *req,
+ 			    const struct ctl_pkg *pkg)
+ {
+-	memcpy(req->response, pkg->buffer, req->response_size);
++	size_t len = min_t(size_t, pkg->frame.size, req->response_size);
++
++	memcpy(req->response, pkg->buffer, len);
+ 	req->result.err = 0;
+ 	return true;
+ }
 
 
