@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AA50332EC1;
-	Tue, 16 Jun 2026 17:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599CB47B422;
+	Tue, 16 Jun 2026 17:31:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781631090; cv=none; b=a0V8h7VSA+gJAhofwgARI9YcDKWBFtcLemr+9RY7Z5X8lC/SwBX9Jo+Xu4BNs5ythAnry4P1EQV0Oghio8edevshYtsC6DQQDWTN2A460cpGKER/RfD0hkcPhuzMkfEO6QBmRmfZGtOqI9kXQe3EWZdV91LIvD99XcXjEnUGR8w=
+	t=1781631095; cv=none; b=Lh86DWF+n4bMLF+W3Fir+y9RQ5nHpf/VzYyKEhM816ACTLSsxZaHGfAxpNt+WrpqD41vogqcrI6d86kwMaPtRqSfPvgdKUauLCC6GIM9Z/z+Inb8MGNdFJdwwO8OhUCwDJrNPaH04un6cgh+1C+ip/iN3aLnDqhhOhQyyacMVtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781631090; c=relaxed/simple;
-	bh=bNBWpj8kIONAE2tufk2sFav/cq/KVxSytHAJkjWpras=;
+	s=arc-20240116; t=1781631095; c=relaxed/simple;
+	bh=TvUxwqGNO9UzerTS/wEV0oDvLlBq6wNxuFW3V/5iDMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YHG0t0vH2gmlsX0ZtGwYb42c74x6/ObRC0wkgc/i+V3c+3hperDI+YmS4kv4yaKULxbBleCjZ5MehDR1UisXX/YGz9ozw0gVwk3WKiFCYEHuoEibxjIlh3lolm/S5dUEmvLKXj1Mrg1cY5OjBaaqxmCnY8un334wO4Sv20q+oYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0uOZbPN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o3ZT+UOi9e6P5WXFqlzwTdtvmsc+UeTdDK4QZKDCUUkw/Ol+x29AvdA3yB8idMN3dpnou1dUWRTSzjFS1ykIdvKkHe9DbvQ7/st1LjAjM5v1nABFbhcaGEBvG1fnpysRwdJVC1DwkBckIjqVdqmLM4D2hjECHCxtiqYqYKmO9a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddwk2N0w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0uOZbPN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C6F61F00A3A;
-	Tue, 16 Jun 2026 17:31:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddwk2N0w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12BE01F00A3A;
+	Tue, 16 Jun 2026 17:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781631089;
-	bh=BwCKlC0PUYQRkpQjVJvyNOpG9Y7ThPgOBJIwUhG2dzA=;
+	s=korg; t=1781631094;
+	bh=PSW77uzTO3uornqDQBFrEiydl70qdFAMMjbK9Ya2YqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W0uOZbPNX24AeMKz1rfKrohbrP4PSg4HMjY3uVbgC0AmZ+WoTP4DLgYh+NCCdky/I
-	 z2HnbggskmOdXtYqQJvV/CSC/ZLLgdMYAJv8W7Sr1mkZOiMhK3FOJgzOrz9dom6ytP
-	 0ypGEXfxxO+9OnT4tOJmuvye9lixhhaOmHzYySHU=
+	b=ddwk2N0w3CeFMu8odBNYNQ1bcEYUlgBck2iHqRdhdPHY43TeZk4rRtNlDorGw1aIO
+	 ujLW7GbHWytvB4Xmf3S3bGybVLXmo7e6CqNHdgREp28Z8PnF0tsTV+5BkIcwq9NDiY
+	 kN4BDcIYW/hnlguA/Oz0WJ3hHgXPngwIDpfMdA/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 137/522] Input: atmel_mxt_ts - fix boundary check in mxt_prepare_cfg_mem
-Date: Tue, 16 Jun 2026 20:24:44 +0530
-Message-ID: <20260616145132.514292792@linuxfoundation.org>
+	Andrew Lunn <andrew@lunn.ch>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 155/522] USB: serial: mxuport: fix memory corruption with small endpoint
+Date: Tue, 16 Jun 2026 20:25:02 +0530
+Message-ID: <20260616145133.355296606@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -50,53 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit baa0210fb6a9dc3882509a9411b6d284d88fe30e upstream.
+commit 4085f0dbb1ce2251c9a5938d693de6593f0ab2bd upstream.
 
-When a configuration file provides an object size that is larger than the
-driver's known mxt_obj_size(object), the driver intends to discard the
-extra bytes.
+Make sure that the bulk-out endpoint max packet size is at least eight
+bytes to avoid user-controlled slab corruption should a malicious device
+report a smaller size.
 
-The loop iterates using for (i = 0; i < size; i++). Inside the loop, the
-condition to skip processing extra bytes is:
-
-    if (i > mxt_obj_size(object))
-        continue;
-
-Since i is a 0-based index, the valid indices for the object are 0 through
-mxt_obj_size(object) - 1.
-
-When i == mxt_obj_size(object), the condition evaluates to false, and the
-code processes the byte instead of discarding it.
-
-This causes the code to calculate byte_offset = reg + i - cfg->start_ofs
-and writes the byte there, overwriting exactly one byte of the adjacent
-instance or object.
-
-Update the boundary check to skip extra bytes correctly by using >=.
-
-Fixes: 50a77c658b80 ("Input: atmel_mxt_ts - download device config using firmware loader")
-Cc: stable@vger.kernel.org
-Assisted-by: Gemini:gemini-3.1-pro
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Link: https://patch.msgid.link/20260504185448.4055973-1-dmitry.torokhov@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: ee467a1f2066 ("USB: serial: add Moxa UPORT 12XX/14XX/16XX driver")
+Cc: stable@vger.kernel.org	# 3.14
+Cc: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/atmel_mxt_ts.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/mxuport.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/input/touchscreen/atmel_mxt_ts.c
-+++ b/drivers/input/touchscreen/atmel_mxt_ts.c
-@@ -1443,7 +1443,7 @@ static int mxt_prepare_cfg_mem(struct mx
- 			}
- 			cfg->raw_pos += offset;
+--- a/drivers/usb/serial/mxuport.c
++++ b/drivers/usb/serial/mxuport.c
+@@ -962,6 +962,14 @@ static int mxuport_calc_num_ports(struct
+ 	 */
+ 	BUILD_BUG_ON(ARRAY_SIZE(epds->bulk_out) < 16);
  
--			if (i > mxt_obj_size(object))
-+			if (i >= mxt_obj_size(object))
- 				continue;
++	/*
++	 * The bulk-out buffers must be large enough for the four-byte header
++	 * (and following data), but assume anything smaller than eight bytes
++	 * is broken.
++	 */
++	if (usb_endpoint_maxp(epds->bulk_out[0]) < 8)
++		return -EINVAL;
++
+ 	for (i = 1; i < num_ports; ++i)
+ 		epds->bulk_out[i] = epds->bulk_out[0];
  
- 			byte_offset = reg + i - cfg->start_ofs;
 
 
