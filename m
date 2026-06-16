@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B217E43E4BF;
-	Tue, 16 Jun 2026 16:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248CE45348A;
+	Tue, 16 Jun 2026 16:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628667; cv=none; b=YB9EN/dLw0svlBgomm0yNXFW+5zKY4YguulTDUbW+VW5uOhTbyKV4qSRYjVqjsRXmfz3bawJcXd1LqwCIwqLaMP1seqTTbbqKASAv6OUPRqGKwVTCJq52LZZ0bD4hBiC/f8Y9xU/JAC9wEoBlSlBBHmOX4JWfkYfMI7z+Jn5k+U=
+	t=1781628673; cv=none; b=PY4nP6K9fJoOFYD5jTKyxnIlw1bUzp6LUbZvrZEpaOEuNIi41f4rfkSBOrLTHQfdwL8L4tb66WQUQszoum3a6zlkGA0CQBkqpz3nB1XvlaHOO7Q4qFAYSgfRqUTaMxpJk3axiuyo6fq9Dsd0myoAIwt0QlupRXOE35mgUHTWsOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628667; c=relaxed/simple;
-	bh=7NMf/UUYg25hzllMsHgnUKmva5bL8vgODH29FXLhq48=;
+	s=arc-20240116; t=1781628673; c=relaxed/simple;
+	bh=Ii1qz7kUCxP8PgqhGv7zboUYN7l+hMIEE6UmBmsOHJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rtyHDQzVMpqcESevM8HCzfsT7SDYC3qI6Dc+ZFO2pyN7xzxjYNKJIzI0keAXUb9V7I1iLQCX/nmSGmsVEFDsPRqiNuYvBzs3jeYrQRUaQPhjetDhpwV5VfTVDTT4A7hKQzL+0JzugHf1+wgU1j9t4y7wteALSIA2kG7A6JfWIT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tWIqY1cz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cXc8VZMToEkfgkiab6UXPhLv81MMd0gD/8ucpWGleNO36iwseM5LDh8frvKbs0y6bMEa7FjCRVFYJhfM+845wOejsnMruufToBxWK+yVFrnp0OPK3yeVzCt/il2rf8325hcEO1xmbHXlextha8H5hK8U+UUsVB1MU3tdgzxCgYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=levrUjTU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tWIqY1cz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B265D1F00A3D;
-	Tue, 16 Jun 2026 16:51:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="levrUjTU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 108A11F000E9;
+	Tue, 16 Jun 2026 16:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628666;
-	bh=Hq7oMt7d/8ifNX2wmEBElA6L0A+bklcLYAbGp1mHMZA=;
+	s=korg; t=1781628672;
+	bh=T2uf254yrQAv+DwiPzuK5i4CveI7eC2xY6p1uJl2OLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tWIqY1czVTpTM5CINIh6v2Ft69C++Bsk1fPCEcY3tqsYskPEEaig8byrinUZKCF+R
-	 Li/ZGlJN2Hl2xfKXaLDm1MdkqJQ9J1G8YAAxGtM8y0B9nBuAplSO06vRsoVw2hhjHB
-	 4sr9ViPKK7LWXO03hiJPNICHTx6J+ncrokQd5UKc=
+	b=levrUjTU/XsUCKMcL1f4B2hp1ESYIeXOY2E/39pWmAjheFX2DJvuE3s043szDSgo6
+	 LTm0nNwAWUm6keRPnB3Px8myljZtTOEalHC+Yac/PazOhR3XmtxaHQamR+QJRdP7oD
+	 hxt3cctliuAAjzOM/cucXrfP+vhpuRG3SBYGiFY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salah Triki <salah.triki@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Maxwell Doose <m32285159@gmail.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Stable@vger.kernel.org,
-	Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 6.6 112/452] iio: adc: viperboard: Fix error handling in vprbrd_iio_read_raw
-Date: Tue, 16 Jun 2026 20:25:39 +0530
-Message-ID: <20260616145123.620961098@linuxfoundation.org>
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 139/452] ASoC: qcom: q6asm-dai: close stream only when running
+Date: Tue, 16 Jun 2026 20:26:06 +0530
+Message-ID: <20260616145125.022132686@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -48,48 +45,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Salah Triki <salah.triki@gmail.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit 422b5bbf333f75fb486855ad0eedc23cf21f3277 upstream.
+commit 048c540ee76ded666bda74f9dae1ca3254e0633c upstream.
 
-The driver proceeds to the reception phase even if the preceding
-transmission fails.
+q6asm_dai_close() and q6asm_dai_compr_free() currently issue CMD_CLOSE
+whenever prtd->state is non-zero.
 
-This uses a goto error label for an early bail out and ensures the mutex is
-properly unlocked in case of failure.
+After prepare() closes an existing stream, the state is updated to
+Q6ASM_STREAM_STOPPED. Since this state is also non-zero, the close and
+free paths can send CMD_CLOSE again for a stream that has already been
+closed.
 
-Fixes: ffd8a6e7a778 ("iio: adc: Add viperboard adc driver")
-Signed-off-by: Salah Triki <salah.triki@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Reviewed-by: Maxwell Doose <m32285159@gmail.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Restrict CMD_CLOSE to the Q6ASM_STREAM_RUNNING state so the command is
+sent only when the ASM stream is still active.
+
+Fixes: 2a9e92d371db ("ASoC: qdsp6: q6asm: Add q6asm dai driver")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260518092347.3446946-3-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/viperboard_adc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/qcom/qdsp6/q6asm-dai.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/iio/adc/viperboard_adc.c
-+++ b/drivers/iio/adc/viperboard_adc.c
-@@ -70,8 +70,10 @@ static int vprbrd_iio_read_raw(struct ii
- 			VPRBRD_USB_TYPE_OUT, 0x0000, 0x0000, admsg,
- 			sizeof(struct vprbrd_adc_msg), VPRBRD_USB_TIMEOUT_MS);
- 		if (ret != sizeof(struct vprbrd_adc_msg)) {
--			dev_err(&iio_dev->dev, "usb send error on adc read\n");
-+			mutex_unlock(&vb->lock);
- 			error = -EREMOTEIO;
-+			dev_err(&iio_dev->dev, "usb send error on adc read\n");
-+			goto error;
- 		}
+--- a/sound/soc/qcom/qdsp6/q6asm-dai.c
++++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
+@@ -456,12 +456,12 @@ static int q6asm_dai_close(struct snd_so
+ 	struct q6asm_dai_rtd *prtd = runtime->private_data;
  
- 		ret = usb_control_msg(vb->usb_dev,
+ 	if (prtd->audio_client) {
+-		if (prtd->state)
++		if (prtd->state == Q6ASM_STREAM_RUNNING) {
+ 			q6asm_cmd(prtd->audio_client, prtd->stream_id,
+ 				  CMD_CLOSE);
+-
+-		q6asm_unmap_memory_regions(substream->stream,
++			q6asm_unmap_memory_regions(substream->stream,
+ 					   prtd->audio_client);
++		}
+ 		q6asm_audio_client_free(prtd->audio_client);
+ 		prtd->audio_client = NULL;
+ 	}
+@@ -678,7 +678,7 @@ static int q6asm_dai_compr_free(struct s
+ 	struct snd_soc_pcm_runtime *rtd = stream->private_data;
+ 
+ 	if (prtd->audio_client) {
+-		if (prtd->state) {
++		if (prtd->state == Q6ASM_STREAM_RUNNING) {
+ 			q6asm_cmd(prtd->audio_client, prtd->stream_id,
+ 				  CMD_CLOSE);
+ 			if (prtd->next_track_stream_id) {
+@@ -686,11 +686,11 @@ static int q6asm_dai_compr_free(struct s
+ 					  prtd->next_track_stream_id,
+ 					  CMD_CLOSE);
+ 			}
+-		}
+ 
+-		snd_dma_free_pages(&prtd->dma_buffer);
+-		q6asm_unmap_memory_regions(stream->direction,
++			q6asm_unmap_memory_regions(stream->direction,
+ 					   prtd->audio_client);
++		}
++		snd_dma_free_pages(&prtd->dma_buffer);
+ 		q6asm_audio_client_free(prtd->audio_client);
+ 		prtd->audio_client = NULL;
+ 	}
 
 
