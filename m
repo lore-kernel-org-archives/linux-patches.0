@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF3E44E025;
-	Tue, 16 Jun 2026 15:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E18936E46C;
+	Tue, 16 Jun 2026 15:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625474; cv=none; b=JXjwxHA+L8W1IMZu/TdwAW2rITYKD8POhIlkfDiRIDdne4ZbRtdl917AemSA2iYXyUFB765Uw3jhaoCzCei/Tfb/MwmW5ZuQy3lQ2TnBowdoxzWbudP/9ztCfo41y46pdKbqd3SVJkdEe1shSCjaHxYVI3wCIAuS7zgmN6y39A4=
+	t=1781625479; cv=none; b=m3FgEdGDJu3ZqMRSQadE8wxPgkz42niG1zTwaPHVKSSKz6DBDjaA+zhW3m2LaTQhC7nwJg1vjKhynFJMNbAfNHIi0+3UknLLGotiz25AVgw/Wwvnx+qIOHUN/7YjirWAkmGMj/dIzzzzzt6Q0fTmouzkeR7KO49kJZaaKo0OfCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625474; c=relaxed/simple;
-	bh=uXV0m8L06y7udZsKNSLHWJ4yQ3+WOv5S8wG7hWva1BU=;
+	s=arc-20240116; t=1781625479; c=relaxed/simple;
+	bh=YdvF9tyj9WL2Mjbaqg+liOKjKVWYqh3ZVIMzYpBDL4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jWKud0sKgXBcszxsTr4QkR7uBuGC6yqR7FrhWRV3coBi5FnUMR3H7HojgtXyEApRVVdjFXujVX7kYqaBdSVozHCwnt4gpvnLLa+NufvxWIZROELLRORBL4wRtQIZsyJsFeLEtSgUCDH19XKIfDKonSHScmL2YejLHhSyQ5gHstE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Ys7X0do; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e6lH5En1ZrdGZSn5UNfEzdZ+nyew77fzlNI8BKMQlrT/R9keQOvmr4Sk/cDhp7VZVa1q/lR+s5J43PogsGzSSAoqNh9m4GjsKHZ3FXLpDejo8448+EDOMfMuF9EFuGN5cDiNKQfv0pj9q9pl4gVTAwi+tbOawmUxn3JlR+t5DAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q43qeiTb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Ys7X0do"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9FF1F000E9;
-	Tue, 16 Jun 2026 15:57:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q43qeiTb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4881F00A3A;
+	Tue, 16 Jun 2026 15:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625473;
-	bh=lPKm3HDwhsxZwFmv9gyhKrSM6dqGmhTBFAxM1RnlXuU=;
+	s=korg; t=1781625478;
+	bh=bNbf6bQTPO8qI/DBVRGhtPEzHhFQkTPYJTEpygBZe9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Ys7X0doqFeuOwfFpiFe5oep7EG+AJWd+lpZ0tmmGZGAdX5/7o3GtarIymtJUg26j
-	 c3mG+AhBdSOGM+Yr0i1f2pj6qyNezxImad5ovSKCX4cZv4u00GfaGJElbrNfhVt3cl
-	 3Ab8jnPKZ5uMprfWHrLy18kpYGHojz7IDhrOhHKY=
+	b=Q43qeiTbr1lRaXJfwOn5eBFSNZUD61a4plEdmkjfcEZsonYay0uQQx828zTDNoO8f
+	 bCPkoE4QkjYdLO5tN43FXnFHctaBdBLZrBozJ6/KujqFNEyrUdp/S0uyJ9eJ4VCa/5
+	 3b6hAuDBEClaqhQWdtqkxpvOEqzWMF5ZVYXYbLFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davide Ornaghi <d.ornaghi97@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.18 148/325] netfilter: nft_meta_bridge: fix stale stack leak via IIFHWADDR register
-Date: Tue, 16 Jun 2026 20:29:04 +0530
-Message-ID: <20260616145105.092681738@linuxfoundation.org>
+	Kyle Zeng <kylebot@openai.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 118/325] net: guard timestamp cmsgs to real error queue skbs
+Date: Tue, 16 Jun 2026 20:28:34 +0530
+Message-ID: <20260616145103.590070652@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -50,45 +53,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davide Ornaghi <d.ornaghi97@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-commit c7d573551f9286100a055ef696cde6af54549677 upstream.
+[ Upstream commit 1ee90b77b727df903033db873c75caac5c27ec98 ]
 
-NFT_META_BRI_IIFHWADDR declares its destination register with
-len = ETH_ALEN (6 bytes), which the register-init tracking rounds up to
-two 32-bit registers (8 bytes). nft_meta_bridge_get_eval() then does
-memcpy(dest, br_dev->dev_addr, ETH_ALEN), writing only 6 bytes and
-leaving the upper 2 bytes of the second register as uninitialised
-nft_do_chain() stack. A downstream load of that register span leaks
-those stale bytes to userspace.
+skb_is_err_queue() treats PACKET_OUTGOING as the sole marker for an skb
+from sk_error_queue. That assumption is not true for AF_PACKET sockets:
+outgoing packet taps are also delivered to packet sockets with
+skb->pkt_type == PACKET_OUTGOING, but their skb->cb is owned by AF_PACKET
+instead of struct sock_exterr_skb.
 
-Zero the second register before the memcpy so the full declared span is
-written.
+If such an skb is received with timestamping enabled, the generic
+timestamp cmsg path can read AF_PACKET control-buffer state as
+sock_exterr_skb::opt_stats. With SO_RXQ_OVFL enabled, the packet drop
+counter overlaps opt_stats. An odd drop count makes the path emit
+SCM_TIMESTAMPING_OPT_STATS with skb->len and skb->data. For non-linear
+skbs this copies past the linear head and can trigger hardened usercopy or
+disclose adjacent heap contents.
 
-Fixes: cbd2257dc96e ("netfilter: nft_meta_bridge: introduce NFT_META_BRI_IIFHWADDR support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Davide Ornaghi <d.ornaghi97@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Keep skb_is_err_queue() local to net/socket.c, but make it verify that
+the PACKET_OUTGOING marker is paired with the sock_rmem_free destructor
+installed by sock_queue_err_skb(). AF_PACKET receive skbs use normal
+receive ownership and no longer pass as error-queue skbs, while legitimate
+sk_error_queue entries keep the PACKET_OUTGOING marker and sock_rmem_free
+ownership.
+
+Fixes: 8605330aac5a ("tcp: fix SCM_TIMESTAMPING_OPT_STATS for normal skbs")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260607021819.49698-1-kylebot@openai.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/nft_meta_bridge.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/net/sock.h |  1 +
+ net/core/skbuff.c  |  6 +++---
+ net/socket.c       | 11 ++++++-----
+ 3 files changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/net/bridge/netfilter/nft_meta_bridge.c b/net/bridge/netfilter/nft_meta_bridge.c
-index 7763e78abb00..219c40680260 100644
---- a/net/bridge/netfilter/nft_meta_bridge.c
-+++ b/net/bridge/netfilter/nft_meta_bridge.c
-@@ -64,6 +64,8 @@ static void nft_meta_bridge_get_eval(const struct nft_expr *expr,
- 		if (!br_dev)
- 			goto err;
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 9540dcc5a0c012..5a26a3834ac68f 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1818,6 +1818,7 @@ struct sk_buff *sock_omalloc(struct sock *sk, unsigned long size,
+ 			     gfp_t priority);
+ void skb_orphan_partial(struct sk_buff *skb);
+ void sock_rfree(struct sk_buff *skb);
++void sock_rmem_free(struct sk_buff *skb);
+ void sock_efree(struct sk_buff *skb);
+ #ifdef CONFIG_INET
+ void sock_edemux(struct sk_buff *skb);
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 745bb0a67c6a4c..43dca2c045766f 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -5399,7 +5399,7 @@ int skb_cow_data(struct sk_buff *skb, int tailbits, struct sk_buff **trailer)
+ }
+ EXPORT_SYMBOL_GPL(skb_cow_data);
  
-+		/* ETH_ALEN (6) is shorter than the destination register span (8) */
-+		dest[1] = 0;
- 		memcpy(dest, br_dev->dev_addr, ETH_ALEN);
- 		return;
- 	default:
+-static void sock_rmem_free(struct sk_buff *skb)
++void sock_rmem_free(struct sk_buff *skb)
+ {
+ 	struct sock *sk = skb->sk;
+ 
+@@ -5408,8 +5408,8 @@ static void sock_rmem_free(struct sk_buff *skb)
+ 
+ static void skb_set_err_queue(struct sk_buff *skb)
+ {
+-	/* pkt_type of skbs received on local sockets is never PACKET_OUTGOING.
+-	 * So, it is safe to (mis)use it to mark skbs on the error queue.
++	/* The error-queue test in skb_is_err_queue() matches this marker
++	 * with the sock_rmem_free destructor installed by sock_queue_err_skb().
+ 	 */
+ 	skb->pkt_type = PACKET_OUTGOING;
+ 	BUILD_BUG_ON(PACKET_OUTGOING == 0);
+diff --git a/net/socket.c b/net/socket.c
+index 2b6e11b085ebd7..4ce6ddd768fb46 100644
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -792,12 +792,13 @@ EXPORT_SYMBOL(kernel_sendmsg);
+ 
+ static bool skb_is_err_queue(const struct sk_buff *skb)
+ {
+-	/* pkt_type of skbs enqueued on the error queue are set to
+-	 * PACKET_OUTGOING in skb_set_err_queue(). This is only safe to do
+-	 * in recvmsg, since skbs received on a local socket will never
+-	 * have a pkt_type of PACKET_OUTGOING.
++	/* Error-queue skbs are marked as PACKET_OUTGOING in
++	 * skb_set_err_queue() and use the destructor installed by
++	 * sock_queue_err_skb(). PACKET_OUTGOING alone is not unique:
++	 * AF_PACKET outgoing taps use the same pkt_type.
+ 	 */
+-	return skb->pkt_type == PACKET_OUTGOING;
++	return skb->pkt_type == PACKET_OUTGOING &&
++	       skb->destructor == sock_rmem_free;
+ }
+ 
+ /* On transmit, software and hardware timestamps are returned independently.
 -- 
-2.54.0
+2.53.0
 
 
 
