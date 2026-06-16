@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42E042F745E;
-	Tue, 16 Jun 2026 16:33:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19935477E21;
+	Tue, 16 Jun 2026 16:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627600; cv=none; b=aKk75r+/yVJSEZaifnEPAPVQpic0S6T5lpid2XL96a0UH1iTr7Eiky7eqcYlxj6XwVmQRDsMOHzLGJNp55BzcFVP08rvtSr44l1PguCsZoa8QA6YtOHSlZMLuzFceACC+dyuDWmIWv+OiTNdk1lHc65pNbjZnVhCRCXurMtPpMU=
+	t=1781627607; cv=none; b=KtvJBZ1c6jOm2DdIZ/8zEkulsV7RIM2RGLeRA6gX5jmijPd5p/rkQFAf34DCxU8zo9AUF9bxPiISliRhMjJ9b48vs2AZfeFMLOUjimMSb2xF5GxI/5XHzNpH3L1XNunj7fQn7B7nEPHJgDkqXDHHMwbzEQ2AA6MC03dy43EVf2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627600; c=relaxed/simple;
-	bh=qyYOl3pw/uM7XyBgMy88PYe9tLrW8SLHrPdd7MKvIWI=;
+	s=arc-20240116; t=1781627607; c=relaxed/simple;
+	bh=Yjo2enGuRr6RcTAx1iPZHXWmZ4Nh9G3BvYcktiU3wkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ffgZGArIJxTTRBLo1paBuB1oXbpn3Yt8X5znC6Dw+JHk75V54XntiaS2Qny9BmlkrCvGiI+/QWCtHpEI/ESi3KTcSoZn8coTo6JDlQkmgAtSqBOkzbo8ff8NH47oTaStOWJaB3QbUBuEz6+BHA/EMvI6uAlZ7YbLTygYdgcn6M8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbVTelUy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q35KFve0p75OLnrCmDoGHZnSamtW1xiC3DKzxGtZN5n/9dTm/Uu6pfbhU3iq6zhYenLosPqq7cHl2zr8dDUDGcqPSs8ZA1IM1HbM4v8X4/tloib05lXM7KWYimUpV6wzd1EjZ91gWKcjHwFjN5r+gL76k0e9q3HpK4uKDicaIWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8CGWUiy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbVTelUy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4436F1F000E9;
-	Tue, 16 Jun 2026 16:33:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8CGWUiy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2C01F000E9;
+	Tue, 16 Jun 2026 16:33:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627599;
-	bh=4MqupAlk3jZD9FtGHXcPnzVnzCHC6tr3b6pOIWEMjLM=;
+	s=korg; t=1781627605;
+	bh=uM7EzihgF9WgLL0EdGuxKoU+1EaHoKHYN3XCKU/AcUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VbVTelUypcSACXmfs/R2pvn0BlPr5ph0DK6L0ompfq3STp4YnBVopKW7BfzWDFwz+
-	 5IEWlLs03pCj5UdTm7NJyzRBXDuF2C4BbJiMO2LCvhIXBtRaMHxXvi3XaFzgI1k51r
-	 OZK6+tuNQnY8dCoUyZ+3nJ25Qtn6v8WSbyqRN4UA=
+	b=O8CGWUiyDqNJ9pkQxIQTqQcHPuVY6BwyEj2XBJ1YvN39PlXez92UbOSen9THcZ5us
+	 L/RL6EdQmxCcCrEXy/QwC3Jx8NmXCWLq4Yugkk+jfGbXwHUwhy/cI6SRmSFSdlq8Jr
+	 jTsV5d8GeELrLojOPPSv9Alau56C5XGNX5hjz0PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Ulf Hansson <ulfh@kernel.org>
-Subject: [PATCH 6.12 196/261] mmc: sdhci: add signal voltage switch in sdhci_resume_host
-Date: Tue, 16 Jun 2026 20:30:34 +0530
-Message-ID: <20260616145054.142809269@linuxfoundation.org>
+Subject: [PATCH 6.12 197/261] pmdomain: imx: fix OF node refcount
+Date: Tue, 16 Jun 2026 20:30:35 +0530
+Message-ID: <20260616145054.187863809@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -51,47 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit f595e8e77a51eee35e331f69321766593a845ef2 upstream.
+commit fba0510cd62666951dcc0221527edc0c47ae6599 upstream.
 
-I met one suspend/resume issue with sdr104 capable sdio wifi card (with
-"keep-power-in-suspend" set in DT property):
-After resuming from suspend to ram, the sdio wifi card stops working.
-Further debug shows that although ios shows the sdio card is at sdr104
-mode, the voltage is still at 3V3. This is due to missing the calling
-of ->start_signal_voltage_switch() in sdhci_resume_host().
+for_each_child_of_node_scoped() decrements the reference count of the
+nod after each iteration. Assigning it without incrementing the refcount
+to a dynamically allocated platform device will result in a double put
+in platform_device_release(). Add the missing call to of_node_get().
 
-Fix this issue by adding ->start_signal_voltage_switch() in
-sdhci_resume_host(). This also matches what we do for
-sdhci_runtime_resume_host().
-
-Then the question is: why this issue hasn't reported and fixed for so
-long time. IMHO, several reasons: Some host controllers just kick off
-the runtime resume for system resume, so they benefit from the well
-supported runtime pm code; Some platforms just use the old sdio wifi
-card which doesn't need signal voltage switch at all, the default
-voltage is 3v3 after resuming.
-
-Fixes: 6308d2905bd3 ("mmc: sdhci: add quirk for keeping card power during suspend")
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Cc: stable@vger.kernel.org
+Fixes: 3e4d109ee8fc ("pmdomain: imx: gpc: Simplify with scoped for each OF child loop")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/pmdomain/imx/gpc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -3782,6 +3782,7 @@ int sdhci_resume_host(struct sdhci_host
- 		host->pwr = 0;
- 		host->clock = 0;
- 		host->reinit_uhs = true;
-+		mmc->ops->start_signal_voltage_switch(mmc, &mmc->ios);
- 		mmc->ops->set_ios(mmc, &mmc->ios);
- 	} else {
- 		sdhci_init(host, (mmc->pm_flags & MMC_PM_KEEP_POWER));
+--- a/drivers/pmdomain/imx/gpc.c
++++ b/drivers/pmdomain/imx/gpc.c
+@@ -488,7 +488,7 @@ static int imx_gpc_probe(struct platform
+ 			domain->ipg_rate_mhz = ipg_rate_mhz;
+ 
+ 			pd_pdev->dev.parent = &pdev->dev;
+-			pd_pdev->dev.of_node = np;
++			pd_pdev->dev.of_node = of_node_get(np);
+ 			pd_pdev->dev.fwnode = of_fwnode_handle(np);
+ 
+ 			ret = platform_device_add(pd_pdev);
 
 
