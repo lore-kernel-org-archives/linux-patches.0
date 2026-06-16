@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AB344DB64;
-	Tue, 16 Jun 2026 16:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0EC4508E4;
+	Tue, 16 Jun 2026 16:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781626898; cv=none; b=f1OtANY8sIxEXczoZWrVzlgdmS5wHeKe5q0iZQWBridqukoxlxOp9ZERqabspC2IhIg7e7+x2TDzDoVVQo1l1jQevRVGtNB2wJXzz0GEmZ1ZMqu8sg/3chDW3luT/Ht2wWrtkJxfxq31Jxas7EIoYeOS+0hhGaR/bqt4uzbwVzA=
+	t=1781626903; cv=none; b=WkysIyz87yDqaIl0pBgX26FrwugNQ8/S2p1cp7eUuBgSgsfJ1AYHi7DE3zkUtpY5YH7nHXXRHqLwZDpmUsMdp9OhAV5kL79izrcRQLraLitAwUX3tB5ks6r8oN4lI6G7omvjivY2etj3boi/GhoOIFn/dfYzOUPKAo7nRD3DblI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781626898; c=relaxed/simple;
-	bh=/my2D0aDpWGcH7DyzlalaQm1wDqz7lqXLaVOTHM0P6k=;
+	s=arc-20240116; t=1781626903; c=relaxed/simple;
+	bh=dT63aIfT90nJ3bpGj5KVLL1MP4GqiyMyfOxZ2AqnK6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KwxDipVhAH2eiui96l2VUxWerDm6HG/VDSW/1quP5HtxDTGxNWGM8lqaH5ujGn4mHiKIRcBKbO1IFGH8H/uSs7tchZS0APa2wUa5loALEyWst2Qxi/rhLFBpPbflPLyiD4VBFMu3Ia08QIB87ULxEExH/6BkcjAUXeicD2kOw/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTByNXCA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MT5NW19aFrwvDrWLUBptevhgZeYAnWN2zZ0x+HVGnW2o2hiwS2OvDroaj4sGyVsMO5UUrZOSyXYd8MGDxLKYIcotO0z69PmZWjfSPZbfVuDLVzAzSE/mVPOp7mU/rkmtLKQlGorEoLAoGksuqknet+z8JPLsJjufb2rOrLHVBtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IxK1wh55; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTByNXCA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AAE71F000E9;
-	Tue, 16 Jun 2026 16:21:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IxK1wh55"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED4941F000E9;
+	Tue, 16 Jun 2026 16:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781626897;
-	bh=YxW3DJKvyhz1pIsarWz7VYoQfYY87RmQrqsQJt4UdQI=;
+	s=korg; t=1781626902;
+	bh=XJMqU8LHyU8DCw9SN5/HzlLfaez06qCMEkmAw6bKYmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tTByNXCA9ekmm2nCh+F+Jg/yGhgS4QLHQ6xWxJ4P7KSl9a0f9beobEguN9V3/uI84
-	 3GKnI6rp38LUmIc7Hs1kSxD2TutesXMuuCfJ5hvzrdk6xCA3qQjvqD+F9azagcA14A
-	 M302j8g6Wo9YqVMjSOnHTQnWUt5ID1bKwuNNmacE=
+	b=IxK1wh55REzlgD04WhoJ+ad4ZXgn8MhxXR7jLunfxBKcuOL+tWnY0/FP8qjdmQBZ7
+	 Tk63fdlwSdmrAWCxuKx+7G7bct0xS5JPJiZePRoKIpQiyIUgWyQUcMJqx9uOhrsVyW
+	 o6F/z1dgawj4qsOgmV1V0O7ZQpxJTMBPU0xYXxaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih Kai Hsu <hsu.chih.kai@realtek.com>,
-	Hayes Wang <hayeswang@realtek.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 090/261] r8152: handle the return value of usb_reset_device()
-Date: Tue, 16 Jun 2026 20:28:48 +0530
-Message-ID: <20260616145049.202641455@linuxfoundation.org>
+Subject: [PATCH 6.12 091/261] gpio: zynq: fix runtime PM leak on remove
+Date: Tue, 16 Jun 2026 20:28:49 +0530
+Message-ID: <20260616145049.252311036@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -53,42 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chih Kai Hsu <hsu.chih.kai@realtek.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 19440600e729d4f74a42591a872099cf25c7d28a ]
+[ Upstream commit 6edb934de9bda3b7abcec856eaee6fc8b4278dd1 ]
 
-If usb_reset_device() returns a negative error code, stop the
-process of probing.
+pm_runtime_get_sync() increments the runtime PM usage counter even when it
+returns an error. zynq_gpio_remove() uses it to keep the controller active
+while removing the GPIO chip, but never drops the usage counter again.
 
-Fixes: 10c3271712f5 ("r8152: disable the ECM mode")
-Signed-off-by: Chih Kai Hsu <hsu.chih.kai@realtek.com>
-Reviewed-by: Hayes Wang <hayeswang@realtek.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260604092247.27158-450-nic_swsd@realtek.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Balance the get with pm_runtime_put_noidle() after disabling runtime PM.
+
+Fixes: 3242ba117e9b ("gpio: Add driver for Zynq GPIO controller")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Link: https://patch.msgid.link/20260609073313.5-1-ruoyuw560@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/r8152.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-zynq.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
-index 1c36816405f13b..f3a4a40d534631 100644
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -9811,7 +9811,12 @@ static int rtl8152_probe_once(struct usb_interface *intf,
- 	struct net_device *netdev;
- 	int ret;
+diff --git a/drivers/gpio/gpio-zynq.c b/drivers/gpio/gpio-zynq.c
+index cc53e6940ad7e6..50fa4938161dde 100644
+--- a/drivers/gpio/gpio-zynq.c
++++ b/drivers/gpio/gpio-zynq.c
+@@ -1015,6 +1015,7 @@ static void zynq_gpio_remove(struct platform_device *pdev)
+ 	gpiochip_remove(&gpio->chip);
+ 	device_set_wakeup_capable(&pdev->dev, 0);
+ 	pm_runtime_disable(&pdev->dev);
++	pm_runtime_put_noidle(&pdev->dev);
+ }
  
--	usb_reset_device(udev);
-+	ret = usb_reset_device(udev);
-+	if (ret < 0) {
-+		dev_err(&intf->dev, "USB reset failed, errno=%d\n", ret);
-+		return ret;
-+	}
-+
- 	netdev = alloc_etherdev(sizeof(struct r8152));
- 	if (!netdev) {
- 		dev_err(&intf->dev, "Out of memory\n");
+ static struct platform_driver zynq_gpio_driver = {
 -- 
 2.53.0
 
