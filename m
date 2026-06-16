@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B8C3EB0F5;
-	Tue, 16 Jun 2026 18:56:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A49B3EB0F5;
+	Tue, 16 Jun 2026 18:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781636200; cv=none; b=P6qpnhVjAhmcgRWZe3+64x39AAI4Ci7ai2C8GoHTT/h6U7MEPI5nW8huXKIZ1WtokX4/6tZgquwkLdu+rPlvZxGg8tvRLkvqGrreRXKz+x6baQrp4T4zWWCih3HDZChp3gv+9MUj2mCPYHGU48Eons1Mj0h29ezS8bo7HWbhgdo=
+	t=1781636205; cv=none; b=syahigPnTk5eH00n2kRSib/+clYfbqQSlbdqCCn6kX9R/CixjbGcqN2w+ehH3cMWOHhY2IyBQC8O+Hr8pI539FBH1UGSGKxya1MdF69RyyXWSlqny1FLegw9h/MdQV0flnzVf6UXeXx3kciX1o2hDlhW9SRVmrzvC1AoYZRN5ZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781636200; c=relaxed/simple;
-	bh=HWtgREgh9RBRbUG9rPPD4r2h73Z0b6JEgf9sk4vJ8Eg=;
+	s=arc-20240116; t=1781636205; c=relaxed/simple;
+	bh=vguewEml/X5I3B4T1QhxJnnkfIGAMoHoT0m8IoI7FGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u5HHXXm3lN3x6s8IUBGcGv4yVGWUOhZ9s90DuL2cZLtmsS0d8AXdoNndsK/fgdM+xeg5CiQUZMjcw8Jdr/OFtUveA+MU4UPKKHcARZlqxLzbyuRXWX3f+PWEZS/JYTzSxIK00AnyQjsiLmhuFTh+UVUShd0crXyRzL8ori+XCSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t4q/JeEX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=szDVICCcd1pHCXsAYQLrgBE/oJKi+ED+uSuBgpKFa44+2JDQekF9kA7zjIFYnPG69WZTv2zLFIFEnkZn5qV9W66b5udouokoVM/MWfcRqQr3h0bQPICnofR/n60cNFAYn+cvKnTQIgfTBLoHcsxcxlFX4Tk4KBtR7KfM+Ccsfns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AsHxf5at; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t4q/JeEX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287E81F000E9;
-	Tue, 16 Jun 2026 18:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AsHxf5at"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1DC1F000E9;
+	Tue, 16 Jun 2026 18:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781636199;
-	bh=B+GDOs23yQpaJvW9sVMPkVRY6JJgzoQncgXbze6uMvM=;
+	s=korg; t=1781636204;
+	bh=Z6G8C5AgRtW3LKcYa7V9BqyOT2uvJ9sA56zNJbMM5hU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t4q/JeEXSiJSlx8YvTSpk/NjCuChSxfJm7LPE0Ety7SX4APBmI3m7fmkGi1Ah0y2s
-	 EG9Y2OiD+vwJ1xMnCNjIQ0Wq51sSwktwQeyOhTbcppLECPe2OU8ovTFxd1Pti+JtRD
-	 /xVGG2JSdGH920vSqHVQHyTPsgVBqbQ9uFY6KcKM=
+	b=AsHxf5atOLIJgOaY7/LPcVAfsY5Sm2g3No4Z9HBgsqaF4mXot1x4tTqnDSbyQTeJ6
+	 zWWvkC+J51i+ucQL6eMVRwkcBHyFPlbKwKGIWrXo4z6evTcMY1nv9kytsZM0+WjIEF
+	 tKPdOh6JRf7dQgJgv33d0sQ5wNvVSKQD3+IqEOyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Akhil R <akhilrajeev@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 5.10 194/342] i2c: qcom-cci: Fix NULL pointer dereference in cci_remove()
-Date: Tue, 16 Jun 2026 20:28:10 +0530
-Message-ID: <20260616145057.217552707@linuxfoundation.org>
+Subject: [PATCH 5.10 195/342] i2c: tegra: Fix NOIRQ suspend/resume
+Date: Tue, 16 Jun 2026 20:28:11 +0530
+Message-ID: <20260616145057.265777342@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145048.348037099@linuxfoundation.org>
 References: <20260616145048.348037099@linuxfoundation.org>
@@ -51,55 +51,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Akhil R <akhilrajeev@nvidia.com>
 
-commit 729ac5a4b966aac42e08a94dea966f4429008548 upstream.
+commit 656646b3847ac6a21b074a813223feef2aadd6e2 upstream.
 
-On all modern platforms Qualcomm CCI controller provides two I2C masters,
-and on particular boards only one I2C master may be initialized, and in
-such cases the device unbinding or driver removal causes a NULL pointer
-dereference, because cci_halt() is called for all two I2C masters, but
-a completion is initialized only for the single enabled master:
+The Tegra I2C driver relies on runtime PM to wake up the controller before
+each transfer. However, runtime PM is disabled between the system suspend
+and NOIRQ suspend. If an I2C device initiates a transfer during this
+window, the I2C controller fails to wake up and the transfer fails. To
+handle this, the controller must be kept available for this period to
+allow transfers.
 
-    % rmmod i2c-qcom-cci
-    Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-    <snip>
-    Call trace:
-    __wait_for_common+0x194/0x1a8 (P)
-    wait_for_completion_timeout+0x20/0x2c
-    cci_remove+0xc4/0x138 [i2c_qcom_cci]
-    platform_remove+0x20/0x30
-    device_remove+0x4c/0x80
-    device_release_driver_internal+0x1c8/0x224
-    driver_detach+0x50/0x98
-    bus_remove_driver+0x6c/0xbc
-    driver_unregister+0x30/0x60
-    platform_driver_unregister+0x14/0x20
-    qcom_cci_driver_exit+0x18/0x1008 [i2c_qcom_cci]
-    ....
+Rework the I2C controller's system PM callbacks such that the controller
+is resumed from runtime suspend during system suspend and it stays
+RPM_ACTIVE throughout the suspend-resume cycle until it is runtime
+suspended back in the system resume. The clocks are disabled in NOIRQ
+suspend and enabled back in NOIRQ resume by calling the controller's
+runtime PM functions directly.
 
-Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: <stable@vger.kernel.org> # v5.8+
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Fixes: 8ebf15e9c869 ("i2c: tegra: Move suspend handling to NOIRQ phase")
+Assisted-by: Cursor:claude-4.6-opus
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Cc: <stable@vger.kernel.org> # v5.4+
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260515234121.1607425-2-vladimir.zapolskiy@linaro.org
+Link: https://lore.kernel.org/r/20260518114013.62065-5-akhilrajeev@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-qcom-cci.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-tegra.c |   53 +++++++++++++++++++++++------------------
+ 1 file changed, 30 insertions(+), 23 deletions(-)
 
---- a/drivers/i2c/busses/i2c-qcom-cci.c
-+++ b/drivers/i2c/busses/i2c-qcom-cci.c
-@@ -683,8 +683,8 @@ static int cci_remove(struct platform_de
- 		if (cci->master[i].cci) {
- 			i2c_del_adapter(&cci->master[i].adap);
- 			of_node_put(cci->master[i].adap.dev.of_node);
-+			cci_halt(cci, i);
- 		}
--		cci_halt(cci, i);
- 	}
+--- a/drivers/i2c/busses/i2c-tegra.c
++++ b/drivers/i2c/busses/i2c-tegra.c
+@@ -1873,28 +1873,37 @@ static int __maybe_unused tegra_i2c_runt
  
- 	disable_irq(cci->irq);
+ static int __maybe_unused tegra_i2c_suspend(struct device *dev)
+ {
++	/*
++	 * Bring the controller up and hold a usage count so it stays
++	 * available until the noirq phase.
++	 */
++	return pm_runtime_resume_and_get(dev);
++}
++
++static int __maybe_unused tegra_i2c_suspend_noirq(struct device *dev)
++{
+ 	struct tegra_i2c_dev *i2c_dev = dev_get_drvdata(dev);
+-	int err;
+ 
+ 	i2c_mark_adapter_suspended(&i2c_dev->adapter);
+ 
+-	if (!pm_runtime_status_suspended(dev)) {
+-		err = tegra_i2c_runtime_suspend(dev);
+-		if (err)
+-			return err;
+-	}
+-
+-	return 0;
++	/*
++	 * Runtime PM is already disabled at this point, so invoke the
++	 * runtime_suspend callback directly to put the controller down.
++	 */
++	return tegra_i2c_runtime_suspend(dev);
+ }
+ 
+-static int __maybe_unused tegra_i2c_resume(struct device *dev)
++static int __maybe_unused tegra_i2c_resume_noirq(struct device *dev)
+ {
+ 	struct tegra_i2c_dev *i2c_dev = dev_get_drvdata(dev);
+ 	int err;
+ 
+ 	/*
+-	 * We need to ensure that clocks are enabled so that registers can be
+-	 * restored in tegra_i2c_init().
++	 * Runtime PM is still disabled at this point, so invoke the
++	 * runtime_resume callback directly to bring the controller back up
++	 * before re-initializing the hardware. The adapter is then marked
++	 * resumed so that consumers can issue transfers from their own
++	 * resume_noirq() handlers and onwards.
+ 	 */
+ 	err = tegra_i2c_runtime_resume(dev);
+ 	if (err)
+@@ -1904,24 +1913,22 @@ static int __maybe_unused tegra_i2c_resu
+ 	if (err)
+ 		return err;
+ 
+-	/*
+-	 * In case we are runtime suspended, disable clocks again so that we
+-	 * don't unbalance the clock reference counts during the next runtime
+-	 * resume transition.
+-	 */
+-	if (pm_runtime_status_suspended(dev)) {
+-		err = tegra_i2c_runtime_suspend(dev);
+-		if (err)
+-			return err;
+-	}
+-
+ 	i2c_mark_adapter_resumed(&i2c_dev->adapter);
+ 
+ 	return 0;
+ }
+ 
++static int __maybe_unused tegra_i2c_resume(struct device *dev)
++{
++	pm_runtime_put(dev);
++
++	return 0;
++}
++
+ static const struct dev_pm_ops tegra_i2c_pm = {
+-	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(tegra_i2c_suspend, tegra_i2c_resume)
++	SET_SYSTEM_SLEEP_PM_OPS(tegra_i2c_suspend, tegra_i2c_resume)
++	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(tegra_i2c_suspend_noirq,
++				      tegra_i2c_resume_noirq)
+ 	SET_RUNTIME_PM_OPS(tegra_i2c_runtime_suspend, tegra_i2c_runtime_resume,
+ 			   NULL)
+ };
 
 
