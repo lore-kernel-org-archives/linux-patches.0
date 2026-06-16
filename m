@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA7847279B;
-	Tue, 16 Jun 2026 16:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73314502F;
+	Tue, 16 Jun 2026 16:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628811; cv=none; b=hIVODz/YNk9WQd1+8DWtoeT3ePiqVG9g5vy/0uvujbEUvkADyKX36Z/DD7Ko8I8zhrrqVJOed0gQ9sZ6zEUJGYlMmu9bzQaZWrzuGCm7DfGae0UE9wgYn5oedsLrRjWilkul/33ODR0AzkUvyfjc0hTg5da4hySfNzdFNM0muV4=
+	t=1781628816; cv=none; b=eIbp3cnVN5mVcQSLfFHmg245DpmlLLnbsqfj/x22ybqSUJaSsofBZ33vvhvdDLzmCcReaa7kFNCpitDOQoH+whDLtV8/oz3yhCrCLJTuQOV4xc7tcOL7h06M5JmibvBxVf+c8Nx5+xbTtwze8n2YpVsbAY2RX0k9lc83Y9O4Rj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628811; c=relaxed/simple;
-	bh=f6rZ9wX6WJJJLyBnAPpQ3iqlJft0ViqHrrcG/gzoGf8=;
+	s=arc-20240116; t=1781628816; c=relaxed/simple;
+	bh=Ec75vY2hyKai6NLRowyIPTkTTY3WVV+qNaOVBbtAeXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BDPnpHeYG7qoHj1+5CeBhY1igV/SZphUs5Pqq/n1UTo2Huc1ykBE7vwZANX0DnibUANA/W0B9dL57Qgksborr+SrBPGV+DTtluskECm2J7P1J61FWqwTMoa6kjPLkXjh/LQlj1qH2dJIDUjkrIGn4pL33ogiXOW/BZy4M4XsA8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZMYWhDPL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oP8Ol4dNzQwFCwShJB56LVmnACh876+xxK9KeFPNYWR6EjqpA/X2HTBft/cLYz0K0OR7LyFC/UK/yJ/12gzaVkJD4zf99LZG+XSz0W0blJ+MvEITtgJ83GStkXnndR7V/AEj4tMKT5SK+qZMjDrznwaYkC1XuUhtneGCXgz29Rg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfgY6fAb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZMYWhDPL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B801F000E9;
-	Tue, 16 Jun 2026 16:53:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfgY6fAb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C1F1F000E9;
+	Tue, 16 Jun 2026 16:53:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628810;
-	bh=E/0isasNZXhrMqOw1BqOfOLho1KwhaqgKcj9pe7xSS0=;
+	s=korg; t=1781628815;
+	bh=0/mDaEy1IYvFB+ZbyG0n2UgGocscKgX5Oxx48G1T7j8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZMYWhDPLk2HrHBMsj5EP4LLK5L5S1I+iOdGMeZnR3Ur1Q8MrKU/17SoAlIPBE2I4A
-	 TY0y2e4y5N9eTxX3n5HQTlrKk1oq4kuplWLmjOHddmkMU0BRBP1CUheqAZOqmZ6O0E
-	 yH1Tacjb3ORzWr85rw9g4A2YH5zJhniBIQlRcpd8=
+	b=hfgY6fAbaHoa/liYWbFuDWJaCO+pE0Zyrgjpb63iwtLbZbbm0nXe+IXseLnW7a7YI
+	 nr+AFZtbk+os9rPq35xJ6DR0trPPhlAUOtbXpaY4yaGNxHIBmb5Xwwm0elYkluxfQv
+	 FNYuA6rnQU0sm+TS9geLSRu4MxnukZGlkV3nEVrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Guangshuo Li <lgs201920130244@gmail.com>
-Subject: [PATCH 6.6 166/452] usb: gadget: f_hid: fix device reference leak in hidg_alloc()
-Date: Tue, 16 Jun 2026 20:26:33 +0530
-Message-ID: <20260616145126.583421411@linuxfoundation.org>
+	Jeremy Erazo <mendozayt13@gmail.com>
+Subject: [PATCH 6.6 167/452] usb: gadget: composite: fix integer underflow in WebUSB GET_URL handling
+Date: Tue, 16 Jun 2026 20:26:34 +0530
+Message-ID: <20260616145126.645030498@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,53 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Jeremy Erazo <mendozayt13@gmail.com>
 
-commit 4f88d65def6f3c90121601b4f62a4c967f3063a6 upstream.
+commit 6c5dbc104dadd79fc2923497c20bae759a18758c upstream.
 
-hidg_alloc() initializes hidg->dev with device_initialize() before
-calling dev_set_name(). If dev_set_name() fails, the function currently
-jumps to err_unlock and returns without calling put_device().
+The WebUSB GET_URL handler in composite_setup() narrows
+landing_page_length to fit the host-supplied wLength using
 
-This leaves the device reference unbalanced and prevents hidg_release()
-from being called. Calling put_device() here is also safe, since
-hidg_release() only frees resources owned by hidg.
+	landing_page_length = w_length
+		- WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_offset;
 
-The issue was identified by a static analysis tool I developed and
-confirmed by manual review.
+If wLength is smaller than WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH the
+unsigned subtraction wraps, and the subsequent
 
-Route the dev_set_name() failure path through err_put_device so the
-device reference is dropped properly.
+	memcpy(url_descriptor->URL,
+	       cdev->landing_page + landing_page_offset,
+	       landing_page_length - landing_page_offset);
 
-Fixes: 89ff3dfac604 ("usb: gadget: f_hid: fix f_hidg lifetime vs cdev")
+ends up copying close to UINT_MAX bytes from cdev->landing_page into
+cdev->req->buf.  KASAN reports a slab-out-of-bounds in composite_setup
+on the kmalloc-2k gadget_info allocation, and FORTIFY_SOURCE traps the
+memcpy as a 4294967293-byte field-spanning write into
+url_descriptor->URL (size 252).
+
+A USB host can reach this from a single SETUP packet against any
+gadget that has webusb/use=1 and a landingPage configured.
+
+Handle the small-wLength case before the math: when the host requested
+fewer bytes than the URL descriptor header, only the header is
+meaningful and no URL bytes need to be copied.  Setting
+landing_page_length to landing_page_offset makes the existing memcpy a
+no-op and leaves the descriptor returned to the host unchanged for all
+larger wLength values.
+
+Fixes: 93c473948c58 ("usb: gadget: add WebUSB landing page support")
 Cc: stable <stable@kernel.org>
-Reviewed-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Johan Hovold johan@kernel.org
-Link: https://patch.msgid.link/20260413142119.2977716-1-lgs201920130244@gmail.com
+Signed-off-by: Jeremy Erazo <mendozayt13@gmail.com>
+Link: https://patch.msgid.link/20260512160530.352318-1-mendozayt13@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_hid.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/gadget/composite.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -1282,7 +1282,7 @@ static struct usb_function *hidg_alloc(s
- 	hidg->dev.devt = MKDEV(major, opts->minor);
- 	ret = dev_set_name(&hidg->dev, "hidg%d", opts->minor);
- 	if (ret)
--		goto err_unlock;
-+		goto err_put_device;
+--- a/drivers/usb/gadget/composite.c
++++ b/drivers/usb/gadget/composite.c
+@@ -2196,7 +2196,10 @@ unknown:
+ 				sizeof(url_descriptor->URL)
+ 				- WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_offset);
  
- 	hidg->bInterfaceSubClass = opts->subclass;
- 	hidg->bInterfaceProtocol = opts->protocol;
-@@ -1317,7 +1317,6 @@ static struct usb_function *hidg_alloc(s
+-			if (w_length < WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_length)
++			if (w_length < WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH)
++				landing_page_length = landing_page_offset;
++			else if (w_length <
++				 WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_length)
+ 				landing_page_length = w_length
+ 				- WEBUSB_URL_DESCRIPTOR_HEADER_LENGTH + landing_page_offset;
  
- err_put_device:
- 	put_device(&hidg->dev);
--err_unlock:
- 	mutex_unlock(&opts->lock);
- 	return ERR_PTR(ret);
- }
 
 
