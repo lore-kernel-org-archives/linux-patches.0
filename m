@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27303C5842;
-	Tue, 16 Jun 2026 18:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C1A352007;
+	Tue, 16 Jun 2026 18:01:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632873; cv=none; b=t/BKhE2P1k8APw5UpIe0GY3FjHuGn//zzvfyt0oeTaJmhPYa+ACJO//zcVV9qMS+uO8XEyaFOaGhCj3rFN3+pC/2qCM1sUagZwR8rLeMrYs2APZQzjt4zk86/2F854wpb7s+C7UXRyV0SDH8UhJ8RoBCX5fcSri+ZjU0WbeqAHg=
+	t=1781632879; cv=none; b=lytgKOsBmOXojAVmP1SM+1EXWNaDSKxs5m4AAVHVsDtZQNOBBRJP1ClXAXuw/RVxqOHuQY3w8NT08OhUkJgXJxLfY2phxQdxRANzM+HACiLTPsxMFKO03alrdI5rj4Vg8hAZzFK/Yc+DLWRxQYcIv3ndrfY1AgPTBs054YtkPP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632873; c=relaxed/simple;
-	bh=vxBSZ+GbesXQaQMe7XhD4z9Qog5/YI/TKoJY0QN6F10=;
+	s=arc-20240116; t=1781632879; c=relaxed/simple;
+	bh=LATR7yHShRC9r4zu1DfKvqLdh/dm7+V9Ru7+aJi7ad4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hu3l6Q+CDyTsqu5t5i/I09tf9/Rcq1BSjNQ3QgOKxGVIQbQaH4JTic31Z6xdpS/czfWM003k4gRa8t18+itAZ75GktVrrHIuG2mU6VW5+dO7JRZRDaeDSONQMKdQxVAEqIuceE71tSNVKx0ifdB1shU89HR3HQ2e21RDOHAZyLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aeF2KFtN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CqmV7tePQuz0Osq9eb8HUUXliaDIaEjJc+bExBEId+55tF/X2QphYoXWrND7mdCNpKHP5ES8fatrgB6lCs881sIwCQtRNlKuXdncC991Geakoi3/NhnUP94yd7KSBZebVi7jtZJTqc/2R+XkucZRcbN7QPwrSet53RkSd8DBocQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DaADAACq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aeF2KFtN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D48C1F000E9;
-	Tue, 16 Jun 2026 18:01:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DaADAACq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 041B51F000E9;
+	Tue, 16 Jun 2026 18:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632872;
-	bh=Ek/V/NhfxJC3xBlwFCdE4c22b0MS24nLTpweSAFsPlM=;
+	s=korg; t=1781632878;
+	bh=fG/zKhGdJ1bjkNKtNUqIjoOtlgH54RkLTpcTlhIu9/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aeF2KFtNgrNMwtJFAhML0lOGEERnQeY4Jllo/v2UO8HJSDPdkGK9lics5HPVfJ4u/
-	 Ojb1Of9AjLwCG1fA9AOgoOFxpvfwN40NUorieYaV/RHWtG6NmafVmm67v8xqEtewoq
-	 VK4+jeFWkOKM1s2HUXnqRw6voU8TLBT1+TAjlZkw=
+	b=DaADAACqVhnvbN6xHg6tqqgNa5pqWcZbcfK7W3xCoSEGy3qpPs9NsRkyfxoVks6D8
+	 0Nifi0mFeyh/G+afug5Atd4KZzyhCSE+6HRU4/PFS5jP6P/iw93x6BPbCwOAH+Wlnt
+	 V/zuC2nGai7UemEneweIEoUYPzUso0MMwM84GhKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Erhardt <aer@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 494/522] ALSA: hda/hdmi: Add quirk for TUXEDO IBS14G6
-Date: Tue, 16 Jun 2026 20:30:41 +0530
-Message-ID: <20260616145148.898363391@linuxfoundation.org>
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>
+Subject: [PATCH 6.1 495/522] perf build: Conditionally define NDEBUG
+Date: Tue, 16 Jun 2026 20:30:42 +0530
+Message-ID: <20260616145148.940932907@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -51,33 +60,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Erhardt <aer@tuxedocomputers.com>
+From: Ian Rogers <irogers@google.com>
 
-commit d649c58bcad8fb9b749e3837136a201632fa109d upstream.
+commit 616b14b47a86d880ba21a363440f20f82152d8f2 upstream
 
-Depending on the timing during boot, the BIOS might report wrong pin
-capabilities, which can lead to HDMI audio being disabled. Therefore,
-force HDMI audio connection on TUXEDO InfinityBook S 14 Gen6.
+When a build is done without DEBUG=1 then define NDEBUG. This will
+compile out asserts and other debug code.
 
-Signed-off-by: Aaron Erhardt <aer@tuxedocomputers.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20260218213234.429686-1-wse@tuxedocomputers.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/r/20230330183827.1412303-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_hdmi.c |    1 +
+ tools/perf/Makefile.config |    1 +
  1 file changed, 1 insertion(+)
 
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -1999,6 +1999,7 @@ static const struct snd_pci_quirk force_
- 	SND_PCI_QUIRK(0x1043, 0x86ae, "ASUS", 1),  /* Z170 PRO */
- 	SND_PCI_QUIRK(0x1043, 0x86c7, "ASUS", 1),  /* Z170M PLUS */
- 	SND_PCI_QUIRK(0x1462, 0xec94, "MS-7C94", 1),
-+	SND_PCI_QUIRK(0x1558, 0x14a1, "TUXEDO InfinityBook S 14 Gen6", 1),
- 	SND_PCI_QUIRK(0x8086, 0x2060, "Intel NUC5CPYB", 1),
- 	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", 1),
- 	{}
+--- a/tools/perf/Makefile.config
++++ b/tools/perf/Makefile.config
+@@ -228,6 +228,7 @@ ifndef DEBUG
+ endif
+ 
+ ifeq ($(DEBUG),0)
++CORE_CFLAGS += -DNDEBUG=1
+ ifeq ($(CC_NO_CLANG), 0)
+   CORE_CFLAGS += -O3
+ else
 
 
