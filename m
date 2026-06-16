@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBC444E045;
-	Tue, 16 Jun 2026 16:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0E5331EAB;
+	Tue, 16 Jun 2026 16:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781627930; cv=none; b=GX2oICRrZZ4umnEmaIMI4e2lQkbscXNN4V4ribWV1axpSaJPkgOaGgb+LyMTqxGM6D6+c0F2DMrboW4PMZ4lM+m4bZ6evUSqJHFvD0efMq1w33TWnd5M5fhrEXi7xfACjeKcdwRzr3tVHNsncVB1X3vExR9zSmi6pvTTIHvpL10=
+	t=1781627934; cv=none; b=DS7JB3o7DstaYevXXmLCZubUKqwS0xWZlRTURa+UC5FAHGaEJsuracI8x7ZzZEEBrdX9nnI8v1ogWcr99SiHhJJ6T1uJLB3Qm4hjoaCr9wiRH0+ZxRhWDGKDVVTw8myJ64htmELdbJtQGsWJdrFvcSxRFjspY4eNpIU8Eg8Zr2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781627930; c=relaxed/simple;
-	bh=GBOqC0P1QSxZLlkhMvSnhJg6pRjFAuvHG3wYOfcXpR8=;
+	s=arc-20240116; t=1781627934; c=relaxed/simple;
+	bh=Qciand+vu0zUf+EGy3whlLsm1ULaQkkuy9PjmlGYqME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jYBwMbowLLsi1B0DgPDI+l1Wo6PAjUZL+hSWdmk0xxsHK4jTE5c7GWmucyOP/QuFJNJv8z4ZekhxQNuFtD1pDxnf5mdGlgP1557IyMyRyuoACpQdQxkhJUlB6Q3UBtHB3QpS2E2pYBiYsiLyBOr47Zs7A47fPP9cOH/FwO3tpj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lmapCQbz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fP/9bO4YTwizrQVXse5c4+QyFcj4YTCGVmWNlcteBjI07/JDpgzh6EEgtoupg/gHo2uLXQynkvlIuEdGhmjDGsLSiAi9brUmOCqoQP1KJX+OiY0oV0PFP9fVUhwaG3q9M6Qy3EViNC9Gn6iIsS2qMmT1VBXUnZ2IfPeR9K5hE/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TdzleOxE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lmapCQbz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E481F000E9;
-	Tue, 16 Jun 2026 16:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TdzleOxE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E2801F000E9;
+	Tue, 16 Jun 2026 16:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781627928;
-	bh=7909xD+mvDBuJx5SU7LVD7JkKyGfvE0vsDoBUgCay54=;
+	s=korg; t=1781627933;
+	bh=aRIhOPZKWi9ucDYurQFct58K9nncbb5RKn8CzHTxoyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lmapCQbz5T8L3eW+L/dJ2MgzVUcGxeWKPI4Ay8IGURJSC3gwFNUL67B9YTzRAKHs6
-	 7WiXnk399WbzkVIXp+pU+70kw5BBLGmVVX8TZUVCQQGGPytypevYjN/3Hw3PhR7Cnc
-	 bxm4fMEIi1DdhaqepYtPMajNlPnzmSiA3DrfJn8A=
+	b=TdzleOxEthd3QyJJia9ZxbTmi1t743Y2ubhnY/JuH1k7k/1opdjYSAG1KHs4lhe0q
+	 Pu6sXyOjHsNQfag+lRzb05DuhNzN6wlx9tUT/yJ7+vTxfdClwp12BJjczUSfOg1v5c
+	 jf0o0nhiLwWRm8IUAYoytlfEfIHTTlpIhn9xkUuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	Florian Westphal <fw@strlen.de>,
-	Nazar Kalashnikov <nazarkalashnikov0@gmail.com>
-Subject: [PATCH 6.12 247/261] ipvs: skip ipv6 extension headers for csum checks
-Date: Tue, 16 Jun 2026 20:31:25 +0530
-Message-ID: <20260616145056.529073236@linuxfoundation.org>
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>
+Subject: [PATCH 6.12 256/261] arm64: errata: Mitigate TLBI errata on Microsoft Azure Cobalt 100 CPU
+Date: Tue, 16 Jun 2026 20:31:34 +0530
+Message-ID: <20260616145056.929364893@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145044.869532709@linuxfoundation.org>
 References: <20260616145044.869532709@linuxfoundation.org>
@@ -51,195 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Will Deacon <will@kernel.org>
 
-commit 05cfe9863ef049d98141dc2969eefde72fb07625 upstream.
+commit 1940e70a8144bf75e6df26bf6f600862ea7f7ea1 upstream.
 
-Protocol checksum validation fails for IPv6 if there are extension
-headers before the protocol header. iph->len already contains its
-offset, so use it to fix the problem.
+Commit fb091ff39479 ("arm64: Subscribe Microsoft Azure Cobalt 100 to ARM
+Neoverse N2 errata") states that Microsoft Azure Cobalt 100 CPU "is a
+Microsoft implemented CPU based on r0p0 of the ARM Neoverse N2 CPU, and
+therefore suffers from all the same errata.".
 
-Fixes: 2906f66a5682 ("ipvs: SCTP Trasport Loadbalancing Support")
-Fixes: 0bbdd42b7efa ("IPVS: Extend protocol DNAT/SNAT and state handlers")
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Nazar Kalashnikov <nazarkalashnikov0@gmail.com>
+So enable the workaround for the latest broadcast TLB invalidation bug
+on these parts.
+
+Signed-off-by: Will Deacon <will@kernel.org>
+[Mark: backport to v6.12.y]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipvs/ip_vs_proto_sctp.c |   18 ++++++------------
- net/netfilter/ipvs/ip_vs_proto_tcp.c  |   21 +++++++--------------
- net/netfilter/ipvs/ip_vs_proto_udp.c  |   20 +++++++-------------
- 3 files changed, 20 insertions(+), 39 deletions(-)
+ Documentation/arch/arm64/silicon-errata.rst |    2 ++
+ arch/arm64/Kconfig                          |    1 +
+ arch/arm64/kernel/cpu_errata.c              |    1 +
+ 3 files changed, 4 insertions(+)
 
---- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
-@@ -10,7 +10,8 @@
- #include <net/ip_vs.h>
+--- a/Documentation/arch/arm64/silicon-errata.rst
++++ b/Documentation/arch/arm64/silicon-errata.rst
+@@ -346,3 +346,5 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | Microsoft      | Azure Cobalt 100| #3324339        | ARM64_ERRATUM_3194386       |
+ +----------------+-----------------+-----------------+-----------------------------+
++| Microsoft      | Azure Cobalt 100| #4193789        | ARM64_ERRATUM_4118414       |
+++----------------+-----------------+-----------------+-----------------------------+
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -1166,6 +1166,7 @@ config ARM64_ERRATUM_4118414
+ 	  * ARM Neoverse-V2 erratum 4193787
+ 	  * ARM Neoverse-V3 erratum 4193784
+ 	  * ARM Neoverse-V3AE erratum 4193784
++	  * Microsoft Azure Cobalt 100 4193789
+ 	  * NVIDIA Olympus erratum T410-OLY-1029
  
- static int
--sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp);
-+sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
-+		unsigned int sctphoff);
- 
- static int
- sctp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
-@@ -108,7 +109,7 @@ sctp_snat_handler(struct sk_buff *skb, s
- 		int ret;
- 
- 		/* Some checks before mangling */
--		if (!sctp_csum_check(cp->af, skb, pp))
-+		if (!sctp_csum_check(cp->af, skb, pp, sctphoff))
- 			return 0;
- 
- 		/* Call application helper if needed */
-@@ -156,7 +157,7 @@ sctp_dnat_handler(struct sk_buff *skb, s
- 		int ret;
- 
- 		/* Some checks before mangling */
--		if (!sctp_csum_check(cp->af, skb, pp))
-+		if (!sctp_csum_check(cp->af, skb, pp, sctphoff))
- 			return 0;
- 
- 		/* Call application helper if needed */
-@@ -185,19 +186,12 @@ sctp_dnat_handler(struct sk_buff *skb, s
- }
- 
- static int
--sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
-+sctp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
-+		unsigned int sctphoff)
- {
--	unsigned int sctphoff;
- 	struct sctphdr *sh;
- 	__le32 cmp, val;
- 
--#ifdef CONFIG_IP_VS_IPV6
--	if (af == AF_INET6)
--		sctphoff = sizeof(struct ipv6hdr);
--	else
--#endif
--		sctphoff = ip_hdrlen(skb);
--
- 	sh = (struct sctphdr *)(skb->data + sctphoff);
- 	cmp = sh->checksum;
- 	val = sctp_compute_cksum(skb, sctphoff);
---- a/net/netfilter/ipvs/ip_vs_proto_tcp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_tcp.c
-@@ -29,7 +29,8 @@
- #include <net/ip_vs.h>
- 
- static int
--tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp);
-+tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
-+	       unsigned int tcphoff);
- 
- static int
- tcp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
-@@ -166,7 +167,7 @@ tcp_snat_handler(struct sk_buff *skb, st
- 		int ret;
- 
- 		/* Some checks before mangling */
--		if (!tcp_csum_check(cp->af, skb, pp))
-+		if (!tcp_csum_check(cp->af, skb, pp, tcphoff))
- 			return 0;
- 
- 		/* Call application helper if needed */
-@@ -244,7 +245,7 @@ tcp_dnat_handler(struct sk_buff *skb, st
- 		int ret;
- 
- 		/* Some checks before mangling */
--		if (!tcp_csum_check(cp->af, skb, pp))
-+		if (!tcp_csum_check(cp->af, skb, pp, tcphoff))
- 			return 0;
- 
- 		/*
-@@ -301,17 +302,9 @@ tcp_dnat_handler(struct sk_buff *skb, st
- 
- 
- static int
--tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
-+tcp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
-+	       unsigned int tcphoff)
- {
--	unsigned int tcphoff;
--
--#ifdef CONFIG_IP_VS_IPV6
--	if (af == AF_INET6)
--		tcphoff = sizeof(struct ipv6hdr);
--	else
--#endif
--		tcphoff = ip_hdrlen(skb);
--
- 	switch (skb->ip_summed) {
- 	case CHECKSUM_NONE:
- 		skb->csum = skb_checksum(skb, tcphoff, skb->len - tcphoff, 0);
-@@ -322,7 +315,7 @@ tcp_csum_check(int af, struct sk_buff *s
- 			if (csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
- 					    &ipv6_hdr(skb)->daddr,
- 					    skb->len - tcphoff,
--					    ipv6_hdr(skb)->nexthdr,
-+					    IPPROTO_TCP,
- 					    skb->csum)) {
- 				IP_VS_DBG_RL_PKT(0, af, pp, skb, 0,
- 						 "Failed checksum for");
---- a/net/netfilter/ipvs/ip_vs_proto_udp.c
-+++ b/net/netfilter/ipvs/ip_vs_proto_udp.c
-@@ -25,7 +25,8 @@
- #include <net/ip6_checksum.h>
- 
- static int
--udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp);
-+udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
-+	       unsigned int udphoff);
- 
- static int
- udp_conn_schedule(struct netns_ipvs *ipvs, int af, struct sk_buff *skb,
-@@ -155,7 +156,7 @@ udp_snat_handler(struct sk_buff *skb, st
- 		int ret;
- 
- 		/* Some checks before mangling */
--		if (!udp_csum_check(cp->af, skb, pp))
-+		if (!udp_csum_check(cp->af, skb, pp, udphoff))
- 			return 0;
- 
- 		/*
-@@ -238,7 +239,7 @@ udp_dnat_handler(struct sk_buff *skb, st
- 		int ret;
- 
- 		/* Some checks before mangling */
--		if (!udp_csum_check(cp->af, skb, pp))
-+		if (!udp_csum_check(cp->af, skb, pp, udphoff))
- 			return 0;
- 
- 		/*
-@@ -297,17 +298,10 @@ udp_dnat_handler(struct sk_buff *skb, st
- 
- 
- static int
--udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp)
-+udp_csum_check(int af, struct sk_buff *skb, struct ip_vs_protocol *pp,
-+	       unsigned int udphoff)
- {
- 	struct udphdr _udph, *uh;
--	unsigned int udphoff;
--
--#ifdef CONFIG_IP_VS_IPV6
--	if (af == AF_INET6)
--		udphoff = sizeof(struct ipv6hdr);
--	else
--#endif
--		udphoff = ip_hdrlen(skb);
- 
- 	uh = skb_header_pointer(skb, udphoff, sizeof(_udph), &_udph);
- 	if (uh == NULL)
-@@ -325,7 +319,7 @@ udp_csum_check(int af, struct sk_buff *s
- 				if (csum_ipv6_magic(&ipv6_hdr(skb)->saddr,
- 						    &ipv6_hdr(skb)->daddr,
- 						    skb->len - udphoff,
--						    ipv6_hdr(skb)->nexthdr,
-+						    IPPROTO_UDP,
- 						    skb->csum)) {
- 					IP_VS_DBG_RL_PKT(0, af, pp, skb, 0,
- 							 "Failed checksum for");
+ 	  On affected cores, some memory accesses might not be completed by
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -250,6 +250,7 @@ static const struct arm64_cpu_capabiliti
+ 			MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V3),
+ 			MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V3AE),
+ 			MIDR_ALL_VERSIONS(MIDR_NVIDIA_OLYMPUS),
++			MIDR_ALL_VERSIONS(MIDR_MICROSOFT_AZURE_COBALT_100),
+ 			{}
+ 		})),
+ 	},
 
 
