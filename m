@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EAC33AD9B;
-	Tue, 16 Jun 2026 16:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953E647A0C0;
+	Tue, 16 Jun 2026 17:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629200; cv=none; b=sLdr12Ot4NgATfs7OZJ4Al4BNPkNbWSALEXHY2GZyRZL67oB/Rm9RfYFjbSs5T1o3kZJNUCp7MYDWadgZrNyth2z0gE9peA3YoVNbql7O7VpzR+nfwgICimScvv0PWWrz9TGdRfj2DNc2GNmL2TLaiSgTZgKugKrlDzzH+KTqyM=
+	t=1781629205; cv=none; b=jjD/wf6Tlf7cD/dejJqJrqo/is+AW/warazVuF+b+1qH/AdLJmJU6ImN/4tf/5TFD5F9aTZoP+mCCIK0OEQIGfc5hHlA8ewttNVakgaIbLtPN/M/s0Vw2aw8apuZZC2iL+gD30T8FM9iZAM7RNQJ2PSPEp88uU64MxpVyMRb8+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629200; c=relaxed/simple;
-	bh=o1sSYpAX0+ik9o0DQTT55T39cx5UF5P5bjpFjNtlv+E=;
+	s=arc-20240116; t=1781629205; c=relaxed/simple;
+	bh=SBeA+MPhiicaFKb9RqmTAE0C59EVpXIVpMg3HIs11Pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b4QfViOXLEApuRYvVwx+qD/Uqsi5D2C9uRYwHabBVYHzuw3UYp1kBOdesV/Qki0Ff4Ua1eO5fDa3j5US+jdym5guEFBsvz6jGMI05w3RynVfRgdLIwJC8Vq+ubxLrvpP8rWDAZYuD+nlg23eDpKxPDrBdXsBqEEQNIqx93u5dXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eM3eWPrt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NKOeWLofHOFJGckKpY0umb0N3FOHg5u8yjZYwXhYVnzf3hyY6PsTBDPwlDnn/RGqYa+IDoK4cu8dPrH2bMP9PAjIBNGhSzd5wngvNRuzLOuYFdGoksq/241ZBHWtIWl/bEqtyNe37oJiMolJu3zKEyd2HRgDyhxmQ44G5bFpmVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8OUMAlI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eM3eWPrt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AFA21F000E9;
-	Tue, 16 Jun 2026 16:59:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8OUMAlI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FBB1F00A3A;
+	Tue, 16 Jun 2026 17:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781629199;
-	bh=jje9zgTViTQvvoEyA7gdWrwF7qFg6E0X9qxq01UKFnQ=;
+	s=korg; t=1781629204;
+	bh=FhF5XB13kkl45c3MXNY8209MFlehBWYngPM3ZE4ZMiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eM3eWPrt4WFCNEjfmqTQQI+Mrgouwvsl/dQymReusBA/eGgPGlxVo5g8qu+PqfFLI
-	 Xzr7Xs6kSG638PAKomAPlQEzzcROrYJy/iFNhP0wclrKTEaF0wmaESQy3O1kbqhv/4
-	 Tuc9pPZIeqSwIjG7Eh0s8OFN1OMM59aynPK11bWU=
+	b=I8OUMAlI4KX8DFxSB0mm5N7Betdqup/PJBqEELDlCvn3wo8GK3zZoU66lGajSUWtK
+	 beo/8CT0NGkhdBcroVzhEnHjYCWEonex81U/klRElXlbTYH6UPyXiLsyoTlyXMyV4n
+	 35r6I4iInU/ACr46HGUKeg6HrCoriutPXDvQSNTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Naveen Mamindlapalli <naveenm@marvell.com>,
+	Nithin Dabilpuram <ndabilpuram@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 240/452] net: ethernet: mtk_eth_soc: Fix use-after-free in metadata dst teardown
-Date: Tue, 16 Jun 2026 20:27:47 +0530
-Message-ID: <20260616145130.298033812@linuxfoundation.org>
+Subject: [PATCH 6.6 241/452] octeontx2-af: npc: Fix CPT channel mask in npc_install_flow
+Date: Tue, 16 Jun 2026 20:27:48 +0530
+Message-ID: <20260616145130.345527069@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,45 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Nithin Dabilpuram <ndabilpuram@marvell.com>
 
-[ Upstream commit 80df409e1a483676826a6c66e693dba6ac507751 ]
+[ Upstream commit 1d31eb27e570daa04f5373345f9ac98c95863be9 ]
 
-mtk_free_dev() calls metadata_dst_free() which frees the metadata_dst
-with kfree() immediately, bypassing the RCU grace period.
-In the RX path, skb_dst_set_noref() sets a non-refcounted pointer from
-the skb to the metadata_dst. This function requires RCU read-side
-protection and the dst must remain valid until all RCU readers complete.
-Since metadata_dst_free() calls kfree() directly, a use-after-free can
-occur if any skb still holds a noref pointer to the dst when the driver
-tears it down.
-Replace metadata_dst_free() with dst_release() which properly goes
-through the refcount path: when the refcount drops to zero, it schedules
-the actual free via call_rcu_hurry(), ensuring all RCU readers have
-completed before the memory is freed.
+Use the CPT-aware NIX channel mask in the npc_install_flow path so that
+when the host PF installs steering rules in kernel for a VF used from
+userspace (e.g. DPDK), MCAM entries see the same channel mask semantics as
+other RX paths.
 
-Fixes: 2d7605a72906 ("net: ethernet: mtk_eth_soc: enable hardware DSA untagging")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260602-airoha-mtk-metadata-uaf-fix-v1-2-3aaa99d83351@kernel.org
+Fixes: 56bcef528bd8 ("octeontx2-af: Use npc_install_flow API for promisc and broadcast entries")
+Cc: Naveen Mamindlapalli <naveenm@marvell.com>
+Signed-off-by: Nithin Dabilpuram <ndabilpuram@marvell.com>
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Link: https://patch.msgid.link/20260602045853.1558530-1-rkannoth@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/marvell/octeontx2/af/rvu.h   |  1 +
+ .../ethernet/marvell/octeontx2/af/rvu_npc.c   | 32 +++++++++----------
+ .../marvell/octeontx2/af/rvu_npc_fs.c         |  2 +-
+ 3 files changed, 18 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 74cb96dbff9ee4..6de783fe116ce8 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -4246,7 +4246,7 @@ static int mtk_free_dev(struct mtk_eth *eth)
- 	for (i = 0; i < ARRAY_SIZE(eth->dsa_meta); i++) {
- 		if (!eth->dsa_meta[i])
- 			break;
--		metadata_dst_free(eth->dsa_meta[i]);
-+		dst_release(&eth->dsa_meta[i]->dst);
- 	}
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+index 9fbc071ef29b0c..11d25404d57166 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+@@ -933,6 +933,7 @@ int rvu_cpt_lf_teardown(struct rvu *rvu, u16 pcifunc, int blkaddr, int lf,
+ 			int slot);
+ int rvu_cpt_ctx_flush(struct rvu *rvu, u16 pcifunc);
+ int rvu_cpt_init(struct rvu *rvu);
++u32 rvu_get_cpt_chan_mask(struct rvu *rvu);
  
- 	return 0;
+ #define NDC_AF_BANK_MASK       GENMASK_ULL(7, 0)
+ #define NDC_AF_BANK_LINE_MASK  GENMASK_ULL(31, 16)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+index 9b8a6046e6dff0..65ad7476e60983 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc.c
+@@ -609,6 +609,19 @@ static u64 npc_get_mcam_action(struct rvu *rvu, struct npc_mcam *mcam,
+ 			  NPC_AF_MCAMEX_BANKX_ACTION(index, bank));
+ }
+ 
++u32 rvu_get_cpt_chan_mask(struct rvu *rvu)
++{
++	/* For cn10k the upper two bits of the channel number are
++	 * cpt channel number. with masking out these bits in the
++	 * mcam entry, same entry used for NIX will allow packets
++	 * received from cpt for parsing.
++	 */
++	if (!is_rvu_otx2(rvu))
++		return NIX_CHAN_CPT_X2P_MASK;
++	else
++		return 0xFFFu;
++}
++
+ void rvu_npc_install_ucast_entry(struct rvu *rvu, u16 pcifunc,
+ 				 int nixlf, u64 chan, u8 *mac_addr)
+ {
+@@ -652,7 +665,7 @@ void rvu_npc_install_ucast_entry(struct rvu *rvu, u16 pcifunc,
+ 	eth_broadcast_addr((u8 *)&req.mask.dmac);
+ 	req.features = BIT_ULL(NPC_DMAC);
+ 	req.channel = chan;
+-	req.chan_mask = 0xFFFU;
++	req.chan_mask = rvu_get_cpt_chan_mask(rvu);
+ 	req.intf = pfvf->nix_rx_intf;
+ 	req.op = action.op;
+ 	req.hdr.pcifunc = 0; /* AF is requester */
+@@ -722,11 +735,7 @@ void rvu_npc_install_promisc_entry(struct rvu *rvu, u16 pcifunc,
+ 	 * mcam entry, same entry used for NIX will allow packets
+ 	 * received from cpt for parsing.
+ 	 */
+-	if (!is_rvu_otx2(rvu)) {
+-		req.chan_mask = NIX_CHAN_CPT_X2P_MASK;
+-	} else {
+-		req.chan_mask = 0xFFFU;
+-	}
++	req.chan_mask = rvu_get_cpt_chan_mask(rvu);
+ 
+ 	if (chan_cnt > 1) {
+ 		if (!is_power_of_2(chan_cnt)) {
+@@ -915,16 +924,7 @@ void rvu_npc_install_allmulti_entry(struct rvu *rvu, u16 pcifunc, int nixlf,
+ 	ether_addr_copy(req.mask.dmac, mac_addr);
+ 	req.features = BIT_ULL(NPC_DMAC);
+ 
+-	/* For cn10k the upper two bits of the channel number are
+-	 * cpt channel number. with masking out these bits in the
+-	 * mcam entry, same entry used for NIX will allow packets
+-	 * received from cpt for parsing.
+-	 */
+-	if (!is_rvu_otx2(rvu))
+-		req.chan_mask = NIX_CHAN_CPT_X2P_MASK;
+-	else
+-		req.chan_mask = 0xFFFU;
+-
++	req.chan_mask = rvu_get_cpt_chan_mask(rvu);
+ 	req.channel = chan;
+ 	req.intf = pfvf->nix_rx_intf;
+ 	req.entry = index;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
+index 0f4e462d39c2ea..b0ec4757b10835 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
+@@ -1354,7 +1354,7 @@ int rvu_mbox_handler_npc_install_flow(struct rvu *rvu,
+ 
+ 	/* ignore chan_mask in case pf func is not AF, revisit later */
+ 	if (!is_pffunc_af(req->hdr.pcifunc))
+-		req->chan_mask = 0xFFF;
++		req->chan_mask = rvu_get_cpt_chan_mask(rvu);
+ 
+ 	err = npc_check_unsupported_flows(rvu, req->features, req->intf);
+ 	if (err)
 -- 
 2.53.0
 
