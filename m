@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B864744D014;
-	Tue, 16 Jun 2026 16:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01DD35AC3E;
+	Tue, 16 Jun 2026 16:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781628944; cv=none; b=IgT36PYUcJX5dxWLT1P9plw5jSm4/F/XjIlcM7yAEY7WH2mKLg9D6gbDr4vlU4JIojEXLXo0jsO9LSjeLlgkesSbDPqDpphrSRWNbvJXuIU5FZ+eWgwKeJiGcYaCvEC7qghqhUKE1RuEOdehTW0KHTeygMAq8ePrPlmH++vXR7k=
+	t=1781628950; cv=none; b=lfIgf3pc/LR/X1B4vjRcZ3c7DCC1AzSY4M9jjcZCX5uK/GGPpYAPgOyKLIM72+PwMUXWrTYiVdgK0f1C1JRXKU1VG7obuECzMvj+vXWO2cdYXa1QJtv+xkyqUeEv7cuedjQv3m0zl9S4HPUHP/R3jOVe6puemll84whKvyS97aM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781628944; c=relaxed/simple;
-	bh=GDB3qCIHel6Mc2vbHqm3lXvBcCQ0jcvU1frqL7r3Bnk=;
+	s=arc-20240116; t=1781628950; c=relaxed/simple;
+	bh=0sbPwU43gkaJDxZfLBM7C65gPvCDJuSeQq2L2/JTyR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oLmTGjdOtQhkK0iID5zDx8ScKEBfmq59G1RNvNvS+bsYowmW1f0ICBrDv/uJnQXpbWcGgz23Qy8Ak0WvXavfm4tbRzuH1cbVMVJrzKnEg4k6fowLxRqC2sOPFa3GYy4UwSLM7ymdMBuAkf+PEeuWMjmo/lacmq+fulz5HMsJh7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NiPAp7sL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kktjVnT+A341kNR0aZzkFCHqSITa2ZP2m63tagymHNH2Sc0nwN5mCBhoOi4nRsci1Mw9lJ3rqQYYy3RZo7QZFVzgIsFy2J5ueZIFXpJhI9diZaCQVDFukgpNGo3qZnIL3L7XNt/WWq9YKcsrohH875rOEmGzt1o2MbgZ4CCuOqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=evPE5wJN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NiPAp7sL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F4E81F00A3A;
-	Tue, 16 Jun 2026 16:55:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="evPE5wJN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F071F000E9;
+	Tue, 16 Jun 2026 16:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781628943;
-	bh=0KbO73aQBToGIfs295ZxncHv/fyuR0qYrAy5JTty8WM=;
+	s=korg; t=1781628949;
+	bh=/seAmBIyQoxLdVN0uQzhvbZCy8pnh+Nec9ivfQtHkKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NiPAp7sLvW0dn9jjoHvh1PVQFuFLO+4hoh3iKR4N/Emv7gb8jwBfdMDBe+dd7/gWY
-	 b2pxC+4xlb91UnEfS1Z7brfDsqt73oLL0yaVBvL9TPJtNkhah1QJRzJmyp6y91g5mg
-	 Kkc4w4KTWSwJua4GzTLatOSP4AZAoRq8G3/PC2IQ=
+	b=evPE5wJNt2+UQKAY+bwi/A01Jb92XJ71C146wjbTYItUJeF2JvGgTt52wpzLFY16r
+	 d1qwYlwUWUnlzIj2AdD5Sa4Z6nzCjOSSwh0Yd8szfTfR8iqvTVzdZkcIW8eTHV9n7w
+	 M0HOgHCAegcsxuuEmOqVs19eUB4mhjw1hEtL5/f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Aleksandr Nogikh <nogikh@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Miles Wang <13621186580@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 192/452] Bluetooth: hci_sync: fix UAF in hci_le_create_cis_sync
-Date: Tue, 16 Jun 2026 20:26:59 +0530
-Message-ID: <20260616145127.921707561@linuxfoundation.org>
+Subject: [PATCH 6.6 193/452] x86/kexec: Disable KCOV instrumentation after load_segments()
+Date: Tue, 16 Jun 2026 20:27:00 +0530
+Message-ID: <20260616145127.970656450@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145117.796205997@linuxfoundation.org>
 References: <20260616145117.796205997@linuxfoundation.org>
@@ -51,82 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-[ Upstream commit bfea6091e0fffb270c20e74384b660910277eb6c ]
+[ Upstream commit 917e3ad3321e75ca0223d5ccf26ceda116aa51e1 ]
 
-hci_le_create_cis_sync() dereferences conn->conn_timeout after releasing
-both rcu_read_lock() and hci_dev_lock(hdev).  The conn pointer was
-obtained from an RCU-protected iteration over hdev->conn_hash.list and
-is not valid once these locks are dropped.  A concurrent disconnect can
-free the hci_conn between the unlock and the dereference, causing a
-use-after-free read.
+The load_segments() function changes segment registers, invalidating GS base
+(which KCOV relies on for per-cpu data). When CONFIG_KCOV is enabled, any
+subsequent instrumented C code call (e.g. native_gdt_invalidate()) begins
+crashing the kernel in an endless loop.
 
-The cancellation mechanism in hci_conn_del() cannot prevent this because
-hci_le_create_cis_pending() queues hci_create_cis_sync with data=NULL:
+To reproduce the problem, it's sufficient to do kexec on a KCOV-instrumented
+kernel:
 
-    hci_cmd_sync_queue(hdev, hci_create_cis_sync, NULL, NULL);
+  $ kexec -l /boot/otherKernel
+  $ kexec -e
 
-While hci_conn_del() dequeues with data=conn:
+The real-world context for this problem is enabling crash dump collection in
+syzkaller. For this, the tool loads a panic kernel before fuzzing and then
+calls makedumpfile after the panic. This workflow requires both CONFIG_KEXEC
+and CONFIG_KCOV to be enabled simultaneously.
 
-    hci_cmd_sync_dequeue(hdev, NULL, conn, NULL);
+Adding safeguards directly to the KCOV fast-path (__sanitizer_cov_trace_pc())
+is also undesirable as it would introduce an extra performance overhead.
 
-Since NULL != conn, the lookup in _hci_cmd_sync_lookup_entry() never
-matches, and the pending work item is not cancelled.
+Disabling instrumentation for the individual functions would be too fragile,
+so disable KCOV instrumentation for the entire machine_kexec_64.c and
+physaddr.c. If coverage-guided fuzzing ever needs these components in the
+future, other approaches should be considered.
 
-Fix this by saving conn->conn_timeout into a local variable while the
-locks are still held, so the stale conn pointer is never dereferenced
-after unlock.
+The problem is not relevant for 32 bit kernels as CONFIG_KCOV is not supported
+there.
 
-This is the same class of bug as the one fixed by commit 035c25007c9e
-("Bluetooth: hci_sync: Fix UAF on le_read_features_complete") which
-addressed the identical pattern in a different function.
+  [ bp: Space out comment for better readability. ]
 
-This vulnerability was identified using 0sec.ai, an open-source
-automated security auditing platform (https://github.com/0sec-labs).
-
-Fixes: c09b80be6ffc ("Bluetooth: hci_conn: Fix not waiting for HCI_EVT_LE_CIS_ESTABLISHED")
+Fixes: 0d345996e4cb ("x86/kernel: increase kcov coverage under arch/x86/kernel folder")
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Dmitry Vyukov <dvyukov@google.com>
 Cc: stable@vger.kernel.org
-Reported-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[doruk: adjust context for 6.6 \u2014 open-coded cmd struct instead of
- DEFINE_FLEX, num_cis tracked via cmd.cp.num_cis]
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Link: https://patch.msgid.link/20260325154825.551191-1-nogikh@google.com
+Signed-off-by: Miles Wang <13621186580@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/kernel/Makefile | 14 ++++++++++++++
+ arch/x86/mm/Makefile     |  2 ++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index a41cfc76e98bf1..7cba461b21de4f 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -6631,6 +6631,7 @@ int hci_le_create_cis_sync(struct hci_dev *hdev)
- 		struct hci_cis cis[0x1f];
- 	} cmd;
- 	struct hci_conn *conn;
-+	u16 timeout = 0;
- 	u8 cig = BT_ISO_QOS_CIG_UNSET;
+diff --git a/arch/x86/kernel/Makefile b/arch/x86/kernel/Makefile
+index 0000325ab98f4d..c1fe6c98d3f6e0 100644
+--- a/arch/x86/kernel/Makefile
++++ b/arch/x86/kernel/Makefile
+@@ -39,6 +39,20 @@ KMSAN_SANITIZE_nmi.o					:= n
+ KCOV_INSTRUMENT_head$(BITS).o				:= n
+ KCOV_INSTRUMENT_sev.o					:= n
  
- 	/* The spec allows only one pending LE Create CIS command at a time. If
-@@ -6703,6 +6704,7 @@ int hci_le_create_cis_sync(struct hci_dev *hdev)
- 		set_bit(HCI_CONN_CREATE_CIS, &conn->flags);
- 		cis->acl_handle = cpu_to_le16(conn->parent->handle);
- 		cis->cis_handle = cpu_to_le16(conn->handle);
-+		timeout = conn->conn_timeout;
- 		cmd.cp.num_cis++;
++# Disable KCOV to prevent crashes during kexec: load_segments() invalidates
++# the GS base, which KCOV relies on for per-CPU data.
++#
++# As KCOV and KEXEC compatibility should be preserved (e.g. syzkaller is
++# using it to collect crash dumps during kernel fuzzing), disabling
++# KCOV for KEXEC kernels is not an option. Selectively disabling KCOV
++# instrumentation for individual affected functions can be fragile, while
++# adding more checks to KCOV would slow it down.
++#
++# As a compromise solution, disable KCOV instrumentation for the whole
++# source code file. If its coverage is ever needed, other approaches
++# should be considered.
++KCOV_INSTRUMENT_machine_kexec_64.o			:= n
++
+ CFLAGS_irq.o := -I $(srctree)/$(src)/../include/asm/trace
  
- 		if (cmd.cp.num_cis >= ARRAY_SIZE(cmd.cis))
-@@ -6722,7 +6724,7 @@ int hci_le_create_cis_sync(struct hci_dev *hdev)
- 					sizeof(cmd.cp) + sizeof(cmd.cis[0]) *
- 					cmd.cp.num_cis, &cmd,
- 					HCI_EVT_LE_CIS_ESTABLISHED,
--					conn->conn_timeout, NULL);
-+					timeout, NULL);
- }
+ obj-y			+= head_$(BITS).o
+diff --git a/arch/x86/mm/Makefile b/arch/x86/mm/Makefile
+index c80febc44cd2fe..dd78ec8758f17e 100644
+--- a/arch/x86/mm/Makefile
++++ b/arch/x86/mm/Makefile
+@@ -5,6 +5,8 @@ KCOV_INSTRUMENT_mem_encrypt.o		:= n
+ KCOV_INSTRUMENT_mem_encrypt_amd.o	:= n
+ KCOV_INSTRUMENT_mem_encrypt_identity.o	:= n
+ KCOV_INSTRUMENT_pgprot.o		:= n
++# See the "Disable KCOV" comment in arch/x86/kernel/Makefile.
++KCOV_INSTRUMENT_physaddr.o		:= n
  
- int hci_le_remove_cig_sync(struct hci_dev *hdev, u8 handle)
+ KASAN_SANITIZE_mem_encrypt.o		:= n
+ KASAN_SANITIZE_mem_encrypt_amd.o	:= n
 -- 
 2.53.0
 
