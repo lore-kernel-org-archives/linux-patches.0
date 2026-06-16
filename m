@@ -1,52 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5640244DB64;
-	Tue, 16 Jun 2026 16:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C366546AEE8;
+	Tue, 16 Jun 2026 16:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781625894; cv=none; b=Q7oLNw3I+V0ID8CqGPvLKtYNu8J6C62IkO5ez/tTGpD7JX2KPGt+rSqr1ZaypmZfQPGq3OufCli/XvMyEns1YGMNmaf1f+XI24On85C+sl14AXFkVU6nX0g9RRPz9m5jYmwlAEFX21vmFU7Zl8Vj3+Hr2TUHDzPa5A17sW8mzdA=
+	t=1781625899; cv=none; b=L84Nrks1sneFui/LrcAjwWVh6dbX3adK63KZV5nATYhHM6slB3t8Vkw51u/MoZ65gUOf1nFovDk1LDI4OaGP3+/4YLyyGY5MwvV9IEDLXZtIlX6XsWZ0BmDKhPO83WRJMfFSOjuDz4PYGYzXZMMEl4oDrA8JNN07N/AKpUMdrL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781625894; c=relaxed/simple;
-	bh=XNzqxF0NQ8rcUo1MbArExBpZcnjjv8wVmwHdrRZKnao=;
+	s=arc-20240116; t=1781625899; c=relaxed/simple;
+	bh=fhPTOnkufZOuzyhqiZy0GQXzts6G7BYk7jpA6jcm9tI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ViU8FLVZo9SR6g//WZESP+2zvNdezq3upbyMnvrE2DsPMlOT+zBy1Ww0fDIRwBrX3pI8sbkcYHjB3KoF3R+FLO3BNHYc6cwvlGBIQFnD3zyt6AOJqeNmy6oC3d9hrRvngBjg1ufSSCj/x+Ey7dNXz0R1PDnWrDK+svvRhKexCvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6KPt4fl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J9E85HwITnhf3UVe8YuSW8u06FRZ19DTYaxcpi2M4aAbB4FLLZs3p1AkKaETJ8zX2fKLgOfm2mMUz3w6+EWffMpo88cqP+XE/M7rx/IgIUM4xwXFMjfU4GYa+QseXktdNtpGD+FRK+bTQHh+HsCWOxhG03Fo3BqRgICChQugXe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTkJxzX8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6KPt4fl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 075171F000E9;
-	Tue, 16 Jun 2026 16:04:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTkJxzX8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69711F000E9;
+	Tue, 16 Jun 2026 16:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781625893;
-	bh=Gvrle3mQqD05KF5TFrVe3ebfvaDeseIh4V2/aRIHQOw=;
+	s=korg; t=1781625898;
+	bh=uT2S7aurb8XCnybllwlZIT3SZ4Nv65KCZnUyfjPfo3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U6KPt4flf0o1Gm2DjaV3ATsB488wI8e0V2gZ0QFVDoTtC/DY7qSn6ZkKFpzZoTM4a
-	 42td3TPw2p0yTSVsHIiYMFlJSFFTt9J07WGRKHbteWyjrC+dfhmAlY+V16dfsMlFtq
-	 2uD2m4NccR8VALGmCtE3vxgPbBGzrI6QeBI9N/e4=
+	b=nTkJxzX8YUzDfTGz5feS1G1uB5+23ubCI8muXO9QSsIx68gMtHfwojMnW0nFexhAa
+	 eYiQeDOuTPXSuDm1Zgkz8U+sMVUHEzoouDMxaqOPCGLi7uso5DVLkui1HKYJzn5Umg
+	 7rcFnl9qsFpl0Vq6T4dB3QLH222bWuGYB0T6Icc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Yilin Zhu <zylzyl2333@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Christian Brauner <brauner@kernel.org>,
-	Jeongjun Park <aha310510@gmail.com>,
-	Kees Cook <kees@kernel.org>,
-	Liam Howlett <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Serge Hallyn <sergeh@kernel.org>,
-	Vasiliy Kulikov <segoon@openwall.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Serge Hallyn <serge@hallyn.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 228/325] ipc/shm: serialize orphan cleanup with shm_nattch updates
-Date: Tue, 16 Jun 2026 20:30:24 +0530
-Message-ID: <20260616145109.751425796@linuxfoundation.org>
+	Kyle Meyer <kyle.meyer@hpe.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 211/325] bnxt_en: Fix NULL pointer dereference
+Date: Tue, 16 Jun 2026 20:30:07 +0530
+Message-ID: <20260616145108.605354298@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145057.827196531@linuxfoundation.org>
 References: <20260616145057.827196531@linuxfoundation.org>
@@ -65,68 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yilin Zhu <zylzyl2333@gmail.com>
+From: Kyle Meyer <kyle.meyer@hpe.com>
 
-commit 2e5c6f4fd4001562781e99bbfc7f1f0127187542 upstream.
+commit d930276f2cddd0b7294cac7a8fe7b877f6d9e08d upstream.
 
-shm_destroy_orphaned() walks the shm idr under shm_ids(ns).rwsem, but that
-does not serialize all fields tested by shm_may_destroy().  In particular,
-shm_nattch is updated while holding shm_perm.lock, and attach paths can do
-that without holding the rwsem.
+PCIe errors detected by a Root Port or Downstream Port cause error
+recovery services to run on all subordinate devices regardless of
+administrative state.
 
-Do not decide that an orphaned segment is unused before taking the object
-lock.  Move the shm_may_destroy() check under shm_perm.lock, matching the
-other destroy paths, and unlock the segment when it no longer qualifies
-for removal.
+The .error_detected() callback, bnxt_io_error_detected(), disables
+and synchronizes IRQs via bnxt_disable_int_sync(), which calls
+bnxt_cp_num_to_irq_num() to map completion rings to IRQs using
+bp->bnapi.
 
-Link: https://lore.kernel.org/9d97cc1031de2d0bace0edf3a668818aa2f4eca6.1777410234.git.zylzyl2333@gmail.com
-Fixes: 4c677e2eefdb ("shm: optimize locking and ipc_namespace getting")
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Yilin Zhu <zylzyl2333@gmail.com>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jeongjun Park <aha310510@gmail.com>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Liam Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Serge Hallyn <sergeh@kernel.org>
-Cc: Vasiliy Kulikov <segoon@openwall.com>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Oleg Nesterov <oleg@redhat.com>
-Cc: Serge Hallyn <serge@hallyn.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Since bp->bnapi is allocated on NIC open and freed on NIC close, PCIe
+error recovery on a closed NIC can dereference a NULL pointer.
+
+Check if bp->bnapi is NULL before disabling and synchronizing IRQs.
+
+Fixes: e5811b8c09df ("bnxt_en: Add IRQ remapping logic.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kyle Meyer <kyle.meyer@hpe.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://patch.msgid.link/aiNM1CY2-StPilxW@hpe.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- ipc/shm.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/ipc/shm.c
-+++ b/ipc/shm.c
-@@ -418,15 +418,17 @@ static int shm_try_destroy_orphaned(int
- 	 * We want to destroy segments without users and with already
- 	 * exit'ed originating process.
- 	 *
--	 * As shp->* are changed under rwsem, it's safe to skip shp locking.
-+	 * shm_nattch can be changed under shm_perm.lock without holding the
-+	 * rwsem, so take the object lock before checking shm_may_destroy().
- 	 */
- 	if (!list_empty(&shp->shm_clist))
- 		return 0;
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -5629,7 +5629,7 @@ static void bnxt_disable_int_sync(struct
+ {
+ 	int i;
  
--	if (shm_may_destroy(shp)) {
--		shm_lock_by_ptr(shp);
-+	shm_lock_by_ptr(shp);
-+	if (shm_may_destroy(shp))
- 		shm_destroy(ns, shp);
--	}
-+	else
-+		shm_unlock(shp);
- 	return 0;
- }
+-	if (!bp->irq_tbl)
++	if (!bp->irq_tbl || !bp->bnapi)
+ 		return;
  
+ 	atomic_inc(&bp->intr_sem);
 
 
