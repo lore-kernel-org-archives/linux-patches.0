@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0618F32A3C9;
-	Tue, 16 Jun 2026 17:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489BB32A3C9;
+	Tue, 16 Jun 2026 17:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781632241; cv=none; b=bw6fG5RQoKs0ceuPnpEHEfR3KZTNhPIobiMci07lNExZkkvxludZIvzR5vZC5BccpR9gyJG8K6cqK40WnILX+M1AJkB5Km9Q55ww04ktK97RXcVu/9mhUCTt2vmPI2KVT+KVr8tmrJ3+z6XPK88Mvsxah+GYHOlLowu6sGjZAnY=
+	t=1781632246; cv=none; b=Rgf71kRTuFCoEW/jyADo1ggUM0Jc15Kjwmw3ACFXfdIxnDdT50am7mcS82Rf0DyuhpnyzHpQNPekzLToGg0NaBrPJXGvwQwWUHIvo5gNGyAal6UPkH6NVQYY4f5ijf5Ur6IAIuwckkhLZ46Bs9iK1qYMIhBytqD0bBUPu1BdOIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781632241; c=relaxed/simple;
-	bh=LtC3Xhl94Tv9y2LAvGcpocHOpmN9cUYgXJgd56Dgpb0=;
+	s=arc-20240116; t=1781632246; c=relaxed/simple;
+	bh=sbixWEFU+uDd4RnkyasSRcuQZyZ4rGhuKwund0SjNRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V1PSbDeDM8otZAvbcjsww/rYEstX8NpsomNSsnTJZsxOOdcfaYaXSn1ComY+XpOL3iH7LmiinS5+bTcdHz8jEDULW+NsIhep2nguFbaB4SSoR10YY/yn6WCZGXv+izM7chcRnnLompbT17JvGgeyDQ6N3u4RQIt8L1wbr9IHgxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eh4Y2iYc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jGrZP4dSU9OHGBL0lbxNaVoz5Kp1aniiIzSzJoLnGYx3UaOyHoHxSQUwjsbz8TETzoykDT/ulf8qw7YHfm0JVE6SUZH9YZ/fPxDXz/1AXbty8AP2IDqxxOL56LoOTKBR2ZnrvPVfyve/5SDzGwjHLWuFboBGPW2KQnMSnGwZh3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D4A42JHh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eh4Y2iYc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F224E1F00A3A;
-	Tue, 16 Jun 2026 17:50:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D4A42JHh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D2E81F000E9;
+	Tue, 16 Jun 2026 17:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1781632239;
-	bh=h5w9Ef8VO2t+g0/yBzeUL4j7YWDYDcDtBtyA6Xc62V4=;
+	s=korg; t=1781632245;
+	bh=2Wb7ozkK8BlphkTLVmgOSHum9FmJHrq26RcXxiLj6mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eh4Y2iYcS+F1Tm1drAhTSDZnYnXYbAHOxfJjnTne/l9FG4nS9D6kmgOPbfC9BgFVP
-	 sGj4Mb08TDcshHh/VVz/Revc6RGNgrE+MQXDRYquabMmWL1y6ojpFGZiTzmiMwNjVc
-	 nZw6H7xWNiFRYJ+toUpXIcVwCCxnXYD6Qrsnw5cg=
+	b=D4A42JHhxOZOwEynVaL1uTY4kW/HiiOA/UuudjJwbkxpR1OZOi3hhk2p3OuqctMw2
+	 46aRy2AXlQerEEFj7sBnycRGR6mjygObfXzbmkbCU+VChgawoiBVCDa9Q7daiemhbo
+	 JYudetC0U08Raj9ktq+7yevT3lPCMUvIErdBQqyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 341/522] spi: imx: fix use-after-free on unbind
-Date: Tue, 16 Jun 2026 20:28:08 +0530
-Message-ID: <20260616145141.767931382@linuxfoundation.org>
+Subject: [PATCH 6.1 342/522] thermal: core: Fix thermal zone governor cleanup issues
+Date: Tue, 16 Jun 2026 20:28:09 +0530
+Message-ID: <20260616145141.812464695@linuxfoundation.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616145125.307082728@linuxfoundation.org>
 References: <20260616145125.307082728@linuxfoundation.org>
@@ -52,48 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 1c78c2002380a1fe31bfb01a3d5f29809e55a096 ]
+[ Upstream commit 41ff66baf81c6541f4f985dd7eac4494d03d9440 ]
 
-The SPI subsystem frees the controller and any subsystem allocated
-driver data as part of deregistration (unless the allocation is device
-managed).
+If thermal_zone_device_register_with_trips() fails after adding
+a thermal governor to the thermal zone being registered, the
+governor is not removed from it as appropriate which may lead to
+a memory leak.
 
-Take another reference before deregistering the controller so that the
-driver data is not freed until the driver is done with it.
+In turn, thermal_zone_device_unregister() calls thermal_set_governor()
+without acquiring the thermal zone lock beforehand which may race with
+a governor update via sysfs and may lead to a use-after-free in that
+case.
 
-Fixes: 307c897db762 ("spi: spi-imx: replace struct spi_imx_data::bitbang by pointer to struct spi_controller")
-Cc: stable@vger.kernel.org	# 5.19
-Acked-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260324082326.901043-2-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Address these issues by adding two thermal_set_governor() calls, one to
+thermal_release() to remove the governor from the given thermal zone,
+and one to the thermal zone registration error path to cover failures
+preceding the thermal zone device registration.
+
+Fixes: e33df1d2f3a0 ("thermal: let governors have private data for each thermal zone")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/5092923.31r3eYUQgx@rafael.j.wysocki
+[ adapted context for missing mutex_destroy/complete ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-imx.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/thermal/thermal_core.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/spi/spi-imx.c
-+++ b/drivers/spi/spi-imx.c
-@@ -1885,6 +1885,8 @@ static void spi_imx_remove(struct platfo
- 	struct spi_imx_data *spi_imx = spi_controller_get_devdata(controller);
- 	int ret;
+--- a/drivers/thermal/thermal_core.c
++++ b/drivers/thermal/thermal_core.c
+@@ -756,6 +756,7 @@ static void thermal_release(struct devic
+ 		     sizeof("thermal_zone") - 1)) {
+ 		tz = to_thermal_zone(dev);
+ 		thermal_zone_destroy_device_groups(tz);
++		thermal_set_governor(tz, NULL);
+ 		kfree(tz);
+ 	} else if (!strncmp(dev_name(dev), "cooling_device",
+ 			    sizeof("cooling_device") - 1)) {
+@@ -1260,8 +1261,10 @@ thermal_zone_device_register_with_trips(
+ 	/* sys I/F */
+ 	/* Add nodes that are always present via .groups */
+ 	result = thermal_zone_create_device_groups(tz, mask);
+-	if (result)
++	if (result) {
++		thermal_set_governor(tz, NULL);
+ 		goto remove_id;
++	}
  
-+	spi_controller_get(controller);
-+
- 	spi_unregister_controller(controller);
+ 	/* A new thermal zone needs to be updated anyway. */
+ 	atomic_set(&tz->need_update, 1);
+@@ -1396,8 +1399,6 @@ void thermal_zone_device_unregister(stru
  
- 	ret = pm_runtime_get_sync(spi_imx->dev);
-@@ -1898,6 +1900,8 @@ static void spi_imx_remove(struct platfo
- 	pm_runtime_disable(spi_imx->dev);
+ 	cancel_delayed_work_sync(&tz->poll_queue);
  
- 	spi_imx_sdma_exit(spi_imx);
-+
-+	spi_controller_put(controller);
- }
- 
- static int __maybe_unused spi_imx_runtime_resume(struct device *dev)
+-	thermal_set_governor(tz, NULL);
+-
+ 	thermal_remove_hwmon_sysfs(tz);
+ 	ida_free(&thermal_tz_ida, tz->id);
+ 	ida_destroy(&tz->ida);
 
 
